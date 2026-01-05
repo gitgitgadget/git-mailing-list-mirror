@@ -1,137 +1,130 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD4E2D8782
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 22:13:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE1720DD72
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 22:19:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767651190; cv=none; b=LoLGaJVkvbmF2bAZzWNO97fqM242htq5p7SrqyKBKI9LkROp4L+lSeAEPGag2Ow3E1vUGju3kN9E0bWz7vl8WwbPBzcHRU4lmmuwmOFglxIUS7s3tcNuAOti8ypcHknMFLa21/R72m+qEKgVvfutGlWTUpqoh2QYIXjsKFcqKJg=
+	t=1767651589; cv=none; b=Iu3oK+F6Rf+1m8Je11yVy01DFQ/RXQaDpvZxvqGVHG42sC7N452CasdWpjdKHtsW6HLhPuMyLgWt9K2ZrFA/rfH3w9q0aXqpVu9n5CjZRM6q+ZmSkWfXmyArpou+/7t/gT0OAjdea/Ckt3gBm2VqQ5wMcBaUVoSkN27aPtMxbWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767651190; c=relaxed/simple;
-	bh=mjvNrsOFXQVFPODFdo6NYmdzdqYKj8sMcKMK5ljCP3A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EYfQaduW0YSZDPpvfkghE7qgour/G20f8Jery5pFX/jVyhtM8LICUUTBMH9HMPpXV0QBKX5I5U9Pm1OJJP+nndp3t6cHx+JAuwcGIF8gOocneoDA7uqmD0YYNe+7/8nKbuONpFyUIZA7ka7VaNJItFnyjMB7SST8pPR51xrEY0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lm+g2pPz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nGPeExRB; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1767651589; c=relaxed/simple;
+	bh=7agdt18lwIE3jUqY/cwxYwr8k+vK7ScmCMGXVBiI1o4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=G7OxWf0YrteIq7fLyWqx/yebOBgZTcQHZlXIYz94Yyvjf7fFNmtoOq9MFnOYZLEYzusCabzlQa4QpoCzMcOmW3o5I3CsqyaLOwnvyVclv6Y7e/5XVhb8VIvwXWXnaxexSuGa15MIB3ifiDIZVa+gx51qPi1bC8ECRbF53cwpmdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=calmm8iR; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lm+g2pPz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nGPeExRB"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 734AE7A00A7;
-	Mon,  5 Jan 2026 17:13:06 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 05 Jan 2026 17:13:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767651186; x=1767737586; bh=Gdp6KIwlnC
-	YcRj2s6o6Okep0Nbj/sU9wTKfGottQklE=; b=Lm+g2pPzs2T+yXHMv0tPcNqGTy
-	6rocbds2a7a1Jm5obFFSqNwOIXOJ5bq93TBm8m02V6499z+RG7EBIC/aN8jpCQht
-	dy1N8YIZ6rMjkkARiYyLcddqslk8zFzTZMZwLqu4eXxSk9qRfDbp+I15owJS1g6A
-	+VGl1Sok5zxGiHCj2Y2asVrslMuH2OI+SdxTxUK9Z6lvbd9bTrNyPPBkWVWbsHaj
-	ROdnzfMYHQXuIaCZk9SFnjUopxBnNagmmfd4N8xzB9S628xuFod2nUrebP9U425Q
-	tKaMU2aMu9oTUpWTPq72z5uFDmbWY46VdZDLFzZiihEzOnsy18eDj+4Z2xbQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767651186; x=1767737586; bh=Gdp6KIwlnCYcRj2s6o6Okep0Nbj/sU9wTKf
-	GottQklE=; b=nGPeExRBhZhrNmsZ0R1wh2mXYMH11dY4wVsY6kcHIux3Ve5Gc2E
-	Y/fdSzy2eLPhqqnqOKJLfERIUZvaXMSUKK8GOGAiTcZKlCyGA4WswE33RQ1vRnya
-	5f/1hTmQfQEj6Gxu9DYijRr+n/dRp4pZl6Pr498aOpUUOANLiMYOk5zLiUttpGSr
-	szAALZ/JwI1HxSocyWTV6W+Ql/d4nguNaLkqH2k5Qat9GlnCUrtB3dpfq0BlYXrV
-	t9Y3lsV4hL43it17ZICWl+aLxoHKG9tpR5wpWPHzK+TcdObNdKsOYkW6m8JCHzNP
-	4SAsXuMRdXBvgKXCMpBryiC8iAdYkqhJoDw==
-X-ME-Sender: <xms:cjdcaRadx9w04Byec_FLqRNkWXMz_6EOrdizuz25FRuyeO5FHqlORA>
-    <xme:cjdcafZmlp_dHUGw6PRSM-dtg1VOInZ6U-pOXLvDK21kxPFai6SoNOs3ZFxnormY1
-    aX2G73BdpyGGhJzcJ1TUc29_oEpRLr9XszJwsff0FmAzTgox1UigA>
-X-ME-Received: <xmr:cjdcaY_oPMCvL1NPCF-ltJa2OtS2ypnQx5v5fW8VBzC2ed-7qopyRKedDDF2xyvHOBjB7VkslIhepj9J5zRDJ2cDCQRA06fMFIhTXi4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelkeegjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:cjdcaeiM09EL3G6T795uaiJ59AX7SsIPBGPenBX0ezRB2yJhx2sa7Q>
-    <xmx:cjdcaYekzCqSVGnnd_6DFze06Dp8D1x_L3SqoDZDsC3ep4JuLNWq1g>
-    <xmx:cjdcaVql_SFA9PHWKxMdvrbbBV3jCiphtF6-_9iKKUdmmGFLVFqwWQ>
-    <xmx:cjdcadBWcV6T2AcYr_8XAyNS--edk__5-Khjce_hacbTPxT1punuzw>
-    <xmx:cjdcaYe38_ClL0OBJgi0vgI39lqB3eOg99MzY5dBo_Vts7xolT_SIzza>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Jan 2026 17:13:05 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org,  gitgitgadget@gmail.com
-Subject: Re: Another look?
-In-Reply-To: <20260105131654.88348-1-haraldnordgren@gmail.com> (Harald
-	Nordgren's message of "Mon, 5 Jan 2026 14:16:54 +0100")
-References: <xmqqldickzva.fsf@gitster.g>
-	<20260105131654.88348-1-haraldnordgren@gmail.com>
-Date: Tue, 06 Jan 2026 07:13:04 +0900
-Message-ID: <xmqq5x9flndb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="calmm8iR"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-34c84dc332cso436388a91.0
+        for <git@vger.kernel.org>; Mon, 05 Jan 2026 14:19:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767651587; x=1768256387; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=K+rft8pXgNh7XjHSkyfVHsoV0NL1PbmypMm4zGP9vws=;
+        b=calmm8iRhtL/rOhXp1Fw3M70lWGU/vERa1fSBPs3D9r3TZcm1sFA6gd3wWH3PeMztj
+         tqDsvy9yY47NDnRiS6dxbdG98K5E+6R8Zb2jScQWBKcwn+gxJbqsiFZnSJ0OJcoF0bK3
+         OmXyRDBoADqnukbKNAoejyDV/OrNjVKusDmpKo2v/SaGmRiFMEkQvgiKN1MGTpKxshSl
+         s5VvYs8ZcmOpO347KSsjIjG8y8uofx3gjmcGUF/j6YRorWGlZXIfdPkzHgidxQxhC09H
+         wxOe0XebbN4VYpP21dyyfcDlDI9+FRs4M2yitPkMSXiW/vbFgrCfcVwN5uuGTLbMTOML
+         zU3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767651587; x=1768256387;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=K+rft8pXgNh7XjHSkyfVHsoV0NL1PbmypMm4zGP9vws=;
+        b=mjEEeBsFBuN5HsLxff+mJ1IZIRuIVobwhWuLdJPpVzssqDSh8Z0brdagAqdbjY7kFD
+         O5FYNaGWCvFjOGdU8n7GwMEG0BEmokn2fkkwyHaZWW+Fs5QMMIoZYN/wahPiWbKO6dzs
+         bm8F+8kDWkuA8ZL6ZGjIwIGn9zB1RmWt6bPuqz6lRJVayiYYy6WC1VxfYtGdeJSsRL/2
+         Rn6xliuBJNBzyQLINK/H/rt0huyGeLe9xy7VNWlTxNhIlZga8KCv40RMgbopDrer9om7
+         PwGN/PtJ98Px2Lws712TVF+UhkIre3SjWg0RoeJnS8Bts5fUKVKxa9h3gEiPiDdNmV0X
+         nSEQ==
+X-Gm-Message-State: AOJu0YxAc8rHM9I0PzhaPmBE0DMqAaRAl4M9BKJe9SAZtMVlUMlVQ7/h
+	ksz1/kn9VY5a2d0RduRE8jgLL9+NooI1JnLlffKGQxmpEvvsGRFB1w44ZBuxW9XrSNmN3jcU9ux
+	G2H/zCNgu8PPfW4Xo/KWZRDRDCHLGCucfpw==
+X-Gm-Gg: AY/fxX7BKYwJAydThYJLPDDf41nAnl+FTJ3fGVL89MPTIjyC3kvT1CUtHUJEpg0IUm0
+	wkhzOl1MxIh1Jc7q42rLI19e6Zf8SHlQAX+5/Cz9g01BFgJsCW3+GDH8yXGNDisXs5O3JDqNRdk
+	MwguczgvPn0Yu5+FtWHhlFAVeXRBH3my7HuuWu25YHoUG2gPCJjMC0X7cd/TOan2wveWRd5x98r
+	DIq+PVdJrMM7E/CPWgwjtH7bRSagqL7ovOgnvq3c19S2QEVuwJusIpo/bV5tutYh4QLao4rrFeb
+	/ju8YU0=
+X-Google-Smtp-Source: AGHT+IGnBAEJjlncQvbaVhvgxiVtrorxaA1TWboLDIWG0YEgfsXxVBTh5yJrBebAB4tatYdEPMWqgo/ualSeDJNKTa0=
+X-Received: by 2002:a17:90b:1c07:b0:341:2b78:61b8 with SMTP id
+ 98e67ed59e1d1-34f5f301a25mr550620a91.20.1767651587016; Mon, 05 Jan 2026
+ 14:19:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAHwyqnWwJuD4T9tuCArW5eY=rPCHKT71LroRRx-aYfDGwr8E9g@mail.gmail.com>
+In-Reply-To: <CAHwyqnWwJuD4T9tuCArW5eY=rPCHKT71LroRRx-aYfDGwr8E9g@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 5 Jan 2026 17:19:36 -0500
+X-Gm-Features: AQt7F2qWu9nrleEGtMOBINaAgIrECjSSGGOiDeYgVirIXcSvrKls6SdModyj_sw
+Message-ID: <CALnO6CB7-w0tNMiYn5=SCBow637vRRrKRj_9k1h1DS4crJaVtQ@mail.gmail.com>
+Subject: Re: Triangular workflows
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
-
->> Please don't.  Unless my assumption, which is that in the old code
->> "!sti" and "!ours && !theirs" is equivalent, is wrong, all you need
->> to do around that part is to first check "if (!ours && !theirs)" and
->> say "your branch is up to date with...", and then have the check
->> "else if (abf == ABQ)" next.  That way, when we check abf we know
->> the branches are different.
+On Thu, Jan 1, 2026 at 2:43=E2=80=AFPM Harald Nordgren <haraldnordgren@gmai=
+l.com> wrote:
 >
-> It seems to be an incorrect assumption. This code change breaks several
-> tests including old ones:
-
-
-
+> Hi Ben!
+>
+> Did you ever get to this? And does it match what I do in the tests for PA=
+TCH v10:
 >
 > ```
-> diff --git a/remote.c b/remote.c
-> index 1f87b85b22..8db4fcd7b5 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2303,7 +2303,7 @@ static void format_branch_comparison(struct strbuf *sb,
->  				     enum branch_mode_flags advice_flags,
->  				     int show_divergence_advice)
->  {
-> -	if (!sti) {
-> +	if (!ours && !theirs) {
->  		strbuf_addf(sb,
->  			_("Your branch is up to date with '%s'.\n"),
->  			branch_name);
+> git config remote.pushDefault origin
+> git branch --set-upstream-to upstream/main
 > ```
 >
 >
 > Harald
 
-That is unexpected.
+Yeah, that's definitely part of it for me. I've been meaning to write
+this down elsewhere for a while, but here's what my setup for
+triangular workflows looks like.
 
-Looking at what stat_branch_pair() does, before returning 0, the
-function always clears *num_theirs and *num_ours, so there is
-something else going on.
+First, there are typically 2 remotes (but not always!). In the
+examples, I'll use "origin" (the place I usually cloned from first,
+the most official version of the code, etc.; also the place I pull
+from) and "benknoble" (the place I push to). The setup works just fine
+with a single origin, though.
 
-If your caller is *not* initializing ours and theirs, and if it is
-not detecting an error return from stat_tracking_info, and the test
-code is trying to see when stat_branch_info() signals failure by
-returning -1, then I can understand why the above change makes a
-difference (i.e., your code above with or without sti -> ours/theirs
-change is broken), but then, that should be handled at the caller of
-stat_tracking_info() by noticing its return value being negative, I
-would have to say.
+Next, I globally configure
+
+    push.default =3D current
+    pull.rebase =3D true
+    branch.autoSetupRebase =3D always
+
+The first works with other settings to make the @{push} ref work (and
+to make "git push" work without arguments). I really like the @{push}
+ref, and I'm not aware of any other way to enable it.
+
+Then, when setting up a repository I configure remotes and make sure
+to configure
+
+    remote.pushDefault =3D benknoble
+
+(if there is such a remote).
+
+The next step is usually starting a branch:
+
+    git switch -c branch origin # or origin/main, or whatever
+
+With the above settings, I immediately have
+- branch@{upstream} (@{u}) -> origin/=E2=80=A6
+- branch@{push} (@{push}) -> benknoble/branch (or origin/branch,
+depending on the case)
+
+
+
+--=20
+D. Ben Knoble
