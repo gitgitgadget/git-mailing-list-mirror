@@ -1,154 +1,129 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA4F1CAA4
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 13:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4C21799F
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 13:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767618058; cv=none; b=RDn5TMEDlMzLZLgA+rCB42avOQRJIxtbLN92K00hDExCdb11xs30eUftbcTKRQNIuhd1V66I2yEK4KUJIn3bgxz8+2FL/MwurL7STBF2qUomE6IhgLgWwN0qc5gKlpUwZXALTrSIUPoSgjTSZYsnNp8XFl+W3VfaBLxBLVkHH+E=
+	t=1767619014; cv=none; b=R2sfF3vhr3FP3BR3VEa5HYFgvu2D40ODVIsnLEnSDqVuiGjXG6bzsaZnFLeeuUngZR8azwHIDd1729re8e4vHHbAETQJKfM+HYkP4GmAYLTstTNsAROKHoNX7iV6eOELlctun5bzf9oUSsAyYP7taH4LX9agybaTyDrQr8B29FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767618058; c=relaxed/simple;
-	bh=jUOgfvFTxEUkmSxegj7gtv2TaaOYUrttGXgrwJT07BE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FjcwSi8Eu90MrJSOjYDJk/ACZPo+AQpjBlzhOQ2gw0XEkulon/Ye0uhuRic4zrFGGzbbg1390N06OYxs/jKUw6MHWBHAAFmsBdGPQCN1s/MGlqNf7fOcC021wxfsQjoQK8zTKHvr2kwKRGrHIHkk5qKI0A3eXjR1+J7tecbIcVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CMccz/b3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LXkahol+; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1767619014; c=relaxed/simple;
+	bh=Fe3HwfYp5Cn7P282jygebBzMs6SQGCitpy8CqD2v7vg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qifruGxbQcm63XjWmPKgTCRqQTpwTo7lwkVV8FTTd3uCoCVTH/ywTr2oWp10xpcz4WEAkQUXJrskDDo0bLjZDuNyx8GDFh28dwswgty636AL0Ch+vVCa17VY68qz3dh/ja7YxDsntXB6cCMn8RxUikZMhO35i6CO+/IbVnGdxfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j4Z4JKd3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eg5wS7qT; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CMccz/b3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LXkahol+"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 575321D00131;
-	Mon,  5 Jan 2026 08:00:55 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 05 Jan 2026 08:00:55 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j4Z4JKd3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eg5wS7qT"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7B3601D00103;
+	Mon,  5 Jan 2026 08:16:51 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 05 Jan 2026 08:16:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1767618055; x=1767704455; bh=KU23Ff5Ysg
-	hoRWmhGXuCtvl247Dw4e5C5u6EJafZjPI=; b=CMccz/b3gJ70lMhyoHcXrtgN2J
-	J5tDoPuYVqXUUUynYcnD1ACIT1ifl4QnwVF42Eo9y3+jCga+hnUgslGJRnN/syF/
-	uLY966ZctjQJh3pBVQlZPX2xiY3EgfAFqdWqZP+LpwxtzHtwLfZf2aliCrIGCpWO
-	4eNsM1R9T6oe32YKovnhdDNQGGF3igqgPHZSunWtZmhftSTbjnqh37QK7W005e0Y
-	730DiRrlyOyU/f6S9R8yW2nakcXzj9pZMUP3ZfKyRNFqzB7x40Y0MfP7GXYtduXG
-	wklbLY9yG8fShv4s0edbtz0d2bCVVcbttlEgiFSczwmeqXCdwcfUGG2ZmIEQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1767619011; x=1767705411; bh=ff8R1YvGMi
+	5qzAJ719mshuvjYinTp+AjXqQcFadK2Qg=; b=j4Z4JKd3OfbGQvPrOE9+HsSVxB
+	LTQ6ySuOf3i6cAdPzGRJz6m9Yed88if1h/kiDELlLIXil2lmJTis4s3AUnsUFD2T
+	niWvOZVM4eWkQps0rcsHq4IU3AsVjhJk3Ib6S8AF9hIZtUPDsvT5NL6QICcb5znw
+	yxMAtTMTwGuR6LWBb4Hky/rVY9R3bFAF1sK1j6emcEMSMyGl4T2zzsomkIaB2UBE
+	VtgSTITMUtRHWJwRBsYr0a+oaCtICncvZGc+/MXITngNULwddWFHUk+b/iN4Wain
+	W8bb0MbJ5pncOfwEUCdcZ/968cs1X5g5uzAeXhqqTYPviLLq6uD4B+upgpLA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767618055; x=1767704455; bh=KU23Ff5YsghoRWmhGXuCtvl247Dw4e5C5u6
-	EJafZjPI=; b=LXkahol+GSLsgE3a4ZpIVm9sSI7YmeuquawbYWQTh4wgiIocgfl
-	Dl9hZoYU1J3d9kBWv5PumCaYful1pVXawZH+tG3lg6FKfuCSnc3clHPDQIUji+Mi
-	zctnLYRy4u+O2LjJjXUxXoeoHvFKBVN1CUPBAwqFYr6BPRYCLmQYHCpiQ+v3UaZW
-	yyN1LsfrYwVZbuqb38B2pFDS2gH0W+BgEhWNMQ34sWgvbvnPREsxymsvgUIq3jAZ
-	TQ61F5RRKzDcAZhylMR19Zz6owGT6jd4FWLt6WsoRI+s83i/ejn2GmppTNKc/KFR
-	cHwxjPPDEqzemZTHbMfQANYwFb2wPzikRgw==
-X-ME-Sender: <xms:B7ZbaTpsHYBB-O4tZCy8Q0CAXYNWPcZHZ3ZiqvcFTIFbcuqHy-79KQ>
-    <xme:B7ZbaUgXaCgWAosazqrR-JToYehm_SInKcnn-2uvHFdaUoz_98xiCXDJbRLFwdi9f
-    Q2_z_BQiOZnN3P2sz8tEHXkn4XAi9_CHDZsiQE7VaO07dezqCyfAsw>
-X-ME-Received: <xmr:B7ZbaYgsr0Ib848SzjcBbwVdTGtx3S3HT_wo7vet1sZY1FTiemASW-5fF69xWD1z8jejxF86zxKe6akf0r7nwD7uoT63wH30KeGAa72V>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeljeefiecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1767619011; x=1767705411; bh=ff8R1YvGMi5qzAJ719mshuvjYinT
+	p+AjXqQcFadK2Qg=; b=eg5wS7qTmxxAyCaVZPp4di4nJYjiwp26+UAW8Ln651ue
+	AzpZ7duPYniU8u+BFpT21xrK7iJZCfJjVD3WGvuZ07BLi7CkbgkenY8K/7CGYxTh
+	XscEqNBdEx24hswmzgpx7fcIw4ik5ZAIF1mdvc2zcESrDPgBYMYcxLqe6iHZ2xG0
+	x1zv2rxtgdqsuARSJS8zl5EN3NxKBEGq4Ot4qg5oer0aviAkaWZF1+rsKCRRVXOb
+	LJLn9FYJ+FA0cqKIUqYDlv5A/3cPa+yvCEkMpIvlyVPf7a92rBJK8UuWBcb1Ff7G
+	lcPeLhRBVmWi95K4OwIjqgwalV+U3fGk52ughZ7iLQ==
+X-ME-Sender: <xms:w7lbaYAiHz_IkXMfyF2wzMtcZHy8fDXEoHjHub4oV5kiAm0g8_CrOA>
+    <xme:w7lbaQhQ1H-AAg6b85dGFt2fRtpDEjKsM4R0b5KCxxnj3-maktuS5amiJaMlmT6kL
+    fIvh9ZbgmC17chkz6i4YVbusAP3yDc2jBLU8W2mUnW7l4OlJYpaIg>
+X-ME-Received: <xmr:w7lbaZM59hg842Mp9cPafvO7C4fwH82dOeknAfOE46eqVVXRJothGrBQ4glN-FuXWh3_KonFL-m2KTHBMDdNVQkurUPe8yVWsIdW98m2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeljeegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhope
-    hmrghtshdrughougguuddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsghmfihilhhl
-    sehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:B7ZbaShQmUktJwteDETv2jd2_7Z--FsVbM4j9iJUI6xoQjA_u7ho0Q>
-    <xmx:B7ZbaQLOQN5McnpALHq7n4Tk7uBX9PH_jLoKJJJVZzHAfrqnDTpPNg>
-    <xmx:B7ZbaZHcgYTSgzzDIEEA267_jdhFpqLPvQvQhDuWaasro5yiLfm1FQ>
-    <xmx:B7ZbacR3WoGBiaiKunaGv8mOxf3KSsG-psMPA5BUtQzQDHhJeVZeTQ>
-    <xmx:B7ZbaUV9imkHqUVbMDRCEWcrxmG2Wzx3oWgOQYvfHPZ1DTN_w4DnBruU>
+    ihhlohhuthemuceftddtnecunecujfgurhephffufffkgggtgffvvefosehtjeertdertd
+    ejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeevueegkedtteeigeejueehuedugfevleefveehue
+    ehgfetffffvefhuefhueekveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:w7lbaZ7e7o1jADZXqsIR5OdAnRPicM3ho8KqfCAHt-uC-m7mnJna6A>
+    <xmx:w7lbaf06JTJgcvwre4IH-MsgMVdWw2Ofdi69b0ry9MpZpJR4cf165Q>
+    <xmx:w7lbaSZXrTEjFx2XvF3xCo-sfplM0StAJtFT-lsHj6utF4T1GJPHYg>
+    <xmx:w7lbafDxtgkTxMUlVvFasYwfrZPl2V-stYqib8MzejIgaqg7Da2Lrg>
+    <xmx:w7lbabJxcN7utL4sLB0er7p-pbTQ_vnGrOEaXfyNXiQCEXcBTRJLfqvi>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Jan 2026 08:00:54 -0500 (EST)
+ 5 Jan 2026 08:16:50 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f8177397 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 5 Jan 2026 13:00:52 +0000 (UTC)
-Date: Mon, 5 Jan 2026 14:00:44 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 2469ce14 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Jan 2026 13:16:49 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Matthew Dodd <mats.dodd12@gmail.com>
-Cc: git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] upload-pack: send shallow-info before wanted-refs in
- protocol v2
-Message-ID: <aVu1_FOWqwuVPH9i@pks.im>
-References: <20251224003504.52660-1-mats.dodd12@gmail.com>
- <20251224003504.52660-2-mats.dodd12@gmail.com>
+Subject: [PATCH 0/5] builtin/repack: make geometric repacking compatible
+ with promisors
+Date: Mon, 05 Jan 2026 14:16:40 +0100
+Message-Id: <20260105-pks-geometric-repack-with-promisors-v1-0-c4660573437e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251224003504.52660-2-mats.dodd12@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALi5W2kC/x3NQQqDMBBA0avIrB2Iwca2VxEXNhl1EE2YES1I7
+ t7Q5dv8f4OSMCm8qxuETlaOe0FTV+CXcZ8JORSDNdaZxjwwrYozxY0OYY9CafQrXnwsmCRurFE
+ U7fRqn8GFT9e1UEpJaOLv/9IPOf8AVxd7cHUAAAA=
+X-Change-ID: 20260105-pks-geometric-repack-with-promisors-2f948d6db774
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>
+X-Mailer: b4 0.14.3
 
-On Wed, Dec 24, 2025 at 01:35:03AM +0100, Matthew Dodd wrote:
-> From: Mats-Dodd <mats.dodd12@gmail.com>
-> 
-> The protocol v2 specification (Documentation/gitprotocol-v2.adoc) defines
-> the ordering of optional sections in the fetch response as:
-> 
->     [acknowledgments delim-pkt] [shallow-info delim-pkt]
->     [wanted-refs delim-pkt] [packfile-uris delim-pkt]
->     packfile flush-pkt
-> 
-> However, since the ref-in-want feature was introduced in 516e2b76bdc
-> (upload-pack: implement ref-in-want, 2018-06-27), the server sends
-> wanted-refs before shallow-info. This violates the specification and
-> breaks the client (fetch-pack.c), which expects shallow-info first.
-> 
-> When a client performs a shallow clone/fetch against a server with
-> uploadpack.allowRefInWant=true, the client receives sections in the
-> wrong order and fails with:
-> 
->     fatal: expected 'packfile', received 'shallow-info'
-> 
-> Fix by swapping the order of send_shallow_info() and
+Hi,
 
-Nit: is there a word missing here? E.g. "Fix this by..."
+I recently noticed that geometric repacking is incompatible with
+promisor remotes. This is because we invoke git-pack-objects(1) with
+both "--stdin-packs" and "--exclude-promisor-objects", and those flags
+are mutually exclusive. Next to us dying though, we also don't have any
+logic to mark merged packs as promisors in case any of the source packs
+was a promisor.
 
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 1e87ae9559..029ca93e69 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -1830,8 +1830,8 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
->  				state = UPLOAD_DONE;
->  			break;
->  		case UPLOAD_SEND_PACK:
-> -			send_wanted_ref_info(&data);
->  			send_shallow_info(&data);
-> +			send_wanted_ref_info(&data);
-
-Indeed. The accompanying code in "fetch-pack.c" expects information the
-other way round:
-
-	if (process_section_header(&reader, "shallow-info", 1))
-		receive_shallow_info(args, &reader, shallows, si);
-
-	if (process_section_header(&reader, "wanted-refs", 1))
-		receive_wanted_refs(&reader, sought, nr_sought);
-
-The bug seems to exist since the inception of this feature. 516e2b76bd
-(upload-pack: implement ref-in-want, 2018-06-27) implements the server
-side in the current-broken way, and 733020517a (fetch-pack: implement
-ref-in-want, 2018-06-27) implements the client side in the correct way.
-So this combination has always been broken, and the fix looks obviously
-correct to me indeed.
-
-One nit though: I don't really think it's necessary to split up this
-series into two patches. The new test can simply be added to this commit
-here.
+This patch series fixes this by making these flags work with one another
+and by introducing special handling for promisor packs during geometric
+repacks.
 
 Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (5):
+      builtin/pack-objects: exclude promisor objects with "--stdin-packs"
+      repack-geometry: extract function to compute repacking split
+      repack-promisor: extract function to finalize repacking
+      repack-promisor: extract function to remove redundant packs
+      builtin/repack: handle promisor packs with geometric repacking
+
+ builtin/pack-objects.c        | 14 +++++--
+ builtin/repack.c              |  3 ++
+ repack-geometry.c             | 89 ++++++++++++++++++++++++++-------------
+ repack-promisor.c             | 97 ++++++++++++++++++++++++++++++-------------
+ repack.h                      | 10 +++++
+ t/t5331-pack-objects-stdin.sh | 39 +++++++++++++++++
+ t/t7703-repack-geometric.sh   | 61 +++++++++++++++++++++++++++
+ 7 files changed, 250 insertions(+), 63 deletions(-)
+
+
+---
+base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
+change-id: 20260105-pks-geometric-repack-with-promisors-2f948d6db774
+
