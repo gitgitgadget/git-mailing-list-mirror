@@ -1,75 +1,102 @@
-Received: from a9-39.smtp-out.amazonses.com (a9-39.smtp-out.amazonses.com [54.240.9.39])
-	(using TLSv1.2 with cipher AES128-SHA256 (128/128 bits))
+Received: from mail-ej1-f67.google.com (mail-ej1-f67.google.com [209.85.218.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A807B33B6D7
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 15:00:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.240.9.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3984834253C
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 15:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767625222; cv=none; b=Ez9wBJrgWZS6X3Kh5pqh8uNtGOCTvBUNaYQIi8A7EkByimffFWTB1rz/E37Il0udQP7xBtCviKYmlwfDbPpTlLEeenAkzpaZmNA44IGaFBwAu13YhZ07xEvV8DdMJvkMr+5lMkTRxf0BQV17Z2kSPdJisOevRET42VUgrQ2e6Jw=
+	t=1767625234; cv=none; b=NBdyScBTjyyi+ibhSUTroFg0kx5zw/T79uQtqc+o24Nj3z8FtpDf86ar4s0+1hm6OB2iVJRdZUjGsWMMaWEvp7SOkm+9qyYICO0f401rIlOf7JRWDJAv7+tgrA3+VNLE8et/ovychiHwXEU7Fo+gWFYZr4e6xvNPuEzDNA95K+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767625222; c=relaxed/simple;
-	bh=7C9Hq5hJMCANqVQDWb11x5fPCJM45wucbhB+hZF6zK0=;
-	h=From:To:Subject:Message-ID:Date:MIME-Version:Content-Type; b=DK/WCKvxHaxkT/TO7KudvCIOCIU7qeswTthiOoGXrczMnRtOZ7yRJoCI9PiLDs9XvQI4mjziJ4UPBHAHdQUwZNEfH/769IIl/s9XLfG72bjK7DESSupwgd9M06KqQwVozljjyfQSKOK+RMjSYXz2zyrb9s2Fe8fVnEdQjoi0FGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=reader.directory; spf=pass smtp.mailfrom=send.reader.directory; dkim=pass (1024-bit key) header.d=reader.directory header.i=@reader.directory header.b=Zf/O1oEp; dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b=kibtBaXX; arc=none smtp.client-ip=54.240.9.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=reader.directory
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=send.reader.directory
+	s=arc-20240116; t=1767625234; c=relaxed/simple;
+	bh=Xp/A5dqmG0tcSr0znXMg+HdAhnp30//HDydUUmBZgaE=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=RZJLJK23ftghO1QCSwsK4Ia7xXqVs4ugCr29XbnxtNPf6dxZ+nKZueZHco5hnGGGNWaAnKPHLExM0/YcIVs8px7VRoI3KiZ65kh5es4s9subWk63OMbPmCcFvNQ3qoPBNOi5dqwVWeIaWySG2dUvdTr3ZqZTTrFXA6E2/XGI3B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cF/HdmIx; arc=none smtp.client-ip=209.85.218.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=reader.directory header.i=@reader.directory header.b="Zf/O1oEp";
-	dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b="kibtBaXX"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=resend;
-	d=reader.directory; t=1767625219;
-	h=From:To:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type;
-	bh=7C9Hq5hJMCANqVQDWb11x5fPCJM45wucbhB+hZF6zK0=;
-	b=Zf/O1oEpnKHpDWVN0JcBmFguq/8/G6pmH4rx30eUIKy9ziWTgQO20sjmwpPr4ewG
-	XVz0r2YV8zNQNBL3eeqLStQZAsqoQytv9xZ88U5fiar0BVqsf02hlZ0FEk7jJc+iHU9
-	9oiD6aAgg1dpYaz/j1vNwMvFVEcIvibbC3aaM7zI=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1767625219;
-	h=From:To:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type:Feedback-ID;
-	bh=7C9Hq5hJMCANqVQDWb11x5fPCJM45wucbhB+hZF6zK0=;
-	b=kibtBaXXzJ4yxSzNkUXVP3yV6aSQYLtkKv3n6j7qN/uYxtcXnlUNFeq6Q7w9YBlE
-	G4fmK5pwa2LaLfT7ZYqd7KdXBI6cTQqo3B5jE7T3B3xWSkQZveYubNG1CW52O1hd0F3
-	6HdCwvrDlB0N1cP8pd4h6/7yGlDlx+a3FhpyookU=
-From: hello@reader.directory
-To: git@vger.kernel.org
-Subject: Git Rev News is on Reader Directory
-Message-ID: <0100019b8eac5db8-53e5b9de-36fb-4f16-9869-420461b301b2-000000@email.amazonses.com>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 5 Jan 2026 15:00:19 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cF/HdmIx"
+Received: by mail-ej1-f67.google.com with SMTP id a640c23a62f3a-b7ce5d6627dso6304766b.2
+        for <git@vger.kernel.org>; Mon, 05 Jan 2026 07:00:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767625231; x=1768230031; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=D85GP6/g93pBKGdwPup2KpoGLd2Z9N/kQpKBRrwPPJs=;
+        b=cF/HdmIxEXAm8uIv+ZqI9hmM3YScKo9HnLMdSfRpZBE8A42AcgjFqmEVfDCVqAdb8n
+         ffjjecxcTmWnGD4yL09vyVll/NWeaJVkSQlGKZPH6yOq4Fj/AsbVibjLC2SNINM4vjjY
+         ++yBoTVP6C9uM0CXb5jvNKJlHyi8uI28R63InfNmMhhpsxSkq5hy06UFOtMyukbkDMyN
+         hSsFcJqDp+YVt/XVnod5Ngh43Ge1mSepCXezr8+cfPjPDh55XKwIhNkxJdr/2mezj5iA
+         yTfjg1C1jPSzII1XTWiFr2Qbm+BCQbSsehtfc+JPVBtJb6OMYtaQGUqlO+a9RsdAFv8K
+         nSPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767625231; x=1768230031;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D85GP6/g93pBKGdwPup2KpoGLd2Z9N/kQpKBRrwPPJs=;
+        b=vGHA5MloA87iaTV75y2FyeZqDnev5w+n2Hhw4I+aToSdo5m8F7ZAYEcH2/1+GNfyet
+         wM7ec+WmOTEaDojrcdmKrgST/CXERrdddy494pAvRmKpAevW8YjxK+F9YLJi4WdqV++W
+         soCXXUEwfZrfu7LNYOAlq0D/7OrngmmS3A1I0kF69s9NY9hUtrCLrjufHRlp3KY0op3d
+         rbjDJVtS/qx96tmpX/+ILiRyMaowrDKXaUCHvU6gPgQehqlDZaDR31i0rhF+2DIvk8le
+         80gHlh9/Ret8h6+tzwBtyuQ/BM9SslOEfdb+p1TTiYfFPx6+wvWywbEUnId6GYfU8+T8
+         g44g==
+X-Forwarded-Encrypted: i=1; AJvYcCVx1m218OuyPgFcF2MaAf50kzdbqt1QfZWtTBPFapJTb77fW4CgjO32e0ZFbvNcVdpW1xM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzteKAKCynA8QLjhzfS5U9+Rqta5k19tP2K75XQgzFtHeM8TmVW
+	itJoke2cGR+2Lwn45j5QInfKnuS/+cQsvs88h3innxYMrPP2iNqowMA3
+X-Gm-Gg: AY/fxX5crVZZxC63XMGLYrAk1myzYX69YEOXQ+ulkwqcZqR4JOKUdbUfA0cB98zYdl3
+	2/UZSKMOBmlmsoWYYGaA0LH10ZYBmcqmrUM0zUN9eS3kWcTsJaZFuNpVvFK0eTftEL1x0QvJPem
+	vE4bgcxlwJ6NaO3gdRaRw3JK4JvN1JJDARhxIqt0qwifcNZkCC3lOr3sIY0Kk7w0DnFACIrXwlk
+	z1Rrb0DYIFi8K0Jg7VcKvduGV9TZHHSlmygGViTxcfqEoqEz00AqGKrmiP4WRHnc3I6obN994mo
+	Mn0/RbB7WZuw+YjMBfqaumfy1GTimLPBQCjb3/1n8at7AaRZVSKUjCyVFeOQFy8y7/FONfduIEP
+	R8zSKMdoa1EKl8+heUcrzpg1jSO+k0WsZa8pD2bxR06on1l/yYEL/uCDIPLM2Ec2vC7tbK2G/n5
+	ame4rY4ouTardNnyigy+pp36szMbB1WSTQ/df7Ix3l82QIxCqohPGBd3AsQ5ngn5MP4Q==
+X-Google-Smtp-Source: AGHT+IGtL9UaFU1xEAtZx9cUS3W4foJ5uj0oR8fVJ6tyPJF9l5e1LgljW8FT/n3WRe11UtRYw44k+A==
+X-Received: by 2002:a17:907:d94:b0:b83:e7e:3732 with SMTP id a640c23a62f3a-b8426bb9433mr5468066b.30.1767625231025;
+        Mon, 05 Jan 2026 07:00:31 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b84267a5063sm9075666b.69.2026.01.05.07.00.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jan 2026 07:00:30 -0800 (PST)
+Message-ID: <3947f777-e08a-4c17-81e3-c4711fe666a0@gmail.com>
+Date: Mon, 5 Jan 2026 15:00:28 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Feedback-ID: ::1.us-east-1.bUdgMqWxfG2SVsrQjgiKGviqCgupN9bd/NLnQooLs3w=:AmazonSES
-X-SES-Outgoing: 2026.01.05-54.240.9.39
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into
+ repo-setting
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, Christian Couder <christian.couder@gmail.com>,
+ Usman Akinyemi <usmanakinyemi202@gmail.com>,
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Taylor Blau
+ <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>
+References: <aVfzMsN2ouY3UBFG@ubuntu>
+ <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
+Content-Language: en-US
+In-Reply-To: <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Happy New Year!
+On 05/01/2026 14:23, Phillip Wood wrote:
+> 
+> It is quite common that moving from parsing config settings eagerly by 
+> calling repo_config() at startup to parsing them lazily via 'stuct 
+> repo_settings' causes regressions like this. We really should find a way 
+> to address that before moving more settings into 'struct repo_settings'
 
-My name's Samir, and I've been subscribed to dozens of =
-newsletters for a while, including Git Rev News.
+See 
+https://lore.kernel.org/git/d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com 
+for some discussion about a possible solution.
 
-This got me thinking...=
-why isn't there one go-to place where readers can discover newsletters that=
- genuinely interest them?
+Thanks
 
-That's why I created https://reader.directory. =
-It's a place where readers can use AI-powered search to find newsletters =
-perfect for them. The site has grown to over 5,000+ readers who use our =
-systems daily to find the perfect newsletter.
+Phillip
 
-As a reader of Git Rev News,=
- I decided to add you guys to our growing index of over 300+ newsletters. =
-This way, more people can find Git Rev News. Feel free to check yourselves =
-out:
-https://reader.directory/git-rev-news (let me know if any information =
-is inaccurate or you want info updated)
-
-We also have some more trafficked =
-sections of our site where we can do sponsored/featured posts if you're =
-interested in greater visibility. Feel free to shoot me an email back.
-
-Best,
-Samir
