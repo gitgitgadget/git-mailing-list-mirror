@@ -1,108 +1,118 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E93348880
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 14:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDB71FE45D
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 14:18:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622424; cv=none; b=f97FP5W8iwqwy4DFJrtGn3ZIC6dq9KI6X4x+Hpeu4MwCxbBMFytCtHeKUlg9Ht78DFVMaN3dNqqeROS/VomQ8IHz4VkLXJ7AJsZr3jRiFBTei55EOYu92T6ayKcv0+riJjFeY7ObauGIBPBwm/q0agcg5ylHIIK3u/YVnfGGeXQ=
+	t=1767622722; cv=none; b=is2cpWi9LnvkSw+Pnxg/uViixPaL47yLKtX0rlpDS9DWHjLvujvL4e1pt4zaM5IRlyuKL3f2ktMi4GQqISBPcczTBUgGOvIgrwJIydPLYLJDQelnpyhss+59vEm0d6W/rcINmgbtYM/G02Vtnj6ymuyK239HoNAZAIC6VhdzLWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622424; c=relaxed/simple;
-	bh=lxDYIym1x/IRZhW/hC3wcN17P6xiDFn80tDfrmdA2h4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BFuOR4zkMrmBb0H0GCXe645UTZnVlHkrDAqon1SdylfgU23hvEYRCl2nckBTtmyYLxw9xuUGMDHTgmxGFYc8XywUSS6kqcs7NGnlFypaex03uHQiHHRGaIG3B7XkZka8tz+PCblWvUYRpxK9XV9LmFosEtrJXMgtPCwzXOdXnno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NbbreXjc; arc=none smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767622722; c=relaxed/simple;
+	bh=Ck88vr0Y0P4XMfmWYu83etWZ6GmpDCeR581UxYpBBlI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z18AjFqxKQGcAC97r/5obuA9mHyjazb0Ok7XWTiA4+AqnbjjvwDB0OxXkM5AFhlG8zdGL7C0cqUlnLUjVR5Zv17waoc2oVQ6vqOFGNxlWW/p6upE2GbhqT9bQ5ZJmXR2nxG7PaAq1pTMhFVIwKaUov5PPihs3uZtIWRW9fFSC0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pv3F5iG0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=udoK71fE; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NbbreXjc"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-55ab217bb5eso1560840e0c.3
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 06:13:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767622422; x=1768227222; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lxDYIym1x/IRZhW/hC3wcN17P6xiDFn80tDfrmdA2h4=;
-        b=NbbreXjcpjsNtqekVncbNqL2zEtOjebnxwX7ijkQSBO+AMdeP+GaYihIScTjKC3A17
-         B4rpa8g4e5yXm23Cmor7HJ97D0K2T+lWk5Kwe9HjAoKIURZAMGcmaAcHybrroCs1N8yT
-         Ooo6pfFiIJmFI3Xi+FIhX//K3glkKPhbzn5oylM8ly1MSN93uZrKfxDPQA33CLgBI4N+
-         cOHgudN8hp/wfS9bkUDOIVZkdOhJGmltM2EyZKYMwzcaNYugeladVsYJjkwqTuVXseA8
-         IKQmlChlc9OIE8tWO/+uDPCY6fqwgwM7d7RZQ+KCQXDHBzFHL9YOxmer+jdED4ocCmIG
-         O14A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767622422; x=1768227222;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lxDYIym1x/IRZhW/hC3wcN17P6xiDFn80tDfrmdA2h4=;
-        b=piMfgFi0JnDkujrB9PJbmAnqMribYhXRuNKAOvKPYirajDp2lErgHHx2/rrwWSUzvw
-         CnhUSm1q8PyA8k2iHA1Vqw6Dg3OARvIxDmzhB8swlART9shgZ4VbBr5aK7SjS5ZTLd0D
-         S8WItQoaTeB0FSpa/RJK4xI06x2EDDDPgqrv2W6pLMFtRWY5TY5furm+yBis212R1rN3
-         qc8O589NN/sO3R+TVkhWhkHIj3ENeDz8EHuu3f3m2iYDxucTSN5G9DYVqO9QuYwKEUji
-         TlWMagK6ib2ZfvZRqKxElOuoLMsgElqrdlysqx4XIunxMIKzDymn82BKFH3TUysZrh2t
-         p25Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWkgjm8suBiZPT+ueiq8r6kT3evYA3cb+Oz1EWgXxX8JYYNwtmUxhFPqMhAQqQyolBdUqE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YymZn5/2WwDpKKpzLzPUGIMXMC1dtizNR5NWgaFsnF2985nU5R4
-	PyiPzXD8+rF0UQdUW1ErZ0WDrkjMzWHJ6v5WEPZeETeHPVsRY2W0MPK/kzOAulRCWL+KQB8tQZQ
-	nmuImhHAR+ax2869ZrpdbxspEAF7jZ/o=
-X-Gm-Gg: AY/fxX4ZThybDeNjHjYosAfEke8Rv7tTNaZSpebTW6rbqwpde2UoLhrATYDr7OMeS73
-	CeRT6pxhGVt3UjC2fiPT9Rue6jNdG1OD2inPTuTTVR5mCx54s7Ide7QiYfoi3QX/Gi0c4a98fEj
-	ycdC/MACPVaf/Y0iZn/VIUDcxdglIGtJ7PjH/Ooua+RzrgWQpmIdgYtHAQSoj6YGHVD45CduqrS
-	KyPqeb05nPy8Pm2tb6oBdWe+lOSeTUn2rmG0jX8vuEMZo5y9l5RCmmOcMn1clIeBRPCvOY=
-X-Google-Smtp-Source: AGHT+IFvHf4hOtenqsqhoO3PUwgHQE2epUY0i1sLH9CV1sJTTLQYI+8zcHXDeL/LnzeDBBLT3ocXKP7n4owN+vzcpo4=
-X-Received: by 2002:a05:6122:1b0f:b0:55b:305b:4e3a with SMTP id
- 71dfb90a1353d-5615bef38bcmr14002641e0c.21.1767622422146; Mon, 05 Jan 2026
- 06:13:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pv3F5iG0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="udoK71fE"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 543CE1D00105;
+	Mon,  5 Jan 2026 09:18:39 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 05 Jan 2026 09:18:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1767622719; x=1767709119; bh=lFU2z6bXrA
+	QdlVrgEtyANmAw8joJ6b4S05QGE82fAYw=; b=Pv3F5iG0hFxMz/cd8nKHhzuw45
+	8m6UZiUQhvnq3rvefY7F1fx19OfOfFwXpOAEfd/N1Z2Ywr5xq84G5fNRnghct50K
+	mIBJnlnwXLB7EbEHJNJzxdeTGElBkYkCa7HA+Wm6b2t0i/a8VA3tSnQBFXiuVujE
+	b8G+0ITabcmgM2He/IdUBTrlMwq/2p/OHosnJzAmY1gXuEGzrp3BF010a8rJ/jUt
+	kCiXQhWhu8XwObAIyJH6xnXS+RFC4vxx7n2X+dUOKAIW3NJVRr+nkbs/9YyZN+tK
+	2ggJ9jkB1AcaFmuRgydcXDd3sophI3emCgmCsQx4oJsnVyIExv62WjZ//78g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767622719; x=1767709119; bh=lFU2z6bXrAQdlVrgEtyANmAw8joJ6b4S05Q
+	GE82fAYw=; b=udoK71fE32ke4QdmxXUWH98WB4XmnpKwYnfEnzmgdvu/dAh+b6C
+	wltAqoXUom5k4uhlCvsWC+tPmgjdUcvS6qXuQKsL4tzYYD256JBhWH2TgOlS+RFL
+	n+7tJePIGzAQ2nRPYIAtr1CPw6CbqNQBsuI2xVS3/Cus9gEcle8ZhulzebwZ+7C9
+	/Cej+sUNl5r36UNXyQOrPUCAciEID04VrdUZ2UC9PZOspZQC125Blhf1Ju/uZWM1
+	93L+seR1Io6V/bOs+kfbHsMjYIALeTQy94k8GooR5/HXEImLjgNGOnBdcLbwMs4O
+	Viy2j6njXlXrj2TKgtkahkJsyo14pBYXOoQ==
+X-ME-Sender: <xms:P8hbaedaBLZS0ItY18w4x7k6SghgLyrY0Qo7pO3LJzzH0I2nrlmtSQ>
+    <xme:P8hbaePdDWFF69zikuBGM9qAshLuWVikAIhgTLuOpz3XWvoX7a_0f2_Ge6lyAVwaj
+    4D1ybYSQSTaAyQa_E63E9kIpLmWy8xrUc1bdiTzgu1QbZ52Dofe>
+X-ME-Received: <xmr:P8hbadJhzmN9SFVHrnUAviW47q8LlhjRFTGL6YkG9dnIcBrakPSEEYT_1j4SEnOT9fcsFXc9gHfNeYY8IPZ4lzrfPEaiNs7Y3Un1wN5R>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeljeehvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:P8hbaXGbNFz6WLPTVQPWrofHOmh6s-PiOE0qICxU9DGgDzzfnM51BQ>
+    <xmx:P8hbadQyALqMQyD3dXbJZduE0tQv-9YlTFBlTPTIVWxhX5ujAFm7Rg>
+    <xmx:P8hbabEHyLDQxVXPfVRCfUhbZgCMFwZL4zvdmxFtWoSKyVtuG76R4Q>
+    <xmx:P8hbaR__1Gxv98_9bK24ergaFnp3cAR5h_hmjMsoFLY4xQ_1eULBtQ>
+    <xmx:P8hbaedQ6iGtwD3-7uAhJBSXs0cou4GlR0-_4njo4Kf2PeUbSi3QLBpj>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Jan 2026 09:18:38 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9dbfaa6f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Jan 2026 14:18:36 +0000 (UTC)
+Date: Mon, 5 Jan 2026 15:18:33 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] repo: add new flag --keys to git-repo-info
+Message-ID: <aVvIOVVKZVjGCDrL@pks.im>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+ <20251209194616.61620-1-lucasseikioshiro@gmail.com>
+ <20251209194616.61620-3-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260104124255.15609-1-pushkarkumarsingh1970@gmail.com>
- <aVqIjHIi6aKvFYXg@Adekunles-MacBook-Air.local> <CALE2CrQoXZjkpd+Lswd=qME9nkmUGu3HK8XacZ+Xz6Y2w+=t3A@mail.gmail.com>
- <CAOLa=ZQOryB1nf86BUkmL8JB88S+C4=z120uoExO7t9wmMP_Ow@mail.gmail.com>
-In-Reply-To: <CAOLa=ZQOryB1nf86BUkmL8JB88S+C4=z120uoExO7t9wmMP_Ow@mail.gmail.com>
-From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Mon, 5 Jan 2026 15:13:43 +0100
-X-Gm-Features: AQt7F2riKa2dmnm66OEE7evEk-gfpyFpku2Xo5g7Jdc13hVR_jdO7tMcNI-lVjo
-Message-ID: <CADYq+fYW0oY5yRLNeqveZqrT9-p_t=ndTZveEwGRpQ-JfYEH7g@mail.gmail.com>
-Subject: Re: [PATCH v3] t1300: use test helpers instead of test builtins
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251209194616.61620-3-lucasseikioshiro@gmail.com>
 
-On Mon, Jan 5, 2026 at 11:55=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
->
-> Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
->
-> > Hi Abraham,
-> >
-> > Thanks for pointing that out.
-> >
-> > Understood. I should keep the commit message itself focused on the chan=
-ge,
-> > and describe what was updated between versions under the `---` section.
-> >
-> > I will send a v4 with the commit message adjusted accordingly and inclu=
-de a
-> > "Changes in v4" note below the separator.
-> >
-> > Thanks for the clarification.
-> > Pushkar
-> >
->
-> I also find using b4 [1] to be very beneficial to handle this. Where b4
-> provides patch versioning and you can simply worry about your commits :)
->
-> [1]: https://b4.docs.kernel.org/en/latest/
->
+On Tue, Dec 09, 2025 at 04:36:03PM -0300, Lucas Seiki Oshiro wrote:
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> index c4a78277df..fd0683631c 100644
+> --- a/Documentation/git-repo.adoc
+> +++ b/Documentation/git-repo.adoc
+> @@ -9,6 +9,7 @@ SYNOPSIS
+>  --------
+>  [synopsis]
+>  git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
+> +git repo info --keys [--format=(default|nul) | -z]
+>  git repo structure [--format=(table|keyvalue|nul) | -z]
+>  
+>  DESCRIPTION
 
-Oh thank you very much Karthik.
-I will surely look into this.
+The synopsis should have been updated in the preceding commit to mention
+"default" for `git repo info`.
 
-Abraham.
+> @@ -131,4 +122,24 @@ test_expect_success 'git repo info --all <key> aborts' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'git repo info --keys --format=nul uses nul-terminated output' '
+> +	git repo info --keys --format=default >default &&
+> +	lf_to_nul <default > expect &&
+
+Style nit: there shouldn't be a space between "> expect".
+
+Patrick
