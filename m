@@ -1,152 +1,135 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE7721CC51
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 21:49:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD5D16EB42
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 21:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767649744; cv=none; b=AryDpxUHx/5FztlcKGZ3D+satSZLFXjWp8NyVoSwtVPVBQptXya3PZHwVRxnJQjgkm+wdpjpRRQmT0VgkO4aIDd/cF49rWZTuiC3LkxoglU6Ecw8xjHqME5Uf+cmGPQd/i5trUvB9R+NibhNzFWWNZ24EthJG6Wz+7V/xOE0Ii4=
+	t=1767649939; cv=none; b=tZb7jwqC5jfiG4k8nZmZBK8h2tN3Vqxqv846IULn5VT9SQvJpN2Ouo9rIhXPsKvK6Wb0orS+HJwXo3QUV8VFx+aEkPpYiuqHcKRCA/fm1zDDlr3jpUDm3vxTq7e52ZDYnqdrQOETPznS38tNrnScZICwRCgI3OMMgVZfPAa23G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767649744; c=relaxed/simple;
-	bh=TNbsKRk/zj1nJNP5/vEY6sHlFslmJ/14njb8kfTUoSc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+B95WuWj70DIDh5AP4eleTsvIiwH5GJvPU13xpKtDGLPiicIw9o4aEs6lob/dD4QL9hKou3Wxkwpk2+VVRimE/QXFjyti8zJ7Cf49o/eHrGu6JbolNHDdL+pIEJWOHZjrGfZjRDkDiJWp5CVDMLbO1dXBeKxH/VK56+mtDvimw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dTDcxQvi; arc=none smtp.client-ip=209.85.128.171
+	s=arc-20240116; t=1767649939; c=relaxed/simple;
+	bh=vQqpODQ0fJu02b+H1FXrb0D24Jhhc7RjwUirnLZY6lU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tnLwrBhoiK0ljDlHqDSv0Arv9dw1m7ZNhu8sM68uGpao9sn0oAT7N5YA+RzNLmGiJuUfxYUd9ZAROzeJgdUQLRet6Ik0bZ6B0pHkI6XGHW6lRQd+TJ9L+gtQqU9lm8qL/hMn5Vr+2XwxPySGMGCfCZsk4csZ0G1R5Q/tiE9MIBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CUGuqpdv; arc=none smtp.client-ip=209.85.221.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dTDcxQvi"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-78c6a53187dso4314557b3.2
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 13:49:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CUGuqpdv"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-5598b58d816so274611e0c.3
+        for <git@vger.kernel.org>; Mon, 05 Jan 2026 13:52:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767649741; x=1768254541; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1767649936; x=1768254736; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2LElUJKuizWq1FdTDiprQikPk9ab6YydqnfNbxixUyk=;
-        b=dTDcxQviZ+EbLLr+STBT9t/ugORvWpOi8ss4YrDlTAr/dK6pJXR797qfjsAkmjN9Yl
-         LXB71NcJlXJX00Aak5GahGWtBXN1Lmc+K05Is9kUdWtaUTmN+BQq8eTgYNSCYyqrF3W7
-         gHttMJ/BJftufJPm946TEWlhN+5FGsMlS6SiQ4E14FQes5LaJ9bhfo3CHNNa9S31gb0z
-         zKXo4JBRLem1wzg3i85PKQb6KDE96mTmUum8ZoC02SVA4JbZPQoLzKzqWU7jTXbpO46Q
-         CVg+fOteTS1shzHvCoEoBOcI+B8Zq+/9I3YONNO218hYV0kMk4hBAXCF7RuscIH68nfu
-         j2CQ==
+        bh=R3iwK1r7B504OvWlFoGh0GxCHVcpbR+9MkEsgv7eFVA=;
+        b=CUGuqpdvxWHsX2/VQ0696zp9u/LAalAUvcB2amQ3FAKhluOT6SFxXh9c1YHjhOZ10t
+         9aiYDWei3UofMO4I5s80sn1TlbFk1Cyk4FyGP7gjpywXpiEk3SC8GGVwBwskO4RyqGwE
+         f+rqw7CCJ0ih+pyPmUiHtwQ+ZlMwIPDbFxlkFCxC0I9XspsvtvoR690YceWz4iqy0REu
+         ZYku6no2byn8BZPp6Etdf11VB9yorYPqT5UiFdb9893nsMNlEa5UtuS9jRaVYaWAQn9+
+         xFV9jGLnS1vHoYOJ0HMdkUu0f7MWWcAM7cxhupjWiGLo5+JWq1IlhVSjdQaxEQCq8LW3
+         G2/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767649741; x=1768254541;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2LElUJKuizWq1FdTDiprQikPk9ab6YydqnfNbxixUyk=;
-        b=oytqeQ7e+hiin1MfDN2P4OUtJ1+8764gSjRSvF9G4fB9EIXeDEMnRR/SbHHEfBC9ot
-         UXGOiv3SZ8TioU5DdhYCw1YQODoHVsfKfPYjJSflrHnPpm2UMoMuKWgwY1Qt+XMYeE1D
-         565M7mNA4wZldAO3KqGBI4ONHmYWO80XxdPDw+7it4ANY7xMKYHYOUUye/4AB/UXOlwn
-         q4tDEqOkSLbe47zWZfemr+N40u5NmKlHxGMQjKMcXv4yoa1uTvvIw29+25Jh2PIldlr4
-         MQgV2ui2suX+SW2dG/0qd9l/gkSyYgxam2cBqosFiLSYf6e1kYnJg+XDrHT+Pr+N4Nm3
-         jOIw==
-X-Gm-Message-State: AOJu0YxcVXgnH58lxpIRuwI4qaeRRen97N6/ss71lyoUuBIKNyUe47ht
-	PxdOi02O/dE3d6FMCIGw/TnyQI8Scc+k7fMaaU/RVXpxcHysYK1e3S7ct74fQw==
-X-Gm-Gg: AY/fxX7hb3r+kBEFTtFNZPAoTr8W4q3b3uGLm8Yumvm5yAHhdOBY9mquiXH0l/0vTBv
-	sOllJj9EQh5tChM2ifzx85HiiGcwhERQn54cxzdGt5hwmrHiqMOk6jtxnN6mObE01l7cVsPJk9y
-	LfkfVpGL0bPYRYn3EScizCl3oGDSguk/A+RV7sS9XI2gyixl4KAsR5EumJBxmw6XdWdcDmqT9fU
-	Tv4ZIIPpWi2MiFoK0dpzWYZXfUzssXMtwVSnDRQbXTinsyCrnPVtP5SbAkRHmSXoH8WuyWor8Si
-	zMDpOwS8v91K5EXfec/hBYB6+YsYTFVYjk2QbzckNPd87X9Q+oUXtBYODn1ZUvp7Ipc9CQUa4Mu
-	HRcd3HN+xibjDOwtbglPIkkR0Rp0P/1Hb0p1FTPnx2g+sBVRWp0PssQX9bToOIVzop7hW32KPVd
-	bDWCokgvdRaUM6EAg=
-X-Google-Smtp-Source: AGHT+IEDaoVWXRtWt5IlxafRsHvC4xTpHfKBVV4+ksvvphs2AYnN28YG4tCaq/XSSoZjALoPqspy2g==
-X-Received: by 2002:a05:690c:2782:b0:78f:cdc7:3d48 with SMTP id 00721157ae682-790a8a80a6bmr9669157b3.29.1767649741378;
-        Mon, 05 Jan 2026 13:49:01 -0800 (PST)
-Received: from localhost.localdomain ([2605:a601:90a8:8b00::a])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa679385sm706737b3.32.2026.01.05.13.49.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jan 2026 13:49:00 -0800 (PST)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>
-Subject: [PATCH v4 4/4] doc: git-reset: clarify `git reset <pathspec>`
-Date: Mon,  5 Jan 2026 16:48:18 -0500
-Message-ID: <accf7a0673358d4724e4944117a382494404deb1.1767649692.git.ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.52.0.rc0.426.g1df11fb20d.dirty
-In-Reply-To: <cover.1767649692.git.ben.knoble+github@gmail.com>
-References: <cover.1767307382.git.ben.knoble+github@gmail.com> <cover.1767649692.git.ben.knoble+github@gmail.com>
+        d=1e100.net; s=20230601; t=1767649936; x=1768254736;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=R3iwK1r7B504OvWlFoGh0GxCHVcpbR+9MkEsgv7eFVA=;
+        b=EJ/Fuj2qiSGhP9q8yAZ2rZEfn4uoAEzZbyMNJk5eF0/tAod9W86ol8GustU4piNV5P
+         CN8UP+RacZC7D2bo+BQWrwDWkNhAtdHgw+00NmfYGPXOxabk7fXvAAICNGUoDFq2IYgp
+         yoNQiPIe/or9A7SPqb54ry6Klaj7lEO+AtgV7vr1kq46V47XeIu6wTTRHWyt5yCOKsKA
+         svR+Jp1DLjdaiW1We6j1W61r4XpXKpH0lMc78jTFs4MuV3D1+1+Z+im/fy3tz2iokiRS
+         Soko0teBD+46fbT+QJcRvzbspNV0bT7KAa+BV7r6SaVk/YL8WlwSlIMQcGtnkeFtNyaF
+         f5fg==
+X-Gm-Message-State: AOJu0YwOdEmpPro7j/LqJfkeB2nO3o2fElpUTMjjAkZwj8znAClxIQJn
+	OwgBy4CfldsRz1swpqOyF8zq1ON0IY3vWKIYZT6L16mLcoC/pv53lk20935ScDcoKJqCghb5s6T
+	IxXgkKc5ybSvO6ekrZ4RURRa+n8bdM24=
+X-Gm-Gg: AY/fxX7Vrm41JcGWLyOwTsL5XWzhiU21yXoQGAA3FLYus8/nCQR7MqqB4t/dU5VyVb4
+	kD2Xi25F4UJx3NiccptMTPi+LTptG/Pd9CVGjjJlniwBPD6Sexe5OpyXyYVcLtw7aOuh2s+fl0a
+	3ye0GpIWss3cILFCKQsHNUy+FidSLmeKBq+A24/Et+t21HvIxQFVlmtZ0OKHqZNvl9Ied2IKqqv
+	1Cwz4IN7OZB7WaI/wSb0j8hIN7mrmIxmURYTJXyrjEkSzCEL4lvwCkEjHwgoRUnKgVdMTE=
+X-Google-Smtp-Source: AGHT+IG4ekLwMokWQ/VADOFVJ3l1wQJ+vbI/5dr693Q+jbmrpAiM6ur8JLJODUs0ubrUfdR5Wl7Ql17cVqby5+XAfCM=
+X-Received: by 2002:a05:6122:6592:b0:55b:305b:4e27 with SMTP id
+ 71dfb90a1353d-56339571890mr365335e0c.19.1767649936489; Mon, 05 Jan 2026
+ 13:52:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <aVgTmYhosEiGG3th@Adekunles-MacBook-Air.local> <aVpI36nPuZAEchuM@Adekunles-MacBook-Air.local>
+ <aVwShWyoGBq4BcGR@szeder.dev>
+In-Reply-To: <aVwShWyoGBq4BcGR@szeder.dev>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Mon, 5 Jan 2026 22:52:18 +0100
+X-Gm-Features: AQt7F2rx1Z1Ncqd53_Bj4i4taCDu2hIv35NRHxT8UYr_PeGtkBJYVdUiLZ4wRhQ
+Message-ID: <CADYq+fbntOOmcb+7cg_VDt24UzsU0UfBzFPMVxVdtL0sAMrHbg@mail.gmail.com>
+Subject: Re: [GSoC PATCH v4] add -p: show user's hunk decision when selecting hunks
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Julia Evans <julia@jvns.ca>
+On Mon, Jan 5, 2026 at 8:35=E2=80=AFPM SZEDER G=C3=A1bor <szeder.dev@gmail.=
+com> wrote:
+>
+> On Sun, Jan 04, 2026 at 12:02:55PM +0100, Abraham Samuel Adekunle wrote:
+> > diff --git a/add-patch.c b/add-patch.c
+> > index 173a53241e..bc7a340d21 100644
+> > --- a/add-patch.c
+> > +++ b/add-patch.c
+>
+> > @@ -1448,6 +1448,7 @@ static int patch_update_file(struct add_p_state *=
+s,
+> >       ssize_t i, undecided_previous, undecided_next, rendered_hunk_inde=
+x =3D -1;
+> >       struct hunk *hunk;
+> >       char ch;
+> > +     const char *hunk_use_decision;
+>
+> 'hunk_use_decision' is defined here, but is left uninitialized.
+>
+> >       struct child_process cp =3D CHILD_PROCESS_INIT;
+> >       int colored =3D !!s->colored.len, quit =3D 0, use_pager =3D 0;
+> >       enum prompt_mode_type prompt_mode_type;
+> > @@ -1564,8 +1565,17 @@ static int patch_update_file(struct add_p_state =
+*s,
+> >                             (uintmax_t)(file_diff->hunk_nr
+> >                                               ? file_diff->hunk_nr
+> >                                               : 1));
+> > +             if (file_diff->hunk_nr) {
+> > +                     if (hunk->use =3D=3D USE_HUNK)
+> > +                             hunk_use_decision =3D _(" (previous decis=
+ion: use) ");
+> > +                     else if (hunk->use =3D=3D SKIP_HUNK)
+> > +                             hunk_use_decision =3D _(" (previous decis=
+ion: skip) ");
+> > +                     else
+> > +                             hunk_use_decision =3D " ";
+>
+> 'hunk_use_decision' is set here, but only if 'file_diff->hunk_nr' is
+> non-zero.
+>
+> > +`
+> > +             }
+>
+> Nit: unnecessary empty line before the closing brace.
+>
+> >               printf(_(s->mode->prompt_mode[prompt_mode_type]),
+> > -                    s->buf.buf);
+> > +                     hunk_use_decision, s->buf.buf);
+>
+> So 'hunk_use_decision' is used uninitialized here if
+> 'file_diff->hunk_nr' is zero.
+>
 
-From user feedback:
+hello SZEDER,
+Thank you very much for the review
+Yes, you are right, `hunk_use_decision` is left uninitialized if
+`file_diff->hunk` is zero
+I will fix the patch and send an updated version.
 
-- Continued confusion about the terms "tree-ish" and "pathspec"
-- The word "hunks" is confusing folks, use "changes" instead.
-- On the part about `git restore`, there were a few comments to the
-  effect of "wait, this doesn't actually update any files? What? Why?"
-  Be more direct that `git reset` does not update files: there's no
-  obvious reason to suggest that folks use `git reset` followed by `git
-  restore`, instead suggest just using `git restore`.
-
-Continue avoiding the use of the word "reset" to
-describe what "git reset" does.
-
-Signed-off-by: Julia Evans <julia@jvns.ca>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
- Documentation/git-reset.adoc | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
-
-diff --git a/Documentation/git-reset.adoc b/Documentation/git-reset.adoc
-index 37c868ae24..5023b50699 100644
---- a/Documentation/git-reset.adoc
-+++ b/Documentation/git-reset.adoc
-@@ -81,29 +81,25 @@ linkgit:git-add[1]).
- 
- `git reset [-q] [<tree-ish>] [--] <pathspec>...`::
- `git reset [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]`::
--	These forms reset the index entries for all paths that match the
--	_<pathspec>_ to their state at _<tree-ish>_.  (It does not affect
--	the working tree or the current branch.)
-+	For all specified files or directories, set the staged version to
-+	the version from the given commit or tree (which defaults to `HEAD`).
- +
- This means that `git reset <pathspec>` is the opposite of `git add
--<pathspec>`. This command is equivalent to
--`git restore [--source=<tree-ish>] --staged <pathspec>...`.
-+<pathspec>`: it unstages all changes to the specified file(s) or
-+directories. This is equivalent to `git restore --staged <pathspec>...`.
- +
--After running `git reset <pathspec>` to update the index entry, you can
--use linkgit:git-restore[1] to check the contents out of the index to
--the working tree. Alternatively, using linkgit:git-restore[1]
--and specifying a commit with `--source`, you
--can copy the contents of a path out of a commit to the index and to the
--working tree in one go.
-+In this mode, `git reset` updates only the index (without updating the `HEAD` or
-+working tree files). If you want to update the files as well as the index
-+entries, use linkgit:git-restore[1].
- 
- `git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
--	Interactively select hunks in the difference between the index
--	and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are applied
--	in reverse to the index.
-+	Interactively select changes from the difference between the index
-+	and the specified commit or tree (which defaults to `HEAD`).
-+	The index is modified using the chosen changes.
- +
- This means that `git reset -p` is the opposite of `git add -p`, i.e.
--you can use it to selectively reset hunks. See the "Interactive Mode"
--section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
-+you can use it to selectively unstage changes. See the "Interactive Mode"
-+section of linkgit:git-add[1] to learn how to use the `--patch` option.
- 
- See "Reset, restore and revert" in linkgit:git[1] for the differences
- between the three commands.
--- 
-2.52.0.rc0.426.g1df11fb20d.dirty
-
+Abraham.
