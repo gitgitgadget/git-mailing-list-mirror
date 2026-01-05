@@ -1,112 +1,119 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733CC319855
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 11:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD672C235E
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 11:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767613159; cv=none; b=YV7IA7OKnmzirH+3zyya91GPLxKspzpD5VFVy7wv9lbdPgg7pFeoHin4GHHCZRdbyeKM6WLcWHAoweJ3Pg541phO1EtwC1Y4czh65YtoXKFq8jJ+5W4eteyJTGUz22ndboL2xdVlZncM5LQ/F4UO+zWwBkqxR7S3twqMtftd+0Q=
+	t=1767613642; cv=none; b=gsONOL+CzaPWN3k198voFSyPc250OFhwEZp6litRT2l9AGYUN/YHM7qvunlR5jD4mIYkOvoYY/xKKVmfaBiFk+QSG1rR8SZsdmM0as/ZO4hyrjfnUZLra1LalkMIRM0sXkHcIeZb4yEOv62R6/w9rbeokVMgibCQ7laeOaCL5oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767613159; c=relaxed/simple;
-	bh=FxQY5yz/9VOAH07dwrKYoo1KI4oFZULNndFrEoVy7oc=;
+	s=arc-20240116; t=1767613642; c=relaxed/simple;
+	bh=r+KO/b9UEzT66kFE6budq6RDdMuSG2phuKjTiWkN9TE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=otceO9tpyExhyqg9QQgVpgALAaZiiAmA9bQGCr+Pmo091ldKNDgxFC5mn9hGSK9wc+X3SBKZz3fw2idyund4XHZLN+J44mbtCCLvQPnP2QCNAiC6o9s99rcUdUSfF3h7S5ZtOFQb/s8E/alnfHlBN8PRqGT7h+c3oD3uNsqjHVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KmNyXAi2; arc=none smtp.client-ip=209.85.214.172
+	 To:Cc:Content-Type; b=LVC0UeNLOKfvmc9DS2QVmG3sTY7LFpff8HMgk5W/SoqH9IsRUWHrnGqbBubRC3mJBdBosj8BkOYln8zTSMbDvG9T3/RjvPH2lW+PTvJmIDXHU3RwzfpPQdkarRFzJSZB4S3zzZ61ipBsrB+srCjRUUdp4wkbpvf88gGtLWSnoqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mA831YAg; arc=none smtp.client-ip=209.85.215.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmNyXAi2"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2a0833b5aeeso188208675ad.1
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 03:39:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mA831YAg"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c1e4a9033abso12395747a12.3
+        for <git@vger.kernel.org>; Mon, 05 Jan 2026 03:47:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767613158; x=1768217958; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767613636; x=1768218436; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ckr2KK6M5R5eySDIyyiWvwh8ff2sO+OBQjCyWMlwwgs=;
-        b=KmNyXAi23le8iE8dSW/gdqifNmRW3V22fqjnsVXd7tLdvrrvduMwXrEfOEZRwiN0rH
-         NBDDkuTamzACE9Iyxa2+lwclj8j3092sJHzgFaskALWnMR6jXGgvCqgTHzEZRfbLD6rb
-         Yyf5gLcLjDn1ANNVvfabruxNxCAGAeJcb/on3y6yiiiN6PT4UGLGP9zz91l9IBejzfdY
-         2L9WiumzUtqGfjD4B4OQ3x4ZtMT9spLhFkZgy8whFuCHwO4GJsRJvXzmFE8CNuJL79Wk
-         IWWjbsd46Ws/R5jY1Iq4bcIgUyJWSIkI5IeD61OQCiljGrAK8C/SFugvMAZ8Had0LAE+
-         epEQ==
+        bh=u/vQzJdE0TO2sXBRzGiolQltscgdZ20/WO4dOFgyt0M=;
+        b=mA831YAgrrhMCINyVbjuaaj0rneNdTuyrsk1TDzGaMME86kMriXB9m5xP0QE5qNbKV
+         afMjnjOen0Pra06TILDWvPUSm1r83hRyXRjG3sc8fuC6Q63A4Hnk3X+CL9wCI1K/OHWK
+         T3G6q+KcBUF3RboOqiXbNaj8wB7s3nzMhTxjJAad1/7lUhesr8qXf7uv2hZESYF4d7Hp
+         AnNcHi1u9XzUQDbcUS/973Ugn0hYT/6rM6FTyAtv2/p9M0LuLKgzEaZzxedvWTabqJzP
+         3x7hanBS9SkDznI88lsGMAq2/H6ovZtoD/FFyrqm7GNm2Iy/nZEVa6JVe/x52gYyCbLc
+         kPYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767613158; x=1768217958;
+        d=1e100.net; s=20230601; t=1767613636; x=1768218436;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ckr2KK6M5R5eySDIyyiWvwh8ff2sO+OBQjCyWMlwwgs=;
-        b=CRvfPLmGW7ho2SS89VwAA5Nltgepa4C6K3kPzLCVwMMleqdu4tk16LEES/mc4stdUX
-         hci9fXseIDiEStZ4NcOxQA+SqqE/5UwCa/dIZfIahs16uLtScau8mU7L1EO6nYQMxfKX
-         pn988Oui/oDG14QTyROipsNiqFv+TuMNjJFVPtanKh2FPo1x3qp5lS+0ZtYj4EB+pTTf
-         Dk1frlIGNDywZMCSnTlEUEdGTjNILvIokXLT3A2CpzZaKxEwmgfvRaupBySsv9jKk+8v
-         km3T8v0rwaIRUtjmBSiAfbyj5hoz7glqburtJ4iZfwcUbG9spI2576y0rF5IxHCeevGM
-         Lj4A==
-X-Gm-Message-State: AOJu0Yw45Gc4usT/BJiHeMUalPLzD0UjKe0cy0cKdiatk9Et04xMtUd8
-	ob+yBQrxIWshVAI+0xdHVTZLj33GrljAA2Kh5Kp5KamxQlUYFG1fvPtQDUmp7Q3OoIBQvv5803E
-	tDw/G0FW+41q1hF7MNVL8SaffbTfHLI0=
-X-Gm-Gg: AY/fxX4pTnb90+3ZCpp/tVxIjkfyQXYQiLN/9sGGd3XNf3xqJGDkFSPeNFdB823+J5W
-	OB7KKTv8PInM29S2tuJnMqOsU/9RCOVAO5IttWLMRKdVTPv8hvdajxOSE7wJzyn/NGxmbVRHLuD
-	9rpJdup6hqGdxGFY5zXU2QioNsvylFj8IuzkjNM79HEBHdzL2f6oOmMrCJwSSE2PTIKkQj7xhTf
-	Jz4S8FHGgct07FiZXcH49H9XDkQGPJSaoTa1BYD1E7VUfotEbGzbJZ8U2Lwt9ZvWRK9jQaRisTK
-	N8mgAEzGkQ==
-X-Google-Smtp-Source: AGHT+IHhZkOtk3YANKCas11mjZjq5WjmyXGPg2oUuSM7oJ5P1swekIj49nmgLEIAEycyl7oECwEKBNNwmextPcH8eKo=
-X-Received: by 2002:a05:7022:e997:b0:11b:9386:8265 with SMTP id
- a92af1059eb24-121722ecff8mr52766438c88.42.1767613157485; Mon, 05 Jan 2026
- 03:39:17 -0800 (PST)
+        bh=u/vQzJdE0TO2sXBRzGiolQltscgdZ20/WO4dOFgyt0M=;
+        b=W86EPgA2uRgcvAHzkZ3pWWr09jAY8BjR7c3R/GI9jjEDoC/NbcDrDVyfmecumQdfKI
+         r9iO+WAA3641gMrCJ2JwlqxN+lzk1nQx3Mdr9yi1K0wS9klcp8BPjhiePIuC9V9pOg0p
+         T1yHl0Uyz1iraxFvjsZuEja3upYNnOnI6vYppgB7Wdii3AWt+TepIIrzjMFfmsh7NxQU
+         bSvy34Tb6Q6gaA+7pGvXC1vdGPO+91Zzqb6KrnyD8TM42In5B5kZA0I5Ylu/4zmYxuHY
+         Rwg0hAuiRerbPNVjKgb0Xihc6ipn4QH2/cwgA9gnsRzV3S/MpG1s9Eq+GVhlFhrPKmMv
+         Uoxg==
+X-Gm-Message-State: AOJu0YxGWZP2B1/A6kpV7pq5pYyWD09dJqJthX7Gv1viClextY6RWpTN
+	wh7OTX4HHCcg1cD2Rr+LGiT6qmZxIzQGIxEf2Aell5DPrmMS39RBVPFht63FNKd18HqKN1sndfy
+	+tNkiA06LSBUVDUcM2majJmHYeJ3SUwE4HPDCYF8=
+X-Gm-Gg: AY/fxX4Ebi/NeVgTFfOpEe9CUcpbxczjulempOzLsLt0L0MHwqwsTQ6XitARNyDSiXs
+	sGlPXaXGPIC1lEwvlAQelFathQqNOaAwEGukNhqpJeP542hVrGY92sUbLTIW4M7IT7QuL4aRgp6
+	BBLeQEXH7GtXEBUuep0c6aqwwAqu0UzRrBpuqzQhEagI9tU89O9/iw4AQvXTYxSCZ9dYyBdRht1
+	W7H2t3kiAz1vgiV+KAbaJCN+qBWljUeM+c5yYt53Tkc3s1mdXecZuI4edQnqQwPTnhZ5L40hctx
+	wNvOk3iH9OqkX16/zkTCNZySaAEywhd8i6ZS41/k2Kagkg7P5W7d1IqbQEA=
+X-Google-Smtp-Source: AGHT+IHfsC3qaQmM94hkb3rqlBrezqUpqus7hS8Yq1VxxV7SonpOxPyJXoExWGwxWqhm3W1peOBg0Hnxa3H8fJsuaj4=
+X-Received: by 2002:a05:7301:2aaf:b0:2ae:506b:4b05 with SMTP id
+ 5a478bee46e88-2b05ec6f3c4mr28531263eec.27.1767613635431; Mon, 05 Jan 2026
+ 03:47:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aVfzMsN2ouY3UBFG@ubuntu> <CAOLa=ZTOKvEQaMxymi+mRcqyNy4bZ4JbK2HPtq6CeewjHMo_=g@mail.gmail.com>
-In-Reply-To: <CAOLa=ZTOKvEQaMxymi+mRcqyNy4bZ4JbK2HPtq6CeewjHMo_=g@mail.gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Mon, 5 Jan 2026 12:39:19 +0100
-X-Gm-Features: AQt7F2qGC5v-k-bJfVwHHRAXdCDNGV7bwbadyM0nA8McOU4qrzlnQha9t_Ei9WQ
-Message-ID: <CAD=f0L-ge9FfNh04Nu05eg9Q6t_gtLaPi2=jiT1LXOjF20OO2Q@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into repo-setting
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, 
-	Christian Couder <christian.couder@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Taylor Blau <me@ttaylorr.com>
+References: <20251229185737.2328-1-deveshigurgaon@gmail.com>
+ <xmqqjyy2dvni.fsf@gitster.g> <CAG7UgEQeOJq0S87btjy8TT9as10bCAJWKEUTfNafa811iM8qwA@mail.gmail.com>
+ <xmqqpl7ol55o.fsf@gitster.g>
+In-Reply-To: <xmqqpl7ol55o.fsf@gitster.g>
+From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Date: Mon, 5 Jan 2026 17:17:02 +0530
+X-Gm-Features: AQt7F2rKsho0gxzygzEemRj8z_6llmopnFgUXtT8po9ZSY2JkSeY1E4HC_HR1q8
+Message-ID: <CAG7UgES1AETfjyhCG2BSTrch+YgVSquJz193rDvpb3cKBfBEkg@mail.gmail.com>
+Subject: Re: [PATCH] [GSoC] t5403: use test_path_is_file instead of test -f
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 5 Jan 2026 at 12:09, Karthik Nayak <karthik.188@gmail.com> wrote:
+> The open-coded four command sequence above is repeatedly used
+> throughout this test script.  I find them quite ugly but more
+> importantly, they have exactly the same downside as your patch is
+> trying to correct---it is almost impossible to tell where the test
+> failed and how from its output, because these "test" will simply
+> fail silently.
 >
-> Olamide Caleb Bello <belkid98@gmail.com> writes:
-> [snip]
->
-> > @@ -927,8 +921,13 @@ static void bootstrap_attr_stack(struct index_state *istate,
-> >       }
-> >
-> >       /* home directory */
-> > -     if (git_attr_global_file()) {
-> > -             e = read_attr_from_file(git_attr_global_file(), flags);
-> > +     if (istate && istate->repo)
-> > +             repo = istate->repo;
-> > +     else
-> > +             repo = the_repository;
-> > +     attributes_file_path = repo_settings_get_attributesfile_path(repo);
-> > +     if (attributes_file_path) {
-> > +             e = read_attr_from_file(attributes_file_path, flags);
-> >               push_stack(stack, e, NULL, 0);
-> >       }
-> >
->
-> For my own understanding, when can `istate` be NULL?
->
+I understand, this does reintroduce the same debuggability issue.
 
-Thank you for your question Karthik.
-So it was stated in a comment in `apply.c:read_old_data():2340` that
-`git apply without --index/cached
-should never look at the index because the target file may not be in
-the index yet
-and we may not be in a Git repository.`
-So NULL is passed to convert_to_git() in place of `istate`.
+> If I were in your position, I'd probably:
+>
+>  (1) first declare a victory with the current patch.
+>
+Agreed, I will keep the current patch as is.
 
-So when we do
-`git apply patch.file` `istate` is NULL, but when we do
-`git apply --cached patch.file`, `istate` is not NULL.
+>  (2) as a separate series, on top of (1), prepare a patch that
+>      replaces these "read old new flag, then check $old, $new, and
+>      $flag" sequence with a helper function that can be called like
+>      so:
+>
+>         check_post_checkout clone3/.git/post-checkout.args \
+>                 "$(test_oid zero)" "$(git rev-parse HEAD"  1
+>
+>      Leave the implementation of check_post_checkout just like the
+>      original, i.e., "read old new flag, and then test these three
+>      things, failing silently".  The point of this step is not about
+>      improving the tests; the point is to make it easier to improve
+>      in the next step, without changing what the tests do.
+>
+>  (3) then update the implementation of check_post_checkout, with the
+>      implementation of the post-checkout hook also updated to match,
+>      so that the helper now looks like this:
+>
+>         check_post_checkout () {
+>                 test "$#" = 4 || BUG "check_post_checkout takes 4 args"
+>                 echo "old=$2 new=$3 flag=$4" >expect &&
+>                 test_cmp expect "$1"
+>         }
+>
+> Hmm?
 
-Bello
+I understand, I will follow up with a separate series along these lines.
+
+Thanks,
+Deveshi
