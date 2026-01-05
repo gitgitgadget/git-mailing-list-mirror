@@ -1,108 +1,99 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3ED92701BB
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 19:23:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD062D3ECA
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 19:27:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767641031; cv=none; b=hlcGTq5Zn4/owVKeEWQnD7KntUXJBSaMmUYy4pe1vurpT0uh1xKr20kwS4nAYl09Vq4FFto0jER+YOqyDQlKKixR79uRgYiYhWof/8XaPteQwZwCXwUBTXj6t0jOl5vgCqERaQLZ1nEqrkqodKaBG/1wzJUzLtikoYstHt7S1GI=
+	t=1767641226; cv=none; b=hszEZs874/wVl2vW1uNxds5Dy7dk6hoznTZUXhXR9LgL5QWrozut3+ZLoMMSCngwPPt3+tFJbmLwZSzezaB6Q/Mk6SYvRY2bjhh9XBNqKEB56JrpFRqAhquwDr4W9jgSFB8YlZOYGB6fnEJpG9HiZwfysEDfwj9ihyXCP13yhM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767641031; c=relaxed/simple;
-	bh=rODsNAHL8e61XqgOSLRtJ1SSN/EIhI766PSHGZSyjso=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=OLJrDWeIIp8YzAzH68bwomUfpJFmRN6mQGEl/PDqF4GWgA9o4Hvteren/mPFucbrd59IeHG+3U7MzhQKgvTuIwssx8uAdd9u7d+UiwGcUXXhEaqCuXWeEalyRukMf5FG36o8WS27ZLuFJbouas2KxShWAyVuKUVSvsOr5k1g+CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=jFFGkRS8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gFvwlvlQ; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1767641226; c=relaxed/simple;
+	bh=/ngDB5h4auTNXqmk090hYjtGvOLRl9JSuQWZ9nXWylE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GKhQQyZCAAgogdKLOCfy5NtPBb3+dVVUOHJmadd2U551f3vq87DtypenLlKZNnrZqIfEbgqB/XkSD313uST9U++cve4UCtzdQIx5Fx0bTq0OBTHWEOIKRRRBmYRlNC7ByRbmdLMQCAdsrVvOCDRlTdQ7J07b1N47NWEqbX5ipTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LqAjl5kf; arc=none smtp.client-ip=209.85.221.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="jFFGkRS8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gFvwlvlQ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0C8327A0086;
-	Mon,  5 Jan 2026 14:23:48 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 05 Jan 2026 14:23:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767641027;
-	 x=1767727427; bh=rODsNAHL8e61XqgOSLRtJ1SSN/EIhI766PSHGZSyjso=; b=
-	jFFGkRS8Mib02cq7FXB5rKC8vhlxzzSfpj3MsX23nB3RNNycMI8ylN2VWZ5GGkvs
-	dlIpqi2d/CTlkJuSysXF9VTSpRAgOrxwNI3XeG37ko/9Vz1EKfWC7SpTVupmZYsW
-	hb235wda0A4ffIJow42aFX/lvnp07kdnqH35SdVGhFv+0sb4E2JmGJoNAXfOZLOC
-	3ALgbjjFuPoU8BXgP6zBfl+7Ui4NqpRh8aR1DkGrOEzuG7i16yI+IYDDpoya8d+p
-	+9DH5QeWQ1b1Spe+TSQ8Lc3WmkZGA/jiYFwtavskUO7zuNMk68LL+urdrN11YYo9
-	24cWeLXkmpi8nossK6C1qw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1767641027; x=1767727427; bh=r
-	ODsNAHL8e61XqgOSLRtJ1SSN/EIhI766PSHGZSyjso=; b=gFvwlvlQhN9hhwVGJ
-	2IOQr27u1aq8A7FpbGRUxmrXp5k90A/k708FTooZVFo6Nk3QWapaFuXmYTJOtKLo
-	mfpEtE88xY6TVkMK0Q/i4ESArgwotfbN0sqTgKvj+6Xm1OzBytIEwOBXlxsy8awS
-	Iwl+LNpnorw4ewa4BkE/opL1Cmk1szxq8ETfONO76LImlu1i0I5NyCnXnDjEQidp
-	Svl0kW0GJD5G5l7CwJoHk09NSwFdp0zxA5SOFRNl9E8T2lgiVAzb2M1no4f6ly2H
-	68Lj3V6a8zL0euUjFxt2dEjdFcrk46+ZFpzQyOqIo7xGjB1emCbrcfM8ZN7WBT/z
-	jqN5w==
-X-ME-Sender: <xms:ww9cacvqVoP6aiOZrNMBRhVloajoAG4edQ5Hqx1jzUyS_hlQJZGFpXg>
-    <xme:ww9caUQup1von-gs2dAnqmjIYhrOsvCa-WtAZnKsZzaeoohW5LnYNydZQR04UxDQR
-    x41exPdesVvvFndBvYeOZ-jJv3DMqQK8fUMWYUBXipqo8x85BAp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelkedufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthho
-    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdfgffettedulefh
-    feekheetgfegfeejveeikeeffeeikeekhfevieeltdekgfeunecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopeifrhhofigtlhhifhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:ww9cabaaLYaGVp4OZnF9r-tO5l90kXivxy78khLc9IYY0dIVVUojPQ>
-    <xmx:ww9caYWsDLbYga97SPs8Sce8lO6CNFcKdvdKmI6SCCTIAn31UGN_sA>
-    <xmx:ww9caVhwxzD_gyBFPKC2MgmE04YYXW7bPK8dkkjwXYZlGIFVkwx1Eg>
-    <xmx:ww9caeXQkXKwcJYcGPDhoEqWNxhkJsZm71GaByye9JJK05C37wW-0Q>
-    <xmx:ww9caZDrJ7G0Simz_Xgn7_tbNjnabclnjSbttXQvKuNwS3yWuqw94vpE>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B2C491EA0066; Mon,  5 Jan 2026 14:23:47 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LqAjl5kf"
+Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-55b4dafb425so1348766e0c.1
+        for <git@vger.kernel.org>; Mon, 05 Jan 2026 11:27:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767641221; x=1768246021; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/ngDB5h4auTNXqmk090hYjtGvOLRl9JSuQWZ9nXWylE=;
+        b=LqAjl5kf3KTTwamJfp6/F/Gin46T4AHA8XTjTkT35kkqhR5dLrKiJ/o32Wxcyg1bX2
+         m93np2tHyXpeR+kA0SgcY235a1I5KD5spDpok1lTVaLCeoqnQwSdHq/rQ0EUuAdYWEwK
+         IUeJPXMWWl6Hxmnl8FUg5yaxB/6d9y5mVxwJ89MG3LK+2EpSmMcAQJVQqEAGb8IgkdDB
+         +X1beqFBMBzB+ajo7G/gKR7gQbF9YAkbHfMSakNJfbvo0CR+tTIbV1wUvzE5xi7OWFKK
+         vXtW5og6gCmpa65dRCxO3i2Gj/mRYc5QpC692Al/gPJjtEiMR/cwlsovdSsNioQYyys8
+         ixyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767641221; x=1768246021;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=/ngDB5h4auTNXqmk090hYjtGvOLRl9JSuQWZ9nXWylE=;
+        b=eyaq58RVrgaKqCg9ukhqCUhQ+1Z9txvBftsfybUJNOLsz1NxM2HYaIPrFCSJI3ATBh
+         KBN5YhEWefJ186mZuJZvsUPIu5MgHWvPpNefblyQVt7VanC+F6kvo/G2ZRaC27jiRwOL
+         jB4JpBQxkUCiy+YT/M8z14+k7KOQV3WV2CpYqbveZ0bdmkKNdnee0gNorgDlCOr2FSli
+         nvgGpfrwTTlYW816u3oBW8nty2DIImjo27i08Y1tnCywJqb3rKR0941A13FtfHSff5hg
+         t1smcV1uBE96mEpdH6itvSAq92iZB9zJAMeYXC/NKB9fVarACQkR1JdmxF6GKHPB8IFB
+         yVVw==
+X-Gm-Message-State: AOJu0YwpZIsNHsBu7N3I5PhT8g+Zo87RhtWCySO+6lyn1gl/qVl+fMoz
+	Z0NbVEsaPN2LLS0++p8J/XI5LiUqXZeJd9PSjiXcSIthFw4iG8Vya6WV2vF2ROdcUvOXG8MQvfy
+	fh8paYJOj5GpFoBIvgcxFJ4eh1eJRgjeTFA==
+X-Gm-Gg: AY/fxX4p3itxO6TnVF0AFd2CEvcFwh6Gjzr5HdNj8OkHmcZa5nQuT83qfMtugkDwxmX
+	5qNpvWs9f7Do/Rrd0G0uJ0VqeDtYeyZgwpPr5JKDtMAJVmTwMuILIioku+7e74gAaq4HR+yMtuT
+	8I/L+1qPqem6dg/tPCBWb5U+FQEKv18U9DTufhPfAVay49N/xo3ujGd2tkb+uOl9tcgVV1vX2Qs
+	AQ430Ak7qkLvN1pifvsOVxowVpAsWMMBQqCbLkM+wKwFxhqzHQsauQoYAkfVTBO6bXwCF6Lypr7
+	xWlEF6D6WNcuQwYckplB3YuL7RxmlAo2B8BJRioVf0KPCTcvz+fmp0l+vz+tw+T+v0pe646VULq
+	ihQTEOZVbJ/RCqg==
+X-Google-Smtp-Source: AGHT+IELm/vpiyDw7Qblinw69kv6Fh+9sKpLai3byr8OrsGQPsScGzT73ZrlxFJiCZPxJ78ezTdz8E5Dl/qadCJlYMY=
+X-Received: by 2002:a05:6122:f07:b0:55b:9bef:2530 with SMTP id
+ 71dfb90a1353d-56339e86247mr74954e0c.6.1767641219820; Mon, 05 Jan 2026
+ 11:26:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AVsxfiaMTaNs
-Date: Mon, 05 Jan 2026 20:23:26 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Wayne Rowcliffe" <wrowclif@gmail.com>, git@vger.kernel.org
-Message-Id: <1ee133df-2bb0-4aaa-b628-e7e2655d4332@app.fastmail.com>
-In-Reply-To: 
- <CANG6c1XhaL1poT2Myo2sy4xbu86vAXO0xQKe33vg7pERmx=TbA@mail.gmail.com>
-References: 
- <CANG6c1XhaL1poT2Myo2sy4xbu86vAXO0xQKe33vg7pERmx=TbA@mail.gmail.com>
+References: <CANG6c1XhaL1poT2Myo2sy4xbu86vAXO0xQKe33vg7pERmx=TbA@mail.gmail.com>
+ <1ee133df-2bb0-4aaa-b628-e7e2655d4332@app.fastmail.com>
+In-Reply-To: <1ee133df-2bb0-4aaa-b628-e7e2655d4332@app.fastmail.com>
+From: Wayne Rowcliffe <wrowclif@gmail.com>
+Date: Mon, 5 Jan 2026 13:26:49 -0600
+X-Gm-Features: AQt7F2rcsnXmHKQ_RZpB1q6v9RxUolzxpteknD46qjnM7xBpGpKSoNGHJrmMXa0
+Message-ID: <CANG6c1V18xUEHbvTysykPT6A5LfV4wQSRQuEXi2XVDs+q_Cv7w@mail.gmail.com>
 Subject: Re: I still use git whatchanged
-Content-Type: text/plain; charset=utf-8
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 5, 2026, at 19:05, Wayne Rowcliffe wrote:
-> I tried using git whatchanged, which I use probably daily, and it said
-> I needed to send you an email that I use it.
+`git log --raw` looks to do what I need. Thanks.
+
+On Mon, Jan 5, 2026 at 1:23=E2=80=AFPM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
 >
-> It's very handy for figuring out what files changed in a commit.
-
-This command is being removed because it was supplanted by git-log(1) a
-long while ago. Both commands use the same machinery, just with
-different defaults.
-
-You can replace it with `git log` in this way:
-
-=E2=80=A2 Given: `git whatchanged <opts>`
-=E2=80=A2 Replace with: `git log <opts> --no-merges --raw`
-
-Additionally for the sake of readability, you might have more
-use for `--stat` or `--name-only` rather than `--raw` if you are only
-reading the output (not feding the output to another program).
+> On Mon, Jan 5, 2026, at 19:05, Wayne Rowcliffe wrote:
+> > I tried using git whatchanged, which I use probably daily, and it said
+> > I needed to send you an email that I use it.
+> >
+> > It's very handy for figuring out what files changed in a commit.
+>
+> This command is being removed because it was supplanted by git-log(1) a
+> long while ago. Both commands use the same machinery, just with
+> different defaults.
+>
+> You can replace it with `git log` in this way:
+>
+> =E2=80=A2 Given: `git whatchanged <opts>`
+> =E2=80=A2 Replace with: `git log <opts> --no-merges --raw`
+>
+> Additionally for the sake of readability, you might have more
+> use for `--stat` or `--name-only` rather than `--raw` if you are only
+> reading the output (not feding the output to another program).
