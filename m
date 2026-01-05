@@ -1,83 +1,84 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDB71FE45D
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 14:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C4427C84B
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 14:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622722; cv=none; b=is2cpWi9LnvkSw+Pnxg/uViixPaL47yLKtX0rlpDS9DWHjLvujvL4e1pt4zaM5IRlyuKL3f2ktMi4GQqISBPcczTBUgGOvIgrwJIydPLYLJDQelnpyhss+59vEm0d6W/rcINmgbtYM/G02Vtnj6ymuyK239HoNAZAIC6VhdzLWs=
+	t=1767622734; cv=none; b=CD1W2RnwR/UEdvqFQBAXIVt4OzPlN4BCtxoYJHRD7OAIdE8hYzMAe4d2PB/nPBGPJpf6q3iCUhpvH2Z5+CDuYbrimnkKuqP8ScTl/RNp6YjnvNCnQRNd+IJtWxD7XeMVZX2Z8Su7h4wGH3IXXebQ/0wCJFjOoDVDaV4Swnr6w0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622722; c=relaxed/simple;
-	bh=Ck88vr0Y0P4XMfmWYu83etWZ6GmpDCeR581UxYpBBlI=;
+	s=arc-20240116; t=1767622734; c=relaxed/simple;
+	bh=nSAVTg9aSnwr/rHUwvjmwv11vWDIKedoiAdOeEeYNKs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z18AjFqxKQGcAC97r/5obuA9mHyjazb0Ok7XWTiA4+AqnbjjvwDB0OxXkM5AFhlG8zdGL7C0cqUlnLUjVR5Zv17waoc2oVQ6vqOFGNxlWW/p6upE2GbhqT9bQ5ZJmXR2nxG7PaAq1pTMhFVIwKaUov5PPihs3uZtIWRW9fFSC0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pv3F5iG0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=udoK71fE; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=rbgZLF35666+Lm7GOCixFpOuaFH/11eubahYIyQRzG/9MBXT+6ATkEmFEiwDrG+Rn7kUnz0J3Ur6reW2fpVcaVaXJoFm+FrvuUMy73jOBtkV3gPxDvAZgd+beCULc9dxHft2wfFs64/X6e/bMFsc0sLaDKSxBKUzoNsOZ4+ciOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PZzZhtJk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FHR0uYRH; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pv3F5iG0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="udoK71fE"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 543CE1D00105;
-	Mon,  5 Jan 2026 09:18:39 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PZzZhtJk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FHR0uYRH"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 695AF1D0011E;
+	Mon,  5 Jan 2026 09:18:46 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 05 Jan 2026 09:18:39 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 05 Jan 2026 09:18:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1767622719; x=1767709119; bh=lFU2z6bXrA
-	QdlVrgEtyANmAw8joJ6b4S05QGE82fAYw=; b=Pv3F5iG0hFxMz/cd8nKHhzuw45
-	8m6UZiUQhvnq3rvefY7F1fx19OfOfFwXpOAEfd/N1Z2Ywr5xq84G5fNRnghct50K
-	mIBJnlnwXLB7EbEHJNJzxdeTGElBkYkCa7HA+Wm6b2t0i/a8VA3tSnQBFXiuVujE
-	b8G+0ITabcmgM2He/IdUBTrlMwq/2p/OHosnJzAmY1gXuEGzrp3BF010a8rJ/jUt
-	kCiXQhWhu8XwObAIyJH6xnXS+RFC4vxx7n2X+dUOKAIW3NJVRr+nkbs/9YyZN+tK
-	2ggJ9jkB1AcaFmuRgydcXDd3sophI3emCgmCsQx4oJsnVyIExv62WjZ//78g==
+	:subject:to:to; s=fm2; t=1767622726; x=1767709126; bh=nSAVTg9aSn
+	wr/rHUwvjmwv11vWDIKedoiAdOeEeYNKs=; b=PZzZhtJkUuPRs9jkQB/fahQ7Hs
+	7dEMrOjLQ70ZgO3CwlUmvZI/0tdUC34GHA7kxAwUnHy8Omx2EQJRWMlDeUefeiT5
+	F2cxh+DkmzUBCqtXXPy1vVd2q2Jl9RGwqhx8OAW70FYyBFIwyuzUkvJ4RJEQV5V9
+	LRICGO37rsjCOKKhNHmwhRLzUrE/fr3Vvezz128g+JgjQ8CgGhmkQJmntT4JkxXO
+	ckROqcx8P2D3Qx0Vj9qIDTSOAp2M5+cXgIGU+7UaJnemPZMISE3Ca+IQWkEWtdyU
+	XdYgE7m54sRDNchNYQUsz4tfVpWNmt6/6FvnRvQ3fz3RG39DKH61P23Wkqug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767622719; x=1767709119; bh=lFU2z6bXrAQdlVrgEtyANmAw8joJ6b4S05Q
-	GE82fAYw=; b=udoK71fE32ke4QdmxXUWH98WB4XmnpKwYnfEnzmgdvu/dAh+b6C
-	wltAqoXUom5k4uhlCvsWC+tPmgjdUcvS6qXuQKsL4tzYYD256JBhWH2TgOlS+RFL
-	n+7tJePIGzAQ2nRPYIAtr1CPw6CbqNQBsuI2xVS3/Cus9gEcle8ZhulzebwZ+7C9
-	/Cej+sUNl5r36UNXyQOrPUCAciEID04VrdUZ2UC9PZOspZQC125Blhf1Ju/uZWM1
-	93L+seR1Io6V/bOs+kfbHsMjYIALeTQy94k8GooR5/HXEImLjgNGOnBdcLbwMs4O
-	Viy2j6njXlXrj2TKgtkahkJsyo14pBYXOoQ==
-X-ME-Sender: <xms:P8hbaedaBLZS0ItY18w4x7k6SghgLyrY0Qo7pO3LJzzH0I2nrlmtSQ>
-    <xme:P8hbaePdDWFF69zikuBGM9qAshLuWVikAIhgTLuOpz3XWvoX7a_0f2_Ge6lyAVwaj
-    4D1ybYSQSTaAyQa_E63E9kIpLmWy8xrUc1bdiTzgu1QbZ52Dofe>
-X-ME-Received: <xmr:P8hbadJhzmN9SFVHrnUAviW47q8LlhjRFTGL6YkG9dnIcBrakPSEEYT_1j4SEnOT9fcsFXc9gHfNeYY8IPZ4lzrfPEaiNs7Y3Un1wN5R>
+	1767622726; x=1767709126; bh=nSAVTg9aSnwr/rHUwvjmwv11vWDIKedoiAd
+	OeEeYNKs=; b=FHR0uYRH1IuVuOQn42/Mle8ks8f8OeP1m5JCrXNEdtBsc3C+tBj
+	URM8hhy6Kx7DMPB2nLCDcnPFeScMlHKRBpHHlxcTitygvm4nMLwZZ86jlJFKj94X
+	i7bnwMiqz+dPpt8pI8hXZF2jD16SICasWQMiKLgy34XLba0MsIhsV2Ylu4dqOKId
+	bkgwSvVoSLlQpnwfiewm88yJwjj80D1gd2Mb4dEd5Ca3cNZA+bKpIU8JVmUOXK6t
+	UJomuHOIPK4pKSIyabImvz690jUpmwrK3M3reL/2YLu2Jywsv5T+5zi8HRjzJ1r/
+	fJDlii+CtthGjQLs9KC9hW0/7Wt2wdOp//g==
+X-ME-Sender: <xms:Rshbaa2GcGXPRuQgOFh3b4upHrzar3liR8ZiXp2dnM2LE8YWhlY63g>
+    <xme:RshbaTFl-E_jbw--vc7fjC-gMNxGgc-FG7UbWXgOMjUdoWQaVsFjmfmMOdA4PaGcA
+    3gsxBXC8l_pGhn6qk7WQKgSrv6rEsajgIKoQBsd-qJ1ES0ehyOj-A>
+X-ME-Received: <xmr:RshbaQgSIjN_0_UIGf1uSNLMJEJtpewmFXgtD1SZURSx9Wor2g0p6pzW7gagKS2tOfR8aC6S7XKJCHaChCZV76IMppyYWyxFiuTIO0qX>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeljeehvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:P8hbaXGbNFz6WLPTVQPWrofHOmh6s-PiOE0qICxU9DGgDzzfnM51BQ>
-    <xmx:P8hbadQyALqMQyD3dXbJZduE0tQv-9YlTFBlTPTIVWxhX5ujAFm7Rg>
-    <xmx:P8hbabEHyLDQxVXPfVRCfUhbZgCMFwZL4zvdmxFtWoSKyVtuG76R4Q>
-    <xmx:P8hbaR__1Gxv98_9bK24ergaFnp3cAR5h_hmjMsoFLY4xQ_1eULBtQ>
-    <xmx:P8hbaedQ6iGtwD3-7uAhJBSXs0cou4GlR0-_4njo4Kf2PeUbSi3QLBpj>
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhutggrshhsvg
+    hikhhiohhshhhirhhosehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:RshbaW8m7xjeMRbi6_bVi7441Z0sTMJr_hgHyRN35sPQSYpLu3U_0A>
+    <xmx:RshbafqUdRR0w5kO-6V9HTr9T10r0KU44Mb-IquKXXZ8V3dmp5itwQ>
+    <xmx:Rshbad_1-BnE55PY_97w2hPozpCJF0xA-iV_jSTHTwJCGd-S54HelQ>
+    <xmx:RshbabW8D6Np5MRuMWpqBe6GIWWE70KUdaL8E61dwA_16VVgtNd95A>
+    <xmx:RshbaRUdcP-0G4xTABy5H3-xrZQb7-LL45npMEm_kAAgMsl1bATR-WcT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Jan 2026 09:18:38 -0500 (EST)
+ 5 Jan 2026 09:18:45 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9dbfaa6f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 5 Jan 2026 14:18:36 +0000 (UTC)
-Date: Mon, 5 Jan 2026 15:18:33 +0100
+	by mail (OpenSMTPD) with ESMTPSA id eed2dcf5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Jan 2026 14:18:44 +0000 (UTC)
+Date: Mon, 5 Jan 2026 15:18:41 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] repo: add new flag --keys to git-repo-info
-Message-ID: <aVvIOVVKZVjGCDrL@pks.im>
+Subject: Re: [PATCH v2 1/2] repo: add a default output format to enum
+ output_format
+Message-ID: <aVvIQYdsrB8vAJ_R@pks.im>
 References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
  <20251209194616.61620-1-lucasseikioshiro@gmail.com>
- <20251209194616.61620-3-lucasseikioshiro@gmail.com>
+ <20251209194616.61620-2-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,33 +87,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251209194616.61620-3-lucasseikioshiro@gmail.com>
+In-Reply-To: <20251209194616.61620-2-lucasseikioshiro@gmail.com>
 
-On Tue, Dec 09, 2025 at 04:36:03PM -0300, Lucas Seiki Oshiro wrote:
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index c4a78277df..fd0683631c 100644
-> --- a/Documentation/git-repo.adoc
-> +++ b/Documentation/git-repo.adoc
-> @@ -9,6 +9,7 @@ SYNOPSIS
->  --------
->  [synopsis]
->  git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
-> +git repo info --keys [--format=(default|nul) | -z]
->  git repo structure [--format=(table|keyvalue|nul) | -z]
->  
->  DESCRIPTION
+On Tue, Dec 09, 2025 at 04:36:02PM -0300, Lucas Seiki Oshiro wrote:
+> Add a `FORMAT_DEFAULT` value to `enum output_format`. Change the initial
+> value of `format` to `FORMAT_DEFAULT` in cmd_repo_info, indicating that
+> the initial value hasn't been changed. Also map the string "default" to
+> this new value in `parse_format_cb`, allowing future patches to add
+> support to --format=default.
 
-The synopsis should have been updated in the preceding commit to mention
-"default" for `git repo info`.
+This is missing a test. It would for example be nice to verify that
+"--format=nul --format=default" does the expected thing.
 
-> @@ -131,4 +122,24 @@ test_expect_success 'git repo info --all <key> aborts' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'git repo info --keys --format=nul uses nul-terminated output' '
-> +	git repo info --keys --format=default >default &&
-> +	lf_to_nul <default > expect &&
-
-Style nit: there shouldn't be a space between "> expect".
+Also, I didn't see `git repo structure` being updated. Should we do that
+so that both subcommands know to handle the "default" format?
 
 Patrick
