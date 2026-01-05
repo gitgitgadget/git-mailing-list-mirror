@@ -1,193 +1,415 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D1F4C81
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 22:56:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30E53126A3
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 23:02:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767653813; cv=none; b=HAgxHSSZBNDwinNRdhmgdPagfZ47TaQFjSuAJQ93f5hl2rS14ZiVWUuKBVnqxhhBj/iv5rxwLNd/C9u9b4RqJvuTCXEjixk51Z0wJTDoIWcGAQO/b7jzaP7Iln/s3N/mv7J10U55W0yg4gi9lmKigDfhIFfwtnAedikS5o25QNw=
+	t=1767654168; cv=none; b=CV1JbOLkP4yq7JnFpNiPCEqtiCHkWRWigT9oV9rooXEpmwlrDbMPRBMogXCVSwdcZ+Arf0EJ7k15LiiGV5wwACIiRcpXq4diYEUhDaIGc6P5ZIAIuxgQSuwHpVxj4pM7kvKLXrZabsk9BHG1I9G0SNTgm/ZdAkk1enK7CVmk6mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767653813; c=relaxed/simple;
-	bh=mFxSyI0pQVLDgHy7e/k8coNtUzjln0ZX/dtloCiYMKI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=STJSgU2mWQYzZJget3ecggFHvsirGeGax4ZI/Ai0bmRuUKtv62EdvW2JkpCyvDtIn8YKzSgS3FDfDWw7AN5zRukrCAQpqyLk8Xof3zsUqizoGfk3E3mnC5oLmWVzr++WnG4WEFd6u+pF4CU3eLrJyMyEvsOD7ZwqF7cSNhdygvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e+u7LlIO; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767654168; c=relaxed/simple;
+	bh=cKWBQ2DoArmzkN6sRUmpXmX6eKJw6Yic9zdJz5pbWNg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FL6SmBcSQjtbHaynsdQ0h626NMDHkbH+00xjM56Utpp/VPc3OE9TMVGdXTPUMZwdUVjsDp2f5C7/xrdVdBQU6Lnb37CoNjMiol8gt5h8BCW+uS0Jgw+4fIGzW2qWNjKKAxUpd4YaSoBpCYBtYLP+/9tIufp9sDt43BHI4GLy1N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=michael.lyo.nz; spf=pass smtp.mailfrom=michael.lyo.nz; dkim=pass (2048-bit key) header.d=michael.lyo.nz header.i=@michael.lyo.nz header.b=muDxHfiG; arc=none smtp.client-ip=80.241.56.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=michael.lyo.nz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=michael.lyo.nz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+u7LlIO"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-43260a5a096so219322f8f.0
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 14:56:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767653809; x=1768258609; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Z/uwYddRivyp9rdrQ3SkNa6yT2XbtVGNEfUeZ6FJa4E=;
-        b=e+u7LlIO5Kg/BQ9xgMuqT0jsA6mxCnXqZjx/PhmFHlSmsJ4P87nNgGW44WrqhCJaM9
-         028Oy9NQK1TFDlPXCNH8kiWaKBe8eUmdT/ncPf3nidizR0u7itwRJy6VCxtN8dM5FncL
-         NZ5Y3Tq482f1yYBNI+DGnF/2toSruINFa6sebRHmzWyzAJoaqt8DpR/peqHN41OJFGK3
-         8BfBdV3MmvT/HAMb2q+4lyZDLXXcH36pKvnNT9bQP0tqT92eSDJ5Lz7ibCAYqPrgwwy/
-         V4N3N74uo6Ox3j611sQKP4ak6TGhEbIQbNKvdgCSrM+5MCIOpf27BF6H4xtUZsDo7h+U
-         G9fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767653809; x=1768258609;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z/uwYddRivyp9rdrQ3SkNa6yT2XbtVGNEfUeZ6FJa4E=;
-        b=E2rXsjlrPMzRPxv8z5oIoLf9ZHgXilOXNFAAgBbm0fPO4o4dU0XWKUhKT680/Uc4+5
-         sFtABoUqnEivlFxuGW293lGcIt89s7rNNiwJAQy+1szHrDlDSmu0WmgL79qYBPBmBOfy
-         amwA5SHA1NDFP7cLqRtTsgM/dCQ40iD6utLM1z6P8PrbYJenNWG1Yqj0JJJK77dZXuiQ
-         D4I6Qh6qkBIGL0+JKfbxB4blT+hH5UP1bRx0Cqniva3c8yGtus3wYbIwVmutZtKVBta2
-         MA3mXmjrtsbVOeCK0OMmBLG5jBhZlx26RrJiQuqh6AXQYciXQ0hbLz0sZARtLgFvPySk
-         vkag==
-X-Gm-Message-State: AOJu0Ywwpj+9z/OPyE9nMRidqJ6aVp9KNmtmX1wZmPct0ijqxzl0Z3a8
-	TkNVmfPcKJXJk0GtZGrI0krZRlkEFoMJlFabqRK8W7jAQNY8J0krzi4zEU/D/LzezLwQkmwKJ8T
-	8p0Jx0h0lHhquenY/JOBG4FAIj4yMQ0XHYv6q
-X-Gm-Gg: AY/fxX5HsdPh4fa2VLiozTLf+zEMhLKnIuu503wYKcjSUnROdYmNgwwBLDMNd7C6aAI
-	g0GFdohVLAJp43JlPwQI8xVW2Hoc5XFgUrhzM+zVpDGUyh0mz9JH5ZXG6M1hEloB7/CR7zp7lED
-	MTlnbYGtCwuY3vfpsWl9Bkb64+ey0Mn5ACTKawWFymeW8ha5Ifkeq18oLU4c4Tpk9PoKxrVPbla
-	zdQMTWyKGhJ31gSn5uKKVSfWcAfTU5Gmb8+XnDeJTBpTGe2WzwwSCX2jyq1qZSTMR/70VPWlFXf
-	cZGU
-X-Google-Smtp-Source: AGHT+IHaCuMj2ViTbJ/Y0A+ZpUsbpG6oe+XEBWdgh9CAxi3xxXx1BQjTpFGwokLtJMCH1iB64nl/h4OEZeDsHRnklSw=
-X-Received: by 2002:a05:6000:200c:b0:430:f879:a0fc with SMTP id
- ffacd0b85a97d-432bca311ecmr1609849f8f.21.1767653809156; Mon, 05 Jan 2026
- 14:56:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=michael.lyo.nz header.i=@michael.lyo.nz header.b="muDxHfiG"
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4dlVFG3Zxsz9t7v;
+	Tue,  6 Jan 2026 00:02:42 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=michael.lyo.nz;
+	s=MBO0001; t=1767654162;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=r/Gq4ztrgGfiokz6PBK1roWEho/BxV0C4E8IV67mwp8=;
+	b=muDxHfiGV+ZLZswvG9grgekXLbrGYWmi/WNUE3P40DSp/GaU7fXbBvAYLP3FcVM1FMhSvM
+	3JkEVKsK68tJqLO+INeKopFt/MQAp9f6Y/thTRDK3LlEHoQVoicd2C3WafjGVm8LJQ/v6g
+	gJxTN0c4mfc/1AAIsmGGT8DcxKf2uvxUnb291oXoxEUJC/XNRfmDO4GFOyzVCwSMIrrf54
+	fH9WNTD/bU2tErGpsK4oDX+Mp/pZSSTkdSD1VmF17vVE3JmMGhZzfeAAiNrsi4r3/iae6E
+	xEhOJ2ouFqAmE0OZrLOOMIQnKC3KRpP0FcPDQZtRrqrgy30f3LKretxRiPWW6w==
+From: Michael Lyons <git@michael.lyo.nz>
+To: git@vger.kernel.org
+Cc: Michael Lyons <git@michael.lyo.nz>
+Subject: [PATCH] doc: git-blame: convert blame to new doc format
+Date: Mon,  5 Jan 2026 18:02:17 -0500
+Message-ID: <20260105230220.519303-1-git@michael.lyo.nz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Harrison McCullough <mccullough.harrison@gmail.com>
-Date: Mon, 5 Jan 2026 15:56:37 -0700
-X-Gm-Features: AQt7F2p4I426qoYhzO6-zYpBi-kPMbxkvJQnyVvXEIiYcEA0a4PBRyzeiE8kIP4
-Message-ID: <CAHLeu+ww7bBACO97ddkHeL2nkwmwqNL9G2Bjq18NZr5_d-MHyQ@mail.gmail.com>
-Subject: Unexpected behavior in git diff --relative=<path>
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+- Use _<placeholder>_ instead of <placeholder> in the description
+- Use _underscores_ around sample commits, ranges, and math involving
+or associated with <placeholders>
+- Use `backticks` for keywords and more complex option
+descriptions. The new rendering engine will apply synopsis rules to
+these spans.
 
-- Create a "foo.txt" file
-- Commit the "foo.txt"
-- Modify the "foo.txt" file
-- Create a "foo/bar.txt" file
-- Commit the "foo/bar.txt"
-- Modify the "foo/bar.txt" file
-- Run `git diff --name-only --relative=foo`
+Signed-off-by: Michael Lyons <git@michael.lyo.nz>
+---
+ Documentation/blame-options.adoc | 100 +++++++++++++++----------------
+ Documentation/git-blame.adoc     |  60 +++++++++----------
+ 2 files changed, 80 insertions(+), 80 deletions(-)
 
+diff --git a/Documentation/blame-options.adoc b/Documentation/blame-options.adoc
+index 1fb948fc76..1f5b6ec57d 100644
+--- a/Documentation/blame-options.adoc
++++ b/Documentation/blame-options.adoc
+@@ -1,105 +1,105 @@
+--b::
++`-b`::
+ 	Show blank SHA-1 for boundary commits.  This can also
+ 	be controlled via the `blame.blankBoundary` config option.
+ 
+---root::
++`--root`::
+ 	Do not treat root commits as boundaries.  This can also be
+ 	controlled via the `blame.showRoot` config option.
+ 
+---show-stats::
++`--show-stats`::
+ 	Include additional statistics at the end of blame output.
+ 
+--L <start>,<end>::
+--L :<funcname>::
+-	Annotate only the line range given by '<start>,<end>',
+-	or by the function name regex '<funcname>'.
++`-L <start>,<end>`::
++`-L :<funcname>`::
++	Annotate only the line range given by _<start>,<end>_,
++	or by the function name regex _<funcname>_.
+ 	May be specified multiple times. Overlapping ranges are allowed.
+ +
+-'<start>' and '<end>' are optional. `-L <start>` or `-L <start>,` spans from
+-'<start>' to end of file. `-L ,<end>` spans from start of file to '<end>'.
++_<start>_ and _<end>_ are optional. `-L <start>` or `-L <start>,` spans from
++_<start>_ to end of file. `-L ,<end>` spans from start of file to _<end>_.
+ +
+ include::line-range-format.adoc[]
+ 
+--l::
++`-l`::
+ 	Show long rev (Default: off).
+ 
+--t::
++`-t`::
+ 	Show raw timestamp (Default: off).
+ 
+--S <revs-file>::
+-	Use revisions from revs-file instead of calling linkgit:git-rev-list[1].
++`-S <revs-file>`::
++	Use revisions from _revs-file_ instead of calling linkgit:git-rev-list[1].
+ 
+---reverse <rev>..<rev>::
++`--reverse <rev>..<rev>`::
+ 	Walk history forward instead of backward. Instead of showing
+ 	the revision in which a line appeared, this shows the last
+ 	revision in which a line has existed. This requires a range of
+-	revision like START..END where the path to blame exists in
+-	START.  `git blame --reverse START` is taken as `git blame
++	revision like _START..END_ where the path to blame exists in
++	_START_.  `git blame --reverse START` is taken as `git blame
+ 	--reverse START..HEAD` for convenience.
+ 
+---first-parent::
++`--first-parent`::
+ 	Follow only the first parent commit upon seeing a merge
+ 	commit. This option can be used to determine when a line
+ 	was introduced to a particular integration branch, rather
+ 	than when it was introduced to the history overall.
+ 
+--p::
+---porcelain::
++`-p`::
++`--porcelain`::
+ 	Show in a format designed for machine consumption.
+ 
+---line-porcelain::
++`--line-porcelain`::
+ 	Show the porcelain format, but output commit information for
+ 	each line, not just the first time a commit is referenced.
+-	Implies --porcelain.
++	Implies `--porcelain`.
+ 
+---incremental::
++`--incremental`::
+ 	Show the result incrementally in a format designed for
+ 	machine consumption.
+ 
+---encoding=<encoding>::
++`--encoding=<encoding>`::
+ 	Specifies the encoding used to output author names
+ 	and commit summaries. Setting it to `none` makes blame
+ 	output unconverted data. For more information see the
+ 	discussion about encoding in the linkgit:git-log[1]
+ 	manual page.
+ 
+---contents <file>::
+-	Annotate using the contents from the named file, starting from <rev>
+-	if it is specified, and HEAD otherwise. You may specify '-' to make
++`--contents <file>`::
++	Annotate using the contents from the named file, starting from _<rev>_
++	if it is specified, and `HEAD` otherwise. You may specify `-` to make
+ 	the command read from the standard input for the file contents.
+ 
+---date <format>::
+-	Specifies the format used to output dates. If --date is not
+-	provided, the value of the blame.date config variable is
+-	used. If the blame.date config variable is also not set, the
++`--date <format>`::
++	Specifies the format used to output dates. If `--date` is not
++	provided, the value of the `blame.date` config variable is
++	used. If the `blame.date` config variable is also not set, the
+ 	iso format is used. For supported values, see the discussion
+-	of the --date option at linkgit:git-log[1].
++	of the `--date` option at linkgit:git-log[1].
+ 
+---progress::
+---no-progress::
++`--progress`::
++`--no-progress`::
+ 	Progress status is reported on the standard error stream
+ 	by default when it is attached to a terminal. This flag
+ 	enables progress reporting even if not attached to a
+ 	terminal. Can't use `--progress` together with `--porcelain`
+ 	or `--incremental`.
+ 
+--M[<num>]::
++`-M[<num>]`::
+ 	Detect moved or copied lines within a file. When a commit
+ 	moves or copies a block of lines (e.g. the original file
+-	has A and then B, and the commit changes it to B and then
+-	A), the traditional 'blame' algorithm notices only half of
++	has _A_ and then _B_, and the commit changes it to _B_ and then
++	_A_), the traditional `blame` algorithm notices only half of
+ 	the movement and typically blames the lines that were moved
+-	up (i.e. B) to the parent and assigns blame to the lines that
+-	were moved down (i.e. A) to the child commit.  With this
++	up (i.e. _B_) to the parent and assigns blame to the lines that
++	were moved down (i.e. _A_) to the child commit.  With this
+ 	option, both groups of lines are blamed on the parent by
+ 	running extra passes of inspection.
+ +
+-<num> is optional but it is the lower bound on the number of
++_<num>_ is optional, but it is the lower bound on the number of
+ alphanumeric characters that Git must detect as moving/copying
+ within a file for it to associate those lines with the parent
+ commit. The default value is 20.
+ 
+--C[<num>]::
++`-C[<num>]`::
+ 	In addition to `-M`, detect lines moved or copied from other
+ 	files that were modified in the same commit.  This is
+ 	useful when you reorganize your program and move code
+@@ -109,14 +109,14 @@ commit. The default value is 20.
+ 	option is given three times, the command additionally
+ 	looks for copies from other files in any commit.
+ +
+-<num> is optional but it is the lower bound on the number of
++_<num>_ is optional, but it is the lower bound on the number of
+ alphanumeric characters that Git must detect as moving/copying
+ between files for it to associate those lines with the parent
+ commit. And the default value is 40. If there are more than one
+-`-C` options given, the <num> argument of the last `-C` will
++`-C` options given, the _<num>_ argument of the last `-C` will
+ take effect.
+ 
+---ignore-rev <rev>::
++`--ignore-rev <rev>`::
+ 	Ignore changes made by the revision when assigning blame, as if the
+ 	change never happened.  Lines that were changed or added by an ignored
+ 	commit will be blamed on the previous commit that changed that line or
+@@ -126,26 +126,26 @@ take effect.
+ 	another commit will be marked with a `?` in the blame output.  If the
+ 	`blame.markUnblamableLines` config option is set, then those lines touched
+ 	by an ignored commit that we could not attribute to another revision are
+-	marked with a '*'. In the porcelain modes, we print 'ignored' and
+-	'unblamable' on a newline respectively.
++	marked with a `*`. In the porcelain modes, we print _ignored_ and
++	_unblamable_ on a newline respectively.
+ 
+---ignore-revs-file <file>::
+-	Ignore revisions listed in `file`, which must be in the same format as an
++`--ignore-revs-file <file>`::
++	Ignore revisions listed in _<file>_, which must be in the same format as an
+ 	`fsck.skipList`.  This option may be repeated, and these files will be
+ 	processed after any files specified with the `blame.ignoreRevsFile` config
+ 	option.  An empty file name, `""`, will clear the list of revs from
+ 	previously processed files.
+ 
+---color-lines::
++`--color-lines`::
+ 	Color line annotations in the default format differently if they come from
+ 	the same commit as the preceding line. This makes it easier to distinguish
+ 	code blocks introduced by different commits. The color defaults to cyan and
+ 	can be adjusted using the `color.blame.repeatedLines` config option.
+ 
+---color-by-age::
++`--color-by-age`::
+ 	Color line annotations depending on the age of the line in the default format.
+ 	The `color.blame.highlightRecent` config option controls what color is used for
+ 	each range of age.
+ 
+--h::
++`-h`::
+ 	Show help message.
+diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
+index adcbb6f5dc..7dc93f90b2 100644
+--- a/Documentation/git-blame.adoc
++++ b/Documentation/git-blame.adoc
+@@ -7,12 +7,12 @@ git-blame - Show what revision and author last modified each line of a file
+ 
+ SYNOPSIS
+ --------
+-[verse]
+-'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
+-	    [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
+-	    [--ignore-rev <rev>] [--ignore-revs-file <file>]
+-	    [--color-lines] [--color-by-age] [--progress] [--abbrev=<n>]
+-	    [ --contents <file> ] [<rev> | --reverse <rev>..<rev>] [--] <file>
++[synopsis]
++git blame [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
++	  [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
++	  [--ignore-rev <rev>] [--ignore-revs-file <file>]
++	  [--color-lines] [--color-by-age] [--progress] [--abbrev=<n>]
++	  [ --contents <file> ] [<rev> | --reverse <rev>..<rev>] [--] <file>
+ 
+ DESCRIPTION
+ -----------
+@@ -30,7 +30,7 @@ lines that were copied and pasted from another file, etc., see the
+ `-C` and `-M` options.
+ 
+ The report does not tell you anything about lines which have been deleted or
+-replaced; you need to use a tool such as 'git diff' or the "pickaxe"
++replaced; you need to use a tool such as `git diff` or the "pickaxe"
+ interface briefly mentioned in the following paragraph.
+ 
+ Apart from supporting file annotation, Git also supports searching the
+@@ -50,47 +50,47 @@ OPTIONS
+ -------
+ include::blame-options.adoc[]
+ 
+--c::
++`-c`::
+ 	Use the same output mode as linkgit:git-annotate[1] (Default: off).
+ 
+---score-debug::
++`--score-debug`::
+ 	Include debugging information related to the movement of
+ 	lines between files (see `-C`) and lines moved within a
+ 	file (see `-M`).  The first number listed is the score.
+ 	This is the number of alphanumeric characters detected
+ 	as having been moved between or within files.  This must be above
+-	a certain threshold for 'git blame' to consider those lines
++	a certain threshold for `git blame` to consider those lines
+ 	of code to have been moved.
+ 
+--f::
+---show-name::
++`-f`::
++`--show-name`::
+ 	Show the filename in the original commit.  By default
+ 	the filename is shown if there is any line that came from a
+ 	file with a different name, due to rename detection.
+ 
+--n::
+---show-number::
++`-n`::
++`--show-number`::
+ 	Show the line number in the original commit (Default: off).
+ 
+--s::
++`-s`::
+ 	Suppress the author name and timestamp from the output.
+ 
+--e::
+---show-email::
++`-e`::
++`--show-email`::
+ 	Show the author email instead of the author name (Default: off).
+ 	This can also be controlled via the `blame.showEmail` config
+ 	option.
+ 
+--w::
++`-w`::
+ 	Ignore whitespace when comparing the parent's version and
+ 	the child's to find where the lines came from.
+ 
+ include::diff-algorithm-option.adoc[]
+ 
+---abbrev=<n>::
+-	Instead of using the default 7+1 hexadecimal digits as the
+-	abbreviated object name, use <m>+1 digits, where <m> is at
+-	least <n> but ensures the commit object names are unique.
++`--abbrev=<n>`::
++	Instead of using the default _7+1_ hexadecimal digits as the
++	abbreviated object name, use _<m>+1_ digits, where _<m>_ is at
++	least _<n>_ but ensures the commit object names are unique.
+ 	Note that 1 column
+ 	is used for a caret to mark the boundary commit.
+ 
+@@ -124,21 +124,21 @@ header at the minimum has the first line which has:
+ This header line is followed by the following information
+ at least once for each commit:
+ 
+-- the author name ("author"), email ("author-mail"), time
+-  ("author-time"), and time zone ("author-tz"); similarly
++- the author name (`author`), email (`author-mail`), time
++  (`author-time`), and time zone (`author-tz`); similarly
+   for committer.
+ - the filename in the commit that the line is attributed to.
+-- the first line of the commit log message ("summary").
++- the first line of the commit log message (`summary`).
+ 
+ The contents of the actual line are output after the above
+-header, prefixed by a TAB. This is to allow adding more
++header, prefixed by a _TAB_. This is to allow adding more
+ header elements later.
+ 
+ The porcelain format generally suppresses commit information that has
+ already been seen. For example, two lines that are blamed to the same
+ commit will both be shown, but the details for that commit will be shown
+ only once. Information which is specific to individual lines will not be
+-grouped together, like revs to be marked 'ignored' or 'unblamable'. This
++grouped together, like revs to be marked _ignored_ or _unblamable_. This
+ is more efficient, but may require more state be kept by the reader. The
+ `--line-porcelain` option can be used to output full commit information
+ for each line, allowing simpler (but less efficient) usage like:
+@@ -152,7 +152,7 @@ for each line, allowing simpler (but less efficient) usage like:
+ SPECIFYING RANGES
+ -----------------
+ 
+-Unlike 'git blame' and 'git annotate' in older versions of git, the extent
++Unlike `git blame` and `git annotate` in older versions of git, the extent
+ of the annotation can be limited to both line ranges and revision
+ ranges. The `-L` option, which limits annotation to a range of lines, may be
+ specified multiple times.
+@@ -173,7 +173,7 @@ which limits the annotation to the body of the `hello` subroutine.
+ 
+ When you are not interested in changes older than version
+ v2.6.18, or changes older than 3 weeks, you can use revision
+-range specifiers similar to 'git rev-list':
++range specifiers similar to `git rev-list`:
+ 
+ 	git blame v2.6.18.. -- foo
+ 	git blame --since=3.weeks -- foo
+@@ -232,7 +232,7 @@ parser (which should be quite natural for most scripting languages).
+ +
+ [NOTE]
+ For people who do parsing: to make it more robust, just ignore any
+-lines between the first and last one ("<sha1>" and "filename" lines)
++lines between the first and last one (_<sha1>_ and _filename_ lines)
+ where you do not recognize the tag words (or care about that particular
+ one) at the beginning of the "extended information" lines. That way, if
+ there is ever added information (like the commit encoding or extended
+-- 
+2.47.3
 
-What did you expect to happen? (Expected behavior)
-
-I would expect to only see modified files inside the "foo/" directory. For
-example, I would expect this to be the output:
-
-```
-$ git diff --name-only --relative=foo
-bar.txt
-```
-
-
-What happened instead? (Actual behavior)
-
-Both the "foo/bar.txt" _and_ the "foo.txt" files were listed--but the "foo.txt"
-file had the "foo" prefix stripped, appearing as just ".txt".
-
-```
-$ git diff --name-only --relative=foo
-.txt
-bar.txt
-```
-
-
-What's different between what you expected and what actually happened?
-
-Using the `--relative=<path>` flag to `git diff` appears to simply remove the
-prefix from each file, regardless of whether that is a full path prefix or just
-part of the file name.
-
-
-Anything else you want to add:
-
-This is the relevant part of the man page for `git-diff`:
-
-> When run from a subdirectory of the project, it can be told to exclude changes
-> outside the directory and show pathnames relative to it with this option. When
-> you are not in a subdirectory (e.g. in a bare repository), you can name which
-> subdirectory to make the output relative to by giving a <path> as an argument.
-> --no-relative can be used to countermand both diff.relative config option and
-> previous --relative.
-
-When I read this for the first time, I imagined that the behavior would be as
-follows:
-
-- `git diff`: include all changes, display file names beginning from repository
-  root
-- `git diff .`: include all changes in the current directory and "below",
-  display file names beginning from repository root
-- `git diff --relative=. .`: include all changes in the current
-directory and "below",
-  display file names beginning from the current directory
-   - E.g. if the repository root is `/home/bob/repo/` and the current directory
-     is `/home/bob/repo/foo/bar/`, then a modified file
-     `/home/bob/repo/foo/bar/baz/qux.txt` would be displayed as `baz/qux.txt`
-- `git diff --relative=.. ..`: include all changes in the parent
-directory and "below",
-  display file names beginning from the parent directory
-   - E.g. if the repository root is `/home/bob/repo/` and the current directory
-     is `/home/bob/repo/foo/bar/`, then a modified file
-     `/home/bob/repo/foo/bar/baz/qux.txt` would be displayed as
-`bar/baz/qux.txt`
-
-I understand that my initial assumption may not be the intended
-behavior. However, I don't think that stripping a prefix of a file name just
-because the file name matched the argument to `--relative` makes much sense. If
-that _is_ the desired behavior, I think that `--strip-prefix` or something
-similar would be a better name. The name "relative", to me, makes it sound like
-it is logically connected to the directory structure.
-
-In addition, the description of the `--relative` flag claims that "it can be
-told to exclude changes outside the directory ...". This implies that the
-argument should be a directory. In practice, the argument _can_ be a directory,
-but that isn't verified.
-
-If this flag is working exactly as intended, then perhaps a clarifying comment
-can be added to the documentation to explicitly state that the argument is
-matched against the full file path, starting at the repository root, and is
-removed from the beginning of the path (and the file is included in the output)
-if it matches--regardless of whether the match matches a full directory path or
-just the first portion of a file name.
-
-I will note that if you want to make sure that the argument to the `--relative`
-flag only matches against entire directories, not file name prefixes, you can
-simply append a trailing slash to the end. In the case of the example I provided
-above, I can run the following and get reasonable behavior:
-
-```
-$ git diff --name-only --relative=foo/
-bar.txt
-```
-
-
-
-
-[System Info]
-git version:
-git version 2.46.2
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.4.0
-zlib: 1.2.12
-uname: Darwin 24.6.0 Darwin Kernel Version 24.6.0: Mon Jul 14 11:30:55
-PDT 2025; root:xnu-11417.140.69~1/RELEASE_ARM64_T6031 arm64
-compiler info: clang: 15.0.0 (clang-1500.3.9.4)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /opt/homebrew/bin/bash
-
-
-[Enabled Hooks]
-
--Harrison McCullough
