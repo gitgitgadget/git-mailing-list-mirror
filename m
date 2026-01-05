@@ -1,184 +1,141 @@
-Received: from mail.codeberg.eu (aburayama.m.codeberg.org [217.197.91.161])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3934733B943
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 11:54:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.197.91.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EE43385A3
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 12:07:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767614066; cv=none; b=NIlIKInw5wkxE+etBhcmi/giAhWAzOoi1k2v09CfNedlHmZSsfajn/+XVuJyTSlBnyR5ezOmL0HbHWGmLQLsHMXUdm9OQFnW1rpdYkeOniYmDmswwxSLbtSvQiy3qSaWM7ZGZV5HJG3fpD47yW2+9TqKVp5zDgDzhgu9CvKseVs=
+	t=1767614880; cv=none; b=jkoWc9OguToD8l5wk2DdDQ2Dry/ErKc6TkaaPbZV60UKD+qn3DoecTFzT780rLBQmGGCmZCmrw9aSjtgJXMTpQtWhPnfpyiwUcJAhvRsc1NMtu4WBnFFP1VpEIXN+NvaCWLeYIoZ5f2b482PQWbLDfZgpx96jwtspLKm9yPYnro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767614066; c=relaxed/simple;
-	bh=VtmCcbccABoudww+3XxADcx+9Sjpmijb84rnvZXjPr4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=YG/1Zo/rOaVpfJR+rhEcA9qDUvqDX8JoR/O+RWVHuwLIDmdvF0pwq1qY/7KmFPZTbJtE6INkdmbMyvbiUIg0z8dysey6YI7nWS5fXD/4nowrpeeO1ox7zLOaWV3PAw3DC1raCbyKoo+C/zqC3INkhPiSiy1Nn/jeyePvwHKd5rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=codeberg.org; spf=pass smtp.mailfrom=codeberg.org; dkim=pass (2048-bit key) header.d=codeberg.org header.i=@codeberg.org header.b=JF+LT0kt; dkim=permerror (0-bit key) header.d=codeberg.org header.i=@codeberg.org header.b=yuN/WM0d; arc=none smtp.client-ip=217.197.91.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=codeberg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codeberg.org
+	s=arc-20240116; t=1767614880; c=relaxed/simple;
+	bh=Kf7ltu7to/CAyJ6f6GqxTjAXtb+fXgzXv3o22g0kRn0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DvmNvWkjNKr9xcsyrrH5+PCcKqDZx7ZYif4luj32OXenwnOv97BUo5aS8m3ng1fX7GQNhNzxw93smy4ALF1YwXp/+dkQWg47rM1WRtIFFxCfPntmZI/4kEli8u8F7bfeKt1pVzpHchaJYrazTEg2ABNRty3ysx0M55dlnjHOUgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O1kcM+Ga; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nZI26StN; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codeberg.org header.i=@codeberg.org header.b="JF+LT0kt";
-	dkim=permerror (0-bit key) header.d=codeberg.org header.i=@codeberg.org header.b="yuN/WM0d"
-DKIM-Signature: v=1; a=rsa-sha256; s=202510r; d=codeberg.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1767613921; bh=F5vzb7FlauxwPj7n4bUsy5+
-	jWqdBd705/LT4DQpO4D8=; b=JF+LT0ktEy5XTvCyau9LjNy//JK4w02Vi1izuvcaRTK7dlFRJG
-	lFzujPyl6qoYOngGHWKIWSLzUriKTu3MFu4xOqhdJWFhmaBTh4yUJ5GaSjBg3UGO3ocgGM91hlD
-	S/eAt2IOpDNiMBY84LLitP+61rOdJcSZ0EsYCqWjJRJrur2iXOaYoctjTdwIdvtglzRKghwjmkX
-	guEenQch8dtuIFmUde/H65cpREjFv3p4/XpIXpDEVIfFqS5jk65cJfFj0t47JJYO+ehKlsxIIux
-	x8KnsTC8uw8/GoHVrxI2UaVW9SMlnLDMCWzm1S1fS2mwQSc2diPtWx+PS5OBC0rALRQ==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202510e; d=codeberg.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1767613921; bh=F5vzb7FlauxwPj7n4bUsy5+
-	jWqdBd705/LT4DQpO4D8=; b=yuN/WM0dyljxWRkqRGc5k+Ym2s5nYHBPLfOBkGIt8uFXeCIgJz
-	R4Wb0Ak0pF3nAbiplFOBd3ap1qIvs2dpLsAQ==;
-Message-ID: <4b6fe686-bb3d-4d10-8a4d-7542b4c93e45@codeberg.org>
-Date: Mon, 5 Jan 2026 12:52:01 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O1kcM+Ga";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nZI26StN"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CE9217A0121;
+	Mon,  5 Jan 2026 07:07:56 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 05 Jan 2026 07:07:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1767614876; x=1767701276; bh=xympUOIi1b
+	H2hJU9QKjQPxhkaowXi2uPuw+3c3nLOWA=; b=O1kcM+GaTnQ+vup70t+QKjw8TC
+	c4xoN88d0evcVTFAN0uWU977cYrKF4CuriZi4v7LcwB3uctZZdKrd/41e+nJn/Rz
+	3QWNUIX7YoZTbK2ExCwgIWG4k7Uv+ryuSW/l2/30mB3yXYHwF6knbCbMn+RzGALP
+	WQR+XhJ/452y1MBZ2tQKy0GM8Yxhw0vPwt+UGm9iLeYUYaZt4RU5ZYJvCPglko8k
+	EQIcdOrRPoLoeQd9DLOgrcrDUQTLrKSg74Zh+RkTEd+WRD7wtUQBWED0xTd9m9Z7
+	U7XmYGv12k5l/HHeS9BFlaQNT3KNtbf8WoTL4iF8t6b+rLGvEiyVMqO4Ej4g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767614876; x=1767701276; bh=xympUOIi1bH2hJU9QKjQPxhkaowXi2uPuw+
+	3c3nLOWA=; b=nZI26StNxM8s6BREkikVqxFktcYk4lALqDlF0CqEwmuRSWkhmT2
+	RV0Z/ahcUDItuZ0rS8ZMa5Qg+FLNfJnNkQVxDB5GZWW5sw5wB3o71TaH5FifcfJv
+	H9rn4rKg8/pcq/FDJvTcRPK9hm1btDBzIk81wt+zeNd3uOv4j1PXsn7E2pfIL+ok
+	ualzJGEKryRC++O8sdqo2KWi99+kH9Msu22eZbLGt7ur6TJRuIj9WdD1wXj3ErXT
+	9+hPrGnkXZr8LkjBFzGZusBmSBR+e/1EW2AFkKqg4Fty6qpX7pcJn+p3G0IG7HmX
+	+8jfIERXYmdEfdARhaqR0hDiIA7xdJgx7Mg==
+X-ME-Sender: <xms:nKlbad9sAqK5paLXuwZNYRRL079ZnUvaMgyoEH2fzezs3JPGgCDQNA>
+    <xme:nKlbaZKsPpoU-tTciunBgYhEVYLDBNAmwIGJ1WuofNaUJugLVU1z3zDJlkFs5MA_1
+    0eW81U0PHdSBUEF93HNe1C6hKdMTjj3xLjwqQlo4KD1BpiAgaG1Pw>
+X-ME-Received: <xmr:nKlbaYau0OJpci9Ry1XdFz_heSfrJ2TXf-BJfbRP2xKZcpuibvojS0tfFaE2JXYGgi1oEDc98p_AU0fcprEYh7jK36XfQ0QOwfDbB0k3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeljedviecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhthh
+    husgesphgruhhlihhsrghgvggvkhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:nKlbabI2-Q9_KrOQNdkQJqYYpHbkh8wDvzvbLaWQct_CXLQiRMZNdQ>
+    <xmx:nKlbaWCxueboB2cBY71yetJycrFmVc1-Xq8Ariwz6HPtEHUAPNQQcA>
+    <xmx:nKlbaQpHfuHfXaAHWo_cISzbGyGx9MasbA8Ny6r3uvsFZiiga3m9Ug>
+    <xmx:nKlbaRhFog1sTb2HSDAhzBVBbo2Bn3gujuyBLreALzD8d_y5dmns9g>
+    <xmx:nKlbacmUReUwXpqmRy2X3MOo0S-5u7AP1B3GsFVYWFrqQLzwiPBAm8ok>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Jan 2026 07:07:55 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f95ffecc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Jan 2026 12:07:54 +0000 (UTC)
+Date: Mon, 5 Jan 2026 13:07:51 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Paul Tarjan <github@paulisageek.com>
+Subject: Re: [PATCH v4] fsmonitor: implement filesystem change listener for
+ Linux
+Message-ID: <aVuplzNaoCHlZG3S@pks.im>
+References: <pull.2147.v3.git.git.1767099302592.gitgitgadget@gmail.com>
+ <pull.2147.v4.git.git.1767202894884.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: git-last-modified weirdness
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-References: <406222e6-d10b-47d8-a177-de5912db4512@codeberg.org>
- <03f96860-29fc-42a7-a220-c3ec65eb8516@codeberg.org>
- <87v7hgpbrk.fsf@iotcl.com>
-Content-Language: en-US
-From: Gusted <gusted@codeberg.org>
-In-Reply-To: <87v7hgpbrk.fsf@iotcl.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.2147.v4.git.git.1767202894884.gitgitgadget@gmail.com>
 
-On 1/5/26 11:57 AM, Toon Claes wrote:
+On Wed, Dec 31, 2025 at 05:41:34PM +0000, Paul Tarjan via GitGitGadget wrote:
+> From: Paul Tarjan <github@paulisageek.com>
+> 
+> Implement fsmonitor for Linux using the inotify API, bringing it to
+> feature parity with existing Windows and macOS implementations.
+> 
+> The Linux implementation uses inotify to monitor filesystem events.
+> Unlike macOS's FSEvents which can watch a single root directory,
+> inotify requires registering watches on every directory of interest.
+> The implementation carefully handles directory renames and moves
+> using inotify's cookie mechanism to track IN_MOVED_FROM/IN_MOVED_TO
+> event pairs.
+> 
+> Key implementation details:
+> - Uses inotify_init1(O_NONBLOCK) for non-blocking event monitoring
+> - Maintains bidirectional hashmaps between watch descriptors and paths
+>   for efficient event processing
+> - Handles directory creation, deletion, and renames dynamically
+> - Detects remote filesystems (NFS, CIFS, SMB, etc.) via statfs()
+> - Falls back to $HOME/.git-fsmonitor-* for socket when .git is remote
+> - Creates batches lazily (only for actual file events, not cookies)
+>   to avoid spurious sequence number increments
+> 
+> Build configuration:
+> - Enabled via FSMONITOR_DAEMON_BACKEND=linux and FSMONITOR_OS_SETTINGS=linux
+> - Requires NO_PTHREADS and NO_UNIX_SOCKETS to be unset
+> - Adds HAVE_LINUX_MAGIC_H for filesystem type detection
 
- > Gusted <gusted@codeberg.org> writes:
- >
- >> Hi,
- >>
- >> Resending this mail as it looks like it might not have arrived (couldn't
- >> find it in the mailing list archive).
- > Thanks for following up. I didn't see it yet.
- >
- >> For Forgejo, I wanted to look into using git-last-modified to gain extra
- >> performance for larger repositories where this can often result in being
- >> (one of) the slowest git operation. However I noticed some problems that
- >> looks to be bugs.
- >>
- >> I've ran all the following commands on the following Git repository, 
-on Git
- >> v2.52.0 (Arch Linux) and my git config does not enable or disable any
- >> feature that should've impacted the any of the following observations.
- >>
- >> $ tmp=$(mktemp -d)
- >> $ git clone https://codeberg.org/forgejo/forgejo $tmp
- >> $ cd tmp
- >>
- >> During some experiments I noticed it being slower for some files. An
- >> example:
- >>
- >> $ hyperfine --warmup 5 'git log --max-count=1 DCO' 'git 
-last-modified DCO'
- >> Benchmark 1: git log --max-count=1 DCO
- >>     Time (mean ± σ):      86.9 ms ±   0.8 ms    [User: 70.1 ms, 
-System: 15.6 ms]
- >>     Range (min … max):    85.5 ms …  88.3 ms    34 runs
- >>
- >> Benchmark 2: git last-modified DCO
- >>     Time (mean ± σ):     151.3 ms ±   4.3 ms    [User: 133.4 ms, 
-System: 15.9 ms]
- >>     Range (min … max):   145.4 ms … 167.1 ms    19 runs
- > In my local benchmarks I see similar results.
- >
- > I agree this isn't great, but git-log(1) is just very good at logging a
- > single path. git-last-modified(1) is mostly designed to give commits
- > for a bunch of paths. For example:
- >
- >      $ hyperfine --warmup 5 'git ls-tree HEAD --name-only | xargs 
---max-args=1 git log --max-count=1 --format=oneline --' 'git last-modified'
- >      Benchmark 1: git ls-tree HEAD --name-only | xargs --max-args=1 
-git log --max-count=1 --format=oneline --
- >        Time (mean ± σ):     852.5 ms ±   9.2 ms    [User: 703.8 ms, 
-System: 141.9 ms]
- >        Range (min … max):   841.9 ms … 869.4 ms    10 runs
- >
- >      Benchmark 2: git last-modified
- >        Time (mean ± σ):     141.2 ms ±   2.0 ms    [User: 133.0 ms, 
-System: 7.9 ms]
- >        Range (min … max):   137.7 ms … 146.0 ms    21 runs
- >
- >      Summary
- >        git last-modified ran
- >          6.04 ± 0.11 times faster than git ls-tree HEAD --name-only | 
-xargs --max-args=1 git log --max-count=1 --format=oneline --
-Only using git-last-modified when there are more than a few paths is
-okay for how I want to use it. I was not really able to deduce this
-from the manual, the general feeling after reading Github blog, Gitlab
-blog and the release notes of v2.52.0 it looked to be a good
-replacement of git log -n1 in all cases.
- >> This might be me misunderstanding the feature, but it looks to me this
- >> cannot be used for paths that is inside a directory. The following 
-two commands
- >> yield the same output:
- >>
- >> $ git last-modified -- web_src
- >> 24019ef5e83fd7bed7f31ad09dd8d5f26b4bdc69        web_src
- >> $ git last-modified -- web_src/svg
- >> 24019ef5e83fd7bed7f31ad09dd8d5f26b4bdc69        web_src
- >>
- >> Where I expected the latter command to return the last commit of
- >> web_src/svg.
- > I agree this is confusing. And I plan to propose a change to this
- > behavior. But at the moment what you're supposed to do in this
- > situation:
- >
- >      $ git last-modified -- web_src
- >      28e0af23faf6c8e8f353ba2ae818ee0f83fd3e5c        web_src
- >      $ git last-modified -r --max-depth=0 -- web_src/svg
- >      b8f15e4ea09c6571872607874ae099269ea4b201        web_src/svg
- >
- > I plan to change the default behavior to basically behave like `-r
- > --max-depth=0`. But I'm happy to hear your input if you think it should
- > be something else?
- > There's some context here[1], but as said, I might shift direction a bit
- > toward making the default more intuitive.
- >
- > [1]: 
-https://lore.kernel.org/git/20251126-toon-last-modified-zzzz-v1-0-608350df0caa@iotcl.com/
+This would also need the below patch to support Meson. Would be great if
+you include it, otherwise I can send it as a separate patch once this
+topic lands. Thanks!
 
-Oh, there's a whole new option! That's exactly what I was looking for
-to get that behavior. Only returning the root level information by
-default looks and feels silly and does remind me of git-diff-tree's
-default, so I would agree on having -r --max-depth=0 as the default.
-Returning the information exactly for the paths being given sounds most
-reasonable.
+Patrick
 
-Although given you mention that this command works best for multiple
-paths I can also imagine -r --max-depth=1 as default to nudge people to
-use it for that purpose.
+-- >8 --
 
- >> I'm not sure why I tried this, but I can trigger a BUG when giving 
-it some
- >> nonsense input:
- >>
- >> $ git last-modified fb06ce04173d47aaaa498385621cba8b8dfd7584
- >> BUG: builtin/last-modified.c:456: paths remaining beyond boundary in
- >> last-modified
- >> [1]    690163 IOT instruction (core dumped)  git last-modified
- >>
- >> `fb06ce04173d47aaaa498385621cba8b8dfd7584` is the tree commit id of
- >> web_src. I
- >> suppose this should've returned a nice error message or blank output. It
- >> does
- >> give a blank output when you specify a valid path:
- >>
- >> $ git last-modified fb06ce04173d47aaaa498385621cba8b8dfd7584 web_src
- >>
- > Hah, that sounds like a real bug. Thanks for reporting, I will look into
- > it.
- >
- >> Kind regards,
- >> Gusted
- >>
- >>
-
-Kind Regards
-Gusted
+diff --git a/meson.build b/meson.build
+index dd52efd1c8..0130d40702 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1322,6 +1322,9 @@ endif
+ fsmonitor_backend = ''
+ if host_machine.system() == 'windows'
+   fsmonitor_backend = 'win32'
++elif host_machine.system() == 'linux' and threads.found() and compiler.has_header('linux/magic.h')
++  fsmonitor_backend = 'linux'
++  libgit_c_args += '-DHAVE_LINUX_MAGIC_H'
+ elif host_machine.system() == 'darwin'
+   fsmonitor_backend = 'darwin'
+   libgit_dependencies += dependency('CoreServices')
