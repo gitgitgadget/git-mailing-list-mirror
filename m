@@ -1,130 +1,131 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE1720DD72
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 22:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80AD1E885A
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 22:24:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767651589; cv=none; b=Iu3oK+F6Rf+1m8Je11yVy01DFQ/RXQaDpvZxvqGVHG42sC7N452CasdWpjdKHtsW6HLhPuMyLgWt9K2ZrFA/rfH3w9q0aXqpVu9n5CjZRM6q+ZmSkWfXmyArpou+/7t/gT0OAjdea/Ckt3gBm2VqQ5wMcBaUVoSkN27aPtMxbWk=
+	t=1767651881; cv=none; b=drRMzRRGUYZ7InKEU555jgkrzZeZQccc2FrW6I8j8x66Phj7uQCVWqqg+X3F7aD6FxYF/F87B4qYf0Cg3h8wKmEJtVqt2Sh/43zLXvlEILPr0J2KLPSmtjJgCsVrTIddQ6UE9oIKtJBXDkS8UrroHJqRjyB1lrcEOS23000ZE3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767651589; c=relaxed/simple;
-	bh=7agdt18lwIE3jUqY/cwxYwr8k+vK7ScmCMGXVBiI1o4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G7OxWf0YrteIq7fLyWqx/yebOBgZTcQHZlXIYz94Yyvjf7fFNmtoOq9MFnOYZLEYzusCabzlQa4QpoCzMcOmW3o5I3CsqyaLOwnvyVclv6Y7e/5XVhb8VIvwXWXnaxexSuGa15MIB3ifiDIZVa+gx51qPi1bC8ECRbF53cwpmdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=calmm8iR; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767651881; c=relaxed/simple;
+	bh=TCGK8ZT1u70BTABwIt+x9M3NYztIavIhndURngVbWT4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=spRqGAUO0RNUY/Uv721rMqLzItGmqEl3dMW26My1mBBMCvCrKjU5xz0oNNKVjLH19p/9cFdBXs8cSQqzGhUDNpHCWoen7OKntSYu3RFbJyqGMXn1iMmuiwiL5OPBKh80+GSvQ8UhCpvaas8lEDEuttDofc/yiZfVI/Hlp685u14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j3YUssI5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SQlG10Zn; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="calmm8iR"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-34c84dc332cso436388a91.0
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 14:19:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767651587; x=1768256387; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K+rft8pXgNh7XjHSkyfVHsoV0NL1PbmypMm4zGP9vws=;
-        b=calmm8iRhtL/rOhXp1Fw3M70lWGU/vERa1fSBPs3D9r3TZcm1sFA6gd3wWH3PeMztj
-         tqDsvy9yY47NDnRiS6dxbdG98K5E+6R8Zb2jScQWBKcwn+gxJbqsiFZnSJ0OJcoF0bK3
-         OmXyRDBoADqnukbKNAoejyDV/OrNjVKusDmpKo2v/SaGmRiFMEkQvgiKN1MGTpKxshSl
-         s5VvYs8ZcmOpO347KSsjIjG8y8uofx3gjmcGUF/j6YRorWGlZXIfdPkzHgidxQxhC09H
-         wxOe0XebbN4VYpP21dyyfcDlDI9+FRs4M2yitPkMSXiW/vbFgrCfcVwN5uuGTLbMTOML
-         zU3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767651587; x=1768256387;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=K+rft8pXgNh7XjHSkyfVHsoV0NL1PbmypMm4zGP9vws=;
-        b=mjEEeBsFBuN5HsLxff+mJ1IZIRuIVobwhWuLdJPpVzssqDSh8Z0brdagAqdbjY7kFD
-         O5FYNaGWCvFjOGdU8n7GwMEG0BEmokn2fkkwyHaZWW+Fs5QMMIoZYN/wahPiWbKO6dzs
-         bm8F+8kDWkuA8ZL6ZGjIwIGn9zB1RmWt6bPuqz6lRJVayiYYy6WC1VxfYtGdeJSsRL/2
-         Rn6xliuBJNBzyQLINK/H/rt0huyGeLe9xy7VNWlTxNhIlZga8KCv40RMgbopDrer9om7
-         PwGN/PtJ98Px2Lws712TVF+UhkIre3SjWg0RoeJnS8Bts5fUKVKxa9h3gEiPiDdNmV0X
-         nSEQ==
-X-Gm-Message-State: AOJu0YxAc8rHM9I0PzhaPmBE0DMqAaRAl4M9BKJe9SAZtMVlUMlVQ7/h
-	ksz1/kn9VY5a2d0RduRE8jgLL9+NooI1JnLlffKGQxmpEvvsGRFB1w44ZBuxW9XrSNmN3jcU9ux
-	G2H/zCNgu8PPfW4Xo/KWZRDRDCHLGCucfpw==
-X-Gm-Gg: AY/fxX7BKYwJAydThYJLPDDf41nAnl+FTJ3fGVL89MPTIjyC3kvT1CUtHUJEpg0IUm0
-	wkhzOl1MxIh1Jc7q42rLI19e6Zf8SHlQAX+5/Cz9g01BFgJsCW3+GDH8yXGNDisXs5O3JDqNRdk
-	MwguczgvPn0Yu5+FtWHhlFAVeXRBH3my7HuuWu25YHoUG2gPCJjMC0X7cd/TOan2wveWRd5x98r
-	DIq+PVdJrMM7E/CPWgwjtH7bRSagqL7ovOgnvq3c19S2QEVuwJusIpo/bV5tutYh4QLao4rrFeb
-	/ju8YU0=
-X-Google-Smtp-Source: AGHT+IGnBAEJjlncQvbaVhvgxiVtrorxaA1TWboLDIWG0YEgfsXxVBTh5yJrBebAB4tatYdEPMWqgo/ualSeDJNKTa0=
-X-Received: by 2002:a17:90b:1c07:b0:341:2b78:61b8 with SMTP id
- 98e67ed59e1d1-34f5f301a25mr550620a91.20.1767651587016; Mon, 05 Jan 2026
- 14:19:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j3YUssI5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SQlG10Zn"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 003F47A00E5;
+	Mon,  5 Jan 2026 17:24:38 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 05 Jan 2026 17:24:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1767651877; x=1767738277; bh=eMSJcnoVzI
+	tB7fwEYshbZBYYENNi9z88mMxYwXyKNLo=; b=j3YUssI521fCRCKU3jFub0n8Rk
+	fJSH+B/S/0tg3XfzW5cSZd6JU+Ib7LEinQoBODTQ84Z5Ht9QatsTUyNRccfNrvzQ
+	umSRXARr20BmQ17s9lHHvWYsltUyU6SIM9jgzf06khl7SWVPqvYZ/D4f/ai7nEex
+	xqRy+ijTBb/KjMjxwL+ft/cApXs+gtEcZ6QW1O7v/HeXIExHb7nUWeRKJ/rFOFek
+	Bg55lsT3IHGdljiLf5BiM1CjZ7vgWKRCDZTeEBw5xLGQMMEIZVGXoZROCJrxtUpm
+	PPro4vfFbUeaRetRYKFF5tYsLiTGsrTVeIXK810NBOO6dRWE3nxEImoVlVUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767651877; x=1767738277; bh=eMSJcnoVzItB7fwEYshbZBYYENNi9z88mMx
+	YwXyKNLo=; b=SQlG10Zn6gOwlo7pEKvLyg7snE7EuDSNLmmd4EwvpDlFbatsu8c
+	rwizWVUpIFCVRgUIvVh2DwT4ozPpAK2qfTBbIVUfuDH3WwePDcNCrW5OEuaFqc61
+	0JRZlYlw5oWvttsuYl8MRHifDI4j1b/N9u5ggVwX0scDbhbkAbV9VhCZKsjr+u/w
+	H1pfLDDhIfhTzBJkfWMHqXzgAaF+eiRyDUm+KtY1WqLIo9fME1+uI/hR9F9GfX5D
+	1Si9Es64Hs2wrM1OXQ9pF8vb0OnnQ7ZV7AIsPtwSN0b+Z4wvlJX8x2ZoryWH20sp
+	o2SbLzAAA1XCXwKmshR7I0kZFDU0suuxTmg==
+X-ME-Sender: <xms:JTpcaXS3CeS643LMmU1-lNDRqYN1Za-mhkEhmW65mylZGnLLLkreSg>
+    <xme:JTpcabU0mbw6X2GZiqxsjyFffmpIEu1qKNGtF8bNPv7Oz0U_XOdWT7ooC3SqtKkdk
+    _oWm3IVFF3LMBHZXL0kazrt1gsl5E-GSIicsrQAKg8YYT7vP6GqDQ>
+X-ME-Received: <xmr:JTpcaQfkjwYBfP0OvhObRNawCE4So0canLlhRx92BkbafknrZeXl3LNcl9SCeviMKRTCGlZvb8FR5eOJ8Y_-p_fsBdp7lE1hnB7afmo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelkeeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepsggvlhhkihguleeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsth
+    hirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehushhmrghnrghk
+    ihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehkrggrrhhtihgtrd
+    hsihhvrghrrggrmhesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhho
+    rhhrrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:JTpcaXIWI2iZL7gmJ_hHCdhBVuhCof6OVkv-5NN-GVzLGTe8rR5pnA>
+    <xmx:JTpcaVwqs-sdR6OGCTG1wWfnc_I3sdkSF5D2dpT4ra8cOALM3SRynQ>
+    <xmx:JTpcaVtnyTmAykD0dtSuhI4GzVP3Le6sqMEQvsv7c8cyMMDK3FEaxA>
+    <xmx:JTpcaQDAh4g7LJ0sB0TW0PNel0a_Z-FPxyEOUw91a5alKR6daWyJhg>
+    <xmx:JTpcacy9UZ_NKRcG7zOHDHBlBW5PTIXN6JuvCqkBwi0jZVG6wlgoKK_U>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Jan 2026 17:24:37 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Olamide Caleb Bello <belkid98@gmail.com>,  git@vger.kernel.org,
+  Christian Couder <christian.couder@gmail.com>,  Usman Akinyemi
+ <usmanakinyemi202@gmail.com>,  Kaartic Sivaraam
+ <kaartic.sivaraam@gmail.com>,  Taylor Blau <me@ttaylorr.com>,  Karthik
+ Nayak <karthik.188@gmail.com>
+Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile"
+ into repo-setting
+In-Reply-To: <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com> (Phillip Wood's
+	message of "Mon, 5 Jan 2026 14:23:26 +0000")
+References: <aVfzMsN2ouY3UBFG@ubuntu>
+	<a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
+Date: Tue, 06 Jan 2026 07:24:36 +0900
+Message-ID: <xmqq1pk3lmu3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAHwyqnWwJuD4T9tuCArW5eY=rPCHKT71LroRRx-aYfDGwr8E9g@mail.gmail.com>
-In-Reply-To: <CAHwyqnWwJuD4T9tuCArW5eY=rPCHKT71LroRRx-aYfDGwr8E9g@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 5 Jan 2026 17:19:36 -0500
-X-Gm-Features: AQt7F2qWu9nrleEGtMOBINaAgIrECjSSGGOiDeYgVirIXcSvrKls6SdModyj_sw
-Message-ID: <CALnO6CB7-w0tNMiYn5=SCBow637vRRrKRj_9k1h1DS4crJaVtQ@mail.gmail.com>
-Subject: Re: Triangular workflows
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Jan 1, 2026 at 2:43=E2=80=AFPM Harald Nordgren <haraldnordgren@gmai=
-l.com> wrote:
->
-> Hi Ben!
->
-> Did you ever get to this? And does it match what I do in the tests for PA=
-TCH v10:
->
-> ```
-> git config remote.pushDefault origin
-> git branch --set-upstream-to upstream/main
-> ```
->
->
-> Harald
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Yeah, that's definitely part of it for me. I've been meaning to write
-this down elsewhere for a while, but here's what my setup for
-triangular workflows looks like.
+> If I run 'git -c core.attributesFile=~does-not-exist rebase -i' with git 
+> built from master it fails immediately with "fatal: failed to expand 
+> user dir in: '~does-not-exist'".
 
-First, there are typically 2 remotes (but not always!). In the
-examples, I'll use "origin" (the place I usually cloned from first,
-the most official version of the code, etc.; also the place I pull
-from) and "benknoble" (the place I push to). The setup works just fine
-with a single origin, though.
+Hmph, if you call any behaviour change a "regression", this may
+certainly count as one, but I do not necessarily think the above is
+a good behaviour.
 
-Next, I globally configure
+Think about a use case where attributes are not used at all, e.g.,
+"git -c core.attributesFile=~does-not-matter cat-file -t HEAD";
+would it make sense to barf when your configuration file has an
+invalid definition for what you are *not* using?  So if the change
+makes it stop barfing, it can even be argued that this is an
+improvement.
 
-    push.default =3D current
-    pull.rebase =3D true
-    branch.autoSetupRebase =3D always
+> It is quite common that moving from parsing config settings eagerly by 
+> calling repo_config() at startup to parsing them lazily via 'stuct 
+> repo_settings' causes regressions like this. We really should find a way 
+> to address that before moving more settings into 'struct repo_settings'
 
-The first works with other settings to make the @{push} ref work (and
-to make "git push" work without arguments). I really like the @{push}
-ref, and I'm not aware of any other way to enable it.
+Very true.  If we know the set of things we parse early and have a
+way to say "this command only X, Y, and Z matters (but not W)", then
+the above cat-file example can omit the attributesFile from the "we
+care" set.
 
-Then, when setting up a repository I configure remotes and make sure
-to configure
-
-    remote.pushDefault =3D benknoble
-
-(if there is such a remote).
-
-The next step is usually starting a branch:
-
-    git switch -c branch origin # or origin/main, or whatever
-
-With the above settings, I immediately have
-- branch@{upstream} (@{u}) -> origin/=E2=80=A6
-- branch@{push} (@{push}) -> benknoble/branch (or origin/branch,
-depending on the case)
-
-
-
---=20
-D. Ben Knoble
+I think overusing repo_settings is a disease.  Moving a singleton
+global to per repository (by adding to struct repository) is one
+thing and it is very welcome.  But changing the way configuration
+variables are parsed (e.g., what used to be parsed by only those who
+care about is now parsed by everybody, or vice versa) needs to be
+handled carefully.
