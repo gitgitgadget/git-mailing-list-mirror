@@ -1,177 +1,126 @@
-Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175512F361F
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 10:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C723A33C1A6
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 11:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767610696; cv=none; b=qkphyEpVL61VnKzz/bt548604eraof3YOyLPhELx7Ke/jJqmtTgOkd23ungOxkeQgVqoFTD6BOt7x7KWBI3UI5PPGRWFS5wQlhmZ4gTYaZ07pZb38WRLbci9nledu104RIlr6loopQc0b7T650k70nsA+ScPCToqtM1knN24mfI=
+	t=1767611387; cv=none; b=L+dz/W8HAVyIHRIqA+8gKKV9+0Kl9AaKsGWUrkWsG5Jw3eM/hu9iYz1nGMhFbt6ovsuYk7yTCWOMzLKv04m7vyOpnwPLBi3pJ/RZ6NETshil7NvkreK/WKMF/kwbvevCllK450gBtJsJ4zVxGG/hDkckICzf62o+bsiZmbfvbz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767610696; c=relaxed/simple;
-	bh=5VSGNMG9jUxmAtrpQx30+rZWVHQ7XjZcV0hydaFs8x8=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G8FbwH+UbnOFRJ8gbrWSSmozHUmTvpMF+WxW6AK90BHPVy3KDQAGDOZ72m/qtVqFzCyNaBKhjLTBQvOp9dzC1eKxG6g+SA0HtLnwStd6VeSrI3FJnpKFjmu1yLKeh8fvjBSmOyUlMReZJA37pIX627QMUvW1rrdBQodzfNLxlHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=z5IJJLxY; arc=none smtp.client-ip=95.215.58.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1767611387; c=relaxed/simple;
+	bh=WvTX0mwTXf+a+06DOSb9pRPOCXrGu0gGX+ufEuy3Iso=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mHoVoMVC78FLNnl/wAG95tJ3WEHPCSPEOCHGYBoaPSVLdHu6aMUU0t6WWfA+4rjyJGmN2BuH5keQ0YOuG8d2ouJI+3mIFlqysw11654FwMtraqzsrkcYS3KGdMpgWrScF7Ph/LyM09WGzXx0oZHMwv4+QElGTfskfXuMaHUQWwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WsvMPYWm; arc=none smtp.client-ip=209.85.217.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="z5IJJLxY"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1767610685;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=C+icQmStp7kJ0N4wVr1cEgF77v2Ka5ud3wlMGUy0gH8=;
-	b=z5IJJLxY3h1Xzzt0c/ZlKe7POzhHu6QGccI3pRs3qaREPcxgDmQ0zLWprnAyhMYINO6NZT
-	yHGeXmW6sQ1ullNw+imYSSGoKY7gUy/u0XtYWAiKNflyF/4JbUxSAAfudraAe+tPDIKMcp
-	r/+8o23R6V/DHueiHKSbVYnAq+z72K8=
-From: Toon Claes <toon@iotcl.com>
-To: Gusted <gusted@codeberg.org>, git@vger.kernel.org
-Subject: Re: git-last-modified weirdness
-In-Reply-To: <03f96860-29fc-42a7-a220-c3ec65eb8516@codeberg.org>
-References: <406222e6-d10b-47d8-a177-de5912db4512@codeberg.org>
- <03f96860-29fc-42a7-a220-c3ec65eb8516@codeberg.org>
-Date: Mon, 05 Jan 2026 11:57:51 +0100
-Message-ID: <87v7hgpbrk.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WsvMPYWm"
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-5dbd150efe8so5498913137.0
+        for <git@vger.kernel.org>; Mon, 05 Jan 2026 03:09:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767611385; x=1768216185; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cyiLBBDDzsJnRsozIaJK1X9MW8WkF5QCiUIGKnBriHY=;
+        b=WsvMPYWmeB/3hubciW7IFS5UIk7MkZnnoPwq/Fae7Q4B8vERzh6jjkk7UNIvigLDZR
+         G6X5NNGSf6FJ65dTnweD+Od/n642vwIiS97ZKl4wiAQxX7kJegxWOygy09/HNUrSyYVs
+         A0hAAD2bb1WHHHHfz52sAcU6AHjos09dpBRhUBQ79ZSKjsn2Xb5ZG1VZPIyf0e4K3OxK
+         i3LgiDNUMnd+JBi/rtg8b80SMfV74r8D3RZlhIXQ9N6/yupyNUC2m768V3ZEVvytfWdG
+         hmRcCxqiWJdSBJtITwWGN7wFIzdBbTLYi1WqbBnOs0JdanBEh52DQeGyr0kRIOW1F+lF
+         NR1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767611385; x=1768216185;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cyiLBBDDzsJnRsozIaJK1X9MW8WkF5QCiUIGKnBriHY=;
+        b=bP5tGDJTqphTDfmVLmkiy/321FbosyvHUsWdzbwNzjTCSTAn/MzCeEmUpiOXgQu/dH
+         6c4S3oDgNsZ+P0BZbn80kjr0hH9WzMiiWeo/+5v/Rt/mbZeuasyWqefNnyvzILcvBUJl
+         KVQqw+GxMzxrCNcnzUZYR6BXYgImp+/h/V1ETuL+XcR9V6FeNBg9sA5eKH8AC2C3NzIf
+         k9Bft6YbFhLl/BJaWAaZY94AosLctetg86xXwq1Ax0QY2fsZtsSN4OSYCNrcjBfp03Fw
+         gO02Y4sMk0mQVNwdhet9cWZlQZ/+a/jtKZ7druw/hxGZc/XM6y3pa/rm1p/CAeiNn77V
+         vpOg==
+X-Forwarded-Encrypted: i=1; AJvYcCXGp0ykQ93ZcYGVw9LE3kuwywXk9osiMeKxluHbhLjL+DuGkkx2yccw9k75TR+HRa75C3s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsNdA/6GEHbF4PjDA5jFsBLdRFrmczffILMdGstbPKbADB6aZk
+	aCzZc+NU57qkFazjdKXvbmCHeio7VNegWlxWhq9deZuM2ER5pu8OPjMxVtparFllDivkYlsGuFo
+	JAdyfsin4nH5SGmcSUEpngNq7fxxYVPQ=
+X-Gm-Gg: AY/fxX7YeOe1bDjmbsECOpACE9xHqgWj5XTPxQYj1Do/dUQ3wx7X6uu/u4UkMErvgQs
+	GaqnpHSTdqFJRM+6OKf6j9rPTYoBg2adz3uWqiPZsC58ZcQA/l/oukYNyruoFnWeG1Psl7n1yaL
+	nyhF4Uks3BNSzfXa9nV0yvq69Z7VgmNxMpUN5jJY7VOEa96qqOIIFXiRRTYBsQZm66Yorxi0bpX
+	EzDqraQnmHSYEi4BHTDj2asQBns0t1Hplt3t7gab1WyTn1166v2X3mWMy1bSQa4udimNQWsmtMJ
+	mfMPE+t9tP4JdCHAsTjsIpcIw0rr2A==
+X-Google-Smtp-Source: AGHT+IEf5t0lbCEs8DafJAnNfLXghTPHkS7HanXpygsQ/n0A75oKjwY2y3HGn3uH4OH11ysX/T2oSqJbzVej0ZtQlqc=
+X-Received: by 2002:a05:6102:5687:b0:5dd:89ab:aa08 with SMTP id
+ ada2fe7eead31-5eb1a6d1d02mr14360797137.19.1767611384719; Mon, 05 Jan 2026
+ 03:09:44 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 5 Jan 2026 03:09:43 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 5 Jan 2026 03:09:43 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aVfzMsN2ouY3UBFG@ubuntu>
+References: <aVfzMsN2ouY3UBFG@ubuntu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+Date: Mon, 5 Jan 2026 03:09:43 -0800
+X-Gm-Features: AQt7F2rMEyZnvOJRQCKVRWOjXQXZx2GP7DKhwmLAnmML0PNITye9ncIsvapA57Q
+Message-ID: <CAOLa=ZTOKvEQaMxymi+mRcqyNy4bZ4JbK2HPtq6CeewjHMo_=g@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into repo-setting
+To: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, Christian Couder <christian.couder@gmail.com>, 
+	Usman Akinyemi <usmanakinyemi202@gmail.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: multipart/mixed; boundary="000000000000b0030a0647a218f6"
 
-Gusted <gusted@codeberg.org> writes:
+--000000000000b0030a0647a218f6
+Content-Type: text/plain; charset="UTF-8"
 
-> Hi,
+Olamide Caleb Bello <belkid98@gmail.com> writes:
+[snip]
+
+> @@ -927,8 +921,13 @@ static void bootstrap_attr_stack(struct index_state *istate,
+>  	}
 >
-> Resending this mail as it looks like it might not have arrived (couldn't=
-=20
-> find it in the mailing list archive).
-
-Thanks for following up. I didn't see it yet.
-
-> For Forgejo, I wanted to look into using git-last-modified to gain extra
-> performance for larger repositories where this can often result in being=
-=20
-> (one of) the slowest git operation. However I noticed some problems that=
-=20
-> looks to be bugs.
->
-> I've ran all the following commands on the following Git repository, on G=
-it
-> v2.52.0 (Arch Linux) and my git config does not enable or disable any=20
-> feature that should've impacted the any of the following observations.
->
-> $ tmp=3D$(mktemp -d)
-> $ git clone https://codeberg.org/forgejo/forgejo $tmp
-> $ cd tmp
->
-> During some experiments I noticed it being slower for some files. An=20
-> example:
->
-> $ hyperfine --warmup 5 'git log --max-count=3D1 DCO' 'git last-modified D=
-CO'
-> Benchmark 1: git log --max-count=3D1 DCO
->  =C2=A0 Time (mean =C2=B1 =CF=83):=C2=A0 =C2=A0 =C2=A0 86.9 ms =C2=B1=C2=
-=A0 =C2=A00.8 ms=C2=A0 =C2=A0 [User: 70.1 ms, System: 15.6 ms]
->  =C2=A0 Range (min =E2=80=A6 max):=C2=A0 =C2=A0 85.5 ms =E2=80=A6=C2=A0 8=
-8.3 ms=C2=A0 =C2=A0 34 runs
->
-> Benchmark 2: git last-modified DCO
->  =C2=A0 Time (mean =C2=B1 =CF=83):=C2=A0 =C2=A0 =C2=A0151.3 ms =C2=B1=C2=
-=A0 =C2=A04.3 ms=C2=A0 =C2=A0 [User: 133.4 ms, System: 15.9 ms]
->  =C2=A0 Range (min =E2=80=A6 max):=C2=A0 =C2=A0145.4 ms =E2=80=A6 167.1 m=
-s=C2=A0 =C2=A0 19 runs
-
-In my local benchmarks I see similar results.
-
-I agree this isn't great, but git-log(1) is just very good at logging a
-single path. git-last-modified(1) is mostly designed to give commits
-for a bunch of paths. For example:
-
-    $ hyperfine --warmup 5 'git ls-tree HEAD --name-only | xargs --max-args=
-=3D1 git log --max-count=3D1 --format=3Doneline --' 'git last-modified'
-    Benchmark 1: git ls-tree HEAD --name-only | xargs --max-args=3D1 git lo=
-g --max-count=3D1 --format=3Doneline --
-      Time (mean =C2=B1 =CF=83):     852.5 ms =C2=B1   9.2 ms    [User: 703=
-.8 ms, System: 141.9 ms]
-      Range (min =E2=80=A6 max):   841.9 ms =E2=80=A6 869.4 ms    10 runs
-
-    Benchmark 2: git last-modified
-      Time (mean =C2=B1 =CF=83):     141.2 ms =C2=B1   2.0 ms    [User: 133=
-.0 ms, System: 7.9 ms]
-      Range (min =E2=80=A6 max):   137.7 ms =E2=80=A6 146.0 ms    21 runs
-
-    Summary
-      git last-modified ran
-        6.04 =C2=B1 0.11 times faster than git ls-tree HEAD --name-only | x=
-args --max-args=3D1 git log --max-count=3D1 --format=3Doneline --
-
-> This might be me misunderstanding the feature, but it looks to me this=20
-> cannot be used for paths that is inside a directory. The following two co=
-mmands=20
-> yield the same output:
->
-> $ git last-modified -- web_src
-> 24019ef5e83fd7bed7f31ad09dd8d5f26b4bdc69=C2=A0 =C2=A0 =C2=A0 =C2=A0 web_s=
-rc
-> $ git last-modified -- web_src/svg
-> 24019ef5e83fd7bed7f31ad09dd8d5f26b4bdc69=C2=A0 =C2=A0 =C2=A0 =C2=A0 web_s=
-rc
->
-> Where I expected the latter command to return the last commit of=20
-> web_src/svg.
-
-I agree this is confusing. And I plan to propose a change to this
-behavior. But at the moment what you're supposed to do in this
-situation:
-
-    $ git last-modified -- web_src
-    28e0af23faf6c8e8f353ba2ae818ee0f83fd3e5c        web_src
-    $ git last-modified -r --max-depth=3D0 -- web_src/svg
-    b8f15e4ea09c6571872607874ae099269ea4b201        web_src/svg
-
-I plan to change the default behavior to basically behave like `-r
---max-depth=3D0`. But I'm happy to hear your input if you think it should
-be something else?
-There's some context here[1], but as said, I might shift direction a bit
-toward making the default more intuitive.
-
-[1]: https://lore.kernel.org/git/20251126-toon-last-modified-zzzz-v1-0-6083=
-50df0caa@iotcl.com/
-
-> I'm not sure why I tried this, but I can trigger a BUG when giving it some
-> nonsense input:
->
-> $ git last-modified fb06ce04173d47aaaa498385621cba8b8dfd7584
-> BUG: builtin/last-modified.c:456: paths remaining beyond boundary in
-> last-modified
-> [1]=C2=A0 =C2=A0 690163 IOT instruction (core dumped)=C2=A0 git last-modi=
-fied
->
-> `fb06ce04173d47aaaa498385621cba8b8dfd7584` is the tree commit id of=20
-> web_src. I
-> suppose this should've returned a nice error message or blank output. It=
-=20
-> does
-> give a blank output when you specify a valid path:
->
-> $ git last-modified fb06ce04173d47aaaa498385621cba8b8dfd7584 web_src
+>  	/* home directory */
+> -	if (git_attr_global_file()) {
+> -		e = read_attr_from_file(git_attr_global_file(), flags);
+> +	if (istate && istate->repo)
+> +		repo = istate->repo;
+> +	else
+> +		repo = the_repository;
+> +	attributes_file_path = repo_settings_get_attributesfile_path(repo);
+> +	if (attributes_file_path) {
+> +		e = read_attr_from_file(attributes_file_path, flags);
+>  		push_stack(stack, e, NULL, 0);
+>  	}
 >
 
-Hah, that sounds like a real bug. Thanks for reporting, I will look into
-it.
+For my own understanding, when can `istate` be NULL?
 
-> Kind regards,
-> Gusted
->
->
+[snip]
 
---=20
-Cheers,
-Toon
+--000000000000b0030a0647a218f6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d2b9e38f5db20beb_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1sYm0vWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM2duQy85bDlhYmMwcHVqK2FBOWxQWExuTjFsWDBvZwpoaHFXbk5GNzNq
+R2NCVFVyTXF2VGdhTkRYOFg4aytFa3cyd1BEQVNxVHJBaGNERkJNWkdJWmpkbVNCUTVhNXpECmdN
+MTBLLy9wRFF5VDRnVkZMeHV1aUc2VThPMWJkSU9FZHBZN043dDhPMW9jeU9qbEdzaDV1MTIyQzI2
+U1BMWUwKbjZ5M1RkQXhCRU9RNmUyVHY2SlhMb0FsV3c1ZUNNbDUvZkQrV3NiVXBZY1BJbTlvNEJB
+Q0lEWUMzaUFkMlMvcwpmTTc3QXhFYzF6UGV1UmJ4MGVtNWVhQ0tFbjRWUGhGL241c0JjTU9oVW91
+bUpZTEVabmlIcTFGTmwrUUlpY3V6Cis2SFpWQm9lRTRaeE44cVd2MC9KK3NLckdVNkdRYnQ2c2Jj
+Syt3dWxwcEJRaG9BT3I0MzcwenlUa0tHQzNzdnkKWWdRTXZtWnZsU1hHcTBTdXdua2VmZGRycmc4
+M2k4QkZORDlzRFN0NEptQkZDK05kZ2NvVDZwNFllMWlKWjZ4agpQTFhkcFFEZUZMSFdBZTF0YXZw
+dUJVZDNoK3dwRnZyV2RxTFBLRUZCbk1sNHVZNGFPcEJoKzBYVzM0NjFQUnZVCkdRVlp0cDNobURQ
+WlUvK2ZEOVFzQzQ5N3AvSTZ6alhXbFo2NUoxVT0KPU5GRjQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000b0030a0647a218f6--
