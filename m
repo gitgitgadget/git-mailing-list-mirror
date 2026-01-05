@@ -1,142 +1,120 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A32320393
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 03:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B621E412A
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 05:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767584194; cv=none; b=s96o84l643bz9PwQxpBao1/KFExmsuUBfA/uiY725852+epOngSJcqaMfjMi5sVOk87rqYc/rNDL5er4LjW2ob59sOLCBKePMURFLBGDe/NUCwPyOHEJKG2LkjL/mxR4JDJdEgzU9AWMJ3TShQ5Csfsi2IWy12LH9aF08clFIyg=
+	t=1767592707; cv=none; b=QPRN7YSVMRCfOdf5pFWLz8gSVwQrxMgQ0eBSXCf3zO9nmqv4nmZbAvysx8yLGXhZHq/7EBB16xat/psx7EyOemCkdF2E431UAIJn5NDi3XIVK5QDdlKSIVrLoljg8wcoQj3SjpweG45vYWu6YlB/31C2xrsIdPDy5MnPobN4KHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767584194; c=relaxed/simple;
-	bh=+pE1PFODYOKR4744lXoRWVvJepC3Ta9EI9CiquSOR0w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VnbjJHMeUSA+KDZdTNO+yWngZaHy5QF4qpuKsoub9Cuav//EcC93aPrzZPeNmSMg42OEJn8pmDkeoKC3caYKX1rPrjYPo996w6Vo1jTKTLoWP4MWItHl8/PPO0f+nCVeRf4YHMRtCSrvRRijDT0Evie/N4Gz3/YkXYme85okBgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=VktcT4kO; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1767592707; c=relaxed/simple;
+	bh=ccGx/WNQv8Lu5m+XdC9SaSX+zQOVQS0TUY+t2JuVImg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X3YbnB3H7MY6nXR/hJfPdPhZXZrISGAO+gpKFn19JD920ULJV8CecDWDgwNZx1/g6GkUOpzOwIHDBX8YYDSOR5g62pDlNQvB9Qq8paooNd4wTq6YQmBCq9jdqs0O7ptMAm5M/xinb6iPX7ez2A3ZndkSHirBtZ/yZvCROFX5nV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJwFPguJ; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="VktcT4kO"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1vcbOF-00EjUE-KM
-	for git@vger.kernel.org; Mon, 05 Jan 2026 04:36:19 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
-	bh=w5J/2K9U/0rUzflVkcNj+zSVcEOfEiyNuugcXtntTGc=; b=VktcT4kOtfetOiyyfGvvh145ig
-	KDMDV/kBtVPNdCe5xH66kGlV79diobJ5us7+Xq2QtbkbRBQlrvsjRVm3ADak5dBCLPdu7FNxYuSpA
-	VTmSYqQFTmktj48I51oWzjMgQKDf3NuFpbwKcM7UIHOk23sghMiBSxz167h1VAHNzx4CSPcJxojGo
-	Rlo8IlhWFw++jnCUA2h/Vs+eOmTQLlVkNHDlD+2huEALha69FmazlXvLFJsh5csZ4gFKNQCr8QVTx
-	0Ytww96gBMJ12FRwdGqol6bb5iDaiWXSJcyPzVGUNCO1/RJIGrtmcBAZVhf4uzGix+Sg/zNKaNRM2
-	ZxqeevqA==;
-Received: from [10.9.9.72] (helo=submission01.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1vcbOF-0001Cr-70; Mon, 05 Jan 2026 04:36:19 +0100
-Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1vcbOB-001Dad-OH; Mon, 05 Jan 2026 04:36:15 +0100
-Message-ID: <4a9c1a5f-336a-472c-af1d-7011fad776a6@howdoi.land>
-Date: Sun, 4 Jan 2026 21:36:13 -0600
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJwFPguJ"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-bd1b0e2c1eeso10434168a12.0
+        for <git@vger.kernel.org>; Sun, 04 Jan 2026 21:58:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767592705; x=1768197505; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IoUe7+KaRGih3wJ2JJu/mLFUsG46CjTSVYUZTi0dnfI=;
+        b=LJwFPguJ2xpSavq9/lBw7hmBLeBk25SATvxe1bHKohahD24pGy6JQqm1qvFyF/++ic
+         0i/6UZuThfAz2Dx3Qbe3LkiSZzf1y/vmZxhtApqhKHq/dpcwNfCS/uKyCWXlpmKQ4muU
+         xAy6IlFeSmbZrVDFxiSB0K0x0yt1NFvMLKrSeGISuotHHkJemER9TuZdhdPV5PCj4OLw
+         pCQXbZkBZaoWGgk58PO7CLWAZQEACs5jhqPnOIsQuLGUzrwb7Zw6xM1mTQecyIl60VYZ
+         tXZUDLIT51weW+G7Hd09uFII+fvw9LScCuKfnN6tbHJ+1v1qFWa72M2tMiWxNbtahyuR
+         /SeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767592705; x=1768197505;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IoUe7+KaRGih3wJ2JJu/mLFUsG46CjTSVYUZTi0dnfI=;
+        b=TcopkomUqW4QvpvSlWbsPFQgxGe+mLSPvsqHyGcf6k38Djru7ucYST4+ueawhqUSzw
+         r79nlAjEE9PqAr+BVnVtliVTVRHwZBFZOGPQFh21cBUUKXYDfnxutpNIDp3sfu75nBpi
+         7jsPnHR6JWzgPQhZJ9ZlkCQeFAovU8ElTNjp8h1cguVZ6WnlBlpyAbiY9pU4DDjkU0mj
+         2aXEgMPxs3yecasF8JrlHd7VN5Apob79/vxRChbWFvqHNG5DSiJ8NQE2oSYP2ze3ao/j
+         iKQvWfYM3DAu16Z+Cdt+QsJbgg+59pdQZ85BR9LbSiOaMkrUSccKHhyDBy+ZxcTjjvvd
+         MT3g==
+X-Gm-Message-State: AOJu0Yzut/CkHKPsLxYkCmv9RSrEIhP27oPtdJBmLaEDasMpCQZW5LCx
+	qFXkTLOOW4P1IR0lXJo8UTdCXyGUBa2YfwGCNdHqLhyZA/fx1J3x0YzM19KyVv9ySH2+sHgDxZu
+	a0QBLfUdSksX5vCCM3bgXOVGr7rt2eQjZ0Oz3hPE=
+X-Gm-Gg: AY/fxX4LietFKXCsvwaCHOGYk5aTtpjXVeLtAdD6N7Md3oo26jS1GGYCVHmr/3hsUzF
+	QMmf/pXCl5JstzqOaim5CBDfQBJ2Uasaftf1w+FMg9B54tbUueVqNtAXP+KIfV9TlGEdH2b83ZD
+	QWjEPmGzRkaoioCY3AReuqrf04hr5Be1+zCMIBQ+5tejtgO+Cmhmgt71LiDGEACsXuLK1M3K3Fm
+	ngyChSgZS1RHAH6x5WoqJ9ONT46Ox48e61i9AB3FoVd3lilLVaRhEactnMt3PMSfqWVydn36513
+	yJIkJ7gpQmk05sNimoMmromnc+lvvdG3ttzIaP/pmuNVcBMbzGmQuQCYeFxV8hVQz4mVP7W+
+X-Google-Smtp-Source: AGHT+IEqpqRNNTLecjzQ6LJhcLB6UML3vtjEg1IlTG7SZvAArF1yPaCM46i14+R2ugq6kDzVkuzk0+bLYoazf+lXbP8=
+X-Received: by 2002:a05:7301:fd86:b0:2ae:55f0:f2be with SMTP id
+ 5a478bee46e88-2b05ec481c1mr40481641eec.31.1767592704753; Sun, 04 Jan 2026
+ 21:58:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Bug] Git subtree regression
-To: george@mail.dietrich.pub
+References: <20251229185737.2328-1-deveshigurgaon@gmail.com> <xmqqjyy2dvni.fsf@gitster.g>
+In-Reply-To: <xmqqjyy2dvni.fsf@gitster.g>
+From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Date: Mon, 5 Jan 2026 11:28:11 +0530
+X-Gm-Features: AQt7F2pz-LEYK1KHRLcC2-bQdYI7H_UNmIGJ1UNQDZeX9rIdO_6TlakZ-NaOhTU
+Message-ID: <CAG7UgEQeOJq0S87btjy8TT9as10bCAJWKEUTfNafa811iM8qwA@mail.gmail.com>
+Subject: Re: [PATCH] [GSoC] t5403: use test_path_is_file instead of test -f
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-References: <e25b4d76-c1b5-4b6b-ba77-e1e2f7243ce9@howdoi.land>
- <20260104142733.2334796-1-george@mail.dietrich.pub>
-Content-Language: en-US
-From: Colin Stagner <ask+git@howdoi.land>
-In-Reply-To: <20260104142733.2334796-1-george@mail.dietrich.pub>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 
-On 1/4/26 08:27, george@mail.dietrich.pub wrote:
+> > Replace 'test -f' with the test_path_is_file in
+> > t5403-post-checkout-hook.sh. This helper provides better error
+> > messages when tests fail, making it easier to debug issues.
+>
+> All true, so I'll queue the patch.  Thanks.
+>
+> A #leftoverbit is to think about what this test checks, if it
+> makes sense, and if we can do better.  The expected outcome of this
+> clone is stable, so the input fed to the hook should also be stable.
+> With the same brain-cycle to write a test that checks the existence
+> of the output file (i.e., proving that the hook was run), we should
+> be able to concoct a test that validates the contents of the output.
+>
+Hi Junio, thanks for the feedback and suggestion!
+I read in githooks.adoc that for clone, the post-checkout hook gets
+the null-ref as the first parameter, the new HEAD as second, and
+flag=1 as third.
+Looking at the other tests in t5403, they read the three arguments
+from post-checkout.args and then validate them.
 
-> It does seem one component was added differently, as a non-merge commit, which seems break things.
+I can update the clone test to follow the same pattern as the other tests:
+read old new flag <clone3/.git/post-checkout.args &&
+test "$old" = $(test_oid zero) &&
+test "$new" = $(git rev-parse HEAD) &&
+test "$flag" = 1
 
-> ```
-> # Create a LINEAR squash commit for subB (simulating cherry-pick of just the squash commit)
-> # This is the key pattern that triggers the bug - a squash commit as a regular linear commit
-> (
->      cd monorepo
->      mkdir -p subB
->      git -C ../subB archive HEAD | tar -x -C subB
->      git add subB
->      # Create a squash-style commit with subtree trailers but as a LINEAR commit
->      # Trailers must be in the last paragraph, separated by blank line
->      subB_short=$(git -C ../subB rev-parse --short HEAD)
->      subB_full=$(git -C ../subB rev-parse HEAD)
->      git commit -F - <<EOF
-> Squashed 'subB/' content from commit $subB_short
-> git-subtree-dir: subB
-> git-subtree-split: $subB_full
-> EOF
-> )
-> ```
+Does this sound reasonable?
 
-Yes, this is very likely to cause breakage.
-
-Normally,
-
-     git subtree merge -P subA --squash
-
-makes two commits, in this order:
-
-1. Squashed 'subA/' content from commit f00...
-2. Merge commit (1) as 'subA'
-
-Commit 1 updates the subtree but does *not* rewrite paths. If you `git 
-show` one, you will see that it has files like
-
-     subA1
-     subA2
-
-and *not* subA/subA1.
-
-The path rewrite actually takes place in Commit 2 (the merge), via the 
-`-Xsubtree` merge strategy option.
-
-`should_ignore_subtree_split_commit` tries to search for commits like 
-(1), which all have the `git-subtree-*` trailer. Normally, these commits 
-either have:
-
-* no parents, if they result from a new `git subtree add --squash`; OR
-
-* only parents which are also "Squashed 'subA/' content," if
-   they result from a follow-up `git subtree merge --squash`
-
-We can safely ignore these commits—and all of their parents—during a 
-`subtree split` if they belong to a different subtree.
-
-Of course, that heuristic doesn't work if the commit has been rebased 
-onto other unrelated history—which is what happened in your repo.
-
-I suspect the best way out may be to remove the 
-`should_ignore_subtree_split_commit` heuristic entirely. It is mostly 
-useful for repos that use `split --rejoin` a lot, and the check itself 
-is slow. WDYT?
-
-
-> How the first two commits show up as verified, unlike the other times when I normally do `git subtree add --squash` and push directly to main, they show up as unverified.
-
-git v2.51.0 also adds --gpg-sign compatibility to subtree. Perhaps this 
-is what you are seeing?
-
-
-> It seems you also need to add `clock` as a remote and fetch it:
-
-Ah, thanks.
-
-Personally, I'm a big advocate for the monorepo layout. In my 
-experience, it makes almost every task easier and faster.
-
-Colin
-
+Thanks,
+Deveshi
+> > Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+> > ---
+> >  t/t5403-post-checkout-hook.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
+> > index 978f240cda..1462e3365b 100755
+> > --- a/t/t5403-post-checkout-hook.sh
+> > +++ b/t/t5403-post-checkout-hook.sh
+> > @@ -109,7 +109,7 @@ test_expect_success 'post-checkout hook is triggered by clone' '
+> >       echo "$@" >"$GIT_DIR/post-checkout.args"
+> >       EOF
+> >       git clone --template=templates . clone3 &&
+> > -     test -f clone3/.git/post-checkout.args
+> > +     test_path_is_file clone3/.git/post-checkout.args
+> >  '
+> >
+> >  test_done
