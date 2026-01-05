@@ -1,126 +1,109 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C723A33C1A6
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 11:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3987314D08
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 11:38:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767611387; cv=none; b=L+dz/W8HAVyIHRIqA+8gKKV9+0Kl9AaKsGWUrkWsG5Jw3eM/hu9iYz1nGMhFbt6ovsuYk7yTCWOMzLKv04m7vyOpnwPLBi3pJ/RZ6NETshil7NvkreK/WKMF/kwbvevCllK450gBtJsJ4zVxGG/hDkckICzf62o+bsiZmbfvbz0=
+	t=1767613116; cv=none; b=XXYNxBXJhRkKjtzaGLpDlFyffYgCUDe1PoTGP0v6J9UshMTMT66aJEv71WNgT0AQnCgcUh2I0zlpPPjHCEIyA0c8JLhw0RmOrd/8hWKGv5OzPruz0VhQIX0g9I/FXUwwTlA4wnQ4NB3MTTjhSt63KepJlZIk2ClgBkj32EJLPEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767611387; c=relaxed/simple;
-	bh=WvTX0mwTXf+a+06DOSb9pRPOCXrGu0gGX+ufEuy3Iso=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mHoVoMVC78FLNnl/wAG95tJ3WEHPCSPEOCHGYBoaPSVLdHu6aMUU0t6WWfA+4rjyJGmN2BuH5keQ0YOuG8d2ouJI+3mIFlqysw11654FwMtraqzsrkcYS3KGdMpgWrScF7Ph/LyM09WGzXx0oZHMwv4+QElGTfskfXuMaHUQWwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WsvMPYWm; arc=none smtp.client-ip=209.85.217.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767613116; c=relaxed/simple;
+	bh=w8u7ISe/0opPNhZu/G36dVjXt99eeHIy4xo/uE7p2Nk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KJ2/Tad+319suUK+M2k3ao4mtQFVFJY/EEJsNH/9eEMg01Jyd51NkPuetvwfxu0RK/huA3eCieh0fzMuoRhDu856rSIzpaq/FBF9KXKLr6ZIU73nGxeasg5B5eDVVdIfKm3A5QBaZyvhAUgPYOqpQnpRkf0tb26yClHAzQTQbFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KDFKVFi/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L3l1NU0v; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WsvMPYWm"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-5dbd150efe8so5498913137.0
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 03:09:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767611385; x=1768216185; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cyiLBBDDzsJnRsozIaJK1X9MW8WkF5QCiUIGKnBriHY=;
-        b=WsvMPYWmeB/3hubciW7IFS5UIk7MkZnnoPwq/Fae7Q4B8vERzh6jjkk7UNIvigLDZR
-         G6X5NNGSf6FJ65dTnweD+Od/n642vwIiS97ZKl4wiAQxX7kJegxWOygy09/HNUrSyYVs
-         A0hAAD2bb1WHHHHfz52sAcU6AHjos09dpBRhUBQ79ZSKjsn2Xb5ZG1VZPIyf0e4K3OxK
-         i3LgiDNUMnd+JBi/rtg8b80SMfV74r8D3RZlhIXQ9N6/yupyNUC2m768V3ZEVvytfWdG
-         hmRcCxqiWJdSBJtITwWGN7wFIzdBbTLYi1WqbBnOs0JdanBEh52DQeGyr0kRIOW1F+lF
-         NR1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767611385; x=1768216185;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cyiLBBDDzsJnRsozIaJK1X9MW8WkF5QCiUIGKnBriHY=;
-        b=bP5tGDJTqphTDfmVLmkiy/321FbosyvHUsWdzbwNzjTCSTAn/MzCeEmUpiOXgQu/dH
-         6c4S3oDgNsZ+P0BZbn80kjr0hH9WzMiiWeo/+5v/Rt/mbZeuasyWqefNnyvzILcvBUJl
-         KVQqw+GxMzxrCNcnzUZYR6BXYgImp+/h/V1ETuL+XcR9V6FeNBg9sA5eKH8AC2C3NzIf
-         k9Bft6YbFhLl/BJaWAaZY94AosLctetg86xXwq1Ax0QY2fsZtsSN4OSYCNrcjBfp03Fw
-         gO02Y4sMk0mQVNwdhet9cWZlQZ/+a/jtKZ7druw/hxGZc/XM6y3pa/rm1p/CAeiNn77V
-         vpOg==
-X-Forwarded-Encrypted: i=1; AJvYcCXGp0ykQ93ZcYGVw9LE3kuwywXk9osiMeKxluHbhLjL+DuGkkx2yccw9k75TR+HRa75C3s=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzsNdA/6GEHbF4PjDA5jFsBLdRFrmczffILMdGstbPKbADB6aZk
-	aCzZc+NU57qkFazjdKXvbmCHeio7VNegWlxWhq9deZuM2ER5pu8OPjMxVtparFllDivkYlsGuFo
-	JAdyfsin4nH5SGmcSUEpngNq7fxxYVPQ=
-X-Gm-Gg: AY/fxX7YeOe1bDjmbsECOpACE9xHqgWj5XTPxQYj1Do/dUQ3wx7X6uu/u4UkMErvgQs
-	GaqnpHSTdqFJRM+6OKf6j9rPTYoBg2adz3uWqiPZsC58ZcQA/l/oukYNyruoFnWeG1Psl7n1yaL
-	nyhF4Uks3BNSzfXa9nV0yvq69Z7VgmNxMpUN5jJY7VOEa96qqOIIFXiRRTYBsQZm66Yorxi0bpX
-	EzDqraQnmHSYEi4BHTDj2asQBns0t1Hplt3t7gab1WyTn1166v2X3mWMy1bSQa4udimNQWsmtMJ
-	mfMPE+t9tP4JdCHAsTjsIpcIw0rr2A==
-X-Google-Smtp-Source: AGHT+IEf5t0lbCEs8DafJAnNfLXghTPHkS7HanXpygsQ/n0A75oKjwY2y3HGn3uH4OH11ysX/T2oSqJbzVej0ZtQlqc=
-X-Received: by 2002:a05:6102:5687:b0:5dd:89ab:aa08 with SMTP id
- ada2fe7eead31-5eb1a6d1d02mr14360797137.19.1767611384719; Mon, 05 Jan 2026
- 03:09:44 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 5 Jan 2026 03:09:43 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 5 Jan 2026 03:09:43 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aVfzMsN2ouY3UBFG@ubuntu>
-References: <aVfzMsN2ouY3UBFG@ubuntu>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KDFKVFi/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L3l1NU0v"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C97F1400078;
+	Mon,  5 Jan 2026 06:38:31 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 05 Jan 2026 06:38:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1767613111; x=1767699511; bh=SjwOsD06vw
+	iQ9v5Flad9OBGrkIMDJkTphVZSxDJ2Ze4=; b=KDFKVFi/7rmI2mB7fj976JZyaP
+	sn94hiE5s4Ughpn+fz5WZC46ioN5SwcgB/FdfpyTpY7jV1gBBGKV0cL/T7ILTUFj
+	8tZScusQYf9F6UAU6qXe2mpUcWvEkW3+dW+sVy3q1XmR1DTGRBM83y9oT7Ct5CSN
+	wr2/4wiU9d0ZNcT9+IHu9aZJJ5ZnyjPlEVtTemNDwoMOtF//Ee4mTMB4Vh1Sb+Tv
+	K++QasPfvfcvZnJVyLkrH3pcDqzxYuSejJLhNRagYfdoRxlw1A3Pdk1Jf3qTWbL2
+	LMc9C47fHnpKuVSgwA1NJsnPpTZR++YEfkmKSaZKswCxgE20YvNon3VeLcFA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767613111; x=1767699511; bh=SjwOsD06vwiQ9v5Flad9OBGrkIMDJkTphVZ
+	SxDJ2Ze4=; b=L3l1NU0vfIisG8DdI9qQrQUbJw/Issv//0rLrLsSO8Yz+l26YtS
+	uLVQrxm194/tzTChCwvXoRMbB77h+zOmor3dMwwUz3JFxBpqJ8hzIb9rWGdxPbkz
+	2ok6yXr1GX1UWxGpqhvZvU4c0NK4EK/rSoogE59APggQ/1pFy273ICUbFBj5+cFO
+	0QvfvhOa/cw3X/H4xUd3jIyAOet1S1dmVwpKeEAfGVdKu4D5PSS28yuODVeBpA6/
+	PLW4m+wqYboD/XcWm4Qfv2vo8AEMHdO1g6lp9XwGF52wBUC+izN8VjmWrzOX3i0F
+	Qnb4mR8x3M7dQOXO93tJ/vrVla4SB/qrK3g==
+X-ME-Sender: <xms:t6JbaZIggG_-OOXFHnmjA2EQUHmeiCUYnn0aNZzmPRzCu_k1FP1E2g>
+    <xme:t6JbacLKl5z3t3BdIHrYXWkwUv2aGchZay5Ki-dxl6r8KP6XQRzepm0OITqH3Wplq
+    ZfCHZ2K7NenHZF6tzGxdAVAemf-uy8LYWECXshYgr8c8Sk7PCwlMA>
+X-ME-Received: <xmr:t6JbaWuujaFjkpIGV8q2uzutLKVE5T8ALuSaT-nteZ7t0yUfFDaSrNvBbN0W2sXkXfhpmAcFF1AyivTiWK1-4jCKcdVkbAZLV_7Zf8iY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeljedvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghplhgrthhtnh
+    gvrhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:t6JbaZRzy4ED4qyaWns5lRt97oGpfYjSAyVqJb4s1AW1mzGwiK7rxg>
+    <xmx:t6JbacNjKJ8yfOc1piT3_BrxeJlUxNY8z_zFYqnTwasFRYbwMMTAfA>
+    <xmx:t6Jbaeb5LW7U5ySQM1vYUb2SzVoLJxaKLZgfIUN7gqA3csezD0JUVw>
+    <xmx:t6JbaWweC5QeDn09Ciaug4LLNGAGbexFajEQyajQ1If6aIlGdMr7_w>
+    <xmx:t6JbaRz0yNrQgjuYHS3GGhcqN7jXZ0lSGbHrLGSQ-tCZqZEiPWkkJsNG>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Jan 2026 06:38:30 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a5f5be7f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Jan 2026 11:38:28 +0000 (UTC)
+Date: Mon, 5 Jan 2026 12:38:21 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Aaron Plattner <aplattner@nvidia.com>
+Subject: Re: [PATCH v2 4/7] packfile: always populate pack-specific info when
+ reading object info
+Message-ID: <aVuirWnh5Yjj24XM@pks.im>
+References: <20251218-b4-pks-odb-read-object-info-improvements-v2-0-62e3e49072bc@pks.im>
+ <20251218-b4-pks-odb-read-object-info-improvements-v2-4-62e3e49072bc@pks.im>
+ <62dfd1ff-cc19-43bb-a622-af480fd72d2b@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 5 Jan 2026 03:09:43 -0800
-X-Gm-Features: AQt7F2rMEyZnvOJRQCKVRWOjXQXZx2GP7DKhwmLAnmML0PNITye9ncIsvapA57Q
-Message-ID: <CAOLa=ZTOKvEQaMxymi+mRcqyNy4bZ4JbK2HPtq6CeewjHMo_=g@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into repo-setting
-To: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, Christian Couder <christian.couder@gmail.com>, 
-	Usman Akinyemi <usmanakinyemi202@gmail.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>
-Content-Type: multipart/mixed; boundary="000000000000b0030a0647a218f6"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <62dfd1ff-cc19-43bb-a622-af480fd72d2b@app.fastmail.com>
 
---000000000000b0030a0647a218f6
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Dec 30, 2025 at 06:03:24PM +0100, Kristoffer Haugsbakk wrote:
+> On Thu, Dec 18, 2025, at 11:54, Patrick Steinhardt wrote:
+> > When reading object information via `packed_object_info()` we may not
+> > populate the object info's packfile-specific fields. This leads to
+> > inconsistent object info depending on whether the info was populated via
+> > `packfile_store_read_object_info()` or `packed_object_info()`.
+> >
+> > Fix this inconsistecny so that we can always assume the pack info to be
+> 
+> s/inconsistecny/inconsistency/
 
-Olamide Caleb Bello <belkid98@gmail.com> writes:
-[snip]
+Thanks, I've queued this change locally now. I'll hold off sending a new
+iteration for now though.
 
-> @@ -927,8 +921,13 @@ static void bootstrap_attr_stack(struct index_state *istate,
->  	}
->
->  	/* home directory */
-> -	if (git_attr_global_file()) {
-> -		e = read_attr_from_file(git_attr_global_file(), flags);
-> +	if (istate && istate->repo)
-> +		repo = istate->repo;
-> +	else
-> +		repo = the_repository;
-> +	attributes_file_path = repo_settings_get_attributesfile_path(repo);
-> +	if (attributes_file_path) {
-> +		e = read_attr_from_file(attributes_file_path, flags);
->  		push_stack(stack, e, NULL, 0);
->  	}
->
-
-For my own understanding, when can `istate` be NULL?
-
-[snip]
-
---000000000000b0030a0647a218f6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d2b9e38f5db20beb_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1sYm0vWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM2duQy85bDlhYmMwcHVqK2FBOWxQWExuTjFsWDBvZwpoaHFXbk5GNzNq
-R2NCVFVyTXF2VGdhTkRYOFg4aytFa3cyd1BEQVNxVHJBaGNERkJNWkdJWmpkbVNCUTVhNXpECmdN
-MTBLLy9wRFF5VDRnVkZMeHV1aUc2VThPMWJkSU9FZHBZN043dDhPMW9jeU9qbEdzaDV1MTIyQzI2
-U1BMWUwKbjZ5M1RkQXhCRU9RNmUyVHY2SlhMb0FsV3c1ZUNNbDUvZkQrV3NiVXBZY1BJbTlvNEJB
-Q0lEWUMzaUFkMlMvcwpmTTc3QXhFYzF6UGV1UmJ4MGVtNWVhQ0tFbjRWUGhGL241c0JjTU9oVW91
-bUpZTEVabmlIcTFGTmwrUUlpY3V6Cis2SFpWQm9lRTRaeE44cVd2MC9KK3NLckdVNkdRYnQ2c2Jj
-Syt3dWxwcEJRaG9BT3I0MzcwenlUa0tHQzNzdnkKWWdRTXZtWnZsU1hHcTBTdXdua2VmZGRycmc4
-M2k4QkZORDlzRFN0NEptQkZDK05kZ2NvVDZwNFllMWlKWjZ4agpQTFhkcFFEZUZMSFdBZTF0YXZw
-dUJVZDNoK3dwRnZyV2RxTFBLRUZCbk1sNHVZNGFPcEJoKzBYVzM0NjFQUnZVCkdRVlp0cDNobURQ
-WlUvK2ZEOVFzQzQ5N3AvSTZ6alhXbFo2NUoxVT0KPU5GRjQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000b0030a0647a218f6--
+Patrick
