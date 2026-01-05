@@ -1,98 +1,77 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDB72D8382
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 10:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767609500; cv=none; b=UyrSww1M+bobirWdVUlRayudqICTOQ1jdeAGJN2Q5yMiR0XVifihFZzXpJGfsPHx0KQMY9RFD7R6P3+zk7YYEeTnubnme90aK7ARkDLXtsTgkjnbaGoSzuK4VUVFP/y0JiOFvZ1cXtzulIwcUelJ2g49gOxGkWc2f0TsA9bdCxM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767609500; c=relaxed/simple;
-	bh=cQoGiOfcP9Wjqyp2YlPZCqW/hU9h829gPXSwKqhmjeg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b212wDq8Wy7OV0hceG5GdENAwkW1dhg0mo70od1lbVNP59MnFxl6hFtnmP7T+zTsKW1/IFccQ+vIRLDOPv2Xt5+ribybi4aSOH45Q4OzcADLZcfOn2pMP3SaF7LlfyJY5BsA0RngkuSBuF7CkbIrO4u+/XvD1Sb0tmzfsTjMQc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k2z8jwdE; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13B41DD0D4
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 10:53:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767610385; cv=pass; b=Y1jqCSCyuMz2ymyGDux9CIYDHU1kTbveSB5GIuFIO+27mTViThyHYz//eC4S6+qVtsZ8TJB6RjWNWHNfKQ0KitjW36J0drka/3ehKbzQGsVVDgO5NM+ZTGsgPgmu5GRqsYGqhaFBDmv/cDGRTBSNo/Sb9CNY+VU+YqDY/y6rVMI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767610385; c=relaxed/simple;
+	bh=4Cho69UOYqNEMQR+xieClxDzFiyLAsipWbDHnMUEGpY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uiVC4fIRUzkfwxoC3l7Tt4uZARv0cMbXapCkYtmyMja8LYLBF3BhIV/jRFGdP2jl/sFBrWBr0EjwooJx/Vppmq4Y/b6R4z/CPG+ye5gX1irS4kZK0Qc7rhAFE9CmOJEFGpwZoCRtT21qzT6xRJG5wHAEGmMPk7ErKIvqGsINzow=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=KcCbvq2Z; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k2z8jwdE"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b734fcbf1e3so2940524066b.3
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 02:38:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767609497; x=1768214297; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cQoGiOfcP9Wjqyp2YlPZCqW/hU9h829gPXSwKqhmjeg=;
-        b=k2z8jwdEoFUJTlVzbZ4J78SqMh/LxRksoYeg2VJNAXxEJtuFTPwvZcNPqCoycbEE/8
-         t3wkWBEXkFiEhJToXfvz93cxumb0sLafv8i6x6F5mJ5f0kEHq4vg52aaL81VzfOxoPpc
-         gdm+q9WPf+pfM538uf8WGqAMxQQIFXWQXwpzuQgHUJU9UakJlIP/ESapmYn1UDIPGc66
-         OaMf7E5K4KotKUCHEqIFBtDTaYbrQSJcdZ/UCF3WEoIHj1xa3zjS6jUAzKr1n3uhRMvk
-         5wyLuolDHYxCkwB+SJGiYe4DRQA9VK3fzQSDg8eVj3nmvRLABWPIYfkUROnVc38cEZYR
-         FnIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767609497; x=1768214297;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=cQoGiOfcP9Wjqyp2YlPZCqW/hU9h829gPXSwKqhmjeg=;
-        b=CYxT/krdcb89CPEJGipqM5ap9QGr7BdeDxcpCa7m2LRKrG0rSOwirhXfFMe24yRPOh
-         Vh93fE7Zv3M/N70cXn+IPYhAvs7bvBeaM+K2jPsJGabAxAQYX6w4qRHK+U/Dt64yw7AJ
-         Gcw22VJFYlhQSDWUc+uc24fYyLvcDufR7r5x25hSwTSSU9+GYQBK+y4SKORJD8lTXeuF
-         PZ/ABfp/4CWw5F0z8GhsZUv6zxNrGZ8VUP9d0GHKMdr1PG2Mmp2dv9TNGirgr6dRew77
-         xGdtSDOUcCA8kaCl6ofl2snaIVWaAQqykHDKL9+6gCsu5QhKh0xZbd3VAo/075a9Dqc4
-         XxCA==
-X-Gm-Message-State: AOJu0YyKsO7gKd9DfGNyGEmHbRl4L3f3+m1lRDItao/JO8G7XPWA6SkE
-	akN+0vuWOiXFdAYb3Q1b06OD05i+0il6cOmMw3NivybylXFKEnFzH7FVEuGa/oYG/RIduaJzMWK
-	0+r8u17TwgVNhBgJg9duS5HIECSoElBusoQ==
-X-Gm-Gg: AY/fxX62lcIJ0/pXzSZgBIx637CN6P9Dseg0W6tKU27EadImyDPNXGOILs//FR1XEMT
-	W+IaUyphUt+Y4NgneE98UKtmWhHkJYFhzu1Wx3jLCQV6CsPipdfKFY23KUVHN6PcEdeIv6pprdp
-	lzsKpYpdAox4pfdGEJXyspzVztd2bW8V/Zq4B37srBBeDsyqQm/bOB+XHyy9i56BPhtsI+HGjhj
-	hcbwJ9h1jFJB+3jI39qSp1Uw/TRnjWfgxeaM/+Kf1X1mTv3PZ/QVIn4F0HI6abCXYn1ENtO7R6v
-	zOfJPlv2ktmQ2Cyqll5OAkOAYs08swwxtMk00dgU7mNFPPbLNxX3esrI
-X-Google-Smtp-Source: AGHT+IGh/8LGEL/m8W91Kx0q5nnPxNDRbSRpEt9aMWxjKhUVT1HiHqDE1UWBURYN9lDDyezMpc9/y/Q1jb82V6Pwyzo=
-X-Received: by 2002:a17:907:d8a:b0:b73:a2ce:540f with SMTP id
- a640c23a62f3a-b8036f55069mr4831460666b.17.1767609496647; Mon, 05 Jan 2026
- 02:38:16 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="KcCbvq2Z"
+ARC-Seal: i=1; a=rsa-sha256; t=1767610370; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=T5drjePkPXPecI3VHJSBEjIUCJ/5dxzkCn5pq0h+sa+fy2tXeDyEayw/ZJ5QzT19zkeHbT9y8MqiwREJJN2+LmlWPP/EpnzsThFtPnNUuv57aYpUWe3GCwVm0UM0Z9jha56wPVu3s8OMSAKULfCEs+oXMN89NNQnbXf+CRI2c+E=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1767610370; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=TPm3FVLsZgfKBKJvxClIAtB9g/A8ZynNQ5RjrjN54ks=; 
+	b=CLY+TV4AedmKgIja8sHh2EIQM5Z91yW5x02I8yNWtwbMc7YWF9J6+SojjSWg7rZd2Rhm/UkJb2cuAz4pP1+DVKcuPx+Gx33RR2oD90ihAZYisE0qac3NCr1uVi+etSti6v++0vaMKjJUPC6priCUn4nkQuXbAmeWUI5YrzvNk5o=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767610370;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=TPm3FVLsZgfKBKJvxClIAtB9g/A8ZynNQ5RjrjN54ks=;
+	b=KcCbvq2ZYigaQWf4/USZLMeo3QeodoYr9D7AeU03WZD49W2u9q246uTGL2L/ApFZ
+	UHVtIJPuN5/ugigivtMm95x+z47vqAQFxmWmXng9vd2obPcxLjQCe1gfUCH6q1HqRpv
+	/lOO0kzKVFmCMV8HSF71PXrmhfI9KlcfKoU9OwzY=
+Received: by mx.zohomail.com with SMTPS id 1767610368301696.5458946872528;
+	Mon, 5 Jan 2026 02:52:48 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Patrick Steinhardt <ps@pks.im>,
+ Josh Steadmon <steadmon@google.com>, Ben Knoble <ben.knoble@gmail.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v6 00/11] Convert remaining hooks to hook.h
+In-Reply-To: <xmqq344ulu4a.fsf@gitster.g>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20251226122334.16687-1-adrian.ratiu@collabora.com>
+ <xmqq344ulu4a.fsf@gitster.g>
+Date: Mon, 05 Jan 2026 12:52:43 +0200
+Message-ID: <87h5t0babo.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251230161228.61455-1-kavyanshbagdi224@gmail.com>
-In-Reply-To: <20251230161228.61455-1-kavyanshbagdi224@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 5 Jan 2026 11:38:03 +0100
-X-Gm-Features: AQt7F2qYCOah21876mgVn9P2nUTv1C2lyqDu8sfKW7wtXb7zaDeXH4v8o5V0nRQ
-Message-ID: <CAP8UFD3vOdyLb-LJtQqHGNESaejPB0kCi75Me0_5QVdKxaqSag@mail.gmail.com>
-Subject: Re: [GSOC] Introduction
-To: Kavyansh Bagdi <kavyanshbagdi224@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-Hi Kavyansh,
-
-On Tue, Dec 30, 2025 at 5:13=E2=80=AFPM Kavyansh Bagdi
-<kavyanshbagdi224@gmail.com> wrote:
+On Sun, 28 Dec 2025, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 >
-> Hello everyone,
+>> Hello everyone,
+>>
+>> This series finishes the hook.[ch] conversion for the remaining hooks in
+>> preparation for adding config-based hooks and enabling parallel hook
+>> execution where possible (that will be a separate series from this one).
+>>
+>> v6 is minor refresh for some last nits. Details + range-diff below.
 >
-> I'm Kavyansh Bagdi, a thrid-year Computer Science student from Udaipur, I=
-ndia.
+> I didn't see anything iffy in the series.  Will replace.
 >
-> I'm currently exploring the materials mentioned in "Hacking Git" and sett=
-ing up the repository locally to familiarize myself with the codebase. So f=
-ar, I've read "General Application Information" and "Sending Patches by Ema=
-il with Git". I plan to continue exploring the remaining documentation.
+> Should we mark this for 'next'?
 
-Great! Thanks for your interest in contributing to Git and welcome to
-the community!
-
-> I look forward to learning from the community and contributing.
-
-We look forward to your contributions.
-
-Best,
-Christian.
+Yes, I think it's ready. Thanks!
