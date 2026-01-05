@@ -1,74 +1,73 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846BA31197A
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 21:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE7721CC51
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 21:49:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767649743; cv=none; b=aMUpXLjh56b8fQzyyGdIz1rNKanCGMyzpEFjLQe50G5W0rdorO3LNZ8sCqjJSaIypUuvBuiE9rwIRNaTlqRugfw71QkB4dKG3Jd+BCrO4f67HTtV7I57V6k4HesK+F0ttw/l/d1Y5ODrryKlSfxGhu+j/8J9f3SkXRaztWVyraU=
+	t=1767649744; cv=none; b=AryDpxUHx/5FztlcKGZ3D+satSZLFXjWp8NyVoSwtVPVBQptXya3PZHwVRxnJQjgkm+wdpjpRRQmT0VgkO4aIDd/cF49rWZTuiC3LkxoglU6Ecw8xjHqME5Uf+cmGPQd/i5trUvB9R+NibhNzFWWNZ24EthJG6Wz+7V/xOE0Ii4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767649743; c=relaxed/simple;
-	bh=+0/UZu0tgZK/TOTIRRsN9QiIgJoKOjblOxJbMVfSofQ=;
+	s=arc-20240116; t=1767649744; c=relaxed/simple;
+	bh=TNbsKRk/zj1nJNP5/vEY6sHlFslmJ/14njb8kfTUoSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCW79axNKZL7jL/255585MczbeQu6wOZdeVJJg1BjLky2AwN+zTRbbAMVUcAFjGGlX6hPsbzzUykvp539dF7qlctwjtMWacM8vkxIeAWjawRGZJuM9vraAIavHaxD2ExgOTz5VtUlb1tKTORnR5Uxr+Pdh9uJFogXIJumD6eBt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q+r8HmY6; arc=none smtp.client-ip=74.125.224.41
+	 MIME-Version; b=o+B95WuWj70DIDh5AP4eleTsvIiwH5GJvPU13xpKtDGLPiicIw9o4aEs6lob/dD4QL9hKou3Wxkwpk2+VVRimE/QXFjyti8zJ7Cf49o/eHrGu6JbolNHDdL+pIEJWOHZjrGfZjRDkDiJWp5CVDMLbO1dXBeKxH/VK56+mtDvimw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dTDcxQvi; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q+r8HmY6"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-644715aad1aso573486d50.0
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 13:49:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dTDcxQvi"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-78c6a53187dso4314557b3.2
+        for <git@vger.kernel.org>; Mon, 05 Jan 2026 13:49:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767649740; x=1768254540; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767649741; x=1768254541; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=puxukEY5xXhLVo19+cbBr81LnBos7Qc4kcq0GtWiweI=;
-        b=Q+r8HmY6/FRYTDs1JSDs9sXfunke12uklZTqKzkaGK2IAuYZ+wxbLXOxSVAXWrOR+r
-         K0zrr2FtdSEOZ07XY09xcNxNzBvk54UAVuePBSy5JO8a6MIRMYoHpTCOL+9dnBYHjAWJ
-         AJfAYNp6I/pbVTykAVOSi/6pqaDvZf7zByo7YcA64rOYGKrGu5E4448xJL7OJO6yf25n
-         GR9MXSGP5N/mGIULgAuWBEhZi2vQjDrHjP+m6PPCNC+2yCjiy78bn0hH3Mp6hJQ55v3y
-         WaTGqUScOO90YA1/pMvBsfrl9W/Vvog+7B1BQj9kzhYOPEK9aS2UVwjk1U/dPAxHn98x
-         S50A==
+        bh=2LElUJKuizWq1FdTDiprQikPk9ab6YydqnfNbxixUyk=;
+        b=dTDcxQviZ+EbLLr+STBT9t/ugORvWpOi8ss4YrDlTAr/dK6pJXR797qfjsAkmjN9Yl
+         LXB71NcJlXJX00Aak5GahGWtBXN1Lmc+K05Is9kUdWtaUTmN+BQq8eTgYNSCYyqrF3W7
+         gHttMJ/BJftufJPm946TEWlhN+5FGsMlS6SiQ4E14FQes5LaJ9bhfo3CHNNa9S31gb0z
+         zKXo4JBRLem1wzg3i85PKQb6KDE96mTmUum8ZoC02SVA4JbZPQoLzKzqWU7jTXbpO46Q
+         CVg+fOteTS1shzHvCoEoBOcI+B8Zq+/9I3YONNO218hYV0kMk4hBAXCF7RuscIH68nfu
+         j2CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767649740; x=1768254540;
+        d=1e100.net; s=20230601; t=1767649741; x=1768254541;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=puxukEY5xXhLVo19+cbBr81LnBos7Qc4kcq0GtWiweI=;
-        b=OowA/RDbbN5FNWamVWn9u0abShgqXLaRDFSYUEUllM6jHISWeVZnHnwlSvz+6L5FAo
-         NFpKbzmvvN42d70yKGyI+/ZX5KAymPoL8/Xr8idatQQmjdeR+/tfdZaKhjOhsQG2e+rz
-         5766tnYHZ6wzk56mCDVRqkKdtLSFE70usQllmYQU8YikYYzLdI/u8tGAquiAjewV7R1Q
-         igPgPVE9e0+xfJnGgSRAHSgVnSOKba/HcHb1k5cn5G4P1oWEGdrOBMPMOtyr/p/SuuuV
-         kShZTkzJELBRjRg15t+K8dhsRZwRJK9445/qobmkdsmeGxbqA5NF/VQWeryjbzBSVlGN
-         GXFg==
-X-Gm-Message-State: AOJu0YwwdrQNfmZD5bJiBB0YfltqkhtwBQeElLV0cpaAtczpBTn5ud88
-	fclgyuhl88yzlyPXikW0eR3o1hobhoS/VhMDe0lysTkQayqYK73ung39oaScOA==
-X-Gm-Gg: AY/fxX7EA1zFpJxw7XuaUnITnq0GWvT1K83F0etR7tu6f7wDKTdAd0TfotbnlMFpp82
-	QWGqRVMtaT1gyAlAWsx9mZSyu/Or+uixEigtmEInpGyA7Fj+PUCWwNjEA61ivrloBQsiLsX5yMg
-	ydfUbFlgJjJR0wXHZIShY5uZTO6BCgsdWyBElLSCc8st4pMf6q1Q53SQKGVUrIa6yqtIfFdGYzA
-	ecDTgWtlMojf8+oMiZSKxbZZk8ND2O/v35IDXqifSghZGbUiczuKGRG7GDMOYpP8307vKttgxj6
-	Kwn/7mFicfLs7QhPdjU3ZtSgncOf5PebVeAegrzYHg1/Dv/QIk30lxoN+gB5TYLvXpBNFcClrLg
-	2EV3SYyETq+PfUsLatpoSdg+VRCQprMlZ1lKKzFeSnwIvpuYunIybTY3+1rXBhvBl/5p4ATwprz
-	075XuVL7xx9cZEG88=
-X-Google-Smtp-Source: AGHT+IH/n2obIgkhttpG1UVo1TEXdFjfI9KPBoBH1S95rvbcKY4l2RMHaQUv2F46130v2WBLiFWBQg==
-X-Received: by 2002:a53:d005:0:b0:645:5297:3e5d with SMTP id 956f58d0204a3-6470d31648fmr420248d50.46.1767649740251;
-        Mon, 05 Jan 2026 13:49:00 -0800 (PST)
+        bh=2LElUJKuizWq1FdTDiprQikPk9ab6YydqnfNbxixUyk=;
+        b=oytqeQ7e+hiin1MfDN2P4OUtJ1+8764gSjRSvF9G4fB9EIXeDEMnRR/SbHHEfBC9ot
+         UXGOiv3SZ8TioU5DdhYCw1YQODoHVsfKfPYjJSflrHnPpm2UMoMuKWgwY1Qt+XMYeE1D
+         565M7mNA4wZldAO3KqGBI4ONHmYWO80XxdPDw+7it4ANY7xMKYHYOUUye/4AB/UXOlwn
+         q4tDEqOkSLbe47zWZfemr+N40u5NmKlHxGMQjKMcXv4yoa1uTvvIw29+25Jh2PIldlr4
+         MQgV2ui2suX+SW2dG/0qd9l/gkSyYgxam2cBqosFiLSYf6e1kYnJg+XDrHT+Pr+N4Nm3
+         jOIw==
+X-Gm-Message-State: AOJu0YxcVXgnH58lxpIRuwI4qaeRRen97N6/ss71lyoUuBIKNyUe47ht
+	PxdOi02O/dE3d6FMCIGw/TnyQI8Scc+k7fMaaU/RVXpxcHysYK1e3S7ct74fQw==
+X-Gm-Gg: AY/fxX7hb3r+kBEFTtFNZPAoTr8W4q3b3uGLm8Yumvm5yAHhdOBY9mquiXH0l/0vTBv
+	sOllJj9EQh5tChM2ifzx85HiiGcwhERQn54cxzdGt5hwmrHiqMOk6jtxnN6mObE01l7cVsPJk9y
+	LfkfVpGL0bPYRYn3EScizCl3oGDSguk/A+RV7sS9XI2gyixl4KAsR5EumJBxmw6XdWdcDmqT9fU
+	Tv4ZIIPpWi2MiFoK0dpzWYZXfUzssXMtwVSnDRQbXTinsyCrnPVtP5SbAkRHmSXoH8WuyWor8Si
+	zMDpOwS8v91K5EXfec/hBYB6+YsYTFVYjk2QbzckNPd87X9Q+oUXtBYODn1ZUvp7Ipc9CQUa4Mu
+	HRcd3HN+xibjDOwtbglPIkkR0Rp0P/1Hb0p1FTPnx2g+sBVRWp0PssQX9bToOIVzop7hW32KPVd
+	bDWCokgvdRaUM6EAg=
+X-Google-Smtp-Source: AGHT+IEDaoVWXRtWt5IlxafRsHvC4xTpHfKBVV4+ksvvphs2AYnN28YG4tCaq/XSSoZjALoPqspy2g==
+X-Received: by 2002:a05:690c:2782:b0:78f:cdc7:3d48 with SMTP id 00721157ae682-790a8a80a6bmr9669157b3.29.1767649741378;
+        Mon, 05 Jan 2026 13:49:01 -0800 (PST)
 Received: from localhost.localdomain ([2605:a601:90a8:8b00::a])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa679385sm706737b3.32.2026.01.05.13.48.59
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa679385sm706737b3.32.2026.01.05.13.49.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jan 2026 13:48:59 -0800 (PST)
+        Mon, 05 Jan 2026 13:49:00 -0800 (PST)
 Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
 To: git@vger.kernel.org
 Cc: Julia Evans <julia@jvns.ca>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
 	Junio C Hamano <gitster@pobox.com>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 3/4] doc: git-reset: clarify `git reset [mode]`
-Date: Mon,  5 Jan 2026 16:48:17 -0500
-Message-ID: <0ca9fcf943653013ec2e4c6e1b3d625ea37adc26.1767649692.git.ben.knoble+github@gmail.com>
+	"D. Ben Knoble" <ben.knoble+github@gmail.com>
+Subject: [PATCH v4 4/4] doc: git-reset: clarify `git reset <pathspec>`
+Date: Mon,  5 Jan 2026 16:48:18 -0500
+Message-ID: <accf7a0673358d4724e4944117a382494404deb1.1767649692.git.ben.knoble+github@gmail.com>
 X-Mailer: git-send-email 2.52.0.rc0.426.g1df11fb20d.dirty
 In-Reply-To: <cover.1767649692.git.ben.knoble+github@gmail.com>
 References: <cover.1767307382.git.ben.knoble+github@gmail.com> <cover.1767649692.git.ben.knoble+github@gmail.com>
@@ -82,114 +81,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Julia Evans <julia@jvns.ca>
 
-From user feedback, there was some confusion about the differences
-between the modes, including:
+From user feedback:
 
-1. Sometimes it says "index" and sometimes "index file".
-   Fix by replacing "index file" with "index".
-2. Many comments about not being able to understand what `--merge` does.
-   Fix by mentioning obscure situations, since that seems to be what
-   it's for. Most folks will use `git <cmd> --abort`.
-3. Issues telling the difference between --soft and --mixed, as well as
-   --keep. Leave --keep alone because I couldn't understand its use case,
-   but change `--soft` / `--mixed` / `--hard` as follows:
+- Continued confusion about the terms "tree-ish" and "pathspec"
+- The word "hunks" is confusing folks, use "changes" instead.
+- On the part about `git restore`, there were a few comments to the
+  effect of "wait, this doesn't actually update any files? What? Why?"
+  Be more direct that `git reset` does not update files: there's no
+  obvious reason to suggest that folks use `git reset` followed by `git
+  restore`, instead suggest just using `git restore`.
 
---mixed is the default, so put it first.
-
-Describe --soft/--mixed/--hard with the following structure:
-
-* Start by saying what happens to the files in the working directory,
-  because the thing users want to avoid most is irretrievably losing
-  changes to their working directory files.
-* Then describe what happens to the staging area. Right now it seems to
-  frame leaving the index alone as being a sort of neutral action.
-  I think this is part of what's confusing users, because in Git when
-  you update HEAD, Git almost always updates the index to match HEAD.
-  So leaving the index unchanged while updating HEAD is actually quite
-  unusual, and it deserves to be flagged.
-* Finally, give an example for --soft to explain a common use case.
+Continue avoiding the use of the word "reset" to
+describe what "git reset" does.
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 ---
- Documentation/git-reset.adoc | 50 +++++++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 23 deletions(-)
+ Documentation/git-reset.adoc | 28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
 diff --git a/Documentation/git-reset.adoc b/Documentation/git-reset.adoc
-index 91dc6e6278..37c868ae24 100644
+index 37c868ae24..5023b50699 100644
 --- a/Documentation/git-reset.adoc
 +++ b/Documentation/git-reset.adoc
-@@ -24,42 +24,46 @@ DESCRIPTION
-    the staged version of the specified files.
+@@ -81,29 +81,25 @@ linkgit:git-add[1]).
  
- `git reset [<mode>] [<commit>]`::
--	This form resets the current branch head to _<commit>_ and
--	possibly updates the index (resetting it to the tree of _<commit>_) and
--	the working tree depending on _<mode>_. Before the operation, `ORIG_HEAD`
--	is set to the tip of the current branch. If _<mode>_ is omitted,
--	defaults to `--mixed`. The _<mode>_ must be one of the following:
-+	Set the current branch head (`HEAD`) to point at _<commit>_.
-+	Depending on _<mode>_, also update the working directory and/or index
-+	to match the contents of _<commit>_.
-+	_<commit>_ defaults to `HEAD`.
-+	Before the operation, `ORIG_HEAD` is set to the tip of the current branch.
-++
-+The _<mode>_ must be one of the following (default `--mixed`):
+ `git reset [-q] [<tree-ish>] [--] <pathspec>...`::
+ `git reset [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]`::
+-	These forms reset the index entries for all paths that match the
+-	_<pathspec>_ to their state at _<tree-ish>_.  (It does not affect
+-	the working tree or the current branch.)
++	For all specified files or directories, set the staged version to
++	the version from the given commit or tree (which defaults to `HEAD`).
  +
----
--`--soft`::
--	Does not touch the index file or the working tree at all (but
--	resets the head to _<commit>_, just like all modes do). This leaves
--	all your changed files "Changes to be committed", as `git status`
--	would put it.
- 
-+--
- `--mixed`::
--	Resets the index but not the working tree (i.e., the changed files
--	are preserved but not marked for commit) and reports what has not
--	been updated. This is the default action.
-+	Leave your working directory unchanged.
-+	Update the index to match the new `HEAD`, so nothing will be staged.
+ This means that `git reset <pathspec>` is the opposite of `git add
+-<pathspec>`. This command is equivalent to
+-`git restore [--source=<tree-ish>] --staged <pathspec>...`.
++<pathspec>`: it unstages all changes to the specified file(s) or
++directories. This is equivalent to `git restore --staged <pathspec>...`.
  +
--If `-N` is specified, removed paths are marked as intent-to-add (see
-+If `-N` is specified, mark removed paths as intent-to-add (see
- linkgit:git-add[1]).
+-After running `git reset <pathspec>` to update the index entry, you can
+-use linkgit:git-restore[1] to check the contents out of the index to
+-the working tree. Alternatively, using linkgit:git-restore[1]
+-and specifying a commit with `--source`, you
+-can copy the contents of a path out of a commit to the index and to the
+-working tree in one go.
++In this mode, `git reset` updates only the index (without updating the `HEAD` or
++working tree files). If you want to update the files as well as the index
++entries, use linkgit:git-restore[1].
  
-+`--soft`::
-+	Leave your working tree files and the index unchanged.
-+	For example, if you have no staged changes, you can use
-+	`git reset --soft HEAD~5; git commit`
-+	to combine the last 5 commits into 1 commit. This works even with
-+	changes in the working tree, which are left untouched, but such usage
-+	can lead to confusion.
-+
- `--hard`::
--	Resets the index and working tree. Any changes to tracked files in the
--	working tree since _<commit>_ are discarded.  Any untracked files or
--	directories in the way of writing any tracked files are simply deleted.
-+	Overwrite all files and directories with the version from _<commit>_,
-+	and may overwrite untracked files. Tracked files not in _<commit>_ are
-+	removed so that the working tree matches _<commit>_.
-+	Update the index to match the new `HEAD`, so nothing will be staged.
+ `git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
+-	Interactively select hunks in the difference between the index
+-	and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are applied
+-	in reverse to the index.
++	Interactively select changes from the difference between the index
++	and the specified commit or tree (which defaults to `HEAD`).
++	The index is modified using the chosen changes.
+ +
+ This means that `git reset -p` is the opposite of `git add -p`, i.e.
+-you can use it to selectively reset hunks. See the "Interactive Mode"
+-section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
++you can use it to selectively unstage changes. See the "Interactive Mode"
++section of linkgit:git-add[1] to learn how to use the `--patch` option.
  
- `--merge`::
--	Resets the index and updates the files in the working tree that are
--	different between _<commit>_ and `HEAD`, but keeps those which are
-+	Reset the index and update the files in the working tree that are
-+	different between _<commit>_ and `HEAD`, but keep those which are
- 	different between the index and working tree (i.e. which have changes
- 	which have not been added).
-+	Mainly exists to reset unmerged index entries, like those left behind by
-+	`git am -3` or `git switch -m` in certain situations.
- 	If a file that is different between _<commit>_ and the index has
- 	unstaged changes, reset is aborted.
--+
--In other words, `--merge` does something like a `git read-tree -u -m <commit>`,
--but carries forward unmerged index entries.
- 
- `--keep`::
- 	Resets index entries and updates files in the working tree that are
+ See "Reset, restore and revert" in linkgit:git[1] for the differences
+ between the three commands.
 -- 
 2.52.0.rc0.426.g1df11fb20d.dirty
 
