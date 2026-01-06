@@ -1,227 +1,151 @@
-Received: from mail-ej1-f65.google.com (mail-ej1-f65.google.com [209.85.218.65])
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1C14C92
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 16:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583413375C3
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 16:28:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767715835; cv=none; b=bKD+WT+YADnQKa9YrMR+9lVFExqLej/pU0VJIrkyCCr2mKQ4JygesYLoLQhKywPN5LOdfMtWcETpJGTgbwIa5X8t78duaR356RcYwbnj+eYJj54WVUQjK7mh5HDDbVVrR7zV/YFrmSCWSr6IPLeyTGySDCs4WGoPxX+NtUHd6Zw=
+	t=1767716899; cv=none; b=NGs/9RNvi/eM0qRzemKWGvzNAPFJCebjdD3VB5ab+sjpkdu4peIE5BMkxxWbm7PWqNcOqmSdowgV4cM5xihH2t0chTRsel6WAmxSnylsXjo754upHUAVD+S59Kj963rEzA0jZXW9gOcB7I4+pEJKIdkOI5thxbF4xZ689ixCf+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767715835; c=relaxed/simple;
-	bh=i1zKhrp1On6vWzidARinNhG4CRhNGNE/6Vnk/feQZLY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IB3CinuZmSoKlmHHFQlCcKFflL9s+y7fn3vnJiISkkNk/+YYDpdMPlFz0q2HgMI17LcmqcdOwENSbsEnDL5E7RFp/Wzm0LxkaAKJ7ZfI17NYnmAXqhNPU8jtmVsMlDBmA1tdbwnwNruIE/Vi8PzWcstJnLxaUsEy5e5oQKdX6/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AZxwfwo8; arc=none smtp.client-ip=209.85.218.65
+	s=arc-20240116; t=1767716899; c=relaxed/simple;
+	bh=Iwo0XUE7NqmGwfozjU3VodKJtiSbD/ApHze7t2XR0Ns=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HnSwgHzVOQtuEbiYXGvbeGtddhfJTMbzKUGoO9bXmqYxEIt+hG3gvGSnM3H8sC+OMkJMgkC7xW6LDswCXaIdhbq0cugz+F1Q8QAGOJZcIO4TM5pfujrcJFfUyqM89fkrFzcwxoMw2UWN6M+yJ1MbVpo489Ogwj0HeDmjPoXci1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fsmhR5bY; arc=none smtp.client-ip=209.85.222.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZxwfwo8"
-Received: by mail-ej1-f65.google.com with SMTP id a640c23a62f3a-b79e7112398so188350366b.3
-        for <git@vger.kernel.org>; Tue, 06 Jan 2026 08:10:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fsmhR5bY"
+Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-941063da73eso716807241.3
+        for <git@vger.kernel.org>; Tue, 06 Jan 2026 08:28:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767715831; x=1768320631; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ctVBX6oGR6U5CDFEJrUEXBpQkvaYYC/w4IY5+Bv/7IA=;
-        b=AZxwfwo8sb8K1m4Ozxe7xCCK585NNz9O2de8E6HBzsV0a9Xte9Ug3R02h9YwEPD7Cn
-         TB9q1wYRYYolghyTGiG1//LspukmAImfXQ+iuRzR4+vpaAURo9gda6CmSLXIIsi6gVzi
-         nxrPY0N2tQiePySnQctG+HSeEfmjNKjyaA9CoPyFpKEuOuRkcajZdBzaQf4tZvNglX3X
-         l4RlfwSZexxqlFNdITENM4sdpRFq5gqItEcYOuuolEIKNH4ldP+3KSMlDsE32j1AA/3I
-         JFYUaZormO3YFu0pomAk2EmbcCTLGslhDxn/bdTzaBS+K+FDdd0tIOdgwm0xIv1cbYi8
-         6vbg==
+        d=gmail.com; s=20230601; t=1767716897; x=1768321697; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=W7Qw28WehLpgmn9rzQ+qsYXQH6iKXEYv+TjXUgn1eHE=;
+        b=fsmhR5bYr8V6jWAtfGCfMrntDE0RlwDDj4UvL1tIIiM7Awjwzf341re6O6/EOGEYXk
+         xNgeA3dLp/5ObVv5fFn8t8g92PmMmT9ZuA2971zsRS1jU1KDX1tx3dwWQ86QWeNfEDND
+         PijoOZttmhIITV2uTcnpzLyXUsp2T9lbvf4EhWFNLqVcNiAm5wHfXHSvKgQBhY5D54+V
+         aq+mDZytCvXGo10CzUGcOGdEalI2srAD/x+BG0UQ3O90BL93RZLzBb/fLoxNs6pY9Ac4
+         hMXXPH33U2pNXPhdwP+ywxh5ILPiMu6ozdMG7+MqzZOUfWYrrxuzEzG12+OpMFkY9iMd
+         eN5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767715831; x=1768320631;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ctVBX6oGR6U5CDFEJrUEXBpQkvaYYC/w4IY5+Bv/7IA=;
-        b=AMGh0ndKkgXsklVe3LDP8e83mCHwv+8xzZ/9Qkf6DlekNFeiE3QYeyOjg7dpHBdOAj
-         6GDy9/mFLNTDu5H2sqfl0cWwOnPxfZYgu6dY1GHW4xOjXiw50T1FF2KkOlTHdw4GxmUP
-         0FfBJsX/B71ZW/N9X7/nBY5jnf3lwJ2xv2pbpj/VnTyyiw96wh8vAfqsAQUi6I7qQuc7
-         3V+oEiZb9ZASc5+JTxZOxD2aNKWjKi9SmwOn8UA575PUaMst+st/mEPsmRcldM+2ObsK
-         uUZXJsdqARBpGL5IfkLxBLK9LFoppVUSNi4mQokfRU+8vMpU6WJHETKAo0nrCeQvdMdP
-         ireA==
-X-Forwarded-Encrypted: i=1; AJvYcCUFhFUBpI7m6guBPWTai4Gc+jZlGJrhZ12utgzTDog0qk6mwwgsWaLkYiv5f21QcZfL270=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNZUhIQUyZoll/+CRem5cm/Z8HnI2OuIIgzUvEUmaDlGQ6UX6r
-	qWGhYYN5CeNsJMuznBQeAl2j3OMV+kKNZ18B77ctTgN8holdRCKuXqmi
-X-Gm-Gg: AY/fxX7HqDJjRFL0g6TNMkE6Ecg0iQuMFiyZLOx9fvSv8XUCki01+RqZzWELPqpNw6F
-	Z7e1UoM2RIR1sBevJe30UeqaCKeJAL/ooGtz+NjLVq5PpolcU5P5VMAOC8J7qLW96egdZTyhIYY
-	a1ewZxdJiL+WHANrCYH2IpQ91R9u6j2ySfcKPPVp1ylfq+R7l0Twd16F7z71Tkknr4hITVd08S7
-	KEwepJ/Wp1PUiPnB8zrShf0g1dz5BtvLIwekKr05CSqsQ27D42VEFP10eMrBfUqiHNWD7/7eVwU
-	kBiCqVQBpfLB+lLZXeDKNnv+IlmzzqDnZsHxz+ERfadmEB5KNZdaXTdCWmNA9KRAwzk0UUo7uMn
-	66KS0d1ZWbWCpBVXheHTNn6fYZlY78ZsGGiORDLR2S5kCcxdGdcmSA6LDiXfGwN1uxaCnIiv5Xx
-	390XuHQ7Uh7V+voV94Cvkl/EC3vJ2tcEE0hA7R9byYIYfe0erFWS8zYnDpjtb/x4Vl/A==
-X-Google-Smtp-Source: AGHT+IGeUD81BlGk2MkbQdTuR0iStH6dVV0Yt6v35ZUXgXt4fjShDquTSiUpFfR83aPd+AMfhoT5Kg==
-X-Received: by 2002:a17:907:3daa:b0:b79:fe3a:6d3 with SMTP id a640c23a62f3a-b8426bee22fmr363809066b.37.1767715831035;
-        Tue, 06 Jan 2026 08:10:31 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a22ff58sm259305366b.6.2026.01.06.08.10.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jan 2026 08:10:30 -0800 (PST)
-Message-ID: <54e48ac4-7151-4378-b95f-8f22279d6761@gmail.com>
-Date: Tue, 6 Jan 2026 16:10:24 +0000
+        d=1e100.net; s=20230601; t=1767716897; x=1768321697;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W7Qw28WehLpgmn9rzQ+qsYXQH6iKXEYv+TjXUgn1eHE=;
+        b=xOkVdvc106xH/9U7dYr09knP//HOI0VsqcbSVKHofiTGeWv6c2iN/FP7RND4DJY21W
+         a9sYFfHwGQvdekUj0bD1kOLhCy68epWAqDROcJLijTpt8ipA7NZ7kZPGoPZs7NyK7PVQ
+         nWo52AYWa2dnSsWrSqp9aF9WZXkfM8zHZSw9NGQyV3ddlwJC2B2R4y3Hko2dtnqgpU8F
+         5cmI3auDvkP8PZ5pzZY/CipZ6ndcROwJPRLv2jHRICm7xGxYpw+CFgYIHVirSPuCJOKC
+         sZMCFtJQL6Q1aBBeLi7DSTdlEasu7qpLILsQnCRuZTDR8gB/aYIYlvuqcO2TNIIJJCBd
+         S27A==
+X-Gm-Message-State: AOJu0Yzq9J1pDBE124qUUFGyuFxuQE3xGWepoAae3hpJUDtLhd2b89rh
+	V11JMSYAHEoFmlxAG708YzaDqc4n6QZJoI1RW2rrRdS+SuGVL4+LLStYTxf0r4rsvmH07tYaft2
+	2J1W3bwaw/HZHIUBUjOOR0bAAy6F/DiY=
+X-Gm-Gg: AY/fxX6/zX95Wmo6QMMcCoojHFZyJEMBxN0tdftTJDXCPEOZF/HYZzyW/ETi1Fq7Tv8
+	CFW7gi7yMrE0vm/lHbUD2w7cRYWThkzlVNatvB8rS/jAAmkkWoQ8qIptTdZjbMh61xd6+tF/njd
+	erNfZ+0NHyMmmb94KmTxNdOe5oesiv1j35Pv41bQKfBwWw+yUqyBIQ/vISOoFRFYgev19gu9N0p
+	aUbbfd+U4cZ6l/BkElXoXsXIrWpvbB0RC/4ZXgKFfKdyKsKKmuZdrND3SoJl+amtEpy97xCDVN1
+	BRW0vgHZchUdp9PVeFtPIj2+WW/Nbw==
+X-Google-Smtp-Source: AGHT+IHymObZi2iavEG4MmbNemUzztKLGZ0N4laYhWNuZBPgalQVK9i2wY9xz2BZwDdyxb6VBxFSRxZYi6ptBGRg6d0=
+X-Received: by 2002:a05:6102:3f49:b0:5df:aff3:c42d with SMTP id
+ ada2fe7eead31-5ec74500cd3mr1143042137.32.1767716896794; Tue, 06 Jan 2026
+ 08:28:16 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 6 Jan 2026 08:28:15 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 6 Jan 2026 08:28:15 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aVzvDGVEI2qVJv2F@pks.im>
+References: <20251206-b4-pks-clar-update-v2-0-9a14b10c1a36@pks.im>
+ <20251206-b4-pks-clar-update-v2-1-9a14b10c1a36@pks.im> <CAOLa=ZQZnYVuK8mDi6Yb8_+hqw_TMugn6i7BJCj1gbNHOruNWA@mail.gmail.com>
+ <aVzvDGVEI2qVJv2F@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC PATCH v6] add -p: show user's hunk decision when selecting
- hunks
-To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
- Christian Couder <christian.couder@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <aVz5kf6eLsMZ6WQQ@Adekunles-MacBook-Air.local>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <aVz5kf6eLsMZ6WQQ@Adekunles-MacBook-Air.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Tue, 6 Jan 2026 08:28:15 -0800
+X-Gm-Features: AQt7F2oxYUMROcjsVtLK6W7phY8nM9VTVes57_NU2cx9MtW3b0X84cBIpyombNo
+Message-ID: <CAOLa=ZTd7Tq6jPCefua07Rw1-zyOY98tjR2g-Em6CM8wui4KtQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] t/unit-tests: update clar to 39f11fe
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000b28b220647baa914"
 
-Hi Abraham
+--000000000000b28b220647baa914
+Content-Type: text/plain; charset="UTF-8"
 
-On 06/01/2026 12:01, Abraham Samuel Adekunle wrote:
-> When a user is interactively deciding which hunks to use or skip for
-> staging, unstaging, stashing etc, there is no way to know the
-> decision previously chosen for a hunk when navigating through the
-> previous and next hunks using K/J respectively.
-> 
-> Improve the UI to explicitly show if a user has previously decided to
-> use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
-> This will improve clarity and aid the navigation process for the
-> user.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I like the idea of telling the user if the hunk is currently selected 
-but say "(previous decision: use)" makes the prompt rather long (some of 
-the prompts in the tests below are 80 characters long). I wonder if we 
-can find a more compact notation. "(currently selected)" is a bit 
-shorter and takes us under 80 characters but is still longer than I'd 
-like - maybe someone reading this will have a better suggestion.
+> On Tue, Jan 06, 2026 at 02:59:21AM -0800, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>> > Update clar to commit 39f11fe (Merge pull request #131 from
+>> > pks-gitlab/pks-integer-double-evaluation, 2025-12-05). This commit
+>> > includes the following changes relevant to Git:
+>> >
+>>
+>> Nit: There is a newer commit merged into the clar repository, but I
+>> don't think it is so important to include.
+>
+> Yeah, I don't really think it's necessary. If this series needs a reroll
+> I'll include it, but otherwise I'll keep this series as-is.
+>
 
-> diff --git a/add-patch.c b/add-patch.c
-> index 173a53241e..a383ea7f45 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -42,10 +42,10 @@ static struct patch_mode patch_mode_add = {
->   	.apply_args = { "--cached", NULL },
->   	.apply_check_args = { "--cached", NULL },
->   	.prompt_mode = {
-> -		N_("Stage mode change [y,n,q,a,d%s,?]? "),
-> -		N_("Stage deletion [y,n,q,a,d%s,?]? "),
-> -		N_("Stage addition [y,n,q,a,d%s,?]? "),
-> -		N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-> +		N_("Stage mode change%s[y,n,q,a,d%s,?]? "),
-> +		N_("Stage deletion%s[y,n,q,a,d%s,?]? "),
-> +		N_("Stage addition%s[y,n,q,a,d%s,?]? "),
-> +		N_("Stage this hunk%s[y,n,q,a,d%s,?]? ")
+Agreed.
 
-I'd find these strings easier to read if we kept the space and just 
-passed an empty string when the hunk is undecided.
+>> > @@ -149,6 +150,7 @@ const char *cl_fixture_basename(const char *fixture_name);
+>> >   * Forced failure/warning
+>> >   */
+>> >  #define cl_fail(desc) clar__fail(CLAR_CURRENT_FILE, CLAR_CURRENT_FUNC, CLAR_CURRENT_LINE, "Test failed.", desc, 1)
+>> > +#define cl_failf(desc,...) clar__failf(CLAR_CURRENT_FILE, CLAR_CURRENT_FUNC, CLAR_CURRENT_LINE, 1, "Test failed.", desc, __VA_ARGS__)
+>>
+>> Nit: While most of the function accept description with variable
+>> arguments, this is the only one which has the '...f()' format explicitly
+>> separated out. It would be nicer if we simply make this part of
+>> 'cl_fail()', no?
+>
+> The problem is that we cannot do so easily. Varargs require at least one
+> argument to be present, so we cannot make this `cl_fail(desc, ...)`
+> without breaking the case where there are no variable arguments:
+>
+>   In file included from ../t/unit-tests/clar/clar.c:1053:
+>   ../t/unit-tests/clar/clar/fs.h:460:3: error: expected expression
+>     460 |                 cl_fail("Cannot copy; cannot stat destination");
+>         |                 ^
+>   ../t/unit-tests/clar/clar.h:152:132: note: expanded from macro 'cl_fail'
+>     152 | #define cl_fail(desc,...) clar__failf(CLAR_CURRENT_FILE, CLAR_CURRENT_FUNC, CLAR_CURRENT_LINE, 1, "Test failed.", desc, __VA_ARGS__)
+>         |                                                                                                                                    ^
+>
+> The alternative would be to make this `cl_fail(...)` instead, but to the
+> best of my knowledge this isn't even a valid construct.
+>
+> Patrick
 
-> @@ -1564,8 +1565,14 @@ static int patch_update_file(struct add_p_state *s,
->   			      (uintmax_t)(file_diff->hunk_nr
->   						? file_diff->hunk_nr
->   						: 1));
-> +		if (file_diff->hunk_nr && hunk->use != UNDECIDED_HUNK) {
+Ah right. Thanks for the explanation.
 
-Why do we need to check hunk_nr here?
+--000000000000b28b220647baa914
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 37fe33afb46550e7_0.1
 
-Thanks
-
-Phillip
-
-> +			if (hunk->use == USE_HUNK)
-> +				hunk_use_decision = _(" (previous decision: use) ");
-> +			else
-> +				hunk_use_decision = _(" (previous decision: skip) ");
-> +		}
->   		printf(_(s->mode->prompt_mode[prompt_mode_type]),
-> -		       s->buf.buf);
-> +			hunk_use_decision, s->buf.buf);
->   		if (*s->s.reset_color_interactive)
->   			fputs(s->s.reset_color_interactive, stdout);
->   		fflush(stdout);
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 4285314f35..cc3986a9d7 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -527,7 +527,7 @@ test_expect_success 'goto hunk 1 with "g 1"' '
->   	_10
->   	+15
->   	_20
-> -	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-> +	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
->   	EOF
->   	test_write_lines s y g 1 | git add -p >actual &&
->   	tail -n 7 <actual >actual.trimmed &&
-> @@ -540,7 +540,7 @@ test_expect_success 'goto hunk 1 with "g1"' '
->   	_10
->   	+15
->   	_20
-> -	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-> +	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
->   	EOF
->   	test_write_lines s y g1 | git add -p >actual &&
->   	tail -n 4 <actual >actual.trimmed &&
-> @@ -554,7 +554,7 @@ test_expect_success 'navigate to hunk via regex /pattern' '
->   	_10
->   	+15
->   	_20
-> -	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-> +	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
->   	EOF
->   	test_write_lines s y /1,2 | git add -p >actual &&
->   	tail -n 5 <actual >actual.trimmed &&
-> @@ -567,7 +567,7 @@ test_expect_success 'navigate to hunk via regex / pattern' '
->   	_10
->   	+15
->   	_20
-> -	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-> +	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
->   	EOF
->   	test_write_lines s y / 1,2 | git add -p >actual &&
->   	tail -n 4 <actual >actual.trimmed &&
-> @@ -579,11 +579,11 @@ test_expect_success 'print again the hunk' '
->   	tr _ " " >expect <<-EOF &&
->   	+15
->   	 20
-> -	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? @@ -1,2 +1,3 @@
-> +	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? @@ -1,2 +1,3 @@
->   	 10
->   	+15
->   	 20
-> -	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-> +	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
->   	EOF
->   	test_write_lines s y g 1 p | git add -p >actual &&
->   	tail -n 7 <actual >actual.trimmed &&
-> @@ -595,11 +595,11 @@ test_expect_success TTY 'print again the hunk (PAGER)' '
->   	cat >expect <<-EOF &&
->   	<GREEN>+<RESET><GREEN>15<RESET>
->   	 20<RESET>
-> -	<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
-> +	<BOLD;BLUE>(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
->   	PAGER  10<RESET>
->   	PAGER <GREEN>+<RESET><GREEN>15<RESET>
->   	PAGER  20<RESET>
-> -	<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
-> +	<BOLD;BLUE>(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
->   	EOF
->   	test_write_lines s y g 1 P |
->   	(
-> @@ -810,7 +810,7 @@ test_expect_success 'colors can be overridden' '
->   	<BOLD>-old<RESET>
->   	<BLUE>+new<RESET>
->   	<CYAN> more-context<RESET>
-> -	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
-> +	<YELLOW>(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
->   	EOF
->   	test_cmp expect actual
->   '
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1sZE9CMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK0w5REFDUFk1OWt1S080TE9DM0g1bEpidEdoRE5PVAp3RlR6WmFEdVg4
+QWJ1eWFGS0lDNzgwbXd0b085dmc3S0tNZExWMUM3TUlPeGwySWk0L3NWK0tTVmdKaDhxV0lxCmpm
+bXRvWU9YS0d4RzBzdGFpMFE5RlpraUUvZFRvek93cnN1OEJJTlVBVGZ3bHlobTVURnBvWWtkRzdZ
+cUxEZjUKQzAvOFpMVFp1ZXpmYjJWQ1V6a3cvZzhWTld2MmVQKzhtR1ZadUowdWNsd2FXQ3hJLzR4
+Smh2QkcvZUFjQ0JUZQp3N2xFRUpPVGpkcG9PVGZxRDM0bjRpbVIyRThwVmdZSjdYdXV5TDVVS3hE
+bzRFNFJjRWp1dGZ0eGNWemtCbGJuCkw1UWFNNHBVVVJNSFhlM3B4N21LbGNkc3orV3orRTc1eEw0
+NEZtbmtWSzByYjBpellWdjhGN3hEREk1Q2tsNjEKM05JcE9qZ2lGN05rWm1KdDAxWW9YejViREhq
+YXBaanViVm9WY1oxb2dVZHYrajhha1lwREpUNnU1cS9BVDJMcApCc052L2J6cElQcHNjMXVrUjZQ
+c1dOK0hyVmhER0VPTG5LbC9XSG9STElwUVNkWGpBUUtMN1cweFEwdVlXejk0Ck1na3ZnZUJReEdS
+Vk5Ka1JENVZ0NWZtZXlQWWUwNVpGM3NOZm9zTT0KPUIxYmQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000b28b220647baa914--
