@@ -1,100 +1,113 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B668F24BD03
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 10:38:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E68328256
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 10:55:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767695889; cv=none; b=CNR4KzGsojIhAGaUTLpxDbIowlMesGe5uLhztPk1b+slHdRFB8tMbviWzDK0AV9jDE5S1djqUtILx0TIJWMVRdYBaw1+Me+Bx+NGwNNACW4fImT3sDMakmGdgwaxNovZTGR0+POI5GtJvFng2Lf4JU/QWOSOH4RQrLxt2s6AWRs=
+	t=1767696937; cv=none; b=iNEVuOhx7lnxRGgMxhVcPXB1q4xMmzYxDnV/pI2DUKc3ecikX8pMTyiLyd8Fr75WeRVnHSAUbNsxpfODM08CjBbH591MQv4WzcpNxfnlWfEfHPzUuCafj04aUL2k//uXG5YSjMqnRYjEZQRbSXjvHYRgp5Db8YCq/sO78Hx4wag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767695889; c=relaxed/simple;
-	bh=JiuCzUwAUAd1U94Qi1oBymwdnLZyDqnF1sd8Kkm1Gno=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iGdqOWFjbJvTzFIWEviJiE46rcrAvXzur3d+oQUlYXjGpIDtTrzSUOGljBA5GBrZJhuQGKErVr9N3PjAEwFyPfz8fWUmvf+DuZzqEFLLCV3KWjPe/UvX5tWwS4p9qMP+UVBNHxd9QbyVjTiAsu3wUrL3NWp8Cf2Xsjx+PTJx+xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QSvQb7Pu; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1767696937; c=relaxed/simple;
+	bh=lKpqkqxjm22ZfAfXnvEoaZnvKKpK4kbh1ZiLxJH6HqQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=SZMuCvvb+E93tq2vSECySkv5Sv5wy3OsZe81FzFF7jcUad2sCAPENCz0PPwuuIM3LkoEqKMsMmEswtpxcvwUD8QgV9npCdFP2SoqnoywjWRYvNfFLeJKXUgB4I8TrEVfDsBa29mqgv736KHQ7BP/80V9W0fbKFwkKBoGOLxXyK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=l+sfn5FA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FXyh98I/; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QSvQb7Pu"
-Received: (qmail 601026 invoked by uid 109); 6 Jan 2026 10:38:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=JiuCzUwAUAd1U94Qi1oBymwdnLZyDqnF1sd8Kkm1Gno=; b=QSvQb7Pu9FBxckACa9XKLZ9nFvfiLdgrNTZM+bzd7+IP22HluMY5ht2c5BvfzqxgJ3hCvqR6iLfbqeMxkP+CJL6oGfjCHZZKblfFUOT7lkEqVd3ie6bERrlFcsZkgjZ6TSD6Q8oLjGCBeDYGkUXc9c+kJVcYOd+GBaO4gz+U9KW+NXXKKwo6a6kmzkgYszbO9atlYFhbrF0IoIfNKD4stVy26z/p/uLNDZXkau219RyJ2E4s9QDIOkhJ0deXhKiUscTsQXJ29WjVDWILiJGkRoYQkKrebnB8tuAFXOhPEUhUkQCBKXr8bDSyIC2s+Sb73GKtxABQXIEXZ0WmKYCO0A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Jan 2026 10:38:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 789289 invoked by uid 111); 6 Jan 2026 10:38:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Jan 2026 05:38:09 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 6 Jan 2026 05:38:03 -0500
-From: Jeff King <peff@peff.net>
-To: Martin Fick <mfick@nvidia.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Slow git pack-refs --all
-Message-ID: <20260106103803.GA69061@coredump.intra.peff.net>
-References: <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
- <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
- <20251226044507.GA1971832@coredump.intra.peff.net>
- <CH3PR12MB9026DFCF7AF4ED1A249B16A5C2BDA@CH3PR12MB9026.namprd12.prod.outlook.com>
- <20260102074901.GD2581074@coredump.intra.peff.net>
- <CH3PR12MB90260C4887067C88629BBE52C286A@CH3PR12MB9026.namprd12.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="l+sfn5FA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FXyh98I/"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A1BEE7A0177;
+	Tue,  6 Jan 2026 05:55:33 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 06 Jan 2026 05:55:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767696933;
+	 x=1767783333; bh=Qv6sWI0OldurdBPxWOAT/FuF3fiZtA9DcMWPwFUFPbE=; b=
+	l+sfn5FAwNad1htfJVdsyG1fMjez/JTOI2kkNGq7dPwOR9f2KKnfcr4XIXGyUFMv
+	NXdTDWH/e3Bejv0IseBFggjy8JkNvqi8z+578JOhoFS8cCHX+JJWL4zjQ7ztbZr7
+	Q0NJfJPc25V2bjL6FXjjxI8oFk5Ec0gdGgtzrCO3H59vW336OWol9La7SCbuUURC
+	ye9mTrXamjrPlg1HWinnKmBo8ryzRBN149k6cIbuDzvS/cgJe3C3wpinW2aqlNJb
+	NXexBySkGUi2oDFDE103xEwBP0lF5r1FI9WvwdV9Yh4K1WO9wz01pou+WNCbz5KM
+	pxEasyU/BLH+rUvUnVWSAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767696933; x=
+	1767783333; bh=Qv6sWI0OldurdBPxWOAT/FuF3fiZtA9DcMWPwFUFPbE=; b=F
+	Xyh98I/RCz1AUQLawXrh/7ELwF2ZhR7wZ9fwDscSy31qU8URucPkuVoJQIZLD2Vi
+	mXSBdt9GXX6ZoQ20uMXaz9khp6uZLVrPMKaIJZPv9HO67XBTENCKQ6w+sftqSKFm
+	4Upps7SD1dUvquHV9O8Ab0n3J8r5KBuhd2FKP418kDESOCk08egJXI4npQ8pdduB
+	iFEe6COs1EYEc1Qlbiy8c/1uhbMQefs/BwQU8hGGEZAUaVlvZRu3l1AipQjbTw9F
+	EmQ5FDHvqEhzNQhZ7pH+sDcSW4sBgj3qkIpd2c8rQjdbh73WW24NmyG5tKY++qmR
+	MWUL+9UOAxAXFpm7yEmFg==
+X-ME-Sender: <xms:JepcaVj8q5inuXmFA0a7N2LOffJwmNPlheWVZ8E566GcPWXUuAsqx2c>
+    <xme:JepcaU1VoFJ5qDNB3eeRGYR2mHcnP-X5ftt1i32svrzOot7Y8U0osdVSBUHoSIrY8
+    TTxABFIoKajsxyoQmm2vhX7hMChPZnuZg9kmhZcxDpcwVA7oqnh1g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddttddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehguhhsthgvugestghouggvsggvrhhgrdho
+    rhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepphhsse
+    hpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:JepcaWlYuGVulayyWo_r36jhXO81iGwb1JqDRGAmcZ_40yov0XCMMA>
+    <xmx:JepcafUkWQOYJng7eEztQ6F9y4n2d7MXERjzNAlLbeF0SE5Fs8P0KQ>
+    <xmx:JepcaUuXGkGGeIzobfVkSRjuBIjNOLoXT01zzhE7a5UF4fDDSgILHw>
+    <xmx:JepcaaYmYCNwCF9-Xb1I6-ksRExFbEmFtR18nMnQ3gEUGndPfpziNg>
+    <xmx:JepcaeUh-_I3pGL_JURAOmmDx18eV5HCBm0gJ1DTG8q0uHEwizpZ_rOK>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 20F1D1EA0066; Tue,  6 Jan 2026 05:55:32 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CH3PR12MB90260C4887067C88629BBE52C286A@CH3PR12MB9026.namprd12.prod.outlook.com>
+X-ThreadId: A6Y4akRbTe2J
+Date: Tue, 06 Jan 2026 11:54:39 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, Gusted <gusted@codeberg.org>
+Cc: git@vger.kernel.org, "Toon Claes" <toon@iotcl.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <39eb6099-49ec-4ebd-8347-e2f2e18f3e8a@app.fastmail.com>
+In-Reply-To: <aVzcyYjR8l-xXD4L@pks.im>
+References: <09870987-ae2f-44ec-b8a0-1654f598b5fd@codeberg.org>
+ <aVvSwkK7RdpFDaVv@pks.im> <8e6dd4d7-6e0a-477a-b10c-8571d6b7da4c@codeberg.org>
+ <aVvWDDtBeJMIF3F0@pks.im> <eecb1c9a-4dc9-4666-b2af-1e3478109db3@codeberg.org>
+ <aVzcyYjR8l-xXD4L@pks.im>
+Subject: Re: git-last-modified on bare repository
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 05, 2026 at 11:45:41PM +0000, Martin Fick wrote:
+On Tue, Jan 6, 2026, at 10:58, Patrick Steinhardt wrote:
+> On Tue, Jan 06, 2026 at 10:42:55AM +0100, Gusted wrote:
+>> On 1/5/26 4:17 PM, Patrick Steinhardt wrote:
+>>>[snip]
+>>
+>> Yup, git from source works! Do you by any chance know if 05491b90ce is going
+>> to be in v2.52.1?
+>
+> No idea, point releases are typically done rather ad-hoc. Let me Cc
+> Junio though so that he's aware that we might want to pick this if we
+> ever release v2.52.1.
 
-> By repacking to get one used, and one cruft pack only, and no loose 
-> objects, I have confirmed that pack-refs it is still slow. This rules out the 
-> idea that the loose object, or pack file counts were making things slow.
+`RelNotes` says that this will be merged to `maint` later which points
+at tag v2.52.0 currently.
 
-OK, that is interesting. I'd still expect opening the objects to be the
-dominating factor, but now the load would be on jumping around the
-mmap'd packfile rather than open/read/close calls.
-
-> OK, after discovering the strace -r and -T options, I have determined that
-> the 29K writes were all very fast in themselves. However, most of the
-> writes seem to follow each other with no other system calls in between.
-> This explains why it looks like the writes are slow, even though they aren't.
-> 
-> If I tally up the time between the previous system call, and each write(),
-> it adds up to the bulk of the time (4mins out of 4m15s) that it takes to
-> pack refs. This tells me that no visible I/O or system calls are the problem,
-> but rather that the program itself is taking a long time between writes.
-> I very much doubt that this is heavy CPU time, but rather I am going to 
-> guess that this is hidden system time spent accessing mmaped memory.
-
-That would be consistent with reading object data from the packfile.
-We'll jump around within the packfile to get that data.
-
-> Could it be really slow reading the packed-refs file? I can see the 
-> packed-refs file is mmaped() before the writes start, and then 
-> munmapped after the writes are completed. If I had to guess, that likely
-> means that the packed-refs file is being read in small increments by the 
-> kernel via mmap, and that is what is making things very slow over NFS.
-
-The packed-refs file is mmap'd, but we'll be reading it sequentially. I
-guess whether or not there is good read-ahead there may depend on the
-NFS implementation.
-
-> My alternative theory, is that each ref is being looked up via a binary 
-> search, but I don't think git does this?
-
-Git does binary search within the packed-refs file, but it shouldn't be
-doing so here. The write-out phase of packing refs is a straight merge
-between two lists: the existing packed-refs entries and the new entries
-we are adding.
-
-I'd second Patrick's suggestion to use perf or similar to try to see
-where the time is going.
-
-You might also try building Git with NO_MMAP. That might make the I/O
-costs more apparent via strace, because they'll be coming via pread().
-
--Peff
+     * "git last-modified" used to mishandle "--" to mark the beginning of
+       pathspec, which has been corrected.
+       (merge 05491b90ce js/last-modified-with-sparse-checkouts later to maint).
