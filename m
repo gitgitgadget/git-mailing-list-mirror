@@ -1,168 +1,126 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4776E4414
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 23:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDAC189BB6
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 23:23:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767741575; cv=none; b=UN5juy+Zn4Ias2eA1Au3BF0Ccg7P2PGLrVdJl/O89OnLIK6MX/NDW407BZhlx4iPQBHx3+w9+h+/rh1naUEtufDOk2zUWYcXQO/CpaPT+s0lEL6ybOIwD4n26W9kk4zZG7ygsZwQwr6vcbv9OgZ8WXXlhpbtb4clajWeA69nfQc=
+	t=1767741783; cv=none; b=FgO/KxPgBiYuMKdLCu47bpPlKMWzBVtuu7xp+wm3M3+Yly7lzMFqhhZyJ2G1zsdzDcK/4eno9CTCgWt+8lTuq3OVbs7heVeRzNKVP1FH8rmwj7VIECW4bPf3ytqB+0dH4hQ+V0u2ivGXnYjRN4vEP8ELOu3ZOsKTMDAYZx/FXwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767741575; c=relaxed/simple;
-	bh=r/EcZzXNVlRsTK0JRXiVMv6rSoII3ElSBTGDkCwp8Tw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ICO2oS/1J7cHJMesvbVFGQmNGY9xENnkfk8ckoqF+ZxZDrAH3+PW5EmVXdfK4VFL0Jg2FjH/9mUG7TUkkcYvj35x/W/Dmq4D62s11PXR0cvFT8rQ6eST/vuk65f0sXAeSNPzQz4SN/rDQ6V2dvsiUrMt247GMfq52ljrR814L9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DE509Nuz; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767741783; c=relaxed/simple;
+	bh=SrIXtYMtc+cukW+qztrLKCaOwXewXeiFc4fcNOAz3dU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DOgkfM5gheJo3hbnNfq02rDopvXUuFSAvYMovtnTYaaVeSLB4mi8Fx6E+RMxKR35ci+BgpygMfTlB6MbDdMJWU1waByEbPW4U31oLbdeOTQukC69qnV5eZ9iccUknf/RgZMAGRiaSDUrpH+Lk9jFtCMol2BRwiBk0zsgC6EI0+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=0QAfgpWz; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DE509Nuz"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6575e760f06so539368eaf.0
-        for <git@vger.kernel.org>; Tue, 06 Jan 2026 15:19:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767741573; x=1768346373; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GCZvlfPvrOb8K53Z8Uxbu4Eq1pY/hcqfAJnXszbYQso=;
-        b=DE509NuzlbmulkcwU6G8Vo2lVz8Pm5qY2B/mmDT+DQJRV1LRXbi6L4DwwdO6O84//N
-         qcylCmrylX5S6bkxmKER1+zLxyUhLqsIv64QTzpsNcRMAk5VCD5z6wNiOiJDwgD1YnzK
-         wwES6tLBIDTlwu1/onDn4p+sODIiCjJMWlT0N2PizI9rbi1IcZhvAbBhVwn651j9Zdxx
-         tP3Bgo7Cb2RrkzA7JrN/vpTnSrBbLjRp+3KNjVBZ20Y0+YZbpS5dbUnghd2D7Qysh2Yi
-         SDxHjesovjrQXXIsRLu3jbfKLfhPpKQamPO8S5Db4W3scVIgf1cflSFJCFVFhwnPhVL7
-         AqPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767741573; x=1768346373;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=GCZvlfPvrOb8K53Z8Uxbu4Eq1pY/hcqfAJnXszbYQso=;
-        b=FzNofknypeYwn9GmG/TkGpq3iXCjSMLwAyjw13mkUaEQ0Fsq85FGfSv+uPlhwcsKQH
-         PqabdhNn/XJbE6vqn40X5D38wEllXz888WbQTEj+lrm5/I9pkSXaYeInPniit6DEjEb0
-         pfxeDluFl0ah4QUXnb1WSL6CiyKzTDav+YnLK0G3BQB2hTQldUs5A0YlGrRwgnH0IS3k
-         ZQAwB6KJMKeQDemSl8XugOVhenWLk9fHjqU0Ym6+MfOoMDvj30mnjKqdyL1Jv3Hd1Uuf
-         p/3Z/bi1+f/hsfrH8Y/xFhg6CyxsA0QR8jyfFA1NhTOhHMiV88OvWMFQMrwY9kWX34ND
-         mV3A==
-X-Forwarded-Encrypted: i=1; AJvYcCUWI7FxumeMAxb4x0WI4kYDTRrmq2e+v7rGB2+o+rzZZ3Fu/OMjUvqvEIObGFyCIjMGYY8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwX5F5848KzRIqttBKEhsCe/VR0p2IHgD++osUl4iaY5M2DrOol
-	zfSRzYfzFv3OILX5bxQS/g3/UsojKeMYc5c8wXbGo86vPxUOQpTOfglyjybveY7kYqYvqtKKaIZ
-	6Zx/+s23JPm9cw/wjgIr2azqoouMm+vjdng==
-X-Gm-Gg: AY/fxX7t7nLqXV7dPdoDbCbxjJ+jOGy7CmyyAUrzPyLix/08cH0ew5ECw0cQ3Svwcjq
-	IRH7/s6f2TmbbM5GMM8xx8bo5bE6mlkNlky6nMcxKKOoKd8wiHtk4f+0rYlEqSuZkZNJXRRY1v+
-	VLGKMu94SNO9m6rwx9azNDnFycsjZXpStBi+WoR+az3DXR0f9Vzq3L1ugQ6WAIsVxT3OnV1D67D
-	p9Lnm947Fr2KKipr1PMzpYri1v3AN9jAzgdTTiW85lGIb9eyTD3CAbokN6+jZbVyz+803pYxS+o
-	v8sGceWRCbVi3Sq46w0eR4wVZrck
-X-Google-Smtp-Source: AGHT+IFexAK+PhlmCaCAbnM3Z5ajQrVUckmgaBkfpkAHCUXDdqidDf5CzobWaFKy6KWwKi9LK9h3pWiVjp/VD7nlzzw=
-X-Received: by 2002:a05:6820:f02d:b0:65d:140:8e1 with SMTP id
- 006d021491bc7-65f54ed12b4mr190079eaf.13.1767741573061; Tue, 06 Jan 2026
- 15:19:33 -0800 (PST)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0QAfgpWz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1767741773;
+	bh=SrIXtYMtc+cukW+qztrLKCaOwXewXeiFc4fcNOAz3dU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=0QAfgpWz+SMGSI3ut5Q/kcG0nBLTjfZ/VG1vg1JrEtN3ZYAzIeRw9Ja0oJIItdrdo
+	 K1VXxIey9fBzfltJVeRvBrIhJDXaX0RIlChZih+ntSjpwQ7moe17Y/jEd/GHyByXcj
+	 wzXx+OY07fBi0TnSveozs1DY26nDezHNE5hQnsjSPTMZruOVgbVHnPn04qjoXS8MS8
+	 mdlPQZwpVichwOjQQdjsmrs1023kIScIZGdanIYkQUjjN0OOVyyd+Hlp/uIyNHsWa4
+	 DRs9zNXMSR76EepBXL9QJqwwjXyEpFgDV0Mh5PjbggQSc0xS9GcHqmcLiqJSfXplzA
+	 y5AFi/3tgyKEbgmowSMmdLQrjhbOYETtdfQjltMHZL8LkFK9tSpMnOij7v3Ks6sOJn
+	 2Mscy3EXWQkEGqylsMkzMHE04flPivfoMjz/o+WgmhoozPiXiLg/ptrpPfXQe3jxub
+	 I4xec5mjz93tT+bCibBfgCN6xKJLgxYUrKiJuMQ2VoDI8/11JEN
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e55e:3716:cd07:8ce2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 31640200B3;
+	Tue,  6 Jan 2026 23:22:53 +0000 (UTC)
+Date: Tue, 6 Jan 2026 23:22:51 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Matthieu Beauchamp <matthieu.beauchamp.boulay@gmail.com>
+Cc: Matthieu Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Matheus Tavares <matheus.tavb@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ignores: handle non UTF-8 exclude files
+Message-ID: <aV2ZS1lvLivi8xRH@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Matthieu Beauchamp <matthieu.beauchamp.boulay@gmail.com>,
+	Matthieu Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Matheus Tavares <matheus.tavb@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com>
+ <aVrCHr_NRDqNjPn0@fruit.crustytoothpaste.net>
+ <CALH9GrYOjb92gjrtdjwapFH9L73XGg1Kan8uz1aVLpSXNURi+Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2026.git.1767035549378.gitgitgadget@gmail.com> <xmqq344siypm.fsf@gitster.g>
-In-Reply-To: <xmqq344siypm.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 6 Jan 2026 15:19:22 -0800
-X-Gm-Features: AQt7F2oDXMz0PdlcnoaHuNFHOJaFJ6ef7zeLjOHfP82-pLVfBeXbMXhvDk50Cro
-Message-ID: <CABPp-BGQK5cup9j1nm1fb+2iuaoQnWEzBvGnmUeoCDv0iEH6_g@mail.gmail.com>
-Subject: Re: [PATCH] fsck: snapshot default refs before object walk
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Matthew John Cheetham <mjcheetham@outlook.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="xLyIB64B0hIxPhAx"
+Content-Disposition: inline
+In-Reply-To: <CALH9GrYOjb92gjrtdjwapFH9L73XGg1Kan8uz1aVLpSXNURi+Q@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--xLyIB64B0hIxPhAx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Dec 29, 2025 at 4:46=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > This problem doesn't occur when refs are specified on the command line
-> > for us to check, since we use those specified refs for both walking and
-> > checking.  Using the same refs for walking and checking seems to just
-> > make sense, so modify the existing code to do the same when refs aren't
-> > specified.
->
-> Excellent analysis and good approach.
->
-> > Snapshot the refs at the beginning, and also ignore all
-> > reflog entries since the time of our snapshot (while this technically
-> > means we could ignore a reflog entry created before the fsck process
-> > if the local clock is weird, since reflogs are local-only there are not
-> > concerns about differences between clocks on different machines).
->
-> Repository on a network filesystem being accessed by hosts with
-> broken clock?
-
-Oh, indeed.
-
-> I do not think our reflog API has (1) give me some token to mark
-> your current state (2) here is the token you gave me earlier, now
-> iterate and yield entries but ignore entries added after you gave me
-> that token, so going by the reflog timestamp is probably the best we
-> could do.  Any approach may get confused when the user tries to be
-> cute and issues "reflog delete" or "reflog expire" in the middle
-> anyway, I suspect ;-)
->
-> > While worries about live updates while running fsck is likely of most
-> > interest for forge operators, it will likely also benefit those with
-> > automated jobs (such as git maintenance) or even casual users who want
-> > to do other work in their clone while fsck is running.
->
-> Great.  Will queue.  Thanks.
->
-> > @@ -509,6 +510,9 @@ static int fsck_handle_reflog_ent(const char *refna=
-me,
-> >                                 timestamp_t timestamp, int tz UNUSED,
-> >                                 const char *message UNUSED, void *cb_da=
-ta UNUSED)
-> >  {
-> > +     if (now && timestamp > now)
-> > +             return 0;
-> > +
-> >       if (verbose)
-> >               fprintf_ln(stderr, _("Checking reflog %s->%s"),
-> >                          oid_to_hex(ooid), oid_to_hex(noid));
-> > @@ -567,14 +571,53 @@ static int fsck_head_link(const char *head_ref_na=
-me,
-> >                         const char **head_points_at,
-> >                         struct object_id *head_oid);
+On 2026-01-06 at 20:45:56, Matthieu Beauchamp wrote:
+> On Sun, Jan 4, 2026 at 2:40=E2=80=AFPM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > Ah, yes, here's the problem.  UTF-16LE is used on Windows, and on
+> > Windows, Git stores pathnames as if they were converted into UTF-8, so
+> > you do need to write the filenames in UTF-8 in the ignore file.
 > >
-> > -static void get_default_heads(void)
-> > +struct ref_snapshot {
-> > +     size_t nr;
-> > +     size_t name_alloc;
-> > +     size_t oid_alloc;
-> > +     char **refname;
-> > +     struct object_id *oid;
-> > +};
->
-> This data structure is somewhat unexpected.  Instead of a struct
-> that holds two arrays, I would have rather expected an array of
-> "struct { refname, oid }", with the possiblity to add a "token to
-> mark the latest reflog entry" to the mix I alluded to earlier when
-> such an API function materializes.
+>=20
+> Yes, the conversion from UTF16-LE to UTF-8 would need to be platform
+> specific.
 
-Yeah, that makes sense.  It'll mean that there won't be anything left
-of Matthew's original patch that I was trying to upstream (especially
-with the further changes Peff highlighted elsewhere in this thread),
-but I can just take the authorship and note Matthew's contribution in
-a trailer.
+We typically don't want platform-specific behaviour in Git.  Many Git
+contributors do not work on Windows but we want things to work as much
+as possible identically across all platforms because it makes
+development easier, as well as making it easier for users to reason
+about the project.  I, for one, don't have a Windows system (nor do I
+want one) but I do want my Git code to just work there.
 
-> [Footnote]
->
-> We could call refs_for_each_reflog_ent_reverse(), grab the
-> parameters that each_reflog_ent_fn receives as that "token" for the
-> latest reflog entry and stop.  That way, we will learn the value of
-> <old,new,committer,timestamp,tz,msg>, which should be a robust
-> enough unique key.
->
-> After that when iterating over the reflog, we know we should stop
-> after processing the reflog entry that holds the recorded value.
+As an example, we still use a POSIX shell in aliases and other settings
+on Windows despite the fact that PowerShell is built into Windows
+because it means that aliases and similar functionality just work
+correctly regardless of platform and it allows users to write a config
+file that works everywhere.
 
-Interesting.  The global timestamp for reflogs seems good enough for
-me (network filesystems with a broken clock feel niche to me), but I
-can leave a TODO in the code for those that want to pursue improving
-the reflog handling further.
+Instead of trying to force Git to gracefully handle UTF-16 in its config
+files, my strong recommendation is to adjust your PowerShell scripts to
+use UTF-8 instead[0] or use a POSIX shell.  I'll note that Microsoft's
+new Edit text editor[1] defaults to UTF-8 (and, except on Windows, LF
+line endings), so I know that Microsoft understands that UTF-8 is the
+proper encoding to use on the Internet today.
+
+[0] https://stackoverflow.com/questions/5596982/using-powershell-to-write-a=
+-file-in-utf-8-without-the-bom
+[1] Available at https://github.com/microsoft/edit and apparently
+shipped with Windows.  I will say that I was impressed at its
+functionality for a 231 KiB binary footprint.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--xLyIB64B0hIxPhAx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaV2ZSwAKCRB8DEliiIei
+gUlzAQDYx0ZOm5YfsZJjF7HA2G5LDvRIC49ijrnJTbBt2OCMnwEAoAf+rrg7xOFW
++r0BV+wwJ17Lcr8YanCLTixkhAwA+AE=
+=v6Lj
+-----END PGP SIGNATURE-----
+
+--xLyIB64B0hIxPhAx--
