@@ -1,111 +1,154 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0864D29BD81
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 10:16:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73CE30AADB
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 10:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767694570; cv=none; b=XzwM7mb/CJLoMkccic3QX4nwqMolvsQROkGq+L+srPS3DmL2TZU8m7no8sHFiDNHtMzuqsDPDHqK+ldej7LU/yBdI3tJMv+z/y3K2C+hlOJJq3bwIR06iunRO4RJHZS1WgFM1MHFHieonwlOiJor8ges+Qyi6GwgzDzjsaK9SE0=
+	t=1767694843; cv=none; b=MpN81Hnf9WCrQjVjXhSQWYHRJ0BhhGDAjR33DkPBlptsCWQ4/CErnR0KvWT/34+2LBlZUR7YMYtOLDMsJmmFJdEaMbPatKIWG/1NtlRMUNexzfea6fqvg0qIPzeHEKM7Yb1/sfN7NQD4tR3SeuWekNkEN0lzjEmmgGOvBzcM91o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767694570; c=relaxed/simple;
-	bh=V2XblLBJgvzRi2kGxQSWCvp/KiSasH5oaOKnla44kM0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oS/9W5JbHNzq9k6t7FU3gCM3WwlIOBghCgr7rWiqQdrPVEJObgIk0Sa74J/+3rN2jwNJtLWNErbgGeQhnq8q7HxsLrnoHmpZvDoYOgzBBUrioLQ+i+/M+0h/4vEAK2WYZVLTkR3TC9EjAVPawfjlEj3R1nb3NtAFEEfRzaadCBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=c8KBFtOG; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1767694843; c=relaxed/simple;
+	bh=aPSCTrcVCzsWWJ4+OF5N4ix6lSBtqjQOIk9hC8RriSk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Kti+pMoW/ujjLaig4vuIcmjNGp+Wq9p3mYxa8EnXkA/gw8uiyFCoYH+YthzECExJ6teLxi1JqxmvsGDZIyR4soFIcOASjP3Cc5q9pQ1GGcH/LjxWDiUzi2xkp5Zs8FXPufO4l1eqDJHWWMs7ZMjAZZf1jLyslS+hyGnktxTyGaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BfLwEo1a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kI7CyfTV; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="c8KBFtOG"
-Received: (qmail 600961 invoked by uid 109); 6 Jan 2026 10:16:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=V2XblLBJgvzRi2kGxQSWCvp/KiSasH5oaOKnla44kM0=; b=c8KBFtOGL/7MNwKZSeeVNPPE5OaGIbtlaHcJRYUSAMezJ4GCmnrtdNva6vA9PeqwxTp+gVzGgLi+LtT5EYbj/JmVTZyoBvLZeNRmgmTUdy33jqOYufvNuz1jzT2ppFdVUG8SAwt8541YKhLkf11kJ/M6P0VCJgzrNQ5MYaRYRY0OhMd36X0tnikgSrs4m9McFdaPdU/TZXJO6NRAQsfrloAJktj0fdYRM5n+rXxxMNWVIu6HKqlBL5Xxrjvbpm7U8ravnBoBCxTonNMYgbgIHCReKD1uq8ZkI2edh0cQhAp+yK3d1DqcsBX/oMsX024ymEF+taYIN9fDV1s4Yyx6eg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Jan 2026 10:16:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 789097 invoked by uid 111); 6 Jan 2026 10:16:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Jan 2026 05:16:09 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 6 Jan 2026 05:16:04 -0500
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 2/2] t/perf/run: preserve GIT_PERF_* from environment
-Message-ID: <20260106101604.GB3727538@coredump.intra.peff.net>
-References: <20260106101043.GA3723319@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BfLwEo1a";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kI7CyfTV"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 23B767A0160;
+	Tue,  6 Jan 2026 05:20:37 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Tue, 06 Jan 2026 05:20:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1767694836; x=1767781236; bh=CuOnL33Jm/
+	OvBLFBtVEW0p2XkAYzFV9zrVmGhrNZJi4=; b=BfLwEo1aGNip0FdHy/Rj8b2U8i
+	2TbOlktmyynctMPmcFPfj7yANF+yfKkopUfhcKkIstnjLABq6nX7ZiJgakga+VQA
+	6LQClJgKycCLy/4F47Omrpj21HJ7/z2zLLBUsVbK5jmD+s26N0Z5dUS1dWh+zCOi
+	ltyB34GpxaSXq3cGquvtn7UCjVYGST1E69zxXkGwid0j7F2/8r6VONf+mdFBTo2V
+	XueAnylTDnjK3VKjTm4nyGZl73TKFSJnKliGwv/JZiO4yeFtL791eRismmu0Ca0F
+	Fne/79OJOPlEQnrN22REJ7+oCJNySRvNhTg4YWsNylKgy8YQsjM1O6gKGwXg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767694836; x=1767781236; bh=CuOnL33Jm/OvBLFBtVEW0p2XkAYzFV9zrVm
+	GhrNZJi4=; b=kI7CyfTVpVOAXPBi3BWas0kOMLhw/TjNTl5Tu9Q5UaN0qGIqj5L
+	ADVfyjN9E0qEkek/k/SPOPRN/oAnyA4i2PE3MnGmRGFGbNtGX5ZUhaZwApa/zjFe
+	LYX7tSmNQnJgU+3/hRoaJBuo/sk5HSCU2uFPAJOHw4bLIKcxeYEa2E92UzjRm47i
+	uaAkguCynxCfHco4OUI3THt1vN7tSFaWoUu7s7J1sh1vozGTPjEyq5HaJRKTuFzO
+	7IClHWR7Yz1z+f7D0Lmhw2t5IZRsiX4iO+BUZqBwlV00YE9giniQmXPb4G6vcSvJ
+	7keHLibgJo/9tnPDn1oT89EYhJb1JDIAFYg==
+X-ME-Sender: <xms:9OFcaekFmvFIUXd0nD0n3Dkf09MDhc68mpTD81CiejCN6eqrzmVvgw>
+    <xme:9OFcac2a3iNV-OQvlOD1MPj5iIzyn3C7PRbJIUGAWG_zLEIzwo5SfQNJzQSwTNM6W
+    vKYuAZPwjtNrAbIhZ1thpiVOE-IgkUgfK6pEHH0RFYq1prbZu3SWg>
+X-ME-Received: <xmr:9OFcaRolwi3trPhGg0dyk0jP5zFCb1kXV_yKBftWz72o2z10t9K-Szl_DVPApYtwSOPi9xz1hIWqU0NHRi0T5OzY6A8lBjhCbIHn0t4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelleelfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfe
+    ekveetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhr
+    ghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsegrshhhlhgvshhhrdhmvgdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshes
+    tghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:9OFcaRc2F4LiekTCn7Dw5pkC1dGo_VqqP9SqoZhjQk29T3xGURc7Uw>
+    <xmx:9OFcaYrn77pWm4NFQ84auMkFwyNZHQLZq3HewgeaQ_WbWxUpuuRIhA>
+    <xmx:9OFcaaHf-Y_8XeWmw919NEAZSG_JTD_d5fhArqJsxS6P2iNY5i3uVA>
+    <xmx:9OFcaQvxpRqTJnyurFxUxrTM_zaXAsGSrkvvi3NLJwQiZuPxzt3G9g>
+    <xmx:9OFcac7somiO1kUplbYMUvDxl9J1GkUHehhpCncryxz5HS2f7nNcOrHA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Jan 2026 05:20:36 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ashlesh Gawande <git@ashlesh.me>
+Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net
+Subject: Re: [PATCH] t5550: add netrc tests for http 401/403
+In-Reply-To: <20260106093451.748761-1-git@ashlesh.me> (Ashlesh Gawande's
+	message of "Tue, 6 Jan 2026 15:04:51 +0530")
+References: <20260106093451.748761-1-git@ashlesh.me>
+Date: Tue, 06 Jan 2026 19:20:35 +0900
+Message-ID: <xmqqjyxvjb4c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260106101043.GA3723319@coredump.intra.peff.net>
+Content-Type: text/plain
 
-If you run:
+Ashlesh Gawande <git@ashlesh.me> writes:
 
-  GIT_PERF_LARGE_REPO=/some/path ./p1006-cat-file.sh
+> Signed-off-by: Ashlesh Gawande <git@ashlesh.me>
+> ---
+> Sending netrc test patches as suggested in: https://lore.kernel.org/git/aPAg3gYwzA9fHCC3@fruit.crustytoothpaste.net
 
-it will use the repo in /some/path. But if you use the "run" helper
-script to aggregate and compare results, like this:
+At the conceptual level, I am happy to have tests for features that
+we claim to support.  It is a different matter if we want to support
+netrc, though ;-).
 
-  GIT_PERF_LARGE_REPO=/some/path ./run HEAD^ HEAD p1006-cat-file.sh
+There are some nits.
 
-it will ignore that variable. This is because the presence of the
-LARGE_REPO variable in GIT-BUILD-OPTIONS overrides what's in the
-environment. This started with 4638e8806e (Makefile: use common template
-for GIT-BUILD-OPTIONS, 2024-12-06), which now writes even empty
-variables (though arguably it was wrong even before with a non-empty
-value, as we generally prefer the environment to take precedence over
-on-disk config).
+> +set_netrc() {
 
-We had the same problem in perf-lib.sh itself, and we hacked around it
-with 32b74b9809 (perf: do allow `GIT_PERF_*` to be overridden again,
-2025-04-04). That's what lets the direct invocation of "./p1006" work
-above.
+Style.  SP on both sides of ().  I.e.
 
-And in fact that was sufficient for "./run", too, until it started
-loading GIT-BUILD-OPTIONS itself in 5756ccd181 (t/perf: fix benchmarks
-with out-of-tree builds, 2025-04-28). Now it has the same problem: it
-clobbers any incoming GIT_PERF options from the environment.
+    set_netrc () {
 
-We can use the same hack here in the "run" script. It's quite ugly, but
-it's just short enough that I don't think it's worth trying to factor it
-out into a common shell library.
+> +	# $HOME=$TRASH_DIRECTORY
+> +	echo "machine $1 login $2 password $3" > $TRASH_DIRECTORY/.netrc
 
-In the long run, we might consider teaching GIT-BUILD-OPTIONS to be more
-gentle in overwriting existing entries. There are probably other
-GIT_TEST_* variables which would need the same treatment. And if and
-when we come up with a more complete solution, we can use it in both
-spots.
+Style.  No space between the redirection operator ">" and
+redirection target.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/perf/run | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Style.  Enclose the redirection target inside a pair of double
+quotes if it involves variable interpolation.  I.e.
 
-diff --git a/t/perf/run b/t/perf/run
-index 073bcb2aff..13913db4a3 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -204,8 +204,18 @@ run_subsection () {
- get_var_from_env_or_config "GIT_PERF_CODESPEED_OUTPUT" "perf" "codespeedOutput" "--bool"
- get_var_from_env_or_config "GIT_PERF_SEND_TO_CODESPEED" "perf" "sendToCodespeed"
- 
-+# Preserve GIT_PERF settings from the environment when loading
-+# GIT-BUILD-OPTIONS; see the similar hack in perf-lib.sh.
-+git_perf_settings="$(env |
-+        sed -n "/^GIT_PERF_/{
-+                # escape all single-quotes in the value
-+                s/'/'\\\\''/g
-+                # turn this into an eval-able assignment
-+                s/^\\([^=]*=\\)\\(.*\\)/\\1'\\2'/p
-+        }")"
- cd "$(dirname $0)"
- . ../../GIT-BUILD-OPTIONS
-+eval "$git_perf_settings"
- 
- if test -n "$TEST_OUTPUT_DIRECTORY"
- then
--- 
-2.52.0.664.g9f53c65b4c
+	echo ... >"$TRASH_DIRECTORY/.netrc"
+
+> +}
+> +
+> +clear_netrc() {
+
+Ditto.
+
+> +	rm "$TRASH_DIRECTORY/.netrc"
+> +}
+
+Should this fail if .netrc did not exist in the first place, or is
+the primary purpose of this helper to ensure the file does not exist
+after it returns (in which case it would be desirable not to fail if
+the file did not exist when it was called, with "rm -f")?
+
+>  expect_askpass() {
+
+Ditto.
+
+> +test_expect_success 'using credentials from netrc to clone successfully' '
+> +	set_askpass wrong &&
+> +	set_netrc 127.0.0.1 user@host pass@host &&
+> +	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc &&
+> +	expect_askpass none
+> +'
+> +clear_netrc
+
+We try not to run random shell functions outside the test_expect_*
+blocks.  A clean-up function like this is better called at the end
+of each piece, arranged with the test_when_finished helper.
+
+	test_expect_success 'do random thing' '
+		test_when_finished clear_netrc &&
+		set_askpass wrong &&
+		set_netrc ... &&
+		...
+	'
+
