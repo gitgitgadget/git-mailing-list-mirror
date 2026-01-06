@@ -1,234 +1,114 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51D830B510
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 07:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E010322B72
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 08:08:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767685490; cv=none; b=udbkWPDeUr2Q2mzwxnSYvgpjdTJ+fNmw/qZ1AqjOFoKF5bNK1xibokfPQlYNjE1k/p3fQZOTZWfNmGOdajagtJBroVo6XDDbjcIOhZaOCYhAz98Q4uwK2ma3/E1rER3EwJWTN4uF1ecoUMnxOJ33PDvLqW/scs0GmRIey+dNed0=
+	t=1767686892; cv=none; b=UZvT5ifIg8ryZyRI14DAIN5p5EpYyLfNurS9PEEbSkcliNx/VAIBQwfiVB9x0gSx+SDuI985mGA+qgiUx2Fs/8yY8JCHUCAij6U2EAmdpDwXXfvgPBkAJLs8weGmtGotk3LiFD4pt9C0xUcqIpS/WSvk3dwNv2+IGXkdLzxMyBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767685490; c=relaxed/simple;
-	bh=+jy2p7Lr/982tHwkq++dLSUyQj+OKZ8G64imNnCQkng=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sw2FM8+AOM1JqAlPNC7BlJ25AF6U31SEDdwLd7jF1uji7lr7IqgR9WArfTV1wuxlLAwrt0VF4243b7D7OUvD2IZwOvi7zXpalY+00F0fwbIW0qu6IkmcgJ+1g0Jwbmw2bDeTeny2oMy+AyxGONHXQkKuGoMX8ZNufo4VtokP7ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cvegKzeJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JUlYaVde; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1767686892; c=relaxed/simple;
+	bh=EaDnU/wPputMDeBP8tW8gkOQxH8nITiKgoPq6QR+qXM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AE0/nk8pYlbn4Kq8KohZBbIUxImzCyDl71PxbuYjHFmqXnav4Fvs4lvY7yw2n3pjPSGZUeDiwaxdu8475/cq5gdVJseHyAR5RLMsvc9z1osYZPnkrBzkbsfk9boq80XtZTRpzrjUfnmTMKx9qO2YWiYMnjB7/kqpP1J5z5DaxcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B/BVYdvn; arc=none smtp.client-ip=74.125.82.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cvegKzeJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JUlYaVde"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0F3A37A0150;
-	Tue,  6 Jan 2026 02:44:48 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 06 Jan 2026 02:44:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767685487;
-	 x=1767771887; bh=njPm7/ioHMcYaB4rg0nZb5UkgY31kJ3yh9E6g51t0x0=; b=
-	cvegKzeJ2dJKOBmkJLUObLoHOLv7gpdg4SXrWmGrRYXWD/KL/S3Oizc86GW08K8I
-	BLeQwEuMkE0GUEDeU+nFoITTTrfePYBIeVFbpMuWAZooqhqgsGeIJHwOJ1s3kF6B
-	4x3tELVsQ35Ks7WlbAY1+aIYXLWCxHHSl8wp4IpcP04ZqeeLvH/jsDp4dN/Eq3i8
-	QnddJj5Td+MN4h9C9Joc7vAu6fQJkJpz8MAclOYQtP7a3dcaL8S2piyPDtL1d9IA
-	QEtCsKF4azPEGUNRfkkr13WRYKn1WEI9E3nF3cntokGBNRcBVxS5GVhWCVfvce2r
-	n9Iw+y3WaB2Ck90/BfYm9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767685487; x=
-	1767771887; bh=njPm7/ioHMcYaB4rg0nZb5UkgY31kJ3yh9E6g51t0x0=; b=J
-	UlYaVdeGr/5LNsWKwF/wSG+xWTm5gV7z4KxbzybFjPslfh332MgSJlU+Ca1LFCL1
-	BXeA6xn+SIbzL7TvDnDaOv1N7L4XhfyJSe9mLq4/u0nhWKgsjbtb4NhYXojSgJ9i
-	9UU1MWqki3316h911BKbbfCBjRSWstt4qkO9OuNeAIsCp5HsuGoAn6/87UHEy/yo
-	8HNLiiZgw1znJ1wc4QlU3vDzX0zANwZBzQVKLx8gybHVW6K6m+Wl4NzbkKqHsT1K
-	M0LpyGm0O61qaX0MYMoYYjl0TMNGQ9dvPEC0bQyZAkslUvBJAwknQU/u2/WHJEG9
-	zCxi+A/62YuT5kmJYbr8Q==
-X-ME-Sender: <xms:b71caQc80RQTDBjfLHErKG3PH8rnluJCiV7doBLQjnIT3wNnKEUfdQ>
-    <xme:b71caZrQSvPux96vyRD3jfiQZoRXqCTYHzgYk4IGt2mPRkClEdorwJH6zp_rm5y4W
-    IAMbU47SEDg8D7YqEe_wrOMeZ-t01MekRWlqtt4mQo22Y5T3GnZiA>
-X-ME-Received: <xmr:b71cae41u9wvkdBy1n3OVgV10sj2mECFAbDVLsGxAUGd1jF9FnrtPsnKjVN43yM0T9K-lLhjoI2agT_DCnDAAhZSfAgoV3KcGETtxyw2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelleeivdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghmohgpph
-    hoghgrtghnihhksehtqddvrdhnvghtpdhrtghpthhtohepghhithhgihhtghgrughgvght
-    sehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:b71cafpNXDJmq9YDW7LWjKh0b16OswbilYybft7SnEFzn3qucUNEAQ>
-    <xmx:b71caQhLNXiVSKPQXoA5tnyB9fldzzser9KcEov1iexp7EHQzAnx-g>
-    <xmx:b71caZKjCzbMMafsSIMdl9kwhoo2vkNzs7QQoXccZXIgrLI6dRLbug>
-    <xmx:b71caQDbVExUrMM1ZN4fYezyfroQGxMNE6OqN539EnT08Hc7C1QKPQ>
-    <xmx:b71caVp_D5zOfk-9W4MFQX-TnB8lpv2Z4Z3CHLY9W16Nyv844gxamtUn>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Jan 2026 02:44:46 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c02aed77 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Jan 2026 07:44:45 +0000 (UTC)
-Date: Tue, 6 Jan 2026 08:44:43 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Samo =?utf-8?B?UG9nYcSNbmlr?= via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	Samo =?utf-8?B?UG9nYcSNbmlr?= <samo_pogacnik@t-2.net>
-Subject: Re: [PATCH 2/2] shallow: handling fetch relative-deepen
-Message-ID: <aVy9a9f1AZzTbBQa@pks.im>
-References: <pull.2121.git.git.1765303880.gitgitgadget@gmail.com>
- <b352a33c90ca67f4ad68df08c0fd155ceeeb167c.1765303880.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B/BVYdvn"
+Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-11beb0a7bd6so3675016c88.1
+        for <git@vger.kernel.org>; Tue, 06 Jan 2026 00:08:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767686889; x=1768291689; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EaDnU/wPputMDeBP8tW8gkOQxH8nITiKgoPq6QR+qXM=;
+        b=B/BVYdvnDfPr6GaOiu2DSXDvBq+2Lnwo5pRwEtixq6/fEowKLsU8lkns4FrZmGcJtl
+         vsXm1HvUPYNpjmweK6oyWUNB+g+P3ZpS3RzudPczyqIW00H1a4ZRRSFoPZwe2P9UKS2G
+         gs6adqPK1Q3Autzkp6Yyqi0eKqMlMBV6WvSYn7klOv3aUdysIENcdxcdrLgPJ+wZ7swN
+         FPmrXthFkxfhzXDowu0av19YnR7SovAiDQXpppgacDfURyOdI4fGMr0+xkTjfelN3mjy
+         imI81UXePNdYtGkUhmYVRdaiL374xTwZ/7AxXgESE7NipBl8ikoaY4C1EB3U1MwVNwbF
+         6U5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767686889; x=1768291689;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EaDnU/wPputMDeBP8tW8gkOQxH8nITiKgoPq6QR+qXM=;
+        b=u8SVFLwlTMc+2AykreGgFrMguUmA05I3Wglpo5PnxLQVZzqJNhFUc5q0f9nlVQ44FG
+         wrZuq+vAFmOJAVXfx8HdiSJLfW+xvShjQyunKKynD0KSZQ0SuRZsdhN0qj+emXLq3BpB
+         fa90xFWrYdOhJj8qAPCiShWqIZKrg8ZNUDZpUHTB9pbKV9PUJb+qfqq/EBQ8gceTmCid
+         rhJtES8KWP6U31NDpxYkLIbB6/Fai4ZKBr/8TwVTXVQkS9kXw1sd8QHgWlw/B6zrLF5/
+         sEHxQXXaEPggnnK6SfR2lSHokH3sfLwZFx7mVZ9k7p++HyNfIYl5Dsuq91eWOTRGba0G
+         7BnA==
+X-Gm-Message-State: AOJu0YyqY0UD7+d5I2cKU5F+NbmagA1ZeByIAzE+fnvWmXkx24NOChIb
+	URJ905fREVvfUF2ncKvguJjIUPYYESHxT1GmEkk3GjqlhwZa8uTI4bee/oR9aBRaDZbjxRRFrcn
+	o7yM0ojrHRTp/yuRz66IdgFO1ChKdXXs=
+X-Gm-Gg: AY/fxX6lZaA7tv8vNWcjPdk4TE3M7fNZyrPVJv+/SCdsx/JbozXJiC2zz6TkRGxjL/1
+	LY689HXVyRA/l7j3T3OTyEc2eQpOoyst6sLHZUwUycVVrdNb0qGcWnuOI9p2qVVAfRMGyt/wjXA
+	8XHG9T5AnmTeRXadpUFH0+sU8NKJ4Qk7wNtOe++4y1Y5TLdYqd3dEMtJ08cb3hlcsjK7EGjoBlX
+	1XU2CYVu2LCxS9a/VFbOzCy+jTJGLPqoEfljfp/+po6QHmG8QAnQXnXd2guQgxA16G1OGvLBVE=
+X-Google-Smtp-Source: AGHT+IGxLkFqA6orseSCaaMPDJ1GwmO+OsFCE936MT6aaImpZqcO56oXqRcAq6xylLBWhIZdJYJP6dIKZkcWunBzijs=
+X-Received: by 2002:a05:7022:d99:b0:119:e569:f86a with SMTP id
+ a92af1059eb24-121f1ae250bmr1161252c88.7.1767686888959; Tue, 06 Jan 2026
+ 00:08:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b352a33c90ca67f4ad68df08c0fd155ceeeb167c.1765303880.git.gitgitgadget@gmail.com>
+References: <aVfzMsN2ouY3UBFG@ubuntu> <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
+In-Reply-To: <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Tue, 6 Jan 2026 09:08:10 +0100
+X-Gm-Features: AQt7F2rPJUvJh8pOO7hHwxfwRkkaHiIMFUVslWmltxg3KvJEUcqXxuQo4Q5pY1Q
+Message-ID: <CAD=f0L-hv1ZYGDyHRCYu3BqgrbvutS+JVn0D3kBq-wq--qgY7A@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into repo-setting
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, gitster@pobox.com, 
+	Christian Couder <christian.couder@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
+	Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 09, 2025 at 06:11:20PM +0000, Samo Pogačnik via GitGitGadget wrote:
-> From: =?UTF-8?q?Samo=20Poga=C4=8Dnik?= <samo_pogacnik@t-2.net>
-> 
-> When a shallowed repository gets deepened beyond the beginning of a
-> merged branch, we may endup with some shallows, that are behind the
+On Mon, 5 Jan 2026 at 15:23, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> Hi Olamide
+>
+> On 02/01/2026 16:32, Olamide Caleb Bello wrote:
+> > When handling multiple repositories within the same process, relying on
+> > global state for accessing the "core.attributesFile" configuration can
+> > lead to incorrect values being used. It also makes it harder to isolate
+> > repositories and hinders the libification of git.
+> > The functions `bootstrap_attr_stack()` and `git_attr_val_system()`
+> > retrieve "core.attributesFile" via `git_attr_global_file()`
+> > which reads from global state `git_attributes_file`.
+> >
+> > Move the "core.attributesFile" configuration into the
+> > `struct repo_settings` instead of relying on the global state.
+>
+> This changes when the config setting gets parsed which unfortunately
+> regresses the user experience when the setting is invalid.
+>
+> If I run 'git -c core.attributesFile=~does-not-exist rebase -i' with git
+> built from master it fails immediately with "fatal: failed to expand
+> user dir in: '~does-not-exist'". With this patch applied it prompts me
+> to edit the todo list and then fails when it tries to checkout the
+> commit we're rebasing onto. Because "git rebase" expects reset_head() to
+> return an error rather die if the checkout fails it is left in a strange
+> state where only practical course of action for the user is to run "git
+> rebase --abort".
 
-s/endup/end up/
-s/shallows, that/shallows that/
+Yes I tried this and I experienced the same behaviour.
 
-> reachable ones.
+>
+> It is quite common that moving from parsing config settings eagerly by
+> calling repo_config() at startup to parsing them lazily via 'stuct
+> repo_settings' causes regressions like this. We really should find a way
+> to address that before moving more settings into 'struct repo_settings'
+>
 
-Hm, which reachable ones? Sorry, I can't quite follow, it would help the
-reviewer to add a bit more context.
-
-> Added test 'fetching deepen beyond merged branch' exposes that
-> behaviour.
-> 
-> On the other hand, it seems that equivalent absolute depth driven
-> fetches result in all the correct shallows. That led to this proposal,
-> which unifies absolute and relative deepening in a way that the same
-> get_shallow_commits() call is used in both cases. The difference is
-> only that depth is adapted for relative deepening by measuring
-> equivalent depth of current local shallow commits in the current remote
-> repo. Thus a new function get_shallows_depth() has been added and the
-> function get_reachable_list() became redundant / removed.
-> 
-> The get_shallows_depth() function also shares the logic of the
-> get_shallow_commits() function, but it focuses on counting depth of
-> each existing shallow commit. The minimum result is stored as
-> 'data->deepen_relative', which is set not to be zero for relative
-> deepening anyway. That way we can allways summ 'data->deepen_relative'
-> and 'depth' values, because 'data->deepen_relative' is always 0 in
-> absolute deepening.
-
-I think the commit message needs some polishing. I myself am not that
-familiar with our shallow logic, so I'm a bit lost here to be honest.
-
-Typically, a commit message should be self-explanatory and guide the
-reader through the problem space as well as the solution. It should, in
-the following order:
-
-  - Explain what the actual issue is as observed by the user. I'm not
-    really sure about this part, only that it's something related to
-    shallow clones, deepening and merge commits.
-
-  - Explain what the root cause of the issue is.
-
-  - Explain how the root cause is being fixed. Ideally, it should also
-    explain why that is the correct fix, potentially referencing other
-    code like you do.
-
-Your commit message on the other hand explains more of the "what" and
-less of the "why", which makes it hard to follow. Also, an ASCII commit
-graph would probably go a long way in explaining the issue :)
-
-> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-> index 2677cd5faa..d05c45e32b 100755
-> --- a/t/t5500-fetch-pack.sh
-> +++ b/t/t5500-fetch-pack.sh
-> @@ -955,6 +955,30 @@ test_expect_success 'fetching deepen' '
->  	)
->  '
->  
-> +test_expect_success 'fetching deepen beyond merged branch' '
-> +	test_create_repo shallow-deepen-merged &&
-> +	(
-> +		cd shallow-deepen-merged &&
-> +		git commit --allow-empty -m one &&
-> +		git commit --allow-empty -m two &&
-> +		git commit --allow-empty -m three &&
-> +		git switch -c branch &&
-> +		git commit --allow-empty -m four &&
-> +		git commit --allow-empty -m five &&
-> +		git switch main &&
-> +		git merge --no-ff branch &&
-> +		cd - &&
-> +		git clone --bare --depth 3 "file://$(pwd)/shallow-deepen-merged" deepen.git &&
-> +		git -C deepen.git fetch origin --deepen=1 &&
-> +		echo "Shallow:" && cat deepen.git/shallow &&
-> +		git -C deepen.git rev-list --all >actual &&
-> +		echo "All rev-lis:" && cat actual &&
-
-This statement and the one two lines further up look like debug code to
-me.
-
-> +		for commit in $(sed "/^$/d" deepen.git/shallow); do
-
-Nit: loops should be formatted like this:
-
-    for commit in ...
-    do
-        ...
-    done
-
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 2d2b70cbf2..ecd3e7f5ef 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -704,54 +705,82 @@ error:
->  	return -1;
->  }
->  
-> -static int get_reachable_list(struct upload_pack_data *data,
-> -			      struct object_array *reachable)
-> +define_commit_slab(commit_depth, int *);
-> +static void free_depth_in_slab(int **ptr)
->  {
-> -	struct child_process cmd = CHILD_PROCESS_INIT;
-> -	int i;
-> -	struct object *o;
-> -	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
-> -	const unsigned hexsz = the_hash_algo->hexsz;
-> -	int ret;
-> -
-> -	if (do_reachable_revlist(&cmd, &data->shallows, reachable,
-> -				 data->allow_uor) < 0) {
-> -		ret = -1;
-> -		goto out;
-> -	}
-> -
-> -	while ((i = read_in_full(cmd.out, namebuf, hexsz + 1)) == hexsz + 1) {
-> -		struct object_id oid;
-> -		const char *p;
-> -
-> -		if (parse_oid_hex(namebuf, &oid, &p) || *p != '\n')
-> -			break;
-> -
-> -		o = lookup_object(the_repository, &oid);
-> -		if (o && o->type == OBJ_COMMIT) {
-> -			o->flags &= ~TMP_MARK;
-> +	FREE_AND_NULL(*ptr);
-> +}
-> +static void get_shallows_depth(struct upload_pack_data *data)
-
-This function looks very similar to `get_shallow_commits()`. Is it
-possible to deduplicate the logic?
-
-Thanks!
-
-Patrick
+Yes, I came across an initial discussion about `prepare_repo_settings()`
+and the issues about the appropriate place to call it but it seemed there was
+no resolution then.
