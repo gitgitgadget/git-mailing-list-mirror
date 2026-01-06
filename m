@@ -1,57 +1,57 @@
-Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E010322B72
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 08:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11E741C63
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 08:09:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767686892; cv=none; b=UZvT5ifIg8ryZyRI14DAIN5p5EpYyLfNurS9PEEbSkcliNx/VAIBQwfiVB9x0gSx+SDuI985mGA+qgiUx2Fs/8yY8JCHUCAij6U2EAmdpDwXXfvgPBkAJLs8weGmtGotk3LiFD4pt9C0xUcqIpS/WSvk3dwNv2+IGXkdLzxMyBc=
+	t=1767686948; cv=none; b=mtAAKndCnFjgicfNMhADM/mJduoHNsPt54nOJJ00rXnJ/7iq4l1t9G4ILIaicqohNGhWe8d55LduEaPiXIjQUrszCIGL9RQYAbtMOU6SlBt7slWWJfVFnBhclC651nG6qciylwl6TwHL4wp78KoRluBpqRzwRVCppygOxcWwhoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767686892; c=relaxed/simple;
-	bh=EaDnU/wPputMDeBP8tW8gkOQxH8nITiKgoPq6QR+qXM=;
+	s=arc-20240116; t=1767686948; c=relaxed/simple;
+	bh=mhrmwkZIJt3qWOzZM6jmWQRG74TR3k9H/pcladw/d+Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AE0/nk8pYlbn4Kq8KohZBbIUxImzCyDl71PxbuYjHFmqXnav4Fvs4lvY7yw2n3pjPSGZUeDiwaxdu8475/cq5gdVJseHyAR5RLMsvc9z1osYZPnkrBzkbsfk9boq80XtZTRpzrjUfnmTMKx9qO2YWiYMnjB7/kqpP1J5z5DaxcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B/BVYdvn; arc=none smtp.client-ip=74.125.82.45
+	 To:Cc:Content-Type; b=nwdGPXrkQllWsMrz8gEmAUIg9xrV6zTAnQf9buXl1T3TxShVKd+2bjPKh5SFK0bG5siKIycVsKALMG4wRC15//+YvnMxHsS8A8aW41tCaVyfLZzgTesw7awlWKresYIRBsna3VB93/ZJQt7F0LRmWqlrhnmjxQUIonkR7TTWQYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SP6PkHUG; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B/BVYdvn"
-Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-11beb0a7bd6so3675016c88.1
-        for <git@vger.kernel.org>; Tue, 06 Jan 2026 00:08:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SP6PkHUG"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-34aa62f9e74so913384a91.1
+        for <git@vger.kernel.org>; Tue, 06 Jan 2026 00:09:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767686889; x=1768291689; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767686946; x=1768291746; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EaDnU/wPputMDeBP8tW8gkOQxH8nITiKgoPq6QR+qXM=;
-        b=B/BVYdvnDfPr6GaOiu2DSXDvBq+2Lnwo5pRwEtixq6/fEowKLsU8lkns4FrZmGcJtl
-         vsXm1HvUPYNpjmweK6oyWUNB+g+P3ZpS3RzudPczyqIW00H1a4ZRRSFoPZwe2P9UKS2G
-         gs6adqPK1Q3Autzkp6Yyqi0eKqMlMBV6WvSYn7klOv3aUdysIENcdxcdrLgPJ+wZ7swN
-         FPmrXthFkxfhzXDowu0av19YnR7SovAiDQXpppgacDfURyOdI4fGMr0+xkTjfelN3mjy
-         imI81UXePNdYtGkUhmYVRdaiL374xTwZ/7AxXgESE7NipBl8ikoaY4C1EB3U1MwVNwbF
-         6U5Q==
+        bh=mhrmwkZIJt3qWOzZM6jmWQRG74TR3k9H/pcladw/d+Q=;
+        b=SP6PkHUGQO8r+LbfXnK5NkDR3lxiDGfPe9pzkxhDn0xvvY00H6SzrNTgaiKZO190Id
+         UDCmb+a27Yb95hsrdYne6O3npVVTDrfhs+2P/xAlJUEG/k57qnhaBoEqLnSaT1YY/VaB
+         LVfflBr2kgCPjrTsWKggVZ2QYy2fDAxojE0H5bfc7M94zDXw8fneYlHqQ3dnpCf8Iiiy
+         Z2rX4AZRhfHeZVFbAN1DgdExTi/bl5d+HGLpHINTFWJ5vcwb7ennLaTxD2j8OAMRDlDG
+         NzDjEMfpDqssjY9QvVQnGlApZtIL6+l1eFRpVK3Y4JKx/TMu1pcALCvVbim4Vqm60CFo
+         v7wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767686889; x=1768291689;
+        d=1e100.net; s=20230601; t=1767686946; x=1768291746;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EaDnU/wPputMDeBP8tW8gkOQxH8nITiKgoPq6QR+qXM=;
-        b=u8SVFLwlTMc+2AykreGgFrMguUmA05I3Wglpo5PnxLQVZzqJNhFUc5q0f9nlVQ44FG
-         wrZuq+vAFmOJAVXfx8HdiSJLfW+xvShjQyunKKynD0KSZQ0SuRZsdhN0qj+emXLq3BpB
-         fa90xFWrYdOhJj8qAPCiShWqIZKrg8ZNUDZpUHTB9pbKV9PUJb+qfqq/EBQ8gceTmCid
-         rhJtES8KWP6U31NDpxYkLIbB6/Fai4ZKBr/8TwVTXVQkS9kXw1sd8QHgWlw/B6zrLF5/
-         sEHxQXXaEPggnnK6SfR2lSHokH3sfLwZFx7mVZ9k7p++HyNfIYl5Dsuq91eWOTRGba0G
-         7BnA==
-X-Gm-Message-State: AOJu0YyqY0UD7+d5I2cKU5F+NbmagA1ZeByIAzE+fnvWmXkx24NOChIb
-	URJ905fREVvfUF2ncKvguJjIUPYYESHxT1GmEkk3GjqlhwZa8uTI4bee/oR9aBRaDZbjxRRFrcn
-	o7yM0ojrHRTp/yuRz66IdgFO1ChKdXXs=
-X-Gm-Gg: AY/fxX6lZaA7tv8vNWcjPdk4TE3M7fNZyrPVJv+/SCdsx/JbozXJiC2zz6TkRGxjL/1
-	LY689HXVyRA/l7j3T3OTyEc2eQpOoyst6sLHZUwUycVVrdNb0qGcWnuOI9p2qVVAfRMGyt/wjXA
-	8XHG9T5AnmTeRXadpUFH0+sU8NKJ4Qk7wNtOe++4y1Y5TLdYqd3dEMtJ08cb3hlcsjK7EGjoBlX
-	1XU2CYVu2LCxS9a/VFbOzCy+jTJGLPqoEfljfp/+po6QHmG8QAnQXnXd2guQgxA16G1OGvLBVE=
-X-Google-Smtp-Source: AGHT+IGxLkFqA6orseSCaaMPDJ1GwmO+OsFCE936MT6aaImpZqcO56oXqRcAq6xylLBWhIZdJYJP6dIKZkcWunBzijs=
-X-Received: by 2002:a05:7022:d99:b0:119:e569:f86a with SMTP id
- a92af1059eb24-121f1ae250bmr1161252c88.7.1767686888959; Tue, 06 Jan 2026
- 00:08:08 -0800 (PST)
+        bh=mhrmwkZIJt3qWOzZM6jmWQRG74TR3k9H/pcladw/d+Q=;
+        b=K6whyQICI0NXEK0DLhgKeVfziaeAgYFXPXVMOCyqKM0gBivgHFhr7ytQX6eqA5FrGe
+         PCjxy5c6r46/9RV6cY25Lc8zLDsdaNatJTXa+E/5nTfNd46F5P+o/lOLr482Hmlo9ZtZ
+         Ecvbqrg4eu0ozRLYS/TDN69UEP1Cvtb+GwWf4glJ9GRgd2hJ363qsvm9y15AozT+rnu0
+         l7L3FEyW7L109d0XYqWJzGt0TNOmnJch5TZyPhAKXhGgD9mT9NWJQNVzF6tPIORsqW+s
+         Tl6TkAhyXrUKLCeu+Rq1QPlDvwVQ5piBAhiZt1SVkDBwoGxkQbL1t1sXXRDI/5HtWjHW
+         viEw==
+X-Gm-Message-State: AOJu0YzFureNbksiucEMkNP799BvEcGmU4RLpIIPdxFxq13MIg4dBp22
+	iJYJQSFZd9JSJoPkTovdygCyLQS2e0SwarPAK6EBtRQsTJB3oMZYSp3SN08LQscpkGTKR9k4LxQ
+	s9kkBb6e5aL5cv1t6yyrwYYOAdioiB3U=
+X-Gm-Gg: AY/fxX5nk3J6ucOnsFU5aeBwMWjO1bp4VKNUCVSaTcBAbbSsZfiGQqn24eB6f1tKQF4
+	8Iq7N5OtRsqyVcjBp7bU8+NLRQ9GCEg1DCPWw0Y+lUHs9nLzRck6PI7WmoxDQkMzYVujokU+QsL
+	tV+il7b4TWeYEWyS5Uo1vrsZP75/Dt0skmwE5VOwDbcUf+RMV64C6g0C78F1nVe1CmmO84i5ANY
+	TA8SrsPCDJ1ZCSJZGWqks0AG3QWDKEBK6aZxZ/l6ySuO/pfcCQ0QGANoP4ghByodnqwgdEs2mY=
+X-Google-Smtp-Source: AGHT+IFRLjGzAhWYuk7uxgEpBPNd14hIFJ04viAusOnwe3HdL9wEKN7mg3JfNPau/9/C8g8X8NmbuLOf7XrOwLBbdYE=
+X-Received: by 2002:a05:7022:fa03:b0:11a:4525:5361 with SMTP id
+ a92af1059eb24-121f18a3333mr2061788c88.6.1767686945997; Tue, 06 Jan 2026
+ 00:09:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,11 +59,12 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <aVfzMsN2ouY3UBFG@ubuntu> <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
-In-Reply-To: <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
+ <3947f777-e08a-4c17-81e3-c4711fe666a0@gmail.com>
+In-Reply-To: <3947f777-e08a-4c17-81e3-c4711fe666a0@gmail.com>
 From: Bello Olamide <belkid98@gmail.com>
-Date: Tue, 6 Jan 2026 09:08:10 +0100
-X-Gm-Features: AQt7F2rPJUvJh8pOO7hHwxfwRkkaHiIMFUVslWmltxg3KvJEUcqXxuQo4Q5pY1Q
-Message-ID: <CAD=f0L-hv1ZYGDyHRCYu3BqgrbvutS+JVn0D3kBq-wq--qgY7A@mail.gmail.com>
+Date: Tue, 6 Jan 2026 09:09:07 +0100
+X-Gm-Features: AQt7F2q2GkfDIoVQSV_GuXfrsp18ZUbfAAaMghBtb1d8SyWCxJVfpfB8VPF8oZ0
+Message-ID: <CAD=f0L8aoddeekws0vemTuWL7vb1eJv0kRhAGvEUTVG+17qtDw@mail.gmail.com>
 Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into repo-setting
 To: phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, gitster@pobox.com, 
@@ -72,43 +73,17 @@ Cc: git@vger.kernel.org, gitster@pobox.com,
 	Karthik Nayak <karthik.188@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 5 Jan 2026 at 15:23, Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Mon, 5 Jan 2026 at 16:00, Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> Hi Olamide
->
-> On 02/01/2026 16:32, Olamide Caleb Bello wrote:
-> > When handling multiple repositories within the same process, relying on
-> > global state for accessing the "core.attributesFile" configuration can
-> > lead to incorrect values being used. It also makes it harder to isolate
-> > repositories and hinders the libification of git.
-> > The functions `bootstrap_attr_stack()` and `git_attr_val_system()`
-> > retrieve "core.attributesFile" via `git_attr_global_file()`
-> > which reads from global state `git_attributes_file`.
+> On 05/01/2026 14:23, Phillip Wood wrote:
 > >
-> > Move the "core.attributesFile" configuration into the
-> > `struct repo_settings` instead of relying on the global state.
+> > It is quite common that moving from parsing config settings eagerly by
+> > calling repo_config() at startup to parsing them lazily via 'stuct
+> > repo_settings' causes regressions like this. We really should find a way
+> > to address that before moving more settings into 'struct repo_settings'
 >
-> This changes when the config setting gets parsed which unfortunately
-> regresses the user experience when the setting is invalid.
->
-> If I run 'git -c core.attributesFile=~does-not-exist rebase -i' with git
-> built from master it fails immediately with "fatal: failed to expand
-> user dir in: '~does-not-exist'". With this patch applied it prompts me
-> to edit the todo list and then fails when it tries to checkout the
-> commit we're rebasing onto. Because "git rebase" expects reset_head() to
-> return an error rather die if the checkout fails it is left in a strange
-> state where only practical course of action for the user is to run "git
-> rebase --abort".
+> See
+> https://lore.kernel.org/git/d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com
+> for some discussion about a possible solution.
 
-Yes I tried this and I experienced the same behaviour.
-
->
-> It is quite common that moving from parsing config settings eagerly by
-> calling repo_config() at startup to parsing them lazily via 'stuct
-> repo_settings' causes regressions like this. We really should find a way
-> to address that before moving more settings into 'struct repo_settings'
->
-
-Yes, I came across an initial discussion about `prepare_repo_settings()`
-and the issues about the appropriate place to call it but it seemed there was
-no resolution then.
+Yes, thank you.
