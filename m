@@ -1,193 +1,166 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126B4EADC
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 20:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1BF1A3166
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 21:16:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767732370; cv=none; b=YxoqssY11jjcvRzdr6Bp4IhGzckfGGY4TiVfGwA4mY4HaH7tKIZ+6GBGgc8D8QpSY084X+sr63eHGfxLZ4fShhDzkl3Yc9h6lWf1PPNqB305kQ/z+fGp3aQiympghxLGp1pXd5vsJWKm6Fxz7NQIPt9N6OkJLIJnee+tV3298R0=
+	t=1767734174; cv=none; b=XDG82+Y44zg6BKeioAR9Gm7+Pmk3f4Z8hL8cepmTIUUq7u/PKnoO5SG6y6/NR2EkdTydK6ogGB8lPzQBBGzltfI+ZTHVGVz3wLMLJcOu3MhvnF4xCSIAerBbz+cghIgVhqIrXpQjXvbercqpR5Kjgl7SftyjQbYciTSHishGeRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767732370; c=relaxed/simple;
-	bh=f5WgHLQiCGuNTjApfivL4sv2Hr7wlYGYr/mO6xVO3dA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=BiE8ruYjfn12pv8UJCuVuw4TANA0s5Z/SZ0n48++0tBaRPJ4tQsGpQjGgThFxGSs6t8RDwFrxU3dDLzVztvjeVWFC9GmFK2K4nNMIyV6/S3xV0ulw9QUMLhLKtezyh8FGQQniyFeRFO90k9neYjFX4DVVaY2bDf26XHikdIj/xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ia4gGRN3; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767734174; c=relaxed/simple;
+	bh=vRMULUDlX/PAhUjA7oOou2HafAIOn2b1DJmm7w048wg=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kgGfB90mDDiy65yok8GRsMcy+zEGKX4nxVDxvcN3AjBKuCR/6lAKZ3DND0ST6rkV7gR/OpOAh/0soddhj6H+lU/JqP5bsa46Fb/SJb8IuKpK5C1Xh68B+cGgC09d89fl0BUUSZJXSCEp/tDWTCCdpDCjn1m5cOnOQabjGx+Yjuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=michael.lyo.nz; spf=pass smtp.mailfrom=michael.lyo.nz; dkim=pass (2048-bit key) header.d=michael.lyo.nz header.i=@michael.lyo.nz header.b=iq9zuo1M; arc=none smtp.client-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=michael.lyo.nz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=michael.lyo.nz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ia4gGRN3"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-78c66bdf675so15015347b3.2
-        for <git@vger.kernel.org>; Tue, 06 Jan 2026 12:46:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767732368; x=1768337168; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m4QpZqhWHUSHaSZhfnFYbQOR8Jantni69P0CXNCa3FE=;
-        b=ia4gGRN30vihjYaV30wXYBfcD66uNJ7agn5icjFz2m858nW5Le3iPdeNJLR4gyabE7
-         cS2evyAvJEkFIUfGnDYHFWs56cGe4SGE/U/pmWz1i6MzDlZsQG+qkqtF07VcrhYJsazp
-         707z8KeFTZKoQgHCrN4ek7gIW5WLwTLZfXfcfp2Kg+UyhUFyIIJh+jL0qDDGaHjeqYBq
-         ybcWvqqorl4f4H+HIORmTZszQdVMLEFBwLS62hbOaV4elmAspu0UI890gwzxyCzus63J
-         k4SF+qzmpgdxlOwOp9DTDtLQhh2iaS5DEPkjQHpM7yyXdmzOwCXEhRsZkvNTw114lgMu
-         r5oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767732368; x=1768337168;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=m4QpZqhWHUSHaSZhfnFYbQOR8Jantni69P0CXNCa3FE=;
-        b=R/zk/ecAeAQZdnFkKQgaOyAdYRdsSpKfd0xTQMkGUHvTvkKOCFWeXNfhgC43M8OkHf
-         TYHaIkx1k8i17KOKh1YZ77+4fEz4tm9z4QkeJpXsY6QH9qLC4Lt7s4RHugnbS3ZNb/cp
-         pkIJ3Ulztqfysmmnaul1HDHgc5mp4dxsIwJFndNO2dlNaZ5hT01w6aFTcXhBujZGCkgI
-         rn1lVzcVjRk97GKvm58xq0IrGYlHdqk14f5dNuKLCFUblmC4MyC5PVwuopm7SajcnnTq
-         9fYTeGQqs2KfxxuMFW8joKKjegiVlzcCGUwPwyqS4fuuFaGb7VaK4tc81oYXCyGoPyje
-         lDCA==
-X-Forwarded-Encrypted: i=1; AJvYcCUzwz85MP/Xc2kpmspeOwHMdUlZrjo/MK+eXitNWhtm0GFzG7PLQSFkk9QDSvIJ+xhq5MY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwAF95bl+Q+zTLVVY/v94fO0QycGoJQveGaowYPaYEWGv8zKPi5
-	kDoSL4VfyGd04++CGYaGVk7xQE23kebEXiUMkpEK9poIA+53qzqwYhYVvOt79fnf8WmFwDimDWa
-	MzfdnXhO5q990XdDcpvguNcqCx/jekdE=
-X-Gm-Gg: AY/fxX5EiSBXHhBpI6ZrzUWbtBBuNYexWmoTt6RV/ANGUPGltRV/5hGSszOopw3y8d+
-	M7bNLCsB1JTSMdmmoqIXjU7IIPEZcLOoSNTdA2xgHjwy6hOk1aPBTfX53XdT2XSKN2Mw4TMP093
-	5QnQ453vTc/tjDxpxYJn4r0nWEUyx30b3eshVWJk0jK6BwNMMxRfP6G7SeINhYsSp0IevEFLjJr
-	AEPAbgKr/WcH2GUsv7eBjkiFbCee3dGKvAdZWZaQ0P7sH9FGNyPiuIWk9UF65haAQLQsJJT6zWt
-	TF76Ygs=
-X-Google-Smtp-Source: AGHT+IF2iXrrF1OLN3ixe8m6yNZIURivHDBvtx1cRgEmnnYuo8j7A67ssE8TyauE/q/ZRIgkMMF/YyiQc8abyhIv8IA=
-X-Received: by 2002:a53:eac3:0:b0:646:518b:bde5 with SMTP id
- 956f58d0204a3-64716bbb77bmr230879d50.8.1767732367906; Tue, 06 Jan 2026
- 12:46:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=michael.lyo.nz header.i=@michael.lyo.nz header.b="iq9zuo1M"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4dm3qp05cvz9vNQ;
+	Tue,  6 Jan 2026 22:16:06 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=michael.lyo.nz;
+	s=MBO0001; t=1767734166;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/vUVrdw2vEuOnIEXVvm4BMUn/LWiPOew7OfaWUgoVEA=;
+	b=iq9zuo1MYx8Y6zB4eEjWRJl+yZTPHLnoX1RbtYIeApamqMPb+tc2gcxcajSZMt+ZoZTQRN
+	DcnOPxaBAKwr85AYPLmwGVXUyzro7xrlxs15TWSQi1aO/s5FjwINCzbou+DJPWEURVQvC7
+	hpJ3lod7wAphRZgloLwn0sSUfnWvnpKtiu2vtan8DtPOZiupJc80tc2gJEMlTnzcWz1Skt
+	J07gbG5QLeZynRNnAD+6BUrkY463w9OtxCFIlEltl9R7bn8bo0etp7JTKILaK6VoTk4Ojv
+	0sdaE2w81yVbclwmgCZ47CrHRCALC7VNq5t19vZAoD+SAdjXEr5zt6ZBvf8yAA==
+From: Michael Lyons <git@michael.lyo.nz>
+To: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <avila.jn@gmail.com>,
+ git@vger.kernel.org
+Subject: Re: [PATCH] doc: git-blame: convert blame to new doc format
+Date: Tue, 06 Jan 2026 16:16:02 -0500
+Message-ID: <9123496.T7Z3S40VBb@debian-mbp>
+In-Reply-To: <7894506.EvYhyI6sBW@piment-oiseau>
+References:
+ <20260105230220.519303-1-git@michael.lyo.nz>
+ <7894506.EvYhyI6sBW@piment-oiseau>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com> <aVrCHr_NRDqNjPn0@fruit.crustytoothpaste.net>
-In-Reply-To: <aVrCHr_NRDqNjPn0@fruit.crustytoothpaste.net>
-From: Matthieu Beauchamp <matthieu.beauchamp.boulay@gmail.com>
-Date: Tue, 6 Jan 2026 15:45:56 -0500
-X-Gm-Features: AQt7F2oyxBUrS2BX0nZ9R4qznfigqA2GoSbiMhJ6zZiQfDmVjUYONXA6SGl6rGw
-Message-ID: <CALH9GrYOjb92gjrtdjwapFH9L73XGg1Kan8uz1aVLpSXNURi+Q@mail.gmail.com>
-Subject: Re: [PATCH] ignores: handle non UTF-8 exclude files
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Matthieu Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Matheus Tavares <matheus.tavb@gmail.com>, Johannes Schindelin <johannes.schindelin@gmx.de>, 
-	Matthieu Beauchamp-Boulay <matthieu.beauchamp.boulay@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On Sun, Jan 4, 2026 at 2:40=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2026-01-03 at 22:16:57, Matthieu Beauchamp-Boulay via GitGitGadget wro=
-te:
-> > When reading exclude files, git assumes it is encoded in UTF-8 and will
-> > fail to apply patterns if it isn't. This is a silent failure as no warn=
-ing
-> > or errors are shown to the users. This is a problem that can take a whi=
-le
-> > to diagnose as many users will not think of checking the encoding of th=
-eir
-> > file and may believe their patterns are wrong instead. Users may also
-> > accidentally commit undesired files.
->
-> This isn't actually true.  Git allows arbitrary byte sequences in the
-> file because Git allows filenames to have arbitrary byte sequences, just
-> like Unix.
+On Tuesday, January 6, 2026 1:57:27=E2=80=AFPM Eastern Standard Time you wr=
+ote:
+> Thanks for helping out.
 
-Yes thank you for pointing that out, I had some wrong assumptions about the
-encodings.
+Glad to!
 
-> > On Windows, this happens if a user uses Windows PowerShell to create th=
-e
-> > file, which results in a UTF-16LE file with a BOM. This issue was discu=
-ssed
-> > here https://github.com/git-for-windows/git/issues/3329. An example of
-> > where a user was confused that his exclude file was not working is cite=
-d
-> > https://github.com/git-for-windows/git/issues/3227.
->
-> Ah, yes, here's the problem.  UTF-16LE is used on Windows, and on
-> Windows, Git stores pathnames as if they were converted into UTF-8, so
-> you do need to write the filenames in UTF-8 in the ignore file.
->
+> > --L <start>,<end>::
+> > --L :<funcname>::
+> > -	Annotate only the line range given by '<start>,<end>',
+> > -	or by the function name regex '<funcname>'.
+> > +`-L <start>,<end>`::
+> > +`-L :<funcname>`::
+> > +	Annotate only the line range given by _<start>,<end>_,
+>=20
+> It would be better to use backticks, so that the comma is formatted as a
+> keyword: `<start>,<end>`
 
-Yes, the conversion from UTF16-LE to UTF-8 would need to be platform
-specific.
+Okay. I changed them back and forth a couple times before the first submiss=
+ion.=20
+I have a question about this further down...
 
-> > A minimal fix should at least warn the user if git cannot properly deco=
-de
-> > the exclude file. Ideally, git would handle any given Unicode file.
->
-> As I mentioned, the file isn't necessarily in UTF-8 or Unicode.  Here's
-> an example shell script to demonstrate (requires a non-macOS Unix):
->
-> ----
-> #!/bin/sh
->
-> rm -fr test-repo
-> git init --object-format=3Dsha256 test-repo
-> cd test-repo
-> touch abc.txt
-> touch "$(printf '\220')"
-> printf '\220\n' >.gitignore
-> git add .
-> git status
-> git ls-files -io --exclude-standard
-> ----
->
-> I'll point out that all of this is also true for things like config
-> files (which are also used in `.gitmodules`) and `.gitattributes` files.
-> If we wanted to make a change, we would be wise to make it everywhere.
->
-> However, if we wanted to force `.gitignore` to UTF-8, we'd need to have
-> an escape mechanism to write non-UTF-8 sequences, and as far as I know,
-> we don't.
+> >=20
+> > --S <revs-file>::
+> > -	Use revisions from revs-file instead of calling linkgit:git-rev-
+> > +`-S <revs-file>`::
+> > +	Use revisions from _revs-file_ instead of calling linkgit:git-rev-
+>=20
+> Placeholders keep their brackets: _<rev-file>_ in prose.
 
-Right, I don't think forcing UTF-8 everywhere is worth it for a relatively
-simple issue. If I can find a portable way to determine that an encoding
-is incorrect (and possibly reencode it), I could apply it to those other fi=
-les
-as well.
+Smart.
 
-> > First, check if a BOM is present. If it is, decode the file to UTF-8.
-> > If no BOM is detected, then try to parse the file as UTF-8. If that fai=
-ls,
-> > attempt to decode the file using the working tree encoding of the file,
-> > if any. If that fails, print a warning to tell the user that the exclud=
-e
-> > file could not be decoded and skip the file.
->
-> We do not accept and strip BOMs in UTF-8 files elsewhere (including in
-> things like `git diff` output), so we should not do so here, either.
-> For Unicode files, if there is no BOM, then the standard is that it's
-> assumed to automatically be UTF-8, so a BOM is superfluous and not
-> recommended.
+> > ---reverse <rev>..<rev>::
+> > +`--reverse <rev>..<rev>`::
+> Here, I would differentiate the names of the two placeholders,
+> <start>..<end> as used below.
+>=20
+> >  	Walk history forward instead of backward. Instead of showing
+> >  	the revision in which a line appeared, this shows the last
+> >  	revision in which a line has existed. This requires a range of
+> >=20
+> > -	revision like START..END where the path to blame exists in
+> > -	START.  `git blame --reverse START` is taken as `git blame
+> > +	revision like _START..END_ where the path to blame exists in
+> > +	_START_.  `git blame --reverse START` is taken as `git blame
+> >=20
+> >  	--reverse START..HEAD` for convenience.
+>=20
+> Here, let's transition to the <placeholder> format: <start>..<end> and so
+> on.
 
-I meant checking for UTF-16 and UTF-32 BOMs and then converting to UTF-8,
-I will clarify if this part is still in the revision.
+This is the continuation of my question on `<start>,<end>`: Do these also g=
+o=20
+to backticks or keep the underscores? My impulse is backticks, but let me=20
+know: `<start>..<end>` or _<start>..<end>_?
 
-> > diff --git a/t/lib-encoding.sh b/t/lib-encoding.sh
-> > index 2dabc8c73e..1b1cc357ba 100644
-> > --- a/t/lib-encoding.sh
-> > +++ b/t/lib-encoding.sh
-> > @@ -23,3 +23,11 @@ write_utf32 () {
-> >       fi &&
-> >       iconv -f UTF-8 -t UTF-32
-> >  }
-> > +
-> > +write_encoded () {
-> > +  iconv -f UTF-8 -t "$1"
-> > +}
-> > +
-> > +write_bom () {
-> > +  echo "$@" | perl -pe 's/\s+//g; $_=3Dpack("H*", $_)'
-> > +}
-> > \ No newline at end of file
->
-> We place newlines at the end of our text files unless there's a good
-> reason no to.
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
+The start/end change from rev/rev makes sense.
 
-I will fix it, I would've assumed that clang-format would fix that.
+> > ---progress::
+> > ---no-progress::
+> > +`--progress`::
+> >=20
+> > +`--no-progress`::
+> >  	Progress status is reported on the standard error stream
+> >  	by default when it is attached to a terminal. This flag
+> >  	enables progress reporting even if not attached to a
+> >  	terminal. Can't use `--progress` together with `--porcelain`
+> >  	or `--incremental`.
+>=20
+> Here maybe swap the first two sentences, remove the "This flags" and conv=
+ert
+> to imperative mood. The first sentence is a bit redundant.
+>=20
+> As a general rule, I tend to reorder/reword the paragraph to describe the
+> effect in the first sentence of the description with an imperative mood.
+
+New commit will reword a couple things here. Fingers crossed. :)
+
+> > -	marked with a '*'. In the porcelain modes, we print 'ignored' and
+> > -	'unblamable' on a newline respectively.
+> > +	marked with a `*`. In the porcelain modes, we print _ignored_ and
+> > +	_unblamable_ on a newline respectively.
+>=20
+> If the words are printed "verbatim", then the format is backticked:
+> `ignored` and `unblamable`.
+
+Another one where I had backticks originally and switched them. I'm not sup=
+er-
+familiar with the porcelain parts.
+
+> This diff is quite large. If there are no other reasons to split the patch
+> according to some semantic reason, then please split file by file.
+
+Okay. Next try will just be blame-options for now.
+
+>=20
+> That's very good for a first try. Now, I hope that you will be ok to revi=
+ew
+> my patches :-)
+
+That's very kind. I'll probably need a couple more rounds before my changes=
+=20
+pass inspection, let alone be declared competent to review yours. :)
+
+=46or the purposes of re-submission, should I be doing something with sciss=
+ors=20
+on this thread, or make a new thread?
+
+Thanks again for the help!
+ML
+
+
