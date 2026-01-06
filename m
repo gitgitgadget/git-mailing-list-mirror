@@ -1,100 +1,299 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE2C3451B3
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 13:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92963128AB
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 14:30:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767707099; cv=none; b=Q6T/tC2vFXaeVTj/7rAOqJLbjPBDHH1TSDtfHF1dw8PEDNxIIdUs2ycvhHLqUKpNHhIQnsXx50u3Dq5nupvvBsWk170TSOfujoftgnVxWcCNyWNeGEsI1C8CItAB3BRWgurGADgOGqvIp8DaJhMC98Fxe7H03FCOuKqAGg5y/+8=
+	t=1767709812; cv=none; b=rGcm/VtX7IBCE7PPQFjoo7rs0OHg9CF2bWH0YOUDntLIE0dNI70twdpPwegw0HV3d7ABwgAMAIc1Ru0m+QRuSU62ckn16SdR/BHrYekei2Dogbg7X3NXSileqSi3GgdUL4CtJckyKamzB+/s7OkxPd0M/YVAfqiq7bQmrQPpCiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767707099; c=relaxed/simple;
-	bh=cFXlbUP2VR/ayjG3geSjeOfwVKj6mkdaMSbpjG9FPOI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QW4XsLE/RU3Qv4dW8mn1fhumqSoLmn0C893ScA8eJdqVw5GWxf8u5M89ZHRp8/dFF2s3dr+VgNGLhwb3+2K64JFf2AEuqstb0FWi14pLGSonFqOdBHuHYeWoEo6EGdgrTCNH0OqKWNxSgUBDp0ZvKyLhRV56Ci1cmkFcXJPZG4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eITDoBLI; arc=none smtp.client-ip=74.125.82.48
+	s=arc-20240116; t=1767709812; c=relaxed/simple;
+	bh=4v0mG6Cn6R2aScJJUGZR/QRfCgL587mrYxHVYIIiGso=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=RE8lhmCNSI9VAd3wr+Jw/7ZJQePZLA496Niq13Fyrr7XAeT5dfo/DWF3XdonoOLjvM+nukPb9QcxyNKbhvZVy3yBWUzqMHiAxjo4J3CoSeJ5pJQQ509uOqTQ2tkeVwj0ky4D7zEoENIaNLyHbDPdC1hUKmo2b+3kxbQv7eX+tfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaCLVsUS; arc=none smtp.client-ip=209.85.221.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eITDoBLI"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-121b251438eso4283698c88.0
-        for <git@vger.kernel.org>; Tue, 06 Jan 2026 05:44:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaCLVsUS"
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-4327555464cso581631f8f.1
+        for <git@vger.kernel.org>; Tue, 06 Jan 2026 06:30:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767707097; x=1768311897; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cFXlbUP2VR/ayjG3geSjeOfwVKj6mkdaMSbpjG9FPOI=;
-        b=eITDoBLItodF9CTzb9VSkfgUU7oI1zDoslOczTQsMet4FT04G8etUT+eqxI1f5vp6O
-         S9Y0W5lv7F9NwhRCWQfzB97AFNw2v1mUDiQKTdcVajEuzkVpRaYBroCFDCqYpasS1vv7
-         sZGaWoX/BSBSoYEEM/getaBiRKXyB3PiW3iO8wfIuUnrsI6zKYjEX50ev9wxGPDR68EV
-         6wCVX8qBB9nFds2U4hwGANmKFkHm1eChqX8WrzQJlLJH/oiwFJ4FIag2RTxWDZ06dQMZ
-         b9Wi5W2IaD3juLZmAHDJt+/qCHO2Ot1U+oGzqZtnAsjly2QCb0ou5oDBKquyeBrIWeO1
-         aN7g==
+        d=gmail.com; s=20230601; t=1767709804; x=1768314604; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VGszS3YxrfUbjS9yjwCQtP4bJaRQ0gDS5yvxBrFaJrs=;
+        b=IaCLVsUS/BvRYNf2lBwyN0l2AYNCKN/WaA8Y4sqmsiT9AveILhte9+wDx81CKJLaii
+         VgGAW59cFgUm/eDa4k6lMEm9yvUrIKjmuE9t1HfQtz26k90h73KKxU8/AZkPE6KeoYe9
+         ++HhJGUXpslF8VTfyG/sSV/Y40gcKfO57zjtkjgOqsGR/D96Hep43Ozj6k3lyuaYuK38
+         cvOa0auDQGwX5YDdMzVgHihLPPsbkcdsJ4RZQBMeNvGouwl/peoA5OfFFfBcXBgrutR4
+         E3EXbDe2Zyjri9Lhm4cANimiYRFrMJg+dMdiWP3nYKaDn/z1TjsPXL4l/P06DWlzhIbw
+         KZFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767707097; x=1768311897;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cFXlbUP2VR/ayjG3geSjeOfwVKj6mkdaMSbpjG9FPOI=;
-        b=oLfxA4MLvrqK4Ja6y9MxgT4fZ6StvCWOVqPWsTiTxT6wu3NGLQLRrCfxu5KbTR07t3
-         fGuBuAzswpfb1p96yIzI85lrCk8AFMgeObuS6jE0sZu7Bc8ZHV/60oIHk0E09Yp3/PeQ
-         KasknkhO9+ghYO3M1btmGtqKQk0IuSZ5VjMDo92ntP3G1Bwc1gkVmAJYSC7zR515NX1U
-         fCFUUXkHCThMCrts/ElVi8fgbkOJKcQgGNW07l+nMgleXxUgmJq9t2tNll9mGZa/pcIP
-         GbgPrixL0AuqLTiAEXwud7SZLwwrw+Fkq9pd+uMr0N/bfx/AkODiSjVJajRS8rwrazIx
-         zJIA==
-X-Forwarded-Encrypted: i=1; AJvYcCU9JmbOJGjpT0Uh1noDJE/YLbBFpFw5ZO5ulULCoWLc3UY4vNFnKm/dvyKUV+E3kZhLalI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyTjIN6BXAD6tjVaYVvyQiAT0yL56G3c+bVJTmgVmXvtyl6Baoa
-	dQnjuytzDIFNRDmGvogp66UobbGWEjbE7jQQXgiwlPQtAMqSwIYWbr3JdDf2b+dhsPFpfcKrTi8
-	w1LBRVO6MTqd1YCefvDjQ78dVd4Hl0+PHIUJ2YfY=
-X-Gm-Gg: AY/fxX73Vq/CsiCK4LRI4qbR7VfB7uZSrflU7KYB0Lf/7bGroVvK3OredanXNYwMU67
-	tnWwfJVWOMa87yJT1XnpaCGR+ARkeEz5qfQhztsu9NCP/VtxgvN+vfiBDu+ldlseendob76zhRz
-	boyBr/BhzWh3v4ASrDD4cSys+ou9/SsPg4ZyKYDZn6OnqrczHqhXUvjnIEfuSqAs42tAnm0hHJU
-	OXPMfty7p311FO0ViIu8dt8H7+lVeoFiNiCdPAduWSiF59Br6/HW6mwewLRK3xxAzTrfsRlxh4=
-X-Google-Smtp-Source: AGHT+IEHPpE+gsGJqwWyo2yvh64q7oarCwbEgXOGrVbYxMW/fyfoxcT9o273P0UiDi5NgkizxY5B2cLBqy6vHzKyGwY=
-X-Received: by 2002:a05:701b:250e:b0:119:e569:f855 with SMTP id
- a92af1059eb24-121f1b1ea9cmr1369728c88.12.1767707096504; Tue, 06 Jan 2026
- 05:44:56 -0800 (PST)
+        d=1e100.net; s=20230601; t=1767709804; x=1768314604;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VGszS3YxrfUbjS9yjwCQtP4bJaRQ0gDS5yvxBrFaJrs=;
+        b=VkzsH3Z9OcanRN6TB9nBERquiYh3KJOO62AuR0nxTDbRROyg5m84O2jpJxtMEIpULU
+         CKj3+4fu8TuAJ6SUemBdW6yGRzS17VGUcPNXm2rF94jSoHZ2atn1ezC1rhzqXR+g4E/L
+         N0GQk39+eynQHH8itbFOS/H0ZBU3xb31pratAvQ4pdy28NFe9Ok+2/OsWeG2M9WN0NXa
+         0q/IAAgdjqj7ITuPQfJERacwI69VpCx4RcsmCKwoa6BdZSH5cMtLhCXZRlyKAbSpgoJx
+         XttzB3Rr7TSiiKA5WoEz0/1BCwH82+X1/woJxIhimlomUzVShMMjlP6Yn7+TfVpxElIl
+         XvRA==
+X-Gm-Message-State: AOJu0YzMGo445bL3iPf/mgT8m/GLNYHffMbj6mnt1ozl6/jOlZjPCqzr
+	daOVRqhu3p4PrYXXMjtS6jUJvNDjlJHswryNKOKqusEwkq6odi9zS3rJOg9ndyO2
+X-Gm-Gg: AY/fxX5I6hPJ6MEVbP16iSOzFnX4ds30K+gZtcafsfTG6uvF1/HVw/2TBTZsDx6OXyl
+	VgYV1b+sYAoq7+7rYdElWjjTGLI7/mIPCrtAKHsI0G4wuLyC3YwIlrdRx8qVIrbgVKAzoz245YR
+	M7VvLihdyHdpI9/iuoHS86/cTHrhqY14o77uJ0Em68kxFSSmMB5MfbILSuHtzHE1l2G66b8j4gB
+	14DGTxyleh/fMAZA45CJqSizPkTY8uQgGhb49Ro/hLtYI4y8lNPpisBuTXFUJ1qzXzOgzSOzkTS
+	+JAscrjQ/TBXrlYxnIX2+lS7AM0qTXupX1cS45RHM0FF0reUH2gqaE4IQFnv9pS9SLde2Jt0Jwr
+	L1aIapxDRAtJsp3vqLZLvFo43BvB2RJ1n3JSm0lqyqr9RdyhV8tX19WJMDZrcKVtBLUUtglJkws
+	qxXwPIrOzrw8WQn8l3GAr+bnL9/RKOSSR74OxMwPKvzc0Lz95U0L4Cp8op11T9fenz4V1kgV48q
+	P9v
+X-Google-Smtp-Source: AGHT+IFd8974stQsyaZ/qD904oSyy0C6ja3GDCYh0u0XWX+hpSSFY/i0lRsAlTV84EMdGbBM205Udw==
+X-Received: by 2002:a05:6000:609:b0:42f:b9c6:c894 with SMTP id ffacd0b85a97d-432bca4f01amr3962313f8f.52.1767709803804;
+        Tue, 06 Jan 2026 06:30:03 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5df91fsm4853303f8f.23.2026.01.06.06.30.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jan 2026 06:30:03 -0800 (PST)
+Message-ID: <2908fbe7-73bb-4f45-8d69-c2c685a9c3a2@gmail.com>
+Date: Tue, 6 Jan 2026 14:29:58 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aVfzMsN2ouY3UBFG@ubuntu> <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
- <3947f777-e08a-4c17-81e3-c4711fe666a0@gmail.com> <xmqqwm1vk83a.fsf@gitster.g> <CAD=f0L9BEPSQivgpM7qURT+WFDY-+Ys_M6Knv8hE0JDw4Wjj5A@mail.gmail.com>
-In-Reply-To: <CAD=f0L9BEPSQivgpM7qURT+WFDY-+Ys_M6Knv8hE0JDw4Wjj5A@mail.gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Tue, 6 Jan 2026 14:44:56 +0100
-X-Gm-Features: AQt7F2rWa2plZ63Svr2FZxD8hXDQlowHzDlJxMamj1p82PWJJtrp2o1ute14des
-Message-ID: <CAD=f0L9H5Q=zW02nr11OSBNgFH3UMLwVjVjn3zhgZ2rjwE85WA@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into repo-setting
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	Christian Couder <christian.couder@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
-	Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: Metadata for merge conflicts during rebase (to aid rustc) and
+ potential for better user experience?
+Reply-To: phillip.wood@dunelm.org.uk
+To: =?UTF-8?Q?Esteban_K=C3=BCber?= <esteban@kuber.com.ar>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org
+References: <CAHnEOG2o784dk+OpkGt-1qjRJb34=sFMJvh-JRJ3v+GNBxFywQ@mail.gmail.com>
+ <CALnO6CAYaOQBOg+8pUZk95frML5tod+N_n3avxASRL10sLtwwA@mail.gmail.com>
+ <CAHnEOG29C1fRBZtpEkebat8znMst7D1JiWdqDAVJQceYqMZGkA@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHnEOG29C1fRBZtpEkebat8znMst7D1JiWdqDAVJQceYqMZGkA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, 6 Jan 2026 at 10:33, Bello Olamide <belkid98@gmail.com> wrote:
->
-> On Mon, 5 Jan 2026 at 23:28, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Phillip Wood <phillip.wood123@gmail.com> writes:
-> >
-> > > On 05/01/2026 14:23, Phillip Wood wrote:
-> > >>
-> > >> It is quite common that moving from parsing config settings eagerly by
-> > >> calling repo_config() at startup to parsing them lazily via 'stuct
-> > >> repo_settings' causes regressions like this. We really should find a way
-> > >> to address that before moving more settings into 'struct repo_settings'
-> > >
-> > > See
-> > > https://lore.kernel.org/git/d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com
-> > > for some discussion about a possible solution.
-> >
-> > Nice, but I suspect it would be an improvement already without
-> > passing repository instance via git_default_config() and instead
-> > have the code use the_repository; it is even possible not to have
-> > any repository when the callchain executes.
+Hi Esteban
 
-But won't this be a temporary solution since the goal is to prevent the use of
-`the_repository`?
+On 24/12/2025 15:03, Esteban Küber wrote:
+> On Mon, Dec 22, 2025 at 1:56 PM D. Ben Knoble <ben.knoble@gmail.com> wrote:
+>> On Mon, Dec 22, 2025 at 9:31 AM Esteban Küber <esteban@kuber.com.ar> wrote:
+>>>
+>>> The questions I have are:
+>>>   - can I *avoid* `--points-at` in any way to identify what branch we're
+>>>     rebasing onto?
+>>
+>> According to "git help rebase", ORIG_HEAD is not reliable but @{1} should be.
+> 
+> After talking with other members of the compiler team, people have
+> concerns about invoking git from the compiler, as it can be a vector
+> for unwanted behavior.
+
+If we're talking about "git rev-parse --git-path" then that does not run 
+any hooks or external processes. In a linked worktree or submodule then 
+".git" is a file rather than a directory. You will need to read the file 
+(which looks like "gitdir: <path>\n" to find the path to the directory.
+
+> I would agree with that assessment, so I am
+> trying to settle on a mechanism where I can parse git state myself
+> (on a best-effort basis; this is only for diagnostics, so fully
+> featured support for all environments is not necessary).
+> 
+>>>   - is there already a better way to identify if the rebase was triggered by
+>>>     `git rebase` or `git pull` (configured to rebase)?
+>>
+>> I haven't studied the internals on this yet, but I think the common
+>> pattern is to look at REBASE_HEAD vs. MERGE_HEAD.
+> 
+> Thank you for the additional information! That prompted me to look
+> into the rest of the files once more, which gave me some hacky ideas
+> on how to get the data I want, and this indeed seems to be
+> sufficient to differentiate these two.
+> 
+>>>   - if neither of the above has a "yes" answer, would git consider *adding*
+>>>     that information, both for third-parties as well as to extend its own UI?
+>>
+>> I think "git status" already shows some of this (maybe not the
+>> branches in question, but certainly the "it looks like you're in the
+>> middle of a rebase/merge/cherry-pick/etc.").
+> 
+> I looked around again and arrived to the following conclusions:
+> 
+>   - presence of .git/rebase-merge (and its files) is enough to
+>     differentiate between a rebase and a merge
+
+Being pedantic the presence of ".git/rebase-merge" tells us that a 
+rebase is in progress, it does not guarantee that the conflicts were 
+created by the rebase though as it is possible for the user to run "git 
+merge", "git cherry-pick" or "git revert" during a rebase. When a commit 
+is being split it is possible that the conflicts come from "git stash 
+pop" if the user stashes some changes, edits a file, commits and then 
+pops the stashed changes.
+
+>   - .git/rebase-merge/head-name is enough to identify one of the sections
+
+Yes, that will give you the name of the branch being rebased.
+
+>   - identifying *at least* one of the sections is enough to make the
+>     output clear enough (even if ideally you'd identify both)
+>   - the sha in FETCH_HEAD matching .git/rebase-merge/onto is enough
+>     to identify that we're dealing with a `git rebase --rebase`
+
+Note that FETCH_HEAD stays around until it is overwritten by the next 
+fetch so that if I run
+
+	git pull --rebase
+
+followed by one of
+
+	git rebase --autosquash [--keep-base]
+	git rebase -i [--keep-base]
+
+without running "git fetch" then ".git/rebase-merge/onto" will match 
+FETCH_HEAD but I'm not running "git pull" and I'm not rebasing onto a 
+new base so any conflicts come from re-arranging the existing commits, 
+not from changes in the upstream branch.
+
+I think the most sensible way of solving this is for "git rebase" to 
+start writing a description of the "onto" commit to 
+".git/rebase-merge/onto-desc". That would allow the output of "git 
+status" to include the branch or tag that we're rebasing onto as well. 
+I've got a rough patch that creates that file in common cases. If the 
+base of the branch is not being changed the file contains "same base" 
+[1], if "onto" matches the upstream branch it contains "upstream <ref>" 
+where <ref> is the full ref of the upstream branch. If the argument 
+given to "--onto" is a ref then the file contains the full name of the 
+ref [2]. Finally when rebasing onto a new root commit it contains "new 
+root".
+
+[1] Detecting that in the general case involves a revision walk which
+     I'd like to avoid so it only works in common cases like
+         git rebase -i HEAD~<n>
+         git rebase --keep-base --autostash
+         git rebase -i --onto ...@{u}
+
+[2] If "--onto" is omitted then it defaults to "<upstream>" so if the
+     user runs "git rebase some-branch" the file will contain
+     "refs/heads/some-branch". Unfortunately "git pull --rebase" passes
+     object id's rather than refnames when it run "git rebase" so the
+     branch name is only detected when rebasing onto the upstream branch.
+
+
+I'll try and post a patch next week.
+
+>   - there's information that is only present in MERGE_MSG in
+>     free-form text, that isn't present anywhere else
+
+I assume that's the name of the branch we're merging into HEAD. For 
+squash merges the equivalent file is SQUASH_MSG.
+
+>   - I can extract the "missing" information for either the
+>     identifying information of where we are merging, be it because of
+>     a `git pull --no-rebase` or `git merge`; the only issue I see is
+>     in having to rely that the output will not change from either of
+>     "Merge branch 'main' into branch-name" and
+>     "Merge branch 'main' of example.url:user/repo" (how much trouble
+>     am I inviting if I were to try and rely on this text not changing
+>     so that I can get 'main' and the remote url from here?)
+
+I'd be surprised if the messages changed but I don't think anyone is 
+going to pledge that they'll never change. You read the object id out of 
+MERGE_HEAD (that is always a file even if the repository is using the 
+reftable backend) and use "git for-each-ref --points-at" to find the 
+branch name.
+
+> First, the information present in MERGE_MSG should be available in a
+> more structured format, to allow for tools to deal with git state in
+> a less coupled way. (This might not be worth it, and the textual
+> representation is already "stable enough" to rely on.)
+
+That might be useful for "git status" as we could say which branch was 
+being merged.
+
+> Secondly, and perhaps more importantly, when generating the diff
+> markers that end up in the user files, their description includes
+> only the full sha or HEAD, or the short-sha and the commit message.
+> I would propose that the branch be identified as well in the
+> generated code.  This could look something like:
+> 
+> `git rebase`:
+> <<<<<<< HEAD [branch 'main']
+
+In the general case HEAD isn't really the branch 'main', it is main plus 
+whatever commits we've already applied. I think I saw someone suggest 
+[from 'main'] which might be better
+
+> =======
+>>>>>>>> e644375 (commit message) [branch 'name']
+
+Unless we're applying the last commit from the branch this isn't branch 
+'name' but one of the commit from it.
+
+> 
+> `git merge`:
+> <<<<<<< HEAD [branch 'name']
+> =======
+> ------- between this marker and `>>>>>>>` is the code from branch 'master'
+
+I'm skeptical that we want to inject extra text into the conflicted 
+region. It makes sense for rustc's diagnostics but it makes it harder to 
+resolve the conflict if we inject them into the file.
+
+>      println!("Hello, main!");
+>>>>>>>> [branch 'main']
+
+For merges [branch '<name>'] definitely makes sense for the two merge 
+heads, I'm not sure what we'd do for the merge base though.
+
+> `git pull --rebase`:
+> <<<<<<< HEAD [local branch 'main']
+
+Do we really need a different label when pulling?
+
+> =======
+>>>>>>>> 8191e7e4f9f82be45bdd4e71c37d2adcf4f88aa2 [branch 'main' of example.tld:user/repo]
+
+Ideally we'd use the remote tracking branch here when pulling from a 
+configured remote repository rather than giving the name of the branch 
+on the remote and it's url.
+
+> `git pull --no-rebase`:
+> <<<<<<< HEAD [branch 'main' of example.tld:user/repo]
+> =======
+>>>>>>>> ebbeec7 (commit message) [local branch 'main']
+> 
+> The format doesn't have to match the above exactly, but having the
+> commit *and branch* information will make it much easier for people
+> to identify things at a glance, at the cost of some additional
+> verbosity in the generated code.
+> 
+> The source of the issue is that where "our" and "their" code is in
+> the patch depends on a somewhat "arbitrary" distinction (as far as
+> a non-implementer is concerned) and it *swaps places* depending on
+> whether we are rebasing or merging. Adding some context to the
+> resulting patches would go a long way of mitigating the confusion
+> this causes.
+
+I agree having some indication of which branch each side comes would be 
+useful but I think when rebasing it needs to be clear that the branch 
+does not necessarily point to that particular commit.
+
+Thanks
+
+Phillip
+
+> Happy holidays,
+> Esteban Küber
+> 
+
