@@ -1,115 +1,125 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED6D2F6181
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 11:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9B3322B8D
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 11:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767697748; cv=none; b=EdI1zbxJ8oj1jz5NV/hKhoHTDEuvw+V0OemhOyheDBKQA+P2YUrNH7t/JMrci9skk8SOhSgRdlL/rcXoNazO4LNMCKYSLmWXtUa5LqhWE8ni44U6/EN69ERXT5TvwThnvhnI7NIAE0S+svmqkUn+KLbJoROO/ivtFCqJY1umZoc=
+	t=1767698191; cv=none; b=VkJw8dg+H0NiWb6mgZEkN4ubQdm9ZylZcL3EJPfiEGWvnyD6Up4PMM9vFb7HlHKeYSLlILI4KcqXgiHQQXu7XVjDc4TR5Xm8zZxraDoZgwZ9yS0zp6u7gnhnei1Pf8DeBff1eurozlkSHnLchKI387zfmUsA5rcW6W7iQlmKJx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767697748; c=relaxed/simple;
-	bh=INxilkxLeFyumTyZbTtQsf7ObL1MrSr4u0KONxibaLY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=l4g4GWEw9ZoFRa3phsgNN+FZKv1xyee9qmtXt+/+uYmEf99mmFp9UTE2CyLqqYoWHccJ27n6U9GAxfYoErBcvqWB296GjRscPkL6+OAdZDwS2z6POik5DSYnb1QMH0N7uHu5yhm+pp7B9CrR2FHuHZhVlMbox+Yw31+N1NA82Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=U8JG9Ape; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S3w0WN2P; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1767698191; c=relaxed/simple;
+	bh=ppRr2rAUTQYzUvRKfykPdB1ixklMDUbh+N3u2uPc7Sg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sWZyLUnwX68vFcFx+rEFlVGobYwYXdXNcPTqxZMVllTbhk8TtEwvE1HzbVOztYnIZ2so2cA/k1bT5u/enUIQiaolGXVUNzKEjPLd81Ny/F0F+o3vLSiA0wUJ89zaNtFmppKLLjRUYWO/+wPvPKeGaVsB8jJnC41Ora4+qU3UQQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NLY8wPjP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nRax8LMj; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="U8JG9Ape";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S3w0WN2P"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C0C0A7A00B0;
-	Tue,  6 Jan 2026 06:09:03 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 06 Jan 2026 06:09:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767697743;
-	 x=1767784143; bh=INxilkxLeFyumTyZbTtQsf7ObL1MrSr4u0KONxibaLY=; b=
-	U8JG9ApeExB5SHvgrNE0ZnYvRsBqS57h7wHujTRsyG3znVfcbxlD2LPmJ8aD35ap
-	OhGspHMSXw56HzDVvgjILzDmyG1Eq+D3dY2gH0H9lDMgdjop1bjIeJMTaP5P0I+L
-	CtTH3OfQvY3lJd2uChTr9PKeN3i05zz4dP+42tS5qQQIUaZWWRiPXThl3yDyiqVD
-	eRLVr8gexodnvphHp2qPu63tXs82tUDyLlN9AI0O/sWoaL31QnM+rdLMfxj7xoxc
-	YwwbVdM/ZCSE8ks90Bowm9e1emE6Sg60L7pCQQ2ZuKkwn8Q9uni75a5++JPUagdR
-	BQWyRAHRIpSIFWjBRy02PQ==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NLY8wPjP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nRax8LMj"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BE1737A0124;
+	Tue,  6 Jan 2026 06:16:28 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Tue, 06 Jan 2026 06:16:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1767698188; x=1767784588; bh=ER25jvk5I2
+	+KOC6LgZVz0tCuHEMVlGKuMfM71UmgTNw=; b=NLY8wPjPMqIg0tNT7vqpWh2rP2
+	7nPYWVkP1/f76DZdp3Usfs0skGjRMIFGsYQNqPR3FSsIVxJkZYg56OZA85R/HBVy
+	KqZNx3IJgJwpfoOnZI8OhQZkfIKM6N3wDDFGKO1CVT8fXDQFjtsUeJkQ/trOdYEh
+	TOenMwD4wbhTjsxQUuCOsv3BUiiOPlXr0fxG6nXZyk8FE7SJQQKZ/E0yhhri2THc
+	1DiSEXDd5uMIf1xxASbVJNKVVWwaMw71LYU1zzqUalsmqdZ8HP9RhdDU5R/XfJ3Z
+	7XLP6a0Stv5QcZN+T9j7/U/xR8BI2Vi1lg7fezdgYy62SKatt6LdAFFGdMFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767697743; x=
-	1767784143; bh=INxilkxLeFyumTyZbTtQsf7ObL1MrSr4u0KONxibaLY=; b=S
-	3w0WN2PD/JV2Arl4cjPc7pZ6u3LvlHJeEsY9Vd38hUn6Sm308yKjMHYYjOEhPCv1
-	FBC3EQkE/0A5UCgbag1JkU5pXp+ru1TynHeba8QtfhEw2h5GXRuFlpZHWaRPBHGa
-	SsF+Z5Jn5FVvjyLAgR1C0wIkugu9ijvevrtts7qioJICzqKE42CyW1Vn7V39O8D/
-	u/ylLQ6fr7kRM9xFXanIKd3rI25m82PH8B02WRedkKSLI6Aeshl9PVRsNynP5K0l
-	YYsOhgQwXdqSV+Mhk9FUTP/HGi39z+anFO2YqNlgrJy+hhoBEw+YgWR3Bch5x77k
-	YAYxEJrARaU3VGsQFJlsA==
-X-ME-Sender: <xms:T-1caUiZmT0RYd5ekfcKSdbxF-9AOCb78Bo8Oq3NJGNu0nBq4P_4PTE>
-    <xme:T-1caX3HC9SaMuOCoanrwF8MAlx2vrV28qjb5wvSYf_DMoEe6ALI45tmZ-n_aZv9x
-    qMoVoLx6bI0l-BJYeQ9DwCp8jbXwLjx47Pdc8FgvjWW8ZJsJJwz7NE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddttdefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767698188; x=1767784588; bh=ER25jvk5I2+KOC6LgZVz0tCuHEMVlGKuMfM
+	71UmgTNw=; b=nRax8LMjrHQAUzBXzt/Lgqd5XGplZyJGqe/I9ki+5Qz/UBmCbxx
+	n2XjwBBhmXXMM+ZsEe4/pXiQb3ksYh/bubL5jg3I2X+SgtBSk7wWLKkkHuyfz390
+	20tJig2J7UPjTw2jGvX/Z3fIO2dLdM7lpDx5YlUkBENytNy4MmfDXhyGqcJ7N2H4
+	fyUkVFTLCXBbqlDMCY9nR06RkkVvY5MPFKx6hXEimKSDgkJZ7iGJurCPPEXKEo48
+	RK2qlHSFxVpq2sSUhscTQ1AxXNxmmlJH0pEMLN9bptxMnysWVhWSngCBEGBaL3y7
+	1EGjxIHef57iIuzSbDUqpDSqmlSK3Yl29BA==
+X-ME-Sender: <xms:DO9caZpM6haTtcCAfR9KMzuG9iotCd_J8_wJhI4HCBCMqkg5NoNAEg>
+    <xme:DO9caSjguYcK5FRIPHYhloP7KqOUc2MabdrWeQj1IGhsqcTvFePyLtke5NsyIvGpt
+    zvNm3VIC-BpV-8NNUbLcbfwPMFZBSGlt4MnR5U-G5Jdae6opKF_Cw>
+X-ME-Received: <xmr:DO9caejzesE2T0vNYVrNBsuqc_Xyft-f8X7GQDdbBPN1Ugzf35hmhuflOUM6sz4B4Lx5lMA7yNeu4rbQxYeOski4YTvnGMCgjVHtICSI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddttdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
-    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeejpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopegrsghrrghhrghmrgguvghkuhhnlhgvhedt
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhm
-    rghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:T-1caZZmPWBfu4AxnMcEa52Lk4DVrflv4Y551P8Bk8O40d7YiYd3qg>
-    <xmx:T-1caRHgRlkkN6C1G8yoVpytoUsLTfO6QBQDui-x0dFd5N_8CF7_eA>
-    <xmx:T-1caaKB3UV9WbKhAfkDL84-r1RFNVw2gSoRUgCm9rEfbs0ZiRvypA>
-    <xmx:T-1cacMdbRE30BLxalzOmVROlZzvSnE35-fJEzHmFU6qqiypIDZLnw>
-    <xmx:T-1caWB8lHnnN3mHDXjILNXzlvJ2K6NeUalBpS0qpGdVBIDSkNSo8An7>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 71A771EA0066; Tue,  6 Jan 2026 06:09:03 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdr
+    tghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhgrrh
+    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:DO9caQh0_Wffa6OzxcNAzel23JN8Pe9veDmTjpb7aivJK-f4Mnyrkw>
+    <xmx:DO9caWJUnxnVCVeo1LzDxlttQIpf4ry_zpE1hsQx8cMmkr_Bmun4sA>
+    <xmx:DO9caXFT-9h-fTxgMVcZEynGq-3u9YtmHaEZ9nnE1HcwUKp9WDfo4A>
+    <xmx:DO9caSRVX3AYCJPCkKY2A8hLzK7btzhX6tOJe5pcjK6Vz8Tl4zQqoQ>
+    <xmx:DO9caRDBrIEuBH3dvQc2ykIjRs3IStVteSJp2bpX9ePMjoQTZnKnamQa>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Jan 2026 06:16:27 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a853a263 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Jan 2026 11:16:25 +0000 (UTC)
+Date: Tue, 6 Jan 2026 12:16:22 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/3] Update clar for improved integer handling
+Message-ID: <aVzvBnwsuPB_zd3_@pks.im>
+References: <20251205-b4-pks-clar-update-v1-0-fd70aac2ab90@pks.im>
+ <20251206-b4-pks-clar-update-v2-0-9a14b10c1a36@pks.im>
+ <CAOLa=ZQrx2T=mPC58oSW=1Y4i1cOCtneN+U7rDUmKAke9ifp7g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Acg0X01AOJVc
-Date: Tue, 06 Jan 2026 12:08:43 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Samuel Adekunle Abraham" <abrahamadekunle50@gmail.com>,
- git@vger.kernel.org
-Cc: "Patrick Steinhardt" <ps@pks.im>,
- "Phillip Wood" <phillip.wood123@gmail.com>,
- "Junio C Hamano" <gitster@pobox.com>,
- =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
- "Christian Couder" <christian.couder@gmail.com>
-Message-Id: <dae478ce-d5ba-4649-a6ab-61be29321131@app.fastmail.com>
-In-Reply-To: <aVzsltM5imOSvW2G@Adekunles-MacBook-Air.local>
-References: <aVzsltM5imOSvW2G@Adekunles-MacBook-Air.local>
-Subject: Re: [GSoC PATCH v5] add -p: show user's hunk decision when selecting hunks
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQrx2T=mPC58oSW=1Y4i1cOCtneN+U7rDUmKAke9ifp7g@mail.gmail.com>
 
-On Tue, Jan 6, 2026, at 12:05, Abraham Samuel Adekunle wrote:
-> When a user is interactively deciding which hunks to use or skip for
-> staging, unstaging, stashing etc, there is no way to know the
-> decision previously chosen for a hunk when navigating through the
-> previous and next hunks using K/J respectively.
->
-> Improve the UI to explicitly show if a user has previously decided to
-> use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
-> This will improve clarity when and aid the navigation process for the
-> user.
->
-> Reported-by: Reported-by: Junio C Hamano <gitster@pobox.com>
+On Tue, Jan 06, 2026 at 03:01:51AM -0800, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > Hi,
+> >
+> > this patch series updates clar. Most importantly, the update contains
+> > properly typed handling of integers as well as a set of new asserts that
+> > perform relative comparisons, like "less than" or "greater or equal".
+> >
+> > Thanks!
+> >
+> 
+> I went through the changes and they look good. I didn't know about
+> double evaluation of arguments in macros before, so that was good to
+> read about. Thanks
+> 
+> > Patrick
+> >
+> > ---
+> > Changes in v2:
+> > - EDITME: describe what is new in this series revision.
+> > - EDITME: use bulletpoints and terse descriptions.
+> > - Link to v1: https://lore.kernel.org/r/20251205-b4-pks-clar-update-v1-0-fd70aac2ab90@pks.im
+> >
+> 
+> Easter egg? :)
 
-This is doubled again like it was in the first version.
+Oops :) Thanks for your review!
 
-> Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
->[snip]
+Patrick
