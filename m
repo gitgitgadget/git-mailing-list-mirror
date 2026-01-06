@@ -1,93 +1,91 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63145254849
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 15:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C85338934
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 15:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767713997; cv=none; b=LvKLAjf67FMOvAem6Tv+awk6UDxMC0IyJ+f3I++tUo0dFmsa9lSFqcGXOtZxB4ofAVlZW7u+GRWaf4lBa9/FNq2tjfUGOWsvreYIe/vZFhbeKNnQ6SZzdSPPbwlwqsJmSgZrhvlhsgnhNHOuvn7OvmgifI0FLmxO4JTA7GnR7yo=
+	t=1767714034; cv=none; b=feJYUOeahNuQVdj9MlTBzYX0TMKZ2Vd0N8H64gbw6jGX56WnwQGQM7FCFKS6ti3BjbsbdoQrGtwifsp4S8fkQ7MqgmiFQmg1Dx15HhkPtky5UFF84QRenrgoqGIbhAY1YUG2dQGSljnXv3iEluDy5l1xHIl/shtjyU7BYyqiNd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767713997; c=relaxed/simple;
-	bh=kVeYdkiaMDz9OtLYbCSaFhfdFS8iL5j1/ybkBTRDi9c=;
+	s=arc-20240116; t=1767714034; c=relaxed/simple;
+	bh=A+UenSIL6gdc2ARnzGwBPS+E2KUPY900pB3PCFtHjKE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=imGs+Q8X54a5N7OOjTGai+GUrh/Rk/Z11DbN3Ww/9Cy1CH9iBMhHhZZIbMRM46PU9x9d6535Dk1eA3qAPmASYc5iQUL2GQK3iDk0bO1fE5HXg5AzXp1XN3EAM/72wUjy7AlsxJ3dqalpLUoeSD5gj/BSts9/gpJVARS8oWmwS+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iOwJN8Oi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A/GBdFBY; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=tHK01nvVObawnhZKEIwTtE4gs/9CdnpIearMjewEd7oLdcG8qbeUDqzvKmofYQ5PyxumLiQiMRjDJv32Y8G1nbKD+5w6Rb7gyq69Bi/rQfffzqssyPoCqgoxYWSWqwE/J0wWVPKnhup7MeqP+T+7jtuFbmX7PW5GQQfbO0z0W4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T+yPTTjx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bMgluFnR; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iOwJN8Oi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A/GBdFBY"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T+yPTTjx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bMgluFnR"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6AE551D00136;
-	Tue,  6 Jan 2026 10:39:53 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 06 Jan 2026 10:39:53 -0500
+	by mailfout.stl.internal (Postfix) with ESMTP id 457391D000BF;
+	Tue,  6 Jan 2026 10:40:31 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 06 Jan 2026 10:40:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767713993;
-	 x=1767800393; bh=tsNSCkqgZDI+rFqjrbAGbPAM8hBp0qCKq4nQpGTDdeA=; b=
-	iOwJN8OiZqOT0ASe2n84LoGOE6BorgN3FNIyQCXSoACWnFqoVk3+FeckP7gXFkc5
-	ZCC2BwKOkLLxjfDrMsPcv1v01vWeCoDtQlQOf+ejjAKnK7IIfoZiVqrOqNnEqN9C
-	ruff4E9HW5qRVp+0TOSH94gtEw5VDxijCQ0Miq1dQpE2NzwqjfOTA29QhCs3br2Q
-	DqT9j7OUFxiUDJMzk/RIDLUOfkQxlB2iFOoCSXPoOOjV4P2ikZCmSPij4heUFsZp
-	aR1zgg/7eOm1Gy9j48cgtTPAyqF6Odqf9jy7QveCuMZWmdjsasjCXTGIjD5N3MeG
-	DJDh1woIVlCll77b67bZuA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1767714031; x=1767800431; bh=oOV4vi07qm
+	iLneeQfW3r5v82RkO7x+XQIKsvB81HGHU=; b=T+yPTTjxMaq3sUsH7AxakMTJXO
+	JB5Di4oljCYu8oEnS4eJOexN8MUZRBk9hbx+WUTL01XbKnkZA+A002NIiX+PSo4j
+	TUMLL8Le9WGME3UW+9jQ00Q5hKF6gkH3qDw4XStLH0du2PZgsYwVwt5yzyvv1o2C
+	6/falk93xSmtW5zWLqGcSgZ03HgI0W6bq04+U6AbZCccE8a5Ag9OpUhLCpbAghWm
+	7NnSJsLml2EM26+069mffS04W1lnB8j3e8/LIPTeb1eJfia4UaJcMNy/1ZUqewT2
+	npAnXsBVtI4FhL3zoEQeGOEVvDmsD3X+hqwhq3YccBjfaKuL6wXhBdtvKyvw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767713993; x=
-	1767800393; bh=tsNSCkqgZDI+rFqjrbAGbPAM8hBp0qCKq4nQpGTDdeA=; b=A
-	/GBdFBYhsvbbMZANI2x5Skw2gCDzr9/nMFDNMuC9FBE/l+9K4+DCBq6v+BLbS12u
-	wLYlWWkK15utU/7kbPVO3zGZ6wem1ruBoCxlI6QKP9pTuocMSwbxeaNRDTbOOA+l
-	X3y/s6uKomHL/FBeYp8Q94EVz0rAAcW87Mg+ZGCk4X7m7yPDrqgDt+AISPG8gSCO
-	4KtwZOb0tWgmKf44ererBBuZgQP1R2f1lpaGzP5DeMAmYlLOnyF74VH8C+mkHpaQ
-	cD4aBL5NaTVREWBvflBJ1by0FujHNvRI7maGjt+CJAOIOZ9GuPe9tEUwqqAC97DF
-	Uf/k8Yexwtv8erzOkJxLA==
-X-ME-Sender: <xms:yCxdaXB-hYgPpQ_Qj4MqsQ2cMXvmR0_-u8f1PUT31hOkNFd3EFqMPw>
-    <xme:yCxdaXiTmDTPNo39xyYXDHDxavJrcZZ1JVaGHiybcb90MOLpBC9qX1i60W-5aeC_U
-    IoHAnVr-B_gY2ff5oMsQc0s8nEo9PYJW82iX8rVKz6hd_WI0MKyaiE>
-X-ME-Received: <xmr:yCxdaZMoU6QIa-k8A0BL1L39UczNYvf6is84rWUdnZGHOe62fMo7roqqe2zeKhOOom5i2FM2NkyhogUMaUgkiDdqusHTrWCZBCY5H1Mi>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767714031; x=1767800431; bh=oOV4vi07qmiLneeQfW3r5v82RkO7x+XQIKs
+	vB81HGHU=; b=bMgluFnR6ulLb9fvp22cTO6KW1xL8bmsDMUNC9NYQsE+kK4jL/Z
+	2b21pSxr3MB2SdoRDCATar/7a41TghUu68o7dczU57ACEBKwb8dQG7oUCHtaaXR4
+	eMnVQsm2uwG1lhSFvRTh3Iz39Na+MKR94k3ky+W6nGVVXOIKpPTaz9Zedrtob0wo
+	Byoll/wH80bCCZD86leHkWHl1D+whDArvIWdixnuMPBnDFqlj0qx0SDRqTbjdFs3
+	VWiWgQ4qrAgXl5XFx1oIyjJbvca4Fnpy2C6WDxCD1VnniqyrmPrNl2Gzjdb9dt8P
+	EM4cv2MwFoo+GoqPWyzpRj+gNnFZCoQOCIw==
+X-ME-Sender: <xms:7ixdaQRvQKWAzd2i9vC3ya-d4Wvz0xB1czNd9EvU4CI8GZMzLKgOGQ>
+    <xme:7ixdaedKjJ743Mf5glDMc91-E-eg-Bkgkxzv10Bsl7klrCjDYd5WOv0aOZzv1AbyT
+    MYoFkW_O_QrasV9txblxtwIUSjL8WoFXFmjKkXCViDXQjaPLl7-7w>
+X-ME-Received: <xmr:7ixdacBCsDNmJ6oJ78iw3Ct1RUmLYMXBmO_KrdEDMkDk1j0WPvEKdAgi1pAyqwxS6rGfsbd-dHIiUDkWpvpPWO2TxhdXp7fnOb3QSAGI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddtheejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmrghilhessggvhigvrhhmrghtthhhihgrshdruggvpdhrtghpthhtohepnhgvfi
-    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgusegu
-    uhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:yCxdaX9WGHA0pG6Z1VLMrsEhgd4CwBtrlCEjZn_ZO_jFNv2x2nvg1w>
-    <xmx:yCxdaac-6vlKhSdzTT-dQPD2kopCOLYBt5joYhcpXCgPmlRngCjhDw>
-    <xmx:yCxdaWyXrqMPNqFlCV0IC1tHT6KbeIXuSgAIl7vzaRhHnyhNbhrTew>
-    <xmx:yCxdafJVD1SfcgzBxDzzsJJiHjhwfF-yv7wlVddHYY_xnNIMVXwZtg>
-    <xmx:ySxdaTETvu7LJFuZVbTzxQMwZemFDSLfHgbKc4iUbYcr4hm4glC4Pbf3>
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhm
+    rdhorhhgrdhukhdprhgtphhtthhopehmrghilhessggvhigvrhhmrghtthhhihgrshdrug
+    gvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehmrghrthhinh
+    hvohhniiesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:7ixdaYlLUrnYdH1Tcq1Ca3Rzl80YZ4LCpL_e9rPT2uEPQ_bkT5hEpQ>
+    <xmx:7ixdafeaDbzZPCrwBUjsncvAGuu1kuPhXkoEaWH7KzJ47gYhUnsRJg>
+    <xmx:7ixdaUTgIefzu-XjBRJVHXItbwYTldDysY-FBYfHPWQpn3oF2aAbTA>
+    <xmx:7ixdaetSJiOn6aqMdgqwfcj-fNSEG78RtPjlzNDcYaEAhGsOa9pAng>
+    <xmx:7yxdadet-Ne7oDQ_e2ncZOUolAZ5Qo5Zjl_-8qSPouNPVX7failA6AZf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Jan 2026 10:39:51 -0500 (EST)
+ 6 Jan 2026 10:40:29 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3b4cd08b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Jan 2026 15:39:49 +0000 (UTC)
-Date: Tue, 6 Jan 2026 16:39:42 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 1e3b6952 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Jan 2026 15:40:28 +0000 (UTC)
+Date: Tue, 6 Jan 2026 16:40:25 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren <newren@gmail.com>
+To: phillip.wood@dunelm.org.uk
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Matthias Beyer <mail@beyermatthias.de>, phillip.wood@dunelm.org.uk,
+	Matthias Beyer <mail@beyermatthias.de>,
 	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Martin von Zweigbergk <martinvonz@gmail.com>, git@vger.kernel.org
+	Martin von Zweigbergk <martinvonz@gmail.com>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>
 Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
  history editing
-Message-ID: <aV0svlRpEZPoJmkO@pks.im>
-References: <aKs3tqjE510MF0T-@pks.im>
+Message-ID: <aV0s6cFwPFQ-Pmhj@pks.im>
+References: <CANiSa6gXbrZaMLVq-AAg38sm+7qgzn4w98WWowLtUHA2P+BdLw@mail.gmail.com>
+ <aKs3tqjE510MF0T-@pks.im>
  <aMsWL2cSoytbmRjA@szeder.dev>
  <4m6rmefbv4hftclimitz5rp6yapswjtnjsxymrsdkuan4jbg3u@dm5jzdiq5cxz>
  <bc01706e-b9cc-4cd4-953a-971a3ccd6c79@gmail.com>
@@ -95,94 +93,58 @@ References: <aKs3tqjE510MF0T-@pks.im>
  <a6efc710-4062-4955-8fe8-bb6d428a44c1@gmail.com>
  <xmqqms3qh13e.fsf@gitster.g>
  <aUVDax0PbkaXGB61@pks.im>
- <CABPp-BGE1PC0RhpkfABUL74Yade6HkMQd35bv0my9A2+1VY6AA@mail.gmail.com>
- <CABPp-BG9h1xxp9b2UfE00EaKozk5kGAUELe-Od139amZdAa47g@mail.gmail.com>
+ <91bd9241-96c1-4b34-98a9-af3bad345c4d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BG9h1xxp9b2UfE00EaKozk5kGAUELe-Od139amZdAa47g@mail.gmail.com>
+In-Reply-To: <91bd9241-96c1-4b34-98a9-af3bad345c4d@gmail.com>
 
-On Sat, Dec 20, 2025 at 08:51:23AM -0800, Elijah Newren wrote:
-> On Fri, Dec 19, 2025 at 8:30 AM Elijah Newren <newren@gmail.com> wrote:
-> >
-> > On Fri, Dec 19, 2025 at 4:22 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > >
-> > [...]
-> > > Okay, so the majority of folks here seem to favor rewriting all
-> > > dependent branches, which is also the default that JJ uses here, and
-> > > git-replay(1) does it, too.
-> > >
-> > > There is one major difference between git-replay(1) and git-history(1)
-> > > though: the former works with revision ranges, whereas the latter does
-> > > not. By using revision ranges we avoid the problem I have mentioned in a
-> > > different branch of this discussion, which is that we have no easy way
-> > > to figure out which branches we'd have to touch in the first place. This
-> > > is because we simply walk the revision range there and then look at
-> > > which of our references point into that range. That's simple enough.
-> > >
-> > > But in our case we're not working with ranges, we are working with a
-> > > singular commit.
-> >
-> > I don't understand the distinction at all.  `git replay edit` also
-> > took a single commit, and then implemented the obvious (and jj-like)
-> > behavior of rewriting all branches that descended from that commit.
-> >
-> > > In my head this meant that we'd have to basically do a
-> > > revision walk that starts from all of our branches so that we can figure
-> > > out which of them would eventually reach the commit that we are about to
-> > > rewrite.
-> >
-> > Yes, and it's only a few lines of code, as I showed earlier.
-> >
-> > > And that of course doesn't scale.
-> >
-> > That's quite an assumption about scaling; I don't believe it.  Under
-> > what conditions would this be slow enough for users to notice and be
-> > bothered?  commit-graphs not enabled + weird local clone with
-> > thousands of local branches?  Also, isn't jj specifically designed for
-> > large repositories and with scaling in mind, and yet this is their
-> > default behavior?
-> >
-> > More importantly, this is being used to justify a large principle of
-> > least astonishment violation (disconnecting branches with shared
-> > history), so we'd not only need to show that walking all branches was
-> > slower enough for users to notice, but slower enough that the negative
-> > user performance experience offsets the negative user experience from
-> > the astonishing behavior.  Typically, spending extra cycles to provide
-> > users with good warnings/errors is a good use of time, especially when
-> > it'll take them far longer to discover and recover from negative
-> > surprises.
+On Mon, Dec 22, 2025 at 10:46:12AM +0000, Phillip Wood wrote:
+> On 19/12/2025 12:22, Patrick Steinhardt wrote:
+> > 
+> > But in our case we're not working with ranges, we are working with a
+> > singular commit. In my head this meant that we'd have to basically do a
+> > revision walk that starts from all of our branches so that we can figure
+> > out which of them would eventually reach the commit that we are about to
+> > rewrite. And that of course doesn't scale.
 > 
-> A quick clarification in case I'm misunderstood above:
+> I'm not so sure about that. In repositories with lots of refs most of them
+> are likely to be tags or remote tracking branches rather than local branches
+> so I'd hope that the number of refs we have to walk was manageable. I'd also
+> expect the commit we're rewriting to be relatively recent so the revision
+> walk should quickly prune any branches that point to commits older than the
+> one we're rewriting which should further reduce the number of commits we
+> need to walk.
 > 
-> When I talk about rewriting branches descended from the commit, I am
-> specifically talking about refs/heads/*, not refs/remotes/origin/* or
-> refs/tags/* or anything else.  Because:
->   * I suspect we'll soon implement an "immutable branches" concept, so
-> that e.g. a request to modify a commit in the history of "main" would
-> result in an error (by default).  This leads to the idea that we're
-> just rewriting the user's local stuff they have on top of the
-> immutable history, i.e. their local branches.
->   * refs/tags/* are designed to be immutable, obviously.  In fact, we
-> might want to automatically include tags in the set of "immutable
-> branches" by default.
->   * refs/remotes/* are designed to match what the corresponding remote
-> had, not to be independently rewritten.  We'd really mess people up if
-> we changed that.
->   * The fact that users created local branches means they are marking
-> those parts of history as a relevant area of interest
->   * While it could be that some of refs/remotes/origin/* have shared
-> history with whatever commit is being reworded/split/edited, so too
-> could branches that were never pushed.  I think focusing on the
-> branches of interest to the user (i.e. their local branches) makes
-> sense.
+> > But now that I've thought about the problem a bit I think we can avoid
+> > that issue by implicitly identifying the range: it's all the commits
+> > between the commit we're about to rewrite and HEAD. So, same as with
+> > git-replay(1), the set of branches that we'd need to rewrite is any one
+> > branch that points into that range. It keeps the UI simple as the user
+> > still only has to think about a singular commit, should be sufficiently
+> > fast to compute in most cases, and it allows mega-merge workflows like
+> > JJ supports.
+> 
+> I agree that users should not have to think about commit ranges, but using
+> an implicit range between the commit we're about to rewrite and HEAD will
+> not rewrite all the branches descended from that commit, instead it will
+> behave like "git rebase --update-refs".
+> 
+> > Does that make sense to everyone? If so, I'll revise my stance and will
+> > adapt the current implementation to do exactly that.
+> 
+> I'd much rather rewrite all the branches descended from the commit we're
+> about the rewrite rather than those that happen to point into the revision
+> range between that commit and HEAD as I think that ends up being confusing.
 
-Fair. I'll send a new revision tomorrow that does this. Thanks!
+Yeah, my next version of this patch series will do that now. I'll
+probably send it out tomorrow.
+
+Thanks for your thoughts!
 
 Patrick
