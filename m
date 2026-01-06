@@ -1,111 +1,102 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45452877FA
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 19:01:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FDE229B38
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 19:52:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767726107; cv=none; b=N3pLn/6PheuT44KW3XHqyteDRI0man9ER+Z4K32PysXqhpLxSsExsHAlqRqpXldusLUvRK4yeL8UvqVm04tdZnsagQtXeayb5wdjKcQnPZRAUoyKOh70YMFQBE+wQOnBme46oMNasioh5RnV9dHZg3Nn7oVRjFOkYrLV1bCCISk=
+	t=1767729170; cv=none; b=lpA4q4YECpqGdaSsfNlris58oWdNpfSrnOpoL/KAAgBOrYZGV01+oNNpuoqAz31lOqBl0O9jV88IpAgCZemIu/dmR0hqMQo2S3UPB503tfjj+okNsa2wlA5VSrCeSNFa+ynHpfPjBnXHRiZiXChJsFsX6TvYlCb2WJjswAwj3lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767726107; c=relaxed/simple;
-	bh=B9hDa6XGPQTrowOE5zjn/dSFaggDLyJ+6f6vi52buW8=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=arXZKOSUTO08FetTCXRBqkwziyLzse7/rQaZhGYgCGy+NifECZaiENhQSNNH8mJh9xISNgH0eivWvuWUVyYCuF6/iKmme15jMmyAlQY4rKmfXqIYMvbsX3A15h2//R0zHEPHDYAPvCZnwopey1EJp9An8RQtG6fLq0TzdzV56z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j+fVBgMm; arc=none smtp.client-ip=209.85.128.177
+	s=arc-20240116; t=1767729170; c=relaxed/simple;
+	bh=zQKS8GermoZDDHrP4mSaj0B2KsFMSHfPkLt6pUmvd84=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lwhB2rJhQecr4iaDg+OktgXHz78whQu0RePCOq6mt5S63eFaG6MhorugSWCfkBScdrneFlTBN6ln1yLRbMSKo0PXAMbjXlpi6Wn4c18DS+hj/P6dqOXWCC30unnX6zbRSiCw1jIt+aX8eTHHsBw89hl13rUtG4qpvM4qAvOD9KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+2JE2BI; arc=none smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j+fVBgMm"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-78e7ba9fc29so15040437b3.2
-        for <git@vger.kernel.org>; Tue, 06 Jan 2026 11:01:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+2JE2BI"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-78fc520433aso15355747b3.1
+        for <git@vger.kernel.org>; Tue, 06 Jan 2026 11:52:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767726103; x=1768330903; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B9hDa6XGPQTrowOE5zjn/dSFaggDLyJ+6f6vi52buW8=;
-        b=j+fVBgMmZqG4RkCQk7ySjN8CPGy2c4B1pE5znA4midLFK0ye/3ya9zrylk1ib1VMBp
-         ix5NCtjFwTSldP7DBNX7c9U26iIdQahD/L1ES1GfvYe1JmZ3gJw6iluVaamjcBRsLku0
-         N4Ou9+I8U6YcHu+K4qqCRO4mgi+RNPhKsIlwJrQWZhOZpyQFAZd6vZiQs5VhWWb7HLcK
-         Ocdcwz1b38s4gQ6r/BwmdmJByFfO7ZJ3lIoLPicDrvSGdqWumXXmww2jd5yoKZ72K6zM
-         7EdRIoPwh0Aly6WJf/K1sMXcs9DlVyaUrmI3pWZEbxtWFGmWjQPjq/6hEz32SXzAWdFs
-         14Bw==
+        d=gmail.com; s=20230601; t=1767729167; x=1768333967; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IYaTx4OR1H1ddGztluqtmoI+6ecyft2mP8p1fRDSKow=;
+        b=A+2JE2BIR45qHE/ZSY2CfaVwFQZtf+cGIjny6zML1gw3qk4/GOxPgFc4lfGFTdf/6j
+         ZhYzYVj7qvDsBeWA+2vMFe26JBr+EPepBw89jp75nF325xv+3BzjPF1hwadGyFRXgJTX
+         swMYSJ6lKJjvWjT3u2Y+nBIezgz6E1Z/n4q/Y5fAfLnfPGvOtF2mLZQat3oGyX9Grjcc
+         ePbsQWbG6muyQdlUN47xMJ0wpDACzYRHs4mp0IUjDaHuTgQ+HD/qdgjN6trdscNl4V7T
+         BtsXSMTi7z68nNcRl0muZdRkawkef+TsWE+H0nFTpzne6th7Q3ot1RIWC4/pgyC2VhRr
+         kBKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767726103; x=1768330903;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=B9hDa6XGPQTrowOE5zjn/dSFaggDLyJ+6f6vi52buW8=;
-        b=WYW8o79hgF+PbsMujBiizPQHzcOdUqqk+JytNvy9Df2WYLQVVlQ7fokMYRI8X+eVgb
-         teJfBeH9dWtVQZCCLQIbM+cew1EsopvQmWeIUZBfSF2tV7gzEoArKs2P/5SLsce7tR/u
-         3TmCou1opVCZQdwLcPn3+b5al3WYbe3ihjj/0i8Rd6j5qBDnwzJAofu6d7ze6PNg9Bu/
-         0baELlnz5G5qT3jBzMk2+e5M1xsxQozKnIwJ1l3iwnyTcPAR0NTQDV6TY1CpxOdkRGXe
-         J9d+8MqthDctABFPfbkX3lkZF8qNZoFMdsp7IBXAMVEBdYBfIa/zVwvDAlyGRI/jrFOW
-         Szfg==
-X-Forwarded-Encrypted: i=1; AJvYcCU370N9DeqhQaOuh8W8UJ//GL5sVNs6xY1bJoFe+IOw8HMj6YolK1FPwuISO+sRS5Ryek8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyop9V2E0tqkn3aHkuEyhLs1tD8DMATaTpYX/p07EnA5JBxn4Fp
-	LkHXht5nl5Vx2rH1UveffymhpuQ2y84Agq5Qx24jG5e/spf7pNyVL1ye
-X-Gm-Gg: AY/fxX6OpOovDyYhw3VdAETAKUGGSOJVBFTgINAfmZFrlU4F31933ShgTKElZGMvKR/
-	g8huHhNaJSeY2Q20Hmmh4dpL5PboJXkwGuJuI+y/lmVk3dxfhf2ri2LAMuX6rs0Y/+uYxYxSnBC
-	5ULGF4vccJLCKS/5Ic3/oJIL8JzRx3/ExxhjCOFrGLVzsE1s29on/QMVStObAEBxh4zX6PpV2dY
-	ERBFaYCQwdQlWK0quEMKHdJcvzOj8UDapjtgFef6IeOLDH9PG06/OEYKFe6n2mIbpdjFN4AiZHO
-	mP1DouL5ZdOUnBG4rIh8hCa/rLjVkGbLjOJOC1rZM6DJrUXvCyo+oBrRTqQBjNEdU5mtA2+nUIR
-	uFVkz3kUEMRnHxXNuW12N1GJr2Ztxlx3F24JdS//bUtNqRULrSLD2s6sfm2OmgnFH/jcyIvWTUT
-	82TEJ8CGUwdoUk/mnO7m/OfW+Ed/3qR8kWPsSjEhFODZ7gOLOyoA==
-X-Google-Smtp-Source: AGHT+IH5Krri6Ei56jCwKQ6YNbjV31jvHd01RYWpQ5WR6z/Eg/w1KFgW1ZiQV3Im5c6IyZQzKlyUQw==
-X-Received: by 2002:a05:690e:42ce:b0:644:45ca:7bfd with SMTP id 956f58d0204a3-64716bdb953mr31610d50.36.1767726103149;
-        Tue, 06 Jan 2026 11:01:43 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:75f6:76cb:303b:9f73])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6470d8c4fcdsm1156201d50.24.2026.01.06.11.01.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jan 2026 11:01:42 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20230601; t=1767729167; x=1768333967;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=IYaTx4OR1H1ddGztluqtmoI+6ecyft2mP8p1fRDSKow=;
+        b=LEpycjXUH2hnqEJPVudxkCb0LkX1b0HNQlHgpqCJzmREX3vVOpV6Z+x7uaipH9+aVO
+         RhPMydg9BMnFiZjFLHueRNG4V26yZrdulxu594uhuMujlj9onBt2/Z1bzPEcxUKioL1N
+         TOcPLDfdihfX0qJleDqg0Q7nmbsOAcoKSqCUZBHoTkCAHmCkt8caRWNYraa/dy41avOT
+         IpvDGK3PKHTTbANQMieOuFLKDBgxxF0BsdQafGv0/WSGUnFMusCEmOhMZYOVtmw6eWpx
+         gWk0D47hkW+NyhoHolDyu17uVj0oTp33S+TIW4WuCfGMKblLAdEKjKh3fE7kdfcKtlA8
+         nbVw==
+X-Forwarded-Encrypted: i=1; AJvYcCVhogNGPAhTH+VgmGjxo52pi3BNjpeTErgzP69qPic41C8PV3jGQC0jgZoSUVEEklp04yo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxTyhxNp2sr38sk4bfNlC0d00YbiYgQ8/r3ZASCcBvKaTxa16Zy
+	28O3xpuaiYxqGd3IH6l1jxQaC1Uoa5MWiBHNkAilmzH1bC+Rru61t5/qMbe4NbriW6h9vSmbJpu
+	ccgu1QnrWu5pD50vAzy3ocNjKn1zHUQc=
+X-Gm-Gg: AY/fxX7rWni5pbIDfgyHN39gCwlDCNPBLehtL65pUUVZJubtLdvUDj9/pmmeMAV0kr6
+	NOwvtUElAaF+0vTJ9/8FaZz4qIVlkRod2Yv8+std+28XkAcGDE6LFgnvbj0XdcMG5Lv4F3G7tWn
+	NzAC3hWan3EYwiVOynf8kNG2Rw3w+rNcFnjwQ7sxKsSTuCro0kGau5OlzWUqYE0pBcX6t+gHZtr
+	tHSgHzqor6/vPjGhgO5gdv6VCrBAlOp+hZ92GHwIIUh5sKokwGG1YvD1CZ0/9VEMQ03eX5vI1y+
+	VSLFUkA=
+X-Google-Smtp-Source: AGHT+IGzqTnuN1NYl+APzKNRBw4c3tddEF9CKaZ/1IpnHXCwY+gNMRO8kiXvnW9MbqNtjJqYULehNfI/lA+UUKVSykM=
+X-Received: by 2002:a05:690e:120e:b0:645:591a:cb6a with SMTP id
+ 956f58d0204a3-64716c753a0mr132338d50.70.1767729167512; Tue, 06 Jan 2026
+ 11:52:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [GSoC PATCH v6] add -p: show user's hunk decision when selecting hunks
-Date: Tue, 6 Jan 2026 14:01:31 -0500
-Message-Id: <ADCF604A-A3F1-48B9-B29E-777CE7026EAA@gmail.com>
-References: <54e48ac4-7151-4378-b95f-8f22279d6761@gmail.com>
-Cc: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>,
- git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Junio C Hamano <gitster@pobox.com>,
- =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
- Christian Couder <christian.couder@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-In-Reply-To: <54e48ac4-7151-4378-b95f-8f22279d6761@gmail.com>
-To: phillip.wood@dunelm.org.uk
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+References: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com> <xmqqsecmnl3d.fsf@gitster.g>
+In-Reply-To: <xmqqsecmnl3d.fsf@gitster.g>
+From: Matthieu Beauchamp <matthieu.beauchamp.boulay@gmail.com>
+Date: Tue, 6 Jan 2026 14:52:36 -0500
+X-Gm-Features: AQt7F2qstly95e1fGCxVNT0L-sAU917QsOGdwPEdfIWwINKbkBZkktaduhPe8fY
+Message-ID: <CALH9GrYpWG2WPM76WDFnK-tFFTFtg3hZFLjg3z27gOYKeXpmxw@mail.gmail.com>
+Subject: Re: [PATCH] ignores: handle non UTF-8 exclude files
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Matthieu Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Matheus Tavares <matheus.tavb@gmail.com>, Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Sat, Jan 3, 2026 at 9:54=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> "Matthieu Beauchamp-Boulay via GitGitGadget"
+> <gitgitgadget@gmail.com> writes:
+>
+> > From: Matthieu Beauchamp-Boulay <matthieu.beauchamp.boulay@gmail.com>
+> >
+> > When reading exclude files, git assumes it is encoded in UTF-8 and will
+> > fail to apply patterns if it isn't.
+>
+> Is it true?  I thought we assume that the exclude patters are
+> written in such a way to match the encoding of the pathnames,
+> whatever used on the platform that our calls to readdir(3) returns.
+> Some platforms may have compat/ code to convert these paths and
+> force use of UTF-8, but please do not write such platform local
+> conventions as if it were universal characteristics of our system.
 
-> Le 6 janv. 2026 =C3=A0 11:13, Phillip Wood <phillip.wood123@gmail.com> a =C3=
-=A9crit :
->=20
-> =EF=BB=BFHi Abraham
->=20
->> On 06/01/2026 12:01, Abraham Samuel Adekunle wrote:
->> When a user is interactively deciding which hunks to use or skip for
->> staging, unstaging, stashing etc, there is no way to know the
->> decision previously chosen for a hunk when navigating through the
->> previous and next hunks using K/J respectively.
->> Improve the UI to explicitly show if a user has previously decided to
->> use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
->> This will improve clarity and aid the navigation process for the
->> user.
->=20
-> I like the idea of telling the user if the hunk is currently selected but s=
-ay "(previous decision: use)" makes the prompt rather long (some of the prom=
-pts in the tests below are 80 characters long). I wonder if we can find a mo=
-re compact notation. "(currently selected)" is a bit shorter and takes us un=
-der 80 characters but is still longer than I'd like - maybe someone reading t=
-his will have a better suggestion.
+I believe you are correct, I wrongly assumed git would always
+manipulate UTF-8 paths.
+The revision will need to take the platform into consideration.
 
-I haven=E2=80=99t looked carefully, so apologies if this is nonsense.
+> "ignores" -> "exclude" on the title, as that is the canonical word
+> we use in the codebase to refer to the ignore mechanism.
 
-What if the marker of current state were on a separate line before the promp=
-t? That would allow more room, right?=
+Thank you, I will update in the revision.
