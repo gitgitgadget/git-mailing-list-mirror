@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07542F6165
-	for <git@vger.kernel.org>; Tue,  6 Jan 2026 10:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0864D29BD81
+	for <git@vger.kernel.org>; Tue,  6 Jan 2026 10:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767694433; cv=none; b=iPw5pnIRUxmu7Xyaoe1TPo/lP6Sg700L0upqYBh5EOZWteCJ7CPzbqRcpPELdyduxKBV92pLIueGcJ25/3+W0J+MjMUNWPyCx8jO098dK+usCJxpFsJx1w4vpfqbJlEzR6Tj8hWtx5JR4UGdm048iezyZh8esUH9CoPLy8Y1+5I=
+	t=1767694570; cv=none; b=XzwM7mb/CJLoMkccic3QX4nwqMolvsQROkGq+L+srPS3DmL2TZU8m7no8sHFiDNHtMzuqsDPDHqK+ldej7LU/yBdI3tJMv+z/y3K2C+hlOJJq3bwIR06iunRO4RJHZS1WgFM1MHFHieonwlOiJor8ges+Qyi6GwgzDzjsaK9SE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767694433; c=relaxed/simple;
-	bh=SGAsfJplf9SVweijfF5D+OmFtlaBdKZRiY0NgYOKevI=;
+	s=arc-20240116; t=1767694570; c=relaxed/simple;
+	bh=V2XblLBJgvzRi2kGxQSWCvp/KiSasH5oaOKnla44kM0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HodBfV2t0l51l8kciFgbBOOojYJwLZ66NWN85y3E3EBNc+YpbPm0Q3rM0YP1gQFrIvr+wPiaU5KpIC+EjWygisHuoOQ5nw09lsmnfugXA054PwowCWA9uCT4fGHm0hKj/lSYFO9NKE3DV4moD8cTEl2iAX7UbgUlSBfNRZxtk4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UHoqizyn; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=oS/9W5JbHNzq9k6t7FU3gCM3WwlIOBghCgr7rWiqQdrPVEJObgIk0Sa74J/+3rN2jwNJtLWNErbgGeQhnq8q7HxsLrnoHmpZvDoYOgzBBUrioLQ+i+/M+0h/4vEAK2WYZVLTkR3TC9EjAVPawfjlEj3R1nb3NtAFEEfRzaadCBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=c8KBFtOG; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UHoqizyn"
-Received: (qmail 600949 invoked by uid 109); 6 Jan 2026 10:13:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=SGAsfJplf9SVweijfF5D+OmFtlaBdKZRiY0NgYOKevI=; b=UHoqizyn8jmfyMROM04/cLSjFwmi2JOdBNbYod9eaTAuvHgsm4x7WrnT3pcU18x8LBVdArh2K/ppQYI43hAs6OxDdYpR9z8h35aVGuuf6JfVi2rIPXI2w2eiXf75kW82mc8W5xqzrcDPCYj44l+HFj+kpxfSSDzIGp7E6Cm1JyAzCgem7ZqkQcEnY6GZwZQk85extoc7QlewLGS01ags7g2INY3/l5OjMRzWsN9DUe7obqvwiapytNCDJkAvGDw5+pi/R7w7JXCTYeZ6TFCryQRnHXNyVJjs29NGulXR7R5qdGmeMfCM9zXARi+kqewk97KFPIjft237PL0Kz51hzA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="c8KBFtOG"
+Received: (qmail 600961 invoked by uid 109); 6 Jan 2026 10:16:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=V2XblLBJgvzRi2kGxQSWCvp/KiSasH5oaOKnla44kM0=; b=c8KBFtOGL/7MNwKZSeeVNPPE5OaGIbtlaHcJRYUSAMezJ4GCmnrtdNva6vA9PeqwxTp+gVzGgLi+LtT5EYbj/JmVTZyoBvLZeNRmgmTUdy33jqOYufvNuz1jzT2ppFdVUG8SAwt8541YKhLkf11kJ/M6P0VCJgzrNQ5MYaRYRY0OhMd36X0tnikgSrs4m9McFdaPdU/TZXJO6NRAQsfrloAJktj0fdYRM5n+rXxxMNWVIu6HKqlBL5Xxrjvbpm7U8ravnBoBCxTonNMYgbgIHCReKD1uq8ZkI2edh0cQhAp+yK3d1DqcsBX/oMsX024ymEF+taYIN9fDV1s4Yyx6eg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Jan 2026 10:13:49 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Jan 2026 10:16:04 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 789055 invoked by uid 111); 6 Jan 2026 10:13:54 -0000
+Received: (qmail 789097 invoked by uid 111); 6 Jan 2026 10:16:09 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Jan 2026 05:13:54 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Jan 2026 05:16:09 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 6 Jan 2026 05:13:49 -0500
+Date: Tue, 6 Jan 2026 05:16:04 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 1/2] t/perf/perf-lib: fix assignment of TEST_OUTPUT_DIRECTORY
-Message-ID: <20260106101349.GA3727538@coredump.intra.peff.net>
+Subject: [PATCH 2/2] t/perf/run: preserve GIT_PERF_* from environment
+Message-ID: <20260106101604.GB3727538@coredump.intra.peff.net>
 References: <20260106101043.GA3723319@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -40,96 +40,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <20260106101043.GA3723319@coredump.intra.peff.net>
 
-Using the perf suite's "run" helper in a vanilla build fails like this:
+If you run:
 
-  $ make && (cd t/perf && ./run p0000-perf-lib-sanity.sh)
-  === Running 1 tests in this tree ===
-  perf 1 - test_perf_default_repo works: 1 2 3 ok
-  perf 2 - test_checkout_worktree works: 1 2 3 ok
-  ok 3 - test_export works
-  perf 4 - export a weird var: 1 2 3 ok
-  perf 5 - éḿíẗ ńöń-ÁŚĆÍÍ ćḧáŕáćẗéŕś: 1 2 3 ok
-  ok 6 - test_export works with weird vars
-  perf 7 - important variables available in subshells: 1 2 3 ok
-  perf 8 - test-lib-functions correctly loaded in subshells: 1 2 3 ok
-  # passed all 8 test(s)
-  1..8
-  cannot open test-results/p0000-perf-lib-sanity.subtests: No such file or directory at ./aggregate.perl line 159.
+  GIT_PERF_LARGE_REPO=/some/path ./p1006-cat-file.sh
 
-It is trying to aggregate results written into t/perf/test-results, but
-the p0000 script did not write anything there.
+it will use the repo in /some/path. But if you use the "run" helper
+script to aggregate and compare results, like this:
 
-The "run" script looks in $TEST_OUTPUT_DIRECTORY/test-results, or if
-that variable is not set, in test-results in the current working
-directory (which should be t/perf itself). It pulls the value of
-$TEST_OUTPUT_DIRECTORY from the GIT-BUILD-OPTIONS file.
+  GIT_PERF_LARGE_REPO=/some/path ./run HEAD^ HEAD p1006-cat-file.sh
 
-But that doesn't quite match the setup in perf-lib.sh (which is what
-scripts like p0000 use). There we do this at the top of the script:
+it will ignore that variable. This is because the presence of the
+LARGE_REPO variable in GIT-BUILD-OPTIONS overrides what's in the
+environment. This started with 4638e8806e (Makefile: use common template
+for GIT-BUILD-OPTIONS, 2024-12-06), which now writes even empty
+variables (though arguably it was wrong even before with a non-empty
+value, as we generally prefer the environment to take precedence over
+on-disk config).
 
-  TEST_OUTPUT_DIRECTORY=$(pwd)
+We had the same problem in perf-lib.sh itself, and we hacked around it
+with 32b74b9809 (perf: do allow `GIT_PERF_*` to be overridden again,
+2025-04-04). That's what lets the direct invocation of "./p1006" work
+above.
 
-and then let test-lib.sh append "/test-results" to that. Historically,
-that made the vanilla case work: we'd always use t/perf/test-results.
-But when $TEST_OUTPUT_DIRECTORY was set, it would break.
+And in fact that was sufficient for "./run", too, until it started
+loading GIT-BUILD-OPTIONS itself in 5756ccd181 (t/perf: fix benchmarks
+with out-of-tree builds, 2025-04-28). Now it has the same problem: it
+clobbers any incoming GIT_PERF options from the environment.
 
-Commit 5756ccd181 (t/perf: fix benchmarks with out-of-tree builds,
-2025-04-28) fixed that second case by loading GIT-BUILD-OPTIONS
-ourselves. But that broke the vanilla case!
+We can use the same hack here in the "run" script. It's quite ugly, but
+it's just short enough that I don't think it's worth trying to factor it
+out into a common shell library.
 
-Now our setting of $TEST_OUTPUT_DIRECTORY in perf-lib.sh is ignored,
-because it is overwritten by GIT-BUILD-OPTIONS. And when test-lib.sh
-sees that the output directory is empty, it defaults to t/test-results,
-rather than t/perf/test-results.
-
-Nobody seems to have noticed, probably for two reasons:
-
-  1. It only matters if you're trying to aggregate results (like the
-     "run" script does). Just running "./p0000-perf-lib-sanity.sh"
-     manually still produces useful output; the stored result files are
-     just in an unexpected place.
-
-  2. There might be leftover files in t/perf/test-results from previous
-     runs (before 5756ccd181). In particular, the ".subtests" files
-     don't tend to change, and the lack of that file is what causes it
-     to barf completely. So it's possible that the aggregation could
-     have been showing stale results that did not match the run that
-     just happened.
-
-We can fix it by setting TEST_OUTPUT_DIRECTORY only after we've loaded
-GIT-BUILD-OPTIONS, so that we override its value and not the other way
-around. And we'll do so only when the variable is not set, which should
-retain the fix for that case from 5756ccd181.
+In the long run, we might consider teaching GIT-BUILD-OPTIONS to be more
+gentle in overwriting existing entries. There are probably other
+GIT_TEST_* variables which would need the same treatment. And if and
+when we come up with a more complete solution, we can use it in both
+spots.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/perf/perf-lib.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/perf/run | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index b15c74d6f1..2ac007888e 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -20,7 +20,7 @@
- # These variables must be set before the inclusion of test-lib.sh below,
- # because it will change our working directory.
- TEST_DIRECTORY=$(pwd)/..
--TEST_OUTPUT_DIRECTORY=$(pwd)
-+perf_dir=$(pwd)
+diff --git a/t/perf/run b/t/perf/run
+index 073bcb2aff..13913db4a3 100755
+--- a/t/perf/run
++++ b/t/perf/run
+@@ -204,8 +204,18 @@ run_subsection () {
+ get_var_from_env_or_config "GIT_PERF_CODESPEED_OUTPUT" "perf" "codespeedOutput" "--bool"
+ get_var_from_env_or_config "GIT_PERF_SEND_TO_CODESPEED" "perf" "sendToCodespeed"
  
- TEST_NO_CREATE_REPO=t
- TEST_NO_MALLOC_CHECK=t
-@@ -58,6 +58,7 @@ then
- fi
++# Preserve GIT_PERF settings from the environment when loading
++# GIT-BUILD-OPTIONS; see the similar hack in perf-lib.sh.
++git_perf_settings="$(env |
++        sed -n "/^GIT_PERF_/{
++                # escape all single-quotes in the value
++                s/'/'\\\\''/g
++                # turn this into an eval-able assignment
++                s/^\\([^=]*=\\)\\(.*\\)/\\1'\\2'/p
++        }")"
+ cd "$(dirname $0)"
+ . ../../GIT-BUILD-OPTIONS
++eval "$git_perf_settings"
  
- . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
-+: ${TEST_OUTPUT_DIRECTORY:=$perf_dir}
- . "$GIT_SOURCE_DIR"/t/test-lib.sh
- 
- # Then restore GIT_PERF_* settings.
+ if test -n "$TEST_OUTPUT_DIRECTORY"
+ then
 -- 
 2.52.0.664.g9f53c65b4c
-
