@@ -1,104 +1,64 @@
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5916F341674
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 18:45:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D182AD16
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 20:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767811507; cv=none; b=VBd0hKSJgcJ3JnF/xoj1izv4YZh1fJMcCDJZQCDqcjH1XCcuh+cdkElixPMfQ2wS+20LmhS+t92xFJYppSB5ZraNc92j0pEZ12tui/tYT1yxpjkiIn4cDj4IBMQbtezlYWnufDK5+S7yBFm2ucxs9KJcph27slewcMaci8cCmu4=
+	t=1767816963; cv=none; b=J6HR0qww3ckdpxyrDtrjLqLJNafpb05ftxenOzjaqGtyrvlX04AGhq9N6qRBqsdzHyqJ6xHbgW0b8wEmJf94iN5IpouNrWCNzI8XsJhRSUYD5sGqjAk9ORo0PCydWTJ/AxwsO5OHmWMdVCz1obIuLbxIrqQ0oIc2b9itjOEnCt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767811507; c=relaxed/simple;
-	bh=IgLro9I116IcffuPQaNGaKJI190UOk6/OdIK5oYBl+8=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qRgiF5gvTkg8gGhECubYjSXbri78T5317YeCFjfsjI5FtfW/lKm+nJcufk712nuY4L+NEK4ZfBZnaYx4QhNLt5y0wzkQWhSZpvzc89zVVTQe4UqnzoZEJzpTTwQyLiIQgpgqE459eiPn8XiWVKljWWIfvS96q443PMmnN5+Wy+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=QI4Gt0bq; arc=none smtp.client-ip=212.27.42.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1767816963; c=relaxed/simple;
+	bh=XsGIkmc4kDEe9+KZ7RR7/eunX2T0nd+lzuk9i8m6x88=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iE4gimtxmqePJOWPjlHHwBLhd7HIy4NajaRFsvGK1AfLwTAfbDHGlDL1aBvnZvY5m6rS1diK8BoSrXfUc3yguZOUb+zvzesJElUj6iiUnnQMdE8UdXP2q3uIFPNlUFWiWlTlm9iecSKIZrxKAsQrbxySulOPtefISRb8sjwYwGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Pshuxf8h; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="QI4Gt0bq"
-Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:5e36:599a:5e38:8283])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 027D02003DA;
-	Wed,  7 Jan 2026 19:44:51 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1767811493;
-	bh=IgLro9I116IcffuPQaNGaKJI190UOk6/OdIK5oYBl+8=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=QI4Gt0bqh7wcIv9OGGI6VTYZsng2qKDXlySqJSx55Ln70Cw6DY/qHknM6T4fLleyU
-	 h7RqlO0yNYaIQM3Ib8xAug9fLQdEsj/Y2rRlhhMcAgXcI9aNqhRCmOaU50RmETV78z
-	 PK4eiMw5ukAt+WncSLlWB6XmcK/v44J7tvgJ/WL4ERFwBBQpW0YVyaFwXbnPGZFBRB
-	 /89nOTqN2LVj3gNnjv8V+meliAdd9dLm0SsFy36sKucBGeH5GUycXc5rS0hefwY/pG
-	 YL77sH2tvcNWwXrMXcNLBcLU5jz2I2zR3qheDn6T+7sHP2EUltrp1pjPk0viv8PHtX
-	 TMZYy6i9AMh1A==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Michael Lyons <git@michael.lyo.nz>
-Subject: Re: [PATCH] doc: git-blame: convert blame to new doc format
-Date: Wed, 07 Jan 2026 19:44:51 +0100
-Message-ID: <2395053.ElGaqSPkdT@piment-oiseau>
-In-Reply-To: <9123496.T7Z3S40VBb@debian-mbp>
-References:
- <20260105230220.519303-1-git@michael.lyo.nz>
- <7894506.EvYhyI6sBW@piment-oiseau> <9123496.T7Z3S40VBb@debian-mbp>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Pshuxf8h"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1767816956;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Yj+lxzr9UaXxYYaOdp026ssnENjjJNvXFaxcgH7NEYE=;
+	b=Pshuxf8hF1P+k0juLxDkHCNiF8s5xr60i7+k3Wq9tfS25zqqHMHKkl8G1+9akZIRw5de5X
+	5EB1Du56Hq7jeko1ezyD6kG2wom6negzqNpuw9kJtmm5TL3hfUS6i967RzE6Nq8bnIdEaq
+	+hLVA50qbrk5/FmXHoUbn0bqFHtLihI=
+From: Toon Claes <toon@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2026, #02)
+In-Reply-To: <xmqqbjj8koe8.fsf@gitster.g>
+References: <xmqqbjj8koe8.fsf@gitster.g>
+Date: Wed, 07 Jan 2026 21:15:37 +0100
+Message-ID: <87wm1tnpqu.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Tuesday, 6 January 2026 22:16:02 CET Michael Lyons wrote:
-> > Here, let's transition to the <placeholder> format: <start>..<end> and so
-> > on.
-> 
-> This is the continuation of my question on `<start>,<end>`: Do these also go
-> to backticks or keep the underscores? My impulse is backticks, but let me
-> know: `<start>..<end>` or _<start>..<end>_?
-> 
-> The start/end change from rev/rev makes sense.
+Junio C Hamano <gitster@pobox.com> writes:
 
+> * sb/bundle-uri-without-uri (2025-12-19) 1 commit
+>   (merged to 'next' on 2026-01-05 at 62d0a58199)
+>  + bundle-uri: validate that bundle entries have a uri
+>
+>  Diagnose invalid bundle-URI that lack the URI entry, instead of
+>  crashing.
+>
+>  Will merge to 'master'.
+>  source: <pull.2134.v2.git.git.1766160106521.gitgitgadget@gmail.com>
 
-Definitely backticks here, because this is a complex synopsis span.
-
-
-> 
-> > > -	marked with a '*'. In the porcelain modes, we print 'ignored' and
-> > > -	'unblamable' on a newline respectively.
-> > > +	marked with a `*`. In the porcelain modes, we print _ignored_ and
-> > > +	_unblamable_ on a newline respectively.
-> > 
-> > If the words are printed "verbatim", then the format is backticked:
-> > `ignored` and `unblamable`.
-> 
-> Another one where I had backticks originally and switched them. I'm not 
-super-
-> familiar with the porcelain parts.
-> 
-> > This diff is quite large. If there are no other reasons to split the patch
-> > according to some semantic reason, then please split file by file.
-> 
-> Okay. Next try will just be blame-options for now.
-
-You can push two commits in this series.
-
-> 
-> > That's very good for a first try. Now, I hope that you will be ok to 
-review
-> > my patches :-)
-> 
-> That's very kind. I'll probably need a couple more rounds before my changes
-> pass inspection, let alone be declared competent to review yours. :)
-> 
-> For the purposes of re-submission, should I be doing something with scissors
-> on this thread, or make a new thread?
-
-Usually, the reworked series is pushed with v2 as reply to the first mail of 
-the first submission, using for instance:
-
-git send-email '--in-reply-to=<20260105230220.519303-1-git@michael.lyo.nz>' 
-v2-*.patch
-
-JN
+Cool! I had this one in my backlog to look into, and now I did. Looks
+good to me, as a matter of fact, I had a similar patch somewhere in my
+local worktree.
 
 
+-- 
+Cheers,
+Toon
