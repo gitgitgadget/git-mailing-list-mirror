@@ -1,92 +1,47 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+Received: from ns3.anscomputer.be (ns3.anscomputer.be [37.19.10.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C476312837
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 13:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B3B32571F
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 13:18:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.19.10.82
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767791770; cv=none; b=GDInplcsbVnH4NKlMPB4Svss4BNR/kIsmFQWNDGcPTMVO16svtZjN+INcyaHBvvHPmjC2UvKpek/HKA1yiKli0x1mTWb1z7lrXq3RoibLenSYmyEyDVZME3AJAdsfusQ8bt4VO3GhG5hEapfrb2MKo58nVeOTET4XcWOxEm8MB8=
+	t=1767791937; cv=none; b=I1RGNbzWoGO/BfkvqMf2kkgJBul1tTbHY4CMB0QRvrcpIctJrChcAf7pzuP0/s2uHVZByA5vVl3DIcrT1vx9xiM0894WDce+kUG2zYC3k28v4uczkelH7RdD/w0kx7aN2LejwtlbRho7MoNaRmSG+MPG59o3+T0vynAHEAVTV2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767791770; c=relaxed/simple;
-	bh=80jXO76uYHDVaOfc9dcXEofKS8yO+4T+cCwI2dWGWN0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nZXo3xitj/ceu4zKtLvUvpIddHxqILzO4wsKGWIz0pwIlGZyYwd2mZjPAZSCMu/kvFOQp+y0SSABhVGNFY3NrExiKH4YBVrovyayt9lkmkFQK137NxCRaOsmKropK43NVcsts4pTsnMMI8nbwgFA9+6+eLOHbU1DsPd3zlQs278=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=ZO4S7hlA; arc=none smtp.client-ip=95.215.58.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="ZO4S7hlA"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1767791766;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KxIUVtDHVvmEPOnXLdA2BTf6bntkMjry1WC2eFwRTSA=;
-	b=ZO4S7hlAPc2qBTioFRSshV1pfpC7Kk8YfeSlx89Vp08OSNeTWymsj1ueYb8qG7KkVoT/5R
-	MyMcJWR8ibGeCm5PGcttNgjyU2vMiRLxdNt8sQRS3xPYg4PSXj7StvDxjZ/xJVRaaetFuq
-	gj0jczs9IaOGIGW3mTUHICCaOQcbDfc=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 07/10] packfile: only prepare owning store in
- `packfile_store_prepare()`
-In-Reply-To: <20251218-b4-pks-pack-store-via-source-v2-7-62849007ce21@pks.im>
-References: <20251218-b4-pks-pack-store-via-source-v2-0-62849007ce21@pks.im>
- <20251218-b4-pks-pack-store-via-source-v2-7-62849007ce21@pks.im>
-Date: Wed, 07 Jan 2026 14:15:54 +0100
-Message-ID: <877bttpnqt.fsf@iotcl.com>
+	s=arc-20240116; t=1767791937; c=relaxed/simple;
+	bh=+aAFaYzp654xYrSlkdnJOn6VZZMHPTJk9HaofBuSFew=;
+	h=To:Subject:MIME-Version:Content-Type:From:Message-ID:Date; b=ixQEnZMSgRKdI3UQEf5cF/sqUSR0xzauIDVk1P6HkJ9BpiyKjHLaS7oNGv3ZAypMbFnLRKjbtZ9Vpug3cMK+d+VVSvFp28VT9AL4O4WnhD21bqqvml0uAiTT2BgRa8CxMFM7oMUg1UNKHh67Whjvu3kS4SKzkKo798NsKVuK/Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ns3.anscomputer.be; spf=none smtp.mailfrom=ns3.anscomputer.be; arc=none smtp.client-ip=37.19.10.82
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ns3.anscomputer.be
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ns3.anscomputer.be
+Received: by ns3.anscomputer.be (Postfix, from userid 1021)
+	id 017B661D2950; Wed,  7 Jan 2026 14:18:48 +0100 (CET)
+To: git@vger.kernel.org
+Subject: =?UTF-8?B?UHJvamVjdCBGaW5hbmNpbmcgT3Bwb3J0dW5pdHk=?=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+From: SAUDI INVESTORS GROUP <fewassm@ns3.anscomputer.be>
+Reply-To: office.rasheedfaisal@gmail.com
+Message-ID: <03fc3ddfbebb2065715d63debe182606@ns3.anscomputer.be>
+Date: Wed, 07 Jan 2026 13:18:47 +0000
+X-Mailer: PHP/8.3.27
+X-Priority: 3
+Precedence: bulk
 
-Patrick Steinhardt <ps@pks.im> writes:
+Assalamu Alaikum,
 
-> When calling `packfile_store_prepare()` we prepare not only the provided
-> packfile store, but also all those of all other sources part of the same
-> object database. This was required when the store was still sitting on
-> the object database level. But now that it sits on the source level it's
-> not anymore.
->
-> Refactor the code so that we only prepare the single packfile store
-> passed by the caller. Adapt callers accordingly.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/grep.c | 14 ++++++++------
->  packfile.c     | 19 +++++--------------
->  2 files changed, 13 insertions(+), 20 deletions(-)
->
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 4855b871dd..5b8b87b1ac 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -1213,12 +1213,14 @@ int cmd_grep(int argc,
->  		 */
->  		if (recurse_submodules)
->  			repo_read_gitmodules(the_repository, 1);
-> -		/*
-> -		 * Note: `packfile_store_prepare()` prepares stores from all
-> -		 * sources. This will be fixed in a subsequent commit.
-> -		 */
-> -		if (startup_info->have_repository)
-> -			packfile_store_prepare(the_repository->objects->sources->packfiles);
-> +
-> +		if (startup_info->have_repository) {
-> +			struct odb_source *source;
-> +
-> +			odb_prepare_alternates(the_repository->objects);
-> +			for (source = the_repository->objects->sources; source; source = source->next)
-> +				packfile_store_prepare(source->packfiles);
-> +		}
+My name is Rasheed Faisal. I represent a group of loan funding investors based in Saudi Arabia.
 
-Ahha, I see what you mean in the previous commit now. Sorry, my mistake.
+We would like to know if you are currently seeking financing for a project. If so, please share the required funding amount and your preferred loan tenure. I will review the details with our investor group and get back to you as soon as possible.
 
--- 
-Cheers,
-Toon
+Thank you for your time, and I look forward to hearing from you.
+
+Kind regards,
+Rasheed Faisal
+Email. office.rasheedfaisal@gmail.com
+
