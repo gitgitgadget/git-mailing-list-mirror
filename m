@@ -1,101 +1,187 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473A2313E32
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 11:35:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767785724; cv=pass; b=ghLk/mTr7n/uxKZoTHScVHlYwUSAsj6u7yBg5jk9bs/C0GMF2bA1utIMwceck0gUHaPlODE0KTPMXCCz6pJ3LcvueNISDa0K8prE3vxQpfKxjG2YtnJF3I+TeVrY9jb91K3FhN7OvWf6zm46P+pCVBtKq5LV9mb4O9uSdp3vGzE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767785724; c=relaxed/simple;
-	bh=GW4P3WJbfUukyGsM3mlIlIfOdsbpbJJ/dyq7mLkv7WE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PX17RLMmvhgMm/QbSckKnZO+Ohc6MQLwQder1TDCRtl+JdMB8dc56sf1wlATAKvLWcC68g0VdBXboQGxWdnmRIqG99TCtfl+7Awlnv49FpjMWH5bARnPlCuJ81mmaus9ExPbraszujapIWZ/lwW6WkYeZt5fXOeb4hcCeB4ETNE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=dWiubnQZ; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB7E30497C
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 11:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767786184; cv=none; b=VZXOg7/ge+Zy7z5xYVaW40NOf/0l7N/zwuSrztQuzQfoz37vSbwvgtMjbX3YJA1bU4bngwMA7aeP+zPBzx4Qn298FRB1AR3Wpwut35K58DpK73KiWcO23L3haCE3GwVOjj9x5HOm5C9iuxPyutt/mPG/YS7VuQC08Z76dYOOykk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767786184; c=relaxed/simple;
+	bh=PH+NuRm3FMsavaOBwYO0PUHBI2Tt/G9cWyTBwGwCcLU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gvFbTiyOfEHTd2POnnjvETj2Rq38ci9KN7R8hEddd0Mp4EeA4ZSxgFZ/yIhHQ5fHDTLSJ3yaceY8KWx9WTXVY60qQ/zB8sUw++CTNs2Llnauvp/2QaSTfPFeK3VkOqigefrsd6HgaeaN/C0E8NgQOWQsrf8UAKRJGYCllqJu7yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XkunrYjT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EvP25I1v; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="dWiubnQZ"
-ARC-Seal: i=1; a=rsa-sha256; t=1767785705; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=jFToZmCvIlBeepjQvP99Zfts/Bn0L8WGkMtuDHC45Ae186aLQkZdkygelWOoMI5vOjjeSlCg/yXPQxxbPx1ySi18TTMN0oILxXK+12+/C/54E4qpIaiXztBqZSIuOKh6JnBlWy5Gy3Or6hGkWfZZ5reOzmZEo2BxAMsmApuyRtw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1767785705; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=RpUioM4gt+wE54IdxYohlf2zIBeLu3LXi8MIwwbAdM4=; 
-	b=U4Zjzmx500A1Jux4y5j+u3wB3mscZQG6q+ajQEc840wOW9+iG2KZdejr7wLlGY3+5Jjd1VUKhH5QNvtmnEDdkCLYcZOJPuwGiNF5qtE7Xjy7hzjRNt7ohUCO/JAPd9Q61CeDxrCbq/tt8lYQu4s3H9RefGW5fv8pVcN1Uw3DMPg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767785705;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=RpUioM4gt+wE54IdxYohlf2zIBeLu3LXi8MIwwbAdM4=;
-	b=dWiubnQZx+JrHvvOHUNtEO8Go9Jwcy8Ja/8ZD1ijP/1Rqu2Mxwd3m+uyvcRw+QyC
-	wlSGASoByTywpOHNCFCJCEzj3IMZOHTupVTkDSSfMDBwrx0ikKgaiHDi3khRKuptuGa
-	XrAw8gC3zvkgeSJ+CJhOfl20zs4CrzVSViMn0F0w=
-Received: by mx.zohomail.com with SMTPS id 1767785703696208.63571030455194;
-	Wed, 7 Jan 2026 03:35:03 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Emily Shaffer
- <emilyshaffer@google.com>
-Subject: Re: [PATCH v2] ws: add new tab-between-non-ws check
-In-Reply-To: <xmqqsecii327.fsf@gitster.g>
-References: <20260107013051.312291-1-adrian.ratiu@collabora.com>
- <xmqqsecii327.fsf@gitster.g>
-Date: Wed, 07 Jan 2026 13:34:59 +0200
-Message-ID: <87a4ypirks.fsf@gentoo.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XkunrYjT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EvP25I1v"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7035BEC0064;
+	Wed,  7 Jan 2026 06:43:01 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 07 Jan 2026 06:43:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767786181;
+	 x=1767872581; bh=W/bwMOxZ0793i2psDZNWr61KIicl+HQF8RZp05QV8rk=; b=
+	XkunrYjTJryfUw2hrBBlaMoMQXzWoFGcYLTrKSYcPb0MeAny/x8weW7p8i/jFWLn
+	O+sc9eepquInE2AtcTWbD1unSMvvtVBN4NQda85L+MruWs/LnUjBaMvR0UXpxaH7
+	zzIrbktaF9yW9l1pqRWfReae4Gxz1aF+ZvoLF2A85x4kjNG1KibOlbUPoSuM4f2J
+	IE2ZLZ0YNW9dCiJMCXehPUWmnuPnaDtIkJ50uJ+xd5o4Gd+5AIcSvgJVYoIIJ2X9
+	NJYWPiW+zdFUnQG/TsPwSYugwUp487kAr5007XKfwsXrQopEvtIA1Cz03tokS1OM
+	jwy54lzlX7c7kY6Oo/tayg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767786181; x=
+	1767872581; bh=W/bwMOxZ0793i2psDZNWr61KIicl+HQF8RZp05QV8rk=; b=E
+	vP25I1veBHXFjZ8qrK7omRKRzavxQUtaFeaIQuW2NsnDZlKzMMm6KJ/q4JVhfwH6
+	yvZ0SeYWh6NgBniA5Sy6LFhUvcVxTODNTVpkEcqttEWjUO6tA2QA4/nN3OLQWG/y
+	sqswJsQg5LB9HLq3yx4qI8jmuPMTMXjBif3a8UFxoD/44uTrKYHj8YhssWWAb0Kb
+	qgo0voGpaFvYzcOGJfV0f8CCTdewWGbBNAP3JmOHF7NDwVNGoy6rOvJFGR+azLwL
+	/u5mnIOsZKi81tUddrPmu+g+Yp14orNMjoQGGwAk/WggDHAxiuayLhIkhxQXiI5w
+	nrc7f231/wmnIdUCQbkjw==
+X-ME-Sender: <xms:xUZeabKYjYz9xU65Sw3p5eOa-0uHbccGziCinSAoTu8nQ9HOdXvUPw>
+    <xme:xUZeaWKwwJL4NMDo04HLiMwFfSSZwxdeVC-0gkEPIUqt6xmFL3KFrgvyeLBiC8hXn
+    Y1MmLW4A-Zsh8-H0ug2qd6u1e_ipd3xkzm8FjIZmagkiHrmFVuR>
+X-ME-Received: <xmr:xUZeaYszxZ4g4jFYs2yskxv5vZ4C3it0qdxrXv3MX3HtB7q-XWBlfoEZN3mzfZiCVUGZxVaJIpkLg2YgminqU7KI2oBIHm4jGJTRZhE1UO8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehmfhhitghksehnvhhiughirgdrtghomhdprhgtphhtthhopehsrghnuggrlhhsse
+    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:xUZeaTTiia3hq0iTtpBlontaTi1OD0VSmFU18e3r7JDX-398R4WdFQ>
+    <xmx:xUZeaeM9IRLnOF9IePzIIft7g1MFFaUk1-6MBlXtQ5hs1zCr1rePtA>
+    <xmx:xUZeaYaZm8tN-XJZIYzyoUDO96BySjZInAH5fokl001LIK4vFAB14Q>
+    <xmx:xUZeaYzVocDHmS6ob-YM-M94yFlFn7ikug2aEqu4OtTLYeo7PIlPaQ>
+    <xmx:xUZeaWrh2R70t6GMdf4mOrZ9uKe2UUo1BWs5xgfb8ru61duaeuSXOS61>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Jan 2026 06:43:00 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f4ef591c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Jan 2026 11:42:58 +0000 (UTC)
+Date: Wed, 7 Jan 2026 12:42:56 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Martin Fick <mfick@nvidia.com>
+Cc: Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Slow git pack-refs --all
+Message-ID: <aV5GwOS_N2jyIFaz@pks.im>
+References: <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
+ <20251226044507.GA1971832@coredump.intra.peff.net>
+ <CH3PR12MB9026DFCF7AF4ED1A249B16A5C2BDA@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <20260102074901.GD2581074@coredump.intra.peff.net>
+ <CH3PR12MB90260C4887067C88629BBE52C286A@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <aVyxbqk-2QQIgDXK@pks.im>
+ <CH3PR12MB9026F1E4B99D32E138800EEBC287A@CH3PR12MB9026.namprd12.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CH3PR12MB9026F1E4B99D32E138800EEBC287A@CH3PR12MB9026.namprd12.prod.outlook.com>
 
-On Wed, 07 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->
->> The check is a bit complex because we want to detect places where
->> a SP was intended (HT can expand to more than one display column),
->> so we need to count both the display columns (col) and the string
->> character columns (i) to determine if a HT looks identical to a SP
->> or can cause confusion.
->>
->> +/....adoc text eol=lf whitespace=trail,space,incomplete,tab-between-non-ws
->
-> The name of the whitespace rule does not quite match what we want to
-> catch.  Can somebody find a phrasing than "between non-ws" that
-> conveys our intent better?  We want to catch a tab that is used by
-> mistsake when the writer would have used a space, and "between
-> non-ws" is one of the heuristics (another is "it is at the 7th
-> column to make it indistinguishable from a space") the code uses to
-> tell if a tab is such a mistaken tab.   "tab-instead-of-space"?
-> "tab-in-place-of-space"?  "tab-that-should-have-been-a-space"?
->
-> The last one is horrible and not a serious suggestion, of course.
+On Tue, Jan 06, 2026 at 11:02:19PM +0000, Martin Fick wrote:
+> > From: Patrick Steinhardt <ps@pks.im> Sent: Monday, January 5, 2026 11:53 PM
+> > On Mon, Jan 05, 2026 at 11:45:41PM +0000, Martin Fick wrote:
+> > > OK, after discovering the strace -r and -T options, I have determined that
+> > > the 29K writes were all very fast in themselves. However, most of the
+> > > writes seem to follow each other with no other system calls in between.
+> > > This explains why it looks like the writes are slow, even though they aren't.
+> > >
+> > > If I tally up the time between the previous system call, and each write(),
+> > > it adds up to the bulk of the time (4mins out of 4m15s) that it takes to
+> > > pack refs. This tells me that no visible I/O or system calls are the problem,
+> > > but rather that the program itself is taking a long time between writes.
+> > > I very much doubt that this is heavy CPU time, but rather I am going to
+> > > guess that this is hidden system time spent accessing mmaped memory.
+> > > Could it be really slow reading the packed-refs file? I can see the
+> > > packed-refs file is mmaped() before the writes start, and then
+> > > munmapped after the writes are completed. If I had to guess, that likely
+> > > means that the packed-refs file is being read in small increments by the
+> > > kernel via mmap, and that is what is making things very slow over NFS.
+> > 
+> > I wouldn't be surprised if NFS was the culprit. At GitLab we found it to
+> > be a constant source of issues, which is why we eventually sunsetted the
+> > use of it completely. Do you use any special flags for mounting the NFS
+> > filesystem?
+> 
+> I am open to alternatives to NFS. Do you know of any NFS alternatives that 
+> provides instantaneous replication to potentially hundreds of mirrors? I 
+> have used Gerrit and git-daemon for many years on NFS, and it generally 
+> has performed very well for us, and it solves many real performance issues 
+> which I have yet to find a viable alternative able to even come close to
+> matching. NFS with all it warts it is for us (and likely will be for many) until 
+> there is a viable enterprise ready alternative with low (zero) replication 
+> latency and high throughput.
 
-I like "tab-instead-of-space". :)
+Yeah, agreed, NFS can get you a long way, until you eventually start to
+hit some road blocks once you reach a certain scale. Unfortunately
+though, there isn't really a ready-made alternative solution that serves
+your needs, or at least none that I know of. That's why GitLab
+eventually settled on Gitaly Cluster with Praefect handling replication,
+and why GitHub has its Spokes architecture that does basically the same
+thing.
 
-Will wait some time in case others have suggestions and if we can't come
-up with something better, then I will use "tab-instead-of-space" in v3.
+> That being said, NFS can cause many issues. In this case, I would say that
+> something is particularly "broken" here with git, and I believe that it
+> would be helpful to the git community to be aware of this fairly specific 
+> broken case which clearly has a lot of room for improvement (as seen
+> by the fact that jgit, in java, can do essentially the same thing more 
+> than 10Xs faster). While I have been mostly assuming that this is a 
+> particularly specific bad case since git daemon generally is fast for most
+> users, this might actually be something that if improved would greatly 
+> improve many parts of git (not just this use case).
 
->> +test_expect_success 'check tab between non-whitespace (tab-between-non-ws: off)' '
->> +	git config core.whitespace "-tab-between-non-ws" &&
->> +
->> +	printf "1234567\tb" >x &&
->
-> I notice all these printf create incomplete lines.  It is true that
-> the detection of a tab that is used when it should have been a space
-> should work even on an incomplete line, but using an incomplete
-> line, which is of course rather unusual, for these tests gives a
-> false impression that somehow this requires an incomplete line to
-> trigger, which is not what we want to give.
->
-> 	printf "1234567\tb\n" > x &&
->
-> or something, perhaps?  I dunno.
+Chances are that if we can improve the case for NFS, other filesystems
+might benefit, as well. So if this is something that we can improve I
+agree that we should. It's too early to tell though, as we don't really
+know what the actual root cause is just yet.
 
-That is a good idea. Will fix in v3. Thanks!
+> It would be nice to improve git to not hold the packed-refs.lock so long 
+> to avoid this blocking behavior on servers. Of course, to be fair, this 
+> likely only blocks Gerrit servers since Gerrit uses the packed-refs file to 
+> perform atomic updates for many things, and most other servers use 
+> loose refs instead. It would be great if git were optimized to avoid any 
+> unnecessary reads while the lock is held.  In theory, almost all of the 
+> data that git needs to read here (including tags for peeling) could be 
+> read before acquiring the lock, and it would only need to double 
+> check certain reads after it acquires the lock in case things changed. 
+> That wouldn't make git pack-refs faster, but it would drastically 
+> reduce the impact of any problematic I/O by not holding the lock for 
+> almost the entire operation.
+
+It can probably be improved, true. I think that it's a bit of a wasted
+effort, as I'd rather invest the time into improving reftables as a more
+future-proof solution. But as you are well aware I'm quite biased here,
+and I'd welcome any efforts to also improve the files backend. I am just
+unlikely to work on it myself :)
+
+> > Did you try using perf(1) to profile the process and generate a flame
+> > graph from it? That should likely make it immediately obvious where Git
+> > is spending all of its time.
+> 
+> I will pursue this. Unfortunately this might be difficult on this 
+> particular server.
+
+True, on the server side this can be a bit tricky.
+
+Patrick
