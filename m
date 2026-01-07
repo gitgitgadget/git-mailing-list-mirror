@@ -1,85 +1,85 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B4B31283B
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 10:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBF2311959
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 10:10:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767780635; cv=none; b=Lgjqh7FAe922Oj8X3r/m/a2FVZN8+DHQzF8xpKdOeTqtl8+G8aqIiXo9eHarn+cAJ+d4RgxfVagVm/mLcGVFcDMOTYSxbfpjnMu/ddGbqiJPIN+GTCvcGqfPsohGZgkkmNkzQRpIiPuocpBncQhQMtccg2HIHLSzouNBknQLE54=
+	t=1767780640; cv=none; b=Cxnrgnwm0/NRP1vZxWzLhCV4V5Qj82u8OY1taBt7f0SKEyMI7vBmKOadyczO6FpsHl9ZI+KshqWb1YhhsJ+mnNE4oqmec7WC155EmXjNyXs4qD9WlCxsd/XTGqpgWiS14/HZ9PT/GbzT9H8CznfHZij8/JyIiwl9EBtyQYgeklU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767780635; c=relaxed/simple;
-	bh=YR2PAvQMR++i7VfmSgDIBwcYfc0OElNikVVvBLHRIDk=;
+	s=arc-20240116; t=1767780640; c=relaxed/simple;
+	bh=vph2Z6NMksv3zoBWHM8gv8xBcJU/HMblZhnAE/Oebq8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WjwoCCefI2nfyiVD/tSNMOittWli4on+ZKx/6R2gYFklxeLJHVDCy5e652oGq6yyjS9dlWb6eTxeQetEugzW9w6rNcCnXPl0ZXJpYUUDG0TS6GZSrbjzmYhe0ex3Rf13hRFEuiV0l6b/eQw+uDJNp+HY4rP/Xj8IIMx7SwAVZW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bhw5cfoB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s1uS9l9Q; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=Cu0fxx2YH9Fc6F1Pmsa8SzKEWfxia1yGLVGCV8SP+1wCKQjFdJ2pqI2xMVRwP9Ng3yWGhLXkEDHI144nKVSEsv3eWEjCnNq3gQK7H1cvCShKhqZAs0fqX2pE6cGGPlJ5luC1027oNJLKha4SRqfqt5DIGWcUz4e+uKlVrFRhWIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P0HT1159; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HGUar/tG; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bhw5cfoB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s1uS9l9Q"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id EEFADEC0243;
-	Wed,  7 Jan 2026 05:10:32 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P0HT1159";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HGUar/tG"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E6B99140016C;
+	Wed,  7 Jan 2026 05:10:35 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 07 Jan 2026 05:10:32 -0500
+  by phl-compute-06.internal (MEProxy); Wed, 07 Jan 2026 05:10:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767780632;
-	 x=1767867032; bh=LPCPElZszsYb4YA47nu8dcyMQn8GXqniw9CUgc6a5WA=; b=
-	Bhw5cfoBwmyhedbu0Q6iYaAaxOXQgJGymTWes+Byrl4SSlQb12aX0IMEoGi39rRg
-	d0yNGyZZnLkjw/duQqZWhc7KdQfP4TLs8CJ6VYCBBI6UHKKHKrq2itozUWP+TToc
-	lVpubKYrt5R0egnt2xMCcQmAdKJrO70NR2ACx/fvJde/FGVIUDeFWNkicyjh4p4T
-	+GnGTxLBAQBdMKo9V14Wc/QCsmLdccSvTp+7TxyeKHezURbH0QhYKKCp1KKuK6g5
-	ap/w1ZCKeDABT0Yzhc7+zcK43x/dD7ZNU/PGC0fNvoJIM7UhhPFbzADDNvbd/Kml
-	xcf1wOl0x6LyLJ8f/rWDmQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767780635;
+	 x=1767867035; bh=SjpT4BP10OJY5hHwybabvT0IQZZfxYsufPv7jSc0jzM=; b=
+	P0HT1159BLMx1Vf2WKQxTDAkAlryBHf5GPawIJUySBve1+Nl2jXF/98LvANuMdLk
+	h1rhP6nKGZzfYrmLuZcHyKfHccJwplEEQJ2OqfVcnFCTnQoNHBt9YXhyWf5MQfLq
+	Yxa7WEvySm2VbQxDiwtBl2ZLXtx5ft+ZuAt2K907cZrgc5VKYFTrjNhGXZ65QRVd
+	PAmu0mLpQ904ulk/4wB0Hjw459R/fwmV8YftT3/4XTf0Y2w+pjPd5AjLzVgePAk/
+	OAHR0VY6O5zWr95vEa/bTSuJXWVtn53WIb3VOfinq0Y/ycBSPtlSJjAnyvCfCNJu
+	gAM7cXB2C2EHH/9cI7vF3A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767780632; x=
-	1767867032; bh=LPCPElZszsYb4YA47nu8dcyMQn8GXqniw9CUgc6a5WA=; b=s
-	1uS9l9Qul1nvWpgm3jERaGnhCXpYw987rUwAtxyMzegcsSzK2GqydarHzJntA7m4
-	W56o+6bFLtP8ItQBfghvX9fjIeLZWuaBNUWV+hWL3kiW/D69jCFR6GekRTg+Fnwv
-	DXCqpjBht31EW/Zhx4xC0bpW2Mtq52UKbE43ttlL+bsa6+Vppm9mpgUwRi5UabT1
-	4E8jOXia30/hCdt+eQoYd6/j2CpnjZb62yCcAhma58fQrce4DYUJ6kuvdai2EE8N
-	4LhxVtGp0zt2uTWBRYq70tXLM23yCm/tuxFhncvs2PbAo1ActjrmZlGDxcsX/EWV
-	p1s0KVQs7FMLO0DLP7ncg==
-X-ME-Sender: <xms:GDFeaVWif33hI5b8kqnQPKyHqTmoBJju02EjR-oE8CUrtqJK54wheQ>
-    <xme:GDFeaRbnvTSPB3PHWHLZ1_iEEtf0EYqPEw-ZkAny2suiVsMv-7O_CF8DnSqddvhGo
-    ENQu3yzs1OTiixhdSg3vLl4eyHbxikRy0K_a1I6Vx0nNqOEktq_>
-X-ME-Received: <xmr:GDFeacxhEvdUFtSP9Zx1CWK6hokHfsRaEUzlSQZaz1jmWaK0kWVcrCrbXYhGUudtB8UzxCo7zDGq3QfThS9wr3rgWccn5XI4r0nUD68wReM>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767780635; x=
+	1767867035; bh=SjpT4BP10OJY5hHwybabvT0IQZZfxYsufPv7jSc0jzM=; b=H
+	GUar/tGjOekHF9NVU/weWrbSs0l+DIXAlczAtLmE5PF8XN8fEF8toSJoKYrvodbz
+	CTuIBvjBf6GwtjVy9oJOO8Bw+EZZWV3vHhrlfPOZByccf2kfv7xZTG8LxxRAH8it
+	wKDEmcSgu44B72TpOMq/kyHnm598RaKgh8OtKIInwTxLFi4j/0ibyBcyEDZ6VLOW
+	QrC6f8s4x/IBVKKAMIQRJo0dcdelsSW5vkN2nxPAnm/QVo57JP1NkpMlpf+3aT1v
+	7fhWv/Lemk4L4LIO3SOxT8miJup1U0KMQKdSstggTvddKFbeBo40a4ydVU+JSC+t
+	onZDPtdjLLi9ZIaxVsvKA==
+X-ME-Sender: <xms:GzFeaQMFukGPAjbG4V3bb0Ufu36HK8JeTMUrKNwG4Y9YWVQg-zx7oQ>
+    <xme:GzFeaSw_qhI1Swt8rjhxEzUEXSJVLwZFJD-u1d7CTym60z1ywhLptmx9JuXLOdHGx
+    CqPypg6P_5q2OW28fV-bS-mbCHKVVlKrxoo0DwyGwfRzhMG-NQOclw>
+X-ME-Received: <xmr:GzFeaSqnHxRaYDdTtR8SEADR-mYFT32Ta2Ybb1v2oZlYYcSpSN40YSkABQfYfpXfMaoWpqA-zGn2bx8_pNWZwt0CJCcsdhdPcKhYdT5OUfc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvjeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpeegnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrihhlsegs
-    vgihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrg
-    hughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhho
-    sghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:GDFeaR0pb_mSa2u7g7X0-Y8lNZp2EYciJIt-6UlN9XoJFwHA7QQdSw>
-    <xmx:GDFeadkli2Y22_wypud3NI-2Jbf--iJFU52YXKIV0-lVAgLp7iBQhQ>
-    <xmx:GDFeaQ_lSuoUlh1t6_LnZDLy0GisORtF1K0hENc_mfmue4nCySpYKQ>
-    <xmx:GDFeaTIPHAGGQ2wJZZ4QqdYQ6pd4BiUDsf6j4HnN8q9ioh65FA872Q>
-    <xmx:GDFeaUVXj7iGnyedna1qcsZqVnN-PEzrm7vT957meggPZEN9ztnAC52l>
+    thhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhh
+    ihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsohhrgh
+    grnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehmrghilhessggvhigvrhhmrght
+    thhhihgrshdruggvpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgr
+    rhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:GzFeaSMmELtH91jIJ1Q62ZW2eMqOyDWp-wZlCjpYC3g-tZMjJBf4Nw>
+    <xmx:GzFeaWdF8vDbj7sGa4J0K0AWq5Q4jXebIJX2ZWrLEcqOAKTWZ3zc4g>
+    <xmx:GzFeaYXodLmaxBuYkGGlXxNNKmPVsq7btC4_2_l2MUGCcygpK0zfPw>
+    <xmx:GzFeaXCM43ncjhtesfa3GqgEwDtVIpqWhgvICLqEpoC91iUQpu6Tvg>
+    <xmx:GzFeaZNX6ao7LI3OV50slM4TDSHbQkmK-rV0mLuksYSxCkjGlbhAa1wy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Jan 2026 05:10:31 -0500 (EST)
+ 7 Jan 2026 05:10:34 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f472b50e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Jan 2026 10:10:30 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 18d86a71 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Jan 2026 10:10:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 07 Jan 2026 11:10:14 +0100
-Subject: [PATCH v8 6/7] builtin: add new "history" command
+Date: Wed, 07 Jan 2026 11:10:15 +0100
+Subject: [PATCH v8 7/7] builtin/history: implement "reword" subcommand
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260107-b4-pks-history-builtin-v8-6-18e9779e3a26@pks.im>
+Message-Id: <20260107-b4-pks-history-builtin-v8-7-18e9779e3a26@pks.im>
 References: <20260107-b4-pks-history-builtin-v8-0-18e9779e3a26@pks.im>
 In-Reply-To: <20260107-b4-pks-history-builtin-v8-0-18e9779e3a26@pks.im>
 To: git@vger.kernel.org
@@ -103,258 +103,902 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Matthias Beyer <mail@beyermatthias.de>
 X-Mailer: b4 0.14.3
 
-When rewriting history via git-rebase(1) there are a few very common use
-cases:
+Implement a new "reword" subcommand for git-history(1). This subcommand
+is similar to the user performing an interactive rebase with a single
+commit changed to use the "reword" instruction.
 
-  - The ordering of two commits should be reversed.
+The "reword" subcommand is built on top of the replay subsystem
+instead of the sequencer. This leads to some major differences compared
+to git-rebase(1):
 
-  - A commit should be split up into two commits.
+  - We do not check out the commit that is to be reworded and instead
+    perform the operation in-memory. This has the obvious benefit of
+    being significantly faster compared to git-rebase(1), but even more
+    importantly it allows the user to rewrite history even if there are
+    local changes in the working tree or in the index.
 
-  - A commit should be dropped from the history completely.
+  - We do not execute any hooks, even though we leave some room for
+    changing this in the future.
 
-  - Multiple commits should be squashed into one.
-
-  - Editing an existing commit that is not the tip of the current
-    branch.
-
-While these operations are all doable, it often feels needlessly kludgey
-to do so by doing an interactive rebase, using the editor to say what
-one wants, and then perform the actions. Also, some operations like
-splitting up a commit into two are way more involved than that and
-require a whole series of commands.
-
-Another problem that rebases have is that dependent branches are not
-being updated. The use of stacked branches has grown quite common with
-competiting version control systems like Jujutsu though, so it clearly
-is a need that users have. While rebases _can_ serve this use case if
-one always works on the latest stacked branch, it is somewhat awkward
-and very easy to get wrong.
-
-Add a new "history" command to plug these gaps. This command will have
-several different subcommands to imperatively rewrite history for common
-use cases like the above.
+  - By default, all local branches that contain the commit will be
+    rewritten. This especially helps with workflows that use stacked
+    branches.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .gitignore                     |  1 +
- Documentation/git-history.adoc | 56 ++++++++++++++++++++++++++++++++++++++++++
- Documentation/meson.build      |  1 +
- Makefile                       |  1 +
- builtin.h                      |  1 +
- builtin/history.c              | 22 +++++++++++++++++
- command-list.txt               |  1 +
- git.c                          |  1 +
- meson.build                    |  1 +
- t/meson.build                  |  1 +
- t/t3450-history.sh             | 17 +++++++++++++
- 11 files changed, 103 insertions(+)
+ Documentation/git-history.adoc |  23 ++-
+ builtin/history.c              | 392 ++++++++++++++++++++++++++++++++++++++++-
+ replay.c                       |   5 +-
+ t/meson.build                  |   1 +
+ t/t3450-history.sh             |   6 +-
+ t/t3451-history-reword.sh      | 344 ++++++++++++++++++++++++++++++++++++
+ 6 files changed, 758 insertions(+), 13 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 78a45cb5be..24635cf2d6 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -79,6 +79,7 @@
- /git-grep
- /git-hash-object
- /git-help
-+/git-history
- /git-hook
- /git-http-backend
- /git-http-fetch
 diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-new file mode 100644
-index 0000000000..5a9d931efc
---- /dev/null
+index 5a9d931efc..4eea317e5c 100644
+--- a/Documentation/git-history.adoc
 +++ b/Documentation/git-history.adoc
-@@ -0,0 +1,56 @@
-+git-history(1)
-+==============
+@@ -8,7 +8,7 @@ git-history - EXPERIMENTAL: Rewrite history
+ SYNOPSIS
+ --------
+ [synopsis]
+-git history [<options>]
++git history reword <commit> [--ref-action=(branches|head|print)]
+ 
+ DESCRIPTION
+ -----------
+@@ -32,8 +32,9 @@ Overall, linkgit:git-history[1] aims to provide a more opinionated way to modify
+ your commit history that is simpler to use compared to linkgit:git-rebase[1] in
+ general.
+ 
+-If you want to reapply a range of commits onto a different base, or interactive
+-rebases if you want to edit a range of commits.
++Use linkgit:git-rebase[1] if you want to reapply a range of commits onto a
++different base, or interactive rebases if you want to edit a range of commits
++at once.
+ 
+ LIMITATIONS
+ -----------
+@@ -51,6 +52,22 @@ COMMANDS
+ 
+ Several commands are available to rewrite history in different ways:
+ 
++`reword <commit>`::
++	Rewrite the commit message of the specified commit. All the other
++	details of this commit remain unchanged. This command will spawn an
++	editor with the current message of that commit.
 +
-+NAME
-+----
-+git-history - EXPERIMENTAL: Rewrite history
++OPTIONS
++-------
 +
-+SYNOPSIS
-+--------
-+[synopsis]
-+git history [<options>]
++`--ref-action=(branches|head|print)`::
++	Control which references will be updated by the command, if any. With
++	`branches`, all local branches that point to commits which are
++	decendants of the original commit will be rewritten. With `head`, only
++	the current `HEAD` reference will be rewritten. With `print`, all
++	updates as they would be performed with `branches` are printed in a
++	format that can be consumed by linkgit:git-update-ref[1].
 +
-+DESCRIPTION
-+-----------
-+
-+Rewrite history by rearranging or modifying specific commits in the
-+history.
-+
-+THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-+
-+This command is related to linkgit:git-rebase[1] in that both commands can be
-+used to rewrite history. There are a couple of major differences though:
-+
-+* linkgit:git-history[1] can work in a bare repository as it does not need to
-+  touch either the index or the worktree.
-+* linkgit:git-history[1] does not execute any linkgit:githooks[5] at the
-+  current point in time. This may change in the future.
-+* linkgit:git-history[1] by default updates all branches that are descendants
-+  of the original commit to point to the rewritten commit.
-+
-+Overall, linkgit:git-history[1] aims to provide a more opinionated way to modify
-+your commit history that is simpler to use compared to linkgit:git-rebase[1] in
-+general.
-+
-+If you want to reapply a range of commits onto a different base, or interactive
-+rebases if you want to edit a range of commits.
-+
-+LIMITATIONS
-+-----------
-+
-+This command does not (yet) work with histories that contain merges. You
-+should use linkgit:git-rebase[1] with the `--rebase-merges` flag instead.
-+
-+Furthermore, the command does not support operations that can result in merge
-+conflicts. This limitation is by design as history rewrites are not intended to
-+be stateful operations. The limitation can be lifted once (if) Git learns about
-+first-class conflicts.
-+
-+COMMANDS
-+--------
-+
-+Several commands are available to rewrite history in different ways:
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index f02dbc20cb..fd2e8cc02d 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -64,6 +64,7 @@ manpages = {
-   'git-gui.adoc' : 1,
-   'git-hash-object.adoc' : 1,
-   'git-help.adoc' : 1,
-+  'git-history.adoc' : 1,
-   'git-hook.adoc' : 1,
-   'git-http-backend.adoc' : 1,
-   'git-http-fetch.adoc' : 1,
-diff --git a/Makefile b/Makefile
-index 1c64a5d2ae..c0569ed8e4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1418,6 +1418,7 @@ BUILTIN_OBJS += builtin/get-tar-commit-id.o
- BUILTIN_OBJS += builtin/grep.o
- BUILTIN_OBJS += builtin/hash-object.o
- BUILTIN_OBJS += builtin/help.o
-+BUILTIN_OBJS += builtin/history.o
- BUILTIN_OBJS += builtin/hook.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
-diff --git a/builtin.h b/builtin.h
-index 1b35565fbd..93c91d07d4 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -172,6 +172,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix, struc
- int cmd_grep(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_hash_object(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_help(int argc, const char **argv, const char *prefix, struct repository *repo);
-+int cmd_history(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_hook(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_index_pack(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_init_db(int argc, const char **argv, const char *prefix, struct repository *repo);
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/history.c b/builtin/history.c
-new file mode 100644
-index 0000000000..f6fe32610b
---- /dev/null
+index f6fe32610b..59011ea517 100644
+--- a/builtin/history.c
 +++ b/builtin/history.c
-@@ -0,0 +1,22 @@
-+#include "builtin.h"
-+#include "gettext.h"
-+#include "parse-options.h"
+@@ -1,22 +1,404 @@
++#define USE_THE_REPOSITORY_VARIABLE
 +
-+int cmd_history(int argc,
-+		const char **argv,
-+		const char *prefix,
-+		struct repository *repo UNUSED)
+ #include "builtin.h"
++#include "commit.h"
++#include "commit-reach.h"
++#include "config.h"
++#include "editor.h"
++#include "environment.h"
+ #include "gettext.h"
++#include "hex.h"
+ #include "parse-options.h"
++#include "refs.h"
++#include "replay.h"
++#include "revision.h"
++#include "sequencer.h"
++#include "strvec.h"
++#include "tree.h"
++#include "wt-status.h"
++
++#define GIT_HISTORY_REWORD_USAGE \
++	N_("git history reword <commit> [--ref-action=(branches|head|print)]")
++
++static void change_data_free(void *util, const char *str UNUSED)
 +{
-+	const char * const usage[] = {
-+		N_("git history [<options>]"),
-+		NULL,
-+	};
-+	struct option options[] = {
-+		OPT_END(),
-+	};
++	struct wt_status_change_data *d = util;
++	free(d->rename_source);
++	free(d);
++}
 +
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	if (argc)
-+		usagef("unrecognized argument: %s", argv[0]);
++static int fill_commit_message(struct repository *repo,
++			       const struct object_id *old_tree,
++			       const struct object_id *new_tree,
++			       const char *default_message,
++			       const char *action,
++			       struct strbuf *out)
++{
++	const char *path = git_path_commit_editmsg();
++	const char *hint =
++		_("Please enter the commit message for the %s changes."
++		  " Lines starting\nwith '%s' will be ignored, and an"
++		  " empty message aborts the commit.\n");
++	struct wt_status s;
++
++	strbuf_addstr(out, default_message);
++	strbuf_addch(out, '\n');
++	strbuf_commented_addf(out, comment_line_str, hint, action, comment_line_str);
++	write_file_buf(path, out->buf, out->len);
++
++	wt_status_prepare(repo, &s);
++	FREE_AND_NULL(s.branch);
++	s.ahead_behind_flags = AHEAD_BEHIND_QUICK;
++	s.commit_template = 1;
++	s.colopts = 0;
++	s.display_comment_prefix = 1;
++	s.hints = 0;
++	s.use_color = 0;
++	s.whence = FROM_COMMIT;
++	s.committable = 1;
++
++	s.fp = fopen(git_path_commit_editmsg(), "a");
++	if (!s.fp)
++		return error_errno(_("could not open '%s'"), git_path_commit_editmsg());
++
++	wt_status_collect_changes_trees(&s, old_tree, new_tree);
++	wt_status_print(&s);
++	wt_status_collect_free_buffers(&s);
++	string_list_clear_func(&s.change, change_data_free);
++
++	strbuf_reset(out);
++	if (launch_editor(path, out, NULL)) {
++		fprintf(stderr, _("Aborting commit as launching the editor failed.\n"));
++		return -1;
++	}
++	strbuf_stripspace(out, comment_line_str);
++
++	cleanup_message(out, COMMIT_MSG_CLEANUP_ALL, 0);
++
++	if (!out->len) {
++		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
++		return -1;
++	}
++
 +	return 0;
 +}
-diff --git a/command-list.txt b/command-list.txt
-index accd3d0c4b..f9005cf459 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -115,6 +115,7 @@ git-grep                                mainporcelain           info
- git-gui                                 mainporcelain
- git-hash-object                         plumbingmanipulators
- git-help                                ancillaryinterrogators          complete
-+git-history                             mainporcelain           history
- git-hook                                purehelpers
- git-http-backend                        synchingrepositories
- git-http-fetch                          synchelpers
-diff --git a/git.c b/git.c
-index c5fad56813..744cb6527e 100644
---- a/git.c
-+++ b/git.c
-@@ -586,6 +586,7 @@ static struct cmd_struct commands[] = {
- 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
- 	{ "hash-object", cmd_hash_object },
- 	{ "help", cmd_help },
-+	{ "history", cmd_history, RUN_SETUP },
- 	{ "hook", cmd_hook, RUN_SETUP },
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "init", cmd_init_db },
-diff --git a/meson.build b/meson.build
-index a5a4e99b25..3a1d12caa4 100644
---- a/meson.build
-+++ b/meson.build
-@@ -610,6 +610,7 @@ builtin_sources = [
-   'builtin/grep.c',
-   'builtin/hash-object.c',
-   'builtin/help.c',
-+  'builtin/history.c',
-   'builtin/hook.c',
-   'builtin/index-pack.c',
-   'builtin/init-db.c',
++
++static int commit_tree_with_edited_message(struct repository *repo,
++					   const char *action,
++					   struct commit *original,
++					   struct commit **out)
++{
++	const char *exclude_gpgsig[] = { "gpgsig", "gpgsig-sha256", NULL };
++	const char *original_message, *original_body, *ptr;
++	struct commit_extra_header *original_extra_headers = NULL;
++	struct strbuf commit_message = STRBUF_INIT;
++	struct object_id rewritten_commit_oid;
++	struct object_id original_tree_oid;
++	struct object_id parent_tree_oid;
++	char *original_author = NULL;
++	struct commit *parent;
++	size_t len;
++	int ret;
++
++	original_tree_oid = repo_get_commit_tree(repo, original)->object.oid;
++
++	parent = original->parents ? original->parents->item : NULL;
++	if (parent) {
++		if (repo_parse_commit(repo, parent)) {
++			ret = error(_("unable to parse parent commit %s"),
++				    oid_to_hex(&parent->object.oid));
++			goto out;
++		}
++
++		parent_tree_oid = repo_get_commit_tree(repo, parent)->object.oid;
++	} else {
++		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
++	}
++
++	/* We retain authorship of the original commit. */
++	original_message = repo_logmsg_reencode(repo, original, NULL, NULL);
++	ptr = find_commit_header(original_message, "author", &len);
++	if (ptr)
++		original_author = xmemdupz(ptr, len);
++	find_commit_subject(original_message, &original_body);
++
++	ret = fill_commit_message(repo, &parent_tree_oid, &original_tree_oid,
++				  original_body, action, &commit_message);
++	if (ret < 0)
++		goto out;
++
++	original_extra_headers = read_commit_extra_headers(original, exclude_gpgsig);
++
++	ret = commit_tree_extended(commit_message.buf, commit_message.len, &original_tree_oid,
++				   original->parents, &rewritten_commit_oid, original_author,
++				   NULL, NULL, original_extra_headers);
++	if (ret < 0)
++		goto out;
++
++	*out = lookup_commit_or_die(&rewritten_commit_oid, "rewritten commit");
++
++out:
++	free_commit_extra_headers(original_extra_headers);
++	strbuf_release(&commit_message);
++	free(original_author);
++	return ret;
++}
++
++enum ref_action {
++	REF_ACTION_DEFAULT,
++	REF_ACTION_BRANCHES,
++	REF_ACTION_HEAD,
++	REF_ACTION_PRINT,
++};
++
++static int parse_ref_action(const struct option *opt, const char *value, int unset)
++{
++	enum ref_action *action = opt->value;
++
++	BUG_ON_OPT_NEG_NOARG(unset, value);
++	if (!strcmp(value, "branches")) {
++		*action = REF_ACTION_BRANCHES;
++	} else if (!strcmp(value, "head")) {
++		*action = REF_ACTION_HEAD;
++	} else if (!strcmp(value, "print")) {
++		*action = REF_ACTION_PRINT;
++	} else {
++		return error(_("%s expects one of 'branches', 'head' or 'print'"),
++			     opt->long_name);
++	}
++
++	return 0;
++}
++
++static int handle_reference_updates(enum ref_action action,
++				    struct repository *repo,
++				    struct commit *original,
++				    struct commit *rewritten,
++				    const char *reflog_msg)
++{
++	const struct name_decoration *decoration;
++	struct replay_revisions_options opts = { 0 };
++	struct replay_ref_updates updates = {
++		.final_oid = rewritten->object.oid,
++	};
++	struct ref_transaction *transaction = NULL;
++	struct strvec args = STRVEC_INIT;
++	struct strbuf err = STRBUF_INIT;
++	struct commit *head = NULL;
++	struct rev_info revs;
++	char hex[GIT_MAX_HEXSZ + 1];
++	int ret;
++
++	repo_init_revisions(repo, &revs, NULL);
++	strvec_push(&args, "ignored");
++	strvec_push(&args, "--reverse");
++	strvec_push(&args, "--topo-order");
++	strvec_push(&args, "--full-history");
++
++	/* We only want to see commits that are descendants of the old commit. */
++	strvec_pushf(&args, "--ancestry-path=%s",
++		     oid_to_hex(&original->object.oid));
++
++	/*
++	 * Ancestry path may also show ancestors of the old commit, but we
++	 * don't want to see those, either.
++	 */
++	strvec_pushf(&args, "^%s", oid_to_hex(&original->object.oid));
++
++	/*
++	 * When we're asked to update HEAD we need to verify that the commit
++	 * that we want to rewrite is actually an ancestor of it and, if so,
++	 * update it. Otherwise we'll update (or print) all descendant
++	 * branches.
++	 */
++	if (action == REF_ACTION_HEAD) {
++		struct commit_list *from_list = NULL;
++
++		head = lookup_commit_reference_by_name("HEAD");
++		if (!head) {
++			ret = error(_("cannot look up HEAD"));
++			goto out;
++		}
++
++		commit_list_insert(original, &from_list);
++		ret = repo_is_descendant_of(repo, head, from_list);
++		free_commit_list(from_list);
++
++		if (ret < 0) {
++			ret = error(_("cannot determine descendance"));
++			goto out;
++		} else if (!ret) {
++			ret = error(_("rewritten commit must be an ancestor "
++				      "of HEAD when using --ref-action=head"));
++			goto out;
++		}
++
++		strvec_push(&args, oid_to_hex(&head->object.oid));
++	} else {
++		strvec_push(&args, "--branches");
++	}
++
++	setup_revisions_from_strvec(&args, &revs, NULL);
++	if (revs.nr)
++		BUG("revisions were set up with invalid argument '%s'", args.v[0]);
++
++	opts.onto = oid_to_hex_r(hex, &rewritten->object.oid);
++
++	ret = replay_revisions(repo, &revs, &opts, &updates);
++	if (ret)
++		goto out;
++
++	switch (action) {
++	case REF_ACTION_DEFAULT:
++	case REF_ACTION_BRANCHES:
++		transaction = ref_store_transaction_begin(get_main_ref_store(repo), 0, &err);
++		if (!transaction) {
++			ret = error(_("failed to begin ref transaction: %s"), err.buf);
++			goto out;
++		}
++
++		for (size_t i = 0; i < updates.nr; i++) {
++			ret = ref_transaction_update(transaction,
++						     updates.items[i].refname,
++						     &updates.items[i].new_oid,
++						     &updates.items[i].old_oid,
++						     NULL, NULL, 0, reflog_msg, &err);
++			if (ret) {
++				ret = error(_("failed to update ref '%s': %s"),
++					    updates.items[i].refname, err.buf);
++				goto out;
++			}
++		}
++
++		/*
++		 * `replay_revisions()` only updates references that are
++		 * ancestors of `rewritten`, so we need to manually
++		 * handle updating references that point to `original`.
++		 */
++		for (decoration = get_name_decoration(&original->object);
++		     decoration;
++		     decoration = decoration->next)
++		{
++			if (decoration->type != DECORATION_REF_LOCAL)
++				continue;
++
++			ret = ref_transaction_update(transaction,
++						     decoration->name,
++						     &rewritten->object.oid,
++						     &original->object.oid,
++						     NULL, NULL, 0, reflog_msg, &err);
++			if (ret) {
++				ret = error(_("failed to update ref '%s': %s"),
++					    decoration->name, err.buf);
++				goto out;
++			}
++		}
++
++		if (ref_transaction_commit(transaction, &err)) {
++			ret = error(_("failed to commit ref transaction: %s"), err.buf);
++			goto out;
++		}
++
++		break;
++	case REF_ACTION_HEAD:
++		ret = refs_update_ref(get_main_ref_store(repo), reflog_msg, "HEAD",
++				      &updates.final_oid, &head->object.oid, 0,
++				      UPDATE_REFS_MSG_ON_ERR);
++		if (ret)
++			goto out;
++		break;
++	case REF_ACTION_PRINT:
++		for (size_t i = 0; i < updates.nr; i++)
++			printf("update %s %s %s\n",
++			       updates.items[i].refname,
++			       oid_to_hex(&updates.items[i].new_oid),
++			       oid_to_hex(&updates.items[i].old_oid));
++		break;
++	default:
++		BUG("unsupported ref action %d", action);
++	}
++
++	ret = 0;
++
++out:
++	replay_ref_updates_release(&updates);
++	ref_transaction_free(transaction);
++	release_revisions(&revs);
++	strbuf_release(&err);
++	strvec_clear(&args);
++	return ret;
++}
++
++static int cmd_history_reword(int argc,
++			      const char **argv,
++			      const char *prefix,
++			      struct repository *repo)
++{
++	const char * const usage[] = {
++		GIT_HISTORY_REWORD_USAGE,
++		NULL,
++	};
++	enum ref_action action = REF_ACTION_DEFAULT;
++	struct option options[] = {
++		OPT_CALLBACK_F(0, "ref-action", &action, N_("<action>"),
++			       N_("control ref update behavior (branches|head|print)"),
++			       PARSE_OPT_NONEG, parse_ref_action),
++		OPT_END(),
++	};
++	struct strbuf reflog_msg = STRBUF_INIT;
++	struct commit *original, *rewritten;
++	int ret;
++
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++	if (argc != 1) {
++		ret = error(_("command expects a single revision"));
++		goto out;
++	}
++	repo_config(repo, git_default_config, NULL);
++
++	original = lookup_commit_reference_by_name(argv[0]);
++	if (!original) {
++		ret = error(_("commit cannot be found: %s"), argv[0]);
++		goto out;
++	}
++
++	ret = commit_tree_with_edited_message(repo, "reworded", original, &rewritten);
++	if (ret < 0) {
++		ret = error(_("failed writing reworded commit"));
++		goto out;
++	}
++
++	strbuf_addf(&reflog_msg, "reword: updating %s", argv[0]);
++
++	ret = handle_reference_updates(action, repo, original, rewritten,
++				       reflog_msg.buf);
++	if (ret < 0) {
++		ret = error(_("failed replaying descendants"));
++		goto out;
++	}
++
++	ret = 0;
++
++out:
++	strbuf_release(&reflog_msg);
++	return ret;
++}
+ 
+ int cmd_history(int argc,
+ 		const char **argv,
+ 		const char *prefix,
+-		struct repository *repo UNUSED)
++		struct repository *repo)
+ {
+ 	const char * const usage[] = {
+-		N_("git history [<options>]"),
++		GIT_HISTORY_REWORD_USAGE,
+ 		NULL,
+ 	};
++	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option options[] = {
++		OPT_SUBCOMMAND("reword", &fn, cmd_history_reword),
+ 		OPT_END(),
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options, usage, 0);
+-	if (argc)
+-		usagef("unrecognized argument: %s", argv[0]);
+-	return 0;
++	return fn(argc, argv, prefix, repo);
+ }
+diff --git a/replay.c b/replay.c
+index 8c2f2d3710..5203f9db4c 100644
+--- a/replay.c
++++ b/replay.c
+@@ -254,7 +254,9 @@ int replay_revisions(struct repository *repo, struct rev_info *revs,
+ 	struct commit *commit;
+ 	struct commit *onto = NULL;
+ 	struct merge_options merge_opt;
+-	struct merge_result result;
++	struct merge_result result = {
++		.clean = 1,
++	};
+ 	char *advance;
+ 	int ret;
+ 
+@@ -270,7 +272,6 @@ int replay_revisions(struct repository *repo, struct rev_info *revs,
+ 	}
+ 
+ 	init_basic_merge_options(&merge_opt, repo);
+-	memset(&result, 0, sizeof(result));
+ 	merge_opt.show_rename_progress = 0;
+ 	last_commit = onto;
+ 	replayed_commits = kh_init_oid_map();
 diff --git a/t/meson.build b/t/meson.build
-index 459c52a489..73006b095a 100644
+index 73006b095a..c9f92450dc 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -387,6 +387,7 @@ integration_tests = [
-   't3436-rebase-more-options.sh',
+@@ -388,6 +388,7 @@ integration_tests = [
    't3437-rebase-fixup-options.sh',
    't3438-rebase-broken-files.sh',
-+  't3450-history.sh',
+   't3450-history.sh',
++  't3451-history-reword.sh',
    't3500-cherry.sh',
    't3501-revert-cherry-pick.sh',
    't3502-cherry-pick-merge.sh',
 diff --git a/t/t3450-history.sh b/t/t3450-history.sh
-new file mode 100755
-index 0000000000..417c343d43
---- /dev/null
+index 417c343d43..f513463b92 100755
+--- a/t/t3450-history.sh
 +++ b/t/t3450-history.sh
-@@ -0,0 +1,17 @@
+@@ -5,13 +5,13 @@ test_description='tests for git-history command'
+ . ./test-lib.sh
+ 
+ test_expect_success 'does nothing without any arguments' '
+-	git history >out 2>&1 &&
+-	test_must_be_empty out
++	test_must_fail git history 2>err &&
++	test_grep "need a subcommand" err
+ '
+ 
+ test_expect_success 'raises an error with unknown argument' '
+ 	test_must_fail git history garbage 2>err &&
+-	test_grep "unrecognized argument: garbage" err
++	test_grep "unknown subcommand: .garbage." err
+ '
+ 
+ test_done
+diff --git a/t/t3451-history-reword.sh b/t/t3451-history-reword.sh
+new file mode 100755
+index 0000000000..cd5883051d
+--- /dev/null
++++ b/t/t3451-history-reword.sh
+@@ -0,0 +1,344 @@
 +#!/bin/sh
 +
-+test_description='tests for git-history command'
++test_description='tests for git-history reword subcommand'
 +
 +. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-log-graph.sh"
 +
-+test_expect_success 'does nothing without any arguments' '
-+	git history >out 2>&1 &&
-+	test_must_be_empty out
++reword_with_message () {
++	cat >message &&
++	write_script fake-editor.sh <<-\EOF &&
++	cp message "$1"
++	EOF
++	test_set_editor "$(pwd)"/fake-editor.sh &&
++	git history reword "$@" &&
++	rm fake-editor.sh message
++}
++
++expect_graph () {
++	cat >expect &&
++	lib_test_cmp_graph --graph --format=%s "$@"
++}
++
++expect_log () {
++	git log --format="%s" "$@" >actual &&
++	cat >expect &&
++	test_cmp expect actual
++}
++
++test_expect_success 'can reword tip of a branch' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++
++		git symbolic-ref HEAD >expect &&
++		reword_with_message HEAD <<-EOF &&
++		third reworded
++		EOF
++		git symbolic-ref HEAD >actual &&
++		test_cmp expect actual &&
++
++		expect_log <<-\EOF &&
++		third reworded
++		second
++		first
++		EOF
++
++		git reflog >reflog &&
++		test_grep "reword: updating HEAD" reflog
++	)
 +'
 +
-+test_expect_success 'raises an error with unknown argument' '
-+	test_must_fail git history garbage 2>err &&
-+	test_grep "unrecognized argument: garbage" err
++test_expect_success 'can reword commit in the middle' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++
++		git symbolic-ref HEAD >expect &&
++		reword_with_message HEAD~ <<-EOF &&
++		second reworded
++		EOF
++		git symbolic-ref HEAD >actual &&
++		test_cmp expect actual &&
++
++		expect_log <<-\EOF
++		third
++		second reworded
++		first
++		EOF
++	)
++'
++
++test_expect_success 'can reword root commit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		reword_with_message HEAD~2 <<-EOF &&
++		first reworded
++		EOF
++
++		expect_log <<-\EOF
++		third
++		second
++		first reworded
++		EOF
++	)
++'
++
++test_expect_success 'can reword in a bare repo' '
++	test_when_finished "rm -rf repo repo.git" &&
++	git init repo &&
++	test_commit -C repo first &&
++	git clone --bare repo repo.git &&
++	(
++		cd repo.git &&
++		reword_with_message HEAD <<-EOF &&
++		reworded
++		EOF
++
++		expect_log <<-\EOF
++		reworded
++		EOF
++	)
++'
++
++test_expect_success 'can reword a commit on a different branch' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit base &&
++		git branch theirs &&
++		test_commit ours &&
++		git switch theirs &&
++		test_commit theirs &&
++
++		git rev-parse ours >ours-before &&
++		reword_with_message theirs <<-EOF &&
++		Reworded theirs
++		EOF
++		git rev-parse ours >ours-after &&
++		test_cmp ours-before ours-after &&
++
++		expect_graph --branches <<-\EOF
++		* Reworded theirs
++		| * ours
++		|/
++		* base
++		EOF
++	)
++'
++
++test_expect_success 'can reword a merge commit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit base &&
++		git branch branch &&
++		test_commit ours &&
++		git switch branch &&
++		test_commit theirs &&
++		git switch - &&
++		git merge theirs &&
++
++		# It is not possible to replay merge commits embedded in the
++		# history (yet).
++		test_must_fail git history reword HEAD~ 2>err &&
++		test_grep "replaying merge commits is not supported yet" err &&
++
++		# But it is possible to reword a merge commit directly.
++		reword_with_message HEAD <<-EOF &&
++		Reworded merge commit
++		EOF
++		expect_graph <<-\EOF
++		*   Reworded merge commit
++		|\
++		| * theirs
++		* | ours
++		|/
++		* base
++		EOF
++	)
++'
++
++test_expect_success '--ref-action=print prints ref updates without modifying repo' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit base &&
++		git branch branch &&
++		test_commit ours &&
++		git switch branch &&
++		test_commit theirs &&
++
++		git refs list >refs-expect &&
++		reword_with_message --ref-action=print base >updates <<-\EOF &&
++		reworded commit
++		EOF
++		git refs list >refs-actual &&
++		test_cmp refs-expect refs-actual &&
++
++		test_grep "update refs/heads/branch" updates &&
++		test_grep "update refs/heads/main" updates &&
++		git update-ref --stdin <updates &&
++		expect_log --branches <<-\EOF
++		theirs
++		ours
++		reworded commit
++		EOF
++	)
++'
++
++test_expect_success '--ref-action=head updates only HEAD' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit base &&
++		git branch branch &&
++		test_commit theirs &&
++		git switch branch &&
++		test_commit ours &&
++
++		# When told to update HEAD, only, the command will refuse to
++		# rewrite commits that are not an ancestor of HEAD.
++		test_must_fail git history reword --ref-action=head theirs 2>err &&
++		test_grep "rewritten commit must be an ancestor of HEAD" err &&
++
++		reword_with_message --ref-action=head base >updates <<-\EOF &&
++		reworded base
++		EOF
++		expect_log HEAD <<-\EOF &&
++		ours
++		reworded base
++		EOF
++		expect_log main <<-\EOF
++		theirs
++		base
++		EOF
++	)
++'
++
++test_expect_success 'editor shows proper status' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++
++		write_script fake-editor.sh <<-\EOF &&
++		cp "$1" . &&
++		printf "\namend a comment\n" >>"$1"
++		EOF
++		test_set_editor "$(pwd)"/fake-editor.sh &&
++		git history reword HEAD &&
++
++		cat >expect <<-EOF &&
++		first
++
++		# Please enter the commit message for the reworded changes. Lines starting
++		# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
++		# Changes to be committed:
++		#	new file:   first.t
++		#
++		EOF
++		test_cmp expect COMMIT_EDITMSG &&
++
++		test_commit_message HEAD <<-\EOF
++		first
++
++		amend a comment
++		EOF
++	)
++'
++
++# For now, git-history(1) does not yet execute any hooks. This is subject to
++# change in the future, and if it does this test here is expected to start
++# failing. In other words, this test is not an endorsement of the current
++# status quo.
++test_expect_success 'hooks are not executed for rewritten commits' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++
++		ORIG_PATH="$(pwd)" &&
++		export ORIG_PATH &&
++		for hook in prepare-commit-msg pre-commit post-commit post-rewrite commit-msg
++		do
++			write_script .git/hooks/$hook <<-\EOF || exit 1
++			touch "$ORIG_PATH/hooks.log
++			EOF
++		done &&
++
++		reword_with_message HEAD~ <<-EOF &&
++		second reworded
++		EOF
++
++		cat >expect <<-EOF &&
++		third
++		second reworded
++		first
++		EOF
++		git log --format=%s >actual &&
++		test_cmp expect actual &&
++
++		test_path_is_missing hooks.log
++	)
++'
++
++test_expect_success 'aborts with empty commit message' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++
++		! reword_with_message HEAD 2>err </dev/null &&
++		test_grep "Aborting commit due to empty commit message." err
++	)
++'
++
++test_expect_success 'retains changes in the worktree and index' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		touch a b &&
++		git add . &&
++		git commit -m "initial commit" &&
++		echo foo >a &&
++		echo bar >b &&
++		git add b &&
++		reword_with_message HEAD <<-EOF &&
++		message
++		EOF
++		cat >expect <<-\EOF &&
++		 M a
++		M  b
++		?? actual
++		?? expect
++		EOF
++		git status --porcelain >actual &&
++		test_cmp expect actual
++	)
 +'
 +
 +test_done
