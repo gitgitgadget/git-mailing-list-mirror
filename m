@@ -1,83 +1,83 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4990731AA9E
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 13:08:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7694A315D2A
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 13:08:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767791309; cv=none; b=hoj4Ld3pOkF5b2ksIy/N1Pp44WKoT65mqJz7FSPabNNEfe8rcxjSVzyV1wDIQ+CVWSqHxqVqbkd6QnHPamJH/nmS1xvsrmuL8JxmPAPPtnjf78bL9BbjPra1upMeyIzLHjwXiBLHrJ9qgcoTiTEGolZ5YC7Z6xLIqu9d7zT4lmY=
+	t=1767791312; cv=none; b=W5d/nb/YIM8QcSOcSWJvTqG/u3VVG1d/EOHCrXuulhzkBSwv0e8xRvd7KMdJtwJvFDqv94cdORJHgsRBcY14KKSZhpTBlpPH4PbgU/a8Xgn4yU0znweu9L9skIeC7w+AtySE8Jn4aOArc5xmM95nxwg9b9PbnoBBSILeHCIdQJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767791309; c=relaxed/simple;
-	bh=C7A1U5SUhnYuxUiBgHxgAdnsAcfQaILB1JMj7+lBik4=;
+	s=arc-20240116; t=1767791312; c=relaxed/simple;
+	bh=EZaAdP3xdhD507KLyYkOjspLg7dXAtOg4kveRSnsmK0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QaFlPJ5PvjayC9P6oaT82ez+ssjVzji/J0ZyY9inxdSf/o1UnBnm3DL/tcKkKQEE5oiaK0zN8Jdv06TAFGvO/0p5vUL9c3rnlOmkkX+tTk9U9raF+pQpopN/oa/1JBj9o8g3kik0o0ZixTWPIfk0MJv1pIt4/sEtuEQrnkMq7ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a72JVAhM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=prVqsptb; arc=none smtp.client-ip=103.168.172.152
+	 In-Reply-To:To:Cc; b=rF5sRYxr9O582rKkS+yKzXxRo6cOB3H3+5jOM6OzeKtCtmoNoESERcBf4X3d5af4RDT3ipahwPNiQxiEmn2nKJ2IsCQdE3SpqBktJCTKJ5pCwFAD0b7l8384Ld4+Z0SUlM9DYC6+wFvQnYjanRGtQ9NC2RECiWBmd+Soogl9g/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WeV01zpq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SWAqXqDY; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a72JVAhM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="prVqsptb"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7BD81140011F;
-	Wed,  7 Jan 2026 08:08:27 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WeV01zpq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SWAqXqDY"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id C8208EC026E;
+	Wed,  7 Jan 2026 08:08:29 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 07 Jan 2026 08:08:27 -0500
+  by phl-compute-03.internal (MEProxy); Wed, 07 Jan 2026 08:08:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767791307;
-	 x=1767877707; bh=s9TlejasDSsSW2N8JDqW8lUh6oLoyiAAlPmvYhH2l08=; b=
-	a72JVAhM58d4mfJu+RknZeZ3LX8iQ6w023kA5zovSuMAhyMzxtDkoVdcwslZNWk5
-	4GvukGL7h1oEaf8d8WQPg4XBphziygzI2lqbG/H/VHe2uYE/5pj+8DR3sNn/umnL
-	7CmTGRea9+DmRIHdjz41V/NBU46PySmtrRkGmQzXlXg1R15kIk1bYosI10pNC2uF
-	Iy3a1QswcRypqus78lj92k+Mg0TXs+fkHtjn11aCGEGV5GfL/vuhX01FyawI2B1t
-	CU5omIsXSJIF1Y9nRUyjrLSOExRfiyGO7hmdSGLkmtm+8VrHISD2r5fanuaI9WTZ
-	M5AtnIiAYY3UelU/33hfEA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767791309;
+	 x=1767877709; bh=+Of+5teqrUJb3PJBCugXm7F0qnppp5DuRfT6Tz1fquU=; b=
+	WeV01zpqAkm7xCAEwuaHKM4hfwVavnf88l3McBWR6JRwhEs2BhxDfNZpAYlVtQk/
+	VMb5CacgYj8qinYLTfmOxQRKTtDjF8qkCZrkWeBI4FENTLPyTIGaI6jkngVo0WsC
+	98MBRy9xsr3zIUTOatVvkFnlYj+7xUH9t1mZ4vxEGD41npZd9jJL2Ws1V4q47GSW
+	TGFhTt2x6ptyZO0r0SztX92PbHtJ029lRI55lYFnyqzTEmkV0BzEtFbUdHr7dDo1
+	nyAkVNAiLdGc3NpPIRJCECvLcRBBqOuAYGM8DQvgl3FflUAXlYfi5JwVx3KFc3Z7
+	RVE5Dztjyt2LxDBK6aXlOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767791307; x=
-	1767877707; bh=s9TlejasDSsSW2N8JDqW8lUh6oLoyiAAlPmvYhH2l08=; b=p
-	rVqsptbmmPf7jzg5Q4jyV1DVdG7YOFCWE0uRmVZNxqvu53B7xEL9JcN/ehjloMHM
-	rANClBp2MrtxF34wwHWjsAYDqIn0EaaaFbFv0F9P//07ka2KCg+AHmySsWIeBiCZ
-	HIPOdSjVIjZvK4z3Z1AVfXSG3Wn9Y8RXGDnpoTpTOhaa5Fcz2lnBKP93wumz5Y7H
-	3LTPIVnoIackaOJKcxqM3uGQqaZM4W3+epi4Da6sBoDDyBgC5z5K6wWwkO4cwWuz
-	WFc6TPAR79ZXck6zVMflQQolkt+G9F1/TXrIIB1jepKcjbQdjWAveF+Xi5CT5mNd
-	LN70q/HNuvROw83CO5cbg==
-X-ME-Sender: <xms:y1peaV-Ad2Q5BcnT5nApAX_7I-V3QGo0hYl1FO9sMoPyPgKvDGM88Q>
-    <xme:y1peadZDPNXQJr4v11z8lyYOqYSwUXEag5hvKnz-iduDoCtGcCEQXIQslXLzIE39I
-    W28xTCUrCubY7rY3K2rDQuuZbQ5PfenoJDF47KNYJtueJMlcx1EGx8>
-X-ME-Received: <xmr:y1peac2AplXkRiPCz_bLX5LE8iRAy747JvsU_6l1vFRcGbF83ohq5C-sZjiGbgVVuRtON27w1TcTeXpx3ffncaKXHxFnjLh5_M-Xa0t26Pc>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767791309; x=
+	1767877709; bh=+Of+5teqrUJb3PJBCugXm7F0qnppp5DuRfT6Tz1fquU=; b=S
+	WAqXqDYNVcMhOLxLPx6+B0teTJxcNupAVGShiD08DKrkmt4FVgE70XBMGi49/9Nc
+	D0kCptGd//o4fxdD7JYq7E11Gx6S/mYizPCzftDQsBq34s9SIQGQ4Z4CUEzsKGNd
+	MnpCQfpRqRR12oTNWDUXVxjQnSoNvpA1a2E+zE07MUR2d6IgpnHMqNqhfoSNFrau
+	08VWLOnXRf8rfBfhZTR4A8SJRDkW9sXGZfzE+ytvsqMuS5DwA8BNDX+wy9MejmRK
+	llDnqqsAB5bVIlUUR6pDLICI1o0sTN11W1OclxSx1tv5gJ0Ohgrj+UVzs5BKqMMn
+	RS1IFrGk9UVnJALkgGlPw==
+X-ME-Sender: <xms:zVpeaQihEE8D3zxSpYHF32lN1S9wsDrulcvnUbU3t7hUChDPw52eTQ>
+    <xme:zVpeacsBk_VW7Vf5Fh5rec_eiqwRVi0jCm2jSZZaMfmNSNEaTWJYE5IftH2lf5CSV
+    _2DNURAg7SfJeseRWJ6Mjgu2Lg3C_QclO-OfW-uRLQbVQWcwvDYQV0>
+X-ME-Received: <xmr:zVpeaR6AG52cdwGH9mbuSSUy9EQWhlAroD5dT0OItF5getMMrVfvmXUJzjPUhKjz-2kOZVO6GenQSg1nFGNvVF0wjk60jv1WBp0Ffvyyn4s>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdefudehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    hnpeefhfeugeelheefjeektdffhedvhfdvteefgfdtudffudevveetgeeuuedtkefhgeen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdr
-    tghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtoheprghplhgrthhtnhgvrhesnhhvihguihgrrdgtohhm
-X-ME-Proxy: <xmx:y1peaQZ1hnZm_ziyxpZUKrERkeibOIVp0fPyG3WHUxtVD9GNS8ZNyw>
-    <xmx:y1peacIGYcDzNaZM4UzhVy4p3uu9IlXfFsZvRCFOZSXNhqQ1QXIK-w>
-    <xmx:y1peaXFLahtTsSPPm4mp_XnglXhkxgRj1Yx5WXzNshGoUWzOMGj15g>
-    <xmx:y1peabsbPsSeuRn4n-gnYT19ADwdmNhDpu5z40jK-tWrGsqZVsopGA>
-    <xmx:y1peaR8D07qGdq1xXqsnF8w_lGaBiul3jTHk_tskLZWDqWopJxv6itA7>
+    thhopegrphhlrghtthhnvghrsehnvhhiughirgdrtghomhdprhgtphhtthhopehkrghrth
+    hhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:zVpeaYPwZZ0knLFqpWgWH5jK7AxgXIC24SLBppzWL_TjKCaJDmRfaA>
+    <xmx:zVpeafvotlO0MG7MA1M6NajvLc8X0RieeaCoLpb-jH5Oa141hGDubg>
+    <xmx:zVpeabbTxvoFbh4ZHQhluVzr4EHYDEjQbtMrnmx6b7_ZlzEWpMCakQ>
+    <xmx:zVpeaRwfrna23vjbmt09gJ8jpg72wd7m9cpK_qPTjfaYGfi_i-4ckA>
+    <xmx:zVpeaRAhtyDb50CVX2M4FwVLGnowWMBkpOsLr38Qe5bBNmo5Ad-dCm9Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Jan 2026 08:08:26 -0500 (EST)
+ 7 Jan 2026 08:08:28 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 233e520c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Jan 2026 13:08:25 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 6b3966b5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Jan 2026 13:08:28 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 07 Jan 2026 14:08:04 +0100
-Subject: [PATCH v4 5/7] packfile: disentangle return value of
- `packed_object_info()`
+Date: Wed, 07 Jan 2026 14:08:05 +0100
+Subject: [PATCH v4 6/7] packfile: skip unpacking object header for disk
+ size requests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,8 +85,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260107-b4-pks-odb-read-object-info-improvements-v4-5-b5d55c47082a@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260107-b4-pks-odb-read-object-info-improvements-v4-6-b5d55c47082a@pks.im>
 References: <20260107-b4-pks-odb-read-object-info-improvements-v4-0-b5d55c47082a@pks.im>
 In-Reply-To: <20260107-b4-pks-odb-read-object-info-improvements-v4-0-b5d55c47082a@pks.im>
 To: git@vger.kernel.org
@@ -96,127 +96,63 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-The `packed_object_info()` function returns the type of the packed
-object. While we use an `enum object_type` to store the return value,
-this type is not to be confused with the actual object type. It _may_
-contain the object type, but it may just as well encode that the given
-packed object is stored as a delta.
+While most of the object info requests for a packed object require us to
+unpack its headers, reading its disk size doesn't. We still unpack the
+object header in that case though, which is unnecessary work.
 
-We have removed the only caller that relied on this returned object type
-in the preceding commit, so let's simplify semantics and return either 0
-on success or a negative error code otherwise.
+Skip reading the header if only the disk size is requested. This leads
+to a small speedup when reading disk size, only. The following benchmark
+was done in the Git repository:
 
-This unblocks a small optimization where we can skip reading the object
-type altogether.
+    Benchmark 1: ./git rev-list --disk-usage HEAD (rev = HEAD~)
+      Time (mean ± σ):     105.2 ms ±   0.6 ms    [User: 91.4 ms, System: 13.3 ms]
+      Range (min … max):   103.7 ms … 106.0 ms    27 runs
+
+    Benchmark 2: ./git rev-list --disk-usage HEAD (rev = HEAD)
+      Time (mean ± σ):      96.7 ms ±   0.4 ms    [User: 86.2 ms, System: 10.0 ms]
+      Range (min … max):    96.2 ms …  98.1 ms    30 runs
+
+    Summary
+      ./git rev-list --disk-usage HEAD (rev = HEAD) ran
+        1.09 ± 0.01 times faster than ./git rev-list --disk-usage HEAD (rev = HEAD~)
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- packfile.c | 21 ++++++++++++---------
- packfile.h |  4 ++++
- 2 files changed, 16 insertions(+), 9 deletions(-)
+ packfile.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index f7c33a2f77..8c6ef45a67 100644
+index 8c6ef45a67..a2ba237ce7 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1587,6 +1587,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+@@ -1586,7 +1586,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 	struct pack_window *w_curs = NULL;
  	unsigned long size;
  	off_t curpos = obj_offset;
- 	enum object_type type;
-+	int ret;
+-	enum object_type type;
++	enum object_type type = OBJ_NONE;
+ 	int ret;
  
  	/*
- 	 * We always get the representation type, but only convert it to
-@@ -1607,12 +1608,12 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 			off_t base_offset = get_delta_base(p, &w_curs, &tmp_pos,
- 							   type, obj_offset);
- 			if (!base_offset) {
--				type = OBJ_BAD;
-+				ret = -1;
- 				goto out;
- 			}
- 			*oi->sizep = get_size_from_delta(p, &w_curs, tmp_pos);
- 			if (*oi->sizep == 0) {
--				type = OBJ_BAD;
-+				ret = -1;
- 				goto out;
- 			}
- 		} else {
-@@ -1625,7 +1626,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 		if (offset_to_pack_pos(p, obj_offset, &pos) < 0) {
- 			error("could not find object at offset %"PRIuMAX" "
- 			      "in pack %s", (uintmax_t)obj_offset, p->pack_name);
--			type = OBJ_BAD;
-+			ret = -1;
- 			goto out;
- 		}
- 
-@@ -1639,7 +1640,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 		if (oi->typep)
- 			*oi->typep = ptot;
- 		if (ptot < 0) {
--			type = OBJ_BAD;
-+			ret = -1;
- 			goto out;
- 		}
+@@ -1598,7 +1598,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 						      &type);
+ 		if (!*oi->contentp)
+ 			type = OBJ_BAD;
+-	} else {
++	} else if (oi->sizep || oi->typep || oi->delta_base_oid) {
+ 		type = unpack_object_header(p, &w_curs, &curpos, &size);
  	}
-@@ -1649,7 +1650,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 			if (get_delta_base_oid(p, &w_curs, curpos,
- 					       oi->delta_base_oid,
- 					       type, obj_offset) < 0) {
--				type = OBJ_BAD;
-+				ret = -1;
- 				goto out;
- 			}
- 		} else
-@@ -1672,9 +1673,11 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 
+@@ -1662,6 +1662,9 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 	oi->u.packed.pack = p;
+ 
+ 	switch (type) {
++	case OBJ_NONE:
++		oi->u.packed.type = PACKED_OBJECT_TYPE_UNKNOWN;
++		break;
+ 	case OBJ_REF_DELTA:
+ 		oi->u.packed.type = PACKED_OBJECT_TYPE_REF_DELTA;
  		break;
- 	}
- 
-+	ret = 0;
-+
- out:
- 	unuse_pack(&w_curs);
--	return type;
-+	return ret;
- }
- 
- static void *unpack_compressed_entry(struct packed_git *p,
-@@ -2152,7 +2155,7 @@ int packfile_store_read_object_info(struct packfile_store *store,
- 				    unsigned flags UNUSED)
- {
- 	struct pack_entry e;
--	int rtype;
-+	int ret;
- 
- 	if (!find_pack_entry(store->odb->repo, oid, &e))
- 		return 1;
-@@ -2164,8 +2167,8 @@ int packfile_store_read_object_info(struct packfile_store *store,
- 	if (!oi)
- 		return 0;
- 
--	rtype = packed_object_info(store->odb->repo, e.p, e.offset, oi);
--	if (rtype < 0) {
-+	ret = packed_object_info(store->odb->repo, e.p, e.offset, oi);
-+	if (ret < 0) {
- 		mark_bad_packed_object(e.p, oid);
- 		return -1;
- 	}
-diff --git a/packfile.h b/packfile.h
-index 59d162a3f4..d7cce582af 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -378,6 +378,10 @@ void release_pack_memory(size_t);
- /* global flag to enable extra checks when accessing packed objects */
- extern int do_check_packed_object_crc;
- 
-+/*
-+ * Look up the object info for a specific offset in the packfile.
-+ * Returns zero on success, a negative error code otherwise.
-+ */
- int packed_object_info(struct repository *r,
- 		       struct packed_git *pack,
- 		       off_t offset, struct object_info *);
 
 -- 
 2.52.0.542.g9473a8513b.dirty
