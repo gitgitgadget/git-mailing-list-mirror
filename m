@@ -1,83 +1,86 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D487825A64C
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 02:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02C72D29B7
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 03:51:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767751942; cv=none; b=htbKfK0lE/h31/9uV7AWqq6Y/TgH88ZPfcZjs2wSUJhi0Mc8Nl4kyXR+hf/J0FA6lEGIFLjEe6DMZeyL8wxa/Zyp18Mh/Dm07cWgEh/qHi3+TKsqlHTke60KOZ2u7re9bYL0CFSKDQy7+EH63CEnolJXqTVVCDfS/2tC74AaXmQ=
+	t=1767757893; cv=none; b=HapX4DZwzfbXQAWKtH990XMWa4tj2xZWf3whTdqIqRTK/OqblULoPgj5xcdfk3R1xf9CphRNFMVtIPeOlDna22qdZvxG0tvULZ9ejFP8a7CtZB8mYh4qncgfAcLUhJ9UsbfbwWj6BD5yqEFy8BQ28BRN6O7iVhjnre85/S7xfd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767751942; c=relaxed/simple;
-	bh=Lj3FsvP1wINQYOTHye1ob13uxKTKU55GjZeZpZEFU4Q=;
+	s=arc-20240116; t=1767757893; c=relaxed/simple;
+	bh=mIrIkloxzNFBmmcH5dPH5V0XGiZtxwSNZTSmWxnltxA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TB2Dc/d3+eyf1rma6igp7POoifprknF1IyJzH5CgtTYOTUmGp5l/HjSmjWod+LCnAEmdP6B0XGzoIqEYVkgk+nguziL63xJZYhDnWgqw2/ZI5n+xYgpqUaOqTq85EIGNefCJeLMcTb6t8qfdJ3qeZaxijwvXaD2S+HPezIPMizA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FLthGsAm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ovHrdtxQ; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=VOnalPqyc4PwgKylsqF3QoB/ePF6A1FEes4xp1CR8ECME9E764aAdXIOIzc9JKgDdc7BWWGzRhtmdkQBiKEb0wseW4m5YjlULULO4cb5vSjDtx/WfG74rYyCL1cPA112PhNGDiDVIeoNzcQdW8ehNH2kSywviJsXW+O3SAYsgc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ipEUN7QG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sNDl0/nY; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FLthGsAm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ovHrdtxQ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E30017A00F5;
-	Tue,  6 Jan 2026 21:12:18 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ipEUN7QG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sNDl0/nY"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EAA5B7A0079;
+	Tue,  6 Jan 2026 22:51:29 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 06 Jan 2026 21:12:19 -0500
+  by phl-compute-03.internal (MEProxy); Tue, 06 Jan 2026 22:51:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767751938; x=1767838338; bh=miULAd6GwL
-	XpyLztf3DVV0G5FHxRbpcjZcfiop3MlM8=; b=FLthGsAmHQxFmz6JST5KsF3b+o
-	D15wqRUFYS7FA1C0z3Lq52sr2rmyw+cWv+EeAle/IU0qZWez6P73j/xERFZaeaxj
-	1FGTNky3MRCpP7kuIPidIXCEVTq0aUBja+qYjVadXM/YffeNlUdg7Uc3PeD8jLEH
-	ZnJnJVxpBnldtjFvExb1SKrDNWYmZV7K/FPE4RS9KiBYl0SC0bQyrrHSD8yFPoJm
-	WWJFoaadjfhfKyYv1Zf0E08Mvq/gNZEX58zEtF+YSNuuq/bn9kVnS/ugk2t18pLy
-	1qCMWpGATCeSnZfSArPJRk6mA0JnSs6lZx+KKm39dyXJIpk430ZX6Ut9/uxA==
+	:subject:to:to; s=fm1; t=1767757888; x=1767844288; bh=mGr/ACIqoT
+	PSkJAMm16yiKQeSwKhjEuaVjV1NjCWLVk=; b=ipEUN7QGTB+9nDSLu+mAxeFQJO
+	zkUrgJNtkz58rglEgSN8SMNU0eSdg4wwDfQPuQFp6Dr9tnixm+K0irVkVj+YvEnK
+	7tuxgdAq9XlXKbzVYs9LuwI6JI+65IxNtqvSDWnaw6/UbD4rUD+onk9hHK6l4GRW
+	9EBM0U7V3dlblFVr7Z0Nk6e7wHVq6WwXTjAz+iqqb0FQP/dvRISY/O4vwITJwXjh
+	mgcg2YsXya9TSeGeJosrIVZR/fD60ecRxdLTJO7VQC97VvH6ebfEwDlaKUcYacIr
+	nPBwwehGyvNLrzZxA5KR5plbAxRm1aiB7uf36ux9McdqQ8TIy/hUEGXz2j1w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767751938; x=1767838338; bh=miULAd6GwLXpyLztf3DVV0G5FHxRbpcjZcf
-	iop3MlM8=; b=ovHrdtxQTgf8JdcChpmof5BF4eAju4nWeSmkuegTPPQeIH89Wu9
-	iw3bWrhxyUV6R4soFjQ2JFRCxcFUzxXZdTodMdKhFRXupb3Me65ycABJIaSLm3pX
-	MZM9nYKWo1KAdxn68tgkmO2nm46Q+0UKFo7NoKC16zyJNMzF4+mNPT78VJtidF20
-	vFc0XPx2qZREmIkLtK5et2hU+KNzQ58TDkAp4tUsAZsa67Fn3XgBJRImShqHlQ5j
-	vbE5n2xcOBc/BV8UH0uhHrmzcbgu05hXNYXQ0QK8ZC8xWdXo+9mpA7MvVid2IMHG
-	/1M8dKl00WPUK6GMjWLtlr4L0T3WDboyHYQ==
-X-ME-Sender: <xms:AsFdadrWN380uRTm0UMHNIZL5bNkbBm0WL3nE2VEsbmmz0QP-tAQYA>
-    <xme:AsFdaWg98425jAQTyA6EjZcJ_wyF6s-dZhIO79plDdreqwWfsm9VyaX0ZJFPYGXWO
-    hdrlTbb8t0UA3VkmJpHvrRnaA_-Z4yVYuOuQ6XYjIGei-nzUp_A>
-X-ME-Received: <xmr:AsFdaSgor2jcH7bWbWxsfbz7LDLvrEiOa2PVBXT6Qk0T38I5r3zb7olHH1bYLsOhYRN2FwePmIpul1N8bmpLZiQgRSWgRQMfrcaufi0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddukeegucetufdoteggodetrf
+	1767757888; x=1767844288; bh=mGr/ACIqoTPSkJAMm16yiKQeSwKhjEuaVjV
+	1NjCWLVk=; b=sNDl0/nYxeFx4VaqXHXkRxSOAYj1zed3zofTMsapHwkrNyT8kgM
+	4ueKM/FZwslKmhlgVgisY8BrcZzzaeATgCKp5AYp+n6I/AKhOOmqP77/rCE0+30h
+	RgYkKxiWoue3wSNMxHpS4MQEvWV0ZhhwXhmEkVA7nzaL+3uU+l5SPcBW8eAXfCLa
+	bvXgn6HpotkCfXI0x3TdPcd8vN0FxqMnVUwFEer7IQsVTeG8T83I5YkE6zF5e89r
+	sVkX5/C3V6wgZs8u/EKuJzB4AttBSVwwYc29Fm/e3/IBd8+hITaCw7ScfwzPBDGk
+	k7wMSUHbfjyY74G5OJTvq3reveQ8j1cnA5g==
+X-ME-Sender: <xms:QNhdabkpvqG8CpVCU-cyD_MbEjc5TVtNBMg4ooaRKXtrUqotQeN2Xw>
+    <xme:QNhdaSg7cZMeGiAb7lGaHyurtBIXcGaFqZrQNQWvRCKnMsmLCUeoO88Z33ggGSAsB
+    VcJvz3EKYkDTNfB69xhSGOzZywsBvlz4PyboIhAKu1WWBz0WNA9Rg>
+X-ME-Received: <xmr:QNhdabd6_wN7FuaVEdlnXSx1Zyd4ZqjJs7llI9itQJ2_TZcPrqadysDr_G-HmMidYUlg7ijcwHIwtor9o2Sh49zPv9ZElOtNhaIl31Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvtdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
-    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrse
-    hgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:AsFdaUgzKSuEXuHsSFNf2nDc1BieGo5YKhV3lRUs3cWL2aM5Ob5s-w>
-    <xmx:AsFdaaJCE1CLClosCfgqIVk46ZghRhck-XJA886DGRIS4jrnvSNFHQ>
-    <xmx:AsFdabFEZVNuU-7rSSo5ZWRss3gasdHsqTnbIYbFfaAsGKrBOSU9LA>
-    <xmx:AsFdaWSNOqW_HV6o_HlDMh0hV5VG2EahNawRV2mKZYB-TdLZ_oAacw>
-    <xmx:AsFdaQo9By2dDpdr_6RzuKSrrpPV1NmaZaK0Ns9mEr3Chqszm4uZHqot>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:QNhdaagZqfLwir_8ZLQo789qaI_Wm6ojYH1kdyCWniW8id-k-UaK3g>
+    <xmx:QNhdabyrYvwzr36kBkiXxLL30_CdTiEPArGnJRUCABaAkzzLurjQJg>
+    <xmx:QNhdaeMlzgTfkeOg_9-E1SvahpzKpPlgwFvCXE2M27LVBX1rAjjBnQ>
+    <xmx:QNhdaUWKHBeaVAyJZ36CivAWAxyC3qIMKbBPpncAaZjD8hYvglj29Q>
+    <xmx:QNhdacruTtpV5y2mS33HERrTvgRe7jjuxPm7aqWgKYuabf6OiTDnGnu_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Jan 2026 21:12:18 -0500 (EST)
+ 6 Jan 2026 22:51:28 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Emily Shaffer
- <emilyshaffer@google.com>
-Subject: Re: [PATCH v2] ws: add new tab-between-non-ws check
-In-Reply-To: <20260107013051.312291-1-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Wed, 7 Jan 2026 03:30:51 +0200")
-References: <20260107013051.312291-1-adrian.ratiu@collabora.com>
-Date: Wed, 07 Jan 2026 11:12:16 +0900
-Message-ID: <xmqqsecii327.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Justin Tobler
+ <jltobler@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/2] Some random object database related fixes
+In-Reply-To: <CAOLa=ZT8_vij=2TU3GNZSST0N8Oj1CmaOd0ZzBcp32N8Aze0WQ@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 6 Jan 2026 08:30:16 -0800")
+References: <20251205-odb-related-fixes-v1-0-ef4250abb584@pks.im>
+	<20260106-odb-related-fixes-v3-0-7ac157207b20@pks.im>
+	<CAOLa=ZT8_vij=2TU3GNZSST0N8Oj1CmaOd0ZzBcp32N8Aze0WQ@mail.gmail.com>
+Date: Wed, 07 Jan 2026 12:51:26 +0900
+Message-ID: <xmqqo6n6hygx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,39 +90,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> The check is a bit complex because we want to detect places where
-> a SP was intended (HT can expand to more than one display column),
-> so we need to count both the display columns (col) and the string
-> character columns (i) to determine if a HT looks identical to a SP
-> or can cause confusion.
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> +/....adoc text eol=lf whitespace=trail,space,incomplete,tab-between-non-ws
+>> base-commit: 2797238193944b52d12624a04a962f40b9bcad69
+>> change-id: 20251205-odb-related-fixes-5f48a0993ef7
+>
+> The changes in this version looks good to me! :)
 
-The name of the whitespace rule does not quite match what we want to
-catch.  Can somebody find a phrasing than "between non-ws" that
-conveys our intent better?  We want to catch a tab that is used by
-mistsake when the writer would have used a space, and "between
-non-ws" is one of the heuristics (another is "it is at the 7th
-column to make it indistinguishable from a space") the code uses to
-tell if a tab is such a mistaken tab.   "tab-instead-of-space"?
-"tab-in-place-of-space"?  "tab-that-should-have-been-a-space"?
-
-The last one is horrible and not a serious suggestion, of course.
-
-> +test_expect_success 'check tab between non-whitespace (tab-between-non-ws: off)' '
-> +	git config core.whitespace "-tab-between-non-ws" &&
-> +
-> +	printf "1234567\tb" >x &&
-
-I notice all these printf create incomplete lines.  It is true that
-the detection of a tab that is used when it should have been a space
-should work even on an incomplete line, but using an incomplete
-line, which is of course rather unusual, for these tests gives a
-false impression that somehow this requires an incomplete line to
-trigger, which is not what we want to give.
-
-	printf "1234567\tb\n" > x &&
-
-or something, perhaps?  I dunno.
+Thanks, both.  Let's mark it for 'next'.
