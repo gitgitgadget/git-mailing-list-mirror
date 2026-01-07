@@ -1,67 +1,67 @@
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com [209.85.221.66])
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF5C34D38C
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 14:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCED628134C
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 14:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767796100; cv=none; b=kczjQ8B7prh2bM9rbvBHavSEcQ/IMkwMIMYKbVVKCtv0ms2dZHTCUf7DagnjG1gcYtwy+RiVkgYPx1rXtkhwfVAodrZD8eUfS+oCet4MQfERyMlCwRACzo01KPB0IUkEt7oh2PD40kprvhTOi3mwn7agb0It9TL1Y5xtTl7zjlc=
+	t=1767796584; cv=none; b=Fuauo/yI4LvgZvyic0kS10H0f7PuD8ZSkzwTYUPDMjZh6tPsQLa6To9qQOxtTbnL7CPElvce1Kk3qlEYUg5OjhQ7Pu2rln0zp97YQK/f/dAUrvnbqrXec/7OWfxRHPma0MOK2xafoOcwvYvdV64fD+rppAmPvasjWxmqgN8a4EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767796100; c=relaxed/simple;
-	bh=Q5fBdGQXpftiNjMiMzUaSfXdEsVe1b141Mr7xjyHqYY=;
+	s=arc-20240116; t=1767796584; c=relaxed/simple;
+	bh=8eTci6riVPImSbYDxNMx9qQGtOrFHo0x0MvuxImQswo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O1PTp35QOQ6p3zZzO0ekpPfJ/K1KE4I8LPX3Y+KF8+uCMCjyHQ4QuIUJuhWGul7P1qyoMJw0x4NpAkNI0o/DytQ1iRw7C3TN9iaREV84yt2N7FmA9G/QJ0VjQbNJazS8+10P+oP7uxZQ7lqBw4IlFpbr8hPCxTwXTDb2RgSdDYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gRYZpzHG; arc=none smtp.client-ip=209.85.221.66
+	 In-Reply-To:Content-Type; b=iS8MXQmIwe0U2YCeWahsvrTvB18ugPm2+pkxL+sWtN/zG5UbHhevOwkuE2dtYPsTKjSkwY5fVoGtjqpvbHdg5462IjFFINGcnJG2hZirSerSPIYizMWSOzi2T/mDAmNYjfGXl7pHuV3qZi7nm9ItgzWAJAqUc/w7H524O5XKTKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I6pcXbGs; arc=none smtp.client-ip=209.85.128.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gRYZpzHG"
-Received: by mail-wr1-f66.google.com with SMTP id ffacd0b85a97d-431048c4068so567630f8f.1
-        for <git@vger.kernel.org>; Wed, 07 Jan 2026 06:28:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I6pcXbGs"
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-47d493a9b96so13137155e9.1
+        for <git@vger.kernel.org>; Wed, 07 Jan 2026 06:36:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767796097; x=1768400897; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767796581; x=1768401381; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SGhtzFnLzTyc0F34BwlLY/+8UN3TOIKkjYoHShrv/y4=;
-        b=gRYZpzHGhlrt9i1ZTbvfLmTeTzCzcuzxGhN42+h34HRvuUetvscySC3/haGcr+oFYr
-         QaxEUZRiDBQ8u33w/tSzfPzs3lhyRrkVlOQ/XLxXMyQSMsr5Ldd4zjHp3an4bEl3fMl5
-         qBVsISlzmJX1PGEH73bThb0nhjhuRMbhlgEdUE2xsQU0h8j6beCJYiCk2swsJcd3lGLA
-         J7f6/GuccodCh2g5NxQBTTsxEAmsWTXCURSeUihXLfWsdfk1hFLCiJrvnJnZrIg++pBE
-         YUD+p1xUrTLHR0+7Sk1NbReE9qwIuaHD2BiPi3VlsouLScjHdxhWLKKoefXEbBDKluNY
-         q18A==
+        bh=o/LFLjhORwqmmurRaIEPG6KXN2KW3/KvU/NxaxOg61A=;
+        b=I6pcXbGs/baWG2YnLUOjmDZAsveNcwUwZaUmXrgSf2sBfcNpd6e3xSPNdaLMvpCfmj
+         TrYMrlKLgLZYwqVo+0DKitqafPGtQ5fuJq09a68wX1typSHb1YSsPL1wXPkSMuO620uq
+         7WAEUAIi1CbymycBtL8O7fpcNUkEWlUPpvOHIfedOlX2qpfeh6ZA5zqk5cq7fXigxacC
+         TGL6r5A1x+cnn/M+N58kBDMNuL86PFpgpMxgjXLXIBwlt/M0pgFKY9EtAtEfw8HYfZZ9
+         NXZ/r5vZJtm8SOeEGSXaA7Uaz/AhIbLXPFn1JCxkHVFs/YDHZ9bfzCYvwQLaD1eKgXC9
+         L56w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767796097; x=1768400897;
+        d=1e100.net; s=20230601; t=1767796581; x=1768401381;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SGhtzFnLzTyc0F34BwlLY/+8UN3TOIKkjYoHShrv/y4=;
-        b=uwvqfHWIuKgYbPSdH1p09Y22UaQHMkoIGj9VBUh8FJyU7XUha1GJETt4EVdP6XzAcU
-         jDieqhrhwWRDUEWBb8X0XSaP0tHz2Vb0mtAV3/kbQuoCmRV46RxuXFOo9JxHo6O0fh/J
-         JN0InscyDksO7D5hFPJ6emg7dRUfOCAu8bysl94O4slqbnktood1fbvrbRS6LkiVL/fd
-         wZQrr4zInHns0nKBiVM8Pi4jlusuD0sCUV3pOBFzMGwPOImPyHDNDJAEmnpND68IjfsH
-         yCikmXqCd8NloU0+IK3N0J8EIJqL9VxC5Gyx1wn+XnKfTGXyhVPz7kAhTq3//UBGR1nF
-         IPlg==
-X-Forwarded-Encrypted: i=1; AJvYcCUv4wkTWCEO2VgccOGvuPHGfT9rMCEpBtwIrIZ6lofUyjT1k0CVgZoLHM42vi3mSHwchJw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxO//nN46YANBVQ5yjAljPUEipN/flOxrslSqQ9VgLZgA5zNyBt
-	ZrAqy7s33yLntZIJCQHlAm6NZdQFt1SmeIr2hauHHaWzrh6basyKS5c2
-X-Gm-Gg: AY/fxX66jPvVP1ZeJ4+Y85Wquq13xpmKdp3Xb4hn5Y3BJ5JcjBnIHGCx5apkuCnm8gB
-	FjvL3Ka6kpVelBO25gaBo9D2pfJOmX6YS+WcMiHuAZntHLnKgdA9K4z5smzogQAdfY1xQLAawfQ
-	jsghCm+yvUuJ7vLAq864h5kdSsqlJ5vzhjK1RST04I5roGSF/OjFSrO4dbFIaRk8JHQ60y5SXe4
-	y2vPa8Hw4iAQPzzSCOBNo9iRKT/4FAcsWm38ktWiArxXqogqu7m4PdEh983pFTPn6ftqD+cysZN
-	OCX/Upqit+BNfmW4bOJZ5jpqkWxfVQCqSxOK22DlTYFh+cpO5jg0aQ17X2GeCSw79GlnrTHL+0Y
-	JfWKyTfdfmv1mQ9mxGlBYCmBvOrMN+UiNXZO3Vy1KTsZXCPhGxDcwwKc17roMCfmT0XbcEJS65s
-	ILUHx3yVDvIrsybjbes4kTOqmFtss4MS8mUWAA8zfU0RhY+aRgvwKsHwS9h4w3ypO8fQ==
-X-Google-Smtp-Source: AGHT+IEHUQvc3EmqYzQZt6ZgtZtV1IqU7R/do8HrKFOIAIAuIe5e4QFd/ZoYO+yZg0EEOGQs+pikVQ==
-X-Received: by 2002:a05:6000:430e:b0:432:b953:b02b with SMTP id ffacd0b85a97d-432bcfd3d7cmr8387191f8f.16.1767796096871;
-        Wed, 07 Jan 2026 06:28:16 -0800 (PST)
+        bh=o/LFLjhORwqmmurRaIEPG6KXN2KW3/KvU/NxaxOg61A=;
+        b=LV3miOd+sRpmlTyVprSb0n/bN8vF6p0dhD4ifZDzhSeYh+2GA08uM6YUd8oNfDenPk
+         GUlpmJqaoWckRiVlFYIgnoB/en+ylBDNNLJqKu45Mv9oRi48DOewWzQ2r6u5U469AVsr
+         CPvqtdj3H66SVpuwxWXhfz79De3qnfc4YTivZ4SvPhlAiKqvs7+/zHyz1vckyKvNFn5L
+         c3MDUTQ2od8KqAbZrxH94eOm1ktzQ9toX7GWwfCfFCWQruL00a/9UeYR2uS9Rjoz/Ttc
+         a6Vghec9fN5SxZQfdLZo+rmVio9SU3R00IR8tb+p8/WOlwIVR2MgFwrg+c1YPfqvJxyC
+         xN5g==
+X-Forwarded-Encrypted: i=1; AJvYcCU8SKUD3Foh7WBOI42xMJS9yiC8o9CsncJm3HX/gaQxFFBxZ2ac9kDAJcgzSNgMlITK134=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBbSmbfctF3+tBhRFS0RvWSDDFVO6ZIcQLI8fe+pS9ELLbPzPy
+	7XFuJkK/b3VWU0pR6fKtCH7dWXLj7NPKIgsUFnBWRpDOf/OIF1xaPunV
+X-Gm-Gg: AY/fxX5+Rh0iSU4gdSVK4+o+hV1FpkXbFxVu9ieyEpw6fz/RO/634f8m9qs1nfkG3qA
+	8znSbkbzOf34iA9zaO7KdjAtLU218kU1NEizvu4POwQxVF5WHgjKYj225C03KMejxrxAHppMn5v
+	3M+521qBTgFfa4bKr0KqEb+B7vqQ0VIfrpzdtuJY4uaFmNK7aEK/r9ZkQShABKzD8KF9Oe5xlw/
+	oZ2M50ZlnwR8N+PmeLVz+jeGlLx/CQ5p+Ihw5EbGF3lKSbWetUN4IbbR1YhGyl0/VAaaU1yddTk
+	vGFv5XrpmG39uFwlq6c6OT4Rd6uMRn11G+ga/CBXWythJsLDGMtNAzYl3sfsjlTRulcIKSQ2Sd0
+	dA2AJnN+Nv68osah+xZsAbm+y5zfioqAgPbkYnt+9xIFfpByfQcg7iMqiEjmfFRO2YQZkLOU0Om
+	xw82EyaWbf/2pqjfd8JC9juS+EKlYBp1F1pYV5FfaTa308Nin+i5hvpNz5q+iRK8rbcg==
+X-Google-Smtp-Source: AGHT+IEJAxIrCaoWIruusJYyYbiwUv9gpuCu2IWIbzBntuQFJFqEt6pIlPWgTju7sKX95tnDx4Eu4w==
+X-Received: by 2002:a05:600c:b86:b0:47a:7aa0:175a with SMTP id 5b1f17b1804b1-47d84b3bc85mr30148175e9.26.1767796580770;
+        Wed, 07 Jan 2026 06:36:20 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd0dadcfsm10685238f8f.3.2026.01.07.06.28.15
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d870dd5b1sm14827595e9.4.2026.01.07.06.36.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jan 2026 06:28:16 -0800 (PST)
-Message-ID: <331595ad-5c6a-4e01-bd0f-1dabb4bc0fcb@gmail.com>
-Date: Wed, 7 Jan 2026 14:28:08 +0000
+        Wed, 07 Jan 2026 06:36:20 -0800 (PST)
+Message-ID: <072dc5ef-e750-4023-bf6c-30b4b143beca@gmail.com>
+Date: Wed, 7 Jan 2026 14:36:19 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,41 +71,36 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH] ignores: handle non UTF-8 exclude files
-To: Collin Funk <collin.funk1@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Matthieu Beauchamp <matthieu.beauchamp.boulay@gmail.com>,
- Matthieu Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>,
+To: Matthieu Beauchamp <matthieu.beauchamp.boulay@gmail.com>,
+ =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc: Matthieu Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org, Matheus Tavares <matheus.tavb@gmail.com>,
  Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com>
- <aVrCHr_NRDqNjPn0@fruit.crustytoothpaste.net>
- <CALH9GrYOjb92gjrtdjwapFH9L73XGg1Kan8uz1aVLpSXNURi+Q@mail.gmail.com>
- <aV2ZS1lvLivi8xRH@fruit.crustytoothpaste.net> <87secimchc.fsf@gmail.com>
+ <20260104173524.GA29867@tb-raspi4>
+ <CALH9GrYi0dYo4LJg8ww1cDOETiOT44m0zQgkxLsxqEuMmv_myQ@mail.gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <87secimchc.fsf@gmail.com>
+In-Reply-To: <CALH9GrYi0dYo4LJg8ww1cDOETiOT44m0zQgkxLsxqEuMmv_myQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 07/01/2026 01:35, Collin Funk wrote:
+On 06/01/2026 20:32, Matthieu Beauchamp wrote:
 > 
-> An unfortunate trend that I have seen with Rust programs is that they
-> completely disregard the systems locale. E.g. using
-> LC_ALL=en_US.ISO-8859-1 and passing an "À" character as an option will
-> typically fail since it is encoded as 0xC0 which is not a valid UTF-8
-> character.
-> 
-> I figured it was worth bringing up since Git may wany to think about it
-> some before introducing more Rust. I think it can be worked around by
-> using OsString [1], but I guess many people choose not to.
+> Yes you are correct, but I want to address the issues for users who may not
+> realize that they used the wrong encoding when creating their exclude file.
+> For that case I don't see how the fact that powershell can be configured to
+> UTF-8 helps, aside from preventing repeating the same mistake.
 
-Git will certainly want to continue to support non-utf8 encodings. 
-That's perfectly possible in rust but in my (rather limited) experience 
-it does take a bit more effort than the equivalent code using the 
-standard library's String type. I find it particularly annoying that 
-"cargo run" refuses to pass non-utf8 arguments to the program being run 
-when the program has been carefully written to support them.
+My concern with that is that it ends up hampering collaboration with 
+people using bash on Windows or a native shell on other platforms. If 
+they append to a UTF-16 encoded .gitignore with "echo path >>.gitignore" 
+you'll end up with a mix of encodings in the same file. Similarly if you 
+use powershell to append to an existing file that is UTF-8 encoded with 
+"echo hello >>.gitignore" is the appended text UTF-16 encoded resulting 
+in mixed encodings in the same file?
 
 Thanks
 
 Phillip
+
