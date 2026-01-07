@@ -1,131 +1,147 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7E83009EE
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 10:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC15023EAAF
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 11:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767781583; cv=none; b=RtdvPL4HeKyyVZB5I8I98/RearkbAKeMThC35YhoEDB+C7CwjWwFtNNjmpeLh44N1nrLnhLDv6BvKZxQohK7anoZIDbfr+zEPgPNEH3uCiBlkygLe/0jzw7vcVYrcJdHb+qADNSX4juodx6brPoghP3qR6OoKALf4NKIGsgqkhg=
+	t=1767785252; cv=none; b=gRBAYo/fZeQWQ5JsYB++YXJbSqb+vgqsRXotmXY9WcERICqIYkEX7/7anlbBgV77+vncX3B0Ck4gilj+pptEUWBAvr5pn7TPNZUHyz3C9Kh+JmYxd+33mg/nbC+mWteH3MItfAowPYkL3EYQqzb5Qnb4htZ2uOJmMjk+iUXKdFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767781583; c=relaxed/simple;
-	bh=uXz8fUEwzGrJAUfexf9IMW649YTJh8j2lzUwi1oEv+Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PtwuIBJ8fJlqtEIytYZYGB3kO0F+K1YY8zc1yMkPHWGPB2cBbWSq9JjcnV++kOFMHRMR7YGEg9vfNQcKa1DPq5nPjrO0BmRPCvQD9+7Zx0OFjsP4QgG1HkSFjdLgsZwJCO6ey34dtEhi1V+Lmes3n7LCgN0bEyypeUvprlEGtZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxnQJaZF; arc=none smtp.client-ip=209.85.128.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767785252; c=relaxed/simple;
+	bh=yNsn8Hi4k15XoJIPpGM5gX0hRoUpeFJ/ZQ9KqZdWvLs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ki0plekKBrg3KQHXWDqJei/Uc3f82xSmMAHFq0hTEZRB9ka+N06zao2SGAyk/9LMx0oSGV+UYh5NSqBEHAXE9GLGCsL8SVZ8eN7HJZqDbJHb3jtUqIGWeO1FnREL/13dgSVgTQx0luTN54w2LL9YwEMsnxAKOXxKZ8l95Rk0QDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZuOVDOfy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vnlr1C9r; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxnQJaZF"
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-47a95efd2ceso16663665e9.2
-        for <git@vger.kernel.org>; Wed, 07 Jan 2026 02:26:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767781581; x=1768386381; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=r6Djq7xahbNzWlnesSnuzMt4+QmZ6gKxYXcff0rbQuY=;
-        b=RxnQJaZFUeDN7ansGKjPwe504GXLGdNM/P6KsZcfibrZ4i/hFOLNoXldg+RZwGup+s
-         5WMEAc/hdGODkL/FzCRjCJGtnqagwtOHvoFBh6wIMRUUe0AVx2D7PkhahmS1ZGyHbNKm
-         A9Cn2+DDAtxUBX3maui+6ZGyz0QWhuC+/V5t4GV9/JMNKT401mYCACTMEj1GTX8us93r
-         pFIQp3yyg72o8HvV4mZ3PAXQKhNdO7q8GQVFumSbgVLmQFAwZkj7SjG8o4UiHaGO0d1U
-         bij8bOg1x2GQbjNGM9Q3RdFddeUmAwALxf2HkQy8g4QP1a2lvegJ4ELgNare1aVaM/ni
-         lNgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767781581; x=1768386381;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r6Djq7xahbNzWlnesSnuzMt4+QmZ6gKxYXcff0rbQuY=;
-        b=rMCNyNB71CLWLl5G7pJ9e/YvmfOXVB/kN0clJcOgHZ9iG1/k6xpAScXswf1zegvdzu
-         tQrkfywVGIKKpX2bXvLjtiJydjkSA4JHcKj6euOJJi4cTy1Vez+r58ROf9Ij05z9ctE1
-         KZe1TWYrM3iQoK7tXG14uDu8rC+yqXLrtN121ES8Q6Gs2LbEjVfxskAAJbUOC+Il7Bfn
-         HIs0mOJs0ErOvwFczcQXfFgJDTMScXfn4NNIfsrtq/0Yk7gmsDh/OucOiFaa1mYVhwt+
-         74Bemz4xBNCXWGTMhUG0LEYniMBaOnaCvlkHlOAt/kv9dOlQLDLaQPuAmAvRBnMbw75O
-         z4hg==
-X-Gm-Message-State: AOJu0Yzq/7S9U4gqJRSPKvUqQeupihgxo+TKXE9e4i9nWVbhVcIhzzwg
-	tfPIu8M1ujHHzsYOBIXLb6a0ui3isBWFXlbSROTI4RP2g2vhG+/YMvNnZsWJN2SP
-X-Gm-Gg: AY/fxX6o3oilgJXzLFX7qrrTUHaePlLohqBj6wijHMz2aEzxxgiiVfDDdt4bySbcBIe
-	S2Rnm92VlQ22iicSANLoh2aEMIU5PYZ+ZsgLGxQCb5f6WiekjBPzqvccH/tDq/JjM3LClqWI4no
-	9HUXJwHlFidHUMWd9c3TFQMCaOjKcAbxxztiGaHN+iwchYDD3uvPgQw7XAv3OYRx5lqSyHFYmo4
-	PN6fnE9QftxsEag8YCspDthjmDD7XfSv7QdI+CoQgBpJ6z1UnuDeDeXaIRCWxKM0hVhuzjKFJJx
-	QZ7m+B1EoO+QZnL0q1N4oY0Rc7OI6XChNxKZBmRraWNMKOnd3ap5or2SG7V4HEcOig0kQno5hln
-	5ppeOrEmlJe1/q73Ddcoxb99J2YCVyPg8ApjCuNcR4Jqari83/GF4G0Kn7cJxe92U/kx6Gbbr0I
-	nDN3TFvqfcuv0YnXQH7qshXs/w2M+TWSut5JD7IftWzieQZ8jWhS9+gO3e01VBloIZeA==
-X-Google-Smtp-Source: AGHT+IH7U0nyUcgnR8NqPGBCz5BGLhlf8NVpKDmLgPrkgDt07YkHUppc+4egdY76xXl+L16B7ejzmw==
-X-Received: by 2002:a05:600c:c08b:b0:47d:6856:9bd9 with SMTP id 5b1f17b1804b1-47d84b33bccmr17191835e9.23.1767781580489;
-        Wed, 07 Jan 2026 02:26:20 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d7f653c78sm93334585e9.11.2026.01.07.02.26.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jan 2026 02:26:20 -0800 (PST)
-Message-ID: <922629dc-828c-4bdf-939c-b38b7b59e8e8@gmail.com>
-Date: Wed, 7 Jan 2026 10:26:12 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZuOVDOfy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vnlr1C9r"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0F6C7EC0258;
+	Wed,  7 Jan 2026 06:27:30 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Wed, 07 Jan 2026 06:27:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1767785250; x=1767871650; bh=sbGMQOT1eJ
+	PBE1CNoGg4MEpp9YqD8UzLf0xfp7di4mg=; b=ZuOVDOfyueyZRZg5ZaaTwyJuow
+	4eoa3x77h+aSr7ZLim/Q1uQYdXTjUtvSh3bWhyKNhKqmCz2fOKTbFjVaiNfmkdYP
+	5D8XxWy7dhZn7PPZQJO1AH7KNFkWbLFqHlCqM9BlJjjg0wgg9OJJ6jxQiCoPMj4q
+	Sk7Sco3Fh8uZ9hNbPB+fxO50xhD7B88jvxgMhFf3qtDXQvyiaae2KChg+M739v6/
+	pnyrD674VR914BJ9WV1rVuae5geL2lVWDZOeeHzc+Tdjchdn4+8Z6RMvhaybL1pH
+	fG6PfHyklCdX2vytfADrGrZ7J5HpSTv1ePYCvqns6MQXmHnXM4bUTA99K00g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767785250; x=1767871650; bh=sbGMQOT1eJPBE1CNoGg4MEpp9YqD8UzLf0x
+	fp7di4mg=; b=vnlr1C9rnNpY6nvybM38NvZKoHvNRDwk0rqO6fa5bH/RVP//G0c
+	P5Y2n8hVEI544Mql4hxOVjQdm3TUxdTv+GRJULC1HOqqKTeWOe9C/0VIQk5LsWjt
+	02Oyf9npOZQuU423cTZhOoHUZEW54GLglz7MLRMtkPfEycTKwKBaKxiz6rOSwxY4
+	2NnSNiEfvjw4otVLFPL3doVff1Yl+VVZ11+CeK1NLLbMOnTo/UuyJ8liRFQBGeRr
+	tY/hucW6e+sWzMcRTMKxvRnALb/I7G6VGnhIBALkOSaco82q7N9aSrJ06vyIsLJu
+	SbdDurYen1l3xC+kMA0t1gZsBl11+p9JS6g==
+X-ME-Sender: <xms:IUNeaQ0lRhMJetnAXSpYpOPI3NyC_iuakNDcu4std-vGlI-E7cwzgA>
+    <xme:IUNeaey1lJ-f5YH9w-CQ7brzVFMO1K-7Cz171YptuuLSYIHwwAp4oUQn-JZ2uR2mY
+    Ewz6elnpq8L8v-pRmzD3FNL-DKTPiCGxD78bt-5q5GDkWpIayI89A>
+X-ME-Received: <xmr:IUNeaSvYFjR_BX4aYGYXncgOtc3BKFKZ_47C3s0uyDhcRqOTUypXNkImw4-UuQaoiM11VbF5Q3EKP9AjaReYUY5ZvLUjEH6klzbutY9zhTE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvleegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgt
+    phhtthhopegrphhlrghtthhnvghrsehnvhhiughirgdrtghomh
+X-ME-Proxy: <xmx:IUNeaQwcgilX6-avTojMeFbQDty_760A0SwRBz3QX4Xzg88M926kJA>
+    <xmx:IUNeaVCIHjs3JFDNIBaac-Y_NCctOBK0R3pV7IsktcwUsZnngU4Nig>
+    <xmx:IUNeaecIaDMta9fQzZRoXlyjmFhtjTA9WN6NruyrkZQzi9pi1Th1MQ>
+    <xmx:IUNeafnKR_Dobs71XO06CJjSZ033UQXGAB1zxOl4winAfLZI8G7Akw>
+    <xmx:IkNeaT3dYqPnyE-dsUwJaEI23O2kpSaXKhsMpuCuC_Beab7sgewOv2hE>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Jan 2026 06:27:28 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e47f5dae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Jan 2026 11:27:26 +0000 (UTC)
+Date: Wed, 7 Jan 2026 12:27:24 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Aaron Plattner <aplattner@nvidia.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v3 1/7] object-file: always set OI_LOOSE when reading
+ object info
+Message-ID: <aV5DHI04KBs4GJn-@pks.im>
+References: <20260106-b4-pks-odb-read-object-info-improvements-v3-0-b5e02fae1fb0@pks.im>
+ <20260106-b4-pks-odb-read-object-info-improvements-v3-1-b5e02fae1fb0@pks.im>
+ <CAOLa=ZSNmi_Lzb=3EdWks=mMOPvfijT2659y4YtxWnUKVUOXaA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into
- repo-setting
-To: Bello Olamide <belkid98@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
- Usman Akinyemi <usmanakinyemi202@gmail.com>,
- Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Taylor Blau
- <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>
-References: <aVfzMsN2ouY3UBFG@ubuntu>
- <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
- <3947f777-e08a-4c17-81e3-c4711fe666a0@gmail.com> <xmqqwm1vk83a.fsf@gitster.g>
- <CAD=f0L9BEPSQivgpM7qURT+WFDY-+Ys_M6Knv8hE0JDw4Wjj5A@mail.gmail.com>
- <CAD=f0L9H5Q=zW02nr11OSBNgFH3UMLwVjVjn3zhgZ2rjwE85WA@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAD=f0L9H5Q=zW02nr11OSBNgFH3UMLwVjVjn3zhgZ2rjwE85WA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZSNmi_Lzb=3EdWks=mMOPvfijT2659y4YtxWnUKVUOXaA@mail.gmail.com>
 
-On 06/01/2026 13:44, Bello Olamide wrote:
-> On Tue, 6 Jan 2026 at 10:33, Bello Olamide <belkid98@gmail.com> wrote:
->>
->> On Mon, 5 Jan 2026 at 23:28, Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> Phillip Wood <phillip.wood123@gmail.com> writes:
->>>
->>>> On 05/01/2026 14:23, Phillip Wood wrote:
->>>>>
->>>>> It is quite common that moving from parsing config settings eagerly by
->>>>> calling repo_config() at startup to parsing them lazily via 'stuct
->>>>> repo_settings' causes regressions like this. We really should find a way
->>>>> to address that before moving more settings into 'struct repo_settings'
->>>>
->>>> See
->>>> https://lore.kernel.org/git/d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com
->>>> for some discussion about a possible solution.
->>>
->>> Nice, but I suspect it would be an improvement already without
->>> passing repository instance via git_default_config() and instead
->>> have the code use the_repository; it is even possible not to have
->>> any repository when the callchain executes.
+On Wed, Jan 07, 2026 at 12:50:45AM -0800, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/object-file.c b/object-file.c
+> > index 6280e42f34..d566df427a 100644
+> > --- a/object-file.c
+> > +++ b/object-file.c
+> > @@ -439,12 +439,23 @@ int odb_source_loose_read_object_info(struct odb_source *source,
+> >  	 */
+> >  	if (!oi || (!oi->typep && !oi->sizep && !oi->contentp)) {
+> >  		struct stat st;
+> > -		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK))
+> > -			return quick_has_loose(source->loose, oid) ? 0 : -1;
+> > +
+> > +		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK)) {
+> > +			status = quick_has_loose(source->loose, oid) ? 0 : -1;
+> > +			if (!status && oi)
+> > +				oi->whence = OI_LOOSE;
+> > +			return status;
+> > +		}
+> > +
+> >  		if (stat_loose_object(source->loose, oid, &st, &path) < 0)
+> >  			return -1;
+> > -		if (oi && oi->disk_sizep)
+> > -			*oi->disk_sizep = st.st_size;
+> > +
+> > +		if (oi) {
+> > +			if (oi->disk_sizep)
+> > +				*oi->disk_sizep = st.st_size;
+> > +			oi->whence = OI_LOOSE;
+> > +		}
+> > +
+> >  		return 0;
+> >  	}
+> >
 > 
-> But won't this be a temporary solution since the goal is to prevent the use of
-> `the_repository`?
+> The change looks good. I'm wary of early returns independently doing the
+> cleanup, wonder if it'd be better to do `status = ...; goto cleanup`
+> instead.
 
-Yes but it would be a good start as passing a repository down to 
-git_default_config() will be quite invasive. It would certainly be 
-better if we can find a solution that uses the repository passed to 
-command when it is non-NULL. Unfortunately commands like "git diff 
---no-index" are passed a NULL repository but we have chosen to store our 
-config in a `struct repository` and so we need some kind of fake 
-repository for those commands. If we stored our config in a separate 
-struct we wouldn't need to fake a repository but then we'd have to pass 
-the config round separately to the repository which is a pain. Perhaps 
-git_default_config() could use `the_repository` when it's given a NULL 
-pointer for the callback data.
+I share that sentiment, and I was in fact having a look at what it would
+take to have a single exit path in this function. I eventually discarded
+the work though because it required a bunch of changes to really make
+this whole function more readable than it currently is.
 
-Thanks
+But now that you're the second one thinking this I'll probably bite the
+bullet and just do it.
 
-Phillip
+Thanks!
 
+Patrick
