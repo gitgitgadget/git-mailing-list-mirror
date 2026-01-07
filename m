@@ -1,121 +1,158 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FE6332912
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 17:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B615F39447A
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 17:33:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767805970; cv=none; b=fhG26u8NelEms+Jv1c+X02eFtZRVjMSTjp/NwhzQzbMckFiNeS0r7vh85kIISB6t+RWl23DdwhflZyDS9wGU3N5qSmW+dHoyJMhNO+/pUtg1Ln69cg6fEkS+W3MinC97hcfdHIGxTN1o5xoMU8V8BSDeO5Km5raXdfpXAoIKDZs=
+	t=1767807207; cv=none; b=f41I5uz36AZaXJ1jl43yn45EBXrX0Pm1iX1uoWStGu/me202e0vplp6lhalG/slZDjH9Jqt3BfBplI+I6Tctks05N1AFmSLFMC5SyurTidSqmZYXb+mYzJ5GHCxfW4BSQd6nEeLNqyWBwVR1W+uSn4S8fSxGID4ThBPyiBcjyZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767805970; c=relaxed/simple;
-	bh=EyVm3i1hBoVY/DKI7UqV4DGJGfuUlGvuJKnOjK2H3Xk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L2gbJZSStu+c3gZxGqGHAaf0FCdmTptPwD9CtjcmAy4NfAjR6mmqkBEvwSdj0b0njUnEKZF/J/bJk63aUuPxXhHiFdUfIgrwUphDIa1ZI/LmClXPKg2w07T6oNG1CSCZkhGXuWWOvQcPQ1h1nyof5d4YQIYA0oPbRcAJ+hPmwoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IDN9mk/b; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IDN9mk/b"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7acd9a03ba9so1641225b3a.1
-        for <git@vger.kernel.org>; Wed, 07 Jan 2026 09:12:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767805968; x=1768410768; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UBz15lR9InLUmyL3Aw9dOKGn5iq3JilZVYdjdL/L3gc=;
-        b=IDN9mk/blOzjF1DFapqFMe60E/qr7HAoyfK7G5eOz6o1gr33CWfgKduO/iZ0aQ5BTz
-         oGQCO2z3NAak3h01Kn5/NVK92hzm7EF57FpF8EPCUiCp+jhgKqrbYOMwkchVSFA+TFUj
-         d62EE3s8KK0miKIDm68Ct4Jg71OVx6294qDgT657RjBpBpODK9gIGhSOTsYWcp6v1l86
-         wOg7nplxe7mewHht3hvFEHnF71ibTQuJIf6QHF1MI9fNQopEE8sAz514yj4rqp1IjIPN
-         3E+H4xiRUuFZS6ey+MrmpKVlBOwgfpgGCOOwupLh+aDFV0iWO4FqxDkhzIRME+qyma5g
-         M6UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767805968; x=1768410768;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=UBz15lR9InLUmyL3Aw9dOKGn5iq3JilZVYdjdL/L3gc=;
-        b=u/bwb6PCitSXU0gfMJq1y343325aA0j+b0Oe9k+5whagSrw1447KVAxwx1kbOq/KIV
-         WVazy9B6L0N8+gZhJl1r9b6PNTjO9a69Vlog6GYOBS5navkLOugjeLFYc6KmB+WVFJs0
-         x0HInA8ho8AjlXsPbNTO6mg8hZBk8jW5taNfKUqF+iEwRQhlHYID9EAJbsyFUkLn6atC
-         Vh5tiXyl6sTNeeTnc/3tH8dSU80ULFwxKSCptFrrBmnYYGvv5w2rlp9W2E8h9g0W0f3B
-         gdmKLS+7Qye5mpOWoYOrh5hiDa/Q5ueBK5hLYQAYofOxc7w7ftKIDl+MU1BGjx3+T9z3
-         y0Wg==
-X-Forwarded-Encrypted: i=1; AJvYcCXrIeLMBlnkYuB/9Oey+ChobvFf0Kto/YiVltpE2uCLn3gW6+KEk2xNXGaJeMELEHJlL5w=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywz5r/d6Qh8mMxUATEFboxp2h8ZRAb4gfEsG8vGkf3YuP7wiZNb
-	22jlqHs4tnN/2SFfmW1FQQMUCRPZc8eC9e8uFSoQ8Add10M4rSxqTMzzDf+2BzWjR1W2NZvP7Mh
-	ZlgXRYxrMij3tDWMgkl3SJR/UOebbXuA=
-X-Gm-Gg: AY/fxX7OxWRYIVVYousefwSzCGfnT1VEP/jO4LG4J06CL+73pL+3r/1weCMAryEz2Mr
-	ZD0f/1hc3fC7B+zxZ7kvnQ/UDcfYiCl5SmBuF2Gr5AgOEyXBUf/3L88+Gbp9Dwnq1O7D2GTUWnM
-	LQJJ72rDDVaH3MwEtQdHhLGM06cId1Ic+VcdaeM3inFDxA/XVVOAI/aSMSvqKgozfQGMhz9blD+
-	BGoPtkQHgvAS9uTX2IxXEkFS3J8GUPQCFSetSMdsd2LgqZpD0OlBbq0mfDSzG/L3Hk33/5EtIZ1
-	8Ryyo0FfC+HhPbV7XDpE5r5PL4taYw==
-X-Google-Smtp-Source: AGHT+IEQQnMov5qn4kAVTWsa8WQVJyDOvkm+IfYKjkm5hcCXJ2XxS2OEmU/obI2X83YNXblctJ5vzEsEtlS32DT9ruY=
-X-Received: by 2002:a05:6a20:9185:b0:36a:ee9f:cefc with SMTP id
- adf61e73a8af0-3898f915622mr2976167637.17.1767805968152; Wed, 07 Jan 2026
- 09:12:48 -0800 (PST)
+	s=arc-20240116; t=1767807207; c=relaxed/simple;
+	bh=8ZLWM2ARD0z70NGhlr02xNkNxdJX1Mx0+piHHleblWw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QmSMY/yui9NZm4nOo/fKjMlaOOfF7L5JFw+NMq7DT09uvB2mf7IG5lEadzXh89l0nV2zPPs0c5jXILltigQVKcnqcPBnw/wgl/1pV0MvpZO7hsfZmjRWbb++cI5CEvvp4+6WPymB4IxuKNqq8BMEDWXxbFVng5MFxhLejpF2gR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.103] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4dmZrB6w8NzRpKJ;
+	Wed,  7 Jan 2026 18:33:14 +0100 (CET)
+Message-ID: <d3f26459-d828-4d01-8c38-ce754e5cc576@kdbg.org>
+Date: Wed, 7 Jan 2026 18:33:14 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <09870987-ae2f-44ec-b8a0-1654f598b5fd@codeberg.org>
- <aVvSwkK7RdpFDaVv@pks.im> <8e6dd4d7-6e0a-477a-b10c-8571d6b7da4c@codeberg.org>
- <aVvWDDtBeJMIF3F0@pks.im> <eecb1c9a-4dc9-4666-b2af-1e3478109db3@codeberg.org>
- <aVzcyYjR8l-xXD4L@pks.im> <39eb6099-49ec-4ebd-8347-e2f2e18f3e8a@app.fastmail.com>
- <xmqqbjj6jnpb.fsf@gitster.g>
-In-Reply-To: <xmqqbjj6jnpb.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 7 Jan 2026 12:12:36 -0500
-X-Gm-Features: AQt7F2pl2ASqyLJZ53kna7b_8ls25Em6xMejhxoR8rIB1gyIDQ90haCMtTZBXKY
-Message-ID: <CALnO6CDRPdXJ-HR0CK7VRf30NCWamX5yBE18uf+nJaM8FMJCmg@mail.gmail.com>
-Subject: Re: git-last-modified on bare repository
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Gusted <gusted@codeberg.org>, git@vger.kernel.org, Toon Claes <toon@iotcl.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] ws: add new tab-between-non-ws check
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+References: <20260107013051.312291-1-adrian.ratiu@collabora.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20260107013051.312291-1-adrian.ratiu@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 6, 2026 at 7:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->
-> > On Tue, Jan 6, 2026, at 10:58, Patrick Steinhardt wrote:
-> >> On Tue, Jan 06, 2026 at 10:42:55AM +0100, Gusted wrote:
-> >>> On 1/5/26 4:17 PM, Patrick Steinhardt wrote:
-> >>>>[snip]
-> >>>
-> >>> Yup, git from source works! Do you by any chance know if 05491b90ce i=
-s going
-> >>> to be in v2.52.1?
-> >>
-> >> No idea, point releases are typically done rather ad-hoc. Let me Cc
-> >> Junio though so that he's aware that we might want to pick this if we
-> >> ever release v2.52.1.
-> >
-> > `RelNotes` says that this will be merged to `maint` later which points
-> > at tag v2.52.0 currently.
-> >
-> >      * "git last-modified" used to mishandle "--" to mark the beginning=
- of
-> >        pathspec, which has been corrected.
-> >        (merge 05491b90ce js/last-modified-with-sparse-checkouts later t=
-o maint).
->
-> These are really "if we will produce a release out of 'maint', the
-> topics marked with these can cleanly be merged to be part of it",
-> and does not answer "if we ever have 2.52.1?" at all, though ;-)
+Am 07.01.26 um 02:30 schrieb Adrian Ratiu:
+> This adds a new check to detect HT in the middle of sentences that
+> should have been a SP, as suggested by Junio in
+> https://public-inbox.org/git/xmqqy0mwsedz.fsf@gitster.g/
 
-Good to know; I'd had questions about that as well.
+Generally, please review the commit message to follow the project's
+style: Use imperative mood in sentences the describe the changes ("Add a
+new check to...", "Supoort highlighting for tools like...", "Enable the
+new chaeck for...", etc.)
 
-> I am on a bereavement leave now, so expect that my response will be
-> leaky and slow.
+> The check is a bit complex because we want to detect places where
+> a SP was intended (HT can expand to more than one display column),
+> so we need to count both the display columns (col) and the string
+> character columns (i) to determine if a HT looks identical to a SP
+> or can cause confusion.
+> 
+> Highlighting support for tools like git diff/show/log is added, as
+> well as git apply --whitespace=fix capability.
+> 
+> The middle section of the line used to be assumed non-highlighted,
+> which is obviously not true anymore, so we split its logic into a
+> separate function named emit_middle_section().
+> 
+> The new check is enabled for Documentation/**/*.adoc, where these
+> kinds of mistakes were seen in practice. It can also be enabled in
+> other locations where it can be useful, by adding to the relevant
+> attributes file.
+> 
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+> ---
 
-Sorry to hear that. The only thing I know for sure is it gets easier with t=
-ime.
+> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+> index 3c8eb02e4f..f5b6ceeed9 100755
+> --- a/t/t4015-diff-whitespace.sh
+> +++ b/t/t4015-diff-whitespace.sh
+> @@ -2440,4 +2440,147 @@ test_expect_success 'combine --ignore-blank-lines with --function-context 2' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'check tab between non-whitespace (tab-between-non-ws: off)' '
+> +	git config core.whitespace "-tab-between-non-ws" &&
 
---=20
-D. Ben Knoble
+It might be worthwhile using test_config here, because this setting does
+not need to persist for the remaining tests.
+
+> +
+> +	printf "1234567\tb" >x &&
+
+What if you made the test cases into
+
+	# only the TAB in the middle must be diagnosed
+	printf "\t1234567\t12\t90\n" >x &&
+
+to test that only the second of the three TABs is diagnosed?
+
+> +	git add x &&
+> +	git diff --cached --check &&
+> +
+> +	git diff --cached --color >raw &&
+> +	test_decode_color <raw >actual &&
+> +	! test_grep "<GREEN>1234567<RESET><BLUE>	<RESET><GREEN>b<RESET>" actual &&
+
+This must be
+
+	test_grep ! "...
+
+Furthermore, a negative test with a very tight pattern is often not
+desired: The test could fail if any single character does not occur
+(which could easily happen if the test text is changed, but not this
+pattern). In this case, it would be sufficient to test only that "BLUE"
+does not occur.
+
+> +	test_grep "<GREEN>1234567	b<RESET>" actual &&
+> +
+> +	# should apply without error because tab-between-non-ws is off
+> +	git diff --cached >patch.diff &&
+> +	git checkout HEAD -- x &&
+> +	git apply --whitespace=error patch.diff
+> +'
+
+There is t/t4124-apply-ws-rule.sh. Wouldn't the `git apply` tests be
+better located there?
+
+Please consider all comments on this test case repeated (and suitably
+adusted) for all other test cases added by this patch.
+
+> +
+> +test_expect_success 'check tab between non-whitespace at tab stop (tab-between-non-ws: on)' '
+> +	git config core.whitespace "tab-between-non-ws,tabwidth=8" &&
+
+I am curious why you set tabwidth=8 here even though 8 is the default.
+
+> +test_expect_success 'check tab between non-whitespace not at tab stop (tab-between-non-ws: on)' '
+
+With my suggested text above, this case does not need a separate test, I
+think.
+
+> diff --git a/ws.c b/ws.c
+> index 6cc2466c0c..633bc69418 100644
+> --- a/ws.c
+> +++ b/ws.c
+> @@ -26,6 +26,7 @@ static struct whitespace_rule {
+>  	{ "blank-at-eol", WS_BLANK_AT_EOL, 0 },
+>  	{ "blank-at-eof", WS_BLANK_AT_EOF, 0 },
+>  	{ "tab-in-indent", WS_TAB_IN_INDENT, 0, 1 },
+> +	{ "tab-between-non-ws", WS_TAB_BETWEEN_NON_WS, 0 },
+
+How about "tab-is-1-space"? The documentation can clarify that not any
+TAB expanding to width 1 is diagnosed, but only those that are between
+non-space characters.
+
+>  	{ "incomplete-line", WS_INCOMPLETE_LINE, 0, 0 },
+>  };
+
+I didn't look at the remaining code changes.
+
+-- Hannes
+
