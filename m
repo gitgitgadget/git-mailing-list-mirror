@@ -1,187 +1,170 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB7E30497C
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 11:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4976315D2A
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 13:08:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767786184; cv=none; b=VZXOg7/ge+Zy7z5xYVaW40NOf/0l7N/zwuSrztQuzQfoz37vSbwvgtMjbX3YJA1bU4bngwMA7aeP+zPBzx4Qn298FRB1AR3Wpwut35K58DpK73KiWcO23L3haCE3GwVOjj9x5HOm5C9iuxPyutt/mPG/YS7VuQC08Z76dYOOykk=
+	t=1767791299; cv=none; b=U/rgtuKxTEwiaSJc8izg5YaQ0rINo0ZvObT1QC3zjJHRqpJw3c0ZV1KccSTsRdxx4LQmM8y4bwZlnBZueFn9hLasqXUoslkfF6x3uQbsmdlNUr8KpsBARAhufY19y9XNF5A8PtrSY8Bp7jLN3vN5yArZ2or1QAOVgEohwqO0mcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767786184; c=relaxed/simple;
-	bh=PH+NuRm3FMsavaOBwYO0PUHBI2Tt/G9cWyTBwGwCcLU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gvFbTiyOfEHTd2POnnjvETj2Rq38ci9KN7R8hEddd0Mp4EeA4ZSxgFZ/yIhHQ5fHDTLSJ3yaceY8KWx9WTXVY60qQ/zB8sUw++CTNs2Llnauvp/2QaSTfPFeK3VkOqigefrsd6HgaeaN/C0E8NgQOWQsrf8UAKRJGYCllqJu7yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XkunrYjT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EvP25I1v; arc=none smtp.client-ip=103.168.172.151
+	s=arc-20240116; t=1767791299; c=relaxed/simple;
+	bh=+Hq21bmNsk2fwuLDyljrz7UYvJFuIM+4zgcx2iqIjwU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=h/Jrl1jk8JPsyMSy9EcldM30O/IcT3+qV9Ol6YkG/Swa4gJuye2Teimffv66hzsaqtjF41J613skWsFBLbSvPqcqC8Arm2cBUBIHVJVWzAlnIHzkGjXQdfAMszPh+z74TX2KcvjCIqifLpbmVLCmBIprI+VcufkefRWEhGDytAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fhYCvkmo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UYI7Furu; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XkunrYjT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EvP25I1v"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fhYCvkmo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UYI7Furu"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7035BEC0064;
-	Wed,  7 Jan 2026 06:43:01 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 07 Jan 2026 06:43:01 -0500
+	by mailfout.phl.internal (Postfix) with ESMTP id A87D2EC026E;
+	Wed,  7 Jan 2026 08:08:15 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Wed, 07 Jan 2026 08:08:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767786181;
-	 x=1767872581; bh=W/bwMOxZ0793i2psDZNWr61KIicl+HQF8RZp05QV8rk=; b=
-	XkunrYjTJryfUw2hrBBlaMoMQXzWoFGcYLTrKSYcPb0MeAny/x8weW7p8i/jFWLn
-	O+sc9eepquInE2AtcTWbD1unSMvvtVBN4NQda85L+MruWs/LnUjBaMvR0UXpxaH7
-	zzIrbktaF9yW9l1pqRWfReae4Gxz1aF+ZvoLF2A85x4kjNG1KibOlbUPoSuM4f2J
-	IE2ZLZ0YNW9dCiJMCXehPUWmnuPnaDtIkJ50uJ+xd5o4Gd+5AIcSvgJVYoIIJ2X9
-	NJYWPiW+zdFUnQG/TsPwSYugwUp487kAr5007XKfwsXrQopEvtIA1Cz03tokS1OM
-	jwy54lzlX7c7kY6Oo/tayg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767791295;
+	 x=1767877695; bh=+WMtFnxRMfVEVK/NgYgjRmeeS0O1ctHZY6MmXWL+ISc=; b=
+	fhYCvkmolm4cpIRRiJ/aX9NELpX0mFf4TvfyYXQsR/ugcOumnWINNvmuj7ouDkAC
+	EcrPCndzUMKYhHA9gvMmW9soll1/oXG9ePfEXt+zI8OhB8rScENxq4BtRkw0m9SX
+	q02yI+j/+DUku1sf3DNRlF+LLpiH/WpPmieAyBqhYH8o5ei0e0m/tTuqo1MYee9j
+	S5QwdqFcoZ4886Sy8/vQeFd6dsVMNqxSCOnmAM87ZrOnizo0QadnQuO7n3Xn82Fc
+	Cd2f8khm7bhhY7bvJsRswLVU0ReYm3Hc4Cz2RrUhuoX4tBBP/LR+y6MxiYAJ1Vog
+	s+nvJhr4Waqu7J0SI6xrFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767786181; x=
-	1767872581; bh=W/bwMOxZ0793i2psDZNWr61KIicl+HQF8RZp05QV8rk=; b=E
-	vP25I1veBHXFjZ8qrK7omRKRzavxQUtaFeaIQuW2NsnDZlKzMMm6KJ/q4JVhfwH6
-	yvZ0SeYWh6NgBniA5Sy6LFhUvcVxTODNTVpkEcqttEWjUO6tA2QA4/nN3OLQWG/y
-	sqswJsQg5LB9HLq3yx4qI8jmuPMTMXjBif3a8UFxoD/44uTrKYHj8YhssWWAb0Kb
-	qgo0voGpaFvYzcOGJfV0f8CCTdewWGbBNAP3JmOHF7NDwVNGoy6rOvJFGR+azLwL
-	/u5mnIOsZKi81tUddrPmu+g+Yp14orNMjoQGGwAk/WggDHAxiuayLhIkhxQXiI5w
-	nrc7f231/wmnIdUCQbkjw==
-X-ME-Sender: <xms:xUZeabKYjYz9xU65Sw3p5eOa-0uHbccGziCinSAoTu8nQ9HOdXvUPw>
-    <xme:xUZeaWKwwJL4NMDo04HLiMwFfSSZwxdeVC-0gkEPIUqt6xmFL3KFrgvyeLBiC8hXn
-    Y1MmLW4A-Zsh8-H0ug2qd6u1e_ipd3xkzm8FjIZmagkiHrmFVuR>
-X-ME-Received: <xmr:xUZeaYszxZ4g4jFYs2yskxv5vZ4C3it0qdxrXv3MX3HtB7q-XWBlfoEZN3mzfZiCVUGZxVaJIpkLg2YgminqU7KI2oBIHm4jGJTRZhE1UO8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvleekucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767791295; x=
+	1767877695; bh=+WMtFnxRMfVEVK/NgYgjRmeeS0O1ctHZY6MmXWL+ISc=; b=U
+	YI7FuruasWBUN74ZCRHmdDG3HOiFcVAZQzTv64dAsM5zVZCc1+YrgSvZMoZql4as
+	d5F7z9pM/pfdBNemq5JFg4NLLcuPUt+K3gEvS9YpA1s1kQvOjyA47xJAJHwWLdri
+	WVi1al+kfUF41ANX/Ac2tkll83qBpJy/0/bzAGUm9oO5IwsppCLppq7kWUMyYt38
+	cl0iJFZmuijEpVAcAfGeVJOJix4ZQCbXtJcxD3yjMv2UjGQgbE+Mw/3mNOr2S7Dv
+	Igdsjm2+aDebl0OHcADxdgukjNhqIGraEW1y40pVOzIdBQTjSmPfmqeMueN9N4px
+	pJD1hu8ttfyzLRzC3SdYQ==
+X-ME-Sender: <xms:vlpeaYhMuVEy-i4qYLatyaeIb0lJMT0WiyN_i1MWrrxo0MG7N63GRg>
+    <xme:vlpeaUsHebtJaOPfzy8GEjybfPwMY_U6ztyKWwMAqV5T3iWl6W9rOBmJ_2gZAkSYa
+    m26ivjlRtv966dfXevlKbBQsfDUjOhRQqdCT1oTEBi3T9smMs8b>
+X-ME-Received: <xmr:vlpeaZ7X_JrWNWBMvxPuh9-okelBuRVHGByO3GROegir3CH8o3uNbGX8ZAk6fG5wZoo8hyB497DPlCORly3WDEewTJov4w_dQnO5CS8quC4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdefudehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmfhhitghksehnvhhiughirgdrtghomhdprhgtphhtthhopehsrghnuggrlhhsse
-    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:xUZeaTTiia3hq0iTtpBlontaTi1OD0VSmFU18e3r7JDX-398R4WdFQ>
-    <xmx:xUZeaeM9IRLnOF9IePzIIft7g1MFFaUk1-6MBlXtQ5hs1zCr1rePtA>
-    <xmx:xUZeaYaZm8tN-XJZIYzyoUDO96BySjZInAH5fokl001LIK4vFAB14Q>
-    <xmx:xUZeaYzVocDHmS6ob-YM-M94yFlFn7ikug2aEqu4OtTLYeo7PIlPaQ>
-    <xmx:xUZeaWrh2R70t6GMdf4mOrZ9uKe2UUo1BWs5xgfb8ru61duaeuSXOS61>
+    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghplhgrthhtnhgvrhesnhhvih
+    guihgrrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghr
+    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:vlpeaQMy9dQPHwc2T3fzasHkRaodnSlV_vwX_xUjpsNvHx4UOSg-vg>
+    <xmx:vlpeaXvMjhItJFB8r7gOcFit_UyieSUQzt8otG5IHktxI7HoQlYfkA>
+    <xmx:vlpeaTaxF-1_xa5FFkn2ykSEN8huyfc_meAHW65J764YjeYqYSbmxg>
+    <xmx:vlpeaZxuHXybSxFwe74OT41j21C-xpK0XftLOwm2cXlMriCjh-u5kA>
+    <xmx:v1peaZAoqW9bk6VZviaqz8UrZd0VrsclxuodFe6ZmtjDuAC9mpwRRzQC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Jan 2026 06:43:00 -0500 (EST)
+ 7 Jan 2026 08:08:13 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f4ef591c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Jan 2026 11:42:58 +0000 (UTC)
-Date: Wed, 7 Jan 2026 12:42:56 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 12b7e581 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Jan 2026 13:08:11 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Martin Fick <mfick@nvidia.com>
-Cc: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Slow git pack-refs --all
-Message-ID: <aV5GwOS_N2jyIFaz@pks.im>
-References: <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
- <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
- <20251226044507.GA1971832@coredump.intra.peff.net>
- <CH3PR12MB9026DFCF7AF4ED1A249B16A5C2BDA@CH3PR12MB9026.namprd12.prod.outlook.com>
- <20260102074901.GD2581074@coredump.intra.peff.net>
- <CH3PR12MB90260C4887067C88629BBE52C286A@CH3PR12MB9026.namprd12.prod.outlook.com>
- <aVyxbqk-2QQIgDXK@pks.im>
- <CH3PR12MB9026F1E4B99D32E138800EEBC287A@CH3PR12MB9026.namprd12.prod.outlook.com>
+Subject: [PATCH v4 0/7] Improvements for reading object info
+Date: Wed, 07 Jan 2026 14:07:59 +0100
+Message-Id: <20260107-b4-pks-odb-read-object-info-improvements-v4-0-b5d55c47082a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CH3PR12MB9026F1E4B99D32E138800EEBC287A@CH3PR12MB9026.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAK9aXmkC/53NwW7CMAzG8VdBOePJcdoSOO09Jg5N6wwPtamSK
+ mKq+u4LSEziBhw/S/79F5U4Cid12CwqcpYkYSyj2m5Ud2rHbwbpy1aEVGvSNbgKpnOC0DuI3PY
+ Q3A93M8joA8gwxZB54HFOgIxGs7e060kVbors5XJLfR3LPkmaQ/y9lbO+Xu8R+3wka0CwurOms
+ dWeHH+Wvw8Z1LWQ6V2VitoQG672uCPXPajmrjaosXlBNUV1NSP5lrV3+K+u6/oHZfl+WIkBAAA
+ =
+X-Change-ID: 20251215-b4-pks-odb-read-object-info-improvements-0e031ef827d2
+In-Reply-To: <20251218-b4-pks-odb-read-object-info-improvements-v1-0-81c8368492be@pks.im>
+References: <20251218-b4-pks-odb-read-object-info-improvements-v1-0-81c8368492be@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Aaron Plattner <aplattner@nvidia.com>, 
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+ Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.14.3
 
-On Tue, Jan 06, 2026 at 11:02:19PM +0000, Martin Fick wrote:
-> > From: Patrick Steinhardt <ps@pks.im> Sent: Monday, January 5, 2026 11:53 PM
-> > On Mon, Jan 05, 2026 at 11:45:41PM +0000, Martin Fick wrote:
-> > > OK, after discovering the strace -r and -T options, I have determined that
-> > > the 29K writes were all very fast in themselves. However, most of the
-> > > writes seem to follow each other with no other system calls in between.
-> > > This explains why it looks like the writes are slow, even though they aren't.
-> > >
-> > > If I tally up the time between the previous system call, and each write(),
-> > > it adds up to the bulk of the time (4mins out of 4m15s) that it takes to
-> > > pack refs. This tells me that no visible I/O or system calls are the problem,
-> > > but rather that the program itself is taking a long time between writes.
-> > > I very much doubt that this is heavy CPU time, but rather I am going to
-> > > guess that this is hidden system time spent accessing mmaped memory.
-> > > Could it be really slow reading the packed-refs file? I can see the
-> > > packed-refs file is mmaped() before the writes start, and then
-> > > munmapped after the writes are completed. If I had to guess, that likely
-> > > means that the packed-refs file is being read in small increments by the
-> > > kernel via mmap, and that is what is making things very slow over NFS.
-> > 
-> > I wouldn't be surprised if NFS was the culprit. At GitLab we found it to
-> > be a constant source of issues, which is why we eventually sunsetted the
-> > use of it completely. Do you use any special flags for mounting the NFS
-> > filesystem?
-> 
-> I am open to alternatives to NFS. Do you know of any NFS alternatives that 
-> provides instantaneous replication to potentially hundreds of mirrors? I 
-> have used Gerrit and git-daemon for many years on NFS, and it generally 
-> has performed very well for us, and it solves many real performance issues 
-> which I have yet to find a viable alternative able to even come close to
-> matching. NFS with all it warts it is for us (and likely will be for many) until 
-> there is a viable enterprise ready alternative with low (zero) replication 
-> latency and high throughput.
+Hi,
 
-Yeah, agreed, NFS can get you a long way, until you eventually start to
-hit some road blocks once you reach a certain scale. Unfortunately
-though, there isn't really a ready-made alternative solution that serves
-your needs, or at least none that I know of. That's why GitLab
-eventually settled on Gitaly Cluster with Praefect handling replication,
-and why GitHub has its Spokes architecture that does basically the same
-thing.
+this patch series contains various small improvements for reading object
+info for either loose or packed objects. These improvements were split
+out of a larger patch series where I'm about to introduce a new generic
+`odb_for_each_object()` function.
 
-> That being said, NFS can cause many issues. In this case, I would say that
-> something is particularly "broken" here with git, and I believe that it
-> would be helpful to the git community to be aware of this fairly specific 
-> broken case which clearly has a lot of room for improvement (as seen
-> by the fact that jgit, in java, can do essentially the same thing more 
-> than 10Xs faster). While I have been mostly assuming that this is a 
-> particularly specific bad case since git daemon generally is fast for most
-> users, this might actually be something that if improved would greatly 
-> improve many parts of git (not just this use case).
+Changes in v4:
+  - Extend the fix for OI_LOOSE and refactor the whole function to have
+    a single exit path as proposed by Karthik. This results in a lot
+    more changes, but makes the function way easier to reason about
+    going forward.
+  - Link to v3: https://lore.kernel.org/r/20260106-b4-pks-odb-read-object-info-improvements-v3-0-b5e02fae1fb0@pks.im
 
-Chances are that if we can improve the case for NFS, other filesystems
-might benefit, as well. So if this is something that we can improve I
-agree that we should. It's too early to tell though, as we don't really
-know what the actual root cause is just yet.
+Changes in v3:
+  - Fix a commit message typo.
+  - Fix a function comment missing some words.
+  - Link to v2: https://lore.kernel.org/r/20251218-b4-pks-odb-read-object-info-improvements-v2-0-62e3e49072bc@pks.im
 
-> It would be nice to improve git to not hold the packed-refs.lock so long 
-> to avoid this blocking behavior on servers. Of course, to be fair, this 
-> likely only blocks Gerrit servers since Gerrit uses the packed-refs file to 
-> perform atomic updates for many things, and most other servers use 
-> loose refs instead. It would be great if git were optimized to avoid any 
-> unnecessary reads while the lock is held.  In theory, almost all of the 
-> data that git needs to read here (including tags for peeling) could be 
-> read before acquiring the lock, and it would only need to double 
-> check certain reads after it acquires the lock in case things changed. 
-> That wouldn't make git pack-refs faster, but it would drastically 
-> reduce the impact of any problematic I/O by not holding the lock for 
-> almost the entire operation.
+Changes in v2:
+  - Rebase the series on top of master with jc/object-read-stream-fix
+    merged into it. I've also evicted the patch that fixes the same
+    underlying issue.
+  - Improve the commit message that drops OI_DBCACHED to explain why
+    this is a safe refactoring.
+  - Link to v1: https://lore.kernel.org/r/20251218-b4-pks-odb-read-object-info-improvements-v1-0-81c8368492be@pks.im
 
-It can probably be improved, true. I think that it's a bit of a wasted
-effort, as I'd rather invest the time into improving reftables as a more
-future-proof solution. But as you are well aware I'm quite biased here,
-and I'd welcome any efforts to also improve the files backend. I am just
-unlikely to work on it myself :)
-
-> > Did you try using perf(1) to profile the process and generate a flame
-> > graph from it? That should likely make it immediately obvious where Git
-> > is spending all of its time.
-> 
-> I will pursue this. Unfortunately this might be difficult on this 
-> particular server.
-
-True, on the server side this can be a bit tricky.
+Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (7):
+      object-file: always set OI_LOOSE when reading object info
+      packfile: always declare object info to be OI_PACKED
+      packfile: extend `is_delta` field to allow for "unknown" state
+      packfile: always populate pack-specific info when reading object info
+      packfile: disentangle return value of `packed_object_info()`
+      packfile: skip unpacking object header for disk size requests
+      packfile: drop repository parameter from `packed_object_info()`
+
+ builtin/cat-file.c     |   3 +-
+ builtin/pack-objects.c |   4 +-
+ commit-graph.c         |   2 +-
+ object-file.c          | 115 ++++++++++++++++++++++++++++++-------------------
+ odb.h                  |   8 +++-
+ pack-bitmap.c          |   3 +-
+ packfile.c             |  61 +++++++++++++++-----------
+ packfile.h             |   7 ++-
+ 8 files changed, 124 insertions(+), 79 deletions(-)
+
+Range-diff versus v3:
+
+1:  5c67d9abe8 < -:  ---------- object-file: always set OI_LOOSE when reading object info
+-:  ---------- > 1:  7708b50c2a object-file: always set OI_LOOSE when reading object info
+2:  8b106feb28 = 2:  a96ac5b351 packfile: always declare object info to be OI_PACKED
+3:  adbd3e5ae5 = 3:  8e3193a06e packfile: extend `is_delta` field to allow for "unknown" state
+4:  218c64c9a5 = 4:  e718161286 packfile: always populate pack-specific info when reading object info
+5:  dcae7be795 = 5:  217bec7e3b packfile: disentangle return value of `packed_object_info()`
+6:  beac514592 = 6:  2aaacfd639 packfile: skip unpacking object header for disk size requests
+7:  dacccf1cb4 = 7:  a9e37b7e00 packfile: drop repository parameter from `packed_object_info()`
+
+---
+base-commit: 7df68b50e49b6a1b576abb19b2e5d457749bc28b
+change-id: 20251215-b4-pks-odb-read-object-info-improvements-0e031ef827d2
+
