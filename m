@@ -1,160 +1,314 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661CF19309C
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 08:50:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E5F35975
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 10:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767775848; cv=none; b=AM8rXRc9Tda6dFeZx1O5YCBFc/eo4CUJi6XNCbkzOWGLWEMKiAci5UsQBF7a1m+TtCP6Ff7mLhBWMOhY2l3xyzjpghZKf11aGIgJQayW6SdVbqUunWWWRJkKCcDWq9ltqUJFLv+hEThZRMvnS971OXg3IrmCkanVk005y4oTM2Q=
+	t=1767780331; cv=none; b=aNOz7j4gEzmiVAOEOklIEa3HotzqsQIEdHy314sg7fWwW36vL9b11JrGrmrUMwPQURwhARWizqTyxOP74LpUrV4rQZUuD/LWwBysPMvo08FNmsdacFTsOl6Vx9YmxE5J9KpwlLo2Gn4IPf6+0250sBGeKD0jOqwSMsrojV8PoLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767775848; c=relaxed/simple;
-	bh=MrnxkVji1m6T6frTyN/zAb+ZiqKfZFyLV4D5O9Whs7Q=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SWppEIXqhxxZudmCX5psmm1bx65nXoMpQHjO1tKvc8ruNw7yw90sh71EHP4ktUyujorM4V7AH4Oh/tmmiXxFZ/FRjlLHv34GYSavfNikpaWME3n8MS0MjwgPDvvjv9oQNYphQI+Ie8Yl5T6tIIgv7loQiTuWbogcKrF6UAAgBEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iOTZVoPA; arc=none smtp.client-ip=209.85.217.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767780331; c=relaxed/simple;
+	bh=0Xc7EtgyFb2H34neRNbNwLCdlGp0/C+0OMHuN2uObDo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fMgw/iVUv5o8xmZj+eqft+cpEATRSRIM1NRPPu3yJZRk2hT3tvh4QEdkEX3wcgOdurLuF0f4ipznDfqQ4u266JARVcW/oJt76qm2M329tfo8xoXeV/ZOCdsCAIIx0lbPCI0oM5hDWAqWF4ghvbrU/zRf1n4aWH6pQwXuhD7P++4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eooYdZeD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bJFbcyIf; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iOTZVoPA"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-5eae7bb8018so660742137.2
-        for <git@vger.kernel.org>; Wed, 07 Jan 2026 00:50:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767775846; x=1768380646; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bNmQbZfW1KjW00mEDLTMjZJ3eObSulIUd1Qoq2KC5ts=;
-        b=iOTZVoPAG99NWg4CKZ1CHTfsAFVwJ1Yd7jNS6K3riQqPXH/+IaHjs1MpJu1S6vNddI
-         /9r5a4HqhBb3SEUMtH/834hNm9/0fRw6GepS0nSLbc74dSDH9GyyCZD8T1tbR2ZVXDgo
-         b9wxW0PQmUoiZZcUXuCW3Atv1q+Xht3QzA9DMRBCIjJhXfoMHX+GDDZAdH9kVAuExksO
-         8AJ/La+Ir7k07skigHmdhyNmEXPVDAWGk2scDLA5GzpHwhkVLrwLTnV/NIgnZ2Ogrkmf
-         ruHA37oXs9p2/cvOd1hPX1hBhSJ9647iQak+RQmQ1ewvNyRjSGTs333lKKlr0oJp765+
-         qOzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767775846; x=1768380646;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bNmQbZfW1KjW00mEDLTMjZJ3eObSulIUd1Qoq2KC5ts=;
-        b=jIB1mXbnLD7BfRr6dUkKgdj4oO510ESEiQ5ETbdBtPaaFUEgpch/gesvGaaINqpz2S
-         Ig8ASNbdIT2m3Ti5OSZ98gSfaMrPC/ZQzmBAXOIvRAqMczhvU2O82gDeRoiETeiUg17c
-         tEu/KsqbVlUmdW0YneqQsQNGkswil7Qwpnl7M/KxOAREQapJsc9vaAt2o957PZ9UmiiF
-         KPmo2Wa7kvsi6sGnQ7tw2hI9hJVfWVjr5YHPFYIEQN+cDQXZqW5QmY5nkGpFwfEqj3dj
-         YqR/gxYtjV22nZrIYsj2dsonyHd9VrUqR8CrbpCmrX7DKisydiGFC1dqtH3Ino33wxLT
-         PDJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV0GZJ1nf2NpYxmQqOYfqivnqCqVMGR0O0vgn74N3R0bWGkw7QudGYaDHssB95fyXtVjHU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyojAkD2+eT4WCalAe3c2qKXnqk/e7dRReb4sCcNMC7M6SXDYAJ
-	g97khqVNaDQ/tqy13uhqyH4mp+0kDvy2IOZVtJqmweAQsdA/tWVEvgV6oXaATOtnPU7sJiZMmwp
-	5ZVBFMnygqJ75/QwhXjdA2ElB9eg+28Q=
-X-Gm-Gg: AY/fxX5VHrVTTLhJ0/+YBdeajeGAUTRpmHYV0exKk2RoV4O8jpYuOeZYLNm90eF3Qcj
-	S0gwg6bBltkdv7w5jlIPHdc4Av23x3SpyFazhx566zhSC6XcDVWbY0Y+yYmvfl3Cx8zYhj7k4Ix
-	kkBp9MI4rEBxvcBq/MVLwjGnD60GbL0+nnzUZHGkkxo+tIQfYT8h/RXHmeQY15aImiyiqcImlyf
-	igl6z2WD1cI990K4va7HSKfkkLHZFa2zqcWZlaP9W5jODtZyqU4KnnYMB8ZoWX1fCoe4IVrWuc7
-	AmTOca9WcSElIwRyLTcwmF4sG7bmfg==
-X-Google-Smtp-Source: AGHT+IG+5j2wF4bPT7cYreGZaJYiRLMBfNOl6e4HLmdY3npLMWQZ/2CMN+fKW7PMDTUrWgkduXcNYnGfVAgceQBxHvY=
-X-Received: by 2002:a05:6102:560b:b0:5db:3b75:a2aa with SMTP id
- ada2fe7eead31-5ecb688e212mr600808137.18.1767775846267; Wed, 07 Jan 2026
- 00:50:46 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 7 Jan 2026 00:50:45 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 7 Jan 2026 00:50:45 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260106-b4-pks-odb-read-object-info-improvements-v3-1-b5e02fae1fb0@pks.im>
-References: <20260106-b4-pks-odb-read-object-info-improvements-v3-0-b5e02fae1fb0@pks.im>
- <20260106-b4-pks-odb-read-object-info-improvements-v3-1-b5e02fae1fb0@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eooYdZeD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bJFbcyIf"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5487CEC026B;
+	Wed,  7 Jan 2026 05:05:27 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Wed, 07 Jan 2026 05:05:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1767780327; x=1767866727; bh=Jl4Z13bpHV
+	CNL2cYEQ4JxHKqoQ34xCUu0neP7f771qo=; b=eooYdZeDw+7NlNptqxALxF1p7M
+	X/G9UBqrVddmsRe9raSHdI6V60+4+bykdthM2PPwlx9o38cp2dN6Vh98jjmRMup7
+	lYe7SgrF+O1KdrUnh6eQ4tgNmHRbfVccjxzFEMPQEPOQtJWwPlw7Wj4vjB5WsKlZ
+	3EOOMy47AWVwL1xe+8nk39wEm4zNIPUrbJDgM/rCX7J2Xjqr6mDnqq1ze5wM4kvO
+	9+xLDALHQqqGYURCOko8/NvJayNy0Iop0Dr8JW+hs7bjwUtpdwx3ypo0YKbg+edY
+	8gIOGeKokCbC5OXsrbhYzvLi+phQ5W0lbJ76IKGQltBYlVQ8n6X9HHShB6nQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767780327; x=1767866727; bh=Jl4Z13bpHVCNL2cYEQ4JxHKqoQ34xCUu0ne
+	P7f771qo=; b=bJFbcyIfCyYrdSsQ23yooKAQjGXpH+LfMACzGTywiPufHZcl8Nb
+	Gb5RxGE55wBNi4yM2yFTLx3nHvSph4OzvEofVhp6zfQq0qZQ8AeAErPCdu6VqgqF
+	ys3ZShpeBWrJOrgFeohhvT0WjzfseXP9y6cvA/JKqWFXAZn0cHxSfBFPyu9jZ8JV
+	5nXb0xA6zbNac2TGK7aRvASAisKzbA7UNr6gnNwtN23zlchYZ1NbevzcTJjq+Mqq
+	ZGSwq+fyN/KU8RScjUyyMB2D+Nlg5WeK5wYjTZgwDVZ+MeDMCf/BqXi8Tdp4zS9+
+	qgTLyAW5z5FsI9t+S9fD447HJWCV4aw8Q3Q==
+X-ME-Sender: <xms:5i9eaeva0y8YbXbGBYTlPc9GJMseWlzY-bonKkD9uphJN_h_U0zN-Q>
+    <xme:5i9eaVtcVU1xvRQ48omZo6VFAqbl6oRHh-_l8OMh4gVuQnMXc_ZtRyAT-yeNmaE46
+    ALqnD0-zg4dKCOA5uV8FbCiuY5pJ4RQyGUo2IkdWa-BMz5F2KF9>
+X-ME-Received: <xmr:5i9eacDweZcmsEZ0LD6ApQcxGr2YLMdxXUWECXCsHzRVYbVfvf0YPobehx0c1Y2eQZNLIybmDrtnX4ua1C7ta9mWvrtlS0gpTpNd2-kMNBI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvjeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihloh
+    hrrhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhs
+    tghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrud
+    ekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:5i9eafNv5wzlNtua16NijzMo5GRh7zRFD11VUW85K9pSUxu2m7_G8A>
+    <xmx:5i9eadzQ16JSnUkO5LqByq7j5B_cvC41Gyc8jQCvAldtxsT-gZnFPg>
+    <xmx:5i9eaXX1puB0LIgxvoAENgPEnEWx56AMNfVxw9lHec_aTCCgnVCwdQ>
+    <xmx:5i9eaXP8U9nEuvCdhkZl2utDDfdHfpHsgGBz1AgwvLA4ze3Ieullxw>
+    <xmx:5y9eaceitY6ZGEPSFVdmj3ZV-_JTw5R4epwFm5VWO2tOmy9lOWFuXOWI>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Jan 2026 05:05:25 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 10a41c79 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Jan 2026 10:05:23 +0000 (UTC)
+Date: Wed, 7 Jan 2026 11:05:16 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Taylor Blau <me@ttaylorr.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 2/9] promisor-remote: allow a client to store fields
+Message-ID: <aV4v3JwW0S-c9Dn4@pks.im>
+References: <20251223111113.47473-1-christian.couder@gmail.com>
+ <20251223111113.47473-3-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 7 Jan 2026 00:50:45 -0800
-X-Gm-Features: AQt7F2oRis9Bz7h3hiUA3k8-Tc1ClsZ8qV7fmN0Z3ntY8KHqJ1rLsV_zfTAIfxM
-Message-ID: <CAOLa=ZSNmi_Lzb=3EdWks=mMOPvfijT2659y4YtxWnUKVUOXaA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] object-file: always set OI_LOOSE when reading
- object info
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Aaron Plattner <aplattner@nvidia.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Toon Claes <toon@iotcl.com>
-Content-Type: multipart/mixed; boundary="0000000000005c1cc90647c86301"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251223111113.47473-3-christian.couder@gmail.com>
 
---0000000000005c1cc90647c86301
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Dec 23, 2025 at 12:11:06PM +0100, Christian Couder wrote:
+> A previous commit allowed a server to pass additional fields through
+> the "promisor-remote" protocol capability after the "name" and "url"
+> fields, specifically the "partialCloneFilter" and "token" fields.
+> 
+> Another previous commit, c213820c51 (promisor-remote: allow a client
+> to check fields, 2025-09-08), has made it possible for a client to
+> decide if it accepts a promisor remote advertised by a server based
+> on these additional fields.
+> 
+> Often though, it would be interesting for the client to just store in
+> its configuration files these additional fields passed by the server,
+> so that it can use them when needed.
+> 
+> For example if a token is necessary to access a promisor remote, that
+> token could be updated frequently only on the server side and then
+> passed to all the clients through the "promisor-remote" capability,
+> avoiding the need to update it on all the clients manually.
+> 
+> Storing the token on the client side makes sure that the token is
+> available when the client needs to access the promisor remotes for a
+> lazy fetch.
 
-Patrick Steinhardt <ps@pks.im> writes:
+I guess another use case is that a client performs a fresh clone and
+doesn't know anything about the remote's promisors yet, right? In that
+case, the client may want to tell git-clone(1) to accept any of the
+remote's advertised promisors, store it and then use that promisor's
+filter to perform the actual clone.
 
-> There are some early returns in ``odb_source_loose_read_object_info()`
+> In the same way, if it appears that it's better to use a different
+> filter to access a promisor remote, it could be helpful if the client
+> could automatically use it.
+> 
+> To allow this, let's introduce a new "promisor.storeFields"
+> configuration variable.
+> 
+> Like "promisor.checkFields" and "promisor.sendFields", it should
+> contain a comma or space separated list of field names. Only the
+> "partialCloneFilter" and "token" field names are supported for now.
+> 
+> When a server advertises a promisor remote, for example "foo", along
+> with for example "token=XXXXX" to a client, and on the client side
+> "promisor.storeFields" contains "token", then the client will store
+> XXXXX for the "remote.foo.token" variable in its configuration file
+> and reload its configuration so it can immediately use this new
+> configuration variable.
+> 
+> A message is emitted on stderr to warn users when the config is
+> changed.
+> 
+> Note that even if "promisor.acceptFromServer" is set to "all", a
+> promisor remote has to be already configured on the client side for
+> some of its config to be changed. In any case no new remote is
+> configured and no new URL is stored.
 
-Nit: s/``/`
+Hm, okay, so that's not yet part of this series. I assume this is going
+to be part of a subsequent patch series then?
 
-> in cases where we don't have to open the loose object. These return
-> paths do not set `struct object_info::whence` to `OI_LOOSE` though, so
-> it becomes impossible for the caller to tell the format of such an
-> object.
->
-> Nobody seems to care about this right now, but it's a bug waiting to
-> happen. Fix this by always setting `whence` on success.
->
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  object-file.c | 19 +++++++++++++++----
->  1 file changed, 15 insertions(+), 4 deletions(-)
->
-> diff --git a/object-file.c b/object-file.c
-> index 6280e42f34..d566df427a 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -439,12 +439,23 @@ int odb_source_loose_read_object_info(struct odb_source *source,
->  	 */
->  	if (!oi || (!oi->typep && !oi->sizep && !oi->contentp)) {
->  		struct stat st;
-> -		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK))
-> -			return quick_has_loose(source->loose, oid) ? 0 : -1;
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index 5d8151cedb..8d6d2d7b76 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -403,6 +403,14 @@ static struct string_list *fields_checked(void)
+>  	return initialize_fields_list(&fields_list, &initialized, "promisor.checkFields");
+>  }
+>  
+> +static struct string_list *fields_stored(void)
+> +{
+> +	static struct string_list fields_list = STRING_LIST_INIT_NODUP;
+> +	static int initialized;
 > +
-> +		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK)) {
-> +			status = quick_has_loose(source->loose, oid) ? 0 : -1;
-> +			if (!status && oi)
-> +				oi->whence = OI_LOOSE;
-> +			return status;
+> +	return initialize_fields_list(&fields_list, &initialized, "promisor.storeFields");
+> +}
+
+I'm a bit worried about all the function-local state that we're
+accumulating in those functions. Wouldn't it be preferable if we instead
+had a `struct promisor_remote` that encapsulates the information?
+
+> @@ -692,6 +700,132 @@ static struct promisor_info *parse_one_advertised_remote(const char *remote_info
+>  	return info;
+>  }
+>  
+> +static bool store_one_field(struct repository *repo, const char *remote_name,
+> +			    const char *field_name, const char *field_key,
+> +			    const char *advertised, const char *current)
+> +{
+> +	if (advertised && (!current || strcmp(current, advertised))) {
+> +		char *key = xstrfmt("remote.%s.%s", remote_name, field_key);
+> +
+> +		fprintf(stderr, _("Storing new %s from server for remote '%s'.\n"
+> +				  "    '%s' -> '%s'\n"),
+> +			field_name, remote_name,
+> +			current ? current : "",
+> +			advertised);
+> +
+> +		repo_config_set_worktree_gently(repo, key, advertised);
+
+Why do we store this information in the current per-worktree config? I'd
+expect that this should be stored in the local config.
+
+> +		free(key);
+> +
+> +		return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+> +/* Check that a filter is valid by parsing it */
+> +static bool valid_filter(const char *filter, const char *remote_name)
+> +{
+> +	struct list_objects_filter_options filter_opts = LIST_OBJECTS_FILTER_INIT;
+> +	struct strbuf err = STRBUF_INIT;
+> +	int res = gently_parse_list_objects_filter(&filter_opts, filter, &err);
+> +
+> +	if (res)
+> +		warning(_("invalid filter '%s' for remote '%s' "
+> +			  "will not be stored: %s"),
+> +			filter, remote_name, err.buf);
+> +
+> +	list_objects_filter_release(&filter_opts);
+> +	strbuf_release(&err);
+> +
+> +	return !res;
+> +}
+> +
+> +/* Check that a token doesn't contain any control character */
+> +static bool valid_token(const char *token, const char *remote_name)
+> +{
+> +	const char *c = token;
+> +
+> +	for (; *c; c++)
+> +		if (iscntrl(*c)) {
+
+Makes sense. I was also wondering about whether we want to check for
+non-space whitespace characters, like newlines.
+
+> +			warning(_("invalid token '%s' for remote '%s' "
+> +				  "will not be stored"),
+> +				token, remote_name);
+> +			return false;
 > +		}
 > +
->  		if (stat_loose_object(source->loose, oid, &st, &path) < 0)
->  			return -1;
-> -		if (oi && oi->disk_sizep)
-> -			*oi->disk_sizep = st.st_size;
+> +	return true;
+> +}
 > +
-> +		if (oi) {
-> +			if (oi->disk_sizep)
-> +				*oi->disk_sizep = st.st_size;
-> +			oi->whence = OI_LOOSE;
-> +		}
+> +struct store_info {
+> +	struct repository *repo;
+> +	struct string_list config_info;
+> +	bool store_filter;
+> +	bool store_token;
+> +};
 > +
->  		return 0;
->  	}
->
+> +static struct store_info *new_store_info(struct repository *repo)
 
-The change looks good. I'm wary of early returns independently doing the
-cleanup, wonder if it'd be better to do `status = ...; goto cleanup`
-instead.
+This should be called `store_info_new()` according to our coding
+guidelines.
 
---0000000000005c1cc90647c86301
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 6a9ec6b39a909f9f_0.1
+> +{
+> +	struct string_list *fields_to_store = fields_stored();
+> +	struct store_info *s = xmalloc(sizeof(*s));
+> +
+> +	s->repo = repo;
+> +
+> +	string_list_init_nodup(&s->config_info);
+> +	promisor_config_info_list(repo, &s->config_info, fields_to_store);
+> +	string_list_sort(&s->config_info);
+> +
+> +	s->store_filter = !!string_list_lookup(fields_to_store, promisor_field_filter);
+> +	s->store_token = !!string_list_lookup(fields_to_store, promisor_field_token);
+> +
+> +	return s;
+> +}
+> +
+> +static void free_store_info(struct store_info *s)
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1sZUhtTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMVc4Qy85eGxLU3NwcU5jZnZaeHNZM2dwUTB4K3o4bwo2OUhqbGFNd1px
-MGF6ZU5IMGhheTcrUzVyd2Y4RUI2VytBVnljZXZCdVNRUndtbkdQazZkVzdhVjIyU2pLcmtmCm5V
-RnFQZHFXeUd2d1MzQmU2V0FrbXA3SmpWTXhvVU9iQ2ZCRnY3VTdDQThmaDZKZTlWc3RGS0hFYk10
-SHpkeS8KblNVWXBHenA2NnpSZkxJMTExMnVtcHVqdUc1bFAvYUhrdndmcVdQU2NQRGg4Rk1UY3ps
-Tk01MjFrTUlaaGg5LwpGN1NQK2VubkFtdDlvdzIxZ3hUQ1FXa1FvRWVwRi9yUnhKSlRXUW1IaDcr
-TjNBZTl0Uzh4OWJwRjV3Qi9QYUQ1CmZiSCtqR3JNK1VRUElkUUVib2dkRUFlU3RrWHE5dFZZTFNo
-eElFOThCdlpDMFVXTWh6cHlUODhFYWhOdkZmNlkKUHhVSGlKVVhHamI2enlDVlVJdXNkMnhCMnVP
-ZFVGVTJFSzJ0YnFVaXMrRVhBVVlrZ2VnbGlhYVM0VGMyenQxTwpqYVJPTU1RRWJGWnhISE5uUlJP
-ajhaQndTeUgxYVJqbTV5ekV4Q2I1Y1lvUXFqRWVPRnhlZzFBUWs4eXV4RmhRCnprUU1tM3BxM2M1
-YnhRWWp5ckxJS2QvU01VUHZKdEVJUndMYndRTT0KPTlMcVYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000005c1cc90647c86301--
+Likewise, this would be `store_info_free()`.
+
+> diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
+> index 023735d6a8..a726af214a 100755
+> --- a/t/t5710-promisor-remote-capability.sh
+> +++ b/t/t5710-promisor-remote-capability.sh
+> @@ -360,6 +360,55 @@ test_expect_success "clone with promisor.checkFields" '
+>  	check_missing_objects server 1 "$oid"
+>  '
+>  
+> +test_expect_success "clone with promisor.storeFields=partialCloneFilter" '
+> +	git -C server config promisor.advertise true &&
+> +	test_when_finished "rm -rf client" &&
+> +
+> +	git -C server remote add otherLop "https://invalid.invalid"  &&
+> +	git -C server config remote.otherLop.token "fooBar" &&
+> +	git -C server config remote.otherLop.stuff "baz" &&
+> +	git -C server config remote.otherLop.partialCloneFilter "blob:limit=10k" &&
+> +	test_when_finished "git -C server remote remove otherLop" &&
+> +
+> +	git -C server config remote.lop.token "fooXXX" &&
+> +	git -C server config remote.lop.partialCloneFilter "blob:limit=8k" &&
+> +
+> +	test_config -C server promisor.sendFields "partialCloneFilter, token" &&
+> +	test_when_finished "rm trace" &&
+> +
+> +	# Clone from server to create a client
+> +	GIT_TRACE_PACKET="$(pwd)/trace" GIT_NO_LAZY_FETCH=0 git clone \
+> +		-c remote.lop.promisor=true \
+> +		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
+> +		-c remote.lop.url="file://$(pwd)/lop" \
+> +		-c remote.lop.token="fooYYY" \
+> +		-c remote.lop.partialCloneFilter="blob:none" \
+> +		-c promisor.acceptfromserver=All \
+> +		-c promisor.storeFields=partialcloneFilter \
+> +		--no-local --filter="blob:limit=5k" server client 2>err &&
+
+Onet thing that's missing in these tests is to verify that a subsequent
+git-fetch(1) updates the configuration.
+
+Patrick
