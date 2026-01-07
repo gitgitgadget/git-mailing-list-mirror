@@ -1,67 +1,66 @@
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95D922538F
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 10:17:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7E83009EE
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 10:26:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767781071; cv=none; b=BkMJowqOPh6ZxuAmyiDnDSqzyytNiqxt7mn3Qizrx+EQQoVFKrM+48uYLBd8iPbu3CbuTfw7sB/1sp2I6P3cOjr8mP4gEjFytrzrTw7sRa5TqyIfwTu7e3dHcASwKcKo6NcKgdE/vMwNPXWbiAvMed+4Dg2mK3ITCOaNi6mwA2M=
+	t=1767781583; cv=none; b=RtdvPL4HeKyyVZB5I8I98/RearkbAKeMThC35YhoEDB+C7CwjWwFtNNjmpeLh44N1nrLnhLDv6BvKZxQohK7anoZIDbfr+zEPgPNEH3uCiBlkygLe/0jzw7vcVYrcJdHb+qADNSX4juodx6brPoghP3qR6OoKALf4NKIGsgqkhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767781071; c=relaxed/simple;
-	bh=nUGKgcuoMVRbiqJknyMFRKVo4qOl+ETsuTLTbgHFQY0=;
+	s=arc-20240116; t=1767781583; c=relaxed/simple;
+	bh=uXz8fUEwzGrJAUfexf9IMW649YTJh8j2lzUwi1oEv+Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pzfFpxq3WO16L8cRHTliOAr6iQf4H7zeDWwAjbwtfxPEPbWXkPJupWLxtAJE4pdHSzLNNP27czHewroPBZKkZY45VJUgdM1ENn2PyGGOThE4jEskGB5eyl7S7bMnRwlA1oPJCRc8TK/VEJ5geyBTFBcqRRD98PbEZhbID9VB+O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ap0VcfSR; arc=none smtp.client-ip=209.85.128.68
+	 In-Reply-To:Content-Type; b=PtwuIBJ8fJlqtEIytYZYGB3kO0F+K1YY8zc1yMkPHWGPB2cBbWSq9JjcnV++kOFMHRMR7YGEg9vfNQcKa1DPq5nPjrO0BmRPCvQD9+7Zx0OFjsP4QgG1HkSFjdLgsZwJCO6ey34dtEhi1V+Lmes3n7LCgN0bEyypeUvprlEGtZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxnQJaZF; arc=none smtp.client-ip=209.85.128.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ap0VcfSR"
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-477632b0621so11484865e9.2
-        for <git@vger.kernel.org>; Wed, 07 Jan 2026 02:17:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxnQJaZF"
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-47a95efd2ceso16663665e9.2
+        for <git@vger.kernel.org>; Wed, 07 Jan 2026 02:26:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767781068; x=1768385868; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767781581; x=1768386381; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kh5Px9sMwxMsl/wjOEN+hAhblWqI1vonYuM7EbwYQAA=;
-        b=ap0VcfSRbhP2btEVHELr+QzCXPrkqSelltQ5PF/L59ihxWffHY5nCk6RqFNM+QY51E
-         0yV2WtG6fIxWI7TBv2oWouEr3dQhGXRX2Fo7L5fJNN8qGTdEp4JJZ9WOM62nHPB1TCmU
-         uYpZHLmRfKO11WmKUNkN24fITjtf6PPUbUmFd2GdgcHw6UBPsypsZVLsrQ1dVe1iQ5+p
-         WqirfsinM+EUHRm0Lf50cZg/te6xQuJ+Kf3RGxnsj4Vz2P/LnJ2OiZCGGsRsLX/KYlqm
-         10qNNTFu2pHOPEcUnVtJh8JZu/4jAVFl1mN99SX7xAauzyt7cNz7yY/Q2CnAqRqVF+88
-         wy+w==
+        bh=r6Djq7xahbNzWlnesSnuzMt4+QmZ6gKxYXcff0rbQuY=;
+        b=RxnQJaZFUeDN7ansGKjPwe504GXLGdNM/P6KsZcfibrZ4i/hFOLNoXldg+RZwGup+s
+         5WMEAc/hdGODkL/FzCRjCJGtnqagwtOHvoFBh6wIMRUUe0AVx2D7PkhahmS1ZGyHbNKm
+         A9Cn2+DDAtxUBX3maui+6ZGyz0QWhuC+/V5t4GV9/JMNKT401mYCACTMEj1GTX8us93r
+         pFIQp3yyg72o8HvV4mZ3PAXQKhNdO7q8GQVFumSbgVLmQFAwZkj7SjG8o4UiHaGO0d1U
+         bij8bOg1x2GQbjNGM9Q3RdFddeUmAwALxf2HkQy8g4QP1a2lvegJ4ELgNare1aVaM/ni
+         lNgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767781068; x=1768385868;
+        d=1e100.net; s=20230601; t=1767781581; x=1768386381;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Kh5Px9sMwxMsl/wjOEN+hAhblWqI1vonYuM7EbwYQAA=;
-        b=W6rkkvQmUkEEjO6/Vqam6ViUUOyT6RPUNn9zRL5RkACPdGoJkeqntMNFfA0eIHLByS
-         m7paEKEwI7Kf5S5jXLMXyP4ltZcI6gO2APcQz7RGOlxDjDp6sAPSDGauT6wD5MZONXVB
-         hV0FHUeJbUUyMx1f4OULuj7uSCdP3g0Sgw2ZIM+5ztYp+IqcEmCBL9SYMq73iC2GBanV
-         OYTmCVhyvDBS5QQTXSYdx6mdSN+k5JkhrQomK1aD83hQTZgPQ+PQVK4Jhy1IqMAtIEPR
-         tbiDerCeQXFOqqwL+OB2aRGMuuGqhmMBauIcWI7WMx5X01/+C2wcrgIdxInGhOSDDHdz
-         vBHA==
-X-Forwarded-Encrypted: i=1; AJvYcCXpOPC/0wCBu3DoxyQ5Xyc/bqP6ZGfepPm0VXUr4Y1yu1UFGebMANRG64Az+zqF7nw589I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzW3X6uPmzODU7CDrEPWa2HIxIgDYVcwPm7qhfbT2bwStCFIDD/
-	OL0SfgUG0U/2joVKW9/RCbp2PcFeQRXLyR1rt/83OdjKent46ZpJNvMB
-X-Gm-Gg: AY/fxX5bTn9FgPaItwsyW8o1tVS3cm0C53+TNF8Tw15UX9t5bjzS7qbFyJMj9sBIHE5
-	zSJXaJTAj10zN+evFaSuXIQdKV8RAOFsiBupoDytgar1htVTsAXmAy3CEkTe5c8jMcSdm9Nso6N
-	OonIbJNHfCYMAMywf55bzqkryGqxo1/3ojZErWg6Zlt1bDW+UilPR5AIycezVQc+uIyAtqXGiRn
-	8VdYP7yvH65pIzVub8vElYkvWyEWNo4lXKlmP7zjxWGKLKqzMRT0voklhkGmuR8Id/U3cScgnxu
-	wi48A6BoTSd1wN/EFbB8tIi5+rUuaDZP4XhHzGoHf6P2vGcCm899VxUe5ZPGMLnjr56lRI1EZOa
-	aGmZo1ZwTpKLslU2XD79fXoPC7/Ea4L3T9EolhPoV3Ys/3GBvliYLZMM02pki6amtaOgwaG1fob
-	VcCi1/2Gs1/E0XfuYSgMMNQZJ8EUdNvpPWJG2VV5Q3s8tcaWEwYSdwLUNRlWFTDoD53A==
-X-Google-Smtp-Source: AGHT+IFaaq57CuL+NQS1QNb+9ZheTOrQXLWuAnfg40JuEYA0RxU9u+bD+kYj722vhtJFwvDZX9Bt9g==
-X-Received: by 2002:a05:600c:3555:b0:46e:4b79:551 with SMTP id 5b1f17b1804b1-47d84b3b692mr24287415e9.31.1767781067821;
-        Wed, 07 Jan 2026 02:17:47 -0800 (PST)
+        bh=r6Djq7xahbNzWlnesSnuzMt4+QmZ6gKxYXcff0rbQuY=;
+        b=rMCNyNB71CLWLl5G7pJ9e/YvmfOXVB/kN0clJcOgHZ9iG1/k6xpAScXswf1zegvdzu
+         tQrkfywVGIKKpX2bXvLjtiJydjkSA4JHcKj6euOJJi4cTy1Vez+r58ROf9Ij05z9ctE1
+         KZe1TWYrM3iQoK7tXG14uDu8rC+yqXLrtN121ES8Q6Gs2LbEjVfxskAAJbUOC+Il7Bfn
+         HIs0mOJs0ErOvwFczcQXfFgJDTMScXfn4NNIfsrtq/0Yk7gmsDh/OucOiFaa1mYVhwt+
+         74Bemz4xBNCXWGTMhUG0LEYniMBaOnaCvlkHlOAt/kv9dOlQLDLaQPuAmAvRBnMbw75O
+         z4hg==
+X-Gm-Message-State: AOJu0Yzq/7S9U4gqJRSPKvUqQeupihgxo+TKXE9e4i9nWVbhVcIhzzwg
+	tfPIu8M1ujHHzsYOBIXLb6a0ui3isBWFXlbSROTI4RP2g2vhG+/YMvNnZsWJN2SP
+X-Gm-Gg: AY/fxX6o3oilgJXzLFX7qrrTUHaePlLohqBj6wijHMz2aEzxxgiiVfDDdt4bySbcBIe
+	S2Rnm92VlQ22iicSANLoh2aEMIU5PYZ+ZsgLGxQCb5f6WiekjBPzqvccH/tDq/JjM3LClqWI4no
+	9HUXJwHlFidHUMWd9c3TFQMCaOjKcAbxxztiGaHN+iwchYDD3uvPgQw7XAv3OYRx5lqSyHFYmo4
+	PN6fnE9QftxsEag8YCspDthjmDD7XfSv7QdI+CoQgBpJ6z1UnuDeDeXaIRCWxKM0hVhuzjKFJJx
+	QZ7m+B1EoO+QZnL0q1N4oY0Rc7OI6XChNxKZBmRraWNMKOnd3ap5or2SG7V4HEcOig0kQno5hln
+	5ppeOrEmlJe1/q73Ddcoxb99J2YCVyPg8ApjCuNcR4Jqari83/GF4G0Kn7cJxe92U/kx6Gbbr0I
+	nDN3TFvqfcuv0YnXQH7qshXs/w2M+TWSut5JD7IftWzieQZ8jWhS9+gO3e01VBloIZeA==
+X-Google-Smtp-Source: AGHT+IH7U0nyUcgnR8NqPGBCz5BGLhlf8NVpKDmLgPrkgDt07YkHUppc+4egdY76xXl+L16B7ejzmw==
+X-Received: by 2002:a05:600c:c08b:b0:47d:6856:9bd9 with SMTP id 5b1f17b1804b1-47d84b33bccmr17191835e9.23.1767781580489;
+        Wed, 07 Jan 2026 02:26:20 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d7f69e802sm90746755e9.8.2026.01.07.02.17.46
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d7f653c78sm93334585e9.11.2026.01.07.02.26.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jan 2026 02:17:47 -0800 (PST)
-Message-ID: <34175f3d-0814-47c6-9945-7c19f2c60ca4@gmail.com>
-Date: Wed, 7 Jan 2026 10:17:39 +0000
+        Wed, 07 Jan 2026 02:26:20 -0800 (PST)
+Message-ID: <922629dc-828c-4bdf-939c-b38b7b59e8e8@gmail.com>
+Date: Wed, 7 Jan 2026 10:26:12 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,76 +71,59 @@ User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [Outreachy PATCH v2] environment: move "core.attributesFile" into
  repo-setting
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org,
- Christian Couder <christian.couder@gmail.com>,
+To: Bello Olamide <belkid98@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
  Usman Akinyemi <usmanakinyemi202@gmail.com>,
  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Taylor Blau
  <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>
 References: <aVfzMsN2ouY3UBFG@ubuntu>
- <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com> <xmqq1pk3lmu3.fsf@gitster.g>
+ <a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com>
+ <3947f777-e08a-4c17-81e3-c4711fe666a0@gmail.com> <xmqqwm1vk83a.fsf@gitster.g>
+ <CAD=f0L9BEPSQivgpM7qURT+WFDY-+Ys_M6Knv8hE0JDw4Wjj5A@mail.gmail.com>
+ <CAD=f0L9H5Q=zW02nr11OSBNgFH3UMLwVjVjn3zhgZ2rjwE85WA@mail.gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqq1pk3lmu3.fsf@gitster.g>
+In-Reply-To: <CAD=f0L9H5Q=zW02nr11OSBNgFH3UMLwVjVjn3zhgZ2rjwE85WA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 05/01/2026 22:24, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+On 06/01/2026 13:44, Bello Olamide wrote:
+> On Tue, 6 Jan 2026 at 10:33, Bello Olamide <belkid98@gmail.com> wrote:
+>>
+>> On Mon, 5 Jan 2026 at 23:28, Junio C Hamano <gitster@pobox.com> wrote:
+>>>
+>>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>>
+>>>> On 05/01/2026 14:23, Phillip Wood wrote:
+>>>>>
+>>>>> It is quite common that moving from parsing config settings eagerly by
+>>>>> calling repo_config() at startup to parsing them lazily via 'stuct
+>>>>> repo_settings' causes regressions like this. We really should find a way
+>>>>> to address that before moving more settings into 'struct repo_settings'
+>>>>
+>>>> See
+>>>> https://lore.kernel.org/git/d61c966b-61ae-4ba9-b983-c8dab6e2c292@gmail.com
+>>>> for some discussion about a possible solution.
+>>>
+>>> Nice, but I suspect it would be an improvement already without
+>>> passing repository instance via git_default_config() and instead
+>>> have the code use the_repository; it is even possible not to have
+>>> any repository when the callchain executes.
 > 
->> If I run 'git -c core.attributesFile=~does-not-exist rebase -i' with git
->> built from master it fails immediately with "fatal: failed to expand
->> user dir in: '~does-not-exist'".
-> 
-> Hmph, if you call any behaviour change a "regression", this may
-> certainly count as one, but I do not necessarily think the above is
-> a good behaviour.
+> But won't this be a temporary solution since the goal is to prevent the use of
+> `the_repository`?
 
-One can argue that it depends on the command, but a as far as "git 
-rebase" is concerned this change in behavior is a regression. It is not 
-just rebase that is affected, for example "git merge" in a partial clone 
-now downloads all the blobs it wants before erroring out which isn't 
-terrible but it is hard to argue that's an improvement. I suspect "git 
-cherry-pick" and "git revert" are also negatively impacted by this change.
-
-> Think about a use case where attributes are not used at all, e.g.,
-> "git -c core.attributesFile=~does-not-matter cat-file -t HEAD";
-> would it make sense to barf when your configuration file has an
-> invalid definition for what you are *not* using?  So if the change
-> makes it stop barfing, it can even be argued that this is an
-> improvement.
-
-For some commands, but the fact that other commands now die when they're 
-not expecting to and so end up in a strange state is a regression. Given 
-how widespread the use of attributes is it would be hard to audit all 
-the affected code paths and adjust them to the new behavior.
-
->> It is quite common that moving from parsing config settings eagerly by
->> calling repo_config() at startup to parsing them lazily via 'stuct
->> repo_settings' causes regressions like this. We really should find a way
->> to address that before moving more settings into 'struct repo_settings'
-> 
-> Very true.  If we know the set of things we parse early and have a
-> way to say "this command only X, Y, and Z matters (but not W)", then
-> the above cat-file example can omit the attributesFile from the "we
-> care" set.
-
-That would be nice, but it would be painful to implement for commands 
-like cat-file which sometimes need to read core.attributesFile and 
-sometimes don't depending on which options they're passed as we 
-typically read the config before parsing the command line options. We'd 
-also need to be careful to update the list when adding new features 
-which depended on config variables that were not previously used by that 
-command.
-
-> I think overusing repo_settings is a disease.  Moving a singleton
-> global to per repository (by adding to struct repository) is one
-> thing and it is very welcome.  But changing the way configuration
-> variables are parsed (e.g., what used to be parsed by only those who
-> care about is now parsed by everybody, or vice versa) needs to be
-> handled carefully.
-
-Indeed
+Yes but it would be a good start as passing a repository down to 
+git_default_config() will be quite invasive. It would certainly be 
+better if we can find a solution that uses the repository passed to 
+command when it is non-NULL. Unfortunately commands like "git diff 
+--no-index" are passed a NULL repository but we have chosen to store our 
+config in a `struct repository` and so we need some kind of fake 
+repository for those commands. If we stored our config in a separate 
+struct we wouldn't need to fake a repository but then we'd have to pass 
+the config round separately to the repository which is a pain. Perhaps 
+git_default_config() could use `the_repository` when it's given a NULL 
+pointer for the callback data.
 
 Thanks
 
