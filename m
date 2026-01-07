@@ -1,114 +1,72 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D022202C5C
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 07:01:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDA928640B
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 07:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767769299; cv=none; b=nYKhAWBIN8RV4mibrMFysjuwmaOaLyoPQfrsL4AzyOv0OOBgITF6Z9jJ2EoK3SQYSXgqjxc+K0GZOmMVXzayIJDBw6wD6jrnoxj6j5bh+4MbiNXLbLkkzo1FF8hnRGY2xutmP3hFDf0EHZMsM30TslXv5ZKSjN/g96GpjbCLss8=
+	t=1767771609; cv=none; b=CfVtDD3xxwTpbc3/OLkK4AEXI1kv6rkea5ru1smeA9Zzc9PsH4diwSbteg802vk5rDv0KSK/gyb6PiP0T/k8uwxbFHUE8FUzx6UFuAc3+TMOUZpfHzmnKKfrJrFRxAzrm/yxWgfpDwm2torMIdZb4GZfvzNlcKMMpsyI8qcTJQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767769299; c=relaxed/simple;
-	bh=utR5P2vHUc0Q0IiW0h33HNDLUZiu1Hr49Ya1AVAbleA=;
+	s=arc-20240116; t=1767771609; c=relaxed/simple;
+	bh=1Eizx7WfluvjeD67o25Eshxn9YVyK+EBIieWr8b4LW0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ttc3QKCqy0RQxK3YDROyTJdkhkZ4zJpikidTKddM/zvi0WoHYjOtVxrfZ41HLTjsATklkW9ZtSW3BTjbt/OeeHMhEplBiEk+F4m071309fUkBthGIx4mztdqJZSvlEfeDeYLXUa0r2YHva8jxToroG12swo2B9MYYJc/ew95aXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hbJ2jMRC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hSyiA0oX; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=qc5uh+w6K3M48bgu2R0lKSlFrq+uP0WD2Q2pGSNfPzydSEgz5W4Uvf1BQnpRy3J8FIpZBOYWoSOL1rap8OB4jXU87AtIDxrjc28YnIb1HJ5GhZkQmcy+xEQ0rrEPUKczAh7+Y82KzZCmrrHIOt2WLqf31OCNBwlYsxvezjY7xAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=U8pUL6EM; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hbJ2jMRC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hSyiA0oX"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 44636EC00EB;
-	Wed,  7 Jan 2026 02:01:35 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 07 Jan 2026 02:01:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1767769295; x=1767855695; bh=sEgRnOfrmJ
-	+clFnE67tc6xekHLADfmV6WbwJ9eDEOx8=; b=hbJ2jMRC3jKI2euwrWNcItvgti
-	pNTYTeZwJWDLE25mdiiIh4NQTCoZHRzuyOlybPLrQEdAyEGRVSMb2nAadgcqCxqW
-	DeH0LRZdIS/JQir+nI3IakTE+x5T9WO50zpGOvTcpDIn9FmUkhhNr+6xRBiMlQeM
-	l32dcnXJ0wDKNY/0m/s5A66n8LwyA4W3s9WWOGEG7EqBrkPaLjn4I4hUgiY/TiJ8
-	5gOfLZaVf/D13lO++Bp255GsSjrx37Ybr3hu+kJCq+xOLx3CN+un0rPA3j8PSTWO
-	2rJO6AU6ZkwVBVN76iVu2jgcT8tnNKIOYQ1E+yiYrfTmi+dMPJwZYbm2IYVw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767769295; x=1767855695; bh=sEgRnOfrmJ+clFnE67tc6xekHLADfmV6Wbw
-	J9eDEOx8=; b=hSyiA0oX7geopJlxoNsGZ0hZvxmy+d459KbEJpBS820+N+d5t+s
-	oNUXYlZVBU4htqEu6Wcubbloiu5EaSuD543liMaUaIMlCGhDUDDC6rrnbB7hdfMK
-	+nxlk67CC+DoJMh2tRgQkXiktJy2oPKXE0b435xLZx9duHka+160JjXTnx8WVnQE
-	pi3uVUYwLw0U7XoRGTdySb7i2Rwi5buFtM1frF82ggmm2tIFwB2ye8aX6djBiQNp
-	Rm6Exq7veG1cyjg/LXS7c1EOceHYjJkbjDSo0K23fCo1cZt/OzFcJgIU2veilnw6
-	YyF3xLZVnBmqrXQG3kNeflHcTI+1b2CiGJQ==
-X-ME-Sender: <xms:zwReaW38UTteNR2Can3U45rbGJiN7z0gSKEKqkI-006SvLAabtyUWw>
-    <xme:zwReaf9OW0C-2sJUN5Gc1PMZjuZi7FNw8pZWQvyLebwOUtzEoK27TDT-r-JqT_T0W
-    FyqnJGm-s6raKzg-00vktMJpvkh-dh48fAuylKE_AmPsjW_XU1w9g>
-X-ME-Received: <xmr:zwReaXNPAAgQgEZhyis0Ua9E0X43kTtCN8ni4zKSAw4RFElgsEyMS4Qn2V8lxfL4CGPbnxv_cHaEyPDxFcDsw6QPFCytSjKUtrUcv7BaMgw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvgedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
-    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:zwReaTdQKC2WoU1L6vKYNwfxzaKNoGIcF7TcYxlewgVmAPf-9xWl_g>
-    <xmx:zwReaWVOBUxG9gGqan2nF72N7t8tOH7pppNmpt5ko9UHe7cyk8hAnw>
-    <xmx:zwReabh4yQGuGmi9m5ODk74eAR7G2AyCEFOpWwy7rlm7hXVz3o9P7A>
-    <xmx:zwReaV_-FvVbJggcpOZoMJT7mKRQKt-ZChtEUBXt6h9iCtKPD1iZzA>
-    <xmx:zwRead8cIW7sLjsNf2Z4FsUFg21_9APZ_E2t6jGxH0EXgdFvl72AJg-X>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Jan 2026 02:01:34 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f8159a44 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Jan 2026 07:01:32 +0000 (UTC)
-Date: Wed, 7 Jan 2026 08:01:22 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="U8pUL6EM"
+Received: (qmail 616803 invoked by uid 109); 7 Jan 2026 07:40:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1Eizx7WfluvjeD67o25Eshxn9YVyK+EBIieWr8b4LW0=; b=U8pUL6EMfzmOOhy6kLWv76IR4TeX7vP2zaYTj0sGpRLKA5O/PgHFBs303iTByrATw+cXOlDvLposIwL+IQ2G+jExGx+bkW+vHo0PT3L1A5STpKwfQqIrQaLxblnfDEmRwXhOtd18mYYbpfLmiMqw1FKFy7hjzVO+BNfg/6JoP3TJuv414Vv06eIBwGGCbBxQODLK0jppYsEaC9diluA7kB4SGPR8Xgf3ll9mpVeKktO/CGuiqgUfte3STdTAntg5E6SSVAjJufOgkbgQ/yTkJoP48sIopXdxDOyZ98Dq3otxcPgY709L4qm7G9F2WHzPycWy/yBX+CzJUga29cbjRQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 07 Jan 2026 07:40:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 803691 invoked by uid 111); 7 Jan 2026 07:40:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Jan 2026 02:40:05 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 7 Jan 2026 02:40:00 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 0/3] Update clar for improved integer handling
-Message-ID: <aV4EwmNdnHyv9wXR@pks.im>
-References: <20251205-b4-pks-clar-update-v1-0-fd70aac2ab90@pks.im>
- <20251206-b4-pks-clar-update-v2-0-9a14b10c1a36@pks.im>
- <CAOLa=ZQrx2T=mPC58oSW=1Y4i1cOCtneN+U7rDUmKAke9ifp7g@mail.gmail.com>
- <aVzvBnwsuPB_zd3_@pks.im>
- <xmqqjyxuhyd9.fsf@gitster.g>
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 1/3] t/unit-tests: update clar to 39f11fe
+Message-ID: <20260107074000.GA102520@coredump.intra.peff.net>
+References: <20251206-b4-pks-clar-update-v2-0-9a14b10c1a36@pks.im>
+ <20251206-b4-pks-clar-update-v2-1-9a14b10c1a36@pks.im>
+ <CAOLa=ZQZnYVuK8mDi6Yb8_+hqw_TMugn6i7BJCj1gbNHOruNWA@mail.gmail.com>
+ <aVzvDGVEI2qVJv2F@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqjyxuhyd9.fsf@gitster.g>
+In-Reply-To: <aVzvDGVEI2qVJv2F@pks.im>
 
-On Wed, Jan 07, 2026 at 12:53:38PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Jan 06, 2026 at 12:16:28PM +0100, Patrick Steinhardt wrote:
+
+> The problem is that we cannot do so easily. Varargs require at least one
+> argument to be present, so we cannot make this `cl_fail(desc, ...)`
+> without breaking the case where there are no variable arguments:
 > 
-> >> > Changes in v2:
-> >> > - EDITME: describe what is new in this series revision.
-> >> > - EDITME: use bulletpoints and terse descriptions.
-> >> > - Link to v1: https://lore.kernel.org/r/20251205-b4-pks-clar-update-v1-0-fd70aac2ab90@pks.im
-> >> >
-> >> 
-> >> Easter egg? :)
-> >
-> > Oops :) Thanks for your review!
+>   In file included from ../t/unit-tests/clar/clar.c:1053:
+>   ../t/unit-tests/clar/clar/fs.h:460:3: error: expected expression
+>     460 |                 cl_fail("Cannot copy; cannot stat destination");
+>         |                 ^
+>   ../t/unit-tests/clar/clar.h:152:132: note: expanded from macro 'cl_fail'
+>     152 | #define cl_fail(desc,...) clar__failf(CLAR_CURRENT_FILE, CLAR_CURRENT_FUNC, CLAR_CURRENT_LINE, 1, "Test failed.", desc, __VA_ARGS__)
+>         |                                                                                                                                    ^
 > 
-> Looking good.  Shall we mark it for 'next'?
+> The alternative would be to make this `cl_fail(...)` instead, but to the
+> best of my knowledge this isn't even a valid construct.
 
-Yeah, I think this topic should be good to go. Thanks!
+It is valid; that's how we define BUG(), for example.
 
-Patrick
+There are other options like GNU's "## __VA_ARGS__", but I think eating
+the format argument with the "..." is the only portable way, at least
+for standard versions we'd support. I think C23 added __VA_OPT__.
+
+-Peff
