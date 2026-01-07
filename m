@@ -1,79 +1,79 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840F72FE05D
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 10:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77BC30596F
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 10:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767780344; cv=none; b=bkeylIfHzCgR699ck10KvFEGdAOimFv689YJjTo19WV/W1A3OXdpTzLjB9xin5L719uv6bXGWq0nJ8+JM6NDFJuzqg1F1Qu0vFMThkrFoHzw9+clW3kgObDMAHsCObzhXlTxZCLGBHmoQ+snvb8iBHcl4cKbnuvrgAHgE0w8V44=
+	t=1767780355; cv=none; b=lBGmC3TK8TQzVwwxwl0blrati9YEGOZuHu4zLK76avhqHpEOOTeLfObso9sBkxGD8GBX7/gmONcoY7QLRJ4YSgJtDrhAgjXvrmHOFVtlDzi5GSl03QpICAmBFWfEx/wjLidrSfd2H+UbLxNzieSL1gdVFY7Fu83HfYez5F3GWoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767780344; c=relaxed/simple;
-	bh=9GEP+8hbC4JifWOz7B8TkD7SD4fqp0B9AnCXY0WN61o=;
+	s=arc-20240116; t=1767780355; c=relaxed/simple;
+	bh=LBQVsHLH2bUcufYNPrZ9R6+VDeA1ymW2XRypWMkPnl0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G+gq3FIqyqeT8ClYvLzUbTKEQO8GhZEm3wKPq7CdjQ7Gm0zQlwgzp2jBwJQC3k3OHPv5mIc69brQozE+bOVt8fcTNORnJs1IDyZpXHhMCR6L4omzao+4QN7RRIB+p6NcOHekDiAs3G2/aizYObDHIQBDBTLl+ClPKq81h9Ftz4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pn901qVr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0cWf99bU; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=KmZ0fMKobsXn85+sx6jzMia+BBfIMHjGrjbDRrnRdzQGkX1zmap9oosDBaj2RkgDTPeZ2ABSa+IWm06ZOYPFMJXkJLEseAk/I56V0+3rf01BonNEYAaAVtGWGvWDiDSvSt/ecIEYuKr2A2ysVsyIrhKellzepC9QwSLLLc6j03k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ei9+/wde; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HKqUaMPY; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pn901qVr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0cWf99bU"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id BB754EC0269;
-	Wed,  7 Jan 2026 05:05:41 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ei9+/wde";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HKqUaMPY"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id C553CEC026B;
+	Wed,  7 Jan 2026 05:05:51 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 07 Jan 2026 05:05:41 -0500
+  by phl-compute-02.internal (MEProxy); Wed, 07 Jan 2026 05:05:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1767780341; x=1767866741; bh=9oMn0YYNwu
-	OhLvhNimK255nWYBVmVheMYeTr5DQTXSU=; b=Pn901qVrHB0rCY6Ft0ACjUJjvW
-	K5daTrvHUwjFrDdhPXSOC+2gXmEDiRx9+cjNAOvqWyUJiHkuL0BJ9RCVV7m7LS64
-	+GWE1BOj86YT0llJ+6o8FTH1tbm/edgPWih8tV02goiZWO3FLAvV64GAZrMEUb0a
-	8RpRatCaBgZSyiKzfSB4/lMA7yJggIE8mRi+e2KWmfccRGaO902D3BaqKMwxItUx
-	d2qrmLntYyuwRrXqHUECoQl9aSrBfMNYNym+wflb8vhXNU2M1iCP8f7lQeNZDxKx
-	8O72N/7GPspjzVlUriXdwKEBZAb+fI89gc0Kqz8YdhIPlJGKxgRPWMyRXbdQ==
+	:subject:to:to; s=fm2; t=1767780351; x=1767866751; bh=lo3+03nA2X
+	BWudpvB8HoT8IQqGJTKGRMOFSywUQxQIk=; b=ei9+/wde8oeZR2YxYfoYP9a0RT
+	btO2KV2SpqTxXi9kpG/Vitg5Cyhxkxw/OpGOY+tv16HEZ4bdB+82F1UQuKeXV9eG
+	Nvvpz6KTVPbW943J8TBHEAe/C0SczeHjrs1shC2G9B+N/8prrd0iWeSkmVi/QA7j
+	RlV9+A1fr/v6F5EGrfYs25OVvar1BHL0rvnuARdoAY3fk8449aCjsfGAswyB6pHm
+	wYy+jZncqPSs1DdehYN448IIrXmHYHC8D3yXEN5ZSP0It2njxdVkj2iUC+lZ9G4R
+	n0xlRdc2qcxJvPIBtPKV2/tJ7Vu/OUS6ON6IG295NP3iPuByh1U3aKsdDu4g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767780341; x=1767866741; bh=9oMn0YYNwuOhLvhNimK255nWYBVmVheMYeT
-	r5DQTXSU=; b=0cWf99bURKfM9BvmO/Rqk3uSVpcp6SS5sLMfRBCvNojF92YeP8B
-	kCWgU0f4WCdyYbCBG6g8L8Pw0S2mwuhvJsbZsNrVXQeeO2Kjvvs31tiyX8oYfr09
-	HH1MKrOZYpvjMP+WYqi4+IuqGAOK+kyNjLUjEBvmThG1Q6wEbZGfvVvwWHDdjeX4
-	aRJVoSQXGr9ac4IGXnR2RhkiaNWD3pzktOUqOvH7NiN0GsQkR5r13p61RB6SGcFQ
-	JZ6l+Kgg3jv/RKjop15wj8g4+VbWFM5JrwTwOPfhlxgMILamInzEdDgtfqWqe+6a
-	Ptb89kQFX/1REufYAn4bOxJhxcH0gf6tpSw==
-X-ME-Sender: <xms:9S9eaQfkpQAVi5ccE8spIa0DcToveXeYfNcmNAn9BItyv1ibvLyjbg>
-    <xme:9S9eafw8OIXh8DoknOSXjgIXQACeoyrOKtBrlTLF4TY3bScjX1442_ZXVBkHpEmu7
-    TXizQLc7sURFQawelcbEnLjIvn4cqOspBP7PyGxIczpaBb0aLBC>
-X-ME-Received: <xmr:9S9eaX_Nu46vRot7ZmssAHiuwakjQRnrLC7feXQfHKnpnD1cb6HGufacsq7Q58faeUE2bES7Y15kPYHaTp72HHjAl_fo60gzAJo8NBNcNFs>
+	1767780351; x=1767866751; bh=lo3+03nA2XBWudpvB8HoT8IQqGJTKGRMOFS
+	ywUQxQIk=; b=HKqUaMPYZ73oNjNmkz+9EdzXLtNpdE1HJBb/Q4DIBYFw+3XW3Sw
+	x2C8f9LM4Jb2WITHKDVPn+6XDfMy9HEnEtjtHhh7JBkWX+V1t+FiMIOqovju4AIA
+	1ILI3X6T45bRisy+HZHm8jbb2LhwA3mhBf/bANwNZ1KDr/2NCUSR92B3Iaf3UTCZ
+	hEsq+zOdxuGKeQ5VD2x+K23wz5lhdgPJyV0JPM2XJkm6D+D39WFtDZu/mj1ANGOE
+	otCB7iiOO3jh3w/KOOJJtEr4GjDPdstG283aDty0tVPWQj2LFp3qj3WAZ+VCyyA9
+	7MsWskrdnHuazBO5NLW1AShjNhVq2ib4luQ==
+X-ME-Sender: <xms:_y9eafOUWgc9cGiZsM5jUHQEZ_MnPQJTuTO6DD5YWw-Ryeq6-AxlNg>
+    <xme:_y9eacPBNYypNXe_d5Oz3ACaNk0fB264L_4AtDwb4-3J8uxBXxSeGHcuZXXr6UQEl
+    csqfv8rKhtgQeIzQc3WMUQm0uQ2yfRnIci0vWRSW2WFu9-kaFV4aw>
+X-ME-Received: <xmr:_y9eaQiOAKQrW41fTNdcdvaWW6W2YV7J9bDcpmiTGKWl87s5dzRDEZYQuIuxwAMiL-Eoiuxsr64dGM3HcOVoTxpqlHLL09zY-VcR2Z_DwL8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvjeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrdduke
-    eksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghr
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhesth
-    hugihfrghmihhlhidrohhrgh
-X-ME-Proxy: <xmx:9S9eaXhtX1v0-zrWPmrcSEeAvuiltGD1mo9oz_SrfJ_wkfdekdll5A>
-    <xmx:9S9eaeHL6PB3HMfS69Rl5ejSNgrQCY1408aiKEJH3Xcvjtnpzq90Mg>
-    <xmx:9S9eaW9QkT927wVg_QNgvcdljHv58MdEXHhypP3UW-euSs7A6SiREA>
-    <xmx:9S9eaVz035Xemv1NWzrqG_3dhqwIJ4EwGxsWZGlaY0_eG3M_--Sryg>
-    <xmx:9S9eaZhSVQvgLX8Zf_FeyhMecZb1ergmCpnfMgz7CRLsMdfVzUCN5cOp>
+    oheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehmvg
+    esthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
+    htohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdr
+    udekkeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuug
+    gvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:_y9eaZsX58H7oc_4dT3NkgQuUwge1XMNIXDHWvGpIVrsLuk1i0GEog>
+    <xmx:_y9eaWQjM6N_NU_3KilsqZaZqZWLm2ofDPowOPrBWO2zXT3dsuPGig>
+    <xmx:_y9eaV1JDxks51GLS00RpYCIQ5rveJC1WlE9NOoP6foatBeHfdqTsg>
+    <xmx:_y9eaTsmAiND75JMZeK7I_TsfCqEeOV1ig19Ypr4uu0K1WJsny022g>
+    <xmx:_y9eaS-dt1upCQtiIzEi_nyOrHOfc2f5X359gwnDptAyfU4SbiDueIey>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Jan 2026 05:05:40 -0500 (EST)
+ 7 Jan 2026 05:05:50 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cf8a9109 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Jan 2026 10:05:39 +0000 (UTC)
-Date: Wed, 7 Jan 2026 11:05:36 +0100
+	by mail (OpenSMTPD) with ESMTPSA id b1fbe6bb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Jan 2026 10:05:50 +0000 (UTC)
+Date: Wed, 7 Jan 2026 11:05:47 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -81,11 +81,10 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 7/9] list-objects-filter-options: implement auto filter
- resolution
-Message-ID: <aV4v8HCe6CLqXJ-1@pks.im>
+Subject: Re: [PATCH 9/9] fetch-pack: wire up and enable auto filter logic
+Message-ID: <aV4v--FYaHCLLrPz@pks.im>
 References: <20251223111113.47473-1-christian.couder@gmail.com>
- <20251223111113.47473-8-christian.couder@gmail.com>
+ <20251223111113.47473-10-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,78 +93,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251223111113.47473-8-christian.couder@gmail.com>
+In-Reply-To: <20251223111113.47473-10-christian.couder@gmail.com>
 
-On Tue, Dec 23, 2025 at 12:11:11PM +0100, Christian Couder wrote:
-> In a following commit, we will need to aggregate filters from multiple
-> accepted promisor remotes into a single filter.
+On Tue, Dec 23, 2025 at 12:11:13PM +0100, Christian Couder wrote:
+> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
+> index 70a9818331..f7432d4b29 100644
+> --- a/Documentation/fetch-options.adoc
+> +++ b/Documentation/fetch-options.adoc
+> @@ -92,11 +92,20 @@ precedence over the `fetch.output` config option.
+>  	Use the partial clone feature and request that the server sends
+>  	a subset of reachable objects according to a given object filter.
+>  	When using `--filter`, the supplied _<filter-spec>_ is used for
+> -	the partial fetch. For example, `--filter=blob:none` will filter
+> -	out all blobs (file contents) until needed by Git. Also,
+> -	`--filter=blob:limit=<size>` will filter out all blobs of size
+> -	at least _<size>_. For more details on filter specifications, see
+> -	the `--filter` option in linkgit:git-rev-list[1].
+> +	the partial fetch.
+> ++
+> +If `--filter=auto` is used, the filter specification is determined
+> +automatically by combining the filter specifications advertised by
+> +the server for the promisor remotes that the client accepts (see
+> +linkgit:gitprotocol-v2[5] and the `promisor.acceptFromServer`
+> +configuration option in linkgit:git-config[1]).
 
-Ah, interesting. I was always operating under the assumption that when
-the server advertises multiple promisors, the client will pick only one
-of them. And that made me wonder how the client knows which one to pick
-in the first place.
+Okay, so if "promisor.acceptFromServer" enables a subset of advertised
+promisors we will automatically use their advertised filters. But what
+about the case where we already have a set of local promisors with their
+own filters, would those also honored by "--filter=auto"?
 
-But of course it's possible to just pick _all_ of them by combining the
-filter.
-
-> diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-> index f13ae5caeb..4a9c1991c1 100644
-> --- a/list-objects-filter-options.c
-> +++ b/list-objects-filter-options.c
-> @@ -230,6 +230,41 @@ static void filter_spec_append_urlencode(
->  		     filter->filter_spec.buf + orig_len);
->  }
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 186e5498d4..41bbaea72a 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -1001,6 +1001,8 @@ int cmd_clone(int argc,
+>  		NULL
+>  	};
 >  
-> +char *list_objects_filter_combine(const struct string_list *specs)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
+> +	filter_options.allow_auto_filter = 1;
 > +
-> +	if (!specs->nr)
-> +		return NULL;
+>  	packet_trace_identity("clone");
+>  
+>  	repo_config(the_repository, git_clone_config, NULL);
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index b984173447..ddc30a0d30 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -2439,6 +2439,8 @@ int cmd_fetch(int argc,
+>  		OPT_END()
+>  	};
+>  
+> +	filter_options.allow_auto_filter = 1;
 > +
-> +	if (specs->nr == 1)
-> +		return xstrdup(specs->items[0].string);
-> +
-> +	strbuf_addstr(&buf, "combine:");
-> +
-> +	for (size_t i = 0; i < specs->nr; i++) {
-> +		const char *spec = specs->items[i].string;
-> +		if (i > 0)
-> +			strbuf_addch(&buf, '+');
-> +
-> +		strbuf_addstr_urlencode(&buf, spec, allow_unencoded);
+>  	packet_trace_identity("fetch");
+>  
+>  	/* Record the command line for the reflog */
 
-Shouldn't we use `filter_spec_append_urlencode()` to do this?
+Nice that both of these changes are so easy now.
 
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 40316c9a34..12ccea0dab 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -1661,6 +1662,25 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  	struct string_list packfile_uris = STRING_LIST_INIT_DUP;
+>  	int i;
+>  	struct strvec index_pack_args = STRVEC_INIT;
+> +	const char *promisor_remote_config;
+> +
+> +	if (server_feature_v2("promisor-remote", &promisor_remote_config)) {
+> +		char *remote_name = promisor_remote_reply(promisor_remote_config);
+> +		free(remote_name);
 > +	}
 > +
-> +	return strbuf_detach(&buf, NULL);
-> +}
-
-I'm surprised we didn't have such a function yet.
-
-> +void list_objects_filter_resolve_auto(struct list_objects_filter_options *filter_options,
-> +	char *new_filter, struct strbuf *errbuf)
-> +{
-> +	if (filter_options->choice != LOFC_AUTO)
-> +		return;
-
-I wonder whether we should rather `BUG()` in case the filter is not an
-"auto" filter. Otherwise it's easy to get the callsite wrong, as the
-user may expect that the filter gets resolved tdo the new filter, but
-it's actually not because the original filter wasn't an "auto" filter in
-the first place.
-
-> +	list_objects_filter_release(filter_options);
+> +	if (args->filter_options.choice == LOFC_AUTO) {
+> +		struct strbuf errbuf = STRBUF_INIT;
+> +		char *constructed_filter = promisor_remote_construct_filter(r);
 > +
-> +	if (new_filter)
-> +		gently_parse_list_objects_filter(filter_options, new_filter, errbuf);
-> +}
+> +		list_objects_filter_resolve_auto(&args->filter_options,
+> +						 constructed_filter, &errbuf);
+> +		if (errbuf.len > 0)
+> +			die(_("couldn't resolve 'auto' filter: %s"), errbuf.buf);
 
-So as menitoned in a preceding commit `list_objects_filter_release()`,
-will retain the `allow_auto` option. But when resolving "auto" filters
-I'd expect us to not accept "auto" in the resolved filter anymore.
-Otherwise, if `new_filter` was "auto", we'd still end up with an auto
-filter, wouldn't we? I'd rather expect us to abort in that case.
+Now that I see it being used I think that the calling convention of this
+function is a bit weird. I would've expected the function to return an
+error code that the caller can consult instead of having to check for
+`errbuf.len`.
 
 Patrick
