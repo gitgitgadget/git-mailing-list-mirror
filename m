@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFBC3A7F73
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 16:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3709A3A0B19
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 16:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767803539; cv=pass; b=e3ggTz3uDLABwxPx+xNPEb72h+wujbg2rjqGnIkFQd1eIC9ikOGb6vVHtWMysFW1yDZJFyq2WOfU7S3jnKeKr6l0CKqqsLGUy2cslnQo9M0+yhHYOSuVbZ9GeL15WuCJgCg/PPcmSJwVxsJPZQK5VE4+SAVy1PIONMGekgrBqXc=
+	t=1767804041; cv=pass; b=CIK8D0wH5SL+QOdkdP/WjxazT2TDyHVe6vGUKr46ex/FmkosCnVwrPwwITCUHHYTjQFX4vU1EhyhP1kldB05z4mBVEVEXJufSZylKBzLQho2DOxaaLDYj5CaELiOqk43PC3mEYgMD2oQOjAXkMOUR+zqURLT9qxJVBYT+kmcd6s=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767803539; c=relaxed/simple;
-	bh=jTXiUOVwxBFfxJUEqPc0tIhZ7+wa0oXbY66iih/0ydM=;
+	s=arc-20240116; t=1767804041; c=relaxed/simple;
+	bh=oCV70U0cvarIfBR99Gn1pUUMJtWaN1UKMX8aTVOQ9f8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FVxMXAZh7KhE/BooNsVsPCUdKmMwbUv+oQA7dlwn3YYzzTyHunsdEslfmrMZBkEMtiwaTetzyu9Aq0WzTathu17jGFulXISG1+zJLQTNxSR4haMUzWgs50gGa0vTxHphHSK6iYZalx18JFIaotpzPXIbd44q1hwSW9u51gztvwI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=cThMnHV+; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version:Content-Type; b=YxFqB1n1DcXWbnVxCdq+6Oq+KNPSf7x0xxbVcGKnl0NUKWTRIrfkq/AxcLBqxo4Te2z6g2AHxS0+dRF4nd8ETrtWsdY9ZamCgCDzYpFuUEtSUoNlfIyibiWwW6E3IaeK916khXQvLGWIy8uzGW+/acgCvEL942YZQzcBLsZCrAs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=hibFDVIB; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="cThMnHV+"
-ARC-Seal: i=1; a=rsa-sha256; t=1767803498; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="hibFDVIB"
+ARC-Seal: i=1; a=rsa-sha256; t=1767804018; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=aENgCPpSDzHShQAvTi92ibMpvIawhAgVgKrGAKBPY64Yap/HT/AUbM3SNN56Dc9mYuyWrp2FpQFTcPesYzLtu/otGrhFc2WcicxcPiv0QXcSL1iH8HGasrUePrujRQnOZyonMnIOItau5ovpZ7oHC3JST09QjoBL95hRfYBtf3w=
+	b=GKblLUKygayyYqcR10zLsOHYiYn40QLeEwjGHyUHDIHv1gXHjkTidyIDZgt/YbHisGAA+axR6ysBI+1iJNxcoiyKMn5ZgU/96TzDaPqcv26k6Wm+SxMFDO/BL8KG0Eki7j3Sn5NPM83OtvQLe7Pnesr7wkJsqPXFt3xofjl7TpQ=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1767803498; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=jTXiUOVwxBFfxJUEqPc0tIhZ7+wa0oXbY66iih/0ydM=; 
-	b=Xl0rxzsaSzTu7UfOzzT+2bItMU3u/1HZEZsBkcXdQ58ZNoOErIivmseEm/vzaQ5HQ3osHUhSFcZTZPPsFn0mUYfoJPnOr3cvil6AuCPquaSn47oaI0kMxLfVjDQ97GojQzHNW3AE7Cm0Bk8IyJZzN/+wXfHwalO1y9ovuXRqbyU=
+	t=1767804018; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=WKNmKYcfnUNqihYW/p5eMoOgZi+F0xPlVkRyIfYqNgQ=; 
+	b=GNCENyoTvCa+6PBP6Ne+1Eofbufz7T3n+gPVHs3k71mME0OpigKg7bPLhlCfTzWx3Nz7esF578T1PfWGR5T22NKfKWOeMahVRNf/CvD1RGtkNCPrrBuwxd8ikwHn++bKWOrPptO60IRR9oXYq1uSfOJIOKToDZwzLFAhTjyumrE=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767803498;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767804018;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=jTXiUOVwxBFfxJUEqPc0tIhZ7+wa0oXbY66iih/0ydM=;
-	b=cThMnHV+RaDpqAmy/ciKqz/4uHhWS938zISTTPq8hQWJnxfQ3Gc+RKqV15PVJhak
-	5ce4/IGORwN0mHF7J203PlUgUMyKQLi0PZWofHT7THsXT6DYPu2kk4ThfcQFTeZVZLL
-	c3c9p01YQ0aqT5qZClWhDlnrNMe2caThna5NumLA=
-Received: by mx.zohomail.com with SMTPS id 1767803496020113.6879115263796;
-	Wed, 7 Jan 2026 08:31:36 -0800 (PST)
+	bh=WKNmKYcfnUNqihYW/p5eMoOgZi+F0xPlVkRyIfYqNgQ=;
+	b=hibFDVIBNsrSxkT2QR84SMNmesB14oGWRZ988LFTL0DNLAVv6C177oi4NEle5Oio
+	GrOjlddZt5E/PPECSEVT6uRp1IkLYQqX1srSso5boUCHzysiOiCJZYWaHX4GJpZ8Ax8
+	D43Wk7I3nidR2VtfbpStgs1VyBZd+1cpYAgEpm4g=
+Received: by mx.zohomail.com with SMTPS id 1767804016225671.8790746320366;
+	Wed, 7 Jan 2026 08:40:16 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
@@ -43,15 +43,15 @@ Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
  C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
  Nieder <jrnieder@gmail.com>, Josh Steadmon <steadmon@google.com>, Ben
  Knoble <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v7 04/11] submodule: introduce
+Subject: Re: [PATCH v7 05/11] submodule: allow runtime enabling
  extensions.submodulePathConfig
-In-Reply-To: <aVy4-LZ7Lz_tuqdp@pks.im>
+In-Reply-To: <aVy4_vtbuYlyppXT@pks.im>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
  <20251220101528.1227487-1-adrian.ratiu@collabora.com>
- <20251220101528.1227487-5-adrian.ratiu@collabora.com>
- <aVy4-LZ7Lz_tuqdp@pks.im>
-Date: Wed, 07 Jan 2026 18:31:30 +0200
-Message-ID: <877bttidul.fsf@collabora.com>
+ <20251220101528.1227487-6-adrian.ratiu@collabora.com>
+ <aVy4_vtbuYlyppXT@pks.im>
+Date: Wed, 07 Jan 2026 18:40:11 +0200
+Message-ID: <874ioxidg4.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,30 +62,58 @@ Content-Type: text/plain
 X-ZohoMailClient: External
 
 On Tue, 06 Jan 2026, Patrick Steinhardt <ps@pks.im> wrote:
->> diff --git a/t/t7425-submodule-gitdir-path-extension.sh b/t/t7425-submodule-gitdir-path-extension.sh
->> new file mode 100755
->> index 0000000000..5d52a289f8
->> --- /dev/null
->> +++ b/t/t7425-submodule-gitdir-path-extension.sh
->> @@ -0,0 +1,138 @@
->> +#!/bin/sh
+> On Sat, Dec 20, 2025 at 12:15:22PM +0200, Adrian Ratiu wrote:
+>> diff --git a/Documentation/config/init.adoc b/Documentation/config/init.adoc
+>> index e45b2a8121..293a2ddbdf 100644
+>> --- a/Documentation/config/init.adoc
+>> +++ b/Documentation/config/init.adoc
+>> @@ -18,3 +18,9 @@ endif::[]
+>>  	See `--ref-format=` in linkgit:git-init[1]. Both the command line
+>>  	option and the `GIT_DEFAULT_REF_FORMAT` environment variable take
+>>  	precedence over this config.
 >> +
->> +test_description='submodulePathConfig extension works as expected'
+>> +init.autoSetupSubmodulePathConfig::
+>> +	A boolean that specifies if `git init` and `git clone` should
+>> +	automatically set `extensions.submodulePathConfig` to `true`. This
+>> +	allows all new repositories to automatically use the submodule path
+>> +	extension. Defaults to `false` when unset.
 >
-> I think I didn't spot any test that verifies the actual config values
-> that get written when the repository extension is enabled. Specifially,
-> what I think we ought to test there is that the generated submodule path
-> is relative to the repository and not an absolute path.
+> Nit: I would have called this `init.defaultSubmodulePathConfig` so that
+> it fits in better with the other configuration we have that impatcs how
+> we set up repository extensions.
+
+I'll rename it in v8.
+
 >
+>> diff --git a/setup.c b/setup.c
+>> index 428427d689..3e05fe7c58 100644
+>> --- a/setup.c
+>> +++ b/setup.c
+>> @@ -2712,6 +2712,16 @@ int init_db(const char *git_dir, const char *real_git_dir,
+>>  					  initial_branch, flags & INIT_DB_QUIET);
+>>  	create_object_directory();
+>>  
+>> +	repo_config_get_bool(the_repository, "init.autoSetupSubmodulePathConfig",
+>> +			     &auto_setup_submodule_path_config);
+>> +	if (auto_setup_submodule_path_config) {
+>> +		int version = 0;
+>> +		repo_config_get_int(the_repository, "core.repositoryformatversion", &version);
+>> +		if (version < 1)
+>> +			repo_config_set(the_repository, "core.repositoryformatversion", "1");
+>> +		repo_config_set(the_repository, "extensions.submodulepathconfig", "true");
+>> +	}
+>> +
+>>  	if (repo_settings_get_shared_repository(the_repository)) {
+>>  		char buf[10];
+>>  		/* We do not spell "group" and such, so that
+>
+> I think that this logic woudl be better located in
+> `initialize_repository_version()`, which is also where we set up all the
+> other extensions. Feel free to disregard though in case there's a good
+> reason you don't do it there.
 
-Yes, I agree, it's a good idea to add a test which verifies the gitdir
-config value to be relative to the repository regardless if the URL
-being added is absolute or not.
-
-This might actually be an oversight in the current code, which the test
-will uncover and I will fix, if necessary.
-
-Will do this in v8 and also fix all the nits you pointed out.
+No specific reason from the top of my mind. I think we can move it
+without issues. Will do it in v8 as well.
 
 Thanks again,
 Adrian
