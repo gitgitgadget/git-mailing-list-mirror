@@ -1,134 +1,148 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3EA1C84D0
-	for <git@vger.kernel.org>; Wed,  7 Jan 2026 08:21:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FF82E2663
+	for <git@vger.kernel.org>; Wed,  7 Jan 2026 08:49:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767774067; cv=none; b=ldkiaMCP4Vycka8ew1Ds1e0RJPlJv+Wk7uAWp5bQpdML7xSb8gdMXNtWcFW67eG28lwhnIK6rewiS8BeRwD6noGtcMyxCoa8/t4ACJTf3077Piz5l8ThvWCZGmx7WoQ45j/foJ4xyo4sTFA4CHaPCUaV9FJexmPJl8r83dGAnpY=
+	t=1767775801; cv=none; b=hFD+RkOiSkzwT3CCX9CX6k936rVx9d8I6VGxT0rUG0uXaRSHCYUM+EdaY0E/WX42iLRkN9USXuSdKvFA94gz+dIoSkcVYz9WiflMpiCrcqvNRx8a+3qW4DUTbw7v5vJcaC58tffWAUIEKIB1raVNji3ga8+5DFW/OtnD4dwdUo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767774067; c=relaxed/simple;
-	bh=xJK84kNmwAe5h99kaDnpn+IVS6/RmazEvr6+tuDpryY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=id/uYbPm8/7TPGyDVYgGo5gzed8ZDDXE6Ey0vRiI6Z1NcQcGjaDFaqTCrAAMwuNKzAaVYmyHeIf1pXZ8YGBtc+nDuhBoX7SKBrfTCJjTDo0W73MjIsx6lxCbtD6MI1501s8wFklymknRsrH3LCfqccnK3a3pYo4dr2JpJvWv/oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GqhGlhm3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ttZr45sH; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1767775801; c=relaxed/simple;
+	bh=4InisJbteqL78Xz5EecWqgjmvI6q4V+P5CodzcilMm4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aSZq2GWOFuTF1g4ppK8i2Z7De6WS3dTIrUl6Qf2PQ0zDc+RZP/i9rfgWyE4/8otqQRWOWLwifuVvXPU8M4vianfSTCsfp83tFD1iY4tyMAOaWYg84WCvlT0b4FF443AxqwXaChVzGgN+ChONtoZ3C00FCaGw3558gfKIC9Zcs+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bMa98kjy; arc=none smtp.client-ip=209.85.217.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GqhGlhm3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ttZr45sH"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 41CFA1400154;
-	Wed,  7 Jan 2026 03:21:04 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 07 Jan 2026 03:21:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1767774064; x=1767860464; bh=lEidYJB4Py
-	FbcyMi8O1UAgTxFVRkBeqE85j9cD9DFR4=; b=GqhGlhm3hbmNO61r/f0kfuE/Xu
-	xgW7WHRvU8IT3eLJ1M62ySzlrNAkE0k0uJpHfecD5dTeO5cwyokZ5Uw7uk/AA++X
-	m2NSMaE1JvZEIi/U5CJqKKEUXgF0YxFG1S6J7he5/47bJkmHcyc+jM0V7lQFQqZW
-	cwz9aTogBavaOR4wWSbBahxUaDpg7/C6tSGiADqgceH3sOAutiV0Fkk+4egeMSUk
-	qghYGGXqaaniR9wvnc3LnqnHln0GZ0jv2hThPtQ/84cB9EdFnq9/m2m+FQ4K9JCR
-	PQha8bDd4XbUAWIUTj41591OKCgXP4LcY7Cz0FbeufAUOzrXrgyCfaeJQoeg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767774064; x=1767860464; bh=lEidYJB4PyFbcyMi8O1UAgTxFVRkBeqE85j
-	9cD9DFR4=; b=ttZr45sHPggkQvRpKwbnBtBLtUAtLkDMx6PcrT8Ia4RNqHEY69a
-	YjUmCcW9kupBQeP65hysF8OdbkgIJvqJS8EdY48cVxSyIkdzb2dUtZGPVkrtep/w
-	ZStidZyUK3SrzaTAPMFySEfKdeVSuKY8YZ818JJq23lEgm1eHQ1BlVRQrNPw7Rt8
-	F1TB2vK++ak4y8jWsBMRXiD0W2SvZ7ysZ0BsGqbBhbnXBs2LOZahjDsuksHyPhXb
-	L8KT24cALmWd6oKYzdJhVqoC2KsuhkdSLIQwTXEfeq5Ek6TNwj4ECxEI7agRODmH
-	+GhkPofhmbfiPaHCoBKglpnu3mGEwzrodnQ==
-X-ME-Sender: <xms:cBdeaRr2o9pdPQO3hu0nDypv3Mt9boIohrvxvunCLqy6tNOpQc46_Q>
-    <xme:cBdeaZrEdqv369MEiFa-HgsmyoTL60yyIgr1vLkoa0_r0D3sRPlLbym5gZkShQ-G9
-    Slhq3YX29WKsjUVGZXmHzsNzThxBLEaeERe6nw3vKmO7F3Svaxd>
-X-ME-Received: <xmr:cBdeab0HdbQzix7y1X_iGDgAyErzyow_Xl2Y0WjnjmoHa66ViNv8j4xpwkvoTKZEqIet-dyVrfR61CkS1oFplJ_NTg8gViKDy6lJIM1YQzI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddvheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:cBdeaYBi3ioWexZEqa8OxAmRafkURo1ufUMl5rqWO6JbJy1UgOzDvg>
-    <xmx:cBdeaTdu9cR5uyEYyZGwk4D659FY_KgrHUwkqTbE7LpLg1zsfLbvaw>
-    <xmx:cBdeadhC0UcN1Ge3bCjGL007sDVwmSPHrNIpXBmHH9dIUXLiano1tw>
-    <xmx:cBdeabo43GC9e7kMHUUxr3JRyBD8n8SNFDnhUsVQNSv7mY8zIVLTfQ>
-    <xmx:cBdeaQLGxQgBID8gEiEKe7OmNBUGRQgBzQZ4let7KqaQsQwF-oB7elFg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Jan 2026 03:21:03 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 426cee31 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Jan 2026 08:21:01 +0000 (UTC)
-Date: Wed, 7 Jan 2026 09:20:59 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] cat-file: only use bitmaps when filtering
-Message-ID: <aV4Xa9ceY4ahYj2m@pks.im>
-References: <20260106102558.GA68914@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bMa98kjy"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5dfcfbcbcc0so640915137.2
+        for <git@vger.kernel.org>; Wed, 07 Jan 2026 00:49:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767775796; x=1768380596; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4InisJbteqL78Xz5EecWqgjmvI6q4V+P5CodzcilMm4=;
+        b=bMa98kjy2jX/hRD4KR7gDBKelZrsokIetBObxURcXMfJTS48mcV0Ahdnx5zXtEYur5
+         vzk2ePqWsgbKREpjz30Zd7NqZEsHkEehLcrDIfA4T7qVDW8/RtJh7m9R7zYUtefMOLWI
+         SPGwAgFCQsvuDAI/iUTAojFvq6He5R2hIpuYhxNpRu0XoEOn+RjXbPF15upeC4yXm9HP
+         OxRx5/CXkxaCkUi+TjpVZ8jp8zlszsproSc57q9s7g8NvKhwWqMKbgjLQ0jFZ7Nb/D3Z
+         qQby6NpI6uBBLePG/1m4whjJr0TN6T+JE4EAKDqHJZcnhSMjt1RY8Sphg8HsOepRzPPK
+         knwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767775796; x=1768380596;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4InisJbteqL78Xz5EecWqgjmvI6q4V+P5CodzcilMm4=;
+        b=iH2Fj9SuyJmGfgu6tsgEu8O4czH6hQhp3rOQtRSCXGQ811594HXmbhyYGp1m1y1GQ4
+         0Tgg22wrt/aM/HCkH8/V8OxmxXLqohUmIJevJztl6VsJxhIW83e5lXIbeuHWEoV2/YJv
+         4Bs9MxpCkrCp6Q3sMRV11+alB/YTbbp0RDxuxMaqY6oxu/IKqLyx+O2R9B3g3a6bnGTA
+         FWrQ5Jg5++t7Ycz/LhcvLDLdaerfYMr3HztKv8eogygyoab5I35meVueUTS8FaL7y4fR
+         pNmVmV+1keUx9+s9ozFz8R16HGR1suk9/ouqsmuZe7vOTbTLMTbhxh9lMPPDq1dYX5pM
+         14BA==
+X-Gm-Message-State: AOJu0YxWPSIK7aMkyLSy4lp9NooDDACPnXBtbdqbSyNr+Zv2wszyHD4t
+	uH5R+MrIdfoFgt1WL9prNXQzbzVtGDP/8uLCXVl6gsH6DVrt2NN9v03Tc5jK/PTPMV7+OiURpmK
+	6RQ2arbTjLsHE1WvvUAZIRajYaZojhdo=
+X-Gm-Gg: AY/fxX6vyIOTGAWZG7TS/GSO4iCxUVRh+g5F37WK9Obf0jtXFOICquNQYHG3nnVCL0k
+	m/JS7uFJ8VyCef7bCYRUxovhkoZY3bnYmPaUoWt0iYjz3HFsL2IeTZ0M1EtujWBFaXtBoGlbvVJ
+	hG4vVxWcsz5R79pFb+JEo0gGimFeAIsY93zZXNzHk0kVfxoRsenK32VQ0JYBqUpAiAn/I9XTiq0
+	GMNDmrO4hhZVCraBZyzv/00NWqWf2HrNAdoejmgPO4K6GToRzOQ1rTytBs35zbEG/BrPuY=
+X-Google-Smtp-Source: AGHT+IGAvixP2YnofxjEiKl/aMz589q/PfvmOIER9Ofk5xrO73k3x6VRpFsHtc9esYI66L3G+52v3HoF7fXDDDs2r7A=
+X-Received: by 2002:a05:6102:c4a:b0:5d7:de08:dcd6 with SMTP id
+ ada2fe7eead31-5ecb5cbba99mr645331137.2.1767775795870; Wed, 07 Jan 2026
+ 00:49:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260106102558.GA68914@coredump.intra.peff.net>
+References: <aVz5kf6eLsMZ6WQQ@Adekunles-MacBook-Air.local> <54e48ac4-7151-4378-b95f-8f22279d6761@gmail.com>
+ <CADYq+fafH-cwc7Ego1fDdNRgSnrOeGzCz_vCqszajVYEx1FV-w@mail.gmail.com> <CADYq+fZDyJWzuJ_DZUc0-uEXJnJc-3mjg=xecaRZ+XqOF1zd1w@mail.gmail.com>
+In-Reply-To: <CADYq+fZDyJWzuJ_DZUc0-uEXJnJc-3mjg=xecaRZ+XqOF1zd1w@mail.gmail.com>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Wed, 7 Jan 2026 09:49:57 +0100
+X-Gm-Features: AQt7F2r36lzYETcRQ3oLUzIEn5OMh5Z0uBD6YxeXo3iFIJL_koMDjLaplaWVAsc
+Message-ID: <CADYq+fYRbdMOo-bZ9bQ0uVpthNKrxKB-fDama5xN-kukprS01w@mail.gmail.com>
+Subject: Re: [GSoC PATCH v6] add -p: show user's hunk decision when selecting hunks
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 06, 2026 at 05:25:58AM -0500, Jeff King wrote:
-> There are some timing tests in 8002e8ee18 that claim the non-filter case
-> is not regressed, but it's not clear to me exactly which commands were
-> run. Given the size of the repo there and the fact that it's more I/O
-> bound, I'd guess it is using an output format that requires looking at
-> the packed objects.
+On Tue, Jan 6, 2026 at 11:19=E2=80=AFPM Samuel Abraham
+<abrahamadekunle50@gmail.com> wrote:
+>
+> On Tue, Jan 6, 2026 at 11:02=E2=80=AFPM Samuel Abraham
+> <abrahamadekunle50@gmail.com> wrote:
+> >
+> > On Tue, Jan 6, 2026 at 5:10=E2=80=AFPM Phillip Wood <phillip.wood123@gm=
+ail.com> wrote:
+> > >
+> > > Hi Abraham
+> >
+> > Hello Phillip,
+> >
+> > >
+> > > On 06/01/2026 12:01, Abraham Samuel Adekunle wrote:
+> > > > When a user is interactively deciding which hunks to use or skip fo=
+r
+> > > > staging, unstaging, stashing etc, there is no way to know the
+> > > > decision previously chosen for a hunk when navigating through the
+> > > > previous and next hunks using K/J respectively.
+> > > >
+> > > > Improve the UI to explicitly show if a user has previously decided =
+to
+> > > > use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
+> > > > This will improve clarity and aid the navigation process for the
+> > > > user.
+> > >
+> > > I like the idea of telling the user if the hunk is currently selected
+> > > but say "(previous decision: use)" makes the prompt rather long (some=
+ of
+> > > the prompts in the tests below are 80 characters long). I wonder if w=
+e
+> > > can find a more compact notation. "(currently selected)" is a bit
+> > > shorter and takes us under 80 characters but is still longer than I'd
+> > > like - maybe someone reading this will have a better suggestion.
+> >
+> > Thank you for the review
+> > So I previously used selected/deselected. But Junio was not okay with t=
+hose
+> > choice of words because they did not clearly tell If the user selected
+> > to skip or
+> > or selected to use the hunk.
+> >
+> > But how about
+> >
+> > Stage this mode change (you chose: use) [y,n,q,a,d%s,?]?
+> > Stage this mode change (you chose: skip) [y,n,q,a,d%s,?]?
+> > Stage this deletion (you chose: use) [y,n,q,a,d%sm,?]?
+> >
+> > or
+> > Stage this mode change (choice: use) [y,n,q,a,d%s,?]?
+> > Stage this mode change (choice: skip)[y,n,q,a,d%s,?]?
+> > Stage this deletion (choice: skip)" [y,n,q,a,d%sm,?]?
+> >
+> > or
+> > Stage this mode change (use: yes) [y,n,q,a,d%s,?]?
+> > Stage this mode change (use: no) [y,n,q,a,d%s,?]?
+> > Stage this deletion (use: no) [y,n,q,a,d%sm,?]?
+> >
+>
+> Also "(you chose yes)" i think is an option also.
+> Stage this mode change (you chose yes) [y,n,q,a,d%s,?]?
+> Stage this mode change (you chose no) [y,n,q,a,d%s,?]?
+> Stage this deletion (you chose no) [y,n,q,a,d%sm,?]?
+>
+> Abraham.
 
-I honestly can't remember anymore, either. I really should stick with
-the actual command run in the Hyperfine benchmark names.
-
-> You can see the mean user CPU does jump by almost 2 seconds in the
-> timings given there. So it may be that the problem was there but drowned
-> out by I/O noise. At any rate, the new t/perf tests isolate it better
-> and reproduce consistently for me.
-
-Could be, yeah.
-
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 505ddaa12f..3cb725940d 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -846,12 +846,14 @@ static void batch_each_object(struct batch_options *opt,
->  		.callback = callback,
->  		.payload = _payload,
->  	};
-> -	struct bitmap_index *bitmap = prepare_bitmap_git(the_repository);
-> +	struct bitmap_index *bitmap = NULL;
->  
->  	for_each_loose_object(the_repository->objects, batch_one_object_loose, &payload, 0);
->  
-> -	if (bitmap && !for_each_bitmapped_object(bitmap, &opt->objects_filter,
-> -						 batch_one_object_bitmapped, &payload)) {
-> +	if (opt->objects_filter.choice != LOFC_DISABLED &&
-> +	    (bitmap = prepare_bitmap_git(the_repository)) &&
-> +	    !for_each_bitmapped_object(bitmap, &opt->objects_filter,
-> +				       batch_one_object_bitmapped, &payload)) {
->  		struct packed_git *pack;
->  
->  		repo_for_each_pack(the_repository, pack) {
-
-Yeah, this seems like a reasonable change to me. I would've preferred to
-avoid the assignment in the conditional, but other than that this looks
-good to me.
-
-Thanks!
-
-Patrick
+I also think "(was: y)" or "(was: n)" is considerably shorter
+Stage this mode change (was: y) [y,n,q,a,d%s,?]?
+Stage this mode change (was: n) [y,n,q,a,d%s,?]?
+Stage this deletion (was: y) [y,n,q,a,d%sm,?]?
