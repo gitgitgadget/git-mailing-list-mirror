@@ -1,74 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0644414
-	for <git@vger.kernel.org>; Thu,  8 Jan 2026 12:38:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5664D2469
+	for <git@vger.kernel.org>; Thu,  8 Jan 2026 12:46:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767875918; cv=none; b=bCxXf84uezY+5qmROB6MRaH2xK6LUYH1mLw9E7J4956gpofk/MviLkxX5lG4nMGmdyyWoNzuoek7iaTC6070vB5pq9kwDtRMx6DRAzBo0ZAnKww+mLyo30WV9EMcjeRRwKUVXU6lzm+dsAqvvT8lWhtjJezeIo9utkZYZxEwuis=
+	t=1767876380; cv=none; b=PmCgSKb9YhouigBgIFre73tw9/mBUvAPRABp8cHuVBtjtZobBMp547peEtpiIO0kzSpq9XeL0AEFu14lsh+ZBcKkjcL9EKF32nuodazDHHx/MxGqIGnl3Ao+pVruegX6y8fr0pBogHoKhzuaxlGhXRAMqsQE5d8wJUT/cqOs9Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767875918; c=relaxed/simple;
-	bh=Krcu7y6slZAKZwZ8s5FRhUz+srxcV9sz1uDcCq19KvU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:From; b=gfM0UPLpimQnexTswu9/w3onfBFN9hn3Tn+sad3yZAqmfEiGtNm44zjlj/UKAmL96m8LL+Jp/aPe8TgRoI84wj3nOQaScCTe7kWgZlI4W8TOIwdvq6dGhXxlt+2EYS8Pd35eoYs2GMbziY3R6Y49ZBcyPYqBBhIojWE2HWpbCac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ct/6wXTc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767876380; c=relaxed/simple;
+	bh=qNcNgAO+7nchKJj6NOCwB7ljl85eGlsunhv0polYwco=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HDBLshiZeGvyKw9+ZdL8GfxuyRtT+jkBSM1iO9Fq+0iGT12lbBzGAwqcknanJp+NrjR/imvTFItRds9ZHOU4+n2fBYNyCyEiqzcIG/qI1cKAtFb2SZzi0IPCsA1y46L/4k5cw90sDPrfwRdOXc1Mb6Ey8MCZz2Z1U8d4TDalzLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ni0EgaIs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ucobCnY+; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ct/6wXTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38A6C116C6;
-	Thu,  8 Jan 2026 12:38:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767875918;
-	bh=Krcu7y6slZAKZwZ8s5FRhUz+srxcV9sz1uDcCq19KvU=;
-	h=Date:To:Subject:From:From;
-	b=ct/6wXTcjkLNVp2UIql5xJat6Oc5dPrM5eeA0+oexI3LcJuY814sv/DicYA4R6gcg
-	 fG1RDRYJlY3vyDHoJGLKgoarjlWviLXY9B4qPt9Kp8Zez9R4PQtAaCaBZTLV5PDJeB
-	 BhCh/GlHrAJFNdgtxQp0zpG6FO770+sSeCiRSr1d96LBgzANFVJEYnLNcpXBDhpVBc
-	 18uKoxEcvYfrnYkWqgjamf/3QYSxDlIkueFoSjUjBqxEFc7ewn3SgwGp79SA81uqCk
-	 38S+P9E9joUV2gF/FalfdWhe9ezdxSBGPBmXNZQLXf5CMa8CzgFuYz8jeG05TG5BXz
-	 2rz6JV4UTJm8Q==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ni0EgaIs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ucobCnY+"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id ACE031D000EA;
+	Thu,  8 Jan 2026 07:46:17 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 08 Jan 2026 07:46:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1767876377; x=1767962777; bh=Pz2Ygrgty9
+	csUtFjBh0gJP30JI1qvj5c7gPHbHzVMoY=; b=Ni0EgaIsjvBRu6DBVLvrLzSwTa
+	9cKHxJvmkjZ/1uSh6EygsBu3r1INIMJ0dsii2trBCYZJHRqLuCZMyHaslumyb73F
+	fSHQw/5EvmCeyfXquOlDo+T5EIDdYY43m0qhC+vxDtHN3n7Fn6rVaUM3H+e2RWjX
+	SdH6D5wuRsArzwyUwzywU/so53ONYmGaTTvCYIYFNt9Us4+MUHiCzKQwgabvqkBv
+	C46VQMxiEDKabQ0MEDylTyJETBeagnWy/2NNoVYulLvS83KxarDMNm2nSG6s6F58
+	a8P+IoU5Vgy7UHgfeK8DLBoXZuufwjlqFUUNILkTmBsDa08lo2IG4uOnsMlg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767876377; x=1767962777; bh=Pz2Ygrgty9csUtFjBh0gJP30JI1qvj5c7gP
+	HbHzVMoY=; b=ucobCnY+hKqL55EYSmLlmTBvOyiOG1DRy144fRJNLoq1Wa/CWkX
+	LPRM6ngOb6abj2gnwiKyw27Sm+Qsc3MhpDFvrkgvKvf0EiGn1vz9dD0huCja0s/R
+	RXK+4XAeCYqO+KVlr19CYtct17WtPI59hhGNKKWXJ1QpbML1y8AB8mNcpG1OUmdR
+	pEW6aptjBvMLhjSGjjY/GKlLNpuvYXHhlcVgzOeEdcE+wtf8s1pyjtr3a3B74TK6
+	fDPju70JqYToxDv0uUn44GvR6qXQ8zz9Rz3IB5R7ofKMXFWtIVdmfaUwC+e9yMSB
+	+ynOUZLYKU7o2Cto/psQVn01PDK5oNp/vqA==
+X-ME-Sender: <xms:GadfaTbAfFU9LlEqbRNAVZp1O0Ne7pmCl8q0xIRvi_rdopL2UbWt8Q>
+    <xme:GadfaWGcB3jpbWMXUbjeFSu7VV4ShjNh5L8itiuWDhggNYSGbCB9KOPNojyMk4fcV
+    mcw_HLF0DIIPKk7WPhX2xpa86i81Iy-MrL09Lp9my0UwIdTIilpNw>
+X-ME-Received: <xmr:GadfafwV7IGLc89NKfK6muuUrP4Jpf3EMXjEjK_av4VY51-zd0q_s74plLB3sKo7Sv79TV40zqntDIf8j5bkZJ5d65VazK679FxbWzE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdehleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:GadfaQk0gx2QCv4An-Qr0VRHZgUhbiadhHHNKU8MY6e0rZp_D9C22Q>
+    <xmx:GadfaQkNX55sRfvVDCHkC2YYKwLTdA5OpOdrAA8DaGkVj45HXVp-Uw>
+    <xmx:GadfaazBqjVjRxcU-vrRTIqq5dwncdR4depaVGbhxJIamtYCH59OIQ>
+    <xmx:Gadfadp0TQT4tcVXquz-xCqe9mssI1A8ngABQFt3kLrUelDwpJoCEQ>
+    <xmx:GadfadIG3z9ZvNR6usieSbN3WZr3tZstJHIArp4LWe3ps4_z5RLOMyor>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Jan 2026 07:46:16 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  Karthik Nayak <karthik.188@gmail.com>,
+  git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 1/3] t/unit-tests: update clar to 39f11fe
+In-Reply-To: <20260107074000.GA102520@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 7 Jan 2026 02:40:00 -0500")
+References: <20251206-b4-pks-clar-update-v2-0-9a14b10c1a36@pks.im>
+	<20251206-b4-pks-clar-update-v2-1-9a14b10c1a36@pks.im>
+	<CAOLa=ZQZnYVuK8mDi6Yb8_+hqw_TMugn6i7BJCj1gbNHOruNWA@mail.gmail.com>
+	<aVzvDGVEI2qVJv2F@pks.im>
+	<20260107074000.GA102520@coredump.intra.peff.net>
+Date: Thu, 08 Jan 2026 21:46:15 +0900
+Message-ID: <xmqqwm1sff1k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 08 Jan 2026 13:38:35 +0100
-Message-Id: <DFJ7PJVEVOYG.377TM7121KCQJ@kernel.org>
-To: <git@vger.kernel.org>
-Subject: Improved Rust hunk headers
-From: "Benno Lossin" <lossin@kernel.org>
-X-Mailer: aerc 0.21.0
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Hey everyone,
+Jeff King <peff@peff.net> writes:
 
-Recently, while looking at a Rust patch [1] for the Linux kernel, I had
-an idea to improve the hunk header for Rust code. The patch's hunk
-header is the function defined above the addition. To me it doesn't
-provide much value in giving context; it has been a while since I last
-looked at that file. It would be much more useful in this case to show
-the context `pub unsafe trait FromBytes {` instead. This is because the
-function that's being added is added to that trait.
+>> The alternative would be to make this `cl_fail(...)` instead, but to the
+>> best of my knowledge this isn't even a valid construct.
+>
+> It is valid; that's how we define BUG(), for example.
 
-In the general case it still is useful to show the function context when
-the contents of a function are changed. Ideally, it would be possible to
-show both the `impl` block and the function signature.
+Thanks.  I was wondering how that thing was working after seeing
+Patrick's message ;-).
 
-I have no knowledge of the inner workings of git, so this might be a
-tall ask. But would it be possible to implement having multi-line hunk
-headers and have a more advanced selection algorithm? AFAIK at the
-moment a regex is used to extract the header, I think that would still
-be sufficient for this case, if the `impl` block header is searched for
-after the function signature.
-
-My current solution to reviewing a patch like this is either opening the
-file and scrolling to the change location. This isn't possible if
-earlier patches in a series already changed the file. In that case the
-only option is to create a new worktree and apply the patch series. It
-would be great if I didn't have to do this for simple things.
-
-Cheers,
-Benno
-
-[1]: https://lore.kernel.org/all/20251216-transmute-v2-1-b23e5277ad02@googl=
-e.com/
+> There are other options like GNU's "## __VA_ARGS__", but I think eating
+> the format argument with the "..." is the only portable way, at least
+> for standard versions we'd support. I think C23 added __VA_OPT__.
+>
+> -Peff
