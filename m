@@ -1,104 +1,96 @@
-Received: from mail-07.mail-europe.com (mail-0701.mail-europe.com [51.83.17.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEACC500962
-	for <git@vger.kernel.org>; Thu,  8 Jan 2026 16:52:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.83.17.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124D02E0412
+	for <git@vger.kernel.org>; Thu,  8 Jan 2026 17:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767891142; cv=none; b=SYmM0RC900qmurDL8gjUE4y0FYvpIQIyt7L+n9FR4q1bMePtClUVc4On8rak0duFcghXgjbBjiUz/JsAYFARSMM3lJgSlkM/2siXdzwvVX7l2KcxIyuKzsJp6gcbWQqRvusGn/o8V49ItEUYA803ulrNEJGN+6TkfcfZ+fepT4w=
+	t=1767892896; cv=none; b=pDlvV3AXVtcCF+BLLaKiUNHLnIJNySrnQoNiZ24gcXTX7LTqn23NN2S1Tj1BLMQghR5ljljLL+Sp8XSlewpWs/gEup/SZ8AaJbDg2IJ7upQQjy0qDhgeUUyRN9wWvrnlwKlsWiGHmgVboVyPVjaHbR46UueiTv/jUJz9qPct6KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767891142; c=relaxed/simple;
-	bh=Cgvj8MjG7ZquwlHe9TBhgkgG7tQkkH6Bz1wNMaeP6s4=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dVuqkh4W3r1f7bmPzJdnJpAA581iFVAYgszTAesOHqrK21PkS+rKm7XN6SMH0TUHlqYyz0sb0sVH5RO4SD3ztrkK0PMxlgEaVS7g4MPTTUYZyyLQLiuguOzyPddfl7xpUcgr+5ftd0zzlW2dPcePRelspMHjCrjG8M2c9crhDHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=fail smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=sIkYSwjB; arc=none smtp.client-ip=51.83.17.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1767892896; c=relaxed/simple;
+	bh=btHdcUWrBy2YNZGxvZjIpmNi+aBaVqvzjSOhC4JfiXs=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bD3C4ozyQ3tjwwzdRKH03Us/WUG5T49fabbZDRwIQ+q1JRVNJ45eZFEvlUWTtegZ1BqK2pgMFBY43jxRQ7DEdEoU4kR5M8++189i03aZOsi9zwNAcErYvpsz6xAoIEZxPtOFlU3xpEbmzr+pmSUpzfnJoz/YVSLzLXTTQ+QHN6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TGA+XjgT; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="sIkYSwjB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1767891129; x=1768150329;
-	bh=NhTgbsLYNxbRMQbOT3W0KlZ9vNT0L+PTUZ9660q6qP4=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=sIkYSwjBxSQe1kFqstPdYWJSICx1OZb3ZdZMJEERmRD2UBqJe2nkE6Vx+ssgdD7sl
-	 rPLkBAFveHEH8he+jBAV31ylx2fDrqLzr8EwM+F9C5YQZfAANxEMeOrOOyLrHSwLJG
-	 0ta2uY4pAHOaabiPbG/Tl/A0rZ/2rYhf6t10Eb+CGfbKRL3XjSF4MSxCepOJpwAdCo
-	 pqFkMsEhjEiDRCieEesbTdERcGhIzoAIGlYGP+ufEtsRwNuuRn9B/NUs5qBgrtiiRZ
-	 KUWjFTgDYqVeE9lJuKhiMK+h7CWZMOK5feKrdiTI+4547kvy5eke+QaRoUYwDwe0Hh
-	 /Sx5LbL5yBGZw==
-Date: Thu, 08 Jan 2026 16:52:05 +0000
-To: Patrick Steinhardt <ps@pks.im>
-From: Tsahi Elkayam <Tsahi.Elkayam@protonmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH v2] reftable/iter: fix UB in indexed_table_ref_iter_next
-Message-ID: <f4gLTILYbAvRqE-aKM3PTyIajeuZBM2Vgo5V66Q8gI6gpI0niPpz8w_lMa29V4Rou2TJ95SKwm2B16KitVrt47KtCzY-eRBm7kemh0iw82s=@protonmail.com>
-In-Reply-To: <aVvR6U6EJ9wfKk8l@pks.im>
-References: <iaPdageDbUKEIQVlnOugIRhoojxnFo3j-WJFWY0eC5el1Epu3sxEnto6Lrd3bhAYL0Ry8T3czP5UPhLHX_gfWCDiCoLuMofdRkqfOSYP-Jk=@protonmail.com> <aVvR6U6EJ9wfKk8l@pks.im>
-Feedback-ID: 35521663:user:proton
-X-Pm-Message-ID: c01ed8a568012b2065264a0863558c7b6bb5a03a
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TGA+XjgT"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-477a219dbcaso28567855e9.3
+        for <git@vger.kernel.org>; Thu, 08 Jan 2026 09:21:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767892893; x=1768497693; darn=vger.kernel.org;
+        h=mime-version:message-id:date:subject:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=23J5HmjcNKEsosU0XaIY66JDfTghrVkvX/rxgrlHoxg=;
+        b=TGA+XjgT1qR/+z2p1uGNIcCUHMfmiuzCWUsAZeoqlJi6rlrld7xvAne6Fueyromhdn
+         WWhoBijRn6oNGSsL+bpD7tJjboY7kVjqo+RwkVwg5T4L8QC9t0gevceTV1VPB1SewasK
+         5jMaPMbi/OptrwbSj5QBTyNSznjIh0s8aTvVmoXB6KeFLZ7fqcOMzMGpMThWF2VWlRTX
+         x3J1vUM6++MzlGS+Rdq93ira/Z5mbkeOMoeB5ZpTEr35IBM2+VfHfdaMB0QvEA9Z7sFq
+         9ald3Zieib0qadc/4QIhCSjuOqB5izVslum1MOrn9XSAWlIqfeZLuNU3kj8KIhsTFAl/
+         lpKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767892893; x=1768497693;
+        h=mime-version:message-id:date:subject:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=23J5HmjcNKEsosU0XaIY66JDfTghrVkvX/rxgrlHoxg=;
+        b=WqIVcolK9xtJnuWvcZ7lU3DLwFAemZdg242bWNTSGg+Wk5+/xFi6NoCwxD2ac4MR4s
+         BFfYsRj1U2q8MzkT/+TKuMQmaq98E8G8t2zUwOJxD0AWrlcadK9Hwzx+ci+nO9fRTJSN
+         O7OtOtez/EfFHkWtiwXQAC5NINvqnUu7a5hDRhOLuXUglvsyU/pmxLIghO3+18bBPjd2
+         EgFJWYrhEkCGlGua9PymtBEywpK0rlUiE289tHbaLL8vqYV0ABUnRAb8gJse2qdjxeaY
+         dZqMgmr7pn0g48hTpT6trODR1qoIwjKI+GuiSsxK4LYaoBR5oTsPFeYaEWRaped3YoGF
+         MFvA==
+X-Gm-Message-State: AOJu0Yyziw4gNik5DNrb2FdXs1/v4bOpesG6Ny6PSfJLK2q/6iopO/3y
+	FG+5go0rMcT1vE9/cecM/8mtjJ4dhd0LByZ0+zzCI8UHuj5S1bSm/p971nFF1g==
+X-Gm-Gg: AY/fxX5kUeVu+SREmhYm+WGmFBahB/iwNRUldQOyQpEWgxbJzEXJ6Cnux9g+d6+ouF1
+	RXxq/YhZXL7XEzaw6g8Gg6svGYXoGSn01mh6SOX/SSQ3uiBm3iVQUg7UKtBhJA7QAwG7VEbX2YT
+	UlIfIG8ZjFTY+MzKBM5eIHNYxSX/mrFDho3G6Ob1z/mr4S5ptDEUlTHJSEVVnyd3+1/GBfDu2mF
+	MzHXAtuxmCl3ahKxqSKkgBFp8XyBQlhkk+HEnXXRXUD0puIdlza6xrCYG/PvzngMDpusTkS8YQE
+	ocSeZ6STDqm7b1tJTZyXr0L0p4trejyahF2MTly07DWQTrLg1ZZvS55qwtxveoqSV1DD4Dz4nvl
+	48Y01bvvWoGY7md9zrbaXUrs5XshxYHfxNouVAmC7aiatvSt5A1fLKjUHtV3in36QAfafmJ8UCA
+	1UDUBPp4tb/YwHUnbjHZ/cuFHTRqC91+6wmDT2ETif
+X-Google-Smtp-Source: AGHT+IFjFP22HThANkVZ7FGRtQeNbSoIMka7Qsu0tXgy0ouwf0zh4xgZe4CqpAOy3vCPLQX0SeXMRQ==
+X-Received: by 2002:a05:600c:4747:b0:47b:da85:b9ef with SMTP id 5b1f17b1804b1-47d84b18a7dmr100549985e9.16.1767892893335;
+        Thu, 08 Jan 2026 09:21:33 -0800 (PST)
+Received: from localhost (222.241.108.93.rev.vodafone.pt. [93.108.241.222])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d870dd5b1sm46350715e9.4.2026.01.08.09.21.32
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jan 2026 09:21:32 -0800 (PST)
+From: David Miguel Susano Pinto <carandraug@gmail.com>
+To: git@vger.kernel.org
+Subject: git init with specified user.email
+Date: Thu, 08 Jan 2026 17:21:31 +0000
+Message-ID: <875x9cvx44.fsf@word>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-The indexed_table_ref_iter_next() function provides reverse mappings from
-object IDs to references. It currently accesses ref->value.val2 without
-checking the reference's value_type, leading to undefined behavior when
-encountering unpeeled references (REFTABLE_REF_VAL1).
+git checkout has a --config option so one can do:
 
-While the current "obj" table implementation is suboptimal=E2=80=94it yield=
-s all
-reference records within a block and relies on manual filtering=E2=80=94thi=
-s
-manual comparison is necessary to ensure the yielded record actually
-matches the target OID prefix requested by the caller.
+    git clone --config 'user.email=email-for-this-clone' ...
 
-Fix the undefined behavior by checking the value_type before performing
-the memory comparison. Additionally, replace the "/* BUG */" comment
-with a TODO explaining the current implementation's inefficiency, as
-suggested by the maintainer.
+which I find nice to setup as git alias:
 
-Signed-off-by: Tsahi Elkayam <Tsahi.Elkayam@Protonmail.com>
----
- reftable/iter.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+    clone-work = clone --config 'user.email=my-work-email'
 
-diff --git a/reftable/iter.c b/reftable/iter.c
-index 2ecc52b336..2eee65bb1e 100644
---- a/reftable/iter.c
-+++ b/reftable/iter.c
-@@ -171,12 +171,19 @@ static int indexed_table_ref_iter_next(void *p, struc=
-t reftable_record rec)
- =09=09=09}
- =09=09=09continue;
- =09=09}
--=09=09/* BUG */
--=09=09if (!memcmp(it->oid.buf, ref->value.val2.target_value,
--=09=09=09    it->oid.len) ||
--=09=09    !memcmp(it->oid.buf, ref->value.val2.value, it->oid.len)) {
-+
-+=09=09/*
-+=09=09 * TODO: The current implementation is suboptimal as it yields
-+=09=09 * all ref records in the block rather than filtering by the
-+=09=09 * OID prefix. This manual comparison is still necessary.
-+=09=09 */
-+=09=09if (ref->value_type =3D=3D REFTABLE_REF_VAL2 &&
-+=09=09    (!memcmp(it->oid.buf, ref->value.val2.target_value,
-+=09=09=09     it->oid.len) ||
-+=09=09     !memcmp(it->oid.buf, ref->value.val2.value, it->oid.len)))
-+=09=09=09return 0;
-+
-+=09=09if (ref->value_type =3D=3D REFTABLE_REF_VAL1 &&
-+=09=09    !memcmp(it->oid.buf, ref->value.val1, it->oid.len))
- =09=09=09return 0;
--=09=09}
- =09}
- }
+(while leaving the default clone for my personal projects; or an alias
+for clone-personal with the work email as the clone default).
+
+I would like something similar for git init.  However, git init does not
+have a `--config` option.  I tried to use
+
+    git -c 'user.email=my-work-email' init
+
+but that's not working (I'm guessing it only picks up configurations
+mentioned on the man page for git-init).
+
+I am currently working around this with a template for work but would
+prefer to init with `-c` (or similar) or at least understand why this is
+not possible.
+
 --
-2.47.1
+David
