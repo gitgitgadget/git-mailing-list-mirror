@@ -1,192 +1,110 @@
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from flow-b2-smtp.messagingengine.com (flow-b2-smtp.messagingengine.com [202.12.124.137])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF93426290
-	for <git@vger.kernel.org>; Thu,  8 Jan 2026 01:13:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BE8221FB8
+	for <git@vger.kernel.org>; Thu,  8 Jan 2026 01:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.137
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767834791; cv=none; b=rTMyzlMUHQ+Z22The8FD8AoXKsdP9H1twDNSI5POq2u4xDxgCV+Ex/NIuzsm6PmLsnbSIs12A4g/LesJVHhS0RxO1MFpfrg+UXezveb8SpdoBFJHtqOV1G6Xzqg0BjwO3Oy0elIehJ17uv/P11DMdmTy6MHRmPGXyOUw2B1ILWw=
+	t=1767835872; cv=none; b=KXGk5vtUwwaqaw/7ytrtrLC3TwN/Uf1MExU+/KDhe9fx6+u33rsQkHImszA/hKIZ+o/pzhkclnWHTUUrCT7hSDHx82cLWqyHfty6OgiEV6Bui4vUhuv8VODjj7C5s7kw5CejY5U8r3dNsoab9m684G+j5P55lOgB3U17qW7msF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767834791; c=relaxed/simple;
-	bh=IAgoVflLExH4ur9u1k4ietGpHE3PWskniqEqMm1UyEY=;
+	s=arc-20240116; t=1767835872; c=relaxed/simple;
+	bh=HgB1+w7EMlCzVnMekvtn6dO0lwdTt038ZGJLOKwgslU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l/GppsUP0VHLl8Y5n6eICYAToie/wud4HajK2wj6IzJmKfUc2JxVMFRc/p2L/kSZarMtJ0NCBCoOLnugO6JhXL9W71LjzR2UcZYVgdtk/FB8T9agL4UQtTmTt7PXxrYJKarL4VYhlOJdCmmDshWVhrX/pBdo2aMIshNHDMV2MS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hv7IaM6v; arc=none smtp.client-ip=74.125.82.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=M/ng7/0PMv1U9VFD39hQmOEK4byKVYWWFRkmECatMfA4gR3F8Nahl8ltl4gLOGOLPd5jckl8chtKF0EEasxYu6qkrIk0K7uIM7pWA7ubUj0xUSLn+HpZ7IVf7xjeRocBHmXJNJcNzeDRVhKGmLA6VTind9PQvE5t3C7FtkeasE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=V3pZq0tm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K5A5oob4; arc=none smtp.client-ip=202.12.124.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hv7IaM6v"
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-11bfa33cb7eso2822762c88.1
-        for <git@vger.kernel.org>; Wed, 07 Jan 2026 17:13:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767834788; x=1768439588; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Eqr3gdyagfBa4sW+D04+bHnBVdmBKNHqmeKmlLgai78=;
-        b=hv7IaM6vm76LxmQ8A8a6bkb2wGmtu7j+qQ+uqXuQrMq+uEB8omBUuG+uNAacp/rbkD
-         f+tu3QsNEnlSOyOXYRjDV4bp5vaj5al4sFEE0XcwBDJZ8VMbrVHA2LPQAulDHdxYD/Oq
-         zcZQwI/DvY+Lj+eS0ID0TgazuVMv1W8NQuLpCa+dKwobLtxf+etcmMGgd9PhB31BpJhG
-         RNw1LbE1iK48zroPxH5NYTpvPQA0jkoQ5Dw1XzRYfdGjtB64Q5IwLBz6wDgVMmqqU+eA
-         HRKKFRSlbvCp0oG7FCxoebxu4+I5l6i1W0XL1qG/H97H77FwytIHjqiPhNYBktPSixWq
-         T/fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767834788; x=1768439588;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Eqr3gdyagfBa4sW+D04+bHnBVdmBKNHqmeKmlLgai78=;
-        b=xCbQM+Yrd/MqlhePss5ERttRxNTsT7o5y6o55Z0MQU1CRzI90YsH5fpvR4ozjNHwGF
-         mIeJgYk79nN23arFn0ETzj9bCYYfz070jTbJNmN68BBp9+EeswsOPwUKSwSu1SIyTWRs
-         +RCffBCYpAW0+xXPbkD3oThKdk4Z46ofLI4XpfutqArrImvcTC7OlKQPSOCe9vf0jE63
-         RsPfnf7VoDlYQuVD5wAx+meAxtFakKdSHszmbjk2pyTZ+NHTKTgT84SRNKG4fLmuIsTg
-         IlyBVSLFpHn1dpZX3dexRPPMM1qj75q9qTYXYnrFbVGUr59yvppmEuQfqyEVy++KAXkU
-         raEw==
-X-Forwarded-Encrypted: i=1; AJvYcCXNFHxF2jo3FSkPiAEe/jSrSJdFmlxKBYV/yCNxTu12UOPbrd+qDbn+eHftSX9rwdYaokU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGIaz7Fr8MfMF52Jmgc7N/XmoyVjNpq4EpzaiYTDprc/R0HQcC
-	IIA/eQzwVSVIHZbzzNFW9yXrxsAegxLbQTl2NWB0zZYCLJ5cbbU8rDRN
-X-Gm-Gg: AY/fxX5l9hLuOpKa/Zx79fZ9ghSWYv/tmns0ZEzQosu8TAxQ2txhJso4ek3kfoPWlbN
-	JknfIOqH/Is5Eiim2R5TUxpqxpoDU69OGWscKVoGiPtfXEUXwkYq3g8rdq2Edi0xDDC+5X3fLri
-	JdnSAWKjc4r1wg8UB6Ys6aI3Kq+kwUnfWRzfpKTk1DtLdHmn4JpNb0gDoX5P1hL/t0557IrUhfD
-	+DGlEGiBs5OTXKJ3I2n9934KUWAvXjIKExqvMQ3L/lMj5B99KxgG+ANEe2zfm/mIbzmQcan//3v
-	B7T2hvKBd/EX1J8EyY5LRjcThdXNzstGsZvt3Oxayc4lj2koz9Fr8NaVOofdhSbf5wz/iPvh39P
-	NkebBCOQKKTne/fFBrcoiJAuF059pam3qkV16NRW0KANPBYbaYvYo7bnM4IS/HZYoOiEP
-X-Google-Smtp-Source: AGHT+IETl8vBVTvM80SdYBIRposwvrLDP3tbKKXUcSLkuCmZhz0ET+ZeMUEukfhGsQTGJNrn+KKZ0g==
-X-Received: by 2002:a05:7022:48d:b0:11a:fec5:d005 with SMTP id a92af1059eb24-121f8afe9d1mr3876417c88.10.1767834787577;
-        Wed, 07 Jan 2026 17:13:07 -0800 (PST)
-Received: from fedora ([2601:646:8081:3770::361d])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121f2434abesm12063795c88.4.2026.01.07.17.13.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jan 2026 17:13:07 -0800 (PST)
-From: Collin Funk <collin.funk1@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Matthieu Beauchamp <matthieu.beauchamp.boulay@gmail.com>,  Matthieu
- Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Matheus Tavares <matheus.tavb@gmail.com>,  Johannes
- Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ignores: handle non UTF-8 exclude files
-In-Reply-To: <aV7ujZ2FeO7EleT5@fruit.crustytoothpaste.net>
-References: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com>
-	<aVrCHr_NRDqNjPn0@fruit.crustytoothpaste.net>
-	<CALH9GrYOjb92gjrtdjwapFH9L73XGg1Kan8uz1aVLpSXNURi+Q@mail.gmail.com>
-	<aV2ZS1lvLivi8xRH@fruit.crustytoothpaste.net>
-	<87secimchc.fsf@gmail.com>
-	<aV7ujZ2FeO7EleT5@fruit.crustytoothpaste.net>
-Date: Wed, 07 Jan 2026 17:13:05 -0800
-Message-ID: <87ldi8aov2.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="V3pZq0tm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K5A5oob4"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailflow.stl.internal (Postfix) with ESMTP id CACB11300031;
+	Wed,  7 Jan 2026 20:31:08 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 07 Jan 2026 20:31:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1767835868; x=1767839468; bh=IUXuV89zif
+	57YnoA27bGsM0OsLXfe2o6diawEdLy1SA=; b=V3pZq0tmZIdjrLB9+4mpAWgIdh
+	qd4+2he6rMTaXTKGsAyX0DWun1cPM/HYkcgTNhi6Ri8KCBEL5bgelm7WmNUhQg+5
+	+HY9Pl21e2MFbCHSLwnzB/PHFjRHZv2jYYEGgBbWbZiiROu4Opw0VX5xyshE3H8A
+	e34r4gBiNn8rUwum37iLY/IDtkYdrhgOcZvCEt1OYfk5fajK2lhNQ41KsF1BptUG
+	Ooz1IgLTAbFoMD3fMaJla6MRM+1wai/4fbBX2XPJClTm12KPV2ERxtReqnG+wMo8
+	s90/xVAOAGVH/pVtg8eqlKBbjLhYL5aJfXhMCUf9YgoEMHII4N7NHVmj21Bg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767835868; x=1767839468; bh=IUXuV89zif57YnoA27bGsM0OsLXfe2o6dia
+	wEdLy1SA=; b=K5A5oob46ddxxXQw0+zwfGWpL6jItHJKiaHf92eHgU/WdU2Fipn
+	9rjaTw9Qo2erChPEMuNMGbAUws5WE6kjWbtXTXD4eFl48chz148zwrIVUY6sFl5E
+	L9xHd6dQ4x9szkEEolKaRmLTmbC76vOkBDzloOJYtFOt8EYVYo1RIRMQPVXLiWpi
+	Dh7S0sMzDnfpUGk5FAVPc02XWWcryvKFGJ46r7UnWD82adzaHkbqgeHSB1XpKjur
+	qTxvJXJUGnSCltB6Wqf08AMXaZ2OUiTlE2K7JYTA3nNq9ZuOVuO97ki+x4ngKGTu
+	78TAsbRyFibfmSqur0PylqJdUPImPWHre6Q==
+X-ME-Sender: <xms:3AhfaQYEeajtOJWZJRuHqowIjS7-XPBPYHaGuQbRFdCKah5nN-E4sg>
+    <xme:3AhfaRa6Pzf9Ee6vAylvA-e8--TJMCAtfyZMEliMJyKRtjjjTCrtzhAqIaChBtUKo
+    Ie4FzaPWdVDo690mGNgLlFrsSTkEsX1AAb82NpX7seNgaN1m-5f68s9>
+X-ME-Received: <xmr:3AhfaYn14pv7Dim1M-GNBYPQLaInhEd3QAlHNhWW5TGHMKLjTKUu662eBaMRobxZCcgJwxvrQc1gOuklS4ZmU1APXX0VUaOv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdegieegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfggtgesthdtredttd
+    dttdenucfhrhhomheptehnughrvgifucevhhhithgvshhtvghruceorghnuggthhhisehf
+    rghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepveeggfellefgueegteejte
+    etudehiefhgeelffdvteejjeeigeevgffgvdeklefhnecuvehluhhsthgvrhfuihiivgep
+    tdenucfrrghrrghmpehmrghilhhfrhhomheprghnuggthhhisehfrghsthhmrghilhdrtg
+    homhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:3AhfaVzqYZidQ7JRXiO8HmCs2a9PvGautZYgRF9eQTfYxEhfVgHPgQ>
+    <xmx:3AhfaePu1Zgu6gp56O1FQqeGi27Nqx-gDluE_wtrtWdRRuqqY8Sl5Q>
+    <xmx:3AhfaRSUkvjMckWTEgADp6DfSTXAExVwNkn_fkL6xeVDeYJVr4P5sg>
+    <xmx:3AhfaUa3dz1OdQwQ_WBIJ6y8bn_qNeo5roRcZAdRNjMwbDQqJyDYMw>
+    <xmx:3AhfaW2dxzz_A5AJbxurt-W9qiBIEO5whw3SW5pES9VzXSYfl5UB1zv7>
+Feedback-ID: i4e2e486a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Jan 2026 20:31:05 -0500 (EST)
+From: Andrew Chitester <andchi@fastmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH] t1420-lost-found.sh: use test_path_is_file for
+ error logging
+In-Reply-To: <xmqq4ip0n3mm.fsf@gitster.g>
+References: <20260104161536.45384-1-andchi@fastmail.com>
+ <xmqq4ip0n3mm.fsf@gitster.g>
+Date: Wed, 07 Jan 2026 20:30:54 -0500
+Message-ID: <87v7hcvqk1.fsf@fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 2026-01-07 at 01:35:11, Collin Funk wrote:
->> An unfortunate trend that I have seen with Rust programs is that they
->> completely disregard the systems locale. E.g. using
->> LC_ALL=3Den_US.ISO-8859-1 and passing an "=C3=80" character as an option=
- will
->> typically fail since it is encoded as 0xC0 which is not a valid UTF-8
->> character.
+> Looks correct, but given that what these tests want to ensure is
+> that underneath .git/lost-found there are only these two expected
+> files, I have to wonder if the output of "ls" here is expected to be
+> very stable.  I.e. if we rewrote the whole thing to something like
+> ...
 >
-> Git does not usually directly read input and then convert it to other
-> encodings unless specifically asked to (e.g., `working-tree-encoding`),
-> so I fully expect that nothing will change there.  However, in many
-> cases, Git also currently does not honour LC_ALL, such as for commit
-> messages.
-
-That makes sense.
-
->> I figured it was worth bringing up since Git may wany to think about it
->> some before introducing more Rust. I think it can be worked around by
->> using OsString [1], but I guess many people choose not to.
+> 	ls .git/lost-found/*/* >actual &&
+> 	cat >expect <<-EOF &&
+> 	.git/lost-found/commit/$(cat lost-commit)
+> 	.git/lost-found/other/$(cat lost-other)
+> 	EOF
+> 	test_cmp expect actual
 >
-> The people who have been working on Rust have been very careful to not
-> make assumptions that all data is UTF-8, and I don't expect that to
-> change.
+> ... would it be a more direct way to say that and is easier to
+> understand to our readers.
 
-Great, glad that it was considered. I guess you have to worry about
-crates, but I think I recall wide agreement that Git was going to be
-careful with what it decides to use.
-
-> OsString is slightly problematic because it is effectively UTF-8-ish (on
-> Windows, it's actually WTF-8 and on Unix it allows arbitrary bytes) but
-> there is no portable way to get any consistent byte encoding out of it.
-> (In versions of Rust too new for us to use, there is a function that
-> provides a byte encoding but it's not guaranteed to be stable across
-> versions.)  I have some custom code in one of my branches to handle the
-> conversion to and from OsString to a consistent byte encoding using some
-> traits to paper over the operating system differences.
-
-Interesting, good to know. Thanks.
-
-Unrelated to encoding, but two other things I noticed about Rust. Before
-main() SIGPIPE is set to SIG_IGN which can be seen with the programs
-below:
-
-    $ cat main.rs=20
-    use std::io::{self, Write};
-    fn main() -> io::Result<()> {
-        io::stdout().write_all(b"hello world\n")?;
-        Ok(())
-    }
-    $ cat main.c
-    #include <unistd.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-    #include <errno.h>
-    int
-    main (void)
-    {
-      static const char message[] =3D "hello world\n";
-      if (write (STDOUT_FILENO, message, sizeof message - 1) < 0)
-        {
-          fprintf (stderr, "%s\n", strerror (errno));
-          return EXIT_FAILURE;
-        }
-      return EXIT_SUCCESS;
-    }
-    $ rustc main.rs
-    $ gcc main.c
-    $ ./main | :
-    Error: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
-    $ echo ${PIPESTATUS[@]}
-    1 0
-    $ ./a.out | :
-    $ echo ${PIPESTATUS[@]}
-    141 0
-
-Before executing a program using the standard library, SIGPIPE will be
-set to SIG_DFL. That is better than not doing that, but both behaviors
-mean that the typical behavior of inheriting signal actions from the
-parent process is impossible without hacks or an unstable feature that
-has been unfortunately stagnant for years [1].
-
-Before main() all standard file descriptors are also opened. While
-reasonable in many cases, is not the desired behavior for all programs.
-Using the same example programs:
-
-    $ ./main >&-
-    $ echo $?
-    0
-    $ ./a.out >&-
-    Bad file descriptor
-    $ echo $?
-    1
-
-I'm not sure if either of those will affect 'git' at all, assuming it is
-mostly library code that is called from C.
-
-But it will likely have to be considered if someone wants to write a
-program that goes in libexec that is executed by 'git'.
-
-Collin
-
-[1] https://dev-doc.rust-lang.org/beta/unstable-book/language-features/unix=
--sigpipe.html
+Thanks for the feedback. This is an elegant solution that I did not
+consider. Looking through the other tests, I am seeing this similar
+pattern of comparing an expected result with the actual result. It is
+much more deliberate and readable this way. I sent a v2, as a reply to
+my original message, but I think I forgot to Cc you in that message. I'm
+still figuring out the email workflow.
