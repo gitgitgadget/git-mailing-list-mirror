@@ -1,86 +1,85 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EDC350A32
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 08:35:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8F034FF4F
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 08:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767947750; cv=none; b=bigS3YZGJDZtMicL0TzL0j3GU5ihqeCodjNe+W9zlNR+BpgwG64XqA7athJR5La43VvhoUkzLZthlA8ilXowj2KgVVgTlIPtovCQMZsrtVKbVfk5y689ieX8/i2uMgDfZodTAJIBIlhdgCyff9yJYDvHXJe1f51o/AFDD8Bnmvo=
+	t=1767947752; cv=none; b=LgSNVk+wmGWSpaWK2zQYr686htLgtZaeM+JZhSvxqYSPZl66EM88xTLKaNupQIcpKuZmOV1HFDeIE9aq9mL29EelNTDNgZW5/Br/ufIZN/XUiCKgBWOrybD6LtrQdfixckolsvzoXP0vRgg0RHnvcvIp8FDMS212pYNUJPbFWVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767947750; c=relaxed/simple;
-	bh=C3RX3t3UrwqsmoWVwuoSSnstReFcF+Co67CUI7cmA4I=;
+	s=arc-20240116; t=1767947752; c=relaxed/simple;
+	bh=YwivlH0YptFwURDJI8ktMD83XQmNXmBnVKwgIwB0Cwo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pn3Dj1erx9v62Oq0pK5t7aptvbSLB7RUPbVIaf8+G4NU1A6x21/MF5H7w+B20oPvBpVRRQDG5GGw5m0iqGmmW+poObh3V2Fu7pnZEITElAc03bFCfMb6vTkyKjy+AW/GfehrpBYUpv6XalqCwanVWdwKGoO8H3Jd5NucUp6eNic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fCFwYuUW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Amt2XIOO; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=VWWjczCZ3x1S0YVRbZ/gvoE9nbWFgfLMjLFKvFf3r3hy/ZwwdU5Tmr5C2Rg6+fWt9unr4is+b/8bQQwPRP3wnFFN9lBdBZySBtcpT+rud072bKdLc0U2KX1sPAeg9Pdckl3x6Vq3A489W39s1KxaMKqgYwx7r+8pRffExhx7s/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HIk9Dg/X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EQJcWqhg; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fCFwYuUW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Amt2XIOO"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B5B5014000CE;
-	Fri,  9 Jan 2026 03:35:45 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HIk9Dg/X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EQJcWqhg"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9E46EEC009F;
+	Fri,  9 Jan 2026 03:35:48 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 09 Jan 2026 03:35:45 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 09 Jan 2026 03:35:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767947745;
-	 x=1768034145; bh=nW9HlhRqkiZ1JI+clWT6nLz5KFA8+ZbvHQgQGNIlra8=; b=
-	fCFwYuUW/JITjj9wI7HY8li3Fwk/lIAWZvVLFuCiuAgiz9c6u6RqitzIQKitbJOC
-	tJXGx5kgHnk7QaGMDVkaqnPZbr9rYxbIgTnZZ/1nnliHIETRG1StkP2t3ZoBm8AQ
-	i7RtZJLyxDpE7ZNNeIW5EGUew0rjhx9EHlDy2u/C0RPnMJxStnIA8CTbpdLbzm1a
-	3Wg+N0fbiW9hlvxC6+MeRFTvbPEhEgX4ZZdMHQtnTLMMWRUS+hLNQ3F5nuG/NENJ
-	8OLqRAm2QOktg3i/Jv8ESCbVgtDSIPTOHXmR+3RV+ypp+SauvRDNVxLlOPg6JM48
-	QEkEwLc8qo3MOm4IspXXjQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767947748;
+	 x=1768034148; bh=S85wlEEt9AbZJRcP48hvA4xwYLUUohdsATv8swlPhCY=; b=
+	HIk9Dg/XH+1e6j/g73Ak2i3THgxM1p1gT9J3nI+wIZ5JN14lEIxlz4t8JyU7n2QK
+	dSbf670Z/C1k32Ou4LFQjVoFBOBd773PA3BvW9J3QTXRTrby7sbilPf3oXOT3hlN
+	Dm1YoZN6lRkm1xtU2BgqCSTD61S+qJ4CSmJgTppfS/jMMrZDd/sKR8H7omzbhI4w
+	ElJ+CIKS0Sa+N4lj604QlJvUrl4wONjUnWtQKKPmGSyk6D3t0L7r+f9tSBRRPo0Z
+	9P/5GhVIq45F04AHVR9i4dY1gWrBTcZeQjuFpKeirm1mCmWoki0rZSHBMtDcPR1W
+	ucqHY7X+xUM1T/Mtc2C/eQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767947745; x=
-	1768034145; bh=nW9HlhRqkiZ1JI+clWT6nLz5KFA8+ZbvHQgQGNIlra8=; b=A
-	mt2XIOOrTjPsUOPymyrUOeOJcfX/Cu5yW5X0Apcoo1bG0wKnaxviMagzxiJ8M9un
-	8Q/j2ofDZ/gZNdOVXkJolw687QxrjZrqHznTKYiCw9ElSuIePvKQhvwP6tX9qQdD
-	7o9yZ1JiUBJUbTFYtc+gaqZgS5bivb96mssLIW10GDcWxKd7q46Lqd+GCCYcdPNh
-	hVMbQdysG4ofAdW4cZJlyXCYQQ7DSL6w4sTORUwgceiDkEWumdFR9tZ+O9UzU0NL
-	AX92OkTQ3RlTWwWbOrl44AM+ZXA5rJQ2OR/VXnubpo7x4oFtmzx/MUttwdYb+bxu
-	+sWYi/VfFpAf5PT3Eek3A==
-X-ME-Sender: <xms:4b1gaftNjtXP2MfhTTe7_iCEQDNkm60yel_z0p1gHAHfEdbxJCEZBA>
-    <xme:4b1gacQgPBLQQxS88WSfw70R-NhqMlHCbc1jrDqasrRRLrELb99X-_rNN_ZyC_JLi
-    rOncjesAt_1PKYKAuqXIZVaZk3aLYF6e7_DfoRwS1usjV13e9cNsg>
-X-ME-Received: <xmr:4b1gaeJEC75LdfPSb_DRf3bELhN3blb8nGNiNlNPaGEAr0VJ5bxIjEcuB0SNNvUJ79AcQ8KM_8SxtgzHB_e_8cdXTEN8PUsro0OvCOfo9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekfeehucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767947748; x=
+	1768034148; bh=S85wlEEt9AbZJRcP48hvA4xwYLUUohdsATv8swlPhCY=; b=E
+	QJcWqhglwX1lPnMTEZed9ngouJTYEbx8K8rBGdJZLFJOOzux5T7Ny+4YPJkiqQMB
+	w0Kl9owP+LfKeQC0RWVKkqokJLbBD9XGyoznv6oIMU+LnrNgdViEskZbN5WVmBFa
+	joDsKWuKkSMPgUtwCTz+E4gxxJ+0lgOaFKcrEGhR83Ps+bdig97202zeeOMabwb5
+	JTH9OHyf73mpacuaaKR0GfO/F0rDUXBABpsGA740oc7S164ND8qVNOzPKGf+WfrI
+	wvROjiJ6Ev89/LuCDG8MQSuIICqOuMKJuS2WbPgm4lxumHdPjyteOGJfmCTMysOn
+	OWv9BdldcCcGJuBvFoPbg==
+X-ME-Sender: <xms:5L1gaaD3vxJeuY5Idqiqn4hkF_wZIESzUluEcp0w8jXU29feshApwA>
+    <xme:5L1gaQWa5ziW4V26hwmUrOOdFwuBYRmM5cTBceHg0mPPJ8lzJHOq4hE_Ej1DiLEor
+    2rFD3fnBxkcfWtCkgcxjYRlP0-SwbF7tHHnuDT13JaEQxqe-UNAWQ>
+X-ME-Received: <xmr:5L1gaY9L6mnDESECCP7RLRuw2vp4IzFy7pvlBr63HX14VQ3iHeeshuw4Jbs4ObbBJloOGd1knIxCoaCDsgXPbm-c18OR-tZngszLixwaCg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekfeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilh
-    grsehfrhgvvgdrfhhrpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsohhrghgr
-    nhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:4b1gaXudtblI1jBzhK-siGHkIeMSJnHeOBRAmysAeNva2db7hxYARQ>
-    <xmx:4b1gad8lv1sYMis-RuChr3PY_27LU-Rz5WyLDo23AqjAu3DR24Foow>
-    <xmx:4b1gaZ1L_EJoZUcUvhNf2N9E0wYVUl3YiNoBM4T62A2ngLsa7P3gDA>
-    <xmx:4b1gaahNsNWqH7z8Jjd6EeUtQXXOR6qE1GuNYLYB7kvNurJkoOVX5A>
-    <xmx:4b1gaQsjytKPTyMQBnEvyP99cwPrf9r3MeNp1dBfFcddLH0mQEzDE0qc>
+    thhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepmhgrihhlsegsvg
+    ihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdr
+    tghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtph
+    htthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehkrghr
+    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
+    khesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguud
+    dvfeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:5L1gaSTjJnVY81DKG-VD2EWbD7ez0Ix8akY2lDkqR1TXXELuRGe2Cw>
+    <xmx:5L1gadSkW7VjNSeUcgmNNxTvbHO7CTkSsmVBxpKwEAmuuhxNoDSCXw>
+    <xmx:5L1gae53ioTVfHDZqu3Zden038QvBgYi5uJpD0qo1jJ_QMqkOQwpZA>
+    <xmx:5L1gaSXytZPir6Z1kKHaec7_71SeAi7UYunfqbXhj97kTgWbWPdJmA>
+    <xmx:5L1gaSA3yKJdN8EwqBk__30TrX86z22iT4jkHBQLjeabWzkJvWONWH8n>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 03:35:43 -0500 (EST)
+ 9 Jan 2026 03:35:46 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5eeb5424 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 9 Jan 2026 08:35:43 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c32d309f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 9 Jan 2026 08:35:46 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 09 Jan 2026 09:35:36 +0100
-Subject: [PATCH v9 1/7] builtin/replay: extract core logic to replay
- revisions
+Date: Fri, 09 Jan 2026 09:35:37 +0100
+Subject: [PATCH v9 2/7] builtin/replay: move core logic into "libgit.a"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260109-b4-pks-history-builtin-v9-1-8766101814c6@pks.im>
+Message-Id: <20260109-b4-pks-history-builtin-v9-2-8766101814c6@pks.im>
 References: <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im>
 In-Reply-To: <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im>
 To: git@vger.kernel.org
@@ -104,52 +103,696 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Matthias Beyer <mail@beyermatthias.de>
 X-Mailer: b4 0.14.3
 
-We're about to move the core logic used to replay revisions onto a new
-base into the "libgit.a" library. Prepare for this by pulling out the
-logic into a new function `replay_revisions()` that:
+Move the core logic used to replay commits into "libgit.a" so that it
+can be easily reused by other commands. It will be used in a subsequent
+commit where we're about to introduce a new git-history(1) command.
 
-  1. Takes a set of revisions to replay and some options that tell it how
-     it ought to replay the revisions.
-
-  2. Replays the commits.
-
-  3. Records any reference updates that would be caused by replaying the
-     commits in a structure that is owned by the caller.
-
-The logic itself will be moved into a separate file in the next commit.
-This change is not expected to cause user-visible change in behaviour.
+Note that with this change we have no sign-comparison warnings anymore,
+and neither do we depend on `the_repository`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/replay.c | 274 +++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 165 insertions(+), 109 deletions(-)
+ Makefile         |   1 +
+ builtin/replay.c | 368 +------------------------------------------------------
+ meson.build      |   1 +
+ replay.c         | 355 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ replay.h         |  64 ++++++++++
+ 5 files changed, 422 insertions(+), 367 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index b7eba509c6..1c64a5d2ae 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1285,6 +1285,7 @@ LIB_OBJS += repack-geometry.o
+ LIB_OBJS += repack-midx.o
+ LIB_OBJS += repack-promisor.o
+ LIB_OBJS += replace-object.o
++LIB_OBJS += replay.o
+ LIB_OBJS += repo-settings.o
+ LIB_OBJS += repository.o
+ LIB_OBJS += rerere.o
 diff --git a/builtin/replay.c b/builtin/replay.c
-index 1960bbbee8..df3b32a52d 100644
+index df3b32a52d..da8b7202f6 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -278,6 +278,137 @@ static enum ref_action_mode get_ref_action_mode(struct repository *repo, const c
+@@ -2,257 +2,22 @@
+  * "git replay" builtin command
+  */
+ 
+-#define USE_THE_REPOSITORY_VARIABLE
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+-
+ #include "git-compat-util.h"
+ 
+ #include "builtin.h"
+ #include "config.h"
+-#include "environment.h"
+ #include "hex.h"
+-#include "lockfile.h"
+-#include "merge-ort.h"
+ #include "object-name.h"
+ #include "parse-options.h"
+ #include "refs.h"
++#include "replay.h"
+ #include "revision.h"
+-#include "strmap.h"
+-#include <oidset.h>
+-#include <tree.h>
+ 
+ enum ref_action_mode {
+ 	REF_ACTION_UPDATE,
+ 	REF_ACTION_PRINT,
+ };
+ 
+-static const char *short_commit_name(struct repository *repo,
+-				     struct commit *commit)
+-{
+-	return repo_find_unique_abbrev(repo, &commit->object.oid,
+-				       DEFAULT_ABBREV);
+-}
+-
+-static struct commit *peel_committish(struct repository *repo,
+-				      const char *name,
+-				      const char *mode)
+-{
+-	struct object *obj;
+-	struct object_id oid;
+-
+-	if (repo_get_oid(repo, name, &oid))
+-		die(_("'%s' is not a valid commit-ish for %s"), name, mode);
+-	obj = parse_object_or_die(repo, &oid, name);
+-	return (struct commit *)repo_peel_to_type(repo, name, 0, obj,
+-						  OBJ_COMMIT);
+-}
+-
+-static char *get_author(const char *message)
+-{
+-	size_t len;
+-	const char *a;
+-
+-	a = find_commit_header(message, "author", &len);
+-	if (a)
+-		return xmemdupz(a, len);
+-
+-	return NULL;
+-}
+-
+-static struct commit *create_commit(struct repository *repo,
+-				    struct tree *tree,
+-				    struct commit *based_on,
+-				    struct commit *parent)
+-{
+-	struct object_id ret;
+-	struct object *obj = NULL;
+-	struct commit_list *parents = NULL;
+-	char *author;
+-	char *sign_commit = NULL; /* FIXME: cli users might want to sign again */
+-	struct commit_extra_header *extra = NULL;
+-	struct strbuf msg = STRBUF_INIT;
+-	const char *out_enc = get_commit_output_encoding();
+-	const char *message = repo_logmsg_reencode(repo, based_on,
+-						   NULL, out_enc);
+-	const char *orig_message = NULL;
+-	const char *exclude_gpgsig[] = { "gpgsig", "gpgsig-sha256", NULL };
+-
+-	commit_list_insert(parent, &parents);
+-	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
+-	find_commit_subject(message, &orig_message);
+-	strbuf_addstr(&msg, orig_message);
+-	author = get_author(message);
+-	reset_ident_date();
+-	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
+-				 &ret, author, NULL, sign_commit, extra)) {
+-		error(_("failed to write commit object"));
+-		goto out;
+-	}
+-
+-	obj = parse_object(repo, &ret);
+-
+-out:
+-	repo_unuse_commit_buffer(the_repository, based_on, message);
+-	free_commit_extra_headers(extra);
+-	free_commit_list(parents);
+-	strbuf_release(&msg);
+-	free(author);
+-	return (struct commit *)obj;
+-}
+-
+-struct ref_info {
+-	struct commit *onto;
+-	struct strset positive_refs;
+-	struct strset negative_refs;
+-	int positive_refexprs;
+-	int negative_refexprs;
+-};
+-
+-static void get_ref_information(struct repository *repo,
+-				struct rev_cmdline_info *cmd_info,
+-				struct ref_info *ref_info)
+-{
+-	int i;
+-
+-	ref_info->onto = NULL;
+-	strset_init(&ref_info->positive_refs);
+-	strset_init(&ref_info->negative_refs);
+-	ref_info->positive_refexprs = 0;
+-	ref_info->negative_refexprs = 0;
+-
+-	/*
+-	 * When the user specifies e.g.
+-	 *   git replay origin/main..mybranch
+-	 *   git replay ^origin/next mybranch1 mybranch2
+-	 * we want to be able to determine where to replay the commits.  In
+-	 * these examples, the branches are probably based on an old version
+-	 * of either origin/main or origin/next, so we want to replay on the
+-	 * newest version of that branch.  In contrast we would want to error
+-	 * out if they ran
+-	 *   git replay ^origin/master ^origin/next mybranch
+-	 *   git replay mybranch~2..mybranch
+-	 * the first of those because there's no unique base to choose, and
+-	 * the second because they'd likely just be replaying commits on top
+-	 * of the same commit and not making any difference.
+-	 */
+-	for (i = 0; i < cmd_info->nr; i++) {
+-		struct rev_cmdline_entry *e = cmd_info->rev + i;
+-		struct object_id oid;
+-		const char *refexpr = e->name;
+-		char *fullname = NULL;
+-		int can_uniquely_dwim = 1;
+-
+-		if (*refexpr == '^')
+-			refexpr++;
+-		if (repo_dwim_ref(repo, refexpr, strlen(refexpr), &oid, &fullname, 0) != 1)
+-			can_uniquely_dwim = 0;
+-
+-		if (e->flags & BOTTOM) {
+-			if (can_uniquely_dwim)
+-				strset_add(&ref_info->negative_refs, fullname);
+-			if (!ref_info->negative_refexprs)
+-				ref_info->onto = lookup_commit_reference_gently(repo,
+-										&e->item->oid, 1);
+-			ref_info->negative_refexprs++;
+-		} else {
+-			if (can_uniquely_dwim)
+-				strset_add(&ref_info->positive_refs, fullname);
+-			ref_info->positive_refexprs++;
+-		}
+-
+-		free(fullname);
+-	}
+-}
+-
+-static void set_up_replay_mode(struct repository *repo,
+-			       struct rev_cmdline_info *cmd_info,
+-			       const char *onto_name,
+-			       char **advance_name,
+-			       struct commit **onto,
+-			       struct strset **update_refs)
+-{
+-	struct ref_info rinfo;
+-
+-	get_ref_information(repo, cmd_info, &rinfo);
+-	if (!rinfo.positive_refexprs)
+-		die(_("need some commits to replay"));
+-
+-	die_for_incompatible_opt2(!!onto_name, "--onto",
+-				  !!*advance_name, "--advance");
+-	if (onto_name) {
+-		*onto = peel_committish(repo, onto_name, "--onto");
+-		if (rinfo.positive_refexprs <
+-		    strset_get_size(&rinfo.positive_refs))
+-			die(_("all positive revisions given must be references"));
+-		*update_refs = xcalloc(1, sizeof(**update_refs));
+-		**update_refs = rinfo.positive_refs;
+-		memset(&rinfo.positive_refs, 0, sizeof(**update_refs));
+-	} else {
+-		struct object_id oid;
+-		char *fullname = NULL;
+-
+-		if (!*advance_name)
+-			BUG("expected either onto_name or *advance_name in this function");
+-
+-		if (repo_dwim_ref(repo, *advance_name, strlen(*advance_name),
+-			     &oid, &fullname, 0) == 1) {
+-			free(*advance_name);
+-			*advance_name = fullname;
+-		} else {
+-			die(_("argument to --advance must be a reference"));
+-		}
+-		*onto = peel_committish(repo, *advance_name, "--advance");
+-		if (rinfo.positive_refexprs > 1)
+-			die(_("cannot advance target with multiple sources because ordering would be ill-defined"));
+-	}
+-	strset_clear(&rinfo.negative_refs);
+-	strset_clear(&rinfo.positive_refs);
+-}
+-
+-static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
+-				    struct commit *commit,
+-				    struct commit *fallback)
+-{
+-	khint_t pos = kh_get_oid_map(replayed_commits, commit->object.oid);
+-	if (pos == kh_end(replayed_commits))
+-		return fallback;
+-	return kh_value(replayed_commits, pos);
+-}
+-
+-static struct commit *pick_regular_commit(struct repository *repo,
+-					  struct commit *pickme,
+-					  kh_oid_map_t *replayed_commits,
+-					  struct commit *onto,
+-					  struct merge_options *merge_opt,
+-					  struct merge_result *result)
+-{
+-	struct commit *base, *replayed_base;
+-	struct tree *pickme_tree, *base_tree;
+-
+-	base = pickme->parents->item;
+-	replayed_base = mapped_commit(replayed_commits, base, onto);
+-
+-	result->tree = repo_get_commit_tree(repo, replayed_base);
+-	pickme_tree = repo_get_commit_tree(repo, pickme);
+-	base_tree = repo_get_commit_tree(repo, base);
+-
+-	merge_opt->branch1 = short_commit_name(repo, replayed_base);
+-	merge_opt->branch2 = short_commit_name(repo, pickme);
+-	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
+-
+-	merge_incore_nonrecursive(merge_opt,
+-				  base_tree,
+-				  result->tree,
+-				  pickme_tree,
+-				  result);
+-
+-	free((char*)merge_opt->ancestor);
+-	merge_opt->ancestor = NULL;
+-	if (!result->clean)
+-		return NULL;
+-	return create_commit(repo, result->tree, pickme, replayed_base);
+-}
+-
+ static enum ref_action_mode parse_ref_action_mode(const char *ref_action, const char *source)
+ {
+ 	if (!ref_action || !strcmp(ref_action, "update"))
+@@ -278,137 +43,6 @@ static enum ref_action_mode get_ref_action_mode(struct repository *repo, const c
  	return REF_ACTION_UPDATE;
  }
  
-+struct replay_revisions_options {
-+	const char *advance;
-+	const char *onto;
-+	int contained;
+-struct replay_revisions_options {
+-	const char *advance;
+-	const char *onto;
+-	int contained;
+-};
+-
+-struct replay_result {
+-	struct replay_ref_update {
+-		char *refname;
+-		struct object_id old_oid;
+-		struct object_id new_oid;
+-	} *updates;
+-	size_t updates_nr, updates_alloc;
+-
+-	bool merge_conflict;
+-};
+-
+-static void replay_result_release(struct replay_result *result)
+-{
+-	for (size_t i = 0; i < result->updates_nr; i++)
+-		free(result->updates[i].refname);
+-	free(result->updates);
+-}
+-
+-static void replay_result_queue_update(struct replay_result *result,
+-				       const char *refname,
+-				       const struct object_id *old_oid,
+-				       const struct object_id *new_oid)
+-{
+-	ALLOC_GROW(result->updates, result->updates_nr + 1, result->updates_alloc);
+-	result->updates[result->updates_nr].refname = xstrdup(refname);
+-	result->updates[result->updates_nr].old_oid = *old_oid;
+-	result->updates[result->updates_nr].new_oid = *new_oid;
+-	result->updates_nr++;
+-}
+-
+-static int replay_revisions(struct repository *repo, struct rev_info *revs,
+-			    struct replay_revisions_options *opts,
+-			    struct replay_result *out)
+-{
+-	kh_oid_map_t *replayed_commits = NULL;
+-	struct strset *update_refs = NULL;
+-	struct commit *last_commit = NULL;
+-	struct commit *commit;
+-	struct commit *onto = NULL;
+-	struct merge_options merge_opt;
+-	struct merge_result result;
+-	char *advance;
+-	int ret;
+-
+-	advance = xstrdup_or_null(opts->advance);
+-	set_up_replay_mode(repo, &revs->cmdline, opts->onto, &advance,
+-			   &onto, &update_refs);
+-
+-	/* FIXME: Should allow replaying commits with the first as a root commit */
+-
+-	if (prepare_revision_walk(revs) < 0) {
+-		ret = error(_("error preparing revisions"));
+-		goto out;
+-	}
+-
+-	init_basic_merge_options(&merge_opt, repo);
+-	memset(&result, 0, sizeof(result));
+-	merge_opt.show_rename_progress = 0;
+-	last_commit = onto;
+-	replayed_commits = kh_init_oid_map();
+-	while ((commit = get_revision(revs))) {
+-		const struct name_decoration *decoration;
+-		khint_t pos;
+-		int hr;
+-
+-		if (!commit->parents)
+-			die(_("replaying down from root commit is not supported yet!"));
+-		if (commit->parents->next)
+-			die(_("replaying merge commits is not supported yet!"));
+-
+-		last_commit = pick_regular_commit(repo, commit, replayed_commits,
+-						  onto, &merge_opt, &result);
+-		if (!last_commit)
+-			break;
+-
+-		/* Record commit -> last_commit mapping */
+-		pos = kh_put_oid_map(replayed_commits, commit->object.oid, &hr);
+-		if (hr == 0)
+-			BUG("Duplicate rewritten commit: %s\n",
+-			    oid_to_hex(&commit->object.oid));
+-		kh_value(replayed_commits, pos) = last_commit;
+-
+-		/* Update any necessary branches */
+-		if (advance)
+-			continue;
+-		decoration = get_name_decoration(&commit->object);
+-		if (!decoration)
+-			continue;
+-		while (decoration) {
+-			if (decoration->type == DECORATION_REF_LOCAL &&
+-			    (opts->contained || strset_contains(update_refs,
+-								decoration->name))) {
+-				replay_result_queue_update(out, decoration->name,
+-							   &commit->object.oid,
+-							   &last_commit->object.oid);
+-			}
+-			decoration = decoration->next;
+-		}
+-	}
+-
+-	if (!result.clean) {
+-		out->merge_conflict = true;
+-		ret = -1;
+-		goto out;
+-	}
+-
+-	/* In --advance mode, advance the target ref */
+-	if (advance)
+-		replay_result_queue_update(out, advance,
+-					   &onto->object.oid,
+-					   &last_commit->object.oid);
+-
+-	ret = 0;
+-
+-out:
+-	if (update_refs) {
+-		strset_clear(update_refs);
+-		free(update_refs);
+-	}
+-	kh_destroy_oid_map(replayed_commits);
+-	merge_finalize(&merge_opt, &result);
+-	free(advance);
+-	return ret;
+-}
+-
+ static int handle_ref_update(enum ref_action_mode mode,
+ 			     struct ref_transaction *transaction,
+ 			     const char *refname,
+diff --git a/meson.build b/meson.build
+index dd52efd1c8..a5a4e99b25 100644
+--- a/meson.build
++++ b/meson.build
+@@ -471,6 +471,7 @@ libgit_sources = [
+   'repack-midx.c',
+   'repack-promisor.c',
+   'replace-object.c',
++  'replay.c',
+   'repo-settings.c',
+   'repository.c',
+   'rerere.c',
+diff --git a/replay.c b/replay.c
+new file mode 100644
+index 0000000000..fc7186ef09
+--- /dev/null
++++ b/replay.c
+@@ -0,0 +1,355 @@
++#define USE_THE_REPOSITORY_VARIABLE
++#define DISABLE_SIGN_COMPARE_WARNINGS
++
++#include "git-compat-util.h"
++#include "environment.h"
++#include "hex.h"
++#include "merge-ort.h"
++#include "object-name.h"
++#include "oidset.h"
++#include "parse-options.h"
++#include "refs.h"
++#include "replay.h"
++#include "revision.h"
++#include "tree.h"
++
++static const char *short_commit_name(struct repository *repo,
++				     struct commit *commit)
++{
++	return repo_find_unique_abbrev(repo, &commit->object.oid,
++				       DEFAULT_ABBREV);
++}
++
++static struct commit *peel_committish(struct repository *repo,
++				      const char *name,
++				      const char *mode)
++{
++	struct object *obj;
++	struct object_id oid;
++
++	if (repo_get_oid(repo, name, &oid))
++		die(_("'%s' is not a valid commit-ish for %s"), name, mode);
++	obj = parse_object_or_die(repo, &oid, name);
++	return (struct commit *)repo_peel_to_type(repo, name, 0, obj,
++						  OBJ_COMMIT);
++}
++
++static char *get_author(const char *message)
++{
++	size_t len;
++	const char *a;
++
++	a = find_commit_header(message, "author", &len);
++	if (a)
++		return xmemdupz(a, len);
++
++	return NULL;
++}
++
++static struct commit *create_commit(struct repository *repo,
++				    struct tree *tree,
++				    struct commit *based_on,
++				    struct commit *parent)
++{
++	struct object_id ret;
++	struct object *obj = NULL;
++	struct commit_list *parents = NULL;
++	char *author;
++	char *sign_commit = NULL; /* FIXME: cli users might want to sign again */
++	struct commit_extra_header *extra = NULL;
++	struct strbuf msg = STRBUF_INIT;
++	const char *out_enc = get_commit_output_encoding();
++	const char *message = repo_logmsg_reencode(repo, based_on,
++						   NULL, out_enc);
++	const char *orig_message = NULL;
++	const char *exclude_gpgsig[] = { "gpgsig", "gpgsig-sha256", NULL };
++
++	commit_list_insert(parent, &parents);
++	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
++	find_commit_subject(message, &orig_message);
++	strbuf_addstr(&msg, orig_message);
++	author = get_author(message);
++	reset_ident_date();
++	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
++				 &ret, author, NULL, sign_commit, extra)) {
++		error(_("failed to write commit object"));
++		goto out;
++	}
++
++	obj = parse_object(repo, &ret);
++
++out:
++	repo_unuse_commit_buffer(the_repository, based_on, message);
++	free_commit_extra_headers(extra);
++	free_commit_list(parents);
++	strbuf_release(&msg);
++	free(author);
++	return (struct commit *)obj;
++}
++
++struct ref_info {
++	struct commit *onto;
++	struct strset positive_refs;
++	struct strset negative_refs;
++	int positive_refexprs;
++	int negative_refexprs;
 +};
 +
-+struct replay_result {
-+	struct replay_ref_update {
-+		char *refname;
-+		struct object_id old_oid;
-+		struct object_id new_oid;
-+	} *updates;
-+	size_t updates_nr, updates_alloc;
++static void get_ref_information(struct repository *repo,
++				struct rev_cmdline_info *cmd_info,
++				struct ref_info *ref_info)
++{
++	int i;
 +
-+	bool merge_conflict;
-+};
++	ref_info->onto = NULL;
++	strset_init(&ref_info->positive_refs);
++	strset_init(&ref_info->negative_refs);
++	ref_info->positive_refexprs = 0;
++	ref_info->negative_refexprs = 0;
 +
-+static void replay_result_release(struct replay_result *result)
++	/*
++	 * When the user specifies e.g.
++	 *   git replay origin/main..mybranch
++	 *   git replay ^origin/next mybranch1 mybranch2
++	 * we want to be able to determine where to replay the commits.  In
++	 * these examples, the branches are probably based on an old version
++	 * of either origin/main or origin/next, so we want to replay on the
++	 * newest version of that branch.  In contrast we would want to error
++	 * out if they ran
++	 *   git replay ^origin/master ^origin/next mybranch
++	 *   git replay mybranch~2..mybranch
++	 * the first of those because there's no unique base to choose, and
++	 * the second because they'd likely just be replaying commits on top
++	 * of the same commit and not making any difference.
++	 */
++	for (i = 0; i < cmd_info->nr; i++) {
++		struct rev_cmdline_entry *e = cmd_info->rev + i;
++		struct object_id oid;
++		const char *refexpr = e->name;
++		char *fullname = NULL;
++		int can_uniquely_dwim = 1;
++
++		if (*refexpr == '^')
++			refexpr++;
++		if (repo_dwim_ref(repo, refexpr, strlen(refexpr), &oid, &fullname, 0) != 1)
++			can_uniquely_dwim = 0;
++
++		if (e->flags & BOTTOM) {
++			if (can_uniquely_dwim)
++				strset_add(&ref_info->negative_refs, fullname);
++			if (!ref_info->negative_refexprs)
++				ref_info->onto = lookup_commit_reference_gently(repo,
++										&e->item->oid, 1);
++			ref_info->negative_refexprs++;
++		} else {
++			if (can_uniquely_dwim)
++				strset_add(&ref_info->positive_refs, fullname);
++			ref_info->positive_refexprs++;
++		}
++
++		free(fullname);
++	}
++}
++
++static void set_up_replay_mode(struct repository *repo,
++			       struct rev_cmdline_info *cmd_info,
++			       const char *onto_name,
++			       char **advance_name,
++			       struct commit **onto,
++			       struct strset **update_refs)
++{
++	struct ref_info rinfo;
++
++	get_ref_information(repo, cmd_info, &rinfo);
++	if (!rinfo.positive_refexprs)
++		die(_("need some commits to replay"));
++
++	die_for_incompatible_opt2(!!onto_name, "--onto",
++				  !!*advance_name, "--advance");
++	if (onto_name) {
++		*onto = peel_committish(repo, onto_name, "--onto");
++		if (rinfo.positive_refexprs <
++		    strset_get_size(&rinfo.positive_refs))
++			die(_("all positive revisions given must be references"));
++		*update_refs = xcalloc(1, sizeof(**update_refs));
++		**update_refs = rinfo.positive_refs;
++		memset(&rinfo.positive_refs, 0, sizeof(**update_refs));
++	} else {
++		struct object_id oid;
++		char *fullname = NULL;
++
++		if (!*advance_name)
++			BUG("expected either onto_name or *advance_name in this function");
++
++		if (repo_dwim_ref(repo, *advance_name, strlen(*advance_name),
++			     &oid, &fullname, 0) == 1) {
++			free(*advance_name);
++			*advance_name = fullname;
++		} else {
++			die(_("argument to --advance must be a reference"));
++		}
++		*onto = peel_committish(repo, *advance_name, "--advance");
++		if (rinfo.positive_refexprs > 1)
++			die(_("cannot advance target with multiple sources because ordering would be ill-defined"));
++	}
++	strset_clear(&rinfo.negative_refs);
++	strset_clear(&rinfo.positive_refs);
++}
++
++static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
++				    struct commit *commit,
++				    struct commit *fallback)
++{
++	khint_t pos = kh_get_oid_map(replayed_commits, commit->object.oid);
++	if (pos == kh_end(replayed_commits))
++		return fallback;
++	return kh_value(replayed_commits, pos);
++}
++
++static struct commit *pick_regular_commit(struct repository *repo,
++					  struct commit *pickme,
++					  kh_oid_map_t *replayed_commits,
++					  struct commit *onto,
++					  struct merge_options *merge_opt,
++					  struct merge_result *result)
++{
++	struct commit *base, *replayed_base;
++	struct tree *pickme_tree, *base_tree;
++
++	base = pickme->parents->item;
++	replayed_base = mapped_commit(replayed_commits, base, onto);
++
++	result->tree = repo_get_commit_tree(repo, replayed_base);
++	pickme_tree = repo_get_commit_tree(repo, pickme);
++	base_tree = repo_get_commit_tree(repo, base);
++
++	merge_opt->branch1 = short_commit_name(repo, replayed_base);
++	merge_opt->branch2 = short_commit_name(repo, pickme);
++	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
++
++	merge_incore_nonrecursive(merge_opt,
++				  base_tree,
++				  result->tree,
++				  pickme_tree,
++				  result);
++
++	free((char*)merge_opt->ancestor);
++	merge_opt->ancestor = NULL;
++	if (!result->clean)
++		return NULL;
++	return create_commit(repo, result->tree, pickme, replayed_base);
++}
++
++void replay_result_release(struct replay_result *result)
 +{
 +	for (size_t i = 0; i < result->updates_nr; i++)
 +		free(result->updates[i].refname);
@@ -168,9 +811,9 @@ index 1960bbbee8..df3b32a52d 100644
 +	result->updates_nr++;
 +}
 +
-+static int replay_revisions(struct repository *repo, struct rev_info *revs,
-+			    struct replay_revisions_options *opts,
-+			    struct replay_result *out)
++int replay_revisions(struct repository *repo, struct rev_info *revs,
++		     struct replay_revisions_options *opts,
++		     struct replay_result *out)
 +{
 +	kh_oid_map_t *replayed_commits = NULL;
 +	struct strset *update_refs = NULL;
@@ -262,223 +905,76 @@ index 1960bbbee8..df3b32a52d 100644
 +	free(advance);
 +	return ret;
 +}
+diff --git a/replay.h b/replay.h
+new file mode 100644
+index 0000000000..84bc8a7a5b
+--- /dev/null
++++ b/replay.h
+@@ -0,0 +1,64 @@
++#ifndef REPLAY_H
++#define REPLAY_H
 +
- static int handle_ref_update(enum ref_action_mode mode,
- 			     struct ref_transaction *transaction,
- 			     const char *refname,
-@@ -306,21 +437,11 @@ int cmd_replay(int argc,
- 	       const char *prefix,
- 	       struct repository *repo)
- {
--	const char *advance_name_opt = NULL;
--	char *advance_name = NULL;
--	struct commit *onto = NULL;
--	const char *onto_name = NULL;
--	int contained = 0;
-+	struct replay_revisions_options opts = { 0 };
-+	struct replay_result result = { 0 };
- 	const char *ref_action = NULL;
- 	enum ref_action_mode ref_mode;
--
- 	struct rev_info revs;
--	struct commit *last_commit = NULL;
--	struct commit *commit;
--	struct merge_options merge_opt;
--	struct merge_result result;
--	struct strset *update_refs = NULL;
--	kh_oid_map_t *replayed_commits;
- 	struct ref_transaction *transaction = NULL;
- 	struct strbuf transaction_err = STRBUF_INIT;
- 	struct strbuf reflog_msg = STRBUF_INIT;
-@@ -333,13 +454,13 @@ int cmd_replay(int argc,
- 		NULL
- 	};
- 	struct option replay_options[] = {
--		OPT_STRING(0, "advance", &advance_name_opt,
-+		OPT_STRING(0, "advance", &opts.advance,
- 			   N_("branch"),
- 			   N_("make replay advance given branch")),
--		OPT_STRING(0, "onto", &onto_name,
-+		OPT_STRING(0, "onto", &opts.onto,
- 			   N_("revision"),
- 			   N_("replay onto given commit")),
--		OPT_BOOL(0, "contained", &contained,
-+		OPT_BOOL(0, "contained", &opts.contained,
- 			 N_("update all branches that point at commits in <revision-range>")),
- 		OPT_STRING(0, "ref-action", &ref_action,
- 			   N_("mode"),
-@@ -350,19 +471,17 @@ int cmd_replay(int argc,
- 	argc = parse_options(argc, argv, prefix, replay_options, replay_usage,
- 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
- 
--	if (!onto_name && !advance_name_opt) {
-+	if (!opts.onto && !opts.advance) {
- 		error(_("option --onto or --advance is mandatory"));
- 		usage_with_options(replay_usage, replay_options);
- 	}
- 
--	die_for_incompatible_opt2(!!advance_name_opt, "--advance",
--				  contained, "--contained");
-+	die_for_incompatible_opt2(!!opts.advance, "--advance",
-+				  opts.contained, "--contained");
- 
- 	/* Parse ref action mode from command line or config */
- 	ref_mode = get_ref_action_mode(repo, ref_action);
- 
--	advance_name = xstrdup_or_null(advance_name_opt);
--
- 	repo_init_revisions(repo, &revs, prefix);
- 
- 	/*
-@@ -414,18 +533,19 @@ int cmd_replay(int argc,
- 		revs.simplify_history = 0;
- 	}
- 
--	set_up_replay_mode(repo, &revs.cmdline,
--			   onto_name, &advance_name,
--			   &onto, &update_refs);
--
--	/* FIXME: Should allow replaying commits with the first as a root commit */
-+	ret = replay_revisions(repo, &revs, &opts, &result);
-+	if (ret)
-+		goto cleanup;
- 
- 	/* Build reflog message */
--	if (advance_name_opt)
--		strbuf_addf(&reflog_msg, "replay --advance %s", advance_name_opt);
--	else
--		strbuf_addf(&reflog_msg, "replay --onto %s",
--			    oid_to_hex(&onto->object.oid));
-+	if (opts.advance) {
-+		strbuf_addf(&reflog_msg, "replay --advance %s", opts.advance);
-+	} else {
-+		struct object_id oid;
-+		if (repo_get_oid_committish(repo, opts.onto, &oid))
-+			BUG("--onto commit should have been resolved beforehand already");
-+		strbuf_addf(&reflog_msg, "replay --onto %s", oid_to_hex(&oid));
-+	}
- 
- 	/* Initialize ref transaction if using update mode */
- 	if (ref_mode == REF_ACTION_UPDATE) {
-@@ -438,78 +558,19 @@ int cmd_replay(int argc,
- 		}
- 	}
- 
--	if (prepare_revision_walk(&revs) < 0) {
--		ret = error(_("error preparing revisions"));
--		goto cleanup;
--	}
--
--	init_basic_merge_options(&merge_opt, repo);
--	memset(&result, 0, sizeof(result));
--	merge_opt.show_rename_progress = 0;
--	last_commit = onto;
--	replayed_commits = kh_init_oid_map();
--	while ((commit = get_revision(&revs))) {
--		const struct name_decoration *decoration;
--		khint_t pos;
--		int hr;
--
--		if (!commit->parents)
--			die(_("replaying down from root commit is not supported yet!"));
--		if (commit->parents->next)
--			die(_("replaying merge commits is not supported yet!"));
--
--		last_commit = pick_regular_commit(repo, commit, replayed_commits,
--						  onto, &merge_opt, &result);
--		if (!last_commit)
--			break;
--
--		/* Record commit -> last_commit mapping */
--		pos = kh_put_oid_map(replayed_commits, commit->object.oid, &hr);
--		if (hr == 0)
--			BUG("Duplicate rewritten commit: %s\n",
--			    oid_to_hex(&commit->object.oid));
--		kh_value(replayed_commits, pos) = last_commit;
--
--		/* Update any necessary branches */
--		if (advance_name)
--			continue;
--		decoration = get_name_decoration(&commit->object);
--		if (!decoration)
--			continue;
--		while (decoration) {
--			if (decoration->type == DECORATION_REF_LOCAL &&
--			    (contained || strset_contains(update_refs,
--							  decoration->name))) {
--				if (handle_ref_update(ref_mode, transaction,
--						      decoration->name,
--						      &last_commit->object.oid,
--						      &commit->object.oid,
--						      reflog_msg.buf,
--						      &transaction_err) < 0) {
--					ret = error(_("failed to update ref '%s': %s"),
--						    decoration->name, transaction_err.buf);
--					goto cleanup;
--				}
--			}
--			decoration = decoration->next;
--		}
--	}
--
--	/* In --advance mode, advance the target ref */
--	if (result.clean == 1 && advance_name) {
--		if (handle_ref_update(ref_mode, transaction, advance_name,
--				      &last_commit->object.oid,
--				      &onto->object.oid,
--				      reflog_msg.buf,
--				      &transaction_err) < 0) {
-+	for (size_t i = 0; i < result.updates_nr; i++) {
-+		ret = handle_ref_update(ref_mode, transaction, result.updates[i].refname,
-+					&result.updates[i].new_oid, &result.updates[i].old_oid,
-+					reflog_msg.buf, &transaction_err);
-+		if (ret) {
- 			ret = error(_("failed to update ref '%s': %s"),
--				    advance_name, transaction_err.buf);
-+				    result.updates[i].refname, transaction_err.buf);
- 			goto cleanup;
- 		}
- 	}
- 
- 	/* Commit the ref transaction if we have one */
--	if (transaction && result.clean == 1) {
-+	if (transaction) {
- 		if (ref_transaction_commit(transaction, &transaction_err)) {
- 			ret = error(_("failed to commit ref transaction: %s"),
- 				    transaction_err.buf);
-@@ -517,24 +578,19 @@ int cmd_replay(int argc,
- 		}
- 	}
- 
--	merge_finalize(&merge_opt, &result);
--	kh_destroy_oid_map(replayed_commits);
--	if (update_refs) {
--		strset_clear(update_refs);
--		free(update_refs);
--	}
--	ret = result.clean;
--
- cleanup:
- 	if (transaction)
- 		ref_transaction_free(transaction);
-+	replay_result_release(&result);
- 	strbuf_release(&transaction_err);
- 	strbuf_release(&reflog_msg);
- 	release_revisions(&revs);
--	free(advance_name);
- 
--	/* Return */
--	if (ret < 0)
--		exit(128);
--	return ret ? 0 : 1;
-+	if (ret) {
-+		if (result.merge_conflict)
-+			return 1;
-+		return 128;
-+	}
++#include "hash.h"
 +
-+	return 0;
- }
++struct repository;
++struct rev_info;
++
++/*
++ * A set of options that can be passed to `replay_revisions()`.
++ */
++struct replay_revisions_options {
++	/*
++	 * Starting point at which to create the new commits; must be a branch
++	 * name. The branch will be updated to point to the rewritten commits.
++	 * This option is mutually exclusive with `onto`.
++	 */
++	const char *advance;
++
++	/*
++	 * Starting point at which to create the new commits; must be a
++	 * committish. References pointing at decendants of `onto` will be
++	 * updated to point to the new commits.
++	 */
++	 const char *onto;
++
++	/*
++	 * Update branches that point at commits in the given revision range.
++	 * Requires `onto` to be set.
++	 */
++	int contained;
++};
++
++/* This struct is used as an out-parameter by `replay_revisions()`. */
++struct replay_result {
++	/*
++	 * The set of reference updates that are caused by replaying the
++	 * commits.
++	 */
++	struct replay_ref_update {
++		char *refname;
++		struct object_id old_oid;
++		struct object_id new_oid;
++	} *updates;
++	size_t updates_nr, updates_alloc;
++
++	/* Set to true in case the replay failed with a merge conflict. */
++	bool merge_conflict;
++};
++
++void replay_result_release(struct replay_result *result);
++
++/*
++ * Replay a set of commits onto a new location. Leaves both the working tree,
++ * index and references untouched. Reference updates caused by the replay will
++ * be recorded in the `updates` out pointer.
++ *
++ * Returns 0 on success, a negative error code otherwise.
++ */
++int replay_revisions(struct repository *repo, struct rev_info *revs,
++		     struct replay_revisions_options *opts,
++		     struct replay_result *out);
++
++#endif
 
 -- 
 2.52.0.542.g9473a8513b.dirty
