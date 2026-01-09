@@ -1,84 +1,84 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAD620459A
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 14:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1817B1F4615
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 14:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767968843; cv=none; b=VzH3DVV2/VqGSfLb/hM/yJtdUWVaHxGt0QJE0QVCBt9R4+UQrosmQXEv42yCB0B53U8jrMS3fKGQLsvNXWcV/sg6bLjM5Um2Gm+CwH5fevVFnXWnbwR5ze4kSreG9R2a1QC8m1Arz7wOsOWmUIUcEl/+hNomvOoKWFJAEUZHQ3E=
+	t=1767968862; cv=none; b=LqrWfHEC0oX3GQrNB43YQejFuuoO8OVXvHhDi2I3tM/FnMNlkSx16Pfl8lHZUMQ6VVoqyG99je8V4U724zZt2LAyVu3GZwx1ZoiotBhf9bZsW2VmLXX32xuD3+fXw5VrmSW8WyQ4ZSlv4pFzdci7XPCFgWEyFYlNFtckWIEUVA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767968843; c=relaxed/simple;
-	bh=P8AwBeDGypgkh2jVyPZUmT2PrdjuokEDhAM76wzlDDs=;
+	s=arc-20240116; t=1767968862; c=relaxed/simple;
+	bh=qnF9MkOz8Fgs/sHzc3vkcPvmLXc6lIKZYubblbWfZ3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uL0dja3vP6znY0IYNXfvG9JA6e7x8wk7gcfNrBiYYxnLSn3bSFYrhPY8de2G+wVOztpUo+dlT+Zqfjr+rgtRCDzBbNNhj2VA55OfCYxRBg8jx6C83uT/oPDKCgsATiFtPyU2WhClUJFNPsXklc5hk86F8WBpvZjf1jjE9GeMiOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=GszHwy0I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rX18gWda; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=iPiMjTsk2EnKtW67xMyeievTXHrEYyjcaKNczojqEhrbEchRdOO4cJk5gt1/jFkAvffOLfh18Sw0AZ8/pbv0ByOKqZ1OwYnUQ/vFs8KovwNBKuW/uw/pcnCK/rFXwIXChrU0c1Q11emG4BwYlfpGJEa7mxlzYrgohUtjJhJ7sNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=peJP2ehV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w7eT1H1R; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="GszHwy0I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rX18gWda"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E26747A00B5;
-	Fri,  9 Jan 2026 09:27:21 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Fri, 09 Jan 2026 09:27:22 -0500
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="peJP2ehV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w7eT1H1R"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 69D587A00B5;
+	Fri,  9 Jan 2026 09:27:40 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Fri, 09 Jan 2026 09:27:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1767968841; x=
-	1768055241; bh=v4kzGNON7kPX83bOGRDCHGecxfmlUzKSad+JxI2wRWg=; b=G
-	szHwy0IDC78bQtxH9nG+Uw68qAxb/DpOccVgWpGCdVuMGMekfg0acHpDhMNXqqvU
-	xMuIlqPvKbo/YLzdblLk94WmrweqNNmoh7u/qdPs0edvJY9CxOP8ZRqxHj4hiEmj
-	+DLHETkQdP6q5/h/IzCS7XZGtLzib481i7/zF02LzVes1Hm0qyyAguSSxAm6jeyE
-	M4lBRPfgRLeQ/v+8lhz9CPYAFfgSP6BDW+/QEA2orDDudYkSi8npx33SKH15Mowu
-	B6SLhGyfgxFJke3O1qReJDNw+t8YKSAiVGIFDarKMsxRUDQaWFKvZYD1bdsycQ9N
-	LVuUS95tER1ZeQKyOsMuw==
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767968860;
+	 x=1768055260; bh=5IOlX4nxKm/Ki+dwzvLxGUdd5bxj9yjzUxaK1DKwfGQ=; b=
+	peJP2ehV7EOIwOhnokBxAvGVMn4z1EmP9hONvKH7fNOMpxxQJ4xFBzd2cSePb6dx
+	Ibn9ZN7NRXUksyffI/pCluft0q7UOhS1p6g9yvo60NldurrM4I1wa2lNOXSlIBiS
+	TQ1yWA95uE143PYYtA+fojxNjXuQc4+Zov9E+6TmkwJ9T90fjE/g2i96wNw51/+K
+	UO3cWm9pmC1S4BKj51ooEYckDwU6QL21mjpozbHb2R41Isx8F9t9qp99fTSjB8Xs
+	p8hL/SWN00YoJjvRQ3WNVijkKUqGtK0eWytnfuqCrUCmJDPa9RxGZ76h/yEZsZNs
+	VvuhhvOanWEUXkXKFWxkYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1767968841; x=1768055241; bh=v
-	4kzGNON7kPX83bOGRDCHGecxfmlUzKSad+JxI2wRWg=; b=rX18gWdaSQuGOSKTA
-	EOA2rauggTvvfvASBfNQBHfh5O48/FokpOWQgxbUaKBoKGVS34qxEIbdnRLu04go
-	9kxbTeD5VTUPjZm/ccmtkIbuzSFuQfggvdl2F6k0Zz6Gng9VgofW7KGaHzLHYoIC
-	scwFjVcU/BNPCJ3jpc0kWOMRuiS1lmi+AshybL7TGWYWsbnM2bnUj1rm3Ku/i/AH
-	pXZrO6atGdLAS5ljUk89DkLh7SVlMBkB0wimpLFhEaBBndq8cYLwtkQbuMC4gmIJ
-	5WG3Y/YKGkXpRJbKRDZRbTgPlXbn1E4G6VSXXIjIdDnytkXDrmx/eD5HUyMGGHi/
-	+CYqA==
-X-ME-Sender: <xms:SRBhaRZPR-I831kKeWRI7BxFM9zMMxa_XJoqLBrDqAd8tmLUGYE0DL4>
-    <xme:SRBhafYw4ciTGYwIk4yTzVmHSU8J7F6Xx41J25bfsQqNkXlKm3OMTyu3JQR2BbMQk
-    2x2RQwSgzxefGRKQ5QDPzeKqW-YbluO0XJsnUOMNHGKoZKZAuk0qt8>
-X-ME-Received: <xmr:SRBhaY_qkL7ioKDMiNHmhLJtjZa6jXdEkYvFarkA9e0TWwlQm1ZcknAxiiJcY4JSh2PtoEf-p6p6v07Nw7eiNKmglpypVtHYxHAskuw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdeltdegucetufdoteggodetrf
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767968860; x=
+	1768055260; bh=5IOlX4nxKm/Ki+dwzvLxGUdd5bxj9yjzUxaK1DKwfGQ=; b=w
+	7eT1H1RCSFGw77g4WwoUXKzcfKYSW2BV1prgBu/jPe9O6ryE49lLe9LIEXcOu/5N
+	0gkGZAgdO+gFWouUcIQvkgVJPpcCw1q6bsgD85kTdyMKP1oTu7M+vaTQV/kyyN7A
+	hd9LsM2DYe+7fLyvjIXE8grh0rEEYaJ/PVfNv3RInx8EvU4jYcIpxTxMo8BqnMZJ
+	eHBfoe+sOiZAiOG6rDigv7QA9TjwM2ztjS5tbJfaPEjfpa4gkqFBMFJFVQm6PvGe
+	UDHewvelkeii2FO/A36uPb/8LeAxdJdvcInm9PNknoPbrGxmpuQWGhRS4tZ8GD1X
+	4V/8FszIfQzx08x/hEqrw==
+X-ME-Sender: <xms:XBBhacJpH2jzqErq-gKw_LFpNKRNDbFU9n7F57LoK7-wbH42BeLHcr0>
+    <xme:XBBhaTIUa6xgxxmpI05gaYxNRUVNOCC2BhFZ9FFc1ETQkClqMBfdZeUTOppkY3ENa
+    _oALKPcOKmDaCHtGXYrrAHRK4-5G3gwkH69jv5H8RXk3A9taZiARw>
+X-ME-Received: <xmr:XBBhaRuTvgXUTAgfSnqfupHTgJKPp59j3eFGS8LrmKmdNyMPWdjMKPQ6uaLQWNdCyjO1gJYQw91YpNnW2R4P4XQvIYZOFpApVbQTvzo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdeltdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
-    necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhenucggtffrrghtthgvrhhnpeefheetkeeftdeiffdvjeetueethfeugfetgfdt
-    veehhfevffeuffdtheeitdefudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehpuhhshhhkrghrkhhumh
-    grrhhsihhnghhhudeljedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhs
-    rdhimh
-X-ME-Proxy: <xmx:SRBhaehmZG3-EfXjQYcs5NgMfZWIf8qa4cxXj8cx4dl22khVpQjW6w>
-    <xmx:SRBhaYd2VYNX7mHMWd-q143pqtoIJ-9-iuKRfu71boitKQ2DSiCqgA>
-    <xmx:SRBhaVoP61ib-2bYwetMiJO8H5Bom6E1Zk1IoyQSvuXROQCKoXS2-A>
-    <xmx:SRBhadB4w8bHq9q04gf3py_GHAn_cz6H5weYFpcoiJxqNQPuRTpvRg>
-    <xmx:SRBhaYc5nl2IYm650kPcD6G0zAw9ObMIDp1Yfb9fuACM6wpaQICm8vW3>
+    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
+    jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
+    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
+    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepphhushhhkhgrrhhkuh
+    hmrghrshhinhhghhduleejtdesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhk
+    shdrihhm
+X-ME-Proxy: <xmx:XBBhaYTyUop3JQKsuLPSDr1wv-xGl1gaa4lSd-vOTpxTR0BZlv9dRQ>
+    <xmx:XBBhafMPJSKnKjWPjTJHRWhXysts8sM6NUpZ-YAMzb9WiRhsof85GQ>
+    <xmx:XBBhaVZqtpLHi-hnSds5Vm8O7eOyIsubEsPj7OOsmQm5ln9Zh1AzLQ>
+    <xmx:XBBhaRyeZ36OMoLDBp1Z_icHcjTqFKufxA-OZCiZbpbA_FXBZjOgPQ>
+    <xmx:XBBhaROJM6-9zJIcnWLDfbU6t68YcD36318TdStaTWANhfvWJOFXq00H>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 09:27:20 -0500 (EST)
+ 9 Jan 2026 09:27:38 -0500 (EST)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Pushkar Singh <pushkarkumarsingh1970@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 2/6] doc: patch-id: capitalize Git version
-Date: Fri,  9 Jan 2026 15:25:58 +0100
-Message-ID: <V2_capitalize_Git.1b4@msgid.xyz>
+Subject: [PATCH v2 3/6] =?UTF-8?q?patch-id:=20use=20=E2=80=9Cpatch=20ID?= =?UTF-8?q?=E2=80=9D=20throughout?=
+Date: Fri,  9 Jan 2026 15:25:59 +0100
+Message-ID: <V2_patch_ID_term.1b5@msgid.xyz>
 X-Mailer: git-send-email 2.52.0.421.gc32ead4fc78
 In-Reply-To: <V2_CV_doc_patch-id_3.1b2@msgid.xyz>
 References: <CV_doc_patch-id_3.1ab@msgid.xyz> <V2_CV_doc_patch-id_3.1b2@msgid.xyz>
@@ -88,41 +88,75 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Git versions are always capitalized.
+The “Description” section decided to introduce and use the term “patch
+ID” for the ID value itself.  Let’s use the same term on the options as
+well.
+
+Also make to sure to use bare “ID” instead of “id”.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/git-patch-id.adoc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/git-patch-id.adoc | 10 +++++-----
+ builtin/patch-id.c              |  4 ++--
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.adoc
-index bac37db09d4..82992e35fc1 100644
+index 82992e35fc1..9999f164b58 100644
 --- a/Documentation/git-patch-id.adoc
 +++ b/Documentation/git-patch-id.adoc
-@@ -47,7 +47,7 @@ This is the default if `patchid.verbatim` is `true`.
-   as a key to index some meta-information about the change between
-   the two trees.
+@@ -31,7 +31,7 @@ OPTIONS
+ -------
  
--- Result is different from the value produced by git 1.9 and older
-+- Result is different from the value produced by Git 1.9 and older
+ `--verbatim`::
+-	Calculate the patch-id of the input as it is given, do not strip
++	Calculate the patch ID of the input as it is given, do not strip
+ 	any whitespace.
+ +
+ This is the default if `patchid.verbatim` is `true`.
+@@ -51,18 +51,18 @@ This is the default if `patchid.verbatim` is `true`.
    or produced when an "unstable" hash (see `--unstable` below) is
    configured - even when used on a diff output taken without any use
    of `-O<orderfile>`, thereby making existing databases storing such
-@@ -61,8 +61,8 @@ This is the default if `patchid.stable` is set to `true`.
+-  "unstable" or historical patch-ids unusable.
++  "unstable" or historical patch IDs unusable.
+ 
+-- All whitespace within the patch is ignored and does not affect the id.
++- All whitespace within the patch is ignored and does not affect the ID.
+ --
+ +
+ This is the default if `patchid.stable` is set to `true`.
+ 
  `--unstable`::
  	Use an "unstable" hash as the patch ID. With this option,
- 	the result produced is compatible with the patch-id value produced
--	by git 1.9 and older and whitespace is ignored.  Users with pre-existing
--	databases storing patch-ids produced by git 1.9 and older (who do not deal
-+	by Git 1.9 and older and whitespace is ignored.  Users with pre-existing
-+	databases storing patch-ids produced by Git 1.9 and older (who do not deal
+-	the result produced is compatible with the patch-id value produced
++	the result produced is compatible with the patch ID value produced
+ 	by Git 1.9 and older and whitespace is ignored.  Users with pre-existing
+-	databases storing patch-ids produced by Git 1.9 and older (who do not deal
++	databases storing patch IDs produced by Git 1.9 and older (who do not deal
  	with reordered patches) may want to use this option.
  +
  This is the default.
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index d26e9d0c1ea..2781598ede6 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -228,9 +228,9 @@ int cmd_patch_id(int argc,
+ 	int opts = 0;
+ 	struct option builtin_patch_id_options[] = {
+ 		OPT_CMDMODE(0, "unstable", &opts,
+-		    N_("use the unstable patch-id algorithm"), 1),
++		    N_("use the unstable patch ID algorithm"), 1),
+ 		OPT_CMDMODE(0, "stable", &opts,
+-		    N_("use the stable patch-id algorithm"), 2),
++		    N_("use the stable patch ID algorithm"), 2),
+ 		OPT_CMDMODE(0, "verbatim", &opts,
+ 			N_("don't strip whitespace from the patch"), 3),
+ 		OPT_END()
 -- 
 2.52.0.421.gc32ead4fc78
 
