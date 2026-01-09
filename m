@@ -1,70 +1,70 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C95369205
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073FD36921F
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767989132; cv=none; b=cFn5+K2bIEuaWYMxnB/ft/43f4neY6zCxWBk4x6Osz2Mxwf77iValQZck25rsks36fzGE1WVdrQk8HhxpuOqdCw64zH+aZOqLa8aPFqyjHQZXjrP4aUSemx+KhW5BrOHr22y81VyfVRBfp8YBYLN6UULliFcAifcVLpLo7tfpIU=
+	t=1767989132; cv=none; b=NfPzP8rQox+z4exKMbQzo1RR3jVCRNqj1v7AbSakKBDHKVxxCV/RVgTLZwFcdm7crAaGriuSbBVw8yStevpa7RCRxixYYW6tnV2DdWAB+BtOTygboBCkFBI1F0k1soyMmUz0j+cgHCE6N1bvCz96zT4FMCw5cuoMyanyZncxPNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1767989132; c=relaxed/simple;
-	bh=/S0Pv8XxmCGF9fYXjAbIV1y4IOvBrLSWbmNjchZF0GE=;
+	bh=+VHMtfFWcnXYWJsAY/EVv/le9EE/5DAua0dMBjAqisg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Xq0etTab60BmW2Q4srpGxDIasmrogGyyVd5YtsO+5rJ+IUASMdRlqb5nN2m6PqYuwitJEJMvPpAzB1j3axtvsk2Ud0f4+fo3DpGy201gPVOwmz8Ju45jHJYnvYfjuEp+O80MfYy090H1Y7+IL0z7tuuIzIIah5qUSpG4/HCiiSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FcyyUc3o; arc=none smtp.client-ip=209.85.160.181
+	 MIME-Version:To:Cc; b=JdKbcno0AhSYvO62HYD3n6BU8TyO7vTmmMmPNdVKjqd7ulBRLvfOeaJrtMbj3CAgAUoyXh7brBbIpMnVk7Dt9Z1kb5Il+WMN+j1o8kX6uby4AQlqbqpfhHaX6HSHj1YKXsay8LF1m4B/2lMyscQ4n8alc/4NTOd3Jna53Othqzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=njnHvmbD; arc=none smtp.client-ip=209.85.222.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FcyyUc3o"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-4fc42188805so48823511cf.3
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="njnHvmbD"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8b29ff9d18cso499994185a.3
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767989126; x=1768593926; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767989128; x=1768593928; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sKOuzr+obFAbzkb8784gQ/VhOcl/5AcxnPs6E/HucdE=;
-        b=FcyyUc3oCWJAgSwLw7jkj2YxKn3+1sldPJVmr22p5dEW5c9bqaOpQ1WP/6OwPep/6P
-         qqqbGaBkTRsl30kdaeEYiTwuJ2QCdTTngaxsxXd+qZh3MG0Z0jrwQOk1Tib7OSCKNxhU
-         GsU4pDqEdBvTZmoyEDSkfUObsTMLD9dksPOuZmbc2NfnPhiJkPIcCdlGsgsMs/wFmZwa
-         LPGUzs4K8SGFkgnq1mKb+vpSmM1VVKHJvN+dTrHO8ZWb/o1BWWwAuwHnbAJyDVgaox8a
-         Vm524qQaNchcZmdI+4tNlbzyAx5A8dUuLTXizybIrSj87lMndhVcBhspTwEmkEp86+Vj
-         pm0g==
+        bh=I+Z3FTrVE9CAckr5u8N4vqh5KuI/5aT0qj+YHfM/kp0=;
+        b=njnHvmbDV4VNu6tStJeIw9qoMEG+P6wARFdCneJ4MyU4h6pS3oZ+0Ha4zAGP3uLZLy
+         oNhWnkK+AAnw3J0hIsslV0yIWcoEbkXFN65GcTmP0g5hKlEyf+4RC84F5B/6OS24GnI2
+         l5Ijr6pC63b8wjOK2Het3b/2bDDMvPbU1j8EeGPu40SBljHK7t1sC5T+v8lvFhJ0Trco
+         OxtUsGBc9VJ3bMzklsY6qKe9ABHutRe4ONR48j/DSECKA/iNYjHResss0MTsHglFMcCl
+         cz89wvm/NY1blcZVs+C0iUCNqozdej8GyTwPdYOQgMoLjIbWoGImp24PBuDd8InMjFF8
+         Z5SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767989126; x=1768593926;
+        d=1e100.net; s=20230601; t=1767989128; x=1768593928;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=sKOuzr+obFAbzkb8784gQ/VhOcl/5AcxnPs6E/HucdE=;
-        b=CKd7WgPi46e6VQdTvAa73k4Iliop75t0X7r6dDMbytfODUvbjmuuYCrokdKcejLg6u
-         Cv1eZVI1MbRA6snCypAdhE/ZPxXtxDXXdT05c4jw8N/kIzBijKIE4p9+22SqgT8P94sL
-         9FVE8kQj60aypbkv1TLN+aIDfuRSSfeYVt2tBpit0ionlQMf0lyxWf5GpCXUm71U65i0
-         IqFyZg/W9MYQN3S2k6jBxh+fFHm9xI9dAPBa6o9zLTmKEJ9O6fq3ctWu/qiHHaEOaE9B
-         +5gy6NDRS2oZRq4XMbupz/OMnozC9Ad4ggDO9A9liku19/hGLKNIBneullrEp7u4mfmA
-         F9eQ==
-X-Gm-Message-State: AOJu0YzlIJaxB4ZoS8yequdc7+j7/P/RnmzTbJfoy07pUYLXlldO9d0h
-	z3radiIMJ7+ObYthCxtDWyjh/eYN350kzC75M3tKgoUeW7UlIawU2+LbZnuNAqKk
-X-Gm-Gg: AY/fxX7bGbnTdjoIfT6zZ4Qj4/pvXpl2Znhq41+b8Au0vfvMk97lSz4z7zbtIo2KCcY
-	fYGNj9XmoaW6q7VciVqdscH8UjUbeSl527pS6FacIxMGDFPp6i2y+t6ooRgNJVBnTHOSMNDK6fp
-	e+O3CYjiHTLiVtlbGDHPFBuNeIMXBY46+53wGI7rx1Nz/XDbH37a/dexFWl1mANdbVbJiE/GeuH
-	Vakq2Fh5vyOs56LJJWpKQEM4ObuC0FHp1bLR3jHmW9sMjnMquyUhSMh+FEEGbes0e54PZxR0E9F
-	Qmd/ljvG0K6FbfRx9wBP7dkRIxBdkm9xQhLx8Nkru49xrMtYT9arG5LH3khoOwYpzBZjThCfYx6
-	cvOxQvfCji0dYP3MoOgUSQwbHxvZv9W8mwlzuhdxc6ERj7EpHlXaFoWB92ZQsh4k1jOSen4YGKG
-	ETQznHETOdEpzEysFaRW7PYg8=
-X-Google-Smtp-Source: AGHT+IFX4PF0ueYRxqV6Pva524bRSgTAtLeGhg9pVeL9il++Iqabxm+1nSt25GZ5+2XYI0qxRr/MDQ==
-X-Received: by 2002:ac8:584e:0:b0:4f1:e3fd:4f0d with SMTP id d75a77b69052e-4ffb4a2b6b6mr155906641cf.75.1767989125534;
-        Fri, 09 Jan 2026 12:05:25 -0800 (PST)
+        bh=I+Z3FTrVE9CAckr5u8N4vqh5KuI/5aT0qj+YHfM/kp0=;
+        b=Mp08tO0CXTspLsWXHeWW3hvaPPHH/NDd/Qh/ATgm0dfspYzFa6tRJszmcgIz9j1Ad4
+         89e5ZhzYUkA4j3r2g5ya9PLZ4JLrToRECMxNxWBTCmL286ZLxZ2tZZEv6WLJwwJzdI4Q
+         AtCvZFhc7EIaVG8U7y7PCWkfsn/zieW1M5ofLoACJnYobwAERHhEGEdZ72FgzSdZlex9
+         6VcJJJV2g8e4foGnfmKn8YY2PVPLefn6PydIg67kbHcmDx7XLD8NZaX5lzf+augEXoOf
+         jzYhPF+6wn2mjriO4tgUFXREf1A6nU2FOysvKSsfNKCT0eN/20C0w2A5IIHr3H8sH6sH
+         V9RA==
+X-Gm-Message-State: AOJu0Yy7F6VzuVAiqwMrCt8+rTbGucZKxrSWO8k8jMk4VmuH03R74pFy
+	4TmuCfFRVZFXz5xxujj38wIwSEwUGvY9cK+u3GIgXIEGyUJJ4FDuy5XYgWn3W+GI
+X-Gm-Gg: AY/fxX5/TyqCCN80dos4iFkWR46AGrj3pdlVirxJO4YoUUxOaHybRT0qrwGzGyGHqdd
+	OZ1HBVbB0AD0hf0AiwJeUN/CZLrylbrYtztxQ2WOv0Nfh0QkLO2irVVmaIlovKGM+57sE7TpcxX
+	4bn8DKirAs/Lgme2D/OjZ2bK9rJn85ozF1KCSSB2hKFMGHPnJ1Fk9kTv+eGPSCuT8TGJeJ0pSba
+	6JHsPIpG/8ZMsVUDWUUXyt8WvNVZiqvwE/cu3WnqU9DvqbOMO/EmMRZ5ctj86+kgKBPqFaVcddz
+	gxOqtOh+qCImct+SljRvf6mgsUc2j+JHLlXod4zGOclRp+dFI9zKcV7C+WAuCBRFfhzEJPGiN9k
+	69+5KX//4XEn8rAYIloIEOjf08KYs+j4HdXl9KEt/YLxapdyRoGi8fd6zTJsT3/jwwK2VgDh07V
+	c8lRd5cLDL6DdQ
+X-Google-Smtp-Source: AGHT+IE7NHLXo4wXvyxUk7S9R7N7jOSdXKc+KffKEMu06AFaKZuR10uwExOjhWyknMC3ETuGNVwcVw==
+X-Received: by 2002:a05:620a:440b:b0:8b2:62f9:9fd8 with SMTP id af79cd13be357-8c38940b8b2mr1353074285a.61.1767989128332;
+        Fri, 09 Jan 2026 12:05:28 -0800 (PST)
 Received: from [127.0.0.1] ([20.161.67.219])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ffa8e5d4c8sm74697391cf.28.2026.01.09.12.05.24
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f4b8b21sm864104785a.16.2026.01.09.12.05.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 12:05:24 -0800 (PST)
-Message-Id: <4aeccd6656a106e537bad73c0f1c8c8c2c34992a.1767989115.git.gitgitgadget@gmail.com>
+        Fri, 09 Jan 2026 12:05:27 -0800 (PST)
+Message-Id: <9a0093d34bb87e4e6d5731acf39265d5bbd19431.1767989115.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
 References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 	<pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
 From: "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Jan 2026 20:05:04 +0000
-Subject: [PATCH v2 07/18] mingw: factor out the retry logic
+Date: Fri, 09 Jan 2026 20:05:06 +0000
+Subject: [PATCH v2 09/18] mingw: add symlink-specific error codes
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,213 +83,50 @@ Cc: Ben Knoble <ben.knoble@gmail.com>,
 
 From: Karsten Blees <karsten.blees@gmail.com>
 
-In several places, Git's Windows-specific code follows the pattern where
-it tries to perform an operation, and retries several times when that
-operation fails, sleeping an increasing amount of time, before finally
-giving up and asking the user whether to rety (after, say, closing an
-editor that held a handle to a file, preventing the operation from
-succeeding).
+The Win32 API calls do not set `errno`; Instead, error codes for failed
+operations must be obtained via the `GetLastError()` function. Git would
+not know what to do with those error values, though, which is why Git's
+Windows compatibility layer translates them to `errno` values.
 
-This logic is a bit hard to use, and inconsistent:
-`mingw_unlink()` and `mingw_rmdir()` duplicate the code to retry,
-and both of them do so incompletely. They also do not restore `errno` if the
-user answers 'no'.
-
-Introduce a `retry_ask_yes_no()` helper function that handles retry with
-small delay, asking the user, and restoring `errno`.
-
-Note that in `mingw_unlink()`, we include the `_wchmod()` call in the
-retry loop (which may fail if the file is locked exclusively).
-
-In `mingw_rmdir()`, we include special error handling in the retry loop.
+Let's handle a couple of symlink-related error codes that will become
+relevant with the upcoming support for symlinks on Windows.
 
 Signed-off-by: Karsten Blees <karsten.blees@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 104 ++++++++++++++++++++++---------------------------
- 1 file changed, 46 insertions(+), 58 deletions(-)
+ compat/mingw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index c7571951dc..26e64c6a5a 100644
+index 0fe00a5b70..0e8807196f 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -28,8 +28,6 @@
- 
- #define HCAST(type, handle) ((type)(intptr_t)handle)
- 
--static const int delay[] = { 0, 1, 10, 20, 40 };
--
- void open_in_gdb(void)
- {
- 	static struct child_process cp = CHILD_PROCESS_INIT;
-@@ -205,15 +203,12 @@ static int read_yes_no_answer(void)
- 	return -1;
- }
- 
--static int ask_yes_no_if_possible(const char *format, ...)
-+static int ask_yes_no_if_possible(const char *format, va_list args)
- {
- 	char question[4096];
- 	const char *retry_hook;
--	va_list args;
- 
--	va_start(args, format);
- 	vsnprintf(question, sizeof(question), format, args);
--	va_end(args);
- 
- 	retry_hook = mingw_getenv("GIT_ASK_YESNO");
- 	if (retry_hook) {
-@@ -238,6 +233,31 @@ static int ask_yes_no_if_possible(const char *format, ...)
- 	}
- }
- 
-+static int retry_ask_yes_no(int *tries, const char *format, ...)
-+{
-+	static const int delay[] = { 0, 1, 10, 20, 40 };
-+	va_list args;
-+	int result, saved_errno = errno;
-+
-+	if ((*tries) < ARRAY_SIZE(delay)) {
-+		/*
-+		 * We assume that some other process had the file open at the wrong
-+		 * moment and retry. In order to give the other process a higher
-+		 * chance to complete its operation, we give up our time slice now.
-+		 * If we have to retry again, we do sleep a bit.
-+		 */
-+		Sleep(delay[*tries]);
-+		(*tries)++;
-+		return 1;
-+	}
-+
-+	va_start(args, format);
-+	result = ask_yes_no_if_possible(format, args);
-+	va_end(args);
-+	errno = saved_errno;
-+	return result;
-+}
-+
- /* Windows only */
- enum hide_dotfiles_type {
- 	HIDE_DOTFILES_FALSE = 0,
-@@ -298,7 +318,7 @@ static wchar_t *normalize_ntpath(wchar_t *wbuf)
- 
- int mingw_unlink(const char *pathname, int handle_in_use_error)
- {
--	int ret, tries = 0;
-+	int tries = 0;
- 	wchar_t wpathname[MAX_PATH];
- 	if (xutftowcs_path(wpathname, pathname) < 0)
- 		return -1;
-@@ -306,29 +326,19 @@ int mingw_unlink(const char *pathname, int handle_in_use_error)
- 	if (DeleteFileW(wpathname))
- 		return 0;
- 
--	/* read-only files cannot be removed */
--	_wchmod(wpathname, 0666);
--	while ((ret = _wunlink(wpathname)) == -1 && tries < ARRAY_SIZE(delay)) {
-+	do {
-+		/* read-only files cannot be removed */
-+		_wchmod(wpathname, 0666);
-+		if (!_wunlink(wpathname))
-+			return 0;
- 		if (!is_file_in_use_error(GetLastError()))
- 			break;
- 		if (!handle_in_use_error)
--			return ret;
-+			return -1;
- 
--		/*
--		 * We assume that some other process had the source or
--		 * destination file open at the wrong moment and retry.
--		 * In order to give the other process a higher chance to
--		 * complete its operation, we give up our time slice now.
--		 * If we have to retry again, we do sleep a bit.
--		 */
--		Sleep(delay[tries]);
--		tries++;
--	}
--	while (ret == -1 && is_file_in_use_error(GetLastError()) &&
--	       ask_yes_no_if_possible("Unlink of file '%s' failed. "
--			"Should I try again?", pathname))
--	       ret = _wunlink(wpathname);
--	return ret;
-+	} while (retry_ask_yes_no(&tries, "Unlink of file '%s' failed. "
-+			"Should I try again?", pathname));
-+	return -1;
- }
- 
- static int is_dir_empty(const wchar_t *wpath)
-@@ -355,7 +365,7 @@ static int is_dir_empty(const wchar_t *wpath)
- 
- int mingw_rmdir(const char *pathname)
- {
--	int ret, tries = 0;
-+	int tries = 0;
- 	wchar_t wpathname[MAX_PATH];
- 	struct stat st;
- 
-@@ -381,7 +391,11 @@ int mingw_rmdir(const char *pathname)
- 	if (xutftowcs_path(wpathname, pathname) < 0)
- 		return -1;
- 
--	while ((ret = _wrmdir(wpathname)) == -1 && tries < ARRAY_SIZE(delay)) {
-+	do {
-+		if (!_wrmdir(wpathname)) {
-+			invalidate_lstat_cache();
-+			return 0;
-+		}
- 		if (!is_file_in_use_error(GetLastError()))
- 			errno = err_win_to_posix(GetLastError());
- 		if (errno != EACCES)
-@@ -390,23 +404,9 @@ int mingw_rmdir(const char *pathname)
- 			errno = ENOTEMPTY;
- 			break;
- 		}
--		/*
--		 * We assume that some other process had the source or
--		 * destination file open at the wrong moment and retry.
--		 * In order to give the other process a higher chance to
--		 * complete its operation, we give up our time slice now.
--		 * If we have to retry again, we do sleep a bit.
--		 */
--		Sleep(delay[tries]);
--		tries++;
--	}
--	while (ret == -1 && errno == EACCES && is_file_in_use_error(GetLastError()) &&
--	       ask_yes_no_if_possible("Deletion of directory '%s' failed. "
--			"Should I try again?", pathname))
--	       ret = _wrmdir(wpathname);
--	if (!ret)
--		invalidate_lstat_cache();
--	return ret;
-+	} while (retry_ask_yes_no(&tries, "Deletion of directory '%s' failed. "
-+			"Should I try again?", pathname));
-+	return -1;
- }
- 
- static inline int needs_hiding(const char *path)
-@@ -2384,20 +2384,8 @@ repeat:
- 			SetFileAttributesW(wpnew, attrs);
- 		}
- 	}
--	if (tries < ARRAY_SIZE(delay) && gle == ERROR_ACCESS_DENIED) {
--		/*
--		 * We assume that some other process had the source or
--		 * destination file open at the wrong moment and retry.
--		 * In order to give the other process a higher chance to
--		 * complete its operation, we give up our time slice now.
--		 * If we have to retry again, we do sleep a bit.
--		 */
--		Sleep(delay[tries]);
--		tries++;
--		goto repeat;
--	}
- 	if (gle == ERROR_ACCESS_DENIED &&
--	       ask_yes_no_if_possible("Rename from '%s' to '%s' failed. "
-+	       retry_ask_yes_no(&tries, "Rename from '%s' to '%s' failed. "
- 		       "Should I try again?", pold, pnew))
- 		goto repeat;
- 
+@@ -102,6 +102,7 @@ int err_win_to_posix(DWORD winerr)
+ 	case ERROR_INVALID_PARAMETER: error = EINVAL; break;
+ 	case ERROR_INVALID_PASSWORD: error = EPERM; break;
+ 	case ERROR_INVALID_PRIMARY_GROUP: error = EINVAL; break;
++	case ERROR_INVALID_REPARSE_DATA: error = EINVAL; break;
+ 	case ERROR_INVALID_SIGNAL_NUMBER: error = EINVAL; break;
+ 	case ERROR_INVALID_TARGET_HANDLE: error = EIO; break;
+ 	case ERROR_INVALID_WORKSTATION: error = EACCES; break;
+@@ -116,6 +117,7 @@ int err_win_to_posix(DWORD winerr)
+ 	case ERROR_NEGATIVE_SEEK: error = ESPIPE; break;
+ 	case ERROR_NOACCESS: error = EFAULT; break;
+ 	case ERROR_NONE_MAPPED: error = EINVAL; break;
++	case ERROR_NOT_A_REPARSE_POINT: error = EINVAL; break;
+ 	case ERROR_NOT_ENOUGH_MEMORY: error = ENOMEM; break;
+ 	case ERROR_NOT_READY: error = EAGAIN; break;
+ 	case ERROR_NOT_SAME_DEVICE: error = EXDEV; break;
+@@ -136,6 +138,9 @@ int err_win_to_posix(DWORD winerr)
+ 	case ERROR_PIPE_NOT_CONNECTED: error = EPIPE; break;
+ 	case ERROR_PRIVILEGE_NOT_HELD: error = EACCES; break;
+ 	case ERROR_READ_FAULT: error = EIO; break;
++	case ERROR_REPARSE_ATTRIBUTE_CONFLICT: error = EINVAL; break;
++	case ERROR_REPARSE_TAG_INVALID: error = EINVAL; break;
++	case ERROR_REPARSE_TAG_MISMATCH: error = EINVAL; break;
+ 	case ERROR_SEEK: error = EIO; break;
+ 	case ERROR_SEEK_ON_DEVICE: error = ESPIPE; break;
+ 	case ERROR_SHARING_BUFFER_EXCEEDED: error = ENFILE; break;
 -- 
 gitgitgadget
 
