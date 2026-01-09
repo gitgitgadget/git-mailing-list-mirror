@@ -1,110 +1,325 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFC0261B6D
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7BA31B133
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 21:26:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767989505; cv=none; b=aGpZpTSD6qBUD6rI4jyWJRsHkoBjw40YE+4MlydJQyyVg7xVkc8sQNZGiqusmBB1CS9i90M3BrEtUJpiZC4SDUOVsY/+aZPKhV52TovINnp+H7gRcq+epeXDGAKyaMmKihTE3TxxWdQFFV7xpQN18spce3eelB/ZblR4PzDiYeo=
+	t=1767993963; cv=none; b=iM4UDqRdyXW7GRFM2Jp/2/6I1dJFhrJrFI4b1hciiyXKJfSXNYReJ6al3lZ6WLr6l2m0jDgr0u+NKVOJx+zQHBgCsRc9zYr0KBXWSjos6gbHvygx1JXlQf7kaj7yG3ig3Gp85ExLfO7K2nnf5EvFr1bDYAQdWEWnEG6PG42AD14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767989505; c=relaxed/simple;
-	bh=jwyZn3759JwNqBBMWLWU8lN2thGKaFh+cqW4Czu5AQM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p4bnCPTNZpVDBnlZQBWdXcv17/RQdjdUa5NkXlo4AkhRU2qInWZLEr38LUeqNshBEbil38sq6Frk34L4WnVUdoVmEOE+5IossSA8aUv4VbDzZGWTFgA5UoWstfi+sl60mMxWQJ62DOMSLBHOvH/7E9jC4ul9ysZ/Gj/wrPD5JdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=LzB1tqke; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1767993963; c=relaxed/simple;
+	bh=EJi3A4ntgZ1VJLqGjkC8fjy0tS6S5rzOiViMQqayed8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jxKREvHt6K9rQUCbhqVsghzi534YsEJBTjQoAHpQWiiZ2/5u6xp57ZbsWLqaojvf48zfJJOsd7KJ/UWvC8Z62w8n9UJ9T+9iAGICVllBly/HJYzOQ27u6A3zfcbVMsnyxLj2XeRKDVM2CuU3CYa+YyPhc3OpY7+4PVTZeQo0ibk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S+kUMEVJ; arc=none smtp.client-ip=209.85.221.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LzB1tqke"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1767989502;
-	bh=jwyZn3759JwNqBBMWLWU8lN2thGKaFh+cqW4Czu5AQM=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=LzB1tqkede3BajKmZRgLQdIi58w8uggQbO6Q4UjlxEruQIrvsjsIDX4hcHUFVXRgP
-	 e6pUU7Lj/nJQ1okiY/1UzIpPNPX0buT4lZ36j7Lywo7/i4ywIUSIDcUSayhhnsc0OQ
-	 qnMo28yPkHmeNwU1efESYYiRQEWujPANvGYtAPJ5tvZwUn/33Ylr/2eJ3BpGI9MRln
-	 WVXX7PTZb9r19iOKRw1xJgq76CBFAs7yqA8IJlqfsCDCJi5UxQgBAyrv7FQVSV6QJs
-	 VFSerJXV5Vn5XeefIdhvvwyM9YDLj3JdwUX6G6qx8tPknNwOZSe+LO8U5GMCH7/qmf
-	 kQN08KLx5sP/fhwWpAEJuXyy8WJVKckKkcbtaphXgV3e8eg5gFFV0H+5lodNY3j8aw
-	 hUpCfsSY/+1qTUH7Qjl6lhmznUvIZ3kZg1xT568v7AHQ07/yTyvJOANbHWR3GPaFmZ
-	 R5Q6zcU6770muSHQzmEutieWWMY7PF8Z2y1rYHvEtUtUZWnkqKd
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8a11:cf76:28ff:b0fa])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4E2D7200B5;
-	Fri,  9 Jan 2026 20:11:42 +0000 (UTC)
-Date: Fri, 9 Jan 2026 20:11:41 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] gitfaq: document using stash import/export to sync
- working tree
-Message-ID: <aWFg_VUZH5_ZqTix@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20260109014608.42773-1-sandals@crustytoothpaste.net>
- <xmqqseceua9j.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S+kUMEVJ"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-563641b24b9so503501e0c.3
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 13:26:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767993961; x=1768598761; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lCP/krCJFxgMPH0c31wDLt1a//lYFzjDNuNXirkQWOc=;
+        b=S+kUMEVJxSSoWDzywaZlKlODM1dFqzU49RpVGl+ao/zsZMSzTssp64G6zdYHgVE0LO
+         bier9r6oyW4MtK3wMPz9ScE7vtm6IDszq+x83qTnIeh5c06okUkNo/h2SkBVjrh+uWCY
+         p/HNecADus9lmCTFL2w5lAAT8UbY0s+hlCW8Qjml/W/vZZsi9PcfMjP7ye2kjm0PFbnu
+         IeIoTzSpjIacQGhViG5rNRxSZhPR3QYjAfQCKwwsTgFQbqLzNybyimX9yfAeLT+lYzUA
+         V1kKps9aOsa4hxv4iyM569q6mc/wn0hgoIaYublWqBftao0A1g5AnYByshspn1NxuX7G
+         0EKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767993961; x=1768598761;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lCP/krCJFxgMPH0c31wDLt1a//lYFzjDNuNXirkQWOc=;
+        b=kP+zURfoYsgKmAHoSfUs+YE/cpvv+kSLciz83MNNjQ5eLc3A41gMI2pOeBfCPW60fb
+         xZryds1RkefFmZYERu9keQaLbw4RZLgSNevp8P0CnQVwjbzqWdGfgSp8yYtDg1pUhI7f
+         1CJtzOoWbbcs2fFUsmTzuod7uyvpgl5tvnOcaaKNMEOhXquYKlyh9wlZDyzBl8uk3sG9
+         mUc9zydTN0HbbgJ8Cxkocqr6q1bErIXEk1FkKFWZjsp16CbvoNRAj6h/ufDHhEJYU/CO
+         gBWI5GDRblH/8wKLKDzMDrQTD1fDrmVT6O6CDX767S49CznKK4yh96HwQz+TUBlF6ZAr
+         3xcA==
+X-Gm-Message-State: AOJu0YyFpeOSvpl25/w2dfqnwxekMXVs4FZXrY0sLLnslYYBxScHNR2h
+	WPkHyD+lV5hCQmyN8IvN5NC/IBIGrXe914tu1pfyUqtTS4zZcK7qhgOQF5P//A==
+X-Gm-Gg: AY/fxX5WK3G3+1OipUcBZpA5RqEe7NOd+YcU+05SUcWT5vIPEhsN+MegCIHjlEX2xCv
+	vmYyzy7dXdF+owWsM5o0d41cwNIU+I3Sx2tOKju7F4Pf0XT6e0kPA/Nd1gOFeTpDLjMdlfscIYp
+	47KozLEYreeRPWieQ0FWV9gEkJA7dwnuuyFe9HcZmtlRMGdrsBCaHwAdAwTRq5VYZoMX2G0H0Ce
+	Q/kbSfHvffHANnpiWpISW6J2J0ua1mXTM5EsRZBsfuCkepb37SugraynUXDqKsDZLpVAxUq4Aq9
+	kBmSfBBNkC/SHPFrWX92y2kwYVDXnrWsaXAyJ+JrmuahDEt0pJPs5JQSU+w+E13Irv/1YTTHg6+
+	vUU3zQVl+hoK81wLB6OrgGf15Hzcwm4NMAtjwG2id0fg+kTtxY08dCxEbJ2DCxMtEibE8xR2pvh
+	XPF8N9h9nEJQknEKtxJ2RnOXW7MuxBo6T6M49MljsEYLGBVaOfKzLugW7v
+X-Google-Smtp-Source: AGHT+IHrS91HzY8XUTI6eoxCXeWKyLmHPaq4x1SpgmTiPfnOERPF+8+LJp2JQXf5YSNt0quQpG5JBQ==
+X-Received: by 2002:a05:6122:3c4f:b0:55f:e06c:442e with SMTP id 71dfb90a1353d-56347fad1f6mr3697162e0c.13.1767993961087;
+        Fri, 09 Jan 2026 13:26:01 -0800 (PST)
+Received: from localhost.localdomain ([2804:7f0:b77d:586:c136:4246:ee92:fdfb])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5633a443e32sm10595955e0c.22.2026.01.09.13.25.58
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 09 Jan 2026 13:26:00 -0800 (PST)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [PATCH v3 0/2] repo: add --format=default and --keys
+Date: Fri,  9 Jan 2026 17:31:51 -0300
+Message-ID: <20260109211554.90828-2-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="P5BS+IArb/CWmKH4"
-Content-Disposition: inline
-In-Reply-To: <xmqqseceua9j.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
 
+Hi!
 
---P5BS+IArb/CWmKH4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The main change in this version is that git-repo-structure now supports
+`--format=default`. This way, both git-repo-info and git-repo-structure
+now can be used with `--format=default`, which resets the output format
+to the default one (`keyvalue` in repo-info, `table` in repo-structure).
 
-On 2026-01-09 at 14:32:40, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > Git 2.51 learned how to import and export stashes.  This is a
-> > secure and robust way to transfer working tree states across machines
->=20
-> Here "secure" in "secure and robust" triggered my "huh?" sensor.  It
-> is a robust way, but is there something particularly "secure" about
-> it, other than "it is less likely to break your repository" in the
-> sense that is already covered by "robust".
+I'm also cc'ing Justin to see if he agrees with this change to
+git-repo-structure.
 
-We know that sharing a working tree with different users is not secure
-because people can have things like hooks or config options that execute
-arbitrary code.  Transferring stashes doesn't have that downside.
+Lucas Seiki Oshiro (2):
+  repo: add a default output format to enum output_format
+  repo: add new flag --keys to git-repo-info
 
-Considering that we used to explain that the only way to do this was to
-rsync the working tree across machines, this option is more secure than
-the previous option since it avoids any potential code execution.  It
-also avoids syncing things like ignored `.env` files, which people often
-use to store secrets, since `git stash` doesn't transfer ignored files
-(but rsync often does).
+ Documentation/git-repo.adoc | 30 ++++++++++++++++------
+ builtin/repo.c              | 50 ++++++++++++++++++++++++++++++++++---
+ t/t1900-repo.sh             | 46 ++++++++++++++++++++++++++--------
+ t/t1901-repo-structure.sh   | 22 ++++++++++++++++
+ 4 files changed, 126 insertions(+), 22 deletions(-)
 
-But if you disagree and prefer to remove it, please feel free to edit
-the commit message before you merge to next, or let me know and I can
-send a v2 if you prefer.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Range-diff against v2:
+1:  9eb2549806 ! 1:  97f8eee687 repo: add a default output format to enum output_format
+    @@ Metadata
+      ## Commit message ##
+         repo: add a default output format to enum output_format
+     
+    -    Add a `FORMAT_DEFAULT` value to `enum output_format`. Change the initial
+    -    value of `format` to `FORMAT_DEFAULT` in cmd_repo_info, indicating that
+    -    the initial value hasn't been changed. Also map the string "default" to
+    -    this new value in `parse_format_cb`, allowing future patches to add
+    -    support to --format=default.
+    +    Add "default" as an option for --format in both git-repo-info and
+    +    git-repo-structure. Using `--format=default` makes those commands use
+    +    their default output format.
+     
+         Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+     
+    + ## Documentation/git-repo.adoc ##
+    +@@ Documentation/git-repo.adoc: git-repo - Retrieve information about the repository
+    + SYNOPSIS
+    + --------
+    + [synopsis]
+    +-git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
+    +-git repo structure [--format=(table|keyvalue|nul) | -z]
+    ++git repo info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]
+    ++git repo structure [--format=(default|table|keyvalue|nul) | -z]
+    + 
+    + DESCRIPTION
+    + -----------
+    +@@ Documentation/git-repo.adoc: THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+    + 
+    + COMMANDS
+    + --------
+    +-`info [--format=(keyvalue|nul) | -z] [--all | <key>...]`::
+    ++`info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]`::
+    + 	Retrieve metadata-related information about the current repository. Only
+    + 	the requested data will be returned based on their keys (see "INFO KEYS"
+    + 	section below).
+    +@@ Documentation/git-repo.adoc: requested. The `--all` flag requests the values for all the available keys.
+    + The output format can be chosen through the flag `--format`. Two formats are
+    + supported:
+    + +
+    ++`default`:::
+    ++	synonym for `keyvalue`.
+    ++
+    + `keyvalue`:::
+    + 	output key-value pairs one per line using the `=` character as
+    + 	the delimiter between the key and the value. Values containing "unusual"
+    + 	characters are quoted as explained for the configuration variable
+    +-	`core.quotePath` (see linkgit:git-config[1]). This is the default.
+    ++	`core.quotePath` (see linkgit:git-config[1]).
+    + 
+    + `nul`:::
+    + 	similar to `keyvalue`, but using a newline character as the delimiter
+    +@@ Documentation/git-repo.adoc: supported:
+    + +
+    + `-z` is an alias for `--format=nul`.
+    + 
+    +-`structure [--format=(table|keyvalue|nul) | -z]`::
+    ++`structure [--format=(default|table|keyvalue|nul) | -z]`::
+    + 	Retrieve statistics about the current repository structure. The
+    + 	following kinds of information are reported:
+    + +
+    +@@ Documentation/git-repo.adoc: supported:
+    + The output format can be chosen through the flag `--format`. Three formats are
+    + supported:
+    + +
+    ++`default`:::
+    ++	synonym for `table`.
+    ++
+    + `table`:::
+    + 	Outputs repository stats in a human-friendly table. This format may
+    +-	change and is not intended for machine parsing. This is the default
+    +-	format.
+    ++	change and is not intended for machine parsing.
+    + 
+    + `keyvalue`:::
+    + 	Each line of output contains a key-value pair for a repository stat.
+    +
+      ## builtin/repo.c ##
+    -@@ builtin/repo.c: static const char *const repo_usage[] = {
+    +@@
+    + #include "utf8.h"
+    + 
+    + static const char *const repo_usage[] = {
+    +-	"git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]",
+    +-	"git repo structure [--format=(table|keyvalue|nul) | -z]",
+    ++	"git repo info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]",
+    ++	"git repo structure [--format=(default|table|keyvalue|nul) | -z]",
+    + 	NULL
+    + };
+    + 
+      typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
+      
+      enum output_format {
+    @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char
+      	if (format != FORMAT_KEYVALUE && format != FORMAT_NUL_TERMINATED)
+      		die(_("unsupported output format"));
+      
+    +@@ builtin/repo.c: static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
+    + 	struct stats_table table = {
+    + 		.rows = STRING_LIST_INIT_DUP,
+    + 	};
+    +-	enum output_format format = FORMAT_TABLE;
+    ++	enum output_format format = FORMAT_DEFAULT;
+    + 	struct repo_structure stats = { 0 };
+    + 	struct rev_info revs;
+    + 	int show_progress = -1;
+    +@@ builtin/repo.c: static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
+    + 	if (argc)
+    + 		usage(_("too many arguments"));
+    + 
+    ++	if (format == FORMAT_DEFAULT)
+    ++		format = FORMAT_TABLE;
+    ++
+    + 	repo_init_revisions(repo, &revs, prefix);
+    + 
+    + 	if (show_progress < 0)
+    +
+    + ## t/t1900-repo.sh ##
+    +@@ t/t1900-repo.sh: test_expect_success 'git repo info --all <key> aborts' '
+    + 	test_cmp expect actual
+    + '
+    + 
+    ++test_expect_success '--format=default is a synonym for --format=keyvalue' '
+    ++	git repo info --all --format=keyvalue >expect &&
+    ++	git repo info --all --format=default >actual &&
+    ++	test_cmp expect actual
+    ++'
+    ++
+    ++test_expect_success '--format=default resets the format' '
+    ++	git repo info --all >expect &&
+    ++	git repo info --all --format=nul --format=default >actual &&
+    ++	test_cmp expect actual
+    ++'
+    ++
+    + test_done
+    +
+    + ## t/t1901-repo-structure.sh ##
+    +@@ t/t1901-repo-structure.sh: test_expect_success 'progress meter option' '
+    + 	)
+    + '
+    + 
+    ++test_expect_success '--format=default is a synonym for --format=table' '
+    ++	test_when_finished "rm -rf repo" &&
+    ++	git init repo &&
+    ++	(
+    ++		cd repo &&
+    ++		git repo structure --format=table >expect &&
+    ++		git repo structure --format=default >actual &&
+    ++		test_cmp expect actual
+    ++	)
+    ++'
+    ++
+    ++test_expect_success '--format=default resets the format' '
+    ++	test_when_finished "rm -rf repo" &&
+    ++	git init repo &&
+    ++	(
+    ++		cd repo &&
+    ++		git repo structure >expect &&
+    ++		git repo structure --format=nul --format=default >actual &&
+    ++		test_cmp expect actual
+    ++	)
+    ++'
+    ++
+    + test_done
+2:  c5b7ba8824 ! 2:  0c7d3bca32 repo: add new flag --keys to git-repo-info
+    @@ Documentation/git-repo.adoc
+     @@ Documentation/git-repo.adoc: SYNOPSIS
+      --------
+      [synopsis]
+    - git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
+    + git repo info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]
+     +git repo info --keys [--format=(default|nul) | -z]
+    - git repo structure [--format=(table|keyvalue|nul) | -z]
+    + git repo structure [--format=(default|table|keyvalue|nul) | -z]
+      
+      DESCRIPTION
+     @@ Documentation/git-repo.adoc: supported:
+    @@ Documentation/git-repo.adoc: supported:
+     +`nul`:::
+     +	similar to `default`, but using a NUL character after each value.
+     +
+    - `structure [--format=(table|keyvalue|nul) | -z]`::
+    + `structure [--format=(default|table|keyvalue|nul) | -z]`::
+      	Retrieve statistics about the current repository structure. The
+      	following kinds of information are reported:
+     
+    @@ builtin/repo.c
+     @@
+      
+      static const char *const repo_usage[] = {
+    - 	"git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]",
+    + 	"git repo info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]",
+     +	"git repo info --keys [--format=(default|nul) | -z]",
+    - 	"git repo structure [--format=(table|keyvalue|nul) | -z]",
+    + 	"git repo structure [--format=(default|table|keyvalue|nul) | -z]",
+      	NULL
+      };
+     @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+    @@ t/t1900-repo.sh: test_expect_success 'git repo info uses the last requested form
+      	git repo info --all >actual &&
+      	test_cmp expect actual
+      '
+    -@@ t/t1900-repo.sh: test_expect_success 'git repo info --all <key> aborts' '
+    +@@ t/t1900-repo.sh: test_expect_success '--format=default resets the format' '
+      	test_cmp expect actual
+      '
+      
+     +test_expect_success 'git repo info --keys --format=nul uses nul-terminated output' '
+     +	git repo info --keys --format=default >default &&
+    -+	lf_to_nul <default > expect &&
+    ++	lf_to_nul <default >expect &&
+     +	git repo info --keys --format=nul >actual &&
+     +	test_cmp expect actual
+     +'
+    @@ t/t1900-repo.sh: test_expect_success 'git repo info --all <key> aborts' '
+     +	test_cmp expect actual_all &&
+     +	test_cmp expect actual_key
+     +'
+    ++
+      test_done
+-- 
+2.50.1 (Apple Git-155)
 
---P5BS+IArb/CWmKH4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaWFg/AAKCRB8DEliiIei
-geXzAQDGZKIQio1eJHTLcYE34J7nA+4CEznxE8JgCndJd8t43AD9HL2GgExQjZp4
-fF6WuoGsdD0IzwkTAjJiDqVqRIyd+Qg=
-=szbI
------END PGP SIGNATURE-----
-
---P5BS+IArb/CWmKH4--
