@@ -1,75 +1,51 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E003375D5
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 15:23:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767972223; cv=none; b=LfF+TiNVmsTU3uJE0M9T5/VtjD0dGn1YbFHvPhmgYL2NwMAv/zl/ortO+BMNAcU0x52CGiXdoKi6amrlM9GIXoOnX4AKOU80IYvgFPF0U9ByhUqTn0Uz1y280PHkxMCZ8dAuMAnCVxsnwqzpmXnXnubjLaH0lSm1IjhVOYfka30=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767972223; c=relaxed/simple;
-	bh=i24ox3svhTvf5u17wSY2bxmolkUZc3IjaIZxTyd8NGw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=oJIMDa7NrDNz2mxR4/m7Lj/YNlOXZsLvAV/KVk8PFGVHoCPh6nkX2YCyMOnWnE7lnsM9f5XJcvZZXS4QJMlsDW/IUm/CZPbhZTgm4xBwMsc9N+/D/0qhhiGS0Gy6FeVnw3FvgMGOcECOHIeFPGDsT+f2qkbBbi9bfM5MUH6y+xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fMq65y2t; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658792C21E6
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 15:36:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767972968; cv=pass; b=Rao65BTEa1KSCunehzcrWgRzdS7mt/hkhs5b4RT7zLWUWihG/GTaw03rSkhabku5kXVvpbBaRxVr7yGJWgdq3U0DKccQGAqfnGdbE28Sc4k8iliWFqC4+dm91hQ4k0Q13iwBkvszvvPuMHNpbFuucdcW4vjZ/qloDodpTD5rZe4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767972968; c=relaxed/simple;
+	bh=ACufrq6Fw+my5tp28lYGogzF9jIceVrdlAyaI889qKU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PTt6ZTy8dE64PpL+aKSj1JMl/mqRqCkTEo5KuZZUBCtpTj5x90hiWbUAJKZOu6RUZo6smuCo6Av9lSt+ghFV59Ecc1iHiI6tdGbO6RLAI54vpafksEE/kxNpqYj0/IHlcBzWAF26ae7FDSTR2Qs47ZyI0Q7zKl2ccQI1u5p6HBM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Je+D0/ec; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fMq65y2t"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-59b6c89d302so3407302e87.1
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 07:23:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767972220; x=1768577020; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hOn/EySal3xXOrCGgJFX644LBZqr+by7bm9RJPgpnJk=;
-        b=fMq65y2tkEqGDUX2kzzeytucjlc92DdpqTzvRjqI7D7XdJBtXC8nqap7Itqt2NQeY8
-         +SIQhRbbIzErMWy2hrN93YBTRSe83FGKsYuK5/pzZNV5aQZTA6ZaqhNSPFSA1/GwhRNG
-         cqjYnmYuL0uTCOG4yhFB+hgVOXZx8kCzl6Wcw0jKxNQSp9OJYR0xpIJOo4jI5tKto7Tp
-         op2LtpjOY7v6AHi/rk1NASCXsrDmRlLjoQo2h8nOg5TsuSq1UHNIav82ORdUyK+q8BFi
-         XnI1qq1GsdmbZGoMwiA6F6Ml5qumjql9xC03svL4S0jg3lhO7EplnHLPJj9pBxcDinKD
-         nw2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767972220; x=1768577020;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hOn/EySal3xXOrCGgJFX644LBZqr+by7bm9RJPgpnJk=;
-        b=SLqdSHv3qEezUEBfyqovqgTSJAygBgVlowf1AkUgbuvSxPPWP0oz4p8oJDJmtt3Y9o
-         sS+4FLYznyIkNk2F1pol7dwXXKaszmHqD3yUJ0DjDc9Gcb80IMhuhfwcaphv0acwoOOX
-         7sVh5BQly7obuvu0b+hHh+3ef+6lXM/zEnHGYxY33xI5uxQraWU5fQO1I4Ei4rbP4sEc
-         l6h3iDayL+01D3xHu8Wcser8LUb2YNvYLwWfIis8CWMTanHgVaWL18y3Y9W7QyFVpAay
-         Mehklrg1FNdgVn5z7sjYM+AdY8rKClWNIiYb+akss/MQVLTVbypr1sI05yV05qoum6p5
-         3CGw==
-X-Gm-Message-State: AOJu0Yz8WwxFmCRYwd273lWn06HUCiFv5ihnd8qkP9V7zLPj2aqSyMZw
-	EJN4ZnMHDSOv8k26gtaKsKhmItDNzFKzwtWdaIWVcVuNxaT2mzydLccH
-X-Gm-Gg: AY/fxX4fJAAIGVZfsA1gigrJxKPVJA/wZnN3V4AYe3kkggBTxiIi0MZsoi4XufgqSXL
-	E85CqazBMtw/fNFy8wk0W9kxg8s5skBUj+lHmr4LYSJTiHm5bBLkzmDEWqQussKU8RUPkGdCzgF
-	+LP0FEprhW/BzEH3ttMO3TwmeN19UHCJUDHqDkQltXZxWadrj/aFvPJ+87c3msZjX+SNWciv4rF
-	N8jD/FRXwyfC/C5ptLrnq1AYOv6RXqz14V90noJGAQt9Ts+rNLTmMBk5gaAXOz1XgeWQgv9I4v4
-	7J/IrVZrRe9odyu8vjsRyBt9HphTbW6RI1qxwrRduwsxAzz/7pNkIbOz2o1shv/Kntgeux15XsB
-	EEXaXjWMyx7logHqWet4z5sokZCsA3bs0ikqaA26G6rEnG2qqgcrpanfh+5J7UJMEu6zwiA+osN
-	RIB1gi5R5VVX4111rHrxIS/enYuTuz2o1Jb3398XZvMQ32AxHrUWlYRV+OATzn/DwMF28krlk=
-X-Google-Smtp-Source: AGHT+IFcM+XwuapO7nC+S/9g6KflkEIGACsW0GvTRRc9Uildsx93d5ApjK7k1SIJshfOPTt3uKRrKQ==
-X-Received: by 2002:a05:6512:2201:b0:59b:6dbe:d09c with SMTP id 2adb3069b0e04-59b6f022ecdmr3900584e87.19.1767972220191;
-        Fri, 09 Jan 2026 07:23:40 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b792cf38bsm1234812e87.63.2026.01.09.07.23.39
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 09 Jan 2026 07:23:39 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: phillip.wood123@gmail.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	gitster@pobox.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
-Date: Fri,  9 Jan 2026 16:23:39 +0100
-Message-Id: <20260109152339.70643-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <daab4e8f-cd9e-40af-bdfd-c5884d15d852@gmail.com>
-References: <daab4e8f-cd9e-40af-bdfd-c5884d15d852@gmail.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Je+D0/ec"
+ARC-Seal: i=1; a=rsa-sha256; t=1767972956; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=hPwiC+Ho5ScX4XxOTJTaAsarGA1Gz3iBYzauSsBM4/Ewcsv6PJTrHLK7zHYXLIyKXo3KunyXbXqfXBmiDcxkKVXDTnBKkkbC7t9BvM1yKA0DWz8ry783qPG0qHztwVRhVAyZ21rgwMtEALtx04PVoC7LCcRdw2EPUF5O+pgdJjc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1767972956; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=gAxJn9DDFdhF70+wDKUb9Z23oQkHPSUxF7vGQ4vvj+k=; 
+	b=XnbLTua/khhX6/45fSRdmMqdm7E/xQjaSOw+tX6V47+xC0SjHwVcELl4BkxQMqN0+3MW8YJ6WpaB9rYj/45BfjdJaPgDFbp2BeXSU6sBxITeXqSgD5isx2PIr/YPl6xp582JQqpQDnQS+lQ582+bpyqzDlp0DuzwGktFan+VKGE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767972956;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=gAxJn9DDFdhF70+wDKUb9Z23oQkHPSUxF7vGQ4vvj+k=;
+	b=Je+D0/eccaHOFYw/K0l/tB0Back2Nkg4jDN3BjpuEtl22qP/f7z2T5qAwe8e230J
+	DjhIvtnqpYtCtuSBrFRN8gJzDAvp3+MJnRrCsuYjYgv6lT8F1ZJPELOLZuUnDbx8u8a
+	yVddCHObkzAs5QObGrWMkh9RvEASBuPCyZkZbrSU=
+Received: by mx.zohomail.com with SMTPS id 1767972953659599.8727478666715;
+	Fri, 9 Jan 2026 07:35:53 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	correctmost <cmlists@sent.com>
+Subject: [PATCH][next] hook: check for NULL pointer before deref
+Date: Fri,  9 Jan 2026 17:35:28 +0200
+Message-ID: <20260109153528.476163-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,25 +53,62 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-> I wondered why we needed to pass sti as well as ours and theirs but it 
-> is because when we're using AHEAD_BEHIND_QUICK our and theirs are always 
-> zero and so we need to check sti to see if the branch is up to date. 
-> Perhaps we could make this a boolean called 'up_to_date' ?
+Fix a compiler warning (-Werror=analyzer-deref-before-check) due to
+dereferencing the options pointer before NULL checking it.
 
-Yes, this is the reason. And I tried a lot of things to get around it. But
-yes, let's pass this boolean instead.
+In practice run_hooks_opt() is never called with a NULL opt struct,
+so this just fixes the code to not trigger the warning anymore.
 
-> This could be 'bool' not 'int'
-> 
-> Everything else looks fine - it is a faithful conversion from the 
-> original and it makes sense to check if the upstream is gone in the caller.
+The NULL check is kept as-is because some future patches might end up
+calling run_hooks_opt with a NULL opt struct, which is clearly a bug.
 
-Done, will be in the next patch.
+While at it, also fix the BUG message function name.
 
-I didn't update the signature of 'format_tracking_info' to have a bool
-there too, because it makes the surface area bigger of also updating the .h
-file there.
+Reported-by: correctmost <cmlists@sent.com>
+Suggested-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+This is based on next, because it fixes a warning introduced in next.
+Succesful CI run: https://github.com/10ne1/git/actions/runs/20855922803
+---
+ hook.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
+diff --git a/hook.c b/hook.c
+index 35211e5ed7..c257bd3940 100644
+--- a/hook.c
++++ b/hook.c
+@@ -148,12 +148,11 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 	};
+ 	const char *const hook_path = find_hook(r, hook_name);
+ 	int ret = 0;
+-	const struct run_process_parallel_opts opts = {
++	struct run_process_parallel_opts opts = {
+ 		.tr2_category = "hook",
+ 		.tr2_label = hook_name,
+ 
+ 		.processes = 1,
+-		.ungroup = options->ungroup,
+ 
+ 		.get_next_task = pick_next_hook,
+ 		.start_failure = notify_start_failure,
+@@ -165,11 +164,13 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 	};
+ 
+ 	if (!options)
+-		BUG("a struct run_hooks_opt must be provided to run_hooks");
++		BUG("a struct run_hooks_opt must be provided to run_hooks_opt");
+ 
+ 	if (options->path_to_stdin && options->feed_pipe)
+ 		BUG("options path_to_stdin and feed_pipe are mutually exclusive");
+ 
++	opts.ungroup = options->ungroup;
++
+ 	if (options->invoked_hook)
+ 		*options->invoked_hook = 0;
+ 
+-- 
+2.51.2
 
-Harald
