@@ -1,80 +1,79 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC3235B12B
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 12:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA36235B150
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 12:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962313; cv=none; b=bhx6oItxq6ZDJE4cj5stzlQDtQCTP/y8eX2b4gcMmMTkDPYRzUDFmXccB0GPNlljKx+mMiK7FkdGoqhBiJaPDfs5fmgevYwjSX5kOHHir/DoaCS+nBYPerkwvzNJc9T8DzB4+uK+bwhR4+FlTyP0oQUF4pywr3kajsCUmYC6dVU=
+	t=1767962318; cv=none; b=aRez33QwCuhM4EFd/6iIUPrDgx2YAYYCSoYMCi513I537PlKAUVWdbuuU9kcIyWn5m+KKm41bwsosbSil5Sr0pal0yaNaRKmwcokt5QwzOOuTmRV75o5fXSV1Wki2Wh7QofewMn0aA7NdfE3EvtNgyX4w8OOJ9acq1pLzKCby80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962313; c=relaxed/simple;
-	bh=WZbLSTw6eGZ7Y215b9CfcxvdREvqII0BAO0JVmcpOFo=;
+	s=arc-20240116; t=1767962318; c=relaxed/simple;
+	bh=ubOvZXYfqZQtxcyk/Digx2iHDxJCIWphDdP10UVQxyM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WHKPsKCKFr/L7B1QRnlZbOJ8RJF4K+wwjk8JPK2+WBB3L8ExF2ktaPzqgnocbpUbZ6el4keaW0793SwPx21POo/KBHTiZt/a1nuiQg4OU9IFGRPPL/jAp4mEhi9NRGY4XO5ECXK3SSA4+5uC31AoTvxqprLtaJ4wPaH3Z0VgrkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TzsHloLj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RB5Go4U5; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=raSUsp3y06HRRd6rHK5x6z4MhCNqNpZSUqgrOq8T8P2UlaGG7MpHfx2kb2mwippYiQRW1+G8WUbe1b259YsxuN5TAlP8ueCEN4mdY2PCaJTgWXuT8bZaV75P9nbesu/epqYK54gHStDo7eIPajc5NC2BmHPfIXCdGu+A6oteHLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d2XeKmQ8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EpLwgQnz; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TzsHloLj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RB5Go4U5"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1E6057A016F;
-	Fri,  9 Jan 2026 07:38:31 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d2XeKmQ8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EpLwgQnz"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id CD3951D000FB;
+	Fri,  9 Jan 2026 07:38:35 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 09 Jan 2026 07:38:31 -0500
+  by phl-compute-10.internal (MEProxy); Fri, 09 Jan 2026 07:38:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1767962310; x=1768048710; bh=WEuULDAsLi
-	D/VtDG9BXzC043OCijvkpglpDrReqYy+g=; b=TzsHloLji/2yAWx+RG1XV5KLVk
-	pLVCTt+7DJq1JyIIbJXy/X24n6FNsE3FjlLbeOfmSRTjczGOOKxGXFmVhY+UQufJ
-	hbJII23QP6hwJUbd/ShQjQUUdRg19y/jSbLkGvrbg8NNrAJqFPJWDDWzQ/L9BWWb
-	/qcAc74zbBCGK42wtjSjzm1gY+wZHyX2UwbmNdGXIyOL4gx+zV7kt3OKxUOmCAoH
-	Yox4GGQ3g5TsOR9bqXzFrPzYp2ogHXdXdXeRuRPEBZAE47j9WTnrJGxvz4AeVRan
-	iKOMAEGjptOZ6vMRrfWcd/K7x2+0u/9rmoC81r0hNsMDxQr1/eWtx/k4C+aA==
+	:subject:to:to; s=fm2; t=1767962315; x=1768048715; bh=iRMLUl7lW1
+	727QykRbTkiSPpZ3NdodbQs0Uk+LhNtNY=; b=d2XeKmQ8jdBjaGiyps8qPuBot/
+	mrC8tA9zmW+6/6vwtegUauB7Cosgi90zJd1N2ErtbvqHRCH1O4nx20CiPOiMpAL5
+	ubWOtJnJoyq+OimFl4xm26Ug6gdhTgL3kqm4RzjARb8SGW7bx+gfUncDLxz0DP6u
+	BwPmMOzz6jmxk4GPUhFkiaifznL9HyNXlBtUuTrzcrjsFv6YTaefuOVFGMrK6ulE
+	LAtyhOm7/xo05cGzLLs9Ta9PbXYKOPbVWeOQP4RynuthPE+DnWqXfrYJyXu+eDiR
+	wrnzr/yoYke6Tr3/YJ2dyiswi8V0fL9PcXf48BmIz6c6wd4CRH4ucT3XKFFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767962310; x=1768048710; bh=WEuULDAsLiD/VtDG9BXzC043OCijvkpglpD
-	rReqYy+g=; b=RB5Go4U5e4SHCLTffVNgmx12ZX892TMYZFgU42DK2CxT/dThD6O
-	K4kWl1m6TIIV6a41c8O2PUzL5GNTJIjf7bqSvTEX7kT8kNlBmSJAo2NwE904nK+O
-	4jX6jElYTGmwhFA6h/YJBRP/nP5YOctsMohtTrV/+KL9QlqLUfUJ17Z586tsKFFn
-	QIV9bOg1yj5V1/SkzmBuh44tGukQAUEq6O3kG/GtpcjVZJQylH/QphybH2xFuCcb
-	rxFYEzETUJEq7ySYdIRyZ0Z2+nBMvhNfXAjrsEFMJe9sVfOHy7312Z5CotRdrMzJ
-	D8Y1Tlb+J9wFxCv2+jJtfLGl96HoLAM2gKw==
-X-ME-Sender: <xms:xvZgabEeTc9PwXrrmwAWw-WkfdMXPNHl8afYjrAbXA2uMBmNKvfOdg>
-    <xme:xvZgaakbY1Xc0YibabAbOPtAdD5ytavvIDal7JU2a2qV5rYYEXi9lDxxtmTx6DNoJ
-    pTXKZo7CSPxpej8axA8usdWcNZMY2_hIlEXTRCvGj7EGZszhgOjBA>
-X-ME-Received: <xmr:xvZgafZ4HF8J9rNHBtxaYnAY-DiCfMhbKCIBTCSkdzkK79LRgj5XT9KtRmRuGgCt6sCo_EbSl43qXO0NS8ZxpoeJbkB5WCUDj-8CXZzh2w>
+	1767962315; x=1768048715; bh=iRMLUl7lW1727QykRbTkiSPpZ3NdodbQs0U
+	k+LhNtNY=; b=EpLwgQnzoJ76ZtiAJZrdHCmTPLZGQLjWLmbqir2t214hBOxnVy+
+	uIWE+Ch2PGBMC3G5YITAGggMTmuIqLlTWjuh1lLQvt4oFKKyZAKjkuG27QWH2x3G
+	JZdzIYLt7DmlPbUg+1tGKaITogIG1fSvl2Tc7Zuul2pbTBZoCKVZ2f9Olt+j0hIm
+	lJPLNIey31nvzU2i8RvKAVtjo0rZx3u7MdSAMZQZgXXYlJdeiRMCAJsiA/x6HQrF
+	c92BTbNuGGpX5lk862z4A7XJE/GT3CjLXip8nb+VUmEg/radNA1eepvJiJBwiJ4y
+	AJB76OsgdiLFI6nJBBKEcipwj+D0ue7kpdg==
+X-ME-Sender: <xms:y_ZgaYauMsvZRHIHSpdmdvS52qw1egS84qulrdBbqKCDkIfWVwmnPw>
+    <xme:y_ZgaVq3tiPJzlHTdcxHC6CdFvU_ueUyfDhWVgnrTwxzOx7mXjdb5oBpK3fmRXcY6
+    1DArbOI2NIYzlnfsG2xVEFu34Sd5-qgQ7zV640ckAMUVFEjR7HmHWQ>
+X-ME-Received: <xmr:y_ZgaVPJwltwj5xZjXqUT4Ow73klVf6KOFxiocEttLrjhVVoAtMBmuNGHm-w-JyqTjRAKcKRGoJLl2XBFDjzWmMhJUq72cUclmXQ9ZP4LA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekkedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epudehtdeutddvtdfhkeeuveeijeefgfeivefhtdefhfduteeigfeugfefgfejtdeunecu
-    ffhomhgrihhnpeifihhkihhpvgguihgrrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
-    ohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstg
-    hhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhgihhtghgrughgvght
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkh
-    drohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtth
-    hopehophhohhhorhgvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepshgrnhgurghl
-    shestghruhhsthihthhoohhthhhprghsthgvrdhnvght
-X-ME-Proxy: <xmx:xvZgafHyQ3mqvrZXC3665Lg4gIqsi-IcsaRlR0lioG6W4RBZMfkWbw>
-    <xmx:xvZgaQLLE-qwulVeFlx6YquzFgz2T8_4oG7XCI4ykZ9Y6nBPw5UlpA>
-    <xmx:xvZgaaOb9qZBMrUpG_Oy8uPaxynA23Dp-tdozwcip11WjT_94didyA>
-    <xmx:xvZgaQkS8-5DZ0UtVlU5EwqeJE7cGEoBh5_OL0eBnEzaauQFTTw5bw>
-    <xmx:xvZgadWybdHSWHkTOYyOKejVy0ejya4BlZtiijckKkm9DCnfg1v8YjDN>
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoh
+    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehs
+    tghhfigrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhithhgrggughgvthesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehophhohhhorhgvlhesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:y_ZgaYq4AzRxm08Mt4ZlclfAKUO_85Tqu9JRSmZidV5NBRFGBWcaPw>
+    <xmx:y_ZgaSdjTpBys_7lyNqTFJRbSzJK0hpzkjE1GTg2u0tPIkb08DSlbA>
+    <xmx:y_ZgaWShtmrEnpzVsoAY9c0Z0If0Z8Y60_HQzoPeQpKYtnGO3bE8sA>
+    <xmx:y_ZgaTbrzHiTXuegMewJFGhuGEl7s2cLMZYH4n4uHAiwwEmU5h1FOA>
+    <xmx:y_ZgaU6ktL5wiIpmEkqCPJExLhV7hQGQmyigZ-F_i-ZjCn5fkoZQdVEB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 07:38:29 -0500 (EST)
+ 9 Jan 2026 07:38:34 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7de371d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 9 Jan 2026 12:38:28 +0000 (UTC)
-Date: Fri, 9 Jan 2026 13:38:26 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 207c1fc3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 9 Jan 2026 12:38:33 +0000 (UTC)
+Date: Fri, 9 Jan 2026 13:38:31 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -82,11 +81,12 @@ Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Andreas Schwab <schwab@linux-m68k.org>,
 	Ondrej Pohorelsky <opohorel@redhat.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 3/4] sideband: do allow ANSI color sequences by default
-Message-ID: <aWD2wpyOo0Tr34OD@pks.im>
+Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
+ sequences to be passed through
+Message-ID: <aWD2x154F5f-c3pL@pks.im>
 References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
  <pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
- <44585ba1f4223f053820d82f1513c2258e1e0059.1765981422.git.gitgitgadget@gmail.com>
+ <fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,133 +95,94 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <44585ba1f4223f053820d82f1513c2258e1e0059.1765981422.git.gitgitgadget@gmail.com>
+In-Reply-To: <fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com>
 
-On Wed, Dec 17, 2025 at 02:23:41PM +0000, Johannes Schindelin via GitGitGadget wrote:
+On Wed, Dec 17, 2025 at 02:23:42PM +0000, Johannes Schindelin via GitGitGadget wrote:
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> The preceding two commits introduced special handling of the sideband
-> channel to neutralize ANSI escape sequences before sending the payload
-> to the terminal, and `sideband.allowControlCharacters` to override that
-> behavior.
+> Even though control sequences that erase characters are quite juicy for
+> attack scenarios, where attackers are eager to hide traces of suspicious
+> activities, during the review of the side band sanitizing patch series
+> concerns were raised that there might be some legimitate scenarios where
+> Git server's `pre-receive` hooks use those sequences in a benign way.
 > 
-> However, as reported by brian m. carlson, some `pre-receive` hooks that
-> are actively used in practice want to color their messages and therefore
-> rely on the fact that Git passes them through to the terminal, even
-> though they have no way to determine whether the receiving side can
-> actually handle Escape sequences (think e.g. about the practice
-> recommended by Git that third-party applications wishing to use Git
-> functionality parse the output of Git commands).
+> Control sequences to move the cursor can likewise be used to hide tracks
+> by overwriting characters, and have been equally pointed out as having
+> legitimate users.
 > 
-> In contrast to other ANSI escape sequences, it is highly unlikely that
-> coloring sequences can be essential tools in attack vectors that mislead
-> Git users e.g. by hiding crucial information.
+> Let's add options to let users opt into passing through those ANSI
+> Escape sequences: `sideband.allowControlCharacters` now supports also
+> `cursor` and `erase`, and it parses the value as a comma-separated list.
 
-The worst that they can do is to set up both fore- and background color
-to be the same so that text isn't visible. But I think that's an okay
-tradeoff.
-
-> Therefore we can have both: Continue to allow ANSI coloring sequences to
-> be passed to the terminal by default, and neutralize all other ANSI
-> Escape sequences.
-
-Makes sense.
-
-> diff --git a/Documentation/config/sideband.txt b/Documentation/config/sideband.txt
-> index 3fb5045cd7..e5b7383c7a 100644
-> --- a/Documentation/config/sideband.txt
-> +++ b/Documentation/config/sideband.txt
-> @@ -1,5 +1,17 @@
->  sideband.allowControlCharacters::
->  	By default, control characters that are delivered via the sideband
-> -	are masked, to prevent potentially unwanted ANSI escape sequences
-> -	from being sent to the terminal. Use this config setting to override
-> -	this behavior.
-> +	are masked, except ANSI color sequences. This prevents potentially
-> +	unwanted ANSI escape sequences from being sent to the terminal. Use
-> +	this config setting to override this behavior:
-> ++
-> +--
-> +	default::
-> +	color::
-> +		Allow ANSI color sequences, line feeds and horizontal tabs,
-> +		but mask all other control characters. This is the default.
-> +	false::
-> +		Mask all control characters other than line feeds and
-> +		horizontal tabs.
-> +	true::
-> +		Allow all control characters to be sent to the terminal.
-> +--
-
-Nit: I think that our modern doc style requires the values to use
-backticks. E.g. "`default`::".
+Hm, okay. I don't really see much of a reason to allow these, but now
+that the code exists already I don't see a reason why we should remove
+those options again.
 
 > diff --git a/sideband.c b/sideband.c
-> index 997430f2ea..fb43008ab7 100644
+> index fb43008ab7..725e24db0d 100644
 > --- a/sideband.c
 > +++ b/sideband.c
-> @@ -40,8 +45,26 @@ static int use_sideband_colors(void)
->  	if (use_sideband_colors_cached >= 0)
->  		return use_sideband_colors_cached;
->  
-> -	git_config_get_bool("sideband.allowcontrolcharacters",
-> -			    &allow_control_characters);
-> +	switch (git_config_get_maybe_bool("sideband.allowcontrolcharacters", &i)) {
-> +	case 0: /* Boolean value */
-> +		allow_control_characters = i ? ALLOW_ALL_CONTROL_CHARACTERS :
-> +			ALLOW_NO_CONTROL_CHARACTERS;
-> +		break;
-> +	case -1: /* non-Boolean value */
-> +		if (git_config_get_string_tmp("sideband.allowcontrolcharacters",
-> +					      &value))
-> +			; /* huh? `get_maybe_bool()` returned -1 */
+> @@ -28,9 +28,43 @@ static struct keyword_entry keywords[] = {
+>  static enum {
+>  	ALLOW_NO_CONTROL_CHARACTERS = 0,
+>  	ALLOW_ANSI_COLOR_SEQUENCES = 1<<0,
+> +	ALLOW_ANSI_CURSOR_MOVEMENTS = 1<<1,
+> +	ALLOW_ANSI_ERASE = 1<<2,
+>  	ALLOW_DEFAULT_ANSI_SEQUENCES = ALLOW_ANSI_COLOR_SEQUENCES,
+> -	ALLOW_ALL_CONTROL_CHARACTERS = 1<<1,
+> -} allow_control_characters = ALLOW_ANSI_COLOR_SEQUENCES;
+> +	ALLOW_ALL_CONTROL_CHARACTERS = 1<<3,
+> +} allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
 
-This case is something that shouldn't happen in practice because we know
-that the config ought to exist. I guess it _could_ indicate a race
-condition, even though it's extremely unlikely to ever happen. So I was
-thinking about whether we want to `BUG()` here, but I guess just
-ignoring this is fine, as well.
+Nit, not worth addressing on its own: readability would be helped a bit
+if the assignments were all aligned.
 
-> @@ -70,9 +93,41 @@ void list_config_color_sideband_slots(struct string_list *list, const char *pref
->  		list_config_item(list, prefix, keywords[i].keyword);
->  }
->  
-> +static int handle_ansi_color_sequence(struct strbuf *dest, const char *src, int n)
+        static enum {
+                ALLOW_NO_CONTROL_CHARACTERS  = 0,
+                ALLOW_ANSI_COLOR_SEQUENCES   = 1<<0,
+                ALLOW_ANSI_CURSOR_MOVEMENTS  = 1<<1,
+                ALLOW_ANSI_ERASE             = 1<<2,
+                ALLOW_DEFAULT_ANSI_SEQUENCES = ALLOW_ANSI_COLOR_SEQUENCES,
+                ALLOW_ALL_CONTROL_CHARACTERS = 1<<3,
+        } allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
+
+> +static inline int skip_prefix_in_csv(const char *value, const char *prefix,
+> +				     const char **out)
 > +{
-> +	int i;
-> +
-> +	/*
-> +	 * Valid ANSI color sequences are of the form
-> +	 *
-> +	 * ESC [ [<n> [; <n>]*] m
-> +	 *
-> +	 * These are part of the Select Graphic Rendition sequences which
-> +	 * contain more than just color sequences, for more details see
-> +	 * https://en.wikipedia.org/wiki/ANSI_escape_code#SGR.
-> +	 */
-> +
-> +	if (allow_control_characters != ALLOW_ANSI_COLOR_SEQUENCES ||
-> +	    n < 3 || src[0] != '\x1b' || src[1] != '[')
+> +	if (!skip_prefix(value, prefix, &value) ||
+> +	    (*value && *value != ','))
 > +		return 0;
+> +	*out = value + !!*value;
+> +	return 1;
+> +}
+> +
+> +static void parse_allow_control_characters(const char *value)
+> +{
+> +	allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
+> +	while (*value) {
+> +		if (skip_prefix_in_csv(value, "default", &value))
+> +			allow_control_characters |= ALLOW_DEFAULT_ANSI_SEQUENCES;
+> +		else if (skip_prefix_in_csv(value, "color", &value))
+> +			allow_control_characters |= ALLOW_ANSI_COLOR_SEQUENCES;
+> +		else if (skip_prefix_in_csv(value, "cursor", &value))
+> +			allow_control_characters |= ALLOW_ANSI_CURSOR_MOVEMENTS;
+> +		else if (skip_prefix_in_csv(value, "erase", &value))
+> +			allow_control_characters |= ALLOW_ANSI_ERASE;
+> +		else if (skip_prefix_in_csv(value, "true", &value))
+> +			allow_control_characters = ALLOW_ALL_CONTROL_CHARACTERS;
+> +		else if (skip_prefix_in_csv(value, "false", &value))
+> +			allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
 
-This would break in case `allow_control_characters` allows _all_ ANSI
-sequences. But that doesn't matter right now because the function is
-only called via `strbuf_add_sanitized()` when we're sanitizing at least
-some characters.
+Does it really make sense to also handle "true" and "false" here? I
+would expect that those values can only be passed standalone.
 
-Might be worth though to add a call to `BUG()` in case we see an
-unsupported value for `allow_control_characters`.
-
-> +	for (i = 2; i < n; i++) {
-> +		if (src[i] == 'm') {
-> +			strbuf_add(dest, src, i + 1);
-> +			return i;
-> +		}
-> +		if (!isdigit(src[i]) && src[i] != ';')
-> +			break;
+> +		else
+> +			warning(_("unrecognized value for `sideband."
+> +				  "allowControlCharacters`: '%s'"), value);
 > +	}
+> +}
 
-Okay, so this loop scans until we find the final "m" character that
-terminates the sequence. Looks good to me.
+This could be simplified if we used e.g. `string_list_split()`. But on
+the other hand it avoids allocations, so that's a nice benefit.
 
 Patrick
