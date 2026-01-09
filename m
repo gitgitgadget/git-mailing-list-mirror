@@ -1,82 +1,157 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D862B35CB82
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 15:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767974257; cv=pass; b=Puh1Oq6sD3A+HPjUBy1Xi++3rLmb8hrnRN/5BeroehMMmUEvSB3GZuNCak4VQ5Yyt1b63dRmSyV5Qqzyoz9aB1u2+DUw4om5ZUlq6TNdVKnox8cGxn7r/FRGQa1j8PNoWwCozAn6ahC7xKNwu7QfYxX/X8DQ2R3wtRKXlvPxts8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767974257; c=relaxed/simple;
-	bh=i7I+il0D9fKCGrCLxzIjQOvAO70VXj4tr1QWvpa1s+o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WvLOKKBGkGLD3Osj/54eQ2lcfkMX2rQ5sJx86Vbm2nXJURsmh74nHkV0XRZ7+6Zmdr98LwQZCz4HerDWQxTi0utDY66ciYJjsI4fKGy30+ZuJINkO3MH79RZdkaOGmyKVBjhRQp6vF6tVh9qNAP50vD3a9yetyxto8lf5gTFkGo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Rw+WWKRV; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0A015687D
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 16:00:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767974444; cv=none; b=OaTvOftfbhKY3xCx/0URaTBFxu3cVg2CRpUDiX8sQrtdLSZmLk8TaScjXcK6RfBcokEXIi1UxlI7D+YViu/t+pY5R8hnBDGYg/NcYm0+kvRKEhu1AcUwntSWia8ecHvM5ryLlUcgmfB1tW6DCvQ5uacuhjznK12dZB1fVtq0Ong=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767974444; c=relaxed/simple;
+	bh=vDbLflxJw1kQYTs0NTjcdRyfS/+HxK7xMRzQIy19Zwc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=h02RQ9drh/KsenV8z3G+KSytQ+K6xmmyiC9U+HpFbRL10r4Z1hdbEAEhabj/5xmyjYuYZno6G3JZ+ttekGS5PaSCBTY0+K2Kp3IPB9KhWRsWnHeuiBqUhMrGV+rI2l1s0joi/EKpE5qpL2LrjfeZ5sEdIADKXSrt9JNKBVOgjwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mhSQQaJg; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Rw+WWKRV"
-ARC-Seal: i=1; a=rsa-sha256; t=1767974245; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=iML+IVIaj9hP6tuhRbrwkr7jxMs3xks0FoHrpgYlDDcnxdj3ojHcDy+NnBessReYjf04QDuuYedTCMH7vX0BrnCY0ffdRKMq9DUR1Kh/uPkiVYnjKG+hvB8EGSriQhZbzQy0erHtjKJ4anBSmCssiUenurMt5Qs9qFIFrBAIID0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1767974245; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=rY9UjzgVf+dwHhNfWRb+g+eJt+h+oif6+N+pca6PJpg=; 
-	b=f/UxwCaAwXSpRRClYvGOrXofum5ABu81Zw3Tn4eKdCF0Rk76i7ppEXdaTbwEIElkUhmKuqyA/lOzcHzkoE6RwhEYHsfHj64jLzlIwTXZey/L9IkKKwPV+4qDK70u0+IesvPTt0zCiODkiFCpHI7EqI4ljFNpjcvd54Y7idYKG+o=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767974245;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=rY9UjzgVf+dwHhNfWRb+g+eJt+h+oif6+N+pca6PJpg=;
-	b=Rw+WWKRV81p4qFwqlwxMA1XefeHB2te3oj+k6Tvu8pNMSdUQ4x0SChZtUdnPb5Us
-	tDAs+25MHBWD8GqIGYCE9mJ3y69bz+Im7l7YR7mezI8BW3e+FlierAjNc/CZpm8x5NM
-	T3Y98He4sU72ofs7RL5LWA/5MGQV+IuwU+TIoupk=
-Received: by mx.zohomail.com with SMTPS id 1767974241921786.1646772224728;
-	Fri, 9 Jan 2026 07:57:21 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Emily Shaffer
- <emilyshaffer@google.com>, correctmost <cmlists@sent.com>
-Subject: Re: [PATCH][next] hook: check for NULL pointer before deref
-In-Reply-To: <aWEkCqABozBzT-QS@pks.im>
-References: <20260109153528.476163-1-adrian.ratiu@collabora.com>
- <aWEkCqABozBzT-QS@pks.im>
-Date: Fri, 09 Jan 2026 17:57:18 +0200
-Message-ID: <87ecnywzhd.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mhSQQaJg"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59b7c2614f7so1334666e87.3
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 08:00:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767974441; x=1768579241; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W+kD4GS6tj6ItOwB7VUiCyUloWswRxoC+k1ymYaKOXs=;
+        b=mhSQQaJgsoPclGCvHCgSLrm15U8VWHgATlh0LAHdKHSNiHwws2TuZ9wsDVxn4ffVze
+         wqbPHgbon+e6xGolxq5KsO04TSjCVP2I+F7ZrbS9LG1XABSMqwOel23oalrWgkk91zB8
+         Z9on9e6ErYrOA2aOQvOKUAcbPmWBiRjBEKQ9wVh8FdE6hBceLoScn704P67IMaPwfb33
+         XKGiEmL1AroqHvtCJtK0FvUtQxv70oAtMJRoGf4U4HhmIAT2Z44AJZkWuMPSXjmubXnd
+         Ly2tMtdRmSHXegqheuZAFOHs47dGBN+rfiIg8L/1tLg+Fq62+Fvg/8RWkgN0y/nrAu5f
+         xRZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767974441; x=1768579241;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=W+kD4GS6tj6ItOwB7VUiCyUloWswRxoC+k1ymYaKOXs=;
+        b=ZkF3s8H41y/dqqROZ8AyBt2U8ZtZQH40DjkRQ9GbVAmWBlEkpUAxme650Drzs7z0Jj
+         DFuAmwjS0L2KfPDuzz5m18mJp7qebBOinFOmtdtDalChRjxamHN1zwShF5XQK4TXaTtv
+         mvKs+3hTurbHXgLRkDjqm8IzyKkXUtxDzMiCKKWWVqY8+H/4v3tse/Amv8fpoRec6uyD
+         vBFpK0wMtdbcyn8qKXu1fJX+oCDv7Kj1sTfaPJPnoc+nR/dGh78Jsn0rRxJFS22XNQHO
+         L24UlfkmyKfDC7k2PVyA1kpARiyW/icIbFZ6+W+dNCbQtIzsdv42rgaRRXimGaisuhR5
+         8udA==
+X-Gm-Message-State: AOJu0YyXRqC+vbQsNZbuZM2h3OsaLnuLTlcobTOVduRv4s6T9OmNNlq8
+	gZ15dnJDnKyFAJ5+QMtgXgm1ACT6FmbiOXgscT9YrmsoBrMDxJ883Ekf
+X-Gm-Gg: AY/fxX55FyWERUTgLmgsQtR9TNyjsDKD1YSb+ro8ENE5Kt+N3+VgIEX7HgYEDnGJhP2
+	vagnz6VeT9G9261l7Yz5tfxNwb5oQ/mm9eHFxsZKlgA83iMYQ6olc/yXm97UYJMqo+jzSZoUxjD
+	PDGqSZZ1b9s/g1YpsF7DTPn7JBqSFBx1IqbLzhY5p+4Ofb5kv+v3MKNp3ymXBBYuMwfWrwyefrk
+	0SOc8rndoEjFwbS8OOkv7Z6xJNb5A/uqjwyvC8V1slTcBQdt5lkpjXeQH5HjmN9RD+ql+Hzkr1J
+	YGR15O4PRR1sDz//TM3jVGVVN4zMiKqvUNlv+qd2JPZgfdKKI/RyVo2xttt7CO/mvVLIeT5XH7L
+	rayoBnbpfJe78g5240jOMKVRiyzlG2nRfts1y9LvPYCwgF8y8LXWqBdcBX+K1LxaWzSxuCR7Gbi
+	M8LGZtNhdjkNO0U3DF7UpiQt6G2mCNBAZiSTVrCnnxNFv9+nj8c2UR83MEwl0uNuk9a2BBrNk=
+X-Google-Smtp-Source: AGHT+IG7tFtqhlTHcuIMb9O/EdwiowP80uXz5PYq6ijvHZrukUmVgz0LTV0o+8Irlgm+26/GNUiKDQ==
+X-Received: by 2002:a05:6512:1106:b0:594:314d:ac53 with SMTP id 2adb3069b0e04-59b6ef15f6fmr3668810e87.23.1767974439189;
+        Fri, 09 Jan 2026 08:00:39 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b7c2dd9e2sm847601e87.5.2026.01.09.08.00.38
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 09 Jan 2026 08:00:38 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
+Date: Fri,  9 Jan 2026 17:00:37 +0100
+Message-Id: <20260109160037.2067-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <ba2b65a5-0e2c-41a5-a480-ec3f5ec2178a@gmail.com>
+References: <ba2b65a5-0e2c-41a5-a480-ec3f5ec2178a@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, 09 Jan 2026, Patrick Steinhardt <ps@pks.im> wrote:
-> On Fri, Jan 09, 2026 at 05:35:28PM +0200, Adrian Ratiu wrote:
->> diff --git a/hook.c b/hook.c
->> index 35211e5ed7..c257bd3940 100644
->> --- a/hook.c
->> +++ b/hook.c
->> @@ -148,12 +148,11 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
->>  	};
->>  	const char *const hook_path = find_hook(r, hook_name);
->>  	int ret = 0;
->> -	const struct run_process_parallel_opts opts = {
->> +	struct run_process_parallel_opts opts = {
->>  		.tr2_category = "hook",
->>  		.tr2_label = hook_name,
->>  
->>  		.processes = 1,
->> -		.ungroup = options->ungroup,
->>  
->>  		.get_next_task = pick_next_hook,
->>  		.start_failure = notify_start_failure,
->
-> What's omitted here is that the next two lines also dereference
-> `options`. That'll also have to be fixed for the warning to go away.
+> Using an enum for a set of flags is a bit confusing.
 
-Thanks for spotting this. Will fix in the same way.
+The point of the flag and the bitmasking is to selectively turn off the push
+and pull advice advice from the relevant branch when the push branch
+comparison is active.
+
+In an earlier implementation the advice logic was moved to the caller
+instead 'format_branch_comparison', but it's more faithful to the original
+to have the advice logic inside 'format_branch_comparison'. Maybe I
+misunderstood your comments around this?
+
+Would happily take a suggestion on a nicer way to handle it.
+
+> On reflection I wonder if we should be calling branch_get_push() instead 
+> of remote_ref_for_branch() and tracking_for_push_dest() as it respects 
+> 'push.default' and so the branch it returns is the one that "git push" 
+> without any arguments would push to.
+
+I'm not getting that to work without tests breaking.
+
+> I think it would be simpler to just return the full refname and let the 
+> caller shorten it.
+
+We could to that but what's the benefit? Shouldn't a helper function reduce
+the work for the caller, not the other way around? 🤗
+
+> Why are we checking for BRANCH_MODE_PUSH here? Don't we want to show 
+> this advice regardless of the mode?
+
+Yeah, that's a good point. However, this will often lead to the advice
+being shown twice, see this test:
+
+```
+status --no-ahead-behind shows diverged from origin/main and ahead of feature branch
+```
+
+> Having to test the flags each time is a bit cumbersome. We could define
+> a couple of local variables to simplify this
+> 
+> 	bool want_push_advice = (advice_flags & BRANCH_MODE_PUSH) &&
+> 				advice_enabled(ADVICE_STATUS_HINTS);
+> 	bool want_pull_advice = advice_flags & BRANCH_MODE_PULL &&
+> 				advice_enabled(ADVICE_STATUS_HINTS);
+> 
+> Then we can simplify the above to
+> 
+> 	if (want_push_advice)
+
+Done, will be in the next batch!
+
+> If we don't want to show this can't we set show_divergance_adivce to 
+> false when we call this function - why is it guarded by BRANCH_MODE_PULL 
+> as well?
+
+This will already have been shown the the pull branch (the upstream
+branch).
+
+And in the cases when it's NOT shown for the pull branch but only the push
+branch has diverged, then pulling won't solve the problem anyway. (Unless
+you would try to pull from your push branch.)
+
+> Here we set an enum to a value that is not a member of the enum.
+
+I use bitmasking to enable both modes by default. But see my comments above
+maybe there is a nicer way to handle all of this.
+
+> This combined with checking "push_branch_modes & BRANCH_MODE_PUSH" below 
+> ensures we skip the push branch if push_sti < 0. That's good but it is a 
+> bit hard to follow.
+
+Possibly this can be done in a nicer way too. But at least I try to
+encapsulate the complexity to only here, to allow the rest of the code to
+be more straightforward. A good trade-off I think.
+
+
+Harald
