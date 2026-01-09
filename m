@@ -1,70 +1,71 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FC9366DCC
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FBF36921E
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767989132; cv=none; b=tb5UYYltpzCYF8TYjuIqLswJ7KAB0lXnc1g1U6LPgrvxUYQpzmn2YYzhAJcPjbHx6TgF0Z3mqB9Q07UrDj/P41a5wbJU6yRel4tIkRLPavuqSwSNeYrUr4BabXDHeFcnrFxorMob/VB6qyxeuixAt3RQ6WDEsLvkm2SHKh086kY=
+	t=1767989133; cv=none; b=gMhXPaqIbLGRLZoNU2jEfjNSE8vDUYgwR5q4akbqaTUlb9fe94HuUHNWrZw7t/BqmHi8slCA9NMUeI8KpZGvgHEJJamVxRphjWdDWE3DYrDl/wunf+nNbIinLSE5RvTGWj5QSLNaMRl2Al//Fm55W7g2ndxYPwT0286YTAZhUIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767989132; c=relaxed/simple;
-	bh=hRI4MoIbPK5hjtOrFpsiFUOBgNFgUuQgvSzrz+qq7nU=;
+	s=arc-20240116; t=1767989133; c=relaxed/simple;
+	bh=tX7ITX8oQXE57mXsn2i+WfN2VEqfS8ZHMVT5hfeuQRA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lYCBJV20nSm6H9jRcg6gjZwr1pCakN+4+18Utr8pjIKES1X0aQqse8uHBZStFLKwh9U6v5qgRF0WzikRHz0E0ctNXZ305mI7Ag24rbYZbvko1xK9u2x15osq+Hw0D2iDWuCY2h7WOMPQhVwfJ9KT3cTHzEytp7/O/lQXO6JxglM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DOaD/EY+; arc=none smtp.client-ip=209.85.219.45
+	 MIME-Version:To:Cc; b=foToEnprw4sqCJZaocCpEZUl54qgPxNMmEPbGkKo/WCpF2RcEjAeeaFkZ2RVVeaeCDQwC2SIc5llvawXmjEZdVhkhA90+BIPEz3EjEfLPC/uv6KzLu83pm8ApPvTZwibp7jPnD7/PdXGImPhbAUYvk6nCfAiSGjb7/4v7UC37j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QiY+rGCl; arc=none smtp.client-ip=74.125.82.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DOaD/EY+"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-88a367a1dbbso73372346d6.0
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QiY+rGCl"
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2b19939070fso2557388eec.0
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767989127; x=1768593927; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767989128; x=1768593928; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0G7RAFoOPU86bZj0aDhfKLT2X7BwUZV//AxWSsWgqHI=;
-        b=DOaD/EY+FnKlrHbe8+zjRcK0ZvIC226cIKRutCKQpc70vBnPF87+ZUEIsiNkjDEJIR
-         +5o7LpdARYRSHrw/IT6LTl6KY2WXe2hmvCbjzzHQaWkZGDedtTYRp1JLMJnb6+e0MyKO
-         Qtssu3r9JmPnGUsBlN07zuuC0MSy04+u6vR5OMmqk3e7in56SAKMSNl3tX/j4WTNXqAB
-         ZFSKzEmKz4gcIAZxLk4aHp73grGEgs5ZVRNnaaiMYjNTSkKy+9gSz0mBVm017voYn9aj
-         KSDIekAivRD8iUJ1yZzn1E+416HktJ1iggUEvRT4Nz7jvUKxOkaKTMf+qN1FBskT5kFw
-         SAiQ==
+        bh=nZ6hgu9O9hcPerzCOCCFeDz8q1c+4OqPb0OX3EF7v4Y=;
+        b=QiY+rGCloQZyCD+DUtb78QpUwpJJNsZSJFJKvvJY5BGNQdcCHblyuNkyk1yMC8GDHJ
+         GbnWbt29VPtqeXId7rt31ZnUlY0Fqya2QTR1THnyGChQByYqk63DKzwWlsML9wOgpYx+
+         4hwdwXYIfGAJyJX0utX0U1YOkngcZlZfQAhmoTb8A/0OlRuH8eU2OPiOTeSHZdIdaCkf
+         wPkOjwdfUQTEv0seNpQ7kaTdvKtRSxlf3BcuogG0rQeMX8dT1AFeQLbbBq7xhxiUo0aF
+         FLBsEESVHOzF18tTOQJlr/8O9DhCLxzzhWkJumoqpRH2WKWHlMhepqNBkAuzFJrg7JLm
+         h1kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767989127; x=1768593927;
+        d=1e100.net; s=20230601; t=1767989128; x=1768593928;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=0G7RAFoOPU86bZj0aDhfKLT2X7BwUZV//AxWSsWgqHI=;
-        b=ee+HlhRC7MDvpR07UnvHqL3i2lIp92D/iiuOfGkMtH+gGLOKtG6opkLR+cZvkJ6+Gf
-         XCX5c2ruDVTWKw5uS2y3oY1OmtKyh+W+jerekL3FZjIpVEvRmnwmO8OoO3beeabBruF+
-         oTKm6Goyzw0k7zfAlYdeD5HT31HrWxX5yLQPwlyzFGKgpZtv6hK7fJqaJfXYv20LlMbA
-         E2X0C1Gah6zgYyabpOKZoJRB3kuJkvdciQ/PoNUCdVNvn1wfzwmPk11XWMf18aOKxhmO
-         hKL9z8a4r0jYjsPFKkW1eRt1YADd6pPR75OdLiO0ftH4VTxzI2FOzW5utxldCwur+KgL
-         W44g==
-X-Gm-Message-State: AOJu0Yz7E9JOrIyyeu0k6W/G4ofYv9PNRHQLy0Nh41V3Q8+mSAO0RzLX
-	JcgJp2d7odD8KNXQU25BWYpScRATGSxij6nd+xs/o7zMe4Ki4oSk+QU26yBmzoGe
-X-Gm-Gg: AY/fxX4N1jM/bYBWvcz1YZRvQaITCL45rY6VsCEXqROgYuJ82dbCU9efebE+WB+jxm/
-	jX0NYq6nIC0e2eRPeCCdNhFNSr4eJS+/73gYHskyRE0iBDr+/XbMw9/n4/mh/5n59ANjktcDzl1
-	PSgpLg1vlUlCkTfWeq3JBXCfJhp2TEu14dbUjGFf9XC2AmMUYG0TaC5mY8PZtHgbRmrt5SSqej2
-	JwN+ybUd3aLZgUabAZ4hLChZ4pshkI65J6jiKd7McU3JZPSsuSlBi2V4468cdE5sNGDs5u7XUDW
-	8Ct4Nn2IaRpMfLlq3VgRnJSJ+X3n803/ebzjdAOEAGQBVevkzG7mIUpt44ST3WRlmkCObWIwe/k
-	u8Y7uiMRwA4HgqavQvNUihsMHo+b5YQ2AIVzxA9S7lIcZyu3NPtA1XtzsMXqt8NZ36eQKTISQZD
-	4C2lZ3JfB3XymD
-X-Google-Smtp-Source: AGHT+IGjU36ei3RTyVVuvnEpuk1nQOl3982G8nt4bfmLEckZed21xfRjdt9nYqKmJZqjwhJ18WsSUg==
-X-Received: by 2002:a05:6214:428d:b0:87b:f369:35d2 with SMTP id 6a1803df08f44-8908424f2cemr154158936d6.39.1767989126826;
-        Fri, 09 Jan 2026 12:05:26 -0800 (PST)
-Received: from [127.0.0.1] ([20.161.67.219])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8907726f1f1sm81120676d6.52.2026.01.09.12.05.25
+        bh=nZ6hgu9O9hcPerzCOCCFeDz8q1c+4OqPb0OX3EF7v4Y=;
+        b=i2BYHQUBVr4cwNXHyBpKSMuJTBLNdJox96exAzr5dhEgeRSWr2dixOmBv4mPqI2aAE
+         aTXz6KImJH5eD+Bbp10BxhK/j9kYwNV8jywxuOsdJB9IeFpbkrsBq0xc3DrN85Aqcd7X
+         wvT0+tykI5/FJUSWIt1JlKeVXqo5rAH+HuMUnpTK3/OcPr90oSjFYK9GIRZN3qkjoDEj
+         2i8hhQZaF27bCWJrMhVwbgi84TSGUDi2IJY7vYx0GawprCFn+mOiMZzdqZ7YvwHfyIo/
+         KJ/RfbCA/f1lm7iOkfl6wtnhbH97NXe0iJKzd7OWau1l8a4xGAiqV+Wnp2Tq2EfBzb06
+         xs3Q==
+X-Gm-Message-State: AOJu0YyfLy2tasB4MAUAzAJO1XOjCR/UIuFz4+UMpMSfwsU5Hkyu2KSp
+	m1vlICOtl17HO9gtaKzBvtQpRUEowpHBXJxo8iTmhk9ybgRR15p6XphSMyC1Zw==
+X-Gm-Gg: AY/fxX6s+xgAyu6e9QK+4dLZCEyI0EjyV8Uica6qjupTYkRhB0FDPLMfvbZ9mzwkjMp
+	3KIf/eeOm651c7nsWjf5NJjRURXbs7Wa911PoS7sEzBKV51ntrUCtuA7sqQvCg+WV3hU5gfYnex
+	ZlEBsT0HrhOwEraanu4NtpStr3SZF0lA/m+dhjpgw7q/Ge9eI7vaXxmEgaqpiXVQPUsddhFRBb/
+	dZ50wyyTrNQUIlCaNIkZuRB5UNp3WfXpWbq3BQbnyeHRiAvaf0dJExAF//fniB/T/pPTGCX4slG
+	Z2dUBY19Mg/4x9EZTZMrisOeiTTCZJBSAIqgQchBmTIoAB+bvpyTV8JTVygqZAx9lgyOdn3f2nX
+	3jDNapRF6KG3T1ls0vuDH6ncRQI3tVcF6zGCcZwm+sQjv067uKC8xiux6irrIvUdL/YDPa9493X
+	0AXWnjOlokKxJW1Y0=
+X-Google-Smtp-Source: AGHT+IHKbXox5+z1dag0gT2p59osyf7RbOYpKy0O9Yn5jyew+S1WjrCnVQvSw6Z90jrAIjMG9oLuRQ==
+X-Received: by 2002:a05:7301:3e18:b0:2b0:5079:d3c8 with SMTP id 5a478bee46e88-2b17d200cf6mr10830929eec.4.1767989127876;
+        Fri, 09 Jan 2026 12:05:27 -0800 (PST)
+Received: from [127.0.0.1] ([172.184.211.145])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b1707d76aasm10798211eec.33.2026.01.09.12.05.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 12:05:26 -0800 (PST)
-Message-Id: <86c07427485f6c73904fe1b637fa262468a38125.1767989115.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
-References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
-	<pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
-From: "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Jan 2026 20:05:05 +0000
-Subject: [PATCH v2 08/18] mingw: change default of `core.symlinks` to false
+        Fri, 09 Jan 2026 12:05:27 -0800 (PST)
+Message-Id: <accb6d5f0aef9ab5de6da8e9d08ad59a19ef5157.1767989109.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2017.v2.git.1767989109.gitgitgadget@gmail.com>
+References: <pull.2017.git.1765899229.gitgitgadget@gmail.com>
+	<pull.2017.v2.git.1767989109.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 09 Jan 2026 20:05:08 +0000
+Subject: [PATCH v2 4/5] strbuf_readlink(): support link targets that exceed
+ 2*PATH_MAX
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,61 +76,49 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Ben Knoble <ben.knoble@gmail.com>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Karsten Blees <karsten.blees@gmail.com>,
+Cc: Patrick Steinhardt <ps@pks.im>,
     Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Karsten Blees <karsten.blees@gmail.com>
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-From: Karsten Blees <karsten.blees@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Symlinks on Windows don't work the same way as on Unix systems. For
-example, there are different types of symlinks for directories and
-files, and unless using a recent-ish Windows version in Developer Mode,
-creating symlinks requires administrative privileges.
+The `strbuf_readlink()` function refuses to read link targets that
+exceed 2*PATH_MAX (even if a sufficient size was specified by the
+caller).
 
-By default, disable symlink support on Windows. That is, users
-explicitly have to enable it with `git config [--system|--global]
-core.symlinks true`; For convenience, `git init` (and `git clone`)
-will perform a test whether the current setup allows creating symlinks
-and will configure that setting in the repository config.
+The reason that that limit is 2*PATH_MAX instead of PATH_MAX is that
+the symlink targets do not need to be normalized. After running
+`ln -s a/../a/../a/../a/../b c`, the target of the symlink `c` will not
+be normalized to `b` but instead be much longer. As such, symlink
+targets' lengths can far exceed PATH_MAX.
 
-The test suite ignores system / global config files. Allow
-testing *with* symlink support by checking if native symlinks are
-enabled in MSYS2 (via setting the special environment variable
-`MSYS=winsymlinks:nativestrict` to ask the MSYS2 runtime to enable
-creating symlinks).
+They are frequently much longer than 2*PATH_MAX on Windows, which
+actually supports paths up to 32,767 characters, but sets PATH_MAX to
+260 for backwards compatibility. For full details, see
+https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
 
-Note: This assumes that Git's test suite is run in MSYS2's Bash, which
-is true for the time being (an experiment to switch to BusyBox-w32
-failed due to the experimental nature of BusyBox-w32).
+Let's just hard-code the limit used by `strbuf_readlink()` to 32,767 and
+make it independent of the current platform's PATH_MAX.
 
-Signed-off-by: Karsten Blees <karsten.blees@gmail.com>
+Based-on-a-patch-by: Karsten Blees <karsten.blees@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ strbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 26e64c6a5a..0fe00a5b70 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2862,6 +2862,15 @@ static void setup_windows_environment(void)
- 		if (!tmp && (tmp = getenv("USERPROFILE")))
- 			setenv("HOME", tmp, 1);
- 	}
-+
-+	/*
-+	 * Change 'core.symlinks' default to false, unless native symlinks are
-+	 * enabled in MSys2 (via 'MSYS=winsymlinks:nativestrict'). Thus we can
-+	 * run the test suite (which doesn't obey config files) with or without
-+	 * symlink support.
-+	 */
-+	if (!(tmp = getenv("MSYS")) || !strstr(tmp, "winsymlinks:nativestrict"))
-+		has_symlinks = 0;
+diff --git a/strbuf.c b/strbuf.c
+index 44a8f6a554..ec2b7afbe6 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -566,7 +566,7 @@ ssize_t strbuf_write(struct strbuf *sb, FILE *f)
+ 	return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
  }
  
- static void get_current_user_sid(PSID *sid, HANDLE *linked_token)
+-#define STRBUF_MAXLINK (2*PATH_MAX)
++#define STRBUF_MAXLINK (32767)
+ 
+ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
+ {
 -- 
 gitgitgadget
 
