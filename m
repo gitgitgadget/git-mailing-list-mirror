@@ -1,158 +1,118 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E835D27E
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 21:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F317F268690
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 22:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767994238; cv=none; b=YMtOoyux+dWL3kHh46CE/wnU6eJ85rlyriDA1dpd+l+D0BjkuyOfdpYQS0eXKfbx8YIfzaesjgujZIhPc+0H5/g2JeWRs1hcnUVoAkSRrSFecKMMTL8Dr0nEuV+yFN1PhPSBwvZnxTO8RecU95by0g53jVwIjVWDmkbZV1KzM7A=
+	t=1767997089; cv=none; b=cPncT00wge+M5yRQri4PP7FSceBF5pnIYo6vGmgXzg3jomdXwcyb4Y4d0rxZBlT2bjjofcUZP3oNHF4c7Icpp40N3B/64WPjUYxz9EZkH5Bl0AzNqBv6h+Xr8naryA5rmvyCI7V9zdq8fKBjJcpZv2bUZoM4vf+f5OaoF3v7RpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767994238; c=relaxed/simple;
-	bh=7KxuX6uDJyKkJkyeJgJZp/N9TuoQayPX9LViRCOetqk=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fjBzQ32ZTeYdbbd8qFCrAoCWVU0ZCRqn4HWmjw+s2fhedQr7u6SSjQl92kZpeb3KuUB6evc1dTgRvS4zswe579H1taiA7Z/pxuvd/0mQaCoPqDCKgmxs4dIOM900hPe2n+c5nAQv/tdSnE1QwBZLIM34xtoscXVDghMNW7pUc68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=YASqzgbq; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1767997089; c=relaxed/simple;
+	bh=TLTmItwAbO5J+mJkTyIHat/eWe/AoV2q3INyxLXiabs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=vFqN12JJT4Mo2GJCxVPBrgoh7CZ84l/9QV9g9Sl20kykyT2jJzRBspQ/48aUjse/OBnDv+YV6TCHw14nKHc3pBiHlVMCBlx0Nq3HP/7axHuv92LrTYGqtp6Z814JoPng9cnUWTf/yhUUTGY2aOfnXHRBXyw/moL7nyiGBwNPg8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zP5mVX/n; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="YASqzgbq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1767994223; x=1768599023; i=l.s.r@web.de;
-	bh=Qm5Cr3Wxq6rBQ4FRkPh1ECkhT1h+CF/FkzAn2yY/zSw=;
-	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=YASqzgbqeFDguiTlMAEyKYIXdkeP1DsquZ8F+FJU73Mm3YmrczlGYioDsCo2WNkr
-	 +M5RuJmnc7LkrNZdX68biUqAeo0Lo7DPlVA5AOZgeYG631QL5qsNt2Dp53CfxVaLM
-	 VT75L07B3YfzwUA+9RZfF7JuDfZhind3e8vxpHmNs3sZf6M/4CHwws4Q/3vLs/w/1
-	 m8Yzv9XPyHswND0Rss7LKpA2Iz2SLjV6s481VQmOak7Q3okVYhhCzIzUptiTVMw9M
-	 R9aPo/jgDgbySZCOGzkUXAcFQFGOA/X2Q9bf3/uInREuTS0l/giOc4xEV2UE3bh5z
-	 TmuczYmzkotyN9pqXw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from Mini-von-Rene.speedport.ip ([79.203.19.215]) by smtp.web.de
- (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1MJWsc-1vOrZe3cFc-00URay for <git@vger.kernel.org>; Fri, 09 Jan 2026 22:30:22
- +0100
-From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-To: git@vger.kernel.org
-Subject: [PATCH 06/10] pack-bitmap-write: use repo_parse_tree()
-Date: Fri,  9 Jan 2026 22:30:17 +0100
-Message-ID: <20260109213021.2546-7-l.s.r@web.de>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260109213021.2546-1-l.s.r@web.de>
-References: <20260109213021.2546-1-l.s.r@web.de>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zP5mVX/n"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1767997086;
+	bh=TLTmItwAbO5J+mJkTyIHat/eWe/AoV2q3INyxLXiabs=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=zP5mVX/nlTzklKOkOErni4QmTeVfV0zh6gzQ/WoEJTKaqa33XRb08ACO54t9S8xjY
+	 lcba1ub0EgdnxOXbWJzoipxlKpu1cwoduE0GFwm91D0aP4q/i7gkh8VsBsiPA3b0gK
+	 8H8ZYF1gVgtMmUQdkZB+HuHoQOVNpH91WUPrBL0K4jGK1uMnR+IaKaNx5CrqVnj6kD
+	 4zlOjrrb6AO6rbNLV0Ltz4PqcRruY1UCY+oqLsDdEM4KZBw5h6oCGrsQ7L5UJrGpkR
+	 5DtpUHZz2yQSo4afEEXh+36x3uXAULNWooWcFcmRM4plkLg6Wg0jAT6hZdlxvhfgwu
+	 j/3Rk7aST5rpwIbj5+3kvM16xZcXp9+EeSuHqiQmKbqkY217JvTIzKt7zVoFfTRrW7
+	 gav9/KUpULrUAVBxfEAUVh9GhW/lYGUmZTTdL6EJdCreO+OZLE++WeOacaXOOYmyho
+	 74srMJAH04xPIgkmwroskECJERIiIbEBURTtuVDuERZpctLdZkV
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8a11:cf76:28ff:b0fa])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BDD25200B5;
+	Fri,  9 Jan 2026 22:18:06 +0000 (UTC)
+Date: Fri, 9 Jan 2026 22:18:05 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: correctmost <cmlists@sent.com>, git@vger.kernel.org,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: Re: [Bug] hook: -Wanalyzer-deref-before-check warning in
+ run_hooks_opt
+Message-ID: <aWF-nZ9MXp31QzXs@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, correctmost <cmlists@sent.com>,
+	git@vger.kernel.org, Adrian Ratiu <adrian.ratiu@collabora.com>
+References: <72d123b8-b75e-4b1d-8506-95eb9ad350da@app.fastmail.com>
+ <aWDm_n2YgjvaRmpV@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JbkVYoKckVvfAh/i"
+Content-Disposition: inline
+In-Reply-To: <aWDm_n2YgjvaRmpV@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--JbkVYoKckVvfAh/i
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:UKSpdVv08IzXZ5rfwfZ/xmOhv8wHSLAMMx5rU3XQf9wpcxK2gOs
- Md8Getrtxv1zpDbzZZ0EZMeZ3Xz/KqE0OZ9GuX1cGg7/LxgtsFVo+AypLGwPwvBr8Yrj5u9
- 934JH5GrF1eDaHjO2P3l0N1jNLeXHYdgUx5VA13FkCV0RYUrmt/LoRhrsMoIKWNiIk4nvKQ
- BREc2Y7/ZY2Q2ti7DWs3A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:IlesiIi7Ypg=;Fs27OXJnOgIVBwStoaeKzeRYQCl
- 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
- 7NUPtHcyoTBcpWvV0=
 
-1a6768d1dd (pack-bitmap-write: stop depending on `the_repository`,
-2025-03-10) replaced explicit uses of the_repository.  parse_tree() uses
-it internally, though, so call repo_parse_tree() instead and hand it the
-correct repository.
+On 2026-01-09 at 11:31:10, Patrick Steinhardt wrote:
+> It's not a real bug. If you take a look at the the `if (!options)`
+> check, you'll see:
+>=20
+> 	if (!options)
+> 		BUG("a struct run_hooks_opt must be provided to run_hooks");
+>=20
+> So we'd abort immediatly with an error message in case the pointer was
+> `NULL`. Which clarifies that this is a case that shouldn't ever happen
+> in the first place.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- pack-bitmap-write.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+You might think that we'd abort, but that's not what modern compilers
+do. Dereferencing `options` if it is NULL is undefined behaviour.
+Compilers are free to assume that undefined behaviour never happens, so
+what most modern compilers do is say, "Oh, we've dereferenced `options`,
+so it can never be NULL," and then use that to omit the check
+altogether.
 
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 4404921521c..d38de772c6c 100644
-=2D-- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -478,7 +478,7 @@ static int fill_bitmap_tree(struct bitmap_writer *writ=
-er,
- 		return 0;
- 	bitmap_set(bitmap, pos);
-=20
--	if (parse_tree(tree) < 0)
-+	if (repo_parse_tree(writer->repo, tree) < 0)
- 		die("unable to load tree object %s",
- 		    oid_to_hex(&tree->object.oid));
- 	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
-=2D-=20
-2.52.0
+This sounds bizarre and like it might actually lead to security bugs,
+and you're right.  However, compilers keep wanting to make code go
+faster, so they keep relying on eliminating undefined behaviour to make
+more assumptions about the code to optimize it, even if that results in
+code that doesn't do what the programmer intended.
 
+This is one of the reasons why I'm in favour of writing more Rust, since
+safe Rust doesn't have undefined behaviour and therefore doesn't suffer
+=66rom these problems.
+
+In any event, this is almost certainly a bug because it almost certainly
+does not do what it looks like it does and the compiler is right to warn
+about it.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--JbkVYoKckVvfAh/i
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaWF+nAAKCRB8DEliiIei
+gTn2AP9A5PGaqEhnhft6JvfziVdJPc3wg+K1XJwPwPNcMm6m+AEA4OAvsS/x7q5L
+1YrExLXmLaq2nFjVaUeED/hrhvtfMQk=
+=EFaO
+-----END PGP SIGNATURE-----
+
+--JbkVYoKckVvfAh/i--
