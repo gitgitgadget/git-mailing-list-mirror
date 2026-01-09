@@ -1,111 +1,164 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D352A946A
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 14:01:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F172FB0B4
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 14:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767967274; cv=none; b=FZoCB8DlPv7GtybSMVZi4qXCga5mvD2PlHZtaBDoq6ZibivLwQ4APlo7gMeJqnfONfjSCopkqGSsnesawzI6Tsb4P9zyZ4sJHLIRbH6Scs8vKqIysn5oDs73SByUrxNoRHljs+IbP+RDe/C7xYKYykD7d2pijbs0yylQLO5rvyE=
+	t=1767968368; cv=none; b=fEhnF+hbbz6Jy+elJOHCHGmeTvikP39iMTxjxJuv8a5TjCenxuXdeRXTMb8U4GxcofA1/1yYeuc8EwzA4C0AqbdKO/ezBFvzLNVrIIdM1/UAv3E43txXVyvM91QHr/x35OeATDxIi6O/fgj9Wr3TdSx6ZYpzIXFWoVuOWjS/QrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767967274; c=relaxed/simple;
-	bh=SF2VnHi7iJIKugT+5rtaVVKYxuFzoYCZjBubNVfz3II=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=S5Wjt9xrpJWo9pyZLGSf0cg106q91rC8Fr9XYrbUD49qBLE1601+SdYtElltlgJVwsm+ZNHT47+m/hfg4DlTLhjRwy2stKV140MK8eBUN+nak2RCPNzt8jbMQp79GnNsXbk7beO1j09M+YyECZznR1eBtNyLfeSXiSjdRX3R9jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TKqJE1e0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zw5VY9RI; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1767968368; c=relaxed/simple;
+	bh=/22zXI9n9ITwqjewDI1MQ1VRAQnxeVHJjAMUmvamHnk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WKcGBO0wEnvR9870SxmCJNepw3QCd91fPDfIN+Bq49OwZCOQPASslyXSYqj1xhoVKamcA0yW5BSwAFFpvMrkeR66FKLEsj2EZHo6MXfinm+lPbMVcOXverRyLprr0C9rvapgfW/NaRFpROLf97QhdVcarlwDpWWGPqs1kEg9MGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cbUei+t7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fhTjl865; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TKqJE1e0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zw5VY9RI"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BD5887A012D;
-	Fri,  9 Jan 2026 09:01:11 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 09 Jan 2026 09:01:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767967271; x=1768053671; bh=dwnohCP/zX
-	+Fbehko3lsyJWYbyH54GlWdFCYeqJUPA8=; b=TKqJE1e0AC+JOzgafkt7YA7CS5
-	KSlUoIrDC8zBJ5CfDLaYOr1QOJ/R5SQHQmkJG5AViJrq7tNxa2hho5lj7OYQFDs6
-	xai6XeKFKFfJT/LhuzECZosm+Y/z86iX4fp5uKnDvH/TFgNDhQm7OwxjaKl6LE6P
-	x5umB/+pThtHeuxx0a/r8dIQgGDZBX6eQCYRvdZMFcUgDQhtNPtGrA5OfInvk0gL
-	/W0cQOiMRKbzBru3HLiCSRnxcW22w/hDuwoxdYVMdn9EBECY1SmqImhjashFfIDr
-	kaK3xTIW//rU4D9e77KasgZsbh7d/koGmFrSgI6AdEEM247FWIvLvpbMhHGA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cbUei+t7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fhTjl865"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C573F7A013D;
+	Fri,  9 Jan 2026 09:19:25 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 09 Jan 2026 09:19:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767968365;
+	 x=1768054765; bh=tS5PsQOShUtnQFivyP9yydUs+wMOi7epJjG+dkY7Fq0=; b=
+	cbUei+t7upOjJvHYELomtMwf24+a8xAZc4oZQM+z70FZB3t3jU1pi9/a7h2eavta
+	9gz3KAvg2CVK6O7dFOo1PESUacuEogDDu2HqI+E06sV7CDSluNCV6MIT3FX9pcwS
+	ORQBhnm10Q8cjYEaxTukIe3onmM4yVdUyuE9PREQxeSLvYcUudVdQsSLkPaS6Mpq
+	0auHUUsouNd6ngtT2howRO4KN4jZu0aJXUUIbQYLhQioKPREdO15KohNqSI4XJAS
+	9HMnW1gCS7khqnPqAMB9ePMVlsnSBa+SkcBJoOlp0iQNOd0hTcQ6VSXAeU1bo//y
+	Y1V04IqP6MEcwPWXfuUgCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767967271; x=1768053671; bh=dwnohCP/zX+Fbehko3lsyJWYbyH54GlWdFC
-	YeqJUPA8=; b=zw5VY9RIG/kTiJ++AQsiwOjYCyVtfYrkmMmusJh+gL95iYz7Ye1
-	mCwecRzFHp0p1NoKT69uhKpU87fuACGLkAcrQDn2Sbg2sqKnWYt+FYjtOJcH46i7
-	3e1sbCnQdxbvCdWMu2y7BdhNgEKDj9FftZlGyejhwomz2Ze33DOVbxRqfmJEB6Cv
-	LMXPZuQR5WNa9ruu2mBifbBDY2VpOjrFY8nRILmtNbifi8BYd861JxksRZiVCyUO
-	6SSaWzrluQt32JA12sZYQAeylNUbjHhm5g8JsEa+hLYQ2jybuzC6OcUClaRRhIZf
-	HlD4MAU4Egdd49YJLiITaGoovHEHywyTK7g==
-X-ME-Sender: <xms:JwphafI0CCY92e7hUPSPuBXc0zeq-uPM6a1NwyW_cjSdWsvGyxoadw>
-    <xme:Jwphaanu-e2wkEO2OkYzYHMzNA3c37pI095pLmuoSPf62symEMChzmqmuWatfCOAt
-    KhdUgv8vhgCF9GRdrbfkSys7wPgeFvMIzMPQSVq-hBLPgoCJrENdg>
-X-ME-Received: <xmr:JwphaVF8IKZFJ-_2R5DpcdWJvf32Wl5os0f88xqQSp4URunf4CVp6Rf7cMsNrWdN6X0F0D5-nSaXz0ipCbtGxbrNNDRof16xVjRlExs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdeltddtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767968365; x=
+	1768054765; bh=tS5PsQOShUtnQFivyP9yydUs+wMOi7epJjG+dkY7Fq0=; b=f
+	hTjl865f5jZOETagpFxwQe4OJ36AK/ZXd49oZYbqn0P4hIKP0WtwOGm5kTkaAnse
+	Bkene0AwAuiAoxVg9GX2m/WXPhuc/XULeer32DjI/yym7pT2NO8mZSCo/fnR3PTe
+	f9YqkKf0sB98Kec1KUMVWKM6CHbu2daNUGwAKoFns2qzqpK1xuesnHGBiQAVMH9h
+	6P529Jt/VK6HkcdaUKKRPpAmwPSUFn3ib/fzPbEOlvK9mh/tLC8qm0I4uLOP4Qw8
+	zWU6kuGape/bQC2647ujN5m6ma/bISsWn75T33ThXOW+USh63wER3lA1asaPde7X
+	pdxPOul9czzSbfE5SEfQA==
+X-ME-Sender: <xms:bQ5haa8D5WBbfDQbRJDOOokyOL3dbUVmhOhjTCotGfDXvmzOJ3AssQ>
+    <xme:bQ5haQtruQKpTQFIvzVMBUV5k1kNdXYt0oEE4DZERokP-aKc-O_vEe5Q4H7eZ0dai
+    geoenysJfW7g6QO3vkj07fbBkGANzkSfORurzlieJGaglSbYHSEQQ>
+X-ME-Received: <xmr:bQ5hadpriyvJl5x2K9zkPr5T4FSEcNWFyti6hVHZxozTXltGbT-hhguLYvWmUUXiKmB50URMIhs8InQ346mhUI3MgpnWqo6FCntXek9OeA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdeltdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:JwphaSE4_KySfQ2bat5MpA--jFOs_euEKZiXUO5m3kDmozfzVn-8pA>
-    <xmx:JwphaaMHnwhK0wTbYityrB97wCeC0-4uSEx83Kttv_OPsY8JdiiHkA>
-    <xmx:JwphaZEzaPu0ctc8vyyVzNrDENckfOv0Td-udRlle-ZW2VVD5kdMrg>
-    <xmx:JwphaZNEMV_p03KUsmpIBpA3KzP8tRx8Sef3DFCn3n7wajLTa4JBkg>
-    <xmx:JwphaSvlRmIagE5EEsGDnMYs7HdX8ASE_uz1Im6Q0bOyF_pJjppp9tp6>
-Feedback-ID: if26b431b:Fastmail
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeevuddvfeffvdejvdelueelveevffeuvdeuueevteehffduheeuvdefvdeujeelueen
+    ucffohhmrghinhepvhgrlhdvrdhtrghrghgvthenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
+    pedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepthhsrghhihdrvghlkhgrhigrmhesphhrohhtohhn
+    mhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:bQ5hadkQFW6H1nD5f-U3oFuCN1TGITiZZ0tvKPMO4BlPI3Wup-8PRQ>
+    <xmx:bQ5haRyg7WsKLEEaFW1AE1nFI1Ovn7FFM0Y96O5JpjcECQkfrN2YGg>
+    <xmx:bQ5haVk_bvFyy9SAz5l_fbli42fwpo_UzEOT0oYJq9r3XpGD1HEKJw>
+    <xmx:bQ5haaehe0iyMENA-JUFve5B4OLvhpcokUaBWzuN8hI8HBExtek9Xw>
+    <xmx:bQ5haWWVCN2uypiLr6GZKu-Cx2YSmOBdzm5rSO82XJ8pMs1mmjDhvoqc>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 09:01:11 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2026, #03)
-In-Reply-To: <44cd16d2-eabf-4ff4-9bc6-da370bbe858d@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Thu, 08 Jan 2026 14:08:33 +0100")
-References: <xmqq1pk0gvxc.fsf@gitster.g>
-	<44cd16d2-eabf-4ff4-9bc6-da370bbe858d@app.fastmail.com>
-Date: Fri, 09 Jan 2026 06:01:09 -0800
-Message-ID: <xmqqpl7ivqai.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 9 Jan 2026 09:19:24 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4d24bff5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 9 Jan 2026 14:19:23 +0000 (UTC)
+Date: Fri, 9 Jan 2026 15:19:20 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Tsahi Elkayam <Tsahi.Elkayam@protonmail.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v2] reftable/iter: fix UB in indexed_table_ref_iter_next
+Message-ID: <aWEOaFpjj5DhFBlC@pks.im>
+References: <iaPdageDbUKEIQVlnOugIRhoojxnFo3j-WJFWY0eC5el1Epu3sxEnto6Lrd3bhAYL0Ry8T3czP5UPhLHX_gfWCDiCoLuMofdRkqfOSYP-Jk=@protonmail.com>
+ <aVvR6U6EJ9wfKk8l@pks.im>
+ <f4gLTILYbAvRqE-aKM3PTyIajeuZBM2Vgo5V66Q8gI6gpI0niPpz8w_lMa29V4Rou2TJ95SKwm2B16KitVrt47KtCzY-eRBm7kemh0iw82s=@protonmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f4gLTILYbAvRqE-aKM3PTyIajeuZBM2Vgo5V66Q8gI6gpI0niPpz8w_lMa29V4Rou2TJ95SKwm2B16KitVrt47KtCzY-eRBm7kemh0iw82s=@protonmail.com>
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+On Thu, Jan 08, 2026 at 04:52:05PM +0000, Tsahi Elkayam wrote:
+> The indexed_table_ref_iter_next() function provides reverse mappings from
+> object IDs to references. It currently accesses ref->value.val2 without
+> checking the reference's value_type, leading to undefined behavior when
+> encountering unpeeled references (REFTABLE_REF_VAL1).
+> 
+> While the current "obj" table implementation is suboptimal—it yields all
+> reference records within a block and relies on manual filtering—this
+> manual comparison is necessary to ensure the yielded record actually
+> matches the target OID prefix requested by the caller.
 
->> * kh/replay-invalid-onto-advance (2026-01-05) 6 commits
->>   (merged to 'next' on 2026-01-08 at 1024748f91)
->>  + t3650: add more regression tests for failure conditions
->>  + replay: die if we cannot parse object
->>  + replay: improve code comment and die message
->>  + replay: die descriptively when invalid commit-ish is given
->>  + replay: find *onto only after testing for ref name
->>  + replay: remove dead code and rearrange
->>  (this branch is used by ps/history and pw/replay-drop-empty.)
->>
->>  Test coverage of "git replay" has been improved.
->
-> I still disagree with this summary. ;)
->
-> <460f1f96-4236-4d19-bdfa-6c86bad811c5@app.fastmail.com>
+It's correct to yield all ref records of an indexed ref block, as any of
+its refs may point to the object ID. What's incorrect is that we:
 
-Thanks for reminding.  Yes, I too disagree with it.  I knew the main
-change between the original two patches will need to be updated when
-I first wrote it to queue the initial version, but it certainly is
-not true with the main change (split across 5 patches now).
+  - Don't seek to the correct obj index block when creating the
+    iterator. This means that we'll also seek into ref blocks that won't
+    even contain any ref with the desired object ID.
 
+  - Don't abort iterating over the obj index blocks once we see that its
+    object IDs no longer match.
+
+So this needs a bit of rephrasing. Please feel free to copy these two
+bullet points as-is.
+
+> Fix the undefined behavior by checking the value_type before performing
+> the memory comparison. Additionally, replace the "/* BUG */" comment
+> with a TODO explaining the current implementation's inefficiency, as
+> suggested by the maintainer.
+
+I wouldn't refer to myself as maintainer, I'm very happy to let Junio
+have that role :) You can for example simply add a "Helped-by:" trailer
+that refers to me.
+
+> diff --git a/reftable/iter.c b/reftable/iter.c
+> index 2ecc52b336..2eee65bb1e 100644
+> --- a/reftable/iter.c
+> +++ b/reftable/iter.c
+> @@ -171,12 +171,19 @@ static int indexed_table_ref_iter_next(void *p, struct reftable_record rec)
+>  			}
+>  			continue;
+>  		}
+> -		/* BUG */
+> -		if (!memcmp(it->oid.buf, ref->value.val2.target_value,
+> -			    it->oid.len) ||
+> -		    !memcmp(it->oid.buf, ref->value.val2.value, it->oid.len)) {
+> +
+> +		/*
+> +		 * TODO: The current implementation is suboptimal as it yields
+> +		 * all ref records in the block rather than filtering by the
+> +		 * OID prefix. This manual comparison is still necessary.
+> +		 */
+
+And this needs a bit of rephrasing to represent the above. For example:
+
+    /*
+     * TODO: The current implementation is suboptimal as:
+     *
+     *  - We don't seek to the first obj record that matches our OID
+     *    prefix.
+     *
+     *  - We don't abort iteration once the OID prefix doesn't match
+     *    anymore.
+     *
+     * We don't have any users of this interface in-tree, but once we
+     * add any we should probably try to fix this interface.
+     */
+
+Thanks!
+
+Patrick
