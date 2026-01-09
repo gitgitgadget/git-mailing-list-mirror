@@ -1,346 +1,217 @@
-Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012059.outbound.protection.outlook.com [40.107.200.59])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C6B500971
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 17:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.59
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767981502; cv=fail; b=etBnWf1sR6O71sbS80dh33fy+zIBWAW/dUsGJL9ZpaLIO2s5iCJZnmOpq5fQG4Szi4DISemlP9grYm5SwKLlrJmpM/JzhKSZVFq0EQLQVgdxALIbzYq3B8xu7jn7xe7WX+HUp0mdleuSYOh2tI2LGoLvnTVJFSrUuFIeQujt43g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767981502; c=relaxed/simple;
-	bh=wNmARcDBcdXzgh9d9feFUVEaWUiqdC7uO3WZoAeg32I=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=UNHlVymDtAvsDTx1HQ3aTpTtyp+74fTajssG5J/FyR6qfCURteAYHFfhN+AHEXvWn+ZmSePBj5ZNVSIFdJlhYd0MgvXerSTEicoJ2TH/4hZCVB4LxGqCa1aA4VWA1ED+HLRkaaLLUGBcnVncHRw7VFx4bz62l3QAqkgbNRh20hI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=c08pjCEb; arc=fail smtp.client-ip=40.107.200.59
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF98320CD6
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 18:01:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767981680; cv=none; b=IleKPn52XOrGrKyd6C2bath7dCWbd8tWsUo+kCY/KcWvDPYrNrIxBO8w4v2zwmOwQQ5imWxhJkMjl/9sGuaSEPZnXWP+Gff1i533nlJe/Pt1kOtlZv8kq1TS4Tjj306l4IMUAzGl1D8t5AcIH7QpBYMRWZt5Oxvl3prIRFwdzk0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767981680; c=relaxed/simple;
+	bh=S1cCaebnXEDl851XEXynfp4iVOnqhlPZFJ95zVGFtFo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=XOjhtmOGCU6xwF5ukRpkkOl6aj/QZghfznIhqMkWeWyFdLyaa33WFmYRvlx+rHwJWzXHgGqFuaR90RyYiODM9CgpgEXMniF8e7q0qHkgkECyz/h7Ct03jSkmOy7GFFkjwvC1IulnfJMT1w6DdmTVSORGwa2wjw2QqbfEp/rKu6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=p/QO5TFm; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="c08pjCEb"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lTPyVGf95XoHm5/ZezbUUIAfc0SqBU4Ex6rn1DnSanJECotJT4szLH8bNvSwgu7c1YKMlTA2zHPoFgvZQM2hFyLa2DH4/H3WIDCsaZS/x+cLx8f9/Qt6jgZOvXSNPTZ97eilz/4vTHc23nPV2CRWLZWnw8EGY938wxRM/2jWxRG6xlbLSMroZnJCYzJgZV1G2LAtHIBMGEqRYgcC2wiLJRr6HZyKghsfaesBg5pfOu2nh/Z8JOrUWi46DsLc3TWJ1nYM2oWj9wzYghd2WBpZrEGGYasIyqWBBmxtn2hbU4V5cEiMmyMAAhImgEIg86ylaznF0nsTvmWEHo4JUe+KAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1/ZgkwfVLDu7a4hky4AhOulurcNhuDg7XkBBKqtKxb0=;
- b=xeHkp4Tp7ohMNMTcXQbR8kp6NALXTgMLCAHL2tnLY21lFvxxF68PZ2/lkcUVPXGRjTKdzINIMF70WGEb9Cjxbqzo3uuJSNsPtMBxp2fUDGHGbxUvh+PRmJEJ/JVkQeEKyc6MbEUw4FT3dEmWtQfrq94gE25ocM5ys0FUIYwR3Jm94rhd4FmzI3pTDwhe1CcTsDuMBuffdH7UV9qdGv3b6fjHuC/yX4KI726oHJDRUHJd0HFQlCslQ2IxHLAvij688mcFbvswNUlPDPVURV5EyXMEL78ALo2EqjuQx04cb2W4uwBEC7U0MvqCiFRAzI6FgQVWBe2ZVxmmEzwVoPptMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1/ZgkwfVLDu7a4hky4AhOulurcNhuDg7XkBBKqtKxb0=;
- b=c08pjCEbAxQEwH1vxp92qnMFpoP9mxLpqGlDyyR5CDivdG8Dxu16GxsJDbFbz8SbOkBhxBZMyrbUqbSa7DCekyOP5bQTl6vjSkIdxtxIoQ693W1A3M6iHoZFRyaZI1ZaVbjj9DUKfPwOMzN/ZDle+leB5vIdrQhFaM5Z2iKXztJ5ahB0UPbBDLxR2VZ40St0DimbbwCb2WNJ0TphNyB+9W5EWoHnVaZmEnXipf1yebazKLyDxzhmFIeD58l1z24qn0rrby4aE6T79Vfs3OwNas5deaxSYh7rrnU8prHbxSZEea8ag+pWxN8EVeCaQ5CqFgTay/DerxYNCORwLrD0CA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BN9PR12MB5305.namprd12.prod.outlook.com (2603:10b6:408:102::5)
- by DM4PR12MB6592.namprd12.prod.outlook.com (2603:10b6:8:8a::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9478.4; Fri, 9 Jan 2026 17:58:17 +0000
-Received: from BN9PR12MB5305.namprd12.prod.outlook.com
- ([fe80::83f5:1b0e:a61d:6707]) by BN9PR12MB5305.namprd12.prod.outlook.com
- ([fe80::83f5:1b0e:a61d:6707%6]) with mapi id 15.20.9499.004; Fri, 9 Jan 2026
- 17:58:17 +0000
-Message-ID: <2e103c5b-8cb3-40ec-aa0e-793f85a1f80d@nvidia.com>
-Date: Fri, 9 Jan 2026 09:57:30 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] remote-curl: Use auth for probe_rpc() requests too
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Rahul Rameshbabu <rrameshbabu@nvidia.com>
-References: <20251112223722.376330-1-aplattner@nvidia.com>
- <aWEV2qs8MHqt_JXC@pks.im>
-Content-Language: en-US
-From: Aaron Plattner <aplattner@nvidia.com>
-In-Reply-To: <aWEV2qs8MHqt_JXC@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BY3PR10CA0028.namprd10.prod.outlook.com
- (2603:10b6:a03:255::33) To BN9PR12MB5305.namprd12.prod.outlook.com
- (2603:10b6:408:102::5)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="p/QO5TFm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1767981670; x=1768586470; i=l.s.r@web.de;
+	bh=ZUKDLm7+FlsdwMj3OEH0XZ+YBDcDjseYrZPdmAi+J7s=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=p/QO5TFmawL/Dj8cWELweR+DBpxCDXFUkMU08JUyrxD+ZBEew1fh6vnhxW2UmO0M
+	 4GeH86YbMzpis6NWWz32CeuKB7vkb6begfw6pDXgYwBENNEBGYOf5jODmGH8V5g8O
+	 k70ejATA+8Qm+tGbKkyuZllrNEohCJqZqlQC49yCCUZpMbsrZHJd3sKXQcJgWB/fB
+	 6vylcqcozRoTRn/gcc6Q88txP11+04wezR9L89Q2YD+I5ObXSNxtvYCFaQzdggXdb
+	 YNeMctyIxXJ7iw/FE9lFiTQn6H8mSEdlzsn4yP+ZwWizxH/fnoYHYzrdjHmrJc2Cl
+	 QbOAn46emOlqcnp6ug==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.19.215]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MoecP-1wBBy32eoD-00phlE; Fri, 09
+ Jan 2026 19:01:10 +0100
+Message-ID: <0a5c058c-e5cb-41c9-8788-6dc6354f9119@web.de>
+Date: Fri, 9 Jan 2026 19:01:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN9PR12MB5305:EE_|DM4PR12MB6592:EE_
-X-MS-Office365-Filtering-Correlation-Id: 94cd810b-ead6-4871-fefd-08de4fa8aac6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|10070799003|376014|1800799024|13003099007|7142099003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?UjQrNWxSU3UzOVZna1A0emNOa2J2RDBqTFRHYkg2S3pXeERBMWphMmQ0dm81?=
- =?utf-8?B?amtWTU0vN1dZc3E2T09NOG93T2t6NkUyd1dDci9jY2hJVi9xbU5zODFnODZC?=
- =?utf-8?B?SjlkZTh0THpjMXhhLzZPaW5DWlZOb01rOFg5M0tpVmg0d0RpYWY5MVV1S0hJ?=
- =?utf-8?B?NFB4Y3F0Z3M3VE5XVnIwOTdodUQrMFp5N0tpRXlsekZYd0F4a29tU2ZkSG00?=
- =?utf-8?B?YjhOWjllMmZGQzM5LzlsNXVWdXlJVWtkdFdiSExxZ3M4Y25TaHhoMzBvQXlx?=
- =?utf-8?B?dHJZV2xtMy9qNWMrdFpJbytXLzJEQ3pPR2NBSG4yMHN6dGhwNjF2S2tyTUJj?=
- =?utf-8?B?Vm9sK200MDkrb2FHRkFCdnd4TEZPeC90WVN2MGwyaXl5TWhqZ2ZlQ2Z3NVJm?=
- =?utf-8?B?bkRHbWxBbzJKTXZTVks2eUNkYktHdDdGU3JneEUzR3BBd2NCaFRRdEp4Wkpu?=
- =?utf-8?B?RFBHSTdYRERwMFV1elVjOVFjN2ZmaEplVTNrN2ZlTlFCZlZQRFBBaEJlYXRY?=
- =?utf-8?B?OVZSZ1ByVi9nblBLa09Wd3hnd3R2S2hScnRrNDJoNXZVWm16VUt0cnBMU2c1?=
- =?utf-8?B?QkpzVVJYaVRCNUE2MFQ4Nlk2MCtDMjUyUWpMOHVSR1Zxa254dm9vZGdnR1lD?=
- =?utf-8?B?bklSQkVQWEl1K2FVYkNDU3JwK0xUT09BdWZKekJ6d2lLQi92YlA3WGVFSlds?=
- =?utf-8?B?ZmJJQjFmeUliRGFjdTZJajNjZWwrK1VhNWFOT0hvZUNrNDRvNXIxRDJ2dUtL?=
- =?utf-8?B?Y25JczVYZzZLYm0xb0NqWm1NZkhaZGtUM3NoYzluajJ3VG1zeFZrSXJLeGQ1?=
- =?utf-8?B?VWlvaUlQK1lQY1loZGJ0ZlNpbHN3bGk0cVUxQTcrQ29FbnhPVkl5YTJBTTdv?=
- =?utf-8?B?ZytybUQzN0EwLzNZcyszOTVxK3BzZG1VT3BMMUVaaXRxOWF3dUVrZ3FPb1lR?=
- =?utf-8?B?NU9aS0VyQTVwcDB6ZGlZVnZxeFZMZGZSQmgwZmV2ZHZURGw3b0duL09ZdWpn?=
- =?utf-8?B?YnBGbG1ENG94TU95djJJZ1RyZHJEM25UUHBrOFZySWRpVUsxZmZqMmlRTS84?=
- =?utf-8?B?bFM4OHBNSGhuRzNxcjJ5OFFRWWpEdlczcXBzcUJYbk1IUU1ISGUzMGpyVHd4?=
- =?utf-8?B?MzNHV2IyeGN2LzVPTUE2dFgrSkVqdllyeTgrVE5tVGRNdkYyQlFrZ0ZsWXpN?=
- =?utf-8?B?U0l1VUhEcDg5dnF4d0s2RllnSm1tQmNwT09qQVBIQ2MwcERCWXMwdkZTd2Q3?=
- =?utf-8?B?SENNb2t1TE1MRGplMlVWNFVYaVNrcFNWMVoyeWVrU3NaV1ZsOHROLzdualc4?=
- =?utf-8?B?amlYOEFGTkc4T0xicGlYZXhXWGd4Mzg5M2d0MkZ3SHQrRzFsbjZQdXBZUmY0?=
- =?utf-8?B?VDI2eCtBYktDbDJNK2dISXJnaWI0TE80bjB2OUd0czVpRGFLL0lLeG96SW1E?=
- =?utf-8?B?K2FGbU15VW15bDlVZEpzTDJYaUtKWnJKd000U3BHL1NwRnp2SW9ydjF0WUhM?=
- =?utf-8?B?ZzRhV3NYOHJvaGNEV0Vwd2hZdXV0YVVTUnA1NVRsTTJHYXA0VUo1bmZpS1o4?=
- =?utf-8?B?UG5ka0tqSjJ0VUErYlUrSVcxblZzWitYbWQ5SnlKZGcxUmljVm16R0t5SFVj?=
- =?utf-8?B?RHpDK0pna3QzWnhLNW5rWW16QlhNMUdrNEhSaWtRYTBHVXRQVERtK0UzR3pa?=
- =?utf-8?B?UkFrMWRrcDdqazZQRXgremhCV2I5bDJJUEtnbkVVV3NRN3hwM1VnZFNlM013?=
- =?utf-8?B?RHp6Q2QybjZMbzFuS1pveTFvcFhVbjZxaW1XSlpySGFCNUVRRStqczZLdkdD?=
- =?utf-8?B?cXFPV1gvNHhvZm9pNXZwM0dXRXk4QkVxSVVqLzNWeTE2bmJaWGVQbndYY0NG?=
- =?utf-8?B?S2ZFWWYvMmdXbzd6bkRWTm9xWXpHemRxNDZoM1grbEpzT2VULzkzMnJLRXYr?=
- =?utf-8?Q?uHK9N1E8nEocI7pCjW57YX7a63hnZpzA?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR12MB5305.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(10070799003)(376014)(1800799024)(13003099007)(7142099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TlA3b21EVkJqWTY2bERlVDI0d0xIbklxU2V2VVJDK2liVnBHOGRnNTJnQlA1?=
- =?utf-8?B?N0ZOZk5UcVpxdmxnQ3E3dzNDYXV2d21GS2JFTmE5ejF4bjNuNWNDUnl6Qy9U?=
- =?utf-8?B?RzNnL2p0QTMxMldDbVIyVGI0UDBQbWEzQXNkcVFDWTZiTHhGNXJEVFhXQ0lR?=
- =?utf-8?B?RVJsRXNoWUtXa0UreFBRbEpFRGZLcFRmQzVPaXZzRHU1TEx5eWVUbnF6dDIv?=
- =?utf-8?B?SVpHYmd6T0s0cmhNMHZvZTduNzljMnZlR01paXpMbWdrQitEcXVGdUdhU2pW?=
- =?utf-8?B?QmlBZDR4Nkx4dlFmRW1IY0F4R0JLTzZKVlJzOFYyTm5CMGZzeGtCdlptM3hP?=
- =?utf-8?B?K3N2VWdrRjJScHBEV3gxVitrdTBNcXBINXdRcTlrSktWZGkxZ0tOdEVVRFlQ?=
- =?utf-8?B?bjYrVkphY1c2MmtBYVFKUnNKc0MwR3J4aU1wQlkybk9QL3lsMytlT0kzK2tU?=
- =?utf-8?B?WmwzdS9BOUl0a3VXQXB0MHhsa0M1aUVLdEl3OFZiSitOQ3BwWDljd25wYlpG?=
- =?utf-8?B?Y29meG5WcXBZU2dXM1NoWkYwSGJONjlIWVpTSG13QzFndDZBSXp1SGd5L1ll?=
- =?utf-8?B?Q3BSUU5PTExML1ZhWEJnVERPcGJZUXZlc2czZllDMHJNYTVnYlhINVZ0M2Qv?=
- =?utf-8?B?T0hrcG9SZE0xT0RtRmF0RGdhYTRQb3VGNlQrNFJhRmZBWXFSbmcveHZsSFlZ?=
- =?utf-8?B?YlNCRnVTNWNUSk5PVW8vV0RlYmE5Um5oaWZ3d3EvUndmMXBLcEVJVTRKNVlN?=
- =?utf-8?B?UnZCTVU1ZVJMYUc4WXNyMURPY0hUVmoycWY1ck5IK0F4QlRaN0V1aDhnVCt6?=
- =?utf-8?B?L3h5R3IxTUNFTTV3VEEzakpjK21RTWxCaG1IWUwyWXEvR3VBbnk2bStPV1VY?=
- =?utf-8?B?Q1lDT1ZGQ3owWkpSUTZXcGpUZE5hUW55a29qSmFVUGlydmhCelg2QVIxSUlP?=
- =?utf-8?B?SW1UNlpTdWVpTGt3NzZlbDVENkJkeVdrQ3k5Um1yUUFOTS9BQi8wVGZXZExU?=
- =?utf-8?B?Ty9LRUFWeEFHMWplRi9uYWl4NjVoeEV4a3FMbFlLL28vNCswMG1lZVUrZVcx?=
- =?utf-8?B?dmY2Q25oa3ZqODlTak9xcXBPRmV1NnpwUmdiNnlxMzYxM1lxYmFhbTVzbllv?=
- =?utf-8?B?TWNFbGozb0RYeUMrTHc5Sks4MnBSVmF4ZVlLYi9PNHBjVmRDMEwyaGFTd0N5?=
- =?utf-8?B?UzFDWVRmcFdTWDlueHdraGJ0bkFWWmgrcStCa0VJa2dheitBUGRWODJqVUNv?=
- =?utf-8?B?dzJwRHlrR0Znc3lqdDkyK2pFcWFpWExUYnFlSmdFZytXQlgwSkpXYXhBcm83?=
- =?utf-8?B?Vk81QjNmTHUxb2FyTUhvdWYzMSt2cTQxYi9VZWE3OTJaYm1QbmlvVjkyUWJN?=
- =?utf-8?B?UTBCaG9RSmF3Qi9pdytPQzhuMFhOSTJGaXlwMjFtNlhUa0NlSzRVYXdSQVll?=
- =?utf-8?B?VGp4TktxVytCN3JNUHFLS1pRRUJ5SHBZaWhJbkxIa0plc0piN1daTkljbVpB?=
- =?utf-8?B?Um5DM0o2UlZuU1VrZ01veXJNSEl0RHRWeUs0TU8rKzdraE5jTDFLTStWZDZO?=
- =?utf-8?B?RGRDOFhIRkVONUVvL0xDT1FTZ1dlbFZ5dWNQdGtnRWJraUN2NGZLSUIxZ3VC?=
- =?utf-8?B?b0U3WFB4MnZpREhBS0RoaXJtRDN3ZUZWUXZXSVZ6OFdXdWRwRGpKWXFPa1Zs?=
- =?utf-8?B?Q1N0Wkg0M3J4SVRhUVMva1pLNDU1KzZuK2Y1blVQTDlKM2NTcm12N0pibFpl?=
- =?utf-8?B?VTh5M05jZk5Fc2VxVUJwKzJ1eGcvNHNPZzVwN3B3MGpSMjNBeTZHemZVK0RE?=
- =?utf-8?B?N3l0cC9RS2ZTb3dHdGtHdURYaWF3ckg3ekV0Q3VzajhyNTZva2pQYmhnWDlj?=
- =?utf-8?B?YVFkbmdmakc1ditIUis5akw3dXB5VDVaTDhOUXFMTnh1SEJDR2NBaEk0ZDRv?=
- =?utf-8?B?U0s1R2RQYXkrRHBUT0Qxa3UvUGEvcWhkMkRtWXgrTjQwdnVNdGtyMEZtaGd1?=
- =?utf-8?B?YnBiNVh1dVREQVE1NmNHNGkrc2JTczFGd0dscDEwZUJCc2J0SGJRQUxyd3lr?=
- =?utf-8?B?SGJkUTFGWS91ak5meHpPb3UyUzFTQStjbWlpZHpvSEZyTTB2cEx4VjA5M1lo?=
- =?utf-8?B?WThDWDIxODk4UHRmb1FydlFFOGtOaWhtNndQZ1M5OU01UUNaSlQ2d3FMSTRX?=
- =?utf-8?B?ay9MczNuVFJiYk54RnBxTFVjd0M3Z3hUd0txVmxxaENod3lWQUc3UGl0WGN5?=
- =?utf-8?B?WThxeDZWZVZoSzNXYVF1dlA0ZzlVQzJraUdFd2YvbEZrUENGWEJKcXl5ZWMr?=
- =?utf-8?B?YnJiMDVueC8xRy9vUHJkWERMVWthQlZoQmsvbnhJS0VXZDIwa1VsUkFCMVlU?=
- =?utf-8?Q?zXWpiZ7y9ySAJJZs=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 94cd810b-ead6-4871-fefd-08de4fa8aac6
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR12MB5305.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2026 17:58:17.2785
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: N7e9Cf+SOXgwPgfy2ZVf+m5JDpgfUYTEcnzUBPrh/qdPVtYxZJoAUFDN2HdQl/49U3VtDe16ymWmzJLE1qABeQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6592
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/2] utf8.c: Enable workaround for iconv under macOS
+ 14/15
+To: tboegi@web.de, git@vger.kernel.org
+References: <20260108174012.471706-1-tboegi@web.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20260108174012.471706-1-tboegi@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Tth8BmzKWkBDfzg3P4hDnCe+zGlaQfLuReXIQ22pI3c40HM1JBU
+ hWKMMAEOdkg6MTQN1Xib0/dahbbhlXolhsYsi+zUW7BCtcnkWzD/afATwDl0DfjJdxbfmMo
+ eShSS/KTu4Qe+Pv0hxCjwyvdPAjOYPRpox5TCscVcio8YDiwNMMMiTzzmEHnvQysh9lY3i4
+ XrCCRN35kXlYnkn2KXSRw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:dgvutf3+lOU=;FSRuHMgq0Bbpw4TYJruOhqmK7DY
+ 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
+ QnHq7d/M=
 
-On 1/9/26 6:51 AM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> sorry for taking so long to review your patch, but I didn't really dare
-> to review it as I'm not that familiar with the subsystem in question.
-> But given that nobody else reviewed it, either, let me try my best to at
-> least provide _some_ helpful feedback to hopefully move this forward.
+On 1/8/26 6:40 PM, tboegi@web.de wrote:
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>=20
+> The previous commit introduced a workaround in utf8.c to deal
+> with broken iconv implementations.
+>=20
+> It is enabled when
+>   A MacOS version is used that has a buggy iconv library and
+>   there is no external library provided (and linked against)
+>   from neither MacPorts nor Homebrew.
 
-Thanks Patrick!
+Odd style.  Make "A" lowercase, remove the line break after "when" and
+unindent?
 
-> On Wed, Nov 12, 2025 at 02:37:18PM -0800, Aaron Plattner wrote:
->> If a large request requires post_rpc() to call probe_rpc(), the latter
->> does not use the authorization credentials used for other requests. If
->> this fails with an HTTP 401 error and http_auth.multistage isn't set,
->> then the whole request just fails.
->>
->> For example, using git-credential-msal [1], the following attempt to clone a
->> large repository fails partway through because the initial request to download
->> the commit history and promisor packs succeeds, but the
->> subsequent request to download the blobs needed to construct the working
->> tree fails with a 401 error and the checkout fails.
-> 
-> Okay.
-> 
->> (lines removed for brevity)
->>
->>    git clone --filter=blob:none https://secure-server.example/repo
->>    11:03:26.855369 git.c:502               trace: built-in: git clone --filter=blob:none https://secure-server.example/repo
->>    Cloning into 'sw'...
->>    warning: templates not found in /home/aaron/share/git-core/templates
->>    11:03:26.857169 run-command.c:673       trace: run_command: git remote-https origin https://secure-server.example/repo
->>    11:03:27.012104 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
->>    11:03:27.049243 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
->>    11:03:27.049270 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
->>    11:03:27.053786 run-command.c:673       trace: run_command: 'git credential-msal get'
->>    11:03:27.952830 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
->>    11:03:27.952849 http.c:849              => Send header: Authorization: Bearer <redacted>
->>    11:03:27.995419 http.c:849              <= Recv header: HTTP/1.1 200 OK
->>    11:03:28.230039 http.c:890              == Info: Reusing existing https: connection with host secure-server.example
->>    11:03:28.230208 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
->>    11:03:28.230216 http.c:849              => Send header: Content-Type: application/x-git-upload-pack-request
->>    11:03:28.230221 http.c:849              => Send header: Authorization: Bearer <redacted>
->>    11:03:28.269085 http.c:849              <= Recv header: HTTP/1.1 200 OK
->>    11:03:28.684163 http.c:890              == Info: Reusing existing https: connection with host secure-server.example
->>    11:03:28.684379 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
->>    11:03:28.684391 http.c:849              => Send header: Accept: application/x-git-upload-pack-result
->>    11:03:28.684393 http.c:849              => Send header: Authorization: Bearer <redacted>
->>    11:03:28.869546 run-command.c:673       trace: run_command: git index-pack --stdin --fix-thin '--keep=fetch-pack 43856 on dgx-spark' --promisor
->>    11:06:39.861237 run-command.c:673       trace: run_command: git -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --recurse-submodules=no --filter=blob:none --stdin
->>    11:06:39.865981 run-command.c:673       trace: run_command: git remote-https origin https://secure-server.example/repo
->>    11:06:39.868039 run-command.c:673       trace: run_command: git-remote-https origin https://secure-server.example/repo
->>    11:07:30.412575 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
->>    11:07:30.456285 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
->>    11:07:30.456318 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
->>    11:07:30.456439 run-command.c:673       trace: run_command: 'git credential-cache get'
->>    11:07:30.461266 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
->>    11:07:30.461282 http.c:849              => Send header: Authorization: Bearer <redacted>
->>    11:07:30.501628 http.c:849              <= Recv header: HTTP/1.1 200 OK
->>    11:07:34.725262 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
->>    11:07:34.725279 http.c:849              => Send header: Content-Type: application/x-git-upload-pack-request
->>    11:07:34.761407 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
-> 
-> Okay, here we see the 401 error code.
-> 
->>    11:07:34.761443 http.c:890              == Info: Bearer authentication problem, ignoring.
->>    11:07:34.761453 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
->>    11:07:34.761509 http.c:890              == Info: The requested URL returned error: 401
->>    11:07:34.761530 http.c:890              == Info: closing connection #0
->>    11:07:34.761913 run-command.c:673       trace: run_command: 'git credential-cache erase'
->>    11:07:34.761927 run-command.c:765       trace: start_command: /bin/sh -c 'git credential-cache erase' 'git credential-cache erase'
->>    11:07:34.768069 git.c:502               trace: built-in: git credential-cache erase
->>    11:07:34.768690 run-command.c:673       trace: run_command: 'git credential-msal erase'
->>    11:07:34.768713 run-command.c:765       trace: start_command: /bin/sh -c 'git credential-msal erase' 'git credential-msal erase'
->>    11:07:34.772742 git.c:808               trace: exec: git-credential-msal erase
->>    11:07:34.772783 run-command.c:673       trace: run_command: git-credential-msal erase
->>    11:07:34.772819 run-command.c:765       trace: start_command: /usr/bin/git-credential-msal erase
-> 
-> And as we think that we've already set up authentication, this error
-> code will cause us to think that the credentials that we've got are
-> invalid. Consequently, we invalidate the credentials that we've stored.
-> Naturally, this will cause _all_ subsequent requests to fail as we're no
-> longer authenticated at all.
-> 
->>    error: RPC failed; HTTP 401 curl 22 The requested URL returned error: 401
->>    fatal: unable to write request to remote: Broken pipe
->>    fatal: could not fetch c4fff0229c9be06ecf576356a4d39a8a755b8d81 from promisor remote
->>    warning: Clone succeeded, but checkout failed.
->>    You can inspect what was checked out with 'git status'
->>    and retry with 'git restore --source=HEAD :/'
->>
->> Fix the immediate problem by including the authorization headers in the
->> probe_rpc() request as well.
->>
->> Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
->> Link: [1] https://github.com/Binary-Eater/git-credential-msal
->> ---
->> If http_auth.multistage were set in this scenario, then probe_rpc() would have
->> returned HTTP_REAUTH and this would have probably worked by generating a new
->> Bearer token. And we might need to use HTTP_REAUTH to handle the case where the
->> token expires between the initial request and this one, but I don't think
->> tackling that in this patch makes sense since the original Bearer token was
->> still valid and git just didn't try using it. And setting multistage (the
->> 'continue' parameter in git-credential(1)) doesn't make sense for Bearer tokens
->> since the token comes from an external agent.
-> 
-> This is something I was wondering about. Specifically, I saw the loop
-> that we had around `HTTP_REAUTH`:
-> 
-> 		do {
-> 			err = probe_rpc(rpc, &results);
-> 			if (err == HTTP_REAUTH)
-> 				credential_fill(the_repository, &http_auth, 0);
-> 		} while (err == HTTP_REAUTH);
-> 
-> I then double-checked that we indeed get `HTTP_REAUTH` as an error code
-> on a 401, so I was wondering why this doesn't lead to an infinite loop.
-> I didn't connect it with the "multistage" thing though.
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+>  Makefile         | 7 +++++++
+>  config.mak.uname | 1 +
+>  2 files changed, 8 insertions(+)
+>=20
+> diff --git a/Makefile b/Makefile
+> index b7eba509c6..5a3823bb67 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1692,6 +1692,7 @@ ifeq ($(uname_S),Darwin)
+>                  ifeq ($(shell test -d /opt/local/lib && echo y),y)
+>  			BASIC_CFLAGS +=3D -I/opt/local/include
+>  			BASIC_LDFLAGS +=3D -L/opt/local/lib
+> +			HAS_GOOD_LIBICONV =3D Yes
 
-Right. I think we don't actually get HTTP_REAUTH because of this logic 
-in handle_curl_result:
+This doesn't check whether libiconv was actually installed via MacPorts,
+so technically that's more of a "Maybe?", no?
 
-	else if (results->http_code == 401) {
-		if ((http_auth.username && http_auth.password) ||\
-		    (http_auth.authtype && http_auth.credential)) {
-			if (http_auth.multistage) {
-				credential_clear_secrets(&http_auth);
-				return HTTP_REAUTH;
-			}
-			credential_reject(the_repository, &http_auth);
-			if (always_auth_proactively())
-				http_proactive_auth = PROACTIVE_AUTH_NONE;
-			return HTTP_NOAUTH;
-		} else {
-			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
-			if (results->auth_avail) {
-				http_auth_methods &= results->auth_avail;
-				http_auth_methods_restricted = 1;
-			}
-			return HTTP_REAUTH;
-		}
-	}
+>                  endif
+>          endif
+>          ifndef NO_APPLE_COMMON_CRYPTO
+> @@ -1714,6 +1715,7 @@ endif
+>  ifdef USE_HOMEBREW_LIBICONV
+>  ifeq ($(shell test -d $(HOMEBREW_PREFIX)/opt/libiconv && echo y),y)
+>  	ICONVDIR ?=3D $(HOMEBREW_PREFIX)/opt/libiconv
+> +	HAS_GOOD_LIBICONV =3D Yes
 
-In this case, http_auth.authtype and http_auth.credential are set and 
-http_auth.multistage is false. So it proceeds to call 
-credential_reject() and return with HTTP_NOAUTH which causes the calling 
-functions to fail immediately.
+Looks good.
 
-> In any case, I think this information would be useful to have in the
-> commit message to help guide readers.
-> 
->>   remote-curl.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/remote-curl.c b/remote-curl.c
->> index 69f919454a..1d0ae72521 100644
->> --- a/remote-curl.c
->> +++ b/remote-curl.c
->> @@ -877,6 +877,8 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
->>   	headers = curl_slist_append(headers, rpc->hdr_content_type);
->>   	headers = curl_slist_append(headers, rpc->hdr_accept);
->>   
->> +	headers = http_append_auth_header(&http_auth, headers);
->> +
->>   	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
->>   	curl_easy_setopt(slot->curl, CURLOPT_POST, 1L);
->>   	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
-> 
-> The change looks simple enough, and matches what we do in `post_rpc()`
-> itself.
-> 
-> It would be great to have a test case for this. It might be possible to
-> use t5563-simple-http-auth as an example, where we already know to set
-> up an HTTP server with authentication.
+>  endif
+>  endif
+>  endif
+> @@ -1859,6 +1861,11 @@ ifndef NO_ICONV
+>                  endif
+>  		EXTLIBS +=3D $(ICONV_LINK) -liconv
+>          endif
+> +        ifdef NEEDS_GOOD_LIBICONV
+> +        ifndef HAS_GOOD_LIBICONV
 
-I'll look into that. It wasn't obvious to me how to make it hit this RPC 
-case specifically but I'll see if I can figure out a way.
+"GOOD" is quite vague.  There's already ICONV_OMITS_BOM, and I wouldn't
+be surprised if we discover the need for some other workarounds soon.
+How about naming the make variables after the C macro to be more clear
+and specific?
 
--- Aaron
+Can we get away with a single make variable?  Set it in config.mak.uname
+on affected systems and set it to empty if we detect that a 3rd party
+libiconv is used?
 
-> 
-> Thanks!
-> 
-> Patrick
+> +                BASIC_CFLAGS +=3D -DICONV_RESTART_RESET
+> +        endif
+> +        endif
+>  endif
+>  ifdef ICONV_OMITS_BOM
+>  	BASIC_CFLAGS +=3D -DICONV_OMITS_BOM
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 38b35af366..3c35ae33a3 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -157,6 +157,7 @@ ifeq ($(uname_S),Darwin)
+>          endif
+>          ifeq ($(shell test "$(DARWIN_MAJOR_VERSION)" -ge 24 && echo 1),=
+1)
+>  		USE_HOMEBREW_LIBICONV =3D UnfortunatelyYes
+> +		NEEDS_GOOD_LIBICONV =3D UnfortunatelyYes
+>          endif
+> =20
+>  	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
 
