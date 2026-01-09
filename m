@@ -1,71 +1,70 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA221DDC1D
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2033644D1
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767989120; cv=none; b=ZhpKGj+/+o8QwIT1ZT1/AdmkEDsKegE9Kv82jZ3e3nllebSs0uuYXHB1XeLelZaQ+TWTMkJj9bAzJGtjcLLppVDnpkA2T9qCRcXyjxOTLOGHvrwOA+ltfwq4AuaZbbA9RA4fRbpldNG/j+PPLBisL2zkF9HwoGtzaqqMYSbHo4c=
+	t=1767989121; cv=none; b=J+VMbkGMd7wXSAdbToSgkSK5TRghHMpd6zmrhaYtRM/loqQctJnUvW7FOtAwSEZF+tDbkYGEcD3m5/sKhG/2pZ6Kl5v6ST3qO7bolxecHjP/jAYX3qEBEDZ+QnT/eEsQTAjXO+Xeb31ReDKMODjJH9kclKwg7vfoIt8/esbd74U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767989120; c=relaxed/simple;
-	bh=yj/UXn2o8daAD1oMoiPOgin3vWjix0gons0vwlHsiSQ=;
+	s=arc-20240116; t=1767989121; c=relaxed/simple;
+	bh=pWrsSBTEKd7cRA9TVzMjqbFZORo+bVDlJA/IuHmWjc4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HsY8ojzL1aS+/Gv4NL2ccNZVsZsKb2YyobGFW3BYkZs8trg3l3A74S+yEz/CF8xDaOMkq/7VmJrnBH8fi0k5yLbByFiD48xi3yZ2hwbfeYCKvBuQzmwDk6YonAiaUGxs4VivWyJhDOq36DGcSkGoxNq1dkxErxu2I+GMKXCpOi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b8QPWWz/; arc=none smtp.client-ip=209.85.219.46
+	 MIME-Version:To:Cc; b=DCrSjJ/N01bpbJdBmEPTp0GVDTBNgU99e2borBnL1zbTzymVzc0Rho5X6nRuwXwDowAVriA5YCyVHWu4ge04VaqlqbgDRRTWq7HKzf9tGNuU+RxuyS5lEVoLnjvKeksEZqRj9iBQzXe4fsNq5+2+tV6cKc4J4xZbXinfrBSN+88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S1vmf8Fn; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b8QPWWz/"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8907fb0188fso37552406d6.1
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S1vmf8Fn"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8b220ddc189so615282985a.0
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767989118; x=1768593918; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767989119; x=1768593919; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Spe4TlIpSxqwqIfN1AIJ4Vo9w33bl8casxd7tt4ezJY=;
-        b=b8QPWWz/4sbvQ/p3Ec64lP1dk7VYvYvEfVyhACFf5XCr0GKm2RKyeEnT7So5RJfs4U
-         AjoW8QDzhBZTwODsj/IVdwfrIxZrHUjXjRIFnWjvrYplc3gq/ual+Q92+C2UwBX0M2FM
-         8pcLMhAK9LMr6Uoi6lCyUKurs8BCM0WHPYW38Zf6bQDxANFD2o7bsU5cbbtzQgPIUpFO
-         wgIwxAZ6vpEXbxiMV914chIw4AnNOcIaLWuFNKJiUt+vUbgz/KIVTfcMlbxYNLwyrBfY
-         HtD9s2aqNMRATrPPeZi5HsJSTFN/GucjC2saij8qsiLHRYSi9fR2uyFPdmUqA5w6UycP
-         vmYg==
+        bh=4Oj+JGWSpfaEcYpTrTTW4Ru8IQEwNKkCfl2kMh9rgeI=;
+        b=S1vmf8FnPS7uDL5dIed2BvnoUYP2ItziwGTugs6pdzMU4UOztSj3FfqlEEoK6Xb8jo
+         V12dKboW9dL5N92OeEltMjlctbxmUPY2lUlKXzOrTu2njZVeVeMITHIqIipv/HUmCueR
+         NFb494jLzqBIGz3bL7Nd6FMZd6C2QTg9TKqqZrRnDWOW4BGoHm9ATBiYWb9+mOcot/ce
+         3axNAmStE3IF6R3FAQQhOLIrlVHHjkwQJTdI+sJIR115DWcP9gKo/HFgH/+H/BBt7KzX
+         Zac5aggUO/SQGVjzmjAD0JzosXdJcly9VrwCQ7z2hyCUjz2NqrEnGAjgQ6Bu3wFhzSGQ
+         1/Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767989118; x=1768593918;
+        d=1e100.net; s=20230601; t=1767989119; x=1768593919;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Spe4TlIpSxqwqIfN1AIJ4Vo9w33bl8casxd7tt4ezJY=;
-        b=xS4i8RyxGoqq4WCbZRV6ld5phf2Y3h7VzWBPbjYluu2whKqG4ou7+ocdbvTLSCzotl
-         45J5l23c9I7OgIdcLARmt5nmjrBAGfu4371uECUrSk6BASlIdShQ+XUKEsCkQvk5y+Ng
-         IKnFKVvYiIco1nRwl23nHJwPqYhgBY2av16mSyxX/34Fg/8YjC4mR1r304XiOabXuZQU
-         XsF1HUzMrBrfbpyet0zUDC23iiau6IIIgdP8B5xmPEQ/hLMmfku6qjZEJKR1cLGnFbnl
-         ZzbiwGLYIMZkcRMy5wn9zPStN2zR54jfI3XVYHN7TizxLu2zyO3J7gVoFI3BVvs1iCSv
-         ZixA==
-X-Gm-Message-State: AOJu0YxkR0RVa1+CwXVc/3OS76+XMvmZ4/5sf++ADSznvCcfosJ6kX2/
-	K2r/9na2DXxq0nvK8jd2723Nknt5QwQfZD2aXblnW22vJ3PwaY5+S0R1l1Z4J/27
-X-Gm-Gg: AY/fxX7jDcMWSSS4R1tVtMwfewYrFJOsiASL6JoXcdM4y1Csgl4iPY7AT+1ERba6GcN
-	05+wz256QTD694OxtKybJrq0C5bYl9XDE3KZ+ndh0+4S+n2L1b5Ne+uH9T9tVD2ItQVYeiFORho
-	P4BSZjgmQ8GpkCJVntQsZW0F0UFPMyxcvSAfDpoebtuoLpd9I4kXBg5k6E+RaDr9gFR+3Ei6L8S
-	PwOKj8C8Mwv4I+p+Jy3HDNAoqWL5A3O/Dhmb1hYM1SLbva880pnXtN2hboRVaJlsV2F6tt9Nswl
-	mq1tMmxSVFX+dHiULut7LbTga/yukRoTv7Gz0JY939cHBJ1g1M0T1Es4t0cvxr7FneyvH1c8Yww
-	YkGpspzTz04vErC1kaJSi+ZDzEud2l2OYZGw+LjeAxsdgACPvEyJ6Xbrg64gCckt2LNpqKOg5Zo
-	xVHy73U60Nv4p/xqP9n/f5XeI=
-X-Google-Smtp-Source: AGHT+IH89fR76wCNFebQGfeP+Uz3TNhnI1O2S5UUjcf142Ww76V9sVjgHQI2Y1husH1a7aBHd51XIg==
-X-Received: by 2002:a05:6214:5403:b0:88a:314c:28bb with SMTP id 6a1803df08f44-8908418bd6fmr166123576d6.17.1767989117774;
-        Fri, 09 Jan 2026 12:05:17 -0800 (PST)
+        bh=4Oj+JGWSpfaEcYpTrTTW4Ru8IQEwNKkCfl2kMh9rgeI=;
+        b=VXkaHRpC7+ERvbfyBivT/QIXlEdHr1QJaQDmOnOxn0kVNyLZ0/jQD/i7ZdRTjQh1CC
+         1zLj2SZziGt3xugr+EbwLvA33Zd1jz9tQ0meNPIj5eot5NOmUTHxXtZWE4xNypjyqsQp
+         LfwlejsIiCqZXKXQbG2RlfQ4zm83uM0pwvoeQOAnrTODmfYJtDY74y6VSTx5Vx76bUju
+         mam6YO7WX991W7KJaOTEpyWE1i61PRspe+89NBVVV60mQxaIpGkcnKh5HgXf3upbvl2t
+         aNnA3rqD/xJLWiRgwG0saTCOU1WhFQMK7g7sAVW6N1DdBFQ8UoOJLtfhSzdi23NeXJxq
+         YHqQ==
+X-Gm-Message-State: AOJu0YwQ7UVCHRlEoyHJbd0YzsoVZIlwrISuoXRNcwxzXBP2xrDq+Qcz
+	GU7UMfBunA7B8iy+c3U/tvio+B1uyjiFbxos8yomfL9bLSsVfVYVczyvS+5mClG/
+X-Gm-Gg: AY/fxX7a9xGrGUm7N/5QS6Lcj0qUR1iTka72du09CNRBXXL5He/5Gr5WEQ5+QrklqlX
+	1/OpA3x5oOEZr9KjkO4wF+axDdQasl2ka4Bj/YHRbgn3SGtlq0lFGSWnfEUkl8JfrW/0YimBmOJ
+	AvoRT/SIVcw66Tn3IQhz/I65pwVwLGBM5+OT2zOYI3IK9U3cP800Pg6T7e6BbWAjD36aZW9/6ql
+	I72K0QigOj4y/AMBaSXYTeoC5iTRgXAVmpOoGwCHpb9uZw92IsmBxXiQvMTIdu5Oy7RBL3phFsU
+	s7W6CvXoAmKMI7OJuBzStWJhyjgBVOd/8a/NcYoNLM5pFNtOj3c9IND4FzrsrpHZ0GaAfccOFRp
+	HFoH78rWJ/yaJzx2m2vutcgmgZsDXFy9+SQ2Ns4FhR6ZiaFJ3MYvA6Qac4HflEuE29uEzP/5rZY
+	rc7fD3IZWwbe/M
+X-Google-Smtp-Source: AGHT+IEeIBXpwRRiZCMh9ca7XOOPxw4N1h+Jo6g5j2ps9L+MmU4w/UJzk2AUENRKHUXahV/5qYzSog==
+X-Received: by 2002:a05:620a:1a13:b0:8b5:5a33:22d2 with SMTP id af79cd13be357-8c3893f22e6mr1371666985a.46.1767989118738;
+        Fri, 09 Jan 2026 12:05:18 -0800 (PST)
 Received: from [127.0.0.1] ([20.161.67.219])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890770e2aa5sm82990846d6.19.2026.01.09.12.05.17
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f4c964csm887475685a.22.2026.01.09.12.05.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 12:05:17 -0800 (PST)
-Message-Id: <6ec4ff74577f3690a11160812666e5ca800d9d65.1767989115.git.gitgitgadget@gmail.com>
+        Fri, 09 Jan 2026 12:05:18 -0800 (PST)
+Message-Id: <5d83a8ab760c7fcbffe43ed82cfebd3d8eefda96.1767989115.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
 References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 	<pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
 From: "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Jan 2026 20:04:58 +0000
-Subject: [PATCH v2 01/18] mingw: don't call `GetFileAttributes()` twice in
- `mingw_lstat()`
+Date: Fri, 09 Jan 2026 20:04:59 +0000
+Subject: [PATCH v2 02/18] mingw: implement `stat()` with symlink support
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,110 +83,49 @@ Cc: Ben Knoble <ben.knoble@gmail.com>,
 
 From: Karsten Blees <karsten.blees@gmail.com>
 
-The Win32 API function `GetFileAttributes()` cannot handle paths with
-trailing dir separators. The current `mingw_stat()`/`mingw_lstat()`
-implementation calls `GetFileAttributes()` twice if the path has
-trailing slashes (first with the original path that was passed as
-function parameter, and and a second time with a path copy with trailing
-'/' removed).
+With respect to symlinks, the current `mingw_stat()` implementation is
+almost identical to `mingw_lstat()`: except for the file type (`st_mode
+& S_IFMT`), it returns information about the link rather than the target.
 
-With the conversion to wide Unicode, we get the length of the path for
-free, and also have a (wide char) buffer that can be modified. This
-makes it easy to avoid that extraneous Win32 API call.
+Implement `mingw_stat()` by opening the file handle requesting minimal
+permissions, and then calling `GetFileInformationByHandle()` on it. This
+way, all links are resolved by the Windows file system layer.
 
 Signed-off-by: Karsten Blees <karsten.blees@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 53 ++++++++++++++------------------------------------
- 1 file changed, 15 insertions(+), 38 deletions(-)
+ compat/mingw.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index cf4f3c92e7..ae6826948e 100644
+index ae6826948e..13970ae729 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -918,8 +918,9 @@ static int has_valid_directory_prefix(wchar_t *wfilename)
- }
- 
- /* We keep the do_lstat code in a separate function to avoid recursion.
-- * When a path ends with a slash, the stat will fail with ENOENT. In
-- * this case, we strip the trailing slashes and stat again.
-+ * When a path ends with a slash, the call to `GetFileAttributedExW()`
-+ * would fail. To prevent this, we strip any trailing slashes before that
-+ * call.
-  *
-  * If follow is true then act like stat() and report on the link
-  * target. Otherwise report on the link itself.
-@@ -928,9 +929,18 @@ static int do_lstat(int follow, const char *file_name, struct stat *buf)
+@@ -1027,9 +1027,26 @@ int mingw_lstat(const char *file_name, struct stat *buf)
  {
- 	WIN32_FILE_ATTRIBUTE_DATA fdata;
- 	wchar_t wfilename[MAX_PATH];
--	if (xutftowcs_path(wfilename, file_name) < 0)
-+	int wlen = xutftowcs_path(wfilename, file_name);
-+	if (wlen < 0)
- 		return -1;
- 
-+	/* strip trailing '/', or GetFileAttributes will fail */
-+	while (wlen && is_dir_sep(wfilename[wlen - 1]))
-+		wfilename[--wlen] = 0;
-+	if (!wlen) {
-+		errno = ENOENT;
-+		return -1;
-+	}
+ 	return do_lstat(0, file_name, buf);
+ }
 +
- 	if (GetFileAttributesExW(wfilename, GetFileExInfoStandard, &fdata)) {
- 		buf->st_ino = 0;
- 		buf->st_gid = 0;
-@@ -990,39 +1000,6 @@ static int do_lstat(int follow, const char *file_name, struct stat *buf)
- 	return -1;
- }
- 
--/* We provide our own lstat/fstat functions, since the provided
-- * lstat/fstat functions are so slow. These stat functions are
-- * tailored for Git's usage (read: fast), and are not meant to be
-- * complete. Note that Git stat()s are redirected to mingw_lstat()
-- * too, since Windows doesn't really handle symlinks that well.
-- */
--static int do_stat_internal(int follow, const char *file_name, struct stat *buf)
--{
--	size_t namelen;
--	char alt_name[PATH_MAX];
--
--	if (!do_lstat(follow, file_name, buf))
--		return 0;
--
--	/* if file_name ended in a '/', Windows returned ENOENT;
--	 * try again without trailing slashes
--	 */
--	if (errno != ENOENT)
--		return -1;
--
--	namelen = strlen(file_name);
--	if (namelen && file_name[namelen-1] != '/')
--		return -1;
--	while (namelen && file_name[namelen-1] == '/')
--		--namelen;
--	if (!namelen || namelen >= PATH_MAX)
--		return -1;
--
--	memcpy(alt_name, file_name, namelen);
--	alt_name[namelen] = 0;
--	return do_lstat(follow, alt_name, buf);
--}
--
- static int get_file_info_by_handle(HANDLE hnd, struct stat *buf)
- {
- 	BY_HANDLE_FILE_INFORMATION fdata;
-@@ -1048,11 +1025,11 @@ static int get_file_info_by_handle(HANDLE hnd, struct stat *buf)
- 
- int mingw_lstat(const char *file_name, struct stat *buf)
- {
--	return do_stat_internal(0, file_name, buf);
-+	return do_lstat(0, file_name, buf);
- }
  int mingw_stat(const char *file_name, struct stat *buf)
  {
--	return do_stat_internal(1, file_name, buf);
-+	return do_lstat(1, file_name, buf);
+-	return do_lstat(1, file_name, buf);
++	wchar_t wfile_name[MAX_PATH];
++	HANDLE hnd;
++	int result;
++
++	/* open the file and let Windows resolve the links */
++	if (xutftowcs_path(wfile_name, file_name) < 0)
++		return -1;
++	hnd = CreateFileW(wfile_name, 0,
++			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
++			OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
++	if (hnd == INVALID_HANDLE_VALUE) {
++		errno = err_win_to_posix(GetLastError());
++		return -1;
++	}
++	result = get_file_info_by_handle(hnd, buf);
++	CloseHandle(hnd);
++	return result;
  }
  
  int mingw_fstat(int fd, struct stat *buf)
