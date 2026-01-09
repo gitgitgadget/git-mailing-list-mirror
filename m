@@ -1,98 +1,113 @@
-Received: from mail-yx1-f67.google.com (mail-yx1-f67.google.com [74.125.224.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0BC35CB76
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 16:02:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0142212FB3
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 16:19:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767974574; cv=none; b=d2Uztmb1foI2ToXLgOVu/yDq6KbZImbcH5Qb3E3i7/ABZGVL6Rcuxgz7ZXERBVOHX+Tsw+WSMhSFflLWf7Q5B/2Cospt43f6qUtfubZS8+VDE7sjcTrdsdNs4GB82xgYr0mDEXhTojG08aVY7DMuQFZM7hiYGuLi0LmQ0jBPkzI=
+	t=1767975541; cv=none; b=jon0thL2svYIJtFjdOu96zt1X/th19NoHSUpbhfxHAuvzIKjXrFJMvTjlAAO5ISCORggLS2udP+PW21WA5Dh1rEXjM9e2WS3MgoMaG9lFprgyosLKCNYhIapBf0uZBsTvhJsX5enerYkO8Vz2jcHtWRW/wc6LLfsACLZ2UKnRnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767974574; c=relaxed/simple;
-	bh=in4YvxKvyx2FSR7QtWyYXY7TOvHnb/MQQzwIWQ846qA=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=sezX0pJxS3fK/AR4X3J4LTgkcfioX/9Ir/jHJWpDcwdZEDjQdwfRhWofrGEXkYMyxVVnKMR5YKpleqZLsIzzcODJu0lQRvxsBKwn9wUDGpfzcD29kMpv9oaDzcJJmG6ropK0XVEOqwEPDfyf1ULTjBvGN+MyYQLAdleYeqija84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Db5MG3sj; arc=none smtp.client-ip=74.125.224.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767975541; c=relaxed/simple;
+	bh=elnvp+XUocv9LGCAa8KPyDqteHBuW7A6MbDduTBhv1k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JEcRAs3iBuDcCHhpBD6knz6Ff6wxdJKASk1uZHIP8aiweejz2LTZC2Yb78wIi3gm/Fgus5ZMNu3qeJITx9aFLew8mpaWcld5QuKj5FY+vMxg71B7LEGfwDXxZP3EtgbM5SI+OfxREu+26O6vSUbPIwjnWfedbY7zP93ygtnZ9n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iHWjsMvV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PJiA8YFv; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Db5MG3sj"
-Received: by mail-yx1-f67.google.com with SMTP id 956f58d0204a3-64471fcdef0so4220414d50.1
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 08:02:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767974572; x=1768579372; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=in4YvxKvyx2FSR7QtWyYXY7TOvHnb/MQQzwIWQ846qA=;
-        b=Db5MG3sjsXVMFt6jFmjx4l9u8AZR2mZ+FkCenn3F8EOxMm/ZFWzGimJp23aPtq0XNc
-         BqK856qxTc33QHN76oFWlA0eLNkdWhPgRoAozYn+E7bihwXdIHcvSK0n/DP48q6hiWHv
-         Pnd02yK2Els8TiKxm1XoDRaxxwIrN27iNe0Qb06lvoidj16VzjLwVCJdCkZJnBhjoIKo
-         VRdhZqXBmqgD9wNTSn/2FPzfRy/KS50eiPqjJSuv7vjjQ1BOopNP950bnOhnZnMjVx+1
-         sWm7G5iU7W5UCfl+a5li7L0huGZgJXcTAjWRYG8SsSRQIKPx2RpyTk4QGJt7JEelINK7
-         234Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767974572; x=1768579372;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=in4YvxKvyx2FSR7QtWyYXY7TOvHnb/MQQzwIWQ846qA=;
-        b=vMXw90uwdzDgURvfnfOUsCRbnrM4A/Xfgv2FJgqaSdtbbE7PAOUKy8vsSaAbYyGYR1
-         nUT6OIMPjti5tzQ/GkKP8Fttl2RpIDivXNgfE2o1W3J6x12ge/E7UlxSWTfZ8pk4evNs
-         2tzf65AEDflxTabspSlRo2nQmni5cEgaj6p+FHyEzI9/v4yXqiTbs4MisP0WYCR8ap6k
-         m0yGmsLfG6unw5DLNYHEbRRUkMKktqLcHyQ0BPTtue4Jo6Lq0qqdW6qqVbSamrf0/EBJ
-         pY1nuDpDfRQdAmpncVDDqS24Z+XMvdn4iL0xGh76ZNPZidJ7bPDjn++TbgTp+xr7Sfw9
-         iD+A==
-X-Forwarded-Encrypted: i=1; AJvYcCU8iUEwaSKXKxI8DRGVdXV8WGkjtWBkWJ3D56suvWP5f6Z5Kuc2bnFZnB6Pmb+9IFrAtvk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4IrekxYGHmVLHo3KhOUbswElV+/cqo9rujZYO1fC9bI0IeON9
-	PT/iv4Pk5tYA1fjfTF2DRoNr322kYTHC4yPk8/7AhvDyKAzluQ3zaia7nRZTkiE/
-X-Gm-Gg: AY/fxX7GWItzJKTIITrQOagaYXr18KW6QweoI1T2ROvMziz8T15fWrPxYY557/XMmSP
-	BraIAqDVrc3L7LIpgoCdJUEIBDPl3uLnbnPk3bh9tcGHqT+QUvxL6UdyvNFsnjhBOlBhkBwNztL
-	1Q0XHZmPuLkEYqvhWt3QSsSm17G6THNgH6NYtrgYudrw8ZxNop3C2S5lMspsqeaZyGXuOJevIGp
-	bbQArB9NqXrt1qFKYxDRIasqvMbJRs/Fmz5DE/2HcYOjZ1QiZU0y2p0K/CUhPtSWHoUFMcmcKJH
-	My8YSPBnaYt8wiZBIYOgDP5Jn6V4ujvty+ZQ7eZ0WmTTp1Qn0rqQqiHJ6rYWA/ltNI0zTenZKrj
-	jYgb0eu5pS/TGncbKkhdBPmYainB4BfWTiXXIxse41NE419pynuygfWjb4yl/h9uGBUT3SIYw/T
-	ddHO8IVZk+4NS9TG5+HAPJQn0exva0RDoa6MrYNw6nW9/RPvha/BcSzLuLp+jfhgMnRAs0L0XS6
-	BCf10wmizncyI3rmEYiG4aCX5iF
-X-Google-Smtp-Source: AGHT+IGahLYZnNNMdPU5wZdBglh+bzQ89LK8m6U02wOL5Ayapg2/u0oELiFbNreDZRaiSO/PM+F0zw==
-X-Received: by 2002:a05:690c:6303:b0:78c:6664:3104 with SMTP id 00721157ae682-790b5723332mr214761467b3.5.1767974571398;
-        Fri, 09 Jan 2026 08:02:51 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:b1a4:3976:e3a8:a9de])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6470d7f7c04sm4657996d50.2.2026.01.09.08.02.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jan 2026 08:02:50 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iHWjsMvV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PJiA8YFv"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D9EED7A0125;
+	Fri,  9 Jan 2026 11:18:59 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 09 Jan 2026 11:18:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767975539;
+	 x=1768061939; bh=deuc79eh5leBSX46vMhLbP539GxeRmUkWA8Rtd7YzTQ=; b=
+	iHWjsMvVXZItlN1BxHRSchGsDfQGlTQeLeco05s22Qq4/3QvZPXSaLOJ7dnpqFjk
+	FNItmviQTRTEqqan0a3Vx+Jor23nfCI/qnDm87L7P3T+j8oyfdIMz77s8ogg3EVE
+	G4K9IX2sg0HteBfOzGFGN5nI6+aXQiG+S2E5T87bpyw90XP1FmmhlnEgKEonRQYA
+	pJTHmkvQpmRkc4NoVao8YhLdtFZxQosDxpaDEDRekmIOeYE/qQALS7FrvG98lsvq
+	ZOS8iiFk8Fw4gz4U40YEZPTjnjEfP3gwEOExpTAXWz/3Qb4Xp9fvgQYbYSTS/W/O
+	LIt097O8iKJF60Rxh4t9mw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767975539; x=
+	1768061939; bh=deuc79eh5leBSX46vMhLbP539GxeRmUkWA8Rtd7YzTQ=; b=P
+	JiA8YFvzdFZEXciYHuqnBEECKH329sl8zBZh01FSVpYFwcqDLSoCtzTnTmXORv31
+	9tdt34ffvtIIHZzZVs2CvUjgEMozeM4h6/oeoLsgggTOGFThoD18nrLV8TDuYaqa
+	EwukE1kAG/W8hI1Ei7T1M0kuktdGeJVHuXE1kfi6FW+qKsvkVTfA35p2ZLT/yyF1
+	l98YhlJAeUpHisCjUNN5FLpim/g2cicINSPbNYEjbn8qg8I31lSGIwLQcmyGpwo5
+	IP/HLOnSG1XctoHSvATJBpfr8WcwGUcg9JPYFR8DQ5AUrGkqEn7KkexFiDdX8ZGt
+	vYnBmDW8eaxFL5nfgFaBg==
+X-ME-Sender: <xms:cyphaeqozeyrPx3tTtIfbE1KjllRICkfqqTSOcYWLQKD4P5OzKjAtQ>
+    <xme:cyphaTroOaABvtMtKlr8qYzPUwhjU3dkYS3kKRzy9M8544iDZFeZvF8dLkYzRbsaO
+    Vjhndk8wm2Ox6DfpFznciCOs8OhBSRb_BbNrJUDsvHaP_qZDYNkyg>
+X-ME-Received: <xmr:cyphaYMKrg7nr2fqhd90bXDAg9V96B4sjpBiF-PvTEPbej4IJ0ZgTaG7GGCNc96Lnwrh20fyKuZAvXSAB2Xdd78avL2C-jI5LPnzh8DnNw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdelvdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopegtmhhlihhsthhssehsvghnthdrtghomhdprhgtphhtthhopegsvghnrdhknhhosg
+    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgho
+    lhhlrggsohhrrgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhg
+X-ME-Proxy: <xmx:cyphacw5cMFVBP-p7W9fVscNGgv4o1YjdoxMytr367wIehs-3u_uDg>
+    <xmx:cyphaZsZBw7vHryF7uc1NqX405kanIk_hZ9uQt0mFwDKiGQ1FPp6hQ>
+    <xmx:cyphad52ga2K9984LbtsQY6BEV6q6DTny1upPAa5N9NzfIUy8CvrjQ>
+    <xmx:cyphaQQkftEmkY3b9XdIxg3xwSWYdSq__HO9FRELasNPWCJ2Y1AHLA>
+    <xmx:cyphaWe8rhrO7FNXvB37KYedNjfIT3rP2BOumn9qplCs6A9lVKAPSvw2>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 Jan 2026 11:18:58 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2a08d572 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 9 Jan 2026 16:18:57 +0000 (UTC)
+Date: Fri, 9 Jan 2026 17:18:54 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: correctmost <cmlists@sent.com>, git@vger.kernel.org,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: Re: [Bug] hook: -Wanalyzer-deref-before-check warning in
+ run_hooks_opt
+Message-ID: <aWEqbqPRq5Ie9XTo@pks.im>
+References: <aWDm_n2YgjvaRmpV@pks.im>
+ <7BD989A0-30B1-418E-9257-1731724DCB72@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [Bug] hook: -Wanalyzer-deref-before-check warning in run_hooks_opt
-Date: Fri, 9 Jan 2026 11:02:40 -0500
-Message-Id: <7BD989A0-30B1-418E-9257-1731724DCB72@gmail.com>
-References: <aWDm_n2YgjvaRmpV@pks.im>
-Cc: correctmost <cmlists@sent.com>, git@vger.kernel.org,
- Adrian Ratiu <adrian.ratiu@collabora.com>
-In-Reply-To: <aWDm_n2YgjvaRmpV@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7BD989A0-30B1-418E-9257-1731724DCB72@gmail.com>
 
+On Fri, Jan 09, 2026 at 11:02:40AM -0500, Ben Knoble wrote:
+> 
+> > Le 9 janv. 2026 à 06:31, Patrick Steinhardt <ps@pks.im> a écrit :
+> 
+> [snip]
+> 
+> > And we'd reliably
+> > segfault anyway if we dereference the pointer, even though we would not
+> > get a clean error message. Not sure whether that really is worth the
+> > hassle though.
+> 
+> I think you’re probably right in practice, but doesn’t the standard just say dereferencing a NULL pointer is undefined behavior? Just wondering for my own curiosity :)
 
-> Le 9 janv. 2026 =C3=A0 06:31, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
+It is, yeah. But I'd claim that on almost all platforms out there it
+would segfault anyway.
 
-
-[snip]
-
-> And we'd reliably
-> segfault anyway if we dereference the pointer, even though we would not
-> get a clean error message. Not sure whether that really is worth the
-> hassle though.
-
-I think you=E2=80=99re probably right in practice, but doesn=E2=80=99t the s=
-tandard just say dereferencing a NULL pointer is undefined behavior? Just wo=
-ndering for my own curiosity :)
-
-Best,
-Ben=
+Patrick
