@@ -1,570 +1,182 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75842BEC3F
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 18:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264A3500966
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:04:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767984047; cv=none; b=h4jJ8qwNAR5EpYeXC0SSEbuTbUhb34kSMfqynKz+IjKSGvyuN/7s3tZ0JVQfImVpzL7OdwYeoJPhO4/nW0PVXz5rxPlHZwYic5w5my4kbW5BQYJH2febL5vZYWzKgk8n3G91BlFEBHiFhg5MCLlTtCpPLjQf6Ra5OIlw0Mgbv7U=
+	t=1767989072; cv=none; b=M/BiIUeJPIvThMxlpGDDlwo974X3Lr9+iLWakmTlV6gNE+iwjDSivEnoe9CI7or7PWTE94E00+KhoIwd+7lqeqNqNROzOiLJFfdOF7URahWJ9akEbO/2lqXHkwYpcrmgthLrDtKIAn1kL2jjr6HnFRstpBLkQGPPL7te2Xt+DnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767984047; c=relaxed/simple;
-	bh=rwfdjMNxpo+o99YDhs55iN4VKtzs1c6bzJHf+zPezgg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jU52a/428Y7zKyDkn2zonyNI0zUUzbjVeVcpyaYKkpbw0bZJPGENnyoyusEN2xXJmd4qATgUr1UqM93lfYi6mhqIrPDV36gfOqw756U12sXFCk0rYfAd89SGG5wr7CJ+kTeJQfQ8vZJkVPOI4jZi2knCJvT5GJ4+rVlRDmdq7mA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H2rQ3vXr; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767989072; c=relaxed/simple;
+	bh=YG2x/O07MEqv8zwOziDgtLGaUjfw3yWLY04uRxht8Mk=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=m1368vZqs7Nh31sFgTdk3KizMXI4YEn9vBdtNYYd2OaEkSsglXyM5AI+mzzfRuinfZ4Ymxor56sggX+y0N1XkZKHT3Gz8TumS+J4E8wJl5h7z9EirgEahB5lt5mjATjQa3U06rNL++PJEGBqk7lkMysNR2xQkfPnYhRNUzM7dYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Qmxp508C; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H2rQ3vXr"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8b2148ca40eso633838185a.1
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 10:40:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767984041; x=1768588841; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SVEj/kgtjCElBucm/TL0ecwmePyhvkzp1OkEeYoD2xA=;
-        b=H2rQ3vXr52zlbNhZAIVhKuPZG/ZyzmtEA1z6urYkwaNul7uneqT6dxoIljLEwPznvK
-         csneC7RyZUMfZtQEh2NjgHRypLxLi+IDoq3EAs94Lgr6GlhrTBHMyDs7lhTjTNoa/XlL
-         /BeFigRQxhudBRK/Inn0S3qtO9YbTCmu2p/PlnkFusDzcrYllekQS20xpkq35vAHs/uw
-         opJAq3grAz2vPEOI2usypbCASX3dKilRmAy13xypYToIJ6w0tLPAcSyLOPJ5e8PetVE3
-         v2BOuHib/MJMn1ZmnMULHwt+FVlhkIapWBSyRSwunhUyLnSosnEL0OFjdqN1uUitspRl
-         LO2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767984041; x=1768588841;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=SVEj/kgtjCElBucm/TL0ecwmePyhvkzp1OkEeYoD2xA=;
-        b=cRvIDd0u6JdNyOXvpdUD5HvQwUVHm2jQVfkNsKz9AHs7d0PtBM9xbroOdTNLFTrxg4
-         lCEUB9h+7xJ0nWm3Hh7krnRefn7SA7dbq5XXSFY6M97Z1c/lT4ZzXdEtJ8BtA3qNRlOX
-         STvkAzJlKsDX4d+flVCAMHu2/gxXFdYm6/4L/9YuSFb3n5rRpHwVGoV6dX/iZn52UQz5
-         n5Ffv7+QjouCY/qMYDMJAHFdEcO1tgjx2socAKMbJUGn8QrK8GmXl6OC68p9Ku0Y78XF
-         IsL4yF0fWxjSLnAcfrLTWuiYH1gzVdC20ZwBaXeBEoDmh6mJipyNxPWAMQB45Ey6i56o
-         vKzA==
-X-Gm-Message-State: AOJu0Yw/c5mzKQp5W7uHANJo7cM+kF8/h5VFWWJdNgtzuHIrRmi8niEy
-	09RXH43WLlL/DLh6rhlbrXYC0SkD44ObbB8XkV9s47NH7HCk43cCmR0Ylrw3sw==
-X-Gm-Gg: AY/fxX6uQwIypX/oX0sLU1Mtbb6RVqgGworCUHLoT7mKIKbzqP+7RDibLUt35VLo+U4
-	K5MuWfc825aKlc4FT1tQG+ZlcIMSBp8q+GZYOu/7f83/urZvm5jMgCuKRvX2b8+aQ/l18Su/HTD
-	xK+ztB4Bf+TLJBPVcvBPpZjHByisdfoLA/qk1C/aGY8ZhuLo0kb96a1sh+XWp6kuYgp5b7D9kPY
-	8cbY0ohTjbfi5ymR+b9on8XXaJYgFn10XolndPTwJ+vAz0Ai+Y5at4601U5buMuQ6pOoPOx5W+G
-	E7SN67OTr7gCCxi14xXBNkGpToejIdZddGqco72zG71jG//0h8jM7BXmOQuU9e06GXXiT9XgLPf
-	ksztSonTfKVtmBQlUxPvJG8d48oZRWow040LDEMY7RBOLypGWafSyTSnh4l1y+J98/JvMv5H84i
-	gdvY0zGNDQ4LAhlw==
-X-Google-Smtp-Source: AGHT+IF+XHY5lusavTaib41mNaaF37NEtd1OfgIAgoOgPuXLSbx4g5UGiALa4XK+t/x/XtYBl7eRvQ==
-X-Received: by 2002:a05:620a:178d:b0:8b2:ea5a:4146 with SMTP id af79cd13be357-8c38942967emr1496309885a.89.1767984040460;
-        Fri, 09 Jan 2026 10:40:40 -0800 (PST)
-Received: from [127.0.0.1] ([145.132.100.68])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f4a9a19sm881449185a.1.2026.01.09.10.40.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 10:40:39 -0800 (PST)
-Message-Id: <dc8ab23158e5b43cf650f71ef5c2b3a094f54129.1767984037.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2138.v19.git.git.1767984037.gitgitgadget@gmail.com>
-References: <pull.2138.v18.git.git.1767976906.gitgitgadget@gmail.com>
-	<pull.2138.v19.git.git.1767984037.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Jan 2026 18:40:37 +0000
-Subject: [PATCH v19 2/2] status: show comparison with push remote tracking
- branch
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Qmxp508C"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1767989068; x=1768593868;
+	i=johannes.schindelin@gmx.de;
+	bh=YG2x/O07MEqv8zwOziDgtLGaUjfw3yWLY04uRxht8Mk=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Qmxp508Cc9D3SAG8IsuHJEIkc4gFfxoDjQAK17VjRHKMHuJ8mrF19TXKQvduMQMk
+	 At3rVchXhQjMJMYSaL0RwWzPcRnoVlf+cEU1y/GabJPRI9DrfjGecWIoxesgZ4roC
+	 4KfdyY2zafq0n5KcAFicjA2S7Fc7eD4pQk1T3uT9Vm40IQZHMT7jnY9P6qo7kcm2x
+	 UqRpo5zIgIryNF/8RsguYW7G4dZntv/AMoCmapZ4Ap+LWwza/LMSJaTuLGcMHXSVg
+	 P3zUltuOLZjrUwp47dTK1GH1ypQ7kWI3NpFTlhBAFOSMm7M3M6xp32M8dwtAaGYft
+	 4AQYJeHfxc89IZxTTg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.21]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4zAs-1voIdE1BJc-017clU; Fri, 09
+ Jan 2026 21:04:28 +0100
+Date: Fri, 9 Jan 2026 21:04:26 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+cc: git@vger.kernel.org, 
+    Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 02/18] mingw: implement `stat()` with symlink support
+In-Reply-To: <46b69027-90b4-439a-a14d-61d1bb739b7b@kdbg.org>
+Message-ID: <704e952d-7924-00ce-b8b0-ad355e659335@gmx.de>
+References: <pull.2018.git.1765980535.gitgitgadget@gmail.com> <c36848eda76742f7a7c203868a077b790301344f.1765980535.git.gitgitgadget@gmail.com> <46b69027-90b4-439a-a14d-61d1bb739b7b@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:vKKBUbnWGcwxnnoZgnAGZLMMOQBuvHydkH4B4C9Z/nz0zsQFWaq
+ NpgdoD+TqAF2KphPomIGFQ2vkcCP2zNvQ0DSn4+O1I+Lw7nEwjTPLg8TZtmU6Isp5bUVxPp
+ Mzf9/kj0cOnbfeRDPYhmXyK6mmJQMCSjrsxJGEot6GmLRoZczpaC2LRdjjBBC740CBJtL9T
+ HB9hlEm5b3GbyTSMXcJtw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:lrR3zfsfRUQ=;eVhpTyjPurVtkU2E4rie0uN2VlC
+ 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
+ qqV8cQKk=
+Content-Transfer-Encoding: quoted-printable
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Hi Hannes,
 
-"git status" on a branch that follows a remote branch compares
-commits on the current branch and the remote-tracking branch it
-builds upon, to show "ahead", "behind", or "diverged" status.
+On Thu, 18 Dec 2025, Johannes Sixt wrote:
 
-When working on a feature branch that tracks a remote feature branch,
-but you also want to track progress relative to the push destination
-tracking branch (which may differ from the upstream branch), git status
-now shows an additional comparison.
+> Am 17.12.25 um 15:08 schrieb Karsten Blees via GitGitGadget:
+> > From: Karsten Blees <blees@dcon.de>
+> >=20
+> > With respect to symlinks, the current `mingw_stat()` implementation is
+> > almost identical to `mingw_lstat()`: except for the file type (`st_mod=
+e
+> > & S_IFMT`), it returns information about the link rather than the targ=
+et.
+> >=20
+> > Implement `mingw_stat()` by opening the file handle requesting minimal
+> > permissions, and then calling `GetFileInformationByHandle()` on it. Th=
+is
+> > way, all links are resolved by the Windows file system layer.
+> >=20
+> > If symlinks are disabled, use `mingw_lstat()` as before, but fail with
+> > `ELOOP` if a symlink would have to be resolved.
+>=20
+> This last paragraph is disconnected from the patch text. I can't find a
+> use of ELOOP anywhere in the code that has something to do with the goal
+> of this patch. Is this a remnant from early times where symbolic links
+> were optional?
 
-When the upstream tracking branch differs from the push destination
-tracking branch, git status shows both the comparison with the upstream
-tracking branch (as before) and an additional comparison with the push
-destination tracking branch. The push branch comparison appears on a
-separate line after the upstream branch status, using the same format.
+You're right. Sharp eyes, by the way, I cannot count how often I glanced
+over this paragraph while pre-reviewing.
 
-Example output when tracking origin/main but push destination is
-origin/feature:
-    On branch feature
-    Your branch and 'origin/main' have diverged,
-    and have 3 and 1 different commits each, respectively.
-      (use "git pull" if you want to integrate the remote branch with yours)
+As to the reason why this paragraph is there: This comes from the initial
+version of this patch:
+https://github.com/git-for-windows/git/commit/b908441ea594f022e862c04cefe8=
+ac73bb8c0ab0
 
-    Your branch is ahead of 'origin/feature' by 1 commit.
-      (use "git push" to publish your local commits)
+I can only try to reconstruct why I skipped the ELOOP logic in the rebased
+version at
+https://github.com/git-for-windows/git/commit/0181eb0c78d04f5fb065cbe2f334=
+6077b0f9930e
+(my guess is that I realized that returning ELOOP when symlink support was
+disabled via `core.symlinks =3D false` was undesirable: In particular with
+Windows 7 semantics, where symlinks could be read and used, but required
+administrator permissions to create, that flag was meant to turn off
+symlink _creation_, but reading existing symlinks should work
+nevertheless).
 
-The comparison is only shown when the push destination tracking branch
-differs from the upstream tracking branch, even if they are on the same
-remote.
+I'll simply remove this paragraph from the commit message.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- remote.c                 | 102 ++++++++++++++-
- t/t6040-tracking-info.sh | 262 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 358 insertions(+), 6 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index eba013b6b4..b8d2d1360a 100644
---- a/remote.c
-+++ b/remote.c
-@@ -29,6 +29,11 @@
- 
- enum map_direction { FROM_SRC, FROM_DST };
- 
-+enum {
-+	BRANCH_MODE_PULL = (1 << 0),
-+	BRANCH_MODE_PUSH = (1 << 1),
-+};
-+
- struct counted_string {
- 	size_t len;
- 	const char *s;
-@@ -2237,13 +2242,75 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- 	return stat_branch_pair(branch->refname, base, num_ours, num_theirs, abf);
- }
- 
-+static char *get_remote_push_branch(struct branch *branch, char **full_ref_out)
-+{
-+	struct remote *remote;
-+	const char *push_remote;
-+	char *push_dst = NULL;
-+	char *tracking_ref;
-+	const char *resolved;
-+	char *ret;
-+
-+	if (!branch)
-+		return NULL;
-+
-+	push_remote = pushremote_for_branch(branch, NULL);
-+	if (!push_remote)
-+		return NULL;
-+
-+	remote = remotes_remote_get(the_repository, push_remote);
-+	if (!remote)
-+		return NULL;
-+
-+	push_dst = remote_ref_for_branch(branch, 1);
-+	if (!push_dst) {
-+		if (remote->push.nr)
-+			return NULL;
-+		push_dst = xstrdup(branch->refname);
-+	}
-+
-+	tracking_ref = (char *)tracking_for_push_dest(remote, push_dst, NULL);
-+	free(push_dst);
-+
-+	if (!tracking_ref)
-+		return NULL;
-+
-+	resolved = refs_resolve_ref_unsafe(
-+		get_main_ref_store(the_repository),
-+		tracking_ref,
-+		RESOLVE_REF_READING,
-+		NULL, NULL);
-+
-+	if (!resolved) {
-+		free(tracking_ref);
-+		return NULL;
-+	}
-+
-+	if (full_ref_out)
-+		*full_ref_out = xstrdup(resolved);
-+
-+	ret = refs_shorten_unambiguous_ref(
-+		get_main_ref_store(the_repository), resolved, 0);
-+	free(tracking_ref);
-+	return ret;
-+}
-+
- static void format_branch_comparison(struct strbuf *sb,
- 				     bool up_to_date,
- 				     int ours, int theirs,
- 				     const char *branch_name,
- 				     enum ahead_behind_flags abf,
-+				     unsigned flags,
- 				     bool show_divergence_advice)
- {
-+	bool want_push_advice = (flags & BRANCH_MODE_PUSH) &&
-+		advice_enabled(ADVICE_STATUS_HINTS);
-+	bool want_pull_advice = (flags & BRANCH_MODE_PULL) &&
-+		advice_enabled(ADVICE_STATUS_HINTS);
-+	bool want_divergence_advice = (flags & BRANCH_MODE_PULL) &&
-+		show_divergence_advice &&
-+		advice_enabled(ADVICE_STATUS_HINTS);
-+
- 	if (up_to_date) {
- 		strbuf_addf(sb,
- 			_("Your branch is up to date with '%s'.\n"),
-@@ -2252,7 +2319,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 		strbuf_addf(sb,
- 			    _("Your branch and '%s' refer to different commits.\n"),
- 			    branch_name);
--		if (advice_enabled(ADVICE_STATUS_HINTS))
-+		if (want_push_advice)
- 			strbuf_addf(sb, _("  (use \"%s\" for details)\n"),
- 				    "git status --ahead-behind");
- 	} else if (!theirs) {
-@@ -2261,7 +2328,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 			   "Your branch is ahead of '%s' by %d commits.\n",
- 			   ours),
- 			branch_name, ours);
--		if (advice_enabled(ADVICE_STATUS_HINTS))
-+		if (want_push_advice)
- 			strbuf_addstr(sb,
- 				_("  (use \"git push\" to publish your local commits)\n"));
- 	} else if (!ours) {
-@@ -2272,7 +2339,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 			       "and can be fast-forwarded.\n",
- 			   theirs),
- 			branch_name, theirs);
--		if (advice_enabled(ADVICE_STATUS_HINTS))
-+		if (want_pull_advice)
- 			strbuf_addstr(sb,
- 				_("  (use \"git pull\" to update your local branch)\n"));
- 	} else {
-@@ -2285,8 +2352,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 			       "respectively.\n",
- 			   ours + theirs),
- 			branch_name, ours, theirs);
--		if (show_divergence_advice &&
--		    advice_enabled(ADVICE_STATUS_HINTS))
-+		if (want_divergence_advice)
- 			strbuf_addstr(sb,
- 				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
- 	}
-@@ -2303,6 +2369,11 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 	const char *full_base;
- 	char *base;
- 	int upstream_is_gone = 0;
-+	unsigned base_branch_modes = BRANCH_MODE_PULL | BRANCH_MODE_PUSH;
-+	int push_ours, push_theirs, push_sti;
-+	char *full_push = NULL;
-+	char *push = NULL;
-+	unsigned push_branch_modes = 0;
- 
- 	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
- 	if (sti < 0) {
-@@ -2314,6 +2385,16 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
- 					    full_base, 0);
- 
-+	push = get_remote_push_branch(branch, &full_push);
-+	if (push && strcmp(base, push)) {
-+		push_sti = stat_branch_pair(branch->refname, full_push,
-+					   &push_ours, &push_theirs, abf);
-+		if (push_sti >= 0) {
-+			base_branch_modes = BRANCH_MODE_PULL;
-+			push_branch_modes = BRANCH_MODE_PUSH;
-+		}
-+	}
-+
- 	if (upstream_is_gone) {
- 		strbuf_addf(sb,
- 			_("Your branch is based on '%s', but the upstream is gone.\n"),
-@@ -2322,10 +2403,19 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 			strbuf_addstr(sb,
- 				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
- 	} else {
--		format_branch_comparison(sb, !sti, ours, theirs, base, abf, show_divergence_advice);
-+		format_branch_comparison(sb, !sti, ours, theirs, base, abf,
-+					 base_branch_modes, show_divergence_advice);
-+	}
-+
-+	if (push_branch_modes & BRANCH_MODE_PUSH) {
-+		strbuf_addstr(sb, "\n");
-+		format_branch_comparison(sb, !push_sti, push_ours, push_theirs, push, abf,
-+					 push_branch_modes, show_divergence_advice);
- 	}
- 
- 	free(base);
-+	free(full_push);
-+	free(push);
- 	return 1;
- }
- 
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 0b719bbae6..cf5a926dcd 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -292,4 +292,266 @@ test_expect_success '--set-upstream-to @{-1}' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'status tracking origin/main shows only main' '
-+	(
-+		cd test &&
-+		git checkout b4 &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch b4
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 2 commits.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status --no-ahead-behind tracking origin/main shows only main' '
-+	(
-+		cd test &&
-+		git checkout b4 &&
-+		git status --no-ahead-behind >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch b4
-+	Your branch and ${SQ}origin/main${SQ} refer to different commits.
-+	  (use "git status --ahead-behind" for details)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status shows ahead of both origin/main and feature branch' '
-+	(
-+		cd test &&
-+		git checkout -b feature2 origin/main &&
-+		git push origin HEAD &&
-+		advance work &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature2
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/feature2${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'checkout shows ahead of both origin/main and feature branch' '
-+	(
-+		cd test &&
-+		git checkout feature2 >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/feature2${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup for ahead of tracked but diverged from main' '
-+	(
-+		cd test &&
-+		git checkout -b feature4 origin/main &&
-+		advance work1 &&
-+		git checkout origin/main &&
-+		advance work2 &&
-+		git push origin HEAD:main &&
-+		git checkout feature4 &&
-+		advance work3
-+	)
-+'
-+
-+test_expect_success 'status shows diverged from origin/main and ahead of feature branch' '
-+	(
-+		cd test &&
-+		git checkout feature4 &&
-+		git branch --set-upstream-to origin/main &&
-+		git push origin HEAD &&
-+		advance work &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature4
-+	Your branch and ${SQ}origin/main${SQ} have diverged,
-+	and have 3 and 1 different commits each, respectively.
-+	  (use "git pull" if you want to integrate the remote branch with yours)
-+
-+	Your branch is ahead of ${SQ}origin/feature4${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status --no-ahead-behind shows diverged from origin/main and ahead of feature branch' '
-+	(
-+		cd test &&
-+		git checkout feature4 &&
-+		git status --no-ahead-behind >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature4
-+	Your branch and ${SQ}origin/main${SQ} refer to different commits.
-+
-+	Your branch and ${SQ}origin/feature4${SQ} refer to different commits.
-+	  (use "git status --ahead-behind" for details)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup upstream remote' '
-+	(
-+		cd test &&
-+		git remote add upstream ../. &&
-+		git fetch upstream &&
-+		git config remote.pushDefault origin
-+	)
-+'
-+
-+test_expect_success 'status with upstream remote and push.default set to origin' '
-+	(
-+		cd test &&
-+		git checkout -b feature5 upstream/main &&
-+		git push origin &&
-+		advance work &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature5
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/feature5${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status with upstream remote and push.default set to origin and diverged' '
-+	(
-+		cd test &&
-+		git checkout -b feature6 upstream/main &&
-+		advance work &&
-+		git push origin &&
-+		git reset --hard upstream/main &&
-+		advance work &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature6
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+
-+	Your branch and ${SQ}origin/feature6${SQ} have diverged,
-+	and have 1 and 1 different commits each, respectively.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status with upstream remote and push branch up to date' '
-+	(
-+		cd test &&
-+		git checkout -b feature7 upstream/main &&
-+		git push origin &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature7
-+	Your branch is up to date with ${SQ}upstream/main${SQ}.
-+
-+	Your branch is up to date with ${SQ}origin/feature7${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status --no-ahead-behind with upstream remote and push branch up to date' '
-+	(
-+		cd test &&
-+		git checkout feature7 &&
-+		git push origin &&
-+		git status --no-ahead-behind >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature7
-+	Your branch is up to date with ${SQ}upstream/main${SQ}.
-+
-+	Your branch is up to date with ${SQ}origin/feature7${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'checkout shows push branch up to date' '
-+	(
-+		cd test &&
-+		git checkout feature7 >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	Your branch is up to date with ${SQ}upstream/main${SQ}.
-+
-+	Your branch is up to date with ${SQ}origin/feature7${SQ}.
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status shows remapped push refspec' '
-+	(
-+		cd test &&
-+		git checkout -b feature8 origin/main &&
-+		git config remote.origin.push refs/heads/feature8:refs/heads/remapped &&
-+		git push &&
-+		advance work &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature8
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/remapped${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status shows remapped push refspec with upstream remote' '
-+	(
-+		cd test &&
-+		git checkout -b feature9 upstream/main &&
-+		git config remote.origin.push refs/heads/feature9:refs/heads/remapped &&
-+		git push origin &&
-+		advance work &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch feature9
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/remapped${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+Ciao,
+Johannes
