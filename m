@@ -1,80 +1,81 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E374335BDA8
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 12:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4C035CB78
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 12:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962415; cv=none; b=fQk738mgjEDh/b1/fDpgso6WhCg0aLEar5K7369uBQNoqwbEdA0G2m3UhY8Q6zMOT9MTyJbFOiUnkEdWKce/A8N74r4VWDx+x+rKVpA3UqhdTyntsfjT7K5qo9h2TFdq+lQiXY/Qk4MFtw5Sy/LMGpvJrf8LHuC9PGPDPPK8ZBc=
+	t=1767962417; cv=none; b=UuC3uN+zcjjelty84K+CE/BF41aRNNYubVTwW9PGceLlRAGoQyJUSP/R0GK4daPotfpq+7RIiz6u+vqQBhEfkoXrdqh/r1f3Wzn8iooinsz6dzwOqFcbLUzg149D5NViwziP0SsDarZ521GXxVqyX8s5JVkh0/cv51DK7b6OD3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962415; c=relaxed/simple;
-	bh=73sxiOCKwiW0bByzZOzwj7GRly57HD25InpztsnFIS8=;
+	s=arc-20240116; t=1767962417; c=relaxed/simple;
+	bh=9HFPi1p+Q44nFkx3BTQcRC3/w4K91lrZapN/20khMIk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=m+ZtvGcUStsO9pu/WSYR7dFjF2Oi5w6o4oqIB066H/FYd6ZiBuZYeyniXfzsPQp8jo5qRgV6Y5ZNFFthj/CMKLxSjXQcr4qggZLHtBU/yTGjg/Mu6olvwCPqUg6OjTscbLvOLD4dlQHG0wARjNY1Ucsx9qqiX3Zuh9RTUxtFsDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I+AbrFfi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F+wvLxAZ; arc=none smtp.client-ip=202.12.124.158
+	 In-Reply-To:To:Cc; b=PtA8FQX8E4FN9sHfu9t+GGtftXP+vu8tdeyb5znOg71vnBkKyrKPfb+xZju2XNWwv2wiiTy8E4OIs37lCxdB1wqqaVignjkL08rMA+/+ctFUEvPkmTjZlu7b0elgt9sNI2laG8xooHtt+fRhyBHC6EVgQw837lufMAk6e0TtmLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FcdxIo7y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S5lPB5ZS; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I+AbrFfi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F+wvLxAZ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4367B7A0177;
-	Fri,  9 Jan 2026 07:40:13 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FcdxIo7y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S5lPB5ZS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6E84C7A0176;
+	Fri,  9 Jan 2026 07:40:15 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 09 Jan 2026 07:40:13 -0500
+  by phl-compute-02.internal (MEProxy); Fri, 09 Jan 2026 07:40:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767962413;
-	 x=1768048813; bh=L1/Mg8raXouTOiFfb42wygG3gL5G30NWKyD6pQvfcok=; b=
-	I+AbrFfiU/FiYbUCKDLxKHvqXjGKCJ8PxwGJAlsrUClXvdYD9QXDKR5YzDGqHvSb
-	aPrIG3zCsplGeOMbyRsyBI+63H++/ZKJmwleaqRUo9ABcr9pNaCWBCYPkM4CSv2T
-	m0yhJdeGNX4XQLcQAnX7nttUQKqxq4DQeGWUCzjLKUYNEVzI8JGyvLjw84NPCdwc
-	Ouu5dQwT6mM3KviqPfQjI8O9jFMIERcT4xNdkor6GCRjrguIUht+MdpPIL3K2SVU
-	2LhS1Mr+e+yrCwewnIxBUlQjlru9v1uO+qyVREefViVKv/xz0lXz2Y3UcGejpy10
-	3hCDonhCyAZ5rIiTWMSpuQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767962415;
+	 x=1768048815; bh=+zF++aywY8FW6U3fetqpni5ik7ZacquEzKBSwajoVfk=; b=
+	FcdxIo7y/O16za4CLmgSTeZ1g93e49cZ6z51vXiEIKhk57JJhbaJUg8uWdIxMdyA
+	a+LbHAhu0S+MxtULzMUGzFCMsLn0pmVtR3OiN6cUqFYSQiZ9QQZVPi/3pQ0F97Z/
+	HMZYRKvDb8j7ZUel81ghJXZWSrbUMGsEgLBJaNZs4eWOgDld1aTmQRDwqH953UyD
+	I2l47ePCUbgt8/N1EK640dX6abtmfAG3ZJFtr8kicTmy997ZZGzlLkxmAavEQi9V
+	1Mb98dXKzaFQ5Ttf1B4YqA5ecoucmhfXXkQcI4q3aGsy0pnl8BvUIfw8jsKXjbU2
+	+iJ11qAETGwU6cU52LbV+g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767962413; x=
-	1768048813; bh=L1/Mg8raXouTOiFfb42wygG3gL5G30NWKyD6pQvfcok=; b=F
-	+wvLxAZ9jOdMij849WG02LO4pclU5OzAIrKNbdUayHATzLRKgwD0ARRt/hW9ybnp
-	DfjupmyaMrfBZH8CvWgm1fG3TDO6tAKdu6Ta6ui3wpiMss5ui1iFKUq3VaF7PRlv
-	EF6n4+Qv1Z7Jw/YwiWYIvqx7zwC/ggVSL48vHktlUATRTTIJi/4H4ILQ+B2HDz92
-	8UgUyI8nVVEZFzZHLTbaWrUJ1Z62m7xIvtxdY0FTYgYG0xC155lSKuj6aeUtohyv
-	1iwgDxhZhtLI7CZDXGTr02FqhiLK9zOOFMRO58z1+Ibynx+FmIGIxHDYipDbMLlO
-	83eImx5PerUOZAETSZ7dw==
-X-ME-Sender: <xms:LfdgaUbTXss6-1YBjK9JvoNdNDfzSUOTfZ610TodENKsIcrMSag5gA>
-    <xme:LfdgaW3QivPDXY9dOnk8vKTBPGLyUO6hq-x7C9MDGQwYuAeFr1Rlr4gzD1Xmullb0
-    BFkgky5pq1LrEOhbmCfSutMk-Rn8LzlFN2A7d1DcwZqzVbwW6s1-A>
-X-ME-Received: <xmr:LfdgacW0VkgSynCF46aiyGwD2dTwJVv1E3MsK-kNADzhd6n1pFyHj6lfJSau6ebntvc1GQ3fwmS2d8mm9zQM9CBkaqh66H7LuyUMwSNMOw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekkeegucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767962415; x=
+	1768048815; bh=+zF++aywY8FW6U3fetqpni5ik7ZacquEzKBSwajoVfk=; b=S
+	5lPB5ZS9dUxYpMKt3CqpPiiVqPo6tAvMWKyDCFAIvDZUV1JMZuJA+LkPd+zaBN4H
+	q/1fRdCbMq3bY2LhhBIb+zXVfZ498/3Emr1W7ewMViPPBAU9iR4ThCqlgXMFign+
+	UvWrxFe6QB5oK/6PXLXCJRnZ7rCh4eucJzoeR3uaYX+37hbQ3dhxOLPmpLHSKGI2
+	58yPS7JR8jj8lCygcUMBjAv99xUJM7FshPMNRI/PkFjVRo/j6RAkoDTs320jS00P
+	HjikO06W3A+RKj0gdLI4lo+5qinJFcbxizKaU1yoDeQRj4s3eNc0rkXbRDRbwt6P
+	330whA+gkPcSqL1rh56mg==
+X-ME-Sender: <xms:L_dgaU9-jx8by-mAWrZo2vClnrzOQX14Z4WXc8TiGozYzEBUVda9Dw>
+    <xme:L_dgaUK5OQBtVjvBRUFUhGWUzbgzdwRQOPpoSX1b2TpxGEyX-pVNmEE4FcF03n-BK
+    5nB8ZHCaRY6zNlAcJgR53VkE5ST0mhX3Xt0J4FHELT8zzSLtYU>
+X-ME-Received: <xmr:L_dgaXY1Wy5xUb-b5pk74rbJ4xoNJznawEJjg9k5p9POzdWLRnwLJM1GtQWxbnyRyccAlrk53PXv4iZXZSie5JlOWs7C2yN21ov07JwZ9w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekkeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvg
-    hjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:LfdgaYV5uhe_4xfPVInVmRUoAb5fWVzxGH305tzdB1jOadmAUeejlQ>
-    <xmx:LfdgaTe3kGpehcqOA37n2fB5yqhJUdQXyt-CPKfNMKJ8E3-95SvZig>
-    <xmx:LfdgaZXtfgcUmHBd98yUafzRoNt02R1f9aA2_msvYotor2siG9bErw>
-    <xmx:LfdgaUcQruN2QRGYNNGng_0b1S486Rn-Gb8MG-29GI01QqpqztRerQ>
-    <xmx:LfdgaUTzXFUL21Ih5TMbZZg90pKypXXlVDL4075h1JkgIQ3R4XB6Ev_w>
+    thhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
+    mhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:L_dgaeJKcDS5suy5LzLB01Q__aWRb21c0QQgTB65419azzlhB8SHSg>
+    <xmx:L_dgadBp0KXPe7V8y9Cp3ItW52GeKeokG3w-rqktswUodvwsWM_Ecg>
+    <xmx:L_dgabpuH898texLGedcDRmePyAfz9LAsAb1mNeL4CpoQdbSqVGlRg>
+    <xmx:L_dgaQhLKDtY7DQDcnCXbBRNErPz7UPp50Fq9WVQXrWlaSXsfldCNQ>
+    <xmx:L_dgaanVoy2r_2Yj58HQ6TGMT5YWGz8KPC2e8Qkuu6JTGFndl3v7XD6U>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 07:40:12 -0500 (EST)
+ 9 Jan 2026 07:40:14 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 414b7eb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 9 Jan 2026 12:40:11 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 7264ae9e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 9 Jan 2026 12:40:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 09 Jan 2026 13:39:43 +0100
-Subject: [PATCH 14/17] refs/reftable: introduce generic checks for refs
+Date: Fri, 09 Jan 2026 13:39:44 +0100
+Subject: [PATCH 15/17] builtin/fsck: move generic object ID checks into
+ `refs_fsck()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,149 +84,188 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260109-pks-refs-verify-fixes-v1-14-3587dba18294@pks.im>
+Message-Id: <20260109-pks-refs-verify-fixes-v1-15-3587dba18294@pks.im>
 References: <20260109-pks-refs-verify-fixes-v1-0-3587dba18294@pks.im>
 In-Reply-To: <20260109-pks-refs-verify-fixes-v1-0-3587dba18294@pks.im>
 To: git@vger.kernel.org
 Cc: shejialuo <shejialuo@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-In a preceding commit we have extracted generic checks for both direct
-and symbolic refs that apply for all backends. Wire up those checks for
-the "reftable" backend.
+While most of the logic that verifies the consistency of refs is
+driven by `refs_fsck()`, we still have a small handful of checks in
+`fsck_head_link()`. These checks don't use the git-fsck(1) reporting
+infrastructure, and as such it's impossible to for example disable
+some of those checks.
 
-Note that this is done by iterating through all refs manually with the
-low-level reftable ref iterator. We explicitly don't want to use the
-higher-level iterator that is exposed to users of the reftable backend
-as that iterator may swallow for example broken refs.
+One such check detects refs that point to the all-zeroes object ID.
+Extract this check into the generic `refs_fsck_ref()` function that is
+used by both the "files" and "reftable" backends.
+
+Note that this will cause us to not return an error code from
+`fsck_head_link()` anymore in case this error was detected. This is fine
+though: the only caller of this function does not check the error code
+anyway. To demonstrate this, adapt the function to drop its return value
+altogether. The function will be removed in a subsequent commit anyway.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/reftable-backend.c  | 82 ++++++++++++++++++++++++++++++++++++++++++++----
- t/t0614-reftable-fsck.sh | 12 +++++++
- 2 files changed, 88 insertions(+), 6 deletions(-)
+ Documentation/fsck-msgids.adoc |  3 +++
+ builtin/fsck.c                 | 41 +++++++++++++++--------------------------
+ fsck.h                         |  1 +
+ refs.c                         | 11 ++++++++---
+ t/t1450-fsck.sh                |  6 +++---
+ 5 files changed, 30 insertions(+), 32 deletions(-)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 6361b27015..fe74af73af 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -2767,19 +2767,89 @@ static int reftable_be_fsck(struct ref_store *ref_store, struct fsck_options *o,
- {
- 	struct reftable_ref_store *refs =
- 		reftable_be_downcast(ref_store, REF_STORE_READ, "fsck");
-+	struct reftable_ref_iterator *iter = NULL;
-+	struct reftable_ref_record ref = { 0 };
-+	struct fsck_ref_report report = { 0 };
-+	struct strbuf refname = STRBUF_INIT;
- 	struct reftable_backend *backend;
-+	int ret, errors = 0;
+diff --git a/Documentation/fsck-msgids.adoc b/Documentation/fsck-msgids.adoc
+index acac9683af..76609321f6 100644
+--- a/Documentation/fsck-msgids.adoc
++++ b/Documentation/fsck-msgids.adoc
+@@ -41,6 +41,9 @@
+ `badRefName`::
+ 	(ERROR) A ref has an invalid format.
  
- 	if (is_main_worktree(wt)) {
- 		backend = &refs->main_backend;
- 	} else {
--		int ret = backend_for_worktree(&backend, refs, wt->id);
--		if (ret < 0)
--			return error(_("reftable stack for worktree '%s' is broken"),
--				     wt->id);
-+		ret = backend_for_worktree(&backend, refs, wt->id);
-+		if (ret < 0) {
-+			ret = error(_("reftable stack for worktree '%s' is broken"),
-+				    wt->id);
-+			goto out;
-+		}
-+	}
++`badRefOid`::
++	(ERROR) A ref points to an invalid object ID.
 +
-+	errors |= reftable_fsck_check(backend->stack, reftable_fsck_error_handler,
-+				      reftable_fsck_verbose_handler, o);
-+
-+	iter = ref_iterator_for_stack(refs, backend->stack, "", NULL, 0);
-+	if (!iter) {
-+		ret = error(_("could not create iterator for worktree '%s'"), wt->id);
-+		goto out;
-+	}
-+
-+	while (1) {
-+		ret = reftable_iterator_next_ref(&iter->iter, &ref);
-+		if (ret > 0)
-+			break;
-+		if (ret < 0) {
-+			ret = error(_("could not read record for worktree '%s'"), wt->id);
-+			goto out;
-+		}
-+
-+		strbuf_reset(&refname);
-+		if (!is_main_worktree(wt))
-+			strbuf_addf(&refname, "worktrees/%s/", wt->id);
-+		strbuf_addstr(&refname, ref.refname);
-+		report.path = refname.buf;
-+
-+		switch (ref.value_type) {
-+		case REFTABLE_REF_VAL1:
-+		case REFTABLE_REF_VAL2: {
-+			struct object_id oid;
-+			unsigned hash_id;
-+
-+			switch (reftable_stack_hash_id(backend->stack)) {
-+			case REFTABLE_HASH_SHA1:
-+				hash_id = GIT_HASH_SHA1;
-+				break;
-+			case REFTABLE_HASH_SHA256:
-+				hash_id = GIT_HASH_SHA256;
-+				break;
-+			default:
-+				BUG("unhandled hash ID %d",
-+				    reftable_stack_hash_id(backend->stack));
-+			}
-+
-+			oidread(&oid, reftable_ref_record_val1(&ref),
-+				&hash_algos[hash_id]);
-+
-+			errors |= refs_fsck_ref(ref_store, o, &report, ref.refname, &oid);
-+			break;
-+		}
-+		case REFTABLE_REF_SYMREF:
-+			errors |= refs_fsck_symref(ref_store, o, &report, ref.refname,
-+						   ref.value.symref);
-+			break;
-+		default:
-+			BUG("unhandled reference value type %d", ref.value_type);
-+		}
- 	}
+ `badReferentName`::
+ 	(ERROR) The referent name of a symref is invalid.
  
--	return reftable_fsck_check(backend->stack, reftable_fsck_error_handler,
--				   reftable_fsck_verbose_handler, o);
-+	ret = errors ? -1 : 0;
-+
-+out:
-+	if (iter)
-+		ref_iterator_free(&iter->base);
-+	reftable_ref_record_release(&ref);
-+	strbuf_release(&refname);
-+	return ret;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 4979bc795e..4dd4d74d1e 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -564,9 +564,9 @@ static int fsck_handle_ref(const struct reference *ref, void *cb_data UNUSED)
+ 	return 0;
  }
  
- struct ref_storage_be refs_be_reftable = {
-diff --git a/t/t0614-reftable-fsck.sh b/t/t0614-reftable-fsck.sh
-index 4757eb5931..d24b87f961 100755
---- a/t/t0614-reftable-fsck.sh
-+++ b/t/t0614-reftable-fsck.sh
-@@ -87,4 +87,16 @@ test_expect_success 'worktree stacks can be verified' '
- 	done
+-static int fsck_head_link(const char *head_ref_name,
+-			  const char **head_points_at,
+-			  struct object_id *head_oid);
++static void fsck_head_link(const char *head_ref_name,
++			   const char **head_points_at,
++			   struct object_id *head_oid);
+ 
+ static void get_default_heads(void)
+ {
+@@ -713,12 +713,10 @@ static void fsck_source(struct odb_source *source)
+ 	stop_progress(&progress);
+ }
+ 
+-static int fsck_head_link(const char *head_ref_name,
+-			  const char **head_points_at,
+-			  struct object_id *head_oid)
++static void fsck_head_link(const char *head_ref_name,
++			   const char **head_points_at,
++			   struct object_id *head_oid)
+ {
+-	int null_is_error = 0;
+-
+ 	if (verbose)
+ 		fprintf_ln(stderr, _("Checking %s link"), head_ref_name);
+ 
+@@ -727,27 +725,18 @@ static int fsck_head_link(const char *head_ref_name,
+ 						  NULL);
+ 	if (!*head_points_at) {
+ 		errors_found |= ERROR_REFS;
+-		return error(_("invalid %s"), head_ref_name);
++		error(_("invalid %s"), head_ref_name);
++		return;
+ 	}
+-	if (!strcmp(*head_points_at, head_ref_name))
+-		/* detached HEAD */
+-		null_is_error = 1;
+-	else if (!starts_with(*head_points_at, "refs/heads/")) {
++	if (strcmp(*head_points_at, head_ref_name) &&
++	    !starts_with(*head_points_at, "refs/heads/")) {
+ 		errors_found |= ERROR_REFS;
+-		return error(_("%s points to something strange (%s)"),
+-			     head_ref_name, *head_points_at);
+-	}
+-	if (is_null_oid(head_oid)) {
+-		if (null_is_error) {
+-			errors_found |= ERROR_REFS;
+-			return error(_("%s: detached HEAD points at nothing"),
+-				     head_ref_name);
+-		}
+-		fprintf_ln(stderr,
+-			   _("notice: %s points to an unborn branch (%s)"),
+-			   head_ref_name, *head_points_at + 11);
++		error(_("%s points to something strange (%s)"),
++		      head_ref_name, *head_points_at);
++		return;
+ 	}
+-	return 0;
++
++	return;
+ }
+ 
+ static int fsck_cache_tree(struct cache_tree *it, const char *index_path)
+diff --git a/fsck.h b/fsck.h
+index bfe0d9c6d2..1f472b7daa 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -39,6 +39,7 @@ enum fsck_msg_type {
+ 	FUNC(BAD_REF_CONTENT, ERROR) \
+ 	FUNC(BAD_REF_FILETYPE, ERROR) \
+ 	FUNC(BAD_REF_NAME, ERROR) \
++	FUNC(BAD_REF_OID, ERROR) \
+ 	FUNC(BAD_TIMEZONE, ERROR) \
+ 	FUNC(BAD_TREE, ERROR) \
+ 	FUNC(BAD_TREE_SHA1, ERROR) \
+diff --git a/refs.c b/refs.c
+index 4fc1317cb3..c3528862c6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -320,10 +320,15 @@ int check_refname_format(const char *refname, int flags)
+ 	return check_or_sanitize_refname(refname, flags, NULL);
+ }
+ 
+-int refs_fsck_ref(struct ref_store *refs UNUSED, struct fsck_options *o UNUSED,
+-		  struct fsck_ref_report *report UNUSED,
+-		  const char *refname UNUSED, const struct object_id *oid UNUSED)
++int refs_fsck_ref(struct ref_store *refs UNUSED, struct fsck_options *o,
++		  struct fsck_ref_report *report,
++		  const char *refname UNUSED, const struct object_id *oid)
+ {
++	if (is_null_oid(oid))
++		return fsck_report_ref(o, report, FSCK_MSG_BAD_REF_OID,
++				       "points to invalid object ID '%s'",
++				       oid_to_hex(oid));
++
+ 	return 0;
+ }
+ 
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index c4b651c2dc..900c1b2eb2 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -105,7 +105,7 @@ test_expect_success REFFILES 'HEAD link pointing at a funny object' '
+ 	echo $ZERO_OID >.git/HEAD &&
+ 	# avoid corrupt/broken HEAD from interfering with repo discovery
+ 	test_must_fail env GIT_DIR=.git git fsck 2>out &&
+-	test_grep "detached HEAD points" out
++	test_grep "HEAD: badRefOid: points to invalid object ID ${SQ}$ZERO_OID${SQ}" out
  '
  
-+test_expect_success 'invalid symref gets reported' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	test_commit -C repo initial &&
-+	git -C repo symbolic-ref refs/heads/symref garbage &&
-+	test_must_fail git -C repo refs verify 2>err &&
-+	cat >expect <<-EOF &&
-+	error: refs/heads/symref: badReferentName: points to invalid refname ${SQ}garbage${SQ}
-+	EOF
-+	test_cmp expect err
-+'
-+
- test_done
+ test_expect_success 'HEAD link pointing at a funny place' '
+@@ -123,7 +123,7 @@ test_expect_success REFFILES 'HEAD link pointing at a funny object (from differe
+ 	echo $ZERO_OID >.git/HEAD &&
+ 	# avoid corrupt/broken HEAD from interfering with repo discovery
+ 	test_must_fail git -C wt fsck 2>out &&
+-	test_grep "main-worktree/HEAD: detached HEAD points" out
++	test_grep "HEAD: badRefOid: points to invalid object ID ${SQ}$ZERO_OID${SQ}" out
+ '
+ 
+ test_expect_success REFFILES 'other worktree HEAD link pointing at a funny object' '
+@@ -131,7 +131,7 @@ test_expect_success REFFILES 'other worktree HEAD link pointing at a funny objec
+ 	git worktree add other &&
+ 	echo $ZERO_OID >.git/worktrees/other/HEAD &&
+ 	test_must_fail git fsck 2>out &&
+-	test_grep "worktrees/other/HEAD: detached HEAD points" out
++	test_grep "worktrees/other/HEAD: badRefOid: points to invalid object ID ${SQ}$ZERO_OID${SQ}" out
+ '
+ 
+ test_expect_success 'other worktree HEAD link pointing at missing object' '
 
 -- 
 2.52.0.542.g9473a8513b.dirty
