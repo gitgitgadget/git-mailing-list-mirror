@@ -1,110 +1,99 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A16D1EA7DB
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 13:18:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767964705; cv=none; b=UhduNdhQ8by5nop2gr/3OzgFU0rkgRkvYEvMZLxh4hWp96PKw7k11qLLljU8PwaktkcfbK++WpxKIJSD0V1Z6l5BM+JSA1fo/6u+0OqbKVtnT4gglA+JJQrinGMjRZXGeb2G2Mb4IrAJrSPMvMa+1oRKJdcMeXCr3FyIFsX+LHc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767964705; c=relaxed/simple;
-	bh=SDSSxlaXbBn45C+KjL5hqejMEH/n6Xi7Be4C7BpV2Kc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PguVGOBfhQGQEPXzQu8cJjjgvpCT8K/sWReKwG99OO2sjv5ZWYmlfCWxLjq52fm7JRdelMQx3tMRmVBscHUqtCubLkQMZbhNHI7wAFFlc80zunyHflWLdmycDmW393D0loWBQMEWqA7TYZGvF09Mw/NjAo42VDZiRft6zzh+J1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZwdQmZue; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB8235CB76
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 13:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767965648; cv=pass; b=ThF7jPuwlfSs1Ed9jC9ci1OYG1qBfuTX/UiwkQidj1aaEoZZvB0crvL3zusO1CL5XB0DiMr7ASltHRYPSFM7O8S00W7ryqNVqBAYMUPkuWbhe3NfwHsIVKo5DWe4HyeqSQPyONUk4xhX1oglmkjFBTT/5R2Bar294gtOr2Mu6Sw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767965648; c=relaxed/simple;
+	bh=3caZk21Io00TMmzu9rzBxrvKv3XJCnJxSKfueOrrDms=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X3CkPMwvbqHyllNPH3dIAD4l/HKw/HjuDu1q3BCvbw3VYvlz0sFlpLqxLB8/wELAVfHZWLUBFudzkKl1S4fNA0L4sRqWegwFf+3YHpyoDDz4zaIPI6dF/vDXtR/F3TyVLbJ8D0p56wxc+tSI2DuuX61p8mWwlsUjf0wPUoP1Tjc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=T3bbl1UK; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZwdQmZue"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1767964702;
-	bh=SDSSxlaXbBn45C+KjL5hqejMEH/n6Xi7Be4C7BpV2Kc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ZwdQmZuez6EvVb+Dm49eQN/QU9RqZ0m8gtD0VZj1i6KgGQAZapC/wkKtWUb2ei5SD
-	 l1mFAKiXBqzjAww4dk0bUWaoq1g1ZuLJFA440oJojH8F1mgFUbjXHBzHaleBKWWJPf
-	 y/nwX0ltBHFrSiQyJbXAIUlXYVnkrcMvIVRTnUlrbxEmSBKXqDH/G2L60RsDAG3wWk
-	 pfa8RkpgaXziSQ63EJMMumVqEMkC2+G59umxn62tlMnI5+85HDVYj2fGZIfNhO7JOp
-	 tCsD1s+dhj6Ym0DUHQDD94hvdjZwSVwe3hHvOr9H5PalxhAA1kBclY5qZDxa4qMMWh
-	 liIH179/lGUFcnUFDSA6N2PDFdXTHbEho4Ud/rp2Ksej8YQ1nzojv0OeEFNDQtfzwb
-	 nvEOIEXKDUN9XEPVXJY7xaCAnzLUacgJEaU/LlWdt0cXDuC7v218yhcjn0zTRuKTLd
-	 XlCkxHQECS/NN8uBPXIVU9H7IKslS0VkpL9dgrcaZ+AeeT0U2kb
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8a11:cf76:28ff:b0fa])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6660B200B5;
-	Fri,  9 Jan 2026 13:18:22 +0000 (UTC)
-Date: Fri, 9 Jan 2026 13:18:21 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Simon Cheng <cyqsimon@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Feat. req.: add a flag to `git clean` to also remove ignored
- nested repositories
-Message-ID: <aWEAHQLzwTxCpD5Q@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Simon Cheng <cyqsimon@gmail.com>, git@vger.kernel.org
-References: <CA+itcS3-RQ=ESqcWj0Pkw=N4e4gwaz2fp2xH2M1MPXQXaMDmCw@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="T3bbl1UK"
+ARC-Seal: i=1; a=rsa-sha256; t=1767965634; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=MQwiRe5CnrSJu0imVThpLMUe96tINXeDFRcvC307sLaClrk+LeMab626ZzBjuLiGZGMn+es6P1j6GCd8ukDhDaZ85ur7qvnsub82WkZjSSxrqz1rgmE1YSAmDYqVb1ns8y6477ISzmb4Uo/UoxC4W9GUQDLzOmTt3dmkMEcF4uM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1767965634; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=3caZk21Io00TMmzu9rzBxrvKv3XJCnJxSKfueOrrDms=; 
+	b=fHKjX/xMQBv0ADwAzuKaFbTNJAT+rYFKRQH1OC1HX52GZcKFm/9HwPHLoh6NWZAP1XC0+nKqudDmPtcZQeWF7lWXfbEFy2Ys2tQDi5r2Q8Jyhy5hK2Xc+tgdRXtOmhVgILB6Zs+Vl6OBovMOf6YwcogskVKZeqpJMJqHmPEX5Hs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767965634;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=3caZk21Io00TMmzu9rzBxrvKv3XJCnJxSKfueOrrDms=;
+	b=T3bbl1UK9zLwHpFEAbKt1palZ4iFQPX15bIm58DpD2vkHGD4ENU0g2z4QfK4FTth
+	cbV1Yu2XTxmzC+F7fpHATarE8VdjocCo7242N3Ql8a29gHE+hYna0yT7hANt0xwWa+P
+	OWwpXgfH4k4hXPtF7cDPDC2gzUwT3hmH8JLENH5o=
+Received: by mx.zohomail.com with SMTPS id 1767965632332169.28765048705452;
+	Fri, 9 Jan 2026 05:33:52 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] ws: add new tab-between-non-ws check
+In-Reply-To: <dcd87fc4-6514-4146-9e44-1276bd739d2f@kdbg.org>
+References: <20260107013051.312291-1-adrian.ratiu@collabora.com>
+ <d3f26459-d828-4d01-8c38-ce754e5cc576@kdbg.org>
+ <dcd87fc4-6514-4146-9e44-1276bd739d2f@kdbg.org>
+Date: Fri, 09 Jan 2026 15:33:47 +0200
+Message-ID: <87h5sux64k.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0epUbXcIOV3Axzok"
-Content-Disposition: inline
-In-Reply-To: <CA+itcS3-RQ=ESqcWj0Pkw=N4e4gwaz2fp2xH2M1MPXQXaMDmCw@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+X-ZohoMailClient: External
 
+On Thu, 08 Jan 2026, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 07.01.26 um 18:33 schrieb Johannes Sixt:
+>> Am 07.01.26 um 02:30 schrieb Adrian Ratiu:
+>>> The check is a bit complex because we want to detect places where
+>>> a SP was intended (HT can expand to more than one display column),
+>>> so we need to count both the display columns (col) and the string
+>>> character columns (i) to determine if a HT looks identical to a SP
+>>> or can cause confusion.
+>>>
+>>> Highlighting support for tools like git diff/show/log is added, as
+>>> well as git apply --whitespace=fix capability.
+>>>
+>>> The middle section of the line used to be assumed non-highlighted,
+>>> which is obviously not true anymore, so we split its logic into a
+>>> separate function named emit_middle_section().
+>>>
+>>> The new check is enabled for Documentation/**/*.adoc, where these
+>>> kinds of mistakes were seen in practice. It can also be enabled in
+>>> other locations where it can be useful, by adding to the relevant
+>>> attributes file.
+>
+> This makes me wonder how useful this check is. Yes, I has happened that
+> I didn't spot at TAB that should have been a SP, but perhaps a handful
+> of times in my career. Compare this to the many times that the other
+> kinds of whitespace errors happened.
+>
+> Applying the rule to all documentation files is questionable: I can't
+> format a table with TAB characters between columns reliably, because if
+> a column happens to be 7 characters wide, the TAB at the 8th position
+> would be diagnosed, but I certainly do *not* want it to be replaced by a
+> SP. Yet, I might want legitimate cases outside tables to be diagnosed, so...
+>
+> Maybe I'm too much of a devil's advocate here...
 
---0epUbXcIOV3Axzok
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'll let Junio decide on the usefulness of this check since he's the one
+who asked for it. :)
 
-On 2026-01-09 at 03:50:30, Simon Cheng wrote:
-> Currently, running `git clean -dxf` on a repository that includes
-> another repository under an ignored path would skip said repository:
->=20
-> $ git clean -dxf
-> Removing foo
-> Skipping repository ignored-path/repo
-> Removing bar
->=20
-> This is to request the addition of a new flag to allow altering this
-> behaviour, i.e. to make `git clean` remove those repositories too.
->=20
-> For me, this feature is relevant for building `*-git` packages from
-> the AUR, for example https://aur.archlinux.org/packages/paru-git. By
-> default `makepkg` would clone the source repo into `./src/NAME`, which
-> creates the aforementioned condition. Without such an option on `git
-> clean`, cleanup after build is rather complicated.
+Maybe we could improve the heuristic to detect tables, for example
+patterns like a\tb\tc.
 
-Does this work if you use `git clean -dxff` (that is, with a second `-f`
-flag)?  I do often clean up ignored repositories that way (and it's
-documented to do that in the manual page), but I'm not sure if you're
-maybe doing something a little different from my workflow.
-
-If that _doesn't_ work for you, would you mind creating a quick shell
-script to demonstrate the problem that you're seeing so that we could
-provide better advice?
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---0epUbXcIOV3Axzok
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaWEAHAAKCRB8DEliiIei
-gf7VAPwKHocsvRjubgc5kTX/9LMfj0l7GG+PfTMyXhP+nnnoxgEA14SqVk32Z/ym
-U1SYB5JLUXYHYuxMt3dqR2xwJ5pu6wU=
-=Kdn8
------END PGP SIGNATURE-----
-
---0epUbXcIOV3Axzok--
+I'm ok either way, just let me know if I should pursue this further.
