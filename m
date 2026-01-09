@@ -1,84 +1,86 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D76350A3D
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 08:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A21D350A26
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 08:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767947753; cv=none; b=Jf/EIAIVDE0whC+nATEbZha7okNNJFcFcgs33XCpPGpqjS+buPmED0zXyvMJyAXPwkKOFBI8xq4ph+lwTOBgIT/c+mOpJZkR4VOXU79PYb/T+qqmF1SaAl+lxtr3HjnxnWUIiM4OIMAJkO8R+XAz7ojWT9cK7hbOX1H4ZioQKSk=
+	t=1767947757; cv=none; b=qb5aImLmgnv52ny0lxllW2R+zGefLYG9/dIw91Esmig2BiPJRNDHU1atosQprT4GEvVUdOeMjoGIQRoVDXcooEDxJa44T/hVDA7RyzVTb95it8dkkRLwcZ95xhHmLAgRQEQXNTMJ9TOMrC++92Zx0XqOItJRIluqbRoPq90eqsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767947753; c=relaxed/simple;
-	bh=q3bUK1Xj+qddPkg/p6VIM+Lws484OMengRkD9zPERas=;
+	s=arc-20240116; t=1767947757; c=relaxed/simple;
+	bh=FWbAYy8nAHaCZ0pEf4LT+xM5lJqZmCPGOcKZP3Cd0hI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VQMrqXimWfpeMalc+f9Ly6tGSILYLdQfP4Ypd6f5TUu9cTLiiL50px2pBzTABRtDM7qncMZJIOaNpNIdHrOc8ySTQw4UCWGA7zg1vLw43surMzsg8SDT6MvMQZcYNkfNPVHpKY3EHFSsOOHlJXg61oPFuey1FkznVRsy+3byrbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LiAI0hZJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tG49zY7i; arc=none smtp.client-ip=103.168.172.147
+	 In-Reply-To:To:Cc; b=aykzR0KE6sqPs5ccbcS+THcnO5CKZRF1LFGjFuaQSejndLyJjYZN6RFGcUWoSUYSoC3CKOM4YfaSvmMbJSK4RBJgv2dQe33gfIWMfzkGDu9RsTzzGaQaL/z5xvIgX3GrPKZAI5N/rIcgzpjhW0lYjvLoTTeIwJHQLWyQkN9hBV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PxyPxOju; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o42zVrxN; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LiAI0hZJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tG49zY7i"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id D1453EC00BE;
-	Fri,  9 Jan 2026 03:35:51 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PxyPxOju";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o42zVrxN"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C5ABD140005B;
+	Fri,  9 Jan 2026 03:35:53 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Fri, 09 Jan 2026 03:35:51 -0500
+  by phl-compute-01.internal (MEProxy); Fri, 09 Jan 2026 03:35:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767947751;
-	 x=1768034151; bh=XayjS+KOTahc3aQ28u/R6rzPUV+f2Jt0NETYyvYDdBc=; b=
-	LiAI0hZJ0DTyFkZlsYPfEUJEa3PNfWxY34BsN/xPGN7qCcRGcbMt7RgfeDEXWz9b
-	6n1x+ZApL4vlTBvBT2jvDTUQ+hK2hJMwRZQjbxLGsfY2w5QEVddE9EwxpJishMKJ
-	J4ceYrY3M6SGTo4ZnK9it2u7DkUraVUkeeV7g5wKYCua7c/9MiVzA8S9/fz1/5Un
-	hQ9KjKvyZkiaVde5/MDrJQ7fuhrxxgm3R9hMZmMvTWoWHol596U98URZW+XqlML/
-	kSiX0+dbaycRBTyBpLCORffC1uzVyA8pP7lo6e/LMYg3TcHekuwuTaygWQIDQhCG
-	kItbL0FfswNmve3CkTJk/g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767947753;
+	 x=1768034153; bh=EDsQMeqO2wYue8rDI4Z8vssyNeGxOxlm284pRV1ibes=; b=
+	PxyPxOju9OwKea2MRJ2xCnngpuMFUP29cNKGBBLlCrmclPXD71XZiywtDwhCbSZ7
+	AkeEAYD/7AEr28usudR5xi7+6hzTU7OIRBCQwrOjF9EKy/z17PZMfWpvCtRFjNlE
+	KtDhkw6K0Ohfq48ZmJk3+i4cFaxqKzxTI6y3mCLKHs7DwA/V260ZX4ekZRcca+EY
+	wQsKJ3pV9S5H76XrcBB1hQC6C59PUyyluIBP8h3NFgQghY7OptF84epq186LJLus
+	1fxuRfSYLsJ1wgFWzfIoSgBsXdz44nAxRssEBflsKJ6Ivv4I9WZCQqAKefK4efNC
+	UBD6MvtocTGoKjPb7FDldQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767947751; x=
-	1768034151; bh=XayjS+KOTahc3aQ28u/R6rzPUV+f2Jt0NETYyvYDdBc=; b=t
-	G49zY7irzISMKB6Mk/kf3jW5PmRrK3Jh8nrRS/fU8y0XRXgL5WWiJKT+Pfnls9UW
-	VjGdQzhlZC1GZnzJbZJ5SVNYmA0NQ7mumfKaefoPDoa+fAJjs2Us0R2jNGTqiI4W
-	4NswF62MQ1iooPtT/pAh6Id7t/p2DqrE8LDsubyPkwzOE+ZcX1gx3tAZeuZ1D0s/
-	mhb4Km0fpX2lJSxuhYTAhZTFqlawcMY2U98k6RooiwghlotFc7BbOskfe+hBRlVB
-	dD6CGHg+d/wilPiBPVtxMILX6Q2BC2gemYWzSWcjVKrwqCYQoUJmsGx8s9uAEulZ
-	7aeoVqBygNxhly50UCijQ==
-X-ME-Sender: <xms:571gafkCpF4pwzSEePV2Zoa3yiSwt-rKJz730Jaz1Kwaif27k2Be-Q>
-    <xme:571gaepkPg84lcGLUI2IjKPaUROcxF9XW1KtgyqtxjGAYscPLig4xYXaT12RjxFOu
-    D2x9gjNcynkG6HvcSacDBlIz0BCeCAijtN9MXUVDYR0BuozJpwbFs8>
-X-ME-Received: <xmr:571gaRBtREggOdrZnkWpDdI4J52Bg3WVgLV9wDpi0GwU0USl94xPvnZWc7JYeW0LjoKQEiK2062_balNgjs2VxHyQI_LyPP6Yz3kXLclDw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767947753; x=
+	1768034153; bh=EDsQMeqO2wYue8rDI4Z8vssyNeGxOxlm284pRV1ibes=; b=o
+	42zVrxNOc9lA7gywql9pAHzljG6tpgfv4N1rZYxb6iXu4uRM+UH2/j5nqcQxGluJ
+	AL9Zg1gwZjCuUYx7SG2ro04Jhqg6HvBl3+QA0YHRC9y2vk0IXdvEmHc1VAfjdOCX
+	6sZddWQw8lvy3ArR5lCualmTENVkGcvBiG4wODnBWKWvgCnYbdYUgChVUV3oh1Q0
+	JuDmrSdtE7oy4qsh+XvT1WdzBzh+PBW+R0hAJRXMSrMwhyvdEmBFJqEeNhTgAuzx
+	paKiJa3bFpixFiPRz4BMn74DusWrafdIRVQINmNPWZb8nlqLJBCBwFVo6wiMwG5u
+	d5qPSDG86qKCK83+x+D0g==
+X-ME-Sender: <xms:6b1gaVk28LsqlbTNUmvpjx6wgYUS7BmaNPKzx7vYRF55yAhFIAn8UQ>
+    <xme:6b1gacqEWNu3-7Z-yUIeUcpdirWAP_ahDpIGnRg_6yWaeHCMxj1F0r4CpT4ulmC2D
+    OTPsmE43Wh4Cd-xED98f3BAL0f66Ry_HhE2qPbkUM-foa-k1Czy8g>
+X-ME-Received: <xmr:6b1gaXA_h0qixQFB-Un7KO_68Voycb11DMdCnkn-pVTZNSKCNMFecBTS03UukAyyyvwuS0Nh3Gchero9jQ_ZHSuva1lTZTvixUvo2pnlcA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekfeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivg
-    guvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    shhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfi
-    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:571gaRENjdy7xXDNzMa3LQmjKVH-QuW51IOJmx6NBndMEare5itzHQ>
-    <xmx:571gab1sArITTg8zPPyV4L0CgajI0Vd6cxd6vwjdWueS9JRBquAE6w>
-    <xmx:571gaSPs9EfDmf2dRVFYfvj2FrlFxg9GYmLRon0ZGI-UQQOVimHcRA>
-    <xmx:571gabYKTYP6ySmW6mASxvgWBkrnI0Q1AiKecjaE1ahZfFqItyONtQ>
-    <xmx:571gaamcXMiy-NjDYkppVo0U4bnNmeNxtoP8Kuzcklzjah0uVQsN4sLo>
+    thhtohepmhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopehsoh
+    hrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniies
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
+    rdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepshiivgguvghr
+    rdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrd
+    gtohhm
+X-ME-Proxy: <xmx:6b1gafHfggzIJn0681VsxaPgE0GYKxVjtNyUzTCGcT4D1xZREEg0TQ>
+    <xmx:6b1gaR12op-87hYuIvR1QpmajrXKcPfBPVBr6vKyEKPOtMPoqidw2g>
+    <xmx:6b1gaQMqBSL6o1YA3OzloYdUb4Nplefd9ReWlBSALYD6BkNmQgKGbw>
+    <xmx:6b1gaRajTj5efAm-D8LP62YnIoL_0iJ2loPFEtZNRj-iwuoK0FCBow>
+    <xmx:6b1gaQkCm8ySnmFY6EC0L59nH2mV6UuAAwq0GtpQcytbGJteJVDq8wMG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 03:35:49 -0500 (EST)
+ 9 Jan 2026 03:35:51 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 537201c9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 9 Jan 2026 08:35:49 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 57b14fac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 9 Jan 2026 08:35:51 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 09 Jan 2026 09:35:38 +0100
-Subject: [PATCH v9 3/7] replay: small set of cleanups
+Date: Fri, 09 Jan 2026 09:35:39 +0100
+Subject: [PATCH v9 4/7] replay: yield the object ID of the final rewritten
+ commit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260109-b4-pks-history-builtin-v9-3-8766101814c6@pks.im>
+Message-Id: <20260109-b4-pks-history-builtin-v9-4-8766101814c6@pks.im>
 References: <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im>
 In-Reply-To: <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im>
 To: git@vger.kernel.org
@@ -102,63 +104,62 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Matthias Beyer <mail@beyermatthias.de>
 X-Mailer: b4 0.14.3
 
-Perform a small set of cleanups so that the "replay" logic compiles with
-"-Wsign-compare" and doesn't use `the_repository` anymore. Note that
-there are still some implicit dependencies on `the_repository`, e.g.
-because we use `get_commit_output_encoding()`.
+In a subsequent commit we'll introduce a new git-history(1) command that
+uses the replay machinery to rewrite commits. One of its supported modes
+will only want to update the "HEAD" reference, but that is not currently
+supported by the replay machinery.
+
+Allow implementing this use case by exposing a `final_oid` field for the
+reference updates. This field will be set to the last commit that was
+rewritten, which is sufficient information for us to implement this mode
+in git-history(1).
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- replay.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ replay.c |  2 ++
+ replay.h | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
 diff --git a/replay.c b/replay.c
-index fc7186ef09..313fb2a768 100644
+index 313fb2a768..20560e792b 100644
 --- a/replay.c
 +++ b/replay.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
+@@ -338,6 +338,8 @@ int replay_revisions(struct repository *repo, struct rev_info *revs,
+ 					   &onto->object.oid,
+ 					   &last_commit->object.oid);
  
- #include "git-compat-util.h"
- #include "environment.h"
-@@ -79,7 +78,7 @@ static struct commit *create_commit(struct repository *repo,
- 	obj = parse_object(repo, &ret);
++	out->final_oid = last_commit->object.oid;
++
+ 	ret = 0;
  
  out:
--	repo_unuse_commit_buffer(the_repository, based_on, message);
-+	repo_unuse_commit_buffer(repo, based_on, message);
- 	free_commit_extra_headers(extra);
- 	free_commit_list(parents);
- 	strbuf_release(&msg);
-@@ -91,16 +90,14 @@ struct ref_info {
- 	struct commit *onto;
- 	struct strset positive_refs;
- 	struct strset negative_refs;
--	int positive_refexprs;
--	int negative_refexprs;
-+	size_t positive_refexprs;
-+	size_t negative_refexprs;
+diff --git a/replay.h b/replay.h
+index 84bc8a7a5b..f8f9889112 100644
+--- a/replay.h
++++ b/replay.h
+@@ -46,6 +46,22 @@ struct replay_result {
+ 
+ 	/* Set to true in case the replay failed with a merge conflict. */
+ 	bool merge_conflict;
++
++	/*
++	 * The final object ID that was rewritten. Note that this field has
++	 * somewhat special semantics and may or may not be what you want:
++	 *
++	 *   - If no commits were rewritten it will remain uninitialized.
++	 *
++	 *   - If a thicket of branches is rewritten it is undefined in which
++	 *     order those branches will be rewritten, and thus the final object
++	 *     ID may point to a different commit than you'd expect.
++	 *
++	 * That being said, this field can still be useful when you know that
++	 * you only replay a single strand of commits. In that case, the final
++	 * commit will point to the tip of the rewritten strand of commits.
++	 */
++	struct object_id final_oid;
  };
  
- static void get_ref_information(struct repository *repo,
- 				struct rev_cmdline_info *cmd_info,
- 				struct ref_info *ref_info)
- {
--	int i;
--
- 	ref_info->onto = NULL;
- 	strset_init(&ref_info->positive_refs);
- 	strset_init(&ref_info->negative_refs);
-@@ -122,7 +119,7 @@ static void get_ref_information(struct repository *repo,
- 	 * the second because they'd likely just be replaying commits on top
- 	 * of the same commit and not making any difference.
- 	 */
--	for (i = 0; i < cmd_info->nr; i++) {
-+	for (size_t i = 0; i < cmd_info->nr; i++) {
- 		struct rev_cmdline_entry *e = cmd_info->rev + i;
- 		struct object_id oid;
- 		const char *refexpr = e->name;
+ void replay_result_release(struct replay_result *result);
 
 -- 
 2.52.0.542.g9473a8513b.dirty
