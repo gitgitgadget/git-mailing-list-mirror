@@ -1,71 +1,70 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBA536A022
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA713369211
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767989139; cv=none; b=ulzLJfBeXUitvJbO3nOztJegp80zGK9vzLeq9uc+yPXbdyiCb4AyIDpsEuzFL8vZ/nX6BRnDbReeTbgLV4FZBXU5sXbNlbP5UUeafxRUxegxArLhkvH6kjw5o740Itsqbm60dr6A7yEwzckXBWPveZ/SlMUBGFh5wh1mrahQyMg=
+	t=1767989140; cv=none; b=NUYLY0slkRc0S6QOmablmMIRngnEv/qHMTXa3eURNU+o0nma3mEJNlVIVGd8O8EPzGuY7lTMRNcyCW0PRqHOw3xi2Rz8Bpb3IvJ0VQSBMTkwrimsrRZPxdaWx+nkiv9OMKSQHgfYlDASBzmTJYWXHGHxI0pnKCbohoz03cjPe9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767989139; c=relaxed/simple;
-	bh=9b46Mb73Y7Zax/2EZe/Iej8RoGP33qNmU+9tzgvST2Q=;
+	s=arc-20240116; t=1767989140; c=relaxed/simple;
+	bh=xmRj2o1zdJYHskrnh6vYUdHR0BaZEU2uki7Ja0ciyj4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=qjdPQ3juiHTxMbYrM41io6W0J+xqhgPY6f6ha7qjJN4ZagNKYhCCMAcXJrt+YPqClyg1NLahIORoMgrYQ0+c487f735aknYuuO3cE/yUfeECtLxJGzD+p2MJs8kMtIChxrBrb/qU/f/cLZz5vc3Gm24aVQ9eSKu6ysL1u8GKLxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pe4aUIPp; arc=none smtp.client-ip=209.85.222.173
+	 MIME-Version:To:Cc; b=thiAIJhZm3oea/GBDPQgrGBgzHu1FTa5YTcHIWinmmbjrW44foiu+b8lLFChKyf+y2dxg47ILHUBZqhFVbYWhwq47VkFucObc1V+TEXMcAyDbkwb0Ug2XYPu6yPzi9lqNPC0tasmrQD+gF7Wr1VsbBz+Ts2pzJ+toDd3gOUdg8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I/Z3dcrI; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pe4aUIPp"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8b23b6d9f11so488967585a.3
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I/Z3dcrI"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8bb6a27d3edso463496785a.3
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767989136; x=1768593936; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767989137; x=1768593937; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zV8OzHSFcIceZz+YHEpJtwlUrOcMv4E5jGSHlfDr+Jo=;
-        b=Pe4aUIPpnXGg6/o9NuGTt+uHWT6PCh/K2XrkcPYUVcxoRNNzB0n12N1MkhuHZjjG0n
-         fMcX+fTUVVPs/umgoFtjzP4kn/3Kx33zvJySGbfwknuxN+iY6ESbJRox14J24M9dzGP+
-         aspdXBGt4oroZQZnNH+TJDMt1OCA13Lu8Iwt9QXI12Fpkapz2F51gX2Rfd7ZTiACeJhu
-         WsH9Tf6MLCfDImrfeiZOAE71J6Q93tZ3rQaQc38EJCL2pg0hQjgNJA7zpMmmTnaJgAD0
-         iPJQnnst+SwLNUFIWxICf/13qZYIdnHLeo6LqAHCpjlVBdhxoqmwz0gIbINcIuNEk4fO
-         EoaA==
+        bh=j5Msj5vV3i+oKs/g4MUQND19CRj0aLwYGgkEiNIlm74=;
+        b=I/Z3dcrIqZNN9zF7BaUusxccKwRI4y3lTSw4JldBKKPk9XZueudyIvB9KVwXTRtHam
+         FSckAU36cMvVujxtL900DSz7qbK7V7LFnGeO/UEq+tYkjkXOUmIpuOnqJuVzTt6cFcs4
+         IL+DHqY7ByBha+Yjmag18G+ALRUZ3INPfy85j0oCF5jUre2/TK9X0yH7EV7Lx2jn349I
+         2BReXjvI5vh4wTfzyqHp2Ck0Nwjqk/86MuWfN+KWtwgrRbQ4GB/YxzFkoUCMfBICOH8Z
+         hyCGgErGzjJ5wHkIZvAd92NoKjMhSmoQRciVwqXQvs588NQdyboZ7QpYKrXJYxzj5A0f
+         zpTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767989136; x=1768593936;
+        d=1e100.net; s=20230601; t=1767989137; x=1768593937;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=zV8OzHSFcIceZz+YHEpJtwlUrOcMv4E5jGSHlfDr+Jo=;
-        b=bbsIRTHLClVm8rbQS1RQCuX5r7YAqxnw53LsfsdnUrY7ON7SCyIrbp9A4wWE2yYi7k
-         i89TlrXiWN0TCqKqvm2M74595caLtJD3hsFVagsd9al5JblY1KL+C+YNKKbcIL7v6Lpn
-         fLxpgLCGV8MoaqJAFFm0JoQ08Q7/nIppnMsv23ZCYGhmtAnfe8jku3FKkjhxB+BrG8vS
-         xbuQWmJGAdnrqGwktG55D477x2men9QHyZxu9RhfdPXSEJrX+9hK0UQcbieXIyfYcYlc
-         1VWjvzlghEEWRH22NCrOw63pThFuc/bWJ+9BftrmtkgHkdD4OmqrePLxwiDMUtSbpm3Y
-         HeGg==
-X-Gm-Message-State: AOJu0YzLXeeemDFVL+3TO46eBFfDD+6t22Bcn7Bq2WilIiUpvtwUoSrL
-	tokAwWXrMLmpYNeA9J4azep6EFSaXUfOppF7oPWMM1GmKX5aY67kNwgkNf2EIKV2
-X-Gm-Gg: AY/fxX4eHTyZwCFtVuqDAhzFuHksdHZwd3UPrR7YDsYWGzG9CUFJjSUDNkjAZ1kOc83
-	9eYIrcD6gkjd0GVOUVcWxTpnv6Dk7dBWw3zSkPTbS01gsOpMgb/d/S0zLHb5mY5N9iswt/KEVKJ
-	let9Il4h6etJKCRQbGNNl1q1lJTJo+iReCEwnLraMIChqqfoFyAjkdYkcdET3e+Qa8+I/PuRwZW
-	Sh/0YJetVMR9GtpnSL7EE5xoFeLbhSaz3qq9SSi9yQk5jyNtGtVUuH8XUGEXmN/q58gzYPXH+a0
-	e1TYYbFQYP8aS1DniXhrHPf4HDWxSpyxUdmkKxPe4meNJVIPOZevE5T2gP6SppmC6iXu1Z7BbZk
-	s7RrWpzTTMZIaL63hThVURTahJ5pq3c9JrBXzN6k6Raj3K9sYguQD2+mJyyA49PDGJ9IFUZNAvj
-	hbKpBfFlPp2rQQ2GSHM3W6nWk=
-X-Google-Smtp-Source: AGHT+IEXjmRJU0Kb52gLPM0fszOyv5aVall1icbfBVTn7p+4rIiizpG5gfBKri/c+75Cp+wnNLrYJg==
-X-Received: by 2002:a05:620a:408c:b0:8b2:1568:82db with SMTP id af79cd13be357-8c3893925e9mr1320653985a.29.1767989136387;
-        Fri, 09 Jan 2026 12:05:36 -0800 (PST)
+        bh=j5Msj5vV3i+oKs/g4MUQND19CRj0aLwYGgkEiNIlm74=;
+        b=jhX5QZRE0lx39ALWJUHUAFrbyW8nf+fHvm4TWouYxgFhM+iVWucIlqkvylnRKpnytV
+         sHzHRPZnDrEVTOICzXAK68Ff5v8aoaJ6AbuYIyu3dJ0yu+VdxPKPFzNb0pORyXi1anVM
+         BMr6AguGb9EFV83Z81iA/QGM+PhepEDqfS3coeb93b/DSS5is6//YOZNemyhS4zUGWin
+         dmSX+qn57engEBBUzJVk1Fd2Es/NcYXst623welkavyrNUnQt9BDBBgxVvZ1kKZHxko8
+         b2zBrodaeS+6NLlC6l9JmwfCR7u0Jf2kDqT2GygC8LO2CCOsMqN6zHKrFGO5NVy8DfMY
+         5rgw==
+X-Gm-Message-State: AOJu0YxSUPXtXesF//is5C5xE+AOOtguDTQIvUdayzPd6f5zIa9J5yFt
+	hXDMNMqyls2d4+W3Z7FfJLc+Ae+RfFeI+dKJSQPDWW2mnrxo7tb+uhwcjnRFYJi4
+X-Gm-Gg: AY/fxX5kUqvqrvD0rk67OP/9IDhM8JC8TY0onsSU3Sq/S7Ec94KvIj3FlpdBepf3757
+	dSt6ljJbrPpvtaCh/15zn1gEI6OwvAzG8Sroe3DjWEaEGKkMWN3VA2MXL7xYkjVEvGYXOTOBMjI
+	XY3K23wFUb0Gv7C41QbcyGbMD+3VuNZnCT2cUG8l4BPiR+ofQfKfk4mrdmzITnxCm39ZK8SlHYX
+	HX0xniGVarujI3ImIOST62pG57XdltZzyRLG3J4ggjcqbP1txw50aJsubJO7PQzkmIXXT6HKTP+
+	zs+Lh5MXzkQ6y4BzR4VZ55Byzj8cDh7hu3RtbNtEpnbBy1QAUUMdyPAJXcS9TwpE7zXdVZJ/W0x
+	S1gEDCI+4dmgcsVrX4mO1Nud92+0hPKxg8VMusFDQnOvd3BKOi04XX6bFicLZfJ11msdSXGnXz7
+	wfDy/5Pp7q+Q18
+X-Google-Smtp-Source: AGHT+IFO9XTJehhZn9GtRbbjuBH6KMMcfi2bHUgQZaEN4j8Toplc3FXGSVEMYdZToGlHsWmRBqxTGQ==
+X-Received: by 2002:a05:620a:440a:b0:8b2:e177:eca7 with SMTP id af79cd13be357-8c38941c5e0mr1464380485a.65.1767989137425;
+        Fri, 09 Jan 2026 12:05:37 -0800 (PST)
 Received: from [127.0.0.1] ([20.161.67.219])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f51ba4bsm886339785a.34.2026.01.09.12.05.35
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f4b917dsm928816585a.17.2026.01.09.12.05.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 12:05:35 -0800 (PST)
-Message-Id: <fb6aa461da7c60db07950d19a453cc75d8ddefcd.1767989115.git.gitgitgadget@gmail.com>
+        Fri, 09 Jan 2026 12:05:36 -0800 (PST)
+Message-Id: <40c3f7f36e945c49cb8c86a431cdcca2d728ec82.1767989115.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
 References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 	<pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Jan 2026 20:05:13 +0000
-Subject: [PATCH v2 16/18] mingw: try to create symlinks without elevated
- permissions
+Date: Fri, 09 Jan 2026 20:05:14 +0000
+Subject: [PATCH v2 17/18] mingw: emulate `stat()` a little more faithfully
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,91 +83,56 @@ Cc: Ben Knoble <ben.knoble@gmail.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As of Windows 10 Build 14972 in Developer Mode, a new flag is supported
-by `CreateSymbolicLink()` to create symbolic links even when running
-outside of an elevated session (which was previously required).
+When creating directories via `safe_create_leading_directories()`, we
+might encounter an already-existing directory which is not
+readable by the current user. To handle that situation, Git's code calls
+`stat()` to determine whether we're looking at a directory.
 
-This new flag is called `SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE`
-and has the numeric value 0x02.
+In such a case, `CreateFile()` will fail, though, no matter what, and
+consequently `mingw_stat()` will fail, too. But POSIX semantics seem to
+still allow `stat()` to go forward.
 
-Previous Windows 10 versions will not understand that flag and return
-an `ERROR_INVALID_PARAMETER`, therefore we have to be careful to try
-passing that flag only when the build number indicates that it is
-supported.
+So let's call `mingw_lstat()` to the rescue if we fail to get a file
+handle due to denied permission in `mingw_stat()`, and fill the stat
+info that way.
 
-For more information about the new flag, see this blog post:
-https://blogs.windows.com/buildingapps/2016/12/02/symlinks-windows-10/
+We need to be careful to not allow this to go forward in case that we're
+looking at a symbolic link: to resolve the link, we would still have to
+create a file handle, and we just found out that we cannot. Therefore,
+`stat()` still needs to fail with `EACCES` in that case.
+
+This fixes https://github.com/git-for-windows/git/issues/2531.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ compat/mingw.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 59a32e454e..3e2110a87a 100644
+index 3e2110a87a..628a3941d2 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -331,6 +331,8 @@ static const wchar_t *make_relative_to(const wchar_t *path,
- 	return out;
- }
- 
-+static DWORD symlink_file_flags = 0, symlink_directory_flags = 1;
+@@ -1273,7 +1273,19 @@ int mingw_stat(const char *file_name, struct stat *buf)
+ 			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+ 			OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+ 	if (hnd == INVALID_HANDLE_VALUE) {
+-		errno = err_win_to_posix(GetLastError());
++		DWORD err = GetLastError();
 +
- enum phantom_symlink_result {
- 	PHANTOM_SYMLINK_RETRY,
- 	PHANTOM_SYMLINK_DONE,
-@@ -381,7 +383,8 @@ process_phantom_symlink(const wchar_t *wtarget, const wchar_t *wlink)
- 		return PHANTOM_SYMLINK_DONE;
- 
- 	/* otherwise recreate the symlink with directory flag */
--	if (DeleteFileW(wlink) && CreateSymbolicLinkW(wlink, wtarget, 1))
-+	if (DeleteFileW(wlink) &&
-+	    CreateSymbolicLinkW(wlink, wtarget, symlink_directory_flags))
- 		return PHANTOM_SYMLINK_DIRECTORY;
- 
- 	errno = err_win_to_posix(GetLastError());
-@@ -2846,7 +2849,7 @@ int symlink(const char *target, const char *link)
- 			wtarget[len] = '\\';
- 
- 	/* create file symlink */
--	if (!CreateSymbolicLinkW(wlink, wtarget, 0)) {
-+	if (!CreateSymbolicLinkW(wlink, wtarget, symlink_file_flags)) {
- 		errno = err_win_to_posix(GetLastError());
++		if (err == ERROR_ACCESS_DENIED &&
++		    !mingw_lstat(file_name, buf) &&
++		    !S_ISLNK(buf->st_mode))
++			/*
++			 * POSIX semantics state to still try to fill
++			 * information, even if permission is denied to create
++			 * a file handle.
++			 */
++			return 0;
++
++		errno = err_win_to_posix(err);
  		return -1;
  	}
-@@ -3523,6 +3526,24 @@ static void maybe_redirect_std_handles(void)
- 				  GENERIC_WRITE, FILE_FLAG_NO_BUFFERING);
- }
- 
-+static void adjust_symlink_flags(void)
-+{
-+	/*
-+	 * Starting with Windows 10 Build 14972, symbolic links can be created
-+	 * using CreateSymbolicLink() without elevation by passing the flag
-+	 * SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE (0x02) as last
-+	 * parameter, provided the Developer Mode has been enabled. Some
-+	 * earlier Windows versions complain about this flag with an
-+	 * ERROR_INVALID_PARAMETER, hence we have to test the build number
-+	 * specifically.
-+	 */
-+	if (GetVersion() >= 14972 << 16) {
-+		symlink_file_flags |= 2;
-+		symlink_directory_flags |= 2;
-+	}
-+
-+}
-+
- #ifdef _MSC_VER
- #ifdef _DEBUG
- #include <crtdbg.h>
-@@ -3558,6 +3579,7 @@ int wmain(int argc, const wchar_t **wargv)
- #endif
- 
- 	maybe_redirect_std_handles();
-+	adjust_symlink_flags();
- 
- 	/* determine size of argv and environ conversion buffer */
- 	maxlen = wcslen(wargv[0]);
+ 	result = get_file_info_by_handle(hnd, buf);
 -- 
 gitgitgadget
 
