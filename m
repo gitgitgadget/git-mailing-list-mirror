@@ -1,167 +1,234 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB352BD5BD
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 14:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE6E23D7E0
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 14:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767969170; cv=none; b=hPuSyeFRebgsKUxwyMcHsuile2z9++ik7SEOXy8ol5nv4ftLd7omCkyiPVXek8DAo29GlQoefECQKmGhTn6cGha/iWVL16qbDYKF0UAhrNnFjXs4lh8vUkZm877g6NtJzWLWW6BKBFMIxNV06PYdfGlwghHMr/EVdN3AIYkFW0g=
+	t=1767970274; cv=none; b=aPGiDedx0DcBxalT9N7f88APxq6HarOTEm2bXW3MAfxyy8F0NIRCopEy5ODRYc8jF2qKXv0N4yiozDwM7TZ9F0QFs0KSeYgxZNsYfJn5dMPsi1u4KB1QMxXvT9yfQ1CiD46mCLnEfJeDrjWVK589h7U3SCmNsuWNFquZLFj0t2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767969170; c=relaxed/simple;
-	bh=rt6eFRUeVVqKUQNye3i3lMoUFOgyKHF1EoQklmvqgwU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mslgs7Gh7mQHyJvo8Rf2rMER63+ReZhYPK38/cxUCL8kukcBt22bbZ91n75rb8Lm84m/QG+Pn6jAGx8x8IzJPXDyWydbsdEeXnwE4w52qd5iEuaefarwlEc+CT8etkNQJ34zz3EHHeqgcN8vh2jjOjZAm0PuoqZ1yA5opCDwndk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Kwvdf/zy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MBB26K1K; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1767970274; c=relaxed/simple;
+	bh=9jfsmIuiU4lG7M+kkRVWId1kVNH5Si0VQ0/GQshWNjY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W0onXDdBCbZXAcOqWIgtF8658WtE55da1wprPMbbRjb6H97LTVCGODeImmVVID/x22zoZWRv/IZla8koOzwXGDwLU6Ew9V4vd77XoKugWke7IJwNqkhoP/1DO9y5LsqIYNV3n+cmOCUzq0YqV0Azw9ltKodx2Jl0BmEcH6wnFjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NQ53LccY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UzuzPW5o; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kwvdf/zy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MBB26K1K"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6F9AA7A0047;
-	Fri,  9 Jan 2026 09:32:42 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 09 Jan 2026 09:32:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NQ53LccY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UzuzPW5o"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id C14DE1D0013F;
+	Fri,  9 Jan 2026 09:51:11 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 09 Jan 2026 09:51:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767969162; x=1768055562; bh=zK16xHQ9gl
-	NNXlbJRye5NGtcKlChRLwxKyCMWRUAX7c=; b=Kwvdf/zy9bC5rJjBWwuV+98e0E
-	dyaemTEwfMnLsGFBVjwOKE2Km+t0BfecxPKhFVYMEKf/EDLO7C6k4T/er3o0osFG
-	+H7p4jJgM4gwX3ahsogZ1GL3iBLjtup1feZVfvVl4RFYDaoqa+rIAMotl7x0+fQv
-	cjErDnW8vzsZJTYUue7ZFsbaSNcV1WUelJRDV2655cByCmZdmuPRSs71X7bXQxnF
-	2wJkjUsyu24koN05bMgIG/x06dKzy+ps5rekSP2T6X+lio7eqhm0oW1g5EQBjC/v
-	MlOWtsLlRRs0wuDiOrAsIm3TowsAzF8A4BPSHef7RU11OrcMlUesRAbCX8qw==
+	:subject:to:to; s=fm2; t=1767970271; x=1768056671; bh=rV1GQa6B5I
+	eD4n686UCosVH77wqvY3ZLVNoeAPmZLkQ=; b=NQ53LccYhNUkN9ojnBy8Ptejmt
+	fTjvNtLzg8z/oYOtwpLNjW9J2ueG8A9a4/WEaCnVi7n1upxI5klplAYcWTGHHeJI
+	lcrd86vab9nG80ZNlr3I31U3qpe+xsailAHWhjxDbmIXot90y51W2x0ar72w3qsJ
+	sJKtUOaCnGCwMcGGd/hNBgV2pDpN6vr4yqCfRy2Fq22MZV/vsEZZgbMgW4y55pb1
+	HCTPTVdsbhng5TUn4shAMTMVoEqCUfJNaFIz14bI8kwcgJVq0dcF/VuKlhgom61K
+	7R1DMxD9MALA0UFTSLwfotEWve3TJVeylDn/vua9I7dXmyKY06c5TDAluNdg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767969162; x=1768055562; bh=zK16xHQ9glNNXlbJRye5NGtcKlChRLwxKyC
-	MWRUAX7c=; b=MBB26K1KVIyTZR5QAeFpqzfKNgLQDmdcN4FqVw8H4bavqzd5JrS
-	NV4BKT4E/CgnZ4gCXapXED7SISmZZQxHQGymaWaKmSHper98GIDbH9tyRcGqjNsX
-	U1GW25IwBYAszZVz9D+Czw7RxIR6xuW2EATYNWDA4y/wUaMcZe39g2lfI1a45X1/
-	BeFgq1flwFr9dHJ9ifBKghgFbuMEzdtbPCk20eizR4sOyj8FuzbR3pOK1toEYgDi
-	ucMJTC+LVe0yiBbK3qUNmulAFWOlkVWTCxju8pJDjeCHl5f18Kaht2hzgM9Is04N
-	3MYJ/BXfqwDcMMIXFjOBaWUwfaudgRlxmiQ==
-X-ME-Sender: <xms:ihFhaVw6SUXKhv8gcPCfhEA0oJU-8FMMsIS_l5W6W4B25x1xrBYm_g>
-    <xme:ihFhact4PpHMTpbw0OkSlfheaHHaJ-mGZOwzFvNx8w0ge0fDEtXsIZ78rH0NvYRff
-    o0CsN3o8YhZfR1VfCSL4n03bN7tby4kGuXzQ5ZE2mnS3C6DogA7>
-X-ME-Received: <xmr:ihFhacvYwZHzTGUqjRAp7y80b4ehI5G0coEXqZoRHA1jTbmuFqXF05007H9joe8Y1umYniZlRhYeRrUrQjAq9_5Aj9ljuStpoZiSHCs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdeltdeiucetufdoteggodetrf
+	1767970271; x=1768056671; bh=rV1GQa6B5IeD4n686UCosVH77wqvY3ZLVNo
+	eAPmZLkQ=; b=UzuzPW5oqBz0YMPzPK3PIL2KmNIomsN/l6eh+25Bz6WkujQdkVC
+	Tt6KJbbvtifj+0ymt1KMuhp6tn5BATOFalYjx2G0tYRySsZpdRpdI67GF5/AuQvI
+	XR1SV8CXqnZdgo99qLx/GRA1OW76gw91c90Auj1wRUs++IO6L6q5wW/H44ebhfop
+	Tl1EnlBDWHCTmVxKfVs711wJMkmJnK4iLz3+/dam2JAOuXUEF/AOexr8AH/fFPhM
+	gGB7k0v2U6RVZaj2URaQd19dkgX6yI7SthyYqsiLQuB6u6ZDzkqHl3mB5v8QVRiX
+	6nSMiK53vtrnaGM2TBX854FUrUX79zjgVtQ==
+X-ME-Sender: <xms:3xVhadvqkqRAVxdEauofiynFz_ohclr-kUsJZ1cD7aTvF97YxgNAgA>
+    <xme:3xVhad64RC_aE7UBxf0NZ6bO368bcE6GbwZYs1syPxx4FielyIjk3fgrTb-e-PG0R
+    ePXVQJvh-gDuwnvDgXR3daUK0CrS30T5HbLIGq8sPKaLW9-r6XdWQ>
+X-ME-Received: <xmr:3xVhaeIygAOZVJQtNcoQq6GGD5ATkcMniwAUZ_lVAxTH2VvmociRvn4hwFGtdMlZJiIPdoUa65k27QWo3qxvyhBsFLdowlkDpTN39DJ3Ug>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdeluddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggr
-    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:ihFhaRM0PgZ3Mh-L26JxPcqZZXGa5zbOo9KeVxAR86x5Q56jY1mn8g>
-    <xmx:ihFhaa25KnG_Npd51mJ3FhkiIATSqez_-2b7l3H5_08fIVZWzKWPDA>
-    <xmx:ihFhadP9D86aBMdLou1IOqBAny6l_kKs0C2CqogPe57TJMP9JVIUzg>
-    <xmx:ihFhaa2uMYFZ8L3I2QVTKxJ5kORKkH__0SS9IKjt1DSJJ3yaPjfFeQ>
-    <xmx:ihFhaa5vZBOugo6c8b_f-6DhpfaYvug6i35ZKB0EecFt1xj7D8nhaamZ>
-Feedback-ID: if26b431b:Fastmail
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    ephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfehtefgveelhfeuueevuedvnecu
+    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiug
+    hirgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheprhhrrghmvghshhgsrggsuhesnhhvihguihgrrdgtohhm
+X-ME-Proxy: <xmx:3xVhad45b3iGsswji5Y16LtEB0ETDyzn9GFnrpf_CwqGWotRUBMRrA>
+    <xmx:3xVhaRyTYnwpO-12pKHH5YKkFjze13aG__ZvgUWDYA0G0Vzji2Fi2Q>
+    <xmx:3xVhaRZMhXZLgSSnJG5fOM9OxlSVyEiW8pqvuhFzbs-VarzGGJ1Q4g>
+    <xmx:3xVhaTQzON-TEmxJcI5G_h0wuip4bx2iOxg7I4V0iB1E4SIppomO_Q>
+    <xmx:3xVhaeWUMFbbA0SKyA5Jjenwu05jx-NBzzix6zvaO_XWw4Qe4GclpVmK>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 09:32:41 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] gitfaq: document using stash import/export to sync
- working tree
-In-Reply-To: <20260109014608.42773-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 9 Jan 2026 01:46:08 +0000")
-References: <20260109014608.42773-1-sandals@crustytoothpaste.net>
-Date: Fri, 09 Jan 2026 06:32:40 -0800
-Message-ID: <xmqqseceua9j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 9 Jan 2026 09:51:10 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a9e09cf6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 9 Jan 2026 14:51:09 +0000 (UTC)
+Date: Fri, 9 Jan 2026 15:51:06 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Aaron Plattner <aplattner@nvidia.com>
+Cc: git@vger.kernel.org, Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Subject: Re: [PATCH] remote-curl: Use auth for probe_rpc() requests too
+Message-ID: <aWEV2qs8MHqt_JXC@pks.im>
+References: <20251112223722.376330-1-aplattner@nvidia.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251112223722.376330-1-aplattner@nvidia.com>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Hi,
 
-> Git 2.51 learned how to import and export stashes.  This is a
-> secure and robust way to transfer working tree states across machines
+sorry for taking so long to review your patch, but I didn't really dare
+to review it as I'm not that familiar with the subsystem in question.
+But given that nobody else reviewed it, either, let me try my best to at
+least provide _some_ helpful feedback to hopefully move this forward.
 
-Here "secure" in "secure and robust" triggered my "huh?" sensor.  It
-is a robust way, but is there something particularly "secure" about
-it, other than "it is less likely to break your repository" in the
-sense that is already covered by "robust".
+On Wed, Nov 12, 2025 at 02:37:18PM -0800, Aaron Plattner wrote:
+> If a large request requires post_rpc() to call probe_rpc(), the latter
+> does not use the authorization credentials used for other requests. If
+> this fails with an HTTP 401 error and http_auth.multistage isn't set,
+> then the whole request just fails.
+> 
+> For example, using git-credential-msal [1], the following attempt to clone a
+> large repository fails partway through because the initial request to download
+> the commit history and promisor packs succeeds, but the
+> subsequent request to download the blobs needed to construct the working
+> tree fails with a 401 error and the checkout fails.
 
-Everything else in this patch (including the patch text, of course)
-I found superbly good.  Thanks.
+Okay.
 
-> and comes with almost none of the pitfalls of rsync or other tools.
-> Recommend this as an alternative in the FAQ.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> (lines removed for brevity)
+> 
+>   git clone --filter=blob:none https://secure-server.example/repo
+>   11:03:26.855369 git.c:502               trace: built-in: git clone --filter=blob:none https://secure-server.example/repo
+>   Cloning into 'sw'...
+>   warning: templates not found in /home/aaron/share/git-core/templates
+>   11:03:26.857169 run-command.c:673       trace: run_command: git remote-https origin https://secure-server.example/repo
+>   11:03:27.012104 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
+>   11:03:27.049243 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
+>   11:03:27.049270 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
+>   11:03:27.053786 run-command.c:673       trace: run_command: 'git credential-msal get'
+>   11:03:27.952830 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
+>   11:03:27.952849 http.c:849              => Send header: Authorization: Bearer <redacted>
+>   11:03:27.995419 http.c:849              <= Recv header: HTTP/1.1 200 OK
+>   11:03:28.230039 http.c:890              == Info: Reusing existing https: connection with host secure-server.example
+>   11:03:28.230208 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
+>   11:03:28.230216 http.c:849              => Send header: Content-Type: application/x-git-upload-pack-request
+>   11:03:28.230221 http.c:849              => Send header: Authorization: Bearer <redacted>
+>   11:03:28.269085 http.c:849              <= Recv header: HTTP/1.1 200 OK
+>   11:03:28.684163 http.c:890              == Info: Reusing existing https: connection with host secure-server.example
+>   11:03:28.684379 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
+>   11:03:28.684391 http.c:849              => Send header: Accept: application/x-git-upload-pack-result
+>   11:03:28.684393 http.c:849              => Send header: Authorization: Bearer <redacted>
+>   11:03:28.869546 run-command.c:673       trace: run_command: git index-pack --stdin --fix-thin '--keep=fetch-pack 43856 on dgx-spark' --promisor
+>   11:06:39.861237 run-command.c:673       trace: run_command: git -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --recurse-submodules=no --filter=blob:none --stdin
+>   11:06:39.865981 run-command.c:673       trace: run_command: git remote-https origin https://secure-server.example/repo
+>   11:06:39.868039 run-command.c:673       trace: run_command: git-remote-https origin https://secure-server.example/repo
+>   11:07:30.412575 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
+>   11:07:30.456285 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
+>   11:07:30.456318 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
+>   11:07:30.456439 run-command.c:673       trace: run_command: 'git credential-cache get'
+>   11:07:30.461266 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
+>   11:07:30.461282 http.c:849              => Send header: Authorization: Bearer <redacted>
+>   11:07:30.501628 http.c:849              <= Recv header: HTTP/1.1 200 OK
+>   11:07:34.725262 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
+>   11:07:34.725279 http.c:849              => Send header: Content-Type: application/x-git-upload-pack-request
+>   11:07:34.761407 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
+
+Okay, here we see the 401 error code.
+
+>   11:07:34.761443 http.c:890              == Info: Bearer authentication problem, ignoring.
+>   11:07:34.761453 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
+>   11:07:34.761509 http.c:890              == Info: The requested URL returned error: 401
+>   11:07:34.761530 http.c:890              == Info: closing connection #0
+>   11:07:34.761913 run-command.c:673       trace: run_command: 'git credential-cache erase'
+>   11:07:34.761927 run-command.c:765       trace: start_command: /bin/sh -c 'git credential-cache erase' 'git credential-cache erase'
+>   11:07:34.768069 git.c:502               trace: built-in: git credential-cache erase
+>   11:07:34.768690 run-command.c:673       trace: run_command: 'git credential-msal erase'
+>   11:07:34.768713 run-command.c:765       trace: start_command: /bin/sh -c 'git credential-msal erase' 'git credential-msal erase'
+>   11:07:34.772742 git.c:808               trace: exec: git-credential-msal erase
+>   11:07:34.772783 run-command.c:673       trace: run_command: git-credential-msal erase
+>   11:07:34.772819 run-command.c:765       trace: start_command: /usr/bin/git-credential-msal erase
+
+And as we think that we've already set up authentication, this error
+code will cause us to think that the credentials that we've got are
+invalid. Consequently, we invalidate the credentials that we've stored.
+Naturally, this will cause _all_ subsequent requests to fail as we're no
+longer authenticated at all.
+
+>   error: RPC failed; HTTP 401 curl 22 The requested URL returned error: 401
+>   fatal: unable to write request to remote: Broken pipe
+>   fatal: could not fetch c4fff0229c9be06ecf576356a4d39a8a755b8d81 from promisor remote
+>   warning: Clone succeeded, but checkout failed.
+>   You can inspect what was checked out with 'git status'
+>   and retry with 'git restore --source=HEAD :/'
+> 
+> Fix the immediate problem by including the authorization headers in the
+> probe_rpc() request as well.
+> 
+> Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
+> Link: [1] https://github.com/Binary-Eater/git-credential-msal
 > ---
->  Documentation/gitfaq.adoc | 39 ++++++++++++++++++++++++++++-----------
->  1 file changed, 28 insertions(+), 11 deletions(-)
->
-> diff --git a/Documentation/gitfaq.adoc b/Documentation/gitfaq.adoc
-> index 8d3647d359..f6c9b9d9f7 100644
-> --- a/Documentation/gitfaq.adoc
-> +++ b/Documentation/gitfaq.adoc
-> @@ -233,14 +233,30 @@ of refs, such that both sides end up with different commits on a branch that
->  the other doesn't have.  This can result in important objects becoming
->  unreferenced and possibly pruned by `git gc`, causing data loss.
->  +
-> -Therefore, it's better to push your work to either the other system or a central
-> -server using the normal push and pull mechanism.  However, this doesn't always
-> -preserve important data, like stashes, so some people prefer to share a working
-> -tree across systems.
-> +Therefore, it's better to push your work to either the other system or a
-> +central server using the normal push and pull mechanism.  In Git 2.51, Git
-> +learned to import and export stashes, so it's possible to synchronize the state
-> +of the working tree by stashing it with `git stash`, then exporting either all
-> +stashes with `git stash export --to-ref refs/heads/stashes` (assuming you want
-> +to export to the `stashes` branch) or selecting stashes by adding their numbers
-> +to the end of that command.  It's also possible to include untracked files by
-> +using the `--include-untracked` argument when stashing the data in the first
-> +place, but be careful not to do this if any of these contain sensitive
-> +information.
->  +
-> -If you do this, the recommended approach is to use `rsync -a --delete-after`
-> -(ideally with an encrypted connection such as with `ssh`) on the root of
-> -repository.  You should ensure several things when you do this:
-> +You can then push the `stashes` branch (or whatever branch you've exported to),
-> +fetch them to the local system (such as with `git fetch origin
-> ++stashes:stashes`), and import the stashes on the other system with `git stash
-> +import stashes` (again, changing the name as necessary).  Applying the changes
-> +to the working tree can be done with `git stash pop` or `git stash apply`.
-> +This is the approach that is most robust and most likely to avoid unintended
-> +problems.
-> ++
-> +Having said that, there are some cases where people nevertheless prefer to
-> +share a working tree across systems.  If you do this, the recommended approach
-> +is to use `rsync -a --delete-after` (ideally with an encrypted connection such
-> +as with `ssh`) on the root of repository.  You should ensure several things
-> +when you do this:
->  +
->  * If you have additional worktrees or a separate Git directory, they must be
->    synced at the same time as the main working tree and repository.
-> @@ -251,10 +267,11 @@ repository.  You should ensure several things when you do this:
->    any sort are taking place on it, including background operations like `git
->    gc` and operations invoked by your editor).
->  +
-> -Be aware that even with these recommendations, syncing in this way has some risk
-> -since it bypasses Git's normal integrity checking for repositories, so having
-> -backups is advised.  You may also wish to do a `git fsck` to verify the
-> -integrity of your data on the destination system after syncing.
-> +Be aware that even with these recommendations, syncing working trees in this
-> +way has some risk since it bypasses Git's normal integrity checking for
-> +repositories, so having backups is advised.  You may also wish to do a `git
-> +fsck` to verify the integrity of your data on the destination system after
-> +syncing.
+> If http_auth.multistage were set in this scenario, then probe_rpc() would have
+> returned HTTP_REAUTH and this would have probably worked by generating a new
+> Bearer token. And we might need to use HTTP_REAUTH to handle the case where the
+> token expires between the initial request and this one, but I don't think
+> tackling that in this patch makes sense since the original Bearer token was
+> still valid and git just didn't try using it. And setting multistage (the
+> 'continue' parameter in git-credential(1)) doesn't make sense for Bearer tokens
+> since the token comes from an external agent.
+
+This is something I was wondering about. Specifically, I saw the loop
+that we had around `HTTP_REAUTH`:
+
+		do {
+			err = probe_rpc(rpc, &results);
+			if (err == HTTP_REAUTH)
+				credential_fill(the_repository, &http_auth, 0);
+		} while (err == HTTP_REAUTH);
+
+I then double-checked that we indeed get `HTTP_REAUTH` as an error code
+on a 401, so I was wondering why this doesn't lead to an infinite loop.
+I didn't connect it with the "multistage" thing though.
+
+In any case, I think this information would be useful to have in the
+commit message to help guide readers.
+
+>  remote-curl.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 69f919454a..1d0ae72521 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -877,6 +877,8 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+>  	headers = curl_slist_append(headers, rpc->hdr_content_type);
+>  	headers = curl_slist_append(headers, rpc->hdr_accept);
 >  
->  Common Issues
->  -------------
+> +	headers = http_append_auth_header(&http_auth, headers);
+> +
+>  	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
+>  	curl_easy_setopt(slot->curl, CURLOPT_POST, 1L);
+>  	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
+
+The change looks simple enough, and matches what we do in `post_rpc()`
+itself.
+
+It would be great to have a test case for this. It might be possible to
+use t5563-simple-http-auth as an example, where we already know to set
+up an HTTP server with authentication.
+
+Thanks!
+
+Patrick
