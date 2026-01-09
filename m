@@ -1,71 +1,71 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C815936826F
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D716366DCE
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 20:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767989134; cv=none; b=g5TRa0T+mWQfajfjag7t8yVketF+BFlyvZz9VawYxLhYrKp+kSnr4gfYyj1Ecst440TtwP2Rqvb7Brae4cGiJ29sTn3fIlB7SA/XoK9WAnvIpFiU2s9iItBcK6jvTAIeFb291hYmsaYNwqM2sufO+hNUCODZMdy/KYaQYLJSsK8=
+	t=1767989135; cv=none; b=P/E5yI8bBQ/+OEgAOoq/FH3K3GJgjbYUh+RU4hEf1o5YtEMpJ2RuBFnaPxKG11ywNqqmqfi6+PZB+bLOGWHibSKBSy2lgDDW/EfA8df5Ip+SGnQ+gbxYePOUBTkSEFcRkprHMsdKpvu/h2FjC/OKvCHAtXMmQ20+unIYjAoCPLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767989134; c=relaxed/simple;
-	bh=EflxFzjegqrsKb+xQuL+ilGTUmqzZu27pdRu4PYZhGs=;
+	s=arc-20240116; t=1767989135; c=relaxed/simple;
+	bh=nQcIJEg7zhE9SZ2mvRvo6S+zKWRIfVDCpV/MhvhXfOg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JLERzWyMyAN9tvzmlCOB5Dluyt1q/sNUqxdYoJyfn/hWMmRtiYpU/yuV4kjA75JZUeUUrI7eyttAM5OfAT10FzD1x0ZLlyTZ8nYzxFvxpJNkHmlRKL4upJaVNjmzOxRczQXGpUUBV9SJnUq2IywDiPgw/t6Y4xsYkyZ8wyP9qJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y/Gvejc/; arc=none smtp.client-ip=209.85.222.178
+	 MIME-Version:To:Cc; b=YZzJV72ycNLcRlnlJlhKe3shi8PvH7Tk/lYZQGEfoTKxhKG+AJQBUsz7ndU/1YIvJJcgxwTJYBlzMn4vgqp/NcaRaH99SFcpA9HLmARvgXSOm06XBGHJT1VJK3hN5zeuMIyCCm/UTmlldLTqOCLCGn3RnKp4De5YObuA4Y1v7OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SOlU5lt2; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y/Gvejc/"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8ba3ffd54dbso679596985a.1
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOlU5lt2"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8c0f13e4424so448445685a.1
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 12:05:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767989129; x=1768593929; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767989132; x=1768593932; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Vay3TxmdG7ouaIawsLZ/S63F1Xn0XclB1ik4VXrZnls=;
-        b=Y/Gvejc/2570I8/gnXxJBNasD5SzyEWfGPn7cHbO8XpWB7psSJIRhnldq4w8OHErtX
-         7Uma8t+al4U2VpDN0CUrx6MpyQtjqS1RhHIDOCuaA9cejCgNgg+FCtBIpV6yOKlUcMSD
-         xdI2ihNlISsvFgDDiNjkhSCt8DR/EFHk3HJ9zdpv+qWcA3aTSZBLARJJ8EQDoUc4A07/
-         03WcLDTrPJZrJwy8Z5xVKBIHj3g0aaZ7jFlSWA1yZaDb7HlM43kaQ7Qsu8P/rMxoOfCi
-         fb0QudgfNhAClYyGR+0Gi/vHlShtlfVBPucFFqW19aQs86f1Qc+n8d91yk/BpoFuKbmA
-         nENg==
+        bh=DANt6saeqVBji7Yc3EDD3xN2+F5PN3a3+CVMrju4vcU=;
+        b=SOlU5lt2Q8NVFKLyKdTLiqqtCKzSBTvWv/r+AODsADSJd7ANUqHHilcJcY8Na+Ie0L
+         vaKYb9EBsVQnRX3RrNuWrMkNtab1UXQzmlOsAj0AqQ6tzUWM266ar0zZ+PLM8KW/pcS9
+         JIOJCeweUIJqWFjpQ50keBNp+9pxKsqJdb90/KuZQStYoO8cdfA5nJx8xQ2QoQh7oYdL
+         XjJjWbVz9bK4NostW5+I2YoLesoAlsD/W92YlGF278VP4Z/fDpNNkC/PfDNNs5Rig0w6
+         cFigrCfgLFawq9GCpMYFARGAH6QIdRgIcCeI5WFPWHW1kJnRTsLYf6UfRse3PoBzvSaU
+         ckew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767989129; x=1768593929;
+        d=1e100.net; s=20230601; t=1767989132; x=1768593932;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Vay3TxmdG7ouaIawsLZ/S63F1Xn0XclB1ik4VXrZnls=;
-        b=Hdx9TWiNlSKZSReng/DL3AxVNW8E34JYA6jNdN9RgDIGlTXNU1Mt+0oUfDcvzmWvlA
-         FIk56uwLoBP+dCOrZz/bDIxRpREBioySMRx9j0NlM58NwzFiNImVte1qfg91VDe+2AYb
-         kLK0lJYL/Xj/vZxRJSytXB7o0ecjEcc6btymf9sCiVPzSlqzjTHaAM0Tbb12RERLnMxZ
-         BpAEzO8h0UPapUuqxbDmOsB4ZuPHYK1mnT67kYejNqCEdjImdFHSD67KZSrp3p0yW0H9
-         xVPujJ3ZJVQMVwNJQcxZUw3GXUdvFbcGKdWRBzZn11K2FsRNlkl54txyBJrG91GQgvtk
-         cuEA==
-X-Gm-Message-State: AOJu0YwN9qARM7G8cAM7C2RfaFHNA10PdA/CRecGDFaSgavAdYNEXFGP
-	poMplRaUHurQrwROO9seCrsHPNe26WzoHPvfBqI7GJRH/cAtq0WOE32xkmAutZJJ
-X-Gm-Gg: AY/fxX4XQxIHa05Ar/XPXjaCCiNBbnaHqsVbAlrg/iMmgRV/zPIRUdEeaHpq0mLOGpZ
-	o8FKpVXWeRQj4kFq1XYhzzLJtzjGC6BC0CNj92hL1BsUznQAwZTl0kg0LzJf0JavK8K6Lv3HH+q
-	qnl6/JYz82YHnRS73v8Q2+hj77HOAqodUOW0PtSpEIxOZng7Ry80/extLKE2VcTDcjLLaIpn/Lg
-	yzonqbXF6TKpdXhwslyH/8L87+deqvvXDnuZ2+yn2GndftmytwDZ5nXwpw7yyr2WNM4iE3Of4wI
-	DeVT0vmudLcDZdF82WICY4us5+ZK2yMtAY6mtmusofUBG3oLJ3AcXKco2lO8OmYXNguAmxr0Dai
-	+zGp75SU7rc7J6vEhBdtAavSoUpAXUQ0DflIG0s9dUrTSb1xWNPNqlL513/ylk3bZyY8+eqy3FT
-	eJBCNtPr4GBzGP
-X-Google-Smtp-Source: AGHT+IEIaoCNTv+3GvuX7DGsVkJt70USQ7MJMAEm+ZdKBaDs56TTNi6AkAoT8rWQW5mL/2exR+itmA==
-X-Received: by 2002:a05:620a:4620:b0:8b2:efe7:d82b with SMTP id af79cd13be357-8c389399f06mr1472396785a.30.1767989129343;
-        Fri, 09 Jan 2026 12:05:29 -0800 (PST)
+        bh=DANt6saeqVBji7Yc3EDD3xN2+F5PN3a3+CVMrju4vcU=;
+        b=Nf8eoKh7hlLyFqulICbOfw+pIe4vKdUpaXCwEdrauVYuKlzgNahbCPFDAvVrzOoz9I
+         A9cD4id82Rr1g5l7JLjKEOfG3G4IT62vT3BRs5SH4TqTAeeaNljbKHLWG5HAXh4tPBPs
+         eeo5H6SwqEr2vISajCPv80YKP2tz9kSpz+oqtug1XPm62HkeY2WG0YXR7bcKIgML8hSc
+         U4ePHYKWb8emCGS/oVk8GCO4Qv2/uJDuJc2gCZyDgKtAy2ghRqcRhXtI3HkovAyVpcDb
+         2pkCEQ4JXyJigaLjBWdajSnT0AYjGui67FFVgb9OOAzhQdmD2ySC9UvwoZdmRgxqlDRm
+         L1sg==
+X-Gm-Message-State: AOJu0YzhwdZSu2oBeHCJb8dnfsq5t9S3chvIGEkUl89DeSvTWH78IiSW
+	+ZhQPXSvaUQRKFzPbpJ617ZWmesWH5iEQyyr2oTIdf4M9rwzA97PAzo6AC8VTZpO
+X-Gm-Gg: AY/fxX5fL1R/OGSLoTx7pKeI5Nl5v9ZHhKzO4X4BFm0SAPN881ap5ELoa6MyVOXoSrq
+	m5x3xoPB4sYJIGHeGn579rQmIj9gvmnCEMi2uMsqwnVYO+1jcDfcv7m1/N6CTq5inc85AH+Hpl7
+	32rRglZXX6/KKkFArorzE5vtjZXvKA+/GKX5WTsHFBHYsvgSrkATJPkvsuuSYjJ2DlE+rAYY2j3
+	JE4IV3XVPeCvHwcjYj90g6MY0pnYuuyWWyHP88cUHPz9rrZP8NnLTYAs3fGmN1zMNgg2ZMGkNSk
+	/8Zv0zO718tLOnMtbk5/cSUx7ki1fkdzX0tLhwWZwuxcf523hJi/m9QmpZcrzM+sOBBDUzMoRn3
+	a8sGf0PGlxT7rgX6cW5/96FWUACLV6DhgzsI1OVUzroNHTPqRqCbnzjBVUAGqtx/9l8S4JnsbBS
+	yFXX9rGQxELkjb
+X-Google-Smtp-Source: AGHT+IFdfFIsGjYh6KEA/TwCVo8IDg3UbR0ZeYucd/r3F1qAQ4wMX5kpxI+JV3nJdqLImMGnEZrxmA==
+X-Received: by 2002:a05:620a:2991:b0:8b2:e6b1:a9b6 with SMTP id af79cd13be357-8c3893690c1mr1335440785a.2.1767989131650;
+        Fri, 09 Jan 2026 12:05:31 -0800 (PST)
 Received: from [127.0.0.1] ([20.161.67.219])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f54427esm930909085a.48.2026.01.09.12.05.28
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f51b787sm874613185a.29.2026.01.09.12.05.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 12:05:28 -0800 (PST)
-Message-Id: <5dc90f9785d8f83f39d79788a3f1b9ed8fa539dc.1767989115.git.gitgitgadget@gmail.com>
+        Fri, 09 Jan 2026 12:05:30 -0800 (PST)
+Message-Id: <f79cf31dab8fab373978a382d71877803d89c8f7.1767989115.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
 References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 	<pull.2018.v2.git.1767989115.gitgitgadget@gmail.com>
 From: "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Jan 2026 20:05:07 +0000
-Subject: [PATCH v2 10/18] mingw: handle symlinks to directories in
- `mingw_unlink()`
+Date: Fri, 09 Jan 2026 20:05:09 +0000
+Subject: [PATCH v2 12/18] mingw: allow `mingw_chdir()` to change to
+ symlink-resolved directories
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,40 +84,53 @@ Cc: Ben Knoble <ben.knoble@gmail.com>,
 
 From: Karsten Blees <karsten.blees@gmail.com>
 
-The `_wunlink()` and `DeleteFileW()` functions refuse to delete symlinks
-to directories on Windows; The error code would be `ERROR_ACCESS_DENIED`
-in that case. Take that error code as an indicator that we need to try
-`_wrmdir()` as well. In the best case, it will remove a symlink. In the
-worst case, it will fail with the same error code again.
+If symlinks are enabled, resolve all symlinks when changing directories,
+as required by POSIX.
+
+Note: Git's `real_path()` function bases its link resolution algorithm
+on this property of `chdir()`. Unfortunately, the current directory on
+Windows is limited to only MAX_PATH (260) characters. Therefore using
+symlinks and long paths in combination may be problematic.
 
 Signed-off-by: Karsten Blees <karsten.blees@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ compat/mingw.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 0e8807196f..b1cc30d0f1 100644
+index 55f0bb478e..5d2a8c247c 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -338,9 +338,16 @@ int mingw_unlink(const char *pathname, int handle_in_use_error)
- 			return 0;
- 		if (!is_file_in_use_error(GetLastError()))
- 			break;
-+		/*
-+		 * _wunlink() / DeleteFileW() for directory symlinks fails with
-+		 * ERROR_ACCESS_DENIED (EACCES), so try _wrmdir() as well. This is the
-+		 * same error we get if a file is in use (already checked above).
-+		 */
-+		if (!_wrmdir(wpathname))
-+			return 0;
+@@ -866,9 +866,27 @@ int mingw_access(const char *filename, int mode)
+ int mingw_chdir(const char *dirname)
+ {
+ 	wchar_t wdirname[MAX_PATH];
 +
- 		if (!handle_in_use_error)
- 			return -1;
--
- 	} while (retry_ask_yes_no(&tries, "Unlink of file '%s' failed. "
- 			"Should I try again?", pathname));
- 	return -1;
+ 	if (xutftowcs_path(wdirname, dirname) < 0)
+ 		return -1;
+-	return _wchdir(wdirname);
++
++	if (has_symlinks) {
++		HANDLE hnd = CreateFileW(wdirname, 0,
++				FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
++				OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
++		if (hnd == INVALID_HANDLE_VALUE) {
++			errno = err_win_to_posix(GetLastError());
++			return -1;
++		}
++		if (!GetFinalPathNameByHandleW(hnd, wdirname, ARRAY_SIZE(wdirname), 0)) {
++			errno = err_win_to_posix(GetLastError());
++			CloseHandle(hnd);
++			return -1;
++		}
++		CloseHandle(hnd);
++	}
++
++	return _wchdir(normalize_ntpath(wdirname));
+ }
+ 
+ int mingw_chmod(const char *filename, int mode)
 -- 
 gitgitgadget
 
