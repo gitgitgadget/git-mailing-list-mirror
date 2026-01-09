@@ -1,263 +1,472 @@
-Received: from smtp-good-out-3.t-2.net (smtp-good-out-3.t-2.net [93.103.246.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1410C2DF6F6
-	for <git@vger.kernel.org>; Fri,  9 Jan 2026 16:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.103.246.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F41435CBB0
+	for <git@vger.kernel.org>; Fri,  9 Jan 2026 17:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767977338; cv=none; b=Lz6Yq0x6A8nZ8b4OLkoGH2cqcqlUPnHGFf2mJXzLuTHPK3F2who7gVoCyuO9Uyv6dd7PMiKq6+yf0Qg5GCd2TIAKQzcK/YpEU2iAh7l+nxNswoWHBAYXY9/VfewshN4jHfPX4wCH/pKPw7ipJ49LLIVPhGlzu5gi5RQJ70T6U2E=
+	t=1767980958; cv=none; b=PiLN8zz4wL5g9zpAv96PFk4lCfj/EMWJOR3B1Hq97DoStUfMWNEihZJYcS2Ink/UxWh+GHKp4ovBEjJqVs2WsjYoa44BT1oMfERF6Ur9tdVPdDqcUMXt3OzSBu4rIUq7XqmJahBhA4XtJ9f3rufgSEnu7kUQMxla4o+HOxPYuQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767977338; c=relaxed/simple;
-	bh=bqgeWTibBgnC2lH24BW1W/OxIJzTCYGgwD/Ogiv1JK4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=l9T41aTR9rBz7FUgznzoSUhbRdMuYKnkESfwpmGzatXwZA5Y2hLGKdvQKR+M0O7bGbAtDYtdsd5GdD0OrpznHxgoztIz5Bp9qtfsGbsh+OeQw9xy7MQIL1+fbVAeWsZmJ6EZc3DCTmkIDsz0o+TzpEN/vxyezrXBPDdc6hRvOJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=t-2.net; spf=pass smtp.mailfrom=t-2.net; dkim=pass (1024-bit key) header.d=t-2.net header.i=@t-2.net header.b=PBUePiJ1; arc=none smtp.client-ip=93.103.246.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=t-2.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=t-2.net
+	s=arc-20240116; t=1767980958; c=relaxed/simple;
+	bh=MFxoObPX+f0Oj4HZBjIbCICaWduMPewwpO6EzLWh/o0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=J2I++x+THV0+9Y7bQ35ZqWDJudHH3dwSERrzuNRL8TcoEh95EfTH6Wl8j+p8czP2pwDTaEQICH8dziNzGTFmlRVN4nvJyvwF5oUUPDpf8LXdAgD+LED5GmyCW2dVu0tpVkjg/l83FwuJhZL39g3U6BmGMFxXWSmXrMMtYMR0QUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E8yRgN94; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=t-2.net header.i=@t-2.net header.b="PBUePiJ1"
-Received: from smtp-2.t-2.si (smtp-2.t-2.si [84.255.208.31])
-	by smtp-good-out-3.t-2.net (Postfix) with ESMTP id 4dnnm41tGnz9vhW7;
-	Fri,  9 Jan 2026 17:48:52 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-2.net;
-	s=smtp-out-2; t=1767977332;
-	bh=bqgeWTibBgnC2lH24BW1W/OxIJzTCYGgwD/Ogiv1JK4=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=PBUePiJ13U1l6k5+4CWs2sKTkwAws1m7sG1xw25XTU2TD56NKLjMIZe7PWb05X6Qj
-	 5xu6qZgTlzRstm1LLCiIn59I0lv6K29M114l/NvQHQI1jUJQSEpRZQwOqv9dmF3Zwf
-	 zKqQQVfSFf7NCBz6H2R1PzjlIIrSD5iAWmboQA6Y=
-X-Virus-Scanned: amavis at mail.t-2.net
-Received: from [IPv6:2a00:1a20:223f:fac3:4f3f:95f4:6690:3b60] (unknown [IPv6:2a00:1a20:223f:fac3:4f3f:95f4:6690:3b60])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: samo_pogacnik@t-2.net)
-	by smtp-2.t-2.si (Postfix) with ESMTPSA id 4dnnlw53DrzMrVGx;
-	Fri,  9 Jan 2026 17:48:44 +0100 (CET)
-Message-ID: <d2cb7351419002ec3be6423f39091e9d0d0e3877.camel@t-2.net>
-Subject: Re: [PATCH 2/2] shallow: handling fetch relative-deepen
-From: Samo =?UTF-8?Q?Poga=C4=8Dnik?= <samo_pogacnik@t-2.net>
-To: Patrick Steinhardt <ps@pks.im>, Samo =?UTF-8?Q?Poga=C4=8Dnik?= via
- GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Date: Fri, 09 Jan 2026 17:48:19 +0100
-In-Reply-To: <aVy9a9f1AZzTbBQa@pks.im>
-References: <pull.2121.git.git.1765303880.gitgitgadget@gmail.com>
-	 <b352a33c90ca67f4ad68df08c0fd155ceeeb167c.1765303880.git.gitgitgadget@gmail.com>
-	 <aVy9a9f1AZzTbBQa@pks.im>
-Autocrypt: addr=samo_pogacnik@t-2.net; prefer-encrypt=mutual;
- keydata=mQINBFwCXogBEAC4B5dfY/m82d0d5VBtFeVAjtUrOOdrLgbYJZFUXsX9pya5x0QdYeTP4
- afUZ73e7zMe0ozH8UMz6iv1niPfPkMorUzNcALDcotZ8Vvf3bMdndV7lHk8jScAMoW2L7VHGn1N+H
- 8yJ5WufqF/yNBLqmVqaLqNjHejZN+Ld+/4AaJ/gQzWVqYH6EaJZd/LSqppJWGOHGGURFakFSDp3Bi
- 6n8SOQmarOt6mGX5wsiHNwa8NtNX1cEJPT8YCQUR7o5fTHb3AEemLRFJoGjeH2RjzPloyTlwSjLXd
- Egph2uUGqiBKD1dREfIuIWtFAJF+iMRHhIEJSF4hvUYrYAV+7ZTlIo3NnDLIeNn40Qmn++9Uh8FbL
- YdFb14dyBkw8MBBQPQNCCpBflK7aaSFWpHv6nk/Z7fGrkwrD51CHsDut8PGQMtmSYMoSCWRI1wChn
- peoZn4Cq3yG1rj90IVv/rxmvL3oMQfE2oSMAhpyRPi0vK68cG4ILpO65Aulr0wr4JFdZBNmpf8BCF
- 4jqpN1HsQJCYUYBMeMeOMkH9Gz3DBWuszvjjs7wmesMkEz5C92UlK6FWGUz6Ioi2bfRGOzx0+AjpZ
- rUaSIQ+5MCPxjWkxl3EQQFL2U3ItxxpaDO46AoRFj4oKKeHoteiwpziY8whIFmDXWfy7nDfp76RiS
- riLtyZiFEuzLwARAQABtCZTYW1vIFBvZ2HEjW5payA8c2Ftb19wb2dhY25pa0B0LTIubmV0PokCTg
- QTAQoAOBYhBNCCwgeDpWpcp2HPBvAkWUZaOuMIBQJcAl6IAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4
- BAheAAAoJEPAkWUZaOuMIKE8QAJ04bxv8nXpY3Tp5nWOIOsBmEHWvVEIdD2kxjC9YCQeKx4gJLADa
- RcuXhFbwi0NQtuSRf1G11ZGqxBM/YHvSd4Rtqbag4P9UY/ZdvMAe1zW4HTO9c2mtoWN3WYxS/gkX+
- wBLVIy+eqrsG5peJmRlq3fTbCxLprgqp6B2IUcTEBa8Iynv7B/1qsG2rd0y8pY+ZHIUtz2ZJHoYz2
- Lx091uYwy9aozibWRot+vZNx4QipOmsoZOm+e5FvTf4yvmFYJ3iR8fUfq9gpCokRNtPG5NvqNLApk
- EwEAlaXH7flAUwF/uRBUASZeyEeKGRtXOUYeGXFyOgykbmIs9IXDms8OLj/TZlSzECeoSX25I0P8M
- QrMb7GChMME4W9i9+ZZc8VWPyYW8W6dyNfBb05lu0XMB62oiYim7cOXiDV49EBYtiXIwUnbfQYVSA
- U8MTvZKS4ek2KGc9OJNLnm8dP2u31jvMUts7AEoU3vxwv8tUBEm4Zpzv8+HvzpAGAnbGc/kiLClaH
- j8E5d/3XIyq0TXlZf7B5Fq+lwa3gXMiLWko7m3PfOFtvbsSWPxplka6r2T2GMt9e51sctckfd7V/F
- unQvSwML0gpE6YicA/OcoFFOwoipilJ4D0YcqLgO8FNQdXukJciq0xeeBWY4t8Oo5M88J4YzAKMr9
- PU/BhjCBDTyCb2b1
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-9+YzrHR5C81dgKtEoK9R"
-User-Agent: Evolution 3.52.3-0ubuntu1.1 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E8yRgN94"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8b2d56eaaceso494994085a.0
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 09:49:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767980955; x=1768585755; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WS8PGRorVgP6EEnZ2nZuDZ6Um6AsANQUmfTEnfu3LX8=;
+        b=E8yRgN94dCwX2gRQqvzIIW5hWAX+RtxQ7c3j50wSE0ZLIfWxDfWSBkMc2Zc8R452pg
+         YIovuE12agqFkK9RfOzxe0UFCayXSwf1Ry6l2a8oE1akul0MY1uz9K0nzoyy/3qz07Tt
+         n10meHMb7FgsppDH88tAl/FVhSzPwcJyoAby3GKi7bpVG8xc98JPx7OULobgYMQWhUe1
+         LhRcC11Yb53vwDhEK+9yZCxlLc5Ntksdz3Vkf4Q+XGr8YDPG/p2j3SHWRqGjCYJpBula
+         f/6OMkKnCmxDAsb4kDiSsHhKJHa9/Ii5pGUiYCv8MwDaWZKWjyfMCVxM/1vGQoYSkDiC
+         PH6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767980955; x=1768585755;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=WS8PGRorVgP6EEnZ2nZuDZ6Um6AsANQUmfTEnfu3LX8=;
+        b=uR5qaVx8U1DlcRoFzn5MaODhVUHYwNfYhHjFs2utY7ZISMHmxJ5DXSqwAwZ5ALT4eF
+         LzbydL0jzELK9HVk5YsdjvyEvV7HgOOQR+WPLDnxsNan/X0YphMDd64WPuya8NaFUTtN
+         CWFdmMFzgE6b8eVHkM3PZXxoFF9nAVKslZSpoTkCsvHkbuJ8Jn2uAxJA2EKnUFhVABtq
+         Jwpd0oL7p51oFaJILY9tYocQYHLTGkf8lswLWiH85ObW6K6HEjgf/acNovAG1Xn8NL3n
+         xE9AHJUzR93zrecGT8oBQeOW8ca6p1pCfAtks6W09Ui3mmitHsakS0furyzfrQzWrqrI
+         o8+g==
+X-Gm-Message-State: AOJu0YxPIJXpwXDDKLvbB5+Y8KXmRziv5goFd39Vs3jQDh1kOO0mQGDA
+	xGgGSGTgvKB9RrJQC/S43osgTJTshU4G80SADOwIBF0r4ToS55+r0roDfo9PlzNy
+X-Gm-Gg: AY/fxX57qwpfl2pTYrrbtojOEXWDFr52JH8GqzUOqfBO9LxS1dTadB9AJ4YlodWb3wI
+	mEBgJL8fQ2/SOmi1R19AbWtbacjRdf1dCaGysKMK4hpCXqDnkpaUq9LqaDS8eUcbZc3sBBTCLPz
+	TXCTjP9wlQvyTAj385YX00bJ6wf+YLeGNIcPWifDLuw/FAfk0kY7bIQCImTH4faXM0bLTeEIggH
+	igNVG/rqQN0vboLdnLC4SKT4ZODwLIAnoUCjVi2NG1wJXZMAJOtRbFj/Q6VNCLqUq5kfxBns+/I
+	d96PZvvNuVCx9z13CsEStZwE+PPbtkqPFXOzbE/vRY9rliVrn7C2ZoXgHAcdH1SP0/Z0YiSfukk
+	iEM32hVPBKjvDh3Y4BwmSAjdMdNETBiX5Kn/Khyf1A9RTTgsS6FMUN+itJU8Hw1EuggsQmgk2gi
+	+2o2S0o2xXQwM=
+X-Google-Smtp-Source: AGHT+IGi6QNfXGCi/aTsSrr7eYs9YX1ZbAD5RufZ2Kcy1SChnVOC4qgDP3EJ0cA7Oal6yid3bs8bEA==
+X-Received: by 2002:a05:620a:3714:b0:8b2:ec1e:fe24 with SMTP id af79cd13be357-8c3893ef768mr1469387085a.42.1767980954879;
+        Fri, 09 Jan 2026 09:49:14 -0800 (PST)
+Received: from [127.0.0.1] ([48.214.54.53])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f4a6b4fsm858516385a.2.2026.01.09.09.49.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jan 2026 09:49:13 -0800 (PST)
+Message-Id: <pull.2026.v3.git.1767980953134.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2026.v2.git.1767749366719.gitgitgadget@gmail.com>
+References: <pull.2026.v2.git.1767749366719.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 09 Jan 2026 17:49:13 +0000
+Subject: [PATCH v3] fsck: snapshot default refs before object walk
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Matthew John Cheetham <mjcheetham@outlook.com>,
+    Jeff King <peff@peff.net>,
+    Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
+
+From: Elijah Newren <newren@gmail.com>
+
+Fsck has a race when operating on live repositories; consider the
+following simple script that writes new commits as fsck runs:
+
+    #!/bin/bash
+    git fsck &
+    PID=$!
+
+    while ps -p $PID >/dev/null; do
+        sleep 3
+        git commit -q --allow-empty -m "Another commit"
+    done
+
+Since fsck walks objects for connectivity and then reads the refs at the
+end to check, this can cause fsck to get confused and think that the new
+refs refer to missing commits and that new reflog entries are invalid.
+Running the above script in a clone of git.git results in the following
+(output ellipsized to remove additional errors of the same type):
+
+    $ ./fsck-while-writing.sh
+    Checking ref database: 100% (1/1), done.
+    Checking object directories: 100% (256/256), done.
+    warning in tag d6602ec5194c87b0fc87103ca4d67251c76f233a: missingTaggerEntry: invalid format - expected 'tagger' line
+    Checking objects: 100% (835091/835091), done.
+    error: HEAD: invalid reflog entry 2aac9f9286e2164fbf8e4f1d1df53044ace2b310
+    error: HEAD: invalid reflog entry 2aac9f9286e2164fbf8e4f1d1df53044ace2b310
+    error: HEAD: invalid reflog entry da0f5b80d61844a6f0ad2ddfd57e4fdfa246ea68
+    error: HEAD: invalid reflog entry da0f5b80d61844a6f0ad2ddfd57e4fdfa246ea68
+    [...]
+    error: HEAD: invalid reflog entry 87c8a5c2f6b79d9afa9e941590b9a097b6f7ac09
+    error: HEAD: invalid reflog entry d80887a48865e6ad165274b152cbbbed29f8a55a
+    error: HEAD: invalid reflog entry d80887a48865e6ad165274b152cbbbed29f8a55a
+    error: HEAD: invalid reflog entry 6724f2dfede88bfa9445a333e06e78536c0c6c0d
+    error: refs/heads/mybranch invalid reflog entry 2aac9f9286e2164fbf8e4f1d1df53044ace2b310
+    error: refs/heads/mybranch: invalid reflog entry 2aac9f9286e2164fbf8e4f1d1df53044ace2b310
+    error: refs/heads/mybranch: invalid reflog entry da0f5b80d61844a6f0ad2ddfd57e4fdfa246ea68
+    error: refs/heads/mybranch: invalid reflog entry da0f5b80d61844a6f0ad2ddfd57e4fdfa246ea68
+    [...]
+    error: refs/heads/mybranch: invalid reflog entry 87c8a5c2f6b79d9afa9e941590b9a097b6f7ac09
+    error: refs/heads/mybranch: invalid reflog entry d80887a48865e6ad165274b152cbbbed29f8a55a
+    error: refs/heads/mybranch: invalid reflog entry d80887a48865e6ad165274b152cbbbed29f8a55a
+    error: refs/heads/mybranch: invalid reflog entry 6724f2dfede88bfa9445a333e06e78536c0c6c0d
+    Checking connectivity: 833846, done.
+    missing commit 6724f2dfede88bfa9445a333e06e78536c0c6c0d
+    Verifying commits in commit graph: 100% (242243/242243), done.
+
+We can minimize the race opportunities by taking a snapshot of refs at
+program invocation, doing the connectivity check, and then checking the
+snapshotted refs afterward.  This avoids races with regular refs between
+fsck and adding objects to the database, though it still leaves a race
+between a gc and fsck.  We are less concerned about folks simultaneously
+running gc with fsck; though, if it becomes an issue, we could lock fsck
+during gc.  We definitely do not want to lock fsck during operations
+that may add objects to the object store; that would be problematic for
+forges.
+
+Note that refs aren't the only problem, though; reflog entries and index
+entries could be problematic as well.  For now we punt on index entries
+just leaving a TODO comment, and for reflogs we use a coarse solution of
+taking the time at the beginning of the program and ignoring reflog
+entries newer than that time.  That may be imperfect if dealing with a
+network filesystem, so we leave TODO comment for those that want to
+improve that handling as well.
+
+As a high level overview:
+  * In addition to fsck_handle_ref(), which now is only a few lines long
+    to process a ref, there's also a snapshot_ref() which is called
+    early in the program for each ref and takes all the error checking
+    logic.
+  * The iterating over refs that used to be in get_default_heads() plus
+    a loop over the arguments now appears in shapshot_refs().
+  * There's a new process_refs() as well that kind of looks like the old
+    get_default_heads() though it is streamlined due to the work done by
+    snapshot_refs().
+
+This combination of changes modifies the output of running the script
+(from the beginning of this commit message) to:
+
+    $ ./fsck-while-writing.sh
+    Checking ref database: 100% (1/1), done.
+    Checking object directories: 100% (256/256), done.
+    warning in tag d6602ec5194c87b0fc87103ca4d67251c76f233a: missingTaggerEntry: invalid format - expected 'tagger' line
+    Checking objects: 100% (835091/835091), done.
+    Checking connectivity: 833846, done.
+    Verifying commits in commit graph: 100% (242243/242243), done.
+
+While worries about live updates while running fsck is likely of most
+interest for forge operators, it may also benefit those with
+automated jobs (such as git maintenance) or even casual users who want
+to do other work in their clone while fsck is running.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    fsck: snapshot default refs before object walk
+    
+    Changes in v3:
+    
+     * Removed the attribution for Matthew, as per his request.
+    
+    Changes in v2, thanks to feedback & help from Peff & Junio:
+    
+     * Fixed errors in commit message
+     * Changed to use a refname, oid struct and have an array of those
+     * Snapshot command line arguments and worktree HEADs too
+     * Add TODO items for snapshotting index entries, and for possibly
+       improved reflog handling
+     * Since nothing from Matthew's original patch in GitHub's fork of git
+       remains in this patch by v2 (only a little of it remained in v1), I
+       changed authorship to myself and gave Matthew an
+       Originally-based-on-a-patch-by trailer.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2026%2Fnewren%2Ffsck-snapshot-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2026/newren/fsck-snapshot-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2026
+
+Range-diff vs v2:
+
+ 1:  7af3e9b92e ! 1:  46b3ae9380 fsck: snapshot default refs before object walk
+     @@ Commit message
+          automated jobs (such as git maintenance) or even casual users who want
+          to do other work in their clone while fsck is running.
+      
+     -    Originally-based-on-a-patch-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Helped-by: Junio C Hamano <gitster@pobox.com>
+          Helped-by: Jeff King <peff@peff.net>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
 
 
---=-9+YzrHR5C81dgKtEoK9R
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ builtin/fsck.c | 162 +++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 122 insertions(+), 40 deletions(-)
 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index c489582faa..eec4626bfa 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -51,6 +51,7 @@ static int show_progress = -1;
+ static int show_dangling = 1;
+ static int name_objects;
+ static int check_references = 1;
++static timestamp_t now;
+ #define ERROR_OBJECT 01
+ #define ERROR_REACHABLE 02
+ #define ERROR_PACK 04
+@@ -509,6 +510,9 @@ static int fsck_handle_reflog_ent(const char *refname,
+ 				  timestamp_t timestamp, int tz UNUSED,
+ 				  const char *message UNUSED, void *cb_data UNUSED)
+ {
++	if (now && timestamp > now)
++		return 0;
++
+ 	if (verbose)
+ 		fprintf_ln(stderr, _("Checking reflog %s->%s"),
+ 			   oid_to_hex(ooid), oid_to_hex(noid));
+@@ -530,8 +534,22 @@ static int fsck_handle_reflog(const char *logname, void *cb_data)
+ 	return 0;
+ }
+ 
+-static int fsck_handle_ref(const struct reference *ref, void *cb_data UNUSED)
++struct ref_snapshot {
++	char *refname;
++	struct object_id oid;
++	/* TODO: Maybe supplement with latest reflog entry info too? */
++};
++
++struct snapshot {
++	size_t nr;
++	size_t alloc;
++	struct ref_snapshot *ref;
++	/* TODO: Consider also snapshotting the index of each worktree. */
++};
++
++static int snapshot_ref(const struct reference *ref, void *cb_data)
+ {
++	struct snapshot *snap = cb_data;
+ 	struct object *obj;
+ 
+ 	obj = parse_object(the_repository, ref->oid);
+@@ -555,6 +573,20 @@ static int fsck_handle_ref(const struct reference *ref, void *cb_data UNUSED)
+ 		errors_found |= ERROR_REFS;
+ 	}
+ 	default_refs++;
++
++	ALLOC_GROW(snap->ref, snap->nr + 1, snap->alloc);
++	snap->ref[snap->nr].refname = xstrdup(ref->name);
++	oidcpy(&snap->ref[snap->nr].oid, ref->oid);
++	snap->nr++;
++
++	return 0;
++}
++
++static int fsck_handle_ref(const struct reference *ref, void *cb_data UNUSED)
++{
++	struct object *obj;
++
++	obj = parse_object(the_repository, ref->oid);
+ 	obj->flags |= USED;
+ 	fsck_put_object_name(&fsck_walk_options,
+ 			     ref->oid, "%s", ref->name);
+@@ -567,14 +599,35 @@ static int fsck_head_link(const char *head_ref_name,
+ 			  const char **head_points_at,
+ 			  struct object_id *head_oid);
+ 
+-static void get_default_heads(void)
++static void snapshot_refs(struct snapshot *snap, int argc, const char **argv)
+ {
+ 	struct worktree **worktrees, **p;
+ 	const char *head_points_at;
+ 	struct object_id head_oid;
+ 
++	for (int i = 0; i < argc; i++) {
++		const char *arg = argv[i];
++		struct object_id oid;
++		if (!repo_get_oid(the_repository, arg, &oid)) {
++			struct reference ref = {
++				.name = arg,
++				.oid = &oid,
++			};
++
++			snapshot_ref(&ref, snap);
++			continue;
++		}
++		error(_("invalid parameter: expected sha1, got '%s'"), arg);
++		errors_found |= ERROR_OBJECT;
++	}
++
++	if (argc) {
++		include_reflogs = 0;
++		return;
++	}
++
+ 	refs_for_each_rawref(get_main_ref_store(the_repository),
+-			     fsck_handle_ref, NULL);
++			     snapshot_ref, snap);
+ 
+ 	worktrees = get_worktrees();
+ 	for (p = worktrees; *p; p++) {
+@@ -589,15 +642,52 @@ static void get_default_heads(void)
+ 				.oid = &head_oid,
+ 			};
+ 
+-			fsck_handle_ref(&ref, NULL);
++			snapshot_ref(&ref, snap);
+ 		}
+ 		strbuf_release(&refname);
+ 
+-		if (include_reflogs)
++		/*
++		 * TODO: Could use refs_for_each_reflog(...) to find
++		 * latest entry instead of using a global 'now' for that
++		 * purpose.
++		 */
++	}
++	free_worktrees(worktrees);
++
++	/* Ignore reflogs newer than now */
++	now = time(NULL);
++}
++
++
++static void free_snapshot_refs(struct snapshot *snap)
++{
++	for (size_t i = 0; i < snap->nr; i++)
++		free(snap->ref[i].refname);
++	free(snap->ref);
++}
++
++static void process_refs(struct snapshot *snap)
++{
++	struct worktree **worktrees, **p;
++
++	for (size_t i = 0; i < snap->nr; i++) {
++		struct reference ref = {
++			.name = snap->ref[i].refname,
++			.oid = &snap->ref[i].oid,
++		};
++		fsck_handle_ref(&ref, NULL);
++	}
++
++	if (include_reflogs) {
++		worktrees = get_worktrees();
++		for (p = worktrees; *p; p++) {
++			struct worktree *wt = *p;
++
+ 			refs_for_each_reflog(get_worktree_ref_store(wt),
+ 					     fsck_handle_reflog, wt);
++		}
++		free_worktrees(worktrees);
+ 	}
+-	free_worktrees(worktrees);
+ 
+ 	/*
+ 	 * Not having any default heads isn't really fatal, but
+@@ -962,8 +1052,12 @@ int cmd_fsck(int argc,
+ 	     const char *prefix,
+ 	     struct repository *repo UNUSED)
+ {
+-	int i;
+ 	struct odb_source *source;
++	struct snapshot snap = {
++		.nr = 0,
++		.alloc = 0,
++		.ref = NULL
++	};
+ 
+ 	/* fsck knows how to handle missing promisor objects */
+ 	fetch_if_missing = 0;
+@@ -999,6 +1093,17 @@ int cmd_fsck(int argc,
+ 	if (check_references)
+ 		fsck_refs(the_repository);
+ 
++	/*
++	 * Take a snapshot of the refs before walking objects to avoid looking
++	 * at a set of refs that may be changed by the user while we are walking
++	 * objects. We can still walk over new objects that are added during the
++	 * execution of fsck but won't miss any objects that were reachable.
++	 */
++	snapshot_refs(&snap, argc, argv);
++
++	/* Ensure we get a "fresh" view of the odb */
++	odb_reprepare(the_repository->objects);
++
+ 	if (connectivity_only) {
+ 		for_each_loose_object(the_repository->objects,
+ 				      mark_loose_for_connectivity, NULL, 0);
+@@ -1040,42 +1145,18 @@ int cmd_fsck(int argc,
+ 			errors_found |= ERROR_OBJECT;
+ 	}
+ 
+-	for (i = 0; i < argc; i++) {
+-		const char *arg = argv[i];
+-		struct object_id oid;
+-		if (!repo_get_oid(the_repository, arg, &oid)) {
+-			struct object *obj = lookup_object(the_repository,
+-							   &oid);
+-
+-			if (!obj || !(obj->flags & HAS_OBJ)) {
+-				if (is_promisor_object(the_repository, &oid))
+-					continue;
+-				error(_("%s: object missing"), oid_to_hex(&oid));
+-				errors_found |= ERROR_OBJECT;
+-				continue;
+-			}
+-
+-			obj->flags |= USED;
+-			fsck_put_object_name(&fsck_walk_options, &oid,
+-					     "%s", arg);
+-			mark_object_reachable(obj);
+-			continue;
+-		}
+-		error(_("invalid parameter: expected sha1, got '%s'"), arg);
+-		errors_found |= ERROR_OBJECT;
+-	}
++	/* Process the snapshotted refs and the reflogs. */
++	process_refs(&snap);
+ 
+-	/*
+-	 * If we've not been given any explicit head information, do the
+-	 * default ones from .git/refs. We also consider the index file
+-	 * in this case (ie this implies --cache).
+-	 */
+-	if (!argc) {
+-		get_default_heads();
++	/* If not given any explicit objects, process index files too. */
++	if (!argc)
+ 		keep_cache_objects = 1;
+-	}
+-
+ 	if (keep_cache_objects) {
++		/*
++		 * TODO: Consider first walking these indexes in snapshot_refs,
++		 * to snapshot where the index entries used to point, and then
++		 * check those snapshotted locations here.
++		 */
+ 		struct worktree **worktrees, **p;
+ 
+ 		verify_index_checksum = 1;
+@@ -1148,5 +1229,6 @@ int cmd_fsck(int argc,
+ 		}
+ 	}
+ 
++	free_snapshot_refs(&snap);
+ 	return errors_found;
+ }
 
-On Tue, 2026-01-06 at 08:44 +0100, Patrick Steinhardt wrote:
-> On Tue, Dec 09, 2025 at 06:11:20PM +0000, Samo Poga=C4=8Dnik via GitGitGa=
-dget
-> wrote:
-> > From: =3D?UTF-8?q?Samo=3D20Poga=3DC4=3D8Dnik?=3D <samo_pogacnik@t-2.net=
->
-> >=20
-> > When a shallowed repository gets deepened beyond the beginning of a
-> > merged branch, we may endup with some shallows, that are behind the
->=20
-> s/endup/end up/
-> s/shallows, that/shallows that/
->=20
-> > reachable ones.
->=20
-> Hm, which reachable ones? Sorry, I can't quite follow, it would help the
-> reviewer to add a bit more context.
->=20
-> > Added test 'fetching deepen beyond merged branch' exposes that
-> > behaviour.
-> >=20
-> > On the other hand, it seems that equivalent absolute depth driven
-> > fetches result in all the correct shallows. That led to this proposal,
-> > which unifies absolute and relative deepening in a way that the same
-> > get_shallow_commits() call is used in both cases. The difference is
-> > only that depth is adapted for relative deepening by measuring
-> > equivalent depth of current local shallow commits in the current remote
-> > repo. Thus a new function get_shallows_depth() has been added and the
-> > function get_reachable_list() became redundant / removed.
-> >=20
-> > The get_shallows_depth() function also shares the logic of the
-> > get_shallow_commits() function, but it focuses on counting depth of
-> > each existing shallow commit. The minimum result is stored as
-> > 'data->deepen_relative', which is set not to be zero for relative
-> > deepening anyway. That way we can allways summ 'data->deepen_relative'
-> > and 'depth' values, because 'data->deepen_relative' is always 0 in
-> > absolute deepening.
->=20
-> I think the commit message needs some polishing. I myself am not that
-> familiar with our shallow logic, so I'm a bit lost here to be honest.
->=20
-> Typically, a commit message should be self-explanatory and guide the
-> reader through the problem space as well as the solution. It should, in
-> the following order:
->=20
-> =C2=A0 - Explain what the actual issue is as observed by the user. I'm no=
-t
-> =C2=A0=C2=A0=C2=A0 really sure about this part, only that it's something =
-related to
-> =C2=A0=C2=A0=C2=A0 shallow clones, deepening and merge commits.
->=20
-> =C2=A0 - Explain what the root cause of the issue is.
->=20
-> =C2=A0 - Explain how the root cause is being fixed. Ideally, it should al=
-so
-> =C2=A0=C2=A0=C2=A0 explain why that is the correct fix, potentially refer=
-encing other
-> =C2=A0=C2=A0=C2=A0 code like you do.
->=20
-> Your commit message on the other hand explains more of the "what" and
-> less of the "why", which makes it hard to follow. Also, an ASCII commit
-> graph would probably go a long way in explaining the issue :)
->=20
-> > diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-> > index 2677cd5faa..d05c45e32b 100755
-> > --- a/t/t5500-fetch-pack.sh
-> > +++ b/t/t5500-fetch-pack.sh
-> > @@ -955,6 +955,30 @@ test_expect_success 'fetching deepen' '
-> > =C2=A0	)
-> > =C2=A0'
-> > =C2=A0
-> > +test_expect_success 'fetching deepen beyond merged branch' '
-> > +	test_create_repo shallow-deepen-merged &&
-> > +	(
-> > +		cd shallow-deepen-merged &&
-> > +		git commit --allow-empty -m one &&
-> > +		git commit --allow-empty -m two &&
-> > +		git commit --allow-empty -m three &&
-> > +		git switch -c branch &&
-> > +		git commit --allow-empty -m four &&
-> > +		git commit --allow-empty -m five &&
-> > +		git switch main &&
-> > +		git merge --no-ff branch &&
-> > +		cd - &&
-> > +		git clone --bare --depth 3 "file://$(pwd)/shallow-deepen-
-> > merged" deepen.git &&
-> > +		git -C deepen.git fetch origin --deepen=3D1 &&
-> > +		echo "Shallow:" && cat deepen.git/shallow &&
-> > +		git -C deepen.git rev-list --all >actual &&
-> > +		echo "All rev-lis:" && cat actual &&
->=20
-> This statement and the one two lines further up look like debug code to
-> me.
->=20
-> > +		for commit in $(sed "/^$/d" deepen.git/shallow); do
->=20
-> Nit: loops should be formatted like this:
->=20
-> =C2=A0=C2=A0=C2=A0 for commit in ...
-> =C2=A0=C2=A0=C2=A0 do
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
-> =C2=A0=C2=A0=C2=A0 done
->=20
-> > diff --git a/upload-pack.c b/upload-pack.c
-> > index 2d2b70cbf2..ecd3e7f5ef 100644
-> > --- a/upload-pack.c
-> > +++ b/upload-pack.c
-> > @@ -704,54 +705,82 @@ error:
-> > =C2=A0	return -1;
-> > =C2=A0}
-> > =C2=A0
-> > -static int get_reachable_list(struct upload_pack_data *data,
-> > -			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct object_array *reachable)
-> > +define_commit_slab(commit_depth, int *);
-> > +static void free_depth_in_slab(int **ptr)
-> > =C2=A0{
-> > -	struct child_process cmd =3D CHILD_PROCESS_INIT;
-> > -	int i;
-> > -	struct object *o;
-> > -	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
-> > -	const unsigned hexsz =3D the_hash_algo->hexsz;
-> > -	int ret;
-> > -
-> > -	if (do_reachable_revlist(&cmd, &data->shallows, reachable,
-> > -				 data->allow_uor) < 0) {
-> > -		ret =3D -1;
-> > -		goto out;
-> > -	}
-> > -
-> > -	while ((i =3D read_in_full(cmd.out, namebuf, hexsz + 1)) =3D=3D hexsz=
- +
-> > 1) {
-> > -		struct object_id oid;
-> > -		const char *p;
-> > -
-> > -		if (parse_oid_hex(namebuf, &oid, &p) || *p !=3D '\n')
-> > -			break;
-> > -
-> > -		o =3D lookup_object(the_repository, &oid);
-> > -		if (o && o->type =3D=3D OBJ_COMMIT) {
-> > -			o->flags &=3D ~TMP_MARK;
-> > +	FREE_AND_NULL(*ptr);
-> > +}
-> > +static void get_shallows_depth(struct upload_pack_data *data)
->=20
-> This function looks very similar to `get_shallow_commits()`. Is it
-> possible to deduplicate the logic?
-
-Thank you for the valuable reply. I'll try to address all the raised points
-including mentioning in commit 1/2 that added test from 2/2 fail without 1/=
-2 as
-quickly as time allows me to.
-
-Thanks!
-
-Samo
-
---=-9+YzrHR5C81dgKtEoK9R
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE0ILCB4OlalynYc8G8CRZRlo64wgFAmlhMVMACgkQ8CRZRlo6
-4wh+qA/8DTvxEKScil36fLDPccTUAMsDsvLKy/xgS0FR+PwYHc0uejnworFFvsvH
-R8R90O5bOkdT0wDPBX3LEBEV+Hw7DFPkk17r+V0+/6xOU1JDXa3JF3ttvpbjcZ2D
-sZHpMN0U2fdt8Cmqtql9AOesSziJyARULuE5GTSKNhzqkpssxoNtFUj0CxbDnNO3
-FatvEtV1aZn5+8zg1za38yJV6S1Sebd8X8YlRXGQqwX7P3DipLdnqN9NAIkNtTr0
-6+pfL82tqdVJiobySETIq/nKktwDeSulZYX4nUSwa16WCnAVKiyTzg+XdcUT7it6
-GeGv0Nx0dtzHpBmdY00ZVrGYAxZq7MxH0kgIMG+p2in4slNPbSXPB/2ZFTqX5Elu
-5hoTkCndqORr6dvRF46EhLPheVMpJ6K2sUYPXhm/LcuVN83mZLUDNIrVXO9hqHPd
-OELy77efrb1Hx1ugCf+xzLOiWEZgUMMLMEhP1uM20vWwkREEfFWb9eBgX2BiwVh9
-jlXv4DOnNRLDJylQb+feg6+GdXCO/g03z7KWHF57r4vH6eY1wE8MbcZb5LFOAc31
-e4U2LHoPbjxwlx93whrt853rKC8pas7i/DE8stwJSjY3WTvl72ZMUBdMDquG2MTX
-el3TcwBW/23oJx7sZ1KaVXMua4ku9P068JP7g6+62mOfnNB0vEI=
-=VIRe
------END PGP SIGNATURE-----
-
---=-9+YzrHR5C81dgKtEoK9R--
+base-commit: b31ab939fe8e3cbe8be48dddd1c6ac0265991f45
+-- 
+gitgitgadget
