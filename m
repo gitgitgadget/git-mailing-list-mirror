@@ -1,85 +1,86 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FA619F137
-	for <git@vger.kernel.org>; Sat, 10 Jan 2026 02:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB6C23E334
+	for <git@vger.kernel.org>; Sat, 10 Jan 2026 02:13:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768010557; cv=none; b=D8SNOLf+gmpSE1WpNz5tkrcWGsMfORWVnqFo1JXXtpz7vuKzZVoFByYIhRbDdF3fdfTijh/3pS1Hn/w11nNaAPKGL8C23z78HaOz9FoGUO4xLLejwsYBgCJkmL8M+CQrwzePhYvcJqfjlEt1azUzYyS3MMkE5jqlg7MtriULfvg=
+	t=1768011195; cv=none; b=Rwg9zF8BzzixD0Zv88ZCTa5/0+HWBU2y7I/0EB8x4vzGJdJv9yNcRKXe7K/4dvejGbFyoEGlvv7wLr0VlVkIWcSsCL8KpOZ1OTtiTHnIZKkITipZjzvY8ht1xE4BKpVQDBo9RujLGtI8iSvJnatsxEcPcJNiumeM52wbG4BSp88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768010557; c=relaxed/simple;
-	bh=a9K4mLz81IHSq0MquH2oT/cPkgsQAm3TIXWqCIZD0l0=;
+	s=arc-20240116; t=1768011195; c=relaxed/simple;
+	bh=qZ5UV/8jlFd23yCh9eWssqdDSkLTX1Gs1g2+Q1yQiLg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g08wMDLGOL+vDCJeqwScwh4Wzo+CgAYs4OqhokxMrGckzmbfSyipae7l1F1CkZWuUQ8qkqoAcJpxRtoslCQcMK80Te23NgxKqUrKpyiXHAae0w0kPM2EYmHRsTf6wfsPa2YCJ4cMPYxNGMzuEj+erZGExLiuQ7o6MhPad0e+BfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fAlUQpxF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ds/KOe6x; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=t2qRdMG+qKBFom55WFr85IHgQHhs5ioZ4jqtnBdz5bPEv4IZWahnWXv6jOoELA8NKlhtJSIrUlzRodYQb4gcyl+p4AsLMAHbXBx/I1J8sMImmr6M0LhloTE9fOIDCKVYz6YwDpeVO05Q1bum1s4ey8MYUb7W8Yg7QQZWYh5Z934=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mdmwCclh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c/w9D4SL; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fAlUQpxF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ds/KOe6x"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 55A611D0004F;
-	Fri,  9 Jan 2026 21:02:35 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 09 Jan 2026 21:02:35 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mdmwCclh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c/w9D4SL"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6808A7A007D;
+	Fri,  9 Jan 2026 21:13:13 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 09 Jan 2026 21:13:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768010555; x=1768096955; bh=zYX4bspzSm
-	2xgfu86WvDmNBDarwvTsdzSCx3bs5uYaA=; b=fAlUQpxFBVKD6RqPcbJPfF02pj
-	4v+cIpHNO8g5Qw+M0IunuRyw+S/GEeVZZsK/T/qsWu/57BTfxvnV4mgb6FS2rDaK
-	au+rIOWDqZKO8GXm18sjJQx+pKyuUYv66WRYMgwraZl4IZFcOq3R9gXaEosYyO6k
-	MWhLzyU2G1BIdYhsU4W2gWcHIvoXoBGwwpuU7kQ5fjCJua7tuM6e8nTWdP8odNEW
-	9Xx/guF0TiGTBgY0BvqKDJ+dXMSUlqpNVN3LGyyURJm0gqyOCAMYyZ0T+imoS9uo
-	5CQ9CEpyW57IiX5qKrBnCYBwthslY08xuDJ+lXCCuWyh+dBuvaV/Lc6vQgqA==
+	:subject:to:to; s=fm1; t=1768011193; x=1768097593; bh=uqFiZRPh26
+	UlAcNlp8JtsX+lcZik+7nnK5lK5nxp4cI=; b=mdmwCclhO4Uk7kUhk1zMBkJhOl
+	9OaSYyAYLy2tZau25aAO8gILBARIDuwBr7XzjXhYlvgZ/vllOuWfOYyDuuYejnvS
+	2t8svd3wa1rpCEUJm8PZAL+GufvWRMQZHAqfzgF6O/XVL2AoJtDmLoDC2qMbBlTN
+	/siQbOyEwPwUHyv/VFs/bSttx3Qn2g1mKl9KI56NwHndbmGR9fV3NTCV504RpkN9
+	oM4Rx+lrQMXz/mJcp/lTjtTTroK5uydWmXLznL0aGebadLfIXMnLFZdbwxj5Vgns
+	xbAT7NO4Qe29/XvIbydl87IW3WbfKeXv5KFDvF7959yUWfwozVT78OGxerqA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768010555; x=1768096955; bh=zYX4bspzSm2xgfu86WvDmNBDarwvTsdzSCx
-	3bs5uYaA=; b=ds/KOe6xIuQ5pmW9VPUXyFKe7jsPzN5CqWq6xhwS+nMLlOg9q8p
-	n3a3T3yHrffzqV6VuhhBkfISPPMn/0PSd6fE785fKmO/33MSffMrUokSiwQdTrRP
-	VRPorNcsrBgX5hzw5nV1C49+2eV6eCY8Vlkmi5WMa/A5sqou1lIakQy4XBll/2nR
-	Yi0RqZXuPDGkTscUEs/xw0y5ks443yVW18jdnUJuM9hOIMKRJyBdcREQqbi2kX/B
-	A557iyogWbdNWmMwWumAi+RTVrhosHBCcg61IDGPSFRkSJFa5Sx4SIeY6gElQAWh
-	gkus2Lfx7rRw5d4uWFR4hBcm8wtRC1PyCMA==
-X-ME-Sender: <xms:O7NhabewXG7z--heuTJDgH7HAAAD4Rbch5ONYRBWniUGXsp6lui4jA>
-    <xme:O7NhaYNoHkLKILFIyl9k0-Xf9GywfR83sPnpVQcN8X-WYXI4sKSgtLxkd7o_BnNOF
-    NXFpqOluj3gu7G46jNHhTWM2FBajQWfDDXYtx8UNVMcZ9cQuGj5dQ>
-X-ME-Received: <xmr:O7NhaZg_htmyANC7FlRzjCdOYJYXF5rgtk23dUlqIZlf_GsUUbRtHw16d9fhcCVOg330DD8squ8leMG1pbhinjr0DHwHlN8cfWeRm1g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduuddtgeegucetufdoteggodetrf
+	1768011193; x=1768097593; bh=uqFiZRPh26UlAcNlp8JtsX+lcZik+7nnK5l
+	K5nxp4cI=; b=c/w9D4SL3s7diaie3Fdo3izeoEKG17AMmNuIMvxQ+t21dTR4USu
+	ATiflnXUBtnwS0bk64Ppf0W++Wu4d8OKVLOEhc5CbRf2A01nL9qciXdsV0nUeupR
+	wIKjjMal2wTieB5pmcvsBkyK0m3vEF4JauadQmz7SgisZbAyYhvuazfxP1Q83FRC
+	v741ubt2jP+bw9a25xO1z6t+tZgsuaa8xvACBAKihtkrkNDU5zOFdDCk220DHf5p
+	b4OpWrL+D9GGMIMvjINjtXH3BewRJoFf3QgH5tv2agy7YRlpz9lk7NbGJDfJ8f/d
+	oZTjv5gMZIiyvPoNTlO8Qp0hVbSLZUKgKvw==
+X-ME-Sender: <xms:ubVhaRPT3s71eSwzmOTKDbcAEt1vAKFQli2wXXor0k90DHhOb54sgQ>
+    <xme:ubVhaa-xNblVPnwsSyMYRvvZOH-DWNEGSMp7kCY4QjlinCTv7q_b3WKueNTfOWvj9
+    2OgomBy59MbDOSahATfmo7-6MWYO43LIjQfeiv6dh7MK1G5O0bB>
+X-ME-Received: <xmr:ubVhaVTvvRY-qF32ORR9kT-lnaimjWNBGHXdesNnHV0XFEHUPzRyKuZ-S2umrixTvL52WlWH_piz3_JNgj1qgckh3Vi35ZZ_Md1m0WY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduuddtgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
     htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:O7Nhab2xi4SJGE6tqo_hhlMurCTXOkjKEU_89Yj6WwWlp5myfL_AZg>
-    <xmx:O7NhaTixp15HKOqASYDhIlGhUgu7qEl4GL8B9iNFdscA33A134gjiA>
-    <xmx:O7NhabcS1TSndXdhPiEzioTx8C_qC6O_kj2IeYZmaVveSYjsgmSGyA>
-    <xmx:O7NhaWl1KGhP6Ti7euMG_2D7M--YsAZmfZot7dDRjqPNKsALsX-MVA>
-    <xmx:O7NhadDTA9QMaU4lKGFF-9Y65LX0Z0RjA8G1AhC9Y08nIfOvAYeQ_b95>
+X-ME-Proxy: <xmx:ubVhaclsdKaYTi9haFBKXAZl2LUY0oFeeqW_t6IbaFTKKahz0eWrVA>
+    <xmx:ubVhaVQd3L2vwJxIuTdL2s4BWLqynIv2BPKU_uxBDZ28ZcYV8uV_AQ>
+    <xmx:ubVhaaNCGMkiPYWZR-t1BfeqVB3Dm0xbT8v8h6WFTnk7Yrqh5COkKw>
+    <xmx:ubVhaeXkYbtyaJvlz8VWXpSVZjRimuuapudkUnzhqRmeCHTK9q1Tpw>
+    <xmx:ubVhaYwGkmT5oGtmVZ9a44CWUOyQ3QTbo8ZAem26sIzOnUU7fIkZFlzO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 21:02:34 -0500 (EST)
+ 9 Jan 2026 21:13:12 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v19 1/2] refactor format_branch_comparison in preparation
-In-Reply-To: <451d7a498617fbcbeb08ee644cb621cbf6af0bd5.1767984037.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v19 2/2] status: show comparison with push remote
+ tracking branch
+In-Reply-To: <dc8ab23158e5b43cf650f71ef5c2b3a094f54129.1767984037.git.gitgitgadget@gmail.com>
 	(Harald Nordgren via GitGitGadget's message of "Fri, 09 Jan 2026
-	18:40:36 +0000")
+	18:40:37 +0000")
 References: <pull.2138.v18.git.git.1767976906.gitgitgadget@gmail.com>
 	<pull.2138.v19.git.git.1767984037.gitgitgadget@gmail.com>
-	<451d7a498617fbcbeb08ee644cb621cbf6af0bd5.1767984037.git.gitgitgadget@gmail.com>
-Date: Fri, 09 Jan 2026 18:02:33 -0800
-Message-ID: <xmqqjyxqtebq.fsf@gitster.g>
+	<dc8ab23158e5b43cf650f71ef5c2b3a094f54129.1767984037.git.gitgitgadget@gmail.com>
+Date: Fri, 09 Jan 2026 18:13:11 -0800
+Message-ID: <xmqqbjj2tdu0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,65 +92,36 @@ Content-Type: text/plain
 
 "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +static void format_branch_comparison(struct strbuf *sb,
-> +				     bool up_to_date,
-> +				     int ours, int theirs,
-> +				     const char *branch_name,
-> +				     enum ahead_behind_flags abf,
-> +				     bool show_divergence_advice)
-> +{
-> +	if (up_to_date) {
->  		strbuf_addf(sb,
->  			_("Your branch is up to date with '%s'.\n"),
-> -			base);
-> +			branch_name);
->  	} else if (abf == AHEAD_BEHIND_QUICK) {
->  		strbuf_addf(sb,
->  			    _("Your branch and '%s' refer to different commits.\n"),
-> -			    base);
-> +			    branch_name);
->  		if (advice_enabled(ADVICE_STATUS_HINTS))
->  			strbuf_addf(sb, _("  (use \"%s\" for details)\n"),
->  				    "git status --ahead-behind");
+> @@ -2285,8 +2352,7 @@ static void format_branch_comparison(struct strbuf *sb,
+>  			       "respectively.\n",
+>  			   ours + theirs),
+>  			branch_name, ours, theirs);
+> -		if (show_divergence_advice &&
+> -		    advice_enabled(ADVICE_STATUS_HINTS))
+> +		if (want_divergence_advice)
+>  			strbuf_addstr(sb,
+>  				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
+>  	}
 
-OK.  We _could_, just like we moved the "upstream_gone" case to the
-caller, move the "up to date" case to the caller as well, but this
-reads well now.  And we do not need the (!ours && !theirs) case in
-this if/else if/... cascade.  Very good.
+This is not a new issue introduced by this series, but it is curious
+there is "ours + theirs" there #leftoverbits.
 
-> +/*
-> + * Return true when there is anything to report, otherwise false.
-> + */
-> +int format_tracking_info(struct branch *branch, struct strbuf *sb,
-> +			 enum ahead_behind_flags abf,
-> +			 int show_divergence_advice)
-> +{
-> +	int ours, theirs, sti;
-> +	const char *full_base;
-> +	char *base;
-> +	int upstream_is_gone = 0;
-> +
-> +	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
-> +	if (sti < 0) {
-> +		if (!full_base)
-> +			return 0;
-> +		upstream_is_gone = 1;
-> +	}
-> +
-> +	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
-> +					    full_base, 0);
-> +
-> +	if (upstream_is_gone) {
-> +		strbuf_addf(sb,
-> +			_("Your branch is based on '%s', but the upstream is gone.\n"),
-> +			base);
-> +		if (advice_enabled(ADVICE_STATUS_HINTS))
-> +			strbuf_addstr(sb,
-> +				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
-> +	} else {
-> +		format_branch_comparison(sb, !sti, ours, theirs, base, abf, show_divergence_advice);
-> +	}
-> +
->  	free(base);
->  	return 1;
->  }
+It is part of ngetext() aka Q_() call, used this way:
+
+	} else {
+		strbuf_addf(sb,
+			Q_("Your branch and '%s' have diverged,\n"
+			       "and have %d and %d different commit each, "
+			       "respectively.\n",
+			   "Your branch and '%s' have diverged,\n"
+			       "and have %d and %d different commits each, "
+			       "respectively.\n",
+			   ours + theirs),
+			branch_name, ours, theirs);
+
+But in this if/else if/... cascade, we have ruled out cases where
+either/both of ours and theirs is 0 already, so ours + theirs has to
+be at least two (because each has to be at least one).  Q_() based
+on a value that is always plural would always use the latter form
+(i.e., "commits").
+
