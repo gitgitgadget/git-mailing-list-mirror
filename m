@@ -1,97 +1,110 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E7C21FF23
-	for <git@vger.kernel.org>; Sat, 10 Jan 2026 01:27:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4671A3164
+	for <git@vger.kernel.org>; Sat, 10 Jan 2026 01:56:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768008423; cv=none; b=o5oO+9st6V9O1BxgGENbc2s1fubuGd3VDZGEAGCi9Vd21RMyOeE0m/cPLVkV4nwz2OVqECF3cvsMOOSMXCte/hsr9QAoN5YeKASUyVHljZov8Tb7ZycrEpHoGAHxzFnzYO0VN0Z1yDFd5LGGyglQVAROLO7CI1cv3fgnjiH0E7g=
+	t=1768010164; cv=none; b=YiW9ggytXefMmgSOrqEn1EQNGd3OB471YOITlTaVd9AlMt4vUbHDVdin0Bsz38qq79UdAiiQXdk+DJ8vqKBRClrfekPDyqCm3hu+Ds3ZBRCAdPfte4Mo08O4Ah7KRbnQfyUv1WSG4akQFo8AFm1809gJxnXVjXsH0YhAB2G2oQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768008423; c=relaxed/simple;
-	bh=ykgk+Gugr46+FZM0ObsQ68/xelb/13OrjgqBsHvPsks=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bFwBCP32Un3O5pXA+f5SlzK5bzDVIAadC1ziq9x46EHKKXYDqlWGWZVWvlp8pYSePFFB1D+iffbg7phn9pP7w7g6zGCLdA5OSFUnU15pz6ivd058e2Sx0Xvr68KJEr/VFClqzRFJ+AkmBTprTNUuAH8cZv22dCTwaeL9MuZOK2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NVQ4qJRm; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768010164; c=relaxed/simple;
+	bh=AZFe1IODxvIEUkXyCmj89bzwVccgqett9mDdGTzj3So=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DIaoO+98ro8wMlMu+URbnl3AiuYzzvW4jA2EfJ07ila223wKxVzd4N85h3YZJe+Ov+shLgm/Q4Zmsz2Nrr+IJc73FILzuzJeCOKScJkJtdItPlGeH0jMhaAOdKMJJ0+4d90nUJLWq4QQCXXmCwH6EQ1Dli5CtKsMklIQiTXwdL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EyRz4tuB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QdDHcom7; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NVQ4qJRm"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-65b6b69baf8so1668006eaf.3
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 17:27:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768008420; x=1768613220; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZWSeX0YDsoRxlq+SPKW1YTt4GoNe6BU3s9R5nzWPsX0=;
-        b=NVQ4qJRmYmy1VW3IyCIDDDEZSfFuYS0GEX+4GxxQJZIiI08BOIgI5q8fyPBrSuJ6jb
-         c3P/oMS8y/JlSQYpKozckDclZvVnnp9WPNReFM2APeOhjQ9fhlclnNkb3DKLvYVuWb8x
-         P7iFrvYQgoS5VbcHX+jYuoB6L1oGp7qMuIsgUp8cQogZHemFn1IiGfDuzr7YFi92w1W+
-         pW+zax2e2rBMeHyb1sKboyKvGdZew1RIJ7zwDqtka28VIorfpKXWluyPKCObNOp0LqJf
-         ITT2iJCWYjqrC8y+aSRu4mmVlp6RvS3wqg5kmnk8P2DWWQ7M+r1gL5/WMdrEjWOMpfYW
-         WoVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768008420; x=1768613220;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ZWSeX0YDsoRxlq+SPKW1YTt4GoNe6BU3s9R5nzWPsX0=;
-        b=P/ToxamquAyOS9hCZsgb3GOwao48nDhNcgjrZi6Jt1ps8JaRHHvOY+Pn+CYHlLBKDJ
-         B85Xrkqg3t4UFCMg+yvhO8CZSlHdLuqsniue9abfKSoime/IbgnRHq9Xsy/5VJUlGx+s
-         vDBDgEeym0Hnxh7z9lsqaPGw9trtM1gjbIedNdC49WDyYx2gvOXmDO3NEbKFtJICe078
-         OQDpeJQQYYZAe2jSgqYkv+5hM6O32KCzLW1d8yPemn0gUV/phMTjtjVczgaQQO52RFP6
-         dV5cczzb0lCagyoqYPjbd8mY21rsRUZCCd4F0KSS5kaXEdFa7byaJ18s7EDUMjmArb6/
-         6/Ng==
-X-Gm-Message-State: AOJu0Yxq+hvHHvNwFhHqS7SGpRs5VjC9IwB1FZmpPROUBYGaOi3CZlMH
-	D0eqekP10SLb3+eEqlRh8lc2Do7FvUuhCdqLxQb8N4irSmUlyPV7+awLILKg0wdASy8BzQBZOJx
-	p07wxOx5lNN9fCkJ3wgL/jN9UgTiUHGE=
-X-Gm-Gg: AY/fxX4DGlVi4q6ya48zX7GFxXbggUwjlr0nbH1CUDK+WO8f8b3y/e7JUMZ36m44buO
-	16pPRuQw+/2E08pFHK5ZNnqVJM0tlqmJCqfv4vdQNhHftTk7lvG5SSqpB+37Dy/fCxwfNQqjJG5
-	QhM+WNxP8sATUUZJtkRQMuTsK17O/FhnYw9J1TRgS4/w/XUxdFd5pHk+9TRsAW0Mes3LzuEcUcd
-	dWTojtNxPO6gmb+F1ykomkxOYHizqA/UVjT/iJLhrBwkLyW55bDoBdZTXq/b3Kd+En3YUMDxiJ6
-	D2g5fQ9DrzvnLj3N89q2knE8IAc=
-X-Google-Smtp-Source: AGHT+IHwjv8HllmVTaGHlSPve7E0r7gklqYOsrKU2KsQEP0kEAjkmwZj2Cm1lLbDgHd2OLbAjgyEiO0wGG7FDWg+xE8=
-X-Received: by 2002:a4a:d0d6:0:b0:659:9a49:8e84 with SMTP id
- 006d021491bc7-65f5508aa17mr4515865eaf.84.1768008420094; Fri, 09 Jan 2026
- 17:27:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EyRz4tuB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QdDHcom7"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 19E147A0102;
+	Fri,  9 Jan 2026 20:56:02 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 09 Jan 2026 20:56:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768010161; x=1768096561; bh=5Hygeu7eMv
+	em51603fazfbrGMqvDRs4DhluT1ImTiAQ=; b=EyRz4tuBwx23eR2J/Ci+NgEWfC
+	zEmkIYKMOusUzPIcwT9lOH98uilye1Kz56stearB3nMGUp82fXF8blHeqbqI5w46
+	7GOd90rffkyV9YQXbG4wdgjxcC+K8G7DDTE9YSVyfMl3Z0HwPj+vHESb6KIxKCM9
+	sRxfLhX36FNMoDI0iN0FkAadh9U4+SzdL3uamcnuinMq8+AeW9afoheur6qs5uvV
+	AMZdmRHDugsi+ZZBAn6mgCciAfIqpRorpXzwD+v1GjPKPDTdJ2x+UsBSwuTZ9mlP
+	FshZJWz7l/ExYqJCkbp615l+ZEp36CUBNl+6Ey/xg1wBqttjWodnWoYNUEJQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768010161; x=1768096561; bh=5Hygeu7eMvem51603fazfbrGMqvDRs4Dhlu
+	T1ImTiAQ=; b=QdDHcom7V9xgqy6DQh0q0gy4njYmsoJWzHlAbJU2sHVQ4I3NYaT
+	RG09kB73Y9UBBYC7u805ZmMImV3SyHQPcAT+C2uZ5+XQFAH3DkzMxq6eUdKuPgDm
+	mcvvlqF66vve6H3M6WsPdaJpk+ZHQBt4SRT93ifatN5B4T7qQ+y1eJS/WSRS57Hk
+	ojQzBn0I1eDH1MmVPIzPx/kgSuN8sIS9TJcPJjUhvrYuLjfey06MWShBRCP3vZO7
+	jg6mN6/P3471WqMK04kHVZ9FePBIWMcsIVzX8vDuBER9COPSAAC6ZObrlYY9cum7
+	onpYLzkuFBkkCawfs5YfSmqS6pIRPgT66Jg==
+X-ME-Sender: <xms:sbFhaTOqMxtTkPB72j4TXOLE4777JAY2jKulCcwvzYy1udbpYUKOHA>
+    <xme:sbFhaVZBv9Lf6QfnRhoISXL-P6BykAmYaumscYdak9oDOZPz6qWNj19hQ3OvEyyJj
+    Zq97dZr1VNgkJgmijace6A84ZOOsUNcUJQZOCBDlC8ABNFOpRxSiA>
+X-ME-Received: <xmr:sbFhafod6JNM7_sNtPT1txzzZHJoB-_eSsDMIGABFRiMO5FVvIe8vDEgbNDhsa6JKMtJuIEK2JIFp5urfUv34LyQxxWy5EMIueMOFm8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduuddtgedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggr
+    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:sbFhaRbjBdwnAyErD1o8CR_95WVTFz4V-43ikrcQKZbb034ecAFTCw>
+    <xmx:sbFhafTvMM_1O0fpqbwcNd_RNqVzMHNfzrwT5VfxKqtlztwjLnwO2w>
+    <xmx:sbFhaQ7k7AZuLPvJDR04ch-dvUHTx9CSxFXRma5tNAGjRI9PtEt7vA>
+    <xmx:sbFhacy3fJZfWiomu-5v-xVMdjq1h6-nmDwUMqDV7_OSNf4V7qN1pQ>
+    <xmx:sbFhaWFBZp1BROMGEO8gxYcFjNLmVMkEgDnQXfq71nlIHMQykp02arb->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 Jan 2026 20:56:01 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] gitfaq: document using stash import/export to sync
+ working tree
+In-Reply-To: <aWFg_VUZH5_ZqTix@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Fri, 9 Jan 2026 20:11:41 +0000")
+References: <20260109014608.42773-1-sandals@crustytoothpaste.net>
+	<xmqqseceua9j.fsf@gitster.g>
+	<aWFg_VUZH5_ZqTix@fruit.crustytoothpaste.net>
+Date: Fri, 09 Jan 2026 17:56:00 -0800
+Message-ID: <xmqqo6n2temn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im> <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im>
-In-Reply-To: <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 9 Jan 2026 17:26:48 -0800
-X-Gm-Features: AQt7F2qIzp7RUu6cbacescfubBk631dA5cjDfw-qScd1P2nOhNslyiTBgBLnnmw
-Message-ID: <CABPp-BEVZbN08zF2P0wNWuOZozc+tbWodfOjtiAkX+XhMiyC6w@mail.gmail.com>
-Subject: Re: [PATCH v9 0/7] Introduce git-history(1) command for easy history editing
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Martin von Zweigbergk <martinvonz@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-	Matthias Beyer <mail@beyermatthias.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Jan 9, 2026 at 12:35=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
-> Changes in v9:
->   - Rename `struct replay_ref_updates` to `struct replay_result` to make
->     its semantics less focussed on ref updates, only.
->   - Clarify and fix return codes of git-replay(1) so that we return 1 on
->     conflict, 128 on an error and 0 on success.
->   - The usual small improvements to commit messages.
->   - Link to v8: https://lore.kernel.org/r/20260107-b4-pks-history-builtin=
--v8-0-18e9779e3a26@pks.im
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I read through this series in detail; it's forming into shape nicely.
-I think there's still a number of small implementation things to fix
-up (see my comments on the individual patches), but the design looks
-good to me now.  I suspect we'll be ready to merge before long.
+> On 2026-01-09 at 14:32:40, Junio C Hamano wrote:
+>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>> 
+>> > Git 2.51 learned how to import and export stashes.  This is a
+>> > secure and robust way to transfer working tree states across machines
+>> 
+>> Here "secure" in "secure and robust" triggered my "huh?" sensor.  It
+>> is a robust way, but is there something particularly "secure" about
+>> it, other than "it is less likely to break your repository" in the
+>> sense that is already covered by "robust".
+>
+> We know that sharing a working tree with different users is not secure
+> because people can have things like hooks or config options that execute
+> arbitrary code.  Transferring stashes doesn't have that downside.
 
-Thanks for your patience and hard work on this!
+Ah, I wasn't thinking about two different people transferring
+repositories.  Using rsync may have that downside.
+
