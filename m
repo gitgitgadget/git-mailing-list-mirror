@@ -1,391 +1,226 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA6130FF1D
-	for <git@vger.kernel.org>; Sat, 10 Jan 2026 04:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B92B50097B
+	for <git@vger.kernel.org>; Sat, 10 Jan 2026 05:13:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768018661; cv=none; b=jVje0rwD2RW/snP2onseeByOh9ZtdMlYM5rbzF9fnMYyA1NCk6A4GiqjPdUpeskkYDXDxaTVI1w7RagnIxj0v0NHc9RGf6JGLJuYEMrmq3vywIna+4wwcHICvUV0OqBMXGgsY0yFusHIIZFJR772Lia1JBKODTjKFK/l0fdvPok=
+	t=1768022022; cv=none; b=jKOkKZAOY5dwqRdiTx2iw/N0DqQkg5cuddDMEPppEPwyuVaQXfVlC+AWGWpu/Ht4+XQT3lM3An1wBXbOOk3B8ELFYyKQKodjbxrhs0Gxxch5J523rLRCMpQwXoonC3PDWQJS9GeRbdYrERkpOac3flYGScQpwNoSJd6AWeJsR78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768018661; c=relaxed/simple;
-	bh=bIfVyG7FVvRkrS16/N2nRMqrnoP6ZDfjlatH0SttTXU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mHUdTqJFIephw/THp3B2K60Yx8Ny6xJlufhH7tg8TJ9FTBDIB6We07M8h4/a/KZy0GFd+jOFCzUM5DMSKqPtA/MpoeIyfYrzuPQwDBqcT0XGul9Zj4VOKw+5dxln8rwdZB5Zj6u1VkWwBJ6FrDZkSx1BR8Rmfa6oP9j+SMwYT5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cZdcQnT/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dc0ssPfd; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1768022022; c=relaxed/simple;
+	bh=uq0rVi5F7YxU/zLkjQqcgVoq6Bxl3/xUHHgaZ/jgUVc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=eQZ9M6k4WN85vHTRltyZ/zjDS4QpHZZ/uqTOWG7szptmvWjPXu1yZWQFMfiByh77ndlKu1sqKaWkcT6nFsBEUL+11S7TJbKdX/YW7YlurLL/24lcR3lSWZ5B1HejUmczS/aPYNbIDkkD5zI/yvF0YNTozxcoJrp85C1vlXRAFDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h1y4tlJ+; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cZdcQnT/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dc0ssPfd"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F2AB67A0087;
-	Fri,  9 Jan 2026 23:17:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 09 Jan 2026 23:17:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1768018654;
-	 x=1768105054; bh=/GfRet2x1j5QoTEA0Qkr/QOFhjxAG19+nZZ67WF4fkI=; b=
-	cZdcQnT/Ftcbd7wQh25unoNpXbKRZ7Xgzj0rpnX6r8Rw0kTmnVFZnPr9K0M/2a78
-	mdVP7Vd2nFmJdtFq82GWHS2oqI4atfxCnRFfFZPGhEohlAyeYC0aE2byqqTG5eEZ
-	mc7YrhAM99ioy6hVw/qSZqQBmwBqbWsT1ikjteI2MbopFxpqnQ2pQEugzXxdns1H
-	Z1q2cKEPCcdCP0rb3J28NUO025JCwRUm1cWPG4xxjGBtk93lAn9DL/P62PN9dHoD
-	le+KoeIvmIv1P/2I1Q3tEqsUmiA+wByKRqQf/m7DqwxoXriZ9ZcqKFMA/BbSWFJW
-	RMLQ8r9QHNwGqg0NEKssIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768018654; x=
-	1768105054; bh=/GfRet2x1j5QoTEA0Qkr/QOFhjxAG19+nZZ67WF4fkI=; b=D
-	c0ssPfdF3KEWZ/88grcQVFSJ0kVV0bPcpdWPFUvLv7V2dRvp6N/JMCxGTcJKFBJs
-	ocNApoUrFvNMbui5Lepp3Skz2cTGu1dZ8FbQomustLOi7dMyTd7wVQUWS/5puACg
-	GIHUX2tlA1Ibo0D7nCus0DS36hjtTKU92sNxRfssOHsCmcEjsz8ZNjT2myRm4VDd
-	P39ZA6WJYoBZDssnXbzmgbWFMv+EHb1eP/Am0/PRxwgWuRxoGvM6Shl8LOqrFOjm
-	FJMrdP6G32vDUufPbrCZmt4K8BjZU6rQTXTr5WIu5N6vwhybLon2s9AHjVxp0zEJ
-	jebb20YTnQkO83BdEUHrA==
-X-ME-Sender: <xms:3tJhaQMBtu0S19BZQEu7OUlRwsDlGHBJdpUxjZ325sulhBq6J-SltQ>
-    <xme:3tJhad0GWF9uDBNNj-6txMRuTG1BbJAOaKtPPjmM3MGo1o106GsgdzmqcO58lDTkE
-    vMo5ZEfV4OhR4YLodE4LJ2OdIWKgon2TvQpnvmsliHDOQYwb00oXA>
-X-ME-Received: <xmr:3tJhafkMdEvXwoUUyMeo_egYyuwkL2QhM7KeSovli-DBKZojtTJLguN3vs9ZLcYOmgK_gRl76CuFcUpeZBdD3mwj1IJPdwtOuuqpWl0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduuddtjeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdtjefhgfekhffhteeiffetheelhedt
-    gfehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepphhssehpkhhsrdhimhdprhgtphhtthhopehsrghmohgpphhoghgrtghnihhksehtqd
-    dvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3tJhaUVmPs1M3sKTjoTd5PsZIZP0so1_2LDsTXFw_jZwYev743DzKw>
-    <xmx:3tJhaVtGJcY6__tMcpUxXHEgU0nRSL26hHfWVCv0EmNBsBkDoXfc-w>
-    <xmx:3tJhaXYQ9aSh9jxdrwr6oEkJRcONe9Qc8DgpXadS_--yR78rmMt6mw>
-    <xmx:3tJhaUVOI0C8aFJJbJ93Hsdz70cUGNJ-56amRndrP-4_dA6tnsSzJQ>
-    <xmx:3tJhaWyzKHAdnxcMd4W-mQSp6LuD7q6o4-k-bFCuikD6OYem60OUd8Ay>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Jan 2026 23:17:34 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Samo_Poga=C4=8Dnik_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Samo
- =?utf-8?Q?Poga=C4=8Dnik?=
- <samo_pogacnik@t-2.net>
-Subject: Re: [PATCH v2 2/2] shallow: handling fetch relative-deepen
-In-Reply-To: <ba1f80105f3e1c3dc6d133fb319e1df69a19bf8f.1767997426.git.gitgitgadget@gmail.com>
-	("Samo =?utf-8?Q?Poga=C4=8Dnik?= via GitGitGadget"'s message of "Fri, 09
- Jan 2026
-	22:23:46 +0000")
-References: <pull.2121.git.git.1765303880.gitgitgadget@gmail.com>
-	<pull.2121.v2.git.git.1767997426.gitgitgadget@gmail.com>
-	<ba1f80105f3e1c3dc6d133fb319e1df69a19bf8f.1767997426.git.gitgitgadget@gmail.com>
-Date: Fri, 09 Jan 2026 20:17:32 -0800
-Message-ID: <xmqqsecertib.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h1y4tlJ+"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4f1ab2ea5c1so67917981cf.3
+        for <git@vger.kernel.org>; Fri, 09 Jan 2026 21:13:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768022019; x=1768626819; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2pemwj+Dqp7W2nMBbX3iSfN/CdQ6BAd3tSKr0OrPgg4=;
+        b=h1y4tlJ+18nIQRr32yRv9fS+0qPjJLqR0egeCt1dlc8i9aka91Ytb8QWk6Si4SULXb
+         6U3zjmkrDo45dHoSeKVpR9jKcwcqTdMbwq6JFrDEodn/PtxozrMBbI8FtoKjG49eaEqF
+         3/BwUZo1RPbrzO5hRzcH5kxrEUUe94LCqLG3ohZ2yBI/6E9nhOOmiTaQg5qRijZgikkw
+         S8079IFbMdn+tALg18HVWErqo+R3PRddjbeOKHUMFA7KctfWrgNRz5zTGgx6fScsKsZs
+         As1U38abU/qCe5vR7Ty3HqgMnDbh5Lr5qwVbP98kw0u+wIwHWYupJYlS4rOwAN2wyU+h
+         fuhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768022019; x=1768626819;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2pemwj+Dqp7W2nMBbX3iSfN/CdQ6BAd3tSKr0OrPgg4=;
+        b=ONrYVNGEfMfl+ndv6KgcaubrsS3Uj3DHGBLFTnFRN0gRnxtJafkeW0ip1e/NgE88pG
+         jxSQvBCEUmqaC8ZRQA/Yrg7oqEEaANczNBMS+vE1w0yNiv6PoBD0M1AOloFlXy6YzxFL
+         T82wg8tmZdcWloC27zVkOodu4Ji+af6BnSFK5fJKUCUW9OInwgJlK6Dz1pPg4xAncNv1
+         oG5OaJv64xMsYdQbseUokKiAXUCX3ml3d7QSKMotTxbAjuvZN630/ZBi9J0u9X0jYXeo
+         vp2lapArfq/Y70dqy/08FWC8B88aD9ZxbtAdlioUVeFBBhpyYxUMCNBkHSjU428oFm28
+         aR3g==
+X-Gm-Message-State: AOJu0YwFRt+RcXy1qL5DOuSeahSaBqp0sGUw7ptB0GVQmhEvYsfGYixi
+	/xWkLD6j85VE7Rz4VI9LMbeg8BbaJ1DAqpbhyR6JBsWmU5cHcCz8xA+flNrb4oXh
+X-Gm-Gg: AY/fxX5BWyPKCbIOnVGuCNJc9bM/BSpMperH/hNIxD0Wr9O3K/IFE4gysnCEvqAPRy5
+	9KQIFNF6X6cEqWAXl3bvrEeP2ff+XpRpo8bL6TDN4OWZq82cx24tDLnb5ooOLfjYqBJ1WfTOvOA
+	GsSFAWYcgq66kgAfJP+rOCwY5P1INcCoGzeQ+bZnQ2jYIME53sHAqrXbKuO8yJD8rqiKZrnNEM3
+	utd/6+0rwV7hULCKs2NKG3FEC8BkE/St+yd8WWqdl+UxYwoRW5x3qVtQfwkfA9sXQxIw9xk0S8Z
+	nDCAJKWOZ8zS/TkgA4orDCgfpG4X1cKPVjr3eyunwhaRIExSvWmFxqCbeV+2LHDoHTucw25THQl
+	T+3rcJPToVlOG/xUvCRK8AqMIiPkCA5GaS6IcFKSNNCNlJxyyTPDNtQwEEUKxZHD7mKS6f4eKAq
+	ph/FgFVqfmORrHMOf4JqfNNoMq
+X-Google-Smtp-Source: AGHT+IGK2e+jN6CIu/gMUjnx0QG73ml1IGD91pD8V4mzs7VAU08im2J9r/OtKj/Dy2iUxHaVklkYjw==
+X-Received: by 2002:a05:622a:283:b0:4f3:4bbb:d5c9 with SMTP id d75a77b69052e-4ffb4a640ecmr192161551cf.79.1768022019469;
+        Fri, 09 Jan 2026 21:13:39 -0800 (PST)
+Received: from [127.0.0.1] ([172.172.153.32])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890770e2833sm86497136d6.18.2026.01.09.21.13.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jan 2026 21:13:38 -0800 (PST)
+Message-Id: <pull.2121.v3.git.git.1768022018.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2121.v2.git.git.1767997426.gitgitgadget@gmail.com>
+References: <pull.2121.v2.git.git.1767997426.gitgitgadget@gmail.com>
+From: "Samo =?UTF-8?Q?Poga=C4=8Dnik?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 10 Jan 2026 05:13:36 +0000
+Subject: [PATCH v3 0/2] shallow: handling fetch relative-deepen
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Samo =?UTF-8?Q?Poga=C4=8Dnik?= <samo_pogacnik@t-2.net>
 
-"Samo Pogačnik via GitGitGadget" <gitgitgadget@gmail.com> writes:
+When a shallowed repository gets deepened beyond the beginning of a merged
+branch, we may endup with some shallows, that are behind the reachable ones.
+Added test 'fetching deepen beyond merged branch' exposes that behaviour.
 
-> 2. Deepen shallow clone with fetch --deepen=1 (NOT OK)
-> Shallows:
-> 0cb5d204f4ef96ed241feb0f2088c9f4794ba758
-> 61ba98be443fd51c542eb66585a1f6d7e15fcdae
-> Graph:
-> *   033585d (HEAD -> main) Merge branch 'branch'
-> |\
-> | * 984f8b1 five
-> | * ecb578a four
-> |/
-> * 0cb5d20 (grafted) three
-> ---
+On the other hand, it seems that equivalent absolute depth driven fetches
+result in all the correct shallows. That led to this proposal, which unifies
+absolute and relative deepening in a way that the same get_shallow_commits()
+call is used in both cases. The difference is only that depth is adapted for
+relative deepening by measuring equivalent depth of current local shallow
+commits in the current remote repo. Thus a new function get_shallows_depth()
+has been added and the function get_reachable_list() became redundant /
+removed.
 
-This three-dash line will act as a marker to tell "git am" that your
-log message ends here.
+The get_shallows_depth() function also shares the logic of the
+get_shallow_commits() function, but it focuses on counting depth of each
+existing shallow commit. The minimum result is stored as
+'data->deepen_relative', which is set not to be zero for relative deepening
+anyway. That way we can allways summ 'data->deepen_relative' and 'depth'
+values, because 'data->deepen_relative' is always 0 in absolute deepening.
 
-To avoid such an accident, make it a habit to indent any and all
-displayed material used as examples, e.g.,
+Samo Pogačnik (2):
+  shallow: free local object_array allocations
+  shallow: handling fetch relative-deepen
 
-2. Deepen shallow clone with fetch --deepen=1 (NOT OK)
-
-   Shallows:
-   0cb5d204f4ef96ed241feb0f2088c9f4794ba758
-   61ba98be443fd51c542eb66585a1f6d7e15fcdae
-   Graph:
-   *   033585d (HEAD -> main) Merge branch 'branch'
-   |\
-   | * 984f8b1 five
-   | * ecb578a four
-   |/
-   * 0cb5d20 (grafted) three
-   ---
-
+ shallow.c             | 45 +++++++++++++++++--------
+ shallow.h             |  1 +
+ t/t5500-fetch-pack.sh | 23 +++++++++++++
+ upload-pack.c         | 76 +++++--------------------------------------
+ 4 files changed, 64 insertions(+), 81 deletions(-)
 
 
-> Note that second shallow commit 61ba98be443fd51c542eb66585a1f6d7e15fcdae
-> is not reachable.
->
-> On the other hand, it seems that equivalent absolute depth driven
-> fetches result in all the correct shallows. That led to this proposal,
-> which unifies absolute and relative deepening in a way that the same
-> get_shallow_commits() call is used in both cases. The difference is
-> only that depth is adapted for relative deepening by measuring
-> equivalent depth of current local shallow commits in the current remote
-> repo. Thus a new function get_shallows_depth() has been added and the
-> function get_reachable_list() became redundant / removed.
->
-> Same example showing the corrected second step:
-> 2. Deepen shallow clone with fetch --deepen=1 (all good)
-> Shallow:
-> 61ba98be443fd51c542eb66585a1f6d7e15fcdae
-> Graph:
-> *   033585d (HEAD -> main) Merge branch 'branch'
-> |\
-> | * 984f8b1 five
-> | * ecb578a four
-> |/
-> * 0cb5d20 three
-> * 2b4e70d two
-> * 61ba98b (grafted) one
->
-> The get_shallows_depth() function also shares the logic of the
-> get_shallow_commits() function, but it focuses on counting depth of
-> each existing shallow commit. The minimum result is stored as
-> 'data->deepen_relative', which is set not to be zero for relative
-> deepening anyway. That way we can allways summ 'data->deepen_relative'
-> and 'depth' values, because 'data->deepen_relative' is always 0 in
-> absolute deepening.
->
-> Signed-off-by: Samo Pogačnik <samo_pogacnik@t-2.net>
-> ---
->  shallow.c             | 44 +++++++++++++++++--------
->  shallow.h             |  1 +
->  t/t5500-fetch-pack.sh | 23 +++++++++++++
->  upload-pack.c         | 76 +++++--------------------------------------
->  4 files changed, 63 insertions(+), 81 deletions(-)
->
-> diff --git a/shallow.c b/shallow.c
-> index 497a25836b..1a32808865 100644
-> --- a/shallow.c
-> +++ b/shallow.c
-> @@ -130,11 +130,12 @@ static void free_depth_in_slab(int **ptr)
->  {
->  	FREE_AND_NULL(*ptr);
->  }
-> -struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
-> -		int shallow_flag, int not_shallow_flag)
-> +struct commit_list *get_shallow_commits(struct object_array *heads,
-> +					struct object_array *shallows, int *deepen_relative,
-> +					int depth, int shallow_flag, int not_shallow_flag)
->  {
-> -	size_t i = 0;
-> -	int cur_depth = 0;
-> +	size_t i = 0, j;
-> +	int cur_depth = 0, cur_depth_shallow = 0;
->  	struct commit_list *result = NULL;
->  	struct object_array stack = OBJECT_ARRAY_INIT;
->  	struct commit *commit = NULL;
-> @@ -168,16 +169,30 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
->  		}
->  		parse_commit_or_die(commit);
->  		cur_depth++;
-> -		if ((depth != INFINITE_DEPTH && cur_depth >= depth) ||
-> -		    (is_repository_shallow(the_repository) && !commit->parents &&
-> -		     (graft = lookup_commit_graft(the_repository, &commit->object.oid)) != NULL &&
-> -		     graft->nr_parent < 0)) {
-> -			commit_list_insert(commit, &result);
-> -			commit->object.flags |= shallow_flag;
-> -			commit = NULL;
-> -			continue;
-> +		if (shallows) {
-> +			for (j = 0; j < shallows->nr; j++)
-> +				if (oideq(&commit->object.oid, &shallows->objects[j].item->oid))
-> +					if ((!cur_depth_shallow) || (cur_depth < cur_depth_shallow))
-> +						cur_depth_shallow = cur_depth;
-> +
-> +			if ((is_repository_shallow(the_repository) && !commit->parents &&
-> +			     (graft = lookup_commit_graft(the_repository, &commit->object.oid)) != NULL &&
-> +			     graft->nr_parent < 0)) {
-> +				commit = NULL;
-> +				continue;
-> +			}
-> +		} else {
-> +			if ((depth != INFINITE_DEPTH && cur_depth >= depth) ||
-> +			    (is_repository_shallow(the_repository) && !commit->parents &&
-> +			     (graft = lookup_commit_graft(the_repository, &commit->object.oid)) != NULL &&
-> +			     graft->nr_parent < 0)) {
-> +				commit_list_insert(commit, &result);
-> +				commit->object.flags |= shallow_flag;
-> +				commit = NULL;
-> +				continue;
-> +			}
-> +			commit->object.flags |= not_shallow_flag;
->  		}
-> -		commit->object.flags |= not_shallow_flag;
->  		for (p = commit->parents, commit = NULL; p; p = p->next) {
->  			int **depth_slot = commit_depth_at(&depths, p->item);
->  			if (!*depth_slot) {
-> @@ -199,7 +214,8 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
->  	}
->  	deep_clear_commit_depth(&depths, free_depth_in_slab);
->  	object_array_clear(&stack);
-> -
-> +	if (shallows && deepen_relative)
-> +		*deepen_relative = cur_depth_shallow;
->  	return result;
->  }
->  
-> diff --git a/shallow.h b/shallow.h
-> index ad591bd139..d1b3878635 100644
-> --- a/shallow.h
-> +++ b/shallow.h
-> @@ -36,6 +36,7 @@ int commit_shallow_file(struct repository *r, struct shallow_lock *lk);
->  void rollback_shallow_file(struct repository *r, struct shallow_lock *lk);
->  
->  struct commit_list *get_shallow_commits(struct object_array *heads,
-> +					struct object_array *shallows, int *deepen_relative,
->  					int depth, int shallow_flag, int not_shallow_flag);
->  struct commit_list *get_shallow_commits_by_rev_list(struct strvec *argv,
->  						    int shallow_flag, int not_shallow_flag);
-> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-> index 2677cd5faa..5a8b30e1fd 100755
-> --- a/t/t5500-fetch-pack.sh
-> +++ b/t/t5500-fetch-pack.sh
-> @@ -955,6 +955,29 @@ test_expect_success 'fetching deepen' '
->  	)
->  '
->  
-> +test_expect_success 'fetching deepen beyond merged branch' '
-> +	test_create_repo shallow-deepen-merged &&
-> +	(
-> +		cd shallow-deepen-merged &&
-> +		git commit --allow-empty -m one &&
-> +		git commit --allow-empty -m two &&
-> +		git commit --allow-empty -m three &&
-> +		git switch -c branch &&
-> +		git commit --allow-empty -m four &&
-> +		git commit --allow-empty -m five &&
-> +		git switch main &&
-> +		git merge --no-ff branch &&
-> +		cd - &&
-> +		git clone --bare --depth 3 "file://$(pwd)/shallow-deepen-merged" deepen.git &&
-> +		git -C deepen.git fetch origin --deepen=1 &&
-> +		git -C deepen.git rev-list --all >actual &&
-> +		for commit in $(sed "/^$/d" deepen.git/shallow)
-> +		do
-> +			test_grep "$commit" actual || exit 1
-> +		done
-> +	)
-> +'
-> +
->  test_negotiation_algorithm_default () {
->  	test_when_finished rm -rf clientv0 clientv2 &&
->  	rm -rf server client &&
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 2d2b70cbf2..4232eef34f 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -704,54 +704,11 @@ error:
->  	return -1;
->  }
->  
-> -static int get_reachable_list(struct upload_pack_data *data,
-> -			      struct object_array *reachable)
-> +static void get_shallows_depth(struct upload_pack_data *data)
->  {
-> -	struct child_process cmd = CHILD_PROCESS_INIT;
-> -	int i;
-> -	struct object *o;
-> -	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
-> -	const unsigned hexsz = the_hash_algo->hexsz;
-> -	int ret;
-> -
-> -	if (do_reachable_revlist(&cmd, &data->shallows, reachable,
-> -				 data->allow_uor) < 0) {
-> -		ret = -1;
-> -		goto out;
-> -	}
-> -
-> -	while ((i = read_in_full(cmd.out, namebuf, hexsz + 1)) == hexsz + 1) {
-> -		struct object_id oid;
-> -		const char *p;
-> -
-> -		if (parse_oid_hex(namebuf, &oid, &p) || *p != '\n')
-> -			break;
-> -
-> -		o = lookup_object(the_repository, &oid);
-> -		if (o && o->type == OBJ_COMMIT) {
-> -			o->flags &= ~TMP_MARK;
-> -		}
-> -	}
-> -	for (i = get_max_object_index(the_repository); 0 < i; i--) {
-> -		o = get_indexed_object(the_repository, i - 1);
-> -		if (o && o->type == OBJ_COMMIT &&
-> -		    (o->flags & TMP_MARK)) {
-> -			add_object_array(o, NULL, reachable);
-> -				o->flags &= ~TMP_MARK;
-> -		}
-> -	}
-> -	close(cmd.out);
-> -
-> -	if (finish_command(&cmd)) {
-> -		ret = -1;
-> -		goto out;
-> -	}
-> -
-> -	ret = 0;
-> -
-> -out:
-> -	child_process_clear(&cmd);
-> -	return ret;
-> +	get_shallow_commits(&data->want_obj, &data->shallows,
-> +			    &data->deepen_relative, 0,
-> +			    SHALLOW, NOT_SHALLOW);
->  }
->  
->  static int has_unreachable(struct object_array *src, enum allow_uor allow_uor)
-> @@ -881,29 +838,14 @@ static void deepen(struct upload_pack_data *data, int depth)
->  			struct object *object = data->shallows.objects[i].item;
->  			object->flags |= NOT_SHALLOW;
->  		}
-> -	} else if (data->deepen_relative) {
-> -		struct object_array reachable_shallows = OBJECT_ARRAY_INIT;
-> -		struct commit_list *result;
-> -
-> -		/*
-> -		 * Checking for reachable shallows requires that our refs be
-> -		 * marked with OUR_REF.
-> -		 */
-> -		refs_head_ref_namespaced(get_main_ref_store(the_repository),
-> -					 check_ref, data);
-> -		for_each_namespaced_ref_1(check_ref, data);
-> -
-> -		get_reachable_list(data, &reachable_shallows);
-> -		result = get_shallow_commits(&reachable_shallows,
-> -					     depth + 1,
-> -					     SHALLOW, NOT_SHALLOW);
-> -		send_shallow(data, result);
-> -		free_commit_list(result);
-> -		object_array_clear(&reachable_shallows);
->  	} else {
->  		struct commit_list *result;
->  
-> -		result = get_shallow_commits(&data->want_obj, depth,
-> +		if (data->deepen_relative)
-> +			get_shallows_depth(data);
-> +
-> +		result = get_shallow_commits(&data->want_obj, NULL, NULL,
-> +					     data->deepen_relative + depth,
->  					     SHALLOW, NOT_SHALLOW);
->  		send_shallow(data, result);
->  		free_commit_list(result);
+base-commit: f0ef5b6d9bcc258e4cbef93839d1b7465d5212b9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2121%2Fspog%2Ffix-fetch-deepen-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2121/spog/fix-fetch-deepen-v3
+Pull-Request: https://github.com/git/git/pull/2121
+
+Range-diff vs v2:
+
+ 1:  f8a8d077cd = 1:  f8a8d077cd shallow: free local object_array allocations
+ 2:  ba1f80105f ! 2:  e79ab6b740 shallow: handling fetch relative-deepen
+     @@ Commit message
+      
+          An example showing the problem based on added test:
+          0. Whole initial git repo to be cloned from
+     -    Graph:
+     -    *   033585d (HEAD -> main) Merge branch 'branch'
+     -    |\
+     -    | * 984f8b1 (branch) five
+     -    | * ecb578a four
+     -    |/
+     -    * 0cb5d20 three
+     -    * 2b4e70d two
+     -    * 61ba98b one
+     +       Graph:
+     +       *   033585d (HEAD -> main) Merge branch 'branch'
+     +       |\
+     +       | * 984f8b1 (branch) five
+     +       | * ecb578a four
+     +       |/
+     +       * 0cb5d20 three
+     +       * 2b4e70d two
+     +       * 61ba98b one
+      
+          1. Initial shallow clone --depth=3 (all good)
+     -    Shallows:
+     -    2b4e70da2a10e1d3231a0ae2df396024735601f1
+     -    ecb578a3cf37198d122ae5df7efed9abaca17144
+     -    Graph:
+     -    *   033585d (HEAD -> main) Merge branch 'branch'
+     -    |\
+     -    | * 984f8b1 five
+     -    | * ecb578a (grafted) four
+     -    * 0cb5d20 three
+     -    * 2b4e70d (grafted) two
+     +       Shallows:
+     +       2b4e70da2a10e1d3231a0ae2df396024735601f1
+     +       ecb578a3cf37198d122ae5df7efed9abaca17144
+     +       Graph:
+     +       *   033585d (HEAD -> main) Merge branch 'branch'
+     +       |\
+     +       | * 984f8b1 five
+     +       | * ecb578a (grafted) four
+     +       * 0cb5d20 three
+     +       * 2b4e70d (grafted) two
+      
+          2. Deepen shallow clone with fetch --deepen=1 (NOT OK)
+     -    Shallows:
+     -    0cb5d204f4ef96ed241feb0f2088c9f4794ba758
+     -    61ba98be443fd51c542eb66585a1f6d7e15fcdae
+     -    Graph:
+     -    *   033585d (HEAD -> main) Merge branch 'branch'
+     -    |\
+     -    | * 984f8b1 five
+     -    | * ecb578a four
+     -    |/
+     -    * 0cb5d20 (grafted) three
+     -    ---
+     -    Note that second shallow commit 61ba98be443fd51c542eb66585a1f6d7e15fcdae
+     -    is not reachable.
+     +       Shallows:
+     +       0cb5d204f4ef96ed241feb0f2088c9f4794ba758
+     +       61ba98be443fd51c542eb66585a1f6d7e15fcdae
+     +       Graph:
+     +       *   033585d (HEAD -> main) Merge branch 'branch'
+     +       |\
+     +       | * 984f8b1 five
+     +       | * ecb578a four
+     +       |/
+     +       * 0cb5d20 (grafted) three
+     +       ---
+     +       Note that second shallow commit 61ba98be443fd51c542eb66585a1f6d7e15fcdae
+     +       is not reachable.
+      
+          On the other hand, it seems that equivalent absolute depth driven
+          fetches result in all the correct shallows. That led to this proposal,
+     @@ Commit message
+      
+          Same example showing the corrected second step:
+          2. Deepen shallow clone with fetch --deepen=1 (all good)
+     -    Shallow:
+     -    61ba98be443fd51c542eb66585a1f6d7e15fcdae
+     -    Graph:
+     -    *   033585d (HEAD -> main) Merge branch 'branch'
+     -    |\
+     -    | * 984f8b1 five
+     -    | * ecb578a four
+     -    |/
+     -    * 0cb5d20 three
+     -    * 2b4e70d two
+     -    * 61ba98b (grafted) one
+     +       Shallow:
+     +       61ba98be443fd51c542eb66585a1f6d7e15fcdae
+     +       Graph:
+     +       *   033585d (HEAD -> main) Merge branch 'branch'
+     +       |\
+     +       | * 984f8b1 five
+     +       | * ecb578a four
+     +       |/
+     +       * 0cb5d20 three
+     +       * 2b4e70d two
+     +       * 61ba98b (grafted) one
+      
+          The get_shallows_depth() function also shares the logic of the
+          get_shallow_commits() function, but it focuses on counting depth of
+
+-- 
+gitgitgadget
