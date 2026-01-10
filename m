@@ -1,374 +1,452 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2719F1F1534
-	for <git@vger.kernel.org>; Sat, 10 Jan 2026 01:17:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7110C1DFD8B
+	for <git@vger.kernel.org>; Sat, 10 Jan 2026 01:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768007859; cv=none; b=HLVp/CS+hYLLj06czsFpB8agrggqvD2dHehG8+UhKAgO3ksbIdBzDMU5S7gvnM0xg2uQMqckfBUbWnMVtguio8I/b05KKPKjzdqh0c+I8S1ItxjaM8ghG99lVnMQTbjMUTFZyQ9nuf5xC4Yu/L2zQryXmVZefnNCw+1uocaPjTY=
+	t=1768008010; cv=none; b=W/pr9v+B5snTbznKpL3FfE7FSGFMtakDwOCylSPxPxEWUMYjk0IvxOYMBNkKzN47VfzUrf4aBpQs5mFXxlIIzokvWl7uZ+NELj9I2QtzotoJUPP4/CP46umEfw3vtxFM+x8jcr2ZKsrDaJmgRQx9zRa4PN52bUg90HsSx58g4iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768007859; c=relaxed/simple;
-	bh=57zdvZBHSb1H1EBL8voMwbbK5u8cfFE/IXpzhEEotuo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XgMsnpUth3F+xdnOrCKLIbRfwSoWcjiSC5GgpQ0iGLmK8/S8LV0NHjdMrlzwBG+8vQ/lrUXa6hcERTrY6C2VK/XCIVsTvS1TsK5kWcf+DbYVAyTPWA9B4HOht6uK7ki/8/oET0PWiybHiPY1pg8M0f443DIpLZJBdRO/ZwNY3mI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JovBzJA1; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768008010; c=relaxed/simple;
+	bh=gizBgdVu7ygo8QKHahQx5JCX2PyR8TH2zAw+FDk7axo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Cx0sDjzOpscPx3lV0vf58cw9jS/qpgfs6EwPFpNcaJYlkVBkui61a4gfSlDUpdOjjVmjy2XlRPNETo+U9MdQhwFxEHSC+tKepzuEkGLkrnNeELXa/4jtuOrjLixX0txzhx/Ffvud6C4BG71vNM3WqcVDbuXI44+vQZ78kf4f+S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=ga28T5xq; arc=none smtp.client-ip=185.226.149.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JovBzJA1"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-65b6b69baf8so1666673eaf.3
-        for <git@vger.kernel.org>; Fri, 09 Jan 2026 17:17:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768007857; x=1768612657; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=89zXmuFLsdO5Nhc0MGAEqMZpffvbGKDPgiwbW3/T+W4=;
-        b=JovBzJA1TcHYNlZg9yC/fPXtJlH/LW7HLGSNI+8qzHxUzsMqcscORbL2wDMAmMXsg4
-         2H9WPUHkWfhuqYSrlPbgtAq8raNisngQaFw+OxygzP4Y5B82udP1jTAxJJcSVwP7VZ4Z
-         fsO5VJeXfL8exDqkYEEdPiSlXI1A/DLHNappUSfd19c2TJB5lU8cdl9Cij/7sFQeqLdJ
-         IyX6UdOQPhvT8xcFQQNZlbHM+eqSGRX4alt2805y87ciGHsqT8uZ2amyJlmrVs9bA+Lx
-         Jd6CQ66EJl7MAwWhfWeDektZUVf6AknXyGsPU29qhtvtF9dp0poULit6+/I/y7NPQhMf
-         yNdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768007857; x=1768612657;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=89zXmuFLsdO5Nhc0MGAEqMZpffvbGKDPgiwbW3/T+W4=;
-        b=CIn4u3Rxx+iYM5F4g2ICKcoxOpPVRn6zreDmHRiXuoDvojwIgwsruZ8c39/DsnVlU6
-         Qo1HnasJOD4S2di1j4bjUuc4wHOaXzKsQiktTxhqP2tn5KdBraEvAA3iRQASsfguug6U
-         72uj70EVPA+Qg03NzA1fyGYIpbvEzo8LIN+1vwcHadB9n5m2szSz3C+D9UrXCgPDqm7F
-         hcjXT/iLopjQcfqKC63UHNu2i2SqPYWNUt8sZAnrE4X7h2NWxxhyMMGfnIm6PJPA/oyQ
-         t57PQRlt3O9EKi8kJ32IgqbElLlDGtU/v1SYWdCSC7xEQYXwSg8SgNyUlA4b696IUELZ
-         GleA==
-X-Gm-Message-State: AOJu0YwFskndILEBhsDpA1tBhquNpB1xyZYsWLPsUSDiPBzHqXFhI3ZW
-	BnjDSMq2PhffU1nbSAYumz1q0/DXuJ5Mj5+XqDFoChORQmAT+Oa+U3HtGrUJ5neeLcjT5B0SD/h
-	6BPzQXpA0Rd7h8B+BQ3wUi/edQZfRndU=
-X-Gm-Gg: AY/fxX7tnJA84KqszUrKMo4JfehuKSUGVzV68yYHXoT3nCJaLj4DDXT7ZDVmz1rcO3i
-	YLXmLDfOLux8/7WtUYsj4/UYNGtzCT4jogiBPjHkK5PS+sDV34UNCRVpfgE+W4ZESHjifp8gvyZ
-	Vj2MTN5MAwF//QFd5RkKr0np2xoh3+idl+fBgqGuvWvbCizu6H0PoKyIzZJNGKjjfRBYJcBYVxA
-	H12K3xPrZJFYz3oz3lGK2cNowyZD8QTDP637xHPinJ37pqg8lxiPAwBRiGdjVWyyJS2ASkv9p5R
-	Ote4yzIqlG2H45L82awsJ9H5fxw=
-X-Google-Smtp-Source: AGHT+IENVl3reWx4pZEFgiBpBp8gAVU8/ATSG9kua80jjMUy861FjUuP0x1Aie+5MaIBXUEDc2UQDtjPRff1EVsFUqQ=
-X-Received: by 2002:a05:6820:f064:b0:65f:5a60:3d3b with SMTP id
- 006d021491bc7-65f5a605135mr4352777eaf.62.1768007856960; Fri, 09 Jan 2026
- 17:17:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="ga28T5xq"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
+	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1veNe0-005Yf0-V4; Sat, 10 Jan 2026 02:19:56 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector2; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+	Message-ID:Date:Subject:Cc:To:From;
+	bh=HnAFpgyhVNQhy+oGu88Zu9aQNvn+ytXn7xr5MYVlfXA=; b=ga28T5xq7Y/9sFW+ISiIuyBKaz
+	xHAUuyIBy1sZ6Z1vdXYYX+SIodluXjWwc+WJ8/9zDn6EY8SLxaTmUobWyz0HhOtQ7PZeCTwUjSXDi
+	VaBF9hAefR4bXZhIz83hGhEqHxEdo9VXwa5rFoUwittAiuEx3aUZDgaa/4RRifXmYxgGapB+zdkDw
+	LBleNsmpa9g47QvEqd1PqUdlX/DD62VGmFhspc8h+Ey7EudSmOPWE8T1/i56evgG+fSKt8xDPY+k5
+	5n4nUWmJUgDS7/lptly42dBOb7lIqVscrcSWwUHMn6k7Yqp9EjYEbVxz3O1FV6iySGaXjYu1ObpDb
+	+jSgpanA==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1veNe0-00045Z-JD; Sat, 10 Jan 2026 02:19:56 +0100
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1veNdn-004Ium-UJ; Sat, 10 Jan 2026 02:19:44 +0100
+From: Colin Stagner <ask+git@howdoi.land>
+To: git@vger.kernel.org
+Cc: george@mail.dietrich.pub,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	zach.fetters@apollographql.com,
+	Colin Stagner <ask+git@howdoi.land>
+Subject: [PATCH] contrib/subtree: detect rewritten subtree commits
+Date: Fri,  9 Jan 2026 19:18:11 -0600
+Message-ID: <20260110011811.788219-1-ask+git@howdoi.land>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im> <20260109-b4-pks-history-builtin-v9-6-8766101814c6@pks.im>
-In-Reply-To: <20260109-b4-pks-history-builtin-v9-6-8766101814c6@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 9 Jan 2026 17:17:25 -0800
-X-Gm-Features: AQt7F2pH96Vc3Bh8jD2glonFXBzjX5lnAYbnNYLiV7zPqUT8zJvh0uKmPT1iN0Q
-Message-ID: <CABPp-BF3jat7zStaydVa=fGHd7b=k6_KgDHt41XkOz+fMF+gbQ@mail.gmail.com>
-Subject: Re: [PATCH v9 6/7] builtin: add new "history" command
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Martin von Zweigbergk <martinvonz@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-	Matthias Beyer <mail@beyermatthias.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 9, 2026 at 12:35=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> When rewriting history via git-rebase(1) there are a few very common use
-> cases:
->
->   - The ordering of two commits should be reversed.
->
->   - A commit should be split up into two commits.
->
->   - A commit should be dropped from the history completely.
->
->   - Multiple commits should be squashed into one.
->
->   - Editing an existing commit that is not the tip of the current
->     branch.
->
-> While these operations are all doable, it often feels needlessly kludgey
-> to do so by doing an interactive rebase, using the editor to say what
-> one wants, and then perform the actions. Also, some operations like
-> splitting up a commit into two are way more involved than that and
-> require a whole series of commands.
->
-> Rebases also do not update dependent branches. The use of stacked
-> branches has grown quite common with competing version control systems
-> like Jujutsu though, so it clearly is a need that users have. While
-> rebases _can_ serve this use case if one always works on the latest
-> stacked branch, it is somewhat awkward and very easy to get wrong.
->
-> Add a new "history" command to plug these gaps. This command will have
-> several different subcommands to imperatively rewrite history for common
-> use cases like the above.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  .gitignore                     |  1 +
->  Documentation/git-history.adoc | 56 ++++++++++++++++++++++++++++++++++++=
-++++++
->  Documentation/meson.build      |  1 +
->  Makefile                       |  1 +
->  builtin.h                      |  1 +
->  builtin/history.c              | 22 +++++++++++++++++
->  command-list.txt               |  1 +
->  git.c                          |  1 +
->  meson.build                    |  1 +
->  t/meson.build                  |  1 +
->  t/t3450-history.sh             | 17 +++++++++++++
->  11 files changed, 103 insertions(+)
->
-> diff --git a/.gitignore b/.gitignore
-> index 78a45cb5be..24635cf2d6 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -79,6 +79,7 @@
->  /git-grep
->  /git-hash-object
->  /git-help
-> +/git-history
->  /git-hook
->  /git-http-backend
->  /git-http-fetch
-> diff --git a/Documentation/git-history.adoc b/Documentation/git-history.a=
-doc
-> new file mode 100644
-> index 0000000000..5a9d931efc
-> --- /dev/null
-> +++ b/Documentation/git-history.adoc
-> @@ -0,0 +1,56 @@
-> +git-history(1)
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +NAME
-> +----
-> +git-history - EXPERIMENTAL: Rewrite history
-> +
-> +SYNOPSIS
-> +--------
-> +[synopsis]
-> +git history [<options>]
-> +
-> +DESCRIPTION
-> +-----------
-> +
-> +Rewrite history by rearranging or modifying specific commits in the
-> +history.
-> +
-> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-> +
-> +This command is related to linkgit:git-rebase[1] in that both commands c=
-an be
-> +used to rewrite history. There are a couple of major differences though:
-> +
-> +* linkgit:git-history[1] can work in a bare repository as it does not ne=
-ed to
-> +  touch either the index or the worktree.
-> +* linkgit:git-history[1] does not execute any linkgit:githooks[5] at the
-> +  current point in time. This may change in the future.
-> +* linkgit:git-history[1] by default updates all branches that are descen=
-dants
-> +  of the original commit to point to the rewritten commit.
-> +
-> +Overall, linkgit:git-history[1] aims to provide a more opinionated way t=
-o modify
-> +your commit history that is simpler to use compared to linkgit:git-rebas=
-e[1] in
-> +general.
-> +
-> +If you want to reapply a range of commits onto a different base, or inte=
-ractive
-> +rebases if you want to edit a range of commits.
+    git subtree split --prefix P
 
-"If ..." with no "then ..." ?  This sentence isn't complete.
+detects splits that are outside of path prefix `P` and prunes
+them from history graph processing. This improves the performance
+of repeated `split --rejoin` with many different prefixes.
 
-> +LIMITATIONS
-> +-----------
-> +
-> +This command does not (yet) work with histories that contain merges. You
-> +should use linkgit:git-rebase[1] with the `--rebase-merges` flag instead=
-.
-> +
-> +Furthermore, the command does not support operations that can result in =
-merge
-> +conflicts. This limitation is by design as history rewrites are not inte=
-nded to
-> +be stateful operations. The limitation can be lifted once (if) Git learn=
-s about
-> +first-class conflicts.
-> +
-> +COMMANDS
-> +--------
-> +
-> +Several commands are available to rewrite history in different ways:
+Both before and after 83f9dad7d6 (contrib/subtree: fix split with
+squashed subtrees, 2025-09-09), the pruning logic does not detect
+**rebased** or **cherry-picked** git-subtree commits. If `split`
+encounters any of these commits, the split output may have
+incomplete history.
 
-Um, what are they?
+All commits authored by
 
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
-> diff --git a/Documentation/meson.build b/Documentation/meson.build
-> index f02dbc20cb..fd2e8cc02d 100644
-> --- a/Documentation/meson.build
-> +++ b/Documentation/meson.build
-> @@ -64,6 +64,7 @@ manpages =3D {
->    'git-gui.adoc' : 1,
->    'git-hash-object.adoc' : 1,
->    'git-help.adoc' : 1,
-> +  'git-history.adoc' : 1,
->    'git-hook.adoc' : 1,
->    'git-http-backend.adoc' : 1,
->    'git-http-fetch.adoc' : 1,
-> diff --git a/Makefile b/Makefile
-> index 1c64a5d2ae..c0569ed8e4 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1418,6 +1418,7 @@ BUILTIN_OBJS +=3D builtin/get-tar-commit-id.o
->  BUILTIN_OBJS +=3D builtin/grep.o
->  BUILTIN_OBJS +=3D builtin/hash-object.o
->  BUILTIN_OBJS +=3D builtin/help.o
-> +BUILTIN_OBJS +=3D builtin/history.o
->  BUILTIN_OBJS +=3D builtin/hook.o
->  BUILTIN_OBJS +=3D builtin/index-pack.o
->  BUILTIN_OBJS +=3D builtin/init-db.o
-> diff --git a/builtin.h b/builtin.h
-> index 1b35565fbd..93c91d07d4 100644
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -172,6 +172,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv=
-, const char *prefix, struc
->  int cmd_grep(int argc, const char **argv, const char *prefix, struct rep=
-ository *repo);
->  int cmd_hash_object(int argc, const char **argv, const char *prefix, str=
-uct repository *repo);
->  int cmd_help(int argc, const char **argv, const char *prefix, struct rep=
-ository *repo);
-> +int cmd_history(int argc, const char **argv, const char *prefix, struct =
-repository *repo);
->  int cmd_hook(int argc, const char **argv, const char *prefix, struct rep=
-ository *repo);
->  int cmd_index_pack(int argc, const char **argv, const char *prefix, stru=
-ct repository *repo);
->  int cmd_init_db(int argc, const char **argv, const char *prefix, struct =
-repository *repo);
-> diff --git a/builtin/history.c b/builtin/history.c
-> new file mode 100644
-> index 0000000000..f6fe32610b
-> --- /dev/null
-> +++ b/builtin/history.c
-> @@ -0,0 +1,22 @@
-> +#include "builtin.h"
-> +#include "gettext.h"
-> +#include "parse-options.h"
-> +
-> +int cmd_history(int argc,
-> +               const char **argv,
-> +               const char *prefix,
-> +               struct repository *repo UNUSED)
-> +{
-> +       const char * const usage[] =3D {
-> +               N_("git history [<options>]"),
-> +               NULL,
-> +       };
-> +       struct option options[] =3D {
-> +               OPT_END(),
-> +       };
-> +
-> +       argc =3D parse_options(argc, argv, prefix, options, usage, 0);
-> +       if (argc)
-> +               usagef("unrecognized argument: %s", argv[0]);
+    git subtree merge [--squash] --prefix Q
 
-Oh, the manual is just a placeholder that you'll extend later?  That
-makes sense, but it would be less confusing if it started out with "No
-subcommands are yet supported, but will be added later", with that
-sentence removed in the next commit when you add a subcommand.
+have a first or second parent that has *only* subtree commits
+as ancestors. When splitting a completely different path `P/`,
+it is safe to ignore:
 
+1. the merged tree
+2. the subtree parent
+3. *all* of that parent's ancestry, which applies only to
+   path `Q/` and not `P/`.
 
-> +       return 0;
-> +}
-> diff --git a/command-list.txt b/command-list.txt
-> index accd3d0c4b..f9005cf459 100644
-> --- a/command-list.txt
-> +++ b/command-list.txt
-> @@ -115,6 +115,7 @@ git-grep                                mainporcelain=
-           info
->  git-gui                                 mainporcelain
->  git-hash-object                         plumbingmanipulators
->  git-help                                ancillaryinterrogators          =
-complete
-> +git-history                             mainporcelain           history
->  git-hook                                purehelpers
->  git-http-backend                        synchingrepositories
->  git-http-fetch                          synchelpers
-> diff --git a/git.c b/git.c
-> index c5fad56813..744cb6527e 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -586,6 +586,7 @@ static struct cmd_struct commands[] =3D {
->         { "grep", cmd_grep, RUN_SETUP_GENTLY },
->         { "hash-object", cmd_hash_object },
->         { "help", cmd_help },
-> +       { "history", cmd_history, RUN_SETUP },
->         { "hook", cmd_hook, RUN_SETUP },
->         { "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
->         { "init", cmd_init_db },
-> diff --git a/meson.build b/meson.build
-> index a5a4e99b25..3a1d12caa4 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -610,6 +610,7 @@ builtin_sources =3D [
->    'builtin/grep.c',
->    'builtin/hash-object.c',
->    'builtin/help.c',
-> +  'builtin/history.c',
->    'builtin/hook.c',
->    'builtin/index-pack.c',
->    'builtin/init-db.c',
-> diff --git a/t/meson.build b/t/meson.build
-> index 459c52a489..73006b095a 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -387,6 +387,7 @@ integration_tests =3D [
->    't3436-rebase-more-options.sh',
->    't3437-rebase-fixup-options.sh',
->    't3438-rebase-broken-files.sh',
-> +  't3450-history.sh',
->    't3500-cherry.sh',
->    't3501-revert-cherry-pick.sh',
->    't3502-cherry-pick-merge.sh',
-> diff --git a/t/t3450-history.sh b/t/t3450-history.sh
-> new file mode 100755
-> index 0000000000..417c343d43
-> --- /dev/null
-> +++ b/t/t3450-history.sh
-> @@ -0,0 +1,17 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'tests for git-history command'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'does nothing without any arguments' '
-> +       git history >out 2>&1 &&
-> +       test_must_be_empty out
-> +'
-> +
-> +test_expect_success 'raises an error with unknown argument' '
-> +       test_must_fail git history garbage 2>err &&
-> +       test_grep "unrecognized argument: garbage" err
-> +'
-> +
-> +test_done
->
-> --
-> 2.52.0.542.g9473a8513b.dirty
+But this relationship no longer holds if the git-subtree commit
+is rebased or otherwise reauthored. After a rebase, the former
+git-subtree commit will have other unrelated commits as ancestors.
+Ignoring these commits may exclude the history of `P/`,
+leading to incomplete `subtree split` output.
+
+The pruning logic relies solely on the `git-subtree-*:` trailers
+to detect git-subtree commits, which it blindly accepts without
+further validation. The split logic also takes its time about
+being wrong: `cmd_split()` execs a `git show` for *every* commit
+in the split range… twice. This is inefficient in a shell script.
+
+Add a "reality check" to ignore rebased or rewritten commits:
+
+* Rewrites of non-merge commits cannot be detected, so the new
+  detector no longer looks for them.
+
+* Merges carry a `git-subtree-mainline:` trailer with the hash of
+  the **first parent**. If this hash differs, or if the "merge"
+  commit no longer has multiple parents, a rewrite has occurred.
+
+To increase speed, package this logic in a new method,
+`find_other_splits()`. Perform the check up-front by iterating
+over a single `git log`. Add ignored subtrees to:
+
+1. the `notree` cache, which excludes them from the `split` history
+
+2. a `prune` negative refs list. The negative refs prevent
+   recursing into other subtrees. Since there are potentially a
+   *lot* of these, cache them on disk and use rev-list's
+   `--stdin` mode.
+
+Reported-by: George <george@mail.dietrich.pub>
+
+Signed-off-by: Colin Stagner <ask+git@howdoi.land>
+---
+
+Notes:
+    * cs/subtree-split-detect-rewritten:
+      "git subtree" (in contrib/) did not correctly split history
+      containing rebased git-subtree commits. This has been fixed.
+    
+    This patch is intended for maint.
+    
+    See-also: <176677910605.6.2281395015810449820.1087545551@dietrich.pub>
+
+ contrib/subtree/git-subtree.sh     | 141 +++++++++++++++++++----------
+ contrib/subtree/t/t7900-subtree.sh |  83 +++++++++++++++--
+ 2 files changed, 169 insertions(+), 55 deletions(-)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 17106d1a72..3ebe88cbea 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -325,6 +325,12 @@ check_parents () {
+ 	done
+ }
+ 
++# Usage: get_notree REV
++get_notree () {
++	assert test $# = 1
++	test -r "$cachedir/notree/$1"
++}
++
+ # Usage: set_notree REV
+ set_notree () {
+ 	assert test $# = 1
+@@ -511,6 +517,71 @@ find_existing_splits () {
+ 	done || exit $?
+ }
+ 
++# Usage: find_other_splits DIR REV UNREVS...
++#
++# Scan history in REV UNREVS for other `git subtree split --rejoin`
++# merge commits belonging to prefixes outside of DIR. These
++# "other splits" don't contribute to DIR and can be ignored.
++#
++# If any such rejoins are found,
++#
++#   * emit their second-parent as an UNREV, avoiding a
++#     potentially costly history traversal
++#
++#   * mark the merge commit as "notree" to ignore it
++find_other_splits () {
++	assert test $# -ge 2
++	dir="${1%/}"
++	rev="$2"
++	shift 2
++	debug "Looking for other splits with dir != $dir..."
++
++	git log \
++		--grep '^git-subtree-mainline:' \
++		--no-patch \
++		--no-show-signature \
++		--format='hash: %H%nparents: %P%n%(trailers:key=git-subtree-dir,key=git-subtree-mainline,key=git-subtree-split)%nEND' \
++		"$rev" ${@:+"$@"} |
++	while read -r key val
++	do
++		case "$key" in
++		hash:)
++			commit_hash="${val}"
++			commit_parents=
++			subtree_dir=
++			subtree_mainline=
++			subtree_split=
++			;;
++		parents:)
++			commit_parents="${val}" ;;
++		git-subtree-dir:)
++			subtree_dir="${val%/}/" ;;
++		git-subtree-mainline:)
++			subtree_mainline="${val}" ;;
++		git-subtree-split:)
++			subtree_split="${val}" ;;
++		END)
++			# verify:
++			# * all git-subtree-* trailers are present
++			# * this subtree is outside of $dir
++			# * the first parent is the git-subtree-mainline:
++			# * the commit has at least two parents
++			if test -n "${subtree_dir}" &&
++				test -n "${subtree_split}" &&
++				test -n "${subtree_mainline}" &&
++				test "${subtree_dir}" = "${subtree_dir#"${dir}/"}" &&
++				test "${commit_parents}" != "${commit_parents#"$subtree_mainline "}" &&
++				rev_exists "${commit_hash}^2"
++			then
++				debug "find_other_splits excluding dir=$subtree_dir merged in ${commit_hash}"
++				echo "^${commit_hash}^2"
++				set_notree "${commit_hash}"
++			fi
++			;;
++		esac
++	done
++}
++
+ # Usage: copy_commit REV TREE FLAGS_STR
+ copy_commit () {
+ 	assert test $# = 3
+@@ -785,42 +856,6 @@ ensure_valid_ref_format () {
+ 		die "fatal: '$1' does not look like a ref"
+ }
+ 
+-# Usage: should_ignore_subtree_split_commit REV
+-#
+-# Check if REV is a commit from another subtree and should be
+-# ignored from processing for splits
+-should_ignore_subtree_split_commit () {
+-	assert test $# = 1
+-
+-	git show \
+-		--no-patch \
+-		--no-show-signature \
+-		--format='%(trailers:key=git-subtree-dir,key=git-subtree-mainline)' \
+-		"$1" |
+-	(
+-	have_mainline=
+-	subtree_dir=
+-
+-	while read -r trailer val
+-	do
+-		case "$trailer" in
+-		git-subtree-dir:)
+-			subtree_dir="${val%/}" ;;
+-		git-subtree-mainline:)
+-			have_mainline=y ;;
+-		esac
+-	done
+-
+-	if test -n "${subtree_dir}" &&
+-		test -z "${have_mainline}" &&
+-		test "${subtree_dir}" != "$arg_prefix"
+-	then
+-		return 0
+-	fi
+-	return 1
+-	)
+-}
+-
+ # Usage: process_split_commit REV PARENTS
+ process_split_commit () {
+ 	assert test $# = 2
+@@ -994,31 +1029,39 @@ cmd_split () {
+ 	fi
+ 
+ 	unrevs="$(find_existing_splits "$dir" "$rev" "$repository")" || exit $?
++	(find_other_splits >"$cachedir/prune" "$dir" "$rev" $unrevs) || exit $?
+ 
+ 	# We can't restrict rev-list to only $dir here, because some of our
+ 	# parents have the $dir contents the root, and those won't match.
+ 	# (and rev-list --follow doesn't seem to solve this)
+-	grl='git rev-list --topo-order --reverse --parents $rev $unrevs'
+-	revmax=$(eval "$grl" | wc -l)
++	revmax="$(git rev-list \
++		<"$cachedir/prune" \
++		--topo-order \
++		--reverse \
++		--parents \
++		--stdin \
++		--count \
++		"$rev" \
++		$unrevs
++	)"
+ 	revcount=0
+ 	createcount=0
+ 	extracount=0
+-	eval "$grl" |
++	git rev-list \
++		<"$cachedir/prune" \
++		--topo-order \
++		--reverse \
++		--parents \
++		--stdin \
++		"$rev" \
++		$unrevs |
+ 	while read rev parents
+ 	do
+-		if should_ignore_subtree_split_commit "$rev"
++		if get_notree "$rev"
+ 		then
+ 			continue
+ 		fi
+-		parsedparents=''
+-		for parent in $parents
+-		do
+-			if ! should_ignore_subtree_split_commit "$parent"
+-			then
+-				parsedparents="$parsedparents$parent "
+-			fi
+-		done
+-		process_split_commit "$rev" "$parsedparents"
++		process_split_commit "$rev" "$parents"
+ 	done || exit $?
+ 
+ 	latest_new=$(cache_get latest_new) || exit $?
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 316dc5269e..4db3a6eff3 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -411,8 +411,9 @@ test_expect_success 'split sub dir/ with --rejoin' '
+ 		git fetch ./"sub proj" HEAD &&
+ 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
+ 		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
+-		git subtree split --prefix="sub dir" --annotate="*" --rejoin &&
+-		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
++		git subtree split --prefix="sub dir" --annotate="*" -b spl --rejoin &&
++		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''" &&
++		test "$(git rev-list --count spl)" -eq 5
+ 	)
+ '
+ 
+@@ -442,18 +443,25 @@ test_expect_success 'split with multiple subtrees' '
+ 	git -C "$test_count" subtree add --prefix=subADir FETCH_HEAD &&
+ 	git -C "$test_count" fetch ./subB HEAD &&
+ 	git -C "$test_count" subtree add --prefix=subBDir FETCH_HEAD &&
++	test "$(git -C "$test_count" rev-list --count main)" -eq 7 &&
+ 	test_create_commit "$test_count" subADir/main-subA1 &&
+ 	test_create_commit "$test_count" subBDir/main-subB1 &&
+ 	git -C "$test_count" subtree split --prefix=subADir \
+-		--squash --rejoin -m "Sub A Split 1" &&
++		--squash --rejoin -m "Sub A Split 1" -b a1 &&
++	test "$(git -C "$test_count" rev-list --count main..a1)" -eq 1 &&
+ 	git -C "$test_count" subtree split --prefix=subBDir \
+-		--squash --rejoin -m "Sub B Split 1" &&
++		--squash --rejoin -m "Sub B Split 1" -b b1 &&
++	test "$(git -C "$test_count" rev-list --count main..b1)" -eq 1 &&
+ 	test_create_commit "$test_count" subADir/main-subA2 &&
+ 	test_create_commit "$test_count" subBDir/main-subB2 &&
+ 	git -C "$test_count" subtree split --prefix=subADir \
+-		--squash --rejoin -m "Sub A Split 2" &&
++		--squash --rejoin -m "Sub A Split 2" -b a2 &&
++	test "$(git -C "$test_count" rev-list --count main..a2)" -eq 2 &&
++	test "$(git -C "$test_count" rev-list --count a1..a2)" -eq 1 &&
+ 	test "$(git -C "$test_count" subtree split --prefix=subBDir \
+-		--squash --rejoin -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" = ""
++		--squash --rejoin -d -m "Sub B Split 1" -b b2 2>&1 | grep -w "\[1\]")" = "" &&
++	test "$(git -C "$test_count" rev-list --count main..b2)" -eq 2 &&
++	test "$(git -C "$test_count" rev-list --count b1..b2)" -eq 1
+ '
+ 
+ # When subtree split-ing a directory that has other subtree
+@@ -477,6 +485,7 @@ do
+ 			test_path_is_file subA/file1.t &&
+ 			test_path_is_file subA/subB/file2.t &&
+ 			git subtree split --prefix=subA --branch=bsplit &&
++			test "$(git rev-list --count bsplit)" -eq 2 &&
+ 			git checkout bsplit &&
+ 			test_path_is_file file1.t &&
+ 			test_path_is_file subB/file2.t &&
+@@ -489,6 +498,7 @@ do
+ 				--prefix=subA/subB mksubtree &&
+ 			test_path_is_file subA/subB/file3.t &&
+ 			git subtree split --prefix=subA --branch=bsplit &&
++			test "$(git rev-list --count bsplit)" -eq 3 &&
+ 			git checkout bsplit &&
+ 			test_path_is_file file1.t &&
+ 			test_path_is_file subB/file2.t &&
+@@ -497,6 +507,67 @@ do
+ 	'
+ done
+ 
++# Usually,
++#
++#    git subtree merge -P subA --squash f00...
++#
++# makes two commits, in this order:
++#
++# 1. Squashed 'subA/' content from commit f00...
++# 2. Merge commit (1) as 'subA'
++#
++# Commit 1 updates the subtree but does *not* rewrite paths.
++# Commit 2 rewrites all trees to start with `subA/`
++#
++# Commit 1 either has no parents or depends only on other
++# "Squashed 'subA/' content" commits.
++#
++# For merge without --squash, subtree produces just one commit:
++# a merge commit with git-subtree trailers.
++#
++# In either case, if the user rebases these commits, they will
++# still have the git-subtree-* trailers… but will NOT have
++# the layout described above.
++#
++# Test that subsequent `git subtree split` are not confused by this.
++test_expect_success 'split with rebased subtree commit' '
++	subtree_test_create_repo "$test_count" &&
++	(
++		cd "$test_count" &&
++		test_commit file0 &&
++		test_create_subtree_add \
++			. mksubtree subA file1 --squash &&
++		test_path_is_file subA/file1.t &&
++		mkdir subB &&
++		test_commit subB/bfile &&
++		git commit --amend -F - <<'EOF' &&
++Squashed '\''subB/'\'' content from commit '\''badf00da911bbe895347b4b236f5461d55dc9877'\''
++
++Simulate a cherry-picked or rebased subtree commit.
++
++git-subtree-dir: subB
++git-subtree-split: badf00da911bbe895347b4b236f5461d55dc9877
++EOF
++		test_commit subA/file2 &&
++		test_commit subB/bfile2 &&
++		git commit --amend -F - <<'EOF' &&
++Split '\''subB/'\'' into commit '\''badf00da911bbe895347b4b236f5461d55dc9877'\''
++
++Simulate a cherry-picked or rebased subtree commit.
++
++git-subtree-dir: subB
++git-subtree-mainline: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++git-subtree-split: badf00da911bbe895347b4b236f5461d55dc9877
++EOF
++		git subtree split --prefix=subA --branch=bsplit &&
++		git checkout bsplit &&
++		test_path_is_file file1.t &&
++		test_path_is_file file2.t &&
++		test "$(last_commit_subject)" = "subA/file2" &&
++		test "$(git rev-list --count bsplit)" -eq 2
++	)
++'
++
+ test_expect_success 'split sub dir/ with --rejoin from scratch' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	test_create_commit "$test_count" main1 &&
+
+base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+-- 
+2.52.0
+
