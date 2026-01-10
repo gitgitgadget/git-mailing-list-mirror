@@ -1,109 +1,91 @@
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF1827FB21
-	for <git@vger.kernel.org>; Sat, 10 Jan 2026 20:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCE72581
+	for <git@vger.kernel.org>; Sat, 10 Jan 2026 22:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768075476; cv=none; b=uAZ+0iVi+myIbGI8L82z8+mT+XAqiX8kY5nWLYgttrSLEsED7X/MU+5FMUxx83RhGx59MfBMaFSGXfN3vQ3eKN/WS/m7ERR4jez46VUSN2+U/t48uJjS574rGPbZPFcYIiXJlleMIJ7qak8rnc/rCl7BRkdbCZL/QSDYvrloSGE=
+	t=1768083509; cv=none; b=PUePpI884wo3tiFOoeB7rJ6KrT3u+BTh4afH3lCJK4NmEh5I7mi9ZiiuQZ1FjC6l1EPqzlTDWIFWJulixMDe9YyOqfwU+tjwxUokv8Mr47XtXPMS02siOZX0zkI/kZVNQYuIx2XpSP682yUv4JUBkvicRYWcIJYrEAXfQ6gSKGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768075476; c=relaxed/simple;
-	bh=ckmcjBSmd0ldOvjsdx1XHwbYuwi4HbTFvoYA/AxdYq4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YXrlHmYULwS/PjoahCSLptIzugPm8xvIGdCEgUJRnjH64nYtL+W6UBtsU6AIvf+aOsYTmY0lim+tGtCM/5IcIOBMp2BzIYRyhEH7qHCyMnqDO5jCTg+Zn/qDMmzofk9uJZg0/GjrtQUQYZrJicdNa9NpIyWnJLRcZGpb9xqIRiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=noDEPDeT; arc=none smtp.client-ip=209.85.208.173
+	s=arc-20240116; t=1768083509; c=relaxed/simple;
+	bh=Wolg1lyk/SJCfG4oUHFMXxSpawJQpoxqHF3CZw9q/TI=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=WM1bUZVbt6ZVPF7W/sD2ui69dBUuewmwrmsrz1ypTRiOkTSwj7QU0q97z835x5T7NVfJFzQOj5ZoQYSWg/ZlfOiuQKrO+7ZYWlkQUY0Hg26NNc7Cu+RcmIoC9Umfr4El1MOdeVclGWWGDBR0PcKxL9O2nPfubJoa8gJ69Da/WH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mPaH6aWr; arc=none smtp.client-ip=209.85.217.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="noDEPDeT"
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-382fa66fa9dso34846711fa.0
-        for <git@vger.kernel.org>; Sat, 10 Jan 2026 12:04:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mPaH6aWr"
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-5ec96028b32so2868843137.2
+        for <git@vger.kernel.org>; Sat, 10 Jan 2026 14:18:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768075473; x=1768680273; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768083507; x=1768688307; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=r/t3/pApIU4Chm1gkOSiJwWaprjmUMeTB+68whKRVOQ=;
-        b=noDEPDeTx3VR7ru0zmU86NIO/FSKpqAlvk+Ds5ocy69geHy+cy0PbAkiQofJ9JRtpE
-         2xz9eu04Q3dughpP++GTWsWgChYDrPPwLrNUKcD0bfKT64wW1+7dihMtO78AUDy/SKc4
-         pxD4xH2qWrxMlWOmIUU2IXMPnZXHzXTuQvG4YJNHBObQjvIlfJPDsnN12UF4XA5CF/Lr
-         rOTErTwOZJySZH7TRufYrlkRxfBP+mVuF89KcoArVg1Vrr0EhbnLPgA/Ppe/MJaqIq8+
-         LPjnKeM9THOoypfvvdcW4RI/EGcWH5cUSgLY/QOn5pj6xie6hrXg6uokIltoUOlFTeRU
-         xCGQ==
+        bh=Wolg1lyk/SJCfG4oUHFMXxSpawJQpoxqHF3CZw9q/TI=;
+        b=mPaH6aWr4bUgJEV8LVbTqXJoxGqwXpuRSohraK+Sd07BD/JEteU3UvLXpsxwZqmAFJ
+         yT9V9rJz8rOqsvSfVqbyq8U/FcAd2NcNBc8SyAln3I5XkanmYcYd9fB5gkpdD3D40ZvU
+         QZ9Z6WNSqj5o9wKWXT8f/sYiX6Srj3kacU8J1Z70bw8kQdeCKiy17UYUtwmFn6Fsul1A
+         xXjxYg231s+DASliRuzKh1wLtLIBdoAiS2MN7Uauy3ZsoBKXKZSRMcKS/4Ao6818q+NT
+         ZA2GCS+L5W7GNMIdVmJZWFW3f3G8W9tf5MGazWq+g8MBDRV01ys6hV+b3WqJ9+d7cLYh
+         Dc0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768075473; x=1768680273;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=r/t3/pApIU4Chm1gkOSiJwWaprjmUMeTB+68whKRVOQ=;
-        b=Y/iFq+wuDx07h4izfjZO/UJwgZkom2xo2v804C9iDaoy/9T6HC7M0WVj7HIWM2LStn
-         4mUE4HwaOdn64oXTlrst6+bBgMrOUhN1+wrzFc/dw0qNFRZbsw6dG4LLrDRPWUsmGpZy
-         R7QkxWgQegOqW7wv8oqIn+uuEUMCK6b0eqy6EEHzeXzFLW7MEtKqWny6rXqkAEYPqvC+
-         VffEAUYX0OXujldqcrr9JFiQd24iq+EPnz9glraKKo4SfHHyRHziFjfgq81pZ4rRbe3C
-         TRso+Ju1kEfFJyUGvNFb8Bscss1c6XEhbT6ThaSA7hSObxeYu+4LBWkBdsGemvuoJGgl
-         YUQg==
-X-Gm-Message-State: AOJu0YzsCePKoiDy6G+3MP5mCSlmfeRzZjtuGwTIprOEfuDZE4L8GtDr
-	cnB+M1hrPNF40j2EPhJMhCFbHoUwbqEdvE00h9tLcPxbVaxpP7FbEPEB
-X-Gm-Gg: AY/fxX6cTg7bYuGPNvYBCdX2lZt4bw/cKHJEamwVu7ALgAiDqqwgzegUYigwdBiKstC
-	7+bfCmjzra9VQuLvmVviaxHbiamBXNsKhcbeR8fvpy6rzvsf1rcTH1g16I8o/tizOm6f3PQX7r3
-	KQKqFOawPeULucdvNMGyRR9z39RtOrcDNA0m3Z2yKD36rStMnA4dUVH28T5zWJ6x+5TfWblVSgJ
-	bbrqLExUyDIFtZNE7nL0PA41m6V3BkrZTkBaaWDqg4WKGmKjFA5qu9CBDpe6q6EsU4icfTln/A8
-	sMqZ8tRg4eKohfIcMuf81jvc8oXQV1dMu0Qo7TIO2AGg7GH0/G00Hu66GmOCsjYz5l6Xlk4yp9e
-	J3KWSMg6n3wtc+ovkCYuKKML1IgfSi9+UOJj2WCoV52mghbX4W0FxyG8PQri0ubXnXj4EOHKuia
-	0/uJ5VQshgu85Yn9Z3yIfSmreAuPioWJfIAb910Mmqim7/ha2GFnvhr4kq/Oakam4an9DvRhn5C
-	hBfa2YKtw==
-X-Google-Smtp-Source: AGHT+IENU6btieniaXzWspAn3b4GqhZnX1D4KR6yJ9jPqPJXhUqi7Rjj0NO7Jw+D/3Os0sYJLtUtqw==
-X-Received: by 2002:a05:651c:1506:b0:383:1704:2211 with SMTP id 38308e7fff4ca-38317042ad4mr23805031fa.19.1768075472888;
-        Sat, 10 Jan 2026 12:04:32 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382f8bb1981sm24760141fa.12.2026.01.10.12.04.32
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 10 Jan 2026 12:04:32 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
-Date: Sat, 10 Jan 2026 21:04:31 +0100
-Message-Id: <20260110200431.53479-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <xmqqfr8ds7br.fsf@gitster.g>
-References: <xmqqfr8ds7br.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1768083507; x=1768688307;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Wolg1lyk/SJCfG4oUHFMXxSpawJQpoxqHF3CZw9q/TI=;
+        b=Z9xWHqE3cXKw+Xtjf4BvC+cmgvePhcM8Y3eTgKrnJFt+AmKHu8F2wIDqKito19yJ7O
+         LjbGxd8T0YFT5HmF6y2bOUfBGv25GutESbSfLpo8yie/PFE3aue8Rhop9BjmDbvWma/h
+         Ow/6gp1fObdNGgQf2rK3SX2Gu+W22b7ga3Z2TnC49dehRY0rTthu3AXIubK1GRfWGxsI
+         f8wW4KfBJsupyBvr80xU6uBeSZZ6inz5f48eI/JCx6LDAVn9co044ZGvRQJJEutYuiW5
+         IUQaSQy6sNWCrlde7XB0PJl8GGv8y1KPD2raSB8n2fBL1zRIbkpNoDgizc/0P8pDT5xe
+         EzCw==
+X-Gm-Message-State: AOJu0Yz1h5RZHSWTnO2f8WtSm8q64rmQwBGrmmCYS0dbZpYPhpv94N5d
+	Qs8NloCSDT3dpXG/8qYirCeHW2OQMeH05QXY3KgO5D266SMDLW7wZMwD
+X-Gm-Gg: AY/fxX5zzFMJl5MDg8r/eeJfvA913N7VVljMGm8B2OQkGRtVFZvQt7XtF9d95kdqyoX
+	+38XnEab3y4AFuxiTo5L67Wl+F6H9JJ4JYlyoMTQcLZb5Oq39LrOoYt98YybB51IfM3oYiqRzRX
+	JFfRZ4fbZn344sMICa0L3EXqoonFM/3Teu4HxY+Nu06cUeeRe7FupZgrRGof4z3OMyArWmBVMk0
+	35dXt3Zypnsg8KWzP64G17EeN+R3bz6m0/pgi7ckKsBuIGCf9RUA45VEpa4GUHmUVxvkyeYrDDD
+	JDsjLs8LmgOVhwvS0fP5RXUFzMSmUXHZcW0GLFpQuhEg7U00pJpi0R4BTNPd48/dTqL+/2aZ4JT
+	+9U8SJ1x5JHnBhWaoTRk4CHnsxjzlW9VERguP3k5VFwHDZm8HG7NTx05FlFcplOWkEQL1n8c1C0
+	ztWCPb1cTWRuoWDR5JJVgpkDayNHT2WbtnyyDTtO0ggQ==
+X-Google-Smtp-Source: AGHT+IHCQ2mIIT4yfdO8SvkMvQl+TkdfAKQPIQ13Fquoy65lvsfsO6xKNmbnbQSyb7TTUJ6bXiZ5HA==
+X-Received: by 2002:a05:6102:5f02:b0:5db:d07c:218f with SMTP id ada2fe7eead31-5ecb9851efcmr5663334137.40.1768083507357;
+        Sat, 10 Jan 2026 14:18:27 -0800 (PST)
+Received: from smtpclient.apple ([177.103.85.119])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ed091d93f8sm11674235137.9.2026.01.10.14.18.25
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 10 Jan 2026 14:18:27 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-> Not at all.  Unless the contrast were "something_fetch" vs
-> "something_push", that is.  And that something being cryptic "sti"
-> (recall my comment on it, being the name of the function that
-> returns the value, which is less understandable than using words
-> that signals what the variable _means_), would not make much sense
-> for the "push" direction, as "sti" is not even an abbreviation for
-> the function that gives the value.  "cmp" (or "compare" for that
-> matter) still has the ambiguity "compare with what and what for?",
-> but at least it would be better than "sti".
-
-Maybe simplest would be 'upstream_diff' and 'push_diff'? But this begs the
-question of why not all the old 'ours', 'theirs', etc variables are missing
-an 'upstream_' prefix.
-
-I feel like this can turn into endless refactoring, latest version now has
-'cmp_fetch' and 'push_cmp_fetch'.
-
-I have on my TODO list to fix the pluralization of the "diverged" text
-after this patch series has been merged. I'm also working on refactoring
-this by introducing a struct to pass data to 'format_branch_comparison'.
-This has the very nice benefit on natural namespacing of variables when
-they become fields in struct variables like 'upstream_branch' and
-'push_branch'.
-
-In the meantime I think I will leave this patch series for now 🤗
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v3 2/2] repo: add new flag --keys to git-repo-info
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <12814829.O9o76ZdvQC@piment-oiseau>
+Date: Sat, 10 Jan 2026 19:00:35 -0300
+Cc: git@vger.kernel.org,
+ ps@pks.im,
+ gitster@pobox.com,
+ jltobler@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <C2D91A8E-F034-4604-8B02-155BAADD14A2@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+ <20260109211554.90828-4-lucasseikioshiro@gmail.com>
+ <12814829.O9o76ZdvQC@piment-oiseau>
+To: =?utf-8?Q?Jean-No=C3=ABl_AVILA?= <avila.jn@gmail.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
 
 
-Harald
+> We use the placeholder format for character names: _NUL_
+
+Thanks. I'll change it in v4 and I'll change other occurrences in this
+document in future patches.
+
+
