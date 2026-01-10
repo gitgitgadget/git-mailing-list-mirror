@@ -1,130 +1,139 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E6E2737FC
-	for <git@vger.kernel.org>; Sat, 10 Jan 2026 13:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1316A1DE4FB
+	for <git@vger.kernel.org>; Sat, 10 Jan 2026 13:30:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768050740; cv=none; b=LNs5pB7VXZVEWt/dvg9Z3JBiSynrUI27+lfRhOb05y2nWoX7CJK6HlYMl440e8c/bmJHLhDrXcYUUerwYJj67FzmMAQ6DwkJCnJOlSIVTsxzPOZ073NumD9IjcEcxNIEyg5NzAA/I18JiFO5fTSsU1bPXiY+fG27epuc1eIiREA=
+	t=1768051837; cv=none; b=aMYatodZFl5WlTEn+qnkqPFc352cv1g7lo32jXA4zb18d2NawVg5k9kM7l6v9+qHUaoI6jhHOApaQpL4r1EoXpNfv99qdGUBtssncnohQ+Opqf5ycU/q0zmYJihDM7PlKn6uVO6lKKFJbrpNq87Me608MTIygS7mvCl7OKWrRe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768050740; c=relaxed/simple;
-	bh=9hRvn+tT0oGzm9DP/TMn+nJ6caJmZmEiISEH01tKUhY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OgAevx9D3EgsrMCf26wpynF2aS85O8cMFunm3B22FAO9zjJay5hv8HfAQcAEOtiHQJT5ik+ykaXCSrRD++C/IXiSKz2s1mwAENaW8tuOPuhRMUFVH02UAnFTq6XMM2EF88nmY4pYBVLL/aYI5Mdg1WIZdsintW0LReh8uyuYnOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=evF+M4X+; arc=none smtp.client-ip=74.125.82.43
+	s=arc-20240116; t=1768051837; c=relaxed/simple;
+	bh=Um74Pm0WMOyr9zGSOh+NDtZy3vR8thTJDpKR7KeqcMM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=HKAHfnhWRKQ8BN+F9A36q8vgI3hlXAazMavAFWhgc8lfNAdYtEQFi9i/8VbwUM4lWOIrc9y43+OTm7gyTZdeZU9YgYe6d4xJtds/WM2tKoRk/66bloWVfKK4ZgkMRdaaRnwNqugaxM/YWV/27dJDVkv4BJP0HRHZQbPPK9R1j/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FGCWVCaO; arc=none smtp.client-ip=209.85.167.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="evF+M4X+"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-11df4458a85so4443843c88.1
-        for <git@vger.kernel.org>; Sat, 10 Jan 2026 05:12:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FGCWVCaO"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-459ac2f1dc2so3004208b6e.3
+        for <git@vger.kernel.org>; Sat, 10 Jan 2026 05:30:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768050739; x=1768655539; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=L8hcq1yqtS8l7YuhjCiUweTUNsnKWjQoRAnd8JPea9g=;
-        b=evF+M4X+4o2z2j9LonqoPmd0/Z2/Gr3cui1qz3FynbQBWhInFkNdcJW816mWQvlthU
-         yj+0UJ9It7jJqqnuVz1WtG1ufu8Twi+owaxheffEJVTnygoY1NaQE4tdnvq/IK84A9AK
-         g4ZT1PLqzxQOCdkunhuUvnTnLCYZ3OliVX6r+uaoBfhxJ4vyjS1Hn7IwgXmN5lgrR4EK
-         IoQf3KzT55tzaGosbBJyntW180peCP1/VC74zSzp8dUHdr8IeIbXCcvasj6nRy0szQa+
-         SdJ08bDVHerRZr+Y5Qn3Fjw80o3a2neVy8NJPyTyRJRt5UINrM9aOo2UQrvI2BVyuYli
-         DjaA==
+        d=gmail.com; s=20230601; t=1768051834; x=1768656634; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PyN5HxqC8/aOtdjFkNDmk+DH6gOXE+i6STyx1reNLqI=;
+        b=FGCWVCaOwIYNwWewXGsz03fnhtNUC9BnbgjYhN3ieXyeUOrFDN2Gt4vNnh308JCrs9
+         gcw2MogoA/N6iPpcoF32ZHvfsoyD56ntGiB1GnRTrm4AJ5g9jxQjAW3/cwd1qEISYMBR
+         GVbM0+6WP/03CTdzMP+UBfA/f4XtJ7Ma2h0Tmhg+Gwlcca9GU+Djix000ShWMuyGhG55
+         Izjq5+Ay8ObSjd/GsjDVYLlCC/yBaTLKAgQUKq4TJFmfr3BakTd3oeKUTHVIiFVGqLop
+         j+g6KLNJXu55n8fWOGJtuDq/TArasuW/Z5jJJG4287ZqnoF2hkXI0YV96OU8QlWmyYSq
+         CULQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768050739; x=1768655539;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L8hcq1yqtS8l7YuhjCiUweTUNsnKWjQoRAnd8JPea9g=;
-        b=aLfTrDmhU7Wrx0yaW1bsrEeahIlGPz3eSPLLIrk3NDC5RgFyr1l3tdXz02orE1jzek
-         3zjLnHze1coYrXTNfUULZm4+GM3KMuDIuLBVbwjDcTBH05mEUAAjFpzCWwt94xLsqCL9
-         /AAuqGoVDRNG4qxbnPBdDUn2mwoRdaA0pnj8xuFhOoXwpwW01ecHAsOQ75LuxnRJSlkw
-         h9ketvNI0kCtlbDGd7OIMyVd6ToJJOYZA6M/+N1l1xrlBS2su2L9AYg8Sq0kFMSlOD5U
-         h2kzcvOsHN3iwVvf+YQB8ED7V7RfjpU+nUdR+G8KRnL35PcweHTSgSW01eaWHwxXi4vt
-         YGtg==
-X-Gm-Message-State: AOJu0YzxTEPYgca/i90KnB7P4/IiL5o7lsAUYkxkz4WLlWIPEGg+V7YB
-	SCdBc7deiiwVAlv+fFmY6QHQcEM9OOwBOPIC/wIm5E1CMByc0fQbIznY
-X-Gm-Gg: AY/fxX5g5uF/fDdxApGnXMjeLtpoN/pfjSgHrDBQMWdPJ3dcKlevATqf3TyXO8ny2cu
-	P+fPrdiOVHGnJ0Nb5uPXW5GHtTSzzjHOl9HjgpCUctir4n0lwD7EAZ0U9aGq7UDPK2EqgbqaGnI
-	uZmp/DUHPi2df0WWwnfBi1T+0jkm4ES03SpVngIiJZKZ9qn4h87MG60iiHAUQSUzKJYBlirAbsF
-	29bxj8VXRBIM5ysm8qU1gekfiv1ZTj/ovzALDZzO7SZDbdzTRTEY3s9AG0CxE0Ciq3xxvoRCdDH
-	+ognkYRqWW1L0tuwr812Rc+UtcnPSBq0IGZz4mJ6cbXL+qwbWhaO/WajUbM0Z37UYpBc3ifejvY
-	hhvh9795nKboerRnsi8zuCDkqxnHY7NEsXzPrTTS9awEWl7ao+amjRUf/uY4vrrgV+mLn6xIm4h
-	7zyudlWw==
-X-Google-Smtp-Source: AGHT+IFBxyNNe2N6R5oZWmerYv49mJfFT+FJPYLXzx4Acex3ZK9lE/OSAMoAECnfhTtzLl0efHnW/A==
-X-Received: by 2002:a05:7022:e07:b0:11b:9386:a3ce with SMTP id a92af1059eb24-121f8b6f5ccmr13223782c88.47.1768050738655;
-        Sat, 10 Jan 2026 05:12:18 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121f24a65b9sm15528047c88.17.2026.01.10.05.12.17
+        d=1e100.net; s=20230601; t=1768051834; x=1768656634;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=PyN5HxqC8/aOtdjFkNDmk+DH6gOXE+i6STyx1reNLqI=;
+        b=Od/PZLU9jZWXzzEPaSexfG3B5/pGozh5lw7UH5MT0b5yJJRKtxyHbYWvuakHL3Wx7Q
+         yMrGPmr3mpNgBSUJ5XiF3wfnbEKgHnVblXFmGU+Rd9jTOkcz83/3PpoMzmAITrtvsrB3
+         bi3Mbzt4AU5Ad5q5QiANgx1aQnf27JTTt9j0QjMayWV+fL/RZyDsw64Po53b5z2JYC7w
+         epuegsNkUbCpNLQMtC77f75kqO98Wjka6HCPPOIqb4KLzPJ7phfv90co+662AhO58M4Q
+         xpx4V6WGXTssZaZeHgBvioDXxX66PNenyUGGVMMeVyhLkVSLceQegtTY6fhIiB3rVWzY
+         s8Uw==
+X-Gm-Message-State: AOJu0YwiivAxddCrl92AFMb84IS/uEkTkGdtZeglQU7lBx/P0wJkvYu6
+	DL4JRpntDQONewF3mvlHaZjoQMSxjTpb9Nh2SDoVgOXYVFjojb9YRq2oyw50YKzJ
+X-Gm-Gg: AY/fxX4UPmjKls1pq5Xn+4IBOtIYJstUj4Lq9rOqy7QTP+g6oTFOIOcLSgJq/kSDt0B
+	S3rKFoaZ8yVwbYYxZfevI1GwzcmnrZ7DJgk76PBpT6v1f64CrCYPbEvF8aMZqVvUhW3Pt9AhmaV
+	QhChcyV3ttWBtO/LCnwJjGbViuyin2VfN/xhIC7UsnmTvvVJaJSVnmDU+4CeeMkPc5a5tAMLO0G
+	AlN+cggQLyRqIFA4iQVgRD5QtC2ph66JJauSFxPsqV/u6Kyol9x8QClhyFhmN+DQjfGIVid53tz
+	S1vdtlJM3OzU4DL13BEji3cKM7wmY1CN0R19se69JYmTrSWTUIDJkmFg5xPy2lhrqs2/UjSr0Go
+	dFmga27avGgjVynYPL/f/Q/vo5h+28iw7ZtH9u/EUT0miVKrwkHlnA+v4+FXgC2E1uk6lLnUwC6
+	11Kw2dBIb9ctT+KQ==
+X-Google-Smtp-Source: AGHT+IHsiw5s7QhGSSQu4RIvbl5MJUqutqSlkonm8XjpBZ1WQmmJ3RHiQ9FhO3ehqBw54+bxkAwhEw==
+X-Received: by 2002:a05:6808:c1f9:b0:45a:8d04:5744 with SMTP id 5614622812f47-45a8d047d4cmr3157345b6e.58.1768051834461;
+        Sat, 10 Jan 2026 05:30:34 -0800 (PST)
+Received: from [127.0.0.1] ([132.196.82.130])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-45a5e2b2b20sm6145368b6e.18.2026.01.10.05.30.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jan 2026 05:12:17 -0800 (PST)
-Date: Sat, 10 Jan 2026 21:12:15 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 10/17] refs/files: introduce function to perform normal
- ref checks
-Message-ID: <aWJQL3WdZermrAUv@ArchLinux>
-References: <20260109-pks-refs-verify-fixes-v1-0-3587dba18294@pks.im>
- <20260109-pks-refs-verify-fixes-v1-10-3587dba18294@pks.im>
+        Sat, 10 Jan 2026 05:30:33 -0800 (PST)
+Message-Id: <pull.2138.v20.git.git.1768051831.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v19.git.git.1767984037.gitgitgadget@gmail.com>
+References: <pull.2138.v19.git.git.1767984037.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 10 Jan 2026 13:30:29 +0000
+Subject: [PATCH v20 0/2] status: show comparison with push remote tracking branch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260109-pks-refs-verify-fixes-v1-10-3587dba18294@pks.im>
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-On Fri, Jan 09, 2026 at 01:39:39PM +0100, Patrick Steinhardt wrote:
-> In a subsequent commit we'll introduce new generic checks for direct
-> refs. These checks will be independent of the actual backend.
-> 
-> Introduce a new function `refs_fsck_ref()` that will be used for this
-> purpose. At the current point in time it's still empty, but it will get
-> populated in a subsequent commit.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs.c               | 7 +++++++
->  refs.h               | 8 ++++++++
->  refs/files-backend.c | 2 ++
->  3 files changed, 17 insertions(+)
-> 
-> diff --git a/refs.c b/refs.c
-> index 739bf9fefc..4fc1317cb3 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -320,6 +320,13 @@ int check_refname_format(const char *refname, int flags)
->  	return check_or_sanitize_refname(refname, flags, NULL);
->  }
->  
-> +int refs_fsck_ref(struct ref_store *refs UNUSED, struct fsck_options *o UNUSED,
-> +		  struct fsck_ref_report *report UNUSED,
-> +		  const char *refname UNUSED, const struct object_id *oid UNUSED)
-> +{
-> +	return 0;
-> +}
-> +
->  int refs_fsck_symref(struct ref_store *refs UNUSED, struct fsck_options *o,
->  		     struct fsck_ref_report *report,
->  		     const char *refname UNUSED, const char *target)
-> diff --git a/refs.h b/refs.h
-> index d91fcb2d2f..61c56cca36 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -655,6 +655,14 @@ int check_refname_format(const char *refname, int flags);
->  
->  struct fsck_ref_report;
->  
-> +/*
-> + * Perform generic checks for a specific symref target. This function is
-> + * expected to be called by the ref backends for every symbolic ref.
-> + */
+cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
+cc: Ben Knoble ben.knoble@gmail.com cc: "Kristoffer Haugsbakk"
+kristofferhaugsbakk@fastmail.com cc: Phillip Wood phillip.wood123@gmail.com
+cc: Nico Williams nico@cryptonector.com cc: Patrick Steinhardt ps@pks.im
 
-I think above comment is the same as `refs_fsck_symref`, I think we
-should update to say that we perform generic checks for a ref instead of
-a specific symref target.
+Harald Nordgren (2):
+  refactor format_branch_comparison in preparation
+  status: show comparison with push remote tracking branch
 
-Thanks,
-Jialuo
+ remote.c                 | 183 ++++++++++++++++++++-------
+ t/t6040-tracking-info.sh | 262 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 403 insertions(+), 42 deletions(-)
+
+
+base-commit: d529f3a197364881746f558e5652f0236131eb86
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v20
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v20
+Pull-Request: https://github.com/git/git/pull/2138
+
+Range-diff vs v19:
+
+ 1:  451d7a4986 ! 1:  bb3e00863b refactor format_branch_comparison in preparation
+     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+       		if (advice_enabled(ADVICE_STATUS_HINTS))
+       			strbuf_addstr(sb,
+       				_("  (use \"git pull\" to update your local branch)\n"));
+     -@@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+     - 			       "and have %d and %d different commits each, "
+     - 			       "respectively.\n",
+     - 			   ours + theirs),
+     + 	} else {
+     + 		strbuf_addf(sb,
+     +-			Q_("Your branch and '%s' have diverged,\n"
+     +-			       "and have %d and %d different commit each, "
+     +-			       "respectively.\n",
+     +-			   "Your branch and '%s' have diverged,\n"
+     +-			       "and have %d and %d different commits each, "
+     +-			       "respectively.\n",
+     +-			   ours + theirs),
+      -			base, ours, theirs);
+     ++			"Your branch and '%s' have diverged,\n"
+     ++			       "and have %d and %d different commits each, respectively.\n",
+      +			branch_name, ours, theirs);
+       		if (show_divergence_advice &&
+       		    advice_enabled(ADVICE_STATUS_HINTS))
+ 2:  dc8ab23158 ! 2:  050197eac3 status: show comparison with push remote tracking branch
+     @@ remote.c: static void format_branch_comparison(struct strbuf *sb,
+       				_("  (use \"git pull\" to update your local branch)\n"));
+       	} else {
+      @@ remote.c: static void format_branch_comparison(struct strbuf *sb,
+     - 			       "respectively.\n",
+     - 			   ours + theirs),
+     + 			"Your branch and '%s' have diverged,\n"
+     + 			       "and have %d and %d different commits each, respectively.\n",
+       			branch_name, ours, theirs);
+      -		if (show_divergence_advice &&
+      -		    advice_enabled(ADVICE_STATUS_HINTS))
+
+-- 
+gitgitgadget
