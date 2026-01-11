@@ -1,91 +1,86 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B3AD27E
-	for <git@vger.kernel.org>; Sun, 11 Jan 2026 03:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2E7500950
+	for <git@vger.kernel.org>; Sun, 11 Jan 2026 04:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768103880; cv=none; b=bJDrDmdPnwLms23npfb7XMeaMab4XQoB6bLq3mNsAWRP1eoDJmcICvThQxy6fujKIg+G38asbGEQ3oevkqb/yPd0ZYhbZKwF4vLdBdAUYwWHrQ2pkqDlrc5vEzBfAAsXzpv/ZDQtg/7JE2K/YseQFNDf3KknsQHe9bGu8aHMiDM=
+	t=1768104118; cv=none; b=RMnIVcopmnH8nGCgYv374vxJ2n+ks7McT9ZTXo45BD/rDV8lVJle+mo/OhHf//FUxRLa9H9NT/Xg9Xpp82oMyOaUVipAwlwVbeNFFYLZPavg91AUtrvN6qroz9XkxClgj+duteVPxK93lSCNEAPlLXppz7Kzh22+3rbOjqoMqKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768103880; c=relaxed/simple;
-	bh=6ZWOcNKYu0ArXSMrmNXN+5iVNCjAtPrGqDFbJxBivBg=;
+	s=arc-20240116; t=1768104118; c=relaxed/simple;
+	bh=1Oh69/pZdMhEuy240/M4VsFVskClwGKKpX6iUd4Jl/M=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FL2V3e34v+4gEgri9DuHkXytc8G0ByWOJzDJPYDO3DtbLLlAYT4PEzaops5ZHDiAFhFpV/9yxybQh8XRMDay0aHYKUPwzl4ZKG6XTt1kA3zdINbjI77jM5mj/K9yNvhvvarjV7R/SGX6al4/N5oXWaoJuZ+vhAN4hmSWI2ikyqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fspWxTCW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bhHahOxi; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=Ga1t0CGB2Fq1ueTfXmt4KjJuWkhi+fibX1Em2aSdF91NdYS1yzHb9VH+g+Jkfwpe4Y7PB/p8Nv9YfTvWfvMQKy9N8G5GiwUEix8OL+hoNkcMbVYyGp/TmXUdDJe2x8oNKlct2pMDIUYemRUuo75m8zS6oHPA2M0GVUhDcVxwiiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cDe6ygQN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jcYzsBY8; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fspWxTCW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bhHahOxi"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1CEA11D00109;
-	Sat, 10 Jan 2026 22:57:58 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sat, 10 Jan 2026 22:57:58 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cDe6ygQN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jcYzsBY8"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 70CB11D00124;
+	Sat, 10 Jan 2026 23:01:56 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Sat, 10 Jan 2026 23:01:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768103877; x=1768190277; bh=tYmfO57OtM
-	7p3xX1gqG150f88wDkoVuKfuKGVU12qjY=; b=fspWxTCWCzajF8YH/d5SZEITJb
-	KZ5OMajqdOtefYDFbA+G8/RjndxLZbCBf7oJqykAlzxSPfsKtAT/gXompRCU8BLW
-	S2GhPVBxyB43lbYsa6KZNha+yq0UwRATOX9/E9qiubN7PgLi+WrT45u7YgK1UUA9
-	apraTqkNSn47CILmCp//NCMl3T+65Jk9lWzsy/iq6HZOxJzJvF0wg+tP3li+jPWn
-	zONgJrRktXO6A0zdE4F83t+KJveOcC1wmniRdzKpVmru+3EEwMp9sBsdlwuoNrCh
-	wFyKVYXbevEdL8HIU3/5URtMAH4rNbSokac95Eq9VX0UFoCMCN6K07iPXZdg==
+	:subject:to:to; s=fm1; t=1768104116; x=1768190516; bh=pTzrhtUFkl
+	ioJko3JYZTrPO2ZyDlf0yU4fjZgUEmNf4=; b=cDe6ygQN+WMSimPVLR+g6Pyw9n
+	nN9HrylaU+do3T2AshdcLq2Lya9ONSdK2KGmXRT1EPQLUsIReZoj7bxGS+BT2DKN
+	vugYGiLDarNouWUYsqmNFnsyAFsb1oyxgTOt/u3Cmf9f9ZqR74szE73NyjEL7cd8
+	3J6qeL2LLShbfpeE0YUS6bwzHmBowXVp6MzkTGNLk8d3c39gLvuw5N9xp1uA7HK0
+	uou/C2512rfvZPBMf1InTbzwxbL+YLLtE02FNODlvUHGb7/6yPYm1qxfgOcgd9s6
+	ojiBRjl7MSIcXk6kSqPRQzymJYSuowNTi4wZ+oqayoI9VOo8HRlsm1nGGHEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768103877; x=1768190277; bh=tYmfO57OtM7p3xX1gqG150f88wDkoVuKfuK
-	GVU12qjY=; b=bhHahOxiUQc8elXtw4drusq2Gkh2P/aaaixkVrzg8QOob6rKMjT
-	Y3cOhh9oA2WYVjvRRA0MnP+ER+HeRhnO3kclgxGfMD4fCctWLgkJDB7OSxJDdRC+
-	zXnYsyqx2hnMkUbEB0hXM+pzS+WjGiJERNHFWQYRz01C3iSCXz2o+kAYj0+bKXDM
-	aPHAhlLNy87BwCF4sMTpOhz3sN8UoOhbrM3hTGVLzhNXpjaa/kBVy+p5Q9PfJU3Q
-	pkuhkEsQJ78mQgPNHgbQD5TupDaAxJUaHly+Z7RpoTRxta99wj56uVhwhWxmvOsz
-	BzZ7BNOM5bPZeZVzX1VVDu1tXMuLIQmKZNg==
-X-ME-Sender: <xms:xR9jaZHYt6YixElYkT4P6ySMZPjfYyUf-iWZa4OMPR0DflAjLK8TWA>
-    <xme:xR9jaQ5cOb-U5Q1BDwZP788PEvMczwi1dSyTilSaHDs1RaJ3bGSwVzMpTk70scTKl
-    kmRGn7sRWbmVTdqnv_Dq4wfsyR5gVE1-eEUinSZ8kMjwRqbCYda-X8>
-X-ME-Received: <xmr:xR9jaeyaJnwkS7HsYTRfIlhbaYIs15tdRjwT5rWBbdqymA-sOtyf_o7THiJDYUtSczA8n8Wj8Yhp3IJ-FR758BAonyvgDoTqyuS8OaA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudefheehucetufdoteggodetrf
+	1768104116; x=1768190516; bh=pTzrhtUFklioJko3JYZTrPO2ZyDlf0yU4fj
+	ZgUEmNf4=; b=jcYzsBY8kL5iuFcZh4mBLcMfikDoF0j1TPl6ziGa821H/p+PvEk
+	dzzWGCmhnMx12ycVqLfZ4vIzxQdeU1a4O7Pg8Nsa72nqUSymxt5SvUrZrhWtW83h
+	R0XGKShPE0KOu1CqDsqhJGSzNhlCNeknKt5aH8aA8EDU/OnAAwPi3XP/q9t3w4KB
+	NmA6XoiLm1akUvu3abxiBpANryBW1BuGo5CrAgWqtccFvTMbF2S3m863eUhgsPwP
+	n+DrN/xFTYA5sktRm6fKsYJ9L7pnJxpTMdAxEdGg0ZP4gQoH6iX458KHdBP0thCh
+	umi40nccW3PNb4XGuc4NDkEP0KSgS+7VzMA==
+X-ME-Sender: <xms:tCBjaVJK4BDnTTWF1KXQzMiS3Z8ydmGvFnwWbV3d3NSO9ICd7FAjug>
+    <xme:tCBjaU2STkn7Y6R1UGfhU-Vs0ERFLIvhB8sI5iurq_DSewF47K-tY-SF4WomDBGay
+    K1WoinsBooCBZo_PC_fIOn7X7p3A3ljD9fuc-BwKyMwzyu28MIZkw>
+X-ME-Received: <xmr:tCBjaXjTpLtCkwqg-1gEVBamWsOt6dBXM7qgr3vPtfBB8VZqFM8R4RHVM0ZSTzSnCdK6Wo0bTR1M4oAbgkI0Yc43MUHo3vVPMmMIMIo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudefheeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
-    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
-    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:xR9jafOzvBJfaBCxwPbU0JRpcxzejTaTT9_FDcB06-Tq6dLsXF9JtA>
-    <xmx:xR9jaUkgiaM4KZiAd5j0GQsL2NwvpuEpr47koLY1c6o8g2eMDzfj-Q>
-    <xmx:xR9jaUQLUvfKrgQzMs9vJFpIz0YRCPSG8dAc7fnyNIItTU6przFbNA>
-    <xmx:xR9jaTXgxCfH-Nd8xCOtyd2--RO09uJ7E2lzRTgLFQpUv1L2QHErKg>
-    <xmx:xR9jaZLz34z2f_6Mk-5qAAPycnMYWwBQvQq8M3SyU2y-zlKG0NSVEsY->
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehmjhgthhgvvghthhgrmhesohhuthhlohhokhdrtghomhdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:tCBjadVJueGe7TjHl0ROzb7vi3UcmtZKEac_G-KzJoumaeChL5fWtQ>
+    <xmx:tCBjaeWcC8HxsGWKads3NoCTNKGeNkOyIfoZrAylE3803JyyM4QsIw>
+    <xmx:tCBjaViqM2lgAnt9ujkeTOMrglKSujtsY_FfeM-TEjXS-fupymR8kQ>
+    <xmx:tCBjaRYOM5194SqeIFFz_Kpg3R7PNsiaKkKWjxpRgcNBCgz1l5L-iw>
+    <xmx:tCBjaYm6EwBqbug1tXftz6CXCeYHM2yFA__iELf-0PP6pNCbVPkcPwqt>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 10 Jan 2026 22:57:57 -0500 (EST)
+ 10 Jan 2026 23:01:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,
-  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [GSoC PATCH v7] add -p: show user's hunk decision when
- selecting hunks
-In-Reply-To: <aV_IGCld5T_dBxTs@Adekunles-MacBook-Air.local> (Abraham Samuel
-	Adekunle's message of "Thu, 8 Jan 2026 16:07:04 +0100")
-References: <aV_IGCld5T_dBxTs@Adekunles-MacBook-Air.local>
-Date: Sat, 10 Jan 2026 19:57:56 -0800
-Message-ID: <xmqqpl7grebf.fsf@gitster.g>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Matthew John Cheetham <mjcheetham@outlook.com>,
+  Jeff King <peff@peff.net>,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3] fsck: snapshot default refs before object walk
+In-Reply-To: <pull.2026.v3.git.1767980953134.gitgitgadget@gmail.com> (Elijah
+	Newren via GitGitGadget's message of "Fri, 09 Jan 2026 17:49:13
+	+0000")
+References: <pull.2026.v2.git.1767749366719.gitgitgadget@gmail.com>
+	<pull.2026.v3.git.1767980953134.gitgitgadget@gmail.com>
+Date: Sat, 10 Jan 2026 20:01:54 -0800
+Message-ID: <xmqqldi4re4t.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,32 +90,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> When a user is interactively deciding which hunks to use or skip for
-> staging, unstaging, stashing etc, there is no way to know the
-> decision previously chosen for a hunk when navigating through the
-> previous and next hunks using K/J respectively.
->
-> Improve the UI to explicitly show if a user has previously decided to
-> use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
-> This will improve clarity when and aid the navigation process for the
-> user.
->
-> Reported-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-> ---
-> Changes in v7:
-> ==============
-> - changed hunk selection state message to reduce prompt width
-> - Removed redundant `file_diff->hunk_nr` in hunk->use check
-> - Made the prompt mode more readable by retaining the space before choices
-> - set `hunk_use_decision` to empty string if `hunk->use == UNDECIDED` to match
->   the prompt mode.
+>     fsck: snapshot default refs before object walk
+>     
+>     Changes in v3:
+>     
+>      * Removed the attribution for Matthew, as per his request.
+>     
+>     Changes in v2, thanks to feedback & help from Peff & Junio:
+>     
+>      * Fixed errors in commit message
+>      * Changed to use a refname, oid struct and have an array of those
+>      * Snapshot command line arguments and worktree HEADs too
+>      * Add TODO items for snapshotting index entries, and for possibly
+>        improved reflog handling
+>      * Since nothing from Matthew's original patch in GitHub's fork of git
+>        remains in this patch by v2 (only a little of it remained in v1), I
+>        changed authorship to myself and gave Matthew an
+>        Originally-based-on-a-patch-by trailer.
 
-The latest "was: X" does look short and sweet.
-
-Let's wait for a few days to see if others have more input and then
-mark the topic for 'next'.
-
-Thanks.
+Thanks.  Let's mark it for 'next'.
