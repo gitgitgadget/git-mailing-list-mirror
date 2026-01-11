@@ -1,66 +1,78 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BC225744D
-	for <git@vger.kernel.org>; Sun, 11 Jan 2026 20:43:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FDF23D2A3
+	for <git@vger.kernel.org>; Sun, 11 Jan 2026 22:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768164232; cv=none; b=cQjRHnR/Lq13TTGv2TLe39oBWOsl2Ex/Hat9zfWZnArB93nE/F2qDY4dsA6nqETfZweqJ07S4tsDPe7xSlwD2hldxd4FS9nebunILGtmna7vB3g5tT4CyvxWrT7K6120STMiBBNlko7qQwjZIZ5plOee3NxMZgx6f2c+f5Er3Kk=
+	t=1768169136; cv=none; b=mEO0ukPPs8tMy3BCRTSZYXSTzqiKRqVyVP7OLUIRogCQ+j8Ok/w+8Pqy2528njTWMu3qfeNFk0jM+QRazxoqsvpgJTtQANx33NTl8ZBURZy7NMDli+IWncN5laZTlmi6nF7m69chqAMnnj4OoPUtO5FuqenvuC4EiGH+46278IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768164232; c=relaxed/simple;
-	bh=oIZllf3sxxrwUscfZtPMHrSImVVLvIdl8Xv0e8c3D9g=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z0Qypfjo9wfpx2UcTvON7bc+JiYcd2/ZzeqZTGbGw1U7wmClF4pp01fj4/usfULyY16ajGXa9AauJdTe16Fy7YC/23VMfmXRyW/a0P3aOghIux3yj3sYjwPGTe60eakOhsoaq6EAX0XQmV1q/4RawI2Z+4DAOyqHQ8SIanx7U40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=michael.lyo.nz; spf=pass smtp.mailfrom=michael.lyo.nz; dkim=pass (2048-bit key) header.d=michael.lyo.nz header.i=@michael.lyo.nz header.b=j/B3FO0T; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=michael.lyo.nz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=michael.lyo.nz
+	s=arc-20240116; t=1768169136; c=relaxed/simple;
+	bh=uuJWCMC+ki1O5dFiuI/nTsX4NmEuqAEk+ttwMbUFY+Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=f2n7mDjhuEAOQEFRTyTDdV2beY/uhDI4yJaUUNl1i1L+DDE1pLZqVCFDIS6EU3kx7qKj+ERhNUeoMRxZBkCZzdINR5NcTUOnrZHljWzJqvfbOKYHrsMSrt21OYPtPYXLQlfWa8OhvAoavpB3FmaJ/yzSXG1f7wp59oEMnc61HcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NRP4JlTx; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=michael.lyo.nz header.i=@michael.lyo.nz header.b="j/B3FO0T"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4dq6t41gstz9srv;
-	Sun, 11 Jan 2026 21:43:40 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=michael.lyo.nz;
-	s=MBO0001; t=1768164220;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=np42Z/JUsczy3Ovqx/ll1ukwoZqe/c6GsjRc5Fy1ipc=;
-	b=j/B3FO0T56PJH5lTfJoTjoDQldskckdHRW0ICm025T4wsAd83hH3wqAUPsmy6xViUvY0F6
-	yqALOj+1jM18IlZStM8k7emrNWU9ggr1sxlpSBCduP5wDm1ZaydPfv+dVIvY8l6+9IvwM4
-	j8rvZ1B4po0PIlHrbQuzZuNJbUAfsz23vcT9H3comyAWxK/6xzxDaMCGRVOyJS5iUEWzvc
-	o7X8sJC50B86mpsgm1rjw7w5ifuhO690rROx9xCDfEt9ZnkIWyKlBuPlwT332zeSvQOGnJ
-	bOJFKTRDumc4WVmBodR7gJz4ETg68/HTL4goJepRjKKxhnGGTFrr+MocxM/nsQ==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of git@michael.lyo.nz designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=git@michael.lyo.nz
-From: Michael Lyons <git@michael.lyo.nz>
-To: git@vger.kernel.org
-Cc: Michael Lyons <git@michael.lyo.nz>
-Subject: [PATCH 0/1] doc: git-bisect to synopsis
-Date: Sun, 11 Jan 2026 15:42:47 -0500
-Message-ID: <20260111204316.836446-1-git@michael.lyo.nz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NRP4JlTx"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8907fb0188fso51633036d6.1
+        for <git@vger.kernel.org>; Sun, 11 Jan 2026 14:05:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768169134; x=1768773934; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=uuJWCMC+ki1O5dFiuI/nTsX4NmEuqAEk+ttwMbUFY+Q=;
+        b=NRP4JlTxtEb+2E2B0fs3gJSiQ9+t3bclFLjtHkMW3TDn4F8vHc2trH2ssEQ9zUz89j
+         gPOzNh1L/LC73dTFxMMFt0GBN5Azggg9px67skJ8geA5CAMvzFFqs2cmF6Fnta9B6+Y8
+         Z6vgPpq/FLEcfQOMJj7ftMwgNZgKjA+gRTeUJ+CKNB2cuBmJDc8BbCT/lwGO4muDSz++
+         HdyJY1GMMgVpgox+yMd02s0GBVgNEN6lccwrvz+PUWrFa/7oSlWp/fE/PvWiUVTJArHa
+         2MbkafSNCTsMcOfUoRxv1VB1s6xJk5u3f3WP7i/NFXQ2p3TZ2X4kp0Owc//fgBNYfiHU
+         cQYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768169134; x=1768773934;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uuJWCMC+ki1O5dFiuI/nTsX4NmEuqAEk+ttwMbUFY+Q=;
+        b=Ev3iLomn1sZDs9xessF6YGPF9JEdDGEsgRljmcQtsLReaYgQkTp18Lv0EblP2PYhwc
+         NQztIHmLZzlWWJHAI/0EDnHhr0QMNL+zsBBm97dmJgY55JOjK4ugYjLx2JYSiXUOtqBA
+         icjApVa1nKXDN7JGVw1DIxn+nc1taQN/JQgLSYU/LVefcF+kM3cwkL9rGzrAvJjoOCal
+         LsiwJPYoEVUiUKyTAxA7ZttFN2Zf/tbB9+45Kj1/KcXPyMKqK9hlm3KkjY6Y249tm66N
+         WlmvsI71u5aiH0jKpcIfwhUhdPykpl88FCoJla7DySi0SQKYBPs/fYJmFgKhGIO0AtB9
+         gocg==
+X-Gm-Message-State: AOJu0YyEpiCpx8g2cz4eeTGd9Y2Lv6T5cQ1mF81MIGar9hlMNErtawLw
+	7vB5o/XccdcTay16RlV6T3bixWXwzFDkT9yZoS0hIY362of4xaTuJ00ljb8HDhaoBzm8dqMFtAO
+	q6kIhvnS5qivxQb0DmzBhdVrR6SyBE/5/7djS
+X-Gm-Gg: AY/fxX5uq1xjWJqk6gwWtLCpnnqAiyIS3CjhMd4ZMsvNDQdkaL3Kq6u410JzTIvzlMI
+	bfhCmC5+EfMPXSwl+zkSsCXdRkJ8ukYL+54rCGLa+xpqBarMRYAVGOPto/iMCnGAWHRbStDlF9L
+	TVpW/wmXZYLmRLcRkOrRW3tgEU10WumyevcabHVWNvs+gUiqYlTwNB3eD7sdUi6YqNOEp4Zmudw
+	CSvorkmSZs//rQ5qXxGQeT2DD17SPZcxwbPdflo4cEVVlgopDPnqXo8e4Ds9k85FNKxfXQr6UbF
+	SjZ6ZaQnqfxJN5rgsvRhOkUb
+X-Google-Smtp-Source: AGHT+IEt40jwVJeImLdgMcNAOIZQL+vaG2C4ruxsjcFHSHvuxlsg1CUeAlZF7C2SCipodSN3OESWPfDbCO5aOt9Jkqo=
+X-Received: by 2002:a05:6214:d0a:b0:890:3f6a:fab2 with SMTP id
+ 6a1803df08f44-890842f028dmr262835166d6.68.1768169133725; Sun, 11 Jan 2026
+ 14:05:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4dq6t41gstz9srv
+References: <20260102002735.31390-1-rostiprodev@gmail.com> <20260102002735.31390-2-rostiprodev@gmail.com>
+ <20260102061626.GA2581074@coredump.intra.peff.net> <CAKU3Xk5=dmdQhTgHB8WrPbbOOo3cyJtCgFgo7juW06F9YaceRQ@mail.gmail.com>
+In-Reply-To: <CAKU3Xk5=dmdQhTgHB8WrPbbOOo3cyJtCgFgo7juW06F9YaceRQ@mail.gmail.com>
+From: Rostislav Krasny <rostiprodev@gmail.com>
+Date: Mon, 12 Jan 2026 00:05:22 +0200
+X-Gm-Features: AZwV_Qjw_DJMtMUy3mWXSW8DD0m2nW6J9J-FI_grukeJ9R4zzyGTLhfxzTebcd4
+Message-ID: <CAKU3Xk5kCEDU7JZBhb6a46dZ=gEkP4neCNLMHXVB4RDnYZHG0w@mail.gmail.com>
+Subject: Re: [PATCH 1/1] compat: modernize and simplify byte swapping functions
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+Content-Type: text/plain; charset="UTF-8"
 
-Update the format of bisect. This one was less involved than git-blame.
+Hello again,
 
-Should I be changing any code blocks to [synopsis] as well?
-There might also be formatting changes desired among the "Bisect run" exit codes.
-
-Michael Lyons (1):
-  doc: git-bisect: convert to new doc format
-
- Documentation/git-bisect.adoc | 67 ++++++++++++++++++-----------------
- 1 file changed, 34 insertions(+), 33 deletions(-)
-
--- 
-2.47.3
-
+Did you decide something about this pull request? Should I improve it
+and send v2?
