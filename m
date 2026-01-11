@@ -1,51 +1,51 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EA4340298
-	for <git@vger.kernel.org>; Sun, 11 Jan 2026 14:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DACA346ADD
+	for <git@vger.kernel.org>; Sun, 11 Jan 2026 14:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768140757; cv=pass; b=EFkaxSqFW0kbbRGMsjPetJaFlIhXZ9YDtDeEtwSQkWME+dzfd84gmZD1/7mxDv7Mj6AklVn60XHqCp/O+wAPkbsXgw2fXGGC59cHjiE4nd8+w8K/NCJlzmIl8wtBYjTkw+uOaSsfhMT8P7atcWJxlJ7bKLJCo0HlVyOXUAgZsqI=
+	t=1768141253; cv=pass; b=Zw/UgedlS5rzb2s949B4dMyYNltz3v7whP3btAgcgemBmhGc+BPugCcLpbBbLFe6KbQ6iIxKkOqdYg2QVZKqVvLZ+lYzLA1CmjN3yXJhGFS/ZdcfR53XOPtnsyUSxQ6sSZghsho12nUiLDuLzr+q0ZjgtExee227rquVR67rH1U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768140757; c=relaxed/simple;
-	bh=LwGHcRqJtiC5x2NUs0xn9Hfm3guSQZ5FYs+k7A+41yw=;
+	s=arc-20240116; t=1768141253; c=relaxed/simple;
+	bh=rWlW/6355Fj4EZXyEvw8/JDZ4TGWiDYuj66hCQvBWx0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fSRhonqCtYGizw7NvLGsboMW3XuDtKkwCLrjZJ6tu7rgCU6jUokut+7+6qp0MCLe6cCjHgMz/Zd612+BxH9R/NxO6Kh9i94ER2nZXaK7KzIliMx/qjB0oVOteJcGKu7irzKDvoMwpI/Nchmeop0UFBxvGtgWtTVv6hDVVAqKEVk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=UqDseaTX; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version:Content-Type; b=TIUbYa5JEruC3Q616lLQSpqaJA1erk5hPMr77bzy6dmIrT6VYTDEdFZ5OzzwOkdmHiUqk6oCzi7B4aKXAULwzMWRjC0M9u1uWlFxcG3Wi+livtyk62eo9/f8Env/csd7R9CjJfTtSs1oeovtzSEzLFnzKr8fM7vGLZv/3rDlN+I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=D1W+eVlc; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="UqDseaTX"
-ARC-Seal: i=1; a=rsa-sha256; t=1768140745; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="D1W+eVlc"
+ARC-Seal: i=1; a=rsa-sha256; t=1768141242; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=KV9XyVqC5jjL7A9uDHEyZuk4ztOSxKfzBxc1jd3sjwWjj0/lQ5/kdwG8qk+SfJ039QKc323nxL8SfbhqSfBSfgzkNLe7lO9UCjMRkYsl2wcNXrwavlRSofoeO9PeYV54cSME3tj2YHx9Ou34hpylXg/eqrSZxgQ+f2C9+leE4fM=
+	b=ax6Gnv5croJ0pau3PrKS3wdIKmdTz4QK+sOFDBG6JzInUhTR1qFAh9IPhNixoAbmW1KX7fTvHwCcGe/pFejKRL6ZH08zrgGphuuhQ9pHgyHMV7vSO2D3cI+kylJ1FwqSUBBqbGRUto0jILCfivwpeT/t+E6jv8TSY873+gkj9pw=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768140745; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=InRGb/Wzx3x87k92vgo9tWlGctUldSS/5zrEhuMxKCE=; 
-	b=FMTK14fPG5oVSpiIu6pM279RkTULuZihh7OxHfqBnpwP7XjTrEvYg1V+3+K7QtyWXQHt2bhWTHbWF8R0X1OD3Q6fMMJoypD+bAv/qc2grxOiK53eOC2PGrjxOGW6bEZPrDZvyA+7V8vkRZ73AthK5EshQgx5sfkOmqQZpM9PDmo=
+	t=1768141242; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=iFOWdhX+qaICIR2vWjU4Y7+1FlnVcGd6yJZTw9rJbwM=; 
+	b=EflrSMdkhl7fZ9/7RbIypNYwANtIGFCEUrQm1Qn1fA0ewo6q48sXdjecvMXPqgFHnUe2F2bstdmB+Tcko61HDZByuWos2uzMLAbyxMUAApGYzVgA472d9ruRzCwaePtLbAsz7smTd1zKzl0iO4137PHNH0+sobkClERwNCydta4=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768140745;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768141242;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=InRGb/Wzx3x87k92vgo9tWlGctUldSS/5zrEhuMxKCE=;
-	b=UqDseaTXeiOtW2waAvniHUgSOxdgR7jtzLTd1Msts0PaEfaPGFuH6mxE8M7t4DQ2
-	MlVJOdM+g6f8l5WLH2rShWxYUqOg6UTsSPAU22yuud96P9MR2WgrE98v49bDai1qBHW
-	PkhFpkC/ewiTGH3HwN5CGAoxEQppyjQZvAZ99eso=
-Received: by mx.zohomail.com with SMTPS id 1768140743437438.14218075256645;
-	Sun, 11 Jan 2026 06:12:23 -0800 (PST)
+	bh=iFOWdhX+qaICIR2vWjU4Y7+1FlnVcGd6yJZTw9rJbwM=;
+	b=D1W+eVlcGhR7e0F4+ES7e26h2fc2qc/TteI56zq+ExdHCskBWBKcPug//QkthWys
+	sK/P/xO8YsHssCoOvbd3kWIKZWvsq203z1/JD1SKs8hjGRTLmLjvggOJXbRsPMYOAcB
+	qNFrPZuboJMrSvGh/EqRg8UvaGmnvHru16cPCMAY=
+Received: by mx.zohomail.com with SMTPS id 1768141239984730.9123917600238;
+	Sun, 11 Jan 2026 06:20:39 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Emily Shaffer
- <emilyshaffer@google.com>, correctmost <cmlists@sent.com>
-Subject: Re: [PATCH v2][next] hook: check for NULL pointer before deref
-In-Reply-To: <xmqq344etd9v.fsf@gitster.g>
-References: <20260109181912.689409-1-adrian.ratiu@collabora.com>
- <xmqq344etd9v.fsf@gitster.g>
-Date: Sun, 11 Jan 2026 16:12:18 +0200
-Message-ID: <87ecnws0fx.fsf@gentoo.mail-host-address-is-not-set>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Patrick Steinhardt
+ <ps@pks.im>
+Cc: correctmost <cmlists@sent.com>, git@vger.kernel.org
+Subject: Re: [Bug] hook: -Wanalyzer-deref-before-check warning in run_hooks_opt
+In-Reply-To: <aWF-nZ9MXp31QzXs@fruit.crustytoothpaste.net>
+References: <72d123b8-b75e-4b1d-8506-95eb9ad350da@app.fastmail.com>
+ <aWDm_n2YgjvaRmpV@pks.im> <aWF-nZ9MXp31QzXs@fruit.crustytoothpaste.net>
+Date: Sun, 11 Jan 2026 16:20:36 +0200
+Message-ID: <87bjj0s023.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,29 +55,42 @@ MIME-Version: 1.0
 Content-Type: text/plain
 X-ZohoMailClient: External
 
-On Fri, 09 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+On Fri, 09 Jan 2026, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+> On 2026-01-09 at 11:31:10, Patrick Steinhardt wrote:
+>> It's not a real bug. If you take a look at the the `if (!options)`
+>> check, you'll see:
+>> 
+>> 	if (!options)
+>> 		BUG("a struct run_hooks_opt must be provided to run_hooks");
+>> 
+>> So we'd abort immediatly with an error message in case the pointer was
+>> `NULL`. Which clarifies that this is a case that shouldn't ever happen
+>> in the first place.
 >
->> Fix a compiler warning (-Werror=analyzer-deref-before-check) due to
->> dereferencing the options pointer before NULL checking it.
->>
->> In practice run_hooks_opt() is never called with a NULL opt struct,
->> so this just fixes the code to not trigger the warning anymore.
->>
->> The NULL check is kept as-is because some future patches might end up
->> calling run_hooks_opt with a NULL opt struct, which is clearly a bug.
->>
->> While at it, also fix the BUG message function name.
->>
->> Reported-by: correctmost <cmlists@sent.com>
->> Suggested-by: Patrick Steinhardt <ps@pks.im>
->> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
->> ---
->> This is based on next, because it fixes a warning introduced in next.
+> You might think that we'd abort, but that's not what modern compilers
+> do. Dereferencing `options` if it is NULL is undefined behaviour.
+> Compilers are free to assume that undefined behaviour never happens, so
+> what most modern compilers do is say, "Oh, we've dereferenced `options`,
+> so it can never be NULL," and then use that to omit the check
+> altogether.
 >
-> Actually the problematic topic has been in 'master' for a few days
-> already, isn't it?  I'd apply directly on top of ar/run-comand-hook
-> topic.
+> This sounds bizarre and like it might actually lead to security bugs,
+> and you're right.  However, compilers keep wanting to make code go
+> faster, so they keep relying on eliminating undefined behaviour to make
+> more assumptions about the code to optimize it, even if that results in
+> code that doesn't do what the programmer intended.
+>
+> This is one of the reasons why I'm in favour of writing more Rust, since
+> safe Rust doesn't have undefined behaviour and therefore doesn't suffer
+> from these problems.
+>
+> In any event, this is almost certainly a bug because it almost certainly
+> does not do what it looks like it does and the compiler is right to warn
+> about it.
 
-Yes, that is correct, the commits landed in master so this patch applies
-cleanly there as well (just double checked to confirm). Thanks!
+Ack and thanks for the feedback. 100% agreed on writing more Rust. :)
+
+See the below link for the fix. I've ensured the NULL check happens before
+dereferencing (many thanks to Patrick as well).
+
+https://lore.kernel.org/git/87ecnws0fx.fsf@gentoo.mail-host-address-is-not-set/T/#ma8343d1b5393d4efc0c1103357a6e684fc8b1017
