@@ -1,96 +1,104 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DACA346ADD
-	for <git@vger.kernel.org>; Sun, 11 Jan 2026 14:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768141253; cv=pass; b=Zw/UgedlS5rzb2s949B4dMyYNltz3v7whP3btAgcgemBmhGc+BPugCcLpbBbLFe6KbQ6iIxKkOqdYg2QVZKqVvLZ+lYzLA1CmjN3yXJhGFS/ZdcfR53XOPtnsyUSxQ6sSZghsho12nUiLDuLzr+q0ZjgtExee227rquVR67rH1U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768141253; c=relaxed/simple;
-	bh=rWlW/6355Fj4EZXyEvw8/JDZ4TGWiDYuj66hCQvBWx0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TIUbYa5JEruC3Q616lLQSpqaJA1erk5hPMr77bzy6dmIrT6VYTDEdFZ5OzzwOkdmHiUqk6oCzi7B4aKXAULwzMWRjC0M9u1uWlFxcG3Wi+livtyk62eo9/f8Env/csd7R9CjJfTtSs1oeovtzSEzLFnzKr8fM7vGLZv/3rDlN+I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=D1W+eVlc; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E8014F70
+	for <git@vger.kernel.org>; Sun, 11 Jan 2026 14:39:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768142374; cv=none; b=e8NWl/nMeqpFYEptLvrBu/ktTu3fCuXR0p4GfwlIEMpJKLjOna3Ins9cH8YMDLOLrfPwc7Pm1g1jqy8TrLpj9swP/db93RazmALKtnRvl6Wcp2j7cKnXg1/26pZa7xpMQ/3PmQGM777QDJ9o5W7OOR77iIc+m1R2UM6QeDe2Fq4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768142374; c=relaxed/simple;
+	bh=UKKV1LMtSmvG2ZHLG8wTwcNwlkpxQIIEoe9f80H18Z8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=bVODjIpE8Xej1Aod7tmCpukwBQO7X1o3OvjsUcFKg9yPoEtEWz6UC2CzD4ymqvsusrZukx2HQbveWzCRLyWI0DZrcDYPySLdf2fJ3fBstR8+FXsVFMuLb2nauij/3ZrdQdaY3eIt6w0OCx1qoZa70DWxrKPOzDvtGxRHkxS3I8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N1iNkIxH; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="D1W+eVlc"
-ARC-Seal: i=1; a=rsa-sha256; t=1768141242; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ax6Gnv5croJ0pau3PrKS3wdIKmdTz4QK+sOFDBG6JzInUhTR1qFAh9IPhNixoAbmW1KX7fTvHwCcGe/pFejKRL6ZH08zrgGphuuhQ9pHgyHMV7vSO2D3cI+kylJ1FwqSUBBqbGRUto0jILCfivwpeT/t+E6jv8TSY873+gkj9pw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768141242; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=iFOWdhX+qaICIR2vWjU4Y7+1FlnVcGd6yJZTw9rJbwM=; 
-	b=EflrSMdkhl7fZ9/7RbIypNYwANtIGFCEUrQm1Qn1fA0ewo6q48sXdjecvMXPqgFHnUe2F2bstdmB+Tcko61HDZByuWos2uzMLAbyxMUAApGYzVgA472d9ruRzCwaePtLbAsz7smTd1zKzl0iO4137PHNH0+sobkClERwNCydta4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768141242;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=iFOWdhX+qaICIR2vWjU4Y7+1FlnVcGd6yJZTw9rJbwM=;
-	b=D1W+eVlcGhR7e0F4+ES7e26h2fc2qc/TteI56zq+ExdHCskBWBKcPug//QkthWys
-	sK/P/xO8YsHssCoOvbd3kWIKZWvsq203z1/JD1SKs8hjGRTLmLjvggOJXbRsPMYOAcB
-	qNFrPZuboJMrSvGh/EqRg8UvaGmnvHru16cPCMAY=
-Received: by mx.zohomail.com with SMTPS id 1768141239984730.9123917600238;
-	Sun, 11 Jan 2026 06:20:39 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Patrick Steinhardt
- <ps@pks.im>
-Cc: correctmost <cmlists@sent.com>, git@vger.kernel.org
-Subject: Re: [Bug] hook: -Wanalyzer-deref-before-check warning in run_hooks_opt
-In-Reply-To: <aWF-nZ9MXp31QzXs@fruit.crustytoothpaste.net>
-References: <72d123b8-b75e-4b1d-8506-95eb9ad350da@app.fastmail.com>
- <aWDm_n2YgjvaRmpV@pks.im> <aWF-nZ9MXp31QzXs@fruit.crustytoothpaste.net>
-Date: Sun, 11 Jan 2026 16:20:36 +0200
-Message-ID: <87bjj0s023.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N1iNkIxH"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-81f3fcdb556so341350b3a.2
+        for <git@vger.kernel.org>; Sun, 11 Jan 2026 06:39:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768142372; x=1768747172; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bmAitbsE2MFf+7zr9RlFK9Xcy7EOZAkyYaowurAdJKs=;
+        b=N1iNkIxH9Rc1giNgVN4UJDGBB7Bm9zZyHIwdPYJCV14tE53NwiWfcxNd7kN9YcD3Ty
+         /xfYpcE7uMeR955oDHDgbhE0vmC9PNQNtP80Uq4bWbCwu62mvTi7LzcSYZiM0QlhvSW4
+         u2gOYW1D0ftYNM3oc3TRKfq6ZyTrWSQR4PBHEpRVV2Wah0h6738AaK7KEe54Ls4td/PJ
+         +ILmFfPRdNHMn/0a0uOk3eTI2GuqO/ifse52jDEKb/Ign3au/kCsIQgbU6CCsqHS2eQ9
+         CtpIVUjisz6hw/y32FLZuVtQx6s17oLx42Y7RH30c4Ly9v2x1CscHXSsAoB2ONN9Hm7g
+         MCjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768142372; x=1768747172;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bmAitbsE2MFf+7zr9RlFK9Xcy7EOZAkyYaowurAdJKs=;
+        b=HPIngrorKOF3/L37zL/mRt79MwA6gpz/3aE0qHPGBbMEtTRrZPb4rt9zMH1cUXENHA
+         oYOjKuBWOIEwkEJrevGz3Rw9C45/nS0aTDFyrO4lMyGDum4r0DloZwSVErvzO6RilAxN
+         r+0gB+dX1DJ6eu5Ao9jMI3SHAM45S+PFeh3LVUZvxLT9WghImZ32qGqy3F9rGvBKQGN1
+         ss780dkOBIlPmHrwFeJUJYR8dsecdQS+vJj3XqrfAc4LTUHbQ2JdsCFBmGFE+9RbRN7S
+         oa+dwSWMW1T+Y7iGVjxTmgywvpAgK4soF9E7s9k8a692Esf+v/kj7K4AkVeKzUnzkfaM
+         Afbw==
+X-Gm-Message-State: AOJu0YxzEcDYb/bEEyQsIT2CmboqBl+8hdYQSyljXRroppfazoCP0wD+
+	s6BJmu61WTV3szaWqr9yWr7VYx2A7h9Jr7j0lgzbQgNrBaG3FZXH14BLhwTH0w==
+X-Gm-Gg: AY/fxX406KHrjp57qTYEJbsqa5eHoCV2qzVMkGhiRCtQLy95DZ7hXxirHlo9rvdI8nl
+	Ny+wolkv2xqaoK7TEp7sRVUrjNcNMiME+C9C9fsFc0f/yTWvrh8u7SBb+BUQiFbY4/mUQ+LIji/
+	zmxpfSti+bFyfCAcyLDRXo71axh7DFBIlYwiJ7KC2uh46kcLltZVy2gMxWNhfVCq4ByprH7m9/i
+	jy355P0ZU8eaKk5n8VJdlFphzgIqy4et1gZrERr5eB8mqHPKx71XSgi2LT+VB2bG5YGNm1hC29d
+	hqaz3OygQazu65XpW2PVRHo3FW5qehBGC64ag76hcfOv9pOmyHptdrKIkoRnII/lQyjFwwNTw66
+	tX4jMkUsKaIEL87dCB2YH8AGlczwV5AAO+Pf2j8ZU2SpLBOysIa8xvLydrGbLcn2xwZ6YSpP4nw
+	GVdc34gDzSBA10d/u0IdWtuTla3uk58sUL
+X-Google-Smtp-Source: AGHT+IE+28Nxjq2Dh2mD3VqbgWHulRcwBkRyM6HPHAv010J1ni5UaH2EM1vCrtgKVYQ11G2k5QZuDw==
+X-Received: by 2002:a05:6a20:7f92:b0:34e:1009:4216 with SMTP id adf61e73a8af0-3898f94c941mr14049145637.24.1768142372418;
+        Sun, 11 Jan 2026 06:39:32 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34f5fa7820fsm14953671a91.2.2026.01.11.06.39.31
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Jan 2026 06:39:32 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Subject: [PATCH] t1420: use test helpers for lost-found checks
+Date: Sun, 11 Jan 2026 14:38:33 +0000
+Message-ID: <20260111143928.37604-1-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
-On Fri, 09 Jan 2026, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
-> On 2026-01-09 at 11:31:10, Patrick Steinhardt wrote:
->> It's not a real bug. If you take a look at the the `if (!options)`
->> check, you'll see:
->> 
->> 	if (!options)
->> 		BUG("a struct run_hooks_opt must be provided to run_hooks");
->> 
->> So we'd abort immediatly with an error message in case the pointer was
->> `NULL`. Which clarifies that this is a case that shouldn't ever happen
->> in the first place.
->
-> You might think that we'd abort, but that's not what modern compilers
-> do. Dereferencing `options` if it is NULL is undefined behaviour.
-> Compilers are free to assume that undefined behaviour never happens, so
-> what most modern compilers do is say, "Oh, we've dereferenced `options`,
-> so it can never be NULL," and then use that to omit the check
-> altogether.
->
-> This sounds bizarre and like it might actually lead to security bugs,
-> and you're right.  However, compilers keep wanting to make code go
-> faster, so they keep relying on eliminating undefined behaviour to make
-> more assumptions about the code to optimize it, even if that results in
-> code that doesn't do what the programmer intended.
->
-> This is one of the reasons why I'm in favour of writing more Rust, since
-> safe Rust doesn't have undefined behaviour and therefore doesn't suffer
-> from these problems.
->
-> In any event, this is almost certainly a bug because it almost certainly
-> does not do what it looks like it does and the compiler is right to warn
-> about it.
+The lost-found test used raw `test -f` and `ls | wc -l` checks.
+Replace them with `test_path_is_file` and `test_line_count` to provide
+clearer failure diagnostics and keep the test consistent with the
+rest of the test suite.
 
-Ack and thanks for the feedback. 100% agreed on writing more Rust. :)
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+ t/t1420-lost-found.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-See the below link for the fix. I've ensured the NULL check happens before
-dereferencing (many thanks to Patrick as well).
+diff --git a/t/t1420-lost-found.sh b/t/t1420-lost-found.sh
+index 2fb2f44f02..da1e48d35e 100755
+--- a/t/t1420-lost-found.sh
++++ b/t/t1420-lost-found.sh
+@@ -28,9 +28,10 @@ test_expect_success 'lost and found something' '
+ 	test_tick &&
+ 	git reset --hard HEAD^ &&
+ 	git fsck --lost-found &&
+-	test 2 = $(ls .git/lost-found/*/* | wc -l) &&
+-	test -f .git/lost-found/commit/$(cat lost-commit) &&
+-	test -f .git/lost-found/other/$(cat lost-other)
++	ls .git/lost-found/*/* >actual &&
++	test_line_count = 2 actual &&
++	test_path_is_file .git/lost-found/commit/$(cat lost-commit) &&
++	test_path_is_file .git/lost-found/other/$(cat lost-other)
+ '
+ 
+ test_done
+-- 
+2.43.0
 
-https://lore.kernel.org/git/87ecnws0fx.fsf@gentoo.mail-host-address-is-not-set/T/#ma8343d1b5393d4efc0c1103357a6e684fc8b1017
