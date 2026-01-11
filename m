@@ -1,83 +1,81 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F2E34DB66
-	for <git@vger.kernel.org>; Sun, 11 Jan 2026 18:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BDD34B682
+	for <git@vger.kernel.org>; Sun, 11 Jan 2026 18:41:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768155935; cv=none; b=E0v0inrgmP7jorsAIXsfLPJOPeVLdTcUZN5mGHDVr38QLN5lypbgqcaVNXJeW4b7R5+HpryrzQ/znDTKmDxpdtryWh66+fsjoJGmR+n5h5H2elEniVVFLFzaQcvPzhEBHCf0nT55E3QjSS/cypkMpb9tib+IxRC0H3IVqO57lt8=
+	t=1768156897; cv=none; b=FVW5SMa26TSqqbhuAd//xPD7q7X85TBYytpc75e1791AU/AobicQlDYDIJHzxhaATssZ6u5q+qcFdtaNXngGqX0Xvnh7P8BqFj5KPxyrlsomM2gusMq93X5j5OVeoBUJR2Q2VTOMZVagsGutJMSgN1XSwa4Gr0S+E5MMoc4NaU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768155935; c=relaxed/simple;
-	bh=dlgefzK7zNzpZQpG3wsLTJ+NoHiidd2CpmSn4yy0Op8=;
+	s=arc-20240116; t=1768156897; c=relaxed/simple;
+	bh=GeT/leIoSbgtXXQsuCFgJTxUcRurGys/ft8AZw9bs1I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H372WToNhlKxibhHuhUHV+UG8fxLnBJAsMzdwEa7+8K0Q9diwMCJQ8tqDWMA/I9CtI0G0OS1/2Vn6AJ+SLvvBUPrOoqg/R6N47ZI75yutZDcYv+IUFmbj6NZs1qikARqZGPzDCleTs2YO5H1frTDOBi29Br7i/tzP8fkE8RXqhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GvgfBqAJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K4tW5O0E; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=Z314BjNVOTWIJCtdoflKDMQPW+QIu+G0ie2Y639K4eIARpPDaPy3/Uw1MX+ZId1q0AM7EW1Nnli6r3dQkT3w5OTAA1xNZRIWkciuZBGrT3X9pdMpF5fqogqqJSx7ucioiBM+Q9wFZSsv/iS+5YTQY6UJ4L13P8Mpz3RRBhSC//4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sfw7XFQE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0e2Kdn3r; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GvgfBqAJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K4tW5O0E"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7D7EDEC00CC;
-	Sun, 11 Jan 2026 13:25:25 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Sun, 11 Jan 2026 13:25:25 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sfw7XFQE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0e2Kdn3r"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6A5F6EC0087;
+	Sun, 11 Jan 2026 13:41:34 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 11 Jan 2026 13:41:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768155925; x=1768242325; bh=duy413+lOK
-	9dc5g4y5p5+HgpX4iAsY8L50HcXA63WTk=; b=GvgfBqAJumCjRSGsHrfCJvP1UH
-	3BE3TSyL/k1BNh+bn8NfoYcjycc3iIz2RWuUZxNNZOiyqVuXeUJAHSEmyLMvJJpj
-	T+08NLHbQwDtENAQpo/Ap42tCS+xxZBnEvpe3oLbCT9UKnkW2Qi848E5+mzc9hgk
-	qgSuauOJ7IMxqKGG08dC5lq/49mU1eJOd1GxmEoGm6YvGkbC0ivpu/O0ssUjS/sX
-	5StV6zU/oXpD/yLIakS6GAe5WUEq7VDdgxFmmPhsXQE+XGSuKUOj2eFQ96Fq8kny
-	/dS1dmvPytyFfswgDAfQN19MIxpRp/xN6BJmIgCBj3ovKyNbqHEDE7nDrh3w==
+	:subject:to:to; s=fm1; t=1768156894; x=1768243294; bh=GeT/leIoSb
+	gtXXQsuCFgJTxUcRurGys/ft8AZw9bs1I=; b=Sfw7XFQEVszPOBCT3HFYp7F7+d
+	RGbuAlf6oe8bX2/PXYmArah4yRh6YrSBUKvsQYhuw2oES5Rv6bZJSC/P89DsadNs
+	zhtS093Q7QKzS+gQJkNk7jg+wTUSDmHobxxhg41lyvTmuWmhzqt0fTmUlhbR6AbY
+	CngXnOiB0RtNt3gdHKv2LM9oyMQkvD+dQgpszcFCCABlMAgyZIGcUVS5T8GOUwuu
+	+ZwTAod0sjG8Gv+cfw8VErgbOxW8RCIn0cWH+wXvoqDywHW9NVfiLA/pJXqEf0h4
+	NwIN+Of+2aoyuS7TOLL8lQyRt+r8G/buYa7ZLNlePDT1X2b0WyYoD44EI7qQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768155925; x=1768242325; bh=duy413+lOK9dc5g4y5p5+HgpX4iAsY8L50H
-	cXA63WTk=; b=K4tW5O0ELtc/1E71lAkuUz1Nv2zR0aNzaO931ca2/P8KD/gr+Fk
-	TbMsLhmHTcqURMWV9pAlhT2hpevm6TGNgtzaCZJErVDq7lOhG2I1sUMk0+qIGDKk
-	KJKcA8SnRc3aGnQss4LLLPPGHPm+/VI8iaL+g6NfC3WzEum2uoAAmgBoodBZBOsQ
-	gqu5i0ajvH8IKlWJ2sse6T90lFEK88M4tM+0OzwSj69U/ZLnAJSUMGH6K0VaIKEE
-	a60Cr4ODksb6Je+qVkhQnqKnZzOtfINsUKjE9d53xYOZrKmNlzJP0li7Qq7qR1eg
-	2L36BL0yKZ+QEqd/6lPdBzq+sTLw7i5maQw==
-X-ME-Sender: <xms:FetjaT6hC6ExCIkO5U8JOQY3oPk0XbRsuyGujvV1ONY38RWlDTkaKw>
-    <xme:FetjaSWROhuugrYGGAHILEId0Dvi05FKtce7syyeoTwTt6uh4nTqWUT3BgXhT-VRl
-    b5NVzjvba21inaj9qrz0MzM7oM0OwJS21Ou9iqOzi0yIIriW9ewMg>
-X-ME-Received: <xmr:FetjaaBYCWk-gsUylfQpe4YyaFOPJS-Ik8EmbIjy6_sVxVDrKqI8EhoQoSH1UpFwJHcE3w5Bso8LQMxIqI9_VqcCrgXorCiC0Npd0uk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudehvdelucetufdoteggodetrf
+	1768156894; x=1768243294; bh=GeT/leIoSbgtXXQsuCFgJTxUcRurGys/ft8
+	AZw9bs1I=; b=0e2Kdn3rJMjmiXjZnoo8He7+vg1tFK8j9UW/sJNDLRLNyRe09F3
+	5cL2wSBzw5xDktWM3nk2vQGS6lmWW8QJ9+wSRAhjyjitTUxBUQieFYxY1R3WrSTf
+	IsU5g6nPqUy3wmq1eeO7XRZxMuVUUju2l4Vfxt/VJzMVA7eQCITEq9kVFAI3eh05
+	b9Ze5aEYFgZ0hS4wlFEWQ7j5VetXNCrcsxAtQzWb27cxL6a46X46TV273t7Fu4QO
+	WtnXpOSnNg+9jM3ZezhY7DdZa8ECU9pS/yXxFK5+HofSOBDma9pth5OX9aeswbAA
+	NhsctXvFJM4Yn4ilSGahENFvyEahhYez9Rg==
+X-ME-Sender: <xms:3u5jaTvVIpN_7q-tjwNQvXbvFIBwrvianJPeSpQr9f_I6goH2dNqyA>
+    <xme:3u5jab7DnV88U27vIccpCYF2U00E0qCnHjDHnB_FPPQqaS3RapNGBfi4ENbZOPX73
+    GsGOX9565SDnZ3VaUWq8QQIBShyP2xKByHhfoIAEkgZ2t60dg1MQQ>
+X-ME-Received: <xmr:3u5jaUIUr99sCg8UVWIo1S6ZPCt5xxS6TliVSRLbW9PAMWrq7XF2gPWtHp4QO_lg-Fdts9-vSHtWy9sMyW_vupag4l3NWHZm9pt61oE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudehfedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhjsehkjhhtshgrnhgrkhhtshhiughishdrihgurd
-    gruhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepkhhjthhsrghnrghkthhsihguihhssehgrhhoqhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:FetjaZ6PBRq7BnzoQxQnrKgWK1P0FJvi30Rg1RjbWNRiXRcS5pXS9Q>
-    <xmx:FetjadwAO5ijwzkCLCStQWgydp_3xAJN0QsEWg6y8XBkPuUeby1zAw>
-    <xmx:FetjaYyYxwmbzdhrNJADEv2zuIcDYvsm3b1reW2e6iow8hRn2yQxbQ>
-    <xmx:FetjadzlugsO0Wkd2FQLOr5CDw9LJEWWO9QBRgwdQTtzunaUwOjs9w>
-    <xmx:FetjaYwmLZmx-EmGzoov-ZutGuNT76GmrKtP9ZBZJ1-LLSHZp25dpLa5>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhushhhkhgrrhhkuhhmrghrshhinhhghhduleejtd
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3u5jab5vYVvnZeW8JkZQ4jo-stg_cRtgT8BIqi-jIr2aWH3FHB4yfA>
+    <xmx:3u5jaXzDaqRbY4zKT71Wsth2_WO-9XvfIuy1Yo1gpXrrrAu1dN0YPQ>
+    <xmx:3u5jafYk-LX8vpmPhREcWQ3LaEv20bwkfsd5vg_EGXHMXIoLqeMGUQ>
+    <xmx:3u5jaZTKd0AQC6n2gCTxUpxVmRzRpIoof5_Uoq4-6tqLR8w3pn1I3A>
+    <xmx:3u5jaUyv7Lhmtch5b1ZkcXnm25_YNPI96euWD7ZWdFDJ-D_3cX2-WOxs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 11 Jan 2026 13:25:24 -0500 (EST)
+ 11 Jan 2026 13:41:34 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: KJ Tsanaktsidis <kj@kjtsanaktsidis.id.au>
-Cc: git@vger.kernel.org,  KJ Tsanaktsidis <kjtsanaktsidis@groq.com>
-Subject: Re: [PATCH] http-backend: write newlines to stderr when responding
- with errors
-In-Reply-To: <20260108225926.3587282-1-kj@kjtsanaktsidis.id.au> (KJ
-	Tsanaktsidis's message of "Thu, 8 Jan 2026 22:59:21 +0000")
-References: <20260108225926.3587282-1-kj@kjtsanaktsidis.id.au>
-Date: Sun, 11 Jan 2026 10:25:23 -0800
-Message-ID: <xmqqpl7govl8.fsf@gitster.g>
+To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] t1410: check files and missing paths after reflog rewind
+In-Reply-To: <20260111140417.36274-1-pushkarkumarsingh1970@gmail.com> (Pushkar
+	Singh's message of "Sun, 11 Jan 2026 14:03:27 +0000")
+References: <20260111140417.36274-1-pushkarkumarsingh1970@gmail.com>
+Date: Sun, 11 Jan 2026 10:41:32 -0800
+Message-ID: <xmqqh5ssouub.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,67 +85,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-KJ Tsanaktsidis <kj@kjtsanaktsidis.id.au> writes:
+Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
 
-> From: KJ Tsanaktsidis <kjtsanaktsidis@groq.com>
->
-> The not_found and forbidden methods currently do not write a newline to
-> stderr after the error message. This means that if git-http-backend is
-> invoked through something like fcgiwrap, and the stderr of that fcgiwrap
-> process is sent to a logging daemon (e.g. journald), the error messages
-> of several git-http-backend invocations will just get strung together,
-> e.g.
->
->> Not a git repository: '/var/lib/git/foo.git'Not a git repository: '/var/lib/git/foo.git'Not a git repository: '/var/lib/git/foo.git'
->
-> I think it's git-http-backend's responsibility to format these messages
-> properly, rather than it being fcgiwrap's job to notice that the script
-> didn't terminate stderr with a newline and do so itself.
+> Subject: [PATCH] t1410: check files and missing paths after reflog rewind
 
-Now another question is which between the callers and these two
-helper functions is responsible to ensure that the message
-terminates with LF.  As these functions can be called only once, I
-think letting them add LF makes sense (if they can be called twice
-or more, we can imagine that a caller may find it useful to make two
-calls to produce a single log entry by ending only the later call
-with LF, but such a use-case clearly cannot be supported with these
-NORETURN functions).  So I think this design makes sense.
+That sounds as if the original did not check these things after
+"reflog rewind" and this patch is about correcting it, doesn't it?
 
-> Signed-off-by: KJ Tsanaktsidis <kj@kjtsanaktsidis.id.au>
-> ---
->  http-backend.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/http-backend.c b/http-backend.c
-> index 52f0483dd3..bda8bb91e1 100644
-> --- a/http-backend.c
-> +++ b/http-backend.c
-> @@ -143,8 +143,10 @@ static NORETURN void not_found(struct strbuf *hdr, const char *err, ...)
->  	end_headers(hdr);
->  
->  	va_start(params, err);
-> -	if (err && *err)
-> +	if (err && *err) {
->  		vfprintf(stderr, err, params);
-> +		fprintf(stderr, "\n");
+That is a bit different from what is really happening in this patch.
 
-Somehow it feels overly heavyweight to call fprintf() just to send a
-single literal byte to the standard error stream.  putc('\n', stderr)
-perhaps?  The same comment forr the other hunk.
+> Replace raw `test -f` and `! test -f` checks in the rewind test with
+> `test_path_is_file` and `test_path_is_missing`. This provides clearer
+> failure diagnostics and keeps the test consistent with the rest of
+> the test suite.
 
-> +	}
->  	va_end(params);
->  	exit(0);
->  }
-> @@ -159,8 +161,10 @@ static NORETURN void forbidden(struct strbuf *hdr, const char *err, ...)
->  	end_headers(hdr);
->  
->  	va_start(params, err);
-> -	if (err && *err)
-> +	if (err && *err) {
->  		vfprintf(stderr, err, params);
-> +		fprintf(stderr, "\n");
-> +	}
->  	va_end(params);
->  	exit(0);
->  }
+On the other hand, this describes what the patch does nicely.
+
