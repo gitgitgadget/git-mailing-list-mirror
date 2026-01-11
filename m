@@ -1,103 +1,109 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BDD34B682
-	for <git@vger.kernel.org>; Sun, 11 Jan 2026 18:41:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8625234C820
+	for <git@vger.kernel.org>; Sun, 11 Jan 2026 19:15:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768156897; cv=none; b=FVW5SMa26TSqqbhuAd//xPD7q7X85TBYytpc75e1791AU/AobicQlDYDIJHzxhaATssZ6u5q+qcFdtaNXngGqX0Xvnh7P8BqFj5KPxyrlsomM2gusMq93X5j5OVeoBUJR2Q2VTOMZVagsGutJMSgN1XSwa4Gr0S+E5MMoc4NaU4=
+	t=1768158933; cv=none; b=N61x6b38XUwRoHdoFfeBb2kj3NcCz7MsRhWjUeQg+wJ5EZRnD1Sy1os57AHQORpUCwAWfP2f4wAxJiir+AXAqg8bEjmw8VZlPgOpCK6uskhKPQG9tCHpW70RqjDJsj8+DNeSlLjZw8HBBJN2zhPP55P4VDLTSVq5mE04UR7TS04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768156897; c=relaxed/simple;
-	bh=GeT/leIoSbgtXXQsuCFgJTxUcRurGys/ft8AZw9bs1I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z314BjNVOTWIJCtdoflKDMQPW+QIu+G0ie2Y639K4eIARpPDaPy3/Uw1MX+ZId1q0AM7EW1Nnli6r3dQkT3w5OTAA1xNZRIWkciuZBGrT3X9pdMpF5fqogqqJSx7ucioiBM+Q9wFZSsv/iS+5YTQY6UJ4L13P8Mpz3RRBhSC//4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sfw7XFQE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0e2Kdn3r; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1768158933; c=relaxed/simple;
+	bh=NOAyyuYWp/U6WJqHyxIoKL3Nmi4FsCWu9uocQmOdfkI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AJML0a41z7syT/wa2THqQdtJc2kDUgSFTDO30TnmiaKnhS6Fy7YXGBjOKg0rE+DX7ED3TO28nkbiYOHKalkxp21YQh97i68EeSWT+ugivMuqestCgjwNNi4LECtrsKFfZErnhECr816ENyAgn7XhW4LKn6jhBxkG8dE2WYoBCeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k2Tq7grj; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sfw7XFQE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0e2Kdn3r"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6A5F6EC0087;
-	Sun, 11 Jan 2026 13:41:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sun, 11 Jan 2026 13:41:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768156894; x=1768243294; bh=GeT/leIoSb
-	gtXXQsuCFgJTxUcRurGys/ft8AZw9bs1I=; b=Sfw7XFQEVszPOBCT3HFYp7F7+d
-	RGbuAlf6oe8bX2/PXYmArah4yRh6YrSBUKvsQYhuw2oES5Rv6bZJSC/P89DsadNs
-	zhtS093Q7QKzS+gQJkNk7jg+wTUSDmHobxxhg41lyvTmuWmhzqt0fTmUlhbR6AbY
-	CngXnOiB0RtNt3gdHKv2LM9oyMQkvD+dQgpszcFCCABlMAgyZIGcUVS5T8GOUwuu
-	+ZwTAod0sjG8Gv+cfw8VErgbOxW8RCIn0cWH+wXvoqDywHW9NVfiLA/pJXqEf0h4
-	NwIN+Of+2aoyuS7TOLL8lQyRt+r8G/buYa7ZLNlePDT1X2b0WyYoD44EI7qQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768156894; x=1768243294; bh=GeT/leIoSbgtXXQsuCFgJTxUcRurGys/ft8
-	AZw9bs1I=; b=0e2Kdn3rJMjmiXjZnoo8He7+vg1tFK8j9UW/sJNDLRLNyRe09F3
-	5cL2wSBzw5xDktWM3nk2vQGS6lmWW8QJ9+wSRAhjyjitTUxBUQieFYxY1R3WrSTf
-	IsU5g6nPqUy3wmq1eeO7XRZxMuVUUju2l4Vfxt/VJzMVA7eQCITEq9kVFAI3eh05
-	b9Ze5aEYFgZ0hS4wlFEWQ7j5VetXNCrcsxAtQzWb27cxL6a46X46TV273t7Fu4QO
-	WtnXpOSnNg+9jM3ZezhY7DdZa8ECU9pS/yXxFK5+HofSOBDma9pth5OX9aeswbAA
-	NhsctXvFJM4Yn4ilSGahENFvyEahhYez9Rg==
-X-ME-Sender: <xms:3u5jaTvVIpN_7q-tjwNQvXbvFIBwrvianJPeSpQr9f_I6goH2dNqyA>
-    <xme:3u5jab7DnV88U27vIccpCYF2U00E0qCnHjDHnB_FPPQqaS3RapNGBfi4ENbZOPX73
-    GsGOX9565SDnZ3VaUWq8QQIBShyP2xKByHhfoIAEkgZ2t60dg1MQQ>
-X-ME-Received: <xmr:3u5jaUIUr99sCg8UVWIo1S6ZPCt5xxS6TliVSRLbW9PAMWrq7XF2gPWtHp4QO_lg-Fdts9-vSHtWy9sMyW_vupag4l3NWHZm9pt61oE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudehfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhushhhkhgrrhhkuhhmrghrshhinhhghhduleejtd
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3u5jab5vYVvnZeW8JkZQ4jo-stg_cRtgT8BIqi-jIr2aWH3FHB4yfA>
-    <xmx:3u5jaXzDaqRbY4zKT71Wsth2_WO-9XvfIuy1Yo1gpXrrrAu1dN0YPQ>
-    <xmx:3u5jafYk-LX8vpmPhREcWQ3LaEv20bwkfsd5vg_EGXHMXIoLqeMGUQ>
-    <xmx:3u5jaZTKd0AQC6n2gCTxUpxVmRzRpIoof5_Uoq4-6tqLR8w3pn1I3A>
-    <xmx:3u5jaUyv7Lhmtch5b1ZkcXnm25_YNPI96euWD7ZWdFDJ-D_3cX2-WOxs>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 11 Jan 2026 13:41:34 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t1410: check files and missing paths after reflog rewind
-In-Reply-To: <20260111140417.36274-1-pushkarkumarsingh1970@gmail.com> (Pushkar
-	Singh's message of "Sun, 11 Jan 2026 14:03:27 +0000")
-References: <20260111140417.36274-1-pushkarkumarsingh1970@gmail.com>
-Date: Sun, 11 Jan 2026 10:41:32 -0800
-Message-ID: <xmqqh5ssouub.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k2Tq7grj"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2a0a33d0585so36215815ad.1
+        for <git@vger.kernel.org>; Sun, 11 Jan 2026 11:15:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768158932; x=1768763732; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qrj9DW+pJervh9LD7nOxUhnedbzmDlXlRuE7/rQ8eas=;
+        b=k2Tq7grj86dikoACaDoA1SER9p8hhPLMM1kiSC1Qc58ggyIkK255NtULUEDxaC/D4b
+         FtVK0lzXDIqpJZj3rn3V/DeXM/p4fOG59aipUN15RfJAPMzicEQ/oYezT4Caj9Cv8rTk
+         T1U78dw06yxDGIJFubgp+MKcoLB+x7wfrIAfKZoJfbzs+rwqZ45I08B1JUuWCsyAbZR6
+         NnCwyIId6UGxZQx5HeEcsLKIC96seGGhPF4XBPaNza5A0BJ0LLeibQfB6G2P07JPfHY1
+         SEvZxCdhipUv7XDGKLPf6g4CvwhXtoWAeEMA1XAE3g8+nHwZZnOj6TzMe7oCAKGu50YV
+         Alqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768158932; x=1768763732;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qrj9DW+pJervh9LD7nOxUhnedbzmDlXlRuE7/rQ8eas=;
+        b=opzcyS1a93AZt7shShz8NCf9CQ2uEIiAI+J/Urr3QQN40zHBcRsU577+spUcPTxEC1
+         7q/i0of/rYn5IenkQ8t0r54Ixexe1/veIRT+XpBy3bLohwlf3xklfBdtXlIB+MIsEB13
+         4YwHHZ2pK6La8ZMZU4XfYx8pAHP5vHPvLcW550o5ryqaApbdpmxGQyAaX23PD5y11f1H
+         4w5Yd6aVgBi2qWYTE1sh0tmywSmpcvzfS629Xt5rL9Meyy31H4gGu1SFwd3sHXeSNskn
+         SV/e90iL0YXVmN29k3vC2mu5UI0Fn3PYLcYoJu6+TbfkQzEn1tPxGu53n2bio+SKJhm8
+         M+ow==
+X-Gm-Message-State: AOJu0Yyufk1ufI7uZUxC1blSmSNRHq7Qonv/J9zDIGxhv7ht2xszVF8O
+	892VBdrnhHigFHDyc9yjo44IE8U3Of5edurpaaaITOV0IZV3wAvh4Brlbv6H3A==
+X-Gm-Gg: AY/fxX7oeFEf+cqZpula75M8mVki+oT4RKhgBNZjCcVeA/CYB9tC+nkYbuZ1iL8OnLP
+	o1owZB9ANuLquHHPux/qa5oNzOodib0l8MQwD5wmidGeC6tq0G8iE4o8ZCaI3bEMgfi5INlbeUy
+	KVh59D9q3IQQFpMWuZdufMW3GhFd7ctsl4s/fLE9VjnvIytl0udzpF0q5UBMQK3jPMvi5bNW6j6
+	O0G+QiQSlhZ5oNIqqSmgxHuq5KHTiVDhlNZmSNAi/OZV7Q9CZUiyNbANqAm7JXyUCrluIguPH9L
+	R/vAsMSUPJ4OWx/M+OTLvv7220xpn037KtkLwhC6nUZ+PxYGD+koDB7f9W5onVjx4d8iRlg/3w2
+	BzO1PaYjwI4jygQOgIlkCUS/luYcbxiJbyiICRTciDdHCCHi+H/nkjGcvWtAeH9frUxNgTA+eYv
+	aiGHyhIqOOd9JUzKTjn/Vm3B6d1UvLPN2R
+X-Google-Smtp-Source: AGHT+IGsPui5s2TuYk1bQFyf+ucvsuL//gfxawSD5/riLFgkNY6155uzKeOl3qZ2DQFz6XTFOin4zA==
+X-Received: by 2002:a17:903:41c9:b0:2a0:a33f:304c with SMTP id d9443c01a7336-2a3ee4c0025mr167195365ad.57.1768158931607;
+        Sun, 11 Jan 2026 11:15:31 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cb2f8asm155940285ad.57.2026.01.11.11.15.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Jan 2026 11:15:31 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com
+Subject: [PATCH v2] t1410: use test helpers in reflog rewind test
+Date: Sun, 11 Jan 2026 19:07:52 +0000
+Message-ID: <20260111191525.17087-1-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqqh5ssouub.fsf@gitster.g>
+References: <xmqqh5ssouub.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
+Replace raw `test -f` and `! test -f` checks in the rewind test with
+`test_path_is_file` and `test_path_is_missing`. This provides clearer
+failure diagnostics and keeps the test consistent with the rest of
+the test suite.
 
-> Subject: [PATCH] t1410: check files and missing paths after reflog rewind
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+ t/t1410-reflog.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-That sounds as if the original did not check these things after
-"reflog rewind" and this patch is about correcting it, doesn't it?
-
-That is a bit different from what is really happening in this patch.
-
-> Replace raw `test -f` and `! test -f` checks in the rewind test with
-> `test_path_is_file` and `test_path_is_missing`. This provides clearer
-> failure diagnostics and keeps the test consistent with the rest of
-> the test suite.
-
-On the other hand, this describes what the patch does nicely.
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index e30f87a358..ce71f9a30a 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -130,10 +130,10 @@ test_expect_success 'pass through -- to sub-command' '
+ 
+ test_expect_success rewind '
+ 	test_tick && git reset --hard HEAD~2 &&
+-	test -f C &&
+-	test -f A/B/E &&
+-	! test -f F &&
+-	! test -f A/G &&
++	test_path_is_file C &&
++	test_path_is_file A/B/E &&
++	test_path_is_missing F &&
++	test_path_is_missing A/G &&
+ 
+ 	check_have A B C D E F G H I J K L &&
+ 
+-- 
+2.43.0
 
