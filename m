@@ -1,68 +1,47 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E686F2147E6
-	for <git@vger.kernel.org>; Sun, 11 Jan 2026 20:22:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1C11E7660
+	for <git@vger.kernel.org>; Sun, 11 Jan 2026 20:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768162928; cv=none; b=k8Xwq3oBROhflkL0Zq+nly/2QzruhUIcBP4+XZABlr7mCrwMZMWUjdslMhe5x1MXBiRAIDH7P6Ekzxo6n9OinK2k2RaahU8u4IuCu/CKK/HOPGWw1a3DP61DgKLiCB1oFvw5bnP41iCaJy5sErgeN75ukQo/Q/F8s31XJ5RiHVc=
+	t=1768164233; cv=none; b=oA8l5jsnAQGePJZ5TU+85oqsQezKYOJhy3zPTf0Ne0tLwJEcFIZrNeuSn0TOKQCb3RVPZBv8IVAUu1juuw4LZMGGCgEgbt1PbMtaPgP5ZTttGFnBpm/7DcQe12YYSQe3eWO6yEw/qMI2LlyeT1Dkr7dALueE1/TRjXqwasIQ+AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768162928; c=relaxed/simple;
-	bh=2PMNZVDH9/9SWGFbGhErb2dXcfms4nlSL8vIU0M+Hng=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lBmFeKP4tLHEZ7BeZaXJ9A4d2qk8CxCGm1LmKWn32mO33FoDchLmYgTHBLs4RyAhOCHUsl9mqqIVeQO7vNAOAH2UPyPX1PvsKdbYHCZWS/yPQrNVZDBqcvn875eQJKeTRRqzbGcUCbpTC26X2pqFi9TZpeV936zZWcd0Lm9aIGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P1Jvjkev; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768164233; c=relaxed/simple;
+	bh=9agVDvjTlsYqw2jvYaRzPIXDxqUI+2Qj3FhMwc5dJtg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=O4AXVjqQDeRdDxkXfDBuzcqv+qHvu0JZkpBZU7ckfunBdIdR7/XGTtIsh8uVj+qliYOJX/qddLM4Dm0Skw4ypDE94V5UexDwbcpM6kJQHfl3f/v7JhGBCY+i9j6oexvFpb93Nfnp3M1EKynsnvAH0FW43LAmTGd5CnQGPHT5lvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=michael.lyo.nz; spf=pass smtp.mailfrom=michael.lyo.nz; dkim=pass (2048-bit key) header.d=michael.lyo.nz header.i=@michael.lyo.nz header.b=JYAxQ7dt; arc=none smtp.client-ip=80.241.56.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=michael.lyo.nz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=michael.lyo.nz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P1Jvjkev"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a0c20ee83dso52470805ad.2
-        for <git@vger.kernel.org>; Sun, 11 Jan 2026 12:22:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768162926; x=1768767726; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7zLc+3p3EEvCqIiKAyz5RphRu6zcZu1Cmud85dKshuk=;
-        b=P1JvjkevGLeLHdqz0Ou2Mvt2K709WejTFtJ2r4wfRMVfBdWC1/oRSIhbV6ryfmoyBS
-         qwpviKxn7ZkSBeK+OqxF5gEnbKpX5CLZkWSWXy0805v71DJSGxiH/gVbpjQORzb08KzU
-         1qsG7G+0GC1i8dIVhbuxThDX/PBEza9rmsCfoRoB5wcUTtAMRwAAvog09OtbfxG8FJtE
-         rIrpnHqClz833W3hONggnLK0sfcfCoftUIKqtP5EGerIe9UrHI3jBmNCGOFlSkSE25xh
-         DWsjoJYGpvV9pWkDkJo6sUCk0UVZ9/uy6n+LOPzDYVtiU7edHiZQPaJDO5lgPJtcEL1s
-         +L4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768162926; x=1768767726;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7zLc+3p3EEvCqIiKAyz5RphRu6zcZu1Cmud85dKshuk=;
-        b=MeNPn54BlGWtzQI9Shs6h1jmFQVl/r0BQIzNm8pd7Snp/8rmNoc/q/V8r/p6E4ykqk
-         FeebGabowP31BKX+ZvhY9geud3hXL07OqpHPbJdFN85QwhKDCli8I7iUqr4zMcgS3hqa
-         9Ptp0VWgREnaxOZcF0shyHGsaCpWPliSohjKCwl08l5qGEca80JzOyJxA6/nX9NuFkKF
-         Akia0y3TqcwuYXEUJp0rxpNF/3SHHY3CFjBYxCWeOMmt9cR3c17CzAw/FG2eJgjzEtME
-         oA++gJ413f2cA2mLs2Ijb4/7TM6mdudrxyI8PC17bYhfYFO8Iw8KbH13WF0/WcxWn5LH
-         Otug==
-X-Gm-Message-State: AOJu0Yz6jAOccX8/R/cWSkpmsNzQZdoNy8ss/+TdMTgADqgxf5fohldp
-	9Qy8HOUgRFNeKCY4aTIVyTstpw5xVZ/5vO4qORdZgcd4cmK13rv73/344FyRWQ==
-X-Gm-Gg: AY/fxX407wZmbF8abXQyesmjHXwNZqJAidt6nTSrO+k33pBDe8QPvUNtud6X92goxwq
-	ovY1fHRf0Df/TZ1Ce9KUsRS4hdHY2PBdjCOfgv7mcwBIqwNOiOvAOdopDsGaQhgm0m8gerv0J1Y
-	zrCmjhLFMpksZOLkVKP8HtIzH0s1WoCXNCxQZhLxvdcbiyb/BFGivf6CrCGEWlu7TkvvEReZTsn
-	w0W4bcBII+svHt/vbpogzc2H1xU5Z6T0RTl5iORjqGzXqWTn2jPXidwmV+FjgKJzIFJsN6Le3IH
-	wFTIgDtnmV4pa3Z/Okj/568Pfa4JqGhiaEEloR3QTt8+W13G1EVadWLu7kUMYC+FU1lAXBhlxcY
-	uznFZ+zFk7IFBxH7A5h0bqxs7brkoVFvt38mHAQWIbe+F7oQTCg/+8b86zU3kPuDTUNtC9cQEzC
-	3Fvj4vEgL4i/GYjlf5I4fgfUihGrXuPDABcWZ/iNRUeNuq
-X-Google-Smtp-Source: AGHT+IGO7ApWLiQyvqvgHLDehI3VpOSIu+WCX3iWNVh86lQg4AJsYrcIUfObSzEpD1tnIu+UoyjHPw==
-X-Received: by 2002:a17:902:f546:b0:290:ac36:2ed6 with SMTP id d9443c01a7336-2a3ee42a386mr142158725ad.14.1768162925953;
-        Sun, 11 Jan 2026 12:22:05 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:8811:38e1:1e97:3d8:1b07:e7b7])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c4cbf28faa9sm15449980a12.2.2026.01.11.12.22.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Jan 2026 12:22:05 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (2048-bit key) header.d=michael.lyo.nz header.i=@michael.lyo.nz header.b="JYAxQ7dt"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4dq6t5261Rz9sxG;
+	Sun, 11 Jan 2026 21:43:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=michael.lyo.nz;
+	s=MBO0001; t=1768164221;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1dRUwmnXn72UveRDQr5bOJVQQUcIPt/bt/R35iDen+A=;
+	b=JYAxQ7dtRXX1PCuB+SRWip8FqT6OV4E6PIRDxxo8/VnhXs6k1d+oSpMNBQ3Tgp19CD79SM
+	Uir5DRLc2GWnUfKMY8peetUfR7RYpVzYLjaEpBTJd2SOxUGEXgJHxzMeARLj/iSE3ETXU6
+	9y7cCgdGjch/Y5hHqa+Sc/0EO/viXVqZISWyLeggd6vFYEPkT8D/CW3jBqxME0F0VgpO6w
+	GLH3OtVXmhHfIvVGs7Eu7O3ioie0u/QUtRsTsnyi+3DwZ3a3uKDuj3lndTa4SrFbIn09Yd
+	vH0Wh800I8cQdUkGudM31OA4bcHumZtYTHrGj20Tvmkyb82vdUY6oBcpsgT4Fg==
+From: Michael Lyons <git@michael.lyo.nz>
 To: git@vger.kernel.org
-Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [RFC PATCH] t5500-fetch-pack.sh: fix suppression of Git exit code in tests
-Date: Mon, 12 Jan 2026 01:30:35 +0530
-Message-ID: <20260111202137.257405-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Cc: Michael Lyons <git@michael.lyo.nz>
+Subject: [PATCH 1/1] doc: git-bisect: convert to new doc format
+Date: Sun, 11 Jan 2026 15:42:48 -0500
+Message-ID: <20260111204316.836446-2-git@michael.lyo.nz>
+In-Reply-To: <20260111204316.836446-1-git@michael.lyo.nz>
+References: <20260111204316.836446-1-git@michael.lyo.nz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,50 +50,176 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+- Change placeholders to glossary terms
+- Refer to placeholders in prose
+- Delimit runnable commands and CLI args with backticks
+- Link internal heading
 
-While implementing the Avoid suppressing Git exit code in test scripts microproject for GSoC,
-I tried to modify this test to remove this suppression. However, after making the changes
-I ran the make test command to check, and the test #365 in which I made changes is failing.
-
-Could someone please explain why this test might be failing after such a change,
-is it something I am missing or is there something that makes this test not amendable directly?
-
-P.S. Kindly ignore the commit message or format, this is only meant to discuss the failing test
-before the actual commit.
-
-Best,
-Shreyansh
-
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Signed-off-by: Michael Lyons <git@michael.lyo.nz>
 ---
- t/t5500-fetch-pack.sh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ Documentation/git-bisect.adoc | 67 ++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 33 deletions(-)
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 2677cd5faa..1ae2d41c47 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -892,13 +892,16 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
- 	test_commit other &&
- 	git commit-graph write --reachable &&
- 	git config core.commitGraph true &&
-+	test_oid algo >oid_algo &&
-+	git rev-parse other >oid_other &&
-+	git rev-parse main >oid_main &&
+diff --git a/Documentation/git-bisect.adoc b/Documentation/git-bisect.adoc
+index b0078dda0e..65fec9fd29 100644
+--- a/Documentation/git-bisect.adoc
++++ b/Documentation/git-bisect.adoc
+@@ -8,20 +8,20 @@ git-bisect - Use binary search to find the commit that introduced a bug
  
- 	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
- 	0012command=fetch
--	$(echo "object-format=$(test_oid algo)" | packetize)
-+	$(echo "object-format=$(<oid_algo)" | packetize)
- 	00010013deepen-since 1
--	$(echo "want $(git rev-parse other)" | packetize)
--	$(echo "have $(git rev-parse main)" | packetize)
-+	$(echo "want $(<oid_other)" | packetize)
-+	$(echo "have $(<oid_main)" | packetize)
- 	0000
- 	EOF
- 	)
+ SYNOPSIS
+ --------
+-[verse]
+-'git bisect' start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]
+-		   [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
+-'git bisect' (bad|new|<term-new>) [<rev>]
+-'git bisect' (good|old|<term-old>) [<rev>...]
+-'git bisect' terms [--term-(good|old) | --term-(bad|new)]
+-'git bisect' skip [(<rev>|<range>)...]
+-'git bisect' next
+-'git bisect' reset [<commit>]
+-'git bisect' (visualize|view)
+-'git bisect' replay <logfile>
+-'git bisect' log
+-'git bisect' run <cmd> [<arg>...]
+-'git bisect' help
++[synopsis]
++git bisect start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]
++		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
++git bisect (bad|new|<term-new>) [<commit>]
++git bisect (good|old|<term-old>) [<commit>...]
++git bisect terms [--term-(good|old) | --term-(bad|new)]
++git bisect skip [(<commit>|<range>)...]
++git bisect next
++git bisect reset [<commit>]
++git bisect (visualize|view)
++git bisect replay <logfile>
++git bisect log
++git bisect run <cmd> [<arg>...]
++git bisect help
+ 
+ DESCRIPTION
+ -----------
+@@ -38,8 +38,8 @@ In fact, `git bisect` can be used to find the commit that changed
+ *any* property of your project; e.g., the commit that fixed a bug, or
+ the commit that caused a benchmark's performance to improve. To
+ support this more general usage, the terms "old" and "new" can be used
+-in place of "good" and "bad", or you can choose your own terms. See
+-section "Alternate terms" below for more information.
++in place of "good" and "bad", or you can choose your own terms. See the
++<<alternate-terms,Alternate terms>> section below for more information.
+ 
+ Basic bisect commands: start, bad, good
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -116,6 +116,7 @@ bad revision, while `git bisect reset HEAD` will leave you on the
+ current bisection commit and avoid switching commits at all.
+ 
+ 
++[[alternate-terms]]
+ Alternate terms
+ ~~~~~~~~~~~~~~~
+ 
+@@ -144,13 +145,13 @@ bisect start` without commits as argument and then run the following
+ commands to add the commits:
+ 
+ ------------------------------------------------
+-git bisect old [<rev>]
++git bisect old [<commit>]
+ ------------------------------------------------
+ 
+ to indicate that a commit was before the sought change, or
+ 
+ ------------------------------------------------
+-git bisect new [<rev>...]
++git bisect new [<commit>...]
+ ------------------------------------------------
+ 
+ to indicate that it was after.
+@@ -208,7 +209,7 @@ Git detects a graphical environment through various environment variables:
+ `MSYSTEM`, which is set under Msys2 and Git for Windows.
+ `SECURITYSESSIONID`, which may be set on macOS in interactive desktop sessions.
+ 
+-If none of these environment variables is set, 'git log' is used instead.
++If none of these environment variables is set, `git log` is used instead.
+ You can also give command-line options such as `-p` and `--stat`.
+ 
+ ------------
+@@ -308,8 +309,8 @@ by checking out a different revision.
+ Cutting down bisection by giving more parameters to bisect start
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-You can further cut down the number of trials, if you know what part of
+-the tree is involved in the problem you are tracking down, by specifying
++If you know what part of the tree is involved in the problem you are
++tracking down, you can further cut down the number of trials by specifying
+ pathspec parameters when issuing the `bisect start` command:
+ 
+ ------------
+@@ -333,12 +334,12 @@ If you have a script that can tell if the current source code is good
+ or bad, you can bisect by issuing the command:
+ 
+ ------------
+-$ git bisect run my_script arguments
++$ git bisect run <my_script> <arguments>
+ ------------
+ 
+-Note that the script (`my_script` in the above example) should exit
+-with code 0 if the current source code is good/old, and exit with a
+-code between 1 and 127 (inclusive), except 125, if the current source
++Note that the script (`<my_script> <arguments>` in the above example)
++should exit with code 0 if the current source code is good/old, and exit
++with a code between 1 and 127 (inclusive), except 125, if the current source
+ code is bad/new.
+ 
+ Any other exit code will abort the bisect process. It should be noted
+@@ -355,22 +356,22 @@ details do not matter, as they are normal errors in the script, as far as
+ `bisect run` is concerned).
+ 
+ You may often find that during a bisect session you want to have
+-temporary modifications (e.g. s/#define DEBUG 0/#define DEBUG 1/ in a
++temporary modifications (e.g. `s/#define DEBUG 0/#define DEBUG 1/` in a
+ header file, or "revision that does not have this commit needs this
+ patch applied to work around another problem this bisection is not
+ interested in") applied to the revision being tested.
+ 
+-To cope with such a situation, after the inner 'git bisect' finds the
++To cope with such a situation, after the inner `git bisect` finds the
+ next revision to test, the script can apply the patch
+ before compiling, run the real test, and afterwards decide if the
+ revision (possibly with the needed patch) passed the test and then
+-rewind the tree to the pristine state.  Finally the script should exit
++rewind the tree to the pristine state.  Finally, the script should exit
+ with the status of the real test to let the `git bisect run` command loop
+ determine the eventual outcome of the bisect session.
+ 
+ OPTIONS
+ -------
+---no-checkout::
++`--no-checkout`::
+ +
+ Do not checkout the new working tree at each iteration of the bisection
+ process. Instead just update the reference named `BISECT_HEAD` to make
+@@ -381,7 +382,7 @@ does not require a checked out tree.
+ +
+ If the repository is bare, `--no-checkout` is assumed.
+ 
+---first-parent::
++`--first-parent`::
+ +
+ Follow only the first parent commit upon seeing a merge commit.
+ +
+@@ -491,9 +492,9 @@ $ git bisect run sh -c '
+ $ git bisect reset                   # quit the bisect session
+ ------------
+ +
+-In this case, when 'git bisect run' finishes, bisect/bad will refer to a commit that
+-has at least one parent whose reachable graph is fully traversable in the sense
+-required by 'git pack objects'.
++In this case, when `git bisect run` finishes, bisect/bad will refer to a
++commit that has at least one parent whose reachable graph is fully
++traversable in the sense required by `git pack objects`.
+ 
+ * Look for a fix instead of a regression in the code
+ +
 -- 
-2.43.0
+2.47.3
 
