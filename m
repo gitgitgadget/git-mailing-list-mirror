@@ -1,85 +1,91 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A611E2834
-	for <git@vger.kernel.org>; Sun, 11 Jan 2026 03:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B3AD27E
+	for <git@vger.kernel.org>; Sun, 11 Jan 2026 03:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768102786; cv=none; b=GgpZgspf0tmKSj9WFu9hhIS4lDxM/CBs4j5vtmRtzE6BfIlyb6vP5KEYgLdYfWzUrbGbNRQr89LKQtrQ29u9QEqNUL8E2RPRVeeaLFRqs3nJAHE9mZ1F0K3W+tJGf0F3mBFcKqXMekkIMiKGCRveHGDklATo3XhZwwhPpa6pKXw=
+	t=1768103880; cv=none; b=bJDrDmdPnwLms23npfb7XMeaMab4XQoB6bLq3mNsAWRP1eoDJmcICvThQxy6fujKIg+G38asbGEQ3oevkqb/yPd0ZYhbZKwF4vLdBdAUYwWHrQ2pkqDlrc5vEzBfAAsXzpv/ZDQtg/7JE2K/YseQFNDf3KknsQHe9bGu8aHMiDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768102786; c=relaxed/simple;
-	bh=DQ7EvOaiO4N7Fk2dHGBRzOzFiWfIEMpxiwfxoJ0O2wA=;
+	s=arc-20240116; t=1768103880; c=relaxed/simple;
+	bh=6ZWOcNKYu0ArXSMrmNXN+5iVNCjAtPrGqDFbJxBivBg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N/6pvgcLydqRRdTVz6KYNs5Pxvbta82B4QkJ7LO54jz+//iavhz3KJHxHPS66c5+IWQaptFCFFexeZI9wHW/9gjWxBJILyYU9TrKOx0zpxCQ2Ko+kpNCNZcnoHSFrHJ18v4Wpivu+schx0iEWRXVShXi9zaxrdl3M/nSog+r0rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WhwQMZcE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NoZOGJkC; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=FL2V3e34v+4gEgri9DuHkXytc8G0ByWOJzDJPYDO3DtbLLlAYT4PEzaops5ZHDiAFhFpV/9yxybQh8XRMDay0aHYKUPwzl4ZKG6XTt1kA3zdINbjI77jM5mj/K9yNvhvvarjV7R/SGX6al4/N5oXWaoJuZ+vhAN4hmSWI2ikyqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fspWxTCW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bhHahOxi; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WhwQMZcE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NoZOGJkC"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 139791D00108;
-	Sat, 10 Jan 2026 22:39:44 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fspWxTCW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bhHahOxi"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1CEA11D00109;
+	Sat, 10 Jan 2026 22:57:58 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 10 Jan 2026 22:39:44 -0500
+  by phl-compute-02.internal (MEProxy); Sat, 10 Jan 2026 22:57:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1768102783;
-	 x=1768189183; bh=IMiJEi8dfGFVnz1boBpFQud6bAjF8oLf1YOKBS//7mk=; b=
-	WhwQMZcEMf9iqaZ+84fI1pcvRgSMmTyB284xpxsbEwDjCC+hbtQ+/Iksj0IMaJVV
-	T8tzfbe7oJmcbqaQUYp8P/jkCiPv93tpMDNHpCaCW02LQh7hn23gczAFjdvMmGpa
-	ywha/Ddli7kmEZo9Zwaf3ZdboirLYkZpPEYwfy5ULjSVWJAi0SGxjs6uDaWn85Sq
-	JS0DTaWbIsJu/Sf2dgvJ6b35o2JrYMe0ivK+n2nKhxLIdbSVyhpoQ41ya545LMqV
-	pX+CEVFy5fMy0hBnK39FQ2accX/DvkpGZQG+IvNqzQN3XaLtdcpiASpX9JAlZSZU
-	H+zTaBc0DLDq/ZSu/Z4AMw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768103877; x=1768190277; bh=tYmfO57OtM
+	7p3xX1gqG150f88wDkoVuKfuKGVU12qjY=; b=fspWxTCWCzajF8YH/d5SZEITJb
+	KZ5OMajqdOtefYDFbA+G8/RjndxLZbCBf7oJqykAlzxSPfsKtAT/gXompRCU8BLW
+	S2GhPVBxyB43lbYsa6KZNha+yq0UwRATOX9/E9qiubN7PgLi+WrT45u7YgK1UUA9
+	apraTqkNSn47CILmCp//NCMl3T+65Jk9lWzsy/iq6HZOxJzJvF0wg+tP3li+jPWn
+	zONgJrRktXO6A0zdE4F83t+KJveOcC1wmniRdzKpVmru+3EEwMp9sBsdlwuoNrCh
+	wFyKVYXbevEdL8HIU3/5URtMAH4rNbSokac95Eq9VX0UFoCMCN6K07iPXZdg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768102783; x=
-	1768189183; bh=IMiJEi8dfGFVnz1boBpFQud6bAjF8oLf1YOKBS//7mk=; b=N
-	oZOGJkCReR6k5eQenNWAI205ObQflY7sETQcEiQv1FTW4cFE7VtkBOQJmR/NqkgI
-	5msaN+Nxt54uOmWKFbDAxQE6lJFE7an1y0sk7BXHN0HQfKaimNxnTSTDGE/p5txD
-	2tqXvfnhA5USYEReyurzOXEfyvuBmSdvk5CErSQv0hMgWyzXJ4eyjYsCDeLhVEd1
-	QuTcfdlBoNYRk8G2ixbeKnsYI802kvsVqMPuApIfqrMsQij7X6AiI4S1DAWrYLdG
-	CPyC9KNN2aRYshhjkbYXPJ/6riIfvn0S5h5r2VdktwbEUKFkQQWBV0W2+0ceHPnN
-	D37QGZzayudiOB0bHn4jQ==
-X-ME-Sender: <xms:fxtjaYUrstcehBFIXAXXt8ZL0q09CWMFF35XUPLSLG-NmDEneuekOQ>
-    <xme:fxtjaTnGwMFxphM4ybUwqQuSe9OTAX4KZvSceKhNy-SS8e8an5qEABKLXW6Q8FXET
-    0n8Eez0TXSD0_ITUyqRNNOqRNoinz4ZQZwWWj-EitD5ntn9Xm4Z>
-X-ME-Received: <xmr:fxtjaRaqoUlB_mbXSAQFZOjNb778XwFFi4tOezbydpTzNGVZtBHNvg9uxhPWEcICznyvEMdBHay1rz8CD03f2Y0Nvg9DbAHBM_GgMV8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudefhedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768103877; x=1768190277; bh=tYmfO57OtM7p3xX1gqG150f88wDkoVuKfuK
+	GVU12qjY=; b=bhHahOxiUQc8elXtw4drusq2Gkh2P/aaaixkVrzg8QOob6rKMjT
+	Y3cOhh9oA2WYVjvRRA0MnP+ER+HeRhnO3kclgxGfMD4fCctWLgkJDB7OSxJDdRC+
+	zXnYsyqx2hnMkUbEB0hXM+pzS+WjGiJERNHFWQYRz01C3iSCXz2o+kAYj0+bKXDM
+	aPHAhlLNy87BwCF4sMTpOhz3sN8UoOhbrM3hTGVLzhNXpjaa/kBVy+p5Q9PfJU3Q
+	pkuhkEsQJ78mQgPNHgbQD5TupDaAxJUaHly+Z7RpoTRxta99wj56uVhwhWxmvOsz
+	BzZ7BNOM5bPZeZVzX1VVDu1tXMuLIQmKZNg==
+X-ME-Sender: <xms:xR9jaZHYt6YixElYkT4P6ySMZPjfYyUf-iWZa4OMPR0DflAjLK8TWA>
+    <xme:xR9jaQ5cOb-U5Q1BDwZP788PEvMczwi1dSyTilSaHDs1RaJ3bGSwVzMpTk70scTKl
+    kmRGn7sRWbmVTdqnv_Dq4wfsyR5gVE1-eEUinSZ8kMjwRqbCYda-X8>
+X-ME-Received: <xmr:xR9jaeyaJnwkS7HsYTRfIlhbaYIs15tdRjwT5rWBbdqymA-sOtyf_o7THiJDYUtSczA8n8Wj8Yhp3IJ-FR758BAonyvgDoTqyuS8OaA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudefheehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:fxtjaWM9DVKe7FjvvNf8vsUrmMDFMJ7id10NShHUvjSsVdGQF3gihA>
-    <xmx:fxtjaeZKT_N71bq-8foNcuje67578su4e5LcnEr3eZ4dQ8n0BGm5Ug>
-    <xmx:fxtjac3Vq6T5hkgxwYqMaghqTG4XStg0QnS1shg9Pfp3bSuXn-eiSw>
-    <xmx:fxtjacdJJ-bI_ei0OrGNjGVKlZud62K4amXuJHWUU2f_Izs78yFVhw>
-    <xmx:fxtjac4HYPu7C60CzXaos1AdSuLc4fPcdIETwiGd8S6X6rjR2nuGe8qZ>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
+    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
+    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xR9jafOzvBJfaBCxwPbU0JRpcxzejTaTT9_FDcB06-Tq6dLsXF9JtA>
+    <xmx:xR9jaUkgiaM4KZiAd5j0GQsL2NwvpuEpr47koLY1c6o8g2eMDzfj-Q>
+    <xmx:xR9jaUQLUvfKrgQzMs9vJFpIz0YRCPSG8dAc7fnyNIItTU6przFbNA>
+    <xmx:xR9jaTXgxCfH-Nd8xCOtyd2--RO09uJ7E2lzRTgLFQpUv1L2QHErKg>
+    <xmx:xR9jaZLz34z2f_6Mk-5qAAPycnMYWwBQvQq8M3SyU2y-zlKG0NSVEsY->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 10 Jan 2026 22:39:43 -0500 (EST)
+ 10 Jan 2026 22:57:57 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org,  gitgitgadget@gmail.com
-Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
-In-Reply-To: <20260110200431.53479-1-haraldnordgren@gmail.com> (Harald
-	Nordgren's message of "Sat, 10 Jan 2026 21:04:31 +0100")
-References: <xmqqfr8ds7br.fsf@gitster.g>
-	<20260110200431.53479-1-haraldnordgren@gmail.com>
-Date: Sat, 10 Jan 2026 19:39:42 -0800
-Message-ID: <xmqqtswsrf5t.fsf@gitster.g>
+To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>,
+  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [GSoC PATCH v7] add -p: show user's hunk decision when
+ selecting hunks
+In-Reply-To: <aV_IGCld5T_dBxTs@Adekunles-MacBook-Air.local> (Abraham Samuel
+	Adekunle's message of "Thu, 8 Jan 2026 16:07:04 +0100")
+References: <aV_IGCld5T_dBxTs@Adekunles-MacBook-Air.local>
+Date: Sat, 10 Jan 2026 19:57:56 -0800
+Message-ID: <xmqqpl7grebf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,19 +93,34 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
 
-> In the meantime I think I will leave this patch series for now 🤗
+> When a user is interactively deciding which hunks to use or skip for
+> staging, unstaging, stashing etc, there is no way to know the
+> decision previously chosen for a hunk when navigating through the
+> previous and next hunks using K/J respectively.
+>
+> Improve the UI to explicitly show if a user has previously decided to
+> use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
+> This will improve clarity when and aid the navigation process for the
+> user.
+>
+> Reported-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+> ---
+> Changes in v7:
+> ==============
+> - changed hunk selection state message to reduce prompt width
+> - Removed redundant `file_diff->hunk_nr` in hunk->use check
+> - Made the prompt mode more readable by retaining the space before choices
+> - set `hunk_use_decision` to empty string if `hunk->use == UNDECIDED` to match
+>   the prompt mode.
 
-I think we are reaching the point of diminishing returns after
-polishing the series enough at the 22nd iteration.
+The latest "was: X" does look short and sweet.
 
-Let's wait for a few days to see if what others find in the series
-and then mark the topic for 'next'.  Hopefully any minor nits can be
-addressed later as a follow-up, just like the Q_(ours+theirs) thing.
+Let's wait for a few days to see if others have more input and then
+mark the topic for 'next'.
 
 Thanks.
-
