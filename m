@@ -1,72 +1,86 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E282FD1B1
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 15:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A67C2FE59C
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 15:28:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768231673; cv=none; b=AUD8YXSchSqzyg+PL+QZt33aP83H2mWW5Am2RqogUJcVrIwwFLveG9ZPOxeB7AUH8jf7yrKWL7zUAn1TzwG5LwjKhwud6qeaZoTejpe2BxYiEVPpAE+JfQzwJXOQ77gyViTHVB4LOmhPyDyGyE3zIiM6LpHC5fC6phU5CsTE36U=
+	t=1768231741; cv=none; b=M9ePgKVquOt18ZbnLz2ioEHfHEGhpFMARzvcxyljRq6WmyODhikbMu1nZNMmYwM5BDYDanvxd1tcQ7/gd7vrxsu+Ei3Q2ulkETZZlEUyJ8YUhVyHWSH5omnqcH1zKQfDcTuLjFzOoarCtpL5i03brG5k87eFjOQx7sYG0pIxDFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768231673; c=relaxed/simple;
-	bh=WGL2YCdKJ0kjYjHAxQ7OgaecWcw8A+VHeMEVgOpKMTw=;
+	s=arc-20240116; t=1768231741; c=relaxed/simple;
+	bh=opv+FT+3aJjxuCdx6oT0jo+LhIF9RI14l3++W7o/v4I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FG8Cbl/NX6f1Mx3JgPZKFM4TSCvaUbXQJq2nlAMTi5hHdnMYFX4LX1vooEdvsYkJZ8AcOA5Jw1mw+VZ90QY0qRw9KksQ5IskyWSrNebiqJFGRTEBxxE0fuOGR5CR2XJ1X3Cj5YjKwdoB+6dL+BU9Qmz5KjN2qmIsO+9+BNQILkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gFws/f4Y; arc=none smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=IePnkIL3wSjkh8QxBFNh+b3XR3gQavXyTBrz31FtfMW32G+Bn9dWkY6Ai81Xq/be6Tg90MF5W1epasOeZpudQ90pb+uWMGlm3XiMRgMJtsf1rGk3J9zIl/oqUCPYDoWCnAi3lzLeAJSIVWB70zAYyEJIOjGVcZ8btygkv9QNwwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jcmmWXqI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LDfDDDlR; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gFws/f4Y"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-65d096dd0ceso1447745eaf.3
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 07:27:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768231666; x=1768836466; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=06e6tjykCGxer/8XGkNoqf3mxS/kJZAIV6VfHP1y3VE=;
-        b=gFws/f4YNKPAssS1vxcuh2F8rShK3MVtxxSxvbZ/WJJaxlvQ+isVuMAlcdw0qAPFrN
-         jIclZBfSL49Yi/Bpsp5TWlaRI0bCtbvT9Vh30fiODX86jIKT1H05VWsy2eDF02lDuqlT
-         NGfabQm09dm2bBN+IZzHZ85qzSO5wKcJDEtpUfJQwRdxUVp9OiDV2jVebpnEGFWdEe/z
-         fX53WGojznRVCXp0sZMnFBiQ/r8wy+GIKAM+2rrpgYLKnMD1Ss7EAwBZ+F24+Or5XhtU
-         XMGA8HIj3grfvKJ1GEwnTjZKgLjaBoX7gXZEGyaH80aNjsRe6dLeY4oiUxSBQ4ZnDztO
-         S/WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768231666; x=1768836466;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=06e6tjykCGxer/8XGkNoqf3mxS/kJZAIV6VfHP1y3VE=;
-        b=uGltVkYEhC0gRuUkxxOR12/CGEQnKysw25HWLbqZb1JIsbnROWUzm64W0qUNa6L4os
-         FpVON7oKAZjBve4kT/CKc9iYpPCus7x9C5YSwObJZBjFlF3YNtSTEjpv9JMV3rUujuwm
-         /qvq3+cs8Y0cZKDmBMkGtjoBD6PVvcaL8X5BLhlo1MZwTJIm3pukJm1kWScQoHa2okGH
-         kRGlldVoeTKr/SKBLT5LG1qbWUJZtWhRj72DupInqbdp6K+2MSy5MYQeGtyAEBIy9uee
-         n8YRQBcGQYDWqWS89pMIQ5/neA6RagZQkQiaAHqqlUpyECmn66T1zuTpUSBnTyk2gZeW
-         0j/A==
-X-Gm-Message-State: AOJu0YyTwmUnATMAEOmPF/Uqz6OgKk4DE9AZQEyAmfIg6Tb6/z+REmfD
-	R/XuFEaGjdrSBvZ4n+vgZM7OGCbCfPsfk6e5Uct55EnOKJzbMZ09zMqXNke9Sw==
-X-Gm-Gg: AY/fxX5oEIrqi669jg9xXeJ9KeSLA2BUkc7bl2FUXw6eYg563EsFMg8ZooSXE35CfqK
-	mJM2yiFNkFEmY3XUFiBNoefDMyHyg7AiR+fPVT/tFgDchz970TN4P7wYt4DGPunsT3BAEHy0aTx
-	pEgY1HCWQ4PlAJQgMGfmsm3cLY+SmQ2I8G91zgKQ3gTwVDQD/tUGCgpGuu+jyGXlDNCFtyHr7LM
-	irfLuxPq4RNUH9q3XlhT64D1anReEk5+puNXw8D1GDtAuHPBaL7FREZDScQ/GCCekUuf7m8UGP5
-	bBHtpMTmlxXDPw5QfJps0efQtAnuXackSnX0dEIXVaeImCXaoIGAr7OjHHUynGM6Z7dZC6kzViC
-	VwgzfME5PrKqKQjlVXiCwsPfLQcCPiirlTV4lvCwG/EiSMB0KItqpOs+AP8wo0pm4n8GIE1Bh25
-	7bXbQF
-X-Google-Smtp-Source: AGHT+IF7t/4mtYKqpSm60wjnluB/B42Xn83d1Ms4JbC5x6CHx/Pju1KYBVKeq4mc8w+0SexIHCWMfQ==
-X-Received: by 2002:a05:6820:1aab:b0:659:9a49:8e02 with SMTP id 006d021491bc7-65f55074400mr6538149eaf.68.1768231666046;
-        Mon, 12 Jan 2026 07:27:46 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-65f48bbb218sm7499512eaf.1.2026.01.12.07.27.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jan 2026 07:27:45 -0800 (PST)
-Date: Mon, 12 Jan 2026 09:27:41 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 00/10] Start tracking packfiles per object database
- source
-Message-ID: <aWUR7mnX29C4YtEn@denethor>
-References: <20251215-b4-pks-pack-store-via-source-v1-0-433aac465295@pks.im>
- <20260109-b4-pks-pack-store-via-source-v3-0-877fd7b7bf81@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jcmmWXqI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LDfDDDlR"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 36D56EC0680;
+	Mon, 12 Jan 2026 10:28:59 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 12 Jan 2026 10:28:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1768231739; x=1768318139; bh=c4jjfxuLuT
+	EunOcoIQQEfXnmO5ccVRXUi/eVq/2wWtQ=; b=jcmmWXqIvLpI5k+a+wZyieQrTd
+	Mm4CZg/jzAHy40i3NJYPoVkiG9DwG4tFDTvD1XGlKcPZoXWS5Ac7E7uKa7prU5n1
+	3bCVS8ENA5JItgxuO/yofW25NSO5LaW7TUnM24mRjId2b8aB6WI1B97xIHno81iU
+	ig0MjBPABpUr7kUAph+i85cBe2Z7aJXSAB0m6lAnA0UNHvzbuufbEVwSM9NvGCVt
+	ntG3Z15Ymh9LGPg5kuKtJa1BxPDAuKWpnG5jeAdua/zXe/XPpDPmy8YA3JY+gESW
+	5oPyo8EidGEGVoCrS2m4VE/KUqh3q4t/pUqHCyJtIE+dy4e6kkdF51SOdRhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768231739; x=1768318139; bh=c4jjfxuLuTEunOcoIQQEfXnmO5ccVRXUi/e
+	Vq/2wWtQ=; b=LDfDDDlResQNFlra4ECCNTzcW4nRLqoMYRvbytNg8kzdXggF/tP
+	nmzif99AMfVwSxr6EJhcTM3EA8/SO7kOoOi8ewh1LgDdFl7zZjvTLjiHUxRhmwQn
+	8ZqvoQ0lYq/4MuDvex/8/XO9LUkctY/tuBu/Ve0ppTUnf3UwFSIOAyS6EQ29aRqQ
+	a2dXWgOpY5v3jXFnnmo6HkmxEn9SzC1pn7vgSO1/FL2Tnszz4xrtLQWBUVVFhXMC
+	zlK/pURuQ9rvotau86dwIb3vsjoYqAGY6BqoFajNh2teo6++OjAead3/4dbPn851
+	GZ5rSzp/01EHy9uVjVZhgHcgP142WPN50zw==
+X-ME-Sender: <xms:OxNlaeGW2CyABJmAHvhIHrUlVtQqzNL6ZNiR-G0jVX8qeHcZNOcBkw>
+    <xme:OxNlaWxbBJfpwnnOgJygc34_fvloSJ-McQvDYPWN9kmbj0f8KH6_UbwLdkCRa6Jrh
+    4DI18WVTG_xUit1h1piPikEmNR2ZsBhiCTD1vpKoEpNW_l36zvo>
+X-ME-Received: <xmr:OxNlaVj9C1u9dlbvQYuUIcQ7QeXV9cowb4VXo1G-toiipneiT2PzJJONBx0LSR5Em9e1waFHHAf0dLp7-FqwZqtXKxgJOdNKFrpe8I1wWA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejkeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:OxNlaRxyok9_nSW55aSal6jSBkQrra3DLJ7BchWGS4THTWzxNBrw1w>
+    <xmx:OxNlaYI54b6gPiDoBNq0aQEtoWeu-z1SZntIdbzBMXuVfXr1tKLF1Q>
+    <xmx:OxNlaYTJ-Wmtk53XviVy-KrQpxE8cKyrCeoMGQyTP_5mHL7_Q3OGEw>
+    <xmx:OxNlaQpv6jXZJRowz0iRu1Vl5w0TDQCct_qX64OicIJ4AtQ-0aWbsw>
+    <xmx:OxNlaYbrn0Awi5MlA_e2kF4BZm8XEYRGjiY_KbV8vGzRmQCk7p1SEkc_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 Jan 2026 10:28:58 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b5891fa3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 15:28:56 +0000 (UTC)
+Date: Mon, 12 Jan 2026 16:28:53 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: [PATCH 09/10] tree: stop using the_repository
+Message-ID: <aWUTNU7WGTwHt6Ks@pks.im>
+References: <20260109213021.2546-1-l.s.r@web.de>
+ <20260109213021.2546-10-l.s.r@web.de>
+ <aWS9Ll8CQ3eILx3z@pks.im>
+ <xmqqh5sqoqr0.fsf@gitster.g>
+ <aWUMn6G0C1cHA4qY@pks.im>
+ <xmqqms2in9hb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,19 +89,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260109-b4-pks-pack-store-via-source-v3-0-877fd7b7bf81@pks.im>
+In-Reply-To: <xmqqms2in9hb.fsf@gitster.g>
 
-On 26/01/09 09:33AM, Patrick Steinhardt wrote:
- 
-> Changes in v3:
->   - Fix a commit message typo.
->   - Link to v2: https://lore.kernel.org/r/20251218-b4-pks-pack-store-via-source-v2-0-62849007ce21@pks.im
+On Mon, Jan 12, 2026 at 07:20:32AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> Changes in v2:
->   - Fix some stale comments that still refer to `kept_pack_cache()`.
->   - Improve commit messages a bit.
->   - Link to v1: https://lore.kernel.org/r/20251215-b4-pks-pack-store-via-source-v1-0-433aac465295@pks.im
+> >> > In any case, I'd propose to move the compatibility macros into a section
+> >> > that says something like:
+> >> >
+> >> >     /* Deprecated wrappers that will be removed once Git 2.53 is released. */
+> >> 
+> >> Please do not take release schedule hostage to one particular fix-up
+> >> series of patches.  Thanks.
+> >
+> > The intent isn't really to take anything hostage. It's rather intended
+> > as a hint that once a specific event has happened, we should take
+> > another look at removing these wrappers.
+> 
+> I am OK with a comment that records the intent, e.g., "let's work
+> towards reducing the use of these wrappers", with the plan for the
+> next step, e.g., "and once we have done so, remove these."
+> 
+> But the comment you wrote is forcing people to make sure we remove
+> the code that uses these wrappers and unless we finish it we cannot
+> release 2.53, no?
 
-Thanks Patrick. The changes in this version look good to me.
+That's definitely not my intent. It's really only intended as a hint
+when those should be removed at the earliest. Maybe something like the
+following instead?
 
--Justin
+    /*
+     * These wrappers can be removed once Git 2.53 is released. If you
+     * see this comment and that release has been published then chances
+     * are high that we forgot to remove them.
+     */
+
+Patrick
