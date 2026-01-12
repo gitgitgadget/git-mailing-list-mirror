@@ -1,55 +1,55 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4202A30BF59
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:21:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5414230BF59
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:21:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768209707; cv=none; b=uYNBwQQgqTq8jFZPtldzG8eW5lccq5l/KpgWiagOUzgjB884RTJi6RUdwbFA6XRaNym3eDv5QKgi546UYIgGYJKL2X5THxeYUAl6Zho6XnxJL3MufOcFuRxyj6OlYxCHs7bU3EsfY/D2y7ihYRpl7G585To7jz3+m/QWocnJmhc=
+	t=1768209711; cv=none; b=jq16E5gzE2w6UM8ig54MsCTC9kwKRcSu6v8aZ3qg7psnIaCWTzBDUHaUHl5xBxgQLVFIoYPzlSY/yu7HD2miMp8iedABh42IAIAnxgp3EB+PPkt4lzPgwCsoSyo44RqihikiVuP8XrBt0M8jCpC3HTbFWtUOc1y+RTBNVeVgjl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768209707; c=relaxed/simple;
-	bh=85VeA9XW9/l8WnqCaIV5CJMkTRHujJAoIwIgXpOy3Vk=;
+	s=arc-20240116; t=1768209711; c=relaxed/simple;
+	bh=kMtkQCYbBO2R2C2CeeSbKXguvM146S7N/Z1s/zrmc34=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HjjVGC3PR2hdEgvrohW+alHXPurKeU3gmdrUQyXqQCcHx/Ry+ARsBfpjnXDSfQ8eY3jiHTbNtBJPB624dte+NHpsaghdDwDkue050DhIu3K0RGTZly4/OZ6rwJLXMEHg4CDeuw7SewKfRViPI3KnsPuin6bMWPUSgxRjLuMWsTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hMxFG7CR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aHe+B6bp; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=TJ5yf8rly8kmU8/cZqWysae72cXfDyJwshVKPucJzEAztSiWrqDTGQKAKS2Bm5Ey/dipRRvvT0W+nBVCRNCgNm/BJKEQnf20aYRcxD9uERV/QfDrmioHaaTJJ1BlmuLycranwJILWeb4VeBlHVkLvimJsT0+5vChAOw26xrP1bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GwCzdQ5P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N6fgJYMZ; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hMxFG7CR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aHe+B6bp"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9C8EE1D00089;
-	Mon, 12 Jan 2026 04:21:45 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GwCzdQ5P";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N6fgJYMZ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AE3D17A00D5;
+	Mon, 12 Jan 2026 04:21:49 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 12 Jan 2026 04:21:45 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 12 Jan 2026 04:21:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768209705;
-	 x=1768296105; bh=6z5IUEPjPuEF0xF+odD/zYVl/LlzUAxMGyNF3aujhJg=; b=
-	hMxFG7CR341+ReQaGu57008NiabS8htsf+o+zDU5kEIAZRRmCbI6VKvqHLbUGpS0
-	tyns6SUdjCtHyC+WozSE3obLveRSkxjGipLpXTdtZFUaX3wcXNfYIxUBMKkrZSwM
-	ELvF3gjBbN1rNsMgrmaUsItAKmJQ7tBbqtWsyUtq2ptVeHdj94afN83xA1lxCsGx
-	++mn8F+HiI+IEVoJoUEF2CKhC6CIeCHEvXw+69FqcK6ZlQ5Aecy3nbDuR9kEdajP
-	gKj7jT9m70YbgBUKrgH7XBpirxETgzpsIWnAqZwcm1pLKuLCbVRrX+7G7BGbTqKR
-	9L5K/kO30OvIFSL7jB7e/A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768209709;
+	 x=1768296109; bh=crZUS+hIX2G5OZoXV3JjQKUO0oyHgFyHxKaKacC3ivQ=; b=
+	GwCzdQ5PB1gBCyFB0zuA3QLg9xO/TiefV+4Xf5/7hGbJwyxug+q5KUk/v/TsyE4B
+	SyIE0XqoNBFkc5MQ4XiALU/e0pUi3MQeh8OmwuIzfQmahUK1oTlGJ2ea2hJPsKrH
+	qSG8pA5ewQQc3zFEGK4YaCyBMp8mX6es/VMS/IbXoacfhD15TnwGJgvHDDkUrOU4
+	SgRhj1bs0nyD6soWHziv2NAxgN3v0EdjRGH6W9v9IhVrJALFzkVkqZjXT3gTmW1+
+	IcY5jku3sFvoADfK9vzBsMakR77oUltiibk1k7HVAXsAFclY6Do2Awd7L+Yw3itu
+	yoXabC/luXoHIxXQCca5ZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768209705; x=
-	1768296105; bh=6z5IUEPjPuEF0xF+odD/zYVl/LlzUAxMGyNF3aujhJg=; b=a
-	He+B6bpLxJRilnptOoz0L/dD5d8p1kLV+3LbC0h1lg05BQ7WFzDMroiTK5lutKfB
-	bUe8gSK6R3cWEyA4hopurQyOWMg8Q+Lu8jMMLCOBA1PRdDaA29O646zQW9HGZN7f
-	g8ZsMewAf+ssvq7iOAxnGowpkLTEiFPmkvooM4DX0pvSWntD8AcMIyw+KXM3OqFh
-	6K14UZQrYdY/JWXB+nxOvyswkB86hpGTNlhaO1UiN/ss2dICZjgJIIlJawPaYaJ6
-	kkOIepLDpHTSIsdaCS76hPcyfvNgzFSxZ9IwX20mVyUwWRskYfjMEheKyQCKn87R
-	4ELSjT+bWZonkya9WaWIg==
-X-ME-Sender: <xms:Kb1kaRk3yOhnxWb203WIWjafd6pwx89w_JjMuOo3WOHmpVq-LV6EqA>
-    <xme:Kb1kaS2LX1C-0D8sgSxhY2NwW2lLb_wa9jwFTT9IoZQ5nyu-mlsc5ljn1KnV1j4-j
-    K4DBH1q03osu5aXv0h4rS5K_zxjF_WSUqJ8WNE6onE4ijotVGtsOOc>
-X-ME-Received: <xmr:Kb1kaVSmfZfVtRNGqhchF8M0Q39jqV9n0q-pQXI9QRk42a51C7BYRLHJZ0FOqLM3nidaZ4riDTAJC3LX8-dstB-JiCwmlDbpuPr2M4zALQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768209709; x=
+	1768296109; bh=crZUS+hIX2G5OZoXV3JjQKUO0oyHgFyHxKaKacC3ivQ=; b=N
+	6fgJYMZ0L2xd+M76vVRAiu2xv9fXW5nT8PjTb7wZitGx62yTsKV2N/GuqyjUrob9
+	uYVhbxmUAko7VyhFFBWk7sa+ii4UE0105F78a5DrbbuYqz7BU2I3mdqjCGVgK92o
+	eOrDnLux0lkRvPr/Ec1gtvVO7DcpI/kuqj9DjX+ayvi0O62M5fgDfAvRBO3EUlKX
+	4JQSeWRNnSAw/cdNf+PVL4AP62RDrgf9s89Dl9jFvEIqLxK3eK98EVvE50RBgEHM
+	oWCuwHIhiq37mbPR3fiSnrFBX+7oDLXEITMsduc58TWF7BO/TYWE5YdDNU/i4oqc
+	jdKIQLpwoKZisaRewTvYQ==
+X-ME-Sender: <xms:Lb1kaQSfLqlH4GfkLCZemDDRol-yxPCMX6dkMjPd5-v5B5Fb6GH9jg>
+    <xme:Lb1kaTzs-tM5p4u2tks_3uEyRLw9k_tsR4idnJ2Sla1DmvhwPd0urd_b5ccoNgl8k
+    RYrM-K56aQ-uid7wicCVXxYy6uczrPIcmvzRfbnKJHK2XY7PDyvdQ>
+X-ME-Received: <xmr:Lb1kabdzrbWMqdhNePCzSMa76j2Xeyd_FLoEL2TYcj720g0oeslcZQKePtwg-9boksuBi6-PN8ki42Y7baDuB2gGiooY-p8g5vqUBAK1cA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejtdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
@@ -59,26 +59,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejtdekucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghp
     thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Kb1kacuSObmaEjnz_ZwyOFD5Bz70k_59V1TqwYwrmHxAoBsaj-0QXQ>
-    <xmx:Kb1kaSZgUN7kc9s2pwqDjtKbYE9XfTJI9FcWNfAREIYSCQXrJtYmRw>
-    <xmx:Kb1kaZv_OhMKvNpHYqrNNvcBpyOMXm_UNgJcxYQVLBsn5HEL_g2-Wg>
-    <xmx:Kb1kacHJPBrsKdLEu5Z_0cHYoezjfzmCYEXPdLQf9vrCS8zVLKPL1Q>
-    <xmx:Kb1kac_Fq1OIc5AfCxtCs409w2myVB0QRYNmrG400oNvxvbbDEGSUWF0>
+X-ME-Proxy: <xmx:Lb1kafL3XrdqE8mKp75J1jbyQAaczUU7l8XiXLDuBl0w6TLvlK2HEA>
+    <xmx:Lb1kacF7Eb9SrXsbt39PnvzoiUe_BLb0vVJ3QwqAHLjhSvcHmDKD2A>
+    <xmx:Lb1kaZoCJSEbcKe-ULsYa9rLBGpU-SksohThrX-Lx0V7SY8nduJ38g>
+    <xmx:Lb1kaVQqpSpfWHz92Yr3BDQORxRbOV_-5jle4xw3gng2QwKKxHadsw>
+    <xmx:Lb1kaTp_8-maWOIwE_YFvAwWdWlVAqpSJqfFdaN_U5fiBCG8UfdOcm96>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 04:21:44 -0500 (EST)
+ 12 Jan 2026 04:21:48 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d157ff3e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 09:21:43 +0000 (UTC)
-Date: Mon, 12 Jan 2026 10:21:40 +0100
+	by mail (OpenSMTPD) with ESMTPSA id d2e0e062 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 09:21:48 +0000 (UTC)
+Date: Mon, 12 Jan 2026 10:21:45 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/10] environment: move access to core.maxTreeDepth into
- repo settings
-Message-ID: <aWS9JLb3UyxOwg9Z@pks.im>
+Subject: Re: [PATCH 08/10] tree: use repo_parse_tree()
+Message-ID: <aWS9KUQDrHj7J6zX@pks.im>
 References: <20260109213021.2546-1-l.s.r@web.de>
- <20260109213021.2546-2-l.s.r@web.de>
+ <20260109213021.2546-9-l.s.r@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,52 +87,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260109213021.2546-2-l.s.r@web.de>
+In-Reply-To: <20260109213021.2546-9-l.s.r@web.de>
 
-On Fri, Jan 09, 2026 at 10:30:12PM +0100, René Scharfe wrote:
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index b0673d1a450..bebcf9f698c 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -578,6 +578,30 @@ static inline bool strip_suffix(const char *str, const char *suffix,
->  #define DEFAULT_PACKED_GIT_LIMIT \
->  	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? (32 * 1024L * 1024L) : 256))
->  
-> +#ifdef _MSC_VER
-> +  /*
-> +   * When traversing into too-deep trees, Visual C-compiled Git seems to
-> +   * run into some internal stack overflow detection in the
-> +   * `RtlpAllocateHeap()` function that is called from within
-> +   * `git_inflate_init()`'s call tree. The following value seems to be
-> +   * low enough to avoid that by letting Git exit with an error before
-> +   * the stack overflow can occur.
-> +   */
-> +#define DEFAULT_MAX_ALLOWED_TREE_DEPTH 512
-> +#elif defined(GIT_WINDOWS_NATIVE) && defined(__clang__) && defined(__aarch64__)
-> +  /*
-> +   * Similar to Visual C, it seems that on Windows/ARM64 the clang-based
-> +   * builds have a smaller stack space available. When running out of
-> +   * that stack space, a `STATUS_STACK_OVERFLOW` is produced. When the
-> +   * Git command was run from an MSYS2 Bash, this unfortunately results
-> +   * in an exit code 127. Let's prevent that by lowering the maximal
-> +   * tree depth; This value seems to be low enough.
-> +   */
-> +#define DEFAULT_MAX_ALLOWED_TREE_DEPTH 1280
-> +#else
-> +#define DEFAULT_MAX_ALLOWED_TREE_DEPTH 2048
-> +#endif
-> +
->  int git_open_cloexec(const char *name, int flags);
->  #define git_open(name) git_open_cloexec(name, O_RDONLY)
->  
+On Fri, Jan 09, 2026 at 10:30:19PM +0100, René Scharfe wrote:
+> e092073d64 (tree.c: make read_tree*() take 'struct repository *',
+> 2018-11-18) replaced explicit uses of the_repository.  parse_tree() uses
+> it internally, though, so call repo_parse_tree() instead and hand it the
+> correct repository.
 
-Why is this new constant defined in "git-compat-util.h"? That feels way
-too global for my taste for a value that should ultimately only be
-required by "repo-settings.c". Is there a reason why it's not declared
-in "repo-settings.h"?
-
-I think we could even get away with declaring it in "repo-settings.c".
-The expectation is that the settings need to be prepared anyway, so we
-can simply set up the default when parsing the config.
+All of the conversions in preceding commits were trivial, so I feel like
+they could've just been squashed together. Please feel free to ignore
+this suggestion though.
 
 Patrick
