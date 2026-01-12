@@ -1,150 +1,131 @@
-Received: from mail-ej1-f65.google.com (mail-ej1-f65.google.com [209.85.218.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D496B1DEFF5
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 14:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1582BEC43
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 14:48:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229121; cv=none; b=rxQ6k67THcY0zT8DQSh6kuvLmuEvzP5l5Y07cpsTMHV12xPhk9AMh7bKnmG3vDp6vUYMbrRJfcILGdgQSmGJTCw6NHCba/IxkUhtL4q73AfOdJcMDFym9OLInvEa+Z7NMvOTNpqLX86UBTnucVSXXhWucURR69BkiDKSZ7wisrs=
+	t=1768229304; cv=none; b=Ru0C6YOwi9lf957tRbW8MZ1e1zopgCrmJrhQkKss3VFrejpRr+4JeRUGHLwoyQLHWa4Ynz7coNZ5HvhyNmqVvcGk3+ZsXWDCrj79p8yYRVoZrXN7WrRbP+XDYFMNByhKU3EP+qammttTBD6CE5C3ncKO1o+NKQUrwQ02h4WW17k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229121; c=relaxed/simple;
-	bh=bxjwGDA6JYc0pSoeP7nY/iGyRSeGR3qfp76dfz6UsB4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=p3GH/cg8uV9LDnqMeNPxomwj7sk8V7MrMQY2fNBZWdTx25t++vBSTpp1sO9ZyaPaRvWn7fPxIxn2EwRmDk8Rqqo6/93AEbSl+AoWaWBVzfsgruZcxlEmfdD8rsjbgfBLnNiJX4jlDg5J74dK4sUx4UVXL2w9Cbcu+/uRpQI4n5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CjFigoP/; arc=none smtp.client-ip=209.85.218.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768229304; c=relaxed/simple;
+	bh=9UK7K8V0Z484KFfHNCbeAwGUJYMRqDQHPV8VlUvG6JE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LkV3zIpSsu9pM9kIud02iHh5BrB5d7HfRwZ+jXO69x9/iliIjQZKzMl5H2kMBxVGkh4i6Ftl4GAxvIAojZiqfBn+c8AkYAa5ERG4UaSwqyVMztazCnE/TBN9Ul8wUCQ2an3nfO26dgKTO+EM0Hua+VpGEJqaokiHRb497X4JTG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XNL4e58S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pbWYoS2s; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CjFigoP/"
-Received: by mail-ej1-f65.google.com with SMTP id a640c23a62f3a-b87003e998bso263449066b.1
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 06:45:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768229118; x=1768833918; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=94Q9ep5pGQsTOLK/f/bG9YdHppf19EmNpj0wi1s/mTw=;
-        b=CjFigoP/sY6FUbr84g8xjkv7qn6d9xbOaySWWeO2Y/S7fO91C8L2bMGId0DNs3PCME
-         L7utNs0cGhHba4dgDqDkE5BfX0rnDjNLbZmsTrUjm5IjJUrGtaTNxspRjZP10Y5U3i/j
-         c4QvLQ27RYoUgego9mbX0RY0s9Pscb1FBP6wUzA5rHTxRhM5Gsu4pbVYeu+s27M2SsIc
-         1YvU9hRyMTLymK4gUAoXK9ZPCXkbgRzwl3ud534bweehjMrB6ANOdKTS3CW2N58lZ9YF
-         HZGTnVlPZxHMRT2bsgFglH9B+mCHCXKtrhsH2sEQe2SooZlq1l7fyPAmRYrIGZ8g2+St
-         pQGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768229118; x=1768833918;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=94Q9ep5pGQsTOLK/f/bG9YdHppf19EmNpj0wi1s/mTw=;
-        b=ac3yIRzMbpTOge1W+PMmg4lbOwFhrq7aWcfXKhyAldTMuF+Jb1Yfyjb/mZQZ3jhnJN
-         tk94oy51O6zIHp4YcNyzyTqfA3eFwXr42gCbjV4IPyfp3dMcaB5VsBAACsf4MRok8ArS
-         KMsgHD1EDW3Ucr+9FLYc0J3YNIP1ZGejvd2RqwxqkOF+czO3rSoXFvh0NZVgryk8a8SZ
-         x+pDR2ikjR4GrsnopZSnE0zXYMPz9nqVc9d9yu1HqtXK2IXpExyT8eWs/eMBBwoNygZx
-         34cP+M55pUr52u4mxf94t8wB2CpLyNotrtP79+Wyfb7g1Drlqxe5tKNFmB+tGvVCqfxG
-         oK1A==
-X-Gm-Message-State: AOJu0YyZeygk/xHGRFY6jD8AYGEeKpLzzmJmP3XDKdA/ZzTqlNopPhc4
-	aTxV5iDMWo5k8tEhlZ3xNsAiS5qpAL8d1o445exnKRsKiGwXyvPsKJgU
-X-Gm-Gg: AY/fxX5cvy0aVR9c9WryRPFtFYOhEzsn2CuD2r87YJPbtlL5mTz55gjGZ5bBlUDDI7R
-	1vV+JF43gZgXbF/2zTJJO7Fu877rfeh0yiiR5ZoR1il8ypcr8C0nyJzeIH/IvpsZ1FHphYieRuv
-	3JQg3y1UYsa54cXzpsJzqrXY9vEaoMjwMIyMpIKko3giZQ6IcynH2+ysdRlmf2O5GpcbSvR1wCQ
-	ifODjuHVm5ZWwQX1+d1EF2dASzjOlD6eYN3BcvC1LifVZuqjV6bRH5P2XuKJnJIGU4pn4rsJVb5
-	RYZlkAUI3e/+YigQeWoHvAsppmzDMrTPCJQoRH+camaiJ8COT797ayq/q62UQQpNDdlzBrXQ1LF
-	+MrrbvH2GlEeTLcCsJG2Mqzz4g7zmEJlMQqk9ek0On/NmXYK8M+zbXTvwR5n9kpesCgeGUY5lZs
-	CwUTDA9JA5rnoTKq1dT8ATEFUjGF5AC9BFHDXuV9Pxl0dBRRYGNxvTjiEl1V1wt0teiw==
-X-Google-Smtp-Source: AGHT+IGfVrhH6RPWMVhtB96VgrHoreWcaoXof5DbLfHOrfVFsOvTr5nx+D0C/U5xURqbK0exl85PbQ==
-X-Received: by 2002:a17:907:3d11:b0:b80:3fb7:8e68 with SMTP id a640c23a62f3a-b84299be630mr2292818066b.21.1768229117794;
-        Mon, 12 Jan 2026 06:45:17 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507b8c4c15sm17803102a12.4.2026.01.12.06.45.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jan 2026 06:45:17 -0800 (PST)
-Message-ID: <d2ea8560-1473-43c0-96c1-e1869e22c721@gmail.com>
-Date: Mon, 12 Jan 2026 14:45:16 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XNL4e58S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pbWYoS2s"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id ED24F140005A;
+	Mon, 12 Jan 2026 09:48:21 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 12 Jan 2026 09:48:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768229301; x=1768315701; bh=pKmJKCgcEg
+	NO6T3hu9NZoxuL0YDbssLNz5uYHORWvlE=; b=XNL4e58SrTPujUC1sfs3sGpAhJ
+	GNFINOoRzR3Ug8+eXWmSZTZBB+StJrwyowwss5KBWWr1tktrbsQ7vNzTgCUS+rBy
+	WeQX2ohEyn557zveV5lfRXJUqHaFwA8CgPlZO9EqmWLndTNSnetqEXw42gFSugD3
+	Dz2eN6Md9PyDC5s8W1ObQGlWEQYncuo4WG+cqXNNTeGcmeWHlpI5otvjr5tKYtHt
+	toy6Xj8pj+LDF5nHR6IFFj+o/L2Slt4tPlJFKy6gF6I4lf4Ck3qJfNiBRZsTy9QD
+	GxAtBWByl0yqtJsgJVNyP/ua0bnaZnHpi2YXQk7gimmABZC7urpYAfPXSKOQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768229301; x=1768315701; bh=pKmJKCgcEgNO6T3hu9NZoxuL0YDbssLNz5u
+	YHORWvlE=; b=pbWYoS2sMAvwAaOaQxozUrP+p3Q1FMr5V8D6yQWoMX/YaAzSIVl
+	bajAy2a5tck6rrsbJo2fW6gQCgm5Pu8DoQY351Afq+gFZXpcnqGLx6BfuE0Nbaal
+	861Cs+K+4mXwuZb08r0a8NMgQstKJ8Fs/FJR4kmYK9BpjeSiGz76lgS6xMnEOO2T
+	V7fU+77LEiKykB6/7lSTrjQncLolbCxVIEzMskZLg4Z7fvACryMskLx25JfbC3RZ
+	eST86OqhTtQgTQBVU+xx60P+p1wOvufHvEJfGw9YLotEmObLcWQUwG12ovhkymmJ
+	GiAxPyfSa02SsJp0pImJy6QVxQVr1EYTl/Q==
+X-ME-Sender: <xms:tQllaaTmmszw8UQMXHyKfV8O83PETbCCHQ44Yudjb2kT1820FlsZDg>
+    <xme:tQllaWpyiDsee45RUQa6sdNxs7lZkdVRfay5eTjIPl0FBmPzYwWOhcUic8mMK8-a_
+    SmpF2tSkfx-4Fji0Sh5PsBmvHHm2QLYgRuf8-89F-t-ud-8SGGPSEw>
+X-ME-Received: <xmr:tQllaQKGrvg6P7tO9qpt4GGUFtzwVQgHzu1woOFLryAInsispi7MXVoEfeMqNjPURoo9xEm2ZgM84wNAtrSEAEvIGZpWGMhYZ5MCCa8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejjeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeguvghvvghs
+    hhhighhurhhgrghonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhn
+    vggtohdrtghomhdprhgtphhtthhopehpuhhshhhkrghrkhhumhgrrhhsihhnghhhudelje
+    dtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:tQllaRoFLnpDy3gsfSWKV_y4POcTWgQldmXeWT1rUoFzQthpIqKtLA>
+    <xmx:tQllaQxFO9NYv9pJfhocO-baSLseekvtBvRoa0VoPitgvYOiQLwXpA>
+    <xmx:tQlladOHUUNb-1tmg-KtvZWGOrgiX11xDQyC3mGoW8UqEHYZpHnDCw>
+    <xmx:tQllad6ue3BkMnm4uSQftGb2IwS7SuhoWvfPdFPMvaKk_Z7B9EIuOQ>
+    <xmx:tQllaXFy9ISCGzoUK6Zz6FuO4opO_k_NDBmSGhUlEzN8c31wjGhpw9ar>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 Jan 2026 09:48:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Cc: git@vger.kernel.org,  sunshine@sunshineco.com,
+  pushkarkumarsingh1970@gmail.com
+Subject: Re: [PATCH v2 1/2] t5403:introduce check_post_checkout helper function
+In-Reply-To: <20260112065301.1290-2-deveshigurgaon@gmail.com> (Deveshi
+	Dwivedi's message of "Mon, 12 Jan 2026 06:53:00 +0000")
+References: <20260111072950.9463-1-deveshigurgaon@gmail.com>
+	<20260112065301.1290-1-deveshigurgaon@gmail.com>
+	<20260112065301.1290-2-deveshigurgaon@gmail.com>
+Date: Mon, 12 Jan 2026 06:48:20 -0800
+Message-ID: <xmqq4ioqopjf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, phillip.wood@dunelm.org.uk,
- Junio C Hamano <gitster@pobox.com>
-References: <ba2b65a5-0e2c-41a5-a480-ec3f5ec2178a@gmail.com>
- <20260109160037.2067-1-haraldnordgren@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260109160037.2067-1-haraldnordgren@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 09/01/2026 16:00, Harald Nordgren wrote:
->> Using an enum for a set of flags is a bit confusing.
-> 
->> On reflection I wonder if we should be calling branch_get_push() instead
->> of remote_ref_for_branch() and tracking_for_push_dest() as it respects
->> 'push.default' and so the branch it returns is the one that "git push"
->> without any arguments would push to.
-> 
-> I'm not getting that to work without tests breaking.
+Deveshi Dwivedi <deveshigurgaon@gmail.com> writes:
 
-It is hard to discuss this without knowing what actually breaks. Are you 
-talking about the tests added in this series? If so that means we're 
-expecting a different behavior to what "git push" actually does. As Ben 
-has pointed out elsewhere in this thread, if you're pushing back to a 
-different branch on the same remote as the upstream branch you need to 
-set `push.default=current`.
+> The test file repeatedly uses the same four-line pattern to validate
+> post-checkout hook arguments: read the args file, then test each of
+> the three values individually.
+>
+> Introduce a check_post_checkout helper function that encapsulates this
+> pattern. This patch does not change test behavior; it prepares the
+> code for improvement in the next step.
+>
+> Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+> ---
+>  t/t5403-post-checkout-hook.sh | 49 ++++++++++++++++++++---------------
+>  1 file changed, 28 insertions(+), 21 deletions(-)
 
-The advantage would be that it simplifies the code and it means we 
-respect `push.default=upstream`.
+OK.
 
-The current implementation returns NULL if there is a push refspec 
-exists but it does not match the current branch - in that case we should 
-return a copy of the branch name instead.
+> diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
+> index 1462e3365b..7bdea25107 100755
+> --- a/t/t5403-post-checkout-hook.sh
+> +++ b/t/t5403-post-checkout-hook.sh
+> ...
+> @@ -109,7 +115,8 @@ test_expect_success 'post-checkout hook is triggered by clone' '
+>  	echo "$@" >"$GIT_DIR/post-checkout.args"
+>  	EOF
+>  	git clone --template=templates . clone3 &&
+> -	test_path_is_file clone3/.git/post-checkout.args
+> +	check_post_checkout clone3/.git/post-checkout.args \
+> +		"$(test_oid zero)" "$(git -C clone3 rev-parse HEAD)" 1
+>  '
 
->> I think it would be simpler to just return the full refname and let the
->> caller shorten it.
-> 
-> We could to that but what's the benefit? Shouldn't a helper function reduce
-> the work for the caller, not the other way around? 🤗
+All other hunks are as described but this one is slightly different,
+which may want a mention in the proposed log message.  We used to
+only care about the fact that post-checkout hook was executed, but
+now we check that we invoke the hook with expected parameters.
 
-The benefit is that you get a sane interface rather that returning two 
-different versions of the same string in two different ways (one from 
-the function's return value and the other from a function parameter). It 
-also matches what we do for the upstream branch.
+Other than that, this looks good; so does the next step.
 
->> Why are we checking for BRANCH_MODE_PUSH here? Don't we want to show
->> this advice regardless of the mode?
-> 
-> Yeah, that's a good point. However, this will often lead to the advice
-> being shown twice, see this test:
-> 
-> ```
-> status --no-ahead-behind shows diverged from origin/main and ahead of feature branch
-> ```
-
-I can't seem to see that test. If we're printing the advice once for the 
-upstream branch and once for the default push remote I think that would 
-be ok.
-
->> If we don't want to show this can't we set show_divergance_adivce to
->> false when we call this function - why is it guarded by BRANCH_MODE_PULL
->> as well?
-> 
-> This will already have been shown the the pull branch (the upstream
-> branch).
-> 
-> And in the cases when it's NOT shown for the pull branch but only the push
-> branch has diverged, then pulling won't solve the problem anyway. (Unless
-> you would try to pull from your push branch.)
-
-But we set show_divergance_advice to false for the push branch so there 
-is no need to check the flag.
-
-Thanks
-
-Phillip
-
+Thanks.
