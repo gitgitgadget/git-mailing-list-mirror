@@ -1,83 +1,84 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A120530EF6C
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A794D30EF6C
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:01:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768208462; cv=none; b=Dd0oZKOPMwNvzfAPQXHL1LCX3inuMViNK+/rEXP86v5BDO7QhXE7OESS8cl7DnTjOQxfJY47hJRyIQ16Jxoz/ekoUmA8zdGRcSE+dazLHWJnZEt8NoA4La4AL0pDHYswcqBuhda90dJg9ifAVfXQAK13Cbl1XfPhb6OmTqjKVeA=
+	t=1768208466; cv=none; b=Y79HQ/XFo2ZJtwUyga0fQ55V3evZVQQUfQGkdTCsW4Z6rRNE7IiP+o+iaNPwRO1NlAUBJ/xI0RY/+wTtprtBq9XR1UE50UODgeC9TU7UgGTPPRnEZJQWcHFumvICRXikLbAOrkxztz1HYXxTYvSeYlOt3bQddSgBuxQRBb5KC44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768208462; c=relaxed/simple;
-	bh=G16mc2cj/bH5E2S6cyV7Hnp3bbgM+Yg6jEdNQHkczZU=;
+	s=arc-20240116; t=1768208466; c=relaxed/simple;
+	bh=b261yiBbYbG2wT4EctjVI0W0a9eaUuamFtKNsDV00H4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=R6KaidODl2wm77OnrKY+RFM0cDsnqr77KQRglfeaUtyGI83qvemOUrqAxZBYWMv0v3f/Q1xV58h9+lE7FWYjdJG+RiqFzS8zqaeTt8xaytf8QWxEkr2p5i4UXBH0h6DWBBloy2d2q4lKK01Uzvj+OttsavdaB18mVQOhl5GlO2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A+VlEfjD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h+DMV02m; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=oI7aExTFqvuaO1lDROJebckvhe4gnD+KzOaGYQc2xEt8qSE8g3zwhexyiwhoIYC9K9FJPPTFnXsGpbL1KuGapsvMcpjH675KBoJos+9Gg0F3pdJ+fGjjvzB6m+O4JDLdk1Q4AoDyPbd4yDKgfODm8jCzTQpPQgAzHt95gsEK6wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B+t4E3GW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zgY0gKhd; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A+VlEfjD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h+DMV02m"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EC0507A00B2;
-	Mon, 12 Jan 2026 04:00:59 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B+t4E3GW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zgY0gKhd"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id C7F6D1D000CA;
+	Mon, 12 Jan 2026 04:01:01 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 12 Jan 2026 04:01:00 -0500
+  by phl-compute-09.internal (MEProxy); Mon, 12 Jan 2026 04:01:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768208459;
-	 x=1768294859; bh=eyK9Z10dMZO31/uetrS5/G8eS2Zvn1AUOHS0UYs5XtM=; b=
-	A+VlEfjDAedVnLXBPhdPcOPeUEUlBSEXobgtTbe9nZy7sU+AczSCWQEEheAh4bQ6
-	ckTVUNOrtBjO6aee1+HfJLKDQ+cwBjCT0r8N2cIPWuoupPq3VPUrOqqDmXj6n3xM
-	yPpTVPiVasXK2DA4+Bv7pJOMAtMEdwkBWux466op0gsYCznteE4QysGBJpNjTq7p
-	CXNb2SPDR8Z9/L6d992IWL/cceSLB0h2fSSP8JfbdgYR8IKc26FC9B+175iC1XQq
-	dpgR/Lj9x7RxXmipOwNLonn1cH/6i8uh5rSuTUMbxQ8njzh7aAONokq2P/SCqWvp
-	koCyGhvrwF7VyutpSPjNrA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768208461;
+	 x=1768294861; bh=BlzBCaQE26S3DuqYoM3QXbmwTfm3Gngq8a8FHWhX86M=; b=
+	B+t4E3GWZprsmeaC8TAe3idWRxXkBa2Tqa0fgUi6X7hc1BOoS6TApbqzSH0K2qPa
+	h5vDg05y9R90kwown8CyNS3sDcXsrGc+yNSSY0MJledFq5ARNSNxNAPIDQDg2tJB
+	SakLnbVo+OBQizNUFfqRVKxHeVuiG88B8DH+XzJ+RwQT66UljthN2LiCSgi2kQ7k
+	i6mZQLfOGumihsLHcYEGgvCuN6f4gLNPW7i0shrAByVEk049y/B2uQErlNSVfvkB
+	t96H5CRf3oZlTaY9aTiJ8XllayRk1S39KmrBt8pIh8FZBND3KkY8WJ3IVoUxGkqY
+	5ITofCufyFU84LUYAQpYJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768208459; x=
-	1768294859; bh=eyK9Z10dMZO31/uetrS5/G8eS2Zvn1AUOHS0UYs5XtM=; b=h
-	+DMV02mUd+fH4sKCY85vFOPI0gR/GQ+SqAvRi4islBJaZ9jHdiblBjLmLasailkU
-	pYOx0iIH0yo2NaWQ9V2OFCAfBA+8j9iryz87Zl5z4tTcwzexZJo/Og2DikEMu6lO
-	nHltn0G3UnofTy3ZQZfwdZY6tjPczyJOZgybXW4KHjAlv30fAZaShNtZET27piNc
-	axKqXc8PjyCydp9uCqnVuJHLE8vuREDgXQPZmOkX03VMGwOKNPyS1uaeHqFPTUuL
-	tNoxF4a0yZZTn7bb/9O2dIMPqbE3jKkgw+YLnosEtIJX0SZCCvIFVq0V0QBqCom7
-	XQRKhlk3PZYR3ESPSYYLQ==
-X-ME-Sender: <xms:S7hkaX5Op0zeYcBcPDxfDmdQSdOsl9qQZabX6x8KDH1H6pHKGU3sOA>
-    <xme:S7hkaQnhWotc4DaUDDpfrL7-fhVShAzyKUWZ9_YL89ZEr_brboYpNgie3JWrPlb0V
-    bv4QvrCAML5aFDs6H0hAgHL6Qt4Z6KLJUpJAINIzDeZFEKzeK5Lcg>
-X-ME-Received: <xmr:S7hkaYRB74ZtVThurt2yiEu80IzRo2LxmpjuD-lw6i77sEN6mP6kX9Gxt2KtZ-GwxCxM6EA1vwMyB9fCD8JqGiY1A7_bC0wg1eTnkyzM-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejtdegucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768208461; x=
+	1768294861; bh=BlzBCaQE26S3DuqYoM3QXbmwTfm3Gngq8a8FHWhX86M=; b=z
+	gY0gKhdG7NFNSgxBDTOyzoXDmV24Rn/7zeluZ58VsGfY8W+/sn403JmIBnTwo+4q
+	6Gzjfgy9XJlMU5Z+GcYpuyv3ax+dX3I85/XbhzesUSKbU7pdzD2TCmVfkKbzKLa5
+	XE7Rid+OFWk2M8/oo9pT/OHAwa8ZS7V8SabpObibg8j1OUg84NWja68XaxBOgz3i
+	e5ahSc5RenXvtepENL8MlgSFT6nI0mTiV3OL7yQpjIsyertFH6MMsmtEFrbYnxbt
+	2WRJ62zSFd5l6YoUKJ4ESjCmskdEwBrjUwwFi0rI2ZC2K6dELwF83M4g+QoiUWIS
+	wFx9C6U6jfqSPFQQ+b3pg==
+X-ME-Sender: <xms:TbhkafMtaOF7q5sBylYA7hGU9PBSe5Gj44USmh2CspvV9PKmCz-IOw>
+    <xme:TbhkacPmdadv1ZPpTnl9SKYNURrdm2kWwFrXSNm8IwTFA1dMzxyTStcfk8AsV1g-_
+    FBKu7lzH0O3s2eu998ezpiOGay4MsVLrYmPDFpnFTHgUW_pI5HN3A>
+X-ME-Received: <xmr:TbhkaQhPjvvBeOTx6DJfEr_b8-MofuNpoyTnHRAqrE-MM0e1rOj3kMZUIhV9ioTqyQlaVF_dG6JvRMDA8WCLIZfJRlNWdiTNw4E0OSBZaA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejtdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    eprghplhgrthhtnhgvrhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepkhhrihhsthho
-    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:S7hkafHsWCqA7wnk3w2-gOgk9iHx5EtGX3CMJLhE8KyIFOabHmy0OQ>
-    <xmx:S7hkadE3X798MQB0fVn3JYqzIpeyJBNcjVb6u5jmkU18FKF2JCc3QQ>
-    <xmx:S7hkadSojEl1XtqEQaZ0aZm64pPTUI0DDuk90WbWaPuqGCGcWUqWvA>
-    <xmx:S7hkaeLQCjok0zToJUkgPXYtrcqLWkYVZSG1swvI9AXB9WYWIQYACQ>
-    <xmx:S7hkaTYKo1Rf-d27dFBYQkD6KdkKe1sFsxOHovq2fYpHDozDOy_KIrws>
+    hnpeekieevveegieevieeuveefheffgeeuheetheegffffkeeijedtueefleffvdevleen
+    ucffohhmrghinhepphgrtghkvggurdhishenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeej
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmshhmihhlvgihsehgihhtlhgrsg
+    drtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
+    thhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtoheprghplhgrthhtnhgvrhesnhhvihguihgrrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:TbhkaZtEqFDU-r_lpV7uaAvbTPrCJgmh1alwaKSF1JDRmtApkZXqhw>
+    <xmx:TbhkaWRM4XVZ0T5bLGahX7JSLiLd0UY_ir7lytmSHlZ4wW_3cojmgw>
+    <xmx:TbhkaV2-DBKdSm2WO1ZLN05y-aux-mcvS-WMdQxVGHPKBUu2ZpyP_Q>
+    <xmx:TbhkaTv3CrrZXPbo8tszosWt_uPVp9ePt8BkWOpRbiAMWuN92QwF-g>
+    <xmx:TbhkaSTr4UpIgSIxauQLvo3_En0ZFilaHyfw6v6Cx0Ncvv5rGteqESy7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 04:00:58 -0500 (EST)
+ 12 Jan 2026 04:01:00 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b4475d42 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 09:00:57 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d91145e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 09:01:00 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 12 Jan 2026 10:00:41 +0100
-Subject: [PATCH v5 1/7] object-file: always set OI_LOOSE when reading
- object info
+Date: Mon, 12 Jan 2026 10:00:42 +0100
+Subject: [PATCH v5 2/7] packfile: always declare object info to be
+ OI_PACKED
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,224 +87,147 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260112-b4-pks-odb-read-object-info-improvements-v5-1-9a6124e95bf2@pks.im>
+Message-Id: <20260112-b4-pks-odb-read-object-info-improvements-v5-2-9a6124e95bf2@pks.im>
 References: <20260112-b4-pks-odb-read-object-info-improvements-v5-0-9a6124e95bf2@pks.im>
 In-Reply-To: <20260112-b4-pks-odb-read-object-info-improvements-v5-0-9a6124e95bf2@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, 
  Aaron Plattner <aplattner@nvidia.com>, 
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>
+ Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>, 
+ Matt Smiley <msmiley@gitlab.com>
 X-Mailer: b4 0.14.3
 
-There are some early returns in `odb_source_loose_read_object_info()`
-in cases where we don't have to open the loose object. These return
-paths do not set `struct object_info::whence` to `OI_LOOSE` though, so
-it becomes impossible for the caller to tell the format of such an
-object.
+When reading object info via a packfile we yield one of two types:
 
-The root cause of this really is that we have so many different return
-paths in the function. As a consequence, it's harder than necessary to
-make sure that all successful exit paths sot up the `whence` field as
-expected.
+  - The object can either be OI_PACKED, which is what a caller would
+    typically expect.
 
-Address this by refactoring the function to have a single exit path.
-Like this, we can trivially set up the `whence` field when we exit
-successfully from the function.
+  - Or it can be OI_DBCACHED if it is stored in the delta base cache.
 
-Note that we also:
+The latter really is an implementation detail though, and callers
+typically don't care at all about the difference. Furthermore, the
+information whether or not it is part of the delta base cache can
+already be derived via the `is_delta` field, so the fact that we discern
+between OI_PACKED and OI_DBCACHED only further complicates the
+interface.
 
-  - Rename `status` to `ret` to match our usual coding style, but also
-    to show that the old `status` variable is now always getting the
-    expected value. Furthermore, the value is not initialized anymore,
-    which has the consequence that most compilers will warn for exit
-    paths where we forgot to set it.
+There aren't all that many callers that care about the `whence` field in
+the first place. In fact, there's only three:
 
-  - Move the setup of scratch pointers closer to `parse_loose_header()`
-    to show where it's needed.
+  - `packfile_store_read_object_info()` checks for `whence == OI_PACKED`
+    and then populates the packfile information of the object info
+    structure. We now start to do this also for deltified objects, which
+    gives its callers strictly more information.
 
-  - Guard a couple of variables on cleanup so that they only get
-    released in case they have been set up.
+  - `repack_local_links()` wants to determine whether the object is part
+    of a promisor pack and checks for `whence == OI_PACKED`. If so, it
+    verifies that the packfile is a promisor pack. It's arguably wrong
+    to declare that an object is not part of a promisor pack only
+    because it is stored in the delta base cache.
 
-  - Reset `oi->delta_base_oid` towards the end of the function, together
-    with all the other object info pointers.
+  - `is_not_in_promisor_pack_obj()` does the same, but checks that a
+    specific object is _not_ part of a promisor pack. The same reasoning
+    as above applies.
 
-Overall, all these changes result in a diff that is somewhat hard to
-read. But the end result is significantly easier to read and reason
-about, so I'd argue this one-time churn is worth it.
+Drop the OI_DBCACHED enum completely. None of the callers seem to care
+about the distinction.
 
+Note that this also fixes a segfault introduced in 8c1b84bc97
+(streaming: move logic to read packed objects streams into backend,
+2025-11-23), which refactors how we stream packed objects. The intent is
+to only read packed objects in case they are stored non-deltified as
+we'd otherwise have to deflate them first. But the check for whether or
+not the object is stored as a delta was unconditionally done via
+`oi.u.packed.is_delta`, which is only valid in case `oi.whence` is
+`OI_PACKED`. But under some circumstances we got `OI_DBCACHED` here,
+which means that none of the `oi.u.packed` fields were initialized at
+all. Consequently, we assumed the object was not stored as a delta, and
+then try to read the object from `oi.u.packed.pack`, which is a `NULL`
+pointer and thus causes a segfault.
+
+Add a test case for this issue so that this cannot regress in the
+future anymore.
+
+Reported-by: Matt Smiley <msmiley@gitlab.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c | 115 ++++++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 71 insertions(+), 44 deletions(-)
+ odb.h                  |  1 -
+ packfile.c             |  3 +--
+ t/t5003-archive-zip.sh | 34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 3 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index 6280e42f34..e7e4c3348f 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -416,19 +416,16 @@ int odb_source_loose_read_object_info(struct odb_source *source,
- 				      const struct object_id *oid,
- 				      struct object_info *oi, int flags)
- {
--	int status = 0;
-+	int ret;
- 	int fd;
- 	unsigned long mapsize;
- 	const char *path;
--	void *map;
--	git_zstream stream;
-+	void *map = NULL;
-+	git_zstream stream, *stream_to_end = NULL;
- 	char hdr[MAX_HEADER_LEN];
- 	unsigned long size_scratch;
- 	enum object_type type_scratch;
- 
--	if (oi && oi->delta_base_oid)
--		oidclr(oi->delta_base_oid, source->odb->repo->hash_algo);
--
- 	/*
- 	 * If we don't care about type or size, then we don't
- 	 * need to look inside the object at all. Note that we
-@@ -439,71 +436,101 @@ int odb_source_loose_read_object_info(struct odb_source *source,
- 	 */
- 	if (!oi || (!oi->typep && !oi->sizep && !oi->contentp)) {
- 		struct stat st;
--		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK))
--			return quick_has_loose(source->loose, oid) ? 0 : -1;
--		if (stat_loose_object(source->loose, oid, &st, &path) < 0)
--			return -1;
-+
-+		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK)) {
-+			ret = quick_has_loose(source->loose, oid) ? 0 : -1;
-+			goto out;
-+		}
-+
-+		if (stat_loose_object(source->loose, oid, &st, &path) < 0) {
-+			ret = -1;
-+			goto out;
-+		}
-+
- 		if (oi && oi->disk_sizep)
- 			*oi->disk_sizep = st.st_size;
--		return 0;
-+
-+		ret = 0;
-+		goto out;
+diff --git a/odb.h b/odb.h
+index 014cd9585a..73b0b87ad5 100644
+--- a/odb.h
++++ b/odb.h
+@@ -330,7 +330,6 @@ struct object_info {
+ 		OI_CACHED,
+ 		OI_LOOSE,
+ 		OI_PACKED,
+-		OI_DBCACHED
+ 	} whence;
+ 	union {
+ 		/*
+diff --git a/packfile.c b/packfile.c
+index 08a0863fc3..b0c6665c87 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1656,8 +1656,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 			oidclr(oi->delta_base_oid, p->repo->hash_algo);
  	}
  
- 	fd = open_loose_object(source->loose, oid, &path);
- 	if (fd < 0) {
- 		if (errno != ENOENT)
- 			error_errno(_("unable to open loose object %s"), oid_to_hex(oid));
--		return -1;
-+		ret = -1;
-+		goto out;
- 	}
--	map = map_fd(fd, path, &mapsize);
--	if (!map)
--		return -1;
+-	oi->whence = in_delta_base_cache(p, obj_offset) ? OI_DBCACHED :
+-							  OI_PACKED;
++	oi->whence = OI_PACKED;
  
--	if (!oi->sizep)
--		oi->sizep = &size_scratch;
--	if (!oi->typep)
--		oi->typep = &type_scratch;
-+	map = map_fd(fd, path, &mapsize);
-+	if (!map) {
-+		ret = -1;
-+		goto out;
-+	}
+ out:
+ 	unuse_pack(&w_curs);
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index 961c6aac25..c8c1c5c06b 100755
+--- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -239,6 +239,40 @@ check_zip with_untracked2
+ check_added with_untracked2 untracked one/untracked
+ check_added with_untracked2 untracked two/untracked
  
- 	if (oi->disk_sizep)
- 		*oi->disk_sizep = mapsize;
- 
-+	stream_to_end = &stream;
++test_expect_success 'git-archive --format=zip with bigFile delta chains' '
++	test_when_finished rm -rf repo &&
++	git init repo &&
++	(
++		cd repo &&
++		test-tool genrandom foo 100000 >base &&
++		{
++			cat base &&
++			echo "trailing data"
++		} >delta-1 &&
++		{
++			cat delta-1 &&
++			echo "trailing data"
++		} >delta-2 &&
++		git add . &&
++		git commit -m "blobs" &&
++		git repack -Ad &&
++		git verify-pack -v .git/objects/pack/pack-*.idx >stats &&
++		test_grep "chain length = 1: 1 object" stats &&
++		test_grep "chain length = 2: 1 object" stats &&
 +
- 	switch (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr))) {
- 	case ULHR_OK:
--		if (parse_loose_header(hdr, oi) < 0)
--			status = error(_("unable to parse %s header"), oid_to_hex(oid));
--		else if (*oi->typep < 0)
-+		if (!oi->sizep)
-+			oi->sizep = &size_scratch;
-+		if (!oi->typep)
-+			oi->typep = &type_scratch;
++		git -c core.bigFileThreshold=1k archive --format=zip HEAD >archive.zip &&
++		if test_have_prereq UNZIP
++		then
++			mkdir unpack &&
++			cd unpack &&
++			"$GIT_UNZIP" ../archive.zip &&
++			test_cmp base ../base &&
++			test_cmp delta-1 ../delta-1 &&
++			test_cmp delta-2 ../delta-2
++		fi
++	)
++'
 +
-+		if (parse_loose_header(hdr, oi) < 0) {
-+			ret = error(_("unable to parse %s header"), oid_to_hex(oid));
-+			goto corrupt;
-+		}
-+
-+		if (*oi->typep < 0)
- 			die(_("invalid object type"));
- 
--		if (!oi->contentp)
--			break;
--		*oi->contentp = unpack_loose_rest(&stream, hdr, *oi->sizep, oid);
--		if (*oi->contentp)
--			goto cleanup;
-+		if (oi->contentp) {
-+			*oi->contentp = unpack_loose_rest(&stream, hdr, *oi->sizep, oid);
-+			if (!*oi->contentp) {
-+				ret = -1;
-+				goto corrupt;
-+			}
-+		}
- 
--		status = -1;
- 		break;
- 	case ULHR_BAD:
--		status = error(_("unable to unpack %s header"),
--			       oid_to_hex(oid));
--		break;
-+		ret = error(_("unable to unpack %s header"),
-+			    oid_to_hex(oid));
-+		goto corrupt;
- 	case ULHR_TOO_LONG:
--		status = error(_("header for %s too long, exceeds %d bytes"),
--			       oid_to_hex(oid), MAX_HEADER_LEN);
--		break;
-+		ret = error(_("header for %s too long, exceeds %d bytes"),
-+			    oid_to_hex(oid), MAX_HEADER_LEN);
-+		goto corrupt;
- 	}
- 
--	if (status && (flags & OBJECT_INFO_DIE_IF_CORRUPT))
-+	ret = 0;
-+
-+corrupt:
-+	if (ret && (flags & OBJECT_INFO_DIE_IF_CORRUPT))
- 		die(_("loose object %s (stored in %s) is corrupt"),
- 		    oid_to_hex(oid), path);
- 
--cleanup:
--	git_inflate_end(&stream);
--	munmap(map, mapsize);
--	if (oi->sizep == &size_scratch)
--		oi->sizep = NULL;
--	if (oi->typep == &type_scratch)
--		oi->typep = NULL;
--	oi->whence = OI_LOOSE;
--	return status;
-+out:
-+	if (stream_to_end)
-+		git_inflate_end(stream_to_end);
-+	if (map)
-+		munmap(map, mapsize);
-+	if (oi) {
-+		if (oi->sizep == &size_scratch)
-+			oi->sizep = NULL;
-+		if (oi->typep == &type_scratch)
-+			oi->typep = NULL;
-+		if (oi->delta_base_oid)
-+			oidclr(oi->delta_base_oid, source->odb->repo->hash_algo);
-+		if (!ret)
-+			oi->whence = OI_LOOSE;
-+	}
-+
-+	return ret;
- }
- 
- static void hash_object_body(const struct git_hash_algo *algo, struct git_hash_ctx *c,
+ # Test remote archive over HTTP protocol.
+ #
+ # Note: this should be the last part of this test suite, because
 
 -- 
 2.52.0.590.g1f87b77810.dirty
