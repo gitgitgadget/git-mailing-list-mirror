@@ -1,80 +1,80 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207D1346E61
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51476346ACF
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768208591; cv=none; b=qWc+WYlFl7VbxeUdt1g/UnPP/Rj2nfuPKo4g8OTMLFRPIjdvtyuf/k/CqRegdMRDq15qoPwvn8Hg1L6HW0jvCsClk5XICoWVQDj13tignGTFk4N4sb8tIz8MQ7fXfNoZMW37BTHsyIzO5l3F+8JlHv8yBU7aQ/u2tTuRdDGxw/U=
+	t=1768208592; cv=none; b=EVMpSfB/ID1JQq1I/zivDtsTmd0UOf4ZJ4FU4Ua2o+t29IDgKwJJrpglznG2kJYz7+yyEmzjh6Xh/+bMXbHs4Otr+QZrXnsXYFOvUKTdO/KK87NFZZ9PtAQXqO8/MvlaOutdmwhGeb2VB48AH4t3qRamy5bTT54bcwWNKQ6Nlzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768208591; c=relaxed/simple;
-	bh=2C2sKD+JIiwYkFhITAsZWOGLWp5+aJZ+ExKNBBCw5Gs=;
+	s=arc-20240116; t=1768208592; c=relaxed/simple;
+	bh=4itYaKqd3lzpLZSrZ7NrP274Dtvux2hrRwfuq0nd74c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MHyB+HqN9ue5k0ngN+q6ku1Y9idCBZzvBCcx1fIOVoWkjHP3LtHoxbXw9J6sUaKcBf/VPAdrcdNQXrG39jmdlGKqA5OEeNduGc9ausisAcMKH9vXUOdIiU/vIgb2eps4ENeD8+g1XNor9nvFYuNfpKVMqr4IBeLzKJZJDbU1l0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ASAL7u9S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SgMBjJ94; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=hvzuWZokFvx+reGQmZ6TpOdz2KDzlhUzuD+iyJknv2yiQYAaOHtEecA7dZ6gr7pUx1KufZyHFzudv0J5R6UNiSgo1G0ipGvc3LKphhPBa84TvP4CG2WEfgYoKACBUqg6KT6QVwoC/NepdZ5Kne21HmahoZsUjWYgPJN1gWw8YiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ctfF74f6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dJFRT9pb; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ASAL7u9S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SgMBjJ94"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 439F07A00B2;
-	Mon, 12 Jan 2026 04:03:06 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ctfF74f6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dJFRT9pb"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C83FA7A007B;
+	Mon, 12 Jan 2026 04:02:58 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 12 Jan 2026 04:03:06 -0500
+  by phl-compute-10.internal (MEProxy); Mon, 12 Jan 2026 04:02:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768208586;
-	 x=1768294986; bh=c+c9HlnxIQHsc1edUmsSgJMm9id/kBLf2yMjqohXU34=; b=
-	ASAL7u9SIbXXilr2lmqLQViDhGoK7ehWHx1klJ+9dMyQvsLC27VzLSC0ZMrPZgct
-	FBaM0YkCrsSHLxfSPoRsECbFCXTZBp5cz3W83PpvNgDB5sKMk1K9PeHs/ywsrPba
-	NF7AYU9XiOa8GpnumJ7O9925enGDdT3kl8B9MA68DbKP7pO9RkE3GnBzB2PQAxvX
-	OdEfpL7BiHE8v3pWl8foOxCWk/YiGE5URGLqEs+XnS6VlmXE4IbdoiIu34EEMojj
-	jn7noVwEmq4+evMgPezQCByJ3NaDEfqWZmGplfhBu+XWVtFfo4THOvkS9ltm5Y07
-	oLE70O5PjYWBnq3OUzv75w==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768208578;
+	 x=1768294978; bh=qDaOpVfYYpwgqsC92+1OxYpzMOgy2EHY8E+JD5i3EXQ=; b=
+	ctfF74f6diDl7Cr13hJVfRHjEmEc3aYm/xAGjYpBQ14EnuMdWAJUePPzcp8RuNc9
+	Nw8R4g8pw9yh6oisbrVhUkGLWmM0qUFwB/BVCXZI4eSuaYcOfpD1wql3P/sNiJk8
+	Kt9uwBlKA4u+syr0Xjw10dfIC5WC6abCrbZTmBbUzvDUFF8djNR/L/GB2QeLeP5e
+	kwJaMejLo1NWIMOcIbouq1CUkiSlsVbt0c8r7+7L/SLtJTUMVpX+/lrEH7HeWPql
+	6mCpE4mq1z0uGSpRs/qCAE9baA2OXKmFVWlb9kRmyNjTUoLCV6cuzoyNFDmWQyWQ
+	V5CIqAyTlqW2PbyTNmH4wQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768208586; x=
-	1768294986; bh=c+c9HlnxIQHsc1edUmsSgJMm9id/kBLf2yMjqohXU34=; b=S
-	gMBjJ949+6Co9bOtrt2Eo+nJaAQJSY2OxlWr65+heWv3Ue4XgxjNFa8o3MmoCooO
-	l0LfCMcwsy0FezSb57cQFz7mADfze+CGwLz7IXN8BNvxRBHMPuoIdgMYfj/b1VKS
-	Yju2tmZP6P/bYqD9Cjc08R5XXlS2eBWPSjsFzUTjBBWNifbusR6e9Eq1B9lHZzCi
-	POIXPFNm0xBOmm3imXiC7SqV3UhtPVVhe/xfcwPy8z56HCZSMcXQuXNUdJLPKv7B
-	FN0fJkOykBf3aZJSP4AjsM2pgz1zRyiMh4s5Z0aqaYnyzWGTfiJU/ePZQp8pPvMs
-	m6P44Q5pmj1t0dxtrUB7w==
-X-ME-Sender: <xms:yrhkaUsDIHXf1x5QrXXnz1SXDk49kJ3IOmWkuQWyxprUEivbUPqvOg>
-    <xme:yrhkaY7AjGYTiBFqub1V0_KPelKEWkZ5p9fR1QGfRCgQG_vO0k2lFybuk7mezR9oB
-    HpE4XObQ1IXkuBLYcyD-YCr5vKqti_v_sX2i5r2su9incn_OcYbeQ>
-X-ME-Received: <xmr:yrhkadKYU_qiCveWIie-uHLQkDo2zpS_gQiuNH6YRmhb-EVbd2niLFTfhxp7XAuoaPjUea_JlorOgzMeP9ysRN1I6-pJOr5j-1xt8bqi4w>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768208578; x=
+	1768294978; bh=qDaOpVfYYpwgqsC92+1OxYpzMOgy2EHY8E+JD5i3EXQ=; b=d
+	JFRT9pb9CHdptK/YDEUD+6DYXKfWXdkqK+O46D+DiyN2QF0tpTAEC0MA4VbSfeHJ
+	4mkoK5Oef+VjzsvoHnnMUDL/FKj/VOgTqw+BqHP/J25OC+kuAiy61MTO/1NxAkYY
+	JrVTUlpFtCCv8s3SKRlndZrqrut6pk4HhSFgwY9XNUxt6n8FSBglY/1fzdtx81Lj
+	JvaKyyB98vI9qxAq+VNbHLgF91ku4CZCRlUiyaMJnHk3vhOrOQJvPCr9mdpx/T0Y
+	o1mNTkUKfH2LgEqc7wxJSWVZXxXtvKyr41V/q2WMCaAI0IkjCGyyvtnK9BfuY2H8
+	0N6ti4OX24O9vYiRjH7Xg==
+X-ME-Sender: <xms:wrhkaaDSafISIWAc7xkBlJ8Ph5tkEj4wFg9nsYUEzxRGPtt78PHhCQ>
+    <xme:wrhkab9lnOdn8uQf9JMYtsbhLJiuvYSxM6B_3A4A9xBxl3T5I1gREP1HF0_lSRqQg
+    PV32drpxAQN-3PcXq7J6DYeMfa8V9X4fAzyBdb-d3aD_vrUH3Xm>
+X-ME-Received: <xmr:wrhkaa_0ksOORf6hdOFTfFtR_A6Nnb7nNXwiIy3qoYbbJbDEju1tX7-w24s5m6qQJwoIIMAQFZgVRF3sOc1ggTG-N0qa9hVdSnEG3uFKEQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejtdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvg
+    hjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
     rhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:yrhkaQ5BR5d8LJGkHbycbFSKuRNFHPyJ1mtozubPu_wBluXwxyeJJQ>
-    <xmx:yrhkaYzCEvVWuwqTOVcW_ZNQ1ZAkaTQh46UpLF2CiDUqeVqB7rT4kg>
-    <xmx:yrhkacYeaP-ZRh_cY61rCJMEJcH1RGK3elyK0QpJEOWZlO42hM3Ijw>
-    <xmx:yrhkaSQIVssIEEvWJeCblKzAt_efjNqohKyWCFB2Rva-uYQWY0VN7w>
-    <xmx:yrhkabVxCWReBTIQVW3GcT693aFsDvOpOYblfVmJ8QfR0itPKD5CMmsS>
+X-ME-Proxy: <xmx:wrhkaSfshYnxhsBaCiqcbl6EEsVMfe1FDdfiyLwDEMlGSaN3DowSVw>
+    <xmx:wrhkaTEShtCJ6o2hjMw7Thsv2aRBjlQKqVMEAB0v3334fG0hhPKE2Q>
+    <xmx:wrhkaQdGK4tLhu8kMEaOv5MX5rGC2Ko7HYU8cLxG3pn9fieQbPST4Q>
+    <xmx:wrhkadEknjCOFbRLMoSBnWC6_KMdzRK6IcAWuJiCgagZO0O16AE78Q>
+    <xmx:wrhkafZB5Ni8bXIiE4n96Z6KvYXFQ9sgbJyYJ7vkeokUON8TBtneX4FU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 04:03:05 -0500 (EST)
+ 12 Jan 2026 04:02:57 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 262ec0b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 09:03:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5b4fef35 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 09:02:57 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 12 Jan 2026 10:02:53 +0100
-Subject: [PATCH v2 04/17] refs/files: remove useless indirection
+Date: Mon, 12 Jan 2026 10:02:50 +0100
+Subject: [PATCH v2 01/17] refs/files: simplify iterating through root refs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,60 +83,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260112-pks-refs-verify-fixes-v2-4-2e9e453bd6c3@pks.im>
+Message-Id: <20260112-pks-refs-verify-fixes-v2-1-2e9e453bd6c3@pks.im>
 References: <20260112-pks-refs-verify-fixes-v2-0-2e9e453bd6c3@pks.im>
 In-Reply-To: <20260112-pks-refs-verify-fixes-v2-0-2e9e453bd6c3@pks.im>
 To: git@vger.kernel.org
 Cc: shejialuo <shejialuo@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-The function `files_fsck_refs()` only has a single callsite and forwards
-all of its arguments as-is, so it's basically a useless indirection.
-Inline the function call.
+When iterating through root refs we first need to determine the
+directory in which the refs live. This is done by retrieving the root of
+the loose refs via `refs->loose->root->name`, and putting it through
+`files_ref_path()` to derive the final path.
 
-While at it, also remove the bitwise or that we have for return values.
-We don't really want to or them at all, but rather just want to return
-an error in case either of the functions has failed.
+This is somewhat redundant though: the root name of the loose files
+cache is always going to be the empty string. As such, we always end up
+passing that empty string to `files_ref_path()` as the ref hierarchy we
+want to start. And this actually makes sense: `files_ref_path()` already
+computes the location of the root directory, so of course we need to
+pass the empty string for the ref hierarchy itself. So going via the
+loose ref cache to figure out that the root of a ref hierarchy is empty
+is only causing confusion.
+
+But next to the added confusion, it can also lead to a segfault. The
+loose ref cache is populated lazily, so it may not always be set. It
+seems to be sheer luck that this is a condition we do not currently hit.
+The right thing to do would be to call `get_loose_ref_cache()`, which
+knows to populate the cache if required.
+
+Simplify the code and fix the potential segfault by simply removing the
+indirection via the loose ref cache completely.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/files-backend.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ refs/files-backend.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0a104c7bf6..4cbee23dad 100644
+index 6f6f76a8d8..297739f203 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -3954,22 +3954,20 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
- 	return ret;
- }
- 
--static int files_fsck_refs(struct ref_store *ref_store,
--			   struct fsck_options *o,
--			   struct worktree *wt)
--{
--	return files_fsck_refs_dir(ref_store, o, wt);
--}
--
- static int files_fsck(struct ref_store *ref_store,
- 		      struct fsck_options *o,
- 		      struct worktree *wt)
+@@ -354,13 +354,11 @@ static int for_each_root_ref(struct files_ref_store *refs,
+ 			     void *cb_data)
  {
- 	struct files_ref_store *refs =
- 		files_downcast(ref_store, REF_STORE_READ, "fsck");
-+	int ret = 0;
+ 	struct strbuf path = STRBUF_INIT, refname = STRBUF_INIT;
+-	const char *dirname = refs->loose->root->name;
+ 	struct dirent *de;
+-	size_t dirnamelen;
+ 	int ret;
+ 	DIR *d;
  
--	return files_fsck_refs(ref_store, o, wt) |
--	       refs->packed_ref_store->be->fsck(refs->packed_ref_store, o, wt);
-+	if (files_fsck_refs_dir(ref_store, o, wt) < 0)
-+		ret = -1;
-+	if (refs->packed_ref_store->be->fsck(refs->packed_ref_store, o, wt) < 0)
-+		ret = -1;
+-	files_ref_path(refs, &path, dirname);
++	files_ref_path(refs, &path, "");
+ 
+ 	d = opendir(path.buf);
+ 	if (!d) {
+@@ -368,9 +366,6 @@ static int for_each_root_ref(struct files_ref_store *refs,
+ 		return -1;
+ 	}
+ 
+-	strbuf_addstr(&refname, dirname);
+-	dirnamelen = refname.len;
+-
+ 	while ((de = readdir(d)) != NULL) {
+ 		unsigned char dtype;
+ 
+@@ -378,6 +373,8 @@ static int for_each_root_ref(struct files_ref_store *refs,
+ 			continue;
+ 		if (ends_with(de->d_name, ".lock"))
+ 			continue;
 +
-+	return ret;
- }
++		strbuf_reset(&refname);
+ 		strbuf_addstr(&refname, de->d_name);
  
- struct ref_storage_be refs_be_files = {
+ 		dtype = get_dtype(de, &path, 1);
+@@ -386,8 +383,6 @@ static int for_each_root_ref(struct files_ref_store *refs,
+ 			if (ret)
+ 				goto done;
+ 		}
+-
+-		strbuf_setlen(&refname, dirnamelen);
+ 	}
+ 
+ 	ret = 0;
 
 -- 
 2.52.0.590.g1f87b77810.dirty
