@@ -1,178 +1,122 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560BB280324
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 19:37:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FE02E7BDC
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 19:47:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768246630; cv=none; b=RDtzaJaS/y43H8hw9aauPhD0g+6a4quhV7lrA/B9TrRXwl0T848ITLWUys0kFQPZyMj+wbCFdrhOUNstfBt+/qbxYN5aGRb/k+pEdxcMrLole7kUKU5GBnzknh0iZ7I2eQgJaEwALs5T2fhYVcx961x4e9+AHx/lEav3C5/tz3c=
+	t=1768247258; cv=none; b=E89Zu+4GU5oZn6P4SjJc4wqaz3rTP88ILWkgPZUlB/JW2XN2NHzN40An8qogMuWQ8YhYEplVCd9juE3eZAVftDMYxMHsU3Qz2MqikyXQgY4g94SfTt3GHAL5gUZxWFk2xLiQHI8GPTNz6avI36jPVRuGeNOUcdGgxoD49xTmKJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768246630; c=relaxed/simple;
-	bh=IOL2f2ETvAjxgDJDgSpVJ8tcFeaCbjd/D/caxxuX73A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ny4+J8kHJa/jIzOCJ8jYX9Uu9qelPETR18qdYO0gr0OYiY2cQ+MZ8V6PFwQsMMEblyLy9NTrgLfOoPbkZfvL6k5WxlhZi8XkJVt1WcXGQ6daLba9TIFvIE9aqgY3wTQ4kXFw41L19/dGsTC4X/Hae5WOeKbJZZ2vFhL2vCrYK0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=C7oX4YPR; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1768247258; c=relaxed/simple;
+	bh=hvA+q5lpfuetswZcsipsYU04KGlZTBn8K5wNzdydcIo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=j7EE8rvJq+pFiNnpEJ7GQtXxo+1CtGco0UtojH5p7aR/mjPZWVk1pXv79mxCNV55CW2fxz92iZ9aPR/5T4K6ht/uSc88AV5fEKFKIVVaszsjLPiEaGmyyGylkIucu+Ph62XXUgMcyf70IAcKhBG/y+ye1oZHWWVnC4cQ2mf6sGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GyVOpUa7; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="C7oX4YPR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1768246623; x=1768851423; i=l.s.r@web.de;
-	bh=aANr+TzQZJ3iQJkUoFzGtrP9my8Qnzl6lMcFxsHdxdY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=C7oX4YPRVVqnFZYK/xlQDFteu1jESql+7OwNUrxZLhbl6Mjsumzb1n7VHLye/mA+
-	 cvp/7L4plDkGBNuHXEUleXm+DTazKvQvCfX0Qd56vy4Z1o4Q1/gSvTPOtcP4BC9ED
-	 /ET2tV6+mAsC8K3CC8I7BHtAE8rZV2jk3WoVagRH9q8a9bnE1I9YxP+Zn5j9O/u6A
-	 MQFAJGU/60IvVAZee/jFgX/qFCmxJnsIMV9IOPxx169IiZb3dHVrQaLTODf0HvwEp
-	 DZWRhLbuuTw7fX1QwlYkinoa6KlqTAjBWoHDwi4IrvxbmDKghaPcWoeJqHHesZ32d
-	 Iuc4rRq6irT73Plg3g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.19.215]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mm9VU-1w5x792pvM-00jOF4; Mon, 12
- Jan 2026 20:37:03 +0100
-Message-ID: <89e23323-7e0f-42b6-9a89-dd8a682644dd@web.de>
-Date: Mon, 12 Jan 2026 20:37:03 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GyVOpUa7"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-382fea4a160so52733061fa.2
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 11:47:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768247255; x=1768852055; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hvA+q5lpfuetswZcsipsYU04KGlZTBn8K5wNzdydcIo=;
+        b=GyVOpUa7vpNM2bVel/PT23Pp1haNePSuyv4c3zYf3KIJ+rqXEE8jWKIN8a/8jd1bpd
+         UrVeHU5IEntJzFNpQJ9u6z+jmgEH7HFyTedApVzocarduYd4scFt+JlHjSfjw555wzbs
+         if6z6qYTDdWtQb9J6eaKgsAJfzI2cMl0s2XzCvc63w6I3yyx2qb95Ns4EO4qqGSyOX73
+         BaMtVYpErjGXmgWniRZo6y0uE/XD3kxEEoSA8qEyfDtIVBx+okIjrlNcIy6D4NUDYGa4
+         nCUJWI6+d0FIy4nqVREVxqZnnbxIOyK+EhoTzXPECBPSvK7LWFrzW5TlyuzVd4OWjWvt
+         P/JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768247255; x=1768852055;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hvA+q5lpfuetswZcsipsYU04KGlZTBn8K5wNzdydcIo=;
+        b=aUm/OXA6bVJQ0VfUOpoxiQs29uQ9qSztbXsvOR1qdU+VqxX7D8NqMjk8rZqlxUCUkA
+         tHSSacPHtSLWR6k/5kD+lhJaGaSjsybsDGHGoP7B4hIY6DSyMQfQjAOF3z2yevkOpJgr
+         V1xD8INmQs/ATWhj34UJFC366e0re/avohbv41IY6eC2a4ng11FunaGzI/b38p+mZe6S
+         Vi9EvMrv89eHPOTkjHLxcge3RBX8a7tG87qBeEn4YoIUSAszjvhFCfSHhH9nddzwNMRY
+         uleiENutV48DI0hB28nkoJmHXmyVRK8ZTsep+JgJe3DDavvc4DxErmRrUthE5DVsZasP
+         2BZw==
+X-Gm-Message-State: AOJu0Yws9DssP1Ktiq9+BVntp7oNFnvXKqleF/Sbc+YDHN57wNlL73wE
+	/nYVDM+HhfiPo4leiE2DaSHaJi9ZlIxs/FHE1yMi7718rjqVqM7UHp20
+X-Gm-Gg: AY/fxX7aUqV6gZCBEnZmFH/vOyPx27pAcg+9vmRmNsk7jF0iOG3rRwaq/zfa5grnvQ1
+	FZG/KDHFU2pq43zSDYvfGf9m3OIOu6HUNy8xR/p9cajEjf/mXkSHkyt5TVm1wV7qfQ8d1fXUJoG
+	ohHhRgSLQevmBwnVoY2YZqthVGK8yYgVE6ErUyUheYjC2MM5NgPncXH1HkV6gdLy0Kbd4ZofYL1
+	ZaGWqirQSNU0GjA6dWLKTLYS9zWChtG5AR6mqBtzhQHAwcDLy7wJ3C1ps2OK2oCcilSx2/bbkxH
+	am4lLsrSgaGKYq1r0N7MfuCuHaNUiWDr40W2XRfM/JzCqwpDxLCvHPHdo6jAp8RDlnJsSZ7RV4E
+	4ueFvzlAGJmyxjng3f1ssK2lT55lAF3fu30Cxb+kbbiJNiuawxyRdxNy6H8c8hnduQz0K6evWo5
+	GCOxz0ISZd1v/2L7j85DK+MLOP6UWz6gieVKo0TBfjdMMk6zkf/NZ40QcWkgY9POD7Ws4xOHU=
+X-Google-Smtp-Source: AGHT+IFlTtjaBHM3pX4HJaY/JuetMob22nOu2Odf1Tuxx5QGJwqbJPERioNCz2eOFozSkbakE4USvw==
+X-Received: by 2002:a05:651c:887:b0:37b:99ec:9bfa with SMTP id 38308e7fff4ca-382ff85488cmr50956511fa.45.1768247254943;
+        Mon, 12 Jan 2026 11:47:34 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382eb3bf079sm40128771fa.13.2026.01.12.11.47.34
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 12 Jan 2026 11:47:34 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	gitster@pobox.com,
+	haraldnordgren@gmail.com,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
+Date: Mon, 12 Jan 2026 20:47:33 +0100
+Message-ID: <20260112194733.23192-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <d2ea8560-1473-43c0-96c1-e1869e22c721@gmail.com>
+References: <d2ea8560-1473-43c0-96c1-e1869e22c721@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] tree: stop using the_repository
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20260109213021.2546-1-l.s.r@web.de>
- <20260109213021.2546-10-l.s.r@web.de> <aWS9Ll8CQ3eILx3z@pks.im>
- <xmqqh5sqoqr0.fsf@gitster.g> <aWUMn6G0C1cHA4qY@pks.im>
- <xmqqms2in9hb.fsf@gitster.g> <aWUTNU7WGTwHt6Ks@pks.im>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <aWUTNU7WGTwHt6Ks@pks.im>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qh/cOrS+EYfLgkLCX0ovCGRFpfTZbMkE+N0xFEB3kkYpvewDROR
- sFiUPChLHwo5MAI6GuODHzOQwljrCkwuVtM8vq3lXZIr7GIKN0klJKi3E07VUI1DPhG2fNU
- AfQBM4pkZYL2FvNWHEV1Es3Dl/wEDZKaDUAInK+2q7rDVwLU6GA9v+iVMfSaCLP/+J6120K
- PnAlWP11MHlgvCKMbxocQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:aa0U5x3UDPk=;hL3gJ7pBtvHyUY62rrKuL38cvDM
- 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
- h8JIXSb1oE0qKfJB0=
+Content-Transfer-Encoding: 8bit
 
-On 1/12/26 4:28 PM, Patrick Steinhardt wrote:
-> On Mon, Jan 12, 2026 at 07:20:32AM -0800, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->>>>> In any case, I'd propose to move the compatibility macros into a sec=
-tion
->>>>> that says something like:
->>>>>
->>>>>     /* Deprecated wrappers that will be removed once Git 2.53 is rel=
-eased. */
->>>>
->>>> Please do not take release schedule hostage to one particular fix-up
->>>> series of patches.  Thanks.
->>>
->>> The intent isn't really to take anything hostage. It's rather intended
->>> as a hint that once a specific event has happened, we should take
->>> another look at removing these wrappers.
->>
->> I am OK with a comment that records the intent, e.g., "let's work
->> towards reducing the use of these wrappers", with the plan for the
->> next step, e.g., "and once we have done so, remove these."
->>
->> But the comment you wrote is forcing people to make sure we remove
->> the code that uses these wrappers and unless we finish it we cannot
->> release 2.53, no?
->=20
-> That's definitely not my intent. It's really only intended as a hint
-> when those should be removed at the earliest. Maybe something like the
-> following instead?
->=20
->     /*
->      * These wrappers can be removed once Git 2.53 is released. If you
->      * see this comment and that release has been published then chances
->      * are high that we forgot to remove them.
->      */
+> It is hard to discuss this without knowing what actually breaks. Are you
+> talking about the tests added in this series? If so that means we're
+> expecting a different behavior to what "git push" actually does. As Ben
+> has pointed out elsewhere in this thread, if you're pushing back to a
+> different branch on the same remote as the upstream branch you need to
+> set `push.default=current`.
 
-Forgetting to remove the three macro definitions is very cheap.
-Forgetting to remove their Coccinelle rules is a bit more expensive.
-Can add a reminder.
+Yes, it's my new tests that are breaking. Maybe it's easiest if you check
+out the `seen` branch which now has this logic, play with the code and run
+the tests to see when it breaks.
 
-Ren=C3=A9
+I designed the feature around 'push.default=current' which I use.
 
+If we would design the feature around 'push.default=upstream' then what is
+the point? 🤗 Why do we need to show status for both an upstream and a push
+branch if we are already pushing to our upstream branch?
+
+> The benefit is that you get a sane interface rather that returning two
+> different versions of the same string in two different ways (one from
+> the function's return value and the other from a function parameter). It
+> also matches what we do for the upstream branch.
+
+That's a good point about matching what we do for upstream branch, I'll
+take a look.
+
+> I can't seem to see that test. If we're printing the advice once for the
+> upstream branch and once for the default push remote I think that would
+> be ok.
+
+This test is also part of my patch 🤗
+
+I disagree about showing the same advice twice.
+
+> But we set show_divergance_advice to false for the push branch so there
+> is no need to check the flag.
+
+Good point! I'll update it!
+
+
+Harald
