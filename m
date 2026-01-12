@@ -1,53 +1,53 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D66C33F365
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 08:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8479C32FA29
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 08:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768205889; cv=none; b=o1y/iuXXvR9yAUBZDdu8mLMrmCUEydIIx2N/VEOYpk15f8XyB57pdZsg6PvQh+SWhraB+v2DQ2VeIEk1tUwnmleWRsSNX0ee26m4k5gV4JI24g/zZofsrv5FSu8FXdPIeuitVb3LG7oghAmtNypOM1+JaKtBqGGVV4Db7f6IQZA=
+	t=1768205892; cv=none; b=Iu11euUI0YjrMDDviEak+zWhGibpwqbKP8cmON1v3uTGV/Q7YbJnoTbzQeNWfe/9umSRLDVgtSGZ4zuXQifSjPrcEKZ8LYwQzcjisiG4GVVbUB1WSOue33OoBxLVPGEw9eN0SPh7aJqbWyK5chHMzxbZp6fGdLaefe1uvqO7ge0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768205889; c=relaxed/simple;
-	bh=hyQu49+zrsuJDLBk3vTLq7ZRCB7zV1fxQc/YRVG1uqE=;
+	s=arc-20240116; t=1768205892; c=relaxed/simple;
+	bh=OqQOKF2z8dHwvOB713xAHs0INIErNzpKNKBgj8w44Rc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D22VRETXRJI8B6zLB4pu4QHMooeXO60N4NuhvHFZSfPvcD8+wQI4raaVrZHS3xMDq9/omb5J+5SV0OHd5aOQjnP1t/TyTGX0D9b97Lz0E0+Pf+/qOYPlLWRyyFNp9mGXt1jmdQMVDHGNnjX+wqPGEIhbnRLXEocw9fjfTuCNaEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dinSzHCK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kDSDkx4y; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=XUSzmcCaa3O+P15I9G2Og1leoP+kxTD6f5rGMyigGadKqtS38bwbejeMMrlfR7NPIoW+uoHxizj17EExI35RVbw784TOsrwMnp5JU2HE8LbIw6R04Xz6wq7JRwFAYHCoBN8XBK0HQcAEqwV7Mi4bpqPT+W5g5DO/yNPI4EB7Cqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JCc0JP9A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xSZWPk2x; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dinSzHCK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kDSDkx4y"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9B28F1D000C0;
-	Mon, 12 Jan 2026 03:18:05 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JCc0JP9A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xSZWPk2x"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id C7D721D00033;
+	Mon, 12 Jan 2026 03:18:10 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 12 Jan 2026 03:18:05 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 12 Jan 2026 03:18:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768205885; x=1768292285; bh=smtI0tmGgx
-	A6JyXicRGE+0m7+R8XbTkjoznicZjTKe4=; b=dinSzHCK5DKhCH+LKzJv5+WrzS
-	Glx+IELsM68hfIFASTv/r2/fPRxPnA9K6hFrqsSJpZAY/kbhSg/7fDKK9b9twcgz
-	RsB3ZdumW2ymlUVANG+lydpV7qPCzWkAJE9hzpKnQWxEFpBa9sDCGfEAbeEu33rK
-	zaF3TlYMQslIFOFn6peTcA5Z6LaZWMl9Rs7MywS1Sy6yAJXIgfhhwyIjvxCgaPoD
-	l6Y+NEK1oDAykQ8PfXCtClHhrG0w9cpvHfMPGX7AxmY15YWrXpkTmtQ0qQIm+FZW
-	TurzIaR7TDPTzlIeVjfcv7AbY6H7kz0LJQBlqTkw83tCSRUu1jQZUyannlhA==
+	:subject:to:to; s=fm2; t=1768205890; x=1768292290; bh=+Si9wmlRjM
+	kMvTKz99z+cssjCiFt1FWlqYADs7DxDI8=; b=JCc0JP9Ae22QUgpOgnhRBm/U+P
+	CoHZOW8ZNIcyeoNo3CQ/9ndTpUWOWQEXDkCYiaNozSf/BtsH3HjBQVm+4SY/Dz9T
+	dzfC4LQI0PcS2c8EdWvbJr/a/Hef78/uCDnp2nNwmlJ9pKnBk2Nn8TfPtX/u56EH
+	1Vwf+cflw+IQ23yWdFn2PCPu2F4ZoQ4u4cVclVHWFU3KrO39x+Lhiwvh9yEHaQ1K
+	UX3hQY+wK8gC0SdSwkza24cDOmZ8uuox99iZQR1Ze7cEKTrPQh/pR+4PO5IwvhNU
+	J0QFjEvhIUtosQ8XnZTzpJGkHYI1SJ4Er78OiebSShsu+h/88u66rTUpmvkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768205885; x=1768292285; bh=smtI0tmGgxA6JyXicRGE+0m7+R8XbTkjozn
-	icZjTKe4=; b=kDSDkx4ycaI9liCRZaYzRYMUzk282HApy2S62Z5ik+aimZTthDK
-	n3zRC2GTTVSJhhoUiZyQpHrS4imfcADwS0AXLb7OelQR/Xkfkl2IFv2x9tVVMsm+
-	lRT+46LvD7fWOuy8xanchAVrPiFgSfug3upL8lxNG6eAVRBwW2nIBSUUn23+7US2
-	A0z5CpcoyClaWfgYLdzxrsmYbW5R61I5o7pL2YAugNDIsZuWSSogTMQBRzWb2EyK
-	VydVfq+xqv7bWs6bD3fRIXrTZaPlsndRJAnQ3j5z/oW6An7U8Ac9CIx9r4rnYuVo
-	zGFDVeUmL36/WlZVqcejPgU0ObrsZTA5Hvg==
-X-ME-Sender: <xms:Pa5kaaVWSprwx9f_krfQANJY6iHoHANBShi286FKiDr4bM4_V0c47g>
-    <xme:Pa5kaeAZbSPF3YFURMwERuru7WAFRnHx-2Z8BRhzg5jz2UBgMzU4YVent8EVwg_BF
-    tltuUFCOsZMvZxFVVWK9p3xiADKKJ_zlmtntNxmBQa1pPWRJ9_x0Q>
-X-ME-Received: <xmr:Pa5kabxMsWl8-Kpji1mM6q2lxk4ZdQpVilsXulu8VI6_SRR-eHKEMEm0QeSnBbXDxQLqYcnfEbqz2HiIJtxWRpZC5f74jptt9F4Ra4I4nw>
+	1768205890; x=1768292290; bh=+Si9wmlRjMkMvTKz99z+cssjCiFt1FWlqYA
+	Ds7DxDI8=; b=xSZWPk2xpfPP8Kaxv9rK0un7fBJTw5JzyXdp9y5K5ei9i5Dpsay
+	QXJpuleglyTkKzUW7l9FxhlUI5WNFmNj+J0yLtNyPMMvYVBRlpojSyqxTRMFu8Pa
+	wtcfVVicnJSIVbRaMP9jYUlM3IexxoUmVcovP2IagVdPqjfgQinE4xY+NF/ROu3H
+	wEMAA2g0FqV5r4GKOW8DS93VWm+i9BOsNcpayRlzOjYPtgi81uQV3YcnY5zIE12e
+	acEMGL2b+IMO0br+S5YA2XPGsPoKjJL6nuBbAVoaCL3AEknuE+al2CGMkVwAT2GK
+	+qbA+CSGeUkqtidMzMIwhUGWxXcjAcfuyLQ==
+X-ME-Sender: <xms:Qq5kaXUMKBWUbaeywFWfzlMAeM3DVIvTYsbRoTz18UiDOa2FuPYNbA>
+    <xme:Qq5kaXBj7KDG1_zvksjaMGO1OEUOmnRepZGq6FNhgWuDEI7sNMx-z816zQ65ErgOq
+    HN-jhX43qTiEhdJY-3r7Opg_ktqXm4dSf6KrX4k_k7CgcFDaq9jbQ>
+X-ME-Received: <xmr:Qq5kaQz_uuX8gTyNgUkHIoahKuIZDOBBqR9PBVBu-j3wCJ013KguNX3W3r7WMfqLOXWiOZgki3z2YheKQZJnL11k0OCKrajC8mB3igMMCg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeileehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,30 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeileehucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirg
-    hluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
-    rghilhdrtghomh
-X-ME-Proxy: <xmx:Pa5kabAXiflBGe2yllxfCcUM6hzUiijQPbQ_4ymrcBBh2C5IzFLGmg>
-    <xmx:Pa5kaYaxSEtpz23zpeZa5va5IPGU59Zbjk64XL9M_SM83cfHfhcFIQ>
-    <xmx:Pa5kaTh7i0MKo0GZ6bfYppUTotwRHTSIGQ-ErsxjDQSUeNoj94FINA>
-    <xmx:Pa5kaa7QiqgEo54yjsxv2FsnImv0NoHRGKjLk1Wv8d4Gq_FXNODdyw>
-    <xmx:Pa5kaSeQMwHUaBhjfE-NdruWwMt83Fb84epV2-ijlnmCO5Ol7KRO-bXl>
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjh
+    hirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Qq5kacDjnUFKfu6etKDG9E7npxpxjQtzFDn3uO1M5TH9xW5sgpjsrQ>
+    <xmx:Qq5kaVb0OarX0nZIJIU7WIGhMadM0ufxiYKBSMh0rpQV6XmDi1DuDg>
+    <xmx:Qq5kacjNC2q4AZN-0lCH6xqqB1ku-gnYj9yT45-X2Txx9_34xNk5Xw>
+    <xmx:Qq5kaf5XG1TG1RJxvEhQOjaiaN7Padg6NL-N2Ero-AqlpZ5kcTn7TQ>
+    <xmx:Qq5kabfycCwf1P41UBKJd9SWdxmguhs40S72W8MMzRbftbeGbCNRLtL7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 03:18:04 -0500 (EST)
+ 12 Jan 2026 03:18:09 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e98e32f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 08:18:04 +0000 (UTC)
-Date: Mon, 12 Jan 2026 09:18:01 +0100
+	by mail (OpenSMTPD) with ESMTPSA id acccc050 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 08:18:09 +0000 (UTC)
+Date: Mon, 12 Jan 2026 09:18:06 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 16/17] builtin/fsck: move generic HEAD check into
- `refs_fsck()`
-Message-ID: <aWSuObEsFaxi1NAf@pks.im>
+Subject: Re: [PATCH 00/17] Fixes and improvements for ref consistency checks
+Message-ID: <aWSuPkzH4RsG472A@pks.im>
 References: <20260109-pks-refs-verify-fixes-v1-0-3587dba18294@pks.im>
- <20260109-pks-refs-verify-fixes-v1-16-3587dba18294@pks.im>
- <aWJUm-hrPquegbdf@ArchLinux>
+ <aWJWCiTFQAZqDb9y@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,52 +86,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aWJUm-hrPquegbdf@ArchLinux>
+In-Reply-To: <aWJWCiTFQAZqDb9y@ArchLinux>
 
-On Sat, Jan 10, 2026 at 09:31:07PM +0800, shejialuo wrote:
-> On Fri, Jan 09, 2026 at 01:39:45PM +0100, Patrick Steinhardt wrote:
-> > diff --git a/refs.c b/refs.c
-> > index c3528862c6..a772d371cd 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -334,8 +334,18 @@ int refs_fsck_ref(struct ref_store *refs UNUSED, struct fsck_options *o,
-> >  
-> >  int refs_fsck_symref(struct ref_store *refs UNUSED, struct fsck_options *o,
-> >  		     struct fsck_ref_report *report,
-> > -		     const char *refname UNUSED, const char *target)
-> > +		     const char *refname, const char *target)
-> >  {
-> > +	const char *stripped_refname;
-> > +
-> > +	parse_worktree_ref(refname, NULL, NULL, &stripped_refname);
-> > +
-> > +	if (!strcmp(stripped_refname, "HEAD") &&
-> > +	    !starts_with(target, "refs/heads/") &&
+On Sat, Jan 10, 2026 at 09:37:14PM +0800, shejialuo wrote:
+> On Fri, Jan 09, 2026 at 01:39:29PM +0100, Patrick Steinhardt wrote:
+> > Hi,
+> > 
+> > this patch series contains a bunch of fixes and improvements for ref
+> > consistency checks. It is structured as follows:
+> > 
+> >   - Patches 1 to 4 contain a couple of cleanups for the consistency
+> >     checks done by the "files" backend.
+> > 
+> >   - Patches 5 to 7 introduce checks for root refs for the "files"
+> >     backend.
+> > 
+> >   - Patches 9 to 14 introduce infrastructure for shared checks with the
+> >     "files" and "reftable" backend.
+> > 
+> >   - Patches 15 to 17 move some ref consistency checks that were still
+> >     driven by git-fsck(1) into `git refs verify`.
+> > 
+> > Thanks!
+> > 
+> > Patrick
 > 
-> We would first check whether the current ref is `HEAD`. And I am
-> wondering whether we have some common APIs. And I find the similar logic
-> in `reglog.c::is_head` like the following shows:
-> 
->     static int is_head(const char *refname)
->     {
->             const char *stripped_refname;
->             parse_worktree_ref(refname, NULL, NULL, &stripped_refname);
->             return !strcmp(stripped_refname, "HEAD");
->     }
-> 
-> I think we might just extract this common logic to avoid introducing
-> repetition.
+> I left some comments. In conclusion, I very appreciate the direction to
+> share the common logic for both "files" backend and "reftable" backend.
+> And also, we could check the correctness of `HEAD` to make the ref
+> subsystem self-contained.
 
-Hm. We could, but I'm a tiny bit worried about just calling it
-`is_head()`. It might be surprising to some callers that there isn't
-only one "HEAD", but that this would also recognize worktree HEADs. If
-somebody just goes like "I wanna know whether I've got HEAD" they might
-not think about that at all.
-
-So given that the complexity is comparatively low I'd prefer to keep
-this as-is for now. On the other hand, if you've got some proposal for
-how to make this interface not confusing I'm very open to that :)
-
-Thanks!
+Thanks for your review!
 
 Patrick
