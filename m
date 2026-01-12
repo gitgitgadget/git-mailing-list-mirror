@@ -1,196 +1,135 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E361F2D061C
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 14:52:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CDC27CB35
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 14:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229580; cv=none; b=AOd0VeNEFYxYRGiyYuY3Mc8wFRfXoOx90VVAiysvXkF/dUguFAt9aZuJIClHqJmHTU1XwLwxx9MFg1Y24AtucT+TArDkrgUT5C1+evWjS/dDJxY/eRlVCqNz1MSmS/7XtugKHLK8hKDU+zHVEkEiZHvFKMyI93qVtcdMR/rxe9U=
+	t=1768229652; cv=none; b=N4lxeN7A7kVAxGP2QDjaFhCoQZvHJhBkucjLQrYRw3esMHoJTWoJNawy2H8yXSLo2BFOQCWbw6xfraI1y/hh0KIAMGR0R+KnTFT3TNvRVp9swWT7RDzDGLpOw577Z02FaQHFj+/dVhfUtKvPs7xNoGW2Qx89NsN3s4DRQQXK2PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229580; c=relaxed/simple;
-	bh=N6gJ14ZSeonQ0oEvZOqPecAtnHwR2DWQwL2STd/Qsxw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ldm4a4SS8y8kJ1TwlQ5y7TGeWw0+2mmvL8gVNeGXqMegjwJ01oTbtDicXM0d4BwXhh6OKpKvGD43I44lU2b30+6Np0Ee6APT54FxbMdX7ljolqBJe66Ak3Qj6d9dldpZYQ1YRj5pBqd9cjvqDo9kb79+Jtt2ph+/7/pN0BZqR0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+LfMS+k; arc=none smtp.client-ip=209.85.217.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768229652; c=relaxed/simple;
+	bh=jqZqJrpx9nPewPRZRgOEeGz35FRIIN5P7l9P4co07uY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=e5an4Dh/XiRG/fwJia2WFO3kuEcNlm3QU6xVFGrSSZihbDs5eqjQKJrE0yyydJS0PvWXKtUnn6CyITmhk62cfeEEuu6YPd4nPxPkJojIUUoItt+sZQP8lYGO6PHha5/4hN/PY69PtCAo5D8dx3xZm2uUKTs+q/Ab1jyUMucPG20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MoiONJLs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YmVNb00y; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+LfMS+k"
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-5eea2b345fbso1384511137.2
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 06:52:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768229578; x=1768834378; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SRF/0hWHO3ib/07OsFApHEIvBZ2GYRaJYmP1gmbRAgk=;
-        b=b+LfMS+kR6thFwsxugtaNaGBMPraS+IJZLK9TfOw00IeD1PvxK1Il1feCo1Atqa+6d
-         btAmJcWuuTvjrmH2fYb0iMvk8eo2v5lxjEWXEiZv4KG17xMM7c97VqwCDNJJZoWExA3Q
-         Yi/GqsDE62wd2cobr0GwE2cmMHaZcNFoeEWBfYABL3TVYgEGgbquvPeoO2EulxmdOLK1
-         wQrYxZ6PQIXu5U8UB+w9KH1kAkCdAm1DPP5OG+o1YJZdzQFQ9rZ3gRFJlvsOWocvXYDN
-         H5SMzIjxazOMKsH/enH1F/oALPm4fFieK/6n/Lx5Lm/PynKCLZ4llxKBDwRBCXg21Dpk
-         0pGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768229578; x=1768834378;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SRF/0hWHO3ib/07OsFApHEIvBZ2GYRaJYmP1gmbRAgk=;
-        b=SuRwmICCuPZajm38RF4U09anHi+4gwM1YCsQVuD0Q1lFGpMgWvCYP+acLWSk0pnKon
-         AjV6q/5C85xL87LOUjFPBqrQ80tMhnSrBvV+/7g5lm9ZICY9t8u5quvl9zJkK2hHyRH3
-         Btrn8FckclfXxq2uQrvtPwelhQX5vAaIbxBrNb0R9QheQJmafjH/QqxE9EKasRexDsT8
-         WV60/HLVYJyRQ+ahNbrVdiqxDRh8vNL0COUssZkWbXKWbAk6hko4B/Cr2mIKPKmmTbwj
-         9xvZz5/1u0NzOXFrPqhekp/8VEGqt9uhy6PmJO60uQOqdNfmV3sEvQ9nnYOgY9DhqU68
-         YCOw==
-X-Forwarded-Encrypted: i=1; AJvYcCWMs24kW/12RIFLv3w1sVqqxNC3A3ZnhHoYqDrw6vNveYrJjFZknlEH5K3TX/217YARzW4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YypNtL7tWFibKjTk+l/1Q/lV9jU72KWbjHrMEV51lQcyLFfSNBv
-	O+kDeMCzpTs+vEqVGl5NC5IW/CIA/u0IqTWPI36jEWfYmPo0Dqcl+E88kmPKMD6r+Z8obxEkUcH
-	JHdEG85zvGTceLrw2gznU5OclmMcqL9k=
-X-Gm-Gg: AY/fxX6KOQuA/IeksSjJwFvx1Bm1ks8RS1OuEXvQu3RQIKLsheUNVtl0hbwGM3tahab
-	H9Qi3xK+9k/g2xPYqkb4f5/Y3//PvWtNHWeBAtxQheCobq0UZ+SXR3cMwljRdE1vuJ9a6HBrtpE
-	A0/CyTQt8tU2GxWES5yWCwD9Yvtnj6JXOKUJ5F9+8EbREYZfM/hgzYxg8bdTkoh1UDiDPJkJrAt
-	9+3C3N2vAzM+19l2CbkSJ3gdn/IiklTFgg+YGXjlph6Q7QGw1kRACAITcF4hABNiSG42CDVfUuW
-	EbwiWreALsMwygBzFR4ecAN8U0yBzXqPJGIZFUj+
-X-Google-Smtp-Source: AGHT+IHGeYOpO/D3neFb7uKMa5s9LDYOFLWpGbl92RIp2lsrjtBZcyaOrbIxQbuVHPCktALE0gpaczMUvENXsWF3Knc=
-X-Received: by 2002:a05:6102:3908:b0:5ee:a6f8:f925 with SMTP id
- ada2fe7eead31-5eea6f90e16mr4636242137.8.1768229577657; Mon, 12 Jan 2026
- 06:52:57 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 Jan 2026 06:52:56 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 Jan 2026 06:52:56 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260109-b4-pks-pack-store-via-source-v3-4-877fd7b7bf81@pks.im>
-References: <20260109-b4-pks-pack-store-via-source-v3-0-877fd7b7bf81@pks.im> <20260109-b4-pks-pack-store-via-source-v3-4-877fd7b7bf81@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MoiONJLs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YmVNb00y"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 055DE14000C8;
+	Mon, 12 Jan 2026 09:54:10 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 12 Jan 2026 09:54:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768229650; x=1768316050; bh=McQgzGS1Gm
+	06Y+tObkADyb3lRYWIu7OJ3kYVWrU2+5A=; b=MoiONJLsePz9G1p/J4Y2Rusxw+
+	eFq9LahN8dhSot7ViCDdS/F7E8pWh6Ff1Bs5g22kOVLgzMyR5ORslvROidxkxPln
+	8IIfxpCDdKpedq/ZViFk0A2vDSXOZB/gkaH8WbQfzMupJ2LdyAkOUM4Bf10jaPMu
+	7bhE+hWD7TmjkHGZ14n1BT0GIKDoG3SSSNdTvbnkCKgyfYTgJlnizhRPUp2h4ML8
+	mEOAuwPUtU+icpdrwp81GQNkQ6ihiWoJFWUfktbmkF5HUV/QIPB56zWID9us5WHV
+	/IKSRzraRvDVTCfq/wLoXjujis+IdvR3doeFaj3bOZ0Xx2rXty5DZhsojG0g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768229650; x=1768316050; bh=McQgzGS1Gm06Y+tObkADyb3lRYWIu7OJ3kY
+	VWrU2+5A=; b=YmVNb00yuRaDprIhFmf2DYnpbpeeIjdGSyv8qazUyZu1kFrBM6J
+	frLLkIHoImUou3ZtomWQB6p4eix5F/ZagU0qXn1/s4y0tDiHKJ8x0GJnaREYW/J6
+	tgUhA7eMc17jueJXlzmPUCzgPKxyNtBNtdEn+2mC0+tiuSwCNaq/hUIGRnRpSS/v
+	WbF9b1ghuvkh/dLNHEIEYIVLXF79GQn7TQLdjyrWUH5o9b8EbcRMkAgAaJqTyX1k
+	6YTcvj73yJib/mer2OAyg7pnD74WODLs9ClwBR31POiIkwtIOL4l5pNMGcWYkgez
+	mRyR4lRoSYzAMgmm4iB++KGrKwqpbtKlp+A==
+X-ME-Sender: <xms:EQtlacgkJQF2A3mOKzo13n21xyKbQf9MzxZv0U6vHf75PTTy6SpjXQ>
+    <xme:EQtlaUFUpcJvaad5TX8H6osLGZb9oclyq44AYO0ak0onVuVGYYW8TjYJWJleGaESZ
+    PG62YbfDNP_AWfVqzIvmLoiY0_LEMrn-wRtIPuv_Yfj-5eYzCx_BQ>
+X-ME-Received: <xmr:EQtlaaQDkAcBY8RymjzmwFKl_wryVVtCucCUJ-q3uIO2CCyiIFztIzShr8ziNO7bzv_AI6FT7mdQCf7VBmlofl5yedcXvCMSIY76pEU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejjeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepudffiefhvdefveefhfeigeetgfejgffhudethfehudeifeevgfeiudekhfej
+    hfdvnecuffhomhgrihhnpehprggtkhgvugdrihhsnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhsse
+    hpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheprghplhgrthhtnhgvrhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepkh
+    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
+    thhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrud
+    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehmshhmihhlvgihsehgihhtlhgrsgdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:EQtlaZwCsKP-8S1bFrW3QD7wWl0tWROLkvH0zZ8dzifjD06oQvZNEg>
+    <xmx:EQtlaefSV6wUpSLrj50UU9FfnONmSyF2Vi_Az-gYVDoL0-yfKIH1-A>
+    <xmx:EQtlaUNUjOikezVvOjq8og3M6hr8dpcvkHi3BU3qQQlCTCYN7MZvRg>
+    <xmx:EQtlaRtj-2G3GyvWT-UjSzdB7ehH6qdLXcG_r19FMTRfbIYR10lRaw>
+    <xmx:Egtlafhbwx2rSua4dNKlG-Km2nzd_0BsRyNltFMnE6o21GorQU0O4UBk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 Jan 2026 09:54:08 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Aaron Plattner <aplattner@nvidia.com>,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Toon Claes
+ <toon@iotcl.com>,  Karthik Nayak <karthik.188@gmail.com>,  Matt Smiley
+ <msmiley@gitlab.com>
+Subject: Re: [PATCH v5 2/7] packfile: always declare object info to be
+ OI_PACKED
+In-Reply-To: <20260112-b4-pks-odb-read-object-info-improvements-v5-2-9a6124e95bf2@pks.im>
+	(Patrick Steinhardt's message of "Mon, 12 Jan 2026 10:00:42 +0100")
+References: <20260112-b4-pks-odb-read-object-info-improvements-v5-0-9a6124e95bf2@pks.im>
+	<20260112-b4-pks-odb-read-object-info-improvements-v5-2-9a6124e95bf2@pks.im>
+Date: Mon, 12 Jan 2026 06:54:07 -0800
+Message-ID: <xmqqzf6inapc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 12 Jan 2026 06:52:56 -0800
-X-Gm-Features: AZwV_QjNoRpzNmcM9b7qnbWc9CgdY96Ozonvz4s6Qbdvr3M7AlythUaVMjJ5pUI
-Message-ID: <CAOLa=ZR0sM21dpS5cfhhPQZLHOq5L1KXM5h0jXaK1+m17CV5xg@mail.gmail.com>
-Subject: Re: [PATCH v3 04/10] packfile: refactor misleading code when unusing
- pack windows
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Toon Claes <toon@iotcl.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Content-Type: multipart/mixed; boundary="000000000000dbaab10648320772"
-
---000000000000dbaab10648320772
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The function `unuse_one_window()` is responsible for unmapping one of
-> the packfile windows, which is done when we have exceeded the allowed
-> number of window.
+> Note that this also fixes a segfault introduced in 8c1b84bc97
+> (streaming: move logic to read packed objects streams into backend,
+> 2025-11-23), which refactors how we stream packed objects. The intent is
+> to only read packed objects in case they are stored non-deltified as
+> we'd otherwise have to deflate them first. But the check for whether or
+> not the object is stored as a delta was unconditionally done via
+> `oi.u.packed.is_delta`, which is only valid in case `oi.whence` is
+> `OI_PACKED`. But under some circumstances we got `OI_DBCACHED` here,
+> which means that none of the `oi.u.packed` fields were initialized at
+> all. Consequently, we assumed the object was not stored as a delta, and
+> then try to read the object from `oi.u.packed.pack`, which is a `NULL`
+> pointer and thus causes a segfault.
 >
+> Add a test case for this issue so that this cannot regress in the
+> future anymore.
 
-For my understanding, when dealing with packfiles, we mmap windows of
-the packfile onto memory. If this is above a threshold, we need to evict
-one of these mappings, this is done on LRU basis via the
-`unuse_one_window()`.
+Great.  Thanks.  Will requeue.
 
-> The function receives a `struct packed_git` as input, which serves as an
-> additional packfile that should be considered to be closed. If not
-> given, we seemingly skip that and instead go through all of the
-> repository's packfiles. The conditional that checks whether we have a
-> packfile though does not make much sense anymore, as we dereference the
-> packfile regardless of whether or not it is a `NULL` pointer to derive
-> the repository's packfile store.
-
-Yup reading the function for the first time, that struck me immediately
-too.
-
-> The function was originally introduced via f0e17e86e1 (pack: move
-> release_pack_memory(), 2017-08-18), and here we indeed had a caller that
-> passed a `NULL` pointer. That caller was later removed via 9827d4c185
-> (packfile: drop release_pack_memory(), 2019-08-12), so starting with
-> that commit we always pass a `struct packed_git`. In 9c5ce06d74
-> (packfile: use `repository` from `packed_git` directly, 2024-12-03) we
-> then inadvertently started to rely on the fact that the pointer is never
-> `NULL` because we use it now to identify the repository.
->
-
-Nice investigation, that explains.
-
-> Arguably, it didn't really make sense in the first place that the caller
-> provides a packfile, as the selected window would have been overridden
-> anyway by the subsequent loop over all packfiles if there was an older
-> window. So the overall logic is quite misleading overall. The only case
-> where it _could_ make a difference is when there were two packfiles with
-> the same `last_used` value, but that case doesn't ever happen because
-> the `pack_used_ctr` is strictly increasing.
->
-> Refactor the code so that we instead pass in the object database to
-> help make the code less misleading.
->
+> Reported-by: Matt Smiley <msmiley@gitlab.com>
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  packfile.c | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
+>  odb.h                  |  1 -
+>  packfile.c             |  3 +--
+>  t/t5003-archive-zip.sh | 34 ++++++++++++++++++++++++++++++++++
+>  3 files changed, 35 insertions(+), 3 deletions(-)
 >
-> diff --git a/packfile.c b/packfile.c
-> index 191344eb1c..3700612465 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -355,16 +355,15 @@ static void scan_windows(struct packed_git *p,
->  	}
->  }
->
-> -static int unuse_one_window(struct packed_git *current)
-> +static int unuse_one_window(struct object_database *odb)
->  {
->  	struct packfile_list_entry *e;
->  	struct packed_git *lru_p = NULL;
->  	struct pack_window *lru_w = NULL, *lru_l = NULL;
->
-> -	if (current)
-> -		scan_windows(current, &lru_p, &lru_w, &lru_l);
-> -	for (e = current->repo->objects->packfiles->packs.head; e; e = e->next)
-> +	for (e = odb->packfiles->packs.head; e; e = e->next)
->  		scan_windows(e->pack, &lru_p, &lru_w, &lru_l);
-> +
->
+> diff --git a/odb.h b/odb.h
+> index 014cd9585a..73b0b87ad5 100644
+> --- a/odb.h
+> +++ b/odb.h
+> @@ -330,7 +330,6 @@ struct object_info {
+>  		OI_CACHED,
+>  		OI_LOOSE,
+>  		OI_PACKED,
+> -		OI_DBCACHED
+>  	} whence;
 
-This is much nicer indeed.
-
->  	if (lru_p) {
->  		munmap(lru_w->base, lru_w->len);
->  		pack_mapped -= lru_w->len;
-> @@ -740,8 +739,8 @@ unsigned char *use_pack(struct packed_git *p,
->  			win->len = (size_t)len;
->  			pack_mapped += win->len;
->
-> -			while (settings->packed_git_limit < pack_mapped
-> -				&& unuse_one_window(p))
-> +			while (settings->packed_git_limit < pack_mapped &&
-> +			       unuse_one_window(p->repo->objects))
->  				; /* nothing */
->  			win->base = xmmap_gently(NULL, win->len,
->  				PROT_READ, MAP_PRIVATE,
->
-> --
-> 2.52.0.542.g9473a8513b.dirty
-
---000000000000dbaab10648320772
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: c1b5535eb987db70_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1sbENzY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMjdWQy85TlNzK1h3U05ORjN6OEFQamtqTXk3ZEdVNAowR1lua1NMN0px
-aGw3bHdEbFNPSGYyM2VQaUhwWkpQWUNYdWd5d043b2dNRjYwZTZUeEFGVXpFdXJWaHBpUTJaCjVF
-b1pHVldmU1Q0Wm5SL2x4MXZDZXhvcUc0Y1MzOTU0T1Z0RnFDQ3VNQ3NwVmhMYW81dEVmdk9BT0Iy
-ejI0QVIKcldtdG05WEpsQWlnOFdyc2x6WXB3S0FmVjVvZWhoTGRMRm5aR1VrUWNSakVMQjdqTS9Z
-bFhLWHhIN013NkxZWApHVXJVeStPV0l2ZWV6bGd1aHJWeXcyREQyRmZJV0pHYmlLbHQ2dlhtV2xh
-Qk1NYUgwcVEyN1dBb01xak1maUJFCnI1RWcxczF6OExIMnRwb1ZFZk03R1lIMisyZGZmOElPbXpU
-d1BjQTVuNGpZRUxRVm5ETFV5OFNyTlprdnRUNmoKWmdqa01oeFNLc0xpeE5jbWVtS1RXSWlQQ3VE
-cnl2TkhEbUVwekJINXJzVjFEa3licjBwbk5UUmVNTEdHWSszdwpRd2xGd1NNVjNvaHhzRnBFMzVQ
-SUE1Ulc0Y2ZYZ3JHalJXYUdkbW9HeHFyWWM1VXZrOVJoR1VYVEJEUklWaTRsCnZONit0Y3ZFekJQ
-dlFuNUptd0pWQWpUWWxOR0RmRk15WENPM0d2OD0KPVRidEcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000dbaab10648320772--
