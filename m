@@ -1,105 +1,112 @@
-Received: from mxout1-he-de.apache.org (mxout1-he-de.apache.org [95.216.194.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C544199EAD
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 23:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.216.194.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA4F2BE034
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 23:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768261089; cv=none; b=pB3k2yuC1FAkh6m0Wa/+JfYmSHEk5mDXS47xkMqlcPmngtVTJvvsK3T86pexGbnXtw02r64WqUD9ZjhpeMfsQ+MFII0D6pW6SmchNK63d3Mkb2Pls2GVB0IoxjdmcDL2WmnxmJfllxcwSIDyTmpgkcn9UcbVAFxD2H3s50xGd5M=
+	t=1768261503; cv=none; b=qt56FudaG9vOVeYT5OTU8wyiF3YIbAJfpTSKtEiH7Mr0334qCfUzJB+Dx1lD/6jAo0pCTrY1+S4xCs48E53jSAqABM4Egee0ZurmSHxuQALPfT+8m8ir0vhHizOEQeq7QiJv2pj014R4pyFNll2OHrVqO1l5OyPgIGt5gGfJfEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768261089; c=relaxed/simple;
-	bh=StWRfVMTAKGnOt5a1zLojD9emdhrEz9HsR2POW3CiBw=;
-	h=To:Cc:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=MfvUWESh14w2fm1cD7Qy0gvN+0Db7FcZB2OFbu8pyHHYqVDUHVFH0+sgpcOocYZ1QCZ/LSwe0EmEJXF1HZmW8u23/WkIvbyjo/ojyleglQN4Ex/ghf8ntYRFPfji8gpdQQhiLEDL+KNyS+PQ5TOr9vFlkCqjwM9SbetLghiGEMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=apache.org; spf=pass smtp.mailfrom=apache.org; dkim=pass (2048-bit key) header.d=apache.org header.i=@apache.org header.b=NhCPY61U; arc=none smtp.client-ip=95.216.194.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=apache.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apache.org
+	s=arc-20240116; t=1768261503; c=relaxed/simple;
+	bh=2wJzWEIgAVlHoRZb4eM4aJw7peqy1wvnf64GOfVYNWQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=NaDxWFjV7ZRzOz+f/AHjHzK7yhokXqdNWG6jeyIjyXyNBsddERxr6rvQLqy9qYlLok6wBwcZqxZ2OPdE/inKkgPPZzFtD+Fv4APwgJOEFW1LAP78CN+5wCHt7y0vMdz6g/CloRw6UY4WweYTatQHnqOtZ/20diQgwK0Pl9VBDN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=iY1PPuxP; arc=none smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=apache.org header.i=@apache.org header.b="NhCPY61U"
-Received: from mail.apache.org (mailgw-he-de.apache.org [IPv6:2a01:4f8:c2c:d4aa::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mxout1-he-de.apache.org (ASF Mail Server at mxout1-he-de.apache.org) with ESMTPS id 4B269655C2
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 23:27:32 +0000 (UTC)
-Received: (qmail 132187 invoked by uid 116); 12 Jan 2026 23:27:32 -0000
-Received: from mailrelay1-he-de.apache.org (HELO mailrelay1-he-de.apache.org) (116.203.21.61)
- by apache.org (qpsmtpd/0.94) with ESMTP; Mon, 12 Jan 2026 23:27:31 +0000
-Authentication-Results: apache.org; auth=none
-Received: from [IPv6:2001:569:bef2:d200:63e1:9891:d2d4:fc0] (unknown [IPv6:2001:569:bef2:d200:63e1:9891:d2d4:fc0])
-	by mailrelay1-he-de.apache.org (ASF Mail Server at mailrelay1-he-de.apache.org) with ESMTPSA id 0A2EE42698;
-	Mon, 12 Jan 2026 23:27:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1768260451; bh=YgIHm7QZLzRXHPFhU2Yx1VR3B/oBUlJVAvrIjP3aEnA=;
-	h=To:Cc:From:Subject:Date:From;
-	b=NhCPY61U1mVVpCbVjmrexrLZrNWpeZjKZbGg5e0ocS9wMgI5a3WvMuMKYi4ECONJm
-	 TavCEgtqVVzHX4X7ggZwpQXVMd2AmL3MxbHd4r36tkEaCRltLTGC9n4vZps8Pg9Hn7
-	 Unzq4ccsEDm/4ls3jY2HQ6tVVoapTmhepQmBriNBKOqLNK5qT97A9H6ofgiE/9IHFm
-	 eZ9gfLHrZdC5GvSsXq9wXx1/Nfb+HDzCz9LYYZH8r5XUFGHbcUmyp6d/4AaF9BuAwJ
-	 0NqcvlMYFqr5Y4QiGjPU/cb2LDYBDXfIAq/YlG09k6oPYUADS0/7ozPl1z4Gr0dWVX
-	 xhzFLbqYXLUPw==
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="iY1PPuxP"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-64760131fc1so3652749d50.2
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 15:45:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1768261501; x=1768866301; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=efw282N2NOkfC+7tCSKXHhjfVJtPZ/h5gkt/ZI1nN74=;
+        b=iY1PPuxPP5UdqVQb4/+fPykg01FemsTkOkYhlKkMM7xRARlRxqieQLEDvMl9VIcSV6
+         m6A65yDC2zogehBQMn+Py2dZp8UTRdDiGkRknVvQYPOmn/llJeyK81zWGMytDqNnP/WU
+         lgkOpNwduiDQKVN8rL0BcJR6SmA8Tph1Kq/ebYBCpnBl4QNgWmj6Zx1tEORBjV/5UFHz
+         HRGVCwO8dxXKIvgm5nRvV8KA69tVqEJpUHypP+E1wTopVVgH3TbLpFhVCaBzF83UkfDF
+         pc0YN5Vrix2oD6HnSYVVarJfhx+Y2G+SGag/GRatiDPe4p0tLgHfz948baFssQQp/5Ka
+         of+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768261501; x=1768866301;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=efw282N2NOkfC+7tCSKXHhjfVJtPZ/h5gkt/ZI1nN74=;
+        b=NwdVEPLqt5yrLJ4JkaP9SWWzCOfUS6sTs7MNovnS7vWMMKqKD1FzMJnRehQO/RY2ge
+         jxWBBH5vpcqo48rXeSYY0c52KC17JTbXGsOIS+QHRJzAJzJFTYkgYLoa5GMfUntwND0i
+         S8edFE0rwEi33sN2Hh6x97PS6nF8xbWOa0TqjN2CjbcowAYsHlXOe6exFJriQRihKVog
+         O5EMZWwxbWy2OIVXW7BCgOOhPmXYJnh677KO9dJzTG35ZTbR1u5fBxRMRxPR+qxhmqiR
+         lg3QM7pWa4DbblpK7AUjn82OiRspG8ROcxXlwRhseR4QzFYRi6zzu7sEd2++8hUl/ixn
+         7Alg==
+X-Gm-Message-State: AOJu0Yz5cIomD1EBApsxR70OWm0r2QoItpaM6u4GzU3guwUj/wu+ZcVG
+	l+IsQ9/6FsNiLgzc6bhA1YuFxxDEGL04D2lExBhBWXsPWiai9jOgqiQxkPlfxYJh9R5MLiz+z6U
+	Bwy505NH0RQ==
+X-Gm-Gg: AY/fxX6iuGVDeZOYvX1YxPZ2ejFRti8XgMnkAXvu2tsXqwTX4mMXkXoylH3WVAdNXng
+	Fjirj8Y7oGHx1QXg8Zozee6YWfjCs+MqT2JF6+Ci+Iva/TGO2TDmFDsVdi/mo8N3oo7hA5RDr+J
+	ZAixNuT+MzYPQjfE6NFdlJ6pK3fYY4FI56zkYq+AWEZzVRGhdTZjD+5MzBIpghmdXsyqTydGO9/
+	2AhXTBxEexRG4QhavwioS1Dli2Nr67X4sN/yiE41VnRdSQ0/y/3Eis6TLk0xpH+bLdv+fqqgf0Y
+	uW8hnwPORYVAzjnhbgi9/y4ZbnMmcFCY0m0dF5ZrLDngBF3anLqIRfYrIcT82uXly+06KIl0yZQ
+	0LTB42jjAyN2KeAGiNNPlMOh7CUXeoItV/LXJarf4EOam737guuAsYGCss6f0qFFmL9W3C1kmfd
+	Z/VPvokoG/ebNkGTPescH5isnjPhOVNZ68NpzqlZbhwmZVgP+AuvwX7trpT3PBXwU29jYvOc9g1
+	OpqpxVDPRLLZLo0Pw==
+X-Google-Smtp-Source: AGHT+IExz6JyS1i2Dvh6ncTkt+1rHv+2tRqYpttuQuTApZKnSkTKFv7XOuV7pB+q24+HCUhuPxrp5A==
+X-Received: by 2002:a05:690c:7449:b0:786:a774:e415 with SMTP id 00721157ae682-790b5833132mr366813767b3.56.1768261500843;
+        Mon, 12 Jan 2026 15:45:00 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa670b16sm74388427b3.35.2026.01.12.15.45.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jan 2026 15:45:00 -0800 (PST)
+Date: Mon, 12 Jan 2026 18:44:53 -0500
+From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Chris Darroch <chrisd8088@github.com>
-From: Chris Darroch <chrisd@apache.org>
-Openpgp: preference=signencrypt
-Subject: pre-push hooks and stdout regression
-Message-ID: <ab578804-891e-edcc-12a6-8b1030d1bacb@apache.org>
-Date: Mon, 12 Jan 2026 15:21:42 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Firefox/60.0 SeaMonkey/2.53.7.1
+Cc: Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] midx-write.c: do not optimize out writes with corrupt
+ MIDXs
+Message-ID: <cover.1768261435.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Hello --
+These two patches came from my work on implementing incremental MIDX
+layer compaction.
 
-   I'm one of the current maintainers of the Git LFS project, and we
-happened to notice that a recent change in Git's "master" branch has
-introduced a regression in our test suite.
+When rebasing on top of current 'master' (at the
+time of writing, 8745eae506f (The 17th batch, 2026-01-11)), I noticed
+an early 'test_done' in t5319 added by 6ce9d558ced (midx-write: skip
+rewriting MIDX with `--stdin-packs` unless needed, 2025-12-10). The
+series is structured as follows:
 
-   Specifically, with commit 3e2836a742d8b2b2da25ca06e9d0ac3a539bd966
-("transport: convert pre-push to hook API") from the "ar/run-command-hook"
-merged last week, it appears that when a pre-push hook such as our
-git-lfs-pre-push program runs, messages it writes to its standard output
-are now delivered to the user's standard error stream instead of
-their standard output stream.
+ - The first patch removes the extraneous 'test_done', which exposes a
+   failing test which is marked as such.
 
-   I suspect this is because the pick_next_hook() function in hook.c
-sets the stdout_to_stderr flag for its "cb" child_process argument,
-and that function is now used to run the pre-push hook.
+ - The second patch explains and fixes the bug, un-marking the test
+   as test_expect_failure.
 
-   Arguably, the Git LFS pre-push hook program should write its
-progress meter messages to stderr, but since at least 2017 it appears
-we have used stdout for this purpose:
+I was originally planning on adding these onto my series under
+tb/incremental-midx-part-3.2. But I opted to split these patches out
+into their own topic to ensure they are picked up before v2.53.0 is
+tagged, should the larger series not be ready by then.
 
-https://github.com/git-lfs/git-lfs/commit/d665f7d725150761fe3b196da2c2d4448f7d2c61
-https://github.com/git-lfs/git-lfs/pull/2732
+Thanks in advance for your review!
 
-   We can certainly work around this change in the Git LFS test suite,
-since our progress messages are still output by Git, just to stderr
-instead of stdout.
+Taylor Blau (2):
+  t/t5319-multi-pack-index.sh: drop early 'test_done'
+  midx-write.c: assume checksum-invalid MIDXs require an update
 
-   However, I think there remains the larger concern that users who
-depend on the existing Git pre-push behaviour in some way may also
-encounter regressions, perhaps because they expect (as our test suite
-does) to see certain messages either output or not output to stderr
-during a Git push operation.
+ midx-write.c                | 14 ++++++++++++++
+ t/t5319-multi-pack-index.sh |  2 --
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-   Please do let me know your thoughts on this subject!  If the
-consensus is that the new behaviour is correct, we'll adjust our test
-suite to match it, but I'll wait to hear the outcome of any discussion
-before making that change.
 
-   Thank you again and all the best,
-
-Chris.
-
+base-commit: 8745eae506f700657882b9e32b2aa00f234a6fb6
 -- 
-GPG Key ID: 088335A9
-GPG Key Fingerprint: 86CD 3297 7493 75BC F820  6715 F54F E648 0883 35A9
-
+2.52.0.437.gcc6f76a88cd
