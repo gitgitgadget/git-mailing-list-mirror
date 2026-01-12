@@ -1,83 +1,187 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4188133C50A
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 20:51:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768251107; cv=pass; b=T1Roz75t9PZBdaBVVRT2CKadkp4ISEM5cWoZ9q46cEhCzY3CSM+s8LEPGOU+J/ML67RZksAMaFGACz9QN1fxkRTO8qguy3wrCASh7sGHJI5/X5yeo6Fw2yQ10fKQM7YzgmSB/DvZ4sUhfeogR6KAQlza3HV8InJObFm9QCN9tdY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768251107; c=relaxed/simple;
-	bh=qLvwXvLTJ9yE0L6P4tjXwuS38/sRqCKFEivpGnUWIvg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SVdRgbcyovc8HSpqjc+um8SmQ1z8U49bgrLb9U/xp+tXtUoBgnG3h3p6dk8+VkgEtC4imQ/mebB9SOk8sZHxWdpc1fiaFf1khqf5EROXXoiAVbCwNaYpjdpzgX1b5LpwI42Y3UdUEQvN0a6yipmMWmg7fyrofuLmkfQJAHiWQYo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=P7mW0b9o; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E211533E378
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 21:24:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768253048; cv=none; b=IRwxx49mWSCS1bVEb3wm9hlCu/PpRpxxf4jTpQrP5LICClLnaX5aEF+r8EEY2yab0LkrcY/Hn5f7YdJ33rzq/tXsymBIXJKbH3wW8AlSDShx9n/A+ZMbJekLvgpjX1/+I/sxhlAwLRJ66Mp0Hwyv7rzop5UZcgBzpLXBbesze64=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768253048; c=relaxed/simple;
+	bh=0+Z6zw9z7WYt1fXAkrUwaPmBkZrvtEdNAyAbAMs13t0=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=N2f97QYhIn5YW4cQ9wlyvwfIfVb8qAlHRmQTwJayni/ANtD3yR9Uq4gaueLoTL0OIle5PfyXPkYwKv5KR3pFhuEH1r9fK5thy6ueRzpjpfAkrVUn+RYPCHaqkbHS7ZBFVzRhlawBFXEgIQfWuZKPjE5YiGDnKFLeQM+VY1K0PYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=Iswfxw5F; arc=none smtp.client-ip=212.27.42.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="P7mW0b9o"
-ARC-Seal: i=1; a=rsa-sha256; t=1768251090; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=XkbLyrOoamo4QYU55C98xkfma1sdMJ+j7fq5XufuQKE6Kyr++PMusLNalLqnvyTAwoUGxQD0ALSjVoOytIf1QZeWOv4NVD49bfE8+jHBQr5cKFVop1wbhUYjOqICftvZhZ6gCJ88yNEmcxhglZpFjwsSTeiHNgAMM7MnUHMKcYM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768251090; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=AmmOVmrtT932aKSHTjE2sI4ry2lY+235puegu2X+s1A=; 
-	b=IlFewMAFJgcLxr7tOffK2CW9u3FLx0gkHJqqP5h5Se7w+wJG9gHfpw/BZNF0kOJpb5WpPDJJtHnM2b0oPKo4rsXMamSAFhyG9pfGOxRslJAS0FL9euwjcPIAAmNoI/2RaySGvnset23y8UB3Qwm9ywx/KtNMBjo0l4zH9P8bxHk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768251090;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=AmmOVmrtT932aKSHTjE2sI4ry2lY+235puegu2X+s1A=;
-	b=P7mW0b9oWNfFrj2MqbUcNwAW9Kqb0vxsb+oqiCI8Qx+WA+IpHEAlN6kP4g8GzHgp
-	2nZalMwxPOfRmEVWnPZyzw+RyVgXBcPO1VtcCCWkzzgKWRn9M4JNXYBI0aUKjEpgdi8
-	vPqclBOrd2l5UHJLSChyRwqtOhs+0nZqN51hERfc=
-Received: by mx.zohomail.com with SMTPS id 1768251088508286.1766042533202;
-	Mon, 12 Jan 2026 12:51:28 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Aaron
- Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, Patrick
- Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Ben Knoble
- <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v9 00/11] Add submodulePathConfig extension and gitdir
- encoding
-In-Reply-To: <xmqq7btmmvqn.fsf@gitster.g>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20260112184632.1334495-1-adrian.ratiu@collabora.com>
- <xmqq7btmmvqn.fsf@gitster.g>
-Date: Mon, 12 Jan 2026 22:51:23 +0200
-Message-ID: <87344ad06s.fsf@gentoo.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="Iswfxw5F"
+Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:3f0a:6352:d04e:7d70])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 6CE5EB00579;
+	Mon, 12 Jan 2026 22:23:55 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1768253038;
+	bh=0+Z6zw9z7WYt1fXAkrUwaPmBkZrvtEdNAyAbAMs13t0=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=Iswfxw5FGyaLTEfRTJlE/dQU/wTeknXnb6KtOyeZroXJNXsmVw3rdeDUJu5fZ/igl
+	 xJ/CIdRyME/6grDJVqZScTnqSYioIkV+dtESF1TeeTLomXezC8aHf5x6iPqfBC31FO
+	 15kQxVEVGwzTa5McrFcENt5TXhA/qkMAPkdq6t0m86x4eJi6VdBzwIvnpvXV4gCvFu
+	 RXYLYpSHCQP1I2bmYaXfifYwOReUX3KTJ4K55YCAP/k47rlOMvmbV+wv9e/gJE7NFZ
+	 g0Y33WC/e4umTcv+2BvEJRTN/L9aHJoENrjBDTuCItYWH1iRzwNYwD3FR0WxKyZK1V
+	 RvGggZ4n9W0rg==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, Michael Lyons <git@michael.lyo.nz>
+Subject: Re: [PATCH 1/1] doc: git-bisect: convert to new doc format
+Date: Mon, 12 Jan 2026 22:23:55 +0100
+Message-ID: <4705928.LvFx2qVVIh@piment-oiseau>
+In-Reply-To: <20260111204316.836446-2-git@michael.lyo.nz>
+References:
+ <20260111204316.836446-1-git@michael.lyo.nz>
+ <20260111204316.836446-2-git@michael.lyo.nz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-On Mon, 12 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->
->> Changes in v9:
->> * Replaced git config --global with test_config_global (Patrick)
->> * Split die() messages to multiple lines (Patrick)
->> * Moved some of the whitespace fixes added in v8 to the commit
->>   which actually introduced the whitespace problem (Adrian)
->
-> Thanks.  It appears that we are getting to the point of diminishing
-> returns, perhaps, in which case we should declare victory and plan
-> to merge it down soonish.
->
-> Again, a report like Josh did previously about this not breaking the
-> users you care about would be very much appreciated.
+On Sunday, 11 January 2026 21:42:48 CET Michael Lyons wrote:
+> - Change placeholders to glossary terms
+> - Refer to placeholders in prose
+> - Delimit runnable commands and CLI args with backticks
+> - Link internal heading
+> 
+> Signed-off-by: Michael Lyons <git@michael.lyo.nz>
+> ---
+>  Documentation/git-bisect.adoc | 67 ++++++++++++++++++-----------------
+>  1 file changed, 34 insertions(+), 33 deletions(-)
+> 
+> diff --git a/Documentation/git-bisect.adoc b/Documentation/git-bisect.adoc
+> index b0078dda0e..65fec9fd29 100644
+> --- a/Documentation/git-bisect.adoc
+> +++ b/Documentation/git-bisect.adoc
+> @@ -8,20 +8,20 @@ git-bisect - Use binary search to find the commit that 
+introduced
+> a bug
+> 
+>  SYNOPSIS
+>  --------
+> -[verse]
+> -'git bisect' start [--term-(bad|new)=<term-new> --term-(good|old)=<term-
+old>]
+> -		   [--no-checkout] [--first-parent] [<bad> [<good>...]] 
+[--] [<pathspec>...]
+> -'git bisect' (bad|new|<term-new>) [<rev>]
+> -'git bisect' (good|old|<term-old>) [<rev>...]
+> -'git bisect' terms [--term-(good|old) | --term-(bad|new)]
+> -'git bisect' skip [(<rev>|<range>)...]
+> -'git bisect' next
+> -'git bisect' reset [<commit>]
+> -'git bisect' (visualize|view)
+> -'git bisect' replay <logfile>
+> -'git bisect' log
+> -'git bisect' run <cmd> [<arg>...]
+> -'git bisect' help
+> +[synopsis]
+> +git bisect start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]
+> +		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] 
+[<pathspec>...]
+> +git bisect (bad|new|<term-new>) [<commit>]
+> +git bisect (good|old|<term-old>) [<commit>...]
+> +git bisect terms [--term-(good|old) | --term-(bad|new)]
+> +git bisect skip [(<commit>|<range>)...]
+> +git bisect next
+> +git bisect reset [<commit>]
+> +git bisect (visualize|view)
+> +git bisect replay <logfile>
+> +git bisect log
+> +git bisect run <cmd> [<arg>...]
+> +git bisect help
+> 
+>  DESCRIPTION
+>  -----------
+> @@ -38,8 +38,8 @@ In fact, `git bisect` can be used to find the commit that 
+changed
+> *any* property of your project; e.g., the commit that fixed a bug, or
+>  the commit that caused a benchmark's performance to improve. To
+>  support this more general usage, the terms "old" and "new" can be used
+> -in place of "good" and "bad", or you can choose your own terms. See
+> -section "Alternate terms" below for more information.
+> +in place of "good" and "bad", or you can choose your own terms. See the
+> +<<alternate-terms,Alternate terms>> section below for more information.
+> 
+>  Basic bisect commands: start, bad, good
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> @@ -116,6 +116,7 @@ bad revision, while `git bisect reset HEAD` will leave 
+you on
+> the current bisection commit and avoid switching commits at all.
+> 
+> 
+> +[[alternate-terms]]
+>  Alternate terms
+>  ~~~~~~~~~~~~~~~
+> 
+> @@ -144,13 +145,13 @@ bisect start` without commits as argument and then run 
+the
+> following commands to add the commits:
+> 
+>  ------------------------------------------------
+> -git bisect old [<rev>]
+> +git bisect old [<commit>]
+>  ------------------------------------------------
+> 
+>  to indicate that a commit was before the sought change, or
+> 
+>  ------------------------------------------------
+> -git bisect new [<rev>...]
+> +git bisect new [<commit>...]
+>  ------------------------------------------------
+> 
+>  to indicate that it was after.
+> @@ -208,7 +209,7 @@ Git detects a graphical environment through various 
+environment
+> variables: `MSYSTEM`, which is set under Msys2 and Git for Windows.
+>  `SECURITYSESSIONID`, which may be set on macOS in interactive desktop 
+sessions.
+> 
+> -If none of these environment variables is set, 'git log' is used instead.
+> +If none of these environment variables is set, `git log` is used instead.
+>  You can also give command-line options such as `-p` and `--stat`.
+> 
+>  ------------
+> @@ -308,8 +309,8 @@ by checking out a different revision.
+>  Cutting down bisection by giving more parameters to bisect start
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> -You can further cut down the number of trials, if you know what part of
+> -the tree is involved in the problem you are tracking down, by specifying
+> +If you know what part of the tree is involved in the problem you are
+> +tracking down, you can further cut down the number of trials by specifying
+>  pathspec parameters when issuing the `bisect start` command:
+> 
+>  ------------
+> @@ -333,12 +334,12 @@ If you have a script that can tell if the current 
+source code
+> is good or bad, you can bisect by issuing the command:
+> 
+>  ------------
+> -$ git bisect run my_script arguments
+> +$ git bisect run <my_script> <arguments>
+>  ------------
 
-Agreed. The logic is basically unchanged since v7, so I think we could
-go ahead and merge based on Josh's report on v8.
+Here, if you want to use to use the synopsis formatting, you may replace the 
+verbatim block with a [synopsis] one:
 
-A big Thank You to all who contributed to this series,
-Adrian
+[synopsis]
+$ git bisect run <my_script> <arguments>
+
+
+Otherwise, LGTM
+
+Thanks.
+
+
+
