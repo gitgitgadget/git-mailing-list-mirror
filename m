@@ -1,103 +1,124 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2AB326D65
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 20:23:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7B53168E3
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 20:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768249413; cv=none; b=k94qcYigEPkzXfCrdSAaHV+HFgFd9R/kbZgyFnrKFs9l0uWr9nqVMr3vSqx8NZkVZCTIm7mS8swXyr47n3jV+0ekTJjuZWN3tXeQC9GqbEcg0uFOwcI/oXW74sdI9bvTI9nk8wG8SxCYrBcJlfM0qp9O6gdyyeyZ9zEHD/kV46A=
+	t=1768249590; cv=none; b=E6BFpXzsGn7+uwRm9wgxpBpJzfy3XLQfSFPyx41iwvEMvFIFsEKF1dLpy00h43jcHJL+cLQx/cq+5GunhffRzY3q8UyEHGdihWeLqYLDWjS7JJ5W/jPB1mp8o+/v6CQ0DjN/2JZiujn3dg0TSTPv9Le7Zo3/e3fV3UlvREO84FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768249413; c=relaxed/simple;
-	bh=N7r/AuMegXqeSvs7ZbNO8l4dOkGy8CdboKRrvPx/BXU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Hl6xGbjprTDjLN9kjMyt3BjFKTMS8pm7vj89cvT2a08imkLCCDvRcG54tF0oxw3TGKyjoMPi9smlGO7hWtnS623QyvQwGvreNFlK9HDgGLUGsYArFOWX1GBvYtcduJ8Cpsd8Rpq8egatR9apQY39rfTpaEFrHJRAKD19wiGIwzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HwjpCgyc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GezFULSA; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1768249590; c=relaxed/simple;
+	bh=h15ty5+BYyt9zM/Y6hDGfbAZyr7bBXF2NgdfwCRBm98=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ajEMmpHyhCFCuM2uRp5zT/fUe/K+7A0T7eWjg3mM8IHKwyeHvlmlj+Z3yVDrvkr+Shr3UWv4hef/zJ9KG+qM1+dUb6auxlq2bCl+0BSuaz0VVBgRztC7pONRdwbQFjQeSd0+clIAJ+t8fEc2pxOADyec3kGROP2dXQM7wKiaA1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cokNy2iA; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HwjpCgyc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GezFULSA"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C5FD37A014E;
-	Mon, 12 Jan 2026 15:23:19 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 12 Jan 2026 15:23:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768249399; x=1768335799; bh=SGkPPjtPHn
-	Wlejeh66wF2DJG6r8ed/dwZUOR6hqEkdA=; b=HwjpCgyc9CT9jyhOW2jJ2jwZS+
-	MbKT9jZEHvKx0LTREGb9sQ/DDP4HdjT1dEXcsd54iZ8oQeMzeEjTVpsR5uc0Vewo
-	W8clE7O4T3aMnApA37PqPECrDmeJCU6XQOCfpHSc3Mn0H8vmEspiTDyW3g1xLxu7
-	/q1aOa9DzldAbhcPh5D+dcYHvvYT/jUV8LuINR0Tegwky5QiDHZKqmnWvhiHugko
-	deczFC1tsp93UcRZx6XJzl9fxzlbXvW2oinICuKcrkKvRAV97/Od0txTG6A7mci+
-	Yg/7xFS79EGItpmJoJGZhOdqkPutnKo4htYqEfO7jE7OlttnbAKyli7qgvFA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768249399; x=1768335799; bh=SGkPPjtPHnWlejeh66wF2DJG6r8ed/dwZUO
-	R6hqEkdA=; b=GezFULSAfpyF3uEcvQPqIgQ/T4Z5cPKcNm7HD487KZgDy3be731
-	K0QlrIpOrt05bfnwiNlcmeKm95NuYwGTdF2l0x7c/+xgLrhRmSOdLtP+ucpx/x4F
-	BIrFVU8yY6lX+MqGlTWeGMhT9vq6ETB7VnXJs4Ux6IfgpBlOko4Jt71yYSCvcuu5
-	7rYwVBq3w/55hyHrS4HoHdpeX/0WgSMj5tsid/+HSayCTf9h8LD0BOjsyeuBruO2
-	02qjXjUS9qTEE0o2qkef0z7QoFMo4+Tc+Oekh6hax5mxhil+yE4iLeqw4o1jfRUG
-	b/stcCX2hg64mKh+vbqGpGmJp04a+Z/Jy6A==
-X-ME-Sender: <xms:N1hlaRd54uMpUUAdSwO6Dpc-pUYaxHBsurCeig1ghj7PDE3KehkrCQ>
-    <xme:N1hlaWEfmS7I_gaCI2bzHulV4jH6BDiAlz3RhT0RDRR1bio3ECb_yCAb0Sl1dZHn9
-    7mYPB1axEU_lT7hdTBIB3cD7PKIawqBL0th-_vPGQxBFq_XnCka1g>
-X-ME-Received: <xmr:N1hlaS0V4hecfgUja6laFkhKc_IUavFL-wUtoUh0JR4O3y9zW8Gin8xqpr8eHCH3D_q72y0PMW34likZupfvnS2xtAPH_r_C_ulaE3Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudekgedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepghhushhtvggusegtohguvggsvghrghdrohhrghdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:N1hlaWmcZlu1UyNmwc1YYPBQdxXPFWMg5ZnjGeB9PVaa6kzhVaUqmQ>
-    <xmx:N1hlaa-rGI-Svkq4p2tZ4gRZAHpacteBT9iJElNFyndHMSAudWW_Xg>
-    <xmx:N1hlaTqtECNBhdhdf4EO2ymwYxP5Utm_ABCj9EvSod9GZkuNgBKQQQ>
-    <xmx:N1hlabklbT0jwWRmF3gm_tKjXyd8Lwt9vYyajmRaY_o3EHj0cBNeIA>
-    <xmx:N1hlaQgmTJLiDiAWg7F5QArpBKp6H1zSBPueHXZC7on02JIhm-qxGXE1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 15:23:19 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Gusted
- <gusted@codeberg.org>
-Subject: Re: [PATCH] last-modified: verify revision argument is a commit-ish
-In-Reply-To: <20260112-toon-last-modified-tree-v1-1-ecbc78341f76@iotcl.com>
-	(Toon Claes's message of "Mon, 12 Jan 2026 17:17:41 +0100")
-References: <20260112-toon-last-modified-tree-v1-1-ecbc78341f76@iotcl.com>
-Date: Mon, 12 Jan 2026 12:23:17 -0800
-Message-ID: <xmqq344amvgq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cokNy2iA"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-88a34450f19so69212376d6.1
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 12:26:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768249587; x=1768854387; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2LOTnCiip/FzJ1QF25tjUAL3pNZvdGoc9KwUNAtgUq0=;
+        b=cokNy2iAo0KhuayKrflCP0NuBpTb9rp5BHXR9rD1AClcWvoD8EuOtnW7TMIa7UKV6l
+         684W6tjt4sTE02Hx5Kq65al2ipMcLJGr3rryAUZ288erlMgiaeevEsCk/QL5gXWGxeUp
+         8M4fZk28hYm9AbnrL0qo5tVFTRUU0T7wRckVITKqj7U8QdRbLL9T9eoNh6JXOKTq5Eu0
+         lCE9SSM+sD7k6qfer+n42KlLP9JcMUYs4/HwRB8dsXDhkSrUOI0vxXvVg6aPGAyP6Xb/
+         9En6Si9fADdxqn9H/v8n3GbSClLjrc4XqKOPCOMKX2JRLScdplEtmilUoLbtg91mk9Px
+         BTJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768249587; x=1768854387;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2LOTnCiip/FzJ1QF25tjUAL3pNZvdGoc9KwUNAtgUq0=;
+        b=i+d+f4zuUDtkudktFpyPC/Y+zEXk7Y5KZieA39krbJGPfMAqPiAPxfzRUP7ZF6WJI7
+         jpRYApQSRARh6yutfzLcpVkW2EKs+pmTLO2Nt0w+48R95S2FZHt6TgdEq5+GVkCnbWBz
+         /spyUfRuYN13tOGJ8mUG/YnoHlfmT+OgQfi2Nq6hl9zwI+xsS3pFFmf6pnaSeaEwqshj
+         y7106fEYiYQ6R3wFMq8dv4/k/iCvYrUCrQ2WoFk2JSblDd5OUlapRf8vOY+s2RQf9sFt
+         fYjRf7632FkGK4teqgvG3jwiKNVZCtN0BCEXywXRUHC1DaHDyNcYfdlY6jHSlATZ4gmF
+         N4oA==
+X-Gm-Message-State: AOJu0YxDMudx/ZFg+Z2l15UAjGzRHj2otb5F/pHrQs/zRI8mYlzIKqyC
+	9erJhUnshPXsnCPpeXiD6eyNsipGLTH0zZRbgl9M/9Z/C18jcWqKMUtQQCxsTHBu
+X-Gm-Gg: AY/fxX6+xOFwecKzfevkx+FINZ3qj497gfqJy7X89IgLcbVOUkhsD8k1/UDHGzQkpIE
+	LZ4EyodQzT5gTdhcLZiUuqOA2kJ76cuf7GaH+J3Pq5b/HxsAKLyTUEmen2W0NZsAXZI2MiRXJl6
+	juMAduSCP9jXDOjBz/+9Tpj8zIKIWigJn4G3fX5GGeKHrM5/hKWp1TmUcvhhCMEqa2r9lExqArv
+	jbZBdUKR6e7k5wpOL4ianG2sohRsxT69s22rPpyYmO1Hm1gkqmfNIn0GcSNFtpDb6ksi3xNZSve
+	MsYDBr8QNvODjEZL+MoSxrqJOX8/Nx+YSVC/rEBB2pxQDQ1/tqUJ84zWGOs8Hw16NyDVdxe0fq/
+	GDYPqprJUcqga1EAZhhJL2/FGQfOjCqyfmXIVT4Yk3qCM5dAFID8Pewh0W3m9zmTLYdpT06jdLG
+	YRfbnTRLsdyMtr
+X-Google-Smtp-Source: AGHT+IGYH5rhI+LgAnfxIKZNbklk94M7YV4EaRa5N/fNIish5A1bAJMy46YTAB9x5q0IT/g4izzkCA==
+X-Received: by 2002:a05:6214:5889:b0:87d:e2b:cdf7 with SMTP id 6a1803df08f44-890842b2b04mr264122326d6.66.1768249587514;
+        Mon, 12 Jan 2026 12:26:27 -0800 (PST)
+Received: from [127.0.0.1] ([20.161.30.224])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89077268016sm142518216d6.46.2026.01.12.12.26.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jan 2026 12:26:26 -0800 (PST)
+Message-Id: <pull.2138.v23.git.git.1768249586.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v22.git.git.1768074976.gitgitgadget@gmail.com>
+References: <pull.2138.v22.git.git.1768074976.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 Jan 2026 20:26:24 +0000
+Subject: [PATCH v23 0/2] status: show comparison with push remote tracking branch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-Toon Claes <toon@iotcl.com> writes:
+cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
+cc: Ben Knoble ben.knoble@gmail.com cc: "Kristoffer Haugsbakk"
+kristofferhaugsbakk@fastmail.com cc: Phillip Wood phillip.wood123@gmail.com
+cc: Nico Williams nico@cryptonector.com cc: Patrick Steinhardt ps@pks.im
 
-> Passing a tree OID to git-last-modified(1) would trigger BUG behavior.
->
->     git last-modified HEAD^{tree}
->     BUG: builtin/last-modified.c:456: paths remaining beyond boundary in last-modified
+Harald Nordgren (2):
+  refactor format_branch_comparison in preparation
+  status: show comparison with push remote tracking branch
 
-Of course, the starting point last-modified needs to be something
-that will yield series of commits when given to get_revision() ;-)
+ remote.c                 | 173 ++++++++++++++++++++------
+ t/t6040-tracking-info.sh | 262 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 400 insertions(+), 35 deletions(-)
 
-> Fix this error by verifying the parsed revision is peels to a
-> commit-ish.
 
-OK.
+base-commit: 8745eae506f700657882b9e32b2aa00f234a6fb6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v23
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v23
+Pull-Request: https://github.com/git/git/pull/2138
+
+Range-diff vs v22:
+
+ 1:  4aa4f1abc8 = 1:  fd05c7b778 refactor format_branch_comparison in preparation
+ 2:  b7e29887d9 ! 2:  f1ad7a1b6f status: show comparison with push remote tracking branch
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+      +		advice_enabled(ADVICE_STATUS_HINTS);
+      +	bool want_pull_advice = (flags & BRANCH_MODE_PULL) &&
+      +		advice_enabled(ADVICE_STATUS_HINTS);
+     -+	bool want_divergence_advice = (flags & BRANCH_MODE_PULL) &&
+     -+		show_divergence_advice &&
+     ++	bool want_divergence_advice = show_divergence_advice &&
+      +		advice_enabled(ADVICE_STATUS_HINTS);
+      +
+       	if (up_to_date) {
+     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+      +	if (push_branch_modes & BRANCH_MODE_PUSH) {
+      +		strbuf_addstr(sb, "\n");
+      +		format_branch_comparison(sb, !push_cmp_fetch, push_ours, push_theirs, push, abf,
+     -+					 push_branch_modes, show_divergence_advice);
+     ++					 push_branch_modes, 0);
+       	}
+       
+       	free(base);
+
+-- 
+gitgitgadget
