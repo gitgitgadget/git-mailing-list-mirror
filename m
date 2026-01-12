@@ -1,125 +1,195 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8FE277035
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 11:50:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21902D73BC
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 12:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768218621; cv=none; b=pIEOd6MWsub7mu79SDdTK+OpVdlMiqSXPdHMCg7oMV/uQSFtV5vTaUXJYojMPGvmB60Ckd5xzqtTU/k8ZZ7g6h9ni2RVTqvCKmy8z2b07txXCke1IDwjIi47DRmVepZys9MFTtBkTun/2F1KLTCbN3/R5ITBZGndb9obLpboWRw=
+	t=1768222572; cv=none; b=R0YAdgL3n6Li1GHnQiRt5mUAx6M6lOislnCnDREk4wT+AzoWFcCPLvubSYI3vZOXsn8JvNRGA0rMu7rGdLuvjFztHAm3K/rSHVtCxwtTgD8q7l8kWXNCS2/Y0RYRy/FGzzumjauH//ZM+nbgLER45q9AsNVZClsujYRH+N0BeCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768218621; c=relaxed/simple;
-	bh=JCuKu0Vohk8lTr3ElMpyls2Tmu9q/O5adX41jjmTot8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CUsLiPONho48Xdrx5zttR/KWN6HuOdYBjQ34F0JDE+H0hhAgxolcyGi/5QPy4TFKkwsUpDsOqUC91hqfUDb/g/ooQhcPJGOYLw9ygbY1QNCWDoGNIbbGJK6B96UXckIvxFXc3g4OS1yDhHc9gEP+hS8bE6XCnBeHusi4Bj7I9qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aeQN/aU7; arc=none smtp.client-ip=209.85.217.50
+	s=arc-20240116; t=1768222572; c=relaxed/simple;
+	bh=Pm7ZPiDpU6w6OsifB5/qxECPB7ZOdSisFRV/VY/W4YI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ORYbF1jh7R9pGdFIYZ7LHfUVus4X1BiKWmq/AvCr2+OBVNRzSQIHsnEug4+R+7YU58vgSPwZrqrIJ4bUm0n8BZJE0NwChKNH86nVTjD9oTOVcQbeFQLj0AelPYnZQ2dJai6mDwc4z66BXK2g+OOEMOgsgZgwBMqL+Ji40YVzpzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tu0AjrQA; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aeQN/aU7"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5eeaae0289bso2496207137.2
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 03:50:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tu0AjrQA"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7904a401d5cso66694117b3.3
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 04:56:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768218619; x=1768823419; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+3JCrHmSxzJU30AYxhNoxwgLRBlGWDgw5bHk+HlXfXA=;
-        b=aeQN/aU7X5BeEfXpwevOX+XfWTLVph95ry7ygx6zJDvQ7HKwpyqITYfM8VYP6RdrwP
-         hjoMjnR/dwVDSjpCyVfcISKiJ5uHQoZJl1E9QGBNFoVyDTciCOQ6gupphb7pZ8t++Dhh
-         zj8F0t7ne15YT1rL/1KV/tJAHoMFa87sGv7BaPQQRJ4wTrYagFjEVBQfB8/lPI6r3nWU
-         yjsbVOWXMfJIonVzxDHgdn8jI0++f3kWeDG0QpR6QDLJcQzEMrlLXuErMWnWB5WJIhU2
-         VtcALa4XrRVCTuWAyi3lnUnH/dKKPdFAm7bemzVLI7XZcCOU0Ev+OINQzSJsww0MpfRw
-         SDww==
+        d=gmail.com; s=20230601; t=1768222569; x=1768827369; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iM1l9NLVg950SGygAZZyyOAYu+RnDqzgs7uLlyQJ4KA=;
+        b=Tu0AjrQAOi9koDCTBfyH0eZAmNnUUbBvvexsmoh9UMGgmD57AN4hAsCioeDdgpT+aR
+         aNcKil6v3SOfUCLNAXZAkehpeIWCnsA/Np4eqWHAJp91jFcuyNRFHLy6dQbZ8ZzXHYC1
+         eUC2wN9tyKTxg5OvjC0TR8n0fpjo0IZ1PnX4Mq13iBhZKzQb0B+UxjT0xRytcU4UkPlI
+         MIV71S7jiRaX7Bme3mK5e1jWO2JDyYhYhU7A3Af/C7CYS2iRKFEXFgtLCedOCqcofiTZ
+         WZ8tanIpdflLtfpB8OPNM4xzO8FGU7RwxTrj4EVIeDAy4X7WwsdpjFrVs3aH3JySKrpg
+         N3Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768218619; x=1768823419;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+3JCrHmSxzJU30AYxhNoxwgLRBlGWDgw5bHk+HlXfXA=;
-        b=X826UvWHD0y52eGmRd8ktJj6sn8SO/kuGrsv059e3CBcP5c8efjuIGpGt58J3sW7vn
-         RpQkzlo8jAfN5Op4oupKLKYjB8smg3lDH1mwyFtMI2hAyfHgQ9JbS2lcMSsw0kADDV1T
-         Y+i3fKCfnHFw7HqNABZ0xSmiiuZufSEwpBjYiqqzlYNSaOp+k3H6Q1lg0uW2cx8Cua4z
-         iIglZ9go8yCmhItV9D56TUblRQwfWRLrWCyVUstw9R/tc4UvRiPrg3TFe0CXzMRyXnjR
-         6C5yl0RLMe91+wm7dTdJ5KZ7pk2ERW5biwqNtzS4GybBcWqOBf/ct7ZykIKvhGay2Pp9
-         95Mg==
-X-Forwarded-Encrypted: i=1; AJvYcCXJjyyr4Y+Yc5ayYVcBDxlIhCC/wb8joZQaHI/Ei9Tj1Ptsg5+fUcFtci3vA0LHrs7y80w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyI128ZEhB6in3xSpbLw8KkfHOEJ7ysfoGrV5CeaBaTcs2vxQwc
-	MAw7JeCi0jJC6Jhrs0QwprXmJdYSnQT458Q5w1fNQuJ2BG70MOqMyiiuD43mE4vvl6zkpt6yZg9
-	8zT49FuDR3h/YemZvszwo2SkYrG5zoBo=
-X-Gm-Gg: AY/fxX4OuuYeZFoj1mEjzjikRvjW1t2vNX/jyrb0hLak1hKyMOoaHjXYZ0oBeHsxkq5
-	Dlh75Gz17VdxTolIYP91gZizyLMRGctgpKToJV0uMYFj4HutplYCiVUWaCInls/+BF8DTT9vxgW
-	JjLOur/jTB8auRcyNZUIY8E4kGDP+0/UJRNf8FwhgfthzcxVpW6AZBMa8AHnz1Qhp86WlDTccUf
-	yiGOfEpDbvQjm5Qja0Hl23rWr5pnSawJG7142hpGbtsStsMX8976BDu20fXWba0DHS6y/QVi1sB
-	uiLHlnSr8RkV+Afl/2+UtP+2WqG/HQ==
-X-Google-Smtp-Source: AGHT+IEVd9NNR2iKC5QQ8NBQW4JZqToLilKLYrwNARi/01r0jVdnO7jKjGi/Xhfk2clVTu1uLllI8lA6c8L/w1XaXjk=
-X-Received: by 2002:a05:6102:6050:b0:5ed:d33:a65d with SMTP id
- ada2fe7eead31-5ed0d33ae20mr7197930137.34.1768218618984; Mon, 12 Jan 2026
- 03:50:18 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 Jan 2026 06:50:17 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 Jan 2026 06:50:17 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260112-pks-refs-verify-fixes-v2-0-2e9e453bd6c3@pks.im>
-References: <20260109-pks-refs-verify-fixes-v1-0-3587dba18294@pks.im> <20260112-pks-refs-verify-fixes-v2-0-2e9e453bd6c3@pks.im>
+        d=1e100.net; s=20230601; t=1768222569; x=1768827369;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=iM1l9NLVg950SGygAZZyyOAYu+RnDqzgs7uLlyQJ4KA=;
+        b=qjepAXRql7+3WAmx2BnKVnk+B+UYtcBTIfKt6HmvhVDV4nle/dSpvfCqpEbaTJ5THC
+         MYMcJZUOhO0BHR1b3Q76ledoDUIDiD+7/u/fzN1GwolkUG9R1zAdbfxU1EW5iZn+jZTx
+         7cE8QUi880kwLF2GVuzBUkgnYwrc5LIjUrmaeuBuNd90Gl+qnnI7/VTqcvqMM7iUQGIk
+         Gu/xs2jDgVJaWYCe+u+sEkIIcuRiYORx2DmRUjAMLl9CgIHt/9hsWY2yBAnO91/99mqx
+         bmdMJHbDg/Rq0kvBdSTEN9VoQZbfRRxQBLrMo3GqeWt5429hzXi8J8s69UbLwNuGkp5U
+         2lnQ==
+X-Gm-Message-State: AOJu0YzYnCYs28Ja2oxIDh3Gmk48RAfmcQq47J3jEi5ZD2IuAuI7g9Yn
+	QjyfMf29CMG4E4j3FQJNZa/UAUwWKaEp/I/KK+zkUIDQqszdVVX4k529jpcNb8nY/0yO51rW1yN
+	N/gdNUmjDM4whw79c3iciLm6tQ8opze6R2UCVTCWQZw==
+X-Gm-Gg: AY/fxX62GJomdVprO1Mov6wWkTKy6hs1Qenu1OGwNfVRNJxrktz+y0cH7wr3f/URqau
+	+k+yYiOfvLFqEklBYg/pTGWgUyIwb7LDvPaCSNpMvwPPVQncKn8KRZM4iZ36uua7LVt7G4Ux9HH
+	BLK9pbvEopxf0//M0+CbXK9qKRdFeQ5mwfmhY69gv9gbF61ul2h8HnIIiIsA6+eRpV98BEMgMdm
+	7L/R6AMB78bt1XNSKiLPFpshMs9gKlYbXk6cFBfaoDdyqIeIKZzt/dSlnIMPdb207XyTiU=
+X-Google-Smtp-Source: AGHT+IEkIhy+/+6ozWhkJIgUb07TXqwulKFO+G+3L2UloC4Qy7iaKB6VHHWYPqGEVtOolBvJpoQlb33pjRcM6Vl6iNw=
+X-Received: by 2002:a05:690e:1c1d:b0:646:bb17:1515 with SMTP id
+ 956f58d0204a3-64716abe6afmr14950464d50.19.1768222569531; Mon, 12 Jan 2026
+ 04:56:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 12 Jan 2026 06:50:17 -0500
-X-Gm-Features: AZwV_QjqNJR4rMBWpkWw-460r9M58IWE49ieEVWMhAI3cuj_Wj_Ui49Z-ovm6VA
-Message-ID: <CAOLa=ZShPP3BPXa=YnC-vuX4zF=pUTFdUidZwOdna8bfVTNM9w@mail.gmail.com>
-Subject: Re: [PATCH v2 00/17] Fixes and improvements for ref consistency checks
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: shejialuo <shejialuo@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000abada806482f7ae8"
-
---000000000000abada806482f7ae8
+References: <20260108174651.1618874-1-shreyanshpaliwalcmsmn@gmail.com> <20260112094030.314203-1-shreyanshpaliwalcmsmn@gmail.com>
+In-Reply-To: <20260112094030.314203-1-shreyanshpaliwalcmsmn@gmail.com>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Mon, 12 Jan 2026 18:25:58 +0530
+X-Gm-Features: AZwV_Qh7jh4P5hZvcjncFWl6ZpNcs5Dz3hPEWa8SzAq9rGXdJuXaJKZTQI3P-lk
+Message-ID: <CALE2CrTuZkFm1R3Bb6gFmrN1trr88vdO_7Aw6ycBYvFpWMEEtA@mail.gmail.com>
+Subject: Re: [PATCH] doc: MyFirstContribution: fix missing dependencies and
+ clarify build steps
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Shreyansh,
 
-> Hi,
->
-> this patch series contains a bunch of fixes and improvements for ref
-> consistency checks. It is structured as follows:
->
->   - Patches 1 to 4 contain a couple of cleanups for the consistency
->     checks done by the "files" backend.
->
->   - Patches 5 to 7 introduce checks for root refs for the "files"
->     backend.
->
->   - Patches 9 to 14 introduce infrastructure for shared checks with the
->     "files" and "reftable" backend.
->
->   - Patches 15 to 17 move some ref consistency checks that were still
->     driven by git-fsck(1) into `git refs verify`.
->
+Thanks for working on this. I have been going through
+MyFirstContribution myself and a lot of these changes match issues I
+actually hit while setting things up.
 
-I reviewed the series and it already looks good, thanks for fixing some
-of the broken parts and cleaning up.
+The extra includes like environment.h and strbuf.h make sense. I also
+ran into build problems when those were missing in the examples.
+Fixing the git psuh synopsis is a good catch too since it breaks the
+manpage tests otherwise.
 
-[snip]
+The note about needing docbook-xsl along with asciidoc is especially
+helpful. That is something I had to figure out the hard way when
+trying to build the docs.
 
---000000000000abada806482f7ae8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 62c7ac8df5a6d241_0.1
+One small thing I wondered about is the prove -j$(nproc) note. It
+might be worth mentioning that using all CPUs can make failures harder
+to read for beginners, so starting without it could be easier. Not a
+big deal, just a thought.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1sazMvY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mekdzQy80eFVPVjBiVTR1cmNWMURIZXZjM2FYMkZGRgo5dDRybjBaRHBp
-RWcreUEyNU1BdktvRW8rQzNYU1EzMkVHZFJNV3VpbjltaGNKdm1HZGhoTzBRcGw3YXpJcmJpClF6
-amFVRDNlbmd4cWI5OFZubGNVMXJFN0RlcElVZXJxWkpwVEI0RHZXY0NWOWZWQzYwYjRPT3Erc3Q5
-czVZRkkKK3FUa29UUDAycmMxSEhaZEZMRFlXU2U3cHdXSWtkYytqaTBYQ1B5eVV2dXl1bUZ5dFNz
-eWRTaWxVQzJvaDJMZwpvL1h3ekZudWI1WW9FREhIekJnRFJyblVCVUZ6YVVMYWxGOSt5ZXczR0lQ
-Q1dHL2RzV0NWSm5ZMG84bk9tWW1OCm54eGNGaStSUnVZdHpEMnViR3RZMFNJOEZjMlphRHA0aFYv
-OFU2MDh4VkVvS0luOUhKUS9XN0tmZ1lZOGVqZHgKOGtNZVR1am9KYy80UXNCZFIwZlQybWpaYnVy
-bEw1U0gzTFBsSzk0aThNQ3Q3eTRpdUZjQjdWR1VPRzYvaC9QRQpsS3IwNHFRN1J3L0paTG9jaCtH
-c0V1MVRDOHNDWnJ2dDV3bXFMUnV4aDd3NnlmRUhQU01JdkhYbHRUbFlod00zCmtTTi85eWFHWjla
-TFBCbUkwY0lzSzZ1amdORE1zdVVyOVVEaTZLWT0KPTJXcTUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000abada806482f7ae8--
+Overall this looks like a nice improvement for new contributors.
+
+Best,
+Pushkar
+
+On Mon, Jan 12, 2026 at 3:10=E2=80=AFPM Shreyansh Paliwal
+<shreyanshpaliwalcmsmn@gmail.com> wrote:
+>
+> Fix several issues in the MyFirstContribution guide that can lead to
+> confusion or test failures when following the documented steps.
+>
+> * Add missing header includes in code examples (environment.h and
+> strbuf.h).
+>
+> *  correct manpage synopsis formatting to prevent failing documentation t=
+ests.
+>
+> * clarify documentation build prerequisites, particularly specifying for =
+DocBook-XSL.
+>
+> * specify the use of parallel test execution with -j$(nproc), noting that
+> it runs tests using all available CPUs and may be adjusted.
+>
+> These updates improve accuracy and make the first-time contributor
+> journey smoother.
+>
+> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+> ---
+>  Documentation/MyFirstContribution.adoc | 15 +++++++++------
+>  1 file changed, 9 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFir=
+stContribution.adoc
+> index f186dfbc89..38f2a23e77 100644
+> --- a/Documentation/MyFirstContribution.adoc
+> +++ b/Documentation/MyFirstContribution.adoc
+> @@ -331,7 +331,8 @@ on the command line, including the name of our comman=
+d. (If `prefix` is empty
+>  for you, try `cd Documentation/ && ../bin-wrappers/git psuh`). That's no=
+t so
+>  helpful. So what other context can we get?
+>
+> -Add a line to `#include "config.h"` and `#include "repository.h"`.
+> +Add a line to `#include "config.h"`, `#include "repository.h"` and
+> +`#include "environment.h"`.
+>  Then, add the following bits to the function body:
+>  function body:
+>
+> @@ -429,6 +430,7 @@ Add the following includes:
+>  ----
+>  #include "commit.h"
+>  #include "pretty.h"
+> +#include "strbuf.h"
+>  ----
+>
+>  Then, add the following lines within your implementation of `cmd_psuh()`=
+ near
+> @@ -504,7 +506,7 @@ git-psuh - Delight users' typo with a shy horse
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git-psuh [<arg>...]'
+> +git psuh [<arg>...]
+>
+>  DESCRIPTION
+>  -----------
+> @@ -531,7 +533,7 @@ easier for your user, who can skip to the section the=
+y know contains the
+>  information they need.
+>
+>  NOTE: Before trying to build the docs, make sure you have the package `a=
+sciidoc`
+> -installed.
+> +and `docbook-xsl` installed. See `INSTALL` for details.
+>
+>  Now that you've written your manpage, you'll need to build it explicitly=
+. We
+>  convert your AsciiDoc to troff which is man-readable like so:
+> @@ -726,9 +728,10 @@ $ prove -j$(nproc) --shuffle t[0-9]*.sh
+>  ----
+>
+>  NOTE: You can also do this with `make test` or use any testing harness w=
+hich can
+> -speak TAP. `prove` can run concurrently. `shuffle` randomizes the order =
+the
+> -tests are run in, which makes them resilient against unwanted inter-test
+> -dependencies. `prove` also makes the output nicer.
+> +speak TAP. `prove` can run concurrently. `-j$(nproc)` runs tests using a=
+ll
+> +available CPUs in parallel, but the job count can be adjusted as needed.
+> +`shuffle` randomizes the order the tests are run in, which makes them re=
+silient
+> +against unwanted inter-test dependencies. `prove` also makes the output =
+nicer.
+>
+>  Go ahead and commit this change, as well.
+>
+> --
+> 2.43.0
+>
+>
