@@ -1,55 +1,55 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850B0225A35
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 14:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884E1259CAF
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 14:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768227448; cv=none; b=K2XRgWmLkt7XRFDvMShJ8YP8s3/V0YxintFxS4asRSCR+B4L3Ot2ZdquTUlLLovdKMfnOpGfWZl9kzlChrxHQVkVBe7kuUWLiYEt2GvDNWn0FQLPPvPV0PhlSHQHS1wv4YYnnsqxxS1utwOBFrGuy6ziVyD9NS9MlX3bRiFjD8A=
+	t=1768227449; cv=none; b=qRmW+Z7H3egeeNDZaXyt2t+QP+JR6kmiFixxsDGpK9jojR3JcI7VhcVD8kcy9Sto+nZxFO8Aq1d32b87jUiLZdPVi2xIAEbhs56sQU4D3ZgAwhJVKIEyHiwXi7zK/T2ukZYUFdDRKHMN/2rW51cklzR31bsv2xY0QejmllSXTKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768227448; c=relaxed/simple;
-	bh=jwvT8wUzq+TTcJgO+aXsI+w3tzpagITrYJSlbbzYXQA=;
+	s=arc-20240116; t=1768227449; c=relaxed/simple;
+	bh=Ts0rxyiVQWPBZulvOt/fMlJL5CZ0/8e9do7pEwR3de0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KBNwYDGSVipRunjdxEp9ZJfKJyUiUXuy4w47ciLpc97JBsCIAKmSy2DF3fHdu87SV88at+FOm1cNuxEMIJSt40gyNryCPgbm+zNA2GIlqYAjUlEi73idouCSraANYd1Pn/LNAgbBxj944Td6QdcZ4CNt6Tu6hBDbi3NByimqHZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HuxVNAmR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EN8uP8wJ; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=FqhjINVh/JfWOwdXFBHMnJOlo5tOLb7g+wK8U1F+DcRVNEBEiB0cOlGXvFoIDlIcoH4SaOS1w2PaewBMG9EagppOaXbCE6b+nooAn+nMInjKK0G+DXt3I80mYLS3VcBa277O9m97bbdJ0043Du7xzvbX780KQM9nr1ZE42yC/2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c5gpDPJC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ToYI7CEK; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HuxVNAmR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EN8uP8wJ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id C36A4EC0598;
-	Mon, 12 Jan 2026 09:17:21 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c5gpDPJC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ToYI7CEK"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id D46C9EC0599;
+	Mon, 12 Jan 2026 09:17:17 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 12 Jan 2026 09:17:21 -0500
+  by phl-compute-09.internal (MEProxy); Mon, 12 Jan 2026 09:17:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768227441;
-	 x=1768313841; bh=tfO7nnCv8CCt359m1gccIzSw4aWv2tRWbVPH86EndRY=; b=
-	HuxVNAmRdYgBETbOrSYszDYIbgOwNI8l+scEtmNroAMGThJnk7e45X8dpqIlgfSQ
-	OoVdEZGdVpbgUZl50oHS4MALSzYJcxzpl0QVYPzL+ku4HzBaMe/GT1UH6MJOsgJf
-	b63nD5QJeW0ahRM5w11ul8UAB3ge42+17f9Y/4NLtbuXZ5GYMVFN6+h7JBAr0/le
-	frR1xXGwDWdZYGkvl4fRYyYl5cJ41MSHo+YVP/5VtDZQIZ2OFbeDrdqEZy1cSHIn
-	4Su08vgaSafhyzXP6gcpiouFZhRdnQtk1vN4v26NP/6XD9NkHZvrD16tSSt6nkyS
-	6Gwinb32s+6LXpXWoyWzvA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768227437;
+	 x=1768313837; bh=lmMeyePlvcR4VwOjq8mdnP3WpPj2Xp8VH7QkEAJh400=; b=
+	c5gpDPJCqu6rz7iUmB9sL9a103AzCznrjCoZ8j5MRcqoLie8U5m2nzI+z8S0AuWw
+	st6V/z0CZX1HoiiO5m0u3w9iFmUBj9+peBYk2g1KPEUB88IYFaCCwaBgHHgHW5cR
+	IN3BYbewHgF+X6bFglU5qo0OJzOBxpOeYwmGoeWK6vOvUWvG0Hdq8EKtC2BhH0kS
+	qoRelcFFYkBPs/JgzCfbKuf+Be0X+Ka4Nu+YbtKyDijoEokpnLkgrgJJPbsldkeg
+	xwLNv9pJ+Ohsho9FcVD4x2dcsNdnWjOuI6O2vGiDXWKmX+W/9Zj34KNx4hduK9BD
+	rJVNlyh4DpkzXNz580xcRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768227441; x=
-	1768313841; bh=tfO7nnCv8CCt359m1gccIzSw4aWv2tRWbVPH86EndRY=; b=E
-	N8uP8wJ1rlvdTrSTZDDGyN4FDtMla8KzulkojcQcq8JL3heoaUEP9TKY/TB0bwwa
-	bq542tJS4NV042MrxZmNE2u5xsc/0PEI95AsNjxRFfdXqr2iCG1AegSdkCj92YSw
-	2a6Q879Fahk4AhB9JvG/uiQy21PC6TLImURTlgTXHytXUqXxrrercHOmb7vwjwTF
-	Px3HUpDVIQyiZCNplm69dlIEpAkCCSFzTDn3ePzI6B4hntGf6E32UrsxVAGw0w6z
-	nqVoxdPphXZ7mAljcQXqTk59AK8/gr5M4t+KbnGjpuMmv1VzNSERVSsG4zQM8pdk
-	YbiblphAglZKvUVXRiW+A==
-X-ME-Sender: <xms:cQJlaV2yy7Q16ytAnPlldW4ePdMx9AShmi5-tggughBxRfyEGD1YOQ>
-    <xme:cQJlaX7q583sTAPfviOWXlJ7YBtvNh98PtVoo4mgxkExIhiJ3ogEv5WU1CjMb4CuM
-    jsnbs9go6rZMEDwfsjTmSuET3lPSs04YtfpuckNJ9hPStmyiRIp>
-X-ME-Received: <xmr:cQJlaRRF5UDwskydtU5bKW8r84lkxzd6v8isAW-FqIPIv6BkXHa79XRObJlfF1Z4xtefACXL98TjaOlflW7xZxMQzF5UurdOu0_ZopPZ1Q>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768227437; x=
+	1768313837; bh=lmMeyePlvcR4VwOjq8mdnP3WpPj2Xp8VH7QkEAJh400=; b=T
+	oYI7CEKrvOp2srsMQATafoub2sjY0kJm4RuNmad7DK606KbHEw7VijCXFmQbz2t3
+	xzuHzGEvoMiVQLnSHKmQlLaHvLHzOki1mRR9Z83EWs+Dbyty2dexmLvymGT+kCEi
+	vzR603UMbpyQqorwBMkxYVr9LhLmnAIQWHj5nybqJ8Fwk+t1IbWP5S6Ll0yWPlG7
+	AbFgWwVmxjCnp8PDPBML04CV4DpBtYe54UJpKmwmGpwSIQBj7C+40Yy34dXT04c2
+	ChPd4HXt8F9ND3r1cy0Hc/2oqIz/14DQRSECf93UWhNJW72SYM9B4bVMnfYOiW4I
+	GAyY48+7spHWO1zPVod+A==
+X-ME-Sender: <xms:bQJlaQILezEEBjYvQ9eweFcaF-iYl-jXz7GRY8NGp-wb_OjnwP1Ngg>
+    <xme:bQJlab_mUDx9bSb-MMSHA72S0lATc1xgDLriaY7rSiBRDbSWWh6rT5kc30fhKXGg-
+    wIrEe1KrY0RaDEnCZfhjQxang1DCQNbhb_22t-SHuM1jgdibHuAVw>
+X-ME-Received: <xmr:bQJlacESJ4CMSG_hJtRoWngTuxdBx5OQ0BNH49F9ubgrmA8qUvq3q3fLyrb2O_w0ePCSme3fBm8jCPe_kCE_cU_IbcifLDiG0PrXfF_mtA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,29 +58,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejieejucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdr
-    fhhrpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhi
-    khdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehmrghilhessggvhigvrhhmrg
-    htthhhihgrshdruggvpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
-    khesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrd
-    gtohhm
-X-ME-Proxy: <xmx:cQJlacWezNbFcnhPpltUT3iEHDdc3QvPz1T8cyGj2fRldG1vHYAuRA>
-    <xmx:cQJlaWEu68U-5prOulAmO8VZqooQJOWjB2-da9rtxlNwYcQC7C70-Q>
-    <xmx:cQJlafe2OJtLlnd0SIO3QKZazl2eKtMbeC9gS86DewSAGaPMwWUwSA>
-    <xmx:cQJlafre1LI7fRtc-nlv24ON_0EVFOXHQuC69XYFLnBbwzczOfa5Sg>
-    <xmx:cQJlac0UmePSTaj3gr5UnZYT3TZvtH-BGXW50dpouq3tYcmMwuZj5aTt>
+    thhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrh
+    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdruggv
+    vhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepnhgvfihr
+    vghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:bQJlaW6fFoapIhVotmSnj8bAJxDDs5KY-NXO4HXImLjw-1m5tynV3A>
+    <xmx:bQJlaVZM0Q5cSAmvZ13Xf8kVqCbCEVIlw0bmNfpZU2Ibfo9zbObeyA>
+    <xmx:bQJlaUiW-Xd0BcSbI7T55iZhWTe3TiSbObz7dNjIPMBQ6TOHjdyFDg>
+    <xmx:bQJlaXe6Qhb4hwULcaogic7lGi4szzERLngrG37frapcrWaqWilRGw>
+    <xmx:bQJlaeInmFAhNV8wdQjyM0moRuJTHdwntJL4UneBF-XT8ECLn1FsETUJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 09:17:19 -0500 (EST)
+ 12 Jan 2026 09:17:16 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 98dbc604 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 14:17:19 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 34948189 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 14:17:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 12 Jan 2026 15:15:18 +0100
-Subject: [PATCH v10 6/8] wt-status: provide function to expose status for
- trees
+Date: Mon, 12 Jan 2026 15:15:17 +0100
+Subject: [PATCH v10 5/8] replay: support updating detached HEAD
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260112-b4-pks-history-builtin-v10-6-e3c6aa5b4cec@pks.im>
+Message-Id: <20260112-b4-pks-history-builtin-v10-5-e3c6aa5b4cec@pks.im>
 References: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im>
 In-Reply-To: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im>
 To: git@vger.kernel.org
@@ -104,82 +103,133 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Matthias Beyer <mail@beyermatthias.de>
 X-Mailer: b4 0.14.3
 
-The "wt-status" subsystem is responsible for printing status information
-around the current state of the working tree. This most importantly
-includes information around whether the working tree or the index have
-any changes.
+In a subsequent commit we're about to introduce a new git-history(1)
+command, which will by default work on all local branches and HEAD. This
+is already well-supported by the replay machinery for most of the part:
+updating branches is one of its prime use cases, and the HEAD ref is
+also updated in case it points to any of the branches.
 
-We're about to introduce a new command where the changes in neither of
-them are actually relevant to us. Instead, what we want is to format the
-changes between two different trees. While it is a little bit of a
-stretch to add this as functionality to _working tree_ status, it
-doesn't make any sense to open-code this functionality, either.
+However, what's not supported yet is to update HEAD in case it is not a
+symbolic ref. We determine the refs that need to be updated by iterating
+through the decorations of the original commit, but we only update those
+refs that are `DECORATION_REF_LOCAL`, which covers local branches.
 
-Implement a new function `wt_status_collect_changes_trees()` that diffs
-two trees and formats the status accordingly. This function is not yet
-used, but will be in a subsequent commit.
+Address this gap by also handling `DECORATION_REF_HEAD`. Note though
+that this needs to only happen in case we're working on a detached HEAD.
+If HEAD is pointing to a branch, then we'd already update that branch
+via `DECORATION_REF_LOCAL`.
 
+Refactor the loop that iterates through the decorations a bit to make
+the individual conditions easier to understand.
+
+Based-on-patch-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- wt-status.c | 24 ++++++++++++++++++++++++
- wt-status.h |  9 +++++++++
- 2 files changed, 33 insertions(+)
+ replay.c                 | 47 +++++++++++++++++++++++++++++++++--------------
+ t/t3650-replay-basics.sh |  9 +++++++++
+ 2 files changed, 42 insertions(+), 14 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index e12adb26b9..95942399f8 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -612,6 +612,30 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 	}
- }
- 
-+void wt_status_collect_changes_trees(struct wt_status *s,
-+				     const struct object_id *old_treeish,
-+				     const struct object_id *new_treeish)
-+{
-+	struct diff_options opts = { 0 };
-+
-+	repo_diff_setup(s->repo, &opts);
-+	opts.output_format = DIFF_FORMAT_CALLBACK;
-+	opts.format_callback = wt_status_collect_updated_cb;
-+	opts.format_callback_data = s;
-+	opts.detect_rename = s->detect_rename >= 0 ? s->detect_rename : opts.detect_rename;
-+	opts.rename_limit = s->rename_limit >= 0 ? s->rename_limit : opts.rename_limit;
-+	opts.rename_score = s->rename_score >= 0 ? s->rename_score : opts.rename_score;
-+	opts.flags.recursive = 1;
-+	diff_setup_done(&opts);
-+
-+	diff_tree_oid(old_treeish, new_treeish, "", &opts);
-+	diffcore_std(&opts);
-+	diff_flush(&opts);
-+	wt_status_get_state(s->repo, &s->state, 0);
-+
-+	diff_free(&opts);
-+}
-+
- static void wt_status_collect_changes_worktree(struct wt_status *s)
+diff --git a/replay.c b/replay.c
+index a8e6d5b30b..6a8cd2f72d 100644
+--- a/replay.c
++++ b/replay.c
+@@ -150,11 +150,17 @@ static void get_ref_information(struct repository *repo,
+ static void set_up_replay_mode(struct repository *repo,
+ 			       struct rev_cmdline_info *cmd_info,
+ 			       const char *onto_name,
++			       bool *detached_head,
+ 			       char **advance_name,
+ 			       struct commit **onto,
+ 			       struct strset **update_refs)
  {
- 	struct rev_info rev;
-diff --git a/wt-status.h b/wt-status.h
-index e40a27214a..e9fe32e98c 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -153,6 +153,15 @@ void wt_status_add_cut_line(struct wt_status *s);
- void wt_status_prepare(struct repository *r, struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
+ 	struct ref_info rinfo;
++	int head_flags = 0;
 +
-+/*
-+ * Collect all changes between the two trees. Changes will be displayed as if
-+ * they were staged into the index.
-+ */
-+void wt_status_collect_changes_trees(struct wt_status *s,
-+				     const struct object_id *old_treeish,
-+				     const struct object_id *new_treeish);
++	refs_read_ref_full(get_main_ref_store(repo), "HEAD",
++			   RESOLVE_REF_NO_RECURSE, NULL, &head_flags);
++	*detached_head = !(head_flags & REF_ISSYMREF);
+ 
+ 	get_ref_information(repo, cmd_info, &rinfo);
+ 	if (!rinfo.positive_refexprs)
+@@ -269,12 +275,13 @@ int replay_revisions(struct rev_info *revs,
+ 	struct merge_result result = {
+ 		.clean = 1,
+ 	};
++	bool detached_head;
+ 	char *advance;
+ 	int ret;
+ 
+ 	advance = xstrdup_or_null(opts->advance);
+-	set_up_replay_mode(revs->repo, &revs->cmdline, opts->onto, &advance,
+-			   &onto, &update_refs);
++	set_up_replay_mode(revs->repo, &revs->cmdline, opts->onto,
++			   &detached_head, &advance, &onto, &update_refs);
+ 
+ 	/* FIXME: Should allow replaying commits with the first as a root commit */
+ 
+@@ -312,18 +319,30 @@ int replay_revisions(struct rev_info *revs,
+ 		/* Update any necessary branches */
+ 		if (advance)
+ 			continue;
+-		decoration = get_name_decoration(&commit->object);
+-		if (!decoration)
+-			continue;
+-		while (decoration) {
+-			if (decoration->type == DECORATION_REF_LOCAL &&
+-			    (opts->contained || strset_contains(update_refs,
+-								decoration->name))) {
+-				replay_result_queue_update(out, decoration->name,
+-							   &commit->object.oid,
+-							   &last_commit->object.oid);
+-			}
+-			decoration = decoration->next;
 +
- /*
-  * Frees the buffers allocated by wt_status_collect.
-  */
++		for (decoration = get_name_decoration(&commit->object);
++		     decoration;
++		     decoration = decoration->next)
++		{
++			if (decoration->type != DECORATION_REF_LOCAL &&
++			    decoration->type != DECORATION_REF_HEAD)
++				continue;
++
++			/*
++			 * We only need to update HEAD separately in case it's
++			 * detached. If it's not we'd already update the branch
++			 * it is pointing to.
++			 */
++			if (decoration->type == DECORATION_REF_HEAD && !detached_head)
++				continue;
++
++			if (!opts->contained &&
++			    !strset_contains(update_refs, decoration->name))
++				continue;
++
++			replay_result_queue_update(out, decoration->name,
++						   &commit->object.oid,
++						   &last_commit->object.oid);
+ 		}
+ 	}
+ 
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index 307101eeb9..c862aa39f3 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -249,6 +249,15 @@ test_expect_success 'using replay on bare repo to rebase multiple divergent bran
+ 	done
+ '
+ 
++test_expect_success 'using replay to update detached HEAD' '
++	current_head=$(git branch --show-current) &&
++	test_when_finished git switch "$current_head" &&
++	git switch --detach &&
++	test_commit something &&
++	git replay --ref-action=print --onto HEAD~2 --ref-action=print HEAD~..HEAD >updates &&
++	test_grep "update HEAD " updates
++'
++
+ test_expect_success 'merge.directoryRenames=false' '
+ 	# create a test case that stress-tests the rename caching
+ 	git switch -c rename-onto &&
 
 -- 
 2.52.0.590.g1f87b77810.dirty
