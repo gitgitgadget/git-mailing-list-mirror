@@ -1,182 +1,156 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F61030E846
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:37:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FB1349AFE
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:40:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768210644; cv=none; b=HJPH7+R4g6cCcDLYekbLqitM07zJUXnlBmt9OCfYnB8y0pP3ySM6RDf+aWOhQCF95QH2dBakFYAHUMe7NTK8w7L+/Zq5wT54dRHLdcXvniK+v/HpFe9fSaQjRLYRuF5050ZYOB11074uBZbJxi093/Wve31vVsbaRJaPTWIBWK0=
+	t=1768210850; cv=none; b=oMWkeW+/kzoRtPZ78hF5d9AueDXnEaKdGvYFzmoUe/QlCMDvrl6CtrhiwagiW2/FYF82btiksby+SWdPaHIiVi0bolq/YzReg33h75jpTMqT/cA/6OsnW1XFPrzguMRco+GSHJGUIAx7UFKC1nqShZUmFGnOx3b+frMbqZmDwTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768210644; c=relaxed/simple;
-	bh=YPkeFg9ycY5VFHBYi+9YIUpKQWoi4hHWSKIcqNvWA1c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TaWGbA7QwhPChEjsPdgNv+OgwhWYDWdj0yLXN6ozNyzke1ONcHlcYQAy+b+fNdjTBbj11bChgYacLDBKt2MG57x/vTY4zJbVaYXOH8BgfziVDsKyIzKNZUtHJMT3ocEJECiots/5Ln9ZFJ7eRtNRGlCAg+3fjSbVl3GC7a9zFOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fxxO5RLq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dnSuMgPW; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1768210850; c=relaxed/simple;
+	bh=6C591FMHuV+PSuRuxDQnYWzkH7oDoupC1uY8/frSUus=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ki59SNgOCS8eNsCQJAwJcXVg02b/g+TuKvldVdT04r5DxqxHe5+GkwMSP9BGTo/YroPtceqNuTuf3bkrNyzoo6TyucpIMbxIkFnjaJXKeYblh4lUhQgFCIlLeBeS/InJdedFssKUHW8CM1SMWKijWwDZtfLZqW6abtsD8YNrwFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UegL0aP5; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fxxO5RLq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dnSuMgPW"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5C3381D000A1;
-	Mon, 12 Jan 2026 04:37:22 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 12 Jan 2026 04:37:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768210642; x=1768297042; bh=Di2+z+fJUG
-	1Cr8onzrdb4MduKEC0xkiDCxs5DnJpMq8=; b=fxxO5RLqoC7VfHCvjVZEoNSxcT
-	NJoEdLc8tNZjgU+hdEbp6cm+tY4YwKVgVaQj9F/kDtZALTtTGpN5sS/Gy1mSS52s
-	xhpcwdZ1Q7nmx3MWJe8yGVzToTQPgNv79EmBAY629dz5gDqWNUTTXPFfVT5YlRIL
-	MZYikSXI9waNj10R3qBQHnVQ3+M/ZMgpxEVWSPx2X9LicNzVu2k7uh8xcs5mzG/b
-	BzaTg2dOwOlNglmyI0mwyE+r5yrobqiJw+qiAU5GYX5oKSRN4FL3drQ3vwp4ss/t
-	Tve/SQR4enZuk7Yp4qfwJRHM/cSLnhfWbziwLwjSW2Yau1Bydi3yEpR2vzFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768210642; x=1768297042; bh=Di2+z+fJUG1Cr8onzrdb4MduKEC0xkiDCxs
-	5DnJpMq8=; b=dnSuMgPW8If2rVSBXuGIzIEnOKel4Uv9pSIk+wavzUfCNxfevHX
-	I1NZxc0JxpLMzgrXdOm2otfaGKxmV7L6uxBHCMRnFCkpGWffSYuFo9G+kLgJOS+X
-	UdTmaaslPPRQYivAVbYyaWXx0uhH9d0kw41YdKxOU1Jp1sH1hJE4mgM2XX3H+rtf
-	a0+E7qYMgmEuIlMwr9VPjXpozY1HR9lmJs6LSGffyRHEr/kn+mZ8EqEPDTySUHZG
-	RKux345ecW5oDE7f8Pi//A1YZSeHsKw7ERCf6pPPTUi03xFt4pC8OmLPYdPgNOdQ
-	cDtr1Ok9LLSRNljf80mbo9/LaRPJhxPRr2w==
-X-ME-Sender: <xms:0sBkaSCrcZJGoTbgqsrLT8627YsoojU8xwIibh-DfYPZwySUu0KOPw>
-    <xme:0sBkaSg8ONRue0KxglwKcztfoBPv4nKELJNEyIqXduUgvXzEfUnp5mJ7T-9bYBrZW
-    ro1IxGaVjoTEcekGt453a6FLzcAjvh1497BZ_apdd_Nb3TTZwJbWQ>
-X-ME-Received: <xmr:0sBkaTODJjuHGuZmi9J0kMKTLl_hcQbvMzrmuNBAY6faGOE5kiM56bNWNZMtjRDi8mW0KeumtaSPBLfD26MSYNjCRfzjF0kK6JDsfmPj0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejudduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:0sBkab73Ix6m-157yt5VShP5luddFFHOazHYeF4PcLP_yVG3lXHU1g>
-    <xmx:0sBkaZ2t0zaY7g-1PZhMIfFFsBiHbiaMdEL3d9r4TleuJOObnGia9Q>
-    <xmx:0sBkaUblb1b1YfTIxU8JAA-J8r2XBPw1lsNxm1UXkhCeQrJXZ6F0wg>
-    <xmx:0sBkaZA1vkGKHJpNAY5IB-Is7t2NHlLn6yKD_XYdkKSeZQznnZnE1Q>
-    <xmx:0sBkaVJQYVVAC7wA34G1eDGbzYTY9lM0qYniyYiTJoCFM3HhYk6k5QhT>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 04:37:21 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 90e5b431 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 09:37:20 +0000 (UTC)
-Date: Mon, 12 Jan 2026 10:37:17 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] builtin/pack-objects: exclude promisor objects with
- "--stdin-packs"
-Message-ID: <aWTAzR4H3XuAlJJn@pks.im>
-References: <20260105-pks-geometric-repack-with-promisors-v1-0-c4660573437e@pks.im>
- <20260105-pks-geometric-repack-with-promisors-v1-1-c4660573437e@pks.im>
- <aWGP/Lp2Eo03F7vN@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UegL0aP5"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-29efd139227so43964535ad.1
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 01:40:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768210845; x=1768815645; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HfcuB1V8GRuezmn23y7MZE0UrjCssT1aBeaKf98s79I=;
+        b=UegL0aP5+JQVr42RsKGWiWJlj3uVz0JiBDpX/amiM3aUpqd7o9XfWcNGWp113wNH8l
+         oc+q+tLTgnMFxTuBvslb3xR/RDE5TalzOaAF1bPLkVFSakYoZGoOn7jWQYYcqaZyOz3x
+         VNhNvmAY4MmLzySOxvSQtRF7tvYo4ArNi7UW+wQPThs3kmJT5WT52JgSFIsNh7J/zYwA
+         KmtvMTrJMM8cOblO/+btUOV5nTB+b99D+M0qOsED7HJNjGtbWiX8MODG3nvX/LHdaeuo
+         3+JSdWpJlJXSDC78yMGGyCgYFkpnBzMmpwgj4B0VLuoFDeWBMGoPALzky7IFFgC9lBYg
+         aa4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768210845; x=1768815645;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HfcuB1V8GRuezmn23y7MZE0UrjCssT1aBeaKf98s79I=;
+        b=JxfQCCIb/U+gH4X3Nbb9pO2fzBhWog4jen3YHBND8Qh+3xSOYbGwg7PavzGZMhPP1n
+         ZzlOeFGU75pHsP93rAplm1KAfVCE85gPruLrDJB6gq1sM3IhqigQeMvG3np/TCzEn2KP
+         ZlCzM5M1C0jx2kwnuU88V6UgffZE9I1urCNZCTh7pl1oVRydJQelKvSdCkl0b0WwA0iC
+         zIRoCGmf4VJmsH7GU7Vn/KamC/fShjkHn/1M8cm7HK478arRHisaQoFrY5ZuCJTl47Gu
+         +RLKgkbkwX/LSuhs67YsFGRYqeguqrwY8xbmDcVKJ36vT5sW2zMPlJeOYPdXMyVFsMeC
+         avGw==
+X-Gm-Message-State: AOJu0YwLO7kEHPoGauiIVuBaRNpgmAspxyLSEgFRYkvXAmblRKD/lKY0
+	SVPmO1W09OeIAudNKum95JkNUM4NmsNSOzhiDd4QnSCqZDKBe7/8XnnD1PUFcQ==
+X-Gm-Gg: AY/fxX6iwhaF1jaqyrnXh0Yb45ZvVmPgIRuFfUhdgN21m1s4XfVgLxc0s8V4CwJ7a5b
+	u7wDlnPxGAY5WF2q6wZnYNbJpcoU+SDqFLMXGilfBdMIDM7piY6ka+N/viImUQXN07YRDRLg/J0
+	Yj97qxvHx2IrVnPod+cJlRYMOvqMGIf0yujVynMby8zeE7s5q6zOt3WJiZ4k7IxOSIYn7mcY8Yn
+	iphmBHPD/Ir1BRyvLmKayomgKdzmZZhC+UylELYWx0OQGR5N6/1j05n4t//9uYBNRHV/9iJd9uc
+	8sexDy3sTeMz8j1gDYe2+1+m6MfTcWZ6TpoqZ3j/ln7amfuqgZ1dg3r7WV/vc2eUeYuzVGZvEeu
+	Yg+ai4H71Wf8zIYaTI73PPPSkYF8MpHeAmYLLRlMBc611tzT5+y3KcjnX8kHQKGOJiAf66mF3kk
+	kjWK/fSuKmPzndwdEJFtSHZ26lRKkeDovbvvCMbqXN8sLR0WLN33vuTmDR
+X-Google-Smtp-Source: AGHT+IHHSQPGPyovG0DHk7ryEEIqbyxDTE9BwF1cytU09bDyodvxg9VDOTvf3utQcVi35Gpog09yBg==
+X-Received: by 2002:a17:902:d544:b0:2a0:fe4a:d666 with SMTP id d9443c01a7336-2a3ee432db5mr154698505ad.10.1768210845298;
+        Mon, 12 Jan 2026 01:40:45 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:8811:38e1:dd74:7b39:2154:bc0f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cc88f1sm167252675ad.78.2026.01.12.01.40.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jan 2026 01:40:44 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH] doc: MyFirstContribution: fix missing dependencies and clarify build steps
+Date: Mon, 12 Jan 2026 15:10:23 +0530
+Message-ID: <20260112094030.314203-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260108174651.1618874-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260108174651.1618874-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aWGP/Lp2Eo03F7vN@nand.local>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 09, 2026 at 06:32:12PM -0500, Taylor Blau wrote:
-> On Mon, Jan 05, 2026 at 02:16:41PM +0100, Patrick Steinhardt wrote:
-> >   - "--stdin-packs=follow" does the same as the first flag, but it also
-> >     asks us to include all objects transitively reachable from any
-> >     object in the packs we are about to repack. This is done by doing
-> >     the revision walk mentioned further up. Luckily, fixing this case is
-> >     trivial: we only need to modify the revision walk to also set the
-> >     `exclude_promisor_objects` field.
-> 
-> Hmm. I'm not totally sure if I'm following why we handle this case
-> separately. Could you elaborate?
+Fix several issues in the MyFirstContribution guide that can lead to
+confusion or test failures when following the documented steps.
 
-You mean why we handle "--stdin-packs" and "--stdin-packs=follow"
-separately?
+* Add missing header includes in code examples (environment.h and
+strbuf.h).
 
-The thing is that we don't really need to care about the case where we
-want to exclude promisor objects with "--stdin-packs" because we don't
-perform any object walk at all. We'll only merge objects part of packs
-that have been passed to us via stdin. Consequently, you can say that a
-request where the user asks us to exclude promisor objects while at the
-same time asking us to pack a promisor pack is self-contracdicting, as
-they could have just as well left out the promisor pack from the
-request to achieve the same.
+*  correct manpage synopsis formatting to prevent failing documentation tests.
 
-There's two approaches here:
+* clarify documentation build prerequisites, particularly specifying for DocBook-XSL.
 
-  - We can simply die when seeing such a malformed request. This is
-    exactly what we do with this patch, and that cannot be a regression
-    because we already died beforehand. We strictly expand the set of
-    supported cases where we pack objects.
+* specify the use of parallel test execution with -j$(nproc), noting that
+it runs tests using all available CPUs and may be adjusted.
 
-  - We can honor this, but exclude promisor packs altogether. This is a
-    feasible thing to do, but now we also have to care about the case
-    where all passed packs are promisor packs. Also, the result would
-    arguably be _more_ surprising if we exclude packing some packs that
-    the user has passed to us.
+These updates improve accuracy and make the first-time contributor
+journey smoother.
 
-In "--stdin-packs=follow" we _also_ do the same as above and die in case
-we're passed a promisor pack directly. But in addition to that, we also
-need to pay attention to the rev-walk we do, because "follow" asks us to
-include objects reachable from any of the packs. So in case any such
-object is a promisor object we need to exclude it.
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
+ Documentation/MyFirstContribution.adoc | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-In the context of `git repack --geometric=2` we won't care about the
-first case: we won't ever ask git-pack-objects(1) to include a promisor
-pack in the normal geometric sequence. We do care about the second case
-though as git-repack(1) may end up passing "--stdin-packs=follow" when
-"repack.midxMustContainCruft=false".
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index f186dfbc89..38f2a23e77 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -331,7 +331,8 @@ on the command line, including the name of our command. (If `prefix` is empty
+ for you, try `cd Documentation/ && ../bin-wrappers/git psuh`). That's not so
+ helpful. So what other context can we get?
+ 
+-Add a line to `#include "config.h"` and `#include "repository.h"`.
++Add a line to `#include "config.h"`, `#include "repository.h"` and
++`#include "environment.h"`.
+ Then, add the following bits to the function body:
+ function body:
+ 
+@@ -429,6 +430,7 @@ Add the following includes:
+ ----
+ #include "commit.h"
+ #include "pretty.h"
++#include "strbuf.h"
+ ----
+ 
+ Then, add the following lines within your implementation of `cmd_psuh()` near
+@@ -504,7 +506,7 @@ git-psuh - Delight users' typo with a shy horse
+ SYNOPSIS
+ --------
+ [verse]
+-'git-psuh [<arg>...]'
++git psuh [<arg>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -531,7 +533,7 @@ easier for your user, who can skip to the section they know contains the
+ information they need.
+ 
+ NOTE: Before trying to build the docs, make sure you have the package `asciidoc`
+-installed.
++and `docbook-xsl` installed. See `INSTALL` for details.
+ 
+ Now that you've written your manpage, you'll need to build it explicitly. We
+ convert your AsciiDoc to troff which is man-readable like so:
+@@ -726,9 +728,10 @@ $ prove -j$(nproc) --shuffle t[0-9]*.sh
+ ----
+ 
+ NOTE: You can also do this with `make test` or use any testing harness which can
+-speak TAP. `prove` can run concurrently. `shuffle` randomizes the order the
+-tests are run in, which makes them resilient against unwanted inter-test
+-dependencies. `prove` also makes the output nicer.
++speak TAP. `prove` can run concurrently. `-j$(nproc)` runs tests using all
++available CPUs in parallel, but the job count can be adjusted as needed.
++`shuffle` randomizes the order the tests are run in, which makes them resilient
++against unwanted inter-test dependencies. `prove` also makes the output nicer.
+ 
+ Go ahead and commit this change, as well.
+ 
+-- 
+2.43.0
 
-> > diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
-> > index 4a8df5a389..cd949025b9 100755
-> > --- a/t/t5331-pack-objects-stdin.sh
-> > +++ b/t/t5331-pack-objects-stdin.sh
-> > @@ -319,6 +319,45 @@ test_expect_success '--stdin-packs=follow walks into unknown packs' '
-> >  	)
-> >  '
-> >
-> > +test_expect_success '--stdin-packs with promisors' '
-> > +	test_when_finished "rm -fr repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		git config set maintenance.auto false &&
-> > +		git remote add promisor garbage &&
-> > +		git config set remote.promisor.promisor true &&
-> > +
-> > +		for c in A B C D
-> > +		do
-> > +			echo "$c" >file &&
-> > +			git add file &&
-> > +			git commit --message "$c" &&
-> > +			git tag "$c" || return 1
-> 
-> Unless these changes all have to live in the same file, could this
-> instead be written as:
-> 
->     for c in A B C D
->     do
->         test_commit "$c" || return 1
->     done &&
->     # ...
-> 
-> ?
-
-We unfortunately can't. The problem is that any object reachable from a
-promisor object may be labelled as a promisor object. So if we had a
-tree that makes all blobs reachable we'd treat all of them as promised
-blobs.
-
-It's quite confusing overall.
-
-Patrick
