@@ -1,121 +1,130 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2C7341076
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 08:40:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2ED3451A3
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 08:51:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768207253; cv=none; b=DYnxLEI6G88lm3q/yO7qgUzwundm9Py4oxIEEcC6HTutYnSLW5f8IRXU6Sq1fea+6R/7698sfajCnuCSqjwl6UdhlsKm8PdsPtQ/tT0iU7d2DTMGuUzAtthI4aKisF+DJX0fK2WOwCvZEktmJicY64tksE0TezQobARuYt7kpwQ=
+	t=1768207875; cv=none; b=ujfO6QDuC5Vly8G1x8eK+8ij4GUXtkEAVuFMm07drPcJtyC9QtRBeYxVo9PUgDAtWEzRyhrmsV2rmLON8daVURc3IhI8pW79Mj0obie/3SYyFr+Fwe+QUZ1L/GQ1n97DRWTYTqTPXaauzkR5nkSsmDH7EDZ6kz/jAsDjBlAB6Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768207253; c=relaxed/simple;
-	bh=b3u9Zo8HSj+jKGjL5kY5E0bWGLYJhd5TSKJOYa4FQmY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bbhxQlswHF0WxLKR4UCArVTlyyyct/CtJbVC9OrIZTGOIkfcXJXVouM7hRUwVHe6PoKe0AtlgO0rbLPkWLddRSkLEAlT73mggop1hQO2HBX/c18l2gZAfzLfhBxeUF7ROzoLTKBISdM7cLxlocXlpvLSAWXB7he2luib32O5YKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JMLawY1e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lj/bJFI1; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1768207875; c=relaxed/simple;
+	bh=H5XsIMZpYtDxRH2BcjHusw5SDrCEZg3zOeGCa6Pzq/k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DBRAz1irqHnI6KbSSsjdL+4QtYC06ZytH+76Hm0PK9qemI8+XGEjjuVHc/Qt/imaBDncU53X5qiQ2n7H7btm0Zb0UUkq365BJ57hRmy84t00dI2iWeeujJcX3pTfVCztDXvlwgD32J18ouPX0yxaFeLqZhj38iBL+WO8ZH9nSL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h1tmjtAs; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JMLawY1e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lj/bJFI1"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id BCA5C1D000BF;
-	Mon, 12 Jan 2026 03:40:51 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 12 Jan 2026 03:40:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768207251; x=1768293651; bh=DEFUUuGl9V
-	dJ0kZN+PJIByKe+K98AYFOFuA3y5r7yP8=; b=JMLawY1ekYQsiBFALh76QS1xJ4
-	D98TBhzyTgyuanLAmwTer5LZzL6WGYT/pOUdXLZyR4xy5nMZocx/2Y01jAOrzoh7
-	codmz9gEB0qoaZSnYE+pL4Nv6rlt9d8vo3/hPYX5a4++drO3jZLFEwUbkydLkqCZ
-	mEaylbxP6s0hUeNL4pXFFR7WOxCePoE2v1V5NsHAGgF/PoyojVv6IlhlhXEa8YUd
-	dVWXbWkkFD+igl8qN5FIQrKojPK8aARHh0y8i23OV1TKq4tJbynIj4rLVQOO8pwQ
-	B3p7B7GuHcnpHc/gg5ph2LAId+zFtg2fa8X2YQQG8L5vdz1J5klS3x8PVLHg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768207251; x=1768293651; bh=DEFUUuGl9VdJ0kZN+PJIByKe+K98AYFOFuA
-	3y5r7yP8=; b=Lj/bJFI15+NXww5Dmo5VfUA8JnkZfhwKaXs4XCzWEQz2vPapEmL
-	GrLOStRW0ZpcwRuUAyJgbWdfmWev76rnYjvUbrlqg7c/GO0N+UGWjuCTFQ5EE7RS
-	9BiqjbkHef1RP/NPoWC3WXIzGYu0lJl+Q5RtSxFI2PujEQdHckiklEiCShZuLuxB
-	OoIYRKYddL0xfnZOcuS8MCLsYXDq6FDRRXa6OStorN/44zhfKwxHAvU1R7/X1lD9
-	3pTpa41wGJkpNJib4YnQNOMpZZL3BB+1K3BJ1xclhSGDgr4NpJm84RXGIAU5vqkp
-	2PEoB3D0L7OrzB8RzGPVtBSUxF3607fy9Tw==
-X-ME-Sender: <xms:k7NkaRev3y-XO8GEk8XyxvJA10cmT8EqnLh7_mO198g09bLC-4scAQ>
-    <xme:k7NkaWP37hdQ1KjE_Lgd_gn2gVfhzOkKF3SJjcgtUA5EcLu7NefpNwIX8U4VLRXE0
-    S92zqUMZsjVdTOn5NvMv-ftTRU1fJI0cuvnOzKs-pFoigqBg9lU4t0>
-X-ME-Received: <xmr:k7NkafhUMDpPm25qyhYsb9Cv3eUyec--t1suoJYWs5XOHgn9NFllEsUHWabG4jqgozkwrfX_OeFoHF-OjJjF8HlxxJsy2wXkFGXfNi5vqA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejtddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtoh
-    hm
-X-ME-Proxy: <xmx:k7NkaZ0Lq3BhenGl5kDvTZ_tOFItjTOqTWKNziGKoLDqCq1VgS_5NA>
-    <xmx:k7NkaZg1QC2oAoOM11AyfRRVDbt_yaDog1YyLiu7PnOvvz7m8UeNoA>
-    <xmx:k7NkaZevM3sMkNyHWqAtST_oQMzr9p8aIF1etIKexjpuHm4LeUwsKA>
-    <xmx:k7NkacmA4j0F9pm3yfZWwuqL9TEPI1i9CicCm_APDvUhKthlVFRkwg>
-    <xmx:k7NkaTBhurSf3WWK5kYZNyM0JkuQhlXUeQ8u9Flf03mSBx8nyHhSEBzB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 03:40:50 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id adb577f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 08:40:49 +0000 (UTC)
-Date: Mon, 12 Jan 2026 09:40:46 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com
-Subject: Re: [PATCH v3 2/2] repo: add new flag --keys to git-repo-info
-Message-ID: <aWSzjnqtvpwYnJlX@pks.im>
-References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
- <20260109211554.90828-4-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h1tmjtAs"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a0d67f1877so47903395ad.2
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 00:51:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768207873; x=1768812673; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Yvdp5/3iAZ4xoghy5go7ukiB2joV3nqXTxbcKbeweZk=;
+        b=h1tmjtAsJgzTF34NXj0PzpFmEfhkG3CtovqSU8Fm69fX+LVaqiPVVqrYXGSDeh8dsH
+         yYrpwRs71x1VYrm+IzKT7qnvmSyWDclEUD5FIbQ7eP2V4I5QJaTsj+bBUxpVOGjwuId/
+         4bfMbpCLTZcg2ckXNeEfPwAsjWrxClcCSSffJcqtgrEmKLe3m+lGeYzteVzt6AYQYsRg
+         FvHSuIDqbEZho3HlujJgpupNirUMYmZxjWGC6wagPSkI+95ejjgSXocTRvwPdH3kG42a
+         FE+BToZlHLQ7XaVPWXnFAzX7TN9Q1jx+jZSiScI1whMtFvWjQt3ENPypRfVrww3zWmW6
+         ctjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768207873; x=1768812673;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Yvdp5/3iAZ4xoghy5go7ukiB2joV3nqXTxbcKbeweZk=;
+        b=A44PF4MN2zPuEfDWHmLIpsgrIUzF+RRaQS364jwKn+i2m0RguQHd1uUgwjlPK0jzNT
+         4666i1YIrDS0cg7mqQoHMMqtoUaC3PjCF6pfpFIRt5DlY00bJ4/GNWOX44MeymuQ2Ym+
+         ya5+2cPcr9OK86IiTpDpsSkUyOmacAMSeeG+mPcFgAx3I5Ea83pB7ZU5C2jyGP5fKLlp
+         nY+sKFXp8cmaD2lY0QGaTZ8fTsHvbhMjOHKveEWh4MUHOIZqESd5O8L4oGfZvwh80g31
+         cgIHQX3QPrTDEh/1bkpo+m8zAWYeQTs13eKraDen48PIt8uWZxVfvIh73XOoCPYVCZ4d
+         BlTQ==
+X-Gm-Message-State: AOJu0YyC08l6BdFnXbbbQo1iRJ8wroMR9DFf1PWmeMzKaZpwd7GpO/FC
+	/j7nJJ+sDTc2/O4OjkMSZ7jO56YeJFjKddEOehuk85vRtBzOEjLppAdAXl17/w==
+X-Gm-Gg: AY/fxX616tki8Woqm/ecqE6fdIxOPkaEldWVfCkx0kj8ZcYa8pTPIkR73L9ydS/dLZY
+	Bv/pbI7t+c1Jfy8A93cQvg5JhLsdWSJVYGDQU5IYU2/NzKm5alr5ZZxxfHrz/yNwacCNLqc29yv
+	4s9FS7tMB8KqJ/2aAp1L7ud0SyV5HcN/opi3bdx47VxcxyLGyOHOrfNZm8uy+ocjJ1lFkv1DqJK
+	+2jDDjNhgRiWErk9LJ46b/T1KmXD3CdGzO/IWFVPEr0Na+2hk7C6RZtCR1B34XGBwhOo/i5CiLm
+	y+eD0zOoO/M5vuMticJInjnWUCuFE3QV3B6AgUtFJo9oxASmUdWk4793sTG+/Xf2uCmhCT+X28k
+	9ilo4m1hPabHlXx558O4cjHq0oPYUvpnyTUT1dyZCUej+Wb+hksjsj3v3y7fr6ygq4IZz9/g6pw
+	se4F4/XhBBW08HNml9uyMdFyskJuTicbk0RmOmkdgmgWTe3g==
+X-Google-Smtp-Source: AGHT+IEHtWqLLN/SuUs/fqbPTqxA/NS0NGmbRvhVAW2k3mYGYG+j2IqKwjbZOtLIZiBYoEaTUeLXtg==
+X-Received: by 2002:a17:903:189:b0:2a1:388d:c084 with SMTP id d9443c01a7336-2a3ee4ca67fmr160377855ad.42.1768207872720;
+        Mon, 12 Jan 2026 00:51:12 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:8811:38e1:dd74:7b39:2154:bc0f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cd2906sm167438545ad.87.2026.01.12.00.51.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jan 2026 00:51:12 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [RFC PATCH] t5500-fetch-pack.sh: fix suppression of Git exit code in tests
+Date: Mon, 12 Jan 2026 13:51:54 +0530
+Message-ID: <20260112085024.299018-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqq8qe3pxvm.fsf@gitster.g>
+References: <xmqq8qe3pxvm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260109211554.90828-4-lucasseikioshiro@gmail.com>
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 09, 2026 at 05:31:53PM -0300, Lucas Seiki Oshiro wrote:
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index fa0e6600af..4471816cc8 100644
-> --- a/Documentation/git-repo.adoc
-> +++ b/Documentation/git-repo.adoc
-> @@ -47,6 +48,16 @@ supported:
->  +
->  `-z` is an alias for `--format=nul`.
->  
-> +`info --keys [--format=(default|nul) | -z]`::
-> +	List all the available keys, one per line. The output format can be chosen
-> +	through the flag `--format`. The following formats are supported:
-> ++
-> +`default`:::
-> +	output the keys one per line.
-> +
-> +`nul`:::
-> +	similar to `default`, but using a NUL character after each value.
-> +
->  `structure [--format=(default|table|keyvalue|nul) | -z]`::
->  	Retrieve statistics about the current repository structure. The
->  	following kinds of information are reported:
+> > +	test_oid algo >oid_algo &&
+> > +	git rev-parse other >oid_other &&
+> > +	git rev-parse main >oid_main &&
+>
+> It is unusual to take these to temporary files.  If you want to
+> reuse the value more than once, it is more common to take them in
+> variables.
 
-I think it's slightly unfortunate that the default format cannot be
-explicitly chosen. "keyvalue" of course doesn't make sense, but maybe we
-should have a format "newline" that can be specified?
+Actually I referenced a previous patch [1] where temporary files were
+used for similar values, so I followed the same pattern here,
+but I agree that variables would make more sense.
 
-Other than that the patches look good to me, thanks!
+> > 	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
+> >  	0012command=fetch
+> > -	$(echo "object-format=$(test_oid algo)" | packetize)
+> > +	$(echo "object-format=$(<oid_algo)" | packetize)
+>
+> The construct $(<file) is bashism, that does not work if your shell
+> is not bash, isn't it?  If you used a variable, e.g.,
+>
+> 	$(echo "object-format=$oid_algo" | packetize)
+>
+> that would make the result more portable.
 
-Patrick
+Right, agreed.
+
+> In any case, since the output of "echo" is sent to "| packetize",
+> the exit code of $(test_oid algo) would not affect the bigger
+> picture, and so would a failure from $(<oid_algo).  I am not sure if
+> this conversion has any value wrt to "suppression of exit code".  If
+> $(<oid_algo) construct fails to read the oid_algo file, the upstream
+> of "| packetize" may exit with non-zero code, but the downstream of
+> the pipe would hide it.
+>
+> THe same comment applies to other two uses of $(<file) construct.
+
+Yes, that makes sense now, sorry I hadn’t considered it this way.
+I now get that since the output is piped into packetize,
+failure in the command would still be hidden.
+
+Now to fix this can we explicitly check the git commands beforehand,
+like for e.g.,
+
+	oid_other=$(git rev-parse other) || exit 1
+
+I believe that would prevent the suppression.
+
+Best,
+Shreyansh
+
+[1] - https://github.com/git/git/commit/c6f44e1da5e88e34
