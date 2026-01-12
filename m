@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9D73803F3
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 18:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDC33876DE
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 18:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768244079; cv=pass; b=rRpjutwmO4cWxhx5nUAWQx8xDQ29p6cbRrBQ8dxbOCkgPSRWdyTo3hLbS+Qz9IU47ZOsC5coYxlmw7kv+GO/tJtds6GcBmYn+YevFfI+BSLBmHjMSv8aUTY4Y6ZHVORHp8aM0g9IYIcUkOigY8CXHB+lbyrJ5aunyLnnWsBQHWw=
+	t=1768244084; cv=pass; b=VQi+DMolFPz5NdkRzOuYN/Svl2HmZ17GU41zUZWeFDx0pZjkDqtYBmSOAR+gFTFUQtVST8GlV0OZ0eZcMbqsuVKI45MRtsnZo1p/n8WWmyyAwbMQVVlC5HwIyp2KESYHtpyrNk0nNhUehzTLxWgmzbRHxUg+0RKB887PIB9iQFU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768244079; c=relaxed/simple;
-	bh=8bsrlosi2EmXscBsblo9zIXvGA2YPwr1jbw8t2SujOw=;
+	s=arc-20240116; t=1768244084; c=relaxed/simple;
+	bh=CIzuzo1EfBaEe2ysQ2m2t1aM//jYkzGgfzX7yIyrWME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pIzDa3jtJkMhDUJog38o9TpnHiIYNqc8K4Gr1aBsHqJPce1CklcWYPsx18t6SCj7QmMjKCQ3auQPgQK6lkOzMHwnVeoHm/44GioYBG/EZC7W0e+bFnneFCvzzsQYl2deRDWB3qM2z5ZrZchrDjlZRX28wJCPGL2zBu1JvXJuDz8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=WsnpJDZN; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=TewG5p6GD9NZT9gCpawHPs88AjH7qNoO1oPGOlvBUNQDec6xet7WxzGAfKmTIaZYL+AkjGmlZ4a9tYPZQuB18lIPc1kQs7mUz1PcrxiweKyflz1NP+PZqMP0Jhmdfg45SoGbq+R936TeMA7Cf4JY3H+nqOJwGTkfpxwxGHPWy9Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=GKJIARC8; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="WsnpJDZN"
-ARC-Seal: i=1; a=rsa-sha256; t=1768244050; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="GKJIARC8"
+ARC-Seal: i=1; a=rsa-sha256; t=1768244064; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=QvBs5I4mbE3IQYvItLe9SsS05cZdDduACaOKA14a1QCTrzEtTZiw7uznk8s/mViO/cPVwBjFwaHZm6slFbaOaKXir191iY3mI6qG9PInPxClGz8kRBYR6FAq3x0F7Q4gpEdelSJIdResFx3azYeKzob5Md+Hu7QOVxzINXJyf3w=
+	b=kn3K4VLuGJQi63FxQsOOSbZBtGB7dYBq9R0Y6vr0AWUQ1tngASUpbgvfAq+qocTNXkB7mSFTuf9pxFH+0k9k8YmRyxqZXfXylHmTnKU8gxynsaKgnMdrz0G9TGsnlFNeZlL2cCmQTXX7NAsHNu9JV5gEfSeQS67rVQIYlOPo654=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768244050; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=FiBe+booWthG1bSjei1jizYf1V5sADzmnDOpYAnlc/A=; 
-	b=MsqwHngoNi+l+g3z9zUpUBQjoHKK45fvH+2nMLD8+msn6fDIGB3lsasxu/v6b7LcLZHSOvuAlm6p3jXR1LQ/lXdVYYax8SszWlUMTjSKyCK1dNpjiBMEUuCq75Dsvsv2911fj9G/VHfloRY3PAjPmT4yc5q9SsOIZ+oH5/peOOY=
+	t=1768244064; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=hc0tTc4Dx8cz36oS8sI6LRhxcEB5ydDoeHjwzB4Mm8U=; 
+	b=Ki58bH8rP7oB39y/x94gYqoH7pih89yE6pXt9FjrcF5vBtc3eXjo5HHT/auHUJtd7pO8uWwrI1RayYblF4/wWxXTD012Er67ZN2Gs68m4BmrY+NPbYvjr4m2QUKYAqvuffj6W7rQlS/SePRQXASPFJNCrK4ljmCq58uRoOelOdI=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768244049;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768244064;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=FiBe+booWthG1bSjei1jizYf1V5sADzmnDOpYAnlc/A=;
-	b=WsnpJDZNFzjvux/dZrXe9UZZEm+VemGcYCD+G5Lll8dW9VnL7DXwNnnWPbqp+cjz
-	vd22dao51IucYu+Orv879X9ZVG5JICW4RR4E/rob4PQQYl9+ksjqACz9250ZyFi94rf
-	1gcw5qIMiFXF0ZoYutP9A8zSZ2UySfq9tJKv084I=
-Received: by mx.zohomail.com with SMTPS id 1768244047822816.3681986131014;
-	Mon, 12 Jan 2026 10:54:07 -0800 (PST)
+	bh=hc0tTc4Dx8cz36oS8sI6LRhxcEB5ydDoeHjwzB4Mm8U=;
+	b=GKJIARC8VM5dOiYnW6+6VBy3GHRY0TDl1n7yEY+S072jNtDJq8VQT27HaDGG45x3
+	1Pd70TuddxEcFyHu9U+eVTkGU/mIfbUFOf4z38rooplsHLLTwRCB6yzFiwm1So7+VEx
+	QuXjIlfHP2xqyFrFkQJwV7+UvIe6n4UVR4ujwjmc=
+Received: by mx.zohomail.com with SMTPS id 1768244062799193.6016062827823;
+	Mon, 12 Jan 2026 10:54:22 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -49,12 +49,13 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v9 00/11] Add submodulePathConfig extension and gitdir encoding
-Date: Mon, 12 Jan 2026 20:46:21 +0200
-Message-ID: <20260112184632.1334495-1-adrian.ratiu@collabora.com>
+Subject: [PATCH v9 05/11] submodule: allow runtime enabling extensions.submodulePathConfig
+Date: Mon, 12 Jan 2026 20:46:26 +0200
+Message-ID: <20260112184632.1334495-6-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+In-Reply-To: <20260112184632.1334495-1-adrian.ratiu@collabora.com>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20260112184632.1334495-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,285 +65,214 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Hello everyone,
+Add a new config `init.defaultSubmodulePathConfig` which allows
+enabling `extensions.submodulePathConfig` for new submodules by
+default (those created via git init or clone).
 
-For those new to the series, we're implementing a submodule gitdir
-extension which allows us to have a unified way to determine gitdirs
-and do things like encode submodule paths to avoid FS conflicts.
+Important: setting init.defaultSubmodulePathConfig = true does
+not globally enable `extensions.submodulePathConfig`. Existing
+repositories will still have the extension disabled and will
+require migration (for example via git submodule--helper command
+added in the next commit).
 
-v9 addresses two more small feedback items from Patrick + some very
-small whitespace problems I introduced in v8.
-
-Patches 1-6 implement the basic mechanisms of the new extension.
-Patches 7-11 improve filesystem conflict detection and resolution.
-
-As always, this is based on the latest master branch, I've checkd
-for conflicts with next/seen, pushed to Github [1] and succesfully
-ran the CI [2].
-
-1: https://github.com/10ne1/git/tree/dev/aratiu/encoding-v9
-2: https://github.com/10ne1/git/actions/runs/20926359849
-
-Changes in v9:
-* Replaced git config --global with test_config_global (Patrick)
-* Split die() messages to multiple lines (Patrick)
-* Moved some of the whitespace fixes added in v8 to the commit
-  which actually introduced the whitespace problem (Adrian)
-
-Range-diff between v8 -> v9:
- 1:  5aae0df74b =  1:  cda5f3688b submodule--helper: use submodule_name_to_gitdir in add_submodule
- 2:  041d921487 =  2:  f57fcc359a submodule: always validate gitdirs inside submodule_name_to_gitdir
- 3:  12ff77be2d =  3:  63e2bcd7bf builtin/submodule--helper: add gitdir command
- 4:  faaea085d2 =  4:  26d0bbff85 submodule: introduce extensions.submodulePathConfig
- 5:  3a65c86a38 !  5:  3f268165b9 submodule: allow runtime enabling extensions.submodulePathConfig
-    @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success 'fetch mixed sub
-      '
-      
-     +test_expect_success '`git init` respects init.defaultSubmodulePathConfig' '
-    -+	git config --global init.defaultSubmodulePathConfig true &&
-    ++	test_config_global init.defaultSubmodulePathConfig true &&
-     +	git init repo-init &&
-    -+	git -C repo-init config extensions.submodulePathConfig > actual &&
-    -+	echo true > expect &&
-    ++	git -C repo-init config extensions.submodulePathConfig >actual &&
-    ++	echo true >expect &&
-     +	test_cmp expect actual &&
-     +	# create a submodule and check gitdir
-     +	(
-    @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success 'fetch mixed sub
-     +		git init -b main sub &&
-     +		test_commit -C sub sub-initial &&
-     +		git submodule add ./sub sub &&
-    -+		git config submodule.sub.gitdir > actual &&
-    -+		echo ".git/modules/sub" > expect &&
-    ++		git config submodule.sub.gitdir >actual &&
-    ++		echo ".git/modules/sub" >expect &&
-     +		test_cmp expect actual
-    -+	) &&
-    -+	git config --global --unset init.defaultSubmodulePathConfig
-    ++	)
-     +'
-     +
-     +test_expect_success '`git init` does not set extension by default' '
-    @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success 'fetch mixed sub
-     +
-     +test_expect_success '`git clone` respects init.defaultSubmodulePathConfig' '
-     +	test_when_finished "rm -rf repo-clone" &&
-    -+	git config --global init.defaultSubmodulePathConfig true &&
-    ++	test_config_global init.defaultSubmodulePathConfig true &&
-     +	git clone upstream repo-clone &&
-     +	(
-     +		cd repo-clone &&
-     +
-     +		# verify new repo extension is inherited from global config
-    -+		git config extensions.submodulePathConfig > actual &&
-    -+		echo true > expect &&
-    ++		git config extensions.submodulePathConfig >actual &&
-    ++		echo true >expect &&
-     +		test_cmp expect actual &&
-     +
-     +		# new submodule has a gitdir config
-     +		git submodule add ../sub sub &&
-     +		test_path_is_dir .git/modules/sub &&
-    -+		git config submodule.sub.gitdir > actual &&
-    -+		echo ".git/modules/sub" > expect &&
-    ++		git config submodule.sub.gitdir >actual &&
-    ++		echo ".git/modules/sub" >expect &&
-     +		test_cmp expect actual
-    -+	) &&
-    -+	git config --global --unset init.defaultSubmodulePathConfig
-    ++	)
-     +'
-     +
-     +test_expect_success '`git clone --recurse-submodules` respects init.defaultSubmodulePathConfig' '
-     +	test_when_finished "rm -rf repo-clone-recursive" &&
-    -+	git config --global init.defaultSubmodulePathConfig true &&
-    ++	test_config_global init.defaultSubmodulePathConfig true &&
-     +	git clone  --recurse-submodules upstream repo-clone-recursive &&
-     +	(
-     +		cd repo-clone-recursive &&
-     +
-     +		# verify new repo extension is inherited from global config
-    -+		git config extensions.submodulePathConfig > actual &&
-    -+		echo true > expect &&
-    ++		git config extensions.submodulePathConfig >actual &&
-    ++		echo true >expect &&
-     +		test_cmp expect actual &&
-     +
-     +		# previous submodules should exist
-    @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success 'fetch mixed sub
-     +		# create another submodule and check that gitdir is created
-     +		git submodule add ../sub new-sub &&
-     +		test_path_is_dir .git/modules/new-sub &&
-    -+		git config submodule.new-sub.gitdir > actual &&
-    -+		echo ".git/modules/new-sub" > expect &&
-    ++		git config submodule.new-sub.gitdir >actual &&
-    ++		echo ".git/modules/new-sub" >expect &&
-     +		test_cmp expect actual
-    -+	) &&
-    -+	git config --global --unset init.defaultSubmodulePathConfig
-    ++	)
-     +'
-     +
-      test_done
- 6:  c62db6b32f !  6:  0bbe9769d1 submodule--helper: add gitdir migration command
-    @@ builtin/submodule--helper.c: static int module_gitdir(int argc, const char **arg
-     +	repo_config_get_int(the_repository, "core.repositoryformatversion", &repo_version);
-     +	if (repo_version == 0 &&
-     +	    repo_config_set_gently(repo, "core.repositoryformatversion", "1"))
-    -+		die(_("could not set core.repositoryformatversion to 1. "
-    -+		      "Please set it for migration to work, for example: "
-    ++		die(_("could not set core.repositoryformatversion to 1.\n"
-    ++		      "Please set it for migration to work, for example:\n"
-     +		      "git config core.repositoryformatversion 1"));
-     +
-     +	if (repo_config_set_gently(repo, "extensions.submodulePathConfig", "true"))
-    -+		die(_("could not enable submodulePathConfig extension. It is required "
-    -+		      "for migration to work. Please enable it in the root repo: "
-    ++		die(_("could not enable submodulePathConfig extension. It is required\n"
-    ++		      "for migration to work. Please enable it in the root repo:\n"
-     +		      "git config extensions.submodulePathConfig true"));
-     +
-     +	repo->repository_format_submodule_path_cfg = 1;
-    @@ builtin/submodule--helper.c: int cmd_submodule__helper(int argc,
-      		OPT_SUBCOMMAND("add", &fn, module_add),
-     
-      ## t/t7425-submodule-gitdir-path-extension.sh ##
-    -@@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success 'fetch mixed submodule changes and verify updates' '
-    - test_expect_success '`git init` respects init.defaultSubmodulePathConfig' '
-    - 	git config --global init.defaultSubmodulePathConfig true &&
-    - 	git init repo-init &&
-    --	git -C repo-init config extensions.submodulePathConfig > actual &&
-    --	echo true > expect &&
-    -+	git -C repo-init config extensions.submodulePathConfig >actual &&
-    -+	echo true >expect &&
-    - 	test_cmp expect actual &&
-    - 	# create a submodule and check gitdir
-    - 	(
-    -@@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git init` respects init.defaultSubmodulePathConfig' '
-    - 		git init -b main sub &&
-    - 		test_commit -C sub sub-initial &&
-    - 		git submodule add ./sub sub &&
-    --		git config submodule.sub.gitdir > actual &&
-    --		echo ".git/modules/sub" > expect &&
-    -+		git config submodule.sub.gitdir >actual &&
-    -+		echo ".git/modules/sub" >expect &&
-    - 		test_cmp expect actual
-    - 	) &&
-    - 	git config --global --unset init.defaultSubmodulePathConfig
-    -@@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git clone` respects init.defaultSubmodulePathConfig' '
-    - 		cd repo-clone &&
-    - 
-    - 		# verify new repo extension is inherited from global config
-    --		git config extensions.submodulePathConfig > actual &&
-    --		echo true > expect &&
-    -+		git config extensions.submodulePathConfig >actual &&
-    -+		echo true >expect &&
-    - 		test_cmp expect actual &&
-    - 
-    - 		# new submodule has a gitdir config
-    - 		git submodule add ../sub sub &&
-    - 		test_path_is_dir .git/modules/sub &&
-    --		git config submodule.sub.gitdir > actual &&
-    --		echo ".git/modules/sub" > expect &&
-    -+		git config submodule.sub.gitdir >actual &&
-    -+		echo ".git/modules/sub" >expect &&
-    - 		test_cmp expect actual
-    - 	) &&
-    - 	git config --global --unset init.defaultSubmodulePathConfig
-     @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git clone --recurse-submodules` respects init.defaultSubmo
-    - 		cd repo-clone-recursive &&
-    - 
-    - 		# verify new repo extension is inherited from global config
-    --		git config extensions.submodulePathConfig > actual &&
-    --		echo true > expect &&
-    -+		git config extensions.submodulePathConfig >actual &&
-    -+		echo true >expect &&
-    - 		test_cmp expect actual &&
-    - 
-    - 		# previous submodules should exist
-    -@@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git clone --recurse-submodules` respects init.defaultSubmo
-    - 		# create another submodule and check that gitdir is created
-    - 		git submodule add ../sub new-sub &&
-    - 		test_path_is_dir .git/modules/new-sub &&
-    --		git config submodule.new-sub.gitdir > actual &&
-    --		echo ".git/modules/new-sub" > expect &&
-    -+		git config submodule.new-sub.gitdir >actual &&
-    -+		echo ".git/modules/new-sub" >expect &&
-    - 		test_cmp expect actual
-    - 	) &&
-    - 	git config --global --unset init.defaultSubmodulePathConfig
-    + 	)
-      '
-      
-     +test_expect_success 'submodule--helper migrates legacy modules' '
-    @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git clone --re
-     +	rm -rf repo-clone-recursive &&
-     +
-     +	# enable the extension, then retry the clone
-    -+	git config --global init.defaultSubmodulePathConfig true &&
-    ++	test_config_global init.defaultSubmodulePathConfig true &&
-     +	git clone --recurse-submodules upstream repo-clone-recursive &&
-     +	(
-     +		cd repo-clone-recursive &&
-    @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git clone --re
-     +		git config submodule.sub2.gitdir &&
-     +		test_path_is_dir .git/modules/sub1 &&
-     +		test_path_is_dir .git/modules/sub2
-    -+	) &&
-    -+	git config --global --unset init.defaultSubmodulePathConfig
-    ++	)
-     +'
-     +
-      test_done
- 7:  c554017f83 =  7:  25e491de11 builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
- 8:  7a794b9b61 !  8:  4fc31f2476 submodule--helper: fix filesystem collisions by encoding gitdir paths
-    @@ submodule.c: int validate_submodule_git_dir(char *git_dir, const char *submodule
-     
-      ## t/t7425-submodule-gitdir-path-extension.sh ##
-     @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git clone --recurse-submodules` works after migration' '
-    - 	git config --global --unset init.defaultSubmodulePathConfig
-    + 	)
-      '
-      
-     +test_expect_success 'setup submodules with nested git dirs' '
- 9:  142a85a1af =  9:  45a3ad12bb submodule: fix case-folding gitdir filesystem collisions
-10:  bafde20354 = 10:  bb03d7be7a submodule: hash the submodule name for the gitdir path
-11:  e3fe1f7529 = 11:  6bde65c6d1 submodule: detect conflicts with existing gitdir configs
-
-Adrian Ratiu (11):
-  submodule--helper: use submodule_name_to_gitdir in add_submodule
-  submodule: always validate gitdirs inside submodule_name_to_gitdir
-  builtin/submodule--helper: add gitdir command
-  submodule: introduce extensions.submodulePathConfig
-  submodule: allow runtime enabling extensions.submodulePathConfig
-  submodule--helper: add gitdir migration command
-  builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
-  submodule--helper: fix filesystem collisions by encoding gitdir paths
-  submodule: fix case-folding gitdir filesystem collisions
-  submodule: hash the submodule name for the gitdir path
-  submodule: detect conflicts with existing gitdir configs
-
- Documentation/config/extensions.adoc       |  29 ++
+Suggested-by: Patrick Steinhardt <ps@pks.im>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+ Documentation/config/extensions.adoc       |   4 +
  Documentation/config/init.adoc             |   6 +
- Documentation/config/submodule.adoc        |   7 +
- builtin/credential-store.c                 |   7 +-
- builtin/submodule--helper.c                | 204 +++++++-
- repository.c                               |   1 +
- repository.h                               |   1 +
- setup.c                                    |  17 +
- setup.h                                    |   1 +
- submodule.c                                | 223 +++++++--
- t/lib-verify-submodule-gitdir-path.sh      |  24 +
- t/meson.build                              |   1 +
- t/t7425-submodule-gitdir-path-extension.sh | 528 +++++++++++++++++++++
- t/t9902-completion.sh                      |   1 +
- url.c                                      |  13 +
- url.h                                      |  14 +
- 16 files changed, 1026 insertions(+), 51 deletions(-)
- create mode 100644 t/lib-verify-submodule-gitdir-path.sh
- create mode 100755 t/t7425-submodule-gitdir-path-extension.sh
+ setup.c                                    |  10 ++
+ t/t7425-submodule-gitdir-path-extension.sh | 122 +++++++++++++++++++++
+ 4 files changed, 142 insertions(+)
 
+diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
+index f4f57c9114..e8d9d9a19a 100644
+--- a/Documentation/config/extensions.adoc
++++ b/Documentation/config/extensions.adoc
+@@ -95,6 +95,10 @@ Git will error out if a module does not have a corresponding
+ Existing (pre-extension) submodules need to be migrated by adding the missing
+ config entries. This is done manually for now, e.g. for each submodule:
+ `git config submodule.<name>.gitdir .git/modules/<name>`.
+++
++The extension can be enabled automatically for new repositories by setting
++`init.defaultSubmodulePathConfig` to `true`, for example by running
++`git config --global init.defaultSubmodulePathConfig true`.
+ 
+ worktreeConfig:::
+ 	If enabled, then worktrees will load config settings from the
+diff --git a/Documentation/config/init.adoc b/Documentation/config/init.adoc
+index e45b2a8121..7b4abdaf8b 100644
+--- a/Documentation/config/init.adoc
++++ b/Documentation/config/init.adoc
+@@ -18,3 +18,9 @@ endif::[]
+ 	See `--ref-format=` in linkgit:git-init[1]. Both the command line
+ 	option and the `GIT_DEFAULT_REF_FORMAT` environment variable take
+ 	precedence over this config.
++
++init.defaultSubmodulePathConfig::
++	A boolean that specifies if `git init` and `git clone` should
++	automatically set `extensions.submodulePathConfig` to `true`. This
++	allows all new repositories to automatically use the submodule path
++	extension. Defaults to `false` when unset.
+diff --git a/setup.c b/setup.c
+index 428427d689..0378483b69 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2310,6 +2310,7 @@ void initialize_repository_version(int hash_algo,
+ {
+ 	struct strbuf repo_version = STRBUF_INIT;
+ 	int target_version = GIT_REPO_VERSION;
++	int default_submodule_path_config = 0;
+ 
+ 	/*
+ 	 * Note that we initialize the repository version to 1 when the ref
+@@ -2348,6 +2349,15 @@ void initialize_repository_version(int hash_algo,
+ 		clear_repository_format(&repo_fmt);
+ 	}
+ 
++	repo_config_get_bool(the_repository, "init.defaultSubmodulePathConfig",
++			     &default_submodule_path_config);
++	if (default_submodule_path_config) {
++		/* extensions.submodulepathconfig requires at least version 1 */
++		if (target_version == 0)
++			target_version = 1;
++		repo_config_set(the_repository, "extensions.submodulepathconfig", "true");
++	}
++
+ 	strbuf_addf(&repo_version, "%d", target_version);
+ 	repo_config_set(the_repository, "core.repositoryformatversion", repo_version.buf);
+ 
+diff --git a/t/t7425-submodule-gitdir-path-extension.sh b/t/t7425-submodule-gitdir-path-extension.sh
+index 453183e27c..03ac165de9 100755
+--- a/t/t7425-submodule-gitdir-path-extension.sh
++++ b/t/t7425-submodule-gitdir-path-extension.sh
+@@ -157,4 +157,126 @@ test_expect_success 'fetch mixed submodule changes and verify updates' '
+ 	)
+ '
+ 
++test_expect_success '`git init` respects init.defaultSubmodulePathConfig' '
++	test_config_global init.defaultSubmodulePathConfig true &&
++	git init repo-init &&
++	git -C repo-init config extensions.submodulePathConfig >actual &&
++	echo true >expect &&
++	test_cmp expect actual &&
++	# create a submodule and check gitdir
++	(
++		cd repo-init &&
++		git init -b main sub &&
++		test_commit -C sub sub-initial &&
++		git submodule add ./sub sub &&
++		git config submodule.sub.gitdir >actual &&
++		echo ".git/modules/sub" >expect &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '`git init` does not set extension by default' '
++	git init upstream &&
++	test_commit -C upstream initial &&
++	test_must_fail git -C upstream config extensions.submodulePathConfig &&
++	# create a pair of submodules and check gitdir is not created
++	git init -b main sub &&
++	test_commit -C sub sub-initial &&
++	(
++		cd upstream &&
++		git submodule add ../sub sub1 &&
++		test_path_is_dir .git/modules/sub1 &&
++		test_must_fail git config submodule.sub1.gitdir &&
++		git submodule add ../sub sub2 &&
++		test_path_is_dir .git/modules/sub2 &&
++		test_must_fail git config submodule.sub2.gitdir &&
++		git commit -m "Add submodules"
++	)
++'
++
++test_expect_success '`git clone` does not set extension by default' '
++	test_when_finished "rm -rf repo-clone-no-ext" &&
++	git clone upstream repo-clone-no-ext &&
++	(
++		cd repo-clone-no-ext &&
++
++		test_must_fail git config extensions.submodulePathConfig &&
++		test_path_is_missing .git/modules/sub1 &&
++		test_path_is_missing .git/modules/sub2 &&
++
++		# create a submodule and check gitdir is not created
++		git submodule add ../sub sub3 &&
++		test_must_fail git config submodule.sub3.gitdir
++	)
++'
++
++test_expect_success '`git clone --recurse-submodules` does not set extension by default' '
++	test_when_finished "rm -rf repo-clone-no-ext" &&
++	git clone --recurse-submodules upstream repo-clone-no-ext &&
++	(
++		cd repo-clone-no-ext &&
++
++		# verify that that submodules do not have gitdir set
++		test_must_fail git config extensions.submodulePathConfig &&
++		test_path_is_dir .git/modules/sub1 &&
++		test_must_fail git config submodule.sub1.gitdir &&
++		test_path_is_dir .git/modules/sub2 &&
++		test_must_fail git config submodule.sub2.gitdir &&
++
++		# create another submodule and check that gitdir is not created
++		git submodule add ../sub sub3 &&
++		test_path_is_dir .git/modules/sub3 &&
++		test_must_fail git config submodule.sub3.gitdir
++	)
++
++'
++
++test_expect_success '`git clone` respects init.defaultSubmodulePathConfig' '
++	test_when_finished "rm -rf repo-clone" &&
++	test_config_global init.defaultSubmodulePathConfig true &&
++	git clone upstream repo-clone &&
++	(
++		cd repo-clone &&
++
++		# verify new repo extension is inherited from global config
++		git config extensions.submodulePathConfig >actual &&
++		echo true >expect &&
++		test_cmp expect actual &&
++
++		# new submodule has a gitdir config
++		git submodule add ../sub sub &&
++		test_path_is_dir .git/modules/sub &&
++		git config submodule.sub.gitdir >actual &&
++		echo ".git/modules/sub" >expect &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '`git clone --recurse-submodules` respects init.defaultSubmodulePathConfig' '
++	test_when_finished "rm -rf repo-clone-recursive" &&
++	test_config_global init.defaultSubmodulePathConfig true &&
++	git clone  --recurse-submodules upstream repo-clone-recursive &&
++	(
++		cd repo-clone-recursive &&
++
++		# verify new repo extension is inherited from global config
++		git config extensions.submodulePathConfig >actual &&
++		echo true >expect &&
++		test_cmp expect actual &&
++
++		# previous submodules should exist
++		git config submodule.sub1.gitdir &&
++		git config submodule.sub2.gitdir &&
++		test_path_is_dir .git/modules/sub1 &&
++		test_path_is_dir .git/modules/sub2 &&
++
++		# create another submodule and check that gitdir is created
++		git submodule add ../sub new-sub &&
++		test_path_is_dir .git/modules/new-sub &&
++		git config submodule.new-sub.gitdir >actual &&
++		echo ".git/modules/new-sub" >expect &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 -- 
 2.52.0
 
