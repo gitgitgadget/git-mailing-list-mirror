@@ -1,72 +1,72 @@
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA4F2BE034
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 23:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8B22D238A
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 23:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768261503; cv=none; b=qt56FudaG9vOVeYT5OTU8wyiF3YIbAJfpTSKtEiH7Mr0334qCfUzJB+Dx1lD/6jAo0pCTrY1+S4xCs48E53jSAqABM4Egee0ZurmSHxuQALPfT+8m8ir0vhHizOEQeq7QiJv2pj014R4pyFNll2OHrVqO1l5OyPgIGt5gGfJfEw=
+	t=1768261507; cv=none; b=CcTOfVxs7Az+QFu36ZQTpXf+SH4zGEsSsQAAnqug7gEfRRqm8Y/lHg+ZQmis9dNdRtY8AzIWlEgoHsCWalnOfrjmXfVnZwjF5e0izZsrU6aq1qbL1MPHu6J/nVn0P3k2P7EbGuCUIiNSqGdJ3baa8BRrQ8C8Ml7xr8cIqOHXm88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768261503; c=relaxed/simple;
-	bh=2wJzWEIgAVlHoRZb4eM4aJw7peqy1wvnf64GOfVYNWQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=NaDxWFjV7ZRzOz+f/AHjHzK7yhokXqdNWG6jeyIjyXyNBsddERxr6rvQLqy9qYlLok6wBwcZqxZ2OPdE/inKkgPPZzFtD+Fv4APwgJOEFW1LAP78CN+5wCHt7y0vMdz6g/CloRw6UY4WweYTatQHnqOtZ/20diQgwK0Pl9VBDN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=iY1PPuxP; arc=none smtp.client-ip=74.125.224.45
+	s=arc-20240116; t=1768261507; c=relaxed/simple;
+	bh=sGAMB63tSY1wtW3cveGhrofrrl8vdCu7EEaHRbCCMBI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FhGMO5uPZHorWmS0F7M7zlijn/jIE0ozr85xA2HMnpXMWaxG4zZEdaKtGfUOy5kx/pfzDjm1ukBpLj5DzQJRYh4B4gLLG2AoU9dHi+HZjBef+cK76XvcUcqH/Kennyiglxz1rCmWKu5CRchw9UPPDd2wBQ4JnX5xhv/nYtaP4IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=RaFp/tK5; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="iY1PPuxP"
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-64760131fc1so3652749d50.2
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 15:45:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="RaFp/tK5"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-790948758c1so70458837b3.1
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 15:45:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1768261501; x=1768866301; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=efw282N2NOkfC+7tCSKXHhjfVJtPZ/h5gkt/ZI1nN74=;
-        b=iY1PPuxPP5UdqVQb4/+fPykg01FemsTkOkYhlKkMM7xRARlRxqieQLEDvMl9VIcSV6
-         m6A65yDC2zogehBQMn+Py2dZp8UTRdDiGkRknVvQYPOmn/llJeyK81zWGMytDqNnP/WU
-         lgkOpNwduiDQKVN8rL0BcJR6SmA8Tph1Kq/ebYBCpnBl4QNgWmj6Zx1tEORBjV/5UFHz
-         HRGVCwO8dxXKIvgm5nRvV8KA69tVqEJpUHypP+E1wTopVVgH3TbLpFhVCaBzF83UkfDF
-         pc0YN5Vrix2oD6HnSYVVarJfhx+Y2G+SGag/GRatiDPe4p0tLgHfz948baFssQQp/5Ka
-         of+w==
+        d=ttaylorr.com; s=google; t=1768261504; x=1768866304; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Givl1UgTqGELS1TbiHO0WkzJMa7/nIQ1ueE1vTv2GqI=;
+        b=RaFp/tK5uzCAuvFGhU9og28wWptuegOCTxOk8olxiw0ikuspzacED4zzjOBWTQIRG+
+         FCSg4IddA8qDmkkjaWBcmHOAT6aCh+I2sxFDKx2LS9hLVo90HMzEcISCw/YVDff78KYA
+         4Lb9antPKfhSAB+9qap/1/pF9rrxPShOmTzvDoQWpnOzYRnMNqlOrvQFPpvnUMkRi+fG
+         cCWJ52v0i+f6biI/Nf1Kkcm1e8cUbA69g5pKHpSQRCSHTpYqeORmJERLIx9C0rIQqs5x
+         Gqk4UkxP1KN1PLGzNVsbp3jd6ziOHx/su0+XbYU303Ockzz/JMxGfqg010x/53zcvH7i
+         wILA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768261501; x=1768866301;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=efw282N2NOkfC+7tCSKXHhjfVJtPZ/h5gkt/ZI1nN74=;
-        b=NwdVEPLqt5yrLJ4JkaP9SWWzCOfUS6sTs7MNovnS7vWMMKqKD1FzMJnRehQO/RY2ge
-         jxWBBH5vpcqo48rXeSYY0c52KC17JTbXGsOIS+QHRJzAJzJFTYkgYLoa5GMfUntwND0i
-         S8edFE0rwEi33sN2Hh6x97PS6nF8xbWOa0TqjN2CjbcowAYsHlXOe6exFJriQRihKVog
-         O5EMZWwxbWy2OIVXW7BCgOOhPmXYJnh677KO9dJzTG35ZTbR1u5fBxRMRxPR+qxhmqiR
-         lg3QM7pWa4DbblpK7AUjn82OiRspG8ROcxXlwRhseR4QzFYRi6zzu7sEd2++8hUl/ixn
-         7Alg==
-X-Gm-Message-State: AOJu0Yz5cIomD1EBApsxR70OWm0r2QoItpaM6u4GzU3guwUj/wu+ZcVG
-	l+IsQ9/6FsNiLgzc6bhA1YuFxxDEGL04D2lExBhBWXsPWiai9jOgqiQxkPlfxYJh9R5MLiz+z6U
-	Bwy505NH0RQ==
-X-Gm-Gg: AY/fxX6iuGVDeZOYvX1YxPZ2ejFRti8XgMnkAXvu2tsXqwTX4mMXkXoylH3WVAdNXng
-	Fjirj8Y7oGHx1QXg8Zozee6YWfjCs+MqT2JF6+Ci+Iva/TGO2TDmFDsVdi/mo8N3oo7hA5RDr+J
-	ZAixNuT+MzYPQjfE6NFdlJ6pK3fYY4FI56zkYq+AWEZzVRGhdTZjD+5MzBIpghmdXsyqTydGO9/
-	2AhXTBxEexRG4QhavwioS1Dli2Nr67X4sN/yiE41VnRdSQ0/y/3Eis6TLk0xpH+bLdv+fqqgf0Y
-	uW8hnwPORYVAzjnhbgi9/y4ZbnMmcFCY0m0dF5ZrLDngBF3anLqIRfYrIcT82uXly+06KIl0yZQ
-	0LTB42jjAyN2KeAGiNNPlMOh7CUXeoItV/LXJarf4EOam737guuAsYGCss6f0qFFmL9W3C1kmfd
-	Z/VPvokoG/ebNkGTPescH5isnjPhOVNZ68NpzqlZbhwmZVgP+AuvwX7trpT3PBXwU29jYvOc9g1
-	OpqpxVDPRLLZLo0Pw==
-X-Google-Smtp-Source: AGHT+IExz6JyS1i2Dvh6ncTkt+1rHv+2tRqYpttuQuTApZKnSkTKFv7XOuV7pB+q24+HCUhuPxrp5A==
-X-Received: by 2002:a05:690c:7449:b0:786:a774:e415 with SMTP id 00721157ae682-790b5833132mr366813767b3.56.1768261500843;
-        Mon, 12 Jan 2026 15:45:00 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768261504; x=1768866304;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Givl1UgTqGELS1TbiHO0WkzJMa7/nIQ1ueE1vTv2GqI=;
+        b=LMf1MJFk49X3wSEDekHwFEQHRJmlfFr06yt7G1j7p7smPA1P1XAok6OS2gpmaDBuWz
+         6/e8LQZlQ8jbywc24qHDvKkoJlJm65UjQeAMPNI97g0Gbzvd12bZ3U6EU6Slrhg2E63/
+         IDLuenIsIxVmCqZAA7vUXmxsHT4KFAe3KyYzP/D+3yZlkWciga8g4XiVzPhHen6iOYEn
+         LizjS26N/XMRoaqaito8rN5JZ7Z+zu3DZF5trn7eQB9MKtjyiI/vjcNurp2SNFwO5O5x
+         Qa41+eAf6YFcpEO4KpptEDNs3xXCLdyTR4LyrIM2RaxyUKokGbN+kNVUkicawydmbFZO
+         riQg==
+X-Gm-Message-State: AOJu0YxDaJ/OVN9PoAH//f2scjdeFjpkHDGW928HwIV4sNjqwwftiso8
+	+onxBH+7CmNGFGPso5NNmFfcgQLWYvBDrICqY+c3EgwsdAUi1JRhtmtgyHf2/Of1bHPrB+NlX55
+	TiAFBQelyCg==
+X-Gm-Gg: AY/fxX5Wq6s87u4kYBgHOyqD9oTWplCHYCQBwsIuLoNy4bB8Y0q+FqsriYuDedDhpqi
+	4XtTG0wfQpnyZQ7km4+HySY4rwWSEu+M9UvNmpL64517Bpjt6HmJlvmd48MWt/nC0dQFbBiVZo1
+	d9q8AoRzC6wATQ+Yima/rD7Joaju0UzEZfOcmnjPmqF+OhAkfAUX7xUnajahL2Juq4WcPgrIb++
+	4JchTCeIlgP0qi/1KJDwPWp5c9A1DMpyhCsvZUiHUbaxCM2zEPJMEB4Mn9Or9os1expCKNv23Xs
+	lk8HcncAhwRK2fGWr6ejCSLGkajdwDhO9W8x5rxZqpcRvOgsbiRQjcC6PYy+2LpHtoMpe6+pcxx
+	YBcumClnAKRpDrKtA/J3Vtvc7D+iJnf8BkPppjezH5TTR5PsCKg0vm4/kcsTSMvUUfRQ+s/ztKy
+	HWs33KqQZlAfR6oLIbc8W/T0DPp6yMJOJuzS5UlcT4/uhxc8MGYK0Z1evfZG5CWH16ZSl04bZuZ
+	a09MCVpI9LvzG5wJEQlvBfBZg+S
+X-Google-Smtp-Source: AGHT+IGQPkUHZO9z5hGr2UqgDy/LDoAsvzfKYEn9VfynAx1zyzf7Ws86xYadLLxpKz2Nv6KzaaYQDQ==
+X-Received: by 2002:a53:e042:0:b0:644:39d9:8c39 with SMTP id 956f58d0204a3-64716c909f9mr11154989d50.84.1768261504380;
+        Mon, 12 Jan 2026 15:45:04 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa670b16sm74388427b3.35.2026.01.12.15.45.00
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6470d8b2573sm8602872d50.21.2026.01.12.15.45.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jan 2026 15:45:00 -0800 (PST)
-Date: Mon, 12 Jan 2026 18:44:53 -0500
+        Mon, 12 Jan 2026 15:45:04 -0800 (PST)
+Date: Mon, 12 Jan 2026 18:45:03 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] midx-write.c: do not optimize out writes with corrupt
- MIDXs
-Message-ID: <cover.1768261435.git.me@ttaylorr.com>
+Subject: [PATCH 1/2] t/t5319-multi-pack-index.sh: drop early 'test_done'
+Message-ID: <9c5faa5932cdd9e570406bc85ba27f94195a4d3d.1768261435.git.me@ttaylorr.com>
+References: <cover.1768261435.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,38 +75,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1768261435.git.me@ttaylorr.com>
 
-These two patches came from my work on implementing incremental MIDX
-layer compaction.
+In 6ce9d558ced (midx-write: skip rewriting MIDX with `--stdin-packs`
+unless needed, 2025-12-10), an extra 'test_done' was added, causing the
+test script to finish before having run all of its tests.
 
-When rebasing on top of current 'master' (at the
-time of writing, 8745eae506f (The 17th batch, 2026-01-11)), I noticed
-an early 'test_done' in t5319 added by 6ce9d558ced (midx-write: skip
-rewriting MIDX with `--stdin-packs` unless needed, 2025-12-10). The
-series is structured as follows:
+Dropping this extraneous 'test_done' exposes a bug from commit
+6ce9d558ced that causes a subsequent test to fail. Mark that test with a
+'test_expect_failure' for now, and the subsequent commit will explain
+and fix the bug.
 
- - The first patch removes the extraneous 'test_done', which exposes a
-   failing test which is marked as such.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t5319-multi-pack-index.sh | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
- - The second patch explains and fixes the bug, un-marking the test
-   as test_expect_failure.
-
-I was originally planning on adding these onto my series under
-tb/incremental-midx-part-3.2. But I opted to split these patches out
-into their own topic to ensure they are picked up before v2.53.0 is
-tagged, should the larger series not be ready by then.
-
-Thanks in advance for your review!
-
-Taylor Blau (2):
-  t/t5319-multi-pack-index.sh: drop early 'test_done'
-  midx-write.c: assume checksum-invalid MIDXs require an update
-
- midx-write.c                | 14 ++++++++++++++
- t/t5319-multi-pack-index.sh |  2 --
- 2 files changed, 14 insertions(+), 2 deletions(-)
-
-
-base-commit: 8745eae506f700657882b9e32b2aa00f234a6fb6
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 794f8b5ab4e..b6622849db7 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -415,8 +415,6 @@ test_expect_success 'up-to-date multi-pack-index is retained' '
+ 	)
+ '
+ 
+-test_done
+-
+ test_expect_success 'verify multi-pack-index success' '
+ 	git multi-pack-index verify --object-dir=$objdir
+ '
+@@ -565,7 +563,7 @@ test_expect_success 'git fsck suppresses MIDX output with --no-progress' '
+ 	! grep "Verifying object offsets" err
+ '
+ 
+-test_expect_success 'corrupt MIDX is not reused' '
++test_expect_failure 'corrupt MIDX is not reused' '
+ 	corrupt_midx_and_verify $MIDX_BYTE_OFFSET "\377" $objdir \
+ 		"incorrect object offset" &&
+ 	git multi-pack-index write 2>err &&
 -- 
 2.52.0.437.gcc6f76a88cd
+
