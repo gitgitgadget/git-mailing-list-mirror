@@ -1,119 +1,115 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2D330B532
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 13:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D3E3587A1
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 13:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768223353; cv=none; b=VkUr+upuHCJR9hd75NvjwUePaO1uCodosHLkB7WTWN+e4AZkR+IbVAf+r4xe8U4RP/TOURLt0Rzok+yA5xgLxFhEc38E+RMu6wuWGa0j19RhYGJSq6R8iXmF+zuDymJhlziICcsaSzzpZwZe5Y41Qxkc6Vg5YkOZckH29n43T4Y=
+	t=1768224316; cv=none; b=gf6SwLZ1itWNpqWvAczntcCpUYoIR/LQSyZRkxlWpMUSnxY3l/thJ7zV1+M8M2JBbwUGOaLQw3ymgILJ0c8pgv80HhcCgZUio7E+BqM95Cs2uWAS8xsk+HiZNxVR+mL3NEpODOLydUrafIji67q7TfuZjbuQI1PIHHwe5Qkpqkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768223353; c=relaxed/simple;
-	bh=GRG1O2sqHDvXnDU7d3GPSYK0dYIcPuZ+PXmI8r6GjiQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SPH5uAaJTgDbb4Inq0ky/Z9XuRl9nVSz+Mp6oCYcbnQSPx30j8txtgwno2Nd6FwoClpuRNSldl/qw+uOikYdabZWo4V2e3uL7f33aLHGIcFZ7vvReljYIaw4R/g+mwOD2tcK5TkHuvf5pH+zlhWYyF7+WHrBlC4fCJhTyvjuI9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DC8KVyLr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TzSuv5FL; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1768224316; c=relaxed/simple;
+	bh=f3wexoEDkjF+EKuMPs7w1wrqBULINFIlhzhJJAirlLc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kvyfhXxuRqRxeTlolXeGcmXzyTzf+KyoB3KwHQ62Kva/yBegBLhtzx3s56+OqiruPyypgYL1PPu6PrEcJXYsJ09k48/xSlUH4LDsJ2BtdXvjION8CbBUvx0gSfXft/Es31ozBkW/iP9J/sq9Fp0lF4OqgkdZm0tWFDonxhcCoaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oRP4npl+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JG7C5n6j; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DC8KVyLr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TzSuv5FL"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 67437EC00DF;
-	Mon, 12 Jan 2026 08:09:05 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 12 Jan 2026 08:09:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oRP4npl+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JG7C5n6j"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id E1A1CEC009E;
+	Mon, 12 Jan 2026 08:25:13 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 12 Jan 2026 08:25:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768223345; x=1768309745; bh=9OQxHmz59o
-	2ldDEI6spp81oXu3AYqlLk6PWCFfbTB08=; b=DC8KVyLrs3P4RjDa/jbfp2PuLT
-	kNhagh2m9IROHMVCjbonmf15CH9bCdZpp1x31gKfPzh8QEvdm46pI3DNcp5C1icS
-	pu7B8MIv5GL+Ux4+cKgweKkz/yzh+H2pVWYBOXFUvVh0DRvwVi/SQAFq/ZF6jq/9
-	zsjyLPwdJRSu4KzpXGdq5Fnu5GxKe9waK4YTapNcn4UddhTvLbVlf+ckxPzDl2Am
-	YmrHQ+poYw7pqusPH7r6WcISRQyI4z8LF32iymO9Joo11XzpAbFe0JN9qYjfEJtE
-	hvTqJ3Qq/gA+i++XK9ssJj04cbVSg0qhOGqZVxgZtvy7b9wNvXONlBKk8yqQ==
+	:subject:to:to; s=fm1; t=1768224313; x=1768310713; bh=PRuP6SeGW2
+	ir3MUILUglbBbMPNaUGnLLj5guxhWQhg8=; b=oRP4npl+KOAec3KT0cp1KDVkcN
+	/sftuymRFh+vh1MA9DmX1yXbUcMbRE2qGHEQxWcapN8thPz0dsw4De9fPvNLuIEm
+	j6yCseOrs8hnNg0OOh+kTPW0Xb3p25QtNT+t23BTf2eNoIujGBkzAxt89C1aASgl
+	jKNPeMgRR1MpB4OlMQw9ndQVtqEJ0NQuxx9nKtugVi6GMWvllpupgkj7LVsOCGrB
+	3DtSo9YWP6CgWyKNS3+uL+wicxxol00F16XOux7/wWGcxnww9VcdXVudrU+nwZAF
+	A+tUR9a+shxM5V/F3d5QDpRyqNF8icTOiDaaSxjf1MVvS5+Pd1DOkbtlMoJg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768223345; x=1768309745; bh=9OQxHmz59o2ldDEI6spp81oXu3AYqlLk6PW
-	CFfbTB08=; b=TzSuv5FLrineJYXTHg7UecRfuwLSlTeRjLrxxzHYxncDjePJ4bT
-	Rer2wIzqWDO3Wg6nW6ZGr7qgnTCEiVeshKOjDpuY7AM6XAPKr7UMdjRt/rqc1190
-	TWnehYKAuJeNzTrqFi1lBcQMoJ2LJlKL4a3nOzemhuo1CHaO/AkymHYDw9jCJBwk
-	pO1hhYpLAiMMX8TNHRNmZHB7P46d+EZ0/3NUwmXpVAMj+DPzWSTCnj6siOy2g/bi
-	XY33475JruF2Umemt/uk80kUtOCxH4iuzAZ18t8+ryEsJE5qGTb3TkBm3yTyc/fY
-	TMR2jxk4wkNdKMwo5Zr104T7AtURlquYGMg==
-X-ME-Sender: <xms:cfJkaYJrnbu9Lf3Jr53lOHi9oJSgb9QLSZkIAxK9kNVeLMzU9cXkpQ>
-    <xme:cfJkafmJR9pBot-hdUSKg7Tar3z3Qdo-hFlnlCQqinZtLgXYzY1I1JC989rLj_0a_
-    TvRxr_l1Fr3E_f9cCJcrV4ZpLw2HcFJIf9rPk_JSU_RTwdr8ixxfg>
-X-ME-Received: <xmr:cfJkaWF9dYo5D2t6QGNvlLv0GUNm_ZnPLvvBDtd3XdlLUtXRHjlfrr-9ThAzoMMCIaTAY4rkwusI9HeZujSoC_vNwWTgsqz_xWRrc2V4Hg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejheefucetufdoteggodetrf
+	1768224313; x=1768310713; bh=PRuP6SeGW2ir3MUILUglbBbMPNaUGnLLj5g
+	uxhWQhg8=; b=JG7C5n6jHl5roolZc/OZVOeRl5Zc8EGy8rzoFIEiRKLwU25PA0e
+	vZ+dCHAxQ1UrzxU0KG7DhH6k0uhha3MBY6g4+0rzfGJbg1p+acSBKuprFEzas+Vt
+	PiW0Wmmf/SqYmCnPMgOZi3FTfbpHiNZv6Qq4zoILjg+//8Aqz1RQo3wogYrrh9aH
+	Xn0XIKLSxAbQsuCw0UuztHSbgCyU3QwU47SjdcplZBHsInPRrWFjFCY2n+M3NAUx
+	GCZCfQ04L9zhW7iIEWgYSdI6RZ4gOXV7ILllixhwYQk9goGWvb+oo36zgwedFf4p
+	3Uvx0KhBUn7ezcnkgto1UkC1D8yJo45PctQ==
+X-ME-Sender: <xms:OfZkaTmSBV0yHtmIdlNzi-dXq8cGpK6u8JTH8kpsgaJT23XiWASW6A>
+    <xme:OfZkad04eTqSbrCnTTLFkFYMf-Rd4qvtBqqmAI-iUt2RsHwC7wX5V7HHWcxAyIeJg
+    IDvzrOipGPbu6YF4pbxoQMvmlY4_fwO-L8gJ9AvFZ4cYuTrn1C5jIg>
+X-ME-Received: <xmr:OfZkaerRWU7t0JIZMaMDAKhgi_517GxG6ZzyCWvnvK2VsDj-O0TeYbWV1n8nmVbxBD1HHTjBhMlas8njcAO6ejCrZgOAXfxPZzZ4LCY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejheejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirg
-    hluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
-    rghilhdrtghomh
-X-ME-Proxy: <xmx:cfJkafEL4h6yZZ-TBxnL13Vdh2gxY1RO7ZMfgmdl2tFNni9vGjHuZA>
-    <xmx:cfJkaTMXh6eRPhghGlUbrwEZQRtaYRYVkYCAoJ7rEdnSv-JScTR91w>
-    <xmx:cfJkaeEz8lr9rNjKG1kVLBjTKERyWt3mp-SfFKO4HCqXO9pTGW2X8w>
-    <xmx:cfJkaaNG-7Lb0qR_AOveseVTg03tyuvfOewfwN0nNWSeMwdFxHxdwg>
-    <xmx:cfJkadCZhYk-_nbVyYvRJwLm-6TezH1-z32KOwyArgjeTwjOdUC2EKXK>
-Feedback-ID: i197146af:Fastmail
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehshhhrvg
+    ihrghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OfZkaaeqrlcEggBC5NKxPkDYZDQ53DRHdMHv8geDdK9mu3KLGdf-ww>
+    <xmx:OfZkadro5ROMqAQh44GKAbKzUmST3thU0uO4pLNxK03UobwjP70viQ>
+    <xmx:OfZkabFOpguTXbAh9-ugxy8WP4yEI24NJJvjhzoNJz8RIbvFy1RkGg>
+    <xmx:OfZkaduamfGTEaIvqXWCRNQNvXnPQeQ-v9Vhf2P-SoRdBKpVcwNfuQ>
+    <xmx:OfZkaaLAlNQkP4HI4s0yZIs_2C9lecLWNczCAuDZZk906RUha9j6vNHi>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 08:09:04 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9a077392 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 13:09:03 +0000 (UTC)
-Date: Mon, 12 Jan 2026 14:09:01 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, shejialuo <shejialuo@gmail.com>
-Subject: Re: [PATCH v2 00/17] Fixes and improvements for ref consistency
- checks
-Message-ID: <aWTybZHqZC_H3dGS@pks.im>
-References: <20260109-pks-refs-verify-fixes-v1-0-3587dba18294@pks.im>
- <20260112-pks-refs-verify-fixes-v2-0-2e9e453bd6c3@pks.im>
- <CAOLa=ZShPP3BPXa=YnC-vuX4zF=pUTFdUidZwOdna8bfVTNM9w@mail.gmail.com>
+ 12 Jan 2026 08:25:13 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,  git@vger.kernel.org
+Subject: Re: [RFC PATCH] t5500-fetch-pack.sh: fix suppression of Git exit
+ code in tests
+In-Reply-To: <aWSv8dlt32xg14e1@pks.im> (Patrick Steinhardt's message of "Mon,
+	12 Jan 2026 09:25:21 +0100")
+References: <20260111202137.257405-1-shreyanshpaliwalcmsmn@gmail.com>
+	<xmqq8qe3pxvm.fsf@gitster.g> <aWSv8dlt32xg14e1@pks.im>
+Date: Mon, 12 Jan 2026 05:25:12 -0800
+Message-ID: <xmqqpl7fnetj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZShPP3BPXa=YnC-vuX4zF=pUTFdUidZwOdna8bfVTNM9w@mail.gmail.com>
+Content-Type: text/plain
 
-On Mon, Jan 12, 2026 at 06:50:17AM -0500, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Hi,
-> >
-> > this patch series contains a bunch of fixes and improvements for ref
-> > consistency checks. It is structured as follows:
-> >
-> >   - Patches 1 to 4 contain a couple of cleanups for the consistency
-> >     checks done by the "files" backend.
-> >
-> >   - Patches 5 to 7 introduce checks for root refs for the "files"
-> >     backend.
-> >
-> >   - Patches 9 to 14 introduce infrastructure for shared checks with the
-> >     "files" and "reftable" backend.
-> >
-> >   - Patches 15 to 17 move some ref consistency checks that were still
-> >     driven by git-fsck(1) into `git refs verify`.
-> >
-> 
-> I reviewed the series and it already looks good, thanks for fixing some
-> of the broken parts and cleaning up.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks for your review!
+> On Sun, Jan 11, 2026 at 02:50:37PM -0800, Junio C Hamano wrote:
+>> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+>> >  	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
+>> >  	0012command=fetch
+>> > -	$(echo "object-format=$(test_oid algo)" | packetize)
+>> > +	$(echo "object-format=$(<oid_algo)" | packetize)
+>> 
+>> The construct $(<file) is bashism, that does not work if your shell
+>> is not bash, isn't it?  If you used a variable, e.g.,
+>> 
+>> 	$(echo "object-format=$oid_algo" | packetize)
+>> 
+>> that would make the result more portable.
+>
+> There's no need for the echo at all as this can also be written as:
+>
+>     packetize "object-format=$oid_algo"
 
-Patrick
+Yeah, I failed to realize that this is a(n unnecessarily) convoluted
+use of command substitution inside HERE-DOC.  What mushroom were we
+on when we originally wrote this crap, I have to wonder ;-)?
+
+Thanks for spotting it.
