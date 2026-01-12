@@ -1,127 +1,110 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F08368299
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 16:36:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8DC2EC0A2
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 18:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768235818; cv=none; b=YFXmSzED9YbB8wkdjY8b84TScwBBUa8DeGv105AdDOX25ArdKSN7ES6ecskJLM2wtCesBvglwRX5Y9e8RLXlcRsFHH2RFf/6xNhQnEDh+vl1l4uNA3o/khASzfrnTJHazEFF+hF7L3NrGFX7GcHBjPgzYBtbwgl73pgSeXb9h5c=
+	t=1768243893; cv=none; b=HcOVP12PjoFYvBMMeRbIn/aPOhbVLe6YmZcBLnZ9KQAT2qAb+ZjWqOXPihTofmIPmhO3nbWBi24k86pCWA74Zi4emwAhE9PyMq2dXz1ygtO5OxXQwh4HmZozdToXGVOgmFJv2P7YjW1+ARuZxZ9GsdSrUdw5OYvbNLPkrTrqjqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768235818; c=relaxed/simple;
-	bh=IY4kCci68Mx2J+vD75pxBUxGt68jdig5JYBFETRVKnk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NpyEIbSFgSghqmrjUNB8G7cJH75+bXaqxMvx++mXYBDA7gm5MrbESJAWyvuEPGg2+Gea1ADh3V1QuHkS9NFc+32zt/zK4xzHCY7g3mZ5p9UXBza81G48jjg4EOXFOPPy6ToVc1v3Z0aKTEa1k1BTBquL8nUoBujnJmaAx9dSnRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GGucCHUG; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768243893; c=relaxed/simple;
+	bh=Ei1Va19p1k1d77nNqWBjLqUK45z+IWczCjlDer0sixE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=n8qrHrL74Ndqy6fXTIIbePqtEIroPAAAKSIp0OSCYLtX+3WUgbmBHUqIcisknXgcRmcYeRfIbMSVKCPaBofh7a+hH41s/UKNzYtegUcX9pHW5vpZEk5A4wV1qqNaC7JS8+TmSszoX7braWCAgrpJsYdD9G7CVEBYA2AOAw3yA9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iDX8AdE4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HjbtVDjl; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGucCHUG"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2a0c09bb78cso40974365ad.0
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 08:36:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768235816; x=1768840616; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZijDl8MuXV3c4TUqDBTyiqUvYTStLjeBUNZ7xneXcGw=;
-        b=GGucCHUGMnxXsABHqrJt3mt8WKMwhncfm86v7aAlFrJn3LhlE79N6/c7lnoXmeSbKG
-         Orf0e38Rkmh3SOcfn5zFATVkzNRyof0NJ38hEg4FAr88OmVQMeCIQAIjKM/El8qLSaVh
-         zUxqI6BgIIZh4A1KRqCjmgqUH8N5qEfBRg0GSi69CV34Cm6j7N5gyMEA7WNO/rzcO/82
-         urJ29UlBZ9Vkd8+0xtTFIO8uOYRmpaUJAz+pbyKV9FXgHeRkYxPL36rfoJSwmU0Hq3Xq
-         3kYScoy0q79IBQ06/Y6u8GkRZHy19p8x4Tbm6620u2nkbMjh1ZXRGwqS4PyZGmMgd98O
-         PTRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768235816; x=1768840616;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ZijDl8MuXV3c4TUqDBTyiqUvYTStLjeBUNZ7xneXcGw=;
-        b=peVK7EwsyFasCHN2v4W1mmKTABvZyWRe6ipmdvVmcoaYxWqOQRBZmWGY78/iQ6YqZd
-         oTJajV/Mgfe76tyhV1EVxdNu59/o+4jIhCkiLyNoPZTsoHzgd71yjXxkOXC+zrfCJvgg
-         lzzeC4p4x26r6OD/cw+dCkThLMR6+IJwxQ+cYYMYV+Qy6S5jkGRm8Oe4HvJcd+/83LxA
-         AvIu054TzW94L0Zb1LXCxKjb9G3qv5X722YZoP2B+SsKvTqANWX7kc9cVqfvfGgS2cjW
-         DCRb/l8UxUYbtvF9DHAPyzbKEed7+Oe5fHwCkLCd1WHIMJdEy287xwvk3x/N9U2MS7DR
-         2YoA==
-X-Gm-Message-State: AOJu0YyqwOW67V+2MZjPNKxckh6onCiwOadNEv0ozr/ZvaUmfC79d8fv
-	SV6lOTE1uO4ImLu/0UXgLyiJv1luWO1CDQP+2VU/zD7nerGOdDmf3xMUTFgNrxvL
-X-Gm-Gg: AY/fxX6tswZhpu0X+CVFZfx0zXXiFbPGvu0pzptBVCpoPYRNa2K2xL1tR1MocUSx+Sc
-	D6w3IoOye+uPT7Qqo7aPei5Q3VsPqDewXBgNAYwWHgQRtGnZfagP4Fx+mHJYeqy+j2Ck1xUtH6T
-	lNBom2hgOTwhIc0J83o+G20Fhc3/OtCbVuY+X8Y2vrnZb2wJ1UZ+sGx69gGJ4w2qjizmSnTGcPN
-	vC27tLhkVW7J6pHvKDxh/9hy5ZtXlYMwPzBlNM2yhl9frukuAX+gG6rsukrSEvr5tWlz6aEqRHS
-	YPZFQsyEgO9KQ8SK1epBqvPWAZtg9/2QlU3oL+RPmDs5ACWskQV0cJ/R95dRlXBt2Jz25lh/Z/A
-	I65WCM0/p7lvo+bimNKlJFiPg4RQdpGISnQ+z+NVNh/9Em55GN/vqIOiXKvb+Q68zbY7j1+jpQx
-	IMzOf2jAwqOrWmCs16RgxT10gXRVQ+3yvV
-X-Google-Smtp-Source: AGHT+IGk+YDDf/CEYkt1A+RplfCRh/j7+r00HgP+Xmzh4KXUxVVHCiHfrR31fhoDvBLrYUyhsKvmJA==
-X-Received: by 2002:a17:902:d2d1:b0:2a0:f0bf:197a with SMTP id d9443c01a7336-2a58b4e4758mr77485ad.13.1768235816115;
-        Mon, 12 Jan 2026 08:36:56 -0800 (PST)
-Received: from d ([49.43.40.217])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cb2c04sm183006655ad.53.2026.01.12.08.36.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jan 2026 08:36:55 -0800 (PST)
-From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-To: git@vger.kernel.org
-Cc: deveshigurgaon@gmail.com,
-	sunshine@sunshineco.com,
-	pushkarkumarsingh1970@gmail.com,
-	gitster@pobox.com
-Subject: [PATCH v3 2/2] t5403: use test_cmp for post-checkout argument checks
-Date: Mon, 12 Jan 2026 16:36:43 +0000
-Message-ID: <20260112163643.231-3-deveshigurgaon@gmail.com>
-X-Mailer: git-send-email 2.52.0.230.gd8af7cadaa
-In-Reply-To: <20260112163643.231-1-deveshigurgaon@gmail.com>
-References: <20260111072950.9463-1-deveshigurgaon@gmail.com>
- <20260112163643.231-1-deveshigurgaon@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iDX8AdE4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HjbtVDjl"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DD4327A0044;
+	Mon, 12 Jan 2026 13:51:30 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 12 Jan 2026 13:51:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768243890; x=1768330290; bh=Ei1Va19p1k
+	1d77nNqWBjLqUK45z+IWczCjlDer0sixE=; b=iDX8AdE4aF+MU+WdWnmPv2lIJ8
+	mFNQ1VBGq+7XKSRVGGelUJcGXUNBLKV0aN8TErXKlKbHWsaN23gW1KC9eVC9JU25
+	CprE2wTaIQOl0eqruit7MrO917Am47qrioakGtj/2x6pNRjQliGD6Nr/G2D/O6qQ
+	Yx+wnNIy+SZU2a6UGVTJ5XmeKVmimgDjiLbC9LbO12CYSXeb4HCcKr+15wt0mCqZ
+	Vg6JU+4PzDG8iSEDjSiH504j4Qy2uk4u4lNep6sDKv5skz8+IM1IVhhOTy3RJ1QS
+	79ac66MpVDh4fR4p6HyGzN6FFyEis8DFOMR31oSjKHceRS1/ReifarAiksIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768243890; x=1768330290; bh=Ei1Va19p1k1d77nNqWBjLqUK45z+IWczCjl
+	Der0sixE=; b=HjbtVDjlCwDD6dFpg8ddzAqPi9flPLxAOmuHkAG2/xHJ73A949Z
+	xpOBgD5HL6vfd4svYZJOzPSho+Aprt3dsCgG2fCgkR3RRfc9i2xMfGmCy+CK8c1B
+	bh/okD2HvPlSuGErTnv3ZtI0CIwrNcuYJVGyr31XtALUVpPz+eMkcXqnwMJCqP2v
+	jcEVwpQD4OjpvlQltoLDis862136c9td6OyV/Kyw3BEuycFYoCZs2/fHMdnm+7Bf
+	Vu6PY01CH8ngEPsyrQIIPwP4uQtlAa43+30xAtysMCHWg4eOm/0Xm9NUFKemV7me
+	ugHk83KiBR1AJ5qF7fCvc6CHOjrOE4Exa/A==
+X-ME-Sender: <xms:skJlaZBExqZCpTKvY19kwsqWgR5UXuO8j9KyS876kSW_mSmfJ599KQ>
+    <xme:skJlaehR85vLwVpA-Bui-YDNQY85gWgRA2snGb3CzcpQGyZOhSKda8i6DoUfiUq5N
+    3P4w-AydiRUHXjkvRqsmQCUDH8v5QarWB8-lj25QJqycQe0M1sJY70>
+X-ME-Received: <xmr:skJlaZld-iEGSqPKV7XBN_hAdpsII8CPrr8fw7JbVcN8mu3QVY3rgeb90qyerRsj8ZgIoa1nYw1-ECHzN1y2Ycrc8VEMuUERjgIE2AY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudekvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhff
+    eggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
+    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpuhhshhhkrghrkhhu
+    mhgrrhhsihhnghhhudeljedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:skJlaSpe3TfQGxNxlKstGVVHADM4EXH2FCPF_s9ah1WcEUWM8b1tJA>
+    <xmx:skJlaaEJ1JPerZoN7067SjnsPMEySOEImv_dn91BuwqjBtaqM4HIvA>
+    <xmx:skJlaWwN8T40cJfvr-6pYH42HkWcGaHu58avxBXZfLo-Yqy4j37wrg>
+    <xmx:skJlaXrSLO7f4i6Ah3SrXAlyfwyBtVKxPxTLNuX42ybYvfNRQahDgA>
+    <xmx:skJlaREd6Gqo0ckzZirm7wff43GQI7HUhYfRHYKQmEJsuFRRSpDzaz7F>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 Jan 2026 13:51:30 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org,  pushkarkumarsingh1970@gmail.com
+Subject: Re: [PATCH] doc: MyFirstContribution: fix missing dependencies and
+ clarify build steps
+In-Reply-To: <20260112161538.351527-1-shreyanshpaliwalcmsmn@gmail.com>
+	(Shreyansh Paliwal's message of "Mon, 12 Jan 2026 21:41:09 +0530")
+References: <xmqqcy3eoq6e.fsf@gitster.g>
+	<20260112161538.351527-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Gnus-Delayed: Mon, 12 Jan 2026 12:49:06 -0800
+Date: Mon, 12 Jan 2026 10:51:29 -0800
+Message-ID: <xmqqbjiymzpq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Update check_post_checkout and the post-checkout hook implementation to
-use test_cmp instead of individual test commands. This provides better
-error messages when tests fail, making it easier to debug which specific
-argument (old ref, new ref, or flag) was incorrect.
+Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
-The hook now outputs in key=value format which test_cmp can display
-clearly when there's a mismatch.
+>> I personally find that stopping at asciidoc and let the user deal
+>> with their platform convention to get asciidoc working, like the
+>> current documentation does, draws the line better than the above
+>> updated text.
+> ...
+> Please let me know what would be the appropriate approach with this.
 
-Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
----
- t/t5403-post-checkout-hook.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Again, I personally find that stopping at asciidoc and letting the
+user deal with their platform convention to get asciidoc working,
+like the current documentation does, draws the line better.
 
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index 7bdea25107..cb0300b2d2 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -16,13 +16,13 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- # <flag> indicating whether this was a branch checkout (1) or file checkout (0).
- check_post_checkout () {
- 	test "$#" = 4 || BUG "check_post_checkout takes 4 args"
--	read old new flag <"$1" &&
--	test "$old" = "$2" && test "$new" = "$3" && test "$flag" = "$4"
-+	echo "old=$2 new=$3 flag=$4" >expect &&
-+	test_cmp expect "$1"
- }
- 
- test_expect_success setup '
- 	test_hook --setup post-checkout <<-\EOF &&
--	echo "$@" >.git/post-checkout.args
-+	echo "old=$1 new=$2 flag=$3" >.git/post-checkout.args
- 	EOF
- 	test_commit one &&
- 	test_commit two &&
-@@ -112,7 +112,7 @@ test_rebase --merge
- test_expect_success 'post-checkout hook is triggered by clone' '
- 	mkdir -p templates/hooks &&
- 	write_script templates/hooks/post-checkout <<-\EOF &&
--	echo "$@" >"$GIT_DIR/post-checkout.args"
-+	echo "old=$1 new=$2 flag=$3" >"$GIT_DIR/post-checkout.args"
- 	EOF
- 	git clone --template=templates . clone3 &&
- 	check_post_checkout clone3/.git/post-checkout.args \
--- 
-2.52.0.230.gd8af7cadaa
+If we are not mentioning to check INSTALL elsewhere in the
+instruction, we probably should, and the place where we mention what
+software you need to install (like compilers, make, etc.) would be
+more appropriate, than a note about building documentation.
 
+Thanks.
