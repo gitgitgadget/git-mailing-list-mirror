@@ -1,151 +1,110 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD7A33CEAF
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 08:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13B530FF1E
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 08:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768206124; cv=none; b=NOFl+oERfyv5fXC6bL8ua4AcnTpQmgTqQzKnYWLbsP8jWhe9tkQueRln5iaJZsA4SkmrsytevgR1Ny7PnImF5AH7lrYjv2/JmeFPPzmItCxggK/rjava/W259S2yK87ECpndjpqxFpsLTKbWe40edYgSDaoGcJH/WnfSh7xe3e4=
+	t=1768206327; cv=none; b=gk6dFirVUl2+7lcdUs2E+qJwxgiKZ05ET7C5z1H29QoDpHACTeAVXzUj8FpFYdfsq8zvZ29MLHLqgX/TMzIX8/25Wvgp9oxgUb8Aez5rEQM/CY1cJESBRFZiDcJ3MaImsuwdRNWE3zHQan+XFMfjV6SBAenZm2JGExoLNUkoNu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768206124; c=relaxed/simple;
-	bh=rjUJN7SJ8r7pBk0HvAzXeJPRUFy+OA5TFPU78FJXB7U=;
+	s=arc-20240116; t=1768206327; c=relaxed/simple;
+	bh=YLBmWlK3NZR1Wocq+cSf6xFn7+rQqEakQUnN4gQC/Mg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yba1DEVakqysfmQB48/IjjSh09ouEHWu9FTRro40ULI8jdKBOtc4AdNEBBZVEAt2fvcnvGcc3VfTRJME9Wu5n/iDrzFh4sqRs4PuziPmW2qyxLwLZu3RoYvKV6Lbh+Rth7Z053uk10k/2K59e/wyhf1Hq9ZAkAHIUmKvBBJ3l7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fqh+/a5d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZodQdCcd; arc=none smtp.client-ip=202.12.124.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=ADyGGw2ngfi4ftoHJqqR0zASWaw6cXevykE3kEr/tL/EuXjOvNNBV+80O05MO+crdHpNhq8lyXHhstHuZLV6MRaUpLMzfUjebU47pd193juH2HqTj87I2I0n4L6yFk4TYvacV/BPrOoanbYD5udVea83r2u5Aiz/kehlTdNCL2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RDqdB3oE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YbOl/gfD; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fqh+/a5d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZodQdCcd"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RDqdB3oE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YbOl/gfD"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 49A637A0049;
-	Mon, 12 Jan 2026 03:22:02 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 010797A00CD;
+	Mon, 12 Jan 2026 03:25:25 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 12 Jan 2026 03:22:02 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 12 Jan 2026 03:25:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768206122;
-	 x=1768292522; bh=hSOJGKp0GEJUTfofvT6Spijmrj3z72S/HR/lVHOb8uk=; b=
-	fqh+/a5d4LcNAi5viNRW154IIHX3xRfBqJO9NZxkK7F1GDTN+HqRM5TPPDrBx4Q2
-	PzLx2Pql8XD5DWr+hUhcFspRtFGc++xj1ukLOFuLmTDuXhm0aRYJjDTh0HcNUa+g
-	PuzONUXUaN0kz0oClZQH3W7ZSozpmlOG6Hfw/BIM2dBwb/40VkbzuZNqj2wUdOZP
-	DuOAH409pskt3g9qhluUQiVOVmlDIs1ekeUStlj4v+YSxu0qcTwbKIKga3yc37tA
-	Eu5K5GlpkqUswmWnZSbagcRPZEu2S6sUloOozloxiuBSiqHMePQX8kxrEvSIleVS
-	Y68R1g3NU/wKTgPXf1IvfQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1768206325; x=1768292725; bh=XJ4W+7sYtW
+	FJZbq5KiIjzEIuNltQRnz3oWRjVk7VY0E=; b=RDqdB3oEKDIa/1r5SWPwlNKcBK
+	74hDQsQyS3iNOV3Dk6i19vlNJF9Ot10UmlxOA0FR/wMvaBe8VeUf8YbONz5UZ+ma
+	pHsN8WQdkr6eHVrlOPFxGRz4ENus3W6yMGA3xt7Rbc5558NaJ0245oLr+0WbYIL8
+	2rygImupBuJaldNmpYZ8MfgDldVP5F/qt+27YrqSSlub/VSzAkh/aGvyIA0N7DcW
+	5WeCOZuq2uO88FQ/qEcSLRMNdVMayKeuNlWYkcb4WEw0pazIQsYfVk5cQNg+q8fx
+	kNRo3GG1g5rXOLW9l46D9zOqrwInt3Dv3uQigKMS76bVUgAhvJxFvlrq9kyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768206122; x=
-	1768292522; bh=hSOJGKp0GEJUTfofvT6Spijmrj3z72S/HR/lVHOb8uk=; b=Z
-	odQdCcd5WXABby23rDmxWOXK5BRBkG/DrusQKPg+VAxaOZY7XHJvjdYxUQ++Lq2K
-	0aoqW29d7+Ov0vXDbGwK9oRUZ9ghb/JqOw+O+4E598EsMWmGHX8yIi349lzwKTWt
-	aJv91/JL+H3T2NaDSJd6WlxsmHBHSqMhD4D+XWydOGWxd/RpZy82kBiAh0bUMa7f
-	+tuUKym+KHNLPtDrS0+EQ6SoplAnD5DmUhr0l7xYAIKe84L+z7kQF2486poXUZ1t
-	tU9Cn1Qco0Dwb3ugLL/n3Gf+VUNP0u0pCIKGQppgi06/X7DGnAkxdcpi44iMU02w
-	JgPzYozHGgZp+ysGYUruQ==
-X-ME-Sender: <xms:Kq9kaZRc7eWCQR5UgeI7O9JlEF2I4ii4GrHh9mjxmC9TUbKDfTfXsA>
-    <xme:Kq9kaaNaf4l_V4opk2vER7PUdYPqRru_-nlnv-a1o4boDtFFeIvBseTYMQUYz7AtI
-    G2g9mE4YCY9CnlZbuwU3r1HLA0AN2ddSUQZj5v1CBXv2GOK2uNVzQ>
-X-ME-Received: <xmr:Kq9kacMRahP9pkhNB9UjogJApmlYtpVjjdtIf9I7eRHdOS7rTw9aS9wfR-Ffz5pMd3yztHNuA0CaKyA5i2MUQjt4bSscGka0SIRVlp9hjA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeileeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768206325; x=1768292725; bh=XJ4W+7sYtWFJZbq5KiIjzEIuNltQRnz3oWR
+	jVk7VY0E=; b=YbOl/gfDrIhZem6mpzekvftE/nBSecrPVUCY9KC/PqwybmvupU8
+	YgCI5mDWwyfLPmXQ9J8ETKW9kEAYuNeqIBLd+r69rIUN3/uIUwCGn3k+xUSaTq9b
+	NQOS6gVbOSqPYDizkvyJSvtNmoB7SjRZxfvX5AsFxO6sdS3FLbRG4srCFkflQZM+
+	dWVq819uZzqYlwXiVXrbjKYuFsr/tIy7b+Y0A71pwOMV3zgFb23LDMMWMhNRekDy
+	Mvj2ZACgxSDxsq/DNeNZWtCZca6tiCw/5FXlRAp/ZzjsGxL7HgJ1BFwrB7x522Cv
+	G0urTm6ma7CTJUQ0Sdcg6xNb8uRPAR8NpSA==
+X-ME-Sender: <xms:9a9kaT9jEhl9qtx-z3kmCetSvQjHdM_VzLvPOKTBFi2AFDyc5fadqw>
+    <xme:9a9kaXLT5AMlqnQgUSVxhOA3G7ltq1gVPFdmG-gB9G3rQmhT-MASp5qyDw5R2YKDq
+    L2HkukApzbZpflZD7A3NRuamP2OYRf33I1XhAPDIC-travGvIXlTQ>
+X-ME-Received: <xmr:9a9kaeZ7_DvxGgD5fIAyeWMfxYFb0Ix9wvebo78o3F5D5H-XFGEge7VoEgtMwS2wIwMgbGazxofMqeIJyW-6VRYoZvCZTGVHhCDXEAG-8g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeileejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeejieefhfffieeghfdvgfduhedvjedttedtjeekheeiheegtdfhieelveegveevvden
-    ucffohhmrghinhepihhllhhlohhokhhinhhtohhthhgrthdrihhtnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgs
-    pghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhrrghmvg
-    hshhgsrggsuhesnhhvihguihgrrdgtohhmpdhrtghpthhtoheprghplhgrthhtnhgvrhes
-    nhhvihguihgrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrgh
-X-ME-Proxy: <xmx:Kq9kaatFrfIWVwd4z67eXztR2O-K1Ot0k04_vK0PYCuu5aeGXW8uxQ>
-    <xmx:Kq9kaWXHY-7EnRR2LBKh_1Bf9AJZNtoLHVemAvS2BS80-2GWudxFNw>
-    <xmx:Kq9kaSslTpekTeca3uhqfIQSmvDkMu-JRz6Y7cZG-MaM28DVm5kp2Q>
-    <xmx:Kq9kaSV_IZ3iUAu18ke5b6vJlayd9Oh5G70xfZY_0ZT1qqICDLCx2g>
-    <xmx:Kq9kaWJwfGeS2-dWxw103DQfkHkhPD3N-a2P_5PEREcuH8BS68z-ob79>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
+    hshhhrvgihrghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:9a9kaZLoo_bxq5QpOwcFbb_nfShFUJLx7-rz2AdM0rDeXxj_spAtwg>
+    <xmx:9a9kacCttrNONqKuEcPcXMYhpRo_g1tjyqRQg4nZQmyZJWweTwKlxQ>
+    <xmx:9a9kaer7c1wTcMmtSMmOuLwkyi6wPW-TeXkTwO-qSM_n26BuuAnxeA>
+    <xmx:9a9kaXiIQSdAYPC9Jibwm8M0fzVBwl3jnOi05NiCkwCTxnybRbCPhQ>
+    <xmx:9a9kaTKAYDZkKWb7bGWxEwir6w9eZMg3y-CpV7JM12dsHjdxY7tETw7G>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 03:22:01 -0500 (EST)
+ 12 Jan 2026 03:25:25 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bbbc9045 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 08:22:00 +0000 (UTC)
-Date: Mon, 12 Jan 2026 09:21:57 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 91e200d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 08:25:23 +0000 (UTC)
+Date: Mon, 12 Jan 2026 09:25:21 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Aaron Plattner <aplattner@nvidia.com>
-Cc: Rahul Rameshbabu <rrameshbabu@nvidia.com>, git@vger.kernel.org
-Subject: Re: [PATCH] remote-curl: Use auth for probe_rpc() requests too
-Message-ID: <aWSvJbYBWpJc-Vcc@pks.im>
-References: <20251112223722.376330-1-aplattner@nvidia.com>
- <aWEV2qs8MHqt_JXC@pks.im>
- <2e103c5b-8cb3-40ec-aa0e-793f85a1f80d@nvidia.com>
- <c09387eb-0847-4130-85d1-9da8a3f64164@nvidia.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [RFC PATCH] t5500-fetch-pack.sh: fix suppression of Git exit
+ code in tests
+Message-ID: <aWSv8dlt32xg14e1@pks.im>
+References: <20260111202137.257405-1-shreyanshpaliwalcmsmn@gmail.com>
+ <xmqq8qe3pxvm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c09387eb-0847-4130-85d1-9da8a3f64164@nvidia.com>
+In-Reply-To: <xmqq8qe3pxvm.fsf@gitster.g>
 
-On Fri, Jan 09, 2026 at 10:39:10AM -0800, Aaron Plattner wrote:
-> On 1/9/26 9:57 AM, Aaron Plattner wrote:
-> > On 1/9/26 6:51 AM, Patrick Steinhardt wrote:
-> [...]
-> > > > diff --git a/remote-curl.c b/remote-curl.c
-> > > > index 69f919454a..1d0ae72521 100644
-> > > > --- a/remote-curl.c
-> > > > +++ b/remote-curl.c
-> > > > @@ -877,6 +877,8 @@ static int probe_rpc(struct rpc_state *rpc,
-> > > > struct slot_results *results)
-> > > >       headers = curl_slist_append(headers, rpc->hdr_content_type);
-> > > >       headers = curl_slist_append(headers, rpc->hdr_accept);
-> > > > +    headers = http_append_auth_header(&http_auth, headers);
-> > > > +
-> > > >       curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
-> > > >       curl_easy_setopt(slot->curl, CURLOPT_POST, 1L);
-> > > >       curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
-> > > 
-> > > The change looks simple enough, and matches what we do in `post_rpc()`
-> > > itself.
-> > > 
-> > > It would be great to have a test case for this. It might be possible to
-> > > use t5563-simple-http-auth as an example, where we already know to set
-> > > up an HTTP server with authentication.
-> > 
-> > I'll look into that. It wasn't obvious to me how to make it hit this RPC
-> > case specifically but I'll see if I can figure out a way.
+On Sun, Jan 11, 2026 at 02:50:37PM -0800, Junio C Hamano wrote:
+> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+> >  	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
+> >  	0012command=fetch
+> > -	$(echo "object-format=$(test_oid algo)" | packetize)
+> > +	$(echo "object-format=$(<oid_algo)" | packetize)
 > 
-> I asked AI to try generating a test case for me and it discovered that the
-> problem doesn't reproduce with Basic auth because git sets CURLOPT_USERNAME
-> and CURLOPT_PASSWORD and curl implicitly includes those in subsequent
-> requests without git having to add them explicitly. If we used
-> CURLOPT_XOAUTH2_BEARER like imap-send.c does, then curl would presumably do
-> the same thing behind the scenes.
+> The construct $(<file) is bashism, that does not work if your shell
+> is not bash, isn't it?  If you used a variable, e.g.,
 > 
-> That said, I'm not sure using that makes sense since the credential helper
-> just tells git to use Bearer auth and what the token is, but not whether
-> it's OAuth2 or some other kind of token. I don't know if that matters.
-> Rahul, do you have any opinions there since you're familiar with this stuff
-> than I am?
+> 	$(echo "object-format=$oid_algo" | packetize)
 > 
-> Anyway, the test it came up with creates a repository with 2000 branches to
-> get the reply to hit the large_request=1 case and then uses a simple
-> credential helper with a dummy Bearer token to trigger the problem. If you
-> think the current fix and that test scenario sound reasonable, I'll clean it
-> up and send out a v2.
+> that would make the result more portable.
 
-Creating 2000 branches can be done efficiently via a single
-git-update-ref(1) call, so this wouldn't cause the test to become
-prohibitively expensive. And if that manages to reproduce the problem it
-sounds like a reasonable way forward.
+There's no need for the echo at all as this can also be written as:
 
-Thanks!
+    packetize "object-format=$oid_algo"
 
 Patrick
