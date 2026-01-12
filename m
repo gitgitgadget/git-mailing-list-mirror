@@ -1,141 +1,105 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mxout1-he-de.apache.org (mxout1-he-de.apache.org [95.216.194.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E869476
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 22:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C544199EAD
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 23:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.216.194.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768257551; cv=none; b=XO1v5StlGYlUglm99GI28dWn3G9Yg3VoKzFnDfQEC9v+bWUEJa5oBul3bE0uOyoFNKLUEyNe9Lw2Rt1Rit4ZENqSWj4c+5n27hP71rkIxhNSCFV2I2dBn+3UjXuvKU3vQSb799ESuKSs6klYXj8Bku/Fg45pVVFe4WsYEr6hGI8=
+	t=1768261089; cv=none; b=pB3k2yuC1FAkh6m0Wa/+JfYmSHEk5mDXS47xkMqlcPmngtVTJvvsK3T86pexGbnXtw02r64WqUD9ZjhpeMfsQ+MFII0D6pW6SmchNK63d3Mkb2Pls2GVB0IoxjdmcDL2WmnxmJfllxcwSIDyTmpgkcn9UcbVAFxD2H3s50xGd5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768257551; c=relaxed/simple;
-	bh=PLIveCHvMgEqt1eSP2OtqbxMpHSXHrZ1+7kcN3Cfp+I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j3Zxz+9v9hLuXiDvNaaQW2uh5oKgNElX4CoQhYgpdMZtIlvHncvWnZ6nWB8nllMlQDaF+ZWONloVqS9JzY3AdiHBcFGwvjtGf9WUw3UVwzQ9x9xt6aAm3jOqWb6STYKjWNLnsPFEL6bOkzqkwDtGbU4xpO0prr2QtkWjIP+eLgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=wVc3D/qi; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1768261089; c=relaxed/simple;
+	bh=StWRfVMTAKGnOt5a1zLojD9emdhrEz9HsR2POW3CiBw=;
+	h=To:Cc:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=MfvUWESh14w2fm1cD7Qy0gvN+0Db7FcZB2OFbu8pyHHYqVDUHVFH0+sgpcOocYZ1QCZ/LSwe0EmEJXF1HZmW8u23/WkIvbyjo/ojyleglQN4Ex/ghf8ntYRFPfji8gpdQQhiLEDL+KNyS+PQ5TOr9vFlkCqjwM9SbetLghiGEMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=apache.org; spf=pass smtp.mailfrom=apache.org; dkim=pass (2048-bit key) header.d=apache.org header.i=@apache.org header.b=NhCPY61U; arc=none smtp.client-ip=95.216.194.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=apache.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apache.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wVc3D/qi"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1768257541;
-	bh=PLIveCHvMgEqt1eSP2OtqbxMpHSXHrZ1+7kcN3Cfp+I=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=wVc3D/qiTgv0E3q5UCuTz3xW90772wXYAtQ/wzxbrlUnLPdoCupmsb1CCZ6yQJ5zP
-	 COxSjF8fQfNr42E3EzwdCwShLV2xzivX3eg3XcreILapYLgCiD4H4CR7WKHaAZM5Vq
-	 V3dzRCoEKca+TrR5HKxlT5xN0GwB/FBayFQdgLF6RlnBCydRsBINSjezeYr7aPUN34
-	 DxXqEEkMkpGn35/IjCK0Rzq88MeAd/vZRoN2UFSFr+QxL1OoJxOQb286/PTobxAofe
-	 WURan0EuwACv6/m540yJW4cYb07oN2R0U9CUHEiIB2twpy9Rs2cTkg0PA48edCtRzO
-	 vwiZNloYW7bX+WFXfVjnRoq85mGrNpp9jzMuKK3/adjX9j3ZzKsFDuoV448dxdafgF
-	 FtfG9iBgzqKVz9Ttm3+INqJWWM5x3h9hSDYHJkyXDvGPiCR18vhZHhvELbAok4TGIi
-	 +5YlYjSKn3l2F1PeRGDLSEOOv5zbOq4amCodCDmQPlqig76PZf4
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e6a9:5e22:aa44:8800])
+	dkim=pass (2048-bit key) header.d=apache.org header.i=@apache.org header.b="NhCPY61U"
+Received: from mail.apache.org (mailgw-he-de.apache.org [IPv6:2a01:4f8:c2c:d4aa::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BCBBA200B5;
-	Mon, 12 Jan 2026 22:39:01 +0000 (UTC)
-Date: Mon, 12 Jan 2026 22:39:00 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Krzysztof =?utf-8?B?WmFixYJvY2tp?= <K.Zablocki@student.tudelft.nl>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Idea regarding GIT
-Message-ID: <aWV4BPdrR7nfRWWf@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Krzysztof =?utf-8?B?WmFixYJvY2tp?= <K.Zablocki@student.tudelft.nl>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <DU0PR09MB8272C80E049596044EF581C2B181A@DU0PR09MB8272.eurprd09.prod.outlook.com>
+	by mxout1-he-de.apache.org (ASF Mail Server at mxout1-he-de.apache.org) with ESMTPS id 4B269655C2
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 23:27:32 +0000 (UTC)
+Received: (qmail 132187 invoked by uid 116); 12 Jan 2026 23:27:32 -0000
+Received: from mailrelay1-he-de.apache.org (HELO mailrelay1-he-de.apache.org) (116.203.21.61)
+ by apache.org (qpsmtpd/0.94) with ESMTP; Mon, 12 Jan 2026 23:27:31 +0000
+Authentication-Results: apache.org; auth=none
+Received: from [IPv6:2001:569:bef2:d200:63e1:9891:d2d4:fc0] (unknown [IPv6:2001:569:bef2:d200:63e1:9891:d2d4:fc0])
+	by mailrelay1-he-de.apache.org (ASF Mail Server at mailrelay1-he-de.apache.org) with ESMTPSA id 0A2EE42698;
+	Mon, 12 Jan 2026 23:27:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1768260451; bh=YgIHm7QZLzRXHPFhU2Yx1VR3B/oBUlJVAvrIjP3aEnA=;
+	h=To:Cc:From:Subject:Date:From;
+	b=NhCPY61U1mVVpCbVjmrexrLZrNWpeZjKZbGg5e0ocS9wMgI5a3WvMuMKYi4ECONJm
+	 TavCEgtqVVzHX4X7ggZwpQXVMd2AmL3MxbHd4r36tkEaCRltLTGC9n4vZps8Pg9Hn7
+	 Unzq4ccsEDm/4ls3jY2HQ6tVVoapTmhepQmBriNBKOqLNK5qT97A9H6ofgiE/9IHFm
+	 eZ9gfLHrZdC5GvSsXq9wXx1/Nfb+HDzCz9LYYZH8r5XUFGHbcUmyp6d/4AaF9BuAwJ
+	 0NqcvlMYFqr5Y4QiGjPU/cb2LDYBDXfIAq/YlG09k6oPYUADS0/7ozPl1z4Gr0dWVX
+	 xhzFLbqYXLUPw==
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Chris Darroch <chrisd8088@github.com>
+From: Chris Darroch <chrisd@apache.org>
+Openpgp: preference=signencrypt
+Subject: pre-push hooks and stdout regression
+Message-ID: <ab578804-891e-edcc-12a6-8b1030d1bacb@apache.org>
+Date: Mon, 12 Jan 2026 15:21:42 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Firefox/60.0 SeaMonkey/2.53.7.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Zb3S4byTMN2Ku6OP"
-Content-Disposition: inline
-In-Reply-To: <DU0PR09MB8272C80E049596044EF581C2B181A@DU0PR09MB8272.eurprd09.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Hello --
 
---Zb3S4byTMN2Ku6OP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+   I'm one of the current maintainers of the Git LFS project, and we
+happened to notice that a recent change in Git's "master" branch has
+introduced a regression in our test suite.
 
-On 2026-01-12 at 02:53:49, Krzysztof Zab=C5=82ocki wrote:
-> Dear all,
-> I'm emailing to suggest feature for git. It can be useful for ppl working
-> with pipelines and having extensive personalized configs. I propose adding
-> new configuration file (or parameter in .gitconfig) .gittemplates. Files
-> listed in there had to be indexed before adding them to that file, otherw=
-ise
-> it would work like .gitignore, but difference is if file was added git wi=
-ll
-> not track changes in it and won't commit them. It can be useful with .env
-> files, using this feature their empty, template version can be committed =
-and
-> frozen where local version can be edited. Same with configs requiring loc=
-al,
-> machine specific paths. Now there is need to keep template version commit=
-ted
-> with different name and proper one recreated locally and ignored which ad=
-ds
-> extra work each time.
+   Specifically, with commit 3e2836a742d8b2b2da25ca06e9d0ac3a539bd966
+("transport: convert pre-push to hook API") from the "ar/run-command-hook"
+merged last week, it appears that when a pre-push hook such as our
+git-lfs-pre-push program runs, messages it writes to its standard output
+are now delivered to the user's standard error stream instead of
+their standard output stream.
 
-Yeah, you're describing the FAQ entry listed at
-https://git-scm.com/docs/gitfaq#ignore-tracked-files.  The rationale
-that's given is this:
+   I suspect this is because the pick_next_hook() function in hook.c
+sets the stdout_to_stderr flag for its "cb" child_process argument,
+and that function is now used to run the pre-push hook.
 
-    The reason is that if Git needs to overwrite this file, such as
-    during a checkout, it doesn=E2=80=99t know whether the changes to the f=
-ile
-    are precious and should be kept, or whether they are irrelevant and
-    can safely be destroyed.
+   Arguably, the Git LFS pre-push hook program should write its
+progress meter messages to stderr, but since at least 2017 it appears
+we have used stdout for this purpose:
 
-Even with a `precious` attribute for ignored files, presumably there is
-some point at which you want to update the file.  For instance, maybe
-the template contains a new, mandatory configuration setting that you
-need for your software to work.  However, Git can't possible know when
-that situation occurs.
+https://github.com/git-lfs/git-lfs/commit/d665f7d725150761fe3b196da2c2d4448f7d2c61
+https://github.com/git-lfs/git-lfs/pull/2732
 
-In the case of your `.gittemplates` approach, you have no template file
-on disk, only the filled-in file, so there's no way to actually rebuild
-the file off the new template.  Your only choice would be to blow away
-the file on disk and reset it.  However, with the existing approach, you
-can simply run a script (which could even be done in a `post-checkout`
-hook if you like) to rebuild the ignored file from the template file,
-including whatever information you need or merging the existing data.
+   We can certainly work around this change in the Git LFS test suite,
+since our progress messages are still output by Git, just to stderr
+instead of stdout.
 
-It also becomes very complex because Git is absolutely not designed to
-have tracked files that are not written into the working tree, so things
-like `git reset --hard` would have ambiguous behaviour: do you want to
-reset the file to its original state or do you want to preserve it?  If
-you want to preserve it, how do you do a full reset of the working tree
-to its original state?
+   However, I think there remains the larger concern that users who
+depend on the existing Git pre-push behaviour in some way may also
+encounter regressions, perhaps because they expect (as our test suite
+does) to see certain messages either output or not output to stderr
+during a Git push operation.
 
-At work, we have a standard script for setting up the repository[0], so
-it's very easy for anyone to do anything necessary, like generating
-these kinds of files or running database migrations.  And again, this
-can be done automatically in a hook.
+   Please do let me know your thoughts on this subject!  If the
+consensus is that the new behaviour is correct, we'll adjust our test
+suite to match it, but I'll wait to hear the outcome of any discussion
+before making that change.
 
-[0] https://github.com/github/scripts-to-rule-them-all
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+   Thank you again and all the best,
 
---Zb3S4byTMN2Ku6OP
-Content-Type: application/pgp-signature; name="signature.asc"
+Chris.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
+-- 
+GPG Key ID: 088335A9
+GPG Key Fingerprint: 86CD 3297 7493 75BC F820  6715 F54F E648 0883 35A9
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaWV4BAAKCRB8DEliiIei
-gROOAQD7ayKulCKyzspTivcwq5JiGHHuxZaq859sC0pIECDArgEAn1gDmqmbOr3V
-0nUH0s2NjXbsubLKeC6qjOynn8hfawI=
-=CVDS
------END PGP SIGNATURE-----
-
---Zb3S4byTMN2Ku6OP--
