@@ -1,138 +1,108 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0E52940D
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 01:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D75A1B3925
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 01:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768182319; cv=none; b=U+AIsY2ggIOqd2V9jySFeXV/4rgYI2/nrAHmN4z0UaJYcP8Vxtx2+yOjuu81PbLjY9iKV3lYbd0Ux90SSDjM9tpWxws/ZUxmuq8vMqOAZzilpUGWX5m4mAoPFa78WEsLWziMxpXREZ9Gkj5ahFrC4WPJ1vs9//bHj06rnmtpM4A=
+	t=1768182457; cv=none; b=n9ggJRhoosUSjUDHmIsjiDWwU9FaCTeWoiSftUiExCsZ8vzmyZyDQgiwFg8ahhAmMAAA+Kl0n3UcF886Y/AJk8ntZo4KVNDvkq81zmnKNWXlTIbFB0V0VzcY0TjGqPLpZigdpnSmX72wcNFlpwOUNj0P4J5stru8TUhFLBTgEbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768182319; c=relaxed/simple;
-	bh=wSaPn1R4VrjQX7tMkkeN8O+FbrZ2tt3Q6hY1BVMbEr0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPZ0nQhVa0Rfq2GLdaJHv96/sN8AKBfcPpxkaZioG0b5+gaekRAGaa/7DYPRNAmL0nTuwodO6P8PZds6YD4cWcU5C9OPYRL/ueKsPOu2D1qO4K4gclY3o9mYckpH8wdFNBD+ruLcqh9JCH9cZXU6jyKL+YMoiJ5Wv5SQ207+CnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kjtsanaktsidis.id.au; spf=pass smtp.mailfrom=kjtsanaktsidis.id.au; dkim=pass (2048-bit key) header.d=kjtsanaktsidis.id.au header.i=@kjtsanaktsidis.id.au header.b=jvDjhBlN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hvUasa2N; arc=none smtp.client-ip=103.168.172.147
+	s=arc-20240116; t=1768182457; c=relaxed/simple;
+	bh=La9ID/d3L904bT9dFRKeO33r/iOBzrWwA0xmaAaexnk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=QeUtNhNgAil55R/nX2w0oHZxQhUKi+MsoVAHYP/54eJVb9p9Rg/9RdluurY/JbGgWwFi1pHLJi8pq5klNvpCj9kYeiohc/sZNDao/slPcBCJl4zIsLqYweJz/V2trBPCY3dD9M8NtLcQ5j5KMtraVtQKov1kvtuT0y+Jcd/Xg74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kjtsanaktsidis.id.au; spf=pass smtp.mailfrom=kjtsanaktsidis.id.au; dkim=pass (2048-bit key) header.d=kjtsanaktsidis.id.au header.i=@kjtsanaktsidis.id.au header.b=nICZnCEf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oX48UJ/5; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kjtsanaktsidis.id.au
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kjtsanaktsidis.id.au
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kjtsanaktsidis.id.au header.i=@kjtsanaktsidis.id.au header.b="jvDjhBlN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hvUasa2N"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id CDC95EC00BA;
-	Sun, 11 Jan 2026 20:45:14 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Sun, 11 Jan 2026 20:45:14 -0500
+	dkim=pass (2048-bit key) header.d=kjtsanaktsidis.id.au header.i=@kjtsanaktsidis.id.au header.b="nICZnCEf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oX48UJ/5"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 17B03EC00BE;
+	Sun, 11 Jan 2026 20:47:34 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-04.internal (MEProxy); Sun, 11 Jan 2026 20:47:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	kjtsanaktsidis.id.au; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to; s=fm3; t=1768182314; x=1768268714; bh=wUC+B0STCLK5J9DPdu9jT
-	UOfJ1ElJbrhH6WOkJkBnNI=; b=jvDjhBlNP6/MNAqTRM9TrrzRLKQ3Z8iPjr11p
-	Wszy9bekagxU2SNJaCfbEkFNQ7NJuksFRSXdVFwahKs6fKOYO8uM+UJMiEu+uMPr
-	cLPOprKElRSwkCz2cZO+29dli4icelPG/ClV1ll/sVMQfZMk2CM0a/JXT1WLXacm
-	LfutCcI50wJM0AgwdZ7luxRTVhjf2B3CYFNhacVQQLbJnPipf5Yf72Y8Ui83n0UA
-	YfPm97f1/ZB4gLjIvkqmXCK3BPeRLPjJiRuGgjgXE75pzqTf6WKghIH725Z18E0v
-	6lKVAwIPFlCqFG2y3gVN0xZywT/1WxNCzppfqw9g+NNWq5iGw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1768182454; x=1768268854; bh=FNuAX+r/DK
+	BRcruYk4XP7HYxRLcRu9HZ1atG080hHUA=; b=nICZnCEfNKb0iY/fdcea945HR6
+	eZm2CrGq98SOb7i8YYixE+70SMQgP+Y/YrVpsxNa1l9kazRf9nFqc/rvOv3JNbcN
+	UZA6sAx3MT/VItyzXMMHMFsMArCDbqv4uIRQdz13FNv7jAsAx8ok80BUBs5xEHLZ
+	4hqrIKM2oFxar5PWyQ9LACTzEZBkF3PyO58eD10GlkqT5psPBx4VLZypTnrlgnFo
+	8H0cbtSW2q3SRadGfNKR4nFA/a3D1/s2AZF6lovfUK6teHzSr4iGAjjxvFcOVYhX
+	bOD065bUMqB8Mv1PZSZq+44ZTN776qxSyqeuesHVmlqM/6P6Dx+ph295Bdrg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1768182314; x=1768268714; bh=w
-	UC+B0STCLK5J9DPdu9jTUOfJ1ElJbrhH6WOkJkBnNI=; b=hvUasa2NJfgFKrar7
-	eiwrteoL0VeKH845dkGXGofWHppt2MEtSiK0ogbuzPsWTtUBQDUIPgkd7JxtZcSv
-	qUAueKrBTznXKQOW+mpV9QfFqjecYQgu9f2X5CLWBLuRbFdc/IfvePTImAPqU8G/
-	YmAGMB3rTbKm9hQyf7g58ZodJYuhIIpEJOt4q/5XGREaQSOXQTv4fvYMtieRlaup
-	HWvu6WSe64knjIOmPxRSXwK5zztJkc2fbPVJWHoeo08ytWzX+qww+HiWT9KwJTLf
-	x62fpPGMBxXlvlUU7WG+TOM+FMo7kg7yuNw2q9DQyU/N9jJ1uXHCKvf3C16e0DJq
-	lez0w==
-X-ME-Sender: <xms:KlJkaRapW3vTiAJX9tFfPED1yCZWHfPUMHtMEgPlxbEZrtX-0E-tuQ>
-    <xme:KlJkaQJGA70qTGfrodX94yS9LAICMQTGDsQMRzQXjJKiGK_sIeueLWE0V3UGISH3c
-    S_OFo0ykkNxhMOREbNFUipVIeevZlPkuRGD9MNl1cIUx7gGcIw->
-X-ME-Received: <xmr:KlJkaXAWhBszdBIl58YW03d5ci9MpbefSaC5-BZMnJ7llXIAPv4TXr5iAaKC5zWyzt4k8WGt4qOWhS3VSjPLKJ1mtH02jK9OxbLf_4rMqwN3m58>
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768182454; x=
+	1768268854; bh=FNuAX+r/DKBRcruYk4XP7HYxRLcRu9HZ1atG080hHUA=; b=o
+	X48UJ/5zP7lkK+UL2p0wgwFeoTlYdi0+toa0tUAOLu+HGb6u4QOsglrvUhwDWdXP
+	YKI0WdqZZDKVuhInRMAc5Hm16gXqAtzFThr1N1jQ+58LmqKL+IvniFYFNkvJS6QE
+	5Dc0TjOkBP3htOTgSl1tm7Q3xLhD4ZCBXQnbGBNtB/A6kZPP8QQ8ADZdBOMgeHad
+	N3l4tvtUzkKS4ek4LJCwerYplAKdndme8j5XinRC29j1cJ61+iyXdCBy6/0N9lf2
+	jDIh+h4ThZ4bFN8+USKuUOEW9c7WHpQ+mR+Gm1tkDz/tj+5Zg1TkojeH0neJztZc
+	ngfCXjan4d06I6kg9I2Lw==
+X-ME-Sender: <xms:tVJkaedNneMvnhhrr7ShcLhgQyZqq7feLesiGZezrdaxx8-MMsO2fg>
+    <xme:tVJkaTCJejzfmIUk3JL21gHtZTNKsNEa9MHb5mAi44y3clD_apIeBYuS7QoO1djWO
+    hl9cI0WWqCnvAckimGWm0G6ScO1YX3Nf0YIkCfU1FPJJJI1VeH5zw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeiudejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtkeertd
-    ertddtnecuhfhrohhmpefmlfcuvfhsrghnrghkthhsihguihhsuceokhhjsehkjhhtshgr
-    nhgrkhhtshhiughishdrihgurdgruheqnecuggftrfgrthhtvghrnhepieeivdeuvedugf
-    elkeethfegleegfedvleefleduveevjeeffeeugedvffegffelnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhjsehkjhhtshgrnhgrkhhtsh
-    hiughishdrihgurdgruhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hkjheskhhjthhsrghnrghkthhsihguihhsrdhiugdrrghupdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:KlJkadquNz3-uBLChc5lB69ZoHdbpLDH10nlcG37AC4O6U5CDvuGng>
-    <xmx:KlJkaahYmMIiZcWiEo5cNPIiHM5aufvyYrQ5_emrzgNbbnKpjSq0Rw>
-    <xmx:KlJkaSBwk4g-UKeXK4wFdcduPx8YdL1WIt7G0RgfSRBDlPB0a55xnQ>
-    <xmx:KlJkaXGL7SifX9GreRBCWD6u9u4c_nAsgBFN7UWKE-JaDeLI8dsqZA>
-    <xmx:KlJkaUtp2X7MGOMu5owZJlwgs6TBDsSSs6hmWQM4p83h8tD0F4mU82kb>
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejre
+    dtredttdenucfhrhhomhepfdfmlfcuvfhsrghnrghkthhsihguihhsfdcuoehkjheskhhj
+    thhsrghnrghkthhsihguihhsrdhiugdrrghuqeenucggtffrrghtthgvrhhnpeeiiedtje
+    etfeejffegvdekteetueeugffgffffleevvdeileejlefggeeitdetjeenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkjheskhhjthhsrghnrg
+    hkthhsihguihhsrdhiugdrrghupdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehkjhhtshgrnhgrkhhtshhiughishesghhrohhqrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:tVJkacbtrBnOG6Tsga56CFQgsL6Wv7laZQsbwaDSB_6RMN801ljPgA>
+    <xmx:tVJkafKkkxvnRERQmy2w7ySo6Ni4He-KgweXICYDBE2rMlY3q4-zBw>
+    <xmx:tVJkaaAiiLk1up_1fnBeiOTEz5VeEhHufktTOtmIozMSpBnwCK3SBA>
+    <xmx:tVJkaUr_IwRIMhTYS-KGDlzJavJeqeTD9kb53Oz7U5ohLAZLb0UnQA>
+    <xmx:tlJkaRWr2Ly1-9cx96ArVaObEnpx5leCvdWf6J77lTUmcXIP7OA-cQ4h>
 Feedback-ID: ibd1946f8:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 11 Jan 2026 20:45:13 -0500 (EST)
-From: KJ Tsanaktsidis <kj@kjtsanaktsidis.id.au>
-To: git@vger.kernel.org
-Cc: kj@kjtsanaktsidis.id.au,
-	gitster@pobox.com
-Subject: [PATCH v2] http-backend: write newlines to stderr when responding with errors
-Date: Mon, 12 Jan 2026 01:44:39 +0000
-Message-ID: <20260112014508.17248-1-kj@kjtsanaktsidis.id.au>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <xmqqpl7govl8.fsf@gitster.g>
-References: <xmqqpl7govl8.fsf@gitster.g>
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 908DF1EA0066; Sun, 11 Jan 2026 20:47:33 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: A2Xbupy-4AlR
+Date: Mon, 12 Jan 2026 12:47:12 +1100
+From: "KJ Tsanaktsidis" <kj@kjtsanaktsidis.id.au>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "KJ Tsanaktsidis" <kjtsanaktsidis@groq.com>
+Message-Id: <e9c21aba-fa06-4e4f-baf5-f11f13d9ac72@app.fastmail.com>
+In-Reply-To: <xmqqpl7govl8.fsf@gitster.g>
+References: <20260108225926.3587282-1-kj@kjtsanaktsidis.id.au>
+ <xmqqpl7govl8.fsf@gitster.g>
+Subject: Re: [PATCH] http-backend: write newlines to stderr when responding with errors
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-The not_found and forbidden methods currently do not write a newline to
-stderr after the error message. This means that if git-http-backend is
-invoked through something like fcgiwrap, and the stderr of that fcgiwrap
-process is sent to a logging daemon (e.g. journald), the error messages
-of several git-http-backend invocations will just get strung together,
-e.g.
+On Mon, Jan 12, 2026, at 5:25 AM, Junio C Hamano wrote:
+> Now another question is which between the callers and these two
+> helper functions is responsible to ensure that the message
+> terminates with LF.  As these functions can be called only once, I
+> think letting them add LF makes sense (if they can be called twice
+> or more, we can imagine that a caller may find it useful to make two
+> calls to produce a single log entry by ending only the later call
+> with LF, but such a use-case clearly cannot be supported with these
+> NORETURN functions).  So I think this design makes sense.
 
-> Not a git repository: '/var/lib/git/foo.git'Not a git repository: '/var/lib/git/foo.git'Not a git repository: '/var/lib/git/foo.git'
+Agreed, the code clearly can't log more messages at this point!
 
-I think it's git-http-backend's responsibility to format these messages
-properly, rather than it being fcgiwrap's job to notice that the script
-didn't terminate stderr with a newline and do so itself.
+> Somehow it feels overly heavyweight to call fprintf() just to send a
+> single literal byte to the standard error stream.  putc('\n', stderr)
+> perhaps?  The same comment forr the other hunk.
 
-Signed-off-by: KJ Tsanaktsidis <kj@kjtsanaktsidis.id.au>
----
- http-backend.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/http-backend.c b/http-backend.c
-index 52f0483dd3..8c810cfcbd 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -143,8 +143,10 @@ static NORETURN void not_found(struct strbuf *hdr, const char *err, ...)
- 	end_headers(hdr);
- 
- 	va_start(params, err);
--	if (err && *err)
-+	if (err && *err) {
- 		vfprintf(stderr, err, params);
-+		putc('\n', stderr);
-+	}
- 	va_end(params);
- 	exit(0);
- }
-@@ -159,8 +161,10 @@ static NORETURN void forbidden(struct strbuf *hdr, const char *err, ...)
- 	end_headers(hdr);
- 
- 	va_start(params, err);
--	if (err && *err)
-+	if (err && *err) {
- 		vfprintf(stderr, err, params);
-+		putc('\n', stderr);
-+	}
- 	va_end(params);
- 	exit(0);
- }
--- 
-2.51.2
-
+I sent a v2 to fix this (hopefully correctly, I haven't had a whole lot
+of experience sending patches to mailing lists with git-send-email :/)
