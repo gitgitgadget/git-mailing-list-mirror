@@ -1,86 +1,98 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A67C2FE59C
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 15:28:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DA92EDD63
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 15:37:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768231741; cv=none; b=M9ePgKVquOt18ZbnLz2ioEHfHEGhpFMARzvcxyljRq6WmyODhikbMu1nZNMmYwM5BDYDanvxd1tcQ7/gd7vrxsu+Ei3Q2ulkETZZlEUyJ8YUhVyHWSH5omnqcH1zKQfDcTuLjFzOoarCtpL5i03brG5k87eFjOQx7sYG0pIxDFg=
+	t=1768232229; cv=none; b=L9VfKfkfjc7R6KZul5SCA8Ep63QhqHpCCYv+6DiOeiIF3AzkElj6CAvsWgPWnZTbMttTwxHgPHHPE8IUsuzg1LKTUuPkG4SqGt9ePg4zevqoWhNH0tOIgzPOJ70SisFYGvJP33dJuNuXcUbMbzXFX51VoWCF5Sq+XtL3gBRwF/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768231741; c=relaxed/simple;
-	bh=opv+FT+3aJjxuCdx6oT0jo+LhIF9RI14l3++W7o/v4I=;
+	s=arc-20240116; t=1768232229; c=relaxed/simple;
+	bh=1fUVpbfj6opG58YQfJ1CuVQL6Dcur4q9jRhbDTYet40=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IePnkIL3wSjkh8QxBFNh+b3XR3gQavXyTBrz31FtfMW32G+Bn9dWkY6Ai81Xq/be6Tg90MF5W1epasOeZpudQ90pb+uWMGlm3XiMRgMJtsf1rGk3J9zIl/oqUCPYDoWCnAi3lzLeAJSIVWB70zAYyEJIOjGVcZ8btygkv9QNwwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jcmmWXqI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LDfDDDlR; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=J1zZ1QES9jBHDm3KQNfMXI6keqfNyPQk2qsxFs3hC2QTPTlbaq/egqGPdjZrosgE722KQxaLxq/Z+yb7r65mfR+G/ZCjj7RaiuFsebbgExk/uw54nwI7q6381taPaVeh3oI0wfJw14fjpzGaopM2gA4RGwTu++yweTzJJ0CNYoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d6xu4Grr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qdnKYZSk; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jcmmWXqI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LDfDDDlR"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 36D56EC0680;
-	Mon, 12 Jan 2026 10:28:59 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 12 Jan 2026 10:28:59 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d6xu4Grr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qdnKYZSk"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 33D1A1400153;
+	Mon, 12 Jan 2026 10:37:07 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 12 Jan 2026 10:37:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768231739; x=1768318139; bh=c4jjfxuLuT
-	EunOcoIQQEfXnmO5ccVRXUi/eVq/2wWtQ=; b=jcmmWXqIvLpI5k+a+wZyieQrTd
-	Mm4CZg/jzAHy40i3NJYPoVkiG9DwG4tFDTvD1XGlKcPZoXWS5Ac7E7uKa7prU5n1
-	3bCVS8ENA5JItgxuO/yofW25NSO5LaW7TUnM24mRjId2b8aB6WI1B97xIHno81iU
-	ig0MjBPABpUr7kUAph+i85cBe2Z7aJXSAB0m6lAnA0UNHvzbuufbEVwSM9NvGCVt
-	ntG3Z15Ymh9LGPg5kuKtJa1BxPDAuKWpnG5jeAdua/zXe/XPpDPmy8YA3JY+gESW
-	5oPyo8EidGEGVoCrS2m4VE/KUqh3q4t/pUqHCyJtIE+dy4e6kkdF51SOdRhA==
+	:subject:to:to; s=fm2; t=1768232227; x=1768318627; bh=ywpMeQxBoz
+	2xOQTIAANsAXVKCnpNfpqO7qIY70oLCys=; b=d6xu4GrrnLfcABo+1tfGMlc1Ag
+	f5FY+PNchxUhyXR9pTH8JimiYgJXT0c2mql29Ew9qeiqLVFbAfc9dJKYN5A1jOxY
+	jJl/eta+4CHvj2YrmfEGxx7men38gmfu+Is3vmqE8uLiwBBtYzxyS8rMeF0lfCpv
+	bQGanzALXCA9tVIAkiOgS2vXNhLOSeOY/uyXXV6WHcX+Ejz0xUne1ti9608XjAqk
+	LkkMqabxR+JF8hjU7rEi1OgtN3RpgcXkNAbJlxEJ8WRwv38u5JU1vX7rm9e/sjYo
+	38Uc5jXPWsNOM6wKfIbx6ELkRCOCk5VMUS4blyDJQfptKODA9/6fi/VPAY5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768231739; x=1768318139; bh=c4jjfxuLuTEunOcoIQQEfXnmO5ccVRXUi/e
-	Vq/2wWtQ=; b=LDfDDDlResQNFlra4ECCNTzcW4nRLqoMYRvbytNg8kzdXggF/tP
-	nmzif99AMfVwSxr6EJhcTM3EA8/SO7kOoOi8ewh1LgDdFl7zZjvTLjiHUxRhmwQn
-	8ZqvoQ0lYq/4MuDvex/8/XO9LUkctY/tuBu/Ve0ppTUnf3UwFSIOAyS6EQ29aRqQ
-	a2dXWgOpY5v3jXFnnmo6HkmxEn9SzC1pn7vgSO1/FL2Tnszz4xrtLQWBUVVFhXMC
-	zlK/pURuQ9rvotau86dwIb3vsjoYqAGY6BqoFajNh2teo6++OjAead3/4dbPn851
-	GZ5rSzp/01EHy9uVjVZhgHcgP142WPN50zw==
-X-ME-Sender: <xms:OxNlaeGW2CyABJmAHvhIHrUlVtQqzNL6ZNiR-G0jVX8qeHcZNOcBkw>
-    <xme:OxNlaWxbBJfpwnnOgJygc34_fvloSJ-McQvDYPWN9kmbj0f8KH6_UbwLdkCRa6Jrh
-    4DI18WVTG_xUit1h1piPikEmNR2ZsBhiCTD1vpKoEpNW_l36zvo>
-X-ME-Received: <xmr:OxNlaVj9C1u9dlbvQYuUIcQ7QeXV9cowb4VXo1G-toiipneiT2PzJJONBx0LSR5Em9e1waFHHAf0dLp7-FqwZqtXKxgJOdNKFrpe8I1wWA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejkeduucetufdoteggodetrf
+	1768232227; x=1768318627; bh=ywpMeQxBoz2xOQTIAANsAXVKCnpNfpqO7qI
+	Y70oLCys=; b=qdnKYZSkTe7aZafUp5ikNHE1s48gecy+FZ7O0kXbajxnXXFJk5L
+	dadvDdXWMGU7yG96sn37Wrp1Pfvrn2aGqbMTGl5E1VuatiGeDjAaY4jEMWIuZrXI
+	XD/mdp4/W3g8cNK8oNxc0rxfgsI7NfbtQTZzDmhXczs5L14QOZAB9TmG/CFX04Tg
+	tR9QTYWG52DFq1PnAdOx4UkEQxXnq/G54gVBXfZhUvwHd7FKFo6WSs+8qkEMsMqS
+	jsl4kiTgyJtYwd/nL4W0wmxzbht/FGAMkGmBLUX0fb8oF8u/kiRqSu/isZSgwbd+
+	JgpmMDPQSKLrOPZbICputrPgY/KWMGB2Fnw==
+X-ME-Sender: <xms:IhVlaVAKS9keoKh5knfQ0BHBPmTlcFyEU2Tw5uLGckMXlTz9IX89cw>
+    <xme:IhVlafWuKI8DtBy1UWIZQ3b3vknA-x4zFAr5dWEKbYfkOlBdkTTnggJJLZ9_P0WV5
+    AvtWQvQNCdUHMfOGsixDWRxtWvFayW7zrdmepfA0RM_jhZgdKO2Fw>
+X-ME-Received: <xmr:IhVlab_Vrwk1lOvHEdXDaRT74pqcLW0_ouSjMH_NR9WUgXx9VP8oZgQqVZ7iHUBd_A83dlF9F8ZcAnszFzTj7csxJuwVd0qkg8SgoR0b6A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejkeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:OxNlaRxyok9_nSW55aSal6jSBkQrra3DLJ7BchWGS4THTWzxNBrw1w>
-    <xmx:OxNlaYI54b6gPiDoBNq0aQEtoWeu-z1SZntIdbzBMXuVfXr1tKLF1Q>
-    <xmx:OxNlaYTJ-Wmtk53XviVy-KrQpxE8cKyrCeoMGQyTP_5mHL7_Q3OGEw>
-    <xmx:OxNlaQpv6jXZJRowz0iRu1Vl5w0TDQCct_qX64OicIJ4AtQ-0aWbsw>
-    <xmx:OxNlaYbrn0Awi5MlA_e2kF4BZm8XEYRGjiY_KbV8vGzRmQCk7p1SEkc_>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepnhgvfihrvghnse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphh
+    hilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdr
+    khhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:IhVlaZTZqfrAtuiv-nIY2qm7b7a39UnEmAzKWAY8Nb381qQWk4uQAw>
+    <xmx:IhVlaYQyx4aM8-S60SI0wN0meEhH9RdN8mUrbVn39tmxazWZiLVJFw>
+    <xmx:IhVlad7r4Y44LrPV1xSuRRzbt39Wj79_SSEd283BU238KQ-y__gpnQ>
+    <xmx:IhVlaVXvW47EG36NoN3iUY-CoaU1t8SajgDgK-R7zCjy-oB1PXiTgg>
+    <xmx:IxVladCS5FQQFoP_VDVifz9Dj-azBntyHGeeycpwOI07sZ7lKPx7ULBb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 10:28:58 -0500 (EST)
+ 12 Jan 2026 10:37:05 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b5891fa3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 15:28:56 +0000 (UTC)
-Date: Mon, 12 Jan 2026 16:28:53 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 0b0d274c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 15:37:03 +0000 (UTC)
+Date: Mon, 12 Jan 2026 16:37:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
-Subject: Re: [PATCH 09/10] tree: stop using the_repository
-Message-ID: <aWUTNU7WGTwHt6Ks@pks.im>
-References: <20260109213021.2546-1-l.s.r@web.de>
- <20260109213021.2546-10-l.s.r@web.de>
- <aWS9Ll8CQ3eILx3z@pks.im>
- <xmqqh5sqoqr0.fsf@gitster.g>
- <aWUMn6G0C1cHA4qY@pks.im>
- <xmqqms2in9hb.fsf@gitster.g>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Matthias Beyer <mail@beyermatthias.de>
+Subject: Re: [PATCH v10 1/8] builtin/replay: extract core logic to replay
+ revisions
+Message-ID: <aWUVHKMfG0vRb8_G@pks.im>
+References: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im>
+ <20260112-b4-pks-history-builtin-v10-1-e3c6aa5b4cec@pks.im>
+ <xmqqv7h6na0s.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,39 +101,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqms2in9hb.fsf@gitster.g>
+In-Reply-To: <xmqqv7h6na0s.fsf@gitster.g>
 
-On Mon, Jan 12, 2026 at 07:20:32AM -0800, Junio C Hamano wrote:
+On Mon, Jan 12, 2026 at 07:08:51AM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> >> > In any case, I'd propose to move the compatibility macros into a section
-> >> > that says something like:
-> >> >
-> >> >     /* Deprecated wrappers that will be removed once Git 2.53 is released. */
-> >> 
-> >> Please do not take release schedule hostage to one particular fix-up
-> >> series of patches.  Thanks.
-> >
-> > The intent isn't really to take anything hostage. It's rather intended
-> > as a hint that once a specific event has happened, we should take
-> > another look at removing these wrappers.
+> > -	die_for_incompatible_opt2(!!onto_name, "--onto",
+> > -				  !!*advance_name, "--advance");
+> > +	if (!(!!onto_name ^ !!*advance_name))
+> > +		BUG("expected either onto_name or *advance_name in this function");
 > 
-> I am OK with a comment that records the intent, e.g., "let's work
-> towards reducing the use of these wrappers", with the plan for the
-> next step, e.g., "and once we have done so, remove these."
+> This brings our crypticness to a whole new level.  onto_name not
+> being NULL is a sign that "--onto" was given, while *advance_name
+> pointer points at the string that "--advance" option has received.
+> We are saying that only one of these two must be non-NULL, and the
+> other must be NULL.
 > 
-> But the comment you wrote is forcing people to make sure we remove
-> the code that uses these wrappers and unless we finish it we cannot
-> release 2.53, no?
+> I know !!VAR is an idiom to turn any pointer into 0 (=NULL) or 1
+> (!=NULL), but isn't the latter (i.e., normalizing all non-NULL
+> pointer to 1) a bit overkill, which becomes only necessary because
+> the construction wants to use "^" as "sides of this operator are
+> different Boolean values" operator.  And then to add on top, the
+> whole thing is !(negated).  I wonder if
+> 
+> 	if (!onto_name != !*advance_name)
+> 		BUG("one and only one of --onto/--advance must be given");
+> 
+> is easier to follow without being overly cute?
 
-That's definitely not my intent. It's really only intended as a hint
-when those should be removed at the earliest. Maybe something like the
-following instead?
+It should be:
 
-    /*
-     * These wrappers can be removed once Git 2.53 is released. If you
-     * see this comment and that release has been published then chances
-     * are high that we forgot to remove them.
-     */
+    if (!onto_name == !*advance_name)
+        BUG(...);
+
+But other than that it reads way better indeed. Fixed up locally,
+thanks!
 
 Patrick
