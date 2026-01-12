@@ -1,84 +1,83 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4183D3128A0
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBFC346AEA
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768208466; cv=none; b=d0q9dPETEYkFP6zLibRtkP/evBTWLXN9hY/0oXHL2Eu98u443b3WB0zfkX6EKCgUDypBp2goQMy9D0S7FYr2mFTh3B0kmDurfgtf9/RHeSFyw+xS4BUO0hLs7iTs40klXNyIRo5Z07CtMi58u3fFch07hRW3lCEytjRiQ7z05cE=
+	t=1768208469; cv=none; b=sRYvYjmYSWa0vXJAWgjvktSmhvgC+GVyzasgC15r/AljD085sveYbhF4M0/UN2WFU9ENa3XmQka/dvsexGHspVyyxK/nvjE3TvlJxBycG3ujoHBKPEMXR4bxMFs/n9WE5vFmNbMFdYKgOFaIHRBdAlgnzT56eBOxO5VZMo8XV70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768208466; c=relaxed/simple;
-	bh=/ivDOm8XLZG6/bfJ97LYR/G0f/eq6PvnD+CEb6BT5EU=;
+	s=arc-20240116; t=1768208469; c=relaxed/simple;
+	bh=p6UbcssXk6f1OwCwtuP/2qhi0RzbgWy/f5bKdCTjKT8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=W8EWj4mGDpuxUEEz5CitNWT/qRWYOVksz5DNbkWI8nDuLxWHgk48YmqSKo1pGtdYhv5BN8oiWfxmQHm1hwdk8BeF/GF7qmxXGkM4AnK8RWh/z2kIuQB1VX+Gh+nnXW5T1wSW/nTHMVv7/NqxlcuTJ/B7XevsxQMrf1QZ1vcQWPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hfttEb2N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IPfVZkNT; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=bY0kzf26rq8pqqX1gQYWl0z4YR8js7Ab/PqZArATQK5A1CpFx/YEcKKtrQVBX0W7xLpIarlPIGUlsKLCHBL4kuMxS/Bv6M86BFMVRMNbEVXeFxfTuLquYzclTrFPt70WijLax78RvL96pQ5zR4T8Z6NQ3L3nUoqt1lVM7JbIt6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ejAfVXQg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t4dC2HEo; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hfttEb2N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IPfVZkNT"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 71E527A0090;
-	Mon, 12 Jan 2026 04:01:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ejAfVXQg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t4dC2HEo"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1781A7A0040;
+	Mon, 12 Jan 2026 04:01:07 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 12 Jan 2026 04:01:04 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 12 Jan 2026 04:01:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768208464;
-	 x=1768294864; bh=ml6ByHQV1QGbCJlKUKdj3agf8RkviqAVgV5ZGtIEacM=; b=
-	hfttEb2NXqP6UE37Mnh2Xs+NS0ZpG1YRX9wMg8RsmB0WW4adoA+jJriVfgBVgVPr
-	EYqJz+ujE3yyNrJS09aZIQD90uDXFwjChEk5p88URINv9LZrVo4KVoIWQivFHQt8
-	YMcsrClbjWejqzo/vzsb30c8Zt7877+WWgVdr9rJsclPO96zkOoS3Dl1j7XwJlOi
-	xxjHxrPKu7qU0Aa1aFZSBte78idqBwkNBe3bsQt+sxpR9eGJrlQlnWHOkBbGDbHq
-	aYeXfkduWaBfrdrTpihTxtVwBJCoIH+LaNyROyjxCV/a1Pz1kpjQas/nNFai16K5
-	3ZAa4h6FcaCgVwHP53jqJA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768208466;
+	 x=1768294866; bh=pTaxlK2KuGhG9M4a5b/qRzxFXdX39ISoMV86WIhE/wU=; b=
+	ejAfVXQg/4uO+SVn5U00SSif3MJ47wcGNekJZ2+KQpAE44NBEd4cPu6UvBPHhxuQ
+	7G1poU39opD2PQnca/qzm9btwIEU3YUfrudn9HG92xNZFGsSqugylqtxfB1P56sk
+	CdLT9L/QrQnGqCWc3ArSatDV4RNPQHlyjNwB5zJydF6Hm4r5CXPHTMRoX1cD3sfT
+	+zgmxUbQPhhk0S3ZB39WmBThhH/Tl1T2Z6aK3ny6VXHRCYws3ozSK0UifhyUXQVt
+	pv7EMatll+tE0+frYExbbsnxILHwmiOEOOUPrSjEkhtWPOxc2mBsmlnivUBUqjBt
+	16/Fxm5ZjgwJjf+f8FSBjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768208464; x=
-	1768294864; bh=ml6ByHQV1QGbCJlKUKdj3agf8RkviqAVgV5ZGtIEacM=; b=I
-	PfVZkNTStfsMcamn1khVQlbBH1rspMVfvfrYSzM0cXtLUF94Bpg4WN79KU5vvgEB
-	ENgczreAK6/H5p70WaU7yXhzIX7KMQ5vo+dx6eGLq4mpOfo/1irShaIpr9bzL4SN
-	f7vI3lhvqFU7atkASw2wclQP98uidjP1yooIF6aKeSG25MKISJJXj4zxLrY9KolC
-	GL2yeohvmmxleJ6hI/mQ1V0SBeaMEL2bbC8RiAqHxuu7x7XV6fkDncULgxhh7F77
-	TW29qAxizSov21HSJ9tLM/CEC/QJFg7xFxq2bid69bmvrx8wfWLYEsZ3MhCzgJv6
-	L7dQ4T47me0kou8WO4jNA==
-X-ME-Sender: <xms:ULhkaX2kdgWeHi843Wg3TlEFY-FuVAlqyrahzFCK40ud8O57T-ESxg>
-    <xme:ULhkaZyY-evt3S7nRT7kYuv7Xm7IWbmByckPS0Vkf6G08ymw62NTivXyCNmH_1DPY
-    4VvwIJSeRGtqhNc-f2oQGBf8TXIg1kl_uZ9HNw82GPATJzw6SjboQ>
-X-ME-Received: <xmr:ULhkaRt99fhwLLWJaoDeMDiqERbxN7-iu95bTSsyAIDuCTRZMiO0FE7GP014outmLbUJ-95uWj4IStrX8Ko5dJD_VJixVHRtlgcCKp_Kaw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768208466; x=
+	1768294866; bh=pTaxlK2KuGhG9M4a5b/qRzxFXdX39ISoMV86WIhE/wU=; b=t
+	4dC2HEoYwZovIGDzd+Bdd9pFJvsx0v/+3AfA7/C6d+syoWFLHI5XaWYluhSfGMK2
+	GADgFQQcAYsgXBG7rqAdvpvc/eS2getCO8+sjcTcbzzsLVozSOPjneCsd+oAeCRP
+	TWacExAq1OuVFpt91BL0KgjusbPqYeie2fBfpb7gEzwiprxevZKSsxtG/lZwVqk6
+	EI3S5aXRhdt9JY+7EbBd798e5reAQlGxRRUKKppDDJJkQDJrTf4+Z+c9SWIO97Fn
+	+IpDpIrK6rI1q9kRs61x3nDK9CJDo+A614UrNn2vtCUUOt8b5gDORUxYQHPPWyYR
+	D3TXYuyJBR4ta14P48J5g==
+X-ME-Sender: <xms:Urhkad9odly9xHgLwmzy63dueVkzpkKZ3yNg1ZX0Xs5pg0V664zaTw>
+    <xme:UrhkaVZCqMcxTITYdRnsQa9AZ0iCnyH_JmetmMvxXi_87Tq5-saXJF8o7zFbbkjMg
+    sOxdczMUfyLedRjuOv-On_ZV2G8X4QtHeDhJGAZfy9FENZO908dww>
+X-ME-Received: <xmr:UrhkaU3dSDIiF22Ye_Qkhb1RUBQK_W4I0-J36BpznL_PfhQ1N85afGJaY5U93aFjoiMrYqP-tcvZ-mMsOYf01r07k2qR0deTThOmCNSBcQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejtdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeekieevveegieevieeuveefheffgeeuheetheegffffkeeijedtueefleffvdevleen
-    ucffohhmrghinhepphgrtghkvggurdhishenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeei
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiug
-    hirgdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
-    rghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
-    phhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ULhkaTz2vTGHqTevQrWahn6sZCOv8MUhkUB3-zzMAODtNIrjiVs9sQ>
-    <xmx:ULhkacCO4UbDJ_JUSkJ4LGm4m581kjmAUTq733Otu5iccCpLpMb3CQ>
-    <xmx:ULhkaZdmenwenIjMqA3-Fna84UDpHT3SwLNu-oSQ1bth2NjvITnkuw>
-    <xmx:ULhkaenOhYv4PO1m0MjKrjhq--HD02GKOiyP-0s8fn10yE25C4p6Qw>
-    <xmx:ULhkaS3YJ59c0FzfTAUGZVaio70qhMcUe07WWwEZJ5jsLLJ0fBGEG99k>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopegrphhlrghtthhnvghrsehnvhhiughirgdrtghomhdprhgtphhtthhopehtohhonh
+    esihhothgtlhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggr
+    khhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeekse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:UrhkaYbXwozgdfksItJsJqAulG_5XCSSwpdJK5hwageQBctKxU4IPQ>
+    <xmx:UrhkaUL3lUaiTDhTgWXmGqTNxPgSj8ZF2psyWsrecU5zi-5FpqVbiw>
+    <xmx:UrhkafGxB4ZStwYubZjUX4s4CgmH9-4hOI-pY8saXnppGAOoyxLL5w>
+    <xmx:UrhkaTvAWRF_cpw_E6u4RZyyUJvtI9In2Rh4ZVgcueYKMYsd6ABdJg>
+    <xmx:UrhkafUn-75x-HhUNkqGnXZlWuA9v_Ff-Bdf3TRYnNkIJVgj7uRRYEcI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 04:01:03 -0500 (EST)
+ 12 Jan 2026 04:01:05 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e2c68cac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 09:01:02 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 77210ed6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 09:01:05 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 12 Jan 2026 10:00:43 +0100
-Subject: [PATCH v5 3/7] packfile: extend `is_delta` field to allow for
- "unknown" state
+Date: Mon, 12 Jan 2026 10:00:44 +0100
+Subject: [PATCH v5 4/7] packfile: always populate pack-specific info when
+ reading object info
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260112-b4-pks-odb-read-object-info-improvements-v5-3-9a6124e95bf2@pks.im>
+Message-Id: <20260112-b4-pks-odb-read-object-info-improvements-v5-4-9a6124e95bf2@pks.im>
 References: <20260112-b4-pks-odb-read-object-info-improvements-v5-0-9a6124e95bf2@pks.im>
 In-Reply-To: <20260112-b4-pks-odb-read-object-info-improvements-v5-0-9a6124e95bf2@pks.im>
 To: git@vger.kernel.org
@@ -97,83 +96,67 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-The `struct object_info::u::packed::is_delta` field determines whether
-or not a specific object is stored as a delta. It only stores whether or
-not the object is stored as delta, so it is treated as a boolean value.
+When reading object information via `packed_object_info()` we may not
+populate the object info's packfile-specific fields. This leads to
+inconsistent object info depending on whether the info was populated via
+`packfile_store_read_object_info()` or `packed_object_info()`.
 
-This boolean is insufficient though: when reading a packed object via
-`packfile_store_read_object_info()` we know to skip parsing the actual
-object when the user didn't request any object-specific data. In that
-case we won't read the object itself, but will only look up its position
-in the packfile. Consequently, we do not know whether it is a delta or
-not.
-
-This isn't really an issue right now, as the check for an empty request
-is broken. But a subsequent commit will fix it, and once we do we will
-have the need to also represent an "unknown" delta state.
-
-Prepare for this change by introducing a new enum that encodes the
-object type. We don't use the "unknown" state just yet, but will start
-to do so in a subsequent commit.
+Fix this inconsistency so that we can always assume the pack info to be
+populated when reading object info from a pack.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.h      |  7 ++++++-
- packfile.c | 17 ++++++++++++++---
- 2 files changed, 20 insertions(+), 4 deletions(-)
+ packfile.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/odb.h b/odb.h
-index 73b0b87ad5..afae5e5c01 100644
---- a/odb.h
-+++ b/odb.h
-@@ -343,7 +343,12 @@ struct object_info {
- 		struct {
- 			struct packed_git *pack;
- 			off_t offset;
--			unsigned int is_delta;
-+			enum packed_object_type {
-+				PACKED_OBJECT_TYPE_UNKNOWN,
-+				PACKED_OBJECT_TYPE_FULL,
-+				PACKED_OBJECT_TYPE_OFS_DELTA,
-+				PACKED_OBJECT_TYPE_REF_DELTA,
-+			} type;
- 		} packed;
- 	} u;
- };
 diff --git a/packfile.c b/packfile.c
-index b0c6665c87..cc797b2b6a 100644
+index cc797b2b6a..f7c33a2f77 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -2159,8 +2159,18 @@ int packfile_store_read_object_info(struct packfile_store *store,
- 	if (oi->whence == OI_PACKED) {
- 		oi->u.packed.offset = e.offset;
- 		oi->u.packed.pack = e.p;
--		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
--					 rtype == OBJ_OFS_DELTA);
-+
-+		switch (rtype) {
-+		case OBJ_REF_DELTA:
-+			oi->u.packed.type = PACKED_OBJECT_TYPE_REF_DELTA;
-+			break;
-+		case OBJ_OFS_DELTA:
-+			oi->u.packed.type = PACKED_OBJECT_TYPE_OFS_DELTA;
-+			break;
-+		default:
-+			oi->u.packed.type = PACKED_OBJECT_TYPE_FULL;
-+			break;
-+		}
+@@ -1657,6 +1657,20 @@ int packed_object_info(struct repository *r, struct packed_git *p,
  	}
  
- 	return 0;
-@@ -2531,7 +2541,8 @@ int packfile_store_read_object_stream(struct odb_read_stream **out,
- 	oi.sizep = &size;
+ 	oi->whence = OI_PACKED;
++	oi->u.packed.offset = obj_offset;
++	oi->u.packed.pack = p;
++
++	switch (type) {
++	case OBJ_REF_DELTA:
++		oi->u.packed.type = PACKED_OBJECT_TYPE_REF_DELTA;
++		break;
++	case OBJ_OFS_DELTA:
++		oi->u.packed.type = PACKED_OBJECT_TYPE_OFS_DELTA;
++		break;
++	default:
++		oi->u.packed.type = PACKED_OBJECT_TYPE_FULL;
++		break;
++	}
  
- 	if (packfile_store_read_object_info(store, oid, &oi, 0) ||
--	    oi.u.packed.is_delta ||
-+	    oi.u.packed.type == PACKED_OBJECT_TYPE_REF_DELTA ||
-+	    oi.u.packed.type == PACKED_OBJECT_TYPE_OFS_DELTA ||
- 	    repo_settings_get_big_file_threshold(store->odb->repo) >= size)
+ out:
+ 	unuse_pack(&w_curs);
+@@ -2156,23 +2170,6 @@ int packfile_store_read_object_info(struct packfile_store *store,
  		return -1;
+ 	}
+ 
+-	if (oi->whence == OI_PACKED) {
+-		oi->u.packed.offset = e.offset;
+-		oi->u.packed.pack = e.p;
+-
+-		switch (rtype) {
+-		case OBJ_REF_DELTA:
+-			oi->u.packed.type = PACKED_OBJECT_TYPE_REF_DELTA;
+-			break;
+-		case OBJ_OFS_DELTA:
+-			oi->u.packed.type = PACKED_OBJECT_TYPE_OFS_DELTA;
+-			break;
+-		default:
+-			oi->u.packed.type = PACKED_OBJECT_TYPE_FULL;
+-			break;
+-		}
+-	}
+-
+ 	return 0;
+ }
  
 
 -- 
