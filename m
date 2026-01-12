@@ -1,81 +1,81 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBA7347FEE
-	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:03:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AF634844D
+	for <git@vger.kernel.org>; Mon, 12 Jan 2026 09:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768208610; cv=none; b=RxWIjl8Qr5p3+2VEf+rD6uAK0WYazfm6vCmJescrTYF1b+Zn0zo+MPwETs4rA29qNoVlR75evfWRFyqVqA4jAur0c7/HFMSwmKbEQKGZKdHdqL7ootKw5TUd2Nv3pXjmr4UYxyh8rsi4hgGg6ciEEhTAyvaIAgQBZQ99OQFnJnE=
+	t=1768208612; cv=none; b=l8bQBedf1HVbbflwqvxin0gE+AJ67U7PGYJxYRQQXYQ40EU81iVOd0zCtksrZGxYX2paiEO82bOkpDINAMdhrCGdUs9UbpRG6jWVarX7fwAn9xJU5NDqWVg5Y4S0ljE+QyxGooceAUDbt5S9uroHUu1UfM7QPv1fyHhUkJQeePE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768208610; c=relaxed/simple;
-	bh=FfTNdrQAex3f87TfKLNh+kQF2p2Eu4hFQR2jBPnb8w0=;
+	s=arc-20240116; t=1768208612; c=relaxed/simple;
+	bh=Z8drvfnhSUjWSfpLYuNJBNqI8T7ieyCdLvB5SP+jdqE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=d7YMjrKgdTD2x33omLjnylZrE3dHflvKwwuonaNN9tzMp+KAxuqKbpb+azo3a0LIMoSp8Ok+k/g3gFci7ahTqqlS6+jy5p5zEjHmhyn4Prn/0MTFsgGjru4MCXTmpEEgw+X/vqA700j1jM6weEDwQ+CQ6bji4AlqsUkaBKA0yVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=esBjggW1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VwfhPirK; arc=none smtp.client-ip=202.12.124.144
+	 In-Reply-To:To:Cc; b=kuL+fTHl4EsT8vyxil9ZxSXDAdAD5IE/XIw+1A+3SnFnl8+EAV3q1E9cjkppzBtfT3MIIpd01S1sNqRwPXRJh+GRYNJPD75IMJStm8uMqtYBbSavf3lmJfCRkV04XSfDPRVc77f2SvyOXJEZ4hh5JBgBvEqvhFuBm/ZDAjc4WOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QgaMGkky; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xic1qAXG; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="esBjggW1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VwfhPirK"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9D5ED1D00045;
-	Mon, 12 Jan 2026 04:03:28 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QgaMGkky";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xic1qAXG"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C32547A0040;
+	Mon, 12 Jan 2026 04:03:30 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 12 Jan 2026 04:03:28 -0500
+  by phl-compute-10.internal (MEProxy); Mon, 12 Jan 2026 04:03:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768208608;
-	 x=1768295008; bh=nfu9JcSQ3bM6Y07y9V8dxZx1glFe4LK9QG929p7RhqA=; b=
-	esBjggW1xomlsCK/BYApaR73MFotYII5NReFa2FzcDc+dVci0IjLRW3sEE02xqHN
-	QeAEPCRA0naBOY9imms4vKZP50UgUb28UmeXR/r7J9Vr2I5l/+9Isl5TQ+vSpxH3
-	tV7Qi4NRqCxfrSVpCpFaEma5+qRtECOowJz8T8W0TkwWNs5unD7wQ4jbpXrhrK1R
-	RTzWChleAajD7xIdwzVgCHWXuYVz71QiNpFcunHtsdX/ClWvLYZM1l+eexuqY7Ug
-	DTRNnK1KsG559z2WrCeNI/ZTu25A/TPBih/zdS9SxlHIh+u6aYA1T+8gi1Z+jmcX
-	SzKdfCEmehReZYDYLJmmFg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768208610;
+	 x=1768295010; bh=2NqUK0a9zS6HNpOS4I708mVR9RoNNNBnuI0qxUZsiEQ=; b=
+	QgaMGkkyU/2jWuldcATzpfkt0fKGNKN7DLrDiuD9sGgEQh1KZn15Wzgpm89IQE8n
+	QUvR0J7lQOtoQCnJHWE8wCywmMBTuNz5fQGLcc07+yl2Hnh/KvKs11E/xaYlTBvt
+	gXHLy2u+/DvbK3vMra6RbOVwFMP6f252TUJ7K9X6Xf3CmtbEdVdJ4attD21RKE5n
+	9TR3nWSbV7KG45NC0XxIcD+6uqVsOhmHOKa19E25aD0HblCRVLQNyVx/89i1uoj/
+	nsoU+hPOcMljNBcBxoTU80dC7Ad4PLLTVxL27Vb6kqrAW8Gl+Z85SDXiub94tfyh
+	DfdfLw0lh8+W+RL5G8BGyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768208608; x=
-	1768295008; bh=nfu9JcSQ3bM6Y07y9V8dxZx1glFe4LK9QG929p7RhqA=; b=V
-	wfhPirKihj1xw9R28QLHx3Rn14NVaUGKCcxGaRk2KOQCniwv1Ujnhr26WPvDPxeM
-	1M6OFzyDDT56xx9CRK+K54RRcY0pqGc/XJWg/c+5f3jZ8MAtQY7Y6FL3/pv6eWPq
-	iu4yJg8aOCsQ/budGabZtm3GzE52tJHzC9UQ/V+DNVsmTv05OdEoseo9ZOzWrmUB
-	T9MC48d37n+mFltR4hA2Fd8KZq9gweEAXSHFUcaTwxCI2PMZ86wlt/gf6Xo9GPn3
-	na/gXDr81mx4MSXWRQ1XrFDIkRJ0yxbZpfLDNx773smEMLs9/Tp5bE8Zq8+pkIT+
-	tcErUA9n4A8oINURQeENQ==
-X-ME-Sender: <xms:4Lhkabs64WjYDKJA-GAoPnwC_pCGu82MHGce_uFsGC9XeGy8qg0KLg>
-    <xme:4LhkaT773wJ1D61p_VR3QZef90HbIEghBAUXTpsF4kZlh1cG7iT9ANCjFIM2EXay0
-    C4GkT4H9stJ7bnJ7RgeaPqKoLq0DaY-M19UjyOCv2l1AIWqxRG1Cw>
-X-ME-Received: <xmr:4LhkacK1vQrniTiGgye0WGsKHj_QdlBVykR_KWe8Pxye-5l7uf9iFuSudl1NEpVFBag9BgUG_xJv2GIXeU9F-8AEzqbK8vNCTgviQYwJkA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768208610; x=
+	1768295010; bh=2NqUK0a9zS6HNpOS4I708mVR9RoNNNBnuI0qxUZsiEQ=; b=x
+	ic1qAXGxf9clKLZwV0g3mGmBmFE0cyMIr7BCR2Scqxc2qa02vZpH9Se5LDzaq/kX
+	5MfiXfUDEtO2ZXEHGTs7TdcaGiuA1wQUq/5KodrcSSqo0Rab6MfDOopN1rcyde31
+	mU53cZJ+40pZP6r57zGvvbI7TrUckqtY1tU6pqVHw7uGlWz+0BlGk1ZF9SQT4D//
+	QZcZFDOrFo7qtdhEbbt+lCF8HI3ANt+1GaAj0qRevDfWjQblpPhIHDpiVi6aJaIG
+	u1YJUSALqFm4rCWPtOefk3jB9sXXJuBhc2s8aKpGfPhITdhOy6rPs3ELYqQcfiP8
+	ygdrWa0l0/rWcVSoVmRAw==
+X-ME-Sender: <xms:4rhkaVuzh27mcX_1uYPpI8sNitu8HFknnE1uAcNC3pZ9FPNjjk5eRQ>
+    <xme:4rhkaV4Xoe4srmBUT80zpH_5dObEsu56lYOFAhm-qenadEw9zje5nlHOuDjgX5PUs
+    T-foh-Sj6YaPKeMwE0khE2VRGjAwJ1qCtIoqjdESRaAJUIlnAQQ>
+X-ME-Received: <xmr:4rhkaWJvu5gMsKu47SNQKjq2ZHRiZKLiFTJemuNRuFbSEX4KO6KtRmAIniZ7IMjRDKROzvZXvF1QOTNXra7BXJwVnX5cPQX0OoE2mRpoBA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejtdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpeehnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehg
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjih
+    grlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
     mhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:4LhkaT4ztberjbbq-gDLva8DpHGMkybxzgP8bTiluVH6RQWkSHS-rQ>
-    <xmx:4LhkafwAum-VulPeoxG90l-q0mN1HCem2eFy_jiLxcJhYV5cvH7jbg>
-    <xmx:4LhkaXZU9ilvId64zroKwPwO7SYFKdjB-JiExC6Z_hqTAG-nG6YMSA>
-    <xmx:4LhkaRQEX8zUr0UFLVLzX3_K28HNgMuj9MR9x5HeCnpWuz_H1KVZlg>
-    <xmx:4LhkaWXXPI8cS9eqwpeqYVIFbqwk3mNn-R-AeTEjL1O-iBWH3-s3tgnb>
+X-ME-Proxy: <xmx:4rhkaV78AgEX1e3psXjCIc4arLomSrrHHCsv6M0QkmmrVeDLxbveew>
+    <xmx:4rhkaZxjC7IEe6OPF9auKfTgT4QqtT1aC6cEw7CnJw8a_Tpljpq2vA>
+    <xmx:4rhkaZYSuTBe-KPgGmz1IpkIOrCkzT__dgE71mIW1TMQkiL5_lH8kQ>
+    <xmx:4rhkabS3mqlitgL8FZkJMbqlubVapCD8oWJGsy8SuZ1iwKlp2XEXqw>
+    <xmx:4rhkaYW1uomEBVyLdyctWIyIwu3tfEgbgYKnznCIEZEajiop8w0e9sUc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Jan 2026 04:03:27 -0500 (EST)
+ 12 Jan 2026 04:03:29 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 25da6a9d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Jan 2026 09:03:26 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9485d61b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Jan 2026 09:03:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 12 Jan 2026 10:03:01 +0100
-Subject: [PATCH v2 12/17] refs/reftable: extract function to retrieve
- backend for worktree
+Date: Mon, 12 Jan 2026 10:03:02 +0100
+Subject: [PATCH v2 13/17] refs/reftable: fix consistency checks with
+ worktrees
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,144 +84,131 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260112-pks-refs-verify-fixes-v2-12-2e9e453bd6c3@pks.im>
+Message-Id: <20260112-pks-refs-verify-fixes-v2-13-2e9e453bd6c3@pks.im>
 References: <20260112-pks-refs-verify-fixes-v2-0-2e9e453bd6c3@pks.im>
 In-Reply-To: <20260112-pks-refs-verify-fixes-v2-0-2e9e453bd6c3@pks.im>
 To: git@vger.kernel.org
 Cc: shejialuo <shejialuo@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-Pull out the logic to retrieve a backend for a given worktree. This
-function will be used in a subsequent commit.
+The ref consistency checks are driven via `cmd_refs_verify()`. That
+function loops through all worktrees (including the main worktree) and
+then checks the ref store for each of them individually. It follows that
+the backend is expected to only verify refs that belong to the specified
+worktree.
+
+While the "files" backend handles this correctly, the "reftable" backend
+doesn't. In fact, it completely ignores the passed worktree and instead
+verifies refs of _all_ worktrees. The consequence is that we'll end up
+every ref store N times, where N is the number of worktrees.
+
+Or rather, that would be the case if we actually iterated through the
+worktree reftable stacks correctly. But we use `strmap_for_each_entry()`
+to iterate through the stacks, but the map is in fact not even properly
+populated. So instead of checking stacks N^2 times, we actually only end
+up checking the reftable stack of the main worktree.
+
+Fix this bug by only verifying the stack of the passed-in worktree and
+constructing the backends via `backend_for_worktree()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/reftable-backend.c | 70 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 43 insertions(+), 27 deletions(-)
+ refs/reftable-backend.c  | 29 ++++++++++++++---------------
+ t/t0614-reftable-fsck.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 15 deletions(-)
 
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index d61790cf65..dda961a32b 100644
+index dda961a32b..6361b27015 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -172,6 +172,37 @@ static struct reftable_ref_store *reftable_be_downcast(struct ref_store *ref_sto
- 	return refs;
+@@ -26,6 +26,7 @@
+ #include "../setup.h"
+ #include "../strmap.h"
+ #include "../trace2.h"
++#include "../worktree.h"
+ #include "../write-or-die.h"
+ #include "refs-internal.h"
+ 
+@@ -2762,25 +2763,23 @@ static int reftable_fsck_error_handler(struct reftable_fsck_info *info,
  }
  
-+static int backend_for_worktree(struct reftable_backend **out,
-+				struct reftable_ref_store *store,
-+				const char *worktree_name)
-+{
-+	struct strbuf worktree_dir = STRBUF_INIT;
-+	int ret;
-+
-+	*out = strmap_get(&store->worktree_backends, worktree_name);
-+	if (*out) {
-+		ret = 0;
-+		goto out;
-+	}
-+
-+	strbuf_addf(&worktree_dir, "%s/worktrees/%s/reftable",
-+		    store->base.repo->commondir, worktree_name);
-+
-+	CALLOC_ARRAY(*out, 1);
-+	store->err = ret = reftable_backend_init(*out, worktree_dir.buf,
-+						 &store->write_options);
-+	if (ret < 0) {
-+		free(*out);
-+		goto out;
-+	}
-+
-+	strmap_put(&store->worktree_backends, worktree_name, *out);
-+
-+out:
-+	strbuf_release(&worktree_dir);
-+	return ret;
-+}
-+
- /*
-  * Some refs are global to the repository (refs/heads/{*}), while others are
-  * local to the worktree (eg. HEAD, refs/bisect/{*}). We solve this by having
-@@ -191,19 +222,19 @@ static int backend_for(struct reftable_backend **out,
- 		       const char **rewritten_ref,
- 		       int reload)
+ static int reftable_be_fsck(struct ref_store *ref_store, struct fsck_options *o,
+-			    struct worktree *wt UNUSED)
++			    struct worktree *wt)
  {
--	struct reftable_backend *be;
- 	const char *wtname;
- 	int wtname_len;
-+	int ret;
+-	struct reftable_ref_store *refs;
+-	struct strmap_entry *entry;
+-	struct hashmap_iter iter;
+-	int ret = 0;
+-
+-	refs = reftable_be_downcast(ref_store, REF_STORE_READ, "fsck");
+-
+-	ret |= reftable_fsck_check(refs->main_backend.stack, reftable_fsck_error_handler,
+-				   reftable_fsck_verbose_handler, o);
++	struct reftable_ref_store *refs =
++		reftable_be_downcast(ref_store, REF_STORE_READ, "fsck");
++	struct reftable_backend *backend;
  
- 	if (!refname) {
--		be = &store->main_backend;
-+		*out = &store->main_backend;
-+		ret = 0;
- 		goto out;
+-	strmap_for_each_entry(&refs->worktree_backends, &iter, entry) {
+-		struct reftable_backend *b = (struct reftable_backend *)entry->value;
+-		ret |= reftable_fsck_check(b->stack, reftable_fsck_error_handler,
+-					   reftable_fsck_verbose_handler, o);
++	if (is_main_worktree(wt)) {
++		backend = &refs->main_backend;
++	} else {
++		int ret = backend_for_worktree(&backend, refs, wt->id);
++		if (ret < 0)
++			return error(_("reftable stack for worktree '%s' is broken"),
++				     wt->id);
  	}
  
- 	switch (parse_worktree_ref(refname, &wtname, &wtname_len, rewritten_ref)) {
- 	case REF_WORKTREE_OTHER: {
- 		static struct strbuf wtname_buf = STRBUF_INIT;
--		struct strbuf wt_dir = STRBUF_INIT;
- 
- 		/*
- 		 * We're using a static buffer here so that we don't need to
-@@ -223,20 +254,8 @@ static int backend_for(struct reftable_backend **out,
- 		 * already and error out when trying to write a reference via
- 		 * both stacks.
- 		 */
--		be = strmap_get(&store->worktree_backends, wtname_buf.buf);
--		if (!be) {
--			strbuf_addf(&wt_dir, "%s/worktrees/%s/reftable",
--				    store->base.repo->commondir, wtname_buf.buf);
-+		ret = backend_for_worktree(out, store, wtname_buf.buf);
- 
--			CALLOC_ARRAY(be, 1);
--			store->err = reftable_backend_init(be, wt_dir.buf,
--							   &store->write_options);
--			assert(store->err != REFTABLE_API_ERROR);
--
--			strmap_put(&store->worktree_backends, wtname_buf.buf, be);
--		}
--
--		strbuf_release(&wt_dir);
- 		goto out;
- 	}
- 	case REF_WORKTREE_CURRENT:
-@@ -245,27 +264,24 @@ static int backend_for(struct reftable_backend **out,
- 		 * main worktree. We thus return the main stack in that case.
- 		 */
- 		if (!store->worktree_backend.stack)
--			be = &store->main_backend;
-+			*out = &store->main_backend;
- 		else
--			be = &store->worktree_backend;
-+			*out = &store->worktree_backend;
-+		ret = 0;
- 		goto out;
- 	case REF_WORKTREE_MAIN:
- 	case REF_WORKTREE_SHARED:
--		be = &store->main_backend;
-+		*out = &store->main_backend;
-+		ret = 0;
- 		goto out;
- 	default:
- 		BUG("unhandled worktree reference type");
- 	}
- 
- out:
--	if (reload) {
--		int ret = reftable_stack_reload(be->stack);
--		if (ret)
--			return ret;
--	}
--	*out = be;
--
--	return 0;
-+	if (reload && !ret)
-+		ret = reftable_stack_reload((*out)->stack);
-+	return ret;
+-	return ret;
++	return reftable_fsck_check(backend->stack, reftable_fsck_error_handler,
++				   reftable_fsck_verbose_handler, o);
  }
  
- static int should_write_log(struct reftable_ref_store *refs, const char *refname)
+ struct ref_storage_be refs_be_reftable = {
+diff --git a/t/t0614-reftable-fsck.sh b/t/t0614-reftable-fsck.sh
+index 677eb9143c..4757eb5931 100755
+--- a/t/t0614-reftable-fsck.sh
++++ b/t/t0614-reftable-fsck.sh
+@@ -55,4 +55,36 @@ for TABLE_NAME in "foo-bar-e4d12d59.ref" \
+ 	'
+ done
+ 
++test_expect_success 'worktree stacks can be verified' '
++	test_when_finished "rm -rf repo worktree" &&
++	git init repo &&
++	test_commit -C repo initial &&
++	git -C repo worktree add ../worktree &&
++
++	git -C worktree refs verify 2>err &&
++	test_must_be_empty err &&
++
++	REFTABLE_DIR=$(git -C worktree rev-parse --git-dir)/reftable &&
++	EXISTING_TABLE=$(head -n1 "$REFTABLE_DIR/tables.list") &&
++	mv "$REFTABLE_DIR/$EXISTING_TABLE" "$REFTABLE_DIR/broken.ref" &&
++
++	for d in repo worktree
++	do
++		echo "broken.ref" >"$REFTABLE_DIR/tables.list" &&
++		git -C "$d" refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: broken.ref: badReftableTableName: invalid reftable table name
++		EOF
++		test_cmp expect err &&
++
++		echo garbage >"$REFTABLE_DIR/tables.list" &&
++		test_must_fail git -C "$d" refs verify 2>err &&
++		cat >expect <<-EOF &&
++		error: reftable stack for worktree ${SQ}worktree${SQ} is broken
++		EOF
++		test_cmp expect err || return 1
++
++	done
++'
++
+ test_done
 
 -- 
 2.52.0.590.g1f87b77810.dirty
