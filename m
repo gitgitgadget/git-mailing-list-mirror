@@ -1,53 +1,82 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA532D5C7A
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 15:38:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768318701; cv=pass; b=A7AjsdJc00eLFSpDI8eRDmSM7giDe9iCPyjCK1HjLr0pLEpw/w1ZVww+R9XOIULGDT6SMZnTzAxcFVTRYKVa/OuObMlx6wCiOZmvnNxuWyrv4L9KqNzsCM1bnPT8Arx/hb4YZXys3dbDR2BpUaeLJsGWVlA5yRN4TbG+U/1pc5g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768318701; c=relaxed/simple;
-	bh=cssNM3UqoXxEJWGH8Wf6Xcxt6+fdwLvbvDEBc3KjpbA=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106C22D5C86
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 15:52:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768319562; cv=none; b=GiwOlY6bi2dk694O1ZvPJw3wI13+zEGcB7pvqnlhPlVmEBv1qsH5UgG9mrgzNjcV9EXXHTFoWV8kwOh6MhKrSbpMzWLypMa8yR6HD7BeQCxJ4efa24G/NclpnTWQ96m8RwziKu+yuQd01GKcucSQbpYG3RXZIN/8HNtwYXXy/MQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768319562; c=relaxed/simple;
+	bh=Cdeqr5FPIzj0C+jQxLmYcyHa9hbE+OUgq0MTvSHIPPc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M19ao7fhI/K/+WnQ96pMsLFZXXXaRJJLcrLwCafPa+mzS5t4koOoofTgQWYOrYV+pgaWoWon8FNAw15QJH3H9mReQJRhX298oP0cPS7j4LX3X7Y35BXF82pWIQIVFNISmK9XujyTGfFnihg+jCvH6frwvGK4dkWw2Wss4Eo3E8Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=kvyCg4FB; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=pTJW4u7NJJr2N8GFzR6KQzrBMjnDOCGCBxPon6OyZYmOejKUXHBWaIrTnS2NVoYrynPbQvaUWLgFGhEbkBee/vk1Ez6BzSFGt5pCypMcNO+rWCvh3bhkku3cDut3d1xLFo820xjP7THzxOzppa7mrDUpnTBdvVAo6t7xOp3l7F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Cib/0Sk8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qex0bnBr; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="kvyCg4FB"
-ARC-Seal: i=1; a=rsa-sha256; t=1768318685; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Vo4mRjF2QUMsMTPnPW3fJlinI2igRKZglkoY2HBS/+Lw8DVg+khIo/sIWElucJ2Wp0gJyBAQzuqmK3aOXrTRweOPgkv1uM39J2nlrxAsXh4E3GtMxPtAm7MzTaX0oedbzk2x3ZFXiXUsnfEvvLODWQ7JLNG7LjMpZhQblUPbjPM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768318685; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=xRVp4Ey711mIubjMo9aqvhg0NeK1A7J2ZGo3b3dhuTE=; 
-	b=ZerfQpskDT4PIa7ZgJwLyjqsHaISxeGkDu4+Zim9sFzdM5upaXoeDyrnoz6n1K16+ZKdA27YHU8AZdyxETjqEycxdPPfmO1LKOUwGfc01JkgY4z3D9IgHcfqbBKJL5dHIYPX/fvSW8qjwiAinxo1gwGm5MS1Lf7m/4g/hKntMD8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768318685;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=xRVp4Ey711mIubjMo9aqvhg0NeK1A7J2ZGo3b3dhuTE=;
-	b=kvyCg4FB/EaKevjCjRNryIf2HYrw6p+Ury2VChW+5xemB19emrPbsUeux6Kikg8a
-	GaEtrP4ePET4Rj84fwYyrd+KYRrabBhOmYUiJIZ7uubeRIo0pSovnYA2a739IES71ZT
-	mqdlgBBKo4a90YJuGNqjYCXNBAtlbl43AuOACnD8=
-Received: by mx.zohomail.com with SMTPS id 1768318682442344.9630956333299;
-	Tue, 13 Jan 2026 07:38:02 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Emily Shaffer
- <emilyshaffer@google.com>, Chris Darroch <chrisd@apache.org>, "brian m.
- carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] hook: make stdout_to_stderr optional
-In-Reply-To: <xmqqv7h5k05v.fsf@gitster.g>
-References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
- <xmqq7btlliip.fsf@gitster.g> <xmqqzf6hk3ox.fsf@gitster.g>
- <87h5spimno.fsf@collabora.com> <xmqqv7h5k05v.fsf@gitster.g>
-Date: Tue, 13 Jan 2026 17:37:59 +0200
-Message-ID: <87ecntikvc.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cib/0Sk8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qex0bnBr"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id E24891D0004E;
+	Tue, 13 Jan 2026 10:52:37 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 13 Jan 2026 10:52:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768319557; x=1768405957; bh=jYXd1GRrtZ
+	HHygmqGPCXCFbjcnPsKMiuganU6Khewcs=; b=Cib/0Sk84u69E0KdIW+WWW+lPZ
+	RiBz8lPXfZMUNVPUb5n6u6pg4Bxx0AL6Sd/bxzdhVdtkHQE+/KzLw9TTIugDCSQX
+	zBOWtQ+/reeRYO8Z+G8E+D/UQD03QSWrvVyH6s3ecLgejwBT810wRdwiUlvwn3OF
+	hQIunIwPnHR1/QqjY0sshfYzuNbhTnyZLhWXYtKkwAPuoO9L1rfzH6oZUbHuvojq
+	zqSYOpcokYO0Hlz99hbzzLyodaEOdCdIgryuW/ekeyUprwHYek66jdcabdhfmWoV
+	qrqyMVDBUrSpeB1y2n18IX0oYVEpYc5RMQOi2sV3A/37oYRsVrx3PyZv7E3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768319557; x=1768405957; bh=jYXd1GRrtZHHygmqGPCXCFbjcnPsKMiugan
+	U6Khewcs=; b=qex0bnBrvBS2g7ko2nLj8ISvV83G2e7np5BTriNa4AY8k8WCa2y
+	qNEXAF8ZdQvhQhAKU1mXDem0f6AQrRh6feXLDNNzXPi+5HriqvNiEioxbJuHleMl
+	jzfRNUFaxosJlXNFpOuq6DrGPqL93h2L3lQWywrarBgKBHzKmPm8ui0E3Qk7RLZe
+	+QOxcyk9MgmZavPjb9tefMr/XhLq+l4Kj0/4vuZWIWBmCTbtpovvH2/+/UUSRE3H
+	rryLnC0qHgNFGC7LN2L8d4lt7y7u+EGjJ1qALU4TNxZHJUJmAzXh5CCCx7VN5tan
+	zKRHp/i7c4PhvPbXAPWxSvOG3R/MxqTI3Jg==
+X-ME-Sender: <xms:RWpmabZ-g64CIP3uAx8DrSPnRSoOfJgfx4eGofwLxMdfBvrgNHIzYg>
+    <xme:RWpmaR1vbse8faeMROPE3qGWapX2zePbAufEuVAnDyV-6AHgu_Z97PN54Qihl0b0b
+    PYe7gXX-rw2BTeykSaFMEv4f29S31a-5Eq7vy8xlLcsgpMMijvdxQ>
+X-ME-Received: <xmr:RWpmabVlE-sRdIkge952bVlRJisAdrRYtIY18maC38QZbQ7yU0Ioa7HsCnzDJSmfRn2RGuOjJq4kZ2N-7ifn7NSzC5TqUGZivND87uI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvddtjeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprhgvghhosehighgrlhhirgdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:RWpmabVvSSZP5ljEM2uKhU1Yu125wwXGzC0IzlK8h9qethfkRkXjgQ>
+    <xmx:RWpmaaep3qL7b92Z7yTU68XGJ9iYO3fKcAdSkWuGWQ-WBNywIiGr8A>
+    <xmx:RWpmaUXHv6e9F8eHEowYTrC-uxowfNgKqdw09H8c5UXKCcNH3G9juQ>
+    <xmx:RWpmaTfgHrEJ2hGm1ynFFzlAXPrUjiOy2VVy_tYSCZBxFviy58Q3jg>
+    <xmx:RWpmaeeEXgziqqcNg7-KocaFuYgCk6-iZBYpPYzI0yYELiWPjDisKN4v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 Jan 2026 10:52:37 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Manuel Rego Casasnovas <rego@igalia.com>
+Cc: git@vger.kernel.org
+Subject: Re: git shortlog --committer vs --committer=<pattern>
+In-Reply-To: <e2733434-f632-4be5-a9e0-28412b4043c4@igalia.com> (Manuel Rego
+	Casasnovas's message of "Tue, 13 Jan 2026 16:22:31 +0100")
+References: <e2733434-f632-4be5-a9e0-28412b4043c4@igalia.com>
+Date: Tue, 13 Jan 2026 07:52:35 -0800
+Message-ID: <xmqqms2hjyrg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,44 +84,32 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-ZohoMailClient: External
 
-On Tue, 13 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->
->> On Tue, 13 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> What was the previous behaviour of code paths that ran other hooks?
->>>> Was pre-push the only one that didn't divert standard output to
->>>> standard error?  This patch does look like a proper regression fix
->>>> in that case.  I browsed "git log -p 1627809eef..c65f26fca4" (i.e.,
->>>> the change for "Merge branch 'ar/run-command-hook'") and random
->>>> sampling (like run_receive_hook() that used run_and_feed_hook(),
->>>> which set stdout_to_stderr to 1) seems to indicate that it is the
->>>> case.
->>>
->>> By the way, if stdout_to_stderr is by default set to true, but tnis
->>> regression fix allows specific callers to opt out of it, then the
->>> title "make stdout_to_stderr optional" is a bit misleaing.  It makes
->>> it sound as if it is false by default and optionally turned on.
->>>
->>> Perhaps like "hook: allow stdout_to_stderr optionally off" or
->>> something?
->>
->> Ack. Will rename in v2.
->>
->> Please wait for v2 because, while writing the tests, I noticed pre-push
->> needs 1 additional line (ungroup output) to function as before.
->
-> Understood.  Thanks.
->
-> Writing these tests would take particular care, I imagine.  Apply
-> the test to the tip of the 'master' before ar/run-commmand-hook was
-> merged, to verify that the tests expect the behaviour before these
-> series, and then merge the result up in more recent 'master' to see
-> that the changes in ar/run-commmand-hook did not negatively change
-> the behaviour, or something like that?
+Manuel Rego Casasnovas <rego@igalia.com> writes:
 
-Yes, that is an excellent idea. The tests should work the same before
-and after the conversion. Will do.
+> Doing something like this in a Git repository returns an error (git 
+> version 2.51.0):
+> $ git shortlog --committer=foo
+> error: option `committer' takes no value
+
+Thanks for noticing and reporting.
+
+> It would be nice to either allow using "--committer=<pattern>" for 
+> shortlog
+
+I took a brief look at the command line parser's source.  It
+shouldn't be impossible to improve the status quo, but it would be
+impossible to match what other commands in the "git regv-lits"
+family of commands like "git log" would do, because "--committer"
+can take its <pattern> as a separate parameter.
+
+So it is clear that "git log --committer" (no other parameters) is a
+syntax error, "git log --committer -n" (no other parameters) is not
+an error but is looking for a committer that match the pattern -n,
+but the same reasoning cannot apply for "git shortlog".  Most
+notably, "git shortlog --committer -n" cannot behave the same way as
+"git shortlog --committer=-n".
+
+
+
+
