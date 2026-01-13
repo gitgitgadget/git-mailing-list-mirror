@@ -1,272 +1,296 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D0F248891
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 23:32:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768347152; cv=none; b=Ntb8bas3ttn8xnnPKLM8GoEXkdi6uCB5t6NU0fvdPFshFeIn8yuuOOeplskYjwQT3IxKnVdQH60ftD6xJwd6s9g8m2vFKIksvsRLvdC75h1Y0kiXP3ud18oM0i1GSZZVZAq+2fakJNLFxd2+UAan2gO2bGOG9F/jnDhFbqoRBn4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768347152; c=relaxed/simple;
-	bh=NF7nv29bX8fNSo/4yjw//e+b5gyny4F6fSSoV2l18xw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xl1VJL90e5CtHOZTMLwYFT5rRd05jsfKGputERFzGI8UWfzCbA81zRjKPZku62boO3ORaUXO73zUDtontHKj/+K3ZYtrCJjOpQgoaMvM31PnMTRS78zGHa/MXzD2QnZMSK9yas0Hnc5Ar4FdA88ypV80UUBExr492CM6mtlZe0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=FSQ99mR3; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA811BC08F
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 23:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768348036; cv=pass; b=FCmZH1aaoQ/txgL3P3FeFsRVomP21LIAIQ+/xnV6Q2ZByNaa8nrq3QDK1xLAO+p4PLn8Tiw2hTwVyC4vfhuNxgdG3Tu5h0K9X6hZNgTUcZlcANPD/a2YhkWMqE0wyVs7JrsuG7ezim0nGhkl1OCoCFpLFSe9X+MbBs2CKObDgKE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768348036; c=relaxed/simple;
+	bh=j68qijIFG4pjGrIBgB2cfTWcwE6otEH9fSBF88kKTWw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nKA3AJrCeq1AMWNQ5nkgsbnelNt/nUSxl4gIKFNZVp/3dbN/4IDV6/dKO2ndpP9Gw4NSPflERStwXvv0fbNzl4c+/MCFEzvMevaB4kNKNng/nNmt1l7q9Khxv6a6uYz81guSkqa8F8+Dj0UVIwewX9BvOgEP1s47MCjzkVQXcAc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=P+ucLmyr; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="FSQ99mR3"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-792815157f3so29954697b3.1
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 15:32:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1768347149; x=1768951949; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vHS+B55R/wdjzXIr67euBs7M5IDX03kjSEEnHpBHoSM=;
-        b=FSQ99mR3RA9N7cJIxFj4wEKnEDl9N2SfbgFMFNX+5zV68ni8Gvrs+KgCXHMxCwTJuC
-         JsFtrWzXxCC34J4cnefYo8F98DAZ6mXX6PGy6Qql6YzZFYas3I9XX2fgI8E7Cx4oMubt
-         mOAXNr+LxQiY5AGIT+bkP311l/l3aZtJWHwweuYna/WY7+xir4ASphqdgJQfr/6F3mvM
-         +paTGRxg1LAoRUSLIA99i+hLd8zso+rsJUN/FMZ/cFykUoEmcfm69p2lTBucQQZYKxNT
-         D8ZmHpDuyQAk1Acyadr+mOWvk4l5VYQHOl06HKbOg7J01AnOadAy6asZULa8iKYGBAM/
-         tdwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768347149; x=1768951949;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vHS+B55R/wdjzXIr67euBs7M5IDX03kjSEEnHpBHoSM=;
-        b=NxIyoffmFVq8LBt1f0IGRQ46JY2arQw+NRJ+Eur1cZoHNM6mCzuQzHugEutuibJW2n
-         JGAzw4XxuA7RiBMLfmAWM2v2ub6AicbJYB0KJMmq5QEvJRStLLmj686DiACkXh+u1pKa
-         TvCxY0be+Ch8hK89E5NqsS0xMA+/2GRBAAkZjrDufiGkIJVVPone7JYXGVsr/mBaUwp4
-         KNV3TTz6kLC/penLgVlykoC1Y7SOv72j/6/Tj7mW+RMzuq/RXAe2PKZeMnmrCB5j2nap
-         kFK98g7qRn/IAxPpOo+k2vwGdLh0Qjfdnf0nuA7fGHQux9gschhbzhth0d7A669nuaoM
-         cgnw==
-X-Gm-Message-State: AOJu0YwqDfJzoF1kKRG4oGI0DrZZmRRvXt3uHtFTtPl+ByarhiRs0mhw
-	8v4qFXNPuP8DxeLUYOmuD8kqP3NJnXKHDtb7NHBcdJ1iGXfIowvDwo7I6pZHKyA9G38=
-X-Gm-Gg: AY/fxX4g3FJQCPcZ3Z5RIX5C5W+gp6kvmdFYlsnvPZl2YHCiHieKKE0XKUR1pFFfCqn
-	cH4moquh9yuZNRUliMB6td6be8E3SzBj9TbyJ9LT3Lgzyg0ygymm15lSaovhxCmjQ3JRG0f5Whz
-	3ekiqZSG9buS2Tk6X4Z3N1HcL0zR7RbmY2941f1dHBV84JmPeLEF/jOgK1+fqzyR07yglaJ6DwB
-	Xnf2rCaBcmkunCxB6ymlR4fxteo/uLZ8pGDmeGqTvcqUnzCUWz7jU6AYVXKukaWxC8uiyPGy+AY
-	hGZQhT6urDXFZwpegJu2GNJzNZGCYUisA24/SvNk/KAuSIdyJz+pP7tCFMpUkhYwsv9GgMqMw0C
-	FkrE7qnCkguxvcA1uGUw0PFGdNCrL3w+kIBEDQGLlYAKSDE4hF/L56gwpQpmw6qIUTAICjAqMtP
-	hWThQgIdzXEwMe1OXggTR95hL6yWi5iFm0gK6UafqZ+uJVMU/SrHNc7QSQC/C3bEncwmpAQmTA/
-	zY7rrFuzVJRiFQ0Jw==
-X-Received: by 2002:a05:690c:e3cd:b0:786:449a:176b with SMTP id 00721157ae682-793a19c5ae5mr5591497b3.21.1768347149418;
-        Tue, 13 Jan 2026 15:32:29 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa6a3969sm84930787b3.43.2026.01.13.15.32.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 15:32:28 -0800 (PST)
-Date: Tue, 13 Jan 2026 18:32:27 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/17] midx: implement MIDX compaction
-Message-ID: <aWbWC4nTnP52lxSg@nand.local>
-References: <cover.1765053054.git.me@ttaylorr.com>
- <c136b2e179d02321de7e7b3f1b6c748cb434d68d.1765053054.git.me@ttaylorr.com>
- <aTfN_PycU9ag8c0u@pks.im>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="P+ucLmyr"
+ARC-Seal: i=1; a=rsa-sha256; t=1768348013; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=nNNuSpoFEFsl2kPt/09FFIIfdQpi0vtuBoyBYhQLF9zbDKse0N+mdhINGexBs/1CRgl0yyhq/gPM8dn2OmMMyNPdo23rt5Flll6875IV8Tu1fIyTQrYM5HoPPxluw7I5D+Q9oVSvs+trMHiHuYTkq8Ch233kghoYyBZycsA/6tw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1768348013; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=iVztGq7K959b8+G31d6Z57o8aVW4lR6BeON24+zbzuM=; 
+	b=LcCWwSQK5XQAQQyUZhFc1wHVfNvIo1ELY6AgEZqkXu6L1SsfubZWqCgngy/zptyMXYM4WUV9T29l7elNDe69UKaCDcHjp0YnQtpK4Y6KFaMN8Jf4ZXSa5Ebl3pFWYMw94QOeryPrBnNUpr17lklNHSJRULWDDo6ve/meCLMXpFA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768348013;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=iVztGq7K959b8+G31d6Z57o8aVW4lR6BeON24+zbzuM=;
+	b=P+ucLmyrn5fS9ZJxrnCKuXaBROYxHCWOqNeAbS6UHaQI58GQpdy8hJV173s57m7D
+	L5E7Oajomgy5SnY2br0vmagaHIUirETf7VZc/3jbGtWtvo5OZIPvasBYmuNrFdmVAWR
+	7FdMeNdx93+B3dunR13AVdrO15xcRhM4eBd5sJa4=
+Received: by mx.zohomail.com with SMTPS id 1768348010487500.1199369303979;
+	Tue, 13 Jan 2026 15:46:50 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	Chris Darroch <chrisd@apache.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v2] hook: allow hooks to disable stdout_to_stderr
+Date: Wed, 14 Jan 2026 01:45:28 +0200
+Message-ID: <20260113234528.1749921-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
+In-Reply-To: <20260113115633.230479-1-adrian.ratiu@collabora.com>
+References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aTfN_PycU9ag8c0u@pks.im>
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On Tue, Dec 09, 2025 at 08:21:32AM +0100, Patrick Steinhardt wrote:
-> On Sat, Dec 06, 2025 at 03:31:47PM -0500, Taylor Blau wrote:
-> > diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
-> > index 164cf1f2291..a9664e77411 100644
-> > --- a/Documentation/git-multi-pack-index.adoc
-> > +++ b/Documentation/git-multi-pack-index.adoc
-> > @@ -12,6 +12,8 @@ SYNOPSIS
-> >  'git multi-pack-index' [<options>] write [--preferred-pack=<pack>]
-> >  		         [--[no-]bitmap] [--[no-]incremental] [--[no-]stdin-packs]
-> >  		         [--refs-snapshot=<path>]
-> > +'git multi-pack-index' [<options>] compact [--[no-]incremental]
-> > +		         <from> <to>
-> >  'git multi-pack-index' [<options>] verify
-> >  'git multi-pack-index' [<options>] expire
-> >  'git multi-pack-index' [<options>] repack [--batch-size=<size>]
-> > @@ -83,6 +85,17 @@ marker).
-> >  		necessary.
-> >  --
-> >
-> > +compact::
-> > +	Write a new MIDX layer containing only objects and packs present
-> > +	in the range `<from>` to `<to>`, where both arguments are
-> > +	checksums of existing layers in the MIDX chain.
-> > ++
-> > +--
-> > +	--incremental::
-> > +		Write the result to a MIDX chain instead of writing a
-> > +		stand-alone MIDX. Incompatible with `--bitmap`.
->
-> Interesting. What would happen if you compact a subrange of the MIDX
-> chain without incremental? Would the MIDX be completely replaced with a
-> MIDX that only covers these packs?
+The last batch of hooks converted to the hook.[ch] API introduced
+a regression because pick_next_hook() always sets stdout_to_stderr
+for its child processes.
 
-That's right.
+Pre-push is the only hook API user which requires stdout_to_stderr
+to be 0, so it can be argued that pre-push needs fixing, however
+this will likely break many pre-push hooks, so it's better to allow
+it to be 0, i.e. to match the previous behavior.
 
-> Also, the "--bitmap" flag does not exist yet, so the second sentence
-> probably needs to be introduced in the next commit.
+To prevent such regressions in the future, extend the hook tests to
+verify hooks write to the expected stdout vs stderr streams and
+maintain backward compatibility with the hooks output assumptions.
 
-Ah, great catch -- I removed that line here. I don't think it needs to
-be readded in the following commit, though, since that patch introduces
-"--bitmap" and makes it compatible with MIDX compaction.
+The tests are independent of the actual hook implementations: I've
+tested they work the same before and after the hook.[ch] conversion
+and will continue to work after we eventually introduce parallel
+hook execution and config-based hooks.
 
-> > +	if (!from_midx)
-> > +		die(_("could not find MIDX 'from': %s"), argv[0]);
-> > +	if (!to_midx)
-> > +		die(_("could not find MIDX 'to': %s"), argv[1]);
-> > +
-> > +	ret = write_midx_file_compact(source, from_midx, to_midx, opts.flags);
-> > +
-> > +	return ret;
-> > +}
->
-> Is it valid if `from_midx == to_midx`?
+Reported-by: Chris Darroch <chrisd@apache.org>
+Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+This is based on the latest master branch.
 
-Yes, that would result in a noop write.
+Changes in v2:
+* Extended hook test coverage to detect future regressions (Junio, Patrick)
+* Reworded commit message and added explanatory comment (Junio, Patrick)
+* Set ungroup = 1 because grouping overrides stdout_to_stderr (Adrian)
 
-> > +	while (m != ctx->compact_from->base_midx) {
-> > +		uint32_t pack_int_id, preferred_pack_id;
-> > +		uint32_t i;
-> > +
-> > +		if (bitmap_order) {
-> > +			if (midx_preferred_pack(m, &preferred_pack_id) < 0)
-> > +				die(_("could not determine preferred pack"));
->
-> `midx_preferred_pack()` only returns a valid pack ID in case we've got a
-> reverse index, and as far as I understand we seem to only generate those
-> when computing bitmaps. I assume that this means that we can only
-> compact MIDX layers in bitmap order if they already were in bitmap order
-> before?
->
-> That would at least also make sense. We of course cannot randomly change
-> the order in the middle of our layers, as that would break later layers
-> that build on top.
+Pushed to GitHub: https://github.com/10ne1/git/tree/dev/aratiu/make-hook-stdout_to_stderr-optional-v2
+Succesful CI run: https://github.com/10ne1/git/actions/runs/20975732134
+---
+ hook.c          |   2 +-
+ hook.h          |   6 +++
+ t/t1800-hook.sh | 127 ++++++++++++++++++++++++++++++++++++++++++++++++
+ transport.c     |   9 ++++
+ 4 files changed, 143 insertions(+), 1 deletion(-)
 
-Indeed, we only generate a reverse index for a MIDX if we are writing it
-with bitmaps, since there is no other purpose for having a revindex
-outside of reachability bitmaps.
+diff --git a/hook.c b/hook.c
+index 35211e5ed7..ebd9d9e26e 100644
+--- a/hook.c
++++ b/hook.c
+@@ -81,7 +81,7 @@ static int pick_next_hook(struct child_process *cp,
+ 		cp->in = -1;
+ 	}
+ 
+-	cp->stdout_to_stderr = 1;
++	cp->stdout_to_stderr = hook_cb->options->stdout_to_stderr;
+ 	cp->trace2_hook_name = hook_cb->hook_name;
+ 	cp->dir = hook_cb->options->dir;
+ 
+diff --git a/hook.h b/hook.h
+index ae502178b9..2488db7133 100644
+--- a/hook.h
++++ b/hook.h
+@@ -39,6 +39,11 @@ struct run_hooks_opt
+ 	 */
+ 	unsigned int ungroup:1;
+ 
++	/**
++	 * Send the hook's stdout to stderr.
++	 */
++	unsigned int stdout_to_stderr:1;
++
+ 	/**
+ 	 * Path to file which should be piped to stdin for each hook.
+ 	 */
+@@ -93,6 +98,7 @@ struct run_hooks_opt
+ #define RUN_HOOKS_OPT_INIT { \
+ 	.env = STRVEC_INIT, \
+ 	.args = STRVEC_INIT, \
++	.stdout_to_stderr = 1, \
+ }
+ 
+ struct hook_cb_data {
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 4feaf0d7be..0e4f93fb31 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -184,4 +184,131 @@ test_expect_success 'stdin to hooks' '
+ 	test_cmp expect actual
+ '
+ 
++check_stdout_separate_from_stderr () {
++	for hook in "$@"
++	do
++		test_grep ! "Hook $hook stdout" stderr.actual &&
++		test_grep ! "Hook $hook stderr" stdout.actual &&
++		test_grep "Hook $hook stderr" stderr.actual &&
++		test_grep "Hook $hook stdout" stdout.actual || return 1
++	done
++}
++
++check_stdout_merged_to_stderr () {
++	test_grep ! "Hook .* stdout" stdout.actual &&
++	test_grep ! "Hook .* stderr" stdout.actual &&
++	for hook in "$@"
++	do
++		test_grep "Hook $hook stdout" stderr.actual &&
++		test_grep "Hook $hook stderr" stderr.actual || return 1
++	done
++}
++
++test_expect_success 'client pre-push hook expects separate stdout and stderr' '
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git init --bare remote &&
++	git remote add origin remote &&
++	test_commit A &&
++
++	hook=pre-push &&
++	test_hook $hook <<-EOF &&
++	echo >&1 Hook $hook stdout
++	echo >&2 Hook $hook stderr
++	EOF
++
++	git push origin HEAD:main >stdout.actual 2>stderr.actual &&
++	check_stdout_separate_from_stderr pre-push
++'
++
++test_expect_success 'client hooks expect stdout redirected to stderr' '
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	for hook in pre-commit post-commit post-checkout pre-merge-commit \
++		prepare-commit-msg commit-msg post-merge post-rewrite reference-transaction \
++		applypatch-msg pre-applypatch post-applypatch pre-rebase post-index-change
++	do
++		test_hook $hook <<-EOF || return 1
++		echo >&1 Hook $hook stdout
++		echo >&2 Hook $hook stderr
++		EOF
++	done &&
++
++	git checkout -B main &&
++	git checkout -b branch-a &&
++	test_commit commit-on-branch-a &&
++
++	# Trigger pre-commit, prepare-commit-msg, commit-msg, post-commit, reference-transaction
++	git commit --allow-empty -m "Test" >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr pre-commit prepare-commit-msg commit-msg post-commit reference-transaction &&
++
++	# Trigger post-checkout, reference-transaction
++	git checkout -b new-branch main >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr post-checkout reference-transaction &&
++
++	# Trigger pre-merge-commit, post-merge, reference-transaction
++	test_commit new-branch-commit &&
++	git merge --no-ff branch-a >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr pre-merge-commit post-merge reference-transaction &&
++
++	# Trigger post-rewrite, reference-transaction
++	git commit --amend --allow-empty --no-edit >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr post-rewrite reference-transaction &&
++
++	# Trigger applypatch-msg, pre-applypatch, post-applypatch
++	git checkout -b branch-b main &&
++	test_commit branch-b &&
++	git format-patch -1 --stdout >patch &&
++	git checkout -b branch-c main &&
++	git am patch >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr applypatch-msg pre-applypatch post-applypatch &&
++
++	# Trigger pre-rebase
++	git checkout -b branch-d main &&
++	test_commit branch-d &&
++	git checkout main &&
++	test_commit diverge-main &&
++	git checkout branch-d &&
++	git rebase main >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr pre-rebase &&
++
++	# Trigger post-index-change
++	oid=$(git hash-object -w --stdin </dev/null) &&
++	git update-index --add --cacheinfo 100644 $oid new-file >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr post-index-change
++'
++
++test_expect_success 'server hooks expect stdout redirected to stderr' '
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git init --bare remote-server &&
++	git remote add origin-server remote-server &&
++
++	for hook in pre-receive update post-receive post-update
++	do
++		write_script remote-server/hooks/$hook <<-EOF || return 1
++		echo >&1 Hook $hook stdout
++		echo >&2 Hook $hook stderr
++		EOF
++	done &&
++
++	# Trigger pre-receive update post-receive post-update
++	git push origin-server HEAD:new-branch >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr pre-receive update post-receive post-update
++'
++
++test_expect_success 'server push-to-checkout hook expects stdout redirected to stderr' '
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git init server &&
++	git -C server checkout -b main &&
++	test_config -C server receive.denyCurrentBranch updateInstead &&
++	git remote add origin-server-2 server &&
++
++	write_script server/.git/hooks/push-to-checkout <<-EOF &&
++	echo >&1 Hook push-to-checkout stdout
++	echo >&2 Hook push-to-checkout stderr
++	EOF
++
++	# Trigger push-to-checkout
++	git push origin-server-2 HEAD:main >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr push-to-checkout
++'
++
+ test_done
+diff --git a/transport.c b/transport.c
+index 6d0f02be5d..5aa39626da 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1373,6 +1373,15 @@ static int run_pre_push_hook(struct transport *transport,
+ 	opt.feed_pipe = pre_push_hook_feed_stdin;
+ 	opt.feed_pipe_cb_data = &data;
+ 
++	/*
++	 * pre-push hooks expect stdout & stderr to be separate, so don't merge
++	 * them to keep backwards compatibility with existing hooks.
++	 * run_process_parallel(), called via run_hooks_opt() below, will buffer
++	 * and merge the streams when output is grouped, so also set ungroup = 1.
++	 */
++	opt.stdout_to_stderr = 0;
++	opt.ungroup = 1;
++
+ 	ret = run_hooks_opt(the_repository, "pre-push", &opt);
+ 
+ 	strbuf_release(&data.buf);
+-- 
+2.52.0.732.gb351b5166d.dirty
 
-So if we have a bitmap and are compacting, then we need to retain the
-order of the packs as they appear in the pre-compaction pseudo-pack
-order to avoid permuting the bits corresponding to those objects. In
-other words, you're correct in saying that we cannot start writing
-bitmaps during compaction if we did not have bitmaps to begin with
-pre-compaction.
-
-> > +		for (i = m->num_packs_in_base;
-> > +		     i < m->num_packs_in_base + m->num_packs; i++) {
-> > +			if (preferred_pack_id == i)
-> > +				continue;
-> > +
-> > +			if (fill_pack_from_midx(&ctx->info[pack_int_id++], m,
-> > +						i) < 0)
-> > +				return -1;
-> > +		}
-> > +
->
-> So the condition that should hold after this loop is `pack_int_id ==
-> m->num_packs`. Which is somewhat obvious: we skip one pack, but that
-> pack is the preferred pack that we have populated first.
-
-Exactly!
-
-> > @@ -1101,11 +1216,18 @@ static int write_midx_internal(struct write_midx_opts *opts)
-> >  			 */
-> >  			if (ctx.incremental)
-> >  				ctx.base_midx = m;
-> > -			else if (!opts->packs_to_include)
-> > +			if (!opts->packs_to_include)
-> >  				ctx.m = m;
->
-> I'm a bit surprised by this change here. I would've expected that we
-> never pass `packs_to_include` when compacting, so why is this change
-> necessary?
-
-Right, we do not pass packs_to_include here during compaction. But if we
-are doing an incremental compaction, then we do want to assign ctx.m in
-addition to ctx.base_midx.
-
-> > diff --git a/t/t5335-compact-multi-pack-index.sh b/t/t5335-compact-multi-pack-index.sh
-> > new file mode 100755
-> > index 00000000000..f889af7fb1d
-> > --- /dev/null
-> > +++ b/t/t5335-compact-multi-pack-index.sh
-> > @@ -0,0 +1,102 @@
-> > +#!/bin/sh
-> > +
-> > +test_description='multi-pack-index compaction'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +GIT_TEST_MULTI_PACK_INDEX=0
-> > +GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
-> > +GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=0
-> > +
-> > +objdir=.git/objects
-> > +packdir=$objdir/pack
-> > +midxdir=$packdir/multi-pack-index.d
-> > +midx_chain=$midxdir/multi-pack-index-chain
-> > +
-> > +nth_line() {
-> > +	local n="$1"
-> > +	shift
-> > +	awk "NR==$n" "$@"
-> > +}
-> > +
-> > +write_packs () {
-> > +	for c in "$@"
-> > +	do
-> > +		test_commit "$c" &&
->
-> Nit: it might be sensible to disable housekeeping here. You strongly
-> depend on the on-disk shape of the objects, so if you by chance wrote
-> two objects starting with "17" we'd end up repacking and racing.
->
-> I've also got an upcoming patch series in mindthat I've got cooking to
-> make geometric compaction the default for auto-maintenance. We've got
-> many test suites that implicitly rely on the current algorithm used by
-> git-gc(1), so I'd love to avoid adding more.
-
-I'm not sure I follow what you mean by "housekeeping" here. Are you
-referring to maintenance.auto? If so, we shouldn't be writing so many
-packs as to trigger that during these tests, but I can disable it as a
-sanity check just in case.
-
-> [snip]
-> > +test_expect_success 'MIDX compaction with lex-ordered pack names' '
-> > +	git init midx-compact-lex-order &&
-> > +	(
-> > +		cd midx-compact-lex-order &&
-> > +
-> > +		write_packs A B C D E &&
-> > +		test_line_count = 5 $midx_chain &&
-> > +
-> > +		git multi-pack-index compact --incremental \
-> > +			"$(nth_line 2 "$midx_chain")" \
-> > +			"$(nth_line 4 "$midx_chain")" &&
-> > +		test_line_count = 3 $midx_chain &&
-> > +
-> > +		test_midx_layer_packs "$(nth_line 1 "$midx_chain")" A &&
-> > +		test_midx_layer_packs "$(nth_line 2 "$midx_chain")" B C D &&
-> > +		test_midx_layer_packs "$(nth_line 3 "$midx_chain")" E &&
-> > +
-> > +		test_midx_layer_object_uniqueness
-> > +	)
-> > +'
->
-> It would be nice to also test for requests that don't make sense: "from"
-> larger than "to", "from == to", missing "from" or "foo" and so on.
-
-All good suggestions, thanks!
-
-Thanks,
-Taylor
