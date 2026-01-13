@@ -1,84 +1,84 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE06350A0E
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 07:35:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7E9366DC4
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 07:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768289720; cv=none; b=nhSA52aHTvzKtL3OIuPtPo5emCMz+91hS4nEPn45ltc+wxeHVCV4X/pth9p6prbwwJ96YE4E8i2YCdezxfhpm9ABSEmpmp6b8oNyIRiGTh3p559F6/PGUhRgWQyeZfkRo8sg6xK4UYErwKObfRbj7DGPvoPpuVDHxNLacW0acZg=
+	t=1768289828; cv=none; b=IocXTLiwcmvl/tAfyq3/Fhxu+zq2sXLXXEmWwuYzQm+3TZ2fuU2IuMFfY5czEo0S98KRZzXJbqoPHTFGN94uSRPRKKHS0iTFAdqVJvyk42kALYloqPxVtgetfzN9sO3TfvhJZ96udtskIyFCqNcnCFIsho+6ECN8AdXq8S0vnIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768289720; c=relaxed/simple;
-	bh=42xjcDjvvq/MQ9fkCkdPvOFy6/mv5byKZ5aupKJ9Z04=;
+	s=arc-20240116; t=1768289828; c=relaxed/simple;
+	bh=CDVoz8WB/LjAPCiPPsckbZeWGN9oBrF8BjEP5RZke34=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fBOL3ektJSOVNeEGqIE1yRJhb9VZFejRmrwFDeo06bsZIYtrVxC8zabfpKlCN9jQ3Cj1Mwi0S8E49XGs88rlhadgvl7jsATPKp5gOobipAPDJ1vbjJXC04TOV3B45e3mdd4TAzaQqEd+/BUQvR1cLvdsRQQzXrFM01wUpRlXQes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vu8xOU03; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0d+ObTAH; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=KxRnTwZTHSqx56x/uJFVL0wKfYb6a0dwCFmnUpZhqFGkaZGApnyvaHbGLUdc/uP6xy3VV/uQc8t8nMJQpjZm5q0UP5kccmd49wUhrsA4zHS8CySlHk6Hq/6PuoSoOlsCRThRZXk4sfXYI+VigCAPUClxlYZrIcfft1zDOpIDdAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OaofXraD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cmYc1PUH; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vu8xOU03";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0d+ObTAH"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D54CA14000C0;
-	Tue, 13 Jan 2026 02:35:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OaofXraD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cmYc1PUH"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 71593EC0102;
+	Tue, 13 Jan 2026 02:37:06 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 13 Jan 2026 02:35:07 -0500
+  by phl-compute-01.internal (MEProxy); Tue, 13 Jan 2026 02:37:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768289707; x=1768376107; bh=qIvDdN9V4T
-	hRdyqnvr1+ik2QAg2AOBuTIWtDp4m9wZ8=; b=Vu8xOU03M8Rqr1KyyNvDXWz+sD
-	eCIa7Z1ubCcwz3wiaD8B7Qi81bzj41KAjEwWJJw1wZNVd4+SyWwQ+6QGZDuAni6l
-	2/12kAs0tIcsRHoJ2kqZcLloGFs5I4TNBLKyXjrFav6Ur9hiE8y2g0fPUPCxc/uG
-	ty1Y/MazTboiXXavCShBWZkdvwgzE/zlX976lKdQyidG9DJfydYgCrNitv9KHSG1
-	Z0I3l2Ak0FZHKZaqlkgXg6w60UxxrwG9w/ga8bEPbk6iu+T2LGCKUOAetOlrlMHh
-	vi49IEFL1UhVE3FYo8SqAFAuak8V+Ip2+whPZqRyfFw/RkOfAs+fcuyfSfVQ==
+	:subject:to:to; s=fm2; t=1768289826; x=1768376226; bh=N8OxYQDUni
+	ewOA4ECV+f34RQK/bPfEEfdfLlt2sxSiA=; b=OaofXraDqqqkUUO4epd68oOCR2
+	G89X6FdvLPmvWu7I321WCvmYUI1Mk70qjo4MC/lP0YugzwNSUPyzCBWbtGceJqQ+
+	ED9Ixb09HzSlZ8pmslZej/NUyk6UVqHWFJqI3jUzPRikF4guMeZflZKB7SHdA6ri
+	7axXLHSnG1r2UOTZb+IzcyqGctaqvO4ynad7tIOgeSCIHrNmacXtc+Kftz+2l10M
+	8EdFjyv48vaGk/9/RRXGZ8dZnKHi4VLWZZwsUaN8MXn+ZyIJgEwsgVmoG/mDYme9
+	mw3tuwEH+p1vgkEy6ixSgpkuCGGyC/kYiPMMsvi27t9/i7fz6I4O8PohW3iA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768289707; x=1768376107; bh=qIvDdN9V4ThRdyqnvr1+ik2QAg2AOBuTIWt
-	Dp4m9wZ8=; b=0d+ObTAHpH8p2LMDPRczgoQdfJ9a9ulVQuPT1grumy/Dm9p8Ii2
-	oFxfNiQSgh+DSvSsisiclhdqwpeKrToIH9WLlf9exQKw84BcOAACbD0Qk1CPrOOV
-	fCcy3bRs2safh6WH3uDz1flCk2GlCfl3hGPAWaXQO1t+L2wMpWDo/GUuiAL4er42
-	25WDRUZFacTMZ7rnMjgz/EVrMjklOMPwFRkfE3WSvp3CKnjotN2qKzUkPPzOJ4xs
-	V70g6p54PnG9yBHDkxxoQclcMFqSRM2g7lJX1dFBAI+OHdrkD11Rh+imB7V/X6sB
-	v//CRjzX+VIIKRfsNDWmKH1fENtSVIjc2dw==
-X-ME-Sender: <xms:q_VlaWX9i5lQj7RO8SarJXDbFAeVD6zYPH9x06dLVKXd1bC5Kydkxg>
-    <xme:q_VlaZlijri-aHEX746XJZEYqp3aBiy52xYZjgJGKgqHyZunB1IgadiUOJXNNfxLf
-    A3SGHtwadKWFcp43LIfgJsu-q4wPQCvGqHdR4PoSDsVc4Q4n2j6>
-X-ME-Received: <xmr:q_VlafZ-K4LhsoeOabLDKUVhmqccApwpqH71LKO5RjhYNXB0yU-gSqBjzqPVQvL1Y3tSIoOsIipV678shFhvtkH0g8xyGjlCXKQongnl5A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeljeefucetufdoteggodetrf
+	1768289826; x=1768376226; bh=N8OxYQDUniewOA4ECV+f34RQK/bPfEEfdfL
+	lt2sxSiA=; b=cmYc1PUH6ymvgxSKdn2csQZjBzzdMVJ4TBkQQzEro11mtJxdHn8
+	mGFHDf55A4H21Ky00Zj7ROvCOUWHJbJ9fBK7obrDdMQB+WJSOpR2OL+PnyPArOm/
+	U/er2c+SMyx1+1S6K3wFIM7rxD/QJwORzKU4/OXHtd7p5YngpFM4NEH/5a/ujuTw
+	TPV2IOMuzQYSqArhFPKCJvBKVmY7jI9u6jXDlTsz4wn8gPwubAjyVwIVIzUAmUDo
+	iiSMDvVUzoko9ZoEvIQfXQ1uDYuu5q5lbaeni2m7bbqcTOsik9W0eWUt6XWhdX6S
+	Gkp6q0et8uDpfQeNRpRI0GXJjk5nQZvLZ2A==
+X-ME-Sender: <xms:IvZlabmk9EwY_l4QhlL6OsyWZo3WF6CKkIZdjz4H1Jrm_ssdvnaiiQ>
+    <xme:IvZlaV0Z4zvA5OOfTDQK9ze1GMU-2FH8lFUYeiGpZbaLi1iS7ywhJiH1epkKmqoe9
+    KiNG6Wt8AVzxtKwXdBKsS05FPG-3Kv86sr20iWPHJICoxJ63JHMLg>
+X-ME-Received: <xmr:IvZlaWpoIf4Gq6zDDMzz9S9UEcxj7eCAlPWA1Mxo38pBTK_dDAHLWFCQMNFwE_RSvtpZELMeDnVHJdhCqVih9vD3B5Fz13gPZfwh3HWgsA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeljeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheprghplhgrthhtnhgvrhesnhhvihguihgrrdgtohhmpdhrtghpthhtoheprhhrrghmvg
-    hshhgsrggsuhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepuggvmhgrrhgthhhisehk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:q_VlacMgfrhrN3tp8p0JyiKjZ_HU9t2bXWyA8FfeJ64up7nAHHI6Yg>
-    <xmx:q_VlacZaKNrAY_3y4B9NBI_BSpn4sD-J9lwETd09gSoLoSKp8a81cQ>
-    <xmx:q_VlaS3Y2tWzrKBlPLeb8NfDSJud5hlLRziszJ1M5tcVtcbKqqMPjg>
-    <xmx:q_VlaaeMzYPMr30IW1dN1w3ZzwRsVX-bDtk9LTYoqVYKequcGjO1cA>
-    <xmx:q_VlaVWXHhKcGI9mPE8gMD-sLD17Ok0S0FpzujglCyACmL54dDjMsjTJ>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehmvgesthhtrg
+    ihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:IvZlaSe_4D4k3ywlYKn5erb3A6B6i1K9HI2TVGPRMQpZYzX5J5U4Pw>
+    <xmx:IvZlaVqjo2h0X6eK1boig4iB_b10CslGeqUIaeU7TAc-Ws8H4rE9_g>
+    <xmx:IvZlaTG3_YMqB9xlw_3Ds38_8UcZOVYTbE46i9THvoPrH6iPahgzSw>
+    <xmx:IvZlaVsZtAxFseFOygyCtMWGD8lyXhJoqzA3GwKZWJP_4ac1O-9riw>
+    <xmx:IvZlaSJ3yYo3Oyw4CSlRXyUEpnDLFK3PML6dFFouO1t2Kt67uE93TynK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Jan 2026 02:35:06 -0500 (EST)
+ 13 Jan 2026 02:37:05 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d179a52a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Jan 2026 07:35:05 +0000 (UTC)
-Date: Tue, 13 Jan 2026 08:35:03 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 76b0bab1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Jan 2026 07:37:04 +0000 (UTC)
+Date: Tue, 13 Jan 2026 08:37:01 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Aaron Plattner <aplattner@nvidia.com>
-Cc: git@vger.kernel.org, Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Lucas De Marchi <demarchi@kernel.org>
-Subject: Re: [PATCH v3] remote-curl: Use auth for probe_rpc() requests too
-Message-ID: <aWX1p2fjo2XPpXiP@pks.im>
-References: <20260113072013.3775439-1-aplattner@nvidia.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t/t5319-multi-pack-index.sh: drop early 'test_done'
+Message-ID: <aWX2HSakgzcfi-CL@pks.im>
+References: <cover.1768261435.git.me@ttaylorr.com>
+ <9c5faa5932cdd9e570406bc85ba27f94195a4d3d.1768261435.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,18 +87,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260113072013.3775439-1-aplattner@nvidia.com>
+In-Reply-To: <9c5faa5932cdd9e570406bc85ba27f94195a4d3d.1768261435.git.me@ttaylorr.com>
 
-On Mon, Jan 12, 2026 at 11:20:12PM -0800, Aaron Plattner wrote:
-> v3: Combine the setup and test into a single subtest, use test_when_finished to
-> remove large.git.
-> 
-> Those are both good suggestions, thanks Patrick.
-> 
-> I contemplated leaving large.git around since normally it gets cleaned up when
-> the "trash directory.t5563-simple-http-auth" directory is removed, but it's 16
-> MB so it's a bit big to leave around even in debug mode.
+On Mon, Jan 12, 2026 at 06:45:03PM -0500, Taylor Blau wrote:
+> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+> index 794f8b5ab4e..b6622849db7 100755
+> --- a/t/t5319-multi-pack-index.sh
+> +++ b/t/t5319-multi-pack-index.sh
+> @@ -415,8 +415,6 @@ test_expect_success 'up-to-date multi-pack-index is retained' '
+>  	)
+>  '
+>  
+> -test_done
+> -
+>  test_expect_success 'verify multi-pack-index success' '
+>  	git multi-pack-index verify --object-dir=$objdir
+>  '
 
-Thanks, this version looks good to me!
+Oh dear, this is embarassing.
 
 Patrick
