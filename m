@@ -1,119 +1,212 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E13D2D9EDB
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 16:20:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38F32DB7A1
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 16:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768321252; cv=none; b=jmHC9+hq12IfivwHVLY0yys+gHM4z3tAoZuS4bguaXJ2IIe1tTW4zztB64gOmiFM3zZqoUZzO07oXZtH7XYLKcgbWUYl+C3y4idPiVFbGCmvz0la5SBHb5sdAsRhrskQZJuulFp0KaxRp7KfF5Jf3i0W9Eaq7sHcG3oKlnbLPDo=
+	t=1768323391; cv=none; b=gLZd8pApu4Mk0Y/nBoYfjpV/EA5K4j8BvkXsV8jnK/XH4HO90H4hEzOG69qzn6hwBG04O/oVJprloSd6z7RZkbNdaO4ocrXJmGTSNszMFJNlRJuqznJs6ReNgRqrdjKAs82TW3mGUNKk9baVNF+Ubf/Od9kzoCN+2tzh6Xk5K9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768321252; c=relaxed/simple;
-	bh=zFSatW3fAfth5ScddsQWG2kE4C+oHWP5NNcg+gutlS0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U7pzVEwodpd+zti90eCTyvJP45gnhMeMZ6tqg4jVTTbMnRAqS4E/pFCGN4RegvrPpUXHkLMLMKOH1x9rm0dgO0dH2jjznxHxYYUM4z1QCeW3jIs1pDnvQYF4iB+2IFSPVDoz23mHgi8gV9jvm6jhwiKpFlvPgBSPlOmBjmCzys8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KgOwHS6A; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768323391; c=relaxed/simple;
+	bh=pJomECVkOEbedjpPgbPlv9IHJm6TRAhLsVV8JClrrAk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=C7K7PTy8bEnFx/2I7ZeOLaoFn/rHgubHEeM3km7195hgo08Ejl522mf2FSxKwFu7NwJVNjGnq+PzDh9WgoetQgRzqd77KmZuACcGQrfF6Zp5zPooH9/KC6Ix+2ifgXvEhGfthWc6FJvnTbrsPi0dy1c4oRzWVuuH+y/CU67KhCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RpBdW4US; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oz8eUyty; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KgOwHS6A"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7939e7b648aso469597b3.1
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 08:20:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768321249; x=1768926049; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zFSatW3fAfth5ScddsQWG2kE4C+oHWP5NNcg+gutlS0=;
-        b=KgOwHS6AQzLdvazThirL3b5+A2ux55GupnzAV4FL7Gnhe/N3uEmM2XdxB25jLywre5
-         4y4ccMWR7GIsioqegLB50o389mUnM28DmHp2jh5KmmrMi1psd9sVuCwW9vbeqGW0GKKE
-         nctcqX+0c25Mp0StxeU+UaPEsSnv581fLld/0Y9BaauL68t93bgFjJwoLG9dGwgCNd7O
-         3PhGM0/2Knk3spN3j4Pp2Vqo7IDC2R512dMRndJEFGdoRcAyt60eH4/JNOuszxa2i/i/
-         kO1Fs317Ru4XifS0XyJkrlD+cSAdFJkTu/OQKfWOV48AjYqLNMaUE1+tUNxX26gARCiv
-         g9PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768321249; x=1768926049;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zFSatW3fAfth5ScddsQWG2kE4C+oHWP5NNcg+gutlS0=;
-        b=Sk7ku8iHfrS8lfuL1hQ8eZKlgO5235un1Zb9lK/5TocFmjOI/wDAvtikBsHS5m3KnB
-         C6L9S8CGrzf+a1tWFF8Tw1uhKfAnBdx9psPoo77c3JKlVOOvgfPG2hhh1qiqu72vT1o6
-         003b/EhU+2VyQ28flFJcBAMMkBNb7m40G1IQIOo19kgleq6fB475Q3DVaLYRohpJgAwA
-         1hcfTyNjJZvZGWHabqVr+fUgFo2Ydp3ftaL3xWaYBd18U8ANPTcGp58iPfEULRhux2aU
-         6nCq55/214hbDEWEzofty7I9zVM09aIZeWcg3KQ4HoBsnWD3Np/0GkEx+q9aE0oNQlzL
-         WPpg==
-X-Forwarded-Encrypted: i=1; AJvYcCUYP1044auW6AmJmwmrk5RGwZWXUwguK5Bd5UC6DtQp6szGGf9I6BfUb6Nc+zDvqe9PT+o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeUhaCQHDmzCvw1Xklhyk0Yb99/q0c3KefMT/fdGEyegYQFeyV
-	JfdaRHvws3fYZdo/cVmZ+el4k06FbAuCCR/ay3c9lJVDCXjU/UHIbdqjYFtdWPjtcSnghP9qjMI
-	+jZGYMMMp5tpaMm5g84zrGmGWr4MrgJYMG5wMGNQ=
-X-Gm-Gg: AY/fxX58ySrRNt62RrkSqlaeZuAz4HdRC7EMAsVPkGUR24GfHcGS+/++xPEHjj4CbY6
-	FK+HT0QxdsmXskB98cCVCzpIEMmZiF88WuKuLzax8uME+blYb+t4Yb6kvrjFr5tCQsJ7lTv/Jde
-	mBnU9lgkpUVWtwCC2WKArndiOrK827iB+RwIO7KawwSdpFqcoXx6h9ewNZw7qZCDD0W4yiTro7l
-	gPmm9hDVsB5Yu1lIaF9gAinQrg1EvaRUSyyrwOdnsytW2Qmylzaih6lbG4SvXE/pzTO++Q=
-X-Google-Smtp-Source: AGHT+IEPVB0erUNSoV8zIfI4E+pFTRvYgYTvt5MUNUi98FZssxWz1hgkmiIMV5FzVmc25Kwac2a6dBAdX53ttfxvb8g=
-X-Received: by 2002:a05:690e:4187:b0:63f:c0ce:f158 with SMTP id
- 956f58d0204a3-64716b8dc86mr18525907d50.30.1768321249472; Tue, 13 Jan 2026
- 08:20:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RpBdW4US";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oz8eUyty"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id F069A1D0011A;
+	Tue, 13 Jan 2026 11:56:27 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 13 Jan 2026 11:56:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768323387; x=1768409787; bh=cXNtIiw9am
+	/9Kw9/e1OpHH/MG89WTN8Y+P8xdAi0d/k=; b=RpBdW4USz/4JjrQaVxBYo6agAj
+	L0rdqJ8Hr3OuQ2GvpDliHK/VRMhKuig5kl6xeGRc6G/oRzGHm0gHjOSDA8+xhaIi
+	c2Jqrj/cXObdHKajzzxn3m7KNCEfC+5kvKzWdFmAD0kpFtuvOHZSttqXOOMfjoT6
+	1KnsxE1nbZmuVGz6IuejnQK+JcOa+CxvlK4Xg6nDe/2RQuMH5fA3H2m+FKEXcC5/
+	286zSVg3tZOUv5X1EnPPADBbi9n7Qer5DIx5GF2+9BYahujaAUmS/8yWI7/kM5mk
+	yM82sgJ75F74vnSBb2u44+DP58b8EwP7BLvLmZXw8a9Z2Bq1/wEJHbCKReSg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768323387; x=1768409787; bh=cXNtIiw9am/9Kw9/e1OpHH/MG89WTN8Y+P8
+	xdAi0d/k=; b=oz8eUytytDgnnNDeaiEZ5kgp2JypEcBZlc1V/PiypH5rwsEHJut
+	xgco+GzU3Axbs0+c14u4L1OfDTQ2kRKEdP2WjyO/ykLiNttNTfvaVei+5ivVq/aE
+	euaOEGIGXJNrJJT8mELX9vlOOEJh+XcjIQfNtLLQb+RoYdTMipwuFQxkavvzL9M3
+	Ih0eU84BpncU3bSirNMCRauZLZMVvUjYtcLUfOCQHol3E1rBtO4eQyd6kbcLSdV7
+	CJ100Jo/5jkE0nndk2cvNdNUk3bkws3OlzxRZlGd0MxP54HYRNz1GsDh4ehP5u4I
+	G5aZnKtOUyPf3yYk+PJSJ7ZV7Z99p7TUZUw==
+X-ME-Sender: <xms:O3lmaWtqon2Divv5ONYyAb7kjmx7kgbLO9OgW45FZF1Siq5JAwNFsA>
+    <xme:O3lmaeBRG4HwDHi3sSPF_1ysGvMjYm01dkmG62ZFGxH-fq_UDmE2hQVjTXu9egSYh
+    pWxu5nr7yqsuyzk-0fU_6FYfjD31Bhl6Kgl7xRMhKIT7AfheMw>
+X-ME-Received: <xmr:O3lmaVbxzsVPDx1euuvhav7-3eeBh4ZrAoNWmxFOKUykWJMo6AypXP6wbErjEDPtAe7afdwsSPb26SHDtfiBzscI9LAou6ZlsqAxPNo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvddtkeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegouf
+    hushhpvggtthffohhmrghinhculdegledmnecujfgurhephffvvefujghffffkfgggtges
+    thdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsth
+    gvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepgeeuheelveevleffkeeg
+    hedvhfevfeekuddujeehheegkeetueetueefgfduheefnecuffhomhgrihhnpehgihhthh
+    husgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdif
+    ohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
+    esfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:O3lmaRW7xEJZj3qkmrRRQy7GydOmhotMAaxBUvwdszZxlvmXj3OBMA>
+    <xmx:O3lmacO1tFymXHOhzayyiRONanASg3bd_oIXb6F7UCPxIDs6KGnIzQ>
+    <xmx:O3lmaTZMpI9YZTobn_kulIgpO6FxjFRGgJdGX0JWqGs-8JMl4_-EHA>
+    <xmx:O3lmaT_zO6TJ4mV3GdTsMDhEQ6xGG_DOSmYJIbYoPP2UBsHe2J-qag>
+    <xmx:O3lmaXJOubAert6K1zc19ZKRrtNdCvsywDOITxEjp7tRdOigshnOuydz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 Jan 2026 11:56:27 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>,
+  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [GSoC PATCH v1] builtin: stop using the_repository
+In-Reply-To: <aWZkEYHhcIhdAjkh@Adekunles-MacBook-Air.local> (Abraham Samuel
+	Adekunle's message of "Tue, 13 Jan 2026 17:16:20 +0100")
+References: <aWZkEYHhcIhdAjkh@Adekunles-MacBook-Air.local>
+Date: Tue, 13 Jan 2026 08:56:25 -0800
+Message-ID: <xmqq7btljvt2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <e2733434-f632-4be5-a9e0-28412b4043c4@igalia.com> <018701dc84a4$39555970$ac000c50$@nexbridge.com>
-In-Reply-To: <018701dc84a4$39555970$ac000c50$@nexbridge.com>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Tue, 13 Jan 2026 21:50:38 +0530
-X-Gm-Features: AZwV_QhUDKlqK1UzeGiZrRHW21NzKQqMrqDHytak3JWmNZjssppSZgr37cUB6UQ
-Message-ID: <CALE2CrSUFt_HGy1+9H08OMZLTjdZt=NZsqvqa1a-rbvDOzjVWw@mail.gmail.com>
-Subject: Re: git shortlog --committer vs --committer=<pattern>
-To: rsbecker@nexbridge.com
-Cc: Manuel Rego Casasnovas <rego@igalia.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Junio,
+Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
 
-Thanks for the clarification.
+> The builtins use the_repository global variable which might
+> not work well when running many repos in the same process at once.
 
-I confirmed that this comes from git-shortlog pulling in
-Documentation/rev-list-options.adoc, which documents
---author=3D<pattern> and --committer=3D<pattern>, even though
-git shortlog treats --committer as an alias for --group=3Dcommitter
-and therefore cannot accept a value.
+This is true, but ...
 
-So this looks like a documentation mismatch rather than just
-the website.
+> Stop using the_repository in these builtins to align with the goal of
+> libification of Git.
 
-I will prepare a documentation patch to make git-shortlog=E2=80=99s
-options unambiguous.
+... in general, each file under builtin/ is about a single command
+that _uses_ libified part of Git.  So it is perfectly fine for the
+libification goal to include "libified functions should not assume
+that it works on the_repository, but they should accept a repo
+parameter to tell them which repository to work with".  But it is
+not necessary, and I would say it is harmful, to subject builtin/*.c
+to the same criteria.  The builtin command implementations can call
+libified function by passing the_repository to libified API function
+that expects a repo parameter.
 
-Thanks,
-Pushkar
-
-On Tue, Jan 13, 2026 at 9:28=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+> Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+> ---
+>  builtin/bugreport.c    | 13 ++++++-------
+>  builtin/bundle.c       | 13 ++++++-------
+>  builtin/check-attr.c   | 26 +++++++++++++-------------
+>  builtin/check-ignore.c | 27 +++++++++++++++------------
+>  4 files changed, 40 insertions(+), 39 deletions(-)
 >
-> On January 13, 2026 10:23 AM, Manuel Rego Casasnovas wrote:
-> >Doing something like this in a Git repository returns an error (git vers=
-ion 2.51.0):
-> >$ git shortlog --committer=3Dfoo
-> >error: option `committer' takes no value
-> >
-> >However the option "--committer=3D<pattern>" is in the documentation:
-> >https://git-scm.com/docs/git-shortlog#Documentation/git-shortlog.txt---
-> >committerpattern
-> >
-> >But it seems to be in conflict with "--committer":
-> >https://git-scm.com/docs/git-shortlog#Documentation/git-shortlog.txt---
-> >committer
-> >
-> >It would be nice to either allow using "--committer=3D<pattern>" for sho=
-rtlog, or if
-> >that's not possible fix the documentation.
->
-> I do not see --committer=3D<pattern>, but do see --committer pattern in t=
-he online
-> help and documentation. --committer is an alias for --group=3Dcommitter.
-> Pattern applies to the log entries.
->
->
+> diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+> index f78c3f2aed..77eb8bd9c1 100644
+> --- a/builtin/bugreport.c
+> +++ b/builtin/bugreport.c
+> @@ -1,4 +1,3 @@
+> -#define USE_THE_REPOSITORY_VARIABLE
+>  #include "builtin.h"
+>  #include "abspath.h"
+>  #include "editor.h"
+> @@ -37,7 +36,7 @@ static void get_system_info(struct strbuf *sys_info)
+>  		    shell ? shell : "<unset>");
+>  }
+>  
+> -static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+> +static void get_populated_hooks(struct repository *repo, struct strbuf *hook_info, int nongit)
+>  {
+>  	const char **p;
+>  
+> @@ -50,7 +49,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+>  	for (p = hook_name_list; *p; p++) {
+>  		const char *hook = *p;
+>  
+> -		if (hook_exists(the_repository, hook))
+> +		if (hook_exists(repo, hook))
+>  			strbuf_addf(hook_info, "%s\n", hook);
+>  	}
+>  }
+
+It is not strictly necessary to churn a file-scope static function
+like this one into taking an arbitrary repo parameter, as the only
+caller of the function, presumably cmd_foo() in the builtin/foo.c
+file, would pass the_repository anyway, whether it explicitly names
+the_repository or passes the repo parameter that it got from its
+caller, git.c:run_builtin().  We _can_ consider a change like the
+above as a preparation to potentially move these functions to the
+libified part of Git, so even though I said it is not necessary, it
+is also OK to perform such a change.
+
+> @@ -93,7 +92,7 @@ static void get_header(struct strbuf *buf, const char *title)
+>  int cmd_bugreport(int argc,
+>  		  const char **argv,
+>  		  const char *prefix,
+> -		  struct repository *repo UNUSED)
+> +		  struct repository *repo)
+>  {
+>  	struct strbuf buffer = STRBUF_INIT;
+>  	struct strbuf report_path = STRBUF_INIT;
+> @@ -141,7 +140,7 @@ int cmd_bugreport(int argc,
+>  	}
+>  	strbuf_addstr(&report_path, ".txt");
+>  
+> -	switch (safe_create_leading_directories(the_repository, report_path.buf)) {
+> +	switch (safe_create_leading_directories(repo, report_path.buf)) {
+>  	case SCLD_OK:
+>  	case SCLD_EXISTS:
+>  		break;
+> @@ -158,7 +157,7 @@ int cmd_bugreport(int argc,
+>  		strbuf_addftime(&zip_path, option_suffix, localtime_r(&now, &tm), 0, 0);
+>  		strbuf_addstr(&zip_path, ".zip");
+>  
+> -		if (create_diagnostics_archive(the_repository, &zip_path, diagnose))
+> +		if (create_diagnostics_archive(repo, &zip_path, diagnose))
+>  			die_errno(_("unable to create diagnostics archive %s"), zip_path.buf);
+>  
+>  		strbuf_release(&zip_path);
+> @@ -171,7 +170,7 @@ int cmd_bugreport(int argc,
+>  	get_system_info(&buffer);
+>  
+>  	get_header(&buffer, _("Enabled Hooks"));
+> -	get_populated_hooks(&buffer, !startup_info->have_repository);
+> +	get_populated_hooks(repo, &buffer, !startup_info->have_repository);
+>  
+>  	/* fopen doesn't offer us an O_EXCL alternative, except with glibc. */
+>  	report = xopen(report_path.buf, O_CREAT | O_EXCL | O_WRONLY, 0666);
+
+All of the above look fine.
+
+> diff --git a/builtin/bundle.c b/builtin/bundle.c
+> index 1e170e9278..ef21ccfd89 100644
+> --- a/builtin/bundle.c
+> +++ b/builtin/bundle.c
+
+Is this patch meant as a microproject in preparation for applying
+for GSoC?  If so, we ask to limit one quality focused one per
+applicant.
+
+https://git.github.io/General-Microproject-Information/#only-one-quality-focused-microproject-per-applicant
