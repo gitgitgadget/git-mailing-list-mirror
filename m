@@ -1,134 +1,139 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B87B393DE8
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 17:59:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2CD287516
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 18:01:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768327171; cv=none; b=VAF/FNOQDmggrWch8epWvjH79/11m/DW/dv/9plTe5W1WULbXbQZfV44UgmbThrNhsvzK4C8vqHPSZ/zwWStrSHkiDxBcZDOFxW4V9zSqTmeOjTueuai34tIRMlv+KKOSqYFgEgicehjxZOUqbOAG308Kz5EHuZYJa87M8B4yU8=
+	t=1768327309; cv=none; b=V0Fl5S/Dgw0ZOvj8snbin5tm+gJ/e06ld2RYsqdlBi5J3HC9J/36+0Opc1B0PWR8EEpSou1yOP4DCqHkUBBit51ylEQ8ts9bqKFhxgWOKSrfN2/UI//S80QovWFR4d/VOfdbuAshCao1LU2Lel6wwn1EXdScplZA3PqPovojev8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768327171; c=relaxed/simple;
-	bh=0LHdsimwVpCx2b7qcftg8aF53seEoTa6kt5UjSFV5G4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wp62nTbTMvD43pn0XMU/xc8yDMBxZfgB6ey5aQJU8wrtkkV1fnncQOUivU5+XGFsUXXTW8QoYLUUv3H4ZVzU/Tarc2/xXOqLTj4kXUawuCjJi7r1wJYsKOH7Z6X8QjKRlPHml2FNkPJxZGV0o/KJ1NBMwZx9KMNrpeiYZdWL3MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HBIetsgm; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1768327309; c=relaxed/simple;
+	bh=xUaYqlsK4BW84ZWuwjcS15a9U8461rg9mP/R0PhEHWo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oQ9QGT3VQB5kzfTyCue4gabmZmm0Pz6u41ba66awiiKY4MZZjRnzU+6k9TKJQc9x409l7kWVLw1lYRvNXFHJiEIKDSqoy1gzqTkpKgsM4g6WKlRRr0W8KPLlAMQuMqIWVQymVUJoELr43yNkXrgPWCuS7rjKziBQthMYDpQhIbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sh3hhaPo; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HBIetsgm"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-29f1bc40b35so85388745ad.2
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:59:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sh3hhaPo"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-78e7ba9fc29so82368867b3.2
+        for <git@vger.kernel.org>; Tue, 13 Jan 2026 10:01:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768327169; x=1768931969; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768327307; x=1768932107; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AqsCGBxoCSZopv3BM4vdIQG/Ae2j9zqiaABhTRo/sk4=;
-        b=HBIetsgmQSLoM23MY6C4/GKsrhjLoChgt6KJKsAZLjZqD2nQEsRR1n7V9fbDe1bscF
-         OKU18nVGnUPmUUqjmDWkSkkDy3plQUz5NYz5rJ2dHlTfBEBhObxzX0Zjtd8DRqQHM551
-         jB9th+p4QII0L8GX5lDh4DSgxsbpZX0QaHVL0ghP0wrNZ/rt5jx3iVCRLIFMt5oM32mk
-         A/ChAvm8nd3TPXcGIlutPf7ZAUxr9kxmdFWRDkZkfxDCyI8nNBfG5biXYWYF4+fXsZ/N
-         wjZSjWyUV1cJuVxHF/QL3ILgq+50Ccx87CW+LMXrzL3FK2+y1N/sYLqyQxcKhIpQ6CU/
-         bQnQ==
+        bh=xUaYqlsK4BW84ZWuwjcS15a9U8461rg9mP/R0PhEHWo=;
+        b=Sh3hhaPo8tyDtXU1c9iwXfTP1mEoid9gvrisAfabvLx3q3oE/Ytu+YVBudDSlXSdMj
+         jX19AzDMb5816ghglZfzJ9BtSIs96JSOPjjjLRTlCem3c/u15hjJf1yU1Jyj0bvmPigi
+         w3dsILfjc8PQImp9gtvVau/Uzar4tDY/5sMBd+LbObE8DisN66tA1iqt9Bg1MNb9VU2u
+         Han+h24R/lncnHeKMRtBR0wS6n/bGybrByiDppSJ0Sna85BTxB1uNeyP9wbqkMcV7RRu
+         aaRcAofq40GxbYHHb+irDRE5c9UOj064mplzcMTJx/rpLuY7HMktrEfCn79l0r9SzE3u
+         I9QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768327169; x=1768931969;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1768327307; x=1768932107;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=AqsCGBxoCSZopv3BM4vdIQG/Ae2j9zqiaABhTRo/sk4=;
-        b=iEOduXBMEnfXZlMPfdhSiPkKFnfMEp0jAao0S2Kviv2YeuNekp9iApMd8syQ4ZLSfr
-         1o2+CBnhbfMxHY/rlPF+TikliI9IbTf2We4q9eEeKXBgcQ7Xpr4cFtKWMJ1R0ruztHUk
-         D29EQ8ZTrzYHo3s/BYApLUXq8LV/PT2g+Oj5EzyHWtI3c10rmzg7zRRMzz5+YljxNYeq
-         0b1fRDVpmVifWb4AAt/oeiJTmWSOTnnTm6ZbFJoExKVT4IUyDhJfOlnUUf3eY/hOAqXY
-         tALROWB/tZvJfdyiAZp16/tmRILuPUeDZ3qjCP8Bm1/ZPq5/yIy4Kws+cpyKRcCAeyWY
-         QvuQ==
-X-Gm-Message-State: AOJu0YwKkQlZ24kEuHrGunyM5L+N1FvzsQ1BHeGjRzzcbK4gI8DhI4Bs
-	PfE6oY+CFI4YVZycNuuSDGTkUaNMEGiuMxZwMnSZ9yWKtdNIkGUcycsX5eokcg==
-X-Gm-Gg: AY/fxX4zWInYsgma8OyqZWCMYY4CdKUJ0hv8pzS7qefTGNM8EA1LJz3p7KcF6e2atoo
-	35zzCoOlWRMVKM8mUYPshIiZDemVvMM0kbwlnWrs2dQ4nplUuH+tCsk+3zmwa/9X2puBkwAtv5t
-	r1tAsHfzsH3agj4npSRjghVm+d0a/C0juPDhcY1Mh8dEv30axcai11L7yZatSu1pGeRgb5+aVO0
-	jEtWKbe5Blbl0RUbC6icIXTX20AHV+XYTRC8wBTUkKp+BOd/4T5EVK6Ia8mkAQZZ4F1KMYlRkij
-	+niVnNWiWR6RtIxAI5J5IY6Weu+OgzaIC0V4f15y2K50R3S7wmET2s7A1AfVVztg2m7+cjx0Myn
-	KxhfTvRdNdjy9V74WXy6tgJ1+tMZ/w4/rULk6eJfw/UQC1TpO9ZNHVP65CB/KXhByxMyZ9VZn+2
-	meFBi/MpzdN9kl1pXpP3H4UkBWWRODuZMZAhK6EnqZn42Cyw==
-X-Google-Smtp-Source: AGHT+IGEA7QqSlvFzluN2+PQLQW0Bgrsr+3D2oRtOvnQ4y8AgEvcO4jcU+Vt6y6k9iXFzcSJhD4khA==
-X-Received: by 2002:a17:903:1a8b:b0:2a1:5785:4417 with SMTP id d9443c01a7336-2a3ee487487mr211830375ad.34.1768327169408;
-        Tue, 13 Jan 2026 09:59:29 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:8811:38e1:d0a1:c2df:cd9f:7f86])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cb2fe3sm208476265ad.59.2026.01.13.09.59.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 09:59:29 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [GSOC][PATCH] t5500: simplify test implementation and fix git exit code suppression
-Date: Tue, 13 Jan 2026 23:23:03 +0530
-Message-ID: <20260113175913.474414-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <xmqqbjixljfg.fsf@gitster.g>
-References: <xmqqbjixljfg.fsf@gitster.g>
+        bh=xUaYqlsK4BW84ZWuwjcS15a9U8461rg9mP/R0PhEHWo=;
+        b=XddkFK3Te3jXtywgXTK+9HZaQyuI651q0jaKQW2OBMbVYhcLb5x+Eh0NHeOdRA94s8
+         uWMb+oWB+ebR87h4y2itWO3KcAeVv8pGOBPTZ/2xl0fs219xGKFPukmHFiQ3ReJhZl1E
+         3GO9shFkjbk6rTRBAv57b8aQb1CqnIiASsThFA09hsIqCgpkIQ87Ct9b7OHVN9wVhXOa
+         iLICLyRNrdk3haNPb/ouc7JaNWgh4wnMh5QmxDT+Vd3Q0uikHPLoL9PSQYgqgujsp4Sq
+         5Ql/iIpIqRBv4YzgIOLaVU44WgiwDA1sPZHAGF1q6YtU0qBo8q6KeJiDWfzaE5uS81xP
+         dJgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX5tfGUOIPcjeMQUBzyJY+SPp1eRaWFQqb9tD+4pppSKGG0t2rEz/33taPR9AMGVEPxoVw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxkn6aKNL0OaLxzllM0ZSe0r+59bc9rytVzqcckLPN2gGy0ZZiM
+	Vf0U1BYEaZROWulKAuXgX0TlUFXs/kNXAn4E/WCoMPdE/YE5/3U1005N1GHZkf7jmovLP2gKPsG
+	k8bIGL/2JFxsLP922ryKDk78m6Qv0kus2sCoqM79xCQ==
+X-Gm-Gg: AY/fxX6LiknNOus2QqIJ6XUR4PdzqkPqA6y6XjhYHBCB+qSO0KOcvTmsjXeBvHw6Iia
+	1TB6LR4w4hVZRCPzSw3P0Pymj7AtaQA1ggLG7NwWzvSeFgMLHm2C4Ufs7JnUkhu7RjsqPGSlkPq
+	ejZB7Ra2YvLuMgtffFuT+J8JD4FoJG2B03Wa4GkWTJGFIayLEFHSNdyDZZOC7qlNaWpiJ5F7r9L
+	ZrL+DkjtIeflfQH9JJEDM6CQZGIkbIfrxrkzRK8gPlwT7RNC9YXsE7XP1d5eIsXKzrb7lo=
+X-Received: by 2002:a05:690e:1519:b0:63f:ab8d:a572 with SMTP id
+ 956f58d0204a3-64901a9c6e2mr82132d50.4.1768327306134; Tue, 13 Jan 2026
+ 10:01:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <e2733434-f632-4be5-a9e0-28412b4043c4@igalia.com>
+ <018701dc84a4$39555970$ac000c50$@nexbridge.com> <CALE2CrSUFt_HGy1+9H08OMZLTjdZt=NZsqvqa1a-rbvDOzjVWw@mail.gmail.com>
+In-Reply-To: <CALE2CrSUFt_HGy1+9H08OMZLTjdZt=NZsqvqa1a-rbvDOzjVWw@mail.gmail.com>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Tue, 13 Jan 2026 23:31:34 +0530
+X-Gm-Features: AZwV_QgqWzblb5psnYSPqKuE1FxYUhcNFZHuqurZPsZo-NkEgme8I-ulN3isBXM
+Message-ID: <CALE2CrS9YAqnX8ikNYzyD_i3H1rzhFQvKLijbnbkZh7VqOSZOQ@mail.gmail.com>
+Subject: Re: git shortlog --committer vs --committer=<pattern>
+To: rsbecker@nexbridge.com
+Cc: Manuel Rego Casasnovas <rego@igalia.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The 'shallow since with commit graph and already-seen commit” test previously used a
-convoluted here-doc that combined manual input construction with packetize, echo and
-embedded Git commands. This structure hid failures from the git commands, as their
-exit codes were suppressed inside echo command substitution and pipe upstream,
-also making the test harder to follow.
+Follow up to my previous mail.
 
-The changes simplify and make the test more robust.
+After checking the generated git-shortlog(1) and git shortlog --help, both
+--committer (grouping) and --committer=3D<pattern> (commit limiting) are
+indeed documented correctly.
 
-* Assign the results of Git commands to variables up front and chain them with &&,
-so the test detects any failures immediately, avoiding any exit code suppression.
+The real issue is the option parser ambiguity that Junio described, where
+--committer=3Dfoo is parsed as the grouping option and rejected, even thoug=
+h
+the filtering form exists.
 
-* Use test-tool pkt-line pack to construct the input and then pass it to git-upload
-in a temp file, instead of relying on here-doc and manual packetization.
-This avoids formatting issues and ensures correct v2 protocol guidelines.
+So this is not a documentation error but a command line parsing limitation.
+Thanks for the clarification.
 
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
----
- t/t5500-fetch-pack.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 2677cd5faa..62cf0e1ff7 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -892,15 +892,20 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
- 	test_commit other &&
- 	git commit-graph write --reachable &&
- 	git config core.commitGraph true &&
+On Tue, Jan 13, 2026 at 9:50=E2=80=AFPM Pushkar Singh
+<pushkarkumarsingh1970@gmail.com> wrote:
+>
+> Hi Junio,
+>
+> Thanks for the clarification.
+>
+> I confirmed that this comes from git-shortlog pulling in
+> Documentation/rev-list-options.adoc, which documents
+> --author=3D<pattern> and --committer=3D<pattern>, even though
+> git shortlog treats --committer as an alias for --group=3Dcommitter
+> and therefore cannot accept a value.
+>
+> So this looks like a documentation mismatch rather than just
+> the website.
+>
+> I will prepare a documentation patch to make git-shortlog=E2=80=99s
+> options unambiguous.
+>
+> Thanks,
+> Pushkar
+>
+> On Tue, Jan 13, 2026 at 9:28=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+> >
+> > On January 13, 2026 10:23 AM, Manuel Rego Casasnovas wrote:
+> > >Doing something like this in a Git repository returns an error (git ve=
+rsion 2.51.0):
+> > >$ git shortlog --committer=3Dfoo
+> > >error: option `committer' takes no value
+> > >
+> > >However the option "--committer=3D<pattern>" is in the documentation:
+> > >https://git-scm.com/docs/git-shortlog#Documentation/git-shortlog.txt--=
 -
--	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
--	0012command=fetch
--	$(echo "object-format=$(test_oid algo)" | packetize)
--	00010013deepen-since 1
--	$(echo "want $(git rev-parse other)" | packetize)
--	$(echo "have $(git rev-parse main)" | packetize)
-+	oid_algo=$(test_oid algo) &&
-+	oid_other=$(git rev-parse other) &&
-+	oid_main=$(git rev-parse main) &&
-+
-+	test-tool pkt-line pack >input <<-EOF &&
-+	command=fetch
-+	object-format=$oid_algo
-+	0001
-+	deepen-since 1
-+	want $oid_other
-+	have $oid_main
- 	0000
- 	EOF
-+	GIT_PROTOCOL=version=2 git upload-pack . <input >/dev/null	
- 	)
- '
- 
--- 
-2.43.0
+> > >committerpattern
+> > >
+> > >But it seems to be in conflict with "--committer":
+> > >https://git-scm.com/docs/git-shortlog#Documentation/git-shortlog.txt--=
+-
+> > >committer
+> > >
+> > >It would be nice to either allow using "--committer=3D<pattern>" for s=
+hortlog, or if
+> > >that's not possible fix the documentation.
+> >
+> > I do not see --committer=3D<pattern>, but do see --committer pattern in=
+ the online
+> > help and documentation. --committer is an alias for --group=3Dcommitter=
+.
+> > Pattern applies to the log entries.
+> >
+> >
