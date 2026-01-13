@@ -1,72 +1,72 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB3C187346
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 06:00:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D97817B505
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 06:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768284041; cv=none; b=hNa8fhT7SGCyFCZTvQFasnEx+TdFuHNUqJEBvLOAVcqaVm4vTxNIOz59FsVquNFWTYHghFWIjHhQofOfxBioAu7T1RJauqNEtc9/79GUB5xB3sEhxxjDBi5f9xIUfcrc+/xnax9er1HmZ3tyhEfLc/9NtbDzT//SjLRfYKU76nI=
+	t=1768284068; cv=none; b=G8xBBTXj6aLW682TCbPZftCPSMMGJCqg23BsDT4uAl1QQJgTkb59AB5GblwDDVfyYd6kg++qkedZTqR7hkAEWKQXz4eYT4w9fs3e0YSI9obNkZoeqo9oZOz39dpwYT7Nm+g5EoAVtk61vUrcUZRNNlPFiTiIO+dmzS+MKFfFVBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768284041; c=relaxed/simple;
-	bh=mXwrWEuozPUZQOljYY8NdWcoBgprk+8HAcY5yaGC20Y=;
+	s=arc-20240116; t=1768284068; c=relaxed/simple;
+	bh=DW7M+41l8I+FrqYSSLrwruY0T64dtEU/4pkHK9d2h3U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KRR4o51/KpJFZ/IpTYcsPteuj2WuVGVaTaPlzbZsHOfcmO9vBI9UABfukn1kp4Tn9Lgc4gJl9qq0fMYvEQLbafqwtA5jxnhuq4034Z7yHJVnEvqFXObJI6QG3cL4+AL3npp+IocB0NZM7spj1C+4By3SiuP5w8kzy+NqmOTjTdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EKfdSwua; arc=none smtp.client-ip=209.85.161.50
+	 To:Cc:Content-Type; b=FcLoWVhBcxn00qXAVewWohZHykUPfie8Jmvzlsom2E2VyJvoX0G+OYG0hwHwCzw3RJZW5EXCuYrluQwYmVkebv+U7KCLByhrsdKgFc0AWh6fM2xa12YJNB3GJyMaPZr9D5GTJxEdcOuvcFe8PlHGhmRqAcnM0C+CcGmWn9/jC9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zyd+sCnH; arc=none smtp.client-ip=209.85.160.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EKfdSwua"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-65e94e128beso3215465eaf.0
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 22:00:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zyd+sCnH"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-3e12fd71984so5111654fac.2
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 22:01:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768284039; x=1768888839; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768284066; x=1768888866; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0+zC7UghtAEZAaqVBHzqVDNkG+yJ6e3bfB2FjVJCBVY=;
-        b=EKfdSwuaYjNXzigSM1dRdHIVaxQnjpQy03IGXTOp7OiO9E9WvtWeyzy+bEbNtvjnXe
-         yKP969tlmqr5LFhIs48diY36g16bR8vZXdsy/ngV2lU2dEVpTumEtX6c3eXiKtKcF3l8
-         2zUIbzPTId/158HCDm5V9c/Qv6cT8MKIF6cbKXVuQsY/1Z2K7+/A9ESqx2uaYDMSOzFP
-         9rxSxwfCJSdJ4hx1ajhZ2TAqdrzLi7QW89DL13XKa8r+hlmwd+tiSgbzDFHWY3kf70/B
-         wi1Oa78kbfSwxOm1BmSKFxx0iyGjKrOtue7oNrsPg6A19ud/jcOxtBHo7HszfOyuZcBe
-         mLrw==
+        bh=fql2gesPNs1RaNyma5kQP/cHo1RJwIuEGiMveIQjfVc=;
+        b=Zyd+sCnH0DHWM7ZjK8x9BcGOGShflYmWvDExFKUIn8ld15/zhjleCqeUb898TMMUY0
+         PDZxakGkPXpMyNjPv1Aby+Z/6fgU4caUwTgBhU+wuPBoiVJdVCnERnWoqYOmbjog+wdn
+         pq5ALvHLZPb76u1QQP+GL6cItznh+Zdzhku1x1W13fpdw1nRxILcI0fUWYukMGCYjH+B
+         Vr+mX7zuB3nyW/Tj+wQEytUFAMgkIlaKpFzY4FvOfyIJh3DAmiFM/uFhLN10k1RdlwUh
+         cNNuRsInI3YWtvwYLncDrZRiCWe/7jNoMMY7R3OGwJ+V3YcXR/9w+ePs0u6iq424Vra6
+         jvyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768284039; x=1768888839;
+        d=1e100.net; s=20230601; t=1768284066; x=1768888866;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=0+zC7UghtAEZAaqVBHzqVDNkG+yJ6e3bfB2FjVJCBVY=;
-        b=KMazVcOhoGq1tgFSnhgss4XQ5Lu5gJvdGJlnS3Ha5mhILlx9zjcqKG0T0fmk+RYNP4
-         f7h2m20HJUZlsvJ/WKVa9cF4FKWGDIcP+9EN/6hyZuo0xnxiYVeRQXYImidOd48ox1aY
-         d/HHjvhI1y2RhfWNBGP3iUGFwnWraGk3S5Wn5NFA63ycNbycv9nWEAjcRyY8Zqd8Kzgu
-         3D0KqkGqDcOf5ySjfNHSJEYDbUjmAfNVEW+7BeQVeT2N8s7m4jEkD+5BWm0HoVvLMCh6
-         tmAU90qD6i4wzBZur7yf9HL6vAmg8rxXu6YuTXyAtBkIxlfhcdq4YHxdZ9bF4rC/jFNJ
-         XTKA==
-X-Gm-Message-State: AOJu0Yxursw7J13JbYgmROPMZVGf8REO1heAcJBhYgIL2Jsz4yoyLwke
-	QzwR9K/IlMDbA2SLpWKT9YoaKiL/QI7y8GrBtIulCCjpykFpaLcYpZHhmH+uC7Knssrvany4pd6
-	D9YsRXKyhrXvpYYHsuBd8hcjp7Vo1xlM=
-X-Gm-Gg: AY/fxX4rzN4nlpO3cPqmP6SAooyfqYMh6v2E5SLgojv/gBuN5Oz5iAJljAVeqtsZ6Cr
-	BrQWNVcnc38ZhMi0DkIsJwkEwypX0P6xTSEMz7tpDoJo1QT+rGbqZROM7/yjI91cR4/4vB4sH0I
-	iVS8rD6ZIVQzEXFYH1w+M+P73gnkObgSINnyqjIrZsRLW4FxGcP47YLA6zo27WgdXOFCTgpRPoz
-	SKWFhBrK6wSsHp/SOf20iwl//ad+NpEprhuHxvzfJ2xE5YJnQtcV1BVQ6Bguf2XxC4kIlYs8sva
-	ncQr4h8rNlFIswgEeR+teghNG7tH
-X-Google-Smtp-Source: AGHT+IGWJEkWsBd4d48spBEmoyxG5fnJFEoloJFXPP92k3+gOzUPRWDx/ECqvYDVKtgZcuYKKkBtgbtt2sUpPwEZCjA=
-X-Received: by 2002:a05:6820:160f:b0:659:9a49:8ee9 with SMTP id
- 006d021491bc7-660f29f3663mr861816eaf.29.1768284039371; Mon, 12 Jan 2026
- 22:00:39 -0800 (PST)
+        bh=fql2gesPNs1RaNyma5kQP/cHo1RJwIuEGiMveIQjfVc=;
+        b=iDPOaW0jzJLq4duOs6rUKK7XHbYDhJYUjYVv+gueyqyzuMIVcFRc/X8uDvFhAm2QHr
+         THB12KWVcu6DF/UhRUiv4HQ1Ql1aHjshUWpd659HzRGeh1qDwY2qqFiV9bto7wvwjtE+
+         lRaVuzUuasr/tLA0KNCw+WGNavcqT4xnCOu7J+o2bNBM70Vdoz4oHr+xRP9Py3+6Sqmv
+         w2fwEA3j8B9xhv+Qw9BH7ay5pWudeMu1jyzkCQrk25LahTcTaxOsdUXm/HnArivQhsAy
+         3d6PdmhnO1Ah1XUTTyqpNzKoUeNp8P1YiRW/P3KSVblkOoz+QwL2QnBfPzr8BI96KJfj
+         gySQ==
+X-Gm-Message-State: AOJu0YwUmjvrXhnKXPLfUCf40lhTgAINhi0tm1i/q4sCp7Rwet+HMRI+
+	d+PEmoJCN+jzztxQhM45dZsvl9zssKNB4mBnS4p8V2tfJsBkSlYEYBuMyrzAQZ1ub/UV0qljlDa
+	iJIKAQm0c6G/UNkDbZ93d53nDfVxwtEg=
+X-Gm-Gg: AY/fxX5odqFQUXY8MYnNz/Z8BIclir0K6F2rEL1oOWBuQvfPrfVofZLhT1r3bBke8Jx
+	xPA9H108s4M0aMEzx+barg1u696BzAM6cZ7sLOdxbGEAywi/RhiHMQvaDe97tiASdN+p3hpGc92
+	WlIOeuaLXwYxEtr25jOYXGISL4+ATYPPY+otGBxYiNP3lkURAfHaPhup/dngcZ7H2kAAOueJdwa
+	8pDNUNKxarxCT1FkDEhEaUsbM/0Rl+xH0rla0yBMbg/58KSwJIjPSc+QH3DBCQDohwv9rPT+eTu
+	xk8nhGQSCq9mrxVzN+Wker1wfOGL
+X-Google-Smtp-Source: AGHT+IFx3hHIvmODfACYO7HjWjFCt0pEjC0f13Brkk4wZNYTjA+27uAEDClKMNlwJGV3cUiJqgopmBV+3l1waVfA1bY=
+X-Received: by 2002:a4a:d15a:0:b0:65b:3797:6536 with SMTP id
+ 006d021491bc7-65f54ed455cmr7147244eaf.3.1768284065961; Mon, 12 Jan 2026
+ 22:01:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im> <20260112-b4-pks-history-builtin-v10-4-e3c6aa5b4cec@pks.im>
-In-Reply-To: <20260112-b4-pks-history-builtin-v10-4-e3c6aa5b4cec@pks.im>
+References: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im> <20260112-b4-pks-history-builtin-v10-5-e3c6aa5b4cec@pks.im>
+In-Reply-To: <20260112-b4-pks-history-builtin-v10-5-e3c6aa5b4cec@pks.im>
 From: Elijah Newren <newren@gmail.com>
-Date: Mon, 12 Jan 2026 22:00:27 -0800
-X-Gm-Features: AZwV_QjXCgrbFyGjnh8O-mWxN3lk5zftdxjXr7O0nq11wJW5dJKZifwWR5dsQ1M
-Message-ID: <CABPp-BGhtPyiVT=32NXz3k8m=+ZgPziXueM4Y8+g4dAUtN9osw@mail.gmail.com>
-Subject: Re: [PATCH v10 4/8] replay: support empty commit ranges
+Date: Mon, 12 Jan 2026 22:00:53 -0800
+X-Gm-Features: AZwV_QivQUuhGTZXLGYFpI3tL7KOLWWt8OCzLdwf0Iyk7i4ROS__4VdcagiKAvU
+Message-ID: <CABPp-BFvi0xmpP1jcU0qc7c-KhYXgzpCVbXyto3FMSFSSwrKoA@mail.gmail.com>
+Subject: Re: [PATCH v10 5/8] replay: support updating detached HEAD
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>, 
 	Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
@@ -80,66 +80,68 @@ Content-Transfer-Encoding: quoted-printable
 
 On Mon, Jan 12, 2026 at 6:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
->
-> In a subsequent commit we're about to introduce a new user of the replay
-> subsystem. With that new user, the range of commits that we'll want to
-> replay will be identified implicitly via "HEAD". With such implicit
-> ranges it becomes likely that the range of revisions that we're asked to
-> replay becomes empty. This case does not make sense with git-replay(1),
-> but with the new command it will.
+[...]
+> +       refs_read_ref_full(get_main_ref_store(repo), "HEAD",
+> +                          RESOLVE_REF_NO_RECURSE, NULL, &head_flags);
+> +       *detached_head =3D !(head_flags & REF_ISSYMREF);
 
-I think I know what you were trying to say, but this feels misleading;
-it could be the commit at the tip of any branch, not just HEAD.
-Perhaps:
+Ah, I like this simpler way to determine if we have a detached HEAD.
+Out of curiosity, though, is there a need to specify
+RESOLVE_REF_NO_RECURSE?  I waffled on that for a bit and just left it
+out.
 
-In a subsequent commit we're about to introduce a new user of the replay
-subsystem. With that new user, the range of commits that we'll want to
-replay will be identified implicitly via a single commit, and will
-include all descendants of that commit to any branch. If that commit has
-no descendants (because it's the tip of some branch), then the range of
-revisions that we're asked to replay becomes empty. This case does not
-make sense with git-replay(1), but with the new command it will.
+> @@ -312,18 +319,30 @@ int replay_revisions(struct rev_info *revs,
+[...]
+> +               for (decoration =3D get_name_decoration(&commit->object);
+> +                    decoration;
+> +                    decoration =3D decoration->next)
+> +               {
+> +                       if (decoration->type !=3D DECORATION_REF_LOCAL &&
+> +                           decoration->type !=3D DECORATION_REF_HEAD)
+> +                               continue;
+> +
+> +                       /*
+> +                        * We only need to update HEAD separately in case=
+ it's
+> +                        * detached. If it's not we'd already update the =
+branch
+> +                        * it is pointing to.
+> +                        */
+> +                       if (decoration->type =3D=3D DECORATION_REF_HEAD &=
+& !detached_head)
+> +                               continue;
+> +
+> +                       if (!opts->contained &&
+> +                           !strset_contains(update_refs, decoration->nam=
+e))
+> +                               continue;
 
-> This case is not currently supported by `replay_revisions()` though
-> because we zero-initialize `struct merge_result`. This includes its
-> `.clean` member, which indicates whether the merge ran into a conflict
-> or not. But given that we don't have any revision to replay, we won't
-> ever perform any merge at all, and consequently that member will never
-> be set to `1`. We thus later think that there's been a merge conflict
-> and return an error from `replay_commits()`.
+I like this refactoring to make the conditions clearer; very nice.
+
+> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+> index 307101eeb9..c862aa39f3 100755
+> --- a/t/t3650-replay-basics.sh
+> +++ b/t/t3650-replay-basics.sh
+> @@ -249,6 +249,15 @@ test_expect_success 'using replay on bare repo to re=
+base multiple divergent bran
+>         done
+>  '
 >
-> Address this issue by initializing the `.clean` member to `1`.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  replay.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/replay.c b/replay.c
-> index 1e660171d2..a8e6d5b30b 100644
-> --- a/replay.c
-> +++ b/replay.c
-> @@ -266,7 +266,9 @@ int replay_revisions(struct rev_info *revs,
->         struct commit *commit;
->         struct commit *onto =3D NULL;
->         struct merge_options merge_opt;
-> -       struct merge_result result;
-> +       struct merge_result result =3D {
-> +               .clean =3D 1,
-> +       };
->         char *advance;
->         int ret;
->
-> @@ -282,7 +284,6 @@ int replay_revisions(struct rev_info *revs,
->         }
->
->         init_basic_merge_options(&merge_opt, revs->repo);
-> -       memset(&result, 0, sizeof(result));
->         merge_opt.show_rename_progress =3D 0;
->         last_commit =3D onto;
->         replayed_commits =3D kh_init_oid_map();
+> +test_expect_success 'using replay to update detached HEAD' '
+> +       current_head=3D$(git branch --show-current) &&
+> +       test_when_finished git switch "$current_head" &&
+> +       git switch --detach &&
+> +       test_commit something &&
+> +       git replay --ref-action=3Dprint --onto HEAD~2 --ref-action=3Dprin=
+t HEAD~..HEAD >updates &&
+> +       test_grep "update HEAD " updates
+> +'
+> +
+>  test_expect_success 'merge.directoryRenames=3Dfalse' '
+>         # create a test case that stress-tests the rename caching
+>         git switch -c rename-onto &&
 >
 > --
 > 2.52.0.590.g1f87b77810.dirty
 
-Looks good otherwise; thanks for splitting this out.
+Good extra test too.
