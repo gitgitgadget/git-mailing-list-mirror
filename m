@@ -1,83 +1,83 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587F32F6925
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 07:31:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE601E4AB
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 07:31:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768289484; cv=none; b=dzZVyteI9wl6yJgnEHq2vMklCJUrV0al4QhyGwDg3zwH1lfPbgbhwMTMybP+I651Ohxutph29RvjQgGgZx3zSBX5F18ZXN+SglH+aohUAs3v/2ej0TD0FWJ6/UtQvcc5wnCF+/jSUrDcl680+yA9AsM5yERLfzZrNTcyT20YM8A=
+	t=1768289498; cv=none; b=glXFXMo7A44dfxiavNDVtXDrVelvPlSiLGsKNd0I4znxGKCdpYp5u6U4Hi6aWC5EZrbT5vTbkwrjXt5xvVWKMP4HmdSJbyiMBh9W1bg3a3yQLLWDElYc3rB85hbWFRpc840DqhwMCkC1nwWBvHUn2Cav1BI8YH8SPA9moOE2aaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768289484; c=relaxed/simple;
-	bh=ht3U83OAktcoAuwmHNFJDkavo2MUuyjqvagW0dDxan0=;
+	s=arc-20240116; t=1768289498; c=relaxed/simple;
+	bh=Y7XgUME74jEQ0mZh1Xdd5IKCfT9uyqSeQvECV/OvUS8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lQInqDnO/C3voB6/CeCnzf2E3RLMekI72YNl1Bzk4hDaXg8UT7TiiPekJ+nSPBHam1z/cOFnUChl3UfNgqQKNHQAoDTLW5XATzFj1Ng7OL6v6wIWcsFH5HTppEQxWUt1PvM1i408o4jkzr0YRIDAdV3uwwhYlRQR/s1YYnKte9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UsLhre5e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TVfEPuJH; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=bu/YgQdnUtyajsYwVf89NuASq7rxJaCXjRwzA4dCUE7pcJFHw1bA+JFYLgOyNrzLr9AjWd8P5HDF7kdbNltR9HwUtkshteOWe3T5HAt6My28y5+GmRR7Id6Wzf6zSr43A+cZel0vXxGxSaaQE44jznzNnnT6MgtZ2PkKm3likHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iXeYmzFX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LiDpHD/C; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UsLhre5e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TVfEPuJH"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 61044140006B;
-	Tue, 13 Jan 2026 02:31:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iXeYmzFX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LiDpHD/C"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id B11F9EC00FA;
+	Tue, 13 Jan 2026 02:31:36 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 13 Jan 2026 02:31:22 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 13 Jan 2026 02:31:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768289482;
-	 x=1768375882; bh=e2r1mkIv+yUCantihfVVGxeFlw9Ao7z5ykjYM3HW7Jg=; b=
-	UsLhre5e/aGZgC7dMHs1ts8+g/cX0rgxFlrxzjN+rDSNplnAQVODn/PgMNg5A8sm
-	j5TU+9UC9GcqUEODuHq0cKkRJsnK1md41eEk4mM38oqRDRL8BH32pN5zb3wPZQGX
-	R0rWvwjlZi+oW8jFPK/wieV+Ixa0WQM9o5EpvO5xjTy3KPyhvyC8cqWzg3fIRoEX
-	/9PEeKwX5SrYvKp7JHoR88eJsAQ8foZarRsn96XItB4nUnybmqEs5HtF+o/Z5tR6
-	zIo1E7yR/OKZL5uSv3S4x5Nq40utjefQqayzYYa71zDaapTqexvrAbg6k+0Q3LR+
-	9qP12RWxqtUz5s8UWhjSag==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768289496;
+	 x=1768375896; bh=xuOAIvk+j5OZxmLUfBn9/brOAHNwSXl5TtPJ0SOYJvo=; b=
+	iXeYmzFXTTcVkDN55bLJilfoCqKe/VlQ68V+sYxIJ4ySGWD9jU+zfulFji72RwHF
+	E1ddeEv6QursSNqwOeBt7Wmx6zOc3WSa0Jn00CPTxKQft8IINqqwdUO9PQtETmB6
+	jlQwmdd/NrT1G5jDFGP5HjaX+goujKvxzLF2jT22dXK1CYWwl2k21Lj7o/hdHLx8
+	tIom6O7PeHDCZM1ztICE1B33Ii2ugaGTFwJivNdeVvcjqE3ZbiIyF2J3vL0AHhdI
+	9ZKncy/qj1nBlDqPq2eGPqYcXShstD/SPAzjroT9FwDX6SUdPoEjkZZ3v+SCoGFO
+	ONURbfNz3qaw59tQ0mnRLQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768289482; x=
-	1768375882; bh=e2r1mkIv+yUCantihfVVGxeFlw9Ao7z5ykjYM3HW7Jg=; b=T
-	VfEPuJHzUn4SbbDt8ucTaE8PUJrCzXuXJj+bpfc38tFij7yVAqOp4WIOKBD+5CSJ
-	FKvNaRBj0kB2O4V+O6+G9lyV75Wsm6xT4h6JwBkg219DbcMNcbNqZwt74UC4sQ40
-	gxtVkKNcVC/y5bF+RWC5Ia5LXf4VySEWsE9ps1+mO1OGY3PputqTkk7hiysccONn
-	5xK/x1I8Fw/Hh4BWGmwtRTr5sFgGBZfeUj8PRM0l3Li85gJRJ7pB7JGx4Q2b278W
-	XmYb6BzEJURyIIgePnG4Iw/HaiJ782DgCrmBbBvkdkt9gs3UrbQkMjMBs+FG/dRA
-	KKsGWLxEkjlp2sZhmPwcg==
-X-ME-Sender: <xms:yvRlaae1-Sff6QFZPsJEYNyRvtr0rZEczMFxOhCSo0YM5FhBrShJMg>
-    <xme:yvRlaYmby25GR3NuPm3Lb8kLGqY57ydCTXQJ9966j-gds4xbzvrM9hTkoO81arha7
-    iRI2-ruEP4z7FgYComvFsmJtxV2AAnb-IEBXMQkfTYDvrge-pAv>
-X-ME-Received: <xmr:yvRlaZaMaH3BREdK16yu6TepGjSEUlJia76UIlw2gJpIa9HHQgqsh6QIrYNVvVHUtfrVO26ChqdTdz_FqjbZTfc8ZEKFNqeQz_vCGC7Qcw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeljedvucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768289496; x=
+	1768375896; bh=xuOAIvk+j5OZxmLUfBn9/brOAHNwSXl5TtPJ0SOYJvo=; b=L
+	iDpHD/CZAsH3aflANHG5AW7kn8xiMlmD8t81zyKHFxW+4Df9eSlnWT4GE+H882DX
+	Zzfd6VXDdbSwvViqIJEJaKFRkGp9doIxBbhBhbkFRbETukkGJ981qPXgKUW2r9hq
+	z4fTqO2NBZnCBXbtJy0UV5uZ2/huSTktWS8QJT8+Ms7tTgC9nvwR9QMrbMPCVl6y
+	Ak8K9qIfZpR0zunjj9n6wjQKWBr53rFxjk93DwHKxPCJMCCncmgWXm7AVvzYisW5
+	AEiUxwc1kwM8PTfeMgCOSvDpZJ/bAlGNK1q/fZRnhpVkvL1iLsTIinNfK1VQBVz2
+	nGDRu63+05oPC7o1Qrm3w==
+X-ME-Sender: <xms:2PRlaQ4ls44H_Bk-skDs-4faSIK53pCKkaj054j4rxBgG8bScS3Adg>
+    <xme:2PRladvFqr_RjZCbgoUBxD8k5RzYxd2xxNxF0xdbEGdWWe9OLKwC86St0iau5b95V
+    D7LbFq12WNwgoX6nfKOzYUP0Ngv4fTw6aX_cKY6Hkl_Nir5EyOOvA>
+X-ME-Received: <xmr:2PRlaa05riE7B5BxibrIPxD-lkQO83-5vMXKXQvtAD3GEqw0LcIrda9Zp5ngRgsS5suStoZGgdpJJozkdbHIYfoKKvIAagXDFQogvHRgfg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudeljeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmrghrthhinhhvohhniies
-    ghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepmhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnse
-    hgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:yvRlaV42pUhgAwzYKMmoAuUtNjrsKqlzJqyCq8PgN9_r2dU2Kw492w>
-    <xmx:yvRlabBr1yoVT-1AXH9Jma8NeQrDWSkMw6V4AYvrQ9ZwfNWCOIiF4w>
-    <xmx:yvRlab8HUni4rrC-XzilQjkcVMHBELxlw-OHtR-Iq1UpASn98H8muQ>
-    <xmx:yvRlaeFkYQbqxLFvV_r7HRQrNG_0-Zqb5JrV_U1ueDGBDWPsVtnBhQ>
-    <xmx:yvRlaWShS2_-UciUS4aqrN3R_mJbhMbwG--VAlHu2vr8LTHoVwKH838G>
+    hnpeetheffvddtleettdetueeukedugeettedutdegueeukeetheefueevvdeitddtveen
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    uddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsohhrghgrnhhovhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
+    rghsthhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepnh
+    gvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:2PRlaeo5KkNmAvKC9ygnUo0kTSw1OXvcIjqAKwCqCQ1jHOmbc7AtKA>
+    <xmx:2PRlaSJ7RR8HQ3KzTzrYaQ7yNUMbmjKuHdkuL1rWVIxY5QM1Q8dF8A>
+    <xmx:2PRlaSTLjOeaS48rrSYo4p9k50YTnfVJknGqLMSl0XhpRX9unHH_LA>
+    <xmx:2PRlaSPkPVwvtUN83Fp_dcRaBn8GxIA0j4EmFhaoxGBTbYYnLitQmw>
+    <xmx:2PRlaS4mOPJ1cv0_5HDzXkqeMvcFH2Z9AnNDqbws8kFVXDmYDzxU67rd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Jan 2026 02:31:20 -0500 (EST)
+ 13 Jan 2026 02:31:34 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1bba932c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Jan 2026 07:31:18 +0000 (UTC)
-Date: Tue, 13 Jan 2026 08:31:15 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 31f18771 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Jan 2026 07:31:33 +0000 (UTC)
+Date: Tue, 13 Jan 2026 08:31:31 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Elijah Newren <newren@gmail.com>
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
@@ -90,13 +90,12 @@ Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
 	Matthias Beyer <mail@beyermatthias.de>
-Subject: Re: [PATCH v9 2/7] builtin/replay: move core logic into "libgit.a"
-Message-ID: <aWX0wyQ_2Mn9ZOEJ@pks.im>
-References: <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im>
- <20260109-b4-pks-history-builtin-v9-2-8766101814c6@pks.im>
- <CABPp-BEo5jGBgJBkCdu_GHstsbEm4mCpKO3NWvNfcjDVC+SbLQ@mail.gmail.com>
- <aWTw4ezgeloLB0R2@pks.im>
- <CABPp-BGM4AxoedD3uUnS+12n5c0egd8pw-=cRsO64oDs+G9RkA@mail.gmail.com>
+Subject: Re: [PATCH v10 1/8] builtin/replay: extract core logic to replay
+ revisions
+Message-ID: <aWX0055xT2PKzgfa@pks.im>
+References: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im>
+ <20260112-b4-pks-history-builtin-v10-1-e3c6aa5b4cec@pks.im>
+ <CABPp-BGOcMRerGpH5HGkUR4-DKPx+VmkWzqRt8qideZoJBrvHg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -106,60 +105,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BGM4AxoedD3uUnS+12n5c0egd8pw-=cRsO64oDs+G9RkA@mail.gmail.com>
+In-Reply-To: <CABPp-BGOcMRerGpH5HGkUR4-DKPx+VmkWzqRt8qideZoJBrvHg@mail.gmail.com>
 
-On Mon, Jan 12, 2026 at 10:00:16PM -0800, Elijah Newren wrote:
-> On Mon, Jan 12, 2026 at 5:02 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Fri, Jan 09, 2026 at 05:16:41PM -0800, Elijah Newren wrote:
+On Mon, Jan 12, 2026 at 10:00:06PM -0800, Elijah Newren wrote:
+> On Mon, Jan 12, 2026 at 6:17 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > @@ -253,6 +254,137 @@ static struct commit *pick_regular_commit(struct repository *repo,
 > [...]
-> > > It feels duplicative to have replay_result include a merge_conflict
-> > > field and to have replay_revisions() return an int which signifies
-> > > whether there's a conflict.  Can we remove one of the two?  (Perhaps
-> > > the merge_conflict field was only a workaround to the weird ret
-> > > setting from the previous patch?)
-> >
-> > The idea here is that we have a generic error code that tells the caller
-> > that _something_ happened, whereas `struct replay_result` gives the
-> > caller a bit more context around what exactly has happened. This allows
-> > callers to handle merge conflicts differently from any other error and
-> > makes the different failure modes a lot more explicit.
-> >
-> > Some context: at GitLab we actually have the use case to surface more
-> > information around what commits have conflicted, so there will be a
+> > +       if (!result.clean) {
+> > +               out->merge_conflict = true;
+> > +               ret = -1;
 > 
-> Interesting, but doesn't answering that question presume first-class
-> conflict handling?  How do you determine which commits conflict
-> without that?  Or, is the first commit we process that hits a conflict
-> sufficient information and you don't really need the commits that
-> conflict, just one of them?  Or, do you presume that all unprocessed
-> commits after the first one that conflicted would have also conflicted
-> (even if it touched files that are conflict-free so far, so that
-> commit would not have contributed to the conflicts)?  If this is done
-> without first-class conflict handling, there may also be an assumption
-> here about linear single-branch history, or else some kind of attempt
-> to continue processing whichever commits don't have an ancestor that
-> has conflicted, so that we can enumerate "commits [which] have
-> conflicted".
+> Even if you keep the special merge_conflict field for other purposes,
+> setting ret to -1 here still feels very wrong.  Negative return codes,
+> and especially -1, is used throughout the merge machinery to signal
+> unexpected errors like failure to read/write to disk.  Further, it's
+> inconsistent with how builtin/merge-tree.c works, where both in code
+> and in documentation merge result code is 0 == clean, 1 == merge
+> conflicts.  I'm worried using -1 here could cause some nasty future
+> maintenance headaches trying to understand the field if left this way,
+> at least for me.  As mentioned in the last round, the ret value here
+> should be 1.
 
-Yup, knowing about the first commit that conflicts is sufficient for our
-use case.
+To expand a bit why I prefer my style: it's extremely easy to get the
+return code wrong. We have a bunch of callsites that set the return code
+directly, and in theory we now have to vet every single such call site
+to verify that it will never return an error code of 1. If any function
+does, then exiting with 1 now becomes ambiguous. This is an error
+waiting to happen.
 
-> > follow-up patch series that extends `struct replay_result` to return
-> > more information about the actual conflict. I'm already planning ahead a
-> > bit in this patch series.
+With being explicit about the error code and the specific condition we
+care about we make that issue go away. Furthermore, it also helps to
+document intent in the code as it is very explicit now.
+
+In any case, I don't want this disagreement to block the patch series,
+so I'll adapt to make it return a positive value on a conflict.
+
+> > @@ -306,21 +438,11 @@ int cmd_replay(int argc,
+> [...]
+> > -       die_for_incompatible_opt2(!!advance_name_opt, "--advance",
+> > -                                 contained, "--contained");
+> > +       die_for_incompatible_opt2(!!opts.advance, "--advance",
+> > +                                 opts.contained, "--contained");
 > 
-> Wait, above you said you wanted to know the "commits [which] have
-> conflicted", here you seem to be suggesting you want to know about
-> "the actual conflict" which might mean you only care about the first
-> commit that conflicted but you want details about what conflicted
-> within it.  Or is it perhaps the set of files that would have had
-> conflicts across replaying the whole sequence of patches (in which
-> case a bunch of the previous questions are still valid)?
+> This predates your patch, but I'm wondering if there's anything we
+> should do to clarify and/or simplify the first check.  The original
+> form of the check
+>      +       die_for_incompatible_opt2(!!opts.advance, "--advance",
+>      +                                 opts.contained, "--contained");
+> was created because (a) I had code that allowed --onto to be implicit
+> in some cases, and (b) I was thinking only of --onto and --advance
+> modes.
+> 
+> However: (a) we got rid of the implicit mode selection from my private
+> branch, and (b) Siddharth added patches which added a --revert mode.
+> Those patches caused confusion around the interplay of --contained
+> with the new mode
+> (https://lore.kernel.org/git/xmqq3460ocv7.fsf@gitster.g/).  I thought
+> the synopsis:
+>            "([--contained] --onto <newbase> | --advance <branch>) "
+> implied clearly enough that --contained is a sub-mode of --onto, but
+> apparently that wasn't the case.  Perhaps we can strengthen that
+> understanding if we change the check here to instead be something like
+>    if (opts.contained && !opts.onto)
+>       die("--onto must be specified if --contained is")
+> 
+> Definitely not critical; but might be a nice cleanup.
+> 
+> > +       die_for_incompatible_opt2(!!opts.advance, "--advance",
+> > +                                 !!opts.onto, "--onto");
+> 
+> Yeah, and Siddharth can convert this to a die_for_incompatible_opt3()
+> call, adding "--revert" to it when he rerolls his series on top of
+> yours.
 
-I was simply being inaccurate there, we only care about the first
-conflicting commit, no plural.
+Fair, but this feels somewhat unrelated to my changes. So I'll not touch
+this part and leave it for a future patch series to clean up, if that's
+alright with you.
 
-Thanks!
+> > -       /* Return */
+> > -       if (ret < 0)
+> > -               exit(128);
+> > -       return ret ? 0 : 1;
+> > +       if (ret) {
+> > +               if (result.merge_conflict)
+> > +                       return 1;
+> > +               return 128;
+> > +       }
+> > +
+> > +       return 0;
+> >  }
+> 
+> You mentioned that you wanted to keep the merge_conflict field due to
+> some future patches beyond the currently submitted series.  I wonder
+> if it'd make more sense to introduce that field once you introduce the
+> new patches, but i don't feel too strongly about that.  I do feel
+> strongly that the place where you set ret to -1 is problematic and
+> should be changed to 1.
+
+I'll drop the field for now.
 
 Patrick
