@@ -1,91 +1,154 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1DC389DEC
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:54:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09702389DEA
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768298092; cv=none; b=X7yaQHMspWiCkaEx+LuFNQ2v29TtPLRz9mtBk6GpOYWtbtKtnPYc8n93sOJ4TKiqXys61BLVORkl/qHvCTtUhhq/fAz/wq107So2jCyEJfi1QxOZ0nF9EFdIr19Eqr2+dN7uKRP/RQ7uGRzGBuz0SBO4+R2J389lovi+rUbyx9s=
+	t=1768298092; cv=none; b=LkRCs+2txTpvvasyGhm7xgLnmS+MW+O9G7LdhYhP7C/1WhcRMCz7NhXtqP0jbIh6GGrrBWA+npjteHOLwBVZSwJdETCmksrlfLwqvuSVEptb3biQrD1P2tnUnYNTVEz3OdnwTB6p+WuEw6xIqzCfQTD5FoQABspsicvwppFlciU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768298092; c=relaxed/simple;
-	bh=caIxGQFV6dQHhbfL4V+vGnobusjld0yMGM1Qf6qgzQM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7m8vgvg0gqwt4zlE0OdJw9ufuc9X1lVmk+BiEYG0jvqXF+RYlQ7BFHawhfcY5fkkS+ND86zZV642kQH8ESRVD5pcgrj+TB+Gi8v+QM3XKJ5d5IwOoE3S6cghyBEz+KpVdar7/HGje1CZCzl6sK/2UHxjxcZxMMzDZxS3NEfV/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nBOwo18j; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	bh=N6ubMocBrugp6WmoixG2AYPq/RwJ52YwFZdCOmrqaDg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=UM/w0dwwqPP40rJ6tHYCXTWbNCgZB8P6JV1YdFyEYNhn0zfzS+dVjrVAYhbeFtBD+tRgxiITSKt9hq0j7euO4AkXw/mH1MMhZxHhZcjIpYeqUpEEvJD/6xX5Wb6QwsLmub085pCSyLPrzgjxU2wk3eI0rSgHPxuZOfzpYuvvEfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fGQAYE5J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mGA4an7/; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBOwo18j"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-382fa66fa9dso50589361fa.0
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 01:54:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768298089; x=1768902889; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HLaTg05mKojFO2vtCcDjbgIW7cTtAr5HXn7CDq5Hibg=;
-        b=nBOwo18joca7uOx7Tx7W2hjYLmOb2+iJh5p9lD+GWBcA6r/6KO3OMeltSXfRf4grgs
-         vbKRgxNNtgj0zg9N6yrKgXpDlGzN0GGRHVT/2ByKpG6m0XS+aZU+79cnm1S4dWHTc4zJ
-         Mo4pCNTEIPcqnYlSJ2EaiQEByGXdcASkZK9KH1A09w4aPt4I7OXO08PZOpQX5VfgV1po
-         CUBuKC9etw//PY55Sj3Ll1MPJOdIuaIiwSPDdGO6EzkujyxiBUK8QdW7YMC8X+8QGmni
-         eKk3wJFSupxnu92bTrEygahAs7FDOhV/odROdPSWjCV2UTFRhojq5zMpL3tesTAA3eZK
-         +pNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768298089; x=1768902889;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=HLaTg05mKojFO2vtCcDjbgIW7cTtAr5HXn7CDq5Hibg=;
-        b=JFqfbONuuBbL3yttvzJ9d2I0nkCOEAnjxot0RBntR7eMu/UH21N4lWFDIWpGkZwdU9
-         98Rssc5srSA6sFPrv5sCjta86QqCaYwzBrul3QU4Z2F1dVObjLG8PVcP35fx7WVwRw+9
-         guxMNHtMdew7LxU2pHtQc2FrZ/DjwQHxOyk1jJ0huwGZehnQAO6dVkw4aQ2me0DVlwoK
-         bmJKbDNgxBcEoZBuAFg/GmA6NXhLEP7gVJ4DpRa4HLIMDz/DjynSpT6iFXxfFkRwLddt
-         zcDUR5cr51STQtt9SM7ssDdOdpUZOGAB4b8EmBL5agclhUqFtKYDSWBbpHuR9uDzRF5A
-         02fA==
-X-Gm-Message-State: AOJu0YzvaETD9Z2oCNu2VnwKv3JW8ysxn2FXxOxqxx+Vdt4lVwhgozY2
-	7B/ct2RNSvxJ2ug8r1tUUjre90+wtYeXjOJemdRJseuSAqtG4+CCQ9OB
-X-Gm-Gg: AY/fxX633uvODFcjHrdFdbV3I2NFOegZ5VrzR1Ra690pOTZZOIVao1kD5XNWF/NzzER
-	U0GAkwxzWLV2dEb21wP7EFi4BTNYa6IHwtAwnjjXFpkUO4c7+GsfCz2QAcn1hg5DsELxgDFyki9
-	OE9oBVmkzWyvgwjCE/vgSr3fuq5SgJx5nCdXfFJ65QArF/U22lsLOdpcROYI7EeS1sa2CXDoUI9
-	XyY3KExDD/pAapkzF2T04h1ElOutViT1eG+EVyyeoC+WCEhyhu0SxT26UKRYEGYoz1+ABc88/pH
-	nD4ZppZsS1re2c57E2ChQGvkurjzGtKHTKDR8INgjQdKaN4lZQRbubsZE4IIwayZIxsYR6h1PIZ
-	+d4S/dHm7BUi282Vz3u4b3/uvGSU4/gzWubdF/d0qCV3ySpnSDATO7qd5zL77eG+pK3eh8Zyl5m
-	XOeklaWMqNkPZzSsIKdmQaWLhFzU8Yh4xH8GdPvNIbI12WlwRJmhabJvtCu7QEA9dP2VIfxaQ=
-X-Google-Smtp-Source: AGHT+IGfZ/VV1EgIpQfm6XbEYEULUZrE47bR1JFdMDsAC7mrhCu9j7Uk9iKF0W4PaNZRuJvhez81CQ==
-X-Received: by 2002:a05:651c:420a:b0:37f:d7eb:15bc with SMTP id 38308e7fff4ca-382ff860204mr57222451fa.40.1768298089113;
-        Tue, 13 Jan 2026 01:54:49 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382eb3a0046sm44993431fa.8.2026.01.13.01.54.48
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 13 Jan 2026 01:54:48 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
-Date: Tue, 13 Jan 2026 10:54:47 +0100
-Message-ID: <20260113095447.52482-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqqv7h6lfua.fsf@gitster.g>
-References: <xmqqv7h6lfua.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fGQAYE5J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mGA4an7/"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 33154140009D;
+	Tue, 13 Jan 2026 04:54:50 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 13 Jan 2026 04:54:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768298090;
+	 x=1768384490; bh=GEg3zcnQP09DwnmZf+kv0xOCurxScjXeFgQdJthvH1Q=; b=
+	fGQAYE5J+9lcxuuGw1dFfxYHiKOmhoWAZZBn4Snysj4sHx4vAM37eXqD/J8yRbXr
+	kxqwWH1feNkgQfptXRTugoh4Ncz6aC4CmNH/w/w7Pr4Jfd0kVwjY9ouHSKB967Ho
+	VgwE7xHOwq/ugI+mNLKFjM8PUxaUzdk6VenkOjhiqJx1WUvdHnYA8c9aRDHGdGMm
+	vGSk3u+rXjUV6QBle9VMqwQ2lhJpmX+37ndxS1B1urrJG+6emkritDfilD+ni/rF
+	8vclnpeVeC64Zw2oyH2J/KwP1GuftaJ15gWVO9IcPa8don4jo8ISN+xgYTFR7iPa
+	7OvuDd1p9sWNrM8Bt/F7Qw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768298090; x=
+	1768384490; bh=GEg3zcnQP09DwnmZf+kv0xOCurxScjXeFgQdJthvH1Q=; b=m
+	GA4an7/SaJ8Kh0UiUlZLnFnMIG+1uA9wGnxdkVvUw3Xjo0PSIPct58fKgzw5VCH5
+	C4Mq+g8unF2QfC/v6rjlbpVGmCy2dwZL4rESVPYna7uwhz1BuopaorE+OrXJ/I25
+	odniT4Jfd+aLonZ/9xydndUgkojdgqbgRMBe6xyjo2u3FB93uUk+COFMxkjrENZm
+	JM3Eh4Qy4VO+hpdYkp11bA2NOV1qof53IOsVQc7bvSFVWc8iSXFoGyMsMECaa6GZ
+	622m5VLuzqy5pBGghfDdt0cUOt9qAMqQN0JEiZZ7+dKB3Erh3sFWb2NQ5fvIJxAd
+	rH5Kh0N9TroCNfRxeQg6A==
+X-ME-Sender: <xms:ahZmaW0CnetonD8DiNMNfukLheEJbvZ9tuwD0mfXbHzPm2L5PjblYw>
+    <xme:ahZmaU5hteEGjhvVehJD_GrVpg22jRpYYPssB95ooHHXYyTlA4HlB2Ant_BY5xAB1
+    gDyyohnTWQI9ETb4qMAn6-vIDzA6eHneyVxAAIwGc8quAQEu6POrg>
+X-ME-Received: <xmr:ahZmaaS73y9ub5v2lsCB1qx_VucWxpgB5PVVHFETJboV1JT6h95j4EWl7itw_GzTcj9LVGk0QuQBpqHnWom_Jdf5dkE2zukPcO_c-o1RCA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvddttddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsohhrgh
+    grnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepnhgv
+    fihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrihhlsegsvgihvghrmhgrth
+    hthhhirghsrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:ahZmaRV6tspIUOALfN4JZWRecIHAC5qCni2peq2ObNUEp7YBMkE4Kw>
+    <xmx:ahZmaXFvR0mh2p2OeQ2N_2TAwY1_wCbvbcAA557proQ_3rRDD0je_w>
+    <xmx:ahZmacfKtEbp84lfogp-JC7oy0tYB7Q4-w5lYvQKEMdT28KCO_2VTA>
+    <xmx:ahZmaYouNtSnHz8bpMcMsn0rF1_lsskLpYRMapzuQDaxwqmrjj8iig>
+    <xmx:ahZmad2_JmYjMDM6QwpqVkKeZhGTg2Tsrheazwm7HRnJKToMGVgoUIQw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 Jan 2026 04:54:48 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b7ec06b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Jan 2026 09:54:47 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 13 Jan 2026 10:54:35 +0100
+Subject: [PATCH v11 4/8] replay: support empty commit ranges
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260113-b4-pks-history-builtin-v11-4-e74ebfa2652d@pks.im>
+References: <20260113-b4-pks-history-builtin-v11-0-e74ebfa2652d@pks.im>
+In-Reply-To: <20260113-b4-pks-history-builtin-v11-0-e74ebfa2652d@pks.im>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
+ =?utf-8?q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+ Martin von Zweigbergk <martinvonz@gmail.com>, 
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+ Elijah Newren <newren@gmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
+ Phillip Wood <phillip.wood123@gmail.com>, 
+ =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+ Matthias Beyer <mail@beyermatthias.de>
+X-Mailer: b4 0.14.3
 
-> Just an observation, and not an objection, but it looks curious why
-> the last one is so different from the other two.  IOW, the above
-> makes me wonder if it makes sense to roll the show_divergence_advice
-> bit into the base_branch_modes flag word.
+In a subsequent commit we're about to introduce a new user of the replay
+subsystem. With that new user, the range of commits that we'll want to
+replay will be identified implicitly via a single commit, and will
+include all descendants of that commit to any branch. If that commit has
+no descendants (because it's the tip of some branch), then the range of
+revisions that we're asked to replay becomes empty. This case does not
+make sense with git-replay(1), but with the new command it will.
 
-Good point. I changed it, it makes it nicer with one fewer parameter.
+This case is not currently supported by `replay_revisions()` though
+because we zero-initialize `struct merge_result`. This includes its
+`.clean` member, which indicates whether the merge ran into a conflict
+or not. But given that we don't have any revision to replay, we won't
+ever perform any merge at all, and consequently that member will never
+be set to `1`. We thus later think that there's been a merge conflict
+and return an error from `replay_commits()`.
 
-> Other than that, this round is a pleasant read.  Thanks.
+Address this issue by initializing the `.clean` member to `1`.
 
-Thanks for all the help so far!
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ replay.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Harald
+diff --git a/replay.c b/replay.c
+index ae13b59abc..6680d50bd7 100644
+--- a/replay.c
++++ b/replay.c
+@@ -266,7 +266,9 @@ int replay_revisions(struct rev_info *revs,
+ 	struct commit *commit;
+ 	struct commit *onto = NULL;
+ 	struct merge_options merge_opt;
+-	struct merge_result result;
++	struct merge_result result = {
++		.clean = 1,
++	};
+ 	char *advance;
+ 	int ret;
+ 
+@@ -282,7 +284,6 @@ int replay_revisions(struct rev_info *revs,
+ 	}
+ 
+ 	init_basic_merge_options(&merge_opt, revs->repo);
+-	memset(&result, 0, sizeof(result));
+ 	merge_opt.show_rename_progress = 0;
+ 	last_commit = onto;
+ 	replayed_commits = kh_init_oid_map();
+
+-- 
+2.52.0.590.g1f87b77810.dirty
+
