@@ -1,69 +1,70 @@
 Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C9B28466C
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 12:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBD0346FA7
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 12:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768306321; cv=none; b=QFqOJGJZAOObhnPD0bFsusB+Nz1oSnvMzjlsPki0HeBe0i2OlFFoBE6k185LcmyBFWolatUirIsyejwt+DOW2LsUBmJElv3qVhyL0LOa60v7McHB2Z5Ts80+vP9KIB8PX+1u0vyAchzJU6v4oa8GdwpKARP4yjbQVjtK6o+Xtd8=
+	t=1768306322; cv=none; b=GlP5WpBDGpw1Du3jqGNoDDaKeEBpnREqGf/XAn+5lmuJUEKMyfqjQByIm5OI28i72yTiq9sJl7Z5214vsUjupbmee6ml1K/DmF0FAESRM1NW3RNzHaGoZUDgkC74hmuo6zX0ty0+RbR6JYB6QzxJo6Y/6KFT5IxOzlmfk3Sv+uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768306321; c=relaxed/simple;
-	bh=b5naPlLLrrPSBc6IZIKX7JLd5aBSaa+FXo845WIOx+k=;
+	s=arc-20240116; t=1768306322; c=relaxed/simple;
+	bh=hvaFgUfinjZIgeJ3QHsxahSWfHO8GXT5K0VY9CQ/M+A=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=k2ZTewU7kBjZ9+dNP4y+Cpf3DxWIOzBfvXDuuYVWeI2a+OkaJCt1IU1F+q8B2FH03ZlIecTt4v2HhaZXK+tZhllZ7KEdRiFKpiy0Y+DymkG/t8g0YybNL6Egc8JmQLf4DirbE1Zt50kR0Z+ZNaBpgFApRBBtwLhQ1JlNd8mjlk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ke+LY5w2; arc=none smtp.client-ip=209.85.160.178
+	 MIME-Version:To:Cc; b=qxx7bSEkJcdjxzk6u9JnjVcfhBcwBoO4cB6UUb4+CMB1EIyIwEq4hIpHwOdi3aS9jSb0j4pA3KxP4FkffaIKsrDHr4mXju004wzZ+QY4hhlejVJ4KrqepdGzH5JtChbBqRlGBJ6sV34kej1G28fHeUNYZQMsYkybPhMQTJ6DTfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQvMbXUg; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ke+LY5w2"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4ee158187aaso81580271cf.0
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 04:11:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQvMbXUg"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4f1ab2ea5c1so110045131cf.3
+        for <git@vger.kernel.org>; Tue, 13 Jan 2026 04:12:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768306318; x=1768911118; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768306319; x=1768911119; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pZzISbNEEjfMKmK0iyaRGUajZP9fSnOq20tYgRYw4Yg=;
-        b=ke+LY5w2rSKWye1zzxGdB8fVB513FrbewvQZVMlXAgxqSLz3vCCEBjvxP4a/uBh94U
-         OKEkEaUqK9SPU7k1DVXTxHk1gS/uees2ENp+YE5ZoyMooKAatg9IrhJjYZEjYQOUdA8h
-         fcr4F6+HjsD74nIqiKOg+w3o0CHz3ZeVEqsmiwtkx6/J//ZpcdkZiF2OSmlbh16hwoHR
-         /BM4uAe483nj+sQa72YQ+pw4LaPevrxt2hAIZ0L+1QNusJ+eMZ5Q/amvaq5gwTRQCO3Y
-         FM+4WShXxxtezvlfpjujNq1XgZvn5n1kxmhfCIcimkOly5uERy9fBtPaYdVELYJBx4Ez
-         16SA==
+        bh=p4r8h+bI4iflLCMRaiiguOyi2Omzn95RD919H6vq9AA=;
+        b=gQvMbXUgr05uSjm/RwA0/8Y1kXzAXc5t9fkRLHdHh+ebk79dsa4W/oxXZilfLswm5u
+         m+yoL4xRyYz5Y8NWxbx7OXSiGuJOpWfIRn2wlhRasAHcn+tkHLAA3ztWCaDXaLh6c++1
+         jUZUuIypcwArtMU/jO5kuvO4KOSnB/CkyY44baEnHUzMw5jkkeEdUXqFY4MAGm9Cf2Hj
+         KPDpTEUQGMcDRS3a1F0fa3hef3IDxh/nLCFXGzE3vniCyoeV+7SfJwyZx8nCEwiWzgER
+         Afny30k8Qwc26DVpL+a9ydnR76lOL4j3UOXiMQR3TCo7UEuaucK1NTDH1rX4b/OeLcPV
+         /pmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768306318; x=1768911118;
+        d=1e100.net; s=20230601; t=1768306319; x=1768911119;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=pZzISbNEEjfMKmK0iyaRGUajZP9fSnOq20tYgRYw4Yg=;
-        b=Os+VaKVmTBD7eV/rxdB56jDO0DBB3fKAtoETGBlCKMpKd0oYa+KvBu3e8NdXsBlqoA
-         pAWb7xrwOthumVuP6ODSW4yW8bcCEJzDQUjWM/o9lyDEQuu7/NW5vkvUpf4hzC2AePO1
-         jb6/KdqNZWoNSXxw+5/1LtVpiAnrs6uPcW8mqxvxLO6nB9dOYYv7cfM6Pp185z8pVKao
-         4jYam8Vzxbi4RVqlQzPe1734kbebZ50Nllj7XS50nUfaVYoT/rR/WTt6pJcipyWhIK6+
-         Baj6E+c45Tx8xHlpkwKd9tgOOTF1XFPOiaBioBiMTsOVY8rImEBmjwuL3W950WxUS5W1
-         uFPw==
-X-Gm-Message-State: AOJu0YzVUKKKfQ2FF/cxzUfXkqy6MaJSqmJusqvdJMIsxSG4MRMOFV5V
-	+k+2FsNzc5a3izjElnL9JlqXpQBdrDzVZnusPcApZVamugd3eKENaZRGaXQjFQ==
-X-Gm-Gg: AY/fxX6Cu/v1syPlMHxbK0+0SAw64LvFCS8oDtd25YmvBctoJeUHZNrni2y3bvrIp//
-	99MeY4loNOIKmTB5ssyXUgBrD2/4NDyWvLZITb169ljfVR7gldtENy/8He1aQ7Mb6/765+PXGvW
-	dq3PbTqE9CKZrw4Y3OJeZcEUSv4cfju4jnOQxiFH+75umr5KosHX89eIpG37WbGYkj8XK0UvQ23
-	9Jn4jH4rHRZR+BsxxVqDm/Jk1QfMSAdHsDzbIrvQRPP0ocCAnyeqTNPVHpXR6LCMyFNSLHcPmA9
-	/7pOKo91OKG4x3c+ccoWKit4Vnr4UBv00PrD5PNly1nEdZvMRwGp4lnVkWnQRHI6GS39zdkBwWf
-	HrQFVUQ0v+B6nRL9TO2Obz1sJsrao8XQaIX55dZJmrL5UqBT4i3HavZSfF76dHaA0AsyQ5VD6+c
-	zH8jk4610hKDC5cw==
-X-Google-Smtp-Source: AGHT+IHGXS8Xx0zXoSXOE76uNseEYbXlvfgij1kdC6TT7SfggepDUyf75A7r7tNaeJgoWkbJPxZcJA==
-X-Received: by 2002:a05:622a:5817:b0:4ee:1dd0:5a51 with SMTP id d75a77b69052e-4ffb4913976mr278848941cf.2.1768306318052;
-        Tue, 13 Jan 2026 04:11:58 -0800 (PST)
+        bh=p4r8h+bI4iflLCMRaiiguOyi2Omzn95RD919H6vq9AA=;
+        b=o2+cSPoZuLk6zAyp7jZY5c1SDpBaW7ZqN32EP0ElQ2Hp7ZaejmtfravmYBJtqNBs+F
+         0r98oJV1oGc1v2oIwjpcMZBcdYwbS1cEc45ePZlLkYNb9+NaO/AfqDKBVPte9OHrHsXu
+         iryJf7XALNJpw9+heY4FcPECav29MPslISASSJtFmOb40OSr7Q2NkMYsOM5puyVNRM8D
+         vy/Gj5T3FY3hScx+bxFQbWG71mTmbJtIhJscZeFgkkybDAJyZrbC+kuJdy2y9K2rK64D
+         9XeW/30oJb/BFGu7MbYxKgTJsQT5Q03vgKzKpKcawao67XE1ybxZrbE1+g7ZL9ITOn8I
+         PZCQ==
+X-Gm-Message-State: AOJu0YwMU0W1+ZPB+n9Yaw8E6gXkA/gy2YinIAnr6MUnCMcOSOA+l/Ha
+	vKTErJEfjtdQHl4/HZK1G7qWaayo2XAsRiEnkHW9xE1DPsZr1iUqDNSk3FkJiw==
+X-Gm-Gg: AY/fxX7l9G2GKBRSBx8XkfpMatanGZR2RJQ3+uoVsRbyFED1FTHGGM8/gk06DTsBhvE
+	SK2j+ZxRiUr+7hu+z6mdLc2vAn3+LNFZD9hWFzjJ9ksX203GRNu5wa3N/1zSx+NOOifkq/6QVdQ
+	YPk2NzPrcObLMcCuAEd/Qo0zD92yEkry/xBBVIstKiu/DSR6mmcgw+NbrH9U+eOSulOrniBuSMz
+	BTQiKZitq+C8P5m77eNrJJ+fgIwUdUt1+71y9u+GG/voF11HJkHZufkm2JApLlV0h+T0sJPZ5xA
+	5aLR3Oqrb8gWIgLUUmDTZfZUuWUCuvtjpYBMICxpVzpuKK9+DXwwGLiwDNqSiwRnPMkMFZHl1hu
+	mUlp+pmWnp6011kljNw5cGeoh6TKhwOwS0XNEO3jjud35g5kSzTZxMoDUIT8rvEiRU8vVqGJlRN
+	mH2b5WSrwkh6szEyLF+Qi4Mn3j
+X-Google-Smtp-Source: AGHT+IHdDhCj5N/60Xj9VqOPgPiD4YqJeXO3dlJqulaDWDCfRofEiVVhdQLWp9VViXeCg11vtPPqFQ==
+X-Received: by 2002:ac8:5cd1:0:b0:4ee:60a6:ee03 with SMTP id d75a77b69052e-4ffb49f5dd9mr267233251cf.41.1768306319429;
+        Tue, 13 Jan 2026 04:11:59 -0800 (PST)
 Received: from [127.0.0.1] ([64.236.142.148])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890771061e7sm154530366d6.25.2026.01.13.04.11.57
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89077267e14sm156266226d6.49.2026.01.13.04.11.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 04:11:57 -0800 (PST)
-Message-Id: <pull.2138.v25.git.git.1768306316.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2138.v24.git.git.1768298118.gitgitgadget@gmail.com>
+        Tue, 13 Jan 2026 04:11:58 -0800 (PST)
+Message-Id: <fd05c7b7786892b2a1efe3a3daa74bb57546830d.1768306316.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v25.git.git.1768306316.gitgitgadget@gmail.com>
 References: <pull.2138.v24.git.git.1768298118.gitgitgadget@gmail.com>
+	<pull.2138.v25.git.git.1768306316.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 13 Jan 2026 12:11:54 +0000
-Subject: [PATCH v25 0/2] status: show comparison with push remote tracking branch
+Date: Tue, 13 Jan 2026 12:11:55 +0000
+Subject: [PATCH v25 1/2] refactor format_branch_comparison in preparation
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,94 +75,143 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
-ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
-cc: Ben Knoble ben.knoble@gmail.com cc: "Kristoffer Haugsbakk"
-kristofferhaugsbakk@fastmail.com cc: Phillip Wood phillip.wood123@gmail.com
-cc: Nico Williams nico@cryptonector.com cc: Patrick Steinhardt ps@pks.im
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Harald Nordgren (2):
-  refactor format_branch_comparison in preparation
-  status: show comparison with push remote tracking branch
+Refactor format_branch_comparison function in preparation for showing
+comparison with push remote tracking branch.
 
- remote.c                 | 175 +++++++++++++++++++-----
- t/t6040-tracking-info.sh | 285 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 425 insertions(+), 35 deletions(-)
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ remote.c | 82 +++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 48 insertions(+), 34 deletions(-)
 
-
-base-commit: 8745eae506f700657882b9e32b2aa00f234a6fb6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v25
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v25
-Pull-Request: https://github.com/git/git/pull/2138
-
-Range-diff vs v24:
-
- 1:  fd05c7b778 = 1:  fd05c7b778 refactor format_branch_comparison in preparation
- 2:  138b79a0b9 ! 2:  fa744efc59 status: show comparison with push remote tracking branch
-     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
-      +	test_cmp expect actual
-      +'
-      +
-     ++test_expect_success 'status with upstream ahead and push branch up to date' '
-     ++	(
-     ++		cd test &&
-     ++		git checkout -b ahead upstream/main &&
-     ++		advance work &&
-     ++		git push upstream HEAD &&
-     ++		git checkout -b feature8 upstream/main &&
-     ++		git push origin &&
-     ++		git branch --set-upstream-to upstream/ahead &&
-     ++		git status >../actual
-     ++	) &&
-     ++	cat >expect <<-EOF &&
-     ++	On branch feature8
-     ++	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
-     ++	  (use "git pull" to update your local branch)
-     ++
-     ++	Your branch is up to date with ${SQ}origin/feature8${SQ}.
-     ++
-     ++	nothing to commit, working tree clean
-     ++	EOF
-     ++	test_cmp expect actual
-     ++'
-     ++
-      +test_expect_success 'status shows remapped push refspec' '
-      +	(
-      +		cd test &&
-     -+		git checkout -b feature8 origin/main &&
-     -+		git config remote.origin.push refs/heads/feature8:refs/heads/remapped &&
-     ++		git checkout -b feature9 origin/main &&
-     ++		git config remote.origin.push refs/heads/feature9:refs/heads/remapped &&
-      +		git push &&
-      +		advance work &&
-      +		git status >../actual
-      +	) &&
-      +	cat >expect <<-EOF &&
-     -+	On branch feature8
-     ++	On branch feature9
-      +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-      +
-      +	Your branch is ahead of ${SQ}origin/remapped${SQ} by 1 commit.
-     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
-      +test_expect_success 'status shows remapped push refspec with upstream remote' '
-      +	(
-      +		cd test &&
-     -+		git checkout -b feature9 upstream/main &&
-     -+		git config remote.origin.push refs/heads/feature9:refs/heads/remapped &&
-     ++		git checkout -b feature10 upstream/main &&
-     ++		git config remote.origin.push refs/heads/feature10:refs/heads/remapped &&
-      +		git push origin &&
-      +		advance work &&
-      +		git status >../actual
-      +	) &&
-      +	cat >expect <<-EOF &&
-     -+	On branch feature9
-     ++	On branch feature10
-      +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-      +
-      +	Your branch is ahead of ${SQ}origin/remapped${SQ} by 1 commit.
-
+diff --git a/remote.c b/remote.c
+index b756ff6f15..fd592ec659 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2230,42 +2230,21 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	return stat_branch_pair(branch->refname, base, num_ours, num_theirs, abf);
+ }
+ 
+-/*
+- * Return true when there is anything to report, otherwise false.
+- */
+-int format_tracking_info(struct branch *branch, struct strbuf *sb,
+-			 enum ahead_behind_flags abf,
+-			 int show_divergence_advice)
+-{
+-	int ours, theirs, sti;
+-	const char *full_base;
+-	char *base;
+-	int upstream_is_gone = 0;
+-
+-	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
+-	if (sti < 0) {
+-		if (!full_base)
+-			return 0;
+-		upstream_is_gone = 1;
+-	}
+-
+-	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
+-					    full_base, 0);
+-	if (upstream_is_gone) {
+-		strbuf_addf(sb,
+-			_("Your branch is based on '%s', but the upstream is gone.\n"),
+-			base);
+-		if (advice_enabled(ADVICE_STATUS_HINTS))
+-			strbuf_addstr(sb,
+-				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
+-	} else if (!sti) {
++static void format_branch_comparison(struct strbuf *sb,
++				     bool up_to_date,
++				     int ours, int theirs,
++				     const char *branch_name,
++				     enum ahead_behind_flags abf,
++				     bool show_divergence_advice)
++{
++	if (up_to_date) {
+ 		strbuf_addf(sb,
+ 			_("Your branch is up to date with '%s'.\n"),
+-			base);
++			branch_name);
+ 	} else if (abf == AHEAD_BEHIND_QUICK) {
+ 		strbuf_addf(sb,
+ 			    _("Your branch and '%s' refer to different commits.\n"),
+-			    base);
++			    branch_name);
+ 		if (advice_enabled(ADVICE_STATUS_HINTS))
+ 			strbuf_addf(sb, _("  (use \"%s\" for details)\n"),
+ 				    "git status --ahead-behind");
+@@ -2274,7 +2253,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 			Q_("Your branch is ahead of '%s' by %d commit.\n",
+ 			   "Your branch is ahead of '%s' by %d commits.\n",
+ 			   ours),
+-			base, ours);
++			branch_name, ours);
+ 		if (advice_enabled(ADVICE_STATUS_HINTS))
+ 			strbuf_addstr(sb,
+ 				_("  (use \"git push\" to publish your local commits)\n"));
+@@ -2285,7 +2264,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 			   "Your branch is behind '%s' by %d commits, "
+ 			       "and can be fast-forwarded.\n",
+ 			   theirs),
+-			base, theirs);
++			branch_name, theirs);
+ 		if (advice_enabled(ADVICE_STATUS_HINTS))
+ 			strbuf_addstr(sb,
+ 				_("  (use \"git pull\" to update your local branch)\n"));
+@@ -2298,12 +2277,47 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 			       "and have %d and %d different commits each, "
+ 			       "respectively.\n",
+ 			   ours + theirs),
+-			base, ours, theirs);
++			branch_name, ours, theirs);
+ 		if (show_divergence_advice &&
+ 		    advice_enabled(ADVICE_STATUS_HINTS))
+ 			strbuf_addstr(sb,
+ 				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
+ 	}
++}
++
++/*
++ * Return true when there is anything to report, otherwise false.
++ */
++int format_tracking_info(struct branch *branch, struct strbuf *sb,
++			 enum ahead_behind_flags abf,
++			 int show_divergence_advice)
++{
++	int ours, theirs, cmp_fetch;
++	const char *full_base;
++	char *base;
++	int upstream_is_gone = 0;
++
++	cmp_fetch = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
++	if (cmp_fetch < 0) {
++		if (!full_base)
++			return 0;
++		upstream_is_gone = 1;
++	}
++
++	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
++					    full_base, 0);
++
++	if (upstream_is_gone) {
++		strbuf_addf(sb,
++			_("Your branch is based on '%s', but the upstream is gone.\n"),
++			base);
++		if (advice_enabled(ADVICE_STATUS_HINTS))
++			strbuf_addstr(sb,
++				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
++	} else {
++		format_branch_comparison(sb, !cmp_fetch, ours, theirs, base, abf, show_divergence_advice);
++	}
++
+ 	free(base);
+ 	return 1;
+ }
 -- 
 gitgitgadget
+
