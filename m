@@ -1,122 +1,122 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAF29443
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 12:31:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768307512; cv=pass; b=coTgsgd8fODlAjAD/s5icR57JfFQ/NPNdBVLRfJOIjNrUruSVEv6k4fzuQEvdph1WuzeDWlCfeVFtyUwNEvgmlhDzRlOQRJE4JHukFNRcOXGhnWI3tfJhN+s8s8nK6JPkEo7AwGs0UDad/nncLjEmIpAn6jXL4Atk8HIMFqyx5A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768307512; c=relaxed/simple;
-	bh=zwGNVSIm20kd0E0YIDugkmYf9/dufo4k5J+knuoJdRI=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C197738A9D4
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 12:54:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768308868; cv=none; b=fwTphl/phlTqjvXJHxFJH4F2c2kNXNNs24FdxpkJ9DsmHU6ZL7IhZR3oFeDBsPQrBZsUjPcR+bgrKPNGxIC1CghP3lh7UBd6k09hZk7F/9K4yViVBfRvUstV+YMOwjXDgRy+SjklVdw6FQrICrcKV0Co08JQsRl+kdAQqVBsBNQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768308868; c=relaxed/simple;
+	bh=pPGitv4hFyxUtdvmNTYqA8ej4EzliQ86ciTDsrOKNSc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kCt9qiBWOkpysY69zqsYCBFKK3AIIJaEyusU5AEY7LDZjW8gaby8PZ/43my7PWszs3CCLv3RSIhIQJaBQanyayUyVGkHpbYZ5ddnN//GD8/t9ZhDefi7BpOWnNpatvneN+k8ZzwprydXxvsqIfS1KuhjPSuPyJMo0MGlJdy9scU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=HJ39eqQY; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=FiiC9ww8R78ON3VXqUqABnKPBpuSgp0Aocj/YTZ6l2FbR01m4vxko2mq+kkHbQp9fgYcu/q96aF3HViTICpPyAyiEHQZdP87jTRs+bOTxYozjdbpVbgd3Quqy+A/0feTBOkOmRXuBZG2FU1qTe6Ob9JyjdJgzdFEwyVO3sJdqmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eqUEVadd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GNDJHjMU; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="HJ39eqQY"
-ARC-Seal: i=1; a=rsa-sha256; t=1768307500; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=OJHQzX2z7xo1kGeOO4DU03lZyKd+isMTjE6vIgV9SByBGACxlZBu7lAgR5/rUX2wOkIpuiyQZsNwNhbJGxv5tyjyr7++Y8Z+UyITqDfE7nwYrByZJmwrnl8fPjbZHliN+QkwnOWi12KRWPv/XaoqZyNamM7F9zn/Fs5M8wsxt2U=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768307500; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=YQhf680Na5+XxgS6k6QRA5biD0F6L0Xc4uT4spApD5s=; 
-	b=YXih65p7fLHh0ZiiaP9EB3Tk+3w1ihj5y+3UgfexIac/v3SbO3ki5Q12IkknhwL4sKV+iFcA43x3yejEmbexaL3s6p78Gxr6ynCml7XOWwr3fQar6A/qw4VGaMbWjfX5hMgylbVPnWJX/RLe2jVlLkFphTpPE9ipKIu5lnssQbA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768307500;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=YQhf680Na5+XxgS6k6QRA5biD0F6L0Xc4uT4spApD5s=;
-	b=HJ39eqQYYj6KoOI0QF5OohV64fw4mlyE6gNBd1UNH4yh6mMNfZ0kIm5j3nOQvh19
-	wvygt/4cwy9Wym3NA8lnYClncUmIVfn8Mla9//DE31rWD2ODaqCxHcJNkfyQ5UkpeHv
-	QHJdVD1WfHKCaxx2gA6nDBT96872MKNiYrmAiqBo=
-Received: by mx.zohomail.com with SMTPS id 1768307498994858.3393982770984;
-	Tue, 13 Jan 2026 04:31:38 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Chris Darroch <chrisd@apache.org>, "brian m. carlson"
- <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Chris Darroch <chrisd8088@github.com>
-Subject: Re: pre-push hooks and stdout regression
-In-Reply-To: <87y0m1onad.fsf@gentoo.mail-host-address-is-not-set>
-References: <ab578804-891e-edcc-12a6-8b1030d1bacb@apache.org>
- <87y0m1onad.fsf@gentoo.mail-host-address-is-not-set>
-Date: Tue, 13 Jan 2026 14:31:35 +0200
-Message-ID: <87pl7diti0.fsf@gentoo.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eqUEVadd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GNDJHjMU"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 184DE7A0162;
+	Tue, 13 Jan 2026 07:54:26 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 13 Jan 2026 07:54:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1768308865;
+	 x=1768395265; bh=C3jqc9JADfjVbnnxKxkoeCQBeTVRdvhoTmIdKHfieWw=; b=
+	eqUEVaddXaqRhMVEzx2xKADtuTdLW6GaEsOSAtg3b8QmE12fyd7JfLOCfgxJ45ho
+	OfDSaG8oMmbeqw0rNDbmFcLyRY2lF+7gKWfDAE/eyUlu4MHrWjj3FIreY7v8tDh4
+	OQVIFjioMvTwu2UCds2I3Rd2bFkaHYET0CkzGMwz+tVhIxSIbakXRA3rtmPVaDyf
+	gcv4KCX6tNGsEKKy2SwmleuvEaAwo2JyUmPNDhQNvuQ0yRrBvIR5LSiJyWTb3B/d
+	CZXUVteZrKy0cao3B5RjxQzmWNK3SosizNDAb6B+nbxEkMzm1xJ57RT0o9T2lpRj
+	f84AlfMxJlWO4q8foZS+9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768308865; x=
+	1768395265; bh=C3jqc9JADfjVbnnxKxkoeCQBeTVRdvhoTmIdKHfieWw=; b=G
+	NDJHjMUafMKHj8H6eL1/+sDSttd8VJzN5OuyOBzNT/JMHpVMWuRw2i+gh/xjKPS+
+	O5qROZgWGY1qkJL4zTNue/Th28W0UgrmcusY73VzXWeF/LpMtmVw6Qffuy2hC/6F
+	Q9ZLGgH7ve5LL/hAz+Hx5DJMbyzj36m3b/AfL9r62DHlBleqPrYjTizJPZ7RT7a+
+	yHKbCtIWej8Z/A2QxfsJJdpxn3aW02AM9wZIRDktaKfYeJtKD90wdXU7au2gaW7h
+	foo8H/XG9f/9b47pa9jv4R+ta/3MU+f0zuSeaU45l7he0GLot33Ed9+eAx7kQdAr
+	55Kf4vjYKtm8u3xNWFV9Q==
+X-ME-Sender: <xms:gUBmaVho7V4F4tznJhAxkF3z3fsHouCzOAUdEH3BHQ2vAMOla6oNPw>
+    <xme:gUBmaX2LFBHUDMD-93r4_dyph4QeGi_sHThAIYZutQMVpTFiIWICRj76U3Xuy9TGC
+    Wvr3z65Wrk0Ns7YK_x9yqng8a5W6VDVa8rosOIipBRb0fhlhIoG>
+X-ME-Received: <xmr:gUBmafjnjmWSzSS_DlX2_rfuxyZLv3TNbsIBFQCAgFDH9F0Bkr0eHa-NWTO0XoLRURsCE5FPtvaMPO6-N6sIllXd8VV-g0KFpmcu1ac>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvddtfeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdtjefhgfekhffhteeiffetheelhedt
+    gfehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithes
+    mhhitghhrggvlhdrlhihohdrnhiipdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:gUBmaXfid9l8uXIlW5mZI89SyW9xMaOatb5a4Z-59KOgoXbP1s8bHw>
+    <xmx:gUBmaSlqIc0Eh-GZnFk3Ec9zwQz-1X1aPNO5AcmOwHZJGXUmp7bbEw>
+    <xmx:gUBmaQvwk-MH5ZhmazxpGVp9ntT3ehPNz0qFkE04XZMl2abXjdfN8A>
+    <xmx:gUBmaY-p3UbK8ZWf0lLtYdjzxScOuEzmVzkiJHZFtCzIdB3uJXCT2A>
+    <xmx:gUBmaRIQGtWx1AxgAxej_ispJF747zZTI46jCLrDy1USGdosNc16oyHb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 Jan 2026 07:54:25 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: git@vger.kernel.org,  Michael Lyons <git@michael.lyo.nz>
+Subject: Re: [PATCH 1/1] doc: git-bisect: convert to new doc format
+In-Reply-To: <4705928.LvFx2qVVIh@piment-oiseau> (=?utf-8?Q?=22Jean-No?=
+ =?utf-8?Q?=C3=ABl?= AVILA"'s message
+	of "Mon, 12 Jan 2026 22:23:55 +0100")
+References: <20260111204316.836446-1-git@michael.lyo.nz>
+	<20260111204316.836446-2-git@michael.lyo.nz>
+	<4705928.LvFx2qVVIh@piment-oiseau>
+Date: Tue, 13 Jan 2026 04:54:23 -0800
+Message-ID: <xmqqqzrtllkw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, 13 Jan 2026, Adrian Ratiu <adrian.ratiu@collabora.com> wrote:
-> On Mon, 12 Jan 2026, Chris Darroch <chrisd@apache.org> wrote:
->> Hello --
->>
->>    I'm one of the current maintainers of the Git LFS project, and we
->> happened to notice that a recent change in Git's "master" branch has
->> introduced a regression in our test suite.
->>
->>    Specifically, with commit 3e2836a742d8b2b2da25ca06e9d0ac3a539bd966
->> ("transport: convert pre-push to hook API") from the "ar/run-command-hook"
->> merged last week, it appears that when a pre-push hook such as our
->> git-lfs-pre-push program runs, messages it writes to its standard output
->> are now delivered to the user's standard error stream instead of
->> their standard output stream.
->>
->>    I suspect this is because the pick_next_hook() function in hook.c
->> sets the stdout_to_stderr flag for its "cb" child_process argument,
->> and that function is now used to run the pre-push hook.
->>
->>    Arguably, the Git LFS pre-push hook program should write its
->> progress meter messages to stderr, but since at least 2017 it appears
->> we have used stdout for this purpose:
->>
->> https://github.com/git-lfs/git-lfs/commit/d665f7d725150761fe3b196da2c2d4448f7d2c61
->> https://github.com/git-lfs/git-lfs/pull/2732
->>
->>    We can certainly work around this change in the Git LFS test suite,
->> since our progress messages are still output by Git, just to stderr
->> instead of stdout.
->>
->>    However, I think there remains the larger concern that users who
->> depend on the existing Git pre-push behaviour in some way may also
->> encounter regressions, perhaps because they expect (as our test suite
->> does) to see certain messages either output or not output to stderr
->> during a Git push operation.
->>
->>    Please do let me know your thoughts on this subject!  If the
->> consensus is that the new behaviour is correct, we'll adjust our test
->> suite to match it, but I'll wait to hear the outcome of any discussion
->> before making that change.
->>
->>    Thank you again and all the best,
->
-> Thank you for reporting this, it's exactly the kind of regressions I'm
-> looking for and the reason I did the "Extending git without breaking it"
-> presentation during the mini-summit a few months ago (video should be
-> online).
->
-> I tend to agree with Brian that going back to the previous behavior is
-> best for now, maybe schedule a breaking change or extension to make
-> hooks to print to stderr instead of stdout.
->
-> I will test this on my parallel config based hooks topic towards which
-> this conversion is building up to and send a patch or report back ASAP.
->
-> Of course I will also run the git LFS test suite to confirm the
-> regression and the fix.
+Jean-Noël AVILA <jn.avila@free.fr> writes:
 
-I couldn't reproduce the git-lfs test failure using the public tests
-from the git-lfs repo (they always pass), however this patch should fix
-it:
+>>  ------------
+>> -$ git bisect run my_script arguments
+>> +$ git bisect run <my_script> <arguments>
+>>  ------------
+>
+> Here, if you want to use to use the synopsis formatting, you may replace the 
+> verbatim block with a [synopsis] one:
+>
+> [synopsis]
+> $ git bisect run <my_script> <arguments>
+>
 
-https://lore.kernel.org/git/20260113115633.230479-1-adrian.ratiu@collabora.com/T/#u
+Can you add a bit to "if you _want_ to use" above?  What's the
+pros-and-cons of doing so or leaving it as the way it is written in
+the patch?  That would help people on the same page when they decide
+if they want to use the [synopsis], preferring over the verbatim
+block.
 
-Chris or Brian, can you please confirm if it works? Much appreciated.
+>
+> Otherwise, LGTM
+>
+> Thanks.
+
+Thanks for a review.
+
+
