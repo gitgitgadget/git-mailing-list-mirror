@@ -1,86 +1,85 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C43B38A29D
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E936637FF79
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768298099; cv=none; b=tS+K7YRUnbUKyQwrQaMwzm8gF8bmzEFiqVso0oqzVFLG4MvpkZIyYs09iyn5jZzlns8Leodc6G1501dEZxhePSO4PBktrbC/WAUJG3T/+woJlNJ6oGn36ZzADz5r4UDlv+lJcIAfbAOWxYFOYmUGsqwKGjfGzWEywTN6LalHb4U=
+	t=1768298101; cv=none; b=RE2T/vctm6QbcAQOIEAxCzYzDSJNNQF8GePxkpwspMdRaCFuRGp2oREN7ZmPEvpRzB9D6yNSNncETC0tdMZEBWyUFK1Q4nFwMdIEIIM34JGnRElhxmS6o+3mqFoCfBL4HYMI2UoKHUJIQx6+IbljITzGTeqUVNRRVp0mLNDOulw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768298099; c=relaxed/simple;
-	bh=jwvT8wUzq+TTcJgO+aXsI+w3tzpagITrYJSlbbzYXQA=;
+	s=arc-20240116; t=1768298101; c=relaxed/simple;
+	bh=OfJ01EBxrwzhoBXmd38LcNgiTuyFDoTnTvBEYvHfczI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=vGJym4qdsHZvRW4+Yym74q4SOE7fQkDap2asg1rV/rnJw8jOtXDlaJoGagR1/a49YIxpv2XGm2yIDG8o4/tw+ESreTxuPWt6MH1NLjJuu7fW65Zc9Jx1mtrU870n6ELDCESQ0myNsYnUIz75C6d1xexKQ8feZDMQz3zpI1SD8AI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ToukkuaE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xA8DtofF; arc=none smtp.client-ip=103.168.172.158
+	 In-Reply-To:To:Cc; b=fopo6uYMmb2w2HjtbUoBfsH95lZy4V/QSHhVIGpIpMgN317RX3RHvp+b78CtoDJGIRBoJkii52slpBF2jgUKi4/El7K+GKiFME8U8Whj1fQklhrW4VPW9p+4hBi/V2Mn6eW8yffZDWtCaR/w4+Bv8+jynJkZHC/h1uQCJSpCNmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N+eMoIeS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rw6wAd0G; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ToukkuaE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xA8DtofF"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 436E61400169;
-	Tue, 13 Jan 2026 04:54:55 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N+eMoIeS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rw6wAd0G"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3AE631400176;
+	Tue, 13 Jan 2026 04:54:58 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 13 Jan 2026 04:54:55 -0500
+  by phl-compute-05.internal (MEProxy); Tue, 13 Jan 2026 04:54:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768298095;
-	 x=1768384495; bh=tfO7nnCv8CCt359m1gccIzSw4aWv2tRWbVPH86EndRY=; b=
-	ToukkuaEL9QfKl7T889TorguITa6B0P2oB93Z9wBQTlASjjAwkUqWZ2QvvlPTMl5
-	fXPOvCxtjEO1gj/P480tI9kSKpplEZ9OQ31axDZobC2DPt6GOSKvGox0J+W6oEjH
-	2db9u4/rQw/OL340JxiovaRcujDG8EXbdlDybGDfc50DdJB1aqEuAfLQ0UM3XhNQ
-	smdOnlhpivbQweBlXQo4wpWu6F943hvx91ZL6t8JZ7O5Jubtkx4vwJ93ouYj61/1
-	6aqcAcfK34qfPwE8sY3iT3RHzM2xrNopBMekTf8K9DD7SEwLnqqSLiOeCMlfyTEM
-	V5GNNM4KTk53F9SiLxStUw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768298098;
+	 x=1768384498; bh=exFpp08c4C8Pcnfe11xAO0L2Ia49dW8t3sUJXmlx5N8=; b=
+	N+eMoIeS7/qyL3wboh49mJQ059Xa901ZRCLoi2d0MxItkDn008nPF71zDOqnGRBJ
+	LF5rvmOvnflgYrEjhWV7qt1CatxYHZOqTJe3ARJouSPu9pTtuk4aOTAifl6GGORo
+	JS6oWNl+11kd2OorEoOQxn2XZvhZ9ayNPzIj4Yzajx0JuILqwtwjKHCyyjlS98JI
+	P40REX8ECZnyzvUAjpBFBlJY+ztAcnDiA7TMxd5KZxlC2uBVBVW8F4WRiC904k5G
+	BNlb2sUFk9xFgQqpKYoZNFD/pF8/7SzgeL5MYeOLe5dm+BisWgJWVLa2qKW20IeZ
+	9sRxqMDVkmNkFUVfml4Vgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768298095; x=
-	1768384495; bh=tfO7nnCv8CCt359m1gccIzSw4aWv2tRWbVPH86EndRY=; b=x
-	A8DtofFkCCPOEh7G2X8W9IOmKigQMNuD3tMYLIRiWVia+2taZgx5fg44FLbN2ggJ
-	1pDrDTEKX9NIzqLCTaWG+1eGB1eDr2kjIT+j6ZIQ8HEGjZFU7VShgSyv5eaubZ75
-	m9td728bshqgw2exfkiEG1BUoKEG4NNty7f/X5QrI1Qi0Ed1Kpg3An5W1lDmGIhp
-	d1W4gSDWig1s1Q409+yt5UmC9NnHDMLGRRwlQrlgB+lqkSlr0d1OYADtODFu8UsO
-	wJt3S09xwRFmGC3b9T9mgUXhSiK4RH633L34ZK8QHSBvmjahYlTfnXLMeYmfDIAF
-	08JYJLbTCsSJRrE3SvSBQ==
-X-ME-Sender: <xms:bxZmaYcDV71KskyKEj6KA7IkFklkt8Bb4JU3RApX6-ohRlMZbor-Zw>
-    <xme:bxZmaWA13dpI_ajkDaThYc5oAgAHiz9FqFClEiRM0zuN-Itv5DwhGVOQCV6q0BZus
-    Wl983erYJ_cBO-uyJmyxT45YzsyAFX2Rtul2CPUdH1g48cQnO1dbg>
-X-ME-Received: <xmr:bxZmaU4z9SqNHm5YF7Zdmluw0qoHjTA3QNDyDqHxPnYmWnUolz7SU82gdcQQwkq5-xJ7XDitaWvyS0vXfchs-VBUgelHeTao21ZR-WAUfA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768298098; x=
+	1768384498; bh=exFpp08c4C8Pcnfe11xAO0L2Ia49dW8t3sUJXmlx5N8=; b=R
+	w6wAd0G/1/ILIiIYBJZQ0781msVt64M6rG0EN80WIaRmjT2N1bCOrpyoHvGOacK2
+	lbNFAEpX8C0gNsx/RGkFmc7I9b/dHk3WKSLxhn0DHaZzM22zpTlSmwYoNCJcUvL0
+	fx54t0QK0jU14jWf2pvQw3pSOC3LRpUVETlOUmSbWdCSYaoAApZuMoNz7yqVzP00
+	66HH5C+7zgMvXVRN6OswcvZsG5xAMu28GQl2fAEt9aoD54/kFqzNT7zqYS0Q1Jh6
+	7aeJ9sLqA5rCWFa993NI6NFSi6yj0iVTzrkt+8VmTpTqlrSD2HqX1qv18vGu+q4s
+	gpGiwlx8vRR5Sb74ihb1g==
+X-ME-Sender: <xms:chZmaSf14GuHuDE9PJsKGK_RWbLT-_MChOj-v0IbpFmfERyf6tuyPQ>
+    <xme:chZmaYDWLpqKJcFlzVs8dlWI-Is-hQRR-aNG93yVn0uN0r9qZC01jRVO4WH-wkELz
+    oCED5s47pLNvor2BRzdA_3OG8mbQfmEyJOJ895mnMGdqvILfZzt5g>
+X-ME-Received: <xmr:chZmae6N-UAFTnlz11qx0CullbyfSShA4iEOwi8BO5E-AqgWlTbJVHMKU6brGa2GPAFfJlik87A4UVQNZqsoHzOzx23Gf1Tulu-R6Ipu7Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvddttdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhv
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslh
-    gvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:bxZmaXcpFblzQYLJpbLDXyTpHpTOp8jHucgoMRn8nxnkLAlE5Kk5OQ>
-    <xmx:bxZmaSsogoOoKtR1hbrPd2Uvk-HTDRsWgJcu3Air0iikDH-N_2JfFg>
-    <xmx:bxZmafmNJGstTRyNR-CXO-LkNBLHWAXYgxWcNsGuLarrgbbYKZ0TTA>
-    <xmx:bxZmadQ2Qw_XE_q1MIWzfAV6S278rzUDZk9mcT3a9d44GX6LYjx-Mw>
-    <xmx:bxZmadckB9TV5FUxEPpmEt01WYt5S4rJrMQ5h2IwioTUMwKfBQRMzTZN>
+    thhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivg
+    guvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrihhlsegsvgihvghr
+    mhgrthhthhhirghsrdguvgdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
+    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
+    pehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:chZmaZd_2031L7cPmg8-oDnVWIY6HxMbSF5JGD96rL5ytBI1S3532w>
+    <xmx:chZmacuT1TIGv1Ygpp1ziZ1YQYCmNSy8_AgCk1Ts_p1aR9rmCRVITw>
+    <xmx:chZmaRkh2_vU__9Fh0UGju5cIDKhaoUPYQC51GzuToP5ZK6WS_kAEA>
+    <xmx:chZmaXSbrhYM0AQj5V6TfoKSKc3Ryw3Ys7em9KyNmIbsv8Dbu16qzg>
+    <xmx:chZmaXdUIW3u_dL3S8A06-Uq7Lv7ndlPqBNRL4iH-adcjcte93NE9BKU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Jan 2026 04:54:53 -0500 (EST)
+ 13 Jan 2026 04:54:56 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c2aa8f09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Jan 2026 09:54:53 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4c6e0326 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Jan 2026 09:54:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 13 Jan 2026 10:54:37 +0100
-Subject: [PATCH v11 6/8] wt-status: provide function to expose status for
- trees
+Date: Tue, 13 Jan 2026 10:54:38 +0100
+Subject: [PATCH v11 7/8] builtin: add new "history" command
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260113-b4-pks-history-builtin-v11-6-e74ebfa2652d@pks.im>
+Message-Id: <20260113-b4-pks-history-builtin-v11-7-e74ebfa2652d@pks.im>
 References: <20260113-b4-pks-history-builtin-v11-0-e74ebfa2652d@pks.im>
 In-Reply-To: <20260113-b4-pks-history-builtin-v11-0-e74ebfa2652d@pks.im>
 To: git@vger.kernel.org
@@ -104,82 +103,261 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Matthias Beyer <mail@beyermatthias.de>
 X-Mailer: b4 0.14.3
 
-The "wt-status" subsystem is responsible for printing status information
-around the current state of the working tree. This most importantly
-includes information around whether the working tree or the index have
-any changes.
+When rewriting history via git-rebase(1) there are a few very common use
+cases:
 
-We're about to introduce a new command where the changes in neither of
-them are actually relevant to us. Instead, what we want is to format the
-changes between two different trees. While it is a little bit of a
-stretch to add this as functionality to _working tree_ status, it
-doesn't make any sense to open-code this functionality, either.
+  - The ordering of two commits should be reversed.
 
-Implement a new function `wt_status_collect_changes_trees()` that diffs
-two trees and formats the status accordingly. This function is not yet
-used, but will be in a subsequent commit.
+  - A commit should be split up into two commits.
+
+  - A commit should be dropped from the history completely.
+
+  - Multiple commits should be squashed into one.
+
+  - Editing an existing commit that is not the tip of the current
+    branch.
+
+While these operations are all doable, it often feels needlessly kludgey
+to do so by doing an interactive rebase, using the editor to say what
+one wants, and then perform the actions. Also, some operations like
+splitting up a commit into two are way more involved than that and
+require a whole series of commands.
+
+Rebases also do not update dependent branches. The use of stacked
+branches has grown quite common with competing version control systems
+like Jujutsu though, so it clearly is a need that users have. While
+rebases _can_ serve this use case if one always works on the latest
+stacked branch, it is somewhat awkward and very easy to get wrong.
+
+Add a new "history" command to plug these gaps. This command will have
+several different subcommands to imperatively rewrite history for common
+use cases like the above.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- wt-status.c | 24 ++++++++++++++++++++++++
- wt-status.h |  9 +++++++++
- 2 files changed, 33 insertions(+)
+ .gitignore                     |  1 +
+ Documentation/git-history.adoc | 57 ++++++++++++++++++++++++++++++++++++++++++
+ Documentation/meson.build      |  1 +
+ Makefile                       |  1 +
+ builtin.h                      |  1 +
+ builtin/history.c              | 22 ++++++++++++++++
+ command-list.txt               |  1 +
+ git.c                          |  1 +
+ meson.build                    |  1 +
+ t/meson.build                  |  1 +
+ t/t3450-history.sh             | 17 +++++++++++++
+ 11 files changed, 104 insertions(+)
 
-diff --git a/wt-status.c b/wt-status.c
-index e12adb26b9..95942399f8 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -612,6 +612,30 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 	}
- }
- 
-+void wt_status_collect_changes_trees(struct wt_status *s,
-+				     const struct object_id *old_treeish,
-+				     const struct object_id *new_treeish)
+diff --git a/.gitignore b/.gitignore
+index 78a45cb5be..24635cf2d6 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -79,6 +79,7 @@
+ /git-grep
+ /git-hash-object
+ /git-help
++/git-history
+ /git-hook
+ /git-http-backend
+ /git-http-fetch
+diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+new file mode 100644
+index 0000000000..68c35f36b9
+--- /dev/null
++++ b/Documentation/git-history.adoc
+@@ -0,0 +1,57 @@
++git-history(1)
++==============
++
++NAME
++----
++git-history - EXPERIMENTAL: Rewrite history
++
++SYNOPSIS
++--------
++[synopsis]
++git history [<options>]
++
++DESCRIPTION
++-----------
++
++Rewrite history by rearranging or modifying specific commits in the
++history.
++
++THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
++
++This command is related to linkgit:git-rebase[1] in that both commands can be
++used to rewrite history. There are a couple of major differences though:
++
++* linkgit:git-history[1] can work in a bare repository as it does not need to
++  touch either the index or the worktree.
++* linkgit:git-history[1] does not execute any linkgit:githooks[5] at the
++  current point in time. This may change in the future.
++* linkgit:git-history[1] by default updates all branches that are descendants
++  of the original commit to point to the rewritten commit.
++
++Overall, linkgit:git-history[1] aims to provide a more opinionated way to modify
++your commit history that is simpler to use compared to linkgit:git-rebase[1] in
++general.
++
++Use linkgit:git-rebase[1] if you want to reapply a range of commits onto a
++different base, or interactive rebases if you want to edit a range of commits
++at once.
++
++LIMITATIONS
++-----------
++
++This command does not (yet) work with histories that contain merges. You
++should use linkgit:git-rebase[1] with the `--rebase-merges` flag instead.
++
++Furthermore, the command does not support operations that can result in merge
++conflicts. This limitation is by design as history rewrites are not intended to
++be stateful operations. The limitation can be lifted once (if) Git learns about
++first-class conflicts.
++
++COMMANDS
++--------
++
++No commands are supported yet.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index f02dbc20cb..fd2e8cc02d 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -64,6 +64,7 @@ manpages = {
+   'git-gui.adoc' : 1,
+   'git-hash-object.adoc' : 1,
+   'git-help.adoc' : 1,
++  'git-history.adoc' : 1,
+   'git-hook.adoc' : 1,
+   'git-http-backend.adoc' : 1,
+   'git-http-fetch.adoc' : 1,
+diff --git a/Makefile b/Makefile
+index 1c64a5d2ae..c0569ed8e4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1418,6 +1418,7 @@ BUILTIN_OBJS += builtin/get-tar-commit-id.o
+ BUILTIN_OBJS += builtin/grep.o
+ BUILTIN_OBJS += builtin/hash-object.o
+ BUILTIN_OBJS += builtin/help.o
++BUILTIN_OBJS += builtin/history.o
+ BUILTIN_OBJS += builtin/hook.o
+ BUILTIN_OBJS += builtin/index-pack.o
+ BUILTIN_OBJS += builtin/init-db.o
+diff --git a/builtin.h b/builtin.h
+index 1b35565fbd..93c91d07d4 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -172,6 +172,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix, struc
+ int cmd_grep(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_hash_object(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_help(int argc, const char **argv, const char *prefix, struct repository *repo);
++int cmd_history(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_hook(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_index_pack(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_init_db(int argc, const char **argv, const char *prefix, struct repository *repo);
+diff --git a/builtin/history.c b/builtin/history.c
+new file mode 100644
+index 0000000000..f6fe32610b
+--- /dev/null
++++ b/builtin/history.c
+@@ -0,0 +1,22 @@
++#include "builtin.h"
++#include "gettext.h"
++#include "parse-options.h"
++
++int cmd_history(int argc,
++		const char **argv,
++		const char *prefix,
++		struct repository *repo UNUSED)
 +{
-+	struct diff_options opts = { 0 };
++	const char * const usage[] = {
++		N_("git history [<options>]"),
++		NULL,
++	};
++	struct option options[] = {
++		OPT_END(),
++	};
 +
-+	repo_diff_setup(s->repo, &opts);
-+	opts.output_format = DIFF_FORMAT_CALLBACK;
-+	opts.format_callback = wt_status_collect_updated_cb;
-+	opts.format_callback_data = s;
-+	opts.detect_rename = s->detect_rename >= 0 ? s->detect_rename : opts.detect_rename;
-+	opts.rename_limit = s->rename_limit >= 0 ? s->rename_limit : opts.rename_limit;
-+	opts.rename_score = s->rename_score >= 0 ? s->rename_score : opts.rename_score;
-+	opts.flags.recursive = 1;
-+	diff_setup_done(&opts);
-+
-+	diff_tree_oid(old_treeish, new_treeish, "", &opts);
-+	diffcore_std(&opts);
-+	diff_flush(&opts);
-+	wt_status_get_state(s->repo, &s->state, 0);
-+
-+	diff_free(&opts);
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++	if (argc)
++		usagef("unrecognized argument: %s", argv[0]);
++	return 0;
 +}
+diff --git a/command-list.txt b/command-list.txt
+index accd3d0c4b..f9005cf459 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -115,6 +115,7 @@ git-grep                                mainporcelain           info
+ git-gui                                 mainporcelain
+ git-hash-object                         plumbingmanipulators
+ git-help                                ancillaryinterrogators          complete
++git-history                             mainporcelain           history
+ git-hook                                purehelpers
+ git-http-backend                        synchingrepositories
+ git-http-fetch                          synchelpers
+diff --git a/git.c b/git.c
+index c5fad56813..744cb6527e 100644
+--- a/git.c
++++ b/git.c
+@@ -586,6 +586,7 @@ static struct cmd_struct commands[] = {
+ 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
+ 	{ "hash-object", cmd_hash_object },
+ 	{ "help", cmd_help },
++	{ "history", cmd_history, RUN_SETUP },
+ 	{ "hook", cmd_hook, RUN_SETUP },
+ 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "init", cmd_init_db },
+diff --git a/meson.build b/meson.build
+index a5a4e99b25..3a1d12caa4 100644
+--- a/meson.build
++++ b/meson.build
+@@ -610,6 +610,7 @@ builtin_sources = [
+   'builtin/grep.c',
+   'builtin/hash-object.c',
+   'builtin/help.c',
++  'builtin/history.c',
+   'builtin/hook.c',
+   'builtin/index-pack.c',
+   'builtin/init-db.c',
+diff --git a/t/meson.build b/t/meson.build
+index 459c52a489..73006b095a 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -387,6 +387,7 @@ integration_tests = [
+   't3436-rebase-more-options.sh',
+   't3437-rebase-fixup-options.sh',
+   't3438-rebase-broken-files.sh',
++  't3450-history.sh',
+   't3500-cherry.sh',
+   't3501-revert-cherry-pick.sh',
+   't3502-cherry-pick-merge.sh',
+diff --git a/t/t3450-history.sh b/t/t3450-history.sh
+new file mode 100755
+index 0000000000..417c343d43
+--- /dev/null
++++ b/t/t3450-history.sh
+@@ -0,0 +1,17 @@
++#!/bin/sh
 +
- static void wt_status_collect_changes_worktree(struct wt_status *s)
- {
- 	struct rev_info rev;
-diff --git a/wt-status.h b/wt-status.h
-index e40a27214a..e9fe32e98c 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -153,6 +153,15 @@ void wt_status_add_cut_line(struct wt_status *s);
- void wt_status_prepare(struct repository *r, struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
++test_description='tests for git-history command'
 +
-+/*
-+ * Collect all changes between the two trees. Changes will be displayed as if
-+ * they were staged into the index.
-+ */
-+void wt_status_collect_changes_trees(struct wt_status *s,
-+				     const struct object_id *old_treeish,
-+				     const struct object_id *new_treeish);
++. ./test-lib.sh
 +
- /*
-  * Frees the buffers allocated by wt_status_collect.
-  */
++test_expect_success 'does nothing without any arguments' '
++	git history >out 2>&1 &&
++	test_must_be_empty out
++'
++
++test_expect_success 'raises an error with unknown argument' '
++	test_must_fail git history garbage 2>err &&
++	test_grep "unrecognized argument: garbage" err
++'
++
++test_done
 
 -- 
 2.52.0.590.g1f87b77810.dirty
