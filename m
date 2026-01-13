@@ -1,139 +1,134 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131CB3933F2
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 17:41:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B87B393DE8
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 17:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768326076; cv=none; b=LLfj4CQKZdpVIDIHty/ypN1CfcwB5bJBi9E39yIXxkCQLSIgc6SmDWX7Pqba7+zJqxeGSm8igRmS0eF4/ocsbNIziRP4D0kOkzvniyUyE3YakJaMKkarTKERRZhj9W5k9rRgCdXV5u3T5PM24qyxscIBQqsifp/YcWlhKTDbleo=
+	t=1768327171; cv=none; b=VAF/FNOQDmggrWch8epWvjH79/11m/DW/dv/9plTe5W1WULbXbQZfV44UgmbThrNhsvzK4C8vqHPSZ/zwWStrSHkiDxBcZDOFxW4V9zSqTmeOjTueuai34tIRMlv+KKOSqYFgEgicehjxZOUqbOAG308Kz5EHuZYJa87M8B4yU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768326076; c=relaxed/simple;
-	bh=eNXZ7UGa88Xagi/u4bv8QwjRJngUa6OJzYYnlKqBZKs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sno9oYLHBWY8j2VCAtxtLteAeJvOjTHDLImpnk9oL3B9/dJycuMTMc3wKUu6p2GAGT9SDBRlTwPO6Ta0y2LknLx0kQIjZZBKv9I74J/MXUbhvXkQEZ3EjhUsEnpM3lUtgOCXE+Kx5qdcIzP1ejTRhrCv7IcFXzzgzeZkvjtqp34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HosKMTIq; arc=none smtp.client-ip=209.85.128.178
+	s=arc-20240116; t=1768327171; c=relaxed/simple;
+	bh=0LHdsimwVpCx2b7qcftg8aF53seEoTa6kt5UjSFV5G4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Wp62nTbTMvD43pn0XMU/xc8yDMBxZfgB6ey5aQJU8wrtkkV1fnncQOUivU5+XGFsUXXTW8QoYLUUv3H4ZVzU/Tarc2/xXOqLTj4kXUawuCjJi7r1wJYsKOH7Z6X8QjKRlPHml2FNkPJxZGV0o/KJ1NBMwZx9KMNrpeiYZdWL3MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HBIetsgm; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HosKMTIq"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-78e6dc6d6d7so39827677b3.3
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:41:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HBIetsgm"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-29f1bc40b35so85388745ad.2
+        for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:59:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768326074; x=1768930874; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768327169; x=1768931969; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jCLJjGb6gQBAxGrXfuX/W3OTEefV4Pe+Q4+3IUBQUdw=;
-        b=HosKMTIqNZIxg0WA59j1KCt67eWOIoy87DshCvwmPZcCYJcIvBFsKC2EwQsGC5Eykg
-         vDN6kQwSe+q+N3Wd0PTvEI/NY/4TA0M1Xjo1/IX1k8jYlUsS0LlLX1h6ffcJ+rkXOPga
-         u6M4SscGpUw46b3VkX0sR8Ehzt/+h3RWAMy6HHUw1Sw7m2zxEDU71JhkZTd5BvYC90tq
-         FwrJwOnQtq/8WYMqgUhoJXODV0iOTg2Gjcw7Ii4om1NC6041i3z5HN+aiczm9dK6pX7V
-         pIxQQtUSTHToyrmGPbmCa1vhdyUIcD4FubPetC3Nrq6KctdTatGk0pTwfj6sKSGmKlXp
-         1GIg==
+        bh=AqsCGBxoCSZopv3BM4vdIQG/Ae2j9zqiaABhTRo/sk4=;
+        b=HBIetsgmQSLoM23MY6C4/GKsrhjLoChgt6KJKsAZLjZqD2nQEsRR1n7V9fbDe1bscF
+         OKU18nVGnUPmUUqjmDWkSkkDy3plQUz5NYz5rJ2dHlTfBEBhObxzX0Zjtd8DRqQHM551
+         jB9th+p4QII0L8GX5lDh4DSgxsbpZX0QaHVL0ghP0wrNZ/rt5jx3iVCRLIFMt5oM32mk
+         A/ChAvm8nd3TPXcGIlutPf7ZAUxr9kxmdFWRDkZkfxDCyI8nNBfG5biXYWYF4+fXsZ/N
+         wjZSjWyUV1cJuVxHF/QL3ILgq+50Ccx87CW+LMXrzL3FK2+y1N/sYLqyQxcKhIpQ6CU/
+         bQnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768326074; x=1768930874;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1768327169; x=1768931969;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=jCLJjGb6gQBAxGrXfuX/W3OTEefV4Pe+Q4+3IUBQUdw=;
-        b=sriueiHk1nH1YZoAFXKGkKogkpH6Pv1KlnO2ZL3NvPmsdgvz92BhRrS3Ulb8Xfo0Cu
-         dxcsodGStpAGDaCUWisVBbFmvsNEcQDbuTA4Rtdv3lk7UuEKurXEv83PHZCoprIO40S+
-         XCe06yd/Y4cpMCHWjf9xa7eESory8KP5h6a2pE/TSmMlyXXafL9RXEkWAdikc/Gu9Fdf
-         4dmSOhwFKofTPi1jOW9nS2+Ussc/+c9zVTIW3JeMZG16IYR5nvGz9Kpafzinvnhl+XNE
-         sgXz1LY5ecbzTZOjeZqY8cgpVh0awGsh+WO9FTN2OTBh/xv/UME53GtxxKtdxcpNrWSE
-         eH7w==
-X-Forwarded-Encrypted: i=1; AJvYcCVL57D3lcomLtXyv2OJwZAquWyCLvWnUbhgQHzqEhFKCP8TN6D6k2MaLHKI2ReGzNbXFSs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwEtOxHHVY1duJ9ozBAD9izVwfOMy5uoe3KvM9SyxpbdyyQT8K5
-	cjcjToXNnczk+d+rKbfdkVL5YLhEjE5nfKSo/NN095kGzpkf7K9v7U+KJxgczvatIyrrGKRm9YA
-	kbGFsaTlEUgeQ4Zz8CcFz2KTySAdlRwCIZLUrqBs=
-X-Gm-Gg: AY/fxX42Bl7WK5rPW4OiaJPEXM+ttEoXUlB1PhRNIL191Wc8j0rGpPpq0QsiaG1wmJ+
-	bRns4dvtL+/8NfZS4q8VFScZ6bBYVcFsplklrBIRk+ufPkK85E2pMHVrJsNYhgypB6pmTyrxELt
-	ChSUUvqhlJqZk9x8EqwxX/IxWuPSsHFNOXmSpd6TFqp4RFiA/ZWh8V8dkxdwwuzllu7P/XHsiVm
-	kUIY7Q2KQdtCoh1t9n5EoxNXOADcP8BW6SVBXzNTwCdzcqNQo2Mjrk337JX55JAq860Iy8=
-X-Received: by 2002:a05:690e:1507:b0:644:6f03:b3be with SMTP id
- 956f58d0204a3-64901aacb12mr29401d50.1.1768326073946; Tue, 13 Jan 2026
- 09:41:13 -0800 (PST)
+        bh=AqsCGBxoCSZopv3BM4vdIQG/Ae2j9zqiaABhTRo/sk4=;
+        b=iEOduXBMEnfXZlMPfdhSiPkKFnfMEp0jAao0S2Kviv2YeuNekp9iApMd8syQ4ZLSfr
+         1o2+CBnhbfMxHY/rlPF+TikliI9IbTf2We4q9eEeKXBgcQ7Xpr4cFtKWMJ1R0ruztHUk
+         D29EQ8ZTrzYHo3s/BYApLUXq8LV/PT2g+Oj5EzyHWtI3c10rmzg7zRRMzz5+YljxNYeq
+         0b1fRDVpmVifWb4AAt/oeiJTmWSOTnnTm6ZbFJoExKVT4IUyDhJfOlnUUf3eY/hOAqXY
+         tALROWB/tZvJfdyiAZp16/tmRILuPUeDZ3qjCP8Bm1/ZPq5/yIy4Kws+cpyKRcCAeyWY
+         QvuQ==
+X-Gm-Message-State: AOJu0YwKkQlZ24kEuHrGunyM5L+N1FvzsQ1BHeGjRzzcbK4gI8DhI4Bs
+	PfE6oY+CFI4YVZycNuuSDGTkUaNMEGiuMxZwMnSZ9yWKtdNIkGUcycsX5eokcg==
+X-Gm-Gg: AY/fxX4zWInYsgma8OyqZWCMYY4CdKUJ0hv8pzS7qefTGNM8EA1LJz3p7KcF6e2atoo
+	35zzCoOlWRMVKM8mUYPshIiZDemVvMM0kbwlnWrs2dQ4nplUuH+tCsk+3zmwa/9X2puBkwAtv5t
+	r1tAsHfzsH3agj4npSRjghVm+d0a/C0juPDhcY1Mh8dEv30axcai11L7yZatSu1pGeRgb5+aVO0
+	jEtWKbe5Blbl0RUbC6icIXTX20AHV+XYTRC8wBTUkKp+BOd/4T5EVK6Ia8mkAQZZ4F1KMYlRkij
+	+niVnNWiWR6RtIxAI5J5IY6Weu+OgzaIC0V4f15y2K50R3S7wmET2s7A1AfVVztg2m7+cjx0Myn
+	KxhfTvRdNdjy9V74WXy6tgJ1+tMZ/w4/rULk6eJfw/UQC1TpO9ZNHVP65CB/KXhByxMyZ9VZn+2
+	meFBi/MpzdN9kl1pXpP3H4UkBWWRODuZMZAhK6EnqZn42Cyw==
+X-Google-Smtp-Source: AGHT+IGEA7QqSlvFzluN2+PQLQW0Bgrsr+3D2oRtOvnQ4y8AgEvcO4jcU+Vt6y6k9iXFzcSJhD4khA==
+X-Received: by 2002:a17:903:1a8b:b0:2a1:5785:4417 with SMTP id d9443c01a7336-2a3ee487487mr211830375ad.34.1768327169408;
+        Tue, 13 Jan 2026 09:59:29 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:8811:38e1:d0a1:c2df:cd9f:7f86])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cb2fe3sm208476265ad.59.2026.01.13.09.59.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jan 2026 09:59:29 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [GSOC][PATCH] t5500: simplify test implementation and fix git exit code suppression
+Date: Tue, 13 Jan 2026 23:23:03 +0530
+Message-ID: <20260113175913.474414-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqqbjixljfg.fsf@gitster.g>
+References: <xmqqbjixljfg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aWPFxQloyfx8x0ED@MAC.fritz.box> <fefb3d25-3723-4e10-893a-620fbdc0cc45@app.fastmail.com>
- <20260113171030.GB265671@coredump.intra.peff.net>
-In-Reply-To: <20260113171030.GB265671@coredump.intra.peff.net>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Tue, 13 Jan 2026 23:11:02 +0530
-X-Gm-Features: AZwV_Qgv7KI9RkO4zGhtzSwiaBY3EMBVULkDlYItZ7ngLnkFHzMUEvMZNRYovBo
-Message-ID: <CALE2CrQ415Ewm_F-DLZu=JY2BTWofmGgorEOa0D=USr5d510SQ@mail.gmail.com>
-Subject: Re: Difficulties using git rebase. Help, please!
-To: Alan Mackenzie <acm@muc.de>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Alan,
+The 'shallow since with commit graph and already-seen commit” test previously used a
+convoluted here-doc that combined manual input construction with packetize, echo and
+embedded Git commands. This structure hid failures from the git commands, as their
+exit codes were suppressed inside echo command substitution and pipe upstream,
+also making the test harder to follow.
 
-That was me. Glad it helped, and I am happy you got the rebase working.
+The changes simplify and make the test more robust.
 
-Rebasing against the merge base instead of the moving
-origin/linux-6.13.y branch avoids pulling in all the upstream
-stable commits.
+* Assign the results of Git commands to variables up front and chain them with &&,
+so the test detects any failures immediately, avoiding any exit code suppression.
 
-Best,
-Pushkar
+* Use test-tool pkt-line pack to construct the input and then pass it to git-upload
+in a temp file, instead of relying on here-doc and manual packetization.
+This avoids formatting issues and ensures correct v2 protocol guidelines.
 
-On Tue, Jan 13, 2026 at 10:41=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Jan 12, 2026 at 05:08:52PM +0100, Kristoffer Haugsbakk wrote:
->
-> > On Sun, Jan 11, 2026, at 16:46, Alan Mackenzie wrote:
-> > >[snip]
-> > >     $ git rebase --onto master origin/linux-6.13.y HEAD
-> > >
-> > > ..  This didn't work well.  In particular, I got a conflict in a file=
- that
-> > > I had never changed.  Why?
-> > >
-> > > Well, I corrected the conflicts in that file, git add'ed it, git reba=
-se
-> > > --continue'd, then got another conflict in a file I'd never touched.
-> > > Same again.  After the third such conflict, I gave up with git rebase
-> > > --abort.
-> > >
-> > > Criticism: there doesn't appear to be a --dry-run option in git rebas=
-e,
-> > > with which one can see how many files will be conflicted.  Instead th=
-ey
-> > > are notified one at a time, drip, drip, drip, .... to the user.  In m=
-y
-> > > case there might have been four conflicted files, there might have be=
-en a
-> > > thousand.  Either I'm missing something, or git rebase is missing
-> > > something, hopefully the former.
-> >
-> > Just a dry-run? I would use `git merge-tree HEAD
-> > origin/linux-6.13.y`. Then you get to see what files are conflicted
-> > without stepping through anything.
->
-> Minor pedantry, but: those are not quite the same thing[1]. You may have
-> conflicts in the rebase that would not be seen by merging the endpoints
-> (in the simplest case, imagine a series which makes a change and then
-> reverts it).
->
-> I do think it's a good approximation, though. But that also points to
-> why OP's request for a --dry-run can't be fulfilled: we can't know what
-> conflicts we'll see in patch 2 until we know what the tree state is
-> after applying patch 1. If there are conflicts in patch 1, we don't know
-> what that state is until the user resolves them.
->
-> -Peff
->
-> [1] If you want to dive into the world of rebase vs merge conflicts,
->     check out Michael Haggerty's imerge tool:
->
->       https://github.com/mhagger/git-imerge
->
->     and some of the associated blog posts and presentations. It can make
->     big ugly rebases/merges easier to deal with.
->
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
+ t/t5500-fetch-pack.sh | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 2677cd5faa..62cf0e1ff7 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -892,15 +892,20 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
+ 	test_commit other &&
+ 	git commit-graph write --reachable &&
+ 	git config core.commitGraph true &&
+-
+-	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
+-	0012command=fetch
+-	$(echo "object-format=$(test_oid algo)" | packetize)
+-	00010013deepen-since 1
+-	$(echo "want $(git rev-parse other)" | packetize)
+-	$(echo "have $(git rev-parse main)" | packetize)
++	oid_algo=$(test_oid algo) &&
++	oid_other=$(git rev-parse other) &&
++	oid_main=$(git rev-parse main) &&
++
++	test-tool pkt-line pack >input <<-EOF &&
++	command=fetch
++	object-format=$oid_algo
++	0001
++	deepen-since 1
++	want $oid_other
++	have $oid_main
+ 	0000
+ 	EOF
++	GIT_PROTOCOL=version=2 git upload-pack . <input >/dev/null	
+ 	)
+ '
+ 
+-- 
+2.43.0
