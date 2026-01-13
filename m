@@ -1,72 +1,72 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F6B187346
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 06:01:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F30187346
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 06:01:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768284078; cv=none; b=SowuXdpSeV3ssoTpeoQtbZDPnewydA1ykoxsDUBvU3DqnknXONOTkGimsF621ziAIROZfUsAineoZZTNvyyqaEzXBPUHN+VFlf9S/fzjY+VFVIq+vEotpKRb0SaGYqRjDXuysPkIJRtzOz/lhUkXfdDGEE0R77zJxYAj4QV3jDE=
+	t=1768284097; cv=none; b=XoPNkZ4ZH8oxoYQRKVS6+xO7j9k5ZxP0ZQovagaK7yarLgxJ1UFY6JMSL4Xm3TukEv98/6GdTGXgi4HHkWWi0f1EB74Pt+9CaKxISnPxSDnzayCm2oE8jvCF6ye5N7EheotkFGTAuiSPl89XETF1RKaIEChGUQt5fBlMo4KXba4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768284078; c=relaxed/simple;
-	bh=SJ6tvgp04AQ3mf76lGDYu+trdRhp54QGSUewJWXC5gI=;
+	s=arc-20240116; t=1768284097; c=relaxed/simple;
+	bh=MQDBlrY5qAzukGB4L914ltnjw9ElqKS92DAEHx1ErM0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Wa0cDktSPXc6LmVvWomDmrw0bouLWYx333Sj8Kq4hzPa9DPEZ5rPk6tAMJ0YAEyyWBHzYgasJQvJ4Rj0IbolJafqzFBeTW3Mcjg1f3A7PR6Q5Syt7wRq/0+tHi4IgD5sr/JPUK9U0VLxCl62u+tMhnvcfQhjcE9p8odybi42xl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RIiaRsqN; arc=none smtp.client-ip=209.85.210.52
+	 To:Cc:Content-Type; b=EFVr8+devxJsEJ5EePajFt8GKJifaA6roP9PCGxOmzXp5xQ3rQJ/69GgIRwNNvECUW/M3m8Cp0AXdycBfCzsmpotFBisRgxC9ro9nDMYPx5WNhgoV0GyhSNrsfiyp4axU7e0t13qefTCFptXndDmaFgIoHoSudnbELIz6kNW3To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qt5EJiLW; arc=none smtp.client-ip=209.85.167.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RIiaRsqN"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7c75a5cb752so5409636a34.2
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 22:01:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qt5EJiLW"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-45358572a11so4425961b6e.3
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 22:01:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768284075; x=1768888875; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768284095; x=1768888895; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=P7RwQ63rDtRZD2yPoWGwiHUpyomQGhwh4++wPvAmg7Y=;
-        b=RIiaRsqN+5CDvAAZh79IOgTfKOG3TYY79AyfdDXjJAZlLQOoywRRe3CMaXcFNW71SS
-         z5edGLJfPXx2H/nOGXkTC4n62lvlayT6bkBTw9Gan2LJGex/JEJxj7rSWWW2HDY7Yvaz
-         lvUXYQEJgCQ7JDaQW+Gk+bjnKZszXznOFAcKlTF0YY52Zzk/8QG2q0FcB3JEAeGsw2IM
-         lfviQkF+2IwyvbiejZKRbxDlBoz/6qloVd/qTfLfIEDKZsO85v02W6YmAQ4czZA/ZDLp
-         id8kg5kcdlhx0gI5fcr7Go4OUt9YYf8HXDuTi2T8AeQppl549I4ji+2++/DoDn7/17PO
-         TcmA==
+        bh=PYHNqP18T1XmjQTnL/0gD1TqQXpwHngudrbjbs3mE+4=;
+        b=Qt5EJiLWKnrgBvm52u5DdNr1Trba/T44657l9Q3vBp9evGlk95itzZa0xEjHyhtljv
+         NATkYEkCvmIg327SsDSzDHSs4UqEr4D5g0RDIUdVQa94c66D5WMGng7f3/rHZQBq3Xt0
+         M67xfwmWDbOTsYH+8RCfSlwQVXK4mF10kEcNfyMfV42+MF+Dzd76Gk8rcSJ0ODefJKSJ
+         /xpFn3hkX3VXqX047yNVoZG8A2uw5SW5Ee5Va9RdnS4ggMPHtFXjC0+YOfj8KLaA4DXb
+         VoTR12GIflJgzIr8+lXdRAKbiwv/UuPHpXGL3fdsKeL6XT5TuknmXHg4YYvZrdjsBo8X
+         fFgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768284075; x=1768888875;
+        d=1e100.net; s=20230601; t=1768284095; x=1768888895;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=P7RwQ63rDtRZD2yPoWGwiHUpyomQGhwh4++wPvAmg7Y=;
-        b=aZD0rdRPpDPoIeDSrMSAOSxJZQTL8D8vqxCfYEuM8zTEPytKyRsEhOUnqx9rVS6hwT
-         ViBTEzUCRhiQ7Qvol2Dv3VjUQ4UcSFhzGSGLd0D+p9C6vFhoC4a4yDfqPGImkceF6wSO
-         D3g6eg2BYgs/lyrR1saDyFVk9AP4OHJ/VZtXNvY6T5SuDI7uVT36/lJivKuy6Vkf96Ah
-         hueShrhpf6W5uLX5lHUHWE79hHEBUgVwvm3a+IMPoqcBHizfNiuzTkNUU19c0Yzt/Cfz
-         X0OSclQQCGoKwTMtsO7MmQzsge9t346bEncm75IWpjTh31HeXCOYqcYV/OKF0tjymZ/O
-         mBig==
-X-Gm-Message-State: AOJu0YyB6d6RvSkReAn4F2uDTgdDtlDn+zjcuq1/5ju4Z1h5mXxfCBvQ
-	nsAHzbOYD6Nitk7AhgNIYGzGOejiWY0T2/PtcEHmbug7tGM/wBZDeZiO/W9KgB9R6HCEBRvHBNS
-	DuYi0+EQjJK/obLsJBdB07gFAtR5PcrQ=
-X-Gm-Gg: AY/fxX54fCT3eaT5OFUsMwkjGbYyP/LDi19iebbTOV+6bFl4y+JQTUjLelmk4J3T+5Z
-	eXtLK+srePVw8GcrGW8SELEhabW5C8dHE25uv7WT3ZVvrMUZnccOCDOHVcL7eLD9rgHUlVE+d+8
-	te6XT4smzPYANhpRYOoale5BYLDJ51rbEmzQ25kbViWXUln/yU9CTS21pa87Bh38qlE4q+81i8w
-	VMXehuLosIsW3pBJZMD+yM8m2Qyg8hG0haDWQLDQLRaYjGBXjbL/LduXCjb/1GmTGEKt7MTs/uP
-	2gwdOX/wLSDC1526Trpjr4qENWQf
-X-Google-Smtp-Source: AGHT+IFANRGOeCFpJ1schhNMXgwDACN2teZDjBkSLETIvB8ttF8GBIXEM2UM8rnmdt2xlwVdY6MvnNas0Lf+L0j8bz8=
-X-Received: by 2002:a05:6820:f002:b0:65b:3480:6453 with SMTP id
- 006d021491bc7-65f55081da2mr10339603eaf.72.1768284075520; Mon, 12 Jan 2026
- 22:01:15 -0800 (PST)
+        bh=PYHNqP18T1XmjQTnL/0gD1TqQXpwHngudrbjbs3mE+4=;
+        b=VqguoF+E+Ta0q+9OypHoBLvlmy5mSZA8nGl2pQ+IJahVog1iAke25laHO7AjQKgXeB
+         AjDXXUbKpbX5l0RwwxbmrnBrqs8TyI4APhQDNZFs5yYeMvDTnX343R1x1wJp4R8sYyVS
+         o9US392+mKmmHLlyrupYV4y3RIhnMBnVuCOcbzwJShOt3QqouNA8dWoW66JwZ7jniN0x
+         4xlvSl69qVE1N6a4f+LR9H9nISgfODLhyDrw+LixdNBa7Eghdz29QTew5NMBThz8Ji0O
+         /dbo97g1j3pfkLeJFquGV8xBq/J51h9jgdIphigVEUqEbK8fS6goMuZbbTmbQzFifJv9
+         CpZg==
+X-Gm-Message-State: AOJu0YygCcWAKv8lNsvHHaTWwa0byZIZgUYhOMvd92s+I7yuKDca3N4J
+	GTIHZebaoikg09r0B6BhCwA4kRmayuw1Y7z3y1+oxNMl/kLelAjONby58/ku2rQ6kOAmyK80UZA
+	Kyy7Yb1uPJnxhXnQaxsJ1i8n9ppqD1PI=
+X-Gm-Gg: AY/fxX4jsnVhFpw35lFHsAmg5peNTYVpEygFypTSiwoN1n8VM+RwhsT9ElSRVxgSTIl
+	jBgHlcCMqgoVlwwGggGlDefsA4DGbyE9DPwdlyeBNTWQhBKQ1M+6J52Z7ZFFSJt4n6fAjwwi9tc
+	kNEgBwAAFfUHxfnyLLqODHRid4PhTIQ4Z9TwKUNs4h73SlI6pH3oiBx7bDcOnG+Sej5dvFgECPF
+	FYkxOTpfkIERg33vYrSYP2X9OesF4HjqlhFOgGH1LTiTd0RW3fblkXLWN3+FgvpNnazn5rvOOFR
+	qjv9xn0snRKxY9OdGooeaCXfyOqg
+X-Google-Smtp-Source: AGHT+IE4+QN1PT7t4X0ErYpZMJTrSD1ydFvv+1TzVeqdvnGvVuHJrbpo1mBZVtgiJUsOqvyTpn3ithE1P26SyYWNIj4=
+X-Received: by 2002:a4a:e9ae:0:b0:65f:6759:992c with SMTP id
+ 006d021491bc7-65f67599c65mr4090899eaf.81.1768284095415; Mon, 12 Jan 2026
+ 22:01:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im> <20260112-b4-pks-history-builtin-v10-8-e3c6aa5b4cec@pks.im>
-In-Reply-To: <20260112-b4-pks-history-builtin-v10-8-e3c6aa5b4cec@pks.im>
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im> <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im>
+In-Reply-To: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im>
 From: Elijah Newren <newren@gmail.com>
-Date: Mon, 12 Jan 2026 22:01:03 -0800
-X-Gm-Features: AZwV_QhaYfdt_j8VG1PXIwXWSEkrzmQJguAffHtgxrThjNJKVgZwuVZwrRrMoEs
-Message-ID: <CABPp-BHq35ySWhud-_53BXE1ed=V7MqjrpWDzgWkcs7o_Lum-A@mail.gmail.com>
-Subject: Re: [PATCH v10 8/8] builtin/history: implement "reword" subcommand
+Date: Mon, 12 Jan 2026 22:01:23 -0800
+X-Gm-Features: AZwV_Qhl2iNAtyTFB2_De0MSUks8cj6Ccmppc-l36kLJIC-BryWof5c-Z642sv4
+Message-ID: <CABPp-BEDpjfxLrB5nWS+DkkTBKR+Le+jJhQiJCio=WkruchioA@mail.gmail.com>
+Subject: Re: [PATCH v10 0/8] Introduce git-history(1) command for easy history editing
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>, 
 	Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
@@ -80,30 +80,24 @@ Content-Transfer-Encoding: quoted-printable
 
 On Mon, Jan 12, 2026 at 6:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
->
-> Implement a new "reword" subcommand for git-history(1). This subcommand
-> is similar to the user performing an interactive rebase with a single
-> commit changed to use the "reword" instruction.
->
-> The "reword" subcommand is built on top of the replay subsystem
-> instead of the sequencer. This leads to some major differences compared
-> to git-rebase(1):
->
->   - We do not check out the commit that is to be reworded and instead
->     perform the operation in-memory. This has the obvious benefit of
->     being significantly faster compared to git-rebase(1), but even more
->     importantly it allows the user to rewrite history even if there are
->     local changes in the working tree or in the index.
->
->   - We do not execute any hooks, even though we leave some room for
->     changing this in the future.
->
->   - By default, all local branches that contain the commit will be
->     rewritten. This especially helps with workflows that use stacked
->     branches.
->
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+[...]
+> Changes in v10:
+>   - Split out changes that make `replay_revisions()` handle empty
+>     revision ranges properly.
+>   - Drop redundant `struct repository` parameter in
+>     `replay_revisions()`.
+>   - Move around `die_for_incompatible_opt2()`.
+>   - Fix up some of the headers in "replay.c".
+>   - Split out the changes that make `replay_revisions()` handle empty
+>     revision ranges properly.
+>   - Create a separate commit that fixes updating detached HEAD.
+>   - Strip "encoding" header as we're reencoding commit messages.
+>   - Merge the logic to update refs in in `REF_ACTION_HEAD` and
+>     `REF_ACTION_BRANCHES` modes.
+>   - Link to v9: https://lore.kernel.org/r/20260109-b4-pks-history-builtin=
+-v9-0-8766101814c6@pks.im
 
-This patch is now a mixture of my patch and yours; all the changes
-since your v9 & my patch look good to me.
+Both Junio and I highlighted some changes in patch 1 (you already
+indicated your agreement with Junio), and I had some minor rewording
+suggestions for the commit message of patch 4.  All other patches in
+v10 look good to me.
