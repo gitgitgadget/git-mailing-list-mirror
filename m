@@ -1,165 +1,153 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C26D30CDB1
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 10:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32FC301702
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 10:41:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768298525; cv=none; b=aqsozwN3TDUJzi6amQhm8BMk2jWMJE9a5bNmiZdxDRsP6IC13f+1kFByYS1GWrTmaa2H/uw7pKsEqbjLtR7LixVqg0zPA5+GRK9lRXEIXOtTuoITZZpL8XigGjaSrUxi7GBhYFmur0Y3dCLfPFip5DjkeRGzbJIPsNChDZ/Sa18=
+	t=1768300917; cv=none; b=OTQr8wc9qwPdOEMdjs+m0ihSVUVnaQtGHcsaKFaH2LS9Myw17N0BMkLY+vgEnDoONY4+G50LaHTBi9HkVtr6FzWB+21XbmLZRaHpcIICOBMhcOK58769wTVU1WGCoCL2bB2RWYg3d18zKibzwHE/TyZAaIaKMpVKPk8rJk+T4OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768298525; c=relaxed/simple;
-	bh=qnWSryuhGOW0Ya6LxVGiDNFuFThc3CLL9bnrvp34Qn0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7bfHIHmXjryWYtcJYpgHm7g1DXb1DHkWyL94Q5ythYehrWuVz3vvWI1cegLRsG2UvBebPj4bG+UEo5ZhmcjJxrcq8q9skOmgg5YBLwzrPlnfouLgtdRx/ZkG2Ebcv/GKD6Q6MaNNkS8ndunQUNrumxX7AxAp7UVZJZq81Z1d5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O481WalJ; arc=none smtp.client-ip=209.85.215.170
+	s=arc-20240116; t=1768300917; c=relaxed/simple;
+	bh=dE08tTURDAIXNE4izrZBBNcdqPEBJVj61EnjxQpO3qs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DkaD8l7qpk10bci6ZrWQ2+DXygMvdUjLHdwA7tFsFLE28X6k+TTEzDYySRbNdM7B8g55daLnIvyITe/SZ5gC3P6GgIGCabn46aZ7Zx1q11chcRwx3vBUdNo38bVyiupH7eI3GG5Su9P50APn4XUg4D2UOD5CDrPxzhemgur9yD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jRa3Lu0s; arc=none smtp.client-ip=209.85.221.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O481WalJ"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c0c24d0f4ceso2834703a12.1
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 02:02:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jRa3Lu0s"
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-42fb0fc5aa4so5490570f8f.1
+        for <git@vger.kernel.org>; Tue, 13 Jan 2026 02:41:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768298523; x=1768903323; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/+mtGnYVhilotIccl0kp/MebdMWgMYwgPj0GdaEVMuE=;
-        b=O481WalJGBWyOD4yH4WtE7V0JCadLvX1EjMyy7w00GupuqNNt7oS7Ae7NuI6DPtHZx
-         apsMXvpM79VZyn7yAMFdGx71z5GOma+tbFNbU6jbm3ZniEH57Ij3oH5c9yqRVEYTru+/
-         V02SkFETbpYgXjxLMoZLIbcUGnEtUfgv83AmGIZ3/wwUawU0IAbYLwTTV8uXRdT3uB2/
-         kTkRhw4bWdkCM5/sLln2z4MG8PvMqoQMVghBaWzgMnixL8WEBubl0h499chH8F2vECTM
-         J1OznoQbHiXb4XExCJJMOFAWopjFiy+hON+mWnmwtz6C28h0wGVFCqD7uG3Bo5TkJf8g
-         khUQ==
+        d=gmail.com; s=20230601; t=1768300914; x=1768905714; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sh8tfO2qL3TkfwTYg0zZjT/JCYR84BnLdVnefZUEeYg=;
+        b=jRa3Lu0s5ahW8zx9ItFmegaFQA63CB669+UVJ+ck9L6w0nkse4OmQ5pAvVr0larE6Z
+         ExFRiTDT+dHnD9yO5O+TWjf1KGcsLopUGTcwx/gYGvvICFvOlIFDkmEWBL1LIX6jhrJG
+         rW4OilUB0AVrZj5W1YkvjqTg0Uu+zounbfH/Vh5cNh2wVAKH/aCw+XzXwUS//6OKUC/o
+         47+eGsD5Y6tSC+JdcWdQIzsjsYWSedprtLGiYqr/DSrtToiquTqSByTSaJ6fUks/xcpe
+         yhgr9STJpIzTVAyZFDSoRBDYzy1in5SrfbdssWkvE9ufTUZmnksgLcN8W34CVj3sGx1l
+         izfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768298523; x=1768903323;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/+mtGnYVhilotIccl0kp/MebdMWgMYwgPj0GdaEVMuE=;
-        b=okpDdVsY0N+T+gy+DeDiPAmAct+gf70FJKUMp22jKGIEk0NvP75h0Vo+oxD4OPB5CI
-         Nb7+mQM9E64avdZXzHM/Ppvk929pBAu2LGKfwGscubC9cnBvUCuBrv4+EZbXpgaWegzg
-         o1lN31ENZ4UNqBXSKqdPc6ImyqC16EjXvtyRHWxOM/chZKUeMlu0RzMyREEPcuG3Wb/D
-         7YJz5thlYMs9ERuGWNt3vO1cX6rmTlLytwYxrsXJyZ2w6N6CrsWL72n2HPA50WnQ7ymz
-         maoPVnOU3CJTpNQVbQkNjWMSOYKHPVMJkgh0O9yjZngJhnxva5yXmgG4GPh0dTr2G6ml
-         KJug==
-X-Gm-Message-State: AOJu0YzNr6CW3QxFE1vDaH2CsaeJ5j9m22eknTu+E1mQNs8MvnFrxOCP
-	7t63rvnoJvhLZUcPY4AxFYR9imzJx3s0zpTXYiPEh7V10tYTI92Aiweo
-X-Gm-Gg: AY/fxX7azg8sZKtWbO1eHRgJxEDhIAoy0h23yo7Dqs0iH+w2BsMIOB0rmaGFd9I2Ple
-	UJE5UCMyjANHXAEUMdwbNhCqWPjz3quvL0PMwC8iBT5t2ug0FHilQqiVmB8GmHiEyLceMcZdLjf
-	kaP1+WETELW4/CyX2MA2u2f0+2LM233WJeGOTUVSGfErQQiSb/8TZ9RI0Ut8+dlN+Xt6aIbTiZt
-	MVqQrKRP1+qtZOWuMW5VKnIelp5Kr1ir/N/kQT83V7DeXBsZxexCGsajthMm9LFdFKMqLC3OyUT
-	SLc8xkdKcMByL1uiIFrdDHBk7paA1AKdmU24Mvtuv4xtIcnisY06ybvUj+SuJyOjfbrVOapande
-	FBWmQwsJGYDtFyiLXIFlqaoEKkZC3an3uT0MU9RocRVkcyiOjkhQ0fpKAJXlAM6eNDjYKv8TDxL
-	Cls/k8vJWd4SIpSxxdReFXWusH/5CBIzXWNwKlLetCcsmMeh+OIhUn2mSU
-X-Google-Smtp-Source: AGHT+IEGrrceh5QJayVHvc+gyeN6jEJJvr7WpT1/9AJx4RVfhYLV3oWa3TlUw3ee/8yzeALSm3iGyQ==
-X-Received: by 2002:a17:90b:1c07:b0:32e:1b1c:f8b8 with SMTP id 98e67ed59e1d1-34f68cdda94mr20469052a91.26.1768298522838;
-        Tue, 13 Jan 2026 02:02:02 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:8811:38e1:6844:3666:14b5:9421])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34f5fb64b3esm19534687a91.10.2026.01.13.02.02.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 02:02:02 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	ps@pks.i,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: Re: [RFC PATCH] t5500-fetch-pack.sh: fix suppression of Git exit code in tests
-Date: Tue, 13 Jan 2026 15:23:55 +0530
-Message-ID: <20260113100145.436591-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <xmqqpl7fnetj.fsf@gitster.g>
-References: <xmqqpl7fnetj.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1768300914; x=1768905714;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sh8tfO2qL3TkfwTYg0zZjT/JCYR84BnLdVnefZUEeYg=;
+        b=DcXZCNTJFyw/3+bY9dXGtTMTHuNvNNZ+XYRxnRd/Qx+jPQnSi6QgT1i5jRKk7oX+zY
+         g+s2tnJcRJjWTWKpvSkztiaEW0oR3OUXDYe8gfBLiABuPKWTQi70yFt2Vm0rldmyxP+U
+         MJXzkdzt+AHcJMkMQ+3ItYTGjp/mPUQtZruKfgAKAVoqgaXMsNxToND1VpUyIICjA6/8
+         jwiENMggGSKoNqrtoRdBgt86cZULHR0LF1slJ31Svb/GDRMwgFhJ3O8b4rUYblbRp4fN
+         fi2tGQoqauW5vbowfyzTrxpG6M92CSC0DN8q8sTmO2rjfY0N3MuzEARlGfp2cKhtFpZK
+         wR9w==
+X-Gm-Message-State: AOJu0Yy8E7AZkKm0EXQp2NxPJNbYtkgpDS7WcpAK3JFuqHyeaCkDTMMX
+	9hDIzx+ICp4mhBzBuI6T7RRvsdYFbA0k6IsMtMcey4p410K2P3Q0OmED
+X-Gm-Gg: AY/fxX6VcPDErgL8aJA2R4zoeuqSRpiYb8VR1qslFAUKAXwxEtJP+jrJ0ACEHkxiQ/w
+	WlES2riimnLHapftcMN+WP1T5tH/QG3GRsAjS2lYl3ofQB+KK695rRJh6Y0vhxeqbtWOH3/WgZo
+	ODnwdo4Y8BWBXjhaPLyLTraKYMf3qUqKdxPx8w3hCDANzevYMY5s/1WJp6YVveSyoCQ4j0hp1Vo
+	MffE7Pd4kcZcH8jR2I0CpllnnnyCVMwn/8ZWOGdltcGcsChBtw7ouFw1Ulkta0Pp58Mg19coG3F
+	R0aVIFHTGtomeL/2h3RG6WBD7zWvWxkrLBX5Dv8dH7+ZjUZjUo9PHYIyaHyhKYw3tdecdRWGn8A
+	ibbgDTft9mW5SR9LiAs5mKJOXA8m77e75EDuG8sX8EMmj9czqu4Aq74ztH2wnEfDi8WtNcQoIMf
+	JjmcE7nmjT2GMHcLJcdTQ0hP51VUnPfzy3sB1fyioFQJDQdRTrZvDuf5CXVm0gTXoTdw==
+X-Google-Smtp-Source: AGHT+IFWUenrjYr5we+R62UjmsRQM1uIVLRZXDVpSw5BN02O3YsPoB/ppiwUX9ibVqF+Rgw/EzoM4g==
+X-Received: by 2002:a05:600c:34cb:b0:47a:9560:5944 with SMTP id 5b1f17b1804b1-47d8f287ae3mr139338185e9.34.1768300913968;
+        Tue, 13 Jan 2026 02:41:53 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47edee4cbc2sm7196025e9.4.2026.01.13.02.41.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jan 2026 02:41:53 -0800 (PST)
+Message-ID: <d8ecb19d-8a17-4979-b663-a6d928709e4b@gmail.com>
+Date: Tue, 13 Jan 2026 10:41:52 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: git@vger.kernel.org, gitgitgadget@gmail.com, gitster@pobox.com,
+ phillip.wood@dunelm.org.uk
+References: <d2ea8560-1473-43c0-96c1-e1869e22c721@gmail.com>
+ <20260112194733.23192-1-haraldnordgren@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260112194733.23192-1-haraldnordgren@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > On Sun, Jan 11, 2026 at 02:50:37PM -0800, Junio C Hamano wrote:
-> >> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
-> >> >  	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
-> >> >  	0012command=fetch
-> >> > -	$(echo "object-format=$(test_oid algo)" | packetize)
-> >> > +	$(echo "object-format=$(<oid_algo)" | packetize)
-> >>
-> >> The construct $(<file) is bashism, that does not work if your shell
-> >> is not bash, isn't it?  If you used a variable, e.g.,
-> >>
-> >> 	$(echo "object-format=$oid_algo" | packetize)
-> >>
-> >> that would make the result more portable.
-> >
-> > There's no need for the echo at all as this can also be written as:
-> >
-> >     packetize "object-format=$oid_algo"
->
-> Yeah, I failed to realize that this is a(n unnecessarily) convoluted
-> use of command substitution inside HERE-DOC.  What mushroom were we
-> on when we originally wrote this crap, I have to wonder ;-)?
->
-> Thanks for spotting it.
+On 12/01/2026 19:47, Harald Nordgren wrote:
+>> It is hard to discuss this without knowing what actually breaks. Are you
+>> talking about the tests added in this series? If so that means we're
+>> expecting a different behavior to what "git push" actually does. As Ben
+>> has pointed out elsewhere in this thread, if you're pushing back to a
+>> different branch on the same remote as the upstream branch you need to
+>> set `push.default=current`.
+> 
+> Yes, it's my new tests that are breaking. Maybe it's easiest if you check
+> out the `seen` branch which now has this logic, play with the code and run
+> the tests to see when it breaks.
+> 
+> I designed the feature around 'push.default=current' which I use.
+> 
+> If we would design the feature around 'push.default=upstream' then what is
+> the point? 🤗 Why do we need to show status for both an upstream and a push
+> branch if we are already pushing to our upstream branch?
 
-I tried using packetize directly inside the here-doc but it was throwing
-the error,
+I'm not suggesting we design the feature around 'push.default=upstream', 
+I'm suggesting that we design it to respect 'push.default' so it gives 
+sensible output (i.e. something that resembles what "git push" would do) 
+whatever the setting.
 
-	fatal: protocol error: bad line length character
+>> The benefit is that you get a sane interface rather that returning two
+>> different versions of the same string in two different ways (one from
+>> the function's return value and the other from a function parameter). It
+>> also matches what we do for the upstream branch.
+> 
+> That's a good point about matching what we do for upstream branch, I'll
+> take a look.
 
-this is probably because packetize is creating an extra newline in here-doc
-which includes unnecessary extra bytes which is throwing off the v2 protocol,
-and this is why I think echo was initially used there convolutedly.
+Thanks, I think that would be cleaner
 
-I think a much better approach, is to use test-tool pkt-line pack,
-which I believe handles the formatting issues internally,
-thus making sure the requirements for the v2 protocol are followed.
+>> I can't seem to see that test. If we're printing the advice once for the
+>> upstream branch and once for the default push remote I think that would
+>> be ok.
+> 
+> This test is also part of my patch 🤗
 
-Additionally, this solves the git exit code suppressing issue as well.
+Oh, I was looking in junio's "seen" branch from the 8th and it wasn't 
+there. I've updated and I can see it now. I can see tests for
 
-Below is the revised patch let me know what do you think.
+  - upstream differs from the local branch, no push branch shown
+  - upstream and push branches differ from the local branch
+  - upstream and push branches match the local branch
 
-Best,
-Shreyansh
+I can't see a test for the local branch differing from the upstream 
+branch when the push branch matches the local branch. As far as I can 
+see in that case we don't show the advice when we should do (and we 
+currently do show it)
 
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
----
- t/t5500-fetch-pack.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+> I disagree about showing the same advice twice.
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 2677cd5faa..62cf0e1ff7 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -892,15 +892,20 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
- 	test_commit other &&
- 	git commit-graph write --reachable &&
- 	git config core.commitGraph true &&
--
--	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
--	0012command=fetch
--	$(echo "object-format=$(test_oid algo)" | packetize)
--	00010013deepen-since 1
--	$(echo "want $(git rev-parse other)" | packetize)
--	$(echo "have $(git rev-parse main)" | packetize)
-+	oid_algo=$(test_oid algo) &&
-+	oid_other=$(git rev-parse other) &&
-+	oid_main=$(git rev-parse main) &&
-+
-+	test-tool pkt-line pack >input <<-EOF &&
-+	command=fetch
-+	object-format=$oid_algo
-+	0001
-+	deepen-since 1
-+	want $oid_other
-+	have $oid_main
- 	0000
- 	EOF
-+	GIT_PROTOCOL=version=2 git upload-pack . <input >/dev/null
- 	)
- '
- 
--- 
-2.43.0
+I think it is less bad than not showing it when the upstream branch does 
+not match the local branch.
+
+>> But we set show_divergance_advice to false for the push branch so there
+>> is no need to check the flag.
+> 
+> Good point! I'll update it!
+
+That's great
+
+Thanks
+
+Phillip
+
+> 
+> Harald
 
