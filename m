@@ -1,141 +1,161 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A913DA41
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 06:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D3322FAFD
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 06:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768284812; cv=none; b=lrAk+v5j4d0ybfNtE6md/HGFyMp82TliRsyXuqoqCxulsJgeM3IKt7Cxgi3FX1ZybG045Eb+69LdM6wBaVgsRbRhQiTR/JMhyN4OaCQbt+Qix9U2KADDFyQOADOpUKMnML3ZT78aTQtA3vn8CV0X8mFxisB+m8nZdb6IjA8ksQ0=
+	t=1768285726; cv=none; b=RCu6lzcY17urni9IKbnQlXv1etbUsyW/ee7jIV5lALq2AS14QXNmZhwai8hFpYE5j/jNPc6S0QVfZQsmCzq9wCOniA/V/NtkafrgAICjSbM7+JSZt3zF/1QcV3HmPpYPdnLvG1kqOH5vz2A1YCFO31UyjG+kJUcV/1IUngusFJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768284812; c=relaxed/simple;
-	bh=pp/4i+sJ+tcb7xm5Qal2LHGxRGnQW/bYiuGfyEqWsmk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eCumdLvyhxtZOhGTkALQ4RJT3jewKwGvWylPVDtpAnTlz6GW0J94sfjWkSmX0I4B5/uNeXBPHHRkayiYu1ICf0Kd4TGhLhzY4erTkEzllmu3ezphRO53+96THWgKQ7+LbLAw6Klc0HW/kAcYsJtCeJ0ra99XFgn1UKCzsb+S2IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WyazXlaJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qmVZDbbK; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1768285726; c=relaxed/simple;
+	bh=+Cf80uOF9k0rA0pwMqkWPJD2olJKsZ3JIHSfM3JqlLw=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=uqbEuRhJ6H8JynlwoJBRJkm3mLS7/wMmC/tImnPXGz4lI3fkypPnndljPPOgcBsgLPpUuEDnBQydkedBKBA0V01ExFCyTwvjDgsgwe+bmjxQIlpJ+gM38EH3oVGlCjIP/WJLbICL+3WJaOZ2692Dkg7SuTMFVKg3TkrHX6fS8o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G455AHyG; arc=none smtp.client-ip=74.125.82.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WyazXlaJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qmVZDbbK"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id E3B7DEC025C;
-	Tue, 13 Jan 2026 01:13:29 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 13 Jan 2026 01:13:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768284809;
-	 x=1768371209; bh=453uyyTtmLcMyyJU2KsoTk4nkrlcWe9Ka2PJU7pmopI=; b=
-	WyazXlaJpPGm4ouG1LM0nPTAHORge37Wm30WvegWX5M+spYsJg/Rw4IHUknKNYfc
-	78HlMOWkxMLi+X4QgLss1ul4AZkX2hjPvTAp6QLAfRz3jod/IjkamtC1l1d5mX2I
-	bkJuYDjk/FBYKLv414xWVyIy+dDaGJ/WJQY9ErCn59r27NjFaF4941tce3FuYHVw
-	PnA8axh9hoSASKvjAC9vOaWO993i7yfL4/4Hsno1rv2IDulRma5cl6ZcI4+oE4yN
-	FGJ5JZzJJmgg9CRWPfY6x6RD3gIMJwpY3AOt9ha5wfSm2t3FMQs0FdpP+Tej7L8T
-	LHgjz9/smxbOdt6Dl6WyyQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768284809; x=
-	1768371209; bh=453uyyTtmLcMyyJU2KsoTk4nkrlcWe9Ka2PJU7pmopI=; b=q
-	mVZDbbKyubzqCS2p7IxgBHbM9Tb8w81+LGu3vFNHh3sHtOZeNKWkgiklPEKQ3JjZ
-	Adv2uIFaQwjArgeQAMc+88sZMfpWPqMmsuwADUM7a7+2g94MHK78+9CQ6x9ZScra
-	iNAtqjk2tYCELq6yDTozYPKnE7eHEKvnmsuFWl7zuDLB91r+a4V4sVuSzHy+DHOh
-	uPzcc7SUzXrlknFnZbZeV+Ldt0jAD3Yg4xsf9+DyziK9nOt+yS5eWeXwP8DnhSLZ
-	xEvjHVesULa95OWvAYCXILcPYKM1J2UVx9FzmxRSLWgxF1b95oq/VKDZCzn+j7dr
-	0UHkOqcsKEl57+JHLjY/g==
-X-ME-Sender: <xms:ieJlaUwMj5qLVrNZEz78E_YmPsWuKfLpPZYf8ULHuFyME01JWx3ciw>
-    <xme:ieJlaft71kMc8gFp96ZLNvZcpS10hNaYnGLe4_rfTkBxp1xUKu6ov8PaR6DVLFTrc
-    4VHdIluXn-oRctZf7kqaQz8ajE3XSwRJnXUAAp-Qln7hjqu5iTTsw>
-X-ME-Received: <xmr:ieJlaTtUmL-0yri8YclVYSGtuKDXbrrEI-3bLfNmoTxsWoNMcsXEqUJUwIOIMVf_xNbEE5J7LiUXAVVTMSf3-AGquCmf1SRlOIVPweAAhA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudelheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
-    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
-    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:ieJlacNitygpFLNM386QYUlXH1wthd-J8QZ4cr84f3Fz97ZYoZgJfQ>
-    <xmx:ieJlaZ269agzZOdZy6E63Y1234x2wk5XcyDvNQ36DK8ZnSDtJuRT1Q>
-    <xmx:ieJlaQMEl-8KLYZWTwrGCkvTs7Mf3uAS1717yxFypU43lPXVdZfvVA>
-    <xmx:ieJlaR1xfmsqvyZRiAPbi56ys_qB1Uawz3Mjp_9PiqIym6DU8ujAaQ>
-    <xmx:ieJlaWVyIOYjFQBvApeN4XTlCkSJ7vcerwFThuz_d9aW72FVCJK9tz8n>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Jan 2026 01:13:29 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6a3fddcf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Jan 2026 06:13:28 +0000 (UTC)
-Date: Tue, 13 Jan 2026 07:13:25 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 09/10] tree: stop using the_repository
-Message-ID: <aWXihQ3ETjQfO6dz@pks.im>
-References: <20260109213021.2546-1-l.s.r@web.de>
- <20260109213021.2546-10-l.s.r@web.de>
- <aWS9Ll8CQ3eILx3z@pks.im>
- <xmqqh5sqoqr0.fsf@gitster.g>
- <aWUMn6G0C1cHA4qY@pks.im>
- <xmqqms2in9hb.fsf@gitster.g>
- <aWUTNU7WGTwHt6Ks@pks.im>
- <89e23323-7e0f-42b6-9a89-dd8a682644dd@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G455AHyG"
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2ae2eb49b4bso9109646eec.0
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 22:28:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768285723; x=1768890523; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=MoO4Uz4jcjMlOfa2dJ/U3Qc237TULLmAlciw8u1E0B0=;
+        b=G455AHyG9fSCmiLlrL+oXhM96dQXazdeu0Wt1hxpw54hnO9l9lO7B5pq+lcAjwCWmt
+         SyYcr7qSYdx5SiwGw3ddubEOVlDuzUj9E+PPV8AmirV0Sp/dS3n3TtgT+4vy6e29xkOk
+         HK6wUv0SyY057OAIjNLcqwRAy7J96xaJCy4Otnt2Jdb4KHz/Nj2eWvMADMHaXpwK93cL
+         +9likefhyBEdAufy7WlzM4x7+ARYmRWzTSe1DWVFcIlYbw4bTIEHXC5iK9owjh5v0Tul
+         07REA6AWvoSSBENSdlR4HkZIx9OOhSUdVRERJBSCCgDDT6+bwrI9/AegD6vlk4K6FjWz
+         FTKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768285723; x=1768890523;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MoO4Uz4jcjMlOfa2dJ/U3Qc237TULLmAlciw8u1E0B0=;
+        b=rLRMvq7DPoJFIQ99eKDXk3majQeB/H+25qhjGcwv5VARGokBRixUPmq9rDE+Pi+WXy
+         gEvqiXPNVnEftPi5zR0V//zmQrGfKua1ejJVRWAFDDWuTu9CAkW8OJEl1hHNHnBjlFbj
+         DKMzrxsLroAmPPRE621oVG7Tah6lTj4v6Zgl4L1e7hGMA3wZTrLQETkt2fHLk4hdRWCw
+         B48hPeDbV1OkuCJqFO6CXYTik1Ha8uhdzUEf89oII+GC8QFgdbpPxxVstLH5BvcspUD6
+         Q+P5rgDZCDxztpk2nVHotyKkoX0fNUq3q7VEqLwjY4HWPkbHCzeKRxTNVXVtidvL4AG3
+         Z7Ow==
+X-Gm-Message-State: AOJu0Yz7nnppCnofd+MhjgG2MfHSQmMg+QKEjOonzGpXolgS+3N8iXa3
+	c9ZiCgYKOZ7aoLTjuMjn3KowqQlWY4EiuTxMz5HH0ydAWGK4BHXYi3dBJ7H8Gg==
+X-Gm-Gg: AY/fxX7KLV/47uczrbJbtWUz9wm1lX2kEcyTeHEyppKKfnB6VH4ua7A8h4nT/JXXtzP
+	CmJ8vitwgSzqNomGOkWs1I1uzlXvvkLNDyugZ3ChfeTP851va1EMYQOh8WsZOPT761FZuN4cF8q
+	8uDSRagUFw79ouqEWS189oDGQHGORF4CeT539m0ernXeTtF+J7IPy9bCpgb6OQVzWJAY4vchM7N
+	xGQdV09A9kT5+tYyThi8j/euy9+AnAPwvvmVcCevnFfgjaSjrAGF9KTVdoDitKRMiPwtfuRilbO
+	1GF4qUbpuZwWGHY660uVJcqJZrFI3qG4i87/z02i6Z1od/hEQ5RLOosHlb6BN3d0a5notn2JsW5
+	LSXfn/p8wnU+SqO6m+pgI9IX/rYI3qNZlg4jhzD1kNvZG9wJq2YL9KqvwT5wN3QNSPrg6lOlfGL
+	+HNlyJAk1z+f9erw==
+X-Google-Smtp-Source: AGHT+IF7ELZ0F8Wl+9hdiLme9XQKUHJqSqS2s4MhiPWkPDGH0+sP/8iswEx59zmpvdu3iEnuKxZEvg==
+X-Received: by 2002:a05:7300:ec91:b0:2ae:5b01:bfa5 with SMTP id 5a478bee46e88-2b17d2ba83emr12603864eec.32.1768285723174;
+        Mon, 12 Jan 2026 22:28:43 -0800 (PST)
+Received: from [127.0.0.1] ([52.159.247.154])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b17078ccf4sm17387481eec.16.2026.01.12.22.28.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jan 2026 22:28:42 -0800 (PST)
+Message-Id: <pull.2030.git.1768285721660.gitgitgadget@gmail.com>
+From: "Shannon Barber via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 13 Jan 2026 06:28:41 +0000
+Subject: [PATCH] gitk: use config settings for head/tag colors
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <89e23323-7e0f-42b6-9a89-dd8a682644dd@web.de>
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    Shannon Barber <sgbarber@gmail.com>,
+    Shannon Barber <sbarber@dataspeedinc.com>
 
-On Mon, Jan 12, 2026 at 08:37:03PM +0100, René Scharfe wrote:
-> On 1/12/26 4:28 PM, Patrick Steinhardt wrote:
-> > On Mon, Jan 12, 2026 at 07:20:32AM -0800, Junio C Hamano wrote:
-> >> Patrick Steinhardt <ps@pks.im> writes:
-> >>
-> >>>>> In any case, I'd propose to move the compatibility macros into a section
-> >>>>> that says something like:
-> >>>>>
-> >>>>>     /* Deprecated wrappers that will be removed once Git 2.53 is released. */
-> >>>>
-> >>>> Please do not take release schedule hostage to one particular fix-up
-> >>>> series of patches.  Thanks.
-> >>>
-> >>> The intent isn't really to take anything hostage. It's rather intended
-> >>> as a hint that once a specific event has happened, we should take
-> >>> another look at removing these wrappers.
-> >>
-> >> I am OK with a comment that records the intent, e.g., "let's work
-> >> towards reducing the use of these wrappers", with the plan for the
-> >> next step, e.g., "and once we have done so, remove these."
-> >>
-> >> But the comment you wrote is forcing people to make sure we remove
-> >> the code that uses these wrappers and unless we finish it we cannot
-> >> release 2.53, no?
-> > 
-> > That's definitely not my intent. It's really only intended as a hint
-> > when those should be removed at the earliest. Maybe something like the
-> > following instead?
-> > 
-> >     /*
-> >      * These wrappers can be removed once Git 2.53 is released. If you
-> >      * see this comment and that release has been published then chances
-> >      * are high that we forgot to remove them.
-> >      */
-> 
-> Forgetting to remove the three macro definitions is very cheap.
-> Forgetting to remove their Coccinelle rules is a bit more expensive.
-> Can add a reminder.
+From: Shannon Barber <sbarber@dataspeedinc.com>
 
-True indeed. We have a bunch of Coccinelle rules that are not needed
-anymore. We should probably do a spring cleanup of those.
+The drawtags procedure currently uses headfgcolor for all label text,
+ ignoring the tagfgcolor setting.
 
-Patrick
+The call to create the outline polygon for (non-tag) heads currently
+ has the color for headoutlinecolor hardcoded to black.
+
+This patch maintains the variables for the non-tag refs so that heads
+ are colored differently from non-head (non-tag) refs.
+
+The outline and fill colors for the non-head refs remain hardcoded to
+ the prior values, black & #ddddff.
+
+Signed-off-by: Shannon Barber <sgbarber@gmail.com>
+---
+    gitk: use headoutlinecolor, headbgcolor, and tagfgcolor config settings
+    to change the color of the tags and head outlines and fill
+    
+    This patch makes the config settings, headoutlinecolor and tagfgcolor,
+    work. These are existing config settings but not used in the code.
+    
+    (I noticed that tagfgcolor was not working while making an extension for
+    vscode that exports its color theme to gitk.) (Upon review of the code I
+    found that headoutlinecolor was also not used and investigated and fixed
+    it.)
+    
+    This simple patch has them affect the target UI elements while drawing
+    refs and their outlined boxes. Tags are drawn in their own code branch
+    then heads and non-heads are drawn in another one. Because both head and
+    non-head refs are drawn in the same loop the colors used to draw (and
+    fill) toggle between the head colors and (still hard-coded) non-head ref
+    colors.
+    
+    Image showing it working, reviewing the patch that made it work.
+    gitk-colors
+    [https://github.com/user-attachments/assets/0eea207d-0891-41c8-8c6d-1464a96a1c76]
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2030%2FMagmaiKH%2Fsbarber%2Fuse_color_config_variables-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2030/MagmaiKH/sbarber/use_color_config_variables-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2030
+
+ gitk-git/gitk | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 7f62c8041d..0415abd873 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -6831,16 +6831,18 @@ proc drawtags {id x xt y1} {
+         } else {
+             # draw a head or other ref
+             if {[incr nheads -1] >= 0} {
+-                set col $headbgcolor
++                set refoutlinecol $headoutlinecolor
++                set reffillcol $headbgcolor
+                 if {$tag eq $mainhead} {
+                     set font mainfontbold
+                 }
+             } else {
+-                set col "#ddddff"
++                set refoutlinecol black
++                set reffillcol "#ddddff"
+             }
+             set xl [expr {$xl - $delta/2}]
+             $canv create polygon $x $yt $xr $yt $xr $yb $x $yb \
+-                -width 1 -outline black -fill $col -tags tag.$id
++                -width 1 -outline $refoutlinecol -fill $reffillcol -tags tag.$id
+             if {[regexp {^(remotes/.*/|remotes/)} $tag match remoteprefix]} {
+                 set rwid [font measure mainfont $remoteprefix]
+                 set xi [expr {$x + 1}]
+@@ -6850,7 +6852,8 @@ proc drawtags {id x xt y1} {
+                         -width 0 -fill $remotebgcolor -tags tag.$id
+             }
+         }
+-        set t [$canv create text $xl $y1 -anchor w -text $tag -fill $headfgcolor \
++        set textfgcolor [expr {$ntags >= 0 ? $tagfgcolor : $headfgcolor}]
++        set t [$canv create text $xl $y1 -anchor w -text $tag -fill $textfgcolor \
+                    -font $font -tags [list tag.$id text]]
+         if {$ntags >= 0} {
+             $canv bind $t <1> $tagclick
+
+base-commit: d529f3a197364881746f558e5652f0236131eb86
+-- 
+gitgitgadget
