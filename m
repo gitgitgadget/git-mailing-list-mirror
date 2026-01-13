@@ -1,207 +1,134 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71021281370
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 13:09:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDFA2405ED
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 13:36:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768309786; cv=none; b=pf9obSkdEePeWQanTBEhMQpaf3QYoPzmwBA1NckaEyMY5I6Fv6em8Q3IzjUKhnVNtiHQQC3TkQpSXnZB76jhruYBdLUfRxwbCj0c3mnog7UTsqEAanxW2pIQLVmvsPFmAYBjt0QCUuC7lHbm41Ll7PuCGnhPZ6UUcJou62aBFns=
+	t=1768311401; cv=none; b=IFYJxeN2uSkRzekUQif/LrTOAu8/hOt8XBXgh5BmC1i33v852uBaX0epwks809Rq5hvWPuVrZefw2LRkifHWVspb+V3+65GG2ikuSoThz0ikm/FjvpUpwVr26Uw3Q6vAFgHVnCmsWaNnxwuhQ/t+Kk4IJyl9A3Pf15hWBGFix+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768309786; c=relaxed/simple;
-	bh=e10rnvX7H/0ufISfcOEhViROoSwkPKVkkcNMmSjAb58=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MnEcUhKCQeLcp6pML0hISXyyshrURJSZZw3x2PP+hiyeSsNtffFeKcd33oDzKvlqU21iMozR9z+c/j8OFnY4hUYnhG5sdYLmVHmMGOPcwqhrRoQG8+zSlZsrLCdbErcsDbXV3BivyU/mbhAXNnm6f8zCzAbWxtY0dbQu7991Nj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XUa9HVcX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L5EUsExp; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1768311401; c=relaxed/simple;
+	bh=ZacUSoNhrGXMbCT2uXn1jTW916+k2H3SJ/h3SZowFk0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z1jceDqYO9ceisSaogFfqOQnH1DWqRpKLZG6I/e/x0hZ6drWGl7lVXQmhLZZxJaxgsSbLMQbkHmBrdCutA2kvIJ1iq4LizIYscjyjO/1S6awb/BNWK4MGbRVEgITITwfZ6Ch0cCv8MMr9VkfxFct6hrQNtwIByH7alhVAbNjXcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BxjKg8uQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gYn/nRee; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XUa9HVcX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L5EUsExp"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AA9207A002C;
-	Tue, 13 Jan 2026 08:09:43 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 13 Jan 2026 08:09:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BxjKg8uQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gYn/nRee"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 98CAF1D00061;
+	Tue, 13 Jan 2026 08:36:38 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 13 Jan 2026 08:36:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768309783; x=1768396183; bh=qezFOuxIek
-	WxFUm/S0Vo3cD74WXfOclHOE+oxtF6y9o=; b=XUa9HVcXaGoIC/JmfjzYuGMJ12
-	lU+TYbvFWoi/nPRzz9FeMWDTPUot+pB3TOPLVUWDZYokBKAO08Y5lKHFBYTQM3lb
-	LVrJB0tW8bVZvNpwOam96DghATZjZQv4hou+Vypv2FR/KaNVwtnWND/Noyd8Re2e
-	GDhFTiEH2ao4aNarBqzcEg3/wpFLPsFbz2+3xd1MkuAieX34EQ6vkCHsVabbobCc
-	p3ITYbZi8mK0Orm0FM5Q54TfVldkVcWnM+ic30zRegotoUcIAUjW952yLv9IcXrX
-	SeAN/AV9/QejoAajq2L/I1CQuJG4iIUND6j0M6rK9vDddElPnpVWi0q0O1qQ==
+	:subject:to:to; s=fm2; t=1768311398; x=1768397798; bh=yud8GVKlc0
+	//XmjzkRn6wIftcdsMKs8VwinufDOt6io=; b=BxjKg8uQz8VVuyH8j1CFZVprs6
+	DV6r5nIYHVmK2x2lMt7OaC/AkF7ORy0TIVjbWNF6bf9mcmoipxS2Wvk0DLye1FRe
+	bSQibNISyaRyQU8r57HvCbsD4++Yb5RZNCAenQzRIHWhjc5bWVGZPzqVzMUaKv3W
+	x2Aobg6wnLt0KqJssORvCkvrzBwCbvtX/oUV0vLOWqeFpUbFXdiMasHSWHrtFZ68
+	2s1xUEo3tNIPrbjYPb97lhBTgA2ICbWOs1VO6wsA9MABj+DbdHfVHNIlpNFRRARq
+	RnYU8dbjuVsKtWgbW8vd2rA6Ol+UT2NjJ2M7nErrLFmBfTOcvR5xVoFp2o6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768309783; x=1768396183; bh=qezFOuxIekWxFUm/S0Vo3cD74WXfOclHOE+
-	oxtF6y9o=; b=L5EUsExpY3AtZAPmuS0+Vlfm5Xyt3fKCHzuNRr8Y2gVTz4oOA62
-	Ga2YhkqiHcpKyMQ2V8+qkj8rlZ+FMEgsGRmNdsRy1wXvtqMdYDTrkqlivrkjq8Pt
-	yoARfVV0fmlppo9Gihbn6jlTL0Z8aP7Kyd6Au0zPruTwkoSyRCgW3GW78FoqnY2V
-	16eqJaAk6xqoEc7AUkatsNaYTI+g6h1dxMNKM/RLqgLU/hwNUy1n5cTDxFlr472v
-	1/m/JLyAfTBAtuf1OkhfmPl0mdor1s+URvSK0EsQbxznQIiCb8B4uRqc1HG9Ix4j
-	cyFaJdZPhpmWKUEH/zTYBoP34Sf7gOYZgtw==
-X-ME-Sender: <xms:FkRmaUlsk7s_ssRJV-11MkAzwFHqfAYD8DQmPEQ4A2Q70yVbH28BiA>
-    <xme:FkRmaXjyy2kAZ2uFu1jlBbPBtOEmENbAyoefoByqSKX0fHERUFQ9xeXG8ZwJev830
-    spYYO5pJFzUolM6xTxQTGOTRCIOxH9dcdR-qoho6kpOCkEFe7Ti1A>
-X-ME-Received: <xmr:FkRmacdnESehSmZFAZGYrHy5rj5PYQpemQFwbgdKpryQ7x7dsgYNEIBMRFsPFHgk6IhUKQuPLprU3qxg405-tGmWeeBTCfbikKSB-n4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvddtgeduucetufdoteggodetrf
+	1768311398; x=1768397798; bh=yud8GVKlc0//XmjzkRn6wIftcdsMKs8Vwin
+	ufDOt6io=; b=gYn/nReeel/KrkrhgQ8gBLGisfVuoMnZAClN/sLVoM0TfrBLk1d
+	UFle0bMmYpkMsUVj0kW+lrlKsbx57FGb1u2JiYGfmF2Y9tc9mN8J4Cmfp9tQii9J
+	5G6Je63quRtUPchCGe4Zza0P7sUQBugV52ZCItUHUK8kJc2YDpmq+gRoruEdWj9q
+	XyIQcMo0duW/8lbF/LChyczmbudiJvOrs95KwBuNj6CREHlepROQoeDhlaxiDW8G
+	6x+2xdh6ogr1NQ7iBv+TyOfWEDzojfDmsYYhIUC6NRKVsy1vs3T5kB6aw21zUXQO
+	RDxuhf/Q1PqWwkgGmEdOeWMOYW6KnFm3ang==
+X-ME-Sender: <xms:ZkpmaYGC-wiJ5V6nZ6lZshppLa0kJaGjFG2_6IL8XfOJ_9_EmK32-w>
+    <xme:ZkpmaVC4s-57eGCiNnJbirjdXQW0zm-z-cJthTGqG89N2PBKlHIYENk27M7jBLVNa
+    SkqYCYFeo-qEXRNXOCv_efzkLovrAoBTm9YY8L5BEfYYeOU1Vu-pI4>
+X-ME-Received: <xmr:Zkpmab-0oKy4aYEBimWi40bxTA5k8BbKLFXcBFafNW6Mnop4Sw3JIgrm5S-QIWrYVeGOfXWmvbA0pqE6UzI820ZOXnXsycMgbcQXKTp2Ig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvddtgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepteeugfeiheekgeffffdvhfelvdelffeiueetieelgfeuhfevtdfgteejffet
-    feeunecuffhomhgrihhnpehhthhtphdqrghuthhhrdhshhdpphhoshhtsghufhhfvghrrd
-    hinhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiughirgdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehrrhgrmhgvshhhsggrsghusehnvhhiughirgdr
-    tghomhdprhgtphhtthhopeguvghmrghrtghhiheskhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:FkRmaXhpB2cwzSI49zrbg0WsqjDZAuKxmX0cK3Iry3hmesLS1hLycg>
-    <xmx:FkRmaUyH_zeXmtDYxOzL0uBocF6osG-DCwmnQDaf5rexFNdizIyKvQ>
-    <xmx:FkRmaTMCm5wiiAS0EPzZLCQWcMktAheCwl2_qrOyuejDHtZjLbzsTg>
-    <xmx:FkRmaVU4BkG1_mXX1tnGxblw_WG_0_ez-_rnPYTaftHyKgta99finw>
-    <xmx:F0Rmac1xLXgWHyF-IJmYY_VF2SeOggu3KYlhOUkZ9eyxMvcQGFA2dGqd>
-Feedback-ID: if26b431b:Fastmail
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheptghhrhhishgusegrphgrtghhvgdrohhrghdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohho
+    ghhlvgdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
+    grshhtvgdrnhgvthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggs
+    ohhrrgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ZkpmaRD_0QgJrFGeI6peCCi8DXLvdpqXLZEnFyeMz94HPy90Muobpg>
+    <xmx:ZkpmaQTJx9VhTLk56dDBR5EANAn7wvQG4C-iUcIVbN2KSF1B761-bg>
+    <xmx:ZkpmaYtNitsFut0qYD1b3VQ8zUUS8udFsSQ-Og7uaFAFjv4-80DzrQ>
+    <xmx:Zkpmac1cus9AU9poCyZryuvxgIF_XI32ofNiIbIy3tMWVclHtNPxEA>
+    <xmx:ZkpmaSpaQbOi3vbnZjs14zajPrfWHg7JgyRPbyVuweZYfwJ5_d99UAJf>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Jan 2026 08:09:42 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aaron Plattner <aplattner@nvidia.com>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Rahul
- Rameshbabu <rrameshbabu@nvidia.com>,  Lucas De Marchi
- <demarchi@kernel.org>
-Subject: Re: [PATCH v2] remote-curl: Use auth for probe_rpc() requests too
-In-Reply-To: <20260113031929.3746753-1-aplattner@nvidia.com> (Aaron Plattner's
-	message of "Mon, 12 Jan 2026 19:19:28 -0800")
-References: <20260113031929.3746753-1-aplattner@nvidia.com>
-Date: Tue, 13 Jan 2026 05:09:41 -0800
-Message-ID: <xmqqfr89lkve.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 13 Jan 2026 08:36:37 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 625a91ec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Jan 2026 13:36:35 +0000 (UTC)
+Date: Tue, 13 Jan 2026 14:36:32 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Chris Darroch <chrisd@apache.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] hook: make stdout_to_stderr optional
+Message-ID: <aWZKYAxhavFc1ZaH@pks.im>
+References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260113115633.230479-1-adrian.ratiu@collabora.com>
 
-Aaron Plattner <aplattner@nvidia.com> writes:
+On Tue, Jan 13, 2026 at 01:56:33PM +0200, Adrian Ratiu wrote:
+> The last batch of hooks converted to the hook.[ch] API introduced
+> a regression because pick_next_hook() always sets stdout_to_stderr
+> for its child processes.
+> 
+> Pre-push is the only hook API user which requires stdout_to_stderr
+> to be 0, so it can be argued that pre-push needs fixing, however
+> this will likely break many pre-push hooks, so it's better to allow
+> it to be 0, i.e. to match the previous behavior.
 
-> Subject: Re: [PATCH v2] remote-curl: Use auth for probe_rpc() requests too
+Okay. Do you happen to know whether we've got test coverage for those
+other hooks? Would be great to verify whether changing
+`stodut_to_stderr` to default-disabled causes at least one test to fail
+for every hook we've got.
 
-Micronit.  "Use" -> "use" (see "git shortlog --no-merges -200
-master" and notice that the usual "the first word of the sentence is
-upcased" rule does not typically apply to the word after "<area>: "
-prefix).
+> We can introduce an extension for the breaking change of all hooks
+> sending stdout to stderr, however this just fixes the regression.
 
-> If a large request requires post_rpc() to call probe_rpc(), the latter
-> does not use the authorization credentials used for other requests. If
-> this fails with an HTTP 401 error and http_auth.multistage isn't set,
-> then the whole request just fails.
+Is it really necessary to change this though? I wouldn't really want to
+go there without a good reason.
 
-> For example, using git-credential-msal [1], the following attempt to clone a
-> large repository fails partway through because the initial request to download
-> the commit history and promisor packs succeeds, but the
-> subsequent request to download the blobs needed to construct the working
-> tree fails with a 401 error and the checkout fails.
->
-> (lines removed for brevity)
->
->   git clone --filter=blob:none https://secure-server.example/repo
->   ...
->   11:07:34.725262 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
->   11:07:34.725279 http.c:849              => Send header: Content-Type: application/x-git-upload-pack-request
->   11:07:34.761407 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
->   11:07:34.761443 http.c:890              == Info: Bearer authentication problem, ignoring.
->   11:07:34.761453 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
->   11:07:34.761509 http.c:890              == Info: The requested URL returned error: 401
->   11:07:34.761530 http.c:890              == Info: closing connection #0
-
-Excellent illustration here.
-
->   11:07:34.761913 run-command.c:673       trace: run_command: 'git credential-cache erase'
->   11:07:34.761927 run-command.c:765       trace: start_command: /bin/sh -c 'git credential-cache erase' 'git credential-cache erase'
->   11:07:34.768069 git.c:502               trace: built-in: git credential-cache erase
->   11:07:34.768690 run-command.c:673       trace: run_command: 'git credential-msal erase'
->   11:07:34.768713 run-command.c:765       trace: start_command: /bin/sh -c 'git credential-msal erase' 'git credential-msal erase'
->   11:07:34.772742 git.c:808               trace: exec: git-credential-msal erase
->   11:07:34.772783 run-command.c:673       trace: run_command: git-credential-msal erase
->   11:07:34.772819 run-command.c:765       trace: start_command: /usr/bin/git-credential-msal erase
->   error: RPC failed; HTTP 401 curl 22 The requested URL returned error: 401
->   fatal: unable to write request to remote: Broken pipe
->   fatal: could not fetch c4fff0229c9be06ecf576356a4d39a8a755b8d81 from promisor remote
->   warning: Clone succeeded, but checkout failed.
->   You can inspect what was checked out with 'git status'
->   and retry with 'git restore --source=HEAD :/'
->
-> In this case, the HTTP_REAUTH retry logic is not used because the
-> credential helper didn't set the 'continue' flag, so
-> http_auth.multistage is false and handle_curl_result() fails with
-> HTTP_NOAUTH instead.
->
-> Fix the immediate problem by including the authorization headers in the
-> probe_rpc() request as well.
-
-Great.
-
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 69f919454a..1d0ae72521 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -877,6 +877,8 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
->  	headers = curl_slist_append(headers, rpc->hdr_content_type);
->  	headers = curl_slist_append(headers, rpc->hdr_accept);
+> diff --git a/transport.c b/transport.c
+> index 6d0f02be5d..8f0e5987ab 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -1372,6 +1372,7 @@ static int run_pre_push_hook(struct transport *transport,
 >  
-> +	headers = http_append_auth_header(&http_auth, headers);
-> +
-
-Is http_auth headers so different from the content-type and accept
-in the larger picture to warrant the blank line before this new
-call?  If not, you probably would want to have these three
-assignments to "headers" that accumulates the header lines together
-in a single block of three lines without any blank line in between.
-
->  	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
->  	curl_easy_setopt(slot->curl, CURLOPT_POST, 1L);
->  	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
-> diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
-> index c1febbae9d..adc210cdd3 100755
-> --- a/t/t5563-simple-http-auth.sh
-> +++ b/t/t5563-simple-http-auth.sh
-> @@ -63,6 +63,26 @@ test_expect_success 'setup repository' '
->  	git push --mirror "$HTTPD_DOCUMENT_ROOT_PATH/repo.git"
->  '
+>  	opt.feed_pipe = pre_push_hook_feed_stdin;
+>  	opt.feed_pipe_cb_data = &data;
+> +	opt.stdout_to_stderr = 0;
 >  
-> +test_expect_success 'setup large repository for probe_rpc testing' '
-> +	rm -rf large.git &&
-> +	git init large.git &&
-> +	(
-> +		cd large.git &&
-> +		git config set maintenance.auto false &&
-> +		git commit --allow-empty --message "initial" &&
-> +		# Create many refs to trigger probe_rpc, which is called when
-> +		# the request body is larger than http.postBuffer.
-> +		#
-> +		# In the test later, http.postBuffer is set to 70000. Each
-> +		# "want" line is ~45 bytes, so we need at least 70000/45 = ~1600
-> +		# refs
-> +		printf "create refs/heads/branch-%d @\n" $(test_seq 2000) |
-> +		    git update-ref --stdin
-> +	) &&
+>  	ret = run_hooks_opt(the_repository, "pre-push", &opt);
 
-Hopefully, $(test_seq 2000) would not bust $(sysconf ARG_MAX), which
-could be as low as 4KB, on any system we care about.  If not, of
-course we could
+The fact that this was able to sneak in without anybody noticing shows
+that we have a test gap. Can we maybe have a test that verifies that the
+hook output goes to the correct standard stream?
 
-	test_seq 2000 |
-	xargs printf "create ...\n" |
-	git update-ref --stdin
+Thanks!
 
-which probably is not all that more expensive than what you wrote above.
-
-Other than that, looking great.  Thanks for working on this.
+Patrick
