@@ -1,153 +1,135 @@
-Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32FC301702
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 10:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768300917; cv=none; b=OTQr8wc9qwPdOEMdjs+m0ihSVUVnaQtGHcsaKFaH2LS9Myw17N0BMkLY+vgEnDoONY4+G50LaHTBi9HkVtr6FzWB+21XbmLZRaHpcIICOBMhcOK58769wTVU1WGCoCL2bB2RWYg3d18zKibzwHE/TyZAaIaKMpVKPk8rJk+T4OU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768300917; c=relaxed/simple;
-	bh=dE08tTURDAIXNE4izrZBBNcdqPEBJVj61EnjxQpO3qs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=DkaD8l7qpk10bci6ZrWQ2+DXygMvdUjLHdwA7tFsFLE28X6k+TTEzDYySRbNdM7B8g55daLnIvyITe/SZ5gC3P6GgIGCabn46aZ7Zx1q11chcRwx3vBUdNo38bVyiupH7eI3GG5Su9P50APn4XUg4D2UOD5CDrPxzhemgur9yD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jRa3Lu0s; arc=none smtp.client-ip=209.85.221.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC143557E0
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 11:57:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768305474; cv=pass; b=sbyelicqLsiBBPm2I2J0SyTo09LPjhASd0HVO1+sbU4m1hbT4iXj37cQBpHokfOp0hFNlCbNv1P8crY9YfXhn9Gl5llz0Sn3ua3zm7/BYuGr+GpBxM69lnjhjNINoM3G8B/AxH7L161KX5/UvUZUDaFZIDmy6ZkBdUuZ0E9VT9s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768305474; c=relaxed/simple;
+	bh=m4c4hfvdiYzUhaACM0TIaRO/V8jM3BHPSKFJ0009HXc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sL/6o1BfgUYxnIabgTcuOU4EvZZTpiCJTEX+0eP4UbYrtXDmKrjwN6wJkZdG32nCWXxdcXmgkNkBLgOXzsEPP7GzmgSPUGRbz9IPiF3JVrtgWzM6xBha6yoOsXnnrKefNYvmys29BGzXNdE+IytSPlcaqk7gr/3XT4Tqtsm9x+c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=WQWD4Jp/; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jRa3Lu0s"
-Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-42fb0fc5aa4so5490570f8f.1
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 02:41:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768300914; x=1768905714; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sh8tfO2qL3TkfwTYg0zZjT/JCYR84BnLdVnefZUEeYg=;
-        b=jRa3Lu0s5ahW8zx9ItFmegaFQA63CB669+UVJ+ck9L6w0nkse4OmQ5pAvVr0larE6Z
-         ExFRiTDT+dHnD9yO5O+TWjf1KGcsLopUGTcwx/gYGvvICFvOlIFDkmEWBL1LIX6jhrJG
-         rW4OilUB0AVrZj5W1YkvjqTg0Uu+zounbfH/Vh5cNh2wVAKH/aCw+XzXwUS//6OKUC/o
-         47+eGsD5Y6tSC+JdcWdQIzsjsYWSedprtLGiYqr/DSrtToiquTqSByTSaJ6fUks/xcpe
-         yhgr9STJpIzTVAyZFDSoRBDYzy1in5SrfbdssWkvE9ufTUZmnksgLcN8W34CVj3sGx1l
-         izfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768300914; x=1768905714;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sh8tfO2qL3TkfwTYg0zZjT/JCYR84BnLdVnefZUEeYg=;
-        b=DcXZCNTJFyw/3+bY9dXGtTMTHuNvNNZ+XYRxnRd/Qx+jPQnSi6QgT1i5jRKk7oX+zY
-         g+s2tnJcRJjWTWKpvSkztiaEW0oR3OUXDYe8gfBLiABuPKWTQi70yFt2Vm0rldmyxP+U
-         MJXzkdzt+AHcJMkMQ+3ItYTGjp/mPUQtZruKfgAKAVoqgaXMsNxToND1VpUyIICjA6/8
-         jwiENMggGSKoNqrtoRdBgt86cZULHR0LF1slJ31Svb/GDRMwgFhJ3O8b4rUYblbRp4fN
-         fi2tGQoqauW5vbowfyzTrxpG6M92CSC0DN8q8sTmO2rjfY0N3MuzEARlGfp2cKhtFpZK
-         wR9w==
-X-Gm-Message-State: AOJu0Yy8E7AZkKm0EXQp2NxPJNbYtkgpDS7WcpAK3JFuqHyeaCkDTMMX
-	9hDIzx+ICp4mhBzBuI6T7RRvsdYFbA0k6IsMtMcey4p410K2P3Q0OmED
-X-Gm-Gg: AY/fxX6VcPDErgL8aJA2R4zoeuqSRpiYb8VR1qslFAUKAXwxEtJP+jrJ0ACEHkxiQ/w
-	WlES2riimnLHapftcMN+WP1T5tH/QG3GRsAjS2lYl3ofQB+KK695rRJh6Y0vhxeqbtWOH3/WgZo
-	ODnwdo4Y8BWBXjhaPLyLTraKYMf3qUqKdxPx8w3hCDANzevYMY5s/1WJp6YVveSyoCQ4j0hp1Vo
-	MffE7Pd4kcZcH8jR2I0CpllnnnyCVMwn/8ZWOGdltcGcsChBtw7ouFw1Ulkta0Pp58Mg19coG3F
-	R0aVIFHTGtomeL/2h3RG6WBD7zWvWxkrLBX5Dv8dH7+ZjUZjUo9PHYIyaHyhKYw3tdecdRWGn8A
-	ibbgDTft9mW5SR9LiAs5mKJOXA8m77e75EDuG8sX8EMmj9czqu4Aq74ztH2wnEfDi8WtNcQoIMf
-	JjmcE7nmjT2GMHcLJcdTQ0hP51VUnPfzy3sB1fyioFQJDQdRTrZvDuf5CXVm0gTXoTdw==
-X-Google-Smtp-Source: AGHT+IFWUenrjYr5we+R62UjmsRQM1uIVLRZXDVpSw5BN02O3YsPoB/ppiwUX9ibVqF+Rgw/EzoM4g==
-X-Received: by 2002:a05:600c:34cb:b0:47a:9560:5944 with SMTP id 5b1f17b1804b1-47d8f287ae3mr139338185e9.34.1768300913968;
-        Tue, 13 Jan 2026 02:41:53 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47edee4cbc2sm7196025e9.4.2026.01.13.02.41.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jan 2026 02:41:53 -0800 (PST)
-Message-ID: <d8ecb19d-8a17-4979-b663-a6d928709e4b@gmail.com>
-Date: Tue, 13 Jan 2026 10:41:52 +0000
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="WQWD4Jp/"
+ARC-Seal: i=1; a=rsa-sha256; t=1768305453; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=IWBjqJYL1fMozsQx8+UGTuOsyO5smcXtZ537KOjhmtqbmlzt3DVw3dkLxV8+u+Cv7EXEarUYl5esVtZkIlbFN/zF2ApuBOW/CZTlWFFWB0ymSUJqi8JGoNNj/rpBSkD/R0naIMBsJbY2Yjc8g2H78lE88o3d+VfeDoXzAV28IUA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1768305453; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=TJcMKNp54qBWxR8eMr5/fi7D6hJUU4n5dRjgOeJhrjk=; 
+	b=iprTKlGTwN34mqmcVw5yinVabduY1gb4UVpvauD4HvPsjwtCNBxBSrjhs3QScFRFve20a9AfAtSLgPtULVFXGJQsDMU3B2Ob+ZnxsbMboJnjqWjDIg7q1SQA4zQpHYxkyQACg+A1S+j6b1pPNISo+PjN99P5H3wD0cpr092gySg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768305453;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=TJcMKNp54qBWxR8eMr5/fi7D6hJUU4n5dRjgOeJhrjk=;
+	b=WQWD4Jp/x8vYoPacnj2ZQG/Ksv8M3elFrIPbMXSSnVJjkAtlPmP6vClKl0wmdjKE
+	phZ6SynvVWR/U7lIxJyuDIiAzP0jHjKAQIiWuESl4aavkhq0Aeuq5YAp9TOSDJdDpW/
+	3/HwDi9Xi3ujAMdaqX5A6klDtaOFbPaDO2ZtYDv8=
+Received: by mx.zohomail.com with SMTPS id 1768305450806908.9937826563012;
+	Tue, 13 Jan 2026 03:57:30 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	Chris Darroch <chrisd@apache.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH] hook: make stdout_to_stderr optional
+Date: Tue, 13 Jan 2026 13:56:33 +0200
+Message-ID: <20260113115633.230479-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v17 1/2] refactor format_branch_comparison in preparation
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, gitster@pobox.com,
- phillip.wood@dunelm.org.uk
-References: <d2ea8560-1473-43c0-96c1-e1869e22c721@gmail.com>
- <20260112194733.23192-1-haraldnordgren@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260112194733.23192-1-haraldnordgren@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On 12/01/2026 19:47, Harald Nordgren wrote:
->> It is hard to discuss this without knowing what actually breaks. Are you
->> talking about the tests added in this series? If so that means we're
->> expecting a different behavior to what "git push" actually does. As Ben
->> has pointed out elsewhere in this thread, if you're pushing back to a
->> different branch on the same remote as the upstream branch you need to
->> set `push.default=current`.
-> 
-> Yes, it's my new tests that are breaking. Maybe it's easiest if you check
-> out the `seen` branch which now has this logic, play with the code and run
-> the tests to see when it breaks.
-> 
-> I designed the feature around 'push.default=current' which I use.
-> 
-> If we would design the feature around 'push.default=upstream' then what is
-> the point? 🤗 Why do we need to show status for both an upstream and a push
-> branch if we are already pushing to our upstream branch?
+The last batch of hooks converted to the hook.[ch] API introduced
+a regression because pick_next_hook() always sets stdout_to_stderr
+for its child processes.
 
-I'm not suggesting we design the feature around 'push.default=upstream', 
-I'm suggesting that we design it to respect 'push.default' so it gives 
-sensible output (i.e. something that resembles what "git push" would do) 
-whatever the setting.
+Pre-push is the only hook API user which requires stdout_to_stderr
+to be 0, so it can be argued that pre-push needs fixing, however
+this will likely break many pre-push hooks, so it's better to allow
+it to be 0, i.e. to match the previous behavior.
 
->> The benefit is that you get a sane interface rather that returning two
->> different versions of the same string in two different ways (one from
->> the function's return value and the other from a function parameter). It
->> also matches what we do for the upstream branch.
-> 
-> That's a good point about matching what we do for upstream branch, I'll
-> take a look.
+We can introduce an extension for the breaking change of all hooks
+sending stdout to stderr, however this just fixes the regression.
 
-Thanks, I think that would be cleaner
+Reported-by: Chris Darroch <chrisd@apache.org>
+Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+This is based on the latest master branch.
+Pushed to GitHub: https://github.com/10ne1/git/tree/dev/aratiu/make-hook-stdout_to_stderr-optional-v1
+Succesful CI run: https://github.com/10ne1/git/actions/runs/20954859587
+---
+ hook.c      | 2 +-
+ hook.h      | 6 ++++++
+ transport.c | 1 +
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
->> I can't seem to see that test. If we're printing the advice once for the
->> upstream branch and once for the default push remote I think that would
->> be ok.
-> 
-> This test is also part of my patch 🤗
-
-Oh, I was looking in junio's "seen" branch from the 8th and it wasn't 
-there. I've updated and I can see it now. I can see tests for
-
-  - upstream differs from the local branch, no push branch shown
-  - upstream and push branches differ from the local branch
-  - upstream and push branches match the local branch
-
-I can't see a test for the local branch differing from the upstream 
-branch when the push branch matches the local branch. As far as I can 
-see in that case we don't show the advice when we should do (and we 
-currently do show it)
-
-> I disagree about showing the same advice twice.
-
-I think it is less bad than not showing it when the upstream branch does 
-not match the local branch.
-
->> But we set show_divergance_advice to false for the push branch so there
->> is no need to check the flag.
-> 
-> Good point! I'll update it!
-
-That's great
-
-Thanks
-
-Phillip
-
-> 
-> Harald
+diff --git a/hook.c b/hook.c
+index 35211e5ed7..ebd9d9e26e 100644
+--- a/hook.c
++++ b/hook.c
+@@ -81,7 +81,7 @@ static int pick_next_hook(struct child_process *cp,
+ 		cp->in = -1;
+ 	}
+ 
+-	cp->stdout_to_stderr = 1;
++	cp->stdout_to_stderr = hook_cb->options->stdout_to_stderr;
+ 	cp->trace2_hook_name = hook_cb->hook_name;
+ 	cp->dir = hook_cb->options->dir;
+ 
+diff --git a/hook.h b/hook.h
+index ae502178b9..2488db7133 100644
+--- a/hook.h
++++ b/hook.h
+@@ -39,6 +39,11 @@ struct run_hooks_opt
+ 	 */
+ 	unsigned int ungroup:1;
+ 
++	/**
++	 * Send the hook's stdout to stderr.
++	 */
++	unsigned int stdout_to_stderr:1;
++
+ 	/**
+ 	 * Path to file which should be piped to stdin for each hook.
+ 	 */
+@@ -93,6 +98,7 @@ struct run_hooks_opt
+ #define RUN_HOOKS_OPT_INIT { \
+ 	.env = STRVEC_INIT, \
+ 	.args = STRVEC_INIT, \
++	.stdout_to_stderr = 1, \
+ }
+ 
+ struct hook_cb_data {
+diff --git a/transport.c b/transport.c
+index 6d0f02be5d..8f0e5987ab 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1372,6 +1372,7 @@ static int run_pre_push_hook(struct transport *transport,
+ 
+ 	opt.feed_pipe = pre_push_hook_feed_stdin;
+ 	opt.feed_pipe_cb_data = &data;
++	opt.stdout_to_stderr = 0;
+ 
+ 	ret = run_hooks_opt(the_repository, "pre-push", &opt);
+ 
+-- 
+2.52.0
 
