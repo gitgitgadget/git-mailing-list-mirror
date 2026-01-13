@@ -1,74 +1,72 @@
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6FE2F6925
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 06:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB3C187346
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 06:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768284030; cv=none; b=A1e/D/GO4DHAeQDn3FZpdrn0+qRqxuTqJuSoysQCF+NZxd8c2nHKh+07llzUTxnQW+Jwpt0lWNKMaCIFcrhRK56g8imk6yAuoleCSotlOY2X1lwBfN32a4/lN4jDMXZtvc33mn6AR95ZLQeMuJwMLjRz+0eTeWhvgHq+uB5DIvE=
+	t=1768284041; cv=none; b=hNa8fhT7SGCyFCZTvQFasnEx+TdFuHNUqJEBvLOAVcqaVm4vTxNIOz59FsVquNFWTYHghFWIjHhQofOfxBioAu7T1RJauqNEtc9/79GUB5xB3sEhxxjDBi5f9xIUfcrc+/xnax9er1HmZ3tyhEfLc/9NtbDzT//SjLRfYKU76nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768284030; c=relaxed/simple;
-	bh=CqOcBzu06rcvC7PsTvImC+ld1+CI5fWMh7INDMCflbo=;
+	s=arc-20240116; t=1768284041; c=relaxed/simple;
+	bh=mXwrWEuozPUZQOljYY8NdWcoBgprk+8HAcY5yaGC20Y=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BqcKIgchesRJROdb4719rXQxUYKGy7WpPkYQE4QhTIcaJBa6kkiElZqG1oMbzEd5uHqpQaZ4A5TPUGqq9S+hHoe7GRHFlvxIwFIUDu3FuETC+39cGWTRlNoaTlv8rGfR50jej7yQjtnsZFCRq6fgTqob+8ciQAeubrI8VK/960M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mnEp0FBT; arc=none smtp.client-ip=209.85.161.45
+	 To:Cc:Content-Type; b=KRR4o51/KpJFZ/IpTYcsPteuj2WuVGVaTaPlzbZsHOfcmO9vBI9UABfukn1kp4Tn9Lgc4gJl9qq0fMYvEQLbafqwtA5jxnhuq4034Z7yHJVnEvqFXObJI6QG3cL4+AL3npp+IocB0NZM7spj1C+4By3SiuP5w8kzy+NqmOTjTdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EKfdSwua; arc=none smtp.client-ip=209.85.161.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mnEp0FBT"
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-659848c994bso3819966eaf.3
-        for <git@vger.kernel.org>; Mon, 12 Jan 2026 22:00:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EKfdSwua"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-65e94e128beso3215465eaf.0
+        for <git@vger.kernel.org>; Mon, 12 Jan 2026 22:00:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768284028; x=1768888828; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768284039; x=1768888839; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iCd1KwCzNaGmZG9bR48fmQTx0G02IAsMVx+4ljMGh7U=;
-        b=mnEp0FBTsn75qSc1CE4/NVs+RozmUB9UJAp84YfaO0vdNk7f0mQI6Z7p0bXg0MNXsi
-         Jf+3CIFP3gXPEhKbQqaH4qkTTupoYT+V5GP34r61QS8ph0hKmjkAP3KuJiPbyV892GIi
-         34G9dysL4SDaTuGqLqYwBmJ9uS6arF+jtYBatQu50xqSbDZ2ZAyz0/LBCIu7MPGMndki
-         MV7iqvXnkRzJ2xrTJjxPRw4YSsK3CzSNxv6bwefo48LuOxnJd4tkdtZbCbNHgehIcMSm
-         d4GdUGZrmlQ99c2YzRJ1HzfftxSQU1nVV+d3JshoL0OitdxP7WQ1EVBGfO+nbqpkWdFO
-         EHHw==
+        bh=0+zC7UghtAEZAaqVBHzqVDNkG+yJ6e3bfB2FjVJCBVY=;
+        b=EKfdSwuaYjNXzigSM1dRdHIVaxQnjpQy03IGXTOp7OiO9E9WvtWeyzy+bEbNtvjnXe
+         yKP969tlmqr5LFhIs48diY36g16bR8vZXdsy/ngV2lU2dEVpTumEtX6c3eXiKtKcF3l8
+         2zUIbzPTId/158HCDm5V9c/Qv6cT8MKIF6cbKXVuQsY/1Z2K7+/A9ESqx2uaYDMSOzFP
+         9rxSxwfCJSdJ4hx1ajhZ2TAqdrzLi7QW89DL13XKa8r+hlmwd+tiSgbzDFHWY3kf70/B
+         wi1Oa78kbfSwxOm1BmSKFxx0iyGjKrOtue7oNrsPg6A19ud/jcOxtBHo7HszfOyuZcBe
+         mLrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768284028; x=1768888828;
+        d=1e100.net; s=20230601; t=1768284039; x=1768888839;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=iCd1KwCzNaGmZG9bR48fmQTx0G02IAsMVx+4ljMGh7U=;
-        b=p8hQOGGiWYExDhF24VFi4/ozN5Tgi+/86i+C5mk6Z7QE7/j9Trf6ke0dE7LcUZL1Ya
-         qz16kAbdYU+SvJ6xVZT39fTvkund2tfmfaUMH/vemSqa4v/hIxKrR7yaRozh/qWGQ3PM
-         p5kj0kfyZ5IiabCkU/RUSf6DxNV5rOUXchQcGpPt8sOwKOTun/DmYh3rLQDZ1Ka5RzW0
-         CjJb5epz+HsHN3pLd9UOmrEm/94NGyXezTqUve+LigiZejl4h1zY1wg+KIQHsUAFzIkU
-         /ZhtO3ajpp7S7wBIBIUEOCit8dPbzec2HWiqCBf8onJ/YDZCT2AmIE5WXSOMqjxEaCqI
-         JcjQ==
-X-Gm-Message-State: AOJu0YxdYOUComgLjFj/avubBTuKXRXy0VvY5DVKHxfZSy4Avq/b8Sg1
-	InW/MrYaQcWSSjNHKSmGDN+jBgrgpqPEcBoer6v5FUA3O0Jimt28nOuVd0wW8AMbv3ANncQIG2o
-	U9vN+sN16AJgFWX+5PMXZBRTbaYCd9q8=
-X-Gm-Gg: AY/fxX6aKJ3k/8+24EjD8tTgXiFrhxw0W0wO8S2GPh+vjBsiAgL9RDcaUOUuX1Nmk2f
-	rj9FdQLV316LUGK29GzCHl2j2cBhb9cv0PAE7wlH8W7yuc6RBk4VLF7eNkTv47zYizCqqd+YN6o
-	gJp6boaUI2+PfnnMfvwSmDaGAlx20oKM0Jy5znRKW8QL4BEf6jPTSfrUhdVgACfDGC59DiAl5VM
-	jcgWLWO/GLVelq5gbLEzH1YZKfK6tpG3aaRfKsw4v9DOMcgnYzbDmVLogxqM/JM2uL9zJuu8BF8
-	e1o3kUJIt6nS4tVtKR868J3PqCOV
-X-Google-Smtp-Source: AGHT+IHD0nupOAzNS+QUSOt99R/yELQum39JQti2XXlS8V6vArn1jnHajO1YjlKORpfkG0hGbGBgkfhHq/Z6zBuY8g8=
-X-Received: by 2002:a4a:be9a:0:b0:65f:5869:f7e7 with SMTP id
- 006d021491bc7-65f5869fddemr7209650eaf.63.1768284027945; Mon, 12 Jan 2026
- 22:00:27 -0800 (PST)
+        bh=0+zC7UghtAEZAaqVBHzqVDNkG+yJ6e3bfB2FjVJCBVY=;
+        b=KMazVcOhoGq1tgFSnhgss4XQ5Lu5gJvdGJlnS3Ha5mhILlx9zjcqKG0T0fmk+RYNP4
+         f7h2m20HJUZlsvJ/WKVa9cF4FKWGDIcP+9EN/6hyZuo0xnxiYVeRQXYImidOd48ox1aY
+         d/HHjvhI1y2RhfWNBGP3iUGFwnWraGk3S5Wn5NFA63ycNbycv9nWEAjcRyY8Zqd8Kzgu
+         3D0KqkGqDcOf5ySjfNHSJEYDbUjmAfNVEW+7BeQVeT2N8s7m4jEkD+5BWm0HoVvLMCh6
+         tmAU90qD6i4wzBZur7yf9HL6vAmg8rxXu6YuTXyAtBkIxlfhcdq4YHxdZ9bF4rC/jFNJ
+         XTKA==
+X-Gm-Message-State: AOJu0Yxursw7J13JbYgmROPMZVGf8REO1heAcJBhYgIL2Jsz4yoyLwke
+	QzwR9K/IlMDbA2SLpWKT9YoaKiL/QI7y8GrBtIulCCjpykFpaLcYpZHhmH+uC7Knssrvany4pd6
+	D9YsRXKyhrXvpYYHsuBd8hcjp7Vo1xlM=
+X-Gm-Gg: AY/fxX4rzN4nlpO3cPqmP6SAooyfqYMh6v2E5SLgojv/gBuN5Oz5iAJljAVeqtsZ6Cr
+	BrQWNVcnc38ZhMi0DkIsJwkEwypX0P6xTSEMz7tpDoJo1QT+rGbqZROM7/yjI91cR4/4vB4sH0I
+	iVS8rD6ZIVQzEXFYH1w+M+P73gnkObgSINnyqjIrZsRLW4FxGcP47YLA6zo27WgdXOFCTgpRPoz
+	SKWFhBrK6wSsHp/SOf20iwl//ad+NpEprhuHxvzfJ2xE5YJnQtcV1BVQ6Bguf2XxC4kIlYs8sva
+	ncQr4h8rNlFIswgEeR+teghNG7tH
+X-Google-Smtp-Source: AGHT+IGWJEkWsBd4d48spBEmoyxG5fnJFEoloJFXPP92k3+gOzUPRWDx/ECqvYDVKtgZcuYKKkBtgbtt2sUpPwEZCjA=
+X-Received: by 2002:a05:6820:160f:b0:659:9a49:8ee9 with SMTP id
+ 006d021491bc7-660f29f3663mr861816eaf.29.1768284039371; Mon, 12 Jan 2026
+ 22:00:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260109-b4-pks-history-builtin-v9-0-8766101814c6@pks.im>
- <20260109-b4-pks-history-builtin-v9-2-8766101814c6@pks.im>
- <CABPp-BEo5jGBgJBkCdu_GHstsbEm4mCpKO3NWvNfcjDVC+SbLQ@mail.gmail.com> <aWTw4ezgeloLB0R2@pks.im>
-In-Reply-To: <aWTw4ezgeloLB0R2@pks.im>
+References: <20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im> <20260112-b4-pks-history-builtin-v10-4-e3c6aa5b4cec@pks.im>
+In-Reply-To: <20260112-b4-pks-history-builtin-v10-4-e3c6aa5b4cec@pks.im>
 From: Elijah Newren <newren@gmail.com>
-Date: Mon, 12 Jan 2026 22:00:16 -0800
-X-Gm-Features: AZwV_QjjcWsSDiKP8JztT3jo2bUmeNhXmAWhZimSsR__pOa575gOND_G8D-iYeY
-Message-ID: <CABPp-BGM4AxoedD3uUnS+12n5c0egd8pw-=cRsO64oDs+G9RkA@mail.gmail.com>
-Subject: Re: [PATCH v9 2/7] builtin/replay: move core logic into "libgit.a"
+Date: Mon, 12 Jan 2026 22:00:27 -0800
+X-Gm-Features: AZwV_QjXCgrbFyGjnh8O-mWxN3lk5zftdxjXr7O0nq11wJW5dJKZifwWR5dsQ1M
+Message-ID: <CABPp-BGhtPyiVT=32NXz3k8m=+ZgPziXueM4Y8+g4dAUtN9osw@mail.gmail.com>
+Subject: Re: [PATCH v10 4/8] replay: support empty commit ranges
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>, 
 	Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
@@ -80,63 +78,68 @@ Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 12, 2026 at 5:02=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+On Mon, Jan 12, 2026 at 6:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
 >
-> On Fri, Jan 09, 2026 at 05:16:41PM -0800, Elijah Newren wrote:
-[...]
+> In a subsequent commit we're about to introduce a new user of the replay
+> subsystem. With that new user, the range of commits that we'll want to
+> replay will be identified implicitly via "HEAD". With such implicit
+> ranges it becomes likely that the range of revisions that we're asked to
+> replay becomes empty. This case does not make sense with git-replay(1),
+> but with the new command it will.
 
-> > > +int replay_revisions(struct repository *repo, struct rev_info *revs,
-> > > +                    struct replay_revisions_options *opts,
-> > > +                    struct replay_result *out);
-> > > +
-> >
-> > stray extra line?
+I think I know what you were trying to say, but this feels misleading;
+it could be the commit at the tip of any branch, not just HEAD.
+Perhaps:
+
+In a subsequent commit we're about to introduce a new user of the replay
+subsystem. With that new user, the range of commits that we'll want to
+replay will be identified implicitly via a single commit, and will
+include all descendants of that commit to any branch. If that commit has
+no descendants (because it's the tip of some branch), then the range of
+revisions that we're asked to replay becomes empty. This case does not
+make sense with git-replay(1), but with the new command it will.
+
+> This case is not currently supported by `replay_revisions()` though
+> because we zero-initialize `struct merge_result`. This includes its
+> `.clean` member, which indicates whether the merge ran into a conflict
+> or not. But given that we don't have any revision to replay, we won't
+> ever perform any merge at all, and consequently that member will never
+> be set to `1`. We thus later think that there's been a merge conflict
+> and return an error from `replay_commits()`.
 >
-> We typically have an empty line between the last declaration and the
-> `#endif` in our headers.
-
-Yeah, I was just confused; sorry.
-
-> > > +#endif
-> >
-> > It feels duplicative to have replay_result include a merge_conflict
-> > field and to have replay_revisions() return an int which signifies
-> > whether there's a conflict.  Can we remove one of the two?  (Perhaps
-> > the merge_conflict field was only a workaround to the weird ret
-> > setting from the previous patch?)
+> Address this issue by initializing the `.clean` member to `1`.
 >
-> The idea here is that we have a generic error code that tells the caller
-> that _something_ happened, whereas `struct replay_result` gives the
-> caller a bit more context around what exactly has happened. This allows
-> callers to handle merge conflicts differently from any other error and
-> makes the different failure modes a lot more explicit.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  replay.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
-> Some context: at GitLab we actually have the use case to surface more
-> information around what commits have conflicted, so there will be a
+> diff --git a/replay.c b/replay.c
+> index 1e660171d2..a8e6d5b30b 100644
+> --- a/replay.c
+> +++ b/replay.c
+> @@ -266,7 +266,9 @@ int replay_revisions(struct rev_info *revs,
+>         struct commit *commit;
+>         struct commit *onto =3D NULL;
+>         struct merge_options merge_opt;
+> -       struct merge_result result;
+> +       struct merge_result result =3D {
+> +               .clean =3D 1,
+> +       };
+>         char *advance;
+>         int ret;
+>
+> @@ -282,7 +284,6 @@ int replay_revisions(struct rev_info *revs,
+>         }
+>
+>         init_basic_merge_options(&merge_opt, revs->repo);
+> -       memset(&result, 0, sizeof(result));
+>         merge_opt.show_rename_progress =3D 0;
+>         last_commit =3D onto;
+>         replayed_commits =3D kh_init_oid_map();
+>
+> --
+> 2.52.0.590.g1f87b77810.dirty
 
-Interesting, but doesn't answering that question presume first-class
-conflict handling?  How do you determine which commits conflict
-without that?  Or, is the first commit we process that hits a conflict
-sufficient information and you don't really need the commits that
-conflict, just one of them?  Or, do you presume that all unprocessed
-commits after the first one that conflicted would have also conflicted
-(even if it touched files that are conflict-free so far, so that
-commit would not have contributed to the conflicts)?  If this is done
-without first-class conflict handling, there may also be an assumption
-here about linear single-branch history, or else some kind of attempt
-to continue processing whichever commits don't have an ancestor that
-has conflicted, so that we can enumerate "commits [which] have
-conflicted".
-
-> follow-up patch series that extends `struct replay_result` to return
-> more information about the actual conflict. I'm already planning ahead a
-> bit in this patch series.
-
-Wait, above you said you wanted to know the "commits [which] have
-conflicted", here you seem to be suggesting you want to know about
-"the actual conflict" which might mean you only care about the first
-commit that conflicted but you want details about what conflicted
-within it.  Or is it perhaps the set of files that would have had
-conflicts across replaying the whole sequence of patches (in which
-case a bunch of the previous questions are still valid)?
+Looks good otherwise; thanks for splitting this out.
