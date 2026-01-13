@@ -1,95 +1,104 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E99195811
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 22:47:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5271D432D
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 23:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768344422; cv=none; b=GtBsDWfhtbmXwzYCnmfdzyXvks8VeXlmUjMTuZDFcxa909IUMVWi/VlOP+N+1mjTtIK0NpM6DNSyNqRd+SXLQeyvejxyUAaMUcElbtDDiqnkXioUYjRZXYDORJ/zt2iDap7f7wdbIA9E2whUknSOo9U+E5tZRGtX61JRm7jVRDA=
+	t=1768345273; cv=none; b=BwoWdnauSWN4Nq8gI+c04MtjQsYl9q7epTis61uE7+Gb5IzNqNZvfzScv/I8Df3c8wSVX6rEj3h0MitGEGh8BqyQrwITcOyKseWHWCYCJunqkeNE0do08sXussZzcIK4qTdnnyinbZoiog1TGujcDl9oncZMbMojhjmavQ5KVjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768344422; c=relaxed/simple;
-	bh=v1G7pOVIov3Dy87Ip26nUP1DMndkD0XNfTJVVfbxUXE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ImLxC7LQPm5TntyKm9uKYKm11tu7fmr6PFefDys2i/Xl27aS1PhdTnSGWvJwljLmclnCFFbqCbUHsDM7in/akevd/wQcwdqlwmJvwebAoS2Zan83u067mwGIG8p34ysqNXxMk8y9y17BBTJhB4T3dLgOQn1L3Wwecgbns9EYafo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=lQD+NspV; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1768345273; c=relaxed/simple;
+	bh=6tXL6YaroLH810HROftp8Jddj2NJTdnCQbosALfqHD8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=B78EWUppgTFsrGwNGP0dyD8AKd+y7KRSPoJSI7cgBQLkWqjto0+mqdBUlHGJAJMCApoS02jnJujMy5uZIalPhL6111PV/u9gUgNohDQoM0OUVoWRqOaWQQtqS91QHsGRLfi1H3ZAOcgyAUEWp+NWXNHM7ZQounUBt5a5P1fS4NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KIJPi2rt; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="lQD+NspV"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-78fb7704cb4so78053657b3.3
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 14:47:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KIJPi2rt"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-59b79f700a1so300770e87.0
+        for <git@vger.kernel.org>; Tue, 13 Jan 2026 15:01:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1768344420; x=1768949220; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v1G7pOVIov3Dy87Ip26nUP1DMndkD0XNfTJVVfbxUXE=;
-        b=lQD+NspVUd4LXV8yF8zDXrIFPBjiFOmUWYWN9JekoddPNQqXBsZYE/ELW7sLtheETO
-         8B9k9i0lz7Fn6rIc2cqNzUlAXlJy/18kYSQkiyBcMk7kWp5Cfbv+WDpV+v8u946N7hrG
-         P7Tjt0hk5wz+vZ4Q57xAB4+YK1Nw1tBBafCvF81KSHFfoU5mGD65RLnuoZ7z2Vq7y491
-         CPwE6qdjLrfZgbTGUZG7sLVGCXWULVqsOK6X++8bopDSHcDB/yFD1DvGdJtf9fGVyumU
-         UxC9Crpd+hDFbPb/ufR5nvHfz/n/4+raefiQ4yb0OZbAqVh4WYaalkg4rIjnVLlFI5fS
-         EBvA==
+        d=gmail.com; s=20230601; t=1768345270; x=1768950070; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=plH0Mg5fGYz6oaLTN1YYorYmRD7zvWwEtQSWtPIbi6w=;
+        b=KIJPi2rtBe623nl9T8M4xBti9FxFauHkq7NXpd0wkIa1Iofd/Kvs3qyNkqZXCep1jl
+         0qXbWanFYdVLXec2cb6+YQlCOA51bt0QkoCPZ/R+It51HeAV4fXXPRQkHg0xzKZUxUqs
+         UpqI9l2PLruGSiSwKt+EipoG++z+z9iA121eVS53JtaoB/balhekQPXHp+h/uuYuH7hM
+         OskouWY01zyEHdJMK8whvAk/sagobpsdwgKOa4Lu6sJiufKEySKKXqrAP1sLmZI1k+q9
+         sgVm+97lmZsDsTG14HybUhK+K35FG3Vcg8gKTqNtTz9qfc4j2hhkudH0bJkc3MddqdMB
+         1mqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768344420; x=1768949220;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=v1G7pOVIov3Dy87Ip26nUP1DMndkD0XNfTJVVfbxUXE=;
-        b=IHJMbg5x6jmxOLoK8y0YpNewh5HX3Fx1HSUVio178MGb5HIZWm/AfPBZUKycH0DyOu
-         ObcuM/EJ57+UAADT6OlyCfwKIXAzyMXHr0JP+k3snsavKoblUsP4RzuypFB474QDzys9
-         kMaeMyVM/GZ2wiTrB59qyenCFa2EJhkQAJelbsJ00ZXMKFCsOPXBkWXChNyqvMnoHo8n
-         B6ZMiAq1H3RaNxWmwJjfPJLHnTEmH93QLeinJxdkQiWggkfId+ZfTMsJR/HVcltRtH23
-         Wz/myFxc8R1lyRIAj/Do2foPdWhkMfmuwLt9+bMtTdJ1rDYde65Lg2P8WzfyBa8ctrv3
-         eTVQ==
-X-Gm-Message-State: AOJu0YwQRCS9xraw33X4vTMYR5grlfIScKSE84ZGa9OhlXBskEQu5ZFc
-	UN9uUZe4V7+GuKvEy4dvxi/qmAbUldh3O/LPSbNZEFIBZbCRBzrC7xlq2g5oR3WknIQ=
-X-Gm-Gg: AY/fxX6Ermd7gztE9xkDwrgIr55bARAFqBHPAigRu5qhfRLYfGIqfeZd2suETe8Dmas
-	c/sQkdc6/rv9qJbLgIEbMpWS5JHJIsMFvXowhTAYLQoN5PsM5kAYGpo52XloMw89bjmW2FSCntm
-	p0ewlunK4wJox+ppKHnnHEhbeG/eK5OySvDnZfc+dC9TWBNf81nYru2OypnF5cJNOOAX9OilvVa
-	dM6rg7rR4Wr/8pSjvN1Z9tRPkZhRUs1k1oaG8sxLM+tNigfUxg/Pz5JU+Gn2Dad9/BIDTvk5RKi
-	NZcwqVykcqICZwkp8+X8IHAh9WGZ4Gu9vWeWeDc6WNYCb9mXWb+fZ36NtyT3GtN3KfJT29A9KPI
-	Vvl1zZBAkf/ixYKpbEY7KwbU8RbyX3G/7DCIb7/5NYK0xDOif3tPOWSqciHPa73DEHUCxZvpBay
-	tYhT8JpHFTl988pzSLBQ3TO6G/0UevNOmB9i0XE5VClxFzNJUh3WP6I1N67cKUDbCCABwTRUIvD
-	EvWqahPbjgFh70yHA==
-X-Received: by 2002:a05:690c:88c:b0:786:58c4:7a21 with SMTP id 00721157ae682-793a1dafe96mr4720737b3.69.1768344420257;
-        Tue, 13 Jan 2026 14:47:00 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa576e55sm84117977b3.18.2026.01.13.14.46.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 14:46:59 -0800 (PST)
-Date: Tue, 13 Jan 2026 17:46:56 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/17] midx: split `get_midx_checksum()` by adding
- `get_midx_hash()`
-Message-ID: <aWbLYCvzqKNziLfZ@nand.local>
-References: <cover.1765053054.git.me@ttaylorr.com>
- <d583a169f08eea9d750622c6e3cf79774a2a68e7.1765053054.git.me@ttaylorr.com>
- <aTcYAdJ6lNCST7PT@pks.im>
- <aTd+fxpflcLuJXDn@nand.local>
- <aTeAUKrB89RM9p+i@nand.local>
- <aTfBZVo6Hq8Nf7uW@pks.im>
+        d=1e100.net; s=20230601; t=1768345270; x=1768950070;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=plH0Mg5fGYz6oaLTN1YYorYmRD7zvWwEtQSWtPIbi6w=;
+        b=DBgmXsVUwVzTCjAmvJNpzTl11Pw55UKJEGCCm3ZgWpWTUfFAH/XQaZSUtpa/luM9gG
+         eeFTfKwLXtFwsw37KU74N/p6i7ncRVZSS1Mz8Lz9vnzh5/NwAQ6E9TYX26+HEdAoUXIv
+         ldbrZeik0h3WATCMyGc/hVG5CFpTFpbYTUVfnRtP5oAcavHU5t9qEkP0xe1m+IfOiZyb
+         rRs/7Ih1orHnhqs6DXFetMl5cV8r7yVfRsTU8+8dMlrdhVQQr4QUzcM5NvpcXuCu+/3s
+         oR8CbW48sNKiJ+1HGQWnCo7IsCxNd9kmEuMmv25S6gWrLAcxBpNh8cFzKUrRNRmk4g7F
+         XIvw==
+X-Gm-Message-State: AOJu0YxHbwZIdMgzz7zqKUy5zVgey2Xt3IV1DzJ9i8DmVPqXmPCdRkL2
+	kRydTzAnNHYZi1tW3N9ymYbQFg+yiEepNN1kjBTlUv4GzdFh8v5xtocSYbLIBw==
+X-Gm-Gg: AY/fxX7anWJza9ny1SKUy88+MdrDW+kv3yVuaUhG5r2Rf8x1LKUugCMOdnBm679Xjo2
+	vmRLB12Pf6nMwv0B6IoqKSHNELS/pINyT8g1xXgCqprOcOwa/Fi0Ayyb0aVaCe2Ej1MzSqFRhlU
+	NtjAxNU7pCi0kK2DORMPaR5N+Ks0gdbehDYDnnt7hUyrECaIBJPkkEkePbWD/jJ0HhuPaDdbs9i
+	W5hmOUg6FZqj6YdsvoMScvPNFV4ao1W6vmA7Tp7LkSOqPPiYfvxMpmppSNB2Zi2KlzjTKaUYXzA
+	5N5jjkH96kEJkpgE5Jc3KSsLkqFolXFOPdOzge4TuZK0Qw7wEWvEkJmf1SU7sx98wRiLFvOi8cQ
+	LveS/uWaEglXgL8Yq1ObMACllt6Iqj4DpC1kunUn+prBdd3FbvIQaTH/2CQ2jsqp8gL0rgkUYlH
+	NsMp8CyIgkmtf36gHVzUnJknigIOPg+H7SpDiIxrAC0S11+oPsYKPQwWrgMk/IW8v7qi1K66Q=
+X-Received: by 2002:a05:6512:138f:b0:59b:67cf:ac0c with SMTP id 2adb3069b0e04-59ba0ed7cdbmr164366e87.17.1768345269338;
+        Tue, 13 Jan 2026 15:01:09 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59ba10410c4sm105965e87.66.2026.01.13.15.01.08
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 13 Jan 2026 15:01:08 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: peff@peff.net
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com
+Subject: Triangular workflow
+Date: Wed, 14 Jan 2026 00:01:07 +0100
+Message-ID: <20260113230107.16728-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260113214059.GC288857@coredump.intra.peff.net>
+References: <20260113214059.GC288857@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aTfBZVo6Hq8Nf7uW@pks.im>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Dec 09, 2025 at 07:27:49AM +0100, Patrick Steinhardt wrote:
-> It's only four more characters to type the `_hex()` variant, and it is
-> in line with the interfaces we've got in "hex.h". So personally I'd
-> still prefer to go with `_hex()`.
+Hi Jeff!
 
-I think that's a fair point. I am not sure that I go along with the
-"it's only four more characters" argument, but I would like to be
-consistent with existing APIs above all else. I think the choice we made
-in "hex.h" is a good one, so let's stick with that.
+I'm very happy that your responded respectfully despite me basically
+saying that you were using Git wrong. It's nice to see how some of the pros
+do it!
 
-Thanks,
-Taylor
+I'm wondering if since you are scripting this anyway, if you really need a
+push branch at all? Can't you just as easily switch to doing this in the
+script:
+
+    git config push.default upstream
+    git push github jk/some-topic
+
+As a note, before I started working on this feature, I don't realize
+that there was such a thing as a push branch (i.e. something different from
+the tracking branch). So I had the habit of checking out and pushing like
+this:
+
+    git branch --set-upstream-to upstream/master
+    git push origin $(git rev-parse --abbrev-ref HEAD)
+
+I worked really well for me. The only issue was missing the status info
+from my own branch -- which is why I started writing this feature.
+
+
+Harald
