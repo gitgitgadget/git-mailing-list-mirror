@@ -1,92 +1,98 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11805369961
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 15:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768317758; cv=none; b=fuQ0KY/CZeuKWGtTVNGb9xFtaYrS491yn9raYvVJxCjMpYzTA24zWPcYeuvDCyaymByrbyVzhpvuR+zsjnNr1JVc0pE4z6bNNW2S8p/yvkQs0jXmdN0HrIPNYYmmqOKgvPD4INPCs2H2dk80ZGamn5kzvKZtoHyzdwOwKfOMvD4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768317758; c=relaxed/simple;
-	bh=o5lIBpKcfpuTtQ+thQ2YGhC5RlSvwMuaGIXoJiVFuZo=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=pirk7WFdk1DgNG97IJ2YMy4VyKs8OkQMpQurS0c7RDFhKHWWe3Zfo4jClt7qwqMxGJDKn6F4aRH03qGj3cOHj7aYdk9mTcKuZh40DzmtCoqO/Z7k0pvXh5xi1XQjWouaFki/owVW4vU2LuMyc+uGqjraVxcZpSUHAKci8PvZm1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=k96tRIpK; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA532D5C7A
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 15:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768318701; cv=pass; b=A7AjsdJc00eLFSpDI8eRDmSM7giDe9iCPyjCK1HjLr0pLEpw/w1ZVww+R9XOIULGDT6SMZnTzAxcFVTRYKVa/OuObMlx6wCiOZmvnNxuWyrv4L9KqNzsCM1bnPT8Arx/hb4YZXys3dbDR2BpUaeLJsGWVlA5yRN4TbG+U/1pc5g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768318701; c=relaxed/simple;
+	bh=cssNM3UqoXxEJWGH8Wf6Xcxt6+fdwLvbvDEBc3KjpbA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M19ao7fhI/K/+WnQ96pMsLFZXXXaRJJLcrLwCafPa+mzS5t4koOoofTgQWYOrYV+pgaWoWon8FNAw15QJH3H9mReQJRhX298oP0cPS7j4LX3X7Y35BXF82pWIQIVFNISmK9XujyTGfFnihg+jCvH6frwvGK4dkWw2Wss4Eo3E8Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=kvyCg4FB; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="k96tRIpK"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Subject:From:To:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=3arrCiVlda5LlrSnmnWMWpTHFzyuiVw0RCGqRNJOed4=; b=k96tRIpKUTU5AfPfwk+mw9Eq6U
-	o/PWDVENwdCWmlm77rJLaCFk+pmCNze3diXi1i6FUWHxgwvnExVhFA1uULH3UBDRbi+I8ridGZ5su
-	T5gJehEVYaiHIG5vx/utm4huruSfgzITWwA/f25xQzXTLHs/coWIq86/iSyPPbP30BnfoYFAZ7N1T
-	0olLQND/SSqesuEFMl4rRm/TTpCe2hGiKKSiVvbk5AIVIOWIxIfItNh5M6rnA9ZU318kDDvQWuc1t
-	bZR/XfMw2YglxbCDKAcK4EBptA6kaScpvc8lyAB7cjki0Cbpa96Zaoo37W4ENmMoVywU2AH6hh2aH
-	tnqBEhwg==;
-Received: from [91.117.234.156] (helo=[10.109.1.198])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1vfgE3-004tfY-QB
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 16:22:31 +0100
-Message-ID: <e2733434-f632-4be5-a9e0-28412b4043c4@igalia.com>
-Date: Tue, 13 Jan 2026 16:22:31 +0100
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="kvyCg4FB"
+ARC-Seal: i=1; a=rsa-sha256; t=1768318685; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Vo4mRjF2QUMsMTPnPW3fJlinI2igRKZglkoY2HBS/+Lw8DVg+khIo/sIWElucJ2Wp0gJyBAQzuqmK3aOXrTRweOPgkv1uM39J2nlrxAsXh4E3GtMxPtAm7MzTaX0oedbzk2x3ZFXiXUsnfEvvLODWQ7JLNG7LjMpZhQblUPbjPM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1768318685; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=xRVp4Ey711mIubjMo9aqvhg0NeK1A7J2ZGo3b3dhuTE=; 
+	b=ZerfQpskDT4PIa7ZgJwLyjqsHaISxeGkDu4+Zim9sFzdM5upaXoeDyrnoz6n1K16+ZKdA27YHU8AZdyxETjqEycxdPPfmO1LKOUwGfc01JkgY4z3D9IgHcfqbBKJL5dHIYPX/fvSW8qjwiAinxo1gwGm5MS1Lf7m/4g/hKntMD8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768318685;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=xRVp4Ey711mIubjMo9aqvhg0NeK1A7J2ZGo3b3dhuTE=;
+	b=kvyCg4FB/EaKevjCjRNryIf2HYrw6p+Ury2VChW+5xemB19emrPbsUeux6Kikg8a
+	GaEtrP4ePET4Rj84fwYyrd+KYRrabBhOmYUiJIZ7uubeRIo0pSovnYA2a739IES71ZT
+	mqdlgBBKo4a90YJuGNqjYCXNBAtlbl43AuOACnD8=
+Received: by mx.zohomail.com with SMTPS id 1768318682442344.9630956333299;
+	Tue, 13 Jan 2026 07:38:02 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Emily Shaffer
+ <emilyshaffer@google.com>, Chris Darroch <chrisd@apache.org>, "brian m.
+ carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] hook: make stdout_to_stderr optional
+In-Reply-To: <xmqqv7h5k05v.fsf@gitster.g>
+References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
+ <xmqq7btlliip.fsf@gitster.g> <xmqqzf6hk3ox.fsf@gitster.g>
+ <87h5spimno.fsf@collabora.com> <xmqqv7h5k05v.fsf@gitster.g>
+Date: Tue, 13 Jan 2026 17:37:59 +0200
+Message-ID: <87ecntikvc.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Manuel Rego Casasnovas <rego@igalia.com>
-Subject: git shortlog --committer vs --committer=<pattern>
-Autocrypt: addr=rego@igalia.com; keydata=
- xsDiBEYc4gQRBAD6S9aR6ogtR9ZiuMGGdbPSo68o2tZ4XvZ/1mSL88ESb0e8RBjRGJKB5yv5
- vBgYDwxAC5J1hbsKCviTfSjpGbfRvp6oq3+pG24YmRvMzPcNV9K7eg/WuNo4XE70kqjvHCCC
- 7R09FW01sllZpzHcjmJC4wfT+OYWXW9uEGSpxuVA/wCgzFt15SPaNhd4YyQ/IerU0VMQsEED
- /1QeKwa+V2gS9n4p7h9DTLrKWR31WU+2BRnpVMwvAAQ3P2pAGSmndbJONmmlK4AO7u3Mzs0V
- roqnh0oggBXadIk0rsGA4ZEtFDV+p/YBqHW7iOPkfE9k4kTBQGMsBEEIyIeFuyCjILTZte2p
- 9+J2VM8WTuAENG4+FtRZNuu9yDVzA/sHZc8SpjPId7Gke1522Vdy431PPWBJ2+ttqlGDBppf
- Y64MwuIfPfUTWjIJYIfkOij3nIe5BUk0nRpqKCWzC5aVup/G54lo1uakPM42vJZuJG0nw9Aa
- +6+ic29wzpTUpkIfvJUwPSGY+ucdaa/9SnUGRmTse8igO7o5TEUaWerKQs0oTWFudWVsIFJl
- Z28gQ2FzYXNub3ZhcyA8cmVnb0BpZ2FsaWEuY29tPsJiBBMRAgAiBQJNvpdkAhsDBgsJCAcD
- AgYVCAIJCgsEFgIDAQIeAQIXgAAKCRA/kOoZu/4XsbOrAJ9uFnRXSHNoXef9zeQ8U133QanF
- sQCfTsUj/b3FhSBblkHdScqgl8rybqXOwU0ERhziChAIAMGH0qEWBDxgLkJlVGC1suuBpPR+
- mg0r6Q9pGq7kPIbdLfhdBWrif8zFxxBlxeCkWmm5jNVxgjCUqdhjqcBP5iHQqrIWsiTTLylf
- 9Ia5tIODlLKzdt5IR2fe60NAN5Rb03qFeAB3lZ6nHvlONtGUMX3ynN5li9P+xNlLrzNMeNL3
- GWzfghpQKwbPJ5lKVjIuEOpGQIB9rBkMyzIteW+onNGvijV79G6tsUc0rrdGrLI5Ye+Xh0L6
- QOWk2XjrOFPlZ2knSatM8H4Ruf4RWJA0twfdu4FIT5MVsbrtdnnsFhT0IIZWEVZJ4Tk0p4iE
- yztIh3uIBpAOTXH8ppY8fYeTiQ8AAwUH/il9ljhBJzf6rQL14yrr5fzgDELBd5tsxFWafWtt
- m81eYOjBALnzESVeGExZsRaCgQqpaQ7tjeWDmTuqVpTL+uz/zXc1Pfor4B/z4ketBJAmu5g4
- 3dL6A5dN8BuLVvrHZ2/JWxEZx6b2na04UWi2Ay+gXexWrWo7GZHmXKAmF1g2i70/80Y/nrU8
- UhpVWE2/N0VbWW83vW4fC6mEKTeAKwWAr3sUHWwcJTYt0MYWhS2Sfv2J9nELxidEEw9jdjVo
- lpz4uQGHybr4tzO3K0X2Oj2ssG/rBnqNMH/MWjPxLWTGHmKgNhNvgIXsKjXyFjEnYTdu3GAZ
- PK0KmigjIO6vNeLCSQQYEQIACQUCRhziCgIbDAAKCRA/kOoZu/4XsceqAKClWYd6nQaNi4pe
- hcHuws05uNGSFwCgp44iSe1rXhLTsU07h6MTrQ1uQIc=
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-Hi,
+On Tue, 13 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+>
+>> On Tue, 13 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> What was the previous behaviour of code paths that ran other hooks?
+>>>> Was pre-push the only one that didn't divert standard output to
+>>>> standard error?  This patch does look like a proper regression fix
+>>>> in that case.  I browsed "git log -p 1627809eef..c65f26fca4" (i.e.,
+>>>> the change for "Merge branch 'ar/run-command-hook'") and random
+>>>> sampling (like run_receive_hook() that used run_and_feed_hook(),
+>>>> which set stdout_to_stderr to 1) seems to indicate that it is the
+>>>> case.
+>>>
+>>> By the way, if stdout_to_stderr is by default set to true, but tnis
+>>> regression fix allows specific callers to opt out of it, then the
+>>> title "make stdout_to_stderr optional" is a bit misleaing.  It makes
+>>> it sound as if it is false by default and optionally turned on.
+>>>
+>>> Perhaps like "hook: allow stdout_to_stderr optionally off" or
+>>> something?
+>>
+>> Ack. Will rename in v2.
+>>
+>> Please wait for v2 because, while writing the tests, I noticed pre-push
+>> needs 1 additional line (ungroup output) to function as before.
+>
+> Understood.  Thanks.
+>
+> Writing these tests would take particular care, I imagine.  Apply
+> the test to the tip of the 'master' before ar/run-commmand-hook was
+> merged, to verify that the tests expect the behaviour before these
+> series, and then merge the result up in more recent 'master' to see
+> that the changes in ar/run-commmand-hook did not negatively change
+> the behaviour, or something like that?
 
-Doing something like this in a Git repository returns an error (git 
-version 2.51.0):
-$ git shortlog --committer=foo
-error: option `committer' takes no value
-
-However the option "--committer=<pattern>" is in the documentation:
-https://git-scm.com/docs/git-shortlog#Documentation/git-shortlog.txt---committerpattern
-
-But it seems to be in conflict with "--committer":
-https://git-scm.com/docs/git-shortlog#Documentation/git-shortlog.txt---committer
-
-It would be nice to either allow using "--committer=<pattern>" for 
-shortlog, or if that's not possible fix the documentation.
-
-Thanks,
-   Rego
-
+Yes, that is an excellent idea. The tests should work the same before
+and after the conversion. Will do.
