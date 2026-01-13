@@ -1,266 +1,139 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB2A350293
-	for <git@vger.kernel.org>; Tue, 13 Jan 2026 17:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131CB3933F2
+	for <git@vger.kernel.org>; Tue, 13 Jan 2026 17:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768325158; cv=none; b=EQMgQNQVQuCmdL6ShiFQpEJbrRPcqwE5DU3pLBa/rCmNJplKOzymHyqw8EnRV5j5d7JcMbVFANdBt6cgz3+SehgaSMuxkyIve3+p+QZlEpoK8F9OO4ve5pCwwGezGpcHBBtc4dN5n//xsWMN07KM6J71CPbfKZnoAkyRLqdJX1w=
+	t=1768326076; cv=none; b=LLfj4CQKZdpVIDIHty/ypN1CfcwB5bJBi9E39yIXxkCQLSIgc6SmDWX7Pqba7+zJqxeGSm8igRmS0eF4/ocsbNIziRP4D0kOkzvniyUyE3YakJaMKkarTKERRZhj9W5k9rRgCdXV5u3T5PM24qyxscIBQqsifp/YcWlhKTDbleo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768325158; c=relaxed/simple;
-	bh=R4e6L/1pKVvmYXL5UCcxLQNp8nkX253Q/zEOkdAtCSk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=HqUP6aQoRJhSnUlJ7Z82A8EkcCoHWPWeJ/jAxo2Xw2JHZI+1BAAcT5P0SaeR51phsWDh9slMSrrPlL1huTPkrsBrsZm3VHXe1Ow6lfcb+ZYAWhQGU9vpOqHyNSpn8vM5wAnkaj3h2Dt3t0hpDYvgjvanYs1WtOnhU7n5L7580aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nVBMk71L; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1768326076; c=relaxed/simple;
+	bh=eNXZ7UGa88Xagi/u4bv8QwjRJngUa6OJzYYnlKqBZKs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sno9oYLHBWY8j2VCAtxtLteAeJvOjTHDLImpnk9oL3B9/dJycuMTMc3wKUu6p2GAGT9SDBRlTwPO6Ta0y2LknLx0kQIjZZBKv9I74J/MXUbhvXkQEZ3EjhUsEnpM3lUtgOCXE+Kx5qdcIzP1ejTRhrCv7IcFXzzgzeZkvjtqp34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HosKMTIq; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nVBMk71L"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-47774d3536dso500425e9.0
-        for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:25:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HosKMTIq"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-78e6dc6d6d7so39827677b3.3
+        for <git@vger.kernel.org>; Tue, 13 Jan 2026 09:41:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768325155; x=1768929955; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768326074; x=1768930874; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f0JOatWKxMuks4VyNpOX+31sb5dYc7LZweJD3KC+IU0=;
-        b=nVBMk71LNaqKcJdljYrMcmbldWiCUjjyogHQF53Gk8zmNKx9d/F4k0hq9AFR/KE//G
-         GuGKs+4e2uweaScMztrZHWuXQhEsTXZ+JEb7qhNPw64aI3GuOVBd4NBXGvbtWw61YhtC
-         tV/aqIyR6DRnQvNctC4xAgLTFt1EiNsZnySarG4nqSt0t3fCwwuqQIBmR8mNoSEQFZ0e
-         f7yPomNyQMLUtGwYZTPgpl0qjF5P2dRbEOavLls0fYzvvr4XipT79tM/pER3+zOwTuHn
-         wVOPn0VWHxEDa4Ee91SJcXIdyXY2SvZOW+s8MQOuSpnH+fa0yKiYcXWT37d0SxyUSID1
-         Q3Ig==
+        bh=jCLJjGb6gQBAxGrXfuX/W3OTEefV4Pe+Q4+3IUBQUdw=;
+        b=HosKMTIqNZIxg0WA59j1KCt67eWOIoy87DshCvwmPZcCYJcIvBFsKC2EwQsGC5Eykg
+         vDN6kQwSe+q+N3Wd0PTvEI/NY/4TA0M1Xjo1/IX1k8jYlUsS0LlLX1h6ffcJ+rkXOPga
+         u6M4SscGpUw46b3VkX0sR8Ehzt/+h3RWAMy6HHUw1Sw7m2zxEDU71JhkZTd5BvYC90tq
+         FwrJwOnQtq/8WYMqgUhoJXODV0iOTg2Gjcw7Ii4om1NC6041i3z5HN+aiczm9dK6pX7V
+         pIxQQtUSTHToyrmGPbmCa1vhdyUIcD4FubPetC3Nrq6KctdTatGk0pTwfj6sKSGmKlXp
+         1GIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768325155; x=1768929955;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1768326074; x=1768930874;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=f0JOatWKxMuks4VyNpOX+31sb5dYc7LZweJD3KC+IU0=;
-        b=YqJ6t/OXXIZfWc5e/dQEiYBqQwq42YTVgILkicIAuRihx5fVeJY7yyoemrk32eM0pn
-         nlwDMj5BrKdjz1V+xHsecYDstx0lSecXDFz6Eq7L1gM2EfXd3/4aRd/4KzJJfOnX74bX
-         sVCIKw8UuL/enD0IwoO7TNfelxIa/cOCcWtyB5sKGUZAyzrlUFOP6jZ5TuVUZmpXxBq7
-         i4t/Zu6tkZz0WoQkQLr8kjA1KtZVd4yhqPaIW3SYStOa9ixjhQgXCNAeoah5AFXbPPp+
-         IlMeEAa9BO4NCebGUm9UMxK4NwXVEHywZhrCRU8HK7HcZtK9Uf3nZljr1mlskETDefTm
-         IAsw==
-X-Gm-Message-State: AOJu0YwvYBmsnoC4isReT1qoYsKC17dHYrQHV3EJk8ySudMjcaCp2K5W
-	rkRNLYQ7fDc2JCIPDMB1kQjF5Jxmn3wrqh3WfKfhln/+HfoQdNEC/34NjLIT0dcP
-X-Gm-Gg: AY/fxX4fmduKQV3B0/q6//JuOdKfjV+p9q+HZ/HsS6GOzUawN3cNC5eTHRXQFOYWu2Z
-	AZr8ZYV7E+hL1swD45VnPn6eWgYI0yH4hD3oJTOC0ivXgvYt2CKL40xhKfaHi7mPiS+1gLb4IQ8
-	NJZhSvAZyxOpfEdMn8AxgtkLTgDQ7omcRQ24iLJgQ/ZqcjT4dpSdNEO4RSIejJUIuwVRjDycQ0A
-	8AzKsx/hEz6hj9TnnqKRL1KGx4EbYHpBcAWx5WgUPbQ08IKXR1FDt3m5XN8DVr4LHx1NT+YhuVt
-	Rj0G7/oMOqy6ikrflWICFQtRWWrLUMZjf4+ZL5X5L7T6yznvToIbjKPVwPnbbs/0R/VVdp68N+G
-	jTZjCm0j0rHF7YO+Q4lD0CGj2qiwbnSKcbgE8qCGMp/3PDyqQkZWVgPk2hyEhRfsTV5Ws5A6q65
-	aeFjJj
-X-Google-Smtp-Source: AGHT+IFi1dcSPJDfDpdxxEOpBirDYv8Jy1KMlyuhanXJLA1Tr1qFquRinnxf/UMGpzFFxoVNC5fTXA==
-X-Received: by 2002:a05:600c:82c3:b0:477:9d88:2da6 with SMTP id 5b1f17b1804b1-47ed7b76cd1mr38328315e9.0.1768325155235;
-        Tue, 13 Jan 2026 09:25:55 -0800 (PST)
-Received: from ubuntu ([102.91.81.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d7f68f69dsm412383055e9.1.2026.01.13.09.25.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 09:25:54 -0800 (PST)
-From: Olamide Caleb Bello <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: phillip.wood123@gmail.com,
-	gitster@pobox.com,
-	christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	me@ttaylorr.com,
-	karthik.188@gmail.com,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [Outreachy PATCH v2 3/3] environment: move "branch.autoSetupMerge" into `struct repo_config_values`
-Date: Tue, 13 Jan 2026 17:44:02 +0100
-Message-Id: <6e54e22ac7096f26e774acc4740bcb135496fb69.1768318762.git.belkid98@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1768318762.git.belkid98@gmail.com>
-References: <cover.1768318762.git.belkid98@gmail.com>
+        bh=jCLJjGb6gQBAxGrXfuX/W3OTEefV4Pe+Q4+3IUBQUdw=;
+        b=sriueiHk1nH1YZoAFXKGkKogkpH6Pv1KlnO2ZL3NvPmsdgvz92BhRrS3Ulb8Xfo0Cu
+         dxcsodGStpAGDaCUWisVBbFmvsNEcQDbuTA4Rtdv3lk7UuEKurXEv83PHZCoprIO40S+
+         XCe06yd/Y4cpMCHWjf9xa7eESory8KP5h6a2pE/TSmMlyXXafL9RXEkWAdikc/Gu9Fdf
+         4dmSOhwFKofTPi1jOW9nS2+Ussc/+c9zVTIW3JeMZG16IYR5nvGz9Kpafzinvnhl+XNE
+         sgXz1LY5ecbzTZOjeZqY8cgpVh0awGsh+WO9FTN2OTBh/xv/UME53GtxxKtdxcpNrWSE
+         eH7w==
+X-Forwarded-Encrypted: i=1; AJvYcCVL57D3lcomLtXyv2OJwZAquWyCLvWnUbhgQHzqEhFKCP8TN6D6k2MaLHKI2ReGzNbXFSs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEtOxHHVY1duJ9ozBAD9izVwfOMy5uoe3KvM9SyxpbdyyQT8K5
+	cjcjToXNnczk+d+rKbfdkVL5YLhEjE5nfKSo/NN095kGzpkf7K9v7U+KJxgczvatIyrrGKRm9YA
+	kbGFsaTlEUgeQ4Zz8CcFz2KTySAdlRwCIZLUrqBs=
+X-Gm-Gg: AY/fxX42Bl7WK5rPW4OiaJPEXM+ttEoXUlB1PhRNIL191Wc8j0rGpPpq0QsiaG1wmJ+
+	bRns4dvtL+/8NfZS4q8VFScZ6bBYVcFsplklrBIRk+ufPkK85E2pMHVrJsNYhgypB6pmTyrxELt
+	ChSUUvqhlJqZk9x8EqwxX/IxWuPSsHFNOXmSpd6TFqp4RFiA/ZWh8V8dkxdwwuzllu7P/XHsiVm
+	kUIY7Q2KQdtCoh1t9n5EoxNXOADcP8BW6SVBXzNTwCdzcqNQo2Mjrk337JX55JAq860Iy8=
+X-Received: by 2002:a05:690e:1507:b0:644:6f03:b3be with SMTP id
+ 956f58d0204a3-64901aacb12mr29401d50.1.1768326073946; Tue, 13 Jan 2026
+ 09:41:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <aWPFxQloyfx8x0ED@MAC.fritz.box> <fefb3d25-3723-4e10-893a-620fbdc0cc45@app.fastmail.com>
+ <20260113171030.GB265671@coredump.intra.peff.net>
+In-Reply-To: <20260113171030.GB265671@coredump.intra.peff.net>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Tue, 13 Jan 2026 23:11:02 +0530
+X-Gm-Features: AZwV_Qgv7KI9RkO4zGhtzSwiaBY3EMBVULkDlYItZ7ngLnkFHzMUEvMZNRYovBo
+Message-ID: <CALE2CrQ415Ewm_F-DLZu=JY2BTWofmGgorEOa0D=USr5d510SQ@mail.gmail.com>
+Subject: Re: Difficulties using git rebase. Help, please!
+To: Alan Mackenzie <acm@muc.de>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The config value `brach.autoSetupMerge` is parsed in
-`git_default_branch_config()` and stored in the global variable
-`git_branch_track`. This global variable can cause unexpected behaviours
-when multiple Git repos run in the the same process.
+Hi Alan,
 
-Move this value into `struct repo_config_values` which holds all values
-parsed by `git_default_config()` and can be accessed per
-repo via `git_default_config()`. This would retain the same
-behaviours while achieving repository scoped access.
+That was me. Glad it helped, and I am happy you got the rebase working.
 
-Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
----
- branch.h                    |  2 --
- builtin/branch.c            |  2 +-
- builtin/checkout.c          |  2 +-
- builtin/push.c              |  2 +-
- builtin/submodule--helper.c |  2 +-
- environment.c               | 16 +++++++++++-----
- environment.h               |  6 ++++++
- repository.c                |  1 +
- 8 files changed, 22 insertions(+), 11 deletions(-)
+Rebasing against the merge base instead of the moving
+origin/linux-6.13.y branch avoids pulling in all the upstream
+stable commits.
 
-diff --git a/branch.h b/branch.h
-index ec2f35fda4..3dc6e2a0ff 100644
---- a/branch.h
-+++ b/branch.h
-@@ -15,8 +15,6 @@ enum branch_track {
- 	BRANCH_TRACK_SIMPLE,
- };
- 
--extern enum branch_track git_branch_track;
--
- /* Functions for acting on the information about branches. */
- 
- /**
-diff --git a/builtin/branch.c b/builtin/branch.c
-index c577b5d20f..d75114b41c 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -795,7 +795,7 @@ int cmd_branch(int argc,
- 	if (!sorting_options.nr)
- 		string_list_append(&sorting_options, "refname");
- 
--	track = git_branch_track;
-+	track = the_repository->config_values.git_branch_track;
- 
- 	head = refs_resolve_refdup(get_main_ref_store(the_repository), "HEAD",
- 				   0, &head_oid, NULL);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 261699e2f5..6c1cb9713c 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1631,7 +1631,7 @@ static int checkout_branch(struct checkout_opts *opts,
- 		if (opts->track != BRANCH_TRACK_UNSPECIFIED)
- 			die(_("'%s' cannot be used with '%s'"), "--detach", "-t");
- 	} else if (opts->track == BRANCH_TRACK_UNSPECIFIED)
--		opts->track = git_branch_track;
-+		opts->track = the_repository->config_values.git_branch_track;
- 
- 	if (new_branch_info->name && !new_branch_info->commit)
- 		die(_("Cannot switch branch to a non-commit '%s'"),
-diff --git a/builtin/push.c b/builtin/push.c
-index 5b6cebbb85..68105ecb2d 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -162,7 +162,7 @@ static NORETURN void die_push_simple(struct branch *branch,
- 		advice_pushdefault_maybe = _("\n"
- 				 "To choose either option permanently, "
- 				 "see push.default in 'git help config'.\n");
--	if (git_branch_track != BRANCH_TRACK_SIMPLE)
-+	if (the_repository->config_values.git_branch_track != BRANCH_TRACK_SIMPLE)
- 		advice_automergesimple_maybe = _("\n"
- 				 "To avoid automatically configuring "
- 				 "an upstream branch when its name\n"
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d537ab087a..7239722e48 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3128,7 +3128,7 @@ static int module_create_branch(int argc, const char **argv, const char *prefix,
- 	};
- 
- 	repo_config(the_repository, git_default_config, NULL);
--	track = git_branch_track;
-+	track = the_repository->config_values.git_branch_track;
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 
- 	if (argc != 3)
-diff --git a/environment.c b/environment.c
-index 65919a6c52..437d14e1ae 100644
---- a/environment.c
-+++ b/environment.c
-@@ -66,7 +66,6 @@ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
- enum eol core_eol = EOL_UNSET;
- int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
- char *check_roundtrip_encoding;
--enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
- enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
- #ifndef OBJECT_CREATION_MODE
-@@ -607,18 +606,20 @@ static int git_default_i18n_config(const char *var, const char *value)
- 
- static int git_default_branch_config(const char *var, const char *value)
- {
-+	struct repo_config_values *cfg = &the_repository->config_values;
-+
- 	if (!strcmp(var, "branch.autosetupmerge")) {
- 		if (value && !strcmp(value, "always")) {
--			git_branch_track = BRANCH_TRACK_ALWAYS;
-+			cfg->git_branch_track = BRANCH_TRACK_ALWAYS;
- 			return 0;
- 		} else if (value && !strcmp(value, "inherit")) {
--			git_branch_track = BRANCH_TRACK_INHERIT;
-+			cfg->git_branch_track = BRANCH_TRACK_INHERIT;
- 			return 0;
- 		} else if (value && !strcmp(value, "simple")) {
--			git_branch_track = BRANCH_TRACK_SIMPLE;
-+			cfg->git_branch_track = BRANCH_TRACK_SIMPLE;
- 			return 0;
- 		}
--		git_branch_track = git_config_bool(var, value);
-+		cfg->git_branch_track = git_config_bool(var, value);
- 		return 0;
- 	}
- 	if (!strcmp(var, "branch.autosetuprebase")) {
-@@ -756,3 +757,8 @@ int git_default_config(const char *var, const char *value,
- 	/* Add other config variables here and to Documentation/config.adoc. */
- 	return 0;
- }
-+
-+void repo_config_values_init(struct repo_config_values *cfg)
-+{
-+	cfg->git_branch_track = BRANCH_TRACK_REMOTE;
-+}
-diff --git a/environment.h b/environment.h
-index 5caf73b4b8..bfcdffe836 100644
---- a/environment.h
-+++ b/environment.h
-@@ -2,6 +2,7 @@
- #define ENVIRONMENT_H
- 
- #include "repo-settings.h"
-+#include "branch.h"
- 
- /* Double-check local_repo_env below if you add to this list. */
- #define GIT_DIR_ENVIRONMENT "GIT_DIR"
-@@ -89,6 +90,9 @@ struct repo_config_values {
- 	/* core config values */
- 	char *attributes_file_path;
- 	int sparse_checkout;
-+
-+	/* branch config values */
-+	enum branch_track git_branch_track;
- };
- 
- /*
-@@ -114,6 +118,8 @@ const char *strip_namespace(const char *namespaced_ref);
- int git_default_config(const char *, const char *,
- 		       const struct config_context *, void *);
- 
-+void repo_config_values_init(struct repo_config_values *cfg);
-+
- /*
-  * TODO: All the below state either explicitly or implicitly relies on
-  * `the_repository`. We should eventually get rid of these and make the
-diff --git a/repository.c b/repository.c
-index c7e75215ac..d308cd78bf 100644
---- a/repository.c
-+++ b/repository.c
-@@ -57,6 +57,7 @@ void initialize_repository(struct repository *repo)
- 	ALLOC_ARRAY(repo->index, 1);
- 	index_state_init(repo->index, repo);
- 	repo->check_deprecated_config = true;
-+	repo_config_values_init(&repo->config_values);
- 
- 	/*
- 	 * When a command runs inside a repository, it learns what
--- 
-2.34.1
+Best,
+Pushkar
 
+On Tue, Jan 13, 2026 at 10:41=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Jan 12, 2026 at 05:08:52PM +0100, Kristoffer Haugsbakk wrote:
+>
+> > On Sun, Jan 11, 2026, at 16:46, Alan Mackenzie wrote:
+> > >[snip]
+> > >     $ git rebase --onto master origin/linux-6.13.y HEAD
+> > >
+> > > ..  This didn't work well.  In particular, I got a conflict in a file=
+ that
+> > > I had never changed.  Why?
+> > >
+> > > Well, I corrected the conflicts in that file, git add'ed it, git reba=
+se
+> > > --continue'd, then got another conflict in a file I'd never touched.
+> > > Same again.  After the third such conflict, I gave up with git rebase
+> > > --abort.
+> > >
+> > > Criticism: there doesn't appear to be a --dry-run option in git rebas=
+e,
+> > > with which one can see how many files will be conflicted.  Instead th=
+ey
+> > > are notified one at a time, drip, drip, drip, .... to the user.  In m=
+y
+> > > case there might have been four conflicted files, there might have be=
+en a
+> > > thousand.  Either I'm missing something, or git rebase is missing
+> > > something, hopefully the former.
+> >
+> > Just a dry-run? I would use `git merge-tree HEAD
+> > origin/linux-6.13.y`. Then you get to see what files are conflicted
+> > without stepping through anything.
+>
+> Minor pedantry, but: those are not quite the same thing[1]. You may have
+> conflicts in the rebase that would not be seen by merging the endpoints
+> (in the simplest case, imagine a series which makes a change and then
+> reverts it).
+>
+> I do think it's a good approximation, though. But that also points to
+> why OP's request for a --dry-run can't be fulfilled: we can't know what
+> conflicts we'll see in patch 2 until we know what the tree state is
+> after applying patch 1. If there are conflicts in patch 1, we don't know
+> what that state is until the user resolves them.
+>
+> -Peff
+>
+> [1] If you want to dive into the world of rebase vs merge conflicts,
+>     check out Michael Haggerty's imerge tool:
+>
+>       https://github.com/mhagger/git-imerge
+>
+>     and some of the associated blog posts and presentations. It can make
+>     big ugly rebases/merges easier to deal with.
+>
