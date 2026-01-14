@@ -1,61 +1,174 @@
-Received: from outbound.ms.icloud.com (p-west3-cluster6-host5-snip4-7.eps.apple.com [57.103.75.110])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413DD35F8BA
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 07:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.75.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A444378D86
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 07:40:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768375427; cv=none; b=A0b+H/pYem82zPc0lob1YLr3TKnNi6Acb8FI8yuN73vF37uNPFUtyPQoYYkKlHk3tAbDAmrhRWT7qkMRQk/1L5EhrLQ1bpGn8d7hYLtvUcWwN1yBQZDtfEAIzRuKvITfbYEf4KTmyZyYmDhr9ObSmIklRjYAeV7X5S0Tk5u5ffU=
+	t=1768376455; cv=none; b=V6M/LVF13aEtEAVNHMXKZMSyxCynR9B9+Y9+R2vcYpe9sTDBvtAunmiXVZipe1iNqvZsb8NOcAe3Z3y/W3+w2l6dqqjgbGtiNcN1u20+1GsPK6W1uj7hb+gzF+DwKlQys3/z//uzCaMCy2Nt1YG7MX4/1VhK5QK2QphYUBbuJMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768375427; c=relaxed/simple;
-	bh=MWh0MyXLL+yIjFBhDi+e8Ydv38TphgUFIL2efhwZdAE=;
-	h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:To; b=eRUnGGyznTbUymJXmrAAKfiKTYbqodWx8a60Zj+EXdOIMCxfS+mjgJjFnzmYK8USG33WkK5mGVwJyTAk1mK9vQ08nM3ER6Xxya7QhPMy1MFxeoWJ3aUe/A/O4j7Tcga4+XMZJ8YeUHg2bMa5LtB4yfqEagY8/R9RTXCgwIGjLNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=yDTIrrrE; arc=none smtp.client-ip=57.103.75.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1768376455; c=relaxed/simple;
+	bh=GpuVT8U1BnvNSJtwexak8EYvoVwo7PPtlEFZ9+8pF1g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MgkmG14gvtmM0+FbcxISd32aFzwz7ZY8LdahBHuZbnsxTuD0jJealEGcjn//7qSn2JKvA5M5EoGVmdQ3Pq3SFL7FQc8YRbb24d9jvS84YJgjoqilj2wmkr3X50PcepF6uLh0lCdBaH7P37A0NXM4ben0AP1FX02lgNrXpXQcQnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ROScI/Ap; arc=none smtp.client-ip=74.125.82.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="yDTIrrrE"
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-west-3a-60-percent-5 (Postfix) with ESMTPS id 321E51800102
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 07:23:38 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; bh=MWh0MyXLL+yIjFBhDi+e8Ydv38TphgUFIL2efhwZdAE=; h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:To:x-icloud-hme; b=yDTIrrrEV/4u28BngE7HzRI7TZyzho0OU6V4tu2AXUDD3AcyCQtRfOUBeYfARH8LgnyVRFc4DCLTCxPV/VhHKSSxXcm57GCww1bKtgKplIP1ZmrMXqDVGYmpsj8SRWTykzQiWUubEbfnTZ9G9wR2CpC+WqjhXucfuyY2cddELAJmdMjun7vuf9M7mVhI4DK8NtyMuKtu2ylxyUkV7+WreRjB/EFoWcRArU3AJblKO0nOQBBbkGv+AKYAJ1DwaHlLcPukHqoTnfYCFscHXaS3vLRPZt2qG0VT9WPGB/Vjsb3GYVGz26arcu4pxQJFI+JARFBQ987U/IRCx8bOx0eT+Q==
-Received: from smtpclient.apple (unknown [17.57.154.37])
-	by p00-icloudmta-asmtp-us-west-3a-60-percent-5 (Postfix) with ESMTPSA id 3CE4B18000AF
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 07:23:38 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-From: Seojin Oh <ohseojin911@icloud.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ROScI/Ap"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-11f1fb91996so208980c88.1
+        for <git@vger.kernel.org>; Tue, 13 Jan 2026 23:40:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768376451; x=1768981251; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=RTq0GVI8ISuGjddgsVy4jD0lYVSTta2c53C9iUeXpRc=;
+        b=ROScI/ApQDgcA4oovm62GyOYWPwNIugPJCR1RHGNYn7heam8CaawVX3WZ++JnHSZFz
+         lN8NssR7048/TuQiAXptvXdr5i3Yhu7Vf4L7lZJPsk/i8YiTvV9o6WFsUZpRzvfPElY9
+         Yl+5aLYWgH5PrHyaVNh0X8p0puyLt4jUrYVBLM2CM3sR+zJQpO7TYUd7+yaC77dNsD1N
+         bpTTYLcJxyOoySZ6gaewVFXKgrT21qpjvhDJpZuD5Regk0LQDRy6cwlDpSFKMKOuWIVu
+         7HzfWO68r/evODIhnjbVYQSZz1wNmidaiWZSVQD7Z/tn0woNlvLOrAMjV7N2mzNePb7l
+         Cx5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768376451; x=1768981251;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RTq0GVI8ISuGjddgsVy4jD0lYVSTta2c53C9iUeXpRc=;
+        b=nkbQ6f0d9uPnL6/al1zJ9FroYXVe2T/FkQTAWmDqdAtzyYRFjqWSBQnMG6OKL3lT1F
+         14+oCXmjhWgO1ra/u0XsEZBUqtWivpBGWmcFWDHxBm79FD/3wUrlo//9GAPynKH79cKW
+         r1qU3cdP9T2n467SllGex8IpfPxxLMlSYOOdRX+7rrnbVNUYjwy2IpJNytHjAlV4wo7Z
+         uU754BawHKoLH5boSr5xbe+eLj8KUUD0Mc2S/1+ceHAdMcOw4WH9yjm3jLTyO1opF51F
+         D60Uqkr3aSlv4T1jQZxv4+16Dqj6t5ZLVD9BKJF6bEXabfYk0McktUJWd11MbACl2D4l
+         s4PA==
+X-Gm-Message-State: AOJu0YzbPflC/tX9/aS3IyVRLojsOfIoGiZImQLpysaVSWdr0Hbu+Gd4
+	0O8xJQ+HLdT1d410V09NpIDnL6Q6PSos/9DvcP0PzNDqPJKuuiTQy+NIgTU3FCXKJn9nvAsO8SF
+	y9/WlA7lV75+IkPS2GUOR4u9y1RPn7rE=
+X-Gm-Gg: AY/fxX4zYK4G1QKVtNa4fysa6O3RwAijv01UT106IjNf9KIdXgeXxJrCiCo90rD4Fy7
+	o/oykqfqRICmNCUJB+eTtQ5Ib+B9iuv7QyCuppauxnjgsboi/K/eauaJmVioQOZ+QnEWlkyrbKr
+	t7R89F3rVGWiu0ArbnUaRRBe7v1SjIz5v48KBFzfe8QZI9g55WRozUubY7de9WAsWMkxevSt/Sn
+	XYw9YADuhfUfJRO+7CQFNSpXxg4DRhaM7w6VZc7PCkSVVFqGMvp6G9Xb5gfzY7kAMqeE5I9o+Q=
+X-Received: by 2002:a05:7022:698d:b0:11a:4016:44a5 with SMTP id
+ a92af1059eb24-12336aacea2mr1888987c88.24.1768376450871; Tue, 13 Jan 2026
+ 23:40:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Hugmom1118@gmail.com
-Message-Id: <2B6F6DF4-67E1-4871-8B40-670F2B4F9B23@icloud.com>
-Date: Wed, 14 Jan 2026 02:23:28 -0500
-To: git@vger.kernel.org
-X-Mailer: iPad Mail (23C55)
-X-Proofpoint-GUID: Z1FLEKRPGhoAEFI2aM_unCjWAKB6Zx8o
-X-Authority-Info: v=2.4 cv=aNH9aL9m c=1 sm=1 tr=0 ts=6967447b
- cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=pGLkceISAAAA:8
- a=IkcTkHD0fZMA:10 a=3a6yGspbazMA:10 a=vUbySO9Y5rIA:10 a=x7bEGLp0ZPQA:10
- a=63tTaWKy1WgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=mWRCZ2U_BfJ_g3AJ2DcA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDA1NyBTYWx0ZWRfX57m76tSuBiEy
- tCUbrJMd/VyAiinRU5eKVonptBt+y/UJq+m5f1pnTj6jFH8aUBopvP7khX+CyajC2J64gfA9IY7
- oPlAzcTCPOheG5wHGi9biVF2iApjvVS0DV9KSdBoHVmEvRmqLHPf6Hn07St/JDcLGT4YipigTIZ
- G0Qtr/b0g/H0OmOCuVueYlEnBzRnm8dvEuUv/M30zoYxefWZ3m+rEpDDQvi4kjke5SU2+osCFlP
- d48dQEBWbZqYhyVc5AwdCzLJPmeNiGifyoJenZEgcavMjZ6Yh8JRxSYU2U/qunkssLrVuSQ6ft8
- 896GteFoRAv1BSU5Kgd
-X-Proofpoint-ORIG-GUID: Z1FLEKRPGhoAEFI2aM_unCjWAKB6Zx8o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-14_02,2026-01-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxlogscore=377 adultscore=0 bulkscore=0 clxscore=1015 spamscore=0
- suspectscore=0 malwarescore=0 mlxscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601140057
-X-JNJ: AAAAAAABFbtWON6TH1ry72oMBodzE2H7D8vjAgJbwhIFc0mQW0Iod39AFCRsmcIjzNd5tNgTFRG5wf3uBqdNaiQvYtSorW5ZHRNKEDgqkXe8Y2q40ianYX4IhnTgJZ201FaDep2IQqQoDVm7hkyrrXjLTJi+2JitogahziSNk4k1liOzrLlHIMIeUyNxrzN1ywpushCtvoFwuXa+ywBjsNrLo9KVUqnpFfDfKNz47tHowpAlpheXgBaJocCKttyoh4Jn9lUNdrbehw5jaEb/rxl+uGVltJytKSJ3DBglzLZwIahSk+7VXfgsgcuJhNd6ktDKh+B+Cx0QLK8qGRxsRbOZurfjOQdM4++81LHGjV4jKfKVQMyoVTTdRTVZimdv/xaG40uxu6qnx4zygrbHZjg9XOzIMHpiUy0La5NIrwK6g0LhNRzb23B5HNf6QXLU7U8oaQoHFCp0GcfcD2PC500xRRFJatiGfiIih/BI7xAhLv7qtKKjyzYERiv5Ht/Nmrs2n3Urz1zgA+0thUBSLAdPJ7ZWbc20JbCxHgdaLJANz6wp7Qt+BVaZ4cY0OHlF2yOUTE/CDTQ6/n82u83WByYhR2fCsUcCC3J644vlQHC8SqjfmGkv3pkGEQ==
+MIME-Version: 1.0
+References: <cover.1768318762.git.belkid98@gmail.com> <6e54e22ac7096f26e774acc4740bcb135496fb69.1768318762.git.belkid98@gmail.com>
+ <xmqqo6mxi91e.fsf@gitster.g>
+In-Reply-To: <xmqqo6mxi91e.fsf@gitster.g>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Wed, 14 Jan 2026 08:40:52 +0100
+X-Gm-Features: AZwV_QjyuhEQtFkREQnptuUW0lrMrRKkf-1LzWBNbweJpH7oFANrhC0sDJhuTu4
+Message-ID: <CAD=f0L-mPX+KECUjXk-WBzEbTP7wCa8sB56GySQT0yh9mfUOWw@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v2 3/3] environment: move "branch.autoSetupMerge"
+ into `struct repo_config_values`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, phillip.wood123@gmail.com, christian.couder@gmail.com, 
+	usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, me@ttaylorr.com, 
+	karthik.188@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-77u/DQrrgpjsnZggaVBhZOyXkOyEnCDrs7Trg4Q=
+On Tue, 13 Jan 2026 at 20:53, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Olamide Caleb Bello <belkid98@gmail.com> writes:
+>
+> > The config value `brach.autoSetupMerge` is parsed in
+> > `git_default_branch_config()` and stored in the global variable
+> > `git_branch_track`. This global variable can cause unexpected behaviours
+> > when multiple Git repos run in the the same process.
+> >
+> > Move this value into `struct repo_config_values` which holds all values
+> > parsed by `git_default_config()` and can be accessed per
+> > repo via `git_default_config()`. This would retain the same
+> > behaviours while achieving repository scoped access.
+> >
+> > Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+> > Mentored-by: Christian Couder <christian.couder@gmail.com>
+> > Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+> > Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
+> > ---
+>
+> Currently the code flow is for git_config(git_default_config) to be
+> called fairly early in the program, updating the singleton globals
+> that are independent from individual repository.  This moves these
+> global variables to be stored in the config_values structure that is
+> tied to the_repository.
+
+This will move those global variables that are repository dependent into the
+struct repo_config_values.
+I admit the mistake is from my end. I should have been clear on that in the
+commit message rather than say '...holds all variables parsed by
+git_default_config()'.
+
+Sorry
+>
+> The claim in the cover letter was that this will make it possible
+> for us to later work on more than one repositories at once and each
+> repository can keep its own independent value.  While the updated
+> data structure may make it _possible_, I am not sure if this is a
+> safe approach to get to the final state, without seeing how the
+> config_values structure in the second "repo" structure is populated.
+>
+> And before moving all these globals into config_values, it is not
+> possible to safely populate the config_values structure in the
+> second "repo" structure, if git_config(git_default_config) is what
+> we plan to use.  The settings that are still stored in globals will
+> then get overwritten.
+
+The idea proposed by Phillip is that we pass the repository parameter
+as the call back to `git_default_config()`.
+But since that will be quite invasive, you proposed we use `the_repository`
+for now. Then later we can pass the repository parameter as the call back
+and handle the invasiveness by simply checking in git_default_config()
+struct repository *r =  cb ? cb : the_repository
+
+>
+> That is why my first question for this round of patches was "are all
+> these settings inherently per repository?", because the scheme would
+> not work if there are globals that cannot be moved to config_value
+> structure to be per-repo.
+
+The movement does not target all the global variables, but only those
+that are dependent on a repository.
+
+>
+>
+> > diff --git a/repository.c b/repository.c
+> > index c7e75215ac..d308cd78bf 100644
+> > --- a/repository.c
+> > +++ b/repository.c
+> > @@ -57,6 +57,7 @@ void initialize_repository(struct repository *repo)
+> >       ALLOC_ARRAY(repo->index, 1);
+> >       index_state_init(repo->index, repo);
+> >       repo->check_deprecated_config = true;
+> > +     repo_config_values_init(&repo->config_values);
+>
+> Having a call to repo_config_values_init() when initializing an
+> in-core repository instance is a reasonable design, and I see this
+> step has an initialization of git_branch_track in that function.
+> Shouldn't we be doing similar initialization in the same
+> config_values_init() function for other members of the structure,
+> namely, attributes_file_path and sparse_checkout?
+
+I opted to initialize only the git_branch_track because in the original code,
+it is set to a default value BRANCH_TRACK_REMOTE before the call to
+git_default_config()
+But attributes_file_path and sparse_checkout were only declared and
+not initialized
+before the call to 'git_default_config'.
+
+I just tried to replicate the current behaviour be initializing
+git_branch_track and those default
+values early before the call to `git_default_config`
+
+>
+> The function also may be a good place to do an equivalent of calling
+> git_config(git_default_config) there to grab values that are suitable
+> for the given repository, but I didn't think things through.
+>
+
+Thanks
