@@ -1,93 +1,107 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028BB3A784F
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 22:22:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA7E31ED7F
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 22:23:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768429366; cv=none; b=OF4hSz07hJL1QCyEWHKGhr0ubpnR0DbtZQpfcNzvcr8/sYq6RgGXM9chcrJkTAlw6XuiUEbGEsC/WdYXIzHEE6meKiiIhVuhna54z1p56xN3vo2wA5Fe2X5x0lUQYcl7/hF/libqYpDCbjemlLQ7oVrJ/N7ECy4QNlfoLKwR7q4=
+	t=1768429442; cv=none; b=ek/QvbM3ABiDD+ft9gtNlQuDtcANynC9NwVVpBi3TZyqe4++40GFE6w7CIca+bcEb14onMrOZbzM/rPUPpoudDTRNyy49Bb3T0YedNJJgQ1jiNUH9Lx6XlrF0+FK2fdJ/5f1q/ojgaG63HBgUAxJD0gE739+WndqxC0oSYX0vqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768429366; c=relaxed/simple;
-	bh=2LcywjklOh8PyfqC0RyQTQu4ibTkcUYhInrhXLDLjtg=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=GcGhas6c0jRSymUWlrDpbbB81F29JUTUl2vqIT76ZkNV40m/p90XL82k2++E+bouZw5k5JETJHm7m3f31SmnsYcNWnDAJg+8m7KjzmygkybyCGTLDBc1PgeN6EZ/uJzjrGORXxT52t3WQbwMAGk5uYwQAk/Jk2UVEDCE9hdwuFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JQwuY6RC; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768429442; c=relaxed/simple;
+	bh=g7lv3KQiBho+9IQtmTZuAMA14Oo64MUag2Clvb2rJfo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=md4c0XwcLs4wQ2u5pJfIRBhb7ZbC/bNAAdBLkYX5gPuDgb3fPjSB3BMYwMPZexdsP+fwVVJDO4yXhY+QDBhKWnmEH0+GwjXs9e5cziVvcSkhAFybFUWY1TGqK7pPTJHLTBus2051YFZt/T/2BVnaY9WuUTjRxoGiX3ty7WT7+2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HcORGaFz; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JQwuY6RC"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-652fec696c9so432458a12.3
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 14:22:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768429353; x=1769034153; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lg+Ao7BZMPB1HXpYwY22G07CZJy0FvdRvIOCNCI84eg=;
-        b=JQwuY6RC7TL0kO4dK375+AbcicayJWzUGW1XePe9w4shJswTF1wKqa7s3rj08YAZWy
-         Vl9iGdM5/PPq3qN4se6QTfVbiJw5dfCpjf77Dvht9c04In8E7tmtlsGErVLCPMFCejX3
-         jNi16wdIo+CVb1axLTpdn0rmyJqejU5fgg7x1ABTOIFe+Oib21cMMChajdugfZ80ikm9
-         S2DTBnSSWH5GVP8+NbK5ER5qn+pCiGEix3vMEdvEKaTVEK4lOYyIt5kbkETyPR44Xr2k
-         YqHNMT0Qe2roeeWcjlbJkRan7sjOi2NvBsXJRWFui48/pwEPBYve4PZKxF9dXTuiFJOH
-         0wFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768429353; x=1769034153;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lg+Ao7BZMPB1HXpYwY22G07CZJy0FvdRvIOCNCI84eg=;
-        b=sDJQ0dIIXo3UGZ6FTCndx11LYbLslaXkg0KaD8ldttWrvf4r4tcpILwdHCZIYxWYzm
-         VdbXa9S9NqxfwIx5sEVNGXwjeUEW2FIvFshNRjQIfbqEr7J+eU7LH32jTLEYE3zyKr+j
-         FkKGGHv+j5PRFTIvjPH5hANDRCQ2U4l9w85oOml7zmjry3n9nXa5ReeyX7TehHNE/Pph
-         75i3qHQmagCZLgzAnN9Fq/oETcSBBqdxQlp817k9+sSHcseMdgfSQbdTA548QbClL9TJ
-         OgipUptoN2V6Ia2PixbYzJq/P/g38Z9rbgphPgk2Jfq9oRQGpgT7836flA/5I08sN8VA
-         X+LA==
-X-Gm-Message-State: AOJu0Yz48izqPe8PcWvJGjscwH2aRj7fo3WAYytfQU0awHjpwn1i09ZC
-	xZMjIZolL4q29BPj+0DSyP1sB7MYjljn8GrVCTBFsovQak2NXDowKqYlFmKkUPSx
-X-Gm-Gg: AY/fxX6FIumYxWCDyO6VxAtr1Z6XxpZLr2O56VJnVliBrTNuUZ9gjhRABaDhoIV9DeH
-	np/0/fefcQr3Zo5AsL0iT3WVu7Y1CrgHxteLbESS1o1qdGw0OlkRbxHBINocZHwLWFo2gc6DxiM
-	+Ziv9kdRZReiC+WeGMrnqvJ24tiSIwx7ocUcXmiwxDfpWBupASIceIezf8Eu3dOoulZ3ApGCt7o
-	RcKbI3QFZLaFDI5WZHOxrpJlvcBDQ8uFr4zTpVh3Zr62NR0JlwLGh5rAMJxMvdxRlNfqyxtaUWw
-	gjTLCO+bRT4S4Yn0Ye9yLFwwWJIKy0ZYPhx5qMfg0MaZ61E6r9qimCeptjR/x2dmuVkjpYNRjy7
-	fsYlUSIwJ5DPfLOu/OIcHQ5jAlIRqeh/hRYLLj/O9XGyTUgsatPeZBvtTeEZVe3QFBqAZBC8LyI
-	TTWr5DPTYInY2LER5fjdmP
-X-Received: by 2002:a05:6402:90c:b0:64d:2920:ef17 with SMTP id 4fb4d7f45d1cf-653ee2ae8d8mr2964261a12.28.1768429352591;
-        Wed, 14 Jan 2026 14:22:32 -0800 (PST)
-Received: from lorenzo-VM ([84.33.162.72])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65411f70f39sm703170a12.18.2026.01.14.14.22.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 14:22:32 -0800 (PST)
-Date: Wed, 14 Jan 2026 23:22:30 +0100
-From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC PATCH 0/1] diff: improve scaling of filenames in diffstat to
- handle UTF-8 chars
-Message-ID: <aWgXJjO4zvCTOZ7K@lorenzo-VM>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HcORGaFz"
+Received: (qmail 42053 invoked by uid 109); 14 Jan 2026 22:23:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=g7lv3KQiBho+9IQtmTZuAMA14Oo64MUag2Clvb2rJfo=; b=HcORGaFzKk/L/6ITkY4NESfzik8QHJx+KlNdIlyLnCHMKjr7CrdqcN4JnqXOvv4pLx+AfP4zXrCHCN5qq0RIIPtpJlcWbDNrnKXGV7u8tJUN00kzeM0KBvlOcXwX7x4gpmxBdQpnqm3qa9e4Tve7ZJ2Us31dO2mQ5OuhRHiPYaIXXJ0WWma9Rax3RuRHuk3DujCOf5CVrhYwBZaOIpZ+nke8BDPnQLvT/GtGJEVNPh71AJ/w3pNQ8X/1eovXt3M7VrlocYtFs/TYe+NKMR3y3Ssu5si3DwiJx0fxJKWJS9RQbnYEVTz9CIHOw6OrKprTmeuNwkLoKiak7Goq4hcIgA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jan 2026 22:23:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 71021 invoked by uid 111); 14 Jan 2026 22:23:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Jan 2026 17:23:54 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 14 Jan 2026 17:23:51 -0500
+From: Jeff King <peff@peff.net>
+To: Elijah Newren <newren@gmail.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Matthew John Cheetham <mjcheetham@outlook.com>
+Subject: Re: [PATCH] fsck: snapshot default refs before object walk
+Message-ID: <20260114222351.GA1014423@coredump.intra.peff.net>
+References: <pull.2026.git.1767035549378.gitgitgadget@gmail.com>
+ <20260102054922.GA2580212@coredump.intra.peff.net>
+ <CABPp-BGqiM8fmirgdqumRNfzWediC5v_uZ9qHjntTqPqABDhnA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <CABPp-BGqiM8fmirgdqumRNfzWediC5v_uZ9qHjntTqPqABDhnA@mail.gmail.com>
 
-The goal of this patch is to improve how UTF-8 characters are handled
-when generating a diffstat. Details are provided in the commit message
-of the patch itself.
+On Tue, Jan 06, 2026 at 03:36:57PM -0800, Elijah Newren wrote:
 
-In this cover letter I would like to ask if this patch (if it gets
-accepted, obv) can be considered a valid GSoC "microproject".
+> >   Side note: I do not think I have ever run fsck with refs on the
+> >   command-line. It is not like it saves you any time! Most of the
+> >   expense comes from opening up and verifying the objects in the first
+> >   step, not from looking at ref reachability.
+> 
+> Not to mention it produces spurious "dangling" object warnings,
+> because while the objects might be reachable, they aren't necessarily
+> reachable from the particular subset you specified on the command
+> line.  I wonder if no one ever noticed that because it's such a
+> useless mode; I only noticed it because you pointed out how Matthew
+> and I overlooked races with command-line arguments.
 
-Also, as this is my first contribution to Git, please let me know if I
-made any mistakes!
+Yep. It would be nice to get rid of it, but of course I worry about
+missing some obscure use case that somebody relies on. Anyway, way out
+of scope for this patch.
 
-LorenzoPegorari (1):
-  diff: improve scaling of filenames in diffstat to handle UTF-8 chars
+> > That did make me wonder a bit about the other fields in "struct
+> > reference" (which your snapshot just throws away). But it looks like
+> > fsck_handle_ref() only cares about the name and oid, so it is OK.
+> 
+> Junio suggested the same thing, although he also suggested we might
+> want to snapshot some reflog information at the same time, which then
+> wouldn't make sense to be using a struct reference.  Even though I'm
+> not implementing per-reflog snapshotting, I left a comment in the code
+> about it so I think it made sense to just create my own data structure
+> with just the name and oid.
 
- diff.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+I do wonder how expensive it would be to just snapshot all of the
+reflogs. It is a shame, because 99% of the time entry N will be
+reachable from N+1 (and thus does not need to be stored), but we don't
+know that until we traverse.
 
--- 
-2.43.0
+So we are potentially storing the oid of every reachable object in the
+repository in memory as a snapshot. But...isn't that exactly what we'll
+do anyway when we traverse, in the form of "struct object"?
 
+Anyway, I can live with your timestamp-based hack for snapshotting the
+reflogs.
+
+> > There are a few other related interesting cases, too:
+> >
+> >   - We may use the index file for connectivity, as well. It suffers from
+> >     the same race, and would benefit from a snapshot.
+> 
+> I left a couple TODO comments about this, so that those who are
+> interested/motivated can extend the snapshotting further.
+> 
+> >   - In get_default_heads() we also look at worktree HEADs. Those have
+> >     the same race (their normal refs we don't consider here, because
+> >     they were already handled by the overall ref iteration).
+> 
+> I handled these in my newer version, since handling them is pretty
+> similar to handling command line arguments.
+
+Both sound like reasonable directions to me. I'll take a look at your
+latest version.
+
+-Peff
