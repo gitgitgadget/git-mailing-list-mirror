@@ -1,65 +1,65 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA913A0B03
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 15:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92F23A0B23
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 15:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768405272; cv=none; b=dUe8FWj8FS2YTKGPZhGZP4OHQ2jSh7q1G1WLpGX7zlXl0wjW4cM4WKFEYOZQcJE32AEkRIsHzLxwTQHsAzzjxwO7MDx0U688zOO0AMD69O+vL/+UevRQJ+EeY45/CxjjXS+nbjqYrwq/Z6VtQihYzKC4RybFbpnypzCydDGUghk=
+	t=1768405273; cv=none; b=aDs1FRR48pYmhdx76im1LXScLQQfr320MXTBDrKIF3G/UGGYroz6xC6SVgAYA1jIX96hvL7iVfaYIpDIztZnTmjNsLiJAssOmd5VjbjKGbJqZMegD5uahVmfKZuBr1AcfPXQOSzZ00TaTi1XY1pffOaku8X8+C4ZJdNrx60pE+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768405272; c=relaxed/simple;
-	bh=Sq6ag5QaxiAVuTARYrz/+Enwb/oJXCb3avWF8hgb7CE=;
+	s=arc-20240116; t=1768405273; c=relaxed/simple;
+	bh=u9ESgyXdftevntYpBo5J2q4gbn8/+50wr5NrLto+9sw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=L7l2YmD0sVQvD3Nh+CrAgcsYAC6mSRBjOUK8iNLP4kDL6njlwBatLlmI524syfAmsKiiULF47peB49oxS0q9bviBQlSWzf9U6wE+8qXQli/ap/KZk87T4Z28FKEWy6NtpBJxX6KCQV8hQKJiFCGlBsqQJE8arAkmpQoQEmVVmUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LE6t6zUG; arc=none smtp.client-ip=209.85.218.45
+	 In-Reply-To:To:Cc; b=DByDP8SmLlRqpO1msBJ66QmdcuvPee4XlC/I3rkE7QRFq6OnpOF2jcf0/eUTl1/RfrXGXGMInlNHjfPdvwk0/CFVWM6L4vPPrcFWVoe9Igfv9zgTTG0hO9tbtOWgnRn4xz/3YZONCiQS0Z/z4y4lGMHmAJGbVzmLWtck6VlV5vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bH/wHGeD; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LE6t6zUG"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b79f8f7ea43so1861692366b.2
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 07:41:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bH/wHGeD"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b8718187eb6so503162266b.2
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 07:41:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768405269; x=1769010069; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768405270; x=1769010070; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=DfET2ei3uSjbRfsYKpOR8iw452K5YJr/kE8h+6XRwxA=;
-        b=LE6t6zUG18zTgYbdc8IrHZG8JJs8KD45nCRMP1npQm3y90qnv2CJxdxQmz5e/e95HP
-         AZtfaT1xPtPolqi6wzdYQOu5BAk/J7xniMUKSDIjUPjzrPPIj9yMV8x72DCYAeg/UR21
-         SfVKVMs/lRhiTVVfOkh+yZma/ZsPWX9CQgDFItuzUF3t0HIQXAFmnGAnhhaK3652kJIs
-         inoy7VtF650G4XF9sX9S9+ri60QU6k2UKQsZCeI84o2uFERdLKxvmoOQ/o+bF1ET/eFV
-         dXsCXUc79jgyH5fnXY1Np52tf3V6myzR1ZUS150SuV9d3wD2k2PWz1i0JVgZt5bMhqk5
-         Lzcw==
+        bh=TY2TpiNNEgze+x5PHHEwPz4tSKqNdWdvg34sORKXoU4=;
+        b=bH/wHGeDLMR0Vkt/QdyjoNjBsaxvt+cpdKRbL2GfZmSeqHDfZzTYM2Dw4R8272l1zf
+         6st//hkE+vckpEZZDfpVIo+fiHNu2pfX6WXgYZUa9KH5NVYquPlvlEsXlS/zUb11lysC
+         udAzOXPRbFJJ8BmJkNjC4xZ267wLE7oa+VRvlP456eYj+7KISkDCRbxgfuKGEWgGmkue
+         y5gvaybrI43bqIPOO7VJ/RSN/x+TJXfzIdVldQsZIfbz0R8mt2AB6xA1vDzciEtafc0S
+         LHaMeHe2XmRxJJpIziaTUGnbvQZTcpxMjjjS25M0423kE8HMh1wfXKH7laQhfSqDKU4A
+         y5DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768405269; x=1769010069;
+        d=1e100.net; s=20230601; t=1768405270; x=1769010070;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=DfET2ei3uSjbRfsYKpOR8iw452K5YJr/kE8h+6XRwxA=;
-        b=OF604LdEUPFbkn+2FjLEkNujUUmQQ1WrzT+KyfEaeiuYnB0b/Hbftc1lkybXblRIIF
-         vI1Iax9eI9jBKYPA9qiVN7RvdRMgq2BuTTQkYRQURQ5ABWkfxB3W7NggbOviSkpSEKkM
-         XisEw2E+BpiUr/q5anl3VdELyOuYZosXeR5DmvhNSK/535lYDTdLZ9itxBOwz7N87sQQ
-         011hD7Lc/pX0cbBheO6m/Ck9JcjNPCe1UR50Nkzzqyzr5OXdVvl9dKJxzw0TGQT51z+0
-         U4DlFtl8Q1fr55a34FrEBAWNLQbtjcMZTm5n/83EzLWPFBete8ZZ8PYhZcFeRX1XJo1T
-         6K3g==
-X-Gm-Message-State: AOJu0YwGjd5DK8qeKmSbU7x5oEfanA6gIxYL5wf8bNKFQ3J0Y4QFwdaf
-	CT1VicYP7dXQNwDQED9ZrBLQkT4EF/8Cvwmrz9ez5A1T+HmdlBBCt0N5
-X-Gm-Gg: AY/fxX6EaF3YGQqp5Y+3ENHKe4JAeupNXasylfcMoiqf+TWJuCXSjt7l2igIM+UvxVM
-	nHsPQGnfo6a16EJI4wbrZ0rUb2WB1xXWCSItMl115K7OAxzFHuu9vZInO6b/OWXdo/pEolbL4mO
-	aWh7j7rDYV5CqtOb4zKLJEdvFhhAojbuz0OYELHfPDaLWeN1m1AQZ6kgFIA1/5O0lICKfNrwjyv
-	qgeunuaNx4xqYg0KFvkYbJvw6MIYx07yty8cyZlT1b2KEij3xbun/W6Oe4qKckCrSvqJSrWRoUm
-	/WIMXGH6nvFa+bztTJIkUJD/uXyxuLXAem4MVrcgS9I9tR7osCpY8ZyhFpiRv2+4zfO63r3lETe
-	JNFa57VCL1Jg+vl/RRnIemAeBB9OBmPFko43ECAUiFmOPDfcOSlbCs1SrpAfpG6cswcB5Y7gcCn
-	hTB31ul7WDnprpfDJYUbA=
-X-Received: by 2002:a17:907:a08a:b0:b87:31d1:4131 with SMTP id a640c23a62f3a-b87612dc12amr261646066b.60.1768405269254;
+        bh=TY2TpiNNEgze+x5PHHEwPz4tSKqNdWdvg34sORKXoU4=;
+        b=JFoLgRh1W23CWtEBMwTsZORa0fzpyuDtGdhvgj7cezENDccNsB04mE6iR3cN5mR+vF
+         skVyuQHcbkPbHzJBUPBQ8GUHKB62c90AhHJ7ATVNSs9N7LiVC0us0TPa9IeDjWdMsMre
+         MV3crdWYNTodVAavTq61oYgpCZFQEh4Zf+Xsj5W71M1QVsxdeNGBCnUipK4CvPNQyNvD
+         zxjlVu15vRUA/T60twnmC2h0P6rKchOQ+8+OGtXEnU0aSTUb8Q6DFKNDU1uFzYPDH+4J
+         vsljzHTEDn2BrZm3ZX5WZQh5qfygvv6lQLS2QrpHSmCE/E0s/7SNbAIauPEqezTAT+hT
+         aLEw==
+X-Gm-Message-State: AOJu0YyV0H81nbY4SDS7jefgk5N+KQXpwcUpvjaN9BlK3oYqLC2zApVe
+	/LsY/ucpPul1QRaaetchKu1auNZJoiWdo+4GoYjVp0S6Lh4qmqwxLNTF
+X-Gm-Gg: AY/fxX6UJgLXA1+jEPdrRgaZt5KAuSd7z03tDqTevSfAXwUFsCDO2T8BPAGPk3XL1SO
+	va0bkDaNOcp44E0BuK6N7YNZCyeA7kRi/OVHPo85jMi8nKhtHPcNXu3nD2JTbZiQzj0sL7lBb6r
+	A1Vy6Sk2sDcdN8MrTuo0ljb0Gtv307fCf5vZcY0PKdl6KI5R2+sxxtbhyyOHtCVLSe9nI+du/A9
+	qNbGwWzbSIYnHBGYOG0pFIZJpcpOotD5qQDUTy9ffaE5u7dYLsDukD+TqIl4M5F0dzMKH+NW+Fe
+	FcsIOO1u5mDcmFhq7NKISGBeJz+lfXDNkstjipSXUqAKSLC+jWuE7mStgX/ypC3J8WEpnMY7y8t
+	ZJTLKtB5G/MORpoLE67x84OdT8GUdE7nhCap8qn7TEXTMv//3Ag+/hUShjixS8A8z4X3OoNNp5E
+	p1srFv/QzQ2lckpXrQ428=
+X-Received: by 2002:a17:907:841:b0:b80:3fb7:f3a8 with SMTP id a640c23a62f3a-b876142f5f7mr291778066b.63.1768405269904;
         Wed, 14 Jan 2026 07:41:09 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1b84:297e:182e:6730])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b872642beb3sm804851166b.46.2026.01.14.07.41.08
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b872642beb3sm804851166b.46.2026.01.14.07.41.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 07:41:08 -0800 (PST)
+        Wed, 14 Jan 2026 07:41:09 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 14 Jan 2026 16:40:46 +0100
-Subject: [PATCH 5/6] fetch: utilize rejected ref error details
+Date: Wed, 14 Jan 2026 16:40:47 +0100
+Subject: [PATCH 6/6] receive-pack: utilize rejected ref error details
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,29 +68,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-5-f5f8b173c501@gmail.com>
+Message-Id: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-6-f5f8b173c501@gmail.com>
 References: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
 In-Reply-To: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
 To: git@vger.kernel.org
 Cc: peff@peff.net, newren@gmail.com, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4230; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=Sq6ag5QaxiAVuTARYrz/+Enwb/oJXCb3avWF8hgb7CE=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGlnuQ8PUCewS8LwfG/R/Kc10XA+nL8Qb1vmJ
- rh5T/IXkDwcQIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpZ7kPAAoJED7VnySO
- Rox/syAL/ilaE7eax0Fe28+Rud1F4ZQYh4ctUV2vnQfZB3ybO3Ty8jvwd1It97JRKiM3IZa1X2z
- NKRhD0fe3MNk3tDn3wHBWDOaezYAG+JTVuI2fjtQtDesh/y9W13himFnq/0uxHNP5ufrMsXmMJo
- rP1PnCGGhl/Mg8XL6HogJC9m4v04aHfCoknHU8tQx61uQBUJOpkLVcy9ZjTXCIe2Jbf7Jnbkgex
- bluC2R9HsxQ5hOpriqUZiPQc5KX7JT7AWRxtnsMJ1LjL7gwFefOL9STTq2Y3vaC9ee9UxyihWhA
- Y7mNm9bMVoi5P8beJFI4+ooAO4VRvv51BmM1buk4tmPUf801g5lm8xte4I9mPwW/Ybfh1MrIy8/
- 39PQozetqv0RFEOnBM0Qi2G8GEeHHg0NkIIHa4gVy88k6//E0Jb+m6+7RiTPbnutGf7DmWyWcsq
- ex6gMF8ypz+NAbKFc24/najjNrlcIHumKBepO07YklsoyxY6YK+FPR0r3spH345GtcNRGETaQB8
- 2k=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3589; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=u9ESgyXdftevntYpBo5J2q4gbn8/+50wr5NrLto+9sw=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGlnuRD2MfUIlwldwj5hJfVXTJ52hSdzNwXfQ
+ G09n0wrb28M84kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpZ7kQAAoJED7VnySO
+ Rox/s7IL/jkyBBaWjsEFjOY06IoJCCLn1q41NuAxCezpuoer4sADPSOj/q7Y11CzKM1/PwwgbEM
+ JEEDMF5jHxUmU5hTdiWYyTZSAa/a06roT26EyJeFUxS8ueUsTVe0R4XTAudleC0ojttORzRxXJs
+ ez0MA/VQUxbELkWmRyi9/VR64IZESb9CV9knzvPp681cq86eN8RIvu/O9wFdd64c22wT0DVbhvj
+ /uAirix6fs0MNYACiO1gjYHAMP4k8nSbBWR1mzPBdHsXSjgBBvdUXgh4sCHs715pm3LXBLLrpgT
+ LxjWovtGVaTSRARpygIDJJpIKNQLw/o4kawny30jDk2lWuNqSfrhW13lDmq9lg2W8jz7jHIH7IT
+ D5ORHFiDb533aDp1XNbaICDO+Yyss++lOKhRKXUacyITHzdYmaShYnA/6m8QwTZv16e500g7Dg9
+ DSdgzDP+/3T+Edca3spm4+8mXkfZF73W0EzODVeNwWEsleQobyLgTFeD8UwbK8/8IeSNbYjw/76
+ pk=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-In 0e358de64a (fetch: use batched reference updates, 2025-05-19),
-git-fetch(1) switched to using batched reference updates. This also
+In 9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19),
+git-receive-pack(1) switched to using batched reference updates. This also
 introduced a regression wherein instead of providing detailed error
 messages for failed referenced updates, the users were provided generic
 error messages based on the error type.
@@ -98,19 +98,32 @@ error messages based on the error type.
 Similar to the previous commit, switch to using detailed error messages
 if present for failed reference updates to fix this regression.
 
+One downside of this is that the messages can be very verbose, for e.g.
+in the files backend, when trying to write a non-commit object to a
+branch, you would see:
+
+   ! [remote rejected] 3eaec9ccf3a53f168362a6b3fdeb73426fb9813d ->
+   branch (cannot update ref 'refs/heads/branch': trying to write
+   non-commit object 3eaec9ccf3a53f168362a6b3fdeb73426fb9813d to branch
+   'refs/heads/branch')
+
+Here the refname is repeated multiple times due to how error messages
+are propagated and filled over the code stack. This potentially can be
+cleaned up in a future commit.
+
 Reported-by: Elijah Newren <newren@gmail.com>
 Co-authored-by: Jeff King <peff@peff.net>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/fetch.c  | 10 ++++++----
- t/t5510-fetch.sh |  8 ++++----
- 2 files changed, 10 insertions(+), 8 deletions(-)
+ builtin/receive-pack.c | 10 +++++++---
+ t/t5516-fetch-push.sh  | 15 +++++++++++++++
+ 2 files changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index d427adea61..49495be0b6 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1649,7 +1649,7 @@ static void ref_transaction_rejection_handler(const char *refname,
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 94d3e73cee..969d59ae3e 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1813,12 +1813,15 @@ static void ref_transaction_rejection_handler(const char *refname,
  					      const char *old_target UNUSED,
  					      const char *new_target UNUSED,
  					      enum ref_transaction_error err,
@@ -118,62 +131,57 @@ index d427adea61..49495be0b6 100644
 +					      const char *details,
  					      void *cb_data)
  {
- 	struct ref_rejection_data *data = cb_data;
-@@ -1674,9 +1674,11 @@ static void ref_transaction_rejection_handler(const char *refname,
- 			"branches"), data->remote_name);
- 		data->conflict_msg_shown = true;
- 	} else {
--		const char *reason = ref_transaction_error_msg(err);
--
--		error(_("fetching ref %s failed: %s"), refname, reason);
-+		if (details)
-+			error("%s", details);
-+		else
-+			error(_("fetching ref %s failed: %s"),
-+			      refname, ref_transaction_error_msg(err));
- 	}
+ 	struct strmap *failed_refs = cb_data;
  
- 	*data->retcode = 1;
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index ce1c23684e..c69afb5a60 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1516,7 +1516,7 @@ test_expect_success REFFILES 'existing reference lock in repo' '
- 		git remote add origin ../base &&
- 		touch refs/heads/foo.lock &&
- 		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
--		test_grep "error: fetching ref refs/heads/foo failed: reference already exists" err &&
-+		test_grep -e "error: cannot lock ref ${SQ}refs/heads/foo${SQ}: Unable to create" -e "refs/heads/foo.lock${SQ}: File exists." err &&
- 		git rev-parse refs/heads/main >expect &&
- 		git rev-parse refs/heads/branch >actual &&
- 		test_cmp expect actual
-@@ -1530,7 +1530,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensiti
- 		cd case_insensitive &&
- 		git remote add origin -- ../case_sensitive_fd &&
- 		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
--		test_grep "failed: refname conflict" err &&
-+		test_grep "cannot process ${SQ}refs/remotes/origin/foo${SQ} and ${SQ}refs/remotes/origin/foo/bar${SQ} at the same time" err &&
- 		git rev-parse refs/heads/main >expect &&
- 		git rev-parse refs/heads/foo/bar >actual &&
- 		test_cmp expect actual
-@@ -1544,7 +1544,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensiti
- 		cd case_insensitive &&
- 		git remote add origin -- ../case_sensitive_df &&
- 		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
--		test_grep "failed: refname conflict" err &&
-+		test_grep "cannot lock ref ${SQ}refs/remotes/origin/foo${SQ}: there is a non-empty directory ${SQ}./refs/remotes/origin/foo${SQ} blocking reference ${SQ}refs/remotes/origin/foo${SQ}" err &&
- 		git rev-parse refs/heads/main >expect &&
- 		git rev-parse refs/heads/Foo/bar >actual &&
- 		test_cmp expect actual
-@@ -1658,7 +1658,7 @@ test_expect_success REFFILES "FETCH_HEAD is updated even if ref updates fail" '
- 		git remote add origin ../base &&
- 		>refs/heads/foo.lock &&
- 		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
--		test_grep "error: fetching ref refs/heads/foo failed: reference already exists" err &&
-+		test_grep -e "error: cannot lock ref ${SQ}refs/heads/foo${SQ}: Unable to create" -e "refs/heads/foo.lock${SQ}: File exists." err &&
- 		test_grep "branch ${SQ}branch${SQ} of ../base" FETCH_HEAD &&
- 		test_grep "branch ${SQ}foo${SQ} of ../base" FETCH_HEAD
- 	)
+-	strmap_put(failed_refs, refname, (char *)ref_transaction_error_msg(err));
++	if (!details)
++		details = ref_transaction_error_msg(err);
++
++	strmap_put(failed_refs, refname, (char *)details);
+ }
+ 
+ static void execute_commands_non_atomic(struct command *commands,
+@@ -1884,6 +1887,7 @@ static void execute_commands_non_atomic(struct command *commands,
+ 		}
+ 
+ 		ref_transaction_for_each_rejected_update(transaction,
++
+ 							 ref_transaction_rejection_handler,
+ 							 &failed_refs);
+ 
+@@ -1895,7 +1899,7 @@ static void execute_commands_non_atomic(struct command *commands,
+ 			if (reported_error)
+ 				cmd->error_string = reported_error;
+ 			else if (strmap_contains(&failed_refs, cmd->ref_name))
+-				cmd->error_string = strmap_get(&failed_refs, cmd->ref_name);
++				cmd->error_string = cmd->error_string_owned = xstrdup(strmap_get(&failed_refs, cmd->ref_name));
+ 		}
+ 
+ 	cleanup:
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 46926e7bbd..45595991c8 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1882,4 +1882,19 @@ test_expect_success 'push with F/D conflict with deletion and creation' '
+ 	git push testrepo :refs/heads/branch/conflict refs/heads/branch
+ '
+ 
++test_expect_success 'pushing non-commit objects should report error' '
++	test_when_finished "rm -rf dest repo" &&
++	git init dest &&
++	git init repo &&
++
++	(
++		cd repo &&
++		test_commit --annotate test &&
++
++		tagsha=$(git rev-parse test^{tag}) &&
++		test_must_fail git push ../dest "$tagsha:refs/heads/branch" 2>err &&
++		test_grep "trying to write non-commit object $tagsha to branch ${SQ}refs/heads/branch${SQ}" err
++	)
++'
++
+ test_done
 
 -- 
 2.51.2
