@@ -1,144 +1,110 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E116439E6C2
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:44:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE6D39283A
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:48:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768427102; cv=none; b=qTyepdc9tDPzELdXQ44YnexzLmlDhFa7AQ4waZ2gOPkkH+i9FrGXomJwaHTH/oadQz8idmZ9II4rHyyb5x5sBzWoUeqYnnvENm0yh5tIZ5EXBEumBBC1cqRT/7OCowsfdWWp26Q/kX68X0Q/A/wCF4dEMyaXs/QUozrBgQAn+to=
+	t=1768427345; cv=none; b=nE9Jmw1mHt4NWlKDMxH35mpY0MxAOsPmeIOMFlkH01npj1y/IkxW/cnWBVVyvAI73EWVB8taqSF8ANGm1lzXKcm5b3GL7XnNWypjigkub2PsWZEV+bIQyDXiHo76oZTpbeFT8QfsNR0X9eqkjUcaAmhisYhixN8pO22IiMNdUZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768427102; c=relaxed/simple;
-	bh=vUE3pDzUKRPZ70f8MgDYpr4HfTacRw4RZsa3dvvVfTg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tn+LRbeQiMpn9laP4KZCevbEfUkWCm8g/MacwNS9HCApVYYJYnNKAnkOc11DLVUiJYt8+KNn4ptaTvhhdhZeSZxGhJfrx9Gh6lMFUt3ISQ8ksnjrVfUDmhrfJ5+85m9vzKnCnvg5Aq8dAFaPDtqxYCUqsMSxOm/TiK2VWeFsvX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=NnhkZN29; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1768427345; c=relaxed/simple;
+	bh=NXHiMkSSOepw2oHQY7ejWrJS3v3a9SnIWr8Xw8aUQjQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KHHXJWyrtHTNDv+RcCp+zv6ImvJc2eD49PVnr9mQmfEyNqMZ0FoB7qegBX1cNkberac40ngqdddCl3K7gG0SC92WWZhH59sMiA+Wt9iQwcMs9bHQnMtsSgvUqySzXNZzqBCbrP4d1fMO0DrBKmzO+BGls7Gs0GaouAaHKTVJUg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LqwBTVeS; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="NnhkZN29"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-792768a0cd3so2380027b3.1
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:44:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LqwBTVeS"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-42fbbc3df8fso141554f8f.2
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:48:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1768427096; x=1769031896; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=75jYX+RqSxeLVJ2f94+SGF/RPNpL/yvlyLcjeEtK9PU=;
-        b=NnhkZN29i3OMTjH/0pJXDXJPwAMimm0zr6HN9O4L1yYifkuton93y09nMPAdgxpWAz
-         1/VcpNTK94beAj9pMSKRe1tkCO6XFoCUVX+CdrHyINrQWu1DBNeRyk66qgGAbvs00jPT
-         yhUnZ+51McM2VSarpObTGAwJRDAGYScv2+0xMVX8GGwxxmyLWdGJVcM12vjg204F1X85
-         ehyFiEpYidl9+/xXFh8r7S03gC6m+Y3gqteY3gL/evlHHaurFOE850ljEcBkqbt/VCtB
-         aEt0nzrBVSb2bH2aiyd7gWgWTPPx+qvZWMQtEX/4iWm2sW4PLgI5fqG6FMkHCA9luoob
-         v6hQ==
+        d=gmail.com; s=20230601; t=1768427315; x=1769032115; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NXHiMkSSOepw2oHQY7ejWrJS3v3a9SnIWr8Xw8aUQjQ=;
+        b=LqwBTVeS7tN0PmthFjWv19Ws5ssxDHXP7WZ5B4A3RQWs5VZq8Yz4oKxkxBhpvr0cGO
+         1oqWMn5LZArOzOzTKSxZbFbEQEBuGQNO8SJEnntlyuyARenIGLKaSjFhwA3wpEDI1f/O
+         0Qv5eWD3//Odnr0XAT3sJM9qPMvzOHf2l6Df+b3LW4YIw8EFjSEuD/kAuH8SQIGbFH2U
+         v0M+OFB8Kue68rmkGeFEnd25t1Kwz50WWjkueJxYbsfDAzMZYH+oz4Cyu5t3ikPtgWlj
+         vrl9AXGcxQSdQNoXwDdmUx4utkCc83iICBBin6ftGj94zV7+4kFff7SJcBVw8yOtYG3i
+         AJnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768427096; x=1769031896;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=75jYX+RqSxeLVJ2f94+SGF/RPNpL/yvlyLcjeEtK9PU=;
-        b=Wao9PzRlE3U2uZ2nTysV0CxbsPeotbWEEboDJsiG8MeIBDBEAgOhZyGrgyzRlbdHYf
-         YZnXlKivL7G0EcgTTW1+6vWYtgZUl5JSAcUxz4Tk3auqCls8C/9v6M/aJJqW+EM9i6Ou
-         8S6vb7ywWwx6fdyZwPCWpuDgPDbWgqiYXQU25AoJjvjvlQi7YEn2ZTjM1XYk6cReVhvZ
-         IGaGYRmfQRuvtmbECDdmJfYKDjCzV/Ly+mLZfN8lGh+PhMT5d66dvGLL3wAhjPbMHtMC
-         T6ZAiJTuo4LXURUx1GFWxgWyPnkKh3Dqp5fX+Xhv4y+K1Yt//a4UH1lYevesq0Je3XfY
-         wA6w==
-X-Gm-Message-State: AOJu0YwvsUhiq8cYCFi4fUeA887AtqQaJbFQ1W1+njmNgxRVKpTrZREz
-	+rSTvV5W7WB8eOPE78QXVacefc2ctNZwKAZhkI6EuNe/LzyQGcgfZ0ZcJwbY6N34478=
-X-Gm-Gg: AY/fxX7pdeTv14NnDEnfT3+COYhf+Ue4yaX6KgRemyz8/tnWraaBhVVkQjakiuqfV63
-	X6HNLqopMehhNPiT9ejHlMQ4L6jJidgcArYCxwDVaCr3KTZhRVY7ZtXvFF5syPPjH4zmIvA98es
-	7xOKNZDs0UTyweEjctngkY5aDJ4O1uoSAExAbjc1v4LHz2EJ03pUnBui8qd8b0SiNMOLMBeiMm6
-	P6ogdT69fcx2GylU9pBCUSWTh67vkiS+PQHrmJwP5h54tdgFyXUjrz5XR/QJ46VEkvDhSJpKCQH
-	7uqCQnSagIzJTbHPpGRoJMBmlrvUyAiYZvYCyRV2/ZKo8hTFwgn30viWN0dTfT6jpKl+Nco3AwL
-	pCMJ2yA8z/wQ3gxK/e1Ac1sdxVksHUrwiBxhEODnvKHNXVer725whf3igIRsrHa7ooe0RT8m+rY
-	i4Gq/BRjiRtv/30YzLqDjxzowuQ1RTQ3/BSyqTDtbRNgr+DArHpSQin4s/trhkp3NVqyu+gZQn0
-	DYQcdLmMvsuVJ10ANbmIz+sDhWc
-X-Received: by 2002:a05:690c:f03:b0:793:b68d:1514 with SMTP id 00721157ae682-793b68d154dmr2387127b3.38.1768427096164;
-        Wed, 14 Jan 2026 13:44:56 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa672cafsm94928167b3.30.2026.01.14.13.44.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 13:44:55 -0800 (PST)
-Date: Wed, 14 Jan 2026 16:44:54 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 10/18] midx: do not require packs to be sorted in
- lexicographic order
-Message-ID: <aWgOVnp+zkGiR8p6@nand.local>
-References: <cover.1765053054.git.me@ttaylorr.com>
- <cover.1768420450.git.me@ttaylorr.com>
- <72bcd4ed6c7f685f58bb3b905fe553173abe1845.1768420450.git.me@ttaylorr.com>
- <xmqqtswnevfc.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1768427315; x=1769032115;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NXHiMkSSOepw2oHQY7ejWrJS3v3a9SnIWr8Xw8aUQjQ=;
+        b=h5CswTZKJzvMmGYyByLZlHePE+LsnIXAqhR+qkcTQxtRoAIKN+hZPr4snJa6IlCJM+
+         UJ07z3J5BDKAgmq3viYTM4X4irkX8OMY7kLPQ1bzRKbmKkpTg8U6uDhxSRlxYul/m/6m
+         B9XFZ84azS4C4JRxqlf5lyF7VXzH1zJR40YHx0hIr24AwNfj+RD8gmtSqmA7cOlo6x08
+         A0VaAOiq+Dh1WtVBm1HdwrQnWiCG5nnCpldi+nUCQhNS0MAvNfZr1wQ0jHYyiRGyH2IR
+         3c6h2w1OlVNs5otsBjRKp8zzXvPr0Qzl1zGl0BfkXy+NcNxsYp8ePFBE9vhKlyNQ0nG3
+         ztIw==
+X-Forwarded-Encrypted: i=1; AJvYcCUMPYZvVGq4MjfBDXO+HHp4IeDx7MLOskiUXy68XyM76PVh8FBG5QVdFkpFHFVZk+bBQGM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIWTEPJC8588ZkzoThzxC/cQmNQzG5ctnWGMbufzBUlh0pyQcJ
+	i9gI1e7T9I1Ns38W3o+yjFGtEJG98qkcMb7D5CSCGHFKAU/qgDaye60PxS9b9+uWeWQA+v+nofL
+	tsgTwZeQAD2d4lwrVwo2pvSS15DnBQYU=
+X-Gm-Gg: AY/fxX5Z3dLql1U1cfSO2ZHDh122/F70WgIxrExIl/OL0fTJBU8sMqI8w7Xw7abtpC/
+	0Q7fXckl+RgSTjYvM1HL8i5mhUFZEU+MnKk/N3+05HOCQSFfToSSdhE2hcge2GgWtOCTyCHMR3p
+	gdmp485drm1x1LciyfyWyAjjdTMy0ncIpGYE5qnZkCJEpZxzWiG/Fzjkd7HkwcDd5/HpO2i+Iyr
+	uGmOoKnMk75fA0sdPvsvPOkOHga8d5ZvvqnOMO21YB51Qum8PzNyzZ0BRDPK53hd0/ilwl1LS20
+	vTQlfBA=
+X-Received: by 2002:a05:6000:22c7:b0:42f:b9c6:c894 with SMTP id
+ ffacd0b85a97d-4342c54874bmr4803390f8f.52.1768427314594; Wed, 14 Jan 2026
+ 13:48:34 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtswnevfc.fsf@gitster.g>
+References: <CAGe2LO0nxXuNNRYS0fk0JuPBDa3UCT8EDJ6G1u4GNW1d9rzRgA@mail.gmail.com>
+ <CAOLa=ZT4fQdHqG+1AeviYuLUR5VG33voJk_DU1y0MzhUKBQvvw@mail.gmail.com>
+ <xmqqh5sof61i.fsf@gitster.g> <CAGe2LO3t3B1g1ARH-LQ9V0UoGmToO-Z9XYpeMOTKkaSQvCpaRA@mail.gmail.com>
+ <20260114211115.GC1008851@coredump.intra.peff.net>
+In-Reply-To: <20260114211115.GC1008851@coredump.intra.peff.net>
+From: Rajiv Sharma <rajiv.tilakraj.sharma@gmail.com>
+Date: Wed, 14 Jan 2026 21:48:22 +0000
+X-Gm-Features: AZwV_Qj6626CdosPMZJ5PAQNeZwNpQ-gRVg1IlqwMKmTLhBAWyG5wGRgDoanYDA
+Message-ID: <CAGe2LO188CuDetOKRQZs8MNw3Fq9LxpAwM8HMEP2AMHAB_g0_A@mail.gmail.com>
+Subject: Re: [BUG] Git push sends too much data unnecessarily
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 14, 2026 at 01:28:07PM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Ah you are right, "push.negotiate" is exactly what is needed here. I
+tried this out and it works like a charm. Thanks for sorting this out.
+
+- Rajiv Sharma
+
+On Wed, Jan 14, 2026 at 9:11=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
-> > @@ -374,7 +374,7 @@ HEADER:
-> >  	    The signature is: {'M', 'I', 'D', 'X'}
-> >
-> >  	1-byte version number:
-> > -	    Git only writes or recognizes version 1.
-> > +	    Git only writes version 2, but recognizes versions 1 and 2.
+> On Wed, Jan 14, 2026 at 05:39:43PM +0000, Rajiv Sharma wrote:
 >
-> We only write version 2, then ...
-
-Ah, thanks for spotting.
-
-This comment is outdated, and I didn't catch it when proof-reading
-the patches. I wrote this line before adding the "midx.version" config
-escape hatch, and doing so made this comment stale.
-
-It should probably look something like:
-
-    Git writes the version specified by the "midx.version"
-    configuration option, which defaults to 2. It recognizes
-    both versions 1 and 2.
-
-I'll update it and include it in the subsequent round.
-
-> >  	hashwrite_be32(f, MIDX_SIGNATURE);
-> > -	hashwrite_u8(f, MIDX_VERSION);
-> > +	hashwrite_u8(f, version);
-> >  	hashwrite_u8(f, oid_version(hash_algo));
-> >  	hashwrite_u8(f, num_chunks);
-> >  	hashwrite_u8(f, 0); /* unused */
-> > @@ -105,6 +108,8 @@ struct write_midx_context {
+> > > This boils down to how Git negotiates between the client <> server
 > >
-> >  	uint32_t preferred_pack_idx;
+> > I think that's the crux of the problem here. I don't think git
+> > negotiates in the push path the way it does in the read path, i.e.
+> > there is no process of client-server communication that involves
+> > gradually arriving at the common base (in this case it would be C3).
+> > The read path does this quite well (using something akin to a skiplist
+> > IIRC?) and the common base is found in a couple iterations in most
+> > cases. I am unaware of the historical context behind this difference
+> > but I assume the server sending unnecessary extra data during the read
+> > path would be much more expensive than the client doing it hence the
+> > push protocol is kept simpler.
 > >
-> > +	int version; /* must be MIDX_VERSION_V1 or _V2 */
-> > +
+> > This kind of negotiation _could_ be added to the push path but it
+> > would be a breaking change. I read somewhere that there were plans for
+> > Push Protocol V2 (in the same vein as Read Protocol V2) so it would be
+> > great to see this improvement making its way there!
 >
-> Ditto.  When we are writing it out, shouldn't this always be 2
-> anyway?
-
-For this and below, the code here is right and the documentation is
-wrong (per above).
-
-> > @@ -410,7 +415,9 @@ static int write_midx_pack_names(struct hashfile *f, void *data)
-> >  		if (ctx->info[i].expired)
-> >  			continue;
-> >
-> > -		if (i && strcmp(ctx->info[i].pack_name, ctx->info[i - 1].pack_name) <= 0)
-> > +		if (ctx->version == MIDX_VERSION_V1 &&
-> > +		    i && strcmp(ctx->info[i].pack_name,
-> > +				ctx->info[i - 1].pack_name) <= 0)
-> >  			BUG("incorrect pack-file order: %s before %s",
-> >  			    ctx->info[i - 1].pack_name,
-> >  			    ctx->info[i].pack_name);
+> I think you may have misunderstood Junio's response. We do have
+> push.negotiate already. It's just not the default.
 >
-> Ditto.
-
-Ditto (and so on) ;-).
-
-Thanks,
-Taylor
+> Did you try your example with "git -c push.negotiate=3Dtrue push ..."?
+>
+> -Peff
