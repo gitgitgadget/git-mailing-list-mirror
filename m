@@ -1,113 +1,160 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5643A0E89
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 22:45:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768430735; cv=pass; b=ECpCj819qTBYeANPExiRn88jZ1m6N7U1Pt0EKT7pJN/UY0TX7+LOt+V736TlZGzX47ZsdtYHCEokwVx7EZe1nij6+mfenYW5nr/Ceq06xY2CfCK0tPWIDyg6y/I/tt1TgpF1ez3XqNCIINUI5DSfoAAqoPSECPnZAlOeem/EQwQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768430735; c=relaxed/simple;
-	bh=REFvZrPckyMUQxxpqx4wL1liu/dj5kQcEyo/o910714=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E25033D6E8
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 22:50:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768431009; cv=none; b=ednB3nLUq+RVDGBJ0ymc6cdZs71fOZwPQkSlDiFbqnXpC9Ylj4rBN7vFCGxFW8BRAbPBFnKeIIfChDnvZJzVbwQQqtayLVjnsbN4PXJDGVrVEby0BtYiu1b7FC9BecW0fW9AEIARXNIfSDq9Au0g/YWu4Xf63niK0mTykPV2vLk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768431009; c=relaxed/simple;
+	bh=CrvvtBqAc28y4tg5ndAKoMNFeyCKZ6Rww8lWmzrqrfk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fnYfynY3xe2m44ZGgTsq2tZOxiIwIGTTnrTo/vlyzZ1tMp20EQWyxLAPALmRUYmj3T2aDtQxaJT7wJdIsXrogNRVFXqAvq1Z3OqO7DcMjZDXllueo8336zc3HeYTE2/2bQnfMu9890oETYCxI/pD1q5CDa8Ni/ya082DKEfZCBk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Si9uGrbT; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=CDkGIGtPQo7IFuEKT/oB/d4HINCBTxR3HZsxL/GC3ajBRWdtCs3ec3WUb/7sww03OYTQ1L8faF/4foPsHaQDLkYlyWinV12cMZZtM+MYGkHeCO1WpVIMTGfQjWlyYVvlNsgrDBcnIYPokuAmDFGNrCs+zcixF9M374/7dWiO5MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Os441Rn3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dljDPUTt; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Si9uGrbT"
-ARC-Seal: i=1; a=rsa-sha256; t=1768430711; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ZRr9OBV+am+lVxFtaz5OBRwGKTSXyP77usqQiR1tN+I/u07qy2DzI4sFfukcfAzhZNZBuOjRJl+q2tk5J0mS2skLSlGTgSL6RtfMVWZtsSRGPcwAH47Fhn2EfxghMOJgljVEJWlCWJ+grlN2u8LLTaeLTCQ1tBqc3N2wcmUTCNI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768430711; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=yT57LXmqLgF7sXbxXLZ2Vwpt2udVJN5uakogRAJPIn8=; 
-	b=ElG5RwWtkG83f94Gi5N26EggHSMPbWtpYvtscA082Pz6i7FPDnfSACUFLoF4Rpxi665HfuvPMEvoWrF0XYIlVOPbGpRVDpNhwPgcQZ+wS1ZspyUh5+3XNv54ubl+o2/XJt0s0wc8kMzqebHd8wu+4dxs58YMZJjaoDp+ZqwkZu0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768430711;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=yT57LXmqLgF7sXbxXLZ2Vwpt2udVJN5uakogRAJPIn8=;
-	b=Si9uGrbTpHCdVeBn6ZNGA68BEMFcJKe5J/YQx7gKCnsA4nCR0OwxCEBsblwJOCXB
-	tWiP94Rhhhspq08Xu8KxDIcImgm30oB/ApKLMKW1W39vecwcEIBMi1LGDfeX7XdgFDx
-	A5Z0YJvMN7Ox+zZ4zEjqlXQdonR10T084j28djpE=
-Received: by mx.zohomail.com with SMTPS id 1768430709426241.05163176461804;
-	Wed, 14 Jan 2026 14:45:09 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick
- Steinhardt <ps@pks.im>, Emily Shaffer <emilyshaffer@google.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Chris Darroch
- <chrisd@apache.org>
-Subject: Re: [PATCH v3 2/2] hook: make ungroup opt-out instead of opt-in
-In-Reply-To: <20260114212718.GB1010080@coredump.intra.peff.net>
-References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
- <20260114185731.2381550-1-adrian.ratiu@collabora.com>
- <20260114185731.2381550-3-adrian.ratiu@collabora.com>
- <20260114212718.GB1010080@coredump.intra.peff.net>
-Date: Thu, 15 Jan 2026 00:45:05 +0200
-Message-ID: <87qzrrlspa.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Os441Rn3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dljDPUTt"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CBFBE7A012C;
+	Wed, 14 Jan 2026 17:50:04 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Wed, 14 Jan 2026 17:50:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1768431004;
+	 x=1768517404; bh=/MnuYKoFVuPtQcX8lGfrdWisOlH1Z9h+WKZ2AZ1j4z4=; b=
+	Os441Rn3bo52Mzr1NhSoVgwNM3EfkM8vOfAbno83+bVQmyLYDQZqxeuryKurEUwR
+	GJmmlrLeE6Rx1xI0s4Cwc5KmTxyj4p4EbUBgT1yvMh0OM0SUVr8vNJd7W2LdpC1m
+	UhrTN9GXOaRF/5v+IOjt926Yoys58E+QKrxdIBFiWr1/AR/WmrDD8Fd1Tgp00C2h
+	eddgeAQMqhhIcfqrxdeekbMNz9kM9PWhcaNSbeRwgT+6J0cUyIhjeUCIZIX8iEhI
+	hgPPThREsmqbYAriO8YiIte4+OsJBKyW8YhL4MAbsBIkWO0lfc+OMDmvebH/rATY
+	Y1kDxFyYjFEBU4JFODwdWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768431004; x=
+	1768517404; bh=/MnuYKoFVuPtQcX8lGfrdWisOlH1Z9h+WKZ2AZ1j4z4=; b=d
+	ljDPUTtPRLN7WIyFfqzgK1N1qsMrYL+kg2X7/EM4Qm9Pm3BMr/w3ABYerUc2XFq6
+	BrTzUHqTPqX/rf/yUl6XY5Dx0JBnrxTICNvbB5oQdEhHgqysuc5QT0nQmWRP05vZ
+	mRVq3fuHm/e+Lqarabuk/CoQ0cRMBpuq2gVpl0Ch5g3HBOCkmpB+LelclKwlGSaf
+	6CYbLl7/YGMe9i2OBIHdJJV0YxG3YyLMuTkum1T/BidU0Sg1gvDxkmkZNNEEXL21
+	sX8+pXsY7qoGpYtVzXu8aAh1zm0WyEHxSkoFDFRg/3mvvYd8LI63SFk1FIkmYcIs
+	5XccUY5AptIMSN/uRVSyQ==
+X-ME-Sender: <xms:nB1oaVTq0phcvGp32xS3kOh9WGXDKPXDyoHjdle1oKnnvKfAbqfVTg>
+    <xme:nB1oaWM1lx_7XAmC2Kokvkk0eVfc0DeBXpa3ZXUW7xaQNxbUJFPBnorbqNW_nzbkD
+    WuOsjoEYUjpMAgrG7_8ULgfqkuWh-SUYDu2jwDnCBw3AJis2jgAYQ>
+X-ME-Received: <xmr:nB1oaYO1GpPGnzpwYRzlJKUgQ3SbxS0bv8msL_mAGkhkEUgQC4wHKZPkSMP3c0ccLYDMESXLdhMg2Y5wP1KjgmtqexDHaN_QRxqZQHA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdeggeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhorhgv
+    nhiiohdrphgvghhorhgrrhhivddttddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:nB1oaWt-AXmvj8dCzr8w5jNYMhPURgftfnpjrdlMnpeKr2KCrauyGw>
+    <xmx:nB1oaSVxPJxnACgMjAqIVwggaZT15VOWnKkzzk8Z3lJsJ-G_WbUq1Q>
+    <xmx:nB1oaevrEELzN3YfiBPSvFiYIOXcunK3BfDDZRGPPwXPg8HqTzB4SA>
+    <xmx:nB1oaeWeoAkWLYtExECPV6mqokNq0JBiLzsAPUFy38hQ1HDIK3Zd_Q>
+    <xmx:nB1oaWNZlSkRO8nDpjc0ajPVTccT_H_zdmENX8xrbAVJvIt_Rfl_TiSU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Jan 2026 17:50:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH 1/1] diff: improve scaling of filenames in diffstat
+ to handle UTF-8 chars
+In-Reply-To: <aWgYRkv-YsuekdR_@lorenzo-VM> (LorenzoPegorari's message of "Wed,
+	14 Jan 2026 23:27:18 +0100")
+References: <aWgYRkv-YsuekdR_@lorenzo-VM>
+Date: Wed, 14 Jan 2026 14:50:02 -0800
+Message-ID: <xmqqikd3ermt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, 14 Jan 2026, Jeff King <peff@peff.net> wrote:
-> On Wed, Jan 14, 2026 at 08:57:31PM +0200, Adrian Ratiu wrote:
+LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
+
+> The `show_stats()` function tries to scale the filenames in the diffstat to
+> ensure they don't exceed the given `name-width`. It does so by calculating
+> the "display width" of the characters to be dropped, but then advances the
+> filename pointer by that number of bytes.
 >
->> In 857f047e40 (hook: allow overriding the ungroup option, 2025-12-26),
->> I accidentally made the ungroup option opt-in instead of opt-out and
->> despite my best efforts to set it for all API users, I missed a case
->> which requires it to be set: the pre-push hook which regressed.
->> 
->> The only thing I needed in that commit was a way to change the default,
->> to convert the remaining receive-pack hooks which require ungroup == 0
->> for sideband output, so it doesn't matter if it's on or off by default.
->> 
->> Bring back the original behavior by setting it for all hooks in the
->> struct run_hooks_opt initializer, which nicely allows changing the
->> default value only where needed, in receive-pack.c.
+> However, the "display width" of a character is not always equal to its byte
+> count. The result is that sometimes, when displaying UTF-8 characters,
+> filenames exceed the given `name-width`, and frequently the bytes of the
+> UTF-8 characters are truncated.
 >
-> I think this is an improvement overall to what's currently in 'seen',
-> and the patch looks as I'd expect.
-
-Thanks. :)
-
-My intention for this series is to fix the two regressions reported by
-Chris and Kristoffer ASAP and not touch receive-pack (yet!) because it's
-a separate topic which deserves its own patch & review / discussion.
-
+> The following is an example of the issue, where the 2 files are "HelloHi" and
+> "Hello你好", and `name-width=6`:
 >
-> I have doubts in general about the approach taken by c65f26fca4
-> (receive-pack: convert receive hooks to hook API, 2025-12-26). We used
-> to use an async muxer thread, and now we are buffering hook stderr,
-> which to my mind is a regression (both in terms of real-time output, but
-> also the deadlock issues mentioned earlier).
+>     ...oHi | 0
+>     ...<BD><A0>好 | 0
 >
-> I'd rather see us continue to set up a muxer thread, and then direct the
-> hook API to attach the stderr of the hook processes to that descriptor.
-> Then receive-pack would just work as before, without having to fiddle
-> with the ungroup flag at all.
-
-I am certainly open to try this other design, especially if we can
-eliminate the risk of deadlocks. I will code something along these
-lines then send it for you to review.
-
+> Make the filename pointer move by the actual number of bytes of the
+> characters to drop from the filename, rather than their display width, using
+> the `utf8_width()` function.
 >
-> You can take that with the appropriate size grain of salt from an
-> observer who has not been following the series (and is not really
-> interested in it, beyond making sure we do not introduce regressions).
-> But it is also an observer who has dealt with many I/O deadlocks in Git. ;)
+> Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+> ---
+>  diff.c | 15 ++++-----------
+>  1 file changed, 4 insertions(+), 11 deletions(-)
 
-No worries, all feedback is welcome. 
+Two comments and a half.
 
-I genuinely appreciate your ideas and suggestions. :)
+ * The change needed for this is surprisingly simple.
 
-Expect a receive-pack patch from me soon, in a separate topic.
+ * You already know about samples that may exhibit the issue you are
+   addressing.  Can we add it as a test case somewhere in t/
+   directory?
+
+ * The NEEDSWORK item addressed by this patch is one of the two
+   NEEDSWORK items added by ce8529b2 (diff: leave NEEDWORK notes in
+   show_stats() function, 2022-10-21).  Makes me wonder how involved
+   the changes would need to be to solve the other one?
+
+Thanks.
+
+
+> diff --git a/diff.c b/diff.c
+> index a68ddd2168..271ace5728 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2859,17 +2859,10 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+>  			char *slash;
+>  			prefix = "...";
+>  			len -= 3;
+> -			/*
+> -			 * NEEDSWORK: (name_len - len) counts the display
+> -			 * width, which would be shorter than the byte
+> -			 * length of the corresponding substring.
+> -			 * Advancing "name" by that number of bytes does
+> -			 * *NOT* skip over that many columns, so it is
+> -			 * very likely that chomping the pathname at the
+> -			 * slash we will find starting from "name" will
+> -			 * leave the resulting string still too long.
+> -			 */
+> -			name += name_len - len;
+> +
+> +			while (name_len > len)
+> +				name_len -= utf8_width((const char**)&name, NULL);
+> +
+>  			slash = strchr(name, '/');
+>  			if (slash)
+>  				name = slash;
