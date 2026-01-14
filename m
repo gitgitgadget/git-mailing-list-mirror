@@ -1,91 +1,126 @@
-Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849B2330D32
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 18:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7444832D7DD
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 18:54:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768414289; cv=none; b=SmHTOAzp12T4reBwKNig8gbETLoBtZ41m8hutHcS0nLG0h67Uf4LYuOBR/68eJ7CdR1RI/2cYLXufOOHoyW0dz3yTByMfYbdHJZ2yteuI71l45GXD0PLC1LZjSznr5ht5HvZsfbQnECPqkty0hwSE92oiEa7W3aJ+CA6Io+vfk0=
+	t=1768416898; cv=none; b=u8QXo2FMhqZnNlrU3vOTfRl3zNqn6Z7B74mH33Ey57tPSVcNv/mQqtb1nivTu2cWWevva47f9pmJz7sHPM1ILseEN2HhmR/PYSXFGPWsOLrClneoIlqTIgPyRafG7yrZiK5swCcHXkArZQZIhZtSq7/mQbyEC3bmhdixTv0o3e0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768414289; c=relaxed/simple;
-	bh=JUwIhQ4nh2mOsm29ZoSisziBgt3+rd+/5A3Jv/aUf8A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OgEjF8CPZbGgdGQ/erDQC4wclUb4VMuQaB1QyHde9dlpkKn0WXG2JFEw12HMt5eZhVm60jjRqSBBkPI6DL8P2Hb2QDfLz1q80AUC+awPxcedGzfns/tk/COdwoez7jXIKB5gxIfDVEBm9Qg/MCQ+x303b5B1I92fiQo9Hr4j7ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4drvM01hNCzRnlX;
-	Wed, 14 Jan 2026 19:11:24 +0100 (CET)
-Message-ID: <f55a85a0-fb57-4911-bd60-cf863da5436c@kdbg.org>
-Date: Wed, 14 Jan 2026 19:11:23 +0100
+	s=arc-20240116; t=1768416898; c=relaxed/simple;
+	bh=9PHrnt+55lSlx8G8AV7ufwBRYNoKBerRbyl2TsRJ2mA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PtdS0yGoAFEisbFgCNlzHnWkDi0ZUXXpQwGS92mrNNS8GAL//8COY0OFdk/3lYOuFjv9zgqteBGmSqaqnnsqpjTj8yARdVCTXqoNqz9Z3MxSlWbI7ddevL09l0R1snDBHETcMrc0YY3A9UZTnK2tRD/4OJJDSUx7ZfOhJbiBd1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ju0xs+qW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aBOJii7P; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ju0xs+qW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aBOJii7P"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id A40331D00101;
+	Wed, 14 Jan 2026 13:54:55 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Wed, 14 Jan 2026 13:54:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768416895; x=1768503295; bh=CvX9O43YPv
+	zoLrtMfVoWVoWGQuoA5CqqjTheTyiDkZA=; b=Ju0xs+qWZN76SIJvQHsghrbcvg
+	uQg8BZeFC4tBk9xDVNlJIvNu71rYNguVUxE+DkMWzSE0yOwlatqGXDPVLDiN8VK5
+	vnxDhPzamy0zdmbLAUGlei4w4HPO5TH6rLNm9L21PnKdCbvYHeBqUS+tixaKNWGi
+	9ZdWnkRGPH3wBiaBCitHSnzYZypC4Vu3kBErvvwfkxxYysDifAkTNQWZcUyG3TOi
+	sfzBXpwHZaSFhjkw5rYrroifqR5ozrK/6yvCUpDhfhGAVtVPdxMsYwsB0Ya1M4fo
+	nLoXWk0M9WziXREvZLSuRoyTic/1GWZpHmrvdh++JJJZQ05EYZu5FBHzeCFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768416895; x=1768503295; bh=CvX9O43YPvzoLrtMfVoWVoWGQuoA5CqqjTh
+	eTyiDkZA=; b=aBOJii7PjLUW8EACjAlIaHxfGf/ab31PboK3DGvOF/urFdDOi13
+	ijFyclyiXuqO+Bx7WAfUDhgsZTuhSZT1WdMY/QbMxIHBz1Tjtu5yAkQE/sSGK1gA
+	ZVfgz/Fi2gO86xbNXliq7c/pFdwpAhGCGm7zj6M/LETNDzHOiBLsIAbXab909UK3
+	mS69opkYkDH1ZeXRN+DU/WdiBQQomDeScsyfpfmp+zdMgT0BlEAF5JVS4E0l86Kb
+	pwzm0fmktmXZ7q48Z4dYeEuPMWxJj4i4K9zCMaKT3tispcBoCMDus8ZOQj1/P3DH
+	+RmZeJVYF7C9vgbS/E3qfA6diBCk6lvPMVw==
+X-ME-Sender: <xms:f-ZnaYlmJDpfLYofw_m4S23SN3n_oO5rzFkTVTPavQHJeq9d_90OgQ>
+    <xme:f-ZnaeukF-Wm9OMppUdpF6nn2NQWh6MzgRmgitJHCCv70r7yZB9dM9hnuneDK5MCa
+    wnRgONEWC1KiG89yTQOdWhnKnnTh27LS9yjPtqVr6Y4Kd-NRxOU-A>
+X-ME-Received: <xmr:f-Znae_s8j5AnozE0gZqJxO6CA-SxPJA_FXXxo1XdPNFSTBZLYDARwUETt6YDDnSpCTpUFdE-vWLuHOyYgBSNTjVlx7rdTK8yycfOhQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdefleehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvg
+    htsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:f-ZnaQPGQkKZQwi9PWdOBEDHUTizARDBv0MIS43th9nc_BVo8Y4cUw>
+    <xmx:f-ZnaUG-Lo6ltCUDYzwUeAcFqcdihQ0GQNJ-GVVJ6Bzvp5FmCTXsAg>
+    <xmx:f-ZnaWTBvU6i5PUOwqG5Z6fH10ItZUB_KRXV5pqRdrmyqJ6HQRgnuA>
+    <xmx:f-ZnaZt39FjrrlpFrn1AaNE8Vy1_4SqvsswuCZ4ZZCb2bWK1nI_r3w>
+    <xmx:f-ZnaSuXpNfs59Wt22AXIpNfu9dCBu6vhrZFrCw3MfpbzAa9PIron67b>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Jan 2026 13:54:55 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,  git@vger.kernel.org,
+  gitgitgadget@gmail.com
+Subject: Re: Triangular workflow
+In-Reply-To: <20260113214059.GC288857@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 13 Jan 2026 16:40:59 -0500")
+References: <20260113170321.GA265671@coredump.intra.peff.net>
+	<20260113183557.7991-1-haraldnordgren@gmail.com>
+	<20260113214059.GC288857@coredump.intra.peff.net>
+Date: Wed, 14 Jan 2026 10:54:53 -0800
+Message-ID: <xmqq8qe0f2iq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk: use config settings for head/tag colors
-To: Shannon Barber <sbarber@dataspeedinc.com>
-Cc: Shannon Barber <sgbarber@gmail.com>, git@vger.kernel.org,
- Shannon Barber via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.2030.git.1768285721660.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.2030.git.1768285721660.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Thank you for your contribution!
+Jeff King <peff@peff.net> writes:
 
-Am 13.01.26 um 07:28 schrieb Shannon Barber via GitGitGadget:
-> From: Shannon Barber <sbarber@dataspeedinc.com>
-> 
-> The drawtags procedure currently uses headfgcolor for all label text,
->  ignoring the tagfgcolor setting.
-> 
-> The call to create the outline polygon for (non-tag) heads currently
->  has the color for headoutlinecolor hardcoded to black.
-> 
-> This patch maintains the variables for the non-tag refs so that heads
->  are colored differently from non-head (non-tag) refs.
-> 
-> The outline and fill colors for the non-head refs remain hardcoded to
->  the prior values, black & #ddddff.
-> 
-> Signed-off-by: Shannon Barber <sgbarber@gmail.com>
+> And having the extra output from "git checkout" is just extra noise for
+> me, especially because it is easy to see only the second message (which
+> looks just like the upstream ahead/behind message, of course) and get
+> confused. The first time I saw it I thought I had misconfigured
+> something with my branch.
 
-In this project, the author and signer-off should be identical. Please
-choose one identity for both.
+It now is clear to me that this should be _optional_, so that those
+who do really want extra output from the command should explicitly
+opt into the feature.  After all, any optional new feature that you
+must opt into by definition cannot regress end user experience for
+those who do not ;-)
 
-It was very hard to figure out what the patch attempts to do. The commit
-message wasn't very helpful, I am afraid. I would have appreciated if a
-short summary of the status quo at a high level had been given. For example:
+At the same time, I suspect that extra comparison on top of what we
+already give against the @{upstream} may not be limited to what
+Harald implemented (is it essentially the same as specyfing @{push},
+or something else?).  I wonder if we can come up with a flexible and
+extensible notation to specify what branch(es) to compare with, so
+that we can use it as the value of this opt-in configuration
+variable?  Something like
 
---- 8< ---
-Gitk draws ref names with 4 different styles depending on the type of ref:
+	[status] compareBranches = @{upstream} @{push}
 
-  - ...
-  ...
+signals that the current branch is compared against these two
+branches, and not having the configuration (i.e., traditional
+behaviour, which is left the default) would be equivalent to have
 
-The styles use variables that can be set in the configuration file for
-..., but hard-codes the style for ... But there do exist configuration
-entries for ... but they are not used. Replace the hard-coded values for
-these latter ones, but leave the remaining styles unchanged.
+	[status] compareBranches = @{upstream}
 
-...
---- 8< ---
+or something like that, perhaps?
 
-What is also missing is what the implications for users are after the
-change. Clearly, the settings stored in the configuration file are now
-heeded. But what happens for users who are unaware that there are
-settings (since they are not accessible via the UI). Are any observable
-changes intentional? If yes, what is the possible impact?
-
-BTW, the paragraph indentation is a bit odd.
-
-The patch text looks good.
-
--- Hannes
+Thanks.
 
