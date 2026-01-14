@@ -1,63 +1,64 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA36378D96
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:38:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC6E37BE81
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:38:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768426760; cv=none; b=CEpxUwyn371BW9XmouXsTL5qitoyz2KPCEQlMGtA3i2W4JfDB1EXc14go11i+YcjO2tNUPnWcNODRrNYBzruFhEcDoZR1kTbVjG6dZ6iPVR05LmOmW7FM2DaV0DfbsTqOpWVje1HntexteBI97PjSFpcm77BRt5VjL0at3dAmOA=
+	t=1768426763; cv=none; b=AYLPUnddJw9y5wL6s1W5XOpQlUY7lIRMZyxJshqTnU2wFNrpBOMsgKX/e+Ni3qHhD5fD94UYwil03zBq2UggfOKBy8YqmLwpNMnbTzudMClyXKaUY1fgN3CxG/7IjVXFL02kXuasidrqqoWYynJlj1tjl1vYSrZX8Hmr2QmSW9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768426760; c=relaxed/simple;
-	bh=YZvJgx1FOFCfDiZL7cmhccR+AMGQPJnwlKuWXG7vku0=;
+	s=arc-20240116; t=1768426763; c=relaxed/simple;
+	bh=FxCw4fm+nPtN6ht44ep+M0oWszuTECrcwNcbV2i1qnA=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
-	 Message-Id:References:To; b=MbJvR4aPO2V0xtT8NpwTP40KqrOQ0mZAxzBuMGThZLLUxkyxzP+9apNvRYB89Nha6rcEOABocoFWnFu7n23wR7ZvDKG8z4jSgLn1BwVyrMrjihJY/y3XklHNmcSyAFEW69Xs6eY95GRuOSHzh5BvjkiPBUWwuoUnIUXvLzxhPGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DfTCDycs; arc=none smtp.client-ip=209.85.128.181
+	 Message-Id:References:To; b=L7zBOds029C83az0FJqX1Re1pmEKY0OS02x2Fk2SD0IZfgdZe6EbzDiSp3rOvgZ2R3JkdtW1wZi6/MTY6WL8/2lK7z2a/UBXWSFKZn3fmxqwAppyau9Bt2xYcIKflBYnDpI+dIzcJT4i7huAUFKZz9nUzVmBYskML2T3JtmG7qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wb6+rTXF; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DfTCDycs"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-792768a0cd3so2329857b3.1
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:38:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wb6+rTXF"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-79018a412edso2324317b3.0
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:38:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768426720; x=1769031520; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768426728; x=1769031528; darn=vger.kernel.org;
         h=to:references:message-id:date:cc:in-reply-to:from:subject
          :mime-version:content-transfer-encoding:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YZvJgx1FOFCfDiZL7cmhccR+AMGQPJnwlKuWXG7vku0=;
-        b=DfTCDycsZq46X9SP9XtLOeKU3DWXQEq/jSb+kGRTKsnLOV/l2z0csiJfVaVyaJWru2
-         crB8huNmRIfC5EKpbyFd2OmCPEdq1GmtKat6+LpxRPm28QnnwkpZYNj4H79FzbpLeJPV
-         jLi1JPmob6KF9n3M2cHIB09pfYOEMCtMFWWPbrqNOPka+2wpoEVabRjOdVhrEXpUF2TF
-         F1Q3Arm+3qBc1l4ock0Omg0IJ86ly2h/FMYbqZojzNVhDwQcRZbGiP4+ApNHpFJdjDDU
-         gQx8BCftN4DdW1DXe4xsRLslMSuPTl/YOxe9GdRZ6bWGlsFMdTM7FQSWq6SMasorJhtP
-         IWxA==
+        bh=h4qxx08/9Wu4E5E7U+Vsan4C5ociP+ZX7QBYSGmOiY8=;
+        b=Wb6+rTXFzdvknCb/N0+wTT2OrnGXGFim9dvoX7q+zDvmr/tzU8kCiFQdOAYElGxt4Y
+         ktUq6HbLSdXf+YkDgz9zWkqa0nDEc4+e2ZYdZfXj/zLBP5GnuyGGR8OHvCgiNJr+fIPm
+         peOKSfFuHvOsf1pG0JMQU3EOS2vsU8PnMmwXWACWhLCJawvJJF8pQVbPVDeL87TbV0FY
+         GMt3+OcgKHV5pTB0UnZDKsWQanKkxMkBQSUd9O3C+P+OIl+QzNvohDoo3yTXLD7bC8/4
+         m+/t9U0WKfwkxy2oJnxY/PG9pxTTVcCDJO6KeICRYUrAZvlIOuVyvelLzrm5dMPrFdY+
+         4j9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768426720; x=1769031520;
+        d=1e100.net; s=20230601; t=1768426728; x=1769031528;
         h=to:references:message-id:date:cc:in-reply-to:from:subject
          :mime-version:content-transfer-encoding:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YZvJgx1FOFCfDiZL7cmhccR+AMGQPJnwlKuWXG7vku0=;
-        b=jqRYSmU6qpedO3Ts0qI+YVJrjuiOleECkynLl5k6yA5HAGbiFvTEotGgZklr+cjORQ
-         +jeI8Kimokpofb+JBaFilcLnxrH+qFC5zdyfCWWa58muFT3Ai01YRCuGv1ornLCF3GQb
-         Hotv/2jkWP8vUnh1q1PPB/2Oh6pfqqFd6jcp9sAw76nLhkUPN+LshM/jqn2/vMqGQ6Ry
-         cAGGeuyVBgduj7CsvteFUry8JRFLHFi7Qt/9VsSK7XtAuLGyAZKbWyeqWAowinmCFFh2
-         YC/x18FjvnoNLQRvZI6Rxti9VdR/LyEowhuBCjQkfpoEA3UE5W1mxpFy03tQN1a0KZKS
-         eMiQ==
-X-Gm-Message-State: AOJu0YynFfs9RjWOQPtrkfxALT2qz7mxeY+Izn29jtN6MuYpHMuXj5S+
-	OVz2Y08Sl3nkc/OQ0hbaESYPztZcZhpELVZ71RVUrzSMPDL7u4bDB6/vEGm84A==
-X-Gm-Gg: AY/fxX5UpxASz8gZ/ZQaZpHZI32PSmP0hFqXKrV14SbWwg55oj3nqXevjEw3FjDzAIf
-	DFZIOreZjcVCX0n3FNJ453wxFbsttKiZPWZS/VsU49wlpJp8vLGIVnMgPjIxb0Z7EUAsPprnrGW
-	N2+qXzc3QUSqtf+5G62WyCKWDcH5TfTdbiDP5Drze2WU8Noc7zgUI+XS4h9eYGCSNWw77aI7rpL
-	ij+vhfe0AWMlNlrm4FWDAISIKcxgUvY31h54WM0OaLey8g8F/NFhNljcXHkl7JpXzQXf5DLzNqI
-	cOWWjPEq/qK+vxVBoa8W4fRDTjfsIS9eFeygIHoKraMF6HU/pOhwEiYvhUAPqUyPRPFDqbj+WKt
-	w2hpG68NEEzRbg5QnhU6atmom5bW0Sz9Exc7ek/kSDITU0uq438aN3oJbkHeQUaGOWE3y4r4SHW
-	i/kh+T8Q1gQH6qlUnVV9n9WeZfFFzfcTsF+jGTJa4LaUx2lqsOnhs14AiEaW6//PTSYu3adHBSr
-	jtcLNk7aDlCHlHfLhjuvw/TMq2V
-X-Received: by 2002:a05:690c:fc9:b0:786:5712:46af with SMTP id 00721157ae682-793a194bd8fmr32064727b3.9.1768426720229;
-        Wed, 14 Jan 2026 13:38:40 -0800 (PST)
+        bh=h4qxx08/9Wu4E5E7U+Vsan4C5ociP+ZX7QBYSGmOiY8=;
+        b=puhB5v6UrztUsOrwDykLqXzgfGzZIYMAjkdMGQhFkQyvKlei7vnq2sof9RcjQI6X9I
+         H+ttwdjwJ2gP6s20fBPKB97DGbJG10ROPQw6LhDF6ZWRgFmI64XXzUzDuvINcD2TCydK
+         jpJ4kLsbrPy9rm43UdcGW8FZL/UYSiztcZay16hoZ9H4S2VaxqKYp5c3+iZIbwdO2jX/
+         qJ9W5mGgKeIrJAQxA50kpjWgmxUDVkSHH/PtgdQ8E2vDuMaRgDLNQC/TXn4+7MwOSUbu
+         6dpVLfTu5J5PEje0/DARQhX2hjBhv+NqFqnSsnZjuxkS9hO7gyvVhjL1U4Bh1/57S5yu
+         1uBw==
+X-Forwarded-Encrypted: i=1; AJvYcCWR2yQuYXtkbNQBifi0Xp/kc/IlSpTEOrVFkYT0heaY/WwHTqjjE5/Eg1mD6iMWWaTp+4k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyyKhdspT6cISJVWc8qnJ6ecB6PrYXST3lKejAkfd8MCSB9XS5E
+	v19P2d5GYS7MhcHOeIXjlDujV9qXsbH5HW+5mFVuDE6sqxPm1RmxwOdu
+X-Gm-Gg: AY/fxX5olR2e2BYJuM5Ix45ZRxeN8Q0dWOEkXQ54emm0Ru96c2DY2yOzwxHUKEHud38
+	FbTBX55w1I447nYn9fItFgpC5WN9yuuWbcui4cSN1s/GOQ/JwIL69wGWK8ucI1Pm1mx6s8vUMoW
+	X10lKjzyF/IpUDTBgVaANf8EE8KzHitVYv3pz3NEVyh4QVcIofXS8+BAqu+QH/p0I71Y3/bDrff
+	8zUlWfRYMG5y70lTSnOjWm0chYV5NWLKP4palizb45hKajqQjp06/3NPC5gTMNyWkuOjXqO8S4Y
+	mo6HFJhfpJZYaQZkkLJrso160xfCQARH/hCF6VeDFmIvBLAP4jOlPxCGSAMkizz4Ve7zMUaPQnA
+	zz4mm/KxRJ8uzIVV3hPzPqEqR7/VrIe9491Ef5I6yAslXY/vMUcu5Y59AjF8TJzXy0W2Yh2nJnv
+	tlcvTNE4OwgDLCKgMVs3A6xQwg59laU9EduXTRsheQMZFOb/GqyEM+ViTxHhc1b9W4PPYKBKpie
+	BWk1iEXRmSEBZjRB4o0RCDf3jMO
+X-Received: by 2002:a05:690c:3501:b0:787:d1e7:e75b with SMTP id 00721157ae682-793a3aa5b2bmr26566177b3.64.1768426728403;
+        Wed, 14 Jan 2026 13:38:48 -0800 (PST)
 Received: from smtpclient.apple ([2605:a601:90a8:8b00:18f6:dd0a:cf21:e611])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa55b8b6sm94954057b3.4.2026.01.14.13.38.39
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa6a4d00sm95462007b3.41.2026.01.14.13.38.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jan 2026 13:38:39 -0800 (PST)
+        Wed, 14 Jan 2026 13:38:48 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -68,27 +69,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
 Subject: Re: Triangular workflow
 From: Ben Knoble <ben.knoble@gmail.com>
-In-Reply-To: <20260114075936.40221-1-haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, peff@peff.net
-Date: Wed, 14 Jan 2026 16:38:29 -0500
-Message-Id: <BADF388F-91FB-42FC-8C12-69693E61F36C@gmail.com>
-References: <20260114075936.40221-1-haraldnordgren@gmail.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
+In-Reply-To: <20260114211013.GB1008851@coredump.intra.peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org,
+ gitgitgadget@gmail.com
+Date: Wed, 14 Jan 2026 16:38:37 -0500
+Message-Id: <56D0BADB-43C8-4E93-A871-6E6B11B59DCF@gmail.com>
+References: <20260114211013.GB1008851@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
 X-Mailer: iPhone Mail (21F90)
 
 
-> Le 14 janv. 2026 =C3=A0 02:59, Harald Nordgren <haraldnordgren@gmail.com> a=
- =C3=A9crit :
+> Le 14 janv. 2026 =C3=A0 16:11, Jeff King <peff@peff.net> a =C3=A9crit :
 >=20
-> =EF=BB=BF
->> My workflow is different from Peff's, but it is similar along at least
->> one line: it's really convenient to have "git push" with no further
->> arguments (only possibly flags) to push my branch to a remote mirror.
+> =EF=BB=BFOn Wed, Jan 14, 2026 at 10:54:53AM -0800, Junio C Hamano wrote:
 >=20
-> Would you also like the status reporting to be off for your push branch?
-> I asking because that's what Jeff is arguing for.
+>> Jeff King <peff@peff.net> writes:
+>>> And having the extra output from "git checkout" is just extra noise for
+>>> me, especially because it is easy to see only the second message (which
+>>> looks just like the upstream ahead/behind message, of course) and get
+>>> confused. The first time I saw it I thought I had misconfigured
+>>> something with my branch.
+>> It now is clear to me that this should be _optional_, so that those
+>> who do really want extra output from the command should explicitly
+>> opt into the feature.  After all, any optional new feature that you
+>> must opt into by definition cannot regress end user experience for
+>> those who do not ;-)
+>=20
+> True, but then it also cannot pleasantly surprise people who didn't
+> realize they wanted it.
+>=20
+> Having your user experience regressed and then tweaking a config option
+> to fix it is not too bad. The deciding factor to me is whether more
+> people will be pleasantly surprised or annoyed. ;) I don't have a strong
+> sense there.
+>=20
+> As a general principle, though, I think a reasonable path forward for
+> any behavior change is:
+>=20
+> 1. Implement the new behavior, hidden behind a config option.
+>=20
+> 2. Wait a while to see how people like the new option, and shake out
+>   any bugs.
+>=20
+> 3. If people like the option and are puzzled why it isn't the default,
+>   then flip the default on.
+>=20
+> In other words, let the utility of the feature be proven in practice by
+> people opting into it. There is a chicken-and-egg problem if they don't
+> know about it, but if it is truly solving a problem people have, then
+> hopefully some of them would look for a solution and find it.
+>=20
+> End philosophical rambling. ;)
 
-I=E2=80=99m somewhat indifferent (mildly for having it on by default), but I=
- meant that you don=E2=80=99t want to suggest that in order to use your new f=
-eature you don=E2=80=99t want folks to have to break their existing workflow=
-s ;)
+Agreed generally, but the chicken-egg goes 2 layers deep here due to triangu=
+lar workflows ;)
+
+I favor something similar to what Junio described but also including @{push}=
+ by default (and ignoring it if non-existent), so that folks discovering tri=
+angular workflows for the first time are easily able to see what is happenin=
+g.
+
+Us =E2=80=9Dalready triangular=E2=80=9D squares are probably well-versed eno=
+ugh in Git to find and tweak the new feature if desired.
+
+Idk though. I think more folks at work should try triangular flows, so I=E2=80=
+=99m biased :p=
