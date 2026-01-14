@@ -1,81 +1,91 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA95A274B40
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 18:03:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849B2330D32
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 18:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768413789; cv=none; b=UnLWSYXbf4Q5D59U/lM0jxfjghGZpNltu8Ix+rjIW34Hu+ehoPHAmEDT9y6//LvYT/BbD2PgXat3Ir0J+tFC2h6yI5j/bPvHeEpivU6NmsWwvC8yXZ2GasW4toJw2a4zKU/lvTZC+9wvIS8tdOzHL5C0caun3dKKNjl5ICXnIKQ=
+	t=1768414289; cv=none; b=SmHTOAzp12T4reBwKNig8gbETLoBtZ41m8hutHcS0nLG0h67Uf4LYuOBR/68eJ7CdR1RI/2cYLXufOOHoyW0dz3yTByMfYbdHJZ2yteuI71l45GXD0PLC1LZjSznr5ht5HvZsfbQnECPqkty0hwSE92oiEa7W3aJ+CA6Io+vfk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768413789; c=relaxed/simple;
-	bh=EIdJV5VEXvnqG72XduwgVfPmIUz67hyFcCR384sL/eM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tXmQIb2QJUU35XEs2gcDvlod5mdPTY82jc432fHWQibf5TfFnOWH1PkN+zrRlRh0vtiItnM1Fngn95M06TcZIOikUUhX314/2XZVMSNJhjEIa7+yAg8pyDPtm1ESFv4DycHb7ArFE4I9LT5fhXt9abm8TqunZGCDqbg1Q9wOw9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Q79kSE8O; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Q79kSE8O"
-Received: (qmail 40884 invoked by uid 109); 14 Jan 2026 18:03:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=EIdJV5VEXvnqG72XduwgVfPmIUz67hyFcCR384sL/eM=; b=Q79kSE8Or1qExcSjfAwG5KVZW3aduIhcc2CAs+tFLqkzK1arxEH8aFSRow0vuAF7DIQONb8+nhZ+QrsQ8Gg4qwpBV1OOeQarhzGaw2c4FX0cNXd581x0zFeCg68KznE/663hZ+eOgEqlSTR16A3bsfpokqbm1PiC6MZV6d9wW3Y0UjR/jQMtInsip1tBL6WlnKXJJEgYTs7LpJV7/19GnDdH+vvcjfN1z/S7zYN9xCDr2l+mWwMboIFVv7KNyGDFq9cbVs713tOqiaVmhsgV42kCw1iCUbHg6Lt7ZW0HergtB0Kmnk/K2+suhwB658/asRUP+s0Cd8RXKEokiJqqug==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jan 2026 18:03:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 67577 invoked by uid 111); 14 Jan 2026 18:03:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Jan 2026 13:03:07 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 14 Jan 2026 13:03:06 -0500
-From: Jeff King <peff@peff.net>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, newren@gmail.com
-Subject: Re: [PATCH 6/6] receive-pack: utilize rejected ref error details
-Message-ID: <20260114180306.GI885771@coredump.intra.peff.net>
-References: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
- <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-6-f5f8b173c501@gmail.com>
+	s=arc-20240116; t=1768414289; c=relaxed/simple;
+	bh=JUwIhQ4nh2mOsm29ZoSisziBgt3+rd+/5A3Jv/aUf8A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OgEjF8CPZbGgdGQ/erDQC4wclUb4VMuQaB1QyHde9dlpkKn0WXG2JFEw12HMt5eZhVm60jjRqSBBkPI6DL8P2Hb2QDfLz1q80AUC+awPxcedGzfns/tk/COdwoez7jXIKB5gxIfDVEBm9Qg/MCQ+x303b5B1I92fiQo9Hr4j7ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.103] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4drvM01hNCzRnlX;
+	Wed, 14 Jan 2026 19:11:24 +0100 (CET)
+Message-ID: <f55a85a0-fb57-4911-bd60-cf863da5436c@kdbg.org>
+Date: Wed, 14 Jan 2026 19:11:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-6-f5f8b173c501@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitk: use config settings for head/tag colors
+To: Shannon Barber <sbarber@dataspeedinc.com>
+Cc: Shannon Barber <sgbarber@gmail.com>, git@vger.kernel.org,
+ Shannon Barber via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.2030.git.1768285721660.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <pull.2030.git.1768285721660.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 14, 2026 at 04:40:47PM +0100, Karthik Nayak wrote:
+Thank you for your contribution!
 
-> In 9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19),
-> git-receive-pack(1) switched to using batched reference updates. This also
-> introduced a regression wherein instead of providing detailed error
-> messages for failed referenced updates, the users were provided generic
-> error messages based on the error type.
+Am 13.01.26 um 07:28 schrieb Shannon Barber via GitGitGadget:
+> From: Shannon Barber <sbarber@dataspeedinc.com>
 > 
-> Similar to the previous commit, switch to using detailed error messages
-> if present for failed reference updates to fix this regression.
+> The drawtags procedure currently uses headfgcolor for all label text,
+>  ignoring the tagfgcolor setting.
 > 
-> One downside of this is that the messages can be very verbose, for e.g.
-> in the files backend, when trying to write a non-commit object to a
-> branch, you would see:
+> The call to create the outline polygon for (non-tag) heads currently
+>  has the color for headoutlinecolor hardcoded to black.
 > 
->    ! [remote rejected] 3eaec9ccf3a53f168362a6b3fdeb73426fb9813d ->
->    branch (cannot update ref 'refs/heads/branch': trying to write
->    non-commit object 3eaec9ccf3a53f168362a6b3fdeb73426fb9813d to branch
->    'refs/heads/branch')
+> This patch maintains the variables for the non-tag refs so that heads
+>  are colored differently from non-head (non-tag) refs.
 > 
-> Here the refname is repeated multiple times due to how error messages
-> are propagated and filled over the code stack. This potentially can be
-> cleaned up in a future commit.
+> The outline and fill colors for the non-head refs remain hardcoded to
+>  the prior values, black & #ddddff.
+> 
+> Signed-off-by: Shannon Barber <sgbarber@gmail.com>
 
-If we are going to have a "potentially cleaned up in the future" state,
-I think I would prefer to see just:
+In this project, the author and signer-off should be identical. Please
+choose one identity for both.
 
-  if (details)
-	rp_error("%s", details);
+It was very hard to figure out what the patch attempts to do. The commit
+message wasn't very helpful, I am afraid. I would have appreciated if a
+short summary of the status quo at a high level had been given. For example:
 
-here. And then it comes over the stderr sideband, but the actual
-status-table gets the same non-verbose message. That's what happened
-in v2.50.0 and earlier. Later if we want to try to cram more details
-into the machine-readable message we can.
+--- 8< ---
+Gitk draws ref names with 4 different styles depending on the type of ref:
 
--Peff
+  - ...
+  ...
+
+The styles use variables that can be set in the configuration file for
+..., but hard-codes the style for ... But there do exist configuration
+entries for ... but they are not used. Replace the hard-coded values for
+these latter ones, but leave the remaining styles unchanged.
+
+...
+--- 8< ---
+
+What is also missing is what the implications for users are after the
+change. Clearly, the settings stored in the configuration file are now
+heeded. But what happens for users who are unaware that there are
+settings (since they are not accessible via the UI). Are any observable
+changes intentional? If yes, what is the possible impact?
+
+BTW, the paragraph indentation is a bit odd.
+
+The patch text looks good.
+
+-- Hannes
+
