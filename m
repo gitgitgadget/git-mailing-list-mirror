@@ -1,95 +1,109 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7C42DF130
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 17:38:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FFB2DF130
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 17:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768412332; cv=none; b=YgnDCBzbgalcCZUZfqqb87w32F3yZZ10R471CkG40y4zAZdkzHdiIioCbImrcinO24li2+5kaYJyjE8KECYgmcZklZhlKIp+BSIgHYq9NJGhvox0rhbp0Q/w/aG9gLTgOfYHzmX8BmhHQMTXcF55GPz+KklSha0Ij3yC2nCibgg=
+	t=1768412400; cv=none; b=ZJEKxTfHkkS8J1VzLQXmazUOLq330zlB/DkY24ZfVi7+DfbPxYF6fK+mN4kWdWwBLeleexET9SnBetRPN9KhAikzre35v0AArD6utOSpIbRugnmVdvyASMtZ9OyzfEUZfUmXfGZwPdYI2XD6aV+S77oGoEcKleIt5wOMp1J164Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768412332; c=relaxed/simple;
-	bh=K4mpcinSJAaRbLpR/bNeED6YTFhXwCRXfJRaKsQaUxw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oKDstc7HDSDGtJ7t+trsxzWAtELNHYBSS9BygfecK8G+GiddEcbTeAY5bh+Y1zlQG90cG4vymR/pLZAhMYq7hYRjirGZwb8sBukKDHJtyvRleK/EZPO1gvxbdv7hyfsTH5zpL6RjO/mT/lE5Ux53qqYYzOV362EtFkEURHdYMz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eb50q0M5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=miGbNfS+; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1768412400; c=relaxed/simple;
+	bh=a9Sw22MgLHcJNaXFUqmcahiolU0oFj8l+7VCliHxBbg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qq3BuLl1ByQCXdrnoIzUwgGTtJryFUoP0Cf/7krahbggTnBNfyzcwqin3nHaF1B612tYhu0PXQJqlCfYWc2tCn4dRNcLHZDHE3/kIVAj65hhDUwXCVmE83ltK4EFu6rRMC73QOdeDIqlzf5Yk8y4OQmjUrj+S9nARh1cnst1hkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bzzaoSAZ; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eb50q0M5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="miGbNfS+"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0C7577A01DB;
-	Wed, 14 Jan 2026 12:38:51 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 14 Jan 2026 12:38:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768412330; x=1768498730; bh=K4mpcinSJA
-	aRbLpR/bNeED6YTFhXwCRXfJRaKsQaUxw=; b=eb50q0M5whmfED4rEB+XvZG0c5
-	M2YwwOhok1xJ+2mPnj8QiD2GgO/0Xogf1Uwh7W9dToFPwjXzRkth6hwHFhCZ80xQ
-	GGFe9tw8cQbMR6TK1qLPcsKRQksZkEXQU5sjcszG1dYTBXt0jfGP237aeQfpsyBe
-	Wv9fowHgZ3Fqe7gmmVMWDp0n/iYozVM75SQaZVFVeSClhIBVcmWdpJ7ztWupgzBe
-	G0OmhJV1Mvs16bUG4Hhc3iPqH7wmLN9iic4PARN6DFqka73TnCh86p7GT24RONNC
-	2YaVSNUbrd4PwkYZbXzJz/JTvGo0GoR1i/uCgO1bT1lLrq0z+hJ0uR0vUr4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768412330; x=1768498730; bh=K4mpcinSJAaRbLpR/bNeED6YTFhXwCRXfJR
-	aKsQaUxw=; b=miGbNfS+FJE/OpbLZAkchedZ9ZUzYBCV5M/8vhQJ80VxoKROWL6
-	jh8mOyY5K4R6ivUjFCVQi1gkhUgmAuIXBY1ZG760z4RwkHZnQ92MUaOIjR+Rd8vh
-	cAnOVkns9yJv1hkxwoaUae7oxP/5stMyfyAIuVxhJhhh8+tv2Kvdkqj4TKQ8SaOA
-	5YrNszbDIoHNAcjbPrQCP3MnVOrDaerTLQ6gtjPMHbHjP+yg5Gj+mUPeJU9GtOwO
-	H4QOrzR/zNY4kcParJQg4cN3yXHOmOceRvGRhUArIX6Bjp8pb+mCVv83eDDRVuZe
-	l5WtTlo7J9yaFASDHbUxZYDpNez+26RxT/Q==
-X-ME-Sender: <xms:qtRnaWXj1jxFtA0b0xeOT1sZsoY_0UWUUsKh3kWYR9JNgwstJmiM3A>
-    <xme:qtRnaZlQFpLabo78eTusTngMXpPAnWjc6ax_C6piRyChwvSlGF3CS49frOZ8vVkbG
-    tOPpJ8ENR4vlhDDCaGsNI7RkEON1eY9334V6HieXxqFHiKTBc69_Q>
-X-ME-Received: <xmr:qtRnafbU36gu6Y_9Y11mnnK0Y-0qBk4fFYXDzU5Tq6P5Qgpx2QZb_-6mxcpH9oJbm_fGasWyVilZNGMQHQr9nVm0_Ak1ihIdeXViddI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdefkedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehrrghjihhvrdhtihhlrghkrhgrjhdrshhhrghrmhgrsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qtRnacO-ioAc64VvYR-8zS5fhqkGxdQe6MPDoRaPDug8-QS07cEgLQ>
-    <xmx:qtRnacagewXK5vKrycPFJK3YD2bPUuBpsNi3JOQLwPywrQ-1KxNAnQ>
-    <xmx:qtRnaS2mM6FdCWCX-gQAQqxWNsUBuyM6-Hx2LUWNXPv6wdesHTSgbg>
-    <xmx:qtRnaadCscnvzYQ0KWMNWz59PhYmq0lAO4w8Y86Gs1FpB52AyVB1xQ>
-    <xmx:qtRnaa6KDM-MiEEf6xEukD3LTW-D7X0zI_N4yItgyHSGEqLFHSAyclCr>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Jan 2026 12:38:50 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Rajiv Sharma <rajiv.tilakraj.sharma@gmail.com>,  git@vger.kernel.org
-Subject: Re: [BUG] Git push sends too much data unnecessarily
-In-Reply-To: <CAOLa=ZT4fQdHqG+1AeviYuLUR5VG33voJk_DU1y0MzhUKBQvvw@mail.gmail.com>
-	(Karthik Nayak's message of "Wed, 14 Jan 2026 17:27:21 +0100")
-References: <CAGe2LO0nxXuNNRYS0fk0JuPBDa3UCT8EDJ6G1u4GNW1d9rzRgA@mail.gmail.com>
-	<CAOLa=ZT4fQdHqG+1AeviYuLUR5VG33voJk_DU1y0MzhUKBQvvw@mail.gmail.com>
-Date: Wed, 14 Jan 2026 09:38:49 -0800
-Message-ID: <xmqqh5sof61i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzzaoSAZ"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-59b6c13b68dso1081708e87.0
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 09:39:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768412397; x=1769017197; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a9Sw22MgLHcJNaXFUqmcahiolU0oFj8l+7VCliHxBbg=;
+        b=bzzaoSAZgINJ90xr+ZbyVwRBLBCEfzWOkF+qOX0iL1mUjl5nJNEDAc+hX8qbSgA2pe
+         KCLpLK5ULrSsNSbtQ82qR4zvps2akVK8yKukxo0BnaJ1r05LqyzRaQqW4zIOo+ISHizk
+         +GCyOuLqGKbCLma90viuosISNCtgBimAQbwe8bhjOERVZ8s2ny899IzV9DGkYFK6g7jq
+         twBBSepbARTLyQqPdA51CVLMHGqWs4LriBwz3rxgbbaMrRaYYYkWMrYNvfbFkxc7X6JZ
+         Lwju7wGPnzoPiil7SKgyuJUUoOC2bhWLJEVsKtDFZ0ImMdSbW8YUZVlbUcj7FbtHl6Fe
+         s+PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768412397; x=1769017197;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=a9Sw22MgLHcJNaXFUqmcahiolU0oFj8l+7VCliHxBbg=;
+        b=t4S1Ndkb1agoyHSyduO7XGQkYOJaOpVMuHbOGQXBJ/TXP04fBx9ykGlIPkdcWimIju
+         wKCXtQiNAEEGeVyUGthdF+ifR2oXTnZLIoHZyS903QFBOUvLa/2ZQXxvvY8gFHT21YV8
+         KhKgSo2KVp/yNe0uPmvXvwN7t5EEqF/cKPjZ4/fU8fQ9iNgfCXt9+t+JAEWsB9oVN/ph
+         tB5fm6KrBdzV5RFFiUIsxyIUB5VO9aVMz3i0LgsCet2KXKkGG9HZBVE29T4vLBtA7aHT
+         EqZv1TpQFW88HErvCjrmXU7ZyTyZ1KCKgtzLFJacHvsuWhdABE1hOTUlJtjpsnyK2r61
+         l9iw==
+X-Forwarded-Encrypted: i=1; AJvYcCV7XumlEY6pZFnYvO+i+SJV425kWfiIrfUBXybGJNDdBpeTaZv/mYuqORuwqwi89W0+kAo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWQExTGvpDNfkp0pXdO+bLEwn+W8V2A1UQdzZq+e0N8ZQTqA2p
+	PRg/zJFyvb8S5Vagekam/nIJUNkT5ZGu3AfB86grRgl+gnPkPeuw6vOUVq45jrPRSp3HfDKU/aP
+	4AENMXGB7KmIoamZAA+dd+BAhtefP9SA=
+X-Gm-Gg: AY/fxX7LeGa7YCjLoOfBbtGrtCAUx+tWX72fN0h0SzAw4qLBelPeI5c0aUlpc34NC7y
+	l9BLBslwvp0YbxoC3yjMEPkQCabl2c61kEPIB5HZ5JDrJlPizXuD6+H1TNpLvCOzJuLzQEeOK9J
+	iD2E2cxgGqKguoxFdspOfl7clvX+6cAHvqWByGtCQ+jTkPyND1QVeExbUkYS9ueveBB1h4zf7K4
+	i3Ha8tE6ZhFMWk+s5P6Kq+L8ncprP8C+F1mPmPWbJGZaYUuGYRZV7LRKBmG8oGhleYEN2fkHdEZ
+	127pEN45Bu4=
+X-Received: by 2002:a05:6512:3b8e:b0:59b:6d18:d777 with SMTP id
+ 2adb3069b0e04-59ba71a1e2dmr60125e87.22.1768412396948; Wed, 14 Jan 2026
+ 09:39:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAGe2LO0nxXuNNRYS0fk0JuPBDa3UCT8EDJ6G1u4GNW1d9rzRgA@mail.gmail.com>
+ <CAOLa=ZT4fQdHqG+1AeviYuLUR5VG33voJk_DU1y0MzhUKBQvvw@mail.gmail.com> <xmqqh5sof61i.fsf@gitster.g>
+In-Reply-To: <xmqqh5sof61i.fsf@gitster.g>
+From: Rajiv Sharma <rajiv.tilakraj.sharma@gmail.com>
+Date: Wed, 14 Jan 2026 17:39:43 +0000
+X-Gm-Features: AZwV_QgdUImglaTrkPcmwcOJmCQU8lVs5Ys6JiJCxxwAUM1v30LrPrZtNb_yctU
+Message-ID: <CAGe2LO3t3B1g1ARH-LQ9V0UoGmToO-Z9XYpeMOTKkaSQvCpaRA@mail.gmail.com>
+Subject: Re: [BUG] Git push sends too much data unnecessarily
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Thanks for the great explanation! You are right, it's not really a bug
+(because there is no correctness problem here) but it surely is
+suboptimal behavior.
 
-> So it sends all objects required to create the reference, in our case 4
-> objects, in your case GBs of data.
+> This boils down to how Git negotiates between the client <> server
 
-"push.negotiate"?
+I think that's the crux of the problem here. I don't think git
+negotiates in the push path the way it does in the read path, i.e.
+there is no process of client-server communication that involves
+gradually arriving at the common base (in this case it would be C3).
+The read path does this quite well (using something akin to a skiplist
+IIRC?) and the common base is found in a couple iterations in most
+cases. I am unaware of the historical context behind this difference
+but I assume the server sending unnecessary extra data during the read
+path would be much more expensive than the client doing it hence the
+push protocol is kept simpler.
+
+This kind of negotiation _could_ be added to the push path but it
+would be a breaking change. I read somewhere that there were plans for
+Push Protocol V2 (in the same vein as Read Protocol V2) so it would be
+great to see this improvement making its way there!
+
+Thanks
+Rajiv Sharma
+
+On Wed, Jan 14, 2026 at 5:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+> > So it sends all objects required to create the reference, in our case 4
+> > objects, in your case GBs of data.
+>
+> "push.negotiate"?
