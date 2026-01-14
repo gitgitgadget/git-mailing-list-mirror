@@ -1,126 +1,124 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7444832D7DD
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 18:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768416898; cv=none; b=u8QXo2FMhqZnNlrU3vOTfRl3zNqn6Z7B74mH33Ey57tPSVcNv/mQqtb1nivTu2cWWevva47f9pmJz7sHPM1ILseEN2HhmR/PYSXFGPWsOLrClneoIlqTIgPyRafG7yrZiK5swCcHXkArZQZIhZtSq7/mQbyEC3bmhdixTv0o3e0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768416898; c=relaxed/simple;
-	bh=9PHrnt+55lSlx8G8AV7ufwBRYNoKBerRbyl2TsRJ2mA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PtdS0yGoAFEisbFgCNlzHnWkDi0ZUXXpQwGS92mrNNS8GAL//8COY0OFdk/3lYOuFjv9zgqteBGmSqaqnnsqpjTj8yARdVCTXqoNqz9Z3MxSlWbI7ddevL09l0R1snDBHETcMrc0YY3A9UZTnK2tRD/4OJJDSUx7ZfOhJbiBd1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ju0xs+qW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aBOJii7P; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB832FD66B
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 18:58:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768417136; cv=pass; b=eoXL33+m/3FaeRWqg71Y2OutvC1o1bMvzglQTbB7OhEICTf7X2sY02UY9ws5TbXfwzEOU0goTJVdRkp03wBoM8hvZcrik1Cz86T9SnwLvz2uDKbRTScmdg0Jl9yBrChqFVQGf+gWsMh/UplVaiSeRKpj58SexhKjPR+RfP82Lrw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768417136; c=relaxed/simple;
+	bh=EvDGY5bnXYP4Vs8bPf20kB+baib6VYx9jB4EaPZtmEQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nlu9xGOg0xSm/xS9KNpMa7KehUw/2T1xd/LNj505pzisjDnHbKki7069FRCb21u41wnNKd2yjIxVQjckdvuZ2quPMHMhRNGNR8RnxzA7xiHQfUJMUm+zH3/VykxqQX0VxSWr/++xdPWOC0hC5489F58Sb5iZBrDtOFQVbJFWFGU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=gkny9BXU; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ju0xs+qW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aBOJii7P"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id A40331D00101;
-	Wed, 14 Jan 2026 13:54:55 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 14 Jan 2026 13:54:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768416895; x=1768503295; bh=CvX9O43YPv
-	zoLrtMfVoWVoWGQuoA5CqqjTheTyiDkZA=; b=Ju0xs+qWZN76SIJvQHsghrbcvg
-	uQg8BZeFC4tBk9xDVNlJIvNu71rYNguVUxE+DkMWzSE0yOwlatqGXDPVLDiN8VK5
-	vnxDhPzamy0zdmbLAUGlei4w4HPO5TH6rLNm9L21PnKdCbvYHeBqUS+tixaKNWGi
-	9ZdWnkRGPH3wBiaBCitHSnzYZypC4Vu3kBErvvwfkxxYysDifAkTNQWZcUyG3TOi
-	sfzBXpwHZaSFhjkw5rYrroifqR5ozrK/6yvCUpDhfhGAVtVPdxMsYwsB0Ya1M4fo
-	nLoXWk0M9WziXREvZLSuRoyTic/1GWZpHmrvdh++JJJZQ05EYZu5FBHzeCFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768416895; x=1768503295; bh=CvX9O43YPvzoLrtMfVoWVoWGQuoA5CqqjTh
-	eTyiDkZA=; b=aBOJii7PjLUW8EACjAlIaHxfGf/ab31PboK3DGvOF/urFdDOi13
-	ijFyclyiXuqO+Bx7WAfUDhgsZTuhSZT1WdMY/QbMxIHBz1Tjtu5yAkQE/sSGK1gA
-	ZVfgz/Fi2gO86xbNXliq7c/pFdwpAhGCGm7zj6M/LETNDzHOiBLsIAbXab909UK3
-	mS69opkYkDH1ZeXRN+DU/WdiBQQomDeScsyfpfmp+zdMgT0BlEAF5JVS4E0l86Kb
-	pwzm0fmktmXZ7q48Z4dYeEuPMWxJj4i4K9zCMaKT3tispcBoCMDus8ZOQj1/P3DH
-	+RmZeJVYF7C9vgbS/E3qfA6diBCk6lvPMVw==
-X-ME-Sender: <xms:f-ZnaYlmJDpfLYofw_m4S23SN3n_oO5rzFkTVTPavQHJeq9d_90OgQ>
-    <xme:f-ZnaeukF-Wm9OMppUdpF6nn2NQWh6MzgRmgitJHCCv70r7yZB9dM9hnuneDK5MCa
-    wnRgONEWC1KiG89yTQOdWhnKnnTh27LS9yjPtqVr6Y4Kd-NRxOU-A>
-X-ME-Received: <xmr:f-Znae_s8j5AnozE0gZqJxO6CA-SxPJA_FXXxo1XdPNFSTBZLYDARwUETt6YDDnSpCTpUFdE-vWLuHOyYgBSNTjVlx7rdTK8yycfOhQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdefleehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvg
-    htsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:f-ZnaQPGQkKZQwi9PWdOBEDHUTizARDBv0MIS43th9nc_BVo8Y4cUw>
-    <xmx:f-ZnaUG-Lo6ltCUDYzwUeAcFqcdihQ0GQNJ-GVVJ6Bzvp5FmCTXsAg>
-    <xmx:f-ZnaWTBvU6i5PUOwqG5Z6fH10ItZUB_KRXV5pqRdrmyqJ6HQRgnuA>
-    <xmx:f-ZnaZt39FjrrlpFrn1AaNE8Vy1_4SqvsswuCZ4ZZCb2bWK1nI_r3w>
-    <xmx:f-ZnaSuXpNfs59Wt22AXIpNfu9dCBu6vhrZFrCw3MfpbzAa9PIron67b>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Jan 2026 13:54:55 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,  git@vger.kernel.org,
-  gitgitgadget@gmail.com
-Subject: Re: Triangular workflow
-In-Reply-To: <20260113214059.GC288857@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 13 Jan 2026 16:40:59 -0500")
-References: <20260113170321.GA265671@coredump.intra.peff.net>
-	<20260113183557.7991-1-haraldnordgren@gmail.com>
-	<20260113214059.GC288857@coredump.intra.peff.net>
-Date: Wed, 14 Jan 2026 10:54:53 -0800
-Message-ID: <xmqq8qe0f2iq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="gkny9BXU"
+ARC-Seal: i=1; a=rsa-sha256; t=1768417120; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=EpUXph3ONEjjZzkH6DUXathQfJyuoJNhl537gPPgFhdLZEiTYjisEokQxZPlHTSe+yoSQdapn3krfRWjKBIzxkYSRMA8UAeXO2wPzg1jRuDe3Zy0HFuKzkK+W41kihnbIBpbfPksb+KTvVlJ/J5DDJxauHAU32S8BNB7v/eaKw4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1768417120; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=eDfWkuItJEtVN3KhR2xRzOMz1vXUNfUgk4ibz6MDTQ4=; 
+	b=IRb+oHxKydJ7UEXVAHiJOlGJQ5+Q9DVwWJZjjv1JXbyl8ZvW3pkeFOeoqVzWz5HVoJzlgIyXQl3zUObsIwf5MiIWSqmIEafL9c6P8wsnOcyjRm0bpxfQSrb0NgEFiKeNmo51UMUSU7lyqyoBRffFrIRQPzJe5RmX0wCQr/C0S1A=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768417120;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=eDfWkuItJEtVN3KhR2xRzOMz1vXUNfUgk4ibz6MDTQ4=;
+	b=gkny9BXUtQnWDpkZuGKhqt1/Rekew4fth3TWn/mPR7Bc62bi/CCR1M+99yzFjzT1
+	HA1sRjPgMyCsySi+PeTgn5iKbiYBUmP7Vu9Ogfe4Wi8raVe0DUbXQK0S8mRI6c+Ycis
+	i53v7fEMxpyvWtS8odl7hGPIBZVhug9WvA9upmm4=
+Received: by mx.zohomail.com with SMTPS id 1768417118912977.2041384528997;
+	Wed, 14 Jan 2026 10:58:38 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Jeff King <peff@peff.net>,
+	Chris Darroch <chrisd@apache.org>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v3 0/2] Fix two hook conversion regressions
+Date: Wed, 14 Jan 2026 20:57:29 +0200
+Message-ID: <20260114185731.2381550-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
+In-Reply-To: <20260113115633.230479-1-adrian.ratiu@collabora.com>
+References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Jeff King <peff@peff.net> writes:
+Hello everyone,
 
-> And having the extra output from "git checkout" is just extra noise for
-> me, especially because it is easy to see only the second message (which
-> looks just like the upstream ahead/behind message, of course) and get
-> confused. The first time I saw it I thought I had misconfigured
-> something with my branch.
+This series fixes 2 regressions reported by Chris and Kristoffer,
+introduced by the 'ar/run-command-hook' merge into master.
 
-It now is clear to me that this should be _optional_, so that those
-who do really want extra output from the command should explicitly
-opt into the feature.  After all, any optional new feature that you
-must opt into by definition cannot regress end user experience for
-those who do not ;-)
+Based on a discussion with Peff on v2, I do plan to revisit and
+rework the server-side hook I/O polling & batching logic, however
+that will be a separate patch unrelated to these two regressions.
 
-At the same time, I suspect that extra comparison on top of what we
-already give against the @{upstream} may not be limited to what
-Harald implemented (is it essentially the same as specyfing @{push},
-or something else?).  I wonder if we can come up with a flexible and
-extensible notation to specify what branch(es) to compare with, so
-that we can use it as the value of this opt-in configuration
-variable?  Something like
+Many thanks to everyone who helped debug & fix these!
 
-	[status] compareBranches = @{upstream} @{push}
+This series is based on the master branch.
 
-signals that the current branch is compared against these two
-branches, and not having the configuration (i.e., traditional
-behaviour, which is left the default) would be equivalent to have
+Pushed to GitHub: https://github.com/10ne1/git/tree/dev/aratiu/make-hook-stdout_to_stderr-optional-v3
+Successful CI run: https://github.com/10ne1/git/actions/runs/21004980299
 
-	[status] compareBranches = @{upstream}
+Changes in v3:
+* New commit to make hook opts.ungroup = 1 default (Peff)
+* Dropped the ungroup fix from the first commit because it's now
+  handled by the more comprehensive second commit (Peff, Adrian)
+* Added fixes tags to commits (Adrian)
 
-or something like that, perhaps?
+Range-diff between v2 -> v3:
+1:  898a21ddd0 ! 1:  77db7035c5 hook: allow hooks to disable stdout_to_stderr
+    @@ Commit message
+         and will continue to work after we eventually introduce parallel
+         hook execution and config-based hooks.
+     
+    +    Fixes: 3e2836a742d8 ("transport: convert pre-push to hook API")
+         Reported-by: Chris Darroch <chrisd@apache.org>
+         Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
+         Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+    @@ transport.c: static int run_pre_push_hook(struct transport *transport,
+     +	/*
+     +	 * pre-push hooks expect stdout & stderr to be separate, so don't merge
+     +	 * them to keep backwards compatibility with existing hooks.
+    -+	 * run_process_parallel(), called via run_hooks_opt() below, will buffer
+    -+	 * and merge the streams when output is grouped, so also set ungroup = 1.
+     +	 */
+     +	opt.stdout_to_stderr = 0;
+    -+	opt.ungroup = 1;
+     +
+      	ret = run_hooks_opt(the_repository, "pre-push", &opt);
+      
+-:  ---------- > 2:  de3001f063 hook: make ungroup opt-out instead of opt-in
 
-Thanks.
+Adrian Ratiu (2):
+  hook: allow hooks to disable stdout_to_stderr
+  hook: make ungroup opt-out instead of opt-in
+
+ builtin/hook.c         |   6 --
+ builtin/receive-pack.c |  12 ++-
+ commit.c               |   3 -
+ hook.c                 |   5 +-
+ hook.h                 |   7 ++
+ t/t1800-hook.sh        | 176 +++++++++++++++++++++++++++++++++++++++++
+ transport.c            |   6 ++
+ 7 files changed, 199 insertions(+), 16 deletions(-)
+
+-- 
+2.52.0.732.gb351b5166d.dirty
 
