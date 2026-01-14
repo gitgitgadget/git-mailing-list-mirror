@@ -1,120 +1,125 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02F32D73BE
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 14:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF0F2D9EC5
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 14:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768400109; cv=none; b=umURnPQdgB9gT5Lbgl43lbYdqlE7hDz8+l/nuqJPKGlh9KZ3PmDeITlwKSsiB+ST67NBc71exyL740Gfgs35QgYaQjXSVl5IhGaxum6ZXbZ0EEprPwInTGfvVqrWLkQG6vbmfdub/O/BwWEgh5l7tJ5gS9r8k9eqJ3kbXZIzRxg=
+	t=1768400639; cv=none; b=WBcezzNQbx07vgSMgxrvfN/TYdclWQZTCzQ85dJSl1HnEbQs6TMcSFhSEG1Q11uioG4v/z+0nnvQDu3MExlXPVRKLhuayV6k8uU6QKO7/sCQUG/Y2YZlF5DDtyuPaBYqCGAhSNDtUuqmlXD/ehc+YvDDqKWpSLyFxa2v5bgSPCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768400109; c=relaxed/simple;
-	bh=Y/ozVxK14VwFG+KxRFRBd4ESxNNIFX2XPoyw5IOtBPU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tfKzYMruUke4W3sclNAdWGTHySp3xB7Qsx5nTgsqQlS1JABkxUorBD1pE44DU0QAMRMrImw4WaWGaDLSECwTz5LUoYjBpQs5MsW9OBH+Cu1SnSZ4QZ2Slb3AKBqZlgzigj2pTTDbX03di+D1xbu5nJ/+zOlw5EOQoEnnRFjgSb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jjsVu7QV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KixouJNz; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1768400639; c=relaxed/simple;
+	bh=EUyNW5VM8piuHSMTu94HcVanDpGPup2reyAGBKjPozc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qFJuhlg3ri7szFnww7SWuGMuUbu/gHc1xgGn3J45CNJKeCQAIRWXPkluhgSMzjs4bTVwiHLdA6LjbzHCIHR8FJMDZMOGuiAcxGi61STJoVu9Lngo6oPFlbZ6mQ5+lOIuSjJPLUQsD/4UpMjRUMbmvKQCUFKVFWHHkPWgjTN3Yps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HGo0gFc2; arc=none smtp.client-ip=74.125.224.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jjsVu7QV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KixouJNz"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 14C1A1D000F4;
-	Wed, 14 Jan 2026 09:15:07 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 14 Jan 2026 09:15:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768400106; x=1768486506; bh=sZ6Fw/Yejs
-	G3i+bvDKet6gO0W+/6y5u2ZBpq2dTOP4k=; b=jjsVu7QVg2QoQTGd+TgfTe7QKS
-	Dog3m32L402ZWS4B5UnXdqUt3a8JT0oQhZE+t7Vi2z+oX0RxuHidB46aJ4DORZD5
-	lcrQGqo+zdQyweFeIJq+UkJ+pRkuduCfjou2Y2x9/FlFSxHuMZn3V+BMBWwtxi9O
-	229xNgnArw+Plc7oHzN4X+XnRGjHqn/okoIzRH72NckHmZqjPs0uTD817GeioN1e
-	Cglu5NlJV4EmFgciWkXTIzCLwgi9RczpVBboR1DxtOPni/0D34+uqEyXYTnQ4lG/
-	PpIpl4e3vmQlZV1UYRf1CTQ8/ukfNrmn7Ez+dN8Ze2tYc89Iy4aVeInxr3yg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768400106; x=1768486506; bh=sZ6Fw/YejsG3i+bvDKet6gO0W+/6y5u2ZBp
-	q2dTOP4k=; b=KixouJNzJnjZwxja3pG/udhoG7t4wkDHiWH+K+vTANJZNEEuVQm
-	YsKHcXacB0qMkLFJ2Ju9qy/k1gxqBI5c6mDq1HCjvUrwmMzXClEMU3wWU5SJNWKq
-	dEISzM7OMkRf6y/FjyVZlJgiTYTtIim245A/T1wiE7dr6Wvay/FobnkOeokb4xS9
-	rLlJW517LEs5CQrh8W0tRSExqIKB3QheaViWtOe/NpbIotdR9wiDxrirykEeLq/a
-	2nvrY6/cwtHib6+560mJRmTbV9NsMikP2jCmAapsJhGajrxkK4RlYsFe8QFud9Gl
-	WKCNdWeH6q7C8kDuDC1SIVsGFytAmJJOIFA==
-X-ME-Sender: <xms:6qRnaZia-zpDSWDilhqzsWPRON2Dj53U4aWGIN0ysZWSK8MDDxhbkg>
-    <xme:6qRnaU5JUpk0njeh2J-HTpPp4mIDWDM7ZuAIpPhmjkv63AmPMd0GrTO5hCvxha0er
-    g4QWxmn1KhTW_a0wM7UFSX35eiiZmiLeb9hCzGylhouI-UQJkUFiA>
-X-ME-Received: <xmr:6qRnaRbd3xAOq7-7cfZNnxcoVHnUqu6szuK5q4ZTKlpJC2pBASNnUw4FFRWVHxc0mlrgQfMItJRT-lZxttks38LeinQVkZGEnk_zheo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdeffeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvg
-    htsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:6qRnaZ4Q3LmqyCbxt9B0azaENc3EmxGtt3L4aSdV-nK7cnhbwblpMw>
-    <xmx:6qRnaUDEXmScBIjzZPbuFtbDsWW3_lCKPY8N6T-6FbnmYnZIOb82Jg>
-    <xmx:6qRnafdop0-YZziToURVbK74oxO87RyB7KyHZf295l8zOLaHP31Q7w>
-    <xmx:6qRnaTLjgp4CDFW-jNWOvy3-2b_cFRRRvdwl6VdFmrWfjS8ZjGa2kw>
-    <xmx:6qRnaebh5Jh53K3fwq_bLBJ3-lBrAhCrnMkRWm7Mehh5fclccnIV2AHy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Jan 2026 09:15:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,  git@vger.kernel.org,
-  gitgitgadget@gmail.com
-Subject: Re: Triangular workflow
-In-Reply-To: <20260114023408.GA858378@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 13 Jan 2026 21:34:08 -0500")
-References: <20260113214059.GC288857@coredump.intra.peff.net>
-	<20260113230107.16728-1-haraldnordgren@gmail.com>
-	<20260114023408.GA858378@coredump.intra.peff.net>
-Date: Wed, 14 Jan 2026 06:15:05 -0800
-Message-ID: <xmqqecnsgu1i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HGo0gFc2"
+Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-6455a60c12bso8396973d50.3
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 06:23:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768400637; x=1769005437; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LKzHUzfNLMLYIV2w8XxiekligWS4irqg8WN7FffeK4Q=;
+        b=HGo0gFc2AFOALBuk+RJUdydWx425ZkhZA91YcmPtsPIRV27o9drjWvO05lvqmH59tu
+         nLK3XuMThKRxRg/wPbjecpfPawh/kZmwXzIr6idlnb11qZLbJSj5+gpR04xIC2ScIDBc
+         5oFtzhyRm3yytjZmShQcApXXRkKZMD/TzAPtiodcv1qNKcd550k+oAofNQ7VBuMMZ3/I
+         cyfEktXQWkcPGIAEic28MWTTNGZS1ZGgfDKdCShZqyWNGrKEVhtrnES3RyVwgpc/M5CK
+         r493daYp1OusTpNimwWcsXXydfj15hLNaGmekFjvIjSIXeaURJBdIDKdXOoilgJnTwgj
+         x8eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768400637; x=1769005437;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=LKzHUzfNLMLYIV2w8XxiekligWS4irqg8WN7FffeK4Q=;
+        b=OP1KlMgtY7aF26usQOdDVpCiaRgv1tYwm9JpJkkiHLveCkzHxapBCLcwE5I2oTL9cp
+         djVg8T5mzLoug5dGl+rCuPPeXpF/ZUTzxdImdZmhGsaKIcw8PYswaI16+COYHBaHgP8h
+         kXMov5k+SzmC289jIjLLPKtZbvsqCe7DQnSCFFY0Y8JIUp2BkT8feAd67ysEntxc9U3o
+         9w5MWTuarQFfWwSTIopJqQXY6ONk+JMmZqD68jbVofnCMSBD5JuNK+9ugX7Ye30fDjeJ
+         GUMjvJBc1SyWhfTGLHgtOwqEW/gxei8sBbDKe1D74sBtlVvK4KqCdMGOmVBiiwi0hCgk
+         2bCw==
+X-Gm-Message-State: AOJu0Yz9PCOsmZTopEK6eM7tDRTKGVUo2Xb/JmgL1tAxFJz5wBR9t8Y0
+	nBh5ZpPEkwIVvLqtkESnIor8Rtbwb1OIQHXxHaraF6pdOs+QS9RLTDKDxy61r04T7i9XF3aOeoW
+	fsl1rddk9blDuhDC5NrEGGBuu4JxjfYM=
+X-Gm-Gg: AY/fxX6lVLwtVCpOHcDPfTnyWnF+lD262UCh3mynuewL4nd4W3sv6Umus/1AEF3ejDc
+	f7CuT9XDipwn6eDhqhDlKezAC3Q0Q3YWYVNZtw1zB2Ot5uwxlx0Fh5Odld1DZHbFNhkYMCXRTt4
+	31J8mEEFB5skwwK+nYy7ahLbvQfgskp69aeb+XIGWy1KKGwSGY3aCWQHsNUQRFqVVD/ToOkvG37
+	ozSjbn6wIgVNEre+o7HIOydQxFurZhN6YWEmr3sLKaLQ7SdnIBKcVCunh5gvK+59FQe/b4=
+X-Received: by 2002:a05:690e:11ca:b0:63f:b0a3:7400 with SMTP id
+ 956f58d0204a3-64901b1cf01mr2148622d50.66.1768400636638; Wed, 14 Jan 2026
+ 06:23:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260113180409.36683-1-amishhhaaaa@gmail.com>
+In-Reply-To: <20260113180409.36683-1-amishhhaaaa@gmail.com>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Wed, 14 Jan 2026 19:53:45 +0530
+X-Gm-Features: AZwV_Qgbp2A2Sxm7wW1AW-eybR5zFi6s2BmiWF-neZhQqa6lFiLr0DrKcMvFP18
+Message-ID: <CALE2CrQFZngj6_NDuf0S=_-nDrrf6b6r=C9jMyEVjwMqvh6J2w@mail.gmail.com>
+Subject: Re: [PATCH] t0100: avoid suppressing git exit code
+To: amisha <amishhhaaaa@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+Hi Amisha,
 
-> So even if I only do it infrequently, it feels weird that a bare "git
-> push" would try to push to the upstream remote (which I don't even have
-> write access to!).
+Thanks for the patch. This makes sense, since piping into grep was indeed
+suppressing the exit status of git cat-file.
 
-Yes, exactly.  I was wondering where Harald's suggestion to swap the
-two remotes came from.
+One small style suggestion. Most Git tests use the helper instead of raw
+grep, so this could be written as:
 
-> Yeah, though @{push} is usually not explicitly configured in the same
-> way @{upstream} is, but rather a consequence of how push.default and
-> remote.pushdefault interact. But it was added for exactly this kind of
-> triangular workflow. I sometimes will do stuff like:
+    git cat-file commit HEAD >actual &&
+    test_grep "Merge branch 'other'" actual
+
+This gives nicer diagnostics on failure and is consistent with other
+tests.
+
+Other than that, the approach looks good to me.
+
+Thanks,
+Pushkar
+
+On Tue, Jan 13, 2026 at 11:34=E2=80=AFPM amisha <amishhhaaaa@gmail.com> wro=
+te:
 >
->   git range-diff origin @{push} HEAD
+> In t0100-previous.sh, the exit code of 'git cat-file' is suppressed by
+> piping it directly into grep. If git crashes, the test might not
+> notice.
 >
-> to compare two iterations of a branch if I know that I haven't pushed.
-> It is a bit of a cheat, because what I really mean is "do a range-diff
-> since the last thing I sent to the list". But if I have just been
-> working on a branch, and I haven't run an integration cycle since then,
-> then I know that the pushed version will match it.
-
-Great suggestion.  It is fun to see that comparing notes among
-people with different workflows brings out these gems ;-)
-
-> There is also branch.*.pushRemote, but I have not found that useful (for
-> my triangular flow there is always a single repo to push to, not one per
-> branch).
+> Redirect the output of git to a temporary file 'actual' and grep
+> from that file instead. This ensures that the exit code of the
+> git command is properly checked.
+>
+> Signed-off-by: amisha <amishhhaaaa@gmail.com>
+> ---
+>  t/t0100-previous.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t0100-previous.sh b/t/t0100-previous.sh
+> index dd5d9b4e5e..ffe3fda495 100755
+> --- a/t/t0100-previous.sh
+> +++ b/t/t0100-previous.sh
+> @@ -40,7 +40,8 @@ test_expect_success 'merge @{-1}' '
+>         git checkout other &&
+>         git checkout main &&
+>         git merge @{-1} &&
+> -       git cat-file commit HEAD | grep "Merge branch '\''other'\''"
+> +       git cat-file commit HEAD >actual &&
+> +       grep "Merge branch '\''other'\''" actual
+>  '
+>
+>  test_expect_success 'merge @{-1}~1' '
+> --
+> 2.51.0
+>
+>
