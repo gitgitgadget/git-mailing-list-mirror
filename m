@@ -1,116 +1,365 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB7B2E9ED8
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 14:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDC326E71F
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 15:26:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768401278; cv=none; b=TNnbl3KzpM2KiiXdwDlTWgQEzcO5tJZQSWHJ4ntn7/ciV03bglEmlk4ALy+smDyQmsZuIhagShk/SQHhedvBJnc5of/J5y0C2YV+uruZl9R0/Q62+UhF2/D+v7UUCEM7nhwaWiBNL5TyTN9tkQoXgvriCb516zAn4Xdfw9+lVuc=
+	t=1768404418; cv=none; b=Gfr+N4Q4FqYOwkxWUBWy0HQAMxHjWGXpZnyZ0vC5afzDbKQzbr2nUTaXwg5NGkL3C6TPVua38eodCpypa6BhW5OVU8+ok2ijkJiRn7tNLuj1l5+Y5+bzgsKr2k+k0ucGjY+4ARk4AVRfwHVIfD+0FuLdAgf2ArPxdpRRqPFmkV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768401278; c=relaxed/simple;
-	bh=kMHlw9tq8S9pttELX2p4iKZ0exsN8jaL6VTusr5IvAs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=fhQwEgUjj/IrXKBF3aredCuQfv7kdW9qh/obUf/fuELW8PlrQ6G38MAbMX1/re/wILtbo5nyyuA/4/B4psvFe349S07R8B39qBoNfxcukUw2ilSQdl7swxHewzDapFCsWzp+/2jU5dMqNSDGhQouSlDHCzwI22QOQKWGFnpMQ4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=baLwkCDk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wxHZ3GHL; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1768404418; c=relaxed/simple;
+	bh=yGAnsorkfbUnHXokEGes1x3e0I3SusKTFFnWzPWPM90=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BBEVNnENOaSxevttqfbRKe1Y0e/L/QJd6mhkDsR5+8Ycfp64KENxiafiF5Gjr388PCjn34xEMVt4wEYexyC9aIXAPgHE6cow7OgFB6wZPLyFzo5wzzcyQ+U3uQOajt7M8izZFff4n7++lzXqlzQCD2ZaH9DuPp4LUZThk1fA0fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=ysqpSjNR; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="baLwkCDk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wxHZ3GHL"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4ACBD1D00155;
-	Wed, 14 Jan 2026 09:34:32 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Wed, 14 Jan 2026 09:34:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768401272;
-	 x=1768487672; bh=sSwhojhoTCjWpHjWGFSvCvsQu0PkPXOVScglMGDSHdY=; b=
-	baLwkCDkv4l4NX4vFT7BhrDyOkqjBO5Mb6Le7NkGCjdLJlZxwlVNbFwFcUT+bnWx
-	wTzzPro9M3ZbmUVYhVBpuSff1b2nADi1JK7nSvh6x0bTuzqaaSR47yZngQidPk/W
-	QID+jkSgVbb8SXn79tYocnOxuP0EboNP39j+1yVRSupEHb6Bj4m7ZYw2pEwM2W6t
-	BPHyilPBNMLAvCwPYdw/54er4lL3ziQTc5ZKdJbEsb4w1noJkk2p7YpahCdc2CSN
-	qnZVONnpQkYlJxSZBQ0BZn8KEeUSJYyYY2ZfAyC1b0jALfUliQaby2E2QGi96gPf
-	+jF5m3yG9JjP8mNWcrTJtw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768401272; x=
-	1768487672; bh=sSwhojhoTCjWpHjWGFSvCvsQu0PkPXOVScglMGDSHdY=; b=w
-	xHZ3GHLhQn1L3u3puZM2aqLY9g208w458RnvHN1CZAd/DQSFrAnj0VHSJlb65g+7
-	xCh8HRFglDSyRoluAjEnWAVOBcszzDE8lEE6JIPHKROd+GGCpydNfA9I0b8oYKAG
-	Rvmq9myLccznLCbFVZe6VDaKmWh/J16zQhABP/U+wZYBEfsR3BnEpzjtPGMNgkqc
-	XxnZ5EiflFZ+QlcuyVUTK3rxlW2Zvly5rExOi/7mC43zMIlqQBBn1bZI66OKdykt
-	XxZp9+7PCGa1+k7gvdKTCUjpKwlf+NZfHmrEIu9qOmU4udEFykBYDZ/+9nR1K93X
-	vrCDQFpswN8+YUqsRdhSA==
-X-ME-Sender: <xms:d6lnaQlJG_roLqzi3TBkmQvQnWBwsggpmjQh8rqioKI3liAh5izIQC4>
-    <xme:d6lnaaoCF_8fPBnlLJ_6qizGdNLFBRBwc_BV-9AtNt5EMMTMDuB9lq0J7iojr0vKh
-    8J4Wnk9lTItvjmc-hs09fQc0g754kG8MxM7-FrgqUFN7I4T5JmJ1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdefgeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
-    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeeipdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopeguvghmrghrtghhiheskhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheprghplhgrthhtnhgvrhesnhhvihguihgrrdgtohhmpdhrtghpth
-    htoheprhhrrghmvghshhgsrggsuhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepphhs
-    sehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:d6lnaWRuViGj7kNigKL2ocMlpE0FgaivvAKn94TAp7EUgsdktdxl_g>
-    <xmx:d6lnaVFIGDl1RA9YJU_yU2e1WLphvArTxjhAHj9Zcp4uIF4-nGhQYQ>
-    <xmx:d6lnabFfcW8uuee3_CfsDOnff5eSRv_sNSZWUxXyPd-bxkEhs83oSw>
-    <xmx:d6lnaTTjmpMbz5psqK2W2rSkqWoe5PyZZiNxeQ9ElQpYtFJyMh4SIA>
-    <xmx:eKlnaawbAlFJ_7jycMV3L6sbJtWC9cS-pmj2Z1KXJusFM8V0pgtjoQUu>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id D89C31EA006B; Wed, 14 Jan 2026 09:34:31 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="ysqpSjNR"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1768404411;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nYOiKmukzNzhW8iknVv3m04UJVd0343HkPaKXOj+fno=;
+	b=ysqpSjNRXtnCMMUnePBrQnGttO4auvPlJNPP7IYkrawwylCoJHSXaAVA/w5O18wNTlFaPx
+	6bFA4yoMoiqm3wbCKDjLiqCBhC+7iQ+NBpwNTM2EcMAoz2nezrRYg06trIQgImswFiVpHK
+	gQHvQOHBWRwoxhveayk0S1UMWPmL/xo=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 5/5] builtin/repack: handle promisor packs with
+ geometric repacking
+In-Reply-To: <20260105-pks-geometric-repack-with-promisors-v1-5-c4660573437e@pks.im>
+References: <20260105-pks-geometric-repack-with-promisors-v1-0-c4660573437e@pks.im>
+ <20260105-pks-geometric-repack-with-promisors-v1-5-c4660573437e@pks.im>
+Date: Wed, 14 Jan 2026 16:26:42 +0100
+Message-ID: <87ms2gjjv1.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Abh28FChBAq3
-Date: Wed, 14 Jan 2026 15:34:11 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Aaron Plattner" <aplattner@nvidia.com>, git@vger.kernel.org,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: "Patrick Steinhardt" <ps@pks.im>,
- "Rahul Rameshbabu" <rrameshbabu@nvidia.com>,
- "Lucas De Marchi" <demarchi@kernel.org>
-Message-Id: <d666df1e-2645-4597-ad10-be22d6a52ba5@app.fastmail.com>
-In-Reply-To: <20260114010642.594566-2-aplattner@nvidia.com>
-References: <20260114010642.594566-2-aplattner@nvidia.com>
-Subject: Re: [PATCH v4] remote-curl: use auth for probe_rpc() requests too
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, Jan 14, 2026, at 02:06, Aaron Plattner wrote:
->[snip]
+Patrick Steinhardt <ps@pks.im> writes:
+
+> When performing a fetch with an object filter, we mark the resulting
+> packfile as a promisor pack. An object part of such a pack may miss any
+> of its referenced objects, and Git knows to handle this case by fetching
+> any such missing objects from the promisor remote.
 >
-> Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
-> Tested-by: Lucas De Marchi <demarchi@kernel.org>
-
-Unrelated nitpick: It is more common in this project to have your signoff last. 
-If the maintainer applies this patch:
-
-    Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
-    Tested-by: Lucas De Marchi <demarchi@kernel.org>
-    Signed-off-by: The Maintainer <>
-
-It looks like The Maintainer added the `Tested-by` trailer.
-
-At least this is my experience with `Acked-by`.
-
+> The "promisor" property needs to be retained going forward. So every
+> time we pack a promisor object, the resulting pack must be marked as a
+> promisor pack. git-repack(1) does this already: when a repository has a
+> promisor remote, it knows to pass "--exclude-promisor-objects" to the
+> git-pack-objects(1) child process. Promisor packs are written separately
+> when doing an all-into-one repack via `repack_promisor_objects()`.
+>
+> But we don't support promisor objects when doing a geometric repack yet.
+> Promisor packs do not get any special treatment there, as we simply
+> merge promisor and non-promisor packs. The resulting pack is not even
+> marked as a promisor pack, which essentially corrupts the repository.
+>
+> This corruption couldn't happen in the real world though: we pass both
+> "--exclude-promisor-objects" and "--stdin-packs" to git-pack-objects(1)
+> if a repository has a promisor remote, but as those options are mutually
+> exclusive we always end up dying. And while we made those flags
+> compatible with one another in a preceding commit, we still end up dying
+> in case git-pack-objects(1) is asked to repack a promisor pack.
+>
+> There's multiple ways to fix this:
+>
+>   - We can exclude promisor packs from the geometric progression
+>     altogether. This would have the consequence that we never repack
+>     promisor packs at all. But in a partial clone it is quite likely
+>     that the user generates a bunch of promisor packs over time, as
+>     every backfill fetch would create another one. So this doesn't
+>     really feel like a sensible option.
+>
+>   - We can adapt git-pack-objects(1) to support repacking promisor packs
+>     and include them in the normal geometric progression. But this would
+>     mean that the set of promisor objects expands over time as the packs
+>     are merged with normal packs.
+>
+>   - We can use a separate geometric progression to repack promisor
+>     packs.
+>
+> The first two options both have significant downsides, so they aren't
+> really feasible. But the third option fixes both of these downsides: we
+> make sure that promisor packs get merged, and at the same time we never
+> expand the set of promisor objects beyond the set of objects that are
+> already marked as promisor objects.
+>
+> Implement this strategy so that geometric repacking works in partial
+> clones.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
-> v4: Style nitpicks, use xargs in case 2000 branches is too many for the command
-> line.
->[snip]
+>  builtin/repack.c            |  3 +++
+>  repack-geometry.c           | 28 ++++++++++++++++-----
+>  repack-promisor.c           | 28 +++++++++++++++++++++
+>  repack.h                    | 10 ++++++++
+>  t/t7703-repack-geometric.sh | 61 +++++++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 124 insertions(+), 6 deletions(-)
+>
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index d9012141f6..f6bb04bef7 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -332,6 +332,9 @@ int cmd_repack(int argc,
+>  		    !(pack_everything & PACK_CRUFT))
+>  			strvec_push(&cmd.args, "--pack-loose-unreachable");
+>  	} else if (geometry.split_factor) {
+> +		pack_geometry_repack_promisors(repo, &po_args, &geometry,
+> +					       &names, packtmp);
+> +
+>  		if (midx_must_contain_cruft)
+>  			strvec_push(&cmd.args, "--stdin-packs");
+>  		else
+> diff --git a/repack-geometry.c b/repack-geometry.c
+> index 0daf545a81..7cebd0cb45 100644
+> --- a/repack-geometry.c
+> +++ b/repack-geometry.c
+> @@ -66,15 +66,25 @@ void pack_geometry_init(struct pack_geometry *geometry,
+>  		if (p->is_cruft)
+>  			continue;
+>  
+> -		ALLOC_GROW(geometry->pack,
+> -			   geometry->pack_nr + 1,
+> -			   geometry->pack_alloc);
+> -
+> -		geometry->pack[geometry->pack_nr] = p;
+> -		geometry->pack_nr++;
+> +		if (p->pack_promisor) {
+> +			ALLOC_GROW(geometry->promisor_pack,
+> +				   geometry->promisor_pack_nr + 1,
+> +				   geometry->promisor_pack_alloc);
+> +
+> +			geometry->promisor_pack[geometry->promisor_pack_nr] = p;
+> +			geometry->promisor_pack_nr++;
+> +		} else {
+> +			ALLOC_GROW(geometry->pack,
+> +				   geometry->pack_nr + 1,
+> +				   geometry->pack_alloc);
+> +
+> +			geometry->pack[geometry->pack_nr] = p;
+> +			geometry->pack_nr++;
+> +		}
+>  	}
+>  
+>  	QSORT(geometry->pack, geometry->pack_nr, pack_geometry_cmp);
+> +	QSORT(geometry->promisor_pack, geometry->promisor_pack_nr, pack_geometry_cmp);
+>  	strbuf_release(&buf);
+>  }
+>  
+> @@ -160,6 +170,9 @@ void pack_geometry_split(struct pack_geometry *geometry)
+>  {
+>  	geometry->split = compute_pack_geometry_split(geometry->pack, geometry->pack_nr,
+>  						      geometry->split_factor);
+> +	geometry->promisor_split = compute_pack_geometry_split(geometry->promisor_pack,
+> +							       geometry->promisor_pack_nr,
+> +							       geometry->split_factor);
+>  }
+>  
+>  struct packed_git *pack_geometry_preferred_pack(struct pack_geometry *geometry)
+> @@ -234,6 +247,8 @@ void pack_geometry_remove_redundant(struct pack_geometry *geometry,
+>  {
+>  	remove_redundant_packs(geometry->pack, geometry->split,
+>  			       names, existing, packdir);
+> +	remove_redundant_packs(geometry->promisor_pack, geometry->promisor_split,
+> +			       names, existing, packdir);
+>  }
+>  
+>  void pack_geometry_release(struct pack_geometry *geometry)
+> @@ -242,4 +257,5 @@ void pack_geometry_release(struct pack_geometry *geometry)
+>  		return;
+>  
+>  	free(geometry->pack);
+> +	free(geometry->promisor_pack);
+>  }
+> diff --git a/repack-promisor.c b/repack-promisor.c
+> index 125038d92e..73af57bce3 100644
+> --- a/repack-promisor.c
+> +++ b/repack-promisor.c
+> @@ -109,3 +109,31 @@ void repack_promisor_objects(struct repository *repo,
+>  
+>  	finish_repacking_promisor_objects(repo, &cmd, names, packtmp);
+>  }
+> +
+> +void pack_geometry_repack_promisors(struct repository *repo,
+> +				    const struct pack_objects_args *args,
+> +				    const struct pack_geometry *geometry,
+> +				    struct string_list *names,
+> +				    const char *packtmp)
+> +{
+> +	struct child_process cmd = CHILD_PROCESS_INIT;
+> +	FILE *in;
+> +
+> +	if (!geometry->promisor_split)
+> +		return;
+> +
+> +	prepare_pack_objects(&cmd, args, packtmp);
+> +	strvec_push(&cmd.args, "--stdin-packs");
+> +	cmd.in = -1;
+> +	if (start_command(&cmd))
+> +		die(_("could not start pack-objects to repack promisor packs"));
+> +
+> +	in = xfdopen(cmd.in, "w");
+> +	for (size_t i = 0; i < geometry->promisor_split; i++)
+> +		fprintf(in, "%s\n", pack_basename(geometry->promisor_pack[i]));
+> +	for (size_t i = geometry->promisor_split; i < geometry->promisor_pack_nr; i++)
+> +		fprintf(in, "^%s\n", pack_basename(geometry->promisor_pack[i]));
+ 
+Okay, so in the situation of the added integration test: PROMISOR_A,
+PROMISOR_B, and PROMISOR_C are below the split, and PROMISOR_D and
+PROMISOR_E above. So using a caret, the latter two marked to be excluded
+by git-pack-objects. Makes sense.
+
+> +	fclose(in);
+> +
+> +	finish_repacking_promisor_objects(repo, &cmd, names, packtmp);
+> +}
+> diff --git a/repack.h b/repack.h
+> index 3a688a12ee..bc9f2e1a5d 100644
+> --- a/repack.h
+> +++ b/repack.h
+> @@ -103,9 +103,19 @@ struct pack_geometry {
+>  	uint32_t pack_nr, pack_alloc;
+>  	uint32_t split;
+>  
+> +	struct packed_git **promisor_pack;
+> +	uint32_t promisor_pack_nr, promisor_pack_alloc;
+> +	uint32_t promisor_split;
+> +
+>  	int split_factor;
+>  };
+>  
+> +void pack_geometry_repack_promisors(struct repository *repo,
+> +				    const struct pack_objects_args *args,
+> +				    const struct pack_geometry *geometry,
+> +				    struct string_list *names,
+> +				    const char *packtmp);
+> +
+>  void pack_geometry_init(struct pack_geometry *geometry,
+>  			struct existing_packs *existing,
+>  			const struct pack_objects_args *args);
+> diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+> index 98806cdb6f..04d5d8fc33 100755
+> --- a/t/t7703-repack-geometric.sh
+> +++ b/t/t7703-repack-geometric.sh
+> @@ -480,4 +480,65 @@ test_expect_success '--geometric -l disables writing bitmaps with non-local pack
+>  	test_path_is_file member/.git/objects/pack/multi-pack-index-*.bitmap
+>  '
+>  
+> +write_packfile () {
+> +	NR="$1"
+> +	PREFIX="$2"
+> +
+> +	printf "blob\ndata <<EOB\n$PREFIX %s\nEOB\n" $(test_seq $NR) |
+
+This test_seq() is fancy trickery if you ask me, but it seems to work
+very well. In case anyone is wondering when 'NR=3' and
+'PREFIX=normal-a', you'll get:
+
+    blob
+    data <<EOB
+    normal-a 1
+    EOB
+    blob
+    data <<EOB
+    normal-a 2
+    EOB
+    blob
+    data <<EOB
+    normal-a 3
+    EOB
+
+I didn't realize doing `printf %s` will print the format string for each
+line passed in.
+
+> +		git fast-import &&
+> +	git pack-objects --pack-loose-unreachable .git/objects/pack/pack &&
+> +	git prune-packed
+> +}
+> +
+> +write_promisor_packfile () {
+> +	PACKFILE=$(write_packfile "$@") &&
+> +	touch .git/objects/pack/pack-$PACKFILE.promisor &&
+
+Okay, understood. As mentioned in Documentation/git-repack.adoc, packs
+having a .promisor file, will force them to be packed separately.
+
+> +	echo "$PACKFILE"
+> +}
+> +
+> +test_expect_success 'geometric repack works with promisor packs' '
+> +	test_when_finished "rm -fr repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		git config set maintenance.auto false &&
+> +		git remote add promisor garbage &&
+> +		git config set remote.promisor.promisor true &&
+> +
+> +		# Packs A and B need to be merged.
+> +		NORMAL_A=$(write_packfile 2 normal-a) &&
+> +		NORMAL_B=$(write_packfile 2 normal-b) &&
+> +		NORMAL_C=$(write_packfile 14 normal-c) &&
+
+Okay, so pack C is more than twice as large as A and B combined, so
+that's why that should be merged.
+
+> +
+> +		# Packs A, B and C need to be merged.
+> +		PROMISOR_A=$(write_promisor_packfile 1 promisor-a) &&
+> +		PROMISOR_B=$(write_promisor_packfile 3 promisor-b) &&
+> +		PROMISOR_C=$(write_promisor_packfile 3 promisor-c) &&
+> +		PROMISOR_D=$(write_promisor_packfile 20 promisor-d) &&
+> +		PROMISOR_E=$(write_promisor_packfile 40 promisor-e) &&
+
+Similar here, D and E are a geometric sequence, but all the previous
+should be merged.
+
+> +
+> +		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects-expect &&
+> +
+> +		ls .git/objects/pack/*.pack >packs-before &&
+> +		test_line_count = 8 packs-before &&
+> +		git repack --geometric=2 -d &&
+> +		ls .git/objects/pack/*.pack >packs-after &&
+> +		test_line_count = 5 packs-after &&
+> +		test_grep ! "$NORMAL_A" packs-after &&
+> +		test_grep ! "$NORMAL_B" packs-after &&
+> +		test_grep "$NORMAL_C" packs-after &&
+> +		test_grep ! "$PROMISOR_A" packs-after &&
+> +		test_grep ! "$PROMISOR_B" packs-after &&
+> +		test_grep ! "$PROMISOR_C" packs-after &&
+> +		test_grep "$PROMISOR_D" packs-after &&
+> +		test_grep "$PROMISOR_E" packs-after &&
+> +
+> +		ls .git/objects/pack/*.promisor >promisors &&
+> +		test_line_count = 3 promisors &&
+> +
+> +		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects-actual &&
+> +		test_cmp objects-expect objects-actual
+> +	)
+> +'
+> +
+>  test_done
+>
+> -- 
+> 2.52.0.508.g883dcfc63e.dirty
+>
+>
+
+I like the solution you have chosen. It makes sense, and so does the
+code, or at least to the best of my knowledge. Included test coverage
+helps understanding the solution and demonstrate it works.
+
+-- 
+Cheers,
+Toon
