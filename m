@@ -1,98 +1,173 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0782521FF4C
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 10:21:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768386106; cv=pass; b=SqM4ZCA5STkwqAXmgYNYn18pcm8EVIYUUAvRynUKtERkMqE8tuS4oW9d5sg0FhJOykg25gLyisAuIPHgiRH57lNpjgIXaV0RmRVkt7GM384E9y88vQGVBMrM2pdQ+6qiT7C3TL9J7CXhZyDHli/mJAfYZ/7cDeXcOfUEaOcYivk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768386106; c=relaxed/simple;
-	bh=1Mc4obFJqKJ0BsAwM/wYW/Sl9Cex7kY07NupnFJhRY8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=JwbPg0VU3HbEmRCVfnTgvalcN0znTN541xUi3ks6OA0XrnpsdlUYJmlNZEDgcxbkyCDgqSFs1O1c8+J6j7Fini/gdcAjsZ9iTAaAp0rW3z+P4F7A0jNbzzzi27TjErTsJjDNeVNweMs83oKF/c+nXoM1JM8Z6uFbUIuvoHcW5EE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I77Klait; arc=pass smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2898E38A28A
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 10:25:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768386306; cv=none; b=Z85yOQY+Vq6AbMNbEd0AJDhz9RXUgfi5MtJhlktks9DVTTiTIINRqeba8/39rohx3zFMzRLwzCF+uz3q96wU8hkQdkpUFHVLuBlrjJDS6BaH1Ui4peuY/6y/DE3V6IxnbOjSUmsU3hdaYkBJ9uzvKfD2yAMNcSUXUYr/hs2xy9Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768386306; c=relaxed/simple;
+	bh=RIMa4Gtovog52oUp5ZnONvZrCYWcMp7sHkscMcEAtBQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=GBPtygAadFI/v0lL08icQLiEz+AteI7vJ+kawMefpWXxhadeFFRW+Ke78QOv2O3br4qMtiaTDIQR/rwvuMNjmQ8oHx8re9q0j0gTwYnFsQrQvDeyZnhhbh9m6l3F2NKg2NGcGHQ6EmglMUBfsKAghidHrCqzloK11y63G/JA6C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=TESOiIAd; arc=none smtp.client-ip=91.218.175.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I77Klait"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-34f62e71769so928817a91.0
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 02:21:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768386101; cv=none;
-        d=google.com; s=arc-20240605;
-        b=FkHSoKr0VWvM8iDSG/c/Uo8/gaF9nI9Am/M/0mOJf5qrx+p90mtg7ozaw+tB2HHhnH
-         FhEcOFPitN3SRaJGGKBIakJbbDFP81g3DY+FeN472j7VB48fqFSikaD5+JbuV13mFfnO
-         +qkoVG03KsTu0oh5rW4Ydu2Wgm+/nJKnuP1KMOm/7qgm5M9KbrnHU+Qzq7p0mQDZNh7/
-         KKVGRI+RmJcYaeRbTL5VB6CemEHvm1OoKz1FwE1XPODdmRx5NStzNdDNTBzJGQWY4C/3
-         HtkjGwqG90BHrCcTWLfwWtzbMtNty3eh9af9NXoMcCMRxajBdKXM5Rqyx08NyXxiMndr
-         cH7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=BVo5Sz3+pFBP74oN0dqRuytdJPfRjBHc1gdePe/Nb34=;
-        fh=BuW9i8pcHqMLkQXv+ndvaIANn5EyFbPqLAWkY6rS8cQ=;
-        b=L93Q7DIFWHy8Wanu80WslfRkXGYgKLrcSbfjJ7f27mG60IThwXrzCFcw54vutMkvXn
-         UfHiHDMD+1WieELkQZB4QiN4IzQLMtFlVnjLv9xDLZzCvaVNpm3S31Bj9KkTPDS6cmdc
-         RNpw/r4GtQBKfyQS3xQBphPHWI+u43nwF1yTpHWo86DrVGwxgUQUxoptxKvC9XcYNOaX
-         f2t9HXTLkDUz9r/5oRx12nyE3tUeVbWpqaqDpaqZClnSIBZRSD7TDhwWmXSXlJqrKzkP
-         jSAffvehbhuL7a2Wna3v85SILWArQ0tFQd51bKWgyGOD4YzA5Bg04GL20zy2jdDBIq4m
-         EU/Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768386101; x=1768990901; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=BVo5Sz3+pFBP74oN0dqRuytdJPfRjBHc1gdePe/Nb34=;
-        b=I77KlaitvWxuB+5sebz4qohq2LB3agBcz8N977ZxkNkYN/Ou1QyEsbPVN8rGmMomMd
-         SMnIBapmo8bVPAIlEd8+6t1J8eAhvqqTzeWuaNDLcOhjSqGHKb22EUwzlafOphypwWQO
-         hEQjwKbHoudO3YN35AnTfTxaU9ZKCJ4T4Nq6gVOpB2bQFOiuJIU9b/FaI2tN1z/OGmyN
-         4OXVxSywODYVikQQ9O/Wxp6sjRHhiuSRtQi5rSA6iHC9K9KzF8lxLsBxFK/2dGgZIEmv
-         wAf4XNgYRxW+hYJQrPSdUT48X69QwuyZFO9UtPcllh9wiQ6IONPiMxvCbKo7huyZKXi8
-         h4pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768386101; x=1768990901;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BVo5Sz3+pFBP74oN0dqRuytdJPfRjBHc1gdePe/Nb34=;
-        b=D7iYNhnH4btEBXCmPVnbuJn1HRw+ScwYp5/vw0FtlMHlr4VOY8rfKy5bS+EmH/Mduc
-         BgwL6axfcUQgUF8nNhPcqEqjrLnmkn9whTQGYPeOPkCr29hyzJ7prJhYovuxLtlCp+cv
-         r82tpxTLb2VWvtJUBd3ALYSox16+q5gYmObRNsUS7sblRV7gMog4saxysUJAWdwiU7GW
-         nqxB9XEH7wrq3r0dFAiQ4I4Bg10nS9ShTz3k2J8efjiksZ9mwKFivHX0FNa4vLxrz9Gp
-         TDnBCLOZvTIzols9WH1UcvwoSO1a+MqVGMDeoQvHhtOYxbCQk88hcFieMIulyVaHu13F
-         oQrA==
-X-Gm-Message-State: AOJu0Yyd2SgjCFolG/Ccm822vdoAe6YSzQGs5CBOKy4/MZ4UyQSNFuWW
-	ShzFNpiGX2pmnhggIE+d7TUHJdlH6xGJJoBU2ZKgxFdVoOnGUUJQuUMRKM3iA7s4HSDu0jlLKd1
-	g0bEDk8lqbAtABM+dvEN0/H7Hp9DpwDZ7kFLU
-X-Gm-Gg: AY/fxX6DBs1otUacO6TQkbtg3tYeBVIN7fpW8favzp3Tyj32xL7NxeNVzBLMP5T/rF3
-	XCXpLT6R773XrXxMVrXK7K8eHUpRNp3hmTbG19jsd0cyz1L6mbwKISwKpmuaJOQDCbObts6M6Hz
-	c2rTMyKr45f1tvYM64Y81r40XJNvIpUfjpEDZdWkqI+1KnillwyKKFxWCLHuwvn/7wFJxDe8Nq6
-	5Vq0cUB7y6/C3kEOk0qIPHs1kBvNYbn6YcwZsVMleT1sxsfHSly/2U/hvgB0qtWTuGfPqhF1Wjj
-	yBL1CXPPcFgydBONIm7nzdzTmuUKY/ar16wuSmSHye8NKgOKOnrSmGO5OYz6axhzKAI=
-X-Received: by 2002:a17:90b:560b:b0:349:2cdd:434a with SMTP id
- 98e67ed59e1d1-351092aeb2emr1652937a91.5.1768386100828; Wed, 14 Jan 2026
- 02:21:40 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="TESOiIAd"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1768386298;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=o0K2i1aswwIVbfZyAalsAJWFKaZ6H8TlrKkXQMrzQG8=;
+	b=TESOiIAdGB6RA+RmrWZu88ss8KfhTRdX/RASDtXORJOANFJZxWrt8afRNCdVcw0nnOYNSD
+	U5t08N6bsQBBCuNQsm3nv2H5Xo7HOOhNiEVuErekugvzjJLkmlsQ2iT7GjzrbsMTY1MJ2Q
+	Kk3mIvN12F+g+ZMaoZcfsYjb/eqwEKk=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH v2 0/3] Fix git-last-modified(1) bug triggered when passing
+ a tree-ish
+Date: Wed, 14 Jan 2026 11:24:44 +0100
+Message-Id: <20260114-toon-last-modified-tree-v2-0-ba3b1860898f@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Wed, 14 Jan 2026 10:21:04 +0000
-X-Gm-Features: AZwV_Qii82Y3XiZZl9rphsD3-JMPO2PdQ7TGc-cYjOGJLRvlCaHbLP4-jhJ6XI4
-Message-ID: <CAGJzqs=0Zr2iqsTUZdjdwpbtaS7kuBOf=E_XT=vbdfyNTKkjNQ@mail.gmail.com>
-Subject: Documentation problem: new syntax for git config --get-urlmatch
-To: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOxuZ2kC/4WNQQ6CMBBFr0Jm7RhaDagr72FY0HYqY4AxbSUa0
+ rsLeACXL3n//RkiBaYIl2KGQBNHlnEBvSvAdu14J2S3MOhSV6VSGpPIiH0bEw7i2DM5TIEIvXP
+ nymhPra9hWT8DeX5v5Vvz4/gyD7Jpza1GxzFJ+GzXk1q9/y+TQoVkja1Ph6PydXVlSbbfWxmgy
+ Tl/AeQVKw7QAAAA
+X-Change-ID: 20260112-toon-last-modified-tree-fdd96b2feaf7
+In-Reply-To: <20260112-toon-last-modified-tree-v1-1-ecbc78341f76@iotcl.com>
+References: <20260112-toon-last-modified-tree-v1-1-ecbc78341f76@iotcl.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>, 
+ Gusted <gusted@codeberg.org>
+X-Migadu-Flow: FLOW_OUT
 
-Hi. What's the new syntax for `git config --get-urlmatch` ?
+Recently there was a bug reported[1] passing a tree OID triggers a BUG:
 
-Docs Documentation/git-config.adoc suggests:
+    $ git last-modified fb06ce04173d47aaaa498385621cba8b8dfd7584
+    BUG: builtin/last-modified.c:456: paths remaining beyond boundary in last-modified
+    [1]    690163 IOT instruction (core dumped)  git last-modified
 
-    --get-urlmatch <name> <URL>
-    Replaced by git config get --all --show-names --url=<URL> <name>
+    `fb06ce04173d47aaaa498385621cba8b8dfd7584` is the tree commit id of web_src. I
+    suppose this should've returned a nice error message or blank output.
 
-But when I tried this I got error:
+Fix this bug by checking the revision argument.
 
-    fatal: --url= cannot be used with --all, --regexp or --value
+[1]: https://lore.kernel.org/git/03f96860-29fc-42a7-a220-c3ec65eb8516@codeberg.org/
 
-Any ideas?
+---
+Changes in v2:
+- Prepend the change with a commit that modifies the error message
+  when more than one revision is given.
+- Prepend another commit that removes double error message.
+- Add test to ensure the command works with annotated tags too.
+- Link to v1: https://patch.msgid.link/20260112-toon-last-modified-tree-v1-1-ecbc78341f76@iotcl.com
+
+---
+Toon Claes (3):
+      last-modified: rewrite error message when more than one revision given
+      last-modified: remove double error message
+      last-modified: verify revision argument is a commit-ish
+
+ builtin/last-modified.c  | 19 ++++++++++++++-----
+ t/t8020-last-modified.sh | 15 ++++++++++++++-
+ 2 files changed, 28 insertions(+), 6 deletions(-)
+
+Range-diff versus v1:
+
+1:  ebd05211ab ! 1:  70baa9b4eb last-modified: verify revision argument is a commit-ish
+    @@ Metadata
+     Author: Toon Claes <toon@iotcl.com>
+     
+      ## Commit message ##
+    -    last-modified: verify revision argument is a commit-ish
+    +    last-modified: rewrite error message when more than one revision given
+     
+    -    Passing a tree OID to git-last-modified(1) would trigger BUG behavior.
+    +    When more than one revision is passed to the git-last-modified(1)
+    +    command, this error message was printed:
+     
+    -        git last-modified HEAD^{tree}
+    -        BUG: builtin/last-modified.c:456: paths remaining beyond boundary in last-modified
+    +        error: last-modified can only operate on one tree at a time
+     
+    -    Fix this error by verifying the parsed revision is peels to a
+    -    commit-ish.
+    +    Calling these a "tree" is technically not correct. git-last-modified(1)
+    +    expects revisions that peel to a commit.
+     
+    -    While at it, also fix a memory leak in populate_paths_from_revs().
+    +    Rephrase the error message to:
+    +
+    +        error: last-modified can only operate on one revision at a time
+    +
+    +    While at it, also fix a memory leak that remained uncovered so far.
+     
+    -    Reported-by: Gusted <gusted@codeberg.org>
+         Signed-off-by: Toon Claes <toon@iotcl.com>
+     
+      ## builtin/last-modified.c ##
+    @@ builtin/last-modified.c: static int populate_paths_from_revs(struct last_modifie
+     -		if (num_interesting++)
+     -			return error(_("last-modified can only operate on one tree at a time"));
+     +		if (num_interesting++) {
+    -+			ret = error(_("last-modified can only operate on one tree at a time"));
+    -+			break;
+    -+		}
+    -+
+    -+		if (!repo_peel_to_type(lm->rev.repo, obj->path, 0, obj->item, OBJ_COMMIT)) {
+    -+			ret = error(_("revision argument is not a commit-ish"));
+    -+			break;
+    ++			ret = error(_("last-modified can only operate on one revision at a time"));
+    ++			goto out;
+     +		}
+      
+      		diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
+      			      &obj->item->oid, "", &diffopt);
+    -@@ builtin/last-modified.c: static int populate_paths_from_revs(struct last_modified *lm)
+    + 		diff_flush(&diffopt);
+      	}
+    ++
+    ++out:
+      	clear_pathspec(&diffopt.pathspec);
+      
+     -	return 0;
+    @@ builtin/last-modified.c: static int populate_paths_from_revs(struct last_modifie
+      static void last_modified_emit(struct last_modified *lm,
+     
+      ## t/t8020-last-modified.sh ##
+    -@@ t/t8020-last-modified.sh: test_expect_success 'last-modified complains about unknown arguments' '
+    - 	grep "unknown last-modified argument: --foo" err
+    +@@ t/t8020-last-modified.sh: test_expect_success 'setup' '
+    + 	test_commit 3 a/b/file
+    + '
+    + 
+    +-test_expect_success 'cannot run last-modified on two trees' '
+    ++test_expect_success 'cannot run last-modified on two revision' '
+    + 	test_must_fail git last-modified HEAD HEAD~1
+      '
+      
+    -+test_expect_success 'last-modified expects commit-ish' '
+    -+	test_must_fail git last-modified HEAD^{tree} 2>err &&
+    -+	grep "revision argument is not a commit-ish" err
+    -+'
+    -+
+    - test_done
+-:  ---------- > 2:  150c43580d last-modified: remove double error message
+-:  ---------- > 3:  ab89cb1ef3 last-modified: verify revision argument is a commit-ish
+
+
+---
+base-commit: d529f3a197364881746f558e5652f0236131eb86
+change-id: 20260112-toon-last-modified-tree-fdd96b2feaf7
+
