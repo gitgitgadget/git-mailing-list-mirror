@@ -1,286 +1,130 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2381D33BBA4
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 18:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768417144; cv=pass; b=fFV6MoKhDA7J0ARWU0RW5BcRIFrxGUG7ToXLdnH0aZN41dqV9/J4ZJKPckAaTHhuU5mWTx4YDNbJST2TM4/laYiHwLVuxfleS0RUX5l5UT8ZorzarAqVTwPOVPev0SeNiYeFrrHBTHaovPKOK4ES2NQ5AlAXAJ3PFitH92SkVcs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768417144; c=relaxed/simple;
-	bh=pq40CMhYwWXWAaekMRBDmXMxG2RJGUm+Ca9MI7t4rQk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pC65+2A09wKaKad6PZT6BXv20DskmC2NtvxUgJhIvg1RPVtfSfFhmF67SGVJOesIsgg1Gk6WdszM/8ZlD4gK8cfuFFV7DqXIsRqge0LWZOY5vvCGMR+ySjD/w7tQhSi64kbbjbAqkdIUXpEES51fxFRp4IVTrpM2wqTjIJZFKdc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=i2ZsAzgh; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B14329E6A
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 19:23:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768418603; cv=none; b=NgGDvE6qCU/gkL3t1rUp8Qycuy7LTAbRDdWYHLGjK8M6/S1jTuXRDWxZofYO9qwLY2lzfKT3nrJfeV4WxINNNZMlfMA8u2zkgzQALxFpKibik7mveW8B0ALfln+Fui5RzH7fw26B26MrjRjT5Oa1Y09WTxkth4/Y1gybGoQAQQE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768418603; c=relaxed/simple;
+	bh=hC3yHW/k61oUcnbXIyCBW6/XLwmpf1v7VRc2xeexKqA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CWTbL4q5pTgf0FkpHJ+I1fNzNZ5xZRgS2Fw99ztmUUyboVCduVITnnalN8llyBUHVelrc4/lMoVkRg/3KKTeMHfvss0Dfu8dkKVSrFC1Kn2SSHR8+jPTKut0y/e/micF8QniKkAMSa9gpchR2B5SCNIglC2NCbCvXBqxdSr4MeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QptHgdXS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=eZHi4L2y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="i2ZsAzgh"
-ARC-Seal: i=1; a=rsa-sha256; t=1768417122; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=gQS16mYfJYU1gvv5LAwX9WFj7J5v8x67RdsYtTzItEK15Sv/ogoTwhOWf0oGNTlp9InxeF1PYIR432+Kk2l58YTrE9jZp5Ts7BuYcQEF2h1usx7s6uQ2jjdS4JWn1xLJ0BbZXAhMYe6htteJZHtGj67+i2KmrypGuB6N80DJI1o=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768417122; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=8yzsP4HDk9lo/n3o1V4w58NQjme0vXTSFgCwgCrI7Go=; 
-	b=beOvZO8/2l4v5N1Gt2EiV9LnWAhttLB0fmQ6PmjJdAbN3kj7qwA6lsGOtA2IFXkQTc9tLA7tyMYxYAdt8tfGyp0g+7APY+AOLwZ2RdHd8w5hS1EPwm0tFoy7MJua22zGJAFH+AKLGKnKD15NjRFEnKN4lIWP5DUvkHoxtIktqMc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768417122;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=8yzsP4HDk9lo/n3o1V4w58NQjme0vXTSFgCwgCrI7Go=;
-	b=i2ZsAzgh/vG+w10YEfxgz1OL6JHmc8B36kPjn3K9JC4wHAK3Vb2RO96E+xxspb/r
-	7es1Ugv7YQX/mX//w18rNhUKeP9sKDLy9iJ3mzUuLF2MnLoN/FDAZedhJIPHPOlsPJg
-	Exzkjd3Ny4C4FB8PO1ntYQEsy1bpn+Q3RFZDLZls=
-Received: by mx.zohomail.com with SMTPS id 1768417121252142.84027394091595;
-	Wed, 14 Jan 2026 10:58:41 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Jeff King <peff@peff.net>,
-	Chris Darroch <chrisd@apache.org>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v3 1/2] hook: allow hooks to disable stdout_to_stderr
-Date: Wed, 14 Jan 2026 20:57:30 +0200
-Message-ID: <20260114185731.2381550-2-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
-In-Reply-To: <20260114185731.2381550-1-adrian.ratiu@collabora.com>
-References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
- <20260114185731.2381550-1-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QptHgdXS";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="eZHi4L2y"
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60ECriVX2735988
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 19:23:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hC3yHW/k61oUcnbXIyCBW6/XLwmpf1v7VRc2xeexKqA=; b=QptHgdXSGqOaPLzS
+	ZSiyKRyDSC00A6eERgJKPoxHEgsJ0pHEKvpzhZSPOun6rkf90Lj45q4RrKa7RllN
+	74ZrHMFtMs7J4ITHCnrVRoxpezJmrmfKBXoQB/bTu2HLq5SSs5wcMiOsaZ89+mEl
+	9jqHQiILBZFO0yg4OoS+ak8v2iPkV+FofivLc1uG6ZaYMrkIKJg9rdPcPWluLUNw
+	6UfJMtRuON1PhSV54X+F87WNeGWcg/qJ6K3E6ixZ/kJP/4iswzNuaf6ZvByu2N7F
+	VfhnRW6+HoQntHJZKEO3NhIvJIr6fdWsK2j7LW/nIMTy6UNdnT9lSHDo1gTw8iKw
+	aFJU6Q==
+Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com [74.125.224.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bpbj5hcgm-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 19:23:20 +0000 (GMT)
+Received: by mail-yx1-f72.google.com with SMTP id 956f58d0204a3-6445cf02fcbso127980d50.2
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 11:23:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768418600; x=1769023400; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hC3yHW/k61oUcnbXIyCBW6/XLwmpf1v7VRc2xeexKqA=;
+        b=eZHi4L2ykIRVxw8VOhMke3ttzfy/Ll0dZC0NF1o7ExGxTWngoimZL4SOQzQL9AZxi7
+         YKYK5L20CIpZ6+kxbd9aMXYsxNcE02WRJAXBAEai4GiD1mdqfBJeiaXoIM/L0SmzEabr
+         Qbe21xkQlH63zrifHnFJ9sLZgUrIjkylARQM2tXCJuVRZUJg47GKHlhl0q9lyX1UFneX
+         tJ/hi6gItIkvdozIAnFE8D2dko4tQpuXz56T1Wrhw3VEqnjljrIAxR6Oh4oo6aXoPsY3
+         QCxVaJaAwg9CCMgWH0LSBpp1oDiUOg9J25FpSZXpgVaiJlNNo58lNnlaCA33A7wgdCL9
+         WlnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768418600; x=1769023400;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hC3yHW/k61oUcnbXIyCBW6/XLwmpf1v7VRc2xeexKqA=;
+        b=IdkhchxhLiymTEFjhNpzIwB8W/7hshyHi9Cpnh9mNphe5KpG8Uh97eevLMG1OyFUDY
+         GtsZi7xe3e91rhjngaW+ZCR6DI1xbB3FDCd8LZTuVtaaMeT9XGPi9tT9F15YjAB9VYf2
+         O2Fq/I8aYbhJkX/cm5bViWaWvnoh658LdIie2xaZB494+jDB+KqOxOgNgwNsvRM1iCRJ
+         nriaGbzE586XmYPOLOxkNqQS3HsiFVD4tJcdtoGpXygG17aLD4U00MxSD86ydrzBjeAz
+         XI3u9xS1pqeglqpQ/7tvF1lNro7gNLjTCukRqnEAVAvlnL7sKg6Nu8QSDxpHtPXE1pVU
+         gdQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUuEe0fL4JJFb7NcMcqLVN4Vhvtx+05E1d/xJUcuIk+128P9zGiNdcoWOY5UGCt5doRW/k=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5N3L9ic8ZpcrWyZenDuuBxFOIwkF9VOU6IlrDtzJvF/IVIVTw
+	CbEAyG7N7jFym5gdpgKe7BVfQzjVwCaZTGvSm1MwtKw5DE0VKaya90uGbvY3hUjct9ZEFOSl+y6
+	pnKGl/YqtgkInLqVc1zvf+cPofN8J15fze0XWcAiF0AkY56r4zt/wkuVGf3pFo80Q6lzUBg1qi5
+	zXb6RwTRrvipmfWLxbS8g941AW4ePOow==
+X-Gm-Gg: AY/fxX7//X2ah76kJjCy+AFBDaDbeaL5j0nzh/GkWfjv4d8IaOfezcAP06vNnFLEbXi
+	+XXn3KOuUzzvhkIKvppNXhoh9kkHnbZfCAWeHagqsfK0RGAsVDLeUS0UKi1OdrMF4/U4LEP8Mt+
+	9kHCg2Wx7shJXlUEpi/hK99P0LqA44WlCrckYEM9Hx6h8ekIEW82S4M6cYibIPL/tCSBM=
+X-Received: by 2002:a05:690c:39a:b0:783:6f8d:e7a6 with SMTP id 00721157ae682-793a1d87aefmr67776647b3.51.1768418600312;
+        Wed, 14 Jan 2026 11:23:20 -0800 (PST)
+X-Received: by 2002:a05:690c:39a:b0:783:6f8d:e7a6 with SMTP id
+ 00721157ae682-793a1d87aefmr67776197b3.51.1768418599776; Wed, 14 Jan 2026
+ 11:23:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+References: <20260112213612.2761854-1-nasser.grainawi@oss.qualcomm.com>
+ <7FB6BFD0-4C54-4924-851E-D4B5C574D7FC@gmail.com> <xmqqqzrsguh5.fsf@gitster.g>
+In-Reply-To: <xmqqqzrsguh5.fsf@gitster.g>
+From: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+Date: Wed, 14 Jan 2026 12:23:08 -0700
+X-Gm-Features: AZwV_QgG4nXT24J82uMXsVL0zVTHFw_NcJaXdYTyMTQLMLTOBMeHrzPpP9L9uD0
+Message-ID: <CAFcKa=8RNxQz--RwLiopuQb9_Fy-jx64ya9vcA1ygcPyYswJ_w@mail.gmail.com>
+Subject: Re: [PATCH] Fetch missing submodule objects from default remote
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>, git@vger.kernel.org,
+        Patrick Steinhardt <ps@pks.im>, Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDE2MSBTYWx0ZWRfX/cp5bwp4e43K
+ BVJFVbwHcqrouY8Bo5NTB2jF3vtQzqP6dodh1aeYxuPU3hhbadvaw+lkOlnKFYdfn1L6j2Z52Eh
+ g7Cag79fgfO1MRMoC/cO7CVFKCQKOGKaDMf3j8SsyFnpyijnSP6xn+nvyCYrn3wSRWYan/RunqG
+ nAft13ZQN+AcUV91/yiCvZU/YGkmiD+pOn5OlTPZYYUUt6llvKNZZcLs0fU7nvBk9XvvK6DJGJQ
+ guQZUTNOYc500kTefnx0/0pybVeYzv6TNxmHC17gUxzUudRXHgE8Wo5g2VhQlSg0O+ZomMkPIej
+ SwMVg7BXdhBvttetihpTKFTk3YyiV7FA+F7IWNgeZ5i64NBYAFXzScqYEKHv2YPbBdeS6pOAM+Z
+ bvML2ggS2uX2GXoiF89KApZRVkdHrG6udM9hz2G1AOMEsAiAifenOwKESXJNIDzjSps48K+7k+f
+ R1ewObaSYZvqqpqHxhg==
+X-Proofpoint-ORIG-GUID: 6IlyeP551AwXfvYXx9nKzL-n6bMY6xz_
+X-Proofpoint-GUID: 6IlyeP551AwXfvYXx9nKzL-n6bMY6xz_
+X-Authority-Analysis: v=2.4 cv=aapsXBot c=1 sm=1 tr=0 ts=6967ed28 cx=c_pps
+ a=VEzVgl358Dq0xwHDEbsOzA==:117 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=ybZZDoGAAAAA:8
+ a=Oxbu_6LmIt5bKB0bthMA:9 a=QEXdDO2ut3YA:10 a=uujmmnXaIg8lM0-o0HFK:22
+ a=0RhZnL1DYvcuLYC8JZ5M:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-14_06,2026-01-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0 adultscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601140161
 
-The last batch of hooks converted to the hook.[ch] API introduced
-a regression because pick_next_hook() always sets stdout_to_stderr
-for its child processes.
+On Wed, Jan 14, 2026 at 7:05=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Other two conventions violated that you may want to point out are
+> (1) the commit title lacks the <area>: prefix and upcases the first
+> word, (2) we do not use // to introduce a comment line.
 
-Pre-push is the only hook API user which requires stdout_to_stderr
-to be 0, so it can be argued that pre-push needs fixing, however
-this will likely break many pre-push hooks, so it's better to allow
-it to be 0, i.e. to match the previous behavior.
+Thanks. I'll fix those and send a v2 with the commit reference fixed too.
 
-To prevent such regressions in the future, extend the hook tests to
-verify hooks write to the expected stdout vs stderr streams and
-maintain backward compatibility with the hooks output assumptions.
-
-The tests are independent of the actual hook implementations: I've
-tested they work the same before and after the hook.[ch] conversion
-and will continue to work after we eventually introduce parallel
-hook execution and config-based hooks.
-
-Fixes: 3e2836a742d8 ("transport: convert pre-push to hook API")
-Reported-by: Chris Darroch <chrisd@apache.org>
-Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
----
- hook.c          |   2 +-
- hook.h          |   6 +++
- t/t1800-hook.sh | 127 ++++++++++++++++++++++++++++++++++++++++++++++++
- transport.c     |   6 +++
- 4 files changed, 140 insertions(+), 1 deletion(-)
-
-diff --git a/hook.c b/hook.c
-index 35211e5ed7..ebd9d9e26e 100644
---- a/hook.c
-+++ b/hook.c
-@@ -81,7 +81,7 @@ static int pick_next_hook(struct child_process *cp,
- 		cp->in = -1;
- 	}
- 
--	cp->stdout_to_stderr = 1;
-+	cp->stdout_to_stderr = hook_cb->options->stdout_to_stderr;
- 	cp->trace2_hook_name = hook_cb->hook_name;
- 	cp->dir = hook_cb->options->dir;
- 
-diff --git a/hook.h b/hook.h
-index ae502178b9..2488db7133 100644
---- a/hook.h
-+++ b/hook.h
-@@ -39,6 +39,11 @@ struct run_hooks_opt
- 	 */
- 	unsigned int ungroup:1;
- 
-+	/**
-+	 * Send the hook's stdout to stderr.
-+	 */
-+	unsigned int stdout_to_stderr:1;
-+
- 	/**
- 	 * Path to file which should be piped to stdin for each hook.
- 	 */
-@@ -93,6 +98,7 @@ struct run_hooks_opt
- #define RUN_HOOKS_OPT_INIT { \
- 	.env = STRVEC_INIT, \
- 	.args = STRVEC_INIT, \
-+	.stdout_to_stderr = 1, \
- }
- 
- struct hook_cb_data {
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 4feaf0d7be..0e4f93fb31 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -184,4 +184,131 @@ test_expect_success 'stdin to hooks' '
- 	test_cmp expect actual
- '
- 
-+check_stdout_separate_from_stderr () {
-+	for hook in "$@"
-+	do
-+		test_grep ! "Hook $hook stdout" stderr.actual &&
-+		test_grep ! "Hook $hook stderr" stdout.actual &&
-+		test_grep "Hook $hook stderr" stderr.actual &&
-+		test_grep "Hook $hook stdout" stdout.actual || return 1
-+	done
-+}
-+
-+check_stdout_merged_to_stderr () {
-+	test_grep ! "Hook .* stdout" stdout.actual &&
-+	test_grep ! "Hook .* stderr" stdout.actual &&
-+	for hook in "$@"
-+	do
-+		test_grep "Hook $hook stdout" stderr.actual &&
-+		test_grep "Hook $hook stderr" stderr.actual || return 1
-+	done
-+}
-+
-+test_expect_success 'client pre-push hook expects separate stdout and stderr' '
-+	test_when_finished "rm -f stdout.actual stderr.actual" &&
-+	git init --bare remote &&
-+	git remote add origin remote &&
-+	test_commit A &&
-+
-+	hook=pre-push &&
-+	test_hook $hook <<-EOF &&
-+	echo >&1 Hook $hook stdout
-+	echo >&2 Hook $hook stderr
-+	EOF
-+
-+	git push origin HEAD:main >stdout.actual 2>stderr.actual &&
-+	check_stdout_separate_from_stderr pre-push
-+'
-+
-+test_expect_success 'client hooks expect stdout redirected to stderr' '
-+	test_when_finished "rm -f stdout.actual stderr.actual" &&
-+	for hook in pre-commit post-commit post-checkout pre-merge-commit \
-+		prepare-commit-msg commit-msg post-merge post-rewrite reference-transaction \
-+		applypatch-msg pre-applypatch post-applypatch pre-rebase post-index-change
-+	do
-+		test_hook $hook <<-EOF || return 1
-+		echo >&1 Hook $hook stdout
-+		echo >&2 Hook $hook stderr
-+		EOF
-+	done &&
-+
-+	git checkout -B main &&
-+	git checkout -b branch-a &&
-+	test_commit commit-on-branch-a &&
-+
-+	# Trigger pre-commit, prepare-commit-msg, commit-msg, post-commit, reference-transaction
-+	git commit --allow-empty -m "Test" >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-commit prepare-commit-msg commit-msg post-commit reference-transaction &&
-+
-+	# Trigger post-checkout, reference-transaction
-+	git checkout -b new-branch main >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr post-checkout reference-transaction &&
-+
-+	# Trigger pre-merge-commit, post-merge, reference-transaction
-+	test_commit new-branch-commit &&
-+	git merge --no-ff branch-a >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-merge-commit post-merge reference-transaction &&
-+
-+	# Trigger post-rewrite, reference-transaction
-+	git commit --amend --allow-empty --no-edit >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr post-rewrite reference-transaction &&
-+
-+	# Trigger applypatch-msg, pre-applypatch, post-applypatch
-+	git checkout -b branch-b main &&
-+	test_commit branch-b &&
-+	git format-patch -1 --stdout >patch &&
-+	git checkout -b branch-c main &&
-+	git am patch >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr applypatch-msg pre-applypatch post-applypatch &&
-+
-+	# Trigger pre-rebase
-+	git checkout -b branch-d main &&
-+	test_commit branch-d &&
-+	git checkout main &&
-+	test_commit diverge-main &&
-+	git checkout branch-d &&
-+	git rebase main >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-rebase &&
-+
-+	# Trigger post-index-change
-+	oid=$(git hash-object -w --stdin </dev/null) &&
-+	git update-index --add --cacheinfo 100644 $oid new-file >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr post-index-change
-+'
-+
-+test_expect_success 'server hooks expect stdout redirected to stderr' '
-+	test_when_finished "rm -f stdout.actual stderr.actual" &&
-+	git init --bare remote-server &&
-+	git remote add origin-server remote-server &&
-+
-+	for hook in pre-receive update post-receive post-update
-+	do
-+		write_script remote-server/hooks/$hook <<-EOF || return 1
-+		echo >&1 Hook $hook stdout
-+		echo >&2 Hook $hook stderr
-+		EOF
-+	done &&
-+
-+	# Trigger pre-receive update post-receive post-update
-+	git push origin-server HEAD:new-branch >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-receive update post-receive post-update
-+'
-+
-+test_expect_success 'server push-to-checkout hook expects stdout redirected to stderr' '
-+	test_when_finished "rm -f stdout.actual stderr.actual" &&
-+	git init server &&
-+	git -C server checkout -b main &&
-+	test_config -C server receive.denyCurrentBranch updateInstead &&
-+	git remote add origin-server-2 server &&
-+
-+	write_script server/.git/hooks/push-to-checkout <<-EOF &&
-+	echo >&1 Hook push-to-checkout stdout
-+	echo >&2 Hook push-to-checkout stderr
-+	EOF
-+
-+	# Trigger push-to-checkout
-+	git push origin-server-2 HEAD:main >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr push-to-checkout
-+'
-+
- test_done
-diff --git a/transport.c b/transport.c
-index 6d0f02be5d..e876cc9189 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1373,6 +1373,12 @@ static int run_pre_push_hook(struct transport *transport,
- 	opt.feed_pipe = pre_push_hook_feed_stdin;
- 	opt.feed_pipe_cb_data = &data;
- 
-+	/*
-+	 * pre-push hooks expect stdout & stderr to be separate, so don't merge
-+	 * them to keep backwards compatibility with existing hooks.
-+	 */
-+	opt.stdout_to_stderr = 0;
-+
- 	ret = run_hooks_opt(the_repository, "pre-push", &opt);
- 
- 	strbuf_release(&data.buf);
--- 
-2.52.0.732.gb351b5166d.dirty
-
+Also, I couldn't find mention of (2) in the CodingGuidelines doc. Did
+I miss it or would you like a patch to add it?
