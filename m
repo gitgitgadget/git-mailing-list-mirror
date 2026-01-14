@@ -1,71 +1,71 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF8633ADB6
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 19:54:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4275033B962
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 19:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768420480; cv=none; b=uqNjd/lB3E9rUdCg6PVFwJUY0x2XIoGZpn+qYs5GDJOnUoKP8wz5i+xWKnRlk0p4ykgoUgHVeMfa/cVHK9YBDHBoU4Y+t1nlCdm27S+xCB/2b2JJxTTtLjRgvOzZKxCZm4p4Tn6eVO1vy1dssWLO8NOLDPKFv87lx407kCGDWK8=
+	t=1768420480; cv=none; b=AnRGBu9+VAoNTIKNMCPgwdic7Ta666/7MWuMqChtauT3ejzw4Kfv8suBdrJEyAkT0RnR1dGf5t9NpgnuKh6a55DOYjgZ9eF4b28XTXfNvP/TZGAlVbIXAfQ2Yggoigphw1fz9Afla7AC0m15x6xwvIDwf1MAnOMwAqD7tfzWmuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768420480; c=relaxed/simple;
-	bh=qYGUgo3GCZ8yVIzKsn7jMxLG79rSbj4CVQhXFYPM/3s=;
+	bh=RdC8JC1wI87M0IAHMVaO1Vgmy66pNYWoIh9pYYPYLnw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YLLi++3/WwILtIwuz/TaFJ3TxsFbtMoafJzGZnJ/kv2faApf/kxzLcmgIP955PqJ0MMRk5cvfw0hwSjKTA09aC9/ildHthLuE32TdtT5s6hlDVTi67+nhRcC6WlKDVdecExYLSLq8Hx/VXVahcNwWvFe/9C14TDz1X136oVWoD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=egJoIyq+; arc=none smtp.client-ip=74.125.224.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=CQAoO9O6d34B7EVS1F8wuXFwzH+YlSMcaFBXf+8/4kSaUEzYQkMKPzx+bxjo6tErRQZf72TqGAfPSMkCrxJtMeHLxFxD1qOEeb1A8Sw/OEQHSTem4YukJWQxTKGSnpO67Zs95qVIjbeX5TUk+x2LboXLNHhmy99Z3K6uZrSMUO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=GtZ5ZuDr; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="egJoIyq+"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-6442e2dd8bbso87158d50.0
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 11:54:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="GtZ5ZuDr"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7926b269f03so1164217b3.2
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 11:54:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1768420478; x=1769025278; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1768420475; x=1769025275; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zHWDqEv3StzsJiah2moamgu56bJqJxdzudIzAVgs9xI=;
-        b=egJoIyq+2zp6/VzIwIty++bWpGPI945vV/rTuoWnZVmYICuyOBW8qd0qqk2KKKn9Kq
-         r05Lck1OWJNz7f32qTqXB6f+4Om3mwYsdws9oeM7ZTFneOkV2Rh1mpBGa7qmTwD30M0Z
-         ls+Qvq0zoj6DoorSUhEzyT1kMoVK2evgPU8c6I8FB08HaRxkrULXoRd2Cw0r9xlnfpfn
-         St3tMOceF2L+8JiCvvI0lngQM7cTFMJoQ4J5Wpf713wF+zXNmwWV1Hi6bhAdb0YGMa/D
-         KJUGigpRSj/VXa4ZQPgPsiJM1ei+3Ts4zwd/AYzGlreacof8sazIR2Y5a/WpjwMcUiiJ
-         I6ig==
+        bh=8temWtRpYY7dGpYl90GV9HmxJuaHTwppg17vuNOV1i8=;
+        b=GtZ5ZuDrwqFkgHnhoQIkZxSz3ZGvtndfBhjjpUXVzrH+Z8bUJKvWiyZMmBvnCd0moQ
+         qW2b2FKVBOHequFgPEL78648fPToWbYAVoUpNBPCQiyZhag0bY1p+/TaZI9qJT/AigRz
+         sodsGoSb/W74ZZhux85WbpXvu/Wk8ga4tXdIYGmAaMaGzGLfpNcxicBuYyiH0p7JFkqX
+         mYOf1Zwrb5CWY5Hv0V8EZ+Vz+qm6tjJIe1VdgoW3XEfJnDhZ/XMNguof4SzSO4mUO2Xl
+         rpDoGLW25KPYW7V4EJxWjaiHtzEwx7Jhc2C1I5DICvhA9SLGzaIsxDh8a9SpUot68EoJ
+         CXfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768420478; x=1769025278;
+        d=1e100.net; s=20230601; t=1768420475; x=1769025275;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zHWDqEv3StzsJiah2moamgu56bJqJxdzudIzAVgs9xI=;
-        b=UVQCnWYYji322ErMFyLMic/LTUxtiI3riCVInhCQPlBCYiHGid3FqBJ8M1XwcWxPJk
-         vd1Pm6UF949tpgpiBsxONxUwvLqXR+38iOuqW4XeIPh/O2v0CiLAEzVr3iCZ1t/wBJ+6
-         9fMQZhm34myyiXRLr5Ql/gH0eL3SNiofyiSqFCy51TwIyoWv4VXd0r7qltTaQ6kVdWNc
-         gZ1pq75CKE6BgIDJ/Dd+CmFGiwg2Hkv/Sf4BhLyfCcirFmoE1NpgYc+XR+gPAysteqOZ
-         eUSDKoy2kANYsvjcp7dqR/FDmBH+RxNlQpSzAlEH/JKHiGF1taMx661JGCBJLpjsf59m
-         nchA==
-X-Gm-Message-State: AOJu0YzR8UqKB2RsPg2lhci+soKpGw2ELvU4IhFkQ97ICDvJpbBbg+ze
-	mrcgpTc7Ydxr6GCbKEB9lRkde1MOCCuNKLmVe1WIipD/tzn8xxoyeB97pccAvUrqApzJt46aqKO
-	LErQL1n8jjg==
-X-Gm-Gg: AY/fxX7dUSE7rQJc0u3S/4jofQi6sIiYzGPCuOkRXK3GZkmA8fINbw/xsogURIHa/A2
-	+ERl9wcbQzMz3+vkRo48tPVz9MgnNpzYjCwBkY36M7AGkbb0cWvr2dGWK0CcHIiWXobBAOMd3Vh
-	E6LRgznLLTpyjTfKMcRtMk+uZZnEjV44p9ocmUIvNzmdGzvISAkyi/C5xZ+YHQgl/ZkMTVLam1s
-	cfwO1rLYAe0QP8iJ6M8gCfkfXbVTqKLuYr3NBImCzavV9p0TSl2ip7lEDJV+vzLK5CHvmMDT4KT
-	1Btad503ri622i03sBiqm8VOUfsU9ooZy8YVLANN/4/xlpCOVQRGke95C0TFH1gKPT0UBaIzuKH
-	cOPEPgUbiK16hHhGhMEtnHlV3AjNAq4RyESsywwgq/fPyn+JEFG0bMaxUBZfFF0MeH+iK//KXJ8
-	FSrzThZlDG7nEUTiezOF/L8Oy6UVA3qWRh0J3t1xMLUgcXhsWOObpMBcVoJOnzFJe6wX40QrWOz
-	n90nDLHI12hgdX4Jw==
-X-Received: by 2002:a05:690e:c47:b0:649:3b9:9269 with SMTP id 956f58d0204a3-64903b99399mr2545959d50.74.1768420478044;
-        Wed, 14 Jan 2026 11:54:38 -0800 (PST)
+        bh=8temWtRpYY7dGpYl90GV9HmxJuaHTwppg17vuNOV1i8=;
+        b=gKiEYrefHloxqVgn06Tfw8EdYtPepq2uTe2kBMVxt0BuvyOxrIzV9/t8iWUrC+vpb4
+         Y7KOlb3no3K7u8UccHLrzJcW5WHbQXzyD+7Feiop2EGPXOSNZQ5t2ffg+c2X5ev8DT0R
+         ve4kOqU72sviPAjjmMGQMOaTo3xsGisctRidbG87S2MAAvIjlfRYWSJESe7ZX26m+dpw
+         DY/JqEO8M9+XiAT0B4wmAFIUzYkYIyaF3sBapXlXjkE9r3BJVst/ExchqhfIlNUJDP5R
+         AMTyjlZ1lyxYb7WZDffriyH4NX34NL9GFpzVjYCUUmC1gs8NKxr2ZvM+jLfIOqsebP8R
+         tycw==
+X-Gm-Message-State: AOJu0Yw0hqhYtdQMe+8nbhtnIqeNLVWSqlseE2ewiyq9RJScd2kl3gmZ
+	dQZti/SEVSLRWAab6HFQGXhk3fjY5jyZGozn0cyYvvRk6ih3HV31ekrKje4wHBzSSg/DpPya6dH
+	T7Lzf9ZD0kA==
+X-Gm-Gg: AY/fxX7NzTITJab9hJIEIXk+naUBn4NRXq3+plPZvsqOIB7+l/wF9ah4o47Bt+vNbnS
+	XwMc/lmM0iRnM8CO+zQ3kFFo9AjJEWPlxywKj37H0XI1wYkBC/I3AdLMjSv58beXGwWcVDBGDYw
+	mO/ko6kh4hlIoP0K5Un9QGJkknUxEXn+NNvhbWtGA/zN6ktIRxC8ReCfEzynPl9xDe7GPfFbHcC
+	1P1QlMsewFsh46TLCx0m8TmY9DNrysU/EPoV1Hgjd3UcuCzwU0JU87FcQguUFIg91jsYGzWGQl1
+	pYxrFDPRl+W7UFdnDR+uoclsHKFHgZ+JUQqaNIyEUgIe+94CTQQT0I4n2Uj5pZv8QQNmSTp+7wx
+	3RyHos1azWbzNymkqJVPWRe1O8O6sFuWo3EiyYnv+iGDSJh8s1ikaIinW84ZUkuv7whaSWDvj/J
+	9nwqZ7YbkfmmmuFMs5wurBM2SuJHZycVXbsrulwBy9Vkb3F+VsMn9sEBTEcwX12sPNtjA2/s+8N
+	0Un1+97k+rVFmqhucn/fnGH4mZs
+X-Received: by 2002:a05:690c:f8d:b0:78f:a5c4:7914 with SMTP id 00721157ae682-793a19b7a04mr68227447b3.26.1768420474986;
+        Wed, 14 Jan 2026 11:54:34 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6470d8c500esm10857402d50.23.2026.01.14.11.54.37
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa55881csm95167947b3.1.2026.01.14.11.54.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 11:54:37 -0800 (PST)
-Date: Wed, 14 Jan 2026 14:54:36 -0500
+        Wed, 14 Jan 2026 11:54:34 -0800 (PST)
+Date: Wed, 14 Jan 2026 14:54:33 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 07/18] t/t5319-multi-pack-index.sh: fix copy-and-paste
- error in t5319.39
-Message-ID: <ff599c11f68859a6189a5b67a174784e90fe4a7e.1768420450.git.me@ttaylorr.com>
+Subject: [PATCH v2 06/18] git-multi-pack-index(1): align SYNOPSIS with 'git
+ multi-pack-index -h'
+Message-ID: <92e6d868a45444eda33a9ea3deedfab088bbc62e.1768420450.git.me@ttaylorr.com>
 References: <cover.1765053054.git.me@ttaylorr.com>
  <cover.1768420450.git.me@ttaylorr.com>
 Precedence: bulk
@@ -78,36 +78,66 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1768420450.git.me@ttaylorr.com>
 
-Commit d4bf1d88b90 (multi-pack-index: verify missing pack, 2018-09-13)
-adds a new test to the MIDX test script to test how we handle missing
-packs.
+Since c39fffc1c90 (tests: start asserting that *.txt SYNOPSIS matches -h
+output, 2022-10-13), the manual page for 'git multi-pack-index' has a
+SYNOPSIS section which differs from 'git multi-pack-index -h'.
 
-While the commit itself describes the test as "verify missing pack[s]",
-the test itself is actually called "verify packnames out of order",
-despite that not being what it tests.
-
-Likely this was a copy-and-paste of the test immediately above it of the
-same name. Correct this by renaming the test to match the commit
-message.
+Correct this while also documenting additional options accepted by the
+'write' sub-command.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t5319-multi-pack-index.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-multi-pack-index.adoc | 7 ++++++-
+ builtin/multi-pack-index.c              | 5 +++--
+ t/t0450/adoc-help-mismatches            | 1 -
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index faae98c7e76..efeab4d22b7 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -517,7 +517,7 @@ test_expect_success 'verify packnames out of order' '
- 		"pack names out of order"
- '
+diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
+index a502819fc38..164cf1f2291 100644
+--- a/Documentation/git-multi-pack-index.adoc
++++ b/Documentation/git-multi-pack-index.adoc
+@@ -9,7 +9,12 @@ git-multi-pack-index - Write and verify multi-pack-indexes
+ SYNOPSIS
+ --------
+ [verse]
+-'git multi-pack-index' [--object-dir=<dir>] [--[no-]bitmap] <sub-command>
++'git multi-pack-index' [<options>] write [--preferred-pack=<pack>]
++		         [--[no-]bitmap] [--[no-]incremental] [--[no-]stdin-packs]
++		         [--refs-snapshot=<path>]
++'git multi-pack-index' [<options>] verify
++'git multi-pack-index' [<options>] expire
++'git multi-pack-index' [<options>] repack [--batch-size=<size>]
  
--test_expect_success 'verify packnames out of order' '
-+test_expect_success 'verify missing pack' '
- 	corrupt_midx_and_verify $MIDX_BYTE_PACKNAME_ORDER "a" $objdir \
- 		"failed to load pack"
- '
+ DESCRIPTION
+ -----------
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index ca98d4c3ba3..c0c6c1760c0 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -13,8 +13,9 @@
+ #include "repository.h"
+ 
+ #define BUILTIN_MIDX_WRITE_USAGE \
+-	N_("git multi-pack-index [<options>] write [--preferred-pack=<pack>]" \
+-	   "[--refs-snapshot=<path>]")
++	N_("git multi-pack-index [<options>] write [--preferred-pack=<pack>]\n" \
++	   "  [--[no-]bitmap] [--[no-]incremental] [--[no-]stdin-packs]\n" \
++	   "  [--refs-snapshot=<path>]")
+ 
+ #define BUILTIN_MIDX_VERIFY_USAGE \
+ 	N_("git multi-pack-index [<options>] verify")
+diff --git a/t/t0450/adoc-help-mismatches b/t/t0450/adoc-help-mismatches
+index 8ee2d3f7c81..e8d6c13ccd0 100644
+--- a/t/t0450/adoc-help-mismatches
++++ b/t/t0450/adoc-help-mismatches
+@@ -33,7 +33,6 @@ merge
+ merge-file
+ merge-index
+ merge-one-file
+-multi-pack-index
+ name-rev
+ notes
+ push
 -- 
 2.52.0.457.gb599f1ad4b0
 
