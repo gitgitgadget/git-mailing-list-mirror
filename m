@@ -1,95 +1,99 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B2336C585
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCAE37E313
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:38:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768426573; cv=none; b=PsED0NmgP6MNWjlb3SVX1hYSw5LGmoWD+kzj3PEiMr1HCMNbHUIgu2VODXd+VN74KAv4dZbDQ9PGwVvOndP0+dxL6q6cLO4QTmZG9FaCxZF/WEk6pvb5xPuZn11e0YZ4b5llbgjgMBhBlzr1MDKjZ1Sq1iBuRpsEkWYCd6/Oqw8=
+	t=1768426752; cv=none; b=rx4GylkMTsSz3o9mJeIA8yvJ8tumuHKruDZrex+PoYDcJQkOqiHgy/pdAeXNFRTO0DZUODDiauPg+GwGicT5KaYJF49fjkpm+/KdKeKPOM/Eq3LF23g7CXLBSAzUVDIkiSOzfUNgQD4mSRVSaqATCGD6OxZCeBkc/AwtfdDNDtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768426573; c=relaxed/simple;
-	bh=uQugTeFgYGEhiQQJllsX2VjaheSLXm8g+x1tfMLDVq8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L7JFDaPsD9J6YNhybLCyJb+Oo3BOGiURLZIK2jQ/j4AgxzVWDeV1JQn49o7AMCktGsYuoe4CI7Bhqpi8sLjDCD+OQE8LXXMNi1saygmMB60GWX8Ktg99kwkQdmJ4SlpgKrZngTA42wNWLbTOXWPjo+7AWaHDGlSR9yELlkVNiRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=J2kXw/BI; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1768426752; c=relaxed/simple;
+	bh=oiYRYdvGOIijSJpdcSlvZBoymMdq9Gt/jl7+RF4w8pQ=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=tBzqLzXr2h5/HZDftrFzKll4PCMhYfxkvca2NSV3SN5Zez7Oe0O+H6KgMe9DTUd2kXpZrJPvDWQMRqa8F+7HlQdP6Os34DBQHeFCA30LHVywaA68xH814Vgdyhd7DYvXWZymoAYhlpy1UuhSKjg8ImMjzC96Em8nEyWNSwB6Q68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YD9cobeM; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="J2kXw/BI"
-Received: (qmail 41851 invoked by uid 109); 14 Jan 2026 21:35:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uQugTeFgYGEhiQQJllsX2VjaheSLXm8g+x1tfMLDVq8=; b=J2kXw/BI5hNneP9NabzCgVOZ+TEjQiEkH9cLoXIRqxPC5RkvyyFaK860BNl/cLQ2E3wV81jseOaiNRQ1VUKiruHPo3t6/P8UKgqX5RQaD3io0qgOM2d4/PBU3ZEp4WFmFAQAWcaHea1baXuCHby2cDCgW2r3RLMjxtc/Tzrq6opgQo4BUjN/76vMy1BI0jA0F9hPIv8G7gRE1xuwFDUZYlsKnzFZNoC3qJq8v65FYTvtDElquYv0blLsIsizUThqQ5oIVXQVCCMRciwSuaQbiCN7uoPB1G0rUYE6oxYSphjbf4ak7gDPR7cSwRtfjyLwwaUI+r5G91f0KUjfYuU3tQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jan 2026 21:35:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 70296 invoked by uid 111); 14 Jan 2026 21:35:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Jan 2026 16:35:53 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 14 Jan 2026 16:35:51 -0500
-From: Jeff King <peff@peff.net>
-To: amisha <amishhhaaaa@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] sparse-checkout: optimize string_list construction
-Message-ID: <20260114213551.GC1010080@coredump.intra.peff.net>
-References: <20260114192803.4852-1-amishhhaaaa@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YD9cobeM"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-790884840baso2549197b3.0
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:38:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768426725; x=1769031525; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HDzJH0EFXJUila46Tmib76CgcYQVNSmz19/+uqg2C1E=;
+        b=YD9cobeMyVz8Kl9igYIvN6sgPNK1wPgMwEMF70D0LBU09cykIgXOHNSPJIdZz2l6Do
+         +FGJf0kyk7kI8Y05FrPqhNbcHyhNBIP7U6Pijr9rs2Vv3yHhm78kb6m3LjSmczqAeAiG
+         p78FkRoh4u1s8Q+GLz4XkpHYb5kPHLIFOoNxbHSzJSZmavsUCCSq4oZl0JmuCuOOyIgr
+         nTlxuvt+pMdN5RQjrpvfKm4z32dgUUijKNcm/z7D5qRsgthibwndD+EumRCNjeoKfozT
+         uyJJiyQO5urRwv4PsEtZ/LLnPoPxpOsHCuoSz9pyWLbBMEZiKWIqZ6WGTdIogLXbDbFx
+         X1kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768426725; x=1769031525;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HDzJH0EFXJUila46Tmib76CgcYQVNSmz19/+uqg2C1E=;
+        b=J21H6ir06Ad9OQIydamcaVskiF8ckctKOsKy91zDbMC3Masmz+a4AYgmMoBt0hQu1q
+         NQ/hAGifFNkpZBKuZ7mvl1bzU1UTLsHifXuHM6E9FBZ4jF5iJm744AWvA4DpiXtY8/Qx
+         xkoDcu091WoVoE/9u91cXd+NznmH53LQ963zcmIsX3nnMldq58whNfjqI3eP67ZNYxYn
+         pYXslmgeQ3dbAbwU9SvbqxDlE1O5uYXI+bAKdu+1bdy25ybtdaQkKMsm3ly3hb7b4J0t
+         skUKFPgP066QdInogFtLbc4cbgVS7w6GrOVAF4ig79bPcKI4SLvar7zkLiYuVVQx3l+n
+         GL/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVhTwLWM+esfjXYfgOa6nTb/z0I9Cerf+H9jKxqwJbIzhBk/mctinv9Hb3AYbyVq3w4HZY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLhvb9vhWwoA+/Q2DPRpqSwZihPVCB8WEXcZIaXJjNlpqr/qpt
+	hcScH3oBqm18V7QCB+o36fHNycjnnsqGE7/4mLnLI3O1NX/4CzEyeQCbaTrexA==
+X-Gm-Gg: AY/fxX4lRFzpyJM7WrNLc2oh/fIShCz7gxHRT374GA+HfGbsQapaQnzVBdqjWZB6VGl
+	ynmQtkXvBNECeI2TTVok5D+1Rox0Kq/WosYPafpdg/ZD7TU3V99pm+wqeSlkXUUpzXsh8/W01TJ
+	yxd8jikAfSx/bvz9nve216bkhDSthSG2m9MEwEC3+7kZ8hahC9snL9Xjyo6slS3sbWVKH6exu2g
+	OqdcAG2jZqYhgzZ3wKNo8lD+LjvMV8GUYPg95uHhcb5IwXyDeFFzhRSSBiCaY3SgG8yLAHsjSbY
+	yq0b0V6H2PZvsS9F0yeYJxYNnIR7b4mHnwxEKGMFbxsQO7y2sj/QkCJr/O2/dQqLoeIs83AmlwX
+	SoqIR+lqINbIyVyE1myDILjCTHxh32L5WMoYtBjrEkU4XLvnwZ2hDB3UhdRQbh8bBSwWYhRMrji
+	wRex0jw2C2m/8KinT6Hrnze6G4wdOa1ql3bf1j2NLD/Sks2ybg896pvrBVPub+Xz4Ktjkj5ZZeD
+	NUO/ORsN1wczSCxZe1M/bLaTry0
+X-Received: by 2002:a05:690c:4681:b0:788:c22:1f0 with SMTP id 00721157ae682-793a3a82f01mr33200497b3.54.1768426724689;
+        Wed, 14 Jan 2026 13:38:44 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:18f6:dd0a:cf21:e611])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa576e55sm94543347b3.18.2026.01.14.13.38.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jan 2026 13:38:44 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260114192803.4852-1-amishhhaaaa@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: Triangular workflow
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <20260114162427.GA885771@coredump.intra.peff.net>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org,
+ gitgitgadget@gmail.com
+Date: Wed, 14 Jan 2026 16:38:33 -0500
+Message-Id: <4F632782-4B1C-452A-A64B-CA223D2C16B0@gmail.com>
+References: <20260114162427.GA885771@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
+X-Mailer: iPhone Mail (21F90)
 
-On Thu, Jan 15, 2026 at 12:58:03AM +0530, amisha wrote:
 
-> Improve O(n^2) complexity to O(n log n) while building a sorted 'string_list' by constructing it unsorted and sorting it afterwards.
-> 
-> Signed-off-by: amisha <amishhhaaaa@gmail.com>
+> Le 14 janv. 2026 =C3=A0 11:31, Jeff King <peff@peff.net> a =C3=A9crit :
+>=20
+>>> Yeah, though @{push} is usually not explicitly configured in the same
+>>> way @{upstream} is, but rather a consequence of how push.default and
+>>> remote.pushdefault interact. But it was added for exactly this kind of
+>>> triangular workflow. I sometimes will do stuff like:
+>>> git range-diff origin @{push} HEAD
+>> I imagine the same thing could be achieved with
+>>  origin/$(git rev-parse --abbrev-ref HEAD)
+>=20
+> Sure, but:
+>=20
+> 1. It is a lot shorter to type @{push}. ;)
+>=20
+> 2. Using @{push} works everywhere, even on my non-triangular repos,
 
-Thanks, I think the patch is an obvious improvement. In general, please
-wrap your lines to something more reasonable (usually 70 or so is
-common). And make sure your sign-off identity matches the DCO section of
-Documentation/SubmittingPatches, in particular this part:
-
-  Please use a known identity in the `Signed-off-by` trailer, since we cannot
-  accept anonymous contributions. It is common, but not required, to use some form
-  of your real name. We realize that some contributors are not comfortable doing
-  so or prefer to contribute under a pseudonym or preferred name and we can accept
-  your patch either way, as long as the name and email you use are distinctive,
-  identifying, and not misleading.
-  
-  The goal of this policy is to allow us to have sufficient information to contact
-  you if questions arise about your contribution.
-
-I think what you have is probably sufficient, but if you are not opposed
-to giving more identity information, we do usually prefer more full
-names.
-
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 15d51e60a8..0a44808ed2 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -91,7 +91,7 @@ static int sparse_checkout_list(int argc, const char **argv, const char *prefix,
->  
->  		hashmap_for_each_entry(&pl.recursive_hashmap, &iter, pe, ent) {
->  			/* pe->pattern starts with "/", skip it */
-> -			string_list_insert(&sl, pe->pattern + 1);
-> +			string_list_append(&sl, pe->pattern + 1);
->  		}
->  
->  		string_list_sort(&sl);
-
-Since we already sort here, I was quite curious how this came about.  It
-looks like the _insert() call and the _sort() were both added together
-in de11951b03 (sparse-checkout: list directories in cone mode,
-2019-12-30).
-
-I'd guess it was just a typo/brain-o to mix up append and insert.
-
-Doesn't the same issue exist in write_cone_to_file(), too (in two
-separate spots)?
-
--Peff
+Just so I=E2=80=99m clear, this is only with push.default=3Dcurrent, right? I=
+ could never make @{push} work otherwise.=
