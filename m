@@ -1,110 +1,138 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE6D39283A
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2771C39527F
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:49:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768427345; cv=none; b=nE9Jmw1mHt4NWlKDMxH35mpY0MxAOsPmeIOMFlkH01npj1y/IkxW/cnWBVVyvAI73EWVB8taqSF8ANGm1lzXKcm5b3GL7XnNWypjigkub2PsWZEV+bIQyDXiHo76oZTpbeFT8QfsNR0X9eqkjUcaAmhisYhixN8pO22IiMNdUZ4=
+	t=1768427392; cv=none; b=pNJQ8EmztVhzSwU59gwUJdavjchrkuNd+N3jjBiQpywBu77VuwmHyRasPmjefbRY9Oqc8gItszdLm6FpxtlFCiRKdfRxb8fxBnDnMXOLZNRXGe76tSld3WkNjGuYN/9EuVOthKXKGdRQDcuy60AZ4SWyhSVZf1MfmyA5pDKzKHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768427345; c=relaxed/simple;
-	bh=NXHiMkSSOepw2oHQY7ejWrJS3v3a9SnIWr8Xw8aUQjQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KHHXJWyrtHTNDv+RcCp+zv6ImvJc2eD49PVnr9mQmfEyNqMZ0FoB7qegBX1cNkberac40ngqdddCl3K7gG0SC92WWZhH59sMiA+Wt9iQwcMs9bHQnMtsSgvUqySzXNZzqBCbrP4d1fMO0DrBKmzO+BGls7Gs0GaouAaHKTVJUg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LqwBTVeS; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768427392; c=relaxed/simple;
+	bh=l16bDPqhyeZm4lXOGWZFdDqFjh/ZVj5R5Et98p/bb8M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=drmkgrngjijzUjaZpI9Xs4kAz6xTd26zfwwLQyXQbnr0n6AnjomNxuCnFEPhONcMnx521kaW8XBX7trZ1Fgde6R8O9YOyqWH1e6BGzTvqoLQDWLi0kj8YPqvw1fcfaOzXzeb6Q2nZhEXYaTLBUlhRwWT5tt73/XlpbSfoa56xJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cAEUgx1D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0COh3EwC; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LqwBTVeS"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-42fbbc3df8fso141554f8f.2
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:48:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768427315; x=1769032115; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NXHiMkSSOepw2oHQY7ejWrJS3v3a9SnIWr8Xw8aUQjQ=;
-        b=LqwBTVeS7tN0PmthFjWv19Ws5ssxDHXP7WZ5B4A3RQWs5VZq8Yz4oKxkxBhpvr0cGO
-         1oqWMn5LZArOzOzTKSxZbFbEQEBuGQNO8SJEnntlyuyARenIGLKaSjFhwA3wpEDI1f/O
-         0Qv5eWD3//Odnr0XAT3sJM9qPMvzOHf2l6Df+b3LW4YIw8EFjSEuD/kAuH8SQIGbFH2U
-         v0M+OFB8Kue68rmkGeFEnd25t1Kwz50WWjkueJxYbsfDAzMZYH+oz4Cyu5t3ikPtgWlj
-         vrl9AXGcxQSdQNoXwDdmUx4utkCc83iICBBin6ftGj94zV7+4kFff7SJcBVw8yOtYG3i
-         AJnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768427315; x=1769032115;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=NXHiMkSSOepw2oHQY7ejWrJS3v3a9SnIWr8Xw8aUQjQ=;
-        b=h5CswTZKJzvMmGYyByLZlHePE+LsnIXAqhR+qkcTQxtRoAIKN+hZPr4snJa6IlCJM+
-         UJ07z3J5BDKAgmq3viYTM4X4irkX8OMY7kLPQ1bzRKbmKkpTg8U6uDhxSRlxYul/m/6m
-         B9XFZ84azS4C4JRxqlf5lyF7VXzH1zJR40YHx0hIr24AwNfj+RD8gmtSqmA7cOlo6x08
-         A0VaAOiq+Dh1WtVBm1HdwrQnWiCG5nnCpldi+nUCQhNS0MAvNfZr1wQ0jHYyiRGyH2IR
-         3c6h2w1OlVNs5otsBjRKp8zzXvPr0Qzl1zGl0BfkXy+NcNxsYp8ePFBE9vhKlyNQ0nG3
-         ztIw==
-X-Forwarded-Encrypted: i=1; AJvYcCUMPYZvVGq4MjfBDXO+HHp4IeDx7MLOskiUXy68XyM76PVh8FBG5QVdFkpFHFVZk+bBQGM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIWTEPJC8588ZkzoThzxC/cQmNQzG5ctnWGMbufzBUlh0pyQcJ
-	i9gI1e7T9I1Ns38W3o+yjFGtEJG98qkcMb7D5CSCGHFKAU/qgDaye60PxS9b9+uWeWQA+v+nofL
-	tsgTwZeQAD2d4lwrVwo2pvSS15DnBQYU=
-X-Gm-Gg: AY/fxX5Z3dLql1U1cfSO2ZHDh122/F70WgIxrExIl/OL0fTJBU8sMqI8w7Xw7abtpC/
-	0Q7fXckl+RgSTjYvM1HL8i5mhUFZEU+MnKk/N3+05HOCQSFfToSSdhE2hcge2GgWtOCTyCHMR3p
-	gdmp485drm1x1LciyfyWyAjjdTMy0ncIpGYE5qnZkCJEpZxzWiG/Fzjkd7HkwcDd5/HpO2i+Iyr
-	uGmOoKnMk75fA0sdPvsvPOkOHga8d5ZvvqnOMO21YB51Qum8PzNyzZ0BRDPK53hd0/ilwl1LS20
-	vTQlfBA=
-X-Received: by 2002:a05:6000:22c7:b0:42f:b9c6:c894 with SMTP id
- ffacd0b85a97d-4342c54874bmr4803390f8f.52.1768427314594; Wed, 14 Jan 2026
- 13:48:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cAEUgx1D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0COh3EwC"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 69D4E1D00126;
+	Wed, 14 Jan 2026 16:49:02 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 14 Jan 2026 16:49:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768427342; x=1768513742; bh=M2TUVvplnr
+	6SzfOAgFbjC/wTr1KsWNtKf9yaCeTVMRY=; b=cAEUgx1DIBTqr/InBAfkyW4xZo
+	pQA3svjCGXjysH3Z8BB94case7pzDewxs4kUwWCc5hHttX9tFOWFAvwFoDOCOslw
+	mckV9u5Su5TxyBYOK88sGUDwbprLsMiicB6Z9ySHT5k7YVbjZ5sX+SVoQgXow8/7
+	xZ4HSskdc3ZiWQYbnympW9mxYQqz00HrAh0VkfjXNctk2BESQVqxRZOdlLrE8zXi
+	stxZFvytGbbNOIynX16kpWuh6EkyGpg1rbn6wanNrv6bFOVdXUOIduXqdgJvMsJR
+	NaUQoIcljG5yTtOD6VQFA+SUWY5SsV39KYxXr54B6dT2L6JVJmvFYs794TqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768427342; x=1768513742; bh=M2TUVvplnr6SzfOAgFbjC/wTr1KsWNtKf9y
+	aCeTVMRY=; b=0COh3EwC00XMB9UK5K55pf2148fCWJ4X57n3rfeQ9I1U7zm2z7t
+	mgIcGxYl14Swd/CLlEFcdWzkPZ8JfDd9UN6oOh6SuYCkUXKNnXrU2ip9hXhGfJUd
+	yGz7E6jUOfTiVhikaY2xLdzvG/5Z0MKW4M9qcsz8y1iOzp3iNWUauDdKIzI/XB13
+	6otxQNKYPUzP/p0gcUH1GErOmGDKxUFjfudKRXxGLAZHclVDtOqRd9/lNERY06Bd
+	fdw9NuwP4aroAisN09CB9UfHtCKNHXnsnVwzhHPyowH3ExlG43Ons7pQrZ777Bw+
+	7B1UIBFNzBNOPhT/x8gPTyngb52SBSq7m9w==
+X-ME-Sender: <xms:Tg9oaTd3EyhNtWuMoOg9w8wcQ35y9vRbSvCJafEhGy4YGge158d0vQ>
+    <xme:Tg9oac5tih2iuzWSK7ErCBzg_tJgLFJeAIVLjkBQ5a9S00ls4qHrI9ZhtsqLadLnB
+    elmQEJxmL2fnXfdbnk9oNLDL4vreoEfGw3ndFQmacu2Qj3lrFYnRQ>
+X-ME-Received: <xmr:Tg9oaWUvQxnziSphBbQkDERlHXXC0KvcH8BBxN-HQseetMuUH0M9gikmphPOzoWytNKQm1u7T3w2iOEk16j6hdXNB3QN9yXomRZJ02A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdegfedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:Tg9oab5bOUlz2Ma7Y6b5Vt77YYsDWQ1srm0h84YjcYFL6HAlxzSTlA>
+    <xmx:Tg9oaRqTdnPSoptVhBu8ObuDCUO67aWhVVZZ8BUDFCOBpgpp5HMAFw>
+    <xmx:Tg9oaekczmiEd5UTwBaPxVVNL1WEzFmR6lLlI3_-yRZ8dnWASuj2ow>
+    <xmx:Tg9oadMbkJC5fpkwBJczmWaBN4iNa36m76nAFI87vsjSbDV46Cmy-w>
+    <xmx:Tg9oaf6w1HTdDfnMQxVRZfhLlh7taVfATLnU4uF-JoBt3o_jyzsbO44u>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Jan 2026 16:49:01 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 11/18] git-compat-util.h: introduce `u32_add()`
+In-Reply-To: <c0c1769464b1c8065c2cea59dfd85a1d37de9dd1.1768420450.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Wed, 14 Jan 2026 14:54:48 -0500")
+References: <cover.1765053054.git.me@ttaylorr.com>
+	<cover.1768420450.git.me@ttaylorr.com>
+	<c0c1769464b1c8065c2cea59dfd85a1d37de9dd1.1768420450.git.me@ttaylorr.com>
+Date: Wed, 14 Jan 2026 13:49:00 -0800
+Message-ID: <xmqqpl7beugj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGe2LO0nxXuNNRYS0fk0JuPBDa3UCT8EDJ6G1u4GNW1d9rzRgA@mail.gmail.com>
- <CAOLa=ZT4fQdHqG+1AeviYuLUR5VG33voJk_DU1y0MzhUKBQvvw@mail.gmail.com>
- <xmqqh5sof61i.fsf@gitster.g> <CAGe2LO3t3B1g1ARH-LQ9V0UoGmToO-Z9XYpeMOTKkaSQvCpaRA@mail.gmail.com>
- <20260114211115.GC1008851@coredump.intra.peff.net>
-In-Reply-To: <20260114211115.GC1008851@coredump.intra.peff.net>
-From: Rajiv Sharma <rajiv.tilakraj.sharma@gmail.com>
-Date: Wed, 14 Jan 2026 21:48:22 +0000
-X-Gm-Features: AZwV_Qj6626CdosPMZJ5PAQNeZwNpQ-gRVg1IlqwMKmTLhBAWyG5wGRgDoanYDA
-Message-ID: <CAGe2LO188CuDetOKRQZs8MNw3Fq9LxpAwM8HMEP2AMHAB_g0_A@mail.gmail.com>
-Subject: Re: [BUG] Git push sends too much data unnecessarily
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Ah you are right, "push.negotiate" is exactly what is needed here. I
-tried this out and it works like a charm. Thanks for sorting this out.
+Taylor Blau <me@ttaylorr.com> writes:
 
-- Rajiv Sharma
+> A future commit will want to add two 32-bit unsigned values together
+> while checking for overflow. Introduce a variant of the u64_add()
+> function for operating on 32-bit inputs.
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  git-compat-util.h | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index b0673d1a450..db62a6f25c5 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -641,6 +641,14 @@ static inline int cast_size_t_to_int(size_t a)
+>  	return (int)a;
+>  }
+>  
+> +static inline uint32_t u32_add(uint32_t a, uint32_t b)
+> +{
+> +	if (unsigned_add_overflows(a, b))
+> +		die("uint32_t overflow: %"PRIuMAX" + %"PRIuMAX,
+> +		    (uintmax_t)a, (uintmax_t)b);
+> +	return a + b;
+> +}
 
-On Wed, Jan 14, 2026 at 9:11=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Jan 14, 2026 at 05:39:43PM +0000, Rajiv Sharma wrote:
->
-> > > This boils down to how Git negotiates between the client <> server
-> >
-> > I think that's the crux of the problem here. I don't think git
-> > negotiates in the push path the way it does in the read path, i.e.
-> > there is no process of client-server communication that involves
-> > gradually arriving at the common base (in this case it would be C3).
-> > The read path does this quite well (using something akin to a skiplist
-> > IIRC?) and the common base is found in a couple iterations in most
-> > cases. I am unaware of the historical context behind this difference
-> > but I assume the server sending unnecessary extra data during the read
-> > path would be much more expensive than the client doing it hence the
-> > push protocol is kept simpler.
-> >
-> > This kind of negotiation _could_ be added to the push path but it
-> > would be a breaking change. I read somewhere that there were plans for
-> > Push Protocol V2 (in the same vein as Read Protocol V2) so it would be
-> > great to see this improvement making its way there!
->
-> I think you may have misunderstood Junio's response. We do have
-> push.negotiate already. It's just not the default.
->
-> Did you try your example with "git -c push.negotiate=3Dtrue push ..."?
->
-> -Peff
+Neither this one, nor the original u64_add(), seem to me a
+particularly good API.
+
+When things might overflow, it is a given that we should give a
+controlled death rather than nonsense behaviour and/or corrupt
+output, but shouldn't the diagnosis message given to the end-user
+when we find an overflow be given at a bit higher layer?  At this
+level, you do not even know what quantities you are adding together
+*means*.  Even though your caller might be able to give a more
+intelligible message like "the number of packs to combine exceeds
+2^32 that is too many".  But dying in these functions means the
+callers have no chance to do so.  The only thing the user sees is
+some code tried to add two u32 and overflowed---without any hint
+what these quantities were or what the addition was trying to
+compute.
+
+
+
+
