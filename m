@@ -1,38 +1,43 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DE91F4613
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 02:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67923173
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 03:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768358051; cv=none; b=YbqLfIhXvYocm5OUCpDM94CjIr6wyz9NhPO2QLKt/v0NlCfGPIWIxbYLxSUul2oss3Pkjv+481WN/LhwVUqUHZtej2QSFRclGqwz9Chumx5q9eACUpD0S+8yxzim6tfrdJNolcJFereVFBl3T5Ad71JSz8uTabFZKtrd6XwB70g=
+	t=1768360381; cv=none; b=ROMTrqeDbaNay2440Dn7WkI7WLatZOe8vKDrImtubkIJ6Hp26mWpW6tNl4XT8FkPpQ8EyElDZOXqzrSH2hllWReT0SB5+4DfeeXPslIKNBlSOYIgyHn5mUBZe2iTfOXHnGX98x2y5DgQO2um8eWmuWG1RP90irP9Yaq+Iijq5Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768358051; c=relaxed/simple;
-	bh=p91XZW9KhWDZlPT7hz5eEEYgOBwAi3gtScbI5t/kJYc=;
+	s=arc-20240116; t=1768360381; c=relaxed/simple;
+	bh=9++FgaCAe4mgFl7uVtNJpHYrEQswxtstMl+vcrvPrsE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xp3Q/LyoEZzpTd0NU3zLWxw2HNiwYXB1qSQEhGYyk7x/tnV4IjPutnYXTZykyrbDJjGrJiC03/eL+toUpe+5lXH8POfo9L3rBrXnxfFnQejNcul1imwCfF5KaW/SjQHPlSFBaVIbu4ef3P9w+Z+PazlHz+jqAxUNQ7ZtdiDmEAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JiLAPoGD; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=HvAYb59dEPowcl2vIExg1YreRL7+3yW9V5g9FncXOuetyXGYxIHHr67OrDplKvc140efZ5iF+G9G3n6Rw7auiny7DaRv13Os5n2vX6jm8rusxuNPaTj1smzYoe5/X2yAzrKKP3VenZQEDoSMOrL0QkpiywOk0rDaeiAGvMXT3PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GwW0xJR5; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JiLAPoGD"
-Received: (qmail 35265 invoked by uid 109); 14 Jan 2026 02:34:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=p91XZW9KhWDZlPT7hz5eEEYgOBwAi3gtScbI5t/kJYc=; b=JiLAPoGDPiuHiBNF/C/aOynSVp+zcl7gJGdZQL+n8MIExaOg7lUh6MarVEwt0/NzOGZOnJhUHV29A5kf3xwyQ0xqNYSb4Mzd2qz0m4dxIBYunX8rHXDfAHfD7GO9yVaUS5UoBPlrBizj69fyam+7gPPdOAIvoDqcE9PQbYzpfOCRFwAFLdlTAR9cvaVSeONMECW566KmhHVnKNZD5UWtDZ4EpqZV/0iBCJpjccVGfHsb3pNq7uDIxa5a6t41/RA8UNcHmNTy3h9msWNZMvI9MkTpjFYoWYCOjZj6XvLHeXJRdUruyR28VCEXDJFuripGsRccPTtFL+HfUFjvE7x+ZQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GwW0xJR5"
+Received: (qmail 35431 invoked by uid 109); 14 Jan 2026 03:12:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=9++FgaCAe4mgFl7uVtNJpHYrEQswxtstMl+vcrvPrsE=; b=GwW0xJR5nnDTp/K2vjcL+jx35eaijouY32g6EMyuu8bz34Il6MCgEbYbN0c2zIdDVWPRBK3ny+QvcYBI1F0UBTvUeioZPC9VJ8lVIycM3dcmm5pIdKnvQPYYy1Jl57rRhm+UEIXf/MlUe2x1YyDtpwz5jwXAMPWmHm6YRRrCnKEd0YtTkP/bmCS0Yq7VzU89s17S+v09GYC74fwjQDk/1MNbKWYK6mi7/QiBCTeIxxwHwf8FRX8GkYFmPhEc6wHz/Nw8lve1A4ZbWGJQ5BPpNANIftLs/7GTY5M5Yr5uHxemIQzfloSEGbI4UdfN/O5BuTkK3jsyQ1Bl8ULu2s5rZQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jan 2026 02:34:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jan 2026 03:12:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 57350 invoked by uid 111); 14 Jan 2026 02:34:11 -0000
+Received: (qmail 57702 invoked by uid 111); 14 Jan 2026 03:13:01 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Jan 2026 21:34:11 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Jan 2026 22:13:01 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 13 Jan 2026 21:34:08 -0500
+Date: Tue, 13 Jan 2026 22:12:57 -0500
 From: Jeff King <peff@peff.net>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com
-Subject: Re: Triangular workflow
-Message-ID: <20260114023408.GA858378@coredump.intra.peff.net>
-References: <20260113214059.GC288857@coredump.intra.peff.net>
- <20260113230107.16728-1-haraldnordgren@gmail.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Chris Darroch <chrisd@apache.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2] hook: allow hooks to disable stdout_to_stderr
+Message-ID: <20260114031257.GA858646@coredump.intra.peff.net>
+References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
+ <20260113234528.1749921-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,53 +46,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260113230107.16728-1-haraldnordgren@gmail.com>
+In-Reply-To: <20260113234528.1749921-1-adrian.ratiu@collabora.com>
 
-On Wed, Jan 14, 2026 at 12:01:07AM +0100, Harald Nordgren wrote:
+On Wed, Jan 14, 2026 at 01:45:28AM +0200, Adrian Ratiu wrote:
 
-> I'm wondering if since you are scripting this anyway, if you really need a
-> push branch at all? Can't you just as easily switch to doing this in the
-> script:
-> 
->     git config push.default upstream
->     git push github jk/some-topic
+> Changes in v2:
+> * Extended hook test coverage to detect future regressions (Junio, Patrick)
+> * Reworded commit message and added explanatory comment (Junio, Patrick)
+> * Set ungroup = 1 because grouping overrides stdout_to_stderr (Adrian)
 
-I could (and in fact the script names the remote directly already,
-because you can't pass refspecs without specifying the remote). But I do
-occasionally push a single branch with a bare "git push". Usually this
-is the integration branch, when I am trying to trigger CI manually
-(e.g., when piling hacks on top in order to debug a CI failure ;) ).
+I have not really been following this topic, but I did read (and
+reproduce) Kristoffer's earlier report about reading stdin. The fix here
+was not quite what I expected.
 
-So even if I only do it infrequently, it feels weird that a bare "git
-push" would try to push to the upstream remote (which I don't even have
-write access to!).
+In particular...
 
-> As a note, before I started working on this feature, I don't realize
-> that there was such a thing as a push branch (i.e. something different from
-> the tracking branch). So I had the habit of checking out and pushing like
-> this:
-> 
->     git branch --set-upstream-to upstream/master
->     git push origin $(git rev-parse --abbrev-ref HEAD)
-> 
-> I worked really well for me. The only issue was missing the status info
-> from my own branch -- which is why I started writing this feature.
+> @@ -93,6 +98,7 @@ struct run_hooks_opt
+>  #define RUN_HOOKS_OPT_INIT { \
+>  	.env = STRVEC_INIT, \
+>  	.args = STRVEC_INIT, \
+> +	.stdout_to_stderr = 1, \
+>  }
 
-Yeah, though @{push} is usually not explicitly configured in the same
-way @{upstream} is, but rather a consequence of how push.default and
-remote.pushdefault interact. But it was added for exactly this kind of
-triangular workflow. I sometimes will do stuff like:
+...I expected to see:
 
-  git range-diff origin @{push} HEAD
+  .ungroup = 1, \
 
-to compare two iterations of a branch if I know that I haven't pushed.
-It is a bit of a cheat, because what I really mean is "do a range-diff
-since the last thing I sent to the list". But if I have just been
-working on a branch, and I haven't run an integration cycle since then,
-then I know that the pushed version will match it.
+here. The stdin issue goes back to 857f047e40 (hook: allow overriding
+the ungroup option, 2025-12-26), where the "ungroup" field was added,
+and various code paths set it to "1" to match the previous behavior. But
+any paths that were missed, including run_pre_push_hook(), would see a
+change of behavior (and in this case, a bug).
 
-There is also branch.*.pushRemote, but I have not found that useful (for
-my triangular flow there is always a single repo to push to, not one per
-branch).
+My reading of 857f047e40 is that it meant to give callers the _option_
+to switch the ungroup behavior, but not actually change anything. So
+wouldn't we want to leave the default as it was by initializing it to
+"1"?
+
+> @@ -1373,6 +1373,15 @@ static int run_pre_push_hook(struct transport *transport,
+>  	opt.feed_pipe = pre_push_hook_feed_stdin;
+>  	opt.feed_pipe_cb_data = &data;
+>  
+> +	/*
+> +	 * pre-push hooks expect stdout & stderr to be separate, so don't merge
+> +	 * them to keep backwards compatibility with existing hooks.
+> +	 * run_process_parallel(), called via run_hooks_opt() below, will buffer
+> +	 * and merge the streams when output is grouped, so also set ungroup = 1.
+> +	 */
+> +	opt.stdout_to_stderr = 0;
+> +	opt.ungroup = 1;
+
+The other unexpected thing is that these two fixes are grouped at all.
+AFAICT, setting ungroup to 1 will fix Kristoffer's stdin problem without
+changing stdout_to_stderr at all.
+
+But I'm still not entirely sure I understand why the ungroup setting,
+which supposedly only affects stderr handling, causes the hook to fail
+to read stdin. Poking at it in a debugger and via strace, it looks like
+we are in a poll loop while feeding stdin, even though we are not
+checking whether the child can read! If we instrument like this:
+
+diff --git a/transport.c b/transport.c
+index 6d0f02be5d..7381450123 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1342,6 +1342,7 @@ static int pre_push_hook_feed_stdin(int hook_stdin_fd, void *pp_cb UNUSED, void
+ 		break;
+ 	}
+ 
++	warning("called pre_push_hook_feed_stdin for %s", r->name);
+ 	if (!r->peer_ref)
+ 		return 0;
+ 
+
+and then run the push from Kristoffer's recipe under strace, I see:
+
+  poll([{fd=7, events=POLLIN|POLLHUP}], 1, 100) = 0 (Timeout)
+  write(2, "warning: called pre_push_hook_feed_stdin for refs/tags/gitgui-0.6.3\n", 68) = 68
+  poll([{fd=7, events=POLLIN|POLLHUP}], 1, 100) = 0 (Timeout)
+  write(2, "warning: called pre_push_hook_feed_stdin for refs/tags/gitgui-0.6.4\n", 68) = 68
+  poll([{fd=7, events=POLLIN|POLLHUP}], 1, 100) = 0 (Timeout)
+  write(2, "warning: called pre_push_hook_feed_stdin for refs/tags/gitgui-0.6.5\n", 68) = 68
+  poll([{fd=7, events=POLLIN|POLLHUP}], 1, 100) = 0 (Timeout)
+  write(2, "warning: called pre_push_hook_feed_stdin for refs/tags/gitgui-0.7.0\n", 68) = 68
+  poll([{fd=7, events=POLLIN|POLLHUP}], 1, 100) = 0 (Timeout)
+  write(2, "warning: called pre_push_hook_feed_stdin for refs/tags/gitgui-0.7.0-rc1\n", 72) = 72
+  poll([{fd=7, events=POLLIN|POLLHUP}], 1, 100) = 0 (Timeout)
+
+So we are hitting the poll timeout for each ref we consider, and it
+takes forever to actually write the whole input stream. Which seems like
+a bug in using feed_pipe without ungroup. Either:
+
+  1. We should write everything to the child as quickly as possible,
+     assuming that we do not have to worry about reading back from it to
+     avoid deadlock.
+
+  2. We should add the child's input pipes to our poll() call so that we
+     can tell it is ready for more input (without hitting the timeout).
+
+Setting ungroup=1 saves us from this because it means that we'll skip
+the poll() call entirely in pp_handle_child_IO(). So we end up
+effectively doing (1), which is OK because ungroup means we are not
+reading stdout or stderr from the child at all.
+
+But it feels like this is papering over a bug, or at least providing a
+dangerous interface. AFAICT you _must_ set ungroup if you are going to
+use the feed_pipe callback. And it does not really have anything to do
+with the stdout_to_stderr flag at all.
+
+It looks like feed_pipe feature is new-ish in your series. Maybe it
+should just be a BUG() to use it without ungroup?
 
 -Peff
