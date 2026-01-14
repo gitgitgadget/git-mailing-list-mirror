@@ -1,137 +1,101 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-yx1-f65.google.com (mail-yx1-f65.google.com [74.125.224.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC6E37BE81
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:38:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08431379990
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768426763; cv=none; b=AYLPUnddJw9y5wL6s1W5XOpQlUY7lIRMZyxJshqTnU2wFNrpBOMsgKX/e+Ni3qHhD5fD94UYwil03zBq2UggfOKBy8YqmLwpNMnbTzudMClyXKaUY1fgN3CxG/7IjVXFL02kXuasidrqqoWYynJlj1tjl1vYSrZX8Hmr2QmSW9U=
+	t=1768426863; cv=none; b=MPvVLu0YVLN46E8kQ5KIRTq4TLLFw9aWBxM6pmQ5a0N/X5aznIfwY2EtRfxgTJxcE8MRSrowR7stYi7XbGL/ciWpOFg1yb+GRxheXJgBDh3QCJrlU7d0TtItH9DsjofSzXDr6aFzMifW5BXq2PzLvc1V1LfodNSrVNzybZQMEeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768426763; c=relaxed/simple;
-	bh=FxCw4fm+nPtN6ht44ep+M0oWszuTECrcwNcbV2i1qnA=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
-	 Message-Id:References:To; b=L7zBOds029C83az0FJqX1Re1pmEKY0OS02x2Fk2SD0IZfgdZe6EbzDiSp3rOvgZ2R3JkdtW1wZi6/MTY6WL8/2lK7z2a/UBXWSFKZn3fmxqwAppyau9Bt2xYcIKflBYnDpI+dIzcJT4i7huAUFKZz9nUzVmBYskML2T3JtmG7qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wb6+rTXF; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768426863; c=relaxed/simple;
+	bh=UJxKozLXqlIIRZpXaL6leeYaLqWSxubOZHWOTD63K8o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M8nNWGA3rOOMfszEONHArbAXKxn1f2r7sbDQB77vCadAxWfjNnrSxOw/UM4jw6eD4SsheBxjA0e26N7y6iG42dmqzxMlmpUvFAvcNLbdIiEYd3uiVPGC80Fb6ddH7yydNbbHDOz7BQ3PSv27KpyCzZ0o80zRM8JpBOLAshN0x2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=mE8a2Dcc; arc=none smtp.client-ip=74.125.224.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wb6+rTXF"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-79018a412edso2324317b3.0
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:38:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="mE8a2Dcc"
+Received: by mail-yx1-f65.google.com with SMTP id 956f58d0204a3-6420c08f886so285826d50.3
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:40:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768426728; x=1769031528; darn=vger.kernel.org;
-        h=to:references:message-id:date:cc:in-reply-to:from:subject
-         :mime-version:content-transfer-encoding:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h4qxx08/9Wu4E5E7U+Vsan4C5ociP+ZX7QBYSGmOiY8=;
-        b=Wb6+rTXFzdvknCb/N0+wTT2OrnGXGFim9dvoX7q+zDvmr/tzU8kCiFQdOAYElGxt4Y
-         ktUq6HbLSdXf+YkDgz9zWkqa0nDEc4+e2ZYdZfXj/zLBP5GnuyGGR8OHvCgiNJr+fIPm
-         peOKSfFuHvOsf1pG0JMQU3EOS2vsU8PnMmwXWACWhLCJawvJJF8pQVbPVDeL87TbV0FY
-         GMt3+OcgKHV5pTB0UnZDKsWQanKkxMkBQSUd9O3C+P+OIl+QzNvohDoo3yTXLD7bC8/4
-         m+/t9U0WKfwkxy2oJnxY/PG9pxTTVcCDJO6KeICRYUrAZvlIOuVyvelLzrm5dMPrFdY+
-         4j9w==
+        d=ttaylorr.com; s=google; t=1768426840; x=1769031640; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UJxKozLXqlIIRZpXaL6leeYaLqWSxubOZHWOTD63K8o=;
+        b=mE8a2DccHZJBJe7NG4v6MgVkegIKFofmDbvsO1C1VvyfbFDvi0QcbnmIC4gINmgY03
+         qQ9g8rDLDmQUWyEBYL6IR8k6yVRl0MLCqbvFZwgYF/JfkQWItIHvY6usS5Ns9E6bCp8N
+         NsFOt2MuwlxVPXvdNKCokR5/HS54ERMdzQ/xkGe0qPi38pWleM/8I5M7u7JrERMtpCV7
+         HoWKRMGZROuOjUBrdbXICw/o0OKXtabuJMQ3NNdG2Z6KQtA6YAcQDo30YFATcGDjBhgW
+         8Ndfxe2nCfuFMpJ6OXQJIJqwrxagMOubDjM1ESbUFozTlYrFeQYlwrsLzUiqEg/KYuS4
+         eMmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768426728; x=1769031528;
-        h=to:references:message-id:date:cc:in-reply-to:from:subject
-         :mime-version:content-transfer-encoding:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h4qxx08/9Wu4E5E7U+Vsan4C5ociP+ZX7QBYSGmOiY8=;
-        b=puhB5v6UrztUsOrwDykLqXzgfGzZIYMAjkdMGQhFkQyvKlei7vnq2sof9RcjQI6X9I
-         H+ttwdjwJ2gP6s20fBPKB97DGbJG10ROPQw6LhDF6ZWRgFmI64XXzUzDuvINcD2TCydK
-         jpJ4kLsbrPy9rm43UdcGW8FZL/UYSiztcZay16hoZ9H4S2VaxqKYp5c3+iZIbwdO2jX/
-         qJ9W5mGgKeIrJAQxA50kpjWgmxUDVkSHH/PtgdQ8E2vDuMaRgDLNQC/TXn4+7MwOSUbu
-         6dpVLfTu5J5PEje0/DARQhX2hjBhv+NqFqnSsnZjuxkS9hO7gyvVhjL1U4Bh1/57S5yu
-         1uBw==
-X-Forwarded-Encrypted: i=1; AJvYcCWR2yQuYXtkbNQBifi0Xp/kc/IlSpTEOrVFkYT0heaY/WwHTqjjE5/Eg1mD6iMWWaTp+4k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyKhdspT6cISJVWc8qnJ6ecB6PrYXST3lKejAkfd8MCSB9XS5E
-	v19P2d5GYS7MhcHOeIXjlDujV9qXsbH5HW+5mFVuDE6sqxPm1RmxwOdu
-X-Gm-Gg: AY/fxX5olR2e2BYJuM5Ix45ZRxeN8Q0dWOEkXQ54emm0Ru96c2DY2yOzwxHUKEHud38
-	FbTBX55w1I447nYn9fItFgpC5WN9yuuWbcui4cSN1s/GOQ/JwIL69wGWK8ucI1Pm1mx6s8vUMoW
-	X10lKjzyF/IpUDTBgVaANf8EE8KzHitVYv3pz3NEVyh4QVcIofXS8+BAqu+QH/p0I71Y3/bDrff
-	8zUlWfRYMG5y70lTSnOjWm0chYV5NWLKP4palizb45hKajqQjp06/3NPC5gTMNyWkuOjXqO8S4Y
-	mo6HFJhfpJZYaQZkkLJrso160xfCQARH/hCF6VeDFmIvBLAP4jOlPxCGSAMkizz4Ve7zMUaPQnA
-	zz4mm/KxRJ8uzIVV3hPzPqEqR7/VrIe9491Ef5I6yAslXY/vMUcu5Y59AjF8TJzXy0W2Yh2nJnv
-	tlcvTNE4OwgDLCKgMVs3A6xQwg59laU9EduXTRsheQMZFOb/GqyEM+ViTxHhc1b9W4PPYKBKpie
-	BWk1iEXRmSEBZjRB4o0RCDf3jMO
-X-Received: by 2002:a05:690c:3501:b0:787:d1e7:e75b with SMTP id 00721157ae682-793a3aa5b2bmr26566177b3.64.1768426728403;
-        Wed, 14 Jan 2026 13:38:48 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:18f6:dd0a:cf21:e611])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa6a4d00sm95462007b3.41.2026.01.14.13.38.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jan 2026 13:38:48 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        d=1e100.net; s=20230601; t=1768426840; x=1769031640;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UJxKozLXqlIIRZpXaL6leeYaLqWSxubOZHWOTD63K8o=;
+        b=VZOtrxlFS4Sycge2uKeNlXkJg4wSda7B2g9h1BEiZ0dzuwbVZOv8v4K6Xzasz1UMyi
+         eJ2atcigB0f8uRYfO6qKgfD8Ad2gg+eleU0RX+rnEOPEntDYYhkl+MXMkf43LSqK5aZu
+         sT2ILWFZIKQZ+4rgHsfXKQhThTnqddbmM/j/niQ4gcR4mbt4J39ZJrlr/hr5qrSAiOhr
+         xDyrRvzVlLsCNPPD608q/qhO4Sd2DBVkzB+Yb8SkUvMRgv6++c4GTBTBBxAMDZuPF29W
+         CCRRgjpKwnZjgOAapkltS/QWxSddlq3uhthXtMtPg9QizBu7C2G/PYe1dYvgLDSi9lpp
+         0BdA==
+X-Gm-Message-State: AOJu0YwQAfG7RugBb6+QM18JnM6xqnuOevtDu5UGDlpVcbB5PyZtZw3w
+	IALt3wMQ+1ie7C+Br3ydzRtxiCBUTyra/SPF197K3SOJjDU/et39FM8d2s54vIlD5e4=
+X-Gm-Gg: AY/fxX6Zf17aug/aEgDicLhYBMLETlRp20SCo9CF5hTjxsDzchiR2vt99/8ZXTPV7Mk
+	TaZMD0yrp436fiAL3PbmDZpPb0j9D3SHXUK+G2dp/snO57W3ZFOdd/aTEU7i06HcSv+aP82qrnt
+	oD7TLfI3S8uEFZD5l8Vscy4oCoyAnXaozl2kKowWq6WuaNuEzxGoFSnyeKI/7xgt8WLFhjApaNL
+	327BH//NGnVuPdonkIFKPCAxlZyPDsP4wd3gsRV4l+dmQKNyPI0umJfbbhR1aFQrzfkcF+3F+b7
+	G3/9WWJy285I3g7Z2JecC3W5n4Vq1tnjkkwZW8905iHfRKgVLeZEtxq/H9X/Wxc+SqkE2riFXcv
+	I040SYNs3fJJNc1ank1jCBoT+4NMat0EDT93GYYhtE1sZ6vw8tr0DvM8TL6iGVopPP50nTNTZZ0
+	RszWXOf03Q2XhXrYE0yYGzC2g1q/QaF5o1ZnpKhEbwFd9oCM6lpIaCT86EWSUJ901PQ73L5snpu
+	shpARbGguB3cPUcMw==
+X-Received: by 2002:a05:690e:128d:b0:63f:ad22:f0a6 with SMTP id 956f58d0204a3-64901aa53ebmr3315768d50.1.1768426839502;
+        Wed, 14 Jan 2026 13:40:39 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6470d8b262fsm10961975d50.18.2026.01.14.13.40.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jan 2026 13:40:39 -0800 (PST)
+Date: Wed, 14 Jan 2026 16:40:38 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 08/18] midx-write.c: don't use `pack_perm` when
+ assigning `bitmap_pos`
+Message-ID: <aWgNVjCej8wO85iD@nand.local>
+References: <cover.1765053054.git.me@ttaylorr.com>
+ <cover.1768420450.git.me@ttaylorr.com>
+ <315a0ea2985894f5ae5f166bdd1685ce0981fb23.1768420450.git.me@ttaylorr.com>
+ <xmqq4iongaoi.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: Triangular workflow
-From: Ben Knoble <ben.knoble@gmail.com>
-In-Reply-To: <20260114211013.GB1008851@coredump.intra.peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org,
- gitgitgadget@gmail.com
-Date: Wed, 14 Jan 2026 16:38:37 -0500
-Message-Id: <56D0BADB-43C8-4E93-A871-6E6B11B59DCF@gmail.com>
-References: <20260114211013.GB1008851@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4iongaoi.fsf@gitster.g>
 
+On Wed, Jan 14, 2026 at 01:13:17PM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > But the process is completely unnecessary in the first place: we are
+> > enumerating all values of `ctx->info`, and there is no reason to process
+> > them in a different order than they appear in memory. Index `ctx->info`
+> > directly to reflect that.
+>
+> As long as pack_perm[] is permutations of [0..ctx->nr-1], it does
+> not matter, as we are clearing all the [0..ctx->nr-1] range anyway,
+> in other words?
 
-> Le 14 janv. 2026 =C3=A0 16:11, Jeff King <peff@peff.net> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Wed, Jan 14, 2026 at 10:54:53AM -0800, Junio C Hamano wrote:
->=20
->> Jeff King <peff@peff.net> writes:
->>> And having the extra output from "git checkout" is just extra noise for
->>> me, especially because it is easy to see only the second message (which
->>> looks just like the upstream ahead/behind message, of course) and get
->>> confused. The first time I saw it I thought I had misconfigured
->>> something with my branch.
->> It now is clear to me that this should be _optional_, so that those
->> who do really want extra output from the command should explicitly
->> opt into the feature.  After all, any optional new feature that you
->> must opt into by definition cannot regress end user experience for
->> those who do not ;-)
->=20
-> True, but then it also cannot pleasantly surprise people who didn't
-> realize they wanted it.
->=20
-> Having your user experience regressed and then tweaking a config option
-> to fix it is not too bad. The deciding factor to me is whether more
-> people will be pleasantly surprised or annoyed. ;) I don't have a strong
-> sense there.
->=20
-> As a general principle, though, I think a reasonable path forward for
-> any behavior change is:
->=20
-> 1. Implement the new behavior, hidden behind a config option.
->=20
-> 2. Wait a while to see how people like the new option, and shake out
->   any bugs.
->=20
-> 3. If people like the option and are puzzled why it isn't the default,
->   then flip the default on.
->=20
-> In other words, let the utility of the feature be proven in practice by
-> people opting into it. There is a chicken-and-egg problem if they don't
-> know about it, but if it is truly solving a problem people have, then
-> hopefully some of them would look for a solution and find it.
->=20
-> End philosophical rambling. ;)
+That's right. The contents of ctx->pack_perm here aren't so important
+since it doesn't matter what order we consider the pack_info structs in.
+As long as we see all of them we are OK, hence iterating over the
+ctx->info array directly rather than in the permuted order given by
+pack_perm.
 
-Agreed generally, but the chicken-egg goes 2 layers deep here due to triangu=
-lar workflows ;)
-
-I favor something similar to what Junio described but also including @{push}=
- by default (and ignoring it if non-existent), so that folks discovering tri=
-angular workflows for the first time are easily able to see what is happenin=
-g.
-
-Us =E2=80=9Dalready triangular=E2=80=9D squares are probably well-versed eno=
-ugh in Git to find and tweak the new feature if desired.
-
-Idk though. I think more folks at work should try triangular flows, so I=E2=80=
-=99m biased :p=
+Thanks,
+Taylor
