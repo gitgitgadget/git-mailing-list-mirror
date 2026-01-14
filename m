@@ -1,97 +1,93 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7432D0C62
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 22:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028BB3A784F
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 22:22:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768429051; cv=none; b=d/TtV/gq6BpemuCZbXOE/dPYxvrXrQ1FoVgMICO1c4Hh59MzZTU1/lDUIk1dhou2+d9c2zA2zar+eb0XzYE0XZkidRyjCo4AeJtR2YsxonxXWy4knX7p7n2pQ4IvPK6Tj+Mq5C91ppmlf+KO3rUa8O148OvxSkFAqUzREiWSdPw=
+	t=1768429366; cv=none; b=OF4hSz07hJL1QCyEWHKGhr0ubpnR0DbtZQpfcNzvcr8/sYq6RgGXM9chcrJkTAlw6XuiUEbGEsC/WdYXIzHEE6meKiiIhVuhna54z1p56xN3vo2wA5Fe2X5x0lUQYcl7/hF/libqYpDCbjemlLQ7oVrJ/N7ECy4QNlfoLKwR7q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768429051; c=relaxed/simple;
-	bh=21iD5g4I0ZtbyeW2nA7rWV7Q83BFeaME/6IeKk1jrws=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PddeYPB8uDJ+OOYQNK5EDp/BxFxctWm2fyiv+rDG73WTM2hJE+KcJBLevVSUMIb7lDJbhlAwiFsthqp9Rv4hj/xzCGcro3MOHgqu+WDJwKmdAMKfhI81Q17f9vJZD3XQAH9toHuyBDcTVcJodTv5ofTqSLJ3CNvoDrt4RdTvlzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WlwFDXiS; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1768429366; c=relaxed/simple;
+	bh=2LcywjklOh8PyfqC0RyQTQu4ibTkcUYhInrhXLDLjtg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=GcGhas6c0jRSymUWlrDpbbB81F29JUTUl2vqIT76ZkNV40m/p90XL82k2++E+bouZw5k5JETJHm7m3f31SmnsYcNWnDAJg+8m7KjzmygkybyCGTLDBc1PgeN6EZ/uJzjrGORXxT52t3WQbwMAGk5uYwQAk/Jk2UVEDCE9hdwuFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JQwuY6RC; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WlwFDXiS"
-Received: (qmail 42027 invoked by uid 109); 14 Jan 2026 22:17:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=21iD5g4I0ZtbyeW2nA7rWV7Q83BFeaME/6IeKk1jrws=; b=WlwFDXiS12MDXprgnRF7FLRiRC4y531eEj9oEHH/ojhR3yRI3MTdchOHis23OqVbKRAiElFW3pc55nQ2w6zB5kXFHXhGH3ABDmzhfumNUCMAUPlmFPJev34XuqQuAxr6Fio1xcqU62Hl7btfphK2w/3Xtj3NEayLI3YMAyIjQDTZHKw/XS8rjAUmbGjhPtCVT4ojBMRFmSoR26YqGwMJVmBQ11DYCR2UFwpL2HC/5AUcMQDQRXAKM6b4I2oEwFaHXU0iEcIAFQspl2zk/aST8f9NwK+ElPs5yQ09unu2FFKSnnH2oLKQS91ruL6QbT0vWGKacp9dm2p9vZmJ7n/isA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jan 2026 22:17:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 70969 invoked by uid 111); 14 Jan 2026 22:17:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Jan 2026 17:17:19 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 14 Jan 2026 17:17:16 -0500
-From: Jeff King <peff@peff.net>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org,
-	gitgitgadget@gmail.com
-Subject: Re: Triangular workflow
-Message-ID: <20260114221716.GA1013308@coredump.intra.peff.net>
-References: <20260114162427.GA885771@coredump.intra.peff.net>
- <4F632782-4B1C-452A-A64B-CA223D2C16B0@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JQwuY6RC"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-652fec696c9so432458a12.3
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 14:22:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768429353; x=1769034153; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lg+Ao7BZMPB1HXpYwY22G07CZJy0FvdRvIOCNCI84eg=;
+        b=JQwuY6RC7TL0kO4dK375+AbcicayJWzUGW1XePe9w4shJswTF1wKqa7s3rj08YAZWy
+         Vl9iGdM5/PPq3qN4se6QTfVbiJw5dfCpjf77Dvht9c04In8E7tmtlsGErVLCPMFCejX3
+         jNi16wdIo+CVb1axLTpdn0rmyJqejU5fgg7x1ABTOIFe+Oib21cMMChajdugfZ80ikm9
+         S2DTBnSSWH5GVP8+NbK5ER5qn+pCiGEix3vMEdvEKaTVEK4lOYyIt5kbkETyPR44Xr2k
+         YqHNMT0Qe2roeeWcjlbJkRan7sjOi2NvBsXJRWFui48/pwEPBYve4PZKxF9dXTuiFJOH
+         0wFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768429353; x=1769034153;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lg+Ao7BZMPB1HXpYwY22G07CZJy0FvdRvIOCNCI84eg=;
+        b=sDJQ0dIIXo3UGZ6FTCndx11LYbLslaXkg0KaD8ldttWrvf4r4tcpILwdHCZIYxWYzm
+         VdbXa9S9NqxfwIx5sEVNGXwjeUEW2FIvFshNRjQIfbqEr7J+eU7LH32jTLEYE3zyKr+j
+         FkKGGHv+j5PRFTIvjPH5hANDRCQ2U4l9w85oOml7zmjry3n9nXa5ReeyX7TehHNE/Pph
+         75i3qHQmagCZLgzAnN9Fq/oETcSBBqdxQlp817k9+sSHcseMdgfSQbdTA548QbClL9TJ
+         OgipUptoN2V6Ia2PixbYzJq/P/g38Z9rbgphPgk2Jfq9oRQGpgT7836flA/5I08sN8VA
+         X+LA==
+X-Gm-Message-State: AOJu0Yz48izqPe8PcWvJGjscwH2aRj7fo3WAYytfQU0awHjpwn1i09ZC
+	xZMjIZolL4q29BPj+0DSyP1sB7MYjljn8GrVCTBFsovQak2NXDowKqYlFmKkUPSx
+X-Gm-Gg: AY/fxX6FIumYxWCDyO6VxAtr1Z6XxpZLr2O56VJnVliBrTNuUZ9gjhRABaDhoIV9DeH
+	np/0/fefcQr3Zo5AsL0iT3WVu7Y1CrgHxteLbESS1o1qdGw0OlkRbxHBINocZHwLWFo2gc6DxiM
+	+Ziv9kdRZReiC+WeGMrnqvJ24tiSIwx7ocUcXmiwxDfpWBupASIceIezf8Eu3dOoulZ3ApGCt7o
+	RcKbI3QFZLaFDI5WZHOxrpJlvcBDQ8uFr4zTpVh3Zr62NR0JlwLGh5rAMJxMvdxRlNfqyxtaUWw
+	gjTLCO+bRT4S4Yn0Ye9yLFwwWJIKy0ZYPhx5qMfg0MaZ61E6r9qimCeptjR/x2dmuVkjpYNRjy7
+	fsYlUSIwJ5DPfLOu/OIcHQ5jAlIRqeh/hRYLLj/O9XGyTUgsatPeZBvtTeEZVe3QFBqAZBC8LyI
+	TTWr5DPTYInY2LER5fjdmP
+X-Received: by 2002:a05:6402:90c:b0:64d:2920:ef17 with SMTP id 4fb4d7f45d1cf-653ee2ae8d8mr2964261a12.28.1768429352591;
+        Wed, 14 Jan 2026 14:22:32 -0800 (PST)
+Received: from lorenzo-VM ([84.33.162.72])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65411f70f39sm703170a12.18.2026.01.14.14.22.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jan 2026 14:22:32 -0800 (PST)
+Date: Wed, 14 Jan 2026 23:22:30 +0100
+From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC PATCH 0/1] diff: improve scaling of filenames in diffstat to
+ handle UTF-8 chars
+Message-ID: <aWgXJjO4zvCTOZ7K@lorenzo-VM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4F632782-4B1C-452A-A64B-CA223D2C16B0@gmail.com>
 
-On Wed, Jan 14, 2026 at 04:38:33PM -0500, Ben Knoble wrote:
+The goal of this patch is to improve how UTF-8 characters are handled
+when generating a diffstat. Details are provided in the commit message
+of the patch itself.
 
-> > Le 14 janv. 2026 à 11:31, Jeff King <peff@peff.net> a écrit :
-> > 
-> >>> Yeah, though @{push} is usually not explicitly configured in the same
-> >>> way @{upstream} is, but rather a consequence of how push.default and
-> >>> remote.pushdefault interact. But it was added for exactly this kind of
-> >>> triangular workflow. I sometimes will do stuff like:
-> >>> git range-diff origin @{push} HEAD
-> >> I imagine the same thing could be achieved with
-> >>  origin/$(git rev-parse --abbrev-ref HEAD)
-> > 
-> > Sure, but:
-> > 
-> > 1. It is a lot shorter to type @{push}. ;)
-> > 
-> > 2. Using @{push} works everywhere, even on my non-triangular repos,
-> 
-> Just so I’m clear, this is only with push.default=current, right? I could never make @{push} work otherwise.
+In this cover letter I would like to ask if this patch (if it gets
+accepted, obv) can be considered a valid GSoC "microproject".
 
-I always use push.default=current, though I think @{push} should work
-with other modes. E.g., with this setup:
+Also, as this is my first contribution to Git, please let me know if I
+made any mistakes!
 
-  git checkout -b foo
-  git clone . tmp
-  cd tmp
+LorenzoPegorari (1):
+  diff: improve scaling of filenames in diffstat to handle UTF-8 chars
 
-  # for the sake of simplicity, our triangle goes to the same place ;)
-  git remote add triangle ..
-  git fetch triangle
-  git config remote.pushdefault triangle
+ diff.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-then doing:
+-- 
+2.43.0
 
-  git -c push.default=current rev-parse --symbolic-full-name @{push}
-
-and:
-
-  git -c push.default=matching rev-parse --symbolic-full-name @{push}
-
-should both point to refs/remotes/triangle/foo. Using "simple" will not
-work, because it demands that the upstream and the push destination are
-the same (so it doesn't really make sense in a triangular flow at all).
-
-But in a non-triangular flow, it will happily point @{push} to the same
-as @{upstream}. I use a triangular flow for git.git, but most of my
-other repos are just personal projects, and I push/fetch from a single
-central source.
-
--Peff
