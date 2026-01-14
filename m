@@ -1,74 +1,74 @@
-Received: from mail-yx1-f65.google.com (mail-yx1-f65.google.com [74.125.224.65])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08431379990
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E116439E6C2
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 21:44:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768426863; cv=none; b=MPvVLu0YVLN46E8kQ5KIRTq4TLLFw9aWBxM6pmQ5a0N/X5aznIfwY2EtRfxgTJxcE8MRSrowR7stYi7XbGL/ciWpOFg1yb+GRxheXJgBDh3QCJrlU7d0TtItH9DsjofSzXDr6aFzMifW5BXq2PzLvc1V1LfodNSrVNzybZQMEeU=
+	t=1768427102; cv=none; b=qTyepdc9tDPzELdXQ44YnexzLmlDhFa7AQ4waZ2gOPkkH+i9FrGXomJwaHTH/oadQz8idmZ9II4rHyyb5x5sBzWoUeqYnnvENm0yh5tIZ5EXBEumBBC1cqRT/7OCowsfdWWp26Q/kX68X0Q/A/wCF4dEMyaXs/QUozrBgQAn+to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768426863; c=relaxed/simple;
-	bh=UJxKozLXqlIIRZpXaL6leeYaLqWSxubOZHWOTD63K8o=;
+	s=arc-20240116; t=1768427102; c=relaxed/simple;
+	bh=vUE3pDzUKRPZ70f8MgDYpr4HfTacRw4RZsa3dvvVfTg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M8nNWGA3rOOMfszEONHArbAXKxn1f2r7sbDQB77vCadAxWfjNnrSxOw/UM4jw6eD4SsheBxjA0e26N7y6iG42dmqzxMlmpUvFAvcNLbdIiEYd3uiVPGC80Fb6ddH7yydNbbHDOz7BQ3PSv27KpyCzZ0o80zRM8JpBOLAshN0x2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=mE8a2Dcc; arc=none smtp.client-ip=74.125.224.65
+	 Content-Type:Content-Disposition:In-Reply-To; b=tn+LRbeQiMpn9laP4KZCevbEfUkWCm8g/MacwNS9HCApVYYJYnNKAnkOc11DLVUiJYt8+KNn4ptaTvhhdhZeSZxGhJfrx9Gh6lMFUt3ISQ8ksnjrVfUDmhrfJ5+85m9vzKnCnvg5Aq8dAFaPDtqxYCUqsMSxOm/TiK2VWeFsvX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=NnhkZN29; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="mE8a2Dcc"
-Received: by mail-yx1-f65.google.com with SMTP id 956f58d0204a3-6420c08f886so285826d50.3
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:40:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="NnhkZN29"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-792768a0cd3so2380027b3.1
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 13:44:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1768426840; x=1769031640; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1768427096; x=1769031896; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UJxKozLXqlIIRZpXaL6leeYaLqWSxubOZHWOTD63K8o=;
-        b=mE8a2DccHZJBJe7NG4v6MgVkegIKFofmDbvsO1C1VvyfbFDvi0QcbnmIC4gINmgY03
-         qQ9g8rDLDmQUWyEBYL6IR8k6yVRl0MLCqbvFZwgYF/JfkQWItIHvY6usS5Ns9E6bCp8N
-         NsFOt2MuwlxVPXvdNKCokR5/HS54ERMdzQ/xkGe0qPi38pWleM/8I5M7u7JrERMtpCV7
-         HoWKRMGZROuOjUBrdbXICw/o0OKXtabuJMQ3NNdG2Z6KQtA6YAcQDo30YFATcGDjBhgW
-         8Ndfxe2nCfuFMpJ6OXQJIJqwrxagMOubDjM1ESbUFozTlYrFeQYlwrsLzUiqEg/KYuS4
-         eMmQ==
+        bh=75jYX+RqSxeLVJ2f94+SGF/RPNpL/yvlyLcjeEtK9PU=;
+        b=NnhkZN29i3OMTjH/0pJXDXJPwAMimm0zr6HN9O4L1yYifkuton93y09nMPAdgxpWAz
+         1/VcpNTK94beAj9pMSKRe1tkCO6XFoCUVX+CdrHyINrQWu1DBNeRyk66qgGAbvs00jPT
+         yhUnZ+51McM2VSarpObTGAwJRDAGYScv2+0xMVX8GGwxxmyLWdGJVcM12vjg204F1X85
+         ehyFiEpYidl9+/xXFh8r7S03gC6m+Y3gqteY3gL/evlHHaurFOE850ljEcBkqbt/VCtB
+         aEt0nzrBVSb2bH2aiyd7gWgWTPPx+qvZWMQtEX/4iWm2sW4PLgI5fqG6FMkHCA9luoob
+         v6hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768426840; x=1769031640;
+        d=1e100.net; s=20230601; t=1768427096; x=1769031896;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UJxKozLXqlIIRZpXaL6leeYaLqWSxubOZHWOTD63K8o=;
-        b=VZOtrxlFS4Sycge2uKeNlXkJg4wSda7B2g9h1BEiZ0dzuwbVZOv8v4K6Xzasz1UMyi
-         eJ2atcigB0f8uRYfO6qKgfD8Ad2gg+eleU0RX+rnEOPEntDYYhkl+MXMkf43LSqK5aZu
-         sT2ILWFZIKQZ+4rgHsfXKQhThTnqddbmM/j/niQ4gcR4mbt4J39ZJrlr/hr5qrSAiOhr
-         xDyrRvzVlLsCNPPD608q/qhO4Sd2DBVkzB+Yb8SkUvMRgv6++c4GTBTBBxAMDZuPF29W
-         CCRRgjpKwnZjgOAapkltS/QWxSddlq3uhthXtMtPg9QizBu7C2G/PYe1dYvgLDSi9lpp
-         0BdA==
-X-Gm-Message-State: AOJu0YwQAfG7RugBb6+QM18JnM6xqnuOevtDu5UGDlpVcbB5PyZtZw3w
-	IALt3wMQ+1ie7C+Br3ydzRtxiCBUTyra/SPF197K3SOJjDU/et39FM8d2s54vIlD5e4=
-X-Gm-Gg: AY/fxX6Zf17aug/aEgDicLhYBMLETlRp20SCo9CF5hTjxsDzchiR2vt99/8ZXTPV7Mk
-	TaZMD0yrp436fiAL3PbmDZpPb0j9D3SHXUK+G2dp/snO57W3ZFOdd/aTEU7i06HcSv+aP82qrnt
-	oD7TLfI3S8uEFZD5l8Vscy4oCoyAnXaozl2kKowWq6WuaNuEzxGoFSnyeKI/7xgt8WLFhjApaNL
-	327BH//NGnVuPdonkIFKPCAxlZyPDsP4wd3gsRV4l+dmQKNyPI0umJfbbhR1aFQrzfkcF+3F+b7
-	G3/9WWJy285I3g7Z2JecC3W5n4Vq1tnjkkwZW8905iHfRKgVLeZEtxq/H9X/Wxc+SqkE2riFXcv
-	I040SYNs3fJJNc1ank1jCBoT+4NMat0EDT93GYYhtE1sZ6vw8tr0DvM8TL6iGVopPP50nTNTZZ0
-	RszWXOf03Q2XhXrYE0yYGzC2g1q/QaF5o1ZnpKhEbwFd9oCM6lpIaCT86EWSUJ901PQ73L5snpu
-	shpARbGguB3cPUcMw==
-X-Received: by 2002:a05:690e:128d:b0:63f:ad22:f0a6 with SMTP id 956f58d0204a3-64901aa53ebmr3315768d50.1.1768426839502;
-        Wed, 14 Jan 2026 13:40:39 -0800 (PST)
+        bh=75jYX+RqSxeLVJ2f94+SGF/RPNpL/yvlyLcjeEtK9PU=;
+        b=Wao9PzRlE3U2uZ2nTysV0CxbsPeotbWEEboDJsiG8MeIBDBEAgOhZyGrgyzRlbdHYf
+         YZnXlKivL7G0EcgTTW1+6vWYtgZUl5JSAcUxz4Tk3auqCls8C/9v6M/aJJqW+EM9i6Ou
+         8S6vb7ywWwx6fdyZwPCWpuDgPDbWgqiYXQU25AoJjvjvlQi7YEn2ZTjM1XYk6cReVhvZ
+         IGaGYRmfQRuvtmbECDdmJfYKDjCzV/Ly+mLZfN8lGh+PhMT5d66dvGLL3wAhjPbMHtMC
+         T6ZAiJTuo4LXURUx1GFWxgWyPnkKh3Dqp5fX+Xhv4y+K1Yt//a4UH1lYevesq0Je3XfY
+         wA6w==
+X-Gm-Message-State: AOJu0YwvsUhiq8cYCFi4fUeA887AtqQaJbFQ1W1+njmNgxRVKpTrZREz
+	+rSTvV5W7WB8eOPE78QXVacefc2ctNZwKAZhkI6EuNe/LzyQGcgfZ0ZcJwbY6N34478=
+X-Gm-Gg: AY/fxX7pdeTv14NnDEnfT3+COYhf+Ue4yaX6KgRemyz8/tnWraaBhVVkQjakiuqfV63
+	X6HNLqopMehhNPiT9ejHlMQ4L6jJidgcArYCxwDVaCr3KTZhRVY7ZtXvFF5syPPjH4zmIvA98es
+	7xOKNZDs0UTyweEjctngkY5aDJ4O1uoSAExAbjc1v4LHz2EJ03pUnBui8qd8b0SiNMOLMBeiMm6
+	P6ogdT69fcx2GylU9pBCUSWTh67vkiS+PQHrmJwP5h54tdgFyXUjrz5XR/QJ46VEkvDhSJpKCQH
+	7uqCQnSagIzJTbHPpGRoJMBmlrvUyAiYZvYCyRV2/ZKo8hTFwgn30viWN0dTfT6jpKl+Nco3AwL
+	pCMJ2yA8z/wQ3gxK/e1Ac1sdxVksHUrwiBxhEODnvKHNXVer725whf3igIRsrHa7ooe0RT8m+rY
+	i4Gq/BRjiRtv/30YzLqDjxzowuQ1RTQ3/BSyqTDtbRNgr+DArHpSQin4s/trhkp3NVqyu+gZQn0
+	DYQcdLmMvsuVJ10ANbmIz+sDhWc
+X-Received: by 2002:a05:690c:f03:b0:793:b68d:1514 with SMTP id 00721157ae682-793b68d154dmr2387127b3.38.1768427096164;
+        Wed, 14 Jan 2026 13:44:56 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6470d8b262fsm10961975d50.18.2026.01.14.13.40.39
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-790aa672cafsm94928167b3.30.2026.01.14.13.44.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 13:40:39 -0800 (PST)
-Date: Wed, 14 Jan 2026 16:40:38 -0500
+        Wed, 14 Jan 2026 13:44:55 -0800 (PST)
+Date: Wed, 14 Jan 2026 16:44:54 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 08/18] midx-write.c: don't use `pack_perm` when
- assigning `bitmap_pos`
-Message-ID: <aWgNVjCej8wO85iD@nand.local>
+Subject: Re: [PATCH v2 10/18] midx: do not require packs to be sorted in
+ lexicographic order
+Message-ID: <aWgOVnp+zkGiR8p6@nand.local>
 References: <cover.1765053054.git.me@ttaylorr.com>
  <cover.1768420450.git.me@ttaylorr.com>
- <315a0ea2985894f5ae5f166bdd1685ce0981fb23.1768420450.git.me@ttaylorr.com>
- <xmqq4iongaoi.fsf@gitster.g>
+ <72bcd4ed6c7f685f58bb3b905fe553173abe1845.1768420450.git.me@ttaylorr.com>
+ <xmqqtswnevfc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,25 +77,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq4iongaoi.fsf@gitster.g>
+In-Reply-To: <xmqqtswnevfc.fsf@gitster.g>
 
-On Wed, Jan 14, 2026 at 01:13:17PM -0800, Junio C Hamano wrote:
+On Wed, Jan 14, 2026 at 01:28:07PM -0800, Junio C Hamano wrote:
 > Taylor Blau <me@ttaylorr.com> writes:
 >
-> > But the process is completely unnecessary in the first place: we are
-> > enumerating all values of `ctx->info`, and there is no reason to process
-> > them in a different order than they appear in memory. Index `ctx->info`
-> > directly to reflect that.
+> > @@ -374,7 +374,7 @@ HEADER:
+> >  	    The signature is: {'M', 'I', 'D', 'X'}
+> >
+> >  	1-byte version number:
+> > -	    Git only writes or recognizes version 1.
+> > +	    Git only writes version 2, but recognizes versions 1 and 2.
 >
-> As long as pack_perm[] is permutations of [0..ctx->nr-1], it does
-> not matter, as we are clearing all the [0..ctx->nr-1] range anyway,
-> in other words?
+> We only write version 2, then ...
 
-That's right. The contents of ctx->pack_perm here aren't so important
-since it doesn't matter what order we consider the pack_info structs in.
-As long as we see all of them we are OK, hence iterating over the
-ctx->info array directly rather than in the permuted order given by
-pack_perm.
+Ah, thanks for spotting.
+
+This comment is outdated, and I didn't catch it when proof-reading
+the patches. I wrote this line before adding the "midx.version" config
+escape hatch, and doing so made this comment stale.
+
+It should probably look something like:
+
+    Git writes the version specified by the "midx.version"
+    configuration option, which defaults to 2. It recognizes
+    both versions 1 and 2.
+
+I'll update it and include it in the subsequent round.
+
+> >  	hashwrite_be32(f, MIDX_SIGNATURE);
+> > -	hashwrite_u8(f, MIDX_VERSION);
+> > +	hashwrite_u8(f, version);
+> >  	hashwrite_u8(f, oid_version(hash_algo));
+> >  	hashwrite_u8(f, num_chunks);
+> >  	hashwrite_u8(f, 0); /* unused */
+> > @@ -105,6 +108,8 @@ struct write_midx_context {
+> >
+> >  	uint32_t preferred_pack_idx;
+> >
+> > +	int version; /* must be MIDX_VERSION_V1 or _V2 */
+> > +
+>
+> Ditto.  When we are writing it out, shouldn't this always be 2
+> anyway?
+
+For this and below, the code here is right and the documentation is
+wrong (per above).
+
+> > @@ -410,7 +415,9 @@ static int write_midx_pack_names(struct hashfile *f, void *data)
+> >  		if (ctx->info[i].expired)
+> >  			continue;
+> >
+> > -		if (i && strcmp(ctx->info[i].pack_name, ctx->info[i - 1].pack_name) <= 0)
+> > +		if (ctx->version == MIDX_VERSION_V1 &&
+> > +		    i && strcmp(ctx->info[i].pack_name,
+> > +				ctx->info[i - 1].pack_name) <= 0)
+> >  			BUG("incorrect pack-file order: %s before %s",
+> >  			    ctx->info[i - 1].pack_name,
+> >  			    ctx->info[i].pack_name);
+>
+> Ditto.
+
+Ditto (and so on) ;-).
 
 Thanks,
 Taylor
