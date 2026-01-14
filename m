@@ -1,99 +1,97 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A5026F2A0
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 23:08:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011A631B814
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 23:12:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768432086; cv=none; b=sQEOhoqNA85ctdou4uczUcKj+SaHMf0PddJzZeuuAJu2RBiQt/qdhsBTflfWEda+JUXc1YU/hetpWBI3tFQkM/CRH2ScZt1cZSAFj6esqoXsOKsihLoAjLEqdrTx+W/obGOW5vaJdWhfopjDXNNeTH8twWulCq/XWM2INmglyYw=
+	t=1768432327; cv=none; b=IxZ8ugPt+PbQKndwl5CJUnhO2ktqafnBKA3ZmRb2UMjgqBDS61ffwmt4Xe92xT+OLVyNk/ECbPIwS7kK2McIfCJSQLWfbqdKFGuBpSUotXqnqPkfJ1BtVBgNB2IGaMwYNJ0mCO82AtmrBBaWO/Yv3L8rXKrMEE2LxD1D4mOqB2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768432086; c=relaxed/simple;
-	bh=i6msJwbskOyKSrVlqNkqGizNpXb4aOt9z8NXrA6oWQA=;
+	s=arc-20240116; t=1768432327; c=relaxed/simple;
+	bh=nVUN2zJJAC3P1NYMsdOQUr7Hy8jwjoiTITKUV6G348M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dPkAf00J8WvSV+X1+na5FYmEDyRgMEE+GCA0YVFJIsGB58iQYW/6GMkr2/99C5/KWWZ/WWHXxum3UxRPHFHkLJ9lilCcHARDBM3yuT9wVBtX5pvHxwCRkSCMSpsdmtnjsQg+9wEc0QA9ZrP6mSMAUqPrncsU8cUr092UUWAA5ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XTR3coHL; arc=none smtp.client-ip=209.85.208.171
+	 MIME-Version; b=h4757OXYkF3Os3Hz6rgr79cfV9NE2ylShEpHvfmz6TGfv9WLvO/eK8zKc0aFo5EFvDm39bf7cDyHIfqm/4GDJ7h3Upf1wPAMSuLZjp+KAthZ3x++nGy8GxaerYME91Lclyj1dOrkt9MJPQ4LArI3lAzhgm5PEP9Rw7dnCYj1QU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PgTGeXcp; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTR3coHL"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-382fb2bb83dso1935901fa.1
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 15:08:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PgTGeXcp"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-598f8136a24so411036e87.3
+        for <git@vger.kernel.org>; Wed, 14 Jan 2026 15:12:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768432082; x=1769036882; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768432324; x=1769037124; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=80uLH4ZAMmshbK+L8PBLeSpKp8cTuVK5acAdd1KicVQ=;
-        b=XTR3coHLcw1Hh7hNWEoUL8N0OPVpQxjnr1NYWx/64W3EDtyel1KpT8xa335TDtDAjy
-         zJc8V7gt5JxY6G228xlSPmXyJYxlIs+M5MOhp8wp/uz2q0XgK2ntcg7S3EkEH6QZK4UK
-         5aT3FezsKCeo4PKaeOfIBe4eVZOpa10U2DSvhQw9SRQuO14XsF5T00ZgJgCq5WTpH5nF
-         bAXTuhWMafpqrT1PKjls8d/AN3JsRuZ/46wvQewiIa1LpCEBoyQn7CbaYfLRgKO4ME7R
-         EXlvJjJ845U4L6ocFYlzaZ/oeH3MtXlgIECSELsIt96f2Nrq9pXJGOPmaWR65hfPx/vQ
-         xmnA==
+        bh=hGT8HRil383Rr9L6I5CmWyaElfxghRksY5KqONv/sQw=;
+        b=PgTGeXcp8BTlf7XEMILCRnxFH92xgUViGy+L6dytiO1EzjOn3bwOMyAc+4Ie1KtjQI
+         wkgaxodl2NaqCa+yzZTm8GY5vyDiUx4+aCVw96LdjWS98ylU9WriEKYp0Uhw4vnqRRcz
+         jzKxe7QjS4tfnNU9lnseAHV406ouFJzVMae/bUE0veDkodEqmEmLoDnRoOPFBWOB7t5U
+         9jBPpS7VLT/r21C2AuUjbXT5g7KfZQUaFGL3vCaXnOZLC2kDdL0NCcNO0Fx3MDR8u99z
+         PTBjdCz/AVqUR0ogCCE9KZs5dGHOkFqsY50QAxf6YjQN+aYmV0YeJUdI9aQ1B0qSYPCv
+         vj+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768432082; x=1769036882;
+        d=1e100.net; s=20230601; t=1768432324; x=1769037124;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=80uLH4ZAMmshbK+L8PBLeSpKp8cTuVK5acAdd1KicVQ=;
-        b=caOlq4caLZWMDGi1qo5rhj1zOVdGGjeHsYRJXZhYyNk1EI2R2i4CSdWYk96qbj1Gpz
-         +r1U3S5DbSxsa4w+0Gq2Srby9qJf7RXFBYys3jF+VxqR6tSrB8AJ7KozrBhoEYrDtSe7
-         k2ganp6dBEBmK0s+web01Wvg+RmnR2LiD64Y76+eA48J/HRM0AWQg9XO1IKkuvwk9XqT
-         JEnBXNWujKtNthQL6MwWMhpSICVq9CIaCVmfWrNR3IJyXHMfiXOo2F+FffNTGQldNczL
-         9p4ApmjxfA3LG8syhsPHpdsQR/Rabl3qbGLnqgS6W7uUGGVB4HjiI8zbMDkRKYlIVdwG
-         WNzA==
-X-Gm-Message-State: AOJu0YzYet0+d2fvmlQ08SFsExx0IeLFsSnFR4o1hlbVGwNcvwAZscKg
-	FVeYzYFkkxMvrWb1wipWyPO/bwXGyuR51yRrXjxZeYsBxXVwyN+J+BU6
-X-Gm-Gg: AY/fxX6pyTem+ZT2uqj6TzNI0hlP2Jre3k/tw1x+50XkhAnm5QDnFAB81H9SrUsX01b
-	LER84MnT5Qmz5O4PchRy6GXYgneXiXMiQgKhpvhPBLjUGvqLfG8PBSxC8YpKJKFkdHEi8Nzxyvf
-	yecdoGEW2tCw3JJroIUhXAkFJydOKAJJTAIcXmvU/k/UKBsZXCTp0E9R5FE4loyOQOaUH9T8tl7
-	Tp7VKTVFfiyHgx0nqezL7m0bHSdCCj86Umh7FITmYLh0d1UwNGPiuiDjU4Ej5YcAmFx9y5Rbr3r
-	l+YxslrVf6c0gOO0SA0/PsD5K1pdaWw21b6UDOvZ2bOzshGCyUxaJBzIKoiDgQ9+km90zv2PEiN
-	N61ncD12uiW2nOujUXi2ocH8Eb7UkhwvtCL3t+r/SpqmDqyVV+zrZpCrwoWYi0NTeryvJkEhJoS
-	Y3u3te7XqBGhxGQeDgPkvb5PNeC+loadLg0U3sQsIoBnCytXdir8Rr2TXu2KMvxCOV5nUueBs=
-X-Received: by 2002:a05:651c:18c6:b0:383:1a86:ad0f with SMTP id 38308e7fff4ca-38360667b8amr12361101fa.10.1768432082115;
-        Wed, 14 Jan 2026 15:08:02 -0800 (PST)
+        bh=hGT8HRil383Rr9L6I5CmWyaElfxghRksY5KqONv/sQw=;
+        b=Zx6nWLNpU141fipn0rCPJAmNPbvTRZQ0/HkBNI9VELceM25OP/e5toB1ylWAcOyH+b
+         pxCvSY33H71Tqcm8cYcwa0ScPBY3H3ErR54yy94HFJFjci0B0DSQ3J2TsdA01kINe9va
+         9a8qonOYoRCnOwkN0LHSlN+4qxhYdNtZPc6vs8rp13ol15Y2pvkAV3SgK8pl1JCz6F72
+         vdPqnbm8GTVqfoVyp7HsQGdCfV4oh2jwuCEbhnaik3t7OIo1ZLECmaS/ZZ5Rj9zsI/vX
+         Ce7DURsX1Paxhof66A2UkJwzo/9T+5Z0l7G84e5WkeJSjlbqOf4mf09mH3XuuZzSFFLs
+         6dlg==
+X-Gm-Message-State: AOJu0YzXIymMhV1UzaiepVJvYSzgesFEyegPuc3JCq/g3+B+tF8CC6GZ
+	KxvewlPZh9q9a/oeqU5RP9H1vhfXNti2f1xQMk6a+2A+d87a6gmzPxKK
+X-Gm-Gg: AY/fxX7ob7rUbWxcuCoJoORjudGaVRKzGFmpcZXI8bVfVqUrFveZta3qUaQZErZyfc8
+	wg5u/lUKhbW/jbMgTQQN3rmVo/00ibaLtQ1cSej+ZB+/vBc5PXPrxuOM2hiSmeeAJC/kTii3xLP
+	waTUilKiKgGdPAUiN0rH1u3VNTql585zOhw+EB3uwVZoJaRcyd77IL78If7134mS9rBx/eNvU4V
+	Y2jVof20gp2Ap9DHoAasg2jG1blf6Ek5TM5GI0cqp71yEeRSXF1/yohgtiKp2YA7fShbEwQ/nuK
+	FRewNiMwb6iSw+fcPwn7qU6rAE/BtOD1Il8XxXMvhUr8dgQo3mYZfe1Jiu09UG1hHgvsTwZpd6d
+	GlohjX06kqLd0rhM+nAHHW1m0DtEtacZ7PDcw6cMVYRpLfU5AMK1P1R2R72EiVSAEXMktam3bBg
+	a9aZUlM+54bBUSQ1FqyFF/GBv3yEmdFTVQjPkY9igY+k9Q0eeTr+4g054RNGiWBNM4gKbZP+9QM
+	p+zU2bqrA==
+X-Received: by 2002:a05:6512:3050:b0:59b:7291:9cdb with SMTP id 2adb3069b0e04-59ba0f80f5bmr1383200e87.24.1768432323941;
+        Wed, 14 Jan 2026 15:12:03 -0800 (PST)
 Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382f494946dsm47340161fa.45.2026.01.14.15.08.01
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59ba1020726sm1092938e87.26.2026.01.14.15.12.03
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 14 Jan 2026 15:08:01 -0800 (PST)
+        Wed, 14 Jan 2026 15:12:03 -0800 (PST)
 From: Harald Nordgren <haraldnordgren@gmail.com>
-To: ben.knoble@gmail.com
+To: gitster@pobox.com
 Cc: git@vger.kernel.org,
 	gitgitgadget@gmail.com,
-	gitster@pobox.com,
 	haraldnordgren@gmail.com,
 	peff@peff.net
 Subject: Triangular workflow
-Date: Thu, 15 Jan 2026 00:08:00 +0100
-Message-ID: <20260114230800.56885-1-haraldnordgren@gmail.com>
+Date: Thu, 15 Jan 2026 00:12:02 +0100
+Message-ID: <20260114231202.61271-1-haraldnordgren@gmail.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <56D0BADB-43C8-4E93-A871-6E6B11B59DCF@gmail.com>
-References: <56D0BADB-43C8-4E93-A871-6E6B11B59DCF@gmail.com>
+In-Reply-To: <xmqq8qe0f2iq.fsf@gitster.g>
+References: <xmqq8qe0f2iq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-> Agreed generally, but the chicken-egg goes 2 layers deep here due to triangular workflows ;)
+> I wonder if we can come up with a flexible and
+> extensible notation to specify what branch(es) to compare with, so
+> that we can use it as the value of this opt-in configuration
+> variable?  Something like
 > 
-> I favor something similar to what Junio described but also including @{push} by default (and ignoring it if non-existent), so that folks discovering > triangular workflows for the first time are easily able to see what is happening.
-> 
-> Us ”already triangular” squares are probably well-versed enough in Git to find and tweak the new feature if desired.
-> 
-> Idk though. I think more folks at work should try triangular flows, so I’m biased :p
+>         [status] compareBranches = @{upstream} @{push}
 
-Ben has an excellent point about triangular workflows, and Jeff of course,
-your philosophical instincts seem correct to me, interesting to read!
+If we go with that, then it becomes trickier code-wise to show push/pull
+advice for the correct branches. But not impossible since we can check if
+branch is the same as @{upstream} or @{push}.
 
-I would think that most people don't have separate tracking and push
-branches to begin with. So it's not a lot of people would be bothered by
-having this be on by default. The people who know about triangular
-workflows will also be able to find how to turn this off.
+Philosophically, two main git commands are 'git push' and 'git pull'. So it
+makes perfect sense to me to signal that those two are special, and not
+allow other compareBranches.
 
 
 Harald
