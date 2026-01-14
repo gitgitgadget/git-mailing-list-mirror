@@ -1,125 +1,137 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF0F2D9EC5
-	for <git@vger.kernel.org>; Wed, 14 Jan 2026 14:23:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EDD286416
+	for <git@vger.kernel.org>; Wed, 14 Jan 2026 14:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768400639; cv=none; b=WBcezzNQbx07vgSMgxrvfN/TYdclWQZTCzQ85dJSl1HnEbQs6TMcSFhSEG1Q11uioG4v/z+0nnvQDu3MExlXPVRKLhuayV6k8uU6QKO7/sCQUG/Y2YZlF5DDtyuPaBYqCGAhSNDtUuqmlXD/ehc+YvDDqKWpSLyFxa2v5bgSPCY=
+	t=1768400822; cv=none; b=fPG5vEs3Og4OdXJNnTMbW623HFe8t1Mmodk0cjK2/frmBL+1XoNXgD1KYTKgeTYxJwnWjUBzvCOFHpb4qFIOkUNHPsiCnLiBBvKhj85mb0o6yzyj86RIgBOjoO8r9NbxVx0rwNzK5Uud4Q6i2sIgmX0sZCeCBMFEQSA08F4xJzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768400639; c=relaxed/simple;
-	bh=EUyNW5VM8piuHSMTu94HcVanDpGPup2reyAGBKjPozc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qFJuhlg3ri7szFnww7SWuGMuUbu/gHc1xgGn3J45CNJKeCQAIRWXPkluhgSMzjs4bTVwiHLdA6LjbzHCIHR8FJMDZMOGuiAcxGi61STJoVu9Lngo6oPFlbZ6mQ5+lOIuSjJPLUQsD/4UpMjRUMbmvKQCUFKVFWHHkPWgjTN3Yps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HGo0gFc2; arc=none smtp.client-ip=74.125.224.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768400822; c=relaxed/simple;
+	bh=BLjsHFtbivomjflKLLhNlGYMt+3rzvFalWstdAdL1E4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kIGGAQyHg2TvYy+ouav66Ljl59N4TBAa5kyrvHRC/0jA8SZxJYhm+gBuBv4Q6T5olRGPIl7on2tpseQa4E/iMIvRjF5nXAumEepv8QxPDcYMVrEvcPL+UcO0LG6JGbTZcF020roQEqB5EghlMXHEhh01Lj07xmwRJdBaFWfYHzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k/nwFHx3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AARYIisq; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HGo0gFc2"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-6455a60c12bso8396973d50.3
-        for <git@vger.kernel.org>; Wed, 14 Jan 2026 06:23:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768400637; x=1769005437; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LKzHUzfNLMLYIV2w8XxiekligWS4irqg8WN7FffeK4Q=;
-        b=HGo0gFc2AFOALBuk+RJUdydWx425ZkhZA91YcmPtsPIRV27o9drjWvO05lvqmH59tu
-         nLK3XuMThKRxRg/wPbjecpfPawh/kZmwXzIr6idlnb11qZLbJSj5+gpR04xIC2ScIDBc
-         5oFtzhyRm3yytjZmShQcApXXRkKZMD/TzAPtiodcv1qNKcd550k+oAofNQ7VBuMMZ3/I
-         cyfEktXQWkcPGIAEic28MWTTNGZS1ZGgfDKdCShZqyWNGrKEVhtrnES3RyVwgpc/M5CK
-         r493daYp1OusTpNimwWcsXXydfj15hLNaGmekFjvIjSIXeaURJBdIDKdXOoilgJnTwgj
-         x8eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768400637; x=1769005437;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LKzHUzfNLMLYIV2w8XxiekligWS4irqg8WN7FffeK4Q=;
-        b=OP1KlMgtY7aF26usQOdDVpCiaRgv1tYwm9JpJkkiHLveCkzHxapBCLcwE5I2oTL9cp
-         djVg8T5mzLoug5dGl+rCuPPeXpF/ZUTzxdImdZmhGsaKIcw8PYswaI16+COYHBaHgP8h
-         kXMov5k+SzmC289jIjLLPKtZbvsqCe7DQnSCFFY0Y8JIUp2BkT8feAd67ysEntxc9U3o
-         9w5MWTuarQFfWwSTIopJqQXY6ONk+JMmZqD68jbVofnCMSBD5JuNK+9ugX7Ye30fDjeJ
-         GUMjvJBc1SyWhfTGLHgtOwqEW/gxei8sBbDKe1D74sBtlVvK4KqCdMGOmVBiiwi0hCgk
-         2bCw==
-X-Gm-Message-State: AOJu0Yz9PCOsmZTopEK6eM7tDRTKGVUo2Xb/JmgL1tAxFJz5wBR9t8Y0
-	nBh5ZpPEkwIVvLqtkESnIor8Rtbwb1OIQHXxHaraF6pdOs+QS9RLTDKDxy61r04T7i9XF3aOeoW
-	fsl1rddk9blDuhDC5NrEGGBuu4JxjfYM=
-X-Gm-Gg: AY/fxX6lVLwtVCpOHcDPfTnyWnF+lD262UCh3mynuewL4nd4W3sv6Umus/1AEF3ejDc
-	f7CuT9XDipwn6eDhqhDlKezAC3Q0Q3YWYVNZtw1zB2Ot5uwxlx0Fh5Odld1DZHbFNhkYMCXRTt4
-	31J8mEEFB5skwwK+nYy7ahLbvQfgskp69aeb+XIGWy1KKGwSGY3aCWQHsNUQRFqVVD/ToOkvG37
-	ozSjbn6wIgVNEre+o7HIOydQxFurZhN6YWEmr3sLKaLQ7SdnIBKcVCunh5gvK+59FQe/b4=
-X-Received: by 2002:a05:690e:11ca:b0:63f:b0a3:7400 with SMTP id
- 956f58d0204a3-64901b1cf01mr2148622d50.66.1768400636638; Wed, 14 Jan 2026
- 06:23:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k/nwFHx3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AARYIisq"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8EDD67A0075;
+	Wed, 14 Jan 2026 09:27:00 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Wed, 14 Jan 2026 09:27:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768400820; x=1768487220; bh=gDBEOMxLLH
+	8ggSxDUCAG3k4ccGVRhML+MIWUuRCZZeQ=; b=k/nwFHx3GW/T8uMY6/MLXtk2uN
+	65Ocuv25HMSyCJ3rLPW5bZoA+QCcUOcsS+B9/eA/vzj7bihKxWSoYsCKBQ3Le4QB
+	v4IV6zfQ+F9qeOyuGb6p7cYOGJzY87y0ZIi3BSsJI305m6ROmRIbuo5Y++L/Uigl
+	YvNFA7rWu5hT6FmE7lAiJKRBlIpNqVMt37SKOsfRTFfSu4VGu/VbUkQwBaJT5/2e
+	42oP3ZrMqs0FJpkrufVFWqUHXoj6wopjon6qd4/W5eYRpirPZhRr1zM8rPX4JOd6
+	ceH4R+RxrQcWQUONSf4fdHcmK3K+d8s9Xe754JY5lbxRdsnJ+OqgOA6Mmedw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768400820; x=1768487220; bh=gDBEOMxLLH8ggSxDUCAG3k4ccGVRhML+MIW
+	UuRCZZeQ=; b=AARYIisqkqno20DXtFTCPH+DcfW5+uFkWJTo3m3tOjJ+61oJSku
+	UPaEg2x/iXjJ7w9i9mc+nEs+emGPAsiuorA2mk+5+W85P7Y595OMvwVpA/hTJSji
+	zw3FwQBg4yn1/8Ryph2FerAjCSLYAwwsgezWlGG9LW8Z7y2HSHt03YjpiKVO3ftZ
+	KGWrI4/xgeuoK08wrCxtHBtQEw+OdY2cthl7f/U4F5tH/smtqXAMj81482MdgQ3o
+	zrKTb9XApopBN/OZns+UuX4SSAqwVNxX9Ed4a+s3bU5avmWjWR9h4aZu6k77xh3x
+	S04qmyCFcx3VaKGP3QDR+ZCCEMayweMTKMw==
+X-ME-Sender: <xms:tKdnabElbKmt-fK_-pXQDr1wSNdWCvVQq4LSAirp94FBTkJT2vezHg>
+    <xme:tKdnafwJ5ztxZWwMdvcG5FF-3XXoJdLWZElxggH6e65Mn0E8qgmGFdd1OwGc_9pJy
+    xmW1IRDDgbblV7P4jAb7c-E1HjY1mQ9-P4srfUS5JwcqFKwg3aE>
+X-ME-Received: <xmr:tKdnaaiwJQX5CAI4T4OgaVpFqikkXgJRdBaMp30Z8JaTTSWtEVFBaPQdXUV2XM7MA0VvvJYK_rLACNajf0RA2cPd5i4fkyD2ff3m4N0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdefgedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:tKdnaSyrbYHh729rSQ7Zl9XVIzcfhvTCd09CbBzSxNWzA_xhNHU7bA>
+    <xmx:tKdnaVLlbAIrsq96vGpOi1UPxxqGGeyBEo2TBqFykjWLOZooWoR6Wg>
+    <xmx:tKdnaRTRjmw2fkeJESn0QX-zaDlcBOPWcgZO2laAub9eO2YjIyx9FQ>
+    <xmx:tKdnaVoH6gwzzFgDpBMRhPoH8uOjc6Za5FGh0Dc0Xm6R_qMNWV9nZg>
+    <xmx:tKdnaf4lu_a1hpWCJN6ja7dPK8P_Zm3XgSzgRltiOFdhQUo_GcqvgX4t>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Jan 2026 09:26:59 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2026, #04)
+In-Reply-To: <aWcnsvVdtHYPWOAB@pks.im> (Patrick Steinhardt's message of "Wed,
+	14 Jan 2026 06:20:50 +0100")
+References: <xmqqjyxli89m.fsf@gitster.g> <aWcnsvVdtHYPWOAB@pks.im>
+Date: Wed, 14 Jan 2026 06:26:58 -0800
+Message-ID: <xmqq8qe0gthp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260113180409.36683-1-amishhhaaaa@gmail.com>
-In-Reply-To: <20260113180409.36683-1-amishhhaaaa@gmail.com>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Wed, 14 Jan 2026 19:53:45 +0530
-X-Gm-Features: AZwV_Qgbp2A2Sxm7wW1AW-eybR5zFi6s2BmiWF-neZhQqa6lFiLr0DrKcMvFP18
-Message-ID: <CALE2CrQFZngj6_NDuf0S=_-nDrrf6b6r=C9jMyEVjwMqvh6J2w@mail.gmail.com>
-Subject: Re: [PATCH] t0100: avoid suppressing git exit code
-To: amisha <amishhhaaaa@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Amisha,
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks for the patch. This makes sense, since piping into grep was indeed
-suppressing the exit status of git cat-file.
-
-One small style suggestion. Most Git tests use the helper instead of raw
-grep, so this could be written as:
-
-    git cat-file commit HEAD >actual &&
-    test_grep "Merge branch 'other'" actual
-
-This gives nicer diagnostics on failure and is consistent with other
-tests.
-
-Other than that, the approach looks good to me.
-
-Thanks,
-Pushkar
-
-On Tue, Jan 13, 2026 at 11:34=E2=80=AFPM amisha <amishhhaaaa@gmail.com> wro=
-te:
+> On Tue, Jan 13, 2026 at 12:10:13PM -0800, Junio C Hamano wrote:
+>> * ps/read-object-info-improvements (2026-01-12) 8 commits
+>>  - packfile: drop repository parameter from `packed_object_info()`
+>>  - packfile: skip unpacking object header for disk size requests
+>>  - packfile: disentangle return value of `packed_object_info()`
+>>  - packfile: always populate pack-specific info when reading object info
+>>  - packfile: extend `is_delta` field to allow for "unknown" state
+>>  - packfile: always declare object info to be OI_PACKED
+>>  - object-file: always set OI_LOOSE when reading object info
+>>  - Merge branch 'jc/object-read-stream-fix' into ps/read-object-info-improvements
+>> 
+>>  The object-info API has been cleaned up.
+>> 
+>>  Comments?
+>>  source: <20260112-b4-pks-odb-read-object-info-improvements-v5-0-9a6124e95bf2@pks.im>
 >
-> In t0100-previous.sh, the exit code of 'git cat-file' is suppressed by
-> piping it directly into grep. If git crashes, the test might not
-> notice.
+> I think this topic should be ready by now. The last iteration only added
+> another test that catches a bug we recently started to hit in production
+> systems, and the previous iterations all received reviews.
 >
-> Redirect the output of git to a temporary file 'actual' and grep
-> from that file instead. This ensures that the exit code of the
-> git command is properly checked.
+> I can try to loop in another set of reviewers though if you prefer.
+
+For a topic like this with multiple iterations, I always revisit the
+thread overview
+
+https://lore.kernel.org/git/20260112-b4-pks-odb-read-object-info-improvements-v5-0-9a6124e95bf2@pks.im/
+
+at lore, but it is hard to judge quickly if we have reached the
+point of diminishing returns when the last few rounds got almost no
+responses.
+
+> I also noticed that the patch series at [1] is not in "seen" yet. Is
+> that intentional or merely an oversight?
 >
-> Signed-off-by: amisha <amishhhaaaa@gmail.com>
-> ---
->  t/t0100-previous.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> Thanks!
 >
-> diff --git a/t/t0100-previous.sh b/t/t0100-previous.sh
-> index dd5d9b4e5e..ffe3fda495 100755
-> --- a/t/t0100-previous.sh
-> +++ b/t/t0100-previous.sh
-> @@ -40,7 +40,8 @@ test_expect_success 'merge @{-1}' '
->         git checkout other &&
->         git checkout main &&
->         git merge @{-1} &&
-> -       git cat-file commit HEAD | grep "Merge branch '\''other'\''"
-> +       git cat-file commit HEAD >actual &&
-> +       grep "Merge branch '\''other'\''" actual
->  '
+> Patrick
 >
->  test_expect_success 'merge @{-1}~1' '
-> --
-> 2.51.0
->
->
+> [1]: <20260105-pks-geometric-repack-with-promisors-v1-0-c4660573437e@pks.im>
+
+It was more like "this topic saw a few responses, one saying the
+thing is confusing, another saying the series is good up to one
+point without mentioning anything about the later steps. perhaps it
+is time to see an updated series, in which case my time is better
+spent on other topics first".
+
+Will take a look at them later today.  Thanks for pinging.
+
