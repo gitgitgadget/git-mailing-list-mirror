@@ -1,121 +1,145 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74152BF002
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 16:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDE4258EC2
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 16:17:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768492952; cv=none; b=rN7wJlyS7/bK/jjZ21bRWUaBKbY7y+lpwo6wIHQl428Y+bgugS/JoiYv/s//6CYFZD6cja5N4jqvtusCKQA5ewanE8H3Y1hl3FFy3UU14y92GhHQuNUlCTA2qf31uI+0rG/KXZYwwrvprgtWWf623BhhJ9a8JTab8wEZnDW9W+M=
+	t=1768493878; cv=none; b=t9c8YfT5RJhNhd+x5Qz3GeW0u18njYIa1V0g/3Pdq+newVrNd3NmYIEaZfHL/6Y5Yr81R+XRcOQerXboDw4rDdLSimdWQCtzWWuni7/M1tjDHIIQbEo4yT123rwwpXiVZ3ILiWS6kEJX4aPUMvxJF3DbcYSYRdOKjgKzx2AWLMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768492952; c=relaxed/simple;
-	bh=ipYl3wI8KEktupBs3SpSLafE/cjCSMefHnhy5fg/eHc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=hEEA3lABDIQDOCy1CrXwkBr7mtHYEvc9x9Lj5keMoBFg1h6ebTeIxl8wjyVciz8iEcM1PwTGBydJzbByzdZ3O48/6TrlvNYOwNsxmMkGtcKYvQnRugxYrLbG3xpeO1eZp5RJMJli+BzodeX5t3AhE4ij+60XK1I94kjifD6pEKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LDNBtc9Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A0ADoSPM; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1768493878; c=relaxed/simple;
+	bh=iuqUa1tVy8edTuPBgVjSJLP20CwCqqMye+YF9FWIB4o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vCjD1ANibOx6cso6ENNi9CHUEiXrCDcABXlepNEX2EtepM0Ozce5MpUkToOqAx86YWJeqIv58/jm8Ze2JODyucu5BiJv4OuPutJjJnJn3LiRz6yOuW3Ngj/t4xUOcTSjd/7poIIPuqBS91ca2XOTxnbZ5ZAmnSqdnxvZ3ZueEMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H2h/Z6av; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LDNBtc9Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A0ADoSPM"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 09764EC0108;
-	Thu, 15 Jan 2026 11:02:30 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 15 Jan 2026 11:02:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768492950;
-	 x=1768579350; bh=cM6J3u+cOSRYk/rWZEn9OU60yjb6rEd4QhmtG5eBcJE=; b=
-	LDNBtc9ZLK9UDeaNBx8YjuOem7Et/gtHgLsiVKZ6RPT3OCm/LT/vjJ4tp2LEgbGr
-	wK5ggHVudufZyLjO3yAd/z7PODpH63wJvrPQAm6mKDkPmLMh7KdLizt72vhllT16
-	WRfBqBP9TN6N8eXz9BcwcDtc8cYwZ+1IuG2y54NR5W4HTYTmO/am72upgsNKNFoi
-	H47ytTzUI0J/OAA6HCAUaX4Cams6LZIS6Xurl16dPfD+O+mgA3GJDNdhVbV4IBEZ
-	p4B+OxQ2pGeuO9UV8H/iFljvXdWFcmL075c8fpgCKo/3T8pmq604IuUcsHVUjFeV
-	C8OhSXYbLujR6CzEdy2Prg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768492950; x=
-	1768579350; bh=cM6J3u+cOSRYk/rWZEn9OU60yjb6rEd4QhmtG5eBcJE=; b=A
-	0ADoSPMc9op3dq1S78bLazp2PTUQXeBhKMxcBF8ck3YgVKvPHfYunSlCcf2tHOBA
-	SMeAiQ8SpndrvZrEcrq6NtA/VOxty2UMUiTOFuXR7Mz48zHMML6HOrDkWqC2dUX1
-	Tcl85cY9SRAFdeUTyGQisJPyWluR03du2+hXIC66pzROHXfmrYbayfKJqsm2IKac
-	VmvXWIoDOl59XhiZmVXPNjl4KrvXsfNtDfeMxceZaUepDcJdLizWiu41Sna6GaUr
-	2ECPN9yNxyWREL0TqNE2IOMit9dPcrKe4jAEsj1dOGxVxohafU76x+kBzSVHAPmr
-	AnrTgZo6SSHX32eof0YNw==
-X-ME-Sender: <xms:lQ9pacK7Q_laq7gSpci5J2MMHplx9aKsHOCIdZXZEPbc79T4KMcMF9A>
-    <xme:lQ9paW8R7irfuOvNtkiAIdAel3er-TJkcTouPPXIiy4wlvFtasKXvMNabswLfWyS0
-    1z4tH3iHq2BFVdgGxr8l_sTnMjUyrmWR1MHLlpJ39HDSoHgGUcEdQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdeigeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehguhhsthgvugestghouggvsggvrhhgrdho
-    rhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepphhsse
-    hpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:lQ9paUyypGuNXoq3opAeZ1pnxeYfOe4IOlQzpX8-7xthgLWSAoAfKg>
-    <xmx:lQ9paWFAgOyD-RobhXavytWFwlNTd422yVRkn-xwILHh_oKJ5fl_mA>
-    <xmx:lQ9paQzFHxEPz6XJSiMSCGhB4TBk0Ptg6LFiwHqOn27zcXWolvbMeA>
-    <xmx:lQ9pafv7NTNqi-Xz_KkbEWptGnoYFzRyV54GEnts7lR8r56xzeTL9g>
-    <xmx:lg9paZA0DgO0nG8OHcdQbdjnT9Z6OmHAsepCNgcpsiAmk6EmktnXRSue>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8EA5F1EA006B; Thu, 15 Jan 2026 11:02:29 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H2h/Z6av"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c0bccb8037eso449092a12.1
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 08:17:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768493876; x=1769098676; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wDarbCctHsl3cL0UaxXs1k/zsSuT5nCjDHGMA8Na3jU=;
+        b=H2h/Z6avyrg0jC37VOdXDYEGco5s5BvrLGgIxMCNdhe2Ya8psa/pItaeip1YnRGhJK
+         O8Le9LL4f/OXeMvtkaHPNKR+/qCNPSPU/32G2KmT9xxk4m4pcvDRImzIuy+rIu1J0nMK
+         v8er1v4716Bif/Q/UcO/xome1jIBsujNe4yBagiYsHySe5W3KKZdFI1UE/8Xp68ySNji
+         eNC7OCerzwUTGf7O9UNLndYy0B0Z7fjevRINqyiFPMq9F8Jvl7yUUmGIU4lKOUVSFFeG
+         k36MpJLXMuqAaaKy8NwYJYA/yEAsqIjShY4YxFK6XQozHprPL/HF8Zdw9Ye3TPQdjNNl
+         x50Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768493876; x=1769098676;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wDarbCctHsl3cL0UaxXs1k/zsSuT5nCjDHGMA8Na3jU=;
+        b=wHwaJGmMvREb3vKi7WL19D3+PYX6daHy0tsjRSjeDHJFuTlBzlg6dcaFN2AlvGTFQp
+         +YED4ywcOFJgpM2SWv1/WooQNyrlJh9zZR/kZk6rRQMHt/0gKsxm8JNhY330ku/20j6p
+         axmYNUm04j2ssP7JWj+556nZ/0R8bwZW4+L81n2KUmKzsqNCv8BkA7XZg0FKnEJ1epbm
+         CD2XFe5xodJ5HQ3dcWQAXd7ST0ShsykWfhzVrh6mcKPHoQ0sAJIMMEHRkqe2wrO6bO5K
+         YvePyfk8MmZGvhC08fNWUc/cn2EvbdY3KEC/RuQ+k8wh8DLxzWOwWsDeduT2pqj+CZZ4
+         6V9g==
+X-Forwarded-Encrypted: i=1; AJvYcCUMTJxXKf5GW5FvGJJIBH8cJkKqIHG/vOlKp0efrVMfsPIYH222jfAZ8J3aKBfpVkxnk8Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVXCYy/XBiOBElWBEoKJmSnTROpPo/ViArJJWVIlLHP3MDaX3P
+	n4DEbpPH+S+WJvOwTQ4kdY2N1I1Sm773FkUssp4uYGRYr6jzbi8V0eH6RAjOR9HNrx7bh0rIrC0
+	KCqI+z6K/9PHvmOvO5OTXRCu0R0EbSaU=
+X-Gm-Gg: AY/fxX7irtpysDxZwCBNT78k8ELMemWC+urx0cSDI+1WdhDyLVsg6bw1ICseOV11gRp
+	R2gxyFlxvgneRTm5v+lJ2rWQDLhJwIbZuCW4hzNNrwAwP1M+ViCIoMmGTkF9+lk9EF1pPqA/RhF
+	DZmu5oBu6F1gBfbVCnuTIzvs4Qhu0+NGZk0/g0KsMuKgryVjmK2QC1BvugqXJuwSEpU+rE6jK/F
+	YDAnFdkeGS/h6k68hgPJNqf9KrxK1n5qI8KUbplckxkHTS3g3DtgqOJfV19anTZ0VpwgEq7/gLp
+	F+keY+D/YSsWOj1mwkDaX5aAIdH9pIgpaar5QUDu3Ymi7XpN26pcB+ef5Rq9oNpJNoT7
+X-Received: by 2002:a17:90b:580d:b0:341:c964:126c with SMTP id
+ 98e67ed59e1d1-35109152e03mr6621460a91.34.1768493876190; Thu, 15 Jan 2026
+ 08:17:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A4B423GE8mRZ
-Date: Thu, 15 Jan 2026 17:02:09 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Toon Claes" <toon@iotcl.com>, git@vger.kernel.org
-Cc: "Patrick Steinhardt" <ps@pks.im>, Gusted <gusted@codeberg.org>
-Message-Id: <bc0db8d5-3c5f-4dd4-9c35-ccb02a6bf5c9@app.fastmail.com>
-In-Reply-To: <20260114-toon-last-modified-tree-v2-3-ba3b1860898f@iotcl.com>
-References: <20260114-toon-last-modified-tree-v2-0-ba3b1860898f@iotcl.com>
- <20260114-toon-last-modified-tree-v2-3-ba3b1860898f@iotcl.com>
-Subject: Re: [PATCH v2 3/3] last-modified: verify revision argument is a commit-ish
-Content-Type: text/plain; charset=utf-8
+References: <20260114162427.GA885771@coredump.intra.peff.net>
+ <4F632782-4B1C-452A-A64B-CA223D2C16B0@gmail.com> <20260114221716.GA1013308@coredump.intra.peff.net>
+In-Reply-To: <20260114221716.GA1013308@coredump.intra.peff.net>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 15 Jan 2026 11:17:45 -0500
+X-Gm-Features: AZwV_Qh3xY4CTqHc5Aky2PEIalUTxBc4R0MnKQCJV-SDOgRuTRYFRZ_3qzsDrtE
+Message-ID: <CALnO6CD3Zg_69cPPn+Rh4EKDF-tDQSLJ42YSMJz308=1C8ZQHg@mail.gmail.com>
+Subject: Re: Triangular workflow
+To: Jeff King <peff@peff.net>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org, gitgitgadget@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 14, 2026, at 11:24, Toon Claes wrote:
-> Passing a tree OID to git-last-modified(1) would trigger BUG behavior.
+On Wed, Jan 14, 2026 at 5:17=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
->     git last-modified HEAD^{tree}
->     BUG: builtin/last-modified.c:456: paths remaining beyond boundary
-> in last-modified
+> On Wed, Jan 14, 2026 at 04:38:33PM -0500, Ben Knoble wrote:
 >
-> Fix this error by verifying the parsed revision peels to a commit-ish.
-
-Nitpick: =E2=80=9Cpeels to commit-ish=E2=80=9D =3D commit-ish so this is=
- a bit
-redundant. Either just =E2=80=9Ccommit-ish=E2=80=9D or =E2=80=9Cpeels to=
- commit=E2=80=9D would be
-enough.
-
-s/verifying the parsed revision peels to a commit-ish./verifying that th=
-e parsed revision is a commit-ish./
-
+> > > Le 14 janv. 2026 =C3=A0 11:31, Jeff King <peff@peff.net> a =C3=A9crit=
+ :
+> > >
+> > >>> Yeah, though @{push} is usually not explicitly configured in the sa=
+me
+> > >>> way @{upstream} is, but rather a consequence of how push.default an=
+d
+> > >>> remote.pushdefault interact. But it was added for exactly this kind=
+ of
+> > >>> triangular workflow. I sometimes will do stuff like:
+> > >>> git range-diff origin @{push} HEAD
+> > >> I imagine the same thing could be achieved with
+> > >>  origin/$(git rev-parse --abbrev-ref HEAD)
+> > >
+> > > Sure, but:
+> > >
+> > > 1. It is a lot shorter to type @{push}. ;)
+> > >
+> > > 2. Using @{push} works everywhere, even on my non-triangular repos,
+> >
+> > Just so I=E2=80=99m clear, this is only with push.default=3Dcurrent, ri=
+ght? I could never make @{push} work otherwise.
 >
-> While at it, also fix a memory leak in populate_paths_from_revs().
-
-(Whether or not this is a stale sentence (see Patricks=E2=80=99)) Why no=
-t a
-separate commit for fixing a memory leak?
-
+> I always use push.default=3Dcurrent, though I think @{push} should work
+> with other modes. E.g., with this setup:
 >
-> Reported-by: Gusted <gusted@codeberg.org>
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->[snip]
+>   git checkout -b foo
+>   git clone . tmp
+>   cd tmp
+>
+>   # for the sake of simplicity, our triangle goes to the same place ;)
+>   git remote add triangle ..
+>   git fetch triangle
+>   git config remote.pushdefault triangle
+>
+> then doing:
+>
+>   git -c push.default=3Dcurrent rev-parse --symbolic-full-name @{push}
+>
+> and:
+>
+>   git -c push.default=3Dmatching rev-parse --symbolic-full-name @{push}
+>
+> should both point to refs/remotes/triangle/foo. Using "simple" will not
+> work, because it demands that the upstream and the push destination are
+> the same (so it doesn't really make sense in a triangular flow at all).
+
+Gotcha. Yeah, simple (the default) doesn't work. I suppose upstream
+might, too. (I also have push.default=3Dcurrent globally, was just
+wondering about what the minimum was to enabled triangular workflows;
+see <https://lore.kernel.org/git/CALnO6CAUSU-Pq_r-WYm3o0to6H8MdqiYOuoKaRfL1=
+PTt30VaoQ@mail.gmail.com/>.)
+
+> But in a non-triangular flow, it will happily point @{push} to the same
+> as @{upstream}. I use a triangular flow for git.git, but most of my
+> other repos are just personal projects, and I push/fetch from a single
+> central source.
+>
+> -Peff
+
+Ditto, yeah (_sometimes_ I actually do the triangle origin/main, local
+branch, origin/branch, so I almost always set upstream as origin/main
+anyways). Cool and thanks!
+
+--=20
+D. Ben Knoble
