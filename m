@@ -1,133 +1,100 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DF4395254
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 13:15:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BAF21B9C9
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 13:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768482949; cv=none; b=m7jPTU9MwiMONBKMOg1ZCb8fov00+aI6If1AOz0BXSSMK119Z/rz23+6QIGWgWbgijQgp2x8QO6WGZ6UFVoA3P/OZ4iU0bNoBNyCshr1YQDQzuaDksoG9MkzCNWU46Bb7lUPOkxO+7Krfy2w5OaXY/GqQUQFGS5YhcJkSMy4Vtc=
+	t=1768483027; cv=none; b=nJNLV6WSXc1FLpJ4QQEEsB5cH+A8Siw6jWZkSJZP/wUs6kFAD06Tvl0IPmpg0yy5Ob97Ajx4iEVIAqNp2wrF/neU9Zp7lK2U7zT3nvx+HLfrMgoscmQfrl28wWp3qaKjVtAMcDtv8rF04UHiXuoHzpo4V1Bhw9K3fj4q4kYQ7B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768482949; c=relaxed/simple;
-	bh=sSkGeiWfqxw5oAMNHKGPsCgkBrRboHu/rIaXZGrAOOs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MdfEW3wdREFPpwk3oOcATFwoHXczAKeZqSwlbh14wi7WOnfHipwOhQfza701ba1/pLNr/a22bT6RbIfXx8wb5Nybw/7zmuYYjJP29dWVMfxXCY0ArAnmsCgYuYSfZMwt3p2QRK5jL2+mHo74yPE9Irw4fLxxGfnkX4Lm9FeDaf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=llGHublC; arc=none smtp.client-ip=74.125.224.47
+	s=arc-20240116; t=1768483027; c=relaxed/simple;
+	bh=qVY9KEjsQUo2lTPSAE3Dkn4VwEgRiN9xkiVi/oY220c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GF3Nx0UzvAhtOqSEWcg4KZjTLO/CJRcMmASIzoHUCAvfU4Qfe8zrWLg0MIkIP27ruEbsE/ld1Dy1Uot6NUOPslRMfROoWc2E/MndALRZnKDoAndtL3j53HX1BYTeNvIJoS5L/mTP08TeVXaEKwkH/cIG236pGaKpBn/zDB1Dv7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5rIFGbz; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="llGHublC"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-6446d7a8eadso746154d50.0
-        for <git@vger.kernel.org>; Thu, 15 Jan 2026 05:15:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5rIFGbz"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-47f5c2283b6so5611115e9.1
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 05:17:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768482947; x=1769087747; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=935VJf0n7EdJTt21LJTC+O1hRXmqDPZ1zQ/cd5U0I48=;
-        b=llGHublCVNkn97n2Xr/JRmkVg0ZZKrHWafvjVwCMsxniN4zQufj7zOI8ItnsXpkpNs
-         DZpyaH72Pocs4L7fLVpaDqSyP5ggKbgwRqcCU9bBTldyQ7f23hPVeR2NzaQSMeQ5wM/L
-         rBD08YWLn39ioj3pKQ6RiWQpF8SpaoP2PpqOqj2PV4twp6iiZ1HMM0vAkmnD7A76c5xP
-         UCksaD5F1PrG0ZKj11UkCKUvepB1nwXR4e958zM4ZwCKqH2vFbz+ie02ksPdxnDqm6T/
-         L57MEgxb3DFUIUHNL4Hm3rMsuvlr5Xepk+Tjyi/o/s3xFXF/YtpDZijDytX/+f5qUHIz
-         7Lwg==
+        d=gmail.com; s=20230601; t=1768483023; x=1769087823; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=K+GF/iFqmYang1B2wfsbj5ao19GLWJjp5y5RKrWvoD8=;
+        b=V5rIFGbzXe4Ih9NYvVp3FqSxXh+n5GxqXkLFqPJ/BfufNBpxKCqcKauEWGCiOhDzEb
+         t/cdi1QxI9TuvX4xi/YHY+9/q4xAeGUOTbJ4QCgApbBPZUm3aEcYn3ig+Q1keOnxkuad
+         XLqz7xT4vWclzAa0l6Znc30xpw8f8+XAPo6y7HPNx69U8t0heUidtj7yT86d987tArgU
+         dD2mUHO+rLN3kyUwWtl8CsEuqO277D3YTQYR59WrdxKBxEPm81VNq48rOtEgXizqpsdk
+         BUw9dIYHwjDPKq4X26MMktcNAHLkhq80MPCz9z0WLg4pP74SmfwIZ3u89W2MRYucADIf
+         uGsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768482947; x=1769087747;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1768483023; x=1769087823;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=935VJf0n7EdJTt21LJTC+O1hRXmqDPZ1zQ/cd5U0I48=;
-        b=qXa2I1Y2u0xJTLZMDkDP/Wty3cpO8jqqSRI++awbp1jhWCfr55m4WHcfBFSXJh0B6a
-         5utswIpHaH3Jt4QYlsByBGLfE7FfGlomfbbkPAByZT6Guvoh7d5fBJlgbFn2w8WlkbCQ
-         A3m4bkXGVQBO1cMk+MbnmECWQnZLMhWKSTRL8DQ47yYHYAivs+PWvWFHSIHdltX7OXjx
-         nIC0vvUoFH+siawJ4S0jXlD7LPlQeB8COs/nJno3hxvZZgoxgExqiRLkJBT3TgjfH7ol
-         X8OybhhCZBNzNZ2svevgYjv+Rz86I5aJU8eKgUemF+KF2HgKhyUUznF+QWqLv9AAsdZY
-         8+Gg==
-X-Gm-Message-State: AOJu0YwaYnMlnqzraE49tgbNp2VdcGkaF5wQpClgERmRw7CNKjXCROlE
-	9jv4YumsEUY12n4AZ/gMzIJzENpdPdsB+gZFyZtNAS++N7EKxjKDK1Md8WlRpavZ1JLCsP0/wgz
-	T6Q+4JTTKEUChVUPpD/hWI0y0Vg4j9HlnJWceIyM=
-X-Gm-Gg: AY/fxX4z8YpVkZ7rf0lxgy7e9ouYcfT9zf4g7AN4UZ73yxhHRM/KND7OSuHr+s6PMw3
-	JkFO0SmX3biByYzMrs/S5KSbNVC1kL83LY95VvtureZ30lo6LYi8Jro9Bwhfd+AfCVDbmsRzmVi
-	AKH4W4FNxIpfQki0tOIcRXCTvyL2AFJCWx9xyrqdqhMod+KzbWZyV2UyL+py9d0BxrVzh9qrqlA
-	3f6zRWKly5mVaTXhmn4ptKxAyRoo/gNeZOvkOqfyiSyfN5c6ckP6Tf88xSq6L38fs8xqKuSDNGN
-	Aj8hpo6TtnXRjev+uK7b15IBVbA=
-X-Received: by 2002:a05:690e:b84:b0:644:71e8:cce9 with SMTP id
- 956f58d0204a3-64901aa65f4mr4908742d50.5.1768482946808; Thu, 15 Jan 2026
- 05:15:46 -0800 (PST)
+        bh=K+GF/iFqmYang1B2wfsbj5ao19GLWJjp5y5RKrWvoD8=;
+        b=LpOLd7p9PwLABgUvkDDaf55iC43ZaPAH5AUBcFbhPib38aR+Dh8mL/IusVfytYlaMM
+         QjP85gHkTm8LzskIJrW8KSd8SZD2rn92l6cxjIWanhVmeMW+qUz/fHLDZATn+wE93PmB
+         aEzcOsln9fH9/oLxnqYqZtGXes8/KpEV4a3Q1gwuIhVuryIyx81qPEsSZgBMGHM2VWvV
+         vY3t0mPDNEEvBQZ5S4gHoMHOSGgqewz7jILuPv5thfUQPgNitQZq8xRBrOfmpdQY54H3
+         ofpzBA2/jwhupfCrBNGvqUNSS/QN+5FfHewvOzxzgdxGb4alzFhg5gUOVbnG5T3cNaWj
+         Twsg==
+X-Gm-Message-State: AOJu0Yw7xSRBOdluVbfltDp5mnZtaDvPWPrEon7D1tbeu0YkQU0XjGuT
+	8QzkIlMOEDniXaJ5Jl42AZbgawoVW35eIF+/7oSVtQM2N12I7qoHepTcOqwyJA41
+X-Gm-Gg: AY/fxX4k5IX/md/bEQ1kg7vWhN3vvUY2nPrV2y2TLZhVjV92gozJb7Fd0JijoNGnWW8
+	xLOXWMWz5rEB6IQTzocGOP8PD8pZtZM0TO2hoV4z4ThE0qIT/vmVoX0Ge5Huo7T9pWakuEzznn8
+	OYP3UuUe9LsW3PUqRJ3vOPZnYAiw9BbvGJHe1rFgIqr/Yuc+VpgYu6/YT8RCi3GoiCjWK/t+hgv
+	bviHqvoIwoB6plD9h2G2vE4MrIIe05key8gE1QBT2skbkkZZpE2fAQx5KqA9KH4e8XHjDuMSdfE
+	VVhGx3w0/Sqh0u8EFOqC9w+0kwOaCRZ4l1lpO31qU7u8QXgmQxhvIsUV7+2DPQ7ir4ThJ3Psvui
+	hE2oduj1MFg39JRM2EFfAxEtE91tXDy+NvRi3eGufs1TdE0Qes69ty4B6VUtG82nXMdrKbYwt91
+	nO/+Y85X1edQMgAfsllLXsyBfWed6IoUuHyP1yvHUw
+X-Received: by 2002:a05:600c:548c:b0:477:fcb:2256 with SMTP id 5b1f17b1804b1-47ee3371876mr82080485e9.17.1768483022708;
+        Thu, 15 Jan 2026 05:17:02 -0800 (PST)
+Received: from localhost.localdomain ([105.113.70.169])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47f428f1ba7sm49882495e9.15.2026.01.15.05.17.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jan 2026 05:17:02 -0800 (PST)
+From: Seyi Kufoiji <kuforiji98@gmail.com>
+To: git@vger.kernel.org
+Cc: Seyi Kufoiji <kuforiji98@gmail.com>
+Subject: [PATCH 0/1] oidmap: make entry cleanup explicit in oidmap_clear
+Date: Thu, 15 Jan 2026 14:16:33 +0100
+Message-ID: <20260115131634.51968-1-kuforiji98@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260114192803.4852-1-amishhhaaaa@gmail.com> <20260115130935.93526-1-amishhhaaaa@gmail.com>
-In-Reply-To: <20260115130935.93526-1-amishhhaaaa@gmail.com>
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-Date: Thu, 15 Jan 2026 18:45:35 +0530
-X-Gm-Features: AZwV_QgkP3LfSSsbCOymBT4ehTUoZsCgdS2mxGucQAoqF8CdDy9K8yDGUpbVvRk
-Message-ID: <CAPvEtreX9sGHUn7+Y0kLo_VnK7Y=OYLq-kz-+np3bu1QtoEpnA@mail.gmail.com>
-Subject: Re: [PATCH v3] sparse-checkout: optimize string_list construction
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, stolee@gmail.com, newren@gmail.com, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Made the changes for other 2 places as well!
+Hello,
 
-I was also very curious about the presence of
-string_list_remove_duplicates in the original code, from my
-understanding string_list_insert already removed duplicates and
-string_list_remove_duplicates was still present with it.
+This small patch improves the clarity and safety of oidmap cleanup by
+making entry destruction explicit in oidmap_clear().
 
+Previously, oidmap_clear() implicitly relied on callers to understand
+how and when stored entries were freed. This change introduces an
+explicit cleanup path, making ownership and lifecycle of oidmap entries
+clearer and less error-prone.
 
-On Thu, 15 Jan 2026 at 18:39, amisha <amishhhaaaa@gmail.com> wrote:
->
-> Improve O(n^2) complexity to O(n log n) while building a sorted 'string_list'
-> by constructing it unsorted and sorting it afterwards.
->
-> Signed-off-by: Amisha Chhajed <amishhhaaaa@gmail.com>
-> ---
->  builtin/sparse-checkout.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 15d51e60a8..edabe7cbd9 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -91,7 +91,7 @@ static int sparse_checkout_list(int argc, const char **argv, const char *prefix,
->
->                 hashmap_for_each_entry(&pl.recursive_hashmap, &iter, pe, ent) {
->                         /* pe->pattern starts with "/", skip it */
-> -                       string_list_insert(&sl, pe->pattern + 1);
-> +                       string_list_append(&sl, pe->pattern + 1);
->                 }
->
->                 string_list_sort(&sl);
-> @@ -289,11 +289,10 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
->                 if (!hashmap_contains_parent(&pl->recursive_hashmap,
->                                              pe->pattern,
->                                              &parent_pattern))
-> -                       string_list_insert(&sl, pe->pattern);
-> +                       string_list_append(&sl, pe->pattern);
->         }
->
->         string_list_sort(&sl);
-> -       string_list_remove_duplicates(&sl, 0);
->
->         fprintf(fp, "/*\n!/*/\n");
->
-> @@ -311,13 +310,12 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
->                 if (!hashmap_contains_parent(&pl->recursive_hashmap,
->                                              pe->pattern,
->                                              &parent_pattern))
-> -                       string_list_insert(&sl, pe->pattern);
-> +                       string_list_append(&sl, pe->pattern);
->         }
->
->         strbuf_release(&parent_pattern);
->
->         string_list_sort(&sl);
-> -       string_list_remove_duplicates(&sl, 0);
->
->         for (i = 0; i < sl.nr; i++) {
->                 char *pattern = escaped_pattern(sl.items[i].string);
-> --
-> 2.51.0
->
+In addition to the implementation change, unit tests are added to
+exercise the cleanup semantics and verify correct behavior during map
+teardown.
+
+Thanks,
+Seyi
+
+Seyi Kufoiji (1):
+  oidmap: make entry cleanup explicit in oidmap_clear
+
+ oidmap.c                | 23 ++++++++++++++++++++---
+ oidmap.h                | 15 +++++++++++++++
+ t/unit-tests/u-oidmap.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 76 insertions(+), 3 deletions(-)
+
+-- 
+2.43.0
+
