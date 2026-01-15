@@ -1,54 +1,91 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0552D7DED
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 17:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497618; cv=pass; b=XXNvHGARcHMa+KA42BU1JErwzl6kMi9wxZz1hd2WNwzgcSpilcrjb6GPmNd1zka5FfqEhlxhPAPi/Oa/11KOKYqCTzFr6oJuObTqPPt/z7UAy/iyiLMolpOc2Pd6kv1i5Nus/yzB2+9rgjkkjoEOqsRDoPLRSIlOS0djBq3BZlo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497618; c=relaxed/simple;
-	bh=g+ajSeCMFZt3FnDlUCZ9i0B1iuNm9kx159gN7e04pE8=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE63D3C1FC7
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 17:33:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768498392; cv=none; b=JDO3Y4ULE8Goa8goGoaZVVR8nWtE9wP5TbIAWDsu3BmklRbmPL+SHKlnusOWCgjC0cKdgSMQUhXf9JO3HZxpF0MYhweRQah7ii70hh+VbVxV8NDTvAINeZpuPoPkVu2ZsHevBxFYL8/wknLHRol8AP5Qxw9eItMNz6SVW4xNgj4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768498392; c=relaxed/simple;
+	bh=VDP3OTqO9LigAfbyD6PCrN+Lrl6EUpY3Pam+CFlplUg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IntW1k4BWmmBf9UpW90k3U8q1iIACAElQuvf9jhIzixeP4Y+HD8capEbAIw/QtaPZOAg4IN4A9q6FqWCDGuzAYZsEBQnlpPrhP4DzsIkaE6zcgHYePK+E4ToCDGBgIX8/BHSaR9pjIWEPwntmgGNaXovefUN7srbyp5hpSVI3Ck=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=S1NdUmcV; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=SZQI4BGXnxRowmqYQo9pKKlfk3wW+O25M88IV9WbpXD6DpPvtobjzQZ9C2v7WDfVBLM3sYlsjK/DgYEbiLZDZscPBwklMDVHLzPZ7RdBf0+o97S6/lRxHoiYRVcu8oYkSNPXVQKwcfZgPML4nCLEQfkRx4vxuIbI6BD2iL/zygM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i9SkyT0Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m/JxgasG; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="S1NdUmcV"
-ARC-Seal: i=1; a=rsa-sha256; t=1768497598; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ECwZ7tnQRC3EklTLbgI4RcqictMnLhCyhxd0DE1iRmsxRTKDV6OFGj+u5rBOVidKiM1ti7NZL1GCFR1QN1AUKT9PUqfK/JD0FYivGAMTWDPQ1xGfaUF5Q8eVLEGuHYEGjCyegOXJM+NOJSl0ddcvQ8cSi1z03TYb/ZHJ/Lm0auo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768497598; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=DksmFQsrRBLXEGXuJrzXsi7R/hz9nwcW0EYNUA6AN5M=; 
-	b=eUUcS6l70AO2CJaucN6AZ/1Y7Y6Grrm1zOwiEdH/w6eN5xKS6OCRiyQAnEg05XWHmoYnxS5QCpwrOFG7ZMjtYq03MpbtiF2gCg0ckjqXXpTzS9AR+1JZe33GkQh3Mkl37hW17Y2LIECeCIHzJY4F5A91Xf3YODImeQFVVeQiHBQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768497598;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=DksmFQsrRBLXEGXuJrzXsi7R/hz9nwcW0EYNUA6AN5M=;
-	b=S1NdUmcVtu1TucwNUqcb+msNdxdlwdUBMtlx2+EOe6Bg84m9XvBRJ/rA54UXa4Qn
-	E4B4U71bRd3zYDmSpS4zvLj206rncFiXNrsB4Aws6WpKT3SxRVyKPSnhGrck4nNywu8
-	I7+sKYi6fDrcxe2Y1GWmFRDY32BBQqlvvY8P7vsw=
-Received: by mx.zohomail.com with SMTPS id 1768497596774294.1564777530467;
-	Thu, 15 Jan 2026 09:19:56 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Emily Shaffer
- <emilyshaffer@google.com>, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, Jeff King <peff@peff.net>, Chris
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i9SkyT0Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m/JxgasG"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0777A7A0092;
+	Thu, 15 Jan 2026 12:33:10 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 15 Jan 2026 12:33:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768498389; x=1768584789; bh=GlY2GKHO9M
+	CjEEhutSjo5sdCU2RnZMnR+65gSRWIbSk=; b=i9SkyT0YL4LyfR/CrdX9xVvptt
+	5Dv6YrKJ7j0GzMyq+NKL3xQVGcpRJirGx7eiwzojnpPQKm/jx//58Y/Jn5OGwHII
+	RszWN0FQ05oST4EK2F8XzHYswbZQSEMTJY4gnKPVONHa/UousGTSMX2WvH0MNptF
+	WiH+phC+GTHQQYuAWU14hL0mOFtVvPNLeCF1Ge2J0r0q/rJm6GdkAUdZWsAKRG9z
+	QaFUicS6OIYDy511S8SzNgOakoLU36iwteD5a1xYpxG7x8J1HZXXhSsGrf7ygTJ+
+	YPoBMf4YjqQz3m2UbQYwjQ1hmwAWO2dz0q5F21md0zsz6U4kfUyINctSgF4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768498389; x=1768584789; bh=GlY2GKHO9MCjEEhutSjo5sdCU2RnZMnR+65
+	gSRWIbSk=; b=m/JxgasG/Nq1dYry/d9Q0d19qF3XLUxTA0bsX3rEsn6gIavHHXR
+	DQ56BYoJiRaVDSIO8GzVRnpkXYZZZhhy6aJQ5Ag7ScNrcqWokAYR31UuURa4tHwc
+	JoEQkVz1jmFkdKLxqzCemwNz9+eY5n5Wzc4x6l2OUh7E9iXXW7Ldz77Vo3GRFKHZ
+	8yATpW1RiMGIavKxy+YEKGzSEd2/JDRu7jRs/tB2vhESNeTlmbjI9+KhXNOJIHzO
+	WXQmIxatWKvhmn/innFxsYmY2yd/S3Se5QVu8RWvim6llr2GRCWqCmQzt5any/XU
+	LZFDfR7S+BGc0opx+wcsmHXcJ78P4Wbjnzg==
+X-ME-Sender: <xms:1SRpaU80VBR2t8ku7OAT9ELGzfDfCiWcC2dmFePKePvZIq9K7gW1bw>
+    <xme:1SRpabw6FpgCazuc8DUyF1R0h6h0Ju-0WbFrLj_T1lPmghHUiD_P7jZXQQwBj9v4l
+    zys20NpvH62Ydcie-mAx1Rir10KbE9r5ACSHt4_v1NN9Vf5ofbXcg>
+X-ME-Received: <xmr:1SRpaQOoGHvqCWGukPME8ZqNTboj9VCu_oIYKlnxTdNxPf8FPoPYpwhNKiJZJyQtalvhVzglHLENa3AY6oS_kK8yvKjmX4mCg5u_gwg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdeiieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
+    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrse
+    hgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggr
+    khhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
+    htpdhrtghpthhtoheptghhrhhishgusegrphgrtghhvgdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:1SRpaQ9ZH4JZAzJ0HBSe3-_Iuh_1fNzW-QkJoEfKOkdsUWDhjeHZbg>
+    <xmx:1SRpad7zbtU50SfywhxIOCz6QgtJgQh51JUZ8WK7jrOLRz_gMJlkwA>
+    <xmx:1SRpaW5Ht8SJ2RMX2YlQn1UFudTCmoMvuFJmodgKhulsSGlXeNTHqQ>
+    <xmx:1SRpaWqOYSzjWMoWMnJUP-0_TDg_TMhxnr5pkw-2qsgeRm6_I8Gddw>
+    <xmx:1SRpacIewgvjo10UE-jhrC51i8NM_JDJMwIzvlpflxmzau2qvMrBoJQ->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 Jan 2026 12:33:09 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Emily Shaffer
+ <emilyshaffer@google.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Jeff King <peff@peff.net>,  Chris
  Darroch <chrisd@apache.org>
 Subject: Re: [PATCH v3 0/2] Fix two hook conversion regressions
-In-Reply-To: <xmqqpl7bc68b.fsf@gitster.g>
+In-Reply-To: <87o6mulrnq.fsf@collabora.com> (Adrian Ratiu's message of "Thu,
+	15 Jan 2026 19:19:53 +0200")
 References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
- <20260114185731.2381550-1-adrian.ratiu@collabora.com>
- <xmqqpl7bc68b.fsf@gitster.g>
-Date: Thu, 15 Jan 2026 19:19:53 +0200
-Message-ID: <87o6mulrnq.fsf@collabora.com>
+	<20260114185731.2381550-1-adrian.ratiu@collabora.com>
+	<xmqqpl7bc68b.fsf@gitster.g> <87o6mulrnq.fsf@collabora.com>
+Date: Thu, 15 Jan 2026 09:33:07 -0800
+Message-ID: <xmqq4iomdbn0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,40 +93,20 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-ZohoMailClient: External
 
-On Thu, 15 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+
+> I agree with this.
 >
->> Hello everyone,
->>
->> This series fixes 2 regressions reported by Chris and Kristoffer,
->> introduced by the 'ar/run-command-hook' merge into master.
->>
->> Based on a discussion with Peff on v2, I do plan to revisit and
->> rework the server-side hook I/O polling & batching logic, however
->> that will be a separate patch unrelated to these two regressions.
+> We can't let these two regressions enter a release, so we have two
+> real chices:
 >
-> I've read these two over once again, and am inclined to say that we
-> should merge these in upcoming 2.53 release.  Opinions?
+> 1. Merge both fixes to 1.53 or
+> 2. Revert the 'ar/run-command-hook' topic merge.
 
-I agree with this.
-
-We can't let these two regressions enter a release, so we have two
-real chices:
-
-1. Merge both fixes to 1.53 or
-2. Revert the 'ar/run-command-hook' topic merge.
-
-The only remaining known open issue is the potential deadlocks in
-server-side hooks highlighted by Peff, however that is less severe than
-these two (I'd actually be surprised if anyone hits in practice without
-a well crafted use case, having access to those hooks).
-
-So I'm inclined for option 1, to land the fixes.
-
-(OFC I'm working on the deadlock issue in parallel, just addressed the
-user bug reports first).
-
-Thanks,
-Adrian
+Hmph, at this early point in the late release cycle before -rc1
+(yes, rc0 is scheduled for this morning, but that is not really a
+release candidate that counts as anything), it is tempting to take
+#2, actually.  I just do not know how much damage such a revert
+would cause to the tree.  I'll experiment after I finish cutting the
+-rc0 preview release.
