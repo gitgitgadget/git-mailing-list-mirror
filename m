@@ -1,82 +1,160 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E6F3D522C
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 17:53:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499606; cv=pass; b=tTbI8FZtaczWqhT8QxzHf+C93Bu7wp0g1/Z3wiwaFD5H38517rfO7KZfDwaJZU+3zpSTPlW6o4fA/Tr6Y36pQpDEDlFItej6jtQc40tORcziQnAw7qyNVxdEEGJ54gBBKo42Yhy7a53I1XWekbQcJSzxUMVAKW/iSO5Oe248mzQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499606; c=relaxed/simple;
-	bh=6QpxPJXFDEIl8TxExhFQHtT8p+Mcrr7H4N3Mb44I0iw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MHK0DPk6MT+BhTjkf4N3W+UTSgB0FJy6pTJ6gXQUcpr7z/0CV/vqejhjsUCXbEbN6qJLeelWT2srAb651cCfuQh4IIC7xmn2o8fTJFWEMRoLi9XBkJtrcdYiUTKtG7hXXI0alqKa2en23SVf9VZE/jlDGWD4Tn2F50hiGccJ468=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Tao4OGqa; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D2E3C00AD
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 17:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768499802; cv=none; b=DfXZ9glgYvtliB4Yuq8DBHsiZzz2X3VePCWwsZIhMX6Dg1DQbwJNF09NVVKE9TVtoMd1tX2kIeBPTtmLG0l+CcX8Fi4RTW3mj81GWCzzUQzYDqvVNzYKoc2CdilPLz796JAqozD+ZFmy+lKk6EQb7HTfTOiob/4y+Qaj0NmrTMI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768499802; c=relaxed/simple;
+	bh=SjKyR/SKUVNWgik7e6iDzeIlKuY3gMHmY5hRmYUttVM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mHt81VAtNkGyEkKiLQPtuGt8EHurx/qBb5ngEDEV2uAps3IRrKMI45Ma/AXdHV1ULo/gMh995ZBNfB2pvsgGlMWzFS4wpRovSWWbzLANQ8kxEiTX/7iNAGj964k03YL1jezidHdhtgaLXjUmRuciWMTkepJf55J9rr6B51t95KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dttOa0ea; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Tao4OGqa"
-ARC-Seal: i=1; a=rsa-sha256; t=1768499590; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=XCQugZaZqxmHvilU+2ug+58QP7jDqJzXhblwkKJU+xrSKCwRD1lJ9sOKsZgNE+BkwoPe1KCLFR/jHovdO3H6jNbE0VE/a+az3Q2LdqpNqlYg4C0zv6Qszjkdfa8SzNIqzruX4BU0Xlw3flk8x7VzFD0xIHLaCfhTRCWhYZn5rMs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768499590; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=KozKa1o6e2D9DsVDe44Pq1YR3o9NPo1F3S0jb+FAV8w=; 
-	b=gsvTNFqpI+FpRXzdtW5u73FKdG19Bm+hxYWqtJxRsZTPbG3AllTLOxWn1uHX90QdoelH4LjCGuGHmMMG/4JqCtmST3yd8kQb/CFKgUck0+HO7HK5Tc/JhYxQGtimnB8o3zwhhhX3gvfvmha7RB/so25gOAeuyRIA+9d7VAp08k4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768499590;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=KozKa1o6e2D9DsVDe44Pq1YR3o9NPo1F3S0jb+FAV8w=;
-	b=Tao4OGqanAUomSh0zPCA/HjddDLd6HjhZ2oUsRwy+Zfat8q0lopzJGaISgqyuYo8
-	P2Z5nBv3Eu3f/cEYwlFVe2UPlc6iMKa847vhqAnfdhBpcUHyBiJhD5rJHQptSncJKFa
-	L4mp7i7+ACeIQO3ig0wyQ9U1voIt7f732QnLGPLk=
-Received: by mx.zohomail.com with SMTPS id 1768499588405541.227984969964;
-	Thu, 15 Jan 2026 09:53:08 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Emily Shaffer
- <emilyshaffer@google.com>, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, Jeff King <peff@peff.net>, Chris
- Darroch <chrisd@apache.org>
-Subject: Re: [PATCH v3 0/2] Fix two hook conversion regressions
-In-Reply-To: <xmqq4iomdbn0.fsf@gitster.g>
-References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
- <20260114185731.2381550-1-adrian.ratiu@collabora.com>
- <xmqqpl7bc68b.fsf@gitster.g> <87o6mulrnq.fsf@collabora.com>
- <xmqq4iomdbn0.fsf@gitster.g>
-Date: Thu, 15 Jan 2026 19:53:05 +0200
-Message-ID: <87ldhylq4e.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dttOa0ea"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2a137692691so7671585ad.0
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 09:56:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768499801; x=1769104601; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pDaPDPjWJeU9PIkTEX/o84JC6Kc/k74imeycKBD2BY8=;
+        b=dttOa0ea0e4djIn4j1PAVqr6tR9ht9g7IeXqq/tNtC84EYUSIApKUPiEM3G3jmtFKj
+         AsP31UMjQxUJ4b591F18WqtunVno9fyKknhK6wgMCOPGlGmWxnMFZPxDgqn67eiFDZAb
+         0I+n9EIdD+aIjtHW+zmV+N9AdgsDnbWsZOQ76M1vU3xX3cQjrqfvYqtORcEebh+oQRjE
+         BlGO7BVR1yANGkvdiBoUDjknxUb1zzSaUxHOCFB6Iypol61wSCFE4lF+D3tasZD8BLEx
+         L47AcmlHTA5BJBeNieymyAL6BspccJY37PLW6UVd8N7HdUrcEKUvM9HTPpIXLYQfp+E7
+         U6Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768499801; x=1769104601;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pDaPDPjWJeU9PIkTEX/o84JC6Kc/k74imeycKBD2BY8=;
+        b=S+mZd/BPUww5d0IYg5BRoO1d7CUgp7lHxetPPI+jFIsXFfJgtVkBB9yxTm0Fr+dcjv
+         AvPD2zCLSr/Ah/7bI8VHG2vmNzc6ZOnrZdbOmYucJrrWsjecRsJ9pvskHNXygp69ALKd
+         vStypWAa9Fg3AbimUd2V2gb5nYH9Ouuh25ZO/RyLZVUu23dk85OjLKCw6nVjvaq1KBQ8
+         g3QnfcUJIbYQC5nrPW4Zx2YQv2sX6OvcY7ud4aHY07NnqXGkOq8+CbA1DqLGIhjD/TAk
+         TyyV4FM25st4Lv3CXzJ+bOGc9d+rbigc7UnDEYZ55R1QSt2JltsDU++kfhvzlAsd1Lju
+         kIMg==
+X-Gm-Message-State: AOJu0YyQB965U1TNMWnywiCKyVhw6DZgvZE0OPWE4KxqWXA1XiAC0nlw
+	edIArAQVZdG16AtI+iA5iL+V6uXEiiiltBob2ePoGx0DHPiKPjkVXk2AuDfeZQ==
+X-Gm-Gg: AY/fxX6JfVJlYvexTAo0iGlO7c1XCZ9lxIwrL8wIJjYMDX4c1U7a0qweCFUpwkqQ1+5
+	/Vcozd5U/Xbf3TEpAS1gaBri2JRT6B4cP72C56eMM+3J9kbAazGVB7UgILUGvWJplzOIhT7pQf0
+	ZioNy+lpRDKdAFhGnUyWWKlEzja/LxTl/MBPfIa0kj2R1s2Zk8/ojjLubXyDLgJQQPa9lDCohoU
+	JhS4EpS/IZq71VOmVta1o9DzN0fJzDMbyV7ZrYQeCHH9PVcx/9CDp0EBCCRSlSyNxV77k8v4Qcg
+	mFHUx/VSgVyD6L7aWKtWoA7Fb6dI2x+kKqmBlgqZVxhBDw+XTgLGjRcwtpmN8RvNz8Vl3jelW59
+	WbYQosn1YcWcNLcWb77A3CS41xwXhFHQxUBiPSz0165MTEdqFMEtFOMaN5acY1gm+zMTSxJyns/
+	afOanDgmI8FWs40IXrg2pyd8CXFnLFebqL
+X-Received: by 2002:a17:902:ceca:b0:2a3:e7fe:645e with SMTP id d9443c01a7336-2a71751c614mr2669185ad.1.1768499800736;
+        Thu, 15 Jan 2026 09:56:40 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a717a5bac0sm1469955ad.8.2026.01.15.09.56.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jan 2026 09:56:40 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Subject: [PATCH v3] subtree: validate --prefix against commit in split
+Date: Thu, 15 Jan 2026 17:52:26 +0000
+Message-ID: <20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqqh5smdejc.fsf@gitster.g>
+References: <xmqqh5smdejc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
-On Thu, 15 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->
->> I agree with this.
->>
->> We can't let these two regressions enter a release, so we have two
->> real chices:
->>
->> 1. Merge both fixes to 1.53 or
->> 2. Revert the 'ar/run-command-hook' topic merge.
->
-> Hmph, at this early point in the late release cycle before -rc1
-> (yes, rc0 is scheduled for this morning, but that is not really a
-> release candidate that counts as anything), it is tempting to take
-> #2, actually.  I just do not know how much damage such a revert
-> would cause to the tree.  I'll experiment after I finish cutting the
-> -rc0 preview release.
+git subtree split currently validates --prefix against the working tree.
+This breaks when splitting an older commit or when the working tree does
+not contain the subtree, even though the commit does.
 
-I do not expect any conflicts and, if there any, they should be trivial.
+For example:
 
-Let me know if you need any help.
+  git subtree split --prefix=pkg <commit>
+
+fails if pkg was removed later, even though it exists in <commit>.
+
+Fix this by validating the prefix against the specified commit using
+git ls-tree instead of the working tree.
+
+Add a test to ensure this behavior does not regress.
+
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+ contrib/subtree/git-subtree.sh     |  9 +++++++++
+ contrib/subtree/t/t7900-subtree.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 17106d1a72..324ed38148 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -257,6 +257,9 @@ main () {
+ 		test -e "$arg_prefix" &&
+ 			die "fatal: prefix '$arg_prefix' already exists."
+ 		;;
++	split)
++		# checked later against the commit, not the working tree
++		;;
+ 	*)
+ 		test -e "$arg_prefix" ||
+ 			die "fatal: '$arg_prefix' does not exist; use 'git subtree add'"
+@@ -966,6 +969,12 @@ cmd_split () {
+ 	else
+ 		die "fatal: you must provide exactly one revision, and optionally a repository.  Got: '$*'"
+ 	fi
++
++	# Now validate prefix against the commit, not the working tree
++	if ! git ls-tree -d "$rev" -- "$dir" >/dev/null
++	then
++		die "fatal: '$dir' does not exist in commit $rev"
++	fi
+ 	repository=""
+ 	if test "$#" = 2
+ 	then
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 316dc5269e..e4f632f3af 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -368,6 +368,28 @@ test_expect_success 'split requires path given by option --prefix must exist' '
+ 	)
+ '
+ 
++test_expect_success 'split works when prefix exists in commit but not in working tree' '
++	subtree_test_create_repo "$test_count" &&
++	(
++		cd "$test_count" &&
++
++		# create subtree
++		mkdir pkg &&
++		echo ok >pkg/file &&
++		git add pkg &&
++		git commit -m "add pkg" &&
++		good=$(git rev-parse HEAD) &&
++
++		# remove it from working tree in later commit
++		git rm -r pkg &&
++		git commit -m "remove pkg" &&
++
++		# must still be able to split using the old commit
++		git subtree split --prefix=pkg "$good" >out &&
++		test -s out
++	)
++'
++
+ test_expect_success 'split rejects flags for add' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
+-- 
+2.43.0
+
