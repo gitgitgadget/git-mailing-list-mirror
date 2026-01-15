@@ -1,141 +1,143 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DAB3B52FF
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 15:21:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C81037E2EB
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 15:43:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768490523; cv=none; b=RGvYf2WdasyKbJHgB97ms3dcffJwpXJhr3EZppXbU+z+OTr3LIi/RiAKW4fJGKvNniyR446hXSyZSKGy+EhMtZ0oC5OdvLlx11olWDmR6OicxcemtqS+K0gzixr+JaUgPn4l9aCYzoaLtP6p7out6ABxaHy2+g4NFu+Vsrzomo8=
+	t=1768491800; cv=none; b=btfKb5Yn+8MIzyosJXr1IIxchNuSLc4KXX6J/a55+LHzOV/SC9Ft3RiafnmtMjGkTi6wm1llLarJ24ZtMRNwisSwNMmBcOhelMJaYcLr2uxZHpMK9k8FpJiegOQ9vDsotDAOmH7kNdaHNRKry1GaCeyqx6bY2K9wwGzPqCAydmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768490523; c=relaxed/simple;
-	bh=26Y9LCXW1xMsBFBhLUk8x/FI9XNkdHp/KdZKEnc3m/s=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tmcoOOVuqq1JqikloC1gc/4JwEjPLjk6m0Dt7NRBUpskAUi37oP827I8fT0NMg3CeKXWhfHE7OKnqn47Sddzi4Wk5WiPIxEpjLCuKDGHy5X37xPoxGY0JC7WAMzYUnbA+riya4c7zyUfXskKDF+Quj7vRcB3BHbXqZ7mqFsuvaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DSkf0Q4P; arc=none smtp.client-ip=209.85.217.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768491800; c=relaxed/simple;
+	bh=CF25JhSaB874yhIZ1WlsWZ5s21rSHHYZceta/KzqLs8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=UpQaxw2oB2Elu29Z1u5BPx9b07yQcJSMRt9yQR2gRxWQpC225w8Uspp+QCKY25CoJzKLC3O8/27ZyP+5ktxgOj6tbPw9Xhn7jP58BR6XmWwWOYxZoOmSuwmxSD8wlj4YPDXIbC+4X8N+j1EYHJO8b6H88yInKhg4wspW9IwFy4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=s/o1I9mj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0Q+vKxMO; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DSkf0Q4P"
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-5ecddf73062so635335137.1
-        for <git@vger.kernel.org>; Thu, 15 Jan 2026 07:21:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768490513; x=1769095313; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=b1Z0c/A3oJno7rPDwDDhtfOBDOFBTHl+PUtHifkjvWE=;
-        b=DSkf0Q4PGaQCibH8mYYouLsBkJ+GWICOT44V5SOdbchsYH4dHHG/v3UeDt1V1JQEmf
-         7x7vys9uSJHxjsegGan6leqHb+3xy20Q74d+mACflKQKGdS5/kzhaod7gzGAbRjWgVcq
-         mg3ceKEFDZl/3YWCoQEuGK/rjrDZQvKSFWllz0IhvYwtyOPuJXXQZLXqWOu2Rn9zglHS
-         j056XuLS13MfzG/vLCpmDYm7bMvuihIN3yOvQms5FJbmqjRBMz3FVRTzkVuOAGodjhZz
-         gl3PGnwHrri2snOo+bdG5KeUJKdX7zipqN23aX5l5HomB9hin4Y1H0VwCBXx1naSFa2n
-         UDZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768490513; x=1769095313;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b1Z0c/A3oJno7rPDwDDhtfOBDOFBTHl+PUtHifkjvWE=;
-        b=mxAdEE24X2SH5SEhwWF9VLwsYuIL2UKche/KLyhNpLOUNgxzpoFMBh/VEaRyiB8Huc
-         w+6IygF4cOu7JZKe2NItU6SgAWDppj01PNslC11c/xp8UgS0jYTQdQaIEOcip5f4mQJQ
-         O86PdpHubd1rbdG9GIxIPEnk2qjgJaAKU2cYhTLM0CK2jZ2CVZiJFZyHBxQtjNpPLrFK
-         UpSTYLxylqjyIXt2bVDcbTcRWydrevj9Lgli3yvKwTnWSmrZ07UC4fIJ4YJEau7kgJLw
-         axRIymUmv+IkIvRxNG9iT4J7+y8ism3JdN1HOQVsRqucDhEBrcZsEXg5iwqWXw8gWzOi
-         CCMw==
-X-Gm-Message-State: AOJu0YzuEsUbuiymt0bzby02ihtsKkP87bpDyffnYkGcnTNVMhA5YpTe
-	6jFtI7tcuHPwo7rn4HYQTNJ50ClSdSRif0yrmMlnj+GyNBkk9FOnlvrxqym5olZRsRUWQHxvSJV
-	K+WaVLdppqUG4E3/EE+t8pBRX5PQebr/vsg==
-X-Gm-Gg: AY/fxX7MCDIRs8e7a4UKFVIiGGo+WwWxA3QUjp6dX9jBr1L/3ffMCB9SEjsQcsgZTKW
-	cppsosvvM/oGN0SORl8ttyBjLqPKSBQkkwgZiUQdox448FkDIbSM1F610lUjijY1gEUa8hSefrf
-	xkDE8X990uN2a6GKgj7xqPD1fdqWYdknuGkjbFMZRPm9KYWAKhzA7rJurWwUvRjLBdCBBpuOhbB
-	R5qmeSPbgoFwc8oK4qNnHKO/b3jA8XF8CRvGugZ4+7lXnWZjFzjXtA5UI8CRsuyQruSug==
-X-Received: by 2002:a05:6102:3714:b0:5ee:f96e:dde with SMTP id
- ada2fe7eead31-5f1924c70eemr1621903137.22.1768490513212; Thu, 15 Jan 2026
- 07:21:53 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 Jan 2026 07:21:51 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 Jan 2026 07:21:51 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260114180306.GI885771@coredump.intra.peff.net>
-References: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
- <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-6-f5f8b173c501@gmail.com>
- <20260114180306.GI885771@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="s/o1I9mj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0Q+vKxMO"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7D0ECEC02AB;
+	Thu, 15 Jan 2026 10:43:17 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Thu, 15 Jan 2026 10:43:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768491797;
+	 x=1768578197; bh=CF25JhSaB874yhIZ1WlsWZ5s21rSHHYZceta/KzqLs8=; b=
+	s/o1I9mj+5K6BYb6qlz6chjc8UdeqJ+u0vXmwFiRxTvefvlVaoJ6lC+jIOMt1wI5
+	Zd0ZCW70fJPc4f8mc2o95vRTBaGsaPdJ5vCYdeUKnMMjRIJTyr85IxBV4Ecvz6qs
+	EjAUxh52/04CTkST2+iyhurCmrq4ynEfWj5gBfzFpTqatD7lSJqw2WmvGuBxr9KI
+	FN0jFd48x11eIUaTEBOaunW1WjXgPM9HxQfHjTq8jQWfiaF0sBRwmGk4cI68QQua
+	Dt9lw1SmXBdjOVvo6U2msLJdsqylbf1lsK9PYsc854pUcEffKgGOd8J4gxMgsjvX
+	Lsrm5rSfXS+aFRY3xuCcqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768491797; x=
+	1768578197; bh=CF25JhSaB874yhIZ1WlsWZ5s21rSHHYZceta/KzqLs8=; b=0
+	Q+vKxMOdQR81eIazx5AdOaT9RdSnneb+TNDEKiwRKfwcmVPlL4NJJi05zOwYdFFn
+	0/CHZqc8P6Axlwe0QEDtiEavHBOpm6vbpkl9RufY9NE4IY6bh3qLN8gsKSPHlqB7
+	kw0WUS+diHAdzup69/gZEwXkzXQlqLsj3w/exwCoyvIV+cJX3Z99rX9P1oKcBkgm
+	NFaEamx2cqmhxAbNt3Fy9PK9OBrtd5oi8B/6iiZGlEgenDshDABN3FPb+WTWqwvd
+	rDSTvEsWvku+dsFUDNWCJEHQ42y6K6pE560vzbjuA6kTqc729Uru0CqIe9wzqiuE
+	h0VVMn8k/bKrD1RTEMMEA==
+X-ME-Sender: <xms:FQtpaa_8wQ1wLoGA3Y6ixUL8ZcUZ32AQJOLBC3kDg53sEhJ8oy1WSUM>
+    <xme:FQtpaVikgLNEx2fql4oJUQRFPwlzFg6mKltoqD66S9XEoSF4kBNI4ncDVfkp1CfWf
+    UD2b8VQfaBgzX0fwQGfblClGj7QKhu8SuoqsnR6oB5BTCRZ7nZIIA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdeigeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeejpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopegtlhgruhhsrdhstghhnhgvihguvghrsegv
+    fhhitghouggvrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepsgifihhllhhirghmshdrvghnghesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehphh
+    hilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhg
+X-ME-Proxy: <xmx:FQtpaSUxfSCkK6ATIvssMitScJyDVVccqs-_J93dLrCxnjm1ttom8Q>
+    <xmx:FQtpafSYQELnMfndwvX0LN0gGGEG1yKq9I5BpKIJp8_0iqkfSh8ezw>
+    <xmx:FQtpaUkskR8enbP9lW6prycvHvuu33Cihfpo7Pk5XgLJwSBA0Bel8Q>
+    <xmx:FQtpad7QMlJ_fYGPlbrjztvBkP5-RIh3DLvBPj3jcDR9w9eLu4rQVQ>
+    <xmx:FQtpaZVdatoJoBzLa0Xoqi_0f2IQ63wn3-eGdSk44VSTaqXEnJZMrCvK>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3B4A01EA006B; Thu, 15 Jan 2026 10:43:17 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 15 Jan 2026 07:21:51 -0800
-X-Gm-Features: AZwV_QgQuLnGmUNGzVW-dHjpAy6mdbsCrKP7GNDr02jnghXEeO8APfZWvnb2b-E
-Message-ID: <CAOLa=ZSCAJ-XPWK6vg3p7TO=3T3y8CD+VY4jqn41X2wbdmoaMg@mail.gmail.com>
-Subject: Re: [PATCH 6/6] receive-pack: utilize rejected ref error details
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, newren@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000d43e8c06486ec88f"
+X-ThreadId: AxiLTKoM6H_J
+Date: Thu, 15 Jan 2026 16:42:55 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>,
+ "Brandon Williams" <bwilliams.eng@gmail.com>,
+ "Phillip Wood" <phillip.wood123@gmail.com>,
+ "Claus Schneider" <claus.schneider@eficode.com>
+Message-Id: <f021269b-c89c-41c8-aa08-2ec2443ac7e8@app.fastmail.com>
+In-Reply-To: 
+ <de72bf0a9135224ed4c4a05ae00deadc28225ac0.1768376879.git.gitgitgadget@gmail.com>
+References: <pull.1987.v2.git.1763057433.gitgitgadget@gmail.com>
+ <pull.1987.v3.git.1768376879.gitgitgadget@gmail.com>
+ <de72bf0a9135224ed4c4a05ae00deadc28225ac0.1768376879.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v3 2/5] read-cache: submodule add need --force given ignore=all
+ configuration
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
---000000000000d43e8c06486ec88f
-Content-Type: text/plain; charset="UTF-8"
-
-Jeff King <peff@peff.net> writes:
-
-> On Wed, Jan 14, 2026 at 04:40:47PM +0100, Karthik Nayak wrote:
+On Wed, Jan 14, 2026, at 08:47, Claus Schneider(Eficode) via GitGitGadge=
+t wrote:
+> From: "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
 >
->> In 9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19),
->> git-receive-pack(1) switched to using batched reference updates. This also
->> introduced a regression wherein instead of providing detailed error
->> messages for failed referenced updates, the users were provided generic
->> error messages based on the error type.
->>
->> Similar to the previous commit, switch to using detailed error messages
->> if present for failed reference updates to fix this regression.
->>
->> One downside of this is that the messages can be very verbose, for e.g.
->> in the files backend, when trying to write a non-commit object to a
->> branch, you would see:
->>
->>    ! [remote rejected] 3eaec9ccf3a53f168362a6b3fdeb73426fb9813d ->
->>    branch (cannot update ref 'refs/heads/branch': trying to write
->>    non-commit object 3eaec9ccf3a53f168362a6b3fdeb73426fb9813d to branch
->>    'refs/heads/branch')
->>
->> Here the refname is repeated multiple times due to how error messages
->> are propagated and filled over the code stack. This potentially can be
->> cleaned up in a future commit.
+> Submodules configured with ignore=3Dall are now skipped during add ope=
+rations
+> unless overridden by --force and the submodule path is explicitly spec=
+ified.
 >
-> If we are going to have a "potentially cleaned up in the future" state,
-> I think I would prefer to see just:
+> A message is printed (like ignored files) guiding the user to use the
+> --force flag if the user has explicitely want to update the submodule
+> reference.
 >
->   if (details)
-> 	rp_error("%s", details);
+> The reason for the change is support submodule branch tracking or
+> similar and git status states nothing and git add should not add either
+> as a default behaviour. The workflow is more logic and similar to regu=
+lar
+> ignored files even the submodule is already tracked.
 >
-> here. And then it comes over the stderr sideband, but the actual
-> status-table gets the same non-verbose message. That's what happened
-> in v2.50.0 and earlier. Later if we want to try to cram more details
-> into the machine-readable message we can.
->
-> -Peff
+> The change opens up a lot of possibilities for submodules to be used
+> more freely and simular to the repo tool. A submodule can be added for=
+ many
 
-Fair enough, I think that would be a better approach for now, will
-change.
+s/simular/similar/ ? Although the sentence doesn=E2=80=99t quite make se=
+nse to
+me. Well I=E2=80=99m unfamiliar with the domain anyway. ;)
 
---000000000000d43e8c06486ec88f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8c3787c661b3d70a_0.1
+> more reason and loosely coupled dependencies to the super repo which o=
+ften
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1scEJnNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNzlJQy85ekRQeC9CajdpU3FNTVRsOHZxR25WY3cwRgphN3B5ZlIvb2tS
-NDVIdDRXNFBZODNnOTNHcXhLNStGeS9BOGJZNmdmc1dFclBwVFVIbzBJTDlWSGx4ck96czBUCmtz
-bDNkSE1tbVRaTWgxT2V4TjJucVZYMERZcUU1L2FBUzl5dXdnYVUrWnFIdENMbUZ2bFBjb2srVkhy
-QWszaHUKem10VnJMZXoveVEyMTBub2x6K0NhRDdBQWt0dDliNGcrblZUY2swUnhudVZmaVZkYXlC
-S1oxL0FLSEJTRXNOSQpnSSt1MnZDaFRUZkJXUVdUZE1JR2VrMHdMaXl2YjJ0aFcvcDhGZzQ0c3ZW
-d1VyR1JyaFFFWTF1eTIwOTFtS3FSCmNXa1dBd1BMREdrekhOV1lTZ3o5Q3lyUnN0OERqN2J3Y05H
-enBXMHN2TWRwdjBqZGlqMVBtNHBGMHA5eXV5dXYKNlM5RzV5OFBpUWRud3JlKzE3RGJjbDRkQzIw
-YzVRVlI3aHN5UGk3ZU5aZG56NjhSMnZ0TEFJUmdDNG9RVWR5eAp0VjcrZ0swZDlQNzZULzhLd0FU
-U2QrREJiYnJVbk1JaFkyK2lkRStBK1MvSWlCNk4weHRZWWFnT2dwTTFLckpDClRkQkVXZFQ4NDVu
-RDhpMlRrNXhhWkhEVEpjckl4cFdLejdvckFabz0KPUY0aXgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d43e8c06486ec88f--
+s/more reason/more reasons/ ?
+
+> gives the friction of handle the explicit commits and updates without
+
+s/handle/handling/
+
+> the need for tracking the submodule sha1 by sha1.
+>
+> Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
+> ---
+>[snip]
