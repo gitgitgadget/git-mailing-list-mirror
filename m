@@ -1,93 +1,134 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D9F29E117
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 20:09:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D9C31A7F7
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 20:27:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768507747; cv=none; b=PPN/DgOdpxPihOnA0024TulnTKJAhn2MWr8DJuLpv3NPhwz4JXFTMEnETL00cGau/h3UPoBQDTlJg0ryGMglmVy8juFRJizANsejFkaW2EeB+E5xz85QXuJrht7qe9fzaDhB57wY3ciyllO5E3sqhFFOof5hfB88FtjWqIkmo9k=
+	t=1768508829; cv=none; b=KWyQHey9EoCspqCxtbPGQJDiI/Zr09Kdiu0Sea5uWm2/AxNkh18/Yzr7FXs6Z5vdy/h7767toxJaMsGAuHhzK8a2OUDfq/4MHqpQm2N8x6OGYSoXnd/4QpulfL5hqjohcN8J38MYDUYzXo8mae0ZJ8FuWS/1lNfWDI5Uu5VW1aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768507747; c=relaxed/simple;
-	bh=3TPyya28HEIOfEq7Ne7xH/GjUA30oGCb+OMSy1kn12s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YqCfmGXC8p3WBD8Am4isQcN95wsGV5dy757M+coOnP6F/LJZAJxAZRvTCjipxY1m7gJbHLRPYQKAVIh0Xmwe8GKdQkNa6vtWJvupL7IIW4PWGEzQIx57ssIifXn0UlSzU+R4hWZRgYx+M//TtGGSaSK7uJOiYoi44H/zaY0eui8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EtdmMO51; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1768508829; c=relaxed/simple;
+	bh=ad/J7+pLtLjf5jbDqae3KRokHJKN4Y3Uav/Mg0LnSIs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OW1cDCL73OBf6yMe9ZWcSB0zdgouglQmuEUExGIXqzITBbIk3RtSZT92YZrbZK70FNxrNMyO2VqSRr44I/VnGl61BRcYdleni0FFu2GGTos5/6MjLiCkEuZqbhgZBDZUTh2mJxFChSgTXN+9dNr2bjYmuNiH4AX+al2mUch1b2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mi5XkKWd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RV37HWLl; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EtdmMO51"
-Received: (qmail 50404 invoked by uid 109); 15 Jan 2026 20:09:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3TPyya28HEIOfEq7Ne7xH/GjUA30oGCb+OMSy1kn12s=; b=EtdmMO5162UZTBE4m05hGuappHAp2noUpI1j1x6otc+p56pEM9549vFLfpite9GWUfyWqSTWCb2DKZ6LQ+rDWr+Woj7M3pBqGdBGi0YSCIAgpVvK4CpXwjyHLwc/6jo9PV9G1o1Mks9s5n0fV8rNARRb2B+lMfrk6dAUiSn+bCALojwZ0hZUVJs3JaxrUtWRce4hU7DOjeJxq7/cv9XVICc3WOCOWicvixYlXISqANWa7nwIdfWQFYS6FXGvYmCs6oEuSE4UNGG8CyTp30PX4m4iF9eQ4R3l58qCd2Axg442oGS1gWHv5vpPJ5ps+XcncC/HlJFibpxJX9EreXVXXg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Jan 2026 20:09:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 82522 invoked by uid 111); 15 Jan 2026 20:09:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Jan 2026 15:09:05 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 15 Jan 2026 15:09:03 -0500
-From: Jeff King <peff@peff.net>
-To: Amisha Chhajed <amishhhaaaa@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
-	newren@gmail.com
-Subject: Re: [PATCH v3] sparse-checkout: optimize string_list construction
-Message-ID: <20260115200903.GB1053259@coredump.intra.peff.net>
-References: <20260114192803.4852-1-amishhhaaaa@gmail.com>
- <20260115130935.93526-1-amishhhaaaa@gmail.com>
- <CAPvEtreX9sGHUn7+Y0kLo_VnK7Y=OYLq-kz-+np3bu1QtoEpnA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mi5XkKWd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RV37HWLl"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5B29D7A0063;
+	Thu, 15 Jan 2026 15:27:06 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 15 Jan 2026 15:27:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768508826; x=1768595226; bh=89vkCpH+Gz
+	6BK1ekk92x1o7CjtyBiwXtJq6dCfK0kCE=; b=mi5XkKWd2j6In7hMjbtKsiVRGD
+	bQ3pPKfDIGSnxkkVE17tkIuzxyeMzxxSirrt1IwejgL5Be7wDCXWqbLtAt7+QV0R
+	KRWv5ZDaMSVcoC18vQOslFLKh60fTNPru0ehuT7mshtLWmco1xsZ7bWGI2pskC3t
+	9Nfx74kiOsNqP4MEKjXDrxxnXszyR4VaOVTEAlQ+aCdr+jnCSfatlg0shdLxhuV+
+	iwMlB1F/3A5QqKl5JEumFALJfNUdh2m93hu+/vAF9KO+eH5r+z6CsNF/1HFbQvoc
+	hUY3SyHjE8AnEM0sxfYe/sJ01Czi1Fw8k+qGfID9L3osJx7XgWRtDJ1LhcFg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768508826; x=1768595226; bh=89vkCpH+Gz6BK1ekk92x1o7CjtyBiwXtJq6
+	dCfK0kCE=; b=RV37HWLlm6j7FncezD8M9Y+afaw3hGnwKf6pEw0wtRg4LOdJpAC
+	cLQxtxx/j77l6Jxs18dSv8SWKen8Tx0R5aAN4kfUCuEtyADAMi12GF8QjWDGOQOo
+	Qq4GBphg9E0TdiJO4PhwlLS8LqZqM0MYeDkBE2Hzn0zVAVqJvh39TXJzVBCTGwhl
+	Dt9MAQM1yce3Fh095yu0y1nflg0E0Kuj8sgUjuwU4JwlnLBKSj7dmQZQQ582AB7G
+	VNtsx+cJJw5BW3Rj4v7Zkl/F6DH+rfkZn4tR6zAGgFo2HBYFAuBR19OgBP15TbfP
+	PkbY1Xmm5ON6agJQXNZ6T+/BtvyVb0e52dg==
+X-ME-Sender: <xms:mU1paSYDIOASVzcOLgihp03zLBxOiqdcqD1R3olf85sr42gXuX8fiA>
+    <xme:mU1paUd25pkjOvc66z8lZUfzAIlsmfj5t4bqODtwocyoWHbYN28GAv-YRy6KN7iSa
+    1VB9LvDNHuc7ltwudi1zepCH1ef5E1LHJScfX762xXZLg_9c525pg>
+X-ME-Received: <xmr:mU1paTLkZMSOTqOScxPVOCdjFpesWcdjLBP8181ydUAWOrho4JEe9XfG0V0ie0-9Yjq2_3dK1a3aRRbXKg8nvh8afirq-iTuiYUiyFU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdejtdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
+    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrse
+    hgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggr
+    khhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
+    htpdhrtghpthhtoheptghhrhhishgusegrphgrtghhvgdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:mU1paRIz-3K50etu1t4DjAVe2gyspbAlqrHD69ztj52xL00fui1jGg>
+    <xmx:mU1paSV5rX06T4li6u9pMX_bI_Jg6nqjg4aua6uxKQuoW-4b6GYbDw>
+    <xmx:mU1paanQhwI33fjVyhYDtZMmn6UHvMrXBZqG-cz471kAmfBYXdB7uQ>
+    <xmx:mU1paYn-2oXToKEfVVTfomaJByOUn82SzNxaskGvB7r7yQeBSeGhqQ>
+    <xmx:mk1paTk8sXQf3L2zD3b_W9I6lXzdW8wCmNmwRqHzvVCRJ4zV10SyuE4l>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 Jan 2026 15:27:05 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Emily Shaffer
+ <emilyshaffer@google.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Jeff King <peff@peff.net>,  Chris
+ Darroch <chrisd@apache.org>
+Subject: Re: [PATCH v3 0/2] Fix two hook conversion regressions
+In-Reply-To: <87ldhylq4e.fsf@collabora.com> (Adrian Ratiu's message of "Thu,
+	15 Jan 2026 19:53:05 +0200")
+References: <20260113115633.230479-1-adrian.ratiu@collabora.com>
+	<20260114185731.2381550-1-adrian.ratiu@collabora.com>
+	<xmqqpl7bc68b.fsf@gitster.g> <87o6mulrnq.fsf@collabora.com>
+	<xmqq4iomdbn0.fsf@gitster.g> <87ldhylq4e.fsf@collabora.com>
+Date: Thu, 15 Jan 2026 12:27:04 -0800
+Message-ID: <xmqqfr86bp0n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPvEtreX9sGHUn7+Y0kLo_VnK7Y=OYLq-kz-+np3bu1QtoEpnA@mail.gmail.com>
+Content-Type: text/plain
 
-On Thu, Jan 15, 2026 at 06:45:35PM +0530, Amisha Chhajed wrote:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-> I was also very curious about the presence of
-> string_list_remove_duplicates in the original code, from my
-> understanding string_list_insert already removed duplicates and
-> string_list_remove_duplicates was still present with it.
+> On Thu, 15 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
+>> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+>>
+>>> I agree with this.
+>>>
+>>> We can't let these two regressions enter a release, so we have two
+>>> real chices:
+>>>
+>>> 1. Merge both fixes to 1.53 or
+>>> 2. Revert the 'ar/run-command-hook' topic merge.
+>>
+>> Hmph, at this early point in the late release cycle before -rc1
+>> (yes, rc0 is scheduled for this morning, but that is not really a
+>> release candidate that counts as anything), it is tempting to take
+>> #2, actually.  I just do not know how much damage such a revert
+>> would cause to the tree.  I'll experiment after I finish cutting the
+>> -rc0 preview release.
+>
+> I do not expect any conflicts and, if there any, they should be trivial.
+>
+> Let me know if you need any help.
 
-Yes, I don't think you could have duplicates when inserting with
-string_list_insert(). Of course your patch removes that, which means
-we're falling back on the notion that the hashmap cannot have
-duplicates, either.
+Thanks.  I think I got
 
-I think our hashmap _does_ allow duplicate entries, though. The
-insertion code in insert_recursive_pattern() avoids duplicates in
-parent_hashmap, but adds its arguments directly to recursive_hashmap.
+ - revert of ar/run-command-hook directly on top of 2.53-rc0, which
+   would become the tip of 'master' tomorrow.
 
-So I think you could get duplicates with something like:
+ - rebuild of ar/run-command-hook + two fix-up topics on top of it,
+   called ar/run-command-hook-take-2
 
-  git init
-  git sparse-checkout set --cone
-  git sparse-checkout add --stdin <<\EOF
-  foo
-  bar
-  foo
-  EOF
+as the "take-2" topic is totally outside 'next', we can rebuild the
+entire topic and get it right the first time, instead of
+incrementally fixing them on top.
 
-Before your patch, that produces this .git/info/sparse-checkout file:
 
-  /*
-  !/*/
-  /bar/
-  /foo/
-
-and after we get:
-
-  /*
-  !/*/
-  /bar/
-  /foo/
-  /foo/
-
-So I think we do want to retain the duplicate suppression. Switching
-from insert() to append() is still good, as long as we keep the
-remove_duplicates() lines.
-
--Peff
