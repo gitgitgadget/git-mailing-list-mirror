@@ -1,111 +1,150 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893A935E534
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 09:43:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6068935EDA0
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 09:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768470208; cv=none; b=sXPE9GwzvTFeX7fxndzgHAQ42J91LkbDQTwLhJs378OzbKMXP1Ir0oehaDlWmtc5Sq4LbvWkIcGKaJftq6gSZ8dArxb9oyd5S7oOISCYglHdi3pDyzbOm1jVYwMlNruU3JwbeotctvvyXa/Cl5VVXYtT0otSYG1Xsid3JPFdUrk=
+	t=1768470627; cv=none; b=gaMBp4cS6TeWtVGWknAWUqbPdOxVhw7hl+Kjnh2V21lVUQzhCqR8kBVGQbh+XyqHInI4DAouE1h1VtNLKW10xss4pJd1YmxAGxqOL3xHlIeWBoNil7UB8nPg3i80V8+QkJJDIu544kH8xDHTZqxwTlwVO9lwW8jy0hQnCzrIr1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768470208; c=relaxed/simple;
-	bh=IV1/uvA2esYA4k8PQiUoPgD5GTAcbU16/fxUOhzc66w=;
+	s=arc-20240116; t=1768470627; c=relaxed/simple;
+	bh=vhdqrXoxsrS5vE4/LYXX8TIELiJ24FUsbnZbmQhoLKI=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P/Nldo8GFIdFGd4lgFKwTOF8gLOCSqy2JBFTz6/HpWhUxG5ZfKDf9o5Ow1bB0n0qB36W3A213vUusvEAkve9xhiPH6Fz+Dhtl3nzeY/oVZsP2d0d9bBl14GraXce2LDBHGoWE/E4ibmtAp/+EH5QKju1APPKeSOeldvYivTk+VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KvOmPyJa; arc=none smtp.client-ip=209.85.221.177
+	 To:Cc:Content-Type; b=ou4zUASItNzp/zIzyp0XHKpTCEPBySQjlYo9qeDOlP89grJUWPM2OecEXmWMuppPYHHWCN5R9omjzaUVHANKyl01SWFpRkjTR72vgGVLN8bwjx64xJskPICW2AlHRjTFeP7oQSiP61nkqlPtEoJQglNKGw/XEIkxEs02x2PBURI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BaNzNAHq; arc=none smtp.client-ip=209.85.222.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KvOmPyJa"
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-5635f6cb32fso258992e0c.1
-        for <git@vger.kernel.org>; Thu, 15 Jan 2026 01:43:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BaNzNAHq"
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-941275fece4so191042241.1
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 01:50:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768470206; x=1769075006; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768470625; x=1769075425; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IV1/uvA2esYA4k8PQiUoPgD5GTAcbU16/fxUOhzc66w=;
-        b=KvOmPyJa6KGik68j39pSoEeSHWcnp8MrKdAq+fM6Pidxb7vriwayZMyinrAlSv7kF4
-         gOQEDRUpAVwxslT3INqJ9r0+By8+mi+89D0GmIyrlPmHzwjEvzUtPL9U5hEs6SJ/+mZ0
-         Q3PLgISjsLOMiCl+8sQROu+ojqYcysK8lvMYnDln+M2tY1KYS9QwHRD04hfVMDEBXAWP
-         khiP5TX1nb313SXTWWOk3znKN1MmYoYccf7wlG+kcCXfxulclEyPyw2zHmeyfN7bWNIN
-         C0hdVNNDgaRGI/RD+5Tz+ZL9+PdbdLA1HuD5XXJXRBipiZ6u7OiW3CDismEIG+1domaa
-         xX2Q==
+        bh=KwO2H3qBvKLcx5E0Xq274ZLAl+Jxq+wp0fnmDuwkHys=;
+        b=BaNzNAHqpcHGvvpCHHhayjnuVMicHTBTYVPcY1hmofhb9tv0Ne2FPEP5jq90RwInnl
+         JgJ7ggznk82PaqiAsHrLre3EJWSX1+VHOGHMl2aYqzAigj9KXxdARJzP41PLGyKLbt1B
+         thIOhAxU7VpFG6KwyhKqTM6lGRjVqmMNpjPuEoPGxBXPY8nDoJ0esGeUunsf4UWIoEET
+         o+7dGtKRFGPcv1tWGWZ2aqV5CSbHj4PcscY36+s+H1SnghML20IdaeDescZzaFx0jCNx
+         MWx9NiJhiNxSsStRz/BEtt1Wj0/7Ku7zQ149jsusYmbETsuRlsbz5PM+davhJuW+UyDk
+         xZng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768470206; x=1769075006;
+        d=1e100.net; s=20230601; t=1768470625; x=1769075425;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IV1/uvA2esYA4k8PQiUoPgD5GTAcbU16/fxUOhzc66w=;
-        b=SbWC9OK9K9487FxWH9oy18vi/arl0Vslt3hccFuwkbIAQTkSX6b65h+5SgPIENtoHp
-         0Ns3FMDvhBBnQ/88uKGsFrr+Tq03N8QJmhHmGWSRppMP7PB9WlHEN7WMVbKVe+sRh0kj
-         OGJPFuy3R3Dgeb8PEcOCUjPN/GejsFVvhVzfBw0cRjGd/ddH2mR9GuAR1O/unRe6yCyw
-         PWCz1p1+WN55A6cVzF33lR9LlwtwSZAckCrjkb7z9HVVPHFvqNsbN5ywr3wBGA0Cf3vo
-         g7AQw91cLg49dIAI5ghAV03T3++AmX7BJiPeOaWf2WgjMpGF5rL/+1IxMrxFUkUbSxVI
-         Jwew==
-X-Forwarded-Encrypted: i=1; AJvYcCXNA3P4iIfN8uMZeR73rN2W5JH7eKPJRUWb0rv4quH58G55tYWDwtavsJpAL6wVPB2gE9c=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNMd6bxB5HusybstruQxBX0RV5n78WPy6l7jKVLox09fv5KO+D
-	CqiMaogO7BI7t9uPRZIUnTFOMAgPdcaQU6Wa+3bRqIvYnBbQsv+Lc7ysM5EWwniErXu2mMHR9Z7
-	hBk/WnBhoG6pUj3QJEQkCHUh0bwgsiDQ=
-X-Gm-Gg: AY/fxX5/cBObtrSNY3sb7NHSZOl8WPUqD25L84dq2RFH+Z9W0AKTKMyDwdUJaGBRORf
-	b3qyAkIrUaGE+duo1QBQ/QQeXpDo8zQVhv5ZhyXZwMGo7+iZNaPu3ULowHdCGGTx7B/BEYH91+r
-	njzZ365C0JTi/nXK2P9RlGHaTfXd5MyvbcgaudMwJ57jBvKUHFL27F4o5BGXk1y6jhXv5Jhfw4I
-	vtfhQpxQAoaUnulTw/ID1RCwl66FZsiQa2R8Eu2Se4FxJYm06LLAokmtanRd+U9Yv/E20WZ4lAL
-	SZUr
-X-Received: by 2002:a05:6102:390f:b0:5dd:840f:a449 with SMTP id
- ada2fe7eead31-5f17f48b103mr2211662137.14.1768470206557; Thu, 15 Jan 2026
- 01:43:26 -0800 (PST)
+        bh=KwO2H3qBvKLcx5E0Xq274ZLAl+Jxq+wp0fnmDuwkHys=;
+        b=j6GQbTPsKhtcm2xaOzB5bUrV++JgqhrrUIzhkfMAINmtkNpRTmZf3yWrgp0rMLFeis
+         w1ub2L1RDmIMUGrUVWredL+jT8A8vSWRItC5U6U+flT2g6Fhj213dJsX03GVyeygePW2
+         BetgbP6J4ZNw3D5ALFfefx6BmIRd6ot56I5+A7CmEOB2k1Ld0afCZ5oQiO9rb7Z1aY7B
+         EaNz9vHMGDhEvAk990b2OaHKtMd/UdxYyEyZV78cELNRvFYgQSWE9TqQpnhb+8PMu6gZ
+         lt08iMlAsPlHTwi5Ok13owYspibFPN8Pr5MnynhsbS2j0Ho/MX/m4f4JSzWnGHG7n0EN
+         ipbw==
+X-Gm-Message-State: AOJu0YxrQ1hGMdXgmUIfF1u5HubAATrQdg0eHoMpMojtBE/KsEyBlrq1
+	W4aQSc4G4OpfQUwpjCevvO+cO7syKeQa96ZBmpTXI1GL5LVxmR/fkdfIAWjf9ggbYSEzwoYbJ2P
+	k9SZoUXxWFR7BEBIevOTt749SczlijAA=
+X-Gm-Gg: AY/fxX4iJ5cqIYyCxps+BeQfu9PSh/BEbK/ItjPAgG9fcENXjM8Smg4GmQ/AAfAXoZi
+	yYVSqg8ckMT7sMFgqh2VZw9NAfoQYsJN0bort+QAXotQDxtAkqnlKt8yLI6r5zW8Ai3DcaQxse6
+	Zh1vzsaZUcIal+ZzpQvsoWWVO4o+bVx9wx800vjYZ5wdpX+xygaFtubGmfhRpYye8xVF6PzdiVA
+	5ZE10Sht2HB9xxfFfktXe2003poYvL5XOdATzVM/CC4YC2/+zsxFnWsDstuy2h9fx2SQA==
+X-Received: by 2002:a05:6102:1612:b0:5ee:a1e5:6504 with SMTP id
+ ada2fe7eead31-5f17f65c006mr2148430137.36.1768470625113; Thu, 15 Jan 2026
+ 01:50:25 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 Jan 2026 01:43:25 -0800
+ HTTPREST; Thu, 15 Jan 2026 01:50:24 -0800
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 Jan 2026 01:43:25 -0800
+ HTTPREST; Thu, 15 Jan 2026 01:50:24 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqh5sof61i.fsf@gitster.g>
-References: <CAGe2LO0nxXuNNRYS0fk0JuPBDa3UCT8EDJ6G1u4GNW1d9rzRgA@mail.gmail.com>
- <CAOLa=ZT4fQdHqG+1AeviYuLUR5VG33voJk_DU1y0MzhUKBQvvw@mail.gmail.com> <xmqqh5sof61i.fsf@gitster.g>
+In-Reply-To: <xmqqwm1kf7gr.fsf@gitster.g>
+References: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
+ <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-1-f5f8b173c501@gmail.com>
+ <xmqqwm1kf7gr.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 15 Jan 2026 01:43:25 -0800
-X-Gm-Features: AZwV_QgU-8kDb_jfVyT8FzD7YXH0FRVIux_Fz1-0AAMWE64gY8xmqnE13-BgwA4
-Message-ID: <CAOLa=ZTZhWscU=4mAb=FhMSNS2r1S0stE9NpCQBKpioTudhfXw@mail.gmail.com>
-Subject: Re: [BUG] Git push sends too much data unnecessarily
+Date: Thu, 15 Jan 2026 01:50:24 -0800
+X-Gm-Features: AZwV_Qh3jsxL7cCCwohoAGd1-lyEpLhhRBkDZcawSNFMzqZfL8sU7KSqP3ueug8
+Message-ID: <CAOLa=ZQfjb1OfHJp6MVkbs=5Wey4Gp6t-jmEQSrojOsp=ge-Jw@mail.gmail.com>
+Subject: Re: [PATCH 1/6] refs: remove unused header
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Rajiv Sharma <rajiv.tilakraj.sharma@gmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000007555e206486a0e6a"
+Cc: git@vger.kernel.org, peff@peff.net, newren@gmail.com
+Content-Type: multipart/mixed; boundary="00000000000067f90706486a2717"
 
---0000000000007555e206486a0e6a
+--00000000000067f90706486a2717
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
 > Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> So it sends all objects required to create the reference, in our case 4
->> objects, in your case GBs of data.
+>> Some of the headers in 'refs.c' are no longer required, let's remove
+>> them.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  refs.c | 2 --
+>>  1 file changed, 2 deletions(-)
 >
-> "push.negotiate"?
+> One thing to note is that The resulting file refs.c still includes
+> hook.h and because of that, the removal of run-command.h from here
+> has no effect.
+>
 
-Neat. Everyday there is something new to know! Thanks.
+Good point, let me modify the commit message to explain this better.
+Perhaps:
 
---0000000000007555e206486a0e6a
+-->8--
+
+refs: drop unnecessary header includes
+
+The 'sigchain.h' header isn't being used and can be removed.
+
+Similarly, 'run-command.h' serves no direct purpose here. While it gets
+pulled in transitively through 'hook.h', we can still drop the explicit
+include for clarity.
+
+>> diff --git a/refs.c b/refs.c
+>> index e06e0cb072..965b232a06 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -15,7 +15,6 @@
+>>  #include "iterator.h"
+>>  #include "refs.h"
+>>  #include "refs/refs-internal.h"
+>> -#include "run-command.h"
+>>  #include "hook.h"
+>>  #include "object-name.h"
+>>  #include "odb.h"
+>> @@ -26,7 +25,6 @@
+>>  #include "strvec.h"
+>>  #include "repo-settings.h"
+>>  #include "setup.h"
+>> -#include "sigchain.h"
+>>  #include "date.h"
+>>  #include "commit.h"
+>>  #include "wildmatch.h"
+
+--00000000000067f90706486a2717
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 579f62bfd396df54_0.1
+X-Attachment-Id: 4808a3464d733b44_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1sb3Ryd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL0ZjQy80ODVQK21UaVlPU240OTdISmgvQVZ2bWR1SApTVk5vOVA4WHZy
-Zlc0WEhRT3JEWjlzOFAyYUdEekNUcUZURUQ3VzU0a2ZWT0NaMytYdGNZaFh4QmJWNnR1Tng1CjM1
-Y1JKWmNuUzZyRmZtUnBNM1dpbS9vV2hWY21YZzR6Y3QrZnBGS2dwRkVwRXIwVnI3SW5ibkJNZnZq
-MURoTmMKZ2U1aGwzam9vVzFIRHVjOGhtYTY5d1hRNGRWMkdpa2g1bnRYMnk4dUlNY3huYU5Vc1U4
-a0p1ZDFFWE1CZFhESgpjS1JabjFSalRzeXl3RU5nd1diZmFsOG4yYUdKRGk5cTc4YzlITnpVM0tj
-OUsvbFNMK1BhZmx2cnpCVldxcTlmClJPTTFXQXFscEIzcEJmdVlZZTU5R1p1S2R1QVc5b2RLS0FB
-VnBjZU5MME91QkdwMzdQZmlhZ1NacENYeklEeFIKem9hR2RYK1NvMGJyb3laSWkxY01KWHhNN3ZN
-THhnTEVNOC9KSWdCcjZFV1BsYkI3QWlWSXIyamlNcENKdGU2QwpZT2Fqcm93R2ZWT3FUWHRoaDhh
-RXJHWmdSaytONG4yanZmTWtxZXZqVmw3NGNSQnVVQjkvd2t5SlN2RTlRRjlICmhvcHllemEvYmJl
-R0RtWExjOFlZdnJJWkhyaHYvOGtwVzlBcFNvcz0KPWpMT0cKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1sb3VGNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meWNzREFDajNOSER4aXVSTzBNdGR3UTdnQTUyUjJrRQozSm1qc0NTK0NB
+V0NFTGl5eEEwZ2Y3eTAxYytxMi81aUs3TkZIVHhDc0lKS2p5ak9DVEtIbnRidlhlTW51WXlXClg2
+QkNMUkF4YjduL1BUZ2lnR3RvamZhUHdxRi91V3Q5Mno3UlY4WHluS2t4UyswSjNpWjFUbjVrMzFG
+dXVsMGgKRVNaenJ5VW4ycDkxeksrT0xsRmVNaGRuR1JRSUs2WlZOSTZQV1lQSUdMdkVzbkIwSFBD
+Vy9JRzNZa3hVKzJzago1QUZQOEdwZmVFYkRxMmdYSVliZzNqdXJZYitHOU1ZVHFXdHBEdVBrS3c0
+WWxieldSUHZud2ZUd0JTbS9Vam1UCmxhVnpWNENDMGxleEF1UmRZcXNObmZ4dnNoVGpXckZxU1RK
+NnlubkZmVmoxWW9odWN2SHlYTjVia0d5QmVaczcKQUltZjcyZDh1Y3JjTng3QjE5SzhsemlJNDhq
+TTRLa0ltdit5K1Q0cXRNQ3FPNzMvRk9UQWZ1ZWdxb3o0aE5oVQpnUnNpUWpwbnVVOUVWY0FGL3R6
+SkhMVDNhTGplVXh0SmZjY0JybHdwNXhsbjZYbldvZHpxOHdaUEp2d3llM1l0CiswSjY1M3l3eVc0
+QzlrVVBoTlM5SmxySUhTdEhtK1R1MlVrOVpBYz0KPS9BRkoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000007555e206486a0e6a--
+--00000000000067f90706486a2717--
