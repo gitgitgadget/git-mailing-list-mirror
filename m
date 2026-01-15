@@ -1,86 +1,123 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598842D0298
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 21:14:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F4C29B217
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 21:16:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768511691; cv=none; b=hifATe0vTsWI+Pghi7TDnKQsx5q6J7m19ZRya0JtExekeoKS58Z53sv9AdHtKwb0MfSkOMFhrr78NYdED/Q/ZYOayWYiljx2530tavKK+SKvrhlNYQqsMOt5WTSDk1YiuP6YBWx/RiqNh8LKg79gy7KIV263VasgJqSIn3ULTFc=
+	t=1768511788; cv=none; b=WuPzU8ldkr49W1ahKWzIdJ1G/m6iHkxNKyBZDJivtR9a+w2bELGlIZGzUy3HWXrnkZOA3ufWrv3uTv29L0vskMxW5lfUltqkKVrEYCqlhcIo77QfpmLk+oueluv6PotMYLtZPVbjF4SWxTS4oR3AOVC/MAX6R0CidbARC4IWXgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768511691; c=relaxed/simple;
-	bh=mlpRoiOC+cEnmiBCQg6e9H2GEzmwDXjWs/Oeoa2N5c0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sQNsHl3nVkoiSJaOav++UVUojq4snYtOTEn/JzXmomxqQieOg2Y9upNtzWECUIJSuZCvA9YGJQB1vutdBLL8sRd1e9+4A4NjZmJkXNYbd0xanOy+t+GgKPbIUH9Epg6pmu27gIe6cnZEsPKKQE1dHNI6EjNTGGLGjvzPqaRw1cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fKNktjLc; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1768511788; c=relaxed/simple;
+	bh=7zfyRcQjC6wi9kqmETH2/bCBy5dtqJDor3NdyM2lCbU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SRMDbazPwqaG1Yf58JjIsA9sWfQYwMltOx/beK2vH6OK+4ysGzi0FiT1yFuGQ6NAL2sHDEptprS+kb80zhzxcmNOIPz6bO1WkvKt0ULmXst5qtRVNCDLdzl4H17XRSTZwb5bTRsab0wvq6sZc9j+LPS3fGEffMtB/pC5XVxIOA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P8nVSqEG; arc=none smtp.client-ip=209.85.210.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fKNktjLc"
-Received: (qmail 50695 invoked by uid 109); 15 Jan 2026 21:14:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=mlpRoiOC+cEnmiBCQg6e9H2GEzmwDXjWs/Oeoa2N5c0=; b=fKNktjLcAcRqbmxfNUINaYBeoJ8UCn5O7ZQb240JYCaLZqLaLDosubBu3O6GqEtQjaOZMomhSDm3C948Ds+5XHXMnrk74U55x0C6Co5ifO5D/nfYOmnCK/+ju3L1p+gkE8qphVYwYa4wZgthxUnpHe3Q+ppBqbr6rNazfDnmbIyLbYEpIwdJp0aS3ksGCYYfPRoOovzXRzqritjy5i05oviU9A+S8+QRSUTjoU7kBc9J+q0/02zbVqwGauRAWvRvdH1ScqgvkBF8Qpehkug8NSHzbC5uEd0HD3b4Mkm9dmAbmcOssdeEofxD15K0WQ/gVwr0QEqgU+0JObCI5sF0qg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Jan 2026 21:14:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 83085 invoked by uid 111); 15 Jan 2026 21:14:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Jan 2026 16:14:50 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 15 Jan 2026 16:14:48 -0500
-From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Ondrej Pohorelsky <opohorel@redhat.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
- sequences to be passed through
-Message-ID: <20260115211448.GF1053259@coredump.intra.peff.net>
-References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
- <pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
- <fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com>
- <aWD2x154F5f-c3pL@pks.im>
- <aWKLrIefrcSwReu2@fruit.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P8nVSqEG"
+Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-81f4c0e2b42so782539b3a.1
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 13:16:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768511786; x=1769116586; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LftdnmNNDOcfUmB9M2K4mZLX6oj5V4W6Oea8qIaCeBw=;
+        b=P8nVSqEGGpYIwb+b/v51twjNjC/iefpqe/VDlsjRr6KYulPb/kogFmyiyj/5bG8Eqt
+         9EqHmoGQFq4Gy/xtH02RnQik/Hb3QP4lqj4EWFW5YbNo1u8b9RAkJBF6MDkB12o7JrH7
+         bSmw15vfp8H/aCU/dhd+BzFb6Ocb2+zYgpdrruzhKQALqsHxqEtmx7ghLL7msLDbqzcC
+         3raMQUZonQKqX4lJtQjvKVcnE0yxuqBE9dXpj9UhCAhrtG14RijpwkPVifV1GzGRH+Lk
+         TYDB3wysKCSYYDLsteK741wwYlmB15JCW//+xuYFynpFHUYIi17CG84u7PVhoWiHoAGo
+         3ARQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768511786; x=1769116586;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=LftdnmNNDOcfUmB9M2K4mZLX6oj5V4W6Oea8qIaCeBw=;
+        b=TP6P9zEM3Rncjc+BpDUnC/EyEHvZDIXszGYW+fT6akCj+aLs8q3AAHbQdn6mJyYXaW
+         vGrh2EorHXqxPTGOLtfcF2GyyFFwXVWOpztfJZ7GLa/mFre4PAm1VbDFvRNKUOlhxsAR
+         zMM1hLoH96yHWoM8cJsBfXbuY/rfhhbbCR6Jg1igNEmYcYPh/eFsY2DvZA2BG1rEYv5b
+         G84hUgMs7buULAAzmc9N6pITfxFBT2dasQYLfEZasacqFRV//fzlEFKTw2+Pb5aEQbrw
+         O/Do0rci4rTz1k6GJsuPSmirTV2xpzVy+Sy3YQbnF9Kz1gvI+/fmbzuRc60o3yBBSXDa
+         q97Q==
+X-Gm-Message-State: AOJu0YyKc6/Ew7yIyKTR9y2FPFDegXuE40n8+aSQA/IQ4cypXOvBVkOM
+	6TKYLfbvOmpZ+l3y2bhoJ9VbCdJG7c1RRYVIuSmw4nnJbhZmfLrOUU9966MEe/6+
+X-Gm-Gg: AY/fxX5YodC+BQgWa0c1byWynwjYWkj+kFmoHjsPFvz6Pr4M0DBJAIzbnHiVtPei1bJ
+	VKDqYBRJsNtnNIytjnvcY7URfUmGDYNWAOHhzw8bstrISW7bd93jnOgcktR2xvSduKiCznpkXg3
+	TJJOaHjEyqc/cZ/E9MEperqYI8G145/DUNi+vS/RHEodmvxGx47Dz4LxtHCuPeeWbEX4XZx24+i
+	uu+fZO1M3HOtXhzgWSMLVHnBlkSxRTpHVY9QPQQl0fcPT9VbshccNcEAa4CDZ2LfAZ+NxPqv+xo
+	4pdm2FyCoYVZuM0+qGaH8BC+x46QdQ9IkgFoYdhSNna/HGYkD2y2e+nLhd+O29OBXajWoyamATj
+	EgtTlMwJD1Xn1QDHqLLTJ3RtsvdfaSkUDlv7zdcF3M7PsmT1k8yNcTa7wXO+K8N2VNI8cZspaT2
+	2EGBIbcnjRT4Z9dDUTdbf/QAuXxNctJjc3k/SIxVaNEOMIOMLHrb9F+8Lz
+X-Received: by 2002:a05:6a00:3491:b0:81f:47ad:6a86 with SMTP id d2e1a72fcca58-81f9f68f7bbmr777498b3a.9.1768511785773;
+        Thu, 15 Jan 2026 13:16:25 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:8811:38e1:40a4:2a1f:e343:cf67])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-81fa1278460sm255099b3a.38.2026.01.15.13.16.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jan 2026 13:16:25 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: pushkarkumarsingh1970@gmail.com
+Subject: Re: [PATCH] Documentation/config: fix replacement for --get-urlmatch
+Date: Fri, 16 Jan 2026 02:44:40 +0530
+Message-ID: <20260115211609.17420-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260115110832.15315-1-pushkarkumarsingh1970@gmail.com>
+References: <20260115110832.15315-1-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aWKLrIefrcSwReu2@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
 
-On Sat, Jan 10, 2026 at 05:26:04PM +0000, brian m. carlson wrote:
-
-> The reason these sequences, along with other sequences not mentioned in
-> this series, are useful is because people run tools like build tools
-> (e.g., Cargo) or linters in pre-receive hooks and print the output and
-> those use a substantial portion of possible escape sequences.  I did a
-> brief survey sometime back of pre-receive hooks on GitHub to see what
-> escape sequences were in use.
+> The documentation claims that --get-urlmatch is replaced by
 > 
-> I think Heroku has a push-to-deploy technique that leverages this
-> approach to build and deploy your app, for instance.
+>   git config get --all --show-names --url=<URL> <name>
 > 
-> This is one of the reasons that I was opposed to this series: it tends
-> to break what is a very common use case.  Certainly it is not as common
-> for cloud-based forge environments, but it is very common for people to
-> do these kinds of things in self-hosted forge environments (where custom
-> pre-receive hooks are commonly used) or in non-forge environments like
-> push-to-deploy.
+> However, --url cannot be combined with --all, and this command
+> fails in practice.
+> 
+> Update the replacement to use only --url, which matches the
+> actual behavior of --get-urlmatch.
+> 
+> Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+> ---
+>  Documentation/git-config.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
+> index cc054fa7e1..ac3b536a15 100644
+> --- a/Documentation/git-config.adoc
+> +++ b/Documentation/git-config.adoc
+> @@ -332,7 +332,7 @@ recommended to migrate to the new syntax.
+>  	Replaced by `git config get --all --show-names --regexp <name-regexp>`.
+>  
+>  --get-urlmatch <name> <URL>::
+> -	Replaced by `git config get --all --show-names --url=<URL> <name>`.
+> +	Replaced by `git config get --url=<URL> <name>`.
+>  
+>  --get-color <name> [<default>]::
+>  	Replaced by `git config get --type=color [--default=<default>] <name>`.
 
-I also share your concern that real-world cases may be relying on these.
-But I am also sympathetic that some people may prefer to risk breakage
-(or ugliness) if it might protect them from misleading or mischievous
-terminal trickery.
+Thanks for working on this, the change looks good to me.
+I was also looking into this based on [1] and was planning
+to send a similar fix, so I’m glad to see that it has been addressed.
 
-Is there any reason we cannot introduce the new functionality as a
-config option but _not_ enable it by default?
+While digging into this, I noticed that neither the documentation
+nor the help output currently mention that --url cannot be combined with
+options like --all, --default, or --regexp, even though there are checks
+in code to prevent that.
+I was thinking that might be added in a follow-up.
+I also had a thought that we could modify the synopsis of git config as well,
+showing two versions of git get, regular lookup and with --url,
+not sure about the plausibility of this though.
 
-That gives people the tools to protect themselves if they want to bear
-the potential cost. It just feels a shame to deny them the tool because
-we can't agree on the default.
+Best,
+Shreyansh
 
--Peff
+[1]- https://lore.kernel.org/git/CAGJzqs=0Zr2iqsTUZdjdwpbtaS7kuBOf=E_XT=vbdfyNTKkjNQ@mail.gmail.com/t/#u
