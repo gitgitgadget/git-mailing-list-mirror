@@ -1,78 +1,80 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C606235A94F
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 09:36:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13B535BDDE
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 09:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768469765; cv=none; b=n+lIgVhUiE8nf+yiPM0zV1FHyHzw3LZxpQNtYTFF029yJig8NPPJfGjtkJuTjOYftOLw63pkNMs9j36c1UIfB1b/NbIyyT5CEP1+iMjg5DRzgi2Jd0iw7dbPOiLQSAe1/m/5wqzg8eGBmUvzmvE+bH4wwZ21w+n2Dmnz7mSb4gE=
+	t=1768469766; cv=none; b=E4iPv/mY86nY7Q1RRD54vfqsasubtDcr+faYWbulhaIk3RJX7CkTJmd27f3Q+HGFg7on53AIcF3JhZYj8xXl0ycaCAwXKZeGGMNfQ2ORZ4a/B5RJCyRchB9TEoiC9lMFUJsPCyUebgk6FS3rFRfyHuHLJeZzvDijFyyoW9a6lFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768469765; c=relaxed/simple;
-	bh=e9KG6CoKvGjdnPOxp4YROM5lTQzdFbzwl8WLffAk61Y=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TKuam6Y1Q8c+cxPsd6bUw81Ymm28pOQRoF3tnCKYCswnd0UMD/ybyTMflqhFCJDsQ19Ov5qdlgaj01cfsdSIhtlXw6201VS8kTAeF5eM6XU5TQoWnp33xpKACW3rUHwI3LheOWwZikqTCpoM6VHxPNg+yqqV76MiZjWF5qk7vhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RlLpMrmj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fLJ502+P; arc=none smtp.client-ip=202.12.124.148
+	s=arc-20240116; t=1768469766; c=relaxed/simple;
+	bh=6OjeReyPWRWXKVnRLmpIBPMNMYc7bZwZEDe7IKjmoE0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=klTIKmJioOBEU+L2pQSqN4sVZSNPHdT9HJkNrvhtECnUJdtNqSr88pDo3PxTf3JM5Zi04hNm/Ej8RoLRP1xku8qgKgUKCFSqv8tku1L2245R08Ry57d6JWGv+2aCAzbk0vXuBQdk1lcUcnY1aifRYBjnmkuLmXPkjROieg8Msns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jVsy/I2H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BdXxxCkt; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RlLpMrmj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fLJ502+P"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id DDC1D1D000EE
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 04:36:02 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jVsy/I2H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BdXxxCkt"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F150C7A0081
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 04:36:03 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 15 Jan 2026 04:36:02 -0500
+  by phl-compute-02.internal (MEProxy); Thu, 15 Jan 2026 04:36:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1768469762; x=1768556162; bh=DtyKsgCBhk
-	tR40yd1eHtc+kyAnHE3rNS+UxSa6mDZvo=; b=RlLpMrmjZv17JuI6+tjWpduUbs
-	Em+m/arfCelbbZebsHjnGja0asiQecc5mqHxQB+2W/cdKY3+Tr2+2/pvUXpGOSfI
-	gmaiNKXDmjWnrvQjgYYpEnWs4lnFVfMICE4a4TdIitWbocAk2UAh9vBdTkQX2DJ8
-	P2vjeY1cDaVE/mLRtVtEOR4UKsWHMl1c3YlYSpmUFFedlaxI0T2BnJ+BYhpRY4CF
-	cVQsYPF3yRQtKDL9maKweEcDYQJ2vUi0tD7dSbYam3XiLVrHgG5PBuKC0nzK+Bxv
-	GZ8yIVvcLe5lBQe4hqIFTpwFToIMz5SqKTw2VuqLZEyCwr7zt+l0pfI38Fbw==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768469763;
+	 x=1768556163; bh=+n8VY3FatFfnmGHh8yzJFv8wLQ2NxASXMLDyF3ZAqFI=; b=
+	jVsy/I2Hmc/h78PpYxfFmozv+6Lgp9TmphTZ/W/gJsn5mPhLn4LE/FiFl4Yh1zB2
+	zrC/laxgqCvqm3iQY2ED0yjAXFeCgVahJMdICn84GFS6UyLiG0yu4guAQfQNCidw
+	Q8klDJB8TZo0z++VNY8Y1LXWTWvq/bWrBB6LK3ZR97PAA67oK1NNA9S+RvaH0uNq
+	6HbWJ2+UsyrBzssgJqn/ndu7omEGBL+2niK9KRWRs7zZOAOuFQ1lekt/uTJNIKGO
+	1Gg0pc43nmBD2gqVtmeipyD7wHHVoN3+iZwJ13n3ArWmYYc0GGs87K+x4uCaZETy
+	7AOPMIhCNAp3UOOiJ/z3Iw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1768469762; x=1768556162; bh=DtyKsgCBhktR40yd1eHtc+kyAnHE
-	3rNS+UxSa6mDZvo=; b=fLJ502+Pxztfr8y+TQIRbj7/SeIsWtEC5pqHFFgl//2X
-	QkgjlOKm+MHLO2/8vDzvXBee+EqiNhlPm9aVmHjPvpa4P9/bVU0Hz3t2KBjxEBja
-	BJSVt/WTghxNZkEXL1tMqHzL4DTzRy9tYD9ysVnsCqvnXorCSV6ErXW+46ZrAAxQ
-	AMW8883wBT9o88GvmGpEKHcLCCWQ7ca/pmWGc2JROw7X/pyJuLc7IE4rEXtxv7yC
-	cWpwDFuDJVH9YyG43SQSkoYdfCuCvqvjrlo7hjFlU6Yo9Fz4RnR22JdFXjwuYSpZ
-	CxPrhTFRJYqQRv+VQtxmzGPUla16LyVBHLD04nfPuA==
-X-ME-Sender: <xms:ArVoaRbKHxrpAliVoc4o1QLAoud1ZMBtAbl1XDeZ2DW3W5fEbT5rtw>
-    <xme:ArVoafXjALaAEei8k0n8DJPp9ozD-rJXiVowgBX0IbF0zKSJvaodTBGpQs4avnC_r
-    5nzUgD9whDr4jaLdOmx8BdD2RTCsooBBnKb6C2KYNRJu1LSRcm8TgM>
-X-ME-Received: <xmr:ArVoaZmYLWNxO3GYhY4VRQD8ouR0HQq60VZNTBnYGbSYdQr1MK1Y503Qj7PjZicpHqQ-ZRs2LvPXY4VbC-VST4rJxx7WrqfPOZ6fX83RakmySw>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768469763; x=
+	1768556163; bh=+n8VY3FatFfnmGHh8yzJFv8wLQ2NxASXMLDyF3ZAqFI=; b=B
+	dXxxCkttPn0KITwmZ+qbDey4ARCnadzefbfrSl4G21t9ilpIPeVvqXwtMNwS8bQu
+	58dCl84h0ZVC0F8wWqV+k45oNMPn7cDKr7wtNiuPIO810tNM8jLRKq/OQEFAija2
+	Q9+6TyDwdagdqRsK939uAgJqaAQRrscD12hLLEQzMTKsyvzx2v40rjQlogUr7zss
+	rWSVQHZnUOHYV3XFbLjXrI6l6Ab3wt5u4YNzJEC2eF9VxTvPMfhH68Jz951cAIGl
+	SS6vr9PDDNHMc9QeiU3zsxhPYKmFVtbyzHPO5RCtKuT+oepB6iT/wQwraAxASkm/
+	KdqBhgDigJY+0BxtW+tjg==
+X-ME-Sender: <xms:A7VoabZa3p2j7fPanB-zw2MopNTnuatvMVYM2e3ONfj6GnboEiISsg>
+    <xme:A7VoaRU4lBf94lepWC1t961LTkYg11K59evNyfPR5hf3GLPD6JyGBdrbgnA0mfAVt
+    ztIsAuWckbfhwtUotOZ7Wm2Tu-8Qv8I-K3Cp9MHkA_Se0-r-4j-DJ4>
+X-ME-Received: <xmr:A7VoaTkq_ZlPCAvywyfUxVvz8qvE_BAV84SvjAURUbpV-hRV4KuzwrfyIAsEYstTXfGNP0KXlSlzQlDspTFcR2_db-ojKq2iq1oOIOY_YI9b5Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdehjeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhufffkfggtgfgvfevofesthejredtre
-    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetieegjeeuheeuudfgveelfeevhe
-    euhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:ArVoaUzwBPUjQ3q4DwY_dUKXUFJ0uJgTV5sUnQaxkEjrox-XyAWEKg>
-    <xmx:ArVoaciNM9ImBEYzJeNpH9SrU_PdMYbIpTWT3uGyljmNmZvi316-XQ>
-    <xmx:ArVoaRX7X7e_9GmZbKUlkpeAsIP9HRRzCZ-Hfy-a6bAiE6qGkYvChA>
-    <xmx:ArVoaW3PzQuKF-a9PAQCU7BgMHPYclp4gHqj84arKMEPmUqPyc9Zlw>
-    <xmx:ArVoab7qhQRgdKYZwmCQKKhp3xDLylFj2PHTOV3ArN94okI_coFK68qb>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
+    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
+    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrgh
+X-ME-Proxy: <xmx:A7VoaWyxu8f2HnFVvOafQHjzMc2mrHggcIUAXN7fnuJYrD7WGibGAQ>
+    <xmx:A7VoaWiIBoV5VmC3uluKQiYPO-0j3-TEcPgQnhgXu3hjgMZGo2qr5A>
+    <xmx:A7VoaTVx4DPUIN05B2tDC7j3qSg-QfMW7q6XTss82E3oOfBoT5a-Rw>
+    <xmx:A7VoaQ3bIB5y0Q0GCzI5eeLpunBZllMe7TIXU7qQr2-JNxzFmsf9Aw>
+    <xmx:A7Voad4z73R8fyMOY3VNQ_mBgbbY4qnhsDlNrBAl2-W--Pne8pmZopYG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 15 Jan 2026 04:36:01 -0500 (EST)
+ <git@vger.kernel.org>; Thu, 15 Jan 2026 04:36:03 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 96c5a79b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 97a8605f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 15 Jan 2026 09:35:59 +0000 (UTC)
+	Thu, 15 Jan 2026 09:36:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/3] Rename commit list functions to conform to coding
- guidelines
-Date: Thu, 15 Jan 2026 10:35:31 +0100
-Message-Id: <20260115-pks-commit-list-coding-guidelines-v1-0-c58868dbf412@pks.im>
+Date: Thu, 15 Jan 2026 10:35:32 +0100
+Subject: [PATCH 1/3] commit: rename `copy_commit_list()` to conform to
+ coding guidelines
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,84 +83,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAOO0aGkC/x2NwQqDQAwFf0VybiCrtKX9FfEgJt0+qqtsVAriv
- 3fpbeYyc5Bbhjk9q4Oy7XDMqUi4VDS8+xSNocWplvomQe68fJyHeZqw8ghfCytS5LhBbUQy52t
- QadREm4dS6SzZXvj+H213nj/eh4mecwAAAA==
-X-Change-ID: 20260107-pks-commit-list-coding-guidelines-51d03de0d39d
+Message-Id: <20260115-pks-commit-list-coding-guidelines-v1-1-c58868dbf412@pks.im>
+References: <20260115-pks-commit-list-coding-guidelines-v1-0-c58868dbf412@pks.im>
+In-Reply-To: <20260115-pks-commit-list-coding-guidelines-v1-0-c58868dbf412@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-Hi,
+Our coding guidelines say that:
 
-I've been working with commit lists quite often recently, and every
-single time I get bitten by the fact that a subset of its functions do
-not conform to our coding guidelines. While most of the functions start
-with `commit_list_*()`, three functions don't. This patch series fixes
-this issue and renames the remaining three functions so that all of them
-start with `commit_list_*()`.
+  Functions that operate on `struct S` are named `S_<verb>()` and should
+  generally receive a pointer to `struct S` as first parameter.
 
-Note that I'm adding compatibility wrappers for the old prototypes to
-ease the transition and not make life hard for any in-flight patch
-series. I've also dropped all changes that lead to conflicts with
-"seen".
+While most of the functions related to `struct commit_list` already
+follow that naming schema, `copy_commit_list()` doesn't.
 
-This series is built on top of 8745eae506 (The 17th batch, 2026-01-11).
+Rename the function to address this and adjust all of its callers. Add a
+compatibility wrapper for the old function name to ease the transition
+and avoid any semantic conflicts with in-flight patch series. This
+wrapper will be removed once Git 2.53 has been released.
 
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (3):
-      commit: rename `copy_commit_list()` to conform to coding guidelines
-      commit: rename `reverse_commit_list()` to conform to coding guidelines
-      commit: rename `free_commit_list()` to conform to coding guidelines
+ builtin/commit.c |  2 +-
+ commit.c         |  2 +-
+ commit.h         | 11 ++++++++++-
+ merge-ort.c      |  2 +-
+ revision.c       |  4 ++--
+ sequencer.c      |  2 +-
+ 6 files changed, 16 insertions(+), 7 deletions(-)
 
- bisect.c                      | 12 ++++++------
- blame.c                       |  2 +-
- builtin/am.c                  |  2 +-
- builtin/commit-tree.c         |  2 +-
- builtin/commit.c              |  4 ++--
- builtin/describe.c            |  2 +-
- builtin/diff-tree.c           |  2 +-
- builtin/gc.c                  |  2 +-
- builtin/log.c                 | 12 ++++++------
- builtin/merge-base.c          | 14 +++++++-------
- builtin/merge-tree.c          |  4 ++--
- builtin/merge.c               | 16 ++++++++--------
- builtin/pull.c                |  8 ++++----
- builtin/rebase.c              |  4 ++--
- builtin/rev-list.c            |  2 +-
- builtin/show-branch.c         |  2 +-
- builtin/stash.c               | 12 ++++++------
- commit-graph.c                |  2 +-
- commit-reach.c                | 30 +++++++++++++++---------------
- commit.c                      | 16 ++++++++--------
- commit.h                      | 25 ++++++++++++++++++++++---
- contrib/coccinelle/free.cocci |  8 ++++----
- diff-lib.c                    |  2 +-
- fmt-merge-msg.c               |  2 +-
- line-log.c                    |  2 +-
- log-tree.c                    |  2 +-
- merge-ort-wrappers.c          |  2 +-
- merge-ort.c                   |  6 +++---
- notes-merge.c                 |  4 ++--
- notes-utils.c                 |  2 +-
- object-name.c                 |  8 ++++----
- pack-bitmap-write.c           |  6 +++---
- ref-filter.c                  |  8 ++++----
- reflog.c                      |  4 ++--
- remote.c                      |  2 +-
- revision.c                    | 36 ++++++++++++++++++------------------
- sequencer.c                   | 20 ++++++++++----------
- shallow.c                     |  4 ++--
- submodule.c                   |  4 ++--
- t/helper/test-reach.c         | 10 +++++-----
- 40 files changed, 163 insertions(+), 144 deletions(-)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 0243f17d53..0aa3690b04 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1849,7 +1849,7 @@ int cmd_commit(int argc,
+ 	} else if (amend) {
+ 		if (!reflog_msg)
+ 			reflog_msg = "commit (amend)";
+-		parents = copy_commit_list(current_head->parents);
++		parents = commit_list_copy(current_head->parents);
+ 	} else if (whence == FROM_MERGE) {
+ 		struct strbuf m = STRBUF_INIT;
+ 		FILE *fp;
+diff --git a/commit.c b/commit.c
+index efd0c02683..c5c66d3a6b 100644
+--- a/commit.c
++++ b/commit.c
+@@ -680,7 +680,7 @@ unsigned commit_list_count(const struct commit_list *l)
+ 	return c;
+ }
+ 
+-struct commit_list *copy_commit_list(const struct commit_list *list)
++struct commit_list *commit_list_copy(const struct commit_list *list)
+ {
+ 	struct commit_list *head = NULL;
+ 	struct commit_list **pp = &head;
+diff --git a/commit.h b/commit.h
+index 79a761c37d..2faf08cd18 100644
+--- a/commit.h
++++ b/commit.h
+@@ -186,13 +186,22 @@ struct commit_list *commit_list_insert_by_date(struct commit *item,
+ void commit_list_sort_by_date(struct commit_list **list);
+ 
+ /* Shallow copy of the input list */
+-struct commit_list *copy_commit_list(const struct commit_list *list);
++struct commit_list *commit_list_copy(const struct commit_list *list);
+ 
+ /* Modify list in-place to reverse it, returning new head; list will be tail */
+ struct commit_list *reverse_commit_list(struct commit_list *list);
+ 
+ void free_commit_list(struct commit_list *list);
+ 
++/*
++ * Deprecated compatibility functions for `struct commit_list`, to be removed
++ * once Git 2.53 is released.
++ */
++static inline struct commit_list *copy_commit_list(struct commit_list *l)
++{
++	return commit_list_copy(l);
++}
++
+ struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
+ 
+ const char *repo_logmsg_reencode(struct repository *r,
+diff --git a/merge-ort.c b/merge-ort.c
+index 2b837a58c3..f31754c361 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -5301,7 +5301,7 @@ static void merge_ort_internal(struct merge_options *opt,
+ 			       struct commit *h2,
+ 			       struct merge_result *result)
+ {
+-	struct commit_list *merge_bases = copy_commit_list(_merge_bases);
++	struct commit_list *merge_bases = commit_list_copy(_merge_bases);
+ 	struct commit *next;
+ 	struct commit *merged_merge_bases;
+ 	const char *ancestor_name;
+diff --git a/revision.c b/revision.c
+index 1858e093ee..9f5baceb85 100644
+--- a/revision.c
++++ b/revision.c
+@@ -4224,7 +4224,7 @@ static void save_parents(struct rev_info *revs, struct commit *commit)
+ 	if (*pp)
+ 		return;
+ 	if (commit->parents)
+-		*pp = copy_commit_list(commit->parents);
++		*pp = commit_list_copy(commit->parents);
+ 	else
+ 		*pp = EMPTY_PARENT_LIST;
+ }
+@@ -4294,7 +4294,7 @@ static void track_linear(struct rev_info *revs, struct commit *commit)
+ 			commit->object.flags |= TRACK_LINEAR;
+ 	}
+ 	free_commit_list(revs->previous_parents);
+-	revs->previous_parents = copy_commit_list(commit->parents);
++	revs->previous_parents = commit_list_copy(commit->parents);
+ }
+ 
+ static struct commit *get_revision_1(struct rev_info *revs)
+diff --git a/sequencer.c b/sequencer.c
+index 71ed31c774..f38d247b10 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1566,7 +1566,7 @@ static int try_to_commit(struct repository *r,
+ 			res = error(_("unable to parse commit author"));
+ 			goto out;
+ 		}
+-		parents = copy_commit_list(current_head->parents);
++		parents = commit_list_copy(current_head->parents);
+ 		extra = read_commit_extra_headers(current_head, exclude_gpgsig);
+ 	} else if (current_head &&
+ 		   (!(flags & CREATE_ROOT_COMMIT) || (flags & AMEND_MSG))) {
 
-
----
-base-commit: 8745eae506f700657882b9e32b2aa00f234a6fb6
-change-id: 20260107-pks-commit-list-coding-guidelines-51d03de0d39d
+-- 
+2.52.0.660.gd05f3a8ea5.dirty
 
