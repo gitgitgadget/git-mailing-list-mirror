@@ -1,290 +1,178 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C778374193
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 11:05:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0429A376BC9
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 11:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768475141; cv=none; b=uLFMDF01Sm4FyNuMpD9tr/t24Xqmx95i617quA2ilQR8iP0dYSPhlarJBMsxXNT7IdnoNFYndTb6ZxpR02xoMD136q92if6BD5SeDUHpbfKP2a2/lv3nH64l0Bk5Ei1R54BLl4IN4+QOeKPm38j5v+K8d/Ai0kVBpAyFaaI3hEw=
+	t=1768475318; cv=none; b=QhmCuSut1fNaIYOajdriNmqjX7SFxr+J4MTgaEwOHWOKD8Cds0oGaqArbs93eaSetUDJ8TXm3hgKxKdUJuPahuk/eFC8wvG10TM45G/GwqW/q+1XFVZA9iZB4YDwvEJZbNQObFAJQqFUMWFgTD2ieH8vxxOrunDXUPnRG+ltmIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768475141; c=relaxed/simple;
-	bh=STKCo/+m2s5VJRumlOIlB0k9ih/dtQe015J7yif8KCQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LVN1HjaAZYB4eBmBLdtuds4eI834Nvi4/cD7VjV9yhjKKYjmjc1SBlEQHHNB/R7aeAYxFRw+bB8IYAcFAxlPWu+84bwHIBHcZYflY9dMH3drqWO2+OZekdTuU3wUH1ugWJ8PjMEXtFU+6gccL3fq5Kb6cjETstAExYlZAWDCCWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cGJEkG7H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b/xJtOwK; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1768475318; c=relaxed/simple;
+	bh=PH+i6VtQRBrrMG9ILs/7eemB7KSWLjKFkryHjnmBY+8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BXpwXEPVm1shODARdE1C4xp8QPGZOK2hnfCrFOoMnqyDIoUdbXdXGpxf+9bwMjDl3+UyHI4j/FtvzcBczH7/N4+txSDW8OytBbKmYXWHDg9GmYcMu05+Z2o+zXa+38S80epszRFcdjN4AwLQE8eh9TEXVIZYZPmkpeUqLFVvNYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eUrCniJZ; arc=none smtp.client-ip=209.85.222.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cGJEkG7H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b/xJtOwK"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8906F1D000E9
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 06:05:32 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Thu, 15 Jan 2026 06:05:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768475132;
-	 x=1768561532; bh=jc49U72XphJTNskspYKGd1aPvbyQ4bpfLBuB06Svl3U=; b=
-	cGJEkG7H/tu0Ca1fEW4XB6ucekgtnaA+X/TfuvveXVJAc5Z6NZ7ggBOwuv46FEk9
-	VX8E64BNQ2Y/DYZOAsUt4mgWX9tyEpgdC1Cdmgd21N/WSNkUvdPojlU8MlCMmqDa
-	6KbkeBrrUpNWGU4iVNoTNR8vk+Z76j4du1TSCRSfj71sbTGM7Z3iVsPC4DRCZ7QT
-	H+KOxFokRIoJFhqlXz+9xbFUK+pgAX2XS4ZxmEHexQv+3MpnuqnV9AA9us69JAhr
-	kTeEnIdlUKR6gALIw0Pl6L0GQWCxRF42+J4P1UFzFWMYebPAR3EtEGIhq8Wg+Qch
-	DAg3lhBotyuMUhZJeG6Utw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768475132; x=
-	1768561532; bh=jc49U72XphJTNskspYKGd1aPvbyQ4bpfLBuB06Svl3U=; b=b
-	/xJtOwKlK+4gBal/26B/aC0gZeoDhFEfzScyGj1d2W4+Eo1kmJog6BVOGQ+FKrn7
-	Q435QJcbl0jOl603OzgH6a7oZf8AKb1INAbt5I3QtI7QvacMu5x6bdzqIVbvQ7qv
-	k4C38lr8q2Rzsit/RgGvB1XKiEQ3obcDQhpfo/8WeJ7ChzO2GfrRg/HetYdbQNX3
-	FEcwYMmb4k+yWH+4flx4WvPxqDe7zfDfB9lWNmdNFceHR55HpZ2qCC421kJq3tWV
-	c87YV03BcZW+tgf9jysfz4WCkzfRG1B4HNOAbTi3h3ePvpXfdTIlddBZYdcLdxi4
-	gpjKaAzjSvMoRDt7L4D0w==
-X-ME-Sender: <xms:_MloaQUgI1CHD5tQOLt45LV71Qw4eQlKZqU7WoYACyCOhdtL_wx_vA>
-    <xme:_Mloabg09S7zqCztWJqtsa1H27BcCUayxlB1Dfyagkjuxe3rAl7kjDKbpAt1csmt6
-    5bpPClpVpnzl0FCDaK02319TylT8harekyneyItyaY2i3T2ZKBP>
-X-ME-Received: <xmr:_MloaaAth_E1Pbs94ClBRxQK1R67ndSun5BBCpvQ2QGvuV4rrY9l6kPwdKzNDxUq2Zaci-7Yv5xKWUH_wVv9bOhcxUlNyd9GOR8bsD2JjwaTdw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdehkeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:_MloaUeugYEVVrc1dBdoL0QUtgswo3X_G_veZ0tWptt_yXyK8fm_Rw>
-    <xmx:_MloaafzY4PffXsqe0Vc4Qg74qdtWkP6Mx9QDWyarWmiJSNzPwPnsQ>
-    <xmx:_MloaQi1FfBZWDQ-YMPqbE-YIyH2_qtUudhDtbIY85rPfS_AG0n_jA>
-    <xmx:_MloaeRNQpxHx6H6VZypd5-iwSuArQzvttkieB3fWJT6sDycmkEbAw>
-    <xmx:_MloaXkdat8WYMFOSpu7SS9QQ2oszU_YFWzxGRTNvfwjL6GzA9p7enA7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 15 Jan 2026 06:05:31 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 281011e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 15 Jan 2026 11:05:31 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 15 Jan 2026 12:04:43 +0100
-Subject: [PATCH 14/14] odb: drop unused `for_each_{loose,packed}_object()`
- functions
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eUrCniJZ"
+Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-93f63d46f34so251535241.2
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 03:08:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768475315; x=1769080115; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pl+gVaaHfHKG2ODLbgI39I1WqXVMK14tdOX0Dt7r/CA=;
+        b=eUrCniJZtSg/XgBDKS9WroIfYsOgSVEGOms5iKREKVEMCQGdSGmZVbdSTkdPVT6wNq
+         NCZu6JRYWTJ9nLPKheMLJrzJS/UQUBV2PGRgqc6NGG2RIEqRRt4qejoukXu4f2OsBIrs
+         wj149KuRc91Po1rK1VIXn/8M0N7lLJiz+dGTbZu1fRf3i0EorvzBoEDmgs39j0ICEFgB
+         /OEuNGnosDCpyPuIB30zdRm86RUBQfFPDXXZMRoHdkKR+WU3O8+73yMTkU9z3BG5CvSc
+         gVg2/SMojfk9bl1vQWSZzzPRfEEyltZFcolwXGRtPgPBCgtJ8P90P+z1ITrBODOL6J6a
+         fCaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768475315; x=1769080115;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pl+gVaaHfHKG2ODLbgI39I1WqXVMK14tdOX0Dt7r/CA=;
+        b=ATHxHEfF+z4KWW3XSqeIR+99sVg1fLBGr9CEDqEpY3Bc08t+GZ0u8JyfpOVLi5Xxcm
+         2vXLpJCqaBd64ajnvTVTAQL0o1PMh0X/dCEcZeOe0WVan3n4DevkICldZV+KJErcMS5Y
+         dW4L6CbCtigfUyl9a5OYksvusPzBLi34rHAiXd1dw7LILCUfue7gTZKpvPx1ypP3g9sQ
+         eYd+QWnuZCqjBnO04glyZ0SRUS/Iz0yh+cRZXt8oMls3zqjyG+Mlg0I6XDPzqNAp+zFR
+         fsJ/bA8UMWuKryv7IkNRucIDCrOnTNwTeMgXLhXmZ0Dfb2F4fqFIsuGY7nJDRHgjgm5g
+         UVTA==
+X-Gm-Message-State: AOJu0YzZisZ8Ob6gIxvmOQ6mDYTYd7DuNC8xwWFJOG7aG1GLOvpBZl53
+	/dQmM2U2hnycq0yfG3Qlzs/xMd3NXKwNCpvRjGIGbo7fN377GrYwE7MKff0xgxPEdgHUEb7Leh7
+	xb7ujQaT+lkTBXuO0EtBPZzYoVK+6qo0seA==
+X-Gm-Gg: AY/fxX4SXoqHk4pLkljtQKcBVxc6wQdoxh5GozxsRXcSoxdiaRnEZM3Sa94egwyyfHW
+	xow2QTS0LYixaq+ohqu7N5QEuYjKIOizQRxg/80A4/BEAuMnpfqxg8IDKE6KC9vxnwF3t9Zxexg
+	A3mfyXzpmWLVvsO1zZHDXiE/d8zKhbCSdTD89Xc3mRDG78d1KHeGxVpSNNzxOIvx/5ow5ItcLRc
+	LkD88fmTumsFROGh9y+jMa9Mn/5IRSJUrwkEJchBvpCS1h2NRYeP+M0BtgVAh485JN6UA==
+X-Received: by 2002:a05:6102:1612:b0:5ee:a1e5:6504 with SMTP id
+ ada2fe7eead31-5f17f65c006mr2182670137.36.1768475314613; Thu, 15 Jan 2026
+ 03:08:34 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 15 Jan 2026 03:08:33 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 15 Jan 2026 03:08:33 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260114175558.GG885771@coredump.intra.peff.net>
+References: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
+ <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-4-f5f8b173c501@gmail.com>
+ <xmqqpl7cf6kf.fsf@gitster.g> <20260114175558.GG885771@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260115-pks-odb-for-each-object-v1-14-5418a91d5d99@pks.im>
-References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
-In-Reply-To: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+Date: Thu, 15 Jan 2026 03:08:33 -0800
+X-Gm-Features: AZwV_QhyBWEvkahRiXrCbDfuIav1NitH_gq81ZuKGpkS5rilpDMLdktxMuEVelo
+Message-ID: <CAOLa=ZQLPB2Tntvimpp2zt=6PiWhJJh_oDCrUk7F8v+pFhyyMA@mail.gmail.com>
+Subject: Re: [PATCH 4/6] update-ref: utilize rejected error details if available
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, newren@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000ec08b206486b3e8b"
 
-We have converted all callers of `for_each_loose_object()` and
-`for_each_packed_object()` to use their new replacement functions
-instead. We can thus remove them now.
+--000000000000ec08b206486b3e8b
+Content-Type: text/plain; charset="UTF-8"
 
-Do so and inline `packfile_store_for_each_object_internal()` now that it
-only has a single callsite again. This makes it a bit easier to follow
-the callback indirection that is happening there.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-file.c | 20 -------------
- object-file.h | 11 -------
- packfile.c    | 92 +++++++++++++++++++----------------------------------------
- packfile.h    |  2 --
- 4 files changed, 29 insertions(+), 96 deletions(-)
+> On Wed, Jan 14, 2026 at 09:27:28AM -0800, Junio C Hamano wrote:
+>
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>> > @@ -573,16 +573,18 @@ static void print_rejected_refs(const char *refname,
+>> >  				const char *old_target,
+>> >  				const char *new_target,
+>> >  				enum ref_transaction_error err,
+>> > -				const char *details UNUSED,
+>> > +				const char *details,
+>> >  				void *cb_data UNUSED)
+>> >  {
+>> >  	struct strbuf sb = STRBUF_INIT;
+>> > -	const char *reason = ref_transaction_error_msg(err);
+>> >
+>> > -	strbuf_addf(&sb, "rejected %s %s %s %s\n", refname,
+>> > -		    new_oid ? oid_to_hex(new_oid) : new_target,
+>> > -		    old_oid ? oid_to_hex(old_oid) : old_target,
+>> > -		    reason);
+>> > +	if (details)
+>> > +		strbuf_addf(&sb, "%s\n", details);
+>> > +	else
+>> > +		strbuf_addf(&sb, "rejected %s %s %s %s\n", refname,
+>> > +			    new_oid ? oid_to_hex(new_oid) : new_target,
+>> > +			    old_oid ? oid_to_hex(old_oid) : old_target,
+>> > +			    ref_transaction_error_msg(err));
+>>
+>> Could "details" reported from the lower layer be less detailed than
+>> what we are formulating here, like updating the value of what ref
+>> from what old object to what new object, or what the err code tells
+>> the end-user?
+>
+> I wondered that, too, but also: is this supposed to be machine-readable?
+> The "rejected ..." output looks like something that could be parsed,
+> and it seems to be documented in git-update-ref(1).
+>
+>   Side note: if this is meant to be a stable format, surely there should
+>   be some coverage in the test suite? There doesn't seem to be.
+>
 
-diff --git a/object-file.c b/object-file.c
-index c0f896673b..bc5209f2fe 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1802,26 +1802,6 @@ int for_each_loose_file_in_source(struct odb_source *source,
- 	return r;
- }
- 
--int for_each_loose_object(struct object_database *odb,
--			  each_loose_object_fn cb, void *data,
--			  enum odb_for_each_object_flags flags)
--{
--	struct odb_source *source;
--
--	odb_prepare_alternates(odb);
--	for (source = odb->sources; source; source = source->next) {
--		int r = for_each_loose_file_in_source(source, cb, NULL,
--						      NULL, data);
--		if (r)
--			return r;
--
--		if (flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY)
--			break;
--	}
--
--	return 0;
--}
--
- struct for_each_object_wrapper_data {
- 	struct odb_source *source;
- 	struct object_info *oi;
-diff --git a/object-file.h b/object-file.h
-index 048b778531..af7f57d2a1 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -126,17 +126,6 @@ int for_each_loose_file_in_source(struct odb_source *source,
- 				  each_loose_subdir_fn subdir_cb,
- 				  void *data);
- 
--/*
-- * Iterate over all accessible loose objects without respect to
-- * reachability. By default, this includes both local and alternate objects.
-- * The order in which objects are visited is unspecified.
-- *
-- * Any flags specific to packs are ignored.
-- */
--int for_each_loose_object(struct object_database *odb,
--			  each_loose_object_fn, void *,
--			  enum odb_for_each_object_flags flags);
--
- /*
-  * Iterate through all loose objects in the given object database source and
-  * invoke the callback function for each of them. If given, the object info
-diff --git a/packfile.c b/packfile.c
-index c96ec21f86..493d81fdca 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2326,65 +2326,6 @@ int for_each_object_in_pack(struct packed_git *p,
- 	return r;
- }
- 
--static int packfile_store_for_each_object_internal(struct packfile_store *store,
--						   each_packed_object_fn cb,
--						   void *data,
--						   unsigned flags,
--						   int *pack_errors)
--{
--	struct packfile_list_entry *e;
--	int ret = 0;
--
--	store->skip_mru_updates = true;
--
--	for (e = packfile_store_get_packs(store); e; e = e->next) {
--		struct packed_git *p = e->pack;
--
--		if ((flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
--			continue;
--		if ((flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) &&
--		    !p->pack_promisor)
--			continue;
--		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS) &&
--		    p->pack_keep_in_core)
--			continue;
--		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS) &&
--		    p->pack_keep)
--			continue;
--		if (open_pack_index(p)) {
--			*pack_errors = 1;
--			continue;
--		}
--
--		ret = for_each_object_in_pack(p, cb, data, flags);
--		if (ret)
--			break;
--	}
--
--	store->skip_mru_updates = false;
--
--	return ret;
--}
--
--int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
--			   void *data, unsigned flags)
--{
--	struct odb_source *source;
--	int pack_errors = 0;
--	int ret = 0;
--
--	odb_prepare_alternates(repo->objects);
--
--	for (source = repo->objects->sources; source; source = source->next) {
--		ret = packfile_store_for_each_object_internal(source->packfiles, cb, data,
--							      flags, &pack_errors);
--		if (ret)
--			break;
--	}
--
--	return ret ? ret : pack_errors;
--}
--
- struct packfile_store_for_each_object_wrapper_data {
- 	struct packfile_store *store;
- 	struct object_info *oi;
-@@ -2424,12 +2365,37 @@ int packfile_store_for_each_object(struct packfile_store *store,
- 		.cb = cb,
- 		.cb_data = cb_data,
- 	};
-+	struct packfile_list_entry *e;
- 	int pack_errors = 0, ret;
- 
--	ret = packfile_store_for_each_object_internal(store, packfile_store_for_each_object_wrapper,
--						      &data, flags, &pack_errors);
--	if (ret)
--		return ret;
-+	store->skip_mru_updates = true;
-+
-+	for (e = packfile_store_get_packs(store); e; e = e->next) {
-+		struct packed_git *p = e->pack;
-+
-+		if ((flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
-+			continue;
-+		if ((flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) &&
-+		    !p->pack_promisor)
-+			continue;
-+		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS) &&
-+		    p->pack_keep_in_core)
-+			continue;
-+		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS) &&
-+		    p->pack_keep)
-+			continue;
-+		if (open_pack_index(p)) {
-+			pack_errors = 1;
-+			continue;
-+		}
-+
-+		ret = for_each_object_in_pack(p, packfile_store_for_each_object_wrapper,
-+					      &data, flags);
-+		if (ret)
-+			break;
-+	}
-+
-+	store->skip_mru_updates = false;
- 
- 	return pack_errors ? -1 : 0;
- }
-diff --git a/packfile.h b/packfile.h
-index ab0637fbe9..8e0d2b7661 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -340,8 +340,6 @@ typedef int each_packed_object_fn(const struct object_id *oid,
- int for_each_object_in_pack(struct packed_git *p,
- 			    each_packed_object_fn, void *data,
- 			    unsigned flags);
--int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
--			   void *data, unsigned flags);
- 
- /*
-  * Iterate through all packed objects in the given packfile store and invoke
+Good catch, the documentation does indeed promise this format, so it
+wouldn't be appropriate to step away from it. Ideally, we should only
+replace the last field, but that would be a lot of redundant
+information.
 
--- 
-2.52.0.660.gd05f3a8ea5.dirty
+Overall, we could also drop this patch too, since the flag was
+introduced with batched updates and we could better justice here once we
+cleanup all other error messages.
 
+> So should we just be replacing the ref_transaction_error_msg() part? I
+> _think_ the low-level details will usually be more informative there,
+> but not necessarily. So possibly we'd even want to show both, though I
+> suspect just concatenating them would be messy.
+>
+> Plus the "details" one has a lot of redundant information in it (it
+> mentions "refname", even though it is already on the "rejected" line).
+
+Indeed, I've noted all possibilities in another response [1], but there
+is some redundancy there and we could do a nice cleanup.
+>
+> In the short-term, I wonder if we just want:
+>
+>   if (details && *details)
+> 	error("%s", details);
+>
+> That gets us back to the status quo, where the details are at least
+> available via stderr. And then we can consider how to combine them into
+> the machine-readable format separately.
+>
+
+That's a good compromise too. I'd say we do this for now and see how we
+can take it from here.
+
+> -Peff
+
+[1]: CAOLa=ZS0i+YXfVHHAax699ME48YG7jXNZ3WOBYryS0hypMZO-A@mail.gmail.com
+
+--000000000000ec08b206486b3e8b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e0fc082e96376695_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1sb3lyQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meCtXQy80cCtNT05GQ1hGSTZybDAwL2dkdmdjci8rdQpKTkdmUzNlUk5X
+ZWV6bkR3MDk0aTREemlxN1JQR1NLNHM0QXFGM0Q4MzFiUVRuNE5ZSk9HcnNRMTFTdnhWdDhRCkVY
+WlNMN2RDNzI3aFBlN2JubUt2bHRhOUhNdVdRZ1ExR0NERFhqT0IwZjh5MXZsei9rNGdMQ2UxWlNC
+NzVSeVYKZTZ3d1V2Zkh2SXJYSG9xMmlXMVlLSFNKaW5qVlF1OTJKWmIrZE1ScEN0V0M0dmRQMzRF
+WkZTaFZOOWtjREdUdwo0UExCV3AvclNrWjRaK1pUU0pIalpMZkxRMTF4YWk4YkIrdjBKVktCMmRJ
+dnFxaWdndERsM0NUZXNzb3hTaVJ1ClIvZ3ZLYzNSVm40aW9KK3o0bW8vOWpIOXA4R1Bjd3ByQzB4
+U3BvNmtiMVdTQXVHb1ZkYTgzbzhUTjVsY1V4UkkKWHZJVFVrbVd6U05rMW5oRUtaOU1zdEY5NWxo
+Zml2dXVQVDYwZ0FnR0lsbU9TQlY3VmFocDNRMXNPYVF2VUZDagoxb3pIZmVWdUpOMG9ndEhOUzNY
+WmlvQ0JCOVhYeVRLakUyM2h6T3VjckFyZTdkOTZlRjZZVnVWRzVEK2h3a0lMCm1KUEpGZ2F5a0Ny
+NTVoQ0x6TFBYdmRJb3QvMzhtbHF1dFE1T2g0RT0KPXNoaUEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ec08b206486b3e8b--
