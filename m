@@ -1,55 +1,55 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9576E37417F
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 11:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D016D374196
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 11:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768475103; cv=none; b=h49H0dlnpwh9Yn1YY1NZ37PRD1U+6/R/RWkxzUVMB0PE23o7D7lG3/3Mp0yhgkP6Ezcp1HJzEnemXWFOq01afJADrrCWAvg+5CNp3OGBJmSRtTTUfbYBWr79/h/o8CUXsB22kV2SEqzS7VwrPNRYURtPedgfxBbl/5pTBMHjhs8=
+	t=1768475106; cv=none; b=ergzC9NZdTAzPULBZBMxCJw7L1BvkfXIut5ePYSuVVo7sMneaY3amvbE+o8lwXu5A2p3qbfx2S7Z3+6tAXjGlY/PWXNt7AKw6TqusbIBBJeof1iSYJkl7q+UZBdbQbc1WI1WfVokhslnIyfAM6su7hC3jOlxpp+w9tmaXvPAhfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768475103; c=relaxed/simple;
-	bh=vOAsokY9QKwhRjRkqbmHid1pRXsdRhm4MEN59M4oQtE=;
+	s=arc-20240116; t=1768475106; c=relaxed/simple;
+	bh=hwVaIOuc/gJ39tajReLsc66fOLZ2FHi2jIX2KTPDb1Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=r7zx4kJydyW0hHngl7qbGXii02gWjv2+ZmkUixD3rP4ivJPhlWAL3ts6HStGMRzr+MIki3PGP/o3My6TeADac0UefRR0jHxZJsHXtCPp4s+YbzjsKsrZqGmWA69g6q5ZkZBpkd8wBsmGctbiTSuMhVKBrsFQwJntgat2kt7mGms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LZEahlc9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lTgNsA8T; arc=none smtp.client-ip=202.12.124.149
+	 In-Reply-To:To:Cc; b=a9B8kdf3JNv60T0AaV0oSDuMz0b0FZmA/T/y8xPOfqoguEmm1FUaVwI/u04R0s/u+1Fz0QoQyG6JreU44VJ/JMKk37k4xUpOSFx/KMr5NwjfqdRama7JfUl/dpBwgdqAknLPaq9M/iZXOtYL3TSdL7yhokWDg2sbkWHG3uOUz/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R+2t3tDy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=owTHSdm1; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LZEahlc9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lTgNsA8T"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id EB4191D000E1
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 06:05:00 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R+2t3tDy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="owTHSdm1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 180451D000E0
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 06:05:04 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 15 Jan 2026 06:05:01 -0500
+  by phl-compute-06.internal (MEProxy); Thu, 15 Jan 2026 06:05:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768475100;
-	 x=1768561500; bh=krTIngsKU6O2b+ERSdVyA/5UoRXrzVGTr3aPsRAgPZc=; b=
-	LZEahlc9XsAVqZBPa3ySCC2tcDvSvpgygqXeukGtr98wqCeufXp1URZUvgP7ajxT
-	Ai33qDvAPuQkvX+KufRrIIqeklt/tIj2CUdFXbcy/jrEaZ/YhFhhdl4dYpBYN1pn
-	D573KNUX3v5yHlviZ9is55h13xve79IxSztBW1yTjBSKK02l4VMzBPbj+EybVLPB
-	iPIUA3qc4CsyO4V0DqDk+lH/wsKr5OcuVEqutOiaR8AlfsCSCwj/VU0e4VSfHIkV
-	84YrJRf193GFbf/EjKYQo2fgH0rvp+z1lFwkukUBJvryeyFObGAmoXxe5G6jOZpp
-	7Ip8ei2Rlz4XlN4rtJ3fSQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768475103;
+	 x=1768561503; bh=N3sVE7K2iZG2DySf5LAlNMmgPF5FweswKgkX7cjBimY=; b=
+	R+2t3tDy6d2MAraGv0FueSn48i78GBNcTmoU8o1g4nQJedpzVfgJCoLpwl0cC2CU
+	9uGDtOd2CZ19rCi6oMF8Y2qf/nS5Ul7m+Koukbt0LdMs6qeDN9WkbybwHEZ0l6K6
+	LCj6CvI4VqH8Ey4pkhvnqN9i7nCEOfm7o6Deac7salO3TS3857rje7oemdYtfalr
+	vHsiAIcMEixjtbXAD7V9I9HTYUR6t3enKYEu7bPy9snrum/wLnWSLuBVaOP6Lqh6
+	sAM2DTxzAgHYx7rKfGYKLLY+8NdMUFOjORFhkG7PX94tZcISlC1qzEcuP4XQuN2s
+	hUwlGqZ/gkXvkK8cV9NX7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768475100; x=
-	1768561500; bh=krTIngsKU6O2b+ERSdVyA/5UoRXrzVGTr3aPsRAgPZc=; b=l
-	TgNsA8TK2IKfLvosFP4Uy/ip1wTMa5dx9N+EMELbSbSjqaiCW6CpPBlVpCiqEg4m
-	GVZpsgZGGfMiJVDpv6HurjlXqfYlYAKcUXQSh/QFD98RTcV+oKlKKW6NnmSCAOSi
-	gz+QCqGCl6Zlk90YxAhKXIAhQakpUYbXcigMsOflEYWF1yXz+QEu+Z15O0fhz1xm
-	BE+bLM7+915KEXIuuwjcjfvFrKLfQHrfcU6vVjqll02Z9WUtNCCLV++qEU96WdPW
-	qGhVK0zWluGc+iiG3O91PX1hVAnpY1IBbyZJimbz6R9GLPn3uwlqJkxMYa48GHUK
-	ZFLHi0ofTbPxl0kxGM6tA==
-X-ME-Sender: <xms:3Mloacuwkj8Z6vTVaUAjhqz32LzEF0EVoBMTrGRjBpsZPwJWiC-m6w>
-    <xme:3MloaQa9D4h8Y6rvcQJExbEHu0BdAPNAVqJDOA3te9T-gIAYr9G-h0NxlE9f4sktR
-    YBaC8AWXQSnA0bUujxqvHM15It_99rU_BV1csm91Se5lrGKbIz75Nk>
-X-ME-Received: <xmr:3MloadZKMQRg_q-xJCNG_-Gh0-4v_blJu7mFbz-gY9khP1cklUljB3MLg7z5a2ynuvV5NZ14YvGBOk7zdTkdPg-20vJpJmmTsHA5TjcDKDNXZA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768475103; x=
+	1768561503; bh=N3sVE7K2iZG2DySf5LAlNMmgPF5FweswKgkX7cjBimY=; b=o
+	wTHSdm1XXpM4LebxYAwwnX7l1ffAgVJIJ2EYxWQxndd8PMC56RJR0aMGhU27Q0pi
+	w0XJ03DRBV/Jkx04qBlQjGwlOkK6rK6zhJVMp8RqfaKwVqiB6YDdtkpyxtnZ/Gos
+	X9EslTywu1GwhTi751N0FlHuriPypo6DtOi4xjZbXRbFEZ7Ba0v0owPcktRVtZxu
+	bSYG0BXzB3D8LcTZNMVHyylZOza3jOLGNMa/IO0cZPLnlP/sDgtpldhOu4gJ1OWE
+	p7442/NSt6aQLPlhqQtZrBF2xkYL0Mx2fQHwwDjZsjNoSq0bN4CncJrSPlL7uQw3
+	+mKuyfDFkwb4yu9tucIew==
+X-ME-Sender: <xms:38loaQ9a0g-rTv2M1yiT9TVVF5P_LhTK9TfczjDYxeYNt5OzcgEu9Q>
+    <xme:38loafrm7Wdtest8jmSsI0ohNMcqdrLHmFLZWFD7PFK6I57Cp6-k_0ezhBEgTNBJ_
+    fMXFv765gRcz89dj5ii9VPETdCWJUiR2KA3RmQtqHPtE_5Eg6HZmy0>
+X-ME-Received: <xmr:38loabpfajRwEvcEDqT4PrpivWZV70dwYI0dznsKw1wiDetJouzDveJlSKQI0-a26XtZni0q8xF8sabDmuGj718QvQ3tycgioa4D_N_Ojs8vxw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdehkeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -59,21 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdehkeelucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:3MloaUWi9guL7oKwqG4ZkAiwO5X7X26lSl2VopwLGvY0q1vAnlzq7w>
-    <xmx:3Mloac0KjryhTSd4E5EIXXgclvKTsQy96Svz2LmTB6KX_Ene2PVLEg>
-    <xmx:3MloaTa01WIhuyG1vQEJh0XYOfpJXsiorlz5fx8HuTL-voqElXmbYw>
-    <xmx:3MloaXpIrRlUu6suZBz66WBUMbl6TPI2HzWNQ8MJFBMR0Xu3zLx1Qg>
-    <xmx:3MloafcMHMCc48oMPdF62Jb-WHu44FWeR6zHUTzEcakuYBs-7wNpJZrZ>
+X-ME-Proxy: <xmx:38loaVlfOdd2E-3A-RtlzRYMyLt590dsOS1ha4TFkB1h53clq3ez4Q>
+    <xmx:38loaVGESORqVffMfrQcpFXXB_oz652EcrdWmu3q3y2xeArGskNwcA>
+    <xmx:38loaWoJGFTVKY-Z9j59an63aajoUaQsrqkipFpCXBjT7528Qt1rLg>
+    <xmx:38loaZ5HaA-CxvYZQzC69d223iKcFwC1KqMvN4hzDgevCbP8BVAsIw>
+    <xmx:38loaQs3mA74hcKLLcKOtMScc2aTQMOHE1c3saX0C3bmNSRfj1RTt2Oo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 15 Jan 2026 06:05:00 -0500 (EST)
+ <git@vger.kernel.org>; Thu, 15 Jan 2026 06:05:03 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1c059e18 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 3466707f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 15 Jan 2026 11:04:59 +0000 (UTC)
+	Thu, 15 Jan 2026 11:05:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 15 Jan 2026 12:04:31 +0100
-Subject: [PATCH 02/14] odb: fix flags parameter to be unsigned
+Date: Thu, 15 Jan 2026 12:04:32 +0100
+Subject: [PATCH 03/14] object-file: extract function to read object info
+ from path
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,94 +83,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260115-pks-odb-for-each-object-v1-2-5418a91d5d99@pks.im>
+Message-Id: <20260115-pks-odb-for-each-object-v1-3-5418a91d5d99@pks.im>
 References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
 In-Reply-To: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-The `flags` parameter accepted by various `for_each_object()` functions
-is a bitfield of multiple flags. Such parameters are typically unsigned
-in the Git codebase, but we use `enum odb_for_each_object_flags` in
-some places.
+Extract a new function that allows us to read object info for a specific
+loose object via a user-supplied path. This function will be used in a
+subsequent commit.
 
-Adapt these function signatures to use the correct type.
+Note that this also allows us to drop `stat_loose_object()`, which is
+a simple wrapper around `odb_loose_path()` plus lstat(3p).
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c | 3 ++-
- object-file.h | 3 ++-
- packfile.c    | 4 ++--
- packfile.h    | 4 ++--
- 4 files changed, 8 insertions(+), 6 deletions(-)
+ object-file.c | 39 ++++++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 23 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index 64e9e239dc..8fa461dd59 100644
+index 8fa461dd59..a651129426 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -414,7 +414,8 @@ static int parse_loose_header(const char *hdr, struct object_info *oi)
- 
- int odb_source_loose_read_object_info(struct odb_source *source,
- 				      const struct object_id *oid,
--				      struct object_info *oi, int flags)
-+				      struct object_info *oi,
-+				      unsigned flags)
- {
- 	int ret;
- 	int fd;
-diff --git a/object-file.h b/object-file.h
-index 42bb50e10c..2acf19fb91 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -47,7 +47,8 @@ void odb_source_loose_reprepare(struct odb_source *source);
- 
- int odb_source_loose_read_object_info(struct odb_source *source,
- 				      const struct object_id *oid,
--				      struct object_info *oi, int flags);
-+				      struct object_info *oi,
-+				      unsigned flags);
- 
- int odb_source_loose_read_object_stream(struct odb_read_stream **out,
- 					struct odb_source *source,
-diff --git a/packfile.c b/packfile.c
-index b65f0b43f1..79fe64a25b 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2259,7 +2259,7 @@ int has_object_kept_pack(struct repository *r, const struct object_id *oid,
- 
- int for_each_object_in_pack(struct packed_git *p,
- 			    each_packed_object_fn cb, void *data,
--			    enum odb_for_each_object_flags flags)
-+			    unsigned flags)
- {
- 	uint32_t i;
- 	int r = 0;
-@@ -2302,7 +2302,7 @@ int for_each_object_in_pack(struct packed_git *p,
+@@ -165,30 +165,13 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
  }
  
- int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
--			   void *data, enum odb_for_each_object_flags flags)
-+			   void *data, unsigned flags)
+ /*
+- * Find "oid" as a loose object in given source.
+- * Returns 0 on success, negative on failure.
++ * Find "oid" as a loose object in given source, open the object and return its
++ * file descriptor. Returns the file descriptor on success, negative on failure.
+  *
+  * The "path" out-parameter will give the path of the object we found (if any).
+  * Note that it may point to static storage and is only valid until another
+  * call to stat_loose_object().
+  */
+-static int stat_loose_object(struct odb_source_loose *loose,
+-			     const struct object_id *oid,
+-			     struct stat *st, const char **path)
+-{
+-	static struct strbuf buf = STRBUF_INIT;
+-
+-	*path = odb_loose_path(loose->source, &buf, oid);
+-	if (!lstat(*path, st))
+-		return 0;
+-
+-	return -1;
+-}
+-
+-/*
+- * Like stat_loose_object(), but actually open the object and return the
+- * descriptor. See the caveats on the "path" parameter above.
+- */
+ static int open_loose_object(struct odb_source_loose *loose,
+ 			     const struct object_id *oid, const char **path)
  {
- 	struct odb_source *source;
- 	int r = 0;
-diff --git a/packfile.h b/packfile.h
-index 15551258bd..447c44c4a7 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -339,9 +339,9 @@ typedef int each_packed_object_fn(const struct object_id *oid,
- 				  void *data);
- int for_each_object_in_pack(struct packed_git *p,
- 			    each_packed_object_fn, void *data,
--			    enum odb_for_each_object_flags flags);
-+			    unsigned flags);
- int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
--			   void *data, enum odb_for_each_object_flags flags);
-+			   void *data, unsigned flags);
+@@ -412,7 +395,8 @@ static int parse_loose_header(const char *hdr, struct object_info *oi)
+ 	return 0;
+ }
  
- /* A hook to report invalid files in pack directory */
- #define PACKDIR_FILE_PACK 1
+-int odb_source_loose_read_object_info(struct odb_source *source,
++static int read_object_info_from_path(struct odb_source *source,
++				      const char *path,
+ 				      const struct object_id *oid,
+ 				      struct object_info *oi,
+ 				      unsigned flags)
+@@ -420,7 +404,6 @@ int odb_source_loose_read_object_info(struct odb_source *source,
+ 	int ret;
+ 	int fd;
+ 	unsigned long mapsize;
+-	const char *path;
+ 	void *map = NULL;
+ 	git_zstream stream, *stream_to_end = NULL;
+ 	char hdr[MAX_HEADER_LEN];
+@@ -443,7 +426,7 @@ int odb_source_loose_read_object_info(struct odb_source *source,
+ 			goto out;
+ 		}
+ 
+-		if (stat_loose_object(source->loose, oid, &st, &path) < 0) {
++		if (lstat(path, &st) < 0) {
+ 			ret = -1;
+ 			goto out;
+ 		}
+@@ -455,7 +438,7 @@ int odb_source_loose_read_object_info(struct odb_source *source,
+ 		goto out;
+ 	}
+ 
+-	fd = open_loose_object(source->loose, oid, &path);
++	fd = git_open(path);
+ 	if (fd < 0) {
+ 		if (errno != ENOENT)
+ 			error_errno(_("unable to open loose object %s"), oid_to_hex(oid));
+@@ -534,6 +517,16 @@ int odb_source_loose_read_object_info(struct odb_source *source,
+ 	return ret;
+ }
+ 
++int odb_source_loose_read_object_info(struct odb_source *source,
++				      const struct object_id *oid,
++				      struct object_info *oi,
++				      unsigned flags)
++{
++	static struct strbuf buf = STRBUF_INIT;
++	odb_loose_path(source, &buf, oid);
++	return read_object_info_from_path(source, buf.buf, oid, oi, flags);
++}
++
+ static void hash_object_body(const struct git_hash_algo *algo, struct git_hash_ctx *c,
+ 			     const void *buf, unsigned long len,
+ 			     struct object_id *oid,
 
 -- 
 2.52.0.660.gd05f3a8ea5.dirty
