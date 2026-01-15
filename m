@@ -1,124 +1,133 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245FD248F73
-	for <git@vger.kernel.org>; Thu, 15 Jan 2026 12:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30153793AA
+	for <git@vger.kernel.org>; Thu, 15 Jan 2026 12:53:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768480090; cv=none; b=UNa5/LifB4dSXURgp6OOl36nJOkb/cCcXkBHkJE/n4mspRjbhPvfTp5ij4+zxYK/JEnJGdrJwuJ1uwGU0Bt2uicYPUmYrd36ZB0VrbhAf+0KdXpCl6FGZt6x0rB4hWdJtdZS7dpqINoiOnFkUdMexgl8CbF3oHwedwpnoDQqPlA=
+	t=1768481586; cv=none; b=R57jJcigaEMMueJ8amonS2aQxADWKQJLZpgKtQ4LM9qJbT3j5pEVfMWaAcfrPxanW88iIJJ60xBqJbygDSW+oL5MGR+pIMtno6C/aRPwDzXqDcfZdlW4yEF11J981Yb0dSTgcdYtnl0RbGH2pSPS+nerGQE5rrWgyJxhm0CNs/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768480090; c=relaxed/simple;
-	bh=UMUlwBxYRMIB18QhP3lQ/CE6j5luh52LkXIw0aJRg64=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGUsjhJ6ydPI/yKBaaHqun8C0pIBI2jejCO5Ofbo9OfzZNrDMRFl511vQJrfYdNminaZqIKBVN3EByzrpeKnN2HGyzGp8q1KLbCZPzOMGczDkqcExIvph/rfqH8+a+QsiWMPFn8svibIEexHEaW1z6ibD46Lu2t0fhe5tQehhjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UGW3xJKq; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1768481586; c=relaxed/simple;
+	bh=yjUzDi7bpN/dCVjGDk45JZNnu/qKe8vhAvS+Nawuksw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aaPoqsN4mzk0C7RdbkbP2wYZ7NOFkBX4DThlrrgKyXpSzLhgCCKiY8b3h9jKBfH+eJ6YsEkO6GaJc9SmPCfWewtkMfDpo3E2v2ast/RVnmZ1Z1htzwED0MGFPLetsMlAaSmkyEsNKiPd8mc6IpUG6B9PcG8ftygnPHUUAOS0Sa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b853xnYc; arc=none smtp.client-ip=74.125.82.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UGW3xJKq"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a0f3f74587so5849955ad.2
-        for <git@vger.kernel.org>; Thu, 15 Jan 2026 04:28:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b853xnYc"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1233702afd3so1021059c88.0
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 04:53:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768480088; x=1769084888; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RNhKVgrw3UCab+1NYsIntqMUqFhJ5weJA1b7pgpsHK8=;
-        b=UGW3xJKqNyaf+iwO1R5lS9PCg+DC6hhXCllQyEe0GghIDekefVbJPZy+FTq3Q0O9V8
-         7hO3PJZ/2BvjmmJ7hWGdV5V+0R5w1YJqR12F9ORYmh/32ulcQOqgbNlHHb5WI/Vdw7lU
-         16QagRzRZNqimEF/Wmfy2Y9aQXXLVVrA5GFH04ZtT1m5dkl2TOe3QVXj4RjuikkoGSGd
-         7ZPcdYo+wWIMkVEdYWA4KhleJQgO0JfwCjOTM+3KLkPgbNsVFlP664GehwTBE8J1sO30
-         ZIgq1Smq/1ZJxDuESm9AKoroUwJI5P7DH4wesNio4xFkirMUDvxndBPYfAikY+0YKXh7
-         6p4Q==
+        d=gmail.com; s=20230601; t=1768481584; x=1769086384; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ehC4aSBk/iKw+4Vq/T8uRM6KFtY4/hJ55OoenNxJnYw=;
+        b=b853xnYcq1Wj3afeDNOPMWrktq1xka5Gv5i2HrXIcn3jrEfBmT8ryqK1vf4btwocsS
+         8QEYUHJkXg/0SnHOTWDCfppwL5/RVt5e5D07R65f50KFSEGyQaGbrEWADYuLDXOfwuPH
+         8RJz2SNaR91GCOGmyAnjKBGOTJfB6jrORCbetq/+UbvNgK+Y9UWXYkCJvo7iWn4Safrb
+         y7ctxMRBf4Nhs4Ehi4EbdRGAPAoIHvGHjuXj7p4BgVk15HJ84+pIKUwejq26XHKXlGuv
+         MuoR3sPPApTKfGiupftcmL0UsloiM/y2alDlsQ+HCiDVTdpglS7YGF9Ol84XJQsfWxb9
+         L9BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768480088; x=1769084888;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RNhKVgrw3UCab+1NYsIntqMUqFhJ5weJA1b7pgpsHK8=;
-        b=wpIVA+chORm4eKTpUJnfNDo2HiF+m3XZFVK0UxJ9eG3pIO+1Cuj75Vex/UKgXdfvZ1
-         uiIE29IkvvVI34bIE8uvzWOIHU3lEB20M86oeD1Tix9bZc89XvlYOV/9gChAcbHt8rAO
-         nCxdBbFz47q4vShrc+exCjIZSzYJYL54Czc7zWegMxb7KFp1OSTnyfhY5qmNTtmffzIR
-         xTx1Hk/BmrooPulPq9Mp55AehNkSmaBrw6EGFkq0mAQ6RFm6VfS/aC/XcuGLA3OFphMm
-         t97AHka7aLDQ4AqtDQAPEB5rWZLhOgVPDuOvieYczeerrsQ8Avt/ItzBiSV6wXnlnaOr
-         rJDw==
-X-Gm-Message-State: AOJu0Ywz/Nj3v6ibt4gmruSK5GnOL9CnOPtZLeOoE5PAxZqT8oUVldog
-	PFjxhIqQzVoeu0uuXTXVpNW3/2coieWVLeA4qfL+pBbZ3n3S+bM1k+tUsne0TA==
-X-Gm-Gg: AY/fxX49eABiJLq2nvIb423Zwc8cPxTCE46P7o+l7bW88oSTlMW6w+eI8qIgTtwl0sN
-	B+CNd14yZh7H4DIG2hjCgDFjfn87MEl15iK1VQzsk4feaWBJJ4VKGYh2ivu3i1wXeHrvWwqbKCi
-	ArzIzAkk3DJaLgWc83UEW9WpvqybjubW0CrVgDSJ4vPVfMS3M3Pdf6Wwjcy0Ib1gf/58j/rH3sO
-	9n8bcYga58NbZ9nQNPtErc7TjKh4RG7M7IK8tqqL0Os+EPOLv8kQ1CsbqPnL+gP5JkjY0s5Sx2T
-	NZAFXLUyZnTxnGVyUwaZLTvfO9QHxiRl5c3ABV3GHE3sSqUoAOilqJdeDhv4Zi6lyz1eYc8TGWO
-	rwFVIPOvsDodxAcrCGfD8kJsqCtagnsOEmm0mHIfXnpczDHIpjkA+swDkngV81gr84syogj6Z2y
-	n+eo/ujbZYpgAy96ibOKwybEFf4Ib4wHXF
-X-Received: by 2002:a17:903:1aa8:b0:2a1:10f6:3c1 with SMTP id d9443c01a7336-2a599dd5b1fmr59893105ad.26.1768480088212;
-        Thu, 15 Jan 2026 04:28:08 -0800 (PST)
-Received: from Pushkar.xu.edu.in ([125.22.10.154])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cb2e1bsm254707155ad.60.2026.01.15.04.28.06
+        d=1e100.net; s=20230601; t=1768481584; x=1769086384;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ehC4aSBk/iKw+4Vq/T8uRM6KFtY4/hJ55OoenNxJnYw=;
+        b=QJpULTxKL6i2FGVgFCBNio4srWvKeQzR6D1dbAPFVGn3LrH7FSfEeKgXMqnMvoH6n8
+         wKCVTU5qbwKlFrsDgu2nntazP/hP3bFnxiaVYtrd9ZP2CO2I4cPx99kLGRqL9RH7LLhw
+         Md9s+RsAewhi1b7W8J8PcKNSpFOvigjMSD6iMxQ6I5g13S9ekrYqfyNAa6FZNjsGclCm
+         jaLs6WXsiVLSNDM48xiA+BoaxhgCbvjtXJL34Y7pgbqYaBz/fXz0sUPrV5YkfxeWD3Wn
+         nEP9wlTQZwmhpZGI6C1oaC0ceOKL/eI4GbOzTKZUhnxGRFEh8WufN+FpzGpL3avVqoux
+         pl+A==
+X-Gm-Message-State: AOJu0YytQlA/YHGPYbm6WQ6/0dAcQloy6YZzwqp9mK3HBaPcrN8dttVa
+	PpbgdtfxH6jh62npFREbApd78KHijdJPGae7vW3TaNRU8QQh6hfJN9P5
+X-Gm-Gg: AY/fxX6kvLJpZI6l4HCCkpJSbRXDFTHf+DIaTLa1YerasFtmy8JcGE49/ChM6yAIj7q
+	CjzArVl5LJha6hsVUCAkLbcPXDrQ+31ea9Lf+1BtDdxSbUwaxxGsuYH7h/PZ9cuSMmeGJr6cPIr
+	sXWgeuUfgia5I3H5PnfNI67hLMggNfWbonXjuoDOyQtbl/7WLgaKeP7FArldj8WhQaxYLHukB6X
+	QePcOySll3ktVPj0IvD0qPw2eTSMR0hdgJfrvAuQa17aQFnCCk/F1AdZCAIcUARO7eiOGO2YEU9
+	05m1lQEyl8n8YwqA0M/H+GOsloMppZAyvPcEMhKXvr0n/KAcg/Y+CneAYRYpreXx4684Xt8sKBy
+	45UDmZd+3QKE3e68Z1ki+yWM3wTaV2Qv1ELqJsTYKTJjI0FzG43H7NJkDHVQzCRl1gnR3cBe2K5
+	+hti07NA==
+X-Received: by 2002:a05:7300:e8b0:b0:2ae:5b71:d233 with SMTP id 5a478bee46e88-2b486dcab0dmr7889104eec.19.1768481583656;
+        Thu, 15 Jan 2026 04:53:03 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b17078ccf4sm21702980eec.16.2026.01.15.04.53.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jan 2026 04:28:07 -0800 (PST)
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-To: git@vger.kernel.org
-Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Subject: [PATCH v2] subtree: validate --prefix against commit in split
-Date: Thu, 15 Jan 2026 12:24:35 +0000
-Message-ID: <20260115122652.18673-2-pushkarkumarsingh1970@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260115120936.18491-1-pushkarkumarsingh1970@gmail.com>
-References: <20260115120936.18491-1-pushkarkumarsingh1970@gmail.com>
+        Thu, 15 Jan 2026 04:53:02 -0800 (PST)
+Date: Thu, 15 Jan 2026 20:52:59 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 16/17] builtin/fsck: move generic HEAD check into
+ `refs_fsck()`
+Message-ID: <aWjjK8fmf8L7vlNi@ArchLinux>
+References: <20260109-pks-refs-verify-fixes-v1-0-3587dba18294@pks.im>
+ <20260109-pks-refs-verify-fixes-v1-16-3587dba18294@pks.im>
+ <aWJUm-hrPquegbdf@ArchLinux>
+ <aWSuObEsFaxi1NAf@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aWSuObEsFaxi1NAf@pks.im>
 
-git subtree split currently validates --prefix against the working tree.
-This breaks when splitting an older commit or when the working tree does
-not contain the subtree, even though the commit does.
+On Mon, Jan 12, 2026 at 09:18:01AM +0100, Patrick Steinhardt wrote:
+> On Sat, Jan 10, 2026 at 09:31:07PM +0800, shejialuo wrote:
+> > On Fri, Jan 09, 2026 at 01:39:45PM +0100, Patrick Steinhardt wrote:
+> > > diff --git a/refs.c b/refs.c
+> > > index c3528862c6..a772d371cd 100644
+> > > --- a/refs.c
+> > > +++ b/refs.c
+> > > @@ -334,8 +334,18 @@ int refs_fsck_ref(struct ref_store *refs UNUSED, struct fsck_options *o,
+> > >  
+> > >  int refs_fsck_symref(struct ref_store *refs UNUSED, struct fsck_options *o,
+> > >  		     struct fsck_ref_report *report,
+> > > -		     const char *refname UNUSED, const char *target)
+> > > +		     const char *refname, const char *target)
+> > >  {
+> > > +	const char *stripped_refname;
+> > > +
+> > > +	parse_worktree_ref(refname, NULL, NULL, &stripped_refname);
+> > > +
+> > > +	if (!strcmp(stripped_refname, "HEAD") &&
+> > > +	    !starts_with(target, "refs/heads/") &&
+> > 
+> > We would first check whether the current ref is `HEAD`. And I am
+> > wondering whether we have some common APIs. And I find the similar logic
+> > in `reglog.c::is_head` like the following shows:
+> > 
+> >     static int is_head(const char *refname)
+> >     {
+> >             const char *stripped_refname;
+> >             parse_worktree_ref(refname, NULL, NULL, &stripped_refname);
+> >             return !strcmp(stripped_refname, "HEAD");
+> >     }
+> > 
+> > I think we might just extract this common logic to avoid introducing
+> > repetition.
+> 
+> Hm. We could, but I'm a tiny bit worried about just calling it
+> `is_head()`. It might be surprising to some callers that there isn't
+> only one "HEAD", but that this would also recognize worktree HEADs. If
+> somebody just goes like "I wanna know whether I've got HEAD" they might
+> not think about that at all.
+> 
 
-For example:
+Make sense.
 
-  git subtree split --prefix=pkg <commit>
+> So given that the complexity is comparatively low I'd prefer to keep
+> this as-is for now. On the other hand, if you've got some proposal for
+> how to make this interface not confusing I'm very open to that :)
+> 
 
-fails if pkg was removed later, even though it exists in <commit>.
+Yeah, I cannot give some better idea, either. Let's keep this as-is :)
 
-Fix this by validating the prefix against the specified commit using
-git ls-tree instead of the working tree.
-
-Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
----
- contrib/subtree/git-subtree.sh | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 17106d1a72..a5822b66d5 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -257,6 +257,9 @@ main () {
- 		test -e "$arg_prefix" &&
- 			die "fatal: prefix '$arg_prefix' already exists."
- 		;;
-+	split)
-+        # checked later against the commit, not the working tree
-+        ;;
- 	*)
- 		test -e "$arg_prefix" ||
- 			die "fatal: '$arg_prefix' does not exist; use 'git subtree add'"
-@@ -966,6 +969,12 @@ cmd_split () {
- 	else
- 		die "fatal: you must provide exactly one revision, and optionally a repository.  Got: '$*'"
- 	fi
-+
-+	# Now validate prefix against the commit, not the working tree
-+	if ! git ls-tree -d "$rev" -- "$dir" >/dev/null
-+	then
-+		die "fatal: '$dir' does not exist in commit $rev"
-+	fi
- 	repository=""
- 	if test "$#" = 2
- 	then
--- 
-2.43.0
-
+> Thanks!
+> 
+> Patrick
