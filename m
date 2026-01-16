@@ -1,129 +1,92 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A00F39A813
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 16:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB6833B6DD
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 16:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768582221; cv=none; b=T7Z0dM10SMKWHYXLq5iRSxNCQwMuQKeSxKrn9WtrjKlZdP5mIpCTTWTJ/uk+J+SB7sLP5jwf6lZPGohFc0YT91B/Ehx6Lx/WfQl3xsx736pB8ALpCv8NmwbzxGB+k49xhYf2dMcFSbEyXabtB5Cv4wqrHYujKJuL+oBT3qk7BN8=
+	t=1768582497; cv=none; b=C8FSXYiE43mMAs8DS+HuVsFezXtpaCjZToKIpobEOuImqrlr8tDFjaihRd7uE+6I2JQ2suSBvgGufnhfMqgomidgCvrWY2iepDJNTW/dc2FIhIJa2DAOpTqNJ4R+qEJHkUfaTfqG/nsbkA80xO68hHwGGLztnH0SdzaXZLReqtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768582221; c=relaxed/simple;
-	bh=noodlQ9usJldUwgMDYZSK9Lu3ezuUiJ83b7HFrM9D4g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0Z/6WKw8xCfAAl+gDchvMz/ZY7mu5U6hcIgFKYKmmdrj9GiLJF+EN2MP/ZRxneQoOYEytOYNzN8+hBbkucI056KchhlZlybqQACwhb+mGb9bAK9kmLrdwrO948fhr8IhRwchiL8FCpCVw9imBZszfPBvKPCX/oUg6Ga3HuwGLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AuOHXT/M; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768582497; c=relaxed/simple;
+	bh=HfzFn4tD8ihlhEkjJ59nGO9VdoNGXtHiKvZCsWGO6Iw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L1ISsAnuXNXGDIVTXI9a09zxZ34y5JB/fmS/6VVKxwbJxWvhqcadEB1ZUVerYLM/4laS25vquhfkUsUaixjGjvNrxp5CqNdQHsIQxsVBwgkFCtWvKLy+jsnMf9Um/G8uzs3SN+BUE5a9CXt0uxwZgkLvY9ZyB8mtwaOnFBAaBe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Wsfm4vxb; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AuOHXT/M"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-42fb0fc5aa9so1246789f8f.1
-        for <git@vger.kernel.org>; Fri, 16 Jan 2026 08:50:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768582217; x=1769187017; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n5PxYlYLy1nOxAfjUxCRCwO6n18GXO2NJyS+HkyJtZ4=;
-        b=AuOHXT/MhPpo3s2YUKKyOQs+bbRChHHh0hRLRQcqpF+PHfaADqbo57KucP+PApSTD+
-         TmAdScmx8tTi6FNTixdsPJj0CQZEdZP5t6LMy1Z+y+tSV+Py6CH5tBLs38IU5Ewb7SER
-         2ikSDkJRIX4sxd7kf35Vij+7E9GyaIXKBPdb9sM5kYPEIWT1OgSIDB6TICBXbIOTO34x
-         LJnzY447B+oFIfUlWI1MTQ8IJ/591GNoMijDmlWBXVUy09oSEiZ1yRGDPeSasoUXxwl/
-         GSgY+R7iGQPWcH+vROlUNpObgMMdbnqh6jScVCcA3X1rnKS1A/+8FTWTwDL+fIu2fJOT
-         mnHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768582217; x=1769187017;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=n5PxYlYLy1nOxAfjUxCRCwO6n18GXO2NJyS+HkyJtZ4=;
-        b=QPM3cwbr4ReIlKAveYhkJvRaIi08ObLqJB8jjXzYDay/pLKk/uxKGVIIXRn3ClWDiC
-         LJWnbcf3YAO+ypwlKhSzurmap0XoZkJJ8pdpQA5KfFx+62fJFE3fkP/CwFPatpFYihKk
-         mwSvZ800UIM7fjWYGtVoa5AqJhLw7rIUbKE6Mpymv4N6rLk8O48kTpXyB5CNCruymL5/
-         hHKyHmNC7I3OEtkU6LkPJziOdP1AF3CDES0+rAViVq61mUnTdoeXFlhuxDLQIdqMbPEm
-         j/1J2QaYKkowD2/KVmTzf8FToweoC0BNnlShnxhaTCfo2aVrExtwNCm+LlHF3eDfQNVC
-         nrOg==
-X-Gm-Message-State: AOJu0YzMl8FEehpiUteNF4greAbLnZS2qdVgrhC+4xJJZ3paLvv/rAy/
-	TH4p+cCQbPyNAVkxLY/f1CofBIY6JSR/co0KEehpK+398I9sb+ZnaA33
-X-Gm-Gg: AY/fxX7HkfwB0xVzl1sOnj98OC12ORUr2HODJAutdzvz2CgQZk8kVsCJz/QeVp3i3ts
-	85gdzslbdya5Gja7etsCmzIpYW+fot6vfz5JtlZ6R4CcD96nrWFwKvqxlW7F2BeS0Q5n4E8OluQ
-	jh7e+96xmQfAyqxgWXPvN9t856ZNoM3A6Pc06ruSMmMNMFhSUdhWzFDYAYThvd8M4DmDVq6lCiE
-	V1yhiw52fEdt6Kunpc3PobC1na8G5P99xGz86deDSC3CmXDKTd5SXJSDwcKEYPdJU0gX8wW9fbw
-	pIuTZEpM+ZEKE29wcbVREtcMYMWYmulQARP25MOUxB7l7QMpG+sBXvmlZG37zy5tpVAB1E05bsd
-	fhJfca+aJGJA8jGpdyqFmGjXgk6u/bZbHSjfYs7k9K7EYxQOG7sKKYjwk7XrTolAx4jREl9SZio
-	oVrhFkOAuE9hs72tUS4ex7xr/K8Wt3k66zgcek1+gX0imBPOXMLPF/rMdo0NhC9Yx+GL55
-X-Received: by 2002:a05:6000:430a:b0:430:fced:909 with SMTP id ffacd0b85a97d-4356a029c78mr4444341f8f.24.1768582216345;
-        Fri, 16 Jan 2026 08:50:16 -0800 (PST)
-Received: from localhost.localdomain ([115.98.235.192])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43569922032sm6299816f8f.8.2026.01.16.08.50.12
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 16 Jan 2026 08:50:15 -0800 (PST)
-From: amisha <amishhhaaaa@gmail.com>
-To: amishhhaaaa@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	stolee@gmail.com,
-	newren@gmail.com,
-	peff@peff.net
-Subject: [PATCH] sparse-checkout: optimize string_list construction
-Date: Fri, 16 Jan 2026 22:20:03 +0530
-Message-ID: <20260116165003.95314-1-amishhhaaaa@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260114192803.4852-1-amishhhaaaa@gmail.com>
-References: <20260114192803.4852-1-amishhhaaaa@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Wsfm4vxb"
+Received: (qmail 59460 invoked by uid 109); 16 Jan 2026 16:54:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HfzFn4tD8ihlhEkjJ59nGO9VdoNGXtHiKvZCsWGO6Iw=; b=Wsfm4vxbtEErEGlBl21Px2F6ZihTFqyuUZp36ELxz4IgodT3PgNl44dkLaOj6bxf2paN6p7S2uFQI86ksDp6o+Wo6vbAEQTB+y0Gj3n3o4Bo4KWtPTKxJ/0v9t5QGdDHbIYerVOBg6+LcUF9/Y1h2jopBwOZNXboNOaVtsBGUzyXOTPj92nr0u4RRAzUdv5oYaBz3RYhhtZE9k9DYtaDclSgUcuk4NWkGBbBn7HZkY3+vJ+ERoAN+0O3Q+gkBzpWd8QRCQWr+Q5dUyUk5Wy1dEFuld2ube0jn0IXZtk/8HNQmjZ7TMi8J0gw4jUdki0FnxdWyz9/mKu0d9lQWMxDtg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 16 Jan 2026 16:54:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 93788 invoked by uid 111); 16 Jan 2026 16:54:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 16 Jan 2026 11:54:53 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 16 Jan 2026 11:54:51 -0500
+From: Jeff King <peff@peff.net>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/2] more t/perf meson/GIT-BUILD-OPTIONS fallout
+Message-ID: <20260116165451.GB1636797@coredump.intra.peff.net>
+References: <20260106101043.GA3723319@coredump.intra.peff.net>
+ <1a430542-715e-4cf1-86f5-d9424951204a@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1a430542-715e-4cf1-86f5-d9424951204a@ramsayjones.plus.com>
 
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
+On Tue, Jan 06, 2026 at 05:07:11PM +0000, Ramsay Jones wrote:
 
-Improve O(n^2) complexity to O(n log n) while building a sorted
-'string_list' by constructing it unsorted then sorting it
-followed by removing duplicates.
+> I hesitated to send this email because I have been reduced to simply skimming
+> the git mailing list (very busy with other projects/real life!), and I may
+> have misunderstood what you aim to do here. ;)
+> 
+> In essence, I was triggered by the 'GIT-BUILD-OPTIONS fallout' phrase in the
+> subject line! That reminded me of a problem/patch I was looking at earlier
+> this (wait, last) year. The patch (below) was a complete 'hack' (as you can
+> see) to allow the environment to override the 'GIT-BUILD-OPTIONS' file. This
+> was in an old branch named 'meson-wip' which I have been meaning to look at
+> again to either delete or fix-up.
+> 
+> One of the many reasons (apart from being a disgusting hack) that I didn't
+> progress this patch is because I felt that not all 'options' in that file
+> should be able to be 'overridden'. So, that implies that the file needs to
+> be split into two; one file of options which can be overridden from the
+> environment and one that can't. If so, then someone has to decide which is
+> which.
 
-Signed-off-by: Amisha Chhajed <amishhhaaaa@gmail.com>
----
- builtin/sparse-checkout.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+I think you understood my goal. :) This is more or less what my patch is
+doing, but just for a select set of options (to un-break t/perf). I
+think a larger fix may look something like this, but:
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 15d51e60a8..7dfb276bf0 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -91,10 +91,11 @@ static int sparse_checkout_list(int argc, const char **argv, const char *prefix,
- 
- 		hashmap_for_each_entry(&pl.recursive_hashmap, &iter, pe, ent) {
- 			/* pe->pattern starts with "/", skip it */
--			string_list_insert(&sl, pe->pattern + 1);
-+			string_list_append(&sl, pe->pattern + 1);
- 		}
- 
- 		string_list_sort(&sl);
-+		string_list_remove_duplicates(&sl, 0);
- 
- 		for (i = 0; i < sl.nr; i++) {
- 			quote_c_style(sl.items[i].string, NULL, stdout, 0);
-@@ -289,7 +290,7 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
- 		if (!hashmap_contains_parent(&pl->recursive_hashmap,
- 					     pe->pattern,
- 					     &parent_pattern))
--			string_list_insert(&sl, pe->pattern);
-+			string_list_append(&sl, pe->pattern);
- 	}
- 
- 	string_list_sort(&sl);
-@@ -311,7 +312,7 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
- 		if (!hashmap_contains_parent(&pl->recursive_hashmap,
- 					     pe->pattern,
- 					     &parent_pattern))
--			string_list_insert(&sl, pe->pattern);
-+			string_list_append(&sl, pe->pattern);
- 	}
- 
- 	strbuf_release(&parent_pattern);
--- 
-2.51.0
+  1. I agree with you that we may need to consider which options should
+     be able to be overridden and which should not.
 
+  2. This hack has to go everywhere that GIT-BUILD-OPTIONS is read. So
+     in test-lib.sh where you have it, but also in perf-lib.sh (matching
+     the fix by Dscho earlier) and also in t/perf/run (matching the fix
+     here).
+
+It would be nice if we could write GIT-BUILD-OPTIONS in a way that did
+the right thing. E.g., by writing:
+
+  : ${GIT_FOO:=some-value}
+
+And then the writer (which is the ultimate source of authority for which
+variables are included) could decide which ones can be overridden.
+
+I _thought_ this wouldn't work because we also source the build options
+files from the Makefile (and so it has to support both syntaxes). But a
+quick grep doesn't show us including it. So maybe we used to do so, or
+maybe I'm mis-remembering (and confusing it with GIT-VERSION-FILE
+perhaps?).
+
+-Peff
