@@ -1,174 +1,174 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A588134AB
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 00:05:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C43328630
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 01:13:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768521945; cv=none; b=C0Vyf2cAJEOorxPsi2ZJ7xl2uHPGujzYpiye6OATvErjOsnhtFl5O0cvpTce7avvvlammukIJ2HcGIg//6jj4bqOOYOyWQxUlUHoIYYhGhRDG7ehSvbWsMJVaLPyA2q7hHj//XejvJYX2MMLums5or/1gLo97YoeG7BCxoYzsck=
+	t=1768526008; cv=none; b=K5hB5TXuwHUUB5h0hk58f8xdWvnQjfemWijlxYcl2pMGq+3hvRZd0tDQCsP8qqdxzX68eSbPaYzaR253J2kDABRuyKEQ/KaxKNgGIUzh4YExF7TvYu73gpQjJgxvyYC9mCNFgkmLAvpO/q9SrqKwrOhCVoU3kSd2WS5uxpsVCbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768521945; c=relaxed/simple;
-	bh=os92YIK2u3w8yNDK5K+rqvaa7QNzc9iXBpOs+spjlU4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AcrlhuCmAekyMZcBk7pqpUsEGhaNpZLRXjKYOPJ/O0v9WnEf1OPhydRWYiFQnKFFzmTMZ+BvU/LgEu0YokjvfzW5LQGgvRPeoHXGlYFULmqRL5zYzmRcoXAb+MosYcjI+ElvnUmw6RXhT7SRcYcZcRIiUovgO3N/fystzk+syeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BO5mxUA/; arc=none smtp.client-ip=209.85.208.44
+	s=arc-20240116; t=1768526008; c=relaxed/simple;
+	bh=HqQe5PwY0UwWk85HurfsittGCRTXOWbHXkwWgbPRPHM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jbnQ7+h/QxSZrPYgKfipqrRLZECaNiU2L5HhtkZrjT8OFhUxcHMMxl3X0g8hXPCsuc6wNhTgKzJzWoOIQZz7yHHhisd2k7J/ooQPJbsdEosaIV7LZqdDzOqD20sP46KBgmWefLjd9GZMPEciEt/B3Fo2hrg1ve/lwy6Gjym9P3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VtPrL1kj; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BO5mxUA/"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-64b9d01e473so2544560a12.2
-        for <git@vger.kernel.org>; Thu, 15 Jan 2026 16:05:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VtPrL1kj"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-78fdb90b670so14536217b3.2
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 17:13:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768521942; x=1769126742; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=nl8kcPgwGwUdR9vJIjBzi+XLq77Qz5cSiakUGhXSTZE=;
-        b=BO5mxUA/ACZB2rRK24xrERUG6TJAYJo9nvIOx/ZO7gJ7etMB4r9cOExl1G9UFtD6/k
-         w0P8cYBrdztZWFhji7vOuSe7sfwlkJjLaaHcdCmA7aG/PFmAEKovm8DnpzgfP2vx/0Vb
-         B0sm0BG/+I/k7uYdv5W0ecHXHc1AwVPd00x7+/A96WNTwrKZGGdNGi/SUr7Qy17OmBlV
-         KZ3ogW7FG7eq3ud24kuhXBbLYOG9WMaYvJaX/riHzHxfgXEx1NLCVLpuoaes4x5t49Ie
-         kb2IAW464MLmX3KSPEANsae9pk+BJrrxFoeWI8qeTukMT21tQXWM6N21R6Ko1s+shtpV
-         eMzw==
+        d=gmail.com; s=20230601; t=1768525990; x=1769130790; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/M+5tCmMcJQ74g4OMAej7kcumOhucY3HZRK190OPHKE=;
+        b=VtPrL1kje/ISAcYjdwgPWHPBFPVn86DPmV8KI6QrDKm+MTwVxQl3HK7+aMiFI7EN4H
+         9nn+u507CQnoV07GW9HOFuZqveYbGG8ii0p1VS3BCp+NpySIX20Hf7A4d14KP0MdY6WU
+         T3/ry2XYYQrDJfSML1hiF6nu/M0dlyeRoqrrrT5FHZ07MU7KDg3Lm6tUQYsmao9XfKVs
+         uR60czCZhtVZ4yy+SuNLnC5DoaHkDyCn/T/x1zOIP95YibWSo+9rtvnKjkThl63aX22Z
+         H/CqB309WkUy3k2/IHi59bQ8ynXos4Qy3pbs/8dfXT55S04+ERzNAKMBCs3vdreN9TEH
+         sGXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768521942; x=1769126742;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nl8kcPgwGwUdR9vJIjBzi+XLq77Qz5cSiakUGhXSTZE=;
-        b=rpUyzLicQkeiVMeOA8As1UW4Pv1H0+E1pdLo4ToT77NJc9VGpsHm2zEc6N+kt/C1m7
-         Ou8V0QUZljHdPV9laZeW9DSEHA+fpojf7083FQONJPtOXCXKwwAyIMOSUddNSQiqfOa5
-         1DTzAMvecbYwoG3YbQm105C/HZRAjRLRK0r+ugr+cEsp/QSO6tx/GGOe6GWS7ZbVJj0U
-         zgOYZWPLit8vlsBj5KX5xHENBfkirQGIdYVLZ/YWbhf+oI9qK5xEOFbU46zWEOH6Alcl
-         E+XTbgBXtKQbRTZm3vppEynk/Vwa9UHwkNc6DX6mrLv65Ayj8bgLDDdOJrdyfKzrVdaP
-         ctPg==
-X-Gm-Message-State: AOJu0Yy5mzNRN5LDbVlLC/QfHv9H/XbG9rhfVRdrK5YEKasMVb+QvBpX
-	6DeghWs7NESMqre4N/yeaMwnp1i6Vt04rx5UNP6oDE4vs8ESkwuED2IHEOPzi2Wc
-X-Gm-Gg: AY/fxX7AlgK2fT+Ip+sLy08dedoGsTnGYQx+aM6sMNub/l/+HhVIBKzl11vjkVQpV3L
-	b1Mpsv+BiB9Y4hllPIMUoRwk1ZNxDQDrPb/QKaCvdM8IecAqnbXkS1PsYuu4pLx6K0ykz0kmEXm
-	ebwYYb37BGfkZyrFqg0SscmhM43H+7bprh92bXuAKBlfe/XHF2d8DzG5UmnU/2IlXzvcDdTwd1c
-	D3DNY9eMG0nRH8GuwVf486rR0NIUkwPwHK0YQaaAGMntdd+c5jgPQhNFBefwOHxTp4mWM6/PV/j
-	X/7Skx9uX0kz4NpJDFuWtOc1MBxZUySiInmWS6FBQDGnaLTv+GaYTtVed7UdFX0x7yjsBFX12XS
-	p/A/UidL/hGlMD1VQt8YQJGRQgpKsXEXf0mb7chmaSMtNNxAcE1ai0RDFqPSWxU4A50jT+bY3vx
-	t5j9EJaluhCLnFsmPOUhRU
-X-Received: by 2002:a05:6402:4402:b0:645:dc9d:83bc with SMTP id 4fb4d7f45d1cf-654525cc0fbmr861112a12.14.1768521941757;
-        Thu, 15 Jan 2026 16:05:41 -0800 (PST)
-Received: from lorenzo-VM ([84.33.162.72])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-654534c8689sm798491a12.23.2026.01.15.16.05.40
+        d=1e100.net; s=20230601; t=1768525990; x=1769130790;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/M+5tCmMcJQ74g4OMAej7kcumOhucY3HZRK190OPHKE=;
+        b=Pyxol7WQ4pl8nkSsoevwnWHCgK5qNMSiLUrid3PgK2Y4rd4Z4/s9kqd2qJZDaeIu/V
+         UYPqDtNe8L0g/Bm85tp4jf9TI+G6zoGO36310I38bm2r2QpATYAdKfXcMjdt/d1DTLLA
+         0eeZLNwWnZ3j3b+mIu0xTI21QwzPqTRj/oyJExlCFKgqNb2qFODXxH3BH/k0+R+jQNho
+         fTIlgSLCVjsMWTvoSTNSAJa3NLLiiRlatP4jxfj0iWQyGwaEHUiAAre7aMZZuz37E0gE
+         MgxQ4HKE5sYDuzOVFPkM146EzeUPDNZqEKyDfear7q72feUdvlqj5/yNm4G0AsmcOsW+
+         1R6w==
+X-Gm-Message-State: AOJu0YzCsdVUaz6VC8YTRfasTzm0brmJmCer34Obo84TMvLHFlABMZsY
+	ySq+3a3b438dmwD+3p4DMcVXovx/KrqwdYCsSm/0PXdcBX0a52pP+AXQhKy72hOh
+X-Gm-Gg: AY/fxX74UvyGlkBmjCWW2QYRFhXObc9p/EV2rWL6nVBS4o+cANbFqZVoCJ96pKBaFaV
+	uhQryN6qU5bpTVVd+OoC87HbZOegL3UivMca52/evXXskmUVKLaPiRU+408MUMYW1Ly5TBdEV7W
+	ruroNivJW47Y+QMLIPD1Kk2nRdImypHTH68Znl4VvNh6FzzT9BGFrRmG2UqS04vdx/7sWnjPodJ
+	M1e5PM5ysHnA19GvNpZTNZDFpHfMMxfCEvOFWXseyU2lJ7Zf6IkMGud2YfJVSzqy2lz2saKcPN5
+	4eOa9o2uTTeZeuWj77g5NPjrKnPI/xqCPj3piD9m5fnvs8Bz8VvaTBLhYSfXXs2csLCGaIB8ixH
+	PJY1jVuKB2CpclEhlRJKvjtIYiy29FRbx7Uvs0+JJhqTcHl2Hf5tkAhC2o1Vk8LSp05g3+B0Ekd
+	ZC5vMolNCzD1/SLGAAOvCwvdiEV/HFDuDiJVrWZ1Q+jNbKVmH5+kpmNy4u1bQXn8SEY8/AUUJi0
+	NDjD4QmurbNwUep8bRl8/wyFyGWn1pfSOlJIVjdezlLojPiLZlTXI4BvXquI/YvI6uJOgEmSQ41
+	ukjwETI7cw==
+X-Received: by 2002:a05:690c:6c83:b0:78c:1038:b710 with SMTP id 00721157ae682-793c526f785mr15710647b3.24.1768525990590;
+        Thu, 15 Jan 2026 17:13:10 -0800 (PST)
+Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-793c66c6e52sm3838837b3.5.2026.01.15.17.13.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jan 2026 16:05:41 -0800 (PST)
-Date: Fri, 16 Jan 2026 01:05:38 +0100
-From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>,
-	Niels Glodny <n.glodny@campus.lmu.de>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [GSoC PATCH v2 2/2] t4073: add test for diffstat paths length when
- containing UTF-8 chars
-Message-ID: <ee088ea6ef91f0c349ed4940feab807d421dde66.1768520441.git.lorenzo.pegorari2002@gmail.com>
-References: <aWgYRkv-YsuekdR_@lorenzo-VM>
- <cover.1768520441.git.lorenzo.pegorari2002@gmail.com>
+        Thu, 15 Jan 2026 17:13:09 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>,
+	Git l10n discussion group <git-l10n@googlegroups.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.53.0
+Date: Fri, 16 Jan 2026 09:13:03 +0800
+Message-ID: <20260116011305.1093750-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.51.0.rc2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1768520441.git.lorenzo.pegorari2002@gmail.com>
 
-Add test checking the length of filepaths containing UTF-8 chars when
-generating a diffstat with various `name-width`s.
+Hi,
 
-Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
----
- t/meson.build                   |  1 +
- t/t4073-diff-stat-name-width.sh | 61 +++++++++++++++++++++++++++++++++
- 2 files changed, 62 insertions(+)
- create mode 100755 t/t4073-diff-stat-name-width.sh
+Git v2.53.0-rc0 has been released, and it's time to start a new round of
+Git localization.  This time there are 44 updated messages that need to
+be translated since the last release. Please send your pull request
+to the l10n coordinator's repository below before this update window
+closes on Sat, 31 Jan 2026.
 
-diff --git a/t/meson.build b/t/meson.build
-index 459c52a489..f2ad6d2f12 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -498,6 +498,7 @@ integration_tests = [
-   't4070-diff-pairs.sh',
-   't4071-diff-minimal.sh',
-   't4072-diff-max-depth.sh',
-+  't4073-diff-stat.sh',
-   't4100-apply-stat.sh',
-   't4101-apply-nonl.sh',
-   't4102-apply-rename.sh',
-diff --git a/t/t4073-diff-stat-name-width.sh b/t/t4073-diff-stat-name-width.sh
-new file mode 100755
-index 0000000000..ec5d3c3c1f
---- /dev/null
-+++ b/t/t4073-diff-stat-name-width.sh
-@@ -0,0 +1,61 @@
-+#!/bin/sh
-+
-+test_description='git-diff check diffstat filepaths length when containing UTF-8 chars'
-+
-+. ./test-lib.sh
-+
-+
-+create_files () {
-+	mkdir -p "d你好" &&
-+	touch "d你好/f再见"
-+}
-+
-+test_expect_success 'setup' '
-+	git init &&
-+	git config core.quotepath off &&
-+	git commit -m "Initial commit" --allow-empty &&
-+	create_files &&
-+	git add . &&
-+	git commit -m "Added files"
-+'
-+
-+test_expect_success 'test name-width long enough for filepath' '
-+	git diff HEAD~1 HEAD --stat --stat-name-width=12 >out &&
-+	grep "d你好/f再见 |" out &&
-+	git diff HEAD~1 HEAD --stat --stat-name-width=11 >out &&
-+	grep "d你好/f再见 |" out
-+'
-+
-+test_expect_success 'test name-width not long enough for dir name' '
-+	git diff HEAD~1 HEAD --stat --stat-name-width=10 >out &&
-+	grep ".../f再见  |" out &&
-+	git diff HEAD~1 HEAD --stat --stat-name-width=9 >out &&
-+	grep ".../f再见 |" out
-+'
-+
-+test_expect_success 'test name-width not long enough for slash' '
-+	git diff HEAD~1 HEAD --stat --stat-name-width=8 >out &&
-+	grep "...f再见 |" out
-+'
-+
-+test_expect_success 'test name-width not long enough for file name' '
-+	git diff HEAD~1 HEAD --stat --stat-name-width=7 >out &&
-+	grep "...再见 |" out &&
-+	git diff HEAD~1 HEAD --stat --stat-name-width=6 >out &&
-+	grep "...见  |" out &&
-+	git diff HEAD~1 HEAD --stat --stat-name-width=5 >out &&
-+	grep "...见 |" out &&
-+	git diff HEAD~1 HEAD --stat --stat-name-width=4 >out &&
-+	grep "...  |" out
-+'
-+
-+test_expect_success 'test name-width minimum length' '
-+	git diff HEAD~1 HEAD --stat --stat-name-width=3 >out &&
-+	grep "... |" out &&
-+	git diff HEAD~1 HEAD --stat --stat-name-width=2 >out &&
-+	grep "... |" out &&
-+	git diff HEAD~1 HEAD --stat --stat-name-width=1 >out &&
-+	grep "... |" out
-+'
-+
-+test_done
--- 
-2.43.0
+    https://github.com/git-l10n/git-po/
 
+The following description of our l10n workflow is from the "po/README.md"
+file.
+
+
+## The "po/git.pot" file is a generated file, no longer in the repository
+
+The l10n coordinator does not need to generate the "po/git.pot" file every
+time to start a new l10n workflow, and there is no "po/git.pot" file at all.
+
+Everyone can generate the "po/git.pot" file with the command below:
+
+    make po/git.pot
+
+But we can also forget about it. By updating our corresponding "po/XX.po"
+file, the "po/git.pot" file is automatically generated.
+
+
+## Update the "po/XX.po" file, and start to translate
+
+Before updating the "po/XX.po" file, l10n contributors should pull the latest
+commits from the master branch of "git.git". E.g.:
+
+    git pull --rebase git@github.com:git/git.git master
+
+Then update the corresponding "po/XX.po" file using the following command:
+
+    make po-update PO_FILE=po/XX.po
+
+Translate the uptodated "po/XX.po" file, and create a new commit.
+
+
+## Refine your commits, send pull requests
+
+In the "po/XX.po" file, there are location lines in comments like below:
+
+    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
+    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
+    #: builtin/rebase.c:1671
+
+These comments with file locations are useful for l10n contributors to locate
+the context easily during translation. But these file locations introduce a
+lot of noise and will consume a lot of repository storage. Therefore, we
+should remove these file locations from the "po/XX.po" file.
+
+To remove file locations in the "po/XX.po" file, you can use one of the
+following two ways, but don't switch back and forth.
+
+ * Keep the filenames, only remove locations (need gettext 0.19 and above):
+
+        msgcat --add-location=file po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+ * Remove both filenames and locations:
+
+        msgcat --no-location po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+After squashing trivial commits and removing file locations in the "po/XX.po"
+file, send pull request to the l10n coordinator's repository below:
+
+    https://github.com/git-l10n/git-po/
+
+
+## Resolve errors found by the l10n CI pipeline for the pull request
+
+A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
+help git l10n coordinator and git l10n contributors to check the conventions
+of git l10n contributions, and it is also used in GitHub actions as l10n CI
+pipeline to validate each pull request in the "git-l10n/git-po" repository.
+Please fix the issues found by the helper program.
+
+
+** Please note: The update window will close on Sat, 31 Jan 2026. **
+
+
+--
+Jiang Xin
