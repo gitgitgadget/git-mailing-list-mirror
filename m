@@ -1,83 +1,38 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C6F337B84
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 16:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F9F1E1E12
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 16:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768581173; cv=none; b=MG8dV6TT7jCknKjFAYTgEWh174ecwy52yfr96Vhx8OM7dKaz8SbryBeUX2u+VvWUTfd6OGbI+5KlRofOHKuCnxPWuUQC8QzPQUYc6cJWhb9mov5e0/RDlgLC6HFMzI1QKDw98zNH8EPDMIzeoHjTFdTjG+xlYR/U9PK/zz4Gl+0=
+	t=1768581953; cv=none; b=ulSoLbwYm4/Ih0fbYglaczo6SI1KuxOvLk10+XM3rGkVlFpBMRsf1Zlvui+q1XmyWBlV5jSIVVFhA/Q0tq5XL4JgJ0c/mk+dIiOAi7omI0TF1cufxC+CJKqVi2k4bjnmUSaNKYhf48yQ1PZ+8EGpMt4JjZngAy/9G7P3jZUb9to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768581173; c=relaxed/simple;
-	bh=MO9MHBhPi2PxnIB49avM7fl+b/FrU6HXtjKOJpXSi7M=;
+	s=arc-20240116; t=1768581953; c=relaxed/simple;
+	bh=CNhhWAsmTye6aWWcaChxpU27N6FPGlEsBB3QG3e8t38=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bcVH3Szw5Np5rrQvrpqQJaXNY/+6UXB5fnJvNkfBoHpN4QOrmN7O2KZ4cJ1vZrn8vHRpehhpF1VWRSim4ZTXQnS+eY1I6A+wpG3Z47uv2ni37hcORgWzIn+SdrriOJa7wmqtgx2jkIYHduj3zMUkQPvE1LGnguOKxu0MHzCs5GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VACoUVgw; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=WsrokPKo82xE2FGz/HQk8IgsmlZ3aZDVxMXDFwRz4MuFSga+W8xOhPiljKctOWNynhon0c7os+Ah113S6XwdLrFqA9tbJz6y4xjzNFqEWsggdNWhnx7jvtAkQY/15RtGaU1fir9z/UUVpUN4b2yLr+heYT8sEA/Ray0t+LLZAjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SxcZzzbR; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VACoUVgw"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b872cf905d3so370580966b.2
-        for <git@vger.kernel.org>; Fri, 16 Jan 2026 08:32:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768581171; x=1769185971; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cMbph+eZCfi9ETmn70AG/RB7fJbD3okmXtf/owpBnnQ=;
-        b=VACoUVgwyhyWWstlAh8hWW6LuIeTROpb8VkHsDoUnJX7WWYL+A+2GDAdIrihFoGIGq
-         PKK0nz9Sb+mh5nNH0vw/8IGKYOnLwQNVyIw13Lmvj7huB2IBiNQGnSAxqIGWW3DbVgCu
-         H27sDUMt6X6XThkRmxKca4Vk8F3kMiJu/ii6ZxfpSgFOhYkkjGRaQrtK/+ptBe1qY8vu
-         EXn40KRsDWa8MWRhEjz3VRZ2FQWm+T+vBnguxleo7Eeix403ONNxfD18MrqgMoC1ao9B
-         5uFdlo3scTY6lTnxX/aY9JgnGZxRrsE5X5e0gvwB7U5zkRRRJiFH+Pnwimkn2Wa6QqWT
-         yF2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768581171; x=1769185971;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cMbph+eZCfi9ETmn70AG/RB7fJbD3okmXtf/owpBnnQ=;
-        b=GcH6gqOUT8NxtIWU+i9DwAsOZ0VHTi3MHHRd/A6tuIGKW3fjrvUw5vcjGeXwKlrVpK
-         gKdc/XYUDgnAs+yH9KhJ4Hhw+BXDvv+plvC1PQwkW6b6C+lEvtzZHu3OJl1+7aEuF3h1
-         +0tmNfhW9R4puf3rtl5B76Eez5YU/3yBcz7gUEq6/A+ovXu7RsY3LnDSfyIOz+zuBHVy
-         11bRsEQRZbKChlbs9XxOdQNZaLceSUvDSpTpfWGOcA7x6haB7+oC6DsR59HMcJoeVlqP
-         nbkJHru6x9hoRs7WoR8IVUGd3tUnt3RR16V2L8B/jFBale2iwGKBpPjmNEzawoUmY9Dj
-         W8Lg==
-X-Forwarded-Encrypted: i=1; AJvYcCWb7k+RTm7rwatHb9mflglyLnwZeJEMfTfyVFFtHxwS9Cp9W3X6e6+MILLiMX25jKK2XQo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRrSmvQ3fDw01/JhgZhb3oibcrAUKuCAoITrpdir/EfMx4ZOIE
-	R7A8jumjplveFiqkf65Z4R+r3wX5piXzWQkw/XQ0lqZEz3hyQPaB1l8F
-X-Gm-Gg: AY/fxX64s8Rd39dDEnx4xPaK0i7UdKogDFM5k12un4YXPTXXL0XoqFhekkKlJ0NB1yZ
-	//YI3hNtHiEQSDcu3iom5f/HysThm/m5SGQDAPoKtqkSPqUJCg0rLxZBUUrQ3sN9rChv8DkqYDN
-	ywfzu/QDI6LRH8s0JKL7mFFKA6cKrCtHD8MxehkKCXQWMmr8fhLvlRfLZejORnraE3NQBB1+vlR
-	NZqZJPkjGJCJpIJgZmBQ6BqBSY5crIU0wwg9yQ1ak/AwuVhVp2OdgUzqLM07Tn1ZQbGKrI9gS36
-	T2Df6Rjd7NvnOq+fjlDLuQ+w2gZxwd4XDOumtacS3B1ermQmeAnu2zS82M8Hsp29iCMEDRKBkGv
-	RHlCp6Sud2cfN45ldSSpHDDTa+QWlewzDeNMtzG6pzG/1KESPFncle6TzWbpN2OyyWibwyr9f4N
-	kgmks0UIV/HiAa1ix1XOrz36tWBd/YXgKqZ/sesWrc7S1Ma+ZOAIhDEyLM6ghH61kGC4G64K0Uw
-	oZFTebJt6lCNNVfuFr4Aw==
-X-Received: by 2002:a17:906:f5a3:b0:b87:1ffc:bf9b with SMTP id a640c23a62f3a-b87968aa44bmr275716666b.3.1768581170476;
-        Fri, 16 Jan 2026 08:32:50 -0800 (PST)
-Received: from localhost (20014C4D24DD3900A135D2EE9B3C72E7.dsl.pool.telekom.hu. [2001:4c4d:24dd:3900:a135:d2ee:9b3c:72e7])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b879513e84csm290701666b.5.2026.01.16.08.32.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 08:32:50 -0800 (PST)
-Date: Fri, 16 Jan 2026 17:32:49 +0100
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Sergey Organov <sorganov@gmail.com>,
-	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-	Martin von Zweigbergk <martinvonz@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Matthias Beyer <mail@beyermatthias.de>
-Subject: Re: [PATCH v11 0/8] Introduce git-history(1) command for easy
- history editing
-Message-ID: <aWpoMcgwsfRCCrr4@szeder.dev>
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <20260113-b4-pks-history-builtin-v11-0-e74ebfa2652d@pks.im>
- <CABPp-BFbUEGqNAeUtUghLd3oKcZiD88P04AYuTtY4T01F1rzdQ@mail.gmail.com>
- <xmqqy0lxa8i6.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SxcZzzbR"
+Received: (qmail 59417 invoked by uid 109); 16 Jan 2026 16:45:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=CNhhWAsmTye6aWWcaChxpU27N6FPGlEsBB3QG3e8t38=; b=SxcZzzbRb5pvKceS2+MvD/1OsNvbhoVKPLEPy8pRNFpVBvFKTIM3ClR1QOOYKmBhS4z+W7I0jFeOzevJ7UYe0+k8HMVJzwtfZEW0KwRGHowJTHpt5myrPxf1jSdjDTYOrr0u58RS7L1471R47sOYdY40NHsUPKbtUbN6uYTATjza0jDGzAeV59H9aHasNwfHISc8tMmQmThdb49zKPAGJhvw678kCUMCzq8qBa8kcLFS+xU9O8YyIw+WH+xglDA/2XMp66E631P2qkfeXjU+UqE0c/Z2FAy3MrZrHlHjofzZNLFy7eIAqfKQi3Qne+EeRcO8ybFP6LkvVmKe38fU7w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 16 Jan 2026 16:45:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 93702 invoked by uid 111); 16 Jan 2026 16:45:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 16 Jan 2026 11:45:51 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 16 Jan 2026 11:45:49 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] cat-file: only use bitmaps when filtering
+Message-ID: <20260116164549.GA1636797@coredump.intra.peff.net>
+References: <20260106102558.GA68914@coredump.intra.peff.net>
+ <aV4Xa9ceY4ahYj2m@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,27 +41,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqy0lxa8i6.fsf@gitster.g>
+In-Reply-To: <aV4Xa9ceY4ahYj2m@pks.im>
 
-On Fri, Jan 16, 2026 at 07:21:21AM -0800, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
+On Wed, Jan 07, 2026 at 09:20:59AM +0100, Patrick Steinhardt wrote:
+
+> > -	if (bitmap && !for_each_bitmapped_object(bitmap, &opt->objects_filter,
+> > -						 batch_one_object_bitmapped, &payload)) {
+> > +	if (opt->objects_filter.choice != LOFC_DISABLED &&
+> > +	    (bitmap = prepare_bitmap_git(the_repository)) &&
+> > +	    !for_each_bitmapped_object(bitmap, &opt->objects_filter,
+> > +				       batch_one_object_bitmapped, &payload)) {
+> >  		struct packed_git *pack;
+> >  
+> >  		repo_for_each_pack(the_repository, pack) {
 > 
-> > On Tue, Jan 13, 2026 at 1:54 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > [...]
-> >> Changes in v11:
-> >>   - Fix overly clever `BUG()` condition.
-> >>   - Drop the `struct replay_result::merge_conflict` field.
-> >>   - Return a positive value from `replay_revisions()` in case there was
-> >>     a conflict.
-> >>   - Improve a commit message.
-> >>   - Fix check for whether `setup_revisions_from_strvec()` was
-> >>     successful.
-> >>   - Link to v10: https://lore.kernel.org/r/20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im
-> >
-> > This version looks good to merge down.
-> 
-> Thanks.
+> Yeah, this seems like a reasonable change to me. I would've preferred to
+> avoid the assignment in the conditional, but other than that this looks
+> good to me.
 
-FWIW, I think it's far from ready to be merged.
+Yeah, I tried to rewrite this to avoid the assignment-in-conditional,
+but the logic gets even more convoluted because we need to get to the
+"else" clause from multiple places then.
 
+I do think that the for_each_bitmapped_object() interface is making this
+a bit harder. Before it was added, the main bitmap entry point was
+always prepare_bitmap_walk(), which opened the bitmap file itself (and
+only after doing the cheap can_filter_bitmap() check).
+
+But here that doesn't quite work, because we need the bitmap_index to
+persist after the for_each_bitmapped_object() call so that we can check
+bitmap_index_contains_pack() on it.
+
+I was tempted to suggest that for_each_bitmapped_object() should return
+the bitmap_index itself, and then this code would become:
+
+   if (filter.choice != LOFC_DISABLED)
+	   bitmap = for_each_bitmapped_object(filter, cb, &payload);
+   if (bitmap) {
+	   /* we iterated those objects; check for other packs */
+   } else {
+	   /* we did nothing; look at all packs */
+   }
+
+   free_bitmap_index(bitmap);
+
+which is not too bad. Mostly I wanted to make the fix as small as
+possible, but I was also a little hesitant to tweak the API when we have
+only one caller (and we don't know what a second caller might want).
+But we could always revisit it on top.
+
+-Peff
