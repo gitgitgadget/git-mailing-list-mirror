@@ -1,84 +1,83 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA9D2DCC1F
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 07:03:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4382517AA
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 07:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768547017; cv=none; b=nPhP7t41Aqo9dwAuJjS/q1/2tnuz0Hp9Qdrh6CjoUjf9mDe01WpBHlG+5dxRRtz7V0oh+wy2Xrs89vMWp1Msu59OhCptqFUTtc14REXtN5IN4X7z+7hpqnjLn69OdL8/UC8/A99yyLWks+Ol0EI1HLU2TEuljR3zuHv89eQo5Ic=
+	t=1768547024; cv=none; b=qsIRk0ae7vHf37XJLBVshLHrZn8B7zO+FgEE+HIR6g9wlBZX3zt7SrfH1xBAxW0y68nfCs8fFMQ+U1Sj+fiu/sfo8Dnto2IMiPl6Xgw6zZlVQZbuk4Ir4VUIlKcl56nMM7rNxWB5qDOHCXIw38NgP3ybmsXO1mcB3HEbkL4U7V0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768547017; c=relaxed/simple;
-	bh=PTVfY+btyawoA58bSXIV24mVfOuVWzWecSPGV9eH0IU=;
+	s=arc-20240116; t=1768547024; c=relaxed/simple;
+	bh=2BdlhlylNrQFH/y3OH/dY3A8KXlTHFLqxjxuJvnLfh4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jnqtizx07PB2ppGrXSj2ejB3XJiM8M9SGRX5FCjI7tjYcayyQ8NND9kSMggRjTUqVt2rYEHKVGCyG0sRm40KcdmTeyMaI2wUnsfRTW5o6Ez9/4rWaPXAccw/aOsCxFYUEdZVHl5C5wwAHCwXeC6GUK0WQiJ81yy77yGRY39ABa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WMs9MboF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T79LmM8O; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZfDRfXk0hts0otKG1DEV1FWEVUPx+ypfL2z/B29eIfSlSEJX4j5CQEjJm0aM6euE4yCD2ShrlUVtSTdRhyblVIswst1aj8xE7ebTR+8IjhZRlppDrcw4qXCPerNVNDiUNxmCIjhQxcGXOhl5uo6hUlpAs3S0P/7IbyP+XDxdXho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=goDynh57; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ksqfUBMu; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WMs9MboF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T79LmM8O"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8C0A31D00167;
-	Fri, 16 Jan 2026 02:03:35 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="goDynh57";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ksqfUBMu"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C002C7A00E9;
+	Fri, 16 Jan 2026 02:03:42 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Jan 2026 02:03:35 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 16 Jan 2026 02:03:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768547015; x=1768633415; bh=3rOiWClyBJ
-	JliPOxu4GvLEuFKiUSQFBqOE+rvKVsSB0=; b=WMs9MboFk0BlRjJKAFUG9kBoMD
-	sr0T5rIzGaq0pPsHpPKj6qJk+imoJDWT7hGQV/aE00LkJ9REfhZ3MpTn7CFiwjXy
-	X12Go2m3lg48/LpTcVbjwLS8wC5nNu3IgbVNN/zFB3v4f0L3cuFhKDoumx3Yb7kh
-	e9U+Jzwz5kRYPFfRfz6+fNVb1knIdm8Fs5XwCLl1aM/ssZLQoOOhgduLxokz1e2s
-	C9X0DFNpxR50dKnkM7Ws0NntspNo0amJPfDMvCL6nvQpY2/hTz4bdnSvSiGQZA2u
-	bQ7bV7nt/rI2iR4GOlP9qalm/ZC/mnAUiWPwOm0qKfCBZTD3vz6E17kAvBLw==
+	:subject:to:to; s=fm2; t=1768547022; x=1768633422; bh=jyEQ/UhGMk
+	SefGUtjzsHPmZXJXMb8NJScRNGZL+FBXY=; b=goDynh57GAm5RHUaw9Ob10GRbp
+	09OtD6jMETpqs0GOIG4hTXUh+URUBAlLsW2xKIZ5Nb5T9J5JpJQZVohq8Quto2CY
+	w7KfyvtaWc/k8eLxKfGD6FFwqYNIuFPcXVg3CjX8poBsr0+gAbGefUyUxH5TbNtD
+	VrQYDZsdNn3EGXIkaOFCCD9SLcwF3TgUmX0H2J8RjV0prxHKCUXxBcRDXF6G4xOz
+	/GznNyS57kYkM9PpAZpL+bZb5V5UqStnJLmm8vcvbSnwYBF4bnvSZsi9bVCTzlzN
+	0GwchpWYU+agYin9IV5qcuM3PYYvpdhNoZPdlxpOe4SlesAmbAg42+z0GDKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768547015; x=1768633415; bh=3rOiWClyBJJliPOxu4GvLEuFKiUSQFBqOE+
-	rvKVsSB0=; b=T79LmM8OEp4tPPMIFUV+X5gyCBp6Iybel/HwJg23Zub0ZmqyzRc
-	ACzVsbye4cHtzrVlFFz2DQQWGSKoG7B6WjWjcc1yMnc8Fx+8QmPXONSbeo+ndciZ
-	aWIzvbDOPgMDYjsxd6IQQ2rMTxOicNS5tQUz57a2fzu09UT4W2SvK5rsQHZ4LS2J
-	fU1nQMgtkjo1o6Kq1eVyrntQN9rfux+bZZ0mCZmllr2KOGfH3oGQIGTUiiFXt8c4
-	xQDo/ilPO8R0zD/SqDXK2paK53p8X2x0u22pi9beiR1sENWHaYtjLLx7S2G30eUY
-	xemkOkgQmCB7piy6+4tRV0cBjqCW0kPQ08A==
-X-ME-Sender: <xms:x-JpaWgXdq1zc7MHYfexn7dKJtJU97behaA0dp1A6DmcXi0qT_0EAQ>
-    <xme:x-JpadAGw5CHTTu9M72APudb3D7zyB5Yvw8qIj7vwszL6ZHHaW8AmuXppPJGWW9UN
-    Dr_4OqxuxMEAqRPGOCAV-zwApHRFV0dr1KUE3W1Y5ig6ZldUzOu0w>
-X-ME-Received: <xmr:x-Jpabu8MbdFF4FsKXnpCPaprAnDUiC2GBiEWiMG7PBLZ4kMKjhj5-wqnQ8W2HVEffmNsTkCGjnyivf8XFUHb8c87MRZS6R_s09CgtyCYQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdekfedtucetufdoteggodetrf
+	1768547022; x=1768633422; bh=jyEQ/UhGMkSefGUtjzsHPmZXJXMb8NJScRN
+	GZL+FBXY=; b=ksqfUBMueDdyfbshF5i0S5eG8XZz1TaxQ6cdUakEjq7bAw+bbZK
+	hSE1EmGJRtBlKJ+JOw+429e7UGbALKkFoRqX7XDoKW/pIYQgTW7TgUrowSFiufPe
+	6lHw2p5N6DLVNVh5qMvZZO5qckAppGnWJALyfe4Dgt5WRmHzJ7PvNQ9035GdhVzx
+	SYeK3eC6tbSBoUJSG8MzpXAH0lQHRW6hz6aV1uZn5qMDpR03a8AIjBaJqdorcbnC
+	WLroONjg5eOqfDs/7cA8tkKBbHfYNU5ao27I0FASAxJys9n/lWiYXZu5j4MjbAUm
+	1EjDABfZO6J2o8E/XSEXtKpSqSpPrG5JuYw==
+X-ME-Sender: <xms:zuJpaX_K3sEIb7QsDn-aJPLqcDFqjEkIAgGM94IO4SHGxvtmws6Iaw>
+    <xme:zuJpaZvxcV2zf6mZtWmPCBdJILs2_kp5ZzCHceQIxuHXY2HqE1lsQuYe2BxpcExjK
+    mDh_ZzUprEsbJEX6pNZarxJe2Nv9qhUb1ZdMOUJM03yvcvJmGyhCsY>
+X-ME-Received: <xmr:zuJpaSoXwoGiMEqYx_cxhIS_m0iKmTVd6lFQ6gGJutYV-4isHtiMr2Txvdu7dJ5sFYSQiHWHWymlHvqfZLxyyGfwr-buW5G0jRQvFTMs6A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdekvdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:x-Jpaaam-_026BgMyADJMhtflblE4ZQXn4yl8nhevM0JQmdlTRAvFw>
-    <xmx:x-JpaWWWrbpbYrZNUdqsnyJ-C1DvjPUTTUHoZNH_gNCLy8be_4Sn6A>
-    <xmx:x-JpaW6yu0kQf1G91yD9JuYjM-N7TiUKulXEBrJMac-kRcEHIRkP5A>
-    <xmx:x-JpaZh_NsR6JmkZYtsjOjNeCfETY6P4pIzNiQMiRWWO-sDZYe_kgg>
-    <xmx:x-JpaeRIOpdRX9pxvbwP97VLeJkvdc5A2JvKWbSkdlsYBtUVA_mhajph>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
+    gvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:zuJpaenhBY_8an4lsTYeyfyFc3yyil6IKba-fZ6PrRRxmFd6uJSV-A>
+    <xmx:zuJpaewDC2nPoRQFErz2Di0ejhyHemlq0YHlXqd1llGyk3WWXrV_Yw>
+    <xmx:zuJpaemeXoJ_r8ZUx9oaPpPPEPU1l-0q8m2H-poUb_yPLj_SyP3O4Q>
+    <xmx:zuJpafexb-2a7O5RzS5-q6JqNU5Wg-_MIEz5hYKFnkQ47zQN_yFxDA>
+    <xmx:zuJpaWsV9lMvj65F6qp0kZ7aoD1rIMSuFV96eJxN5OHqT9-jbAxlgwxq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Jan 2026 02:03:34 -0500 (EST)
+ 16 Jan 2026 02:03:41 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c4c498a6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Jan 2026 07:03:34 +0000 (UTC)
-Date: Fri, 16 Jan 2026 08:03:31 +0100
+	by mail (OpenSMTPD) with ESMTPSA id d4ff0b1a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Jan 2026 07:03:41 +0000 (UTC)
+Date: Fri, 16 Jan 2026 08:03:38 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 04/14] object-file: introduce function to iterate through
- objects
-Message-ID: <aWniwzCL5S6FD3N9@pks.im>
+Subject: Re: [PATCH 07/14] odb: introduce `odb_for_each_object()`
+Message-ID: <aWniyrg-a7FTnkvE@pks.im>
 References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
- <20260115-pks-odb-for-each-object-v1-4-5418a91d5d99@pks.im>
- <aWlSYGIe5izqWwte@denethor>
+ <20260115-pks-odb-for-each-object-v1-7-5418a91d5d99@pks.im>
+ <aWlXu9ogFnv0GGBo@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,45 +86,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aWlSYGIe5izqWwte@denethor>
+In-Reply-To: <aWlXu9ogFnv0GGBo@denethor>
 
-On Thu, Jan 15, 2026 at 02:54:23PM -0600, Justin Tobler wrote:
+On Thu, Jan 15, 2026 at 03:17:07PM -0600, Justin Tobler wrote:
 > On 26/01/15 12:04PM, Patrick Steinhardt wrote:
-> > We have multiple divergent interfaces to iterate through objects of a
-> > specific backend:
-> > 
-> >   - `for_each_loose_object()` yields all loose objects.
-> > 
-> >   - `for_each_packed_object()` (somewhat obviously) yields all packed
-> >     objects.
-> > 
-> > These functions have different function signatures, which makes it hard
-> > to create a common abstraction layer that covers both of these.
+> > diff --git a/odb.c b/odb.c
+> > index ac70b6a099..65f0447aa5 100644
+> > --- a/odb.c
+> > +++ b/odb.c
+> > @@ -995,6 +995,33 @@ int odb_freshen_object(struct object_database *odb,
+> >  	return 0;
+> >  }
+> >  
+> > +int odb_for_each_object(struct object_database *odb,
+> > +			struct object_info *oi,
+> > +			odb_for_each_object_cb cb,
+> > +			void *cb_data,
+> > +			unsigned flags)
+> > +{
+> > +	int ret;
+> > +
+> > +	odb_prepare_alternates(odb);
+> > +	for (struct odb_source *source = odb->sources; source; source = source->next) {
+> > +		if (flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY && !source->local)
+> > +			continue;
+> > +
+> > +		if (!(flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)) {
+> > +			ret = odb_source_loose_for_each_object(source, oi, cb, cb_data, flags);
+> > +			if (ret)
+> > +				return ret;
+> > +		}
+> > +
+> > +		ret = packfile_store_for_each_object(source->packfiles, oi, cb, cb_data, flags);
+> > +		if (ret)
+> > +			return ret;
+> > +	}
+> > +
+> > +	return 0;
+> > +}
 > 
-> I assume that the intention is to eventually have a generic
-> for_each_object() function that can iterate across objects regardless of
-> the source. Is the end goal to have each source define the appropriate
-> for_each_object callback?
+> Ok, I think I understand a bit more clearly now. As implemented here,
+> odb_for_each_object() iterates across each the objects (loose and
+> packed) in each source. Object iteration is not handled transparently
+> for each source yet though and we still explicitly iterate both loose
+> and packed objects. If I understand correctly, this current
+> implementation will become specific to the "files" backend/source in the
+> future.
 
-Yup.
-
-> > Introduce a new function `odb_source_loose_for_each_object()` to plug
-> > this gap. This function doesn't take any data specific to loose objects,
-> > but instead it accepts a `struct object_info` that will be populated the
-> > exact same as if `odb_source_loose_read_object()` was called.
-> > 
-> > The benefit of this new interface is that we can continue to pass
-> > backend-specific data, as `struct object_info` contains a union for
-> > these exact use cases. This will allow us to unify how we iterate
-> > through objects across both loose and packed objects in a subsequent
-> > commit.
-> 
-> Naive question: in a future where we have additional ODB backends, does
-> this mean that `struct object_info` would also need to be updated to
-> include them?
-
-Yes. We'd introduce a new `OI_*` type to signifiy the specific backend
-via the `whence` fieldand will (optionally) have a new member in the
-union of backend-specific data.
+Yup, that's correct :)
 
 Patrick
