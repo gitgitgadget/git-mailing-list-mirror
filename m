@@ -1,126 +1,135 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E4F3939A4
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D0F33B6E1
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:09:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768583024; cv=none; b=uarhnQT/SwX6NDLGlahFa5OEgxkZvdZKG4G18OxRBGh2PsDzK1ouzB25votAnQYvGLrtuFvvSyhEw0bZpG7fClxyo8i5NmgM25oF8Sv7NIVM7XG007SxtZbM3EAiM8PtK0UFBT/VCwWG01veXNO8CEZ2RXIhiiUGI/QOt6aVCQM=
+	t=1768583397; cv=none; b=ZbX09eLTIDR+tcdr72xdrGXbf0xMhe2BjwEFeubVJb4HtmfovqRkiBrklQxQK5AXkSAfpbpZaI1vv3g2mnWMQ0MHwrqC8rHQMNE9R7lFjGUZO0dD2+VVHZ0d/HMefouB3RYxFWjEZF1koo1eiTfYNnc3Jbb2REJITgdTYO1lbRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768583024; c=relaxed/simple;
-	bh=SwxP1nMFjMRFnFnoWNaHOI9hbAng4NUhX3bWhYJrKhw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BEyfcvEDUtyuuSzAuVxjOzC1klJChU0Q2y8qs+SmRXqkJWE0dR36n/sZQoX5CcGS8tZPt5HQf0EI7rPSEhhiZzgju0VYCEr3FossU4uwhaqI1TznNJR5l4DChFfeHqTF/eYjo/IMgh7AA58uODXbuiX2i1MIlu3018ebWYBLUlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S15RSIaD; arc=none smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768583397; c=relaxed/simple;
+	bh=ibPgFwN61bWZ478VwEPLgEwCq6bGxt9qsLDQHQ0SGRg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=k/6rV51fLSWJL9B5pKIGJ1lrUp6Ee6NYtkmKeQqXiiQTjNGDvils1aXOxdCodgnXTo5eH6yQo4vGszVVsZdSSZaR99PTfFgGfuflSpVZaRruDxrQmiXm1aPQ0gofWWqed6z6L+CIxkeb4kD1fot2HqGkdHpQz7U239K1zKPdWiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c1kSW2C/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G3xNEz4+; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S15RSIaD"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-6481bd173c0so2088717d50.2
-        for <git@vger.kernel.org>; Fri, 16 Jan 2026 09:03:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768583011; x=1769187811; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aT9UnRefdDBfPPUKwthgrNgfCksbGnAuS4XCv1riTyU=;
-        b=S15RSIaDCAI0QZLrlv6PdOoWVReu1sdw1/kBukqS4KiFUUcCv7Ye0y6B80BPs7lmNu
-         V/NRCq4HzTdZzCy8ARWnBPYdDxX3wu2iHGro189zLd8cZUY75p4mEpVAv0Pl98VdcmTP
-         +nv9EU2m3aCJfcsubBUfP88b2Hil22Q/bCYwjV1g0n9mf3DzgtUhzFkeLf7nVVzegHb/
-         bP2aOuDh3cpw8oyCTpcdBelurN0KYteZ0BujDWu79n+OyW4tVDS90y+4h6Z7X2ikBW9F
-         fz6b1t/bMERe1fjrJeWXAM8lFIbC1oMhmMUc1YeKwfIjfDVYJKbvgWU7EE8p3rbcF0fH
-         nHkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768583011; x=1769187811;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aT9UnRefdDBfPPUKwthgrNgfCksbGnAuS4XCv1riTyU=;
-        b=vazFQgeJeOAzzzNQ2P3Fh++OnJ/VwVoHhnBbMwfUxcR5dv5pF09fJfjmPF/3owVyqo
-         36bN0/epWsCUO8FnYJ6EyB+j5JOuEp6A0NcapWgffuXnnYiiv6AHnbl/Jr3yXVRv8kaR
-         a23kPbk+NVxScLjozIeMVVCA+85k1pPGdBF1KyrVS58xDImKqddGWjr6u8+yZhNnCwES
-         OUMtxxc5KymP1ldiFD1B8Mmmhj/vEsV6Te4P+uJ/+Y7ZPEsP7qjE8pNmpxRASLzOwWUv
-         6gBqCM/74pnpjKfnUn70rPiWNcS9o1JbwHnavH4sTgnNX8DofFotUDtX1bZE9Bs52mjW
-         YwwQ==
-X-Gm-Message-State: AOJu0Ywf9+Iaw56iAofx4FSiiaY4yaxEHZyRVQCS7Ojd2R5+nqhhS35K
-	eAt0EDt5J5l5pba7J2lUhpmbNftCAv07FpZcfs9MjSf+pCiSKlW6/PAmY8JF2LJdeKAqBUG2V4X
-	Yz065tpiM9JapCvP7QtsZ/0s9FgmSDfI=
-X-Gm-Gg: AY/fxX5Zqk8Bu+899AqZZa0miaxG1unCComInOwiTZm/EnkZDGrCPBqIUIf/Y4eRu0Z
-	9DfG3/XfrsDtOS2YY78Lfzm0Hg6bJVORdAv0HosGyfCPgEudevQw6XJOn1UXXLkgACoetkylPe7
-	6vcFe4j8SBEEnI5sbYVYpJ2QQbbzUszBNHNQ2NhginJ3X4KTamwGj35u2ujLoO/2xfhy6rer6Gs
-	y4Wal5i4KJ4wROhPxaipVbyPaZnHKd2D6ju+DHLZfjs+8CuJmPGg72AalcM3e/49sLSqMQbUECS
-	6SlQagwr2bDdSN4CJfi9e/Le+6fWaDTPoEr4h0A=
-X-Received: by 2002:a05:690e:11ce:b0:649:3e9:ceeb with SMTP id
- 956f58d0204a3-64917704b38mr2363956d50.23.1768583010692; Fri, 16 Jan 2026
- 09:03:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c1kSW2C/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G3xNEz4+"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id A97861D00178;
+	Fri, 16 Jan 2026 12:09:55 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 16 Jan 2026 12:09:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1768583395;
+	 x=1768669795; bh=o65hNptA3f8VhIJgASesqCuWftO+su55ty3hp2TEQLA=; b=
+	c1kSW2C/th8RxCtYyXiXMq1IMaAmgJ1vZyi1yLEzMIDItZtx+DtPcHgDHyVQQLWM
+	TssSJ0/fzj/+Kf+k1Db7HZXAQ2K1vSI73dLgzYvjkNDuLl4FSkkpZhoFopGJJB80
+	ivsSU3LtfqhznbPyehoBK/NTLVIW6ZVkfZ0NlB/HJY2gusAIpJHpbMiMS8VF84kH
+	hHTLDO7RgHetDkrDeQai4d6+fyElfB2CNPf3KhG6ilMW06M9NlT3lJlQ3HRL7ew/
+	/aV4AIWqbpDmiOURvE16K7pCKD5eT87Wnu9oNOwed6MHovxUm66/r3+MOENSyAQz
+	IFJ5Ysc5VyagpB3dyzr7dA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768583395; x=
+	1768669795; bh=o65hNptA3f8VhIJgASesqCuWftO+su55ty3hp2TEQLA=; b=G
+	3xNEz4+dJFMbkmcUM4EooQAhocccyZXYNbjOX8+uNF/VDht4vrLOlBrtP4+Ss/nG
+	gFn/qWJUEoStBcddtvXpRwzp50zgUUFbP1lRUix5Nvef9oS3m1gP20s7IdD3qIxJ
+	z11Sz9TMvGJd4BRUvVgPL6XRrVrDjo12LwT/WcRvM9KG3z6pMwNaL2QFcssxYeJu
+	028SJu+yKxDL/f6aiZYSac0DNlpTNvCnTQ0q2mrSH2eCicM6/xEo1CiTEjig2Dbk
+	8wd0DeYelmk+IoPZK6a7R7aqdBwgW5I8ItVRqicSIlmEE/RzUKN1Vv5Psk7f4ZJI
+	7GTzuZaVonmwe+1x7ltZw==
+X-ME-Sender: <xms:43BqafQlu8E-m1zEe4dbku35V-UOhjPMJzvOzoq_xpQYPAE76_I_NQ>
+    <xme:43BqaYNYiuejBVidJpjHnBRieU8_LlF8eBpuNsEts2w-xZAMIXKd9LKwwMEozj9Hf
+    2WMVb3RgtrTdcasyu7X_f0tJQ5dtrhWDGVrzmy10bknYkevp_3MPw>
+X-ME-Received: <xmr:43BqaSNqr0h1jb1wbbbYucPHpKIx6kfQJmTpcxw72BpPWDKNj1z00m4BABexgllAG9HcajOiY-dqcDe2EkUrGYoVGYk6TVVy4Te50Tc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdelhedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhskhgr
+    rhhrrhholedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:43BqaYsmGqfs1fyfRT71ykfPTdkwTD3I7mBj0xHm0q4P8Fhtfwp5kw>
+    <xmx:43BqacXGSCE8Vnab_uK8lMpILsXI9fxO3oiL4D5k0yKzY5Sj6_KamA>
+    <xmx:43BqaQshv6xU6PxwvzetN-BraWWzAWcVUr2BrjKu-J_dEO-158Lj0Q>
+    <xmx:43BqaYX9B7OUNRuhU4ZG75tqNFAWmhbDd1saWmjVuzxrxty1BQ3srg>
+    <xmx:43BqaYOkh9wawiN6t2mfyDDqr_JMBqwRs3x8y1vOx8WPlq4Y10BtQyCS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Jan 2026 12:09:55 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Oskar =?utf-8?Q?Jask=C3=B3lski?= <oskarrro90@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: README update proposition
+In-Reply-To: <CAFp-0Pz_BdZwA4Pn=jUxvYu1prj0F85q+3GWSW-G6LF=cSHn8A@mail.gmail.com>
+	("Oskar =?utf-8?Q?Jask=C3=B3lski=22's?= message of "Fri, 16 Jan 2026
+ 12:22:39 +0100")
+References: <CAFp-0Pz_BdZwA4Pn=jUxvYu1prj0F85q+3GWSW-G6LF=cSHn8A@mail.gmail.com>
+Date: Fri, 16 Jan 2026 09:09:53 -0800
+Message-ID: <xmqq7btha3ha.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260114192803.4852-1-amishhhaaaa@gmail.com> <20260115130935.93526-1-amishhhaaaa@gmail.com>
- <CAPvEtreX9sGHUn7+Y0kLo_VnK7Y=OYLq-kz-+np3bu1QtoEpnA@mail.gmail.com> <20260115200903.GB1053259@coredump.intra.peff.net>
-In-Reply-To: <20260115200903.GB1053259@coredump.intra.peff.net>
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-Date: Fri, 16 Jan 2026 22:33:18 +0530
-X-Gm-Features: AZwV_Qij0Nl-xZzHRxUA31m2s_K38_GxDJmzVsiiWh3yZh7mOasPxp6oRFQs22M
-Message-ID: <CAPvEtrc4KuQhNhc966=bbMQUZw1Ne1eoG68mVoZiG6A3h4t=GQ@mail.gmail.com>
-Subject: Re: [PATCH v3] sparse-checkout: optimize string_list construction
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com, newren@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-I was able to reproduce this, are we open to a patch adding a test
-that checks if duplicate entries are present in stdin the result
-should not have it? because the tests were passing even after removing
-all duplicates checks, and non duplicates enforcement is a part of the
-method's behaviour, if I am understanding correctly.
+Oskar Jaskólski <oskarrro90@gmail.com> writes:
 
-On Fri, 16 Jan 2026 at 01:39, Jeff King <peff@peff.net> wrote:
->
-> On Thu, Jan 15, 2026 at 06:45:35PM +0530, Amisha Chhajed wrote:
->
-> > I was also very curious about the presence of
-> > string_list_remove_duplicates in the original code, from my
-> > understanding string_list_insert already removed duplicates and
-> > string_list_remove_duplicates was still present with it.
->
-> Yes, I don't think you could have duplicates when inserting with
-> string_list_insert(). Of course your patch removes that, which means
-> we're falling back on the notion that the hashmap cannot have
-> duplicates, either.
->
-> I think our hashmap _does_ allow duplicate entries, though. The
-> insertion code in insert_recursive_pattern() avoids duplicates in
-> parent_hashmap, but adds its arguments directly to recursive_hashmap.
->
-> So I think you could get duplicates with something like:
->
->   git init
->   git sparse-checkout set --cone
->   git sparse-checkout add --stdin <<\EOF
->   foo
->   bar
->   foo
->   EOF
->
-> Before your patch, that produces this .git/info/sparse-checkout file:
->
->   /*
->   !/*/
->   /bar/
->   /foo/
->
-> and after we get:
->
->   /*
->   !/*/
->   /bar/
->   /foo/
->   /foo/
->
-> So I think we do want to retain the duplicate suppression. Switching
-> from insert() to append() is still good, as long as we keep the
-> remove_duplicates() lines.
->
-> -Peff
+> @@ -16,15 +16,20 @@ standard Git installation.
+>  You need to have the following dependencies installed before you begin:
+>  
+>  - Git
+> -- Tcl
+> -- Tk
+> -- wish
+> -- Gitk (needed for browsing history)
+> +- wish (Tcl/Tk runtime required to run the Git GUI)
+> +- Gitk (optional, needed for browsing history)
+
+Hiding the mention of Tcl/Tk may be a small regression for users
+depending on what distribution is on.  On Debian based systems,
+"wish" is merely a virtual package and the package to install is
+"tk", for example.
+
+Is Gitk truly "optional"?  When running git-gui there are a few menu
+items that invoke gitk.  Does the rest of the document inform users
+well enough to avoid touching these features?  I'd think that we
+would rather want the README talk about giving a fairly complete
+installation without such limitation.
+
+The parenthesized explanation on "wish" is a good addition, though,
+and we may want to keep it even if we were to drop everything else
+in this patch.
+
+> -Most of Git GUI is written in Tcl, so there is no compilation involved. Still,
+> -some things do need to be done (mostly some substitutions), so you do need to
+> -"build" it.
+> +Git GUI is implemented in Tcl/Tk and is executed as a script via the `wish`
+> +runtime. If `wish` is available in your PATH, no separate Tcl or Tk installation
+> +is required.
+
+If this were in the end-user instruction, being clear and concise
+like the updated text is a very good thing, BUT because this is in
+the building-and-installing section, I doubt this is a good change.
+
+The build procedure (in git-gui/Makefile), would try to run "tclsh"
+which is often found in the Tcl package, when it needs to use po2msg
+on a system without msgfmt, which are all part of the install/build
+procedure.  Again, if somebody already built git-gui for you, I
+agree that all you need to have is "wish" and "gitk", but that is
+not the target audience of this section, is it?
