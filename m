@@ -1,125 +1,156 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85C5344035
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 07:09:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD90F303A1E
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 08:30:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768547375; cv=none; b=UMQ3jV0QcorZkOZzdkrw4CbNWgd1ovysoeePyxE/w9Pl71wylJRIJZ19BMtbPTUSg1dXbMNymIfHq6jpYjUaptXtUrbyujz0n/HV3KueVj1mPgQtwvSGfRN0vDS/KQ9NNKNhsVvv7touyyGF6rSuUsh8dyd6RffKpfWajg42dek=
+	t=1768552246; cv=none; b=gv57w1bBh0BV6FB+VbIUtlox5Hb7IKnyQsg8UkaELlbL6Uo/nndpSYADLXkvnk2bKBoy0z202PMjl7g0s5p8uvz+BzyISl0OLGobng3j1hWEhZASaxVvESgerNqqUwryl2oUeX/HlzhjhLcnxxuUrCFaMK5tnp1hkl+r9lcSw/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768547375; c=relaxed/simple;
-	bh=vQVtuSt0IgdgTWz6K9ZF+er5CqK6oUFEHVeUqvrB7rs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QVyvpE3giKwGz5YPZ0nVsuj3IPNuZRMEExNbiKjbh2w7XZD10oMmyAv1Zgrd69wVYP25IHuMVqOy6vOHp0clLBds1GDynY+tjhiHxeP7+bBLEN0+0h0ZHudSGwP9cEC3Kwj/9tBtEg0WWTgJoEBCZqcon3msq7fmbIeYzYRjlWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YgjSil9P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wf9+VWLS; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1768552246; c=relaxed/simple;
+	bh=N9ktUAJ+3gUDtVVYnsK38gndKBZTq5qkd8N/kGjjMi8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NMOKuImuoTFxLKguCsIy799rdZ9goGMvOXRSkdlCW4Y2GTnyM7mdAi21bVlKUBdNj/xD3iX0SpwC7larvw/2nZiz1lWH8oqHTjib2GwdiIBQ1ShW0xC+qjBgedxHItnteyjYLqwc34QAHZYtC1ikpOhmv4Wy8QhmZfJ2CUat+dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RwpIIiSR; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YgjSil9P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wf9+VWLS"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 12B0D7A00EF;
-	Fri, 16 Jan 2026 02:09:33 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Jan 2026 02:09:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768547372;
-	 x=1768633772; bh=1ZOs4ESL9hUrPqWlzE/+S7Tvubcz7L8snjFw/xNzQ8w=; b=
-	YgjSil9PPjKK+j3jBdta0zhInDLhCXHHWF8tfQz0eJF9vBraNzQaPkrPkIrsgxaP
-	1eJ1NeLHL7FGUv0DJ5YrQM/huj6My+DDuwh3ORPaGNC0gQrI7X/SxV6J3fXciUGK
-	T+xy/9dA3f3DtmUH2pwBNYuU6ndKfoVVYltNdnwdeqrqxjQvU1ok9sCZQGqbrCfV
-	SnSwIWZBOYjnfc/XYGtVadstvS2P9J1Tm72RveXpmj1QUHYgM/BcIzaivQdl9hmx
-	Jgxqa4Glz+F4oWa6cNH9SWOQrwT9+l/2K8QX4IMq0clSml/OvLW8fTN0BnMIh6Qj
-	RM8hGNDbEwjO3zdmheBuwg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768547372; x=
-	1768633772; bh=1ZOs4ESL9hUrPqWlzE/+S7Tvubcz7L8snjFw/xNzQ8w=; b=w
-	f9+VWLS+NI1Vl07HHSwkpwWaAKEqpV1S3bMaWSazd2FeSF3aMVQLYkxFf6ytukmw
-	Dkx2EucKGtiI4FM5nwID1AS7S8OWQ3MwyhqBBMJU/EFJSac+/ZTyTtvl3HrKQ31n
-	CurcfWPtxnOZ1nY2p1WIJRLnU0zx+94bjrdLj1/35+ro/FQD/4ajt0YxXrmGoz5M
-	f1RKzja90L1nA3lf4KhQjeUT8CUCt8WaDgDhT8o7gS+RMoHobPQnbwCvIWBg78Qj
-	nXfLs4JCAaN3ROVjTA5hit3aHv9b/GiPap1wHxSfTKoZx7pMuHOHf/UQ613UX7kw
-	RZWT92MhhktQWTgT73jDQ==
-X-ME-Sender: <xms:LORpaWjDw4d3fMyAZatPYVH6hd82SBfY0i1Q_vVeONlEdXvOlPmCXw>
-    <xme:LORpaeeam7X3NgEd0dt7Dqh8tm2Cd5zYdGyuD0jCr3G9wtIGStckZWunXQV1_hRN1
-    w4YfkqtbBAXWLeSjVOX0hcJArZFEjD4wTkzgWNhivkw9B896Tj3PbQ>
-X-ME-Received: <xmr:LORpabeG3nMGFY_PkkshFNIjNPtQJ2fStQMxxwQg2r7d-guqbLk3c0AgUsEPzUaMFkRm0pHePVnlPXs6pVaQbGuMsiJRntuRY1LKoUGYPQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdekfedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
-    thhoohhnsehiohhttghlrdgtohhm
-X-ME-Proxy: <xmx:LORpaY9JRg7x2082N3ZbvLdm8PBQ3mPrvJmGquRdnRfzOwHcGu4xgQ>
-    <xmx:LORpaXlHOXYBnFkyQd215ovdvins_i1ugphJBHZXKHlNFu3CK_ydeg>
-    <xmx:LORpaa-lt6gDbO_SJVECb5f07iSHUBRo5XPDH7B-N16mcxuoYdJMRQ>
-    <xmx:LORpaVnPM8KwfA3f67fMsz1Sk5Pg_gS91Row2mI40tp0Get-yNXASg>
-    <xmx:LORpaZEjDLyDZeJyyxVVsJQbW96Q9Z6K6VVyulEobhDMSwpK2kxu1oaR>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Jan 2026 02:09:31 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6ee2fc5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Jan 2026 07:09:30 +0000 (UTC)
-Date: Fri, 16 Jan 2026 08:09:27 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] last-modified: rewrite error message when more
- than one revision given
-Message-ID: <aWnkJ_GpgbXBPwFp@pks.im>
-References: <20260114-toon-last-modified-tree-v2-0-ba3b1860898f@iotcl.com>
- <20260114-toon-last-modified-tree-v2-1-ba3b1860898f@iotcl.com>
- <aWd2SLrBQRBC1e2S@pks.im>
- <87jyxjjejz.fsf@iotcl.com>
- <aWjVWC71rFeTsHLP@pks.im>
- <ca6cfd7a-3392-46ce-99ab-3d93c9ce90dd@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RwpIIiSR"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-78fb9a67b06so17504637b3.1
+        for <git@vger.kernel.org>; Fri, 16 Jan 2026 00:30:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768552244; x=1769157044; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qiBSY6HPlvqCph00pdV0fD4b65p+p0c6Hf4LzmKB3bc=;
+        b=RwpIIiSRcMYlMRTEwEd4XZuQL3S89C6X4KxE1DKVuoHZg9EK+EVJMiDtuJxNDdgO1B
+         7KQgHiuZ/beZkXQWk5DCaf+FctUA2Dg9Ogc2xaKIDRPwGPgyhu31KM/f+nq6i4EiRore
+         ZJWNH7my7tYl6PbmxyP8IQv5pCJDrsklx7wM8QEgLoB59cXXvIZL2Fa+Y9RBteuvcKTr
+         cPQDrPfRrct4aihwGB4Uvd7qmLyQiNjLfzxmNJ1KSr/AsYDIVPZfwZUlA3NqSwFEemqp
+         I+Lrw2ErYn7Y3DjSBxyN0WkzgxoNCv8g894NXRV5AyCr+VNTmTdPdo0F8jybaZFaVZs8
+         BbzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768552244; x=1769157044;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qiBSY6HPlvqCph00pdV0fD4b65p+p0c6Hf4LzmKB3bc=;
+        b=MscQqAhPItWkfXovTWPy8H3rlIbMCGbAybjO8ke+UIMt4gScIgJS9Co9SQ9YIpxHgJ
+         gy/v86kgw8UlYTUyPYkkjkMo1S0IKuEqoxe2KD9dp4XC7m3/i3JgCRHc0LNRoq22HI9i
+         9XhxZ96H/uSUOkZD+if3HQF1Iud7dO45Tw+BalSDA+pdemYhKRpM6PdLat/x0c2lQF6X
+         /LLxGVBKBwueEeKuTJtPrGjo1ifokJ2iozqf1ZRKI4YBGUglCt2fDHxV4yWFqPgyfQd8
+         /ewHUPXZs9Hi/CUmSw1SUOT3qAX3z4UKYvJJxkz5azgN2sZkYkpMumQHg1OA5uKog0CQ
+         nJeg==
+X-Gm-Message-State: AOJu0YzSAcAFH36QqoY0TM1CO1TFFw+cc8NDkpFbJGHJiQ/49Wpu3jEB
+	tMunu7GBTUpUzblxI0AGMZ7Hp0CnuEoYSHu/pg52pfFYsfxCuWQ5F7slR+b1tl3XhvM0yoVT5r4
+	iV1SM4mVhLmkqLVa/fCu4Ch3NRx8rLTY=
+X-Gm-Gg: AY/fxX63om0v9MWG3cK452yhB5tHkJoO3Or6ugu7kccqeoDoxUAeoBe6juysixHuI6n
+	CpWBOKrMgKchU4EujYotv3nJS0riXN1SYG6HuUXhrgGYW0fAp5fF9fipB6+H8wVJgDOWUApUm5r
+	S91DbpLx7/3qWNPjymS1ajxbVO9ccLMOnBGWVjHINZigDwlWcOy8nIPUZrrqQkVg3Lr6I8+OXr9
+	ukZT5Z5g8FNqHre9xOqgwhNJPIhd8WrnMmWxk+DxsnIhs1VFokQlM1lmV1RBTQKuFt1tZZq87Vc
+	4lObpgIc/lrmJFIASbmrWQNtS4mg
+X-Received: by 2002:a05:690e:128b:b0:641:ffaa:4eda with SMTP id
+ 956f58d0204a3-64917763057mr1475048d50.74.1768552243861; Fri, 16 Jan 2026
+ 00:30:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ca6cfd7a-3392-46ce-99ab-3d93c9ce90dd@app.fastmail.com>
+References: <20260114192803.4852-1-amishhhaaaa@gmail.com> <20260115130935.93526-1-amishhhaaaa@gmail.com>
+ <CAPvEtreX9sGHUn7+Y0kLo_VnK7Y=OYLq-kz-+np3bu1QtoEpnA@mail.gmail.com> <fc14e0e5-93bc-4805-a20d-d2aa4eb87ddb@web.de>
+In-Reply-To: <fc14e0e5-93bc-4805-a20d-d2aa4eb87ddb@web.de>
+From: Amisha Chhajed <amishhhaaaa@gmail.com>
+Date: Fri, 16 Jan 2026 14:00:31 +0530
+X-Gm-Features: AZwV_Qgd6Ctp27cqVJMQYDOpoGBsZXHlN-ltvJM3VblUHre2YTL_wJkTr783gdU
+Message-ID: <CAPvEtrdQ7LB4p0_yCg+ef6fsWSHwxA8C1uX0SJbfnV3vfQHD_g@mail.gmail.com>
+Subject: Re: [PATCH v3] sparse-checkout: optimize string_list construction
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com, newren@gmail.com, 
+	peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 15, 2026 at 03:34:50PM +0100, Kristoffer Haugsbakk wrote:
-> On Thu, Jan 15, 2026, at 12:54, Patrick Steinhardt wrote:
-> > On Thu, Jan 15, 2026 at 12:33:36PM +0100, Toon Claes wrote:
-> >>[snip]
-> >> I was thinking about mentioning something like "commit-ish" instead, but
-> >> I felt "commit-ish" isn't a commonly used term toward end-users. Looking
-> >> at gitglossary(7), it says "revision" is a "synonym for commit". I'm
-> >> happy to change this message, but I'm not sure s/revision/commit-ish/ is
-> >> the best change for this.
+It was assumed to be safe under the notion that our entries are not
+duplicate but as already pointed out, our entries are not unique so we
+need one of those two ways either insert or remove_duplicates, this
+can be a trivial question but i wonder how are the tests passing by
+removing these lines, i was actually researching about it.
+
+On Fri, 16 Jan 2026 at 03:56, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>
+> On 1/15/26 2:15 PM, Amisha Chhajed wrote:
+> > Made the changes for other 2 places as well!
 > >
-> > gitglossary(7) also defines commit-ish, but I guess you're right that
-> > revision is the more common term. I'm a bit surprised that it's defined
-> > to be a synonym for a commit, but oh, well.
-> 
-> Surprised that “revision” is a synonym for commit? Why is that?
-
-Because in my mind a revision can resolve to any object type.
-"<rev>^{<type>}" for example is a revision, but it can resolve for
-example to a tree if you say "HEAD^{tree}". Still a revision, but
-definitely does not resolve to a commit.
-
-Also, it's confusing to conflate the way to name a commit with a commit
-itself. "HEAD~10" is a revision, but taken by itself it's not a commit.
-It's not even clear whether it resolves, so it feels sensible to me to
-keep these two concepts separate from one another.
-
-Patrick
+> > I was also very curious about the presence of
+> > string_list_remove_duplicates in the original code, from my
+> > understanding string_list_insert already removed duplicates and
+> > string_list_remove_duplicates was still present with it.
+>
+> So the string_list_remove_duplicates() calls were unnecessary with
+> string_list_insert(), but why is it safe to remove them now that you use
+> string_list_append() instead, which doesn't check for duplicates?
+>
+> >
+> > On Thu, 15 Jan 2026 at 18:39, amisha <amishhhaaaa@gmail.com> wrote:
+> >>
+> >> Improve O(n^2) complexity to O(n log n) while building a sorted 'strin=
+g_list'
+> >> by constructing it unsorted and sorting it afterwards.
+> >>
+> >> Signed-off-by: Amisha Chhajed <amishhhaaaa@gmail.com>
+> >> ---
+> >>  builtin/sparse-checkout.c | 8 +++-----
+> >>  1 file changed, 3 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> >> index 15d51e60a8..edabe7cbd9 100644
+> >> --- a/builtin/sparse-checkout.c
+> >> +++ b/builtin/sparse-checkout.c
+> >> @@ -91,7 +91,7 @@ static int sparse_checkout_list(int argc, const char=
+ **argv, const char *prefix,
+> >>
+> >>                 hashmap_for_each_entry(&pl.recursive_hashmap, &iter, p=
+e, ent) {
+> >>                         /* pe->pattern starts with "/", skip it */
+> >> -                       string_list_insert(&sl, pe->pattern + 1);
+> >> +                       string_list_append(&sl, pe->pattern + 1);
+> >>                 }
+> >>
+> >>                 string_list_sort(&sl);
+> >> @@ -289,11 +289,10 @@ static void write_cone_to_file(FILE *fp, struct =
+pattern_list *pl)
+> >>                 if (!hashmap_contains_parent(&pl->recursive_hashmap,
+> >>                                              pe->pattern,
+> >>                                              &parent_pattern))
+> >> -                       string_list_insert(&sl, pe->pattern);
+> >> +                       string_list_append(&sl, pe->pattern);
+> >>         }
+> >>
+> >>         string_list_sort(&sl);
+> >> -       string_list_remove_duplicates(&sl, 0);
+> >>
+> >>         fprintf(fp, "/*\n!/*/\n");
+> >>
+> >> @@ -311,13 +310,12 @@ static void write_cone_to_file(FILE *fp, struct =
+pattern_list *pl)
+> >>                 if (!hashmap_contains_parent(&pl->recursive_hashmap,
+> >>                                              pe->pattern,
+> >>                                              &parent_pattern))
+> >> -                       string_list_insert(&sl, pe->pattern);
+> >> +                       string_list_append(&sl, pe->pattern);
+> >>         }
+> >>
+> >>         strbuf_release(&parent_pattern);
+> >>
+> >>         string_list_sort(&sl);
+> >> -       string_list_remove_duplicates(&sl, 0);
+> >>
+> >>         for (i =3D 0; i < sl.nr; i++) {
+> >>                 char *pattern =3D escaped_pattern(sl.items[i].string);
+> >> --
+> >> 2.51.0
+> >>
+>
