@@ -1,41 +1,41 @@
 Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F892EFD8C
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 20:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390632ED84A
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 20:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768596169; cv=none; b=iKP6zz+KQbwLAEuKjlYS+2zqZSey6/aOQk8kTBGLa1n9KYhh+th2Cl384OWfeM1rrFHiWtJkmxGfQpmJnhGwtHYxzkDew/Hluax5WyCISotYEm6IzfAEeFi3sXvsuI7dZ4/qNUt5LWLu1WvQAF0QBW6obqpLXSlMB/4uEc9RcLw=
+	t=1768596180; cv=none; b=kJ1/GPk3L/WDT7xwKhk+gGqMCc6Fiv12II9kH1SDhJrQmZlvOMYNf6NkV29xa/wk6TNOknsuM3wDFEB0QQc18TPZ3Z6gAwMlE31lreU1+SdimzTTbIgF6A/6I1oNuMYXpO8cWQ3Bd2VawjMxLkpBzu2bHGdc1OMV5aihzGHyRHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768596169; c=relaxed/simple;
-	bh=MQOWGslgtMSTM+BriGZnDcUsJFp8Lm/+hCYEHlqAVkQ=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=oMp/i8Z3E5oMSosBoDl9cOgPUavB3WlRHl71HrUP1ZNpl68Ri9kYzJ0/TNxegFfUBxxaTKVP+9ZLm3Y3cG2ScT052COqyfF7bDdS5cAdfmd+OmsHh+USt8khHLn0yX08Hr/Wa4XI7chV9KUN5fY+Z0o3SuR71+c1fxWJ51RyUCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=PHDzBwGy; arc=none smtp.client-ip=84.93.230.235
+	s=arc-20240116; t=1768596180; c=relaxed/simple;
+	bh=l7SoYMU5XofmYqBNOwt8bK5uoDfYuBat9IjpI7gA1MU=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=QWLcB4fEr1YdpzD/t4xyL2EiURRHRBej9Hj21U7fXF26SdPw/w/Kx8nFCUo7mAfFqmCZsbdqC95H9KtOiZ9gYxxbqIz63WRHrnY/B1Fkjvr7Uu+y3aof8KJcTEK11QJsUFdS4LxuEUTYcZVoOvvukmy+WaSly62+OEViGzZ7FnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=UfirhZ2q; arc=none smtp.client-ip=84.93.230.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="PHDzBwGy"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="UfirhZ2q"
 Received: from [10.0.2.15] ([80.189.83.109])
 	by smtp with ESMTPA
-	id gqbhvtpffkJhVgqbivUOEM; Fri, 16 Jan 2026 20:39:46 +0000
+	id gqbsvtpidkJhVgqbuvUOES; Fri, 16 Jan 2026 20:39:58 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1768595986; bh=1DojMO4t6RGhpCbvLgszXnvD/4pxfOZb773DKhLTw00=;
+	t=1768595998; bh=3Ez5xCr4j6qmZjwx/NZ0PcmuIxGMkX4Mx+DMxuLo7uE=;
 	h=Date:To:Cc:From:Subject;
-	b=PHDzBwGysoXgEGm1RCQm7vVyGNF9ZHkEG8R6aCQ1jDoX15cBeD3oh4UBISQ6NLgfZ
-	 Hd6/xtUKPGdKDpKWUWme6SzBVvhCtCjmtdAywobjIkqKXsfVRzBbbWRz5cnj49DKLp
-	 ZQHBpgJRqupKDdyGQJvg/EwDcocH0+pPsZISNLQuTqpDViN6xP69nHXeVbPiAbZbbE
-	 KC3bspmbqJgmE//60FkSburNvFqcKElHEq984ZSQ/viugHbE3NmpeiDA3oVS3uy/tc
-	 ILzMw9ab5epZ081XditUoCOL2lSY3xtyHY1rZvcioepl3dnCjR0KsIQJEZRbtjGk8U
-	 Gfr6TOI0qUitg==
+	b=UfirhZ2q7hAUcAN/v93oQdqQLoel0COwHFVsu8Ogy9GaJ66vhJXfSFIIq/voK7C1O
+	 ApT15KLyrH8+QVY2kuyzsdoaaUIKbldvDrw3XZUxqeVKWuRjldKC2sGhHoIwcHPcBJ
+	 bF/g6+/zPgrJA6B9ma5dDYZmoZfoE/HZBb5vN3MzBJ1GNTgkKT+2QeJuKZsYqYkApO
+	 j3XmGMy6cK5iB/eEfvZo4Tf+jo2Pp50XEk152LlFQ0PcSAQ+Ix5HNDU40j/oreiIJX
+	 0Kf3deTwncJuXrsot+agrVlL/MQe7GmbtxbSC49FGsRio3DXIopQqearll4wrXJ2CQ
+	 hbSVbPK2VbnNQ==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=C+5KyhP+ c=1 sm=1 tr=0 ts=696aa212
+X-CNFS-Analysis: v=2.4 cv=C+5KyhP+ c=1 sm=1 tr=0 ts=696aa21e
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=RMdYD1IlY8hFOmm90WcA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=fUSZDwcxntXz5Iget8wA:9 a=QEXdDO2ut3YA:10
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-Message-ID: <79d1fba5-8cd1-4fa5-9424-7ab77da0f5e0@ramsayjones.plus.com>
-Date: Fri, 16 Jan 2026 20:39:44 +0000
+Message-ID: <f46e023b-1925-41b2-9842-42e7cb727056@ramsayjones.plus.com>
+Date: Fri, 16 Jan 2026 20:39:56 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,38 +48,75 @@ To: GIT Mailing-list <git@vger.kernel.org>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 1/2] t9700/test.pl: fix path type expectation on cygwin
+Subject: [PATCH 2/2] t0610-reftable-basics: mitigate a flaky test on cygwin
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfIxDkUixQtfZ8pWVDB1+DWIvDKRZo704u9OOQ+LyUliQMlzq4gyunMg2h3/5o1cjdHp8HqVqIJ2lratzximCObzq41UNpH0tIB3OdCjJ3wvbg/CiUo0v
- 9PmNMv8+vkqSVmV4qV3yaE37Ny5XTtQytu9ROEhiOCz6N52W0F6Z3VPgjC1GEbWJ1oeYpUbguonBU54/QfAdikTkiDErLhRvByM=
+X-CMAE-Envelope: MS4xfGkB+jYD9LEu7qh20IirN1rU/tz59eibS8NYgopDIH9tr4d5GVjF7lnb+fSeMhQOy343Yg3h6m8Q5k12WnuMC1a8PHiFnSh8KGtYqBJFnYKb0BYPLnIX
+ 0XDtwSfzZ/V137XpQK+mzve2pTjs5X2yroDi5eUPzgeUFdQ/TY/vaCh+wjdlFD0GVUqxMLmXmkClxGPN7klxk8zQU+OlK/ThIIE=
 
 
-Commit 4ec7ac101b ("t9700: accommodate for Windows paths", 2025-12-17)
-changed the type of the absolute path to the git directory from unix to
-win32 for both GfW and cygwin. This fixed the test for GfW but causes
-new failures on cygwin, since the test expectation is that it uses unix
-paths on cygwin. In order to not break cygwin, disable the new code by
-removing the "or $^O eq 'cygwin'" sub-expression from the conditional
-part of the fix.
+Test #29 ('ref transaction: corrupted tables cause failure') started to
+fail intermittently for me (from v2.52.0-rc0) when running the testsuite
+with '-j8'. (Also, having moved to a new laptop and windows 11, rather
+than windows 10). If the test is run by hand, or without any parallelism,
+then it passes without issue.
 
+When the test fails (e.g. 1 out of 32 parallel runs) the cause is due to
+a permission error while corrupting a table file:
+
+  ./test-lib.sh: line 1010: .git/reftable/0x000000000001-0x000000000002-d89bb8ee.ref: Permission denied
+
+This corruption is done in a shell loop, directly after a 'test_commit',
+which uses an ': >"$f"' expression to truncate the file. Adding a sleep
+of one second after the 'test_commit' and before the shell loop fixes
+the test (it is not clear why). Replacing the redirection shell expression
+with a 'test-tool truncate "$f" 0' invocation also provides a fix, which
+could simply be another way to change the timing sufficiently to win the
+race.
+
+During a debug session, I tried looking at the strace output for the
+shell redirection:
+
+  $ rm /tmp/hello; echo hello >/tmp/hello; ls -l /tmp/hello
+  -rw-r--r-- 1 ramsay None 6 Nov 10 17:25 /tmp/hello
+  $
+
+  $ strace -o zzz bash -c ': >/tmp/hello'
+  $
+
+Similarly, for the test-tool solution:
+
+  $ strace -o xxx ./t/helper/test-tool truncate /tmp/hello 0
+  $
+
+When comparing the output, the differences seemed to be what you would
+expect and, if anything, the shell redirect probably would have taken
+longer than the test-tool solution (many fcntl() calls to dup the stdout
+to the <fd>).  The call to the win32 api NtCreateFile() was identical,
+apart from the first (FileHandle) parameter, of course.
+
+In order to fix this flaky test on cygwin, despite not knowing why it
+works, replace the shell redirection with the above 'test-tool truncate'
+invocation.
+
+Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- t/t9700/test.pl | 2 +-
+ t/t0610-reftable-basics.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9700/test.pl b/t/t9700/test.pl
-index 570b0c5680..f83e6169e2 100755
---- a/t/t9700/test.pl
-+++ b/t/t9700/test.pl
-@@ -118,7 +118,7 @@ sub adjust_dirsep {
- 
- # paths
- my $abs_git_dir = $abs_repo_dir . "/.git";
--if ($^O eq 'msys' or $^O eq 'cygwin') {
-+if ($^O eq 'msys') {
-   $abs_git_dir = `cygpath -am "$abs_repo_dir/.git"`;
-   $abs_git_dir =~ s/\r?\n?$//;
- }
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 6575528f21..e19e036898 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -207,7 +207,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
+ 		test_commit file1 &&
+ 		for f in .git/reftable/*.ref
+ 		do
+-			: >"$f" || return 1
++			test-tool truncate "$f" 0 || return 1
+ 		done &&
+ 		test_must_fail git update-ref refs/heads/main HEAD
+ 	)
 -- 
 2.52.0
