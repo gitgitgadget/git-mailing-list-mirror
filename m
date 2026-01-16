@@ -1,129 +1,102 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308903375DC
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:31:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67856F2F2
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768584680; cv=none; b=nBDmSZZokRSQbXTGmyJjKmLq3ghKjrbSnpv9rmElix1L3bJXMtbWjiiepCrYyJVefneOGz42aopXj9gO1rVSCpViSJFC/huyseEJfYKuAry9XrRoVmpMN0oEQAdTOLKNEstjDLUbbY8wcH4J1/Ea1IQ66kJWiauYhxLU2Yx6WLQ=
+	t=1768584723; cv=none; b=flQHgUB3L6MuB4j531bKtKWyErfw6RWMEx3wMlKxqizQxvmAB72cbDqxDfM4Q7wnWNIWi7f1YoBXDwSJeJDrjOalcn8+kYcv/ExIpNrjK5G6uXU2sozKD0c2vNp+CYu+SeMuBqKps15nLXD9N+Zgvx1DOQexAv3f5eCYsxvDndc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768584680; c=relaxed/simple;
-	bh=9QjW1V3v+yI076ZGiLiDKFTd1Aedos37PmgjMyIwqu8=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=HN/QQvf+6VO1XRgcwe6QwzPiEfMoxxx590eB2q8glHaWcwpx7j8zznGlyjACSUxrP3lxVpnP1dojAhFZxAFGJAFezPb+PyhSx8e61wYeVQkv3Si30lz7umQcgyJPF310DfDT56YlZo4tbJdcMWHzP9P26gqqbfO/+6Iei9GUx/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FBdiRzbJ; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768584723; c=relaxed/simple;
+	bh=zlC0WS9k73qNjlePArq7pi8HrR+E1hhFgUwtSsN6y7s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oX1Y4de2HSynVqXODyxTBrWY6U8aT8Omdz3ThvhZL9FBiTAY9K5DQMFzUVmvdQg9AKxeN9pAEzganw6zTLfhmk6aRYy1GD/7EPqKxQGpPMBU7eAIYLFbXoLr6/Gv5Trce7EQt2L99rJmlp5nFAcVOUVS9E+57qJ1+nO9xmhFAhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MJXyy4IO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ow37WWSJ; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FBdiRzbJ"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-661097640a8so1019955eaf.2
-        for <git@vger.kernel.org>; Fri, 16 Jan 2026 09:31:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768584678; x=1769189478; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZCpMs+p/9kyh7yXZAOZQxH9SR2DFidQTM+wfgzLuw58=;
-        b=FBdiRzbJX/L/Hn6Y+ny9M9MagPYtwR2jH/SwJHRuS/G5ZQ7PjPSBfUg8GG2UZgM3FI
-         Lz1HF8lqaQlSTPxVaTPrhM2O+IkMsvHtPhqtpi+Dup/TpjBaJrGc2MMdMynLw4caFHJL
-         yYDA0268W3o/IpZ0xCHs/+XJuCdKfI9/kYa3w4aEmc2SUp2HX0RNP2kUBlL/a8+kHNTN
-         hiYJiTkGLG9lZ43PM/Mie2XMUwBmqHK0NmwBKJ1itdbwjTPM/TtL6jDkzFKBsJRmsVh8
-         TwlSan6EsvbZIzsWYkgH7ND5W+nG/P4SNciN4nQMM3U36Jow5bqKZVPWDsVAM0yt7kqB
-         ELIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768584678; x=1769189478;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZCpMs+p/9kyh7yXZAOZQxH9SR2DFidQTM+wfgzLuw58=;
-        b=Yu+Vf3jutlApdjguovOKKf5me7SBQ6aOpq/V0njmxlid+dqFUibmLyd3M9rQOXC909
-         W6FrWGcFK5ftVSNdWYwzf2mMfquLtlHzJDCBPEN+LADLt2RWj8DHxKK4NEEvFedZsb0q
-         Ww/0d5NqCHozufYPLf3U5aPg5BiG/DEu0VZV4NRDDVVD1Mf0e1wjwcVC+FXnCryemMDA
-         cglrWiBfIb88QWF3GeUdrAGtzmXvXepZGo2533SIFw2SrovHnAOICadIwjyUX1lpj+36
-         U0BbGbkiqqhs5wzUgOIrge9KhKAfcnmmOiOMi8JdM4EKusENdKceD2lE/3QspP+QoOXL
-         NFCw==
-X-Gm-Message-State: AOJu0YzUby0oFCjXRSK/bsDvgmLSNLJJvWZGOWRhL0szXOhC7Wbp3lpo
-	QXED4smuEwXVgunLbW9vLca3vu2tQsT1TqPC46gHZ6XJ/oSOjnmw0kvao+e0rQ==
-X-Gm-Gg: AY/fxX7V791EXufYcCVKc1BDSuHC9WXpsT8xunvQB/2Yb1/bUzqPLFLkVI9sNgXwtf/
-	tTilIgqIUjKUGftnrKHDRjAsC3X6OHkUYibj8sU2vfFAurkEDWeQ5rqyPhZEJBxsLYallVWlktL
-	4QDr7pUaaocbQkP5g4AG+AT/OZcdZn7F2mFKjWzOIRnlAOJpnDeOQmjE01mPw0w6aTjxC9lxmFz
-	kv0Cd+rz5e1oA2sO9prrPMnlwWf8m+yTxKlR5WBY1NiN5edq5C0+ad2tSBfvDZOvfcVKFJatSDQ
-	bNxSagHbfzrlViDQjqVklRhQ58z+3fKOLPxFkabyOGoi63/HNhR88+6s1zZoV+xVDsDFWgA5U0H
-	UgqnTnvdi7v6CIkHNK5cqAhb5+hEp/fVH8Kv3XsMxKKRwcvElZI6LhFm65zCZa7JdQzaZT4c7qS
-	47sOdILt1OKThIqA==
-X-Received: by 2002:a05:6820:813:b0:65f:5bc2:844d with SMTP id 006d021491bc7-661179cee7emr1602869eaf.62.1768584677810;
-        Fri, 16 Jan 2026 09:31:17 -0800 (PST)
-Received: from [127.0.0.1] ([172.212.163.17])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-66289e3af7dsm207467eaf.14.2026.01.16.09.31.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 09:31:17 -0800 (PST)
-Message-Id: <pull.2031.git.1768584676520.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 Jan 2026 17:31:16 +0000
-Subject: [PATCH] ci(*-leaks): skip the git-svn tests to save time
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MJXyy4IO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ow37WWSJ"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 113261D0006B;
+	Fri, 16 Jan 2026 12:32:01 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 16 Jan 2026 12:32:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768584720; x=1768671120; bh=297nDEYV6i
+	TIRkyNyVxEarvce37WEpbZd+RLar62bAQ=; b=MJXyy4IOtZZP7EQ7fT3m3oqQ48
+	XHF1OB8KjIgtkG9aQkv2IqJw0dQJKPFbiCIcAWrZdYeOdBznXTenJLRkbAfc4Utd
+	u62bh851RyrWsZDL7uIkhzKTD6/zN1wXLCKSoeryz73ShDigXMdTihsKKlSyRHZk
+	lTa6jQNz1jU2gkGIWdmF4MQaTBSc6BDX+NFSkAPsHI01iZyuuJT9rD5F4qEkZJka
+	LNkXdkQJtP6GsVJSBAr+0XhAWTmfmwP2xkT198VGlwJ8OiZ/C8qG38i1P9/4Q8jb
+	Ef/4DfI71P9k7o6icye64Ua0oMCu26QqMApVxBPhK/GDFIdHm/e5kVDYvVEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768584720; x=1768671120; bh=297nDEYV6iTIRkyNyVxEarvce37WEpbZd+R
+	Lar62bAQ=; b=ow37WWSJqDDtoplHDAyjemrxy0+c3ToJrL7OcJztBmH66pZmtrG
+	aMgiL6rM7qugUKNul9+ab2h9E8o8IMUA/1mcciddFCxzt0+BYQCmJ4YFd/gqpGOO
+	L4ghwO/liXtexfdZqa50KVC/dhn0y/PzTOvVO1L2RCj/c/MkGidCofwKJ6sogMVn
+	pfClET9o/W45bxaYUaLZdLAIyfHczSJSC59QUylo5gY7bIYgUIRyIcv9EVORu85R
+	UhGAP4w6+ttjpKJkRgOhuWbrifTZokfAAv236vayXA24N73CgUOKLQB4vFMPChbW
+	FyJ1QyJ+Vl0C3MKTZkItuAfrsQA3JyzY8yg==
+X-ME-Sender: <xms:EHZqaQF5bfNujQKfFZfy2EUe7ZaTJRFECD-ut5Pcgj629It17yfRfA>
+    <xme:EHZqadCssGJrOUbTCgmiu1KEUOh7Yt9H6k6j_aFWVUpFLji5BWGphXbLqwxuqhxIQ
+    jvM8d9n5Ie8YYqnEptOrLIUIWaIGS0gXgz4Icy-33FlY_YQgjY9zA>
+X-ME-Received: <xmr:EHZqaT_P_7g26piYdJSXQ0eC7APy0XoZgTWvGnzwMEa8I4eQ31VwlfGPkrvTOP26YBhl-rQPXArszVT3DRZ2CHf8BpBM8oEBv763W4A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdelheegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdr
+    ihhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhushhtvggusegtohguvggsvghrghdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:EHZqaZBHHy2TL5fgVhxMRHugOZxvu1frxhm1sUeb45RsLVkSDLdsAA>
+    <xmx:EHZqaYSn0o-SqjqZzmBIzuGXz_IhyZveH8JenJD5q-o7vf0PsRyJSw>
+    <xmx:EHZqaQsKEvSxV8c0OMKCK8bLsNluEfV9rdZksTDpqOF8jFMAtTWBzg>
+    <xmx:EHZqaU2f4PpEdm6Ggret63S51U2luOroINhkc518gHLPTI3-wCWXtA>
+    <xmx:EHZqaShZdQqR3prRaE7D7-87kV12x4LVThFioWoETVXmsVhBbk3Ie00O>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Jan 2026 12:32:00 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Gusted
+ <gusted@codeberg.org>
+Subject: Re: [PATCH v3 1/4] last-modified: rewrite error message when more
+ than one revision given
+In-Reply-To: <20260116-toon-last-modified-tree-v3-1-e6ade4dc35ab@iotcl.com>
+	(Toon Claes's message of "Fri, 16 Jan 2026 14:08:37 +0100")
+References: <20260116-toon-last-modified-tree-v3-0-e6ade4dc35ab@iotcl.com>
+	<20260116-toon-last-modified-tree-v3-1-e6ade4dc35ab@iotcl.com>
+Date: Fri, 16 Jan 2026 09:31:59 -0800
+Message-ID: <xmqqpl798nw0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Toon Claes <toon@iotcl.com> writes:
 
-I noticed recently that the leak-checking jobs still take a lot of time,
-and upon analysis, the git-svn tests contribute significantly to this.
+> -test_expect_success 'cannot run last-modified on two trees' '
+> +test_expect_success 'cannot run last-modified on two revision' '
 
-Analyzing a recent CI run, I saw that the Git test suite contains
-1,017 tests, running for approximately 5¼ hours total. Of these, 65
-git-svn-related tests (~6% of test count) took 42.24 minutes combined,
-accounting for ~13.% of the total runtime. This implies that the git-svn
-tests are roughly twice as expernsive compared to the other tests.
+Not "revisions"?
 
-However, testing git-svn in the leak-checking jobs provides minimal
-value: git-svn is implemented as a Perl script, and leak checking only
-handles C code. While git-svn does call into Git's built-in commands
-that are implemented in C, these are standard Git operations that are
-already thoroughly exercised elsewhere in the test suite. Therefore,
-running the git-svn tests in the leak-checking jobs only adds to the
-overall run time with little value in return.
-
-Given that the leak-checking jobs are particularly time-intensive and
-these 42+ minutes of SVN tests per job provide no additional leak
-detection value, skip them in the *-leaks jobs to reduce CI runtime.
-
-Assisted-by: Claude Sonnet 4.5
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    ci(*-leaks): skip the git-svn tests to save time
-    
-    I leaned heavily on AI to implement this patch, in particular when
-    analyzing the logs. That's why I added that trailer talking about Claude
-    Sonnet. If this is undesirable, please let me know.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2031%2Fdscho%2Fskip-svn-and-leak-tests-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2031/dscho/skip-svn-and-leak-tests-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2031
-
- ci/lib.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/ci/lib.sh b/ci/lib.sh
-index f561884d40..a165c7f268 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -356,6 +356,7 @@ linux-musl-meson)
- 	;;
- linux-leaks|linux-reftable-leaks)
- 	export SANITIZE=leak
-+	export NO_SVN_TESTS=LetsSaveSomeTime
- 	;;
- linux-asan-ubsan)
- 	export SANITIZE=address,undefined
-
-base-commit: 7264e61d87e58b9d0f5e6424c47c11e9657dfb75
--- 
-gitgitgadget
+>  	test_must_fail git last-modified HEAD HEAD~1
+>  '
