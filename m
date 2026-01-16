@@ -1,160 +1,121 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C46323BD1A
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 00:00:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C4C800
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 00:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768521639; cv=none; b=W3NZCT02GKAjeI4R8lsLx6cpuF1TSpMQGsJDk5ZKYR/tBNrwXqW3JKDVmwnkROR+5uVUDTHqgBh233NDZ6wvXKf5XtYxYjcVfT2zl1OAKxyGl8i0bKg1ZgrJFibB59J0jyEXPgnoC9GIdiui+vygSQ1NHCPCPjI0g+tUAJYBpSc=
+	t=1768521868; cv=none; b=k1QpXIJ2KCWXMu6DohUPjfyKdVuCDjH2szqCdA4dnYs9OzuV1jWtOjEqME7Z0oGLbdt8K6fUeCg5Br6eCsLK8OT5lvPlm4m2reKEA31FbiJovcRXt06xGF6LXNlrlC0EJIGa+EfReER0Z61KM2+yngW2JmvH9aG8rxuoKjeSKZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768521639; c=relaxed/simple;
-	bh=HwKzs4eoUS3dnH74WmSEVQC9vdKduvuE616ZO7AvIhA=;
+	s=arc-20240116; t=1768521868; c=relaxed/simple;
+	bh=gWc33uCmWb98uMl9nbX0fzw+Gtw1rfeEZqOBXJIYE8M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B/nUpOHm+7Z6otpOVIlzsK05kc4uCBkEIFfwIWfRYHRIRuXzdl7Vj8Lud+euMKVZWwn0zVZBtJz6UkX7CloMxMCQF3QB+vGRHdRi3a/7ZZkmdOO3n4oyYHiiqqDAqLB/tnrk/dkjzh6gdza+nJ7U9OaymoWNpeJCvwzK8eYGFxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OPVXSXXX; arc=none smtp.client-ip=209.85.218.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=kQUmpPrA+sDa6NphN8ZSfqgwH0tB4jyEmbBOvgKvnfjXv5fkIiaoucCpE55hl8q0aCJKQkKKoJlqcdj0gRCPAyTcipljoA17WdYlaGTPD1GS4hX3jaNfTB8qDDe6D0IHIZNcgvC7JGTcemfH5FsxeYqFSRsPXfGfEBsdxe8JG64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T/F0rj/F; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OPVXSXXX"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b8719aeebc8so270078766b.3
-        for <git@vger.kernel.org>; Thu, 15 Jan 2026 16:00:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T/F0rj/F"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b8714a52072so245280066b.3
+        for <git@vger.kernel.org>; Thu, 15 Jan 2026 16:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768521636; x=1769126436; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=weJ620R/AOJpkdZ2rVokKs/LeCNkiPu5au7logahH+Y=;
-        b=OPVXSXXX5NMNhOPWAsIMoO2chWTqRNk7cKokPPwPfTdoGlLzFOZm82mEXnTD+Hvshc
-         ajJcNI/n3W66KmkvnvW9yDgBjZApEKRHBjeMgzTlqaKi6U/kFsIBvuI9AZtmWBUGFK9V
-         nLpbTaqxUew+0lq6iozyn0NGa4XA+deKUF91K048b2i6+AgfNmhxokk9u8yKC/hNncoh
-         rDaGvB0y6cm+BIb0lCHDlJohRl/RtF9fXNugg3n1VOUe/jegZsKaPfGY2XwNcy/xWJfM
-         eBab/nLK22K5fDjcOfcMIEug9r8+woCxf6Ey80ZlnveQND4vZJuDWAGCvcX3++7uV7kF
-         zhiQ==
+        d=gmail.com; s=20230601; t=1768521865; x=1769126665; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OsYA8s3PqahFS1gOvXybEolHV/I8y+ZksdLvuBQENow=;
+        b=T/F0rj/FVrgiwG0rAafoKM+hdpuout5Y2fzI7alcTqvBlehTKB7y6kz/TSPwPBvgow
+         tT2m+YgHm1eOt9s4Ad4fs8Cr9f0Ph0tS1/kWyUz24aH6BTQjcPy+gONxDfn4gCRtxvKc
+         qLqPfSr/IVllulQADeikWVZ2xlQr1oVOhXcBzjvjOdBZW1FnQti9cVKT2uwSXSlv76si
+         poJqQHxaOiMleJgnDzkKhmqRBIo+VTJCXOaUAjtu3gyg+4dooGv5Z+lESY5xnbDJqME0
+         hb9mBCm95bcj3ZTv0eJaGARhiEOtOryQEFPrOBEOe9igioYNSxgiwRk3pP9sedv1wC6Z
+         IZyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768521636; x=1769126436;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=weJ620R/AOJpkdZ2rVokKs/LeCNkiPu5au7logahH+Y=;
-        b=eiuurE3YmqSAg4mtaIlF+EfuwfuOVYIv/grYIw0VJgJScmsLWs4i0+/ChpppmzfYw3
-         L4PNRIkHVpUwTWYKYafoEt/ab50YBrhzuxxz8HTYMpE2orS2+CfybMrHwMyGeORJ6lCR
-         i4aSLyGDdWQoiZhrP9xNFichde+WV88ky++NRIO3spTGB8atJjBHsWnE4iA32qbcICwa
-         5qC0n0qfcU1Q2ANghLxEn639Ed5hTZHV8OWDydBxuvGdqhZ1Jr0I0j+MqYTpakozCpfu
-         QagnjYsb0OhnGJw6Up8azk+wKW3swmFkDWpxZO3FuLCgOf+V+5Z4q7w1e7yEQjzTuzad
-         4oiA==
-X-Gm-Message-State: AOJu0Yy+1xQ/ab6J3ugw858OVll5A5CsnBuokswM88OpwMHfEUO5GE6S
-	QVT8lm4C0fbRyaY/iLzjY11dVKcnSS6fiFGp+oIUKiPDFhh9ofseAGiVgyOCjL9Z
-X-Gm-Gg: AY/fxX55Qn8Pi9SoJJOSJW2NCyaDBYKHKoeDfidjnJhZ4GKDNn3IAKb/Pkv5SBQBQj0
-	7WQhMVUkw7skbtRhT/Ioim7SfdUezPePhAa4idFzX6ZvYOKXMJ43NrnpQldajC2sIMubWPyVDsH
-	vvPJqwkGXWORrGHo2c1C7gvqcWLPHb+krneh0iqnidDmhmLV0NadYkMtmjIck1yZ1SasBt5czzS
-	+mR2R+SsmRGtf1JxVEa65anQ6v9NQufuWEFthrWemQojZf/TzeRi4VyGt/m7M/Jv7arJUJi87EX
-	a6KQj0OYbLRRU/UIX4wH7LyIRwyS84HfTLwzMr3aTeq/cYZ/+aDZjh6x7MkSr8bJHx8UuCX669A
-	CzYFGIR8N7NsPCL//kq70nVqY4K55BDllzOWh5gR5ctUO13xlpjZPTnUXg4EGczQqUpP4tKDFkQ
-	B+5kC54WLMixP7sEbB6fPL
-X-Received: by 2002:a17:907:1b20:b0:b87:156d:519 with SMTP id a640c23a62f3a-b8792feb142mr123350566b.56.1768521636134;
-        Thu, 15 Jan 2026 16:00:36 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768521865; x=1769126665;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OsYA8s3PqahFS1gOvXybEolHV/I8y+ZksdLvuBQENow=;
+        b=wP9M8Rz4praOvSgdow7wu/0f1frWpQ/WWxS7ZmVUvSEjYM6A/kGuHJJefv4RTbv2v1
+         JRHgUtdABcAReH7ZJABppvB+5X7TtEJrY0Dxn2hj8kel8QrTbeAK2PLD84sqorLAOFN0
+         Fbd10cn9Tk1D8UvBCcoLgY3uXUcrv57W4WJ2GWJSgm+Iy9TFU9ymrHxXrYyJtlNGu8sp
+         4nhlokTB5Kg/roqZgE91V120gyaWoJrWiiaXIJ9xxg6w0m/mpNSQC//NQt8XzTTI6KJf
+         xxV8yDDOEBriGtVtdQcVN6635vvI3tsuIGNaTsKb5Qfck1sTjfktFcfl2VSO9Q8aIUZL
+         ioGA==
+X-Gm-Message-State: AOJu0Ywlfk55xTmtyC/14KEP4NtgpRqRQDcQBCOhEHmUmGT/8dZU6xB/
+	q/5I8PpT6pjTpryf2F/RPvPZsYHitC2BRV33khzDhrwjZ9f0ACSt0tnT19VgS64s
+X-Gm-Gg: AY/fxX4b3GBUy5/BwKvLwgpDYIOKnD3G1GgwiWDt1fNHjNBHZ8nGk+U3mrjoWgCGj6j
+	wH//m3KVrSg0nYT0HeJBZHUfd0K31/43OFMQG3j8PKH1LYdbwyaDH78R4577S9tLJekKrYLvqud
+	LHfQ2x+hAM6eFNZGM/SZIui6WUpqSRXCMrss7npEHbkIoXLKEzBoidikPwq2cZ47FqYGgpO4cHI
+	UZ/psoNSNapLLyLe3GhPanR3wz78GnrgIWwLfRfN+pHMU7hMrPKikvqaUKylzQX+tG5dWRdEtdT
+	24+7X6DlNfBtX2JkOL9ecrGaEwxuknQulkTjowIe76icrKsoMy/TjPk378PFIZyqP/IHGAfboq+
+	8tu21jFjWG6hgcVRma1Q55XJyR+g7+AebNAD9azOVciN7tgQJmhy5Y/1yS8C9rpB25Sxg+cc9+M
+	7nw9igQn0BM8HzDfQPEuqk
+X-Received: by 2002:a17:906:6a14:b0:b87:1db0:a4af with SMTP id a640c23a62f3a-b8796c12a53mr50412066b.64.1768521864777;
+        Thu, 15 Jan 2026 16:04:24 -0800 (PST)
 Received: from lorenzo-VM ([84.33.162.72])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b87959fa522sm76639666b.46.2026.01.15.16.00.35
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8795a0880dsm68940666b.57.2026.01.15.16.04.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jan 2026 16:00:35 -0800 (PST)
-Date: Fri, 16 Jan 2026 01:00:33 +0100
-From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [GSoC PATCH 1/1] diff: improve scaling of filenames in diffstat
+        Thu, 15 Jan 2026 16:04:24 -0800 (PST)
+Date: Fri, 16 Jan 2026 01:04:22 +0100
+From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>,
+	Niels Glodny <n.glodny@campus.lmu.de>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [GSoC PATCH v2 0/2] diff: improve scaling of filenames in diffstat
  to handle UTF-8 chars
-Message-ID: <aWl_oeJJxtwsUyR3@lorenzo-VM>
+Message-ID: <cover.1768520441.git.lorenzo.pegorari2002@gmail.com>
 References: <aWgYRkv-YsuekdR_@lorenzo-VM>
- <xmqqikd3ermt.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqikd3ermt.fsf@gitster.g>
+In-Reply-To: <aWgYRkv-YsuekdR_@lorenzo-VM>
 
-On Wed, Jan 14, 2026 at 02:50:02PM -0800, Junio C Hamano wrote:
-> LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
-> 
-> > The `show_stats()` function tries to scale the filenames in the diffstat to
-> > ensure they don't exceed the given `name-width`. It does so by calculating
-> > the "display width" of the characters to be dropped, but then advances the
-> > filename pointer by that number of bytes.
-> >
-> > However, the "display width" of a character is not always equal to its byte
-> > count. The result is that sometimes, when displaying UTF-8 characters,
-> > filenames exceed the given `name-width`, and frequently the bytes of the
-> > UTF-8 characters are truncated.
-> >
-> > The following is an example of the issue, where the 2 files are "HelloHi" and
-> > "Hello你好", and `name-width=6`:
-> >
-> >     ...oHi | 0
-> >     ...<BD><A0>好 | 0
-> >
-> > Make the filename pointer move by the actual number of bytes of the
-> > characters to drop from the filename, rather than their display width, using
-> > the `utf8_width()` function.
-> >
-> > Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-> > ---
-> >  diff.c | 15 ++++-----------
-> >  1 file changed, 4 insertions(+), 11 deletions(-)
-> 
-> Two comments and a half.
-> 
->  * The change needed for this is surprisingly simple.
+Added a test (as Junio Hamano suggested) to check how the generated
+diffstat handles UTF-8 characters when given various `name-width`s.
 
-It is indeed surprisingly simple, I agree!
+This allowed me to notice a bug where, if the given `name-width` was 2
+or less, the `len` variable would become negative, entering an infinite
+loop. So I also fixed this bug.
 
->  * You already know about samples that may exhibit the issue you are
->    addressing.  Can we add it as a test case somewhere in t/
->    directory?
+LorenzoPegorari (2):
+  diff: improve scaling of filenames in diffstat to handle UTF-8 chars
+  t4073: add test for diffstat paths length when containing UTF-8 chars
 
-Yeah, we should add a test case. I will do it in the next reroll.
+ diff.c                          | 17 ++++-----
+ t/meson.build                   |  1 +
+ t/t4073-diff-stat-name-width.sh | 61 +++++++++++++++++++++++++++++++++
+ 3 files changed, 68 insertions(+), 11 deletions(-)
+ create mode 100755 t/t4073-diff-stat-name-width.sh
 
->  * The NEEDSWORK item addressed by this patch is one of the two
->    NEEDSWORK items added by ce8529b2 (diff: leave NEEDWORK notes in
->    show_stats() function, 2022-10-21).  Makes me wonder how involved
->    the changes would need to be to solve the other one?
+Range-diff against v1:
+1:  63e73122d1 ! 1:  abeb8d3439 diff: improve scaling of filenames in diffstat to handle UTF-8 chars
+    @@ Commit message
+         characters to drop from the filename, rather than their display width, using
+         the `utf8_width()` function.
+     
+    +    Force `len` to not be less than 0 (this happens if the given `name-width` is
+    +    2 or less), otherwise an infinite loop is entered.
+    +
+         Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+     
+      ## diff.c ##
+    @@ diff.c: static void show_stats(struct diffstat_t *data, struct diff_options *opt
+     -			 * leave the resulting string still too long.
+     -			 */
+     -			name += name_len - len;
+    ++			if (len < 0)
+    ++				len = 0;
+     +
+     +			while (name_len > len)
+     +				name_len -= utf8_width((const char**)&name, NULL);
+-:  ---------- > 2:  ee088ea6ef t4073: add test for diffstat paths length when containing UTF-8 chars
+-- 
+2.43.0
 
-Mmh, I see. I'll take a closer look, but at a first glance it doesn't
-seem too involved.
-
->
-> Thanks.
->
-
-Thank you!
-
-> 
-> > diff --git a/diff.c b/diff.c
-> > index a68ddd2168..271ace5728 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -2859,17 +2859,10 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
-> >  			char *slash;
-> >  			prefix = "...";
-> >  			len -= 3;
-> > -			/*
-> > -			 * NEEDSWORK: (name_len - len) counts the display
-> > -			 * width, which would be shorter than the byte
-> > -			 * length of the corresponding substring.
-> > -			 * Advancing "name" by that number of bytes does
-> > -			 * *NOT* skip over that many columns, so it is
-> > -			 * very likely that chomping the pathname at the
-> > -			 * slash we will find starting from "name" will
-> > -			 * leave the resulting string still too long.
-> > -			 */
-> > -			name += name_len - len;
-> > +
-> > +			while (name_len > len)
-> > +				name_len -= utf8_width((const char**)&name, NULL);
-> > +
-> >  			slash = strchr(name, '/');
-> >  			if (slash)
-> >  				name = slash;
