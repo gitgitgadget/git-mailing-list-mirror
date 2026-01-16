@@ -1,122 +1,125 @@
-Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390632ED84A
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 20:42:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3DD28C009
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 21:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768596180; cv=none; b=kJ1/GPk3L/WDT7xwKhk+gGqMCc6Fiv12II9kH1SDhJrQmZlvOMYNf6NkV29xa/wk6TNOknsuM3wDFEB0QQc18TPZ3Z6gAwMlE31lreU1+SdimzTTbIgF6A/6I1oNuMYXpO8cWQ3Bd2VawjMxLkpBzu2bHGdc1OMV5aihzGHyRHU=
+	t=1768598835; cv=none; b=B+MGYiC0/Wa37LEZ9bOvtKr9HcIKKJbN70R61givuUYsaIs37LYK6KI8KT+Iuw2UfTNrOVlFu+dr1hSej10kbIBy5ELg7chcXqpkUsGkVmogMXh4rqKjUprdPJESSRol/pGVtpnQ25RyF0yoE7VD989SxuTcqErIIdIzJ30x6js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768596180; c=relaxed/simple;
-	bh=l7SoYMU5XofmYqBNOwt8bK5uoDfYuBat9IjpI7gA1MU=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=QWLcB4fEr1YdpzD/t4xyL2EiURRHRBej9Hj21U7fXF26SdPw/w/Kx8nFCUo7mAfFqmCZsbdqC95H9KtOiZ9gYxxbqIz63WRHrnY/B1Fkjvr7Uu+y3aof8KJcTEK11QJsUFdS4LxuEUTYcZVoOvvukmy+WaSly62+OEViGzZ7FnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=UfirhZ2q; arc=none smtp.client-ip=84.93.230.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1768598835; c=relaxed/simple;
+	bh=iblIaNq1ESBmFCWkQYEZO/GF6622kyJN1m7QnM+yAMM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ua5n7vrWH2Fb1A7svBz8gaT5v5SHOOijZUBaC8uD9814bop2d/RoC5YsDdkY3dGmAim6bemu62/uKofH8YlbLY6ctiH3WFMEIozgEPKfjmJMtxQxSsbGL4yXHsWOI4IQVaK616iCVYUZMP1ssZ1g9NnB7S57GQNG55yR+r8ztW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gGex/ZmU; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="UfirhZ2q"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id gqbsvtpidkJhVgqbuvUOES; Fri, 16 Jan 2026 20:39:58 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1768595998; bh=3Ez5xCr4j6qmZjwx/NZ0PcmuIxGMkX4Mx+DMxuLo7uE=;
-	h=Date:To:Cc:From:Subject;
-	b=UfirhZ2q7hAUcAN/v93oQdqQLoel0COwHFVsu8Ogy9GaJ66vhJXfSFIIq/voK7C1O
-	 ApT15KLyrH8+QVY2kuyzsdoaaUIKbldvDrw3XZUxqeVKWuRjldKC2sGhHoIwcHPcBJ
-	 bF/g6+/zPgrJA6B9ma5dDYZmoZfoE/HZBb5vN3MzBJ1GNTgkKT+2QeJuKZsYqYkApO
-	 j3XmGMy6cK5iB/eEfvZo4Tf+jo2Pp50XEk152LlFQ0PcSAQ+Ix5HNDU40j/oreiIJX
-	 0Kf3deTwncJuXrsot+agrVlL/MQe7GmbtxbSC49FGsRio3DXIopQqearll4wrXJ2CQ
-	 hbSVbPK2VbnNQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=C+5KyhP+ c=1 sm=1 tr=0 ts=696aa21e
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=fUSZDwcxntXz5Iget8wA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <f46e023b-1925-41b2-9842-42e7cb727056@ramsayjones.plus.com>
-Date: Fri, 16 Jan 2026 20:39:56 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gGex/ZmU"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4801eb2c0a5so9595895e9.3
+        for <git@vger.kernel.org>; Fri, 16 Jan 2026 13:27:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768598832; x=1769203632; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/VUirNvP1yzH8cbVB0w9sokLsOmDUXxggl6vb+JhJMo=;
+        b=gGex/ZmUFTOXqSrMqpVu/LOZJhw0NXTNRjdwUvQZzmhtOJsz+xI9hqS4CcFMNME7pA
+         ayl6UeqF/yTTsHkA6uzD773YwAsAMHNfhMAxTT7x8eZ3Yq7ZoLiOBMLt8eJeJY5voWj+
+         +z6pjO0/QZ8FgyZi0cEVRrIBqrtsoxyfw8BDHzwASh/tsc+ujGYnWKKJQrhUgTAyj5qC
+         oPfITdL+38m/gQ9VtlTDhND0Yqw3GU3sTQWpqvFTMqAjBaUeUZ8y7kbqfEd8NR46oOwi
+         xCBpoQlhSWiBSsItqsH5zDW4aA3Vl06GsfFULENTipx5c+/L8ZYeJ0MvrEtIA3np+PnK
+         N4+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768598832; x=1769203632;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/VUirNvP1yzH8cbVB0w9sokLsOmDUXxggl6vb+JhJMo=;
+        b=GeAhTZUGHE0LvNmTYbbFLpYZ5bQFOmL8Fsxyy3dcfYNulZijqdhQONrA5vykgJw1U8
+         HWIWLuSOCV+kDCfS+ZOZ37zuV42j1o92t2Qc/Cz9VXGrtA5RVe+pA7AX2yp494fgSwCN
+         QLw9JGzJBxl7zTO1DcaY7tYDNXGg2bzAMTUcf/lLVVfbiy63C6frNoutdANQw6khchHM
+         08DTD0AeV4aBAqNUIdEiz408nN7Ge/bMR6lp+yB81cDj0vZEotQ2iXd5FGs9PNLpXjDD
+         DWUYOKvKH4ciRFP0us2uzpbeh90jjamUMjFrzBZEGBjp/I+D4PTOuCTIDjbh8hbCEiPk
+         USGw==
+X-Gm-Message-State: AOJu0YwYYtT40kkJ59lfP3gkSxwbJiOY/+f+NwAu3ezkKzR3QQ887HNy
+	7t7mheLOB/hbnWV2T1/IQTykLZkMtqxdOdtdB3gQt4taXzVgAnd11+Gq
+X-Gm-Gg: AY/fxX4APorT2hoSslLyElRz76J3rB1qEBSheYK6zRiDkVsxheKOMbgR7RiBNiofQzb
+	ldO4fJhtIzoviQ1+MkDxkfWu0pxARb3LKUsfkR6WRme4Y6QmUzOoj3B7Pps+zkvSukCAGweyAM6
+	K/aSRa5004hb7NSAYtT6o319qLp2P7A+smf2THVwV8LLfgq/4iJyhAot38MzJfofxZVfcYucf6V
+	Ah6uMf9OyMY2QFnv8SupHTRB2/lt4gvK/A2tMxO59vCLFZFs4YxlUuo9g6Ln6RCSlP6NHT/7gBk
+	LGzl/NDKWp44MZxo7V3PvcgHKYjkY3FGNAi4SlZrJamtebfKxKBOO+uxhUushL3s6g173c0LpSC
+	5onRFL31IV3S0V8iFv6aaOnSgUzHoaOygj8W0fG81r87yvhYXV6AVol2pyQkRZquD9H07fZanca
+	NoGlw437Am4r1KHA5CRY1R0NTxWFXfZA==
+X-Received: by 2002:a05:600c:4695:b0:477:b734:8c52 with SMTP id 5b1f17b1804b1-4801e2fec26mr58535975e9.14.1768598831755;
+        Fri, 16 Jan 2026 13:27:11 -0800 (PST)
+Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1edb:411c:5531:1628])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801fe67780sm23382025e9.16.2026.01.16.13.27.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jan 2026 13:27:11 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Fri, 16 Jan 2026 22:27:06 +0100
+Subject: [PATCH v2 1/7] refs: drop unnecessary header includes
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: GIT Mailing-list <git@vger.kernel.org>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 2/2] t0610-reftable-basics: mitigate a flaky test on cygwin
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfGkB+jYD9LEu7qh20IirN1rU/tz59eibS8NYgopDIH9tr4d5GVjF7lnb+fSeMhQOy343Yg3h6m8Q5k12WnuMC1a8PHiFnSh8KGtYqBJFnYKb0BYPLnIX
- 0XDtwSfzZ/V137XpQK+mzve2pTjs5X2yroDi5eUPzgeUFdQ/TY/vaCh+wjdlFD0GVUqxMLmXmkClxGPN7klxk8zQU+OlK/ThIIE=
+Message-Id: <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-1-925a0e9c7f32@gmail.com>
+References: <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-0-925a0e9c7f32@gmail.com>
+In-Reply-To: <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-0-925a0e9c7f32@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
+ Elijah Newren <newren@gmail.com>, gitster@pobox.com
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=824; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=iblIaNq1ESBmFCWkQYEZO/GF6622kyJN1m7QnM+yAMM=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGlqrSxS6qsbwgmM7YiYsTJFoDazTDaJfIMSo
+ MP2dCX2WtibSokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpaq0sAAoJED7VnySO
+ Rox/KUcL/1pQpY/Vjkc3Eg6LyGowj0nnrM2BGxRnNXYLDQkqmmV/JjzNc0pkiq6bqdyQdw7S/AH
+ BP1ZctoBJx3kj7hA6xaKBD1NjFPlzBCrpxXls0DrsKO/fZwnrb4BGzpX4x7tLplatMU1zVQ+Fj+
+ 41h9czhRbZAPsoZxfyLDuJtmwY8WqWSu0fQUO193EDG/7yYS7idqnLG23kxgSizOdkbF/hzbM5q
+ 2iXLPyD9tEsvREuO8yrf0El3XyokTP2sKoscSjrE1yCvC4TySF57TTarGqrMinprkZO3a3Otdwz
+ CGan9wzTlspljcG0pHU08bskrp5O0AekZ2UgT3AZahXEVAPEcaKF7K6rTkyEYlqymICj6Dm9TuM
+ MvHq4J6G4XZLKZpzI/FsOPKiBtkNscgVmHJNHdiB8r3fIpdvDhnRsJuCUEcLZYVkMFlrL7mFnqA
+ /jfae21eCD405Bn56tfH/uBRmC4H4l6fKsK05E+fHxzXFFO4CdZfWnQkQIwT0coQ01H7F8l8W75
+ vQ=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
+The 'sigchain.h' header isn't being used and can be removed.
 
-Test #29 ('ref transaction: corrupted tables cause failure') started to
-fail intermittently for me (from v2.52.0-rc0) when running the testsuite
-with '-j8'. (Also, having moved to a new laptop and windows 11, rather
-than windows 10). If the test is run by hand, or without any parallelism,
-then it passes without issue.
+Similarly, 'run-command.h' serves no direct purpose here. While it gets pulled in transitively through 'hook.h', we can still drop the explicit include for clarity.
 
-When the test fails (e.g. 1 out of 32 parallel runs) the cause is due to
-a permission error while corrupting a table file:
-
-  ./test-lib.sh: line 1010: .git/reftable/0x000000000001-0x000000000002-d89bb8ee.ref: Permission denied
-
-This corruption is done in a shell loop, directly after a 'test_commit',
-which uses an ': >"$f"' expression to truncate the file. Adding a sleep
-of one second after the 'test_commit' and before the shell loop fixes
-the test (it is not clear why). Replacing the redirection shell expression
-with a 'test-tool truncate "$f" 0' invocation also provides a fix, which
-could simply be another way to change the timing sufficiently to win the
-race.
-
-During a debug session, I tried looking at the strace output for the
-shell redirection:
-
-  $ rm /tmp/hello; echo hello >/tmp/hello; ls -l /tmp/hello
-  -rw-r--r-- 1 ramsay None 6 Nov 10 17:25 /tmp/hello
-  $
-
-  $ strace -o zzz bash -c ': >/tmp/hello'
-  $
-
-Similarly, for the test-tool solution:
-
-  $ strace -o xxx ./t/helper/test-tool truncate /tmp/hello 0
-  $
-
-When comparing the output, the differences seemed to be what you would
-expect and, if anything, the shell redirect probably would have taken
-longer than the test-tool solution (many fcntl() calls to dup the stdout
-to the <fd>).  The call to the win32 api NtCreateFile() was identical,
-apart from the first (FileHandle) parameter, of course.
-
-In order to fix this flaky test on cygwin, despite not knowing why it
-works, replace the shell redirection with the above 'test-tool truncate'
-invocation.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t0610-reftable-basics.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ refs.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 6575528f21..e19e036898 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -207,7 +207,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
- 		test_commit file1 &&
- 		for f in .git/reftable/*.ref
- 		do
--			: >"$f" || return 1
-+			test-tool truncate "$f" 0 || return 1
- 		done &&
- 		test_must_fail git update-ref refs/heads/main HEAD
- 	)
+diff --git a/refs.c b/refs.c
+index e06e0cb072..965b232a06 100644
+--- a/refs.c
++++ b/refs.c
+@@ -15,7 +15,6 @@
+ #include "iterator.h"
+ #include "refs.h"
+ #include "refs/refs-internal.h"
+-#include "run-command.h"
+ #include "hook.h"
+ #include "object-name.h"
+ #include "odb.h"
+@@ -26,7 +25,6 @@
+ #include "strvec.h"
+ #include "repo-settings.h"
+ #include "setup.h"
+-#include "sigchain.h"
+ #include "date.h"
+ #include "commit.h"
+ #include "wildmatch.h"
+
 -- 
-2.52.0
+2.51.2
+
