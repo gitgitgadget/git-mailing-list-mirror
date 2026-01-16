@@ -1,41 +1,41 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418DE3A63EF
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 20:19:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5943A35DE
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 20:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768594749; cv=none; b=eljgvOM5w5TWeJ40IS7pmt4jNbYybO6voX/INMtQTKloMB8t6ZIXsFSIPk++4aNNKaBR161+WcTAUaC35hkfhCYDye8lKXRFu5hKc+NEJ/ZZqkAs7cn/YMrN1fPZNKt0RN0dj/sTcoQkstWCnBUvrxlcux4UkWHrLSwl/XUWU/I=
+	t=1768594754; cv=none; b=s8mYiechdskaNGAyOvy9gJBxjJy6mse/h2WJNsHYtIoNO9N7XjAMI5Lmm0leU0aWa7nnKYb4k2CBsLMGGrv7tPyl2xHEWBFzxB3fENH5nI0th4J1YapZaF51UsJ6QvVxT1Mzi6o/h2XoRqyJkDHJMFvX/NNmD3iDMRVbcXDTbbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768594749; c=relaxed/simple;
-	bh=tAxbeQaQL2o6xHpyPmvL/f7sV1FM+QYsDe1/L0n+3dY=;
+	s=arc-20240116; t=1768594754; c=relaxed/simple;
+	bh=jbtWjm5EL8qquNLlBNmDGw2jOZ8IC4H6kOzqu1O00II=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N8FCX3EutdiZ6oHcGbbxQabe7GCuC0chKIgObhqvWdyh+V4n/sCVbonbMnR2jucmQfvgh4THiCUsNzqZcLtvjPtoMuWq2gNcvx2W40Sp1fMXAABDdUd/AY+w//x86iXeBo81r9a9cHwT7c2cf6ZympR0yFEH8kuhbuPREqviZTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=OFXk5WJW; arc=none smtp.client-ip=217.72.192.78
+	 In-Reply-To:Content-Type; b=pvkol7g2pwGs+TVmkqw/sbnpc3jQqW2fnlHcw6YQr81QUerLJH4HBFEXdQpamoXmz3DTyqLBNjImpaVOlSK/wAk0XFik5AdW1878UDyuJjRzqLHaTZYUl4+FLWaejglVMYjDrtRK2zS/sYseSDnbxAK3taiqlgdGnUU4CPNCJqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=hZSfyGDl; arc=none smtp.client-ip=212.227.17.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="OFXk5WJW"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="hZSfyGDl"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1768594742; x=1769199542; i=l.s.r@web.de;
-	bh=3Mnf+kXc5JR8iTZONb+7pGQ77WUVabBtB7W7Mld3h4Q=;
+	s=s29768273; t=1768594746; x=1769199546; i=l.s.r@web.de;
+	bh=Yib/3fNJdHzZw1Nd0bjazwCl3SENn2zdogf8Y9RwqxU=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
 	 References:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding:cc:content-transfer-encoding:
 	 content-type:date:from:message-id:mime-version:reply-to:subject:
 	 to;
-	b=OFXk5WJWTmtyCsi3VB35yycYdkmFFIVd5qnrONWcXdArN92+W1PndL4nw+Fdwkmp
-	 2HHbU/KWOk9ik1nymYwJfQJ1faAt//rgbvo+IpUQdg9pkuqLzfBm1ufw7eiUGcLnH
-	 fAv7SSZlSBJKvkLMaHQpT8J/x8pSMQQ+MH4huaHtHKHT3ea2W7C/Wrt8/Qk78nXNe
-	 KRu4RpsNZE689k/gj6NgDredvAIFovC8eLdzHEBLtvyWEpkbAlyfWhYTfYPqVWGNV
-	 PSIJth1GZDLPTq/ykhuIOII92X0a8O3s2FsyzthEkWIw6+vmm7kkQ80Tkbd8ngDig
-	 4bkExwtbzkjpUJhdkQ==
+	b=hZSfyGDlWWTQq0npytMinhm4zayyIsI7gpm8N/V+iri1fNBSEPPj71jv6rU98zA8
+	 OwTHnl2XjTiBas0FSMWACe7bPpl1Z9z63IxASmLvlK6GogwKoNa15JPt3vqIvdYPp
+	 XJ11rBN/q8hM1ht6VeNO/H7zAVJ5Yfscc5yAaAqf7weFqxj/mFULps9v2MB6QiiMa
+	 ce9uhAQXRu1KkMEAKlcw1YTmW/3O/QBjiczDfU996MixzTEV0vQkG1C7DgMyczA90
+	 xta+BihUudYoirBQSDTJH3owqCmClkULViWk5iJpcZM3l++9C/abvRBjsTTr7gD5R
+	 9UruHa2PVWm2kuZC9g==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.2.31] ([79.203.19.215]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mfc4g-1wI4qM0lmy-00fwX3; Fri, 16
- Jan 2026 21:19:02 +0100
-Message-ID: <fc291b3a-5ee5-4488-9b01-d3de32f7c257@web.de>
-Date: Fri, 16 Jan 2026 21:19:01 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mv3UY-1vyNCc21Fg-00r1J3; Fri, 16
+ Jan 2026 21:19:06 +0100
+Message-ID: <07ca298a-ad32-4998-88ff-d69c04418fdd@web.de>
+Date: Fri, 16 Jan 2026 21:19:06 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,211 +43,184 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
-To: phillip.wood@dunelm.org.uk, Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 09/10] xdiff: remove dependence on xdlclassifier from
+ xdl_cleanup_records()
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>
 References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
- <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
- <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com>
- <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
- <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
+ <f9b10e71d23f8b4fa34dcffb371cf5a173760409.1767379944.git.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
+In-Reply-To: <f9b10e71d23f8b4fa34dcffb371cf5a173760409.1767379944.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:kz89xYLpVPrbfhA7u3sHoxQ4ufyWS3v8Iuzl5hV99+IfhRvEZXS
- OlLK4Z4xbFiw4DphBQ0rrKLjGQCA2OWZc7GQwduaUtyoiyaJk3CcjEdNNB1zIbOx1QadCIE
- JLWoB5uUX6Ae5bcdlwkbBwzsQD35MY9LDvPXNCmNDMS8Xopf4MGs3majBDb8oMpTIRrLPmi
- /BNZvAUG7r0+SYZIMBDig==
+X-Provags-ID: V03:K1:x1f50lNyi9gJO2yxyK7WOzDq8DlPlUKaK7mA3yyotAaZwElzduC
+ 2RRvMxgmn4RqMf3vbCBJy51I0vYE3mOK/asVVq+3C1xKumt7l0TGYLkzdCJp6e9/n1OsuGa
+ b+iOZy4fhMI3yvyGE4hl9Ly0EFWuhTWGVj3pG1RCimeiyMgqWxQ35cFzuJSiBtNS62FbIxY
+ ddDDZ9KZzkPdiMzjSEAYg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:kqzsNofZeps=;iLnxVisJLMlWuZw6WSZeURXm6DR
- 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
+UI-OutboundReport: notjunk:1;M01:P0:O8IZb7pRauo=;qxazVfg0byi9gVWy+1ADgil1KCj
+ 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
+ MuufwvuBN6vycNXXAxZd7EUd6X1OP
 
-On 1/16/26 11:39 AM, Phillip Wood wrote:
-> I've Cc'd Peff and Ren=C3=A9 for a second opinion if you have time pleas=
+On 1/2/26 7:52 PM, Ezekiel Newren via GitGitGadget wrote:
+> @@ -253,22 +250,44 @@ static bool xdl_clean_mmatch(uint8_t const *action=
+, long i, long s, long e) {
+>  	return rpdis1 * XDL_KPDIS_RUN < (rpdis1 + rdis1);
+>  }
+> =20
+> +struct xoccurrence
+> +{
+> +	size_t file1, file2;
+> +};
+> +
+> +
+> +DEFINE_IVEC_TYPE(struct xoccurrence, xoccurrence);
+> +
+> =20
+>  /*
+>   * Try to reduce the problem complexity, discard records that have no
+>   * matches on the other file. Also, lines that have multiple matches
+>   * might be potentially discarded if they appear in a run of discardabl=
 e.
->=20
-> On 15/01/2026 15:55, Ezekiel Newren wrote:
->> On Thu, Jan 8, 2026 at 7:34=E2=80=AFAM Phillip Wood <phillip.wood123@gm=
-ail.com> wrote:
->>
->>>> +static void _set_capacity(void *self_, size_t new_capacity)
->>>> +{
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0 struct IVec_c_void *self =3D self_;
->>>
->>> Passing any of the ivec variants defined below to this function invoke=
-s
->>> undefined behavior because we're not casting the pointer back to the
->>> orginal type. However I think on the platforms we care about
->>> sizeof(void*) =3D=3D sizeof(T*) for all T so maybe we can look the oth=
-er way.
->>
->> If someone finds that this code does not work because of this
->> assumption I'd like to know. But I can't fathom a case where it
->> wouldn't work.
->=20
-> So we have two different structs
->=20
-> struct IVec_c_void {
-> =C2=A0=C2=A0=C2=A0=C2=A0void *ptr;
-> =C2=A0=C2=A0=C2=A0=C2=A0size_t length;
-> =C2=A0=C2=A0=C2=A0=C2=A0size_t capacity;
-> =C2=A0=C2=A0=C2=A0=C2=A0size_t element_size;
-> }
->=20
-> and
->=20
-> struct Ivec_u8 {
-> =C2=A0=C2=A0=C2=A0=C2=A0uint8_t *ptr;
-> =C2=A0=C2=A0=C2=A0=C2=A0size_t length;
-> =C2=A0=C2=A0=C2=A0=C2=A0size_t capacity;
-> =C2=A0=C2=A0=C2=A0=C2=A0size_t element_size;
-> }
->=20
-> One the platforms we care about they will have the same memory
-> layout as all pointers have the same representation. However I don't
-> think they are "compatible types" in the language of the C standard
-> because the type of the "ptr" member differs. That means casting
-> IVec_u8* to IVec_c_void* either directly or via void* is undefined
-> and so
->=20
-> =C2=A0=C2=A0=C2=A0=C2=A0struct IVec_u8 vec;
-> =C2=A0=C2=A0=C2=A0=C2=A0ivec_init(&vec, sizeof(*vec.ptr));
->=20
-> is undefined. For the compiler to see the undefined cast it needs to
-> look across translation units because the implementation of
-> ivec_init() will be in a separate file to where it is called. Maybe
-> that and the fact they have the same memory layout saves us from
-> having to worry too much though I'm always nervous of undefined
-> behavior.
+>   */
+> -static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
+> -	long i, nm, mlim;
+> +static int xdl_cleanup_records(xdfenv_t *xe, uint64_t flags) {
+> +	long i;
+> +	size_t nm, mlim;
+>  	xrecord_t *recs;
+> -	xdlclass_t *rcrec;
+>  	uint8_t *action1 =3D NULL, *action2 =3D NULL;
+> -	bool need_min =3D !!(cf->flags & XDF_NEED_MINIMAL);
+> +	struct IVec_xoccurrence occ;
+> +	bool need_min =3D !!(flags & XDF_NEED_MINIMAL);
+>  	int ret =3D 0;
+>  	ptrdiff_t dend1 =3D xe->xdf1.nrec - 1 - xe->delta_end;
+>  	ptrdiff_t dend2 =3D xe->xdf2.nrec - 1 - xe->delta_end;
+> =20
+> +	IVEC_INIT(occ);
+> +	ivec_zero(&occ, xe->mph_size);
 
-True.  The GCC docs give a fun example of what a compiler might do
-when using different struct types to access the same memory:
+This array is presized here.  It is neither grown nor shrunken.
+CALLOC_ARRAY would work just as well, at least at this point, no?
 
-https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Aliasing-Typ=
-e-Rules.html
-
-Not sure it applies to this case, but the point is that compilers
-can and will do terrifying things when they smell UB, with little
-concern for safety or original intent.
-
-> An alternative would be to pass the individual struct members as functio=
-n parameters
->=20
-> =C2=A0=C2=A0=C2=A0=C2=A0void ivec_init(void **vec, size_t &length, size_=
-t &capacity,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 size_t &element_size_, size_t element_size)
-> =C2=A0=C2=A0=C2=A0=C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *vec =3D NULL;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *length =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *capacity =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *element_size_ =3D element_si=
-ze;
-> =C2=A0=C2=A0=C2=A0=C2=A0}
-
-The ampersands (&) should be asterisks (*), right?
-
-> and have DEFINE_IVEC_TYPE create typesafe wrappers
->=20
-> =C2=A0=C2=A0=C2=A0=C2=A0static inline void ivec_u8_init(struct IVec_u8 *=
-vec)
-> =C2=A0=C2=A0=C2=A0=C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 void *ptr =3D vec->ptr;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ivec_init(&ptr, &v->length, &=
-v->capacity,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 &v->element_size, sizeof(*(v->ptr));
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 vec->ptr =3D ptr;
-> =C2=A0=C2=A0=C2=A0=C2=A0}
-
-Mixes "v" and "vec", misses a closing parenthesis.  Looks viable,
-though, and this method should be applicable to the rest of the
-functions as well (on the C side).
-
-I guess this doesn't require an element_size member anymore as
-each wrapper can pass in the sizeof value.
-
-> That's safe because we cast the "ptr" member to "void*" and then
-> back to the original type. On the rust side the implementation of
-> IVec<T> would also need to split out the individual struct members
-> when it calls ivec_init() etc. It's all a bit more effort but the
-> benefit is that we don't have any undefined behavior and we have a
-> nice typesafe C interface to 'struct IVec_*'.
-Right.  No idea how ugly this would be on the Rust side, though.
-
-Ren=C3=A9
-
+> +
+> +	for (size_t j =3D 0; j < xe->xdf1.nrec; j++) {
+> +		size_t mph1 =3D xe->xdf1.recs[j].minimal_perfect_hash;
+> +		occ.ptr[mph1].file1 +=3D 1;
+> +	}
+> +
+> +	for (size_t j =3D 0; j < xe->xdf2.nrec; j++) {
+> +		size_t mph2 =3D xe->xdf2.recs[j].minimal_perfect_hash;
+> +		occ.ptr[mph2].file2 +=3D 1;
+> +	}
+> +
+>  	/*
+>  	 * Create temporary arrays that will help us decide if
+>  	 * changed[i] should remain false, or become true.
+> @@ -288,16 +307,14 @@ static int xdl_cleanup_records(xdlclassifier_t *cf=
+, xdfenv_t *xe) {
+>  	if ((mlim =3D xdl_bogosqrt((long)xe->xdf1.nrec)) > XDL_MAX_EQLIMIT)
+>  		mlim =3D XDL_MAX_EQLIMIT;
+>  	for (i =3D xe->delta_start, recs =3D &xe->xdf1.recs[xe->delta_start]; =
+i <=3D dend1; i++, recs++) {
+> -		rcrec =3D cf->rcrecs[recs->minimal_perfect_hash];
+> -		nm =3D rcrec ? rcrec->len2 : 0;
+> +		nm =3D occ.ptr[recs->minimal_perfect_hash].file2;
+>  		action1[i] =3D (nm =3D=3D 0) ? DISCARD: (nm >=3D mlim && !need_min) ?=
+ INVESTIGATE: KEEP;
+>  	}
+> =20
+>  	if ((mlim =3D xdl_bogosqrt((long)xe->xdf2.nrec)) > XDL_MAX_EQLIMIT)
+>  		mlim =3D XDL_MAX_EQLIMIT;
+>  	for (i =3D xe->delta_start, recs =3D &xe->xdf2.recs[xe->delta_start]; =
+i <=3D dend2; i++, recs++) {
+> -		rcrec =3D cf->rcrecs[recs->minimal_perfect_hash];
+> -		nm =3D rcrec ? rcrec->len1 : 0;
+> +		nm =3D occ.ptr[recs->minimal_perfect_hash].file1;
+>  		action2[i] =3D (nm =3D=3D 0) ? DISCARD: (nm >=3D mlim && !need_min) ?=
+ INVESTIGATE: KEEP;
+>  	}
+> =20
+> @@ -332,6 +349,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, =
+xdfenv_t *xe) {
+>  cleanup:
+>  	xdl_free(action1);
+>  	xdl_free(action2);
+> +	ivec_free(&occ);
+> =20
+>  	return ret;
+>  }
