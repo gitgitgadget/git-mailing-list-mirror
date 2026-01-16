@@ -1,40 +1,40 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AA93A1E6A
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 19:38:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0083939A4
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 19:47:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768592322; cv=none; b=n3iI3bJRbmGypdBIi3g1L2m0ZpZO1L0L5KCea+9dz76xTlYEUSUPuhCEgyyEAte4WeK18ADKotoo23Gb2tPJZoXoKrJPp59Ks+oYYdhWobD1C36NCkACu+KQu1i2AaquOk34kupfssugo6hhFtUpw3Ua0PFFLKtvb0jAZFgGvvA=
+	t=1768592866; cv=none; b=KxE1z+O4nl3jQyWS+NM1PxcX6EjKod0Hi+hhnJcsu2QtOLcmvS3Q745LWRlhWfr7VJLeIl/qaY/nigXXWUPrQarWOPPgrCI5fuhaT2Hl1VuceeEqK2OYK9mmZr3/ZJ1+ojd6drmvpnlKZs7qY3wyQgU8Q6g7NpsX5YC/5zfzemY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768592322; c=relaxed/simple;
-	bh=IjEVnT5LhJ5zQieDCNrCZJ1bk7k3sYvTJAz2nkFsJdI=;
+	s=arc-20240116; t=1768592866; c=relaxed/simple;
+	bh=wAss/k/iQWkOlKYZ1mHFihXgT+ngCvjuliIdfrPVI+Q=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=HCsuBRRmUAllHt818Dptr0kPpj6cXnVwVZVGccpnkn8w3aojF763HshlyFUmxns61j7+NLkbhxZn5srDKcUprMRi/A9KnU2VnjgotsA/sKGLIyRMIBz9qSSVFqBwfHTjNZfeFQYhjeBq1a7PtkGvW4ykEZ0pPwsH8g8NF+CoiwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=aLK9VEVJ; arc=none smtp.client-ip=212.227.17.20
+	 MIME-Version:Content-Type; b=tHbh1r966I6+onG7qU3aZlDcIrmdvdg8vX1ivc5bJADroqoAYoJfXZcmPlxB9OyppJbQdX6SzAowAt3ai34DvPkKf1Tdhp8oD7dbJxzSb8c+cbJXJDGxxjBS28+r3TuW9VA74pzrGEXLkucawzCe9+ibgQe4bR9I7ixPz9LEhsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=dgYwKLhB; arc=none smtp.client-ip=212.227.17.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="aLK9VEVJ"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="dgYwKLhB"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1768592304; x=1769197104;
+	s=s31663417; t=1768592861; x=1769197661;
 	i=johannes.schindelin@gmx.de;
-	bh=gxQyOJjCjhp7tHXq7Oj2Iy42nOP4EkLg153yGa0zukU=;
+	bh=CM/x3rSbFGXwh1QLOJabHnRqOx7A0LiUE6FjhYOjbeA=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=aLK9VEVJDdC2ymS/usm+/DFVSFroXUIugwT0/yCVTwpIZgHeDEEwaLqeh84+801H
-	 GxKrUFLma0sb0tkcx4xUH0/iDH+Q4CdoYqVnsQhm0+gxeWJextS9pX9s3Hy5ELS29
-	 fQO1LyCaoT8I2Uc3qUNjCY8IxzkSrrJY8VRPBNbuh6EugFlMbgEaokGUf6YUkhYK3
-	 zU6oL+R5wQD0nmmNOpEeFr1nPpMcp/atv66vkaCPuzwaVD03cis6wRJZD9egBHbTd
-	 etlp/ZgDlNUYvFA7aEh6FeFqyybpWWenYzWdgKYPotadJ4Vukr89jCf1AiaRLl8j/
-	 8zTtNzUMxYBMgW9MXA==
+	b=dgYwKLhB6YQ7ky1BNQ8KYdttFNF1C/G7KOoaa0UhsdFHqu2gsFyR0I7aJzezWo1d
+	 9fgJGTQl6EkPP7lZUXXyXOs+aFlQoLPXu6XsxDPUktOxBkQDkxQawL+795RbvCYZM
+	 /2UMNQamcnEYjrAg/z8ShQGCsId/2+e7JjG9rIqSHaaSHTUAGTxk3EFCtKWvCvsfG
+	 h+4nenay/tR0n2wmn3X7kOjS70COh6uYmxK8rUsMY2Ws1owPmzXUu2TblFuFfaYRp
+	 nPAFpMHuH6hv04mrK4uYalL8mlikv+dGrpCTW6CJafM5xS96YtQr260YyEUAahOU+
+	 +POoAeETvkG6Y4MnAA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [172.23.242.68] ([89.1.215.21]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mzyuc-1w3IRi0U5e-00qsBo; Fri, 16
- Jan 2026 20:38:24 +0100
-Date: Fri, 16 Jan 2026 20:38:22 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MHoNC-1vd02t2Y7C-008yp1; Fri, 16
+ Jan 2026 20:47:41 +0100
+Date: Fri, 16 Jan 2026 20:47:39 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Patrick Steinhardt <ps@pks.im>
 cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
@@ -42,11 +42,11 @@ cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
     Phillip Wood <phillip.wood123@gmail.com>, 
     Andreas Schwab <schwab@linux-m68k.org>, 
     Ondrej Pohorelsky <opohorel@redhat.com>
-Subject: Re: [PATCH v2 3/4] sideband: do allow ANSI color sequences by
- default
-In-Reply-To: <aWD2wpyOo0Tr34OD@pks.im>
-Message-ID: <53ed8f19-7084-b9ab-ca4c-cd558b75c1fc@gmx.de>
-References: <pull.1853.git.1736878772.gitgitgadget@gmail.com> <pull.1853.v2.git.1765981422.gitgitgadget@gmail.com> <44585ba1f4223f053820d82f1513c2258e1e0059.1765981422.git.gitgitgadget@gmail.com> <aWD2wpyOo0Tr34OD@pks.im>
+Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
+ sequences to be passed through
+In-Reply-To: <aWD2x154F5f-c3pL@pks.im>
+Message-ID: <bb319446-a655-42b7-00b4-581fb9290843@gmx.de>
+References: <pull.1853.git.1736878772.gitgitgadget@gmail.com> <pull.1853.v2.git.1765981422.gitgitgadget@gmail.com> <fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com> <aWD2x154F5f-c3pL@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,247 +54,207 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QSdrVl4Avm2U3yxzhw0YSwZ0MlrlH5XbLKGpEovcOK3aQn7w/AF
- pc65B1C3ox9e5QqITQEklxAYoHVSA69XhCKKNTgYdpwHAiJkLCjvoj0iCmjWpaGMF+ZggPN
- h6Tksl2jIq69f/3U5eSY+7Phlj5JQs4pcffco6O15g3CGqh4Jx34bpmIEWuSq0wmDFH6csa
- VISxy414SBYxhGElIG0MQ==
+X-Provags-ID: V03:K1:3cHtXke/KZx0Kiy77qnTb9h+1tsqR4b38zOEUScw1yvsCGa7dhF
+ H2S8kp46MQz4dpKtXsxhUGFSHp6M/QViXUz3g/K4w777Lee0yzKIdDdpMNqMSct96APT9mW
+ zLWymQMo8NiAyi2jCZp5jlWMwZCMj4flMHBxcTIct/wEbX9AFtaCDi+pQtYpByzmGMmpNoG
+ JKAntEEAB9X/jS16flU+Q==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:69FCa7UyGlI=;hs7EPXGGPXy2+UH1jgvY3jkXVC3
- 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
- 3iYtPBf4O5On+yWWhAI5TyVt+P+mp
+UI-OutboundReport: notjunk:1;M01:P0:s2NCMOQ3gXw=;jTeaXl3VHiQc95nSW3/phgztDA3
+ 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
 Content-Transfer-Encoding: quoted-printable
 
 Hi Patrick,
 
 On Fri, 9 Jan 2026, Patrick Steinhardt wrote:
 
-> On Wed, Dec 17, 2025 at 02:23:41PM +0000, Johannes Schindelin via GitGit=
+> On Wed, Dec 17, 2025 at 02:23:42PM +0000, Johannes Schindelin via GitGit=
 Gadget wrote:
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >=20
-> > The preceding two commits introduced special handling of the sideband
-> > channel to neutralize ANSI escape sequences before sending the payload
-> > to the terminal, and `sideband.allowControlCharacters` to override tha=
-t
-> > behavior.
-> >=20
-> > However, as reported by brian m. carlson, some `pre-receive` hooks tha=
-t
-> > are actively used in practice want to color their messages and therefo=
+> > Even though control sequences that erase characters are quite juicy fo=
+r
+> > attack scenarios, where attackers are eager to hide traces of suspicio=
+us
+> > activities, during the review of the side band sanitizing patch series
+> > concerns were raised that there might be some legimitate scenarios whe=
 re
-> > rely on the fact that Git passes them through to the terminal, even
-> > though they have no way to determine whether the receiving side can
-> > actually handle Escape sequences (think e.g. about the practice
-> > recommended by Git that third-party applications wishing to use Git
-> > functionality parse the output of Git commands).
+> > Git server's `pre-receive` hooks use those sequences in a benign way.
 > >=20
-> > In contrast to other ANSI escape sequences, it is highly unlikely that
-> > coloring sequences can be essential tools in attack vectors that misle=
-ad
-> > Git users e.g. by hiding crucial information.
+> > Control sequences to move the cursor can likewise be used to hide trac=
+ks
+> > by overwriting characters, and have been equally pointed out as having
+> > legitimate users.
+> >=20
+> > Let's add options to let users opt into passing through those ANSI
+> > Escape sequences: `sideband.allowControlCharacters` now supports also
+> > `cursor` and `erase`, and it parses the value as a comma-separated lis=
+t.
 >=20
-> The worst that they can do is to set up both fore- and background color
-> to be the same so that text isn't visible. But I think that's an okay
-> tradeoff.
+> Hm, okay. I don't really see much of a reason to allow these, but now
+> that the code exists already I don't see a reason why we should remove
+> those options again.
 
-Indeed.
+I agree that the feedback that elicited this patch did not specify any
+concrete use case where this might be necessary. I basically implemented
+this only to alleviate the reviewer feedback more than any real-world
+issue.
 
-The major concern here is to hide the fact from the user that Git already
-exited and that what they see in their terminal is not actually Git asking
-them to input something.
-
-Technically, this would be possible by setting the text to "invisible"
-(which would be a fine thing when pretending to ask for a password,
-anyway). But without the ability to move the cursor, attackers will have a
-much harder time to cover their tracks.
-
-> > Therefore we can have both: Continue to allow ANSI coloring sequences =
-to
-> > be passed to the terminal by default, and neutralize all other ANSI
-> > Escape sequences.
 >=20
-> Makes sense.
->=20
-> > diff --git a/Documentation/config/sideband.txt b/Documentation/config/=
-sideband.txt
-> > index 3fb5045cd7..e5b7383c7a 100644
-> > --- a/Documentation/config/sideband.txt
-> > +++ b/Documentation/config/sideband.txt
-> > @@ -1,5 +1,17 @@
-> >  sideband.allowControlCharacters::
-> >  	By default, control characters that are delivered via the sideband
-> > -	are masked, to prevent potentially unwanted ANSI escape sequences
-> > -	from being sent to the terminal. Use this config setting to override
-> > -	this behavior.
-> > +	are masked, except ANSI color sequences. This prevents potentially
-> > +	unwanted ANSI escape sequences from being sent to the terminal. Use
-> > +	this config setting to override this behavior:
-> > ++
-> > +--
-> > +	default::
-> > +	color::
-> > +		Allow ANSI color sequences, line feeds and horizontal tabs,
-> > +		but mask all other control characters. This is the default.
-> > +	false::
-> > +		Mask all control characters other than line feeds and
-> > +		horizontal tabs.
-> > +	true::
-> > +		Allow all control characters to be sent to the terminal.
-> > +--
->=20
-> Nit: I think that our modern doc style requires the values to use
-> backticks. E.g. "`default`::".
-
-Will change.
-
 > > diff --git a/sideband.c b/sideband.c
-> > index 997430f2ea..fb43008ab7 100644
+> > index fb43008ab7..725e24db0d 100644
 > > --- a/sideband.c
 > > +++ b/sideband.c
-> > @@ -40,8 +45,26 @@ static int use_sideband_colors(void)
-> >  	if (use_sideband_colors_cached >=3D 0)
-> >  		return use_sideband_colors_cached;
-> > =20
-> > -	git_config_get_bool("sideband.allowcontrolcharacters",
-> > -			    &allow_control_characters);
-> > +	switch (git_config_get_maybe_bool("sideband.allowcontrolcharacters",=
- &i)) {
-> > +	case 0: /* Boolean value */
-> > +		allow_control_characters =3D i ? ALLOW_ALL_CONTROL_CHARACTERS :
-> > +			ALLOW_NO_CONTROL_CHARACTERS;
-> > +		break;
-> > +	case -1: /* non-Boolean value */
-> > +		if (git_config_get_string_tmp("sideband.allowcontrolcharacters",
-> > +					      &value))
-> > +			; /* huh? `get_maybe_bool()` returned -1 */
+> > @@ -28,9 +28,43 @@ static struct keyword_entry keywords[] =3D {
+> >  static enum {
+> >  	ALLOW_NO_CONTROL_CHARACTERS =3D 0,
+> >  	ALLOW_ANSI_COLOR_SEQUENCES =3D 1<<0,
+> > +	ALLOW_ANSI_CURSOR_MOVEMENTS =3D 1<<1,
+> > +	ALLOW_ANSI_ERASE =3D 1<<2,
+> >  	ALLOW_DEFAULT_ANSI_SEQUENCES =3D ALLOW_ANSI_COLOR_SEQUENCES,
+> > -	ALLOW_ALL_CONTROL_CHARACTERS =3D 1<<1,
+> > -} allow_control_characters =3D ALLOW_ANSI_COLOR_SEQUENCES;
+> > +	ALLOW_ALL_CONTROL_CHARACTERS =3D 1<<3,
+> > +} allow_control_characters =3D ALLOW_DEFAULT_ANSI_SEQUENCES;
 >=20
-> This case is something that shouldn't happen in practice because we know
-> that the config ought to exist. I guess it _could_ indicate a race
-> condition, even though it's extremely unlikely to ever happen. So I was
-> thinking about whether we want to `BUG()` here, but I guess just
-> ignoring this is fine, as well.
+> Nit, not worth addressing on its own: readability would be helped a bit
+> if the assignments were all aligned.
+>=20
+>         static enum {
+>                 ALLOW_NO_CONTROL_CHARACTERS  =3D 0,
+>                 ALLOW_ANSI_COLOR_SEQUENCES   =3D 1<<0,
+>                 ALLOW_ANSI_CURSOR_MOVEMENTS  =3D 1<<1,
+>                 ALLOW_ANSI_ERASE             =3D 1<<2,
+>                 ALLOW_DEFAULT_ANSI_SEQUENCES =3D ALLOW_ANSI_COLOR_SEQUEN=
+CES,
+>                 ALLOW_ALL_CONTROL_CHARACTERS =3D 1<<3,
+>         } allow_control_characters =3D ALLOW_DEFAULT_ANSI_SEQUENCES;
 
-I don't think that we can even get into a race condition because the
-config is cached after it is read.
+I like that suggestion. Will change it.
 
-> > @@ -70,9 +93,41 @@ void list_config_color_sideband_slots(struct string=
-_list *list, const char *pref
-> >  		list_config_item(list, prefix, keywords[i].keyword);
-> >  }
-> > =20
-> > +static int handle_ansi_color_sequence(struct strbuf *dest, const char=
- *src, int n)
+> > +static inline int skip_prefix_in_csv(const char *value, const char *p=
+refix,
+> > +				     const char **out)
 > > +{
-> > +	int i;
-> > +
-> > +	/*
-> > +	 * Valid ANSI color sequences are of the form
-> > +	 *
-> > +	 * ESC [ [<n> [; <n>]*] m
-> > +	 *
-> > +	 * These are part of the Select Graphic Rendition sequences which
-> > +	 * contain more than just color sequences, for more details see
-> > +	 * https://en.wikipedia.org/wiki/ANSI_escape_code#SGR.
-> > +	 */
-> > +
-> > +	if (allow_control_characters !=3D ALLOW_ANSI_COLOR_SEQUENCES ||
-> > +	    n < 3 || src[0] !=3D '\x1b' || src[1] !=3D '[')
+> > +	if (!skip_prefix(value, prefix, &value) ||
+> > +	    (*value && *value !=3D ','))
 > > +		return 0;
+> > +	*out =3D value + !!*value;
+> > +	return 1;
+> > +}
+> > +
+> > +static void parse_allow_control_characters(const char *value)
+> > +{
+> > +	allow_control_characters =3D ALLOW_NO_CONTROL_CHARACTERS;
+> > +	while (*value) {
+> > +		if (skip_prefix_in_csv(value, "default", &value))
+> > +			allow_control_characters |=3D ALLOW_DEFAULT_ANSI_SEQUENCES;
+> > +		else if (skip_prefix_in_csv(value, "color", &value))
+> > +			allow_control_characters |=3D ALLOW_ANSI_COLOR_SEQUENCES;
+> > +		else if (skip_prefix_in_csv(value, "cursor", &value))
+> > +			allow_control_characters |=3D ALLOW_ANSI_CURSOR_MOVEMENTS;
+> > +		else if (skip_prefix_in_csv(value, "erase", &value))
+> > +			allow_control_characters |=3D ALLOW_ANSI_ERASE;
+> > +		else if (skip_prefix_in_csv(value, "true", &value))
+> > +			allow_control_characters =3D ALLOW_ALL_CONTROL_CHARACTERS;
+> > +		else if (skip_prefix_in_csv(value, "false", &value))
+> > +			allow_control_characters =3D ALLOW_NO_CONTROL_CHARACTERS;
 >=20
-> This would break in case `allow_control_characters` allows _all_ ANSI
-> sequences. But that doesn't matter right now because the function is
-> only called via `strbuf_add_sanitized()` when we're sanitizing at least
-> some characters.
->=20
-> Might be worth though to add a call to `BUG()` in case we see an
-> unsupported value for `allow_control_characters`.
+> Does it really make sense to also handle "true" and "false" here? I
+> would expect that those values can only be passed standalone.
 
-Later patches change the logic, though, to make `allow_control_characters`
-a bit field. So maybe it can be left as-is here?
+I was thinking that 1) it keeps the implementation more consistent, and 2)
+it would allow for an "oops, let's restart this" type of approach, saying
+`color,erase,false,color`.
+
+Might be over-engineered, but the alternative would have to take care of
+special-casing `true` and `false` in the following warning (because they
+_are_ recognized, they just wouldn't be recognized inside a
+comma-separated list).
 
 >=20
-> > +	for (i =3D 2; i < n; i++) {
-> > +		if (src[i] =3D=3D 'm') {
-> > +			strbuf_add(dest, src, i + 1);
-> > +			return i;
-> > +		}
-> > +		if (!isdigit(src[i]) && src[i] !=3D ';')
-> > +			break;
+> > +		else
+> > +			warning(_("unrecognized value for `sideband."
+> > +				  "allowControlCharacters`: '%s'"), value);
 > > +	}
+> > +}
 >=20
-> Okay, so this loop scans until we find the final "m" character that
-> terminates the sequence. Looks good to me.
+> This could be simplified if we used e.g. `string_list_split()`. But on
+> the other hand it avoids allocations, so that's a nice benefit.
 
-Thank you for your review!
+The code also was a lot more verbose. I know, because that's what it
+looked like before I changed it. :-)
+
+Ciao,
 Johannes
