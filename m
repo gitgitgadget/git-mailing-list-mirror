@@ -1,65 +1,65 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D91C29D27A
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 21:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BDC3090C7
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 21:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768598836; cv=none; b=BJREZGJd5gN5Fha+qzG32A2PtcJ0MMD9viBwK9/bKTNeX1TFN8gA7/A2elHVT62PcpcmT0nSN+yV5AQEXoueySuGROJXZWj6ndaCdsYLHm6gCSMk8uqXCR6La+ENarQaRrD7FUl1VU7vLO8r0LpW3c1xjBkOyCO8KZ+zzEUuEjQ=
+	t=1768598837; cv=none; b=Ipx2hoNZN6TpfIveuXPsHZa1/ktq1YDQMd6eSQWU/uBpOCF6SjxP5AYY0hZybgROPUObII0beFXa/xsuEFJjZJ4FRvr9uMHEzckpp9phEC5v8gKXCsewuG4D3qcNP7T0D7iYhk+jmfNU37RvD9hdXQBi2OzA971mlrNL5HuXVtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768598836; c=relaxed/simple;
-	bh=4UJhxa+O0MBFAkPxCJI3Yq5z50GuIcFBkI0bjZ8v+fc=;
+	s=arc-20240116; t=1768598837; c=relaxed/simple;
+	bh=b/k1vHOo2pCnoG/j7DojxXG+08ccj7/s0F1yKfskN1s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MKgFT6axYGKAEr/trz3OcG0JhSj4OoSoQC/8pU5b9JAulAlXazcIusWeFe2N0MnSzSr2tbODKURdSFpXCcwd8mN3cDWCAm/f6IgsIWFHVfPTe0J/RytYqJK7gwI1oS+yP3j3L4lv21efEX2PbkyARa9xhJ9weOpdr/fWgXchr+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VrEhoRFS; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:To:Cc; b=rkkUe10lYd9ClhAq8R/oOGoH0A8tewOxCxMhJiP2zo6+mdP9X8Nf8GQ52zyQb1JDrJxTrvkahwRV/dxbCcHhPq9MWoqAg0OFHSJpk5gki5qP+Ya3njBND/u/N1dGCJ2pZtw6ZeofYy1agQEzINbxEk1CsPr3sXolzFVxigFVt/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ExQ9RTKK; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VrEhoRFS"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4801c1ad878so15708345e9.1
-        for <git@vger.kernel.org>; Fri, 16 Jan 2026 13:27:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ExQ9RTKK"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-47ee937ecf2so19118115e9.0
+        for <git@vger.kernel.org>; Fri, 16 Jan 2026 13:27:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768598833; x=1769203633; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768598834; x=1769203634; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=petUc72WmwiRQaET2kaU0YBEh+cnRZVtNa088k75XJY=;
-        b=VrEhoRFSLFCia4Tqy8sCAJPq8QNMrV1be9LWZgLAainwJSoa6uYXUATZkHhIS1OeSb
-         pwYnzBGbSWlvBdPeODCk3ft6wJwAHduz0hGNRfx+gcivPDtuzrl0fH91K5cb9Hs6sDbz
-         D8SDAkXqLaKPM50PPVAdMQE83exRg/mpkWD5/aTXYK5KIea9DGp76VYR49Iia+dzEHGf
-         lepvtDB9ZuK219iWWArR5D16DLkuSjD/7xzk+RO4M+E4SX1rF0Q08Xni4ivymDOuxHah
-         l5DcAbhJwxjugTuaDhoM34cgW8xojj3GldJ4psqQOhV4mjZ9dmDmMxk9jiann4Xvoq/N
-         f5/A==
+        bh=FQY8wWYNgpXHRjuxCqKCZaGnzoookw/V3Y6z3MyG7Wg=;
+        b=ExQ9RTKKvDVlbrf0TcWgg/HHNHojdrs6q81k7ZSBE1t5Tbw4t4jkKTg9NIqR5G9JCW
+         QEQaZ6oWdlD6Djka56ySuaZP2lfQAs7oJootcu4mmkZ98zzMdjTZFf0UWQYP4s+CzVSs
+         zDxcVKUjsC4YC4umT+hjlOkfhz37ekMTEgojMrNR03MMfYZSEtysLq28tKX0Z0LlUn6H
+         TrnzSiGfF/bPTlPZdHcQLW7uAFGDBKeyhfY9SrRAwfakdDMHrYpyDkrPPTlE9nZ0F0sr
+         Ar4FDX4aNrXkcqSh8kyPWE53R6nq6I8zvX9LVoZkQJy5f64+UfaqxejwUSAGKaojQRgZ
+         XnhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768598833; x=1769203633;
+        d=1e100.net; s=20230601; t=1768598834; x=1769203634;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=petUc72WmwiRQaET2kaU0YBEh+cnRZVtNa088k75XJY=;
-        b=oOHnd/QXkqeg5VkIuYDX5P+TxgyEm0fwzpuc0LJWtAuVoJIRcA95Zt8P06a6dN/QDv
-         ZvQMigyAztz6lVwlluL1lXz7wmmMw5DmvHksyhpniSXkaAgMwCMO9+N7o974AhZ3gWFQ
-         8sU3N2GvQa4eQ+eL97gS0p2Zreieud44R+86ItthHCzgJtW1edzSeeDLGZVkC8QdYlkw
-         UV6NcHRoqyTHxPk0xcCTMs757siSqyGq0cHvtYNrPv20CJAdvWBs0+bIbl8E0DkPOvN3
-         CB9e3zYB/6/ULLsRmvjNdeBS3vRpp297Dg1SfFB/3C3zlME0E+BShGqz4vQfSPdK5es4
-         W9Lw==
-X-Gm-Message-State: AOJu0YwnmEN/dYM7Fi+EQqV3DsIOBzAJRm+9lNX6P6lmCkJPhDZEjV/N
-	E7uUipt9AoTwK9u8u8PiPPV2RQTOH10xYAeco8QtQ81tB0IyAsnSky/p
-X-Gm-Gg: AY/fxX45kZKD6tJ49XfIUCQ4jt+Jb+J16eRWbUw/lgevGSgMsbU3DTCEVmPJ5FfgpDn
-	HX6MPip6TqIp+ZCTrKorhU73MQMJRCW7fcKXOfeYqjYydH/WA6lkFHWtr+P0kps2Sl6vZSYKEho
-	xbcLXZTdJQcUQifuT1Vg2XzBQDeI0xC+fttPgX5ExeAg4NCOv+0PjS7Tf0rpcgP/hDU+hGu44Vo
-	9zCFQuPFiJpHKmS9Ww26ThIiJlIinXipO5rrKeVtXWj5z6aJn4awYZsHnNLhpZEX+SDoPMSwpFk
-	Y7pczU+k4BZSaLUokSgfWEyJa2EJj6DU1EFAnT9L+YZ3sEl+VtkZevuoNCtMLhReXveeSMWKmci
-	B9FKV1mbs09NP/AVfiuwmJgplydbxCiAjbpxONPyG4yPYHEIAvGTzjJzrid+72WbcuAegPRM46w
-	DEcXt5eFhF/6YgdkQWPVR4XcvbLrKPQw==
-X-Received: by 2002:a05:600c:8b08:b0:47d:5d27:2a7f with SMTP id 5b1f17b1804b1-4801e347d3amr56226725e9.26.1768598832718;
-        Fri, 16 Jan 2026 13:27:12 -0800 (PST)
+        bh=FQY8wWYNgpXHRjuxCqKCZaGnzoookw/V3Y6z3MyG7Wg=;
+        b=A/FAsNf/Og8Znh1pK/9s/aKntXOWb8l62R6lFVjXq1W1KNcKFnWEqUhngrp9qjsgYD
+         m17UudV5rcBDjN8P+IIPV2Cnf3uzufaK2jxG59+4YB28Ykr2yrt1vayNBYFwO4lCUM4d
+         bBeTo7kyL4vH2pOZd4h2DH04TkYsI8Ka7KbUwX0rHKfC67xySq9/NiHXTbAPnfVWfNqx
+         zNKR/9q/3pdnIL1LXxjQKxYDViktJIkSFDXJqzTWAqMmP5tdWaNA4ox0+YYOXCkdTw3e
+         IzD0crDUkQ8/jcjiY57GqO/zT4frJo5SUaPRhhqLFm1/t+mOC4aKtmaciEhGXq32fOC7
+         JwOw==
+X-Gm-Message-State: AOJu0YxcQqDAWXqOu7imoTrNOJ3DiP2X+IN4KuaHECpgGIfcsW/mTFat
+	3e1aUyzwOz85pm9B3T40TEIqAtrYBvyk5wO9vBmS8AqvT8GqIMzEScek
+X-Gm-Gg: AY/fxX5d+tEOGbwSAPEl0f3MKq9gQRdhvmw6BrQbDsbAcLDUSBwGhfkWBdNnyNqFaI/
+	/wqdn+T0oQ3hDWQgXVye8joOp2cQ08cInVW44hV4ei2aBPkfIBmKU0lAAmUvyeHuGI0ct+xQsFb
+	XXIrkpitWfP2DXtGeHyOMvwJMCdPwvbIAkD+r9h0CSmf8aU7o/Cwi4eY6f//5cHnKuMsoRrvTtb
+	1fI+FfExdCPGQ+eqQyVv7Ud5xmTlxkxw2jymHllD4GqaYRgd0bOE2Q+LdreGl8rJTKu9mge+Thl
+	TCYpuirXU8BjJ+Manb44Bk0VC6bbgPZ0CfcqMydtXcHCES6swTljbJu75s3rnD0mqqB7uQG19HE
+	gUVgan/56gpVaO4Rc+cR8LXBm3hGaa4vN8V1do5DMgyWsk4XXH4XUGKaZAJQO0LawBXRR+0R58d
+	2Lm736BmT5e8cVAfVtoPg=
+X-Received: by 2002:a05:600d:640f:20b0:47d:6c36:a125 with SMTP id 5b1f17b1804b1-4801e7d2a3cmr41619495e9.17.1768598834009;
+        Fri, 16 Jan 2026 13:27:14 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1edb:411c:5531:1628])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801fe67780sm23382025e9.16.2026.01.16.13.27.11
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801fe67780sm23382025e9.16.2026.01.16.13.27.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 13:27:12 -0800 (PST)
+        Fri, 16 Jan 2026 13:27:13 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 16 Jan 2026 22:27:07 +0100
-Subject: [PATCH v2 2/7] refs: skip to next ref when current ref is rejected
+Date: Fri, 16 Jan 2026 22:27:08 +0100
+Subject: [PATCH v2 3/7] refs: add rejection detail to the callback function
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,255 +68,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-2-925a0e9c7f32@gmail.com>
+Message-Id: <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-3-925a0e9c7f32@gmail.com>
 References: <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-0-925a0e9c7f32@gmail.com>
 In-Reply-To: <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-0-925a0e9c7f32@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
  Elijah Newren <newren@gmail.com>, gitster@pobox.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8568; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=4UJhxa+O0MBFAkPxCJI3Yq5z50GuIcFBkI0bjZ8v+fc=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGlqrS0PqG1VTX4rNZC7Bi89bHxkNr7uESRPs
- JlXIx9CvqrgwIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpaq0tAAoJED7VnySO
- Rox/X7sMAIzaOj++Ym66sz9VnlNRpFuVOJ3PK8YgylVBhy+jA9TEXtfAYVExMT/MZDD0QV2MCQY
- VnNS8chTcyTb52im3T5XhEjY4mC2cxVlWcwdLz/EWkw1EWxFxd0Rb+b/pJj0xq2pSCHo1yUYgo6
- ftEbl7flBN9tbd0vcIHwsjFSCc7uWrffEQntNf7RWcl46TDNATRx3MMR+lLA1URKB+5Uy1TFeaR
- Quxz2MTz+n4KiGsmrcKDjXSiizK9JyfYo7uxdC5LRaXfdDqlXurWvjVoD+3BTz94kGZpVZkWH5q
- BNlptVBnG6TZH1rbPO2ymVxvfBc3iu8gw1v7nHvixbqF94k0Jqkw3HSXvomOF9+sHHMNHAOFiID
- gFYUym+C/jiyAZ+eqQsUMVC4g95pnHELWolYvQ+iZ557WNOjpZTKVMjacdn+flDPwZ9InSWPuWA
- 6x8UethGX0IX99VPvlF7GFQ45kENFpilhjhObxx0QACbw3fYQXSh0n6UK+cQovz91J+tIPAAlq3
- 1Q=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3039; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=b/k1vHOo2pCnoG/j7DojxXG+08ccj7/s0F1yKfskN1s=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGlqrS3Ul/WpNvqmSbk6Tv5f27u/fi2KAVhrE
+ N0aIbSjR/j9EokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpaq0tAAoJED7VnySO
+ Rox/PKcL/ReUaVRkSKsmnNhYxEXaJ9g6yyuPRscNYBa9I7OBZcuw8P3XmXt0qyACAIL+lr/i/xK
+ P7JuarzU7cZDL1Bu5DpyijjGf0dM2pSl49FY7X0iYQe7wefp8CfqvaZx1isaCbcL6doazVPnv9j
+ sPerivLq0Spi59dtC+M9DQXh51p+HvhE4h9i9xdG3WgUaFuUVF2CPIgO0QomRuIXeNaai8NhTva
+ CVnXqBywKK4gTHoziE4LxmCGt/ib4rIwIad2RFeikki1f5ELKyxxRxvka4HfwWaM7h/NMSHBjkB
+ HTohrq4PofFXz84hkPHH7k51mgEVpahK73BDDzoaMW5X/FAyIfmeuZNbp/S1FdhQnWoGrvHQauC
+ J7oW5SpKrvlStmixMRN7I1U6Tdx0CjGgBnCJZ5GpjlBLMvfDpRHMsPqQTKyyaL2tROd1QDRvBzW
+ G+9bv49VPGp1G7h1rqGKGakLfp2uqRnJQgyPe1wYI9K3xAlw+ekOyRcxJM9yt3+Kli27t1B5kB7
+ YA=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-In `refs_verify_refnames_available()` we have two nested loops: the
-outer loop iterates over all references to check, while the inner loop
-checks for filesystem conflicts for a given ref by breaking down its
-path.
+The previous commit started storing the rejection details alongside the
+error code for rejected updates. Pass this along to the callback
+function `ref_transaction_for_each_rejected_update()`. Currently the
+field is unused, but will be integrated in the upcoming commits.
 
-With batched updates, when we detect a filesystem conflict, we mark the
-update as rejected and execute 'continue'. However, this only skips to
-the next iteration of the inner loop, not the outer loop as intended.
-This causes the same reference to be repeatedly rejected. Fix this by
-using a goto statement to skip to the next reference in the outer loop.
-
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs.c                  | 44 ++++++++++++++++++++++++++------------------
- refs/files-backend.c    |  5 ++---
- refs/packed-backend.c   | 12 ++++++------
- refs/refs-internal.h    |  4 +++-
- refs/reftable-backend.c |  5 ++---
- 5 files changed, 39 insertions(+), 31 deletions(-)
+ builtin/fetch.c        | 1 +
+ builtin/receive-pack.c | 1 +
+ builtin/update-ref.c   | 1 +
+ refs.c                 | 2 +-
+ refs.h                 | 1 +
+ 5 files changed, 5 insertions(+), 1 deletion(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 288d3772ea..d427adea61 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1649,6 +1649,7 @@ static void ref_transaction_rejection_handler(const char *refname,
+ 					      const char *old_target UNUSED,
+ 					      const char *new_target UNUSED,
+ 					      enum ref_transaction_error err,
++					      const char *details UNUSED,
+ 					      void *cb_data)
+ {
+ 	struct ref_rejection_data *data = cb_data;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index ef1f77be8c..94d3e73cee 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1813,6 +1813,7 @@ static void ref_transaction_rejection_handler(const char *refname,
+ 					      const char *old_target UNUSED,
+ 					      const char *new_target UNUSED,
+ 					      enum ref_transaction_error err,
++					      const char *details UNUSED,
+ 					      void *cb_data)
+ {
+ 	struct strmap *failed_refs = cb_data;
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 195437e7c6..0046a87c57 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -573,6 +573,7 @@ static void print_rejected_refs(const char *refname,
+ 				const char *old_target,
+ 				const char *new_target,
+ 				enum ref_transaction_error err,
++				const char *details UNUSED,
+ 				void *cb_data UNUSED)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
 diff --git a/refs.c b/refs.c
-index 965b232a06..3459d0e4e5 100644
+index 3459d0e4e5..e754159c21 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1222,6 +1222,7 @@ void ref_transaction_free(struct ref_transaction *transaction)
- 		free(transaction->updates[i]->committer_info);
- 		free((char *)transaction->updates[i]->new_target);
- 		free((char *)transaction->updates[i]->old_target);
-+		free((char *)transaction->updates[i]->rejection_details);
- 		free(transaction->updates[i]);
+@@ -2872,7 +2872,7 @@ void ref_transaction_for_each_rejected_update(struct ref_transaction *transactio
+ 		   (update->flags & REF_HAVE_OLD) ? &update->old_oid : NULL,
+ 		   (update->flags & REF_HAVE_NEW) ? &update->new_oid : NULL,
+ 		   update->old_target, update->new_target,
+-		   update->rejection_err, cb_data);
++		   update->rejection_err, update->rejection_details, cb_data);
  	}
+ }
  
-@@ -1236,7 +1237,8 @@ void ref_transaction_free(struct ref_transaction *transaction)
- 
- int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
- 				       size_t update_idx,
--				       enum ref_transaction_error err)
-+				       enum ref_transaction_error err,
-+				       struct strbuf *details)
- {
- 	if (update_idx >= transaction->nr)
- 		BUG("trying to set rejection on invalid update index");
-@@ -1262,6 +1264,7 @@ int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
- 			   transaction->updates[update_idx]->refname, 0);
- 
- 	transaction->updates[update_idx]->rejection_err = err;
-+	transaction->updates[update_idx]->rejection_details = strbuf_detach(details, NULL);
- 	ALLOC_GROW(transaction->rejections->update_indices,
- 		   transaction->rejections->nr + 1,
- 		   transaction->rejections->alloc);
-@@ -2657,30 +2660,33 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
- 			if (!initial_transaction &&
- 			    (strset_contains(&conflicting_dirnames, dirname.buf) ||
- 			     !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
--						       &type, &ignore_errno))) {
-+						&type, &ignore_errno))) {
-+
-+				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-+					    dirname.buf, refname);
-+
- 				if (transaction && ref_transaction_maybe_set_rejected(
- 					    transaction, *update_idx,
--					    REF_TRANSACTION_ERROR_NAME_CONFLICT)) {
-+					    REF_TRANSACTION_ERROR_NAME_CONFLICT, err)) {
- 					strset_remove(&dirnames, dirname.buf);
- 					strset_add(&conflicting_dirnames, dirname.buf);
--					continue;
-+					goto next_ref;
- 				}
- 
--				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
--					    dirname.buf, refname);
- 				goto cleanup;
- 			}
- 
- 			if (extras && string_list_has_string(extras, dirname.buf)) {
-+				strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
-+					    refname, dirname.buf);
-+
- 				if (transaction && ref_transaction_maybe_set_rejected(
- 					    transaction, *update_idx,
--					    REF_TRANSACTION_ERROR_NAME_CONFLICT)) {
-+					    REF_TRANSACTION_ERROR_NAME_CONFLICT, err)) {
- 					strset_remove(&dirnames, dirname.buf);
--					continue;
-+					goto next_ref;
- 				}
- 
--				strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
--					    refname, dirname.buf);
- 				goto cleanup;
- 			}
- 		}
-@@ -2710,14 +2716,14 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
- 				if (skip &&
- 				    string_list_has_string(skip, iter->ref.name))
- 					continue;
-+				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-+					    iter->ref.name, refname);
- 
- 				if (transaction && ref_transaction_maybe_set_rejected(
- 					    transaction, *update_idx,
--					    REF_TRANSACTION_ERROR_NAME_CONFLICT))
--					continue;
-+					    REF_TRANSACTION_ERROR_NAME_CONFLICT, err))
-+					goto next_ref;
- 
--				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
--					    iter->ref.name, refname);
- 				goto cleanup;
- 			}
- 
-@@ -2727,15 +2733,17 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
- 
- 		extra_refname = find_descendant_ref(dirname.buf, extras, skip);
- 		if (extra_refname) {
-+			strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
-+				    refname, extra_refname);
-+
- 			if (transaction && ref_transaction_maybe_set_rejected(
- 				    transaction, *update_idx,
--				    REF_TRANSACTION_ERROR_NAME_CONFLICT))
--				continue;
-+				    REF_TRANSACTION_ERROR_NAME_CONFLICT, err))
-+				goto next_ref;
- 
--			strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
--				    refname, extra_refname);
- 			goto cleanup;
- 		}
-+next_ref:;
- 	}
- 
- 	ret = 0;
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 6f6f76a8d8..6790d8bf53 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2983,10 +2983,9 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 					  head_ref, &refnames_to_check,
- 					  err);
- 		if (ret) {
--			if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--				strbuf_reset(err);
-+			if (ref_transaction_maybe_set_rejected(transaction, i,
-+							       ret, err)) {
- 				ret = 0;
--
- 				continue;
- 			}
- 			goto cleanup;
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 4ea0c12299..59b3ecb9d6 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1437,8 +1437,8 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 						    update->refname);
- 					ret = REF_TRANSACTION_ERROR_CREATE_EXISTS;
- 
--					if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--						strbuf_reset(err);
-+					if (ref_transaction_maybe_set_rejected(transaction, i,
-+									       ret, err)) {
- 						ret = 0;
- 						continue;
- 					}
-@@ -1452,8 +1452,8 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 						    oid_to_hex(&update->old_oid));
- 					ret = REF_TRANSACTION_ERROR_INCORRECT_OLD_VALUE;
- 
--					if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--						strbuf_reset(err);
-+					if (ref_transaction_maybe_set_rejected(transaction, i,
-+									       ret, err)) {
- 						ret = 0;
- 						continue;
- 					}
-@@ -1496,8 +1496,8 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 					    oid_to_hex(&update->old_oid));
- 				ret = REF_TRANSACTION_ERROR_NONEXISTENT_REF;
- 
--				if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--					strbuf_reset(err);
-+				if (ref_transaction_maybe_set_rejected(transaction, i,
-+								       ret, err)) {
- 					ret = 0;
- 					continue;
- 				}
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index c7d2a6e50b..191a25683f 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -128,6 +128,7 @@ struct ref_update {
- 	 * was rejected.
- 	 */
- 	enum ref_transaction_error rejection_err;
-+	const char *rejection_details;
- 
- 	/*
- 	 * If this ref_update was split off of a symref update via
-@@ -153,7 +154,8 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
-  */
- int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
- 				       size_t update_idx,
--				       enum ref_transaction_error err);
-+				       enum ref_transaction_error err,
-+				       struct strbuf *details);
- 
- /*
-  * Add a ref_update with the specified properties to transaction, and
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 4319a4eacb..0e2648e36c 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1401,10 +1401,9 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 					    &refnames_to_check, head_type,
- 					    &head_referent, &referent, err);
- 		if (ret) {
--			if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--				strbuf_reset(err);
-+			if (ref_transaction_maybe_set_rejected(transaction, i,
-+							       ret, err)) {
- 				ret = 0;
--
- 				continue;
- 			}
- 			goto done;
+diff --git a/refs.h b/refs.h
+index d9051bbb04..4fbe3da924 100644
+--- a/refs.h
++++ b/refs.h
+@@ -975,6 +975,7 @@ typedef void ref_transaction_for_each_rejected_update_fn(const char *refname,
+ 							 const char *old_target,
+ 							 const char *new_target,
+ 							 enum ref_transaction_error err,
++							 const char *details,
+ 							 void *cb_data);
+ void ref_transaction_for_each_rejected_update(struct ref_transaction *transaction,
+ 					      ref_transaction_for_each_rejected_update_fn cb,
 
 -- 
 2.51.2
