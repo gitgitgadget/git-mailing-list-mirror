@@ -1,106 +1,170 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123C213A3ED
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 10:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7954329E46
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 10:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768557747; cv=none; b=UocqtBd596RMK7UGss9w/uTQHTYvLhGu587o6ITBR8pEi4ay5ppX20dwIEvx3x4kKyNLtVLUilAybScNVGKfg45gpGyzWoXheB1wDmg19pZTqoLJllfislq5tmS135u9zgw68ikXNah/e4VJMPAk2mXRPFyvL6LoJoYZcLnV8o8=
+	t=1768559973; cv=none; b=nB44QH2WZcHS+4dJ7wJaBlmdx+JAlUksAJ+vhWD/hxeFfj4zTUuerzwDaW9vaKMgRYotbCGx0vg3eMn20Cg1m7OZNDjiSP6PDUG8NZRlWow3QQ8P+rhXJ79P1PomyVtUhsWzPtIGIBsoilV+T6skWTsIFWP3+kNMCZlw41J0hNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768557747; c=relaxed/simple;
-	bh=Z6SlV4Sp54f8JvFBx3AxXDN/F+GUz7yH2+mvyHGN5ms=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JVAh05g5/nACC2Ol2y6SgfHumVZUNjQJqrz0KGRGcYukmIhAb4vJO5gax9j8ZoOTLubUqn1YVkMPDrN64iw4+7VLawtEXTGaB6mZTB64gKdRWMdWO2LR89m0x+hP91oXC2woIeAMcXf8udVOtEG6BivLXBVx+rzM4mki22sdnjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VAhhFmbb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=do9r2r0M; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1768559973; c=relaxed/simple;
+	bh=NF2kD902wN6G4KxETqWgZMEvWGwDFW6uC/L83TDEeh4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XMbmevg7W5E48ZGcL3bIHjcnIEl/4mm0ix7YtKelePKPWJAHXlQ4WGigjov5QX9a+KvKJ5XxFeEa9WyvZdrAh0bOKo+yhC1G2Dtq8jNcmD6LV38izzObSQVVD7MGcOzDSCg1R7iNORKdGehe9zcYqxYN6N3PeBOtfvMaA7vbi4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fUYRgAv2; arc=none smtp.client-ip=209.85.221.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VAhhFmbb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="do9r2r0M"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 215CC1D000BB;
-	Fri, 16 Jan 2026 05:02:24 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Jan 2026 05:02:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768557743;
-	 x=1768644143; bh=w7WYl3bxRBmSvPIyBxZ99mhuW2iUwnD4a/qv5AiJJ7Q=; b=
-	VAhhFmbbzMAItIZoRHR/OTQjDWL4LMuaolCvd2rsFVRrAQXfCN7BZV8Iz/ddzyaj
-	tc0dhEJ3Smm9SF2xuHDmOgsw+eBaz/oxAX6IwM0L5h7nPYem053A7vpnKB5cC8kN
-	1SXWK7ihVLcQ5n5hmM2Y0yyvIOtHWx8ZvL52ZDaLiQwX7VcHgLHqk6nMogQz+R7e
-	DspgRe9oPzv/NcrAhtwJIRkHWViW8IXsLfaaMMk8+FC1ev+a99IHDXaEcvzK8RvO
-	7G6mvkUYmL9bvqbC8NUylyht1Rb6jZuwxhvwV4JaGVcCIQDyh+n+qqOp0ycv0GKK
-	/kVGWuaJdb0rX57h5OjHAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768557743; x=
-	1768644143; bh=w7WYl3bxRBmSvPIyBxZ99mhuW2iUwnD4a/qv5AiJJ7Q=; b=d
-	o9r2r0MgYCDEpR04expEdYtkBceU2FfreeMmzQ7zIN+LE8/5PJvXbDmThe5FaHZt
-	T9MyLAsAeoPItuItRMSHPQeyRFMpe2bGM37Sdc8/+cfkxyIct+LHTqRRaCebJcbY
-	IUn9ZgVS12Opwr0HJ5R3Tx2nbXiX0UtbapPc7MVbuOLinPCHlDnGsAQ3i9yh9yiq
-	UGJte2mCF7vP0+2D5J4EknnZYHj8OcWWxDwlEkhUk/W4VoiV0t4by4DXw4jQaQEP
-	eGi4n1AA/AzTqfXMO1IAIKzQJqA6Fj2loeHQxNtOtnnLkGVVUS+WFlbP30yi1iZr
-	N3huTPRn22XoapeAybHlg==
-X-ME-Sender: <xms:rwxqacDQxOalJDRr5dTRG8lIUvWIl0uJYo6K8VY58I66tBo6vrAiZA>
-    <xme:rwxqaV9ZK7gIAVsDo1tP_CC_SYW-qx2knAHjdu2Pa5bAP4N7w5iQ026FYXb45acPf
-    Fw9fRYlxXZTVrEP6o0l84KxWei9MGXdp9DIHnac24qH8RJisVmigw>
-X-ME-Received: <xmr:rwxqac9v0labJmRi63VmxcivoHXMzMsKB3opY7emZdopN2to06ezdoz-Jm6rPdK_Q2A0bbV3Qc-X4weMeqMEaUV06n67BtOuIwL-1LBT9w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdekieegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
-    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
-    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    eplhdrshdrrhesfigvsgdruggv
-X-ME-Proxy: <xmx:rwxqaccYrIXWJHAmRF0qxPK_cDSIgNtnvNpqLyKuSpYMJVCm14JbZA>
-    <xmx:rwxqaVHSXlzto6vdCWeYPV_AQoyzoksvm0Nu0ezV55UZsn8PgTHIJA>
-    <xmx:rwxqaafTkbCaL8iCNjzjG9whKGgMgpLnmgS7RYS6q1CDQQeODi3wmw>
-    <xmx:rwxqafExBpA6RovxXYXQ_rJz7fIuhr78vr2Pu3Mg_5rHEfpO81o7yw>
-    <xmx:rwxqaYn0xg29FQvfsk3hb-gEQs_uVg15y01ifsvcL1V10Ae6yc6gWFMP>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Jan 2026 05:02:22 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5543ce91 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Jan 2026 10:02:21 +0000 (UTC)
-Date: Fri, 16 Jan 2026 11:02:17 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/10] cocci: remove obsolete the_repository rules
-Message-ID: <aWoMqfTmrOU8UMhm@pks.im>
-References: <20260109213021.2546-1-l.s.r@web.de>
- <cd6e8f5a-baaa-4c4d-9d2d-576d4b6a9a5e@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fUYRgAv2"
+Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-432d256c2e6so1473907f8f.3
+        for <git@vger.kernel.org>; Fri, 16 Jan 2026 02:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768559970; x=1769164770; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=MrFZV1+UpoPp5W6Ca7THq66l+yercIVYhYMLmohfc2E=;
+        b=fUYRgAv236ZxamwRY2wXXbe3L4Re89HPfnnona9D02JUckHHKXflT8wUM6UZLtWvsp
+         sXWtxcXpfTHwsFcqYCQ9Ikl+7hZy6NYJhkjsYohD6d/qDOzHGxhBKu9ROT7cbZ0jIiGo
+         qo4uqLp1Egxw/9cBk14LU1z6OlzTeVSJ0cuJM8+qgd0l8rsRP1sIfJ636GhvkQNogVtX
+         F6yDYwIznw1oJAekjsl5Y4jOk+n4nS+STEp3qHoqBCAyA2ZHSGqBK39YIrduqe4KU8rK
+         mR/XT3LbXATRa3u7N1suY68YTIBhGtoUnkYRjspOQdhrPXuba1JPoCEg4b9mF9wCGKJt
+         RgHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768559970; x=1769164770;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MrFZV1+UpoPp5W6Ca7THq66l+yercIVYhYMLmohfc2E=;
+        b=uX6NcavAnAAKbA2BlTp3DS/0n88qbhAgUZNcRK66mj6F2OnmslRijsJuBDNxcAZZoa
+         2a3HX5QVpaluiWTd6cc0sq8GnClCJzcb/E1zTYgk+ECTjqMQnb6XHqYs5d41zdQNAoIY
+         JWy+fQA/wWMchMwtIUPxDGFeJ+Bwi6t7RRPPiZnDhqzq4VIxzAfMxxv4+Ik/mYyApJZ2
+         oqEM5mzUCqh116EqRC0+7XVB9njYnvwQ7mgOT39iUasyn7P0TroXYlp+eaRGNHWKF+3I
+         7XIqkIyzSdLPLUdY5q3/ZpKutFYeNMURkRrXMARsGjgT0SDz15wBILKxgudImqSl3Xpl
+         AW+w==
+X-Forwarded-Encrypted: i=1; AJvYcCV0DExeWYtI/8I+GrsXtCgaKmxuLCvbZtjrcNTa1POZth7DWWaRIOHn5jTDYL1HO3z/VfA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx57GmRNNlIfMPZ+2aSkhs5VyvZDszqxMfuESqx+/5FOpthlpw5
+	/0LxfQ7mVO1sAHVkssc8EMs4PEtUdLAQdSi0kx5KSmL1RjS3qWMy3oYC
+X-Gm-Gg: AY/fxX5IBDx31oC1eywMnvRV0ZkrDwjoEqB4sHzr/BR4lPOtiYHJBtLUzljqrzzQ8ec
+	taPmEbEMephQ8cfNeti9/qDdw5SLaGjWJO1vYmjiqp/Q4r4TsW8aPeQo2W/seZ7Bqz9sSitNmtd
+	IPZ24SIH9Icj/ShmLNX3YSOYQ3SwMO7KjdAl7tAP+qTdP2KVUP1QZcl/0Y4Rf70selYqDHiBLCM
+	uhhGTdNHQ9skBTVPJAmyp3vJPXks24AmwWoWCJnO6KKZ9sqAcFWPHlVd5jJvndQuORgfuiLagea
+	/Tub8P7TO93vhDgjTfgVvq8JseUvBUFLVm97gY1jrFFIW7F5DEtfVgFxVSS0QJ0k4tyGo5TSoc9
+	HudnJ908Ou25FKFgi/UNbJ9yJ1rp1YD8XONwW9aFrYo3bKV+71CfdqUgaZfz8uNx0INX2BRK6Fx
+	9JfrK65OVrMGcpHnt+8WhpuvMUDib4+4S+X0krE4r5la9qCix4wZiKh84C8gAFBBp8+g==
+X-Received: by 2002:a05:6000:2209:b0:430:f463:b6ac with SMTP id ffacd0b85a97d-43569bc58b4mr2853264f8f.44.1768559969775;
+        Fri, 16 Jan 2026 02:39:29 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43569927163sm4258679f8f.12.2026.01.16.02.39.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jan 2026 02:39:29 -0800 (PST)
+Message-ID: <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
+Date: Fri, 16 Jan 2026 10:39:28 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
+To: Ezekiel Newren <ezekielnewren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Jeff King <peff@peff.net>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
+ <l.s.r@web.de>
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+ <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
+ <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com>
+ <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cd6e8f5a-baaa-4c4d-9d2d-576d4b6a9a5e@web.de>
 
-On Thu, Jan 15, 2026 at 11:01:25PM +0100, René Scharfe wrote:
-> 035c7de9e9e (cocci: apply the "revision.h" part of
-> "the_repository.pending", 2023-03-28) removed the last of the repo-less
-> functions and macros mentioned in the_repository.cocci at the time.  No
-> stragglers appeared since then.  Remove the applied rules now that they
-> have outlived their usefulness.
+I've Cc'd Peff and René for a second opinion if you have time please.
+
+On 15/01/2026 15:55, Ezekiel Newren wrote:
+> On Thu, Jan 8, 2026 at 7:34 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+ >
+>>> +static void _set_capacity(void *self_, size_t new_capacity)
+>>> +{
+>>> +     struct IVec_c_void *self = self_;
+>>
+>> Passing any of the ivec variants defined below to this function invokes
+>> undefined behavior because we're not casting the pointer back to the
+>> orginal type. However I think on the platforms we care about
+>> sizeof(void*) == sizeof(T*) for all T so maybe we can look the other way.
 > 
-> Also add a reminder to eventually remove the just added rules for
-> tree.h.
+> If someone finds that this code does not work because of this
+> assumption I'd like to know. But I can't fathom a case where it
+> wouldn't work.
 
-All of the removals look good to me, and I verified that we indeed don't
-have these functions anymore. Thanks!
+So we have two different structs
 
-Patrick
+struct IVec_c_void {
+	void *ptr;
+	size_t length;
+	size_t capacity;
+	size_t element_size;
+}
+
+and
+
+struct Ivec_u8 {
+	uint8_t *ptr;
+	size_t length;
+	size_t capacity;
+	size_t element_size;
+}
+
+One the platforms we care about they will have the same memory layout as 
+all pointers have the same representation. However I don't think they 
+are "compatible types" in the language of the C standard because the 
+type of the "ptr" member differs. That means casting IVec_u8* to 
+IVec_c_void* either directly or via void* is undefined and so
+
+	struct IVec_u8 vec;
+	ivec_init(&vec, sizeof(*vec.ptr));
+
+is undefined. For the compiler to see the undefined cast it needs to 
+look across translation units because the implementation of ivec_init() 
+will be in a separate file to where it is called. Maybe that and the 
+fact they have the same memory layout saves us from having to worry too 
+much though I'm always nervous of undefined behavior.
+
+An alternative would be to pass the individual struct members as 
+function parameters
+
+	void ivec_init(void **vec, size_t &length, size_t &capacity,
+		       size_t &element_size_, size_t element_size)
+	{
+		*vec = NULL;
+		*length = 0;
+		*capacity = 0;
+		*element_size_ = element_size;
+	}
+
+and have DEFINE_IVEC_TYPE create typesafe wrappers
+
+	static inline void ivec_u8_init(struct IVec_u8 *vec)
+	{
+		void *ptr = vec->ptr;
+		ivec_init(&ptr, &v->length, &v->capacity,
+			  &v->element_size, sizeof(*(v->ptr));
+		vec->ptr = ptr;
+	}
+
+That's safe because we cast the "ptr" member to "void*" and then back to 
+the original type. On the rust side the implementation of IVec<T> would 
+also need to split out the individual struct members when it calls 
+ivec_init() etc. It's all a bit more effort but the benefit is that we 
+don't have any undefined behavior and we have a nice typesafe C 
+interface to 'struct IVec_*'.
+
+Thanks
+
+Phillip
+
