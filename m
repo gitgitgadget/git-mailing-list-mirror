@@ -1,226 +1,277 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011017.outbound.protection.outlook.com [40.107.208.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5943A35DE
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 20:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768594754; cv=none; b=s8mYiechdskaNGAyOvy9gJBxjJy6mse/h2WJNsHYtIoNO9N7XjAMI5Lmm0leU0aWa7nnKYb4k2CBsLMGGrv7tPyl2xHEWBFzxB3fENH5nI0th4J1YapZaF51UsJ6QvVxT1Mzi6o/h2XoRqyJkDHJMFvX/NNmD3iDMRVbcXDTbbM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768594754; c=relaxed/simple;
-	bh=jbtWjm5EL8qquNLlBNmDGw2jOZ8IC4H6kOzqu1O00II=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pvkol7g2pwGs+TVmkqw/sbnpc3jQqW2fnlHcw6YQr81QUerLJH4HBFEXdQpamoXmz3DTyqLBNjImpaVOlSK/wAk0XFik5AdW1878UDyuJjRzqLHaTZYUl4+FLWaejglVMYjDrtRK2zS/sYseSDnbxAK3taiqlgdGnUU4CPNCJqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=hZSfyGDl; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E937242D6A
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 20:35:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768595745; cv=fail; b=P+6LE3Th1TS5Pvhx848Esck5Wysxk/RGDcfuNKTCSjP25KnLgaivO0iuDbESqg5mjMtr2N64ttUeL49bfibgniC+/CZ9bCim5FFWAOJ+x+4PmFJZtrEy+ZJk0jYbnrrFn4CfXKsaexPpz4+gsJD0hqxnw/Fg0gfLPkyW6h+vUAg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768595745; c=relaxed/simple;
+	bh=aqafOP0bU2Z9E3u/v/RBtxXzEYlGY3t981cwM4QsM9c=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Osc/WvA44XYcQ/dMwLvbD9dtEKhIyFXVQPp/Nxxv1JMcAppxVXa+pwhoYUSFzz2KJiqNFkv2PVsFRmzyctFujKV26h19YqGfObHodhYfRkpLdadmG9jEL8XEpdhW0pifLjmlVXi1J8Z6PJVY13+LoVvjgN7eP25akQcK/MPsGFA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ZpEi5wuv; arc=fail smtp.client-ip=40.107.208.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="hZSfyGDl"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1768594746; x=1769199546; i=l.s.r@web.de;
-	bh=Yib/3fNJdHzZw1Nd0bjazwCl3SENn2zdogf8Y9RwqxU=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=hZSfyGDlWWTQq0npytMinhm4zayyIsI7gpm8N/V+iri1fNBSEPPj71jv6rU98zA8
-	 OwTHnl2XjTiBas0FSMWACe7bPpl1Z9z63IxASmLvlK6GogwKoNa15JPt3vqIvdYPp
-	 XJ11rBN/q8hM1ht6VeNO/H7zAVJ5Yfscc5yAaAqf7weFqxj/mFULps9v2MB6QiiMa
-	 ce9uhAQXRu1KkMEAKlcw1YTmW/3O/QBjiczDfU996MixzTEV0vQkG1C7DgMyczA90
-	 xta+BihUudYoirBQSDTJH3owqCmClkULViWk5iJpcZM3l++9C/abvRBjsTTr7gD5R
-	 9UruHa2PVWm2kuZC9g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.19.215]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mv3UY-1vyNCc21Fg-00r1J3; Fri, 16
- Jan 2026 21:19:06 +0100
-Message-ID: <07ca298a-ad32-4998-88ff-d69c04418fdd@web.de>
-Date: Fri, 16 Jan 2026 21:19:06 +0100
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ZpEi5wuv"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MDH6A62UzmoNg5iQD5J9EC1Uo+iTHK+QE7edj3Jb0S5/u3CNZ9EQAg3djDvQLDa21IVaiv4IJAyOvP6fL2C85CwmEAfQvOtvNATlVRO0UsMNE+WpWi83do55He1kbUMdDcMCA0dyHqhoLL5t8+ehCuSLOj9xHmKFYLwNE6cyoAG/DPnLAdM6Hr9oQssjqoZOz+kjqKR6JcDQzR3wUk9BlAR8EtJ/X+0MkJMX9XBg0B8KJVjaVp3bYH9fYlbLz/b0cuU+AIYcsVj9MdZZ2XoB4CcLQaWiQlaytfCtPUmEusdS7fVcfzvhzea68cOjumyr4ixKcRpMbcgPBxCiAoDMzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Fhq4dQLxfR9Ve+B4tK+7hQ1PlOZsw+27uNPUIaqmmf8=;
+ b=MMLoTx2XNUaHPS9pDLKy3veuZ8GZxYBLFM0s9VSiibSkPqgUaKds/rNxLXP9aPzFg21qIrnM7YXwokmaZWGe0EoghVKRPOwxOyheouZpWCqOVqQGV7tYdJVdGz+/dJtVjPV5LYKj/17tWO88ol2hvNa/8XzSU/Ak1RreF0sGJAT6xcHLa2RcaX1frHhsEUKQfQj9zBn+M+GmYYNZn7Fumr4MvIFJ69MH2ju5KlVO+L0CMbrxtLpRfSb0NX+xA3Srt8sdNsLrXQ3ehQEQOopRc9EOa9Aj9lVVosKVMSeChBNVc7WlYgzIobWfR2A2YuvOuG3yhVNctOE2ySFXdjCRmA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Fhq4dQLxfR9Ve+B4tK+7hQ1PlOZsw+27uNPUIaqmmf8=;
+ b=ZpEi5wuvAaW1BnMC5qcCqbyrSuNYfnmk26eCn7tT3g95qt0rPpMm/M3Ob5YsVCI0NVzv0YO1JWOmN9pMBrVVE3GTB8YGAhAGCgdFNUkgums7k3fdwXDazz1HkiVE8hksMwAfA4oZUGtFLBiWNKgPE01+MQtDl3kdpNLAYIa3rTZnveq+R62QaSP9QsyYJJ1yLQMyGNvIjiTmNaHar6oB2SLI3rqqrxaLPPILLveQ9VXtzCVz2Wo0yBK3ZurCaO4AaqwHrOaSMw6vh3EHbreSpcfobZQ0FnPaq6aDQ89hJl5MRMeYicBm5WnTjKcVtsJ8st/1bNqGaTWiz8g/DSEA9A==
+Received: from CH3PR12MB9026.namprd12.prod.outlook.com (2603:10b6:610:125::15)
+ by SA1PR12MB6821.namprd12.prod.outlook.com (2603:10b6:806:25c::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.5; Fri, 16 Jan
+ 2026 20:35:41 +0000
+Received: from CH3PR12MB9026.namprd12.prod.outlook.com
+ ([fe80::7e83:9747:5352:4af2]) by CH3PR12MB9026.namprd12.prod.outlook.com
+ ([fe80::7e83:9747:5352:4af2%6]) with mapi id 15.20.9499.005; Fri, 16 Jan 2026
+ 20:35:34 +0000
+From: Martin Fick <mfick@nvidia.com>
+To: Jeff King <peff@peff.net>
+CC: Patrick Steinhardt <ps@pks.im>, "brian m. carlson"
+	<sandals@crustytoothpaste.net>, "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Slow git pack-refs --all
+Thread-Topic: Slow git pack-refs --all
+Thread-Index:
+ AQHcdebABRaVmXg1XEKj998vyrImTLUzA1gAgABVq4CAB+sE2oADSLCAgAW7ve6AAH4YAIAA2VTygAEJ2gCAALoZLIAMdr8AgAF2APo=
+Date: Fri, 16 Jan 2026 20:35:33 +0000
+Message-ID:
+ <CH3PR12MB902665032350D502E3D31ACBC28DA@CH3PR12MB9026.namprd12.prod.outlook.com>
+References:
+ <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
+ <20251226044507.GA1971832@coredump.intra.peff.net>
+ <CH3PR12MB9026DFCF7AF4ED1A249B16A5C2BDA@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <20260102074901.GD2581074@coredump.intra.peff.net>
+ <CH3PR12MB90260C4887067C88629BBE52C286A@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <aVyxbqk-2QQIgDXK@pks.im>
+ <CH3PR12MB9026F1E4B99D32E138800EEBC287A@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <aV5GwOS_N2jyIFaz@pks.im>
+ <CH3PR12MB9026C8C940270F02CEF83C4FC284A@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <20260115210908.GE1053259@coredump.intra.peff.net>
+In-Reply-To: <20260115210908.GE1053259@coredump.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB9026:EE_|SA1PR12MB6821:EE_
+x-ms-office365-filtering-correlation-id: 90071ba1-0b20-4c72-b5aa-08de553ecc49
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|366016|376014|38070700021;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?Z8bRSF7eS7g+HjhADXm2FTmW78Fib5s7DApKWEVXGPR4ogVqMjLLAQXGUL?=
+ =?iso-8859-1?Q?ae9mAy7+R0AcfgPHJFF5pksnYsT4uVwJfv+7+E3oXyAuIJmjzKOLxUUz/0?=
+ =?iso-8859-1?Q?fHMC4j+HzhfyIUlMl3jSrOu8bvcsPn59Zm7BuUknnq7dVeFAIBLX0idu7i?=
+ =?iso-8859-1?Q?bZTFnPN6S7nn8c0X9YpfjudM1AfX75lJ9GTEFmC+QT8JszzgUHivPyJbj+?=
+ =?iso-8859-1?Q?YkASaLsgRVkWGtmYEUFMgsIDabcR9MGLeuNbQpmOjOGaHHRE0qU2OKUxlZ?=
+ =?iso-8859-1?Q?1qYDGb9Lwmr946PEH/uDmMJo6EClYr6KKVBg21lYtDtNLhKSmd5xUFDeY5?=
+ =?iso-8859-1?Q?uc0RC3dfLEWJsJ1X8QNpHj47Ccqna2rkV0nuw21PtAueV6no8U9fU+sUNe?=
+ =?iso-8859-1?Q?oHYx5TEDeQjvjlGbRMrFAjn/AzjWIqzp4PVGkPhvzv5RCyy2jyE4Yiaxf5?=
+ =?iso-8859-1?Q?kphf/jVWsoyaEHkB/I/lS+26+kCp2YXapRAtuF9cFZVbgIzacVcDbV9sAW?=
+ =?iso-8859-1?Q?00URnQtUkhVoK4XpzDhxOFhUWi5NazeEBXt62CmcOQfaYT+ZNtRRDEt8Pd?=
+ =?iso-8859-1?Q?DwPVOLd3PI2klAZrjjimFlZ7L4XL251APwDUV0U+YxUOXJ1mykgEgxP+6n?=
+ =?iso-8859-1?Q?MFXhI6h1ja1w1yjMCzylv4ZePlMHas9sYluueLI+MiWgwMphfZ7d+6nar+?=
+ =?iso-8859-1?Q?YKFdKz+2s6hBgSi+yvjD7/GqO3YB/KCVKGXKASSBHrQFCg4ub15FThtJMl?=
+ =?iso-8859-1?Q?CJ//bzSBuB4QdgCrOWhY2ynx9+D2Tkr9vXqNiXHsGMl1Uhg8a4w13Tgwim?=
+ =?iso-8859-1?Q?8SaW3XdFcyXrFNjwq8eUbHKRztbA2a0TjpsF9X0hOfSdKvf3ypqJDLcPux?=
+ =?iso-8859-1?Q?IGfdY2di+/N8IlaecxwiD2t6+LJe2WOEDqN+P18okGTeHrI/ssULjaU7xh?=
+ =?iso-8859-1?Q?b2p0b6ecVLdHPZ119V0LBT2eeJ9rDRbYGO4tPyjDN+94iN3ox8KgFiVlTp?=
+ =?iso-8859-1?Q?1BfepViO1xKwebhvKRJkkm80fD2so8L3jKjkvMMxcUlv/DEW2zzUUN/DZg?=
+ =?iso-8859-1?Q?W0xrHKbFowMmrUjA6i1iSeDTJdbWRK19d3SVJdjd5iOslcSHUwT+wcBZry?=
+ =?iso-8859-1?Q?RRXe9yi0+NaZivHPC5+WiEdao9pAp0P44wsV0nlwnzCu5wgVWkxkUTo377?=
+ =?iso-8859-1?Q?x6SQYIYfUJh6/l6qnUA91TIv+gPgFzJVCj37zErJpyeW1PaKuf3vI4EUbI?=
+ =?iso-8859-1?Q?0dJnhkV9vcyMADOSiiZi32zc13pv18+Bqp87bEgoo6Cvyb5837X0JzRi7q?=
+ =?iso-8859-1?Q?4pyxxXl7FSFyyVv2/5+0Ui7qqmUpUcwqaRUSshOKoDYow8fkM7chkxJ2bg?=
+ =?iso-8859-1?Q?4quqfmwBC2OqIEspLqUor8qbnaOwLZ/iJcQ18TgQmF55XUOQSBoYsVi56b?=
+ =?iso-8859-1?Q?UVp0kmVkuX3/ZllTCaUD6EJujVWmtOfDhrEg/jCmqShcMXM361ZdANZLjg?=
+ =?iso-8859-1?Q?nGswrOJpnPtTD0Jndg5/WT4ksoPif3ce6Bb93r98djNwkjT/sGjeZ+d6c3?=
+ =?iso-8859-1?Q?ghrjCoxQT2sE/sz8JxxJeQaIg39wA1dj+g7JGBwF6jVqBjpYjYHlRreill?=
+ =?iso-8859-1?Q?Msrx+oBftkFJqDHSJ9pOxZxNx4HK/U/XUUfdzlWLhRAU7cEa10yxQ8cnSI?=
+ =?iso-8859-1?Q?YiKhHVBv3XvV+xKzRn8=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB9026.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?uz2yTNSbdNd/6mAerkzyOAHT3U0V9Gzh9Itnx6D0rHmJ/4mg2QAjue2Dff?=
+ =?iso-8859-1?Q?RWRXkyW8AfGYgKs1yznzHseVMA7tbVKNwpbKuQYh3LQ/y9S7ZnV7nja4mi?=
+ =?iso-8859-1?Q?kYBPjgUOlA9W/vdJByOjQJn2wq/1kvxcc5Tz/0hB1Q4GVwftW4DCtMZqrU?=
+ =?iso-8859-1?Q?fUg/1gqadjY0nDskkJ/UDbedmdTN/xPb/QZzfjCgbC4j9e4jOXiXPz7DxV?=
+ =?iso-8859-1?Q?0pUakUUN/F0ryyVsRlR9gOoU6LoTVW4R4ShV3OVtWbTemNN0qZ+h5QlIPU?=
+ =?iso-8859-1?Q?dOLrV5CxGYf/5Ozg91mny9jOaKEJuBM/DgyELFqTjN68d9h41V/ndwpdxy?=
+ =?iso-8859-1?Q?IMvmJSwUDj9ebskj3BbJwaOp220w2r1PFGL4wfmBjXzAna+6ZgCn6CbFR5?=
+ =?iso-8859-1?Q?fiPL9ilodwBpYuzVY3vOh3qfWQE+hU7jNkQA49aLv762TvnpGEV4ROP6yN?=
+ =?iso-8859-1?Q?u14pYcXtVP8Va3LcdmOLuSCeY0NB71PTu6vQV2r3RFuTcup76P6OM/DVJB?=
+ =?iso-8859-1?Q?jLQXqGSrBjKQWWTwF29aGbhK7QgJbQZK+Ci44S0ifKklKPyLkwmuqC69w6?=
+ =?iso-8859-1?Q?Ie2ndIOuBF3eAu/BTIu5VhwER3zUtxnHc6Nyf3arqHZDDJxb+wgQz0G7p1?=
+ =?iso-8859-1?Q?17zLG3O2VDSfzewVmsGfzvThQklXczP7qXd8mkPHPO/5k9pwrphIA+mwI1?=
+ =?iso-8859-1?Q?OiOFArxCwi/2ZQZWMKc+jDboV0JyUOXLJLKDvMKKYw2oAaN98PJAtS3c2S?=
+ =?iso-8859-1?Q?A3I8pCLX+9BXVGa8IwFXg56Hf7rr+JAXaGd+MNB85yPDocM+pZO4WnnUxJ?=
+ =?iso-8859-1?Q?Ld+lv6e9vBMOqQqkcMvpO1nrFjgxtESYmc2mkWMZaf+dYIPaGlVTpKp47X?=
+ =?iso-8859-1?Q?JBIVWC3IqiFQHGr60mm555M1QXMYV0Kpq/2ihO/wQXbV0A3pID1ZjBVy+/?=
+ =?iso-8859-1?Q?hAbbpnYPcFYESDdBnZINLJtRbOGIqet1e7UIyXQ0yzQX/5cBe9Ul/K2zoM?=
+ =?iso-8859-1?Q?2NqpEYOrl2a8z9NbpQipFN1GXGWf3eVK3NrpwCM2fsJQxi5bwwmMyK9BGP?=
+ =?iso-8859-1?Q?nNoYlsr0ZWMu1Lc/F93D+8DCbpJci7Lk/ojTCi3EUMWSldbIy/60lBj17v?=
+ =?iso-8859-1?Q?omxw6HDOGo4NsuD6o+vjgvtq2iyLkBvvoBbnxfT4BHcqrurC1W+kXwwV/2?=
+ =?iso-8859-1?Q?DxBCMVuDMfcM9QCd5irG9Ti4aLMRrnd7B8kJR07GfxvIG8QqxL73/eav3l?=
+ =?iso-8859-1?Q?C1kojOc3TSH/m85lejSrzYslN/OWVxvr4Nmgd+oVzHunS7JszZ2yKAE5Y1?=
+ =?iso-8859-1?Q?F783duHMOTwDszknD8YkEFAQXQho5+NvsHv5edmgeL+7R0g5dZ58L13PJX?=
+ =?iso-8859-1?Q?oTHd5DT+JRzt/kqhYOvrpKG99Bv9NUGq8m3K+Oz+VjGcAk2bdoy/69kl9h?=
+ =?iso-8859-1?Q?HfSkwQM594j9PZaP0jcPIJUcBCmamUbTTnGEDlsHpUJLTyhu0FlViXAoAr?=
+ =?iso-8859-1?Q?87hA1s/sU1HxHU7+6o/0LlbGHO/tC7CoR3JP5UK0fDRsPtrxEeepf4/7Cz?=
+ =?iso-8859-1?Q?CH6RG+ukthGCX/axJLTZNnCmzGcc03viC/ZvvYmD67kwXuwUNHalgbTVTJ?=
+ =?iso-8859-1?Q?CcuDjGSmma6uCuQ+pVd7caEbOxZYDdAQNnzSsfh4WUoH0ffQhWK4eRCDNo?=
+ =?iso-8859-1?Q?aXnKflk1qlD980jpSmw+LixToo5BxTJGlxavXmXKhDHqDgPu5I3H4uKSvJ?=
+ =?iso-8859-1?Q?OXL2vXqH1CESymWzuouuCu3byWUgcVtrGMOD8mU3Md6PA+?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] xdiff: remove dependence on xdlclassifier from
- xdl_cleanup_records()
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>
-References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
- <f9b10e71d23f8b4fa34dcffb371cf5a173760409.1767379944.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <f9b10e71d23f8b4fa34dcffb371cf5a173760409.1767379944.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:x1f50lNyi9gJO2yxyK7WOzDq8DlPlUKaK7mA3yyotAaZwElzduC
- 2RRvMxgmn4RqMf3vbCBJy51I0vYE3mOK/asVVq+3C1xKumt7l0TGYLkzdCJp6e9/n1OsuGa
- b+iOZy4fhMI3yvyGE4hl9Ly0EFWuhTWGVj3pG1RCimeiyMgqWxQ35cFzuJSiBtNS62FbIxY
- ddDDZ9KZzkPdiMzjSEAYg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:O8IZb7pRauo=;qxazVfg0byi9gVWy+1ADgil1KCj
- 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
- MuufwvuBN6vycNXXAxZd7EUd6X1OP
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9026.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 90071ba1-0b20-4c72-b5aa-08de553ecc49
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jan 2026 20:35:33.5798
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: dQDn5+X1vqFPSBX1gk0jxjVrkVGYRVHctqngSODVKionNogmd4iTZMlda6YA2aKAVKijNeinFFPuH31ZgbX9Uw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6821
 
-On 1/2/26 7:52 PM, Ezekiel Newren via GitGitGadget wrote:
-> @@ -253,22 +250,44 @@ static bool xdl_clean_mmatch(uint8_t const *action=
-, long i, long s, long e) {
->  	return rpdis1 * XDL_KPDIS_RUN < (rpdis1 + rdis1);
->  }
-> =20
-> +struct xoccurrence
-> +{
-> +	size_t file1, file2;
-> +};
-> +
-> +
-> +DEFINE_IVEC_TYPE(struct xoccurrence, xoccurrence);
-> +
-> =20
->  /*
->   * Try to reduce the problem complexity, discard records that have no
->   * matches on the other file. Also, lines that have multiple matches
->   * might be potentially discarded if they appear in a run of discardabl=
-e.
->   */
-> -static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
-> -	long i, nm, mlim;
-> +static int xdl_cleanup_records(xdfenv_t *xe, uint64_t flags) {
-> +	long i;
-> +	size_t nm, mlim;
->  	xrecord_t *recs;
-> -	xdlclass_t *rcrec;
->  	uint8_t *action1 =3D NULL, *action2 =3D NULL;
-> -	bool need_min =3D !!(cf->flags & XDF_NEED_MINIMAL);
-> +	struct IVec_xoccurrence occ;
-> +	bool need_min =3D !!(flags & XDF_NEED_MINIMAL);
->  	int ret =3D 0;
->  	ptrdiff_t dend1 =3D xe->xdf1.nrec - 1 - xe->delta_end;
->  	ptrdiff_t dend2 =3D xe->xdf2.nrec - 1 - xe->delta_end;
-> =20
-> +	IVEC_INIT(occ);
-> +	ivec_zero(&occ, xe->mph_size);
-
-This array is presized here.  It is neither grown nor shrunken.
-CALLOC_ARRAY would work just as well, at least at this point, no?
-
-> +
-> +	for (size_t j =3D 0; j < xe->xdf1.nrec; j++) {
-> +		size_t mph1 =3D xe->xdf1.recs[j].minimal_perfect_hash;
-> +		occ.ptr[mph1].file1 +=3D 1;
-> +	}
-> +
-> +	for (size_t j =3D 0; j < xe->xdf2.nrec; j++) {
-> +		size_t mph2 =3D xe->xdf2.recs[j].minimal_perfect_hash;
-> +		occ.ptr[mph2].file2 +=3D 1;
-> +	}
-> +
->  	/*
->  	 * Create temporary arrays that will help us decide if
->  	 * changed[i] should remain false, or become true.
-> @@ -288,16 +307,14 @@ static int xdl_cleanup_records(xdlclassifier_t *cf=
-, xdfenv_t *xe) {
->  	if ((mlim =3D xdl_bogosqrt((long)xe->xdf1.nrec)) > XDL_MAX_EQLIMIT)
->  		mlim =3D XDL_MAX_EQLIMIT;
->  	for (i =3D xe->delta_start, recs =3D &xe->xdf1.recs[xe->delta_start]; =
-i <=3D dend1; i++, recs++) {
-> -		rcrec =3D cf->rcrecs[recs->minimal_perfect_hash];
-> -		nm =3D rcrec ? rcrec->len2 : 0;
-> +		nm =3D occ.ptr[recs->minimal_perfect_hash].file2;
->  		action1[i] =3D (nm =3D=3D 0) ? DISCARD: (nm >=3D mlim && !need_min) ?=
- INVESTIGATE: KEEP;
->  	}
-> =20
->  	if ((mlim =3D xdl_bogosqrt((long)xe->xdf2.nrec)) > XDL_MAX_EQLIMIT)
->  		mlim =3D XDL_MAX_EQLIMIT;
->  	for (i =3D xe->delta_start, recs =3D &xe->xdf2.recs[xe->delta_start]; =
-i <=3D dend2; i++, recs++) {
-> -		rcrec =3D cf->rcrecs[recs->minimal_perfect_hash];
-> -		nm =3D rcrec ? rcrec->len1 : 0;
-> +		nm =3D occ.ptr[recs->minimal_perfect_hash].file1;
->  		action2[i] =3D (nm =3D=3D 0) ? DISCARD: (nm >=3D mlim && !need_min) ?=
- INVESTIGATE: KEEP;
->  	}
-> =20
-> @@ -332,6 +349,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, =
-xdfenv_t *xe) {
->  cleanup:
->  	xdl_free(action1);
->  	xdl_free(action2);
-> +	ivec_free(&occ);
-> =20
->  	return ret;
->  }
+> From:=A0Jeff King <peff@peff.net> Sent:=A0Thursday, January 15, 2026 2:09=
+ PM=0A=
+> > ...=0A=
+> > And the remaining third was a bit all over the place with small section=
+s,=0A=
+> > the largest two of those sections being:=0A=
+> >=0A=
+> > packed_refs_store_create ~8.7%=0A=
+> >=A0 unknown 4.4%=0A=
+> >=A0 memchr 4.4%=0A=
+> >=A0 page_fault 4.4%=0A=
+> =0A=
+> Hmm, I don't think we have a function "packed_refs_store_create". Did=0A=
+> you typo while transferring the name over?=0A=
+=0A=
+Yes, this should have been packed_ref_store_create (singular), sorry.=0A=
+=0A=
+=0A=
+> At any rate, we can assume this is poking through the packed-refs file=0A=
+> itself, looking for trailing newlines via memchr.=0A=
+> =0A=
+> But why would we do that immediately when creating the packed-refs store=
+=0A=
+> in memory? In modern versions of Git, we try to avoid reading the=0A=
+> packed-refs file as much as possible, binary-searching when we can. Of=0A=
+> course that means it has to be sorted, which was not something promised=
+=0A=
+> by the original format. So we have a "sorted" tag that we write. E.g.,=0A=
+> this is from my clone of git, packed with git itself:=0A=
+> ... =0A=
+> =A0 # pack-refs with: peeled fully-peeled sorted=0A=
+> ...=0A=
+> =A0 jgit pack-refs --all=0A=
+> =0A=
+> That gives me this:=0A=
+> =0A=
+> =A0 # pack-refs with: peeled=0A=
+> ...=0A=
+>  Aha! So jgit is not writing out the "sorted" tag. As a result, when git=
+=0A=
+> reads the file, its logic is:=0A=
+> =0A=
+>   1. Check for the sorted tag. It's not here, so...=0A=
+> =A0 2. Check if the file is sorted by reading each entry linearly. If it'=
+s=0A=
+> =A0=A0=A0 not, then...=0A=
+> =A0 3. Read it all into memory and sort the result. We can then=0A=
+> =A0=A0=A0=A0 binary-search that (and iterate it in sorted order, which is=
+=0A=
+> =A0=A0=A0=A0 important for pack-refs).=0A=
+> =0A=
+> So when git reads the packed-refs file, we are ending up at least with=0A=
+> step 2, an extra pass through the whole file, and maybe to step 3=0A=
+> (depending on whether jgit actually sorts the file).=0A=
+> =0A=
+> You mentioned that Gerrit writes the packed-refs file directly itself,=0A=
+> presumably using jgit. So it sounds like it is constantly undoing Git's=
+=0A=
+> "sorted" marker, which causes git-pack-refs to spend extra effort=0A=
+> checking the sortedness, and rewrite the marker, which then gets hosed=0A=
+> again by jgit, and so on.=0A=
+=0A=
+Agreed, this is likely the case, but not for the sorted marker, see below..=
+.=0A=
+=0A=
+> And that may explain why jgit is faster, if it is not doing the extra=0A=
+> sort check. If it is not even trying to maintain the sorted property=0A=
+> that it would be faster still (it takes one linear pass while writing=0A=
+> out the file, omitting entries that match our updates, and then appends=
+=0A=
+> our updates at the end).=0A=
+=0A=
+Unfortunately, this does not actually seem to be the reason.=0A=
+=0A=
+> If jgit _is_ sorting the file but not writing out the sorted marker,=0A=
+> then it should start doing so. ;)=0A=
+=0A=
+Agreed, I will see to it that this gets fixed. Unfortunately, adding the =
+=0A=
+sorted tag does not seem to speed things up. :(=0A=
+=0A=
+> If it's not sorting the file, then probably it should start doing so=0A=
+> (and writing the marker). This will make subsequent reads much faster=0A=
+> (mmap + binary-search). It shouldn't even be slower to write (assuming=0A=
+> jgit's writes are doing the usual "rewrite the whole thing to a tempfile=
+=0A=
+> and atomic-rename into place", and not taking some shortcut by appending=
+=0A=
+> to the file).=0A=
+=0A=
+FYI, jgit does seem to order things, it does not append. The resulting outp=
+ut=0A=
+from jgit after a repack with new refs add matches that from git for all bu=
+t=0A=
+the header.=0A=
+=0A=
+> Unrelated to your problem, but also jgit should support the fully-peeled=
+=0A=
+> tag, another thing that makes readers faster. ;)=0A=
+=0A=
+Ironically, this is not just related, it appears to be the trigger!!! When =
+I add =0A=
+this tag (and not the sorted tag), the cache flushed time drops down to =0A=
+under 4s (from over 5mins)!=0A=
+=0A=
+I will see to it that jgit fixes this too. That should help solve my proble=
+m.=0A=
+=0A=
+That being said, it seems like something is still broken in git here =0A=
+despite this tag being missing?=0A=
+=0A=
+Thanks so much Peff for helping get to this point!=0A=
+=0A=
+-Martin=
