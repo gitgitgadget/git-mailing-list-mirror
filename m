@@ -1,92 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB6833B6DD
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 16:54:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E4F3939A4
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768582497; cv=none; b=C8FSXYiE43mMAs8DS+HuVsFezXtpaCjZToKIpobEOuImqrlr8tDFjaihRd7uE+6I2JQ2suSBvgGufnhfMqgomidgCvrWY2iepDJNTW/dc2FIhIJa2DAOpTqNJ4R+qEJHkUfaTfqG/nsbkA80xO68hHwGGLztnH0SdzaXZLReqtw=
+	t=1768583024; cv=none; b=uarhnQT/SwX6NDLGlahFa5OEgxkZvdZKG4G18OxRBGh2PsDzK1ouzB25votAnQYvGLrtuFvvSyhEw0bZpG7fClxyo8i5NmgM25oF8Sv7NIVM7XG007SxtZbM3EAiM8PtK0UFBT/VCwWG01veXNO8CEZ2RXIhiiUGI/QOt6aVCQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768582497; c=relaxed/simple;
-	bh=HfzFn4tD8ihlhEkjJ59nGO9VdoNGXtHiKvZCsWGO6Iw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L1ISsAnuXNXGDIVTXI9a09zxZ34y5JB/fmS/6VVKxwbJxWvhqcadEB1ZUVerYLM/4laS25vquhfkUsUaixjGjvNrxp5CqNdQHsIQxsVBwgkFCtWvKLy+jsnMf9Um/G8uzs3SN+BUE5a9CXt0uxwZgkLvY9ZyB8mtwaOnFBAaBe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Wsfm4vxb; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1768583024; c=relaxed/simple;
+	bh=SwxP1nMFjMRFnFnoWNaHOI9hbAng4NUhX3bWhYJrKhw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BEyfcvEDUtyuuSzAuVxjOzC1klJChU0Q2y8qs+SmRXqkJWE0dR36n/sZQoX5CcGS8tZPt5HQf0EI7rPSEhhiZzgju0VYCEr3FossU4uwhaqI1TznNJR5l4DChFfeHqTF/eYjo/IMgh7AA58uODXbuiX2i1MIlu3018ebWYBLUlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S15RSIaD; arc=none smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Wsfm4vxb"
-Received: (qmail 59460 invoked by uid 109); 16 Jan 2026 16:54:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HfzFn4tD8ihlhEkjJ59nGO9VdoNGXtHiKvZCsWGO6Iw=; b=Wsfm4vxbtEErEGlBl21Px2F6ZihTFqyuUZp36ELxz4IgodT3PgNl44dkLaOj6bxf2paN6p7S2uFQI86ksDp6o+Wo6vbAEQTB+y0Gj3n3o4Bo4KWtPTKxJ/0v9t5QGdDHbIYerVOBg6+LcUF9/Y1h2jopBwOZNXboNOaVtsBGUzyXOTPj92nr0u4RRAzUdv5oYaBz3RYhhtZE9k9DYtaDclSgUcuk4NWkGBbBn7HZkY3+vJ+ERoAN+0O3Q+gkBzpWd8QRCQWr+Q5dUyUk5Wy1dEFuld2ube0jn0IXZtk/8HNQmjZ7TMi8J0gw4jUdki0FnxdWyz9/mKu0d9lQWMxDtg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 16 Jan 2026 16:54:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 93788 invoked by uid 111); 16 Jan 2026 16:54:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 16 Jan 2026 11:54:53 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 16 Jan 2026 11:54:51 -0500
-From: Jeff King <peff@peff.net>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/2] more t/perf meson/GIT-BUILD-OPTIONS fallout
-Message-ID: <20260116165451.GB1636797@coredump.intra.peff.net>
-References: <20260106101043.GA3723319@coredump.intra.peff.net>
- <1a430542-715e-4cf1-86f5-d9424951204a@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S15RSIaD"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-6481bd173c0so2088717d50.2
+        for <git@vger.kernel.org>; Fri, 16 Jan 2026 09:03:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768583011; x=1769187811; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aT9UnRefdDBfPPUKwthgrNgfCksbGnAuS4XCv1riTyU=;
+        b=S15RSIaDCAI0QZLrlv6PdOoWVReu1sdw1/kBukqS4KiFUUcCv7Ye0y6B80BPs7lmNu
+         V/NRCq4HzTdZzCy8ARWnBPYdDxX3wu2iHGro189zLd8cZUY75p4mEpVAv0Pl98VdcmTP
+         +nv9EU2m3aCJfcsubBUfP88b2Hil22Q/bCYwjV1g0n9mf3DzgtUhzFkeLf7nVVzegHb/
+         bP2aOuDh3cpw8oyCTpcdBelurN0KYteZ0BujDWu79n+OyW4tVDS90y+4h6Z7X2ikBW9F
+         fz6b1t/bMERe1fjrJeWXAM8lFIbC1oMhmMUc1YeKwfIjfDVYJKbvgWU7EE8p3rbcF0fH
+         nHkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768583011; x=1769187811;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aT9UnRefdDBfPPUKwthgrNgfCksbGnAuS4XCv1riTyU=;
+        b=vazFQgeJeOAzzzNQ2P3Fh++OnJ/VwVoHhnBbMwfUxcR5dv5pF09fJfjmPF/3owVyqo
+         36bN0/epWsCUO8FnYJ6EyB+j5JOuEp6A0NcapWgffuXnnYiiv6AHnbl/Jr3yXVRv8kaR
+         a23kPbk+NVxScLjozIeMVVCA+85k1pPGdBF1KyrVS58xDImKqddGWjr6u8+yZhNnCwES
+         OUMtxxc5KymP1ldiFD1B8Mmmhj/vEsV6Te4P+uJ/+Y7ZPEsP7qjE8pNmpxRASLzOwWUv
+         6gBqCM/74pnpjKfnUn70rPiWNcS9o1JbwHnavH4sTgnNX8DofFotUDtX1bZE9Bs52mjW
+         YwwQ==
+X-Gm-Message-State: AOJu0Ywf9+Iaw56iAofx4FSiiaY4yaxEHZyRVQCS7Ojd2R5+nqhhS35K
+	eAt0EDt5J5l5pba7J2lUhpmbNftCAv07FpZcfs9MjSf+pCiSKlW6/PAmY8JF2LJdeKAqBUG2V4X
+	Yz065tpiM9JapCvP7QtsZ/0s9FgmSDfI=
+X-Gm-Gg: AY/fxX5Zqk8Bu+899AqZZa0miaxG1unCComInOwiTZm/EnkZDGrCPBqIUIf/Y4eRu0Z
+	9DfG3/XfrsDtOS2YY78Lfzm0Hg6bJVORdAv0HosGyfCPgEudevQw6XJOn1UXXLkgACoetkylPe7
+	6vcFe4j8SBEEnI5sbYVYpJ2QQbbzUszBNHNQ2NhginJ3X4KTamwGj35u2ujLoO/2xfhy6rer6Gs
+	y4Wal5i4KJ4wROhPxaipVbyPaZnHKd2D6ju+DHLZfjs+8CuJmPGg72AalcM3e/49sLSqMQbUECS
+	6SlQagwr2bDdSN4CJfi9e/Le+6fWaDTPoEr4h0A=
+X-Received: by 2002:a05:690e:11ce:b0:649:3e9:ceeb with SMTP id
+ 956f58d0204a3-64917704b38mr2363956d50.23.1768583010692; Fri, 16 Jan 2026
+ 09:03:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1a430542-715e-4cf1-86f5-d9424951204a@ramsayjones.plus.com>
+References: <20260114192803.4852-1-amishhhaaaa@gmail.com> <20260115130935.93526-1-amishhhaaaa@gmail.com>
+ <CAPvEtreX9sGHUn7+Y0kLo_VnK7Y=OYLq-kz-+np3bu1QtoEpnA@mail.gmail.com> <20260115200903.GB1053259@coredump.intra.peff.net>
+In-Reply-To: <20260115200903.GB1053259@coredump.intra.peff.net>
+From: Amisha Chhajed <amishhhaaaa@gmail.com>
+Date: Fri, 16 Jan 2026 22:33:18 +0530
+X-Gm-Features: AZwV_Qij0Nl-xZzHRxUA31m2s_K38_GxDJmzVsiiWh3yZh7mOasPxp6oRFQs22M
+Message-ID: <CAPvEtrc4KuQhNhc966=bbMQUZw1Ne1eoG68mVoZiG6A3h4t=GQ@mail.gmail.com>
+Subject: Re: [PATCH v3] sparse-checkout: optimize string_list construction
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com, newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Jan 06, 2026 at 05:07:11PM +0000, Ramsay Jones wrote:
+I was able to reproduce this, are we open to a patch adding a test
+that checks if duplicate entries are present in stdin the result
+should not have it? because the tests were passing even after removing
+all duplicates checks, and non duplicates enforcement is a part of the
+method's behaviour, if I am understanding correctly.
 
-> I hesitated to send this email because I have been reduced to simply skimming
-> the git mailing list (very busy with other projects/real life!), and I may
-> have misunderstood what you aim to do here. ;)
-> 
-> In essence, I was triggered by the 'GIT-BUILD-OPTIONS fallout' phrase in the
-> subject line! That reminded me of a problem/patch I was looking at earlier
-> this (wait, last) year. The patch (below) was a complete 'hack' (as you can
-> see) to allow the environment to override the 'GIT-BUILD-OPTIONS' file. This
-> was in an old branch named 'meson-wip' which I have been meaning to look at
-> again to either delete or fix-up.
-> 
-> One of the many reasons (apart from being a disgusting hack) that I didn't
-> progress this patch is because I felt that not all 'options' in that file
-> should be able to be 'overridden'. So, that implies that the file needs to
-> be split into two; one file of options which can be overridden from the
-> environment and one that can't. If so, then someone has to decide which is
-> which.
-
-I think you understood my goal. :) This is more or less what my patch is
-doing, but just for a select set of options (to un-break t/perf). I
-think a larger fix may look something like this, but:
-
-  1. I agree with you that we may need to consider which options should
-     be able to be overridden and which should not.
-
-  2. This hack has to go everywhere that GIT-BUILD-OPTIONS is read. So
-     in test-lib.sh where you have it, but also in perf-lib.sh (matching
-     the fix by Dscho earlier) and also in t/perf/run (matching the fix
-     here).
-
-It would be nice if we could write GIT-BUILD-OPTIONS in a way that did
-the right thing. E.g., by writing:
-
-  : ${GIT_FOO:=some-value}
-
-And then the writer (which is the ultimate source of authority for which
-variables are included) could decide which ones can be overridden.
-
-I _thought_ this wouldn't work because we also source the build options
-files from the Makefile (and so it has to support both syntaxes). But a
-quick grep doesn't show us including it. So maybe we used to do so, or
-maybe I'm mis-remembering (and confusing it with GIT-VERSION-FILE
-perhaps?).
-
--Peff
+On Fri, 16 Jan 2026 at 01:39, Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jan 15, 2026 at 06:45:35PM +0530, Amisha Chhajed wrote:
+>
+> > I was also very curious about the presence of
+> > string_list_remove_duplicates in the original code, from my
+> > understanding string_list_insert already removed duplicates and
+> > string_list_remove_duplicates was still present with it.
+>
+> Yes, I don't think you could have duplicates when inserting with
+> string_list_insert(). Of course your patch removes that, which means
+> we're falling back on the notion that the hashmap cannot have
+> duplicates, either.
+>
+> I think our hashmap _does_ allow duplicate entries, though. The
+> insertion code in insert_recursive_pattern() avoids duplicates in
+> parent_hashmap, but adds its arguments directly to recursive_hashmap.
+>
+> So I think you could get duplicates with something like:
+>
+>   git init
+>   git sparse-checkout set --cone
+>   git sparse-checkout add --stdin <<\EOF
+>   foo
+>   bar
+>   foo
+>   EOF
+>
+> Before your patch, that produces this .git/info/sparse-checkout file:
+>
+>   /*
+>   !/*/
+>   /bar/
+>   /foo/
+>
+> and after we get:
+>
+>   /*
+>   !/*/
+>   /bar/
+>   /foo/
+>   /foo/
+>
+> So I think we do want to retain the duplicate suppression. Switching
+> from insert() to append() is still good, as long as we keep the
+> remove_duplicates() lines.
+>
+> -Peff
