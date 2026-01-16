@@ -1,102 +1,110 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67856F2F2
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:32:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45957396B66
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768584723; cv=none; b=flQHgUB3L6MuB4j531bKtKWyErfw6RWMEx3wMlKxqizQxvmAB72cbDqxDfM4Q7wnWNIWi7f1YoBXDwSJeJDrjOalcn8+kYcv/ExIpNrjK5G6uXU2sozKD0c2vNp+CYu+SeMuBqKps15nLXD9N+Zgvx1DOQexAv3f5eCYsxvDndc=
+	t=1768585578; cv=none; b=c9rgSqVGYdYsIfAZFFiVGU6idEWlagFCTY50k3Ho08dcXwY8yGzejaLtuWaub1rX+OeHCBjbL2MkSsAdxDud5fFaQAVV5iAFFHqm/Xa3chlLMJYGKAlNGeLavkDPNEPnx1xvJlt2BIP93AYJN0RmwKsiVqRT3cBC+GShRGJHhyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768584723; c=relaxed/simple;
-	bh=zlC0WS9k73qNjlePArq7pi8HrR+E1hhFgUwtSsN6y7s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oX1Y4de2HSynVqXODyxTBrWY6U8aT8Omdz3ThvhZL9FBiTAY9K5DQMFzUVmvdQg9AKxeN9pAEzganw6zTLfhmk6aRYy1GD/7EPqKxQGpPMBU7eAIYLFbXoLr6/Gv5Trce7EQt2L99rJmlp5nFAcVOUVS9E+57qJ1+nO9xmhFAhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MJXyy4IO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ow37WWSJ; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1768585578; c=relaxed/simple;
+	bh=909YBJgPZqIumrU5FL2As73/0X2uXFeX48aq4qRtNZs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=usuq/JCgLKXaraaKbs9+wrGW1BuzoJyarGAdwRxfhV0qfRgSvV31HH9BfRlJn3M9bk5STGk3Xjmg/E6KQ2pnSOOoDrko7ywI87xZqumIOWs+jmZLIf6Yu0R93pOcwDh6KapHopL5JP27klxmlshnjhhw/YLVVhs2OO2EP4yfoaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vd9ImlBg; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MJXyy4IO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ow37WWSJ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 113261D0006B;
-	Fri, 16 Jan 2026 12:32:01 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Jan 2026 12:32:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768584720; x=1768671120; bh=297nDEYV6i
-	TIRkyNyVxEarvce37WEpbZd+RLar62bAQ=; b=MJXyy4IOtZZP7EQ7fT3m3oqQ48
-	XHF1OB8KjIgtkG9aQkv2IqJw0dQJKPFbiCIcAWrZdYeOdBznXTenJLRkbAfc4Utd
-	u62bh851RyrWsZDL7uIkhzKTD6/zN1wXLCKSoeryz73ShDigXMdTihsKKlSyRHZk
-	lTa6jQNz1jU2gkGIWdmF4MQaTBSc6BDX+NFSkAPsHI01iZyuuJT9rD5F4qEkZJka
-	LNkXdkQJtP6GsVJSBAr+0XhAWTmfmwP2xkT198VGlwJ8OiZ/C8qG38i1P9/4Q8jb
-	Ef/4DfI71P9k7o6icye64Ua0oMCu26QqMApVxBPhK/GDFIdHm/e5kVDYvVEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768584720; x=1768671120; bh=297nDEYV6iTIRkyNyVxEarvce37WEpbZd+R
-	Lar62bAQ=; b=ow37WWSJqDDtoplHDAyjemrxy0+c3ToJrL7OcJztBmH66pZmtrG
-	aMgiL6rM7qugUKNul9+ab2h9E8o8IMUA/1mcciddFCxzt0+BYQCmJ4YFd/gqpGOO
-	L4ghwO/liXtexfdZqa50KVC/dhn0y/PzTOvVO1L2RCj/c/MkGidCofwKJ6sogMVn
-	pfClET9o/W45bxaYUaLZdLAIyfHczSJSC59QUylo5gY7bIYgUIRyIcv9EVORu85R
-	UhGAP4w6+ttjpKJkRgOhuWbrifTZokfAAv236vayXA24N73CgUOKLQB4vFMPChbW
-	FyJ1QyJ+Vl0C3MKTZkItuAfrsQA3JyzY8yg==
-X-ME-Sender: <xms:EHZqaQF5bfNujQKfFZfy2EUe7ZaTJRFECD-ut5Pcgj629It17yfRfA>
-    <xme:EHZqadCssGJrOUbTCgmiu1KEUOh7Yt9H6k6j_aFWVUpFLji5BWGphXbLqwxuqhxIQ
-    jvM8d9n5Ie8YYqnEptOrLIUIWaIGS0gXgz4Icy-33FlY_YQgjY9zA>
-X-ME-Received: <xmr:EHZqaT_P_7g26piYdJSXQ0eC7APy0XoZgTWvGnzwMEa8I4eQ31VwlfGPkrvTOP26YBhl-rQPXArszVT3DRZ2CHf8BpBM8oEBv763W4A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdelheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhushhtvggusegtohguvggsvghrghdrohhrghdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:EHZqaZBHHy2TL5fgVhxMRHugOZxvu1frxhm1sUeb45RsLVkSDLdsAA>
-    <xmx:EHZqaYSn0o-SqjqZzmBIzuGXz_IhyZveH8JenJD5q-o7vf0PsRyJSw>
-    <xmx:EHZqaQsKEvSxV8c0OMKCK8bLsNluEfV9rdZksTDpqOF8jFMAtTWBzg>
-    <xmx:EHZqaU2f4PpEdm6Ggret63S51U2luOroINhkc518gHLPTI3-wCWXtA>
-    <xmx:EHZqaShZdQqR3prRaE7D7-87kV12x4LVThFioWoETVXmsVhBbk3Ie00O>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Jan 2026 12:32:00 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Gusted
- <gusted@codeberg.org>
-Subject: Re: [PATCH v3 1/4] last-modified: rewrite error message when more
- than one revision given
-In-Reply-To: <20260116-toon-last-modified-tree-v3-1-e6ade4dc35ab@iotcl.com>
-	(Toon Claes's message of "Fri, 16 Jan 2026 14:08:37 +0100")
-References: <20260116-toon-last-modified-tree-v3-0-e6ade4dc35ab@iotcl.com>
-	<20260116-toon-last-modified-tree-v3-1-e6ade4dc35ab@iotcl.com>
-Date: Fri, 16 Jan 2026 09:31:59 -0800
-Message-ID: <xmqqpl798nw0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vd9ImlBg"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7cfcebf1725so1538696a34.1
+        for <git@vger.kernel.org>; Fri, 16 Jan 2026 09:46:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768585576; x=1769190376; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nGzZMXvr3uh0Hw/9WODwt5P1e4FuNDF3FN3J5SBGCRY=;
+        b=Vd9ImlBgBIfrlQUweCIbgQ5dUBE6EzQMLYtV71LmbhLH3zX2AffSgISpBBRW7Z1x/h
+         UEVPr9O1ty6YZvgdXbyWkQmb75R0s/hbKSRiOoEdkpmV+8f2mUhF6GkdD/YV55dL46+T
+         +68yWYJSTs8StM9mmJVlyQb2lfdC2S7eRfg9qv0/8Z5rKM4syySsJUo+BDM6oCfOLEEW
+         lrs+oXs9S7P85N/7723tEFsN3qMxFxUmAsl2BoAGBXucthErX1ohvc86XgELrbReoNaf
+         akOQstpx5FV0ciqY150KahGLBGjnlzK6pdbBLbIb90Jbl5tzekHHQhL3bLQSNu/ay3LM
+         p9OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768585576; x=1769190376;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nGzZMXvr3uh0Hw/9WODwt5P1e4FuNDF3FN3J5SBGCRY=;
+        b=NWDfXw8EzxCVS3+aA6X7EgrzAsKc/ajhwnLpwJpMYUmeunVK/o5i1w19ejUOjpB+sA
+         zFhG3NGEiJEyA3p/XqDP8vC+qwWwkMrezVQo485HDH77ZMxVWMWBt6vxRtiMhmqPd+ZK
+         6iH9ryQQ7icu8ms+5xuL9TVpNC9V6C9Y9e4DZc6GQ9BPC9Qsm09Co/YPCInj1mX1jk+O
+         v4pTeX/guQvP69pparUlp8uFbk/Y7/1hlcrGCIRzhjm8Xmd5bo04OP9A3EFwN9s+X2u0
+         jQtYq4/k00Glh4UlGVUbDzv1vROmPUfZRGWSsboJnnAUwoUtiwXqOCRzL+oLS6QJXMWG
+         BhWA==
+X-Gm-Message-State: AOJu0YwB0mZu7tRONIr+oVC2ckou3dgNrkL6kCmMHfTzhLVy6aQJEN30
+	zVKqKDEY3S2DPuacsbZlTYpVRBFxoQ3L3i2Bw24UyHMUSaVS48d82ogJmVj3Ig==
+X-Gm-Gg: AY/fxX5y93ltbMiYowAxRDsA0ii1heGkZQ9gcoghc/EQD11IB8XFLnifYXfQY1lXCsu
+	YNf1mtuhKWge85P3FRcVDzrZFED+JwYbmdOhYJjL9IftXGZO2EY2m6CL2KWdu1LlfHO0GYKjXrb
+	iM+V34dUHE42Q1IDLqOBRLrEUEeBSkN9KX+vlICrc8+u3pFs0EfrDOiOqRbCIFKExkMeKKfPvTb
+	wlKsoc+6B+mbNt6VTPpfn/JI1o4spkTFxHs4dxOFSAFL+J+A8hHc8fQ+Z+cU5scUFJ/jreJInyd
+	dJHxBM073znCXCJYXuylWXi69YEhRrqkjt3iCljBlEM8oVmy46M0K0xGRjvOxtQmzmFmM/tbLMN
+	WCitNYRhIY3PnYaYl0xind+mv2r/yqQPSHPZvTmNALU3yDMEVRQttu5Y9LLECpdxPlmHLOJW7CM
+	dTANRr
+X-Received: by 2002:a05:6830:6d10:b0:7cf:d784:5dd with SMTP id 46e09a7af769-7cfded74cd8mr2335334a34.11.1768585575690;
+        Fri, 16 Jan 2026 09:46:15 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7cfdf28efefsm2017638a34.14.2026.01.16.09.46.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jan 2026 09:46:15 -0800 (PST)
+Date: Fri, 16 Jan 2026 11:46:12 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 07/14] odb: introduce `odb_for_each_object()`
+Message-ID: <aWpz65mPZfy7Hfba@denethor>
+References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
+ <20260115-pks-odb-for-each-object-v1-7-5418a91d5d99@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260115-pks-odb-for-each-object-v1-7-5418a91d5d99@pks.im>
 
-Toon Claes <toon@iotcl.com> writes:
+On 26/01/15 12:04PM, Patrick Steinhardt wrote:
+> diff --git a/odb.h b/odb.h
+> index f97f249580..8f6d95aee5 100644
+> --- a/odb.h
+> +++ b/odb.h
+> @@ -475,6 +475,23 @@ typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
+>  				      struct object_info *oi,
+>  				      void *cb_data);
+>  
+> +/*
+> + * Iterate through all objects contained in the object database. Note that
+> + * objects may be iterated over multiple times in case they are either stored
+> + * in different backends or in case they are stored in multiple sources.
+> + *
+> + * Returning a non-zero error code will cause iteration to abort. The error
+> + * code will be propagated.
+> + *
+> + * Returns 0 on success, a negative error code in case a failure occurred, or
+> + * an arbitrary non-zero error code returned by the callback itself.
+> + */
+> +int odb_for_each_object(struct object_database *odb,
+> +			struct object_info *oi,
 
-> -test_expect_success 'cannot run last-modified on two trees' '
-> +test_expect_success 'cannot run last-modified on two revision' '
+Something I probably don't fully understand yet is the role of `struct
+object_info` being passed in here by `odb_for_each_object()` callers.
+Outside of configuring the specific object info attributes that are
+needed for a given callback, is there reason that callers would care
+about the data that gets populated in it? I was under the impression
+that this object info was really only needed for the internal
+`odb_for_eachodbject_cb` that gets invoked.
 
-Not "revisions"?
-
->  	test_must_fail git last-modified HEAD HEAD~1
->  '
+> +			odb_for_each_object_cb cb,
+> +			void *cb_data,
+> +			unsigned flags);
