@@ -1,85 +1,83 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21ECE33B96A
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 18:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D8021FF35
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 18:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768589726; cv=none; b=iK+wCc/7cEhi0BRkFbvD1jY9J0z/MiPstnchdv3qxAJZCyVF04RSmxcRcRboeEw6njedcRqH/yq1kXof6lo9Hiq7SYsPpPKKBQX/c+7w45cgUCzW1bZwDumgatIRzcsTwSU/l1XHmOZwz6Vv9mWbcv/D57yQrbdDFjneb+T9HYY=
+	t=1768589805; cv=none; b=ZFDhDX0fgamFOPbk5KZGD2GMEfuLPoQaBsy9Xo/U1CaC6iR8aD9XoCHW1H01SXKQRbOIWifPAbQiFCe5Tnm5b55Ghw8TNN08Ae4xjlNQ/sePhlZf7NsilYtGt0f+G5sNNtWVQTghvzW9FEQXq87XQoFv9EztCYBXR0rRqTrM9J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768589726; c=relaxed/simple;
-	bh=3IZKKn9MDRW7+ti0nDwk5qhN3MSHiYEoi+rel5+3pTg=;
+	s=arc-20240116; t=1768589805; c=relaxed/simple;
+	bh=riQU8KcwDLQ0LcWQUaI5FKq+ZMI39eJYtxJcHlajpBo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L+F0K9I/hFGy+ddL0yDr3DZ8PrlmdRx58RtUbaBJ72T713SUhzUV+QcMLbQ5QCAu/9JiB9ovs/4UMt36iEuJToxNgXr7y23N9E/sYvzHMql3GkiLp51mi2zvJrjtnQTFQuMOYwBhsEm6QzPdyUualOtWdMEt+wnU/Jzw6YF587g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jnel0r7o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ecmQbYue; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=nrKsIuDwcO7Y6D4A3taS1xzurKLMTtEAQGAvUB7YnLztUXTZQMDqvEYW1u/fFTLLeJBG20kXFoMXsSQ4385nn0Za7F+1dBe0K51Z4HwkR/JmF6X68Pxnw4Pwhn/fj2bbKzqVT+7Xf4DAFb9RAq3+66lFvO+YQUDOhy00tBirQcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=efkd2tzh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=saE5qDrl; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jnel0r7o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ecmQbYue"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="efkd2tzh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="saE5qDrl"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5A8C4140006F;
-	Fri, 16 Jan 2026 13:55:24 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0C0461400094;
+	Fri, 16 Jan 2026 13:56:43 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 16 Jan 2026 13:55:24 -0500
+  by phl-compute-01.internal (MEProxy); Fri, 16 Jan 2026 13:56:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768589724; x=1768676124; bh=IrYx6Ax+3u
-	cluGW0JMOXiPlBbWVanhlNVi/q13d2hMo=; b=Jnel0r7oQtW34WnxBlYpEbMKQ1
-	bTalL9KXauuxNb5G6TDyCXXmfZa9GGSs+F9mzR2yuWaWulPJxfgk7NV1mfC91+T4
-	MbTBwb230RoJTMplvfakSMBD8/HooFxIKnVlYEp7vkSDWHH5iTw1ElE8N1v/fNpt
-	rGOedWHi6hmSzuTHHZhuKfQAN3rhfaSAB4gdIu24y0Qt3w11ShjCkwH+4Aqg+r83
-	TYDxsPg3cUMl5Z78GfXGrGLprkxuKkocMbx5Z6YUxu50RdvBGeLmt2L5xqQ2QS6o
-	+0ujp2eFKaLuKm/IQnTHg9wKTOE7SwJvEix6J6qKDaw/6Ikez9G7odnKAE5Q==
+	:subject:to:to; s=fm1; t=1768589803; x=1768676203; bh=vs4r7jaNqg
+	I9b3WBw09joG5/aw3gFQleZKEoObuGiiM=; b=efkd2tzh+70MyAWpxxCjUF+3Kk
+	y6O2AkhWY6pViOR/mMrIG6zUjGLqf8d8jMxU5YyN8ziVxwz/WTyvxXZFiDxxLl9J
+	39rlrzB2LViVCA0KRXJpmyud+Q1SnMGk+VyaQoBvXE0jmrIzRekMedJMK2mmOJ/H
+	g4pn8LuVnkIVNxq40fXF/KLW0+qIKU6jNn6XmXLIFshN5T9Q8widOBAZmqwP2qmQ
+	FLJolZaGdf8JS14XpF5t7yKgj3LUQo1uJoxa47phwva5pEreCXPOB56l8hyhft0a
+	02wRZMGSqQ+IClm/uA92vwDLBx4GdOF7nj6gvd0U/5hwRjOm+o4ffUGkEQbg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768589724; x=1768676124; bh=IrYx6Ax+3ucluGW0JMOXiPlBbWVanhlNVi/
-	q13d2hMo=; b=ecmQbYuedGLYLBX/ufhEWhY6nCwOcd/QV3m0uicX3jsLHoYBx8c
-	g1Skcb3pagwWyQOOLnyXIV7FwGxMrnkk+mBFMGHbHlPhajaD5pQGHePEuM4Nqd1M
-	NWgM60lzPzaxeU6syQqylnr5PmHpeB3BSG7dQLprz5vh7pWlarsYCITxoPJCqFbH
-	4ygglHRNrzNGbi6RuFgxjGRGBjTrjVeKxnolsD9i2h+TixQP8OZCj7ycuPqFiuIg
-	Xf3lJZGjcHmzIyLdxNBvYndJPAsPsQZ36nCBx3iqY5VtWkU48sugY17IVV3DJyKq
-	C0/p32IsvP48YdQbGcz/q2WQgnjoWNSYKpQ==
-X-ME-Sender: <xms:nIlqae7sABDCuDNQ3ut5nNVXCD1Fqcs2IijZEaKbea8oWxwbKrga3g>
-    <xme:nIlqaeyb14-K3SlBW9ECGc-bUGK5KIlE294bnRu64ZJLzO4iaNa03n5HZp6KyKNaY
-    sPhuZ-DvYrWRMHIZ3o_2z8ujtV0vAB0rtP8ifFZqzHAhuok5Jv71g>
-X-ME-Received: <xmr:nIlqaVz-hf1mX8NmO4QYbnPrH7h964ghJDtuek-FwdIRM9RIp2VTcF_dMNTTZqNbjGj6dBSaIL6WQhtWx_yj3ccnV01hFVf4f8cjlUA>
+	1768589803; x=1768676203; bh=vs4r7jaNqgI9b3WBw09joG5/aw3gFQleZKE
+	oObuGiiM=; b=saE5qDrlCYgB9yQFFoqD2t3X0u+oGPq74MlRvZdX3yphId2M7Vk
+	n9fTF8UX0nkb6Z0uMG6KCzejS42qok1YWr2doHZWI8FTQ4Ly3fuJs6dkr1oOec+Z
+	2TV3XKWsXtDmVhXAWeYg5+7VA44rt6CRHwMYJThhA77O+2UhCm8UfXNBbe2B1hwy
+	EY5aLyxPvnB+Dcx4vAkbbs5boLeSAE4S9dBOYP27h7qB4gfKuvhzym1JbFYgl6xT
+	J5VzXaPu3orJk/LtUlIaU42RCK7zdAl3g/cNthxUUiv/hhZcGQk/tyyvYS95ZXiR
+	G/5JICyxxxUoF3BGnCHr9nk11M+CSrodBqQ==
+X-ME-Sender: <xms:6olqaaDC0b71gQuIMb7V_4ZyB_or_vD_8i55IQOvo_9f1spH2pOQXg>
+    <xme:6olqabhe2kLvLc2Ps6qGXomndiceezyaFmPYAsqe7wvvsdXLEyLpprYGaFzjFG2yo
+    M6rt70ny4-LHbFJkTUUbuxJK-BD7-ugqRzA-iWZaChkzM0tU2ST40U>
+X-ME-Received: <xmr:6olqaSmynfcEgIeRH8Jqx2QIfeoX4dQFfbvi9f-3gYXYAzARBghelqR3421AQRbhUfjIYEl_xSiPEPQFReqtFdGQhSVea474ZVqAyEk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdeljeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepheekueefheegiefhveevteeugeduueeftdekveettedthfejjeffudekjeei
-    gfevnecuffhomhgrihhnpehflhgrghhsrdhnohenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonh
-    esihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhushhtvggusegtohguvggsvghrghdrohhrghdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:nIlqaWwfBR_knuZ1NAmv0AopDzzRlB9gf0-2fneWXp1Lv0rKLzPz2A>
-    <xmx:nIlqafYlD6S51SsxMLkHkDs1kpBelwZiOmgH3XSufGdXPF6F8ZGNQg>
-    <xmx:nIlqaXWHUs1DqtqSMlm47yxyfurpoG1XyfvwHRxTiOjtwUgSxuVILA>
-    <xmx:nIlqadgS7D0ojiQOS06coAjLL1cnemiGBF2Y2Sv82zC9S1S49YxpoQ>
-    <xmx:nIlqaYMer5VbB2rlfdMN3vOeqM_lk8FSSXTyP4R4MLUVKYB0wHDY-1kZ>
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjoh
+    hhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithdqphgrtghkrghgvg
+    hrshesghhoohhglhgvghhrohhuphhsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:6olqaXq_IcHxbCAlWFnC9P8Eh6DL0GDkoyiibDPkAsdJYaMsMXoK3w>
+    <xmx:6olqabFYH4sN1-Lb1ts9V_cKrTol337pQUI8lhn7tpHGgMI2Okm2Xw>
+    <xmx:6olqaTwXyvUGL8box5IyZ1WO5CvgRhPZLIhheJjuqDFiuYqwvhWOcw>
+    <xmx:6olqaQrgJjN4-rWphgCQJtTg9CzoOa7_4XYNGs2AzjzeA9EBC3hO3A>
+    <xmx:64lqaSrj66or9L8az4vpEdsfYQQudJrdTxWR9SoIjzZfS6a2KWmh9WFG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Jan 2026 13:55:23 -0500 (EST)
+ 16 Jan 2026 13:56:42 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Gusted <gusted@codeberg.org>
-Subject: Re: [PATCH v2 5/5] last-modified: change default max-depth to 0
-In-Reply-To: <20260116-toon-last-modified-zzzz-v2-5-79e44f2806fe@iotcl.com>
-	(Toon Claes's message of "Fri, 16 Jan 2026 14:22:53 +0100")
-References: <20260116-toon-last-modified-zzzz-v2-0-79e44f2806fe@iotcl.com>
-	<20260116-toon-last-modified-zzzz-v2-5-79e44f2806fe@iotcl.com>
-Date: Fri, 16 Jan 2026 10:55:22 -0800
-Message-ID: <xmqq1pjp8k11.fsf@gitster.g>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: git@vger.kernel.org,  git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git for Windows 2.53.0-rc0
+In-Reply-To: <1MbzyP-1wEj5N1dfD-00evZm@mail.gmx.net> (Johannes Schindelin's
+	message of "Fri, 16 Jan 2026 16:30:36 +0100 (CET)")
+References: <1MbzyP-1wEj5N1dfD-00evZm@mail.gmx.net>
+Date: Fri, 16 Jan 2026 10:56:41 -0800
+Message-ID: <xmqqwm1h75ee.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,65 +87,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
-> index a3992db3f2..57136baf3b 100644
-> --- a/Documentation/git-last-modified.adoc
-> +++ b/Documentation/git-last-modified.adoc
-> @@ -27,6 +27,7 @@ OPTIONS
->  `--recursive`::
->  	Instead of showing tree entries, step into subtrees and show all entries
->  	inside them recursively.
-> +	This is identical as setting `--max-depth=-1`.
+> Dear Git users,
+>
+> I hereby announce that Git for Windows 2.53.0-rc0 is available from:
+>
+>     https://github.com/git-for-windows/git/releases/tag/v2.53.0-rc0.windows.1
+>
+> Changes since Git for Windows v2.52.0 (November 17th 2025)
+>
+> New Features
+>
+>   * Comes with Git v2.53.0-rc0.
+>   * Pressing the Tab key in an empty line in Git Bash no longer causes
+>     the session to "freeze".
+>   * Git for Windows' installer is now built by InnoSetup v6.6.1.
+>   * Comes with cURL v8.18.0.
+>   * Microsoft Edit can now be specified as Git editor.
 
-When I heard that the default value of max-depth will be 0, the
-first thing I wondered was "how would I spell unlimited in the new
-world order?", and the documentation for "--max-depth", not
-"--recursive", would have been the place I expected to fish for
-necessary information.
+;-).
 
-Over there, there is "A negative value means no limit", so saying
-"identical as setting --max-depth to a negative value" here would
-match the description over there better, or the user will be left
-wonderign if "-1" is merely an example that is negative, or if it is
-more special than other negative values and if so in what way.
+>   * Comes with Git Credential Manager v2.7.0, the "anniversary release"
+>     after one release-less year, which brings native x64 and ARM64
+>     binaries for the respective flavors of Git for Windows.
+>   * Upgrades the memory allocator mimalloc that is used by Git for
+>     Windows to v2.2.6.
+>   * Comes with the MSYS2 runtime (Git for Windows flavor) based on
+>     Cygwin v3.6.6.
 
-> @@ -36,7 +37,7 @@ OPTIONS
->  `--max-depth=<depth>`::
->  	For each pathspec given on the command line, descend at most `<depth>`
->  	levels of directories. A negative value means no limit.
-> -	Setting a positive value implies `--recursive`.
-> +	The default depth is 0.
->  	Cannot be combined with wildcards in the pathspec.
-
-> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-> index 842700bc6a..a10e711beb 100644
-> --- a/builtin/last-modified.c
-> +++ b/builtin/last-modified.c
-> @@ -481,14 +481,10 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
->  	lm->rev.no_commit_id = 1;
->  	lm->rev.diff = 1;
->  	lm->rev.diffopt.flags.no_recursive_diff_tree_combined = 1;
-> -	lm->rev.diffopt.flags.recursive = lm->recursive;
-> +	lm->rev.diffopt.flags.recursive = 1;
-
-Hmph, so this will always be recursive?
-
->  	lm->rev.diffopt.flags.tree_in_recursive = lm->show_trees;
-> +	lm->rev.diffopt.max_depth = lm->max_depth;
-> +	lm->rev.diffopt.max_depth_valid = !lm->recursive && lm->max_depth >= 0;
-
-Not saying --recursive would keep lm->recursive==0 and non-negative
-value of --max-depth will flip max_depth_valid on.  Saying
-"--recursive" or giving a negative "--max-value" would make
-max_depth_valid false, and it allows traversal all the way down to
-leaves.
-
-It may be correct, but feels quite convoluted.  I wonder if we can
-get rid of lm->recursive altogether now as a clean-up, and have
-"--recursive" truly do what the documentation claimed is equivalent
-earlier, i.e. OPT_SET_INT(0, "recursive", &lm.max_depth, -1).  Would
-that simplify the logic a bit and make it easier to reason about the
-logic around here, I wonder?
-
+Thanks.
