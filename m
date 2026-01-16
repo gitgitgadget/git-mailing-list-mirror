@@ -1,121 +1,109 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A39E555
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 07:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28CF2DCC1F
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 07:03:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768546873; cv=none; b=RDFr9Ga/PyBozSwc0M01kMiPkGWfrXRaVNKvMLWo/HOgiYl2YM5nT0USvsC/WYgBDupwbDPE2GnXQq/QStmOnoYUev/YQn7YgpPmCZOGUdXhv80IGB9uh7M7X51bhZiFq/tvlCyzz1HUWd+XYybCXsYl3Ht+a3aI358oNyYeODE=
+	t=1768547000; cv=none; b=Jj0OY9Btw8J1g/mg/iju8lOwxssAdwghvQ1LpMfUAJAyJFqWe5NVHbRveNfIefUv81BfkuM0PZZgNvxf7gtu1ZWqPy8cw+nHc/Ohd2oIxiHtlYMSjVS1mjXpsWWUqpUygfhdf2i2N9wt3UDZUmcuQxr099Vpa3zhChkta4lWtuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768546873; c=relaxed/simple;
-	bh=dOzCF6LabzYfRJvMgNlgL1bChP2XPKmIGng+RKyVNNU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sBpeKpodZ/KqhA2cOEbtkD++TCBDc9KRLVXZdE+HkJlfzgGoK7JFPRCzWuT/K8R6YyciVbne9elzB4JMHaJ9WeP6pa7iO7Qlz6PkH7XUlTY7VaTXU/M0jOd+J6nu2iz3WMQof5Ptg3bkReFS2xfnhamBPKdAYFRQayEjQ3PEF4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I9qIbpMX; arc=none smtp.client-ip=209.85.160.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768547000; c=relaxed/simple;
+	bh=OJbKi3ep5phlmXjOHrkEbDrJ2NEbWHCoZWrV+P4G/+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FXZ3R2QJCBrvWcPfVB5O2OpzGcsBK7g2stKNtFyajJp53efmfx4x9cRrEcvlo8cFLBJ/6cws3i3exx8CC1T29J9/XUgN8FPrASclNZEZcHzO2Pzc9TT1ICitkGmrgrq699oUnoGsx0PgoE5EJzjaJcEXuQletd0OxFVop/89nGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gtbmFtyP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hO+S6+eX; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I9qIbpMX"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-40439fb8584so939842fac.0
-        for <git@vger.kernel.org>; Thu, 15 Jan 2026 23:01:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768546871; x=1769151671; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=78x8FxD3eubeW4MSDIZmNh8pMUGpW6rQMnVEYSf3Ry8=;
-        b=I9qIbpMXXjd5HFiBMj+NEHxpdF8wQskP+dgjRF1Fe+HwT2uUS8EThf9eFQj49/P6Qy
-         NahqIwW0T2JiNnz4+AUDfgnRajvWVfscK3OGrmgaLxFrjG0rIY+r0W18l9va2EaW5Y4Z
-         Vy+EJcy4H4xyos01rddP5R6QkEUwTRpAMG602pBuhKKPdAhEvkAOofH4hDLI6DbCtnri
-         A+xH4BxEXXgi879VHhQ2BZMaS1yCfP28qGt+vE70BlnLKJxfTTcW9/UV5/bZh4S4xEE4
-         80emDKIlg0+Bn1KDr27IrnJrEZXIjm/q8e8CTORBS41Pcy/eXdpkFv6flr4IsjbgG6bg
-         E/lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768546871; x=1769151671;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=78x8FxD3eubeW4MSDIZmNh8pMUGpW6rQMnVEYSf3Ry8=;
-        b=tsGshFuYYiD2EwJr+GvAVpo9aXLQ9iPHNx0BmcQBDSII3H4uXJrbnlVi6ZWwfoIKDQ
-         qcsX+RNuweqUj6g0XFPw41DLab6+kX6HF0/cUvj/DLL1RShRpJW8n09UbpYOm6xSGKKo
-         j5ajjMZfTJ2ESOJOwzXFf47cCcIz/9m0pGmBgaZSF+NTiv1GVc8SN8b1RKFWH7vtxqGd
-         6pmPQokgYu3xCh4mlmMJgH1LDXUxVpHN+liY38EMnq1acEpq7bJ1aHM0xXj17YQEE/50
-         XUokAyJu9zpX22sMwbA/969jBYTrPfb2CzyaYU/K2AKKJZHQFGnDcW10nsT9cOGrBRCz
-         BuKw==
-X-Gm-Message-State: AOJu0Ywpjxc+MpXPTEAQLFns7CCAVyEvVdzC9y0tH6o1YiyW5ulYJ3in
-	D9b3Mkag9SilmUeCiHohfGrKIkJuVj1AO3VY5tHDlzcW5cuz8raRpo+wyvODzxAeoVchY6NdPii
-	2OAqYr1NFDXNn9alRCcwe4ZC/ok0D1Tmmf7ob
-X-Gm-Gg: AY/fxX4ZWHZDDq0Xb7rFfy8b37Z+McF7Acr8KUBVJtV3UrrdLklqgPnHpDkvIsid7eP
-	UX+K2b5mYz55Vi1j7aazEKCSm37YT3XNoTJYcKZpoQ9yLZzCihYhe0W+HGra1ZWCHNBnsm9VT3q
-	zlSyJKko8TxRPadpnZ+1cujMF9TFfHNBKzt6PdVykSg7hO0PcytxJQMlWfpJwl3F8jbqX5uQwcY
-	ix6x6zGR5Bqg/PFH5AbzwmhGKdG7OK3hD8cLAqYCs7P1cnsvDahs7z7sWYQYLOl6Mrc0GPva/wv
-	eud76jghQD9GZDVrq3ycEXRGxwsi
-X-Received: by 2002:a4a:db4d:0:b0:65d:1636:5439 with SMTP id
- 006d021491bc7-6610e6806bbmr2753980eaf.40.1768546870594; Thu, 15 Jan 2026
- 23:01:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gtbmFtyP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hO+S6+eX"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 54A231D0009D;
+	Fri, 16 Jan 2026 02:03:18 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Fri, 16 Jan 2026 02:03:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1768546998; x=1768633398; bh=IYH5+yptF7
+	ox4Flx2/X0t2OhYBN65MQg05v+e9SL3Zc=; b=gtbmFtyPs7RdZ2M4DsTzKXNAr6
+	KZl2MHujtRzBGpovIe4VJexIC5b0YtK9uDZwW5Q0CaJqjSYDKkemnNLBKwCCbx0k
+	4WUIOj/4wr5gEJ94Qx6JHjpHtyPNpR6ogegZe/Ai4+6bzgzq4wj7LiDa4XZ5YWVo
+	femxpsc5/S6McpoPOtdJAO/8t5PfgnG4TbvNtAgOK/T+mkk3CZetiWhzlAMM9O4t
+	orZhRMGlsVhMPSjFQgE/p6+b9XrlPu7y91Bkf2sj7OOCVAhpzPxKztfyuGaO5PAW
+	DCS4QrBpJ9yZ1W9ni7OVty/hkxkcoYv5RnemqH4oUYm8khPEYJ5EsCj4v9Xg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768546998; x=1768633398; bh=IYH5+yptF7ox4Flx2/X0t2OhYBN65MQg05v
+	+e9SL3Zc=; b=hO+S6+eXBHLfYIf61xtAsvS4IbIXSIJA9EwD8n7arcr6Hr4T2Ti
+	dhw3ffs9bggN2G/BwvjT6mXwTD0CsNZeQMt4lzYTNjL9Q0gKuPoE8/209duLa2Bp
+	p60grnf0sD6Y134YLMO9dSMhLPb/3wjP+wqZLZaME0bYCjzwnNekXbfuwuLtPwa7
+	/IM9aJ9OGWh+/NW6A0MrdZySeFY257IvsGUSCbBtOvHNFf2A7CapbjmpspyEPDuI
+	t1qn715qyJwtZpDeIprSL+DcnjQtS97EknCsh+x2UtdWHxwzTr/W4wfAOrd+SWk/
+	iugolpqPZ3b6t2cy7GU4vHl+vt6+SzPxziA==
+X-ME-Sender: <xms:tuJpaUDllDgzUKrhj9OrvDym9nCjB1QKQIpNxef3DowPWS2jh2CvJA>
+    <xme:tuJpaci78IzgXhhuVTqXSLGaDlGI8x77UapDF-BzCRY_W6TDoVktsPl3YAXemNBdt
+    je75bXr6h0rHDPT6URtWVRDuEr8f2XbD1fRo0yIKLUqH6ufjl2riT0>
+X-ME-Received: <xmr:tuJpaVOa3gtzuBonKMwcaLn0HEAZlj5rhTCl08E9J0OyjDNiXl9F5Xvo3sXgI-BtT4AMPDMM9XhauOr_v3cd0WjL-R4siPiELzSxgjfsPg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdekfedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:tuJpaV6QzHKzLosQCjUjSDi2vet_ZARFA6p97-YWkiKQqrRpbFalRA>
+    <xmx:tuJpab1pPC8PKKq0TTjR0SpOu3FEcBUKeas7XmKqVIuhhk2yEOMvAw>
+    <xmx:tuJpaea-jGFWj7b2oH6nrs3DbxngQIfpmhnCJGViN7gz2CyE9eYixg>
+    <xmx:tuJpabCeDEirg8lUB0o7f4nfgliwq-INzZDnCoyFGAEKh1f7oEBm2Q>
+    <xmx:tuJpaXaThYeoMowwFOuMOK1tN4tn2ENFRFBkpFZXm6dTPHyj14vN6_gl>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Jan 2026 02:03:17 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 84fde481 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Jan 2026 07:03:16 +0000 (UTC)
+Date: Fri, 16 Jan 2026 08:03:13 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/14] odb: introduce `odb_for_each_object()`
+Message-ID: <aWnisVFbgXIG492W@pks.im>
+References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
+ <xmqqy0lzc7e4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqldhybtqs.fsf@gitster.g>
-In-Reply-To: <xmqqldhybtqs.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 15 Jan 2026 23:00:59 -0800
-X-Gm-Features: AZwV_QjCyU2whmaDhfmXucl4YYRjLr88f_P2jUry1eb9uAjKDILkXjmQ9lLunjQ
-Message-ID: <CABPp-BFGPs1ziDFZhbrk25fj5froGPCi92yxGOr9dpgMujKU1Q@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2026, #05)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy0lzc7e4.fsf@gitster.g>
 
-On Thu, Jan 15, 2026 at 10:59=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
+On Thu, Jan 15, 2026 at 05:50:11AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The patch series is built on top of 8745eae506 (The 17th batch,
+> > 2026-01-11) with the following two series merged into it:
+> >
+> >   - ps/read-object-info-improvements at b7f649ca93 (Merge
+> >     remote-tracking branch 'junio/ps/read-object-info-improvements' into
+> >     HEAD, 2026-01-15).
+> >
+> >   - ps/packfile-store-in-odb-source at 1ff0e42d33 (Merge remote-tracking
+> >     branch 'junio/ps/packfile-store-in-odb-source' into HEAD,
+> >     2026-01-15).
+> 
+> These two commit objects you cite have never been at the tip of
+> these branches in my tree; I'll go by the branch name for now ;-)
 
-> * ac/sparse-checkout-string-list-cleanup (2026-01-15) 1 commit
->  - sparse-checkout: optimize string_list construction
->
->  Code clean-up.
->
->  Will merge to 'next'.
->  source: <20260115130935.93526-1-amishhhaaaa@gmail.com>
+Ugh, yeah. I referenced the merge commits in my tree, which is of course
+dumb. Will fix the cover letter to point to what you have now.
 
-Shouldn't it restore the string_list_remove_duplicates() calls first?
-(See 20260115200903.GB1053259@coredump.intra.peff.net and
-fc14e0e5-93bc-4805-a20d-d2aa4eb87ddb@web.de )
-
-> * pw/replay-drop-empty (2025-12-18) 2 commits
->  - replay: drop commits that become empty
->  - Merge branch 'ps/history' into pw/replay-drop-empty
->  (this branch uses ps/history.)
->
->  "git replay" is taught to drop commits that become empty (not the
->  ones that are empty in the original).
->
->  On hold, until the base topic gains consensus and stabilizes.
->  source: <375adc4e941f3bb22a2b12ee26a083951ed724dd.1766076625.git.phillip=
-.wood@dunelm.org.uk>
-
-I think the base topic has done so now (as I'll note below), so this
-should be ready to advance.
-
-> * ps/history (2026-01-13) 9 commits
->  - builtin/history: implement "reword" subcommand
->  - builtin: add new "history" command
->  - wt-status: provide function to expose status for trees
->  - replay: support updating detached HEAD
->  - replay: support empty commit ranges
->  - replay: small set of cleanups
->  - builtin/replay: move core logic into "libgit.a"
->  - builtin/replay: extract core logic to replay revisions
->  - Merge branch 'kh/replay-invalid-onto-advance' into ps/history
->  (this branch is used by pw/replay-drop-empty.)
->
->  "git history" history rewriting UI.
->
->  Will merge to 'next'?
->  source: <20260113-b4-pks-history-builtin-v11-0-e74ebfa2652d@pks.im>
-
-Yes, I think it's ready.
+Patrick
