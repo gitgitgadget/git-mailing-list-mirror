@@ -1,83 +1,91 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D0F33B6E1
-	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF44318E1F
+	for <git@vger.kernel.org>; Fri, 16 Jan 2026 17:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768583397; cv=none; b=ZbX09eLTIDR+tcdr72xdrGXbf0xMhe2BjwEFeubVJb4HtmfovqRkiBrklQxQK5AXkSAfpbpZaI1vv3g2mnWMQ0MHwrqC8rHQMNE9R7lFjGUZO0dD2+VVHZ0d/HMefouB3RYxFWjEZF1koo1eiTfYNnc3Jbb2REJITgdTYO1lbRA=
+	t=1768583768; cv=none; b=bwZ+VQVMsps7mGZcFkrL4wAiU+qT19+e60WyEBSLYaleS7QdUMaSvujXWwXPiuMobuVzqsW8FGl4Q1RfMm4bf8No1bRBb5WsONK3ujMSj3BARROjEeZ0fBeqD9G8TxXkAtCHwI78qj1pF4JhS6yw6iHWZMqGWDSFdMLJ6gDRbcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768583397; c=relaxed/simple;
-	bh=ibPgFwN61bWZ478VwEPLgEwCq6bGxt9qsLDQHQ0SGRg=;
+	s=arc-20240116; t=1768583768; c=relaxed/simple;
+	bh=SUVIAxiGq7NnBDJjRA54zbtaT/fhJJCAvGigE1S2eAc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k/6rV51fLSWJL9B5pKIGJ1lrUp6Ee6NYtkmKeQqXiiQTjNGDvils1aXOxdCodgnXTo5eH6yQo4vGszVVsZdSSZaR99PTfFgGfuflSpVZaRruDxrQmiXm1aPQ0gofWWqed6z6L+CIxkeb4kD1fot2HqGkdHpQz7U239K1zKPdWiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c1kSW2C/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G3xNEz4+; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=s4yUy5Qs6jkL35R5Q9rJPcxoYJCejAYHFv7mXNH8H5Pavq1sMx58Bzx/UsoYOcjFhEZJqOB8DUM2LkWbzkfWmzKJMz5I8A772GKbdL049W8U5YLIrSQ8VKRz8ai0mSzl1osL7ZNXeai7vkyMj4TRwSiyQ18Zc+dOeDGQj5slRdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UqLve0OY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XkYlwhDV; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c1kSW2C/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G3xNEz4+"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id A97861D00178;
-	Fri, 16 Jan 2026 12:09:55 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 16 Jan 2026 12:09:55 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UqLve0OY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XkYlwhDV"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id BB4291D0014C;
+	Fri, 16 Jan 2026 12:16:05 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Fri, 16 Jan 2026 12:16:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1768583395;
-	 x=1768669795; bh=o65hNptA3f8VhIJgASesqCuWftO+su55ty3hp2TEQLA=; b=
-	c1kSW2C/th8RxCtYyXiXMq1IMaAmgJ1vZyi1yLEzMIDItZtx+DtPcHgDHyVQQLWM
-	TssSJ0/fzj/+Kf+k1Db7HZXAQ2K1vSI73dLgzYvjkNDuLl4FSkkpZhoFopGJJB80
-	ivsSU3LtfqhznbPyehoBK/NTLVIW6ZVkfZ0NlB/HJY2gusAIpJHpbMiMS8VF84kH
-	hHTLDO7RgHetDkrDeQai4d6+fyElfB2CNPf3KhG6ilMW06M9NlT3lJlQ3HRL7ew/
-	/aV4AIWqbpDmiOURvE16K7pCKD5eT87Wnu9oNOwed6MHovxUm66/r3+MOENSyAQz
-	IFJ5Ysc5VyagpB3dyzr7dA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1768583765;
+	 x=1768670165; bh=eFNf4lo7EqcCKcrnp2XpjeP9DnyqcaeXkBk7c4UZBGw=; b=
+	UqLve0OY7iZEnemfec1wnsoJmEStzFs2pd3GEZ/HEFjkdTWYRKxD8JCvFT/iPbqy
+	E998J3q/hUZ6ABjcxJ0/b5v9MTEA9hY8xwneDjiE3XiW+PNyRwdjRzUtaytZVMH3
+	nEqewiLUT+VN+G6ghffikZWN7/vNax9pNGazdcDKsMcg3de+S4xiS+qe0MxZZSMl
+	vGW3gqNhyS55ji/pCMAVR2z//2zHYLcTkFZYbHq6hPC2p7bQRKM+eMU3cZviZdyl
+	8PO0oL4ptL0iSXyD2bwQVzw0HuoPE49Qwd+viLkHSUiLKPkfd/kcruVpscZH8Op1
+	HB4G1HJfAfBI9Io4GPP4OQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768583395; x=
-	1768669795; bh=o65hNptA3f8VhIJgASesqCuWftO+su55ty3hp2TEQLA=; b=G
-	3xNEz4+dJFMbkmcUM4EooQAhocccyZXYNbjOX8+uNF/VDht4vrLOlBrtP4+Ss/nG
-	gFn/qWJUEoStBcddtvXpRwzp50zgUUFbP1lRUix5Nvef9oS3m1gP20s7IdD3qIxJ
-	z11Sz9TMvGJd4BRUvVgPL6XRrVrDjo12LwT/WcRvM9KG3z6pMwNaL2QFcssxYeJu
-	028SJu+yKxDL/f6aiZYSac0DNlpTNvCnTQ0q2mrSH2eCicM6/xEo1CiTEjig2Dbk
-	8wd0DeYelmk+IoPZK6a7R7aqdBwgW5I8ItVRqicSIlmEE/RzUKN1Vv5Psk7f4ZJI
-	7GTzuZaVonmwe+1x7ltZw==
-X-ME-Sender: <xms:43BqafQlu8E-m1zEe4dbku35V-UOhjPMJzvOzoq_xpQYPAE76_I_NQ>
-    <xme:43BqaYNYiuejBVidJpjHnBRieU8_LlF8eBpuNsEts2w-xZAMIXKd9LKwwMEozj9Hf
-    2WMVb3RgtrTdcasyu7X_f0tJQ5dtrhWDGVrzmy10bknYkevp_3MPw>
-X-ME-Received: <xmr:43BqaSNqr0h1jb1wbbbYucPHpKIx6kfQJmTpcxw72BpPWDKNj1z00m4BABexgllAG9HcajOiY-dqcDe2EkUrGYoVGYk6TVVy4Te50Tc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdelhedtucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768583765; x=
+	1768670165; bh=eFNf4lo7EqcCKcrnp2XpjeP9DnyqcaeXkBk7c4UZBGw=; b=X
+	kYlwhDVWYH7cmWTY98rJdRGYMBclvNrlMxh3gJUKIZmG8cgbEH/kpHJ5FcY9yt6B
+	cNrfFCX645J2vzv2pJzevUX7eT9f2+ctXjwpHaVzMMHtq+X7XUcr8HTwWOi1ussX
+	PKk05BthK54XSl4LAMDizFQk4OzIcQ8AhDGrf5ZxG/3VwEYF0YWOUPBGzx0AgQyI
+	GMmMWAw4r08h7HaiolpsnyQDWY7ZIn3vxypH7HrviCIUVJevAXymLeQ3hZkelwvd
+	f+U7jv569gVk5l/z0GY+xhD3fmkLw5Yc0j4/UX9zim0CvZOBw+N/RJBJrIZiAG71
+	tSezEi8+0fYLwvmXn6FXA==
+X-ME-Sender: <xms:VHJqac0tKq8thI8nVxG3nCf3QozpMLgb11la3QkCpk75Nx-1fFRSTg>
+    <xme:VHJqad-URJT1LUO5gu7GFWijro6D_CD9j958xKW8oPKr2QzWylcu9nBq7urX10Dp3
+    brZdsw2rncFrLNk1Kd13BlWp3NZsGhXGGJbrZgLAtX6MfVOtI1TZA>
+X-ME-Received: <xmr:VHJqadNPmgH9E5iVmQHMzkY1UC7sMXh04SU9hlgathlRxyDZ0S2P2N8xqed7DQLQYStsxrWCmuzeqX0ibO0hITk2BG7s9YcZBpTMGpM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdelhedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhskhgr
-    rhhrrhholedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthht
+    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
     hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:43BqaYsmGqfs1fyfRT71ykfPTdkwTD3I7mBj0xHm0q4P8Fhtfwp5kw>
-    <xmx:43BqacXGSCE8Vnab_uK8lMpILsXI9fxO3oiL4D5k0yKzY5Sj6_KamA>
-    <xmx:43BqaQshv6xU6PxwvzetN-BraWWzAWcVUr2BrjKu-J_dEO-158Lj0Q>
-    <xmx:43BqaYX9B7OUNRuhU4ZG75tqNFAWmhbDd1saWmjVuzxrxty1BQ3srg>
-    <xmx:43BqaYOkh9wawiN6t2mfyDDqr_JMBqwRs3x8y1vOx8WPlq4Y10BtQyCS>
+X-ME-Proxy: <xmx:VHJqaRe5kGijwfMsTRpF6kNQkb22xJycXPRVPcuMClqxlJ2hsxu4Vg>
+    <xmx:VHJqacU1M1QZP5KV8VkZd4dPxAbJDZs-fi1EcIIOWlwo2YkOZ8AATw>
+    <xmx:VHJqaZg8tUc9Hu0rPGm_8zORTyDwdCVBb9fw5KlwSezeVsAZVctPag>
+    <xmx:VHJqab-k9F7ou3UB0PXClz5ZZJm0Vyr1VCDXUY6aWOJ3WvoqFB12wA>
+    <xmx:VXJqaWobWbwc9SSv5v0FCfVL_0t_e6QmrexOizVEQ5jnLD_xdyUcuoFZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Jan 2026 12:09:55 -0500 (EST)
+ 16 Jan 2026 12:16:04 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Oskar =?utf-8?Q?Jask=C3=B3lski?= <oskarrro90@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: README update proposition
-In-Reply-To: <CAFp-0Pz_BdZwA4Pn=jUxvYu1prj0F85q+3GWSW-G6LF=cSHn8A@mail.gmail.com>
-	("Oskar =?utf-8?Q?Jask=C3=B3lski=22's?= message of "Fri, 16 Jan 2026
- 12:22:39 +0100")
-References: <CAFp-0Pz_BdZwA4Pn=jUxvYu1prj0F85q+3GWSW-G6LF=cSHn8A@mail.gmail.com>
-Date: Fri, 16 Jan 2026 09:09:53 -0800
-Message-ID: <xmqq7btha3ha.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Toon Claes
+ <toon@iotcl.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] last-modified: rewrite error message when more
+ than one revision given
+In-Reply-To: <aWnkJ_GpgbXBPwFp@pks.im> (Patrick Steinhardt's message of "Fri,
+	16 Jan 2026 08:09:27 +0100")
+References: <20260114-toon-last-modified-tree-v2-0-ba3b1860898f@iotcl.com>
+	<20260114-toon-last-modified-tree-v2-1-ba3b1860898f@iotcl.com>
+	<aWd2SLrBQRBC1e2S@pks.im> <87jyxjjejz.fsf@iotcl.com>
+	<aWjVWC71rFeTsHLP@pks.im>
+	<ca6cfd7a-3392-46ce-99ab-3d93c9ce90dd@app.fastmail.com>
+	<aWnkJ_GpgbXBPwFp@pks.im>
+Date: Fri, 16 Jan 2026 09:16:03 -0800
+Message-ID: <xmqq3445a370.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,48 +96,27 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Oskar Jaskólski <oskarrro90@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> @@ -16,15 +16,20 @@ standard Git installation.
->  You need to have the following dependencies installed before you begin:
->  
->  - Git
-> -- Tcl
-> -- Tk
-> -- wish
-> -- Gitk (needed for browsing history)
-> +- wish (Tcl/Tk runtime required to run the Git GUI)
-> +- Gitk (optional, needed for browsing history)
+>> Surprised that “revision” is a synonym for commit? Why is that?
+>
+> Because in my mind a revision can resolve to any object type.
 
-Hiding the mention of Tcl/Tk may be a small regression for users
-depending on what distribution is on.  On Debian based systems,
-"wish" is merely a virtual package and the package to install is
-"tk", for example.
+Yup, in the early days of this mailing list (like in 2005 ;-), the
+word "revision" was used more or less interchangeably with "object
+name", but "a revision" was much more likely to refer to a commit
+than "an object name".  The name of the file that implements one of
+the more core-ish part of the system is "revision.c" and talks about
+"revision traversal", which is mostly about following parent pointers
+in commit DAG, but also follows into trees starting from commits.
 
-Is Gitk truly "optional"?  When running git-gui there are a few menu
-items that invoke gitk.  Does the rest of the document inform users
-well enough to avoid touching these features?  I'd think that we
-would rather want the README talk about giving a fairly complete
-installation without such limitation.
+> Also, it's confusing to conflate the way to name a commit with a commit
+> itself. "HEAD~10" is a revision, but taken by itself it's not a commit.
 
-The parenthesized explanation on "wish" is a good addition, though,
-and we may want to keep it even if we were to drop everything else
-in this patch.
+I do not know about this.  If HEAD~10 does not resolve to anything,
+it would not be a commit and it would not be a revision, either.
 
-> -Most of Git GUI is written in Tcl, so there is no compilation involved. Still,
-> -some things do need to be done (mostly some substitutions), so you do need to
-> -"build" it.
-> +Git GUI is implemented in Tcl/Tk and is executed as a script via the `wish`
-> +runtime. If `wish` is available in your PATH, no separate Tcl or Tk installation
-> +is required.
-
-If this were in the end-user instruction, being clear and concise
-like the updated text is a very good thing, BUT because this is in
-the building-and-installing section, I doubt this is a good change.
-
-The build procedure (in git-gui/Makefile), would try to run "tclsh"
-which is often found in the Tcl package, when it needs to use po2msg
-on a system without msgfmt, which are all part of the install/build
-procedure.  Again, if somebody already built git-gui for you, I
-agree that all you need to have is "wish" and "gitk", but that is
-not the target audience of this section, is it?
+> It's not even clear whether it resolves, so it feels sensible to me to
+> keep these two concepts separate from one another.
+>
+> Patrick
