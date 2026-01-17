@@ -1,79 +1,78 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5012F242D83
-	for <git@vger.kernel.org>; Sat, 17 Jan 2026 16:15:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726E31DB13A
+	for <git@vger.kernel.org>; Sat, 17 Jan 2026 16:17:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.171
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768666510; cv=pass; b=njP1KbPcuplzXcpMz1FGSp3TU2lbe8dY1ioMYCflFXX5AMc7ofBdlG354E9iYc7GjCfnjv1Nt3/yFp6d4ezfPoq2cYXP7ocANaa3pKIlXM1Jsgmv11CMtRGG31AHFLzx0N/O4FQtuCsWB56hw3IAZ5tHzAD8u228Uy+bUjwhjCg=
+	t=1768666630; cv=pass; b=lKyrrups08bwrzllanklOt6IynLI8UfYUPf9aGdSVH91JWyHgOVWd62zSvyShDhrSwwAZnhGzKntS6//Den5jd/mrcbbHEcrRH2yGc6AUivVBKpyux71NjpB83cFD84xK0+yRxq+BEYm1UxZDTUl7nM6p5qLpaCd7epAwSZ1T7k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768666510; c=relaxed/simple;
-	bh=j8WONNryyVpowXxZgEjNVmfLM38M2z/yz2iF6QQeMq4=;
+	s=arc-20240116; t=1768666630; c=relaxed/simple;
+	bh=xdPvkLFgqZvrgQqejF/J/N9/AqURizWgRUA9CDIhUl8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H4gpF3iEt/sByf/puE93taZvghuppvkUJmwrmuePSKXVw9Tjfyey5xE8lw1zy8jvXZFOQKg7oe2+rcR5niHnuFay5cMk6nF396uvEucL5540t9W9wj2VZqHGmZrREZShdWobm59AstUnwxMH/pptEoBsmTTbKId+lUNAW6oDvVg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UuqnmGC9; arc=pass smtp.client-ip=209.85.208.178
+	 To:Cc:Content-Type; b=h/IZrrrpz+hQj2lr0y8r7vCCtAjEi3JrDlEwSKqBIDNlGR54zs6wo8yfAu9aDuMOIpIb95O+dSe2gFimrgFoJ2JB/xJ8114sXrEWc+WsKaBN2U9B9NYgqavUkR1G0/1Ko+i1AZI6EdSOr/4wB9AAjTyAssJnk8VKCQRHgNd2OnU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RXEJQAi2; arc=pass smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UuqnmGC9"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-3831c18b23bso23678561fa.2
-        for <git@vger.kernel.org>; Sat, 17 Jan 2026 08:15:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768666506; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RXEJQAi2"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-38310ee9d40so26713161fa.1
+        for <git@vger.kernel.org>; Sat, 17 Jan 2026 08:17:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768666628; cv=none;
         d=google.com; s=arc-20240605;
-        b=aMkb4207s9gD4yLeK28AfF1MRBf9mcfe6N72ksN6dC8Mpu0G7t7y5D5VhaZb5miAeQ
-         ug6WZ+ymCrk4mdGLSy5/mN1Irm+V1v5BfzegWjxrR0sRau44fs0rf2ukPkGtbK2QcJua
-         mkt/gIizLz8mm6za08W/qKODtpk9LCGguEn6+yfJTRihKhVFflVgHtXPBCpYdB1zczuA
-         cbSOLVCi6CapK7gXBzrc6KBp3CR5YMOKnhpWaAO9CZD6JLcjDhYU1XqQ+VWgIlMJvQvZ
-         nbgbpb6xiLj9Tm/ch1E1MrRLdqQXDiKwKNP7548SqfI6IYf95KGtKLfQRXNcOEkezlhz
-         4yBA==
+        b=c9aTULiOOcXioc4ntBLHO6Ni65EKXQFrmLhm470DKkzEvcSUkK3m+OUC3qfFDM8gn1
+         D9RQlQqrlkuEsGNYcFJ4dMO9bvFRFZm+fBaytI5JGy1s0BzTwtqp/da/4u6gkJoq1X+P
+         4qUIEI8HDqACzo0ygt+DRM+7GbLECGeP7UHkMgk3e70LFUBis54wBD3iJJ5Zk40msFWQ
+         A+hDnzNf7ZXX8tnyn7VCNON+dj8waIzg+rYxkd9OJN0sUpn8N32GS8x3iz0JDKKM3xn1
+         rrtaRC8tQRl8XwcbgiWozrCkbNcuXDcy6iLwzVBv0Dm8YqQ8oaQQcTft1ejBgOG2r8bI
+         artw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=5qmnEGEw4GlWMULdkiVbNmK9diWUow/RnoVpmZTSPKc=;
-        fh=XMnCKIaKobi6slfb2CtB2/bIi1b3Q0DvS8D0Th0lLWs=;
-        b=ax61EP9vRSLhZsZBc5SZjcDh1BV+RGI4C+R02vqkkJPyfwkkGuBEsUar/r2B4zUlix
-         d/2mriPmJuZGRpH6iD8yhhOIFm+2FHU0J8lhinWb8vhVqk+ut2EHVWmk/rW+x05NrL7l
-         +VPhWd9Lz71CQ8HM708hvS6YESjT2WydFUGdmpDCYIAfdIXMCemD2wa3ISQ831igfj+t
-         xZQnHPujXoFAYTR1do10A5aA+mlbH02iKFsfXYirvukPHmcWK90z1uuUoMIoCQYUOfDW
-         ANspc3ht5BRUR8ZdSc8C5X55rt0aIqgaJYrmjn0DeAOA4Jmwq635DGrwRuUtedJpvk8W
-         Qlww==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=xdPvkLFgqZvrgQqejF/J/N9/AqURizWgRUA9CDIhUl8=;
+        fh=cA9ndVEQyw/jOntqmMS1eMFGHPsVa7b7EEPT5joIoX0=;
+        b=X3rd76qJBIj7hOUqTtcXDQXIAi2o/mdtH/DxHAaHXJaADTdcpRsjc0x9dgQbs0P6p0
+         4Csa898gU9E7NBrelC2RNt6TJqUGgmtv+dT/EXFR6HtHWLpgWHx83L710bWPgkX5XXGr
+         ewxcKIyIeBsFtLvCXELrqHPbjNlejiNGigAPXZ+ScRq/KR95Za+/06tMnT6Zv2tG31/8
+         LBmg87wrfmtvdSvLkHqTrru2BWnxWc/qlJuWYlioUsQJuyMevn2gVCSnlFrNnAziW3I5
+         mptN1G333r1u8aOEBhOWPsYesoUeYC8w3bw/EfEtDxYqG0LJIdNw8icQN/lbTjdniMD8
+         EJ/A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768666506; x=1769271306; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5qmnEGEw4GlWMULdkiVbNmK9diWUow/RnoVpmZTSPKc=;
-        b=UuqnmGC97u8m+9saC1Fd6Q4kzBJJl/2p68++dNMk0PEAkgYYeUwkkt/YCpVHYAsLuZ
-         7BzwIqmZFGH+ch3MJYlGM+cWAOkQpNknh4jTY0LnA5Z7nq+67anGH8SfYJ1CXmiCZnIy
-         /Q5MfcQ45Fc5IWszDf/wBbYb5KReGdjpu9qtsxfTHeU8Atx7WnpbTBlx+koSmkWefSgr
-         vjMZpTa4rdNMBGlfPLj4/EpbNUhLf5+t+haX+4RnWsq9LI7OxPHeCXdoZZz2Jgeu4PhZ
-         G3Clv236EsZWq96OeeWPQamchsQG7hkoCkceN13tbu1/1HFuf8/N3f79YHJmQnH7m34s
-         uM5A==
+        d=gmail.com; s=20230601; t=1768666628; x=1769271428; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xdPvkLFgqZvrgQqejF/J/N9/AqURizWgRUA9CDIhUl8=;
+        b=RXEJQAi2DwiA5f23jugEacyh/gYxIrtDAvcMViu75hFjUn4qvrp8nB4B/zq5Aaph/I
+         0kW00xw1cUNZ9RwHvzeK7BncAUzHthDwHdKpaosGPbKniPcpHaw2Z7oEtojyDAFkNuGZ
+         pm0A1o5ZxyINhuuYztvm/3h1rpEjTnwO9mmW6Helzx9mJ1QGIAS4htFboFrH2pGi8yjN
+         5NRf08nqtLzrJgn0oIqoSoJrzTggfXIS6foiGi5tplBv1yqBcNqaXbcUPThOPrlCf43R
+         Hyxt5/v+k9dpyJDpM/aQXI2JxR3hYOO65+Z5oyJTQpz/KrtpqgTzgwusUX/OvcLOcgVd
+         l/Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768666506; x=1769271306;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=5qmnEGEw4GlWMULdkiVbNmK9diWUow/RnoVpmZTSPKc=;
-        b=FySIzc/4bfZuoJAnVFdS48E1F8Gimc5YRol60ed44TkPzHlxdnagtQlcFIznMygEzq
-         3soZyHEuw+aYLc6VeA/isKvQ9ulPSfRL6IURjNtiMDeKfIfIgcoktt/f6x/IWwzhA+q4
-         xL+0+DmLCqzKnr+bDRmOvBlqnwGeCLohWsdkzF6Xx2I8U5uZZYHJN6R0JlYCWosYjWYi
-         Wmxf0HuNAt+0EgHhEC76J84FR7xw7ZZ8d1JqGo2Fmt7VyctxNwfhYbx3uBlJdF+KWGPW
-         r7pHRtT6WI32C2NMXc4dq+jsMGPqf8atYoVYHtfYIxlWF4RyJsqij9vDQs57F3mc7qgw
-         akKg==
-X-Forwarded-Encrypted: i=1; AJvYcCVW1LZUD+bnWh+KBT52wE9unXKJzH2ybn9F/A772HS2E3a0keo33EygsK6YnknN6Z/sB4E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMfHS0W57lyRiZ/jkahY17rfKB+SZ7Tz3gFnS5IMNv0XVcZwmR
-	FCs029s/0k4+MFYFGVKHTZ+s7qavEX3yF2H7jh/g57fbRhBeULvfUkeMQE4p3rLfrRlbDJ/SAq0
-	6TIIBzwU3Agzg49lhuxvUMGm0eXqz95U=
-X-Gm-Gg: AY/fxX6wdS5Aa8BXGGcwY7CDKIx7XPJ6WBTRcEa9KVMsIzr3kgarjbHjcXsLIzkZi8G
-	Cr+EDqtF2BEWiBsSgzyOytNwPtSds4P0jmpwdCBstVrA0KzgDj3gbYBq0OeQgz2QOeoiDiBBFGg
-	chwCzR47lgkxfEd+xjPya/FvqHc/l3r+qqlwN+PzB1RgTz78rPNjv7n8iUfW1Fb0elQ2dVjf0pH
-	MezgYuSl4jqS09XqXUbAG7TnJbt+3Jjihmb1XUmXI6WvmPJGb6KOCToGJgbtZhWkUV5+IU=
-X-Received: by 2002:a05:651c:2211:b0:383:1832:9590 with SMTP id
- 38308e7fff4ca-383841489b7mr21522641fa.1.1768666506083; Sat, 17 Jan 2026
- 08:15:06 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768666628; x=1769271428;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xdPvkLFgqZvrgQqejF/J/N9/AqURizWgRUA9CDIhUl8=;
+        b=fdhkt1O42tnNJnTdSWgUE4+kGoN24ypLzWWlLyjXbUpY3RPy2teVwOyAwSLWAatU8z
+         xnOh9pVEpOHkN1em1IiZ8+s6y9Dh0Ap1/4A4A6vVY/EWL+Q4DXS+hPId0yzRhTlq8gah
+         9BHghlCkU3I1P1JUoGQ2Wj1WcGJgn8D+2+DPbieWRGumBjjR4EPZewe9L7kMtzw16uj/
+         dJnAo0fqIasWl65NPkO/k5HOUDZo/31kSb5dM1RUN5Sa7R9EY50F8PDNWo6O2rUqWpdE
+         1KjQXmiogwB5MBEv5H8Kv//n19+09wbX8yQt2DnSVYMLIP1BOGhfnHOwGwW+xy0BQ8qz
+         FtWA==
+X-Forwarded-Encrypted: i=1; AJvYcCWP6W4bQuIDxZ3GlxSu9yJAOp4k/NA73TiHxF7QdIrnzQBcMpw0bHA81ewIWMW8yDICkpg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxil3cbRnhblwdECH12BV9140jmOAp5801pyqMCeOtBx1Wy4J+R
+	Fy2PuMjh8lJyB1vJIqD5tlCPC22DgUw/pG118Y5Zt/A3sNdMwWVDMJS4kya7muzZvXQ2/EWNIGO
+	oW+bJvYwOJ7H8tKW4m8cx1+7dGeSDBGs=
+X-Gm-Gg: AY/fxX4SBrLQvnLMLQkakblZOAzuw+LEXRUv2zov0T9gG5PQ5tdPgiB3Sc8ehu2hm7z
+	XRA+tWNyeCBzv7hk7n0MuhYX1EtTGrywCUCtxXCUiKgpwUAmzM22m6LozIWbAR94GtoMhV3Anlm
+	Jwgpzwn5i+++c+OQOSvEKOdqraYCXTufgQ+3C/+QN96LfYXchoFHP1QAi9Ozd01QWSFfLKdz6+Y
+	xjdansaftMFVRUTS700pBJlr7I1ANo70fnfzRl/3wAuxDL4gy41T6ohGymYulWt5vWZArM=
+X-Received: by 2002:a05:651c:221b:b0:383:46e:4b50 with SMTP id
+ 38308e7fff4ca-38384335b6amr22904931fa.40.1768666627496; Sat, 17 Jan 2026
+ 08:17:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,117 +82,19 @@ MIME-Version: 1.0
 References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
  <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
  <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com> <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
- <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
-In-Reply-To: <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
+ <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com> <CAH=ZcbAogCpqg0RkKg1WjuAcuKyArDs4aP+k=McCs_byDT2Weg@mail.gmail.com>
+In-Reply-To: <CAH=ZcbAogCpqg0RkKg1WjuAcuKyArDs4aP+k=McCs_byDT2Weg@mail.gmail.com>
 From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Sat, 17 Jan 2026 09:14:54 -0700
-X-Gm-Features: AZwV_QiViyJeagj01C0tfkN9ZnzmPuXDlr_wYI0wXPoloOh7gaBA-WG39sPSOjY
-Message-ID: <CAH=ZcbAogCpqg0RkKg1WjuAcuKyArDs4aP+k=McCs_byDT2Weg@mail.gmail.com>
+Date: Sat, 17 Jan 2026 09:16:56 -0700
+X-Gm-Features: AZwV_QgIXg_RZTqY5FYrWDcvlsRr2xKMC-6oB5oumKaTUH95IExtOvb6c7mHMCk
+Message-ID: <CAH=ZcbCmMCYd7m-nrjSM4i3Tyr76C50ekJGQgDtRveMC7UxvwA@mail.gmail.com>
 Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
 To: phillip.wood@dunelm.org.uk
 Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
 	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 16, 2026 at 3:39=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> I've Cc'd Peff and Ren=C3=A9 for a second opinion if you have time please=
-.
->
-> On 15/01/2026 15:55, Ezekiel Newren wrote:
-> > On Thu, Jan 8, 2026 at 7:34=E2=80=AFAM Phillip Wood <phillip.wood123@gm=
-ail.com> wrote:
->  >
-> >>> +static void _set_capacity(void *self_, size_t new_capacity)
-> >>> +{
-> >>> +     struct IVec_c_void *self =3D self_;
-> >>
-> >> Passing any of the ivec variants defined below to this function invoke=
-s
-> >> undefined behavior because we're not casting the pointer back to the
-> >> orginal type. However I think on the platforms we care about
-> >> sizeof(void*) =3D=3D sizeof(T*) for all T so maybe we can look the oth=
-er way.
-> >
-> > If someone finds that this code does not work because of this
-> > assumption I'd like to know. But I can't fathom a case where it
-> > wouldn't work.
->
-> So we have two different structs
->
-> struct IVec_c_void {
->         void *ptr;
->         size_t length;
->         size_t capacity;
->         size_t element_size;
-> }
->
-> and
->
-> struct Ivec_u8 {
->         uint8_t *ptr;
->         size_t length;
->         size_t capacity;
->         size_t element_size;
-> }
->
-> One the platforms we care about they will have the same memory layout as
-> all pointers have the same representation. However I don't think they
-> are "compatible types" in the language of the C standard because the
-> type of the "ptr" member differs. That means casting IVec_u8* to
-> IVec_c_void* either directly or via void* is undefined and so
->
->         struct IVec_u8 vec;
->         ivec_init(&vec, sizeof(*vec.ptr));
->
-> is undefined. For the compiler to see the undefined cast it needs to
-> look across translation units because the implementation of ivec_init()
-> will be in a separate file to where it is called. Maybe that and the
-> fact they have the same memory layout saves us from having to worry too
-> much though I'm always nervous of undefined behavior.
->
-> An alternative would be to pass the individual struct members as
-> function parameters
->
->         void ivec_init(void **vec, size_t &length, size_t &capacity,
->                        size_t &element_size_, size_t element_size)
->         {
->                 *vec =3D NULL;
->                 *length =3D 0;
->                 *capacity =3D 0;
->                 *element_size_ =3D element_size;
->         }
->
-> and have DEFINE_IVEC_TYPE create typesafe wrappers
->
->         static inline void ivec_u8_init(struct IVec_u8 *vec)
->         {
->                 void *ptr =3D vec->ptr;
->                 ivec_init(&ptr, &v->length, &v->capacity,
->                           &v->element_size, sizeof(*(v->ptr));
->                 vec->ptr =3D ptr;
->         }
->
-> That's safe because we cast the "ptr" member to "void*" and then back to
-> the original type. On the rust side the implementation of IVec<T> would
-> also need to split out the individual struct members when it calls
-> ivec_init() etc. It's all a bit more effort but the benefit is that we
-> don't have any undefined behavior and we have a nice typesafe C
-> interface to 'struct IVec_*'.
->
-> Thanks
->
-> Phillip
->
+> If the size of different kinds of pointers ever differed from the size
+> of void* then wouldn't that make all calls to malloc undefined? I
 
-If the size of different kinds of pointers ever differed from the size
-of void* then wouldn't that make all calls to malloc undefined? I
-don't see this as a problem since I'm not casting between structs with
-different members that are not pointers. I could use void* for
-everything, but then we'd need an accessor like *(T*)ivec_at(&vec, i),
-but this is much more painful and error prone than simply vec.ptr[i].
-
-I agree that the example referenced by Rene is problematic, but
-irrelevant to ivec in my opinion.
+I meant to say undefined behavior, not simply undefined.
