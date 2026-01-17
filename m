@@ -1,80 +1,85 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99924BBF0
-	for <git@vger.kernel.org>; Sat, 17 Jan 2026 18:15:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DA02D541B
+	for <git@vger.kernel.org>; Sat, 17 Jan 2026 18:34:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768673749; cv=none; b=CjEIqugdZbkYx4U82/y57AQP5waKqyxOWQhq37+m0gT0GT2QBxGtg+wW4ZnazlRTkL3ejNx3g3vJzz6glQ/V/hfNHu9WJKlAzjcZcc5PTeDqTXkOkeAwl1iy2SSBsBSD85s7IK3t8kIwWgYKqEp+NUeMatpnZKy+KS6kCTflc/0=
+	t=1768674861; cv=none; b=ft2rItc+aPkxJ0ewoTF+6p6Jxq67BnTPnM0lrmQPVnkTu03eu8qEegGHlOtyQgUgz9C1ad+8XTMK66EcOx4M2UD8WGKlOkpAu4la10ip7JBbpxrnERtMA09G5allyLhW1GIRbF2VxzQ8zX6WyF+suVRZeZJFtFV5X//Vj2oXIUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768673749; c=relaxed/simple;
-	bh=p/qfF3J2Er76CJBczl6kdOL2lG8MrCCXw6bDbkcrowE=;
+	s=arc-20240116; t=1768674861; c=relaxed/simple;
+	bh=G4cFGXTA4ax63WjiK+PL9aLwSKjVpFB7BPrKMroqRKo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dHLND3+DDWJpxgZkjZKfEte/nELYgrjPphoNGcd0yinHo9tOTRYc2j7QNcExt8cq6DTRBYThxKAHL1HyY2CJt3W0Tb9wwId6pKH5ILe50EUk+vKqv8BGo7hyg0ACa/uQ63KDIiPB9SN4VDpx1h0seHGFZ+PxhaqYTd4Q/XkByA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gajS+cG8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t1m12KyA; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=KoH2Ndxgvx8h6tZz/GRN2vBsBC46rkYA2ToyJRKYJ1xY2dWK4VlJXfNdtqh9pQEu1X+52G+rhQiNOccq8BIkgP3kVUASewc/fYeQbCzYo8QMFdg+N1WzEm0pkUbz5J1U+rObQDKTH842rUCwUjpzXb5JqtLv5LeEyIms+IfWpR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W5BDcpUG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PADFSxmU; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gajS+cG8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t1m12KyA"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W5BDcpUG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PADFSxmU"
 Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8D8D0140037B;
-	Sat, 17 Jan 2026 13:15:43 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id BB441EC06C4;
+	Sat, 17 Jan 2026 13:34:18 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Sat, 17 Jan 2026 13:15:43 -0500
+  by phl-compute-11.internal (MEProxy); Sat, 17 Jan 2026 13:34:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768673743; x=1768760143; bh=LlxDr8xAkz
-	rlD5pG3tUAvZplO1N45QrNSjjWVF0GfTA=; b=gajS+cG8ZeTw3V79UuwRZrBtXB
-	wkuZB5VeiIR8sMESAbJP+XOdVfKt4hzaAnmJ1E/KFWG2P3HimuTzgTEGtXR4RAYx
-	FHpB/9Xy0O08Ffa7QR9zZe6lorCheQFaxnxIgK63BmqbRnpG+z9rTLGDWHkfr9j9
-	QWdln0MrjiHRWtru/8sPCfSux0HJ6fZOw86KnmjIlFQWBrhA6rC877a5Hj0v6VLs
-	6thCvOfpI1NonEmwi8wAnNoJk85ZAYiwumgLhTSRF2k4u4JQc59DUjzARHDfpK/+
-	+CdgtRitotJW1jCxqR4so6d/QAQcUkOeTqg+ohSVBz74SOqtPPPagWXzWbxg==
+	:subject:to:to; s=fm1; t=1768674858; x=1768761258; bh=WfKZ0pzcOt
+	nP6C6qeyq6F7knE9s2hddCCN66QgYVMUc=; b=W5BDcpUGogWGLGxK9LPN8nF9D2
+	imYiMf0LtaRkCHXLWD08zzoDrTl7shYyC+vf1QBEhbTC6DBBglhbRJng/VcMvcf0
+	//zh+AhZEhnhDs4GVtpG3Szizc2RSN3L3CUlqw0pry3Jx4cNLuxFnhuY0LOdUr4P
+	ZSoEFluV/JD/6HBYqo9jbiC4074sQyN+/g1QUjJj/9EFFW5XlZ+D8FpV8LGEw9Lh
+	7AHRor4hLDNct4GycdG2RYsvjkjg1mMPSydpjzBEXDO7R9XBpCSwqZxdyr6Krruf
+	YjFNF/6XKw3GbzM11WlGYzIj4MaGcXalPWaHXFIqlEvvcL6Q0gLHuz/c472Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768673743; x=1768760143; bh=LlxDr8xAkzrlD5pG3tUAvZplO1N45QrNSjj
-	WVF0GfTA=; b=t1m12KyAVdLj8Sg3BNxzXwCjpNklidC/qB2HV8C0Mp82d6PBmtm
-	d/vXi60OpYNKpzjC8SEHStvvPgAxC6nsTFJKxCuVgP9rzqDCIJzKF3nCjGIdV7Fl
-	pII0hbyb6apqPUUDLRs8/lfrZ7GMeR+893DcofPMFdYbsUdbY0uA7lHAIUNDGcag
-	fHbtZIJo9wteCMqY4DKusgV4yyhKGY4w4/nPwQ5QJtMDHfbl9YV+iKRaqUvVQZ7i
-	V3jlB5bS8y/31w6AMddK/CJyRtAhtyjRStfz5Hr7wyzqWtohT3Z/9Lup54FFvk+l
-	rniADi417vh3RmvMV4tH++f9PPBN1fWN7SA==
-X-ME-Sender: <xms:z9FraY3jH3epSgf_VXj9bCnIqNjo5J0NExgYbvEGc0iYIfprdgSwQg>
-    <xme:z9FraaiI0hxsPU_u22QU9OhYaQ0z4_XENnpcotdqpnWkqpCj8B8Ir6hHX6YWSKyGS
-    NlB4KXJl5_PYMWRrit5EeR8fJmwcP7QJjblss0q9MyNa5m6MHpWvg>
-X-ME-Received: <xmr:z9FraeQnyUvkmhxv1eUnjVrfZpceXxk62TfpuqsvvIhpqKEWLzV0VTG6uUZ1InfYx8cGfsolVztqS5DEHX2fQup7E_Hsb2n5B0fPNrg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufedvheduucetufdoteggodetrf
+	1768674858; x=1768761258; bh=WfKZ0pzcOtnP6C6qeyq6F7knE9s2hddCCN6
+	6QgYVMUc=; b=PADFSxmUFG5lpSFzFuCnZ7jcUZYAhdva0sqCDuTDfNzA/Mh0/uQ
+	eA0W8payfTihQeq7+9v04Va7Smc8UpdfIEj3rIS39afQH/lb8+J3zT2s1rMGVbLZ
+	9ypTI04b4SjDwgd0notrVS4eOG/ayDwpcJv2eY5PR8Srzefj81Wl1FsB4qC/6e3+
+	MrmjrttQk313GEcU7Y+eW5aYiirhP/fNKCjuvfiSCZlcJL+b3EYMTPDdH5jJsyac
+	JArwCfekWzZP1Cln+2ZJvJ3CCcTyMFbtVdCjZ4bj5J21QeZWaq2JKQRHBWW3/zdR
+	jXZWenkRXDQv4uoBLxi0w8KsXBpJXPsMliA==
+X-ME-Sender: <xms:KtZraQoHWxHIfrvjkua7s199iaOCcrBBT1RXk0K-2RyWy0tm1DoJMQ>
+    <xme:KtZradjheXCwylbE4E0CCVNZZcyrGA2tdcMF1f96Yue5jYMrviLuahRAPCEGREJ7R
+    63Q6T6Bl4WuIjdFy5iuw_mBicqXJBcmxGTXagvGSzI3JIHx3CcvCtM>
+X-ME-Received: <xmr:KtZradjL_4q0bpB2VRMpfhGmhuRXvaa9HfzdtijV4L2LC-OeeDL7vwCwrUGDnu5bknTc4xCb30YnNmXE9MXrsEHiWEEZRTBrNgOBsew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufedvheehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
-    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:z9FrabhXd2UKdlYHUeGkCP1u4xKgP7gjAwKppMZJBkUYDm9mDsJ8Lw>
-    <xmx:z9Frae4koURHH9wGIVSEdRDg3KD3VIoNsoEEVgNMGOwrOUM5ZMEg4w>
-    <xmx:z9FraYAOxHmlQnaPInALrOzG_9quQAzQyxrzAIQx3z4iha8dx9QOOA>
-    <xmx:z9FraVY2VMlHb7tpW0DBd7zicL9P0KwM70sQHSMPcIT37fq8mdb1Jg>
-    <xmx:z9FraeiUmvptyrxpUDsf__w0i8D3sn1qt5GizNy8uj0MwiAiQIC9Vbz1>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjh
+    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:KtZraTgFz8BOu7_K_xRwHlAzhvUu5uciy0ScLCjX4iduB0LD_Kb91A>
+    <xmx:KtZradJFi6uC2XM4QmMvvduGHVlYaPuT7G7RkEvhrEjlFeZSDk--Sg>
+    <xmx:KtZraSHAm6isEucfFRPL6pVbpxeQxsztIR3fxqW9oDAQnwXGkMWGIQ>
+    <xmx:KtZraRS8k8uLIVixuVBKrDyLHXq4JOgl_Jx21WZIQB6cmac06UZrjg>
+    <xmx:KtZraZ7jodmtTTsHEN2fQ647pauVNJxdJMyd98aB1NkKsOU6EvgVjZGv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 17 Jan 2026 13:15:43 -0500 (EST)
+ 17 Jan 2026 13:34:18 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v1] t2203: avoid masking exit codes in git status
-In-Reply-To: <20260117175847.334666-1-a3205153416@gmail.com> (Tian Yuchen's
-	message of "Sun, 18 Jan 2026 01:58:47 +0800")
-References: <20260117175847.334666-1-a3205153416@gmail.com>
-Date: Sat, 17 Jan 2026 10:15:41 -0800
-Message-ID: <xmqqy0lw5cmq.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci(*-leaks): skip the git-svn tests to save time
+In-Reply-To: <b649f137-7140-4fb6-848a-b3408e54bbe5@gmail.com> (Phillip Wood's
+	message of "Sat, 17 Jan 2026 15:04:48 +0000")
+References: <pull.2031.git.1768584676520.gitgitgadget@gmail.com>
+	<b649f137-7140-4fb6-848a-b3408e54bbe5@gmail.com>
+Date: Sat, 17 Jan 2026 10:34:17 -0800
+Message-ID: <xmqqa4yc5brq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,87 +89,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->  test_expect_success 'git status' '
-> -	git status --porcelain | grep -v actual >actual &&
-> +	git status --porcelain >tmp &&
-> +	grep -v -e actual -e tmp tmp >actual &&
-
-Looking at other parts of this patch makes me wonder if we can get
-away by filtering lines that match "^?" out, instead of explicitly
-naming 'actual' and 'tmp'.  It seems that the entire t2203 file does
-not care about untraacked files at all (in other words, there is no
-"expect" file that expects a line with '^?' in it), so rewriting the
-above (and everything that this patch touches) to use something like
-
-	git status --porcelain -uno >actual
-
-makes the intent clear (i.e., we do not care about untracked files)
-and simpler (i.e., we do not need "grep -v" to filter), wouldn't it?
-
->  	cat >expect <<-\EOF &&
->  	DA 1.t
->  	A  elif
-> @@ -26,7 +27,8 @@ test_expect_success 'git status' '
->  '
->  
->  test_expect_success 'git status with porcelain v2' '
-> -	git status --porcelain=v2 | grep -v "^?" >actual &&
-> +	git status --porcelain=v2 >tmp &&
-> +	grep -v "^?" tmp >actual &&
->  	nam1=$(echo 1 | git hash-object --stdin) &&
->  	nam2=$(git hash-object elif) &&
->  	cat >expect <<-EOF &&
-> @@ -171,17 +173,20 @@ test_expect_success 'rename detection finds the right names' '
->  		mv first third &&
->  		git add -N third &&
->  
-> -		git status | grep -v "^?" >actual.1 &&
-> +		git status >tmp &&
-> +		grep -v "^?" tmp >actual.1 &&
->  		test_grep "renamed: *first -> third" actual.1 &&
->  
-> -		git status --porcelain | grep -v "^?" >actual.2 &&
-> +		git status --porcelain >tmp &&
-> +		grep -v "^?" tmp >actual.2 &&
->  		cat >expected.2 <<-\EOF &&
->  		 R first -> third
->  		EOF
->  		test_cmp expected.2 actual.2 &&
->  
->  		hash=$(git hash-object third) &&
-> -		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
-> +		git status --porcelain=v2 >tmp &&
-> +		grep -v "^?" tmp >actual.3 &&
->  		cat >expected.3 <<-EOF &&
->  		2 .R N... 100644 100644 100644 $hash $hash R100 third	first
->  		EOF
-> @@ -211,11 +216,13 @@ test_expect_success 'double rename detection in status' '
->  		mv second third &&
->  		git add -N third &&
->  
-> -		git status | grep -v "^?" >actual.1 &&
-> +		git status >tmp &&
-> +		grep -v "^?" tmp >actual.1 &&
->  		test_grep "renamed: *first -> second" actual.1 &&
->  		test_grep "renamed: *second -> third" actual.1 &&
->  
-> -		git status --porcelain | grep -v "^?" >actual.2 &&
-> +		git status --porcelain >tmp &&
-> +		grep -v "^?" tmp >actual.2 &&
->  		cat >expected.2 <<-\EOF &&
->  		R  first -> second
->  		 R second -> third
-> @@ -223,7 +230,8 @@ test_expect_success 'double rename detection in status' '
->  		test_cmp expected.2 actual.2 &&
->  
->  		hash=$(git hash-object third) &&
-> -		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
-> +		git status --porcelain=v2 >tmp &&
-> +		grep -v "^?" tmp >actual.3 &&
->  		cat >expected.3 <<-EOF &&
->  		2 R. N... 100644 100644 100644 $hash $hash R100 second	first
->  		2 .R N... 100644 100644 100644 $hash $hash R100 third	second
+> Looking at the CI logs for this PR the p4 and cvs tests account for 
+> another 24 minutes of test time and I suspect they also offer little in 
+> the way of extra coverage. Unfortunately there is no equivalent of 
+> NO_SVN_TESTS to disable them - I wonder if building with NO_PYTHON and 
+> NO_PERL would make sense for the leak test job?
 >
-> base-commit: 7264e61d87e58b9d0f5e6424c47c11e9657dfb75
+> Either way I like the direction of this patch
+>
+> Thanks
+>
+> Phillip
+
+Yup, I generally like this direction, and introducing NO_P4_TESTS
+and NO_CVS_TESTS would not be so bad.  Here is how it looks on top
+of Dscho's patch.
+
+--- >8 ---
+Subject: [PATCH] ci: skip CVS and P4 tests in leaks job, too
+
+Looking at the CI logs, the p4 and cvs tests account for another 24
+minutes of test time and they offer minimal value for quite a
+similar reason as the previous step.
+
+Let's introduce and use a mechanism to skip these tests to save
+some resources.
+
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ci/lib.sh       | 2 ++
+ t/lib-cvs.sh    | 6 ++++++
+ t/lib-git-p4.sh | 5 +++++
+ 3 files changed, 13 insertions(+)
+
+diff --git a/ci/lib.sh b/ci/lib.sh
+index a165c7f268..3ecbf147db 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -356,7 +356,9 @@ linux-musl-meson)
+ 	;;
+ linux-leaks|linux-reftable-leaks)
+ 	export SANITIZE=leak
++	export NO_CVS_TESTS=LetsSaveSomeTime
+ 	export NO_SVN_TESTS=LetsSaveSomeTime
++	export NO_P4_TESTS=LetsSaveSomeTime
+ 	;;
+ linux-asan-ubsan)
+ 	export SANITIZE=address,undefined
+diff --git a/t/lib-cvs.sh b/t/lib-cvs.sh
+index 57b9b2db9b..c8b4404888 100644
+--- a/t/lib-cvs.sh
++++ b/t/lib-cvs.sh
+@@ -2,6 +2,12 @@
+ 
+ . ./test-lib.sh
+ 
++if test -n "$NO_CVS_TESTS"
++then
++	skip_all='skipping git cvs tests, NO_CVS_TESTS defined'
++	test_done
++fi
++
+ unset CVS_SERVER
+ 
+ if ! type cvs >/dev/null 2>&1
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index 2a5b8738ea..d22e9c684a 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -16,6 +16,11 @@ P4D_TIMEOUT=300
+ 
+ . ./test-lib.sh
+ 
++if test -n "$NO_P4_TESTS"
++then
++	skip_all='skipping git p4 tests, NO_P4_TESTS defined'
++	test_done
++fi
+ if ! test_have_prereq PYTHON
+ then
+ 	skip_all='skipping git p4 tests; python not available'
+-- 
+2.53.0-rc0-217-gd590ba4684
+
