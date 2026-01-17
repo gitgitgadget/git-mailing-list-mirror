@@ -1,151 +1,171 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB85FCA4E
-	for <git@vger.kernel.org>; Sat, 17 Jan 2026 15:04:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5921198E91
+	for <git@vger.kernel.org>; Sat, 17 Jan 2026 15:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768662295; cv=none; b=crgYQ2cW/JGoNDLMWIo5d9UQjogEVeybjtw0UlQtTVsEXLBzDXs8O90fTDHwC1VZ6Kw0rluo2iXyVax4VsPvsK2COuhrgbyeCllTcgLBYnxMxELRWIVpJq4+6p7FOCEUdVE5qUKIdrBH8ALuC/EBItbvaqbaykLr91dY5131W30=
+	t=1768665508; cv=none; b=MHbHz8mvpE/eVx48p6bmwH7Ui6yhs4UacBSQfuVLtXTKTzCa1C9mSmh8QZAr+1CzrC6v06Be/RU1lVrtDrOj3ujCbm+xUg/8B6TWBMk4A7r3Pl1ZdkmQogsDaWQwAkU3CJ3C3O4OckOgbTGVZ+n2auWkC4gjrjVua07jcF24b8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768662295; c=relaxed/simple;
-	bh=oO7u+BoHV1cb6m961Mb26uyCp+rJmtUraZhUDQyOrgA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eED63SWWdSqr5EGiINGn1pJWQOakE3PwwXao6cQFJ8o1O1S719S9RGHaRt/Ms+lW43Xi50bDiG0imQ5VC1sn/rOUiFtbkNcEaDxgLZ2CbV+VxgbGeZDXBr8Gx21rBYcoVB2F+hp2x+AfmE9iVrVlEzOkKbhmO6xJGggDwUbKY7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bn3Do7By; arc=none smtp.client-ip=209.85.128.66
+	s=arc-20240116; t=1768665508; c=relaxed/simple;
+	bh=88t96p/wUpw2vncbmMuIciBKv+yK6DXMGamWlylEq7o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YHOmKEjM8mxnTybivaq7ze8iZptA3qZzXE5TzkMqTpMzW/xKZ0DqjjsKFC8SU+OE5osWDcWJ413GQCHGTy300AuSySxVRqYAToKkmP5atRA1PVf6yNBKF/qGl2E5ExLTV7UduyKCNXTkaOnS9oe2u0x0S7p3MLpAk54wqY/FaGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J51aYgnn; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bn3Do7By"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-47ee301a06aso26192805e9.0
-        for <git@vger.kernel.org>; Sat, 17 Jan 2026 07:04:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J51aYgnn"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-59b77f2e43aso4978143e87.1
+        for <git@vger.kernel.org>; Sat, 17 Jan 2026 07:58:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768662292; x=1769267092; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VosjSggaw1/Z2v4KDYzQhrEUH2oYsDtwEl6tQ3KxpFA=;
-        b=bn3Do7ByIIzd0UUvvvZeB+T7hHkGOs3TsoBY6C+Grf9AVCDiwk7MuoKgT43e5eE/td
-         PfZQIZGF+3G7sQUkknzUTPOAUWNq5acxv2pmK2Arm918rPplYNBMeEiNSVPtdP/FpPFS
-         rFZM6UMPTajrYKXp+lcFaMqIcfS3xYllGTdHSIFVV2AgAQRhQxY0u+eKpvHw/7P3VEqz
-         L67rEh9NAXlfp/kC1hJAs8fZDBjZ3p/+Kcp0aDiNVXjJA03Roma8UMGGCP3i1U+xfXe5
-         rUoyD1hMWhXYwhaik5mB3M0JdMApoh70uSCuEHCgZUCxMpMdHrrCDxyxTah4hzUSJOa6
-         YZaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768662292; x=1769267092;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768665505; x=1769270305; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VosjSggaw1/Z2v4KDYzQhrEUH2oYsDtwEl6tQ3KxpFA=;
-        b=a6jbxTGphKuQ+SvKSN8DvhkrNzZOpeg6DWQ3r5XjHd050UpNooxTjuFUFxDo96XuXg
-         k0YimFsjcgcKQT1ftHNfd08aY1YfieN9XbVlqgnqYCUuMnLvhnsfJEq4S5aiIGrv9cCk
-         xmQiVYFDmuT0TVZH6ceD6Z1v6SL8o0esUIKSfABmC1vghHJi5l5d0Q4z+WXiqF5D85P+
-         3N5rHvt8WrztMoxY/TGTorpoQQtjOJIpsQYiJxpzPbG8XG0qmWmUdKhC0MITvr070+nb
-         MpptuHcWaP+dkpXF7iQz5q/QLfiwUpyulW/IFksBttBuNHj48SlZn6up1hOBs+pvhOzr
-         Cksg==
-X-Forwarded-Encrypted: i=1; AJvYcCUNxccPLagXe3xpnss71y7mKiiVAhUDJfpVX1wMRzgxfb07rQKoFzdvdetV44DHTmzA+Oo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyqc0CM4RrjLSIVag7AZmzOd8W/TFCLXUie1omyifwOncwyhhh+
-	FbiDAVAUFPEUCckDTA61FgU804SjbCRaWudhpL/tMA2+hbDIp6NJi+BV
-X-Gm-Gg: AY/fxX6ceGF7N1tv6pskZQkEAXDni9vRgUVBwaRDX4yHPRT5ZlDKjNwkYUjmdxmTILE
-	LWZq5f2VYpTALEZ0XOSjxFeQWuSGFaQitIzVybqRqSJ5J1Lay7RKnr2OsM7HSgIrbzKpcQG1VLE
-	yc9gd+6ZuXr2ch+KaIZwnDsXn4OLErBL629P9M2vfj7mk7Brp4FNr/8wZ9pTS0Oobi1nLlOAjbB
-	8Km2OwIHeV4Xv4oXaMrhfHoJTpJuk9Aw4Kf227O9W1FKAyziz9eH3dMEnnYnxhjdEFT046ZWkwe
-	XyNknCMY8EZkAdhmZ7FQKvrb1xRB07MTsgNboTRuyn8+SakAkHjrXduQ/Ysl5H2JZNlePtg/tBA
-	A37F5yI3UPeS3jGhY8IxLwMlPjf7DgZXmB2nqQCekjMQ2e5b7CbqY/cKF3I7kQn3DUx9tS0Z/6M
-	SrF8dy/c5zUsd6O5jbIiTLmvjpylF31/5fVfqvIFXDceFr5MSyy8vtaA6D1s7RVAAZWg==
-X-Received: by 2002:a05:600c:810b:b0:47e:e78a:c832 with SMTP id 5b1f17b1804b1-4801eb1c65emr51803425e9.37.1768662291947;
-        Sat, 17 Jan 2026 07:04:51 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47f3b7a5f94sm163103415e9.0.2026.01.17.07.04.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Jan 2026 07:04:51 -0800 (PST)
-Message-ID: <b649f137-7140-4fb6-848a-b3408e54bbe5@gmail.com>
-Date: Sat, 17 Jan 2026 15:04:48 +0000
+        bh=6SqVGgXrH/a0JbNcQg7gIjJi1e3wf2ooxWfukQvqGVc=;
+        b=J51aYgnntThQ93krXm2MuHbwxDiA4gwZMOIM6OIasQisG1nemfE+EMnU5vXcNHdBCO
+         ZwoetuUQ3CoUZacNosYjJBMaszuIxqAd65LdFQfE+eXGYJK+oE9+lkHuh2gUd/BLgzE7
+         Tk0rOzh0pIqDT6uXZHHkuTriytfAj+ski9dDgtIrkgmW477NWfpwmbYdb5VIC4ukRSLs
+         Hhj7kILf+N2gYUELpEVWSihgvDC3vCMTtMfTNm1H6/wmG7FJDWZ5bEpKzqwLmnX9DtHk
+         tyaz9BMOvncEXitmUPDE3BrNwL0w/A8yI3/OY648oY0FFBBgOLgjw80cbn+50RGKNblX
+         SLUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768665505; x=1769270305;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6SqVGgXrH/a0JbNcQg7gIjJi1e3wf2ooxWfukQvqGVc=;
+        b=Nfz5MNkRhXvBYmpj0r7ZPPNu+ngWk8ofOKHuCPpDtIuy/KuavxySzTci849bYoMb5q
+         BWdPRqzPjI4xfifGaYAwPPEvxoTuVLrWVTeuWiaPRYUMd3/QcrRBHzSTCvY+KPFShidz
+         xG3uopwKZE0edBeSXTLHIpPP+NXOxXONSEGnBECKXTNcUeIRoTDtPje0jainGmNz83f5
+         M8TFJva5LX+50FgD6pNnKzuAuAHLw2YnenzzpgIKxoFrQkatsTsZnHxEOKuUS1vrySf+
+         xjSITNncK6a5xh6/4U6ezGPZrHBf5jGUSDfWpksxWkTqaVUhGphCdZYaGD+B4CBR8fbv
+         x2DA==
+X-Forwarded-Encrypted: i=1; AJvYcCU0z/7VqEyB0n2sSzebswdyBLbhXQIsccugUAh4sho1R2kzaLaiEGsJ+UrfWLaF49yZtz4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJzWyWh9QlWTQqzpmz/JDWe03qaaPhiULiEFA9uln9A48OUaFX
+	inbTo7Bvb5fPdChI3RtKSmQ+41kkMM7hESLub3MmrvQptdfIqWUKcnUMJ4En2k4cRxm2ttGruaz
+	F6RX+lc8UzhJSzwuxe/BKSc6K5bNalwlljUA/
+X-Gm-Gg: AY/fxX4bc34K//AX01fV/bdJW9JjJ55/nWrcQsSqSIHTc7y+lEwnVZgF+uYTMUCTM8I
+	KGODWUlJwZzVMssSaWZmYCXjZD2FW1lqV4iuTXwTu8PDx7WhW7s0ZUkXGwmOBBhunXAeXVwC+Y3
+	ow4x9Ql2/Xw9iSeJf861cVlhtHpMnCiEwcfbHV7rWIgHJsNgRjvvmLZ6NHWZd37HYeBeMMA4V22
+	PvaFny/LtN/BHKHyhws2KaKwoJ80KkosWTo+ytwGtn6MkzMCCVq3nsCjdK4p7x9hMJ+6e4=
+X-Received: by 2002:ac2:4983:0:b0:59b:7292:cbc5 with SMTP id
+ 2adb3069b0e04-59ba719c72amr2719883e87.21.1768665504554; Sat, 17 Jan 2026
+ 07:58:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] ci(*-leaks): skip the git-svn tests to save time
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.2031.git.1768584676520.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.2031.git.1768584676520.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+ <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
+ <0a306227-5db8-4d12-865c-fa0efe5c6beb@web.de>
+In-Reply-To: <0a306227-5db8-4d12-865c-fa0efe5c6beb@web.de>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Sat, 17 Jan 2026 08:58:13 -0700
+X-Gm-Features: AZwV_QjIBL0K_1eQFl2wt8WVqyxf5idXMvdlL5uD3d5NdlKok1fjVSI9_JqIlYc
+Message-ID: <CAH=ZcbB=Yf=wn2O273adrvpUpE0bJGKwrAjOAjmB8AgJrjz5Bg@mail.gmail.com>
+Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Johannes
+On Fri, Jan 16, 2026 at 1:19=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
+ote:
+>
+> On 1/2/26 7:52 PM, Ezekiel Newren via GitGitGadget wrote:
+> > diff --git a/compat/ivec.c b/compat/ivec.c
+> > new file mode 100644
+> > index 0000000000..0a777e78dc
+> > --- /dev/null
+> > +++ b/compat/ivec.c
+> > @@ -0,0 +1,113 @@
+> > +#include "ivec.h"
+> > +
+> > +struct IVec_c_void {
+> > +     void *ptr;
+> > +     size_t length;
+> > +     size_t capacity;
+> > +     size_t element_size;
+> > +};
+> > +
+> > +static void _set_capacity(void *self_, size_t new_capacity)
+> > +{
+> > +     struct IVec_c_void *self =3D self_;
+> > +
+> > +     if (new_capacity =3D=3D self->capacity) {
+> > +             return;
+> > +     }
+> > +     if (new_capacity =3D=3D 0) {
+> > +             free(self->ptr);
+> > +             self->ptr =3D NULL;
+> > +     } else {
+> > +             self->ptr =3D realloc(self->ptr, new_capacity * self->ele=
+ment_size);
+> > +     }
+> > +     self->capacity =3D new_capacity;
+> > +}
+> > +
+> > +
+> > +void ivec_init(void *self_, size_t element_size)
+> > +{
+> > +     struct IVec_c_void *self =3D self_;
+> > +
+> > +     self->ptr =3D NULL;
+> > +     self->length =3D 0;
+> > +     self->capacity =3D 0;
+> > +     self->element_size =3D element_size;
+> > +}
+> > +
+> > +void ivec_zero(void *self_, size_t capacity)
+> > +{
+> > +     struct IVec_c_void *self =3D self_;
+> > +
+> > +     self->ptr =3D calloc(capacity, self->element_size);
+> > +     self->length =3D capacity;
+> > +     self->capacity =3D capacity;
+> > +     // DO NOT MODIFY element_size!!!
+> > +}
+> > +
+> > +void ivec_reserve_exact(void *self_, size_t additional)
+> > +{
+> > +     struct IVec_c_void *self =3D self_;
+> > +
+> > +     _set_capacity(self, self->capacity + additional);
+> > +}
+> > +
+> > +void ivec_reserve(void *self_, size_t additional)
+> > +{
+> > +     struct IVec_c_void *self =3D self_;
+> > +
+> > +     size_t growby =3D 128;
+> > +     if (self->capacity > growby)
+> > +             growby =3D self->capacity;
+> > +     if (additional > growby)
+> > +             growby =3D additional;
+> > +
+> > +     _set_capacity(self, self->capacity + growby);
+> > +}
+>
+> Constant growth steps like these cause linear growth and quadratic
+> complexity.  ALLOC_GROW does exponential growth with factor 1.5 to
+> get linear complexity.  Here's an old plea to do the same:
+> https://blog.mozilla.org/nnethercote/2014/11/04/please-grow-your-buffers-=
+exponentially/
+>
+> Ren=C3=A9
 
-On 16/01/2026 17:31, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> I noticed recently that the leak-checking jobs still take a lot of time,
-> and upon analysis, the git-svn tests contribute significantly to this.
-> 
-> Analyzing a recent CI run, I saw that the Git test suite contains
-> 1,017 tests, running for approximately 5¼ hours total. Of these, 65
-> git-svn-related tests (~6% of test count) took 42.24 minutes combined,
-> accounting for ~13.% of the total runtime. This implies that the git-svn
-> tests are roughly twice as expernsive compared to the other tests.
+It _is_ exponential. ivec_reserve(&vec, 1) means grow by _at least_ 1.
+I'm not using typical memory management as defined in
+git-compat-util.h because I'm trying to get ivec to behave very
+similarly to Rust's Vec so that when Rust is introduced into the code,
+C programmers will already be familiar with how Vec operates _and_ so
+that converting from IVec to Vec is as simple as refactoring IVec
+declarations to Vec.
 
-Looking at the CI logs for this PR the p4 and cvs tests account for 
-another 24 minutes of test time and I suspect they also offer little in 
-the way of extra coverage. Unfortunately there is no equivalent of 
-NO_SVN_TESTS to disable them - I wonder if building with NO_PYTHON and 
-NO_PERL would make sense for the leak test job?
-
-Either way I like the direction of this patch
-
-Thanks
-
-Phillip
-
-> However, testing git-svn in the leak-checking jobs provides minimal
-> value: git-svn is implemented as a Perl script, and leak checking only
-> handles C code. While git-svn does call into Git's built-in commands
-> that are implemented in C, these are standard Git operations that are
-> already thoroughly exercised elsewhere in the test suite. Therefore,
-> running the git-svn tests in the leak-checking jobs only adds to the
-> overall run time with little value in return.
-> 
-> Given that the leak-checking jobs are particularly time-intensive and
-> these 42+ minutes of SVN tests per job provide no additional leak
-> detection value, skip them in the *-leaks jobs to reduce CI runtime.
-> 
-> Assisted-by: Claude Sonnet 4.5
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->      ci(*-leaks): skip the git-svn tests to save time
->      
->      I leaned heavily on AI to implement this patch, in particular when
->      analyzing the logs. That's why I added that trailer talking about Claude
->      Sonnet. If this is undesirable, please let me know.
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2031%2Fdscho%2Fskip-svn-and-leak-tests-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2031/dscho/skip-svn-and-leak-tests-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2031
-> 
->   ci/lib.sh | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index f561884d40..a165c7f268 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -356,6 +356,7 @@ linux-musl-meson)
->   	;;
->   linux-leaks|linux-reftable-leaks)
->   	export SANITIZE=leak
-> +	export NO_SVN_TESTS=LetsSaveSomeTime
->   	;;
->   linux-asan-ubsan)
->   	export SANITIZE=address,undefined
-> 
-> base-commit: 7264e61d87e58b9d0f5e6424c47c11e9657dfb75
-
+Since C does not support generics there is no _proper_ solution. What
+I have come up with on the C side for ivec is my best effort
+compromise.
