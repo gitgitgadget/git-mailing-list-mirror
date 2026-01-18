@@ -1,139 +1,81 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-e107.zoho.com (sender4-pp-e107.zoho.com [136.143.188.107])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3BB23D7F0
-	for <git@vger.kernel.org>; Sun, 18 Jan 2026 18:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768760835; cv=none; b=eRZxZOCX9Zl53jHRq6ez20MFdubJ0iraXOb/sv2YK5HsS6/wn+IPAu/j/4uWGPkFoXlsHUmUU4iHPVV63PTByJFBeruvqz24pgNO3j2VF1OyC5HrOrNsKx30ygIcHUGlcqp96Qqu/IO+TYsyWqFmgKB4Khq+wTA2Hhto8U4SuHc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768760835; c=relaxed/simple;
-	bh=McA0JMGTfjKYke6PyAGappDTWbp1uRGnNV2BIY8JkRQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=niNzVr6quza+4eU+e0NJ1dTcVMGRjUbyCUTok8eZvqwUSz6DCkN8Mne70gJtN6oJRoRxgC6FBRN+tvvpbi4W+zfarvr0pywf9pDs3hPCCP4ck5U2RZnB5aa8cWrYJOphQdOl9W20/mIbcDBKoNoRDyFhGYWkhhxuK8Sw2VaD/q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kcgVzmYr; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D67E241C8C
+	for <git@vger.kernel.org>; Sun, 18 Jan 2026 18:30:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.107
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768761061; cv=pass; b=o+isNZwGd5srXkBQSTTWgJ2mx7B/hW9xhYZvyMyQy5VoWeJ+mDAQW0VZyTr/w1TvzBlGNQlsnmpupVsXFbC0UdrXa2/G2zkDGlxMYWM6mNLfsjb1Qia1qeoBGS327KO4E6T5oecNSpqrhSDCz00OCPaNyk8utEPkO9s9tLqckCs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768761061; c=relaxed/simple;
+	bh=or42+4zTjP6BUqKYjbP6ovdatsJgRddNFVVAx68XZ/w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jJnnc4ctyqt5WN1dt9thULY0wlX3xR6vCkpP5/BYOtj1ayjjAN+HggxnsTjmCxKyGEUvT7tu1VBOl8XWycwEtBAIoeSzT0D48zhMgMeuncIN3cqHAWEb0QyW4O07HadurspQxIF+hGTjRDd3+cISMHKnAO0mW9ei4KuWoLyxUNk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=RHlbwBrB; arc=pass smtp.client-ip=136.143.188.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kcgVzmYr"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-502a26e8711so12491901cf.1
-        for <git@vger.kernel.org>; Sun, 18 Jan 2026 10:27:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768760833; x=1769365633; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=56/0tYGuYk7w6Mc9CJbO4TVfCeS0Dk82NC6JrRx/dSg=;
-        b=kcgVzmYrRE5sGmFzXJ7/JH/9Qql4FJZCV5vqc5gqgMJmdZ+FQarP87XxOe5xaA9sjT
-         LdqSjVDEQMe863QEe7E+OkieK302iZUherQQWwPRXe5LaK68A36owg27i2Dv+HvrEInR
-         /g93Jbg+SxGbvO4I1SgZ/y0pQocJdT2CK72ippLuTR5GYMYolk3mkvcFAHeIELbqgTxn
-         3F24fmyuAQ32I0ZsHFb/71D8LwF2oa8roiPFaUUp158s3+2xTFIkm3fnjQSQzFa0ucf2
-         KOrMmLrW6CWayAw1lX5OuM3iG3Vcdqu2LpCiXhvYB8mqlzRFIY09G/UMmkN9qOkIWime
-         T+Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768760833; x=1769365633;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=56/0tYGuYk7w6Mc9CJbO4TVfCeS0Dk82NC6JrRx/dSg=;
-        b=nbT1izt2RLYF2XO8Ks1mNwYOg4yrR6HeAztJLFIg+2tiVlXBAYyV2zNamLGNkAlL/H
-         SXTS93xf+eq6HIZ0KaHYG5u/SC2vzdADjYqcIxn5KPSaKwpSsFGv/2mv9vP7VNoSk8GT
-         dcOz3tF7MSdHdps+qEpnPfyFHRNwApUtwIkkDWXnI69R4iueLjSNPoDdrjWZ7TaRWuIk
-         wbZRI8iF4Ll04VV0QoE8R/Ph4/OXm0qJyBQMOXUTYB4IeqqC/zqAUYYBRfgZ4/fyXLdO
-         4BuLI49ToBiO3SQlYp3GN38+qKlqCD+S0WYnRzQvH/QdvHd63LZJkNut+ZI3uXnzXLIs
-         6NkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV8Bx8X/os1Rbfu8NWAsd0BOFweWPWr4H/zLWZj37zRNTANWcuLq6b0TeBFFc8moZ4WAjs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWIMfvvX2Lo+nU6iqcX7R41qDtRkVmHoxuJ8fRcK9SxNLT/E8B
-	MDUseIuGSxLY7xtzRdE9te+Rp0Yj4TjsnT7r9VyyhUaQBlb7Akg/DZBI
-X-Gm-Gg: AY/fxX61wNaVCs4ODxa22f/72C+Hr/OYQirqm/dRakNDeDNbSCWsUdwg0FLkG5MXmr4
-	YCxZBWqgqBMWd+oacVgNwi7SCgumiOHBUFkLN96TI97aliIq+9fZruUZVQQMSTe48VXRLYqyDq1
-	a6V5H3mbxgfNWlzbFFAx++U4IIw2fTvnhwkNNmC+7Imlv4HkG04Y9VH6VgiHiFIb71pxdOB94vB
-	d88eLZ0P3ClLHUkxUeRv2xKtfPOxmKkvZ3EBEhyiZafyZpHupLGRPxcQqysXO/RbJl/jQcpaDvm
-	9llp0uQeq7xxs9ymUqvp+basEakCmcaU1KQMceTln1w2jX/L3rRf9kfzUG4O0Y4yLYkDmPOroF9
-	b2pp0uZ7jmbkZqDZZV6A1TSkGhMGTdsbSeIINFR78ZpmhnRvl8p3Sq6O9rsr6bDKxgv2daWV8Lx
-	qpYDW1cKK+yk0uxQbdW7gTkKnA0d+EwgFW1Yfe9ATjBnNeKwaaGMsGrCfQMf2rHKL4fIF2ZCgjQ
-	A5QAe/Vj+cjMkA27BHqImsB52yU+vCNwQ==
-X-Received: by 2002:a05:622a:58b:b0:4f4:d92a:7be9 with SMTP id d75a77b69052e-502a1652581mr169141241cf.16.1768760832912;
-        Sun, 18 Jan 2026 10:27:12 -0800 (PST)
-Received: from ?IPV6:2605:a601:8119:700:1eb:9803:eb2f:8b98? ([2605:a601:8119:700:1eb:9803:eb2f:8b98])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c6a724a445sm650780885a.26.2026.01.18.10.27.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Jan 2026 10:27:12 -0800 (PST)
-Message-ID: <b46885b1-5781-43d8-8751-d85048c45e5e@gmail.com>
-Date: Sun, 18 Jan 2026 13:27:11 -0500
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="RHlbwBrB"
+ARC-Seal: i=1; a=rsa-sha256; t=1768761046; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Va99wjTvuawH6TEsVegGJYuypM0uCA/JstRXlmtxwuRr4XVHFPQhuySv+ceCbc+FMIBAzofY4wc2E4F0iC/Dw6HmgQlmEv+AYxtAsBbq2ow0xshc2MH/IbREe5P2TrkZcJQe+3Zd38Hf0xImcMn+gXLDRbJKNkiyqug/b2joLwM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1768761046; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=or42+4zTjP6BUqKYjbP6ovdatsJgRddNFVVAx68XZ/w=; 
+	b=BYCkklD1M5TM6psKbfLTU/HCXzl6k0ZHi2Uy0ac256rpe5LJjtDi4ffy3/1VtRoN7zdz894uNS+VMSWkzEh3u/3K+gKupLZr/aSanOA52L33YRau01VsOz0lgnIkylbLSf16ttd05eDAOC4tAkhcTy7O/SukLS8nFQQaE3VHMN8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768761046;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=or42+4zTjP6BUqKYjbP6ovdatsJgRddNFVVAx68XZ/w=;
+	b=RHlbwBrBrVeshr9lgBo1HX7tQv5iZ2n9kuHzT5acs19cq2TRzEx+ph6Wb4QV19aC
+	H9KT4DGU1d40bvX1NYKVfN5y8puOzfrOjkAa0K9b5z/hHatN6tQkVOJPmkd0RDBL1Im
+	59NaONW3GUAP6M3Q4DQgyJoEDWHoA4oH91++mAo4=
+Received: by mx.zohomail.com with SMTPS id 1768761043664504.29388460881046;
+	Sun, 18 Jan 2026 10:30:43 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Junio C Hamano
+ <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
+ <steadmon@google.com>, Ben Knoble <ben.knoble@gmail.com>, Phillip Wood
+ <phillip.wood123@gmail.com>, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Emily Shaffer <nasamuffin@google.com>,
+ =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v6 06/11] reference-transaction: use hook API instead of
+ run-command
+In-Reply-To: <aWzQtsZCXNPeJ5vw@szeder.dev>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20251226122334.16687-1-adrian.ratiu@collabora.com>
+ <20251226122334.16687-7-adrian.ratiu@collabora.com>
+ <aWzQtsZCXNPeJ5vw@szeder.dev>
+Date: Sun, 18 Jan 2026 20:30:38 +0200
+Message-ID: <875x8yydrl.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] revision: add --maximal option
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: gitster@pobox.com, git@vger.kernel.org,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.2032.git.1768703645125.gitgitgadget@gmail.com>
- <1da38e88-3f61-43df-9c75-5716d715bf80@kdbg.org>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <1da38e88-3f61-43df-9c75-5716d715bf80@kdbg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-On 1/18/26 4:05 AM, Johannes Sixt wrote:
-> Am 18.01.26 um 03:34 schrieb Derrick Stolee via GitGitGadget:
->> diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
->> index 453ec59057..f0d2ab32a9 100644
->> --- a/Documentation/rev-list-options.adoc
->> +++ b/Documentation/rev-list-options.adoc
->> @@ -444,6 +444,10 @@ The following options affect the way the simplification is performed:
->>   	times; if so, a commit is included if it is any of the commits
->>   	given or if it is an ancestor or descendant of one of them.
->>   
->> +`--maximal`::
->> +	Restrict the output commits to be those that are not reachable
->> +	from any other commits in the revision range.
-> 
-> I had to read this sentence three times to understand what it wants to
-> say, and that even though I had a rough idea what it was supposed to
-> mean. I tried to come up with a better wording, but found it to be
-> really hard.
-> 
-> 	Restrict output to the commits at the tips of the
-> 	revision range.
-> 
-> is all I could do, but this isn't a lot better, I am afraid.
- > > The option name is too generic IMHO. How about "--starting-point",
-> "--topmost-only"?  It's function is somewhat parallel to --boundary, but
-> at the positive end of the revision range. Perhaps we can use that as
-> inspiration.
+On Sun, 18 Jan 2026, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:
+> On Fri, Dec 26, 2025 at 02:23:29PM +0200, Adrian Ratiu wrote:
+>> Convert the reference-transaction hook to the new hook API,
+>> so it doesn't need to set up a struct child_process, call
+>> find_hook or toggle the pipe signals.
+>
+> With these changes 'refs.c' doesn't use anything from 'run-command.h'
+> and 'sigchain.h' anymore, so their #includes should be removed as
+> well.
+>
+> https://public-inbox.org/git/20260116-633-regression-lost-diagnostic-mess=
+age-when-pushing-non-commit-objects-to-refs-heads-v2-1-925a0e9c7f32@gmail.c=
+om/
 
-My perspective is skewed, because "maximal" is a concrete term in the
-world of partially-ordered sets (such as commit history ordered by
-reachability across child-to-parent relationships). It's important to
-distinguish from "starting points" because the inputs to the command
-are a list of starting points, not all of which are maximal within the
-set. In fact, if some positive starting points are reachable from the
-negative starting points, then they are already excluded.
-
-My familiarity with this term is skewed by my experience working with
-such terms, so I'm very open to new names for this option.
-
-Your comparison to --boundary is interesting, because --boundary _adds_
-commits to the range by selecting the commits from the negative range
-that are reachable from the output commits. --maximal as defined here
-_restricts_ to the output of commits in the range. It's interaction with
---boundary is trivial because no boundary commits would be included as
-they are necessarily reachable from a maximal commit.
-
-> The option is listed among options that affect the way the
-> simplification is performed. But is this true? Isn't it just an option
-> that changes what output is produced?
-
-You're right that this is poorly placed. I'll put it in a better location
-in v2.
-
-Thanks,
--Stolee
-
+Indeed. Thank you. Will do in v7.
