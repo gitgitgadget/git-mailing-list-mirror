@@ -1,107 +1,109 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA5A1FC7
-	for <git@vger.kernel.org>; Sun, 18 Jan 2026 13:43:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768743799; cv=pass; b=jSWG2yamlqby+2z3uqW+I3vtGA87XEcq7uWUPuyA13rZJU3Twm1wYWdGngvKsKYV63EiN8hvtFnkkPDMB/6wrae5tlM+1Kp2OPftpyZh8//07LDFibiqCkGlUOWlHqH2vuEszTx9BJLUb2xxsiqNYuuq+hu+oJww4ZQNni1HDWY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768743799; c=relaxed/simple;
-	bh=lxTMUZpsc1dMmKy1+LbDSIWZSDJrA1gtWczfZkJYNlw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Cto8fsBk/hfGboBvXKEO1oKnN1veDREfAhoKHbEoQ7L5m0O2lb+AP21yqL1QJrvhADlWfqYFmj9fMevOn4cp6JACcNFeFjptj0KKv8sJGUi/KTygKHggJ4OX5wzeNmBW7b6dc31yGHyMFMmimvcjWqVA6oW08Uh8KtB+Jjb22i0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H91j6nXK; arc=pass smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECC828C2BF
+	for <git@vger.kernel.org>; Sun, 18 Jan 2026 13:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768744771; cv=none; b=gCZ+jFMEzFYAuMDDEMlZ8jVERndpWNYAbFCKzSXTmK+ZvVxIPI3n/jdUAwq+MMpYQ112zD+F4VyVxgHEyR5mkWekbPWyQ/iTPIKZ4STTOjc6+m6syA5ZH98pGAf3MrZm4gREYl+z6Cs0UME6+A+RA6HoT+Ws/pAwMqbF2PUaIPI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768744771; c=relaxed/simple;
+	bh=j44xiHlkFzXbNYDEQBNFlPS7f6WP+jncWJ5BPDdz4sI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Qd0WdujnmAbqC0evK4XaHJkJwVbKd4M1+Npm/awRYrQ+4RQjEOmCcc7UuO63PvOP3mlEtX6W9J8gLbcmShB6hTgcLtfWR2f0x8LwVATdZz2x+n6BRDLEWEvVYjUNz55WmwjruNXJk+DD6kF3VI1hr3fPzGOJHlL/Nph6eYOnnW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=oMkHMxUh; arc=none smtp.client-ip=84.93.230.250
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H91j6nXK"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-430fbb6012bso2725143f8f.1
-        for <git@vger.kernel.org>; Sun, 18 Jan 2026 05:43:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768743796; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kxsfBVXB0rmtep0QSFTawGnBs7DIF7wy3AyH84ES7jj/UmflssE1vsF9f3Nc7EbzIg
-         e4uVOHcpHiRZ4TaliCJdwhXOuSM4UBc7dbZVU+icGCD4KHjLy+/9pizjkstZmWZ7VCrw
-         NixE94wzDqwcpPQedZCbZueG4cIMoiqLzo5Wucmh/TK9injt8baCpp4lJ1a+qgpDNkKV
-         gm9urX5V/Yj9A8gz9uaESjUpkJNVaBIm4cLWvOMU9ZR0mkzcxHgPBTrzb62rhS0KJsvt
-         lSSri0XBODOmphSx2Xk3GCyLHJYRd8gz3K7+XBRCteKqziczqwbvE+XMzQU/7lXPR1ZM
-         iJzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=lxTMUZpsc1dMmKy1+LbDSIWZSDJrA1gtWczfZkJYNlw=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=lmyQ+f5qCFr0yXGlkoxA2tvro7LPSuMGIVTtRWDm/G4okjx+tl6wHnxHotVvrOGptw
-         E+L3zZylgWOKTwCrayLCL9lxNrY4vGBfKS29036sIRTGPdGlGfv2OOgl99VGVUY5l1s2
-         qh3YOK1GKVg+tvtEjxAfgWbCK4XPxDpnqMoYh/rG5Ezalbe7jEHg85wnYtT/fKb1lwNt
-         oNMS3rU+Ue6jyl5uMeV8fywmlHkeE35nFV1LgZqtABFhMBM5rxz4b8AQzYlz8kV6Agoc
-         6rM1w8Hy1U1R+0Lz6YSCc99zxZn/VyTMswOb205x3DkFcIPu6n1UqTxyOjbCexySa7Ng
-         c2PA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768743796; x=1769348596; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lxTMUZpsc1dMmKy1+LbDSIWZSDJrA1gtWczfZkJYNlw=;
-        b=H91j6nXKB/kf2vCWecPuy2kQXyfR4prFitJnvLgcn6iH1JFQZpvsXcKGD5WWC+9hGF
-         mIccFPwI6Qua6yG+REMUpYhcJC237N81q73GOYu50VMquoT2hdYhgcatz7SaABvUQd60
-         fp9qBuQJ7g8mmfr7DEC1HQjEdp0vzGOUU7uo+lm+KWZ3rV31YkAgsDruXZayl4wK9g3R
-         lHWpAvKaEfeF6Yc3cneHpkQVZ0Ywr9K/rnv4juni1y+1WuklGQQdK+orKfr0xFWeWVFF
-         24XZ9lWYOydTw88IAH/aawlNWc4e/DwiOoc5dJS0ou8RUAABe7AKK0+hpl7AfdZajCX5
-         w41A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768743796; x=1769348596;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lxTMUZpsc1dMmKy1+LbDSIWZSDJrA1gtWczfZkJYNlw=;
-        b=ewMthwXY5S9Y97Jqe8hSWY+wkFOYDgkqDLAoIOnA5YLN1jvDMSCFFCJ3L5BfafkGvI
-         czMlOOVdWKtq3keRoefuIH9Tc1M83IoRa50H7EzTen/PHnwC7ujnLKidT56HaL1/eEv3
-         evJwzdLRNCyUWkI6qqvmWl+804PyUir8Cv8+hvVCDPxEpaG8af0fOEkbMrBAvql+xCsh
-         ov1LhZRHuQ9SG8PD6skn5lZKge0h6vzxmzvXxz6k7+EGCUW08IL/j612NRvruxbKrn3m
-         hf6oGr0hAoSL+UfUdlwRAKD2gKCf5fg6tXwyXxkE8PuU3QqqZoQo3kqSj7Ax1ECi1Jp8
-         XH5A==
-X-Gm-Message-State: AOJu0Yx/pjqjuGv0lOGlZXTW0SBitT37CQLYReaGwsmCKjrdLlZipd+D
-	atd2SaWUd9sUr3a8MxzQR8aDSKRyLIqrD0mo9x4gUQlR36cnsKhvurt/e/VPMiUPyMiveyUbSct
-	sBRT095GyV1bLV6pyWDl1IWEWH6AiFuXcBspt
-X-Gm-Gg: AY/fxX6PDgMG/QggmjFqPCQGFb1F6F1tXS2nzRqbeFFDRv9wPPJN3qjeU6CQR3Thoja
-	RydltfOW69VNp62Bk3cpfL8cRKBp+dgfyplqYCFt5PcvVTBgmcMJ3SZgAoA7I4VpXO0PCjJOMEd
-	iGbS5ub3FVqUxXAOKNzAAwksGq3Beu57PMTyW6nbvGuFTP9rQZzDZ4SmyyQsgmf9aVUFkrt+Hgg
-	kaaIi8FgWmVIul9KHNf56NvOMJ0mQX6cg9b5jDt+o5zwcWXMCESx6pNKvFI+enI/cs9kp4=
-X-Received: by 2002:a5d:5847:0:b0:434:24fe:b25f with SMTP id
- ffacd0b85a97d-43569bbaf29mr11178651f8f.37.1768743795760; Sun, 18 Jan 2026
- 05:43:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="oMkHMxUh"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id hTJGvVpA8rZAchTJHvcJpz; Sun, 18 Jan 2026 13:59:20 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1768744760; bh=i1XAyfeZ9lawZtSP8nlXhmkq5fUIC40+ocDIqTSFOv8=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To;
+	b=oMkHMxUhDfUqjbnrw5wNjAwgHGr5m5anqxC8CkquDxwVwHqM11rQRjTWw2HUgEn41
+	 pBniy9AQum69EFcdm/I2Sx4WhS1ZKH7gcB22AMDoaNZwcGYIGBY/DSLpY4x23sKCV5
+	 Oj0LL5vXXfFDaLVfSUQ8eQ5GdutYmfVvwQedft47iIf/el0IW0Q9izH4DKYJ9Khdgb
+	 DCNZoKibwzgBvfvGCaVrjDBG8f9SzpWpttN5jvOEGPkWvDoT03R51uez8hdwit8XZw
+	 HuB6Pw1o8E04JLDP5Yjipz4JwXfcAbAgCHbzO8BYmONCFvROvxxDWaxz0VgSzW3iX0
+	 rQXxQ+wTXr6QQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=bqnvB1ai c=1 sm=1 tr=0 ts=696ce738
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=ts3SAFlqq7JghuwZjJ4A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <a19baa0c-e084-44c4-bd77-a6c18626a6f4@ramsayjones.plus.com>
+Date: Sun, 18 Jan 2026 13:59:17 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqldhybtqs.fsf@gitster.g>
-In-Reply-To: <xmqqldhybtqs.fsf@gitster.g>
-From: Yee Cheng Chin <ychin.macvim@gmail.com>
-Date: Sun, 18 Jan 2026 05:42:39 -0800
-X-Gm-Features: AZwV_QjL7n-rAg-575KIpwMyBhpzUN0hSIBZOCUuN0QSJfqMkW23rUsvh3nek1M
-Message-ID: <CAHTeOx8z4bG2OmPCc+8pCHBVeUWPmxgaSqz=jHL+H=VRHx=KAA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2026, #05)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Subject: [PATCH 0/2] v2.53.0-rc0 test failures on cygwin
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+References: <3f8925eb-7602-433c-83e0-a88cf8d155fa@ramsayjones.plus.com>
+Content-Language: en-US
+In-Reply-To: <3f8925eb-7602-433c-83e0-a88cf8d155fa@ramsayjones.plus.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfGGgUgBhVVcZ4V9GW39rIOT8OQV5PNYQZ0z9jfFY7jleadJLhTZwtQRhwgl41MWNpSKiXxv2+TFLmM7aHHLfnTnvt11nSZBOOMP4oXUksie7OoqQ34VP
+ MPYtH/DpmBxh2W1fRquMPBJ4+tGUqwFhW8IUJzvu7Dfl/pXB/lCmJUcEXbZ1rxrSYDkL7jl8v2ksXbEbHDJEKYgihAOLmKvk0pY=
 
-> * yc/histogram-hunk-shift-fix (2025-12-06) 1 commit
-> - xdiff: re-diff shifted change groups when using histogram algorithm
->
-> The final clean-up phase of the diff output could turn the result of
-> histogram diff algorithm suboptimal, which has been corrected.
->
-> Will discard. Has been waiting for further comments for too long.
-> source:<pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
 
-Hi, I'm the author for this patch. I'm still pretty new to Git
-contribution, but what kind of comments are you looking for when
-deciding on a patch? I noticed that my patch didn't receive any
-comments, but it was essentially a bug fix for an occasional
-suboptimal histogram diff result. I would imagine most people would
-not have much to say given that it was not a new feature or introduced
-any breaking changes.
+
+On 16/01/2026 8:39 pm, Ramsay Jones wrote:
+> 
+> 
+> This cycle brings a t9700 test failure on cygwin, see patch #1.
+> The second patch was owed from the last cycle, sorry about not
+> getting to it sooner, but it is _still_ a puzzle. ;)
+> 
+> I have tested these patches on Linux without issue. On cygwin
+> the t0610 test passes with '--stress' which it failed earlier
+> and the t9700 test has only been tested by hand.
+> 
+> Directly after sending these patches, I will start a '-j8' run
+> of the full testsuite on cygwin and let you know if it fails
+> (it should not!). ;)
+
+Just for avoidance of doubt, this test passed without issue:
+
+  $ ./git version
+  git version 2.53.0.rc0.2.gc56c9e3a41
+  $ 
+
+[ie. v2.53.0-rc0 + these two patches]
+
+  $ tail test-out1
+  All tests successful.
+  Files=1028, Tests=32260, 2945 wallclock secs (22.75 usr 64.42 sys + 7655.90 cusr 10222.07 csys = 17965.14 CPU)
+  Result: PASS
+  make clean-except-prove-cache
+  make[2]: Entering directory '/home/ramsay/git/t'
+  rm -f -r 'chainlinttmp'
+  rm -f -r 'trash directory'.*
+  rm -f -r valgrind/bin
+  make[2]: Leaving directory '/home/ramsay/git/t'
+  make[1]: Leaving directory '/home/ramsay/git/t'
+  $ 
+
+> [When I run the testsuite like this on cygwin I can't use the
+> laptop for anything else and the keyboard gets _very_ toasty!]
+
+Now I can try a lower '-j' value to find a happy medium (although
+no '-j' argument leads to approx. 4 hours for a test run, which is
+already better than 6+ hours for my old laptop).
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
+
