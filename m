@@ -1,103 +1,110 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C2D2367D3
-	for <git@vger.kernel.org>; Mon, 19 Jan 2026 05:59:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F311339B1
+	for <git@vger.kernel.org>; Mon, 19 Jan 2026 06:34:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768802390; cv=none; b=TTBmNF9IBHBF42ZhXSWNye/6OTeeExxoz2OU6KZxpFYUgPQQs4+kE+m+hVp7keHxevmppnrvNUTPLuzsJjsWsBbBS3DZNXw+dutliqqM6ybrG8T2gW+3qqgt6+Adcdcig2r3SApDkPkc3+ab7mgEwY0asSoMQLoE0oh5/lx4VVY=
+	t=1768804447; cv=none; b=JizIGEky5/wUr5PB7Ts+f7MEU0mNeIHYx1i1ZnE8rz4HDf+qQ1ynZH8uTceLwpuFMkWsqTrbzw7HGO/B4uvmjrcMgGQ2CgqJBVhT4u8zgJq7CJUcyGtYs8LcWDgiCuTey0fTnNSpM5V6cSdPddiqnXx58QwhcQTZYzd5y9N7YZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768802390; c=relaxed/simple;
-	bh=BcoP3tDq+mHFnJK+r1o3UDSAQrpnTxKh1Rh1kU6KxGs=;
+	s=arc-20240116; t=1768804447; c=relaxed/simple;
+	bh=aV1N4TGrk73Xu4JfQRonxOp56vqc1S4EMBotRwZ0Vzc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A1rJ/ng+u3EeDKkRcgugmgmTgQFhAzb1PbxgHBuc6vu1RCkYDZ+14u+9pL7TmlzB0NaqavkxS0syfecq2/Gxn1e3iO2srzQV2BYyIQDKpioghYQ566YQ/ggGUajGBO1DtbHA4mD5hWh9gQnF/6rUTQRzjjzoqNSy1UA5E06oBk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=iNMHpH/+; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=it/GyBubHOV/pZBL6mTas7OcDQRXurmiehZvXHwEkDWBmxXs/3daWPpFDHvZx7W75QrvnSQa4amLke4M8LFnlrCRayRBnA/2C8Dwhfuuh7u/2kU+lN4UfAjeErC6mcBAJ98JevMg4uAJB43jwr/JCNf+UZXWIrv0E6rqWE2hPHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UoGnSAO/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zCqwC3Gu; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="iNMHpH/+"
-Received: (qmail 95575 invoked by uid 109); 19 Jan 2026 05:59:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=BcoP3tDq+mHFnJK+r1o3UDSAQrpnTxKh1Rh1kU6KxGs=; b=iNMHpH/+C9M5qJeEgqsv3dLdWDUysCEJrvDox2+1GnQH2AqcuekSEcV8M/1zI8WhqtrB7xjLiu/AxjISCXEda+Ro+UOqOAJFQ07Ok45aTqNfBzQ4oinHYhZgo4S+QkWS2/KQO2VmkL7PMV+aJFxTgm1IFbVU72RZSYebtt0QbcAKtsIrp7X1b5VszT46rAHOavMP8u75RHwBIIT6U/9Jxcr+iEsNvoUOPrkT1HWUi4fm5SFG9zI/sKkupT8EELNu72TCWbosL3TQAhkWYIiGGGWKw1Ks1MI68rng/AiYnkdmt6Ao5TxjqM+ybZxiJZxRTktmy4pPuDSw2Vh2/oGweQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 19 Jan 2026 05:59:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 154431 invoked by uid 111); 19 Jan 2026 05:59:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Jan 2026 00:59:51 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 19 Jan 2026 00:59:47 -0500
-From: Jeff King <peff@peff.net>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>, phillip.wood@dunelm.org.uk,
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
-Message-ID: <20260119055947.GA3100271@coredump.intra.peff.net>
-References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
- <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
- <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com>
- <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
- <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
- <CAH=ZcbAogCpqg0RkKg1WjuAcuKyArDs4aP+k=McCs_byDT2Weg@mail.gmail.com>
- <6ae80903-3cc5-4017-9eac-0b3100b93b04@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UoGnSAO/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zCqwC3Gu"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E6AE5140061D;
+	Mon, 19 Jan 2026 01:34:03 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 19 Jan 2026 01:34:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1768804443; x=1768890843; bh=gOVOI7VSep
+	vsB22g+ZGWqjLR3W6peq98j62LU7Upl4o=; b=UoGnSAO/vVR3oX89HBDeELtmA3
+	t2cgBNNbpuxnBvO7vi19MuDtkCY8ESlg2Ma8FVnVhzeRQPqyu99jIfkKwZfKf9LA
+	XGv0o3TVBC61uWQxQwXwk3UgCp/BrggsIeESc02jzmGmiG7Km73oU9OwHMVy8+NK
+	C7gz4qmsVULK+w09Shxv6ZuMSMa1qMsa9HfsjzzvfWM9QM308eIm9hRdRL5tRJzy
+	DOJQjkz30urhovuSZHLTyJhI4trwfw6Igpgdsq0e5aBlxul11qWSG/gYH7y/Cvuu
+	3fLgyAdGqOx/zHfF4bEhUS9azkEKt/vRSkXb9Ut4SIg2QQJ4UldNDhPXMOjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768804443; x=1768890843; bh=gOVOI7VSepvsB22g+ZGWqjLR3W6peq98j62
+	LU7Upl4o=; b=zCqwC3GuXalUB6i4Dbp1HhtpDT2EqCYQgc5YR65ErzsG1fV2p5R
+	xtH3rgdojCVvXyTY1g2szzfwSqBzIu0QqO9HwywLjaZcyxeskWXpKdQMBO8QGopv
+	hf4L5/ZuhUrLybg8HffXDOGjRRfxT8lmJzB8ZCE7akL+iGDdKbz1PUomO9SiBJ6E
+	0pnt6E5dOV1mloC+hEikTEAjVymi3QaN8hd2nYre02xpQF0uuHWtuRRSmELXxaao
+	4HnVyejk4kwyTEH9x1sp9WW6Ajt/cTZozv3hGkK8mLmrqL06ex1bZda2TBJFL9EG
+	5aqAvNrcF52l9et2SoKt/kdkWIvV2FJ9mEA==
+X-ME-Sender: <xms:W9BtabyZMLlR3vHDZnvYXxsIUpeTNuXz7GPN3uSaEUJEWeaRiRy2gg>
+    <xme:W9BtaatU8vZeI__euI8a_FUdLXkFY-UfD3Eidd3St7KLP8ejET3NcAPymu8IEWw8q
+    uXb3Mg9EAdhegFcoUMb5ikEBiy7a7wSJXBO2zyUdhc3KFwNc6EDVg>
+X-ME-Received: <xmr:W9BtaSu3YWnKnkdVDIJmZg_AK-J7mrG8SagyhODjBZmfkGupRSZ4Mn3baTnz1C3TOw0pIVIu1oiXC7v5Ez9uUzhGUGHtFR4R9-D5R1-7eLo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeeikeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhl
+    rdgtohhm
+X-ME-Proxy: <xmx:W9BtafMimrfMxZAIcu8GZoIoonThw8OtBmtpRXRnFn54wG10kCbqCA>
+    <xmx:W9BtaQ2vbATrkfQxtZU27q5hCQMedqr9GKOwLYRD98-tVSvptDqKJg>
+    <xmx:W9BtabO3GThy4DNfDC8Wccsr7PEmZLXz6PbJ_IrtlZ_GtbHys1Zrxw>
+    <xmx:W9BtaQ0T1f7lA-u9kdaeoOe4zj1ygfJllHGd0MQ9kcnyq8B4AX2tfg>
+    <xmx:W9BtadYgF6Xd3ewnUcoh0dxsgQPyxAoL4xf2lJZ5debZP-CVHbm7W7OC>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 Jan 2026 01:34:02 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id df22ca6f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 19 Jan 2026 06:34:01 +0000 (UTC)
+Date: Mon, 19 Jan 2026 07:33:58 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH 1/4] remote: return non-const pointer from error_buf()
+Message-ID: <aW3QVkpPPHjKVNLC@pks.im>
+References: <20260119051858.GA1991308@coredump.intra.peff.net>
+ <20260119051945.GA1991523@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6ae80903-3cc5-4017-9eac-0b3100b93b04@gmail.com>
+In-Reply-To: <20260119051945.GA1991523@coredump.intra.peff.net>
 
-On Sat, Jan 17, 2026 at 05:40:08PM +0000, Phillip Wood wrote:
-
-> On 17/01/2026 16:14, Ezekiel Newren wrote:
-> > 
-> > If the size of different kinds of pointers ever differed from the size
-> > of void* then wouldn't that make all calls to malloc undefined?
+On Mon, Jan 19, 2026 at 12:19:45AM -0500, Jeff King wrote:
+> We have an error_buf() helper that functions a bit like our error()
+> helper, but returns NULL instead of -1. Its return type is "const char
+> *", but this is overly restrictive. If we use the helper in a function
+> that returns non-const "char *", the compiler will complain about
+> the implicit cast from const to non-const.
 > 
-> I believe there are (Havard architecture?) platforms where function pointers
-> are a different width to data pointers, and that's why you cannot store a
-> function pointer in void*. I agree it would be weird for char* to have a
-> different width to int*, I suspect the restrictions on casting from one type
-> to another are about alignment.
+> Meanwhile, the const in the helper is doing nothing useful, as it only
+> ever returns NULL. Let's drop the const, which will let us use it in
+> both types of function.
 
-The standard does allow for different pointer sizes for char and int.
-The key thing is that a void pointer has to be able to represent any. So
-you can cast a smaller pointer to void and vice versa (and the latter
-would presumably throw away some of the bits, which is OK as long as the
-void was made from one of those smaller pointers originally).
+This function signature is indeed quite misleading, and I'd argue that
+it continues to be so even after the change. I guess the intent is to
+make it a bit easier to print an error in functions that return a
+string.
 
-More discussion at:
+I'm not really a huge fan of this, but it's not a fault of this patch
+series, so let's read on.
 
-  https://c-faq.com/null/machexamp.html
-
-I don't know how malloc worked on those platforms, though. The caller
-knows that malloc returns a void pointer, so it could cast to the
-smaller format in the usual way at the call-site. But I don't know how
-you would tell malloc() in a standard way what type of pointer you
-wanted to get out of it. I suspect they may have had specialized
-allocation functions. Or maybe it was enough to just throw away the low
-bits if you only cared about a word-addressable pointer.
-
-At any rate, yeah, I agree with your original concern that the two
-structs are not compatible. The layouts could be totally different. And
-not just due to pointer size, but IIRC pointers to different types could
-have different alignment requirements. So:
-
-  struct foo_void {
-	size_t len;
-	void *ptr;
-  };
-
-  struct foo_u8 {
-	size_t len;
-	uint8_t *ptr;
-  };
-
-might need different padding to properly align the pointers. In the case
-under discussion the pointers are always at the start, though, so I
-think it wouldn't matter.
-
--Peff
+Patrick
