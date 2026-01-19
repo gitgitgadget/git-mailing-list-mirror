@@ -1,132 +1,136 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE73350A19
-	for <git@vger.kernel.org>; Mon, 19 Jan 2026 08:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768812794; cv=none; b=Vx1rsxjVL6ohtpipC9l0ArygcmcImCbiPd6CNk852yv7zGZFkkSo3QXMfygzuagRozO/hgq+ebAPf25ZABVoxf+fmax0T9GHPwhVMohMjzqUyOg3+PzH4zSv4W9YRZebTMTSvWfS7HfsT6UYEXU5cRl+f2hJqUp2OTvsUZUAsec=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768812794; c=relaxed/simple;
-	bh=moISCIBvx5IlukspghYFjbt1VQysPnunNgAoB94zVoM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L28Bo4YyDhAiCMi9A4kwHhYGu8WvAtnosbjbx/ceRnZ1Ip/Z/jqgE+z31XVrEd4cNWXpUNs4fCmSAkSW8NqqS6YQmsBdwpAYYI77vPjphGHgI4giKgqoBdxB0OyZGfk904i7e+23mON6pN3tJh8dYuazUUbOgozPvs9h3Uuv7FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f4kXDgWe; arc=none smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6790317A2F0
+	for <git@vger.kernel.org>; Mon, 19 Jan 2026 10:17:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768817878; cv=pass; b=V1z1R0hrs7EC4qjR4ZI80aUVYs/0ON32GJUnJoKOaPIrCB8/95vnI/UOUrZzTA7p4OK8bHXVrgegc53LCszWs3PK+gYawH7IktHlLoHBE2vuWRVTDrucOLbEkrOsgf8zczOV6BsrQU+aHtArBD16Of5GXZ/6VXivvCQoPIYA5vM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768817878; c=relaxed/simple;
+	bh=FnZSBu4ktsNb3ZPiIR9UbyoWA4rFjb41oklojBiV6p8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nVzxulyQnHoU/jK0UcGTaOgCUh9S9sGaIBuOmDdSZCVhjHWrNSfQZbm/862DpMMQRWVLsU1opReBrUOuEn0Nv2mKMMC1rNtt+SY2p32Ehzcr9BmszT4fHBaG9MrWvBqPh151IOsZLkaohlx9zdK7UHPAA/QQUh/9sB2xzyOmWtM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hTS67Yrj; arc=pass smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f4kXDgWe"
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-5ec8781f5c9so1847707137.1
-        for <git@vger.kernel.org>; Mon, 19 Jan 2026 00:53:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hTS67Yrj"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-79088484065so37933417b3.1
+        for <git@vger.kernel.org>; Mon, 19 Jan 2026 02:17:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768817876; cv=none;
+        d=google.com; s=arc-20240605;
+        b=VoAkFWj2inxtNVPqMXO7bvVF2fa2e052akC5f5fS1RK/0aEyNdYodtw6A//QRxlLLt
+         Kft6u1p5h9pHQWT5tMzvrNI79AWsIIv7UkpZ1VX5yPgWo+Nfa/j6DUAhocpTefev/h/5
+         8nPGj8aM5uLSoTVS8/agATczXN31PHU2O0j5/g0mosXPWT6iykpqYv/Vc4uJrWv3fTrJ
+         JY2Ng97L/deb0EqUiw66cCsQK9mvIWY49jr5YJ4/Cb2irFFgImIx7LF1C+oMlJ2mRr5p
+         5kq/yAh1LwXQUMNVI18ZZGKW0qYUGiXsluGQI8rPdFUWMTA18JZHzFhMB4fHpcacL5+b
+         DEAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=EOm0A7qtAptaew6Os/6cJlAzFbmvrNKRGF3DH2BHPG0=;
+        fh=LXLRV0ehehwuql0dc9RY56h9a8dTuFWTI0G06CzlgQQ=;
+        b=DCT43q8Tk2VhUnw1ZfdvfglMidfIdZ6dTAPecKLp4B3thCXdWxvzPBGLZdQpSAicso
+         zhD08UEqeGn+lYuYDESApkq4EyRRuIunWl/brAnoRQbi3upfnaG2luOr6hdmM6oEEVZY
+         k8bh5Xk/slnpq12mz30YH09GkWXEr77O4mGmQTVLicYc7avghbtbdvz0RCyvj8NEArRA
+         6vBGKQs0w1X2dolGbNApFJKF0DBeM9nCJhA3qHxx7D1nVsBzbxRqxwesVZnM5ZeGvmik
+         8XkfdF0yY/cfUskdBd5rMIMHd1nWGRMmFPekulCOI7tY5c0a76BWKLuSD7jPH82Q2pSn
+         mSYA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768812789; x=1769417589; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IF7OcLYh09w0gbQkLyS1FAaVX1a7wbjeHGI5mV+Oib8=;
-        b=f4kXDgWe+7mPaw/LfrHNf5+NTRsZJcCLfRMkErNnH+c24q9jQ7IrGuKN86GQTlZ+t3
-         bXwF81dZB2xJ937pTzpz04UtJW2Jq8SIi8dNg4k7qeG2Es8xNzsg6fxg3PEmZcVSsrjg
-         ast+YtEkSYg3K7wEI7cVDLrwK5YTXRsEtXiPnxga06ri+B3h/v6jdMX6iWNZpROjZlXi
-         q/cO9FP2RycmG6if2difeyyW4NXj/aSo6nME30iujXJYwfEiXxUHcwoFobUb5h2STjPw
-         lx+ugUa7cqVO+l7EV2ptAvcY7Vr4YreOwugk24NbBJjr3/ulzF9r66Zi4dot6jC9M3Ct
-         Z6Bg==
+        d=gmail.com; s=20230601; t=1768817876; x=1769422676; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EOm0A7qtAptaew6Os/6cJlAzFbmvrNKRGF3DH2BHPG0=;
+        b=hTS67YrjoP2IKtRz6DUFedGEg5s0oRl/GSmzA+mT43c6lV648Elwa52YLJ0Sz7bfA0
+         zgTmEbPpSzvTGg7hnYNgesROGqV7zcvs8ch+Y5Ha5rugYAg1vZ3U4HqG3HhEA29nFLTZ
+         dziYt3KWmaTipr2SJ5dRsk/BjIlLcyk/PAU1uUu3tqUCm31HB3F94OIBjLriW0Lknsj7
+         gAnvG2mMMynQlERgMgz9lKtng4gl4QU58CQZIXZyLK/zAoXDowH3AKR3HEDO+4KtUpux
+         V+UnQgS4WZSv8XmNHf6l4VaMpvn6yve5AiEK2csVtI+o7NYuIq7RLjf5hGlv+kiLsn3J
+         Izpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768812789; x=1769417589;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IF7OcLYh09w0gbQkLyS1FAaVX1a7wbjeHGI5mV+Oib8=;
-        b=aINJkfuFrAOmwXVp7VeFDeRGN2Pzd5z6Zf/uqUo4BAtHtTHjk6tUmL3rjFxznqep09
-         mIT4K1ZgOEryz1O2LSzew2/GKomaY2XoxJROfLFA+lI8/0B1RWO0AlXvVFErm8+/njIY
-         gLa36YgFlxV36TimxdmlGctRdpk8xSjzy8gk1vGag2GxcGsTTaPMhRpyY9TBf7QVXj/N
-         jOeo8j1S4EVIoqOWvhx3D22J2CcCKCWBut+mhkRzs5wCKJoKq1Ng+qIuq5YdKxbvK8NQ
-         /KRQNhBxbRxew6chiJsiWL+ML18jhdopCtl4SVTfjRiIteiBU5Cp7pMpeCHiiR7boWfN
-         Gx3g==
-X-Gm-Message-State: AOJu0YzSFqpX14FMn+SG8aDe3ARmM1MDZpevBqXWM3tI6CFRTpWxswvQ
-	VFbgS6p+FSDDXVMcXFvCQov6bCAOu6KbIyojGycw9UOKfxWOgHmplSlDu6Uq+b6/iqOSORXN8Jk
-	p1EfQiwkdDDyb8dWRMf2SxE0cS/7JmVY=
-X-Gm-Gg: AY/fxX4rJ0QysPVLKBS+5hKya5LuWZR6xrIIpufOPAm7p1+5ui/2ikG5Sw+g5m53ZjC
-	m98AKATu3SZt/xi0+uFozxD5Ce81g+1B/kbMdiL050Pqd7bhsQ5em8n12Esh/hfgusdB6YwpDtx
-	yniK6PKsYCZIcChzJLYWwI8LAvialPuq0l0H1ixuSsohe3fcxGsTflit+c/gpIqIseIVAqY/tMl
-	nHdx/TXaMSZW89abxQECZl2ppAyMoJV0q0dT84FTDuX8GkkKxWKQ9b26h+z2qYhuEYuIB5LeRdH
-	Ez85+E05eGBwBSXXuR3bwzYey4WIIA==
-X-Received: by 2002:a05:6102:1611:b0:5e5:7055:66f5 with SMTP id
- ada2fe7eead31-5f1a5512e54mr3897659137.27.1768812789274; Mon, 19 Jan 2026
- 00:53:09 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 19 Jan 2026 03:53:07 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 19 Jan 2026 03:53:07 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aWzM+qePiaRWz5/f@szeder.dev>
-References: <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-0-925a0e9c7f32@gmail.com>
- <20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-1-925a0e9c7f32@gmail.com>
- <aWzM+qePiaRWz5/f@szeder.dev>
+        d=1e100.net; s=20230601; t=1768817876; x=1769422676;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=EOm0A7qtAptaew6Os/6cJlAzFbmvrNKRGF3DH2BHPG0=;
+        b=GeR05WTbgUi2OEPD5BvBwnelxAI4Ou+BikLqLigyTwvaHwmgMIiGhGOoSF8sY0pw8b
+         LGJrhZQAgDerzW/F+Din41/EhFVgWFL3jXCaGmieyLXWxixxgBxQf/hsDo6h/ZFaQ9Jd
+         1Q64JyPXSsDinDQD8bxdznQ/uQj0jZ+QkTITatQz8QpRCUKNtCAkurPGCfpGV8KfGzEs
+         Xn/wsTdWzwqLwRR7NhcvHsEhCgGli704YuTYYu3k0QWe1TSOKzcvsLhDttnhaVghJjFP
+         t2YrxixO+d5O2i/eqMKv+oFe6xJD/a88AeobOGcmMhnBaWb0eNSEuE2lHJ7WFhvZ21Hg
+         rXxg==
+X-Forwarded-Encrypted: i=1; AJvYcCXCo+VXYb9v+smQiSq6C7PNrJ6TAbj0w3SAZXTVqqKa47EjqiZZc39ArfnoQt+lu8US38A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YydxQ66ecYiP+Wzh8gJ/gEk+wwODhFQm+Ninqk329lwjMRPpWFY
+	8rn/QxAwr4eIwuK7hGSZb7DjftumIJ7JnWBrFjCJKgJXVyVaKxj782aNdo7vxVyKuF43XE6VEZO
+	choDZw7fRRxS0VaZTKumWdUA8zeMMbW0=
+X-Gm-Gg: AZuq6aKUYnnIHjkrWYlIbfR0QlIJcAnbzm6DCun6h1NXZNG+ZxQrrx/LBGfGpWBaqDz
+	TwPO3GXoScoj2fNXSUdPJTSEKjTEsWgQDSWz8A2C7AgRDO7CutpGLS0QEJ+d1vCOw9JBVfW0Uln
+	8gNVHBW+x0FIJufSQNVENsdJIokr+ksQc9CCfpfTNbqwm9So3sVonF3FPYqXiH014XXcNGKV+bA
+	yiNhWzQEK6x79s9DIHA0/hkosnZeqRujmCW1XQ82ODq2FBOJMMBXWSwI649pbgRZ6249jtZ40d4
+	x6Hbl2t4g2fbMEWIGlZESY7+Bym0djYkKfCxSF8yYtKfcyIG5H69/+IS1EN/OgKG3SI6o6k=
+X-Received: by 2002:a05:690c:dc5:b0:793:db5f:f8fc with SMTP id
+ 00721157ae682-793db6011d4mr108196337b3.10.1768817876350; Mon, 19 Jan 2026
+ 02:17:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 19 Jan 2026 03:53:07 -0500
-X-Gm-Features: AZwV_Qilh4IyXbeBxBRSCOY6AD1bEqCZo7M4gdwUtey9xc5xuB9bNzrLAMHvYaM
-Message-ID: <CAOLa=ZTuD=bcO2pin6CWYFrc9Lwnq5JWy99cUGt8bOYkGh8vHw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] refs: drop unnecessary header includes
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>, 
-	gitster@pobox.com
-Content-Type: multipart/mixed; boundary="000000000000fab3980648b9d111"
-
---000000000000fab3980648b9d111
+References: <f3500e698fd40297d2e2634785529b76d49ca470.1768530514.git.zhiyou.jx@alibaba-inc.com>
+ <xmqqo6mta7bg.fsf@gitster.g> <aW3XUxaomqGbtpEj@pks.im>
+In-Reply-To: <aW3XUxaomqGbtpEj@pks.im>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Mon, 19 Jan 2026 18:17:45 +0800
+X-Gm-Features: AZwV_QhyUi1PrUfYyrC6hUBLHGmRPbGrDnQrjLTkGaEAEKFw7zWw-SOiwkvufhM
+Message-ID: <CANYiYbGn-ANF4jT2Lef+uL=sfcVWukBH7J71VaapGkaDaYHFZA@mail.gmail.com>
+Subject: Re: [PATCH] help: report on whether or not gettext is enabled
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>, 
+	Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-
-> On Fri, Jan 16, 2026 at 10:27:06PM +0100, Karthik Nayak wrote:
->> The 'sigchain.h' header isn't being used and can be removed.
->>
->> Similarly, 'run-command.h' serves no direct purpose here. While it gets =
-pulled in transitively through 'hook.h', we can still drop the explicit inc=
-lude for clarity.
+On Mon, Jan 19, 2026 at 3:03=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> > ... we do for the curl library, so only reporting "enabled" does
+> > feel perfectly OK to me.
+> >
+> > I would prefer not to see the "disabled" entry myself, by the way.
+> > Combined with the vintage of Git binary that had these help text,
+> > the fact that an "enabled" line is missing is enough clue to
+> > diagnose.  I know you mimicked the Rust entry before this point
+> > (just above the precontext of the hunk), but I think we should fix
+> > it to drop the "disabled" entry from there.
+> >
+> > Cc'ed the author of cb2badb4 (help: report on whether or not Rust is
+> > enabled, 2025-10-02).
 >
-> The need for these #includes went away fairly recently, I think in
-> 26238496a7 (hook: provide stdin via callback, 2025-12-26) and
-> 7a7717427e (reference-transaction: use hook API instead of
-> run-command, 2025-12-26), which were merged in f406b89552 (Merge
-> branch 'ar/run-command-hook', 2026-01-06).  Unfortunately, that topic
-> had some regressions and therefore was reverted in a3d1f391d3 (Revert
-> "Merge branch 'ar/run-command-hook'", 2026-01-15), and as a result
-> merging this topic into seen resulted in a merge commit 180b93f7ba
-> (Merge branch 'kn/ref-batch-output-error-reporting-fix' into jch,
-> 2026-01-16) that can't be built.
+> One reason why I personally prefer to have enabled/disabled is that it
+> allows you to discern the following two cases:
 >
-> I think this patch should be dropped from this series, and these
-> #includes should be removed in that other topic.
+>   - You have a modern version of Git that doesn't have gettext.
 >
-> https://public-inbox.org/git/20251226122334.16687-1-adrian.ratiu@collabor=
-a.com/T/#u
+>   - You have an old version of Git that doesn't know to print
+>     information about whether or not gettext is enabled.
 >
+> If we don't print the info at all when gettext is disabled then it's
+> impossible to tell these two cases apart. That argument in my mind also
 
-Sounds good, thanks for letting me know. I'll drop it from the next
-version!
+Both `git version --build-options` and `git bugreport` display the
+Git version number. This allows us to identify whether we're
+looking at an old version that predates the gettext feature,
+or a modern version where we can expect gettext status to
+be explicitly reported (even if disabled).
 
---000000000000fab3980648b9d111
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 127f902148e9df8f_0.1
+In reroll v2, I considered outputting GIT_LOCALE_PATH
+instead of "enabled" for gettext, but that would have required
+refactoring git_setup_gettext() in gettext.c. The benefit didn't
+seem worth the effort, so I dropped it.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1sdDhPMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meVpFQy80N2ptZWlvMjRlNmQxdkNkNWs2OGdYRVhpWAo2elhUOXBpeTAz
-YWNYTFdGdTdxSEdIb2Z2TEtocTJUbCtWM0E4QWFiK0w3bzBKZG9aVVp6c0h1Ymwvc0E4VVhkCm51
-c3pPY05TbDlOaktmbGhCOTc0RVJvVXpnWDY2emJsejVIUFppeEdYK3FCL3VReTNLRFVIQXAwVVlv
-L3dsSFkKVVQvMUNhL3UyQk45bXN3NDByTXprbk9XWXU1UXg5QlQzZTRzSnI1U09JdnJLQ0hiL3dT
-UlFkejBuQUJaRGhycAp3a1owZjFodFgvYlMyanFWc2dBU3IydERWTFlNN0tjaTBMeS9yN1MzaUZT
-Uk9iSllSOUhDRGFUdldFZ1c5ZGQyCjhUeWRNQ09HT1B3UjBQaHFsQ1pPRWxHaGlDZkJkMGlJam1L
-cVZjbnoxUFY2Uyt3OTdSTEk2b1hWOE1oUVExVGgKSzV2d29pa2ZjMDFiWEw2cjA0T2pVTDB4NHlI
-OTBrdERJS1NMaTFWc3RsNzMwdkw1enJ5YUN1NHB2S0N3VmVsQQo2NUpnYjN3NURVMWNKOEVqK21W
-YVAzeGEwZXFQZFpub1pPdFBNZXJ1M3c2WWdhTDhhNlVQcFJob2M4SDJVOHhVClQ1Qm8yOTJSVWJH
-YXVQZGhhZGUxYzY0cnBTSy83K1BRSklRZThZdz0KPWtmN3QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000fab3980648b9d111--
+--
+Jiang Xin
