@@ -1,106 +1,199 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4D52EC0B5
-	for <git@vger.kernel.org>; Mon, 19 Jan 2026 20:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764B8239E75
+	for <git@vger.kernel.org>; Mon, 19 Jan 2026 21:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768855215; cv=none; b=L0wKqHeF0fasn5Lg/EkgFn4ep/ovpG183ntgWA1DACEa+DKCwWSzijEySkmmYi49kr3uAZ9StsFkkKXf3F+dRZrttnxI3mT5s14dn5YOgn2afBnxiKAdkawVUFGonn1iHvgOHT3d8PFmn+NUiePsmdrnlnq/nGd9Qoqwhjdcajc=
+	t=1768856986; cv=none; b=lW5aDypFva0GzyFhOaRgU2Td2yGEKoIUPxXkYJbeh9hJMUxs3K6G9GU1I2HSg6/Fu8JbntHckIa628NwBND2A7zrrUTvILXVp8lbJcvsbdioZTUumRcSJ/fY5u0KyWrIt7ixzISNt7mddY6/cNRlmb5x/nko8Hb7eSb/gCSzKCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768855215; c=relaxed/simple;
-	bh=ohqyUPyghYvhhWnGIgDlIPNOlcxAFaq3OW0ctpZ2Y38=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OE/qvCY4hBChzXCIWYpEZ5tARSvzkWH153D/3cl8E76Fns/M1dpAA8xMn8EOT+tEV/HAGNxJEEeyQXX0V3BDTM02vmOUh/e0Vu8t80Zs0y8Vay2cCrqTEpj1uhQxy+CQhI14Mbjg6aGkc/HNzu30It3h6ehDQWtcy1HkOaxaf+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=edcM/Xg9; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1768856986; c=relaxed/simple;
+	bh=/hvfr3n8KF3sW67i3luQbIU+Qgaxc7L42sK1MF0JyPs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oPACPBzbW1kCAGGqOroSwR04tsDZfr9DrfTlF3/drz1MmOJj3pq5LtjStMnRujKIav3PbY8tnseLa5HLpxZjF0wmSCGoO+SKdMIRou53gsPwgB3YGR2LTSIlxDreNGZDniwZ4tZS8M2xtUxPWm12PMhbwe9/0j9gT2m7O4jU0GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mpbvtGne; arc=none smtp.client-ip=74.125.82.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="edcM/Xg9"
-Received: (qmail 103555 invoked by uid 109); 19 Jan 2026 20:40:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ohqyUPyghYvhhWnGIgDlIPNOlcxAFaq3OW0ctpZ2Y38=; b=edcM/Xg9EmXyA2WpeG+lZy2xWiNVEuwbHhAFnEPK6rold6sXAL7/4n6iD9c5OFuqDQerQ+gorOCG2OjoMWJE94SY1E4gMthNhfxcARdslcETdWTw2fvwzvm+BOns3o/3pfi0pibsV7GU43oEWC9jSTd/arjBbEpcKLde7AOGkW6G4B1AMdTQomXWfty4ferWUzVxSd3G4ncfJKqwhCXgZsLrXfZU1gNLiTUpzmCxvV/3sJ3rm/WtUMIvB110ntkwS1s5mRmokV2tptZg1lB6zfbizpYB7I5xMP1C45pHFOwEP5BtxmfVGSz3hNKNPlZCZgxiyn0lDjls4hDKXoQRVw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 19 Jan 2026 20:40:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 165429 invoked by uid 111); 19 Jan 2026 20:40:13 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Jan 2026 15:40:13 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 19 Jan 2026 15:40:10 -0500
-From: Jeff King <peff@peff.net>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk,
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
-Message-ID: <20260119204010.GA3148606@coredump.intra.peff.net>
-References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
- <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
- <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com>
- <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
- <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
- <CAH=ZcbAogCpqg0RkKg1WjuAcuKyArDs4aP+k=McCs_byDT2Weg@mail.gmail.com>
- <6ae80903-3cc5-4017-9eac-0b3100b93b04@gmail.com>
- <20260119055947.GA3100271@coredump.intra.peff.net>
- <CAH=ZcbCXAB3vzRbyHkunQh09njyLk4WXvfLVxynXaswEkBv+DA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mpbvtGne"
+Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-1233702afd3so6016274c88.0
+        for <git@vger.kernel.org>; Mon, 19 Jan 2026 13:09:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768856984; x=1769461784; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NZrwhLlT60WpuSvjkjwKiaBhz4nKk2Pp9DzBequvtWc=;
+        b=mpbvtGnegJQ0t/lZkfBc2qkAWswUHC9CIRrDuTBtVIm+kn6+OUs+xTW4jEbntikJek
+         G2lDi1ifM/UR1b2dnqX8f4tAmLfW/gP53FKg/4dKNopOSg8WQe8xzgnG+oO0jy+WkypV
+         TQGvkqp6M49GcWOEc3sH4/BApEDupKPCi+/Xjojj+hEI+OmuuuLDc9hqsVm6yNuhZLEB
+         vZMhb0cOARHi3TOD6404ZRDcPT6mUClVkNWyLaDTxe2/C2LjBu54UBcQtTi0lfI+JSaY
+         kSIOVlZ1fS3TayBjhtfzA7hnCZjIOhCQbMchvq1JYSX8bKuw1f+okfCvPCyp3ElCj5K2
+         s3Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768856984; x=1769461784;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NZrwhLlT60WpuSvjkjwKiaBhz4nKk2Pp9DzBequvtWc=;
+        b=hJhMJqErftgiw5ucnt1mjSCaNUj7VEhMDlZfciPRUY6zRBZOsTAguzxmUNoLmGrfdU
+         wBHgmy4HPjfu/+IAkoP34md+HlLBo0U3AbpFFSL8ZQEuMbW465oGXo6bWZK0JM90RKR3
+         NU+waBjRECnDt0aVrfC39FZM9prbjRWrNK3T/jhzVr/hr4ac2DoaTciwYrPpamOSbOZA
+         cU6A2rR6FyWTZjQI7SGfx3uemDZ+Nsniiqh5ta2mJeb/N658eKM3u7LmpXBoXO6A/HL0
+         Ev/cECPgBW1YIQU9a8CSulknrZwFSoJmthUAejiUWrjw/Y47XVNH3o3z30rmc/B7A9s4
+         nTag==
+X-Gm-Message-State: AOJu0YyiXxApnxln308tUjUwT5akQlBQ3L/X7nIKIRruJ9p+NNvP5u3f
+	qYCu7w+OzWxLg2HnItd8UZ9N9DEn4qO0yBk56Q0pzcZHjX6x/jXe2Gnw1EqFLw==
+X-Gm-Gg: AY/fxX6QSHCXLMz/aBTcNb2uyv7ZWzSaN7wdTjaVOj9IDhWk4gWOzcGPWSIWpeIYDO1
+	PL8tkhFUa88Ad1D2hl54QTqNlobJ7u4zWG9r+zjqxIpbI9dR5GTQxnS8Z5zoayiNgLgXaXAn60i
+	HaAjfK9766Af53KCzs+ebERgMVHfm6SMAVUiLcC71FU6lMwfwWY3UonZ/Tspp/vmD6eOBMuNzPi
+	R7tTwUhHitBsuUutt5adenFQGVDjWC/jNg87qBoBREYe6TCNiBbT5vCBX/3j3UApTJwCE3VHgfl
+	R1ha7u63UrefnLBxBZCAZrddp+q2zm2fHWgLZ5fUiHuTzSAxUh5ihZ49SvcHqb62wHYHQGhFa9q
+	76W42C2JqO6krJDSyd5si2Pwl2Ir2MjoyV2lzEWQFKEbVV4xWA1M7X2rH5wBNQ0hJdXOWhH1YrG
+	p1fUFtfcNSKdHBwaNtpfacSHndTfuRRowL2QQhtVvaYG6x0TY=
+X-Received: by 2002:a05:7022:619d:b0:122:8d:3688 with SMTP id a92af1059eb24-1244a73bacdmr9200253c88.22.1768856984150;
+        Mon, 19 Jan 2026 13:09:44 -0800 (PST)
+Received: from localhost.localdomain ([191.181.59.93])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1244ac57fd0sm16935706c88.3.2026.01.19.13.09.41
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 19 Jan 2026 13:09:43 -0800 (PST)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	avila.jn@gmail.com,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [PATCH v4 0/2] repo: add --format=default and --keys
+Date: Mon, 19 Jan 2026 17:20:18 -0300
+Message-ID: <20260119210932.68893-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAH=ZcbCXAB3vzRbyHkunQh09njyLk4WXvfLVxynXaswEkBv+DA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jan 19, 2026 at 01:21:04PM -0700, Ezekiel Newren wrote:
+Hello, again!
 
-> Ok..., is there a way to pad a field to the largest size needed so
-> that this also works on the harvard architecture? If C isn't even self
-> consistent then how are these structs going to be passed between C and
-> Rust (which is THE point of ivec)?
+This v4 addresses these two issues:
 
-If you make a union of the pointers, it will require the largest size
-and the strictest alignment requirement. So:
+1. NUL was replaced by _NUL_ in the documentation
+2. Now, the default output format of `git repo info --keys` is "lines"
+   and "default" is a synonym for it. I prefer to called it "lines"
+   instead of "newline" (as suggested by Patrick) because I thought that
+   it would be clear to the user
 
-  struct foo {
-	union {
-		void *v;
-		uint8_t *u8;
-	} ptr;
-	size_t len;
-  };
+Lucas Seiki Oshiro (2):
+  repo: add a default output format to enum output_format
+  repo: add new flag --keys to git-repo-info
 
-would be a single struct you could use to store a void pointer _or_ a u8
-pointer. The one thing you shouldn't do there, though, is assign via one
-union member and read from the other. So I don't know if that helps you
-or not (I confess I have not followed this rust discussion at all, and
-know nothing about rust/c ABI compatibility, and just got roped in on C
-esoterica).
+ Documentation/git-repo.adoc | 33 +++++++++++++++++-----
+ builtin/repo.c              | 56 ++++++++++++++++++++++++++++++++++---
+ t/t1900-repo.sh             | 54 +++++++++++++++++++++++++++--------
+ t/t1901-repo-structure.sh   | 22 +++++++++++++++
+ 4 files changed, 143 insertions(+), 22 deletions(-)
 
-> Or do we just tell the arcane Harvard architecture "too bad" Git won't
-> run on it anymore?
+Range-diff against v3:
+1:  97f8eee687 = 1:  7dabd62250 repo: add a default output format to enum output_format
+2:  0c7d3bca32 ! 2:  fba621fc4f repo: add new flag --keys to git-repo-info
+    @@ Documentation/git-repo.adoc: SYNOPSIS
+      --------
+      [synopsis]
+      git repo info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]
+    -+git repo info --keys [--format=(default|nul) | -z]
+    ++git repo info --keys [--format=(default|lines|nul) | -z]
+      git repo structure [--format=(default|table|keyvalue|nul) | -z]
+      
+      DESCRIPTION
+    @@ Documentation/git-repo.adoc: supported:
+      +
+      `-z` is an alias for `--format=nul`.
+      
+    -+`info --keys [--format=(default|nul) | -z]`::
+    ++`info --keys [--format=(default|lines|nul) | -z]`::
+     +	List all the available keys, one per line. The output format can be chosen
+     +	through the flag `--format`. The following formats are supported:
+     ++
+     +`default`:::
+    ++	synonym for `lines`.
+    ++
+    ++`lines`:::
+     +	output the keys one per line.
+     +
+     +`nul`:::
+    -+	similar to `default`, but using a NUL character after each value.
+    ++	similar to `default`, but using a _NUL_ character after each value.
+     +
+      `structure [--format=(default|table|keyvalue|nul) | -z]`::
+      	Retrieve statistics about the current repository structure. The
+    @@ builtin/repo.c
+      
+      static const char *const repo_usage[] = {
+      	"git repo info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]",
+    -+	"git repo info --keys [--format=(default|nul) | -z]",
+    ++	"git repo info --keys [--format=(default|lines|nul) | -z]",
+      	"git repo structure [--format=(default|table|keyvalue|nul) | -z]",
+      	NULL
+      };
+    +@@ builtin/repo.c: enum output_format {
+    + 	FORMAT_TABLE,
+    + 	FORMAT_KEYVALUE,
+    + 	FORMAT_NUL_TERMINATED,
+    ++	FORMAT_LINES
+    + };
+    + 
+    + struct field {
+     @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+      	return 0;
+      }
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+     +{
+     +	char sep;
+     +
+    ++	if (format == FORMAT_DEFAULT)
+    ++		format = FORMAT_LINES;
+    ++
+     +	switch (format) {
+    -+	case FORMAT_DEFAULT:
+    ++	case FORMAT_LINES:
+     +		sep = '\n';
+     +		break;
+     +	case FORMAT_NUL_TERMINATED:
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+      static int parse_format_cb(const struct option *opt,
+      			   const char *arg, int unset UNUSED)
+      {
+    +@@ builtin/repo.c: static int parse_format_cb(const struct option *opt,
+    + 		*format = FORMAT_KEYVALUE;
+    + 	else if (!strcmp(arg, "table"))
+    + 		*format = FORMAT_TABLE;
+    ++	else if (!strcmp(arg, "lines"))
+    ++		*format = FORMAT_LINES;
+    + 	else if (!strcmp(arg, "default"))
+    + 		*format = FORMAT_DEFAULT;
+    + 	else
+     @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+      {
+      	enum output_format format = FORMAT_DEFAULT;
+    @@ t/t1900-repo.sh: test_expect_success '--format=default resets the format' '
+     +	test_cmp expect actual_all &&
+     +	test_cmp expect actual_key
+     +'
+    ++
+    ++test_expect_success 'git repo info --keys uses lines as its default output format' '
+    ++	git repo info --keys --format=lines >expect &&
+    ++	git repo info --keys --format=default >actual_explicit &&
+    ++	git repo info --keys >actual_implicit &&
+    ++	test_cmp expect actual_explicit &&
+    ++	test_cmp expect actual_implicit
+    ++'
+     +
+      test_done
+-- 
+2.50.1 (Apple Git-155)
 
-Minor nit: the Harvard architecture is one where function pointers are
-not the same as data pointers. An int/char distinction can happen even
-on more common (von Neumann) machines.
-
-But I think we can rephrase your question as: are there real-world
-machines we care about that will have different pointer sizes, or can we
-ignore this issue for practical purposes?
-
-I don't know the answer. I suspect it probably is OK for Git not to run
-on the machines mentioned in that C faq. But:
-
-  1. Sometimes there are subtle implications of undefined behavior that
-     may cause a compiler (even for a sensible machine) to do unexpected
-     things. I don't know offhand if that is the case here.
-
-  2. There are some modern platforms in which pointers are a bit more
-     opaque than just numeric addresses. For example, we've had a few
-     patches dealing with questionable pointer usage to make things work
-     on CHERI Arm systems. I'm not sure if any of that would matter
-     here, though (IIRC, it was mostly that pointers were unexpectedly
-     large and had matching alignment requirements, but all of them
-     equally so).
-
--Peff
