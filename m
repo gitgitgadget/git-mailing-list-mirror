@@ -1,42 +1,66 @@
-Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E334C1F03D7
-	for <git@vger.kernel.org>; Mon, 19 Jan 2026 17:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059732DB7BB
+	for <git@vger.kernel.org>; Mon, 19 Jan 2026 18:11:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768842842; cv=none; b=hyRvflX/6VeogyEctxmKm1alnJ9/3G8g8gmMs4AruEh5hfFCaLy8DVyYLidLf3gR3V8Gs850L0YR6GODFK3AF8xw//gK/JDYlVaPrkbBtxqNyupz+Mu/Nmq879eZZn0ohBBdrazV495Elblsb+cXGEDN1b04JePPobRK11kESk4=
+	t=1768846307; cv=none; b=lsru/aicoxGDuirawdLjYI/Sq9aShee242DhwchDc367JkjMsGl7NlIZelEUYpTHQVGsf4aCRoiWOD5fkPpHs5zyXr9X2r0PpUw3CR5Rvtw43oBWKhGsatlPvpRKDvtyqrDQF2bDDCCB3beekmOP1fygpQDjkQBncopzdb16cq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768842842; c=relaxed/simple;
-	bh=GS5SEh5SmioJBKxonHDPTGhmHbs70dOLGzS8QesqY78=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W3Xvte99cZFFR3/A7AjQsHDsMy7NXiWxhYsYX+X4AvbqaCMLdNP7DMf4t0qsXNAyD2Ls2/dfGmoXucC2hW3okSZf4J9fseVh5gIGL8VWw2KmelzyYzski5PB4yZOkTOdGzjhzvjbtbeToFfOw7/lkrfzDwg4YUeIvR7S9FMb/ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=AsVSIz15; arc=none smtp.client-ip=212.159.14.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1768846307; c=relaxed/simple;
+	bh=3c2D3FCcT/UjBGq1RSvesP6s+pB+X8Qtb/CSKXWKrPE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=rWUcJWfKoHV4KyvmI2yuA+SwPlPDhfLrvegF5ZFkwX5Uhsa2R8xuZMQCcyT9MmehQ+l7lCDZgMiUNtD3BqyAWy2uhT4qdRlZceD5cY32WXm0BaHzHC3egZZoa6c0gYJMjFdrw9tvVuZoOZM69gRtzt0Qyar6TOTPNYDKrwYqRiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G4d85I8R; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="AsVSIz15"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id hsm6vdeaTENzvhsm8v0lbX; Mon, 19 Jan 2026 17:10:48 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1768842648; bh=7bGthu381o9q+kI7We7FCzoigU+5f2SqqQ8sqF05Yag=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=AsVSIz15tLiuEOQh6PWEG6gERCD5WtCAVixRFjJl6nGbX4pReFBiMZT9+kgOPsjkx
-	 Y2mT4K478GU/OfeD31GkFl3BKas2ia0VhiKfvJFwwi9yjLSl7i5p5OxcyDof+Qui5M
-	 er7Akx4IoGiySp860Y9GOx0S1s03QbfISE2E0u/XBN2UUycK358h6ieAMnlhYMs6M3
-	 P0eIUpfrhgsfKU/LmJzW1k7OShsQxiBEO5xhM9veTu7/Vu8rKbZfg5igGO50XLWdRQ
-	 d2s36cIM+2+9tucg88uRdPN7IuaACpGRRIxOJDuHErcNFiuHZBfTmyK2nHjuHBC7dQ
-	 ZVFmmHFsxxb5Q==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=doN4CEg4 c=1 sm=1 tr=0 ts=696e6598
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=EBOSESyhAAAA:8 a=yYNHE5MykbLbUTAhWGoA:9
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <f4599b1e-78df-44f3-a9b8-ed28411e169c@ramsayjones.plus.com>
-Date: Mon, 19 Jan 2026 17:10:46 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4d85I8R"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-88a288811a4so47264026d6.3
+        for <git@vger.kernel.org>; Mon, 19 Jan 2026 10:11:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768846305; x=1769451105; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3c2D3FCcT/UjBGq1RSvesP6s+pB+X8Qtb/CSKXWKrPE=;
+        b=G4d85I8RIIZxxyYc6xb+oFFMzezhG6srwcS4O/WLU3O/zl2Ce/6RkbfBoM3KIhrgJE
+         E0rGIPG6A4Pv66HU+Cmn7j0javeiJqr5FH+RN9KMu1A1ulRhnGP7ik9x0l4l+/G5XFM+
+         94DkcmNGqVYBfIkyOOeFtvDUpDC3yGqdt8XZjKDPzEtR0NUA+A7eCYUYP5/OLhGVxHo9
+         w0DgvgrnIMBBxIUqUUoLHZGaOCfbF6wor4kQzCkDTCKR8WwRFXeKvwc6q8n3xWFRld2o
+         RYi2ve9i9Bi54En24Rf+xvBriK1O256DN/8gSSfoIjMQJEYk8qa2rjx5DE1r7qNJjVAZ
+         aINQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768846305; x=1769451105;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3c2D3FCcT/UjBGq1RSvesP6s+pB+X8Qtb/CSKXWKrPE=;
+        b=wu+sep9YHOyZsbtmsABp4WIjYord7NIJNcSeRUQ0/5e9kkJtKb1DMQ34V+hD9CK/X5
+         6lMnffHqTaa74uO1TdzOCFM8w5jndJd7Xa/tEMq9vZbRWEqxYsTOY4IvR+DxzC79U/xt
+         LqsGEEL65VAOcFE0+Rx6QWS+Z10xH/W0fn8LWLiGUvTgMkGgxoXsWTABz6d0zQP/hSdY
+         pRWBhtO6MansQLtx+S7i6O+9z/mTDmeg0KrRgAxWgw25C8CD9Qq0S1fDxFjW5klrkiD8
+         Fi7xchW+7KdcU/LUtaWGdHA6I92aykbzCt+rZl7vDa9iUB6O1czXPma39iO9YX4v6FaW
+         7V1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVdYnxz7vrIE72QnWdJ7xalnPNwQ68SkGjNWEGtrAOeOeOUt9qnjdMtLMtK6omCG9xtgpQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAAmuCu62HAP3pPPxMAChMTFu1twitHWB4BTCT/j4c1wP/HFry
+	CuOy/pn98xDq2PM3Ei6iyRdeDq+ovWuq8IhyNFtAxTprv8tvhXVyvJpx
+X-Gm-Gg: AZuq6aKL3tzdX8Z4rQY9dMCAZpilkNJXRCMFxvXYCNaXv6A+eYXXeVFDmpEilk9bLJr
+	yBtsRmFWcDNLgphCp9cyz7ZUCWr9oIqCVVWvR0ZzJZqFeqjhTYDn7ZyjLtrOSl4RIYCyjgQH/Rb
+	zxbxH8HfTPYwN+q3bM2xLl2++5fXMUyD/gTGa80ecV9ogRqOra2DfB7FrS7kVFynZmweIQs2PbD
+	cj+yyqKJqKqOCyNmIzCc8KhFBnMg51LhUot8f/NJ9Ok2whPDbKAoO360eBdrMRL4Tbq/Hbw8aFI
+	voomlGnJ+3mb6lIlD4mkufB6x8MXiysdj+mXrRdef6mNMPh3XK/fXvb2AqSsU7qAF1kupLmAzWY
+	yeKwhG74SzG4DhNn9+8kN71qJIyZE/ftwo6r9AyfP047HdjEk6MhUXtr5M5j+2cZ3dEA0Dde3D8
+	Au8bFjJUj0laOtfQ7Af9UlyN6pJOQw9wASfuzquB+WKdK5XTYvzv9bjjCgFA==
+X-Received: by 2002:ad4:5bcc:0:b0:87d:c7ab:e5d0 with SMTP id 6a1803df08f44-8942ddb2fbfmr194995456d6.55.1768846305001;
+        Mon, 19 Jan 2026 10:11:45 -0800 (PST)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8942e5e49f2sm87177876d6.6.2026.01.19.10.11.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Jan 2026 10:11:44 -0800 (PST)
+Message-ID: <edbde063-2c39-4812-9970-247b67f678c7@gmail.com>
+Date: Mon, 19 Jan 2026 13:11:44 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,132 +68,27 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] t0610-reftable-basics: mitigate a flaky test on
- cygwin
-To: Patrick Steinhardt <ps@pks.im>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>
-References: <f46e023b-1925-41b2-9842-42e7cb727056@ramsayjones.plus.com>
- <aW3UO3ff9aNc7HQz@pks.im>
+Subject: Re: [PATCH] t1091: cone mode list deduplicates and normalizes paths
+To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>, git@vger.kernel.org
+References: <20260119165724.7339-3-pushkarkumarsingh1970@gmail.com>
 Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <aW3UO3ff9aNc7HQz@pks.im>
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20260119165724.7339-3-pushkarkumarsingh1970@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfKWZVG0LW2KDoghz3HHe8tSJhSpzdJa8+Agv/LMeOZrCwAzDlOoQ7MZYP9MxRIoytyqbBqGzhkJ/OlTwopzc+azZjMnnOr8iL6h/9vRG+U9ufk6C08rL
- DRZe0WZ0nY32EEfrd4cyxkuPwbdAPTcKZWYePrD4hrBj0vU6EJaVr6dMJAv7mILKLfdlrSBiCbQvkL7/IIwdZ1+gtKO6Y1r8pYI=
 
+On 1/19/2026 11:57 AM, Pushkar Singh wrote:
+> Ensure that git sparse-checkout list in cone mode collapses
+> semantically identical paths (e.g. "folder1", "folder1/",
+> and "./folder1") into a single canonical entry.
 
+Are you aware that this is already being worked on? [1]
 
-On 19/01/2026 6:50 am, Patrick Steinhardt wrote:
-> On Fri, Jan 16, 2026 at 08:39:56PM +0000, Ramsay Jones wrote:
->>
->> Test #29 ('ref transaction: corrupted tables cause failure') started to
->> fail intermittently for me (from v2.52.0-rc0) when running the testsuite
->> with '-j8'. (Also, having moved to a new laptop and windows 11, rather
->> than windows 10). If the test is run by hand, or without any parallelism,
->> then it passes without issue.
->>
->> When the test fails (e.g. 1 out of 32 parallel runs) the cause is due to
->> a permission error while corrupting a table file:
->>
->>   ./test-lib.sh: line 1010: .git/reftable/0x000000000001-0x000000000002-d89bb8ee.ref: Permission denied
-> 
-> This rings a bell. I remember that we discussed a case at some point in
-> time where a redirect converted to `test-tool truncate` fixed a flake on
-> Cygwin.
+[1] https://lore.kernel.org/git/20260119123339.48435-1-amishhhaaaa@gmail.com/
 
-Indeed, the mail thread starts at:
+Please contribute review to that thread with the context
+you've gathered creating this patch.
 
-  https://lore.kernel.org/git/f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com/
-
->> This corruption is done in a shell loop, directly after a 'test_commit',
->> which uses an ': >"$f"' expression to truncate the file. Adding a sleep
->> of one second after the 'test_commit' and before the shell loop fixes
->> the test (it is not clear why). Replacing the redirection shell expression
->> with a 'test-tool truncate "$f" 0' invocation also provides a fix, which
->> could simply be another way to change the timing sufficiently to win the
->> race.
->>
->> During a debug session, I tried looking at the strace output for the
->> shell redirection:
->>
->>   $ rm /tmp/hello; echo hello >/tmp/hello; ls -l /tmp/hello
->>   -rw-r--r-- 1 ramsay None 6 Nov 10 17:25 /tmp/hello
->>   $
->>
->>   $ strace -o zzz bash -c ': >/tmp/hello'
->>   $
->>
->> Similarly, for the test-tool solution:
->>
->>   $ strace -o xxx ./t/helper/test-tool truncate /tmp/hello 0
->>   $
->>
->> When comparing the output, the differences seemed to be what you would
->> expect and, if anything, the shell redirect probably would have taken
->> longer than the test-tool solution (many fcntl() calls to dup the stdout
->> to the <fd>).  The call to the win32 api NtCreateFile() was identical,
->> apart from the first (FileHandle) parameter, of course.
-> 
-> Too bad. I stil wonder whether it is the extra process that we spawn
-> that ends up fixing the issue.
-
-Well, a 'sleep 1' before the shell loop also fixes the issue. I hate to
-mention the 'windows delays updating some file attributes until after the
-process has exited' conspiracy theory, but ... :) (yeah, I just don't
-think that is possible, except ...)
-
->> In order to fix this flaky test on cygwin, despite not knowing why it
->> works, replace the shell redirection with the above 'test-tool truncate'
->> invocation.
->>
->> Helped-by: Patrick Steinhardt <ps@pks.im>
-> 
-> Oh, so is this the exact case that we were talking about? If so, it
-> might make sense to link to the mail thread so that folks can also read
-> a bit into our discussion around this.
-
-Indeed! I thought about referencing the email thread, but I decided that it
-didn't really offer any more supporting evidence than the commit message
-(in fact less - it doesn't mention the 'strace' scan).
-
-I can add that (again [1]), if you think it's worth it, but I just re-read
-the email thread and I'm not convinced it offers much extra value. So, I would
-rather not re-roll, but I will if you think it worth it. Let me know.
-
-[1] https://lore.kernel.org/git/f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com/
-
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>  t/t0610-reftable-basics.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
->> index 6575528f21..e19e036898 100755
->> --- a/t/t0610-reftable-basics.sh
->> +++ b/t/t0610-reftable-basics.sh
->> @@ -207,7 +207,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
->>  		test_commit file1 &&
->>  		for f in .git/reftable/*.ref
->>  		do
->> -			: >"$f" || return 1
->> +			test-tool truncate "$f" 0 || return 1
->>  		done &&
->>  		test_must_fail git update-ref refs/heads/main HEAD
->>  	)
-> 
-> In any case, if it seems to reliably fix the issue I'd say we just merge
-> it. It's unfortunate that we haven't been able to figure out the root
-> cause, but so be it.
-
-Agreed!
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-
+Thanks,
+-Stolee
 
