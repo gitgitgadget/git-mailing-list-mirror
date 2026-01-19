@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF1426A1A4
-	for <git@vger.kernel.org>; Mon, 19 Jan 2026 05:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E6127FD48
+	for <git@vger.kernel.org>; Mon, 19 Jan 2026 05:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768799987; cv=none; b=TCpuwRts7UNPRmAVatJ+9Wo79s7rlh1sbFgxwtQoK9HKeCCbzGZFg+VIw/DcN2mCxArSLFVaKi5anoxcdqV+NpmpT+cixnAb3PBShH27Xi3MfXwcgl5wbB3UaJrJtxE4XcVgZqNrAXuKd9P28qaoHc5EwQANrT6WEpQ1lEbDhcw=
+	t=1768800029; cv=none; b=iO3hHE6rMhE71JTgmSyq2PWdYigv5gQMea5GoGzRvUGXSoI52wGPIVyiXxDNzozt71vKIGiseVSJ8IhiUCygMSPCISP4w1wRa4U7TE13uUqlkODvN3aSm/pBGA3T4NDFDLhQQVVb9wgKc+WremG4hFqf1WzbJ6DdHn7pGlLLd00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768799987; c=relaxed/simple;
-	bh=1ZxWJaI9ZC/4DW/Vz6awqFaG8Ut+F6wxOM9EviayDL0=;
+	s=arc-20240116; t=1768800029; c=relaxed/simple;
+	bh=9KNuld+QhpPVeUvgdtcr+nmmI4LZwWP5QSTNKCWhanQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kJTVp9i+qHGXjSPIxYPMKYsD+HSvr+n4sgOZMirNfmVsf7+rQQV4juoznahs7A3BKW0OHW2OHvgJVta+8yvYvP/oIHJbbYerbfszI5Ev3EjxZjYgkvco03hL3KW1BPBkQDb2f8XAhPHkILslqEQq2mSiYUmLr7oKrsGGneVbzbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VNxlA3To; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=XAqqtNgPepFt8OJhkl+LXXpHHq+w1YwvA0vQfXAlMlKuxto2eaOI6VIZotrzQd+JJDUZkKPiTd7rR33+Rp8mQhggU59WstUXVOC0Azb50g7MfKYLi/Eu49/GLOFPXB7WauRUE6Y9NLuGizyEloykNWetB07PNxYjsgwFlM3aCC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Sg5c950F; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VNxlA3To"
-Received: (qmail 94389 invoked by uid 109); 19 Jan 2026 05:19:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1ZxWJaI9ZC/4DW/Vz6awqFaG8Ut+F6wxOM9EviayDL0=; b=VNxlA3TotXFUcaPQJP5j4R7f/8B38e1HwYRDCifOp5mAbTLFX1bQ+697Tlva5hHzDGeDAPpqbujCNN7r7GCgHUPwaUHAlPmMDJ5CcntSRxP26dzJOGonSPjHeryw5OjAgoQkDK2oqZn0VROCXGyFpVvcxnqymYKCwXYT59VY85yVeT6ja7M+rKDJe82wtlbMiKS5njNrlije9D/joXb6sbQbcS0OOuXdkRavi+qOFliAHwGtcHvLn+Cz+zjrse6FhmQrhiRl8ircurZeHZO77EPmo1qYzYHcBoifwFFYKmrgj1d9J2RqPMC8HTeOZV19dOus24Oc2et+8jDsUpyPuQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Sg5c950F"
+Received: (qmail 94401 invoked by uid 109); 19 Jan 2026 05:20:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=9KNuld+QhpPVeUvgdtcr+nmmI4LZwWP5QSTNKCWhanQ=; b=Sg5c950Fz8H+65vBIiTJw9C0x7DVov6XSMqOypoza12yhRgwcrttRHXQrywc+QC0kB2mZRqF54xwEtCXMFFuRjRmc2LAj20a5Gs61ZF7wie3HQcwe3f6plgLzusRS4dvGwEwjj2d9nij9hg6uLQPyadhDSytm63ZbtmAxryTjiuGzWiDE70c95Arefa86X345KrxLqk3IpO1uIu2y4j7VTwBeyhLcjZr5F+VhOCy/DsBOX4kjpfx1/INlaaLN3dg7D6Ag2OkAkUWIjFGV4MfM5CWpcXNTaR1LYfhfRXbukCx1/IyNT4iNxBnK8xY57Gj9MKDduyxReFsEfCgJbeZYg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 19 Jan 2026 05:19:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 19 Jan 2026 05:20:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 153838 invoked by uid 111); 19 Jan 2026 05:19:49 -0000
+Received: (qmail 153871 invoked by uid 111); 19 Jan 2026 05:20:30 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Jan 2026 00:19:49 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Jan 2026 00:20:30 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 19 Jan 2026 00:19:45 -0500
+Date: Mon, 19 Jan 2026 00:20:26 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH 1/4] remote: return non-const pointer from error_buf()
-Message-ID: <20260119051945.GA1991523@coredump.intra.peff.net>
+Subject: [PATCH 2/4] remote: drop const return of tracking_for_push_dest()
+Message-ID: <20260119052026.GB1991523@coredump.intra.peff.net>
 References: <20260119051858.GA1991308@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -42,34 +42,62 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260119051858.GA1991308@coredump.intra.peff.net>
 
-We have an error_buf() helper that functions a bit like our error()
-helper, but returns NULL instead of -1. Its return type is "const char
-*", but this is overly restrictive. If we use the helper in a function
-that returns non-const "char *", the compiler will complain about
-the implicit cast from const to non-const.
+The string returned from tracking_for_push_dest() comes from
+apply_refspec(), and thus is always an allocated string (or NULL). We
+should return a non-const pointer so that the caller knows that
+ownership of the string is being transferred.
 
-Meanwhile, the const in the helper is doing nothing useful, as it only
-ever returns NULL. Let's drop the const, which will let us use it in
-both types of function.
+This goes back to the function's origin in e291c75a95 (remote.c: add
+branch_get_push, 2015-05-21). It never really mattered because our
+return is just forwarded through branch_get_push_1(), which returns a
+const string as part of an intentionally hacky memory management scheme
+(see that commit for details).
+
+As the first step of untangling that hackery, let's drop the extra const
+from this helper function (and from the variables that store its
+result). There should be no functional change (yet).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ remote.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/remote.c b/remote.c
-index b756ff6f15..3dc100be83 100644
+index 3dc100be83..5de9619bc7 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1831,7 +1831,7 @@ int branch_merge_matches(struct branch *branch,
+@@ -1869,9 +1869,9 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
+ 	return branch->merge[0]->dst;
  }
  
- __attribute__((format (printf,2,3)))
--static const char *error_buf(struct strbuf *err, const char *fmt, ...)
-+static char *error_buf(struct strbuf *err, const char *fmt, ...)
+-static const char *tracking_for_push_dest(struct remote *remote,
+-					  const char *refname,
+-					  struct strbuf *err)
++static char *tracking_for_push_dest(struct remote *remote,
++				    const char *refname,
++				    struct strbuf *err)
  {
- 	if (err) {
- 		va_list ap;
+ 	char *ret;
+ 
+@@ -1899,7 +1899,7 @@ static const char *branch_get_push_1(struct repository *repo,
+ 
+ 	if (remote->push.nr) {
+ 		char *dst;
+-		const char *ret;
++		char *ret;
+ 
+ 		dst = apply_refspecs(&remote->push, branch->refname);
+ 		if (!dst)
+@@ -1929,7 +1929,8 @@ static const char *branch_get_push_1(struct repository *repo,
+ 	case PUSH_DEFAULT_UNSPECIFIED:
+ 	case PUSH_DEFAULT_SIMPLE:
+ 		{
+-			const char *up, *cur;
++			const char *up;
++			char *cur;
+ 
+ 			up = branch_get_upstream(branch, err);
+ 			if (!up)
 -- 
 2.53.0.rc0.338.g08aa8a9473
 
