@@ -1,83 +1,86 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776FA268690
-	for <git@vger.kernel.org>; Mon, 19 Jan 2026 06:34:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDC028980E
+	for <git@vger.kernel.org>; Mon, 19 Jan 2026 06:50:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768804459; cv=none; b=j0FGpAk5/y0IU1S7U9zLyiFxDKWnKxWohGsRDnLy+Qq0xF5m6pe0eiGkV3JMiofmXEAmqkbj4U/wcZMkM2GrXMIProSHgP8mjK5x2am5ImAAy0IfO8xD49AiLcc4nOJoFdZhexsx/a16p/63GhYADmmC3ZPi4nzY2cKogFqcpXg=
+	t=1768805444; cv=none; b=RF//PCYJG0Ofor2FcceywlDWLiWtMXoiBxEFP7kFSTHtPmCtgLL+g/AtGsI6F8RR4TKCxS6xnvpjxdPznEOZ87cdjkkc9aw75/kjSW9+6U/dGnRJhsQkC8+HJPv6vFEBl4+92NQTLY4xSME6WOUx2rYoctyWiyj+ZJc+Jgop008=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768804459; c=relaxed/simple;
-	bh=6Go/Gzlf2XqFfBgiMyc1unNjofxyMgGmrxVVERYhS0A=;
+	s=arc-20240116; t=1768805444; c=relaxed/simple;
+	bh=DlpI36OvCWu7N7WD6uYJf07KWVW2K5h4RSX9H9suHRA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fhwFZpFWX/mgH0t9sOwoROU2yD4qOtIiIE9T1WwiOXiM1evGkJbhBikLI9wFjcw3dqtPsiukzEJwVs55xfL+JF7DLsN6iCtLS8vUhMW6M3UTM0srysclLQ+tIItnN0lRz7xkkJQOVY0Nf6H+FQ4Es48L/qv+S5rTPw6vSxONBME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F1S0FXsA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OcIqtidH; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=tnizUtVzk/DDMW5QZewsMhD8rpHh/3AM/mhyUvTt9DT5adtMBWbAnm/H3bciDlsvoz2SeUIw4tJlYou7reiHLMkTwwNA2YRKJYKLksOMUYI1AIxdAnWIpuR5dLREr7nDZwAbTsfEB/5WxeCWwIiOFYrgaEu2aXrqvuZGiXk53f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L2jWmQtr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qr6nMqN1; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F1S0FXsA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OcIqtidH"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id B3A0BEC0900;
-	Mon, 19 Jan 2026 01:34:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L2jWmQtr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qr6nMqN1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4CBF81400695;
+	Mon, 19 Jan 2026 01:50:41 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 19 Jan 2026 01:34:17 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 19 Jan 2026 01:50:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768804457; x=1768890857; bh=N0ERCMul9f
-	GSpdpTBTBc5Fl4UPb9QPHXejSq9GdjSf4=; b=F1S0FXsAQ3LtX5x/EWv5eTBOmh
-	A+QqcvUfvLIY/j3zziiKQAuEKzbqWloaaVAYeu9Ox1/3qquYcIV0xaKUbI73MzG4
-	fJ1Wt9ukUg2gPQyz7B97qA7U2H087T0/BWaF6RjkOYgR/geHwWeGhuksP8l8r46a
-	mOv9jhwiS4RRMSdq0W3P1r3/NhmuJoBlt9WJIMvQcLBf+w7M3IGG0luIEqSqN7p+
-	wlfbIYgv8rQnfABl3WZ0MkOvQTG/NlqtGwO3wYy0SWKFuGSFwnX+vSQjJL1WlDyA
-	tMA9X8qXuXEcCyqYdoMPNZ6JvH05611rFJJVxkjmN0N4ibh0H3LJFZitMauA==
+	:subject:to:to; s=fm2; t=1768805441; x=1768891841; bh=uno3VJfTAU
+	eIbd1KpPMOOW5ooIWbRdLT5QKv9pFCKGg=; b=L2jWmQtr6vAmSQ29OLN+mIEmPm
+	4umwooYG9XV9vBiz/00NXnqM37j7fJ5M61Bw7XkTGfb0mRWLO4h4umA02BuQg4bu
+	bqUgxIQ3TQLYvEI+A/5irfu+qrNZb5eX/pCcrmJbAY/VAXrJUTFFZgo+yPO0x5W2
+	ZUu8KaBHyQCnQ6/UQsgflB82aeJE7L4fKk9SOQDseYoz9JdEIuz9DTb0eH4PP/Sf
+	wYQ0Nj+LH1u+aEg4V5ug9TDfiEumzhhn8ydg3b7/dND54sDZeGP/gtRiW67AXHd9
+	dpA0M8g7zzcC4S+e3aDvxTQqmeytjrem20XqXs7ZOQUHb/ymaoJgdp5wiA4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768804457; x=1768890857; bh=N0ERCMul9fGSpdpTBTBc5Fl4UPb9QPHXejS
-	q9GdjSf4=; b=OcIqtidHF3d5Hj/4KEN9AmXQDFhsHCgWIMGy4QfEe+Fhw+LtMAm
-	wqujI0n9sDq4XaCLBb3ITyUrbiYQ+f6HDKZWknowflV57cX3YxmoYcyQBTEZSf7y
-	ZthdJ6WTOcl1RV+NJcbkXDmgWlBw/mj99dxAq9fKwtD69XVdUG0ZWgFi6BfsWUGv
-	a8EQ1FnFiZIQRFSoHjxurmt2M1gIMtGKcHdGQxFQf21G1L2na6UnTEbHhTi2IpB9
-	g9Xv8FsHyhidGdpqmhV4YCCV8MNc4vtgLpyptfwkDAn4GA1gKbg0WycdcVJZZWpN
-	Jxc6/irwyNIkEVnvWkQbaprae1LxuhJoOEw==
-X-ME-Sender: <xms:adBtabQ7vxUZByU4__yh2E7W42oVxLwezyXjIDqPQ1g2IE05_-is5w>
-    <xme:adBtaUMb0uVH2YnDWNpwWWx6FOLHu0pLLujDasw_yE9ptCM0jtNduCf8ci-i1DzK5
-    7R6muvIFl7N6m2bRln7kyHD5YwdTof_lYLFpwDRuzkgmWeXJdWxww>
-X-ME-Received: <xmr:adBtaePVNQ__vFbNr1whqSEG8kayI7PAuNrYbix41ZMJF0jZY_Bp4xzr-xGgPmu7GUw1qirf1JqnXJvfKocWOv7nMM_2hBRTnoVUy4cWrN4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeeikeeiucetufdoteggodetrf
+	1768805441; x=1768891841; bh=uno3VJfTAUeIbd1KpPMOOW5ooIWbRdLT5QK
+	v9pFCKGg=; b=Qr6nMqN1s2pXBKIrNmkiWOWRpAg4KNrL0L0cMp5Vfkcn2/Gs2X3
+	TJSOiJOuuJzXpqVgOD8hI0vPX8H4WDGZMxNvyGdJQMqglQGzuTQWv7gZWdiIazDa
+	CkoEUZzhNVknqE5yF5mMUJnTe1jzMhrGixqyI2LOacLSkgYeeje6SbejxmTzRIjs
+	k/+AyIvdU7YM9tc52tx8iVzmj5XwLv/fi/IWw1mzXT4mzPF3/tHco0q9lEOuR/eJ
+	rVc3lsEZ0ZzzXr2FgZGlUZ9c6+iI2e1rh6JJVwz8QszzLK9ykhEt31OJg9OhVOk3
+	1jN7q4FHW27RWVAawjMvLizHlyq1JIJ+zbg==
+X-ME-Sender: <xms:QNRtadsnIpsm4EDgPFpAejtpy2hkhqn9P6miMriLrDKcRmsTbPvB-g>
+    <xme:QNRtaUTIXT5094D3B3ox8bevd5z4SXaQe8pMDZjB6Ct6ZpAQ7lC0ZSvsR6SzgQtcL
+    LVlgYzjuQTrIqkq4X3kQxNP1k1LqcN9stkQNgnru1knT6bZcRVRXg>
+X-ME-Received: <xmr:QNRtabOSzBN9GXVPx6fSIfUV1lB849svhXpC5rpVXnoo6Y-yw20AK3Lr-I8IZJ4PWAgcfVE2CvkCJXU-qnrpeXVAXmcW_76Oxoavh0XNJ4Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeeikeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhrghrrghlug
-    hnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhf
-    rdhnvght
-X-ME-Proxy: <xmx:adBtaUuHJMjKVbP09nbniNw3bnhEEihae5NfA4iPBVHD17b5DmwuCw>
-    <xmx:adBtaYV4oDZUXl0FBKFWbvXhW_JqplhMiMiueQ2sRDNledWpYYlGhg>
-    <xmx:adBtactPyOklkZ2twTs6sUDD1v2g7cYE3NQjcH0QMxouk_7eVp4eoA>
-    <xmx:adBtaUVl8Yh8BcQRA-mbvfyokQmlw0DDxOQrEJdipaazsPm6A0dmAw>
-    <xmx:adBtae57HKzkGu-DG8vYaCCqxAd6rFx8ll3_Dz-9wOmbM6DPs_Zhs-ik>
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnh
+    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvg
+    hsrdhplhhushdrtghomh
+X-ME-Proxy: <xmx:QNRtaRaWgf9j1CopN1RLSALl3o6kfYutongsKrhAhEJEcRymK82goQ>
+    <xmx:QNRtady-Ny9Ns3FEKFInL7o6PqSrDHyHU-oX_jQxpq6oe-a8G8X06w>
+    <xmx:QNRtaULSMgYd-HU4xuJuIv0bFs2wQxyO6mOOjZHfrEF1lhpk_gyeqA>
+    <xmx:QNRtafpkdQA2WchCR3fQnyshXv1K5PCm0FhlS_BAY4ydX0Aa6yyi7Q>
+    <xmx:QdRtaR6URsaj_AkJstHeji8lDFoY831EQXU52Q0b6VgXRL3GjIWbAUSN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 Jan 2026 01:34:16 -0500 (EST)
+ 19 Jan 2026 01:50:39 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3d86b457 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 19 Jan 2026 06:34:16 +0000 (UTC)
-Date: Mon, 19 Jan 2026 07:34:13 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 23824113 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 19 Jan 2026 06:50:38 +0000 (UTC)
+Date: Mon, 19 Jan 2026 07:50:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH 4/4] remote: always allocate branch.push_tracking_ref
-Message-ID: <aW3QZaYoPQvBkfvd@pks.im>
-References: <20260119051858.GA1991308@coredump.intra.peff.net>
- <20260119052320.GD1991523@coredump.intra.peff.net>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] t0610-reftable-basics: mitigate a flaky test on
+ cygwin
+Message-ID: <aW3UO3ff9aNc7HQz@pks.im>
+References: <f46e023b-1925-41b2-9842-42e7cb727056@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,26 +89,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260119052320.GD1991523@coredump.intra.peff.net>
+In-Reply-To: <f46e023b-1925-41b2-9842-42e7cb727056@ramsayjones.plus.com>
 
-On Mon, Jan 19, 2026 at 12:23:20AM -0500, Jeff King wrote:
-> diff --git a/remote.c b/remote.c
-> index e191b0ff6e..3e9d9b3e1f 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1924,7 +1925,7 @@ static const char *branch_get_push_1(struct repository *repo,
->  		return tracking_for_push_dest(remote, branch->refname, err);
->  
->  	case PUSH_DEFAULT_UPSTREAM:
-> -		return branch_get_upstream(branch, err);
-> +		return xstrdup_or_null(branch_get_upstream(branch, err));
->  
->  	case PUSH_DEFAULT_UNSPECIFIED:
->  	case PUSH_DEFAULT_SIMPLE:
+On Fri, Jan 16, 2026 at 08:39:56PM +0000, Ramsay Jones wrote:
+> 
+> Test #29 ('ref transaction: corrupted tables cause failure') started to
+> fail intermittently for me (from v2.52.0-rc0) when running the testsuite
+> with '-j8'. (Also, having moved to a new laptop and windows 11, rather
+> than windows 10). If the test is run by hand, or without any parallelism,
+> then it passes without issue.
+> 
+> When the test fails (e.g. 1 out of 32 parallel runs) the cause is due to
+> a permission error while corrupting a table file:
+> 
+>   ./test-lib.sh: line 1010: .git/reftable/0x000000000001-0x000000000002-d89bb8ee.ref: Permission denied
 
-Makes sense. I was wondering whether you'd also change
-`branch_get_push_1()` in a subsequent patch, so I'm happy to see this.
+This rings a bell. I remember that we discussed a case at some point in
+time where a redirect converted to `test-tool truncate` fixed a flake on
+Cygwin.
 
-This whole series looks good to me, thanks!
+> This corruption is done in a shell loop, directly after a 'test_commit',
+> which uses an ': >"$f"' expression to truncate the file. Adding a sleep
+> of one second after the 'test_commit' and before the shell loop fixes
+> the test (it is not clear why). Replacing the redirection shell expression
+> with a 'test-tool truncate "$f" 0' invocation also provides a fix, which
+> could simply be another way to change the timing sufficiently to win the
+> race.
+> 
+> During a debug session, I tried looking at the strace output for the
+> shell redirection:
+> 
+>   $ rm /tmp/hello; echo hello >/tmp/hello; ls -l /tmp/hello
+>   -rw-r--r-- 1 ramsay None 6 Nov 10 17:25 /tmp/hello
+>   $
+> 
+>   $ strace -o zzz bash -c ': >/tmp/hello'
+>   $
+> 
+> Similarly, for the test-tool solution:
+> 
+>   $ strace -o xxx ./t/helper/test-tool truncate /tmp/hello 0
+>   $
+> 
+> When comparing the output, the differences seemed to be what you would
+> expect and, if anything, the shell redirect probably would have taken
+> longer than the test-tool solution (many fcntl() calls to dup the stdout
+> to the <fd>).  The call to the win32 api NtCreateFile() was identical,
+> apart from the first (FileHandle) parameter, of course.
+
+Too bad. I stil wonder whether it is the extra process that we spawn
+that ends up fixing the issue.
+
+> In order to fix this flaky test on cygwin, despite not knowing why it
+> works, replace the shell redirection with the above 'test-tool truncate'
+> invocation.
+> 
+> Helped-by: Patrick Steinhardt <ps@pks.im>
+
+Oh, so is this the exact case that we were talking about? If so, it
+might make sense to link to the mail thread so that folks can also read
+a bit into our discussion around this.
+
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>  t/t0610-reftable-basics.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+> index 6575528f21..e19e036898 100755
+> --- a/t/t0610-reftable-basics.sh
+> +++ b/t/t0610-reftable-basics.sh
+> @@ -207,7 +207,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
+>  		test_commit file1 &&
+>  		for f in .git/reftable/*.ref
+>  		do
+> -			: >"$f" || return 1
+> +			test-tool truncate "$f" 0 || return 1
+>  		done &&
+>  		test_must_fail git update-ref refs/heads/main HEAD
+>  	)
+
+In any case, if it seems to reliably fix the issue I'd say we just merge
+it. It's unfortunate that we haven't been able to figure out the root
+cause, but so be it.
+
+Thanks!
 
 Patrick
