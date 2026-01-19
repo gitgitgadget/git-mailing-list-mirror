@@ -1,85 +1,105 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FFB2DCF74
-	for <git@vger.kernel.org>; Mon, 19 Jan 2026 15:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3C135C181
+	for <git@vger.kernel.org>; Mon, 19 Jan 2026 15:44:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768835058; cv=none; b=tX7hi1zzs5b+Pdmix8RG+ve09qUfN8FS9SbgU+WO+rIQv4WuZi2usI4/2Ezb94qyrpKUOWt7cl79Q6/cvRPiIBhfvnqkNio572E7e3TwvIBLx1+67Rz4gnW8K3dV5J0xiUPnWbtSe5ERTHJGQPYmTnfE4y7rseqSgYfrBwOsPQg=
+	t=1768837499; cv=none; b=EW8ENyHzgHIRRbITR8yXmxh0m6uZte7OGayjH+/noqOQjsjucCLDhBzIOBrV9Wwmtmrwc8hBkb3kkDM2wYNs5iSKVm90ugLKzYODswO7pYHmt/nkwpq+5VfkKLaO8KtM1lyUPMkbwU3HgRUIHBgWAA3ODl9Qftx7hKYCodF+NUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768835058; c=relaxed/simple;
-	bh=9VOlCv3coMfvg1nwI9o8dYh6IX4h8FXC9mu0Qn4iR0U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrWoGVW6gwKAPNUCVSCVKbvhLQfXmdu71I6FBJ4yP9cgzLXpmfJNBNbnRBUPry7pjbWTCdxZ6aGFCaabDzpOTL3tB/xIwJt0YDfsoZXBznK1wEpRM9g1BtM/J32N0yH1Lh5y1itqi4q9CzXYi2GiFqivE4E0zFJ4YZg/Q3758i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZHuSouDw; arc=none smtp.client-ip=209.85.167.45
+	s=arc-20240116; t=1768837499; c=relaxed/simple;
+	bh=/Lkp1EIoAwl6RdFf54vLdMdcxsG9LgMSjbtC6FpDRGI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iGaUEaAyGZhdD3mGPXjIbpXjmzrBOJAr9a2r1xv7vaYHzx+uvsHZWt8DDUKXzHHZAARIWEgwr3sPelBM7ZfefVDBjBIM5A+/8oZCOvQDtutXaUYQrV6A0yT2DbJo72ClzA5VZGJmKrG4Z1UMAQnk5kpfLM+Z4tK8Gi9U+jiAPK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nf7ynITz; arc=none smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHuSouDw"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-59b67388c9cso5435004e87.2
-        for <git@vger.kernel.org>; Mon, 19 Jan 2026 07:04:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nf7ynITz"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c46d68f2b4eso2681771a12.2
+        for <git@vger.kernel.org>; Mon, 19 Jan 2026 07:44:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768835055; x=1769439855; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768837498; x=1769442298; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9VOlCv3coMfvg1nwI9o8dYh6IX4h8FXC9mu0Qn4iR0U=;
-        b=ZHuSouDwkT6+VadE9k55MGLw3lDpuUpNYN9yI1gHHMZ9ZeifXraWNBbMTK69/n/H50
-         hWZK9+0MfKox6hzYdb1MP8RDUmGYe+3heQL/JGToB7gsP+UrzQmQRyAd+ofr5EPRyz+N
-         wJakFZKNuHG+MvQZwKUUX2hr9nCefE6SmrUAoWgYh4Jzd1znkAfbdtJKEPj409/unPWy
-         6EiHoAzVm6k+bL7NAmxyrHV4VRXu8jne8LQEhCT/OXlE10R/BPk4/7izfQ6uwJEnev40
-         FUsHiAReJ8imD8mSbzp4x1ptvjhzRJJHiyIMeN6ks5DSy7+LUmsmDXqcFIrJIkEbkJTQ
-         67Gg==
+        bh=/Lkp1EIoAwl6RdFf54vLdMdcxsG9LgMSjbtC6FpDRGI=;
+        b=nf7ynITz9sSYB3kqtXIoYPJhC2pufhYJQKW4oM1XP7gVwJyi70/Od7Qm7jrZ81Npzo
+         QnIE3QSS+WaTXETgzim8r2rFidsL6N2AJp/aG3fbyaEMfv10BjZgKWJ+oWP9JflDJGtM
+         0wdEHNAcnW6PQkpaHP+9B9ZpUVNapCuC/0FmUL7kP/el3WxMF/slxUdnFbHWutCBR4MW
+         9jln8UaugmJP5nbg6v8SKyC897gU4PTe62NTsu8RxiOjfnUTnB0O4Vup/qosHpN2RXBG
+         gUfmV9t2aRO0xOCsd1X8ZDMby6O855CN1Mk0x28b6lexcZY6Z+rCrMvkE23HjAjS0JK4
+         loog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768835055; x=1769439855;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1768837498; x=1769442298;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=9VOlCv3coMfvg1nwI9o8dYh6IX4h8FXC9mu0Qn4iR0U=;
-        b=rzkOzpzgt3cUgv79eSqSFKJlfLkTzu9WxH/6kYSYu9qQVNA02Dob5YR44IYMfz/aLS
-         TXPvtDcKDsbqAX2GFBe7PmNHPFnF+EKPlAvsWp4N3nbv5Tgi9g72y6qrtlCSbRqkTALZ
-         9DGukopa1Jn0v4GfpHBd7D6GNt3mONDjb4Kys1U/BOJqSzMHN74EcmfhvJruP3ddiAmC
-         9EY86yGo9hnTyfvuKSQTodOdwEtc+LFJnBExZu7V6i/TdsH0fYBHv1yEWHvJMJJnONzt
-         PraNMjK2O9Ds5It9Zq5FYkvWNDFcSYXhU1RRYf4XUkJQ1xriYkII9Rs5r0cJntcd9Lqc
-         d2yQ==
-X-Gm-Message-State: AOJu0YzqRs8srzJVALWMJQ/2SquhHKICJ7GozNE4yioYe+U/FEHdIwPN
-	kO7jRbn56qcwJJEnynF1KVmgafON93Pk6NuXIgNwtmcMz/KP3qTicQOJ
-X-Gm-Gg: AY/fxX7b4/g8HNXMeyIGnbiWcDJZfnYm6pkAXiThTCeAo2QMZXmuCHieurUirzlP50B
-	RomJq6RyeghQLbb1dUPVVvlInSZRk9dongN/NJNe/pYf/fFSkLE4yV6hvWTS6eTALynl3qy5iSD
-	ovI5UUOl3rzlcK112pq+OqBrCf+atQW9U68GN5wkFaS80K6ggDpqJI8KhQU2gOwzHcpgDh9aJJg
-	xb7lKEN1COq2GFlL8cNGSWeDMGre76uDQ/05rr/DyazXYdOUzICpQw8chlEFb0jpmB1sygrtsvD
-	kaqf+0dCXTdetyxl7JZ7g6agI1QPMcvNsiQcXqHLgHszhIaY9x0G119doDh7G1WmaIErXjFZMqH
-	53DPO3IjHNNVWg1jDdg6+oEQj0MKEpPBpTt1T7hC7T8/FKdFspx/VBx33UEBcmSM5nNHZ3o0ZfJ
-	NNFLWYYENOhiU0WM0j9NZeKcIyPJTa1maqWBVUSWiYEMqtVHXAiPDvAQMXbybL6IfMlDW84HuZY
-	u38NzFO1w==
-X-Received: by 2002:a05:6512:3e18:b0:59b:83fc:e584 with SMTP id 2adb3069b0e04-59baeef7ad6mr3680885e87.30.1768835055016;
-        Mon, 19 Jan 2026 07:04:15 -0800 (PST)
-Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59baf33eb76sm3465210e87.10.2026.01.19.07.04.14
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 19 Jan 2026 07:04:14 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: peff@peff.net
-Cc: git@vger.kernel.org,
-	haraldnordgren@gmail.com
-Subject: Triangular workflow
-Date: Mon, 19 Jan 2026 16:04:13 +0100
-Message-ID: <20260119150413.37807-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260119051858.GA1991308@coredump.intra.peff.net>
-References: <20260119051858.GA1991308@coredump.intra.peff.net>
+        bh=/Lkp1EIoAwl6RdFf54vLdMdcxsG9LgMSjbtC6FpDRGI=;
+        b=HAIqsWf4FDPVCU7maFzFuef4c+70wgrCMau2NnNu3lPI9PzlZyvi260bcxM2aNnM+H
+         DF14old/icp8iiZhDDQsbw4zvgtmA5raj0tlvVE8SzTbzcIM2hdVA1J1QSqwHda+v0eM
+         gkh8fwV/GdCgMlIR0Op/ig+sIJFwpoWRhDkg6gtQwSBwOzgX2ql/+T/8yymfZDGHljgf
+         kae6jTZw0u3zyEvKS4nk+9zvpz6+UWTdGx+EOuaPfYf9QzhjSWl1ZYICzuWFTr6D77Vw
+         E3oNCCFiWNbC6FMByO6IEbkuJMoWjHKYOr6zwDjHMvtvFB4ifTI6pA5HAfIfIk1H6wGu
+         TCoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWIKyzJ/4LTf8uDPeP3Ep2RprZPpShTO7+tzlmi1T1/k4Td2daIE0S/OLZ2bbG9vNfHga8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzM0m08/sijcQJdPiaXQjIP6AOWmZ8+7PJ2AtlHUTaLmrSKV5US
+	PpMHBpLZ/hp64Y8YtSg64jdKTTbife7pr0g4ayOUTHa1sgtXOebtptZ3VXpJBhjTd73Z4XE6Rfk
+	OKzrIrdPP2qBC6ze0l+q0fILOFt67Pn81CA==
+X-Gm-Gg: AZuq6aIo8vKzvQZJXGu/MKI/b1/NyTNWj43RkNkQ25KrYJb35f9YNI2UeLgw+vmzqS2
+	2DuLl+IoBiPqveLEWn/yEEx8hH7NbEcCF2X7FdVixns2BkurZdEgt1vq+2GREEpKyYH7LHxDq3Q
+	8ns2jPzrKM2GmvcptLW/U489zo8uedhlj0e42asPsiETzLel24pZLw8SpvE0s+TU89k9KqwPz+N
+	bitk82dkU2qa5ShIkVAXdZVni0V0TYd0zb6RTX5LXXlgLSB29vDPcET5o8rcGdRdATjdQLDBR8F
+	Na0OyCSgORouAqju66IBNbfEwOHs22GSZPmbUs1Hbcrumh1DQFjz+El5NNxi3vHMUv+/
+X-Received: by 2002:a17:90b:4985:b0:34c:fbf0:fa55 with SMTP id
+ 98e67ed59e1d1-35272f92312mr9962188a91.21.1768837497636; Mon, 19 Jan 2026
+ 07:44:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <xmqqldhybtqs.fsf@gitster.g> <CAHTeOx8z4bG2OmPCc+8pCHBVeUWPmxgaSqz=jHL+H=VRHx=KAA@mail.gmail.com>
+In-Reply-To: <CAHTeOx8z4bG2OmPCc+8pCHBVeUWPmxgaSqz=jHL+H=VRHx=KAA@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 19 Jan 2026 10:44:46 -0500
+X-Gm-Features: AZwV_QgTG8VRN8h3MzAa9l4S2e8guVYKh6UMJ94ebMatcdtYiA-67OGEPTxBROg
+Message-ID: <CALnO6CC3WTBjaLR7yAr-w5eaqzyd2qF5MAyfV2wQY3+TDEbEsw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2026, #05)
+To: Yee Cheng Chin <ychin.macvim@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks a lot Jeff!
+On Sun, Jan 18, 2026 at 8:43=E2=80=AFAM Yee Cheng Chin <ychin.macvim@gmail.=
+com> wrote:
+>
+> > * yc/histogram-hunk-shift-fix (2025-12-06) 1 commit
+> > - xdiff: re-diff shifted change groups when using histogram algorithm
+> >
+> > The final clean-up phase of the diff output could turn the result of
+> > histogram diff algorithm suboptimal, which has been corrected.
+> >
+> > Will discard. Has been waiting for further comments for too long.
+> > source:<pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
+>
+> Hi, I'm the author for this patch. I'm still pretty new to Git
+> contribution, but what kind of comments are you looking for when
+> deciding on a patch? I noticed that my patch didn't receive any
+> comments, but it was essentially a bug fix for an occasional
+> suboptimal histogram diff result. I would imagine most people would
+> not have much to say given that it was not a new feature or introduced
+> any breaking changes.
 
-Would be nice to get this merged ASAP, so I can continue the work on my
-feature without the memory leak there.
+I just gave it another read and, while I can't comment on the xdiff
+source changes, I find the proposed log message and test cases clear
+(and demonstrate clear benefit).
 
+I also appreciated the analysis of occurrence, which to me suggests
+the performance cost is negligible.
 
-Harald
+Thanks.
+
+--=20
+D. Ben Knoble
