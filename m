@@ -1,82 +1,85 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626143624CB
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 18:07:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA64352941
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 18:26:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768932467; cv=none; b=NigEVRvnGViTwYdHUMuZ0DKLDq7pZTR6A1gZgJfXIqzu2+gH1siQIYSl9kLknYFxd0uG8CJaec5zsoWf8a1Lp+8Bpui0O4ZkpmN7897k0J0nYwil4vaYI+9BZS9YyvE+v9qasETJrOpFQsOSzNiRSUn5iVbJ0JEv5sdWrEf0rB4=
+	t=1768933620; cv=none; b=LIAt0sykBA9YkVRGmNk7osnhcyJ2HFsN5T+axhrDZwOuT2yQ9sn7KlRbnLpO5H/4yyeu2fueFw4eCpp9oH3pKq6y5JaUhoMFVFURf2712Sn1h8L5u2EIjoEEBXM+dwDWgsCebiYwaRZEXJMfq+FYC5rS0MoGCNSQCgG1wmiRWtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768932467; c=relaxed/simple;
-	bh=QBWOysYpXExNVCddhrXVxpcxi5HO7NiL4Opm7+jjvkk=;
+	s=arc-20240116; t=1768933620; c=relaxed/simple;
+	bh=JszDzGHc05gLsgyUAlAwkIBaGoeOyWwiiOCIn/ut9tE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nhvnMAstMMuVg9pNNPlgmWbmoL04dLxbzsb7QNIpXZ7lfEDM0B5CgaPG99Sb/hWvzCg9KQUA4aUJHTnEZnIEYwDEGU7O9xiTAoX2deznjuv2i21dnw8ua8QUqoRc6BpZ2/Oe2M01X9tHWCrUWvGs6fDQ/FcSAwAEl7isrQIRxII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l0wboBQ2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZZkN3OrO; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=K4nKR4UYMgJYRrpza7U8L9cpgREr07wPoKeFDPl7jC7+xelNkPgpqb6fKEf4aGHD5dmiBdbb6r0+qvva2HPQJU97oxUdiogH0VA86jY4xbtC1HU9dCrk5Ly18OeTgBOl1H4vFE/lDG7wVEeS5Z784so0mFibf3QEHVSGTHbvSD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nwTg8d2T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PfBqy3as; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l0wboBQ2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZZkN3OrO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 78D4D1D0003B;
-	Tue, 20 Jan 2026 13:07:44 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nwTg8d2T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PfBqy3as"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7477A7A0088;
+	Tue, 20 Jan 2026 13:26:57 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 20 Jan 2026 13:07:44 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 13:26:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768932464; x=1769018864; bh=i9HifmOurs
-	zr0EEJfqeP77u/WUHuCEkfsDvHkovtICI=; b=l0wboBQ2UAx0pdk0n8UWfLX2NG
-	X1FiVkntAk6Tx3qq+nAEAWrFNHqUua3LPKCTmejS35avTHU+KV1wAImwW0Gtocpu
-	djrFX1YocZJZGUgUJKKr/F9hoK9C2dWd+XglN1JFFG+jsjn0XVaHjUezrXyebi2P
-	QkiniAdZSBHHM/BbxjNpNxkAIiO7p4Uqxn+WqBP6dmWrsI5J3oiQcgYSFzE/Emoo
-	ysTsw0SA9dsZc3aFRHVNpWldTjb8wQrsJOLnkREHE5+AdaZcsRgJ3PE/ZN3lJ1K5
-	8qFL5fqhPwVJxgHybYS4I+KidHFrVuOHDdCIImhwTs54/SLIs/afUBD/OMZg==
+	:subject:to:to; s=fm1; t=1768933617; x=1769020017; bh=3RdSz70tWO
+	nDCYnF/BnF6scfIEO6m2C1EGMzotSRWdQ=; b=nwTg8d2TxmC6ZatUvRMLEYPKJn
+	y4jIq6O5CHm4YWUwqwKRcbeHtBbcH25iGLZltR87UukfATLSfmN1QI0vLn85CjSr
+	TqcwHUkID4n3OquNx3JdiK98lo09dt9EnP7fQ76N6v/EIZ+yu3/mV2oSAMlyoLwB
+	fdAJl2HV/sWWwGmuJBrid2hvJyI1GMtgdbOm/7WjNyQDU8vePHEx75JbYsKbcC7c
+	Z32srBWerBHaDGcrXsfmr5NVhhNY/xyodY1vyDgTRO1kliiaifD0xfwX1ZKX5iNl
+	VJOYEsi7H6mT3sVkpCMbapNzzMfsTBlLhD8AP2dn2znYgOlU9zwr96oxJ3cw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768932464; x=1769018864; bh=i9HifmOurszr0EEJfqeP77u/WUHuCEkfsDv
-	HkovtICI=; b=ZZkN3OrOLxMlPCBLq/SuvHSr+l5cu/oYvLkHCMuGdnADwa30ERV
-	GfQ1RV7m08HMG4A/5vhAIDxrs0lL9a/eqbwAVkxSHQoJobkPmd6Zay1uXeifSkSk
-	xnwNAsAQ7KWxKP74f2g0oHNJ1ljyExsaOZWKsShaXUzLhy/VQ3zLPu1VWsZIPHDC
-	y0RojBNEWBmGz30CKU8zPkJfysrLkcXT22/d0fNvfOUvPEQIEUcEv/UkMHlRvI7H
-	ti0V3VexJLLgqy9AqfyVkZdW0K3tny6NpUN6QjgYBApTq41reZ3fjTZe9c4E1upg
-	bxnmRzO8rkTXDk6NwaB+J9VpmOdzUaO/Hkg==
-X-ME-Sender: <xms:cMRvaRjCVhjCZcdCWstnvlJpxozMWfJfzlz_S8WcWRpiAJpbrlQ0xg>
-    <xme:cMRvadcrRL9Blm28qCeXYi9FefBY4JQsZLOFpN1Z14Nj2VZdynPaYm-bRAM7u0YwO
-    fkKW0H7_Wj_kRVgcfM5zoAuQhyUlp8WxoIA6L3NMAK0ZdA5zIZ-hE0>
-X-ME-Received: <xmr:cMRvaefcG8At9OeTZDt5bEg4Z7mP6sQVA_zo5GOOtAriFres8CEFNs-QyNyI-xZkyp3VUO0YX_qxrc02C-GLKEUO4j3WJVnqAZTpyNU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedutdelucetufdoteggodetrf
+	1768933617; x=1769020017; bh=3RdSz70tWOnDCYnF/BnF6scfIEO6m2C1EGM
+	zotSRWdQ=; b=PfBqy3asTdqCtJzV5UNShqEjqqu8lxwEiuGFwTg7cWYDYqF9MUn
+	dBhdPxE/RtKq3jvEpj1bM6uBPFLpAjzF0vVDfW4Ltz/RKB0XFHsh9GUHnkhmfhJX
+	9Q7S7h0c8P8UTigQsVckpSikF2xEy/qJGh2kVrMAu6uZkzvq+jc86QyDHteVVh5b
+	FyK7Q49KD4sLRYXt83uaKbfeSqkcq4ONN7A9vbOAQa9GVDopIMg+/DsUAbGeXzgT
+	CC5eniT4KNan+JA8nwjuoEHrpUy8i9DS27x4E3HHTX6YohG1pg2kwTa2T3W/Q1iy
+	XRm3ctdVfAhGkXpIRUtlXEUmE8ptStMA4Tg==
+X-ME-Sender: <xms:8MhvaeamYiYLD6r0-ARDXN6igLNruyHkjd5nW2gUAZudPpvfFjx_gQ>
+    <xme:8MhvaS7enM-1B5q28-Ft1holxVP5rVyV1GxTrZCKO9oG5_S_ZioJliPr2cOj0Oij9
+    Lwi-ijuKG8Pb-I5fXsZDEqfN7S0GSujim5G8dmiCq7kVRS-krpNEg>
+X-ME-Received: <xmr:8MhvaZCq5UCAHwXYp_0yNmfi4Fekz4n4DOAL4RJ_9psYx18-_vn1bIvnhCIZ63qKfd-nbPTUSpwH7VhCs_VmJ5PXjEPWSFVrXQ74jqU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeduuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
-    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:cMRvaf8bE7RWgfrpWwtssPDW4EWcLR5wPfZ6I7s0JfG9qbDI0l4T-A>
-    <xmx:cMRvaSmBvzJOoCIZNl2Cyb9_wY_QyYa8StMNHlMbzyMXQf68Nd9qTw>
-    <xmx:cMRvaZ9V8lN3Pj-zkMgonVL4vttNiBvzrvVPmbuuDsdZCeA2JlBDaA>
-    <xmx:cMRvaYlYgrV3nrdmPw3aaskaNtF1LAIOqJUo3j3kElwTKPlim6E8fg>
-    <xmx:cMRvaddot98lQqVR6c9VjesKIJ8ZufIyWvNIhD3-MXdl2An-aXP5Vc1u>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhn
+    vghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:8MhvaQdZwxkcDdt07Uw2nlIsU2LpnHz8aiOCueFlT_B72Y3HSWpG3w>
+    <xmx:8MhvaQJ61vQ1zopjgS-ihszQyYOfkpOdcXgrBsGtHcIFAF8WwrkwvQ>
+    <xmx:8MhvaT0AOR6OJxYpVSu6O3MttV0uHxy1ZJYcRXrCYg_6zL1f_NBWww>
+    <xmx:8MhvaahCe3tewP5HM5kIuRzoSwnYTEi9K9lt5_Uo5fE_VkNDYiLHug>
+    <xmx:8chvaRv08DpWXA0AbARUD-yVp6k7ukIfYjLEDxYFR_4ZaplUvqvgjjTy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 13:07:43 -0500 (EST)
+ 20 Jan 2026 13:26:56 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] show-index: implement automatic hash detection
-In-Reply-To: <20260120140901.517928-2-shreyanshpaliwalcmsmn@gmail.com>
-	(Shreyansh Paliwal's message of "Tue, 20 Jan 2026 19:35:39 +0530")
-References: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
-	<20260120140901.517928-2-shreyanshpaliwalcmsmn@gmail.com>
-Date: Tue, 20 Jan 2026 10:07:42 -0800
-Message-ID: <xmqqzf68yx75.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,  "Git Mailing List"
+ <git@vger.kernel.org>,  "Phillip Wood" <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] mailmap: add an entry for Phillip Wood
+In-Reply-To: <5a4e7da4-d295-4beb-9f37-b2ce4e10df35@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Tue, 20 Jan 2026 14:52:48 +0100")
+References: <f10c3f680d58ca0abbf795ae8b0f2ad14ab85419.1768906910.git.phillip.wood@dunelm.org.uk>
+	<5a4e7da4-d295-4beb-9f37-b2ce4e10df35@app.fastmail.com>
+Date: Tue, 20 Jan 2026 10:26:55 -0800
+Message-ID: <xmqqtswgywb4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,92 +89,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> @@ -71,6 +60,40 @@ int cmd_show_index(int argc,
->  			die("corrupt index file");
->  		nr = n;
->  	}
-> +
-> +	/* detection of hash algorithm
-> +	Only works for small files, i.e without large offsets */
-> +	if(!the_hash_algo && version == 2) {
+> On Tue, Jan 20, 2026, at 12:01, Phillip Wood wrote:
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> While all my commits appear under the same address, other addresses
+>> appear in some commit trailers. Map those addresses to the canonical
+>> one.
+>>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>> I'm not sure if we actually remap the address in trailers but
+>> we've certainly talked about doing it in the past.
+>
+> Yeah it does.
 
-We have one SP between "if" (and other syntactic elements like
-"while") and the open parenthesis "(".  End-user controlled function
-names lack this SP between <word> and "(".
+Hmph, are you sure?  My quick experiment tells me that the trailers
+are not munged.
 
-If we turn what is inide of this block into a separate helper
-function, it would allow us to structure the logic better.
+    $ git show --pretty=fuller -s | grep '@'
+    Author:     Patrick Steinhardt <ps@pks.im>
+    Commit:     Junio C Hamano <gitster@pobox.com>
+        Signed-off-by: Patrick Steinhardt <ps@pks.im>
+        Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    $ cat >>.mailmap <<\EOF
+    Junio C Hamano <no-such-user@google.com> <gitster@pobox.com>
+    EOF
+    $ git show --pretty=fuller -s | grep '@'
+    Author:     Patrick Steinhardt <ps@pks.im>
+    Commit:     Junio C Hamano <no-such-user@google.com>
+        Signed-off-by: Patrick Steinhardt <ps@pks.im>
+        Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-	/* Returns GIT_HASH_* constants, or GIT_HASH_UNKNOWN */
-	static int auto_detect_hash_function(int fd)
+By the way, this is totally expected as there is no guarantee that
+what comes after these colons would look like a human-readable-name
+followed by an e-mail address at all.  Some projects deliberately
+omit e-mail addresses from reporter credits to protect themselves in
+jurisdiction with stronger privacy laws, some trailers like
+"closes:" do not even point at people, etc.
 
-For example, ...
-
-> +		struct stat st;
-> +		size_t file_base_size;
-> +		size_t table_size;
-> +		size_t size_rem;
-> +		size_t hash_size;
-> +
-> +		if(fstat(0, &st) || !S_ISREG(st.st_mode))
-> +			die(_("unable to detect hash from non-regular file"));
-
-... this "die()" does not have to be here.  We can just return
-GIT_HASH_UNKNOWN and let the caller fallback.  Does the existing
-code correctly complain when the filestream is opened for a
-non-regular file, or it just gets totally confused?
-
-> +		file_base_size = 8 + (256 * 4);
-> +		table_size = file_base_size + (nr * 4 * 4);
-> +		size_rem = st.st_size - table_size;
-> +		hash_size = size_rem / (nr + 2);
-> +
-> +		if(hash_size == GIT_SHA1_RAWSZ) {
-> +			repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		} else if(hash_size == GIT_SHA256_RAWSZ) {
-> +			repo_set_hash_algo(the_repository, GIT_HASH_SHA256);
-
-And instead of calling repo_set_hash_algo(), just return the
-constants so that the caller can handle it.  And 
-
-> +		} else {
-> +			die(_("unable to detect hash algorithm, "
-> +					"use --object-format option"));
-
-... this also can return GIT_HASH_UNKNOWN, without complaining
-anything.
-
-> +		}
-> +	}
-
-So, instead of inserting all of the above lines in cmd_show_index(),
-we'd have something like the following ...
-
-	hash_func = auto_detect_hash_function(0);
-	if (hash_func == GIT_HASH_UNKNOWN) {
-		warning(_("assuming SHA-1; use --object-format to override"));
-		hash_func = GIT_HASH_SHA1;
-	}
-	repo_set_hash_algo(the_repository, hash_func);
-        hashsz = the_hash_algo->rawsz;
-
-... there.
-
-By the way, what happens if we find SHA-256 also broken and end up
-choosing another hash function that is 256-bit wide in the next hash
-revamp?
-
-Thanks.
-
-> +
-> +	/* Final fallback to SHA1 */
-> +	if(!the_hash_algo)
-> +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +
-> +	hashsz = the_hash_algo->rawsz;
-> +
->  	if (version == 1) {
->  		for (i = 0; i < nr; i++) {
->  			unsigned int offset, entry[(GIT_MAX_RAWSZ + 4) / sizeof(unsigned int)];
+Or perhaps your "Yeah" is about "we've talkined about doing it"?
