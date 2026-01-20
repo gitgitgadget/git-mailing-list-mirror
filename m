@@ -1,229 +1,188 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F421433985F
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 16:32:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337F5322C65
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 16:44:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768926779; cv=none; b=tF276K2VfxVpkMs/tNcO4jK4ALW9Z6CgViXj4v4MgBHLdiEZamELTjz9ZDVsj5IA9Sd/pEwk5xBXMGiCgmFzRk5g7XlpixVk6R7uK+h4tbuUHGSMY5L7qHXVUY4Ouu2Bnp52hSPyR4xVlvKoiWXYHzTy9CJA7PpSfj15M4dC/Ok=
+	t=1768927498; cv=none; b=Zv9FH1egWBBtwvmvTIdwVAYCd+ChxPB7Ts8J/kpswZXNyG8V1bP8p1SQiN/U0i5zSmwGaMJce//p42Pgc1RtKpH2vadYyahC1nrNZKmGOLA7GdbqF9kaHHYNgbScqsQienR+DCfzqOdmqhOOMtSnbhaOev7c1tbtg1p7suT87rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768926779; c=relaxed/simple;
-	bh=WQdlOnEh1VYr1PoSAmcSLyYSIAn6MAHkhxgNedsNS8g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lqlkyeHm0OdO3HYQMghH2VpZokWY99hVLQ7GkrVYFY4zu1wVPEDGmpRvk67ocokXUBew3OgXJKi3HI3USDq1gpNxAJAf+wDwz+nkqqz+bFfRrgm9k4Lph1+4Rformvh3sfgN73L/8kI4jLiKmkkooRcXKjBtNsb1UtnPcNgjGZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hOy9Y9v7; arc=none smtp.client-ip=209.85.128.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768927498; c=relaxed/simple;
+	bh=ElX7ZefVsRsh59bvw56PRpLaETua/Ug4l6XK9p91Rss=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dIooDN38tCE7YhWglrubsgL4h7K536DbDhkIgX2F++34Qr6jbnKjFHnmuoVqTrrXhDRTWnLqQ2kc9DtfuNyCJ4rA+ypNlrZ1PMD1FUWWq4IJELWSHhjCQeGjcr1ELBY5BGTD5s2053AjpRRt4jY+RdqpJsNf0TJVHwGiWJ3IESE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eaEf5tGW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yd+akw1g; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOy9Y9v7"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4801c314c84so36019365e9.0
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 08:32:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768926775; x=1769531575; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QFr0ly3FbGMdWGGylMJA4JcER0w0U9mBiumht1eXNb4=;
-        b=hOy9Y9v7SwwQmpFLB/QPYUy4d+su2j1Bt6SqukkqH1xrQUOw92IWfxe0kvCNHcjJYL
-         i7EkkLLTHsrTTkEHCbFVDfuYnL5szp1uiBRKGxpAofoaxL5IoMOWhLfNwZTPif6f/1M5
-         AM2jf4fYOo5SrwebkELC+pfSH4nLniTb7MwlFQVa6FJLDaGfYV5cl+/Y4t9/KF8wgIaL
-         F3ETbmiZWpu80oCASVzmA1MT+iThav2Zfwmd08LlqPhuVVhn+Ad6kIeXPr/tVoxMqi6x
-         BzLAvfOri9Y9xdWDNaJbJ057GabnmLj6+xcpKM0DWzpfkaDR9i9vvirQrwANvuZx8+pA
-         z4mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768926775; x=1769531575;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QFr0ly3FbGMdWGGylMJA4JcER0w0U9mBiumht1eXNb4=;
-        b=nJzQO+7zzR1dX7PLJRnOVfPjzkEBX1rhoopAOeGvp/AkebvLz9wcwYu0sxV7yXYWTY
-         J8RnwPr4fAU8kN3j8G1s2qXOQPlMeXtWLbrlr1tXgCc1/r5dQz2EAKFgTO6aQAPTXG40
-         cG3x+oLoUJixtCu23nHvq+b43DZeplwplf9EYTAy/BBoMgiT+DIW4xsGyIwhbAjaZ0ax
-         JUJwpv49417RPY0nbqbrSrkW5/Zu2azWapkBgduB81/PlMII/AJoz32QfpJ4szYTYoTK
-         Us9USgp4TDNxrIS5pFRhTptZRakSHlOeUVSk1DOf051vvnUNlarx4NKJN3Yw1f1/pGu/
-         tMdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV/oqh1PWr7jwABSPW1okDSymWMpnsbWv0j3tKAwVmB+728pt6Y4uXpeXhTkQL5L811+Q0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxu8sOYeQ5OnDWHBiaG9W6DJyC9A2UBbaGgXV/DZo7rQAEk6vEy
-	iWsf0bmM3yOrDIurtDEC23jcZfjXFGSutFjRCtkOnorTllwHR9uoi89U
-X-Gm-Gg: AY/fxX4aILju9LrWnDoZkHXY+p/lxjTrYrXoZJTtwlXJ4klHTo0HVMPamaNcmf4mBoc
-	hvd3gDnyLLJcOySqhXHSPhZcdbsdU641eucIzeVgxNyuea9VYCT3QEFBYbQ8ihBzDDmQ0SXQZkJ
-	yQfGbf5u120hAUz+KD3kgx2Bi4IorY4zZz/Iz8yR58zaocYwyLeCMhrlrPar9/r4NSSm6IjpSMs
-	OpxsP1eHL9NvGO6JRiftWZeICIPSYpe5biSmiCpBqgv8KeCOWjn6WMUY9MMJYl9xfqs0uTeruU7
-	Jq5YpSV/54T63ibgKUT+iFFUCn8+8Kh6jfKBj7znjxHzFF0BKLGU5kU4ek+059tJEv/P3+aM1Lc
-	SubROieeTvkGNrq5FMYKAeX4RSplYcXGIYmkzNrwtr1q/Ruz2Vtdmk+nWfkDA+jE4M5MI0CnLxJ
-	p6tx+WIIUQ5jADk958KwOmC1AQDE7nlCVXn/2Ht7z3JD1etatsVIuTP80iaHF/c4i/cg==
-X-Received: by 2002:a05:600c:8b78:b0:47e:e8c2:905f with SMTP id 5b1f17b1804b1-4801e30a790mr217349505e9.8.1768926775084;
-        Tue, 20 Jan 2026 08:32:55 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801fe03b56sm115000345e9.4.2026.01.20.08.32.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jan 2026 08:32:54 -0800 (PST)
-Message-ID: <e9a031fd-072d-4810-b7e0-0d64ffedce10@gmail.com>
-Date: Tue, 20 Jan 2026 16:32:54 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eaEf5tGW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yd+akw1g"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2525A7A0063;
+	Tue, 20 Jan 2026 11:44:55 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 11:44:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1768927494;
+	 x=1769013894; bh=UnMmq5GNu8mCbKhJXBm02FQ2LAbHZSaNXYeKvsEHw44=; b=
+	eaEf5tGWNRVidbdUukXH69/tsoYDYfgUH+Cg3mJtbZo3TVNrkYkiVEcWLjC+He+t
+	vrOSA733O7SlK/yqzKv4+Fai8C65TG2O32o9C5x+comqnUB6nm5snhIJ+4xlSy94
+	2WUK1zxXqWvSCLKbC+jB7Jp07C9scKDN4BZdZvqF/3LfeK9j1hN6e/nk2GLGguLj
+	d4gkDgrbrIMgLoDH2QPDvXaZKuojhpWOosMRUCjlqAxghrLe/oMl5LfUPSdicCFF
+	XzAthehWVZqP28VBm5d+1Zllh6TMfl3CFf2LFI2f7SresdXff7Pz4fzanaPMJ5GU
+	zQeacSHLuvtCEJqysF5/iw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768927494; x=
+	1769013894; bh=UnMmq5GNu8mCbKhJXBm02FQ2LAbHZSaNXYeKvsEHw44=; b=y
+	d+akw1g2jDzX2gJP+dpQ+DjGGWJeQDt6+M1spH409Evx4848FGdLYcVh2hAPbkHD
+	MJfFypKu+MoaEBQIWHllEGu0iEHl7/MKjZG/CGrp5Bo6mMrHxnEKUcyJFhVdrQ1O
+	bErZ4hf6s74ezcvtLt1G8TDUnWPJBAEOJ3ToQxLKyj/Wu6qtgxnbuS0LWfmWUlZ3
+	qdQyfOqlUlQ962ES9i6pNoqVjEW3u3yOG6RpXvh5TACa6GFcOyYCgtfal0fUnpy0
+	TnN1ErSdadnKiyPZ3uq1Xnjgb2FfoZx7W6Ay5SyOIrlvVqowtuxhs/u2pndJRcrt
+	Wgo+4T5WHMjEkjm1MtqMA==
+X-ME-Sender: <xms:BrFvaS9oJMKwFbNOHxcKu4qTnsztl4xZy4sJwvn_97X2M1vTsY_s-w>
+    <xme:BrFvaZtWnY-WG-8Sg8EC8_OWkUpiBH_KzO-HRJ3AlTYzqMN7pqlztMf2OkY5mz_aG
+    fe1Lgek42WHJ9QspGG7QcLJoGG2ecXxmz6yzq6rFOf1MUtI-Rlx5iM>
+X-ME-Received: <xmr:BrFvadAvmzBtR7dXrdmSiZA6W5hDxrTXL2_JzlgKNGTQsHTFe4oLQtp7_ZheN5qYsHn9Md0b2zGecN8UqzkSuZIO0F5xgv5c7x9rd7Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhrhgv
+    higrnhhshhhprghlihifrghltghmshhmnhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BrFvaZVJ6GsJ6JUevJ4siRvE-cNsY4y1nhzRgUi4szr6YdbASHNZdg>
+    <xmx:BrFvaTBooFw-BCxKHtXnfHCl_k8vTRee2ryKn0Kc4pToXyYkzAcB-g>
+    <xmx:BrFvaU_KvYj5dAgChRdScPbuioWDqanSFcimfnWsNFPsY-nhP0hDdA>
+    <xmx:BrFvaSExUUeECfc4izJNyEOpuSJFosycGFZ1F7SmwenEMxKk_-Bggg>
+    <xmx:BrFvaQg6WnmEQqaOUXFC2Wg2ygQTFs3orPeEFpHdI3U40ypdS2MxhAq7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Jan 2026 11:44:54 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [GSOC][PATCH] t5500: simplify test implementation and fix git
+ exit code suppression
+In-Reply-To: <20260113175913.474414-1-shreyanshpaliwalcmsmn@gmail.com>
+	(Shreyansh Paliwal's message of "Tue, 13 Jan 2026 23:23:03 +0530")
+References: <xmqqbjixljfg.fsf@gitster.g>
+	<20260113175913.474414-1-shreyanshpaliwalcmsmn@gmail.com>
+Date: Tue, 20 Jan 2026 08:44:53 -0800
+Message-ID: <xmqqikcw1bei.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 07/10] xdiff: replace xdfile_t.dstart with
- xdfenv_t.delta_start
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>
-References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
- <d74722538b693fb26e8684f9dd3fbc319a2a575e.1767379944.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <d74722538b693fb26e8684f9dd3fbc319a2a575e.1767379944.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 02/01/2026 18:52, Ezekiel Newren via GitGitGadget wrote:
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
-> 
-> Placing delta_start in xdfenv_t instead of xdfile_t provides a more
-> appropriate context since this variable only makes sense with a pair
-> of files. View with --color-words.
+Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
-So as dstart and dend must be the same for both files we now store the 
-values once in xdfenv_t. That explains why we start passing xdfenv_t 
-around rather than xdfile_t in patch 5.
+> The 'shallow since with commit graph and already-seen commit” test previously used a
+> convoluted here-doc that combined manual input construction with packetize, echo and
+> embedded Git commands. This structure hid failures from the git commands, as their
+> exit codes were suppressed inside echo command substitution and pipe upstream,
+> also making the test harder to follow.
 
-Thanks
+Very nicely written problem statement, but your line-wrap setting is
+way too big.
 
-Phillip
+Drop "previously".  The problem statement that describes the
+status quo is written in the present tense.  I.e., "Now it is X,
+which has problems Y and Z", not "It used to be X (before this
+patch), which had problems Y and Z".
 
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+"and pipe upstream" -> ??? "and being on the upstream side of pipes"???
+
+> The changes simplify and make the test more robust.
+
+And then you tell somebody sitting in front of a keyboard to make
+changes to the code to make it better.  I.e.,
+
+    Instead of computing the pack protocol lines inside here-doc
+    that is fed to the program being tested (i.e., 'git
+    upload-pack'), use the "test-tool pkt-line pack" helper to
+    prepare the input to the command in a file first, and then feed
+    it to the command.  This has a few advantages:
+
+     - It makes debugging of the pkt-lines that are fed to the
+       command easier.
+
+     - We no longer need to count number of bytes on each line
+       ourselves; the tool does it for us.
+
+     - Execution of "git" commands are done outside the here-doc,
+       and it is easier to see any failure would be captured before
+       we even run the "git upload-pack" test.
+
+or something, perhaps?
+
+
+> * Assign the results of Git commands to variables up front and chain them with &&,
+> so the test detects any failures immediately, avoiding any exit code suppression.
+>
+> * Use test-tool pkt-line pack to construct the input and then pass it to git-upload
+> in a temp file, instead of relying on here-doc and manual packetization.
+> This avoids formatting issues and ensures correct v2 protocol guidelines.
+>
+> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 > ---
->   xdiff/xhistogram.c |  4 ++--
->   xdiff/xpatience.c  |  4 ++--
->   xdiff/xprepare.c   | 17 +++++++++--------
->   xdiff/xtypes.h     |  3 ++-
->   4 files changed, 15 insertions(+), 13 deletions(-)
-> 
-> diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-> index 5ae1282c27..eb6a52d9ba 100644
-> --- a/xdiff/xhistogram.c
-> +++ b/xdiff/xhistogram.c
-> @@ -365,6 +365,6 @@ out:
->   int xdl_do_histogram_diff(xpparam_t const *xpp, xdfenv_t *env)
->   {
->   	return histogram_diff(xpp, env,
-> -		env->xdf1.dstart + 1, env->xdf1.dend - env->xdf1.dstart + 1,
-> -		env->xdf2.dstart + 1, env->xdf2.dend - env->xdf2.dstart + 1);
-> +		env->delta_start + 1, env->xdf1.dend - env->delta_start + 1,
-> +		env->delta_start + 1, env->xdf2.dend - env->delta_start + 1);
->   }
-> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-> index 2bce07cf48..bd0ffbb417 100644
-> --- a/xdiff/xpatience.c
-> +++ b/xdiff/xpatience.c
-> @@ -374,6 +374,6 @@ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
->   int xdl_do_patience_diff(xpparam_t const *xpp, xdfenv_t *env)
->   {
->   	return patience_diff(xpp, env,
-> -		env->xdf1.dstart + 1, env->xdf1.dend - env->xdf1.dstart + 1,
-> -		env->xdf2.dstart + 1, env->xdf2.dend - env->xdf2.dstart + 1);
-> +		env->delta_start + 1, env->xdf1.dend - env->delta_start + 1,
-> +		env->delta_start + 1, env->xdf2.dend - env->delta_start + 1);
->   }
-> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-> index 06b6a6f804..e88468e74c 100644
-> --- a/xdiff/xprepare.c
-> +++ b/xdiff/xprepare.c
-> @@ -173,7 +173,6 @@ static int xdl_prepare_ctx(mmfile_t *mf, xdfile_t *xdf, uint64_t flags) {
->   
->   	xdf->changed += 1;
->   	xdf->nreff = 0;
-> -	xdf->dstart = 0;
->   	xdf->dend = xdf->nrec - 1;
->   
->   	return 0;
-> @@ -287,7 +286,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
->   	 */
->   	if ((mlim = xdl_bogosqrt((long)xe->xdf1.nrec)) > XDL_MAX_EQLIMIT)
->   		mlim = XDL_MAX_EQLIMIT;
-> -	for (i = xe->xdf1.dstart, recs = &xe->xdf1.recs[xe->xdf1.dstart]; i <= xe->xdf1.dend; i++, recs++) {
-> +	for (i = xe->delta_start, recs = &xe->xdf1.recs[xe->delta_start]; i <= xe->xdf1.dend; i++, recs++) {
->   		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
->   		nm = rcrec ? rcrec->len2 : 0;
->   		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
-> @@ -295,7 +294,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
->   
->   	if ((mlim = xdl_bogosqrt((long)xe->xdf2.nrec)) > XDL_MAX_EQLIMIT)
->   		mlim = XDL_MAX_EQLIMIT;
-> -	for (i = xe->xdf2.dstart, recs = &xe->xdf2.recs[xe->xdf2.dstart]; i <= xe->xdf2.dend; i++, recs++) {
-> +	for (i = xe->delta_start, recs = &xe->xdf2.recs[xe->delta_start]; i <= xe->xdf2.dend; i++, recs++) {
->   		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
->   		nm = rcrec ? rcrec->len1 : 0;
->   		action2[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
-> @@ -306,10 +305,10 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
->   	 * false, or become true.
->   	 */
->   	xe->xdf1.nreff = 0;
-> -	for (i = xe->xdf1.dstart, recs = &xe->xdf1.recs[xe->xdf1.dstart];
-> +	for (i = xe->delta_start, recs = &xe->xdf1.recs[xe->delta_start];
->   	     i <= xe->xdf1.dend; i++, recs++) {
->   		if (action1[i] == KEEP ||
-> -		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xe->xdf1.dstart, xe->xdf1.dend))) {
-> +		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xe->delta_start, xe->xdf1.dend))) {
->   			xe->xdf1.reference_index[xe->xdf1.nreff++] = i;
->   			/* changed[i] remains false, i.e. keep */
->   		} else
-> @@ -318,10 +317,10 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
->   	}
->   
->   	xe->xdf2.nreff = 0;
-> -	for (i = xe->xdf2.dstart, recs = &xe->xdf2.recs[xe->xdf2.dstart];
-> +	for (i = xe->delta_start, recs = &xe->xdf2.recs[xe->delta_start];
->   	     i <= xe->xdf2.dend; i++, recs++) {
->   		if (action2[i] == KEEP ||
-> -		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xe->xdf2.dstart, xe->xdf2.dend))) {
-> +		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xe->delta_start, xe->xdf2.dend))) {
->   			xe->xdf2.reference_index[xe->xdf2.nreff++] = i;
->   			/* changed[i] remains false, i.e. keep */
->   		} else
-> @@ -348,7 +347,7 @@ static void xdl_trim_ends(xdfenv_t *xe)
->   		size_t mph1 = xe->xdf1.recs[i].minimal_perfect_hash;
->   		size_t mph2 = xe->xdf2.recs[i].minimal_perfect_hash;
->   		if (mph1 != mph2) {
-> -			xe->xdf1.dstart = xe->xdf2.dstart = (ssize_t)i;
-> +			xe->delta_start = (ssize_t)i;
->   			lim -= i;
->   			break;
->   		}
-> @@ -370,6 +369,8 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
->   		    xdfenv_t *xe) {
->   	xdlclassifier_t cf;
->   
-> +	xe->delta_start = 0;
-> +
->   	if (xdl_prepare_ctx(mf1, &xe->xdf1, xpp->flags) < 0) {
->   
->   		return -1;
-> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-> index 979586f20a..bda1f85eb0 100644
-> --- a/xdiff/xtypes.h
-> +++ b/xdiff/xtypes.h
-> @@ -48,7 +48,7 @@ typedef struct s_xrecord {
->   typedef struct s_xdfile {
->   	xrecord_t *recs;
->   	size_t nrec;
-> -	ptrdiff_t dstart, dend;
-> +	ptrdiff_t dend;
->   	bool *changed;
->   	size_t *reference_index;
->   	size_t nreff;
-> @@ -56,6 +56,7 @@ typedef struct s_xdfile {
->   
->   typedef struct s_xdfenv {
->   	xdfile_t xdf1, xdf2;
-> +	size_t delta_start;
->   } xdfenv_t;
->   
->   
+>  t/t5500-fetch-pack.sh | 19 ++++++++++++-------
+>  1 file changed, 12 insertions(+), 7 deletions(-)
+>
+> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+> index 2677cd5faa..62cf0e1ff7 100755
+> --- a/t/t5500-fetch-pack.sh
+> +++ b/t/t5500-fetch-pack.sh
+> @@ -892,15 +892,20 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
+>  	test_commit other &&
+>  	git commit-graph write --reachable &&
+>  	git config core.commitGraph true &&
+> -
+> -	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
+> -	0012command=fetch
+> -	$(echo "object-format=$(test_oid algo)" | packetize)
+> -	00010013deepen-since 1
+> -	$(echo "want $(git rev-parse other)" | packetize)
+> -	$(echo "have $(git rev-parse main)" | packetize)
 
+
+
+> +	oid_algo=$(test_oid algo) &&
+> +	oid_other=$(git rev-parse other) &&
+> +	oid_main=$(git rev-parse main) &&
+
+OK.
+
+> +	test-tool pkt-line pack >input <<-EOF &&
+> +	command=fetch
+> +	object-format=$oid_algo
+> +	0001
+> +	deepen-since 1
+> +	want $oid_other
+> +	have $oid_main
+>  	0000
+>  	EOF
+
+Nice.
+
+> +	GIT_PROTOCOL=version=2 git upload-pack . <input >/dev/null	
+
+There is a trailing whitespace on the above line.
+
+>  	)
+>  '
