@@ -1,184 +1,159 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F5E3C1FD7
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 09:16:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECDC3B8D56
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 09:20:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768900599; cv=pass; b=rEu1DUmDV5k9wzsXYAmCbU2t1cV3DsCKtLzZgCk/mzrcMEP6MfBW6yHmlfE8i7O8ViO0AOkog1fGQVmQ13nWAMZeascK6XX2ic7l5Mm/bx8+hsAyOVEzD0+BVX2CEXmsGEPA0Zbv0fO9MUbjrhstn8YabidhDtivOXM9aAJnn/E=
+	t=1768900810; cv=pass; b=kZ+cndgMgGVSfxT8trNHNhxErwPddqT6Ayhmzi9HFUxMYgixFlP+b1df2BN4K/4JgH79szTER8utC87v8V1OV3n2/h5SzmA2r1DtJxIrkkgSvzS3hWl37JcqcyL30u/F8mRX1p7sQtPsG2XgCnRkP+ogukUWFwqCQUtIafgMRos=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768900599; c=relaxed/simple;
-	bh=WzCP7fdaUh3OtzXOJ6IawNV3pRFNlb29sEQdcDpK10I=;
+	s=arc-20240116; t=1768900810; c=relaxed/simple;
+	bh=z62LBxMGwVgWGl+jlUusH74MS/lsCmQUuUZe/9sRWjw=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=eGYNNXv4lKJEqCYYNawI56Bjd1+Lh4AtWFroQ2cPJlDW7DN2w5LEwM7xyJPqho7yeOqejSvAFdEPHmwLhYWDEX+wtxvY26vgycLnpMFItrFMJb69PH8KLpnNgr1k1TDbU9UZFFzrbGUISgCfNcBm1JxNuHzkJfyrizsjh9pzFGY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XlXHq62Y; arc=pass smtp.client-ip=209.85.221.175
+	 To:Content-Type; b=f8v0u+biwz+82CBqz5zju8hefnb+1NY1wOWSdjmMAlXxpe7EfYpDDPPIiCfh5xgnH6yCSOocqxI4sud5HFJxZzGR/p1xs9sLKr51coX80vfUCvdp5wjdYTzYXu/Pf9N5TTWJCA8AVji9b0xxcRxp2T1oKVeZ3aK5rH/3CEMdACU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aYVjCD+a; arc=pass smtp.client-ip=209.85.217.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XlXHq62Y"
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-5637b96211aso4479523e0c.2
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 01:16:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768900596; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aYVjCD+a"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-5efa4229bd2so3372536137.0
+        for <git@vger.kernel.org>; Tue, 20 Jan 2026 01:20:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768900807; cv=none;
         d=google.com; s=arc-20240605;
-        b=ApzwQCfmKU5PGmDvzWI/Htbe2M9Zih4Ek+Wxfd20PE0IHt6spf6KrwFrTnaZYeg751
-         x+wojJJyHhntyq2c7cvynwNka2ITWUEEFS9N+TJOE8OxjjHS5ZAegFWi8LlLg0T7MG7/
-         ZGsB8Cdn1nwelRc+29DowZxM3Dgw4+Tk1ggPEddI4uU2gwF8vwJgWCwirtUqo+9O/2qU
-         pc8apiKoDfgkM9GyqRCRJGLKKQk+vKaxcl0gNNQKopIzRKvSsUY+DS1X4hE03Ja0V47B
-         VgM9jzI+bI03HMmPHbGkqjsCETncFjG4YicxR0QvNCj3+Nm5rrCHym/XgmfDNmM1mKUd
-         F8dA==
+        b=SO5FbV1Mlm42N9qw1goSSFgJ2m8JdU9lcmaEpDDA5HHFs741u7RPHL4IHXUN8IeUXe
+         70IdzoeLxJlI5nwPvlioTjA2MjdzChgHzuPxbyn4H0UuNHIXdgSxDf36TgXSnubn62x6
+         0hYkyaGeifsZ/fsHAFXZoXO4y1omT3OIZEDWxWAWaXiyDO5R6w9J1X18fEIdJ0z88rZ7
+         5a80druODhZXzFugdzTJzavRRTs8Ttcbyf7Kn3aVp/aP8LhzrcI+XVpBYjGkC3ThyQ27
+         cJoFCW8+lvtMK9HBt14gzZIsvx6c+A42HCWWRuC+8DdEPdnTGCDqBD/Le+PztCqw30k5
+         Qg+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :dkim-signature;
-        bh=J6lP7smlx0cPRtO8BCk2wptRzub5kJC/33reRSUMcSU=;
-        fh=D29SPazCqcLdEovdlvKxs07csSUIecPhMsPzE3oenu4=;
-        b=EnaOWv/Ij4o8x3YehWXBtlKB3PyA9DLslKaXLxMHdRZm60mg4YcTw+I6dIbbyfD690
-         6O7cD3JqQ/qteWDSPfhhc/NTx0u/KUnwIJEmLxqIqUjSTRvkUVlW0eberrcmQ/662Gis
-         0NdGoh2xjHPHT8Qs8dADAsCpMUfECTNP+3RXu1kiQqVS0iuHGpXxTG28Itr2cZOIcH5K
-         cHXZk3P5Qm8ehmmxj+evNC52TSiONaDvqyh7qwlp7Hzso8Oyf2nAkmAgW0z6+UzVcgC2
-         BbNyyHjmRqVLabL0SOCUNOieINA7LdOEZgTlBesbRXzi3tE0YnX0zhgWBc0zj7eYDN2w
-         qUSg==;
+        bh=33Brbffs9wvQIhTiKZDoNkuf2wRN1LU9EgaHBCNvFNw=;
+        fh=BXgRwoLsY1aObvar3H9yz9TRHQNqDxFThVVnK6NJDoI=;
+        b=Tp7IOSbcT3MhtaNQs7eXyUxZqlna58ZX+ZVasfdD1deQLAIOUD+jNgcaqGcu0aF14D
+         jxjnrBLut5gS+MVV978VH7BWAC2xGhwLko4lmoRnSubzbrtOX399/sHrBBDcrxBD7dPa
+         O1bssjNUe5X1pO8q1BVqNQl18ZqCFwJCLMgBp83Uofgftv0gbUZ3kTItQyW0UnS5yEMz
+         yQkQDxd1JTvDNZ/JD414HqTpDuTR8ZwMaPMEjUrCma5377jsN0Dj+et72WP4GikqAgsF
+         3+Ij2+eKX88JdQvCaPrjEQtnM1qyNFFijGjxRQssNLbDQl1FTRivOnKnPeqKul/9EaSy
+         uNCQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768900596; x=1769505396; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768900807; x=1769505607; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=J6lP7smlx0cPRtO8BCk2wptRzub5kJC/33reRSUMcSU=;
-        b=XlXHq62Y9PA7OVmjHek3xVkJ62NKmoK54C1XN/9+oTb5fJqxdWINJ28OBvVsr+BZwq
-         sZS0QdGKg9GkHqkT6Al7RxKvXIW7eDH7cEM91J2vFRTktDUGtsffjsaL5TgUdDJrE+A0
-         ClCsdbdsxQaf76o3e6FegD7K0jBIReaEaZSkWrB1txpaOF3QvyUYc3jglJOVWBZteXmj
-         ffT4iBvw/FOPr6t8LNhqQzbc0rPC1/3fuDttTaTNbdzNDcl6avqRW7kAmRaesyB7idpM
-         T5XZZlk947RGXTpym6wJVSC/v6CLOyqI8Cagg6oerpPUqlVZjIcagg3WBDlSGO8ZEOoc
-         8JQw==
+        bh=33Brbffs9wvQIhTiKZDoNkuf2wRN1LU9EgaHBCNvFNw=;
+        b=aYVjCD+aQatOFdOovwdJwle96WfgSVD7mofBa7pE9rPUrfhv5tIcreFcRB1iv1fbRd
+         fyotCg4G8Fr0VGRtE5Ufq6IEOZ6YNiSNS49nIcVqMvib91VAIFu1sQYiY0HoEihE2ch5
+         dm4iwjM/1iDwcAloI0WJdoH/I0m8luKti6iLW9u3LV43BDoV2eSTzraARHzTcsPOoFwk
+         ymBUqPoXhhdOOTdQrx8/eUNS052dpoN2EdI5sIHWdejWLdYGje6ZWsCycENa+6guODgX
+         SbbxABKDr3uGJinfD38QcdyYLooSemKfHEjCyi3GzPO0PI0V7UXvMkqtXOpY/TnbYEsJ
+         FHGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768900596; x=1769505396;
+        d=1e100.net; s=20230601; t=1768900807; x=1769505607;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=J6lP7smlx0cPRtO8BCk2wptRzub5kJC/33reRSUMcSU=;
-        b=rDmXkuxNRP1d+sGWO+RFEVMSkG9a5cB1qpyj2KzGvq5xiytHJhf6S5Yh4Gio9JuYQT
-         yVqHAP17SGfe80XeGnGm7fyrHYBZ4xAlz0sR9BxFMpRATfvLpRMGGK4JVgzOrcauHxeY
-         bvDA9Y5UBEndquDr1EphNcCaE7fru9yBwvkRXhRGYMwqqgaNm932Isfo02EeAuJ91MMQ
-         SIuM792kLTfJi3fm04Yz61xzExjU0zhR4vQSfmIdEdKo5nu/cjqJu8ljF/nU6EvyVTIl
-         Ak0SrJ3jBvU+ClJj99GPtH9LVaDnHDButnfRYFW0gbWoMr7mVCaySjDrf0JI5fyOg1e+
-         8Iyw==
-X-Forwarded-Encrypted: i=1; AJvYcCVDFoI+cuAGJ3yXfkD+Xbceu0cOE4h7ESkpTiUPYTPY3Hi22b1x3I8TeurVXmUq/wgOrBc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOpdOpu3xVvPpeKvo9dCWTlD0iqj4FTV2Mlw15xxcTWxuPObAY
-	vCvaIop+yTMJEpfhmz5Lkmqq7xMCFEfev9pFkuSmaSd43ZgrkZKYii6lxBrSVNtLpZ53xwOYtwz
-	pmjgVlFwLfWTBSHqLwo0XoLanxDuNjaiFzQ==
-X-Gm-Gg: AZuq6aI6xrf619hmvANyfI0KSH0Tk4FtYLMdoynQauhHCdODJNBOOP+4bZ9p7OKP5gp
-	2nn7Knq3QT7r+jcB08C+Lo8GdsSt2q5AUVyPACsHWkhqCB9CLWUROcmGuc6w2ZHpEShXV+uaeXC
-	SQkTnAm6rIPStpL9aiCKSkU5J+5B4KUjRgL41YqE7m1OZvoy6Hirw5oHIbJI2e93UBCUhA6rxz2
-	n08g+D6k9a0d5DVkA1XZ+jriSOvlY7r1yVi4/nvVlj1bPz0cot+lYr1b9LHLf1+I77CgAchnUYh
-	gRz6jjKrQyvwSv2HvMcZB/CNDnOpdg==
-X-Received: by 2002:a05:6122:8c16:b0:55f:cae4:250c with SMTP id
- 71dfb90a1353d-565de441249mr286882e0c.13.1768900596537; Tue, 20 Jan 2026
- 01:16:36 -0800 (PST)
+        bh=33Brbffs9wvQIhTiKZDoNkuf2wRN1LU9EgaHBCNvFNw=;
+        b=dysRTxvfg7m4iAdMnGLP+W42I+QT8tm0TJW7NUTM0EWn2WdjQGTXdor27WmZnDT4ND
+         ASrmRd8FhhTuAg2p8EdnrIxcAlagjisKw1in+9P8wezldob/Ki4kTfFQRCoV1osfK0vy
+         LADqALAssX0t+rQthaqPSMCzd63eIUoXdUE/sMrZqkbWs/1J00WbpB6DSW0KMs3IiTZy
+         KLJXJm0F1xklQFzdUrE3YE0S6hWa45XGn0p3Slu3xc4eG9dpJ8wGccXqn6bSfP29F/65
+         A4wfWuU/gEgeOWXllFIEM5A+t30hcy8/M3+fyI7o/rgQDNGnd9nH9J/GCiccIcsLyuq/
+         g1Hw==
+X-Forwarded-Encrypted: i=1; AJvYcCUdWeKFpXXxUQn9F9YIoqWEkC0NHmTBy/+6rsvPH0UWY+c8kmOGj4DjeJyHQB9Su66Wk8U=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw78lXvzqkUz9IOUdKRwByi+yYuT7nR2KxBGR19YwLVOmpXC4DI
+	o3LXoSQEvDb3/NZJZ2Ini8VUK0dDHvKM4h6IKY1VzDwIrcXCsjlVsDtcnTXxHqrbkKjciPjLebb
+	3NmE/mSAmdWSuq046Q8dq+TLqwNhM+ycVbw==
+X-Gm-Gg: AZuq6aJNGnQe4BcvOti3N30/6S25CZxp8tjytwlAqiMkU3UdtmWNpZ8QGEOS6ufuFHd
+	PJXPwOeksI6GCdDryP/6hH86OYqyCjModABElu5cmGaLXF2zP978elf96zuvKveDNu+0t2HFd8Q
+	iDfNHTEi1R53FptUV7X1rt2PSgzXnr5zmABq5RJPLrAE6MY/PsNwl6NXMFGqIvtxgjq69XKRlUO
+	/lPEdtRqtXRteDDRi4tP/IlY6Cvy3JJ6D1hIY3XNerTZL9Ho1N8KbtejTqCHjiST8bgxVyy2OW3
+	ZoIQT9FSstPfwfhWgBBBHL5cIko+zg==
+X-Received: by 2002:a05:6102:5112:b0:5ef:8881:c8a6 with SMTP id
+ ada2fe7eead31-5f50a8cff5cmr324504137.13.1768900807639; Tue, 20 Jan 2026
+ 01:20:07 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 Jan 2026 09:16:34 +0000
+ HTTPREST; Tue, 20 Jan 2026 09:20:05 +0000
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 Jan 2026 09:16:34 +0000
+ HTTPREST; Tue, 20 Jan 2026 09:20:05 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260115-pks-odb-for-each-object-v1-4-5418a91d5d99@pks.im>
-References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im> <20260115-pks-odb-for-each-object-v1-4-5418a91d5d99@pks.im>
+In-Reply-To: <20260115-pks-odb-for-each-object-v1-7-5418a91d5d99@pks.im>
+References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im> <20260115-pks-odb-for-each-object-v1-7-5418a91d5d99@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 20 Jan 2026 09:16:34 +0000
-X-Gm-Features: AZwV_Qjnw4fEhZ0dtbzoprRsOXicMRY7wpKABso-nqKOHl7uQOUDqUeOdYGDnFI
-Message-ID: <CAOLa=ZTupfCEHFHeGtA-r0g5KfghRL0X3BoH6zVTMg-GMZsodw@mail.gmail.com>
-Subject: Re: [PATCH 04/14] object-file: introduce function to iterate through objects
+Date: Tue, 20 Jan 2026 09:20:05 +0000
+X-Gm-Features: AZwV_Qgncmo5MjAm0PaEfNf84LukkARVpRacvvX58sHfy_fztRv3kwkYcj0hpT8
+Message-ID: <CAOLa=ZSgODbmRAHopGejyr1swhDzRa9rccM8TBc3CW=WkRe=pw@mail.gmail.com>
+Subject: Re: [PATCH 07/14] odb: introduce `odb_for_each_object()`
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000b33a3c0648ce43a9"
+Content-Type: multipart/mixed; boundary="0000000000004865d20648ce5038"
 
---000000000000b33a3c0648ce43a9
+--0000000000004865d20648ce5038
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> We have multiple divergent interfaces to iterate through objects of a
-> specific backend:
->
->   - `for_each_loose_object()` yields all loose objects.
->
->   - `for_each_packed_object()` (somewhat obviously) yields all packed
->     objects.
->
-> These functions have different function signatures, which makes it hard
-> to create a common abstraction layer that covers both of these.
->
-> Introduce a new function `odb_source_loose_for_each_object()` to plug
-> this gap. This function doesn't take any data specific to loose objects,
-> but instead it accepts a `struct object_info` that will be populated the
-> exact same as if `odb_source_loose_read_object()` was called.
->
-> The benefit of this new interface is that we can continue to pass
-> backend-specific data, as `struct object_info` contains a union for
-> these exact use cases. This will allow us to unify how we iterate
-> through objects across both loose and packed objects in a subsequent
-> commit.
->
-> The `for_each_loose_object()` function continues to exist for now, but
-> it will be removed at the end of this patch series.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  object-file.c | 41 +++++++++++++++++++++++++++++++++++++++++
->  object-file.h | 11 +++++++++++
->  odb.h         | 12 ++++++++++++
->  3 files changed, 64 insertions(+)
->
-> diff --git a/object-file.c b/object-file.c
-> index a651129426..65e730684b 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1801,6 +1801,47 @@ int for_each_loose_object(struct object_database *odb,
->  	return 0;
->  }
->
-> +struct for_each_object_wrapper_data {
-> +	struct odb_source *source;
-> +	struct object_info *oi;
-> +	odb_for_each_object_cb cb;
-> +	void *cb_data;
-> +};
-> +
-> +static int for_each_object_wrapper_cb(const struct object_id *oid,
-> +				      const char *path,
-> +				      void *cb_data)
-> +{
-> +	struct for_each_object_wrapper_data *data = cb_data;
-> +	if (data->oi &&
-> +	    read_object_info_from_path(data->source, path, oid, data->oi, 0) < 0)
-> +			return -1;
-> +	return data->cb(oid, data->oi, data->cb_data);
-> +}
-
-Okay so here, we use `read_object_info_from_path()` since we already
-have the path, we don't need to call `odb_loose_path()`.
-
 [snip]
 
---000000000000b33a3c0648ce43a9
+> diff --git a/odb.h b/odb.h
+> index f97f249580..8f6d95aee5 100644
+> --- a/odb.h
+> +++ b/odb.h
+> @@ -475,6 +475,23 @@ typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
+>  				      struct object_info *oi,
+>  				      void *cb_data);
+>
+> +/*
+> + * Iterate through all objects contained in the object database. Note that
+> + * objects may be iterated over multiple times in case they are either stored
+> + * in different backends or in case they are stored in multiple sources.
+> + *
+> + * Returning a non-zero error code will cause iteration to abort. The error
+> + * code will be propagated.
+> + *
+
+Super-Nit: This is for the callback function. It would be nice to be
+explicit about that.
+
+> + * Returns 0 on success, a negative error code in case a failure occurred, or
+> + * an arbitrary non-zero error code returned by the callback itself.
+> + */
+> +int odb_for_each_object(struct object_database *odb,
+> +			struct object_info *oi,
+> +			odb_for_each_object_cb cb,
+> +			void *cb_data,
+> +			unsigned flags);
+> +
+>  enum {
+>  	/*
+>  	 * By default, `odb_write_object()` does not actually write anything
+>
+> --
+> 2.52.0.660.gd05f3a8ea5.dirty
+
+--0000000000004865d20648ce5038
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: ec1dc62a030297e7_0.1
+X-Attachment-Id: 3ff952676ebcc885_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1sdlIvRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK1pTQy80K0E2eGVwRUdSTk44RmVlV05KcmY0L3dkWAozd05OZWhTSDFy
-VVBjV3gxcEwyOUFrdXo2VnpWcjN0M2NKVktYVjhrRG5uNG5lWlRHTnZvWlpjSXlBRGJXRjNaCmhj
-MndCbFpEcFRCS0FTKzhFSjZPK01RVmR3c1FqWXA2N2x3UVJKb1FaMUlwTkI1TWIrM21udmNSR2Rp
-TCtEMlYKaFFabXJGemgxcGgzc2xDRHhRcklsZU9ZU3pGSWRwWFNQVUZtUXNjOUdTR0VLazZIemFJ
-cXNnRnl5alo4dU53bQoxTW4vT3JZR0RvUnBCNGNPT3YzUFR2WDFjeHBNWnl2OUtwRXBLQVJKZDVB
-NmNtY2JvSHBGa0E1cjlxdml2L2ZICmlwY1U2WURyRitJYWNCa1dsdzgwNGVGcVllenpBdElOaTh1
-Nmc4MHIvUTJGeVkzNDlRZE02UHEyRkExc3ZyRUYKYnpZMkJSbFNCR1U1TklhTmlxdHNrVHI4bkY2
-cTNBUTBlRVJSVVh4ZVo4d2NsUUY4ODl0OTY2Rkk3dzBpck5DagpESGxtNjZ1bVNidTJoc21YR1Fw
-QVowcnZKSVgwOXdCajcrK0ErQ1NXZlN0MDN3RjJub1B2MytzaDJuWmdIZFhoCjNRZ1N6VUJGd1hy
-Q3ZoOXVpZlJIeVhDWHRLYVMyUVZxYjdPNXBqbz0KPWlYbTUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1sdlNNUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMDRIQy80a25VK2c0ZjZFc2cwRkpKelVyS0hEL2dSeQpRblNya1d3LzN0
+U3VUWm42MTJUVVE5ZmNTQ201aEl6R3JReUE0NUtzTzBHaG8yQlRVTTJPS3pEaWtDdTV3K2t0CjR5
+dExCRS9GWEU0KytYT2U5amM5eTRhblNXZDg5MnEzdFFGL2Q5OVEyUkhPSFpmbS8rWEhlZlR2UTNx
+Yi8vdW0KYUY2a09iOVM5SkNQVm9RNmh6OEQrMlQ5MWpvbU5tL2kyaVJZNFFCWnVvV2lGWDdUQmc2
+MW1CaFNHaSs3WXl2cgpDKzJrQVhwN0NnVFJrbWF1NjMzc2VRK2ZrSlY2V3lyb3BiTEhkQTdZOVBl
+NGZtZW5WZSsyZ0lId05zMHF4L3NSCkhUdXBWV2s1UW9zVTR1Q1I2dkFJcW5TbnpsQXBqc3dLVTNS
+amtCS1NlSU56V2ZyMm1lTS9ZYnBlVXhSbGtQMDEKMGpvWGw4eFJaTng1U2hSYzRnUUdhelFoVDdK
+N1grcjhRdFZQN0dDUHVvcnliSDJ2TXVLcm9YSW1EQzhNZCtOUQo1aVFnbDcvdysyR3o0SFN3Q1Nk
+ek96L0RDUm9lOUlQdlBLazFvMHpwd0NIZzdYVFpBdUFKSnJqZU5nN0hKdExSCitwd21Oa1dJaDdp
+ei8zcXVoNVhHOFVTRXd2a0J5NzErNVc3bGgyMD0KPVFGdTYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000b33a3c0648ce43a9--
+--0000000000004865d20648ce5038--
