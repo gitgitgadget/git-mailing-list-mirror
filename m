@@ -1,86 +1,88 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADCA299A82
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 05:47:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6962C339B4E
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 05:49:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768888067; cv=none; b=GA2Y/bfGEFFQeU5mTQvo70Tu1fp07GLXkiP2pTPwuCtC3VQR7w+uL7wqvEtuhg/0+YU4LGdQMxFherS4Rd9oaRyXXCU+k4VJ7MhgEvrmfMwKtqHW7M5kZRgrCGg7axQaBaDd3ZtDUMW7bGiGQqfTQ7iBaxI2IvG4VtdLBV11BJE=
+	t=1768888155; cv=none; b=Zbw1L78xlGBSGfLZUk9OvagXo2qMezTiA1uSfL8Iz8UMAxW8vrFN3Nbe+K0wn94E/MsnWZLqT0Bs/pP6VKuED7h0m1FQtn8EnHPllVONPPuo7Rf5EL14pnfVqnZNr0JdmUDzIMG/pP+STLlS+HMM8wLNXcd8u2gNf0Q2kcPBGbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768888067; c=relaxed/simple;
-	bh=dHmG43kmD+rC9wpHm/kgHS+vwivyxB/mSpZ+YjNo2T0=;
+	s=arc-20240116; t=1768888155; c=relaxed/simple;
+	bh=KJmHdBKrmpMS5F8S2rjnmaD/UoPTETiJoJhWX89XIyI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gyqmf8cHz7xg5wITc+oAS1ylTYYFwTNhle0PXTsg/YkRYwApgKJJuegdaAi19dQMDDSvbJYmt1PDE+nZM2bgSY3wSjB4EyfqcqLbQ/ZIXKYR2TGOTDYYLwf/vgUWXr1vc3ghDwKaTocEc3EVuG6PHYmdBDopFKCZZlqEuz/ASGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Wa1Um/qw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ieQkb/HU; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=HuqB2IVPXpEJr4Ype59tYyNpkEL0sQGiq1UXxXhTHxZuYXZlKPog97a4pp8S0BJ3QCEBxBNjApAWoapV5u/kokVzKO8gQsJBq6N2mfGZy7GI3iJSHxTINLqAfuwYqBOH1o3R0uwvuM8PJDfHSGpBpOR/kSsjZnFdBcDooIOG+us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iqGK1JAq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bom+wmIU; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Wa1Um/qw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ieQkb/HU"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 00C4C1D004EA;
-	Tue, 20 Jan 2026 00:47:43 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iqGK1JAq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bom+wmIU"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7064D7A0560;
+	Tue, 20 Jan 2026 00:49:12 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 20 Jan 2026 00:47:44 -0500
+  by phl-compute-03.internal (MEProxy); Tue, 20 Jan 2026 00:49:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768888063; x=1768974463; bh=a7uFqLJliI
-	aeD1cxk7h55qjkqtQNcknWUmmPnw7evwo=; b=Wa1Um/qwQGwkzfHa2MkVfweaQO
-	akavoFktVGRY2fR31cZBNFYaNSdxb25AkjXoD0PQFW8HPpqwdT2iNSuSgF7BN5cc
-	NxbDuN2u6oPxzLHpAreT6Xo/GW5ijrmvNd2nQb3b2P59c565BfDyr4v98nOBiy1f
-	29Q+CBhRcVYIJF1eZXT50heeTL9VXp9CW7XrJJTy8YMZk/mRts1JbRcBKTC2L3bf
-	mV00s/7Y1epbuXQNp4F8wp1sgNFEE8sUx1UL807Gd81Zp6oBItjZIvzoOXyM+dER
-	NAMFUUIDk2W/wnzPxdlMNFM+/SMn3bsKadpVSu4UE9DywAHQ7Ufnq+mJYDqQ==
+	:subject:to:to; s=fm2; t=1768888152; x=1768974552; bh=wcjF3ertgt
+	DqC9o5PtKLaVsz//qSrO7O1iKNXMB3Z9M=; b=iqGK1JAq05vdwGTXWrBkTGU+Ix
+	J8AN+vjNCVOBmq8qtQGPcYrfjNBPC8+L2wFvW6G207xGFbiBYbElb3KlbCWxIeP+
+	Qj0GJGq+Rens09dKvmJVKujILEDsyAiGLOvQ/iXb/b1tDglUoa3cOLrP9DY1Rp1p
+	31+//JlW/wUG9avNhNwFIbCIskTJwMYO87fp8aQ3R8omTbg6PrmUkUiAiBXaRwlA
+	wRuybxX8k2IeQq2Vo0poMe1ZpGM+RUrHK0W8+HRA9Wo/Q5imKMakklCdsa2uzXE8
+	s2DIrcq+6xFyq3RBS4vNZBHxit2MgjgF63UPTwpNRSwhJGqUGeoaJN1fPzbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768888063; x=1768974463; bh=a7uFqLJliIaeD1cxk7h55qjkqtQNcknWUmm
-	Pnw7evwo=; b=ieQkb/HUQy18lvob2T7ao16rj6t1ni06kZzKEGsvEzu0MpDfcpc
-	2bVP1Fzp/NYp4f59TC6rMMTUAYqOAIYhziZao6x3xQLdf1m7WTGZdfEXCmrTJ+68
-	1/2C/SGaS81EXR0xR9oz+xXjiup1KUH9GnT//BNj91FDCUvxVGY6vOYdLLv3LiY0
-	3CByBpf/GBeTkcds1AWSGmShjXB+z16NI0BBcCoYFQQSL+kUZkyT+2oH63rOFP+F
-	6q8W2xHpGTVpWNweoxlvP7eb106z0dHx+LUJuXP6FaoNY2gnto4lYO8dbrkCu9FX
-	aeGM5B8KjFz4MBKshh2GJbLnXWyCj0+tcUw==
-X-ME-Sender: <xms:_xZvaaJZwhoJvuTnpUZs70NzcjVWH3138zalhSzkW-rmZ0yHd9keXQ>
-    <xme:_xZvaZJ2zoGkjw7RnwHcWbgP2jHZhlP1Piw4hUrh0KmBcyfTC-UbVJvBiI9CTiJa0
-    B2Ur880WCBFVMTZpc2jhQj9Z-yojE7OuKO4xENkK24QD2wo-360FZQ>
-X-ME-Received: <xmr:_xZvafu18Rt_TYv3spBjXuj0oxmfZxAWp3QD318fNgvI15xtwPrkyf-bahqcP50G-mt_CLI72LsEknxxP5IjCtP34PRmqMZWGH94PXRZpQ>
+	1768888152; x=1768974552; bh=wcjF3ertgtDqC9o5PtKLaVsz//qSrO7O1iK
+	NXMB3Z9M=; b=bom+wmIUCQBHrwkUYWvvind0m7mRpoEzO8deAA6bz+S1xk+LYHO
+	OrHuot2/SCZBOofMiL7ciR2XNOqykIK+BBWbX5862wY9Bc9dZMaW3HXN5roqIJ0L
+	t0TtPkuJiKwaMiwwv9Ggz9rncqqJ8bHMnyagfc9qfGV7kRn5QGorDvSGi0Yt6N7y
+	16VQiapPsvvRl/9XTZU6YUnckwDw1gdaJRdvTL+zyBbSbC901TqvOxh9Gnw5UvXO
+	+GCx7ROTZQt/gQfDhzFE4qCgdDTu3mIARUbA1wYjEwQ19zJG/00aWhnQi40mQ/HO
+	7soALXheDlqTtwep3VCmXaxkzY4ygPfSvdA==
+X-ME-Sender: <xms:VxdvaSpjpyPHymEVLXiyTJTQydA3D7FzCdMWhvfOJ7H6vgBQhtjPEQ>
+    <xme:VxdvaecCNUFTydKL68u0RiUMv6SABsx2OsLetOeALZXGiXrglV9ZxKpFRvCm4vs30
+    RI4GPHorPqkhFmh9iLF2Pket3HTVVzLvKWkvBN5DFCHqvkRP4crrA>
+X-ME-Received: <xmr:VxdvaRr8YhCKjUymoCt6ueEx5fRWuv7AQIDNa88T_qQnaz9to6nJ__gWhM_XfHyW7hP2hukcuju_gBRnn0pp1JNOQECh6NZ9E7L_auO28Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeeliedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopeiihhhi
-    hihouhdrjhigsegrlhhisggrsggrqdhinhgtrdgtohhm
-X-ME-Proxy: <xmx:_xZvaeQL7lWtzX_w5cGzmDuS-GlF_lVLW3s1CzrsZuzntSNXC3uc8A>
-    <xmx:_xZvadMde9Drj55nRTzjpwr94JUI_eHtvuauhwz9K9KGFOUy9UszFw>
-    <xmx:_xZvabaSUSi76WR05WnP9GY7wE8NZ6Q0cVnI_12MbL7GWWp_t_zaIw>
-    <xmx:_xZvafwOPhAwn60x8dFNLMEZqbgUnXXBzHdjzpiMli8aFBmnUW8BHA>
-    <xmx:_xZvaYsHeYzKD2awl94ZDvHjYr2ugfSYQU8F_Lez8CXsseriSUtXrGLb>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjh
+    honhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:VxdvafEAMyusVZa5XT3h6PGgWO7wWKwM_O9CpSP81b1auy94QgW5iA>
+    <xmx:VxdvaRsAp5v7mfaZrkOA70mHhmd-kobf86ulK8aD3FWltT-UVHaShg>
+    <xmx:VxdvaRU0RO6ZAof3Miw_TcRFi2S7otumkP6b_CZ7wkuR-81ZK582pg>
+    <xmx:VxdvadGdQ5YHeQYuMOL4rCNWRp3uLmUVnnk9tZH6n4h020oLGC16Qw>
+    <xmx:WBdvaY3Xa1_279-gOzudhuMunx58zYg-gCIuhmtligb16eImQfhZfHIN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 00:47:42 -0500 (EST)
+ 20 Jan 2026 00:49:11 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 88ffb5fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Jan 2026 05:47:40 +0000 (UTC)
-Date: Tue, 20 Jan 2026 06:47:37 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 21d5429e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Jan 2026 05:49:10 +0000 (UTC)
+Date: Tue, 20 Jan 2026 06:49:06 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>, Git List <git@vger.kernel.org>,
-	Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH] help: report on whether or not gettext is enabled
-Message-ID: <aW8W-SzorzDC8-rg@pks.im>
-References: <f3500e698fd40297d2e2634785529b76d49ca470.1768530514.git.zhiyou.jx@alibaba-inc.com>
- <xmqqo6mta7bg.fsf@gitster.g>
- <aW3XUxaomqGbtpEj@pks.im>
- <xmqqsec13zsd.fsf@gitster.g>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] t0610-reftable-basics: mitigate a flaky test on
+ cygwin
+Message-ID: <aW8XUqlbiJgr8Eib@pks.im>
+References: <f46e023b-1925-41b2-9842-42e7cb727056@ramsayjones.plus.com>
+ <aW3UO3ff9aNc7HQz@pks.im>
+ <f4599b1e-78df-44f3-a9b8-ed28411e169c@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,39 +91,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqsec13zsd.fsf@gitster.g>
+In-Reply-To: <f4599b1e-78df-44f3-a9b8-ed28411e169c@ramsayjones.plus.com>
 
-On Mon, Jan 19, 2026 at 04:15:14PM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Jan 19, 2026 at 05:10:46PM +0000, Ramsay Jones wrote:
+> On 19/01/2026 6:50 am, Patrick Steinhardt wrote:
+> > On Fri, Jan 16, 2026 at 08:39:56PM +0000, Ramsay Jones wrote:
+> >> In order to fix this flaky test on cygwin, despite not knowing why it
+> >> works, replace the shell redirection with the above 'test-tool truncate'
+> >> invocation.
+> >>
+> >> Helped-by: Patrick Steinhardt <ps@pks.im>
+> > 
+> > Oh, so is this the exact case that we were talking about? If so, it
+> > might make sense to link to the mail thread so that folks can also read
+> > a bit into our discussion around this.
 > 
-> >> Combined with the vintage of Git binary that had these help text,
-> >> the fact that an "enabled" line is missing is enough clue to
-> >> diagnose.
-> >> ...
-> >
-> > One reason why I personally prefer to have enabled/disabled is that it
-> > allows you to discern the following two cases:
-> >
-> >   - You have a modern version of Git that doesn't have gettext.
-> >
-> >   - You have an old version of Git that doesn't know to print
-> >     information about whether or not gettext is enabled.
+> Indeed! I thought about referencing the email thread, but I decided that it
+> didn't really offer any more supporting evidence than the commit message
+> (in fact less - it doesn't mention the 'strace' scan).
 > 
-> When you see no "gettext:" line in the report, you can tell between
-> the above two cases by looking at what the first entry in the same
-> report "git version --build-options" produced, which is the Git
-> version, can't you?
+> I can add that (again [1]), if you think it's worth it, but I just re-read
+> the email thread and I'm not convinced it offers much extra value. So, I would
+> rather not re-roll, but I will if you think it worth it. Let me know.
+> 
+> [1] https://lore.kernel.org/git/f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com/
 
-Fair, that's possible. It still feels roundabout though as now the user
-also needs to know when this feature was implemented. That's why I lean
-towards just adding the info in both enabled and disabled cases: it
-gives you the information unconditionally. We don't really lose anything
-on our side, and the end user has an easier job to figure out whether
-the feature is enabled or not.
-
-But as I said, I don't feel strongly enough about this to request any
-changes.
-
-Thanks!
+Fair enough, let's just keep it as-is. Thanks!
 
 Patrick
