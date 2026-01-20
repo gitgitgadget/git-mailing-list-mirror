@@ -1,92 +1,91 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026B138BDA9
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 20:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351A938B7BD
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 21:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768942792; cv=none; b=LqdNDf2HujqfKX4yiKDX6Rj93mq8OEpN1A9SK2qxkPcbW7cxlEvruxIjscTTBgfbC155pEilR4AlUhfPIw0UGlv9iv7N1KJBjmWcd0E4ix/HkJTDfoXkcsC1TMXdaKm0cCBCt7cZ7AbchQWFikMDrOocrR3xsVywen9hhF2dxLY=
+	t=1768943020; cv=none; b=ckAfO5UNSslXnry/BPebK9AbuFPhBVDdp0LH/sYayp6mJCog0gDUlwKymwLoOi+xEsnT6QJjJTNiDYFbMmA1IGL94KfIfC91NK2zEjVNX8aV+gR/kK0FdlBDUoiPmkffDALmq+okBVsn47eLH8MvMlONbiK1UT9nndHpslGTbJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768942792; c=relaxed/simple;
-	bh=whEF5h0Ip2hj7eHo9ECR4Dlt70nbHBiptT3IPB5VGM4=;
+	s=arc-20240116; t=1768943020; c=relaxed/simple;
+	bh=44102DE/wSCZ9P3/oMhiaxiuxQ+1pMMqfDYVNlJimmQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hLIqE+XXm9I4wMtrF5mRyW98vmfYD+jumHKwvoAhGUMPwC3G9Dt0f/ED56uChkLyeUMUz05/32cPbVgIyrk/ufchZ3pgdQ+4J1SBeylTgoKfStgRiT9cbmQvXWO0NGlOMpUWZSPnl3Af1KwVhnqnNeTKwOQ/msjVBZ9Ku1ucItw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nk43kJXe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LJvMgPyB; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=luwOnu4vpvwIg7X0uV5soJRxFHaRhnqR4xed+nVLtnfPgrQdtmZU0hT0SgkjncsRIdEkIYLuyQAbh4nDuFa+5XrDAWvcrnvyKDN9pdt/bV9Y0rG3kodUlaZKw5/4V/uvZjUCcDzVJJ+tknRPWlCMYFN1Ovgv2JOU5qDYewGtKCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q1poVqM9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ph5QQXAW; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nk43kJXe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LJvMgPyB"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EAC3E7A0113;
-	Tue, 20 Jan 2026 15:59:48 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 15:59:49 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q1poVqM9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ph5QQXAW"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2F9DA7A0062;
+	Tue, 20 Jan 2026 16:03:36 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 20 Jan 2026 16:03:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768942788; x=1769029188; bh=DLhcN3lhU7
-	p1E4oJ2WAoaek4a3r8W/aX483EfB7P1AM=; b=Nk43kJXeaUEQrJRZHe+cv8l03o
-	AAbqjfeRF9tLITE6Ya5WyDSBpxB7Md/W/A4icjYrud2Sm3NaCSX1YmT8LmreM54k
-	j/kM2yj3fAemWMRN0g8F0XWQsLQyY/M56m3uvluKBcpOqfUmhCnvg2ERXM9dYUAN
-	NJPlio8ewewCtctzWyblWzPWvXO6ESf/eUvxH5HnnO/gg8kKuU7Ka6xizhGmjwit
-	5jZNa3VfS6All2wbhYSB2Q8Il23nH55G/2PloNrBSx+SOuttf1157cezFibm3s08
-	yaUyZ3TDwodCdD3k91xPYDuywZWUpRHiL4KD8Qyeyckagbjm/tyyLZlzdOkw==
+	:subject:to:to; s=fm1; t=1768943016; x=1769029416; bh=ch3InMRrDc
+	jY4nQ8o2ZZ/6DUkTZGoYh6HPwInzxGI7A=; b=Q1poVqM9AA3cP/tqq2IzAo3utX
+	prvuSMFSUBdQ8I4+OKAQmPy2yYteWheGk32GjEA5nU/CiJd6KtzN57wBp28PC5DE
+	kwX6GkXehtb32tctDvdAjfHFf9iFKsx46EIlvfRdt4Pxst847jCFYAPqMtUb3yQ7
+	03y/smKammRbtDwsmsfDV1D24lp1PQ5XNwtiEyaC+vyJtqrJtR/9RoEmIuqFM2Es
+	Mmf7Df3q1/omLyui5XYC4yn0u8MzmFoCuU62KHTfqZnu1p3k+HjMd+XddEDojbYV
+	OPCRTXjCuxkHXH8p+o3fDmAbS4QcPZhTYl5GA5r/t2b6m303mW2q/32SAwQw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768942788; x=1769029188; bh=DLhcN3lhU7p1E4oJ2WAoaek4a3r8W/aX483
-	EfB7P1AM=; b=LJvMgPyBg8X0B8DKcxnoaHSJdF4Bu84VJuGPbSpt/oRFlCYVn1p
-	Jo0Z61lEuLwmBuuw8vrFadrwHALRZIfEvd4vefETaqiHmKlLInyph+WjHrokhR7w
-	CcRUKZo3S/8QFAtjknPUhq1v2aI3WQF5g4SOJVNEi7licBvW5p2V1UQUFvOdHKnq
-	aN8edSpj1pED6zb2lxe7aryuN5Y+p6+r3j6WKXsfNOtyJ60JzoRiVVP8VKZzuzoj
-	non6+73awtDQZydxRx8Pwc/g1ycf3GRBEbezRLaSYmgWqEFDawQa1vnfcTB7P7Sd
-	/Ts2qiLbYfnFXkIPqM+yw4qwx3N2yuAUUeQ==
-X-ME-Sender: <xms:xOxvae1pQkTZbHUyxjmxBiK9r3w03A2Dw10l3Lp5gMrQrHbryo-ERg>
-    <xme:xOxvaTUMvObee7Ah4Y6mtLz5eQ9MRP7lbsrHdxS3B9yoP_hz2l0qSUskZo19cprs9
-    izA29UoIA02oic1Q-Rw93DKbc9VqpLJd0WD3Pbh5WmZ4hl0OHQvdg>
-X-ME-Received: <xmr:xOxvaZKsKFPxnGneunQEPKZgY10XiZLRt3RDZlWvfZEn7zr47ynDqb-kg86dwoZZzFaukDAR4JLHTytwm2KPKY3HleeoX8gI-xlJ4Jg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedugeefucetufdoteggodetrf
+	1768943016; x=1769029416; bh=ch3InMRrDcjY4nQ8o2ZZ/6DUkTZGoYh6HPw
+	InzxGI7A=; b=ph5QQXAW/Tw3R+0H7x0LeZapkl+5wpKM7yD6zTKM4y1K95tYMAx
+	tbNNNamWkLvmqjwGzsmfFJtJ8t1ygwkmIU0XM8Y3noIV5mnubnQNXYMeO9GqmFmZ
+	ETxuHnHTtLUiCBmv6hzcaNlHWs84e5cx7p3hbncvMvROQyYI5kiYQy2kO6lfS4dm
+	ZFLQXX02XGd45oxL2RcOx08EYHhBEHmuiWW77YLHebZTtvCgtSDPjeDGtKPgx60a
+	SeLZoJHHcvbb8BjRckOtxk1zwnoQPQYKrZWwTTOYPuQYNtwuRUcoELBhhZJSfuFt
+	qCDhnhRAHsgloVw7wzaMGFWCwlmYvl6Rq8A==
+X-ME-Sender: <xms:p-1vaccI8fAMk58EocpR9D7TjkyXf5yx8Qs9TTX-9oeDgk8RezOjbg>
+    <xme:p-1vabJEhGHIquQvl64jzRppuUBQOgxS1ozLjDqEMYxsJPHMVeP-3CCcjMqkeTaJf
+    zPeBqSMYd1S9TMqZ68gggNW2VsoSFFJ2XBl_ht-d3yc78zpZdO3ZCw>
+X-ME-Received: <xmr:p-1vaZJJCoCxkotddKGD1oMMOIm_4V6C4SLI8ZTvKzeM-iPsBuxFnXODqxF9L3P7q1pLcdxu1tT9MWfjjC618t2kgowaskDO5-LDoZs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedugeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
-    pehsrghmohgpphhoghgrtghnihhksehtqddvrdhnvghtpdhrtghpthhtohepphhssehpkh
-    hsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohep
-    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:xOxvaV0UpDT-1LTkTUmizgSaN10zlX5909OMTlIhILqWA45tcwZfLQ>
-    <xmx:xOxvaf4NmYd_rN2jKUcN2JXRJaOvuV97TTqjTpJSsC3K3UAc4XyNsg>
-    <xmx:xOxvae-IMrtQbGEiJDUQPTxIXJTjzR9nb7R-YrL6CP_NOJBhamm5dA>
-    <xmx:xOxvaWVjuQ18Pi1054YcUlw0KY1YG1_HF9VwjDCTbB6xUSMmUTMWLA>
-    <xmx:xOxvaS7BcAw8rqxbiuG1zNHauVxHa5FOLc9enk8MjZfCB3xi9AFtt3Tk>
+    htvghrnheptddvffeuieekleejkeejleejueevtefhieffheefteekkeeugeeuvdegfeeh
+    gfevnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrg
+    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohht
+    tghlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:p-1vaaUNUVmLNrKvOYskVovcr93uA9XD5uRdCXCEh1SwJirT6A8LFg>
+    <xmx:p-1vaSkLmWQI2TTsw4cuNwmVuT2GL156GZexFR_MsgXY75Et2YdtrA>
+    <xmx:p-1vaQnnv68cn17zQGoMhnpTb2h0CCKA-YxUhGTUs1bAddextD3eFQ>
+    <xmx:p-1vaSZVRzt03pZsOdnonFh3ECFghRacg1VSHwAAIRGPgsDyslZ1lg>
+    <xmx:qO1vaebFYvg1CeWF_-PS1BuZwVY7uqQY3qZUPpnIgBKYRjg1Y-lif3dk>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 15:59:47 -0500 (EST)
+ 20 Jan 2026 16:03:34 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Samo =?utf-8?Q?Poga=C4=8Dnik?= via GitGitGadget
- <gitgitgadget@gmail.com>,
-    Samo =?utf-8?Q?Poga=C4=8Dnik?= <samo_pogacnik@t-2.net>,
-    Patrick Steinhardt <ps@pks.im>,
-    Taylor Blau <me@ttaylorr.com>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] shallow: set borders which are all reachable after
- clone shallow since
-In-Reply-To: <xmqqh5ujuekq.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	24 Nov 2025 16:43:33 -0800")
-References: <pull.2107.git.git.1763807914242.gitgitgadget@gmail.com>
-	<pull.2107.v2.git.git.1763926552033.gitgitgadget@gmail.com>
-	<xmqqh5ujuekq.fsf@gitster.g>
-Date: Tue, 20 Jan 2026 12:59:46 -0800
-Message-ID: <xmqqfr80xanx.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,
+  jltobler@gmail.com,  toon@iotcl.com,  sunshine@sunshineco.com,
+  =?utf-8?Q?Jean-No=C3=ABl?=
+ Avila <jn.avila@free.fr>
+Subject: Re: [PATCH v3 0/2] refs: allow setting the reference directory
+In-Reply-To: <CAOLa=ZT5YwDXEs=wHqVcHqLNxen51-hucaPXOWQEMug3oWfxOA@mail.gmail.com>
+	(Karthik Nayak's message of "Mon, 5 Jan 2026 12:13:18 -0800")
+References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
+	<20251201-kn-alternate-ref-dir-v3-0-c11b946bc2fa@gmail.com>
+	<aVvVAH1eRxGa60Fp@pks.im>
+	<CAOLa=ZT5YwDXEs=wHqVcHqLNxen51-hucaPXOWQEMug3oWfxOA@mail.gmail.com>
+Date: Tue, 20 Jan 2026 13:03:33 -0800
+Message-ID: <xmqqbjioxahm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,35 +95,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
+>> FYI: I did an internal review of this at [1] and mentioned a couple of
+>> things that I think still need to be iterated on. Most importantly, I
+>> think that we also need to handle worktrees:
 >> ...
->> The modified implementation of a generic shallow boundary finder
->> based on rev-list ensures that all shallow border commits are reachable
->> also after being grafted. This is achieved by inspecting all parents
->> of each initial border commit candidate. The border commit candidate
->> is set border only when all its parents wern't on the initial list of
->> candidates. Otherwise the border commit candidate is not set as border
->> however its parents that weren't on the list of candidates are set as
->> borders.
+>> So you can expect another iteration of this patch series once folks
+>> settle into their usual post-holiday rhythms again :)
+>>
+>> Patrick
+>>
+>> [1]: https://gitlab.com/gitlab-org/git/-/merge_requests/451
 >
-> It is a minor point, but there are "boundary" and "border" used more
-> or less interchangeably in the proposed commit log message, and
-> would make the readers wonder if there are differences (I do not
-> think we use the word "border" anywhere in our documentation).  It
-> is minor as we do not have such mixture in the end-user facing part
-> of the documentation with this patch.
->
-> I'll let those (cc'ed) who may be more familiar with, or, at least
-> have more code than I have in, the shallow infrastructure to comment
-> on the way the updated code uses the revision machinery.
+> Thanks for putting that here. I did reply to one of Junio's what's
+> cooking emails [1] stating the same (mostly that I'm on vacation) and that
+> the topic isn't abandoned but would be delayed.
 
-After this exchange, the topic has been dormant for almost full two
-months.  As I do not deal with shallow clones myself, even though I
-understand that some folks rely on it working, I'd really prefer to
-see somebody who are familiar with the underlying logic to review
-this patch if we were to move forward with it.
+OK.  The topic has been marked as [Stalled] and I'll probably eject
+it from 'seen' soonish to declutter my tree, but it does not mean a
+renewed effort on the same topic is unwelcome.  "Dismissed without
+prejudice" so to speak.
 
 Thanks.
-
-
