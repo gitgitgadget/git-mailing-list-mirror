@@ -1,84 +1,149 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE43428859
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 13:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39251366566
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 13:46:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768915327; cv=none; b=NQ4akrcx/HYpvJo7GngGpSzyTbxC2HaYBYZbNScOkCQTiqHTOSVpJSagHZEnK7713Oq9LaiP4z+hwnb2VCiGrGFlbEojUfJt1s/dQ4npOlhNukYzJW+aV4RVtyxncW/Bp+zcAz8ZfrgeU43syI0/gYgMapq02IVQoFXZAYpvbYA=
+	t=1768916792; cv=none; b=t2r3LcIX6KsdhwvXvYACcaJHZP88tD0aKWEG5txOYjFHhzt0WRhBbAmnYZJFLnhFmMcfLg6Z2duRiuyVVpjtiHsJZcF+Ts/D6a9ff7CIP/jXgc116Ht7YDsyhz+ULEO7zSGe+TChVXuh23NF+GMECTBD6w9cGHZ+UGKKm/4eXSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768915327; c=relaxed/simple;
-	bh=VA/1K5kHCnSKQGNKSwXvif7VpWxn3cYgPvXMC+KlXzs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIYch6HfMJLUI+hqISPO8wUfKU2x/LFregO+n7pFhIERybuelW4+sL73GnNe3v31KVf4zmKnWzwUpW6I9dTQxG6rCB7fCcnCj7lVbuHWXygS/mvO19199s+sqod9mOX4VHFUob7RkQ0vACxOT0F678LPzAO7qlTXtm9im8sWENw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CL6TYQ5y; arc=none smtp.client-ip=209.85.167.46
+	s=arc-20240116; t=1768916792; c=relaxed/simple;
+	bh=huGY58eZb3BFq0JSzf6G8ox3StINEmSRvkrfP34y3SA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B0JEV0WGoK3hoC7WrxdegwpLGPZbFr3DbNE2xpZLC2OrttIIL4btmAfd41hlhcWVg9NoRhg0ZznqS73L0eojOKWqbWvl/Rw0XjaHiUoyeu9wocLVILSkoHcrYtAFeVL6c0weDlIBld6by9Gb455byaYdY5fI0G9lY3QnFqj4+us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XEKwVC4F; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CL6TYQ5y"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-59b30275e69so6738035e87.1
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 05:22:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XEKwVC4F"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-47ee937ecf2so39098445e9.0
+        for <git@vger.kernel.org>; Tue, 20 Jan 2026 05:46:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768915324; x=1769520124; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VA/1K5kHCnSKQGNKSwXvif7VpWxn3cYgPvXMC+KlXzs=;
-        b=CL6TYQ5yFU3OzonCYq1kSMwxsy2uUeFzYaYy+lzhvWoBPhjWZojRo9PtT4Am1NtPCI
-         r/U6pdgZ7jRV1mYQwBzfvnGaRdDABOgcXuk+12ne2CSVNOtZUm3aI/fWUgwP/qIYv+ua
-         AXK5CqQp2EbxlsIO1ogaWatKt0ueMUu1I60fU+2jW8+UXIofEsIAS720q2gpZ/6VmKkg
-         WtkwTe9VZP5jYq8R9VRP2xEMLX8SnN33MKJlxsOMnoywQXJg2OOS23zFuHfHQZrFgdpo
-         08Fb9rYxrtm7uITxDsSJczMfC5UpYn5Ab3jtCPnYYRnpAFfGDPX0MVcTrxu2DaYfOLgD
-         WwkA==
+        d=gmail.com; s=20230601; t=1768916786; x=1769521586; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XVzoulTJ0+MFkElOZ+f11nEM7Ok2EFg7JMN4uc/QdUM=;
+        b=XEKwVC4FeXCImZ9GFia6pwkifnmbjk1hbBvXKVdah6rxnJ/ijpBVildVrSFpQHSRfm
+         jl/y9FQlHZjGEZUEDIwrnEa084yDuSwzE1rVFOglKI5GAZy2drkpDj5BykqrhSw/ZJ1l
+         n2M9z0AoIjmpllXYnbOimg4SBdXW+WQPIMbpGoS9CovhjyZTzewveUkV93rHhzSNyLHU
+         FGVWK5LLhamFL0ksBM/W4iuK4/d1mIHOagWey9prl+31drZv77W54hXS6G6CfxxEAHGa
+         Gdx7VCPPBR1KOojdVXSoraHCLjObif89XPB0wRBC2VDvN4u5iD/DHXuwEEDZD5NsnbLM
+         lyBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768915324; x=1769520124;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=VA/1K5kHCnSKQGNKSwXvif7VpWxn3cYgPvXMC+KlXzs=;
-        b=XW1MuHXfaxaiN3pi2KGjC3/OFa4RUQ3bNurGQ3Dgvd8NwVlCUO0m0TJg9rP3Tduv1b
-         cG0MEwBw1WV/g1G7HCceagII2BYrBMlLy6uQKGhBEOzjZi3DTVMdYnAJjYJRaXDeIzgj
-         b8KQ7wEcf3AHn3f2xvmk4QJmJRQQC2widIyx9uTPxG1vhqMwaCi/CEaqx5NdMu5om41G
-         QPBuwVuvAFIz32cS2p3BQHxBmiTrQrCks0Yhn6nSME1edDTKnknI+IcIagOotx5jnf/8
-         wMRMSFu/tynjC3gImDCnzJ910h7CfBhFwxuccS/hfEFiN3XYgDEJ4DFx/hw3loRe17nN
-         udYQ==
-X-Gm-Message-State: AOJu0Yz6gdeAqSVrsuV7QTtYwIhXj18fpleLvNMGCz+HgK0r2JxPqtcT
-	PBBYz8/mJJsxDmLZQEE66hBkc0rgovbyP9tNlXzLYXxhz3EZE4Vf/6p52+9YoA==
-X-Gm-Gg: AZuq6aLDHye6F3QD5R3flm27dkL375TeBoNUNU71f/tM1JNYj12Ov07qmDqqpLdVBPO
-	b9tBooz8snt1kzVdZ/nGxtPt0nq3wwFeAA7g6s21LBtQ5zamNiufQZW+A71orguAarXyfQKv9KQ
-	YGjwWIl40R45ZyNIW40lP7q2j2UIlIE3sFaLL9Byk3Ff0sX9EByUhmr6iEqEyWVupOopvZ0vrnd
-	mQDmSo/ZCUSUh4llXQjK4E8KzeWsyb3DO2x1x0MGkz0LXAb3PrKkXBBLtYfjhOUmK2JLGHt8ZdA
-	d8EZ+qrxyvf6J/4LIyAGfPGM67k/G66tBpXpYXM8HBW8CZv2qO/IEcI6+EglJCbCsAhJcN8j+uN
-	KTPU4Y8iP7ChqSN1DIqcalEQ86LF8wEajfebTeopz9YOys47PNJLzHqMnGbRDi4S0BTZcHwpqvP
-	XLTMemeqVAcPdU59iJSX5SJt5Tk+hxsNqZ3hy1E6tnp/sbf0Rzcoai0XX9Bx0enuqrhH/YmLIgk
-	sy1qy87qMcAJog=
-X-Received: by 2002:a05:6512:3501:b0:59b:b30f:301b with SMTP id 2adb3069b0e04-59bb30f301dmr4890175e87.22.1768915323919;
-        Tue, 20 Jan 2026 05:22:03 -0800 (PST)
-Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59baf39c150sm4122300e87.78.2026.01.20.05.22.03
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 20 Jan 2026 05:22:03 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: haraldnordgren@gmail.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	peff@peff.net
-Subject: Memory leak
-Date: Tue, 20 Jan 2026 14:22:02 +0100
-Message-ID: <20260120132202.1655-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260120094957.28855-1-haraldnordgren@gmail.com>
-References: <20260120094957.28855-1-haraldnordgren@gmail.com>
+        d=1e100.net; s=20230601; t=1768916786; x=1769521586;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XVzoulTJ0+MFkElOZ+f11nEM7Ok2EFg7JMN4uc/QdUM=;
+        b=hQXc81YI7ErVPXlpxT8RB43J9HwfzTrg4NFHGz8vhVHJDbQvZqdXhEMhPP3G57lTEt
+         Z06ejy15bBu3vj1JgprMo2ArHgOdPV4cJbxAZ2oL1hWa0danRCQoejkAwg8LdrzB0Axn
+         OZnycqyJsIV3f8J88Kz5xve0Pn3Ln18wsjd2W4xc/oG1eX56AKJY6gFs25ki66KWmJ26
+         rqwhxz8KE/Jl8WDPowiOgPjIQBPjgPUB6NFJxAvk216/dEavv3CsAKTk/U+sa5pvBZ5k
+         jpIldTjzAFv99zXPkeI6iH/kqlBPFpWo4CeI8Nu795MsVMrf4t1URByOnXJb0ZAbFhln
+         y2cQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUr0IWwaebS0azRk9CdzYzBd9uSx9qmZsHXM01VS+crti3Ac9aLAjJq3QjoFpdVDrolsqE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxeENbxuSrgLlrYMLdt/diEq2q9VJ7QZeRNS1pKA5b5LR0vZdxC
+	gngI+yylWYiCvI/QuiWr/ySQkVaFB9V7TD5JjjEEPBbNfa+T16+1/6fS
+X-Gm-Gg: AY/fxX5A88leOm31dyz+DU2E07TTkm0cl+7hSBOjWJsxJd48+bo9dYaeU0AYKKtsD2r
+	Pj3/1iDWNZSsLSgOSWePh9TLMvId29VzHFt5AxqX29oHZjcn75t9hkzpdztElC5zA8FUV6qup+T
+	fS6Aw0ETQNerpOdiagDEFbJV70Ab6NQENNWE2FLeGxTwVgO3sc35/jtNbg7etKETn+8ilzXniTk
+	OnGfOK3qqDmC/Dm8Tjm0sd+WaCBePH7dEhd5qeWGrAHZWkXrd99O3362UfKTHHjASF+w6YS/0lU
+	GrCykMgTVxRyJg1wjRQccwqZ5L2I6bSy5415qzBiSA4dXSwX+RLfD6CVvDzWpACleVLNdzQumBs
+	mtRa9qjPwZTw51deZabGyFcKWRZpZtA8tur70hsMfwmzCiJVgM8OPlBTkFfR4yxfdxz8oWcBBtX
+	Z663PQTwg92MY9udeBB+hptM3GcsqRPXxIAsAHpgTdL94jZv0Jv9icOHfzb+Ejp/DpoBdG/Lk=
+X-Received: by 2002:a05:600c:638f:b0:479:1348:c63e with SMTP id 5b1f17b1804b1-480418f1128mr1443355e9.9.1768916786132;
+        Tue, 20 Jan 2026 05:46:26 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:d097:d38c:2c4c:9266? ([2a0a:ef40:627:1f01:d097:d38c:2c4c:9266])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801e8c0475sm294993415e9.10.2026.01.20.05.46.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Jan 2026 05:46:25 -0800 (PST)
+Message-ID: <c1846365-10d8-4252-bb38-59bd652fcfd0@gmail.com>
+Date: Tue, 20 Jan 2026 13:46:24 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
+To: Jeff King <peff@peff.net>
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>, phillip.wood@dunelm.org.uk,
+ Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+ <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
+ <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com>
+ <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
+ <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
+ <CAH=ZcbAogCpqg0RkKg1WjuAcuKyArDs4aP+k=McCs_byDT2Weg@mail.gmail.com>
+ <6ae80903-3cc5-4017-9eac-0b3100b93b04@gmail.com>
+ <20260119055947.GA3100271@coredump.intra.peff.net>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260119055947.GA3100271@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-My bad, it does fix it! I think I applied your patch incorrectly the first
-time around.
+Hi Peff
 
+On 19/01/2026 05:59, Jeff King wrote:
+> On Sat, Jan 17, 2026 at 05:40:08PM +0000, Phillip Wood wrote:
+> 
+>> On 17/01/2026 16:14, Ezekiel Newren wrote:
+>>>
+>>> If the size of different kinds of pointers ever differed from the size
+>>> of void* then wouldn't that make all calls to malloc undefined?
+>>
+>> I believe there are (Havard architecture?) platforms where function pointers
+>> are a different width to data pointers, and that's why you cannot store a
+>> function pointer in void*. I agree it would be weird for char* to have a
+>> different width to int*, I suspect the restrictions on casting from one type
+>> to another are about alignment.
+> 
+> The standard does allow for different pointer sizes for char and int.
+> The key thing is that a void pointer has to be able to represent any. So
+> you can cast a smaller pointer to void and vice versa (and the latter
+> would presumably throw away some of the bits, which is OK as long as the
+> void was made from one of those smaller pointers originally).
+> 
+> More discussion at:
+> 
+>    https://c-faq.com/null/machexamp.html
 
-Harald
+Thanks for the clarification and the link - the C FAQ is always an 
+interesting read.
+
+Phillip
+
+> I don't know how malloc worked on those platforms, though. The caller
+> knows that malloc returns a void pointer, so it could cast to the
+> smaller format in the usual way at the call-site. But I don't know how
+> you would tell malloc() in a standard way what type of pointer you
+> wanted to get out of it. I suspect they may have had specialized
+> allocation functions. Or maybe it was enough to just throw away the low
+> bits if you only cared about a word-addressable pointer.
+> 
+> At any rate, yeah, I agree with your original concern that the two
+> structs are not compatible. The layouts could be totally different. And
+> not just due to pointer size, but IIRC pointers to different types could
+> have different alignment requirements. So:
+> 
+>    struct foo_void {
+> 	size_t len;
+> 	void *ptr;
+>    };
+> 
+>    struct foo_u8 {
+> 	size_t len;
+> 	uint8_t *ptr;
+>    };
+> 
+> might need different padding to properly align the pointers. In the case
+> under discussion the pointers are always at the start, though, so I
+> think it wouldn't matter.
+> 
+> -Peff
+
