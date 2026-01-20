@@ -1,211 +1,157 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC5E34575D
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 22:18:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4CB322557
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 23:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768947544; cv=none; b=sGNuwLQnIlRlvn774TkLqP6J7wZTrL3+cNnAmXAb0LsRN1nhrxbPLlxezh2xEXPAO9VQqm7H4w9buIaGlQqs8sVxmKWxmNXe+vwJLdzvq6kIeZBztVbRWYlAsuAkJaQNb7rrTvZ0H49mZmJQUHEy5gLLVqOP3kRWOD6Qju1rXZc=
+	t=1768950672; cv=none; b=GT7Fl2iz2YGyhn6yTUUfRMn0fbwyw5RwnjoJPHtzM7Hp2ko4c5a2Dc+kIEnSVAhi1Mvsd+ZzWWWrxgjhEM4UJ0emddAKp7Dy4/0O/9nFXFuOuthMoE3Nk/Pj4Tn8fG+8KcgAoFBzyidq7e25EcOMEXHbRgZZvnDxbHIMTXjxLhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768947544; c=relaxed/simple;
-	bh=GvBwNKK04YhFvXbdBsG/YrJiwmAbyCTw2CAwQegYxkg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eFb0ZjrK85PqIY7mbAq0bgXx+/cnujvtjfLsUBG/iot12UinnGreYBRaH2o7t14oY10a3DcxMf9W5aXDvde9LbXvugQ2/UB6TQ2odMEc818hMbZ3y/dh2V2fHacQ1nUWmk4wL+NrTvoQGrgWERjP2bExjLe0SufSeZ/TjAD4/4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fSgxp/35; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768950672; c=relaxed/simple;
+	bh=SnijZ4du6GCczHWD8c/9mcsoNoYqb9z+a/5DGBGkwGs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YdijPjLGcSbI5tqSbekt0GoVRgaK63UkSBzqp8juQRkwBPEN/83NhhuSLaX5EhTlcGJPnvTb1Px1tYupFaS+WJyTaL067bBn7c5Ak6OpaBR8B81YM8lbMM1gGjZVIxsvrRbljKLdQYhLVgcuVO9ZmCjbt+HVIrZ/eQJVeChqOAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SzuulSBd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rh1lCWIe; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fSgxp/35"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-78fc0f33998so55521497b3.0
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 14:18:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768947537; x=1769552337; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9qLfst+Ynn4dkb0Y+PBERHRy5KVETXbXJ4L3+lhBf3g=;
-        b=fSgxp/352gycQceVaVMo7C0ivVZaFG8aQEXZcIgrkueJ1p/Fns1EV2U/ELMoAUWyQz
-         UcwyCaKFvUNnY7y2u5aLmoqzeXMif/h0A6fHIGI2ZJORk3dhnVoP9xWMbqtXy7pHP5Ob
-         TkyrQHFBKIL1EgC5CLOb7LeX5S5h2xBGj6M8t6ZUGP+0qD6VEiqvXSJwWL/E3HpxgGqs
-         +D38zt8V29DeyFJ55D06IKafwIeIF7KYMg8Sd9pVLsYPQg65WtkelVCErt4YAUCg3a7E
-         C50UYLvFzJs7aitNrNLzaKVAaKaBK9NKh6zZmzNBXCR9whdLTOvVd3OCla4i2GXGqZz6
-         8xww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768947537; x=1769552337;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9qLfst+Ynn4dkb0Y+PBERHRy5KVETXbXJ4L3+lhBf3g=;
-        b=VR02TBJPPgrj7nlW/cxVMRQ6uDBsZvLLlqdCW2HDb+gbvSJIS9Uf1ZrHatCa8WYZzK
-         5SvMIUqA++x05k0592W/u/cua236o44c1HV5IlILCKFXWi/hM9s1WVTkKSCxAoe3LDc8
-         dMF5xg0NBehZiZCu3rADdEwqgLmN1s9KU6pV6Duz1X/n4wKPj+kowCxeyrsN+8Pqetdr
-         GAICP9A4c/k3/OlMCWG8wg3cGafpk2Me3qbxYQRqYSvRwOku8WNCnqCOiX3N2eAliE65
-         UcpGml4na8qKSpvztzlrBgans5zN1mW9n7nEgGqN6PyyewZ5chtTmsw2vSXxbCyeM8zI
-         xnGw==
-X-Forwarded-Encrypted: i=1; AJvYcCXiOjCBeC7CDJgL4Fs4iGTVdavxKnT8m9X6L9X9QnRIa9S00Z09nmTUFERjhgcnFvG6R3w=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzi1JDgp61J573MBcS84QREINvq0ebt7hLVrUnLe4J7rf2oqAPK
-	WITX8YPUBUdMcastMIasgmHPDK8z6cpwtJY3I7Psp6phtpGg5ps4nH4a
-X-Gm-Gg: AZuq6aIWU71jMqJxXJZNBy98eMKkDfELvFuwGOtGdvajtiJoHZGGCqTZAiqg7gKpl2m
-	0jVb20dMmQstoUd1zhGhbYrDHQR3qIDaNrGbwslrS45ymxGPBnTxQQg+Ac9em4OYDNpeiO8RNhY
-	U+kdQS6UK1GCTGG5eKrrS7RLZs5PpBZ/Zupk9WFlnj+A597jfHxHND9qDd1jIF7NmoVk2xLvNQY
-	5gU4/vMAT5Cb7HQUq81manIqNMjEZmrLn4ODvMeUSrVkUcylYlnb/j/kVlt5OWbRUQennY1gurJ
-	AbZHzHz9h1G1rFOfoRipdG+gxfsXeWraPcHWwx+a5zgYPZwNzT6MXnibQvX3EjHpq3cOmz0A1LO
-	d7orhgNVzE1nSxhRpHkbfGSIdfKmAfIMChvbMXLuYr7SOzZSmTAd7vdOePOyda0JxpwF2A5Fwwc
-	RxoNnQKYnzZi+tDUZS0+4KZf2FLlN04KCr3L/ohoaybApoHJhpMBUgXuumFIqM9OiqLvQK9tbuq
-	O77
-X-Received: by 2002:a05:690c:e3eb:b0:789:61ca:88f6 with SMTP id 00721157ae682-7940a0e6743mr66455697b3.4.1768947537393;
-        Tue, 20 Jan 2026 14:18:57 -0800 (PST)
-Received: from localhost.localdomain ([2605:a601:90a8:8b00::a])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6494080138fsm863351d50.20.2026.01.20.14.18.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jan 2026 14:18:56 -0800 (PST)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: ps@pks.im
-Cc: Johannes.Schindelin@gmx.de,
-	ben.knoble@gmail.com,
-	cb@256bit.org,
-	collin.funk1@gmail.com,
-	contact@hacktivis.me,
-	eschwartz@gentoo.org,
-	ezekielnewren@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	me@ttaylorr.com,
-	newren@gmail.com,
-	phillip.wood123@gmail.com,
-	pierre-emmanuel.patry@embecosm.com,
-	sam@gentoo.org,
-	sandals@crustytoothpaste.net,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>
-Subject: RE: [PATCH RFC v4 1/9] meson: add infrastructure to build internal
-Date: Tue, 20 Jan 2026 17:18:42 -0500
-Message-ID: <20260120221844.6085-1-ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.52.0.rc0.569.g0e1cb519e9.dirty
-In-Reply-To: <20250910-b4-pks-rust-breaking-change-v4-1-4a63fc69278d@pks.im>
-References: <20250910-b4-pks-rust-breaking-change-v4-1-4a63fc69278d@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SzuulSBd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rh1lCWIe"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E863A7A00BF;
+	Tue, 20 Jan 2026 18:11:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 18:11:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768950668; x=1769037068; bh=Lyltz3MGi5
+	9ee8XwlDu/0KhZAkY3w/E22dRnqs+rQBo=; b=SzuulSBdF2i04rJjQILfa6zsv4
+	PIUkPbEtm+mLU6pfqehPHiTTvmr07syX+eYrtncKvwY7v20WurxtJ1aYuSg7tWVB
+	Itr9OrRNN21QezMxGO1rG6BA0L+e0+Y2Vkpj5MT+CToIsbaAi54CF30ge7U+hS35
+	7nk+hJtTkvfuVd801BofH0MPtgfG4392C4KiOGAUAYR0LXHpgQxe67zkJiswyFYg
+	Q9JEuHtVIa+9XjHSj0lJ7tlLlPujbPr1XtxeuKSGUI3oo3LQjxUIn1aQTyBYjHaq
+	x0vhnOrWSCB+xzpxbqYDS+jbXqiJnS9WVwgqNEKAG9l6og1AYNLrByDPIKTA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768950668; x=1769037068; bh=Lyltz3MGi59ee8XwlDu/0KhZAkY3w/E22dR
+	nqs+rQBo=; b=rh1lCWIei1X73APTfJ03Oge524aCC6bi8Mn8NtQpQgHmfXhrRFT
+	PDvrV/rxdFp4nXM1P/WTyEtSIcK0G71rzgU9VG1GYj+CeSZkEB6Bh/qnl9YFec5H
+	c8BGpR+bqYruImjjx068A4h5GtGUqStYlHarVDcKkXW0+Sk1gknxlFwzHQFLYtvr
+	W01jmUdD3p2dCyhsmJAXw9WTMm985b5ed/jby5CjzW7CENWW79iNIJHUNxH/7H0D
+	WpqUYVg7kkufphdcIulom5eUzJUFqOt3ASIvqRYmlOYXR2/pn78/I/sYi9u8y5Ot
+	i3Z3Cl4WU++sRcn7+Nh/3oEBElfVwvON3hg==
+X-ME-Sender: <xms:jAtwadGdENc3qAZlexTzHwbpwPIXup09UgttnvJoYe64_7OpcEF1kQ>
+    <xme:jAtwaU7YPG2lvmUsb1AikDn4uH9Ca1hcf5NAV7NCdb3cvfp0C58ZTlJnEP_7iUk1N
+    1zJ4ZtIc0EUiXgZOeLeuut9PkMUVtUdZ-LCCk1g52dyuP8MGxSSZFc>
+X-ME-Received: <xmr:jAtwaSwCRMCHeeljCcjZVnVst7oYQn9IYWwBNd3kqlXPsvyeOugXM6d5SLCeQTa1nPek8PyrTai8uG_v9qVunhFbQKWPJJYFMP5-Vwo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeduieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhish
+    gtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopegtohguvgeskhhhrghu
+    ghhssggrkhhkrdhnrghmvgdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgv
+    thdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:jAtwaTMqBS1m0tD2UrTaOR4j2p67GhlW9d8VDD1ehJB_NbrS7aKk5A>
+    <xmx:jAtwaYn5oHFQc8IRsCJPASOf4GOvIRn_8KwTr_BYZnAmKiFLoFaUkA>
+    <xmx:jAtwaYQLqeuxjLVNVrC8Yusd8YhtQ-tez6uzFyPPLsLo7DQUgNW8gQ>
+    <xmx:jAtwaXV7CRbZWXDFpG0DvgR_5JRO9Hl1XUTqkhA9pEfLxYg42JX8FQ>
+    <xmx:jAtwaY7pR0S4pUXudQzqyOF_LJH5LkSCIiArL4zJTmxKxppr38c_uCqp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Jan 2026 18:11:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, 
+    =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,
+  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Elijah Newren
+ <newren@gmail.com>,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH] replay: drop rev-list formatting options from manual
+In-Reply-To: <xmqq3440x8da.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	20 Jan 2026 13:49:21 -0800")
+References: <01a7acfaf87494419b3766da57d4c05cf99c79bb.1768873599.git.ben.knoble+github@gmail.com>
+	<xmqqldht2fgd.fsf@gitster.g>
+	<CALnO6CCaVdJQ2xSPfvxQzVCfPsjbWHhMFUiLoiPQtVn9MeKFOw@mail.gmail.com>
+	<xmqq5x8w2t3o.fsf@gitster.g> <xmqq3440x8da.fsf@gitster.g>
+Date: Tue, 20 Jan 2026 15:11:05 -0800
+Message-ID: <xmqqy0lrx4l2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi Patrick,
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
-> new file mode 100755
-> index 00000000000..f29745beb36
-> --- /dev/null
-> +++ b/src/cargo-meson.sh
-> @@ -0,0 +1,32 @@
-> +#!/bin/sh
-> +
-> +if test "$#" -lt 2
-> +then
-> +	exit 1
-> +fi
-> +
-> +SOURCE_DIR="$1"
-> +BUILD_DIR="$2"
-> +BUILD_TYPE=debug
-> +
-> +shift 2
-> +
-> +for arg
-> +do
-> +	case "$arg" in
-> +	--release)
-> +		BUILD_TYPE=release;;
-> +	esac
-> +done
-> +
-> +cargo build --lib --quiet --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
-> +RET=$?
-> +if test $RET -ne 0
-> +then
-> +	exit $RET
-> +fi
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+>>
+>>> If I've understood all that correctly, then I have the Python version
+>>> installed for building Git and it understood the syntax. Given that
+>>> the Ruby version is newer, I think it should also work against the
+>>> spec.
+>>
+>> We have CI jobs to catch the differences so hopefully we know soon
+>> enough if one is so badly broken ;-)
+>>
+>> Thanks.
+>
+> We didn't have to wait for CI jobs.  You can try
+>
+> 	make -C Documentation lint-docs
+>
+> which reveals that somebody is not expecting these multiple things
+> there.  I think Documentation/lint-gitlink.perl needs updating.
 
-As far as I can tell, v4 of the Rust series introduced this script [1]. I didn't
-notice any comments on or about the use of "--quiet" here, and Gentoo's been
-carrying a patch to remove it [2] (also attached below). I don't think it's been
-sent upstream, but we could… any thoughts on "why --quiet" or objections to such
-a patch?
+Perhaps something like this.  Haven't thought things through to spot
+negative ramifications, though.
 
----- 8< ----
-From 35f637fbabb3b8181a29ba7d96a505b49ea0ba0d Mon Sep 17 00:00:00 2001
-Message-ID: <35f637fbabb3b8181a29ba7d96a505b49ea0ba0d.1763489487.git.sam@gentoo.org>
-From: Sam James <sam@gentoo.org>
-Date: Tue, 18 Nov 2025 18:10:03 +0000
-Subject: [PATCH 1/2] rust: don't pass --quiet to cargo
+The original comes from f81a574f (doc: test linkgit macros for
+well-formedness, 2025-08-11); its author Cc'ed for better ideas.
 
-This obscures that cargo is being invoked at all and it means even
-ninja --verbose has no mention of it other than invoking the target.
+----- >8 -----
+Subject: [PATCH] lint-gitlink: do not get confused by overly long ifdef directive
 
-Signed-off-by: Sam James <sam@gentoo.org>
+The old pattern, when encountered "ifndef::git-shortlog,git-bar[]",
+complained that "hortlog," (i.e., a substring that is up to 8 bytes
+long, that comes before "git-bar[]") is not "linkgit:", which was a
+nonsense.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- src/cargo-meson.sh | 2 +-
+ Documentation/lint-gitlink.perl | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
-index 3998db0435..63a5e7c6ac 100755
---- a/src/cargo-meson.sh
-+++ b/src/cargo-meson.sh
-@@ -19,7 +19,7 @@ do
- 	esac
- done
- 
--cargo build --lib --quiet --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
-+cargo build --lib --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
- RET=$?
- if test $RET -ne 0
- then
-
-base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+diff --git a/Documentation/lint-gitlink.perl b/Documentation/lint-gitlink.perl
+index f183a18df2..91621f9db1 100755
+--- a/Documentation/lint-gitlink.perl
++++ b/Documentation/lint-gitlink.perl
+@@ -41,7 +41,7 @@ sub report {
+ @ARGV = $to_check;
+ while (<>) {
+ 	my $line = $_;
+-	while ($line =~ m/(.{,8})((git[-a-z]+|scalar)\[(\d)*\])/g) {
++	while ($line =~ m/([a-z]{,8}:+)((git[-a-z]+|scalar)\[(\d)*\])/g) {
+ 	    my $pos = pos $line;
+ 	    my ($macro, $target, $page, $section) = ($1, $2, $3, $4);
+ 		if ( $macro ne "linkgit:" && $macro !~ "ifn?def::" && $macro ne "endif::" ) {
 -- 
-2.51.2
----- >8 ----
+2.53.0-rc0-249-g60c15f3eb8
 
-(While I'm thinking of it, we also have a patch to allow specifying CARGO [3],
-in case there are comments on that.)
-
----- 8< ----
-From 1eba2788aab9f63ff55ac453b0d885aaa60c77af Mon Sep 17 00:00:00 2001
-Message-ID: <1eba2788aab9f63ff55ac453b0d885aaa60c77af.1763489487.git.sam@gentoo.org>
-In-Reply-To: <35f637fbabb3b8181a29ba7d96a505b49ea0ba0d.1763489487.git.sam@gentoo.org>
-References: <35f637fbabb3b8181a29ba7d96a505b49ea0ba0d.1763489487.git.sam@gentoo.org>
-From: Sam James <sam@gentoo.org>
-Date: Tue, 18 Nov 2025 18:10:47 +0000
-Subject: [PATCH 2/2] rust: respect $CARGO environment variable
-
-Respect the CARGO environment variable if set. Gentoo uses this to
-control the version of rust/cargo for a build.
-
-Signed-off-by: Sam James <sam@gentoo.org>
----
- src/cargo-meson.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
-index 63a5e7c6ac..bbf3f91178 100755
---- a/src/cargo-meson.sh
-+++ b/src/cargo-meson.sh
-@@ -19,7 +19,7 @@ do
- 	esac
- done
- 
--cargo build --lib --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
-+${CARGO:-cargo} build --lib --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
- RET=$?
- if test $RET -ne 0
- then
--- 
-2.51.2
----- >8 ----
-
-[1]: https://lore.kernel.org/git/20250910-b4-pks-rust-breaking-change-v4-1-4a63fc69278d@pks.im/
-[2]: https://github.com/gentoo/gentoo/blob/master/dev-vcs/git/files/git-2.52.0-0001-rust-don-t-pass-quiet-to-cargo.patch
-[3]: https://github.com/gentoo/gentoo/blob/master/dev-vcs/git/files/git-2.52.0-0002-rust-respect-CARGO-environment-variable.patch
