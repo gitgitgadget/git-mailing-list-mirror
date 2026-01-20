@@ -1,203 +1,120 @@
-Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200913D301B
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 21:47:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31433D1CD4
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 21:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768945676; cv=none; b=DZy7/vv5vtSsIImW/rvxzEtLtTa5QS7ICYd3zu08nU0IO0l+P1XxBue6KMg/PoT95nPYgW2xx4Fr51Y9EPVO/ia1CmpHL5WqVEQ5XQg+cimz6Rh7hMqtYolf05MbjPW1TK2M1PJ6LercZ+kQT+D5DRPtTfaP0QT2QniFgRCPJxI=
+	t=1768945768; cv=none; b=AAnNXCB8YR17yagaZgunXbIuJ/Bnw8WKvMB0MDNTDglWawLxRmPKn7PzskYhXe4+R+9rf8NCNBPoP+VELGavznSUbY2Wy736LPcEZ6VP3SoN0VQj7xT7OWH6HSwl7J03axQOUvn0x+nspfctCkzcL+foFAtJHiCyfi7anFqYDec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768945676; c=relaxed/simple;
-	bh=2x1FbiJqYrhYDVSA6IG5/rZ3Zaf+U8fkJbXjDIzbu4k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kVbwxHhpZ657zRtaoSlj9+AzWD+FwhjKt1Qg4aiDLsCYjT8BY/FOIBaSQ4Jcr9gCIsilT1JMSvz6WHOnd8M8k52Q3zTLmEWLMVzmpZAJjAZIlnYkzzpbQtaseXde8y6XYIDGmWp/UPlhiqnrUx6sRo8irF0J7ySgw0xqtZ2II0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=gGZPb4OA; arc=none smtp.client-ip=95.215.58.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1768945768; c=relaxed/simple;
+	bh=k0nVRPT8El9OpP7o9FJ3QKVSi8zsCGJbGyFtrNi0niw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A3O7j3RDBzwvVxvaZz+kPLxyJZe97eW28n1RCOCytgyRItpA/KU9BApcVspa9PwbfCbtu53Hc/kVu4ciiwL6k8IaHc7JHbTICeHPm518wRtOmp0txHznixv8fHMkv4UAX3sA+lW1PM099obfZFdYfdwWGoIDkdm92aDUJiTra6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DGxiPe+k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=isXeQiEc; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="gGZPb4OA"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1768945668;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hCezt+TraOHPbCzIBrNO4FQGqNZJqVo8wnI8Z4v8MF0=;
-	b=gGZPb4OAQj0gsvN6eyX/xOOUPWNn9qtwXm6H4LGjl3Z/LKO/R4wOrvsTQBeWMfqa8ruSeD
-	60B2I+I9U5HmELHC3K8RSSmjYbZe3QaYN1+L5lh+lVOxtH1/N4qIPzAWX84ReTIze55WRf
-	mMaK+ZqCXwG9UGyDc7/yop7XtxzFO0w=
-From: Toon Claes <toon@iotcl.com>
-Date: Tue, 20 Jan 2026 22:47:11 +0100
-Subject: [PATCH v3 4/4] last-modified: change default max-depth to 0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DGxiPe+k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="isXeQiEc"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 70E1F1D000D1;
+	Tue, 20 Jan 2026 16:49:24 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 16:49:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768945764; x=1769032164; bh=L/F4HKOLUE
+	BQuzDU2/7SMwLWIVoZJuujIlr4abhfTK8=; b=DGxiPe+kBbss95LV+RVD/m7j8/
+	QXQHkOBIUtj4mf4tBGy7PUTjidL0a7rDR9lE2NDKD7RxN5jv8CIHPxuj8guFQVre
+	iY2oimxZF8MQSUIKxwLGMnLs2z7c6d7HEfyhItg/cRtAYrOD2mCS2RU28eTS7APs
+	J03VY7kODDk8yc9IjzWjZo+Yy1LHGEa+dcGBEe+jjc2Luq1GO92VHRHP9Uh7CBMZ
+	UsBUr2PdKIyrl2frWrDMJb81y52Xp0M/hv4CNP8qQeUir8D3pKXebn9omZZPs+WU
+	mFtXtBu+pyHMp5cZ1yuXWTCPZu35YsTRmA7DkwYZ+Kjs7d7iSW1vo762ZSlQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768945764; x=1769032164; bh=L/F4HKOLUEBQuzDU2/7SMwLWIVoZJuujIlr
+	4abhfTK8=; b=isXeQiEcVCK6lP9QTuuA+1vUmFuBU57q6QYG76MkYoi1KQkh6Bi
+	jNM2afocLAuPlZathNoR1ygQJEtvhspm2b4WEPxUpAebVfZeWQx/VicO4fM3v9dT
+	cgGXii/Qhae/K2DyldPIThJITisdyQvx4HdzCBwVorSnJ+xla7Jy6PhZW/nh+Z+X
+	UN+vW8BnDwx0odRo1GYrEM77BEITMI4SHRfNQvJFWG//K+EwFSaR1Wgj6KJ+CBHY
+	yq/neeK6U+NPNllcEG4OdUn6zeCbBnJ6DnnNDBRhBdP8+l0QmPFS7WnjDQL+M2RW
+	OPiFMemCkhPbwtaj9+fAlmYpjZWAzyja5BQ==
+X-ME-Sender: <xms:Y_hvaYXA1OtiqX9iAweIK13OMKBpaBIC24LFLNuWy6QSyUU9t7moww>
+    <xme:Y_hvabpxku3SAXKJ5BjURv_Eyz3-ev2R8i4enYW_P19H9M-QX3YD5xY1VXQhH_rWX
+    tSLqrJIOaoM4hjzco-R5dABC3OyRI80VprOpZThwY3xrluynj80kg>
+X-ME-Received: <xmr:Y_hvaSlGjHBsCCjpr4NzPn0WlZdz6-lVrsa55r8qIcgsfnNDPQOTkSxF8LkqqxpUg_clC7kcbv8Fg8d1HlQnUOwpwai5RWbrNETUMvM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeduheefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtth
+    hopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehnvgifrhgv
+    nhesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtoh
+    hothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Y_hvaT3Td6P2eeyt5iag_ny5V5SeDFQIRZYJs1OPXTEpyMDDb3nPAg>
+    <xmx:Y_hvaXRNSAz1PcuTysposLI7tsjFIyjdxqLZDe0svwyghCedrw87dQ>
+    <xmx:Y_hvaUwwBxA5UMqtkp4CQxqQSC-BKLzR0AISBt9brerAlb320Bc8Fw>
+    <xmx:Y_hvafAoRznuSkWYIEss6IQetj8l__6S0-Ith3N2KkEwGFIwH4Epig>
+    <xmx:ZPhvafdBeS55j6OIAgCEJ9cGkeLfrt_oDr-u5sn3yGk3bkHPZokFAFcK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Jan 2026 16:49:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,
+  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Elijah Newren
+ <newren@gmail.com>,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH] replay: drop rev-list formatting options from manual
+In-Reply-To: <xmqq5x8w2t3o.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	20 Jan 2026 07:37:15 -0800")
+References: <01a7acfaf87494419b3766da57d4c05cf99c79bb.1768873599.git.ben.knoble+github@gmail.com>
+	<xmqqldht2fgd.fsf@gitster.g>
+	<CALnO6CCaVdJQ2xSPfvxQzVCfPsjbWHhMFUiLoiPQtVn9MeKFOw@mail.gmail.com>
+	<xmqq5x8w2t3o.fsf@gitster.g>
+Date: Tue, 20 Jan 2026 13:49:21 -0800
+Message-ID: <xmqq3440x8da.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260120-toon-last-modified-zzzz-v3-4-9bffd4968b0e@iotcl.com>
-References: <20260120-toon-last-modified-zzzz-v3-0-9bffd4968b0e@iotcl.com>
-In-Reply-To: <20260120-toon-last-modified-zzzz-v3-0-9bffd4968b0e@iotcl.com>
-To: git@vger.kernel.org
-Cc: Gusted <gusted@codeberg.org>, Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
 
-By default git-last-modified(1) doesn't recurse into subtrees. So when
-the pathspec contained a path in a subtree, the command would only print
-the commit information about the parent tree of the path, like:
+Junio C Hamano <gitster@pobox.com> writes:
 
-    $ git last-modified -- path/file
-    aaa0aab1bbb2bcc3ccc4ddd5dde6eee7eff8fff9	path
+> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+>
+>> If I've understood all that correctly, then I have the Python version
+>> installed for building Git and it understood the syntax. Given that
+>> the Ruby version is newer, I think it should also work against the
+>> spec.
+>
+> We have CI jobs to catch the differences so hopefully we know soon
+> enough if one is so badly broken ;-)
+>
+> Thanks.
 
-Change the default behavior to give commit information about the exact
-path instead:
+We didn't have to wait for CI jobs.  You can try
 
-    $ git last-modified -- path/file
-    aaa0aab1bbb2bcc3ccc4ddd5dde6eee7eff8fff9	path/file
+	make -C Documentation lint-docs
 
-To achieve this, the default max-depth is changed to 0 and recursive is
-always enabled.
+which reveals that somebody is not expecting these multiple things
+there.  I think Documentation/lint-gitlink.perl needs updating.
 
-The handling of option '-r' is modified to disable a max-depth,
-resulting in the behavior of this option to remain unchanged.
 
-No existing tests were modified, because there didn't exist any tests
-covering the example above. But more tests are added to cover this now.
-
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- Documentation/git-last-modified.adoc |  9 +++++----
- builtin/last-modified.c              | 21 +++++----------------
- t/t8020-last-modified.sh             | 35 +++++++++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+), 20 deletions(-)
-
-diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
-index 6f9b119bb6..d7d16fc4f7 100644
---- a/Documentation/git-last-modified.adoc
-+++ b/Documentation/git-last-modified.adoc
-@@ -25,13 +25,14 @@ OPTIONS
- 
- `-r`::
- `--recursive`::
--	Instead of showing tree entries, step into subtrees and show all entries
--	inside them recursively.
-+	Recursively traverse into all subtrees. By default, the command only
-+	shows tree entries matching the `<pathspec>`. With this option, it
-+	descends into subtrees and displays all entries within them.
-+	Equivalent to `--max-depth=-1`.
- 
- `-t`::
- `--show-trees`::
--	Show tree entries even when recursing into them. It has no effect
--	without `--recursive`.
-+	Show tree entries even when recursing into them.
- 
- `--max-depth=<depth>`::
- 	For each pathspec given on the command line, traverse at most `<depth>`
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index 28fc77a0f8..f7f4c5109c 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -53,7 +53,6 @@ define_commit_slab(active_paths_for_commit, struct bitmap *);
- struct last_modified {
- 	struct hashmap paths;
- 	struct rev_info rev;
--	bool recursive;
- 	bool show_trees;
- 	bool nul_termination;
- 	int max_depth;
-@@ -481,14 +480,10 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
- 	lm->rev.no_commit_id = 1;
- 	lm->rev.diff = 1;
- 	lm->rev.diffopt.flags.no_recursive_diff_tree_combined = 1;
--	lm->rev.diffopt.flags.recursive = lm->recursive;
-+	lm->rev.diffopt.flags.recursive = 1;
- 	lm->rev.diffopt.flags.tree_in_recursive = lm->show_trees;
--
--	if (lm->max_depth >= 0) {
--		lm->rev.diffopt.flags.recursive = 1;
--		lm->rev.diffopt.max_depth = lm->max_depth;
--		lm->rev.diffopt.max_depth_valid = 1;
--	}
-+	lm->rev.diffopt.max_depth = lm->max_depth;
-+	lm->rev.diffopt.max_depth_valid = lm->max_depth >= 0;
- 
- 	argc = setup_revisions(argc, argv, &lm->rev, NULL);
- 	if (argc > 1) {
-@@ -524,8 +519,8 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
- 	};
- 
- 	struct option last_modified_options[] = {
--		OPT_BOOL('r', "recursive", &lm.recursive,
--			 N_("recurse into subtrees")),
-+		OPT_SET_INT('r', "recursive", &lm.max_depth,
-+			    N_("recurse into subtrees"), -1),
- 		OPT_BOOL('t', "show-trees", &lm.show_trees,
- 			 N_("show tree entries when recursing into subtrees")),
- 		OPT_INTEGER_F(0, "max-depth", &lm.max_depth,
-@@ -535,12 +530,6 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
- 		OPT_END()
- 	};
- 
--	/*
--	 * Set the default of a max-depth to "unset". This will change in a
--	 * subsequent commit.
--	 */
--	lm.max_depth = -1;
--
- 	argc = parse_options(argc, argv, prefix, last_modified_options,
- 			     last_modified_usage,
- 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT |
-diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
-index 50f4312f71..3944d2e153 100755
---- a/t/t8020-last-modified.sh
-+++ b/t/t8020-last-modified.sh
-@@ -93,6 +93,41 @@ test_expect_success 'last-modified subdir recursive' '
- 	EOF
- '
- 
-+test_expect_success 'last-modified subdir non-recursive' '
-+	check_last_modified a <<-\EOF
-+	3 a
-+	EOF
-+'
-+
-+test_expect_success 'last-modified path in subdir non-recursive' '
-+	check_last_modified a/file <<-\EOF
-+	2 a/file
-+	EOF
-+'
-+
-+test_expect_success 'last-modified subdir with wildcard non-recursive' '
-+	check_last_modified a/* <<-\EOF
-+	3 a/b
-+	2 a/file
-+	EOF
-+'
-+
-+test_expect_success 'last-modified with negative max-depth' '
-+	check_last_modified --max-depth=-1 <<-\EOF
-+	3 a/b/file
-+	2 a/file
-+	1 file
-+	EOF
-+'
-+
-+test_expect_success 'last-modified with max-depth of 1' '
-+	check_last_modified --max-depth=1 <<-\EOF
-+	3 a/b
-+	2 a/file
-+	1 file
-+	EOF
-+'
-+
- test_expect_success 'last-modified from non-HEAD commit' '
- 	check_last_modified HEAD^ <<-\EOF
- 	2 a
-
--- 
-2.52.0
 
