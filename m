@@ -1,81 +1,80 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0357447886C
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 15:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9280E4657F2
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 15:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768922786; cv=none; b=f7cQkgv4TcP5RMGXGu4+j4IIgeCkfkWVhhEpW5o5Tcf+cSXpM+o6dV+Bj3dRjj2sdhga9D7yfGtYlQDVmdCiEN0sbQ02imIaV+Xi4Y2OdFPQMNFDaGwM7noYRkKhMml9Jv1OVt/XoHXNj/4U54quyRfyDY8C4izD5ojTd9D3DbE=
+	t=1768922797; cv=none; b=UbXIgiPypH4YxCKS6NRrQyW/S+T853P5/dIK3Uldcz8elZkQg7ShwMHqGeQ3x6eIT+fOj2CqcQ8o2/19SMK6OEbI8Sa1ZmN/SD6h7dIHNE8EbI4Hjca1UchOO5FYu4O+Nxa8O/uD4hww6fbg4vf5Ln4jlXc6KacCPBTCfsbX9WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768922786; c=relaxed/simple;
-	bh=JSPXN7NwtWe59uhrDwxDVCrg7YXPTIS2BLkkjSb0KPg=;
+	s=arc-20240116; t=1768922797; c=relaxed/simple;
+	bh=78ZlQsf7QmmfbBXjXS3kcaZa0llPSUuNJMYiNoWUI/k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LhVVB6Do9j67yHs0lR0Vd8sF0KMY27RJtvVPlXAvYnqK8khulwC2wiW2b/yMXWZSSjz6L1p8F/qACOMsIcjCG/eNbPbu+gmeO6GoMr+vjojB0NhAi+9gjKLlV96r6dpuecDT1Q1aq7WYmz2sU9XudZ5Fw3CcmmBeaHwH9/zYXrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TR6y4jgn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oUQxQtsT; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=VhkfW6hBf4cUDkpWLsNC6ouS5U4GQD20OvwnrI0sFjcuK/meh+TCytI4ByyEbXXGXEXFPVyGtFcHfnV0IR/57sqNZQdd6fIWuEkktQOiJzmNPkF+t2z9yuaFvsS8KeVi/JsoFgjWI+Rn2a5wqHDt38PdhJPqKq7sswyA9Xc1J9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ym90Cw48; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NL1qgX1i; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TR6y4jgn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oUQxQtsT"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 27AB57A00C8;
-	Tue, 20 Jan 2026 10:26:24 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ym90Cw48";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NL1qgX1i"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C0E767A0049;
+	Tue, 20 Jan 2026 10:26:34 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 20 Jan 2026 10:26:24 -0500
+  by phl-compute-06.internal (MEProxy); Tue, 20 Jan 2026 10:26:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768922784;
-	 x=1769009184; bh=xFLiACMEoR3j+fYNLETlBjk6t4qJHRDIsQSXzI9xGg8=; b=
-	TR6y4jgnP6tdJAx4Y3OuPve9XvS1N/UJFUhZ4BZRq1ccZjjJxy6w4IxkfwOoCtSU
-	6BW3jerPFZmEAtw59pzpBnuB91VMjjO7cU3pJqYXdIHps+DcneFLtwbkkG79jE2C
-	IyWA+Oeb/9V69RFHJdkVqGP0io7O2r7I9UGrxfH0RtVjvekiKeDANUO7+sjt8vyF
-	xLaYj1vh9cJ7JyUCBH3UQMh5LUlackqKKqakglPBPeAKVIWhiqH+3yiAIez/RNZB
-	pI29Zd27VEmvxnoz+hRBPVSsOx0zLyn0K9/CeTnVWwnen2IYJEajYojNOPRJxpfh
-	qeRfRVypTToqGwhktsrENw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768922793;
+	 x=1769009193; bh=yjXHj0OgbBDfXdNTMAB7avFQ6MMfKNz46+uzvd7gYAs=; b=
+	Ym90Cw48KWnjHXQJ0xh6y3B4EWiTzTacHjzdTqlQyTTBBwvEosKilIkOBgueDdLx
+	6KTksw6Yd1DbiXf1kFfDPA+ijdBuX15w5lfD7I2VydoT9UREAsctZsaAbOJLsDG6
+	CckReL5+CgDZmDJ0fBJSgDQVkI57MEsdC0c6AxGcz9drJvqdTGhB65+YfNMFS3or
+	SZsiYsdxlsvOCf7laYClCUQOGlPuNw2uwmqqbo3pr56GqV2zu3eYwCQmOSSM7qro
+	rFY9g+rnbJUni7C1YQXSMBCwV6mAObnKk9nIbo7Tq1JYVxZ3RS/xDp8NatIcqUSa
+	YEM13KDn6eCihHO45EIUvg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768922784; x=
-	1769009184; bh=xFLiACMEoR3j+fYNLETlBjk6t4qJHRDIsQSXzI9xGg8=; b=o
-	UQxQtsTY6AfYNFohpa7tfWUWyR+/L+A2V9pMIUSnOgFwV8ROsLFP4KvCougxwuA2
-	RNvNHmfB5psO3t8EH0pE/TGt+9G0ILOB23SDAqxChqTJTzr3nXb4lb1rMU53dalD
-	twY4bdqji+j/zkKO8YygkRyFr9kxv7LXnQJ6E6R8rvKRGPZQCgp5vh8jppG41hMD
-	R4Buh05CDZLcXue1VzQIR75H0qmKPPIDIr5szt0Cu9+OezJT69ej2MEBWqkuedaw
-	fFwACM+YRNIaiJOpq3bTKgsUyRXUYKa2ZPa3xfORayj7OkGVb2GSGL4gGpgwx1c5
-	RxMXFBwf2A2uf7Zy9iRqA==
-X-ME-Sender: <xms:n55vabxSsD6CK8SK3FNFQEeB4qTIgk4tnWOIdNIrkchctlJcVD-bWA>
-    <xme:n55vaaTi5st6re5fSSQWoawY7ov2YZugyDuavLe24kU-LFVHxX9LnfH8tnvK61YnY
-    WWSw7Xx7N0foliNkR6JQupPjkV3zdbnqJCh_YV_xvqH0y8i6jRJ3Q>
-X-ME-Received: <xmr:n55vaaXlB9adhkg3sTRJvqOWKMxC6XLEImZ0Z30nE42O-DPlgK9_5tqGgbfiFbb1pyUnuh42neIkcmrXKRCvQQKbixWIgX-U3wOI3XfeTA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtjeehucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768922793; x=
+	1769009193; bh=yjXHj0OgbBDfXdNTMAB7avFQ6MMfKNz46+uzvd7gYAs=; b=N
+	L1qgX1izkEgzv4P4g50ANK8GyXGdJPBaqQxihr2xXgbzZjE28VkovY9iud3OoHRK
+	dL0VlGmMfe/TS/I3juXcYuCgglSnLA5pQmwWJoFzq9/Jjg33S+JMy9nDhApOUuWO
+	ReCjVpsWu4O6b13IINT3NmTqlA3T8ck1rcgxoFn+qAY2EFrUT/4NZZP4vZICdZ+O
+	7myFArRq2wOBUaxkEIp6iHdF6CXWsU7F72CCUoeZ9cYacVcIv7jHUYHNsGbC1cKz
+	ec9Im30q1vRiOACM4H4IVArWHiM0j1GmZpj04KVrGXaQGsXiNEXC40XfW/p8i0RO
+	A02B5jtkh51cM3aAaEcLg==
+X-ME-Sender: <xms:qZ5vaeSr6TM38u-_f8eXaz4GSWb0QUoD0RR5z_emZkwip-TmoF45HA>
+    <xme:qZ5vaazIS5w9hzIap8-DPTwbsJA3AiNhUKHAs8X1BnUqyFhtfdRaUVT3th5o7M6UB
+    Lbkzo1l6bSYUOFMDjOA66daxQhFD5oo5E99hc8uCA7IW7jNjPgkyEE>
+X-ME-Received: <xmr:qZ5vaQ0HCTeey6B7qPegTE51TwdfjPgViBdEVCFkkHFy8NEh3idTSfTNSejXdH-WCDsWXtsjAaNyTf8hhLDwE-p81K4psQzEgMrbvO_KzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtjeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:n55vaUYT69wCPgFaHASsSRJNyWpUPAkXwEQBSm043QF5PGoXgzsUKw>
-    <xmx:n55vaY1OMWmUwKeSkDsiz18vb2FbTTTeoXd628IybPMkwlhTTCQnkw>
-    <xmx:n55vaehtIxW-XhNZLxe8Dcf1dU0GRs78etRn18fyY_GEsngPIXZXBA>
-    <xmx:n55vaUZPn95q6036wkSeN9ZyZkCwyPJaE6ZC4Y6Hx0vnWAvykHzGLw>
-    <xmx:oJ5vaR2sn3wwNaICCcAha39Rwgk4xZKX7iNj293PKvK3984YNhnNCELl>
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:qZ5vaY68SSpOwbynsAPNQOYM7CRpEwrJ9gFYIFHQdOPkVS2dnT-0QQ>
+    <xmx:qZ5vaTUS9uQAawmGC57iZRHIjTX3gnWMnfCLr_H_Otlk2kdUdE5eHg>
+    <xmx:qZ5vaXCsk55Ymbh_GZt1Bahe0u1umEDRInhI-bDRYm4K1kVjtQ5G2A>
+    <xmx:qZ5vaS4f-NBYeyQPTaXglbb1TSvuyrKkca5SBx1awPNcWtdIdVO4FA>
+    <xmx:qZ5vaYWfaesTpkrtZRaoTS0qQNCOZ0oCoFN3TIBTEyzZ8YhAaY6Wa9Oh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 10:26:22 -0500 (EST)
+ 20 Jan 2026 10:26:32 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 58674bb9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Jan 2026 15:26:22 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 689afc2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Jan 2026 15:26:31 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 20 Jan 2026 16:26:02 +0100
-Subject: [PATCH v2 06/14] packfile: introduce function to iterate through
- objects
+Date: Tue, 20 Jan 2026 16:26:03 +0100
+Subject: [PATCH v2 07/14] odb: introduce `odb_for_each_object()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260120-pks-odb-for-each-object-v2-6-d05cbfd3d6f8@pks.im>
+Message-Id: <20260120-pks-odb-for-each-object-v2-7-d05cbfd3d6f8@pks.im>
 References: <20260120-pks-odb-for-each-object-v2-0-d05cbfd3d6f8@pks.im>
 In-Reply-To: <20260120-pks-odb-for-each-object-v2-0-d05cbfd3d6f8@pks.im>
 To: git@vger.kernel.org
@@ -92,111 +91,84 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.3
 
-Introduce a new function `packfile_store_for_each_object()`. This
-function is the equivalent to `odb_source_loose_for_each_object()` in
-that it:
+Introduce a new function `odb_for_each_object()` that knows to iterate
+through all objects part of a given object database. This function is
+essentially a simple wrapper around the object database sources.
 
-  - Works on a single packfile store and thus per object source.
-
-  - Passes a `struct object_info` to the callback function.
-
-As such, it provides the same callback interface as we already provide
-for loose objects now. These functions will be used in a subsequent step
-to implement `odb_for_each_object()`.
-
-The `for_each_packed_object()` function continues to exist for now, but
-it will be removed at the end of this patch series.
+Subsequent commits will adapt callers to use this new function.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- packfile.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- packfile.h | 14 ++++++++++++++
- 2 files changed, 62 insertions(+)
+ odb.c | 27 +++++++++++++++++++++++++++
+ odb.h | 17 +++++++++++++++++
+ 2 files changed, 44 insertions(+)
 
-diff --git a/packfile.c b/packfile.c
-index d15a2ce12b..cd45c6f21c 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2360,6 +2360,54 @@ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
- 	return ret ? ret : pack_errors;
+diff --git a/odb.c b/odb.c
+index ac70b6a099..65f0447aa5 100644
+--- a/odb.c
++++ b/odb.c
+@@ -995,6 +995,33 @@ int odb_freshen_object(struct object_database *odb,
+ 	return 0;
  }
  
-+struct packfile_store_for_each_object_wrapper_data {
-+	struct packfile_store *store;
-+	struct object_info *oi;
-+	odb_for_each_object_cb cb;
-+	void *cb_data;
-+};
-+
-+static int packfile_store_for_each_object_wrapper(const struct object_id *oid,
-+						  struct packed_git *pack,
-+						  uint32_t index_pos,
-+						  void *cb_data)
++int odb_for_each_object(struct object_database *odb,
++			struct object_info *oi,
++			odb_for_each_object_cb cb,
++			void *cb_data,
++			unsigned flags)
 +{
-+	struct packfile_store_for_each_object_wrapper_data *data = cb_data;
++	int ret;
 +
-+	if (data->oi) {
-+		off_t offset = nth_packed_object_offset(pack, index_pos);
++	odb_prepare_alternates(odb);
++	for (struct odb_source *source = odb->sources; source; source = source->next) {
++		if (flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY && !source->local)
++			continue;
 +
-+		if (packed_object_info(pack, offset, data->oi) < 0) {
-+			mark_bad_packed_object(pack, oid);
-+			return -1;
++		if (!(flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)) {
++			ret = odb_source_loose_for_each_object(source, oi, cb, cb_data, flags);
++			if (ret)
++				return ret;
 +		}
++
++		ret = packfile_store_for_each_object(source->packfiles, oi, cb, cb_data, flags);
++		if (ret)
++			return ret;
 +	}
 +
-+	return data->cb(oid, data->oi, data->cb_data);
++	return 0;
 +}
 +
-+int packfile_store_for_each_object(struct packfile_store *store,
-+				   struct object_info *oi,
-+				   odb_for_each_object_cb cb,
-+				   void *cb_data,
-+				   unsigned flags)
-+{
-+	struct packfile_store_for_each_object_wrapper_data data = {
-+		.store = store,
-+		.oi = oi,
-+		.cb = cb,
-+		.cb_data = cb_data,
-+	};
-+	int pack_errors = 0, ret;
-+
-+	ret = packfile_store_for_each_object_internal(store, packfile_store_for_each_object_wrapper,
-+						      &data, flags, &pack_errors);
-+	if (ret)
-+		return ret;
-+
-+	return pack_errors ? -1 : 0;
-+}
-+
- static int add_promisor_object(const struct object_id *oid,
- 			       struct packed_git *pack,
- 			       uint32_t pos UNUSED,
-diff --git a/packfile.h b/packfile.h
-index 447c44c4a7..ab0637fbe9 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -343,6 +343,20 @@ int for_each_object_in_pack(struct packed_git *p,
- int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
- 			   void *data, unsigned flags);
+ void odb_assert_oid_type(struct object_database *odb,
+ 			 const struct object_id *oid, enum object_type expect)
+ {
+diff --git a/odb.h b/odb.h
+index f97f249580..8a37fe08e0 100644
+--- a/odb.h
++++ b/odb.h
+@@ -475,6 +475,23 @@ typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
+ 				      struct object_info *oi,
+ 				      void *cb_data);
  
 +/*
-+ * Iterate through all packed objects in the given packfile store and invoke
-+ * the callback function for each of them. If given, the object info will be
-+ * populated with the object's data as if you had called
-+ * `packfile_store_read_object_info()` on the object.
++ * Iterate through all objects contained in the object database. Note that
++ * objects may be iterated over multiple times in case they are either stored
++ * in different backends or in case they are stored in multiple sources.
 + *
-+ * The flags parameter is a combination of `odb_for_each_object_flags`.
++ * Returning a non-zero error code from the callback function will cause
++ * iteration to abort. The error code will be propagated.
++ *
++ * Returns 0 on success, a negative error code in case a failure occurred, or
++ * an arbitrary non-zero error code returned by the callback itself.
 + */
-+int packfile_store_for_each_object(struct packfile_store *store,
-+				   struct object_info *oi,
-+				   odb_for_each_object_cb cb,
-+				   void *cb_data,
-+				   unsigned flags);
++int odb_for_each_object(struct object_database *odb,
++			struct object_info *oi,
++			odb_for_each_object_cb cb,
++			void *cb_data,
++			unsigned flags);
 +
- /* A hook to report invalid files in pack directory */
- #define PACKDIR_FILE_PACK 1
- #define PACKDIR_FILE_IDX 2
+ enum {
+ 	/*
+ 	 * By default, `odb_write_object()` does not actually write anything
 
 -- 
 2.53.0.rc0.250.g0ac79233d6.dirty
