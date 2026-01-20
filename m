@@ -1,114 +1,145 @@
-Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5F33644DE
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 20:46:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768941967; cv=pass; b=sMfOrIf/uQFEncqUYSqqznmepXzEwVB+5WeAbI2jp+WMgLhQ3WLJ8kPhMIdvBqFmrCw9bE6lx3SrCuc+G99snOxUs4PsNvRuOif/8aIeqYkC0/VfkU4JZvbyBqf/7W1fkfeA/1Pzd2JSOIcB6wwW3Ff8ek+rNT15ak+xffplD0E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768941967; c=relaxed/simple;
-	bh=fkuDK1vwgUYmeyMFGWx2++iGfXy3+NjUjhYD62YixoM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=A22zTtKty6X3oCBjKmtQ3GJ7xdAjF/w5VUjpzP9PHGlN8eFPrSD6bNyb6lyL9dU2unZ/dtMmwFmGVJjOT60LODZ2RVyRjOiVrXa+Cz5sFGLvOfGFY8gCDTTUZNwTOOPJjIBw56vY9ngQ9Fk24F+6aNBEiXaWz2FLAhKa2Pvp4eQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MqIaV3CR; arc=pass smtp.client-ip=74.125.224.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1AF364025
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 20:46:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768941984; cv=none; b=PKurTBYgO+TZZzXp+qrnH2Pz0CL/vIU9lcyNwc0nC6/XgBKFsJNecQwezoCQN8r/3YFNt6YydtPl11FH+6ilud1AAqsZ7b4ptSknsR0n3L50m70H+RETrmwap+WFU1v/EXnOYtJd9M7dfa58z2cV5XHRe06mH4XC1h+bW4jxDkE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768941984; c=relaxed/simple;
+	bh=YJlGpjk4CQbubQzgKdBDO9sdwmiMN/JIhXATBo5HaeU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ed6AP7wTYD8a9tLwWY3Ub5ILW2OlCJNESdKpvsIb8XzO/07nI1cUYEz6qE1Diu//XnyEA8oUb2D2HxYIRZ4c77XCH1gjEmU2MTYOlQfg4WxoOwDGYonuMX/5cBSuRMZ0oeJlzzfGwcfZdliMy0UkxBDb9XpwQ4vTn+Tycng7fhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jZJYpe+A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gs4KoV0X; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MqIaV3CR"
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-6420c08f886so7755774d50.3
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 12:46:04 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768941964; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SlV/rhMBS0zdl5UmjUaGssFIC1dioTVC8XXku5bpUm6RTJ9ZD/M4YhmEbT7j+6QnRd
-         6VC0HbaCvtA+W9B1v9gM1MZnQ/mZBMJwKhn6XBZlC/4Wz5tDRe1F2nc5rZ9vJwz0t2T2
-         8iD/lsXLYAjyducd19h4WIcTCUY3Npdt1i83+rjtwOyxqbD/X8vMSv7HM1C/hdRQokNJ
-         RVAsOW2lTGpMLzkIeQHIzYwbypu3c4gGAoVFYzeYWALmFerq2MjR1aKTQL8JtT5DIusc
-         MtBASacBdVcX7CPjtZcK1ChKG41irIFMQWmoyJqHckwnhsw59Dwpmiz9A51lyFeH2RbY
-         hDWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=fkuDK1vwgUYmeyMFGWx2++iGfXy3+NjUjhYD62YixoM=;
-        fh=QnVQ3wfWHPhiZMoMSXPWuRxIZpGYqet0mF2rlxd0t4Q=;
-        b=Vvy67vMFsxdJLqlmOiylPK92C49Syvn/XbSBIObCVJVCgOEtZ1gVGBahsfLJTZ6S30
-         JunlLsqf5OglWboq4zvlSF4RkR1YpeBZ5oPG4UHIwl1LhZ5qEWsKdXugpzolQ1O7y3J6
-         n/XZF+EAVb7ewH14qcPD5dMVCCsHgV4k/S6sa43ahHfZpFORAF6pHfePBGomv6dY8fk7
-         I8MWT6azX1zwwLKp1iGGJ6e5siPFT1J3P7MvJl1B9zf7lBTVWGuVSypJ9cmEsxzLggti
-         pnMSWL8gVzaQdCBC6MxqV2wXMq7rfStXshfS3oMlMyJ2Nty7risV1kJewdbkSamDfV2a
-         YUlw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768941964; x=1769546764; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fkuDK1vwgUYmeyMFGWx2++iGfXy3+NjUjhYD62YixoM=;
-        b=MqIaV3CR1aT58R/OE+/MjeKYzVo5osKaM2P/6g34rxf3JSeYnCSAipXVaysrucesrs
-         WQ+sCqRf9uRI3o+xDkLSat0IOYlZlCoXcZjVRXfVp9lypoIWHwfpZ3ovsNLJgnnw0nDW
-         fq543KrDOzCkqwXFLDjN+8hZQBbww3ThJhv3BQwa3FZWlnGIAn2Mpx4QAzcva99psKs4
-         oNdWA13SrfxdmUVjCKnsE3QSUKuHXHDRZTAfM/6KO6UKPl1TLQVZDzS/cFiUgXLyw/8H
-         AAoJFOg0JboiBdWRCcbfRCzuqQ8hNSMBiKmflIE9HS95OCIR8W58CYc9nmrmk8bZAkNm
-         OWBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768941964; x=1769546764;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fkuDK1vwgUYmeyMFGWx2++iGfXy3+NjUjhYD62YixoM=;
-        b=OeW4MsksYiQlAigpYpWTMXIfzuWcm0koz9QYxdmmXNgipi3c4p9xJ+VXW2n8s7m9P6
-         YL+4HjI8HpSosiy3DYWS2Nxlpx3q2swT5qD315APoFxAVxJQYM9s3pMpuI/XLwsvk+0S
-         oFBQn3mNzs9hln9xc104hd+wLChCBJsQnlgMxN5BzUhRYp+0/vNl+M9+crh08x0gM9sq
-         ViRbzu2AH3cuo52cGybci4wz+d9C1qe2EHFa0n4/Z+52K+YzT94PBwdDG3NdDWlXw5f9
-         KWLqQheQxRV1URDHX7/4cfk1PnzDhJc5iLGTEXyiigo32Ns91XpZG6oMUPPg7y6G7zFL
-         JSDg==
-X-Gm-Message-State: AOJu0Yyz1CzS7pLWj1ZwKu4Qbhl4jxFZac/MSRr6SxooL3Jp9Bja+vZY
-	UXQXIPRf+p9SQG+keS+4oojpxhrUcex+FbpXYLUUDLpgUTQmlPcRGNpuLikPnHHD1jE7E/a2Yeq
-	kgCy+dEUX71V8qCNZPTwvwa9JErTIOOBw4+rC
-X-Gm-Gg: AZuq6aImAsWkImQlxSzWeX1rjLm79SpIr0prXHucmZ87E2+RZ0mLH4egLyDzbNV4h83
-	5HKMw3cl23G7OV5mGjfzuhzaS3cFmS5AqJsiK2e7J9ajBjvSrJay5crtX7d7imyRWwjjmgBPszj
-	i9Mo9JOstvhETte5jqWOoTsOZuED6MdHOZA8zX7xIJHmueENx3e7Cp36PR7Pg9Ip6Yvlfx46tc0
-	OwxpWwDZ3S6HrMuD9nB1DKN7+JhVvap4sWvmKWh2i0un5XDveO2N/Aod6kJkipgdiGx+wAYSFH5
-	37LT
-X-Received: by 2002:a05:690e:138b:b0:649:422e:a68d with SMTP id
- 956f58d0204a3-649422ea842mr1311798d50.69.1768941963770; Tue, 20 Jan 2026
- 12:46:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jZJYpe+A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gs4KoV0X"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 85C237A006D;
+	Tue, 20 Jan 2026 15:46:20 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 20 Jan 2026 15:46:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1768941980;
+	 x=1769028380; bh=5HjTGdL15LOsYOsoFQlMUfa8h/ROCyYvv8LEtdwtZRg=; b=
+	jZJYpe+AKLNPxZCwN8TxRwzMcWltbwXrVPrirohPTzqhCPm88tCKobupxk+58ptN
+	aEpOyLd3q2rGMrNMx/EXNcOs3qoHpcCX+A5BmaOshs2DAHPhxrR80mgvudjhE2P0
+	+3gepgK83cbgAeP//lmUaTejgM+FWaO9Pwk+nPgYHj1w8H/T896sSLUIqsIGwo5u
+	QnaQMEdrkeG8gRtahFIO+vNr7Ul8eX2qsgHqawd/3mnApIrJt7sEujfJVKyIYD0b
+	lAOA+Km1vv+lggd+MvD/R/KBUccOjycyAJcu1QdyCYt9txi1pZ1jtBCM8bH2uhor
+	jQm5mW2pDIiUudgHsny8Sw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768941980; x=
+	1769028380; bh=5HjTGdL15LOsYOsoFQlMUfa8h/ROCyYvv8LEtdwtZRg=; b=g
+	s4KoV0XXjkjfthrje2/a4IhZutrTgPOU9PFsKQyqBCBlgLze2TNI8ajnk84UPhae
+	DJIXfNDxcq5ljIjU/1b2zJQgslSEpI9RtwwIXlNuBrntFTx/O0OaB3otblGwzhLU
+	3CIWRawOq8HAlxeFBNS/zzBpCQjp0u9xhy/LzlqSE60O1OVCrFYcI8MuH1SfW2pZ
+	9AJxSxOyDZrpyKD7DjVzAy+P6yWXkeST94nikc5t/plncOFKsZaAZPWNZ1R42Doi
+	AtyfLOk1jLHKRtD0t6DogCOM7vi/1PZsFoPrT0gTzkwp53n+RUr8/xgwC2SJLDY0
+	gWph8mnWj/XISSI8GOqVw==
+X-ME-Sender: <xms:nOlvaZLgmY-cts280Lu4rvislgDycPn-jZ0-C0D55ld7fTElIeYwpw>
+    <xme:nOlvacnBsbh-5u-xWoLAxNtlqa6DJopzkv1Y6zTodz9LGsz1NkxIv5euE5TGwj8Wm
+    3aqASPd12Y2p2ubiQNiFkrKmIdiaqq6LBinISqgtYNtbcDXAWcbIw>
+X-ME-Received: <xmr:nOlvafEglH_R1QiZxH5IL7wuYI4jdAOdgUjqWYDLuJe6qulQxmMhnfj1Yzgy3_py-6kaYn5MUhUCKr3IxD-HyWPbfDQnyiaa0WsnTqs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedugeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnhephfetvdejheduheegleehfeeive
+    dtgeelfedvffdtvedtudffieekieeijedvlefhnecuffhomhgrihhnpehkvghrnhgvlhdr
+    ohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehrvghnvgdrrhgrhhhnsehpfhhiiigvrhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:nOlvaUEQoawoWYwPvjvrS7IKRzZ_2-lJCPT5GlNthIRwQg-pND0TiA>
+    <xmx:nOlvaUPNe_nXJb8xPTXx3IDX0tjU_CdaVK_Q67qa0T3JHEQr5dh1Fg>
+    <xmx:nOlvabEYdtJACKocouNkRYormIm7oJPjaRpD4Igb7VAJAgP8rdnCjA>
+    <xmx:nOlvaTOTdmXr8VRBL4rstnXDx4w5vZUS4mp78PwDXpU4-WohCS4ThQ>
+    <xmx:nOlvaTKmf9wOJqU1pX5Us79mjd0lnJ-Yc8o_2P5Dwf9jOx-jqm04GZAz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Jan 2026 15:46:19 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rahn=2C_Ren=C3=A9?= <Rene.Rahn@pfizer.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git-add ignores exclude markers for ignored files
+In-Reply-To: <xmqqtsz9o3cn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	04 Nov 2025 14:11:20 -0800")
+References: <MN0PR01MB761143093D1A4D226E8883A380C4A@MN0PR01MB7611.prod.exchangelabs.com>
+	<xmqqtsz9o3cn.fsf@gitster.g>
+Date: Tue, 20 Jan 2026 12:46:18 -0800
+Message-ID: <xmqqwm1cxbad.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFOYHZDnXQOcDmzwf1WRpZpNRAs-R2YOBh3ru0mr0ffrMLB=9Q@mail.gmail.com>
-In-Reply-To: <CAFOYHZDnXQOcDmzwf1WRpZpNRAs-R2YOBh3ru0mr0ffrMLB=9Q@mail.gmail.com>
-From: Chris Packham <judge.packham@gmail.com>
-Date: Wed, 21 Jan 2026 09:45:51 +1300
-X-Gm-Features: AZwV_Qh6awBKyVFd4ERnfRyYDVOV01vTDtY5vVCvsiSVLwjF2J9Bu4ZkglPokeo
-Message-ID: <CAFOYHZDcFJBiZwmposZVGmymmRz1XOaXP8iCRgTDVcsWPTH=6g@mail.gmail.com>
-Subject: Detecting source of a push in a pre-receive hook
-To: GIT <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi Git,
+Junio C Hamano <gitster@pobox.com> writes:
 
-At $dayjob we're moving from a mix of plain git repositories on a
-server accessed via ssh with a secondary Gerrit server tacked on the
-side for code review to using the Gerrit server as the primary source
-of truth.
+> "Rahn, René" <Rene.Rahn@pfizer.com> writes:
+>
+>> Steps to reproduce:
+>>
+>> mkdir git-add-test
+>> cd git-add-test
+>> git init
+>> touch .gitignore
+>> echo “ignored.txt” >>.gitignore
+>> touch ignored.txt
+>> git add --“:(exclude)ignored.txt”
+>> 
+>> Expected behavior:
+>> 
+>> The git add command recognizes that the file ignored.txt is
+>> already excluded despite of it being ignored by some gitignore and
+>> thus does not check if it is ignored or not. It simply will not be
+>> added.  Note forcing git-add will do the trick, but this could
+>> also have side effects for some files that are ignored but not
+>> present in the list of excluded files.  Hence, this can’t be the
+>> right solution.
+>
+> It is not quite clear what you want to see.  The command would not
+> add ignored.text even if you give ":(exclude)ignored.txt" from the
+> command line, would it?
+>
+> This may be an ancient regression when e1b8c7bd (dir: remove struct
+> path_simplify, 2017-01-04) was rewritten exclude_matches_pathspec()
+> function, which was written in 29209cbe (dir: fix COLLECT_IGNORED on
+> excluded prefixes, 2010-03-11), back in the days before ":(exclude)"
+> and other pathspec magic was even invented.
+>
+> Perhaps try this patch?
+>
+> I have no idea what the ramifications of the change is, though.
+> There may be unintended fallouts in some distant corner, even though
+> it does not seem to break any existing tests.
 
-So that people don't have to update origin.url for all their local
-repositories, we're using the Gerrit replication plugin to keep the
-old server in sync (and will likely do so for the foreseeable future).
-We have installed a pre-receive hook for the migrated repositories on
-the old server that rejects pushes from anyone except the user that
-the replication runs as.
+As I haven't heard from anybody if this patch improves the reported
+situation or there are unintended behaviour changes that degrades
+the system, I'll drop this topic from 'seen' soonish, as this topic
+is not exactly my itch.  That does not mean that it is unwelcome if
+motivated others pick up the patch and polish it to bring it to the
+finish line.  Anybody doing so should consult the original
+discussion thread [*].
 
-For various reasons we also have a CI system that pushes some things
-(mostly tags but some automated merge commits as well) that runs as
-the same user. We'd really like to be able to have the pre-receive
-hook reject pushes from the CI system but allow them from the Gerrit
-server. Does the pre-receive hook have any way of knowing the source
-of a push operation?
+Thanks.
 
-Thanks,
-Chris
+
+[Reference]
+
+* https://lore.kernel.org/git/xmqqtsz9o3cn.fsf@gitster.g/
