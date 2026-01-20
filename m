@@ -1,152 +1,144 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EEA3659FB
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 06:05:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768889162; cv=none; b=E95+EY4pEFA84iJTR3u+rexkohd3tWF8plIQ0cIJCVh26cA2Uo1zzJD8zNuynHzJbLUuoR0s+yXXMR9l9Huwnu9yJTjPYQtnLEhg+663MQmiFKJ/YVAJm5Fz0STGI9HCCpiV1/lYG6Mp/apGhaBCAa01wE7nWwlQJ6SDnf5lwi4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768889162; c=relaxed/simple;
-	bh=g9ah/znk+C9JivVeyTTMfXB9+jEHlPuOGBRMHFEGYkg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VFN0eDv5TnGycjJ3CaefzsBqBOMOdyCwS6l5vK/UmFycAhFz4UdyA8KsngbMgcaAcMeQO7qoTHNaQ6Fft2QjHiMpJSGAWVI2B3UbbgFscLvgC4UiepVp7eMr8DaGOvkWMDtuqYRVmVsWHIh1rw0INif9Gm4NJhUhXQoyys0YAQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pe5L48ZW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bUxl/2aT; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CB83370F2
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 06:20:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768890012; cv=pass; b=hTa1AOXq4xszz87pLvaHFA8JitfX3l+rPqbVrCULxTNvCSeQypHCLlaYr9n8OCLcks2/tqP7L9XwNKLU1xAtfQItSDfCCdkWlE77gNBcYgqseWxSvpyb2O+jp3xtxdcuQ5GALl8fr0we4cfglk3Lxu/GzSnXH7rGnk7DuMtoy5w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768890012; c=relaxed/simple;
+	bh=nrBbru/FHxBAyS0S82cItkG2hycPmtFeZF4MtQTnfGw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=l6WDPRateQ1cze1H744MZIR6DzOsXFwL6JD2y75ShpzAbluAXttIAapbJ4HjwFCsrQO1g5HjjIIkntIaEGONyonczal4Pj4DyMc8JX6eX1cwnYR+EER26FdhIZtI2ssEM6aa+XFthMacfRgudHzYrqi92VYcIpbjcEcyQgCAH8Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atlassian.com; spf=pass smtp.mailfrom=atlassian.com; dkim=pass (2048-bit key) header.d=atlassian.com header.i=@atlassian.com header.b=M1QZQZPb; arc=pass smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atlassian.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atlassian.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pe5L48ZW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bUxl/2aT"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id BBB5BEC0107;
-	Tue, 20 Jan 2026 01:05:50 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 01:05:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768889150; x=1768975550; bh=ZKlDRjXl8I
-	E0CkjC6+m/8WASTN0BEWmCi2ke3iiYPgI=; b=Pe5L48ZWENds4n5Rc0MbwcJ7RX
-	MfCCN1iKHqy2QnVpVF5FVQw5+k2X3cjG8kss8UQRrAzTkjqzCKMFv7im9vX7qNmO
-	VgeL5vYfDaCZAyyDWlphS+s//au06+7MtvZCuHW/H1tjJ9Ur+lh/2Pl8bHSn8zUU
-	10JAdgpFob2KYN34h5gXvB09jzJjUdPiMRJph+i0ruRgjna1bksHKSq/TiCb8JHi
-	X+P660+C9X7DOlXl+232Oq/t+gSuS4FVEnCj18wZ5k6RyZh//onIbRB0/m4q6GHR
-	cbB+VeY4CYQJezN779KDjNh3L26k2RXdQLzjMjpwE/3Xe5SASXtENW1jJN+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768889150; x=1768975550; bh=ZKlDRjXl8IE0CkjC6+m/8WASTN0BEWmCi2k
-	e3iiYPgI=; b=bUxl/2aTYBT+2N6HPf/E6xoak1JHwLNn7tLYCcah6HwPUhGYqon
-	IqGrhGyOzGND6w6UXkzS4qiEiHvTkpa1CdoWB/FWJ+jTMDNl1R1PMyk4Uad1R1GN
-	0G4Ql/jMFblN3kGl07cjiWZcuE1J5d4lk3bbi1bEjrt2YgBSKR9M30VcuyLw3BFb
-	datp2G6XEawYemBah/tTjLTCeNUjXlQVZs4NFzHN+waosQfxNPB2biian/HaTS7f
-	UuIjYpqoVo9fwCjAx2IT78g6lwpnua+GF1yz8JTkhUqszlcthF0p/cO9fpJVUML0
-	6u3Wv7URuobAWJqSmUpt1fg+Icg2hAjNXKQ==
-X-ME-Sender: <xms:PhtvaQzFluQECvYtFk-qTsTcjJlt0qtRJH_ZsB_wbsQbrPoG6IaUIQ>
-    <xme:PhtvabKUd_N7S3oNtunwQ3HKYNlH6zK2AJxhmVqVTNq0IUriloaUJENzKAbl1PZdf
-    PrfaHblQUYaX4lfbjRqkTxal85pUmBQs7mZYF13Cs0GYwpZJCiAfzs>
-X-ME-Received: <xmr:PhtvaarOrCxZO7Q0MGJMZDlGoEv-kO9xhEIepZhiC8q4PF_hawlHRWC49qXfTKAeTnO4s42yx-Pfmkffs-VN73jYkKmXZHQDehz-L2eQcw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeelieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghvihhlrgdrjhhnsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:PhtvaaLkmb12tjrsxTq7bP-F_UDw6N8W2q9DkNfGNLjstNiKJJohUQ>
-    <xmx:PhtvafShXXRiqkSFi1voVvW3gzKYhkIa3WrZgF3k4qTPqQsXlnBv9w>
-    <xmx:PhtvaZuGS5QP5Hz_5V4B_zoaveaEOFcQtUWrVuJ8XOuCdDpGEZP5WA>
-    <xmx:PhtvaQbaNNZdqufDnwJsJVZIXIaHDl7CDDuVwIkLiJqIT60qTteh0g>
-    <xmx:PhtvaWpc2iEJB3Jvob0b8BjvBu2dEBUY-TYXGER2DKv0uO58LvYca_3f>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 01:05:49 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 939c2908 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Jan 2026 06:05:48 +0000 (UTC)
-Date: Tue, 20 Jan 2026 07:05:45 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com,
-	avila.jn@gmail.com
-Subject: Re: [PATCH v4 2/2] repo: add new flag --keys to git-repo-info
-Message-ID: <aW8bOfVLcG58t-Uk@pks.im>
-References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
- <20260119210932.68893-1-lucasseikioshiro@gmail.com>
- <20260119210932.68893-3-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=atlassian.com header.i=@atlassian.com header.b="M1QZQZPb"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-6442e2dd8bbso3938714d50.0
+        for <git@vger.kernel.org>; Mon, 19 Jan 2026 22:20:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768890010; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ktxMKpj04MUrNSF9+hLCU0vGUS1uv+Yr2Umbj0QvvfymI+BEuHyBF8rYpq8kwDHkOq
+         8t79V3EVwGqpsqCodnXWSLpC3O5dUuUsdxSqDKnreQFin/WVcjpxo/m5C73XeRfAVN5C
+         4cCFv+MfM4PhNydgiyPuxlsBx16Z5SxTl0ayVIXg99G0lxF6OojljPTDjOYiKf45lQvf
+         MQHz+dfHmWAkkQP/eydBznTqjyXc/t/BMs1jZm1sQb2g7kez8xVN5JRm30Xy9mQabejg
+         a5rAtnzOHVn+9v1pNcC2G2UjgfYhnrl+GmK3bOeXbvo2kdp4bg2DgyF3YaS28/1IPtWZ
+         prPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=Ilq+Bwj92YKYSvNBrb8XiqDYtN2dxF7nLIqwljI9P3Y=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=SAQjlxeypehU+V0OAIhMtPe3m1kEHRHYjq6XvcWMbpqXErfNcIS5II4CWpejplfViT
+         iucESLXXh2a7CXp0Rey38fP46rbvyg8UnNI4jHUUFRLt2rlRRBIceZselLMI2GUBf1CD
+         ZAzf3sXFKKJr36DIOjETi0cqfbL9cQgSK5jK+fG+dNov9zt0Crc9ZvDrKIheNTY5/oY1
+         P+TkkEVilYrFB+Ef4NvmNxir5ly4ZTrLudLzw6iJft7+zIkpHESj+c9cLwMliUnfbhHr
+         EpyFPv0d66V/PFX77jQwgnZY7bt5m7YJ+0FgXaK4VMmp5WF5nRZTSflPC9f9xrRWCcBy
+         FzsQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian.com; s=google; t=1768890010; x=1769494810; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ilq+Bwj92YKYSvNBrb8XiqDYtN2dxF7nLIqwljI9P3Y=;
+        b=M1QZQZPbuyrqN7bCdrHDOUtUm81BIG6W15STWuijtRZ6HdSFtSirGuJoeCtUkAr69P
+         0GFzLghkJUA6M1jZ35MnTdWm1CQu2XroKBaMgXK/FkFTu8s9JK1MDdlu4LwHMbldNiC3
+         iCgdIEWgXTkL73B3px/J/PYbjfSIzso/crZ1d+AQK8rREsWBOlfo1QqA3cCauYLy927y
+         ICYtWzAWcLhHF+yqE5ju/+Byv6k8JCQ1ey+rCNiW0biwJ9zSJF/G+WEzJCEZZ2zJRwlZ
+         5aGszq/Xxxl+GQFJAsFoU6WNnJxPq76FXL39Jg6Y4GCX41pI99R0KAJIkGkdg9UBlQJ0
+         zSLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768890010; x=1769494810;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ilq+Bwj92YKYSvNBrb8XiqDYtN2dxF7nLIqwljI9P3Y=;
+        b=eAxNS44jePgvEVgrOwcBIDLE3GwrC9SeH7TC9nMK/VzeYIOpOj/kXpqL98sRV2lio2
+         VTinbvzU+M6O7e45aBJ/VTk7RepHSannbYmO2gwD0qBBZUD0wBYGTWhwZT6j50YJZkTp
+         oqWR9qswnPuDOtvMzbsy+RISxDYhyGCw94DUvSk+kbtleUTwvMhenqrTDdc7WdjhBL4b
+         m16J6/ttvJVSyBzDRcqSCW4WjysLKvFVerP/hMCb8VBocSlM0oIF9y20Ss9eUQoR+i13
+         PyAmSBagF8ZVuG5q7VfpCsD6j5nCdVBJGLGXj8zg2+MJrRjmDQvFIDsitRoiVvBK4zNk
+         nqHw==
+X-Gm-Message-State: AOJu0Yyd/RGpJGn8zn25jgv/vURUSYnZeZQdipRqHBnc9U4gX8dNU+O7
+	mPresGzV/ymQ9mxYeg0nvWvvlE0R7UM5ONjtm2JEnT9WULwMjyfX79KmBvad+TE5G4Jd5P5MblX
+	C1xAhoOgCx+iCOkAGbKqApysD16SUszWS1EIkbnaTdM/MKmu01beeZA==
+X-Gm-Gg: AZuq6aInStcnSkZq+UlNSth4dSxeVMRGnJZUT+OnG5UlrjyvP2G20bB1zXC+uojh12t
+	PIbYAkNhNICYgoB1kgoV/Az5dDjHyqeIVi412R6FGQ2TiAjfMgXWh7m7rGgrGjtWobUeosqKzq1
+	kkAH04HI3iVXrvQs63eCIy1jWIZVcBkNroNj8YdlLKCDSBNLIgisL8QcMGwcP/XgYaey6Tk/ha3
+	U3Id9aOheA+Def0juaFvJwVUZuCaUxkOmWwKwiUoccuQNHBqL5I1/Pb1JAn+911IReKSLImmH1b
+	inJtc/BRa9Fh
+X-Received: by 2002:a05:690e:dce:b0:640:d174:3839 with SMTP id
+ 956f58d0204a3-64916486fa8mr10566904d50.36.1768890009825; Mon, 19 Jan 2026
+ 22:20:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260119210932.68893-3-lucasseikioshiro@gmail.com>
+From: Stepan Tsymbal <stsymbal@atlassian.com>
+Date: Tue, 20 Jan 2026 17:19:59 +1100
+X-Gm-Features: AZwV_Qjp08NoTUaSR_7pYjTlvqfmnPG_Hv3zw2mmZKvEzxhL0fyDS5T3lnGex9M
+Message-ID: <CAM8dTE=RciNHyyyhtprjXL22deTrzj5DKcBsSiAt0jFz6Az8JQ@mail.gmail.com>
+Subject: How to get failed refs with new 'git fetch' behavior?
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 19, 2026 at 05:20:20PM -0300, Lucas Seiki Oshiro wrote:
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index 306d3fa2df..2f698c5253 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -29,6 +30,7 @@ enum output_format {
->  	FORMAT_TABLE,
->  	FORMAT_KEYVALUE,
->  	FORMAT_NUL_TERMINATED,
-> +	FORMAT_LINES
->  };
->  
->  struct field {
+Hello everyone,
+Appreciate your time and effort on developing and supporting the tool!
+I hope you can help me understand how to work with new behavior
+introduced in 2.51.
 
-Tiny nit: we also tend to terminate the last enum value with a comma.
-The reason here is that it makes it easier to add new values going
-forward while only having to change one line.
+We parse output of =E2=80=98git fetch=E2=80=99 command in Bitbucket - in au=
+tomation
+that synchronizes mirrors. And from the output we see what references
+were successfully updated and what failed.
 
-> @@ -149,6 +151,32 @@ static int print_all_fields(struct repository *repo,
->  	return 0;
->  }
->  
-> +static int print_keys(enum output_format format)
-> +{
-> +	char sep;
-> +
-> +	if (format == FORMAT_DEFAULT)
-> +		format = FORMAT_LINES;
-> +
-> +	switch (format) {
-> +	case FORMAT_LINES:
-> +		sep = '\n';
-> +		break;
-> +	case FORMAT_NUL_TERMINATED:
-> +		sep = '\0';
-> +		break;
-> +	default:
-> +		die(_("--keys can only be used with --format=default or --format=nul"));
+In 0e358de (fetch: use batched reference updates) =E2=80=98git fetch=E2=80=
+=99 started
+to use batched reference updates. Which is a great improvement by
+itself, and required the change in 'git fetch' output.
 
-This error message isn't true anymore, as we also support
-"--format=lines" now.
+With git 2.50, when repositories had directory/file ref conflicts, the
+errors were explicit:
+    $ git fetch
+    error: cannot lock ref 'refs/remotes/origin/branch_path':
+     'refs/remotes/origin/branch_path/conflict' exists; cannot create
+'refs/remotes/origin/branch_path'
+    From /Users/stsymbal/repos/git-conflict-test/first/../first
+     ! [new branch]      branch_path -> origin/branch_path  (unable to
+update local ref)
+    error: some local refs could not be updated; try running
+     'git remote prune origin' to remove any old, conflicting branches
 
-> @@ -162,6 +190,8 @@ static int parse_format_cb(const struct option *opt,
->  		*format = FORMAT_KEYVALUE;
->  	else if (!strcmp(arg, "table"))
->  		*format = FORMAT_TABLE;
-> +	else if (!strcmp(arg, "lines"))
-> +		*format = FORMAT_LINES;
->  	else if (!strcmp(arg, "default"))
->  		*format = FORMAT_DEFAULT;
->  	else
+And git 2.51, in the same situation, no longer tells what ref failed:
+    $ git fetch
+    From /Users/stsymbal/repos/git-conflict-test/first/../first
+     * [new branch]      branch_path -> origin/branch_path
+    error: some local refs could not be updated; try running
+     'git remote prune origin' to remove any old, conflicting branches
 
-You also have to adapt `cmd_repo_structure()` to handle this new vaule.
-Otherwise it would `BUG()`. I guess the most reasonable change here
-would be to treat "lines" and "keyvalue" as equivalent?
+It is trivial in case of a single ref being fetched, but when fetching
+many refs there is no obvious way to see which one failed. For other
+errors there will be a single error message per ref, but not for
+directory/file conflict.
+The 'reference-transaction' hook also lists all references as committed.
+
+Is it expected behavior moving forward? Can you suggest any
+workarounds to know what refs were successful / failed?
+
+Reproducible example:
+    mkdir first && cd first
+    git init -b main
+    git commit --allow-empty -m "initial commit"
+    git clone ../first ../second
+    git switch -c branch_path
+    git commit --allow-empty -m "another commit"
+    cd ../second
+    git update-ref refs/remotes/origin/branch_path/conflict HEAD
+    git fetch
 
 Thanks!
-
-Patrick
