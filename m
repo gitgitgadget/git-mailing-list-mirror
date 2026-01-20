@@ -1,91 +1,92 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6D047D93F
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 20:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026B138BDA9
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 20:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768942478; cv=none; b=EcCJvveksbYq+E76Wz4FVQAzJ4Yv0rXgMJo7jI1ZdPZJn6MSPnVhjjonz2GN9+SgyV5xvadKVaZDSo+UhhlB9k31lyHW7BR5qs1QN0Rf5lULnc7FWdIllTln/cuHGTFJd+0mGhK6by5jJuczqp/igK4EPSdI11AQ2iiBp47Btvs=
+	t=1768942792; cv=none; b=LqdNDf2HujqfKX4yiKDX6Rj93mq8OEpN1A9SK2qxkPcbW7cxlEvruxIjscTTBgfbC155pEilR4AlUhfPIw0UGlv9iv7N1KJBjmWcd0E4ix/HkJTDfoXkcsC1TMXdaKm0cCBCt7cZ7AbchQWFikMDrOocrR3xsVywen9hhF2dxLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768942478; c=relaxed/simple;
-	bh=iybWSmxv23PW/Mx9RnND5xhDNyf3xq48f4yyg4McRes=;
+	s=arc-20240116; t=1768942792; c=relaxed/simple;
+	bh=whEF5h0Ip2hj7eHo9ECR4Dlt70nbHBiptT3IPB5VGM4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z/uWFU7d6fdoBGngCvP/hZuqUvf+saE5oq0qW4fjwsdaq2g3mVNBDn+ZIH41EheFggvS3WAYTNe75RS6JEthMtXu2eXcmjXkvRf8NZucZrchbDfbzkRJfV5metIPj+ARE1zIQdI8fWV1xfMjjYT3ObbjcZBCpzJ5jGqg6ir44gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h/juXEvE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AaR/2v27; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=hLIqE+XXm9I4wMtrF5mRyW98vmfYD+jumHKwvoAhGUMPwC3G9Dt0f/ED56uChkLyeUMUz05/32cPbVgIyrk/ufchZ3pgdQ+4J1SBeylTgoKfStgRiT9cbmQvXWO0NGlOMpUWZSPnl3Af1KwVhnqnNeTKwOQ/msjVBZ9Ku1ucItw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nk43kJXe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LJvMgPyB; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h/juXEvE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AaR/2v27"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7F90F7A0113;
-	Tue, 20 Jan 2026 15:54:35 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 20 Jan 2026 15:54:35 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nk43kJXe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LJvMgPyB"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EAC3E7A0113;
+	Tue, 20 Jan 2026 15:59:48 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 15:59:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768942475; x=1769028875; bh=yTMKDNUA16
-	6111HtbkTVEGMgBSKxq45wAkZfp8iEngM=; b=h/juXEvEoGicCfHKrBvLodJg1B
-	aAyNu0Nj72EsalzRWU+ACczIOkC8jA0L530AQeOf0aL4wYA4SKev9LDnXvluya6I
-	nyRJJEjyMAujqAVBCNVmdVuWHCyWyOThfAcRDvbmh6wFVd2hcyanOx/heSI8r2IL
-	aPwIFZ3jESAXF/52xlAurv2+EnrDvCoujuVgR9322cy5/5nP3Rj5vDIyp0Qd1Bu5
-	hYFlWHLA0C3rf+jefuS2OntNPi32myC4Mh/OYJNAa23K5D1so7Z5DeaR3LuB/OUK
-	4cNQ1CE+TpXyZgRj5PqFQ+x+3mz5NpdDWgEaEYMtf4nITlmhcMB2iruO/KYQ==
+	:subject:to:to; s=fm1; t=1768942788; x=1769029188; bh=DLhcN3lhU7
+	p1E4oJ2WAoaek4a3r8W/aX483EfB7P1AM=; b=Nk43kJXeaUEQrJRZHe+cv8l03o
+	AAbqjfeRF9tLITE6Ya5WyDSBpxB7Md/W/A4icjYrud2Sm3NaCSX1YmT8LmreM54k
+	j/kM2yj3fAemWMRN0g8F0XWQsLQyY/M56m3uvluKBcpOqfUmhCnvg2ERXM9dYUAN
+	NJPlio8ewewCtctzWyblWzPWvXO6ESf/eUvxH5HnnO/gg8kKuU7Ka6xizhGmjwit
+	5jZNa3VfS6All2wbhYSB2Q8Il23nH55G/2PloNrBSx+SOuttf1157cezFibm3s08
+	yaUyZ3TDwodCdD3k91xPYDuywZWUpRHiL4KD8Qyeyckagbjm/tyyLZlzdOkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768942475; x=1769028875; bh=yTMKDNUA166111HtbkTVEGMgBSKxq45wAkZ
-	fp8iEngM=; b=AaR/2v275oCnsHs6HI32O/U0wdd5FB8C1jMrKzp6KikeOnQsEgi
-	lVm78rsK9xZ3kopxu7NqD2ifrZmCtqzUX/G5eiOlyL64SFwY9JGJNq24zRNqENIe
-	q6TnuWaX9gNceIDt7Fqs+MfMi58iXEDF7QS06bNpN9putqzl+MY5qEV03xE3J8zi
-	GOahIjLj5pcmI+KrtGF3V/YxTckhwW+C2dWLJFuu4hgvw2U31yxl8K2EkS9kK0Pr
-	ZfvGGYQO/nMprGSY8ZMJclQkoQBWCdeBL9XM+X0B1llj6eBPOoay8/FTy2DbbmGF
-	B8otBv0gy2RbZDSocrw/rbP0aqlH1VGjCzw==
-X-ME-Sender: <xms:i-tvaUlZ2l_8d7jMOr8GmjOvi4BvNBaW5eGQ5cA0lJsAONNYIQWMGQ>
-    <xme:i-tvaWGeSZhyeXDLPBIGzvan0_4s1m7YpcvXoeMC8FZTnEFl_RdITz0Yu_00Lkx2i
-    ujOSaabMBXxPS23tNNQkTQ81fmaYqWGogYmwk_YIbX56tvnI1hIwA>
-X-ME-Received: <xmr:i-tvaU5xUwb7o7WjsF2CLmLU7ZAAwltF08Q1O0t1CBQLDZZwcDHb6SJZfa-xxOYbMOhkma6J1puXVWfXbf5INXO1GhwVN5AHxdgPgx0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedugedvucetufdoteggodetrf
+	1768942788; x=1769029188; bh=DLhcN3lhU7p1E4oJ2WAoaek4a3r8W/aX483
+	EfB7P1AM=; b=LJvMgPyBg8X0B8DKcxnoaHSJdF4Bu84VJuGPbSpt/oRFlCYVn1p
+	Jo0Z61lEuLwmBuuw8vrFadrwHALRZIfEvd4vefETaqiHmKlLInyph+WjHrokhR7w
+	CcRUKZo3S/8QFAtjknPUhq1v2aI3WQF5g4SOJVNEi7licBvW5p2V1UQUFvOdHKnq
+	aN8edSpj1pED6zb2lxe7aryuN5Y+p6+r3j6WKXsfNOtyJ60JzoRiVVP8VKZzuzoj
+	non6+73awtDQZydxRx8Pwc/g1ycf3GRBEbezRLaSYmgWqEFDawQa1vnfcTB7P7Sd
+	/Ts2qiLbYfnFXkIPqM+yw4qwx3N2yuAUUeQ==
+X-ME-Sender: <xms:xOxvae1pQkTZbHUyxjmxBiK9r3w03A2Dw10l3Lp5gMrQrHbryo-ERg>
+    <xme:xOxvaTUMvObee7Ah4Y6mtLz5eQ9MRP7lbsrHdxS3B9yoP_hz2l0qSUskZo19cprs9
+    izA29UoIA02oic1Q-Rw93DKbc9VqpLJd0WD3Pbh5WmZ4hl0OHQvdg>
+X-ME-Received: <xmr:xOxvaZKsKFPxnGneunQEPKZgY10XiZLRt3RDZlWvfZEn7zr47ynDqb-kg86dwoZZzFaukDAR4JLHTytwm2KPKY3HleeoX8gI-xlJ4Jg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedugeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtoheptghmlhhishhtshesshgvnhhtrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:i-tvaWnA6k-cpDv_ko-g9z7AtjwJdkRKwecp0GVQULncliKZ5xbNAA>
-    <xmx:i-tvaRoXU6bVgHnvuZKfAnNjXhK2rfZ_rc5aqW3890Hx3mTDcPXEoA>
-    <xmx:i-tvaduRZ6IFlAqcRTgLpOTZXYkR_dEpcz5oC2FhAhFnydHIPfYOuw>
-    <xmx:i-tvaeE34gZCMHom-PA9IX4abn8wfRLzzSXn5PjFv4vDSOjztozaew>
-    <xmx:i-tvacGG0M2fdZwdlrQZ4HDOQt6twj2z61ckfTC-vOGYr3VJhlarrYJD>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
+    pehsrghmohgpphhoghgrtghnihhksehtqddvrdhnvghtpdhrtghpthhtohepphhssehpkh
+    hsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xOxvaV0UpDT-1LTkTUmizgSaN10zlX5909OMTlIhILqWA45tcwZfLQ>
+    <xmx:xOxvaf4NmYd_rN2jKUcN2JXRJaOvuV97TTqjTpJSsC3K3UAc4XyNsg>
+    <xmx:xOxvae-IMrtQbGEiJDUQPTxIXJTjzR9nb7R-YrL6CP_NOJBhamm5dA>
+    <xmx:xOxvaWVjuQ18Pi1054YcUlw0KY1YG1_HF9VwjDCTbB6xUSMmUTMWLA>
+    <xmx:xOxvaS7BcAw8rqxbiuG1zNHauVxHa5FOLc9enk8MjZfCB3xi9AFtt3Tk>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 15:54:34 -0500 (EST)
+ 20 Jan 2026 15:59:47 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-  git@vger.kernel.org,
-  Patrick Steinhardt <ps@pks.im>,
-  correctmost <cmlists@sent.com>,
-  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 2/4] parse: add functions for parsing from non-string
- buffers
-In-Reply-To: <4d83375b-76e2-4420-80dd-6a04d3201532@gmail.com> (Phillip Wood's
-	message of "Fri, 5 Dec 2025 16:11:15 +0000")
-References: <20251130131351.GA198697@coredump.intra.peff.net>
-	<20251130131537.GB199335@coredump.intra.peff.net>
-	<4d83375b-76e2-4420-80dd-6a04d3201532@gmail.com>
-Date: Tue, 20 Jan 2026 12:54:33 -0800
-Message-ID: <xmqqldhsxawm.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Samo =?utf-8?Q?Poga=C4=8Dnik?= via GitGitGadget
+ <gitgitgadget@gmail.com>,
+    Samo =?utf-8?Q?Poga=C4=8Dnik?= <samo_pogacnik@t-2.net>,
+    Patrick Steinhardt <ps@pks.im>,
+    Taylor Blau <me@ttaylorr.com>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] shallow: set borders which are all reachable after
+ clone shallow since
+In-Reply-To: <xmqqh5ujuekq.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	24 Nov 2025 16:43:33 -0800")
+References: <pull.2107.git.git.1763807914242.gitgitgadget@gmail.com>
+	<pull.2107.v2.git.git.1763926552033.gitgitgadget@gmail.com>
+	<xmqqh5ujuekq.fsf@gitster.g>
+Date: Tue, 20 Jan 2026 12:59:46 -0800
+Message-ID: <xmqqfr80xanx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,55 +96,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> There are a few choices regarding the interface and the implementation.
->> 
->> First, the implementation:
 >> ...
-> This all sounds sensible to me and an does the interface description.
-> ...
-> If we're parsing INTMAX_MIN then this negation tries to calculate 
-> -INTMAX_MIN which is undefined (I've added some tests for parsing 
-> INTMAX_MAX and INTMAX_MIN at [1] and verified that UBSAN is triggered 
-> when parsing INTMAX_MIN). We could do
+>> The modified implementation of a generic shallow boundary finder
+>> based on rev-list ensures that all shallow border commits are reachable
+>> also after being grafted. This is achieved by inspecting all parents
+>> of each initial border commit candidate. The border commit candidate
+>> is set border only when all its parents wern't on the initial list of
+>> candidates. Otherwise the border commit candidate is not set as border
+>> however its parents that weren't on the list of candidates are set as
+>> borders.
 >
-> 		*ret = u_ret;
-> 		if (*ret != INTMAX_MIN)
-> 			*ret = -*ret;
+> It is a minor point, but there are "boundary" and "border" used more
+> or less interchangeably in the proposed commit log message, and
+> would make the readers wonder if there are differences (I do not
+> think we use the word "border" anywhere in our documentation).  It
+> is minor as we do not have such mixture in the end-user facing part
+> of the documentation with this patch.
 >
-> but I think it might be easier to alter parse_from_buf_internal() to 
-> make "negate" a local variable, change the function argument to "bool 
-> allow_negative" and do
->
-> 		*ret = negate ? 0u - val : val;
->
-> Then parse_signed_from_buf() can do "*ret = *u_ret;" to convert the 
-> output of parse_from_buf_internal() to a signed value.
->
->> diff --git a/t/unit-tests/u-parse-int.c b/t/unit-tests/u-parse-int.c
->> new file mode 100644
->> index 0000000000..a1601bb16b
->> --- /dev/null
->> +++ b/t/unit-tests/u-parse-int.c
->> @@ -0,0 +1,98 @@
->> +#include "unit-test.h"
->> +#include "parse.h"
->> +
->> +static void check_int(const char *buf, size_t len,
->> +		      size_t expect_ep_ofs, int expect_errno,
->> +		      int expect_result)
->> +{
->> +	const char *ep;
->> +	int result;
->
-> Do we want to set errno=0 here so that we can be sure it has been set by 
-> parse_int_from_buf() when we check it below?
+> I'll let those (cc'ed) who may be more familiar with, or, at least
+> have more code than I have in, the shallow infrastructure to comment
+> on the way the updated code uses the revision machinery.
 
-
-After this message, the discussion stopped and the topic has been
-dormant since then for a month and a half.  I'd drop the topic from
-'seen' soonish but that does not mean an improved version of this
-patch is unwelcome.
+After this exchange, the topic has been dormant for almost full two
+months.  As I do not deal with shallow clones myself, even though I
+understand that some folks rely on it working, I'd really prefer to
+see somebody who are familiar with the underlying logic to review
+this patch if we were to move forward with it.
 
 Thanks.
+
+
