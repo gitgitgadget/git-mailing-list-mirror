@@ -1,69 +1,69 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEA943C04D
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 14:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3EB43DA38
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 14:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768918202; cv=none; b=SJ061mjFogNdS0CUjA6o8ylxU8eWTbZbotixv9H7s8fWCVeJolLVrPqAJnjH2zv7P01dfWLKBPUpGf1PmEj9VXV9mR10806eEbzlmrbXLsdxqe9gEOA74XOsFVUhTUBDAs5VVlBGKsTBP40VF+UybBn2VKeI6lqjxz7ijnoRayA=
+	t=1768918206; cv=none; b=EZ+kEc/FHkwuHLt7J9b7qjEE5YX0JImoEcKb2ixh/si0Wa5PgX14LdExUoKPjctbEVA57BLJAvTH5fX19D91yWUvVgpRwd/jWYftBcrXJ1ypB+IqzCpnUNh2FQ0UofMzuOAAgqZn0rCLdFAwiJYWSsMjN2PqzlnREgLRPr96R8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768918202; c=relaxed/simple;
-	bh=HwfEI86CdCU2fzCxXw6ReS8x5fHgrtWaB3/WRbC3JZ4=;
+	s=arc-20240116; t=1768918206; c=relaxed/simple;
+	bh=TTS1HZUNLaXxeD+AzW1462Qx6S95WzG8rVCEdJLtFPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpM4kCBoYxQB8gwvCCJh2Eo6CeCf/4QquB162LZ0J7BTcWaTVFgs1860aeVWkCoeE61Aqf8y40MK3VguLLauPXOgtfvBRiza1XZ4RuxhxChmWxs1oDIFdZAuTr0AXx8fNdHLfAITTCR40V76TJwTV0q2HK4Dp3ePcIh///D4JEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IX5cPygd; arc=none smtp.client-ip=209.85.215.170
+	 MIME-Version; b=BSfDUwafKnvBTEp4qt7PDS4CMPeuoWrvWF0MoTpS/fMZWmp3ugXv7cB+sj5967kaV53FNWe9mNutcTpn5s62Vq60bkFLXwziTIXm+ZkGqMLLQ0gmvz4gmDE1ET45Li3EAiGTc8APlkPOoJoaXQUXevDJlin16gWtvrMOoc17Hqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2CsnDW/; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IX5cPygd"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c05d66dbab2so3481953a12.0
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 06:10:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2CsnDW/"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-81e8b1bdf0cso3103147b3a.3
+        for <git@vger.kernel.org>; Tue, 20 Jan 2026 06:10:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768918200; x=1769523000; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768918204; x=1769523004; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7S4lG8zkSZ1REK7yqCW3O4vsIKK2s45KOtnWETsqvQ8=;
-        b=IX5cPygdLW4Z7V2P90OAi/uRcmNKR66of2t2XNXfnCDDe9PE1BhD/vuxEIkGlNaIFj
-         XZczmzOo6CEwsTam6R/pB0DoWcM71rQO0bRSEGGEVmUj/ZcnZxYjmLStcz8GssFSNnqE
-         8qVKc3AoT7Zx5ZjKEq6Rmy1boD6sZybRZa7MMUnxuDaSp5XwWJgD5TFEQFFhHR5W5OaA
-         O5NL50TrVhch4JbHA8073Ezs4M6q00OPskLAV/gGOJbVIYbwxbWwN+GspCZR5DxsoWf3
-         GT6shJy1Y1uaPMRf9zmHPKnFtR21sAeQ6QxE+81EcieLosXm3w2oQ0JrzHynA2Qj3J9r
-         GRpA==
+        bh=tx1q49fWHwyfY6dlzu/Qi/pKKHUmTjZD4fMYoMgmVwY=;
+        b=c2CsnDW/Pbb39/k/6PlnZbkORvRGHrMhqDeGUdUYVapOsocrf+JklDgCcKXNqybGXX
+         NKsLfiGUeVbAOlvMLEQUo8hni1bUXWZD8A1c4TF4NCbkDujWqrxJVCthSiaYAoxN0RLW
+         RI28w0/VR3oDHYqwAmileUpDUFhfmx5Pdoji4Cdm1A0JXRZGZGy6HlT43bd7bLG03vvC
+         L8uvNP4rtTsSxhmEAmTTZKm0vSXLZHtBh+aGyVSSjQFd19YlIV51JeSeOH1qGn/Ap8Jy
+         XwDtqy4xGsfFtZwcTjUwmYO1mCccmrOtcejValjHPXk6cSHSi+vAf5Al2DKzxyu5rYRH
+         o+XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768918200; x=1769523000;
+        d=1e100.net; s=20230601; t=1768918204; x=1769523004;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7S4lG8zkSZ1REK7yqCW3O4vsIKK2s45KOtnWETsqvQ8=;
-        b=J7h+8TpweZqi2Ozqn0426ZWQNIFP7rG+dZNVkwm/ZUTGCeZyb+PwGBPuYctaHsv4M9
-         70ALuBNoK0llK94aF0XbSfRTcrqNaHu7hLwDeRYyEYmVrQEj2VR14QaFgzMj2o4tuK+C
-         GMsGiFq1UMLB9i3IS1T8tNknaqD2MVjKjxZr/wL9WNw2CGuNzMxDYredrPESt5Qh1A7Z
-         wsEP51gQ1FLKAuoqPhGRwwHxL0wkVTlTDBKuHC0z2lA2fCWH2cVh0bIdKGUyB6XGjG7i
-         ChXabufB+Ch9VYL2NAAZMOMRqMJgZqSnqj+xDhvTr13WJS2zvce++X4xr3ShYsFAJbh+
-         XoHQ==
-X-Gm-Message-State: AOJu0YwtFBO5iYUPtSjrNjPNXK2rAu368iBfx7NmJFbGyNZa6I8vn9zj
-	BnlRSOJ1i6cB5t5qDmdu141u/DV123xwG8YI1QKQyZ4VZbkHA1HLAZzuwIgKag==
-X-Gm-Gg: AZuq6aJsGhzCNsSezo/TT3sLrihMfx0w/cY21mHuJFcJ3OqsTZnnGAGiuUeTaafogxh
-	IvMvuRCKG89AeVpEPzCcHTGWCdkq4f/+sFuTCtM3uKtLeWofrANbvD23upvlj4THU367ogw0crV
-	iDDNvoUWjxeAm17jtGAwPoPI2+UWWWcRtz438Z28KF4oqHuKe1hklZEO0eGNqgpy7q6ZrMpxAxO
-	7EXo4LRuvN4FMZJc+YBRvWWIacgMSV+UhRkomdH2lNbghg9BNi4mjcW7q4dWaCD55kZJWffFN5S
-	fkM9HRDZQzL8aVfseSxC6c9l+JhuVUflGWS9wEKt9YtH5zvWjGJex6WlcwV5+/dlpGNkERqk4rL
-	fveViH35MKNDUvpZzgwtEbdYnIq7dzPiVsAmrf6hSoi2bd5u/qayqbrwrbLxBNl/JlSOX/+MH2E
-	kLJjLKk/qFdvik8xQfD61oRIyqDVXtHg12U8jPDWfeZlu35Q==
-X-Received: by 2002:a17:90b:2fc4:b0:34a:4cc0:9e38 with SMTP id 98e67ed59e1d1-352c3ea74bbmr1711397a91.10.1768918200400;
-        Tue, 20 Jan 2026 06:10:00 -0800 (PST)
+        bh=tx1q49fWHwyfY6dlzu/Qi/pKKHUmTjZD4fMYoMgmVwY=;
+        b=s28wu4x/+R9a0Xz93z4XjQuXia3XL3wq0dFjp/jdj9LVYa7uSVIaNFxfYTaYg8xcpS
+         Lwr3TsxjmpLPhHXzL31Uj+AL/lsw+7Vr4fMBwnuW+HmpXF77eSBqt6YPdS4OoWRCFUKT
+         SgR1u50xk8pHGxUy3MNHGxJTuivznt+xi27CIna0Mws3a+WQqeyGNbiw9K2Pm0LCs82E
+         6PghNHl9HnHYW6bvBK9ZcvY3CwaBOWXyPIlYhbdWHNaR1uid15GkC/uh8UX+9YbbBYmm
+         2I1vZGDd3Z1gnMcMbVKbR/bHznMm9m9tcYf09M2O4OrHKiQQ2XbX8aLkCOTPTkhTYIFv
+         zUzw==
+X-Gm-Message-State: AOJu0Yx1qUMMoHr0UXCFn3MS6niGBp58lEJn4Oi7ts6sKfmeHQZaHDAS
+	KTzoTj/TAx6OZGrVUixX+62BdZcNk7FXcRQVZAfDVmPxL2QqJcQ1JK+G5cqEBw==
+X-Gm-Gg: AY/fxX5BIVUbCW//Gf5sfYFIc48jPES7dOOjjdafww09molU+iLHidqtYMPrIbMyhkE
+	S2CpAFQfPl7WikgWgp50+sxYbiEo8UBzPorEkAyGW491whs63UbO1tr25iyrdC83Gz/w2futR6t
+	SQnZsdwEpzq5BTbyIHbTcMviXpaEK3v8A7Erbq7eloSE7jaZdIvKtzbTvuZzQEEwbT4RMpZK/nJ
+	9c/pGVq9gA4KLwO9VDRhxiINQe+vsbkr6Y3XMu+QZ96KZyev69WHtzXsQFmLg3HcqJFUBcf5IwI
+	NQ2BPVaMCuzHa3D48KMmD2qgSaZkvcMqv+LT157JG+qY7pIKm/+vWI/cWCj66umy1mj1UMiIY2j
+	fQp97uRR3HiDCsT6Uz0fRWnfi1rhUfw/Ag+K33yQp4SffK+2QnVZO3wWGsRK7AJwF1hLhAuTXKC
+	2ByDSUr/CYqgCi1ATjo/5ahFB9VzpFgIv7nQAS+/d3jXsElGaJYoWYePo5
+X-Received: by 2002:a05:6a21:6112:b0:342:1265:158f with SMTP id adf61e73a8af0-38e45e21462mr2006228637.51.1768918204116;
+        Tue, 20 Jan 2026 06:10:04 -0800 (PST)
 Received: from Shreyansh-PC.domain.name ([2401:4900:1cd7:6181:2062:a538:8b6f:d4b5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-352d5a3ea3dsm1362250a91.3.2026.01.20.06.09.58
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-352d5a3ea3dsm1362250a91.3.2026.01.20.06.10.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jan 2026 06:10:00 -0800 (PST)
+        Tue, 20 Jan 2026 06:10:03 -0800 (PST)
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH 2/3] show-index: use gettext wrapping in error messages
-Date: Tue, 20 Jan 2026 19:35:40 +0530
-Message-ID: <20260120140901.517928-3-shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH 3/3] show-index: remove global state variables
+Date: Tue, 20 Jan 2026 19:35:41 +0530
+Message-ID: <20260120140901.517928-4-shreyanshpaliwalcmsmn@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
 References: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
@@ -75,88 +75,92 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Previously, error messages were passed directly to die().
-As suggested by the Git coding guidelines, wrap user-visible strings
-in the _() macro so they can be translated.
+As Git is in the process of removing global state,
+this function still relies on the global variables,
+the_repository and the_hash_algo.
+
+Remove the associated macro and the UNUSED attribute from
+the repo parameter, and replace all uses of the_repository and
+the_hash_algo with repo and repo->hash_algo, respectively.
+
+This modernizes git show-index and makes it more compatible.
 
 Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 ---
- builtin/show-index.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ builtin/show-index.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/show-index.c b/builtin/show-index.c
-index be62edc57b..a9c2f18b73 100644
+index a9c2f18b73..96adae14c0 100644
 --- a/builtin/show-index.c
 +++ b/builtin/show-index.c
-@@ -41,23 +41,23 @@ int cmd_show_index(int argc,
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "builtin.h"
+@@ -16,7 +15,7 @@ static const char *const show_index_usage[] = {
+ int cmd_show_index(int argc,
+ 		   const char **argv,
+ 		   const char *prefix,
+-		   struct repository *repo UNUSED)
++		   struct repository *repo)
+ {
+ 	int i;
+ 	unsigned nr;
+@@ -37,7 +36,7 @@ int cmd_show_index(int argc,
+ 		hash_algo = hash_algo_by_name(hash_name);
+ 		if (hash_algo == GIT_HASH_UNKNOWN)
+ 			die(_("Unknown hash algorithm"));
+-		repo_set_hash_algo(the_repository, hash_algo);
++		repo_set_hash_algo(repo, hash_algo);
  	}
  
  	if (fread(top_index, 2 * 4, 1, stdin) != 1)
--		die("unable to read header");
-+		die(_("unable to read header"));
- 	if (top_index[0] == htonl(PACK_IDX_SIGNATURE)) {
- 		version = ntohl(top_index[1]);
- 		if (version < 2 || version > 2)
--			die("unknown index version");
-+			die(_("unknown index version"));
- 		if (fread(top_index, 256 * 4, 1, stdin) != 1)
--			die("unable to read index");
-+			die(_("unable to read index"));
- 	} else {
- 		version = 1;
- 		if (fread(&top_index[2], 254 * 4, 1, stdin) != 1)
--			die("unable to read index");
-+			die(_("unable to read index"));
- 	}
- 	nr = 0;
- 	for (i = 0; i < 256; i++) {
- 		unsigned n = ntohl(top_index[i]);
- 		if (n < nr)
--			die("corrupt index file");
-+			die(_("corrupt index file"));
- 		nr = n;
+@@ -63,7 +62,7 @@ int cmd_show_index(int argc,
+ 
+ 	/* detection of hash algorithm
+ 	Only works for small files, i.e without large offsets */
+-	if(!the_hash_algo && version == 2) {
++	if(!repo->hash_algo && version == 2) {
+ 		struct stat st;
+ 		size_t file_base_size;
+ 		size_t table_size;
+@@ -79,9 +78,9 @@ int cmd_show_index(int argc,
+ 		hash_size = size_rem / (nr + 2);
+ 
+ 		if(hash_size == GIT_SHA1_RAWSZ) {
+-			repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
++			repo_set_hash_algo(repo, GIT_HASH_SHA1);
+ 		} else if(hash_size == GIT_SHA256_RAWSZ) {
+-			repo_set_hash_algo(the_repository, GIT_HASH_SHA256);
++			repo_set_hash_algo(repo, GIT_HASH_SHA256);
+ 		} else {
+ 			die(_("unable to detect hash algorithm, "
+ 					"use --object-format option"));
+@@ -89,10 +88,10 @@ int cmd_show_index(int argc,
  	}
  
-@@ -99,7 +99,7 @@ int cmd_show_index(int argc,
- 			unsigned int offset, entry[(GIT_MAX_RAWSZ + 4) / sizeof(unsigned int)];
+ 	/* Final fallback to SHA1 */
+-	if(!the_hash_algo)
+-		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
++	if(!repo->hash_algo)
++		repo_set_hash_algo(repo, GIT_HASH_SHA1);
  
- 			if (fread(entry, 4 + hashsz, 1, stdin) != 1)
--				die("unable to read entry %u/%u", i, nr);
-+				die(_("unable to read entry %u/%u"), i, nr);
- 			offset = ntohl(entry[0]);
- 			printf("%u %s\n", offset, hash_to_hex((void *)(entry+1)));
- 		}
-@@ -113,15 +113,15 @@ int cmd_show_index(int argc,
- 		ALLOC_ARRAY(entries, nr);
+-	hashsz = the_hash_algo->rawsz;
++	hashsz = repo->hash_algo->rawsz;
+ 
+ 	if (version == 1) {
+ 		for (i = 0; i < nr; i++) {
+@@ -114,7 +113,7 @@ int cmd_show_index(int argc,
  		for (i = 0; i < nr; i++) {
  			if (fread(entries[i].oid.hash, hashsz, 1, stdin) != 1)
--				die("unable to read sha1 %u/%u", i, nr);
-+				die(_("unable to read sha1 %u/%u"), i, nr);
- 			entries[i].oid.algo = hash_algo_by_ptr(the_hash_algo);
+ 				die(_("unable to read sha1 %u/%u"), i, nr);
+-			entries[i].oid.algo = hash_algo_by_ptr(the_hash_algo);
++			entries[i].oid.algo = hash_algo_by_ptr(repo->hash_algo);
  		}
  		for (i = 0; i < nr; i++)
  			if (fread(&entries[i].crc, 4, 1, stdin) != 1)
--				die("unable to read crc %u/%u", i, nr);
-+				die(_("unable to read crc %u/%u"), i, nr);
- 		for (i = 0; i < nr; i++)
- 			if (fread(&entries[i].off, 4, 1, stdin) != 1)
--				die("unable to read 32b offset %u/%u", i, nr);
-+				die(_("unable to read 32b offset %u/%u"), i, nr);
- 		for (i = 0; i < nr; i++) {
- 			uint64_t offset;
- 			uint32_t off = ntohl(entries[i].off);
-@@ -130,9 +130,9 @@ int cmd_show_index(int argc,
- 			} else {
- 				uint32_t off64[2];
- 				if ((off & 0x7fffffff) != off64_nr)
--					die("inconsistent 64b offset index");
-+					die(_("inconsistent 64b offset index"));
- 				if (fread(off64, 8, 1, stdin) != 1)
--					die("unable to read 64b offset %u", off64_nr);
-+					die(_("unable to read 64b offset %u"), off64_nr);
- 				offset = (((uint64_t)ntohl(off64[0])) << 32) |
- 						     ntohl(off64[1]);
- 				off64_nr++;
 -- 
 2.52.0
 
