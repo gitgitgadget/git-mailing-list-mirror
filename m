@@ -1,65 +1,67 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C3F3D1CDC
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48C03D1CCE
 	for <git@vger.kernel.org>; Tue, 20 Jan 2026 09:59:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768903180; cv=none; b=TsQYxrFtKo0EarDaDftUaB9HzdTKEQ3X9xIJkMiwsHC+Foa+Jynam9R+gCACGS9wYusqNVCPDsARUFaWqGotkZUiFekllop3mcQOPZl1d9eMPazF/O013+mk4FmMXRl8F4f9mcKYwkeidUf6rWsDWfZL+XHEUVp53zdn23AtjmM=
+	t=1768903181; cv=none; b=JHRVXbgQ+kQaEdGaeArnIGPBydVvomCZ5fAofqvNht2BFa8tdkFozw+2ifIqnC6s8DkJ0TYbnjG1qYjr2xcKiSFHdq7Vy6M4Ees8d+o03L7slVyIqRVo+TtD8gmoHIPP6xwCC0QSiUbaZ/ON24AAg/ZaZMU9lHvCL6COtcP/K8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768903180; c=relaxed/simple;
-	bh=wdcds6xE82jDkiS8Iuyt8novimIZwCWvEsTKL+cPdfc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PJgylkArwXXrjSCOf/UuoQdWjzamzYLqO1OSeixfcsQIW2pZo+4iuN/LchjSNDgSMrpEAuQEhi1tvl8of1nR34Y6oz4pFEpVWh+DaBnXnsx8/vUETex9yjbpeXq63SkQk2NmWItm7t7jfqRqvfCbUEjAtllVABbtsuhtuuzvUTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S8ufr/g2; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1768903181; c=relaxed/simple;
+	bh=T14GMJ3rNlboxqbbPxBn8+VwQIgd0/s3BtmdND5J0nA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=csevqUeUx9HgJGcDUVOu6N7XBFIxVU/bcU4tqQuWzMhpMosbFI3DRvosYs7e039ozrt9x3jQvUPJu3fyRpWWyTk+vDLzslYXlD6P6iHk+ndiQLKdvSEsQEH71AkRJwhXhb39M+Ls8vrepvvOie98ICcld74x6NcsnPqeojVXp2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hWE00RUH; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S8ufr/g2"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4801d1daf53so35651395e9.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hWE00RUH"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43596062728so11317f8f.1
         for <git@vger.kernel.org>; Tue, 20 Jan 2026 01:59:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1768903177; x=1769507977; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rKCJZGvGDcsdURT84ELEHVJ0fX3suOIM4krl+dSPOsU=;
-        b=S8ufr/g2IrTyETLP5zza/5HnvNknH46iH3n9Yvds06b2dUJ8UeFOF6ok+wEKg34nNZ
-         xXE7xqGcUZtOTSRrqNFmRzKxo9SJugT4V0RStpZHNNzU+ewYRoYODfRRaKkXeO/Djptf
-         15UhVYJxJHzA8tROZ4TZJr8GaMX+okJ7qvFBc/5ZERZWWgSgJNQxPhmd/+0QbE5LTtw9
-         +Qbu1ALNZCKr9Px/dzXm/9NOGRqdOSEkIe0h801NlkFmQ5knSk6cxc2hi4uTfJIgpu0v
-         USSZKzndMl7ljj3BZLSH5o6lp41/g92ZhWsFs2BPORgwiYAflB7C38DWV8GuqGBAykud
-         6QRA==
+        bh=LAvZLZcFY2WGvi2BQvDD+a1ldwjWfHOPk5ZlIcLbbuY=;
+        b=hWE00RUHy5iL8sCQmTE4VZDzjD9S4bZIIkmH4MLWoBeDUguXYmWPrSxp8wOZ3db8ZY
+         HYiifAwijSvPk1WZDmZ7Pm7PH2xkLOc2uJTdCBwD1tBoU/+d2Soe1U7aKQ7UWY0Paa1j
+         FRJY54XNHuhmG47Kor4uV9LfEksFhp2fiOfzfpEyUee8GD3Tbkay9U28vIU1S/b5PTtl
+         ZGo6fvWzLKfNK291wxi9pxsC2b/FL8XaQ8miSPZhM/dEoOreuzs2fLFxfNu7FZnFwHup
+         whqevBJyS8AwJqWmb4zn5oeyF33XneR51jOWi4WgpL2d3GGMck0j2lCthSdGH5ctpekF
+         Zt0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1768903177; x=1769507977;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rKCJZGvGDcsdURT84ELEHVJ0fX3suOIM4krl+dSPOsU=;
-        b=AvSxt1QZW4Hfwwta+lATGeILat5+YwS14MlOeVjje7EhqjR4S6wto3gM8BnIHxvsIB
-         wMQrwrZYIp/ALeLMM3SL6/I1KgdqHVC4X2n0Cnc+XEyWivead1ZqpxrP+fl61QBIyC+B
-         vh+1xKrhgxjEZ4EZXwH9lJM75n25fEQnORY3vOqy24Vwm6dvZRMSlZVGsG5AKAG/xkhG
-         a+F9JU5Y5X8vmWHrw5kW8t0/Kl2wMgQ7gOrGpqjWS6dmq0uav9KBVba1C90q+5rNJZsn
-         YD5I8d9zkwwil1rBWrjRxNr+KQlTbTzQBbk7aXms4A9PoBqM/CoYCi19P/yOS6AgGfAQ
-         lVlQ==
-X-Gm-Message-State: AOJu0YyWutzN8uom/lvnTYGpEU52N3pGp4QijZXQfY8JMgsdDOng9eam
-	s5kbus6JTgVQRehYpqGPUI6uKkfuzvGZBOfhLrzMNqsDWPVsyFINv4wc
-X-Gm-Gg: AZuq6aKltWLbPyqptzK2xd7g4mG+/9S2mOfodYYmuXhVhMDF1AHmbn7LdzXlVrPm94Y
-	BFdlR09bg4cwfRjMs3veevgGMQsiZ8kK6lAUCRMGlKBfpqZau4l+rOetWyluEJN8qY7/5Cw8vMl
-	J7xtzaYifS869Vnhnyf4U/Cj/N4R2MCG7096GM3GXCDLaPG+DuAAzXPv3TJnIqkeUAc3sFZdRDx
-	qecHL5h2YWTr8JaxMVExJmeZwM7tX1bWQjO2j1MzMLGbUTc8Z+7FUYQsaXKhC9ERvRt31+Kxclo
-	7AyPHyTy6tmNsehaC0/fogGmkHWW427wfTrIJxE7XcntUQ8GD6sXGch4Fibiq3DkWSelQoUVnAa
-	KYWdegWTs2N+KwGsc3uRkhkCizXdUo1VTIzQskX6VDWxQA9i4FHNvwy8uTD+gFzJRCUDSCR8/v7
-	UENaKsDD3005jnS6Zxqg==
-X-Received: by 2002:a05:6000:240f:b0:432:db19:7dc7 with SMTP id ffacd0b85a97d-43569bd7008mr18723974f8f.61.1768903177019;
-        Tue, 20 Jan 2026 01:59:37 -0800 (PST)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:9d17:c155:e8f0:9505])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43569921f6esm27879778f8f.4.2026.01.20.01.59.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LAvZLZcFY2WGvi2BQvDD+a1ldwjWfHOPk5ZlIcLbbuY=;
+        b=IEO576v+sSHB/9HoWhClQVVKnMhVMQpT6xV54/De8L9ExipnFtXJmpRQBgSW2LYCPj
+         B8iLGiS7Ku2LtW8BHOu6FHhVRvBvrIQ9PX2lVuCWvbiiSApoOGtP4J+YKlPv/3zMQy5q
+         ouRW4ihX+feOQYsIpioS0w4kBOnJlJt1NaulRf7YdxZ/eIYWSCviaGW5uoQ5BAD+cdRl
+         mdtlbkjSrZpvdVxSAmaO4r+VSOWwnf7kRo7kTkHolzWnZ+T1BzIW0yBBe0P7OkXjDoDi
+         Pdx90EOrqC0yFGA/crpf1+mZyJTQNDnpJXPzzGcvipEMlyWZzDfgdhV1OaugYjC4P2tU
+         IFvg==
+X-Gm-Message-State: AOJu0Yx8TCzLZDHqC+GUMVTzBx/aWfeKqXZ25scT5vwnmg+ZOG2Tui3Z
+	fckK4SLh99yyarAivkynyrxNk2c03apSIoNaUojFOO5C8JXv7etsh85I
+X-Gm-Gg: AZuq6aJGsk/Iv/wUE0TMLHyRnoIXNi7PQdi9n/0pMXVG7HbIqOqbUAM/Lq2o3qL9Qwy
+	NIvivgGY7M0Xt3twWW8mNYe5kF+3vYS5MTGv8gZgZX73RYUfAWOaA+qW/adOtrZ/oLMidkau0UH
+	4+e1A1V4n6NOYPrqodRsFHyVA4y2miBE1hLjB8l3EPKfGHLUHJ60DS7Bwgmthm+El6loMf9/0q4
+	CEQYkM6B6bQXdOUvtHHyXqf4I5hdC22Gxv9/xdblGzpQvcfwSuN5Se8taBxICko6fv0aDszB+d8
+	IlfrvAZtTE0rC2T/pWpY+HBws5V9uNNQrUwT1fPF4f6i2wHvZZaQSCmPT+r6sZsfbVMAKfjA3rr
+	/1Xd5z8d7meptZtiUdF50+ZiV8qFxRkMAp/iZ557G6IIfMFpHjDEdoFOedFdc/ztFKL9NKWOYnC
+	AwR1eSWz5ugeXcWcilBQ62PSUp1WkL
+X-Received: by 2002:a05:6000:2906:b0:432:5a4e:c023 with SMTP id ffacd0b85a97d-4356954f212mr20876619f8f.13.1768903176215;
         Tue, 20 Jan 2026 01:59:36 -0800 (PST)
+Received: from [127.0.0.2] ([2a02:8109:d906:4e00:9d17:c155:e8f0:9505])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43569921f6esm27879778f8f.4.2026.01.20.01.59.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 01:59:35 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 20 Jan 2026 10:59:19 +0100
-Subject: [PATCH v3 1/6] refs: skip to next ref when current ref is rejected
+Subject: [PATCH v3 0/6] refs: provide detailed error messages when using
+ batched update
+Date: Tue, 20 Jan 2026 10:59:18 +0100
+Message-Id: <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-0-e0edb29acbef@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,257 +69,680 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-1-e0edb29acbef@gmail.com>
-References: <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-0-e0edb29acbef@gmail.com>
-In-Reply-To: <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-0-e0edb29acbef@gmail.com>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAPZRb2kC/7XOS27DIBAG4KtErDsVj/iVVe9RZYExtqeKIWKI0
+ yry3Tu4qpQLZMcP/zDfQ5BP6EmcDg+R/IqEMXAwbwfhZhsmDzhwFlrqWiploDYGkp+Sp1KFS6Q
+ MA9op8AEdLHxveeo++wDXG80YJghcdHFZMEPsv7zLBDnyLyPB7O1AoJqmrXst2+5oBa++8ht+7
+ 6zP81+m2z5ZLKUxI+WYfnb3qkrvn3h8DXFVIGGsxrZXjXGVVB/TYvHyzkOiEFf9jKhfhNCM6HR
+ lpe9cMxr9jNi27Rd+a8T0zwEAAA==
+X-Change-ID: 20260113-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-17786b20894a
+In-Reply-To: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
+References: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>, 
- newren@gmail.com, gitster@pobox.com
+ newren@gmail.com, gitster@pobox.com, 
+ Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8568; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=wdcds6xE82jDkiS8Iuyt8novimIZwCWvEsTKL+cPdfc=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGlvUgZ46RmO7AjL9Do++6z5XxyCSg1YTocia
- ytAq0EJtCW9dIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpb1IGAAoJED7VnySO
- Rox/WiEL/3gpCmX9rsmv5dOvNL3ZvMTp8h/mU9jWMwMH4suqVcZ9K2VYaMuVd9wN6xcymgRXOFE
- 70JQUxdHwry7MK0vnyocVeIsm0JJks8jMhtWJU6FczDB1PyE2a+WGfLuiYNjUOGOUE1f99JwrhE
- C2m5X/nZ6iqG3rTzvVpS0LEOylJz2ruZdLghSpTKyDp2tq5A/VrIfQ3TCq//Wk9aVICKt3bhPJ0
- 1+4MSbZq8+XNZjOW49K35DG0ABYfse8yGG1l8sI4JrPf2SQiy4t+gYeIJaalXPwj3Ux/eAkvYEf
- BeglxxC71+XJbm0Mofk2JODzSLDzCxIU1GXrTmbq7Ad5hC6p/D4tbELL7csyVTrA9/3sdLfs8x+
- +dA/l/vkvb7nqWIEI3dJ3CT8dydmasoOVSccveocbhJPk4YMvvpO4hvMTeGsJk49/lkWWZTKZbP
- iHbxK5kW7HZW47eJ44tjDYxa1ssGd7KmhD+UKMB4mvBLG70zE24IxS6NEurHkVlUCci4LXy4nP8
- Tc=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=28993;
+ i=karthik.188@gmail.com; h=from:subject:message-id;
+ bh=T14GMJ3rNlboxqbbPxBn8+VwQIgd0/s3BtmdND5J0nA=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGlvUgawaz4Ve8ggF5kqWhzkGy0Xd7qZV9jgk
+ zs9Gywy3kisnIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpb1IGAAoJED7VnySO
+ Rox/on0L/As8Qwwxc2wuaqgzGndvczYR20tbO7Ni3zbOvMjGW6TOXUvSE+R99HYpEQZJLahE4cs
+ YpQJ7tR52HIbaog6U1VxskDCeyUvI5gKP4R5VrmrVaxgyg63BScCP85eTM7uhWZw+VoAtbdM1dw
+ u/UMT23nD2ZN9yeE91c00wRHqgYoJS8CNjoLbpDOjq3VJxVUuihfenHHumG6qeoq5X28k/AST2S
+ h0RtcDByc//0FvDjg79TggtX05IoANKdYiVXkT7anNqVo4NlinW1L6Zb7kuv7lD5vhnOIzmvqV6
+ i+eSrVeX7cmbKFhRIEux9q6oEf4LY7449w9oZoT0pYZ70ltmcTO/K9M0AZUfyHJ4mO0snMBBXyN
+ rdgi2jfAd/KStWBOlOs3JDL/BFOgt5zTdt0WHZ8l1zQRcK1z2dLmX9ZY0bO2xLRiCLxOfCx1uZJ
+ fOc0kWlzwyrnX1bS2WU9R46Kxqa+JSDuarthVmYaMpjcSPUBbJxWsFGfUDl5SlPNo/Qwxwe8AU4
+ Rk=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-In `refs_verify_refnames_available()` we have two nested loops: the
-outer loop iterates over all references to check, while the inner loop
-checks for filesystem conflicts for a given ref by breaking down its
-path.
+The refs namespace uses an error buffer to capture details about failed
+reference updates. However when we added batched update support to
+reference transactions, these messages were never propagated, instead
+only an error code pertaining to the type of failure was propagated.
 
-With batched updates, when we detect a filesystem conflict, we mark the
-update as rejected and execute 'continue'. However, this only skips to
-the next iteration of the inner loop, not the outer loop as intended.
-This causes the same reference to be repeatedly rejected. Fix this by
-using a goto statement to skip to the next reference in the outer loop.
+Currently, there are three regions which utilize batched updates:
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+  - git update-ref --batch-updates
+  - git fetch
+  - git receive-pack
+
+While 'git update-ref --batch-updates' was a newly introduced flag, both
+'git fetch' and 'git receive-pack' were pre-existing. Before using
+batched updates, they provided more detailed error messages to the user,
+but this changed with the introduction of batched updates. This is a
+regression in their workings.
+
+This patch series fixes this, by passing the detailed error message and
+utilizing it whenever available. The regression was reported by Elijah
+Newren [1] and based on the patch submitted by Jeff King [2].
+
+[1]: https://lore.kernel.org/all/CABPp-BGL2tJR4dPidQuFcp-X0_VkVTknCY-0Zgo=jHVGv_P=wA@mail.gmail.com/
+[2]: https://lore.kernel.org/all/20251224081214.GA1879908@coredump.intra.peff.net/
+
 ---
- refs.c                  | 44 ++++++++++++++++++++++++++------------------
- refs/files-backend.c    |  5 ++---
- refs/packed-backend.c   | 12 ++++++------
- refs/refs-internal.h    |  4 +++-
- refs/reftable-backend.c |  5 ++---
- 5 files changed, 39 insertions(+), 31 deletions(-)
+Changes in v3:
+- Drop the first commit.
+- For the last commit, where we delay 'git fetch' status information,
+  delay all information to the end. Also use a list to compliment the
+  existing strmap, this ensures that the order is maintained.
+- Link to v2: https://patch.msgid.link/20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-0-925a0e9c7f32@gmail.com
 
-diff --git a/refs.c b/refs.c
-index e06e0cb072..53919c3d22 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1224,6 +1224,7 @@ void ref_transaction_free(struct ref_transaction *transaction)
- 		free(transaction->updates[i]->committer_info);
- 		free((char *)transaction->updates[i]->new_target);
- 		free((char *)transaction->updates[i]->old_target);
-+		free((char *)transaction->updates[i]->rejection_details);
- 		free(transaction->updates[i]);
- 	}
- 
-@@ -1238,7 +1239,8 @@ void ref_transaction_free(struct ref_transaction *transaction)
- 
- int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
- 				       size_t update_idx,
--				       enum ref_transaction_error err)
-+				       enum ref_transaction_error err,
-+				       struct strbuf *details)
- {
- 	if (update_idx >= transaction->nr)
- 		BUG("trying to set rejection on invalid update index");
-@@ -1264,6 +1266,7 @@ int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
- 			   transaction->updates[update_idx]->refname, 0);
- 
- 	transaction->updates[update_idx]->rejection_err = err;
-+	transaction->updates[update_idx]->rejection_details = strbuf_detach(details, NULL);
- 	ALLOC_GROW(transaction->rejections->update_indices,
- 		   transaction->rejections->nr + 1,
- 		   transaction->rejections->alloc);
-@@ -2659,30 +2662,33 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
- 			if (!initial_transaction &&
- 			    (strset_contains(&conflicting_dirnames, dirname.buf) ||
- 			     !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
--						       &type, &ignore_errno))) {
-+						&type, &ignore_errno))) {
-+
-+				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-+					    dirname.buf, refname);
-+
- 				if (transaction && ref_transaction_maybe_set_rejected(
- 					    transaction, *update_idx,
--					    REF_TRANSACTION_ERROR_NAME_CONFLICT)) {
-+					    REF_TRANSACTION_ERROR_NAME_CONFLICT, err)) {
- 					strset_remove(&dirnames, dirname.buf);
- 					strset_add(&conflicting_dirnames, dirname.buf);
--					continue;
-+					goto next_ref;
- 				}
- 
--				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
--					    dirname.buf, refname);
- 				goto cleanup;
- 			}
- 
- 			if (extras && string_list_has_string(extras, dirname.buf)) {
-+				strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
-+					    refname, dirname.buf);
-+
- 				if (transaction && ref_transaction_maybe_set_rejected(
- 					    transaction, *update_idx,
--					    REF_TRANSACTION_ERROR_NAME_CONFLICT)) {
-+					    REF_TRANSACTION_ERROR_NAME_CONFLICT, err)) {
- 					strset_remove(&dirnames, dirname.buf);
--					continue;
-+					goto next_ref;
- 				}
- 
--				strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
--					    refname, dirname.buf);
- 				goto cleanup;
- 			}
- 		}
-@@ -2712,14 +2718,14 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
- 				if (skip &&
- 				    string_list_has_string(skip, iter->ref.name))
- 					continue;
-+				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-+					    iter->ref.name, refname);
- 
- 				if (transaction && ref_transaction_maybe_set_rejected(
- 					    transaction, *update_idx,
--					    REF_TRANSACTION_ERROR_NAME_CONFLICT))
--					continue;
-+					    REF_TRANSACTION_ERROR_NAME_CONFLICT, err))
-+					goto next_ref;
- 
--				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
--					    iter->ref.name, refname);
- 				goto cleanup;
- 			}
- 
-@@ -2729,15 +2735,17 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
- 
- 		extra_refname = find_descendant_ref(dirname.buf, extras, skip);
- 		if (extra_refname) {
-+			strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
-+				    refname, extra_refname);
-+
- 			if (transaction && ref_transaction_maybe_set_rejected(
- 				    transaction, *update_idx,
--				    REF_TRANSACTION_ERROR_NAME_CONFLICT))
--				continue;
-+				    REF_TRANSACTION_ERROR_NAME_CONFLICT, err))
-+				goto next_ref;
- 
--			strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
--				    refname, extra_refname);
- 			goto cleanup;
- 		}
-+next_ref:;
- 	}
- 
- 	ret = 0;
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 6f6f76a8d8..6790d8bf53 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2983,10 +2983,9 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 					  head_ref, &refnames_to_check,
- 					  err);
- 		if (ret) {
--			if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--				strbuf_reset(err);
-+			if (ref_transaction_maybe_set_rejected(transaction, i,
-+							       ret, err)) {
- 				ret = 0;
--
- 				continue;
- 			}
- 			goto cleanup;
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 4ea0c12299..59b3ecb9d6 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1437,8 +1437,8 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 						    update->refname);
- 					ret = REF_TRANSACTION_ERROR_CREATE_EXISTS;
- 
--					if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--						strbuf_reset(err);
-+					if (ref_transaction_maybe_set_rejected(transaction, i,
-+									       ret, err)) {
- 						ret = 0;
- 						continue;
- 					}
-@@ -1452,8 +1452,8 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 						    oid_to_hex(&update->old_oid));
- 					ret = REF_TRANSACTION_ERROR_INCORRECT_OLD_VALUE;
- 
--					if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--						strbuf_reset(err);
-+					if (ref_transaction_maybe_set_rejected(transaction, i,
-+									       ret, err)) {
- 						ret = 0;
- 						continue;
- 					}
-@@ -1496,8 +1496,8 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 					    oid_to_hex(&update->old_oid));
- 				ret = REF_TRANSACTION_ERROR_NONEXISTENT_REF;
- 
--				if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--					strbuf_reset(err);
-+				if (ref_transaction_maybe_set_rejected(transaction, i,
-+								       ret, err)) {
- 					ret = 0;
- 					continue;
- 				}
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index c7d2a6e50b..191a25683f 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -128,6 +128,7 @@ struct ref_update {
- 	 * was rejected.
- 	 */
- 	enum ref_transaction_error rejection_err;
-+	const char *rejection_details;
- 
- 	/*
- 	 * If this ref_update was split off of a symref update via
-@@ -153,7 +154,8 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
-  */
- int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
- 				       size_t update_idx,
--				       enum ref_transaction_error err);
-+				       enum ref_transaction_error err,
-+				       struct strbuf *details);
- 
- /*
-  * Add a ref_update with the specified properties to transaction, and
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 4319a4eacb..0e2648e36c 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1401,10 +1401,9 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 					    &refnames_to_check, head_type,
- 					    &head_referent, &referent, err);
- 		if (ret) {
--			if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
--				strbuf_reset(err);
-+			if (ref_transaction_maybe_set_rejected(transaction, i,
-+							       ret, err)) {
- 				ret = 0;
--
- 				continue;
- 			}
- 			goto done;
+Changes in v2:
+- Updates to the commit messages to be more descriptive.
+- Instead of passing the char pointer for the error description, pass
+  the 'strbuf' itself. This makes the API a lot cleaner to deal with.
+  Also avoids having to remember to reset the strbuf after usage.
+- Chalk out a separate commit for using a 'goto next_ref' in
+  `refs_verify_refnames_available()`. This makes the intention much
+  clearer.
+- For git-update-ref(1), keep the existing implementation as is and only
+  output the detailed error message to stderr.
+- For git-receive-pack(1), use 'rp_error()' for detailed error message
+  while keeping the current implementation as is.
+- Added a separate patch to handle missing information in git-fetch(1)'s
+  status table. This involves delaying updates to the end, where update
+  success/failure information is available. I'm not too confident about
+  this approach though, we could also drop it from the series and I
+  could pick that up independently. This is still 1.19 ± 0.02 times
+  faster than non-batched version (v2.50.0) in the files backend.
+- Link to v1: https://patch.msgid.link/20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com
 
--- 
-2.51.2
+---
+ builtin/fetch.c         | 259 +++++++++++++++++++++++++++++++++++++-----------
+ builtin/receive-pack.c  |   7 +-
+ builtin/update-ref.c    |   7 +-
+ refs.c                  |  46 +++++----
+ refs.h                  |   1 +
+ refs/files-backend.c    |   5 +-
+ refs/packed-backend.c   |  12 +--
+ refs/refs-internal.h    |   4 +-
+ refs/reftable-backend.c |   5 +-
+ t/t1400-update-ref.sh   |  71 +++++++------
+ t/t5510-fetch.sh        |   8 +-
+ t/t5516-fetch-push.sh   |  16 +++
+ 12 files changed, 316 insertions(+), 125 deletions(-)
+
+Karthik Nayak (6):
+      refs: skip to next ref when current ref is rejected
+      refs: add rejection detail to the callback function
+      update-ref: utilize rejected error details if available
+      fetch: utilize rejected ref error details
+      receive-pack: utilize rejected ref error details
+      fetch: delay user information post committing of transaction
+
+Range-diff versus v2:
+
+1:  7592b0a9aa < -:  ---------- refs: drop unnecessary header includes
+2:  97095095bc = 1:  dbabb9a172 refs: skip to next ref when current ref is rejected
+3:  2dadab77a2 = 2:  b0ab39a262 refs: add rejection detail to the callback function
+4:  007c6d58c1 = 3:  2b323bddbc update-ref: utilize rejected error details if available
+5:  0d0b8b75c8 = 4:  8bf3d986f4 fetch: utilize rejected ref error details
+6:  b9348b5ae3 = 5:  5dab402570 receive-pack: utilize rejected ref error details
+7:  d90420903f ! 6:  596762e6b5 fetch: delay user information post committing of transaction
+    @@ Commit message
+         `ref_update_display_info` which will hold individual update's
+         information and also whether the update failed or succeeded. This
+         finally allows us to iterate over all such updates and print them to the
+    -    user. While this brings back the functionality, it does change the order
+    -    of the output. Modify the tests to reflect this.
+    +    user.
+     
+    -    Using an strmap does add some overhead to 'git-fetch(1)', but from
+    -    benchmarking this seems to be not too bad:
+    +    Using an dynamic array and strmap does add some overhead to
+    +    'git-fetch(1)', but from benchmarking this seems to be not too bad:
+     
+           Benchmark 1: fetch: many refs (refformat = files, refcount = 1000, revision = master)
+    -        Time (mean ± σ):      51.9 ms ±   2.5 ms    [User: 15.6 ms, System: 36.9 ms]
+    -        Range (min … max):    47.4 ms …  58.3 ms    41 runs
+    +        Time (mean ± σ):      42.6 ms ±   1.2 ms    [User: 13.1 ms, System: 29.8 ms]
+    +        Range (min … max):    40.1 ms …  45.8 ms    47 runs
+     
+           Benchmark 2: fetch: many refs (refformat = files, refcount = 1000, revision = HEAD)
+    -        Time (mean ± σ):      53.0 ms ±   1.8 ms    [User: 17.6 ms, System: 36.0 ms]
+    -        Range (min … max):    49.4 ms …  57.6 ms    40 runs
+    +        Time (mean ± σ):      43.1 ms ±   1.2 ms    [User: 12.7 ms, System: 30.7 ms]
+    +        Range (min … max):    40.5 ms …  45.8 ms    48 runs
+     
+           Summary
+             fetch: many refs (refformat = files, refcount = 1000, revision = master) ran
+    -          1.02 ± 0.06 times faster than fetch: many refs (refformat = files, refcount = 1000, revision = HEAD)
+    +          1.01 ± 0.04 times faster than fetch: many refs (refformat = files, refcount = 1000, revision = HEAD)
+     
+         Another approach would be to move the status printing logic to be
+         handled post the transaction being committed. That however would require
+    @@ Commit message
+         which is more involved infrastructure work compared to the strmap
+         approach here.
+     
+    +    Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+         Reported-by: Jeff King <peff@peff.net>
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+     
+    @@ builtin/fetch.c: static void display_ref_update(struct display_state *display_st
+     +	const char *summary;
+     +	const char *fail_detail;
+     +	const char *success_detail;
+    ++	const char *ref;
+     +	const char *remote;
+    -+	const char *local;
+     +	struct object_id old_oid;
+     +	struct object_id new_oid;
+     +};
+     +
+    -+static struct ref_update_display_info *ref_update_display_info_new(
+    -+						char success_code,
+    -+						char fail_code,
+    -+						const char *summary,
+    -+						const char *success_detail,
+    -+						const char *fail_detail,
+    -+						const char *remote,
+    -+						const struct object_id *old_oid,
+    -+						const struct object_id *new_oid)
+    ++static struct ref_update_display_info *ref_update_display_info_append(
+    ++					   struct ref_update_display_info **list,
+    ++					   size_t *count,
+    ++					   char success_code,
+    ++					   char fail_code,
+    ++					   const char *summary,
+    ++					   const char *success_detail,
+    ++					   const char *fail_detail,
+    ++					   const char *ref,
+    ++					   const char *remote,
+    ++					   const struct object_id *old_oid,
+    ++					   const struct object_id *new_oid)
+     +{
+     +	struct ref_update_display_info *info;
+    -+	CALLOC_ARRAY(info, 1);
+    ++	size_t index = *count;
+     +
+    ++	(*count)++;
+    ++	REALLOC_ARRAY(*list, *count);
+    ++
+    ++	info = &(*list)[index];
+    ++
+    ++	info->failed = false;
+     +	info->success_code = success_code;
+     +	info->fail_code = fail_code;
+     +	info->summary = xstrdup(summary);
+     +	info->success_detail = xstrdup_or_null(success_detail);
+     +	info->fail_detail = xstrdup_or_null(fail_detail);
+     +	info->remote = xstrdup(remote);
+    ++	info->ref = xstrdup(ref);
+     +
+     +	oidcpy(&info->old_oid, old_oid);
+     +	oidcpy(&info->new_oid, new_oid);
+    @@ builtin/fetch.c: static void display_ref_update(struct display_state *display_st
+     +	free((char *)info->success_detail);
+     +	free((char *)info->fail_detail);
+     +	free((char *)info->remote);
+    ++	free((char *)info->ref);
+     +}
+     +
+     +static void ref_update_display_info_display(struct ref_update_display_info *info,
+     +					    struct display_state *display_state,
+    -+					    const char *refname, int summary_width)
+    ++					    int summary_width)
+     +{
+     +	display_ref_update(display_state,
+     +			   info->failed ? info->fail_code : info->success_code,
+     +			   info->summary,
+     +			   info->failed ? info->fail_detail : info->success_detail,
+    -+			   info->remote, refname, &info->old_oid,
+    ++			   info->remote, info->ref, &info->old_oid,
+     +			   &info->new_oid, summary_width);
+     +}
+     +
+      static int update_local_ref(struct ref *ref,
+      			    struct ref_transaction *transaction,
+    - 			    struct display_state *display_state,
+    +-			    struct display_state *display_state,
+      			    const struct ref *remote_ref,
+    - 			    int summary_width,
+    +-			    int summary_width,
+     -			    const struct fetch_config *config)
+     +			    const struct fetch_config *config,
+    -+			    struct strmap *delayed_ref_display)
+    ++			    struct ref_update_display_info **display_list,
+    ++			    size_t *display_count)
+      {
+      	struct commit *current = NULL, *updated;
+      	int fast_forward = 0;
+     @@ builtin/fetch.c: static int update_local_ref(struct ref *ref,
+    + 
+    + 	if (oideq(&ref->old_oid, &ref->new_oid)) {
+    + 		if (verbosity > 0)
+    +-			display_ref_update(display_state, '=', _("[up to date]"), NULL,
+    +-					   remote_ref->name, ref->name,
+    +-					   &ref->old_oid, &ref->new_oid, summary_width);
+    ++			ref_update_display_info_append(display_list, display_count,
+    ++						       '=', '=', _("[up to date]"),
+    ++						       NULL, NULL, ref->name,
+    ++						       remote_ref->name, &ref->old_oid,
+    ++						       &ref->new_oid);
+    + 		return 0;
+    + 	}
+    + 
+    + 	if (!update_head_ok &&
+    + 	    !is_null_oid(&ref->old_oid) &&
+    + 	    branch_checked_out(ref->name)) {
+    ++		struct ref_update_display_info *info;
+    + 		/*
+    + 		 * If this is the head, and it's not okay to update
+    + 		 * the head, and the old value of the head isn't empty...
+    + 		 */
+    +-		display_ref_update(display_state, '!', _("[rejected]"),
+    +-				   _("can't fetch into checked-out branch"),
+    +-				   remote_ref->name, ref->name,
+    +-				   &ref->old_oid, &ref->new_oid, summary_width);
+    ++		info = ref_update_display_info_append(display_list, display_count,
+    ++						      '!', '!', _("[rejected]"),
+    ++						      NULL, _("can't fetch into checked-out branch"),
+    ++						      ref->name, remote_ref->name,
+    ++						      &ref->old_oid, &ref->new_oid);
+    ++		ref_update_display_info_set_failed(info);
+    + 		return 1;
+    + 	}
+    + 
+      	if (!is_null_oid(&ref->old_oid) &&
+      	    starts_with(ref->name, "refs/tags/")) {
+    ++		struct ref_update_display_info *info;
+    ++
+      		if (force || ref->force) {
+    -+			struct ref_update_display_info *info;
+      			int r;
+     +
+      			r = s_update_ref("updating tag", ref, transaction, 0);
+    @@ builtin/fetch.c: static int update_local_ref(struct ref *ref,
+     -					   remote_ref->name, ref->name,
+     -					   &ref->old_oid, &ref->new_oid, summary_width);
+     +
+    -+			info = ref_update_display_info_new('t', '!', _("[tag update]"), NULL,
+    -+							   _("unable to update local ref"),
+    -+							   remote_ref->name, &ref->old_oid,
+    -+							   &ref->new_oid);
+    ++			info = ref_update_display_info_append(display_list, display_count,
+    ++							      't', '!', _("[tag update]"), NULL,
+    ++							      _("unable to update local ref"),
+    ++							      ref->name, remote_ref->name,
+    ++							      &ref->old_oid, &ref->new_oid);
+     +			if (r)
+     +				ref_update_display_info_set_failed(info);
+    -+			strmap_put(delayed_ref_display, ref->name, info);
+     +
+      			return r;
+      		} else {
+    - 			display_ref_update(display_state, '!', _("[rejected]"),
+    +-			display_ref_update(display_state, '!', _("[rejected]"),
+    +-					   _("would clobber existing tag"),
+    +-					   remote_ref->name, ref->name,
+    +-					   &ref->old_oid, &ref->new_oid, summary_width);
+    ++			info = ref_update_display_info_append(display_list, display_count,
+    ++							      '!', '!', _("[rejected]"), NULL,
+    ++							      _("would clobber existing tag"),
+    ++							      ref->name, remote_ref->name,
+    ++							      &ref->old_oid, &ref->new_oid);
+    ++			ref_update_display_info_set_failed(info);
+    + 			return 1;
+    + 		}
+    + 	}
+     @@ builtin/fetch.c: static int update_local_ref(struct ref *ref,
+      	updated = lookup_commit_reference_gently(the_repository,
+      						 &ref->new_oid, 1);
+    @@ builtin/fetch.c: static int update_local_ref(struct ref *ref,
+     -				   remote_ref->name, ref->name,
+     -				   &ref->old_oid, &ref->new_oid, summary_width);
+     +
+    -+		info = ref_update_display_info_new('*', '!', what, NULL,
+    -+						   _("unable to update local ref"),
+    -+						   remote_ref->name, &ref->old_oid,
+    -+						   &ref->new_oid);
+    ++		info = ref_update_display_info_append(display_list, display_count,
+    ++						      '*', '!', what, NULL,
+    ++						      _("unable to update local ref"),
+    ++						      ref->name, remote_ref->name,
+    ++						      &ref->old_oid, &ref->new_oid);
+     +		if (r)
+     +			ref_update_display_info_set_failed(info);
+    -+		strmap_put(delayed_ref_display, ref->name, info);
+     +
+      		return r;
+      	}
+    @@ builtin/fetch.c: static int update_local_ref(struct ref *ref,
+     -				   remote_ref->name, ref->name,
+     -				   &ref->old_oid, &ref->new_oid, summary_width);
+     +
+    -+		info = ref_update_display_info_new(' ', '!', quickref.buf, NULL,
+    -+						   _("unable to update local ref"),
+    -+						   remote_ref->name, &ref->old_oid,
+    -+						   &ref->new_oid);
+    ++		info = ref_update_display_info_append(display_list, display_count,
+    ++						      ' ', '!', quickref.buf, NULL,
+    ++						      _("unable to update local ref"),
+    ++						      ref->name, remote_ref->name,
+    ++						      &ref->old_oid, &ref->new_oid);
+     +		if (r)
+     +			ref_update_display_info_set_failed(info);
+    -+		strmap_put(delayed_ref_display, ref->name, info);
+     +
+      		strbuf_release(&quickref);
+      		return r;
+    @@ builtin/fetch.c: static int update_local_ref(struct ref *ref,
+     -				   remote_ref->name, ref->name,
+     -				   &ref->old_oid, &ref->new_oid, summary_width);
+     +
+    -+		info = ref_update_display_info_new('+', '!', quickref.buf,
+    -+						   _("forced update"),
+    -+						   _("unable to update local ref"),
+    -+						   remote_ref->name, &ref->old_oid,
+    -+						   &ref->new_oid);
+    ++		info = ref_update_display_info_append(display_list, display_count,
+    ++						      '+', '!', quickref.buf, _("forced update"),
+    ++						      _("unable to update local ref"),
+    ++						      ref->name, remote_ref->name,
+    ++						      &ref->old_oid, &ref->new_oid);
+    ++
+     +		if (r)
+     +			ref_update_display_info_set_failed(info);
+    -+		strmap_put(delayed_ref_display, ref->name, info);
+     +
+      		strbuf_release(&quickref);
+      		return r;
+      	} else {
+    +-		display_ref_update(display_state, '!', _("[rejected]"), _("non-fast-forward"),
+    +-				   remote_ref->name, ref->name,
+    +-				   &ref->old_oid, &ref->new_oid, summary_width);
+    ++		struct ref_update_display_info *info;
+    ++		info = ref_update_display_info_append(display_list, display_count,
+    ++						      '!', '!', _("[rejected]"), NULL,
+    ++						      _("non-fast-forward"),
+    ++						      ref->name, remote_ref->name,
+    ++						      &ref->old_oid, &ref->new_oid);
+    ++		ref_update_display_info_set_failed(info);
+    + 		return 1;
+    + 	}
+    + }
+     @@ builtin/fetch.c: static int store_updated_refs(struct display_state *display_state,
+      			      int connectivity_checked,
+      			      struct ref_transaction *transaction, struct ref *ref_map,
+      			      struct fetch_head *fetch_head,
+     -			      const struct fetch_config *config)
+     +			      const struct fetch_config *config,
+    -+			      struct strmap *delayed_ref_display)
+    ++			      struct ref_update_display_info **display_list,
+    ++			      size_t *display_count)
+      {
+      	int rc = 0;
+      	struct strbuf note = STRBUF_INIT;
+    + 	const char *what, *kind;
+    + 	struct ref *rm;
+    + 	int want_status;
+    +-	int summary_width = 0;
+    +-
+    +-	if (verbosity >= 0)
+    +-		summary_width = transport_summary_width(ref_map);
+    + 
+    + 	if (!connectivity_checked) {
+    + 		struct check_connected_options opt = CHECK_CONNECTED_INIT;
+     @@ builtin/fetch.c: static int store_updated_refs(struct display_state *display_state,
+    + 					  display_state->url_len);
+      
+      			if (ref) {
+    - 				rc |= update_local_ref(ref, transaction, display_state,
+    +-				rc |= update_local_ref(ref, transaction, display_state,
+     -						       rm, summary_width, config);
+    -+						       rm, summary_width, config,
+    -+						       delayed_ref_display);
+    ++				rc |= update_local_ref(ref, transaction, rm,
+    ++						       config, display_list,
+    ++						       display_count);
+      				free(ref);
+      			} else if (write_fetch_head || dry_run) {
+      				/*
+    +@@ builtin/fetch.c: static int store_updated_refs(struct display_state *display_state,
+    + 				 * would be written to FETCH_HEAD, if --dry-run
+    + 				 * is set).
+    + 				 */
+    +-				display_ref_update(display_state, '*',
+    +-						   *kind ? kind : "branch", NULL,
+    +-						   rm->name,
+    +-						   "FETCH_HEAD",
+    +-						   &rm->new_oid, &rm->old_oid,
+    +-						   summary_width);
+    ++
+    ++				ref_update_display_info_append(display_list, display_count,
+    ++							       '*', '*', *kind ? kind : "branch",
+    ++							       NULL, NULL, "FETCH_HEAD", rm->name,
+    ++							       &rm->new_oid, &rm->old_oid);
+    + 			}
+    + 		}
+    + 	}
+     @@ builtin/fetch.c: static int fetch_and_consume_refs(struct display_state *display_state,
+      				  struct ref_transaction *transaction,
+      				  struct ref *ref_map,
+      				  struct fetch_head *fetch_head,
+     -				  const struct fetch_config *config)
+     +				  const struct fetch_config *config,
+    -+				  struct strmap *delayed_ref_display)
+    ++				  struct ref_update_display_info **display_list,
+    ++				  size_t *display_count)
+      {
+      	int connectivity_checked = 1;
+      	int ret;
+    @@ builtin/fetch.c: static int fetch_and_consume_refs(struct display_state *display
+      	ret = store_updated_refs(display_state, connectivity_checked,
+     -				 transaction, ref_map, fetch_head, config);
+     +				 transaction, ref_map, fetch_head, config,
+    -+				 delayed_ref_display);
+    ++				 display_list, display_count);
+      	trace2_region_leave("fetch", "consume_refs", the_repository);
+      
+      out:
+    @@ builtin/fetch.c: static int backfill_tags(struct display_state *display_state,
+      			 struct fetch_head *fetch_head,
+     -			 const struct fetch_config *config)
+     +			 const struct fetch_config *config,
+    -+			 struct strmap *delayed_ref_display)
+    ++			 struct ref_update_display_info **display_list,
+    ++			 size_t *display_count)
+      {
+      	int retcode, cannot_reuse;
+      
+    @@ builtin/fetch.c: static int backfill_tags(struct display_state *display_state,
+      	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
+      	retcode = fetch_and_consume_refs(display_state, transport, transaction, ref_map,
+     -					 fetch_head, config);
+    -+					 fetch_head, config, delayed_ref_display);
+    ++					 fetch_head, config, display_list, display_count);
+      
+      	if (gsecondary) {
+      		transport_disconnect(gsecondary);
+    @@ builtin/fetch.c: struct ref_rejection_data {
+      	bool conflict_msg_shown;
+      	bool case_sensitive_msg_shown;
+      	const char *remote_name;
+    -+	struct strmap *delayed_ref_display;
+    ++	struct strmap *rejected_refs;
+      };
+      
+      static void ref_transaction_rejection_handler(const char *refname,
+    -@@ builtin/fetch.c: static void ref_transaction_rejection_handler(const char *refname,
+    - 					      void *cb_data)
+    - {
+    - 	struct ref_rejection_data *data = cb_data;
+    -+	struct ref_update_display_info *info;
+    - 
+    - 	if (err == REF_TRANSACTION_ERROR_CASE_CONFLICT && ignore_case &&
+    - 	    !data->case_sensitive_msg_shown) {
+     @@ builtin/fetch.c: static void ref_transaction_rejection_handler(const char *refname,
+      			      refname, ref_transaction_error_msg(err));
+      	}
+      
+    -+	info = strmap_get(data->delayed_ref_display, refname);
+    -+	if (info)
+    -+		ref_update_display_info_set_failed(info);
+    -+
+    ++	strmap_put(data->rejected_refs, refname, NULL);
+      	*data->retcode = 1;
+      }
+      
+    @@ builtin/fetch.c: static void ref_transaction_rejection_handler(const char *refna
+       */
+      static int commit_ref_transaction(struct ref_transaction **transaction,
+      				  bool is_atomic, const char *remote_name,
+    -+				  struct strmap *delayed_ref_display,
+    ++				  struct strmap *rejected_refs,
+      				  struct strbuf *err)
+      {
+      	int retcode = ref_transaction_commit(*transaction, err);
+    @@ builtin/fetch.c: static int commit_ref_transaction(struct ref_transaction **tran
+      			.conflict_msg_shown = 0,
+      			.remote_name = remote_name,
+      			.retcode = &retcode,
+    -+			.delayed_ref_display = delayed_ref_display,
+    ++			.rejected_refs = rejected_refs,
+      		};
+      
+      		ref_transaction_for_each_rejected_update(*transaction,
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+      	struct fetch_head fetch_head = { 0 };
+      	struct strbuf err = STRBUF_INIT;
+      	int do_set_head = 0;
+    -+	struct strmap delayed_ref_display = STRMAP_INIT;
+    ++	struct ref_update_display_info *display_list = NULL;
+    ++	struct strmap rejected_refs = STRMAP_INIT;
+    ++	size_t display_count = 0;
+     +	int summary_width = 0;
+    -+	struct strmap_entry *e;
+    -+	struct hashmap_iter iter;
+      
+      	if (tags == TAGS_DEFAULT) {
+      		if (transport->remote->fetch_tags == 2)
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+      
+      	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
+     -				   &fetch_head, config)) {
+    -+				   &fetch_head, config, &delayed_ref_display)) {
+    ++				   &fetch_head, config, &display_list, &display_count)) {
+      		retcode = 1;
+      		goto cleanup;
+      	}
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+      			 */
+      			if (backfill_tags(&display_state, transport, transaction, tags_ref_map,
+     -					  &fetch_head, config))
+    -+					  &fetch_head, config, &delayed_ref_display))
+    ++					  &fetch_head, config, &display_list, &display_count))
+      				retcode = 1;
+      		}
+      
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+      	retcode = commit_ref_transaction(&transaction, atomic_fetch,
+     -					 transport->remote->name, &err);
+     +					 transport->remote->name,
+    -+					 &delayed_ref_display, &err);
+    ++					 &rejected_refs, &err);
+      	/*
+      	 * With '--atomic', bail out if the transaction fails. Without '--atomic',
+      	 * continue to fetch head and perform other post-fetch operations.
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+      		commit_ref_transaction(&transaction, false,
+     -				       transport->remote->name, &err);
+     +				       transport->remote->name,
+    -+				       &delayed_ref_display, &err);
+    ++				       &rejected_refs, &err);
+     +
+    -+	/*
+    -+	 * Clear any pending information that needs to be shown to the user.
+    -+	 */
+    -+	strmap_for_each_entry(&delayed_ref_display, &iter, e) {
+    -+		struct ref_update_display_info *info = e->value;
+    -+		ref_update_display_info_display(info, &display_state, e->key, summary_width);
+    ++	for (size_t i = 0; i < display_count; i++) {
+    ++		struct ref_update_display_info *info = &display_list[i];
+    ++
+    ++		if (!info->failed && strmap_contains(&rejected_refs, info->ref))
+    ++			ref_update_display_info_set_failed(info);
+    ++		ref_update_display_info_display(info, &display_state, summary_width);
+     +		ref_update_display_info_free(info);
+     +	}
+      
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+      	if (transaction)
+      		ref_transaction_free(transaction);
+     +
+    -+	strmap_clear(&delayed_ref_display, 1);
+    ++	free(display_list);
+    ++	strmap_clear(&rejected_refs, 0);
+      	display_state_release(&display_state);
+      	close_fetch_head(&fetch_head);
+      	strbuf_release(&err);
+    @@ t/t5516-fetch-push.sh: test_expect_success 'pushing non-commit objects should re
+      		test_grep "trying to write non-commit object $tagsha to branch ${SQ}refs/heads/branch${SQ}" err
+      	)
+      '
+    -
+    - ## t/t5574-fetch-output.sh ##
+    -@@ t/t5574-fetch-output.sh: test_expect_success 'fetch aligned output' '
+    - 		grep -e "->" actual | cut -c 22- >../actual
+    - 	) &&
+    - 	cat >expect <<-\EOF &&
+    --	main                 -> origin/main
+    - 	looooooooooooong-tag -> looooooooooooong-tag
+    -+	main                 -> origin/main
+    - 	EOF
+    - 	test_cmp expect actual
+    - '
+    -@@ t/t5574-fetch-output.sh: test_expect_success 'fetch compact output' '
+    - 		grep -e "->" actual | cut -c 22- >../actual
+    - 	) &&
+    - 	cat >expect <<-\EOF &&
+    --	main       -> origin/*
+    - 	extraaa    -> *
+    -+	main       -> origin/*
+    - 	EOF
+    - 	test_cmp expect actual
+    - '
+    -@@ t/t5574-fetch-output.sh: do
+    - 		cat >expect <<-EOF &&
+    - 		- $MAIN_OLD $ZERO_OID refs/forced/deleted-branch
+    - 		- $MAIN_OLD $ZERO_OID refs/unforced/deleted-branch
+    --		  $MAIN_OLD $FAST_FORWARD_NEW refs/unforced/fast-forward
+    - 		! $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/unforced/force-updated
+    -+		* $ZERO_OID $MAIN_OLD refs/forced/new-branch
+    -+		* $ZERO_OID $MAIN_OLD refs/remotes/origin/new-branch
+    -+		+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/remotes/origin/force-updated
+    -+		  $MAIN_OLD $FAST_FORWARD_NEW refs/unforced/fast-forward
+    - 		* $ZERO_OID $MAIN_OLD refs/unforced/new-branch
+    - 		  $MAIN_OLD $FAST_FORWARD_NEW refs/forced/fast-forward
+    --		+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/forced/force-updated
+    --		* $ZERO_OID $MAIN_OLD refs/forced/new-branch
+    - 		  $MAIN_OLD $FAST_FORWARD_NEW refs/remotes/origin/fast-forward
+    --		+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/remotes/origin/force-updated
+    --		* $ZERO_OID $MAIN_OLD refs/remotes/origin/new-branch
+    -+		+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/forced/force-updated
+    - 		EOF
+    - 
+    - 		# Change the URL of the repository to fetch different references.
+    -@@ t/t5574-fetch-output.sh: test_expect_success 'fetch porcelain overrides fetch.output config' '
+    - 	new_commit=$(git rev-parse HEAD) &&
+    - 
+    - 	cat >expect <<-EOF &&
+    --	  $old_commit $new_commit refs/remotes/origin/config-override
+    - 	* $ZERO_OID $new_commit refs/tags/new-commit
+    -+	  $old_commit $new_commit refs/remotes/origin/config-override
+    - 	EOF
+    - 
+    - 	git -C porcelain -c fetch.output=compact fetch --porcelain >stdout 2>stderr &&
+
+
+base-commit: 8745eae506f700657882b9e32b2aa00f234a6fb6
+change-id: 20260113-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-17786b20894a
+
+Thanks
+- Karthik
 
