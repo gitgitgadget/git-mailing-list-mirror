@@ -1,166 +1,96 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3EB43DA38
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 14:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768918206; cv=none; b=EZ+kEc/FHkwuHLt7J9b7qjEE5YX0JImoEcKb2ixh/si0Wa5PgX14LdExUoKPjctbEVA57BLJAvTH5fX19D91yWUvVgpRwd/jWYftBcrXJ1ypB+IqzCpnUNh2FQ0UofMzuOAAgqZn0rCLdFAwiJYWSsMjN2PqzlnREgLRPr96R8Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768918206; c=relaxed/simple;
-	bh=TTS1HZUNLaXxeD+AzW1462Qx6S95WzG8rVCEdJLtFPk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSfDUwafKnvBTEp4qt7PDS4CMPeuoWrvWF0MoTpS/fMZWmp3ugXv7cB+sj5967kaV53FNWe9mNutcTpn5s62Vq60bkFLXwziTIXm+ZkGqMLLQ0gmvz4gmDE1ET45Li3EAiGTc8APlkPOoJoaXQUXevDJlin16gWtvrMOoc17Hqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2CsnDW/; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B6E45091D
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 14:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768920137; cv=pass; b=s0+I+BSrkaXk6ecGoUZWnExTfUIA0RXh3kX0T1+qCTcUOeFGpStBLVAILDsofI2kslqdF8Yqieqc+aNansljD12DAUCm+KeQz0E60iilI6uqQZck42W5ZDZfKAQZCbY8TqGa+1M2ZIIlEiRm/EGkRGrWeHtvabim/Qd2AXuK27g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768920137; c=relaxed/simple;
+	bh=qlycOrCbTWn09slaEZyvKXhoyrD2c9otY+QgX4dx6MA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=BMIKnkNPe5oIfmxDtfnHJ1UDOzsVlgQK94frOC4z1kHsZN8sXkAw4TMydInKA6qDle7VZwqCFZ4TAq6LKjEAWOLyRQ6h/NVX3Z9ogS+TSBBC+b1Jd0mRuBOEeq8EEFOJ9o1XKcmFx3GOzMey1mBxuRiajZyeugrO3HPOaH9aGEk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ViP70lp5; arc=pass smtp.client-ip=74.125.82.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2CsnDW/"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-81e8b1bdf0cso3103147b3a.3
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 06:10:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ViP70lp5"
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-123320591a4so5446711c88.1
+        for <git@vger.kernel.org>; Tue, 20 Jan 2026 06:42:16 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768920135; cv=none;
+        d=google.com; s=arc-20240605;
+        b=HqHPslN5HLtthKbSKABDNZ72uNnxONoicNqyyQm19o1pvyCMNwCDVIxsHd/c/cCfWQ
+         zISro8kRdLm1RKeP/+Ejb37chQAONsyFjSVsC68LD3w/aLEYRK9doSd90ApWnOp4MXDj
+         DMFL0O/LCvu5NnJJdF8AjUeN1dITWfQyqxPFfMj86umbl7zTGKvlO2VqO7ZiBOIMFOg0
+         7yrYvUHh8M4vuCJzTmHWZC2bGSzNfEAszaHhAI8DG8sN/kXCnQv3Bui5rHq9/G/LZkV3
+         NH6Q6fuS7EaBGUGbNUMk8jy149CLYiZfzQMW09tK/iG48SOJvmr0dZDmFhruZpIdH3/Y
+         U4Jw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=qlycOrCbTWn09slaEZyvKXhoyrD2c9otY+QgX4dx6MA=;
+        fh=wsvoWvBz3+zI3cO8xbdreD5Z3aI/wpKopH/flyQpgVg=;
+        b=e58NA0w3yDmUGsCQlzpxVGNMza8ELsNnPQJDFzKKxxIek4C5/sYF5DQixR06TE9Q7l
+         Giw7ysC96nlTSpGONPHDcFJbEEEKcwDvihVkSdeq6w1tTJflxL12Os/rfhNgcY1NU1WJ
+         cNUoFFwXklBAc/Df8tlEw64iKNZz1Vo4DDLnZ/4BcDOadi1tXf7fzCySTPqSw2NXIqU6
+         lDSlUUB+deNIJEgN2DTEaYBg11CHUMDOispGwESW02qfZoi+g8dT9wHbEUz/kw7MIinl
+         gro0LoE5XxXYeLYRlHqVMTehcbw3Z1HagWy2mBZCzsM+mB1qc7fHhFBeVlI3U/iGepNW
+         eNsw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768918204; x=1769523004; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tx1q49fWHwyfY6dlzu/Qi/pKKHUmTjZD4fMYoMgmVwY=;
-        b=c2CsnDW/Pbb39/k/6PlnZbkORvRGHrMhqDeGUdUYVapOsocrf+JklDgCcKXNqybGXX
-         NKsLfiGUeVbAOlvMLEQUo8hni1bUXWZD8A1c4TF4NCbkDujWqrxJVCthSiaYAoxN0RLW
-         RI28w0/VR3oDHYqwAmileUpDUFhfmx5Pdoji4Cdm1A0JXRZGZGy6HlT43bd7bLG03vvC
-         L8uvNP4rtTsSxhmEAmTTZKm0vSXLZHtBh+aGyVSSjQFd19YlIV51JeSeOH1qGn/Ap8Jy
-         XwDtqy4xGsfFtZwcTjUwmYO1mCccmrOtcejValjHPXk6cSHSi+vAf5Al2DKzxyu5rYRH
-         o+XA==
+        d=gmail.com; s=20230601; t=1768920135; x=1769524935; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=qlycOrCbTWn09slaEZyvKXhoyrD2c9otY+QgX4dx6MA=;
+        b=ViP70lp5NLDBKiweh5a92TqwEw6mdlg7r0idtugwbVQkElwXjKQT/YX7oZfeD96HBl
+         jMBhXZREzFaEDCy49Ook6i7QmAqYpxs2qOvf19pHd5Y9ugEaJ99C8L4jZNRyvPXCSqE0
+         VZj5wngYUSeXWdklVQlX69oiQdNLOx9SiZj5zG8eZUfBJVxxa4pw9EGvnafGXjVfuXGR
+         fGUbh3xgGsk2vnn/wXrDBbgcZPP2HTrU81iw8iD/wodciLbjDIV+w7ahr8151pKXoCJ+
+         jj8giqx3cpwxhA/d3PYebvr0/zxpG9zm/OdPGO9qfRf+hUM3zydXLXYvKoVEcgDsThKq
+         6j/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768918204; x=1769523004;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tx1q49fWHwyfY6dlzu/Qi/pKKHUmTjZD4fMYoMgmVwY=;
-        b=s28wu4x/+R9a0Xz93z4XjQuXia3XL3wq0dFjp/jdj9LVYa7uSVIaNFxfYTaYg8xcpS
-         Lwr3TsxjmpLPhHXzL31Uj+AL/lsw+7Vr4fMBwnuW+HmpXF77eSBqt6YPdS4OoWRCFUKT
-         SgR1u50xk8pHGxUy3MNHGxJTuivznt+xi27CIna0Mws3a+WQqeyGNbiw9K2Pm0LCs82E
-         6PghNHl9HnHYW6bvBK9ZcvY3CwaBOWXyPIlYhbdWHNaR1uid15GkC/uh8UX+9YbbBYmm
-         2I1vZGDd3Z1gnMcMbVKbR/bHznMm9m9tcYf09M2O4OrHKiQQ2XbX8aLkCOTPTkhTYIFv
-         zUzw==
-X-Gm-Message-State: AOJu0Yx1qUMMoHr0UXCFn3MS6niGBp58lEJn4Oi7ts6sKfmeHQZaHDAS
-	KTzoTj/TAx6OZGrVUixX+62BdZcNk7FXcRQVZAfDVmPxL2QqJcQ1JK+G5cqEBw==
-X-Gm-Gg: AY/fxX5BIVUbCW//Gf5sfYFIc48jPES7dOOjjdafww09molU+iLHidqtYMPrIbMyhkE
-	S2CpAFQfPl7WikgWgp50+sxYbiEo8UBzPorEkAyGW491whs63UbO1tr25iyrdC83Gz/w2futR6t
-	SQnZsdwEpzq5BTbyIHbTcMviXpaEK3v8A7Erbq7eloSE7jaZdIvKtzbTvuZzQEEwbT4RMpZK/nJ
-	9c/pGVq9gA4KLwO9VDRhxiINQe+vsbkr6Y3XMu+QZ96KZyev69WHtzXsQFmLg3HcqJFUBcf5IwI
-	NQ2BPVaMCuzHa3D48KMmD2qgSaZkvcMqv+LT157JG+qY7pIKm/+vWI/cWCj66umy1mj1UMiIY2j
-	fQp97uRR3HiDCsT6Uz0fRWnfi1rhUfw/Ag+K33yQp4SffK+2QnVZO3wWGsRK7AJwF1hLhAuTXKC
-	2ByDSUr/CYqgCi1ATjo/5ahFB9VzpFgIv7nQAS+/d3jXsElGaJYoWYePo5
-X-Received: by 2002:a05:6a21:6112:b0:342:1265:158f with SMTP id adf61e73a8af0-38e45e21462mr2006228637.51.1768918204116;
-        Tue, 20 Jan 2026 06:10:04 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd7:6181:2062:a538:8b6f:d4b5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-352d5a3ea3dsm1362250a91.3.2026.01.20.06.10.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jan 2026 06:10:03 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH 3/3] show-index: remove global state variables
-Date: Tue, 20 Jan 2026 19:35:41 +0530
-Message-ID: <20260120140901.517928-4-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
+        d=1e100.net; s=20230601; t=1768920135; x=1769524935;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qlycOrCbTWn09slaEZyvKXhoyrD2c9otY+QgX4dx6MA=;
+        b=R18jO/8LiO+iwfteR4I+N2E4OQECovrLoyHAWV5wSLxsKZ9Fk6CTV9JGhBABvpla+w
+         YtjrC2uGvZgjbJTEv5D1qglN4Z7HVNLEu/FnPsKgnwysX9EfqShuzsWV6n7J4038C4C2
+         /BH4DnXnB+fvFdZOpSas7LVk5rD+3kYkozAfEkbV1EJDoxydyeWFkFluFdcTY6HaIkQ+
+         RsYzlRwcNWFJD+TvH2kPaGr/azH/PQLoaHonuM9nkmkEsTzNBGfmFZYjPzGyVR/a4n9o
+         Nofave0hwLK0TR8gFxkn+XEywa8todFmzsd1kJT8Kt9UxaiwIHaJX/oC0UlsQpOuVU+s
+         HHGw==
+X-Gm-Message-State: AOJu0YzcoAVgh4ZhzZ1/B0dbUBl/A7AKEWmMDNaA6aJ/i8kJ5ibkmPu+
+	MtzV8V9aJ9ZC7ECND1d0L2r9aZjTZflcz50yjfpygPmOrHpOZwsSoJZKI8POipEU5Sg6Vk47NLZ
+	XbCKCqNEPLbHMieGWYF9YFRpx4jwLPWOH9QCSGfKAjA==
+X-Gm-Gg: AY/fxX7X/Fja0hePpSljvlEAsRwpn5bTpbkBqIETuvto7UGlFunvEif6YKO3xTnlm/0
+	GpmraFwe810+M8gs89SXJ9UA4HKZAc+kAEQ2k7ZDXGl2L9NFaMJnHJ4OdNWJpDk48zO5fmLkt7n
+	SYk1kBSwD+4itrN7aXYbctMQXY1dTDpfw9ZSnB9W4BzrCD4Ignj5t5vSCIaCmvPpMxDK5RRTCs3
+	/p7FVccLNOZHyTFgiKGlE3Fay95SFfci4/cBGIK4gi1gAf9sw5ooKJw7m+4oYuTybE+xJ+K
+X-Received: by 2002:a05:7022:f105:b0:124:65f7:2c2e with SMTP id
+ a92af1059eb24-12465f72d12mr2170211c88.43.1768920134969; Tue, 20 Jan 2026
+ 06:42:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Bello Olamide <belkid98@gmail.com>
+Date: Tue, 20 Jan 2026 15:42:03 +0100
+X-Gm-Features: AZwV_QgLxjnKijH69NoIkCYSSYsq2CywaiYcKfNAUwUS1WDkhMGiKGyrD5LiQo0
+Message-ID: <CAD=f0L_DGgpr+kxRjZY4KLGjdKn8zTfhq2gZWSY4Jm--yqJeWg@mail.gmail.com>
+Subject: =?UTF-8?Q?=5BOutreachy=5D_Blog=3A_Refactor_in_order_to_reduce_Git=E2=80=99?=
+	=?UTF-8?Q?s_global_state_=28week_5_=26_6=29?=
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-As Git is in the process of removing global state,
-this function still relies on the global variables,
-the_repository and the_hash_algo.
+Weeks 5 & 6 of my Outreachy internship were all about design, not just code.
 
-Remove the associated macro and the UNUSED attribute from
-the repo parameter, and replace all uses of the_repository and
-the_hash_algo with repo and repo->hash_algo, respectively.
+Lots of reviews, deep discussions, and learning when to pause,
+rethink, and send an RFC before moving forward.
 
-This modernizes git show-index and makes it more compatible.
+I wrote about the lessons here:
+https://hashnode.com/post/cmkjgvu5t000302jyfon53h7l
 
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
----
- builtin/show-index.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/show-index.c b/builtin/show-index.c
-index a9c2f18b73..96adae14c0 100644
---- a/builtin/show-index.c
-+++ b/builtin/show-index.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
-@@ -16,7 +15,7 @@ static const char *const show_index_usage[] = {
- int cmd_show_index(int argc,
- 		   const char **argv,
- 		   const char *prefix,
--		   struct repository *repo UNUSED)
-+		   struct repository *repo)
- {
- 	int i;
- 	unsigned nr;
-@@ -37,7 +36,7 @@ int cmd_show_index(int argc,
- 		hash_algo = hash_algo_by_name(hash_name);
- 		if (hash_algo == GIT_HASH_UNKNOWN)
- 			die(_("Unknown hash algorithm"));
--		repo_set_hash_algo(the_repository, hash_algo);
-+		repo_set_hash_algo(repo, hash_algo);
- 	}
- 
- 	if (fread(top_index, 2 * 4, 1, stdin) != 1)
-@@ -63,7 +62,7 @@ int cmd_show_index(int argc,
- 
- 	/* detection of hash algorithm
- 	Only works for small files, i.e without large offsets */
--	if(!the_hash_algo && version == 2) {
-+	if(!repo->hash_algo && version == 2) {
- 		struct stat st;
- 		size_t file_base_size;
- 		size_t table_size;
-@@ -79,9 +78,9 @@ int cmd_show_index(int argc,
- 		hash_size = size_rem / (nr + 2);
- 
- 		if(hash_size == GIT_SHA1_RAWSZ) {
--			repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+			repo_set_hash_algo(repo, GIT_HASH_SHA1);
- 		} else if(hash_size == GIT_SHA256_RAWSZ) {
--			repo_set_hash_algo(the_repository, GIT_HASH_SHA256);
-+			repo_set_hash_algo(repo, GIT_HASH_SHA256);
- 		} else {
- 			die(_("unable to detect hash algorithm, "
- 					"use --object-format option"));
-@@ -89,10 +88,10 @@ int cmd_show_index(int argc,
- 	}
- 
- 	/* Final fallback to SHA1 */
--	if(!the_hash_algo)
--		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+	if(!repo->hash_algo)
-+		repo_set_hash_algo(repo, GIT_HASH_SHA1);
- 
--	hashsz = the_hash_algo->rawsz;
-+	hashsz = repo->hash_algo->rawsz;
- 
- 	if (version == 1) {
- 		for (i = 0; i < nr; i++) {
-@@ -114,7 +113,7 @@ int cmd_show_index(int argc,
- 		for (i = 0; i < nr; i++) {
- 			if (fread(entries[i].oid.hash, hashsz, 1, stdin) != 1)
- 				die(_("unable to read sha1 %u/%u"), i, nr);
--			entries[i].oid.algo = hash_algo_by_ptr(the_hash_algo);
-+			entries[i].oid.algo = hash_algo_by_ptr(repo->hash_algo);
- 		}
- 		for (i = 0; i < nr; i++)
- 			if (fread(&entries[i].crc, 4, 1, stdin) != 1)
--- 
-2.52.0
-
+Bello C. Olamide
