@@ -1,104 +1,104 @@
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4173D4103
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 23:11:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CD6340DB0
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 23:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768950712; cv=none; b=RbA3Q0xt5rdQit0D/ldK7fpPi1OGpfi/ydvAXaL3bQYM5epWZVTIrDYRwEuMrz52f2kNWC42SovvXg8dtbWzsw+6brz/EDZXRJR1iXH/PmVUnzdlkL0MZxOCHX18ZIlcfViy733/CEkh8IRTXcLEuBji7xmPJ+tGLdM4ItOBtog=
+	t=1768951441; cv=none; b=plaFYnDtrUSvn1E6D8fCAvzNiw61QeMafUKmUT4+aijVIwrhs2u49ET09wPvjWkE8V35qcXU9+DTdDv9CpbN8RvHPKtRyslKyxOsFaWtWWPbzhVBz5tRTrTGnLtCj1Q32G8LiAG/LXvbTHzRwbDFqG6vxMZw3cIL1hj9XzY77LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768950712; c=relaxed/simple;
-	bh=b2t8O83VamncbqC47GjgQex1eeYUyaYjt6nIl9P7mgI=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Z5fv0Y13SD2M/4+72xo5EwXTaEpaZEYJQUhQWuNOptkUvcKDV6N8XxDQHvDGWyQuDGjKCWB9NUp+csk8DcQzknhf+2NHWBkPfD5i1amwFok9vGKmwe7gtMoynX3WDWPPC40Ke9XeOv8TXkDfjwFe9V4rUOGradYnVAphaTbJ7hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O5NmquKI; arc=none smtp.client-ip=74.125.82.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768951441; c=relaxed/simple;
+	bh=TC7aBgoNFh/70wOh5s80oO/trpHxqHbAIwmGsQH1ZrU=;
+	h=Date:From:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I3RMe7/k56FYALvf4TemtQuHpFgk132i8jdke1w38d5+xlyiTJD4hped71t+NoEZsuJdeFfRopbSt9a7gzh1e3Tj433fG+PYjGgpkydIIxEaZznlfvsg4ayS8LWnywoPvm8QCHnnBexEs5zmz5BQ0dTZXqbWpdZoBSGhl1nfghg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=yygJVwzE; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O5NmquKI"
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2ae255ac8bdso10686000eec.0
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 15:11:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768950710; x=1769555510; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OlRoc2VJ4Z7Zb+Oo7g89g/t15stCNpijmt/mCwNBDIo=;
-        b=O5NmquKIYNPOKykvVfjGUG+vzE3517nOOc6QDytTmnCiKPxazcgr+eBQKIjMuv9QKE
-         Ua0kpa3GnHqMML88/dOoS89uiDd7kkBqlOaOV/0nal2wMoiqrEkZdnkHfyECZKSQ/dFD
-         +51zulY0v2WtaQsCLJlJ7INYyfPTJuboSoXe2gTMYn5vHoVXUh0EzOy+k8c7vBrUGzLv
-         zaKn3WLRY493h3PUV3aTHDkYDaGbxvppc+kFmWodXe1flnCJ8Dn/1JCbzP3SUtIvAP+t
-         WqyGUIj4U0tB1DyiHeIfWnz59Y+WHgKO87uf3Z2rK8ywMHZA+GncdUsTX4gA+LZ5U0xn
-         g79g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768950710; x=1769555510;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OlRoc2VJ4Z7Zb+Oo7g89g/t15stCNpijmt/mCwNBDIo=;
-        b=ElSM1ovYPyZ9DpICc4M0KsCM2r+hQC+ZKBI+Rh2k+L2PO9zIDTClo88KYarkmq02JK
-         mptnTNA5R4VsXzPU015zHF1bMCuvKPBYY1RDdmxcA6IiZ29wrF9u1MP9FR4YetLzAiQv
-         bi/vrZwZq+A2sMDm09ZVG81+puusEdKKUk7BOyhGgissUJnfKe+bA63JjWTJwWRARv7x
-         CRM2O6cM1u3BKayHLoiota/BsQsOQmUA3z36Sf6IF+1T8Vfvi3bipihtAbVExP+i5pgk
-         BAPMTL6fkjvevHxpiZdoZYGtPpijGqbAlQnWOjeYM7cspp4wtBmEbfMjPcfg4DNZUKFs
-         ALwA==
-X-Gm-Message-State: AOJu0Yx4/nHl4IEbEi/TPEtukKElw7TZ66GiYa+3HKSRhEim3yOMwRH8
-	n2gzIeCgEoe4CoJPVJufsFgsp4CWKYyQ+a7Wd9dpNkA4774pUWsFIw3R
-X-Gm-Gg: AZuq6aKnDHqhcb3LFD5r8LNfeb7EGLgTwTBzQfWt5r49pDnVy7CE+4dyEIN0XKv4+7E
-	yo583Ewu35wkJ36TvHLJIFjpZHCJogtXGXX6ga2X+fNjbXO7H1kelRyO6a879eEEAygF7AkNd4f
-	Ybryn1+FiSreqR4oG7CuI0ntk6Cn06VOq3pOtJiN065OLoVPyVCvwgJpv3cAnemw48NwWft4KO2
-	30Li7C60dwdn9lIEM/u8dHYPjaEYZf7/8Ffcyrz5p6ewPvpiQi+fMoRI0WowUpTZVxfJr5fU240
-	vBFbSLfI3U62ArL/gQU31XfWItCqpJ2bbIolr+Xy8yK5PGb1Z4RAyZA/HGKqLYhsoZAuQaADoNk
-	Rp9Tpe6GfXaxz1jf8mW0n0FR6mJztUEG6kTInfrMKuvukKfiYmrEus9SdJZlUDxj0jsrTJjUeXW
-	+5gDHqFQ74AuahvzgP/KdaFAdEqwBp2nsmxBWqrS1iFMkCm0xbvKjUsnM5oyPuaMMCTFOFeeU=
-X-Received: by 2002:a05:7300:2146:b0:2ae:6146:37a8 with SMTP id 5a478bee46e88-2b6b3eed5e4mr15070903eec.2.1768950709407;
-        Tue, 20 Jan 2026 15:11:49 -0800 (PST)
-Received: from smtpclient.apple (201-1-211-91.dsl.telesp.net.br. [201.1.211.91])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b34c0f7fsm18963588eec.3.2026.01.20.15.11.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Jan 2026 15:11:49 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yygJVwzE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1768951430;
+	bh=TC7aBgoNFh/70wOh5s80oO/trpHxqHbAIwmGsQH1ZrU=;
+	h=Date:From:Cc:Subject:References:Content-Type:Content-Disposition:
+	 In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+	 Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=yygJVwzEXtTgiD4pjXgdsHR0n2rF8IPYdF1hdsExc77JWkwy6p6nTpLA3dlIq8C6h
+	 nUOhqqpAMG5GRqNWMwYIdOB+zl+5ub3M3EI1BOTIsDvdyqz6mKEck9oGjBLSJJoQHA
+	 USGEJ9fmt1xlbS+M9uBsVGtj20lHPF8z9tvaFvuedtKRtVOFfQtX6xF+WxWB8Vta2c
+	 IsRm35JnZkYGzHQOogWeIUIQgbhQvVJ4/FHz9BiFWPEZjdo7htlN+8Fcq93+V8JORj
+	 RVSlEEpyltDOY5ifWFc5+KOGLT0btFNUpXnNFIlZVPqYu1TgmsG27CamK+PkadQsSH
+	 C3RdDBZvmYiCj9S8u0uI/acYwjJRPYszd1J5rt49HoszlIAZXP260wHto30Zurpd/3
+	 K8DTCAzJdd/7v/TdhHHp9fz/Pqnv+H4PTkjKUEY2duixLDbrM4LH8vre5rxJBG8G1m
+	 bnqYitAZO8/sOFK0ZA+neTBEMZcabhg9XGumqaHYCUzUoRSS4ti
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:29e1:ea3:cc7f:75cb])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CC34B20081;
+	Tue, 20 Jan 2026 23:23:50 +0000 (UTC)
+Date: Tue, 20 Jan 2026 23:23:49 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: ps@pks.im, Johannes.Schindelin@gmx.de, ben.knoble@gmail.com,
+	cb@256bit.org, collin.funk1@gmail.com, contact@hacktivis.me,
+	eschwartz@gentoo.org, ezekielnewren@gmail.com, git@vger.kernel.org,
+	gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+	phillip.wood123@gmail.com, pierre-emmanuel.patry@embecosm.com,
+	sam@gentoo.org
+Subject: Re: [PATCH RFC v4 1/9] meson: add infrastructure to build internalg
+Message-ID: <aXAOhTx07g4LVTNo@fruit.crustytoothpaste.net>
+References: <20250910-b4-pks-rust-breaking-change-v4-1-4a63fc69278d@pks.im>
+ <20260120221844.6085-1-ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH v4 2/2] repo: add new flag --keys to git-repo-info
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <aW8bOfVLcG58t-Uk@pks.im>
-Date: Tue, 20 Jan 2026 20:11:35 -0300
-Cc: git@vger.kernel.org,
- gitster@pobox.com,
- jltobler@gmail.com,
- avila.jn@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <2B17A803-F1E0-4A9D-B0B7-2C62DA3939A2@gmail.com>
-References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
- <20260119210932.68893-1-lucasseikioshiro@gmail.com>
- <20260119210932.68893-3-lucasseikioshiro@gmail.com> <aW8bOfVLcG58t-Uk@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Azd4JXMoxbm1yI0D"
+Content-Disposition: inline
+In-Reply-To: <20260120221844.6085-1-ben.knoble+github@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-> Tiny nit: we also tend to terminate the last enum value with a comma.
-> The reason here is that it makes it easier to add new values going
-> forward while only having to change one line.
+--Azd4JXMoxbm1yI0D
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sure, I forgot to add it. 
+On 2026-01-20 at 22:18:42, D. Ben Knoble wrote:
+> As far as I can tell, v4 of the Rust series introduced this script [1]. I=
+ didn't
+> notice any comments on or about the use of "--quiet" here, and Gentoo's b=
+een
+> carrying a patch to remove it [2] (also attached below). I don't think it=
+'s been
+> sent upstream, but we could=E2=80=A6 any thoughts on "why --quiet" or obj=
+ections to such
+> a patch?
 
-> You also have to adapt `cmd_repo_structure()` to handle this new vaule.
-> Otherwise it would `BUG()`. I guess the most reasonable change here
-> would be to treat "lines" and "keyvalue" as equivalent?
+I have no objections to either of these patches.  We'd want `--quiet` by
+default for the Makefile due to the output format, but I don't know why
+we'd need it for meson.
 
-Nice catch! I don't know if it makes sense. If we change that in
-structure, we'll also need to also change in info, making the name
-"keyvalue" useless. Another solution: change the current "keyvalues" by
-"lines" in those three cases. Maybe it makes more sense than the name
-"keyvalue".
+To be clear, I don't use the meson format at all, so someone who cares
+about it and can speak to it should definitely chime in, but I would say
+that given the explanations in the patches, they seem reasonable.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-> Thanks!
+--Azd4JXMoxbm1yI0D
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks again, Patrick!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaXAOhAAKCRB8DEliiIei
+gck4AQCgxkNLYEqqkx3jo080m0dwWaNB1+YfICxCQyQ0AzdQGgD/ej1lg9SZgUof
+zaGGlzEpvDB8egoamr2+JkDhAwUMrwY=
+=qpFw
+-----END PGP SIGNATURE-----
+
+--Azd4JXMoxbm1yI0D--
