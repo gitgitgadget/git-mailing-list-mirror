@@ -1,157 +1,104 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4CB322557
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 23:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4173D4103
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 23:11:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768950672; cv=none; b=GT7Fl2iz2YGyhn6yTUUfRMn0fbwyw5RwnjoJPHtzM7Hp2ko4c5a2Dc+kIEnSVAhi1Mvsd+ZzWWWrxgjhEM4UJ0emddAKp7Dy4/0O/9nFXFuOuthMoE3Nk/Pj4Tn8fG+8KcgAoFBzyidq7e25EcOMEXHbRgZZvnDxbHIMTXjxLhw=
+	t=1768950712; cv=none; b=RbA3Q0xt5rdQit0D/ldK7fpPi1OGpfi/ydvAXaL3bQYM5epWZVTIrDYRwEuMrz52f2kNWC42SovvXg8dtbWzsw+6brz/EDZXRJR1iXH/PmVUnzdlkL0MZxOCHX18ZIlcfViy733/CEkh8IRTXcLEuBji7xmPJ+tGLdM4ItOBtog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768950672; c=relaxed/simple;
-	bh=SnijZ4du6GCczHWD8c/9mcsoNoYqb9z+a/5DGBGkwGs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YdijPjLGcSbI5tqSbekt0GoVRgaK63UkSBzqp8juQRkwBPEN/83NhhuSLaX5EhTlcGJPnvTb1Px1tYupFaS+WJyTaL067bBn7c5Ak6OpaBR8B81YM8lbMM1gGjZVIxsvrRbljKLdQYhLVgcuVO9ZmCjbt+HVIrZ/eQJVeChqOAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SzuulSBd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rh1lCWIe; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1768950712; c=relaxed/simple;
+	bh=b2t8O83VamncbqC47GjgQex1eeYUyaYjt6nIl9P7mgI=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=Z5fv0Y13SD2M/4+72xo5EwXTaEpaZEYJQUhQWuNOptkUvcKDV6N8XxDQHvDGWyQuDGjKCWB9NUp+csk8DcQzknhf+2NHWBkPfD5i1amwFok9vGKmwe7gtMoynX3WDWPPC40Ke9XeOv8TXkDfjwFe9V4rUOGradYnVAphaTbJ7hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O5NmquKI; arc=none smtp.client-ip=74.125.82.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SzuulSBd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rh1lCWIe"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E863A7A00BF;
-	Tue, 20 Jan 2026 18:11:08 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 18:11:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768950668; x=1769037068; bh=Lyltz3MGi5
-	9ee8XwlDu/0KhZAkY3w/E22dRnqs+rQBo=; b=SzuulSBdF2i04rJjQILfa6zsv4
-	PIUkPbEtm+mLU6pfqehPHiTTvmr07syX+eYrtncKvwY7v20WurxtJ1aYuSg7tWVB
-	Itr9OrRNN21QezMxGO1rG6BA0L+e0+Y2Vkpj5MT+CToIsbaAi54CF30ge7U+hS35
-	7nk+hJtTkvfuVd801BofH0MPtgfG4392C4KiOGAUAYR0LXHpgQxe67zkJiswyFYg
-	Q9JEuHtVIa+9XjHSj0lJ7tlLlPujbPr1XtxeuKSGUI3oo3LQjxUIn1aQTyBYjHaq
-	x0vhnOrWSCB+xzpxbqYDS+jbXqiJnS9WVwgqNEKAG9l6og1AYNLrByDPIKTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768950668; x=1769037068; bh=Lyltz3MGi59ee8XwlDu/0KhZAkY3w/E22dR
-	nqs+rQBo=; b=rh1lCWIei1X73APTfJ03Oge524aCC6bi8Mn8NtQpQgHmfXhrRFT
-	PDvrV/rxdFp4nXM1P/WTyEtSIcK0G71rzgU9VG1GYj+CeSZkEB6Bh/qnl9YFec5H
-	c8BGpR+bqYruImjjx068A4h5GtGUqStYlHarVDcKkXW0+Sk1gknxlFwzHQFLYtvr
-	W01jmUdD3p2dCyhsmJAXw9WTMm985b5ed/jby5CjzW7CENWW79iNIJHUNxH/7H0D
-	WpqUYVg7kkufphdcIulom5eUzJUFqOt3ASIvqRYmlOYXR2/pn78/I/sYi9u8y5Ot
-	i3Z3Cl4WU++sRcn7+Nh/3oEBElfVwvON3hg==
-X-ME-Sender: <xms:jAtwadGdENc3qAZlexTzHwbpwPIXup09UgttnvJoYe64_7OpcEF1kQ>
-    <xme:jAtwaU7YPG2lvmUsb1AikDn4uH9Ca1hcf5NAV7NCdb3cvfp0C58ZTlJnEP_7iUk1N
-    1zJ4ZtIc0EUiXgZOeLeuut9PkMUVtUdZ-LCCk1g52dyuP8MGxSSZFc>
-X-ME-Received: <xmr:jAtwaSwCRMCHeeljCcjZVnVst7oYQn9IYWwBNd3kqlXPsvyeOugXM6d5SLCeQTa1nPek8PyrTai8uG_v9qVunhFbQKWPJJYFMP5-Vwo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeduieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhish
-    gtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopegtohguvgeskhhhrghu
-    ghhssggrkhhkrdhnrghmvgdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgv
-    thdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:jAtwaTMqBS1m0tD2UrTaOR4j2p67GhlW9d8VDD1ehJB_NbrS7aKk5A>
-    <xmx:jAtwaYn5oHFQc8IRsCJPASOf4GOvIRn_8KwTr_BYZnAmKiFLoFaUkA>
-    <xmx:jAtwaYQLqeuxjLVNVrC8Yusd8YhtQ-tez6uzFyPPLsLo7DQUgNW8gQ>
-    <xmx:jAtwaXV7CRbZWXDFpG0DvgR_5JRO9Hl1XUTqkhA9pEfLxYg42JX8FQ>
-    <xmx:jAtwaY7pR0S4pUXudQzqyOF_LJH5LkSCIiArL4zJTmxKxppr38c_uCqp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 18:11:07 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, 
-    =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,
-  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Elijah Newren
- <newren@gmail.com>,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH] replay: drop rev-list formatting options from manual
-In-Reply-To: <xmqq3440x8da.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	20 Jan 2026 13:49:21 -0800")
-References: <01a7acfaf87494419b3766da57d4c05cf99c79bb.1768873599.git.ben.knoble+github@gmail.com>
-	<xmqqldht2fgd.fsf@gitster.g>
-	<CALnO6CCaVdJQ2xSPfvxQzVCfPsjbWHhMFUiLoiPQtVn9MeKFOw@mail.gmail.com>
-	<xmqq5x8w2t3o.fsf@gitster.g> <xmqq3440x8da.fsf@gitster.g>
-Date: Tue, 20 Jan 2026 15:11:05 -0800
-Message-ID: <xmqqy0lrx4l2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O5NmquKI"
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2ae255ac8bdso10686000eec.0
+        for <git@vger.kernel.org>; Tue, 20 Jan 2026 15:11:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768950710; x=1769555510; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OlRoc2VJ4Z7Zb+Oo7g89g/t15stCNpijmt/mCwNBDIo=;
+        b=O5NmquKIYNPOKykvVfjGUG+vzE3517nOOc6QDytTmnCiKPxazcgr+eBQKIjMuv9QKE
+         Ua0kpa3GnHqMML88/dOoS89uiDd7kkBqlOaOV/0nal2wMoiqrEkZdnkHfyECZKSQ/dFD
+         +51zulY0v2WtaQsCLJlJ7INYyfPTJuboSoXe2gTMYn5vHoVXUh0EzOy+k8c7vBrUGzLv
+         zaKn3WLRY493h3PUV3aTHDkYDaGbxvppc+kFmWodXe1flnCJ8Dn/1JCbzP3SUtIvAP+t
+         WqyGUIj4U0tB1DyiHeIfWnz59Y+WHgKO87uf3Z2rK8ywMHZA+GncdUsTX4gA+LZ5U0xn
+         g79g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768950710; x=1769555510;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OlRoc2VJ4Z7Zb+Oo7g89g/t15stCNpijmt/mCwNBDIo=;
+        b=ElSM1ovYPyZ9DpICc4M0KsCM2r+hQC+ZKBI+Rh2k+L2PO9zIDTClo88KYarkmq02JK
+         mptnTNA5R4VsXzPU015zHF1bMCuvKPBYY1RDdmxcA6IiZ29wrF9u1MP9FR4YetLzAiQv
+         bi/vrZwZq+A2sMDm09ZVG81+puusEdKKUk7BOyhGgissUJnfKe+bA63JjWTJwWRARv7x
+         CRM2O6cM1u3BKayHLoiota/BsQsOQmUA3z36Sf6IF+1T8Vfvi3bipihtAbVExP+i5pgk
+         BAPMTL6fkjvevHxpiZdoZYGtPpijGqbAlQnWOjeYM7cspp4wtBmEbfMjPcfg4DNZUKFs
+         ALwA==
+X-Gm-Message-State: AOJu0Yx4/nHl4IEbEi/TPEtukKElw7TZ66GiYa+3HKSRhEim3yOMwRH8
+	n2gzIeCgEoe4CoJPVJufsFgsp4CWKYyQ+a7Wd9dpNkA4774pUWsFIw3R
+X-Gm-Gg: AZuq6aKnDHqhcb3LFD5r8LNfeb7EGLgTwTBzQfWt5r49pDnVy7CE+4dyEIN0XKv4+7E
+	yo583Ewu35wkJ36TvHLJIFjpZHCJogtXGXX6ga2X+fNjbXO7H1kelRyO6a879eEEAygF7AkNd4f
+	Ybryn1+FiSreqR4oG7CuI0ntk6Cn06VOq3pOtJiN065OLoVPyVCvwgJpv3cAnemw48NwWft4KO2
+	30Li7C60dwdn9lIEM/u8dHYPjaEYZf7/8Ffcyrz5p6ewPvpiQi+fMoRI0WowUpTZVxfJr5fU240
+	vBFbSLfI3U62ArL/gQU31XfWItCqpJ2bbIolr+Xy8yK5PGb1Z4RAyZA/HGKqLYhsoZAuQaADoNk
+	Rp9Tpe6GfXaxz1jf8mW0n0FR6mJztUEG6kTInfrMKuvukKfiYmrEus9SdJZlUDxj0jsrTJjUeXW
+	+5gDHqFQ74AuahvzgP/KdaFAdEqwBp2nsmxBWqrS1iFMkCm0xbvKjUsnM5oyPuaMMCTFOFeeU=
+X-Received: by 2002:a05:7300:2146:b0:2ae:6146:37a8 with SMTP id 5a478bee46e88-2b6b3eed5e4mr15070903eec.2.1768950709407;
+        Tue, 20 Jan 2026 15:11:49 -0800 (PST)
+Received: from smtpclient.apple (201-1-211-91.dsl.telesp.net.br. [201.1.211.91])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b34c0f7fsm18963588eec.3.2026.01.20.15.11.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 Jan 2026 15:11:49 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v4 2/2] repo: add new flag --keys to git-repo-info
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <aW8bOfVLcG58t-Uk@pks.im>
+Date: Tue, 20 Jan 2026 20:11:35 -0300
+Cc: git@vger.kernel.org,
+ gitster@pobox.com,
+ jltobler@gmail.com,
+ avila.jn@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <2B17A803-F1E0-4A9D-B0B7-2C62DA3939A2@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+ <20260119210932.68893-1-lucasseikioshiro@gmail.com>
+ <20260119210932.68893-3-lucasseikioshiro@gmail.com> <aW8bOfVLcG58t-Uk@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
->>
->>> If I've understood all that correctly, then I have the Python version
->>> installed for building Git and it understood the syntax. Given that
->>> the Ruby version is newer, I think it should also work against the
->>> spec.
->>
->> We have CI jobs to catch the differences so hopefully we know soon
->> enough if one is so badly broken ;-)
->>
->> Thanks.
->
-> We didn't have to wait for CI jobs.  You can try
->
-> 	make -C Documentation lint-docs
->
-> which reveals that somebody is not expecting these multiple things
-> there.  I think Documentation/lint-gitlink.perl needs updating.
+> Tiny nit: we also tend to terminate the last enum value with a comma.
+> The reason here is that it makes it easier to add new values going
+> forward while only having to change one line.
 
-Perhaps something like this.  Haven't thought things through to spot
-negative ramifications, though.
+Sure, I forgot to add it. 
 
-The original comes from f81a574f (doc: test linkgit macros for
-well-formedness, 2025-08-11); its author Cc'ed for better ideas.
+> You also have to adapt `cmd_repo_structure()` to handle this new vaule.
+> Otherwise it would `BUG()`. I guess the most reasonable change here
+> would be to treat "lines" and "keyvalue" as equivalent?
 
------ >8 -----
-Subject: [PATCH] lint-gitlink: do not get confused by overly long ifdef directive
+Nice catch! I don't know if it makes sense. If we change that in
+structure, we'll also need to also change in info, making the name
+"keyvalue" useless. Another solution: change the current "keyvalues" by
+"lines" in those three cases. Maybe it makes more sense than the name
+"keyvalue".
 
-The old pattern, when encountered "ifndef::git-shortlog,git-bar[]",
-complained that "hortlog," (i.e., a substring that is up to 8 bytes
-long, that comes before "git-bar[]") is not "linkgit:", which was a
-nonsense.
+> Thanks!
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/lint-gitlink.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/lint-gitlink.perl b/Documentation/lint-gitlink.perl
-index f183a18df2..91621f9db1 100755
---- a/Documentation/lint-gitlink.perl
-+++ b/Documentation/lint-gitlink.perl
-@@ -41,7 +41,7 @@ sub report {
- @ARGV = $to_check;
- while (<>) {
- 	my $line = $_;
--	while ($line =~ m/(.{,8})((git[-a-z]+|scalar)\[(\d)*\])/g) {
-+	while ($line =~ m/([a-z]{,8}:+)((git[-a-z]+|scalar)\[(\d)*\])/g) {
- 	    my $pos = pos $line;
- 	    my ($macro, $target, $page, $section) = ($1, $2, $3, $4);
- 		if ( $macro ne "linkgit:" && $macro !~ "ifn?def::" && $macro ne "endif::" ) {
--- 
-2.53.0-rc0-249-g60c15f3eb8
+Thanks again, Patrick!
 
