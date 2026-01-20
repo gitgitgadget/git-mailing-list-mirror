@@ -1,55 +1,55 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30224477E41
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 15:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0357447886C
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 15:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768922784; cv=none; b=P1DhLLJ+ORyldnGhmkOr4IfKlKtHGNG5VISTtO0MF/yWwbYvICpsLK5EJNW4CQLhPzmE4sWqDtHvEqjvJWo9Rm3UuSntmBEFGRd9mokvG4gchpqTHC8wJ1EAcVDpW56c+D+Z7pFgCvzsa6/tET625NHjY/USvULV7j9uQKns+gU=
+	t=1768922786; cv=none; b=f7cQkgv4TcP5RMGXGu4+j4IIgeCkfkWVhhEpW5o5Tcf+cSXpM+o6dV+Bj3dRjj2sdhga9D7yfGtYlQDVmdCiEN0sbQ02imIaV+Xi4Y2OdFPQMNFDaGwM7noYRkKhMml9Jv1OVt/XoHXNj/4U54quyRfyDY8C4izD5ojTd9D3DbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768922784; c=relaxed/simple;
-	bh=xbYgNUWj4+m0BjVlhY1zI/gZmzZhwoVkCZ6j1gX/xX4=;
+	s=arc-20240116; t=1768922786; c=relaxed/simple;
+	bh=JSPXN7NwtWe59uhrDwxDVCrg7YXPTIS2BLkkjSb0KPg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jEn0vA6OZW3lQ9l4S4LTSilg6fWYL6hl0gOGan2OYOA76KLxxI51Ya3dX0t8j6ccX8jH3mMCFfVuh347Y69wrfct/v3NnTEG+pN+S/35G4l2XRNereTaBDvwaGi/5CvqIburl2L2C42QCaF4FI7qqw/J51P2IqbfqWc4a/9MsM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T/tnFZr4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X/AYCkZO; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=LhVVB6Do9j67yHs0lR0Vd8sF0KMY27RJtvVPlXAvYnqK8khulwC2wiW2b/yMXWZSSjz6L1p8F/qACOMsIcjCG/eNbPbu+gmeO6GoMr+vjojB0NhAi+9gjKLlV96r6dpuecDT1Q1aq7WYmz2sU9XudZ5Fw3CcmmBeaHwH9/zYXrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TR6y4jgn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oUQxQtsT; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T/tnFZr4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X/AYCkZO"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TR6y4jgn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oUQxQtsT"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 903B47A00D1;
-	Tue, 20 Jan 2026 10:26:20 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 27AB57A00C8;
+	Tue, 20 Jan 2026 10:26:24 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 20 Jan 2026 10:26:20 -0500
+  by phl-compute-05.internal (MEProxy); Tue, 20 Jan 2026 10:26:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768922780;
-	 x=1769009180; bh=9IK9tGmUznhWX3U7/oLqpH/mUDkpXY5mYRpgaEbKs5A=; b=
-	T/tnFZr4l1rZs3Kv3mGtSVRSUquKpTaKvToLtiq0tYCAgZG3UOdTmzZO2xWZH9pK
-	/U4pnVKv3uNpGT+i5Q13eB9xLPfrW5bij5mV0PYsIc2I/2XazyB/PjBkuFm2Shw/
-	XzVBufugWPZCR76YfG+s54vyQpWOVWNMIazIl6/wzvS+KAkSe3PrjQxyuo0ri4Qj
-	c+gTzRNUjFtCqBDFscRZxmZpfaoz2QGQdye2P1+WJg+QmjBsEDk6s4hKmR6Lq1Fu
-	3ZyRi1t1EA5/bB/G7FeiMwmvV5b/rIfzk9j3Sprr2ZvD6LLxykBbiQBh7m0cObBw
-	tE7XY9dwKSC2/oPTjEO4VQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768922784;
+	 x=1769009184; bh=xFLiACMEoR3j+fYNLETlBjk6t4qJHRDIsQSXzI9xGg8=; b=
+	TR6y4jgnP6tdJAx4Y3OuPve9XvS1N/UJFUhZ4BZRq1ccZjjJxy6w4IxkfwOoCtSU
+	6BW3jerPFZmEAtw59pzpBnuB91VMjjO7cU3pJqYXdIHps+DcneFLtwbkkG79jE2C
+	IyWA+Oeb/9V69RFHJdkVqGP0io7O2r7I9UGrxfH0RtVjvekiKeDANUO7+sjt8vyF
+	xLaYj1vh9cJ7JyUCBH3UQMh5LUlackqKKqakglPBPeAKVIWhiqH+3yiAIez/RNZB
+	pI29Zd27VEmvxnoz+hRBPVSsOx0zLyn0K9/CeTnVWwnen2IYJEajYojNOPRJxpfh
+	qeRfRVypTToqGwhktsrENw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768922780; x=
-	1769009180; bh=9IK9tGmUznhWX3U7/oLqpH/mUDkpXY5mYRpgaEbKs5A=; b=X
-	/AYCkZOSoJXkFMLrt2ubo50HMg1G9iN6BaCx0UckPS+K2Xp7d0sSqtVU3ccUQKLY
-	zBpBjYvIraByg18k8xjTkYcyTT2T9NgMPkbN0eFWHIyRA0hFGTMYzcxmnHV8WGx9
-	z25OVO5a7m83wg21x9AWRjgozCPujTxweOblPBz9DlgoG1lR34uSHYgzLVUjQ4wv
-	14isy1EyjuQfpZhiumj3ztbizxBsLUQ78plupe6aeDW+4SodxC8kO9zGCIrRrSTl
-	yJUSSZ7WuTcTvCa96zbXWRzlbARlTIWlgEQAsYdKGo2u4Iw7HDVTJelE/bz/Tq+J
-	d1DTzV81yhI5QQZVpJMnA==
-X-ME-Sender: <xms:nJ5vaXYstnWPXoPoF8L5NFOjeF0sHscj2INu0_OUuAJJbIYeOFgtPQ>
-    <xme:nJ5vadayeX7_xiUeCAIKWGXo4UOysZNBf5InKoTvgBXm2vIajus6erO8ecQfQY6Dl
-    g99ArJvra2T_VIpxinIkbr_cBZjP7KsfI5Zx7-h3rsfC0RrP9QPtQ>
-X-ME-Received: <xmr:nJ5vae92rw_QUkoH_KMuethA-1DbELqwpKp9MImOCw-5JJmNz1o5WIDW-hFh4iFTAuYwopjFZF3HlLiULXk-UW0DGrDpGxVZXzKTerC7Hg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768922784; x=
+	1769009184; bh=xFLiACMEoR3j+fYNLETlBjk6t4qJHRDIsQSXzI9xGg8=; b=o
+	UQxQtsTY6AfYNFohpa7tfWUWyR+/L+A2V9pMIUSnOgFwV8ROsLFP4KvCougxwuA2
+	RNvNHmfB5psO3t8EH0pE/TGt+9G0ILOB23SDAqxChqTJTzr3nXb4lb1rMU53dalD
+	twY4bdqji+j/zkKO8YygkRyFr9kxv7LXnQJ6E6R8rvKRGPZQCgp5vh8jppG41hMD
+	R4Buh05CDZLcXue1VzQIR75H0qmKPPIDIr5szt0Cu9+OezJT69ej2MEBWqkuedaw
+	fFwACM+YRNIaiJOpq3bTKgsUyRXUYKa2ZPa3xfORayj7OkGVb2GSGL4gGpgwx1c5
+	RxMXFBwf2A2uf7Zy9iRqA==
+X-ME-Sender: <xms:n55vabxSsD6CK8SK3FNFQEeB4qTIgk4tnWOIdNIrkchctlJcVD-bWA>
+    <xme:n55vaaTi5st6re5fSSQWoawY7ov2YZugyDuavLe24kU-LFVHxX9LnfH8tnvK61YnY
+    WWSw7Xx7N0foliNkR6JQupPjkV3zdbnqJCh_YV_xvqH0y8i6jRJ3Q>
+X-ME-Received: <xmr:n55vaaXlB9adhkg3sTRJvqOWKMxC6XLEImZ0Z30nE42O-DPlgK9_5tqGgbfiFbb1pyUnuh42neIkcmrXKRCvQQKbixWIgX-U3wOI3XfeTA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtjeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtjeehucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:nJ5vachrBBJEz3dOONcotGW7_TA1xIkE5LMfNjqk1nLtaS5S-yTf-A>
-    <xmx:nJ5vaefJWB6qRpQagOM8YzPVgz5rKj1yL4YZHYUOb7Tdqoj1Ts3wmw>
-    <xmx:nJ5vaTrPvXJb7QpwVJ-bzStf-hSV-6rj2tJrMXxLIZ0Yk1_ktNzesA>
-    <xmx:nJ5vaTBrYkDbufIdsNWdiTkm-UUGw58oeRkpDu5jZXpqCfNQtDzYFQ>
-    <xmx:nJ5vaef9Y8lE6ddYLn1syp1ecA9I13CpVnEgYAUc5ZZH7JZUzNRkecv5>
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:n55vaUYT69wCPgFaHASsSRJNyWpUPAkXwEQBSm043QF5PGoXgzsUKw>
+    <xmx:n55vaY1OMWmUwKeSkDsiz18vb2FbTTTeoXd628IybPMkwlhTTCQnkw>
+    <xmx:n55vaehtIxW-XhNZLxe8Dcf1dU0GRs78etRn18fyY_GEsngPIXZXBA>
+    <xmx:n55vaUZPn95q6036wkSeN9ZyZkCwyPJaE6ZC4Y6Hx0vnWAvykHzGLw>
+    <xmx:oJ5vaR2sn3wwNaICCcAha39Rwgk4xZKX7iNj293PKvK3984YNhnNCELl>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 10:26:18 -0500 (EST)
+ 20 Jan 2026 10:26:22 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cdace754 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Jan 2026 15:26:18 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 58674bb9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Jan 2026 15:26:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 20 Jan 2026 16:26:01 +0100
-Subject: [PATCH v2 05/14] packfile: extract function to iterate through
- objects of a store
+Date: Tue, 20 Jan 2026 16:26:02 +0100
+Subject: [PATCH v2 06/14] packfile: introduce function to iterate through
+ objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260120-pks-odb-for-each-object-v2-5-d05cbfd3d6f8@pks.im>
+Message-Id: <20260120-pks-odb-for-each-object-v2-6-d05cbfd3d6f8@pks.im>
 References: <20260120-pks-odb-for-each-object-v2-0-d05cbfd3d6f8@pks.im>
 In-Reply-To: <20260120-pks-odb-for-each-object-v2-0-d05cbfd3d6f8@pks.im>
 To: git@vger.kernel.org
@@ -92,120 +92,111 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.3
 
-In the next commit we're about to introduce a new function that knows to
-iterate through objects of a given packfile store. Same as with the
-equivalent function for loose objects, this new function will also be
-agnostic of backends by using a `struct object_info`.
+Introduce a new function `packfile_store_for_each_object()`. This
+function is the equivalent to `odb_source_loose_for_each_object()` in
+that it:
 
-Prepare for this by extracting a new shared function to iterate through
-a single packfile store.
+  - Works on a single packfile store and thus per object source.
+
+  - Passes a `struct object_info` to the callback function.
+
+As such, it provides the same callback interface as we already provide
+for loose objects now. These functions will be used in a subsequent step
+to implement `odb_for_each_object()`.
+
+The `for_each_packed_object()` function continues to exist for now, but
+it will be removed at the end of this patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- packfile.c | 78 ++++++++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 45 insertions(+), 33 deletions(-)
+ packfile.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ packfile.h | 14 ++++++++++++++
+ 2 files changed, 62 insertions(+)
 
 diff --git a/packfile.c b/packfile.c
-index 79fe64a25b..d15a2ce12b 100644
+index d15a2ce12b..cd45c6f21c 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -2301,51 +2301,63 @@ int for_each_object_in_pack(struct packed_git *p,
- 	return r;
+@@ -2360,6 +2360,54 @@ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+ 	return ret ? ret : pack_errors;
  }
  
--int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
--			   void *data, unsigned flags)
-+static int packfile_store_for_each_object_internal(struct packfile_store *store,
-+						   each_packed_object_fn cb,
-+						   void *data,
-+						   unsigned flags,
-+						   int *pack_errors)
- {
--	struct odb_source *source;
--	int r = 0;
--	int pack_errors = 0;
-+	struct packfile_list_entry *e;
-+	int ret = 0;
- 
--	odb_prepare_alternates(repo->objects);
-+	store->skip_mru_updates = true;
- 
--	for (source = repo->objects->sources; source; source = source->next) {
--		struct packfile_list_entry *e;
-+	for (e = packfile_store_get_packs(store); e; e = e->next) {
-+		struct packed_git *p = e->pack;
- 
--		source->packfiles->skip_mru_updates = true;
-+		if ((flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
-+			continue;
-+		if ((flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) &&
-+		    !p->pack_promisor)
-+			continue;
-+		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS) &&
-+		    p->pack_keep_in_core)
-+			continue;
-+		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS) &&
-+		    p->pack_keep)
-+			continue;
-+		if (open_pack_index(p)) {
-+			*pack_errors = 1;
-+			continue;
-+		}
- 
--		for (e = packfile_store_get_packs(source->packfiles); e; e = e->next) {
--			struct packed_git *p = e->pack;
-+		ret = for_each_object_in_pack(p, cb, data, flags);
-+		if (ret)
-+			break;
-+	}
- 
--			if ((flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
--				continue;
--			if ((flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) &&
--			    !p->pack_promisor)
--				continue;
--			if ((flags & ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS) &&
--			    p->pack_keep_in_core)
--				continue;
--			if ((flags & ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS) &&
--			    p->pack_keep)
--				continue;
--			if (open_pack_index(p)) {
--				pack_errors = 1;
--				continue;
--			}
-+	store->skip_mru_updates = false;
- 
--			r = for_each_object_in_pack(p, cb, data, flags);
--			if (r)
--				break;
--		}
-+	return ret;
-+}
- 
--		source->packfiles->skip_mru_updates = false;
-+int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
-+			   void *data, unsigned flags)
-+{
-+	struct odb_source *source;
-+	int pack_errors = 0;
-+	int ret = 0;
- 
--		if (r)
-+	odb_prepare_alternates(repo->objects);
++struct packfile_store_for_each_object_wrapper_data {
++	struct packfile_store *store;
++	struct object_info *oi;
++	odb_for_each_object_cb cb;
++	void *cb_data;
++};
 +
-+	for (source = repo->objects->sources; source; source = source->next) {
-+		ret = packfile_store_for_each_object_internal(source->packfiles, cb, data,
-+							      flags, &pack_errors);
-+		if (ret)
- 			break;
- 	}
- 
--	return r ? r : pack_errors;
-+	return ret ? ret : pack_errors;
- }
- 
++static int packfile_store_for_each_object_wrapper(const struct object_id *oid,
++						  struct packed_git *pack,
++						  uint32_t index_pos,
++						  void *cb_data)
++{
++	struct packfile_store_for_each_object_wrapper_data *data = cb_data;
++
++	if (data->oi) {
++		off_t offset = nth_packed_object_offset(pack, index_pos);
++
++		if (packed_object_info(pack, offset, data->oi) < 0) {
++			mark_bad_packed_object(pack, oid);
++			return -1;
++		}
++	}
++
++	return data->cb(oid, data->oi, data->cb_data);
++}
++
++int packfile_store_for_each_object(struct packfile_store *store,
++				   struct object_info *oi,
++				   odb_for_each_object_cb cb,
++				   void *cb_data,
++				   unsigned flags)
++{
++	struct packfile_store_for_each_object_wrapper_data data = {
++		.store = store,
++		.oi = oi,
++		.cb = cb,
++		.cb_data = cb_data,
++	};
++	int pack_errors = 0, ret;
++
++	ret = packfile_store_for_each_object_internal(store, packfile_store_for_each_object_wrapper,
++						      &data, flags, &pack_errors);
++	if (ret)
++		return ret;
++
++	return pack_errors ? -1 : 0;
++}
++
  static int add_promisor_object(const struct object_id *oid,
+ 			       struct packed_git *pack,
+ 			       uint32_t pos UNUSED,
+diff --git a/packfile.h b/packfile.h
+index 447c44c4a7..ab0637fbe9 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -343,6 +343,20 @@ int for_each_object_in_pack(struct packed_git *p,
+ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+ 			   void *data, unsigned flags);
+ 
++/*
++ * Iterate through all packed objects in the given packfile store and invoke
++ * the callback function for each of them. If given, the object info will be
++ * populated with the object's data as if you had called
++ * `packfile_store_read_object_info()` on the object.
++ *
++ * The flags parameter is a combination of `odb_for_each_object_flags`.
++ */
++int packfile_store_for_each_object(struct packfile_store *store,
++				   struct object_info *oi,
++				   odb_for_each_object_cb cb,
++				   void *cb_data,
++				   unsigned flags);
++
+ /* A hook to report invalid files in pack directory */
+ #define PACKDIR_FILE_PACK 1
+ #define PACKDIR_FILE_IDX 2
 
 -- 
 2.53.0.rc0.250.g0ac79233d6.dirty
