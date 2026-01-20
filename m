@@ -1,135 +1,111 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FE2221545
-	for <git@vger.kernel.org>; Mon, 19 Jan 2026 22:16:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBBD2030A
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 00:15:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768860988; cv=none; b=FYqgkT1w5I0nvV8GdS4WHNmLDDAEzIlED/KGmbStUvFhiE8wGOlvBgS076GwIOcoTXcspnpBoqVdufReNe28JDoUUulqGGI6ZNK2JYvsAKakdmL0r3cpCBqLRFcMya7IqMTwFJG5lwis2Qvg07IPEQly9yg8ivPWAF2W3lnD1uQ=
+	t=1768868120; cv=none; b=QEYK06NvW9HqfeQieorQj0BZYRxWkpuDrjebOCvkos32xjbBwCoczrA7vkEb8wXm10S6C2v5/wcWf8vZULXEoZuEP/9SOUOTcpGJ5AdedKGOtxqvIHkesbG4uh/ImOwUFryxGcB68nCkptc8r39a0/C0IdB0v2YS41JpWda9pS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768860988; c=relaxed/simple;
-	bh=cFpsrxy6tefnydtCk7lshYAVC9QspVQDRsWN7hJlJHo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ig4IPQzdOp/o08ZgbU0/67/SUHsM1ygnCQUQTw3b9kCBIWFr0wca2qEPkRd9xh5w3NcI5AQ7BbtLLojXPB/Rf63a9sVxtEIenY2sKq8ZQwQwd109fmM265N0r+58VYCxfUVXxsRIx6gmlxs/HwXVvqgxEvZFBteEruNzRHfMD3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=BA1q9fqE; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1768868120; c=relaxed/simple;
+	bh=Av6at9rvhxGYowE8+3it5DSoCXB229odH6d0/mv8prM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ccMTAGX1eB82BoIJj/xurEqpqzxvhO5k1891bYAtGlplyjbXMVfeixtzvsFKCnjnpDJJfedXFRy0Q8n2p0Hr4+34QaMjbf9oe7gne8/or+Q4yse7plelZFI3E2WwqX6ub2gPyEABl7uxztScljoY9X58hHawKMqStfHXJ/dyD7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wk4QfIbb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ekqZUiD7; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BA1q9fqE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1768860979;
-	bh=cFpsrxy6tefnydtCk7lshYAVC9QspVQDRsWN7hJlJHo=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=BA1q9fqEd3u0nJmYZsyVmubccoBiobgyFBikWDQ3MYpyx1FgR/5Q0i7QBlRsO61xV
-	 ihn1tsFdKtD3dmWacxgefuj8yYQoQeHQ5G2+Dj77d84W++5TBH1lSC4FO6H5kOuwTm
-	 EHc+N0xPyAgXZvBAGtVhPGAKOSZTcL+OFi/CKRyJOPlSLB6F75iq48SuzYSp8NPgKe
-	 71uzDcKIeVDiv0UN/poawACmHI/3JUpL2nVXsq0LcEnalHX/Un8CH2/v1PwGID6oNt
-	 DVtZW/N1yR1m9NPNyUWQbIRZV0gCLI6z92pHzrv/or2991msyyqY17QJg/sngoXGvS
-	 6N39UZvyGW5TcRiiagsC28ShxQPQVFBW/C35k6LpUGoWnI0cXM09Mxxbdle3Uygd4B
-	 apwroGMrwXkMtJJRP5nTpsYNjhhcWDwOAyBU2TAmPIVtE5H+pM48CVRXM3XE30MsPU
-	 jl//zeEALA7cu/NUWkwaFiOVbvRNnfMGiFcfBGcZjtnH/L4o3iF
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:11b3:8fe0:a8a4:798f])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8806320081;
-	Mon, 19 Jan 2026 22:16:19 +0000 (UTC)
-Date: Mon, 19 Jan 2026 22:16:18 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wk4QfIbb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ekqZUiD7"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 70F5B1D004E8;
+	Mon, 19 Jan 2026 19:15:17 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Mon, 19 Jan 2026 19:15:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1768868117; x=1768954517; bh=YNdi1cVRYG
+	/nL7cixkFIBusia7xuPkY5dR5+jehHl+Y=; b=Wk4QfIbbiBOOAST9wHr39wQ0vW
+	Pxe56398xm00X3nvJwamN5GSUH0H0Xc7e5mx9no+NmAzlzl9d+UQHFdIuqz4YJ4y
+	DYCQosEibHMwjyZPEHeS1nbv65YVqkXi/DVz+oix3BOsmp2hgko4Q+9YuIc+oJz9
+	uF5OIWKw1WAC6IvP0vcwE7iQT95XBFvl2obxXWafd0oT6LkXBNuw7XikU7CAn//+
+	mltc0l/wyE2COWq9BjYg+WTVQGb1sbtweyNZuphHN+fgDOWOLUl2SgvxAZvnK+t5
+	WfcGgykFxwcz+HZRNzhgQXfHa1wruxLOmvj8VtusBT9b2ehtxl8d1cOtKmQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1768868117; x=1768954517; bh=YNdi1cVRYG/nL7cixkFIBusia7xuPkY5dR5
+	+jehHl+Y=; b=ekqZUiD7EpNlz9WW5KXijHxhKHgsGc3hz7Tbk33j04bwFL+jG/F
+	Hv0YxSoCdD0FdiwnxmkpDSNBqza6REWb0dm1MzIzw2Xqv2znk16p0mZQ8TsGDVhx
+	ymFMnn/i1aNMBRQM8YIVndnsfqMvwwVQP8kTth/DV1sKBI+tI7oi/tBEkbC/NcuH
+	S2ZpsAlXi6ezq1+f6ozOdbjIf068Tw21JgEfXNzrvnUdEY9q7q2WgksPbsD/mO6A
+	PzbfXZ3pjA8uokWZB6nM3Wdp/vJzAqoKwH9Iv/XNVKImptwq1X0n/VD1dXZ96NC0
+	TEGnY88Wt2zLUETvrppt6IMvEKmHF8BXfgw==
+X-ME-Sender: <xms:FMluaZVUrHkWH3I5FGnexaBgl-LcKNfVzALu5Xn1Hb5XNegCwjXOmg>
+    <xme:FMluaQfI5uwYKSqD5_L7bXvI9NxUwR7JtZrpe6Ggv73OXHRaKR6d5eTElrOcyZqfc
+    A1O9I3C-xBvBNWYyu6dFqBi1voNvk2zLJJYc3VH_-QH-b2NIFycJw>
+X-ME-Received: <xmr:FMluadsHgFFz1SW-u0yOh3_dEzs1pCB7paaJH7PmT19XMG4k_i3-NDLwA6SCUvep-71Efdl6kSboaEFVJpxEmsWlqYCebXC_LTty3xs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeekleejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopeifohhrlh
+    guhhgvlhhlohdrnhgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepiihhihihohhurdhjgiesrghlihgsrg
+    gsrgdqihhntgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:FMluaX9EF2jknbc62zyxIk139fpUApK_i8hyVq7X97jNYiJj_CW50w>
+    <xmx:FMluaQ0BnLWL_w2jeLZ34QPCDCorfruiaVLanDQ32GLrVE1ZQQoFKg>
+    <xmx:FMluaUB6Vr4Qom3E9qqhXIQmwJwjPkhUdnAigdvfTCfD3gWXaj4txQ>
+    <xmx:FMluaUfV4EVU_8Yp9tMSK0GEAJKtLsqAQ73ejup1Cr-MjRNlJBYONw>
+    <xmx:FcluaQYB1SqjLYYpT6Fs_3uqA_3tAmRNUmapKoA531qbLxnoQ4EaBddi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 Jan 2026 19:15:16 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ondrej Pohorelsky <opohorel@redhat.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
- sequences to be passed through
-Message-ID: <aW6tMtg0pEKq23TX@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
-	Ondrej Pohorelsky <opohorel@redhat.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>
-References: <fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com>
- <aWD2x154F5f-c3pL@pks.im>
- <aWKLrIefrcSwReu2@fruit.crustytoothpaste.net>
- <20260115211448.GF1053259@coredump.intra.peff.net>
- <xmqqa4yeblsx.fsf@gitster.g>
- <c0af9072-cf21-a7e2-5b78-eb70217b462c@gmx.de>
- <aWnekt4ESo0bKpOT@pks.im>
- <CA+B51BEs7kuJ7s+K2vbZLSoaq3krGrqVncQAaTjSSNazFLY3tw@mail.gmail.com>
- <xmqq3445bn33.fsf@gitster.g>
- <aW3bSYCIPMhJT1mf@pks.im>
+Cc: Jiang Xin <worldhello.net@gmail.com>,  Git List <git@vger.kernel.org>,
+  Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH] help: report on whether or not gettext is enabled
+In-Reply-To: <aW3XUxaomqGbtpEj@pks.im> (Patrick Steinhardt's message of "Mon,
+	19 Jan 2026 08:03:47 +0100")
+References: <f3500e698fd40297d2e2634785529b76d49ca470.1768530514.git.zhiyou.jx@alibaba-inc.com>
+	<xmqqo6mta7bg.fsf@gitster.g> <aW3XUxaomqGbtpEj@pks.im>
+Date: Mon, 19 Jan 2026 16:15:14 -0800
+Message-ID: <xmqqsec13zsd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tX/VKoODrKkeWkno"
-Content-Disposition: inline
-In-Reply-To: <aW3bSYCIPMhJT1mf@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+>> Combined with the vintage of Git binary that had these help text,
+>> the fact that an "enabled" line is missing is enough clue to
+>> diagnose.
+>> ...
+>
+> One reason why I personally prefer to have enabled/disabled is that it
+> allows you to discern the following two cases:
+>
+>   - You have a modern version of Git that doesn't have gettext.
+>
+>   - You have an old version of Git that doesn't know to print
+>     information about whether or not gettext is enabled.
+
+When you see no "gettext:" line in the report, you can tell between
+the above two cases by looking at what the first entry in the same
+report "git version --build-options" produced, which is the Git
+version, can't you?
 
 
---tX/VKoODrKkeWkno
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2026-01-19 at 07:20:41, Patrick Steinhardt wrote:
-> I think what I strongly disagree with is that this is considered to be a
-> feature. I myself don't consider this to be a feature though, but rather
-> a security fix for a bug that can lead to arbitrary code execution on
-> the client-side, for example via title bar injection.
-
-I don't agree with that.  Nobody still enables the functionality in a
-terminal that allows title bar injection.  And, as I've pointed out,
-even connecting to an SSH remote allows exactly the same behaviour as
-this patch seems to try to fix, so there is no actual security benefit
-to enabling these patches there.  Defaulting this series to on is like
-closing the barn door to prevent the horse from getting out when there's
-a giant hole in the barn wall.
-
-It should be pointed out that, in general, simply using SSH to connect
-to an untrusted remote system or using `cat` on an untrusted file can do
-exactly the same thing as this series tries to prevent by sending
-arbitrary terminal codes to the terminal.  Nobody has sent patches for
-SSH to make it filter out terminal sequences.
-
-I have also found pre-receive hooks on GitHub that will be broken by
-these changes.  Just because Dscho has not seen them doesn't mean that
-they don't exist and many users who are not on Windows do not run the
-latest Git (they run what's provided by their distro or vendor), so they
-won't notice that things are broken until we've shipped the feature
-being on by default.
-
-I'm not opposed to adding support for this as an opt-in feature for
-those people that want it, though, and I think that's the right path for
-including it.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---tX/VKoODrKkeWkno
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaW6tMQAKCRB8DEliiIei
-gUdGAQDmygWkBDJRbf9zIrt1ZacyFfIPLVLACSWgBDK1U+NsIwEAuM7eh0Xczf5j
-UGclIn7d4cjiKxyYdm/hz1q+82YpCAo=
-=LGnL
------END PGP SIGNATURE-----
-
---tX/VKoODrKkeWkno--
