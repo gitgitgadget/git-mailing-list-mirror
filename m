@@ -1,96 +1,148 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B6E45091D
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 14:42:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768920137; cv=pass; b=s0+I+BSrkaXk6ecGoUZWnExTfUIA0RXh3kX0T1+qCTcUOeFGpStBLVAILDsofI2kslqdF8Yqieqc+aNansljD12DAUCm+KeQz0E60iilI6uqQZck42W5ZDZfKAQZCbY8TqGa+1M2ZIIlEiRm/EGkRGrWeHtvabim/Qd2AXuK27g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768920137; c=relaxed/simple;
-	bh=qlycOrCbTWn09slaEZyvKXhoyrD2c9otY+QgX4dx6MA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=BMIKnkNPe5oIfmxDtfnHJ1UDOzsVlgQK94frOC4z1kHsZN8sXkAw4TMydInKA6qDle7VZwqCFZ4TAq6LKjEAWOLyRQ6h/NVX3Z9ogS+TSBBC+b1Jd0mRuBOEeq8EEFOJ9o1XKcmFx3GOzMey1mBxuRiajZyeugrO3HPOaH9aGEk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ViP70lp5; arc=pass smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4A543E9F4
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 15:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768921306; cv=none; b=F3VUa6Ig2VFC8PZqZWx2gzxiPgtE0/gHkHZUhrXhVlfeXHhZBWYBgT61S4XIe9wXo1Djm2rqBEn2KnW1sUyfriGzu8S9vhHx+LmlnAftMvzS6YMW3iXJFZT4sWov7hjXalB19ltfDdevFHcVGh9OgchfP+vxbR560GvXz+YBw1o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768921306; c=relaxed/simple;
+	bh=4hUTRR9UjKRXU8SY3/mkxUKHSKMCC72Xxknx1+h87gQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gKThFZwPyzJD3p4hremQUKkChUFE775sBbI0wz/FMSsYGM9oFG+OGR0zHf5VPTEKBRTxxmN4IQMy8Xh9JoCZ+Wbc1I5mvZ6M1PddBL5nb7yDPrzpIzoPbUG+Ox3mDJv6KmSX/7Jtvdq3G3HtJ5aee8Z48+sKuXcN/UJWBFyTY4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaeI4u+c; arc=none smtp.client-ip=209.85.128.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ViP70lp5"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-123320591a4so5446711c88.1
-        for <git@vger.kernel.org>; Tue, 20 Jan 2026 06:42:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768920135; cv=none;
-        d=google.com; s=arc-20240605;
-        b=HqHPslN5HLtthKbSKABDNZ72uNnxONoicNqyyQm19o1pvyCMNwCDVIxsHd/c/cCfWQ
-         zISro8kRdLm1RKeP/+Ejb37chQAONsyFjSVsC68LD3w/aLEYRK9doSd90ApWnOp4MXDj
-         DMFL0O/LCvu5NnJJdF8AjUeN1dITWfQyqxPFfMj86umbl7zTGKvlO2VqO7ZiBOIMFOg0
-         7yrYvUHh8M4vuCJzTmHWZC2bGSzNfEAszaHhAI8DG8sN/kXCnQv3Bui5rHq9/G/LZkV3
-         NH6Q6fuS7EaBGUGbNUMk8jy149CLYiZfzQMW09tK/iG48SOJvmr0dZDmFhruZpIdH3/Y
-         U4Jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=qlycOrCbTWn09slaEZyvKXhoyrD2c9otY+QgX4dx6MA=;
-        fh=wsvoWvBz3+zI3cO8xbdreD5Z3aI/wpKopH/flyQpgVg=;
-        b=e58NA0w3yDmUGsCQlzpxVGNMza8ELsNnPQJDFzKKxxIek4C5/sYF5DQixR06TE9Q7l
-         Giw7ysC96nlTSpGONPHDcFJbEEEKcwDvihVkSdeq6w1tTJflxL12Os/rfhNgcY1NU1WJ
-         cNUoFFwXklBAc/Df8tlEw64iKNZz1Vo4DDLnZ/4BcDOadi1tXf7fzCySTPqSw2NXIqU6
-         lDSlUUB+deNIJEgN2DTEaYBg11CHUMDOispGwESW02qfZoi+g8dT9wHbEUz/kw7MIinl
-         gro0LoE5XxXYeLYRlHqVMTehcbw3Z1HagWy2mBZCzsM+mB1qc7fHhFBeVlI3U/iGepNW
-         eNsw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaeI4u+c"
+Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-4801d1daf53so38890685e9.2
+        for <git@vger.kernel.org>; Tue, 20 Jan 2026 07:01:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768920135; x=1769524935; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=qlycOrCbTWn09slaEZyvKXhoyrD2c9otY+QgX4dx6MA=;
-        b=ViP70lp5NLDBKiweh5a92TqwEw6mdlg7r0idtugwbVQkElwXjKQT/YX7oZfeD96HBl
-         jMBhXZREzFaEDCy49Ook6i7QmAqYpxs2qOvf19pHd5Y9ugEaJ99C8L4jZNRyvPXCSqE0
-         VZj5wngYUSeXWdklVQlX69oiQdNLOx9SiZj5zG8eZUfBJVxxa4pw9EGvnafGXjVfuXGR
-         fGUbh3xgGsk2vnn/wXrDBbgcZPP2HTrU81iw8iD/wodciLbjDIV+w7ahr8151pKXoCJ+
-         jj8giqx3cpwxhA/d3PYebvr0/zxpG9zm/OdPGO9qfRf+hUM3zydXLXYvKoVEcgDsThKq
-         6j/Q==
+        d=gmail.com; s=20230601; t=1768921303; x=1769526103; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=wgRJjUwDDilHyp7WRgMRtDVCPfcg1we+otfZIMWTyFQ=;
+        b=IaeI4u+cmt3irZCqEZd7KQTKACvsZ8t8LFaGGy0lXcYzLvGAzHd1i44LgRfs2a+dL8
+         XkmvzxmBEHT2FFC3mkQ+qFJ06nhkZPeiI7u3BgIyMKqF27RCFwHu4O15EWUW+NPX7TI0
+         GzK+uWMyJyHADCocwJkcuc4ZSu8TJP9N8kJKM7f9QNsxWPPjMssm6vNuIJ4jXWQK7A5Q
+         0RYTzTx692Pi9n+DYgSUtyzmuRIFylhD8T11lM+iDQzrQ9c6VwovBa66etLiVwre1O6D
+         hhHQJDmJAJzToRezYvjGSdDIbdrZxfmfZgky7PaGGyv38iBmt2K8AsNN6N+IW/cBV5ft
+         SMVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768920135; x=1769524935;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qlycOrCbTWn09slaEZyvKXhoyrD2c9otY+QgX4dx6MA=;
-        b=R18jO/8LiO+iwfteR4I+N2E4OQECovrLoyHAWV5wSLxsKZ9Fk6CTV9JGhBABvpla+w
-         YtjrC2uGvZgjbJTEv5D1qglN4Z7HVNLEu/FnPsKgnwysX9EfqShuzsWV6n7J4038C4C2
-         /BH4DnXnB+fvFdZOpSas7LVk5rD+3kYkozAfEkbV1EJDoxydyeWFkFluFdcTY6HaIkQ+
-         RsYzlRwcNWFJD+TvH2kPaGr/azH/PQLoaHonuM9nkmkEsTzNBGfmFZYjPzGyVR/a4n9o
-         Nofave0hwLK0TR8gFxkn+XEywa8todFmzsd1kJT8Kt9UxaiwIHaJX/oC0UlsQpOuVU+s
-         HHGw==
-X-Gm-Message-State: AOJu0YzcoAVgh4ZhzZ1/B0dbUBl/A7AKEWmMDNaA6aJ/i8kJ5ibkmPu+
-	MtzV8V9aJ9ZC7ECND1d0L2r9aZjTZflcz50yjfpygPmOrHpOZwsSoJZKI8POipEU5Sg6Vk47NLZ
-	XbCKCqNEPLbHMieGWYF9YFRpx4jwLPWOH9QCSGfKAjA==
-X-Gm-Gg: AY/fxX7X/Fja0hePpSljvlEAsRwpn5bTpbkBqIETuvto7UGlFunvEif6YKO3xTnlm/0
-	GpmraFwe810+M8gs89SXJ9UA4HKZAc+kAEQ2k7ZDXGl2L9NFaMJnHJ4OdNWJpDk48zO5fmLkt7n
-	SYk1kBSwD+4itrN7aXYbctMQXY1dTDpfw9ZSnB9W4BzrCD4Ignj5t5vSCIaCmvPpMxDK5RRTCs3
-	/p7FVccLNOZHyTFgiKGlE3Fay95SFfci4/cBGIK4gi1gAf9sw5ooKJw7m+4oYuTybE+xJ+K
-X-Received: by 2002:a05:7022:f105:b0:124:65f7:2c2e with SMTP id
- a92af1059eb24-12465f72d12mr2170211c88.43.1768920134969; Tue, 20 Jan 2026
- 06:42:14 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768921303; x=1769526103;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wgRJjUwDDilHyp7WRgMRtDVCPfcg1we+otfZIMWTyFQ=;
+        b=BTRXUNnXwNEELEQ6UK6G+PUGWv6u5DlKDAY/vImkkp0wWVzXfsTzs4Z/KzydzOUTDM
+         CVDhlSeSMB+IFgqxkL+zuZAjHYzbwyugDW5va8fTfIeLLuQR3EjVqPZB9vcuVkJ7km6j
+         S/GxeUtEHumL4qVMcKURefU3MS2vfOWPNgCz+uZZPcMSvRM8HSuh4x+kD8se/iFiMzGe
+         yqFAV9bNO7xmnImTYszfZs1RO/686FvEUvgbGqVV0pqStlZtPaOmt9PxmJKLOdZgUGC9
+         JMk1M4XBrw+6oIFSWR75nskyuhu5cwHxXSkDO+lvcvdjbBSphMGVvyQHuC5Sqj3W3YAg
+         QsrA==
+X-Forwarded-Encrypted: i=1; AJvYcCWawyleyHIHZw0A/bEsM5xHYbRzziIONlFKkCP8jANnGIK9cxs3U160cuE4agGzCRglbkk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnH0w29r1TdrxVZ/iNJRsSWRuL3jlZdkvb2WKXkGhmkBqR/J5p
+	n/Un7ck11n9hWzY6E0Q2iywMeAi2HmagbTwbbjN9hSzeNFxf6vSEK/VY
+X-Gm-Gg: AY/fxX6NZTrzCtTyWmJMxRbzG6Sh8p6EeHPa9UF5iWXabrKutGuvR8ABSht2KTi1qac
+	dbcsP30k5AqTqvnt0+4TDEvORk1GTJ1AnWOrDUL9N/cytNA1AgX1upc6xGj9VYE96ezHqQ2oERh
+	jOYlQ0IJmS2gqK7wOz8sOn5fTy4/7vKgDm/Ot4tGnnuVSL1qGmDXQiB2KPkzLMGwsEpkde41Y+5
+	mHV5AAclH4tfwcbQ1TXYeW0H4uKFRdnyuk6OkW3Pb/rFqzPErzVFVGvwjzBOhc29TPvgcz31DPi
+	qUwMLww5skX2dMVJtF6hHKDgdpINUO1XnH99I7WwUtJWDfZxjVn9zJcsI0Ssdpqpe1ciBTUKwhW
+	7b2VHrMD9OfgqWnzby3B6p3MXs0DiW1cshiCxQv/RuXqHISEp2DjtRv2dDm8eYEWgM4E/nVVX8t
+	ycMluXIPnmpQ6XGHB2OUGU6tdrTGPaK8zJJHmhfSb/Z41fcMYBWaaeRTIuUMulNqtRFNKSSlZBa
+	TuW
+X-Received: by 2002:a05:600c:c4a4:b0:477:7bca:8b2b with SMTP id 5b1f17b1804b1-4801e2fef34mr218628835e9.15.1768921301534;
+        Tue, 20 Jan 2026 07:01:41 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801fe65883sm103614025e9.15.2026.01.20.07.01.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Jan 2026 07:01:40 -0800 (PST)
+Message-ID: <1c46f551-0040-481e-9476-bc1b85f92636@gmail.com>
+Date: Tue, 20 Jan 2026 15:01:39 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Bello Olamide <belkid98@gmail.com>
-Date: Tue, 20 Jan 2026 15:42:03 +0100
-X-Gm-Features: AZwV_QgLxjnKijH69NoIkCYSSYsq2CywaiYcKfNAUwUS1WDkhMGiKGyrD5LiQo0
-Message-ID: <CAD=f0L_DGgpr+kxRjZY4KLGjdKn8zTfhq2gZWSY4Jm--yqJeWg@mail.gmail.com>
-Subject: =?UTF-8?Q?=5BOutreachy=5D_Blog=3A_Refactor_in_order_to_reduce_Git=E2=80=99?=
-	=?UTF-8?Q?s_global_state_=28week_5_=26_6=29?=
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 02/10] xdiff: make classic diff explicit by creating
+ xdl_do_classic_diff()
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+ <9bd01bce9f0763d9dcc962ff94fcda36346bafc4.1767379944.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <9bd01bce9f0763d9dcc962ff94fcda36346bafc4.1767379944.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Weeks 5 & 6 of my Outreachy internship were all about design, not just code.
+On 02/01/2026 18:52, Ezekiel Newren via GitGitGadget wrote:
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+> 
+> Later patches will prepare xdl_cleanup_records() to be moved into xdiffi.c
+> since only the classic diff uses that function.
 
-Lots of reviews, deep discussions, and learning when to pause,
-rethink, and send an RFC before moving forward.
+I assume that's to make it easier to covert the myers implementation to 
+rust without affecting the rest of the code? If so it would be nice to 
+say that.
 
-I wrote about the lessons here:
-https://hashnode.com/post/cmkjgvu5t000302jyfon53h7l
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Bello C. Olamide
+> +int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+> +		xdfenv_t *xe) {
+> +	int res;
+> +
+> +	if (xdl_prepare_env(mf1, mf2, xpp, xe) < 0)
+> +		return -1;
+> +
+> +	if (XDF_DIFF_ALG(xpp->flags) == XDF_PATIENCE_DIFF) {
+> +		res = xdl_do_patience_diff(xpp, xe);
+> +		goto out;
+> +	}
+> +
+> +	if (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF) {
+> +		res = xdl_do_histogram_diff(xpp, xe);
+> +		goto out;
+> +	}
+> +
+> +	res = xdl_do_classic_diff(xe, xpp->flags);
+
+This might be clearer that we're calling only one of the three functions 
+if we wrote this as
+
+	if (XDF_DIFF_ALG(xpp->flags) == XDIF_PATIENCE_DIFF)
+		res = xdl_do_patience_diff(xpp, xe);
+	else if (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF)
+		res = xdl_do_histogram_diff(xpp, xe);
+	else
+		res = xdl_do_classic_diff(xe, xpp->flags);
+
+and then we can drop the out: label
+
+Thanks
+
+Phillip
+
+>    out:
+>   	if (res < 0)
+>   		xdl_free_env(xe);
+> diff --git a/xdiff/xdiffi.h b/xdiff/xdiffi.h
+> index 49e52c67f9..8bf4c20373 100644
+> --- a/xdiff/xdiffi.h
+> +++ b/xdiff/xdiffi.h
+> @@ -42,6 +42,7 @@ typedef struct s_xdchange {
+>   int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
+>   		 xdfile_t *xdf2, long off2, long lim2,
+>   		 long *kvdf, long *kvdb, int need_min, xdalgoenv_t *xenv);
+> +int xdl_do_classic_diff(xdfenv_t *xe, uint64_t flags);
+>   int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+>   		xdfenv_t *xe);
+>   int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags);
+
