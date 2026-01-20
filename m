@@ -1,92 +1,102 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5B131B810
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 20:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5790F38A29C
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 20:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768939367; cv=none; b=Fa1u19Wo8NDSN1yQgSH31DZRCokiUIDP9T8xsvJ0+opVa730AmnD+wU9eU137euMMWOVetZcSEo/GHLRK2vD3l6Txa/rSGd3vwbxW/jY9XUGDADkj0XwqGvIX0ODkWWUIR4kDlg7MXpx7+iwR1YqqEpwOz3p1Yq8C8eeCPi/mZQ=
+	t=1768939915; cv=none; b=m3PJHkCdZcLBIMuNEl9+wrOGBhDeT6mlzw/l2BydDm9Oz9gzjDUTPgK5gizEC5YMhJt4OYd6n2GRj3Gwammpdw7Dm4aLCTqEeugcMOcQbDa+wiQYNTphzgGTYIaXJ97/tSdpm7ikjnw05ivhNiC6BS4fVy9ALBaWjarNA7mCxzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768939367; c=relaxed/simple;
-	bh=u6aOpIrf9heI1FKYkxiQHQ/5kNBUEKEhphpLQMh3YbY=;
+	s=arc-20240116; t=1768939915; c=relaxed/simple;
+	bh=G09M5yPBiLhRTlvf7YqVAMMoElMDlg0QEt1T8UFnjfA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mCZwQzzFQ8feuyXJyqnOlDFxm+ZwewU+VCR2kCW/87Zmb/Gypsp9NsZiUCpwoJARcKEHGjd5gzFpjYyBSZMV6PqdqusqNl9+L73kKme6RA0yfREvT4oIO3NSt8/54lpEveUC2Cde0XFPqPlNULFb12TOiQHuqNMQrQkcxW+bg9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sOuUY85l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PaBdRAlk; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=MjiQ67kFaeubwnp/OyOyfLQROz1YGIHR5z8MqfY27mpKf+WTN3f7rBvRjTB3Sr22aEZwdrEAhFDYGW868s5shhLgol9x6RUlzWojjVwcQGZo0no+2oGVQ6A7LrzRcL2rinh51RFIOlypSvbrVmYKN/VkY9TzPp5ywenzH4RRC24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ahCBuLMz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0okT561O; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sOuUY85l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PaBdRAlk"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E2F617A009C;
-	Tue, 20 Jan 2026 15:02:43 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ahCBuLMz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0okT561O"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8483C7A00C8;
+	Tue, 20 Jan 2026 15:11:50 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 20 Jan 2026 15:02:44 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 20 Jan 2026 15:11:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1768939360; x=1769025760; bh=t0kucYpJBL
-	+ZKoUQHc6+q1g1gwV9zgR4wdybqWcHPYQ=; b=sOuUY85l3+LuDz3rm2NnCdq0mL
-	8Dul0b3N+bSSsFbRZgNkR3O7lXZLfkEhpu9zZKzAj4BQ1CGmhtuyOhIiY+40Guyb
-	VDncJulbNAzXbTsL4wjsT1Pl3jRwJg1OjAkeP9nJ4qUpdmFanD9gZHfUaqD+7K0l
-	XQkcZEsrEKUSmcLYRjuX5S7Lt85u+qEZBdysraQBzLdWSo0c0EijJs0o5eNJE+XY
-	vTpD9U9yGf2tIbOxEsdDOX1M3i3//NKuO3t2T8OfEe85RAZd1JNGZmw9KnOnbq+q
-	Kt6Pn7aXePO2zD0SDPD7HzE7gasVn7hyyTO0WB06MU4kXngChhnLv8j3w+wQ==
+	:subject:to:to; s=fm1; t=1768939910; x=1769026310; bh=+jJ6RgcKQ6
+	eebXcgBBO1wLNMA1//JGgscme4GYVMI0I=; b=ahCBuLMz/Vw2IBHJNQ3TxQf0in
+	J/wbxtD5I5GD82c4Ow8nttSEOcT7W1nYhMbswzqyawjo8FQHw4CSbDoaBKIofBr9
+	xU/h2ghd0w8osk/j6GyEns3Ceadk51v6v8Rsgdul7VvArezAgl9C1irIqQivZL+a
+	vvOdHYXjXyAuOkFibnvjl62FmeI9w0DKW65xC456Yrs012Uzd/ax0fwf0D+06PKj
+	TlqaKXBRH7yIdE/jxqmfyqdnBd3RwwW6TFkV3mfACgtO6dzQ1WhX55DS2Ov3uhrk
+	s/iU2v4mfp/OV+wsHH9y/q4dMhFgWCWCdTDQ3yS9eeCoVQlFQi2aRJ4CjC6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768939360; x=1769025760; bh=t0kucYpJBL+ZKoUQHc6+q1g1gwV9zgR4wdy
-	bqWcHPYQ=; b=PaBdRAlkYiQ9LWu4IN5f17Cn83rix/Vc3cTaCEgWB1B89shWVST
-	9AaKj8l4qReWNbuxgz0RAm9zO/Hlx7wzgDL/Z5Snr1oQGO234VNIiyqREPWWfZYH
-	H//nA1+2Y3YF1L3zb6Qnf9xFQPpYy1ZYxujJ1ivuT0zGsyZf1OCUK/gg6YJLCInU
-	8czV3uKbjPg5i71uhgwJl4/mN7MsY6hDWV15SVbO52G6E9mL0n68NvRKiIVV00ah
-	+2K7nQ6WulwztvpsLM2S1taq4JzynJiRYmR1kwvLHZ02xtvLdhaK6eL/gQTAKsJt
-	K7mMfMeYP0mSMPEEV57tdBR5FE1fESiFYHQ==
-X-ME-Sender: <xms:YN9vab6nTHat4Wkf0CVp1FyiA2nUmz9xMYiQk2LApJdxaTbeDFQhqQ>
-    <xme:YN9vadcGTByziMx_Dlr0MSCVjf6xazH6C7leiaJQk0GYOvC5AA89G4UASD9w2I91o
-    sozeukhJpJMnXAKxRrRl-tG57tHBVeQAom_O755OtVVxvb1pmOf8w>
-X-ME-Received: <xmr:YN9vaW5MXo4KIQdEGqRwscOrqtC9D96VaVmxHWX6orXaIfqLiQmI0MckgDhXvVlgUhnxRFXRd1LZhiMKZFmL2MOYGjT-tXD1qdHOUQE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedufedvucetufdoteggodetrf
+	1768939910; x=1769026310; bh=+jJ6RgcKQ6eebXcgBBO1wLNMA1//JGgscme
+	4GYVMI0I=; b=0okT561O0XzS1q2XUAayZprT2Qs0TOHxQveMsbjd8K2WmFYZKxb
+	mS6cZxRYsWJvurcsCf+oVS9M8DS7T9l99IGLZqE/IlfDQIlSqK3Hh1g/xUEOUYJg
+	x7MA7iZ9jTqu4738sy02B/Q7eHDwJ5g9vtcdjhQm/kyrEpjhdjiRXXmKc4QfD0Ss
+	i9imd8XqYUkkq2Vg7mJCau2Gtug4Yrwucuwi7u3FFYeDTjpltd1tsDdb7dyjbr2v
+	4N7T/FaUdWMmS59I64z1SdfurxD/nyybhxfYr+FpXhdJZ/q8xqY/tGrt4sLwVWai
+	pY6BvoUGbaRpYfwgWhToUPDTkzrJLPFRTDQ==
+X-ME-Sender: <xms:huFvaQn2Ne4mfIk4zr-LU2hDNoxqGWA3B5OjNnDLqLYGsz_R7OAJWg>
+    <xme:huFvaca-Hf5CXHp3EyK6oE5JTVts6ZZCDxC0xBSqcxGC6ksuq0PTGqQoOCw0rBtMh
+    qoHYO3GNV2HeG9DihxQp--cBTm498qHWK7k_qjnaE2S3Rg8sr6O7A>
+X-ME-Received: <xmr:huFvaTFXPvIW4XWxyJzEPzB1uVhy6Q0ODnaFTkXSyVI6rIUlc9bNgfqMDpfpYurRp6GVBkk1m_vL50sgVuXZQsCyVU32n4QfPSNRFpw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedufeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvg
-    esghhmrghilhdrtghomhdprhgtphhtthhopehtsghovghgihesfigvsgdruggvpdhrtghp
-    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehprghulhhordgtrghsrg
-    hrvghtthhosehshhhophhifhihrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
-    rhgtphhtthhopehptggrshgrrhgvthhtohesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:YN9vaS9grmDl-GchE0p5A_jO3HeJHZIiQXdsKoaabcEKAOW91HxCCQ>
-    <xmx:YN9vaQEGG56aezfclpw18XlN9j-wD0B18RUj8BNUJ1lCJL87q4Mz6A>
-    <xmx:YN9vafXr1NiaWCHZa4T6Qq14DpKcSeOfLVIOouIvNIp9beAgQuT7-Q>
-    <xmx:YN9vaU_-Qi5_2xcPIjbybR36TifKLWzGoUEupaeHtg4cn0OKr4TDMA>
-    <xmx:YN9vaWX9Q5KGPMYziD_svnVWX95JyBAg12Zd6WvL6oDiZ6s8XtUVDyU2>
+    htvghrnhepieehhfeuudelhfeitdelvdduieduteeludelgfefheegveethfeljedtkeet
+    gfehnecuffhomhgrihhnpegvgigrmhhplhgvrdgtohhmpdgsuhhtihhtughovghsnhhtsh
+    grhigrnhihthhhihhnghgrsghouhhtfihhvghthhgvrhhithhruhhsthgvgigrmhhplhgv
+    rdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
+    htohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehophhohhhorhgvlhesrhgvughhrg
+    htrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhm
+    gidruggvpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
+    hhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgthh
+    ifrggssehlihhnuhigqdhmieekkhdrohhrgh
+X-ME-Proxy: <xmx:huFvaTYngjYp-tFeOTHseg2_x40PboDYoc4RAtLsVSAYOxnzs7VP_g>
+    <xmx:huFvafwNi3oDSvamKhUfaUSRYUiP80Vg8SSBuuTKd4TbUmWveV3OTg>
+    <xmx:huFvadTTF2EBKFXIQ5U-t5cHOPtjMfeakFLmgOckxnmxArIGWuIp7Q>
+    <xmx:huFvaUISpnKuDltBrQ9Kyg-BPmSPIMefnDqIHDz5FJqNBFkTlD9htA>
+    <xmx:huFvacxfq1sdJ7GxG3kr_am_am-W3NXTJFLfIom3bBlaZX49rDlu7DaR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Jan 2026 15:02:39 -0500 (EST)
+ 20 Jan 2026 15:11:49 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Torsten =?utf-8?Q?B=C3=B6gershausen?=
- <tboegi@web.de>,  Jeff King
- <peff@peff.net>,  "Paulo Casaretto (Shopify)"
- <paulo.casaretto@shopify.com>,  Patrick Steinhardt <ps@pks.im>,  Paulo
- Casaretto <pcasaretto@gmail.com>
-Subject: Re: [PATCH v5] lockfile: add PID file for debugging stale locks
-In-Reply-To: <pull.2011.v5.git.1768933954845.gitgitgadget@gmail.com> (Paulo
-	Casaretto via GitGitGadget's message of "Tue, 20 Jan 2026 18:32:34
-	+0000")
-References: <pull.2011.v4.git.1767804355831.gitgitgadget@gmail.com>
-	<pull.2011.v5.git.1768933954845.gitgitgadget@gmail.com>
-Date: Tue, 20 Jan 2026 12:02:37 -0800
-Message-ID: <xmqqjyxcyrvm.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Patrick Steinhardt
+ <ps@pks.im>,  Ondrej Pohorelsky <opohorel@redhat.com>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Johannes Schindelin via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
+ sequences to be passed through
+In-Reply-To: <20260120193109.GB3295894@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 20 Jan 2026 14:31:09 -0500")
+References: <aWKLrIefrcSwReu2@fruit.crustytoothpaste.net>
+	<20260115211448.GF1053259@coredump.intra.peff.net>
+	<xmqqa4yeblsx.fsf@gitster.g>
+	<c0af9072-cf21-a7e2-5b78-eb70217b462c@gmx.de>
+	<aWnekt4ESo0bKpOT@pks.im>
+	<CA+B51BEs7kuJ7s+K2vbZLSoaq3krGrqVncQAaTjSSNazFLY3tw@mail.gmail.com>
+	<xmqq3445bn33.fsf@gitster.g> <aW3bSYCIPMhJT1mf@pks.im>
+	<aW6tMtg0pEKq23TX@fruit.crustytoothpaste.net>
+	<xmqqa4y81ag8.fsf@gitster.g>
+	<20260120193109.GB3295894@coredump.intra.peff.net>
+Date: Tue, 20 Jan 2026 12:11:46 -0800
+Message-ID: <xmqqfr80yrgd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,106 +106,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Existing PID files are always read when displaying lock errors,
-> regardless of the core.lockfilePid setting. This ensures helpful
-> diagnostics even when the feature was previously enabled and later
-> disabled.
+> I hesitate to suggest this, but: we have a similar distinction already
+> for protocol selection, where GIT_PROTOCOL_FROM_USER tells us whether
+> the URL came directly from the user, or if we were directed there as
+> part of an untrusted automated process (like a .gitmodules file).
+>
+> We use that to disallow file:// from .gitmodules without breaking "git
+> clone file://" on the command line.
+>
+> So we _could_ use that as a signal here, to suggest that servers you
+> feed on the command line (including remotes you've defined) are more
+> trusted than ones that you may have been redirected to from a possibly
+> malicious .gitmodules file.
+>
+> But I say "hesitate" because:
+>
+>   1. This is a convoluted scheme making heuristic assumptions about
+>      trust. It was a not-so-bad way of compromising on the file://
+>      thing, but it may not be worth the complications here.
+>
+>   2. The trust boundaries aren't quite the same anyway. If I feed
+>      "https://evil.example.com" to Git manually, I can verify that
+>      "https" is the URL and that is OK to use the HTTP protocol. But it
+>      doesn't say anything about whether I trust example.com to write to
+>      my terminal.
+>
+> So maybe a dumb direction, but just thinking out loud.
 
-> +core.lockfilePid::
-> +	If true, Git will create a PID file alongside lock files. When a
-
-Hmph, are there cases where a single process grab two more more lock
-files and a single PID file helps identify who holds these multiple
-lock files?  I somehow had an impression that with the configuration
-on, we create an extra PID file for each lock file we create.
-
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 0243f17d53..4378256fa5 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -539,8 +539,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
->  
->  	path = repo_git_path(the_repository, "next-index-%"PRIuMAX,
->  			     (uintmax_t) getpid());
-> -	hold_lock_file_for_update(&false_lock, path,
-> -				  LOCK_DIE_ON_ERROR);
-> +	hold_lock_file_for_update(&false_lock, path, LOCK_DIE_ON_ERROR);
-
-A change that is not necessary/essential for the purpose of the
-topic?
-
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 92c6e7b954..1dcc8dd550 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -748,8 +748,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
->  		xsnprintf(my_host, sizeof(my_host), "unknown");
->  
->  	pidfile_path = repo_git_path(the_repository, "gc.pid");
-> -	fd = hold_lock_file_for_update(&lock, pidfile_path,
-> -				       LOCK_DIE_ON_ERROR);
-> +	fd = hold_lock_file_for_update(&lock, pidfile_path, LOCK_DIE_ON_ERROR);
-
-Likewise?
-
-> @@ -1016,8 +1015,7 @@ int cmd_gc(int argc,
->  
->  	if (daemonized) {
->  		char *path = repo_git_path(the_repository, "gc.log");
-> -		hold_lock_file_for_update(&log_lock, path,
-> -					  LOCK_DIE_ON_ERROR);
-> +		hold_lock_file_for_update(&log_lock, path, LOCK_DIE_ON_ERROR);
-
-Likewise?
-
-> +static void get_pid_path(struct strbuf *out, const char *path)
-> +{
-> +	strbuf_addstr(out, path);
-> +	strbuf_addstr(out, LOCK_PID_INFIX);
-> +	strbuf_addstr(out, LOCK_SUFFIX);
-> +}
-
-If we get rid of LOCK_PID_INFIX, and instead did
-
-    #define PID_LOCK_SUFFIX "~pid.lock"
-
-wouldn't it make the overall patch simpler?  I do not see any code
-that uses LOCK_PID_INFIX independently (other than the above code,
-obviously).  Then get_pid_path() would become
-
-        static void get_pid_path(struct strbuf *out, const char *path)
-        {
-                strbuf_addstr(out, path);
-                strbuf_addstr(out, PID_LOCK_SUFFIX);
-        }
-
-While at it, we can also lose LOCK_PID_INFIX_LEN that nobody uses ...
-
-> @@ -127,6 +128,22 @@ struct lock_file {
->  #define LOCK_SUFFIX ".lock"
->  #define LOCK_SUFFIX_LEN 5
->  
-> +/*
-> + * PID file naming: for a lock file "foo.lock", the PID file is "foo~pid.lock".
-> + * The tilde is forbidden in refnames and allowed in Windows filenames, avoiding
-> + * namespace collisions (e.g., refs "foo" and "foo~pid" cannot both exist).
-> + */
-> +#define LOCK_PID_INFIX "~pid"
-> +#define LOCK_PID_INFIX_LEN 4
-
-... from here.
-
-> +
-> +/* Maximum length for PID file content */
-> +#define LOCK_PID_MAXLEN 32
-
-This is used as the last parameter to strbuf_read_file(), which does
-not mean we stop reading after reaching this length at all, so the
-name of this constant is very misleading.  We only read the file in
-the error code path so there isn't much point in trying to optimize
-reading from these files too heavily.  I'd suggest getting rid of
-this constant, and passing 0 to the function instead to signal "we
-are willing to take the default given by the strbuf subsystem".
-
+Yeah, I think #2 makes it unworkable for this purpose.  When
+somebody you met recently at a party and you not yet know how much
+to trust told you "You may be interested in this nifty add-on I have
+in my repository at https://example.com/nifty.git", you may want to
+clone it only to peek at it first without trusting it.  So automated
+or manually fed from the command line, I'd say the destination where
+"git clone" goes is much less trusted than the cloned repositories
+you keep (presumably after inspecting and interacting with its
+contents enough).
