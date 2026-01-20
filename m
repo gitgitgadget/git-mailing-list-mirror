@@ -1,110 +1,149 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DC11C8603
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 13:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768917193; cv=none; b=TUwKCtkjdj0OisXVLymhdItw0QDE/mF8FUNSAJ2A1tZ4J4SRnQmzTg16Tjq5O4mPgdV/IY79kMTuwU9iOi8CZ3bqig7BGxvPj7qupykqE9Iqxdhoh+zK+VWVqh8rEQEn+67+OhnQcB+sXuDXx0THbPLNVr9cQNWVQZvDw7hTQdU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768917193; c=relaxed/simple;
-	bh=UWur8W8cKOiAjiWqk5KHLWu1G2QXGTx6NPL5mJXpPF8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=WKQQvAeRWw/RyAultMTI+ljDqln9mDnioOtmsw0YJaLAzxDRnbJe+fP7/hk/T0gEDQ4KbC/OIc4L+CzSwrdCt3MaYfkaFuD/mlUFKAcWMSzpU9RJsMhFQ0G+/dJQRX1Nkpy4OGZwqWd/rJZ8hkyw8pF0P1q3Uc8jQo5YPncId3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RwcRnp9q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DFG3sHAb; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3177366DD6
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 14:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768917880; cv=pass; b=t6kNE/Pm0c/xsbA/YTR3eZ+KE2nZ58Qxo9w3uiowA3YgpP37xMtUko+1nDF2dnEBEXJVIruJj3rr/7EuWfIx8WA1sPC9jMTeU0czb5K83lF76ouQKUu4eJwU/cm/+EkP7zAK23V0UbhUvIcn/11pC0em+pPUSeOOpJ3mRmJ9peo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768917880; c=relaxed/simple;
+	bh=6k2K25NpWgNuPCa6/vVC/Cdwn0OnTVVtzPLTR3Lg2Wk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PxnSJ+xJrMM4PokVLRLJHzhAleWHA6cPa9ZHh2CrWsV5BQL6qfO+9D4ZPnsm+pPdn62TVNSx5ZkE22OI66wl/FDMrwA6e9io49h8whQxkmUzjdQdNwZAQBIODoGUIUYqugRLG0Hb7bjYUGtL/RnhAz3RHQ0gw+eXlrKMfR0MS4Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VYaGzMgd; arc=pass smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RwcRnp9q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DFG3sHAb"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DA1AD7A00A2;
-	Tue, 20 Jan 2026 08:53:09 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 20 Jan 2026 08:53:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768917189;
-	 x=1769003589; bh=UWur8W8cKOiAjiWqk5KHLWu1G2QXGTx6NPL5mJXpPF8=; b=
-	RwcRnp9qCc2tfNmZKIByQMlV9CFDirQVQAiHEaenqCWY2tDqG3BxnUdBBZOz5f8Z
-	DSMUspCi8wkAF4di99oGtTVIPgqDguhddTR5SKfAVsl5Jn5DVVj5+THamT2LyNJV
-	h7b0S02fbBVj5x91kxgS7fyG4v3V8qL9AzetvpCreHNhfWCb0SgPKUX8UCfl9bic
-	ZXnHVaz2lzbJGJseHl6kqkDpaJT133CD9yJO4k5VjZ6jPr9AArA54zP6rDClPu/i
-	uKB2VdRAGJrAbR7gGwH/gi5qOSC95MmjWMKajSVovmTLQWXI6u7G5meOikytmqzk
-	dj59cGEx/hlNUbHYigl8OQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768917189; x=
-	1769003589; bh=UWur8W8cKOiAjiWqk5KHLWu1G2QXGTx6NPL5mJXpPF8=; b=D
-	FG3sHAbzYpPivm+Otabq4Vx8IYFn1MqiDpxAVswSFt+vT9JMnDmFcHa/DBC7C8kj
-	YBJxfKUcCTmeXyqed2qxMVO/wabcSSfm/UsPUFZD4KZfYT1myzyXsekyK/EoYt1I
-	ZU8Wuh9UQwnGOcn/7mtq5l7Sw7HCmu4gxzYKVc0KI+GgWPf1MMcl1AQOj9AAIwHW
-	x6TDbfmZDt3Z2Vpm4PmRkLDqErj+YXD/RJeOLyJZIuKYAVtF3ry3OXWbBL/5R5Pq
-	rWnqeEVjt+JRIT09i95WQcSlMn8l5O/NpxpCyxgW6rPDdl75t5hmhJKeR1fyOssY
-	SttcUVmlV6zzL1dVPOqlQ==
-X-ME-Sender: <xms:xYhvaWFa8q45thBoAGOrJR_SOQQIBiRki2KQTMthbNjhg7Rv1DTcFoY>
-    <xme:xYhvaSJ1XoV2UHm2y5BjdDLYC834ql9EVjVr7Ceo5ilZle-58J6mOS-d1rqCOjlOf
-    FA-NgaG1vZX_cE3ApijrO6dmCn4PgU-EhOPdn2hOGg45xx_eSo9YA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtheekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
-    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
-    lhhmrdhorhhgrdhukhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:xYhvaVOk2aQU32p0P-3VO4ZIM0hHbh8JmY9FHrqQRzzO5PxdCg90Sg>
-    <xmx:xYhvaTbXZ3-QiKlEmQlyMMrFQoE3c7BAdOgkKGHW75rz42PXrlyR2A>
-    <xmx:xYhvaXw5REx1AngyMM68-RkJonDNPIX9Zz3PvFpuE0J0cfd1jiEF3Q>
-    <xmx:xYhvaWLILmaALEQcFFII0bAKpfidkquar1pEM8bwMAXKVAMj4JjSUg>
-    <xmx:xYhvaWuLn2WUdcBzqzMRct5bffvLDY8s-v0hZfaPvGH3d9lnPWLGBjpF>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 381321EA006B; Tue, 20 Jan 2026 08:53:09 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VYaGzMgd"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-352f00d0e83so23822a91.2
+        for <git@vger.kernel.org>; Tue, 20 Jan 2026 06:04:38 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768917878; cv=none;
+        d=google.com; s=arc-20240605;
+        b=DKCGR2dOUQVuQmBum91jgA7edjVB7w1MuY1/DeRdR4xkBmoNok4yFNAB+m8C0pm+jH
+         HicuwGydRyEDRICbUJ2dqtmrGJg00yUxDaozNyMgx4oJnV93+h+M/A5Dj+YWClEDadMb
+         7bi278ee8qxVRwaSL6w67v4ok7HOx9Rm+sagdnt8T9j904Wl7ptmR5Y+uMuA9RJ+vzxx
+         0bnagx1xXhI4BlEUUN2WvVtfNwDhBJw7SgSIhPRG4EBpfBPSsPIfJ5BjSu0No3J1pZjp
+         0yKWn0ueC/Txuift9GwTHdTYCYxBz5djzOFjTJ6L/Jt7N7i0oVJeqUWCCHp6fcgs8cUq
+         IquQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=7Y3Zlef6i2P3NWjWcANV8mREbDBPGTMxdr4VthrDsdE=;
+        fh=Nfq7QF1MjbZ3oXbuX9/v3Ag7ViofVylou5nKaNghBVs=;
+        b=LrcBuixuxUsWGvLpq/VPZJeqzFGv6BAvUF1OSAtB+hpFFNIubq1WrChaCCu7apEQWQ
+         0LhGBmlRk58GkzLoujdJTUIzYBwzXpM0vZ2hz5exjQplv3JTOF5AMOoe7DAYuBBNhsYF
+         kugI08Fo63lNCi40oP3Ux22ViAekeLiZRTvlKdFbMM4WOqxPiSMv/kMfk4HBuRkaONOR
+         YPTRThFZm+3QRi5wqacISTGzDJ72BRharyb6QNeISHX760tUROm8TnMfSNEyM/fNGvXv
+         Lvezj69XkTgcfOMXXNKJM7ksxxz2CsipNdMsA+1dyo32GbzI0ajETnO3LVqqGbHxDrnN
+         b7UQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768917878; x=1769522678; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7Y3Zlef6i2P3NWjWcANV8mREbDBPGTMxdr4VthrDsdE=;
+        b=VYaGzMgdqoqWwSZg4AaFIlYEJauknYW9/8FlAEaSLZOcd7Xcw2yonbed4JkXHl2cCQ
+         Z6NedW433nEq4DJfcQVVs3TRg9RHz8GCWk0CTZNeMGTR5RnxD38HIjsFqPU4nrS92elP
+         mfhP9gu03zFlr8YdIgKNgisANhI1z08PdPW7dbqe/6yGR31fYlCIwHSo7FuYk6DhzM0B
+         GM9sLCaRnewzRftEGfcCEiStsGXLGQWjfok155y2S8kEZzZ6JC3JsePmrfSc18bRxGGL
+         1lJBRKrOd1YpdPYVORdtza334U6wEVUDvc0/FFBkEjfrNkWsZItLoO2ps9HNyNsRVhar
+         N9Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768917878; x=1769522678;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=7Y3Zlef6i2P3NWjWcANV8mREbDBPGTMxdr4VthrDsdE=;
+        b=bfiDuTxIl1THXp+IyHF+u+UUdcBsBR5/OVAGeNidW1DqfWoH71miqKYL1jCggcBQOO
+         zKrhlWGydZDRtygdkfz234vAWanauzrzCRp0VLBbiAvW6uCQjh+u4i7WMzMVnqULbMIc
+         FOGDAJMG852k6z1oiSDzxD1y8fzidFo7Ky3XallLT4HQJxHmWM4v+oTZd2uMFeTA0Asd
+         PBWcRHM6Y4I57YlD5V9+gWY44mHnYKlk3pU218ck2j6U5k3Ju6CRQd1CLVeU6kTbexMJ
+         A0wYYinMTw0Ragt/xeNar7xCHMqOdRfukCAAjyalttlT8WicR9iQ1mJoAouJNTQ06iTw
+         5vLg==
+X-Gm-Message-State: AOJu0Yx7U2BfD0ahi4j9WXxKOx8pgkxWaJ9UHVeySkgurEibS/dYSDf2
+	XVUgFxJzgwwRouWGuPPQN8o2L3hWLp8/s3osQSm1UptA9QwgCAst9Tn8GtDaGBDtp4oe9B1WwAV
+	rnlqNEZqErh7c4RSKNoBp7fjjNegsYoc=
+X-Gm-Gg: AZuq6aJbMg0idvtA2/AVVbYyODaPkGlqA/sRMyzqsgsTXUwINlutz3XuSZBGNKWNGZm
+	ExteD+yiKHhDbXt2dmu3EaxenUL3GPD4UnoHOzipI1r8FXOnjyTh68EdADLNU93X8aR8vAPLC81
+	g8vN++uVitskQZ78hXZ05V1DopZRGCJxbfSC5uEWETaaWK+GOkKMlmUo7DwOpJ06Xmn6YKNW+eT
+	qJWhz3qVJukufRoVOny+cN+Rq/q+CQTsD1v5vusn22ii8OB1oOdFAQhWfxGnQiwKF07REvR3M10
+	3NpdlHiRuCRGfkXX5q0JmLgcNHpQ5ORiBhsBK2R1mrTtL1UPdNNGoWzl90//wsT8BVkS
+X-Received: by 2002:a17:90b:2749:b0:343:684c:f8ad with SMTP id
+ 98e67ed59e1d1-352c3e568a4mr1497765a91.4.1768917878102; Tue, 20 Jan 2026
+ 06:04:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Ai8Eq8lg8y5F
-Date: Tue, 20 Jan 2026 14:52:48 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Git Mailing List" <git@vger.kernel.org>,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: "Phillip Wood" <phillip.wood123@gmail.com>
-Message-Id: <5a4e7da4-d295-4beb-9f37-b2ce4e10df35@app.fastmail.com>
-In-Reply-To: 
- <f10c3f680d58ca0abbf795ae8b0f2ad14ab85419.1768906910.git.phillip.wood@dunelm.org.uk>
-References: 
- <f10c3f680d58ca0abbf795ae8b0f2ad14ab85419.1768906910.git.phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] mailmap: add an entry for Phillip Wood
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <01a7acfaf87494419b3766da57d4c05cf99c79bb.1768873599.git.ben.knoble+github@gmail.com>
+ <xmqqldht2fgd.fsf@gitster.g>
+In-Reply-To: <xmqqldht2fgd.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Tue, 20 Jan 2026 09:04:25 -0500
+X-Gm-Features: AZwV_Qis1YteynhOPlilsl-nMJocwrSuG6cQITow6D5D-pJILie0bVYGIi7iD-k
+Message-ID: <CALnO6CCaVdJQ2xSPfvxQzVCfPsjbWHhMFUiLoiPQtVn9MeKFOw@mail.gmail.com>
+Subject: Re: [PATCH] replay: drop rev-list formatting options from manual
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>, Elijah Newren <newren@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Sergey Organov <sorganov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 20, 2026, at 12:01, Phillip Wood wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Mon, Jan 19, 2026 at 9:19=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> While all my commits appear under the same address, other addresses
-> appear in some commit trailers. Map those addresses to the canonical
-> one.
+> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 >
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
-> I'm not sure if we actually remap the address in trailers but
-> we've certainly talked about doing it in the past.
+> > The rev-list options in our manuals are quite long; git-replay's manual
+> > is no exception. Since replay doesn't use the formatting options at all
+> > (it has its own output format), drop them.
+> >
+> > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> > ---
+> >
+> > Notes (benknoble/commits):
+> >     I noticed this while reading. It took me a minute to find the
+> >     Asciidoc reference on multiple attributes [1] since it's not used
+> >     elsewhere in the rev-list include :) I'm not sure it needs to be
+> >     included in the commit message, though normally I would, personally=
+.
+> >
+> >     [1]: https://docs.asciidoctor.org/asciidoc/latest/directives/ifdef-=
+ifndef/
+>
+>
+> Indeed.  Not just rev-list, but ifdef:: or ifndef:: anywhere do not
+> check multiple attributes in existing docs.
+>
+> "ifndef::git-shortlog,git-replay[]" is rather hard to follow, as it
+> is unclear if they are ANDed or ORed, and it does not help to have
+> it with negation X-<.  I guess there always is the first instance,
+> and we need to get used to it ;-)
+>
+> As long as the construct is understood correctly with AsciiDoc and
+> Asciidoctor (two renderers we depend on), it is OK, but I do agree
+> with you it deserves to be said in the log message that you noticed
+> this is the first time we use the syntax.
+>
+> Thanks.
 
-Yeah it does.
+Extra sentences coming in v2 then ;)
 
->[snip]
+RE: AsciiDoc vs. Asciidoctor, it was a bit difficult for me to
+untangle https://docs.asciidoctor.org/ and https://asciidoc.org/
+(which points quite a bit at the former for specs/docs). It seems that
+by AsciiDoc you refer to the legacy Python processor
+(https://github.com/asciidoc-py/asciidoc-py/), and then Asciidoctor is
+presumably the Ruby processor
+(https://github.com/asciidoctor/asciidoctor)?
+
+If I've understood all that correctly, then I have the Python version
+installed for building Git and it understood the syntax. Given that
+the Ruby version is newer, I think it should also work against the
+spec.
