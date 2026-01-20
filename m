@@ -1,121 +1,122 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801651F8BD6
-	for <git@vger.kernel.org>; Tue, 20 Jan 2026 02:20:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8865935966
+	for <git@vger.kernel.org>; Tue, 20 Jan 2026 02:36:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.178
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768875648; cv=pass; b=cC3qL8Y4Wa3zlcWouCnPoqVPf1K5ycv4ESTMQviwV0Pwyq8Urx4yUkIDSuvAYwf9/o6DbE+rc4WhH6vR3E0pYuMs4VueQ7Y/uXXc9ayfVuhksNSVA3ixEBIjBHPXPDU/jLgg824lJ6MTl8QgPYo6kVxkFDk0AIj5PWGPO8r/Xjc=
+	t=1768876617; cv=pass; b=vBJ4GxTVj0yVn55G2OF7vsnnfcy1mUGaJwjqVZFgD9ni32glyEjgnPbxsNB6B5/A41k/0om9s1J5fFBQD/NU5iw8xL88f3VcQhiAopi6LKfEgfdCXo70HgLedImnpR/HMXtJw6vSnjT+Q76LiIiXaXLNMl+N4G/rZGeBPykvTpk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768875648; c=relaxed/simple;
-	bh=2gYwzpzIj6JVgsqbYxFYRLnXFczqDp0xJhdzaAQiGB8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=uQ5w6KMGig5jdCW4E0myhBALRBlL2uNvPiV3Wf7yZBVJGTqrARRu8xDYiCvUASSKkTCz++0P36nrRAEetJe4uml+TrddxHjFSd29pJWm5mnHQ+V1qY/ksBOOF7vBH2Y21ca+iM69Y/+a+BGHI230W+Xn1eERZZV6gTHOalVfzI4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cm4k6ulr; arc=pass smtp.client-ip=209.85.215.171
+	s=arc-20240116; t=1768876617; c=relaxed/simple;
+	bh=llCYed34LqOrZ1g24Nal7qh68Do9F96bUycP1LHXZpc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jxaE4z3u3r0mU7PnT9+ZWg4ecZzI5BSFyawcEDWNptcuc1lq6WBiZftzur29S7EzD7ys5QC99pu14KcegdvNJcop4sokWl7AmOHmljriigQACR4EP4Tr59ftFCV8ytHTVcgag8Wxmazt9FiyITF2zWScMbsMWrLVWs5RFxnywS0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C1TWJn8a; arc=pass smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cm4k6ulr"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c56188aef06so1851016a12.2
-        for <git@vger.kernel.org>; Mon, 19 Jan 2026 18:20:47 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768875646; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1TWJn8a"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2a0d0788adaso31290085ad.3
+        for <git@vger.kernel.org>; Mon, 19 Jan 2026 18:36:56 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768876616; cv=none;
         d=google.com; s=arc-20240605;
-        b=HgaPA/0C0R0WirEv6IpsTox3WJpl+SvXXc5BNy+HAaG2fJc2CxqG82UcwHern1GS+d
-         b9z/t/beNn+4x4cZLEs55wGHt5Ksf5YlO9Nt8r/r8fYW8eA42WUcRGuWu3wNDYKviqwO
-         DcewnilLTu5ipKXcuUbGZI0gzoI3bmHICqpXdb7istjOBvCyd+nuXqdRz7oooa19PF8u
-         jBdMr1l9AWqeeuhWlaLANODoeBFR9sbBqgOFGzFBjpLjTjYlxh2QkSrCEQ84FFlX9GmH
-         Dgx+U42miju1TKH3ovwZ11ISyMa16h7d9HL7WnT9PXEiO0lPmoSDloRV2PBj4K0QCo5E
-         WMeA==
+        b=YgM9ye/SGw/4q6cWQxAvM82c+NpjB4jK1BS9nO+TSwvjCXKuYyIIrAq1KXn8zeOLSp
+         g5VGNoQd40EXtfhTOs+sK0s5hd/uNknh16rcYb0B8Lp7I7j7b+bvAyD+LamdvxKLxQQP
+         9MwwhL0GO3QaPPLXaGYKFjxHYqAEx9gTXudMxWaicIJv3WutiZwm6iwuZ/i7v3fOabNO
+         UnRYIr3MRKM0t7DDOhqljpG+nXpVQ0vHSnGFtJk8/7j+skSTx+CBw9NB+yswf+wZEXmg
+         kcM9Cex0Nd+kGC6JC5E/Sf0uiva7CyZJYL9ze+yucx4w2DgAKFnTOXytbLDt6yuUEZed
+         PKbQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=1t+sJ5XANdIF/n+p83f3yZUalzbfcqrLLT4gSTov8E8=;
-        fh=WfJB1YkHjfxkSMCsogHMbYc3pvCTmQRpLXh1eGJSZoM=;
-        b=VxhsXZcAIakYh+iHBez78EeqgX343yIyNrfwtkuYONQ+o53NeY0MVYq4lah/yzGLDj
-         MqHsqFrfLvIsxCJOBVlXhNHrTSgHrTRhpbv0KZrKw3MGlnIM8mhTBBUQQi8GpWhZOqA/
-         W/Mj8n2F0GLVDmou1/8lpPXu1VBQFwxOyGletZWxGk/151OQRkKr1DISHsn/lB1EG8x6
-         OgQOt20yThDv0LBPWcP/z8xCMVje7bdUtsRPLJUAhAc+u25FPwyXiTZWPbBnluXQuV43
-         qwi3j5TLbhAcjrgF7Su0FKP6S9n/WNbmOaQLNAyoeLlhhXlVvy1geZ+jHlllkaGhCyS9
-         xuTQ==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=QPRhQMY3ptPwh+PNJC51EZ7w9jiqotAIlcvege1PflE=;
+        fh=YmyOmxzAwSf0Yh7JNsFoBNWPPyIRs3Ia6ickf0oEn/0=;
+        b=BWR7lHeS9VzKnWvqiGgrPkEWm/Bj9AQXGi70uQrtkMkCayR/c0NY1LwWQgGM/bvXWz
+         /s70R9uoLemzDCVYL5qBnNUVVRT1sxDuS8JABFM8yVPhM+IqlhXTNXM2NhgmP/9+j+Q/
+         8vU8F7cdPbQAY2zVkNBKuf50mE+fTnDFJYrogavglT513rJjVhOy8kRN9qbFrou10t80
+         KFBpNoAvlABtC8WuLA4ngyhwjLH4eqsO4n6VKUm3a1Fn3o21VzQg988PkIiAmO+8Wk+v
+         naCbgNi2rtO59WTBGZw0Wmga0sJ1QRBXShCSnVNSscFHA9V38MSFsn51tHq9yfPCxsft
+         Lqdg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768875646; x=1769480446; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1t+sJ5XANdIF/n+p83f3yZUalzbfcqrLLT4gSTov8E8=;
-        b=Cm4k6ulrEKjdHE7ZiDsH40vmZ7D4dQOrPrQBqU8kyzJplNGChmr5scA3ADRW+I1DAN
-         +EZAFdTzpRzkEt3lw6IcZN0/VsTsy57RkiOVGN+DEIeJEDQ8fRLohc1KB0a3By8Gz+Vx
-         r5BONXpWt+KE8obhhyvSXuxjHg1OdLi/D0Hc7oWfnZkt05PzFj6d+EuSkl2tX1xnXHBL
-         fT4hgT9AQjr6BjLgDagrEWOqQoTnr9zfsE3WeH84lkhBtIVlzF8Or71JgNGzmexlNvxI
-         0gU28N4V97kBc4MpjVVKH15vlL9GiXTXqCHNfYGOaXrNvyDMsIOxJDzmjODVtKw6uQgV
-         aZsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768875646; x=1769480446;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768876616; x=1769481416; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1t+sJ5XANdIF/n+p83f3yZUalzbfcqrLLT4gSTov8E8=;
-        b=On7OX8RlBCR0U/GWm43inBCobOED8tfp9Dk3tgAQmw/wOAR8BvzGkCrWOYAn0nkfQf
-         X5AzvRy3aZ7JyIst2NIExikFezmZ75XGuVPZXcDufcfbnKISJo7fbqja3GFs+JQXpYzq
-         Qv9sYvJEbeOgDWg2RjvAWrUOcZsAxVSbgSc+hBUYQkOj4WEh1UBtaTa/31+UFR8iDBdU
-         4XWYddYOau4RBe0rb7VbEtY5aEzO1OFrMEJqs9CTwu+dfviq4KtWT1wro2/Yh7Q5VWCo
-         Zkukg/4eZBpZCzlevtm1Y1ONEg9//BGGlU1DTFy8fU24q5tlvgce5d216nr9J9HDxs9D
-         ZMzw==
-X-Gm-Message-State: AOJu0YzvnuJzuwwet5q221lVdR336z3mkA1RlERcwvYCbaXO1RU++MRo
-	OfCS6b6XXY8+RoftdkXzDpCWDAEfp/qXPgyXePgxcPiAx1foaaDoTBXN/OdG8Y06Eu2d1y8j9Ky
-	aE3So72pM55l4wtxK4LGdtt3hXXRROT8eTE3T
-X-Gm-Gg: AZuq6aLj/SpnTh4FotHpsGzbWlmgRho3ZXcTEcYIE/JFYivdVoiYXA2NYSZ1NcU4mU6
-	6vz60lxNNvFb1xHWM1souATISrWTFYq7AtDm2Cu7RMdA5DxtGbxj93Su4GY7tqY7WglqOh1Ygg1
-	Y5TCDYbJfWvlzZZ134dmnIqvaiioXynjAsQnlSeaKwJJJ4puExAKVPzXVTZLvaA8sDRnDHzq5Ly
-	LH0leiZ1qQIKzKrhcWIXmv4zJYTNFfsU+LYtYHtajO5FrQ3R1p23xj+oDVRjgo/f3mw9gDjmvzc
-	bGKHDsRl3YcM9RSCjzEZFL48kreuwVFIBLIKe9H2or9wyPlwA4mPMV1snmu47K3V1ygn
-X-Received: by 2002:a17:90b:5787:b0:343:e461:9022 with SMTP id
- 98e67ed59e1d1-35272fa56cemr11587251a91.24.1768875646503; Mon, 19 Jan 2026
- 18:20:46 -0800 (PST)
+        bh=QPRhQMY3ptPwh+PNJC51EZ7w9jiqotAIlcvege1PflE=;
+        b=C1TWJn8aOJxUsrS5ba+Lw+/UYPA2QnkH4mueZGWBqe3xgvaAVjeM/rOQ8Lh/TXveBy
+         vjLEmxAPfeZfaWeGRI+rWvfSiJUswj9xpOovxOc7i625xn8u4li2/k7HRQC4vJM2SB+U
+         2Ad7kwTV9XnaaAgWYNzYKpjsDl1fC0iEEnJxAsjcp+T26vDsiqBxLsGmwr9qImyLZlay
+         o0qMx0H2aO4YGJmL0eukEn62IbFPB4tm3zQxU6LL9BUpRwXuEYi8nSY87Zr0Iy4TUg0U
+         JrsZcaQiGS4y1WLW2N5n1F3SH3ak2T5EU42blpm/btqj9mqAN3UKftV73SIG95KAg/Yw
+         x1rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768876616; x=1769481416;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=QPRhQMY3ptPwh+PNJC51EZ7w9jiqotAIlcvege1PflE=;
+        b=HvnZjh9RGvGdj3gcz7X6D3xAxoh/9oqPwkQmQdb6CoMowBwqVElFvHkO0p0W4zwm2N
+         B8I7URFNZpw9IUFlISRgnrM7u9dcSY1YeTdVYEm7+y7ePwsOKUmfqJz2v/Ztxzy/O9bj
+         S4DQ9m6p56T01xhZX0L70xY1eJR+tS9E1olBOwbqaI11rY/Zcnfg504X86/y1lbtEVFr
+         egF4EOi7psZXCfGq9yXcSWHiA0yxj1G5HiV/vOkIaD70WVTkloHAxc5uvqIzG045rsF+
+         cOfECgJ61JcmkCvk5nVXCTTZfwuM3A3lh5O9rc582pvHuZE/O13EaIz1DGkLhvor/f3F
+         zKZA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJWCvJHvBCftlTTGIUmfgtIVOX7J5IWOnKXkouBp/hx7QyIN9+rnCELdgWoCZaoY6BSTo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8QNYL/EIMRzifMCFk2vBFqbUr+OqlmdMRfvVfp0BSqUqC83l6
+	llKU4ur7hvBvNyvDQCjtdf+kUrX4tvt38gLctuNEBTpX0LqFtpmsNXC3ppRJ9oVPk5C9p7LDgr7
+	RSm2cQQiCjT8RadnvhwtPRrVOoRjsJ0A=
+X-Gm-Gg: AZuq6aLFgY6qpAZDZO/Bz5hFr2WwIsarTH+uagnFNp4lWWqSKZpz5oVPAqO2pS2q7b4
+	x6gr2/rnNFf4QJN6Mk92Rt5eHSKBDRt5j//0VH4tI/vtvZs7NNPcCLEt5io0FHR84HUrq8uRrFO
+	cnfXNtBsNZlrT39sq97bSvfs9grxCxtiEn2RAF/H1qOmIFUTX+4ignk9R7bGVYGkbqGUEp8W+jy
+	k5R2ewfFfTdJCGykOF3nM3JTDO3Xt18vA70ho+3FoGYOENrqW02W6FbYzLJ8h16qsjpyAe7cBPd
+	NCa82IYvO5lTTR2qllnKXq01kHmLQkP6FBMmsbxc5c4j5ynH1pJ/nH6axRTqD+eknM8C
+X-Received: by 2002:a17:902:f64f:b0:29f:2734:6ffb with SMTP id
+ d9443c01a7336-2a7698fc893mr4399045ad.22.1768876615763; Mon, 19 Jan 2026
+ 18:36:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+ <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
+ <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com> <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
+ <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com> <CAH=ZcbAogCpqg0RkKg1WjuAcuKyArDs4aP+k=McCs_byDT2Weg@mail.gmail.com>
+ <6ae80903-3cc5-4017-9eac-0b3100b93b04@gmail.com> <20260119055947.GA3100271@coredump.intra.peff.net>
+ <CAH=ZcbCXAB3vzRbyHkunQh09njyLk4WXvfLVxynXaswEkBv+DA@mail.gmail.com> <20260119204010.GA3148606@coredump.intra.peff.net>
+In-Reply-To: <20260119204010.GA3148606@coredump.intra.peff.net>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 19 Jan 2026 21:20:35 -0500
-X-Gm-Features: AZwV_Qj7-04YHrfQZ6Lg8caWlWHfq_1yheXDCcTMxUBnJs3emk4wwJC6FVWfqPw
-Message-ID: <CALnO6CCkcp-Pj-M6yCnr3O-DJE3PedEcqGah3e+E9C4Awqf+Kg@mail.gmail.com>
-Subject: git submodule: update --remote --checkout + upstream branch change
-To: Git <git@vger.kernel.org>
+Date: Mon, 19 Jan 2026 21:36:44 -0500
+X-Gm-Features: AZwV_QjvkaV1S4OmZLTT9w9mmJ3bOm2PxwjIrpjtVaRQpD9zYvH7iqBwgLiZPwU
+Message-ID: <CALnO6CCf9zEVgWHjK_-kHzALa_JrOUDT_CSA1a_xa5gfPB3LtQ@mail.gmail.com>
+Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
+To: Jeff King <peff@peff.net>
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	phillip.wood@dunelm.org.uk, 
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On my build of git.git origin/master (with ps/history merged in, but
-that shouldn't affect this), I received a confusing error today:
+On Mon, Jan 19, 2026 at 3:41=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+>   2. There are some modern platforms in which pointers are a bit more
+>      opaque than just numeric addresses. For example, we've had a few
+>      patches dealing with questionable pointer usage to make things work
+>      on CHERI Arm systems. I'm not sure if any of that would matter
+>      here, though (IIRC, it was mostly that pointers were unexpectedly
+>      large and had matching alignment requirements, but all of them
+>      equally so).
 
-    git submodule update --remote --checkout
-    =E2=80=A6
-    Unable to find refs/remotes/origin/HEAD revision in submodule path
-'=E2=80=A6submod=E2=80=A6'
+Arguably on all modern platforms, pointers are more than just numeric
+addresses, due to provenance ;)
 
-Turns out the upstream repository had renamed the main branch from
-master to main, and the git dir
-(.git/modules/=E2=80=A6submod=E2=80=A6/refs/remotes/origin) still had
-
-    ref: refs/remotes/origin/main
-
-This is weird, because I could successfully "git fetch" inside the
-submodule, and "git ls-remote" showed HEAD on the remote pointing at
-the same place as refs/heads/main. In fact, I was so puzzled that I
-didn't understand where this error had come from (grepping in the
-source found builtin/submodule--helper.c; GIT_TRACE2=3D1 was not really
-any help here), nor did I have very high hopes of solving it except
-that I happened to know where to look for occurrences of "master" that
-might need changed.
-
-A simple "git -C =E2=80=A6submod=E2=80=A6 remote set-head origin -a" solves=
- the
-problem; is there something the submodule code needs to do to handle
-this more gracefully, such as fixing it automatically or letting the
-user know what possible causes are? Or something I can do to avoid
-this coming up with other repositories I use as submodules?
+- https://www.ralfj.de/blog/2018/07/24/pointers-and-bytes.html
+- https://www.ralfj.de/blog/2020/12/14/provenance.html
+- https://www.ralfj.de/blog/2022/04/11/provenance-exposed.html
 
 --=20
 D. Ben Knoble
