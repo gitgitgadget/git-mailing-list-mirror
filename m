@@ -1,104 +1,114 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6076733FE0D
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 18:47:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA8C366575
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 18:51:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769021253; cv=none; b=LalqqFBuoXaRyQ39Q7Rnws3FsGqj9GKoQqBoOfcgZAT/eXYKsKneh2/ZsqYua8Xs/l9kSao3SQmm8EK2cNmPPX9pF8xF3JIC4nwjiAqJ1E3CZjqTEHLq5AanSToIfL3aguAaps+tVmId8T/V3IYp7T1epiXjn92Hrwjwc2B2rl8=
+	t=1769021469; cv=none; b=CUxnu4Dc7dLPuMJhSnE28s/3//7Y3xaAN3GWqXrTpUlHpM4xvuecrYu9lBbdw19U2V6PQXhOwutXHRCVimn79jdJOYxNO7fTd6uru3LSunSbbSeQ/330o/bJK2queNQZO0jKy3QBYbkWt4727ByCeR/I3e0tLxjg42lVfXHd+Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769021253; c=relaxed/simple;
-	bh=IS8wNjiT1VrWhyk+4aq3Ic5VkRVcjCWq4VY76ihoO3A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R9Mhvmezu5kqoZ7MnTebKynCQCNHtYfaxzIXVahUsg7XxtTYHIMGfv00C9+r/ap2aHxlAU0WaxWiRPAnCY5Wu5SdGyE04xJ/Y8AGuW/ewGRlCzoCU2gN1IgWlVujWkUCj0CpozpaKogj0p3mU+6DUxomEDRB8c/tZtmUx4M63h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XCXBHz7g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NVeLf+OA; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769021469; c=relaxed/simple;
+	bh=jkd5hczqO2fFi6ZeAOabv/1c18Zdo4gUt3buekDZWR8=;
+	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=f2L4lsXI0n58+FKuynn1EL93ATm9NqOwJAQDb4L9nPcPekIlBjZ01rQ64+nVvcGYAk+1gYFpnxLZ+WfO/Czhl2p/jVbIE1sXJ3wwcFUcKieLWKPaA8qCNs6/yOwzwpYW34wwj7AaSGGDXffZw5nmfz1VM0xwpmOt+XAtr3n/iOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nnGb5Lf5; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XCXBHz7g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NVeLf+OA"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 964521D00135;
-	Wed, 21 Jan 2026 13:47:30 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 21 Jan 2026 13:47:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769021250; x=1769107650; bh=UZ+j5fnq+S
-	A0USLSSVjHGUXnwvp47dcF+v9zjv4UC3k=; b=XCXBHz7g6qeytNrXDmHhF3wmyK
-	fQauUBlRLrwRSm58PK6/23yVPuhfjCdZhjHBx8C6+xyuxqWthbtuV2uZaOmnvwoy
-	0SU5hR9mIkZGLcj39IFMQ5rdNUXPL/KXjgl7vc/d0BbgxpgVZrwd0duBs6TUEIyb
-	6fd5CaKOQgRe3n5+siX/FkClfy1Tb3PWPWuIIkKZiw9GsQJ9cW1EF2vwhp/0pDMy
-	AfhrFxh8MzKSIy0PsLIoVst5wFhquatmTo6OvwMAtniXC0tJzep2glVSX9EMn5rZ
-	TdbOaz4djZrEyi3CuSOKcP3C0zJdLJefS2rbllPTjf/N2vahGeu1TP9jvhAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769021250; x=1769107650; bh=UZ+j5fnq+SA0USLSSVjHGUXnwvp47dcF+v9
-	zjv4UC3k=; b=NVeLf+OA/nPOFLpb804NYG3dsRsK9dig4TE8tfbuxZpYNSR2JvA
-	c5tcm+aimbqm3gW3a2BmFTu0TRXSMS+cW1deTS6xe4aGEYPGUCUsoKg/NgwsUMg2
-	x52XayxTP16NorVAsdXsnZaYU4u3T1OM8YPJCqybXmg+KtqPmSa5aqKmOYWGgQoJ
-	j9NU5eHEfxrzlhC3xjtFZ1HAL+YyUFWyzOKP0D7gqJAhlcq5pZeaLl/XqFCmy2Wq
-	od4Tcn5WmJVX1UHsOHH/5dor8CGo/hLlwtQiwceB+OLoLsaxkYvRQSpfdN4Mpa6J
-	D1IDjBelGhIWfuF4whlV3EntH00vTsmvH/A==
-X-ME-Sender: <xms:Qh9xaTyjSoky2jiLXGuxuxHjLbhwtkfaLjK3dvoRcGFh0CKtWqiWkQ>
-    <xme:Qh9xaSJP7CF48W7AFsiBPpAE3xq-3GDPYxM5YV3UxjXUoqOpOWnnqERcInMYq8bSc
-    del6muvprTKIrFV_s2e4vJWUuTOlD8v67TokLBkmKzY72ol2j1z>
-X-ME-Received: <xmr:Qh9xaVrQINPNeB2MeHyt3O8LoxZRVjAB0F_qE__nz7bVOtBdN-FSn3Wv24wVSKQoPzwFHUXPR5cLpTQz2cTmpbxfePAfqKB9u6v_K9k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeegtdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehpvg
-    hffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:Qh9xaZK8wgS5rKxBDtiStQ36TpG0c1A_YV0b46AyI-OxO0y0-TYG0A>
-    <xmx:Qh9xaSQzA6Sk9g55jEYN1O3mbRG6oyMI0gaifsvg_goSDG2CckIVow>
-    <xmx:Qh9xaQt4exZjXnbfm4aHyZeSfXEmRRAfFdYbfcLLktV3f0h9weFY9w>
-    <xmx:Qh9xabZGyQohRCyEjFpBkHFeLx_a7BwWWRhh0_gmoEpzlzID39thnw>
-    <xmx:Qh9xaVqxVn9IvXjDx3-CiqrPEI1S-7KdXKiY1ujhk4INQ8wjOl8JXa6s>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Jan 2026 13:47:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org,  gitgitgadget@gmail.com,  peff@peff.net
-Subject: Re: Memory leak
-In-Reply-To: <xmqq7btcx8pc.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	20 Jan 2026 13:42:07 -0800")
-References: <20260120094957.28855-1-haraldnordgren@gmail.com>
-	<20260120132202.1655-1-haraldnordgren@gmail.com>
-	<xmqq7btcx8pc.fsf@gitster.g>
-Date: Wed, 21 Jan 2026 10:47:28 -0800
-Message-ID: <xmqqh5seu7jz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nnGb5Lf5"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a0ac29fca1so1067765ad.2
+        for <git@vger.kernel.org>; Wed, 21 Jan 2026 10:51:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769021466; x=1769626266; darn=vger.kernel.org;
+        h=mime-version:content-transfer-encoding:msip_labels:content-language
+         :accept-language:message-id:date:thread-index:thread-topic:subject
+         :cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=v0LnvwLlu8oNQa95q78Bm8/XKR0PbQgAuTeGmlXSJhQ=;
+        b=nnGb5Lf5wHLizjpdW4u7mqdLMv7MHPmoFQ1vaNzH7H3SV31Hjaou2Wbr9UbMbUe8+J
+         TVw2O2IKGz8xCk6p1kRXFUX2z71SZkj2AkNZdu/lFds0VWzsgUdB+ajLDd1iOaz6CRWS
+         V2rjdXx/L9BJ6ox/6Q8uVd0ldwTEaxe8OFwXbrUIn1Lxd+q41XYIgDrRUPynSpOYQbqJ
+         qjV6kea+rqqAPXvB+2KB/ocZWy47ET+PMFS3hW2BgxGF0Qw9V5lUhzlz0I87dytQ2t03
+         dbnGiHS2jvVwF+OfPkgw0M1MbX+taNbwd+FMYLmgrzacGUndnUvJ/LTyiFtcr/3t1Znp
+         y5qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769021466; x=1769626266;
+        h=mime-version:content-transfer-encoding:msip_labels:content-language
+         :accept-language:message-id:date:thread-index:thread-topic:subject
+         :cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v0LnvwLlu8oNQa95q78Bm8/XKR0PbQgAuTeGmlXSJhQ=;
+        b=gnjR99g50A9ub3UG9tKTqg+zYrJy7ToKvaqPiBjMv4wq5yjI+mqL2OqMQU9e33Npaa
+         X+m6UmKZ5KO544s3PA/AA/7lrXsaXCEVWwHsYvs/Js4ot1swMz8D1vEGP73UcgQkZd/p
+         9NyamVqin38Dkd1bxD1nt84XeLdXSMrAgnwOOsFlmGaM/uSzrBFxOqwSQUoNLX6Ezqze
+         7U0kWDke5s1f0qF7CFnI4cZ9gnfWXQ8l9pkfwXHfH1Ctl6FwP5ZwRrFSdLvthgDVYuiB
+         dZFsfGUQ+8GY/VHWvDiJj+vleJyK1E2ACRkRjU8aHse6fa7h02qovP1ZVPB7pwzrwtX/
+         RJPQ==
+X-Gm-Message-State: AOJu0YytFH4b8tvreh80NZLzIljjGFS021E39VcqrrIjFtkKsn1hTO1d
+	0UTbkn/38Mk6YMm3QfwPe/KpQ7Hh/3wS8m+wwTpjYhaWOjmYtQd3sdhD
+X-Gm-Gg: AZuq6aLe1qZfLGjp/6aLi20kyyKE19YmGaBoagzZnzNQmMyq9/J+pQutr9aHHUmCsFr
+	jSvqzga9yjCQGUK06/j1bjg3jaSsSKRDioI4vSTORWYc7kqLTPfeFqfxdRuaEVRpOAHgk3Q9x+5
+	VclJeqn/wc7WEOj+MxKW2wSyEdxwQFZirYtv1j4Hlf0IpaYwu5vPl9V8EsEceORrVQGqj8M1afI
+	Io1hOk8NYHmP2M6XLLsPeyN2nChHjFQxCVRNx1Cqf5oXKeVVfIkKzhKcFkV00rL2OasTGJlvOkr
+	FKD0aZTaOujcN3eh1qy1GeaRT9EEsUf/1SK9K7NHPnQ/qQnanl3w1cgPopL0s7XdecDdfR+d7xb
+	RfIfli+ukMFcXbYYfe2YjyVtwS0W6lqx9WWIvyP2GLV+bosFHK8B/o1gb8Qfng75cX3onI7u1Ab
+	RuMbX9YMDDvY5hd5sp7LiXpr5U2XFNdimL8FnP1VsqkS6e+qNRh4bC4m+0Lwo3Lz07OmquBQZdt
+	d3IJriTOQU=
+X-Received: by 2002:a17:902:d2d1:b0:2a5:8e98:1b44 with SMTP id d9443c01a7336-2a76ad6bb2bmr53205945ad.31.1769021465863;
+        Wed, 21 Jan 2026 10:51:05 -0800 (PST)
+Received: from SL2P216MB1885.KORP216.PROD.OUTLOOK.COM ([2603:1046:101:97::5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7190eeefasm159752255ad.43.2026.01.21.10.51.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jan 2026 10:51:05 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: "alf.clement@gmail.com" <alf.clement@gmail.com>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: .gitignore issue
+Thread-Topic: .gitignore issue
+Thread-Index: AQHciwa44rLSah1ilE+2uUtnWaLX0w==
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date: Wed, 21 Jan 2026 18:51:02 +0000
+Message-ID:
+	<SL2P216MB1885CE309BDBA65860D8762FA296A@SL2P216MB1885.KORP216.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator:
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+msip_labels:
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Harald Nordgren <haraldnordgren@gmail.com> writes:
->
->> My bad, it does fix it! I think I applied your patch incorrectly the first
->> time around.
->
-> I've queued your v26 on top of a merge of Peff's leakfix patches
-> into 'master'.  It hopefully will appear in today's pushout.
->
-> Thanks, both.
-
-So are we all happy with v26 of the topic?
+Hi Alf,=0A=
+=0A=
+This is expected behavior.=0A=
+When a directory matches an ignore rule, Git stops descending into it entir=
+ely. The pattern=0A=
+=0A=
+        backup_STOCKS*/=0A=
+=0A=
+matches directories starting with backup_STOCKS, and once Git prunes traver=
+sal at that level, similarly prefixed paths can disappear from git status, =
+which is why backups/ no longer shows up.=0A=
+=0A=
+This isn=92t a bug, but a result of how ignore patterns and directory pruni=
+ng work.=0A=
+=0A=
+If you want to ignore only those directories and nothing else, anchoring th=
+e pattern helps:=0A=
+=0A=
+        /backup_STOCKS_*/=0A=
+=0A=
+You can also verify which rule is responsible with:=0A=
+=0A=
+        git check-ignore -v backups/=0A=
+=0A=
+Hope that clears it up.=0A=
+=0A=
+Best,=0A=
+Pushkar=
