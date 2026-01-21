@@ -1,55 +1,55 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA34221FA0
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 12:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBF942EEAA
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 12:51:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768999863; cv=none; b=HCX0GUh38DGx88Kf817rFCeGdVqwyURPkM36nqnCiLTnnM9TU2DvxzUUivx+DNyQ6zrMWxzH8JtBpaG0hgB9G6a2Knr0tvbyXPDAvCwmt2q8P91Ah/+Ep+2ev7TGI7xlMfcZLPl77KWOKISx71SoKn4leZ5AM1UgNf5usB0FT78=
+	t=1768999866; cv=none; b=W62yx4Juz5yyVemnCpbLMN9Vze2PLTnO2lwAUTlIf3O6FYaj6mLlTMmgpJ8BNRCdecq86nZs1Etz0qTYGTHYnF4WiyCSxKl7F3VZfsnx24QZdyAAbfWZ/r2SwiSTP9otutKfQyXzMZyucMT51uQ07ExXcp4Qc+ImvlAvaBFI64U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768999863; c=relaxed/simple;
-	bh=Qn5337orNOeJUgdMw7xb9N9IRTflG+zn5z5EwhtHEVU=;
+	s=arc-20240116; t=1768999866; c=relaxed/simple;
+	bh=cX22Lz59DOmBRlVpOFUKjU0Ua6j4TUQYO7IRTJSqNyI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Mw/WQYXmwB5FGRsifq7CvuHvril/xQH0aT+SFuE0DO2hmnFGvV6KcMefO/qgwyvJY8/qhXcMcZxhgribB2gRDphjIEk5KU7/MZi2UyiI4QlSzyGW1GJF21RjJ0FphTu/4YtZso9yt/OhDX7dgHgjqdzNJzOmkBg8Fcxo9sUUZVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iE+HFgGT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PIvNRkvJ; arc=none smtp.client-ip=202.12.124.144
+	 In-Reply-To:To:Cc; b=Vv9lrJ90w2C8JLrDB59hDaJXHx9jT6/LuW8EGgAekaBfSREtcyHZSeOrFu7OrrLSWCj6xNGLApgKP5O8bC5bo6zg7zgH0NG54WIZ/1caHuJVFz3Vb6fRGkO3LRvobQEoXvRMXLLJcpAmmF/g2Q7+Yo1GtKYnWW1VpT/mIFP4cak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SzC17Zb5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wuK/iati; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iE+HFgGT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PIvNRkvJ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id CBD291D00125;
-	Wed, 21 Jan 2026 07:50:59 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SzC17Zb5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wuK/iati"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7A62714001A9;
+	Wed, 21 Jan 2026 07:51:03 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 21 Jan 2026 07:51:00 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 21 Jan 2026 07:51:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768999859;
-	 x=1769086259; bh=TqRuS4IGkn/ebJ+IpNPhw2FbT1WRrK7wtrJSvz4UUgc=; b=
-	iE+HFgGTGU7+MlBeY4Eng3jwGeKsjU1kYLR4PfXJpWZ3wqqW3nGfmyZxt2eRmK0K
-	YkNHn5gj2ywlme9VtKmsC3qnnbnF3HxDFlVanV6oGxDuyLzCO6D5Lxd9lCICRB7p
-	xAlWwoCFbVKfKFVHt6SsE6hm0zCJsNpsPnDFXQJf7HLOOr2T2h3wRbzDU4UFH1vV
-	4aB7MbTj0rDMVVRNTP6xqqOa2tYq5CrG5xTq2QHRqxL7RPEZAPnZjlepdJkLbgTD
-	kv2NEURg3G4HxlCFAJ8TvrlJMQ1y6RRD4YSKrADZL4hz2BxwuAwYoM98xkCo9Mqj
-	2c1RQMoi89bLh0/Wvuzk3w==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768999863;
+	 x=1769086263; bh=cqlC/0NUGCsvNBenwTEzqb37rOr0nOHgG6kpQRivtoI=; b=
+	SzC17Zb5Fhg+UQfZGXu6uzU7E1mg0NRHXztSTIbDeXthuxNtQvn2ZbZglfT3VMKv
+	LP/V+ONEfZY6TBCltkdGNOENqbBDnhISu+/3LrSbqPvkx8PbWahzxCyXRxytkSe+
+	Hb/pzDcIaYOT8GYlGJA3k062SGNMpt/QvE4fjFz8WALzxojgqvol49brjbTE9lB6
+	E1lZxzIbyrWkGJy/5z6Rox7VPDaEVxw2TkgBUvT8v0vgth5Uo01WfRx0Iu38JX+m
+	F97s2c9/xJP1XaIixUEBq7O43/gd6PakKkw9gaR/POw+m+zY4YEBGQA2LGcBiQXl
+	jWNWPttiYWWEBNRZH5jOyQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768999859; x=
-	1769086259; bh=TqRuS4IGkn/ebJ+IpNPhw2FbT1WRrK7wtrJSvz4UUgc=; b=P
-	IvNRkvJt29/DGyUAYCHZpkatb8v38yYk90+w5ce0+DSwamDPGqRydHoNrJujXlqm
-	GKrdqvo2CNkHUFABRfoQQrFthahLWsAfe9Jayn0NRwOCioMkZT4iuwaG3IJ1EFRc
-	oYnlcdfTxUQ9ENTRbXzKf6S2z2mD7uHg3Ceuj2/7LYgJfz7l1ezSakw2TggsjWah
-	xHAl8LW/E5e8Dc1wzsElR/RN4hmjPLU2QMsM3lH1CVJDdIO63cuYny7XeLQbBvf5
-	HUKAVipLQa/DGReY28XBudXG/QALniwzuBmO2hXBpnzlLMU1QjAKMP0P9TAwCf5y
-	/p+pJtBy7ygCPe7p6btJQ==
-X-ME-Sender: <xms:s8twafquH_vi52dXkGdLPqFq6Oq34oX_ciEOKxQp8QsHP6Iy06ZQdQ>
-    <xme:s8twaQrdWOH_ELy4DzEwx9qDAnOI6_6iat4UQdaZDDqS_gP1LzOwf-6LQJ0BPX6qx
-    SAVWfcxWPmnUsuUhPPX8vF9UmeTyOpoAh8Vb4kG0pw1K-B4Pxrc>
-X-ME-Received: <xmr:s8twaRMnj6jbVDc3GTtPuyT3PbeIjyqMlX5yvm-h-QAGFsHNnqXyTRgBf6tJQ5er8MPQVcnY6R91fVPeLPpVNhoCW9RMDlrH0NwNLBXz0xw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768999863; x=
+	1769086263; bh=cqlC/0NUGCsvNBenwTEzqb37rOr0nOHgG6kpQRivtoI=; b=w
+	uK/iati07zRPGbMDkpDW2w0qRfx4XN8J5K9ICSOl1w0WOT6OfOa5YacOEKX780xc
+	1yAlDBA0JbgvJKoEtjjz4prNEnDZouGvd9VqhN5d0eoDJHs+JjxgSe4covTUKpqS
+	V3XVMVwlIk7BYI+AcKz6RK1uJIY2LJiahNl8ICWrpeioc51KHs5F6IaycjC25LaN
+	SniQZ4Wfvuk5yohf8ZBPt9ovnvDuMcG45xzldXdfotQE4J+gKd8KksCnJH1Rw2SR
+	UUfrvnf3eRsDLRfEpWyctUt42/2MdfXhmioyly8anytIePcTH1VeZC+PtwKkSfIv
+	CgEUBSNmV178ziC2ih80A==
+X-ME-Sender: <xms:tstwaaAEzCzIwdNet0WHGppnjJHGTA8fZfN3ebFmxqUVAV8FrV5iTw>
+    <xme:tstwabh4tMVqe-Fq3cwRYx73rk64en4bexiFselAvJ1NyukV0PU0dBIwbavDpdoBW
+    _4tCWWrnDQDeDFjThWJztQ0VM91E4syfQHBHrl_LBZR-VLxr8Ny>
+X-ME-Received: <xmr:tstwaSnE1plH0f1-b3pH83skfE1CxR2HNdINNvUmQAe8sM8xeCgkHJhVKeOHxnruhDkKMw4ZbEzD-K9dNDhgDTCPppBgLa3w56ggWN2TO7k>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeffedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeffedvucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:s8twaRzDsrowMq3P6yv10_Ru-NXQDnK3ReK0s7Xzda8FljJy-P5n8A>
-    <xmx:s8twaatweezbhwDJ57UjCOFxJ5sNyCgh86amr_jX5ghlTOIzWWL5gw>
-    <xmx:s8twaa7oKEEW_jYwYLA56oKy_hdIY5uWwqmls0cOiSATRJizpJNv7w>
-    <xmx:s8twaZR5ymsQEp-BoCrz5OeSHhGb66F-OZolpPOhz1YwnI-m-3-Vqg>
-    <xmx:s8twaQvDD8Yq0c7IMbV1Nu15AyMs-STVj5RL3Sxo2GELbkMeIMB9YuXr>
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:tstwaXppmrHCjifVdxebJi-CNJsKjm5YTj9BAgsir5y-n--zqkts5w>
+    <xmx:tstwabG6Ow8v5QPB4fCMHP0ZN4Z2FRrHeUEyAIXnEm_ehCn7gPKxfA>
+    <xmx:tstwaTzR6w0V_hmk8LTuEQQ8uIvCHsAcmzffzGEBWgGuKLw7zrRsDA>
+    <xmx:tstwaQoSnz67ILBWNV6sPA4FVcvG25EHLo-yxfcHEuTgq_j2-aPTQQ>
+    <xmx:t8twaQp7ChIDpgBnidECO9Vi-1_aMGH0lvLKvarQ9dFoGCze0cmTIULj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Jan 2026 07:50:57 -0500 (EST)
+ 21 Jan 2026 07:51:01 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d4c7b6ee (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Jan 2026 12:50:57 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4b1fd30d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Jan 2026 12:51:00 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 21 Jan 2026 13:50:26 +0100
-Subject: [PATCH v3 10/14] treewide: drop uses of
- `for_each_{loose,packed}_object()`
+Date: Wed, 21 Jan 2026 13:50:27 +0100
+Subject: [PATCH v3 11/14] odb: introduce mtime fields for object info
+ requests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260121-pks-odb-for-each-object-v3-10-12c4dfd24227@pks.im>
+Message-Id: <20260121-pks-odb-for-each-object-v3-11-12c4dfd24227@pks.im>
 References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
 In-Reply-To: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
 To: git@vger.kernel.org
@@ -92,162 +92,200 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.3
 
-We're using `for_each_loose_object()` and `for_each_packed_object()` at
-a couple of callsites to enumerate all loose and packed objects,
-respectively. These functions will be removed in a subsequent commit in
-favor of the newly introduced `odb_source_loose_for_each_object()` and
-`packfile_store_for_each_object()` replacements.
+There are some use cases where we need to figure out the mtime for
+objects. Most importantly, this is the case when we want to prune
+unreachable objects. But getting at that data requires users to manually
+derive the info either via the loose object's mtime, the packfiles'
+mtime or via the ".mtimes" file.
 
-Prepare for this by refactoring the sites accordingly.
-
-Note that ideally, we'd convert all callsites to use the generic
-`odb_for_each_object()` function already. But for some callers this is
-not possible (yet), and it would require some significant refactorings
-to make this work. Converting these site will thus be deferred to a
-later patch series.
+Introduce a new `struct object_info::mtimep` pointer that allows callers
+to request an object's mtime. This new field will be used in a
+subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/cat-file.c | 28 ++++++++++++++++++++++------
- commit-graph.c     | 44 +++++++++++++++++++++++++++++++-------------
- 2 files changed, 53 insertions(+), 19 deletions(-)
+ object-file.c | 29 +++++++++++++++++++++++++----
+ odb.c         |  2 ++
+ odb.h         |  1 +
+ packfile.c    | 40 +++++++++++++++++++++++++++++++++-------
+ 4 files changed, 61 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 6964a5a52c..7d16fbc1b8 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -806,11 +806,14 @@ struct for_each_object_payload {
- 	void *payload;
- };
+diff --git a/object-file.c b/object-file.c
+index 65e730684b..c0f896673b 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -409,6 +409,7 @@ static int read_object_info_from_path(struct odb_source *source,
+ 	char hdr[MAX_HEADER_LEN];
+ 	unsigned long size_scratch;
+ 	enum object_type type_scratch;
++	struct stat st;
  
--static int batch_one_object_loose(const struct object_id *oid,
--				  const char *path UNUSED,
--				  void *_payload)
-+static int batch_one_object_oi(const struct object_id *oid,
-+			       struct object_info *oi,
-+			       void *_payload)
- {
- 	struct for_each_object_payload *payload = _payload;
-+	if (oi && oi->whence == OI_PACKED)
-+		return payload->callback(oid, oi->u.packed.pack, oi->u.packed.offset,
-+					 payload->payload);
- 	return payload->callback(oid, NULL, 0, payload->payload);
+ 	/*
+ 	 * If we don't care about type or size, then we don't
+@@ -421,7 +422,7 @@ static int read_object_info_from_path(struct odb_source *source,
+ 	if (!oi || (!oi->typep && !oi->sizep && !oi->contentp)) {
+ 		struct stat st;
+ 
+-		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK)) {
++		if ((!oi || (!oi->disk_sizep && !oi->mtimep)) && (flags & OBJECT_INFO_QUICK)) {
+ 			ret = quick_has_loose(source->loose, oid) ? 0 : -1;
+ 			goto out;
+ 		}
+@@ -431,8 +432,12 @@ static int read_object_info_from_path(struct odb_source *source,
+ 			goto out;
+ 		}
+ 
+-		if (oi && oi->disk_sizep)
+-			*oi->disk_sizep = st.st_size;
++		if (oi) {
++			if (oi->disk_sizep)
++				*oi->disk_sizep = st.st_size;
++			if (oi->mtimep)
++				*oi->mtimep = st.st_mtime;
++		}
+ 
+ 		ret = 0;
+ 		goto out;
+@@ -446,7 +451,21 @@ static int read_object_info_from_path(struct odb_source *source,
+ 		goto out;
+ 	}
+ 
+-	map = map_fd(fd, path, &mapsize);
++	if (fstat(fd, &st)) {
++		close(fd);
++		ret = -1;
++		goto out;
++	}
++
++	mapsize = xsize_t(st.st_size);
++	if (!mapsize) {
++		close(fd);
++		ret = error(_("object file %s is empty"), path);
++		goto out;
++	}
++
++	map = xmmap(NULL, mapsize, PROT_READ, MAP_PRIVATE, fd, 0);
++	close(fd);
+ 	if (!map) {
+ 		ret = -1;
+ 		goto out;
+@@ -454,6 +473,8 @@ static int read_object_info_from_path(struct odb_source *source,
+ 
+ 	if (oi->disk_sizep)
+ 		*oi->disk_sizep = mapsize;
++	if (oi->mtimep)
++		*oi->mtimep = st.st_mtime;
+ 
+ 	stream_to_end = &stream;
+ 
+diff --git a/odb.c b/odb.c
+index 65f0447aa5..67decd3908 100644
+--- a/odb.c
++++ b/odb.c
+@@ -702,6 +702,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
+ 				oidclr(oi->delta_base_oid, odb->repo->hash_algo);
+ 			if (oi->contentp)
+ 				*oi->contentp = xmemdupz(co->buf, co->size);
++			if (oi->mtimep)
++				*oi->mtimep = 0;
+ 			oi->whence = OI_CACHED;
+ 		}
+ 		return 0;
+diff --git a/odb.h b/odb.h
+index 8a37fe08e0..68336d2730 100644
+--- a/odb.h
++++ b/odb.h
+@@ -317,6 +317,7 @@ struct object_info {
+ 	off_t *disk_sizep;
+ 	struct object_id *delta_base_oid;
+ 	void **contentp;
++	time_t *mtimep;
+ 
+ 	/* Response */
+ 	enum {
+diff --git a/packfile.c b/packfile.c
+index 4f84bc19d9..c96ec21f86 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1578,13 +1578,14 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 	hashmap_add(&delta_base_cache, &ent->ent);
  }
  
-@@ -846,8 +849,15 @@ static void batch_each_object(struct batch_options *opt,
- 		.payload = _payload,
- 	};
- 	struct bitmap_index *bitmap = prepare_bitmap_git(the_repository);
-+	struct odb_source *source;
+-int packed_object_info(struct packed_git *p,
+-		       off_t obj_offset, struct object_info *oi)
++static int packed_object_info_with_index_pos(struct packed_git *p, off_t obj_offset,
++					     uint32_t *maybe_index_pos, struct object_info *oi)
+ {
+ 	struct pack_window *w_curs = NULL;
+ 	unsigned long size;
+ 	off_t curpos = obj_offset;
+ 	enum object_type type = OBJ_NONE;
++	uint32_t pack_pos;
+ 	int ret;
  
--	for_each_loose_object(the_repository->objects, batch_one_object_loose, &payload, 0);
-+	odb_prepare_alternates(the_repository->objects);
-+	for (source = the_repository->objects->sources; source; source = source->next) {
-+		int ret = odb_source_loose_for_each_object(source, NULL, batch_one_object_oi,
-+							   &payload, flags);
-+		if (ret)
-+			break;
-+	}
- 
- 	if (bitmap && !for_each_bitmapped_object(bitmap, &opt->objects_filter,
- 						 batch_one_object_bitmapped, &payload)) {
-@@ -861,8 +871,14 @@ static void batch_each_object(struct batch_options *opt,
- 						&payload, flags);
+ 	/*
+@@ -1619,16 +1620,34 @@ int packed_object_info(struct packed_git *p,
  		}
- 	} else {
--		for_each_packed_object(the_repository, batch_one_object_packed,
--				       &payload, flags);
-+		struct object_info oi = { 0 };
+ 	}
+ 
+-	if (oi->disk_sizep) {
+-		uint32_t pos;
+-		if (offset_to_pack_pos(p, obj_offset, &pos) < 0) {
++	if (oi->disk_sizep || (oi->mtimep && p->is_cruft)) {
++		if (offset_to_pack_pos(p, obj_offset, &pack_pos) < 0) {
+ 			error("could not find object at offset %"PRIuMAX" "
+ 			      "in pack %s", (uintmax_t)obj_offset, p->pack_name);
+ 			ret = -1;
+ 			goto out;
+ 		}
++	}
 +
-+		for (source = the_repository->objects->sources; source; source = source->next) {
-+			int ret = packfile_store_for_each_object(source->packfiles, &oi,
-+								 batch_one_object_oi, &payload, flags);
-+			if (ret)
-+				break;
++	if (oi->disk_sizep)
++		*oi->disk_sizep = pack_pos_to_offset(p, pack_pos + 1) - obj_offset;
++
++	if (oi->mtimep) {
++		if (p->is_cruft) {
++			uint32_t index_pos;
++
++			if (load_pack_mtimes(p) < 0)
++				die(_("could not load cruft pack .mtimes"));
++
++			if (maybe_index_pos)
++				index_pos = *maybe_index_pos;
++			else
++				index_pos = pack_pos_to_index(p, pack_pos);
+ 
+-		*oi->disk_sizep = pack_pos_to_offset(p, pos + 1) - obj_offset;
++			*oi->mtimep = nth_packed_mtime(p, index_pos);
++		} else {
++			*oi->mtimep = p->mtime;
 +		}
  	}
  
- 	free_bitmap_index(bitmap);
-diff --git a/commit-graph.c b/commit-graph.c
-index 7f1145a082..a3087d7883 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1479,30 +1479,38 @@ static int write_graph_chunk_bloom_data(struct hashfile *f,
- 	return 0;
+ 	if (oi->typep) {
+@@ -1681,6 +1700,12 @@ int packed_object_info(struct packed_git *p,
+ 	return ret;
  }
  
-+static int add_packed_commits_oi(const struct object_id *oid,
-+				 struct object_info *oi,
-+				 void *data)
++int packed_object_info(struct packed_git *p, off_t obj_offset,
++		       struct object_info *oi)
 +{
-+	struct write_commit_graph_context *ctx = (struct write_commit_graph_context*)data;
-+
-+	if (ctx->progress)
-+		display_progress(ctx->progress, ++ctx->progress_done);
-+
-+	if (*oi->typep != OBJ_COMMIT)
-+		return 0;
-+
-+	oid_array_append(&ctx->oids, oid);
-+	set_commit_pos(ctx->r, oid);
-+
-+	return 0;
++	return packed_object_info_with_index_pos(p, obj_offset, NULL, oi);
 +}
 +
- static int add_packed_commits(const struct object_id *oid,
- 			      struct packed_git *pack,
- 			      uint32_t pos,
- 			      void *data)
- {
--	struct write_commit_graph_context *ctx = (struct write_commit_graph_context*)data;
- 	enum object_type type;
- 	off_t offset = nth_packed_object_offset(pack, pos);
- 	struct object_info oi = OBJECT_INFO_INIT;
+ static void *unpack_compressed_entry(struct packed_git *p,
+ 				    struct pack_window **w_curs,
+ 				    off_t curpos,
+@@ -2377,7 +2402,8 @@ static int packfile_store_for_each_object_wrapper(const struct object_id *oid,
+ 	if (data->oi) {
+ 		off_t offset = nth_packed_object_offset(pack, index_pos);
  
--	if (ctx->progress)
--		display_progress(ctx->progress, ++ctx->progress_done);
--
- 	oi.typep = &type;
- 	if (packed_object_info(pack, offset, &oi) < 0)
- 		die(_("unable to get type of object %s"), oid_to_hex(oid));
- 
--	if (type != OBJ_COMMIT)
--		return 0;
--
--	oid_array_append(&ctx->oids, oid);
--	set_commit_pos(ctx->r, oid);
--
--	return 0;
-+	return add_packed_commits_oi(oid, &oi, data);
- }
- 
- static void add_missing_parents(struct write_commit_graph_context *ctx, struct commit *commit)
-@@ -1959,13 +1967,23 @@ static int fill_oids_from_commits(struct write_commit_graph_context *ctx,
- 
- static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
- {
-+	struct odb_source *source;
-+	enum object_type type;
-+	struct object_info oi = {
-+		.typep = &type,
-+	};
-+
- 	if (ctx->report_progress)
- 		ctx->progress = start_delayed_progress(
- 			ctx->r,
- 			_("Finding commits for commit graph among packed objects"),
- 			ctx->approx_nr_objects);
--	for_each_packed_object(ctx->r, add_packed_commits, ctx,
--			       ODB_FOR_EACH_OBJECT_PACK_ORDER);
-+
-+	odb_prepare_alternates(ctx->r->objects);
-+	for (source = ctx->r->objects->sources; source; source = source->next)
-+		packfile_store_for_each_object(source->packfiles, &oi, add_packed_commits_oi,
-+					       ctx, ODB_FOR_EACH_OBJECT_PACK_ORDER);
-+
- 	if (ctx->progress_done < ctx->approx_nr_objects)
- 		display_progress(ctx->progress, ctx->approx_nr_objects);
- 	stop_progress(&ctx->progress);
+-		if (packed_object_info(pack, offset, data->oi) < 0) {
++		if (packed_object_info_with_index_pos(pack, offset,
++						      &index_pos, data->oi) < 0) {
+ 			mark_bad_packed_object(pack, oid);
+ 			return -1;
+ 		}
 
 -- 
 2.53.0.rc0.250.g0ac79233d6.dirty
