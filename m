@@ -1,118 +1,221 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CC647ECC9
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 12:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C523D3CF5
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 12:50:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768999690; cv=none; b=b4jlPAhw9V2WFZIIq1kxzEqjpJ9Xt/jRAlymEPStoRaQ8rImGaSeju3uOTERFWM5KCsq2iwm/bxpdtu0dzCRUXidHOlkOUSioYV0IGpK9hyWZdanNyYwZleICzj4PujH9LeT91dgW0U6mNnK69SMJy5pR+BgDoQtwchkygnbP3g=
+	t=1768999834; cv=none; b=WJ3YhnRQP4stzWTxu9T+NYu0JJhBzNKf+gNLbpqMFGEaZ9KyftXdoJjnO/taOoxkvRhAk3fE7Rz+WUz5raEUeRSSE/G8cWZIfE2nQpXbqXFzjvN04+U7sx8YIt3Vcg2J5P3qmrY+ZYV4VnKt5yfw6aRRpA+d23iuTERoUMKSX6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768999690; c=relaxed/simple;
-	bh=sddZlecZzgCaJfcoDnRnb4kgbtaNyMSLB1rTc82KoWk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkJ1MoOoyk/EAIb+iVR895ETmeEsfpPw0+2ebH1e1CRfd0u8YAgYHFmZw1qv3BI59JLa+LBaRkpqNrhPSbZ1g2PfthzajWAToEvovDsFv2Hq9iGXUztN0RIgQlb/sGnGZyYJykYg9FweNCbnfJiuzw+/b5Lvk2zXrAnSCiGt2DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XL8BFFQ7; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768999834; c=relaxed/simple;
+	bh=UJerkGlpwqnSH12uJZYrWzaUXT7XdqOCN0ZeqVf/u9A=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=kCkNYC0l2c6Y8O6QkIpR+Fsc0BwSSv3eWcvTrekYRqQCLKLcAJ1UcMyOb3g+VmgmFHPyYrkYy6w0zJkO63YSELfbhwTB4qyNb9xoTf8QUGvQW7B+Q+VHCxUqIdxhTUXn9r8xLCN6FYt6FwV2s97mAaFB+VVp/LrQCKqpASSIFQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D6JCQ+Ri; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UcvZn8/h; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XL8BFFQ7"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c54f700b5b1so3890447a12.0
-        for <git@vger.kernel.org>; Wed, 21 Jan 2026 04:48:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768999686; x=1769604486; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=udB+rclw8I/EyaP1J/zVpJqdrl0T9DqbFRbybyNe+Jg=;
-        b=XL8BFFQ7u5MN5sZoS2ONHXOYLdKPvdL7c/MvBxsjHLJhMvl6fk34/YqAojK/cGa4Ku
-         JQG9ZLa0bWOVX5xd/gj4unFW7jqw1Qj8IhMlftl+dyISenD2CvHx94inSWJLhpOKwXVF
-         ehfqdV98t3Yh8zQf9IYCBXxA4iNyvKhedfEUijDee0C2TAnseMLiJ53kN4cfltMdbISn
-         ybMiIxp5FAW0iGhPB8l3utR6UNDkKCBynSB/5iWfTIwEE5uF2kzfQos7oDCrIbSMenvA
-         fIRVWMFrxXmnqRHvcHqOCT0YesN+nMbFatPmzidYVpecAC4UEsSnVNUqyn7pgZe3q8cz
-         qDeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768999686; x=1769604486;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=udB+rclw8I/EyaP1J/zVpJqdrl0T9DqbFRbybyNe+Jg=;
-        b=AWak5Q0mhfcJhLc2kDvml3c41GHDknWupncSNVK1p6Edmut9bQd414Z29RRA4WqYs8
-         rrWKMD1XiVy+HJhoYyPomd0mPQ3FIVzL9L8QDsVL9STiN18dFhHC5zxZSgJRYBbilxtf
-         /EwN13imIDDpNnHiXPtF5kbUq4QGVuaGUvqTULlFRdrs4eG40EfdHH5Ze6J4XMkpUIiy
-         ENwwiDn++9y9aa3uuIs7WIxcVnz3JgP4AOuoYYlNNN83kYYJ0Fh9XP7c0vavideBwNlN
-         rIbU8ocENERWeEGprtEGPPf/btyBbSlXzVZigODnSdWxQ349Ac+pyvnVEt0NE2xqv2O8
-         vq7w==
-X-Gm-Message-State: AOJu0YwCjfLKYTf6IZcUGyDtfK9SaFDls5RQkYCpCa4ysobxE5RKCq+L
-	WdZV7j+HugV/l+VlbPdKDrowiJLnNBu+a9cDk7HjgTMVdRi1yhbUYpjwE4Qsow==
-X-Gm-Gg: AZuq6aLCFGGyZlKleClmnH8YiMB7TRroPcM1JSyS7eu0dYGfX/WEgJb+UX17UptLeuZ
-	ZWk78mIRTIJUel0KEpxTkhw0Jo7c8qn8qrJ4+gooiq0MDhyJfHpEC/tCwQ4GPDUpbXerdw/swXA
-	yr3qjAUUQVZeokl0Mlywi7Y3mWy5umHL/KpB6pV/vCsRWwu1PAv7v7PF7F96J0RIDA1HxUpchD0
-	WkApsvPLQA3MvGPEb26xkEsiEWdYRTgs0fHXgGtt+5ilVnGA6uxY9EIft1MrytIT+D8W9fcy/aG
-	VrqriE9bvQJm4jJeWCQ31PwsAKAuCrZcqf2ljKqtXiKbe9M8sVMoVMmYUKUgiEFKJ1dKqdbdcch
-	3oEILOSwrjDn7K+uNx2GhSflwVOCkEu86XrFk76g8L3aBV/iG8RhetyhGAaX1dSsZjk+NdPxM5x
-	xnnSeSmMp1L+M+25rTIOlzHKauIvDWn2zO8fvtn8tMRBt6AQ==
-X-Received: by 2002:a05:6a21:3288:b0:38b:d9b5:5de2 with SMTP id adf61e73a8af0-38e00d5cc7cmr16994558637.50.1768999686431;
-        Wed, 21 Jan 2026 04:48:06 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd7:6181:4ac5:7f6c:c462:4847])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-353032f43c7sm873234a91.8.2026.01.21.04.48.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 04:48:05 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	phillip.wood123@gmail.com
-Subject: Re: [PATCH 3/3] show-index: remove global state variables
-Date: Wed, 21 Jan 2026 18:17:20 +0530
-Message-ID: <20260121124754.848110-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <7b5dd0c4-0ca0-458e-89db-621a70dac9ae@gmail.com>
-References: <7b5dd0c4-0ca0-458e-89db-621a70dac9ae@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D6JCQ+Ri";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UcvZn8/h"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 119F17A0152;
+	Wed, 21 Jan 2026 07:50:31 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Wed, 21 Jan 2026 07:50:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768999830;
+	 x=1769086230; bh=Q3yc8jr7C9DA47ZKB9edP3Sqq0HbZlr5AohyDd8zEFI=; b=
+	D6JCQ+RiCj8mqFkjosqOCZELUX6/24tACedxaIGBDm/8YdgCY2WeO56peQjsrV4O
+	d1RqzIeaTPS1n8oedIh/kul5YEHt8g5WQV787StDhwZU38XWGWo/60Ikz9j4Ahv7
+	PTGv375o48csU52raQKukOcV7aYZD218dVcAECLz5ApRLdq/kfC7iLjG4/O7WFC+
+	VdDel/aZ16LKyfteW2RUmUOgiYMYzdM79XYE2Oe1mrXDHB+lq4BLRGrF2T7KLU+d
+	QG7pziSwWoEyE7DQddoSfwxop1DJih70HJOfzBuYQbwc3FLHS8EfX5LDVK6J9IC/
+	KfG9Fjf8HIMrXnGwB0u3HA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768999830; x=
+	1769086230; bh=Q3yc8jr7C9DA47ZKB9edP3Sqq0HbZlr5AohyDd8zEFI=; b=U
+	cvZn8/hbVwQQs1MZyy5qmFspoxWOyHmpSk1YPgooC8QJ5I/jirWs9mOTzm+O4+ZK
+	F1JTgkTofFLS2fv9GWMUhbxj6vPaSkHaD0f+N9JOzybPoGMRpUKXi1cO8oDi3RpA
+	i6hirF0lny0asXf7VukxIa5lAPguzKtGSkbjRGOr4pPcWs3S2jaATYtf2SaEdKlo
+	gmHoP8t+bLAtjbgSnbUCcZ0kkEcTjpew/nIY6uFU71T5u+46V90p1GQGZS9yOZY3
+	O+OTn4Cfc5smEAGErJDwvvGPM0ZZTs8YeOixDd8ne4x5ejp+/aB/czqdsJqhSddj
+	9v7W5D5Vw68ozFgbtXflw==
+X-ME-Sender: <xms:lstwabcLIYzOUDqlBr5zqeYEg0quB-_HNSQJvzTSKh7szmclWsO53Q>
+    <xme:lstwaYMnezwhUVb8QHVrhvTTupktE4ajq1wM_KemVcVOqGO6_3gn6cJNHHv0xz3NT
+    FwJkc4eIBT66RT68_Nk-1kaBpLgy0URfLjxsVrsdxvKW-2-YpMF4A>
+X-ME-Received: <xmr:lstwaZiSndpFyhW8ljjJP6FMXQhe_07JcNb4Xzkg6hrDCo4-YBWQ4W7bPnIW9IAJekxDwCf6iwQOv5WMtLQoNQpWoh-Be4y7KidJQADOSLc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeffeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    gedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlh
+    htohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:lstwab0IDHRuvxCP5sNF-z6FgWHv38lWxjISibQ9r589g4IIiKdn2A>
+    <xmx:lstwaTi8dtr8_auZK7PV3oYevnvWTqd03sDAyczJhXD1YpGlmpSsnw>
+    <xmx:lstwabfB3hPfs7uBgTJmWRArLbDwQF7INsluR1wLfuU02U75-jQEcQ>
+    <xmx:lstwaWn4gWbW5-yH__PdPQI9SlJ6cnAgZkNuL66NtIImoNrsnOAUsw>
+    <xmx:lstwadDmYClk31Yigea0cl2uYv98UdLC1LN-MFkl7omXmdiUaQwjttMF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Jan 2026 07:50:29 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2c666080 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Jan 2026 12:50:26 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 00/14] odb: introduce `odb_for_each_object()`
+Date: Wed, 21 Jan 2026 13:50:16 +0100
+Message-Id: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIjLcGkC/4XNwQ7CIAyA4VcxnK0BJnN48j2Mh0GLQ+NYYCGaZ
+ e8u28F4MR7/pv06sUTRU2LHzcQiZZ986EtU2w2zXdtfCTyWZpLLmguhYLgnCGjAhQjU2g6CuZE
+ doebm0Fgkrh2ycj1Ecv65yudL6c6nMcTX+iiLZfrfzAI4qL1oWi1QodansrnzD7aAWX4hkv9GZ
+ EGQK2scVli75oPM8/wGtiIGRgABAAA=
+X-Change-ID: 20260115-pks-odb-for-each-object-60b78cde09fd
+In-Reply-To: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
+References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, 
+ Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.3
 
-> On 20/01/2026 14:05, Shreyansh Paliwal wrote:
-> > As Git is in the process of removing global state,
-> > this function still relies on the global variables,
-> > the_repository and the_hash_algo.
-> > 
-> > Remove the associated macro and the UNUSED attribute from
-> > the repo parameter, and replace all uses of the_repository and
-> > the_hash_algo with repo and repo->hash_algo, respectively.
-> 
-> I don't think that is a good idea because repo will be NULL outside of a 
-> repository. For a lot of commands that does not matter because they 
-> require a repository to run but judging from the first patch in this 
-> series this command is supposed to be able to run outside a repository.
-> 
-> I'm increasingly of the opinion that adding a repository argument to the 
-> builtin commands was a mistake as they all just use a single repository 
-> so using "the_repository" seems perfectly reasonable. It leads to 
-> problems like the segfault in this patch and takes attention away from 
-> the much more useful task of moving our library code away from using 
+Hi,
 
-That makes a lot of sense, especially for the commands
-which are meant to run outside the repo as well.
-In hindsight, the NULL repo issue and the segfault risk
-should have been obvious to me, particularly given that I started
-by creating the hash detection for no-repo cases :)
+this patch series introduces a generic `odb_for_each_object()` function
+to iterate through objects and adapts callers to use it. The intent is
+to make iteration through objects independent of the actual storage
+backend.
 
-Anyways I will drop this patch in the next version.
+The series is structured as follows:
 
-> "the_repository". If you're interested in contributing to that effort 
-> then there are a number of instances of "the_repository" in wt-status.c 
-> that can be trivially replaced by the repository instance in "struct 
-> wt_status" or the repository passed to the function. I'm not sure how 
-> easy it is to remove them all - you might need to change the code to 
-> pass a repository instance down the call chain in a few cases but there 
-> are certainly quite a few that can be easily and usefully cleaned up.
+  - Commits 1 to 2 do some cleanups for the for-each-object flags.
 
-Yes sure, I will take a look and see where I can contribute in wt-status.c,
-towards reducing global-state usage.
+  - Commits 3 to 7 introduce the infrastructure for
+    `odb_for_each_object()`.
 
-Best,
-Shreyansh
+  - Commits 8 to 13 convert a couple of callers to use the new
+    interfaces.
+
+  - Commit 14 drops now-unused functions.
+
+The patch series is built on top of 8745eae506 (The 17th batch,
+2026-01-11) with the following two series merged into it:
+
+  - ps/read-object-info-improvements at a282a8f163 (packfile: move MIDX
+    into packfile store, 2026-01-09).
+
+  - ps/packfile-store-in-odb-source at 12d3b58b55 (packfile: drop
+    repository parameter from `packed_object_info()`, 2026-01-12) .
+
+Changes in v3:
+  - Fix error code propagation in last commit.
+  - Link to v2: https://lore.kernel.org/r/20260120-pks-odb-for-each-object-v2-0-d05cbfd3d6f8@pks.im
+
+Changes in v2:
+  - Clarify the comment of `odb_for_each_object()` to point out that
+    it's the callback that can abort iteration by returning a non-zero
+    error code.
+  - Document in the commit message that we don't yet convert all sites
+    to use `odb_for_each_object()`.
+  - Link to v1: https://lore.kernel.org/r/20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (14):
+      odb: rename `FOR_EACH_OBJECT_*` flags
+      odb: fix flags parameter to be unsigned
+      object-file: extract function to read object info from path
+      object-file: introduce function to iterate through objects
+      packfile: extract function to iterate through objects of a store
+      packfile: introduce function to iterate through objects
+      odb: introduce `odb_for_each_object()`
+      builtin/fsck: refactor to use `odb_for_each_object()`
+      treewide: enumerate promisor objects via `odb_for_each_object()`
+      treewide: drop uses of `for_each_{loose,packed}_object()`
+      odb: introduce mtime fields for object info requests
+      builtin/pack-objects: use `packfile_store_for_each_object()`
+      reachable: convert to use `odb_for_each_object()`
+      odb: drop unused `for_each_{loose,packed}_object()` functions
+
+ builtin/cat-file.c     |  30 +++++++--
+ builtin/fsck.c         |  57 ++++------------
+ builtin/pack-objects.c |  47 ++++++-------
+ commit-graph.c         |  46 +++++++++----
+ object-file.c          | 120 +++++++++++++++++++++------------
+ object-file.h          |  21 +++---
+ odb.c                  |  29 ++++++++
+ odb.h                  |  43 ++++++++++--
+ packfile.c             | 180 +++++++++++++++++++++++++++++++++----------------
+ packfile.h             |  18 ++++-
+ reachable.c            | 129 ++++++++++-------------------------
+ repack-promisor.c      |   8 +--
+ revision.c             |  10 ++-
+ 13 files changed, 426 insertions(+), 312 deletions(-)
+
+Range-diff versus v2:
+
+ 1:  3cd6a9b898 =  1:  f931af359e odb: rename `FOR_EACH_OBJECT_*` flags
+ 2:  2b9a766928 =  2:  4454d3b8e6 odb: fix flags parameter to be unsigned
+ 3:  e5a8257291 =  3:  0953291ffc object-file: extract function to read object info from path
+ 4:  309fb50d2a =  4:  b0a8ff2d9d object-file: introduce function to iterate through objects
+ 5:  8332af532d =  5:  def018bbca packfile: extract function to iterate through objects of a store
+ 6:  17675561dc =  6:  caccd45aa0 packfile: introduce function to iterate through objects
+ 7:  aa79e2f2ea =  7:  4e429e52b2 odb: introduce `odb_for_each_object()`
+ 8:  33737e286b =  8:  8f16adec2c builtin/fsck: refactor to use `odb_for_each_object()`
+ 9:  606b944a67 =  9:  a1c95ffc4f treewide: enumerate promisor objects via `odb_for_each_object()`
+10:  bf31434259 = 10:  c0ecc5517e treewide: drop uses of `for_each_{loose,packed}_object()`
+11:  359ac505ae = 11:  1687ac9f3c odb: introduce mtime fields for object info requests
+12:  eb7c6f5571 = 12:  1d4b35e3a5 builtin/pack-objects: use `packfile_store_for_each_object()`
+13:  80227f4d71 = 13:  f360ff980a reachable: convert to use `odb_for_each_object()`
+14:  b614e33feb ! 14:  bbad8b1a2b odb: drop unused `for_each_{loose,packed}_object()` functions
+    @@ packfile.c: int packfile_store_for_each_object(struct packfile_store *store,
+     +		ret = for_each_object_in_pack(p, packfile_store_for_each_object_wrapper,
+     +					      &data, flags);
+     +		if (ret)
+    -+			break;
+    ++			goto out;
+     +	}
+     +
+    -+	store->skip_mru_updates = false;
+    ++	ret = 0;
+      
+    - 	return pack_errors ? -1 : 0;
+    +-	return pack_errors ? -1 : 0;
+    ++out:
+    ++	store->skip_mru_updates = false;
+    ++
+    ++	if (!ret && pack_errors)
+    ++		ret = -1;
+    ++	return ret;
+      }
+    + 
+    + struct add_promisor_object_data {
+     
+      ## packfile.h ##
+     @@ packfile.h: typedef int each_packed_object_fn(const struct object_id *oid,
+
+---
+base-commit: 1ff0e42d332523a11cc3d61b8d8463db5f9f14e8
+change-id: 20260115-pks-odb-for-each-object-60b78cde09fd
+
