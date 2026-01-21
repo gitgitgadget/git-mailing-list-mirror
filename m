@@ -1,93 +1,93 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C924481AB6
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 16:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF616326D57
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 16:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769012892; cv=none; b=lKs7n9pB2HXbcFQjCzqu3THGNQSEz8934BrDE4ZFggrDqNMO/7CXQ61RegmhvsLrYGrPKVpDHvjjw9RxlGElE8cH9szkgsSelOBHJZKRnLzYUU/21ZGPFc2juqi8OD3FBwCMeURRvWrZJ+nXaBTcr3iAQxbyQNBn7yVwm7lfg9U=
+	t=1769013569; cv=none; b=mZzHXqunOJ7lQRmZWpHjOIYGz844cRBsMT+5WwUQ7hJSWKgpAq6KSulxvWEjlGlhZJPJyDiwtsaRZzJx0XaNuAXY61JpvKCZXmNDtQCbOBPeTgPilPvWeOarCSMMo0P99rF+c+//5sneuSZjGrOavEo1+gnGsUAxfM2bahAsWBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769012892; c=relaxed/simple;
-	bh=PnhHu5NQHqKgFjAGUr4SxADmbjQHJh3xltQrMyGBgIA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aA8r/sYETx8sq+Mtg4wQzzun6yQ7QdjgfaMthloYbym+kTPGxcMVxtD8czi1ho6iviZv1tAoD2zbHN9zexKWB88PbnrHSTLB6EjHnO9F9nUJ61Qu8oTNfpgfOAWoUXzMBIfcugb3eMQseZjGhqqZC5GMwJ92QkjgsninBH1RMII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J8G0w8Aw; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769013569; c=relaxed/simple;
+	bh=57NY4EjlKdUV9xd34NjMhAY5/ea8jZ7WTsr8FBVtQ00=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tnwqPwIbqkDQhw6LUAq5y5wR5hrcareToLzCXZ1VBLxK1t2YYXRVvvPVGlXEgVDEtiPpz8SPUlN7zyoALlzcC8hZ54KioYXR93O0Yf+htIQYHGdX4I8wHNznzzI1qc8xNzaED/+/CR4xauEBCw+lV6riHZVqWdh6pH3P32cKVr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=L0xOz7H0; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J8G0w8Aw"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8c5386f1c9fso879785a.1
-        for <git@vger.kernel.org>; Wed, 21 Jan 2026 08:28:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769012887; x=1769617687; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PnhHu5NQHqKgFjAGUr4SxADmbjQHJh3xltQrMyGBgIA=;
-        b=J8G0w8AwLFzEvDT/jb9JR5k7Tf6wsXDonfAodMHrReMWg4L/VAk3gwYS6HMY8vAuGG
-         tQMFn8hb0HTofq7xyx0YbhF3YHNTQRG1VouIik+FQG7oltriTx4vfLyYJupG8w9Z/oXP
-         XSWYTNx6n2RJ5LOrkFV+g7qCPJAMrb+eVNuC6wIbFsuIKPkK1T7Ff41TMX83LL7yL5OE
-         lE0bDtWWbqED2w8Q4b/HJgEsQ5Z4HHGDa9u7A3pO7DvBiQ2RGAo0JKe9zCUnic/fuzfw
-         S7lupAnHHHKpmH8lopQFyvvTKsszT5k3ojroS3aSh4qhf0L4/9qJGXpyFnTxclL6Ji93
-         Qp0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769012887; x=1769617687;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PnhHu5NQHqKgFjAGUr4SxADmbjQHJh3xltQrMyGBgIA=;
-        b=ocxRxc9oD4a7M0sZt/UK4nPb7vtt7N9nlQr/bdPiEzlfg9ElHToHXm0ivOqFTP7V/+
-         Z1rXKr/zBGe6oNHDdLJ/C1PrAItWiT8KiTcYkx0N4wva34ykEf0Lt2PwjcF+wRPK9QHj
-         yF6kx9S+RGGnkE4w+oTqFQ7NIrCcraTVSXSTyq4rjB5mDVJbSgoc3U0woPQiCo2y9Lz/
-         YnEqR/a8mH6Cbm45sOcwfJEW42tSnvugzEv2ijMpwIpj23DI9EHMZumK5BWFA1qm+Asi
-         TUFJtEm3O5u57d4wL/7YwUAG7IBxtwz6tgq9Q1X5EbtHsLDfQ+O7b+RH4i2nhcJSIlmZ
-         YDzA==
-X-Forwarded-Encrypted: i=1; AJvYcCWMPzZZMz1gcedMAn0QMnD3ynXV7cx+IfEGa1HZgRkWskH+JDl6bUQ/2Mjtqgqd8rUQxMY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxpyO1WxVdLURmAzJEk3xoRZO/HrtOajIn100Uz06bHtWhkeoY1
-	Jdl7rnAjXu33p+dCFfvIxR0DB1xMlo1clGBJ/imsBxkCpUEYrIuiYfT9HR9Urg==
-X-Gm-Gg: AZuq6aKVZdb3pcIEzNXA2qo+CgPKyIxwI3054XhbKtoI2iW2JxOWruuPfCeVymS1aeS
-	NC0b8iD76qDv2ga9qkSRhDuLDHBDQt4iTcOA5R2eYGT55GSIe7T0PtPQDtDAAhbInq9z/1tGl9W
-	4Ix01vhg2ptYYyCzzq3rV084laBoJSvkT14LZd5VsqNrfsPZjepjQR76GVvFAGS5v74n5o8ERDs
-	lawg6hWoitO+b2JTvuoeAnblyY6zT+6BMT8O7iVqCJ86DAsl8kHglvmR/zfoZLWvUv2+X7t1g83
-	OuvusZ9/sKjU2vw7AOfS9wjkCqu/ynCwzdYPQ2vNilvB7ezqRqZWF/HnADGHsdctPDxz/qo28o+
-	enM/g45RCivzxmXQMOJIFRJg2fxklC5EmkMHGMG2PukxX2QtcFrZG2J48WiowoGHucHFwOzP7DP
-	d62CRiJg5D7bkqvLBKGsiRBHhuHq0GZ3al36l2TLDPnefzX3WpjSBo47ktnKITHY3nETO4
-X-Received: by 2002:a05:620a:1a94:b0:8b2:e17a:37 with SMTP id af79cd13be357-8c6a6956532mr2377242685a.43.1769012887572;
-        Wed, 21 Jan 2026 08:28:07 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c6a71ac960sm1246643785a.4.2026.01.21.08.28.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Jan 2026 08:28:07 -0800 (PST)
-Message-ID: <615b31c3-a47a-43bc-8dcf-7943ead101a7@gmail.com>
-Date: Wed, 21 Jan 2026 11:28:06 -0500
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="L0xOz7H0"
+Received: (qmail 122561 invoked by uid 109); 21 Jan 2026 16:39:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=57NY4EjlKdUV9xd34NjMhAY5/ea8jZ7WTsr8FBVtQ00=; b=L0xOz7H0EVwJgvMt7iVBXIcipHhLoZPxSn+ofQLaHHh0QMf1i3FTC6qixqnS+gbBrFK1v2f+ntWCwXOfltdHF9aiWL9QQhmljwYY7xfiKJqJPJzsX5ZJZq4iRvzJrnXw/FV5nkFUZOERgM42Sk47f7rVCSbPg+jVleSDGTCw6v6bbNtqA3SRLF0m19oTgN8ufPff6Dgz9JtEWcsku91jjrUC/oJoL/7J/60o7zaHep+neht4daltvZoSM392bPhH2BAGWkfQcMqpKWlvQ0GXzm0k7SlWORyOH+W5qeiGwh6475VdxfB3bX7Okw5CbeY9GFCyerL6Z55WgVwAsviYaw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jan 2026 16:39:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 205723 invoked by uid 111); 21 Jan 2026 16:39:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jan 2026 11:39:25 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 21 Jan 2026 11:39:24 -0500
+From: Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Paulo Casaretto via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	"Paulo Casaretto (Shopify)" <paulo.casaretto@shopify.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Paulo Casaretto <pcasaretto@gmail.com>
+Subject: Re: [PATCH v5] lockfile: add PID file for debugging stale locks
+Message-ID: <20260121163924.GA576236@coredump.intra.peff.net>
+References: <pull.2011.v4.git.1767804355831.gitgitgadget@gmail.com>
+ <pull.2011.v5.git.1768933954845.gitgitgadget@gmail.com>
+ <20260121071344.GA570838@coredump.intra.peff.net>
+ <CAPig+cSE7Y-MLu1PTdo2kUq_MztMQgm0eYby03cX2K5YAJLwsg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7] sparse-checkout: optimize string_list construction and
- add tests to verify deduplication.
-To: Amisha Chhajed <amishhhaaaa@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>,
- Jeff King <peff@peff.net>
-References: <20260120153829.48044-1-amishhhaaaa@gmail.com>
- <20260121130005.72375-1-amishhhaaaa@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260121130005.72375-1-amishhhaaaa@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cSE7Y-MLu1PTdo2kUq_MztMQgm0eYby03cX2K5YAJLwsg@mail.gmail.com>
 
-On 1/21/2026 8:00 AM, Amisha Chhajed wrote:
-> Improve O(n^2) complexity to O(n log n) while building a sorted
-> 'string_list' by constructing it unsorted then sorting it
-> followed by removing duplicates.
+On Wed, Jan 21, 2026 at 03:13:41AM -0500, Eric Sunshine wrote:
 
-Thanks for iterating on this. I think v7 is good to go.
+> > diff --git a/lockfile.c b/lockfile.c
+> > @@ -122,14 +122,10 @@ static struct tempfile *create_lock_pid_file(const char *pid_path, int mode)
+> >         strbuf_addf(&content, "pid %" PRIuMAX "\n", (uintmax_t)getpid());
+> >         if (write_in_full(fd, content.buf, content.len) < 0) {
+> >                 warning_errno(_("could not write lock pid file '%s'"), pid_path);
+> > -               close(fd);
+> > -               fd = -1;
+> >                 unlink(pid_path);
+> >                 goto out;
+> >         }
+> >
+> > -       close(fd);
+> > -       fd = -1;
+> >         pid_tempfile = register_tempfile(pid_path);
+> >
+> >  out:
+> >
+> > which would just let the close after the out label handle all cases?
+> 
+> Correct me if I'm wrong, but wouldn't this suggested change be
+> problematic on Microsoft Windows? Specifically, if I recall correctly,
+> Windows won't allow a file to be deleted if any processes still have
+> it open, and this change eliminates the call to close() preceding the
+> call to unlink(), so the file would still be held open when the
+> attempt is made to remove it.
+> 
+> If so, then probably better would be to drop the unreachable `if (fd
+> >= 0) close(fd)` after the `out` label.
 
-Thanks,
--Stolee
+Ah, yeah, you're right. Ironically I spent quite a while thinking on the
+implications of calling close() before register_tempfile() and decided
+it didn't matter, but totally ignored the first half of the hunk. ;)
 
+The second half is still valid, I think, but at that point it is the
+only path that uses the close() in the out-path, so we might as well
+drop the out-path one.
+
+-Peff
