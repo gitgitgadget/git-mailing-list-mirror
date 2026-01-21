@@ -1,89 +1,81 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D552C32FA21
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 08:51:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F7347AF73
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 09:33:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768985512; cv=none; b=hi63LYajMphninlRI6kJQJN9VTXCE8wGXC6vdZcSRspFh5kVxy734Vnn+D31kvd13wtBSpUKaYPCtQrevFh4nBpoehZAVYSS4BRBlZtG3Xvo3jXYnge981Uq5wHcp9N2HLNrWrjNTbnBA+GDIslXVj8Ovi07Dx3hxnYwagGFtI0=
+	t=1768988001; cv=none; b=F5z5y7YaWa2kh0zMmyq4ih5MDl4+Giuf+gtJox2Zqe2qq4OkKOHRzJFUw3X38MQzJ4/DPzFKs7abDqjXIBTgpBBimSQ0JLgv3p0JFcqqYop3ZOmSBPyVCFt6SzHGdcRa+aE7fkwtxHB0IrQABmTX+xnePf5evDorPmVHjqZkJe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768985512; c=relaxed/simple;
-	bh=01wX+LP2w30v5a947x6gCzZEc3ZyEPVhbFUxx322k/I=;
+	s=arc-20240116; t=1768988001; c=relaxed/simple;
+	bh=x1iNMNP4ixsZNegOgDPG6hT7zkcY+8Fv9pcfkr1FMJQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q4XKpDgVNK3xTzZhJWH307ywcTc5QS0o23DJGFgPTlS72lyLF9BMMVppZ26HT79F7M09incUjaWHr0IBTWN4KkE6AUBbPl9/d9+bur3HXMJ47lwDbaa/lvH8Gd71giKrCSegu5vZOEFRsZvGRs3E4N+TqZyxDvcrh5Wh6fBWJso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FOYtVhsK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=txu/q8Ei; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=pWBXzzT7KnIVE/LKbpZrw3LEQXfV52f9W/ym8DlnxAQMVloCaCIY+2HIXpH4M+z05FzZyztTCVPZtEFGhHCuLPmHYlK22l/BAYE5p2pbV3oAi6H2O0EYTtz1liXlecOqtOo3+/FVEB5hAkX7UYdgytQ1uAWvo/juQo9lU2sfFWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c0sptFEN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iB/YZEqS; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FOYtVhsK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="txu/q8Ei"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EE7707A013F;
-	Wed, 21 Jan 2026 03:51:48 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Wed, 21 Jan 2026 03:51:49 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c0sptFEN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iB/YZEqS"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id B05031D000D1;
+	Wed, 21 Jan 2026 04:33:17 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 21 Jan 2026 04:33:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768985508; x=1769071908; bh=Ur/ReM4+T1
-	a1snAncdJkbpHSgXMw6PVnNzUrcN4NNhA=; b=FOYtVhsKAIYZzZE9Hx9ac7SnfS
-	s7FzucoB2o6YlPWa1I+ORX9cvp6GfGDzda33BmjWCHUjerSQa+UR2PK3YxVPy90m
-	ma18wVnYaEcxtWCi50V84oZCbY7PmAy3XDEOBP1RZWnbg6fooZ+qoiUcZLSgfwZh
-	cMqcuEdtCyFNUQZgLEAIQNRj9uVDFsMG9csJqdFGR7te6Kg4Haa3rHr/mHYn9T2k
-	AlUWTppnvVpO86c6SSNja9kQJAIGF25T1k6fwgEc4RYYh17ykqH+4iUtj7Au6Wom
-	jkS/F0xJzKFeTYQOdxXW3PSQSJE1JrJkjL+MUBN6HukuvZqcaM4OWQdO4U8Q==
+	:subject:to:to; s=fm2; t=1768987997; x=1769074397; bh=ImYnaUeDUS
+	OBmZUtW0n30cw4zs2kCaITTvzzuGH3GpI=; b=c0sptFENzvkLq574wJHxa3qAn2
+	e1wJSZzt4zY8uU5ycuV6lD5vv/kfAVvcWLChjE8f3xevCOqUNRkU1n6HT/wi68Lc
+	QPG7m+Ww1rjBTo4UN9WgEGOpuwM057qqFyrlowIvSX1zg6WTq5V43BzXKfFigCXr
+	PZ/j9uZqCyA4qKzOh3mQaS4IHrcgxkadhG/cKSL9YnU2LPIjaxkI15sXokBmj3MW
+	5abl1eHYOVHFAj+cVc/VnhM2juxVepKTwhAPTqAoKGKpfoyDtkXROiBe0x0GDYQi
+	arUwrIbaD9C6lWONM3oPqZZ47DX2HmWirI66GHy+minvq+MJ1lKIqropxxEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768985508; x=1769071908; bh=Ur/ReM4+T1a1snAncdJkbpHSgXMw6PVnNzU
-	rcN4NNhA=; b=txu/q8EirYEV3HqnSpzWLtUuXU0552ZUuseRn2dR7R9m47Lwn0I
-	awL6h3dkH6GHhCucKHRUbYUhpiWVuCGAEW0EA4DxlRncvRHAWeL8yEu2SfEEsy0i
-	Ps9wslDxAcHhpC/2m5Y2bBjBXwY1K6U5ajYJeuCz5teUn7TtOxCZHffA5e+oeTEh
-	yoKs/LQvRNOD6ICZn9mxKZneo/NioCQC5kJl/LL+hAIGTSVbPo+d1/Czi3CpEyr8
-	mmB7AH0mY9zp/w5E1WbgXJKewDoiR9yOKh5mHtAasUsoxNqFc9duMsUxd0Jk/jqX
-	qeGYrGW1d/km7lT8uP3YRvMrtZbrEu1VcrA==
-X-ME-Sender: <xms:pJNwaQRFXxESagRZYb4zaD_o8r5GsQcVmxhoEMkU4zl0Kst-bZAj4w>
-    <xme:pJNwaUrhbjB7IK51aavJXiwTqkt3d5CBoYpfTRPi7cTxma4CXuH9wEjyZMfon0_6E
-    eXzCct3DdWfxWeVDNwvesN1YO_-2agkqm0eb87jhxZr9kJxVNXRb5k>
-X-ME-Received: <xmr:pJNwaWL76LwJme1sh2-nIdpLite9LbHL4mGp88uXpU4whJawVXmwvnpiQHAgrwmMXTH3Re8jLj7BliLL9JObSd0t71V5-Vl5-ct6Ol1RdXM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedvkeehucetufdoteggodetrf
+	1768987997; x=1769074397; bh=ImYnaUeDUSOBmZUtW0n30cw4zs2kCaITTvz
+	zuGH3GpI=; b=iB/YZEqSQ4OTAKOchyzDsntC0sryBBAuR6ggVhjVo1sHjKUDR6L
+	EftwHc/ffc/1vfILJR7djr2f9pAb9W4KJx3wrgTsNjwtifWh0PTprB2DbgJI/ctZ
+	AP34Z+iMEKM1/Y2Ci3fj29lf7px+d2kv9oNtz2K+Wjxqe1AUxnyny+sgKKeR+Apm
+	1CUHKqKbw0UwXNGQZ8FsS8wBN4kiY9zyXwKWDtza/mVuAq9oJz7TRR7jup5xrcQW
+	l1T6Or3r7O7ochoupCvxNJFPYp5U5k6M9LjQP556Y8fRka7VcPIzshc/p0KuME3q
+	F5L0L66ousNEZMx7Ic6lJUD98WaNYdkwWgA==
+X-ME-Sender: <xms:XZ1waVtTcc-sr_hzAu5C1YopILAWJkwk0ZWvNZJjrbNCRerlYlr8xg>
+    <xme:XZ1waV432pcwZd1NFfrH1_EnxfpRwG-Bkf8IU41n_fBJfIut9zv2bsW7x48PfeV9c
+    FAlIU81YBYIE5-5a8etgoAEHZ8Pxetv76p-FQMM-YCMl97V2V1l>
+X-ME-Received: <xmr:XZ1waWIPzniTAMfK360K1N2SCgFLpquvY9I_GLg6XhVXtt9mHhXLAnZlDhj9caKI2Itk9cb20dJvAFjrLEIpZ4p7-jOHUIQ7TUp9CLlMjz0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedvleefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlh
-    horhhrrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:pJNwafo-BgEb87KUPd3MSe-NELPwcrR629J9lj2SJQoM-2FWKYaUzQ>
-    <xmx:pJNwaWwpyxvzRFOB8kCJf6kmKDivSp8JmMm2kvgaUAdhAEesybfEbw>
-    <xmx:pJNwabMERDilT4lVGJ6TeoXiT7tt-IXtvYEf7rf5jBYm36ki2i9JJQ>
-    <xmx:pJNwaT4abPZOdaR3F0P_mnpDBkeRWseP4VG6TcZRp62htzFNeWKFOA>
-    <xmx:pJNwaZ-Dr0myytonID-Cjb3rCYk6P9c-OFqci8dlH8gD1xbyg-HF5_Sk>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtoheprgefvddtheduheefgeduieesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:XZ1waV4csaS5bCTKTfuMWXHASG3fH-y1cTfnOnYWrn9RYcfCFvZUeg>
+    <xmx:XZ1waZwD71MW3KKUEr5hfMvMkVs0eoOzy-yDICJ78zX5tI9haMTWnQ>
+    <xmx:XZ1waZYyZCDaB0eyC4GsdOwy8azKPLE8AySvS7BdMwSRtydSN_QG1w>
+    <xmx:XZ1wabRXN_R38YCYpomooJcip0ZlotM8WXtsKOjV5x_fUZRMMH6QYw>
+    <xmx:XZ1waR6DFR5HKWNv2v7au7uz0PJQne50PuBUbJfMpReEG4k5353UerCs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Jan 2026 03:51:47 -0500 (EST)
+ 21 Jan 2026 04:33:16 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 245a5f58 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Jan 2026 08:51:45 +0000 (UTC)
-Date: Wed, 21 Jan 2026 09:51:36 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 37af63db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Jan 2026 09:33:14 +0000 (UTC)
+Date: Wed, 21 Jan 2026 10:33:11 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 11/18] git-compat-util.h: introduce `u32_add()`
-Message-ID: <aXCTkVpjJkTabx_0@pks.im>
-References: <cover.1765053054.git.me@ttaylorr.com>
- <cover.1768420450.git.me@ttaylorr.com>
- <c0c1769464b1c8065c2cea59dfd85a1d37de9dd1.1768420450.git.me@ttaylorr.com>
- <xmqqpl7beugj.fsf@gitster.g>
- <aWgSzI30k0BZfZ4Q@nand.local>
- <aWgwn2rk/qw+fRoA@nand.local>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v1][RFC] symlinks: use unsigned int for flags
+Message-ID: <aXCdVyySI_biFPzS@pks.im>
+References: <20260120152219.398999-1-a3205153416@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,120 +84,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aWgwn2rk/qw+fRoA@nand.local>
+In-Reply-To: <20260120152219.398999-1-a3205153416@gmail.com>
 
-On Wed, Jan 14, 2026 at 07:11:11PM -0500, Taylor Blau wrote:
-> On Wed, Jan 14, 2026 at 05:03:56PM -0500, Taylor Blau wrote:
-> > As for removing u64_add(), that should be straightforward as well since
-> > there is also a single caller. Let me know if you think that makes sense
-> > to take up as part of this series, or if you would prefer it done
-> > separately. I tend to prefer the latter, since the state after applying
-> > the above is that we avoid adding any new callers.
-> 
-> This appears to be easy enough. The following applies on top of 'master'
-> if you want to pick it up separately:
-> 
-> --- 8< ---
-> 
-> Subject: [PATCH] git-compat-util.h: drop u64_add(), u64_mult() helpers
-> 
-> The u64_add() and u64_mult() helper functions were introduced in
-> b103881d4f4 (midx repack: avoid integer overflow on 32 bit systems,
-> 2025-05-22) to implement overflow checks during a fixed-point
-> calculation when estimating pack sizes in the MIDX writing code.
-> 
-> However, those functions call die() when either the addition or
-> multiplication of their operands (depending on which function is being
-> called) would cause an overflow. This does not allow the caller to
-> provide a more detailed message, presenting the user with an opaque
-> message like:
-> 
->     fatal: uint64_t overflow: M * N
-> 
-> Let's discourage these opaque error messages by dropping these functions
-> entirely and instead having the caller use unsigned_mult_overflows() or
-> unsigned_add_overflows() themselves, providing the caller the
-> opportunity to come up with their own die() message.
-> 
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  git-compat-util.h | 16 ----------------
->  midx-write.c      | 15 +++++++++++++--
->  2 files changed, 13 insertions(+), 18 deletions(-)
-> 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index b0673d1a450..24edd68c671 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -641,22 +641,6 @@ static inline int cast_size_t_to_int(size_t a)
->  	return (int)a;
+On Tue, Jan 20, 2026 at 11:22:19PM +0800, Tian Yuchen wrote:
+> The 'flags' and 'track_flags' fields in symlinks.c are used
+> strictly as a collection of bits (using bitwise operators including
+> &, |, ~).
+
+That's one important data point. The other important data point is
+whether or not we ever use any negative values here. But these flags are
+defined like this:
+
+    #define FL_DIR      (1 << 0)
+    #define FL_NOENT    (1 << 1)
+    #define FL_SYMLINK  (1 << 2)
+    #define FL_LSTATERR (1 << 3)
+    #define FL_ERR      (1 << 4)
+    #define FL_FULLPATH (1 << 5)
+
+So they indeed are only ever positive.
+
+> Using a signed integer for bitmasks may lead to undefined
+> behavior with shift operations and logic errors if the MSB is touched.
+
+Mostly a theoretical issue, but we indeed prefer to use unsigned ints
+for bitsets like this.
+
+> diff --git a/symlinks.c b/symlinks.c
+> index 9cc090d42c..ed63891149 100644
+> --- a/symlinks.c
+> +++ b/symlinks.c
+> @@ -74,11 +74,11 @@ static inline void reset_lstat_cache(struct cache_def *cache)
+>   */
+>  static int lstat_cache_matchlen(struct cache_def *cache,
+>  				const char *name, int len,
+> -				int *ret_flags, int track_flags,
+> +				unsigned int *ret_flags, unsigned int track_flags,
+
+`ret_flags` is also a combination of `FL_*` flags, so it's never
+expected to be negative, either.
+
+>  				int prefix_len_stat_func)
+>  {
+>  	int match_len, last_slash, last_slash_dir, previous_slash;
+> -	int save_flags, ret, saved_errno = 0;
+> +	unsigned int save_flags, ret, saved_errno = 0;
+
+Changing the type of `save_flags` makes sense, but you also change the
+type of `ret` and `saved_errno` to become unsigned, which does not make
+sense.
+
+> @@ -192,10 +192,10 @@ static int lstat_cache_matchlen(struct cache_def *cache,
+>  	return match_len;
 >  }
-> 
-> -static inline uint64_t u64_mult(uint64_t a, uint64_t b)
-> -{
-> -	if (unsigned_mult_overflows(a, b))
-> -		die("uint64_t overflow: %"PRIuMAX" * %"PRIuMAX,
-> -		    (uintmax_t)a, (uintmax_t)b);
-> -	return a * b;
-> -}
-> -
-> -static inline uint64_t u64_add(uint64_t a, uint64_t b)
-> -{
-> -	if (unsigned_add_overflows(a, b))
-> -		die("uint64_t overflow: %"PRIuMAX" + %"PRIuMAX,
-> -		    (uintmax_t)a, (uintmax_t)b);
-> -	return a + b;
-> -}
-> -
->  /*
->   * Limit size of IO chunks, because huge chunks only cause pain.  OS X
->   * 64-bit is buggy, returning EINVAL if len >= INT_MAX; and even in
-> diff --git a/midx-write.c b/midx-write.c
-> index 87b97c70872..6006b6569c8 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -1738,8 +1738,19 @@ static void fill_included_packs_batch(struct repository *r,
->  		 */
->  		expected_size = (uint64_t)pack_info[i].referenced_objects << 14;
->  		expected_size /= p->num_objects;
-> -		expected_size = u64_mult(expected_size, p->pack_size);
-> -		expected_size = u64_add(expected_size, 1u << 13) >> 14;
-> +
-> +		if (unsigned_mult_overflows(expected_size,
-> +					    (uint64_t)p->pack_size))
-> +			die(_("overflow during fixed-point multiply (%"PRIu64" "
-> +			      "* %"PRIu64")"),
-> +			    expected_size, (uint64_t)p->pack_size);
-> +		expected_size = expected_size * p->pack_size;
-> +
-> +		if (unsigned_add_overflows(expected_size, 1u << 13))
-> +			die(_("overflow during fixed-point rounding (%"PRIu64" "
-> +			      " + %"PRIu64")"),
-> +			    expected_size, (uint64_t)(1ul << 13));
-> +		expected_size = (expected_size + (1u << 13)) >> 14;
+>  
+> -static int lstat_cache(struct cache_def *cache, const char *name, int len,
+> -		       int track_flags, int prefix_len_stat_func)
+> +static unsigned int lstat_cache(struct cache_def *cache, const char *name, int len,
+> +		       unsigned int track_flags, int prefix_len_stat_func)
+>  {
+> -	int flags;
+> +	unsigned int flags;
+>  	(void)lstat_cache_matchlen(cache, name, len, &flags, track_flags,
+>  			prefix_len_stat_func);
+>  	return flags;
 
-One downside this pattern has is that we repeat the computation, which
-makes it easy to get it wrong or forget updating either the check or the
-computation.
+All callers already pass unsigned flags, so that's good. But there's two
+callers that use the return value of this function:
 
-I think ideally, we would have interfaces that combine the two
-approaches in `u64_mult()` and `unsigned_mult_overflows()`. Something
-like this for example:
+  - `threaded_has_symlink_leading_path()` uses `lstat_cache() & FL_SYMLINK`.
 
-    static intline bool u64_mult(uint64_t a, uint64_t b, uint64_t *out)
-    {
-        if (unsigned_mult_overflows(a, b))
-            return false;
-        *out = a * b;
-        return true;
-    }
+  - `threaded_has_dirs_only_path()` uses `lstat_cache() & FL_DIR`.
 
-This would let the caller handle the failure and is thus quite flexible,
-which results in the following code:
+Both of these functions really only care about whether or not the
+statement evaluates to a truish value. Maybe it would make sense to have
+a preparatory commit where convert the return values of those functions
+to be booleans?
 
-	if (!u64_mult(expected_size, (uint64_t)p->pack_size, &expected_size))
-		die(_("overflow during fixed-point multiply (%"PRIu64" "
-		      "* %"PRIu64")"), expected_size, (uint64_t)p->pack_size);
+> @@ -234,7 +234,7 @@ int check_leading_path(const char *name, int len, int warn_on_lstat_err)
+>  static int threaded_check_leading_path(struct cache_def *cache, const char *name,
+>  				       int len, int warn_on_lstat_err)
+>  {
+> -	int flags;
+> +	unsigned int flags;
+>  	int match_len = lstat_cache_matchlen(cache, name, len, &flags,
+>  			   FL_SYMLINK|FL_NOENT|FL_DIR, USE_ONLY_LSTAT);
+>  	int saved_errno = errno;
+
+Looks good.
+
+> diff --git a/symlinks.h b/symlinks.h
+> index 7ae3d5b856..25bf04f54f 100644
+> --- a/symlinks.h
+> +++ b/symlinks.h
+> @@ -5,8 +5,8 @@
+>  
+>  struct cache_def {
+>  	struct strbuf path;
+> -	int flags;
+> -	int track_flags;
+> +	unsigned int flags;
+> +	unsigned int track_flags;
+>  	int prefix_len_stat_func;
+>  };
+>  #define CACHE_DEF_INIT { \
+
+There is only one user of `struct cache_def` outside of "symlink.c",
+which is "preload-index.c". That user doesn't care about the flag
+definitions though, so this conversion looks good to me.
+
+Thanks!
 
 Patrick
