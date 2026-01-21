@@ -1,149 +1,133 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx1.hexon-is.nl (mx1.hexon-is.nl [82.148.219.134])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37E7481AB2
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 13:00:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF44A48A2C7
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 13:15:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.148.219.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769000428; cv=none; b=KXRGdbU8zq/HCn22LimLyRDRcShHk1R1imPfRGJFAxzPPof7vaWiOqy5UGh+wqbzz+fTVN5Mxw/2hbaqU45owcsCJ6z6SigwxRDN2GiTObkW1DfuINorNL0aOlVdKkiFTJHp+pn6RfZ4YWAj5M5H375gqJWe43hCD58uZ4RNZso=
+	t=1769001307; cv=none; b=Gwf1ADzBgYvq1iQPuFYyV9/AnnQWlKrIx/ioTBMZvmQQ6pzuC9ND5esYHZvibT5bL9VH67NDOmSmS1uuAmlvfqXiyFlhUQUcxIkth+qgaIVuacAukHsr8tfG5PBl7lgRkySdvE3AYVLaAhpaPQT3JUwhSoROq2sQmzrRNJNqRk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769000428; c=relaxed/simple;
-	bh=T0e6Fgp5IhJ2v4w5tTKyGpkSN6L+/kefFrvT5IHG3AE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cjZX4WheJQR3yw0WmOMv5+njaUNj/8Eq2wvPaGCt6gLmBFb9ZkScz4HU3wGVtuv2zfB5gn+0r40Rkiz/m2nLdc+YHiS+IUj3WS9VagrswSiY3oaUwo3lTI4VcPTnXusP/czuOhzX3duXxqALpqwFbzWYVbAxIBTq9cqMBVF3l98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dtr7wZSY; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769001307; c=relaxed/simple;
+	bh=Q1umRYl/bUyQQIjFVUXD2KoYyh6TQeMytLUeAubnQag=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=G5jH672R8+yG4fF5L26sNlpZGfo7eFkHsMdOL16b8XQvN88uTxMx7E+tx8rYZClHWlvhc2K08WrORdiTBFVw/MrMRx5agnJOcUW2VAaRyw0h8FndogCOWpAICjWGUZFVRwFbH81W75Q24sBZJdnaDVwOjm3Mieg80OBQ2L617rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hexon.nl; spf=pass smtp.mailfrom=hexon.nl; dkim=pass (1024-bit key) header.d=hexon.nl header.i=@hexon.nl header.b=WDPwQq+i; arc=none smtp.client-ip=82.148.219.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hexon.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hexon.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dtr7wZSY"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2a76f90872cso9554975ad.3
-        for <git@vger.kernel.org>; Wed, 21 Jan 2026 05:00:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769000426; x=1769605226; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B50ZkrS1bnD3dgS5URWytoPR86E3rBqaIKgTaCBM0WM=;
-        b=Dtr7wZSY8SeqclPs8/cr57KI7Mwm9nxIQ+w8NLPhWEJcUAXjahynEXawdHuz/8TVz6
-         6LIxpmspbidluCQRWHSKxYztvw6Oqc3Q0pCGe6wlNHBKH19Nw9TVGIduC4+ak2BTB0Zy
-         oIMsh2IKj6uybny+JTeAOMOO/IovPkjUkK3OFPNaItGyEYzOY/3pmo1jdIKCJNoOVv5W
-         DUqSjeHWrOQRBkDrT9+m9WWWLim5unHJvcgfqQR5mhJtATPFwU/vCWtJCoflgLnHhkpq
-         9v+uWnmMC3m+XIHqx9vIXWbt07qi1wnXiWT+xqkCOfdkhqMWwnix2VvVVoDrbAyV2qqW
-         mnhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769000426; x=1769605226;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=B50ZkrS1bnD3dgS5URWytoPR86E3rBqaIKgTaCBM0WM=;
-        b=WNYGT2WTBaFmY1pP8VyvlOODoA8Eepctmmqn7ZEnoh0dlmgAa9af3rF0rCzg1sEYVl
-         zvsbyqb8qqG9k3lw3TOML1pKJXQLQHB3+8wka5+zr4fbNM7Nktb9LBrODonskfSUQ1Wz
-         6EXy7zUJwrfNO7XTdJU9cbFAnoTytMk4JVATIoTBuccH86P7i1g39SrYP1q8B+yV/q+Y
-         nvTXQBuw8YaEPref+mDU8Czx/o1ZmAmFzealEqZuni2HbjsjF5rA/1Ie6IiGzesB/FA9
-         7Mo3bxCpse/9wmIG17N+meF2bD8KvDFd9IbVADUykTg8qtYfhDAgUoaUpdJ+UfG6Nx89
-         oJyA==
-X-Gm-Message-State: AOJu0YxicxmUK4umXsMubCHcRBMnSJEGrZ80mLQR5tsM/ajy/W/XX9vM
-	WVeSH2I2b7WZJh7Fdf6a2+jNK8V+S8KmAbsGNuzHW+PCVaH4zV7IwELwZm2VrQ==
-X-Gm-Gg: AZuq6aJUUsVntb7l1hXTrNf0IvhPbh54yC5wiegX4lLsy5B/GHR+gqYWcFWZUoLrlOt
-	PSPAWgpndTU4J3Y5pXts7xKPJasJWDySwo2q4VmL9w8+yVnEg7Mky6HOgSOsy+lykt/GazbVdPZ
-	ry/TR6pOKUudiEnrMAUJX8rsTcCsqYTwWn0xsnHhdiVg42lbgpGQWCDoNyuQHV/tUPffJ+ISSB5
-	vl9FS4YJlC3lnVQ1w/imLB8XUBxRlzMdEM3iSG3SknyaUpUJAzJueAB4H3WZhu3nDaQMLLlP/oP
-	NUHdm+dEkdFLUtZ/M/CqB8y2VLBErafarDElY/f6+7sobcD/Dk+NSkYYd+yU0xpyv+0u69J4S5h
-	iGSD4yYeBYk0UpRt10yE3iXdWfwedMuK1srnqMhZkJZNdMQj3bVSC3sCNFtMwHFKG7+Uu2V4oVB
-	3zPuuibeHcjgB05ZS5X8TIz19kfT+VRqiMbfHkOPQSjHM13w==
-X-Received: by 2002:a17:903:ac7:b0:2a0:da38:96d8 with SMTP id d9443c01a7336-2a7188a2b7bmr156515565ad.25.1769000425403;
-        Wed, 21 Jan 2026 05:00:25 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd7:6181:4ac5:7f6c:c462:4847])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7190ca9d6sm144001745ad.25.2026.01.21.05.00.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 05:00:24 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [GSOC][PATCH V2] t5500: simplify test implementation and fix git exit code suppression
-Date: Wed, 21 Jan 2026 18:24:11 +0530
-Message-ID: <20260121130012.888299-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqqikcw1bei.fsf@gitster.g>
-References: <xmqqikcw1bei.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=hexon.nl header.i=@hexon.nl header.b="WDPwQq+i"
+Received: from [10.0.1.108] (gw.hexon-nijmegen.nl [89.255.9.179])
+	(authenticated bits=0)
+	by mx1.hexon-is.nl (8.15.2/8.15.2/Debian-18) with ESMTPSA id 60LCUY0L3799047
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
+	Wed, 21 Jan 2026 13:30:34 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=hexon.nl; s=default;
+	t=1768998634; bh=Q1umRYl/bUyQQIjFVUXD2KoYyh6TQeMytLUeAubnQag=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=WDPwQq+iC3209FOW1hO0Jj004xGbFRWmT2xnBF4Bxjcs2+5vAQ8hUuOs3kPoymeyU
+	 JJ5954SGWFgiuVwPrGsfehkBkaflyS5o5pvHuPbGXJQyiTRoZ29rg1CPMooJwsV3SD
+	 Mv1KMepT/zJ6xZeiMNXzw+Vf4A0Kwawce3Qd13l4=
+Message-ID: <5a81da1c-1cf7-4966-8be5-67139878a3e0@hexon.nl>
+Date: Wed, 21 Jan 2026 13:30:34 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: Bug: git-stash fails for new file not staged for commit
+To: Claas Augner <claas.augner@lsp.net>, git@vger.kernel.org
+References: <f139a5e1-242a-e23b-6eda-b8b49423d70b@lsp.net>
+Content-Language: en-US
+From: Jille Timmermans <jille@hexon.nl>
+In-Reply-To: <f139a5e1-242a-e23b-6eda-b8b49423d70b@lsp.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Hexon-MailScanner-ID: 60LCUY0L3799047
+X-Hexon-MailScanner: Found to be clean
+X-Hexon-MailScanner-From: jille@hexon.nl
+X-Hexon-MailScanner-Watermark: 1769603435.31784@yUvFyrnOKnrcDNyP2fzjJg
 
-The 'shallow since with commit graph and already-seen commit”
-test uses a convoluted here-doc that combines manual input
-construction with packetize, echo and embedded Git commands.
-This structure hides failures from the git commands,
-as their exit codes are suppressed inside echo command
-substitution and being on the upstream side of pipes.
-
-Instead of using here-doc to construct the pack
-protocol that is directly sent to the
-'git upload-pack' command being tested,
-capture the outputs of the git commands upfront
-and use the 'test-tool pkt-line pack'
-tool to construct the input in a temporary file,
-and then feed it to the command.
-
-This has a few advantages:
-
-* Executing the git commands outside the here-doc
-avoids suppressing their exit codes and makes
-debugging easier.
-
-* It removes the need to manually count and
-manage pkt-line lengths to keep in line with
-the v2 protocol, as the tool handles this internally.
-
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
----
-Changes in V2:
- - Fixed commit message wording and tense
- - Improved line wrapping
- - Fixed a trailing whitespace
-
- t/t5500-fetch-pack.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 2677cd5faa..4bb56c167a 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -892,15 +892,20 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
- 	test_commit other &&
- 	git commit-graph write --reachable &&
- 	git config core.commitGraph true &&
--
--	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
--	0012command=fetch
--	$(echo "object-format=$(test_oid algo)" | packetize)
--	00010013deepen-since 1
--	$(echo "want $(git rev-parse other)" | packetize)
--	$(echo "have $(git rev-parse main)" | packetize)
-+	oid_algo=$(test_oid algo) &&
-+	oid_other=$(git rev-parse other) &&
-+	oid_main=$(git rev-parse main) &&
-+
-+	test-tool pkt-line pack >input <<-EOF &&
-+	command=fetch
-+	object-format=$oid_algo
-+	0001
-+	deepen-since 1
-+	want $oid_other
-+	have $oid_main
- 	0000
- 	EOF
-+	GIT_PROTOCOL=version=2 git upload-pack . <input >/dev/null
- 	)
- '
- 
--- 
-2.52.0
-
+On 24-06-2021 17:42, Claas Augner wrote:
+> > What did you do before the bug happened?
+>
+> I tried to stash a new file that I added with `git add --intent-to-add`:
+>
+> ```
+> $ touch foo
+> $ git add --intent-to-add foo
+> $ git stash
+> ```
+>
+>
+> > What did you expect to happen?
+>
+> The file should have been stashed.
+>
+>
+> > What happened instead?
+>
+> The stash failed with the following error message:
+>
+> ```
+> error: Entry 'foo' not uptodate. Cannot merge.
+> Cannot save the current worktree state
+> ```
+>
+>
+> > What's different between what you expected and what actually happened?
+>
+> Instead of stashing the file, the stash fails with an error message.
+>
+>
+> > Anything else you want to add:
+>
+> Background: https://github.com/okonet/lint-staged/issues/990
+>
+>
+> [System Info]
+> git version:
+> git version 2.32.0
+This bug is still present with git version 2.52.0.
+> cpu: x86_64
+> no commit associated with this build
+> sizeof-long: 8
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> uname: Linux 5.4.72-microsoft-standard-WSL2 #1 SMP Wed Oct 28 23:40:43 
+> UTC 2020 x86_64
+> compiler info: gnuc: 9.3
+> libc info: glibc: 2.31
+> $SHELL (typically, interactive shell): /usr/bin/zsh
+>
+>
+> [Enabled Hooks]
+> applypatch-msg
+> pre-applypatch
+> post-applypatch
+> pre-commit
+> prepare-commit-msg
+> commit-msg
+> post-commit
+> pre-rebase
+> post-checkout
+> post-merge
+> pre-push
+> pre-receive
+> update
+> post-receive
+> post-update
+> push-to-checkout
+> pre-auto-gc
+> post-rewrite
+> sendemail-validate
+>
+> -------------------------------------------
+> LSP.net GmbH
+> Prinzregentenstr. 40
+> 10715 Berlin / Germany
+> T +49 30 20896331
+> Web: https://www.LSP.net
+> Blog: https://blog.LSP.net
+>
