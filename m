@@ -1,132 +1,86 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F642773D3
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 21:12:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769029978; cv=pass; b=rmuLEiUbS++xQEiDxkWrb4b5jrVueBqK5UTT7hkAeBHQt4GjeipyTr2X8boiPEXWtmPVWfvnRJrJ9UVTXlza77nE4G5mSi8UYKFYlfQcGxfMhljzpOErSFLI4DJnDT5c/eei1Vn8PgZ+wGlAp1HZUq5mPIcMn+X9B40oDv/aekQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769029978; c=relaxed/simple;
-	bh=oXL68u0aNYK1bsdR5kyym10HJKLOHiZcNcshTNYEFJU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fcGOGJjGIJQwyN4AB1pAjYgN1P+DoUstHu1LsMho0XuFsWRi+1iAGlUjVBg32E8oQeIGTNvvqNjmtYBDN+jfwlOxJ9n9FMOSaBf/7ezg6KZyIZUxQB7mPzMFPM26PS9UdYipVXm8Gzrgzax2JeGaCgomZU80qHRJDsrBLLHxCOo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HGNtzzNv; arc=pass smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6608C335097
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 21:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769030428; cv=none; b=IY1RdCiTdRzixCQsaMLGXTINCHCtzIjFC1ONBk6bV3Izh3oSkxTM9AvTpkLrmSxEZb55EczbIsATG0l0eIs8xMRbars8gLp22boXuuRctdXRbllRjnf8/+HukdT9Qejd/PSz0L+3Zbdpk9XyaCwccqkg9MrejB3M0TIuwQP3l44=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769030428; c=relaxed/simple;
+	bh=v2yVHONp9BTOac1ASNRU7rJXDVlsOWT1K/9XSP/CW14=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n5MY6Q4HGgmg85njnao/QOECHPjpzqVQaNqqFW4exdeJrRbMjLro7M/Wp20fT0gid3q7CXR2HwL4Vyfugvu5XCnuxsS+9Tj73Pstgs33bFz3hpocsjNp+H8m4eS7wGeL2myg60bvXexdB/Hb60ncMnC5LqLTXoVglaZ7Ba6NP8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MOsTSaQG; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HGNtzzNv"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-382f9211cbfso2997741fa.0
-        for <git@vger.kernel.org>; Wed, 21 Jan 2026 13:12:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769029973; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MDDDvgMqrcbf69AX4DtmtyHVzfBzdzrrWAN6/ouoNlxUspFkIYLnclyrCxEAQuPIlj
-         DEisTDlD6RAzzWCNXCJKgSRzFDFQcSi/xsM9b1jb4nBKIn5SP+qpNTSVHXkLKcpsb41r
-         7JnMBI0kwLq55ROMIhH/aR4Ld6FBmpvWCSOqUawwMpXmiw3SdeMFMDL81wdBwHHIHMit
-         b1rnbgPEDiMjmvTLxB/JeMIpfGj7baskmHS5dOjaMKEKbJjrjxq77kPXuLH02GOKfWQb
-         V2GYrGmMhmxUdrJe5hzN8Pr8HbOoGjLhnbImd7TqKYkKc+BecP5AFdkr6sODwojmONV7
-         YqEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=K7DYO/xJwehjYi6D+ODajDOKLhgV4hGbP3Uz8em4TLU=;
-        fh=fd9zhwv8qfOZ3DMDdOATw0Q76ZdXViGqXnH6hM56Uqo=;
-        b=IGuEpqZWvWf4qzIUPhaqYKi38TOj+khg6s6bvzZwD6LRkwmospxtx/HXgtsbomnhun
-         tQaYRr5+tGs+TcFjmk2lfu4qFtNqy8CJhuSMGy3woVWglVjXrzPeFFoPsIcM8AM9QnvT
-         GIayAI/6kAfXxJhb04v1A6GrromH6gIljiFbSbH+dZLG0KKuOf/ff0cNN0oY8Jr6F0j1
-         UGH0gGVZP4e9rOCT6aB4ibRWQh5C8V6BL4ekgG3OAkWhBZZMgdXwx4P5Ga9q2rnAeJuk
-         IK+b4vNSM8CqQG+UxfQQscWDx9e3pESgkdALjx3OSltxQDnaGJKiC1c2NV8VT+8G9A94
-         V+6g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769029973; x=1769634773; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K7DYO/xJwehjYi6D+ODajDOKLhgV4hGbP3Uz8em4TLU=;
-        b=HGNtzzNvb1uOf57ewiYSbQUocnhrD3mC0mtNYapf80WiiMM88LOCSFg1J7/h+b/+ry
-         y9oBnsolBVNxN2sl8lxA3whSX+7sigaz0u0FFgoXcmsgewYPd9KhPR80lc1pIs0kWw42
-         vadqQLUkwxxGVC4pKsVCE/zdhxPBsWbaTuF5Gjh5I4X8Mq4D6lCY/IqmKCCMoCxarVF8
-         sSft+Rfd9pvYifnEGtDdObtdNDZQV6RGW4BUPVYUzk0ZpP9g2DbsfqYLx+DX8QQfe3dm
-         AlovjiwCFInIFjDHmHHjh7B/p/xbYutVRBbNw9+BuOoabfnSvagevcbw2qmiomEkSwbP
-         /ezA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769029973; x=1769634773;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=K7DYO/xJwehjYi6D+ODajDOKLhgV4hGbP3Uz8em4TLU=;
-        b=n1pK7Ljiw47Xvn8srjyuBpoT/521sr+NvQJl03bmDKYlffYI6OjK1bYc8Ld2cC17LB
-         dTc20CCZbNsBg8W/hDXZFxkOIIaVw6l0k1WsvTXvce7PgjqXlpxRs/tHyhhGKQHA/06r
-         Xn3FuC5CcrDpJMo4GgTEZrJPvk9zNdlzv/2f8J2ILoGaJVKDz+WScRE2Gufb2vxpioNC
-         K0eMBZt+F8WWRc0bVpgy0lFbUeE78/3CIBJVafF3MDGI3FgKHzKVDkF3DqShuvz1sWhi
-         RYfIjCFxooljIONWsbGCeVYN/6ZeoyOw8D84oStRMvltdWWYn1jZENZ3fw15Hg6YxB7S
-         3X9g==
-X-Forwarded-Encrypted: i=1; AJvYcCW07xsFEjwLqlkSBCkoscnmj8x2datbyWkaWrIFxch9rl9pJ1IMtAEZBuIZrb+uG5aRxIA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2knCGCwEnMEMFDW/q7eYihk320K9iuvSTdAX2RaY9O3lhUJjU
-	xehiAUSZQdpUiprIKWxZKy6SnRHyIFhlAFFhD4pAnS991amxUZNIyNr5FXlqsHZWOu9t6OHrkm+
-	BPNPm7Bv8EAgm4ziczbtTukPc+O15FCw=
-X-Gm-Gg: AZuq6aLlr6lH0Jhq2Db5LJ6IzG2lJEjGbCwvTl3d/LbsrxKi2ap5ALegnIglwjc4jlg
-	PDtMSUEE0R+OXbgXGjnFqJelIH0GoVyOXU5z6BJh/4KQncfIQ/8NkCJ3e6BMJC/4mu9Zcy3yIuG
-	89S1f3CD6E4QAD9CaDPLB5fD3zfUK6VNrCtAPyxDoGj91FMXR8erV0w41qqwdr2NxKRxK9C9JAu
-	/y7Kmw/7HOhhKN2lw9l9RdZZFtonE6r1jZOwDQbAdFrkxocnT8m8EOdm8MBknMrkn5Nxd0hzek6
-	PpPHvA==
-X-Received: by 2002:a05:651c:4cb:b0:383:723:3c50 with SMTP id
- 38308e7fff4ca-383866d040dmr57038271fa.14.1769029972325; Wed, 21 Jan 2026
- 13:12:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MOsTSaQG"
+Received: (qmail 123844 invoked by uid 109); 21 Jan 2026 21:20:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=v2yVHONp9BTOac1ASNRU7rJXDVlsOWT1K/9XSP/CW14=; b=MOsTSaQGy3cwkb9BsMbaxUBKHU2NqWe1w4PpjNtpCq8rANpyCJI6SYITikposWEzvizTMCgYA6KmvMda9YlVgUlzi/WPNBKddWqA6viJRxutGMQzGk/Y/c2coa+gElXic8trqnLBz0LQYel53QrhDYnWUcJM091rXpg7Dypskz8zCnSp3rdKduQP9sabM3L+M5HlZryFFde584Tuvy9cjUi8Yr3S4Dy+FpT8OsKi+CInocf9d8NlVlErE93Ekc8WoMkIoR2nuPGZpXc1sSca8LC6cQs+Wcek+Vj3d2u/rz5jGGSYVEfB7CllggA8B4NrxERvuYS30VMGErSrI4ALpw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jan 2026 21:20:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 210733 invoked by uid 111); 21 Jan 2026 21:20:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jan 2026 16:20:26 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 21 Jan 2026 16:20:24 -0500
+From: Jeff King <peff@peff.net>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
+Message-ID: <20260121212024.GC723458@coredump.intra.peff.net>
+References: <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
+ <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com>
+ <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
+ <c2d9a432-0753-4786-8de9-c3dcfe69ac36@gmail.com>
+ <CAH=ZcbAogCpqg0RkKg1WjuAcuKyArDs4aP+k=McCs_byDT2Weg@mail.gmail.com>
+ <6ae80903-3cc5-4017-9eac-0b3100b93b04@gmail.com>
+ <20260119055947.GA3100271@coredump.intra.peff.net>
+ <CAH=ZcbCXAB3vzRbyHkunQh09njyLk4WXvfLVxynXaswEkBv+DA@mail.gmail.com>
+ <20260119204010.GA3148606@coredump.intra.peff.net>
+ <CAH=ZcbCNeYATxqAeXcGd9kkHzJq2y5BpMrChSzb215EHAjHsbg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
- <53e4840c1653772379dc8d5c883b34717b81ac43.1767379944.git.gitgitgadget@gmail.com>
- <208da094-8a5d-4f16-b42b-5d5204576b5f@gmail.com>
-In-Reply-To: <208da094-8a5d-4f16-b42b-5d5204576b5f@gmail.com>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Wed, 21 Jan 2026 14:12:40 -0700
-X-Gm-Features: AZwV_Qjk5YjPBF9L_uoSkMrup3gKswB3xBW-Fx80h5QpE-8iFrpxFySWX3xOItc
-Message-ID: <CAH=ZcbCbz6MB9-9Ehskk2+27GMXXewmAzRcGyN_bBi8s5Ksxjg@mail.gmail.com>
-Subject: Re: [PATCH 03/10] xdiff: don't waste time guessing the number of lines
-To: phillip.wood@dunelm.org.uk
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAH=ZcbCNeYATxqAeXcGd9kkHzJq2y5BpMrChSzb215EHAjHsbg@mail.gmail.com>
 
-On Tue, Jan 20, 2026 at 8:02=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> On 02/01/2026 18:52, Ezekiel Newren via GitGitGadget wrote:
-> > From: Ezekiel Newren <ezekielnewren@gmail.com>
-> >
-> > All lines must be read anyway, so classify them after they're read in.
-> > Also move the memset() into xdl_init_classifier().
->
-> So instead of looping over the input lines one and a bit times (the bit
-> being from xdl_guess_lines) we now loop over them twice as we split them
-> first and then classify them in a separate loop. It does save some work
-> not to call xdl_guess_lines but it is unclear if that offsets
-> classifying them in a separate loop.
->
-> > +     for (size_t i =3D 0; i < xe->xdf1.nrec; i++) {
-> > +             xrecord_t *rec =3D &xe->xdf1.recs[i];
-> > +             xdl_classify_record(1, &cf, rec);
->
-> We seem to have lost the error handling if xdl_classify_record() fails.
+On Wed, Jan 21, 2026 at 02:00:15PM -0700, Ezekiel Newren wrote:
 
-The error handling was not "lost" it was deliberately removed. The
-only way in which xdl_classify_record() could fail is by a failed
-memory allocation. On the Rust side this would result in a panic
-(panic means something different in Rust vs C) in which case C could
-not possibly recover. Also for operations like Vec.push() in Rust it's
-assumed that memory management functions will never fail and if they
-do they crash the program with no chance of recovery (unless you
-account for panic unwinding which is really ugly). It seems a lot of
-arguments about ivec and my xdiff cleanups are "We don't do things
-this way in Git/C" I'm aware of many of these arguments and I'm trying
-to address them with a more specific answer of "Yes, but that's not
-how things are done in Rust and all of this is to prepare the code for
-conversion to Rust and some things shouldn't, or even, cannot be done
-the C way in Rust."
+> What about adding clar unit tests to make sure that different ivec
+> types have the same size and layout? e.g. sizeof(IVec_c_void) ==
+> sizeof(IVec_u8);
+> sizeof(IVec_c_void) == sizeof(IVec_u16);
+> sizeof(IVec_c_void) == sizeof(IVec_u32);
+> sizeof(IVec_c_void) == sizeof(IVec_u64);
+> ...
+> 
+> As well as other tests for ivec.
+
+I'm a little hesitant in general to have run-time tests for properties
+around undefined behavior, just because the compiler is allowed to do a
+lot of tricky things when we get into that territory. Plus it is not
+really _solving_ the problem, but perhaps just alerting us slightly
+sooner than the production code itself crashing and burning.
+
+You'd also need to check the pointer field sizes directly due to
+padding. I don't think it's sufficient, due to padding. If one pointer
+is 4 bytes and another is 8 (for example), but the element afterwards
+requires 8-byte alignment, then the compiler will have to insert 4 bytes
+of padding. And the resulting struct size will be the same. You'd have
+to more directly check that sizeof(uint_t*) == sizeof(void *), I think.
+
+So I dunno. I am not a compiler expert, nor a rust expert, nor really
+know anything about rust/C ABI boundaries. There might be no problem at
+all here, and I'm only commenting on what I know is possible (albeit
+unlikely) from the C side.
+
+-Peff
