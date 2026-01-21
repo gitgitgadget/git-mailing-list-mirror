@@ -1,101 +1,49 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8C9314B62
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 19:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056E937F8A1
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 19:53:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769022166; cv=none; b=PB0Q0Dz+aWp5qaVVw99E87Bmi+UDnzZCisbK64h0X5G9LvsUsX38H/xf1BJKTq1JzVnJRfaToE8rjo72tTa68BVpvJM4aOLtiitbPDFcCn+DtiI88OrkJEWJZargK80NDLeULgdzbzWfFUwXXrXoqfy70m5ItwXjgx+WiTSON4w=
+	t=1769025219; cv=none; b=b7y3kYdbzms0Cy6DMF82hA9+MT76o1RbmCa9sBH2Or7P59c24EyoLFwMJx+AQ+k48iXZPiItW3suSptJfsuJ3Ewrco8kqQ0PFhMnH4igYlOyFUSAzXtn2//YB6o0bvw7op8DDhkPljTaTkVQG2nqsNjufnYssA0kqR4hS6MDk8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769022166; c=relaxed/simple;
-	bh=JnDd8dsq74PpLULSH1GHIBvDEqN+v9g0GwEle1ffSG8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kqlDvniCmrOIPKcMFT7JcoSg+HarQzrawUZVYrJRbI8Q1xXMEz77pR7LnT/PX+iWqm2EEj8yZQTL/QMQI2xeNHoh5lVse2VuukBF14hm3a8AY5Z8Q3QieaN0RpViMFflmSf6333J4Z4vEgC7NBpsuHITIoHtRFgw11QOdghF4Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FNyTiHpx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sDaMHzMq; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769025219; c=relaxed/simple;
+	bh=QV6Z/QSmgzUJhk+IOY2PNZlq7eWkRAryvrJ8O0jkgN4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lnXkqloU85QYF8CJeSnGHPYCccO5XTFo0zC7v5TmnT/eHB6Wx6D+YVhoUAICK8b/vedk6ms2vbrmV4EC8m69Pp4DvoMAm3TF6niIGVrJ+g8gEWVuj8XncTJ0bgQtW0AvXUoLiqXClfen1/W2OvhtJ5qf+NRW0hjs3HOteZUqLrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aENqrmDw; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FNyTiHpx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sDaMHzMq"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4D05B1D0011B;
-	Wed, 21 Jan 2026 14:02:43 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Wed, 21 Jan 2026 14:02:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1769022163;
-	 x=1769108563; bh=gs7MuQJlr1xpGD0dOyQR6YdIiX0CGYY33zsqyL47eHA=; b=
-	FNyTiHpxJp+Mc8spFChdW4+itLgrbl7Svol1bmsT+vEPyi00Gyxx7dZWvb6jcXTK
-	z2e0sKLIirdV+7kzHHdSXc5JlsxqjvYWA1DO67q69LtwEer0Nhbq5SZq2VP0B8Re
-	+0h1gzOkzR0v4LvJlqInk3zCLoG76XQNOLogj0/A4ImTZaSWt3xlX0N8EpanlXky
-	djum8zx6oxuZnU2ojsmS7DDCcY3SHD+Rj6Vr6g8MFl1vL1w631X8qlBVFhcD6S44
-	kyBqiSOJ+2VPRVWFZ0CSxZ3r81GrvJUFNuoMb5+zyK2PhGRqp4W+WSW2W5dXClYY
-	N2nfVGgWRHwOUQQFNVEthg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769022163; x=
-	1769108563; bh=gs7MuQJlr1xpGD0dOyQR6YdIiX0CGYY33zsqyL47eHA=; b=s
-	DaMHzMq/ED5DF4AOly853wa1xuOwuXH3LVYYZ/f9BHrN5XdgRsBbzIKajzhOZYbG
-	jxk0084CNlwdLWg7C+eBE6Stk3ci8QXgbmUtQnSy4fK2G3fH4MiXUPTU2E+DkaYG
-	URjdaHyxrUMOoGCyEPkO27iL4IIDnQPvtyNUxAbXjlLcVhcw5R8/EYd3ihB56Gde
-	PTVn+PwXBKZXNRDExolO2fpvJ4Z2y7JJYgU3yriucCJfE/AAZtduNrwgaSqkmuRt
-	cgGMqmeap06SPEHAEfWxRlKf67cTJm3z9gJMd4jWo5529bOvgmGy+o8XwqOE4m59
-	ZKsm5X0afYzw8wBccMFLA==
-X-ME-Sender: <xms:0iJxaTJ9XnVbdSbZ_7kxRvHYD-wo_Qng8p_hdxUIjX90oVhau0EHhw>
-    <xme:0iJxadi4OPYxejDaPyil8uYCv3wd6IP-mxWI0i0A6oC9bS_duF_sIt-1uXoeHHu_N
-    ycz-ZuAR2q_fIqWHUnHwct-3sstUxNOtP8nAi4pIpv6wDiCgVP0>
-X-ME-Received: <xmr:0iJxaX_lSABgPTHWIgv--w7QIsDnB42PduB2vircNS3FCVKaoqbyaeqNUauGxrIoJ_T-xZjsa0j3R2Tz82rWIv53ZdrtYNI5c8HZQDY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeegtdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpefhtedvjeehudehgeelheefieevtdegleefvdfftdevtdduffeikeeiieej
-    vdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepudefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghl
-    vgesghhmrghilhdrtghomhdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehm
-    rghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffh
-    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:0iJxaaNwu7WVskelMwBL3w_pwspOiPVtYhA7a_DvZXW_ePvaa7JkkA>
-    <xmx:0iJxaTByL5Eewgbe9T6i8UzBVBTRvpSeIG9A_RaJdOBufenphtWhow>
-    <xmx:0iJxaWMKtWPjd2JraRT-QvDWKdQNfIVq-nmm2U5SRD0KP8NdjqT93g>
-    <xmx:0iJxaSdBnAJYMMOD048bqKnhd7psf5qY-ohZv_DAoDjpKDyrIKIDbw>
-    <xmx:0yJxaRiHXaEvj-g60VxAAD91CJiurss6VYL6hkPJGgKV4CNVz8RrxkaY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Jan 2026 14:02:42 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Sergey
- Organov <sorganov@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
- <jn.avila@free.fr>,  Martin
- von Zweigbergk <martinvonz@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Karthik Nayak
- <karthik.188@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,
-  Matthias Beyer <mail@beyermatthias.de>
-Subject: Re: [PATCH v11 0/8] Introduce git-history(1) command for easy
- history editing
-In-Reply-To: <aWpoMcgwsfRCCrr4@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Fri,
-	16 Jan 2026 17:32:49 +0100")
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-	<20260113-b4-pks-history-builtin-v11-0-e74ebfa2652d@pks.im>
-	<CABPp-BFbUEGqNAeUtUghLd3oKcZiD88P04AYuTtY4T01F1rzdQ@mail.gmail.com>
-	<xmqqy0lxa8i6.fsf@gitster.g> <aWpoMcgwsfRCCrr4@szeder.dev>
-Date: Wed, 21 Jan 2026 11:02:40 -0800
-Message-ID: <xmqq4ioeu6un.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aENqrmDw"
+Received: (qmail 123298 invoked by uid 109); 21 Jan 2026 19:53:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=QV6Z/QSmgzUJhk+IOY2PNZlq7eWkRAryvrJ8O0jkgN4=; b=aENqrmDwfpUBg6YSFBzqP8S9dmbixssXTcaCEAnbirz9t8z78dCiod8t6bI8hhGdLZZz0AkyNZ2XcSh2lCS8yIngcsnQMLJjBADTvcIGf+H5pBqi5Zg15e7WDoc38hLXa5o+Fd7rELqDHe2epLotsY6/k3XY+kXdQidtEbLJ8oiGkZ+O811pVj6mQAbHgrMvWVBeBBgSua8+ZRMisSUxOFIuRqbLKWHy8H/wM3ZhCDLu49Ok3vl9Ihy60FSn35yLI3+KoQYRUg4k5zGN0fUgDxty+Oljdc2yh5iNFFvzqkObNKGKIdHAT1ppRBmO1TFh36Gik5cyW4tq2Ew9OFlAlQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jan 2026 19:53:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 209589 invoked by uid 111); 21 Jan 2026 19:53:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jan 2026 14:53:31 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 21 Jan 2026 14:53:29 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Paulo Casaretto via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	"Paulo Casaretto (Shopify)" <paulo.casaretto@shopify.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Paulo Casaretto <pcasaretto@gmail.com>
+Subject: Re: [PATCH v5] lockfile: add PID file for debugging stale locks
+Message-ID: <20260121195329.GA584009@coredump.intra.peff.net>
+References: <pull.2011.v4.git.1767804355831.gitgitgadget@gmail.com>
+ <pull.2011.v5.git.1768933954845.gitgitgadget@gmail.com>
+ <20260121071344.GA570838@coredump.intra.peff.net>
+ <CAPig+cSE7Y-MLu1PTdo2kUq_MztMQgm0eYby03cX2K5YAJLwsg@mail.gmail.com>
+ <20260121163924.GA576236@coredump.intra.peff.net>
+ <xmqqcy32u769.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -103,32 +51,20 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqcy32u769.fsf@gitster.g>
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+On Wed, Jan 21, 2026 at 10:55:42AM -0800, Junio C Hamano wrote:
 
-> On Fri, Jan 16, 2026 at 07:21:21AM -0800, Junio C Hamano wrote:
->> Elijah Newren <newren@gmail.com> writes:
->> 
->> > On Tue, Jan 13, 2026 at 1:54 AM Patrick Steinhardt <ps@pks.im> wrote:
->> > [...]
->> >> Changes in v11:
->> >>   - Fix overly clever `BUG()` condition.
->> >>   - Drop the `struct replay_result::merge_conflict` field.
->> >>   - Return a positive value from `replay_revisions()` in case there was
->> >>     a conflict.
->> >>   - Improve a commit message.
->> >>   - Fix check for whether `setup_revisions_from_strvec()` was
->> >>     successful.
->> >>   - Link to v10: https://lore.kernel.org/r/20260112-b4-pks-history-builtin-v10-0-e3c6aa5b4cec@pks.im
->> >
->> > This version looks good to merge down.
->> 
->> Thanks.
->
-> FWIW, I think it's far from ready to be merged.
+> Jeff King <peff@peff.net> writes:
+> 
+> > The second half is still valid, I think, but at that point it is the
+> > only path that uses the close() in the out-path, so we might as well
+> > drop the out-path one.
+> 
+> True.  A fix-up may look like this.  I've got rid of the assignments
+> to "fd" that are not used.
 
-Will the discussion continue in the other subthread, i.e.,
+Yup, that all looks correct to me.
 
-https://lore.kernel.org/git/CABPp-BHkNLdH4C7U4sFoVhrsSPH8KAaDtOdLEQGyajmXZz9hVg@mail.gmail.com/
-
+-Peff
