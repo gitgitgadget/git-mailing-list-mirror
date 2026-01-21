@@ -1,81 +1,87 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB30034A783
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 18:04:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC9F348465
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 18:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769018680; cv=none; b=T7bOCiifC/UeDuqEhcmF+eqpNvq1+qZTmTZY0T3xNHxeA3hRMl0ecnvQ1S9iMgO6GH1IwITwLXJRl8HVQJVn5JhPpaRqVLSLL05vFIfg76IiTMN7p7pYPEn/JZRYS9xLNfb4+1XjulSVtO7Z5xocL7j7t3NMMmq4v9ukGU4L6+M=
+	t=1769019153; cv=none; b=nZMPHpoo6/jRqw5Cw9i+D3ReNGAiO2DS3Oqm/cMVUITcGekUZOl8/6hWm5jZOQzWf624KrT45h/TwHRr8ruqcFveItphnBNITvSVlT2QDHa2C/61DgSdWcGCu9QhQM4xND4J1ldsYrgiWiQB4MgjDqOIdbRwjRdEoIy1Dh/PBdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769018680; c=relaxed/simple;
-	bh=AcO99QAbCFzqzC2GITuhJX1Hm8rv4qkFZp2QEeIi6O8=;
+	s=arc-20240116; t=1769019153; c=relaxed/simple;
+	bh=7K8tiPH4EqeCFyB0vAP3+lDHsXFVEKK3WZybD6LHL04=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lAJKzjsKwrfoSRaHmrP6ntyMekAtMGaMwub6q7AknY0jO0UjyqLCckAcyptjEwNvjWXVi+17CguDSNhJn9sWOkBHTiVbc6qFyegbXlU7KJnG0jZobOfJ8Q6jp98dJ1uwaRFN53uVXJFdB7qllq+K/7iAXF0TG4lBBseFJpFMbC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mVvdogaT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OnezAsBt; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=QkutQUWv67hVcMxVbuSb91iRJOO7aLj322r86fsbU+TQ9zTKJuhVkL4IwgtRVzVNOeSpKv8hPnKUkt3O2Ej1D3En9c1eWK5Fe1pPiASdfhBYtPTyw4Yf8hxOdhbqrWltxX/pjp8QpqTvtiEJAQvzvYTYsMELCRQYG4GFrATFMtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FEI4nmBS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OagsTSBa; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mVvdogaT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OnezAsBt"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id BECD81D00056;
-	Wed, 21 Jan 2026 13:04:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FEI4nmBS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OagsTSBa"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6F9BE7A00D1;
+	Wed, 21 Jan 2026 13:12:30 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 21 Jan 2026 13:04:34 -0500
+  by phl-compute-09.internal (MEProxy); Wed, 21 Jan 2026 13:12:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769018674; x=1769105074; bh=BAXlCdiIbe
-	v2yxjpMIkAHtLogrXfazq6G9jVo7CdWeg=; b=mVvdogaTgwLJ6Wihqen+xnnG4m
-	vaSF+96v2gNxHUnpkLKdDdTdJiQ+qyxwlRzhdQWfaaL9frMQskBUV5hxInlGgRer
-	hJDJ2fA4dmupf7+H0nN3NrIsCnYRf9WLnHmnLJZ/FmGIu67zwklqy8D47Yf/m8Po
-	yAL6Qh3rNSJgY5Y8w7pOaJF6wUT+2MoYbmk0OD8XNNTvzSr/mzcnzMRliKQj1B+/
-	7B7kz1z8hn0gONuxRRlASme/6BVHvwMYo/A2IQpNzF+WwNmDRJ2BuPKgVI0Pptl5
-	lZe6gNEhJZGge3yvU+EPBB4eLgf9y/5UIyRbJef3ZvnHnDP/JLOWDPZo5OjA==
+	:subject:to:to; s=fm1; t=1769019150; x=1769105550; bh=v+cAZgtvou
+	HdDjTM/SRzoipnAt7xeMZxBhKbLVv3DKE=; b=FEI4nmBS23/bJoDmozcq/YqyYZ
+	VXlS42ViBXUg657Q0s7QlV0ZEyoUvkIb5eP1YEds+rTJFiGngRvN9d4MEJePO5XU
+	RaCxpmHi2zSJVKYJ6zSNik4Yx76kFncz9dgxf/TMzEnRCZooSzqLCwJxusnDjB8C
+	5nAE4SQSgRF9EiXFcdUFbCFhleNlhQK+UMp1jwEXfYN0O1UWzi6IpAvxMKWshzkN
+	eVXwGPPUereMqI0nDIC5QI5K2rlTLIbL407cPFEHVq50YLkh0X+IffX564PJYFdV
+	DVkH8jT1zpUSHBaObUcAz6Rk97iDLduvlM+RJQMc/oeidWxOuF/luvshiW5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769018674; x=1769105074; bh=BAXlCdiIbev2yxjpMIkAHtLogrXfazq6G9j
-	Vo7CdWeg=; b=OnezAsBt+LSWxJpQfWVVcZkJhdOlgPu8OT6B4Ct6xzRgH205Z9J
-	1qrk0Yk6NNw+lDgx/ZiyTCDgqSVyDCAxdrCmtKWuoGldImIMbLBPgiZIg+X8jrgv
-	YPtq3Ih5YnISq3KTJCDhIpJphcn6bFHDYlHV0xDyi0iCwURoiNC0ORmsJOF1T/ee
-	cVnDhhUCG/M7QS2Lb2q+78T22Ozrv8Zrn3B92IB94Ixe1BIFpbyIlhPQ4dx15hMn
-	pNpkuMyCpHIpZ49aOXpsFKiAFeib+Hz0QrnJGD0savgZvoqunOJpONqTb6g1hBFp
-	Bh8UOwGp0DB43oEY4YTWW3mzIgDBt7ay/3g==
-X-ME-Sender: <xms:MhVxadNqK7ffpcbnfkfw3Rx7KMPtn2TctT8HkjGxU2niaoURUDyKdA>
-    <xme:MhVxaW_OKNf_DHjz1FbDBWGDmXqcj6RWdHm8qym1un51VUQi1-a6dvkeoU2AvXAeZ
-    Ni0Uc3hdaRex7AWy_2-mNFOCQWinv9ciS0e70nme1POfvwmDNKZ>
-X-ME-Received: <xmr:MhVxaRStFUQQ2ipWQJ0-0rvaLpD3JWV-sPIOqZAjEBjazaCIjzRpIIMAezPMn-ZHrLCLdYtC88D2KiDGVZSzVZUFDnhx7oUgd1QIf5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeefleehucetufdoteggodetrf
+	1769019150; x=1769105550; bh=v+cAZgtvouHdDjTM/SRzoipnAt7xeMZxBhK
+	bLVv3DKE=; b=OagsTSBazEulUl6XaUE3zfxV2G49PeQXrdb1a5/krkpAz2D7mCV
+	ZOAK5KsL6Ev8Q9rXnMkNgOEpk7BkYUCwAqOisIcih5ycJ+GHR05Z5+odBHjg7ZBD
+	rMwIMkZCZbevYl1HB20xwb31dCyn6FSpL12G152SLuinO0OOzsqzP88Mr+B+ZeP/
+	CRY+UCOrhjUSguiCdo5hSneD0Ys/LQPiAUAvgmKks+E0g5fAC/Bz/dIUWda1csPI
+	6KeZ9VA2PyFH6E3L4pyf3jYob4PEVBcAYcbBlUXaKB4iq13TnL26I33II5DMmJgs
+	WnIhyKXVz/wXSLkq4JIg6o4MIxMIe33gxXg==
+X-ME-Sender: <xms:DhdxaazQJulleJcxRXZKX32edHRXWdGefQOiqXlDDZFNQmSV1YtWtg>
+    <xme:DhdxaZ-iAqM5I5gSsKi_hjh75oWOWKbFzLpkYLKxCBNhfSgYaJTgiE-3HHyVirZbu
+    OBxD7OLt0z4yP7QzSprAtkZbMDF5378_sAxAzr5Q7K1hUp_OYGotQ>
+X-ME-Received: <xmr:DhdxaWJykduGo6AIlNwG0pPoAoUutug47ouxQWWgOxstnMi-QsojC-W3gQ4YT6PkFcidsOt6BTzqvFVV3dt6VI5UGrceBjzZRKxVqNA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeefleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
-    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:MhVxaYm3SjZFnIq5EBPty8n1FLlp0NPI2V0uRqE0uLsB0YoKNwxl6w>
-    <xmx:MhVxaRRxQuy7lZW5WX7AjnoUQyc3b_KVYm5I6_oD7vBQ-0qdW3Mmkg>
-    <xmx:MhVxaWNr6C5flL3ZvCJNlj4MdLHBHx-Oe78X1q0afmekt-6lw1xxMw>
-    <xmx:MhVxaaW-nyoSzJaC91ac_6-COua-911GRQG3zitr0CeqfaL0715JqQ>
-    <xmx:MhVxaUx0GPDUHyFtY2GrbnltQnhXUbK5646sov-QG5tnmyhZFf8V3DiB>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhephffgudejgffglefffeeujeffueektdeggeejudfhtddvieegvdekhedtieej
+    udeknecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpmhhsghhiugdrlhhinhhknecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
+    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfse
+    hpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgt
+    phhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DhdxaXcv93sdYREkrDOEUFv_TXtB1OhkVmS452oDdzNWbozFrx1z7w>
+    <xmx:Dhdxad_uDTcvQ6TDixptwblUo-hpBx6hqI3QLYYN68pZoYOl6O0aeA>
+    <xmx:DhdxacotTxxIi1hzOwt5vqWtYxC4MY8wc9oYxGlM17DxsecGIDIfew>
+    <xmx:DhdxaaBxGqEYUP1jMagz7uNebZHHQtzfJNoQt1qZ-YWDea5BfPlC9A>
+    <xmx:DhdxaejkV3b6RWTXG246ZYoaakpnPBloa73zFV--3Ma1pCqKDabKZhrs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Jan 2026 13:04:34 -0500 (EST)
+ 21 Jan 2026 13:12:29 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v2] symlinks: use unsigned int for flags
-In-Reply-To: <20260121162640.424126-1-a3205153416@gmail.com> (Tian Yuchen's
-	message of "Thu, 22 Jan 2026 00:26:40 +0800")
-References: <20260121162640.424126-1-a3205153416@gmail.com>
-Date: Wed, 21 Jan 2026 10:04:32 -0800
-Message-ID: <xmqqzf66u9jj.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  newren@gmail.com,
+  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 0/6] refs: provide detailed error messages when using
+ batched update
+In-Reply-To: <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-0-e0edb29acbef@gmail.com>
+	(Karthik Nayak's message of "Tue, 20 Jan 2026 10:59:18 +0100")
+References: <20260114-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v1-0-f5f8b173c501@gmail.com>
+	<20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-0-e0edb29acbef@gmail.com>
+Date: Wed, 21 Jan 2026 10:12:27 -0800
+Message-ID: <xmqqtsweu96c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,33 +91,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> The 'flags' and 'track_flags' fields in symlinks.c are used
-> strictly as a collection of bits (using bitwise operators including
-> &, |, ~). Using a signed integer for bitmasks may lead to undefined
-> behavior with shift operations and logic errors if the MSB is touched.
-
-Which we do not do, so the "signed can lead to bugs" is a valid
-concern and moving to unsigned is a good mitigation, but ...
-
+> The refs namespace uses an error buffer to capture details about failed
+> reference updates. However when we added batched update support to
+> reference transactions, these messages were never propagated, instead
+> only an error code pertaining to the type of failure was propagated.
 >
-> Change these fields from 'int' to 'unsigned int' to align with C
-> standards and typical usage patterns.
-
-... I'd tone it down a bit by replacing "aling with C standards and
-typical" with "match our", if I were writing this.
-
+> Currently, there are three regions which utilize batched updates:
 >
-> Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
+>   - git update-ref --batch-updates
+>   - git fetch
+>   - git receive-pack
+>
+> While 'git update-ref --batch-updates' was a newly introduced flag, both
+> 'git fetch' and 'git receive-pack' were pre-existing. Before using
+> batched updates, they provided more detailed error messages to the user,
+> but this changed with the introduction of batched updates. This is a
+> regression in their workings.
+>
+> This patch series fixes this, by passing the detailed error message and
+> utilizing it whenever available. The regression was reported by Elijah
+> Newren [1] and based on the patch submitted by Jeff King [2].
+>
+> [1]: https://lore.kernel.org/all/CABPp-BGL2tJR4dPidQuFcp-X0_VkVTknCY-0Zgo=jHVGv_P=wA@mail.gmail.com/
+> [2]: https://lore.kernel.org/all/20251224081214.GA1879908@coredump.intra.peff.net/
 >
 > ---
-> Changes in v2:
->
-> Decouple definition of 'ret' and 'saved_errno' from 'save_flags'.
-> 'ret' captures the return value of lstat() which can be -1, so it
-> must remain signed. Same applies to 'saved_errno'.
->
-> (Thanks to Patrick Steinhardt for spotting this)
+> Changes in v3:
+> - Drop the first commit.
+> - For the last commit, where we delay 'git fetch' status information,
+>   delay all information to the end. Also use a list to compliment the
+>   existing strmap, this ensures that the order is maintained.
+> - Link to v2: https://patch.msgid.link/20260116-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v2-0-925a0e9c7f32@gmail.com
 
-Yes, indeed.  Thanks.
+Thanks.  These look good.
