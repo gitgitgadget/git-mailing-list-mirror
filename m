@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC5B43CEEA
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 21:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3943421A0A
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 21:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769032526; cv=pass; b=VCcrtPNJP3v9V1wLa6zk0E/kDWK2bsy7TjvTLFi7wzrnVGfyAkXDXARyDAt8eu8rujyuNeTSdjaY9vGFfBsXdciLBxN8zfFL9UahKKFDzCO+GOdQqCAB/MxMAAe+6b/Z5HC62sdqWG+ct6WC27EpH6E/S8I+47k0iXH1NqtuP2k=
+	t=1769032528; cv=pass; b=lQvNo701e8GDDdhWesyMd63Oys/9G4AOacMk9XktAunUJSehQpoGgfC7F6yw9BH3zWcV5M/OkuffJJIcT6aBiWPA2LC766O6rZUHYNBV3e0z7c73LihDiz210hRymG71Xp6Nf4nCJqlIie2fzeyGNgwsW5rvmyBnugKz002sZ8E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769032526; c=relaxed/simple;
-	bh=DkJOlN1XdjPruf3G4OsJlyJakGy8O0oXWo4mUqFom+I=;
+	s=arc-20240116; t=1769032528; c=relaxed/simple;
+	bh=y2Irrr7+AbLhVJ1ig1g9/E+we2OI23jSju+0NsfnWeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkabOUrlPhNVSA4IAS7aDuJU6UugxTMVa14/xg5Yz/ewcJp5IoIb4lEqAc0JOOrb0Jsy4pvgXV5syvFPse/8T4VXAhR+Ohnm7qB89DOjLz9DqDMZ1stu3oKlWcYEFOwYlbMiNXosq4e78UamDZMd6GgiDbp2bP5URBl5lZ8Pp98=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=HQxpIfuU; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=LFRhP0hjgjzgVudja1Ik3/Xd/O2YaJJ0eREI0OX5Qobn4FWy3M2mJc5NpwrKvqZRl9rFzUfmPfCn4ORz+Yhh21tvbUc931TbpMOjosagQOdv/0QtEf+z8YYyDKU5gcsgq5xBrYLn3HcW8omhGgBkcSbgYc6L2iV9JtwMMGZUDjo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=HOdowCgy; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="HQxpIfuU"
-ARC-Seal: i=1; a=rsa-sha256; t=1769032511; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="HOdowCgy"
+ARC-Seal: i=1; a=rsa-sha256; t=1769032513; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=OQbNF8TrubUvqTUMT91d0NjcgiA3awXpq4FjRrEK8Vt/Zde2qDdc+EClahtMbbX7w321+0u05OCXMthfzmnmgMnmcpGv/K2DQO2HK/GJSL5+wpf63BqMkGLKldqMwhMhNv2safkXtFYpWYo6CbvpytrglP6X3RbjMV6Srpe2kIY=
+	b=TcQnlQBf2mO/eoTJfPTWDEh4L+w07Kp6u7JpcHWzpDF6qT40SJcCNK7bHPPMitZ8+f7uVxNFRMKKcuVR9ybLhdDNwUsf5n3fa786pNydbVOopjuGeAwdNAtfeuqmP7SQInnE1tYa/1y6K1a18D03hMQq66VtA+leveTOgMOfnxg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1769032511; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=As1+Woth2+/jUrdpADcJ3FTEktyt63jhwZTBhKqldIk=; 
-	b=Y++OA3+QwxVW+FGh41AABfrEjRLPxwbjRupDfzk3hGFw+RXIHeY0apzy7OQoBMKz5Zy0UVN2bhrB8ndi9eot7qjepI+j79BrdrWg69JoZxevm2UgebVkQ6Oyp3MLOJq99r2zViyYZNBwQVZImjsaL1KXsGTvXfOnp4/uRiZa4HE=
+	t=1769032513; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=sHXQR7Vh1jGbC7rW/5UFseEWfdU0hL4anp8b3qxyuNo=; 
+	b=UnTEqtcEgBimd8FpTnfzwnBNVEGg74/uQm12ySnndQPbty8uvFaJxuyfOL+yVJYsOb4FxzK8/uLPGKWiEWxdpvNG63VXaS+X6FLBvtIEVuFcrXthhPWMtk6bJJ36KbhNx9IljwJnoa5kB9j+JcE2/OqL0ynK8fMtwuZ/HDZxs3k=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769032511;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769032513;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=As1+Woth2+/jUrdpADcJ3FTEktyt63jhwZTBhKqldIk=;
-	b=HQxpIfuUJeV3R0KDB5lzi8LyTrB3eVylL/mqEr3bMn853pMzM+7JmYTjKCA6tN1t
-	4S61T0BvgasOuZ0Ex+QdkPh89UihcrCUMX50MJI/mA0XkX1vRdariWSvyQUuP7GaX0e
-	zZqJDpqoi9jCPfMropsSWziBu1NGf6R5Oz6nsECg=
-Received: by mx.zohomail.com with SMTPS id 17690325101874.811498205024009;
-	Wed, 21 Jan 2026 13:55:10 -0800 (PST)
+	bh=sHXQR7Vh1jGbC7rW/5UFseEWfdU0hL4anp8b3qxyuNo=;
+	b=HOdowCgylJj9uDkDxDFVXncyp1o7eRTk9c9LtL4SwWuBVrlU/lnE/BCkrmjLqmtd
+	drcrcs1xoOBB+ICTHNFbYHmvmf/bcsEBB9vxsRb+UP/gPW8hEx2p5W5Sjd5y87/133R
+	Ix5RbmcqmAtdBxXAIuuW8F92Wt6sljT9CWtVUsNo=
+Received: by mx.zohomail.com with SMTPS id 1769032512318859.5348866946554;
+	Wed, 21 Jan 2026 13:55:12 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org,
 	Jeff King <peff@peff.net>
@@ -45,9 +45,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v7 09/12] hook: add jobs option
-Date: Wed, 21 Jan 2026 23:54:33 +0200
-Message-ID: <20260121215436.1473800-10-adrian.ratiu@collabora.com>
+Subject: [PATCH v7 10/12] run-command: poll child stdin in addition to stdout
+Date: Wed, 21 Jan 2026 23:54:34 +0200
+Message-ID: <20260121215436.1473800-11-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260121215436.1473800-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -61,120 +61,147 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Allow the API callers to specify the number of jobs across which
-hook execution can be parallelized. It defaults to 1 and no hook
-currently changes it, so all hooks run sequentially as before.
+Child input feeding might hit the 100ms output poll timeout as a
+side-effect of the ungroup=0 design when feeding multiple children
+in parallel and buffering their outputs.
 
-This allows us to both pave the way for parallel hook execution
-(that will be a follow-up patch series building upon this) and to
-finish the API conversion of builtin/receive-pack.c, keeping the
-output muxer thread design as Peff suggested.
+This throttles the write throughtput as reported by Kristoffer.
 
-When .jobs == 1 nothing changes, the simple "copy_to_sideband" mux
-still outputs directly via sideband channel 2, keeping the current
-(mostly) real-time output characteristics, avoids unecessary poll
-delays or deadlock risks.
+Peff also noted that the parent might block if the write pipe is full
+and cause a deadlock if both parent + child wait for one another.
 
-When .jobs > 1, a more complex muxer is needed, to buffer the hook
-output and avoid interleaving. After working on this mux I quickly
-realized I was re-implementing run-command with ungroup=0 so that
-ideas was dropped in favor of run-command which outputs to stderr.
-Then run-command's stderr just connects to the simple muxer input.
+Thus we refactor the run-command I/O loop so it polls on both child
+input and output fds to eliminate the risk of artificial 100ms
+latencies and unnecessarily blocking the main process.
 
-Maybe it's better to understand using ascii graphics:
+This ensures that parallel hooks are fed data ASAP while maintaining
+responsiveness for (sideband) output.
 
- [ Sequential (jobs = 1) ]             [ Parallel (jobs > 1) ]
+It's worth noting that in our current design, sequential execution
+is not affected by this because it still uses the ungroup=1 behavior.
 
- +--------------+                      +--------+   +--------+
- | Hook Process |                      | Hook 1 |   | Hook 2 |
- +--------------+                      +--------+   +--------+
-        |                                  |             |
-        | stderr (inherited)               | stderr pipe |
-        |                                  | (captured)  |
-        v                                  v             v
- +-------------------------------------------------------------+
- |                      Parent Process                         |
- |                                                             |
- |      (direct write)              [run-command (buffered)]   |
- |             |                                 |             |
- |             |                                 | writes      |
- |             v                                 v             |
- |      +-------------------------------------------+          |
- |      |             stderr (FD 2)                 |          |
- |      +-------------------------------------------+          |
- |                           |                                 |
- |                           | (dup2'd to pipe)                |
- |                           v                                 |
- |               +-------------------------+                   |
- |               | sideband "muxer" thread |                   |
- |               +-------------------------+                   |
- +-------------------------------------------------------------+
-
-When use_sideband == 0, the sideband muxer thread is missing, so
-the same architecture just outputs via the parent stderr stream.
-
-See the following commits for the hook API conversions doing this,
-using pre-existing sideband thread logic from `copy_to_sideband`.
-
+Reported-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- hook.c | 7 +++++--
- hook.h | 9 +++++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ run-command.c | 61 ++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 43 insertions(+), 18 deletions(-)
 
-diff --git a/hook.c b/hook.c
-index fde1f88ce8..aafed134af 100644
---- a/hook.c
-+++ b/hook.c
-@@ -152,8 +152,8 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
- 		.tr2_category = "hook",
- 		.tr2_label = hook_name,
+diff --git a/run-command.c b/run-command.c
+index aaf0e4ecee..dfd2aeda07 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1562,7 +1562,7 @@ static void pp_init(struct parallel_processes *pp,
  
--		.processes = 1,
--		.ungroup = 1,
-+		.processes = options->jobs,
-+		.ungroup = options->jobs <= 1,
+ 	CALLOC_ARRAY(pp->children, n);
+ 	if (!opts->ungroup)
+-		CALLOC_ARRAY(pp->pfd, n);
++		CALLOC_ARRAY(pp->pfd, n * 2);
  
- 		.get_next_task = pick_next_hook,
- 		.start_failure = notify_start_failure,
-@@ -169,6 +169,9 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
- 	if (options->path_to_stdin && options->feed_pipe)
- 		BUG("options path_to_stdin and feed_pipe are mutually exclusive");
- 
-+	if (!options->jobs)
-+		BUG("run_hooks_opt must be called with options.jobs >= 1");
-+
- 	if (options->invoked_hook)
- 		*options->invoked_hook = 0;
- 
-diff --git a/hook.h b/hook.h
-index 7cbeef0a1e..3db860bf3c 100644
---- a/hook.h
-+++ b/hook.h
-@@ -16,6 +16,14 @@ struct run_hooks_opt
- 	/* Emit an error if the hook is missing */
- 	unsigned int error_if_missing:1;
- 
-+	/**
-+	 *  Number of processes to parallelize across.
-+	 *
-+	 * If > 1, output will be buffered and de-interleaved (ungroup=0).
-+	 * If == 1, output will be real-time (ungroup=1).
-+	 */
-+	unsigned int jobs;
-+
- 	/**
- 	 * An optional initial working directory for the hook,
- 	 * translates to "struct child_process"'s "dir" member.
-@@ -86,6 +94,7 @@ struct run_hooks_opt
- 	.env = STRVEC_INIT, \
- 	.args = STRVEC_INIT, \
- 	.stdout_to_stderr = 1, \
-+	.jobs = 1, \
+ 	for (size_t i = 0; i < n; i++) {
+ 		strbuf_init(&pp->children[i].err, 0);
+@@ -1707,21 +1707,52 @@ static void pp_buffer_stdin(struct parallel_processes *pp,
+ 	}
  }
  
- struct hook_cb_data {
+-static void pp_buffer_stderr(struct parallel_processes *pp,
+-			     const struct run_process_parallel_opts *opts,
+-			     int output_timeout)
++static void pp_buffer_io(struct parallel_processes *pp,
++			 const struct run_process_parallel_opts *opts,
++			 int timeout)
+ {
+-	while (poll(pp->pfd, opts->processes, output_timeout) < 0) {
++	/* for each potential child slot, prepare two pollfd entries */
++	for (size_t i = 0; i < opts->processes; i++) {
++		if (child_is_working(&pp->children[i]) &&
++		    pp->children[i].process.err > 0) {
++			pp->pfd[2*i].fd = pp->children[i].process.err;
++			pp->pfd[2*i].events = POLLIN | POLLHUP;
++		} else {
++			pp->pfd[2*i].fd = -1;
++		}
++
++		if (child_is_receiving_input(&pp->children[i])) {
++			pp->pfd[2*i+1].fd = pp->children[i].process.in;
++			pp->pfd[2*i+1].events = POLLOUT;
++		} else {
++			pp->pfd[2*i+1].fd = -1;
++		}
++	}
++
++	while (poll(pp->pfd, opts->processes * 2, timeout) < 0) {
+ 		if (errno == EINTR)
+ 			continue;
+ 		pp_cleanup(pp, opts);
+ 		die_errno("poll");
+ 	}
+ 
+-	/* Buffer output from all pipes. */
+ 	for (size_t i = 0; i < opts->processes; i++) {
++		/* Handle input feeding (stdin) */
++		if (pp->pfd[2*i+1].revents & (POLLOUT | POLLHUP | POLLERR)) {
++			int ret = opts->feed_pipe(pp->children[i].process.in,
++						  opts->data,
++						  pp->children[i].data);
++			if (ret < 0)
++				die_errno("feed_pipe");
++			if (ret) {
++				close(pp->children[i].process.in);
++				pp->children[i].process.in = 0;
++			}
++		}
++
++		/* Handle output reading (stderr) */
+ 		if (child_is_working(&pp->children[i]) &&
+-		    pp->pfd[i].revents & (POLLIN | POLLHUP)) {
++		    pp->pfd[2*i].revents & (POLLIN | POLLHUP)) {
+ 			int n = strbuf_read_once(&pp->children[i].err,
+ 						 pp->children[i].process.err, 0);
+ 			if (n == 0) {
+@@ -1814,21 +1845,15 @@ static int pp_collect_finished(struct parallel_processes *pp,
+ 
+ static void pp_handle_child_IO(struct parallel_processes *pp,
+ 				const struct run_process_parallel_opts *opts,
+-				int output_timeout)
++				int timeout)
+ {
+-	/*
+-	 * First push input, if any (it might no-op), to child tasks to avoid them blocking
+-	 * after input. This also prevents deadlocks when ungrouping below, if a child blocks
+-	 * while the parent also waits for them to finish.
+-	 */
+-	pp_buffer_stdin(pp, opts);
+-
+ 	if (opts->ungroup) {
++		pp_buffer_stdin(pp, opts);
+ 		for (size_t i = 0; i < opts->processes; i++)
+ 			if (child_is_ready_for_cleanup(&pp->children[i]))
+ 				pp->children[i].state = GIT_CP_WAIT_CLEANUP;
+ 	} else {
+-		pp_buffer_stderr(pp, opts, output_timeout);
++		pp_buffer_io(pp, opts, timeout);
+ 		pp_output(pp);
+ 	}
+ }
+@@ -1836,7 +1861,7 @@ static void pp_handle_child_IO(struct parallel_processes *pp,
+ void run_processes_parallel(const struct run_process_parallel_opts *opts)
+ {
+ 	int i, code;
+-	int output_timeout = 100;
++	int timeout = 100;
+ 	int spawn_cap = 4;
+ 	struct parallel_processes_for_signal pp_sig;
+ 	struct parallel_processes pp = {
+@@ -1876,7 +1901,7 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
+ 		}
+ 		if (!pp.nr_processes)
+ 			break;
+-		pp_handle_child_IO(&pp, opts, output_timeout);
++		pp_handle_child_IO(&pp, opts, timeout);
+ 		code = pp_collect_finished(&pp, opts);
+ 		if (code) {
+ 			pp.shutdown = 1;
 -- 
 2.52.0.732.gb351b5166d.dirty
 
