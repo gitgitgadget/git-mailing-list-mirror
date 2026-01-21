@@ -1,116 +1,120 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B283B5307
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 05:59:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C946B44D03C
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 07:13:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768975170; cv=none; b=rcjoZZHkk8kK+/wq9YNPfpgqNEIstRDe+Ugya2weOeRCIkkuBbFeYsp6qeiVfMwrVPZkbZqePcanJ1FaZTwooaOjkx2dH2OjbjZSO14E9sH1Nsr2GMZ3sn2RFncFb+NqZS/pbROFJdk/+rtQNom8wa76iaSFqn4pSO71AL7KzcQ=
+	t=1768979636; cv=none; b=bYN7Tt9FlvOh7em8l2ybKwdP9FjmVCfHHMsMGkkYnF3ZUf5HuQQTaHj1JMuWfF0s3MtgED8b6sbmwDmNBK8p2tvX8yWCkP8wCAb5E8NxYEazTXPvR/KPpQMe9xvt/8Ut8mwO9J+MGsAwkxVii5P+JpEkGaOVXKbZhwk4BSrv+os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768975170; c=relaxed/simple;
-	bh=kGJw0lrR2M9blCyHUbihYLrw+Q5Y9IYnKY9jQN7TKGE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Tx+CXUz0qV6LuP89qfAmLc8cYP/FG2m6GHltZcLMvOeNC3ru92uNUfSAtxkCBLQoOEtn6RJdEa605BJWJRnfTvfWRFaCWlAjDSPzLImbE6IabA84dtfqRsNOpkP9FwdyIahZ/fvPllZ9o/diWIhR4DNwtZQllh6ZuO21KAbQTzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TqA2IEXT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C8BGQDpd; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1768979636; c=relaxed/simple;
+	bh=vi5VNergCsZHyctA548bWHb0bUfeajL21T6Ig0sqfyw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sV54I00xYmjRYempKi/4o/8xEa0TmIrsTUQwZ0/4LQvqML8QC695YaP2JOHg1Rbma7gSNxGfmdkqOWRnL/a+9m/z3T1i0Ykyf9V8mqQkqzVnjo0e5G5yJFUOTj+wDSu8HBWduI6UW2wxwgiFY0gzxiq6gWIbbiNS5GyXzhGyqrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FFgoGFco; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TqA2IEXT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C8BGQDpd"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7FDCE1D00107;
-	Wed, 21 Jan 2026 00:59:26 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Wed, 21 Jan 2026 00:59:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1768975166;
-	 x=1769061566; bh=yI3Trah9XBjrMq0ChKg/r4BfkzZIzUA9oZ84upCR5FI=; b=
-	TqA2IEXT9gaun7Q+HuiEqZEWiL57MN5P6B2bkq1Bp2dC4zKaHYqz5d/FjQthsmnQ
-	8cMqvVeHFcfDTJhwrEHNp3nKHuXQAozENHcOxSdB82xLsO+8ihHsArG7waMkH5Fw
-	epV1iPk5k+wDfLx2/Aj3DnxafwnUIFbKF1UtnsNY6PyP7QkUvvuUXzlDUsFQN4Ok
-	yKQHSihoi7HTmBw2zW61KnjU1fGVy6U+4IiSAPolW0HPWS02M3JzldWsNRV0Z4LG
-	yy823HMdOLX77/MSZqtAqAnPHMP+ymGpNUoRiMa3BPs6AFt1NgmMb1tjP+P3CSCG
-	tSN88nHprExAM3UfIIdiXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768975166; x=
-	1769061566; bh=yI3Trah9XBjrMq0ChKg/r4BfkzZIzUA9oZ84upCR5FI=; b=C
-	8BGQDpdnVwPUR/K9K3x3iaVjz7uOi02AbeePD/7BOie73suyawNlGCTQ5VNh1IU5
-	jffAQ/yGFlKLJek6KF3Y9r5jr8f6QgE5d8uS3BWfk1TT6+0LpvYasEOMT87DHFK2
-	2Z9ycb8KMkOQCS3D8U7NZp93m4M3R7QD2HhrR2So6k4OA6NqHo18KKI6mrMZ3rnO
-	stxxrOEK0n0cPgJyHsCa5cN/31DTK1vOTBNcdmvD2JX7idnqDtWQADXfyxNAeYRi
-	/a4X+8lXHTSwFs5f/49tmlMZmdJn6qdeeILm7Y32o6dN1TGgilxQUt3dp62tI3cA
-	kbf15OlLRcWT/I70aauzw==
-X-ME-Sender: <xms:PmtwaZ_yEBBfQ-oCFwmbErjMvXZwSteReKuyTlOGpPOROrMhy2gqkYo>
-    <xme:PmtwaYj7VHlb14RXH1njYvj19s_zDCWFWReb48Eyl3dMTP6ULSFjSATT_1tGeyJmr
-    NiTZ1uuMKPAjht32cyEQ-_tw7FdN6yVtMBuCUopa_yun2G8eyNn>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedvhedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepffeuueeiheeh
-    ffejgedtveefhedthfevvdegudeltdffheejvdfhjeduffehgeelnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoh
-    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehp
-    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:PmtwaYJyNubWfkl_X84FxuWOHHC15eU4xEfYU7c6Vax9-qWURunb5A>
-    <xmx:PmtwaRHn4z-Zl8co0QHFbEtPt4bGIzZMvwpqPWcXSYOmjUDyBu0wiA>
-    <xmx:PmtwaUTwhw3XXha9jNSzul6mj3rj1wwuPevKpUKgEM9f5oaFmKxxLg>
-    <xmx:PmtwaVem31KF-na-kWWVaTvbsefEjbJErZCkv-jM7H4lT4rAbOoo0g>
-    <xmx:PmtwaSwKKtbvAX3r3g1Iy_mhVti4Q4oZPcvQDJAljkqqhaP-jrJtTzWv>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id E03641EA006B; Wed, 21 Jan 2026 00:59:25 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FFgoGFco"
+Received: (qmail 119619 invoked by uid 109); 21 Jan 2026 07:13:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=vi5VNergCsZHyctA548bWHb0bUfeajL21T6Ig0sqfyw=; b=FFgoGFcoGftvDM1uvfnlABAOXTt63jd3qKJb2wiLt/zNrVrmYF2a5L6QQFqxwA9iVA5bEfLSIriqq+AUz/EiQ/vCVjLzu9d+Ts5vJn7jf+0USAjEtiJRZRZ03ObxBbP6X6ITTYkpkbqsBVcYLW6HaxEDNK9E1V2dkdnxlwApEANQhht44Dj6FYXGlbNhSuCUA09uXt+ULYliZa2grYeeo1lEgp1Cqzk2roqKcN4kMhiNRvKQPdHo6Zw8BOTg0znQuRgoBBGxBxlVP6PFfLX8FLLZJs8IUQrfogRjMWqxWajMlUu9hQapbNPdODGUYMXdhKUOFAu7k5XWwXaX/HYsqg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jan 2026 07:13:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 195298 invoked by uid 111); 21 Jan 2026 07:13:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jan 2026 02:13:48 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 21 Jan 2026 02:13:44 -0500
+From: Jeff King <peff@peff.net>
+To: Paulo Casaretto via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	"Paulo Casaretto (Shopify)" <paulo.casaretto@shopify.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Paulo Casaretto <pcasaretto@gmail.com>
+Subject: Re: [PATCH v5] lockfile: add PID file for debugging stale locks
+Message-ID: <20260121071344.GA570838@coredump.intra.peff.net>
+References: <pull.2011.v4.git.1767804355831.gitgitgadget@gmail.com>
+ <pull.2011.v5.git.1768933954845.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Ai8Eq8lg8y5F
-Date: Wed, 21 Jan 2026 06:59:04 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
-Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Git Mailing List" <git@vger.kernel.org>,
- "Phillip Wood" <phillip.wood123@gmail.com>
-Message-Id: <8712ff01-aed1-4f74-9c8b-b36bc22eb56d@app.fastmail.com>
-In-Reply-To: <20260120192424.GA3295894@coredump.intra.peff.net>
-References: 
- <f10c3f680d58ca0abbf795ae8b0f2ad14ab85419.1768906910.git.phillip.wood@dunelm.org.uk>
- <5a4e7da4-d295-4beb-9f37-b2ce4e10df35@app.fastmail.com>
- <xmqqtswgywb4.fsf@gitster.g>
- <20260120192424.GA3295894@coredump.intra.peff.net>
-Subject: Re: [PATCH] mailmap: add an entry for Phillip Wood
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.2011.v5.git.1768933954845.gitgitgadget@gmail.com>
 
-On Tue, Jan 20, 2026, at 20:24, Jeff King wrote:
->>[snipe]
->> Or perhaps your "Yeah" is about "we've talkined about doing it"?
->
-> ...yeah, I think this is the case. There's a proof of concept at:
->
->   https://lore.kernel.org/git/YW8A5FznqLYs7MqH@coredump.intra.peff.net/
->
-> but nobody ever took it further
+On Tue, Jan 20, 2026 at 06:32:34PM +0000, Paulo Casaretto via GitGitGadget wrote:
 
-I have been thinking lately of a `.trailersmap` which has the hash on
-one line and the trailers beneath for each entry. Because some trailer
-blocks are unintentionally mangled.
+> +static struct tempfile *create_lock_pid_file(const char *pid_path, int mode)
+> +{
+> +	struct strbuf content = STRBUF_INIT;
+> +	struct tempfile *pid_tempfile = NULL;
+> +	int fd = -1;
+> +
+> +	if (!lockfile_pid_enabled)
+> +		goto out;
+> +
+> +	fd = open(pid_path, O_WRONLY | O_CREAT | O_EXCL, mode);
+> +	if (fd < 0)
+> +		goto out;
+> +
+> +	strbuf_addf(&content, "pid %" PRIuMAX "\n", (uintmax_t)getpid());
+> +	if (write_in_full(fd, content.buf, content.len) < 0) {
+> +		warning_errno(_("could not write lock pid file '%s'"), pid_path);
+> +		close(fd);
+> +		fd = -1;
+> +		unlink(pid_path);
+> +		goto out;
+> +	}
+> +
+> +	close(fd);
+> +	fd = -1;
+> +	pid_tempfile = register_tempfile(pid_path);
+> +
+> +out:
+> +	if (fd >= 0)
+> +		close(fd);
+> +	strbuf_release(&content);
+> +	return pid_tempfile;
+> +}
 
-> (I do still run with it as part of my daily build, which probably
-> enhanced my confusion ;) ).
+Coverity complains that the close(fd) call in the "out" label is
+unreachable, and I think it is right. When we jump from before the
+open(), or if the open failed, then fd is negative (and thus no close).
+If we get there when write_in_full() fails, then we close ourselves in
+the conditional. And if we succeed, then we close the descriptor before
+registering the tempfile.
 
-Cool!
+I don't think it's wrong, but the cleanup is redundant between the "out"
+path and the others.
+
+Did you mean this:
+
+diff --git a/lockfile.c b/lockfile.c
+index 731cdd4944..e5d6ae0df6 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -122,14 +122,10 @@ static struct tempfile *create_lock_pid_file(const char *pid_path, int mode)
+ 	strbuf_addf(&content, "pid %" PRIuMAX "\n", (uintmax_t)getpid());
+ 	if (write_in_full(fd, content.buf, content.len) < 0) {
+ 		warning_errno(_("could not write lock pid file '%s'"), pid_path);
+-		close(fd);
+-		fd = -1;
+ 		unlink(pid_path);
+ 		goto out;
+ 	}
+ 
+-	close(fd);
+-	fd = -1;
+ 	pid_tempfile = register_tempfile(pid_path);
+ 
+ out:
+
+which would just let the close after the out label handle all cases?
+
+-Peff
