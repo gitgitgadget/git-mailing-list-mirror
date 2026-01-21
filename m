@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20583A89A5
-	for <git@vger.kernel.org>; Wed, 21 Jan 2026 21:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3833BBD0
+	for <git@vger.kernel.org>; Wed, 21 Jan 2026 21:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769032509; cv=pass; b=VSxZvZoGy1kix1L6TygJ1yfpZ+tbL211RKPSHaDhDRZzyW6M1gw3bgjh49owdeHvQxm9YOq0p2zgU+J+3CBbZmX1WyaiLxuR8KDA5hKE4ktLRHzPxmYBOUEeW5v6iQslkuDKTHZ7CwhX+hiafqMt4LBrNOme/Xn8O8BCAgafNPY=
+	t=1769032510; cv=pass; b=dXB04KKE6IKxeY3jpL90x9aqWCYblvc6KHeZb1ZUMugTB0PGbWsNl356mj96JgYu6KPZgXadrDOoNY1AabVtcUVoFl2h0UIBcC6op3BNl+qXWqzrjThr/6BGOWHhsf5CTxlB+Ogh4H0B7tsJvSrFk3VYD2lyiTuzMWQYN5LnDLM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769032509; c=relaxed/simple;
-	bh=iK/ZQNaaFIdhuLtmj69DSKCqPzjoILUqLIzaJCFNeGk=;
+	s=arc-20240116; t=1769032510; c=relaxed/simple;
+	bh=6O6xcuuG0dOsPzOpTtXjBsijW0u6hUGDLaPNSzuz1/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHLowspQvGRJ8o/nOd08XJXnHb/FMxBn+safJmnYVA2VBcmXccTP7VqELPUwGg6tlzrvdHu8gRgjXgpRTJauY1OvfEhZmVRbc4zoPxE6TAkG79zbJ2QEnwTWSKGhb1Oouywl/KqyR0wmXuLu0/1l6P2V0UKZRcQNFdK/WAg+bO0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=iP1X7ydW; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=I8FtQ29PYz1fxfN4alfEISQfkdMdAqIRxTPh9Mpbqbn56t/06k2gFW0qlSdKGlG92W0+vfTOaC9Z8uGxoTUjGb9+9vIB3AWdkkhFFP+3T3YkfG6JGodvsBykkd32vW/kGpHwaHv89NfOtbF5YWejNQWnmsyWq8Lxn2YOwspUADc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=cbznrwBL; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="iP1X7ydW"
-ARC-Seal: i=1; a=rsa-sha256; t=1769032493; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="cbznrwBL"
+ARC-Seal: i=1; a=rsa-sha256; t=1769032495; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=bLyjiUwOSTqypwhU55yhJWb4OMysu9Iz8cnVGCy2XUosIT/EAer/GtPnNczZ+hoeS6YAHh0mwSCf5hOPPQbBPOhSVNZj9L0VGf2pg0DaH0GLSDqsyy7/IUqZ6DtphdHuif5RJ9C6ssrOXpoIISWtlUwhRKDXHmHbsmyYlx1Ls9o=
+	b=k8XSh5RT01A2hA2TTxSdNPtRPzaIFRWqDsll3NPD2GOPFl4laa//rdoVEipXtQ6JijB25IeAcCYw+b4L9ae9lzPs+pEIuOJR6rCxdrK4CVO47fIwG59Wx6X14OUH/jIA9+a7VNQxnrMPz92NzKntnvZkFhY6SyprkWJ9SFPSQGE=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1769032493; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=i8rNGSFFfADHMv3QgzqTLSLA7VpQ1FaLHAf8jK4pklM=; 
-	b=JsiE1wHrANWTRASpTqOReV0sjGlA0iIKBPiHc2tjunQVzOkLpEZb2SOeYrnp06LW9b0+5+kZ5EHzTksQ0yfx+v9upAjnLhvsaNkJh6sWsAqeRi6JnpVqBwEyG2X5FVxp13UzlvHnW+kU1vf8RGF1u9ZTBEO7wT2QUqld+Q0wBmE=
+	t=1769032495; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=4wizJ4C2dfJpzWPFX3+lpQUJ2avCv0HDTmVw/WOWAVw=; 
+	b=YA5jielzvOUSKLle4CwMt7W9Y6a9cAEM0BjJPQKdAWIDn/IH5iDPRCitgcc6A1BBpDV+9Cj5+I5MhAlyCXI+3KNMTbxvcVaQ7gO2LEYZ4C1DhddhEBCIOSfcDAbD9/iWpBBUdd+VHBvKfr3I+MUxdeBlGZh3kp+IOPdjjiwBk8c=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769032493;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769032495;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=i8rNGSFFfADHMv3QgzqTLSLA7VpQ1FaLHAf8jK4pklM=;
-	b=iP1X7ydWaRBYzwU622q1D9wKc7iT4cohReEoiK39iGerV7Cglu43M3gfQrEmAoIH
-	7Hg1RwNPmjXEdiq6CGmy2gYXPo6ts9SdFqwBs+1xCRW5LNv/0Ui3L6NCCD0kLaopEH/
-	VK5t29zLk+I1NfyVwvwVZRn5fL3YfqgXwp9Kk2x8=
-Received: by mx.zohomail.com with SMTPS id 1769032491865848.3376151035734;
-	Wed, 21 Jan 2026 13:54:51 -0800 (PST)
+	bh=4wizJ4C2dfJpzWPFX3+lpQUJ2avCv0HDTmVw/WOWAVw=;
+	b=cbznrwBLADYlwtKmLJ/NOb6naXAzDyYMiHI5Lbe3pthNX0aUjI48yro2AnDyNXop
+	m2QwV/1RoLzL8PnljC7xllsj2sIYf8C1SsImfBgS3xOR9QCv9QU28L3gj6Ca8tmIm9J
+	ZJSat9Z0P5Dat5jHACaHKp3hhgC4UOixlt2gBh1E=
+Received: by mx.zohomail.com with SMTPS id 1769032493910351.5583692254545;
+	Wed, 21 Jan 2026 13:54:53 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org,
 	Jeff King <peff@peff.net>
@@ -45,9 +45,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v7 01/12] t1800: add hook output stream tests
-Date: Wed, 21 Jan 2026 23:54:25 +0200
-Message-ID: <20260121215436.1473800-2-adrian.ratiu@collabora.com>
+Subject: [PATCH v7 02/12] run-command: add first helper for pp child states
+Date: Wed, 21 Jan 2026 23:54:26 +0200
+Message-ID: <20260121215436.1473800-3-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260121215436.1473800-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -61,154 +61,88 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Lack of test coverage in this area led to some regressions while
-converting the remaining hooks to the newer hook.[ch] API.
+There is a recurring pattern of testing parallel process child states
+and file descriptors to determine if a child is running, receiving any
+input or if it's ready for cleanup.
 
-Add some tests to verify hooks write to the expected output streams.
+Name the pp_child structure and introduce a first helper to make these
+checks more readable. Next commits will add more helpers and checks.
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
 Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- t/t1800-hook.sh | 127 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 127 insertions(+)
+ run-command.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 4feaf0d7be..0e4f93fb31 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -184,4 +184,131 @@ test_expect_success 'stdin to hooks' '
- 	test_cmp expect actual
- '
+diff --git a/run-command.c b/run-command.c
+index e3e02475cc..3989673569 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1478,15 +1478,22 @@ enum child_state {
+ 	GIT_CP_WAIT_CLEANUP,
+ };
  
-+check_stdout_separate_from_stderr () {
-+	for hook in "$@"
-+	do
-+		test_grep ! "Hook $hook stdout" stderr.actual &&
-+		test_grep ! "Hook $hook stderr" stdout.actual &&
-+		test_grep "Hook $hook stderr" stderr.actual &&
-+		test_grep "Hook $hook stdout" stdout.actual || return 1
-+	done
++struct parallel_child {
++	enum child_state state;
++	struct child_process process;
++	struct strbuf err;
++	void *data;
++};
++
++static int child_is_working(const struct parallel_child *pp_child)
++{
++	return pp_child->state == GIT_CP_WORKING;
 +}
 +
-+check_stdout_merged_to_stderr () {
-+	test_grep ! "Hook .* stdout" stdout.actual &&
-+	test_grep ! "Hook .* stderr" stdout.actual &&
-+	for hook in "$@"
-+	do
-+		test_grep "Hook $hook stdout" stderr.actual &&
-+		test_grep "Hook $hook stderr" stderr.actual || return 1
-+	done
-+}
-+
-+test_expect_success 'client pre-push hook expects separate stdout and stderr' '
-+	test_when_finished "rm -f stdout.actual stderr.actual" &&
-+	git init --bare remote &&
-+	git remote add origin remote &&
-+	test_commit A &&
-+
-+	hook=pre-push &&
-+	test_hook $hook <<-EOF &&
-+	echo >&1 Hook $hook stdout
-+	echo >&2 Hook $hook stderr
-+	EOF
-+
-+	git push origin HEAD:main >stdout.actual 2>stderr.actual &&
-+	check_stdout_separate_from_stderr pre-push
-+'
-+
-+test_expect_success 'client hooks expect stdout redirected to stderr' '
-+	test_when_finished "rm -f stdout.actual stderr.actual" &&
-+	for hook in pre-commit post-commit post-checkout pre-merge-commit \
-+		prepare-commit-msg commit-msg post-merge post-rewrite reference-transaction \
-+		applypatch-msg pre-applypatch post-applypatch pre-rebase post-index-change
-+	do
-+		test_hook $hook <<-EOF || return 1
-+		echo >&1 Hook $hook stdout
-+		echo >&2 Hook $hook stderr
-+		EOF
-+	done &&
-+
-+	git checkout -B main &&
-+	git checkout -b branch-a &&
-+	test_commit commit-on-branch-a &&
-+
-+	# Trigger pre-commit, prepare-commit-msg, commit-msg, post-commit, reference-transaction
-+	git commit --allow-empty -m "Test" >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-commit prepare-commit-msg commit-msg post-commit reference-transaction &&
-+
-+	# Trigger post-checkout, reference-transaction
-+	git checkout -b new-branch main >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr post-checkout reference-transaction &&
-+
-+	# Trigger pre-merge-commit, post-merge, reference-transaction
-+	test_commit new-branch-commit &&
-+	git merge --no-ff branch-a >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-merge-commit post-merge reference-transaction &&
-+
-+	# Trigger post-rewrite, reference-transaction
-+	git commit --amend --allow-empty --no-edit >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr post-rewrite reference-transaction &&
-+
-+	# Trigger applypatch-msg, pre-applypatch, post-applypatch
-+	git checkout -b branch-b main &&
-+	test_commit branch-b &&
-+	git format-patch -1 --stdout >patch &&
-+	git checkout -b branch-c main &&
-+	git am patch >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr applypatch-msg pre-applypatch post-applypatch &&
-+
-+	# Trigger pre-rebase
-+	git checkout -b branch-d main &&
-+	test_commit branch-d &&
-+	git checkout main &&
-+	test_commit diverge-main &&
-+	git checkout branch-d &&
-+	git rebase main >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-rebase &&
-+
-+	# Trigger post-index-change
-+	oid=$(git hash-object -w --stdin </dev/null) &&
-+	git update-index --add --cacheinfo 100644 $oid new-file >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr post-index-change
-+'
-+
-+test_expect_success 'server hooks expect stdout redirected to stderr' '
-+	test_when_finished "rm -f stdout.actual stderr.actual" &&
-+	git init --bare remote-server &&
-+	git remote add origin-server remote-server &&
-+
-+	for hook in pre-receive update post-receive post-update
-+	do
-+		write_script remote-server/hooks/$hook <<-EOF || return 1
-+		echo >&1 Hook $hook stdout
-+		echo >&2 Hook $hook stderr
-+		EOF
-+	done &&
-+
-+	# Trigger pre-receive update post-receive post-update
-+	git push origin-server HEAD:new-branch >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-receive update post-receive post-update
-+'
-+
-+test_expect_success 'server push-to-checkout hook expects stdout redirected to stderr' '
-+	test_when_finished "rm -f stdout.actual stderr.actual" &&
-+	git init server &&
-+	git -C server checkout -b main &&
-+	test_config -C server receive.denyCurrentBranch updateInstead &&
-+	git remote add origin-server-2 server &&
-+
-+	write_script server/.git/hooks/push-to-checkout <<-EOF &&
-+	echo >&1 Hook push-to-checkout stdout
-+	echo >&2 Hook push-to-checkout stderr
-+	EOF
-+
-+	# Trigger push-to-checkout
-+	git push origin-server-2 HEAD:main >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr push-to-checkout
-+'
-+
- test_done
+ struct parallel_processes {
+ 	size_t nr_processes;
+ 
+-	struct {
+-		enum child_state state;
+-		struct child_process process;
+-		struct strbuf err;
+-		void *data;
+-	} *children;
++	struct parallel_child *children;
+ 	/*
+ 	 * The struct pollfd is logically part of *children,
+ 	 * but the system call expects it as its own array.
+@@ -1509,7 +1516,7 @@ static void kill_children(const struct parallel_processes *pp,
+ 			  int signo)
+ {
+ 	for (size_t i = 0; i < opts->processes; i++)
+-		if (pp->children[i].state == GIT_CP_WORKING)
++		if (child_is_working(&pp->children[i]))
+ 			kill(pp->children[i].process.pid, signo);
+ }
+ 
+@@ -1665,7 +1672,7 @@ static void pp_buffer_stderr(struct parallel_processes *pp,
+ 
+ 	/* Buffer output from all pipes. */
+ 	for (size_t i = 0; i < opts->processes; i++) {
+-		if (pp->children[i].state == GIT_CP_WORKING &&
++		if (child_is_working(&pp->children[i]) &&
+ 		    pp->pfd[i].revents & (POLLIN | POLLHUP)) {
+ 			int n = strbuf_read_once(&pp->children[i].err,
+ 						 pp->children[i].process.err, 0);
+@@ -1683,7 +1690,7 @@ static void pp_output(const struct parallel_processes *pp)
+ {
+ 	size_t i = pp->output_owner;
+ 
+-	if (pp->children[i].state == GIT_CP_WORKING &&
++	if (child_is_working(&pp->children[i]) &&
+ 	    pp->children[i].err.len) {
+ 		strbuf_write(&pp->children[i].err, stderr);
+ 		strbuf_reset(&pp->children[i].err);
+@@ -1748,7 +1755,7 @@ static int pp_collect_finished(struct parallel_processes *pp,
+ 			 * running process time.
+ 			 */
+ 			for (i = 0; i < n; i++)
+-				if (pp->children[(pp->output_owner + i) % n].state == GIT_CP_WORKING)
++				if (child_is_working(&pp->children[(pp->output_owner + i) % n]))
+ 					break;
+ 			pp->output_owner = (pp->output_owner + i) % n;
+ 		}
 -- 
 2.52.0.732.gb351b5166d.dirty
 
