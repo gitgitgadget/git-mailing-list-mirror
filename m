@@ -1,216 +1,175 @@
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A87D34F48D
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 20:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71F539DB12
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 20:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769112485; cv=none; b=JNHCZsKmKU3tzduwwDpVOx0PtqB9yNdqC4dkVaNvSQNn1fp5heHklS3B4VNiKFi0xoWVyxY5B4qDKGw4BVhWTT05Fka0Px6/EZXQTzKaqCi8bCRfxAKstB69u1Wh+n3NduM6fz5tPs6woBdG4gQ27McnkhHXBQwkxEx6tzMD7Yg=
+	t=1769112636; cv=none; b=m/LuHl9EzVLo/JC4/IuVKEHlmbdd+WnVUyLcH100OO5rE7v9HMlzHxfJXczh7gYP+POEsFK70hc1nz0BR7LtbH5MimNVxBrI82bcBn/FTatIrHYRNQt8Fscl44F0BQmQI2F+tXZIAMDvm91Hq38WQD0OZkK06tvrEW4IOXvG1Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769112485; c=relaxed/simple;
-	bh=hvaFgUfinjZIgeJ3QHsxahSWfHO8GXT5K0VY9CQ/M+A=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=B2jAsDwh0SkM76o7hwq/PJhddpuoyUlKAtB/443/usOxAR9qY0kJCyEj0zIS4sH4CExLhV4NnN44VIiK1EHAWY680U4pt2Ml6KDIMtvHGGFH3gss7TlmBbJCRRXHGRYNukMFYvK6VZl6WVQoq1iOVxYJ8hy1CTZrdMjndXzdFeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cljOGwqf; arc=none smtp.client-ip=74.125.82.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769112636; c=relaxed/simple;
+	bh=hWhgYRlkZY0inhDPflLR4eHx7b/0ZMr7FOYZGBaurwk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SlVGJDxy43fAdsEaZpQJyAID//erztqfIVOt+zaM7dPiAyXGrgLgaAGWTw980yDXmEmvNuOP+IwxvIZUmsfYfIxXrbzOSEsAgLd/S38G8w2soo60ZYjX63NimkiSgWdByg13iGUvr/2hYNI6+mrwnm/BHQCJ9cGQzU+UEqeblcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Czv9lMKL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tnI4NIgN; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cljOGwqf"
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-2b4520f6b32so2251003eec.0
-        for <git@vger.kernel.org>; Thu, 22 Jan 2026 12:07:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769112474; x=1769717274; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p4r8h+bI4iflLCMRaiiguOyi2Omzn95RD919H6vq9AA=;
-        b=cljOGwqfSgQKkY6GHVq6uu/+xJNCzIfT1z+K2UhH7naR/M+z4k+ywMtkh5w9SssnS8
-         0doavb4at4cSxqN8rUbXWjmVfu8sJ0bzCbTL7kD7JlZplXKFizRmbVpEyC8T7E7q0NVs
-         Aaa524zz4n7B1n7f2PJhWBJqAVaa3rWhxR2wMAd79YW5rYx3s50Vh2FDzoLETQ9SPPa6
-         rK/2y/4xM/2EHsH37aEHLiq4j5+qVRsGQRXujwThySoWuZ8q1VL3MBPYDSaUfgnbTVx6
-         SsjD7OqIxq1ust6B3nOyLP5m5aq0gy6ZulBg40n2+LsYmduilWBj7xh1LL2B2+kexR/N
-         MFyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769112474; x=1769717274;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=p4r8h+bI4iflLCMRaiiguOyi2Omzn95RD919H6vq9AA=;
-        b=ABcAJUkk6hkrj81sD9BF/KRH9R65PF/uDiz84Vl0SFY/FILpI7QGCIOZ7E/2eeg4iY
-         8EiGljb5WQ2SMMaZv1r1UlhFL43/zQA6tb8dxRtKPERKF8kysv0z0GmeVSeK4Uam4/90
-         d9TlK8u19/05Bf5+qju3rqlswLn4byWEHGdX851iDkxbS5oJyg7VL5Z2Q+O5MfQy6LLK
-         QPNX3dEjNvu1HZvxO+75/coM9qKlHfOFuOZKJBdNC9pduTv1F4yRCCjKZEr/hbcbJdDt
-         jwssnddpp8O+q3e3vruNJgnta2qR4aleFboIbBS11kVOCJYU3uzFUGgemwqPMuBShDJY
-         c/Hg==
-X-Gm-Message-State: AOJu0YyPh9Z3+oRNtYd9gFmBvJOKIXwINKs5Li3nJ6zqRQXZMRI1uwKN
-	TuZ1okGXtSe2ZJoM1AXSCiourzKLiM74Zbp8RzUW+1LJCZLK8fROwKseab+G+w==
-X-Gm-Gg: AZuq6aJPWNA5deP8d8pZ617E2MpOx7dLmudFru1D7NIxe1MV/nm+N2i2rCZrUWX92ab
-	2fVaxZvnn9tSdAjEGj/AUO9lBBs7nsM5QERYkON/0DukzGOUYsE7CLVpqrINU+vgdqk0fzWIqw4
-	3cQ5bNrFHcu7G4geHnl9u3YSydOibiVykvd5+vCERHBCgjRPrXUJbYY6gpQvFuRp2nBeemxwLle
-	x8PSaNlL9tNKXkkSfes5Mo8T1jUsybs0x1zi/ysCtBiQWdJV78qzpoKp36mjFt3XuQUeUO5Rr/N
-	bpfVf3+2NT7RqGXOvgOW7b+KUG4u2SV0aHMTY4OSsWR8BTH16+et761kuaSi5UXAAzRTcOo/yoo
-	Wl9qAXG61DAa9Q92bWDvv0/uyZkrC3GSrAq65j33YCXF2dk5PdeOxFwyml5RAsJ0SpKLWdteATh
-	Czh6BUVEzHPt1ff3YzF766S14=
-X-Received: by 2002:a05:7300:bc05:b0:2a4:4884:e03d with SMTP id 5a478bee46e88-2b7399956c4mr253791eec.11.1769112474109;
-        Thu, 22 Jan 2026 12:07:54 -0800 (PST)
-Received: from [127.0.0.1] ([52.161.51.150])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b73a691d85sm497003eec.1.2026.01.22.12.07.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jan 2026 12:07:53 -0800 (PST)
-Message-Id: <f3c8c782b0ae7d20cf023a315e373a38c1fe9511.1769112471.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2138.v28.git.git.1769112471.gitgitgadget@gmail.com>
-References: <pull.2138.v27.git.git.1769096240.gitgitgadget@gmail.com>
-	<pull.2138.v28.git.git.1769112471.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 22 Jan 2026 20:07:50 +0000
-Subject: [PATCH v28 1/2] refactor format_branch_comparison in preparation
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Czv9lMKL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tnI4NIgN"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 487EFEC080C;
+	Thu, 22 Jan 2026 15:10:29 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 22 Jan 2026 15:10:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769112629; x=1769199029; bh=CHT0288toN
+	+CChs1OO9JMmIJ8ZFRNnj5ex+Rfelk/k4=; b=Czv9lMKLtwR6cQkinB0Cls/EEE
+	eSRq1WspVWtZz0ZIQDBpPWIyTpaEdG8qRb5Q0pmbQq5b2+d9HW8i6s3oYLL6jRyE
+	3ZdWfSm97R2V4fyEG/6MvX/sLRvdJo+DJeUj+hPQTJPVX3KA9a54qwNIbOjU1IsN
+	ZpQEZw2kZ8WPxKaZh4xm7SLIoYdup01y61xPH9hoscIk1iDjH0LEZ1yfa0HiTd/Q
+	y6aouKzIUvV/RzoKjezazaVql+/IkZ/GvsTCj1bSeN8IWbEflLqhJvmuP/OcTkqe
+	QCnnb10JMdwZ81CUqDyr+dzc7IcvuL8vsjROJaoK3hcbMVZoIp+cryIAhEaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769112629; x=1769199029; bh=CHT0288toN+CChs1OO9JMmIJ8ZFRNnj5ex+
+	Rfelk/k4=; b=tnI4NIgNQV/fDhOmIAWeNRCGbd92VyORMnhDuu921NcKUtwn27r
+	BLna1jOhOwk7WeVEOJ6/I5IWU21IuVBxUa8/h1sKtxQDA6WYn4OcqUIDcdZnwcsF
+	Ug8lV1RJmbFxwt3liyaD6wzOzCpWCyJMHXL0Qheiq6lFOtjNsj/fXhOWMwWFbt6J
+	sbc/HwKbn7kIDre2GrWW4mwTJ2nBzH+QpAZN7dKk0iGu49PXJDQBrBC+aFDAhWjf
+	TPAv/CYrz2HNwBlhRvZlMRYMwjDh4SqDCbD63kr9K+4zgeOhujg4LS97LMkCeuCq
+	rR+M7NZfQjNE/yp0+TctgnKlgz/PkEh9bRg==
+X-ME-Sender: <xms:NYRyaaIqKvIC4LXzFgfDLoHYevUQ3nSwMRveUR6FmwGpjOQu3hiWAw>
+    <xme:NYRyaV30Cr-Nn6Z47IZFrX2-HhFHiUCNOWuVEzq6QoJnJMUmMJBZKzMrOcNxgo7wX
+    nrCNgtkVsag1XxE99uNINzJq4MxPEmtCwDyCQ1sN54wZ-HSuAdOMg>
+X-ME-Received: <xmr:NYRyaUj0tGOJpa0OSW7Iz9DFNHm2FDwv3ydI6klne9qwL1QIVYjw_nWLMs4IVWasqvVgwSe3pPq6-a3kJe2tJ7fm0BcrfxtrACvxWm4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejtdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:NYRyaWUi0o08ceREGXQ0ZcOuQIBriHyFish9uogIZZTVj6Wzv_IdQw>
+    <xmx:NYRyaTUy8d7Xd_CGIFTmvoEkVjSoYGUpPgr1Bk33hwfNc5sIL4Ap_Q>
+    <xmx:NYRyaWgd2m31cf-I5K3z2CvtqGlM5voyaWJ7hhiGh14WLsrDV5Uqsw>
+    <xmx:NYRyaeZrMhaNLc4stnywqlEMkGxaVMW3-rvUtY4AYn2mX9Za0_yhWg>
+    <xmx:NYRyaX60FHT2Q6Kuu3A-hk2oRopcJ0MvZwchjt_WvRHFWqfY7DoKgYue>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Jan 2026 15:10:28 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net,  newren@gmail.com,
+  phillip.wood123@gmail.com
+Subject: Re: [PATCH v4 6/6] fetch: delay user information post committing of
+ transaction
+In-Reply-To: <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-6-2ddba0832440@gmail.com>
+	(Karthik Nayak's message of "Thu, 22 Jan 2026 13:05:00 +0100")
+References: <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-0-2ddba0832440@gmail.com>
+	<20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-6-2ddba0832440@gmail.com>
+Date: Thu, 22 Jan 2026 12:10:27 -0800
+Message-ID: <xmqqldhpmmrw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Refactor format_branch_comparison function in preparation for showing
-comparison with push remote tracking branch.
+> +struct ref_update_display_info {
+> +	bool failed;
+> +	char success_code;
+> +	char fail_code;
+> +	const char *summary;
+> +	const char *fail_detail;
+> +	const char *success_detail;
+> +	const char *ref;
+> +	const char *remote;
+> +	struct object_id old_oid;
+> +	struct object_id new_oid;
+> +};
+> +
+> +struct ref_update_display_info_array {
+> +	struct ref_update_display_info *info;
+> +	size_t alloc, nr;
+> +};
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- remote.c | 82 +++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 34 deletions(-)
+OK.  The ref_update_display_info structure is full of pointers.
+They are of "const char *" type, hinting that they are borrowed
+pieces of memory, and there is nothing to clean inside, other than
+the .info member itself?
 
-diff --git a/remote.c b/remote.c
-index b756ff6f15..fd592ec659 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2230,42 +2230,21 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- 	return stat_branch_pair(branch->refname, base, num_ours, num_theirs, abf);
- }
- 
--/*
-- * Return true when there is anything to report, otherwise false.
-- */
--int format_tracking_info(struct branch *branch, struct strbuf *sb,
--			 enum ahead_behind_flags abf,
--			 int show_divergence_advice)
--{
--	int ours, theirs, sti;
--	const char *full_base;
--	char *base;
--	int upstream_is_gone = 0;
--
--	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
--	if (sti < 0) {
--		if (!full_base)
--			return 0;
--		upstream_is_gone = 1;
--	}
--
--	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
--					    full_base, 0);
--	if (upstream_is_gone) {
--		strbuf_addf(sb,
--			_("Your branch is based on '%s', but the upstream is gone.\n"),
--			base);
--		if (advice_enabled(ADVICE_STATUS_HINTS))
--			strbuf_addstr(sb,
--				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
--	} else if (!sti) {
-+static void format_branch_comparison(struct strbuf *sb,
-+				     bool up_to_date,
-+				     int ours, int theirs,
-+				     const char *branch_name,
-+				     enum ahead_behind_flags abf,
-+				     bool show_divergence_advice)
-+{
-+	if (up_to_date) {
- 		strbuf_addf(sb,
- 			_("Your branch is up to date with '%s'.\n"),
--			base);
-+			branch_name);
- 	} else if (abf == AHEAD_BEHIND_QUICK) {
- 		strbuf_addf(sb,
- 			    _("Your branch and '%s' refer to different commits.\n"),
--			    base);
-+			    branch_name);
- 		if (advice_enabled(ADVICE_STATUS_HINTS))
- 			strbuf_addf(sb, _("  (use \"%s\" for details)\n"),
- 				    "git status --ahead-behind");
-@@ -2274,7 +2253,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 			Q_("Your branch is ahead of '%s' by %d commit.\n",
- 			   "Your branch is ahead of '%s' by %d commits.\n",
- 			   ours),
--			base, ours);
-+			branch_name, ours);
- 		if (advice_enabled(ADVICE_STATUS_HINTS))
- 			strbuf_addstr(sb,
- 				_("  (use \"git push\" to publish your local commits)\n"));
-@@ -2285,7 +2264,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 			   "Your branch is behind '%s' by %d commits, "
- 			       "and can be fast-forwarded.\n",
- 			   theirs),
--			base, theirs);
-+			branch_name, theirs);
- 		if (advice_enabled(ADVICE_STATUS_HINTS))
- 			strbuf_addstr(sb,
- 				_("  (use \"git pull\" to update your local branch)\n"));
-@@ -2298,12 +2277,47 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 			       "and have %d and %d different commits each, "
- 			       "respectively.\n",
- 			   ours + theirs),
--			base, ours, theirs);
-+			branch_name, ours, theirs);
- 		if (show_divergence_advice &&
- 		    advice_enabled(ADVICE_STATUS_HINTS))
- 			strbuf_addstr(sb,
- 				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
- 	}
-+}
-+
-+/*
-+ * Return true when there is anything to report, otherwise false.
-+ */
-+int format_tracking_info(struct branch *branch, struct strbuf *sb,
-+			 enum ahead_behind_flags abf,
-+			 int show_divergence_advice)
-+{
-+	int ours, theirs, cmp_fetch;
-+	const char *full_base;
-+	char *base;
-+	int upstream_is_gone = 0;
-+
-+	cmp_fetch = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
-+	if (cmp_fetch < 0) {
-+		if (!full_base)
-+			return 0;
-+		upstream_is_gone = 1;
-+	}
-+
-+	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
-+					    full_base, 0);
-+
-+	if (upstream_is_gone) {
-+		strbuf_addf(sb,
-+			_("Your branch is based on '%s', but the upstream is gone.\n"),
-+			base);
-+		if (advice_enabled(ADVICE_STATUS_HINTS))
-+			strbuf_addstr(sb,
-+				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
-+	} else {
-+		format_branch_comparison(sb, !cmp_fetch, ours, theirs, base, abf, show_divergence_advice);
-+	}
-+
- 	free(base);
- 	return 1;
- }
--- 
-gitgitgadget
+> +static struct ref_update_display_info *ref_update_display_info_append(
+> +					   struct ref_update_display_info_array *array,
+> +					   char success_code,
+> +					   char fail_code,
+> +					   const char *summary,
+> +					   const char *success_detail,
+> +					   const char *fail_detail,
+> +					   const char *ref,
+> +					   const char *remote,
+> +					   const struct object_id *old_oid,
+> +					   const struct object_id *new_oid)
+> +{
 
+This helper that consumes the structure is used throughout the
+patch, and relative to the previous round it got easier to read.
+
+> +static void ref_update_display_info_free(struct ref_update_display_info *info)
+> +{
+> +	free((char *)info->summary);
+> +	free((char *)info->success_detail);
+> +	free((char *)info->fail_detail);
+> +	free((char *)info->remote);
+> +	free((char *)info->ref);
+> +}
+
+This answers "no" to my previous question.  These are not borrowed,
+but are owned by this structure.
+
+> @@ -1965,7 +2090,17 @@ static int do_fetch(struct transport *transport,
+>  	 */
+>  	if (retcode && !atomic_fetch && transaction)
+>  		commit_ref_transaction(&transaction, false,
+> -				       transport->remote->name, &err);
+> +				       transport->remote->name,
+> +				       &rejected_refs, &err);
+> +
+> +	for (size_t i = 0; i < display_array.nr; i++) {
+> +		struct ref_update_display_info *info = &display_array.info[i];
+> +
+> +		if (!info->failed && strmap_contains(&rejected_refs, info->ref))
+> +			ref_update_display_info_set_failed(info);
+> +		ref_update_display_info_display(info, &display_state, summary_width);
+> +		ref_update_display_info_free(info);
+> +	}
+
+And after a fetch finishes and we consume the display_info, we call
+_free() to release the resource held there, plus ...
+
+>  	if (retcode) {
+>  		if (err.len) {
+> @@ -1980,6 +2115,9 @@ static int do_fetch(struct transport *transport,
+>  
+>  	if (transaction)
+>  		ref_transaction_free(transaction);
+> +
+> +	free(display_array.info);
+
+... of course the array itself, which makes sense.
