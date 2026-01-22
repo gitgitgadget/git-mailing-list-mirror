@@ -1,60 +1,62 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65238367F26
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBE2374197
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769102139; cv=none; b=IuvrmnCinjV8K9xckkce2hVHEIeqBbWQqF1ldk5PLqBxIdBH3vC+sh/Kn1h97UkQ5TrlxUXmRPuWO4EtrSTWV3HaXz8Zi3ZnKG5zGNrMlcVbZczWk0iDtluVXGf9CjZisffhWEy29UwlpvflErl3OycUt8+cWmvg3vMWmHkfu+M=
+	t=1769102149; cv=none; b=sHVvaOnI7Fo/U626XPKfAg7BC63XvEleAqHRKtzBDSHxHPwoW+Pk4uY34+8beidzdYp73VS1ITlfQaSdq898jVaOaBKm0vbSNxnEv6K2QOzhJjpG5EhzT3WzScl6qD70S83RI8L0ADBGxbNEJOf10Z/H+9dASFje3oWDOYnOtxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769102139; c=relaxed/simple;
-	bh=c2VVnBJUyvGedCoTqwRLl4PZ/N4OFVeDqetvVcgIEjI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=muNY4+YBC8xp7SNVemAOnFocA4sD931MrGE/jEin3054SL5AOVyz5g2Qg8d0SArol8Vads7zzeTOACZ1MQL3XbxdJZH57Z+L4/sCEBJcZcizwRHmYwDxSyBLuKzIS0ZEAzl6o8iAjrclvvsK45ONJJE38Xe6E3tFzGmg96GdveE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCiIhXUN; arc=none smtp.client-ip=209.85.214.177
+	s=arc-20240116; t=1769102149; c=relaxed/simple;
+	bh=4/vCmaZn++j+tmfUlkry8NtAaqxIzAFgUCCuPUkHMJQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MoyTOjFCocnsT2bpmEYL8/jl+wyMXAa9Ii90lEPy/e2UJCmWkiJDFUQ5lxCVSRZ+VWdIACJw+mK8PSd4FPdbO/e0QKhWrs5fUKZ3myOoVQIe7KNfFLJh23XdtpST+y1cztbSeiXfwgxTzdSWeCFyR3UGV+i7zYpmivAGq0kox54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m/y0N1XA; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCiIhXUN"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2a76f90872cso7161925ad.3
-        for <git@vger.kernel.org>; Thu, 22 Jan 2026 09:15:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m/y0N1XA"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-bde0f62464cso434730a12.2
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 09:15:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769102131; x=1769706931; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zS/GxMdiJGDCeHk055yjjzpfuWy6c8ec4m8IN4L4FwE=;
-        b=RCiIhXUNLgw6APUXmLoc4p5VUsZveUzlCnv6UtTwAO63yIvvFXRt74mQ1jB0cHL0K0
-         AEMPXvuDVK0v9x5Ge2bkIygxvJYdcyGCkczvx1BDl+iCef2Og2nM5fEK1GHhJUX2Ynza
-         IaCn0SLW2hk/xSKwQ6Ks4ireiyfoQTgRtOFqAdNQrfMLL0u7B0pVS9lq7Mmeb/SVhhye
-         lqC5BY5eJCfRAEp7pjH2+rr85Czwh55+mvc4xOb9JE9g+YFQTqnLKXHTpUzPD66CG8Wu
-         3VTi+fVUWft6KNqNRmSCExivH5LCr3HVwnq40wHdX0t3seDrUFUeJQn1x0P2f0rvZJ94
-         I7PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769102131; x=1769706931;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1769102143; x=1769706943; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zS/GxMdiJGDCeHk055yjjzpfuWy6c8ec4m8IN4L4FwE=;
-        b=fE9VZXV2WSWk90iiWIfp+u9dB4lacKOy6LaVd4ohfzm12oqo/1MC9V1IoPZ0rr7fGb
-         NPkh9iDQBihqto9Ub4VvNaYk7CX0+w26VbpMqEjyJuiRrzU9/MK4UIoXu1Bd83QlUV6P
-         K+MprcE0EpdKn1dMqo1kcgha0LbJ+pq6RIr3R51OvBr0OnAMnpe8aghbCU4QZl721YWA
-         nohSL0IjwiHy52tMdXT6fxy5mPnK9XutHUoJ4EUrrteullC+vbbOovpNAib+IdMyEVSE
-         ZCK4mn0Nv9DdAyUjTZXMTGovC02T/MHHUT2e2Y722OO2GtkzDSFcxvfEtQ3lfMuJusVn
-         SIyA==
-X-Gm-Message-State: AOJu0YwLpJQMV/U69M+/i5Aw1YYvje6DfPGZ/vt2T9gxfozF9KX4Eoga
-	iEw528Mg/6FD8j4fSfZnTzBgeBtuumRCpN4hdj9ddnxjSzewBTh6UMqrCMeTYxil
-X-Gm-Gg: AZuq6aIWE4KY6ZS4V0YBMyaSVeoeFSkISLG0VwpaTsIOwwUZdQ7e8Or9mTZVtZ4VoWv
-	QLAYFWfF/VX6qWh9x5EOX0TP43/3CnvubjiCRxAj5Y1BwVxzYYOZFQ8/zmhF9vR/I6S05e0ndD4
-	Te3s4w9HFUfM0yw5lmnn0TaAupGhnxeN5qTz5RdtwsCa086qYxorDf1b7AejeqKHkChX2XQGZK3
-	w9DeTo8mc2WDqofOfxnIMxMbzTZgeE09vJKXce9CaAq6iXj4PhUtKi9wUnQVv3kCHwY2ZdNQFkp
-	MrJbPWESTESlALOmW/GY0WF+wwASegg5zClF0S3cDqch/0A6pdO7Xl3UwGlh9WjJwgJMPxyxmWn
-	l6kM/Zkv7kZEgJIEH+sNxD+JOmCnV+cYYfugf2LnStUSeN5k7yvVjuOa5mWmBG1NaSBWeH8NOK8
-	Q30+hYJ4w/YzRBpbHH2eD5ssjblzEpMlLWmVAJve1Kou1jNy5HuFJbin3abSf2p94JdSev
-X-Received: by 2002:a17:903:2443:b0:2a7:f369:4de8 with SMTP id d9443c01a7336-2a7fe73eb13mr983295ad.42.1769102131065;
-        Thu, 22 Jan 2026 09:15:31 -0800 (PST)
+        bh=SpOnG7AZ8sMEQvbQxV8b+xEK28KWnSg/Gg4yOmSUybM=;
+        b=m/y0N1XA+Wo1wYKPE1qhzMCQjQqqmwafDgPR+UftINWidIMlONST4swdEdNal5zw0c
+         U2+rzke1uT7gb66I3LMY+UAwdnZchVK3O7HTVQ6rwQ+AhEFTbFnPM5IWobCMSSOlFIcd
+         VFDGLIYL4+WUrgb0YH1xnLYYOpwEau8LdbBTBzVeqvy4Hj4CcYrkWpwcbBx9pp5cSEIG
+         ez0AQn+TNSvVvQ51dFRvqrXHb+6kIBMo1OFOsT9vxozBP2eWFjoOi0GcQX7KiYlvvpQV
+         XG+8p0Q55ineeFPqVGYEZtgy/7gCRr3fXi9nAUceTDl6VI/Rwr+rdq1aFpLt9PhpnOcl
+         irIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769102143; x=1769706943;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SpOnG7AZ8sMEQvbQxV8b+xEK28KWnSg/Gg4yOmSUybM=;
+        b=sVa3mJ0tkA0BtE5H/Mw3BqN6Ei/4SkASmmIznZQ7OmCr751Vz7opAus9uIqtijlwYi
+         H1+wzDm4bla4UzcUFg+5ON87dvG4kSdEV3x1S7XBoUX4fFXowDJFev18/3Xf/mSOJwXt
+         SQMLmV0XIbWjBd+BCPPC1R6uvxpbVDUo3IyH5Pzx/oYrr52db8MbonJFHVRsu083jF5W
+         tLg+nIQgNxFxbD/HUqK7bpYz5xD9efR83mrvUTbtPWvcSZHbFsfdQyybcDqTAWU/atow
+         TrLGGUI3wxMI4vbvmJ67J1RRwThTWXPUyXlAJqshqCT0RfoKhZml4DbahYiDnQwvDyeN
+         BPvw==
+X-Gm-Message-State: AOJu0YyCyN+IJx9f0EcGyj0ioXocvyZN/hKj1PnNWRbPfIo0JAkn4iqE
+	LHv+B8CanE4UIC8FBhfpRIYCU1ycNVgHTKL+RnpMkW6E/1bqw/owk+Wt54J0tAQB
+X-Gm-Gg: AZuq6aLxe2Cs5y/NhEIWeSyyGQSJNiWcWFp+Khi3/Lq5FKs2SHoFa2I0UwJQryMfbTS
+	xl+qbGP3csX4U6FLbQWHD7P2YxgHO5cH2IRwcr5b7fR6Gey4wxQQUp/QybYQnXpRmO27yby+Ue0
+	2ywogD8RnJEgtwKjZUx/FRw3z1wa1emHnw7CUqMNHSB5qisbBkgbEP3HOCEPIkgAmH9TOrCtNtH
+	EXMnGUo01qN3UpWVYQf284ZN9FRQg/g0rCxTqIDLDylXRBc92OsMpaYUojz1N7fZfGarmMI9cQg
+	pvSEzy4TbmzvpXCuiZ+E8yLBraiO5AqUqjjvUhMX78648at48fsr13ncfbco3t7rz31Po06D3dK
+	ZjcmpFRkb7ja/i3tdMQKpGY8HUtPe+aMMgbuXS1eqAtbCz6t51ArIlz2LsbDK95qquV8lO03PNm
+	DQZyuVcD1L6eNnX/kg6Rilwa1ksejHQOQibNII4MNfhNLZqFiq0zb84sxT8ZAt4jjIAJ0m
+X-Received: by 2002:a17:903:3d10:b0:2a7:80ac:85b0 with SMTP id d9443c01a7336-2a7fe43ed60mr1737015ad.2.1769102143106;
+        Thu, 22 Jan 2026 09:15:43 -0800 (PST)
 Received: from localhost.localdomain ([115.98.234.248])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a773d4e5basm81557205ad.94.2026.01.22.09.15.28
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a773d4e5basm81557205ad.94.2026.01.22.09.15.40
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 22 Jan 2026 09:15:30 -0800 (PST)
+        Thu, 22 Jan 2026 09:15:42 -0800 (PST)
 From: Amisha Chhajed <amishhhaaaa@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -62,10 +64,12 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>,
 	amisha <amishhhaaaa@gmail.com>
-Subject: [RFC PATCH 0/2] Adding string_list_sort_u to replace combined calls of string_list_sort and string_list_remove_duplicates calls.
-Date: Thu, 22 Jan 2026 22:45:21 +0530
-Message-ID: <20260122171523.94234-1-amishhhaaaa@gmail.com>
+Subject: [RFC PATCH 1/2] Adding string_list_sort_u which sorts a list then deduplicates it.
+Date: Thu, 22 Jan 2026 22:45:22 +0530
+Message-ID: <20260122171523.94234-2-amishhhaaaa@gmail.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260122171523.94234-1-amishhhaaaa@gmail.com>
+References: <20260122171523.94234-1-amishhhaaaa@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,37 +78,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Following up with Junio's suggestion in 
-https://lore.kernel.org/git/xmqqqzrp74q3.fsf@gitster.g/, calls to 
-string_list_remove_duplicates are almost always preceeded by string_list_sort
-which can be coupled into a single method.
+string_list_remove_duplicates is almost always preceeded by
+string_list_sort, hence adding string_list_sort_u which dedupliactes
+post sorting.
 
-There are places, for example the call of string_list_remove_duplicates
-in pack-objects.c where removal of that line causes no test failures,
-however removal of string_list_sort_u version did because removing sort
-is a more catchable behaviour by the current tests, this might improve
-the case where we were unsure why removing string_list_remove_duplicates
-caused no test failures.
+Signed-off-by: Amisha Chhajed <amishhhaaaa@gmail.com>
+---
+ string-list.c | 6 ++++++
+ string-list.h | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-I was unable to write unit tests for this new method in this RFC PATCH
-since I was quite unsure why no unit tests were present for string_list_sort
-and string_list_insert.
-
-Amisha Chhajed (2):
-  Adding string_list_sort_u which sorts a list then deduplicates it.
-  Replacing calls of string_list_sort and string_list_remove_duplicates
-    with the combined variant string_list_u.
-
- builtin/clone.c           | 3 +--
- builtin/fast-export.c     | 3 +--
- builtin/pack-objects.c    | 6 ++----
- builtin/sparse-checkout.c | 6 ++----
- help.c                    | 3 +--
- notes.c                   | 3 +--
- string-list.c             | 6 ++++++
- string-list.h             | 6 ++++++
- 8 files changed, 20 insertions(+), 16 deletions(-)
-
+diff --git a/string-list.c b/string-list.c
+index 08dc00984c..020ed8fef7 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -247,6 +247,12 @@ void string_list_sort(struct string_list *list)
+ 	QSORT_S(list->items, list->nr, cmp_items, &sort_ctx);
+ }
+ 
++void string_list_sort_u(struct string_list *list, int free_util)
++{
++	string_list_sort(list);
++	string_list_remove_duplicates(list, free_util);
++}
++
+ struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+ 						     const char *string)
+ {
+diff --git a/string-list.h b/string-list.h
+index fa6ba07853..3ad862a187 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -239,6 +239,12 @@ struct string_list_item *string_list_append_nodup(struct string_list *list, char
+  */
+ void string_list_sort(struct string_list *list);
+ 
++/**
++ * Sort the list and then remove duplicate entries.  If free_util is true,
++ * call free() on the util members of any items that have to be deleted.
++ */
++void string_list_sort_u(struct string_list *list, int free_util);
++
+ /**
+  * Like `string_list_has_string()` but for unsorted lists. Linear in
+  * size of the list.
 -- 
 2.51.0
 
