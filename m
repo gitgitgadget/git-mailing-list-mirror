@@ -1,53 +1,53 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B102DFA2F
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 22:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02793A2ACB
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 22:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769119670; cv=none; b=abEXvmhdRksKe4eZvhIfR6kYhn2r13dFyAiLqfSD81wmOhM5C4QxmPi+LbxTzAKBmcJQiFdYfcNXqwc6dDcwkV/ZEo2dfjoTKJdWZCWASVj3VjkpMYj5eP/DbuyoDcBqVDmY5aCiVrY+cQU5w17WVqZTdRwekakQgfY7+0oEzyA=
+	t=1769119799; cv=none; b=J976uxW8Flw9rI67TF611Znqj+k+wg6b014oCvvMFY/jU3WjMKAvSAqKVnbJxSdFxHPVIpHGB6PqLEHcmCaxktXCIV1cDctSgFL0xROhFey3uHC/ffGaJnbohVX4eKLq9bvWTDvlIury1N6BFQZVIpQu8o/+2CWdMI8AHa1e+k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769119670; c=relaxed/simple;
-	bh=5tAUB9zYNIi7oT2COOUaTD6uyms2Bv+OCI4gfJRJR8I=;
+	s=arc-20240116; t=1769119799; c=relaxed/simple;
+	bh=QLDWuaPbSdgkyadd3rE4mGYz2qT8SWsOmS7FhR1JF2s=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mzd4GVDYGQt7qrqKW7iySencEWTNCJ5UlF13y9zxnmiRlZfPv6FPYKup1gOJT9mqlF28RTnpG23+QGhsdy101evAFsDl/h10JcFODYiEsy6qB/zofXdg0IZKRlqc6VVxLShqBRJOwmQD5ugrcPg3iEY+is61CjD51ZeJvDJ7fPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ehOn33Ah; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m0OlBL4q; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=N8oMgiy8JlhWOoifvncd5vqWOnOR/Id8zpoiGE9IufK202qkoOEPsXtAWbE49FTPKTXM0wIbc9GmQtiMsU5ekcEcdCdf5qQlHx9gPfXfigRDOMGzoy4Rm7+54TAvILTdEjpc10LBnvlRqE/1nsPTSs/qDHBHhBYEkWcYafmxv4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VGN0qMPH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xTvMFjHy; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ehOn33Ah";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m0OlBL4q"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 229601401048;
-	Thu, 22 Jan 2026 17:07:43 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 22 Jan 2026 17:07:43 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VGN0qMPH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xTvMFjHy"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4A6F2140104B;
+	Thu, 22 Jan 2026 17:09:44 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 22 Jan 2026 17:09:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769119663; x=1769206063; bh=IXwdoaq6O7
-	U3pP7GDjG2H2WCRodUkTOOu1ndBhPJWcc=; b=ehOn33AhXVkvx9SCcI1s3hKqh6
-	c886IRdIMRQHewB8g8CZybIw4z8acgtNHzWEE+QOyKe3cfBo2oKYgdubFSgdtTIy
-	r6h+90t54NZD/A/gC0+H5oVrZf1ftqpKv7Kzpju4g+j/HGKhAmqMX3BbiPa8SUmt
-	weoqeWDCugVkn26eh1lPCRtK2uwPwxT8XW17xQNAeD+jREJsL1Gv9KrNiJQRxtWp
-	Wey+MHjMqGre/HqilYgdL3Mnd2v2ktMwJ7oQurTtRg3HabOYmYSDcl8y0ibvegM3
-	TmQ0umiHAvhp/WShT5TvLfhmaQQyx08JyOsDgeT2CmFIQ8dTomM7kOYRnWDQ==
+	:subject:to:to; s=fm1; t=1769119784; x=1769206184; bh=5PaFQGDvj0
+	xQrQZRhreQgx/W/NTsNJlbWAcQwm10M4I=; b=VGN0qMPHXulfTsniqAnHSr7iis
+	nMKpGRyL6LiduMwlpC2chJfudoeCkS0gbtE+7roavrZoMij0mw54aOfW8HaCm+ms
+	cTUW9ByVXsni6fui6pP0BlrK3OICbwb5uC+poW/IN6JngbKmuqzd73GgmQXImyWQ
+	8Q+qXMMIJwQk2sD4Oe7ixjwZczKWWI/gcjtrQOIc6ys5G0wAhovj4u4L72D1tuGC
+	SXG0IBqThVYAWh6kRxeoBrwstfBsTwYpoItcxC5/jVIDEUFKzkju2da50RRvWFie
+	+imb7nnjDmaRXwdc7igObqGgMU0FYLF1UZF/sBV3yIDN4MLHIEBej3gR1Z3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769119663; x=1769206063; bh=IXwdoaq6O7U3pP7GDjG2H2WCRodUkTOOu1n
-	dBhPJWcc=; b=m0OlBL4qtd/7xbRKm5wTzsaOiaW3aI6vdsSLyTVdtoo8hw1V8Bc
-	E3ydMRX41eLjjoaSth024u7IfEwc8prx23OFQdPyG7WUtkxW96mf1Q3BDRGswv/x
-	Lnpf25G7u28pWOaAcn+eL90pSJjCBWJMBDjToPm23s6gi9o3fy/B+VLjcumgPTlE
-	UDLK+Ur4RKD1XmL3t1d+evXJ8K26bt70UX9pdGiODVtxc1XNovE/T41aZtz8KzZi
-	27EEsz1SaC8nmVu8Z3mlJF0sqlgxvtGeH7T07LDLdCjtIzpfLprFBkxHsiG1W0+k
-	+eRm5k+0+HUrYUiB+GDIe9kCYu/+So4J7RA==
-X-ME-Sender: <xms:r59yaUBddl2qZEb0IFX-zsGCtowqhK2RtBfJGdlj0_WGeVsJP5D-9w>
-    <xme:r59yae-O8OJPXaXd6p2y3n7yp_JmoW2l3Tg98z-UZKY7QBF-_WfOkTLX-mbmHYP2d
-    uBRQrIejc-606DYd29C8gLrBKMcyLpOTZ-c8LY4ntgagVYkTbNx>
-X-ME-Received: <xmr:r59yaYAFGatll3Q-5VWIFX-Oo3-S4SHSP0vxmTANS9cu4FSWwC79MYWBmKU0VZZ6GLDizvm-g162iJ-5rK4cG66FCAuK5e_0nTaakwA>
+	1769119784; x=1769206184; bh=5PaFQGDvj0xQrQZRhreQgx/W/NTsNJlbWAc
+	Qwm10M4I=; b=xTvMFjHy2NnVa7RVVut8AMNMp/cHbVMLb6Gff/frWow5VC/PvrJ
+	FAJ5UlZZdZftZJxpPJjoH8eesXBLvN80Am/ytzKeYCcmA2TaZf0XtIUCprOUfYh5
+	k6zsx5PsnrHeuBKdfHhveW0fWrBYgarStz8/uty749SjemQZGJGBtG6CHlSfXSk1
+	BJ8VSOUJ3z3VROzux7A3zsUoiIMAY3L5q4meBkDtpPhWqNJpiQCvConSaE1gLBUY
+	9gHZRhBzIbWz9vvVSmBc23Fffb30GmWFW+Y/E5YPs6cnUhYcae1SjBQxbgjH1icT
+	VSM+dFd6Rgbpc8VBdJ4Khi71FL4PeHOGQCA==
+X-ME-Sender: <xms:KKByacm04OQgMj71iiO9LOoDZMDfzAbye54nzOd-ElYcNFLrzdxG9w>
+    <xme:KKByafjQ1kRM95HPv_Coxm7OwHr-rPbCn0ToBFJ2jdTugpn7m7esTn9Lbj_Ucl6_9
+    DZCmg0THhLncU_6-FZATUUyLi32eXrPvM_hVCEU5CM0_Hor6Rwgyg>
+X-ME-Received: <xmr:KKByaUckmUzkhISfgkedB5QN9wxC7SpArpvElx1UEpDnduNzDiJFWA4PS8ozw8hEjmjedb7N2NvnOocfC3OBj0lhlfi8lTf-4IEJLUg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejfedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -61,26 +61,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejfedvucetufdote
     shhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrih
     hlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehg
     ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:r59yabQmDs1us-_qNbRaY509KuOhK7QfhiGRZHiEdeRbGPY9aqxZrQ>
-    <xmx:r59yaXtR7Fpw6r4pt5hdCLNO2dY_xiFQvXyKAXDqVS4PXm1sFTXJiA>
-    <xmx:r59yaf2pP93ame4AF-3s6-E1vVUOC_rKJKBBRfOYB0IsYB2iVeiWZg>
-    <xmx:r59yaQWz3oC2mFZFAgqB1rNSU8-NCInsNnpccKZZg_GZZYFngSrKew>
-    <xmx:r59yaeco7df1FM4dyWMTVtM_BKsV_HTbI1SqWjK1MU-OIH6Bfe8_cK76>
+X-ME-Proxy: <xmx:KKByafirLRuCa429NIFZYnDfrsgkSZ0RkGyPig_w_hiKWoh2ebQ4hg>
+    <xmx:KKByaczXCJrEi913GzqebE5UnlCfFyAMV5-4BgDsVMPyjorEhzQnzg>
+    <xmx:KKByabNI5e47qeI-xO_Oq7RJbJur_DZdI42GYtNNz2WtZyl4vAe8lQ>
+    <xmx:KKByadU8_QMETcRcLBOIoTqIfBJYq91LmEKZ_oIyCghRQajltc9Jrw>
+    <xmx:KKByabWw4aqkgT9-jWfx5vCWIqu5Bf09RvMWE69r0XjMUOJhnYXXzOdu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 17:07:42 -0500 (EST)
+ 22 Jan 2026 17:09:43 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Amisha Chhajed <amishhhaaaa@gmail.com>
 Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Elijah Newren
  <newren@gmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH 1/2] Adding string_list_sort_u which sorts a list
- then deduplicates it.
-In-Reply-To: <20260122171523.94234-2-amishhhaaaa@gmail.com> (Amisha Chhajed's
-	message of "Thu, 22 Jan 2026 22:45:22 +0530")
+Subject: Re: [RFC PATCH 0/2] Adding string_list_sort_u to replace combined
+ calls of string_list_sort and string_list_remove_duplicates calls.
+In-Reply-To: <20260122171523.94234-1-amishhhaaaa@gmail.com> (Amisha Chhajed's
+	message of "Thu, 22 Jan 2026 22:45:21 +0530")
 References: <20260122171523.94234-1-amishhhaaaa@gmail.com>
-	<20260122171523.94234-2-amishhhaaaa@gmail.com>
-Date: Thu, 22 Jan 2026 14:07:41 -0800
-Message-ID: <xmqqcy31l2s2.fsf@gitster.g>
+Date: Thu, 22 Jan 2026 14:09:42 -0800
+Message-ID: <xmqq8qdpl2op.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,52 +91,13 @@ Content-Type: text/plain
 
 Amisha Chhajed <amishhhaaaa@gmail.com> writes:
 
-> string_list_remove_duplicates is almost always preceeded by
-> string_list_sort, hence adding string_list_sort_u which dedupliactes
-> post sorting.
+> I was unable to write unit tests for this new method in this RFC PATCH
+> since I was quite unsure why no unit tests were present for string_list_sort
+> and string_list_insert.
 
-The usual way to compose a log message of this project is to
-
- - Give an observation on how the current system works in the
-   present tense (so no need to say "Currently X is Y", or
-   "Previously X was Y" to describe the state before your change;
-   just "X is Y" is enough), and discuss what you perceive as a
-   problem in it.
-
- - Propose a solution (optional---often, problem description
-   trivially leads to an obvious solution in reader's minds).
-
- - Give commands to somebody editing the codebase to "make it so",
-   instead of saying "This commit does X".
-
-in this order.
-
-To those who have been intimately following the discussion, it often
-is understandable without some of the above, but we are not writing
-for those who review the patches.  We are primarily writing for future
-readers of "git log" who are not aware of the review discussion we
-have on list, so we should give something to prepare them by setting
-the stage and stating the objective first, before going into how the
-patch solved it.
-
-With that in mind, perhaps something along this line ...
-
-
-    Subject: string-list: add string_list_sort_u() that mimics "sort -u"
-
-    Many callsites of string_list_remove_duplicates() call it
-    immediately after calling string_list_sort().  It is
-    understandable because the former requires the string-list to be
-    sorted, but at the same time, it is clear that these places are
-    sorting only to remove duplicates and for no other reason.
-
-    Introduce a helper function string_list_sort_u() that combines
-    these two calls that often appear together, to help simplify
-    these callsites.
-
-... probably?
-
-The same comment applies to the way the other patch is explained.
+t/unit-tests/u-string-list.c has tests for remove_duplicates,
+though.  If one discovers test coverage is lacking, it is perfectly
+fine to enhance the coverage, especially the low-level unit tests
+are ralatively cheap to run.
 
 Thanks.
-
