@@ -1,92 +1,102 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C543E37474F
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:21:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E8236828A
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:58:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769102468; cv=none; b=pyPYErGZQ/Oe0zfjN0xL5aIxpN/bSFu2QAO8MrSzrMs6o3O3jnMLoilruEjDMVXVdRAWmpZRVeLX5Oi6Pbbz9MWxH8kfBliYCqGuUQUl5bxQjlhuVtv8oozuwldTpLu+BAEJxDka+m25RO5OsjoESSzJnF78DsDM6j+BqD5TG/E=
+	t=1769104694; cv=none; b=CeEg12bMadHb5n3faIkBoFDBNSF2AnUHwO59HDuezESFiHAb8twJJ8FTrG+RmTfAYhUFu8RLVuFybKe9AA8/O7ufqbe2pRzldQwLh3mgjfOl3GS+srDcWgkw1hCkOAjItdDnyl5ymyol+KcLS/n7pJ0E0120ZVg6D9rDDYUhA7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769102468; c=relaxed/simple;
-	bh=zw8eb1eR9vvivIdzEDOidEASkgCEZnw8Z5bd/OnYOok=;
+	s=arc-20240116; t=1769104694; c=relaxed/simple;
+	bh=shAZ4qHCo+nAnG8ZDWx+fgANBp2mejnl2obKFPoJ6AU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bj5bgOnYv06pY96MCGxwedQUWQwy10vAllAczyQ7RV36LAd/qJBGDiyJQqg7ISu3rFOpstdrCz+BiwzZggYem4kP+tnPVTCZOmD+dY1TnV1e1KTrn2jCmc/5Xja5cFRWZmzI+bjPYc2GqQ+WsWmxzQTah9VP/WwgENjBb7fnW8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HtaOHpSs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dKX47cjm; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=OQ4CMROqDDs2YWsoM2SQ3snIXP7wlwce+BHdVfEy6bqPxDFg8J6MWdyaYFqRTtbQjGDOxTZZXyTltlDDhweOBWOuYItRWZ5avGQXAv/QeUtSttL6oTTH/TMjsMmooXCq84x6lI+WMPep0RmRROJnoBmAw1k4hkrEQgMSeSoltB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gDFwVcRa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mv9Q+Bi4; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HtaOHpSs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dKX47cjm"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7F2831400197;
-	Thu, 22 Jan 2026 12:21:01 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gDFwVcRa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mv9Q+Bi4"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 58F55EC009E;
+	Thu, 22 Jan 2026 12:58:04 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 22 Jan 2026 12:21:01 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 22 Jan 2026 12:58:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769102461; x=1769188861; bh=6FMQxNLsE+
-	1nvnyGkX6mYmRZrwzr9Hi0HRr6Z/Ips74=; b=HtaOHpSsJCLvTVwmo0hhNoWF80
-	2Xedj2mfk2SHu3eVxZ4yNZgczmxUM1ZNhZTHlqa7gItA4Kr2SkQQ7e/PLglfHuh+
-	X93dD3bn0k3ata5xyz4xjMREAbQF77F9VXVDBfT2Um4e7S1xRJwVEcwb60Xsn58b
-	Ay+yiKtPow3f350Qp2tADlrXYUjSVL2fmMYbNHyqq0SPWVQV252MBeRZ4sNEMypE
-	vBTvCeR6PsDCFjLLStYv1H1eg8zFiPP3NamlWz6l4112JMxm8WnWDgO/ZHkJKDZr
-	znC4eMdX3pG6hrlaAm3XJ31XMKHZud5M9kohXBb+FcEUMlMoYhwqqq+fTw5w==
+	:subject:to:to; s=fm1; t=1769104684; x=1769191084; bh=1KO8wTXwgD
+	rlLWy41uxLwUDpt1hn+YHPrK5bO14zMWc=; b=gDFwVcRaQf8KoskqRsrH9fs9uH
+	zdCwMNBd1pgb9OQyaJhAoF4XkfNOpXb4w5G+x+QZUAqAlDYAhWpRA9KeSg+6sq6/
+	NKnjpzZe3D3EPuSk5HgrfCnQpSyqbZme9EeNb7Z1Smn+yydobwCr+jlDEwL/dffv
+	Rfj7cSmNm6/Dt9MZEvftDpenek9aFEcU1/nAFvDk7o9dmIHQ99wixQ5BVjEVNfIq
+	0JWrcsvh7BJljkAT7fr9CdTqnq3zRcWt7IJuyx/I7Z/q3+4j9zZyRuC9aF/bmdxJ
+	P9sAa9xZOVRoAuY+saM+uNxTRKmCI742ovvEVMDXZAb69GU7W0OR1Cx/d3tg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769102461; x=1769188861; bh=6FMQxNLsE+1nvnyGkX6mYmRZrwzr9Hi0HRr
-	6Z/Ips74=; b=dKX47cjm1EXtya/j4yKeXf2XGPfHh43O9BDoWRPKRmGI7Ibn255
-	JUFwM3BvQIn0Tl9u+XcmCN8jCtIcTuSiZgi7h/+SNpQSZfsytMt7XBZZKRX5mokB
-	EEDPF5wtYzeTeNqssAkSLCyHRNaB//AI0Vu6VrySc/n89h+Y/QRvG07By8cwu0up
-	VDrRWsmo/fwrrG54gorCQdL+PtQY+eL6FdJ93zHRs12OiUuDog7qAS2QVwEu7uYt
-	4RAATjSshVpCToFDaD4scftPLNbnrzYz54Di69YERoPCiGtAY/Rdp2tfNzjz5sFV
-	9+TcfRfF0u7auWr5mox6OzGggMXg4QQhNVQ==
-X-ME-Sender: <xms:fVxyab_dgUogKnRqiT-jvhgqu27Abfl-XDdYeR50k-S-WSr5joYbxg>
-    <xme:fVxyaWz_AQOomUo9Kjx0i2Dfmtq-CPmU3-s7d3E9fUVhdlJMCQ3udv1RibbkCyfp-
-    AVM6JBCRbIKTFv9AosnfnaqT9Gn0I-XTHAp9y8lTGZwiXz4QF_rBA>
-X-ME-Received: <xmr:fVxyafOGccaEBitSjcpFAONphP73vi63jtmzlIRRYBln53RkaBFdFnw76oMHb8BADyAfJ1fa9Cel_hjXSiOxX86-wCH3inDkXxzNiNs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeijeegucetufdoteggodetrf
+	1769104684; x=1769191084; bh=1KO8wTXwgDrlLWy41uxLwUDpt1hn+YHPrK5
+	bO14zMWc=; b=Mv9Q+Bi4HWWFDPaRxAtdmaDqERpIhZClO4LI5siouVR4gmkydhX
+	4rLHJkJfbINiS/Im0yUlvWYxURndK/DWqVcyO10GrqNO4q6yaIbR2wOp/Yl05U3Q
+	x1efVJK8bSv7Bh+RVFSdKFAA00dmtNp41ewF9KnRIn4wvB295YM/oF++ehjEXKpm
+	JaHZ3ZILpGOs0RgKj6JyHq1ZrREIZNFnEAqYPx3z4HnqzOvzyk0nWSvi4/M7w+9H
+	ALstRVRvtx3evHFgvb+BD6LDRUEDVNcuZ3RHfu5u2szVYA8SbsXv0zRV8NPba0PN
+	wOxH+fILozCfrcDjvHM9Br2nD+2Z/fo2c2w==
+X-ME-Sender: <xms:LGVyaUxGR8-aMGiECOL0iXzCSVyTLKxwifxr8AV1TAWreeU0gSXLfg>
+    <xme:LGVyaU0dXXgNsEnHoeTUjB0Unp9HMbHvO_OXIX52haB1DmK6MrAhJOdBzgRNHznqx
+    7YaarE6aJuo2bUCz_KA62fsScCm-nkFrBWFD2qow3sNgkA8HD8_YVg>
+X-ME-Received: <xmr:LGVyaazgmiRTN574N2CkOn_CFFHc8UfQyn9q2Em_edQD_z3dlZDWowwIvU2_OTX8pWARU2R3dkQBFz3-IfvQFSJotSilhuhf0fukJdY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeikedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
-    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepvghmihhlhihshhgrfh
-    hfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:fVxyaT_lgRQOSHb96kKQiqWn41JLhzCY-TvRB0ZthZxLtnqLUUoGOA>
-    <xmx:fVxyaU7El49Mzva4ZO6bIx5-3lLpaCbUEep8CQkBDfjBxWeFCUcodg>
-    <xmx:fVxyaR6nnPosniMJzBkOZthumt7iJBKiS1MhVEwdY1bz7W_0oqh3Rg>
-    <xmx:fVxyaVpsQwmmOffXIAEqOUQfzLfD1d0PZZ5DYIwTuLRVRCGt7Jg3tA>
-    <xmx:fVxyaXjuG4pyhi9pQtzNyY1HgeXAV-hwU8YjYUaBtL_d4XahaXCb6mv2>
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjh
+    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepshgr
+    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehophhohhhorhgvlhesrhgvughhrghtrdgtohhm
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtghhith
+    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehstghhfigrsgeslhhinhhugidqmheikehkrdhorhhg
+X-ME-Proxy: <xmx:LGVyaZUy0TIerLVi_3LdaSz2s14BHnvAWzn7b9_3hbKdqrHZZAAplg>
+    <xmx:LGVyaW8__smYMkHJhGDDLDuTST36Q3Hgn31Er3REij5D9l76sudbsA>
+    <xmx:LGVyacszlQM8UlE-UkSsywXQbe8rozh7qA8j05MnsOToJ6fvuPUjcw>
+    <xmx:LGVyaW3Y8-8kDMV5eY20mWiZNSluravRJ812p2WwDkwXSVmSfC1EKA>
+    <xmx:LGVyaQekRFMIDglbPapKFOtVKRIWcK2r00EF1cH6dNBw4ltxMaOUsXIM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 12:21:00 -0500 (EST)
+ 22 Jan 2026 12:58:03 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Emily Shaffer
- <emilyshaffer@google.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
- <steadmon@google.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v7 10/12] run-command: poll child stdin in addition to
- stdout
-In-Reply-To: <877bt9rk0f.fsf@collabora.com> (Adrian Ratiu's message of "Thu,
-	22 Jan 2026 12:58:56 +0200")
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
-	<20260121215436.1473800-1-adrian.ratiu@collabora.com>
-	<20260121215436.1473800-11-adrian.ratiu@collabora.com>
-	<xmqqzf66pnmz.fsf@gitster.g> <877bt9rk0f.fsf@collabora.com>
-Date: Thu, 22 Jan 2026 09:20:59 -0800
-Message-ID: <xmqqv7gto96s.fsf@gitster.g>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Patrick Steinhardt
+ <ps@pks.im>,  Ondrej Pohorelsky <opohorel@redhat.com>,  Jeff King
+ <peff@peff.net>,  Johannes Schindelin via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
+ sequences to be passed through
+In-Reply-To: <a51f9433-e82f-bc2c-5fc4-f8ae95a859f8@gmx.de> (Johannes
+	Schindelin's message of "Thu, 22 Jan 2026 13:29:16 +0100 (CET)")
+References: <fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com>
+	<aWD2x154F5f-c3pL@pks.im>
+	<aWKLrIefrcSwReu2@fruit.crustytoothpaste.net>
+	<20260115211448.GF1053259@coredump.intra.peff.net>
+	<xmqqa4yeblsx.fsf@gitster.g>
+	<c0af9072-cf21-a7e2-5b78-eb70217b462c@gmx.de>
+	<aWnekt4ESo0bKpOT@pks.im>
+	<CA+B51BEs7kuJ7s+K2vbZLSoaq3krGrqVncQAaTjSSNazFLY3tw@mail.gmail.com>
+	<xmqq3445bn33.fsf@gitster.g> <aW3bSYCIPMhJT1mf@pks.im>
+	<aW6tMtg0pEKq23TX@fruit.crustytoothpaste.net>
+	<xmqqa4y81ag8.fsf@gitster.g>
+	<a51f9433-e82f-bc2c-5fc4-f8ae95a859f8@gmx.de>
+Date: Thu, 22 Jan 2026 09:58:02 -0800
+Message-ID: <xmqqo6mlo7h1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,23 +106,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Yes, it is odd and it's a weirdness of the run-command.c child fd
-> handling logic where .in, .out and .err are initialized to 0.
+> I disagree with making sideband sanitization opt-in or weakening it based
+> on a "trusted remote" heuristic. In this context, emitting untrusted bytes
+> to a terminal without proper sanitization is a security-relevant bug;
+> safe-by-default should be the baseline.
+> ...
+> If the goal is to mitigate terminal escape injection from
+> remote-controlled output, then shipping it disabled by default does not
+> mitigate the default case. Most users will not discover or enable a
+> hardening knob until after an incident.
+
+I think we already know we disagree on this point already.  I am
+simply agreeing with what brian recommended, based on his findings
+at GitHub hosted public projects [*], and what Ondrej says they have
+been doing in Fedora, CentOS and RHEL [*].
+
+
+> I don't think we can safely infer "trusted enough to write to my terminal"
+> from "I fetch from there often".
+
+It was mostly an attempt to offer an idea: "Even if we make it off
+by default, we may want to protect the initial clone, and here is
+one thing you could do...".  If it would not help in practice, I am
+fine if we ditch it (meaning: default off everywhere, even for the
+initial contact with an unknown repository).
+
+> If the proposal is "full pass-through of all control characters is
+> opt-in", or "full sanitizing of all control characters is opt-in", I
+> whole-heartedly agree: That is already opt-in via setting
+> `sideband.allowControlCharacters` to `false` or `true`, respectively.
 >
-> Patrick raised this up as well in one of the previous patches, however
-> reworking run-command to not use 0 sentinel values for fd's is quite the
-> big unrelated patch (I gave up after spending about 1.5 days on it at
-> the time).
+> If the proposal is "keep the historical behavior (verbatim sideband
+> payload, no sanitization) as the default, and make sanitization opt-in", I
+> am firmly opposed: This makes the sideband payload remote-controlled; A
+> security hardening that is off by default will not protect the default
+> user population.
+>
+> Can you confirm which of these two meanings you intend when you say
+> "opt-in" here? Once that's clarified, we can discuss whether the default
+> should remain at "color-only" (today's default) with explicit opt-in for
+> riskier sequences, or whether you're arguing for no filtering at all by
+> default.
 
-Thanks.  I didn't realize that this was already discussed.
+The latter.
 
-> Maybe one day we can also fix this weird aspect of the run-command API.
+I wouldn't be surprised if people, who usually do not participate in
+the discussion around here, are highly inconvenienced when we
+suddenly filter out IEC/ISO 2022:1994, for example.  Not that I
+suspect that these character encodings are still popular in some
+parts of the world, but that I fundamentally disagree with the
+attitude "we explicitly allow colors to be passed so it is perfectly
+fine if we filter everything else out".
 
-At least a comment somewhere would be sufficient to avoid others
-waste (your) time like I just did, wondering why fd=0 is special,
-even they know that it is unlikely to get fd=0 from a fresh new
-open()/dup() etc. in our codebase.
 
-Thanks.
+[References]
+
+* https://lore.kernel.org/git/aWKLrIefrcSwReu2@fruit.crustytoothpaste.net/
+* https://lore.kernel.org/git/CA+B51BEs7kuJ7s+K2vbZLSoaq3krGrqVncQAaTjSSNazFLY3tw@mail.gmail.com/
