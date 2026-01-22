@@ -1,103 +1,161 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3246387379
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 08:26:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769070376; cv=none; b=HR6COUmSo9kOubIJintwOVGnaH59JszGlTb3a+3mSrNq6bFNjH84+K+r3sewPMBLiuHJmHfxzQ26yyMP7cCOp1R8R5nbLSKEzUOT3u/SXfMe/XGYYBFXZEHZ7rvGd9zRBuT8+oekXPdWXuEGFCEsITQsMm2GPXf2lgxdJzjc3wY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769070376; c=relaxed/simple;
-	bh=GEkH1ZoYaPyidsi4j6vkHyBd5aHJidi2BxAczHX+jHE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nIVy/67PM/NzbcSFR67nn7Q6iSRMKgQ+hVqGZV7HvKow2qsY6ulVFyWCoB/2xx55qxteFAIPpnY/ppf0BF7RU2TAutXU9G8EJ2Qg3RON9Da/1eBxKFrTl7JwJdUpPhwpZBYnp6xU+q8oX8j4Sf3Q4nqf/0laIeR7pq75Eu9WPAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=uI7dh/mA; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54257330B22
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 09:05:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769072749; cv=pass; b=RmzkxzR57DR7NfHXzWOXYlj17YuVc9ep+QByLHOTYz6NN14GTirxaS/uAUD4QpofuMaxUQxP6Y5wtJR8HUlj3dqoQK1RL7M54KKrvagfaCMiaH30R5iZpEZEoQbLRGNQImPukK1OVewi9b7zslV2c5Y5Bcm27l2Nvut1hndci4I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769072749; c=relaxed/simple;
+	bh=3MJ5SiAB+/JmNzvWB9Uxw8ikWh9/MaKPlWqlviULBUU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cO6DlVLusNNBuXkQuEfDHcBKgfetBnoM4PUzrKl4ZO1nDN9+YiD9B6Bj51kiuyZjIshYYClKGjQmmYl9QEmxoTyzWZhESU6P/cgRJVMKkT0Y5G9zVM+adMXdaTf69kGBQ7A9tplSYwLnRNEKt0IYEPM6R+L/JX8zaO7tnAneBNk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gzxI0IEL; arc=pass smtp.client-ip=209.85.222.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="uI7dh/mA"
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 6D2744C019
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 09:26:07 +0100 (CET)
-Received: from [192.168.3.191] (unknown [92.173.128.58])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 81B8C5FF95;
-	Thu, 22 Jan 2026 09:25:57 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1769070359;
-	bh=GEkH1ZoYaPyidsi4j6vkHyBd5aHJidi2BxAczHX+jHE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uI7dh/mA19zoZ/bhIVaE2UyVHIhgZdbqd75+GR7y+n50I8t0zIpzDmTae9pseM6FZ
-	 2j9YuPWwCtSwiM0CnfdTfr6WceAi9/C4phC+pLtywDmfkPc/Gs1AVZYaD9cpKBFMMH
-	 6pvsrzLp7JZ/mOYg4149MyexDmlVFT9INZ2ZiU9DHV4UE1TErbLP0AkqK9aTWJ5nyc
-	 0UzSaBsmhX3lv+Ihn+jgFnvJI6cVIdyjSgXdan3BNBzDaaVrRGpvw7Rqzd79s/mlz1
-	 CJHQDCI0Z46VLF0rJ643rIOMxCYWZOaMdhKd0nMYn2aR8xP92rAKvhmHpLq5B531G4
-	 tkqhAIj/ZufRQ==
-Message-ID: <212c09b2-2931-495f-96d9-495f78666f0f@free.fr>
-Date: Thu, 22 Jan 2026 09:25:57 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gzxI0IEL"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-9480c6f8b43so188533241.2
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 01:05:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769072746; cv=none;
+        d=google.com; s=arc-20240605;
+        b=KRzoDoyhLYJNvRqBX49QKkKwCymatyaSXTS9LOzn8Dbcwf5IshFh0RMP++lfCG0+Sg
+         TFlDkwiWTxtTXnzywbjs5ROWay+ZFy9qtAhW5BPOZYE8iUOHtC1/sIGKI9kAqiQYKzm0
+         wgCOqBbLRDwBERgFGF8D39YlkckejOu7vSujqfi7zAUfcAAtYjD78xYyzP04BfUpl+wM
+         hOQ62gkXnNyt8QJRv/aLB/T0GWPrxoliibxE9Dvp5KV0q7r0HEb7hjrHFIIfcRX//MfF
+         gnpS9/L60JJxLllgWUDLwM1NHgUlD7DFYy8dqnJ7Qp7vfOZcP2tpKOYdQCBMFvlR6hH9
+         zf2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=vc8LxrlXp1TRy8cJVzj2adVuQyrkM/i39URUQkIbqXw=;
+        fh=tgTGuaRN1GeKD8B4glk9fdd2/0h556MnuSKCDjvRgyI=;
+        b=NFrx5hXnLqq8w9lPeQGjbz820YfePQeOjNKGRLO3y2xDy0RPu5mrPGiMW/57wCWhrT
+         VrG8lHBTIwOxX2rZx3bOqc0+Ci2HI6ocsm6ppOQqEB6/gv5cjmGiwtNOTIdl7b/mM7vj
+         sGtshEFeXaKjkrYdUxB3dMb833RaaGrheJgyyzdPM/Easha5sd1gXe7PxNPkoocSQsfq
+         Zr68o/AodabRsP7Gs5B8VT8zCJjHcGn3g6OxMvXb2gT8cFAL5S6AvI2hu5KpGzlOEfG3
+         82fhZFDq27HnjkcEOD0JrEtYcSqGaufgwI4W/mTbxcJFN1PgAHBqxtbWhg1VPwDcBTkT
+         aalg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769072746; x=1769677546; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vc8LxrlXp1TRy8cJVzj2adVuQyrkM/i39URUQkIbqXw=;
+        b=gzxI0IELCjOXtBwqjgt/tjKgIMZ1jQW4yculbzbbPG8OOKIeg9/SAARaa8/O4lFO7c
+         SIndhxXYcKOSFHE7Mh+46ZUZg7iUJJMlAqRuuUuo8dc+dAZdSd25M5JBmD2uc7/AbIht
+         Z8IBQ+iEB964fv3C/IbtWGKPDj7uMoXt6OFXhSWSR2EJxa7NiK0ZmuCnUbaDTljf1Dkl
+         VMhutYLpo7lAG3CFQjYTNhi3x8Y3nTqZyb2ufVuqBvtQ7VaCMdDAsTVuFpiZnFe4RP2n
+         zTYMjY814ESXskY4xu0wgUh0R7AbA5QyE0IlIzgXmYG4mxe3D+dDNeSbjy3blB6Ftfcp
+         Dd0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769072746; x=1769677546;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vc8LxrlXp1TRy8cJVzj2adVuQyrkM/i39URUQkIbqXw=;
+        b=fX/OdAzDgRDBNR/IKMMOhBg9cRhkxBID5Lxku09DY5HEr8qF6BFAQiHyoFq1DUDQi5
+         WU+C+TibGqoOxIvP4K64cunNCRdXHjtj79/Ij1w0cGRAmZ1RbsbP9NQAHSfKjWiwSrzm
+         Z++LiOa17h915ptL5RY/Z/I+rvaqphLrUXtGLjw8qIxJNIpIdzvFbX4hi2upCZEza8Nf
+         WtZo2mEI5fzdM+frg+iuFYZhsNBrxbafH4F2VbGaC8+5llTin+YN8Zma7agqAyktmEo/
+         pR0NHmnU4Zb6p9Y/iGR5IyJzRQbVJiJ8Yn0bbRl0lDqc+LQqRVm/htXoirKZCF0cayO2
+         HUEg==
+X-Forwarded-Encrypted: i=1; AJvYcCX4moxcJKJ/aTSpyXmYViGf9UgEiOGFhMHHwu4Zd21cYItZ04bPy3fLi0VImvQo8KvmiNk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywb+1tPacdFFi0PzkSXpB2myFWEP4DGzLgFBoc7vmisTLpg91t8
+	OgDjC5c781sp1MbYYdrQVqBHU8PKud5dAJKgIuLxL0EJeqGxajPMRLN/Ttk9et91W0zC5lWwRyl
+	4JSHvHSDSOem6lQ/D2wb4LpXu98vZNFk=
+X-Gm-Gg: AZuq6aIGYgvfKEFZEv+Z0+wui3bczninayWF9VgJISFPO0j30E+AuUWw9sn+OTxVPM5
+	j3shkvbqGAYJa+b8Zb2VFBoYZXo+F/5Kz0TqXPrzhORHO3OFamVhvlmzybcowGJnG/3HQ05pWPi
+	ns2G3w042fNCroQPBWp0WHaN55Ctkw9pvJNIIa3zY0LVUpx2d1k5Mo0Fr0lMpHOZOQ/szpsLRfC
+	3b0G+nprIRI/OG31R03+ExI+KQN0Nq9o57Qt4urzhXzG8Upw8MoIciCDmZEqGZLJUbCIRjdO7W1
+	/Inj3GrpjcE3PbvXLxJQYIGMtQhp
+X-Received: by 2002:a05:6102:3584:b0:5ee:a1e5:6504 with SMTP id
+ ada2fe7eead31-5f1a558f790mr5931264137.36.1769072746066; Thu, 22 Jan 2026
+ 01:05:46 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 22 Jan 2026 01:05:44 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 22 Jan 2026 01:05:44 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <67808128-5f41-4ae5-b224-a76048cd82c8@gmail.com>
+References: <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-0-e0edb29acbef@gmail.com>
+ <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-6-e0edb29acbef@gmail.com>
+ <67808128-5f41-4ae5-b224-a76048cd82c8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH=5D_=2Emailmap=3A_fix_and_expand_mappings_f?=
- =?UTF-8?Q?or_Jean-No=C3=ABl_Avila?=
-To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <gggadget.24e@msgid.xyz>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Language: fr
-In-Reply-To: <gggadget.24e@msgid.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Thu, 22 Jan 2026 01:05:44 -0800
+X-Gm-Features: AZwV_QgYhybtUiPV5gW0Ciw7zlrzhnNmWSDEDhZ-UTPpiyVhyGjgGuHiMsREnls
+Message-ID: <CAOLa=ZRO1gH_pdo6Z1xpx5N5u=Unfhq7wyV8EHUiB0zp1+AhJw@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] fetch: delay user information post committing of transaction
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, newren@gmail.com, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="0000000000009c9d720648f65825"
 
-Le 21/01/2026 à 22:51, kristofferhaugsbakk@fastmail.com a écrit :
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> 
-> The latest release candidate notes say that there is a new contributor:
-> 
->     Jean-Noël Avila via GitGitGadget, ...
-> 
-> But this is a familiar face, just in a G.G. Gadget trench coat.
-> 
-> Also map the rest of the idents in the history.
-> 
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
-> 
-> Notes (series):
->     Tested with:
->     
->         git shortlog -e
->     
->         git shortlog -e \
->             --group=trailer:helped-by \
->             --group=trailer:acked-by \
->             --group=trailer:reviewed-by \
->             --group=trailer:noticed-by \
->             --group=trailer:reported-by
-> 
->  .mailmap | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/.mailmap b/.mailmap
-> index 3cf26b1add0..799734821b4 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -107,6 +107,9 @@ Jason Riedy <ejr@eecs.berkeley.edu> <ejr@cs.berkeley.edu>
->  Jay Soffian <jaysoffian@gmail.com> <jaysoffian+git@gmail.com>
->  Jean-Noël Avila <jn.avila@free.fr> Jean-Noel Avila
->  Jean-Noël Avila <jn.avila@free.fr> Jean-Noël AVILA
-> +Jean-Noël Avila <jn.avila@free.fr> Jean-Noel Avila <jean-noel.avila@scantech.fr>
-> +Jean-Noël Avila <jn.avila@free.fr> Jean-Noël AVILA <avila.jn@gmail.com>
-> +Jean-Noël Avila <jn.avila@free.fr> Jean-Noël Avila via GitGitGadget <gitgitgadget@gmail.com>
->  Jeff King <peff@peff.net> <peff@github.com>
->  Jeff Muizelaar <jmuizelaar@mozilla.com> <jeff@infidigm.net>
->  Jens Axboe <axboe@kernel.dk> <axboe@suse.de>
-> 
-> base-commit: 83a69f19359e6d9bc980563caca38b2b5729808c
+--0000000000009c9d720648f65825
+Content-Type: text/plain; charset="UTF-8"
 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I spilled all my online identities in the codebase... Thanks for fixing
-this with the right one.
+> Hi Karthik
+>
+> On 20/01/2026 09:59, Karthik Nayak wrote:
+>
+>> +struct ref_update_display_info {
+>> +	bool failed;
+>> +	char success_code;
+>> +	char fail_code;
+>> +	const char *summary;
+>> +	const char *fail_detail;
+>> +	const char *success_detail;
+>> +	const char *ref;
+>> +	const char *remote;
+>> +	struct object_id old_oid;
+>> +	struct object_id new_oid;
+>> +};
+>
+> I was expecting that we'd pass around a struct like
+>
+> struct ref_update_display_info_array {
+> 	size_t alloc, nr;
+> 	ref_update_display_info *info;
+> };
+>
+> rather than passing a pointer, count pair as separate parameters. That
+> would also allow us to use ALLOC_GROW() rather than reallocating the
+> array each time we append to it which is rather inefficient.
+>
+> Thanks
+>
+> Phillip
+>
 
+That's fair, I was considering an array and didn't see the need, but
+using 'ALLOC_GROW()' does make it simpler, plus we'd totally remove the
+need for the double pointer. Will change. Thanks!
+
+--0000000000009c9d720648f65825
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 99a96f2ef3061040_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1seDZHY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1menFLQy85cmFUTzlzK2tCcytiN1BBQ0RGWXlzUkFhaQp4WjQyMThJUXFT
+YTlFL1V3dXc2bUY1ZzhoaDg0S3ViZ2xVVlJ1ZTF4dXlKVUtzd1N5RzVGemQrYVh0cEVJeVplCjZZ
+UTI4TTNucXEzM1ZrRlhGc3dscnFpOEpFS1l4eUpBRytnTmR2a3NteStvSm93ZXBlZ0VJeTl0Q284
+VG9tUWUKcWwza1B1ZERLNGFMRmlhVHVLZVk2cVFTc1pQd0dtd2pCemV4MUJIemdsbEptN0FlUUds
+OHZFN1Z5OGdKSk1UWgpkZVlaWVExQmFYZzNMUU1ROWE4aGJvV2licDcvaVBDcmNQZ0tGOXZFbVh2
+T1ZwK1JZZnN3S2FHblR5TEkwcG9yCmRhZEMyWmRDVWZIYllWeG9ueGVVeksvak04VW51ZWhsR2hD
+UEhLZTBBb3F3Mkp1Q3RPbklvK213Z1QraTJtU1cKMFhDM2lRcUIzU1oyQ05CV3JnT3FHMnJpZERv
+YVdnMU1CLytxdThWTDVIRmNZSENNVHR0MysvdHFFbTJJMFV4cApJOU44WklUakltNUJmUzRDTGtv
+RW1zeFZCcWZZcGVibmhPV0RhSEFSZ3Z5RGFBSEVZMEFtK05waWFNRElCMVAxCjF3QkZTb0I4bjNS
+R0pNSkMzYlJDelVnNld6UXpzRUtaUUZnd3lZTT0KPTZrclYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009c9d720648f65825--
