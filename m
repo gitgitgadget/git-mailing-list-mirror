@@ -1,108 +1,104 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D8814F70
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 23:15:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13C5352F93
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 23:44:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769123708; cv=none; b=W4lg7iLk/Ab5dhDkVJVTHCEu5Kl5/w0o7pLFbUHFE+/fNfDRL4FN8JjE6vvD2VayEnqB3R+r3cfuYe2cjB5MDby0EiyiQGcpPBxlxt9so1k34+JleUIoWXejwQX3T9GbLCl8dbZrw2FFvHdvrrSh7QTyXpzdVjydUVHcB1OKLWQ=
+	t=1769125493; cv=none; b=Vfn4zhdo2iTSuy4RGKkzeckeymCCW0VWMVbysxubI0w3d5vqtBPkRqB8V5f/zyd4rCebtMYctcuJI9/Ib3h6HRicjFSYozMeronyMK9EJBTPw9XgDMPjjXAicyH7xFnWd8K/065MeNTJWTl1mk9cgDq54t2jhszflMv+40zwk78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769123708; c=relaxed/simple;
-	bh=iFXk4D2xoC8MYVF8pXaJWZAZWwkuuH3bf8ROVKieiOc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mc7HYhQ0UTV2ikeR3l+dmAleHMQrAyvnKC/OxCsrVEp+LLTJgXYrc1irV1l+7QZu6WLjIbcOi+Y8yVumpbZUMiqD9ndSFUKaQVKu8YU6pXZLEUU4PlRnt+PNzJy3O5gr1eDLYSzvVCNfjzAW1/dBRLlSDmEiypQRzBPdefXItP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fjlfC/zn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UZ0rQnk4; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769125493; c=relaxed/simple;
+	bh=HvMfijoyAOf5Cd5gQA03tm0qMn/yS+yFGOW1hibPlk0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bxp/Ad8m1aG+aWpf4rS8u7WzJAtEpcQwoXftzyzY+W195Ngnm0L4GuWk1XA90YPPIs7BmMXyiLoUk638WdavtysnhRpLqiGY262eehWftGg12BESx57GmKgLYjDOPfooEjPh5oPBM1d6zmN3TxNijU/uRUsrdX24I+BGA3aOIuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Z4h/DoKi; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fjlfC/zn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UZ0rQnk4"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F1A031400E8E;
-	Thu, 22 Jan 2026 18:14:59 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 22 Jan 2026 18:14:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769123699; x=1769210099; bh=8us2JKa6E7
-	oF4e7k8E8C/VdNEppKTKzmM8zsi9lT8KQ=; b=fjlfC/znLoP/B/DNtdrfQ93DgU
-	jpNvJsFHPUKAOi2NESBh7aH2iwEdn3LcnME8I1BPr/RqCODHlm6YIdBVDzJdYXdn
-	05w95o6zU5BB5hmJOy/10n5MZXzK7/czvovaRHzmQgL+Mmp7ADXSarcNJvviw3Q2
-	T2P2SMc1G7ufFiUHmkeAKLOmfJ7GeJUU0iaZUskCYr1CuRbaOfAqVpcWOx1lV/f+
-	iiw7lx615dVulHshatCnMHwwMx02Nrsv9/e7ZyUK4dC+y0vA6tyJm+GXNGmX68q4
-	FtUYcp01ABAmF2d/Nn+4ffyPWKHXV+0eNlSnaOpBHFLyFPWbYv/ezByH1gJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769123699; x=1769210099; bh=8us2JKa6E7oF4e7k8E8C/VdNEppKTKzmM8z
-	si9lT8KQ=; b=UZ0rQnk4YPIjjZxwDZtKpxF9Aafky3MQpxrPNvn6QxWBLoPSIT7
-	8NSdPylDCyzRA96vTScJ3qZm4uxACKk/opkMWixqmI7oTD2xPwZnpRM+NDMSeN0S
-	WWZVxx8x8BFkBHyk5HKNo5h/UtRzONJt9obSbUFQeqEbNSqH6SMWnQlFXa7XDgH1
-	vXNNPVq2cLyvXxC9f8r6Q4RNCSb45wrgQkaeML2z2ThQYy0jtYqAZf1pu4F5vhLF
-	zwYToOvvIAqraNvGww6gyq8d/c6iIhrvKZpHmRE8+I2aA1UV1mfHxadnCWY/QFak
-	t5739mQ/AC8LUaURysOeNFzJtDsYv+PNwBA==
-X-ME-Sender: <xms:c69yad2nOpMWEOZNJGDOoA2cu2d3yh5uTx0dONcyd-GpCvnXIDpXPg>
-    <xme:c69yaa_tsuOFS8HT9aIbAE-s3RDLebn2uxp1WPMfzlyW5FO7Of-zKuoTYQe2HWv2B
-    GUmIRlxDYYJ3AJ3tV57L0t8QYfci-GUy26XH_2E2xk3L3CT4xUdgA>
-X-ME-Received: <xmr:c69yaWMAITexa8FY1gvYT37C_wqNO9iMWDnyZxYmzlLxdDzzuRxPD5a8XC4QBlgAT7RLu8S9csmbxXqfZJKS3Lt0mJVF4zCSlPW1qog>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejgeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvg
-    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:c69yaWdGS9rSh5MhXjYyXicY24cpybqCpVsaRvYPTsZHx7FlaEQrgg>
-    <xmx:c69yadVAVwEQQJMBRQmBLlxSaI1hNQn4aIuRuKoNhD8vQ8W1jq_c7g>
-    <xmx:c69yaWhSvnT25sErZByH-saXZUy07GlotNXK_BV83t4j9F8STb7NNQ>
-    <xmx:c69yaU_OKzFl7ijcOS1XiBmWEDKpUkGYqC_cMbgMJRJ1B513hluK3A>
-    <xmx:c69yaaKzLz_YE5HNWnU-aeCq9sKvAONpx6Ll_O4Xmi6u8X7dTwdyS45Z>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 18:14:59 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v27 2/2] status: add status.compareBranches config for
- multiple branch comparisons
-In-Reply-To: <20260122224427.GB2107958@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 22 Jan 2026 17:44:27 -0500")
-References: <pull.2138.v26.git.git.1768766353.gitgitgadget@gmail.com>
-	<pull.2138.v27.git.git.1769096240.gitgitgadget@gmail.com>
-	<0993420fc1185ec4a907a8c3bb52ca965e720c54.1769096240.git.gitgitgadget@gmail.com>
-	<xmqq5x8tmlj7.fsf@gitster.g>
-	<20260122220154.GA2107958@coredump.intra.peff.net>
-	<20260122224427.GB2107958@coredump.intra.peff.net>
-Date: Thu, 22 Jan 2026 15:14:58 -0800
-Message-ID: <xmqqsebxjl3h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Z4h/DoKi"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8c6b16bd040so184685985a.1
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:44:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1769125487; x=1769730287; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JFXUIPlckPzZbVs3NtF534mG2UHVwIeQ/tg8rRY3EnY=;
+        b=Z4h/DoKiPkSyAJAsvaj0zOfdS6cou0+x/udLiFB4Qvh4YfDkEWezp+TWzY6IaMOkjZ
+         pT0FjgvcsozYka8/rrwtICLaAXGW7JoVkcuh0ymzycMXg1icmWSISzDJhsJ0Rpq+OYyS
+         LSPA9OUUWgn0UOTqrVO083xfQDZMybY9W/s8Tc8yGUJANiEJY3smB12lyA54u4APf9Gq
+         aRlh5aIjIxyyVzTclG49zVhzAoLD5EDaJZQqDAqpxSJVWxKw3pm9BoeCQbD1u/Tx4nmG
+         aFqs+upGJlxl/a7gEDnsW3umEJwcZwzp/eWZ+G+ZVIMcstVHWh4wbIBPy0qz1zvBbnGJ
+         RnxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769125487; x=1769730287;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JFXUIPlckPzZbVs3NtF534mG2UHVwIeQ/tg8rRY3EnY=;
+        b=AOAYhBBgLF6l4FHj5zIVEna7SajtgVsnvE4EgLf1HN2X2xyPD5i5w+6qqXHhea/S0f
+         pcFQ3HG6QXqIhO5hvWIKn2CrFc/rcLnYbfWZgfCCKoXVwzjhh/c5ltpvKKDfNLxv3jvf
+         GkvVsTFQ8+DR+ccxEq7jpEiJf7MiDK+bWP4gtyDSsh/GD+QPmfUximWIyPi888sQScZP
+         tnCXgTGdgy05qefJ6v+iKZ8jWcPjapEC5ApjaV37/dDc5D25YsLr0DOCDYRmXyLdWQFL
+         poUkHpq+D5wBAI2+Or3n97HIc1y88HceIB1+8PvODp0kUDldfG4sRg8IN0jdLLlQ12/W
+         Tvqw==
+X-Forwarded-Encrypted: i=1; AJvYcCXty+0F8rAoSf/s0qTGCxXbudNDEMUsijkHSQmna/RcDv8qnetMfRNRW5+JfvL2VKoOVRg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoOByo4vqWhk990S+PyZFct2uBeNUItZF1GyLF1+w9SfBAaY9P
+	+yzuCqeN1kC2XqxozEMHNUgi11EJ2LcTdifCAFDjG3LeOuF7jvIqoad9ZYhqD3K3psA=
+X-Gm-Gg: AZuq6aJ1uozFvhx78dfLT4n30mgnf2zoVOoxxdI+24n0PJ5wQz3HFqB1Ise8xW4+PQY
+	J7/BuqbxWO8bYV7Wt/6blg85VeQWZe6ElnNmQMdV/tJvK06qvZzGWAnb2tjiQRK/LjyVgFKPrz2
+	kHBN3bMBx4jBijvOnpWQOepGf0BsWmHQ01IzGfnhF70Qc++c3aNhj4AKiiIZjGA2cEIQp2BeTXW
+	DoNUFJ1+Qnw1h7cKMQ/ct0Au8IbwGiS6bZrQbWTzjsQf70rVoPkQjpy/nJJeEgrwipN90wrtOJ6
+	uNlWSlcoMwAVFRFWozSdeCBao1bpsPdyrbHeUIDkAvoudRFmcBVR8y5wX2NVYvTNJZtCiftjRMh
+	BR2pyCsW2SbOiIvbOFVkL1XeDcNDF/Vv6Pm5alVxUWrZhmSfxpEXVl9O1raKxWF+ip11mKgjDNC
+	UAETeuIcvQXWcAt6f9FN88JVWL+Ht14SD/dtanh+GgRDGULGxIVpABnsKIegzX2APW/TpNTyh7M
+	5TQn6hms7Pxl/hpgg==
+X-Received: by 2002:a05:620a:454d:b0:8c6:b45b:9e2e with SMTP id af79cd13be357-8c6e2db8dc3mr157163085a.38.1769125487493;
+        Thu, 22 Jan 2026 15:44:47 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c6e38559besm44967485a.45.2026.01.22.15.44.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jan 2026 15:44:47 -0800 (PST)
+Date: Thu, 22 Jan 2026 18:44:43 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 02/14] odb: fix flags parameter to be unsigned
+Message-ID: <aXK2awZo/d9bUjPY@nand.local>
+References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
+ <20260121-pks-odb-for-each-object-v3-2-12c4dfd24227@pks.im>
+ <20260121211128.GB723458@coredump.intra.peff.net>
+ <aXHI0vNArKiDCL-I@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aXHI0vNArKiDCL-I@pks.im>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jan 22, 2026 at 07:50:58AM +0100, Patrick Steinhardt wrote:
+> > You can find this pattern in lots of places (try grepping for "enum
+> > [a-z_]* flag"). The ones that aren't are typically using flags that are
+> > not using enums at all (just #defines).
+>
+> True, but `unsigned flags` is way more common:
+>
+>     $ git grep 'unsigned flags' | wc -l
+>     219
+>
+>     $ git grep 'enum [a-z_]* flag' | wc -l
+>     56
 
-> I don't know what all of it means. The "%s" thing was short to
-> implement, but the real source of the extra complications is using
-> repo_dwim_ref() to do the resolution. But I think the overall direction
-> is more consistent with how the rest of Git behaves.
+Sure, though I think the convention can/should evolve where it makes
+sense. I tend to agree with Peff earlier in this thread that enum flags
+are preferable to unsigned ones for the reasons he laid out. I don't
+think we should go and proactively convert the 219 instances of
+"unsigned flags", but for new code I think we should prefer enum flags.
 
-Yeah, I tend to agree.  As long as we do not hardcode the
-prefixing of "refs/remotes/", we won't paint ourselves into a corner
-we cannot get out of, I guess.
-
-Thanks.
+Thanks,
+Taylor
