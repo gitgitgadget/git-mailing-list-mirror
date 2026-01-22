@@ -1,74 +1,73 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE076CA52
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 00:04:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BDB262FC1
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 00:15:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769040252; cv=none; b=LVJyeE+3yPn1ub66rhBFJBGQMHGWUHtCJd40dWhQy5PEVurl4CQ11DtJfNHqSIhcfyW3nRRtUNrKW4xt7qBDnxkgmPuhWFaj1ytcn4DqEaIyUXI26jNDr9ZZIe9aMp7T87eap8qdRhlwJijX+QDMoAsWQkHX+Raums7PKBUT0aU=
+	t=1769040928; cv=none; b=g0uxkAH2/Fl0mm3Ek0x2eNkmtmwN7Md7I+JYnYDMLkZTpufus4etxiAS0djTw+dbueN41sjcqK6exM7Zz/h0vJwUjQ84BTHcMobQ9dQu2haaYkY5quk3RQCNbL9A2ipXegMT8FG2dDP1eHF/nfozGhxRcv3ramTjgZHZ350NO1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769040252; c=relaxed/simple;
-	bh=mRrDjG8ZWfNkHjTmt9ha80Zm6my7SjIpitenstj4+aY=;
+	s=arc-20240116; t=1769040928; c=relaxed/simple;
+	bh=eo7WNM2Egv3zm8B0e2DK1d9j1x9ECTChkNfnMnCxva8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Scu3oXxkIKUAEUC6MSMLGtxGTZxCaHXr+GaT0Yyc3jKdQlvzkgXvzUx6tZz8wz3TD2dADgrFbrFRmSyyl7t8bvpIMsaVxfAUgR6cW99kPi0zCcYbe7xX36SztrJecBPKE0wnITwjInzyk2jT1kLHwuycFvrfnMcUnRLPIIkckkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gsXDGipt; arc=none smtp.client-ip=209.85.128.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=QwZNtCECJ8Eq+mMTGELpCzdC8EUXWYVLYKSg1caCEgEG+BSIOpPpk2H/xv+tD52DeqUH07H9IFroEtIIy3hglZl/oyDnJo48bNeZdZN5ssB0M7xfV9qrtoZ57KxUa4orsAGo9gj3pgwJ2mjoXdOmkyWWpn3kq8Mrl604dEl433U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gxj6CatU; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gsXDGipt"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-78fba1a1b1eso8604737b3.1
-        for <git@vger.kernel.org>; Wed, 21 Jan 2026 16:04:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gxj6CatU"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7927b1620ddso6593527b3.0
+        for <git@vger.kernel.org>; Wed, 21 Jan 2026 16:15:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769040244; x=1769645044; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1769040918; x=1769645718; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mRrDjG8ZWfNkHjTmt9ha80Zm6my7SjIpitenstj4+aY=;
-        b=gsXDGiptAq6QpmgSsx2vV1g9/ETC7e5rZLESi74odVReIC4qPxrOg+w56X8UK+h0Ru
-         c986mpdwhjpbdCnCRtLbq54WzI9JA8E28K5HFFvsOmEFrNkQ2U/xfbCO3CP90hbC0Mnh
-         xwxZ8jDOYBEgXXZvXoQLTZ7uhEOt5B9qtl5y0DGnnOvSVcG8MmFF2/D4/OMwD4iWyu8c
-         SgkFf5wBVuqRSj3nV+W1ouzeJDefzOdvYG5DJe6XD9BWELj1JwEOfLfqm8W8Z0e84cHq
-         ZXeL6r2syARILZ0/8i4gWvGGYR/pHq0cNly3D0vUxKVJjZG2C1mocQNMrN/qlto5j8jJ
-         ikbA==
+        bh=eo7WNM2Egv3zm8B0e2DK1d9j1x9ECTChkNfnMnCxva8=;
+        b=gxj6CatUWqmk73kDpgxrn4S4OL3257H5wnlRbRhUhHFkp3rgWE7LEGwaMhU9nXiSBD
+         gm7Q/HcQ4H9elXi7wz/ZogC0mDyT+nz8It1IlMH+BTooKWooYhTJRKmHMRm85wemghyt
+         gOINp+oNd0/9ZInxrOMBhBULAsJoUE4AwYU7pLnxzbh2XAycjhdl/HKefr6VDbE0Uuez
+         W7hg5Eq2Oxg1Z51+imn3nJS8wzO/J4p6qizVZjkKcCg47FYuGjeyRfG/lPGFKNWJULuq
+         iHDGktLbbUsNK5129TbCtiH2MyNIRCMuyrxUTezlM0l4Gpw+NDaUu+4qguwctXhNen28
+         trfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769040244; x=1769645044;
+        d=1e100.net; s=20230601; t=1769040918; x=1769645718;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mRrDjG8ZWfNkHjTmt9ha80Zm6my7SjIpitenstj4+aY=;
-        b=Xf3iYY5nXBJNyOa7phvHjSdTT9X063834R5DkJfmqOF/jYBicpVjNy4QagtW0Aq7G+
-         +aYLa3+FOwvdZWhVCY8RjUrtiCZwg2n4JnYPJtNcSAdwd/CwH0A3ke/aiAfcBNp2kGa+
-         my1Mthl/Lyva/8tB49Tb6jpwLF+E/mTiB2T3CWdTOFsL3ajV1+XwfBlPOkHUp5P9S82Y
-         IFm9b8zGFMG+4G0QIU8FoMCrAMiH+5ogS5ODZaBD184rXXCUbdRRCCCKV0f/VvMEImsO
-         y76/qBZLyeXDXXWFllb67UY8NIOA9wPFpm1a/49GfuUR+R/pFNoCP3fCZCFkEoBl/+Sm
-         SIcA==
-X-Gm-Message-State: AOJu0Yy2Cs1D7wBHAlt7DI3GEwFcmkpWFnaN5b17IecOizooma5bIXUL
-	PE1MQcTFBwIT9PDp8NYQaFOLDf7owj/yBRVOeLyqBLv6hemFJ0uiQgr9RW7WsQmnzGDGhHTEUIv
-	WTETTLes=
-X-Gm-Gg: AZuq6aJLuIIVDErS6jLbfmQFiVnSXfe8ERUuUBjsFDwUHBEDEX4acPoX586zdhVYfLm
-	PMz1vuzY9HnHJRS2tuexAocogwCngXW6OCjAx+4/vJJcGUL1BR4FHueCwFPB+gcTDRUMMV6CfM+
-	0BcYrB6rLfmnRFKTL9AGZWr7aNIOe12ITNSaEcP1qqlbaKvKTEaKeDoaoua9LMkIRdkbXnSINzu
-	q3uc/So+7o2y5t/t6IjaxaPvSIIcXe3+BBbXS5hTzj58BSDWo0ujYTmogSd4NY9Xs4J8KiL18wb
-	XVZI82218eT/57hybx6KIyw+fxqMBqWgh/9lawev3OdPF34/+SnCJyMBCtR0vxVSRiBX1G/0j/i
-	fbKA3qf7sxeWJQ8EZzFLx5UFIByQtT0HWwc+Dfah2HLPxYxVDtcT6etwQNCudQrB0VlvefIWrI3
-	imjPULGSodXXnIh4NucaVSs+EnheLHBF3Gahr6TArEeoGA8m+45MUMLvZyclD1lnyvMASIrWiN/
-	ny3TsL8uHHY9/+0aQ==
-X-Received: by 2002:a05:690e:d8a:b0:63f:96d7:a369 with SMTP id 956f58d0204a3-649512ac8dcmr928667d50.28.1769040243851;
-        Wed, 21 Jan 2026 16:04:03 -0800 (PST)
+        bh=eo7WNM2Egv3zm8B0e2DK1d9j1x9ECTChkNfnMnCxva8=;
+        b=qfAaey7E98StlznPTH7PCZDxr0mjNobx8dEUuboC/R5ZmgUUPhj7/L8tyRMB9iaA/R
+         K4wGLuOOzQcWHhcmRhv7T03k5mEytod469WKykdFuRx3We/RBaF23zIJCQ9vOAaU2PFG
+         Jwu/VHaS+JN1aVCXckd9QRbZfZ5mNqDhifTtOFSABKc3hBJtH3jI6x4EOx9NVlWY65cz
+         2MHSlRXxiN+xMDznRZUioN6wcCetFmEPLTjndiF/7a6RW2W0ScG2BiCZ6WBRg23wM/2I
+         9JrOia0oA4C3Zo3BxvL6zvKEa2navDRj+jJ7nOIuwKmDWrCSM78UzdjSj94XRGOdtWI7
+         JFrA==
+X-Gm-Message-State: AOJu0YwbC6bZFCXEq1nmWvcExibAn1pLXPLmv7/GHE4pmmpXtvSDJ0cF
+	vPCk+NQw3qzxGSSFQO1patiVNxtsDVqqp63KcOIucP2ABVZYnYjfV9K51Ue7bCmOB/A=
+X-Gm-Gg: AZuq6aIoLIDM6F84dkS8W4YAr2uKEQa1QDPTWDSrNUDz4Q6J2+nYJJHeHbeZWtqlJoL
+	Kgl6kPQdI8z7HfLpl594q+mPDmQ0JmmF+ilJLwupu5Rh7THrtBv+EVighFXNnKXFraH3zVHdn6m
+	3ofbmQA4EBLBCc/GSetdykl3TOJ4lVPt/WsUpeFkk+hBo8Db0FV5JSLmddVgaevgFaTAWnnWKgx
+	WWa+od9oHC/BOMqJ4Yitha51kewCzlReT4s3aFYLdBp2i1gjOFn4Nl8+uQL8lnCXwDc+WspN5+h
+	+j7Qzf1GYjhXlcyEW/78i1LpI7/2iTozjNfx9pWW+pwQ8qAoiGCACdYTIMriTzV0SMsCkJ9cowQ
+	9gH0neIOOkNXirMvt8qGdChTdjU6xdPVUHQxKRqXVi1VmGVw0S/EAcSLgQr1nQMqjHR0Z3t3bGO
+	YWR0NbU4sTNlZcuntV1Fnni63GpFla1Wav9uxLVtIYrLUbrD28bEe2wVFr4KLO98F6nIK3ITI7N
+	CposQib0o1K6EpYVQ==
+X-Received: by 2002:a05:690c:d8d:b0:794:105c:d684 with SMTP id 00721157ae682-7942a7ff8d3mr11290657b3.30.1769040918313;
+        Wed, 21 Jan 2026 16:15:18 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6494686dd20sm1795608d50.22.2026.01.21.16.04.03
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-793c686db17sm72698437b3.38.2026.01.21.16.15.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 16:04:03 -0800 (PST)
-Date: Wed, 21 Jan 2026 19:04:02 -0500
+        Wed, 21 Jan 2026 16:15:17 -0800 (PST)
+Date: Wed, 21 Jan 2026 19:15:16 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 03/14] object-file: extract function to read object
- info from path
-Message-ID: <aXFpcms/adskOx3X@nand.local>
+Subject: Re: [PATCH v3 04/14] object-file: introduce function to iterate
+ through objects
+Message-ID: <aXFsFAV/1J9DLQRY@nand.local>
 References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
- <20260121-pks-odb-for-each-object-v3-3-12c4dfd24227@pks.im>
+ <20260121-pks-odb-for-each-object-v3-4-12c4dfd24227@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,23 +76,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260121-pks-odb-for-each-object-v3-3-12c4dfd24227@pks.im>
+In-Reply-To: <20260121-pks-odb-for-each-object-v3-4-12c4dfd24227@pks.im>
 
-On Wed, Jan 21, 2026 at 01:50:19PM +0100, Patrick Steinhardt wrote:
-> Extract a new function that allows us to read object info for a specific
-> loose object via a user-supplied path. This function will be used in a
-> subsequent commit.
+On Wed, Jan 21, 2026 at 01:50:20PM +0100, Patrick Steinhardt wrote:
+> Introduce a new function `odb_source_loose_for_each_object()` to plug
+> this gap. This function doesn't take any data specific to loose objects,
+> but instead it accepts a `struct object_info` that will be populated the
+> exact same as if `odb_source_loose_read_object()` was called.
 
-I think that I'm a tad unsure of this interface. I understand that for
-the existing object storage mechanism that having a path makes sense:
-loose objects are stored in files which are referenced by their path.
+This may be a bit of a tangent, but I wonder if we are over-applying the
+function prefixing convention.
 
-But this feels like a leaky abstraction to me. If we are dealing with an
-object store implementation that uses entries in a database, or
-arbitrary blob storage, do they have an equivalent concept of "path"?
+In general I am really happy with this convention, and it yields
+organized headers where functions are clearly grouped by what structure
+they operate on. But I have noticed a handful of times where we replaced
+a very concise function name with a longer prefixed version.
 
-Perhaps this is clear later on in the series, but I think at this point
-I am a little unclear of the direction.
+I think I don't have a clear sense of what the benefit of prefixing is
+in this particular instance. Supposing for a moment that we don't have
+an existing for_each_loose_object() function (which I think is the
+end-state of this series). What does the name
+"odb_source_loose_for_each_object()" convey that
+"for_each_loose_object()" does not?
+
+I think if there were multiple ways to iterate over loose objects, it
+makes a lot of sense to prefix them such that they are grouped to avoid
+mixing interfaces or using one API when you meant to call another. But
+my understanding is that the intent here is to consolidate all of the
+different ways to iterate over objects which live in different
+odb_source implementations opaque to the caller. As a result, what other
+way exists to iterate over loose objects?
+
+Another aspect of this is how approachable the function is to newcomers.
+On the one hand, I can see an argument that prefixing makes it clear
+which functions belong together, and so if a newcomer is familiar with
+the concept of ODB sources, then they should reasonably expect that a
+function to iterate over loose objects would begin with "odb_source_".
+
+But on the other hand, while a newcomer may be familiar with the basics
+of Git's object model enough to understand the distinction between loose
+and packed objects, they may not be familiar with the concept of an ODB
+source. In that case, the prefix makes it somewhat more difficult to
+find the right function to use.
+
+I think there is a reasonable argument towards prefixing in the case
+that we want to link against this function from outside of Git. But
+AFAIK that is not likely to happen in the near future. So in the interim
+I think we are left with function names which are a little more verbose
+than the ones they are replacing without a clear benefit.
+
+To be clear, I am generally in favor of this convention and have been
+applying it myself especially when splitting out the repack builtin
+implementation into their own compilation units. But I wonder if we
+could relax the convention in cases like these without sacrificing
+clarity/organization.
 
 Thanks,
 Taylor
