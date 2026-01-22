@@ -1,175 +1,131 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71F539DB12
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 20:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769112636; cv=none; b=m/LuHl9EzVLo/JC4/IuVKEHlmbdd+WnVUyLcH100OO5rE7v9HMlzHxfJXczh7gYP+POEsFK70hc1nz0BR7LtbH5MimNVxBrI82bcBn/FTatIrHYRNQt8Fscl44F0BQmQI2F+tXZIAMDvm91Hq38WQD0OZkK06tvrEW4IOXvG1Nw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769112636; c=relaxed/simple;
-	bh=hWhgYRlkZY0inhDPflLR4eHx7b/0ZMr7FOYZGBaurwk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SlVGJDxy43fAdsEaZpQJyAID//erztqfIVOt+zaM7dPiAyXGrgLgaAGWTw980yDXmEmvNuOP+IwxvIZUmsfYfIxXrbzOSEsAgLd/S38G8w2soo60ZYjX63NimkiSgWdByg13iGUvr/2hYNI6+mrwnm/BHQCJ9cGQzU+UEqeblcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Czv9lMKL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tnI4NIgN; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BA038B9B2
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 20:17:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769113031; cv=pass; b=oc+c6IaoKrrjy1LsFbvkGeJc73Ns1+Sj9STjJ/X6nlMSUGt+1z9ZWFycIJH35mqYhMkei+buyxyfehx3SXbo6gxgvmWfzDqy7ZtiBwei7Xf7EtdK6iNj4T2I8Xt2+2Em0QGXIYDWEocYkrquQJkdB5n/JWV0JPhnR8ysb9HteRw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769113031; c=relaxed/simple;
+	bh=W2Lkznq9jeTD5UB1fuMvGCmEbFTdKG9f+ozNqyhOeT8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XT5vtUw4q6TE66fiyuvKuNwE+/Y3JkNHQEis+t+WGlJ0NwmCP8p+SRPDqnytYdKIh/fNdwTIJ0G3OdSzGmOuQMgSVas5WtkgifwAXLadeBWdaoYY0pjKWf807lTuZuLaTkrZxPCngt1UCi/yI3zInKqpDMlUr0lFADDhZCpsHkQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RXyNozoI; arc=pass smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Czv9lMKL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tnI4NIgN"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 487EFEC080C;
-	Thu, 22 Jan 2026 15:10:29 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 22 Jan 2026 15:10:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769112629; x=1769199029; bh=CHT0288toN
-	+CChs1OO9JMmIJ8ZFRNnj5ex+Rfelk/k4=; b=Czv9lMKLtwR6cQkinB0Cls/EEE
-	eSRq1WspVWtZz0ZIQDBpPWIyTpaEdG8qRb5Q0pmbQq5b2+d9HW8i6s3oYLL6jRyE
-	3ZdWfSm97R2V4fyEG/6MvX/sLRvdJo+DJeUj+hPQTJPVX3KA9a54qwNIbOjU1IsN
-	ZpQEZw2kZ8WPxKaZh4xm7SLIoYdup01y61xPH9hoscIk1iDjH0LEZ1yfa0HiTd/Q
-	y6aouKzIUvV/RzoKjezazaVql+/IkZ/GvsTCj1bSeN8IWbEflLqhJvmuP/OcTkqe
-	QCnnb10JMdwZ81CUqDyr+dzc7IcvuL8vsjROJaoK3hcbMVZoIp+cryIAhEaw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769112629; x=1769199029; bh=CHT0288toN+CChs1OO9JMmIJ8ZFRNnj5ex+
-	Rfelk/k4=; b=tnI4NIgNQV/fDhOmIAWeNRCGbd92VyORMnhDuu921NcKUtwn27r
-	BLna1jOhOwk7WeVEOJ6/I5IWU21IuVBxUa8/h1sKtxQDA6WYn4OcqUIDcdZnwcsF
-	Ug8lV1RJmbFxwt3liyaD6wzOzCpWCyJMHXL0Qheiq6lFOtjNsj/fXhOWMwWFbt6J
-	sbc/HwKbn7kIDre2GrWW4mwTJ2nBzH+QpAZN7dKk0iGu49PXJDQBrBC+aFDAhWjf
-	TPAv/CYrz2HNwBlhRvZlMRYMwjDh4SqDCbD63kr9K+4zgeOhujg4LS97LMkCeuCq
-	rR+M7NZfQjNE/yp0+TctgnKlgz/PkEh9bRg==
-X-ME-Sender: <xms:NYRyaaIqKvIC4LXzFgfDLoHYevUQ3nSwMRveUR6FmwGpjOQu3hiWAw>
-    <xme:NYRyaV30Cr-Nn6Z47IZFrX2-HhFHiUCNOWuVEzq6QoJnJMUmMJBZKzMrOcNxgo7wX
-    nrCNgtkVsag1XxE99uNINzJq4MxPEmtCwDyCQ1sN54wZ-HSuAdOMg>
-X-ME-Received: <xmr:NYRyaUj0tGOJpa0OSW7Iz9DFNHm2FDwv3ydI6klne9qwL1QIVYjw_nWLMs4IVWasqvVgwSe3pPq6-a3kJe2tJ7fm0BcrfxtrACvxWm4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejtdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:NYRyaWUi0o08ceREGXQ0ZcOuQIBriHyFish9uogIZZTVj6Wzv_IdQw>
-    <xmx:NYRyaTUy8d7Xd_CGIFTmvoEkVjSoYGUpPgr1Bk33hwfNc5sIL4Ap_Q>
-    <xmx:NYRyaWgd2m31cf-I5K3z2CvtqGlM5voyaWJ7hhiGh14WLsrDV5Uqsw>
-    <xmx:NYRyaeZrMhaNLc4stnywqlEMkGxaVMW3-rvUtY4AYn2mX9Za0_yhWg>
-    <xmx:NYRyaX60FHT2Q6Kuu3A-hk2oRopcJ0MvZwchjt_WvRHFWqfY7DoKgYue>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 15:10:28 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net,  newren@gmail.com,
-  phillip.wood123@gmail.com
-Subject: Re: [PATCH v4 6/6] fetch: delay user information post committing of
- transaction
-In-Reply-To: <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-6-2ddba0832440@gmail.com>
-	(Karthik Nayak's message of "Thu, 22 Jan 2026 13:05:00 +0100")
-References: <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-0-2ddba0832440@gmail.com>
-	<20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-6-2ddba0832440@gmail.com>
-Date: Thu, 22 Jan 2026 12:10:27 -0800
-Message-ID: <xmqqldhpmmrw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RXyNozoI"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-45c8e85deffso479531b6e.1
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 12:17:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769113022; cv=none;
+        d=google.com; s=arc-20240605;
+        b=NubtSYjLVv2rnS5PU9mWkBN8CLiqi9bXFibBjYufriTG1wbNUMTLHu2xgzZooEakRe
+         1BzugGgmqjFohwRMCcYKlbC2vRs3gvJDKxbnkTjDy13lWq80EKQdlMdpYPG3x+ojfoEm
+         Wb1Ayb74hvT7lXAi6biQcUwsr/QmY0VXDbenvPbmfT57cZRB6OXNk/1zRwq73hKzqihu
+         lH7XQdIDOxq9ExLVCvG5AinmRvmK35F/TWpGjsxBLtW7QZTXUZ4i5pUarzSUpqj4E8Zn
+         zmkpwdXU9rcRH5oTvoauTZMBe94pAHMokFP+wWINGz13gaErK2f6lwQ5iFjnGDl16Ohh
+         mSqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=knN4pEcHHNd7w5zVRcr1GGxrJhyZ9ywkFVBapW9+yns=;
+        fh=E9h8LrGAHDx/zooHAiFPwfHTR2hlPNN4YBtZKRhFAtE=;
+        b=GkxGsDsdYcS++YRmguARjfWx1NE6uUJRit/IYAGI+zI3mexH8uDY4sdRw7dwm5LdXX
+         lxVzq528f5dIfgmv4QA0RlGqwWyzTclWVZfLWwYHjbYyiwTeJ6pgwMPQwRHu7cr597rD
+         1fnBirIe2H+V1LJAE77wD37d5hUYFEFpziIwNMDY1BHlCytswVtpq75SkauJjVT4DEYI
+         nOB19BYT0MF8lNi9boQLssAKvkWLY1kC/+KaGZoi4rkWeAAcmhzbBbWVIu50jEbUjZkT
+         J7JDZZPb+rGMguQ3jnxA1lUKheeEEQH/VxCgQXi6xl90NDOnTambHfErQLdw5k6VW94t
+         34Zw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769113022; x=1769717822; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=knN4pEcHHNd7w5zVRcr1GGxrJhyZ9ywkFVBapW9+yns=;
+        b=RXyNozoIOR8ThQBdOMt2NJDna0qZzqvpHdG/BhwwH5wmxzNkB5ePmWCbdXCTfl/XPT
+         OtGMATBHLfTHxx3Fvx0nGtzxv5f3j8CgeNd4GqUCh+8kK+zqqQCP0SutpQVUMxckqlPg
+         O+z7QM0RY8bHvqDFofCTRk+GArEhPtZkU30bTJYTMLyqkDhPDElgkc1b5Z11ib7dXCFG
+         JbFIsWyw3aHJe+bV/aXsmjC0ECITTDbh42IgzyBZF3f3uhVnfC0nqb+ae+ee9uWvw4Pn
+         HEqj1vLZtma7kfwo/stylSEbZaYeGeYkfLsaGIwggfk5SLIMA2gJ62DFamXDzAyPCIp0
+         tIPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769113022; x=1769717822;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=knN4pEcHHNd7w5zVRcr1GGxrJhyZ9ywkFVBapW9+yns=;
+        b=dUeCHGCErQ/7eH/NYOIuMY+a9XPu4Kan5mcFF9ODLW+QD+aRGlDdGyqyMaSxta7DZG
+         xtPuwQQHMBNyN4m0OdkGJvvZwX34GzHXUdLoKBxNGjeATBEn8OeTmwRqZ/cKJWShqCm+
+         4Pf5xURXSuJ7SpOc7ZsxuAQakyFEh5KVy77jTK2wLRA1jhRt96JPjD26SURfarUV1Nxr
+         6tQ6f/BxY8hzSnCkeqHPd87RvH5GFsmqIystkSE0hz8UTButXJAcU3O7FbfzfO5EhCaf
+         lQho1ef4HgwC3Xqn6Skra1pJMzey+dkzX/jKE6JN8CP6w/UfC7JZJeeSHKzJfR5Aqqic
+         15Ew==
+X-Forwarded-Encrypted: i=1; AJvYcCUb7SFPChySK8aKJoY3F/B1oDQ0llykgNAU/1NhMFU0Vy2wPZZBhFJJXLavm3zSW0/yci8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLpzUzsgwJcPg/0sQDeuNjUxbvTgwRB4FedF5SRkdyTOxViagH
+	Z69UABPn+1zXno3b2QA2AzgF0R5UZcjeWaNrvVNiMqk4cBtsBNro9VFH6U0lCeUTvimkiHzX/VQ
+	tiGjju4D4Pa7ZywfVUJWOegJNbb/MEmuObsOU
+X-Gm-Gg: AZuq6aIjb+YDGwY744n8R4Mh1UdGS1yAVRO1vhbJ/pXpy0JB+w+jgbF/Lm2RntcYg5Q
+	7oLMvCg+Wu5REP1Jwf0DxTzBt91z5AkRhyloxnzoYPr7bR6qRXZpoOdQbCwkbNdwmywaauSGoqi
+	F2RUEQlEecaY6oduwmdzsgB6O0yDDafofiaASHril90BrZIX+jUDY8zbn0q6Mo3yNeXEHd9xJ4c
+	7Lf9NeLC1fCS0mPhv+oVhxKugK0JDTUShs/elyVssPgwznp4IXuaSPog2Ds27jFOrkq+ngGFkgf
+	RqQO
+X-Received: by 2002:a05:6820:4489:b0:662:bf3a:ea6c with SMTP id
+ 006d021491bc7-662cab02f7bmr411918eaf.28.1769113021858; Thu, 22 Jan 2026
+ 12:17:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260114194815.1049888-1-nasser.grainawi@oss.qualcomm.com>
+ <20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com> <xmqq5x8to53y.fsf@gitster.g>
+In-Reply-To: <xmqq5x8to53y.fsf@gitster.g>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Thu, 22 Jan 2026 12:16:53 -0800
+X-Gm-Features: AZwV_QgAEl8UkXlvS6Ils8_CSrOnnfBkB5yd0eN7uVbswNDcdYjgYgbcucp9RME
+Message-ID: <CA+P7+xoYA6zhwVeCV6d5yW4ZxOKNLam3r-ayEDHpYpFqWyLduw@mail.gmail.com>
+Subject: Re: [PATCH v3] submodule: fetch missing objects from default remote
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>, git@vger.kernel.org, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Thu, Jan 22, 2026 at 10:49=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Nasser Grainawi <nasser.grainawi@oss.qualcomm.com> writes:
+>
+> > When be76c21282 (fetch: ensure submodule objects fetched, 2018-12-06)
+> > added support for fetching a missing submodule object by id, it
+> > hardcoded the remote name as "origin" and deferred anything more
+> > complicated for a later patch. Implement the NEEDSWORK item to remove
+> > the hardcoded assumption by adding and using a submodule helper subcmd
+> > 'get-default-remote'. Fixing this lets 'git fetch --recurse-submodules'
+> > succeed when the fetched commit(s) in the superproject trigger a
+> > submodule fetch, and that submodule's default remote name is not
+> > "origin".
+> >
+> > Add non-"origin" remote tests to t5526-fetch-submodules.sh and
+> > t5572-pull-submodule.sh demonstrating this works as expected and add
+> > dedicated tests for get-default-remote.
+> >
+> > Signed-off-by: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+> > Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
+> > ---
+>
+> Thanks.  Jacob, this v3 is not exactly the same as v1 that you
+> reviewed (and range-diff relative to v2 does not capture what got
+> changed between the version you saw and this version), but I just
+> checked that they are "essentially identical" except for the
+> proposed log message.  Are you happy with having your Reviewed-by on
+> this version?
+>
 
-> +struct ref_update_display_info {
-> +	bool failed;
-> +	char success_code;
-> +	char fail_code;
-> +	const char *summary;
-> +	const char *fail_detail;
-> +	const char *success_detail;
-> +	const char *ref;
-> +	const char *remote;
-> +	struct object_id old_oid;
-> +	struct object_id new_oid;
-> +};
-> +
-> +struct ref_update_display_info_array {
-> +	struct ref_update_display_info *info;
-> +	size_t alloc, nr;
-> +};
+I re-reviewed the patch and everything looks fine to me:
 
-OK.  The ref_update_display_info structure is full of pointers.
-They are of "const char *" type, hinting that they are borrowed
-pieces of memory, and there is nothing to clean inside, other than
-the .info member itself?
-
-> +static struct ref_update_display_info *ref_update_display_info_append(
-> +					   struct ref_update_display_info_array *array,
-> +					   char success_code,
-> +					   char fail_code,
-> +					   const char *summary,
-> +					   const char *success_detail,
-> +					   const char *fail_detail,
-> +					   const char *ref,
-> +					   const char *remote,
-> +					   const struct object_id *old_oid,
-> +					   const struct object_id *new_oid)
-> +{
-
-This helper that consumes the structure is used throughout the
-patch, and relative to the previous round it got easier to read.
-
-> +static void ref_update_display_info_free(struct ref_update_display_info *info)
-> +{
-> +	free((char *)info->summary);
-> +	free((char *)info->success_detail);
-> +	free((char *)info->fail_detail);
-> +	free((char *)info->remote);
-> +	free((char *)info->ref);
-> +}
-
-This answers "no" to my previous question.  These are not borrowed,
-but are owned by this structure.
-
-> @@ -1965,7 +2090,17 @@ static int do_fetch(struct transport *transport,
->  	 */
->  	if (retcode && !atomic_fetch && transaction)
->  		commit_ref_transaction(&transaction, false,
-> -				       transport->remote->name, &err);
-> +				       transport->remote->name,
-> +				       &rejected_refs, &err);
-> +
-> +	for (size_t i = 0; i < display_array.nr; i++) {
-> +		struct ref_update_display_info *info = &display_array.info[i];
-> +
-> +		if (!info->failed && strmap_contains(&rejected_refs, info->ref))
-> +			ref_update_display_info_set_failed(info);
-> +		ref_update_display_info_display(info, &display_state, summary_width);
-> +		ref_update_display_info_free(info);
-> +	}
-
-And after a fetch finishes and we consume the display_info, we call
-_free() to release the resource held there, plus ...
-
->  	if (retcode) {
->  		if (err.len) {
-> @@ -1980,6 +2115,9 @@ static int do_fetch(struct transport *transport,
->  
->  	if (transaction)
->  		ref_transaction_free(transaction);
-> +
-> +	free(display_array.info);
-
-... of course the array itself, which makes sense.
+Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
