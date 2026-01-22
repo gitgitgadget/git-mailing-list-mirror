@@ -1,117 +1,110 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B643915C3
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65238367F26
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:15:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769101673; cv=none; b=sgbjznPjbwleFAxP3YnMPbbwtcsPuOvxHsX94DSXrwEkV5RBcV/DctaN6u0KITLZ1e/nbidSuNJauXeSWZPXuJzLurLFbgJkp6XAJdDIwq5msQMTZF2b8/30MCwmJ5HDbKlNDtj3wvM/HgyCxldAKvSLtFL6kzN6fyS9P0puBUU=
+	t=1769102139; cv=none; b=IuvrmnCinjV8K9xckkce2hVHEIeqBbWQqF1ldk5PLqBxIdBH3vC+sh/Kn1h97UkQ5TrlxUXmRPuWO4EtrSTWV3HaXz8Zi3ZnKG5zGNrMlcVbZczWk0iDtluVXGf9CjZisffhWEy29UwlpvflErl3OycUt8+cWmvg3vMWmHkfu+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769101673; c=relaxed/simple;
-	bh=rc12O7Ey1F9fQxr7ejnvWw3NLqmv/YBzPk0ULOuviHI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jJrrV7nGgp31T4ktaDOdo1uvtoFzYZLPUySXsFUV+ZPTbqR4SC9KzstBcD8tIrZSeIGOEUjfnNUkx+cDZTV6T9qYUpRyINRgJpFmuVxKf5XMtVxsYhsa4oDjgVYnfb/hHNC849ldP0BrJ8YPEpx0Tdh40j9IOE3vqiY6i0nqsbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fqisGS1Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E+idT+za; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769102139; c=relaxed/simple;
+	bh=c2VVnBJUyvGedCoTqwRLl4PZ/N4OFVeDqetvVcgIEjI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=muNY4+YBC8xp7SNVemAOnFocA4sD931MrGE/jEin3054SL5AOVyz5g2Qg8d0SArol8Vads7zzeTOACZ1MQL3XbxdJZH57Z+L4/sCEBJcZcizwRHmYwDxSyBLuKzIS0ZEAzl6o8iAjrclvvsK45ONJJE38Xe6E3tFzGmg96GdveE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCiIhXUN; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fqisGS1Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E+idT+za"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 10A811400102;
-	Thu, 22 Jan 2026 12:07:42 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Thu, 22 Jan 2026 12:07:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769101662; x=1769188062; bh=POGHdV8iRh
-	zcpyWpdNohjb0QSMmujEwsBMBSSnonlQE=; b=fqisGS1Zl8rzNGs0cYwK27hvK8
-	sXaKmSuPkvf/d23e/A4psmNtoQFBLwRIpTgtzJD1Z4U4onbJkG5GBFKOQI42PzVq
-	hfb3RcQlFSfafMDv3hrTZlQR+1gm9b+fs7LLYRUWGU9gNGYM28tVRGsRqkdnFNbG
-	QiKzrhc9zEta8UWIDN6hy/5ixGUYj7xMzpeVPD6MHGca/1x8/NQ9plmasdWCdRxJ
-	o8YdyVNP4J0fuiUWS4s/4qy7BIbz6dnvhXetemCEmoQcVAFG/nJ31YKdcXIYdSTi
-	H2bfOKiSmfNJCJfAA37Yz86ldFsC7eWfdaLOEQpL52RToCeQKNDdOvSAP7CQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769101662; x=1769188062; bh=POGHdV8iRhzcpyWpdNohjb0QSMmujEwsBMB
-	SSnonlQE=; b=E+idT+zaSdY/Cjm2EJAFXD8A3ybXjF6h1BBJ6XR+h1dkyD9Rvqp
-	xouZjbRgv1vuMoYt/zSqYmbT9oDIIhlysISdWrks+6IOwhSMIluEBwE5/CFBxKSe
-	d0imVkFKyn3hAwVWR/QPIdIb3X9mTJ3IAsK0tZYQ42lRk7hqUOKwISls39hfZ7+F
-	3OpzLGMyvyGy5TnTZG26MByeoil7P7j81X+fnV4UPGOTnjZ86gEEEmJQH/VamPwS
-	9dJvwRKPG2Oqo8tk+OgJqXoOmdcG+J12VFZKDJP8GdEN9MF/bXp2TPuxfFLw1I6e
-	yUAhQohAAsqKvUI/39okaXfOXd5e1y2hM5A==
-X-ME-Sender: <xms:XVlyaVl2WnoZfcIByy8bacBtOK5b13E4ZLOzJO8jIOnyhEBm7Qc-Ug>
-    <xme:XVlyaTFesqUWtsaKMg5KjAT4WDaoIFcaZBjSBsKqFCg8FpAEiYYsh9S010_2-0ocv
-    GMJaum0DHG34hvR_wRo7xgdIXgtT0OSqycK6B2AvIMXTnOyi1a6EA>
-X-ME-Received: <xmr:XVlyad78AQyXHmtvrHLyqz7hFTlxGpikot_7OXFH4K7Jb7u-WG0VGPuE87LVD0z6-L6Jvhv9HludE57rW03-w_gDsU_KTayRoenyMjU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeijedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtoh
-    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpshes
-    phhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfihrvghnsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XVlyabmMXxX6ChAZwdk_OB2-rNdDSkvz2B2Hxe4yo2fZkycJMu0AlA>
-    <xmx:XVlyaSr1XWIbkgLkcHi6UZqGfl9GJXVTM1Ud8EtHVtydw3IjdsQszA>
-    <xmx:XVlyaat-Sg0OHvVWLZYZDk7HOGMyomnCawCYYuO_gys8oVeQTNr8Qg>
-    <xmx:XVlyaXHsAxqv2YpSOJFw1mEM8vJO4-bkqnSQTDAdBhE4WFtoIbLdmw>
-    <xmx:Xllyabot5fYIcvCgPAsSVAQL-7hdCn1HC05l3jx12dYzIhGe5M_vObBc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 12:07:41 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: <rsbecker@nexbridge.com>
-Cc: "'Taylor Blau'" <me@ttaylorr.com>,  "'Patrick Steinhardt'" <ps@pks.im>,
-  <git@vger.kernel.org>,  "'Jeff King'" <peff@peff.net>,  "'Elijah Newren'"
- <newren@gmail.com>
-Subject: Re: [PATCH v2 11/18] git-compat-util.h: introduce `u32_add()`
-In-Reply-To: <014c01dc8b46$7a2997b0$6e7cc710$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Wed, 21 Jan 2026 21:26:06
-	-0500")
-References: <cover.1765053054.git.me@ttaylorr.com>
-	<cover.1768420450.git.me@ttaylorr.com>
-	<c0c1769464b1c8065c2cea59dfd85a1d37de9dd1.1768420450.git.me@ttaylorr.com>
-	<xmqqpl7beugj.fsf@gitster.g> <aWgSzI30k0BZfZ4Q@nand.local>
-	<aWgwn2rk/qw+fRoA@nand.local> <aXCTkVpjJkTabx_0@pks.im>
-	<aXFni2tE7vn1dKFp@nand.local>
-	<014c01dc8b46$7a2997b0$6e7cc710$@nexbridge.com>
-Date: Thu, 22 Jan 2026 09:07:40 -0800
-Message-ID: <xmqq4iodpodf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCiIhXUN"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2a76f90872cso7161925ad.3
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 09:15:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769102131; x=1769706931; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zS/GxMdiJGDCeHk055yjjzpfuWy6c8ec4m8IN4L4FwE=;
+        b=RCiIhXUNLgw6APUXmLoc4p5VUsZveUzlCnv6UtTwAO63yIvvFXRt74mQ1jB0cHL0K0
+         AEMPXvuDVK0v9x5Ge2bkIygxvJYdcyGCkczvx1BDl+iCef2Og2nM5fEK1GHhJUX2Ynza
+         IaCn0SLW2hk/xSKwQ6Ks4ireiyfoQTgRtOFqAdNQrfMLL0u7B0pVS9lq7Mmeb/SVhhye
+         lqC5BY5eJCfRAEp7pjH2+rr85Czwh55+mvc4xOb9JE9g+YFQTqnLKXHTpUzPD66CG8Wu
+         3VTi+fVUWft6KNqNRmSCExivH5LCr3HVwnq40wHdX0t3seDrUFUeJQn1x0P2f0rvZJ94
+         I7PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769102131; x=1769706931;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zS/GxMdiJGDCeHk055yjjzpfuWy6c8ec4m8IN4L4FwE=;
+        b=fE9VZXV2WSWk90iiWIfp+u9dB4lacKOy6LaVd4ohfzm12oqo/1MC9V1IoPZ0rr7fGb
+         NPkh9iDQBihqto9Ub4VvNaYk7CX0+w26VbpMqEjyJuiRrzU9/MK4UIoXu1Bd83QlUV6P
+         K+MprcE0EpdKn1dMqo1kcgha0LbJ+pq6RIr3R51OvBr0OnAMnpe8aghbCU4QZl721YWA
+         nohSL0IjwiHy52tMdXT6fxy5mPnK9XutHUoJ4EUrrteullC+vbbOovpNAib+IdMyEVSE
+         ZCK4mn0Nv9DdAyUjTZXMTGovC02T/MHHUT2e2Y722OO2GtkzDSFcxvfEtQ3lfMuJusVn
+         SIyA==
+X-Gm-Message-State: AOJu0YwLpJQMV/U69M+/i5Aw1YYvje6DfPGZ/vt2T9gxfozF9KX4Eoga
+	iEw528Mg/6FD8j4fSfZnTzBgeBtuumRCpN4hdj9ddnxjSzewBTh6UMqrCMeTYxil
+X-Gm-Gg: AZuq6aIWE4KY6ZS4V0YBMyaSVeoeFSkISLG0VwpaTsIOwwUZdQ7e8Or9mTZVtZ4VoWv
+	QLAYFWfF/VX6qWh9x5EOX0TP43/3CnvubjiCRxAj5Y1BwVxzYYOZFQ8/zmhF9vR/I6S05e0ndD4
+	Te3s4w9HFUfM0yw5lmnn0TaAupGhnxeN5qTz5RdtwsCa086qYxorDf1b7AejeqKHkChX2XQGZK3
+	w9DeTo8mc2WDqofOfxnIMxMbzTZgeE09vJKXce9CaAq6iXj4PhUtKi9wUnQVv3kCHwY2ZdNQFkp
+	MrJbPWESTESlALOmW/GY0WF+wwASegg5zClF0S3cDqch/0A6pdO7Xl3UwGlh9WjJwgJMPxyxmWn
+	l6kM/Zkv7kZEgJIEH+sNxD+JOmCnV+cYYfugf2LnStUSeN5k7yvVjuOa5mWmBG1NaSBWeH8NOK8
+	Q30+hYJ4w/YzRBpbHH2eD5ssjblzEpMlLWmVAJve1Kou1jNy5HuFJbin3abSf2p94JdSev
+X-Received: by 2002:a17:903:2443:b0:2a7:f369:4de8 with SMTP id d9443c01a7336-2a7fe73eb13mr983295ad.42.1769102131065;
+        Thu, 22 Jan 2026 09:15:31 -0800 (PST)
+Received: from localhost.localdomain ([115.98.234.248])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a773d4e5basm81557205ad.94.2026.01.22.09.15.28
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 22 Jan 2026 09:15:30 -0800 (PST)
+From: Amisha Chhajed <amishhhaaaa@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>,
+	amisha <amishhhaaaa@gmail.com>
+Subject: [RFC PATCH 0/2] Adding string_list_sort_u to replace combined calls of string_list_sort and string_list_remove_duplicates calls.
+Date: Thu, 22 Jan 2026 22:45:21 +0530
+Message-ID: <20260122171523.94234-1-amishhhaaaa@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-<rsbecker@nexbridge.com> writes:
+Following up with Junio's suggestion in 
+https://lore.kernel.org/git/xmqqqzrp74q3.fsf@gitster.g/, calls to 
+string_list_remove_duplicates are almost always preceeded by string_list_sort
+which can be coupled into a single method.
 
->>> This would let the caller handle the failure and is thus quite
->>> flexible, which results in the following code:
->>>
->>> 	if (!u64_mult(expected_size, (uint64_t)p->pack_size, &expected_size))
->>> 		die(_("overflow during fixed-point multiply (%"PRIu64" "
->>> 		      "* %"PRIu64")"), expected_size, (uint64_t)p->pack_size);
->>
->>It does read quite cleanly, so I think I'm convinced.
->
-> Are all of these changes endian-safe?
+There are places, for example the call of string_list_remove_duplicates
+in pack-objects.c where removal of that line causes no test failures,
+however removal of string_list_sort_u version did because removing sort
+is a more catchable behaviour by the current tests, this might improve
+the case where we were unsure why removing string_list_remove_duplicates
+caused no test failures.
 
-I do not think of any endian-ness issue around here; these "mult"
-helpers are checking if the result would overflow using regular
-division, without doing any funny byte-shuffling ourselves.
-<git-compat-util.h> has definitions of unsigned_mult_overflows(),
-and maximum_unsigned_value_of_type(), if you are curious.
+I was unable to write unit tests for this new method in this RFC PATCH
+since I was quite unsure why no unit tests were present for string_list_sort
+and string_list_insert.
+
+Amisha Chhajed (2):
+  Adding string_list_sort_u which sorts a list then deduplicates it.
+  Replacing calls of string_list_sort and string_list_remove_duplicates
+    with the combined variant string_list_u.
+
+ builtin/clone.c           | 3 +--
+ builtin/fast-export.c     | 3 +--
+ builtin/pack-objects.c    | 6 ++----
+ builtin/sparse-checkout.c | 6 ++----
+ help.c                    | 3 +--
+ notes.c                   | 3 +--
+ string-list.c             | 6 ++++++
+ string-list.h             | 6 ++++++
+ 8 files changed, 20 insertions(+), 16 deletions(-)
+
+-- 
+2.51.0
 
