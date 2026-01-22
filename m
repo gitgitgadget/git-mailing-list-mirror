@@ -1,142 +1,227 @@
-Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1F32DC349
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769095792; cv=pass; b=Ce5jXbBCc658Q3ksJ9wP5QtfdZd5bl80Vc/BFaqoAuuSHLzPDmQJ8n9GxjUhcHBwjcvQNQc886dSeBt87gNz/ZhMOBRssO6aVRuqrHMqN1QLAiJW2SMuDSQV7BXBDe6obAda4tBZlgwGi20Oe8SNINX4lG1Um3a4kV6CH+3euvw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769095792; c=relaxed/simple;
-	bh=DsdGZxZHKbg4LmOcAaucGl7Cn45yiQ1R7xRyRJrJEKM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C5Ilanv2rKuSOvEOayAfR59/9k/x+h/9hcFuGezHQUk4b3TEz8+AMef1TwD5hJ1EOkgqYtlkK5atgti2oIHuoAaquMxEXk6c+0Cxsf6SyqLiMAmGV72Xa0z9KeGbaXptCve+m8uouKKdcvQ+Eh5qKMPEnRwO2zyj9WbXtIsC8bU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T+plIvAm; arc=pass smtp.client-ip=74.125.82.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140D935B137
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:37:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769096245; cv=none; b=YVlgVemFRr7z8p5o+Za8LotSNj8Z9rvV9S2JAeTVplekUc9sl/2S67WRC0bkx6kRmgpR+bV9iGBCfUVJJiXWmLTBcWoyJNQMEt8rDjcj2/VYrRD4QEWMo2Zw9tFtLedO6NX4MtK+txX1MKUiQOix0is4+xNSdxWJp+v6VqLjrWg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769096245; c=relaxed/simple;
+	bh=FHKHQBvEjrc1xsk3yUJEuWPhDGiZ7o3nl4fyCQtB5Vg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=E/AwHN4tY3rREyJvlETEe46ClyI/sud2Yift+RRIpnX+9ig7VATRNghkvGAfDak0sgOokxbMbgLrOsJ3u1Q4h0aTYP2XcdnOMuIrnCBSqdS8Pf9dc88Z/pZ60YdPBlCDmqgZwgNerb6wYfS68M87QZWgJR5Mz5pG5/eAkTRMa74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yw2ZxqeY; arc=none smtp.client-ip=74.125.82.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T+plIvAm"
-Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-12448c4d404so1189717c88.1
-        for <git@vger.kernel.org>; Thu, 22 Jan 2026 07:29:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769095783; cv=none;
-        d=google.com; s=arc-20240605;
-        b=dtLrl12yeA9mpG5ddwPNg258YGANFQU09Axhp466c/HnLyife8ccGuyygrT59GyAqB
-         9EMBQI8ec9WD+7v3sA8L6L8u/sQzczLE07Gj+4QLQBpHS7jJhRgBFsvgbDGng9nbSMRY
-         Mp5j6NuxrnhWdTQoSYUpcsoAtXFtDnMSXQpYX2foxB2bOKnJo7TEIBE7BVFsyWUTQyNN
-         7NmnMr32/7ZhkjoayRVDjxQ4ZZklp0HEY0XJHS3FiQ4Kc+Yr8xHmttRtbmAT473iENQe
-         Yr6ldliCiaPWrLf1JPYwscn/jkoCGsgBVRTtB27VDhQH5s4e6Q4v1oetWnRityYMPtT0
-         2sbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=7V5ySvnh+GRNKfyuBbA7GiNj0PJRA/im5k5WXNH8Bck=;
-        fh=SUtS5Uxcs1MaW7qAkYHaLrxMI/luGLAfuRKahcKGaig=;
-        b=KpMX2lrHQtdYw1QqVjhgU3hhtMj9ZQlQAKWv06sGO0qxWmjQJ4IzzjJRU/fSJhhmLi
-         CGhIH5u1evLDRFdulKMXQdcleu9MGoqwc7IesFwe+GPH8EYE+nUs01fbrrMn8H+afWQt
-         ZpeHZ/4zAhPDcSjb91qaW0ndFM1uH2Z8vBZz9LtVDqQZf4n8Rf8rTdIGUyVLYuGJT6MV
-         yLX3xQwekYjkyILYqZ3qlRMfPs11vB3+y2yZS9zDu+lmG5ut6yQMK2k07kuwpX8opkRb
-         jQjSxEmkrqeN8CLXm1yM4+5ktt+5oI/h7NRBbiPskNfBka8AtzrSMei4sOyFI65zy/zs
-         2+oA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yw2ZxqeY"
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2b714f30461so1021154eec.0
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 07:37:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769095783; x=1769700583; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7V5ySvnh+GRNKfyuBbA7GiNj0PJRA/im5k5WXNH8Bck=;
-        b=T+plIvAmX9tbnUglsByL4CLy6mB6TMALgaNuE4ArFoZ2MImQrceu6eRF7cWGyKKQ6z
-         i8zXTlV3UZ+wfssUdE4h57G1FSnuYfgkQ5ID0Vkun2cvmuW8kSCXWU7GijOqJzUw2VXN
-         0ALss3sRGJiDK2OuZl/c9dMNIYBnlOOYgv6nazCYBwWQf1dWEcdwSMDiv41FHjaVA5dm
-         whmQ0b9qBVltZBT6CHtv4fJnMETHBA94w3Nu480xUJbQFiYXY0v/Yk0Sf3F7QcHJPICP
-         J3rrgiEkXSw48IDxA0HzM/FMcXAkv3yEKiZ8YOL778WLkxj8hPrkpjZ/gHUHSZkHO0HX
-         86PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769095783; x=1769700583;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1769096243; x=1769701043; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7V5ySvnh+GRNKfyuBbA7GiNj0PJRA/im5k5WXNH8Bck=;
-        b=jo0MqAfvZH+hmBi8rmI74t7GMwt6UoiF+TDRlXJQlW4fl9Jr2Hgd9fdTfcn4BkzFkZ
-         oXV2iiNKyMTQfGsK8LE2oW7bgGplgYO6mZY7UjrgQKmeZCeJ2MLc6NYCNEIAdj/19DBE
-         GAkfZJ0NvkFm/lPIgUIf+eRj8GPNPILx96Z/hLxjJH4PrSOVSMU33Qc6gCYV7meWXxqV
-         SgmuFYrUl78PnQ60eDuMUrSn9ApXb+sJ+iw9VDMyoeeNzpfaktjuJsVdUjBgM8v2TGwu
-         DyU9uHtaxtuH2kaiCgVUPbxgqzZv//aOEz9fKfrZXpdMLgViHEQHlVUqdbLUopFbtTpn
-         sqOQ==
-X-Gm-Message-State: AOJu0YwNOaaDyNwyfuSXcZaTF3aOsTmDoLucynFhw1RHfCaKNetmKu2U
-	zioNbkEZxzr+RzrLGhjmSx9QKnIusDi9WKyrMJBTk4tm40DFsw1J37qjVMmi+fN3dzUI9vgo1Fs
-	rDpQqxGzQZILgCkeC35vDDg8L6D2k7Bs=
-X-Gm-Gg: AZuq6aKWS1GCAoFAI0eMJxeRTmprUkmpM9AcJZaNUiKnqINLBv2JSJr7oUdyQa6z6Q2
-	uDdTM89DWxjhG4DbxiigfolVf8vHx1Ik5TSoyjCSqmql8OAJcg2KxZKHFoTrBAEvzyFdsIcKl0R
-	MyUowshm7LvOUMElpB/5CSTD40mfiSD9NGJxnh2JDDLlXrbwlGJmBN+IJfl4NdfVduafW0gjY9F
-	IqZ4Ucvagl4gZJxeE9PRdl/WW6qIzTqhC7kOuzydm6VF7iFdLKpn4U3Jf5N3IsrBm9SlmKjfZk=
-X-Received: by 2002:a05:7022:4582:b0:11b:95fe:bee3 with SMTP id
- a92af1059eb24-1246aabf3f6mr7103725c88.37.1769095782940; Thu, 22 Jan 2026
- 07:29:42 -0800 (PST)
+        bh=ECcgHZIsTrLvN3Iq7C4nCOeKWlWV54F0mLmweBLGch4=;
+        b=Yw2ZxqeYnY+LFsB5FixUdICoNTEU9PmIkCUiioysDvxbbKr1o9yOOdoxum4i+6iucJ
+         rieADnAuQwHdLaGMXEfq4WdgcwBFjcsCAd3KXOC8AX0JE0+CJ8dP5x7JBlb/PXwDWErn
+         AtYpnaODXaEgFpwhqn0Ueutj8GaP/Cp3nADBlU1zNGjiwiz5Mmz9ldOeAcHbL5daxBTo
+         Y1Qjj19RHXwhMIv7EMAHNtsa+8TrghPomWsljjWXC02SPRFOnZobjSw8jL+9XSUSlQ8r
+         ECtkYlm4O0zf70XbnFz6PQtMdABW+BZAM9eAINlsgvC9qdqGYeWhNjs08YtbwW0dRgA3
+         gpCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769096243; x=1769701043;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ECcgHZIsTrLvN3Iq7C4nCOeKWlWV54F0mLmweBLGch4=;
+        b=onq3LFvdooUk32hvm0sjx8PHDTF68tZPS16figr8aW+26O6JK8N795i8vpuZlB3Qy1
+         c1obPh1fwXRTPoJmFXPre9UunmhZDk0z7oE0R9hbMPw4aONxxeN9pVXqGUZZpGGNZeeY
+         tkQZUUQFZ4lra47UAqXd/fFMA8j1i0Z8Uxh3dR1Wm0GEtZiKglE8CoYYZsV9Vyp/41gr
+         enJ/I0VpOMe1wGizdWa2L8C+aMZEiX4ug3/kAlnun3FirUrR+ne/NqHr5DlUx1rIfPNe
+         aCPKKCYBjpHUX4cydVwdJ+I9genOEAP/Vfg/d1gGDHn3ufuBIzoe1AD+2rqVj3Ih87xb
+         4urQ==
+X-Gm-Message-State: AOJu0YzN83ypO2j3h8u2DqvIt+hVQ8QeJVryApVVxNC+Fr1kqHToqa3P
+	RWFXwXLkNwXvJb/Nfh8pUZHmTXWofdGbvtnmhXkjRGxS1fe8BvvuoBUJIVoHIQ==
+X-Gm-Gg: AZuq6aL+n0eOOK4TwJa+m4JhuJYhnj/1PYsPXBCHwceXba3apCuPsINo6o8Guvch/KF
+	ZynckASax29BAv2p2/AFe6qDC1bRrtja+mNlSF6W/mxUSDxibbIZm+dLlWKrgjeZQb9T33HT/6J
+	aVQrtho3+O6QFR7NVEslOXFRKU36UDQ2+wG2XfrhiEVKhn7JRcyHBihhWnPkBtbOCU7EiwoueSM
+	q7XdKxVZnTje2ehcVk/WtxflHgYCjVDmhqcnQSHKNmLV1Mu20OZJojA37xjiJv2vlloOwCF49Qs
+	oU+M03yL3Pq2Gd9NBGWr6MpsN/FKgwjO09WDhplWTRG/6mV7ESWPtklCHu8IOJtFxdxlzAh3Dh3
+	5W+iFTm8uovUdo8onyFqnxOjY6y6T24doW9Bqijb2yYf+jm9hoTrjXawUJV3/5kPVSkhe5kVDyO
+	hAuKdUFArBmRD7Z4x8nShcKtevEw==
+X-Received: by 2002:a05:7300:dc03:b0:2a4:630b:c789 with SMTP id 5a478bee46e88-2b6b410c863mr14991322eec.37.1769096242529;
+        Thu, 22 Jan 2026 07:37:22 -0800 (PST)
+Received: from [127.0.0.1] ([172.215.217.241])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7093325e4sm9838998eec.28.2026.01.22.07.37.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jan 2026 07:37:21 -0800 (PST)
+Message-Id: <pull.2138.v27.git.git.1769096240.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v26.git.git.1768766353.gitgitgadget@gmail.com>
+References: <pull.2138.v26.git.git.1768766353.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 22 Jan 2026 15:37:18 +0000
+Subject: [PATCH v27 0/2] status: add status.compareBranches config for multiple branch comparisons
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1768681947.git.belkid98@gmail.com> <9a411db9f8f9df37c7a5f100d97c8d5ff5f6ba97.1768681947.git.belkid98@gmail.com>
- <56ac85bc-8e12-4cb9-ba22-db021c473110@gmail.com>
-In-Reply-To: <56ac85bc-8e12-4cb9-ba22-db021c473110@gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Thu, 22 Jan 2026 16:29:43 +0100
-X-Gm-Features: AZwV_QhmBEGzPmsARTCpNruHu_x4cqqUgrjx0URvFuuWCf506tanaXQiBp53saM
-Message-ID: <CAD=f0L_VP3jN-_B9-iyEd6WPURHFBvOUJgy4HPUv0vSp29P+Qw@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v3 3/3] environment: move "branch.autoSetupMerge"
- into `struct repo_config_values`
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com, 
-	usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, me@ttaylorr.com, 
-	karthik.188@gmail.com, Toon Claes <toon@iotcl.com>
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-On Thu, 22 Jan 2026 at 15:41, Phillip Wood <phillip.wood123@gmail.com> wrote:
->
-> Hi Olamide
->
-> On 17/01/2026 20:59, Olamide Caleb Bello wrote:
-> > The config value `brach.autoSetupMerge` is parsed in
-> > `git_default_branch_config()` and stored in the global variable
-> > `git_branch_track`. This global variable can cause unexpected behaviours
-> > when multiple Git repos run in the the same process.
-> >
-> > Move this value into `struct repo_config_values` to retain current
-> > behaviours while achieving repository scoped access.
->
-> Same comment as the previous patch about repository scoped access.
+cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
+cc: Ben Knoble ben.knoble@gmail.com cc: "Kristoffer Haugsbakk"
+kristofferhaugsbakk@fastmail.com cc: Phillip Wood phillip.wood123@gmail.com
+cc: Nico Williams nico@cryptonector.com cc: Patrick Steinhardt ps@pks.im cc:
+Jeff King peff@peff.net
 
-Okay thank you
+Harald Nordgren (2):
+  refactor format_branch_comparison in preparation
+  status: add status.compareBranches config for multiple branch
+    comparisons
 
->
-> > diff --git a/environment.h b/environment.h
-> > index 3b5ff7094a..bfcdffe836 100644
-> > --- a/environment.h
-> > +++ b/environment.h
-> > @@ -2,6 +2,7 @@
-> >   #define ENVIRONMENT_H
-> >
-> >   #include "repo-settings.h"
-> > +#include "branch.h"
-> >
-> >   /* Double-check local_repo_env below if you add to this list. */
-> >   #define GIT_DIR_ENVIRONMENT "GIT_DIR"
-> > @@ -89,6 +90,9 @@ struct repo_config_values {
-> >       /* core config values */
-> >       char *attributes_file_path;
-> >       int sparse_checkout;
-> > +
-> > +     /* branch config values */
-> > +     enum branch_track git_branch_track;
->
-> We could probably drop the "git_" prefix now that it is not a global
-> variable.
+ Documentation/config/status.adoc |  20 ++
+ remote.c                         | 192 ++++++++++++++----
+ t/t6040-tracking-info.sh         | 337 +++++++++++++++++++++++++++++++
+ 3 files changed, 512 insertions(+), 37 deletions(-)
 
-Alright thank you for the review.
->
-> Thanks
->
-> Phillip
->
+
+base-commit: b5c409c40f1595e3e590760c6f14a16b6683e22c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v27
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v27
+Pull-Request: https://github.com/git/git/pull/2138
+
+Range-diff vs v26:
+
+ 1:  27a46f8d9c = 1:  27a46f8d9c refactor format_branch_comparison in preparation
+ 2:  caa761f615 ! 2:  0993420fc1 status: add status.compareBranches config for multiple branch comparisons
+     @@ remote.c
+       struct counted_string {
+       	size_t len;
+       	const char *s;
+     -@@ remote.c: static void branch_release(struct branch *branch)
+     - 	free((char *)branch->refname);
+     - 	free(branch->remote_name);
+     - 	free(branch->pushremote_name);
+     -+	free((char *)branch->push_tracking_ref);
+     - 	merge_clear(branch);
+     - }
+     - 
+      @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+       	return stat_branch_pair(branch->refname, base, num_ours, num_theirs, abf);
+       }
+     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+      -	const char *full_base;
+      -	char *base;
+      -	int upstream_is_gone = 0;
+     --
+     ++	char *compare_branches = NULL;
+     ++	struct string_list branches = STRING_LIST_INIT_DUP;
+     ++	struct string_list processed_refs = STRING_LIST_INIT_DUP;
+     ++	int reported = 0;
+     ++	size_t i;
+     ++	const char *upstream_ref;
+     ++	const char *push_ref;
+     + 
+      -	cmp_fetch = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
+      -	if (cmp_fetch < 0) {
+      -		if (!full_base)
+      -			return 0;
+      -		upstream_is_gone = 1;
+     -+	char *compare_branches_config = NULL;
+     -+	struct string_list compare_branches = STRING_LIST_INIT_DUP;
+     -+	struct string_list_item *item;
+     -+	int reported = 0;
+     -+	size_t i;
+     -+	const char *upstream_ref;
+     -+	const char *push_ref;
+     -+
+      +	repo_config_get_string(the_repository, "status.comparebranches",
+     -+			       &compare_branches_config);
+     ++			       &compare_branches);
+      +
+     -+	if (compare_branches_config) {
+     -+		string_list_split(&compare_branches, compare_branches_config,
+     -+				  " ", -1);
+     -+		string_list_remove_empty_items(&compare_branches, 0);
+     ++	if (compare_branches) {
+     ++		string_list_split(&branches, compare_branches, " ", -1);
+     ++		string_list_remove_empty_items(&branches, 0);
+      +	} else {
+     -+		string_list_append(&compare_branches, "@{upstream}");
+     ++		string_list_append(&branches, "@{upstream}");
+       	}
+       
+      -	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
+     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+      -				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
+      -	} else {
+      -		format_branch_comparison(sb, !cmp_fetch, ours, theirs, base, abf, show_divergence_advice);
+     -+	for (i = 0; i < compare_branches.nr; i++) {
+     ++	for (i = 0; i < branches.nr; i++) {
+      +		char *full_ref;
+      +		char *short_ref;
+      +		int ours, theirs, cmp;
+      +		int is_upstream, is_push;
+      +		unsigned flags = 0;
+      +
+     -+		item = &compare_branches.items[i];
+     -+		full_ref = resolve_compare_branch(branch, item->string);
+     ++		full_ref = resolve_compare_branch(branch,
+     ++						  branches.items[i].string);
+      +		if (!full_ref)
+      +			continue;
+      +
+     ++		if (string_list_has_string(&processed_refs, full_ref)) {
+     ++			free(full_ref);
+     ++			continue;
+     ++		}
+     ++		string_list_insert(&processed_refs, full_ref);
+     ++
+      +		short_ref = refs_shorten_unambiguous_ref(
+      +			get_main_ref_store(the_repository), full_ref, 0);
+      +
+     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+       
+      -	free(base);
+      -	return 1;
+     -+	string_list_clear(&compare_branches, 0);
+     -+	free(compare_branches_config);
+     ++	string_list_clear(&branches, 0);
+     ++	string_list_clear(&processed_refs, 0);
+     ++	free(compare_branches);
+      +	return reported;
+       }
+       
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	)
+      +'
+      +
+     ++test_expect_success 'status.compareBranches from upstream has no duplicates' '
+     ++	(
+     ++		cd test &&
+     ++		git checkout main &&
+     ++		git status >../actual
+     ++	) &&
+     ++	cat >expect <<-EOF &&
+     ++	On branch main
+     ++	Your branch is up to date with ${SQ}origin/main${SQ}.
+     ++
+     ++	nothing to commit, working tree clean
+     ++	EOF
+     ++	test_cmp expect actual
+     ++'
+     ++
+      +test_expect_success 'status.compareBranches shows ahead of both upstream and push branch' '
+      +	(
+      +		cd test &&
+
+-- 
+gitgitgadget
