@@ -1,367 +1,222 @@
-Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59A24418D1
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 12:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8451C824BD
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 12:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769084042; cv=none; b=lAglaUPC0QWiZAnU0KgEPkZB7rOw5N64OC+K9w6vpvOIpeHb5Wr4GXzcm2GIMWDK21xQbNGKMi1wuuDAJAV+5bLIsDTwRSmXKCJNt1KGFbhUYFx5X0rFAwMxit0vk6eY8bU1AZ/B0BF/E1ZRglNZLsKyZSV0UCSq3y8ETHaRqdk=
+	t=1769084985; cv=none; b=lOVPxSIG8dSbSOGXNQuRk+sS3kxtp40ltPemnhzQhbY7QEMOJRsta7UnXTuvLXcRTcTXQ+ii/MZOfsjImCJukA42Y5AQgpfrRjnTe+rHX0HZMBzkZTzZYx2OT3m77wIJzFfEO293+Kt2yNoN0vc/nWSywWd0dfKRQZLoC9R1rnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769084042; c=relaxed/simple;
-	bh=TDQI8hrbIPsLgrZynrjMxm6cimlOfyCHCUaRIkshBzc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UWlkI8vVL8l7pBSN9M/eY2vjkx5k+cUb1se1lF6Xv3zpZDRb96bde3j1pjORG0gGQVqiExy9Xp5B7B7w3pnsrLOZGqRnRHMOBsSqS1Qc6lrNm1BXcyZSnlq+YfH/YMARqxXxu6QBle0P1wASKTv1OExCa5IL3+KRNSe5INTrw5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=0giFWID7; arc=none smtp.client-ip=91.218.175.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1769084985; c=relaxed/simple;
+	bh=Dqr0Q/sk/sVkNb+sDBdZsHIeTBWDNFj6KpV/CRy5qZg=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=hANcyNbGLQTeYhmngdZWXb4XuwjsqLDFBG6NUaQaZfnWRq2pUAiwU6bfr2046DZSnZvWlaLpOkFs7hrSGbqZWhfPDaaG3C3GsocE8UtkdedXKShn53edkmUhZtrPwaL/5MBfXd4JNwWYIl5wfU7IRFhBht2ibTK+sRXXP1JGsKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=llmIVTsj; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="0giFWID7"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1769084036;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=owBWSUaOBHY2LgkAL4bXMqEVfg0mqnSjOGjhIt7mfbA=;
-	b=0giFWID7VUYK26eoaeZVXLWa8Y65ggsmHJnN2rBUAqEemJGwVQlp7nUIrgdp219z1EEfNF
-	BJDVkoRkDg3bqfpDMZKsCOSuw3uzGpLllJJEjHpEPJ5odE9I3RMx18ka1MamjBAZGLaMn2
-	fKZqII/0CFkCa3S+O61da/nQ256b278=
-From: Toon Claes <toon@iotcl.com>
-To: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
-Cc: phillip.wood123@gmail.com, gitster@pobox.com,
- christian.couder@gmail.com, usmanakinyemi202@gmail.com,
- kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com,
- Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [Outreachy PATCH v3 2/3] environment: environment: stop using
- core.sparseCheckout globally
-In-Reply-To: <fd95169de42891452b430814476d78c706e4a7e2.1768681947.git.belkid98@gmail.com>
-References: <cover.1768681947.git.belkid98@gmail.com>
- <fd95169de42891452b430814476d78c706e4a7e2.1768681947.git.belkid98@gmail.com>
-Date: Thu, 22 Jan 2026 13:13:45 +0100
-Message-ID: <87zf65j152.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="llmIVTsj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1769084959; x=1769689759;
+	i=johannes.schindelin@gmx.de;
+	bh=wwpskCiW7A/xqax7y2uv4oKkTAscFFNpZzn6fKacj/k=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=llmIVTsjTT+cZCUxeT72nNNW/wDVyjORgQjMw7/mJLwu6bS5wgE1npDTVHimiMdK
+	 g6e2PUHokp0+3q5rqbehAwPPEjvRJjdK0yezFRx+PowQ3eFWv/OCqus/6agcMjxL3
+	 R1fNgrRgz60BaEpLCQiEXpRQpq+UqbqcXIqrHMDV521fkOh9lZ51IH9uuZblSQnjX
+	 o4wWS3iRdYodmNz+oO/0VSUoE4YYz6v/B0d8VtyA8lYt1drxOOGb8icxKcXoeJUtQ
+	 pArhNlhuSfVCVkBdah1yeBkX61w1voSziJS4oxtW3+NjiABg/8uFKhktgz85S+wpw
+	 10Nn3vUSBE9f6NhwFQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.108]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6UZv-1vgwvn3pMH-0058lG; Thu, 22
+ Jan 2026 13:29:18 +0100
+Date: Thu, 22 Jan 2026 13:29:16 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+    Patrick Steinhardt <ps@pks.im>, Ondrej Pohorelsky <opohorel@redhat.com>, 
+    Jeff King <peff@peff.net>, 
+    Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
+    Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
+ sequences to be passed through
+In-Reply-To: <xmqqa4y81ag8.fsf@gitster.g>
+Message-ID: <a51f9433-e82f-bc2c-5fc4-f8ae95a859f8@gmx.de>
+References: <fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com> <aWD2x154F5f-c3pL@pks.im> <aWKLrIefrcSwReu2@fruit.crustytoothpaste.net> <20260115211448.GF1053259@coredump.intra.peff.net> <xmqqa4yeblsx.fsf@gitster.g>
+ <c0af9072-cf21-a7e2-5b78-eb70217b462c@gmx.de> <aWnekt4ESo0bKpOT@pks.im> <CA+B51BEs7kuJ7s+K2vbZLSoaq3krGrqVncQAaTjSSNazFLY3tw@mail.gmail.com> <xmqq3445bn33.fsf@gitster.g> <aW3bSYCIPMhJT1mf@pks.im> <aW6tMtg0pEKq23TX@fruit.crustytoothpaste.net>
+ <xmqqa4y81ag8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:P008PrnfhTqdLrEdqMYr0Yd/7PaFErNmxlOw/SZHg7Vk9UvVkPn
+ NJrIqirlmgQEkKEMhSvYmKW6Mm59/wtrw6PYaqpI75LO5t+7YLpsSb55Ma74yJHqUq9Dxhu
+ pOb/CluiTb3n7KMC6n39yfybK11R8FWHKII/K65iHRJJQch9OjoEmdw8J19AjMsLQMvA4t3
+ pzGfMWhAsYngNA58VSzeQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:fOfySGU+JOI=;b23Ir/7J0/bjO+cBHaYnTEr6WCf
+ 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
 
-Olamide Caleb Bello <belkid98@gmail.com> writes:
+Hi Junio,
 
-It seems you have 'environment:' twice in the title?
+I disagree with making sideband sanitization opt-in or weakening it based
+on a "trusted remote" heuristic. In this context, emitting untrusted bytes
+to a terminal without proper sanitization is a security-relevant bug;
+safe-by-default should be the baseline.
 
-> The config value `core.sparseCheckout` is parsed in
-> `git_default_core_config()` and stored globally in
-> `core_appy_sparse_checkout`. This could cause unintended behaviours
+On Tue, 20 Jan 2026, Junio C Hamano wrote:
 
-s/core_appy_sparse_checkout/core_apply_sparse_checkout/ ?
+> [...] forcing this filtering on everybody [...]  unless it is enabled by
+> default. [...]
 
-> when different Git repositories running in the same process access this
-> variable.
->
-> Move the parsed value into `struct repo_config_values` to retains current
-> behaviours while achieving the repository scoped access.
->
-> Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
-> ---
->  builtin/backfill.c        |  2 +-
->  builtin/clone.c           |  2 +-
->  builtin/grep.c            |  2 +-
->  builtin/mv.c              |  2 +-
->  builtin/sparse-checkout.c | 22 +++++++++++-----------
->  builtin/worktree.c        |  2 +-
->  dir.c                     |  2 +-
->  environment.c             |  4 ++--
->  environment.h             |  2 +-
->  sparse-index.c            |  6 ++++--
->  unpack-trees.c            |  2 +-
->  wt-status.c               |  2 +-
->  12 files changed, 26 insertions(+), 24 deletions(-)
->
-> diff --git a/builtin/backfill.c b/builtin/backfill.c
-> index e80fc1b694..5fc8c51ed1 100644
-> --- a/builtin/backfill.c
-> +++ b/builtin/backfill.c
-> @@ -139,7 +139,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
->  	repo_config(repo, git_default_config, NULL);
->  
->  	if (ctx.sparse < 0)
-> -		ctx.sparse = core_apply_sparse_checkout;
-> +		ctx.sparse = repo->config_values.sparse_checkout;
->  
->  	result = do_backfill(&ctx);
->  	backfill_context_clear(&ctx);
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index b19b302b06..b6b19e83d1 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -623,7 +623,7 @@ static int git_sparse_checkout_init(const char *repo)
->  	 * We must apply the setting in the current process
->  	 * for the later checkout to use the sparse-checkout file.
->  	 */
-> -	core_apply_sparse_checkout = 1;
-> +	the_repository->config_values.sparse_checkout = 1;
->  
->  	cmd.git_cmd = 1;
->  	if (run_command(&cmd)) {
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 53cccf2d25..525edb5e9c 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -482,7 +482,7 @@ static int grep_submodule(struct grep_opt *opt,
->  	 *	"forget" the sparse-index feature switch. As a result, the index
->  	 *	of these submodules are expanded unexpectedly.
->  	 *
-> -	 * 2. "core_apply_sparse_checkout"
-> +	 * 2. "sparse_checkout"
->  	 *	When running `grep` in the superproject, this setting is
->  	 *	populated using the superproject's configs. However, once
->  	 *	initialized, this config is globally accessible and is read by
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index d43925097b..511620747b 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -572,7 +572,7 @@ int cmd_mv(int argc,
->  		rename_index_entry_at(the_repository->index, pos, dst);
->  
->  		if (ignore_sparse &&
-> -		    core_apply_sparse_checkout &&
-> +		    the_repository->config_values.sparse_checkout &&
->  		    core_sparse_checkout_cone) {
->  			/*
->  			 * NEEDSWORK: we are *not* paying attention to
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 15d51e60a8..1c2c39b968 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -63,7 +63,7 @@ static int sparse_checkout_list(int argc, const char **argv, const char *prefix,
->  	int res;
->  
->  	setup_work_tree();
-> -	if (!core_apply_sparse_checkout)
-> +	if (!the_repository->config_values.sparse_checkout)
->  		die(_("this worktree is not sparse"));
->  
->  	argc = parse_options(argc, argv, prefix,
-> @@ -400,11 +400,11 @@ static int set_config(struct repository *repo,
->  
->  static enum sparse_checkout_mode update_cone_mode(int *cone_mode) {
->  	/* If not specified, use previous definition of cone mode */
-> -	if (*cone_mode == -1 && core_apply_sparse_checkout)
-> +	if (*cone_mode == -1 && the_repository->config_values.sparse_checkout)
->  		*cone_mode = core_sparse_checkout_cone;
->  
->  	/* Set cone/non-cone mode appropriately */
-> -	core_apply_sparse_checkout = 1;
-> +	the_repository->config_values.sparse_checkout = 1;
->  	if (*cone_mode == 1 || *cone_mode == -1) {
->  		core_sparse_checkout_cone = 1;
->  		return MODE_CONE_PATTERNS;
-> @@ -418,7 +418,7 @@ static int update_modes(struct repository *repo, int *cone_mode, int *sparse_ind
->  	int mode, record_mode;
->  
->  	/* Determine if we need to record the mode; ensure sparse checkout on */
-> -	record_mode = (*cone_mode != -1) || !core_apply_sparse_checkout;
-> +	record_mode = (*cone_mode != -1) || !repo->config_values.sparse_checkout;
->  
->  	mode = update_cone_mode(cone_mode);
->  	if (record_mode && set_config(repo, mode))
-> @@ -699,9 +699,9 @@ static int modify_pattern_list(struct repository *repo,
->  		break;
->  	}
->  
-> -	if (!core_apply_sparse_checkout) {
-> +	if (!repo->config_values.sparse_checkout) {
->  		set_config(repo, MODE_ALL_PATTERNS);
-> -		core_apply_sparse_checkout = 1;
-> +		repo->config_values.sparse_checkout = 1;
->  		changed_config = 1;
->  	}
->  
-> @@ -798,7 +798,7 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix,
->  	int ret;
->  
->  	setup_work_tree();
-> -	if (!core_apply_sparse_checkout)
-> +	if (!repo->config_values.sparse_checkout)
->  		die(_("no sparse-checkout to add to"));
->  
->  	repo_read_index(repo);
-> @@ -907,7 +907,7 @@ static int sparse_checkout_reapply(int argc, const char **argv,
->  	};
->  
->  	setup_work_tree();
-> -	if (!core_apply_sparse_checkout)
-> +	if (!repo->config_values.sparse_checkout)
->  		die(_("must be in a sparse-checkout to reapply sparsity patterns"));
->  
->  	reapply_opts.cone_mode = -1;
-> @@ -969,7 +969,7 @@ static int sparse_checkout_clean(int argc, const char **argv,
->  	};
->  
->  	setup_work_tree();
-> -	if (!core_apply_sparse_checkout)
-> +	if (!repo->config_values.sparse_checkout)
->  		die(_("must be in a sparse-checkout to clean directories"));
->  	if (!core_sparse_checkout_cone)
->  		die(_("must be in a cone-mode sparse-checkout to clean directories"));
-> @@ -1035,7 +1035,7 @@ static int sparse_checkout_disable(int argc, const char **argv,
->  	struct pattern_list pl;
->  
->  	/*
-> -	 * We do not exit early if !core_apply_sparse_checkout; due to the
-> +	 * We do not exit early if !repo->config_values.sparse_checkout; due to the
->  	 * ability for users to manually muck things up between
->  	 *   direct editing of .git/info/sparse-checkout
->  	 *   running read-tree -m u HEAD or update-index --skip-worktree
-> @@ -1061,7 +1061,7 @@ static int sparse_checkout_disable(int argc, const char **argv,
->  	hashmap_init(&pl.recursive_hashmap, pl_hashmap_cmp, NULL, 0);
->  	hashmap_init(&pl.parent_hashmap, pl_hashmap_cmp, NULL, 0);
->  	pl.use_cone_patterns = 0;
-> -	core_apply_sparse_checkout = 1;
-> +	repo->config_values.sparse_checkout = 1;
->  
->  	add_pattern("/*", empty_base, 0, &pl, 0);
->  
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index fbdaf2eb2e..e401b8253e 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -536,7 +536,7 @@ static int add_worktree(const char *path, const char *refname,
->  	 * If the current worktree has sparse-checkout enabled, then copy
->  	 * the sparse-checkout patterns from the current worktree.
->  	 */
-> -	if (core_apply_sparse_checkout)
-> +	if (wt->repo->config_values.sparse_checkout)
->  		copy_sparse_checkout(sb_repo.buf);
->  
->  	/*
-> diff --git a/dir.c b/dir.c
-> index b00821f294..56b412a6d2 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1551,7 +1551,7 @@ enum pattern_match_result path_matches_pattern_list(
->  
->  int init_sparse_checkout_patterns(struct index_state *istate)
->  {
-> -	if (!core_apply_sparse_checkout)
-> +	if (!istate->repo->config_values.sparse_checkout)
->  		return 1;
->  	if (istate->sparse_checkout_patterns)
->  		return 0;
-> diff --git a/environment.c b/environment.c
-> index 283db0a1a0..6633542750 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -74,7 +74,6 @@ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
->  #endif
->  enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
->  int grafts_keep_true_parents;
-> -int core_apply_sparse_checkout;
->  int core_sparse_checkout_cone;
->  int sparse_expect_files_outside_of_patterns;
->  int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
-> @@ -546,7 +545,7 @@ static int git_default_core_config(const char *var, const char *value,
->  	}
->  
->  	if (!strcmp(var, "core.sparsecheckout")) {
-> -		core_apply_sparse_checkout = git_config_bool(var, value);
-> +		cfg->sparse_checkout = git_config_bool(var, value);
->  		return 0;
->  	}
->  
-> @@ -761,4 +760,5 @@ int git_default_config(const char *var, const char *value,
->  void repo_config_values_init(struct repo_config_values *cfg)
->  {
->  	cfg->attributes_file_path = NULL;
-> +	cfg->sparse_checkout = 0;
->  }
-> diff --git a/environment.h b/environment.h
-> index aea73ff25b..3b5ff7094a 100644
-> --- a/environment.h
-> +++ b/environment.h
-> @@ -88,6 +88,7 @@ struct strvec;
->  struct repo_config_values {
->  	/* core config values */
->  	char *attributes_file_path;
-> +	int sparse_checkout;
->  };
->  
->  /*
-> @@ -169,7 +170,6 @@ extern int precomposed_unicode;
->  extern int protect_hfs;
->  extern int protect_ntfs;
->  
-> -extern int core_apply_sparse_checkout;
+If the goal is to mitigate terminal escape injection from
+remote-controlled output, then shipping it disabled by default does not
+mitigate the default case. Most users will not discover or enable a
+hardening knob until after an incident.
 
-In the field you're adding to 'struct repo_config_values' you have
-dropped the 'core_' prefix, what the reason for that? If I understand it
-correctly also settings from other sections might end up in that struct,
-so wouldn't it be better to keep the prefix?
+> Two levels of defaults [...]  trusted daily remotes vs new remotes.
+> [...]
 
->  extern int core_sparse_checkout_cone;
->  extern int sparse_expect_files_outside_of_patterns;
->  
-> diff --git a/sparse-index.c b/sparse-index.c
-> index 76f90da5f5..6dd8dd679d 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -152,7 +152,8 @@ static int index_has_unmerged_entries(struct index_state *istate)
->  
->  int is_sparse_index_allowed(struct index_state *istate, int flags)
->  {
-> -	if (!core_apply_sparse_checkout || !core_sparse_checkout_cone)
-> +	struct repo_config_values *cfg = &istate->repo->config_values;
-> +	if (!cfg->sparse_checkout || !core_sparse_checkout_cone)
->  		return 0;
->  
->  	if (!(flags & SPARSE_INDEX_MEMORY_ONLY)) {
-> @@ -670,7 +671,8 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
->  
->  void clear_skip_worktree_from_present_files(struct index_state *istate)
->  {
-> -	if (!core_apply_sparse_checkout ||
-> +	struct repo_config_values *cfg = &istate->repo->config_values;
-> +	if (!cfg->sparse_checkout ||
->  	    sparse_expect_files_outside_of_patterns)
->  		return;
->  
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index f38c761ab9..2bdfa1334c 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1924,7 +1924,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->  	if (o->prefix)
->  		update_sparsity_for_prefix(o->prefix, o->src_index);
->  
-> -	if (!core_apply_sparse_checkout || !o->update)
-> +	if (!repo->config_values.sparse_checkout || !o->update)
->  		o->skip_sparse_checkout = 1;
->  	if (!o->skip_sparse_checkout) {
->  		memset(&pl, 0, sizeof(pl));
-> diff --git a/wt-status.c b/wt-status.c
-> index e12adb26b9..a2e388606f 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1764,7 +1764,7 @@ static void wt_status_check_sparse_checkout(struct repository *r,
->  	int skip_worktree = 0;
->  	int i;
->  
-> -	if (!core_apply_sparse_checkout || r->index->cache_nr == 0) {
-> +	if (!r->config_values.sparse_checkout || r->index->cache_nr == 0) {
->  		/*
->  		 * Don't compute percentage of checked out files if we
->  		 * aren't in a sparse checkout or would get division by 0.
-> -- 
-> 2.34.1
->
->
+I don't think we can safely infer "trusted enough to write to my terminal"
+from "I fetch from there often". A previously-trusted remote can be
+compromised, after all. Which means that a trust-based default is a
+foot-gun: it creates a path where users believe they're protected while
+the program is intentionally passing through attacker-controlled escape
+sequences.
 
--- 
-Cheers,
-Toon
+Besides, allowing "colorful output from their hooks" _is already allowed
+by default_ in the proposed patch series. The config variable
+`sideband.allowControlCharacters` isn't an "all or nothing" setting, after
+all.
+
+> [...] you shouldn't have to manually configure "I accept colors from
+> them". [...]
+
+Color is already a narrowly-scoped exception. Cursor movement / erase
+sequences are in a different category because they can rewrite prior
+output and hide what actually happened. If we want to allow them, it
+should remain explicit opt-in on the client, not something we enable
+automatically based on repository state.
+
+If the argument is "setting `sideband.allowControlCharacters` to `color`
+by default breaks common workflows on established remotes",
+can you point to a concrete repro (hook snippet + terminal + escape
+sequences relied on) or a public example? Without that, I don't think we
+should bias the default toward pass-through of higher-risk sequences.
+
+Absent such evidence, the best way to proceed is to keep sanitization
+enabled by default for sideband output (modulo color), with the clearly
+documented escape hatch for users who knowingly want additional sequences.
+If there is a strong need for per-remote behavior, there is
+`sideband.<url>.allowControlCharacters`, as per v3), i.e. users _do_ have
+that option _after_ stating that they trust that particular remote not to
+wreak havoc with their terminal.
+
+Also keep in mind that this patch series' scope is the sideband channel;
+The fact that SSH-based transports patch through `stderr` (completely
+side-stepping sideband) is out of scope.
+
+Ciao,
+Johannes
+
+P.S.: Junio: if we continue to discuss "opt-in"/"opt-out", I think we
+need to be more explicit about which behavior we mean. We now have multiple
+levels in `sideband.allowControlCharacters` (default allows color;
+`cursor`, `erase`, `false` and `true` allow more fine-grained levels).
+
+If the proposal is "full pass-through of all control characters is
+opt-in", or "full sanitizing of all control characters is opt-in", I
+whole-heartedly agree: That is already opt-in via setting
+`sideband.allowControlCharacters` to `false` or `true`, respectively.
+
+If the proposal is "keep the historical behavior (verbatim sideband
+payload, no sanitization) as the default, and make sanitization opt-in", I
+am firmly opposed: This makes the sideband payload remote-controlled; A
+security hardening that is off by default will not protect the default
+user population.
+
+Can you confirm which of these two meanings you intend when you say
+"opt-in" here? Once that's clarified, we can discuss whether the default
+should remain at "color-only" (today's default) with explicit opt-in for
+riskier sequences, or whether you're arguing for no filtering at all by
+default.
