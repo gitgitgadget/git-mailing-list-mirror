@@ -1,560 +1,260 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FAB2E8B64
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769095691; cv=none; b=KPQmmfmfdQ/1lZDQ11Ybqy0Fioj2HnQxoNpReCfvEvoF61FIMIyJ7ujfgx4vYAVaw3sMukgQZoNfbijVgFo4gX/QmyEbz4msb6e8MOMK2AdT0TtN+W1NdveMBXh3QH34yL3214BRYbXaUZcdUpKz7e0p5MTzBmfrH4BzjoVNtWQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769095691; c=relaxed/simple;
-	bh=3QOHLpWDHZxzdQ75y4nVuo5/RiCq6CVTArAOR6yeSPE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kCsRJ4Z1n/ByaIr6M2h1F+mP5rDdDRme9oVmD8/98HgG77YVqz3k9XdqcFH5sUALZABWArErWN9PyOOaEwq5QB+QJ097s0pi1e4Oxtuyr2UCwnld9wHqNseBLsTz8F0qiTiKi6ZiC4plm6hemfe64ndtyTZczdt5rHIlAn5JZbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hZd/vjH4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Z4Jp1PCr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4585638BF78
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:29:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769095745; cv=pass; b=kgo32zvb97EbJES9116sMdefRQtveYMhdBE8clwe0beKkhOnbvtJYGX91cIUP7DCI1J36aMcaSwiI8ryBHhINxVv44D63Lfc76gEt/JIGbq1NCjKUTdn1jvCkC4OeshB6d0rQMTNolrYpSTjd+jSjMuNhf+8VEIAyraulLgYfhY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769095745; c=relaxed/simple;
+	bh=XwsiYd/LJoJvrNRLNqFcADC/dTBsk1pDpwlDJbDmvYw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H7mwqDgZkcauGtsTUEP7ZUkjluz8ndDtp5ac6heeDylHri3YJA4yYzdl2Ive6T9WS5B7HRPFnKned8AQ9w4vtEMXAsQ5I0EWjPr0PVqq63btd1KXLMmAuKRd0LZCeCSMctPCdyRz1TN+D2IBLlNdOOtfg4VpXQ0h6hxBRfDASw4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RNxbJl30; arc=pass smtp.client-ip=74.125.82.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hZd/vjH4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Z4Jp1PCr"
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60M8buWU645944
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:28:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=GU5G7HW6Wc8
-	btQf0Fna/Sb9PQAvAB9tKjOHNOAGLbfA=; b=hZd/vjH4v0n07dhjXEnRUTA1ck2
-	esD8ULl5QPay98P3yc3dDpLPbr0+2v/wuRQAZB0/m4nvdtnkFQTgeooAlCMTiaon
-	0KyxLtA4iTo1N66E/oYNMWqCkTdYTmSZzCscDacEm5xqSReeB6rXWczi037wmT6f
-	j+VpY/IuvBF+kx2ucT7/+Yw97vsnrlst7aW2s5vVjni4UVhoIUvn9KAYB59MGaNj
-	uieSO7VYwhakUe8hsVBXUlWCJX/arpIzz8EqaMEeMK2Y9kT4NmTgbMYQlnETmVVW
-	Q4ipWavSVcWWWaivTbircE/xQ9v4Cn7YQKXp101NigcmClrbwQS9QIhhEPQ==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bu8j9tn5k-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:28:07 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-2b70c92f404so1511730eec.0
-        for <git@vger.kernel.org>; Thu, 22 Jan 2026 07:28:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RNxbJl30"
+Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-12331482b8fso349532c88.1
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 07:29:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769095740; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ArnKnLBW21DtDfzf/NZSYXuffSspc+9qwrNzZtakg8VtH+phuKdSW9EKtHDu95sr7F
+         3uid4f3Nzdwa6VghuyuUfkdJ526eSGm07bUo2XY+Ds5AGY3qFT8pi9caZTlrZBGHOrLE
+         SWgxUx5Fy54K2iZzb3UEGSb+JSQCFs5Kc7EhJ3kaYnFUToPJ4gQ9+BQXjPLM/Ks++JVM
+         PoQXQh3ZO8xR5R9hzEfiWooA+xl1pa6lECvypzFt3UvfYr9VnFO/esXCjIZRLtJAlLFt
+         an1UunBlulmVZUMWPDk26rjUxqzLtlrcITiOTU4TXl1X5EuF8+rhGZon9TDPvEjlsJzd
+         LPHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=cjLgZf5P2/uHRakG/1BJN/Bmlk/QbTiRy9n3wd6jSfM=;
+        fh=SUtS5Uxcs1MaW7qAkYHaLrxMI/luGLAfuRKahcKGaig=;
+        b=VUWuPb/LKrIRc4h2RrezbiquVC2CjXNbfXK3JvQUh4MPsPOcHeE3P6XS4zgnkzBu5s
+         CQBgWI5nbz3Pz8FVCzjv41YGGoOQnCgzjg9MfYGSIHPMzFlkW/aV+yCGaFJsQJRVRykg
+         QGAKFuM5TEbY9yPBzPkoDRVzwYkwHJs80irZEA42zENewaI2gJ1eMpxznyAgm/AqlzUu
+         l34eTLW4nFc1kakSRbfmkpLMjxbKAevGmTT+2dSSmTGC7SfbhHe9kMxVYEY8CB2d2zgN
+         gXbavT4AcqtHkdDT64V0ARDd9pU447uGNWs3Khqymr5X4y7gqYPyKbT2A/XMOJ4WG70U
+         EYtQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769095687; x=1769700487; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GU5G7HW6Wc8btQf0Fna/Sb9PQAvAB9tKjOHNOAGLbfA=;
-        b=Z4Jp1PCr1EIXshxbL2Lh2c6rpexmzmNKTiBnTJkvWWU/H+FIBZNExrhC5m5bu1P5YX
-         B9jPsiXDpzFHx9hozGafcjvAyAL/owOAb3o21vW0Npqd76Na51i69rT0Jdu8mAcADALt
-         QYaQBBjb84fCpPYuB8+PlZ7tTBSuj4ho6Bjo0v5BVTKRH/NbaN5aEGpMp0+TM6T+tiMp
-         df6iqfSJhgJrkjVgHglql1vC5+rzllH3GOVyZ0ZWxj2aXn655vgu7ysd1mHFKn9l0RFM
-         j5y8AThfYj3kkI9HMHP+Ppsml35UEuIh21vvw6Qr0+P3GT8xezbqAh1PDLu9apc8KOrj
-         3MaQ==
+        d=gmail.com; s=20230601; t=1769095740; x=1769700540; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cjLgZf5P2/uHRakG/1BJN/Bmlk/QbTiRy9n3wd6jSfM=;
+        b=RNxbJl30IufFHvV1KKrbPmZtnysNiiUnvaxvo/1vZupIZvkq6ojH+GF8ft+Y+bUmi5
+         WpnF/ryqmbe74SQfQfeMcX5n0Ysa+IIKKkFFOyPLYfqq3JkmSwv5/8Y4E2ZU1TR43erp
+         j2f2ZQM4Ke1bsmcNEuaQFY0i0CRw6wZmjqDdbM0a752W7tTWqedseHaaQwhbuWnz0LSq
+         qMflsUJ87TXt5s9V9+cp1Hu+k+Wd7VLVHfQLaKdpDfN/+rfabU2IU6lF+pBe7DQx14T8
+         wDaZCuplFCt5leVr9mcBbt7mX18/XRkt9P0BBG6BNU9uOqK4iaukYs3JUUWiwEv63jS5
+         Fj4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769095687; x=1769700487;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=GU5G7HW6Wc8btQf0Fna/Sb9PQAvAB9tKjOHNOAGLbfA=;
-        b=aPgzfioU9ft4bBxbU0joAWC873d6yvPmeIQk9zHd4KhXGvSOOV1XxHW0BIFKgoI6wt
-         Du2p5N1pimsKC/ZhmxZNRI37rrC/pjWi4RApNLUhElAHy2bi+HkHoJncEoTaIfixiDS3
-         ZKfL5guZtkC88yTI1WZibLBHEn4ICoWo5B+jiKc05fI5QO/ZnOQWyl3dhyLRrwRzGw20
-         Ux5x8gIn3G1+loOgq5e8H+kKOXOJx1HNonwPEYC0d7j7leiASmVhlPSJAJDm8Q2GflEF
-         3sS+ki+Jz+EFCakDuJF8jnlfa8eq/l6UVsCdWKwlPhr9HRMIdf0jrS6VuJERDGFviGQ7
-         rUfA==
-X-Gm-Message-State: AOJu0YxQeUQzR3KA379a7lkwise/hjN7c0z5hcoPoTJHEiDf9IFvbZB4
-	9BfkyqcGHOh4ZpJDKedUaClFpc9EO/ohGmBrhLzs/FTOdmES1V5p8p2g8EOaWhf1wmXtoTEZqDo
-	qKD/+Zlfe+0bcVSFzXhzVd0DZhfEWYuJEWvu/bDJEdri36LhPVDMZ+PSXsAcict4=
-X-Gm-Gg: AZuq6aJrpwFp6Teb7a9tkBQkRFWLfZ4ZuqGgbsxMwOVpsLyneSIeQrIQgyDeVa5ysIY
-	oT0j6EZDpssqymAIqrxudJplXdEGt6v/FlTUvo7e+SlIMO7OFtOX+IH0AQriNPmgzWdGlJI55OG
-	5m4HU47XJ6X44FRrQ6E7oznlX8HzPm4NijfhWyaTlHAHGS9n8BvKdXf+sGzt1XbKxahCTTqBzWu
-	GvJRW1gxG8iZWWGNJt+bkn3KogscGhR4OB960qgccPILIXH58sdZJhVeTLYeorPdcwcTDBUMEje
-	AS72+imXC1f3fFLXkARBfjgmgvrWxcLJ2sH4XJrZ1WHNmJ4qvHrSsu2vJIx32z7Z39fRsE7Q9GW
-	X4FVF98xlDkWpOQ2hi2SkmSPHIW0J+Nx8OvNKkGheCiyjDaEN/P6R8eXfk3vtWJdgRjA=
-X-Received: by 2002:a05:693c:4095:b0:2b7:2e78:9d0 with SMTP id 5a478bee46e88-2b72e7826dcmr679927eec.16.1769095686253;
-        Thu, 22 Jan 2026 07:28:06 -0800 (PST)
-X-Received: by 2002:a05:693c:4095:b0:2b7:2e78:9d0 with SMTP id 5a478bee46e88-2b72e7826dcmr679905eec.16.1769095685529;
-        Thu, 22 Jan 2026 07:28:05 -0800 (PST)
-Received: from hu-nasserg-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6ff4f6488sm10627985eec.19.2026.01.22.07.28.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jan 2026 07:28:05 -0800 (PST)
-From: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
-To: git@vger.kernel.org
-Cc: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>,
-        "D. Ben Knoble" <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] submodule: fetch missing objects from default remote
-Date: Thu, 22 Jan 2026 07:27:22 -0800
-Message-ID: <20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260114194815.1049888-1-nasser.grainawi@oss.qualcomm.com>
-References: <20260114194815.1049888-1-nasser.grainawi@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1769095740; x=1769700540;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cjLgZf5P2/uHRakG/1BJN/Bmlk/QbTiRy9n3wd6jSfM=;
+        b=cFYFkEpMJ1AlKnpwYJH/7/GXpNSBSfSTHMK3d/bCtOVeWD8EKnieNmMyAp06rMaM2h
+         Hv6Dgs8FwusVSPn5NYzHTmhO3mxlv5kNTQU03HiM/DipZuTbr/bj99DZd6vEg7lwpOPx
+         LAjv1vOVDEP5E4+Uq1GG8nU+EhTnRj1BA32cARwg4ZAKIZRIXpo1rhO5rdh4GwZcXqp3
+         aAjikSlaZLO5eBO/GctbHBRjInKsC8XYOkoz49NMhRGz7eyBqQ7uzfVM0sgYGRmG4PS1
+         4nW2S17fc36xdQNubnwxPMyLJeRv2KMZr4WMWaG1372XSGk/ht0Uj2T2WkAZ07SIP3cK
+         LA1g==
+X-Gm-Message-State: AOJu0Yye8voZFq5ufTLAtV69vhmEkryR7wy7eSiZO/4g6tgwJf/pq0xJ
+	t4+j9xJCDafD/Qzctxp8hh7lJVu5KzHPUbzPvAwv3XEoFmGpbK/h4ATM+O7/UQAPfUhHV35MLvH
+	wdGl2Zs0ywbYOYvhBjaKcoH22QnGg/GdeCkKxXXxWJA==
+X-Gm-Gg: AZuq6aK5/REg/+JXxPKHP3Z8Szm5BHjZnqJpOhPdXRV3P/oMO710ykFCYScZ+teDzzs
+	SvTrfMt/QOs3WatSZd9vbAoS72MskJA9QlLmnb5zyybt0OwnXNAn+j/Vwu01J5+v1+PoZybt+fW
+	Z019Ix9JN3s/0u21kK2ITAXik+D8LUBCTJBQEcQtu37A3CElyTHI5Y8O45/1IOGw8Mf//wghUpV
+	yZUk8ykhhh0UyVArFvQk0dVuQ98RFu0Ddz+a3g2jQKhHS5/NYo+sRM8pLx57o8s596yWFvPUP8=
+X-Received: by 2002:a05:7022:4393:b0:123:2d62:2e8d with SMTP id
+ a92af1059eb24-1244a717ef4mr16271779c88.3.1769095740014; Thu, 22 Jan 2026
+ 07:29:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 6lhyRmJRjrD3JnNCHJCJ-h5KFpTRbpbH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDExOCBTYWx0ZWRfX3o7mcTyQcUlr
- 1zTGgP251joarvvjlPkY9GleTXERQsq1TlNRlRq3lqIo0YxMt9f/pulGuzenF/uJyDVNvSNt67v
- hnHbeaP2Z1UG4dcd+3myoLTVYe0yEBu7EqwNXVGqa2EU5UdaLxeq8V9FEJIAc/Ub8zsIyP97eXe
- hize3z90wB2eQ8xz0noZ8IXmtZOZU5l0ZQ9+hKxPUrmVL+nB6FQRorouZMMwKpqqDSGX3n1ZXia
- OM0OqA0jgk+E9NOPenA88PsabUlmTfGlo0emu/Iwm/op29AwE3T+JSVmZ9Js8jZq6d2ws5ohwUq
- 3gXNxIELgdFiiziwq2x3KNMHbhNyEkrrOl3dP8+mnVMRVgv9rbVT9Y8NX+OUHN968YFtNwz+gym
- +Lh5eWdr5BBMRAF3xWLk3r9VuX/hrSApaFqkq9WpLyu6wwrbAyMoj/eIDKoUCMTw4Mn7FORsW3y
- xd7NeD559IfMhJIIdSg==
-X-Authority-Analysis: v=2.4 cv=U4CfzOru c=1 sm=1 tr=0 ts=69724207 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=24VaFxuiyONUqTJ376EA:9
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: 6lhyRmJRjrD3JnNCHJCJ-h5KFpTRbpbH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-22_02,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0
- suspectscore=0 bulkscore=0 clxscore=1015 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601220118
+References: <cover.1768681947.git.belkid98@gmail.com> <fd95169de42891452b430814476d78c706e4a7e2.1768681947.git.belkid98@gmail.com>
+ <18b5d932-8a5a-4f33-a803-ef6f0c7d2750@gmail.com>
+In-Reply-To: <18b5d932-8a5a-4f33-a803-ef6f0c7d2750@gmail.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Thu, 22 Jan 2026 16:29:01 +0100
+X-Gm-Features: AZwV_QhnZ0C5bZUSPhC3Jpm0687aY6Vv7WqswaTmtzygFN-ZJEOFVfe7Le_GocY
+Message-ID: <CAD=f0L9JhJq95kV7oUsaN5FqmUAH2qeSTLPLYXKAHUtNiHK_WA@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v3 2/3] environment: environment: stop using
+ core.sparseCheckout globally
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com, 
+	usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, me@ttaylorr.com, 
+	karthik.188@gmail.com, Toon Claes <toon@iotcl.com>
+Content-Type: text/plain; charset="UTF-8"
 
-When be76c21282 (fetch: ensure submodule objects fetched, 2018-12-06)
-added support for fetching a missing submodule object by id, it
-hardcoded the remote name as "origin" and deferred anything more
-complicated for a later patch. Implement the NEEDSWORK item to remove
-the hardcoded assumption by adding and using a submodule helper subcmd
-'get-default-remote'. Fixing this lets 'git fetch --recurse-submodules'
-succeed when the fetched commit(s) in the superproject trigger a
-submodule fetch, and that submodule's default remote name is not
-"origin".
+On Thu, 22 Jan 2026 at 15:41, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> Hi Olamide
+>
+> On 17/01/2026 20:59, Olamide Caleb Bello wrote:
+> > The config value `core.sparseCheckout` is parsed in
+> > `git_default_core_config()` and stored globally in
+> > `core_appy_sparse_checkout`. This could cause unintended behaviours
+> > when different Git repositories running in the same process access this
+> > variable.
+> >
+> > Move the parsed value into `struct repo_config_values` to retains current
+> > behaviours while achieving the repository scoped access.
+>
+> It doesn't achieve repository scoped access though because we only ever
+> populate the values in "the_repository", all other instances of "struct
+> repository" are initialized by config_values_init() but not the config
+> settings.
 
-Add non-"origin" remote tests to t5526-fetch-submodules.sh and
-t5572-pull-submodule.sh demonstrating this works as expected and add
-dedicated tests for get-default-remote.
+Okay I understand.
+Thank you for clarifying.
 
-Signed-off-by: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
-Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
----
-Range-diff against v2:
-1:  99c4792cff ! 1:  1dd17e9f75 submodule: fetch missing objects from default remote
-    @@ Commit message
-     
-         Change-Id: I0fec01b161aa13ed4c1c5e53477dad6912d1b5e6
-         Signed-off-by: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
-    +    Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
-     
-      ## builtin/submodule--helper.c ##
-     @@ builtin/submodule--helper.c: static int get_default_remote_submodule(const char *module_path, char **default_
-    @@ t/t5572-pull-submodule.sh: test_expect_success 'fetch submodule remote of differ
-     +test_expect_success 'fetch submodule remote of different non-origin name from superproject' '
-     +	git -C child/a-submodule remote rename origin o2 &&
-     +
-    -+	# Create commit that's unreachable from current master branch
-    ++	# Create commit that is unreachable from current master branch
-     +	git -C a-submodule checkout -b newmain2 master^ &&
-     +	test_commit -C a-submodule echo_o2 &&
-     +	test_commit -C a-submodule moreecho_o2 &&
+>
+> > diff --git a/builtin/backfill.c b/builtin/backfill.c
+> > index e80fc1b694..5fc8c51ed1 100644
+> > --- a/builtin/backfill.c
+> > +++ b/builtin/backfill.c
+> > @@ -139,7 +139,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
+> >       repo_config(repo, git_default_config, NULL);
+> >
+> >       if (ctx.sparse < 0)
+> > -             ctx.sparse = core_apply_sparse_checkout;
+> > +             ctx.sparse = repo->config_values.sparse_checkout;
+>
+> Using "repo" rather than "the_repository" here is dangerous because only
+> "the_repository" contains the parsed config. This applies throughout
+> this patch.
 
- builtin/submodule--helper.c             |  38 +++++
- submodule.c                             |  17 ++-
- t/meson.build                           |   1 +
- t/t5526-fetch-submodules.sh             |  52 +++++++
- t/t5572-pull-submodule.sh               |  21 ++-
- t/t7425-submodule-get-default-remote.sh | 186 ++++++++++++++++++++++++
- 6 files changed, 312 insertions(+), 3 deletions(-)
- create mode 100755 t/t7425-submodule-get-default-remote.sh
+Okay noted...
+Sorry but I have a question.
+I observed that the address of "repo" is passed to builtin/backfill.c,
+is gotten from git.c:handle_builtin
+which passed run_builtin "the_repository" as a parameter.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d537ab087a..b180a24091 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -112,6 +112,43 @@ static int get_default_remote_submodule(const char *module_path, char **default_
- 	return 0;
- }
- 
-+static int module_get_default_remote(int argc, const char **argv, const char *prefix,
-+				     struct repository *repo UNUSED)
-+{
-+	const char *path;
-+	char *resolved_path = NULL;
-+	char *default_remote = NULL;
-+	int code;
-+	struct option options[] = {
-+		OPT_END()
-+	};
-+	const char *const usage[] = {
-+		N_("git submodule--helper get-default-remote <path>"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	if (argc != 1)
-+		usage_with_options(usage, options);
-+
-+	path = argv[0];
-+	if (prefix && *prefix && !is_absolute_path(path)) {
-+		resolved_path = xstrfmt("%s%s", prefix, path);
-+		path = resolved_path;
-+	}
-+
-+	code = get_default_remote_submodule(path, &default_remote);
-+	if (code) {
-+		free(resolved_path);
-+		return code;
-+	}
-+
-+	printf("%s\n", default_remote);
-+	free(default_remote);
-+	free(resolved_path);
-+	return 0;
-+}
-+
- /* the result should be freed by the caller. */
- static char *get_submodule_displaypath(const char *path, const char *prefix,
- 				       const char *super_prefix)
-@@ -3608,6 +3645,7 @@ int cmd_submodule__helper(int argc,
- 		OPT_SUBCOMMAND("set-url", &fn, module_set_url),
- 		OPT_SUBCOMMAND("set-branch", &fn, module_set_branch),
- 		OPT_SUBCOMMAND("create-branch", &fn, module_create_branch),
-+		OPT_SUBCOMMAND("get-default-remote", &fn, module_get_default_remote),
- 		OPT_END()
- 	};
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
-diff --git a/submodule.c b/submodule.c
-index 40a5c6fb9d..6599657f34 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1706,6 +1706,8 @@ static int get_next_submodule(struct child_process *cp, struct strbuf *err,
- 	if (spf->oid_fetch_tasks_nr) {
- 		struct fetch_task *task =
- 			spf->oid_fetch_tasks[spf->oid_fetch_tasks_nr - 1];
-+		struct child_process cp_remote = CHILD_PROCESS_INIT;
-+		struct strbuf remote_name = STRBUF_INIT;
- 		spf->oid_fetch_tasks_nr--;
- 
- 		child_process_init(cp);
-@@ -1719,8 +1721,19 @@ static int get_next_submodule(struct child_process *cp, struct strbuf *err,
- 		strvec_pushf(&cp->args, "--submodule-prefix=%s%s/",
- 			     spf->prefix, task->sub->path);
- 
--		/* NEEDSWORK: have get_default_remote from submodule--helper */
--		strvec_push(&cp->args, "origin");
-+		cp_remote.git_cmd = 1;
-+		strvec_pushl(&cp_remote.args, "submodule--helper",
-+			     "get-default-remote", task->sub->path, NULL);
-+
-+		if (!capture_command(&cp_remote, &remote_name, 0)) {
-+			strbuf_trim_trailing_newline(&remote_name);
-+			strvec_push(&cp->args, remote_name.buf);
-+		} else {
-+			/* Fallback to "origin" if the helper fails */
-+			strvec_push(&cp->args, "origin");
-+		}
-+		strbuf_release(&remote_name);
-+
- 		oid_array_for_each_unique(task->commits,
- 					  append_oid_to_argv, &cp->args);
- 
-diff --git a/t/meson.build b/t/meson.build
-index 459c52a489..ef6cdab165 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -887,6 +887,7 @@ integration_tests = [
-   't7422-submodule-output.sh',
-   't7423-submodule-symlinks.sh',
-   't7424-submodule-mixed-ref-formats.sh',
-+  't7425-submodule-get-default-remote.sh',
-   't7450-bad-git-dotfiles.sh',
-   't7500-commit-template-squash-signoff.sh',
-   't7501-commit-basic-functionality.sh',
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 5e566205ba..a5a273b392 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -929,6 +929,58 @@ test_expect_success 'fetch new submodule commit intermittently referenced by sup
- 	)
- '
- 
-+test_expect_success 'fetch --recurse-submodules works with custom remote names' '
-+	# depends on the previous test for setup
-+
-+	# Rename the remote in sub1 from "origin" to "custom_remote"
-+	git -C downstream/sub1 remote rename origin custom_remote &&
-+
-+	# Create new commits in the original submodules
-+	C=$(git -C submodule commit-tree -m "change outside refs/heads for custom remote" HEAD^{tree}) &&
-+	git -C submodule update-ref refs/changes/custom1 $C &&
-+	git update-index --cacheinfo 160000 $C submodule &&
-+	test_tick &&
-+
-+	D=$(git -C sub1 commit-tree -m "change outside refs/heads for custom remote" HEAD^{tree}) &&
-+	git -C sub1 update-ref refs/changes/custom2 $D &&
-+	git update-index --cacheinfo 160000 $D sub1 &&
-+
-+	git commit -m "updated submodules outside of refs/heads for custom remote" &&
-+	E=$(git rev-parse HEAD) &&
-+	git update-ref refs/changes/custom3 $E &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules origin refs/changes/custom3:refs/heads/my_other_branch &&
-+		git -C submodule cat-file -t $C &&
-+		git -C sub1 cat-file -t $D &&
-+		git checkout --recurse-submodules FETCH_HEAD
-+	)
-+'
-+
-+test_expect_success 'fetch new submodule commit on-demand in FETCH_HEAD from custom remote' '
-+	# depends on the previous test for setup
-+
-+	C=$(git -C submodule commit-tree -m "another change outside refs/heads for custom remote" HEAD^{tree}) &&
-+	git -C submodule update-ref refs/changes/custom4 $C &&
-+	git update-index --cacheinfo 160000 $C submodule &&
-+	test_tick &&
-+
-+	D=$(git -C sub1 commit-tree -m "another change outside refs/heads for custom remote" HEAD^{tree}) &&
-+	git -C sub1 update-ref refs/changes/custom5 $D &&
-+	git update-index --cacheinfo 160000 $D sub1 &&
-+
-+	git commit -m "updated submodules outside of refs/heads" &&
-+	E=$(git rev-parse HEAD) &&
-+	git update-ref refs/changes/custom6 $E &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules origin refs/changes/custom6 &&
-+		git -C submodule cat-file -t $C &&
-+		git -C sub1 cat-file -t $D &&
-+		git checkout --recurse-submodules FETCH_HEAD
-+	)
-+'
-+
- add_commit_push () {
- 	dir="$1" &&
- 	msg="$2" &&
-diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
-index 45f384dd32..faafe31409 100755
---- a/t/t5572-pull-submodule.sh
-+++ b/t/t5572-pull-submodule.sh
-@@ -257,7 +257,26 @@ test_expect_success 'fetch submodule remote of different name from superproject'
- 	git -C a-submodule reset --hard HEAD^^ &&
- 
- 	git -C child pull --no-recurse-submodules &&
--	git -C child submodule update
-+	git -C child submodule update &&
-+	test_path_is_file child/a-submodule/moreecho.t
-+'
-+
-+test_expect_success 'fetch submodule remote of different non-origin name from superproject' '
-+	git -C child/a-submodule remote rename origin o2 &&
-+
-+	# Create commit that is unreachable from current master branch
-+	git -C a-submodule checkout -b newmain2 master^ &&
-+	test_commit -C a-submodule echo_o2 &&
-+	test_commit -C a-submodule moreecho_o2 &&
-+	subc=$(git -C a-submodule rev-parse --short HEAD) &&
-+
-+	git -C parent/a-submodule fetch &&
-+	git -C parent/a-submodule checkout "$subc" &&
-+	git -C parent commit -m "update submodule o2" a-submodule &&
-+	git -C a-submodule reset --hard HEAD^^ &&
-+
-+	git -C child pull --recurse-submodules &&
-+	test_path_is_file child/a-submodule/moreecho_o2.t
- '
- 
- test_done
-diff --git a/t/t7425-submodule-get-default-remote.sh b/t/t7425-submodule-get-default-remote.sh
-new file mode 100755
-index 0000000000..b842af9a2d
---- /dev/null
-+++ b/t/t7425-submodule-get-default-remote.sh
-@@ -0,0 +1,186 @@
-+#!/bin/sh
-+
-+test_description='git submodule--helper get-default-remote'
-+
-+TEST_NO_CREATE_REPO=1
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	git config --global protocol.file.allow always
-+'
-+
-+test_expect_success 'setup repositories' '
-+	# Create a repository to be used as submodule
-+	git init sub &&
-+	test_commit --no-tag -C sub "initial commit in sub" file.txt "sub content" &&
-+
-+	# Create main repository
-+	git init super &&
-+	(
-+		cd super &&
-+		mkdir subdir &&
-+		test_commit --no-tag -C subdir "initial commit in super" main.txt "super content" &&
-+		git submodule add ../sub subpath &&
-+		git commit -m "add submodule 'sub' at subpath"
-+	)
-+'
-+
-+test_expect_success 'get-default-remote returns origin for initialized submodule' '
-+	(
-+		cd super &&
-+		git submodule update --init &&
-+		echo "origin" >expect &&
-+		git submodule--helper get-default-remote subpath >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get-default-remote works from subdirectory' '
-+	(
-+		cd super/subdir &&
-+		echo "origin" >expect &&
-+		git submodule--helper get-default-remote ../subpath >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get-default-remote fails with non-existent path' '
-+	(
-+		cd super &&
-+		test_must_fail git submodule--helper get-default-remote nonexistent 2>err &&
-+		test_grep "could not get a repository handle" err
-+	)
-+'
-+
-+test_expect_success 'get-default-remote fails with non-submodule path' '
-+	(
-+		cd super &&
-+		test_must_fail git submodule--helper get-default-remote subdir 2>err &&
-+		test_grep "could not get a repository handle" err
-+	)
-+'
-+
-+test_expect_success 'get-default-remote fails without path argument' '
-+	(
-+		cd super &&
-+		test_must_fail git submodule--helper get-default-remote 2>err &&
-+		test_grep "usage:" err
-+	)
-+'
-+
-+test_expect_success 'get-default-remote fails with too many arguments' '
-+	(
-+		cd super &&
-+		test_must_fail git submodule--helper get-default-remote subpath subdir 2>err &&
-+		test_grep "usage:" err
-+	)
-+'
-+
-+test_expect_success 'setup submodule with non-origin default remote name' '
-+	# Create another submodule path with a different remote name
-+	(
-+		cd super &&
-+		git submodule add ../sub upstream-subpath &&
-+		git commit -m "add second submodule in upstream-subpath" &&
-+		git submodule update --init upstream-subpath &&
-+
-+		# Change the remote name in the submodule
-+		cd upstream-subpath &&
-+		git remote rename origin upstream
-+	)
-+'
-+
-+test_expect_success 'get-default-remote returns non-origin remote name' '
-+	(
-+		cd super &&
-+		echo "upstream" >expect &&
-+		git submodule--helper get-default-remote upstream-subpath >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get-default-remote handles submodule with multiple remotes' '
-+	(
-+		cd super/subpath &&
-+		git remote add other-upstream ../../sub &&
-+		git remote add myfork ../../sub
-+	) &&
-+
-+	(
-+		cd super &&
-+		echo "origin" >expect &&
-+		git submodule--helper get-default-remote subpath >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get-default-remote handles submodule with multiple remotes and none are origin' '
-+	(
-+		cd super/upstream-subpath &&
-+		git remote add yet-another-upstream ../../sub &&
-+		git remote add yourfork ../../sub
-+	) &&
-+
-+	(
-+		cd super &&
-+		echo "upstream" >expect &&
-+		git submodule--helper get-default-remote upstream-subpath >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'setup nested submodule with non-origin remote' '
-+	git init innersub &&
-+	test_commit --no-tag -C innersub "initial commit in innersub" inner.txt "innersub content" &&
-+
-+	(
-+		cd sub &&
-+		git submodule add ../innersub innersubpath &&
-+		git commit -m "add nested submodule at innersubpath"
-+	) &&
-+
-+	(
-+		cd super/upstream-subpath &&
-+		git pull upstream &&
-+		git submodule update --init --recursive . &&
-+		(
-+			cd innersubpath &&
-+			git remote rename origin another_upstream
-+		)
-+	)
-+'
-+
-+test_expect_success 'get-default-remote works with nested submodule' '
-+	(
-+		cd super &&
-+		echo "another_upstream" >expect &&
-+		git submodule--helper get-default-remote upstream-subpath/innersubpath >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get-default-remote works with submodule that has no remotes' '
-+	# Create a submodule directory manually without remotes
-+	(
-+		cd super &&
-+		git init no-remote-sub &&
-+		test_commit --no-tag -C no-remote-sub "local commit" local.txt "local content"
-+	) &&
-+
-+	# Add it as a submodule
-+	(
-+		cd super &&
-+		git submodule add ./no-remote-sub &&
-+		git commit -m "add local submodule 'no-remote-sub'"
-+	) &&
-+
-+	(
-+		cd super &&
-+		# Should fall back to "origin" remote name when no remotes exist
-+		echo "origin" >expect &&
-+		git submodule--helper get-default-remote no-remote-sub >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_done
--- 
-2.52.0
+Won't the address of "repo" and "the_repository be the same"?
 
+>
+> >
+> >       result = do_backfill(&ctx);
+> >       backfill_context_clear(&ctx);
+> > diff --git a/builtin/clone.c b/builtin/clone.c
+> > index b19b302b06..b6b19e83d1 100644
+> > --- a/builtin/clone.c
+> > +++ b/builtin/clone.c
+> > @@ -623,7 +623,7 @@ static int git_sparse_checkout_init(const char *repo)
+> >        * We must apply the setting in the current process
+> >        * for the later checkout to use the sparse-checkout file.
+> >        */
+> > -     core_apply_sparse_checkout = 1;
+> > +     the_repository->config_values.sparse_checkout = 1;
+> >
+> >       cmd.git_cmd = 1;
+> >       if (run_command(&cmd)) {
+> > diff --git a/builtin/grep.c b/builtin/grep.c
+> > index 53cccf2d25..525edb5e9c 100644
+> > --- a/builtin/grep.c
+> > +++ b/builtin/grep.c
+> > @@ -482,7 +482,7 @@ static int grep_submodule(struct grep_opt *opt,
+> >        *      "forget" the sparse-index feature switch. As a result, the index
+> >        *      of these submodules are expanded unexpectedly.
+> >        *
+> > -      * 2. "core_apply_sparse_checkout"
+> > +      * 2. "sparse_checkout"
+>
+> That should be something like config_values.sparse_checkout to make it
+> clear that "sparse_checkout" is the name of a member of a struct, not
+> the name of a variable.
+
+Okay noted
+
+>
+> > diff --git a/environment.h b/environment.h
+> > index aea73ff25b..3b5ff7094a 100644
+> > --- a/environment.h
+> > +++ b/environment.h
+> > @@ -88,6 +88,7 @@ struct strvec;
+> >   struct repo_config_values {
+> >       /* core config values */
+> >       char *attributes_file_path;
+> > +     int sparse_checkout;
+>
+> There are several other sparse checkout variables like
+> core_sparse_checkout_cone that we'll need to convert in the future so
+> "apply_sparse_checkout" or "sparse_checkout_apply" would be better names.
+
+Okay noted.
+
+>
+> Thanks
+>
+> Phillip
+>
+>
+> >   };
+> >
+> >   /*
+> > @@ -169,7 +170,6 @@ extern int precomposed_unicode;
+> >   extern int protect_hfs;
+> >   extern int protect_ntfs;
+> >
+> > -extern int core_apply_sparse_checkout;
+> >   extern int core_sparse_checkout_cone;
+> >   extern int sparse_expect_files_outside_of_patterns;
+> >
+> > diff --git a/sparse-index.c b/sparse-index.c
+> > index 76f90da5f5..6dd8dd679d 100644
+> > --- a/sparse-index.c
+> > +++ b/sparse-index.c
+> > @@ -152,7 +152,8 @@ static int index_has_unmerged_entries(struct index_state *istate)
+> >
+> >   int is_sparse_index_allowed(struct index_state *istate, int flags)
+> >   {
+> > -     if (!core_apply_sparse_checkout || !core_sparse_checkout_cone)
+> > +     struct repo_config_values *cfg = &istate->repo->config_values;
+> > +     if (!cfg->sparse_checkout || !core_sparse_checkout_cone)
+> >               return 0;
+> >
+> >       if (!(flags & SPARSE_INDEX_MEMORY_ONLY)) {
+> > @@ -670,7 +671,8 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
+> >
+> >   void clear_skip_worktree_from_present_files(struct index_state *istate)
+> >   {
+> > -     if (!core_apply_sparse_checkout ||
+> > +     struct repo_config_values *cfg = &istate->repo->config_values;
+> > +     if (!cfg->sparse_checkout ||
+> >           sparse_expect_files_outside_of_patterns)
+> >               return;
+> >
+> > diff --git a/unpack-trees.c b/unpack-trees.c
+> > index f38c761ab9..2bdfa1334c 100644
+> > --- a/unpack-trees.c
+> > +++ b/unpack-trees.c
+> > @@ -1924,7 +1924,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+> >       if (o->prefix)
+> >               update_sparsity_for_prefix(o->prefix, o->src_index);
+> >
+> > -     if (!core_apply_sparse_checkout || !o->update)
+> > +     if (!repo->config_values.sparse_checkout || !o->update)
+> >               o->skip_sparse_checkout = 1;
+> >       if (!o->skip_sparse_checkout) {
+> >               memset(&pl, 0, sizeof(pl));
+> > diff --git a/wt-status.c b/wt-status.c
+> > index e12adb26b9..a2e388606f 100644
+> > --- a/wt-status.c
+> > +++ b/wt-status.c
+> > @@ -1764,7 +1764,7 @@ static void wt_status_check_sparse_checkout(struct repository *r,
+> >       int skip_worktree = 0;
+> >       int i;
+> >
+> > -     if (!core_apply_sparse_checkout || r->index->cache_nr == 0) {
+> > +     if (!r->config_values.sparse_checkout || r->index->cache_nr == 0) {
+> >               /*
+> >                * Don't compute percentage of checked out files if we
+> >                * aren't in a sparse checkout or would get division by 0.
+>
