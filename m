@@ -1,162 +1,143 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338AE3A1A5D
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 22:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B102DFA2F
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 22:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769119327; cv=none; b=ZmkAFjL5UQ42iH9m5RbLrv9gCKEq3Cya9jE22Cx/jjq46duA/z4usD2v3AQjL+R1hU2vhf1s0fGErSBgk3X3WAHRZAsWNiVzhocdzJ0j8Kf+QgXgEh8ndy92XYJMaYs82o67uK9DEJGDMWDbG4MjRnyRdtSX4qglheiuGiUdXK4=
+	t=1769119670; cv=none; b=abEXvmhdRksKe4eZvhIfR6kYhn2r13dFyAiLqfSD81wmOhM5C4QxmPi+LbxTzAKBmcJQiFdYfcNXqwc6dDcwkV/ZEo2dfjoTKJdWZCWASVj3VjkpMYj5eP/DbuyoDcBqVDmY5aCiVrY+cQU5w17WVqZTdRwekakQgfY7+0oEzyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769119327; c=relaxed/simple;
-	bh=63RWm9QMVYDMaqerG/30/tWSVvRU38fD2iyrxvULRtY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AlsfpJwIe7z7amJrl0Sihq+0rLTpz/dmvPXCmDlUVJELDp6lffCs/vDedoq7EVHci/6lW5CY0LVYF9QB+ulMLdHP29PYZAmyp7Tur0w4HjpcZBQsN/GfAlNcZK/xKjUtNd7jL68qLn6ixrGg9ZKfIsZ4dnBhQihbH2XYz0Kc95c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WjUxwJDn; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1769119670; c=relaxed/simple;
+	bh=5tAUB9zYNIi7oT2COOUaTD6uyms2Bv+OCI4gfJRJR8I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mzd4GVDYGQt7qrqKW7iySencEWTNCJ5UlF13y9zxnmiRlZfPv6FPYKup1gOJT9mqlF28RTnpG23+QGhsdy101evAFsDl/h10JcFODYiEsy6qB/zofXdg0IZKRlqc6VVxLShqBRJOwmQD5ugrcPg3iEY+is61CjD51ZeJvDJ7fPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ehOn33Ah; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m0OlBL4q; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WjUxwJDn"
-Received: (qmail 131105 invoked by uid 109); 22 Jan 2026 22:01:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=63RWm9QMVYDMaqerG/30/tWSVvRU38fD2iyrxvULRtY=; b=WjUxwJDnnoDWmOt4jqWEP5azan8r3+0SFzxRsVm5GceUY5y+pqN9i7ejx6dy640D4nccSfAT1ZvpVwZJeWEZnCApJzqLKKTnx816nXstDydzBgINR6P9CIPNCqw8Cm6iGVQCDZSOKLGXVCbyaETB0hUuc4/sDosa+etgsV/keEM76uajEUnEmqX2IvFrb8JP638YmzEq2gEDRiS+CbdewVHf77HgroknXrZVkd7691R4QBd1Oq0Tjvg8DIij+BEu4v+xLz42dv0rWBRcaSNf8Yp5fn2FntMLR44Zt4M2akB3TpPYqafwoS0AY1uUpPQhWdLiakLGmAJOHsAEy0OQ/Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Jan 2026 22:01:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 239712 invoked by uid 111); 22 Jan 2026 22:01:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Jan 2026 17:01:57 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 22 Jan 2026 17:01:54 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v27 2/2] status: add status.compareBranches config for
- multiple branch comparisons
-Message-ID: <20260122220154.GA2107958@coredump.intra.peff.net>
-References: <pull.2138.v26.git.git.1768766353.gitgitgadget@gmail.com>
- <pull.2138.v27.git.git.1769096240.gitgitgadget@gmail.com>
- <0993420fc1185ec4a907a8c3bb52ca965e720c54.1769096240.git.gitgitgadget@gmail.com>
- <xmqq5x8tmlj7.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ehOn33Ah";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m0OlBL4q"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 229601401048;
+	Thu, 22 Jan 2026 17:07:43 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 22 Jan 2026 17:07:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769119663; x=1769206063; bh=IXwdoaq6O7
+	U3pP7GDjG2H2WCRodUkTOOu1ndBhPJWcc=; b=ehOn33AhXVkvx9SCcI1s3hKqh6
+	c886IRdIMRQHewB8g8CZybIw4z8acgtNHzWEE+QOyKe3cfBo2oKYgdubFSgdtTIy
+	r6h+90t54NZD/A/gC0+H5oVrZf1ftqpKv7Kzpju4g+j/HGKhAmqMX3BbiPa8SUmt
+	weoqeWDCugVkn26eh1lPCRtK2uwPwxT8XW17xQNAeD+jREJsL1Gv9KrNiJQRxtWp
+	Wey+MHjMqGre/HqilYgdL3Mnd2v2ktMwJ7oQurTtRg3HabOYmYSDcl8y0ibvegM3
+	TmQ0umiHAvhp/WShT5TvLfhmaQQyx08JyOsDgeT2CmFIQ8dTomM7kOYRnWDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769119663; x=1769206063; bh=IXwdoaq6O7U3pP7GDjG2H2WCRodUkTOOu1n
+	dBhPJWcc=; b=m0OlBL4qtd/7xbRKm5wTzsaOiaW3aI6vdsSLyTVdtoo8hw1V8Bc
+	E3ydMRX41eLjjoaSth024u7IfEwc8prx23OFQdPyG7WUtkxW96mf1Q3BDRGswv/x
+	Lnpf25G7u28pWOaAcn+eL90pSJjCBWJMBDjToPm23s6gi9o3fy/B+VLjcumgPTlE
+	UDLK+Ur4RKD1XmL3t1d+evXJ8K26bt70UX9pdGiODVtxc1XNovE/T41aZtz8KzZi
+	27EEsz1SaC8nmVu8Z3mlJF0sqlgxvtGeH7T07LDLdCjtIzpfLprFBkxHsiG1W0+k
+	+eRm5k+0+HUrYUiB+GDIe9kCYu/+So4J7RA==
+X-ME-Sender: <xms:r59yaUBddl2qZEb0IFX-zsGCtowqhK2RtBfJGdlj0_WGeVsJP5D-9w>
+    <xme:r59yae-O8OJPXaXd6p2y3n7yp_JmoW2l3Tg98z-UZKY7QBF-_WfOkTLX-mbmHYP2d
+    uBRQrIejc-606DYd29C8gLrBKMcyLpOTZ-c8LY4ntgagVYkTbNx>
+X-ME-Received: <xmr:r59yaYAFGatll3Q-5VWIFX-Oo3-S4SHSP0vxmTANS9cu4FSWwC79MYWBmKU0VZZ6GLDizvm-g162iJ-5rK4cG66FCAuK5e_0nTaakwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprghmihhshhhhhhgrrggrrgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    shhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:r59yabQmDs1us-_qNbRaY509KuOhK7QfhiGRZHiEdeRbGPY9aqxZrQ>
+    <xmx:r59yaXtR7Fpw6r4pt5hdCLNO2dY_xiFQvXyKAXDqVS4PXm1sFTXJiA>
+    <xmx:r59yaf2pP93ame4AF-3s6-E1vVUOC_rKJKBBRfOYB0IsYB2iVeiWZg>
+    <xmx:r59yaQWz3oC2mFZFAgqB1rNSU8-NCInsNnpccKZZg_GZZYFngSrKew>
+    <xmx:r59yaeco7df1FM4dyWMTVtM_BKsV_HTbI1SqWjK1MU-OIH6Bfe8_cK76>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Jan 2026 17:07:42 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Amisha Chhajed <amishhhaaaa@gmail.com>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH 1/2] Adding string_list_sort_u which sorts a list
+ then deduplicates it.
+In-Reply-To: <20260122171523.94234-2-amishhhaaaa@gmail.com> (Amisha Chhajed's
+	message of "Thu, 22 Jan 2026 22:45:22 +0530")
+References: <20260122171523.94234-1-amishhhaaaa@gmail.com>
+	<20260122171523.94234-2-amishhhaaaa@gmail.com>
+Date: Thu, 22 Jan 2026 14:07:41 -0800
+Message-ID: <xmqqcy31l2s2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq5x8tmlj7.fsf@gitster.g>
+Content-Type: text/plain
 
-On Thu, Jan 22, 2026 at 12:37:16PM -0800, Junio C Hamano wrote:
+Amisha Chhajed <amishhhaaaa@gmail.com> writes:
 
-> > +static char *resolve_compare_branch(struct branch *branch, const char *name)
-> > +{
-> > +	struct strbuf buf = STRBUF_INIT;
-> > +	const char *resolved = NULL;
-> > +	char *ret;
-> > +
-> > +	if (!branch || !name)
-> > +		return NULL;
-> > +
-> > +	if (!strcasecmp(name, "@{upstream}") || !strcasecmp(name, "@{u}"))
-> > +		resolved = branch_get_upstream(branch, NULL);
-> > +	else if (!strcasecmp(name, "@{push}"))
-> > +		resolved = branch_get_push(branch, NULL);
-> 
-> OK.  Usually @{upstream} without anything before the at-sign means
-> the upstream of the current branch, but we need to force pretend
-> that branch were the current branch, so we'd need to special case
-> like this, which looks reasonable.
+> string_list_remove_duplicates is almost always preceeded by
+> string_list_sort, hence adding string_list_sort_u which dedupliactes
+> post sorting.
 
-Yeah, it is unfortunate to have to special-case these names, even though
-the resolving functions already know about them. If we are looking at
-branch "foo" we could rewrite them as "foo@{upstream}", etc, but that
-also requires special-casing (though maybe slightly less, if we just
-accept the @ sign?).
+The usual way to compose a log message of this project is to
 
-I can think of two alternatives, though.
+ - Give an observation on how the current system works in the
+   present tense (so no need to say "Currently X is Y", or
+   "Previously X was Y" to describe the state before your change;
+   just "X is Y" is enough), and discuss what you perceive as a
+   problem in it.
 
-One is that repo_interpret_branch_name() could accept a field in its
-options struct to set the default branch (rather than "HEAD"). Something
-like this (totally untested):
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
 
-diff --git a/object-name.c b/object-name.c
-index 8b862c124e..925a487d84 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1732,7 +1732,7 @@ static int interpret_branch_mark(struct repository *r,
- 		branch = branch_get(name_str);
- 		free(name_str);
- 	} else
--		branch = branch_get(NULL);
-+		branch = branch_get(options->default_branch);
- 
- 	value = get_data(branch, &err);
- 	if (!value) {
-diff --git a/object-name.h b/object-name.h
-index cda4934cd5..962f99b0f6 100644
---- a/object-name.h
-+++ b/object-name.h
-@@ -119,6 +119,12 @@ struct interpret_branch_name_options {
- 	 * of die()-ing.
- 	 */
- 	unsigned nonfatal_dangling_mark : 1;
-+
-+	/*
-+	 * Pass this to branch_get() when interpreting @-marks without a
-+	 * branch, rather than using HEAD.
-+	 */
-+	const char *default_branch;
- };
- int repo_interpret_branch_name(struct repository *r,
- 			       const char *str, int len,
+ - Give commands to somebody editing the codebase to "make it so",
+   instead of saying "This commit does X".
 
-Most callers would continue to pass NULL in the usual way, but the
-resolution here would pass in the current branch name.
+in this order.
+
+To those who have been intimately following the discussion, it often
+is understandable without some of the above, but we are not writing
+for those who review the patches.  We are primarily writing for future
+readers of "git log" who are not aware of the review discussion we
+have on list, so we should give something to prepare them by setting
+the stage and stating the objective first, before going into how the
+patch solved it.
+
+With that in mind, perhaps something along this line ...
 
 
-The second is a bit more complicated, but is even more flexible. Part of
-the point of this status.compareBranches approach is that you can add
-regular refnames to the list. But would a user want to use a name that
-is derived from the comparison branch, rather than just a static name?
-That is, to compare branch "foo" against "origin/foo"? Usually that is
-exactly the kind of refspec-application that @{upstream} and @{push} are
-computing (after taking into account various config). But if you have a
-third source of refs, would you want to be able to compare to
-"origin/%s", where %s is the shortened branch name?
+    Subject: string-list: add string_list_sort_u() that mimics "sort -u"
 
-In which case these values could become "%s@{upstream}" and "%s@{push}",
-and they could just be fed straight to the branch-interpret machinery.
+    Many callsites of string_list_remove_duplicates() call it
+    immediately after calling string_list_sort().  It is
+    understandable because the former requires the string-list to be
+    sorted, but at the same time, it is clear that these places are
+    sorting only to remove duplicates and for no other reason.
 
-> > +	strbuf_addf(&buf, "refs/remotes/%s", name);
-> > +	resolved = refs_resolve_ref_unsafe(
-> > +		get_main_ref_store(the_repository),
-> > +		buf.buf,
-> > +		RESOLVE_REF_READING,
-> > +		NULL, NULL);
-> > +	if (resolved) {
-> > +		ret = xstrdup(resolved);
-> > +		strbuf_release(&buf);
-> > +		return ret;
-> > +	}
-> 
-> It would be handy to be able to say "origin/master" (or even just
-> "origin", which is interpreted as "origin/HEAD" via the DWIM
-> machinery) and prepending of "refs/remotes/" above does help such
-> DWIMmery, but I wonder if it is too limiting?  Would there be
-> situations where you would want to compare with something outside
-> refs/remotes/ hierarchy?
-> 
-> For example, writing "v2.52.0" there to see how far we came since
-> the last release would become impossible if we always force prepend
-> "refs/remotes/".  I wonder if we can reuse already existing DWIMmery
-> that uses refs.c::ref_rev_parse_rules[], which should allow such use
-> case, while still allowing you to write "origin/master"?
+    Introduce a helper function string_list_sort_u() that combines
+    these two calls that often appear together, to help simplify
+    these callsites.
 
-Yeah, I think tags or even local branches would be plausible candidates.
-But at any rate, I'd expect these to be resolved in the "usual" way that
-we do elsewhere. If we switch to using repo_dwim_ref() or something that
-interprets @-marks, then that matches nicely with the suggestions I gave
-above.
+... probably?
 
--Peff
+The same comment applies to the way the other patch is explained.
+
+Thanks.
+
