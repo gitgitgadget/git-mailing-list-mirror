@@ -1,161 +1,166 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54257330B22
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 09:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C22030FF36
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 09:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769072749; cv=pass; b=RmzkxzR57DR7NfHXzWOXYlj17YuVc9ep+QByLHOTYz6NN14GTirxaS/uAUD4QpofuMaxUQxP6Y5wtJR8HUlj3dqoQK1RL7M54KKrvagfaCMiaH30R5iZpEZEoQbLRGNQImPukK1OVewi9b7zslV2c5Y5Bcm27l2Nvut1hndci4I=
+	t=1769073604; cv=pass; b=XOsNll3+11okAgXYyUHUbnPKXOYaKdbKqgHDrJ0izWicwhGoxwmUVgwHMhAmFZfNG0jEoQeDgdX9PUIStb0hB5UidkU2/4eHpTkj53gqpijgTwYq8H1XRfGVFBUbr1OtILjQz+tzdMUmLKlgGhoeng0yOYXkUTfvLjdVGHqofuQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769072749; c=relaxed/simple;
-	bh=3MJ5SiAB+/JmNzvWB9Uxw8ikWh9/MaKPlWqlviULBUU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cO6DlVLusNNBuXkQuEfDHcBKgfetBnoM4PUzrKl4ZO1nDN9+YiD9B6Bj51kiuyZjIshYYClKGjQmmYl9QEmxoTyzWZhESU6P/cgRJVMKkT0Y5G9zVM+adMXdaTf69kGBQ7A9tplSYwLnRNEKt0IYEPM6R+L/JX8zaO7tnAneBNk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gzxI0IEL; arc=pass smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769073604; c=relaxed/simple;
+	bh=2GplLyG0tF0+pRmbE9dKrS1Yut0ANuc7YJUFKZXP5xk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eZXusG758A/NZfZtTinItAct+iSuMqkYcWUs6RogUiJhPfhvkYcS0BqahuyXOPvS/9J2KjprlfCkVOu8W0vDOfXXYWTt1SQTSyAijZAFxpePhgUTfFrwgOEjxD8/Mu4VeovZm/M9UFXPYQYYfmZcy6LE4qiHPfRTGF7cv+P7jFI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Onv1z9uX; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gzxI0IEL"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-9480c6f8b43so188533241.2
-        for <git@vger.kernel.org>; Thu, 22 Jan 2026 01:05:47 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769072746; cv=none;
-        d=google.com; s=arc-20240605;
-        b=KRzoDoyhLYJNvRqBX49QKkKwCymatyaSXTS9LOzn8Dbcwf5IshFh0RMP++lfCG0+Sg
-         TFlDkwiWTxtTXnzywbjs5ROWay+ZFy9qtAhW5BPOZYE8iUOHtC1/sIGKI9kAqiQYKzm0
-         wgCOqBbLRDwBERgFGF8D39YlkckejOu7vSujqfi7zAUfcAAtYjD78xYyzP04BfUpl+wM
-         hOQ62gkXnNyt8QJRv/aLB/T0GWPrxoliibxE9Dvp5KV0q7r0HEb7hjrHFIIfcRX//MfF
-         gnpS9/L60JJxLllgWUDLwM1NHgUlD7DFYy8dqnJ7Qp7vfOZcP2tpKOYdQCBMFvlR6hH9
-         zf2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=vc8LxrlXp1TRy8cJVzj2adVuQyrkM/i39URUQkIbqXw=;
-        fh=tgTGuaRN1GeKD8B4glk9fdd2/0h556MnuSKCDjvRgyI=;
-        b=NFrx5hXnLqq8w9lPeQGjbz820YfePQeOjNKGRLO3y2xDy0RPu5mrPGiMW/57wCWhrT
-         VrG8lHBTIwOxX2rZx3bOqc0+Ci2HI6ocsm6ppOQqEB6/gv5cjmGiwtNOTIdl7b/mM7vj
-         sGtshEFeXaKjkrYdUxB3dMb833RaaGrheJgyyzdPM/Easha5sd1gXe7PxNPkoocSQsfq
-         Zr68o/AodabRsP7Gs5B8VT8zCJjHcGn3g6OxMvXb2gT8cFAL5S6AvI2hu5KpGzlOEfG3
-         82fhZFDq27HnjkcEOD0JrEtYcSqGaufgwI4W/mTbxcJFN1PgAHBqxtbWhg1VPwDcBTkT
-         aalg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769072746; x=1769677546; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vc8LxrlXp1TRy8cJVzj2adVuQyrkM/i39URUQkIbqXw=;
-        b=gzxI0IELCjOXtBwqjgt/tjKgIMZ1jQW4yculbzbbPG8OOKIeg9/SAARaa8/O4lFO7c
-         SIndhxXYcKOSFHE7Mh+46ZUZg7iUJJMlAqRuuUuo8dc+dAZdSd25M5JBmD2uc7/AbIht
-         Z8IBQ+iEB964fv3C/IbtWGKPDj7uMoXt6OFXhSWSR2EJxa7NiK0ZmuCnUbaDTljf1Dkl
-         VMhutYLpo7lAG3CFQjYTNhi3x8Y3nTqZyb2ufVuqBvtQ7VaCMdDAsTVuFpiZnFe4RP2n
-         zTYMjY814ESXskY4xu0wgUh0R7AbA5QyE0IlIzgXmYG4mxe3D+dDNeSbjy3blB6Ftfcp
-         Dd0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769072746; x=1769677546;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vc8LxrlXp1TRy8cJVzj2adVuQyrkM/i39URUQkIbqXw=;
-        b=fX/OdAzDgRDBNR/IKMMOhBg9cRhkxBID5Lxku09DY5HEr8qF6BFAQiHyoFq1DUDQi5
-         WU+C+TibGqoOxIvP4K64cunNCRdXHjtj79/Ij1w0cGRAmZ1RbsbP9NQAHSfKjWiwSrzm
-         Z++LiOa17h915ptL5RY/Z/I+rvaqphLrUXtGLjw8qIxJNIpIdzvFbX4hi2upCZEza8Nf
-         WtZo2mEI5fzdM+frg+iuFYZhsNBrxbafH4F2VbGaC8+5llTin+YN8Zma7agqAyktmEo/
-         pR0NHmnU4Zb6p9Y/iGR5IyJzRQbVJiJ8Yn0bbRl0lDqc+LQqRVm/htXoirKZCF0cayO2
-         HUEg==
-X-Forwarded-Encrypted: i=1; AJvYcCX4moxcJKJ/aTSpyXmYViGf9UgEiOGFhMHHwu4Zd21cYItZ04bPy3fLi0VImvQo8KvmiNk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywb+1tPacdFFi0PzkSXpB2myFWEP4DGzLgFBoc7vmisTLpg91t8
-	OgDjC5c781sp1MbYYdrQVqBHU8PKud5dAJKgIuLxL0EJeqGxajPMRLN/Ttk9et91W0zC5lWwRyl
-	4JSHvHSDSOem6lQ/D2wb4LpXu98vZNFk=
-X-Gm-Gg: AZuq6aIGYgvfKEFZEv+Z0+wui3bczninayWF9VgJISFPO0j30E+AuUWw9sn+OTxVPM5
-	j3shkvbqGAYJa+b8Zb2VFBoYZXo+F/5Kz0TqXPrzhORHO3OFamVhvlmzybcowGJnG/3HQ05pWPi
-	ns2G3w042fNCroQPBWp0WHaN55Ctkw9pvJNIIa3zY0LVUpx2d1k5Mo0Fr0lMpHOZOQ/szpsLRfC
-	3b0G+nprIRI/OG31R03+ExI+KQN0Nq9o57Qt4urzhXzG8Upw8MoIciCDmZEqGZLJUbCIRjdO7W1
-	/Inj3GrpjcE3PbvXLxJQYIGMtQhp
-X-Received: by 2002:a05:6102:3584:b0:5ee:a1e5:6504 with SMTP id
- ada2fe7eead31-5f1a558f790mr5931264137.36.1769072746066; Thu, 22 Jan 2026
- 01:05:46 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 Jan 2026 01:05:44 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 Jan 2026 01:05:44 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <67808128-5f41-4ae5-b224-a76048cd82c8@gmail.com>
-References: <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-0-e0edb29acbef@gmail.com>
- <20260120-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v3-6-e0edb29acbef@gmail.com>
- <67808128-5f41-4ae5-b224-a76048cd82c8@gmail.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Onv1z9uX"
+ARC-Seal: i=1; a=rsa-sha256; t=1769073587; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=NdHG2CXS/2wqifRCCWauTZf1c2wAoFPE3Qm8YGh2Xn3RexaZp6LsP2wFlFTTRx+efL12kjWh8nIdmVeLeHymLRKh4VLH/WODnjhgwrCWtqcEJMMBvehSbjtuzpS3jXIbtHSc9pEPHXj4m5FaV2Nti8WekcbFcMWrmEo8PV1rCR8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1769073587; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=okK6duGvPigPkFV83RY6AYMDp8OvrHiGuIx3bwEt8AY=; 
+	b=KE7cEfGAk+gSEhoyIZxyu5oKYYmQV26GSwiutQF2EJ7LmYDN2/Oxe78YwrgtB/oSnBTXga3WnZCscy2S9oUx8P2vH/2W6Gwb8gWODZnnRtiuFFQTGaFW/scZDRqu3sW+8GAhsNahebyiL6/HF9HqKRWOew68hpeN+aiAVC8Dizg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769073587;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=okK6duGvPigPkFV83RY6AYMDp8OvrHiGuIx3bwEt8AY=;
+	b=Onv1z9uXjgqIp56SfgzIGH+5NukeoMGZ0CE0gdTFSeSWZwdWVgyEJN5HrxFL18DC
+	55XuintCbyP83Y26+IpxwkGGFUXYRVqy3YxWadkWo/Js2mkFVkt2XcB/VwGG/hYdGnx
+	LTKUbtRFT0BG9Wn0bzw/UjIN/LaxUzyp1qoPcwRc=
+Received: by mx.zohomail.com with SMTPS id 1769073585834411.43214206556127;
+	Thu, 22 Jan 2026 01:19:45 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
+ <emilyshaffer@google.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
+ <steadmon@google.com>, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v7 01/12] t1800: add hook output stream tests
+In-Reply-To: <xmqqjyxar4q4.fsf@gitster.g>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20260121215436.1473800-1-adrian.ratiu@collabora.com>
+ <20260121215436.1473800-2-adrian.ratiu@collabora.com>
+ <xmqqjyxar4q4.fsf@gitster.g>
+Date: Thu, 22 Jan 2026 11:19:40 +0200
+Message-ID: <87ikcuqa1f.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 22 Jan 2026 01:05:44 -0800
-X-Gm-Features: AZwV_QgYhybtUiPV5gW0Ciw7zlrzhnNmWSDEDhZ-UTPpiyVhyGjgGuHiMsREnls
-Message-ID: <CAOLa=ZRO1gH_pdo6Z1xpx5N5u=Unfhq7wyV8EHUiB0zp1+AhJw@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] fetch: delay user information post committing of transaction
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, newren@gmail.com, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000009c9d720648f65825"
+Content-Type: text/plain
+X-ZohoMailClient: External
 
---0000000000009c9d720648f65825
-Content-Type: text/plain; charset="UTF-8"
+On Wed, 21 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+>
+>> Lack of test coverage in this area led to some regressions while
+>> converting the remaining hooks to the newer hook.[ch] API.
+>>
+>> Add some tests to verify hooks write to the expected output streams.
+>>
+>> Suggested-by: Patrick Steinhardt <ps@pks.im>
+>> Suggested-by: Junio C Hamano <gitster@pobox.com>
+>> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+>> ---
+>>  t/t1800-hook.sh | 127 ++++++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 127 insertions(+)
+>>
+>> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+>> index 4feaf0d7be..0e4f93fb31 100755
+>> --- a/t/t1800-hook.sh
+>> +++ b/t/t1800-hook.sh
+>> @@ -184,4 +184,131 @@ test_expect_success 'stdin to hooks' '
+>>  	test_cmp expect actual
+>>  '
+>>  
+>> +check_stdout_separate_from_stderr () {
+>> +	for hook in "$@"
+>> +	do
+>> +		test_grep ! "Hook $hook stdout" stderr.actual &&
+>> +		test_grep ! "Hook $hook stderr" stdout.actual &&
+>> +		test_grep "Hook $hook stderr" stderr.actual &&
+>> +		test_grep "Hook $hook stdout" stdout.actual || return 1
+>> +	done
+>> +}
+>> +
+>> +check_stdout_merged_to_stderr () {
+>> +	test_grep ! "Hook .* stdout" stdout.actual &&
+>> +	test_grep ! "Hook .* stderr" stdout.actual &&
+>> +	for hook in "$@"
+>> +	do
+>> +		test_grep "Hook $hook stdout" stderr.actual &&
+>> +		test_grep "Hook $hook stderr" stderr.actual || return 1
+>> +	done
+>> +}
+>
+> Asymmetry between the above two was a bit surprising, but the string
+> "the word 'hook' followed by something ending with 'stdout' or
+> 'stderr'" is specific enough that the way the check makes sure
+> everything goes to stderr is probably fine.
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+It should be possible to make them symmetrical. Will do in v8.
 
-> Hi Karthik
+>> +test_expect_success 'client pre-push hook expects separate stdout and stderr' '
+>> +	test_when_finished "rm -f stdout.actual stderr.actual" &&
+>> +	git init --bare remote &&
+>> +	git remote add origin remote &&
+>> +	test_commit A &&
+>> +
+>> +	hook=pre-push &&
+>> +	test_hook $hook <<-EOF &&
+>> +	echo >&1 Hook $hook stdout
+>> +	echo >&2 Hook $hook stderr
+>> +	EOF
+>> +
+>> +	git push origin HEAD:main >stdout.actual 2>stderr.actual &&
+>> +	check_stdout_separate_from_stderr pre-push
+>> +'
+>> +
+>> +test_expect_success 'client hooks expect stdout redirected to stderr' '
+>> +	test_when_finished "rm -f stdout.actual stderr.actual" &&
+>> +	for hook in pre-commit post-commit post-checkout pre-merge-commit \
+>> +		prepare-commit-msg commit-msg post-merge post-rewrite reference-transaction \
+>> +		applypatch-msg pre-applypatch post-applypatch pre-rebase post-index-change
 >
-> On 20/01/2026 09:59, Karthik Nayak wrote:
+> Slightly overlong lines above...
 >
->> +struct ref_update_display_info {
->> +	bool failed;
->> +	char success_code;
->> +	char fail_code;
->> +	const char *summary;
->> +	const char *fail_detail;
->> +	const char *success_detail;
->> +	const char *ref;
->> +	const char *remote;
->> +	struct object_id old_oid;
->> +	struct object_id new_oid;
->> +};
+>> +	do
+>> +		test_hook $hook <<-EOF || return 1
+>> +		echo >&1 Hook $hook stdout
+>> +		echo >&2 Hook $hook stderr
+>> +		EOF
+>> +	done &&
+>> +
+>> +	git checkout -B main &&
+>> +	git checkout -b branch-a &&
+>> +	test_commit commit-on-branch-a &&
+>> +
+>> +	# Trigger pre-commit, prepare-commit-msg, commit-msg, post-commit, reference-transaction
 >
-> I was expecting that we'd pass around a struct like
+> ... and this one ...
 >
-> struct ref_update_display_info_array {
-> 	size_t alloc, nr;
-> 	ref_update_display_info *info;
-> };
 >
-> rather than passing a pointer, count pair as separate parameters. That
-> would also allow us to use ALLOC_GROW() rather than reallocating the
-> array each time we append to it which is rather inefficient.
+>> +	git commit --allow-empty -m "Test" >stdout.actual 2>stderr.actual &&
+>> +	check_stdout_merged_to_stderr pre-commit prepare-commit-msg commit-msg post-commit reference-transaction &&
 >
-> Thanks
+> ... and this one.  I'll stop counting.
 >
-> Phillip
+> You commit, and then checkout, and then merge, and then
+> amend/rewrite, etc., all of which look quite sensible.  
 >
+> These separate steps not being in individual test_expect_success and
+> instead in a single one chained together with &&- makes me suspect
+> that it would be inconvenient to tell which step is failing and to
+> debug when things start to break, though.
 
-That's fair, I was considering an array and didn't see the need, but
-using 'ALLOC_GROW()' does make it simpler, plus we'd totally remove the
-need for the double pointer. Will change. Thanks!
-
---0000000000009c9d720648f65825
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 99a96f2ef3061040_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1seDZHY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1menFLQy85cmFUTzlzK2tCcytiN1BBQ0RGWXlzUkFhaQp4WjQyMThJUXFT
-YTlFL1V3dXc2bUY1ZzhoaDg0S3ViZ2xVVlJ1ZTF4dXlKVUtzd1N5RzVGemQrYVh0cEVJeVplCjZZ
-UTI4TTNucXEzM1ZrRlhGc3dscnFpOEpFS1l4eUpBRytnTmR2a3NteStvSm93ZXBlZ0VJeTl0Q284
-VG9tUWUKcWwza1B1ZERLNGFMRmlhVHVLZVk2cVFTc1pQd0dtd2pCemV4MUJIemdsbEptN0FlUUds
-OHZFN1Z5OGdKSk1UWgpkZVlaWVExQmFYZzNMUU1ROWE4aGJvV2licDcvaVBDcmNQZ0tGOXZFbVh2
-T1ZwK1JZZnN3S2FHblR5TEkwcG9yCmRhZEMyWmRDVWZIYllWeG9ueGVVeksvak04VW51ZWhsR2hD
-UEhLZTBBb3F3Mkp1Q3RPbklvK213Z1QraTJtU1cKMFhDM2lRcUIzU1oyQ05CV3JnT3FHMnJpZERv
-YVdnMU1CLytxdThWTDVIRmNZSENNVHR0MysvdHFFbTJJMFV4cApJOU44WklUakltNUJmUzRDTGtv
-RW1zeFZCcWZZcGVibmhPV0RhSEFSZ3Z5RGFBSEVZMEFtK05waWFNRElCMVAxCjF3QkZTb0I4bjNS
-R0pNSkMzYlJDelVnNld6UXpzRUtaUUZnd3lZTT0KPTZrclYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000009c9d720648f65825--
+Yes, I'll break these into smaller tests in v8 to avoid having this big
+test which can fail for a number of reasons. Thanks!
