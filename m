@@ -1,123 +1,131 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8121E2ECE85
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 14:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769092888; cv=none; b=j7mdPrbD0S1JQmT5wpPR1U8ZbsRlNDWu1NeF5a4OyirPNozO2bDY7mkLTKkeY7Us3khxh+4jyZBc4u4atjEKfQ7jnT6q3FSgiJBPW2KB9+d/pE+mQrfC0nqAecHSrix432/QBHI2X+KLTngr4Nrvg0GbMKBQ9c+iBupndn1vCoI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769092888; c=relaxed/simple;
-	bh=zQ9CYIfVibCrdoMZcbhFbcctUzxHM7gbOBkbKU2mL7k=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Xr0bDdVevNPY41iRl8mMH0D4SPyswCEH8sxI6MQQFfcb+hNuYUGvpYfv5tpGK2sC2+tadytL9msPbuSCAYi/nD2bzYGJxW0QuYuwk4z+ZqzHiQ9BXMsdTjFuAc8K50pETm93f41zdUD6HYA9RlCxsipg2TJsMxM8zQr4s9acGGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cz21aJf/; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E09230216D
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 14:43:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769093037; cv=pass; b=fmJCMtOv2g4o4ivD/KFKAvhvwCVY8nZDYXn38Q5OgRB9N5j3lbX5nuHVLTyurYj4NkCqGO23PDn/68HTEBp7j1AYG7KNQ+mQg+cTLwyYyycKVXj/SK3lEmXOCk6kDDVoroHA4AzjV82UY/PpZysE3JH26SZNCWvxg6FW/wLca9o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769093037; c=relaxed/simple;
+	bh=fHZ9nBB1YU5E3SIIvfP34z8IEAmuGP1nEFU8suw8XoQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jCSndKIyCZlCeB/Q1MOUiw+nl6ZfHha5f0g/6HB61yMsrCIJLN2x+uoijZqNGOUkhKqXSq9WHqGnHXfHxuPxTEkXLmQgl+V4kbIednJmX4TXgJ5W4Gm0f+DbpwO00gi58qaH9kGv9D6jRVfEXWFb6b6yTsdI/Zs0jKRXUrXb+zI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E8KpaUFV; arc=pass smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cz21aJf/"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b79f8f7ea43so72887566b.2
-        for <git@vger.kernel.org>; Thu, 22 Jan 2026 06:41:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E8KpaUFV"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-65801ce918eso2253035a12.2
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 06:43:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769093034; cv=none;
+        d=google.com; s=arc-20240605;
+        b=c1un5OcSMg27NaX+hCN/cH9eU46Bc9m6ORu+gPWABe2gGKN0Mbb6x73gk4mUczNTBR
+         0Sjllu6m3WBowDCQQc9nWXk+I+Cr5nWvhIPBz707j9TUIcDOiNCGtWUC4fo9awP6MOtD
+         jCAV5lBVV39ida80FtLROgFqDKiBUfMfsjd761wZPFt7Rizer1cBhHxZz3+778vL0kzE
+         bDsknXCWivoBnvkNyZWAs+Q0/wPcrKhUgvIlNc79tVf+iwZcKcrBghV14w1SV0VeZW9i
+         M75+9S5mOvD34Ugf0daIhXmfM9B9jdc6YXH+qZ0L/ltN03PjZ+hBV07hcRruWbSh97ex
+         vJjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=fHZ9nBB1YU5E3SIIvfP34z8IEAmuGP1nEFU8suw8XoQ=;
+        fh=8vHLGEEesstCVeANqzMibFIFhcPnxtHULMQMsolPErc=;
+        b=UztjrS5oz7b0hFl9sTb5QXRIH5ld5JXtLwGT7+h81kSX4vv8Y8RD2m6VsFDQ9VR0MC
+         rObKRNUfV/4q5PiI39AZnDuGe583kFKRrRX3csj6un3JtV4QKDEBIgV1IRBKQ9cIDf04
+         CfbKXxeMKD1Q1d1p9VJmK1utdVVXbTluKjGyR7homlW/s5xglH+7VNtT0x73ZpKZFdYq
+         M9C52SPxblYDfhocgQafryF5FB6V77lwuguv8ICMGcvPim+8V+po7sb4s9dEL1nL5dbP
+         XF7Q9HsgRzu6kVgalBg7vDVpfYsHEH4GhT2RXasRRwo2OLR+eDH0Iij7KokeSzgbKQX+
+         Ue8Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769092885; x=1769697685; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gI7567tzEbFwXPl5DmRp00LTdoOK5T+/sRMIpnAoQ8E=;
-        b=Cz21aJf/Z1BM8ocoi+JeRfBuSzkaYHkIHYLVI8Jnc1I+6NUfFIxj+g5kAADAY8lF17
-         HBBlleHb4qaQtqDnauoe5OupvgT3zZlo6x+IGNqpSclKLJQw1s67iUuHm+r1aVpc830f
-         Xh4Lw4+u6QA8aeaNG5+SIOyGGUxIk5L5D6tDtD0Je9tnVuL1nAd6OvBiCU6sxOmgR36K
-         ZMNAFz9YlgJVi1wrmngjYGd9QJ31EidF0yvE7BHU3YC4jDFMmttW52uuGGxMyBPd7EQG
-         VTVEMHG6YK/uXWuQ7VnLNFN4O/4RLP7A18wjRaacigB9L80/PV/XQI9CIC4Obdycvrgu
-         tn9w==
+        d=gmail.com; s=20230601; t=1769093034; x=1769697834; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fHZ9nBB1YU5E3SIIvfP34z8IEAmuGP1nEFU8suw8XoQ=;
+        b=E8KpaUFVlUkCMXQwI+EKw5QJbX1vf+mDZO2LjvB+6n17p7SOaTOflebZXkJcAZ481V
+         klTetPxSAdgMNjVszg6YBgSuX1F8yg1ZbvRKUKkKcbIU4afC0pm1smUvLzqz6bnOM5Lr
+         lYu6bLAtHyEEa3rAFJcAyvlLu715R3B+XHi2hBKPtP+OENEfWdiJUksva+xA8zXKXQjr
+         3c2jqmaYLwvPhcsj0O//pyJ9QXcvSauQAEIA2y+NrNBr+sXDNmZTP77xil+HEE3oHPvu
+         qBbZmcZADAzq1pngSOsVzhRw+LzY6G5A7gRzEvcdlu6V3u/3AqL0wOPt/Y5c9d7RF0Ee
+         13Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769092885; x=1769697685;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gI7567tzEbFwXPl5DmRp00LTdoOK5T+/sRMIpnAoQ8E=;
-        b=tk3zCzPiKBV3faL74SB4i3AqTFv5JOgKofS8dHOfvyKMf6B1kLQX3lwr9HY2JhSn63
-         qCMWRgo7a3MmwzW2YC5liBt+RT5HWOat3uQzdtQY8TRDSk0dqMgYf9Hzqa6gLZqE/hgG
-         D1qhW5fEQxoeLXY5XdYspUEp0XqYBza/NruM0quiqwbTuDNMU0PlLrC4oSUDYujjXazj
-         588g8MIM8YuXt7geZ73x2uqmQBnhULph4PAV0On10gA2hCSNxk6uadUpCpd0Fp5Rzwlu
-         mNu8YYzOUjBBM6TnuDF+v4qnxf0iJZ5GLqRUpRPVjvO887rjhgnpi3mLlHHr+pqce0nc
-         KBWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWbYGgKxkcvhWMWupGVJ1v9Un7wD7u9hgMUz32ggCa6FYh5Aff/FUEdu6Yn0M/lR5jFzAM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YygGRhckyg2bVZceqVkZoqP0xWHm4J2r9bXV7cgDN+2/O+w8yqO
-	Hne0mx8/LXjnQdzLxcDQU1b7vCt2OqIRFVhAt7Fk/Gq0UiJOpVaidsu7
-X-Gm-Gg: AZuq6aKXJrV9+YqVjZTuSnubmau+If+lGUjgUZV4wKYIg9hm+Jn1XioEak+6AMeUXnl
-	m4gtoXOZ6e9YEnKKlddwibiVWvJ5th2tciOB/7xKOs20upUmfPBcaoMkyf/+iNe43tLdbAiWJT5
-	x5pMkx63EgVjxgFpfKtF+e8o539aIDLkzyYAwACr8e9shegTFhdVal3lRjYs1rRfsWV+2qK26f3
-	ZUE8h9nI3DMNkFwk2lIa5KtU+mF5/vvC+hXO4mpxqmnWakUhzS8L6u3Ok8D90piPu8KQt5emTYm
-	mT80TCIwk7lQORi2stWl9CIgHP7eBbISjh2C23UMCZGN0jbTbR+zRG7QY2m7VBNnHdvZM+/tugy
-	3hHp71dC0fgdOIQzGs2fG6/rx7cRZBaU1Cw9MVwsiBDM0ggdqHmsuuBUuvGBv+IcG8T5iYAmcRw
-	K6lkTU1T1Nz/7NoL4G7hKv+6GNkpVqPAb+M5ge8ROFVcuv7jODeSat5lcWWSSDh+Mo5Q==
-X-Received: by 2002:a17:906:fe09:b0:b86:f558:ecad with SMTP id a640c23a62f3a-b8800236e57mr702428766b.7.1769092884240;
-        Thu, 22 Jan 2026 06:41:24 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8795a18c3fsm1682101166b.58.2026.01.22.06.41.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jan 2026 06:41:23 -0800 (PST)
-Message-ID: <56ac85bc-8e12-4cb9-ba22-db021c473110@gmail.com>
-Date: Thu, 22 Jan 2026 14:41:22 +0000
+        d=1e100.net; s=20230601; t=1769093034; x=1769697834;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fHZ9nBB1YU5E3SIIvfP34z8IEAmuGP1nEFU8suw8XoQ=;
+        b=LAfg9hD6QYfv7yyE49VtoiVnZISTXFoafPDOWYpZJQZBLl9LKHcFt5Whgl26L71/Mn
+         vpRGrJsU+o4P1sgwa7VXwzKAigLE4hFSdcJD3a7d5ka2yqD4quwbjECWiG5O/JL7JhNe
+         pFT9kAW6NrpArUdq6iJOREh36k6D09tvIBIWuUzWL/lLiEk59XzXIK/Aa7Zoqi2MSFi+
+         bxxfQz5cMiC/bKo98VYOf4+oFMcyQfTPBNR+jNXD6Rc9RbKmBTRFlNX4C+XkW0/dOYCL
+         D1OVH4Q5YUKLmQi9DI4xK4B8/8smXKtKVJZdv5zP3/CQdGD7SIKKa+gAHtQROpmhTA9j
+         C4IQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUbnqwC8AOQQNMFN66Efbc5T2IrB8gI2GplgwuTgaL3kC4tWBMWf6fAWhfdkn1Q4dap/gE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2C+GoiAPdI8GgcBpS79UB9v/MBJ2roSNUANQwGic6Ax9QDw8B
+	JODSfeku4h4GJnqq8S2f/OOfMHXZXLlb8ReSZGji1+0k64aWDWCoLh0AdBlbqC6RAt0kClYitva
+	7fExKtNHo7x9zUXpYtvEjcnKZI/QcNiA=
+X-Gm-Gg: AZuq6aKulIe2Iljo2bToo6fqO4AP2UBnJcYj5WATrzzWvC5DYDYgtjTcXxO9UaIPdDD
+	Djt9sl6+DpdsFsPmkcVjSCTzHSVBaH0P1oIMeCguutnbMMQaEMe71m3wRXGl9UGz7lKtTRanZGG
+	u51X1hructEOQa2DFcb5vohptJXyYNW2nNqQoj3MygMJlX95FLD/16u2QYsoDBqPxKxyEJxjLB8
+	pUKxvQyAhXuRaeKo4qqkt3PLyc/PssybFeYv3GVsbzrsVtNqbYsoOg4jzrE0+Y9BcEtknfLB5xm
+	HRi+bBCPC+KRpGVLwkiA056SSmUt
+X-Received: by 2002:a17:907:3fa5:b0:b87:1d71:f44d with SMTP id
+ a640c23a62f3a-b8792d27463mr1830134366b.11.1769093033271; Thu, 22 Jan 2026
+ 06:43:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [Outreachy PATCH v3 3/3] environment: move
- "branch.autoSetupMerge" into `struct repo_config_values`
-To: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
-Cc: phillip.wood123@gmail.com, gitster@pobox.com, christian.couder@gmail.com,
- usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, me@ttaylorr.com,
- karthik.188@gmail.com, Toon Claes <toon@iotcl.com>
-References: <cover.1768681947.git.belkid98@gmail.com>
- <9a411db9f8f9df37c7a5f100d97c8d5ff5f6ba97.1768681947.git.belkid98@gmail.com>
-Content-Language: en-US
-In-Reply-To: <9a411db9f8f9df37c7a5f100d97c8d5ff5f6ba97.1768681947.git.belkid98@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAP8UFD11txMWSfMTvDtcBJuuZA5mKffo6XUyR9LWk2d_N0RRtA@mail.gmail.com>
+ <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com>
+In-Reply-To: <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Thu, 22 Jan 2026 20:13:27 +0530
+X-Gm-Features: AZwV_QjgW1ex9UtjnsQGSZsx_nQbg-7JxTAdEWkIQo0JpVfhIpCY2G_By3DuuAw
+Message-ID: <CA+J6zkSo1LuFUdTU8m6z4vANrJ2r88EV6RDDC_0ZW3bWec2v2Q@mail.gmail.com>
+Subject: Re: Git project and GSoC 2026
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Christian Couder <christian.couder@gmail.com>, git <git@vger.kernel.org>, 
+	karthik nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Meet Soni <meetsoni3017@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
+	Bello Olamide <belkid98@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Olamide
+Hey all!
 
-On 17/01/2026 20:59, Olamide Caleb Bello wrote:
-> The config value `brach.autoSetupMerge` is parsed in
-> `git_default_branch_config()` and stored in the global variable
-> `git_branch_track`. This global variable can cause unexpected behaviours
-> when multiple Git repos run in the the same process.
-> 
-> Move this value into `struct repo_config_values` to retain current
-> behaviours while achieving repository scoped access.
+On Thu, 22 Jan 2026, 10:38 Kaartic Sivaraam, <kaartic.sivaraam@gmail.com> wrote:
+>
+> Hi Christian,
+>
+> Thank you for initiating the discussion.
+>
+> On 16/01/26 16:36, Christian Couder wrote:
+> >
+> > The application period for mentoring organizations to participate in
+> > GSoC 2026 is from January 19 to February 3. Let's try to anticipate a
+> > bit and decide soon if the Git project wants to participate.
+> >
+>
+> Indeed.
+>
+> > If we want to participate, we need (co-)mentors, org-admins, projects
+> > and micro-projects ideas, and we need to update existing pages or
+> > create new ones on the Git Developer Pages (git.github.io) website (or
+> > on git-scm.org if we want to switch this to it now). Please chime in
+> > if you are interested.
+> >
+>
+> I would be glad to help as an org-Admin this year too. I could act as a fallback mentor in case any mentor / co-mentor becomes unavailable during a particular period of the program.
+>
+> I also Cc-ed Chandra Pratap as they expressed interest to be a co-mentor before.
 
-Same comment as the previous patch about repository scoped access.
-
-> diff --git a/environment.h b/environment.h
-> index 3b5ff7094a..bfcdffe836 100644
-> --- a/environment.h
-> +++ b/environment.h
-> @@ -2,6 +2,7 @@
->   #define ENVIRONMENT_H
->   
->   #include "repo-settings.h"
-> +#include "branch.h"
->   
->   /* Double-check local_repo_env below if you add to this list. */
->   #define GIT_DIR_ENVIRONMENT "GIT_DIR"
-> @@ -89,6 +90,9 @@ struct repo_config_values {
->   	/* core config values */
->   	char *attributes_file_path;
->   	int sparse_checkout;
-> +
-> +	/* branch config values */
-> +	enum branch_track git_branch_track;
-
-We could probably drop the "git_" prefix now that it is not a global 
-variable.
-
-Thanks
-
-Phillip
-
+I'd be glad to help as a co-mentor. I think I'd be able to best help
+with project ideas related to reftable or testing, seeing how I worked
+on reftable tests in my GSoC project, but please let me know if I can
+help with anything else as well!
