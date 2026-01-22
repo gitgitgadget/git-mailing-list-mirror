@@ -1,135 +1,95 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BDB262FC1
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 00:15:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6A8318BA6
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 00:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769040928; cv=none; b=g0uxkAH2/Fl0mm3Ek0x2eNkmtmwN7Md7I+JYnYDMLkZTpufus4etxiAS0djTw+dbueN41sjcqK6exM7Zz/h0vJwUjQ84BTHcMobQ9dQu2haaYkY5quk3RQCNbL9A2ipXegMT8FG2dDP1eHF/nfozGhxRcv3ramTjgZHZ350NO1Y=
+	t=1769043552; cv=none; b=gwcCm0dTSyb46DhbOpWvVmdN3irIjRsqYkVPiCPbtoPEV2/og9kqxVVXWD7REL7/jvuolZkFMY4RIssqJSJWvGFeO32nairl8jGQTE4XeNrZrInCn9kybxBoYIq4KPcsuJH6AYkJHIXW4FEf1+9Bk/4k4fPpYFwgiK3D3WgAl2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769040928; c=relaxed/simple;
-	bh=eo7WNM2Egv3zm8B0e2DK1d9j1x9ECTChkNfnMnCxva8=;
+	s=arc-20240116; t=1769043552; c=relaxed/simple;
+	bh=DRJaqCVCa3VvDJJZUesRpVji2W/m8qfA33mluMMKaRU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QwZNtCECJ8Eq+mMTGELpCzdC8EUXWYVLYKSg1caCEgEG+BSIOpPpk2H/xv+tD52DeqUH07H9IFroEtIIy3hglZl/oyDnJo48bNeZdZN5ssB0M7xfV9qrtoZ57KxUa4orsAGo9gj3pgwJ2mjoXdOmkyWWpn3kq8Mrl604dEl433U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gxj6CatU; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=RMC001l0TFQcC1KLejFC/05ag6XNcrtR8Ybk4NZp8wQ/sLGPZ1MvXSHZ+TNOajP7VDeAE+Hp8kjHxRLBrmo3HdK0zQ5FLkL9ypTJAY43twHWFd/sRcDsybDuWCy+fjpxVmX2fhemFyI/Rqe7OgdHPu2QFm+ZYH5dETPkLcOrUTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EaAj/TzF; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gxj6CatU"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7927b1620ddso6593527b3.0
-        for <git@vger.kernel.org>; Wed, 21 Jan 2026 16:15:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EaAj/TzF"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47d63594f7eso3547105e9.0
+        for <git@vger.kernel.org>; Wed, 21 Jan 2026 16:59:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769040918; x=1769645718; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769043548; x=1769648348; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eo7WNM2Egv3zm8B0e2DK1d9j1x9ECTChkNfnMnCxva8=;
-        b=gxj6CatUWqmk73kDpgxrn4S4OL3257H5wnlRbRhUhHFkp3rgWE7LEGwaMhU9nXiSBD
-         gm7Q/HcQ4H9elXi7wz/ZogC0mDyT+nz8It1IlMH+BTooKWooYhTJRKmHMRm85wemghyt
-         gOINp+oNd0/9ZInxrOMBhBULAsJoUE4AwYU7pLnxzbh2XAycjhdl/HKefr6VDbE0Uuez
-         W7hg5Eq2Oxg1Z51+imn3nJS8wzO/J4p6qizVZjkKcCg47FYuGjeyRfG/lPGFKNWJULuq
-         iHDGktLbbUsNK5129TbCtiH2MyNIRCMuyrxUTezlM0l4Gpw+NDaUu+4qguwctXhNen28
-         trfQ==
+        bh=0sa3EA7LmUK5q48tLhQD+1UAY0PuCR2/3PbtkUXDa8A=;
+        b=EaAj/TzFtbjzIHF7SFE/wEnJxKvzcqgQ3lDX9dJpaPSh+IL5vGHAdh89KPu+OreKMV
+         MxyLdIA5Y/iTDj+kAKYfmB+zCv0jkZzhyfVLd+D55s2wm6/3Xayk1ej3IwgyPaVUOYIt
+         TVgh8bhN5mwkK1Bzelul7AdjRcuHk4EKuublKGQWt3RKxvXE1foWKfDsFpPBA2DPmeGC
+         xNm1rzN3kTl+ZGMFYXC2U5nNn8LZUJBEKG5FqP3Go29lIvw+cf0obKW3f9Zu6rXkkG9q
+         L44zXQmNbO0trxNxihKdeywcJTnsMvFNnXb7HTBhr5KnWaRzQb8PlwAAjU1LegkIpSCD
+         6rag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769040918; x=1769645718;
+        d=1e100.net; s=20230601; t=1769043548; x=1769648348;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eo7WNM2Egv3zm8B0e2DK1d9j1x9ECTChkNfnMnCxva8=;
-        b=qfAaey7E98StlznPTH7PCZDxr0mjNobx8dEUuboC/R5ZmgUUPhj7/L8tyRMB9iaA/R
-         K4wGLuOOzQcWHhcmRhv7T03k5mEytod469WKykdFuRx3We/RBaF23zIJCQ9vOAaU2PFG
-         Jwu/VHaS+JN1aVCXckd9QRbZfZ5mNqDhifTtOFSABKc3hBJtH3jI6x4EOx9NVlWY65cz
-         2MHSlRXxiN+xMDznRZUioN6wcCetFmEPLTjndiF/7a6RW2W0ScG2BiCZ6WBRg23wM/2I
-         9JrOia0oA4C3Zo3BxvL6zvKEa2navDRj+jJ7nOIuwKmDWrCSM78UzdjSj94XRGOdtWI7
-         JFrA==
-X-Gm-Message-State: AOJu0YwbC6bZFCXEq1nmWvcExibAn1pLXPLmv7/GHE4pmmpXtvSDJ0cF
-	vPCk+NQw3qzxGSSFQO1patiVNxtsDVqqp63KcOIucP2ABVZYnYjfV9K51Ue7bCmOB/A=
-X-Gm-Gg: AZuq6aIoLIDM6F84dkS8W4YAr2uKEQa1QDPTWDSrNUDz4Q6J2+nYJJHeHbeZWtqlJoL
-	Kgl6kPQdI8z7HfLpl594q+mPDmQ0JmmF+ilJLwupu5Rh7THrtBv+EVighFXNnKXFraH3zVHdn6m
-	3ofbmQA4EBLBCc/GSetdykl3TOJ4lVPt/WsUpeFkk+hBo8Db0FV5JSLmddVgaevgFaTAWnnWKgx
-	WWa+od9oHC/BOMqJ4Yitha51kewCzlReT4s3aFYLdBp2i1gjOFn4Nl8+uQL8lnCXwDc+WspN5+h
-	+j7Qzf1GYjhXlcyEW/78i1LpI7/2iTozjNfx9pWW+pwQ8qAoiGCACdYTIMriTzV0SMsCkJ9cowQ
-	9gH0neIOOkNXirMvt8qGdChTdjU6xdPVUHQxKRqXVi1VmGVw0S/EAcSLgQr1nQMqjHR0Z3t3bGO
-	YWR0NbU4sTNlZcuntV1Fnni63GpFla1Wav9uxLVtIYrLUbrD28bEe2wVFr4KLO98F6nIK3ITI7N
-	CposQib0o1K6EpYVQ==
-X-Received: by 2002:a05:690c:d8d:b0:794:105c:d684 with SMTP id 00721157ae682-7942a7ff8d3mr11290657b3.30.1769040918313;
-        Wed, 21 Jan 2026 16:15:18 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-793c686db17sm72698437b3.38.2026.01.21.16.15.17
+        bh=0sa3EA7LmUK5q48tLhQD+1UAY0PuCR2/3PbtkUXDa8A=;
+        b=kJzeL4/b/ecXHU5yPc/3gYQpflswexQuu7J4ccm5m8NxlYg97X/LpldRMw8vpIc9yX
+         an1GCbykVXsiMnkN7ym3nyKTviXGq/ieB5GCGBCs7TMEIj1Mh66WSKmftx8UVwlMuDR3
+         UGxawyPm4NplwNHOgvZdtsfIqCBConBilzh1STBYoDvV4HjG45AbjpILyWfz/2IyvhoL
+         cUNvL6s0J0wjStoCv1HOFVrtKoZxcR5LuYGqOhzPtKB+W1qQGR0+jU28MGAGS8df5t53
+         0vnt/LAP5UUKazEIv4ebwopxbVvb4Uirwz5xOZtk2eZeDSeArqscxZTlRK3+r/yH0A1q
+         ZOMA==
+X-Gm-Message-State: AOJu0Ywjz4lEXRjo/bfCrpVRE45x4pv+o9mqX+Bz5SWuYZJNULTBiEna
+	yeZXRLtvs39Vh/z4el0BbSePL8e3rQl+HOpmYdXaJTLUN2x8N9iymsvi8C42/0J1
+X-Gm-Gg: AZuq6aIHuOVOqofKAKv+KbYEFVKrk/VIFojp55XCo9jodjA6nMcZTuOFhghHcAWVLlo
+	h1B47Jwd5fDA0yXcCJTi1j9IZCZfoEUMlm6MysGXkR1AajKT+Z6HRxg2cGbOQ9XMeTfSForSi6i
+	Yg6YDQO0dHAGgdbe2bHRh1Rm50noQ7UutTYPgaOa7JNQt9FhsjelDXaQyt1gWWWjRDQR2etHGGj
+	vHS/qgxeI+LgyeP4KIqPl9l3lFMAWO3k7nAFyhxTL3Mf4VCiiNEtQmHKQcycyKB+MwyhQj4AL02
+	HE2QBhtf5HZ/H7ETwhMSJsly+Z1rTXZJwJqV15hw2C9Z6gm8+/8vBTX3IXoGOkpLFyiYdIggbLU
+	jlLXQWOVavaKBVwrBoB54Eqjr49T6FZG2/njM++yK1zimRmXxnsXZ7OtGfRCpSfGr1IYljwv4dL
+	N3Jz3JCjmwKW9FXyWem0dT
+X-Received: by 2002:a05:600c:35d2:b0:47e:f481:24b7 with SMTP id 5b1f17b1804b1-4801e33a871mr348526955e9.17.1769043548364;
+        Wed, 21 Jan 2026 16:59:08 -0800 (PST)
+Received: from lorenzo-VM ([84.33.162.72])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48042c38063sm35325165e9.12.2026.01.21.16.59.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 16:15:17 -0800 (PST)
-Date: Wed, 21 Jan 2026 19:15:16 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 04/14] object-file: introduce function to iterate
- through objects
-Message-ID: <aXFsFAV/1J9DLQRY@nand.local>
-References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
- <20260121-pks-odb-for-each-object-v3-4-12c4dfd24227@pks.im>
+        Wed, 21 Jan 2026 16:59:07 -0800 (PST)
+Date: Thu, 22 Jan 2026 01:59:06 +0100
+From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2026, #07)
+Message-ID: <aXF2WtWh5RV3wGgk@lorenzo-VM>
+References: <xmqq5x8uu6yk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260121-pks-odb-for-each-object-v3-4-12c4dfd24227@pks.im>
+In-Reply-To: <xmqq5x8uu6yk.fsf@gitster.g>
 
-On Wed, Jan 21, 2026 at 01:50:20PM +0100, Patrick Steinhardt wrote:
-> Introduce a new function `odb_source_loose_for_each_object()` to plug
-> this gap. This function doesn't take any data specific to loose objects,
-> but instead it accepts a `struct object_info` that will be populated the
-> exact same as if `odb_source_loose_read_object()` was called.
+Hey Junio
 
-This may be a bit of a tangent, but I wonder if we are over-applying the
-function prefixing convention.
+> * lp/diff-stat-utf8-display-width-fix (2026-01-15) 2 commits
+>  - t4073: add test for diffstat paths length when containing UTF-8 chars
+>  - diff: improve scaling of filenames in diffstat to handle UTF-8 chars
+> 
+>  The computation of column width made by "git diff --stat" was
+>  confused when pathnames contain non-ASCII characters.
+> 
+>  Will merge to 'next'?
+>  source: <cover.1768520441.git.lorenzo.pegorari2002@gmail.com>
 
-In general I am really happy with this convention, and it yields
-organized headers where functions are clearly grouped by what structure
-they operate on. But I have noticed a handful of times where we replaced
-a very concise function name with a longer prefixed version.
+I would say yes, if you agree. The patch seems fine to me, and I
+wouldn't change it in any way.
 
-I think I don't have a clear sense of what the benefit of prefixing is
-in this particular instance. Supposing for a moment that we don't have
-an existing for_each_loose_object() function (which I think is the
-end-state of this series). What does the name
-"odb_source_loose_for_each_object()" convey that
-"for_each_loose_object()" does not?
+Also, thank you so much for your guidance and for dealing with my many
+mistakes. Now I feel much more comfortable working with a mailing list,
+so the number of my mistakes should decrease sharply (I hope :-)).
 
-I think if there were multiple ways to iterate over loose objects, it
-makes a lot of sense to prefix them such that they are grouped to avoid
-mixing interfaces or using one API when you meant to call another. But
-my understanding is that the intent here is to consolidate all of the
-different ways to iterate over objects which live in different
-odb_source implementations opaque to the caller. As a result, what other
-way exists to iterate over loose objects?
-
-Another aspect of this is how approachable the function is to newcomers.
-On the one hand, I can see an argument that prefixing makes it clear
-which functions belong together, and so if a newcomer is familiar with
-the concept of ODB sources, then they should reasonably expect that a
-function to iterate over loose objects would begin with "odb_source_".
-
-But on the other hand, while a newcomer may be familiar with the basics
-of Git's object model enough to understand the distinction between loose
-and packed objects, they may not be familiar with the concept of an ODB
-source. In that case, the prefix makes it somewhat more difficult to
-find the right function to use.
-
-I think there is a reasonable argument towards prefixing in the case
-that we want to link against this function from outside of Git. But
-AFAIK that is not likely to happen in the near future. So in the interim
-I think we are left with function names which are a little more verbose
-than the ones they are replacing without a clear benefit.
-
-To be clear, I am generally in favor of this convention and have been
-applying it myself especially when splitting out the repack builtin
-implementation into their own compilation units. But I wonder if we
-could relax the convention in cases like these without sacrificing
-clarity/organization.
-
-Thanks,
-Taylor
+Lorenzo
