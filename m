@@ -1,94 +1,128 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B220322DD6
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 01:37:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E49722301
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 02:26:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769045857; cv=none; b=E+lJDa2PX0WBEY0ZMfN27P2lZEY7gD9x4I30+uqqHeVfd6GGI/fFbsAD/wsykM8PVcFp+B/YX1DSA14hdrMxGBgf54RC7ik8Wsjzt/rtTtXz7A8Fpg8Ouib51jusoxemnxOZliHm16jcGSXLqpCUhbZNJSmVGb3icuWYojVGi10=
+	t=1769048788; cv=none; b=uYu19AM1cQiXDKYHuQ4DrgfUgsk5eKHAAXFAo891wawM2dzyykFDRsYxqM6+NH4kIbhi+PjZdE7eZoN1KmmTCVbGXKezsh53NjH77gFRhoFdHTLOqefQu6C71iC0Ed3maaYZ2COlg16zPv17rAkh5W8iu7B8Vl+fNIxBBXOOw6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769045857; c=relaxed/simple;
-	bh=fKMFYnXVCl60wwVNh+BORTqN4mdTMDwzyZdRwa1fScQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jc6JyztYU0IDJaJkCDSjsLxZbyERhW0Vu+c7T6MXeXCnL17A6sZjOaiteCE83kZXxqtpmkNTowo8N6yAXYRY5Dw2+N9wqYEh/z7+kTuLfDe8jvoI6dJ7p9iyu8b2aVY6xGOE3sTd+sGoB4/0Iuce3Ji4n1U3GpmFsBQZG2By4ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=U1KeeiQS; arc=none smtp.client-ip=74.125.224.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="U1KeeiQS"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6493937c342so604551d50.1
-        for <git@vger.kernel.org>; Wed, 21 Jan 2026 17:37:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769045854; x=1769650654; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8AySh2GGHEc1/sTvP0NJQPpg5kjCjZK5P3sGRrFAzAI=;
-        b=U1KeeiQSVqSG7+HDYVI7FtL43dddoqvu63sjie1gJcWDB58t0BrZdSB7IyfCuelvd9
-         ct0/5WRimqWv1HoTxvVAVtTMZQblkTPRSuK16vh8tH3O7ByydwJvQgPGffiST9veD6iP
-         9bqAa/lJdH5bPKDngdnsAMKlfqhjCST4/2wNMe9Yepg6eT+J0SxHDkO9Sw/9TeKv5vfK
-         ePrXJ+6yfgfLwSPIWV+mlgK0iHGUGtFsiYEsLEEdnoNgCy8rVXUladkcmjK7EBYqrpEY
-         HMJvkaqbFDhdsRPTq1xh4u6rBYlTpYR14CiNwWvwK1dlcc/s7mcVDE25pH7j2Jdy8xr8
-         dyCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769045854; x=1769650654;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8AySh2GGHEc1/sTvP0NJQPpg5kjCjZK5P3sGRrFAzAI=;
-        b=hVFT2AfBVzLAYkuadOZqbkudXsDak6vIjw33lc5KyXu5oijbRSm9pOGNVHDDO29be8
-         IJttcrSTUdfBlUj7xCDcMg/uQTizlr5Lb3/iqM3zoHcMN8X35bIA0z38jFmabxsij4Ws
-         M8S1GOWVOtB2ChR/u0cZR59+HO4Y7BaRO7reRRxqXVroL7ItE5JMHEovUkcmYjtIQv9L
-         ZVAMFvGVDGlFS8XhZWSCyJXCWd+1X4F6+hDpH/zniaIdIrsvE5lCSvo8sQAGNPPntW0J
-         lzZHaVu/JzS4hn7cVb1plJcxIEZdaW0nxG2UnXcO19VawTMgqbSeq009BMHsYoPZVzKi
-         Klvg==
-X-Gm-Message-State: AOJu0Yzt8njKnxGOnz81EsCOMmYQ40EUfGExbEbwbzTiYvmbcnZBPz0u
-	iGGbln7L0lJLHr5TTO5Y/Q9xrc3ILKsRsu3dG5eIDj7Tx2eiSfVYwpx7oZ6y3Eu+f6o=
-X-Gm-Gg: AZuq6aLI98d78I1vtYkK+wTrmkiS7IckDz+gDQqqhX9ADxnJNPlvYPcd7dNTtNY+oJv
-	5lEyKjRbD391Fu1bPNCfi4eYbach9qg+uFplVnwjNR+LeZ5JsJVZwMU0K2uYOxL810qRGnV9uyF
-	8zEJMS4EfXLBI4bXb0Wa5sFEd/6h28AY7U/NTrpPVrgk/xgd6AUSLPsAXBrpLrG7m6pMXJyom+l
-	L4xL5zJNBxGrISfDW2aAJ8YjLrfVTzq6CBgH8DcFbGQ2smgzTZk8WrT+gqqwM6ojf0aKu52p/Mz
-	U6ak6/G33sd9mbVT+oubJdLPOt2EzB5qwTXt+P/ln6FVPKZHhL23hdyjEaNfY1R972tQ+mQCAcN
-	Q8pwu7vCi6Iyrnu4K7wDgXw+JLnmZCupNBhqt5RmPa7Nt9RSaDFEKFfDK14bSIqm5CXLJ0TOz56
-	DfoH5n6LEu9kj4M6Zy440p3dEZt5kc61Bvdc6pe9SvKMEQrE2V2leJL7jC1AFzTJKnF06C6s+p4
-	4G8JZVbS5IzVuwbvA==
-X-Received: by 2002:a05:690e:d8d:b0:647:2160:143 with SMTP id 956f58d0204a3-64917773c38mr13106311d50.90.1769045854664;
-        Wed, 21 Jan 2026 17:37:34 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6495423c296sm252303d50.3.2026.01.21.17.37.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 17:37:34 -0800 (PST)
-Date: Wed, 21 Jan 2026 20:37:33 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 05/14] packfile: extract function to iterate through
- objects of a store
-Message-ID: <aXF/XfEcHA7lvyDE@nand.local>
-References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
- <20260121-pks-odb-for-each-object-v3-5-12c4dfd24227@pks.im>
+	s=arc-20240116; t=1769048788; c=relaxed/simple;
+	bh=t3CR05myygbrMOIKi5L6z97TJQjMRznUV3Z4zmbRtm8=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=W5piyI6VZ4v8QJH5upSV9gDTD64xj5BgrEfWruxMkiBLUOdQKPv0vvQutEHDJb3wf9rywWSVk1ye7nEbudVc6eGjGxhyyPq/et6FDuCYVKzV8OnWfVGNyPQ/t0cELm0npF9/unjVn53NOXcecrI3d7DOuiN/vuI59MCAnH3t7Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 60M2QBRC2355815
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Jan 2026 02:26:11 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Taylor Blau'" <me@ttaylorr.com>, "'Patrick Steinhardt'" <ps@pks.im>
+Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
+        "'Jeff King'" <peff@peff.net>, "'Elijah Newren'" <newren@gmail.com>
+References: <cover.1765053054.git.me@ttaylorr.com> <cover.1768420450.git.me@ttaylorr.com> <c0c1769464b1c8065c2cea59dfd85a1d37de9dd1.1768420450.git.me@ttaylorr.com> <xmqqpl7beugj.fsf@gitster.g> <aWgSzI30k0BZfZ4Q@nand.local> <aWgwn2rk/qw+fRoA@nand.local> <aXCTkVpjJkTabx_0@pks.im> <aXFni2tE7vn1dKFp@nand.local>
+In-Reply-To: <aXFni2tE7vn1dKFp@nand.local>
+Subject: RE: [PATCH v2 11/18] git-compat-util.h: introduce `u32_add()`
+Date: Wed, 21 Jan 2026 21:26:06 -0500
+Organization: Nexbridge Inc.
+Message-ID: <014c01dc8b46$7a2997b0$6e7cc710$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260121-pks-odb-for-each-object-v3-5-12c4dfd24227@pks.im>
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJLRUIcsGc0vZFOf7bQGsMkQWFk9gGsF+6rAm25p1EA/7rhDgFEsTRpAR7U36wB7fyjTQMGPrwXtBx30SA=
+X-Antivirus: Norton (VPS 260121-8, 1/21/2026), Outbound message
+X-Antivirus-Status: Clean
 
-On Wed, Jan 21, 2026 at 01:50:21PM +0100, Patrick Steinhardt wrote:
-> ---
->  packfile.c | 78 ++++++++++++++++++++++++++++++++++++--------------------------
->  1 file changed, 45 insertions(+), 33 deletions(-)
+On Taylor Blau January 21, 2026 6:56 PM writes:
+>On Wed, Jan 21, 2026 at 09:51:36AM +0100, Patrick Steinhardt wrote:
+>> > diff --git a/midx-write.c b/midx-write.c index
+>> > 87b97c70872..6006b6569c8 100644
+>> > --- a/midx-write.c
+>> > +++ b/midx-write.c
+>> > @@ -1738,8 +1738,19 @@ static void fill_included_packs_batch(struct
+>repository *r,
+>> >  		 */
+>> >  		expected_size =3D (uint64_t)pack_info[i].referenced_objects << =
+14;
+>> >  		expected_size /=3D p->num_objects;
+>> > -		expected_size =3D u64_mult(expected_size, p->pack_size);
+>> > -		expected_size =3D u64_add(expected_size, 1u << 13) >> 14;
+>> > +
+>> > +		if (unsigned_mult_overflows(expected_size,
+>> > +					    (uint64_t)p->pack_size))
+>> > +			die(_("overflow during fixed-point multiply (%"PRIu64" "
+>> > +			      "* %"PRIu64")"),
+>> > +			    expected_size, (uint64_t)p->pack_size);
+>> > +		expected_size =3D expected_size * p->pack_size;
+>> > +
+>> > +		if (unsigned_add_overflows(expected_size, 1u << 13))
+>> > +			die(_("overflow during fixed-point rounding (%"PRIu64" "
+>> > +			      " + %"PRIu64")"),
+>> > +			    expected_size, (uint64_t)(1ul << 13));
+>> > +		expected_size =3D (expected_size + (1u << 13)) >> 14;
+>>
+>> One downside this pattern has is that we repeat the computation, =
+which
+>> makes it easy to get it wrong or forget updating either the check or
+>> the computation.
+>>
+>> I think ideally, we would have interfaces that combine the two
+>> approaches in `u64_mult()` and `unsigned_mult_overflows()`. Something
+>> like this for example:
+>>
+>>     static intline bool u64_mult(uint64_t a, uint64_t b, uint64_t =
+*out)
+>>     {
+>>         if (unsigned_mult_overflows(a, b))
+>>             return false;
+>>         *out =3D a * b;
+>>         return true;
+>>     }
+>
+>I had considered this approach when writing, but ultimately decided =
+against it, since
+>it felt a little clunky to have to pass a pointer in to do a simple =
+arithmetic operation.
+>But I think your point about ensuring that we actually do:
+>
+>    if (unsigned_mult_overflows(a, b))
+>      die(...);
+>    result =3D a * b;
+>
+>and not "result =3D a * c" or some other expression which is not "a * =
+b"
+>is a good one.
+>
+>I dunno. The spots in this patch are the only uses of u64_mult() and =
+u64_add(), so
+>I'm hesitant to keep a helper function around just for that sole =
+use-case. I wonder if
+>we should do what you suggest here for the much more frequently used =
+st_add() /
+>st_mult() / st_sub() functions?
+>
+>> This would let the caller handle the failure and is thus quite
+>> flexible, which results in the following code:
+>>
+>> 	if (!u64_mult(expected_size, (uint64_t)p->pack_size, =
+&expected_size))
+>> 		die(_("overflow during fixed-point multiply (%"PRIu64" "
+>> 		      "* %"PRIu64")"), expected_size, (uint64_t)p->pack_size);
+>
+>It does read quite cleanly, so I think I'm convinced.
 
-Reading with --color-moved and ignoring space changes makes it clear
-that this patch is extracting the logic to iterate through the packfile
-store of a single source into its own function, and then calling that
-function from within for_each_packed_object().
+Are all of these changes endian-safe?
 
-Seems reasonable.
-
-Thanks,
-Taylor
