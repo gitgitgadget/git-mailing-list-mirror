@@ -1,76 +1,118 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D3D366817
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 19:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867AC353ECA
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 19:10:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769108994; cv=none; b=QtOM0Myf2jlyGyuEEfGAKdr65rOMxvsaugONXk+l6syP7F5vYLxxefGdwqrybGpEG9BqMubWq+Alw9+T89ioLMwGjxp/9jnUyj1DiADYQviOdGQrOWBCd0V5rrG0ptVVIeHggdMnC1V5pFhlyKtCuexbm8x7L0xefYjpqys/ZCI=
+	t=1769109008; cv=none; b=RGzvyRT/EIjxdCf6J4ZUPs3qkkMVoW0CmXtYppgZyuzyyFcucm/WCpIktMbdnB537eZDv3+Z1Qxc/f87JFE/C2YlVyF+K3m//ZZFC5FWi4BsNZtsaA2qi7oswlapr+3G0DoAyDfpuj+UfexIrK+jtLvVhSpnu0kQg2p/A6yEMT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769108994; c=relaxed/simple;
-	bh=eh29IieZZpkpz5hR2w5GWQ5p5zolqE3T+0yntofBF6c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sRGLoWNcAfrqDwJqh017IdfGIhoWJrcShzHAHLd6PSPOfk69NcT3qYZYPvJBmn8+cFmFjQhl7fG2q8fEZwxi4Jd2a2qmugKgPBUVxnXsQIhjKTG9z6t8ctJcMIeOmlImVQ2fhiZjCR5lfm0Gwb57H4aDA4VD1wk5RPFKADZ02MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=RJargEsn; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1769109008; c=relaxed/simple;
+	bh=/yyHwgQMHiXg0/x36AyLa2HTS6PNTWvES1s93NIrYwI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=iL8+QB6XZ21y3tNjxoQzuUmpGfPrNaoY3DZY9+xNALlZ8E3I3G21JOXA9eQraeS5gizpIUBRTjnacKf+sm9xGldc9s3bMAMtHU6Z7GD7PbbNrax87lEkMHO/Q/FcdSajK7XKpqIje3HPsc3saNd23TkSQdb5NHk1yRw0N0t9Rwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBqsNYtl; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="RJargEsn"
-Received: (qmail 130395 invoked by uid 109); 22 Jan 2026 19:09:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=eh29IieZZpkpz5hR2w5GWQ5p5zolqE3T+0yntofBF6c=; b=RJargEsnCawZFoCO4gZ2NOeOQ56c3sZbpXyknwuU8bW8KP5YexMDHBwHBoFCtf7MiINpUXXRVgqKdVsSv12SGs/90ligKGEjC3n2bHoXo5/fkmer7Yh2dRy4aTQbJsOXyQCglogaPy9n7jNM468lNzp0p9qZPxeYqexN7HibTq6hnaJiqxjJNclu6B8btpwKjGt+XUAr9g3Yzc2AXgfE4PPwmaB0Zw3CMFco6CreA1xrfYyIwUermp3T6kofkUXuVFtFicGdy1/gAwUX167WTEMR678snyL6R9wAko1HZTbLNrTrEQpppPqutmKdv/T8eQnsuo5BRd0QAxyClYPlgw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Jan 2026 19:09:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 236157 invoked by uid 111); 22 Jan 2026 19:09:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Jan 2026 14:09:43 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 22 Jan 2026 14:09:41 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] reset: avoid reflog update on no-op reset
-Message-ID: <20260122190941.GB2098026@coredump.intra.peff.net>
-References: <20260122154743.20496-3-pushkarkumarsingh1970@gmail.com>
- <xmqqwm19mq69.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBqsNYtl"
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-59de0b7c28aso918961e87.1
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 11:10:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769108996; x=1769713796; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nR0DpjPpQYIBsLJlVwhG5/a5DK0izncz3oBrfIyHVbY=;
+        b=kBqsNYtl3M2yozZtLoaPH9xVAzf3Lk6ujHHDmVeo2qOtmdKLUJ6eoBT0Ivzi6fSWyt
+         0gJNjjEeMQ+GDFu39Hh4kmN6miN9CxF2G5CqlBmhrCbmpu73Oltet7BAUwiHBiyHpIoK
+         3VuF7I6VOHhXGOe3Lz3y7uJgivsoS3W5IcDsxhn1QoAUaGaJD4LJmzGNKSSxNp4701Na
+         iL2IiQYJpomzlY0aqxddI9PHXamz1GsbV+lm6sVfHsRQPbT4T/ar1GJoCBl8LDgjBRvZ
+         wPmf+ARERdpJ03o9viYhQLzRQtQEWK+sWA+eaebH6+2ii9et50yBNyYDVX7AQInpAEIh
+         no0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769108996; x=1769713796;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nR0DpjPpQYIBsLJlVwhG5/a5DK0izncz3oBrfIyHVbY=;
+        b=Zh4O1gHs3RVn4pp5bLp5kg6Djm4odk798/cpDtCk/aVY0roguXHVNV+LMpIiQ3kfZt
+         wPNtHxvpSGilesHefpeBW1QYe9cm5sJ+7C7fqWLjsCyBfqRCfUGZHhsrQxEVDFjmORJ6
+         M/3DhIYHsEc7D50FEB0w8v0Gh+UTlU5Hwi+KYmxh7upuFUty92h+mKcfJxOIB0MYi9nN
+         QF4eH70/vLrfXO8Vm6ZjMNOsO1/Spggn+t+D4y94Y4kJc7+UKOdYUiGwJFBl72tEQTAP
+         t8xLZTMIHaosHRU8ELwcl0haXIdEMnfSkdGv/pjD+vxRmExy0HRlIuhtMX9rtGF4osxJ
+         sD0A==
+X-Gm-Message-State: AOJu0YyuAmlHPVHpgZKOqa8sgZAl0cYeD+ZLBaukS0jWOnZk7VIlx+eq
+	VNML6NZMkm3meoR09XKgi/6uJ2pNzkZxRFTAM5sf2YEbtSpFuIDlFuS9
+X-Gm-Gg: AZuq6aLEoUWrfnbSD+A9E4MTo+Tu5cKfV25UR286ectkwwdiE57o5deoU0Ujf3B6pxA
+	C476ZhjXIvdAoW/PBNvHra9EP+4mkSrIWt4Zp8fYVcoY+HWKWwTwW/lhp5moaMe9p8ZLg2c5dkX
+	poby91PyzjP1XFKUcpk2PqiOn6tZzmB45tiOQoFRZEOQgc/E4RI1nVGPNzO2WbpHnt5ESy6c96F
+	f+NBm/pklXnBAgKjsrwvdINFdF8rinDjmMSLfpXF2tYSciHc2uUamrF2bxNsBeYxA323HjODunM
+	zG7ujRVjblGk33JTayG1F6tf+70BejCSmmUQHyOMDp09VfSQfkmxUioWmDk4+2SPNUKE5JjGdeA
+	ZrtnvzCodFaoFr1xBW8WIzJRHJwTE49LaIl5/VVOIToD8+pu1BWjqHmmGs5cnsP9wP1zTKGgBAC
+	AsinjsgFDkFSD3Ub2KltCB6dO6/0SOUEPy/wV6qw5TpQ4MEmhBnWuNkKHRMM4DC8pvufP+Szrvc
+	t+g/UiHUg==
+X-Received: by 2002:a05:6512:2c0f:b0:59d:e35d:749f with SMTP id 2adb3069b0e04-59de49054e0mr120626e87.9.1769108996176;
+        Thu, 22 Jan 2026 11:09:56 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59de4927b7dsm73954e87.93.2026.01.22.11.09.55
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 22 Jan 2026 11:09:55 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com
+Subject: Re: [PATCH v27 0/2] status: add status.compareBranches config for multiple branch comparisons
+Date: Thu, 22 Jan 2026 20:09:54 +0100
+Message-ID: <20260122190954.64780-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqq1pjho4wn.fsf@gitster.g>
+References: <xmqq1pjho4wn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwm19mq69.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 22, 2026 at 10:57:02AM -0800, Junio C Hamano wrote:
+> Before these list of CC's (which does not seem to have any effect,
+> by the way.  The message is going only to the list with your
+> personal address on CC: and to nobody else), ...
 
-> Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
-> 
-> > When "git reset" is invoked with a target that already matches HEAD,
-> > it currently writes a reflog entry even though no reference is updated.
-> >
-> > Detect this no-op case and avoid updating ORIG_HEAD and HEAD, skipping
-> > the reflog entry entirely.
-> 
-> I am mildly negative on this one.  A scripted use that gets which
-> commit to reset to from the caller in the outside world, e.g.,
-> 
->     #!/bin/sh
->     git reset --hard "$1"
->     git diff --stat @{1}
-> 
-> would be confused if reflog does not reliably store the state before
-> running "reset --hard" to @{1}.  In other words ...
-> 
-> > Add a regression test to ensure no reflog entry is written for a no-op
-> > reset.
-> 
-> ... this change may already be a regression for existing users.
+Hmm, I always just the 'git send-email' snippet from example here:
+https://lore.kernel.org/git/xmqqbjilo6h9.fsf@gitster.g/, which for this
+message is:
 
-I was just writing the same message. ;) In addition to scripted use,
-that reflog does contain some human-readable information: the message
-field tells us what name we "git reset --hard" to. That might be helpful
-when digging through it trying to piece together what happened.
+  git send-email \
+    --in-reply-to=xmqqbjilo6h9.fsf@gitster.g \
+    --to=gitster@pobox.com \
+    --cc=git@vger.kernel.org \
+    --cc=gitgitgadget@gmail.com \
+    --cc=haraldnordgren@gmail.com \
+    --cc=peff@peff.net \
+    /path/to/YOUR_REPLY
 
--Peff
+> ... please summarize
+> 
+>  (1) what this series of patches are about, to help those who
+>      encounter these patches for the first time, and
+> 
+>  (2) what changed in this iteration (v27) relative to the previous
+>      iteration (v26).
+> 
+> I happen to have seen your other message so I can guess this is
+> about deduping when more than one comparison target is listed and
+> some happen to become the same branches, but others may not have
+> seen that other message, and it is not helpful to just dump the
+> range-diff and force them to read it to deduce what you did.
+
+Fair point, but I always always use GitGitGadget to submit patches to here,
+I'm sure sure if there is a way to do that from there?
+
+I just write '/submit' to create the whole patch:
+https://github.com/git/git/pull/2138#issuecomment-3785055635
+
+
+Harald
