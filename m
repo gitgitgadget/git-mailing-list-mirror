@@ -1,103 +1,162 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726A038886B
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 21:44:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338AE3A1A5D
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 22:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769118250; cv=none; b=T+fxHyf5XkSWq8XGZhi1JzyhLMmdlnscP3VyiUU+SWGYCmK+QkastQWOqySzN2M1J5Pv/dlmaUzRpHVzbirko5lHoEwbuMRbz3zt5rFqzckJvvl8De7wfAvJ2cpRhA0qbpSusMUonspCZnJrfqFXqhd4Vf06XGCM5yBoj5xiWG8=
+	t=1769119327; cv=none; b=ZmkAFjL5UQ42iH9m5RbLrv9gCKEq3Cya9jE22Cx/jjq46duA/z4usD2v3AQjL+R1hU2vhf1s0fGErSBgk3X3WAHRZAsWNiVzhocdzJ0j8Kf+QgXgEh8ndy92XYJMaYs82o67uK9DEJGDMWDbG4MjRnyRdtSX4qglheiuGiUdXK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769118250; c=relaxed/simple;
-	bh=ZWeeehNl8sg/ihkiYH7WedtFpLzT4S//B4lKD4TYnJA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PAfV81yg3duXD6pedlmGr5NA/imA0qUayAHTknEQDk0D1TxgZbZ1q7F66UJ+EGATsnMvN9q7yZ5IXIk+4C/vmFdv1KuS5/qIiqnRrW0Jt+WRYrvRFoakhwlwIALS2ibsdASSJRYYga5DIchXUO4Mab9Eq+cMZT1OzXdSdpR2I70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YM/zKVtW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KloB8f+M; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769119327; c=relaxed/simple;
+	bh=63RWm9QMVYDMaqerG/30/tWSVvRU38fD2iyrxvULRtY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AlsfpJwIe7z7amJrl0Sihq+0rLTpz/dmvPXCmDlUVJELDp6lffCs/vDedoq7EVHci/6lW5CY0LVYF9QB+ulMLdHP29PYZAmyp7Tur0w4HjpcZBQsN/GfAlNcZK/xKjUtNd7jL68qLn6ixrGg9ZKfIsZ4dnBhQihbH2XYz0Kc95c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WjUxwJDn; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YM/zKVtW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KloB8f+M"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0FE0D1400EFF;
-	Thu, 22 Jan 2026 16:44:02 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 22 Jan 2026 16:44:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769118242; x=1769204642; bh=RWWVtE97xu
-	1YxAr1EIoHmeBxRIylT2ojxjKn+XDP9SE=; b=YM/zKVtWZuEHdbvWIGtz/Me/wk
-	qtjOm6dQKqJ51joGbrJCzhUiS0ZDi+b6OgS2WjhVueP8rjP1XvJJ3vfN2B2A3p+3
-	MpAdjM6I3GUYUlhDC8PQHwDtGlPvaQcDrMTvrbrbmmUfFWmw1jo0sZoHpUuSexKL
-	J8unNamV/ikNFQzCaUsbXGNPLqEKvlc5G/UEP9hbaFqnJlRTzq5THk9lwpm6q8VL
-	3a1U3G9j/LQRb/h6HEI+85IsWba58AG/zQKqOXQ8Krpgk9vOD+6KqdvtIEzgob8k
-	MfauB+KQsiQkldHXtT+gpZ1TNjyeV+ezqziOnPULGR0aWT1/ZWFs7/27PTbQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769118242; x=1769204642; bh=RWWVtE97xu1YxAr1EIoHmeBxRIylT2ojxjK
-	n+XDP9SE=; b=KloB8f+M7SMGPgvXjVH/x/oeHkOWEVcQxQvs0VzM7gbUk9RXunF
-	cjjvt/JhU7xZ8uiKCcKf+6HsLbaeLECYSxf5EBxe7AvhoP7kr8uv68DOwXWbzWus
-	ZQSYo3N7lvoVZggsKbqZcpurnkPBC8c9SCi9LEwz/4diGFyLSvgxYiQ1rZXGh2Zd
-	BYFB+ZmwIK/yJPUQ1AOQ/Aj3Uf18o2oQ3VojQwP9AF2IdOMKap13z+utVymoVvIC
-	k/ORLjDrf7U7TxYz96Xaz0+xrLN07kHDUvc/IvTf1tahMT9FEOkGPv3Bb6eXZ/6S
-	uVEICRTTwQywJhJ+twVniya5F2Sy8FWI8AQ==
-X-ME-Sender: <xms:IZpyaey-46-FU_oEjNqaqKJPk04nsu6HDeyCd5h1wU91vzKXgagv4g>
-    <xme:IZpyaRI5PUb729jA8WZ92we0mOlIRZoNltOLTT0spY3265ysbhrq481QT3Rk0YmHB
-    ZYYqWYWfXdYq74Q9CEHDIvvZdeRk4YewWrCFgYj8XCPQMu27RERCw>
-X-ME-Received: <xmr:IZpyaYoLAsVJsodM97_KksGt8xtosd5MwMOiS3U6AiYSumU9oMOFWgTno9LINRvQfR7OndUG3JMZBF7G9V7xoo9u4egTFJA5AYtazDA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejvdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:IZpyaQIQFo32c9Hcf_SGTBUAYUX6m2Pf5_5PVKh30TDF9aaUpC8-lA>
-    <xmx:IZpyadRZtJdDmwRFbpeMG8PV4KAwn6csXa_CXIDCE2bqoEbwNZsuSQ>
-    <xmx:IZpyafsQ60vsgqpVD3brSVwvNbKYT3NKS3IqBA9WTK73H4mQpl-ToQ>
-    <xmx:IZpyaeYE9StbelmQHfZvmfM8nQrTjRiKQFr9phRoW1MB76QMQCJ-rA>
-    <xmx:IppyaQYqkgNR7W8XYcgclr7OC2oJZwq6O8sknUKuFnnalpjETuWm6Evv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 16:44:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Sixt <j6t@kdbg.org>,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH v2] revision: add --maximal-only option
-In-Reply-To: <pull.2032.v2.git.1769097958549.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Thu, 22 Jan 2026 16:05:58
-	+0000")
-References: <pull.2032.git.1768703645125.gitgitgadget@gmail.com>
-	<pull.2032.v2.git.1769097958549.gitgitgadget@gmail.com>
-Date: Thu, 22 Jan 2026 13:44:00 -0800
-Message-ID: <xmqqikctl3vj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WjUxwJDn"
+Received: (qmail 131105 invoked by uid 109); 22 Jan 2026 22:01:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=63RWm9QMVYDMaqerG/30/tWSVvRU38fD2iyrxvULRtY=; b=WjUxwJDnnoDWmOt4jqWEP5azan8r3+0SFzxRsVm5GceUY5y+pqN9i7ejx6dy640D4nccSfAT1ZvpVwZJeWEZnCApJzqLKKTnx816nXstDydzBgINR6P9CIPNCqw8Cm6iGVQCDZSOKLGXVCbyaETB0hUuc4/sDosa+etgsV/keEM76uajEUnEmqX2IvFrb8JP638YmzEq2gEDRiS+CbdewVHf77HgroknXrZVkd7691R4QBd1Oq0Tjvg8DIij+BEu4v+xLz42dv0rWBRcaSNf8Yp5fn2FntMLR44Zt4M2akB3TpPYqafwoS0AY1uUpPQhWdLiakLGmAJOHsAEy0OQ/Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Jan 2026 22:01:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 239712 invoked by uid 111); 22 Jan 2026 22:01:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Jan 2026 17:01:57 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 22 Jan 2026 17:01:54 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v27 2/2] status: add status.compareBranches config for
+ multiple branch comparisons
+Message-ID: <20260122220154.GA2107958@coredump.intra.peff.net>
+References: <pull.2138.v26.git.git.1768766353.gitgitgadget@gmail.com>
+ <pull.2138.v27.git.git.1769096240.gitgitgadget@gmail.com>
+ <0993420fc1185ec4a907a8c3bb52ca965e720c54.1769096240.git.gitgitgadget@gmail.com>
+ <xmqq5x8tmlj7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq5x8tmlj7.fsf@gitster.g>
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Jan 22, 2026 at 12:37:16PM -0800, Junio C Hamano wrote:
 
->     My motivation for this feature is very similar to the bundle URI
->     application. I can get around it by creating a tool that uses git
->     rev-list --parents and then uses a hashset to collect the parent list
->     and filter out any commits that ever appear as parents. It would be more
->     efficient to use Git's native revision-walking feature.
+> > +static char *resolve_compare_branch(struct branch *branch, const char *name)
+> > +{
+> > +	struct strbuf buf = STRBUF_INIT;
+> > +	const char *resolved = NULL;
+> > +	char *ret;
+> > +
+> > +	if (!branch || !name)
+> > +		return NULL;
+> > +
+> > +	if (!strcasecmp(name, "@{upstream}") || !strcasecmp(name, "@{u}"))
+> > +		resolved = branch_get_upstream(branch, NULL);
+> > +	else if (!strcasecmp(name, "@{push}"))
+> > +		resolved = branch_get_push(branch, NULL);
+> 
+> OK.  Usually @{upstream} without anything before the at-sign means
+> the upstream of the current branch, but we need to force pretend
+> that branch were the current branch, so we'd need to special case
+> like this, which looks reasonable.
 
-How does this relate to "git merge-base --independent", or do they
-compute completely different things?
+Yeah, it is unfortunate to have to special-case these names, even though
+the resolving functions already know about them. If we are looking at
+branch "foo" we could rewrite them as "foo@{upstream}", etc, but that
+also requires special-casing (though maybe slightly less, if we just
+accept the @ sign?).
+
+I can think of two alternatives, though.
+
+One is that repo_interpret_branch_name() could accept a field in its
+options struct to set the default branch (rather than "HEAD"). Something
+like this (totally untested):
+
+diff --git a/object-name.c b/object-name.c
+index 8b862c124e..925a487d84 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1732,7 +1732,7 @@ static int interpret_branch_mark(struct repository *r,
+ 		branch = branch_get(name_str);
+ 		free(name_str);
+ 	} else
+-		branch = branch_get(NULL);
++		branch = branch_get(options->default_branch);
+ 
+ 	value = get_data(branch, &err);
+ 	if (!value) {
+diff --git a/object-name.h b/object-name.h
+index cda4934cd5..962f99b0f6 100644
+--- a/object-name.h
++++ b/object-name.h
+@@ -119,6 +119,12 @@ struct interpret_branch_name_options {
+ 	 * of die()-ing.
+ 	 */
+ 	unsigned nonfatal_dangling_mark : 1;
++
++	/*
++	 * Pass this to branch_get() when interpreting @-marks without a
++	 * branch, rather than using HEAD.
++	 */
++	const char *default_branch;
+ };
+ int repo_interpret_branch_name(struct repository *r,
+ 			       const char *str, int len,
+
+Most callers would continue to pass NULL in the usual way, but the
+resolution here would pass in the current branch name.
 
 
+The second is a bit more complicated, but is even more flexible. Part of
+the point of this status.compareBranches approach is that you can add
+regular refnames to the list. But would a user want to use a name that
+is derived from the comparison branch, rather than just a static name?
+That is, to compare branch "foo" against "origin/foo"? Usually that is
+exactly the kind of refspec-application that @{upstream} and @{push} are
+computing (after taking into account various config). But if you have a
+third source of refs, would you want to be able to compare to
+"origin/%s", where %s is the shortened branch name?
+
+In which case these values could become "%s@{upstream}" and "%s@{push}",
+and they could just be fed straight to the branch-interpret machinery.
+
+> > +	strbuf_addf(&buf, "refs/remotes/%s", name);
+> > +	resolved = refs_resolve_ref_unsafe(
+> > +		get_main_ref_store(the_repository),
+> > +		buf.buf,
+> > +		RESOLVE_REF_READING,
+> > +		NULL, NULL);
+> > +	if (resolved) {
+> > +		ret = xstrdup(resolved);
+> > +		strbuf_release(&buf);
+> > +		return ret;
+> > +	}
+> 
+> It would be handy to be able to say "origin/master" (or even just
+> "origin", which is interpreted as "origin/HEAD" via the DWIM
+> machinery) and prepending of "refs/remotes/" above does help such
+> DWIMmery, but I wonder if it is too limiting?  Would there be
+> situations where you would want to compare with something outside
+> refs/remotes/ hierarchy?
+> 
+> For example, writing "v2.52.0" there to see how far we came since
+> the last release would become impossible if we always force prepend
+> "refs/remotes/".  I wonder if we can reuse already existing DWIMmery
+> that uses refs.c::ref_rev_parse_rules[], which should allow such use
+> case, while still allowing you to write "origin/master"?
+
+Yeah, I think tags or even local branches would be plausible candidates.
+But at any rate, I'd expect these to be resolved in the "usual" way that
+we do elsewhere. If we switch to using repo_dwim_ref() or something that
+interprets @-marks, then that matches nicely with the suggestions I gave
+above.
+
+-Peff
