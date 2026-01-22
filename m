@@ -1,135 +1,133 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A9B30CD91
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DC34E3792
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 15:52:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769096518; cv=none; b=IUpvrn0tHr5hk/99msEQhfTrDjn8mcOVOC4jYk9KiC04QcnAdNtpazO5s3psbSUCvQQ3BEze25HptkZRFV4KeiE4K0qXX8ykxRmYTXcXwn4S/fdkbwVJ+Oa9DU75SOXbyvANE1Zjx1m8uORoRvFuxtm0eWTSAF5vO9ZTznohT3E=
+	t=1769097149; cv=none; b=QRKOFljN65tf8fTsfvMUzLdElacY+FpwJQZ4N/bWXtpsXEiiqLCmvwtEo/fsQf0AmMtGVjMjzC6Pedau/x7yZVb5SdqRbC4sQ/nCE4XudScLZu9EqRB6R/DlcqfEpJGEDr06D0IwMRCL/dsPt77UrUGUsf7X27f47OjJDwXRExk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769096518; c=relaxed/simple;
-	bh=GXp1snzLUK2cdJ9XcS6AP51lJOXdWTO8l7ILfLbAmBE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=V6m8PkTB39JtLys5cnekHA5lClCPH5YzoKfA7AAOyENkWVS2/HZDL9nS/moyqAOo/+Q+L87aq7ddUcElbheRKI57/IINqTGBOBzgMbjoDmykES2HexgSqa1d3j6fRwMEDdj3lE2mQKBbcis8sq23yau2HzC+4v5Y+AS5ZAfAAG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B+4aB9vF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pcNjbQcj; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769097149; c=relaxed/simple;
+	bh=eYtNHs80H3g9KCdM/Ix3Nj/luIKhmgamHuATFveRCXU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aSwfWeJGorW4geSVQVf0/8sbIRHhiTmcGpFQ9/BAY7vvYF2664v8dsAMI1JYsOnbp6saR/prcP1xaUvaU4JKgdHsmjpOUq/T6pWe4e8IxZqnTfmMEyR3d2BZefqmkbkTbdqsX5z9mPl9NxIFv/3ZoyaJq+UwKxZQQDPjhVlIU1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SGsGK56I; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B+4aB9vF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pcNjbQcj"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C81A7140012C;
-	Thu, 22 Jan 2026 10:41:53 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Thu, 22 Jan 2026 10:41:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769096513; x=1769182913; bh=0Lhi5xtfPp
-	0a4QBVwJGDxm8ckqeOcJQPRf9YMMqOu5Q=; b=B+4aB9vFjqWMylSEPeu8nz09TC
-	w4I4tLJV3bAyYNUzE8t5Lh2380KYaBmYp5FrwvAaG8l9VVtu1b5z4fNSW1oy/L2n
-	JT/gaQedCiQlKQtHMs0PCNuRS9OAjsnSdWVkiJfiO5VshoFEC5s2IayxXU1FuPmw
-	AtxmFIEF6I+SsV0OSNUpGtpB92552rxab/kRj81fUWYBBaFunjCIQIcF8G8tIMv4
-	T5CTci+64h+A6oLU1GqNj0DGPxehFwYCvIShSfScpgTsgWKA0sgmSEeg5fefLipa
-	Z6XvxCBsh8uPwHHKhX5x9Bpi1xhVO1ryKkWQsUSDOcQqTLAd3bwCdC46CT/Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769096513; x=1769182913; bh=0Lhi5xtfPp0a4QBVwJGDxm8ckqeOcJQPRf9
-	YMMqOu5Q=; b=pcNjbQcjfif66tLuhAgDJGENFmcvOrquZ561DlM33E0Q6HSw+oX
-	9oriwEHvmnbDLqoq/eJi0xlZm+Bb6bi55URXGvw70rXsnbzyYIO/oAdyKOiBji2V
-	mYt8e8DLEr2PmTkJ2aNfe9R8eyoWxNttB2v/U7l3CWZ5HJZhnP1o28BpoTnwlejW
-	3r1zIJ0OIL/zBn4QHB+XNJ04pIQyO4nsqsXxE8D1i7DVs7fVuD41ZAMUQMAYC698
-	grnl89qff0hWknylNTylvEirgOf+rpoZbIuYpgWSfdPfjI3Th9ofN4WxCa8BTyE5
-	ysko3BC2BJdeGtgRSyznPRJWzIhx4r0Brtw==
-X-ME-Sender: <xms:QUVyaVy0bZ-mhDBjdJqCdmDwL1wENYkb-ZAUlie88QXeEETzMxGnzg>
-    <xme:QUVyaXh3Xn2UhE4xtoRWySxGdoOBH1UR1VDj0FLOdb9_DLi-VHiyDLSCWQNRNaInO
-    JQN6oHQq9khmj_TJkmL2J1wbwuh5WRCfpsBL9Qj0-5RqnH9Kuv9xQ>
-X-ME-Received: <xmr:QUVyaRmKcl6XzJZtTR4b-iroHnw7-TCcJ7D0uAGv-h4BjKuhpfwwyxBDgnLE8-XS_JGUH9T2KvKYnNi_ht0mlRWVD_4LzcoXVgy838k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeiheehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrh
-    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:QUVyadiwkqoJVK0VOmup84nKPfGME8TxcY8gXgRVRzPAiMSjN3LzEw>
-    <xmx:QUVyaV0wLAo8rSeB0TKFn_f0jtSL8KUkfRHTmBLvZ6drteYcP72IoQ>
-    <xmx:QUVyaWKFTZYPnPQ29xb3s0O-_VzFRCZULS9hgGQu2IkCDZJAqvUCvg>
-    <xmx:QUVyaVwyCgs7QGvlEUVxT9XnrRCvSrdAtzaPBrE-1dAkwyLRfKInjA>
-    <xmx:QUVyaUg4ViFT0yFpFxza6bmbzHt47aQoZRpVVWSXAQkv8E9WrGIdaf6L>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 10:41:53 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jeff King <peff@peff.net>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
- Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 02/14] odb: fix flags parameter to be unsigned
-In-Reply-To: <aXFosXv328ZPjlcw@nand.local> (Taylor Blau's message of "Wed, 21
-	Jan 2026 19:00:49 -0500")
-References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
-	<20260121-pks-odb-for-each-object-v3-2-12c4dfd24227@pks.im>
-	<20260121211128.GB723458@coredump.intra.peff.net>
-	<aXFosXv328ZPjlcw@nand.local>
-Date: Thu, 22 Jan 2026 07:41:51 -0800
-Message-ID: <xmqqcy31pscg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SGsGK56I"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2a0d52768ccso8684275ad.1
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 07:52:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769097138; x=1769701938; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oqrii66u60l9tgbdznMouE4wmV4m2pKxZZXTYEzmXZU=;
+        b=SGsGK56Ih5VeuhlN/zE8ULpt2Q4bOs1UfECIdup4lv4aMmGO/g/Pf7s2xlUsrvlMgJ
+         3Zr3pC89C0lH1jIix3vEGAqJfacA/fwIc49/N6Qh63L3s8bw8yCyTurFO10WrsgHqaEs
+         u+iphp7ISjWvSuiIA0rRsxOGIN3FA3WCkSqWx1/ClgdnE2r+SlwmTW2hQH/ksE/gvCVf
+         XXNqXPwII+k1N8OA+UQbT7bE6Zc1e6OkjqmZO4lRWpXpKZDtFjsBq8pNLsYAvcihB6JT
+         KMvx6nmR67spwhDLWv4HlwebO6lfRLOZeoWg/GnvY+F6nOuM6eMOJanTfYaLPrcil1rv
+         ckNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769097138; x=1769701938;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oqrii66u60l9tgbdznMouE4wmV4m2pKxZZXTYEzmXZU=;
+        b=ccTnfdJeBRtCjNxTeNwnm6+kd0/z5MKOEHjbRMgni6iGr+Mb/jL7JFQrWlYj795LEO
+         H5mWWzvsjYB+ERwzNzdDVKoxeGpQ7c4lZGE8ughcPFoP2AOx/sqgSeVVhqkSj8ZTAsN8
+         XYux2JatPBvNZ12bpBtoNtpnt7kc17GVoUEDyHJsvramZBTO4ST0zG3j/8IvlA+mOJbH
+         iA9Gu/X6/rYvLa1a00okmaUo5+54KVSTxa5zfbp5xlp1aY5CFdd9nzRThpoFYTlZw2DC
+         U8eOIU9/q77TluLnxnaQ6XUqRfThS+2k9Aax9ObzFUKT7+O7VOu10N/RdgVQBFso2t22
+         XXfA==
+X-Gm-Message-State: AOJu0YxsVHzF/udVvs0M/JWRA/j4dfISX2VKkhsSsl8ry4L3aq7Znzx2
+	ZvVydE7up6mYOr/67+Mjpq2BmJ5oXy0/ksSPww86NtQguWgfzDIypBHWKZxdlw==
+X-Gm-Gg: AZuq6aKOvF3CbCXKIbqnCQED5FN6NRji3jgHYjKtZ62s1Nc58TVJzLi16qMhU+p+Qr2
+	LFX6wQtlydE/5/G9mPhYR4nTcDjt7fXgjZho76J5zd87r7h9xBGwWB394Dy/p3aC2dZ6V06+ulC
+	xKjPE7HvXLTMIJvQQMPXC5XDaRmG7HQQD7GJIogSNJ0LCXYiN6Pf9fkfIWUVM71NTfVOkEb9xL3
+	q4agschxqW5ixo5MZToAmL8+iJ5BZY4LOP5OKOG2KlZ7dSNofMSc7aee2/duLfrqdUdOnsEgLiM
+	FgGcb+ITH3mw8lBkRwb+pPw/tyvkOYfbCyWB3fiMq5ro+Ep/Bb5vzYGFlj9byXmxQghbjXhWsM8
+	InqOkYq29xK73UDmzEk9hSuKcv4EJnBW+A8XYdMu1EIqjObyWlGhmf1sIbmxyE8/IZvS3Mzmw41
+	+ENNVQGT/DApq3IOuO2v0Qvdwx/LMd8o72
+X-Received: by 2002:a17:902:ce8b:b0:29f:301a:f6cf with SMTP id d9443c01a7336-2a7175c30damr196187425ad.35.1769097138425;
+        Thu, 22 Jan 2026 07:52:18 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7190ce2ebsm190268605ad.32.2026.01.22.07.52.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jan 2026 07:52:18 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Cc: peff@peff.net,
+	gitster@pobox.com,
+	Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Subject: [PATCH] reset: avoid reflog update on no-op reset
+Date: Thu, 22 Jan 2026 15:47:45 +0000
+Message-ID: <20260122154743.20496-3-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+When "git reset" is invoked with a target that already matches HEAD,
+it currently writes a reflog entry even though no reference is updated.
 
-> I agree with you that we should be using an enum in these cases over
-> unsigned for the reasons you suggest. I've stumbled over this in the
-> past, so perhaps this is worth adding to the CodingGuidelines?
+Detect this no-op case and avoid updating ORIG_HEAD and HEAD, skipping
+the reflog entry entirely.
 
-I am OK with declaring our preference of "enum" over "#define"d
-constants.  The only two minor hesitation I have against the use of
-"enum", especially for bitset but not for enumeration, are that
+Add a regression test to ensure no reflog entry is written for a no-op
+reset.
 
- (1) enum gives a false sense of type safety to casual coders. If I
-     have two enum types and pass one to as a parameter to a
-     function that expects the other one, would the compiler help me
-     catch that as a potential mistake?  -Wenum-conversion is not
-     enabled even with -Wall so I am assuming that the compiler
-     folks fells that it is not reliable enough.
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+ builtin/reset.c   |  4 ++++
+ t/t1410-reflog.sh | 15 +++++++++++++++
+ 2 files changed, 19 insertions(+)
 
- (2) it is not easy to force an enum type to be unsigned, unless you
-     are at C23 or above.  If shifting enums are warned by the
-     compilers by default, I wouldn't worry about it, but use of
-     unsigned is more explicit in this regard.
-
-
-
-Use of enum does help debuggers, as gcc figures out that three and
-tres are both (ONEBIT | TWOBIT) when asked to print it in the
-following snippet.
-
-    enum bits {
-            ONEBIT = (1 << 0),
-            TWOBIT = (1 << 1),
-    };
-
-    int main(int ac, char **av)
-    {
-            enum bits one = ONEBIT;
-            enum bits two = TWOBIT;
-            enum bits three = one | two;
-            enum bits tres = 3;
-            ...
+diff --git a/builtin/reset.c b/builtin/reset.c
+index ed35802af1..900c2f2fe8 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -309,6 +309,10 @@ static int reset_refs(const char *rev, const struct object_id *oid)
+ 		old_orig = &oid_old_orig;
+ 	if (!repo_get_oid(the_repository, "HEAD", &oid_orig)) {
+ 		orig = &oid_orig;
++		if (oideq(orig, oid)) {
++			strbuf_release(&msg);
++			return 0;
++		}
+ 		set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
+ 		refs_update_ref(get_main_ref_store(the_repository), msg.buf,
+ 				"ORIG_HEAD", orig, old_orig, 0,
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index ce71f9a30a..54f8692c53 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -533,6 +533,21 @@ test_expect_success 'reflog for symref with unborn target can be listed' '
+ 	)
+ '
+ 
++test_expect_success 'reset does not write reflog entry on no-op' '
++	git init no-op-reset &&
++	(
++		cd no-op-reset &&
++		echo a >file &&
++		git add file &&
++		git commit -m initial &&
++
++		before=$(git reflog | wc -l) &&
++		git reset HEAD &&
++		after=$(git reflog | wc -l) &&
++		test "$before" = "$after"
++	)
++'
++
+ test_expect_success 'reflog with invalid object ID can be listed' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+-- 
+2.43.0
 
