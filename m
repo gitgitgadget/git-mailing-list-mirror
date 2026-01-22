@@ -1,131 +1,121 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BA038B9B2
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 20:17:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769113031; cv=pass; b=oc+c6IaoKrrjy1LsFbvkGeJc73Ns1+Sj9STjJ/X6nlMSUGt+1z9ZWFycIJH35mqYhMkei+buyxyfehx3SXbo6gxgvmWfzDqy7ZtiBwei7Xf7EtdK6iNj4T2I8Xt2+2Em0QGXIYDWEocYkrquQJkdB5n/JWV0JPhnR8ysb9HteRw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769113031; c=relaxed/simple;
-	bh=W2Lkznq9jeTD5UB1fuMvGCmEbFTdKG9f+ozNqyhOeT8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XT5vtUw4q6TE66fiyuvKuNwE+/Y3JkNHQEis+t+WGlJ0NwmCP8p+SRPDqnytYdKIh/fNdwTIJ0G3OdSzGmOuQMgSVas5WtkgifwAXLadeBWdaoYY0pjKWf807lTuZuLaTkrZxPCngt1UCi/yI3zInKqpDMlUr0lFADDhZCpsHkQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RXyNozoI; arc=pass smtp.client-ip=209.85.167.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10B438B7AA
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 20:17:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769113052; cv=none; b=fJXY9d5sHaw4v30dRWsO5QtUfif0eAKHUsHhnaS93xkzp9wheKM8hFoWuQtFlynKyyIovYGoewPUdnT6uNTJnbZ6uTG2kHGAs/CRpFjU2cxVFry85bZAd6Wn0XCFvHWyeV+yPSAHwWpkaJXf5fGLvObPdhf7c0mXFwB4nfCeH6o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769113052; c=relaxed/simple;
+	bh=jraS67SCAhxUQ2V61Khqx8XLJdhnm+TcrZ4tgk6J2Jw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OECoWQ9WmQS0CvvpUa1TgtcScQa//g03mUb6Gde6BcpGuZGp6X9vqeyFVDOT+LVgkqdaMcvAtHAvAPhKaEgQ2wb0QWrMpy5cM9qU/dvlWW/fcL72BiJRfEETF88FuJpeHJf3zs0zBnN6FjUerRAin3DrL+4rp0XlXg9reoUHu7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=p9tREIPO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WxQeSB+K; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RXyNozoI"
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-45c8e85deffso479531b6e.1
-        for <git@vger.kernel.org>; Thu, 22 Jan 2026 12:17:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769113022; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NubtSYjLVv2rnS5PU9mWkBN8CLiqi9bXFibBjYufriTG1wbNUMTLHu2xgzZooEakRe
-         1BzugGgmqjFohwRMCcYKlbC2vRs3gvJDKxbnkTjDy13lWq80EKQdlMdpYPG3x+ojfoEm
-         Wb1Ayb74hvT7lXAi6biQcUwsr/QmY0VXDbenvPbmfT57cZRB6OXNk/1zRwq73hKzqihu
-         lH7XQdIDOxq9ExLVCvG5AinmRvmK35F/TWpGjsxBLtW7QZTXUZ4i5pUarzSUpqj4E8Zn
-         zmkpwdXU9rcRH5oTvoauTZMBe94pAHMokFP+wWINGz13gaErK2f6lwQ5iFjnGDl16Ohh
-         mSqg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=knN4pEcHHNd7w5zVRcr1GGxrJhyZ9ywkFVBapW9+yns=;
-        fh=E9h8LrGAHDx/zooHAiFPwfHTR2hlPNN4YBtZKRhFAtE=;
-        b=GkxGsDsdYcS++YRmguARjfWx1NE6uUJRit/IYAGI+zI3mexH8uDY4sdRw7dwm5LdXX
-         lxVzq528f5dIfgmv4QA0RlGqwWyzTclWVZfLWwYHjbYyiwTeJ6pgwMPQwRHu7cr597rD
-         1fnBirIe2H+V1LJAE77wD37d5hUYFEFpziIwNMDY1BHlCytswVtpq75SkauJjVT4DEYI
-         nOB19BYT0MF8lNi9boQLssAKvkWLY1kC/+KaGZoi4rkWeAAcmhzbBbWVIu50jEbUjZkT
-         J7JDZZPb+rGMguQ3jnxA1lUKheeEEQH/VxCgQXi6xl90NDOnTambHfErQLdw5k6VW94t
-         34Zw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769113022; x=1769717822; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=knN4pEcHHNd7w5zVRcr1GGxrJhyZ9ywkFVBapW9+yns=;
-        b=RXyNozoIOR8ThQBdOMt2NJDna0qZzqvpHdG/BhwwH5wmxzNkB5ePmWCbdXCTfl/XPT
-         OtGMATBHLfTHxx3Fvx0nGtzxv5f3j8CgeNd4GqUCh+8kK+zqqQCP0SutpQVUMxckqlPg
-         O+z7QM0RY8bHvqDFofCTRk+GArEhPtZkU30bTJYTMLyqkDhPDElgkc1b5Z11ib7dXCFG
-         JbFIsWyw3aHJe+bV/aXsmjC0ECITTDbh42IgzyBZF3f3uhVnfC0nqb+ae+ee9uWvw4Pn
-         HEqj1vLZtma7kfwo/stylSEbZaYeGeYkfLsaGIwggfk5SLIMA2gJ62DFamXDzAyPCIp0
-         tIPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769113022; x=1769717822;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=knN4pEcHHNd7w5zVRcr1GGxrJhyZ9ywkFVBapW9+yns=;
-        b=dUeCHGCErQ/7eH/NYOIuMY+a9XPu4Kan5mcFF9ODLW+QD+aRGlDdGyqyMaSxta7DZG
-         xtPuwQQHMBNyN4m0OdkGJvvZwX34GzHXUdLoKBxNGjeATBEn8OeTmwRqZ/cKJWShqCm+
-         4Pf5xURXSuJ7SpOc7ZsxuAQakyFEh5KVy77jTK2wLRA1jhRt96JPjD26SURfarUV1Nxr
-         6tQ6f/BxY8hzSnCkeqHPd87RvH5GFsmqIystkSE0hz8UTButXJAcU3O7FbfzfO5EhCaf
-         lQho1ef4HgwC3Xqn6Skra1pJMzey+dkzX/jKE6JN8CP6w/UfC7JZJeeSHKzJfR5Aqqic
-         15Ew==
-X-Forwarded-Encrypted: i=1; AJvYcCUb7SFPChySK8aKJoY3F/B1oDQ0llykgNAU/1NhMFU0Vy2wPZZBhFJJXLavm3zSW0/yci8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLpzUzsgwJcPg/0sQDeuNjUxbvTgwRB4FedF5SRkdyTOxViagH
-	Z69UABPn+1zXno3b2QA2AzgF0R5UZcjeWaNrvVNiMqk4cBtsBNro9VFH6U0lCeUTvimkiHzX/VQ
-	tiGjju4D4Pa7ZywfVUJWOegJNbb/MEmuObsOU
-X-Gm-Gg: AZuq6aIjb+YDGwY744n8R4Mh1UdGS1yAVRO1vhbJ/pXpy0JB+w+jgbF/Lm2RntcYg5Q
-	7oLMvCg+Wu5REP1Jwf0DxTzBt91z5AkRhyloxnzoYPr7bR6qRXZpoOdQbCwkbNdwmywaauSGoqi
-	F2RUEQlEecaY6oduwmdzsgB6O0yDDafofiaASHril90BrZIX+jUDY8zbn0q6Mo3yNeXEHd9xJ4c
-	7Lf9NeLC1fCS0mPhv+oVhxKugK0JDTUShs/elyVssPgwznp4IXuaSPog2Ds27jFOrkq+ngGFkgf
-	RqQO
-X-Received: by 2002:a05:6820:4489:b0:662:bf3a:ea6c with SMTP id
- 006d021491bc7-662cab02f7bmr411918eaf.28.1769113021858; Thu, 22 Jan 2026
- 12:17:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="p9tREIPO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WxQeSB+K"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8CCF0EC09D8;
+	Thu, 22 Jan 2026 15:17:27 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 22 Jan 2026 15:17:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769113047; x=1769199447; bh=adSQxnl3ZK
+	cvyMfgy/m5KIjP5DhV+IPWtjShU1qVWdU=; b=p9tREIPOX+ALM76PqKlbodyy04
+	tj6rsspZhhhpbXawkjQQdboMzEsF29vBYsASkNAjDmfAoEnehLIR0mH/IxHAniXy
+	SlvwVrF+VwNOj4qk3uWky6C7q6jAuOgU3RzOhiLTNuXX9bdZLOQt3t8dolQ0xhU3
+	a8F3ZNi8S0UAwxcgocf3NEmz1UKK6gl9cQyA7aUw9KhW2j4x5SmoDECuS3Xf9aR2
+	XZPurO5csrIGV4jHWqN9B5uoJLkRWzsAvmHYmyKwswUW5qGONUNM2In86DgFTeg+
+	DWkixE6jO+eYH70/tCQnnm6guTBTUPkg4eUQrmRf0v5VXFkqQeKpQiR3qnhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769113047; x=1769199447; bh=adSQxnl3ZKcvyMfgy/m5KIjP5DhV+IPWtjS
+	hU1qVWdU=; b=WxQeSB+Kyftw/pBa7zuDPf2o5RtjwEFFzv/jWeoM9TK5vUlnPRy
+	mNk3t1o3PE9VQNJKUC3fKlvgVf8h5TzXpOm4+uN6+Y53Nfx1F7Jl7WQ+G8ln42S0
+	KctpWu9bWprn+uIc4NOrVj0OMjVrkil4JpKf0yj2LdEHSqPew8vCR22nRR0knPLB
+	w07zwMvPkfZ+UehhvV395vqbKAlTjs6mGPsIUlj16gylYJijDSG7GWp4p90El8pc
+	YKyU5rqjOF9zyH7ERx2GtG7gYPxztje50G/MH5TVNquPVeORTc/PlH9yJRIpaK4G
+	2Ytzvl3Da72bH2/0JwqdsQb5umM7vsjX6Jg==
+X-ME-Sender: <xms:14Vyaa7V5piDv2Rtkq5Ozz5-m1NRKq4r-XsfUTgIQf-vGiB7JFeZAg>
+    <xme:14Vyafu53BvT2tUfcm-FIlNivVic7Y_kqvPLeAIC3Hp57kJJV9D1W7_boKe8hFLdi
+    lmL2jnUIkhz9iBiquaCn5g4AB287Z4fyfoIeYzbXH4ecK07aX36WAY>
+X-ME-Received: <xmr:14VyaU3rxxFwwjYsfN-QEK_2C22MMG76xNhMIJl4Hg_I_tuE4qPX1fKmfdMz70QpHTSLbwkFVNDfkcf8IIj9Fs87rYjKMqkJf42MNQs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejtdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
+    hmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepthgsohgvghhiseifvggsrdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
+    htpdhrtghpthhtohepphgruhhlohdrtggrshgrrhgvthhtohesshhhohhpihhfhidrtgho
+    mhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhunhhshhhinhgvse
+    hsuhhnshhhihhnvggtohdrtghomh
+X-ME-Proxy: <xmx:14VyaQqbMBM0IrqyQIKyYXqA6z9Fxm-P3Y-S-izKMKQ5UEGWPMGL-w>
+    <xmx:14VyacKVv7ZgLhw7yeXXUqUeM63nq6s5PRhPOkKduCmoQ26vJ39uSw>
+    <xmx:14VyaUTh9WUFRm9R3zG8AUAFshLLEjcDnCs2O-515mwnKAJMtqEuVA>
+    <xmx:14VyacMPXb7BlHkNpA7WX3QIxaHg8Ag4HPVFBuIYI4VIyB6-x_gMJg>
+    <xmx:14VyaWeRU7W9_GXHNOtQ7N58RLN6bEcjUG1SW-aC21wRGyaUTdjSGLLh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Jan 2026 15:17:26 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  Torsten =?utf-8?Q?B=C3=B6gershausen?=
+ <tboegi@web.de>,  Jeff King
+ <peff@peff.net>,  "Paulo Casaretto (Shopify)"
+ <paulo.casaretto@shopify.com>,  Patrick Steinhardt <ps@pks.im>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Johannes Sixt <j6t@kdbg.org>,  Paulo
+ Casaretto <pcasaretto@gmail.com>
+Subject: Re: [PATCH v6] lockfile: add PID file for debugging stale locks
+In-Reply-To: <pull.2011.v6.git.1769109815197.gitgitgadget@gmail.com> (Paulo
+	Casaretto via GitGitGadget's message of "Thu, 22 Jan 2026 19:23:35
+	+0000")
+References: <pull.2011.v5.git.1768933954845.gitgitgadget@gmail.com>
+	<pull.2011.v6.git.1769109815197.gitgitgadget@gmail.com>
+Date: Thu, 22 Jan 2026 12:17:25 -0800
+Message-ID: <xmqqh5sdmmga.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260114194815.1049888-1-nasser.grainawi@oss.qualcomm.com>
- <20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com> <xmqq5x8to53y.fsf@gitster.g>
-In-Reply-To: <xmqq5x8to53y.fsf@gitster.g>
-From: Jacob Keller <jacob.keller@gmail.com>
-Date: Thu, 22 Jan 2026 12:16:53 -0800
-X-Gm-Features: AZwV_QgAEl8UkXlvS6Ils8_CSrOnnfBkB5yd0eN7uVbswNDcdYjgYgbcucp9RME
-Message-ID: <CA+P7+xoYA6zhwVeCV6d5yW4ZxOKNLam3r-ayEDHpYpFqWyLduw@mail.gmail.com>
-Subject: Re: [PATCH v3] submodule: fetch missing objects from default remote
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>, git@vger.kernel.org, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Jan 22, 2026 at 10:49=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Nasser Grainawi <nasser.grainawi@oss.qualcomm.com> writes:
->
-> > When be76c21282 (fetch: ensure submodule objects fetched, 2018-12-06)
-> > added support for fetching a missing submodule object by id, it
-> > hardcoded the remote name as "origin" and deferred anything more
-> > complicated for a later patch. Implement the NEEDSWORK item to remove
-> > the hardcoded assumption by adding and using a submodule helper subcmd
-> > 'get-default-remote'. Fixing this lets 'git fetch --recurse-submodules'
-> > succeed when the fetched commit(s) in the superproject trigger a
-> > submodule fetch, and that submodule's default remote name is not
-> > "origin".
-> >
-> > Add non-"origin" remote tests to t5526-fetch-submodules.sh and
-> > t5572-pull-submodule.sh demonstrating this works as expected and add
-> > dedicated tests for get-default-remote.
-> >
-> > Signed-off-by: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
-> > Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
-> > ---
->
-> Thanks.  Jacob, this v3 is not exactly the same as v1 that you
-> reviewed (and range-diff relative to v2 does not capture what got
-> changed between the version you saw and this version), but I just
-> checked that they are "essentially identical" except for the
-> proposed log message.  Are you happy with having your Reviewed-by on
-> this version?
->
+"Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I re-reviewed the patch and everything looks fine to me:
+>     lockfile: add holder info file for debugging stale locks
+>     
+>     Changes in v6:
+>     
+>      * Applied Junio's fix-up: removed unused fd = -1 assignments and the
+>        unreachable if (fd >= 0) close(fd) cleanup at the out label in
+>        create_lock_pid_file().
+>      * Kept close(fd) before unlink() in the error path for Windows
+>        compatibility, as noted by Eric Sunshine and Johannes Sixt.
+>      * Reverted the unnecessary whitespace-only changes to builtin/commit.c
+>        and builtin/gc.c - these files are no longer touched by this patch.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2011%2Fpcasaretto%2Fpid-holder-file-v6
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2011/pcasaretto/pid-holder-file-v6
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2011
 
-Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
+Looking good.  Shall we declare victory and mark it for 'next' now?
+
+Thanks.
