@@ -1,95 +1,146 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6A8318BA6
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 00:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626C02F12AE
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 01:33:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769043552; cv=none; b=gwcCm0dTSyb46DhbOpWvVmdN3irIjRsqYkVPiCPbtoPEV2/og9kqxVVXWD7REL7/jvuolZkFMY4RIssqJSJWvGFeO32nairl8jGQTE4XeNrZrInCn9kybxBoYIq4KPcsuJH6AYkJHIXW4FEf1+9Bk/4k4fPpYFwgiK3D3WgAl2U=
+	t=1769045633; cv=none; b=W4O5Q7Fk+VH1BntvShyNNaX2uSBhdbGcWJQmcILuEUo0TIVgwLWopO5AjwullQ1zHejMbqsgSPhHQxYozjMSnOXzWnaSjWO/4fHOsRTQZ61hfIebHk2VKCjv1U2IZ6848PMDh9rcvtg+b6D5iBqvt39TcWeL4XCuGPDrq0hueP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769043552; c=relaxed/simple;
-	bh=DRJaqCVCa3VvDJJZUesRpVji2W/m8qfA33mluMMKaRU=;
+	s=arc-20240116; t=1769045633; c=relaxed/simple;
+	bh=vdP6zx2l+ObCqg2eL9SM2rx0SIHs80yylHJQN2MgSNQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RMC001l0TFQcC1KLejFC/05ag6XNcrtR8Ybk4NZp8wQ/sLGPZ1MvXSHZ+TNOajP7VDeAE+Hp8kjHxRLBrmo3HdK0zQ5FLkL9ypTJAY43twHWFd/sRcDsybDuWCy+fjpxVmX2fhemFyI/Rqe7OgdHPu2QFm+ZYH5dETPkLcOrUTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EaAj/TzF; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=FMqr6tzy+Iuki6pFo9V3lFNJr9dMdxvUzmhJ4/x1ARhnjvJHwSM0vRUAqrwR6kZjrhAyPnHVrjuKu4K9/DEWofMtqvgY/62qihqMKAeyH2AnGIziuLtK9uGn0yVU5R1AnHZrfto9e08VTVPKSEjONkmhTgso4+MT0dlLNM2I7dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=HC43yukv; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EaAj/TzF"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47d63594f7eso3547105e9.0
-        for <git@vger.kernel.org>; Wed, 21 Jan 2026 16:59:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="HC43yukv"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-78c66bdf675so4377727b3.2
+        for <git@vger.kernel.org>; Wed, 21 Jan 2026 17:33:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769043548; x=1769648348; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1769045630; x=1769650430; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0sa3EA7LmUK5q48tLhQD+1UAY0PuCR2/3PbtkUXDa8A=;
-        b=EaAj/TzFtbjzIHF7SFE/wEnJxKvzcqgQ3lDX9dJpaPSh+IL5vGHAdh89KPu+OreKMV
-         MxyLdIA5Y/iTDj+kAKYfmB+zCv0jkZzhyfVLd+D55s2wm6/3Xayk1ej3IwgyPaVUOYIt
-         TVgh8bhN5mwkK1Bzelul7AdjRcuHk4EKuublKGQWt3RKxvXE1foWKfDsFpPBA2DPmeGC
-         xNm1rzN3kTl+ZGMFYXC2U5nNn8LZUJBEKG5FqP3Go29lIvw+cf0obKW3f9Zu6rXkkG9q
-         L44zXQmNbO0trxNxihKdeywcJTnsMvFNnXb7HTBhr5KnWaRzQb8PlwAAjU1LegkIpSCD
-         6rag==
+        bh=iHkLJlc5aReX/WM/+m0dr98zd91pWjU12cBpJ5tlhug=;
+        b=HC43yukvlD8yEgVsbOzICbJufqEYBTV8Z4qOGeaabb/m9n4Fb+ddlW6UMWQ8J7d0zK
+         UWFvd/8qT1EuLbF3Gh/qLwfqZQabfDkjMc5AqKjKsDmHvrf6VLrbFxK6pM3xT/4uhR+G
+         86TAMdG5aOU4BeneM8losKlH1r7LGfx2v/jIj7e1OeMa0lAu/MP1CjADWIWCnbSys+1E
+         S+4Vt5k7pcEJySvo4UI2HBudRsflBWoPJTxuyF7ZJaIJKIJf13lzkvt04DNwBmqMQH99
+         8YUxvJ+IESwOqdulqJBvbgSm4TQO41L3eBlQvb5mHJEnDtAsb1COIl6nO+k/8ATNM1YM
+         pdVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769043548; x=1769648348;
+        d=1e100.net; s=20230601; t=1769045630; x=1769650430;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0sa3EA7LmUK5q48tLhQD+1UAY0PuCR2/3PbtkUXDa8A=;
-        b=kJzeL4/b/ecXHU5yPc/3gYQpflswexQuu7J4ccm5m8NxlYg97X/LpldRMw8vpIc9yX
-         an1GCbykVXsiMnkN7ym3nyKTviXGq/ieB5GCGBCs7TMEIj1Mh66WSKmftx8UVwlMuDR3
-         UGxawyPm4NplwNHOgvZdtsfIqCBConBilzh1STBYoDvV4HjG45AbjpILyWfz/2IyvhoL
-         cUNvL6s0J0wjStoCv1HOFVrtKoZxcR5LuYGqOhzPtKB+W1qQGR0+jU28MGAGS8df5t53
-         0vnt/LAP5UUKazEIv4ebwopxbVvb4Uirwz5xOZtk2eZeDSeArqscxZTlRK3+r/yH0A1q
-         ZOMA==
-X-Gm-Message-State: AOJu0Ywjz4lEXRjo/bfCrpVRE45x4pv+o9mqX+Bz5SWuYZJNULTBiEna
-	yeZXRLtvs39Vh/z4el0BbSePL8e3rQl+HOpmYdXaJTLUN2x8N9iymsvi8C42/0J1
-X-Gm-Gg: AZuq6aIHuOVOqofKAKv+KbYEFVKrk/VIFojp55XCo9jodjA6nMcZTuOFhghHcAWVLlo
-	h1B47Jwd5fDA0yXcCJTi1j9IZCZfoEUMlm6MysGXkR1AajKT+Z6HRxg2cGbOQ9XMeTfSForSi6i
-	Yg6YDQO0dHAGgdbe2bHRh1Rm50noQ7UutTYPgaOa7JNQt9FhsjelDXaQyt1gWWWjRDQR2etHGGj
-	vHS/qgxeI+LgyeP4KIqPl9l3lFMAWO3k7nAFyhxTL3Mf4VCiiNEtQmHKQcycyKB+MwyhQj4AL02
-	HE2QBhtf5HZ/H7ETwhMSJsly+Z1rTXZJwJqV15hw2C9Z6gm8+/8vBTX3IXoGOkpLFyiYdIggbLU
-	jlLXQWOVavaKBVwrBoB54Eqjr49T6FZG2/njM++yK1zimRmXxnsXZ7OtGfRCpSfGr1IYljwv4dL
-	N3Jz3JCjmwKW9FXyWem0dT
-X-Received: by 2002:a05:600c:35d2:b0:47e:f481:24b7 with SMTP id 5b1f17b1804b1-4801e33a871mr348526955e9.17.1769043548364;
-        Wed, 21 Jan 2026 16:59:08 -0800 (PST)
-Received: from lorenzo-VM ([84.33.162.72])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48042c38063sm35325165e9.12.2026.01.21.16.59.07
+        bh=iHkLJlc5aReX/WM/+m0dr98zd91pWjU12cBpJ5tlhug=;
+        b=ZN5WlDjeyE3+MSmHKyUlg7kk+IFICXDFey9AgoJGVMvFm4opUoqg5QJVMjecnwL37h
+         ZOZARLi264ceTSvVWy3aAKJa6OaSM4gGUkOWc6dxLZjNPqZLptCFbIumXDCxeSxilBuC
+         khBwD4ncBSlY3gtkSzB1I07URz54Nw9SnxXtMCe2TU1HIhun2BkffRFZo5439qbNKvc2
+         nz9dyF3Az6ZJepgVkDWGdXlZUyzJQsMRjx4TpMUqm6AXWUsmgNLXwFHxiX770kt+54CG
+         E4XNnPtxNi2l4H3JmmwFFJ26kNapnOjRO73YEoPsf5xvGTLP9b+Kjss/D/txHCcwJ78o
+         8+tg==
+X-Gm-Message-State: AOJu0YxgNl35Oooc8VcJAmruI+oPHXsbB7PWBc20/2GxwqRW8CSFIOdF
+	+zpMe61GbxfXa0kDzNoaKfR2sS3//6CGmW9UBBRme708YFPsDs+RPiF96cQlWG+C6Pw=
+X-Gm-Gg: AZuq6aKrmkTA5wLom1uc86D6jh1Rwgs3vwslulZ69HH9sh5rH2RUXN0YlmgnmLgC2Cy
+	OvAZfOPP+or+P4RWBQVLIZHHF2zQvUU5VBo7cPOD3yIymdotUwzl9tCVyM5adBtmjM7pIUNlmh4
+	TTpjPvlxwv1MnmsrzBgbKyLtGDXgEgn1ayhuyOKREz3nWvFD27PeNyD9DhxpbU12yhVn9RGFX0+
+	H7A186nsO8Mp05wN81rNLVegWlLaEffYkOGk72Ad+rj9GFPl3b3L8uRDzHLkFBhE6V1nDDDnjv6
+	eDXiZk3On8ogC+6vLpQgUHH2ny0mtXt9zV9fqE7i59fHIGjb3avDjQjB99T0Hq/Q/oSd1ZkhrCA
+	EYVwgaqBCilGhKpsfkDBlgl43ENV5C50vOU8mZlk+eKw4GWN5UYX8nYAbInBEsrM064HgEDgHJa
+	m2fHrfDQ6UugIfWC9ZwtQuJ7YY3va6h9RVns5GKQWypMDjN3LuubwlOa/G1WD9hCUc/fWI+fd+g
+	Mo1obLuHsDoF84MTg==
+X-Received: by 2002:a05:690c:c4fa:b0:793:bc20:23e1 with SMTP id 00721157ae682-7940a113ccbmr64472517b3.11.1769045630306;
+        Wed, 21 Jan 2026 17:33:50 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-793c68c31dfsm72984307b3.51.2026.01.21.17.33.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 16:59:07 -0800 (PST)
-Date: Thu, 22 Jan 2026 01:59:06 +0100
-From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2026, #07)
-Message-ID: <aXF2WtWh5RV3wGgk@lorenzo-VM>
-References: <xmqq5x8uu6yk.fsf@gitster.g>
+        Wed, 21 Jan 2026 17:33:49 -0800 (PST)
+Date: Wed, 21 Jan 2026 20:33:48 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 00/14] odb: introduce `odb_for_each_object()`
+Message-ID: <aXF+fMQKry71Gh0w@nand.local>
+References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
+ <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5x8uu6yk.fsf@gitster.g>
+In-Reply-To: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
 
-Hey Junio
+On Wed, Jan 21, 2026 at 01:50:16PM +0100, Patrick Steinhardt wrote:
+> The patch series is built on top of 8745eae506 (The 17th batch,
+> 2026-01-11) with the following two series merged into it:
+>
+>   - ps/read-object-info-improvements at a282a8f163 (packfile: move MIDX
+>     into packfile store, 2026-01-09).
+>
+>   - ps/packfile-store-in-odb-source at 12d3b58b55 (packfile: drop
+>     repository parameter from `packed_object_info()`, 2026-01-12) .
 
-> * lp/diff-stat-utf8-display-width-fix (2026-01-15) 2 commits
->  - t4073: add test for diffstat paths length when containing UTF-8 chars
->  - diff: improve scaling of filenames in diffstat to handle UTF-8 chars
-> 
->  The computation of column width made by "git diff --stat" was
->  confused when pathnames contain non-ASCII characters.
-> 
->  Will merge to 'next'?
->  source: <cover.1768520441.git.lorenzo.pegorari2002@gmail.com>
+I was having a little bit of trouble constructing a base to apply these
+patches. a282a8f163 merges cleanly into 8745eae506, but 12d3b58b55 does
+not merge cleanly into that, nor do they apply as a single octopus
+merge.
 
-I would say yes, if you agree. The patch seems fine to me, and I
-wouldn't change it in any way.
+Looking at the base-commit identified below from your fork[1], there is
+some conflict resolution required to merge in the latter series. I'm
+including the --remerge-diff results below in case others are interested
+in applying this locally.
 
-Also, thank you so much for your guidance and for dealing with my many
-mistakes. Now I feel much more comfortable working with a mailing list,
-so the number of my mistakes should decrease sharply (I hope :-)).
+--- 8< ---
+diff --git a/packfile.c b/packfile.c
+remerge CONFLICT (content): Merge conflict in packfile.c
+index 4cc9d8c07e6..402c3b5dc73 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2164,16 +2164,8 @@ int packfile_store_read_object_info(struct packfile_store *store,
+ 	if (!oi)
+ 		return 0;
 
-Lorenzo
+-<<<<<<< b7f649ca936 (Merge remote-tracking branch 'junio/ps/read-object-info-improvements' into HEAD)
+ 	ret = packed_object_info(e.p, e.offset, oi);
+ 	if (ret < 0) {
+-||||||| merged common ancestors
+-	rtype = packed_object_info(store->odb->repo, e.p, e.offset, oi);
+-	if (rtype < 0) {
+-=======
+-	rtype = packed_object_info(store->source->odb->repo, e.p, e.offset, oi);
+-	if (rtype < 0) {
+->>>>>>> a282a8f163f (packfile: move MIDX into packfile store)
+ 		mark_bad_packed_object(e.p, oid);
+ 		return -1;
+ 	}
+@@ -2574,17 +2566,9 @@ int packfile_store_read_object_stream(struct odb_read_stream **out,
+ 	oi.sizep = &size;
+
+ 	if (packfile_store_read_object_info(store, oid, &oi, 0) ||
+-<<<<<<< b7f649ca936 (Merge remote-tracking branch 'junio/ps/read-object-info-improvements' into HEAD)
+ 	    oi.u.packed.type == PACKED_OBJECT_TYPE_REF_DELTA ||
+ 	    oi.u.packed.type == PACKED_OBJECT_TYPE_OFS_DELTA ||
+-	    repo_settings_get_big_file_threshold(store->odb->repo) >= size)
+-||||||| merged common ancestors
+-	    oi.u.packed.is_delta ||
+-	    repo_settings_get_big_file_threshold(store->odb->repo) >= size)
+-=======
+-	    oi.u.packed.is_delta ||
+ 	    repo_settings_get_big_file_threshold(store->source->odb->repo) >= size)
+->>>>>>> a282a8f163f (packfile: move MIDX into packfile store)
+ 		return -1;
+
+ 	in_pack_type = unpack_object_header(oi.u.packed.pack,
+--- >8 ---
+
+Thanks,
+Taylor
+
+[1]: https://gitlab.com/pks-gitlab/git.git/
