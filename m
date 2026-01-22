@@ -1,102 +1,81 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E8236828A
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E8736F431
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 18:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769104694; cv=none; b=CeEg12bMadHb5n3faIkBoFDBNSF2AnUHwO59HDuezESFiHAb8twJJ8FTrG+RmTfAYhUFu8RLVuFybKe9AA8/O7ufqbe2pRzldQwLh3mgjfOl3GS+srDcWgkw1hCkOAjItdDnyl5ymyol+KcLS/n7pJ0E0120ZVg6D9rDDYUhA7g=
+	t=1769105381; cv=none; b=h49iRZn1dBYIVQ3lhocm7Umhbmm2uHHB2rOwjdfaWTdFeMGplSBrfNqQkQhx3GYqNETSOgAhbJ9V63176h/UcCFWaVSV+D0fZiTGUso4c0tyoScUY9JlB6GL8vi7Ch7OiXufB3KZGJsfeeznE34GWzXkZiWn8KA3mp8im7DHIts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769104694; c=relaxed/simple;
-	bh=shAZ4qHCo+nAnG8ZDWx+fgANBp2mejnl2obKFPoJ6AU=;
+	s=arc-20240116; t=1769105381; c=relaxed/simple;
+	bh=Q6rcETaWEqvDH7fEEUe7Ez3wvIzCexJqFo9M2looc+g=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OQ4CMROqDDs2YWsoM2SQ3snIXP7wlwce+BHdVfEy6bqPxDFg8J6MWdyaYFqRTtbQjGDOxTZZXyTltlDDhweOBWOuYItRWZ5avGQXAv/QeUtSttL6oTTH/TMjsMmooXCq84x6lI+WMPep0RmRROJnoBmAw1k4hkrEQgMSeSoltB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gDFwVcRa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mv9Q+Bi4; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=GZ3cuV40YJluDHTyXXJAMLX38TcxLBXVGij6dSVuVuxXHVxQtRqwYhZvvpifjuR3CUFif9Xs8vYz88gr4FO3ymCQaVKNoryHYcs3dsJyTb+zGk4JQVth5fjtq0wMh3kbRdDugHfjySDslxVAfud3Qfg39yA/kYgjUnWCwMouHMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ca6qKWEw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rTDppb3+; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gDFwVcRa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mv9Q+Bi4"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 58F55EC009E;
-	Thu, 22 Jan 2026 12:58:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ca6qKWEw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rTDppb3+"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id CEA96EC016F;
+	Thu, 22 Jan 2026 13:09:31 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 22 Jan 2026 12:58:04 -0500
+  by phl-compute-09.internal (MEProxy); Thu, 22 Jan 2026 13:09:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769104684; x=1769191084; bh=1KO8wTXwgD
-	rlLWy41uxLwUDpt1hn+YHPrK5bO14zMWc=; b=gDFwVcRaQf8KoskqRsrH9fs9uH
-	zdCwMNBd1pgb9OQyaJhAoF4XkfNOpXb4w5G+x+QZUAqAlDYAhWpRA9KeSg+6sq6/
-	NKnjpzZe3D3EPuSk5HgrfCnQpSyqbZme9EeNb7Z1Smn+yydobwCr+jlDEwL/dffv
-	Rfj7cSmNm6/Dt9MZEvftDpenek9aFEcU1/nAFvDk7o9dmIHQ99wixQ5BVjEVNfIq
-	0JWrcsvh7BJljkAT7fr9CdTqnq3zRcWt7IJuyx/I7Z/q3+4j9zZyRuC9aF/bmdxJ
-	P9sAa9xZOVRoAuY+saM+uNxTRKmCI742ovvEVMDXZAb69GU7W0OR1Cx/d3tg==
+	:subject:to:to; s=fm1; t=1769105371; x=1769191771; bh=BirlOklotk
+	ssqXLKiS4q3BdVnHiRgTnyU1s3soxy1lc=; b=ca6qKWEwUTLqY2CdmtrCspbRzA
+	aKqIGNEs7hQJMXJY8rPy4eszPOWmRrk+VdhW8CB+woUwZFJnD2pa7YvGVm9B6D7l
+	b1JUTmabSXqMLdw1CYB7LjVCjNkc4Ah/X6XxhaK9Np+3dIhC/xO6W7QenUcn4LX2
+	v9/dVqQd+RdtpWazXlUE9utBNCTxiUMpKxQTPypOYlcTbirUQi88TneHwqJSpkMG
+	XevWhwp/9E+SrorlSxvypSTaYjJgK6QOilBIWq+e4UZJqHzT8wYXRTbujovAzJW1
+	6xufAo1yhGG4nPAm3+Iuz4Pd4nbRj6xOMSzxvOcIVCcFt/Ck0xtazuvcpzjw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769104684; x=1769191084; bh=1KO8wTXwgDrlLWy41uxLwUDpt1hn+YHPrK5
-	bO14zMWc=; b=Mv9Q+Bi4HWWFDPaRxAtdmaDqERpIhZClO4LI5siouVR4gmkydhX
-	4rLHJkJfbINiS/Im0yUlvWYxURndK/DWqVcyO10GrqNO4q6yaIbR2wOp/Yl05U3Q
-	x1efVJK8bSv7Bh+RVFSdKFAA00dmtNp41ewF9KnRIn4wvB295YM/oF++ehjEXKpm
-	JaHZ3ZILpGOs0RgKj6JyHq1ZrREIZNFnEAqYPx3z4HnqzOvzyk0nWSvi4/M7w+9H
-	ALstRVRvtx3evHFgvb+BD6LDRUEDVNcuZ3RHfu5u2szVYA8SbsXv0zRV8NPba0PN
-	wOxH+fILozCfrcDjvHM9Br2nD+2Z/fo2c2w==
-X-ME-Sender: <xms:LGVyaUxGR8-aMGiECOL0iXzCSVyTLKxwifxr8AV1TAWreeU0gSXLfg>
-    <xme:LGVyaU0dXXgNsEnHoeTUjB0Unp9HMbHvO_OXIX52haB1DmK6MrAhJOdBzgRNHznqx
-    7YaarE6aJuo2bUCz_KA62fsScCm-nkFrBWFD2qow3sNgkA8HD8_YVg>
-X-ME-Received: <xmr:LGVyaazgmiRTN574N2CkOn_CFFHc8UfQyn9q2Em_edQD_z3dlZDWowwIvU2_OTX8pWARU2R3dkQBFz3-IfvQFSJotSilhuhf0fukJdY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeikedvucetufdoteggodetrf
+	1769105371; x=1769191771; bh=BirlOklotkssqXLKiS4q3BdVnHiRgTnyU1s
+	3soxy1lc=; b=rTDppb3+P8XgCZ0SVbKBNNz2pLufYWtvWwqccrGjvCuazhbpgqy
+	YjYPbisbcEdzBvdQoBmZaJKbVQlGOcx8YXqn92PZ76Mu2OiQfXDdruB01Ft4XQUN
+	gkPgmoLh1S87efqihfUnLO5wlahhfyUacL87jJktcXrFbF3uNmxmW7Jw5jlaXLlz
+	gTmnGTjDR46zxe0zq18BvNTRh6elYYGgMTZOCuhVf196aZdvkRWs37PfTZo9W6jf
+	IePMaFevpSYdStT/h+MC5tZ2zieOLXkVGXLAZ9DYfVlvzLXYt5DEVVjaH3l22Wu6
+	GbfbL5i5ijrE8i1WL0OiYhxZuk2GRxd5gQA==
+X-ME-Sender: <xms:22dyaeqzq32y45xXC2_m2DR9jhX8V-OefmjxsQrrl4Q7a-KWrNO1gQ>
+    <xme:22dyaUHOST9VOvoMCT1Of9-OuyBGvbaBOlF_ozxi2NVQ76Ph8VaJp4j7XrODVs7Fi
+    kvb5hST3OoQge041LDd8YsgJD_UrjnKcbKahrWG7WP-gH1jAUAV>
+X-ME-Received: <xmr:22dyaQlAJfhVUd6g2Oie5P4DljLfchaSUhB9Ss9zT4IQ0Rt5s_RRcfhaLtI6rWvatoEIdcQ7g-d3OSMRwShJXdvsJrmqub4OrqEWfPI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeikeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjh
-    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepshgr
-    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehophhohhhorhgvlhesrhgvughhrghtrdgtohhm
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtghhith
-    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehstghhfigrsgeslhhinhhugidqmheikehkrdhorhhg
-X-ME-Proxy: <xmx:LGVyaZUy0TIerLVi_3LdaSz2s14BHnvAWzn7b9_3hbKdqrHZZAAplg>
-    <xmx:LGVyaW8__smYMkHJhGDDLDuTST36Q3Hgn31Er3REij5D9l76sudbsA>
-    <xmx:LGVyacszlQM8UlE-UkSsywXQbe8rozh7qA8j05MnsOToJ6fvuPUjcw>
-    <xmx:LGVyaW3Y8-8kDMV5eY20mWiZNSluravRJ812p2WwDkwXSVmSfC1EKA>
-    <xmx:LGVyaQekRFMIDglbPapKFOtVKRIWcK2r00EF1cH6dNBw4ltxMaOUsXIM>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffie
+    ejgeefhfdtvdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgt
+    ohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheplhhuihhsrdgrlhhvrghrrgguohdrthhorhhrvghsse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:22dyaXndet5i6zRkxJmneaXs1tE7oZBH6M-ERmXEw2Wxjlp9n7EzTQ>
+    <xmx:22dyaRt-OKFYTQH1KIIzrvb8pu4Sv51WOQuuvGlR8ivip1cNeq3DLg>
+    <xmx:22dyaal0zxtfNi7iUaUsX5AWlMrHRcKq-s67rkDL4bYi5VSjFc29rw>
+    <xmx:22dyacuLw8GoH_QD5lvsJPk1Y-ggC5fWMcNFdHMsQ06ZSfGEPrVKYg>
+    <xmx:22dyacFzjslJ2IaRRzPafZP6iLBQQY4Ys0IjthrZzzKd4pdR-rkXH_1Z>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 12:58:03 -0500 (EST)
+ 22 Jan 2026 13:09:31 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Patrick Steinhardt
- <ps@pks.im>,  Ondrej Pohorelsky <opohorel@redhat.com>,  Jeff King
- <peff@peff.net>,  Johannes Schindelin via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Phillip Wood
- <phillip.wood123@gmail.com>,  Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
- sequences to be passed through
-In-Reply-To: <a51f9433-e82f-bc2c-5fc4-f8ae95a859f8@gmx.de> (Johannes
-	Schindelin's message of "Thu, 22 Jan 2026 13:29:16 +0100 (CET)")
-References: <fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com>
-	<aWD2x154F5f-c3pL@pks.im>
-	<aWKLrIefrcSwReu2@fruit.crustytoothpaste.net>
-	<20260115211448.GF1053259@coredump.intra.peff.net>
-	<xmqqa4yeblsx.fsf@gitster.g>
-	<c0af9072-cf21-a7e2-5b78-eb70217b462c@gmx.de>
-	<aWnekt4ESo0bKpOT@pks.im>
-	<CA+B51BEs7kuJ7s+K2vbZLSoaq3krGrqVncQAaTjSSNazFLY3tw@mail.gmail.com>
-	<xmqq3445bn33.fsf@gitster.g> <aW3bSYCIPMhJT1mf@pks.im>
-	<aW6tMtg0pEKq23TX@fruit.crustytoothpaste.net>
-	<xmqqa4y81ag8.fsf@gitster.g>
-	<a51f9433-e82f-bc2c-5fc4-f8ae95a859f8@gmx.de>
-Date: Thu, 22 Jan 2026 09:58:02 -0800
-Message-ID: <xmqqo6mlo7h1.fsf@gitster.g>
+To: Luis Alvarado <luis.alvarado.torres@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: CVE-2025-66476
+In-Reply-To: <CALFwtBbK6sNo0swy5k_+jgcKQmOpw3b=o8_UKhvLhtYYLqoUow@mail.gmail.com>
+	(Luis Alvarado's message of "Thu, 22 Jan 2026 11:40:30 -0500")
+References: <CALFwtBbK6sNo0swy5k_+jgcKQmOpw3b=o8_UKhvLhtYYLqoUow@mail.gmail.com>
+Date: Thu, 22 Jan 2026 10:09:29 -0800
+Message-ID: <xmqqikcto6xy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -106,62 +85,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Luis Alvarado <luis.alvarado.torres@gmail.com> writes:
 
-> I disagree with making sideband sanitization opt-in or weakening it based
-> on a "trusted remote" heuristic. In this context, emitting untrusted bytes
-> to a terminal without proper sanitization is a security-relevant bug;
-> safe-by-default should be the baseline.
-> ...
-> If the goal is to mitigate terminal escape injection from
-> remote-controlled output, then shipping it disabled by default does not
-> mitigate the default case. Most users will not discover or enable a
-> hardening knob until after an incident.
+> I need some help or guidance on how to remediate this vulnerability.
+> We have a customer with Git, which includes VIM and is vulnerable to
+> CVE-2025-66476. However, the GIT version for Windows was last updated
+> in November 2025. How can I remediate this issue, is there a way to
+> update VIM without updating git? if so , how.
 
-I think we already know we disagree on this point already.  I am
-simply agreeing with what brian recommended, based on his findings
-at GitHub hosted public projects [*], and what Ondrej says they have
-been doing in Fedora, CentOS and RHEL [*].
+The Git project does not ship any binary, not even Git binary, let
+alone Vim binary.  We work on and ship only the source code of Git.
 
+If you are getting your vim as part of the windows port of Git,
+please redirect your inquiry to the Git for Windows project; you can
+probably reach out to them at their issue tracker at
 
-> I don't think we can safely infer "trusted enough to write to my terminal"
-> from "I fetch from there often".
+    https://github.com/git-for-windows/git/issues.
 
-It was mostly an attempt to offer an idea: "Even if we make it off
-by default, we may want to protect the initial clone, and here is
-one thing you could do...".  If it would not help in practice, I am
-fine if we ditch it (meaning: default off everywhere, even for the
-initial contact with an unknown repository).
+Please be sure to search first before asking, since the maintainer
+of the project is busy.
 
-> If the proposal is "full pass-through of all control characters is
-> opt-in", or "full sanitizing of all control characters is opt-in", I
-> whole-heartedly agree: That is already opt-in via setting
-> `sideband.allowControlCharacters` to `false` or `true`, respectively.
->
-> If the proposal is "keep the historical behavior (verbatim sideband
-> payload, no sanitization) as the default, and make sanitization opt-in", I
-> am firmly opposed: This makes the sideband payload remote-controlled; A
-> security hardening that is off by default will not protect the default
-> user population.
->
-> Can you confirm which of these two meanings you intend when you say
-> "opt-in" here? Once that's clarified, we can discuss whether the default
-> should remain at "color-only" (today's default) with explicit opt-in for
-> riskier sequences, or whether you're arguing for no filtering at all by
-> default.
-
-The latter.
-
-I wouldn't be surprised if people, who usually do not participate in
-the discussion around here, are highly inconvenienced when we
-suddenly filter out IEC/ISO 2022:1994, for example.  Not that I
-suspect that these character encodings are still popular in some
-parts of the world, but that I fundamentally disagree with the
-attitude "we explicitly allow colors to be passed so it is perfectly
-fine if we filter everything else out".
-
-
-[References]
-
-* https://lore.kernel.org/git/aWKLrIefrcSwReu2@fruit.crustytoothpaste.net/
-* https://lore.kernel.org/git/CA+B51BEs7kuJ7s+K2vbZLSoaq3krGrqVncQAaTjSSNazFLY3tw@mail.gmail.com/
+Thanks.
