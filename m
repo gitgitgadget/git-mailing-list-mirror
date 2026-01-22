@@ -1,86 +1,85 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE12B39570F
-	for <git@vger.kernel.org>; Thu, 22 Jan 2026 21:11:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA763BE4A6
+	for <git@vger.kernel.org>; Thu, 22 Jan 2026 21:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769116297; cv=none; b=N3hTOtqTKa7jDliiRZpupBj5IURX9quCQ9QnE0HLHwC6Bf5hC/equANhL/h9BLxA7Te5QxFUV1TuURLZbbiVZf4GMlQrerKvu0Vg6Yfa9kXla49FvvCTZnwNCblIARhmqjQglVURZ7p/b6MC0vYUEZWQbQy/ReFL8fYOuyUH5Qc=
+	t=1769116918; cv=none; b=N7hOEWZxQ6XW0boWxTpjibEsVgU4ZUt3TIiuYmlb8G4v2ukiQAi7poeuadmMv9PRDKHVzz8Dv5yp6J6PD+PoJ+mtp8JwYAxCbun3Emvs3zx3TyFtQXI9JEUB9uJCiO0r5iIXjFiHeafz8aMa/1ACKuS3cMszo8bxOKr0Zxi/GiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769116297; c=relaxed/simple;
-	bh=e10EeM16BS94X26f0bjkpj2N6TwTtxZAmB7h1pfpOw8=;
+	s=arc-20240116; t=1769116918; c=relaxed/simple;
+	bh=Ojtx9GZCvZDU1L8nz1EnpE1Et3b6GzJerUDNgZNA89c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TnswgSiMIhcL7p+LOyIcQ9aP+JzeNl93Jqp9NWE868C/ceqI8BISF+wpMlNQVZv9y79O4NpZv4l28PwZTjE0pv5hFGJLB3RTOxa5c2heZJSvFavLOEo/fpoL9Vpg2rDMpESVtAkhcOds+Xd1jArL0gjfbF+oOZtjNx9cHK7iBZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Rkp3RH1Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aRECrSUg; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=f8hby0C9jw+A0G/un0ycWFMGsULDDSYOxETRIVOVgTsReDSXBh5nwatwip7EYGUQgwkg6WVibxf3MK40mXO6T0jFWU5KxLX3uHluqBbua5GLRM3mMJWUXpuy7vAvnMzYK+68PLn6Wm/KPN3DJqXdPvLauQS8thf4mgE+hROZw18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NxEG/L3J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EwZGU6cJ; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Rkp3RH1Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aRECrSUg"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8E463EC0C51;
-	Thu, 22 Jan 2026 16:11:27 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NxEG/L3J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EwZGU6cJ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 440D91400D17;
+	Thu, 22 Jan 2026 16:21:47 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 22 Jan 2026 16:11:27 -0500
+  by phl-compute-06.internal (MEProxy); Thu, 22 Jan 2026 16:21:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1769116287;
-	 x=1769202687; bh=BSrAnIDNlNNJ3ds+3YN2aR6WK/5v+jmNoSaMJpi8rWk=; b=
-	Rkp3RH1QUwH6tIi3HkS8oiKTRPSz3wkuiOKoJVxBChlzXZEOoyHt0fRycRuAj+MW
-	TGypXgHmOhd7c9sn3oStgvS51kSJyF8qiNgeZRL52Giatvw8/5kbFN22Gssz1AXI
-	PcHSSDT8G5rNcixafhrpCDKF7C6s9rpoKm7DGL95qUXVjdbmBFXPyw0akAgol7Bp
-	3oVJVCIR/4Xq165w/LxfMl3j7wJEs3SSpfAKfuq3Hu5QH8PBOMNSaRaWvSYJvRnR
-	WNmXYslxm/Vp3x20UaW5fpByr47oDJEq9kHTEe5AA8iPdcqeOc4YGA41RegZitWv
-	GbwKcnRlBtxoVbAZPi0C3g==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769116907; x=1769203307; bh=suVhvX0rPM
+	buHU1gwraXsCJpPZLig5X0A4oUVf2+lxs=; b=NxEG/L3J6ZrQ6Mmheu67tfVJSp
+	iIyQ8Q+d7aPMwyZO83XZUpiSyNrQ9xSLmOlFJvtxXkrDGrzpcsfXIAKR+g5CD90x
+	1DMY3Hw2aakKRVaSem/Px9oBjDc4/qPw3LW9fBvrALoEdVPOswwP9X0dAm8Yds4u
+	JGJj9eBMjfc0VMl1IQz+b5u0zsYJ8VspIVInaJ5mj+I4Gu/5f0ZloChq/hjsq3us
+	GESSvZRWbGFYB9+SAgNZeuYPFqBnhWoNIRIPT+KlUHM9HUaPeET82h9UBuUD+odU
+	l/piWbkqRia/9cPlrdNSDHp1UG93R9lLKD3lrWiPMOjAXy6msOijT/+o1YZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769116287; x=
-	1769202687; bh=BSrAnIDNlNNJ3ds+3YN2aR6WK/5v+jmNoSaMJpi8rWk=; b=a
-	RECrSUgraBHDe4s+7Y4QvAFTsfOXa4VVyDtsEzxHgv2PnlAekj9cSwNjaTlt8Tdt
-	pBH7oXDM94ORi3Z6XO9JlB5GTrWIPoRtkFCCVgAEWHybaESijq8BxL1mN7iEkSG1
-	KYUqSAW+1g5Gw+9W0o7UmQe0lBp7orrJUfP6dHa2iubpLlx52vzYjg+UTBGZTNTc
-	vY+OVignT62UhLMieCtRHKlIaxM/pW59X9bGsaOT+VeQ3715DjwHee/X+pUYpOc3
-	H65NlAR7ZILRzoZ7PaIAxZtXA2/pNsE81xbSFjJIckDII1xUsv3BOxTImRLsnTkr
-	svuZIs3DBfG+5w+32oflg==
-X-ME-Sender: <xms:f5JyaeuKQUYvUsNrIMbfdl4nu6t00ejub4m4mEfyim6sSAM3UYYEJA>
-    <xme:f5JyaacIigpnd2gE9xo4eFpos4H6_6Hpdg0u8CJHtgkfdHdlw-8lAKklyL4-J1OPB
-    133jt0j4bqzuS_-i1nRKj266HwW3lSYOcmXsqjzpc0bDezVCD7iVg>
-X-ME-Received: <xmr:f5JyaezGabqA8amMgU7LiR4vdlrNUu6x52KOwwdK1hn--KN8D1raQIUeQvvFs9H6L98_zpeUhTP37toNxkH8epaJcZN4pMNueKBlYxM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejvddtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769116907; x=1769203307; bh=suVhvX0rPMbuHU1gwraXsCJpPZLig5X0A4o
+	UVf2+lxs=; b=EwZGU6cJ9gEmbQ88N3Mpe+jAGP9Kt4zfti3ZjL1J/b7U1cL4ZGh
+	BdsICLHXlLy0gedWqCvjZWtqUaoem0cgbaMK1/QBDjwIJIN4Xbl7KLyH/2ujExZ5
+	Io40mokUs5DrYZYDuW+YRzDsC7GK+P2/GyyDoj21dD2TSBkS9eJNX3FXeUp+JJKc
+	Qm1om08ZG7BNF2cJJOp8A6XfSNvnAeRzG5SeaObMcO1vx5x9oin7VaWt9PVOEjT2
+	h0WqPU2KpacfR4vaIfltxPPR+82EcNnkLd8Q3c2Uj6CGH/GPXSjy7mDjkMvfcV0x
+	R0L7KOGyXOGhzCCLSdeYnGcQ0zsA6P2BFMg==
+X-ME-Sender: <xms:6pRyaSwUBUsbCvNj8glWgXmiQOjpMnV5TqIT6z-rqEiwjTuiIJH7Gg>
+    <xme:6pRyaXmOxiXTe9oa7ca-gYtjPjK3nY4PfzmY4DhIBx5p86UE3So8C1XzZ9nCgJolO
+    EhOfLwtCGBBegCByJdtQpk5sLJqVVk2SLQvWuSyjYERU8O-Z6ZLNA>
+X-ME-Received: <xmr:6pRyabkujSUJtPrhT33XvZswRot6z-8CzwJWRjiZFu8lxL34cUbVgrDe6y_hvKhdk2-X0NTI-6jA461vqzWSP2ivkWzjLkRTmzZeJPw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeejvddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:f5JyaYHIcUq974HXQCkAVtCBfamqoB5_JvajTD9gcY3NsWs8TV3pbg>
-    <xmx:f5Jyaax6w06h1Aleb4U6Eu12p2zlsgrXO0ELZR0oMTvFwHuTGRqpgQ>
-    <xmx:f5JyaRsRmLaomUUTaNxX22Y2JCD4w-G_XKJdKqMVEjH-SwWJ_9b61w>
-    <xmx:f5Jyaf2d7BTeb_r_knpOglqL6OeECg9sLcc2kiIMWAhN_hux-z-Hnw>
-    <xmx:f5JyaSRMBh4mtLv51NDIRQkkz2T1kovNrUSu-eHd49Bv0LH4HYTDub_C>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepnhgrshhsvghrrdhgrhgrihhnrgifihesohhsshdrqh
+    hurghltghomhhmrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhgrtghosgdrkhgvlhhlvghrsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:6pRyaZw50-S8-GZhYJG52HfvMhZkg4uHRNKyV2pvIaVwTQi6nkB1pg>
+    <xmx:6pRyaQomiqXCv1N1sQutMaPJ6nmx9T-adw9uyryvzIfyIA2hhu-87g>
+    <xmx:6pRyaY4yBVY0hRpYhsZVpEm8VJy7pCjSB0iFUyp5Z37dByZNerbi4Q>
+    <xmx:6pRyaXf2zfVryQhcbZqLRwDQEMGd_9GCNMr1zMnF7hc7kOMJkzH-TA>
+    <xmx:65RyaX3wvgC2pnLsJvg78Yzd5W0krEyAFsJOEL0pnxWQx1MJA7udVvdd>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Jan 2026 16:11:27 -0500 (EST)
+ 22 Jan 2026 16:21:46 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org,  gitgitgadget@gmail.com
-Subject: Re: [PATCH v27 2/2] status: add status.compareBranches config for
- multiple branch comparisons
-In-Reply-To: <20260122205632.80273-1-haraldnordgren@gmail.com> (Harald
-	Nordgren's message of "Thu, 22 Jan 2026 21:56:32 +0100")
-References: <xmqq5x8tmlj7.fsf@gitster.g>
-	<20260122205632.80273-1-haraldnordgren@gmail.com>
-Date: Thu, 22 Jan 2026 13:11:25 -0800
-Message-ID: <xmqqwm19l5du.fsf@gitster.g>
+To: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3] submodule: fetch missing objects from default remote
+In-Reply-To: <20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com>
+	(Nasser Grainawi's message of "Thu, 22 Jan 2026 07:27:22 -0800")
+References: <20260114194815.1049888-1-nasser.grainawi@oss.qualcomm.com>
+	<20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com>
+Date: Thu, 22 Jan 2026 13:21:45 -0800
+Message-ID: <xmqqsebxl4wm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,39 +87,13 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Nasser Grainawi <nasser.grainawi@oss.qualcomm.com> writes:
 
->> For example, writing "v2.52.0" there to see how far we came since
->> the last release would become impossible if we always force prepend
->> "refs/remotes/".  I wonder if we can reuse already existing DWIMmery
->> that uses refs.c::ref_rev_parse_rules[], which should allow such use
->> case, while still allowing you to write "origin/master"?
->
-> Sounds like a follow-up rather of doing now, right? 🤗
->
-> Since the inteface won't change, just adding more functionality a new
-> feature, we should be able to fix this behind the scenes later.
+>  t/t7425-submodule-get-default-remote.sh | 186 ++++++++++++++++++++++++
 
-Disambiguation will make it harder or impossible to add such an
-enhancement later, though.
-
-When the user says "git log origin" or "git show origin/main",
-refs.c::ref_rev_parse_rules[] is applied and turns these into
-refs/refs/remotes/origin/HEAD or refs/remotes/origin/main, but as
-you can see in refs.c::ref_rev_parse_rules[], these are at
-relatively low precedence order.  Your version has refs/remotes/ as
-the first (and only) choice, so if a user has refs/heads/origin/main
-and refs/remotes/origin/main at the same time, "git show
-origin/main" would use the former.  With the implementation of this
-round, "[status] compareBranches = origin/main" would pick
-refs/remotes/origin/main and nothing else first, and then would
-start behaving differently once such an enhancement to use the
-standard DWIMmery rules is introduced, which may appear to be an
-unnecessary regression to end-users.
-
-So, no, I wouldn't recommend it as a follow-up.  We should decide to
-do so now or declare that we would never do so.
+One thing I forgot to notice is that t7425 is already taken by
+another topic in flight in 'seen'.  Perhaps move it to t7426 or
+something, perhaps?
 
