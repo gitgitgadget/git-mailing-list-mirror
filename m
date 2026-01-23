@@ -1,154 +1,129 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0891BCA1C
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 07:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B4A33C1B9
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 07:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769152777; cv=none; b=MnJ9KLdAKQ5NzRsemDdQY2nBcpsOta0ao/rPhortRMm6hMW0l883gmm5ttujlv83Wfvsa9lMZNDLUmso0eAD21kVBK4nhUR1QWLMk0J4KpQSEeB2kTEGIu6xXjc7Ga/yL9jwxKiD3ePBfz8ENs4X5Jq8ECYHNExK5lrNOkA26Uo=
+	t=1769152986; cv=none; b=Gw0PdyZPVme6ENXBND7W9xxC8ssgd+5lIW1G7FpDcxucQj1wnRCsKTUvxPqSLmFv4ZVBkJfGzDHXMf8pQ76vs8BCo7SFSGruSLlNu+Xzwm7HT6SA6PSmw0QNh24ne1cVQORgLvklwXSGCdvPXJ6psI2TIPRAFQ8t9ZYz+h3wEPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769152777; c=relaxed/simple;
-	bh=IlO1Au05OtIeCzxTsG4Ed3bFys6fr3kHfsPpHmJQwdc=;
+	s=arc-20240116; t=1769152986; c=relaxed/simple;
+	bh=LJJ4NZn9I/PejrHt7+fiKtLcoGAZbySl8qbY2fpfz3Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DB6UIPHVVeH/99mZzOhbYc1cOnXO6wC+Y/pvRrvuv7h100PdZ+bagb4GPB58ol60+d+VdREc0KR5Le+QC+ha4PGboD/+GgHrzg9eQJcBfIo+0vQmZRzn5wkQBP84bEkEjtfnYB1mZwTSbtTdTp83UlhtyX6DjIeDTEM80vLFeGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VcApGWoj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3YlGYKP; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=WAInuMCxDZ6JQhVxY7jwthQMJXw9t0JR+0r7lZAiUWeRYJW+sgD0c0TGNCGV2DD5RT0TpMl0S1zpSYfvDt+ifgDzqodZmhut+0iNNUuuHwNoexzq+JPbpfueEOnKiVZ8RCsUA0uCWWySf72oJUJSVC6WUGt+O+PmQ4WS+ql0Cqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YFKg5h/C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oa18zqZx; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VcApGWoj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3YlGYKP"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4F00F7A00D2;
-	Fri, 23 Jan 2026 02:19:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YFKg5h/C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oa18zqZx"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A59BB7A0128;
+	Fri, 23 Jan 2026 02:23:03 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Fri, 23 Jan 2026 02:19:34 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 23 Jan 2026 02:23:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769152774; x=1769239174; bh=D7GtWhQKcY
-	PeZ/q7fV9tlCPnbNU9A27vJIu7WPp3AO8=; b=VcApGWojHFn4YS1xgyzSnOizXr
-	LUJzybPbDicE1J0P21d8tJjbMa2ZQ0URilIGA/4Q3OCe2X3uI1RtHEXyA4T6iJ9e
-	Czi2u+XFtkJP707L+r2/H3tMGVeV5/0p9sBJsnvRawF7+W/QCYAQvZZEFP/kJB+C
-	As/yci4BbEuLdoXAtj/+Tl66X/ZFhh1Sw8ih5ez6pieePBKkiQdfHCGZApghAb31
-	/37rUnVYTfcJ/JMdgvSaiO+X9GU2nw9Dfv/XC2db3kxnZRK952oe77PwFzWKq2OZ
-	NCdA1qbpWvA49tFIWVfjBcKCB7zzxFb/pV3vRBGzNLkeK5tPD40EZRqMkW8w==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1769152983;
+	 x=1769239383; bh=D4kG2H+9qmJ33/kztw589XzH0pmk2bWS7PmZIvN/J84=; b=
+	YFKg5h/Cu6G8//OwlRWThEL03TYvccQx4Bgha36Gr7pqNBGLTj6iu+CGfNiwEj1v
+	X6vbwK29U7BdT+sDLh7nhqE4nsjOZkr9ghDKvCIiZYp+6YKQcoapxA29F7JJ2irN
+	9wd/VC4sxygIH32dnVICBBapXlwoY20OEnih0KyvLym6bn9CxyIuC12LbWjEWe0V
+	P0Am5/O6xM/LAb9KqrBSIKqeH9pDMZRFoqMya3kGQ5I6oTz9gSRocfbbad4dZCrA
+	p7wZ1rpfgxthkT575hqGAn0/fkVRGJDWpvaOOweeGJPbQA322vo+fffcjwQXCJ2x
+	xANlrZXB/jp4C9trfGmvUg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769152774; x=1769239174; bh=D7GtWhQKcYPeZ/q7fV9tlCPnbNU9A27vJIu
-	7WPp3AO8=; b=T3YlGYKPVjkNa8OVBIAgT1DsXvt3IVqjUkD3RR8XN81rtlAu88o
-	QZIJtLQwZRSYEog4Q4VXAoCsTTsAzYwMFSIqzZFuVn8W9sIyW9gBQ4/HhwQXf9Md
-	iQ/kF5tOPhMR0gstPzV4PuNUZ8RjEuYHvJpFcwqSngPE+0p//NFNgGRsLQ2tujRn
-	NXHEwNxWxrHGuRX2TRGz42yIuP9luRYiSNvVabMZ1I9VDyyj+HESNTyjmhwXt9Qh
-	NrC6UKERW8yd1O3wQ/MJ6rA96YJ1/Sw1q+Vtr+VyJojWwxaeOlE22kZ5Wf3RKFFy
-	iNWnCF/U/sWvAjAFTe03zZ7pRIgRfGiHNog==
-X-ME-Sender: <xms:BSFzaR4XpXFrOJxr_18cDb7oz4Q0gCX9HeBoaF6NB1RPX1AK2lnebQ>
-    <xme:BSFzaResazxYMTJVcuRTS3QZTKOusgDvSBZiDlFcggRu4GxtuosBvXv-9jcY5d9gU
-    FHHUq7O0t2cXQmHG9_9CfrWm8sJMORFrj7dVRS71yDWdYXmjyNQlA>
-X-ME-Received: <xmr:BSFzacHExpRIVpKd4uWbAXzxtS82n3qPb7phjmMiB-hGHn0bOzfuNI4VPQMC0XftbQK-YevCOsjuvp5HvMSyvi374XxQyxclIpk4Irv5NknW>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769152983; x=
+	1769239383; bh=D4kG2H+9qmJ33/kztw589XzH0pmk2bWS7PmZIvN/J84=; b=o
+	a18zqZx6U4EWsOX9AyzdYOPrIYVVPiSxC57IRITzb9PXGxpsZYse78IfQpfSTGrm
+	xWe7OGCACRb5G9Ql0kjUgjZqMsQrPX/qBLp1BhDAbxCnniS3jUZW46sN9bzRTYbl
+	BMVzSD1J9mlRHGp6F1MGNcXuKO/caciMJLW6AbzlR9aMU9rcWYizwyYjhvHwvzFW
+	qKiV12qBCYhmLS19P4QpAYW/aoLBp6Yq6DeAkhyfoxxprFAp49bsof58job0YH4o
+	1b46uzc3mUHkzFAPmDaFcpC3dA5O51KzFCuHkcnBczcgwEr2V8eyEd50avnhoaj6
+	Hfr8DFMb1pwdlM4vJa+8w==
+X-ME-Sender: <xms:1yFzaeRm83TYuXwfvUcBIkVOPhxHZv1t5e-EXrBvffApNHF2f8ZcZA>
+    <xme:1yFzabOeFb7ZCBzluYuA--16rxh2aWGbn_eFriovvk-puFwtfTcxmFQLHflXgKK3B
+    eA92VYKkokyi3hu0wH7ZeGTE3X1qNmoxSCDFJx5L0J6lZuVWZGCdg>
+X-ME-Received: <xmr:1yFzaZNsSxeQY8FniP9Wrhpnw0_9S5Z1Bmmm6QJZGvJn9gSA_jorrJbJw3jREilp9rM_iyj0w8rYMfy-KvP3NUfQK7GgPSL3V0BeelBH0bd3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeekgeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopegrughrihgrnh
-    drrhgrthhiuhestgholhhlrggsohhrrgdrtghomhdprhgtphhtthhopehsrghnuggrlhhs
-    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghhrhhishgusegrphgrtghhvgdrohhr
-    ghdprhgtphhtthhopegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
-    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:BSFzaaTh37q5UBzybvyXBRDcNtL51QIIICw0ffYPgg-NBdguKF4R1A>
-    <xmx:BSFzaaaavHJ4p5AwFR7mqpCmW3wJSTe-IB9lEyukkowAi-AH7yquqQ>
-    <xmx:BSFzad2y6OMJVd_eiiObIL8QGT76W4AAAba5-oK4h4QTEfHyPru5qg>
-    <xmx:BSFzaVqyiW3VK82a9cWcFlVjsEMuw1Y4N01yLZzr00VREr5KHT7oHQ>
-    <xmx:BiFzaeeEWYBY44ilrxK4ptaWc9gJQPJ6FlC2JjnD2S_nfxqdYHC-hovb>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
+    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
+    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhrhgvhigrnhhshhhprghlihifrghl
+    tghmshhmnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:1yFzaTvQ9yjbkcG_83hemj-gynHvCtsniMytyLDuf46lp_AKcKRlPw>
+    <xmx:1yFzabUmXqENfqfZxS-gNGaEgauzVYlImWXCnLzQCutpFLtGllLTIA>
+    <xmx:1yFzaTuaSvtTb8-43d8t3g3WY2B9jdYeXC_QhYsnG47lD_7kfkcqLQ>
+    <xmx:1yFzafW2i8vANBJnhITF6d-7jrx7ZmJv7SQnsJctmgfjSHiPKhSYBg>
+    <xmx:1yFzabOGZpPQ8k-qc_6SxlqL_tbfnASqJ53Ki_k7BwxzUreHp_JFxa_U>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Jan 2026 02:19:32 -0500 (EST)
+ 23 Jan 2026 02:23:02 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 76a3a560 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 23 Jan 2026 07:19:30 +0000 (UTC)
-Date: Fri, 23 Jan 2026 08:19:21 +0100
+	by mail (OpenSMTPD) with ESMTPSA id bd52efbb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 23 Jan 2026 07:23:01 +0000 (UTC)
+Date: Fri, 23 Jan 2026 08:22:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Chris Darroch <chrisd@apache.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v7 06/12] hook: allow separate std[out|err] streams
-Message-ID: <aXMg-SKKhYzIXvv8@pks.im>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20260121215436.1473800-1-adrian.ratiu@collabora.com>
- <20260121215436.1473800-7-adrian.ratiu@collabora.com>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 1/3] show-index: implement automatic hash detection
+Message-ID: <aXMh0pYw2ZrptCNj@pks.im>
+References: <aXCJp_rGPetsXE8J@pks.im>
+ <20260121103431.793004-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260121215436.1473800-7-adrian.ratiu@collabora.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260121103431.793004-1-shreyanshpaliwalcmsmn@gmail.com>
 
-On Wed, Jan 21, 2026 at 11:54:30PM +0200, Adrian Ratiu wrote:
-> The hook API assumed that all hooks merge stdout to stderr.
+On Wed, Jan 21, 2026 at 04:01:47PM +0530, Shreyansh Paliwal wrote:
+> > On Tue, Jan 20, 2026 at 10:07:42AM -0800, Junio C Hamano wrote:
+> > > Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+> > > > @@ -71,6 +60,40 @@ int cmd_show_index(int argc,
+> > [snip]
+> > > By the way, what happens if we find SHA-256 also broken and end up
+> > > choosing another hash function that is 256-bit wide in the next hash
+> > > revamp?
+> > 
+> > Yeah, agreed. The index unfortunately does not carry sufficient info to
+> > clearly identify the hash function that is in use, and second-guessing
+> > via the hash length doesn't really seem like a sensible solution to me.
+> > If we cannot tell for sure what the hash is, then we should rather ask
+> > the user to specify the object format. And in fact we already do that,
+> > as we have the `--object-format=` option for git-show-index(1).
+> 
+> Yes this is exactly why I was peculiar about this patch and the
+> TODO comment, also why I sent it out as an RFC.
+> 
+> I initially assumed that in the near future we’re unlikely to move away
+> from SHA-256 to another hash, but I agree that relying
+> on hash length is still a heuristic that won't be a good approach
+> in the long term as well as it creates ambiguity in the large files
+> containing 64-bit offsets.
+> 
+> So should we drop this thought entirely and just make sure
+> that if git show-index is run outside a repo,
+> it should throw an error asking the the user
+> to use --object-format option rather than silently
+> falling back to SHA-1 which is the current approach.
 
-Tiny nit, not worth rerolling over: we typically write the observation
-in past tense. So s/assumed/assumes/
-
-> diff --git a/hook.c b/hook.c
-> index 5ddd7678d1..fde1f88ce8 100644
-> --- a/hook.c
-> +++ b/hook.c
-> @@ -81,7 +81,7 @@ static int pick_next_hook(struct child_process *cp,
->  		cp->in = -1;
->  	}
->  
-> -	cp->stdout_to_stderr = 1;
-> +	cp->stdout_to_stderr = hook_cb->options->stdout_to_stderr;
->  	cp->trace2_hook_name = hook_cb->hook_name;
->  	cp->dir = hook_cb->options->dir;
-
-The implementation looks easy enough. We convert the static value we had
-before into a configurable one, and...
-
-> diff --git a/hook.h b/hook.h
-> index 2169d4a6bd..7cbeef0a1e 100644
-> --- a/hook.h
-> +++ b/hook.h
-> @@ -34,6 +34,11 @@ struct run_hooks_opt
->  	 */
->  	int *invoked_hook;
->  
-> +	/**
-> +	 * Send the hook's stdout to stderr.
-> +	 */
-> +	unsigned int stdout_to_stderr:1;
-> +
->  	/**
->  	 * Path to file which should be piped to stdin for each hook.
->  	 */
-
-Another tiny nit that is not worth a reroll: might be worth mentioning
-that this is the default behaviour.
-
-> @@ -80,6 +85,7 @@ struct run_hooks_opt
->  #define RUN_HOOKS_OPT_INIT { \
->  	.env = STRVEC_INIT, \
->  	.args = STRVEC_INIT, \
-> +	.stdout_to_stderr = 1, \
->  }
-
-... make the old behaviour the default.
+That would be a regression for users that currently _can_ run
+git-show-index(1) outside of a repository with a SHA-1 based index. It's
+not going to be a common use case, but I wouldn't be surprised if there
+was at least one user out there that we'd break with such a change.
 
 Patrick
