@@ -1,128 +1,137 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BCB3227B83
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 16:55:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2542264C0
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:01:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769187353; cv=none; b=tmvzWNdsBedgDeQ2SklC7XLdNSfsJdLEaTX4Y0kh4L/aezuR31Zwiz5BHIn0hRQo19sBAOXyvcOc0ede0cHIkDkV82W4wI/tBasxCwwdHRxFVoVYEYhQUp9Mrx+Iux6xP2HMYSZ5VgEP0qokjIJnhpIh6jkAVuu47iGiH048DTQ=
+	t=1769187709; cv=none; b=NY7i4vLRjBqbuDa7Ed90WRUnHd9qPemqQeK5tClsfNdpbSC5Pd9lOgMFREW5S4gjQNWsg6ruMxs73oxcjhG43YzHbKvdVvQgRLzzXvw6D0237HgPRpAlhNq8KsNgWPQYcaxp3+wEKsqQQZXsMsgR4nnSxZOkObInfyoytIvpxUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769187353; c=relaxed/simple;
-	bh=I3cQpen3sbg9LarS5CMKr+W05NZ2nGl5NPgpcLpzdbU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j7hWVN+yFwcMCj43WXfYriSWL2o+4mhLIVWb7owgVJSqFs8DAQEStbHrvTPnGBMGdrUAwOm87864JHCsIVx1Kh0IoZsp3P7UmlH+0I9/QqwiUrdJmIIEHbfWKKAmw+6vVOONcXzTSM8Ge+sVOalHpOOYsk24CAXkUwyHu6Rbo4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cn0DHsYL; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769187709; c=relaxed/simple;
+	bh=raIeBSjVw7/AzIXvUJxC3+aJph4DHxbWQppYvhj6zmU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=abetJpdv1vtBO+ydR1brxQHhnM9nfyb5fCR207nOifHiGp7mBg3BPyZmE5Xs/1mtIflvlvtPT56q+TyuCJsFyxwV5ySAz37pcbDppZQ4CEFygCDxIvhevPjfzZzM04Nnc7kvhFdrdXdVUwrbIhBCxGoRVyQD3xPTo13QONQh9ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pgSzEtlc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ArEvQxM3; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cn0DHsYL"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8c537b9fcbfso263457685a.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2026 08:55:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769187351; x=1769792151; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W379m6zKEvPsVkzuvBZcBlKDhfG9gRcBK30+Try2NFk=;
-        b=cn0DHsYLxiRG2kt3CRl2Fq5dUj/tvZoPTWiSPAsIm5nNtjdLpnDA06uYNHibXaeTJj
-         FXypB5/GzerZX+n/QWhXqn7XkrMerdxB3eogzW6OC8C2ALvLj3SraDXqKp6D8X9O9/xB
-         /FVTI7J9y/2/36tzH4uSfWRXR/ofgVgMIUbN8XvrJacWrC2qBCm1Aw/K1oZV9Ym5Qzcw
-         bm5TpD5Efn+XCQfOlFMKPh78loRMnL8YlhELUpa0DwBvFqmvznJ97RNcuHVIH8j/7OYB
-         rhdbNbxXju0VI9ODX/ikxHPa4dI4B9HUZYGQSm6CTZR3o045rokNsNjoN2EfTD47ha0B
-         HU2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769187351; x=1769792151;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W379m6zKEvPsVkzuvBZcBlKDhfG9gRcBK30+Try2NFk=;
-        b=FYOokS8VSDZHWns4veCKFkCykZ20sMsqL/gs6rl5OM+FIsrzd5SJzTTLTtBwfo9wo+
-         aMlFF2kE9jFqpazEKF5etXMCHVxRYxWUcCvGKrN3bcMCDDOdekKYIdKmIuRDW5l/2DcC
-         A3czKKJXq0MAdpdAVG8lTiPpR/Rwsw9iYl3Fc1MqohnT/+15VAW+Vjyno4NO+tWmYOFK
-         UXkKOJ49C5z/iiQlgROr5qX6ni9z0k6+56AutI+yivOzDEeTiy12gCdPJ+2jx5weerUO
-         Q9NbsUrm8yFNieoZDfYZyHY5KPLaCeDyEJDkF9GuP5ZjcBxC8TOhZyfvza7/18rus4kj
-         OodQ==
-X-Gm-Message-State: AOJu0YyF/NRvmWXZtSi0lZPFIkRB+SDnLcJZwqC6SmIRCofaGx99MBJC
-	Q9HV0XCZy4t4zegULkkaJPad/HycLPPCZwS/Obl/wJPLTcHSjuBApfXD
-X-Gm-Gg: AZuq6aKPDpadotrELaMv0n3qkDH5V0NSn+D5knRNr8H/H9AoCVMhCYu84mgls1HeMbz
-	SMh3bb/JMe0Sz/7/OtJRMSZdTfwWWYT40KxE2ZO0PxSjm+lM9C7EQ7ECENvtfdirgFXxbgsgqTP
-	hed1fNvfOJP4GsHt0v72+S7y8pie9FJSQUHg8awekvVI3ucZe9expqBOXgYwvPfy93spfCNWkEg
-	PpkC+bQ1HgUl6Bm5AmzX7sB3dpUVxWA6WlHC6yDJ1RQh/0z7qZiBAXMQQ4/MyRXuhY8+IwCJjn9
-	z5D8RjiFUJXFztU7QvZdjRS0/DJ5dH4R5zScoQlMoIx83rJqjSodDoqbXG1CIFm20Oe7kn91tMu
-	DIRshNJkpdegpoPThmFwKo7dFuESXtHdb7a8+2IpcpVHJ2adEcPguh5qSlV6exGTtjg7ihp6OZB
-	Vf9buwYir5B3qSg0sMeLGRCXPM1S2BU5R5o1aiE+P17YGCug1K2yhBUkVEnDBkCRZANDVF
-X-Received: by 2002:a05:620a:7105:b0:891:7008:f2e0 with SMTP id af79cd13be357-8c6da876333mr951761885a.8.1769187350860;
-        Fri, 23 Jan 2026 08:55:50 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c6e37c61ffsm212997785a.7.2026.01.23.08.55.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jan 2026 08:55:50 -0800 (PST)
-Message-ID: <f363c16c-1c36-4485-b1e9-22abe32b3a25@gmail.com>
-Date: Fri, 23 Jan 2026 11:55:49 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pgSzEtlc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ArEvQxM3"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6A41F7A0087;
+	Fri, 23 Jan 2026 12:01:46 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 23 Jan 2026 12:01:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769187706; x=1769274106; bh=iiSQqfQlGP
+	Nfq9UfP2NG1OGBTTK9sIyJKVJ7ye6wzkI=; b=pgSzEtlcIAvcoEXIwR4Re2p5OY
+	ObB8hIfbPqaHmCq/w9L5/Bg7v06Lyno5eS9AZ8pb+cCJBd2HzkC/iHcsbjB6sN7q
+	urqMD9v5QGMULxXJdyxlBRgH+cr68R0HJbI9oDdPGicZzbC+lx/5FH/NKoV01ocR
+	B1zmhcW6voyRNBtFxxYGShlq5hl0ix5hws/C+s07Vb0DU+4nDm1FpYIeGYJMP7cU
+	VFGUlGlfr4Fsd51PF7dQeY88QqfEuNch+bJaoKGCN0OjqC3JBif2GpBrDGkq1yld
+	WIPANg0iChMqbaFobGJZYtuaG2Hx1LuFH+UUO+MsXA4iZ4+C8dt7fmpOyeAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769187706; x=1769274106; bh=iiSQqfQlGPNfq9UfP2NG1OGBTTK9sIyJKVJ
+	7ye6wzkI=; b=ArEvQxM3BWTrG2GdcH4LVW1LtLTRBL6qhISOOhBpXqEzfsGg4/x
+	Hw73sFSN9cyGfcXd0LS4Zgh2lZsyIJ90DftNP+A2iYZFbQiyURN9TmvjbcE6Xm2U
+	syzNstG3xwqyIoKWaSMh7ujdn+Liz6Sl37gcjloe2YdFW7bjTPwhPd/ZKGSHiFn0
+	wIyX0yMazu1h8bESbDuWypKubtINvzmY5KvBBDGzM8FOGXDltQ+/tGbCYGGl4x9U
+	ut7kt9tsX+azoDe0SI6gjzg89EXNfCXlfReAzHkQ2cX/SDoOE6Agmnz6xgm3ML4R
+	c2cmGcbq1dC3AMfiEED74POVWzCnFp0jPgA==
+X-ME-Sender: <xms:ealzaeu1fxiTN98n9Geqdmh2bgQDhktGcIJPdxnc95f4aYVwZ1q_WA>
+    <xme:ealzaaV9osXGGlePum-yGvPCeEVYFJsAH0jik3-czQmrG15EPZQ5qB3_aBPNeJ9IE
+    bjNL0LxViJeJ0_y6SyQsSe_PhlLQOkgvlRP7K83z6qsWvScuWkEbnE>
+X-ME-Received: <xmr:ealzaSFQQLCBcMRTtIAKGkh_gVFaou400gqvzPslZaa3sfM0yfHlawE1XwBLmDUW7nAkw97EeD1zAvy4k96O6HdDbz2n1NUxz_TgU4M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdr
+    ihhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ealzaU3ubNWHzKs2HSQ2Xb24snk9fH7NpjVQmaq_dzOP0chpmdUkOA>
+    <xmx:ealzacNhjGcnlcig6TV9uD7qRICVRgrLz38mz5btwzhGIl3scWjguA>
+    <xmx:ealzab4rW3T5yxtXnjdrpTJrgY2dVDrQ61WlAuFt5Y-o7pThZzprtg>
+    <xmx:ealzae2bf-GHOm-XKA0rwX0J6feZPqzbd7_kwoAK2Q954wI9Nc5WLg>
+    <xmx:eqlzacCNY4Lk3QVq5vIO1R_xR8IxfvIik9-xPMkd5Gb2N9xczuYnCn5d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 Jan 2026 12:01:45 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v4 1/4] last-modified: rewrite error message when more
+ than one revision given
+In-Reply-To: <20260123-toon-last-modified-tree-v4-1-86bf97bad4e2@iotcl.com>
+	(Toon Claes's message of "Fri, 23 Jan 2026 15:33:01 +0100")
+References: <20260123-toon-last-modified-tree-v4-0-86bf97bad4e2@iotcl.com>
+	<20260123-toon-last-modified-tree-v4-1-86bf97bad4e2@iotcl.com>
+Date: Fri, 23 Jan 2026 09:01:44 -0800
+Message-ID: <xmqqpl70i7pj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] revision: add --maximal-only option
-To: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.2032.git.1768703645125.gitgitgadget@gmail.com>
- <pull.2032.v2.git.1769097958549.gitgitgadget@gmail.com>
- <xmqqikctl3vj.fsf@gitster.g> <7daff220-f93a-463a-b586-dd876b51edae@gmail.com>
- <13ff1d94-401e-4fa7-b247-fe8396ca9970@kdbg.org> <xmqqecngjp87.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqecngjp87.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 1/23/2026 10:58 AM, Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> Am 22.01.26 um 23:15 schrieb Derrick Stolee:
->>> Unfortunately, it also says "print a minimal subset" which in some
->>> sense is correct by "it cannot be made smaller without losing
->>> information" but we actually choose the maximal set there, not a
->>> minimal set.
->>> ...
->>> You are presenting interesting overlaps of terminology and needs.
->>> One thing that is different about 'git rev-list --maximal-only' with
->>> a list of starting commits is that it wants the maximal set from
->>> the _union_ of the histories, instead of the _intersection_ like
->>> 'git merge-base --independent' does.
->>
->> I don't quite understand how a union or intersection come into play
->> here. The difference between the two is that `git rev-list
->> --maximal-only` permits negative revisions as input, but `git merge-base
->> --independent` does not. In the case where the input is only positive
->> revisions, the result of --maximal-only should always be exactly
->> identical to --independent, right? Even if the revisions are on
->> disconnected histories?
-> 
-> Ahh, it is an ancient history that I forgot how the command worked.
-> "merge-base --independent A B C" does not do any "merge-base"
-> computation over the commits A B C and shows the ones that cannot be
-> reached from any other.  If it were to compute merge bases across
-> these commits and then find commits, among the computed merge bases,
-> that cannot be reached from any other merge bases, "intersection"
-> might come into play, but I do not think that is what the command
-> does.
+Toon Claes <toon@iotcl.com> writes:
 
-Interesting. Thanks for the correction. So we _do_ have a way to
-get this information for a range that doesn't have negative refs
-or other custom walk modifiers (and this implementation would be
-faster for this case).
+> When more than one revision is passed to the git-last-modified(1)
+> command, this error message was printed:
+>
+>     error: last-modified can only operate on one tree at a time
+>
+> Calling these a "tree" is technically not correct. git-last-modified(1)
+> expects revisions that peel to a commit.
+>
+> Rephrase the error message to:
+>
+>     error: last-modified can only operate on one revision at a time
+>
+> While at it, ensure modify the test to ensure the correct error message
+> is printed.
 
-My patch includes test cases that are not covered by the
-merge-base command. I don't think it would be valuable to extend
-the merge-base command with even more cases that don't actually
-output merge-bases / intersections.
+"ensure modify" -> "modify".
 
-Thanks,
--Stolee
+>  		if (num_interesting++)
+> -			return error(_("last-modified can only operate on one tree at a time"));
+> +			return error(_("last-modified can only operate on one revision at a time"));
 
+I recall we earlier had discussions on "commit" vs "revision", but
+was the conclusion that 'revision' is the appropriate term here?  I
+somehow feel that it is sufficient to insist on "commit" (not
+"commit-ish").  The way you are allowed to give that commit might be
+more lenient and you may be able to pass a tag that points at a
+commit, but that does not change the fact that the "last-modified"
+command can only operate on one commit at a time, does it?
+
+> +test_expect_success 'cannot run last-modified on two revision' '
+
+"two revision" -> "two revisions".
+
+> +	test_must_fail git last-modified HEAD HEAD~1 2>err &&
+> +	test_grep "last-modified can only operate on one revision at a time" err
+> +'
+> +
+>  test_expect_success 'last-modified complains about unknown arguments' '
+>  	test_must_fail git last-modified --foo 2>err &&
+> -	grep "unknown last-modified argument: --foo" err
+> +	test_grep "unknown last-modified argument: --foo" err
+>  '
+>  
+>  test_done
