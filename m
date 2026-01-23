@@ -1,159 +1,261 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B52227B83
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 16:38:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54D4283FC3
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 16:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769186318; cv=none; b=l8Wq+r3TTbaN7Q8ZTaf3pfhp+sYTdGiist25uIS7T95A4dOC22eK+tKbWPZYxnyX70ZovPCpoI2Y9E4O/v4JBtUrsC5jXLYjOXDtmRVB7FU1q49ZPl16bsagjahgnN/7BwnOWSKr9s45uii+eTY9rIXKK9uOLC4H5Bgdrpv7aeE=
+	t=1769186957; cv=none; b=WJrhlySiQx8Xrbm2rODg4eMjWFQ0eqa2yIIF/Yx9iX+b5n/iybVRnqWPK2j9pwxQ5P0oAq/rVKOXdf3nyWyYWk/3iffRp7uJ4hdd4KRpp2oljHq21kx0b6QSmykt+ItZdrMZca34TjEENCw63utEagI294G4RwaHNLKRbOzHkKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769186318; c=relaxed/simple;
-	bh=6GCq2mP1CgktVBE1+BslXj12jrtBZe1IUro4bZq/NrU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HWdfZNaCjgpflJEn9jPsy5RFoPi5n73Vic3ddogCM+jy0n9Kaeesl5Vx4lHXKOUjNQ0X9eBxkVRc2TnxLRuXgqiWiEvtX7gCQsz0Z0es8NYQ2IlEEZPeofUMM8YJwQiXuIllgVOBUkolXTg6uruwO/5vY5McPhvXJbqH7n+ohXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NiNvym0g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BF3ORxzo; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769186957; c=relaxed/simple;
+	bh=/vOX4D0oGrCYsJXNgsP5QgYdgDNhKpjmbGdczUanOiw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=opRPZ5wymkkfS9qecDpztSMt/aizVNpwH1wjRpy5HKvgokBlBBtKuh57emxAOIIEFXwoj+NwsPUNX7Yuf9TXq1vx1j9swaoXO+4eJV3jSvzwcPAnNVfowxBMMk0UqZpO89o6QHeEJ2tkk8iBVO3EIc1vPC0VCcuiur8CIFX3Qmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R1d6q10Q; arc=none smtp.client-ip=74.125.82.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NiNvym0g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BF3ORxzo"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id B1AF21D0013F;
-	Fri, 23 Jan 2026 11:38:35 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 23 Jan 2026 11:38:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769186315; x=1769272715; bh=Eqmas0Pmqj
-	QLknOiB4b7zX1xWYTiaRmC34gIIWOqysc=; b=NiNvym0g1AJ/22bRn1O6UBIHgc
-	jG1MthjHz4oCoQ2c4YAhX8qs0vAt6HFqtlP6e4xXCD50NMsRw+0Q6O8+ealirvGO
-	0PjZrAw14YN1994ssrdYrUReuSNSdIkEJXkKUuByItA9nSDNQmbUgoCJqIX1hX2F
-	FHWGwXgI2p90vEoyS0Z4mLRy3FxjHy+brGMwG3bDx3RbUquj4UBibEwDgZOKV0Rd
-	ADNzaLGTV1NSCuTNXMQQYMronGLvs56lWXt89xdybt9fjLg4iOk4sxIk1WWZxWJz
-	SVXujZb8iLGHv9IVoTLrqPh0NMZ3aJy2Jac/JA/PTWRcuFLlcgPDbTDfc4ww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769186315; x=1769272715; bh=Eqmas0PmqjQLknOiB4b7zX1xWYTiaRmC34g
-	IIWOqysc=; b=BF3ORxzo1hpKA5R7EQ696MDeqH/i/rsekYEjUkOWa6qZoWUqN0r
-	j2tWM6TEV+SqxSjccBavaglN793yFOGN9/TWpRBUzsqojS3K5138t9YMXG0k3oYX
-	aDW5Bx1bJfaRsLvzvZBIbYtkQfEMkKvkXwnHLKAKfsmkdsR4hzikcp7A37HsWAgk
-	+V9tcD2mfXm28ehawoHE0LL3S5ldi2QsIrzXZI0kevSUNeg1DtpO1Q9OiEI0lolK
-	hbH2YOejDqC4Wcw7NgRdbbtr1VNAF2gVsG4zs6dVRY3F1Z/GUW0dJyYPj2t0OhN7
-	Vz+EPjn/uqXvS1buF2URWiAvDCs4RKTty3Q==
-X-ME-Sender: <xms:C6RzaXNAKSlsvIfj9YhIKGtdLzLctZ-_4pAN27zFiPRota3OajEm3Q>
-    <xme:C6RzaUijL-0B-PjUqy4iNaFH__edDcJ2c5qwsJ7rxJDKiUYLZo0ygjXCe2RasV3rU
-    wb85PbBmpVQoSXhY-Qt_TqkDlOxnH_8r2wbsSCDxH_TYrvIbPbWUA>
-X-ME-Received: <xmr:C6RzaZ4KeUf30WapDOxwXVw9VtNoAIWB3KZo4TN0JxKYBxUDUwhq5UGwFg0my9Uk2xIg_CxRUMUj1HT6NNlbygQGKxqs3ejK8jYWano>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
-    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
-    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:C6Rzab0uSAkL42VSJLboitAUQ7PrbPI_iOXJEmdPecK53_I8vV2w-Q>
-    <xmx:C6RzaUvkdUu7LoleHdPMMvfx0svfvZute4qxFY2mjblTFst2cFyidQ>
-    <xmx:C6RzaR5ME52NuK_Pcbh2DVrSNBuOZMYEcS837xhvhUQYTg-UKicCZA>
-    <xmx:C6RzaQdZSTDm5hVhPITAw4CrGrs4bx0JultdFkmUqAcMkZFOSviqiQ>
-    <xmx:C6RzaZqWjdI6dwlu7eUO9A1bvfrSSywMQmmzk6dsWTAz-TnenpzKaFrS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Jan 2026 11:38:34 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,
-  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [RFC PATCH 1/1] add-patch: Allow reworking with a file after
- deciding on all its hunks
-In-Reply-To: <e98d8aa20fb4a82b93b9887e38eb8289252b936d.1769164663.git.abrahamadekunle50@gmail.com>
-	(Abraham Samuel Adekunle's message of "Fri, 23 Jan 2026 12:58:45
-	+0100")
-References: <cover.1769164663.git.abrahamadekunle50@gmail.com>
-	<e98d8aa20fb4a82b93b9887e38eb8289252b936d.1769164663.git.abrahamadekunle50@gmail.com>
-Date: Fri, 23 Jan 2026 08:38:33 -0800
-Message-ID: <xmqqv7gsi8s6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R1d6q10Q"
+Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-11f36012fb2so3854815c88.1
+        for <git@vger.kernel.org>; Fri, 23 Jan 2026 08:49:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769186955; x=1769791755; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RCoVdHE5Vt3pHN0IigEx2F+2rniqYkTridZis4vTAsA=;
+        b=R1d6q10Qzt9byJRouGys8DGsN/UoE1N/FEDPrWwm/XdZvBBNZ0LbMEkDPpcU0qSxxN
+         fMfVcVD5klexNVTgbryWw10YFQE/06JQWW6uHpa+7R1no/bI9VIkt5KaMoqDYcMp+FmO
+         YbrhTzJ2QnlxEh1lOtGpUNqBqQYqP7LFSPj14qAx332KqZqoKbbcVybMrN5tA0xrus+E
+         zIa0DurPfWOjrtBUNvqTz1AUriHK50hoPTfzScAY86AK+IdeK1JBI2ky8de+XMz+H4Kh
+         USP9dTqPwqRq/jEY+nHqSRPx61P15Wpx5QagEXWIr7FD5pbKXo8KcVvsPOdeUNNJpN5T
+         IMpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769186955; x=1769791755;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=RCoVdHE5Vt3pHN0IigEx2F+2rniqYkTridZis4vTAsA=;
+        b=ZIzZpC5ecTd3TE5AIAoccP4168jR2Y/uCX4H03Qtx+VQ07eA78AGCzCn3MUbONbAnd
+         Q5zisnDAu+Fo8UZNwX3PRGk2MM6Xu3YAclRipA+yOvTkQs7T9SwhDMFR8ZPLijF8bG1o
+         ioNzZdgrlaknoSYzMvwbkEv+Vi6XOFxLFNDl1dioChtYvGiBcyXj54qRJRDd4BPpm/OL
+         IUU/Nd+sB8WUCwwr0P+5z+QVfh3bHtr7hXkQfGt1V9ZKrzh3am9MWGmY3LCpVTWAzAFv
+         8iHZBGhlhxZclrCaWBQs/rSHGCS/LgrqSJKeNxBBp/35AYxSVCGf5kdQdxzwPTP2WyHX
+         JXYA==
+X-Gm-Message-State: AOJu0YwchLB3okWxnMEmYHrU5Z4d0C7E4xFaLRTI60yB1rMA0X1EwMDZ
+	Sir4fSHXeAq59ebMjrWmeaCHsvTN04YUuAsP6P3oxN7S3Txh2m3WMAar4AR81g==
+X-Gm-Gg: AZuq6aJEMUb0otfgck64TCLmaQmrK6MdzLNxqNAFmUcham9UD1Vs5bsTieLqnPPGnz7
+	I6xUEUVxlb1EoOIIUuIxgc0O46d12JTQcFR1Rpx0Anj3RMBlAgwW4I+s+e/oeqj7LYt0dI907dI
+	Cz6/PEZTEVzkiCTrz+g6Lcpc5BEiPvLmMRzq1O+89tA8OwpkXKsB99mRizNBLXR9gmE8a+IslJ6
+	atD0b9AomjEAC2MuyotzJGE+JrvvJXPlfRTqipb1x8r4wvL+hKfcOz93SfKb+dG9th6YkeYH+0K
+	zMmbnxisvBy37i7QLMISreJjSygHqI98mT0vvdcRU5ywyrbB+fkrHoNafIr5VPq9VVASUdGEde4
+	jx0joRYcWReD7SyWt8HvOIHOowpklJfp5tB/IM8DQZB4UF14ZHTzpd5LXmNx2es0gsjxGZbxIi0
+	ScVIhrEFtXpvMz9GOPyNxl29eoJRcv8aSlhkKa7OY1qnjdzYE=
+X-Received: by 2002:a05:7022:4184:b0:11b:c1fb:89a with SMTP id a92af1059eb24-1247dbf817bmr1799338c88.32.1769186954422;
+        Fri, 23 Jan 2026 08:49:14 -0800 (PST)
+Received: from localhost.localdomain ([191.181.59.93])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1247d9a3f22sm5522640c88.13.2026.01.23.08.49.11
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 23 Jan 2026 08:49:13 -0800 (PST)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	avila.jn@gmail.com,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [PATCH v5 0/2] repo: add --keys and rename "keyvalue" to "lines"
+Date: Fri, 23 Jan 2026 13:34:52 -0300
+Message-ID: <20260123164900.35092-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+Hi!
 
-> After deciding on all hunks in a file, the interactive session
-> advances automatically to the next file if there is another,
-> or the process ends.
->
-> Allow for reworking with a file by introducing a what_now prompt which
-> allows for navigating with J/K or advancing to the next file if there is one.
+There are two main changes in this v5:
 
-Describe "how" you are allowing these new things that users used not
-to be able to do (no, not in the "by adding this variable and
-switching on its value" sense, but in the "now deciding on all the
-hunks in a file does not automatically advance to the next file, and
-the user has to do X to move forward" sense).
+- the "keyvalue" output format of git-repo-info and git-repo-structure were
+  both renamed by "lines"
+- the "default" output format was dropped
 
-> -	int colored = !!s->colored.len, quit = 0, use_pager = 0;
-> +	int colored = !!s->colored.len, quit = 0, use_pager = 0, skip_what_now = 0;
+This way:
 
-This is getting overly long.  Wouldn't it be easier to follow if a
-preliminary patch split these existing variables into three
-independent definitions, and the main patch adds the fourth one?
+- `git repo info` accepts --format=lines and --format=nul
+- `git repo info --keys` accepts --format=lines and --format=nul
+- `git repo structure` accepts --format=table, --format=lines and --format=nul
 
-> +			if (s->file_diff_nr > 1)
-> +				prompt_whatnow = _("What now? [J,K,q,>]? ");
-> +			else
-> +				prompt_whatnow = _("What now? [J,K,q]? ");
+Lucas Seiki Oshiro (2):
+  repo: rename "keyvalue" to "lines"
+  repo: add new flag --keys to git-repo-info
 
-I wonder if ">" has to be made so special.  Wouldn't it be easier to
-reason about the logic if ">" (and probably "<" to go back by one
-file) are added to the prompt in the same logic that decides 'g',
-'k', 's', etc. should be shown using the "permitted" variable?
+ Documentation/git-repo.adoc | 32 +++++++++++++++--------
+ builtin/repo.c              | 51 ++++++++++++++++++++++++++++++-------
+ t/t1900-repo.sh             | 44 ++++++++++++++++++++++----------
+ t/t1901-repo-structure.sh   |  4 +--
+ 4 files changed, 97 insertions(+), 34 deletions(-)
 
-And when the inter-file navigation is in the permitted set (i.e.,
-there are multiple files involved), you'd show ">" (or "<", or both
-if you are dealing with the second file among three files) and ask,
-instead of silently moving to the next one, or something like that.
+Range-diff against v4:
+1:  7dabd62250 < -:  ---------- repo: add a default output format to enum output_format
+-:  ---------- > 1:  f5448ce915 repo: rename "keyvalue" to "lines"
+2:  fba621fc4f ! 2:  16bc72afe1 repo: add new flag --keys to git-repo-info
+    @@ Documentation/git-repo.adoc
+     @@ Documentation/git-repo.adoc: SYNOPSIS
+      --------
+      [synopsis]
+    - git repo info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]
+    -+git repo info --keys [--format=(default|lines|nul) | -z]
+    - git repo structure [--format=(default|table|keyvalue|nul) | -z]
+    + git repo info [--format=(lines|nul) | -z] [--all | <key>...]
+    ++git repo info --keys [--format=(lines|nul) | -z]
+    + git repo structure [--format=(table|lines|nul) | -z]
 
-Organizing the logic that way will also allow you to move to the
-next file _without_ first having to decide on all hunks in the
-current file.  Just say ">" to deal with the next file first, and
-after you are done, either come back with "<", or the system notices
-that there are undecided hunks in the earlier file and takes you
-back automatically.
+      DESCRIPTION
+     @@ Documentation/git-repo.adoc: supported:
+      +
+      `-z` is an alias for `--format=nul`.
 
-I also have a hunch that with such a code structure you may not even
-need skip_what_now flag, but I haven't even written the code in my
-head, so if somebody tries to do so, they may discover the reason
-why such a flag is still needed.
+    -+`info --keys [--format=(default|lines|nul) | -z]`::
+    ++`info --keys [--format=(lines|nul) | -z]`::
+     +	List all the available keys, one per line. The output format can be chosen
+     +	through the flag `--format`. The following formats are supported:
+     ++
+    -+`default`:::
+    -+	synonym for `lines`.
+    -+
+     +`lines`:::
+    -+	output the keys one per line.
+    ++	output the keys one per line. This is the default.
+     +
+     +`nul`:::
+    -+	similar to `default`, but using a _NUL_ character after each value.
+    ++	similar to `lines`, but using a _NUL_ character after each value.
+     +
+    - `structure [--format=(default|table|keyvalue|nul) | -z]`::
+    + `structure [--format=(table|lines|nul) | -z]`::
+      	Retrieve statistics about the current repository structure. The
+      	following kinds of information are reported:
 
->  		strbuf_reset(&s->buf);
->  		if (file_diff->hunk_nr) {
-> -			if (rendered_hunk_index != hunk_index) {
-> +			if (rendered_hunk_index != hunk_index || skip_what_now == 1) {
+    @@ builtin/repo.c
+     @@
 
-Style (which may become irrelevant, as I just said the variable may
-not be needed after all, but anyway).  Elsewhere skip_what_now is
-used only for "is it zero, or is it not zero?".  Comparing
-explicitly with 1 only here makes readers suspect if assigning 2 or
-70 to the variable has special meanings and wastes their brain
-cycles.
+      static const char *const repo_usage[] = {
+    - 	"git repo info [--format=(default|keyvalue|nul) | -z] [--all | <key>...]",
+    -+	"git repo info --keys [--format=(default|lines|nul) | -z]",
+    - 	"git repo structure [--format=(default|table|keyvalue|nul) | -z]",
+    + 	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]",
+    ++	"git repo info --keys [--format=(lines|nul) | -z]",
+    + 	"git repo structure [--format=(table|lines|nul) | -z]",
+      	NULL
+      };
+    -@@ builtin/repo.c: enum output_format {
+    - 	FORMAT_TABLE,
+    - 	FORMAT_KEYVALUE,
+    - 	FORMAT_NUL_TERMINATED,
+    -+	FORMAT_LINES
+    - };
+    -
+    - struct field {
+     @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+      	return 0;
+      }
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+     +{
+     +	char sep;
+     +
+    -+	if (format == FORMAT_DEFAULT)
+    -+		format = FORMAT_LINES;
+    -+
+     +	switch (format) {
+     +	case FORMAT_LINES:
+     +		sep = '\n';
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+     +		sep = '\0';
+     +		break;
+     +	default:
+    -+		die(_("--keys can only be used with --format=default or --format=nul"));
+    ++		die(_("--keys can only be used with --format=lines or --format=nul"));
+     +	}
+     +
+     +	for (size_t i = 0; i < ARRAY_SIZE(repo_info_fields); i++) {
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+      static int parse_format_cb(const struct option *opt,
+      			   const char *arg, int unset UNUSED)
+      {
+    -@@ builtin/repo.c: static int parse_format_cb(const struct option *opt,
+    - 		*format = FORMAT_KEYVALUE;
+    - 	else if (!strcmp(arg, "table"))
+    - 		*format = FORMAT_TABLE;
+    -+	else if (!strcmp(arg, "lines"))
+    -+		*format = FORMAT_LINES;
+    - 	else if (!strcmp(arg, "default"))
+    - 		*format = FORMAT_DEFAULT;
+    - 	else
+     @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+      {
+    - 	enum output_format format = FORMAT_DEFAULT;
+    + 	enum output_format format = FORMAT_LINES;
+      	int all_keys = 0;
+     +	int show_keys = 0;
+      	struct option options[] = {
+    @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char
+     +	if (show_keys)
+     +		return print_keys(format);
+     +
+    - 	if (format == FORMAT_DEFAULT)
+    - 		format = FORMAT_KEYVALUE;
+    + 	if (format != FORMAT_LINES && format != FORMAT_NUL_TERMINATED)
+    + 		die(_("unsupported output format"));
+
+
+      ## t/t1900-repo.sh ##
+    @@ t/t1900-repo.sh: test_expect_success 'git repo info uses the last requested form
+      	git repo info --all >actual &&
+      	test_cmp expect actual
+      '
+    -@@ t/t1900-repo.sh: test_expect_success '--format=default resets the format' '
+    +@@ t/t1900-repo.sh: test_expect_success 'git repo info --all <key> aborts' '
+      	test_cmp expect actual
+      '
+
+     +test_expect_success 'git repo info --keys --format=nul uses nul-terminated output' '
+    -+	git repo info --keys --format=default >default &&
+    -+	lf_to_nul <default >expect &&
+    ++	git repo info --keys --format=lines >lines &&
+    ++	lf_to_nul <lines >expect &&
+     +	git repo info --keys --format=nul >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'git repo info --keys aborts when using --format other than default or nul' '
+    -+	echo "fatal: --keys can only be used with --format=default or --format=nul" >expect &&
+    -+	test_must_fail git repo info --keys --format=keyvalue 2>actual &&
+    ++test_expect_success 'git repo info --keys aborts when using --format other than lines or nul' '
+    ++	echo "fatal: --keys can only be used with --format=lines or --format=nul" >expect &&
+    ++	test_must_fail git repo info --keys --format=table 2>actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    @@ t/t1900-repo.sh: test_expect_success '--format=default resets the format' '
+     +
+     +test_expect_success 'git repo info --keys uses lines as its default output format' '
+     +	git repo info --keys --format=lines >expect &&
+    -+	git repo info --keys --format=default >actual_explicit &&
+    -+	git repo info --keys >actual_implicit &&
+    -+	test_cmp expect actual_explicit &&
+    -+	test_cmp expect actual_implicit
+    ++	git repo info --keys >actual &&
+    ++	test_cmp expect actual
+     +'
+     +
+      test_done
+-- 
+2.50.1 (Apple Git-155)
+
