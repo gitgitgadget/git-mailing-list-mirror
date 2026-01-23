@@ -1,83 +1,86 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16AF221540
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 22:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA79146D5A
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 23:27:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769207806; cv=none; b=pwK1MCZIDcM+LcloN+a6BFszo6IjMzn92m30LeFcNMjaZP8TEHYCXZd+PA4YOpzVnDviroc43pgmLtobVllF3mmY6TGJugFqauADIL57/SdmihnLImOP3r9u/Ke2vseXgZsXVHFczDOWXTKqDealCAB6R2SotnLeMXoSDkFg1ro=
+	t=1769210823; cv=none; b=GkVUXcGcXO9fefzDHdUqhYhjamVR06GnhnFzfoqEF93Qr530AhB6Hne0iPYXu/wytamiOr/FzE3GsrXLm6BdxWOMIFxv+zqcS0MRwPRlM57vwQA5Y/idaJHOhl278Kb/UocoDCwvNsdXY9imR4JBVDitMGKVEfaX5vsE6lQ9FD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769207806; c=relaxed/simple;
-	bh=yPSMt5KiNTob+yDpoA2zGj7QuSpsdEOk7fYbiGllVa0=;
+	s=arc-20240116; t=1769210823; c=relaxed/simple;
+	bh=+eOTQWOkperQEmkREKb60c4VyD1BWwOJ0fEXxHA54G8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mC86BkNjO61XBLKYS+HEmhvMEd0R6gTBfIlKuVc1AIBTpXZS0YjbBOBx9pfyeKWMwB0kQw4X0mTpD3mP6V7zUVRH8g0HRY30r6TciLF+WDL/DMTBNVz7Q5QZ0izWA5D+rb9/KFGzYBVmCzjufelsPXBTI71lvj1VTXGUDRRAr5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qQO4cy/W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FmOtYyFj; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=CfPC0nA+dJpJnFlqxQH0oYkSwHOh0VMrHXhw6LejatUghHSpRLelyiZHiWGlH3JcpQep0Mq3Uem5/59DHz5vdJAfCMJNh3hubQHTc/pil5BKAMrBFRJop+VrG3H4FeGRIAX4mB5z54C5u+kZu8ARcRsjxfbei8hzQx4lLOkl3VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sv1OYMM3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zLTgbfBl; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qQO4cy/W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FmOtYyFj"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id A989F1D00093;
-	Fri, 23 Jan 2026 17:36:43 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sv1OYMM3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zLTgbfBl"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 432FB7A00EB;
+	Fri, 23 Jan 2026 18:27:01 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 23 Jan 2026 17:36:43 -0500
+  by phl-compute-02.internal (MEProxy); Fri, 23 Jan 2026 18:27:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769207803; x=1769294203; bh=Alx8+Z3iIn
-	BZpcXLW9hV7zBMAI8nbu58lpYK+4iEh8U=; b=qQO4cy/W5jBW/V9JCZsqRyhTA1
-	gDyKXCk+spCsvNrutteAXM7dlcJmqAswubwvWR68yVE8bao8hMNgVvoZOheBlDx4
-	PFRySh7hhZEDNAJKKEEkKIaplzUNdDJMY3lSDEVyYEZCLQ2DDDpMVvRBSKwcpo13
-	gks9Y4oGUyCQmupE5AUz/tQV6Tx+jPeLgyGZgWf3s+dyu7RvUoWo2dvDGYCIQeVk
-	o8vqEA9WnL7qFF13IuedhrK306eCtZtofRiH7Q6OWG0VRpU6nRLYJqTvoGbnKPM9
-	/ybWKkDvDrf905PGnoB/+yrKZ8ZtbA9c+3m3H9exFJ982Ml4ncQ3KGLXfwUQ==
+	:subject:to:to; s=fm1; t=1769210821; x=1769297221; bh=B2f/h6T7+v
+	vF2wVLNLfeoVqkkwrzZ1dCJkAcvpr76M0=; b=Sv1OYMM3NZyQSDCvkDW2jFgHpM
+	9yMIaZu/sFDRNmb3o9fsGbZywWLn/r2frizt82DxRawqzwA1yNvVBDyzRYqVvtWf
+	+nw2UaJ73SZU3K8SZ8n5hlIsULfg5jUT1VWCfYTPhdQk9DjHp6m0lhSps4mkqYoy
+	aotxSzvdlHYVk34kzVpGEJM4h7rN12KLZJncc4rC6/OT0QlT2wCgHyEl43cmyrBJ
+	75jagJYVX+XqIbVhN+UxPwClMwZlsqFAV9KQcw3fcGTGaLo33XCE3SVWGeOuU6U1
+	Zv4+tdDOKlQ6nYnXCZlLS0Lk8tkEd07CNhDk5BO1FHhhui05pITTfHsm3KhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769207803; x=1769294203; bh=Alx8+Z3iInBZpcXLW9hV7zBMAI8nbu58lpY
-	K+4iEh8U=; b=FmOtYyFjoyxG7gPQwz5HDY/cVhaFiBSY38vqPP0xjJqo6SdOA/M
-	O0VULMT+MSIOQFkFQJ4PUmCj0gFHjPhjN56TTvuXxL/uMFaHT0bfgcpqRzCxQnpx
-	2bN7jknttDpOG7W9K2OQBrbVoxalaji8wriSOgBGbXAAS1FhY+soFoup+XADDlLW
-	Aa1JS5odnkNi1esdzMW1n7D0D8/gT588L+d6TpV4fMB95DIgkOZdrYZ8fMn03v7E
-	FmKwSyEei3fiUHZHCEPwDH8XAQW0QxJFWDKoY5QsgxIAQ/oEqlJh2CgSHskUEzCx
-	NPhgL9Nal5rl3786CvPsZrUI2HZzE7r2Uog==
-X-ME-Sender: <xms:-_dzaaI-5HyUUulwsNu_Wot_DtU7o1Sr7SmKiMWJyL8kyfarT4IGag>
-    <xme:-_dzaZL3-tm2N14rQNZw5lCegrYno322GZYTDj5YsStcBSxhXR5k6W8ZQBdP-Na7k
-    yT7D7fWeVIyYzzdG0Fcnbdz3kYVPDxAe8Mk-Z45T7Mvv1pivSeq7w>
-X-ME-Received: <xmr:-_dzafuiyo7qWAZIMtbKlkrLRgVhUnSoDrzX42qbwvImuMgWcMjOew-4hm5d80P4f06fTgEoTnN4kHbcVMd7vIUWyngBkERst3XQntk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduhedtvdeiucetufdoteggodetrf
+	1769210821; x=1769297221; bh=B2f/h6T7+vvF2wVLNLfeoVqkkwrzZ1dCJkA
+	cvpr76M0=; b=zLTgbfBlcT9YiITykXk0c10B9Ekn6SKyTQZQeu9f/ALaMg13cHI
+	yS93Vq9D9OTwtqS3GzfB+PGbjpZcpuF8eMyfdmuNbaPZa2w/0JLNMz+D8zG9jKGr
+	1YOamPmSTsUyZHR5olLIQaeK7Pp8nbloqhnGjiU2JcX6ccUmo3rASPGMXO6mRn7F
+	Sc4qD7L9L3pfDjg3zzMTXZsa5azidXh+kyFMi2CEJO/OaF5c/fg29HnOjmuXbjtg
+	ReEdCMAWYNXI+bxBwgBeTMrFxZB3dm7fizVl6ZOtMs5emnvxJJGzGkfMKt171CYz
+	xjqBhFXJHDPONkepil45/TeTspjwSBWu9dw==
+X-ME-Sender: <xms:xAN0aQss5Dp1iZLIs3zuJG4yM8ycNeM_Jyh6v6nm37vwkrG_BmSNMw>
+    <xme:xAN0aWwSyhoiopWvtnaBugU-PLLEPtjsLmKDC7eCisjEgLQI7ACsqhddZVubliotA
+    yl7QVYPjh7IVFojSb-A5BFyEVOOHTBUcMcxwToc000Z4NZpetl1mA>
+X-ME-Received: <xmr:xAN0aTCvnP4_7dx4Yg7fcpM0vnn4qEa1GC6lYDuqDPQ_GIeSHSY6N5Ttp7CgeMw8KOfCLqrpFNBnLnNZgm9F-U_CzsP_csg3vxg7aio>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduhedtfeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepkhhlrghushgvmhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-_dzaeT0OJ3pcU9LFlPJj8XzIPkSHsfpqvaRul2NyPmhOAUE43JiGQ>
-    <xmx:-_dzadNStkQvh28_IKgzMtnGh5gX_supXxYV3YsN_zXLr_ZjzPYopg>
-    <xmx:-_dzabYjJbNF-yklqg4O220dFP3QseKimsAmJFqwjcPS3UA61Z14xg>
-    <xmx:-_dzafzLmOzjUQP9STQogytby7Gg4BS6zNTpdfAWq-imqUhaRbYfQA>
-    <xmx:-_dzaVquyAfC4tlZdHF4SA_3a76jfN3q_EJbGs-HxQ8ed1zr8h2sd5z8>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnrg
+    hsshgvrhdrghhrrghinhgrfihisehoshhsrdhquhgrlhgtohhmmhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgt
+    phhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:xAN0aUfWi90Lp9boB1dA6c5VizPDC__Nf2ng-SuhEgy4DCbwVM435A>
+    <xmx:xQN0adl8iiBVeox68Dh4IMVKKf6boZRjUoGVLVlajC2HrGXNoBM-iw>
+    <xmx:xQN0abEi_IsTjNYay5xMyklX6KF-7DSejJsVN80tx3ny566SOzx7MA>
+    <xmx:xQN0aV6n9YWQmLICdP4j3_2gStkWz3gLajn3KA6ysCjiplbwR1LRHA>
+    <xmx:xQN0acxBUiOQixGRPcdxkdZoVq6Tiv3mk7dLjv74oOUutT6fFPPrWhtB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Jan 2026 17:36:42 -0500 (EST)
+ 23 Jan 2026 18:27:00 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Klaus Sembritzki <klausem@gmail.com>,  git@vger.kernel.org
-Subject: Re: The SHA256 of "xy\n" (ASCII, no CRLF) contains 1337, ACBAD in
- za, and I am 1aa
-In-Reply-To: <20260123210643.GA2728629@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 23 Jan 2026 16:06:43 -0500")
-References: <CADMnYXDDbVBwZgETsFhwkOyn8cM8QU4+YQs2rRfTac6ec49-5A@mail.gmail.com>
-	<20260123210643.GA2728629@coredump.intra.peff.net>
-Date: Fri, 23 Jan 2026 14:36:41 -0800
-Message-ID: <xmqq8qdogdmu.fsf@gitster.g>
+To: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3] submodule: fetch missing objects from default remote
+In-Reply-To: <20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com>
+	(Nasser Grainawi's message of "Thu, 22 Jan 2026 07:27:22 -0800")
+References: <20260114194815.1049888-1-nasser.grainawi@oss.qualcomm.com>
+	<20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com>
+Date: Fri, 23 Jan 2026 15:26:59 -0800
+Message-ID: <xmqq4iobhpvg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,27 +90,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Nasser Grainawi <nasser.grainawi@oss.qualcomm.com> writes:
 
-> On Fri, Jan 23, 2026 at 09:16:46PM +0100, Klaus Sembritzki wrote:
->
->> $ # My initials (ks): 1aa
->> $ echo ks | sha256sum
->> $ 1aa44e718d5bc9b7ff2003dbbb6f154e16636d5c2128ffce4751af5124b65337
->> 
->> $ # 50566750337
->> $ echo thinking | sha256sum
->> $ 50566750337beb9e98e553fd9196d10576f9eb0cbc6b66e2586b9d73af4f352f
->
-> Oh man, I've got deadbeef!
->
->   $ echo jk35252822 | sha256sum
->   33f1a74529870456c56ad97c59cfed6bdeadbeef9b9bc3f4ff49bb203e36f96b
->
-> What could it all mean?
+> diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+> index 45f384dd32..faafe31409 100755
+> --- a/t/t5572-pull-submodule.sh
+> +++ b/t/t5572-pull-submodule.sh
+> @@ -257,7 +257,26 @@ test_expect_success 'fetch submodule remote of different name from superproject'
+>  	git -C a-submodule reset --hard HEAD^^ &&
+>  
+>  	git -C child pull --no-recurse-submodules &&
+> -	git -C child submodule update
+> +	git -C child submodule update &&
+> +	test_path_is_file child/a-submodule/moreecho.t
+> +'
+> +
+> +test_expect_success 'fetch submodule remote of different non-origin name from superproject' '
+> +	git -C child/a-submodule remote rename origin o2 &&
+> +
+> +	# Create commit that is unreachable from current master branch
+> +	git -C a-submodule checkout -b newmain2 master^ &&
 
-Sorry, but I have to admit that I completely lack humor receptor
-cells.
+This test assumes that the first branch created by default is
+'master', which will break in one of the CI jobs:
 
+  https://github.com/git/git/actions/runs/21304166518/job/61328461844#step:9:1942
 
-
+If we are assuming that we are on the default branch when this
+"Create commit" step runs, perhaps you can replace your "master^"
+with "HEAD^" to achieve the same effect in a way that works
+regardless of what the default branch is called?
