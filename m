@@ -1,62 +1,62 @@
-Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1932D0C66
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 16:49:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D7A2DF132
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 16:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769186962; cv=none; b=hTS5jGAvLVw7R314q7aBmbBg2nkse8l22MX9rlQVE8AnNYjuvlDVITAwP5tqCiFsb9+SFzm5/iqzCjix4elxikois67VRdKTuKc2y6jPz3R3XjmGPOGU5sYKTcAx7eLruNuVkzDy2ALItnH6LANTjcPeVDSjkcqNgL1dhnLsLCg=
+	t=1769186964; cv=none; b=c/jtu/hXiE6xgszVuMVC5Kd01Db6oyErUdqW9mh2ayGoaBntyO+WPEon72GJ4IfFEWpphRURHkOeR9tVYWYHm2FxM9ORabmI0JanrQQHOKLVLYTq9piHSknpgYkiIOgiL5LkbE9H+uYS0O/BP5Ovtq7Bb0BTnKojs1VmKns7Yho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769186962; c=relaxed/simple;
-	bh=ELS2/p6qYEhUNX+OgFl+PwQRscxcAKWBA6Ss3kCQCIc=;
+	s=arc-20240116; t=1769186964; c=relaxed/simple;
+	bh=f0eB1Vcvd6s77jv7N5YZq7qTY6F+B0J7yi5m2pS8uXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iB0s2PUxIgkwZjYClvOGTLa3rZjohsRJPem4nwZkexxgj0Ubre2BpNwuBZoDOgw5wDHyYD/h2zloHHjC18sOuZJcZ7xlvZXmAppYFNRBoRiyxrzQFb1xnbH54pk72sNbGLuy0bmjyDLhXsQtlxAIc9x5eowLdvFJNzgnEjQ8+wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hrkVzYmX; arc=none smtp.client-ip=74.125.82.45
+	 MIME-Version; b=kPcHobOXv0X768GkMQxggSQCBot/kVIZ6o03qIk4xbPpoEyb1yNWHYI6wK+yiJN+aQbfuISvkthnxLqIJYL31m8il2vmDrVirxU35gHlhQ6QckCfRiGmZt1E4G3we8AlBULjz2KEvnJyd0XepRQOUPjEA76mCTnMyDtLacDAcNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AtHWLHNz; arc=none smtp.client-ip=74.125.82.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hrkVzYmX"
-Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-1233b953bebso6179274c88.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2026 08:49:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AtHWLHNz"
+Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-121bf277922so4266560c88.0
+        for <git@vger.kernel.org>; Fri, 23 Jan 2026 08:49:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769186958; x=1769791758; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769186961; x=1769791761; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GoJdaD8wNLfrnO9ZVjyrKLP1fP5Nm3eE+9TZBLqDggg=;
-        b=hrkVzYmXsGOnysN8uBM4NgF2bu+Aqvz5U6dHJhZ/9mdcabSmF5AbVjTkZP5QEJ3evc
-         11LcIrtUoC3dDAhpcsxoFPfL5QHETbyI9qGnn/EUYCmeAfAbKvqL3IMMx/s92S9vCk8y
-         rua4xvWDFhs6Wt7Jxzguyt5ZTYHMr7xq+4BkCRLiq884rSBy50mOqaFNIlHijNSvHhGu
-         wFwcTH/cvaRZb40S0pbGsIIQGI48NPxuu+xjgTf28wYEV5zB1VnsXCveI96mr209+GyK
-         h4PGgPwFZJnpnXZdpvrVW9TR+tbMOBcBVHRx7KKH4fxM1CIl1jZxB/Eak213Y8cNfIiW
-         U7LA==
+        bh=pQeYfPU0wSMdN9kK4HUcLbvmlzDPElT6ibVsm/yv5f0=;
+        b=AtHWLHNzDIi9IgbkfNKDYWlLuKBgm/qBu04cJdBdr1ibpdqX4DthECqTNLTfHZCQBD
+         5zYVMRR72yKp0ij0i6rhap/aczQrAPUbQoGp9eADtSnlvkLPD3pavbhBYEZoLGXlt7zz
+         kd8LZHPI80oPUJZnWxyk4njoptir++FrP3R/cxcHGNaluU9xvvV+xfefvy/Gb++MDyBW
+         DzeRakbZRTB/rSYECXvsqX+0J/SClkncdHtGSlYbl/q+PG05E5xx6IMIV2yHMipBozRT
+         6PEZhjlBiVrKcbaqlgernmHM3FwAaSmx1jnIZoFyA0PVojHqxaeOnnvOjWac0v9maiS6
+         iPuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769186958; x=1769791758;
+        d=1e100.net; s=20230601; t=1769186961; x=1769791761;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=GoJdaD8wNLfrnO9ZVjyrKLP1fP5Nm3eE+9TZBLqDggg=;
-        b=foYsQI52wC90A2euYO6JtjTRmop1Xg01C0UYKWmNQchSBGnp37B6g9TfxpVdTKkvca
-         x0Ol8dZZTGRIMtW/GYguFJZdACKvB4dtGJeoCbJ+qnAgKJrTIx1/uKgQp93zM5/ql7Po
-         k3coW3oEWy0nrAqTj+aJCOB5QIRALdS1B+EUECBPZq28xFafqx+j/fr6L8z0/ysPZX8J
-         cK8dDdDRV/Wywah/OyD728QVBNnwoFjCh9Wq14EPhPTASXT991qRzCI2uYc3sXsziUmM
-         rwkHhTIJ39XSXZvEHzSoRwxtlPo59+YUArjTa7lqYCiDE8oyP+dvzVTiKfnUkaZk3A+v
-         +DnA==
-X-Gm-Message-State: AOJu0Yyp2WSYyzNJK/5pPySnpUOzK78mReB4VHjsCCv0WDOS9Bx00Diw
-	c8neASzury8cea811pNsn7IaoZygPKi52oe+TwzMqoVJSmhHBAZwhjfCrDZoVA==
-X-Gm-Gg: AZuq6aIun9dwf10hxNkEL2S26xeD28IQxfN519JA58yLt41+X2y/o8VTiu3JfQM8keL
-	PFVaUirI17JXga1bGpP6jiG1VEvq5bGycefv7JFGHJM9kc0u71oj2rDVPtzJo/9v+1bV1dy5Qea
-	Ka+c94DZ6AN4+m4w63TG3RsRjh8L6KQyru1irA/dWCVXGQnrj/X9c/4ofpVKwar4f1+vYqajDKJ
-	T0DWBn7mPs01bd9VPyNb5eYsacAkxGdqkhJ73BUWRpt4v8TN3AZcQS9TrcZhDzRqbB83mVgx7CQ
-	NhbzB6LqxXdqT7UPsy2zuKeU0GEEcstXACMIhFF3xMPcofxPLSScmosP3+Z4KKdBVcTfqmZMXqx
-	Ff1ywpsRfXn5SYO8Coz9GnPjyWNMXN9x0SP3mrQCKcj13nsrhlMvosqXktmaAxEoJEYV20qrNVF
-	hNscL6E8mn0Au2wS19dAFW7jrPXO8WVwkyo/M0dFKm3pcuLdf9mEp1XxyiUA==
-X-Received: by 2002:a05:7022:660c:b0:119:e56b:c75a with SMTP id a92af1059eb24-1247dbf8d14mr2005519c88.31.1769186957906;
-        Fri, 23 Jan 2026 08:49:17 -0800 (PST)
+        bh=pQeYfPU0wSMdN9kK4HUcLbvmlzDPElT6ibVsm/yv5f0=;
+        b=abgXTrxPvfoByd7U8fHilmIg+Pqhqz53O0JA/46ADzUDBocjMn267+5Rpa/eJ3iSlm
+         H8Zf/t58OQGFKUGwYi5EFCfHaMyrNKgAJK2zha845slZOJj7pymvZnzY9NLg4UPCTzx2
+         1LK8l/gVJ6DN5rjcmMqOwwBkv19chTlIgTj0KWfzjVnZObVU59rGDgGFYEp5ub7l2K1E
+         2SnXZtCM/wydyS36coVGCDcbTrQ6tZHp48zmPwox3BWc0Dpx7hD2huKwmnSQLsjtfgXp
+         ID+nPRclW5p1Iac4LJCYTSL6/Ek6oEgIY3sbY6wJL+B4kGqlvYWqoRzQ5xM/ZDG8MpYq
+         w1sw==
+X-Gm-Message-State: AOJu0YxmGa74th151aE0Z4gG3rjo5KOLKaY1Vli5YqFalrxJgLyLI383
+	KPn4/Sc8PkFt6De3QJSIOxQZtvezIvMvgYGMSP6p81Odl4hn7XQqPkFjRVzbiA==
+X-Gm-Gg: AZuq6aKdOrpW7qee6NA0fL+zy0gAzOoJWLHgyVS/qEL6HIreKSQBPJTwWPi1j/yVhVD
+	BfjpnqmEFP1xMFom0eYeGicv1sxplEGc8m+8eqzq3OFE+apFplu7pOdsNdVc/WkvNsuYGoTLtg3
+	qfaGtz3CR8E+ftUVm7fXQlEObIqUOmkL3E0cKlY8ctf4H/V/DkYyz7W5fhhcifVmxLtFanpsLJg
+	62TCaleWrUshVXk5TOUh2pMO+2lSYYax+GAofbftoECY7C9BJS06l6K+Cjhb6HYmo3fNRm7ILAG
+	lGngHhirSHUqG+xctuWw25nk2zdu+dIGP7MyenIyTm9Sp+l9W3rnZUaYkzJfc+zqHv/zvbBZYNS
+	WA3Rceyhs96SdLj0qNcZqitK6QW/hDEwUkLMfrdsVutwHdV/b5s43bRkIreuboUAyQCO5v2zBHU
+	Na6vQpTrKz6m1N/XJKZhekfI+Aos8MOMwJdY2JUBc+ypZsnS3QIIaIen4cmA==
+X-Received: by 2002:a05:7022:6ba1:b0:11b:d561:bc16 with SMTP id a92af1059eb24-1247dbc4cd0mr1763886c88.22.1769186961051;
+        Fri, 23 Jan 2026 08:49:21 -0800 (PST)
 Received: from localhost.localdomain ([191.181.59.93])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1247d9a3f22sm5522640c88.13.2026.01.23.08.49.14
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1247d9a3f22sm5522640c88.13.2026.01.23.08.49.18
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 23 Jan 2026 08:49:17 -0800 (PST)
+        Fri, 23 Jan 2026 08:49:20 -0800 (PST)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -64,9 +64,9 @@ Cc: ps@pks.im,
 	jltobler@gmail.com,
 	avila.jn@gmail.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [PATCH v5 1/2] repo: rename "keyvalue" to "lines"
-Date: Fri, 23 Jan 2026 13:34:53 -0300
-Message-ID: <20260123164900.35092-2-lucasseikioshiro@gmail.com>
+Subject: [PATCH v5 2/2] repo: add new flag --keys to git-repo-info
+Date: Fri, 23 Jan 2026 13:34:54 -0300
+Message-ID: <20260123164900.35092-3-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260123164900.35092-1-lucasseikioshiro@gmail.com>
 References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
@@ -79,206 +79,181 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The output format name "keyvalue" isn't so descriptive. Rename it to
-"lines", since it describes better the syntax of the output format and
-it isn't tied to key-value pairs.
+If the user wants to find what are the available keys, they need to
+either check the documentation or to ask for all the key-value pairs
+by using --all.
+
+Add a new flag --keys for listing only the available keys without
+listing the values.
 
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- Documentation/git-repo.adoc | 21 +++++++++++----------
- builtin/repo.c              | 19 ++++++++++---------
- t/t1900-repo.sh             |  4 ++--
- t/t1901-repo-structure.sh   |  4 ++--
- 4 files changed, 25 insertions(+), 23 deletions(-)
+ Documentation/git-repo.adoc | 11 ++++++++++
+ builtin/repo.c              | 32 +++++++++++++++++++++++++++++
+ t/t1900-repo.sh             | 40 +++++++++++++++++++++++++++----------
+ 3 files changed, 72 insertions(+), 11 deletions(-)
 
 diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 7d70270dfa..693e1bbced 100644
+index 693e1bbced..f474274009 100644
 --- a/Documentation/git-repo.adoc
 +++ b/Documentation/git-repo.adoc
-@@ -8,8 +8,8 @@ git-repo - Retrieve information about the repository
- SYNOPSIS
+@@ -9,6 +9,7 @@ SYNOPSIS
  --------
  [synopsis]
--git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
--git repo structure [--format=(table|keyvalue|nul) | -z]
-+git repo info [--format=(lines|nul) | -z] [--all | <key>...]
-+git repo structure [--format=(table|lines|nul) | -z]
+ git repo info [--format=(lines|nul) | -z] [--all | <key>...]
++git repo info --keys [--format=(lines|nul) | -z]
+ git repo structure [--format=(table|lines|nul) | -z]
  
  DESCRIPTION
- -----------
-@@ -19,7 +19,7 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
- 
- COMMANDS
- --------
--`info [--format=(keyvalue|nul) | -z] [--all | <key>...]`::
-+`info [--format=(lines|nul) | -z] [--all | <key>...]`::
- 	Retrieve metadata-related information about the current repository. Only
- 	the requested data will be returned based on their keys (see "INFO KEYS"
- 	section below).
-@@ -30,21 +30,22 @@ requested. The `--all` flag requests the values for all the available keys.
- The output format can be chosen through the flag `--format`. Two formats are
- supported:
- +
--`keyvalue`:::
-+
-+`lines`:::
- 	output key-value pairs one per line using the `=` character as
- 	the delimiter between the key and the value. Values containing "unusual"
- 	characters are quoted as explained for the configuration variable
- 	`core.quotePath` (see linkgit:git-config[1]). This is the default.
- 
- `nul`:::
--	similar to `keyvalue`, but using a newline character as the delimiter
-+	similar to `lines`, but using a newline character as the delimiter
- 	between the key and the value and using a NUL character after each value.
- 	This format is better suited for being parsed by another applications than
--	`keyvalue`. Unlike in the `keyvalue` format, the values are never quoted.
-+	`lines`. Unlike in the `lines` format, the values are never quoted.
+@@ -45,6 +46,16 @@ supported:
  +
  `-z` is an alias for `--format=nul`.
  
--`structure [--format=(table|keyvalue|nul) | -z]`::
-+`structure [--format=(table|lines|nul) | -z]`::
++`info --keys [--format=(lines|nul) | -z]`::
++	List all the available keys, one per line. The output format can be chosen
++	through the flag `--format`. The following formats are supported:
+++
++`lines`:::
++	output the keys one per line. This is the default.
++
++`nul`:::
++	similar to `lines`, but using a _NUL_ character after each value.
++
+ `structure [--format=(table|lines|nul) | -z]`::
  	Retrieve statistics about the current repository structure. The
  	following kinds of information are reported:
- +
-@@ -61,17 +62,17 @@ supported:
- 	change and is not intended for machine parsing. This is the default
- 	format.
- 
--`keyvalue`:::
-+`lines`:::
- 	Each line of output contains a key-value pair for a repository stat.
- 	The '=' character is used to delimit between the key and the value.
- 	Values containing "unusual" characters are quoted as explained for the
- 	configuration variable `core.quotePath` (see linkgit:git-config[1]).
- 
- `nul`:::
--	Similar to `keyvalue`, but uses a NUL character to delimit between
-+	Similar to `lines`, but uses a NUL character to delimit between
- 	key-value pairs instead of a newline. Also uses a newline character as
- 	the delimiter between the key and value instead of '='. Unlike the
--	`keyvalue` format, values containing "unusual" characters are never
-+	`lines` format, values containing "unusual" characters are never
- 	quoted.
- +
- `-z` is an alias for `--format=nul`.
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 0ea045abc1..4031612bc8 100644
+index 4031612bc8..a7d4855f06 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -17,8 +17,8 @@
- #include "utf8.h"
+@@ -18,6 +18,7 @@
  
  static const char *const repo_usage[] = {
--	"git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]",
--	"git repo structure [--format=(table|keyvalue|nul) | -z]",
-+	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]",
-+	"git repo structure [--format=(table|lines|nul) | -z]",
+ 	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]",
++	"git repo info --keys [--format=(lines|nul) | -z]",
+ 	"git repo structure [--format=(table|lines|nul) | -z]",
  	NULL
  };
+@@ -148,6 +149,29 @@ static int print_all_fields(struct repository *repo,
+ 	return 0;
+ }
  
-@@ -26,7 +26,7 @@ typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
- 
- enum output_format {
- 	FORMAT_TABLE,
--	FORMAT_KEYVALUE,
-+	FORMAT_LINES,
- 	FORMAT_NUL_TERMINATED,
- };
- 
-@@ -91,7 +91,7 @@ static void print_field(enum output_format format, const char *key,
- 			const char *value)
- {
- 	switch (format) {
--	case FORMAT_KEYVALUE:
++static int print_keys(enum output_format format)
++{
++	char sep;
++
++	switch (format) {
 +	case FORMAT_LINES:
- 		printf("%s=", key);
- 		quote_c_style(value, NULL, stdout, 0);
- 		putchar('\n');
-@@ -157,8 +157,8 @@ static int parse_format_cb(const struct option *opt,
- 		*format = FORMAT_NUL_TERMINATED;
- 	else if (!strcmp(arg, "nul"))
- 		*format = FORMAT_NUL_TERMINATED;
--	else if (!strcmp(arg, "keyvalue"))
--		*format = FORMAT_KEYVALUE;
-+	else if (!strcmp(arg, "lines"))
-+		*format = FORMAT_LINES;
- 	else if (!strcmp(arg, "table"))
- 		*format = FORMAT_TABLE;
- 	else
-@@ -170,7 +170,7 @@ static int parse_format_cb(const struct option *opt,
- static int cmd_repo_info(int argc, const char **argv, const char *prefix,
- 			 struct repository *repo)
++		sep = '\n';
++		break;
++	case FORMAT_NUL_TERMINATED:
++		sep = '\0';
++		break;
++	default:
++		die(_("--keys can only be used with --format=lines or --format=nul"));
++	}
++
++	for (size_t i = 0; i < ARRAY_SIZE(repo_info_fields); i++) {
++		const struct field *field = &repo_info_fields[i];
++		printf("%s%c", field->key, sep);
++	}
++
++	return 0;
++}
++
+ static int parse_format_cb(const struct option *opt,
+ 			   const char *arg, int unset UNUSED)
  {
--	enum output_format format = FORMAT_KEYVALUE;
-+	enum output_format format = FORMAT_LINES;
+@@ -172,6 +196,7 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+ {
+ 	enum output_format format = FORMAT_LINES;
  	int all_keys = 0;
++	int show_keys = 0;
  	struct option options[] = {
  		OPT_CALLBACK_F(0, "format", &format, N_("format"),
-@@ -185,7 +185,8 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+ 			       N_("output format"),
+@@ -181,11 +206,18 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+ 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+ 			       parse_format_cb),
+ 		OPT_BOOL(0, "all", &all_keys, N_("print all keys/values")),
++		OPT_BOOL(0, "keys", &show_keys, N_("show keys")),
+ 		OPT_END()
  	};
  
  	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
--	if (format != FORMAT_KEYVALUE && format != FORMAT_NUL_TERMINATED)
+ 
++	if (show_keys && (all_keys || argc))
++		die(_("--keys cannot be used with a <key> or --all"));
 +
-+	if (format != FORMAT_LINES && format != FORMAT_NUL_TERMINATED)
++	if (show_keys)
++		return print_keys(format);
++
+ 	if (format != FORMAT_LINES && format != FORMAT_NUL_TERMINATED)
  		die(_("unsupported output format"));
  
- 	if (all_keys && argc)
-@@ -671,7 +672,7 @@ static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
- 		stats_table_setup_structure(&table, &stats);
- 		stats_table_print_structure(&table);
- 		break;
--	case FORMAT_KEYVALUE:
-+	case FORMAT_LINES:
- 		structure_keyvalue_print(&stats, '=', '\n');
- 		break;
- 	case FORMAT_NUL_TERMINATED:
 diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-index 51d55f11a5..4155211e5d 100755
+index 4155211e5d..a9eb07abe8 100755
 --- a/t/t1900-repo.sh
 +++ b/t/t1900-repo.sh
-@@ -34,7 +34,7 @@ test_repo_info () {
- 		eval "$init_command $repo_name"
- 	'
+@@ -4,15 +4,6 @@ test_description='test git repo-info'
  
--	test_expect_success "keyvalue: $label" '
-+	test_expect_success "lines: $label" '
- 		echo "$key=$expected_value" > expect &&
- 		git -C "$repo_name" repo info "$key" >actual &&
- 		test_cmp expect actual
-@@ -115,7 +115,7 @@ test_expect_success '-z uses nul-terminated format' '
+ . ./test-lib.sh
  
- test_expect_success 'git repo info uses the last requested format' '
- 	echo "layout.bare=false" >expected &&
--	git repo info --format=nul -z --format=keyvalue layout.bare >actual &&
-+	git repo info --format=nul -z --format=lines layout.bare >actual &&
+-# git-repo-info keys. It must contain the same keys listed in the const
+-# repo_info_fields, in lexicographical order.
+-REPO_INFO_KEYS='
+-	layout.bare
+-	layout.shallow
+-	object.format
+-	references.format
+-'
+-
+ # Test whether a key-value pair is correctly returned
+ #
+ # Usage: test_repo_info <label> <init command> <repo_name> <key> <expected value>
+@@ -119,8 +110,8 @@ test_expect_success 'git repo info uses the last requested format' '
  	test_cmp expected actual
  '
  
-diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index 17ff164b05..a6f2591d9a 100755
---- a/t/t1901-repo-structure.sh
-+++ b/t/t1901-repo-structure.sh
-@@ -113,7 +113,7 @@ test_expect_success SHA1 'repository with references and objects' '
- 	)
+-test_expect_success 'git repo info --all returns all key-value pairs' '
+-	git repo info $REPO_INFO_KEYS >expect &&
++test_expect_success 'git repo info --all and git repo info $(git repo info --keys) output the same data' '
++	git repo info $(git repo info --keys) >expect &&
+ 	git repo info --all >actual &&
+ 	test_cmp expect actual
+ '
+@@ -131,4 +122,31 @@ test_expect_success 'git repo info --all <key> aborts' '
+ 	test_cmp expect actual
  '
  
--test_expect_success SHA1 'keyvalue and nul format' '
-+test_expect_success SHA1 'lines and nul format' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
- 	(
-@@ -140,7 +140,7 @@ test_expect_success SHA1 'keyvalue and nul format' '
- 		objects.tags.disk_size=$(object_type_disk_usage tag)
- 		EOF
- 
--		git repo structure --format=keyvalue >out 2>err &&
-+		git repo structure --format=lines >out 2>err &&
- 
- 		test_cmp expect out &&
- 		test_line_count = 0 err &&
++test_expect_success 'git repo info --keys --format=nul uses nul-terminated output' '
++	git repo info --keys --format=lines >lines &&
++	lf_to_nul <lines >expect &&
++	git repo info --keys --format=nul >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git repo info --keys aborts when using --format other than lines or nul' '
++	echo "fatal: --keys can only be used with --format=lines or --format=nul" >expect &&
++	test_must_fail git repo info --keys --format=table 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git repo info --keys aborts when requesting keys' '
++	echo "fatal: --keys cannot be used with a <key> or --all" >expect &&
++	test_must_fail git repo info --keys --all 2>actual_all &&
++	test_must_fail git repo info --keys some.key 2>actual_key &&
++	test_cmp expect actual_all &&
++	test_cmp expect actual_key
++'
++
++test_expect_success 'git repo info --keys uses lines as its default output format' '
++	git repo info --keys --format=lines >expect &&
++	git repo info --keys >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.50.1 (Apple Git-155)
 
