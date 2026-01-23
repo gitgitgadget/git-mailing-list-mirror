@@ -1,123 +1,100 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534FD3016EB
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 15:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10F8279329
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 16:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769183885; cv=none; b=sl7Wtg67Q9xz90mALqd3nGsY27FYneFsnTjSfqhr4TsjxbtsVt4MGiXMCfeQh+ih24Yh0cLp99cYFTAlYzdNH7uJzVgAIujHckMDPTots0wXFor2PZyedTd2IJumMAkJwXafUxRqOqM+KgWyzatI0PCPRc0Ylup/qTFwLtAU20Q=
+	t=1769184673; cv=none; b=CPrgBL9grCALdANiktcWXnl8rsuAc7j20EAU6tuK7zGCye9FNrlCOlgToWZYsu0i+/zzTrfvOhwoz06aEi/Z89eroGSb1a9fF/4aDfPi+eR3ef5kjKXwvCbY+DTtJMOLUEc8GDNKAmk9QsY6Qvd+70FeKAjx84+KjrUphuEu6Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769183885; c=relaxed/simple;
-	bh=3XJLwFbqHun4CghojPObJVgbMX749aHA/NvUP5iBUC0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Fxn0ckswKYBrJ4VtoDMaJB2cweafXS1GL4ObBn28dq6Y8UD2p08nahHDQ2xxaJZlCmC/pm8rLbMEmm5hUsA8eSg4tLEPTu9XyJAj7jD0ImE1va8jKazAdGUlVKX1v7NWUfychJxhY3imzFyIgDiTSZPtz483uyZo2LejCS0/gUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aMsHE89W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xpozSPvB; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769184673; c=relaxed/simple;
+	bh=CAWpQz8wis8O5+ZPgAW4vB6InFiq+ATclrDxt+sFH1c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cmhWMu6J8JH5lXwA/UPLo25Ak1nMJSwWB4JxTYs0yiaXMReCqwFypp7xgtaQyyRz7923B0IUFWVtH25OlndsECfHNThrfMQcQZKF5u0DE1GS+Px+//YkovPRtVYW/yM+bgUCni+6Zk0622qKoukdWTFR6seukqCiUOJQBZ7agno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RiP7tUi7; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aMsHE89W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xpozSPvB"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5EBDB7A017A;
-	Fri, 23 Jan 2026 10:58:02 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 23 Jan 2026 10:58:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769183882; x=1769270282; bh=7kdawayYl8
-	P4TgKeV+s39dYB50E/Ce4TURhzTRn5MD8=; b=aMsHE89WdyGbygIuD9gXz8VT8+
-	55YtnP3JLMV1oRpH/W7T9vPVfQau1oAGD+RevrRDTrAytzTY5xTcsqhWEAuzgUBW
-	zLXk39i3rLMcw23WLIgGpgELNoLFEv512dxqakNW82V3MmgSAqvHtwxMI29FcElX
-	KINVoUq/qTVCcfziWuhVgmLfNLJf6SchTYSVizb1BV/fgv6CdQOgNJcYBt7TIxCd
-	jySIQCykxIE30lR8BA5S7CkFM5PvF4vXnDk3nv1SAYo1TTcLT3xmybCMmcIFjYPb
-	SZwx8QfYXlFxrc2kaIx8Js+O5TXI9azVMJ4YL6WWxT/NfTJxr1762hRpBVtQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769183882; x=1769270282; bh=7kdawayYl8P4TgKeV+s39dYB50E/Ce4TURh
-	zTRn5MD8=; b=xpozSPvBP7OYtQTDXhFYs2PUzOeVPGtS0b8/cdbl8k3owd9f5oi
-	uqoMcZYqZ5p/9FiftCPMXy//qeoTsEmkOmTdPKGvUT5Zxgvu4JRcdo5d4woDKPoH
-	lADmBDbeEZ5Xkh5j1bMW5Y/QfvztT6p/IKWoLGti3W3pnfyE1ZEWlxbMnArSSlon
-	QHpAVMmyAlh9q8o5W/aPxOinGOcJ94za3GhDBZw41VlLNSnhUpAaKySCs+dpV46c
-	avq0PI5qa3cmMmWGNVq8OUv59GKZcbJJGWQkbtiB/yzGjfWNJqUxUWn7tiGhSs/E
-	tzgTiAx1crbCGVwJLE1QWR/o9UDjqHA9QXw==
-X-ME-Sender: <xms:ippzaUSQm2l0iBUfT07F7RyuUBo93C6V5GYyVOkianQPu-mJyEKDzg>
-    <xme:ippzaYprtszIjOH8niqkEVnKp9zfNITDjHrK3yXIg_teJo1a6JN2fYxX0i457VKlk
-    XlUZdjGdH_C4bdwqmnkh3cH2QK3gwL-rkxcPcu5fNRfZ6CMKJUTDA>
-X-ME-Received: <xmr:ippzaaJYlICkrpbt6NNHtSlHZbPXGAhMDTX8vUTqivmxsg4TpiQuunww6RCtl56UW_0Stld7-yIkrrb5cYWfd1UyGND-zM-cb--DS0c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepsh
-    htohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ippzaTpzxL0fIjU7mdG_dD7Pp0Z1Wg0AhFISP-TBirkRF0W6aWCYgA>
-    <xmx:ippzaazouAbWoOMlLAKQ05V7KzjsS2vpCdpP-3YI_680tsUXaNcCFQ>
-    <xmx:ippzafPyUajF7Kz7qzv2dUOJzI4SLImAXcRwuf_P0z1_ZxXhaSsGRw>
-    <xmx:ippzaX4LaFN8z8NuAYEPEtF0HQK0bqFKTfsT28yAvkUMz3nd0yf3fg>
-    <xmx:ippzaX65R8_OQ1wxr4ZLvmopcXLLSULsDGz7QHqQIPLLIc-kdJBnmP4Z>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Jan 2026 10:58:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Derrick Stolee <stolee@gmail.com>,  git@vger.kernel.org,  Derrick Stolee
- via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2] revision: add --maximal-only option
-In-Reply-To: <13ff1d94-401e-4fa7-b247-fe8396ca9970@kdbg.org> (Johannes Sixt's
-	message of "Fri, 23 Jan 2026 07:38:08 +0100")
-References: <pull.2032.git.1768703645125.gitgitgadget@gmail.com>
-	<pull.2032.v2.git.1769097958549.gitgitgadget@gmail.com>
-	<xmqqikctl3vj.fsf@gitster.g>
-	<7daff220-f93a-463a-b586-dd876b51edae@gmail.com>
-	<13ff1d94-401e-4fa7-b247-fe8396ca9970@kdbg.org>
-Date: Fri, 23 Jan 2026 07:58:00 -0800
-Message-ID: <xmqqecngjp87.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RiP7tUi7"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a7a9b8ed69so26913005ad.2
+        for <git@vger.kernel.org>; Fri, 23 Jan 2026 08:11:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769184672; x=1769789472; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vuBfPvWNp7hzgZIXLIBnfPMCka/+R+h4+Y0oir9wiss=;
+        b=RiP7tUi7UJmEMbbsmRN/yyUde+CwDOfltI681bFCt5lcnIqtnvJjSZbOd0s8BsVfUN
+         lNEjvaFuc20vhA4E3GDuiEiaOtFX8fpt54lcvTchNvrynbQPgHzOgxzl/H8QHhvz91Bi
+         D/Txj4FTeGz3MMxbE48qNuGZG8WeD9JVBXXtIFSP6hrzFEQBIYm4ly87fGdRms0m9LVp
+         O5xvwIetpPpWTYYlU1cfl7Xj0vyIAN4bpvEK9syfc/VZetJmSe8DD9URPR69EMcyvHwj
+         Cxjaza4f0ZLK6m2z9hURslGBTFRmJkUQT5Em5r69RMeF4xe072IrSl30rabHGHVDMfDO
+         Oxcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769184672; x=1769789472;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vuBfPvWNp7hzgZIXLIBnfPMCka/+R+h4+Y0oir9wiss=;
+        b=rufFNJQA4AVgAqvP2aVVbVi8D9slXcthsmABZq/5PcvGuVD/PX3etBW82jgZdbfRJb
+         hEieWJp922e5URglDhUtiXSDnhBenlShOxsyC8BAVkiW/NByWAY4UEMRMx92QEvGyj0K
+         7zcOTlJZh7GcOdRmAU80B7VN7HbgNxxmTYRXui9HssJa7vWM8tuv/Oktr+76vyg6GCjQ
+         DN5IhT1h89O2unPv0xSZKW4WgkWOWhEa15PNgtY+YOodJvZzKGt84RsLkBEzFqkXxIcT
+         hnFOT/atZTyx56YcEXE1JuJ2mmAnBu9SB8P05PLbcyb8J3bIXGMKDOxLvLHAX9AjTNp6
+         MGLA==
+X-Gm-Message-State: AOJu0YwIqw6Oh5pP+tjPYN9MkUSFEp9bf6c7iZtu/Wst2mJ/TiSDXI2m
+	dV3AcZr7mW353sAViVYqcBwUsorXbbSRJ9XHdlT+k8d9pVp8jxxhdFaP5oaAvg==
+X-Gm-Gg: AZuq6aLqso9VRhBcpM7aj5mpxclkXgGF7RQk3wgOadr+zAhqw4UaZpJTy7OYICpz22D
+	UsyJB3u7U207IkqB/2sL67HJVu2+/AJfDfTCBYN5LxPbdop25Mp6jSS4EuaQ5T4DCLN3gwh/iaj
+	NL4X89EnaOjTVijzinH/gXmqn2VsSOJ71oWZCNFgB55fPfTRAPK3vMguJ/nPBeKOrIZE2pWPye+
+	nO9d2/wDrcbrI6O7vxNTOT8yTZObMtwlxiXWKoiURCN5d211brECVcUoHBs2OMub4S7S9EOWOij
+	Lg42d9vNMeTyHDnPsySp7xw0lhwYfOdyWL4LqmbEu29BRmZSD9QC7EjnkAUYN/8yF85RbmcJ+zU
+	VuldbpzroZwJ74zDP+hNhs4khAg4D9BRM31A1FSqHM1YhgWoupx2cjm63CQRSGNfZtNNHMqXbnS
+	OqwohiNplpLrIa8JhsEFaMqNODyu0r6aeX/XIeTs+g8jeTtw==
+X-Received: by 2002:a17:902:ce0c:b0:2a0:d05d:e4f with SMTP id d9443c01a7336-2a7fe7422b5mr32251765ad.45.1769184671787;
+        Fri, 23 Jan 2026 08:11:11 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd7:6181:9f98:a763:f00e:e03b])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a802fae596sm23766755ad.73.2026.01.23.08.10.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jan 2026 08:10:41 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im
+Subject: Re: [PATCH 1/3] show-index: implement automatic hash detection
+Date: Fri, 23 Jan 2026 21:38:48 +0530
+Message-ID: <20260123161017.37827-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <aXMh0pYw2ZrptCNj@pks.im>
+References: <aXMh0pYw2ZrptCNj@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Johannes Sixt <j6t@kdbg.org> writes:
+> That would be a regression for users that currently _can_ run
+> git-show-index(1) outside of a repository with a SHA-1 based index. It's
+> not going to be a common use case, but I wouldn't be surprised if there
+> was at least one user out there that we'd break with such a change.
 
-> Am 22.01.26 um 23:15 schrieb Derrick Stolee:
->> Unfortunately, it also says "print a minimal subset" which in some
->> sense is correct by "it cannot be made smaller without losing
->> information" but we actually choose the maximal set there, not a
->> minimal set.
->> ...
->> You are presenting interesting overlaps of terminology and needs.
->> One thing that is different about 'git rev-list --maximal-only' with
->> a list of starting commits is that it wants the maximal set from
->> the _union_ of the histories, instead of the _intersection_ like
->> 'git merge-base --independent' does.
->
-> I don't quite understand how a union or intersection come into play
-> here. The difference between the two is that `git rev-list
-> --maximal-only` permits negative revisions as input, but `git merge-base
-> --independent` does not. In the case where the input is only positive
-> revisions, the result of --maximal-only should always be exactly
-> identical to --independent, right? Even if the revisions are on
-> disconnected histories?
+That makes sense, but relying on a silent SHA-1 fallback purely because we
+are outside of a repository still feels a bit ambiguous to me. It works today
+mostly because SHA-1 has historically been the default, but if in future
+git introduces additional hash functions or if SHA-256 indexes become
+more relevant to this particular usage.
 
-Ahh, it is an ancient history that I forgot how the command worked.
-"merge-base --independent A B C" does not do any "merge-base"
-computation over the commits A B C and shows the ones that cannot be
-reached from any other.  If it were to compute merge bases across
-these commits and then find commits, among the computed merge bases,
-that cannot be reached from any other merge bases, "intersection"
-might come into play, but I do not think that is what the command
-does.
+Though, I think based on the discussion so far,
+we can only show a warning like this along with the SHA-1 fallback like this,
+
+    warning(_("assuming SHA-1; use --object-format to override"));
+
+Do you think if this would be appropriate, or if anything 
+better can be done to handle this or
+is it just better to leave the behavior as-is.
+Let me know :)
+
+Best,
+Shreyansh
