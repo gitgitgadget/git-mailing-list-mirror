@@ -1,81 +1,87 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BD42857F4
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B58242048
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769188969; cv=none; b=Kikk4tPZrFgraBw30SwFx02VPmmN4lraKvoMNtNU7l7fFbVJKHGDfNVFBLGB2KVdkrcli38kLupRgAylV6oqKgjOlKYpZd11hb5XLOdXQs+M7XyQL9DT4IL1gdeTEK9InDgHK2r8+ZjXl+Q9c6jZtYKeuf2hId1CEVccdts09/Q=
+	t=1769189475; cv=none; b=ZrEqFhmAiBhqW4G47CuQBKKdDgjHMFOzKdYfgMDSotVVzzvlGozXa0DjTA1RR3bPVTVLyzSJ6/n4kBRvbOrsq+1UqdSMBJaqE2GyDgdXW3vWtUgc5jtRW7ITY/d0zrcWdTT7+LbHF0J2hyP3nQXEhfTeUaxP45IaCzit9thWtY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769188969; c=relaxed/simple;
-	bh=CvFxzYZDTcxWi5MmnuXFBeiw4JL+9ffj5DFdqwDsM98=;
+	s=arc-20240116; t=1769189475; c=relaxed/simple;
+	bh=+y0PYQ51Yu4KT0ob8lj3gs0cjaiYwf4hYUIBTsKptDM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L1J8lmbjFzunjYptPLTYL+9Bgs23d1d140iy4kXvIiP58BOo8agtFPiQmcskeJtyBIJnb1qCUXysp3UyZhVTC9kDk75rptsBaleyIJ5KuC/zfc8yrYI1cROtGVRGUypKTRwFcCs/hcmK9zX3Hv/k7CFL7abuHtSTf1hoxsX16Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UhGCckfW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z3SCEBri; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=tH0xr7LYAIL1kmzVjV4nT30AQSyHAQWXN1232ZOn1CzF6J07WyIeLCy4kNeIbOS8QtaxaX8dVw7Js4g6Amfitq0kC5ZhwY3ieWX0rtNUiwpFrDXcRNwpkizFL1ZZK3qnM+9/qxXlpCw6QWcPQJLMf4XCA+ewUQXllNmdevIJaXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dq0QVw4N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LDl4SVaX; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UhGCckfW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z3SCEBri"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 81C967A002C;
-	Fri, 23 Jan 2026 12:22:47 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 23 Jan 2026 12:22:47 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dq0QVw4N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LDl4SVaX"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 12D657A0016;
+	Fri, 23 Jan 2026 12:31:13 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 23 Jan 2026 12:31:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769188967; x=1769275367; bh=avMawZQHF4
-	ad8wltQDU6SrLVQ06nB5ZRkCh/CJGf4zo=; b=UhGCckfW/zu2LAGgRbzvo0AvAq
-	lA1O21a6qe1IpL8L0Wgps39ashWWSUbMzpJ3UNaoIRrIGDu6uHAtrEdjqDMj9VTF
-	kNnHTPnlDq2/G9dEuTLxSCiAzz73epjoAviTKHYjTgcn8/K6llWjZEJfHH/IX9YH
-	pNtbKMizDwhoZz+I5EPrC0xHXQ4cdMzL1f/S9227cdKNHI1RjjY48srzvHzoZyzI
-	KjMt1kqlbyhYF5jp2z4J+vYH12DqaFWuBmVSDqL1/gtwl0er+S8r3CMm9yjgQTW7
-	ZzTlhXgPNDlcMc05PCAxrbqFvEkIRK9ayoaHZjVJ5xnY+2jEEaVnEiIL6nGw==
+	:subject:to:to; s=fm1; t=1769189472; x=1769275872; bh=DCkS2Ovvf6
+	XSDoHiGWH97tuSZOqpjYjV/JspK8TjRRc=; b=dq0QVw4NkzBrGUyniW9iSo0gvI
+	1IehQ9mR8sbdSEiq6mprGSH/YMfur8HeKtWVBQiReWxkPC7MTYdLUNeLqai50/mG
+	zN4WnqOLJmkSAR824Ld6OBZal9reheMF9OETymBzd8DeMD21SJppu3UjcJNO1sEi
+	00k9BxzrVcB0+uJZAdzXJSlg15rm5QZdiFvw/6mYHLt66GJqxT1sVdFB+JsrDjzd
+	lR07LS/jfvQ1z+AzsE0l5lOPbXqb9Zoc3jeFDyRQNBIbuwVdoClPbct4NrL+eCWj
+	Npk0AfqVlDmHjjG3hXzSJhjS2DMwKsMRAfbrFwdCdbZ3l1BLC97v6ngMRhag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769188967; x=1769275367; bh=avMawZQHF4ad8wltQDU6SrLVQ06nB5ZRkCh
-	/CJGf4zo=; b=Z3SCEBriAzI32wTJzeOoKOIjkD8iitHVzTlpuYED7r3xGN01IU5
-	gOSqbt7isfijtFN6Wnd7YViOz1BitbyjTpx3vBJE4bcE5qau/EXL4Rvl0Eog4nT+
-	MjuKDdrS2WuiGBFfGqCVkUD9kA8LqBtPqnR2o9pS1k9EMRHctdCdQ372mdVstb53
-	+6Y/aLStB7SJHY80bp8pzVwPPOXrx/ogtzNKVWQKiCy9Zri1slH3LQ5Q8hW+WkB9
-	NyneEL/2g+LhTbtf0nUahYMUamhy+MMtsdBmLwyPpkfrSaT/JjAK1fcWWVVTu0+s
-	u0nVwqfCc8Api1c9YOb9o9VZ3m8PqUlwMQg==
-X-ME-Sender: <xms:Z65zaZNcB3xkPSSVeMQ1sBUgzhd0NjOdRgGV2BlhIZD-DSCHXCin-g>
-    <xme:Z65zafOEUHKtwxq0_YwjRT_WOYBfaIZHH7F0rbcPOFaAx3i3lfZFNyrBEHtSNDCGh
-    9tKg0ncMDyp3FtSd8I323-hY0JTes87_Fp-jBhv1sRTO92c1QL_Ww>
-X-ME-Received: <xmr:Z65zaRtxiTYpf2sTWQgNZDSPFmL9jDBoXr__IDms915GxrL3Wymv8tVOT4JIijotP64knvsb_pOpalgYmABSC_p36YtdMbl3S0bhEz8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelieefucetufdoteggodetrf
+	1769189472; x=1769275872; bh=DCkS2Ovvf6XSDoHiGWH97tuSZOqpjYjV/Js
+	pK8TjRRc=; b=LDl4SVaXY6Y9cuqw+AN4gIAULF5iG13Z3KVEOk/wgoewZYXncHa
+	s3lXSj9mXgPFsQrKJYdxwhMOOlN5kw66H1TXxQSm2EsioltQRxjKxRPmZpH206sp
+	4XDgey7Y5JgrQUeOdd7Z4et46JGkFr1/Vf3negg9M60f1aKQHPAJEaGUi2T0osJS
+	IzWtGnWXti310IDiNOuUMS+gb802FyONenppTIDQ0h8KrUb//8krazLQbCXijG2S
+	7ZSkBubHbFum5r2fXM7sFAC2z0LfefdzT8W/A1RDdFxUSVirY2t16TYH9uNXVAnX
+	7UsjetU59EGIs36ep+89lkYB3qttjMonYRQ==
+X-ME-Sender: <xms:YLBzaShPlANq3Mjfo2xQPEUgzNS6PvAe9QvZIGiSLUFIx0MH9cD0HA>
+    <xme:YLBzaWvllGUXMPxXqIANDHKLJFqq8fO131XGdVWpsIKsHejhFM1Iojo0SNOyuYwzI
+    tuKtvBu3n5llxMtGby8KIdUrCar5zQOn6sgtsteC8kep3sUc4QPEg>
+X-ME-Received: <xmr:YLBzaT4r65dHGPevOmKGipp-nYXLiu3KIZ7LnXV1a2eC8AY2S2c5p7ell2H74SUUvawjpfMR1Kmd2Xh0MgvjC0o-EZhwhGfgu9S1lDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelieehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Z65zaRXmaM0V8hNe11FGVRKfQkRPZX_RJC58gaew2p3aEtpRuQaiHg>
-    <xmx:Z65zaRtWThAIWwSETCW6YAZDyfSWrm5PKSzysZ29AeHkvc-PWEdg9w>
-    <xmx:Z65zaVX1bYvSNnUOpeKyI0sfVZRiz51e8jt-24QkShHjFkD91H7p2w>
-    <xmx:Z65zacmTxmt5pTX80jd_baqSCAFkT9c4hKphTazaSJnT7yuHsaOZQw>
-    <xmx:Z65zaTcaql3HTHIlbVZ9q3ppLsina5ociW4MRj8LX3uaeOjtzkB1j7Jc>
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdr
+    ihhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhushhtvggusegtohguvggsvghrghdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:YLBzaSONEH3sjgJ60h71VEpgJfzjRgurvD5lqC-KIPeWTsxeZ_VgaQ>
+    <xmx:YLBzaRtZk_tgMhIHT9XzLoFxXMpOpAUwriYlPlyT4xyO3wEnMLlp_w>
+    <xmx:YLBzaVZR351XfifTb4SZe8isXVwY1ipjMMNN_bHMhAOVpxhbLgEjag>
+    <xmx:YLBzaTxceXida9u5g8L7kDhfIpO0R9aLOlcKfJDEsjxdc46ItsGzcw>
+    <xmx:YLBzaVcztw0xp6lNzS0HzPSELCJRV17UVbcN0PatmQTE4pW3BXZ2lblJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Jan 2026 12:22:46 -0500 (EST)
+ 23 Jan 2026 12:31:12 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2026, #08)
-In-Reply-To: <87v7gsiehe.fsf@iotcl.com> (Toon Claes's message of "Fri, 23 Jan
-	2026 15:35:25 +0100")
-References: <xmqqikcsk5qj.fsf@gitster.g> <87v7gsiehe.fsf@iotcl.com>
-Date: Fri, 23 Jan 2026 09:22:45 -0800
-Message-ID: <xmqq8qdoi6qi.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Gusted
+ <gusted@codeberg.org>
+Subject: Re: [PATCH v4 4/4] last-modified: verify revision argument is a
+ commit-ish
+In-Reply-To: <20260123-toon-last-modified-tree-v4-4-86bf97bad4e2@iotcl.com>
+	(Toon Claes's message of "Fri, 23 Jan 2026 15:33:04 +0100")
+References: <20260123-toon-last-modified-tree-v4-0-86bf97bad4e2@iotcl.com>
+	<20260123-toon-last-modified-tree-v4-4-86bf97bad4e2@iotcl.com>
+Date: Fri, 23 Jan 2026 09:31:11 -0800
+Message-ID: <xmqq4ioci6cg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,22 +93,31 @@ Content-Type: text/plain
 
 Toon Claes <toon@iotcl.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> * tc/last-modified-not-a-tree (2026-01-16) 4 commits
->>  - last-modified: verify revision argument is a commit-ish
->>  - last-modified: remove double error message
->>  - last-modified: fix memory leak when more than one revision is given
->>  - last-modified: rewrite error message when more than one revision given
->>
->>  Giving "git last-modified" a tree (not a commit-ish) died an
->>  uncontrolled death, which has been corrected.
->>
->>  Will merge to 'next'.
->>  source: <20260116-toon-last-modified-tree-v3-0-e6ade4dc35ab@iotcl.com>
->
-> Sorry for the late response, I decided to reroll this after all. Changes
-> are small though.
+> +		if (!repo_peel_to_type(lm->rev.repo, obj->path, 0, obj->item, OBJ_COMMIT)) {
+> +			ret = error(_("revision argument '%s' is a %s, not a commit-ish"), obj->name, type_name(obj->item->type));
+> +			goto out;
+> +		}
+> +
 
-Thanks, I just took a look and had a few comments on the first one.
+I do not use l10n version, but I am not sure how localization should
+work with this message.
 
+    _("revision argument '%s' is a %s, not a commit-ish")
+
+There is no way type_name(obj->item->type) would be localized in
+this code (after all, it is used in format_object_header() that is
+the helper function to prepare the contents of the loose object
+file).  Yet, it is tempting to translate "commit-ish" for those
+preparing the .po files, which would lead to mixture of C-locale
+'tree' and end-user-locale _("commit-ish").
+
+I am wondering if we want to avoid this mixture by forcing the
+C-locale for both, i.e.,
+
+    error(_("revision argument '%s' is a %s, not a %s"),
+	  obj->name, type_name(obj->item->type), 'commit-ish')
+
+We can leave it as-is and polish the error messages later, of
+course, but I am curious what the best practice is.
+
+Thanks.
