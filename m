@@ -1,118 +1,138 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C32E1E0DD8
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B549426B2AD
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769190517; cv=none; b=XhyLqwcyINxYv22/LSB8+eTqflb9gIsQufeAtDpfio8g6cWAZQUqr9269qTQeDFreDKYI6urVLaHjIG6BDZ+7gt5mvWhTVqcB6TdxQTu+2pUXNturbSVYlxeaGqD4+v6UJPCn+KD2f61pvT7Z2FtJ5k5lZKEVBLCYTHAQ6L0FQM=
+	t=1769191042; cv=none; b=KX1Esbp8uyl7ksbpdJZjcWDXIRh9C/inNrb0Lj/drO2liQo/ZwOD4x/gopAp0aVKPH8xiMyFd9id1o8gp9DcZKzD+AYfb76YZHSC5GPWIZlJVGO4dU+J/dk5xEIzQuLJmjIoGxCnSyyNgW/AnbDNtXXFPcqFDffkRQY0i71BbSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769190517; c=relaxed/simple;
-	bh=q68CAPdIeMfPJjAXwWfg134ASvgnb2sw/A+TsY9gGwo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VEvcgpbhscpeZzX8aQSQ+kJAxLD+8UL7AblFymqDlF0kogV6IQtLvyf4neSkgQ0b7Ffd57qtsbz1eCwvlzjUrDupRp5xWzMigbQZRyVgWjKSDx/Dl7HchGZI53wuFktk6xKHZXjNMvOkdQMgfjO4ioe9BjaV/KkqW53V8aSvbTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=pcQQOH7T; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1769191042; c=relaxed/simple;
+	bh=hsnN0sxEjmJQBTQBb+9HlVLrrXCxfuqc2ZZ7vy+ZGE4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cT/EyvGWx0D5xbVlCKqhcrRkmCaYTPB25c8MbjMULw3/xZtZc1PPcUGNB6zft4BkIH/Q/4+ymjn04ATZkQXqDs5q6fepbS/dIZbFX3m0RB4UC+SDz6m5f8i3MIoD7as//z0SC3rBjhMEqFbVc9LIDUwK/+GsiUJrkSehCjxzB7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YJqC3jXa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V2CpZwgz; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="pcQQOH7T"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-7927261a3acso27841057b3.0
-        for <git@vger.kernel.org>; Fri, 23 Jan 2026 09:48:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769190515; x=1769795315; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SzevXAlXQsFX2zdwzlfYNHelvicpP6e1Ml3bp/xjEOc=;
-        b=pcQQOH7TK0v4YYRKriuIiOnUt9y4rJpXNnBYULWOoB6ide1tqChWMle61yzZM2DZQg
-         nxVgBY3W8GhYmi72hlncHUPd9pa0Vwr2lpiGEXQXwfxXLJUhMJpGzlN44Vedc93nhXFy
-         Z2PaKSTL1jwD7h7K5lMz9WpODgF/yMwcLxgKG9sL0xyW5gpJ2GlXlgRACHADMyvSeU6Z
-         p3P5U0bgCtprgpdRaoFRuebUfYW62pf1UDizdWNpMjzKUvlJm0Ho3aCR2LR3ui/V+KPV
-         wVW7DBh9mgIaXOIxCwKh/LKP8kEPUPxmS/RncfhgzSrAvPPc6wJA6Sjie69/hKw8J815
-         TL7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769190515; x=1769795315;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SzevXAlXQsFX2zdwzlfYNHelvicpP6e1Ml3bp/xjEOc=;
-        b=d2/Q5zV/KY0bYygYaitHGIc2V9HUiPoVtFZeRzSd1sJyXg8CvvxEJvfsl6KqdgS/uO
-         5bBIUeQFTBDNcXgZSkK+BNb5SUwOlk/OT/V4241yBHJQZKzRALjj71VfM9Vf+hkMIklS
-         A4BZDdBycK3SWFr1p1ZAl7MfVGIFh83fJmoGQfFvmLRVLzV5eMPN+Pc8HA1FU9clKrik
-         urzqf9HnUg/fYLKLGeFqcJqeneMg3ysFe5DEvm1/HuMI+FS3iGzWIqEaEFlfFUetzGVI
-         0+idRQ9xE4dg+K2TuAVkI0iQLVaci6xjYsjKnWpgHqGkBD+t21dOSODrr4e1sJYwIkWC
-         iU+g==
-X-Gm-Message-State: AOJu0YzPcHnwAyYUZo1vCbgaF4shK6aKz+Da+ywgbuXenQEpJEUBHfxZ
-	Wcf38Q9qQwwtg/yl0m5sC8kXSchvEQl6uv78DaxQ94DEjF6BS/MVCUgo5Z4eC5gVCW4=
-X-Gm-Gg: AZuq6aLYk2Vg6jMl9/TI03ghK/EepqLlgArWD/ylZkoGSTptGq0sfWW2SFKUs4Dd8GY
-	/jTxSgHC+NpgMOLjsJ2Mnvr3Ekuhkt7RZvXiC4ZEiYobd8oyGwSw9HHoFsSa/YgnYdSipQnAcBg
-	x/Kg3lheXssBKJA4w+3QvC7A1+G1tHNx/jpEQdLx+0EvQyRBMvZpi6z4ZBACwPoxUzAmUa7Pwk5
-	kZR8ZWIPX7n1gPgJBdDx4P3rnDFYx4YgsFaiy64f6eKQT9AZqgovdOPPAxRVMdWDYYuCtUOYPmY
-	9WAiGs29f1NrWv1kNsHdb22xwEpGgY2K2jitLAuUx7L+E4PJT3JAds8YN0195yxRyuhNzYdIuZl
-	GAKWRxwjfVTOCPjVShwWUTXZgSHCr/g+4sPnh7hi50ibmQhz73YF56lvIEFKb701i3z6PhfZgpV
-	eV4EK0pkzV0C1rA6MvXbpEa+yLENfamyx6lwJnUy/WXNVgDIsfsLnMk9q7kwgLPwllTvYAHok5G
-	yuiB8PcP8vLHTHc1g==
-X-Received: by 2002:a05:690c:4483:b0:794:e8e:745b with SMTP id 00721157ae682-79439a42df9mr30783257b3.70.1769190513575;
-        Fri, 23 Jan 2026 09:48:33 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943b2bb70dsm13474097b3.45.2026.01.23.09.48.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jan 2026 09:48:33 -0800 (PST)
-Date: Fri, 23 Jan 2026 12:48:32 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 11/14] odb: introduce mtime fields for object info
- requests
-Message-ID: <aXO0cNaY3DWu6aQ2@nand.local>
-References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
- <20260121-pks-odb-for-each-object-v3-11-12c4dfd24227@pks.im>
- <aXLJoDdoEyKXKtBf@nand.local>
- <aXNCq8h94i2Z6uSa@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YJqC3jXa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V2CpZwgz"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C82AA7A0095;
+	Fri, 23 Jan 2026 12:57:20 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Fri, 23 Jan 2026 12:57:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769191040; x=1769277440; bh=Xf9m2Ws/Qc
+	xQEpyjI+CewdDndHTHPBVXOxuZrSTG2EA=; b=YJqC3jXaqP/FPKnTxwMNWMR4hU
+	OQin++SwZ4xU14yZ8orvq7kSwBkR5bHxQGs9+gp2k1/lYR2ijaaRw0L6p4ckVadG
+	BtqUW5amvGFAx+1rmg4cFZ2Xf+F5Ii80rhore7SxJ/NPNsb3iqhnr40pHsKkjajS
+	7J8mD924mVaSvlKV+ADdCFqAgwJJcHZ9Vj9BmpO6gKtddXRiYnhpxqdhgD4OXmN4
+	zSZlz1BD1kpYrjsvFYl0LzqRPTauMZZyQqbH7N0NOCZr7tey7d2Sm7SbUsDNzkfw
+	W7PdYTcsPL+EkcAL2dm1bh8T3m6mwr9v3Gwr3XDnd46huR7ESy25mkqebw/g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769191040; x=1769277440; bh=Xf9m2Ws/QcxQEpyjI+CewdDndHTHPBVXOxu
+	ZrSTG2EA=; b=V2CpZwgzSJtSSBkt8OhOzWPrPHGFVUPt2kHS+28vRHlCkNZiGIf
+	DwnPx3CIfAQeh0JYLyk/faSU5hZ4LMSpAX4akBKkHsuTuSyZ4jGzt43u8+Lyg9ko
+	vQJWwr1KjdqZc8zssGlW2RwiobU5/OPOoL03M8iHImefV4Kry7rt/tD4rOWppbRi
+	DiG/eJjYnQBEXF5Fk4lNbpe2kvnHgoJAtFScqFPbhmmulcmYATrRMjXUNKfsrc2a
+	OuEWWpZxRFni54zW++z0ivvaHIw3VqZZaRdpnEC55eUJAzQyCNHMJVjlENF063yK
+	paqr+BnmoSoxIm1HyJ2P+HsJ4GIXgpTm8Dw==
+X-ME-Sender: <xms:gLZzac5drJmaCHihJOwyiswCMw2zNwXniiHk97L1BHitPHza_QtU2w>
+    <xme:gLZzaRlGBGD3J1kxyX5TN9KIXZKvAv0S2eGUiBig07AoTXJeEjdOpm2BcC56ckowO
+    ibZMQ5W8GBmgReuSrM_xeVbC6Jdf790Cjup9MpAk4-QW1a4TtvY1g>
+X-ME-Received: <xmr:gLZzaVSpm05rCcgG9euie5OpE8hnf3dgFs0YkUzSsTlBP5eNFvcgx5QvX47LH6oyjAkXz6Zrv4OXcees6qCxG_ogS3aEQIm_LS9ujJc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeljedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:gLZzaYEAxicGbQqSSAy5Za0hcofKLK3TtTmZw_L9by4_rcDwejmR6w>
+    <xmx:gLZzaSHsI4-DLO3WYY26FY2_y5LboQ7hw9kE01sxRREJl-uD50AahA>
+    <xmx:gLZzaeRODRQymvDMeYL7nlC4fxw8vWC1INcZMFmgezCeJM5nih6hOQ>
+    <xmx:gLZzabLlw_49quwTRDvQDWI8yN8mMyh3MUWI-Ny9M3dJnLOt-tN5UA>
+    <xmx:gLZzabDvK4WmXugYi2GQgAWZ44RGWyFGE9nBvftVP1KlDz0gxcxhn9ZK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 Jan 2026 12:57:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net,  newren@gmail.com,
+  phillip.wood123@gmail.com
+Subject: Re: [PATCH v4 6/6] fetch: delay user information post committing of
+ transaction
+In-Reply-To: <CAOLa=ZSLPasvFrCgKzVOq7mDXiqX9SxoOf0MZdzBXOLn73okMQ@mail.gmail.com>
+	(Karthik Nayak's message of "Fri, 23 Jan 2026 09:49:46 -0500")
+References: <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-0-2ddba0832440@gmail.com>
+	<20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-6-2ddba0832440@gmail.com>
+	<xmqqldhpmmrw.fsf@gitster.g>
+	<CAOLa=ZSLPasvFrCgKzVOq7mDXiqX9SxoOf0MZdzBXOLn73okMQ@mail.gmail.com>
+Date: Fri, 23 Jan 2026 09:57:19 -0800
+Message-ID: <xmqqjyx8gqkg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aXNCq8h94i2Z6uSa@pks.im>
+Content-Type: text/plain
 
-On Fri, Jan 23, 2026 at 10:43:07AM +0100, Patrick Steinhardt wrote:
-> > > diff --git a/odb.c b/odb.c
-> > > index 65f0447aa5..67decd3908 100644
-> > > --- a/odb.c
-> > > +++ b/odb.c
-> > > @@ -702,6 +702,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
-> > >  				oidclr(oi->delta_base_oid, odb->repo->hash_algo);
-> > >  			if (oi->contentp)
-> > >  				*oi->contentp = xmemdupz(co->buf, co->size);
-> > > +			if (oi->mtimep)
-> > > +				*oi->mtimep = 0;
-> >
-> > Assuming that you do not change the object_info request/response
-> > semantics, I wonder if it might make sense to zero out the entirety of
-> > the response section as a belt-and-suspenders mechanism in case future
-> > contributors forget to assign zero to the new fields themselves.
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+>>> +static void ref_update_display_info_free(struct ref_update_display_info *info)
+>>> +{
+>>> +	free((char *)info->summary);
+>>> +	free((char *)info->success_detail);
+>>> +	free((char *)info->fail_detail);
+>>> +	free((char *)info->remote);
+>>> +	free((char *)info->ref);
+>>> +}
+>>
+>> This answers "no" to my previous question.  These are not borrowed,
+>> but are owned by this structure.
+>>
 >
-> Splitting up the request/response structure as you proposed in a
-> previous patch could definitely help with this. I'd prefer to rather do
-> such a bigger change as a follow-up though as it would lead to a lot of
-> churn.
+> Yup, cannot be borrowed, since those go out of scope much earlier.
 
-I'm OK with pushing the larger change down the road, but I am a little
-uncomfortable with the interim state being introduced here. Perhaps a
-compromise here would be to have the caller supply a pointer to an
-object_info struct, whose request fields we honor. The response fields
-would then be written into a separate object_info struct via an
-out-parameter.
+And the reason why they are marked "const char *" which typically
+signals that they are borrowed is?  After all, that is where these
+casts inside free() comes from.
 
-I don't know. I think that ^ this suggestion is kind of ugly, but I'm
-trying to come up with something that doesn't introduce the risk I
-described above in the interim between this patch series and the one
-you're proposing later on.
+There are two schools of thought.  One (which I originally was in)
+marks resources we own with "const", if these members will not
+change once we initialize them and we want to avoid accidentally
+muck with the contents of these pieces of memory during the course
+of the program.  Those of us in the school often have to cast away
+constness in their calls to free() like the above.
 
-Thanks,
-Taylor
+But I saw many of our developers squarely fall into the other camp,
+where they always use a non-const pointer to point at the resource
+the structure owns.
+
+The latter school of thought opens us up to bugs caused by mistaken
+code that modifies these memory regions that those of us in the
+former school would use "const" to avoid, but it makes it easier to
+reason about memory ownership models by signalling if the enclosing
+structure owns or borrows the resources.
+
+I'd say the latter school are majority of our developer base, and a
+lot of existing structures follow that rule.  I was hinting that we
+may want to follow suit in this new structure.
+
+Thanks.
+
