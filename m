@@ -1,113 +1,213 @@
-Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7673D994
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 14:47:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769179638; cv=none; b=RYJNpKqMJOmhe/ZVYE5js/7M+hBRNRTjheTjreQrlfaBmmNHLm+6NAzeALKIItxsu+jxSJ2DWjNTECaXfdstLDWu4pKcxQWvePcVDycKC7nDK/DU/6w1mSQ8fgv4ijSF8pjT9VncXSTSebEuCdyVKsWTQuvbpkyzx4xyXzZC3WM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769179638; c=relaxed/simple;
-	bh=fblhkH26mlNL6HZuw66NIYGuVQOk+fBez82v6VUQ6Ts=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=AbLB1E9CQNJQTXyhmCNvB/SGpieObU/kHCfb3LKoMYYz2/dtZetRJhECMm5jvEsmYbcf/7hAubetTr1uwlihbcscN7xF5P86AvOQk+Kj/0yJQpVh1etUbjGII56j2Eu5imWH8ePSel8Y0rwZHQEtSrJpOzcohxXJWqI3IWsbTps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DZ3HW2zK; arc=none smtp.client-ip=209.85.128.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA1F24C676
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 14:49:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769179791; cv=pass; b=KVdGEZoI5UjvJDdAC/9DoySG8RePhzMcKdBt6YLvExM07zuh9HzSKvJZmKjT/nHK9kmp/2uO1v2a0BiQ1o78JiouV02J3sPdCFFGOEHdsTnJpdt+QyBenvmG5Som/ABSG2BnkM6nYwQpIODhSJ6KfjPmX9Hsg0wkaf83f0WgZkA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769179791; c=relaxed/simple;
+	bh=c6AjoEKnrghhEmVj84i6AsLZpaLiGL01iY8zefXaHI4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Eb7SGmM/O8x04LDELFEpwdcs9I3fuH99MWjarlbHA0P/hIJm5JYO2kYPyubINlLchFkcW96kfDEmLBJPQX89uTlKlBXS1/hu4LAI3pGvC/llQOxhoOYYBjYnRAH/tx35LBWCV1mB8XJDVU8vp5W68x0BY+II9K3lrm2qXQWfq9Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bnjSqNEG; arc=pass smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DZ3HW2zK"
-Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-47f5c2283b6so17242505e9.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2026 06:47:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bnjSqNEG"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-9480078b2fbso2290378241.1
+        for <git@vger.kernel.org>; Fri, 23 Jan 2026 06:49:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769179788; cv=none;
+        d=google.com; s=arc-20240605;
+        b=X9vmte9j50lkYQHPRI5qCKdu4D5ExUvpctT4g+fx+7PL6enCZK8edREeKNrjBjBjOE
+         63ao8s5GSmDFWyPNgyw7bewBhRjS4hV3TjraZiSNf69RKdRSoIz4XtyiWO6IV4Dv3aMT
+         QraV1WxYQOvS2TvDIoiAt6dnDXSCySacoM0n0uhTgye1oiDqg6fHImKl6DASfhw70wyg
+         RTBViZhwiYDtOCk9d9I4Rfui675Oa6IZyMrwo9UO2zy1ox2c6kFfTB4isVi5djRVkZno
+         SfXixaTgLq9/q835zgYjdURSFY3bdcoyDRoz31z4qaBjhIxrCCxdNtoDPTiTJ0wbSQjW
+         BjMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=qDmddaS7YI0FLs8w7bPSM4EF+f2gT+OamcDSPM7zk0g=;
+        fh=LrV0gm1y5AUAMOc6gVEyY+U3tdxxtrFOSNFgmZR9U/M=;
+        b=KTYPjZ19CysfrPdJzjzAbM9RrwJtvLm1jSBdCOvBYpWUg1jl2k4DqCmrrE0joT9C/F
+         KwV/MQVXQKvlBRL9EGBg3rE5vUSnca40o0voIqEkJTp3HrKBGmJxYNloZKbvcg+Cvj66
+         pPE+CtMpR+3O1xA43gv//+btMxB/BoQRCVGwQbYVUYWoL7qryZaCalXaXPVQ44/zuqTx
+         qCCwoehPL5T9Zb5RpuDlZc1QKTuv11FFiAmJghP9W8GpnzInlI33wzMjTZXTomfzmCEF
+         ajFXV2fF2NcFhZUNcTB/59q22Xv7ML2Sc39EhIdpGMZOOoFjLhcnnWHgPWj1fxHwFBH0
+         /W7A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769179635; x=1769784435; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nDE6AbjD57WxyBk+EuM+bSN7ao07zEAXc4Jpz3YOapY=;
-        b=DZ3HW2zKrCvIfv8Mr/EC4dnTGeN77e1ngs30U5H1SOVLpQoLTO9Kd1vv8mS4z6uI6S
-         DrT9KZN7ofcwdQ98UYW50GGoJqVq9ueieVkyuuPdwz566yzAL5Ti2ItesKX152bvotgu
-         q9Nmw4kiwvdmiFjNEIz0rTmCRSH+uaNl4+l1zMiREpbhe515PyFn1AW8f7QCLOsoveKq
-         uwlWy5WWaxVMrv0GOEMAk6Bf8LJcTwkM+Z4GFU4rvvOmtqKOekD5oMnTrvruviWfF6nU
-         xSNdMNPcgsnKXsHHoARq+P1bKTq40152KhPnCzW+Z/U++Y626dmWvFplC6MZ56wGnEFL
-         DUIQ==
+        d=gmail.com; s=20230601; t=1769179788; x=1769784588; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qDmddaS7YI0FLs8w7bPSM4EF+f2gT+OamcDSPM7zk0g=;
+        b=bnjSqNEGk6hMTvLlaJvkGlMNfaJx9jD6zAr15WH8eRNV2W1qN3iIrlgezqYet8eVWg
+         IEEPuTKJ5TmUI7bMTRvdxoHWJ5A9Sm1yZqFvulxABmikLpLYEylWxxzPwIyLXP+E2cNN
+         iv5sjWsOIPE8B6f8sYmIPbzwTNIIaMS9PUCC8GAKPNutlFlpX02Vu2d1ZIYznVf2W7e1
+         +YdxO1kCZKmXMwb08AJFv5Soj1cNtbLzYAl/OnIKh3NJdYpncfBl/b4sbas+28iR7Rps
+         3agJIZOLTgBUs63/AUnbKK/Y0UfUuXSCpodpBjavwyXWJ9bFhddVQHkWHKdoC6k7OSyX
+         nUhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769179635; x=1769784435;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1769179788; x=1769784588;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nDE6AbjD57WxyBk+EuM+bSN7ao07zEAXc4Jpz3YOapY=;
-        b=oFdSrulGWrbV1odyAWp+A3Tg/xviOLKMfyX9vxSlx37zIRrMsbNiG9d2pyLxVMnjx2
-         nnqIcpYThCDhxN4ieAwevhjwZVyzBdqlQpvV7DgiYujl6VfJSypJlQ0POL6F4b7Zw5SR
-         jZNrM1UfRn4fcp5cvXa3/z1p9vWCBzx1FNiUzj/FC58Iaq/m28qWoFvu1J+WvsxHrSw2
-         4cudlH5Lw4XZQ+3WCHiS8Se7PVykg9htwht5Pg/Lz+Olu1/MVPli6IUuJ2AGJOiDWocW
-         N1r4O0a6sZ3N6oizHN0kMjQ/NeHmOXhyT00dD3UzWcty5kHiSaQGOsqExsHYEFppzV4A
-         O/2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWnhOZV+zx8q7NqVKBluhuvK3nLlKnfDqHqk0bEdu2lMgL2oj/loAFEsGQYb/boW420nes=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoOHmMNhIESnJ/AOIE8Jpf0BA3QgcL3mEYoWK+hlDJaaUDH62K
-	rTVhhkCR03yq/tZoAPZ6a0vSl5ksbwybuM7GCWHWwEQlcwWb4a/aRAhI6sXCkNky
-X-Gm-Gg: AZuq6aLHug6zLYvSyuVYiaPY4Tp8OCs7PyrqfqBxsPLS+2Zj3gCo40lPLs7oYy7Kpfa
-	lxIRw3gp0ZxObyxgIjiHMmIM0hxYx1/nWwO6wz7RPy7gpTU35VZlDD80hrF/JydOYOEAnCh/wqy
-	O/C4SsStiKACD0DspawY5dq1AU2ZOvYE6xutvbbkNUwcldU6GOxC9Xf+IJmqFVoFAvSP1QQ6ek3
-	kAgr2+gnlXAGM3CeBb4OmPVOk76QaxL919/ZhB4ETggUwt8QdM+mK1nP4NjGAygUCWIB2Ls+jJ1
-	gOiiJCOBF/bzxeImSKV46VOgkLpH87BfsKXLPgaJywYLHvtaFLb0jzo1wooV77pYSeAMq1n4iPj
-	C7fnub3fgbo8wxylyWFKJGetgMtZ0Hp4dD4F0Og05Mse3chRcV4aWu0H3ECSmPWZsRVa8oEWtc6
-	P1l35fsKwXNoZpz5z6exfLFvXhdG3VXFQEd7YdFkoN3m7T6xyvRHm3ZlqEV1BoPLoreg==
-X-Received: by 2002:a05:600d:8444:10b0:47e:e91d:73c0 with SMTP id 5b1f17b1804b1-4804ca6b2a9mr38345265e9.19.1769179634897;
-        Fri, 23 Jan 2026 06:47:14 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1f7b4d8sm6997602f8f.38.2026.01.23.06.47.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jan 2026 06:47:14 -0800 (PST)
-Message-ID: <a29ce07a-9585-475e-bb3d-4742f2ec400a@gmail.com>
-Date: Fri, 23 Jan 2026 14:47:11 +0000
+        bh=qDmddaS7YI0FLs8w7bPSM4EF+f2gT+OamcDSPM7zk0g=;
+        b=KeQu2dTgoRsOYyUGSdBgP61ZZNQCauV4QiU3Zt6sbtG5knYKNAQNSd7DG4rzvZkdXr
+         0kmCS2Q5cXTcRyUl2po6R3GmTQGJYxoXhYM+KG0QAMW9aMpEl9CMQ1hTnPVtGQykaqI4
+         2ze8N2hs+Srrr44tU7nwvrquqxcuC0dVn0XYUc3yOSeqbCPGU5RWcCJxzO57sgbyTfOF
+         pE5BBbx0/DGGilvvem5HnncAQHCSNdU5W3aDygNAgiZTCJQNDz5/j+t5TJa5SdgUq2x1
+         gWoG4OVl3uOJajJTrwhqMb7P6V3OMajMaqQ/q3EhNZ0Xo0r3/Z8QSbvWwI7K6iy0CPN7
+         JUAQ==
+X-Gm-Message-State: AOJu0YzSP55ngGC/xHDZJv0X3ni0VjCABdZg/GAiXS3ZbWipMAroOfjw
+	mwhIaoSqtDhn/ec4kRTCgPT3sfGjWBlmvPwYmZKW6FdwfngRxCAB1ZCFc6xma5utsUAgV2CoFCK
+	E+ptKNwDJ89D2YGNVWMMDm1ITGgw9TVg=
+X-Gm-Gg: AZuq6aJNvEn53ExTOKeoukObxRz7D6uma5a+2I7fcE8rUA73xrKZn18sObo9qrZvHfc
+	HQLiTizxmFXRC8M5uc4oGooui+jw4Px4Mf9g9TZGL4bhvWwMMAmPvAfl8FnshMdiriEn2btn0X0
+	DIp1Fyd1/eNFDLf5WQqJcFvlu6f/QeJYAkgBXVUia4zyiHue6eC41x3rcAycFDkvCNi5XzXLCMH
+	icZZu/SA00EWGHTJ1ov5z6xWAeSnWtlobxcuSHlykOu0VdGCYGhfI6xXWfKxZfb8xT79AV7orXJ
+	q8s0wt/fterhao53w4GNhPSIrzyoi9SsU5wR3j/o
+X-Received: by 2002:a05:6102:5108:b0:5f5:2954:d1e0 with SMTP id
+ ada2fe7eead31-5f54cbd741emr1058225137.22.1769179787868; Fri, 23 Jan 2026
+ 06:49:47 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 23 Jan 2026 09:49:46 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 23 Jan 2026 09:49:46 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqldhpmmrw.fsf@gitster.g>
+References: <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-0-2ddba0832440@gmail.com>
+ <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-6-2ddba0832440@gmail.com>
+ <xmqqldhpmmrw.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] ci(*-leaks): skip the git-svn tests to save time
+Date: Fri, 23 Jan 2026 09:49:46 -0500
+X-Gm-Features: AZwV_Qi-gyNVrU7Sla_hB8f5I1yRWkEg0lTk2jh-wcyTLhHRFO9JjoK05q_rLEk
+Message-ID: <CAOLa=ZSLPasvFrCgKzVOq7mDXiqX9SxoOf0MZdzBXOLn73okMQ@mail.gmail.com>
+Subject: Re: [PATCH v4 6/6] fetch: delay user information post committing of transaction
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.2031.git.1768584676520.gitgitgadget@gmail.com>
- <b649f137-7140-4fb6-848a-b3408e54bbe5@gmail.com> <xmqqa4yc5brq.fsf@gitster.g>
- <79c29032-dc32-4030-95ad-dfbd50d9b6ab@gmail.com> <xmqq1pjk2sv2.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqq1pjk2sv2.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, peff@peff.net, newren@gmail.com, 
+	phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000ccdd8f06490f4413"
 
-On 20/01/2026 15:42, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> The patch looks good to me, it is very convenient that we can put the
->> test in the library files rather than each test file. Should we drop
->> these tests from the ASan job as well?
-> 
-> That's probably a good idea.
-> 
-> I also was wondering if we want a blanket NO_FOO_TESTS that we can
-> use instead listing all.  That FOO should not be SCM, though, as the
-> reason why we exclude the tests is not because they are test about
-> foreign SCM.  We exclude them as low value because testing them
-> exercises little code of ours that we may make mistakes these checks
-> are trying to uncover and that we can fix when they do.
-> NO_FOREIGN_CODE_TESTS?  I dunno.
+--000000000000ccdd8f06490f4413
+Content-Type: text/plain; charset="UTF-8"
 
-Having a single Makefile knob is tempting, the naming as tricky though. 
-We're skipping these tests because they're scripted and we already have 
-leak coverage for the git commands that they call, the fact that they're 
-calling foreign programs is incidental to that. If "git svn" was 
-implemented in C then we probably would want to check it for leaks even 
-though it called a foreign program. That's a long winded way of saying I 
-don't have any better suggestions!
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> +struct ref_update_display_info {
+>> +	bool failed;
+>> +	char success_code;
+>> +	char fail_code;
+>> +	const char *summary;
+>> +	const char *fail_detail;
+>> +	const char *success_detail;
+>> +	const char *ref;
+>> +	const char *remote;
+>> +	struct object_id old_oid;
+>> +	struct object_id new_oid;
+>> +};
+>> +
+>> +struct ref_update_display_info_array {
+>> +	struct ref_update_display_info *info;
+>> +	size_t alloc, nr;
+>> +};
+>
+> OK.  The ref_update_display_info structure is full of pointers.
+> They are of "const char *" type, hinting that they are borrowed
+> pieces of memory, and there is nothing to clean inside, other than
+> the .info member itself?
+>
+>> +static struct ref_update_display_info *ref_update_display_info_append(
+>> +					   struct ref_update_display_info_array *array,
+>> +					   char success_code,
+>> +					   char fail_code,
+>> +					   const char *summary,
+>> +					   const char *success_detail,
+>> +					   const char *fail_detail,
+>> +					   const char *ref,
+>> +					   const char *remote,
+>> +					   const struct object_id *old_oid,
+>> +					   const struct object_id *new_oid)
+>> +{
+>
+> This helper that consumes the structure is used throughout the
+> patch, and relative to the previous round it got easier to read.
+>
+>> +static void ref_update_display_info_free(struct ref_update_display_info *info)
+>> +{
+>> +	free((char *)info->summary);
+>> +	free((char *)info->success_detail);
+>> +	free((char *)info->fail_detail);
+>> +	free((char *)info->remote);
+>> +	free((char *)info->ref);
+>> +}
+>
+> This answers "no" to my previous question.  These are not borrowed,
+> but are owned by this structure.
+>
 
-Phillip
+Yup, cannot be borrowed, since those go out of scope much earlier.
 
+>> @@ -1965,7 +2090,17 @@ static int do_fetch(struct transport *transport,
+>>  	 */
+>>  	if (retcode && !atomic_fetch && transaction)
+>>  		commit_ref_transaction(&transaction, false,
+>> -				       transport->remote->name, &err);
+>> +				       transport->remote->name,
+>> +				       &rejected_refs, &err);
+>> +
+>> +	for (size_t i = 0; i < display_array.nr; i++) {
+>> +		struct ref_update_display_info *info = &display_array.info[i];
+>> +
+>> +		if (!info->failed && strmap_contains(&rejected_refs, info->ref))
+>> +			ref_update_display_info_set_failed(info);
+>> +		ref_update_display_info_display(info, &display_state, summary_width);
+>> +		ref_update_display_info_free(info);
+>> +	}
+>
+> And after a fetch finishes and we consume the display_info, we call
+> _free() to release the resource held there, plus ...
+>
+>>  	if (retcode) {
+>>  		if (err.len) {
+>> @@ -1980,6 +2115,9 @@ static int do_fetch(struct transport *transport,
+>>
+>>  	if (transaction)
+>>  		ref_transaction_free(transaction);
+>> +
+>> +	free(display_array.info);
+>
+> ... of course the array itself, which makes sense.
+
+Yeah, the CI also didn't show any leaks, so we should be good.
+
+--000000000000ccdd8f06490f4413
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: ec4b5796b44b003b_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1semlvZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meCtzQy85UjFKRHlWelpqWGtxWldweExOeS9YdkEwdwo4czBLbGJGTURC
+aCtxZmY5U2FWalFwSjFReHRSYjQ4SFFHM0xxaU1CR3R4OTZkMUgrc1lzUjZ5Slp1NlBLT2luCmdu
+eTFOWVlMN1IwSlNCNmM2bjhCa1Q2WnpmMFM1WU9OY2xVd1c3MXRHdFB5M1JpN3JUeFdJU29aaFVV
+bi9oRHMKdUh1NzRlamxHYVhOREtNcHV2SVpEVENodXQ5RXNVTEZuVVpkVzhRSjlaRndnQjhsNlFC
+NkljY3lsUy91aWZrdgpQbnpYQzd4ajQxU0F6RFJhOUpoNmR3ZkNmV2FkZHFCNHJkVWdRZGZGYi8x
+VkNaUUNNV1Z1QmZCbDdsQkVSMkNHCkxqVnhnNVBxdnFzWk01TnNWTFdFcko5ZkxObVg5YmdVd21K
+WUVVejlnMmdnYUxOckhMcVVlbWVQUkZSeDF1eXcKaFpKNjJoN2FoQUhKMHppM3ZjK0k4VStwaVZk
+dHVIdDh6ak1EaXN1QlZ2YVJ3Q2xMRUFzMmhocXlDUFFQTmtQSwpZK21kR3RyS1VZeEFxQ0Y1UXlD
+ZFNGQUd5VWlscVdSaEZqVVRXYW5DZHJMQnhBMjUybExPenk1b1M1TmdvbTF2CkVaV3RJem5VSnVS
+WTZpVmI0V3ZjOExaTVl5dUVUbW1wYWxQcGZsST0KPW13eFAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ccdd8f06490f4413--
