@@ -1,113 +1,117 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E2C1B4224
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:45:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F80249EB
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:46:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769190315; cv=none; b=k0FQZXHCGEj7is636oymUvTbJHgrVGrH0Tp2wvebHO41EBSQoUDIveM1D1jXC34KBSBGWmFrlHt8W8po16A7n9wYNU//G/z2H7T+DwDRmrvX/ytGXJcSf8BWZzBAQrSxgILnXVBrgzRoCk8F2uPFVbAmVrGzgbjrgePEtqZu8NE=
+	t=1769190367; cv=none; b=kMm/5dYiG4R/7iTExzhQhL+Pt/wJz4wAr+CO/Y2eMWrL7MFjLYzff8nUUCWXjnPZok9nRCV5sluuc4FvHO3qC+qzg4glEdBeCgwJeO3fKZnzOoT5bNxEseGcTsmdYjvPe12QVr7Ue30Q8uSlhU0a9hL/V3mKEjWmQGhsYUf+d7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769190315; c=relaxed/simple;
-	bh=JtlNZg5LiGVyBO/PG8tWZ4jMLCQge+Ln3RW8jeNvT+Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U/LjrX1rU5uKcvWlfrybJRDFju6IwoADpTHiAAZNDoYYiWGHhO4yX1GdGCkoLmdw4VDs3Jrkppo+CGzy/OgbH+1mWs58gU5oyDgxLxtB6YdTEqajGfEpIMZBHBL/qGQqGx4f7Ra/iXy0trmaNiasoXXbW3w3mcIassQsCkCQqBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=H6iHDv7i; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1769190367; c=relaxed/simple;
+	bh=wEpOrz0kE6Dn9UZz36QktiDQZL+Tif+kwPkKUs4u6u0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mIY0u6yp5Qtap0kSGGrJpDL8qDTv7fx/0rN509iqyi5fmZEF5fqNuPDorDupbG0sA3Y9Mgn4pbW9EmdqHVtqkJEKeEpj8vj8DYNYqjz9XW3xNqs7IWFLaFtonW88lsIFowLafx1vuur8x0AFJ8f/n7LVh3Zapgs4Fu63daIy9F8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NM6sWvSp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Uu9VRpg/; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="H6iHDv7i"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79405f99b8eso37776307b3.0
-        for <git@vger.kernel.org>; Fri, 23 Jan 2026 09:45:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769190313; x=1769795113; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0yA5nfssfINVNQ1BYv6jehN5Jau2ZnAQ+p6kLVl2CiA=;
-        b=H6iHDv7iOb+t5VhxX7BppCJRs9uVJLcUu0fbnGukvarrKgCO3qdfMO/n+mbVk5+qRL
-         eHixra8LXl5/VJDHFGuIitlHJwtlskeLO+nuR6pkV1W9Y00YRIzeLzQn2R4K6UISZ57u
-         vA93hOSGexmTQwqIDzB6hH93huMf7GsSY51xq8c+8Zsbv2AsJ/RRlMyVhFZKWGtxd9UY
-         htDgDDJxat+KcHusvT79X9/vKcvLxyja6TBSMTogSeIFYghGW94tLAC77bMmNTJUFfmB
-         MJUEDDfWECpQFB1Xx8/1NTou3GssKhsg1JH+1hG0rw8tz8GLLqQ21S1jE8hAYZyt8oD0
-         TL9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769190313; x=1769795113;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0yA5nfssfINVNQ1BYv6jehN5Jau2ZnAQ+p6kLVl2CiA=;
-        b=IThPtCTA54kQk4KgRUTihNOIZCMJVzxCsl15BGhWxZ1o5vrUnviVZCUscgWxwjM7LG
-         J8FUdGyf79D6G93onYIYRTgZ6ek6qPegPDry8AnwEVC4bV34xbYupzaNjHes7AbSHGAG
-         5Po6zpWfpqEYTtLbiWzefJHyZmAYQLd91XG0OYCdIkVQjYVpbJcVh85cA9Wq1rNLST8R
-         L4/UglVDB6HIwHAVuuvW3dJSPEZnAY5ToD+9bLs5c02pSewRe+eJtOFUZuYxyfva+bVP
-         djdeF3xTlgHuV06Z5SjKHiJjlFeStYaPoZLrTNdKMwFLn33fURQCmsLj+saXafzkON2j
-         beQA==
-X-Forwarded-Encrypted: i=1; AJvYcCV3khDG6GC+IDz+sCM+azR4r1rXuOy9NWjz2ygSTJKcxcQPoeT+7XV81ffG7ewWf+OXOw0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUrOywhR68mUKZkwQDlLYicriWbphCqz+HGS6V0Saey7cqPdhX
-	XNciRIYNsVU2RmATcGAQPo7LrRzifxMTU6CzmLU8s5Iw9J58tHBwm77hL+sAi0O7Ywk=
-X-Gm-Gg: AZuq6aKogtdIulWSx4JXVKL1Ku7H3OTXI4ZPW9uZ5mjyo1U86KercPcmgXwUac5zCwO
-	8A2p2y6Iug5cBNDdS2OKarGCmCDWhZimrMr0YO5snxiwDEQ9JTBPCdOEGMJlyeWog3wSldNQYQG
-	GiOf6kdaBerBC02czRXVda0jNBGzLQFQ+EkMFsd8bOAPZxR2dJApDNoOeCSZcy4N/UzD1QMQuQT
-	q0A/LeUDRIm+WXJZoGQUW1eozhbUkpLp2HHLULkOc93CIVcSKsgzi+2UN005F3nH1IuIhut95XK
-	Q+pXpAT6uRh9k1/6BTiMEN2kr7dHzZ6KPQ+a7nkJgC42U/H4B/G1dh72rcC/PUbweDar6bJRYPR
-	rFO+0n8EUy8REisNlHCHpUzHogbvc/ww6cb2rUNZM+tpEGcVsUY8urL2wp85hQyMMn3u8/khAMC
-	3ip8tkoylB8sAPQc6UK/+QM30C+AErUwV4QSPqAglkC8AgOZFPjhpM2LwaVAUZcKKE1l3tnPFhg
-	lCruGrYWwNXbADz6Q==
-X-Received: by 2002:a05:690c:c52f:b0:794:8bd:66f6 with SMTP id 00721157ae682-7942a867b10mr61014197b3.29.1769190312904;
-        Fri, 23 Jan 2026 09:45:12 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943b2a2b0bsm13407617b3.31.2026.01.23.09.45.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jan 2026 09:45:12 -0800 (PST)
-Date: Fri, 23 Jan 2026 12:45:11 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Chris Torek <chris.torek@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 06/14] packfile: introduce function to iterate through
- objects
-Message-ID: <aXOzp4ivyYgPLux4@nand.local>
-References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
- <20260121-pks-odb-for-each-object-v3-6-12c4dfd24227@pks.im>
- <aXK7cSJW2syew89a@nand.local>
- <aXNCjT6Al-4YLah5@pks.im>
- <CAPx1Gvd6BGPeVmN5b7WM_r6OFf7Y6KooJ2O1jT5O6LzNzGuEEw@mail.gmail.com>
- <xmqq343wjo2v.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NM6sWvSp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Uu9VRpg/"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id E11D41D00151;
+	Fri, 23 Jan 2026 12:46:04 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Fri, 23 Jan 2026 12:46:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769190364; x=1769276764; bh=YT5vAI0OpM
+	q4lE8Ld6RBlf9j7BG5c7mPagiAmxP+bko=; b=NM6sWvSpLp8XNyyz7fd/QVqK5J
+	TRkphCEezeuQDPbtU8jNM4F+1x/HClln1JqHXgvolBPzRPACeRhvnnYc7gSB7gxx
+	yGESHJjPpZTwqlKg+r1A7M6BM88YtCDZY35X8eXAcYxAb0R8HW+MXfuYhnRfcQul
+	8UcUGgxSlvzTyhKiNTsK1W2ahdnaGnqdbgOY2D7CawQokiMoINJa5pPyiOacxxsm
+	Gp7Q/FIcJQju1UXucCMiELUOToy8P5TZzpHiCQZL5WIh3OOObD36uhQK6XmzhNto
+	nP07g+DRkYC4RKRJEEPuly4cQeDRGsMBbMp1Dnj/EmN8/mIHMM+ltw6Cfn4w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769190364; x=1769276764; bh=YT5vAI0OpMq4lE8Ld6RBlf9j7BG5c7mPagi
+	AmxP+bko=; b=Uu9VRpg/YuRVFAQjNpDgMntcs6rwOzuQD3VlzgV7ZRjAOBYERMD
+	zBM+ManxSaEgtU2mj0s1udqzQWlr/e7i/FFM8hLZe4Y1YprxfblVvIu9qET7qwW2
+	0FoM30rXM9/mbO+lrf3+Ggb9jdP8PHj4ElFeS1ZfqoEg1JJJi3PBvLxzPB8Meedq
+	Pgj0uzgS5tipmL6Va6FKURwhY76JXT/vVE06DVGeAoAJzxs8RzvfwKfCpVYzWTcK
+	ASKDvcT5cZMPUmtrrnc9JSQyvIQcv4Bj/Uxv4RIwoPIrCQVkOV6HdcsETfneyBGC
+	h7z8B4bEwcGdcO8tsTqwhi5MIAoXG4BDDLw==
+X-ME-Sender: <xms:3LNzaeRCkNJ47kcJFIG766ZMaNrXa5cF4MB8BXUaZh6WCbLeAYiclQ>
+    <xme:3LNzaao54sDQsSOKRPwYNFu7vqo-helRmGZ5ht5wwzPQBA0NYO3HNtH_HRiAykfL2
+    _s6I-57HWVI2mRMxH_IMzR05oQWZwp13_MWEwc6MJgEzGChYS6T-Q>
+X-ME-Received: <xmr:3LNzaULc65cto-0BkPmScFk5mrtQ4Zi5HyGXa5UzdFLWPgm4gRoX155_fNeo7gfDvFZPKw5xPcphFJsqob0gSOsn9v3wYnyZa-nxbyI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjh
+    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3LNzaVo-yWW5MI2uDp-hqHeX4ZazjPoBf09T0y5e4t1wixAq-uny1w>
+    <xmx:3LNzaUwlwuCZRQLCiq3RfQ263yj5YUrXfZiNbAirMjjozkCWJ2GcrQ>
+    <xmx:3LNzaRODOG7S1G3ztQ6K4LDYXDzb_I7dX_8g5MpPLzp9-R8oWu-8XQ>
+    <xmx:3LNzaR4pkFmXRZVLBolXpsK5G2pwZ7R2NrvC9q3Uh8FyH-L5G9dbog>
+    <xmx:3LNzacBHNRPo5qNyWu_QoZPCr-IFG3PVzAimrHT2ag0GcmvUFuH7D4Nz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 Jan 2026 12:46:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci(*-leaks): skip the git-svn tests to save time
+In-Reply-To: <a29ce07a-9585-475e-bb3d-4742f2ec400a@gmail.com> (Phillip Wood's
+	message of "Fri, 23 Jan 2026 14:47:11 +0000")
+References: <pull.2031.git.1768584676520.gitgitgadget@gmail.com>
+	<b649f137-7140-4fb6-848a-b3408e54bbe5@gmail.com>
+	<xmqqa4yc5brq.fsf@gitster.g>
+	<79c29032-dc32-4030-95ad-dfbd50d9b6ab@gmail.com>
+	<xmqq1pjk2sv2.fsf@gitster.g>
+	<a29ce07a-9585-475e-bb3d-4742f2ec400a@gmail.com>
+Date: Fri, 23 Jan 2026 09:46:02 -0800
+Message-ID: <xmqqqzrggr39.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq343wjo2v.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Jan 23, 2026 at 08:22:48AM -0800, Junio C Hamano wrote:
-> Chris Torek <chris.torek@gmail.com> writes:
->
-> >> > > function is the equivalent to `odb_source_loose_for_each_object()` in
-> >> >
-> >> > s/to/of/ ?
-> >>
-> >> Hm, isn't "to" correct in this case? The remainder of the sentence reads
-> >> weird though.
-> >
-> > Different English dialects. The preposition after "different" differs...
-> >
-> > (It also matters whether you use the definite article, "the function F1
-> > is THE equivalent of F2 in case X" vs "function F1 is equivalent to F2
-> > in case X".)
->
-> Heh, "equivalent" is "Y is an equivalent of X" is a noun.  It is
-> adjective in "A is equivalent to B".  Of course, article is used
-> only with the former (i.e. noun) form, but article is not the
-> essential difference, parts of speech is.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-An alternative suggestion would be s/the //, making this read:
+> ... If "git svn" was 
+> implemented in C then we probably would want to check it for leaks even 
+> though it called a foreign program. That's a long winded way of saying I 
+> don't have any better suggestions!
 
-    This function is equivalent to `odb_source_loose_for_each_object()`
-    in that it [...]
+I am not sure if I agree.  If Perl interpreter used to run the Perl
+version of "git svn" were found leaky, are we willing to go in and
+plug leaks there?  Not likely, particularly since it is not what we
+ship and we do not have control over which version of Perl the users
+have on their systems.  So we say "Perl is foreign and we are not
+equipped to plug leaks in various versions of it on users' systems,
+so it is not worth spending cycles to test for leaks in it".
 
-Thanks,
-Taylor
+If "git svn" were in C, linked with libsvn without using the perl
+binding, and libsvn were found leaky, the story is the same.  We do
+not control the version of libsvn the users have on their systems,
+we are not equipped to plug leaks in there, so it is not our job to
+spend cycles to test for leaks in it.
+
+
