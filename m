@@ -1,247 +1,173 @@
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892FE30E835
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 10:43:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFC27261D
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 10:58:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769165006; cv=none; b=aZKGRqOLX5QOohlhBAowtShb8O6D5mELh1VamU0YlcYOHFsUO162ExxMa8dR3n2Zb75gp7vwvnIlUaSdXdq3z25kNKcwxz8mERDXw7xc432Sy3QsTc3yYJtFWVvkgvwxmC+c1wRH8fGVAuz7PajEAHhsNTnUOmtLcsvp8thLTYk=
+	t=1769165892; cv=none; b=DMk6D5KGuZPt+Xqd/FF5yUheEwWuX/IgyUx//f6po+PIdY98pnALc9cWQM5BLE/jwDAb1Vk1FFnBY53uPAXlF1+7tjBfb677ujvcovSfpkCDuh8BKYTUEvYeXUFUekqKeKks8rp1N+JSHqbLHD7y1B2S8Rv5u9mRYfT9nFq/YR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769165006; c=relaxed/simple;
-	bh=bi+cXeJNDW6p17LVvamN8dYUUNITm5V5pxc3gog85vM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=W3AB9UOgzmnSgenRYq16nhFBj9ZlRRZ9ryXseHEBtp4TweISUKU5vNyFwv9J0bruuont3AylpCjSw28y8lyKYgOEI9Tto+7MPWuK0OSK58a2iaPNB+xaufV0Vs02kYIuYdfKgt7Teu/Fwq1wSX1nbBj/nz4V1MLwhHMO6z3v7hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TWJN618e; arc=none smtp.client-ip=209.85.221.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769165892; c=relaxed/simple;
+	bh=Lz624yylIgSFPG/vhpxMmeGAvcjZZOX7ioLjpWzAHfY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UrdkdgITuzbSHjmGX8GXCqCboZ8yIYrMI/ZMkT7KjUGv8nsxW0bjJfwklC6io5zs/EGFI23jm6+NAMIjmUxrkucW5DezpPGcDHfZPO7H7EaoKrJyoW6qFrJ8KYSy/zDr9kIte455mr2dKaWUAZEZm6Vt/qrmg/OJkmEX7rhdzuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b1HwQvVh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hkUfGJrj; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TWJN618e"
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-4358fb60802so1170600f8f.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2026 02:43:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769165003; x=1769769803; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ktz0vRiN7bSYY9T/pbytsXhEAExNb4sA5iYUoxqnlNs=;
-        b=TWJN618eIb8+aOvp0aiWHiw/YPPYq4MoXlXXkXeMWw8JzIT/ttPxJYgMIrnvaTlL32
-         oY2kLXJ2lMs3j1D4myhrA1C/8Yt5Ad9OSDvxPSagWDy1/qPBgkfx8H6SiB8aUv7s92Io
-         2MsXAHMvbasE10fnSGMXGILGji9R4gnYBFdtLJ7VIEzjNk9qyzce5MXeh9hEG8tg4+R7
-         MLwpI4X0J9SLkfMNQ++a5XoC2gZHhFTIlIXdUKzeoCEEMEv6rh0PJKc3FF+h3VE9djOW
-         /zpR1Wm9eMd5vRgMTQPmnlDvX/7DkSdLVzshcACvsIjkZtISVDiJPEh/kpUspgXFNIrT
-         tpBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769165003; x=1769769803;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ktz0vRiN7bSYY9T/pbytsXhEAExNb4sA5iYUoxqnlNs=;
-        b=S+p5moUgTkAArHPasKIol/qnG/XW1lBLmselG5VYta2anrG7Yb9kagnQpOOsBJf/90
-         Fi57TfJv3oEdJvKgHc8j0x8SbtMzBO1jikU5aV0gfdQ6wqkqYnKs/PclIcrMQH3nT3u0
-         4hyPO+5nfFHNd0B4L8fccj6+Rdpu0buU8mWpzEqMH35Tbb8wt5dg6BZCcQYM9Aqd9eTK
-         IVvwrjrntxXDbVewzKItkTI5JmjwTYr6Y4eS0Ld3jOI73nO04++lOZ63F+YCaSMZ0j0m
-         i/jtGYmJFBIHwiRl1d4ycGoGKm/3eMgGgRCynaSjyYNk1sydJ06QWs+BHG6NBTL1EPmv
-         2jJQ==
-X-Gm-Message-State: AOJu0YyjoEGeJ+saCm6W3DGp9OFD2kIj/5lSeD4M7Swt4+2jm5N+3Nqu
-	quDa6YA2hFRi3vfnq85mi/7nEdqZkyd+NyZ6pChjzWRCso4f0HqhMfoFmS3V6uCq
-X-Gm-Gg: AZuq6aKDfuy3SVwPTamgZYk3Xu073OU9cTOZ/1yPwfqR6jwK4pSaS1lsOGXQ/WHNvQC
-	6WokddWrCjkb/SvNGI8yuBgM9wOIsDBsfI0NCJ6V1MdaO4FTU1VGUcboJpWInnSUsD1/3+d+1AT
-	RpN1NiPJjr1lJLHUI10Of04bhONRnKUbjQNqkiCswNecvQnzjoGk+XtmiivFI6HIWcSKHcAVD3R
-	G2iabSONupB3i4w+8Y4zousRXeu7jtKmGQc7bxtMuTajboNzN6HTTtTcwYngO2gD8K35ScKCqCx
-	Z0NDMv7h+2fQ4zRPu0+cRVqef0UYSBeMn/0h7O11vGp7GzT25LEStm9ELlhzW75GSLkV/Xr4hQ8
-	0qtjMvpm8/bMuozmAH2caFXhmPp82/3PYxih+z7/jCLx4qoTy9cGBv9zUhk29xVPWrX+HRhkTT7
-	u9agVFGoS1ISWaw1y68Y0Isj4M6rQKm/T7fsnzZlgupL6p5gF6SvQ6O4Nuh8mlScClwQ==
-X-Received: by 2002:a05:6000:1446:b0:429:cb8b:b58e with SMTP id ffacd0b85a97d-435b1b8b671mr4705136f8f.28.1769165002532;
-        Fri, 23 Jan 2026 02:43:22 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1f7c269sm6041287f8f.43.2026.01.23.02.43.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jan 2026 02:43:21 -0800 (PST)
-Message-ID: <4f19e70f-8ab5-4322-ac71-76bc925b324a@gmail.com>
-Date: Fri, 23 Jan 2026 10:43:19 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b1HwQvVh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hkUfGJrj"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 44A4E7A0068;
+	Fri, 23 Jan 2026 05:58:09 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Fri, 23 Jan 2026 05:58:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1769165889;
+	 x=1769252289; bh=gAFd3XaV9SNNoyGDpiJ084U8JhT+QTLYh6J3uRrTlLY=; b=
+	b1HwQvVhMQb1uUlfe3SQ3D8SJjF3lWJyaTzqDg858K3g2BmEyB+RPCA25p+MJACX
+	Hke+PPtslzWeR/tEspVWCVXqt8aUuLMuNzBBJyusKsUXX8LIYJA6U5ufZt6KvSMV
+	y9FVfpGJCrJqZrWUC4o1FOnSdMTow3e2+KFtg4ovWVwz2fEwqZ/Hu/YCcvO6Dpms
+	q3HxAC0Hx8MwQ61U+FASpSKKR9RpRcaT+ccdHwPyryaUkgyOotYzuiCQ+qSiDEvy
+	lpK1quFHhUmNN8an7h0+XWzFUGDpTp3ZfBt/iu4SaEX59IiCwj66aTUnhaGhGy8/
+	5pGsADzLaxuyxqn2MOL6Jw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769165889; x=
+	1769252289; bh=gAFd3XaV9SNNoyGDpiJ084U8JhT+QTLYh6J3uRrTlLY=; b=h
+	kUfGJrj/+NpJ93P+kB8daOjKH+5kprB7PPP4B7/DNUGSCNaAYCwsmlm2O6g/A3Tq
+	agxfCWYZ+QeoaaiRpdeE50DhSgOzqHSkEzm14NYK02NGKiFjZR4257v2s69Mvysy
+	mLd1P564SWOepgiWr+SBOsXFrDftjP2FEsat83anTQWnRlnA28mDJbe4Uzm42meB
+	MABcudnTsjE+wGwggEDlGebYFhGPXYDMQZk/+85KKM5O4CT7QK7heBCnXfPBz7ti
+	rCnIIlNOk3tPflu2Iv7HIfntMg780Yajisq/cPvwAwr7+leac55e9QSdfKAiz+1F
+	8Rzn6RSLuGib3Yn5PXbYA==
+X-ME-Sender: <xms:QVRzaQjnQEkkfrXXbAmP_RxfHofxyp0aXYRtEmEfKGJAIHg9UzDo0g>
+    <xme:QVRzacvPBGNbfmabdFYmJkwzXuTI3t5ei2mdMEIn2rQGd8up2kLHwGuUJ1MT2JIST
+    EArAsIB8W-IPmoa5ybh74Zy3Tbs7iq4bLJAuxkYrd7abMZeSn6ERg>
+X-ME-Received: <xmr:QVRzaR42pF2NjOoV05i8FLiUC9XIH6SFhcfzTeVGRJCvZoM9dO-KHXie2P9BDTQ0AsOomfihQQEnP3Dym3LuutPkCOvI0T5gUEVogDFR-Au9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeekkeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeetheffvddtleettdetueeukedugeettedutdegueeukeetheefueevvdeitddtveen
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvse
+    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:QVRzaYNuHzMaZZdBjXMJcG6QtcSA1qv---0WhoZ5h8k44AImg32cfw>
+    <xmx:QVRzafuO5eLQ5Fzy2j4PqhWuG_f1BTq1u5vj70TGPp2Ll2iPxc8W6Q>
+    <xmx:QVRzabaBx-JpzOzjZJ95NBQt5frkxFHeUTF6LZxsRA0wDmq1ZzRFLQ>
+    <xmx:QVRzaRw1TEMf3N17xgMQbVA1DFGGmZy1Z365Px5mnAp0W71rgeDgkA>
+    <xmx:QVRzad8-T1mat1meFGXGyfH3L0lg6ekqWd_c8V-H_Jm1Wx0MYWoZBTdI>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 Jan 2026 05:58:07 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 92ccb376 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 23 Jan 2026 10:58:06 +0000 (UTC)
+Date: Fri, 23 Jan 2026 11:57:56 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 02/14] odb: fix flags parameter to be unsigned
+Message-ID: <aXNUNJudud_KuT33@pks.im>
+References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
+ <20260121-pks-odb-for-each-object-v3-2-12c4dfd24227@pks.im>
+ <20260121211128.GB723458@coredump.intra.peff.net>
+ <aXFosXv328ZPjlcw@nand.local>
+ <xmqqcy31pscg.fsf@gitster.g>
+ <20260122192337.GC2098026@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [Outreachy PATCH v3 2/3] environment: environment: stop using
- core.sparseCheckout globally
-To: Bello Olamide <belkid98@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com,
- usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, me@ttaylorr.com,
- karthik.188@gmail.com, Toon Claes <toon@iotcl.com>
-References: <cover.1768681947.git.belkid98@gmail.com>
- <fd95169de42891452b430814476d78c706e4a7e2.1768681947.git.belkid98@gmail.com>
- <18b5d932-8a5a-4f33-a803-ef6f0c7d2750@gmail.com>
- <CAD=f0L9JhJq95kV7oUsaN5FqmUAH2qeSTLPLYXKAHUtNiHK_WA@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAD=f0L9JhJq95kV7oUsaN5FqmUAH2qeSTLPLYXKAHUtNiHK_WA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260122192337.GC2098026@coredump.intra.peff.net>
 
-On 22/01/2026 15:29, Bello Olamide wrote:
-> On Thu, 22 Jan 2026 at 15:41, Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->>> diff --git a/builtin/backfill.c b/builtin/backfill.c
->>> index e80fc1b694..5fc8c51ed1 100644
->>> --- a/builtin/backfill.c
->>> +++ b/builtin/backfill.c
->>> @@ -139,7 +139,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
->>>        repo_config(repo, git_default_config, NULL);
->>>
->>>        if (ctx.sparse < 0)
->>> -             ctx.sparse = core_apply_sparse_checkout;
->>> +             ctx.sparse = repo->config_values.sparse_checkout;
->>
->> Using "repo" rather than "the_repository" here is dangerous because only
->> "the_repository" contains the parsed config. This applies throughout
->> this patch.
+On Thu, Jan 22, 2026 at 02:23:37PM -0500, Jeff King wrote:
+> On Thu, Jan 22, 2026 at 07:41:51AM -0800, Junio C Hamano wrote:
 > 
-> Okay noted...
-> Sorry but I have a question.
-
-You don't need to be sorry for having a question - it shows you have 
-been thinking about the feedback you have received which is very good.
-
-> I observed that the address of "repo" is passed to builtin/backfill.c,
-> is gotten from git.c:handle_builtin
-> which passed run_builtin "the_repository" as a parameter.
+> > Taylor Blau <me@ttaylorr.com> writes:
+> > 
+> > > I agree with you that we should be using an enum in these cases over
+> > > unsigned for the reasons you suggest. I've stumbled over this in the
+> > > past, so perhaps this is worth adding to the CodingGuidelines?
+> > 
+> > I am OK with declaring our preference of "enum" over "#define"d
+> > constants.  The only two minor hesitation I have against the use of
+> > "enum", especially for bitset but not for enumeration, are that
 > 
-> Won't the address of "repo" and "the_repository be the same"?
-
-Yes, but I think it is safer to explicitly say "the_repository" so that
-if any of the functions you convert here are ever passed another 
-repository instance the code will keep working as expected. It also 
-documents that the config value is only stored in "the_repository". Once 
-we make these config values per-repository then we can use the 
-repository instance passed to the function.
-
-Thanks
-
-Phillip
-
->>
->>>
->>>        result = do_backfill(&ctx);
->>>        backfill_context_clear(&ctx);
->>> diff --git a/builtin/clone.c b/builtin/clone.c
->>> index b19b302b06..b6b19e83d1 100644
->>> --- a/builtin/clone.c
->>> +++ b/builtin/clone.c
->>> @@ -623,7 +623,7 @@ static int git_sparse_checkout_init(const char *repo)
->>>         * We must apply the setting in the current process
->>>         * for the later checkout to use the sparse-checkout file.
->>>         */
->>> -     core_apply_sparse_checkout = 1;
->>> +     the_repository->config_values.sparse_checkout = 1;
->>>
->>>        cmd.git_cmd = 1;
->>>        if (run_command(&cmd)) {
->>> diff --git a/builtin/grep.c b/builtin/grep.c
->>> index 53cccf2d25..525edb5e9c 100644
->>> --- a/builtin/grep.c
->>> +++ b/builtin/grep.c
->>> @@ -482,7 +482,7 @@ static int grep_submodule(struct grep_opt *opt,
->>>         *      "forget" the sparse-index feature switch. As a result, the index
->>>         *      of these submodules are expanded unexpectedly.
->>>         *
->>> -      * 2. "core_apply_sparse_checkout"
->>> +      * 2. "sparse_checkout"
->>
->> That should be something like config_values.sparse_checkout to make it
->> clear that "sparse_checkout" is the name of a member of a struct, not
->> the name of a variable.
+> I don't think there's any disagreement over using enums in general. It's
+> just a question of what type to declare in function interfaces.
 > 
-> Okay noted
+> >  (1) enum gives a false sense of type safety to casual coders. If I
+> >      have two enum types and pass one to as a parameter to a
+> >      function that expects the other one, would the compiler help me
+> >      catch that as a potential mistake?  -Wenum-conversion is not
+> >      enabled even with -Wall so I am assuming that the compiler
+> >      folks fells that it is not reliable enough.
 > 
->>
->>> diff --git a/environment.h b/environment.h
->>> index aea73ff25b..3b5ff7094a 100644
->>> --- a/environment.h
->>> +++ b/environment.h
->>> @@ -88,6 +88,7 @@ struct strvec;
->>>    struct repo_config_values {
->>>        /* core config values */
->>>        char *attributes_file_path;
->>> +     int sparse_checkout;
->>
->> There are several other sparse checkout variables like
->> core_sparse_checkout_cone that we'll need to convert in the future so
->> "apply_sparse_checkout" or "sparse_checkout_apply" would be better names.
+> It is enabled with -Wextra, which we turn on with DEVELOPER=1. I think
+> gcc will catch the most obvious mismatches like:
 > 
-> Okay noted.
+>   enum one { FOO };
+>   enum two { BAR };
+>   void func(enum one value);
+>   void doit(void) { func(BAR); }
 > 
->>
->> Thanks
->>
->> Phillip
->>
->>
->>>    };
->>>
->>>    /*
->>> @@ -169,7 +170,6 @@ extern int precomposed_unicode;
->>>    extern int protect_hfs;
->>>    extern int protect_ntfs;
->>>
->>> -extern int core_apply_sparse_checkout;
->>>    extern int core_sparse_checkout_cone;
->>>    extern int sparse_expect_files_outside_of_patterns;
->>>
->>> diff --git a/sparse-index.c b/sparse-index.c
->>> index 76f90da5f5..6dd8dd679d 100644
->>> --- a/sparse-index.c
->>> +++ b/sparse-index.c
->>> @@ -152,7 +152,8 @@ static int index_has_unmerged_entries(struct index_state *istate)
->>>
->>>    int is_sparse_index_allowed(struct index_state *istate, int flags)
->>>    {
->>> -     if (!core_apply_sparse_checkout || !core_sparse_checkout_cone)
->>> +     struct repo_config_values *cfg = &istate->repo->config_values;
->>> +     if (!cfg->sparse_checkout || !core_sparse_checkout_cone)
->>>                return 0;
->>>
->>>        if (!(flags & SPARSE_INDEX_MEMORY_ONLY)) {
->>> @@ -670,7 +671,8 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
->>>
->>>    void clear_skip_worktree_from_present_files(struct index_state *istate)
->>>    {
->>> -     if (!core_apply_sparse_checkout ||
->>> +     struct repo_config_values *cfg = &istate->repo->config_values;
->>> +     if (!cfg->sparse_checkout ||
->>>            sparse_expect_files_outside_of_patterns)
->>>                return;
->>>
->>> diff --git a/unpack-trees.c b/unpack-trees.c
->>> index f38c761ab9..2bdfa1334c 100644
->>> --- a/unpack-trees.c
->>> +++ b/unpack-trees.c
->>> @@ -1924,7 +1924,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->>>        if (o->prefix)
->>>                update_sparsity_for_prefix(o->prefix, o->src_index);
->>>
->>> -     if (!core_apply_sparse_checkout || !o->update)
->>> +     if (!repo->config_values.sparse_checkout || !o->update)
->>>                o->skip_sparse_checkout = 1;
->>>        if (!o->skip_sparse_checkout) {
->>>                memset(&pl, 0, sizeof(pl));
->>> diff --git a/wt-status.c b/wt-status.c
->>> index e12adb26b9..a2e388606f 100644
->>> --- a/wt-status.c
->>> +++ b/wt-status.c
->>> @@ -1764,7 +1764,7 @@ static void wt_status_check_sparse_checkout(struct repository *r,
->>>        int skip_worktree = 0;
->>>        int i;
->>>
->>> -     if (!core_apply_sparse_checkout || r->index->cache_nr == 0) {
->>> +     if (!r->config_values.sparse_checkout || r->index->cache_nr == 0) {
->>>                /*
->>>                 * Don't compute percentage of checked out files if we
->>>                 * aren't in a sparse checkout or would get division by 0.
->>
+> which yields:
+> 
+>   $ gcc -c -Wall -Wextra foo.c
+>   foo.c: In function ‘doit’:
+>   foo.c:4:24: warning: implicit conversion from ‘enum two’ to ‘enum one’ [-Wenum-conversion]
+>       4 | void doit(void) { func(BAR); }
+>         |                        ^~~
+> 
+> What it doesn't help with is passing arbitrary integers, which includes
+> #define'd constants. Swapping out "enum two" for:
+> 
+>   #define BAR 1
+> 
+> will not produce a warning. That's the issue that I ran into with the
+> color code in:
+> 
+>   https://lore.kernel.org/git/20250916202748.GM612873@coredump.intra.peff.net/
+> 
+> Unfortunately bit operations on enum values seem to lose the "type" for
+> the purposes of this warning, and just become regular integers. So if we
+> modify our example to:
+> 
+>   num one { FOO_A = 1 << 0, FOO_B = 1 << 1 };
+>   enum two { BAR_A = 1 << 0, BAR_B = 1 << 1 };
+>   void func(enum one value);
+>   void doit(void) { func(BAR_A | BAR_B); }
+> 
+> it no longer complains.
+> 
+> I still think we are better off declaring the flag parameters with the
+> enum type, though. It will catch some problematic cases. And even if
+> there were no compiler support at all, I think the hint to humans about
+> the expected type is worth it.
 
+I don't care strongly enough myself, but do you or Taylor maybe want to
+send a patch that documents our preference? If so I'll be happy to adapt
+my series to use whatever style we agree on.
+
+Thanks!
+
+Patrick
