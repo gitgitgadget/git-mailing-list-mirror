@@ -1,120 +1,104 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B0D3EBF2B
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 07:48:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769154514; cv=pass; b=dfPQ1Yw4E5Iq3IXkBsQDJD/csRRyTjPTMiepT6YfxJJ97pmO/A53HlEWhcT1IWJHGgCxNH2GRUVPuv3arxaTqiOpaqlHXl6FTNVIFyeXExeu3Z/k/tjB3a6UJzQlpcA4qRi2pdrxZ29gMhiLTNF54z8+uSbPx7XMpyfH0LOkDCk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769154514; c=relaxed/simple;
-	bh=gI1A82vlvsb0M9M17OXAZWDqdVXbniSfvMtvDfmgz98=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZNQXqFjO5oVzQRP/0TZcnzL1EsI2Bv3kGzRiugCZ9lMefzS3PR9mhe5KmpuO0ynfrXGVX6CMAQ6mAsuIHM/NHlgZblQGI22DCaC1JoIq9Hxd5xHu9VxKAAF1BmNMqLHii3lkFqsRFT1ZS4WP/L2eX6sbmgKZ10qdNzodA4jSueQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=HTk/Qm20; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF24311C27
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 08:54:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769158461; cv=none; b=Z7ugJnwYI1ltcYnuYR9Fqcnq5UXkFgB76lNXC7QIpG7jNCEXy6cFQhPDcX7/0pBRGToOqX6dCGLpzLFBHPNmLWaDjzu4/gCAc1lf54ToUoGd/FkvfsCzTFcUwXmv4ukQJc46JLYMmSnIATs1LqVfiBqmqvZWxWmsf1YCHve81ZE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769158461; c=relaxed/simple;
+	bh=HZvI3KhbtnODgVnvBGTmBo8DCAu7evkJSLoUl49ASm0=;
+	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=t0MRjP61ft61l//f6zHFUPfS2Xi9iGCUB1cXwHxrNvUy7i1vQMS+HOCsARTgFEwPFZnm0KSDRRQrAiFIxRiatZ+DAAlPoHuF4H5csD+wSl48BNRY50rt6TtYOlhxZ3/YSFX2obH2zwA24SAMpAa7qgPXEYgvC8nvPSWZ30CdsRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LIDYIHR8; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="HTk/Qm20"
-ARC-Seal: i=1; a=rsa-sha256; t=1769154485; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=SCD5aG5GdjxXjZuggfEytBtTeCgfEry9pwx1PD4JB9CocHb6MHmN820qJ7IPss04i6AIlW6sLvvelTJ1MyMgihVtoMqPnWFFVnRKPfJkmMmNFV3XXh+kvQct//7zj3TMGrA5VV3hLepNgQGY4Ru4vCBswgX95cBEY4RKmdL05F8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1769154485; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=1pQ67eZiPzhAAWebJBixUtyX+LQUUTHFbt7U/ftDReU=; 
-	b=k/Ftx1MscycAGL4jXsuTibbjaCcoQT0HGCgDXEPuBQUo2bGXCyYcrsvkEjit6amCgaf/Xq9DayrOQjuXOj3tE9SUWO1piZ/yslEh87eSiTAvB5jwsq1LCRXS4vPKxnjOGg0YD01HPjOrcinTWDAO5Dx88L269LlMJk6KAk0HBvc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769154485;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=1pQ67eZiPzhAAWebJBixUtyX+LQUUTHFbt7U/ftDReU=;
-	b=HTk/Qm20RrziHdE1Uik6vk2RDyda1HgSCTw5Pb/t1GwV4MFy8NMIbLf1IPXrYlHy
-	kqEA+818nOFyFZfSVFxiO6BcSG8Xwr2RQXSzsY2LJDXsJ+LDu7qyC00fm4kj3B/Hcfp
-	9ucuyLzL6kXAzddgcNSFxdQ3ZVKhPstCTKv84oHI=
-Received: by mx.zohomail.com with SMTPS id 1769154482438233.66041416411053;
-	Thu, 22 Jan 2026 23:48:02 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
- <emilyshaffer@google.com>, Junio C Hamano <gitster@pobox.com>, Josh
- Steadmon <steadmon@google.com>, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, Chris Darroch <chrisd@apache.org>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v7 06/12] hook: allow separate std[out|err] streams
-In-Reply-To: <aXMg-SKKhYzIXvv8@pks.im>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20260121215436.1473800-1-adrian.ratiu@collabora.com>
- <20260121215436.1473800-7-adrian.ratiu@collabora.com>
- <aXMg-SKKhYzIXvv8@pks.im>
-Date: Fri, 23 Jan 2026 09:47:57 +0200
-Message-ID: <874iocrcr6.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LIDYIHR8"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-78fb5764382so20241677b3.0
+        for <git@vger.kernel.org>; Fri, 23 Jan 2026 00:54:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769158459; x=1769763259; darn=vger.kernel.org;
+        h=mime-version:content-transfer-encoding:msip_labels:content-language
+         :accept-language:message-id:date:thread-index:thread-topic:subject
+         :cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HZvI3KhbtnODgVnvBGTmBo8DCAu7evkJSLoUl49ASm0=;
+        b=LIDYIHR8bj+HDvhJTSMQIZdm34h5/8CSj62a1OXFBjj6EynlKa2KPAyMb2lZnPz502
+         IphEO58JdKzNRPT2ARsHYEJBnJchBH6+AeknKz/B+gOM73ma3UFUast1QbZqAU8rj9OK
+         jthyjKp2CqNsq1jRKGR5HsP9DPbGUxInzmRApKxtpcbl6VOMlMJCFp18697IRyBk7cNZ
+         M5Eb/J5ABFQ0wjhNEBfZOd6Yw37SQjkA3QsM2m4rsnK6X9l4hBpyXdD5ZyEygWU/4hAe
+         3Sx9echg8Sln5bP5fBHNzyd6ZSTm94JAz4in91viY86QCWfNU/kr7vxFnuB7NHEeOFa7
+         a8zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769158459; x=1769763259;
+        h=mime-version:content-transfer-encoding:msip_labels:content-language
+         :accept-language:message-id:date:thread-index:thread-topic:subject
+         :cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HZvI3KhbtnODgVnvBGTmBo8DCAu7evkJSLoUl49ASm0=;
+        b=HxgB87q7MLRL9W4ThKzX9NaHElK8iaZJT0oaKe5xD3NSToRpMExCsaUKQGjc0VjLQb
+         YwADblk1cspaielRBL/Kzc0OtI1QsKeNW2UM8i+AL2rxWlt0QU7IaRbS8e5FwQSrLY4O
+         p7Y+jy2PpuhIVq45wP2Fo4+PJdl8XYpAQngNngryXE4ZV9x+8pCRj8r38i+jV5oDtuLY
+         we/9mjWQyOrUFq8YuJrLvaMG6GIETK4G3b5OlWPpAEvtH8NMzql87sLM58DCkZLdn6Xa
+         GnIfUrJz9oM1Gdux4est9Sq2JlQJO2TaIGWZEhLlBX4jWZT8jJS6YTtN3dgC2PpPAVKu
+         JQ0A==
+X-Gm-Message-State: AOJu0Yydw4tIZNaLctCdD6Ex6T3nmZA0Ld4bJN0zTTotCEd4UEWihO/d
+	nAggCMRgPQXwWO+NmmgjgTsBb7UIE5Zc6aqPukmJL38RfwUMcHkHt3rW
+X-Gm-Gg: AZuq6aLfBHCmdWBaq8xPA2riX9hhllRrjOOd6U4eXLIY/hCNJNqfmwPaFjHIbx3iU5U
+	8sjYsjCq0FMy8dSjvon0RXa0nmAQn93AU3AjcxplLo8kWDdHRGoRN1Sjzca355NW+mIR3BJv8PO
+	oWdpdBnnL8EYcG3kR6DFljThJ1eRh1Z2nfQfx0Tqq8fLCRoEZh/Pu47e12ayoakUpkN+xqhFlnt
+	DgK1q/eadxKMsAoyrUxJOVw0auEYRT7v7GHehOvVampBXMAxrydFB+rhh6GdDZQDaeW1bpZz3Ez
+	7PPyjwJ1rHUciKsizO8wTCw2ite2kr8dXKviwq1DddTuh8Idya4OjXQxTtuqDL1RhidcrZMK6EY
+	SW8a4XhUGjxkQgmvfJjPLZtLoVIZvDov6jJnKSnrWPOCyVwAAard45OHm7a9tsdmQKZrEejEd9d
+	Va9fajKd9axUdgydxDoTDMOLr33M/S52zczIj90mlM0ffMrK1w0gOc6+hpIHJXuuiXkzfDyG3gP
+	D/dYBWjg0k=
+X-Received: by 2002:a05:690c:39b:b0:792:75e3:2c25 with SMTP id 00721157ae682-79440b9ab09mr3224757b3.66.1769158459396;
+        Fri, 23 Jan 2026 00:54:19 -0800 (PST)
+Received: from SL2P216MB1885.KORP216.PROD.OUTLOOK.COM ([2603:1046:101:97::5])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943b2b9e7csm8036707b3.41.2026.01.23.00.54.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jan 2026 00:54:19 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: "peff@peff.net" <peff@peff.net>, "gitster@pobox.com" <gitster@pobox.com>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>, Pushkar Singh
+	<pushkarkumarsingh1970@gmail.com>
+Subject: Re: [PATCH] reset: avoid reflog update on no-op reset
+Thread-Topic: [PATCH] reset: avoid reflog update on no-op reset
+Thread-Index: AQHcjEVGzCYZL1GDmUa/efyV04yKbw==
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date: Fri, 23 Jan 2026 08:54:15 +0000
+Message-ID:
+	<SL2P216MB1885C5C9B75A38AE99E5511DA294A@SL2P216MB1885.KORP216.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator:
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+msip_labels:
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
 
-On Fri, 23 Jan 2026, Patrick Steinhardt <ps@pks.im> wrote:
-> On Wed, Jan 21, 2026 at 11:54:30PM +0200, Adrian Ratiu wrote:
->> The hook API assumed that all hooks merge stdout to stderr.
->
-> Tiny nit, not worth rerolling over: we typically write the observation
-> in past tense. So s/assumed/assumes/
->
->> diff --git a/hook.c b/hook.c
->> index 5ddd7678d1..fde1f88ce8 100644
->> --- a/hook.c
->> +++ b/hook.c
->> @@ -81,7 +81,7 @@ static int pick_next_hook(struct child_process *cp,
->>  		cp->in = -1;
->>  	}
->>  
->> -	cp->stdout_to_stderr = 1;
->> +	cp->stdout_to_stderr = hook_cb->options->stdout_to_stderr;
->>  	cp->trace2_hook_name = hook_cb->hook_name;
->>  	cp->dir = hook_cb->options->dir;
->
-> The implementation looks easy enough. We convert the static value we had
-> before into a configurable one, and...
->
->> diff --git a/hook.h b/hook.h
->> index 2169d4a6bd..7cbeef0a1e 100644
->> --- a/hook.h
->> +++ b/hook.h
->> @@ -34,6 +34,11 @@ struct run_hooks_opt
->>  	 */
->>  	int *invoked_hook;
->>  
->> +	/**
->> +	 * Send the hook's stdout to stderr.
->> +	 */
->> +	unsigned int stdout_to_stderr:1;
->> +
->>  	/**
->>  	 * Path to file which should be piped to stdin for each hook.
->>  	 */
->
-> Another tiny nit that is not worth a reroll: might be worth mentioning
-> that this is the default behaviour.
->
->> @@ -80,6 +85,7 @@ struct run_hooks_opt
->>  #define RUN_HOOKS_OPT_INIT { \
->>  	.env = STRVEC_INIT, \
->>  	.args = STRVEC_INIT, \
->> +	.stdout_to_stderr = 1, \
->>  }
->
-> ... make the old behaviour the default.
-
-Thanks for the review, your understanding is correct.
-
-I will address all the nits you pointed out in the v8 reroll I plan to
-do anyway, to address all the received feedback.
-
-Will leave v7 up for about one more week to gather more feedback.
+Thanks, that makes sense.=0A=
+=0A=
+I was reasoning about reflog entries purely in terms of reference=0A=
+updates, but I see your point that "git reset" also uses the reflog=0A=
+as a record of user actions, even when the target happens to match=0A=
+HEAD.=0A=
+=0A=
+In that light, skipping the reflog entry on a no-op reset could indeed=0A=
+break the assumption that "@{1}" reliably refers to "the state before=0A=
+the most recent reset", both for scripts and for humans inspecting=0A=
+history.=0A=
+=0A=
+I agree that this makes the change questionable as-is. I=92m happy to=0A=
+drop this patch, or to rework it in a way that preserves the reflog=0A=
+entry while addressing the underlying concern (if there is one).=0A=
+=0A=
+Thanks for the detailed explanation.=
