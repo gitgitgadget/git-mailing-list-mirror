@@ -1,36 +1,36 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3302E24C676
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 14:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1147A221F12
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 14:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769178808; cv=none; b=Wh8e9tx7fnZ1XDh3icMvycxN1IOFxu8KdfQ+WAlZESDC56M6SKCKGQ9VGoRwkzgU2zogwqAFTxJtZKDXxNttd61RlQHgxoaTzn5suX67mpEvHkUYh3/BFX5SBla17s05CTLC/DTgSxiDIAQnZljWr9JHBJk5SdgXCIvkOZ1Vw8Y=
+	t=1769178812; cv=none; b=Q2q2qcH+Rmo+F2/9rg05Pt+Lp5Y2M0/jE2UcpoeWkpOyxUiI3Vzu99VuXRmzpYSwVQbh0CfVl1duwsn3cgMXFYh/OYjRKVZHCGVwMxh5g5TgwkxAxeeGisRKJfUKeHagqjFqhJjoN4YFG5Y25AxbYNvLhW8jrL4PwZPMmDq5uIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769178808; c=relaxed/simple;
-	bh=bdH0UyG9NIw5gBCBEpTOVqUwRasTuIZsV0Yi+KtolKw=;
+	s=arc-20240116; t=1769178812; c=relaxed/simple;
+	bh=2CbL9DK8GldFm/VlkCSWpsokOUhuvofkf2z5H2jaS6g=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Dtjz8M/8DF91c5PY5srauF5TWvapYEmTtxs5YXB2c49PLeI+FdAKBgggyPS36QzsyoNcAgfM9KjDuQQHlGcKAFfGa1DRgMih486Z09Lc1cEV9dQyFT91hUbMDEfEcCa9L2gKchLbaHf+CjsWQhapr0C9zdkumB8evicf2/MurbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=XQxuzUSf; arc=none smtp.client-ip=95.215.58.174
+	 In-Reply-To:To:Cc; b=ZEfYveC/ZS8qgPBd0mxixj3A3RgV5OJbpAICL26gBEVNDLMk1dDdY3vT9VW0CKqGXF+yZp5ssoHK1n3YTwpDCOO9X4MWdKWuimwg32cZyQVMfvMaXixTt7HjFUnuNGizTa/GKngcxs9/4/XIljD7mEhrNAhh7SrMHChVHWcML9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=R1VGxz8k; arc=none smtp.client-ip=91.218.175.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="XQxuzUSf"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="R1VGxz8k"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1769178804;
+	t=1769178807;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=KeTqiD3GQRoLU/bNzsF6tsWA0Psut/7F15XxPyFFQDg=;
-	b=XQxuzUSfsYkDdMN1g3/eg0Uskjup0851Gqau35zcZPphR6hKLMsGdCh4mFrvUC0aU/LGEA
-	4tdPvGzlEs85A73fvmBL17CS8E1OOZclRykZzpuJw9LUZqmrp3JW0AKMG+1mfPCZsEgYWp
-	2Kaqu76CPBVuKL7sKsvp1g5Jcdet5LI=
+	bh=1XXGtfEdP7PuXVB4kbu1que/0T+x0yvwYPEMi8njfcA=;
+	b=R1VGxz8kN4ua+HZSLOT8PBYJf/lQERzZ+3rPBgXBPpaLMEWV50+Q5F8G6/J0rpde3j1gRQ
+	+/v6vrSzi//PXhz1Z5+Q0KFXjGBpiINvXMrftE56edbjnEZcKB3BF1+pk9hHRlQZiqgCW5
+	Wja5L7VxPEVxmUwJBe+tuhZCcDroH/4=
 From: Toon Claes <toon@iotcl.com>
-Date: Fri, 23 Jan 2026 15:33:01 +0100
-Subject: [PATCH v4 1/4] last-modified: rewrite error message when more than
- one revision given
+Date: Fri, 23 Jan 2026 15:33:02 +0100
+Subject: [PATCH v4 2/4] last-modified: fix memory leak when more than one
+ revision is given
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,7 +39,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260123-toon-last-modified-tree-v4-1-86bf97bad4e2@iotcl.com>
+Message-Id: <20260123-toon-last-modified-tree-v4-2-86bf97bad4e2@iotcl.com>
 References: <20260123-toon-last-modified-tree-v4-0-86bf97bad4e2@iotcl.com>
 In-Reply-To: <20260123-toon-last-modified-tree-v4-0-86bf97bad4e2@iotcl.com>
 To: git@vger.kernel.org
@@ -48,71 +48,51 @@ Cc: Patrick Steinhardt <ps@pks.im>,
  Toon Claes <toon@iotcl.com>
 X-Migadu-Flow: FLOW_OUT
 
-When more than one revision is passed to the git-last-modified(1)
-command, this error message was printed:
-
-    error: last-modified can only operate on one tree at a time
-
-Calling these a "tree" is technically not correct. git-last-modified(1)
-expects revisions that peel to a commit.
-
-Rephrase the error message to:
-
-    error: last-modified can only operate on one revision at a time
-
-While at it, ensure modify the test to ensure the correct error message
-is printed.
+When more than one revision is given, the function
+populate_paths_from_revs() leaks a `struct pathspec`. Plug it.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- builtin/last-modified.c  |  2 +-
- t/t8020-last-modified.sh | 11 ++++++-----
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ builtin/last-modified.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index c80f0535f6..7d95244e3f 100644
+index 7d95244e3f..06e3f79aec 100644
 --- a/builtin/last-modified.c
 +++ b/builtin/last-modified.c
-@@ -146,7 +146,7 @@ static int populate_paths_from_revs(struct last_modified *lm)
+@@ -123,7 +123,7 @@ static void add_path_from_diff(struct diff_queue_struct *q,
+ 
+ static int populate_paths_from_revs(struct last_modified *lm)
+ {
+-	int num_interesting = 0;
++	int num_interesting = 0, ret = 0;
+ 	struct diff_options diffopt;
+ 
+ 	/*
+@@ -145,16 +145,20 @@ static int populate_paths_from_revs(struct last_modified *lm)
+ 		if (obj->item->flags & UNINTERESTING)
  			continue;
  
- 		if (num_interesting++)
--			return error(_("last-modified can only operate on one tree at a time"));
-+			return error(_("last-modified can only operate on one revision at a time"));
+-		if (num_interesting++)
+-			return error(_("last-modified can only operate on one revision at a time"));
++		if (num_interesting++) {
++			ret = error(_("last-modified can only operate on one revision at a time"));
++			goto out;
++		}
  
  		diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
  			      &obj->item->oid, "", &diffopt);
-diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
-index 50f4312f71..91901eed58 100755
---- a/t/t8020-last-modified.sh
-+++ b/t/t8020-last-modified.sh
-@@ -12,10 +12,6 @@ test_expect_success 'setup' '
- 	test_commit 3 a/b/file
- '
- 
--test_expect_success 'cannot run last-modified on two trees' '
--	test_must_fail git last-modified HEAD HEAD~1
--'
--
- check_last_modified() {
- 	local indir= &&
- 	while test $# != 0
-@@ -230,9 +226,14 @@ test_expect_success 'last-modified merge undoes changes' '
- 	EOF
- '
- 
-+test_expect_success 'cannot run last-modified on two revision' '
-+	test_must_fail git last-modified HEAD HEAD~1 2>err &&
-+	test_grep "last-modified can only operate on one revision at a time" err
-+'
+ 		diff_flush(&diffopt);
+ 	}
 +
- test_expect_success 'last-modified complains about unknown arguments' '
- 	test_must_fail git last-modified --foo 2>err &&
--	grep "unknown last-modified argument: --foo" err
-+	test_grep "unknown last-modified argument: --foo" err
- '
++out:
+ 	clear_pathspec(&diffopt.pathspec);
  
- test_done
+-	return 0;
++	return ret;
+ }
+ 
+ static void last_modified_emit(struct last_modified *lm,
 
 -- 
 2.52.0
