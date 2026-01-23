@@ -1,123 +1,103 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DC12C0263
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 20:16:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769199421; cv=pass; b=OBvHtATjBmLuU6IrnE8luEP4x/wy+ca24rl0+w/bKiLz3seEjLYurKK99Fu5tmK8G3uj/yEGXcZ9PCuqXsTfKNCiV60n0iZ9yPYk+PZGNzydOeg8NB/0rPDR461z6vF6egJmrDEXac/JUwj9vdMJEQg0WgwsSDMcrK1Z+uLvK/Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769199421; c=relaxed/simple;
-	bh=TUNAGiu4ezEWJm5uYRa7wQsABq7yywrxmVTJujgOr44=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Ru42iqrz4JxN43G2jTjAkI0JLoLb0M7NMHtXGz1QgbShkEs8FmOjQWZ6OfVidwlXAYntPdANPNt8hNrfElVnxQ6rqoI5pdtKQ15AnQ9MtYb8qphOHrFSD2Hfea7euKdvyTvarVEnG0uXdJEcL8l3E/Lwev7PK8axsoHPxB/y8Rk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gOUXJBLm; arc=pass smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D698E2DCBF7
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 20:29:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769200168; cv=none; b=PG4DidWb4Mb7seXDR3ggHFiDLd2cSsKW5cOFtvP2/iuam9ZezkUHicyutZ3Zp4pHwx4z3IW6dvv9xZbAZKAwUGUHXq/RUn5KI3vGYOrAXf0rqs6FwSSchMqw4wLEKQF3vRAPMWIZAw3sfAf6QNoUfDHfNMUgP3J4yTOwS5eWe0U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769200168; c=relaxed/simple;
+	bh=bE7bU2PxxT0/iarZlZjDHAEnYZAw0uh+Cqc8CCB0+JI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FqpdL1iZ5JijgtxtoLiXnQUytij7A/8K2V83u6UXpp02Zz7vKNi69hRAEFiXqpY98p7Su5AeO0Cfr9Y1z2n5BVgLobBPXS7917rymbh6szHVobEiRT81iSHrMHlp0Ie8Vrl3Qlyh8BA34hAZqYY34wCtBm4KLKDV/5o0VeNsm80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=lrdfZZzw; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gOUXJBLm"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-78fba1a1b1eso43759077b3.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2026 12:16:59 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769199418; cv=none;
-        d=google.com; s=arc-20240605;
-        b=QRyC9s7wSGb5ehMi0ExbziCgUNG7PMfVAH4IrUes+GbndsOlpu9cWcvbQRNBQ3R3VL
-         Vmb1M0ruRjsMs7WDwzACpd6kgxQopIfeRieVayrU4Hsa9o9hFaCZ1WxRUD0l+5QR/ZsT
-         S63LH+JH2VVKu7BodqZtVZzrlpcvH1sTTCI10qEHVRRgq/nxyaYc9lwSnVwuFzTkbYmQ
-         wPOB9mvT558Wo9FFVr8uxnQu67XvRJqdm4ro+cKz+ambbXy/I+iKFsFUe4wadGKW8xRN
-         IFa3ezqlwwujps1Mk7E3fHlGNbng9BGbiHpxEBu0S9pEH3wFYkfdWl0aGYD5xVjmqCC2
-         6oZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=TUNAGiu4ezEWJm5uYRa7wQsABq7yywrxmVTJujgOr44=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=ZRj6EuHB+2P9kJ+aIkbpW/4Mo+YBTlwLGjmfqh8Zl7DbY5X9a+NKBZDfqnuqE54vQx
-         Tt2km2G2QY3qeATefns618CrsHpCkOKmDc0S2v7DHtU/il62upHcQrnA0b6MyzyL6bc6
-         lK5vchnyKG5vSu1b6iDGnqEZEKjNkWtP3o/4HPabvZnvBcnAXfVLYw92W/yVs6UYihmK
-         GnbnKNdZwrCQGHu/ZtqFm43/7kFCVBvPPxzwpD9ON0Z5hLQKXwPqWT7QdXNpIvg92+t4
-         +vpCEdrbHw4PBl5EDVY3S9bzxlVIOwEu0/bSty7mgBpx2hA84Fg58M5GYlfzLIuVdbw+
-         me2g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769199418; x=1769804218; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=TUNAGiu4ezEWJm5uYRa7wQsABq7yywrxmVTJujgOr44=;
-        b=gOUXJBLmqlxMj5HJgWpaqseKprkgG3by9YElm31RK4t9y426bCqZ9LErDp7iXpjNkP
-         FJq5A4vq2BQaBrDCqRMFRMiALDQKgjVmsFcKAsdNGqQ5dwQe1CSZgDAQ3CXNsC9o5VlC
-         ZhNNMVjziWBez4LCvrDbljWj02MJ8x5q/iiDUHxhiTkXeF1r9qJXaHXPpFlRHg9q3yTV
-         +a9sfgn1ZLb0RNrNPH/sCmuXceG6RpnGmA+nPrr2VR/bArGwWK5a8zJ+h3lGZv6Nl/AY
-         kXien7PTje4Q5X6UoC27zm7Cx+Uu1+JaHgGKcqKfC5G3SAjSDyaqiU5wYdOkKxrtxNh1
-         5RHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769199418; x=1769804218;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TUNAGiu4ezEWJm5uYRa7wQsABq7yywrxmVTJujgOr44=;
-        b=KBK9TiooIHAFtLCfkUhg2WnHvxzGf8lPJW2RMBHpXCjZDCTceC/u3HloapsFnitmSI
-         d5zhJnpNmVvsU/jsymn4jSmlVWHMkcmGlP2rjfxNMnKXz70EC4uCjD3uP8wPZ/fiHevJ
-         no/v2Q6ITJ6audQr9eFouOVLCJNHuLfH8cXoday2JHgtPS+7TInqlTGYoaU9w9LhTkOR
-         oAKBw+kAgaX1d/dmEukbK6R4ITMlRzE63ggQkJecKkt13LYHHF4atKvLbH/Xv9LdKinv
-         G9+vgzNd5c4I8ZgXYOnzUU2B5444k75PRdVIZBmCt/kvaRKRXZO3UhBrDmEHHtkw+oIY
-         125g==
-X-Gm-Message-State: AOJu0YxXbSUxfJPYc9MdiT+4nJM5yu9ALZKHQ3BK3vul31dI+aHR7Qqn
-	KFHJvhm195fWAXCN/ThAIhiL9/8/O47ANv4hlHk94T+6PLYExJvBevkp02k2dwCruqWbD5GSTHT
-	CgGx/q9xklqraL+jOXLCHblxhde7QPwlDXycQ
-X-Gm-Gg: AZuq6aK3A7uj8RITjga2gsvfEvwtTnk8R4zvBNE1lwoJDE2ZtiyMImbugLcdmRl13zX
-	UMGJd9O6bcycenXOPBobWvvlPX0IOu/IzYLkhlYCmJhK+LB8CJJACflaE07HdynGoEQqqjOQSX2
-	iKuyc+YJJc29IQKs0RX5e0st2SS+Z43lUasseHN8xR1s13fk4HqfAmaaWY1VJ+z53tsrjfrYW2o
-	Ai6pxZJ9VLsysuCHejj/eNUXgaXSDfXk/VfZAs/RsecNi9fS5e+cSq6KaEP637gvlOeBmz4GUZh
-	qWHk
-X-Received: by 2002:a05:690c:22c4:b0:78f:fcfa:c966 with SMTP id
- 00721157ae682-7942a8a6fcdmr62957807b3.30.1769199418021; Fri, 23 Jan 2026
- 12:16:58 -0800 (PST)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lrdfZZzw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1769200158;
+	bh=bE7bU2PxxT0/iarZlZjDHAEnYZAw0uh+Cqc8CCB0+JI=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=lrdfZZzww5+ZL2jhwHasFHGtSf5qttJnWTsgWnUENBOR4yIMx1f7cWei+6PJ5Ckku
+	 pk/4Ca9qvybpHRRaHBIHtq9YHal9/QFkMXA6cAPAimGAL1Nm7k6QexVHcoc0OrP7Ce
+	 qUJFckA8/tprwzFgIVHfOsiCz5O9veIE4tqLjQIjaQ1dKrsGpL4TBs7ASkugN8sen2
+	 zmcnR2JtNxwV9ksYe7LKoZO6Lwp1CFc7I/dO3qwzGLurnraIO2Zq9c6QSbCD8CLfjT
+	 oLHtuZT4VcCMnlf0nZgB1DEZdb2kR5262WzFFhXsYuyDz8sdP2CcLjoErOT7g+tzuY
+	 8YSd0u7Do0sGUYw/RhB5Kewa7H3ghifZAKUkIEk47z/XxeQiRVizGGK9QI8Or440Zn
+	 0/kkCMDr30BfPorx6PtiphmDF/OBsU9ClExTiu2TmNj4oXzYQfKQBT304D74WYFpUK
+	 1mF+SDk4w327c+Kz988CmxsLSJshHvY4oKksho8Ty0AHunQemgN
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:504b:5db7:29f5:6f63])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B883320081;
+	Fri, 23 Jan 2026 20:29:18 +0000 (UTC)
+Date: Fri, 23 Jan 2026 20:29:17 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 1/3] show-index: implement automatic hash detection
+Message-ID: <aXPaHWV62HEfHyy_@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
+	git@vger.kernel.org
+References: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260120140901.517928-2-shreyanshpaliwalcmsmn@gmail.com>
+ <xmqqzf68yx75.fsf@gitster.g>
+ <aXCJp_rGPetsXE8J@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Klaus Sembritzki <klausem@gmail.com>
-Date: Fri, 23 Jan 2026 21:16:46 +0100
-X-Gm-Features: AZwV_QgZjshu6CbxF7aPfTmW0Bk1HZZIsRnKwBwOt4rufvw4pG9lMTM_QtP2i0c
-Message-ID: <CADMnYXDDbVBwZgETsFhwkOyn8cM8QU4+YQs2rRfTac6ec49-5A@mail.gmail.com>
-Subject: The SHA256 of "xy\n" (ASCII, no CRLF) contains 1337, ACBAD in za, and
- I am 1aa
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vkcZplau7xBFZkZS"
+Content-Disposition: inline
+In-Reply-To: <aXCJp_rGPetsXE8J@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Dear all,
 
-see for yourself:
+--vkcZplau7xBFZkZS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-$ # xy: 1337
-$ echo xy | sha256sum
-$ 3b2fc206fd92be3e70843a6d6d466b1f400383418b3c16f2f0af89981f1337f3
+On 2026-01-21 at 08:09:11, Patrick Steinhardt wrote:
+> I think if we wanted to fix properly this we should rather introduce
+> index v5 with a header that encodes the hash used by it. Like that we
+> wouldn't have to guess anymore. Whether the hassle is worth it might be
+> a different question though.
 
-$ # za: acbad
-$ echo za | sha256sum
-$ 28832ea947ea9588ff3acbad546b27fd001a875215beccf0e5e4eee51cc81a2e
+Index v3, which will be used during interoperability, will encode the
+hash algorithm and can be used for single-hash implementations as well
+as multi-hash implementations.
 
-$ # My initials (ks): 1aa
-$ echo ks | sha256sum
-$ 1aa44e718d5bc9b7ff2003dbbb6f154e16636d5c2128ffce4751af5124b65337
+There's an implementation in my `sha256-interop` branch at
+https://github.com/bk2204/git.git and we could simply enable it by
+default at some point in the future.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-$ # 50566750337
-$ echo thinking | sha256sum
-$ 50566750337beb9e98e553fd9196d10576f9eb0cbc6b66e2586b9d73af4f352f
+--vkcZplau7xBFZkZS
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Less strange results, but I still wonder if this is random, as
-expected after reading this: https://crypto.stackexchange.com/a/12840
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
-$ # It was bad AF BC:
-$ # bc, badfaf
-$ echo bc | sha256sum
-$ bc18cd878fc136926875bcb4bddc7f3badfaf4298f5dd1a9fd4c1b9692b624fc
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaXPaHAAKCRB8DEliiIei
+gQANAP4mhmh6HphOuGNWWf7/1FCt6R9SSfkFAE3r3j0F9JEx1gD/aBstUeezHpMD
+1QdYXdcFRLwgo/1MLujAWto6NiuyPQA=
+=PYsy
+-----END PGP SIGNATURE-----
 
-$ # 439247560, 1532557
-$ echo vw | sha256sum
-$ 439247560f158e6c80ea9b43c3345b4468ccf6fb1532557b1bab8908ad8b075a
-
-I do not need my name attached to these examples, even though I am 1aa.
-
-Cheers,
-Klaus Sembritzki
+--vkcZplau7xBFZkZS--
