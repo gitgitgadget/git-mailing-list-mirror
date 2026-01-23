@@ -1,102 +1,113 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A65826F2BE
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:37:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E2C1B4224
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 17:45:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769189849; cv=none; b=uOLN7aW03F3Px998pIk2CgZUn8vvLfE5QVokLC0JbzC9EJfzKysdNYQ/YKMDVejXKvXISIj4CMY4qVgpxoUpQsZmIffS6BYix/6uLDH91IVVuLe4Fmk0QclXtAjYppuVSSnL4DuIVkFExprx1I+n9Wa+nj1PlucNJARkXT3WNRg=
+	t=1769190315; cv=none; b=k0FQZXHCGEj7is636oymUvTbJHgrVGrH0Tp2wvebHO41EBSQoUDIveM1D1jXC34KBSBGWmFrlHt8W8po16A7n9wYNU//G/z2H7T+DwDRmrvX/ytGXJcSf8BWZzBAQrSxgILnXVBrgzRoCk8F2uPFVbAmVrGzgbjrgePEtqZu8NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769189849; c=relaxed/simple;
-	bh=oGa4mOYiuku+XTzohJLUEP1k8MdPg7Ogz1Wn5/pGQs8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OsAKUIAFddYfRUxQmM2hVc0zsVapSwLlkk5P3wk5IKx5/sigqNKn3JDC/C1Yz4jcNWLlbR8cmTNKTmsqfPrs5M6f7uqufC/r3xKHQDp5zHD2CNl2a0fBNqdgeddB9U/kd2sbS+J7UR7VkZZgEPcE/0IOKlo73llqIBtQC23hMaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ka/TvyWo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UOYR4QvO; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769190315; c=relaxed/simple;
+	bh=JtlNZg5LiGVyBO/PG8tWZ4jMLCQge+Ln3RW8jeNvT+Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U/LjrX1rU5uKcvWlfrybJRDFju6IwoADpTHiAAZNDoYYiWGHhO4yX1GdGCkoLmdw4VDs3Jrkppo+CGzy/OgbH+1mWs58gU5oyDgxLxtB6YdTEqajGfEpIMZBHBL/qGQqGx4f7Ra/iXy0trmaNiasoXXbW3w3mcIassQsCkCQqBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=H6iHDv7i; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ka/TvyWo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UOYR4QvO"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BC0307A00A2;
-	Fri, 23 Jan 2026 12:37:27 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 23 Jan 2026 12:37:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769189847; x=1769276247; bh=xpmf1Rw0Kw
-	+uz89tyGzsWCfDh3jnS30dZJmAO/IYP1c=; b=ka/TvyWowatjdg6DVEQYAQ5iGv
-	v6mu1jXJLyCNexEiTk63QdsSmvfE4SKCnCuoJSZ9PQdSHXvdVmFBdWHuBKJeuxVc
-	6wI2C5p0ic97zp1Us3xDvfT4QssRBH3CWF6Vlk3RKQ4a75apE1+x4U/LzumiseDi
-	/icMdqX48uLIUUaoO63hLZVuBk0a9Jvz5ZEB+PbMmJ+k/u4DIou2c+qPk5s4cgJf
-	cQ8mXcxprG3YY1JSwoOFboWq4vM05Co2X4fUAqZPALs8RjNIfF5s3814IwEXsu5f
-	UOrs3CFhvst0VliY3JgOaBDTJ9s1bWVnaG0gHpN2N0xeM2hLNVH8IkLqpYWg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769189847; x=1769276247; bh=xpmf1Rw0Kw+uz89tyGzsWCfDh3jnS30dZJm
-	AO/IYP1c=; b=UOYR4QvORA41EymsC8+xtnisrEc+7VP+27gOscZK8Uf8Aw/oJRP
-	5a7M6IHgkoy7zydH5tfJGRflR9+TkwGBxM+s44zmpOE/d9+YrY+BS+N2oeXuufef
-	JDpNVc8KFOQoy1pg0D1q7AN+SDAToeXlTRrWFN6qJffAe3Axlmw0+ZaMf9eY14AM
-	gUhSCu/btAbkQVGxXZwRKzA78r30FMq4pKj4Q+Vv9/ATSYKIOqDoBU30MkA/CUjF
-	UqBZltk0lmpSKnznRKI8685UbsMZPFqInBk3nCrtLuVfAHebcMJXGYCMU3BBe2Mp
-	agi9LmkziBJsIDs97KfYRLEDO2uWlzGmPMA==
-X-ME-Sender: <xms:17FzadpzajnSsFrFRCyf2VU15wGI8CI2SdYumUci7fu36SfmfFKQHg>
-    <xme:17FzaXEnM6FP5kEtFTdF6Pa5JvQ4kdLys4Gm8EhrP-7rYAk01FUR8QtXR0uhUkW5Z
-    CAhILnzV6cT8hcFvbQshqkXsebX5tSXhTjimzc-I-UZVuu7B6gIcPo>
-X-ME-Received: <xmr:17FzaXlZ4SYPKJn21IFIxLp8d5xSjjjYPHJVrHIFr0qvUBOdYFGamGDTkW3lELWRibhxRLWg3jw1Baa-xW_Ld4UY2-l7_0TLyPfnhe4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpuh
-    hshhhkrghrkhhumhgrrhhsihhnghhhudeljedtsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:17FzaSlSrFbK8302bJaUzpZCKYWwTADh9QiNtsCQD4sNPkllVsKavw>
-    <xmx:17FzaQtNXW-S7zPpcuYt0lVepQdZEZjjOMBEUBL_RLk6JfwmGbmq3Q>
-    <xmx:17Fzadkwp9ioGvMxABqMYo4wBT301keDeRNhrtEpy2-N3TWajDHggQ>
-    <xmx:17FzaTvM8Rg02wPN9ZEEQax3h1sOUxhO-frRvbiXdjaUXQSrKeEcdw>
-    <xmx:17FzafEoAbRaIpmdTMUWeCpUco_YfXDQkQmlJFAgwmKH5luDP9VLyvR9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Jan 2026 12:37:27 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v4 0/1] subtree: validate --prefix against commit in split
-In-Reply-To: <20260123142658.15516-2-pushkarkumarsingh1970@gmail.com> (Pushkar
-	Singh's message of "Fri, 23 Jan 2026 14:26:56 +0000")
-References: <20260123142658.15516-2-pushkarkumarsingh1970@gmail.com>
-Date: Fri, 23 Jan 2026 09:37:25 -0800
-Message-ID: <xmqqwm18grhm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="H6iHDv7i"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79405f99b8eso37776307b3.0
+        for <git@vger.kernel.org>; Fri, 23 Jan 2026 09:45:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1769190313; x=1769795113; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0yA5nfssfINVNQ1BYv6jehN5Jau2ZnAQ+p6kLVl2CiA=;
+        b=H6iHDv7iOb+t5VhxX7BppCJRs9uVJLcUu0fbnGukvarrKgCO3qdfMO/n+mbVk5+qRL
+         eHixra8LXl5/VJDHFGuIitlHJwtlskeLO+nuR6pkV1W9Y00YRIzeLzQn2R4K6UISZ57u
+         vA93hOSGexmTQwqIDzB6hH93huMf7GsSY51xq8c+8Zsbv2AsJ/RRlMyVhFZKWGtxd9UY
+         htDgDDJxat+KcHusvT79X9/vKcvLxyja6TBSMTogSeIFYghGW94tLAC77bMmNTJUFfmB
+         MJUEDDfWECpQFB1Xx8/1NTou3GssKhsg1JH+1hG0rw8tz8GLLqQ21S1jE8hAYZyt8oD0
+         TL9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769190313; x=1769795113;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0yA5nfssfINVNQ1BYv6jehN5Jau2ZnAQ+p6kLVl2CiA=;
+        b=IThPtCTA54kQk4KgRUTihNOIZCMJVzxCsl15BGhWxZ1o5vrUnviVZCUscgWxwjM7LG
+         J8FUdGyf79D6G93onYIYRTgZ6ek6qPegPDry8AnwEVC4bV34xbYupzaNjHes7AbSHGAG
+         5Po6zpWfpqEYTtLbiWzefJHyZmAYQLd91XG0OYCdIkVQjYVpbJcVh85cA9Wq1rNLST8R
+         L4/UglVDB6HIwHAVuuvW3dJSPEZnAY5ToD+9bLs5c02pSewRe+eJtOFUZuYxyfva+bVP
+         djdeF3xTlgHuV06Z5SjKHiJjlFeStYaPoZLrTNdKMwFLn33fURQCmsLj+saXafzkON2j
+         beQA==
+X-Forwarded-Encrypted: i=1; AJvYcCV3khDG6GC+IDz+sCM+azR4r1rXuOy9NWjz2ygSTJKcxcQPoeT+7XV81ffG7ewWf+OXOw0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUrOywhR68mUKZkwQDlLYicriWbphCqz+HGS6V0Saey7cqPdhX
+	XNciRIYNsVU2RmATcGAQPo7LrRzifxMTU6CzmLU8s5Iw9J58tHBwm77hL+sAi0O7Ywk=
+X-Gm-Gg: AZuq6aKogtdIulWSx4JXVKL1Ku7H3OTXI4ZPW9uZ5mjyo1U86KercPcmgXwUac5zCwO
+	8A2p2y6Iug5cBNDdS2OKarGCmCDWhZimrMr0YO5snxiwDEQ9JTBPCdOEGMJlyeWog3wSldNQYQG
+	GiOf6kdaBerBC02czRXVda0jNBGzLQFQ+EkMFsd8bOAPZxR2dJApDNoOeCSZcy4N/UzD1QMQuQT
+	q0A/LeUDRIm+WXJZoGQUW1eozhbUkpLp2HHLULkOc93CIVcSKsgzi+2UN005F3nH1IuIhut95XK
+	Q+pXpAT6uRh9k1/6BTiMEN2kr7dHzZ6KPQ+a7nkJgC42U/H4B/G1dh72rcC/PUbweDar6bJRYPR
+	rFO+0n8EUy8REisNlHCHpUzHogbvc/ww6cb2rUNZM+tpEGcVsUY8urL2wp85hQyMMn3u8/khAMC
+	3ip8tkoylB8sAPQc6UK/+QM30C+AErUwV4QSPqAglkC8AgOZFPjhpM2LwaVAUZcKKE1l3tnPFhg
+	lCruGrYWwNXbADz6Q==
+X-Received: by 2002:a05:690c:c52f:b0:794:8bd:66f6 with SMTP id 00721157ae682-7942a867b10mr61014197b3.29.1769190312904;
+        Fri, 23 Jan 2026 09:45:12 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943b2a2b0bsm13407617b3.31.2026.01.23.09.45.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jan 2026 09:45:12 -0800 (PST)
+Date: Fri, 23 Jan 2026 12:45:11 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Chris Torek <chris.torek@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 06/14] packfile: introduce function to iterate through
+ objects
+Message-ID: <aXOzp4ivyYgPLux4@nand.local>
+References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
+ <20260121-pks-odb-for-each-object-v3-6-12c4dfd24227@pks.im>
+ <aXK7cSJW2syew89a@nand.local>
+ <aXNCjT6Al-4YLah5@pks.im>
+ <CAPx1Gvd6BGPeVmN5b7WM_r6OFf7Y6KooJ2O1jT5O6LzNzGuEEw@mail.gmail.com>
+ <xmqq343wjo2v.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq343wjo2v.fsf@gitster.g>
 
-Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
-
-> Changes in v4:
->  * fix indentation in the case statement
->  * add a regression test to ensure --prefix is validated against the
->    target commit rather than the working tree
+On Fri, Jan 23, 2026 at 08:22:48AM -0800, Junio C Hamano wrote:
+> Chris Torek <chris.torek@gmail.com> writes:
 >
-> No functional changes beyond the above.
+> >> > > function is the equivalent to `odb_source_loose_for_each_object()` in
+> >> >
+> >> > s/to/of/ ?
+> >>
+> >> Hm, isn't "to" correct in this case? The remainder of the sentence reads
+> >> weird though.
+> >
+> > Different English dialects. The preposition after "different" differs...
+> >
+> > (It also matters whether you use the definite article, "the function F1
+> > is THE equivalent of F2 in case X" vs "function F1 is equivalent to F2
+> > in case X".)
+>
+> Heh, "equivalent" is "Y is an equivalent of X" is a noun.  It is
+> adjective in "A is equivalent to B".  Of course, article is used
+> only with the former (i.e. noun) form, but article is not the
+> essential difference, parts of speech is.
 
-This seems to be identical to v3, which already had the fix to the
-case and addition of tests.
+An alternative suggestion would be s/the //, making this read:
 
-https://lore.kernel.org/git/20260115175403.3971-3-pushkarkumarsingh1970@gmail.com/
+    This function is equivalent to `odb_source_loose_for_each_object()`
+    in that it [...]
 
+Thanks,
+Taylor
