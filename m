@@ -1,74 +1,73 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F142F531F
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 01:06:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F82F369988
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 01:22:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769130408; cv=none; b=ioSNlOj9ZVoessyKXaznVSsMQFmbcaQbKOY9xY1T7FvzHgjVrJfsY8+SKSGe4C1kj9muKp6H8nV7XbnAREIM8yB5mGN6+Rr9GUe1RZYpkhqSCYHhpzEOkOar89sf6L+fADc9Gib+6+SBMLuVwV1HGXW9jXiuiXc7pFr6yGtrb7s=
+	t=1769131330; cv=none; b=APq1m7eUlNcI0Vgyqqcu87Zulh4unou8pq5c+hA386RwClaHkss4gJ1Ybf0heP/alaX1i4iCs0PCrJYMJ0SAKJdWDn1r7+dc+kt96eiVI89d8ydZbzTYDMY5HrEW2xCxXERzJSUXWELeW9pS7cbSlPpmuCKdMlTXH6h1hysKcYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769130408; c=relaxed/simple;
-	bh=qOLNx2dboO5QapMrMna+hg/Sc9gxIAFdP/sg6ESf3XU=;
+	s=arc-20240116; t=1769131330; c=relaxed/simple;
+	bh=9V+qXRUhceHZL5tOqvnuFTpQPnk/xXndMdKIhedff/w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BfHsB0+G+Qj0dgwz9A+9vA250I4Uc5kYC1lmmQCvEob7cqTr/sRVTLeiT5y3Q9Z289/YFP+l9ucYNAbx4MVLcxveSTwtBuJUmBcru+xUCZ6yEbLLE6sUxlpQm0TtwFVbbz/MsoxTyhhKqPM5pdYJl2jqvWFIuFS9Rvrl1bCcIiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=UlddWePR; arc=none smtp.client-ip=209.85.128.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=FchH+LoGOz0RqYeLQNhir/ioTM1ElCuyvm6tMWrm149ebPaAVFFNZzeRBprByHoc6/ZyoE9K72uiNSF0h1MnL9nt3NaUDLMkR2vixsWqnswGQVcnOQjUMbgkSLfSVvcl0oqxCiD6gTLCyNywK92nXEOLR45bGHVMc941LuPOX1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=PWD+QC6Q; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="UlddWePR"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-794265fb73bso15692707b3.1
-        for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:06:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="PWD+QC6Q"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7942fca0da6so9277797b3.3
+        for <git@vger.kernel.org>; Thu, 22 Jan 2026 17:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769130402; x=1769735202; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1769131316; x=1769736116; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JfW+U4ba3fnJIrHOallX62Piz/BBF2EhLWlB5fpb6Jw=;
-        b=UlddWePRdTqcDFIYRh0PkoqSYpiQqmTN9v1rtfYr6GzDGRayNKzIDVtDFWVzN03me3
-         MeYREow+CzQOSLrIVFPbmABFn0/D0JgpdWBMWapUa5fgEsBb0a6qeRgFBZqw3rmVUuc6
-         gXxVlYFHuhFNz8czip9eHn2KG93OpxK7gKPWMMBJUjR6G5+ivnu8z8zXnT44c2gP5+oY
-         E2sZXfU9nTa+GLfywjo+u1YFgT7sAGxEXRIwUwSDL++0yzhnfYbfA2MX//FWAPvxsq1M
-         Y/QCYQLJnjIXHsJ6GEcQL5entMwfR88DFafemBNGYjtvrjw9teI6kG+KxvtwVuRcethT
-         6YZA==
+        bh=G7Dtn9Uf+Kd2t+BDs6cIGBGVEYxoSWtxdrNPPz2EulU=;
+        b=PWD+QC6QQgYkY+UrVfq0uojfR3bEud+VRYfmll1oz5I0044ZX29G9dvPoFX/bs7zQF
+         oFzt7kUGbBd5J1jWH3z8n561smUAUSOZQPg3y0bo+NK2m66tCn2fIgPn2d4G6mAErVfQ
+         6+GIyWrqtf7EUY3sx4K/jd5xxfOU2JuYREQqOamsru3i603VoaO+k2XGZQcbgPH3A9Om
+         hJpUJ84ZVI+XgXjOm6n8nL/Gx+mv/oiO1smIxLdV/ar3iQn4wcU/rcDazzMzfwUqtNq1
+         W2LIENmd7jb6/wmkpMe98w+hrw4TwrP5j/dd7XbNBPLHXWg9EJT8XwUffvIE+vN3QMhK
+         K18A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769130402; x=1769735202;
+        d=1e100.net; s=20230601; t=1769131316; x=1769736116;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JfW+U4ba3fnJIrHOallX62Piz/BBF2EhLWlB5fpb6Jw=;
-        b=AQWiQEpWuVE/yGrmTVtT+HErdf6WP5EM2sk6ndijW9V6Xzc31+onSUBg0KYqSAtChk
-         ZrJqtKndKQUSvVWfJQgek21/sIedVxUWGpyQlymW/QR/f0o7iS7jzivC+3+I3cIkfnjJ
-         MHyACZSW26tBJJ5WxItdNB3U0w8D4HxB+fgREi5uad75jB+Q1GZ1xq5/sxmck/AD2tlV
-         2KTtK7GY+y2FATF5hrdNsRWpln7LlFgQ8JeUQzDh55ZJGUhnzI74sSJQZIjH0ZFo7yUG
-         KgtUlwI4/GgMrqBDMQ5P1BbSPy/cvAh1rJlGBnOJgeEpoPNL9zVb6Kl4EZlxv/jz90Ye
-         MtXA==
-X-Gm-Message-State: AOJu0YxWwH+/IUFQhYUAZHzqvOFLUUhmKu8sYVmgup02H9wV0o9+UDlK
-	31Rd9qG0KPYX0hi5UM5D84rFTccD6veNdqtLctu4KWxD2hBbZrIA+xLq2fXM87z87QCZ4lXHnHc
-	nf5wio6I=
-X-Gm-Gg: AZuq6aLB+IJaR7ojnlsPLqCbF0LG/eh2zKdjiTe3i2Q6VCyh7Hdiv6/BaGRzpvpKDYE
-	Rpy0SM24QBjQQpdFENt2jMKQHfX9RaP1GpVPgZCmJ9Bkm3gsHtK3rlgS3eDQ3kjwPKDM3aCI3gL
-	B3ZlC5Dxd1qvh3qjT64sGnB6V1BTY7LI6x7fn9Wr6ddiCW73QbawMpmSzlqKJrSZoSPY4ksieo+
-	b/frfNRLulJcacskDf+JS4+rJs8sokNvASdht1tw490hFDF7LSCRv2LDTecul7uOj9pehqngtC7
-	7tOTZ5qrGzBCEWrrPiAvh/S8V7Md/VvNih/dq0BN3yUAR60pl2t6jmFdvqs2V36eSG1EBdcAra8
-	BwSd+NsG0mHBd9zhBUaENIpuxvEe6dUQsM88j4g2EMDF/2L0L2xCKNkitBX2PW66J53fOoSBW09
-	nD1BdywKa8FgNWHYDWLn0W0+8RiIyF3Ui7sPv6H0fFj5LeDLsJuibDVmEqZw+zSyGMvv6e5RlVp
-	FzmMweDBp2rZ0xUog==
-X-Received: by 2002:a05:690c:6809:b0:784:aec5:7042 with SMTP id 00721157ae682-794399d2cd2mr14581537b3.38.1769130401665;
-        Thu, 22 Jan 2026 17:06:41 -0800 (PST)
+        bh=G7Dtn9Uf+Kd2t+BDs6cIGBGVEYxoSWtxdrNPPz2EulU=;
+        b=L0W602jXKbmgWK5LeCOPLzg/s7h0y+NuXOHVv9WvkQ2nxI9235Y9IHrLm/Uv7UjeXD
+         2WBbX8/ibvWQjW34p+ghJXeiQd1devVcNLOL88aoPteJ1wWTT8w0AqHAWK2VcyKgC9IP
+         rnjP+tZIsQAmclOPiFNbkybf1AFnUh6NxbDVnp0ORT0wx5+JNAWxj7qM0mrF9mb8tBjg
+         +udPZMWZsc6cMqCAxPqaiv+cUT3YfGLxlk5Jr1rw84RiH9xWtBG4femiy7g9rQkVg2Z2
+         J2q+p+0GbI7w2gZr8MLKThcLFnBwScKfJJ+X6I/7tg8x4JuXDhdAiOVK1H0r9OHSRDWG
+         Z+dA==
+X-Gm-Message-State: AOJu0Yw05nwjpOCH/MeJgJi82O/EDYXkkrtimXkqWYupZO7OS1pEoM8Q
+	pShvJl68rrWR5UfI4G2LAP9s6oIRWk6QIYDBGdE3yqdHZq5nuF1618C+l2xRotmJZVw=
+X-Gm-Gg: AZuq6aIWx8pZxamfSugqS5mmOhBfYwqCHdf8lS77WJ4neMU6b+88pMcKyDUixCyf4+7
+	jOjm4kdTXXDmdZ4jZO/jX6m49Ir7aDsgUAUXiiPtvRSVIhC/fsxk7L8rxWIyju3B5c/MjbZw4Kc
+	tFakTOHl1hfMwtErGRofOLmA1p0ZY0HPRZVTr0zmNli1H5+54oZnc0tBzWSzBPclcvPl0l9DjCk
+	rEpB9GFDZzfxihe66uCYHCciDCQA27rtaZFiXngTNOHutB55YSj/28IeRKyG/kSjMpl+M40Iwa/
+	B6OXPjleADueBkVzRcaANkPtwFmLuWEGST39TCS3wzEBAio6Pne2q99EZ+DPjk58y140TCUN2b2
+	nPFHrJnDISq9fFuKIRgcjDqV657CsNFkjIR4XFPjkeWqy+lD2tpEo4/87deuXQnVPZvHJxtqp0H
+	aCD3TvtVN7QbTBBvP/HAVyATm0+mvfxgYlCtu7UrJZSM+pKmVzrAtDhGCZmU3hUiGoVk32xUcsj
+	X7CmEx8EGqeXv1xYQ==
+X-Received: by 2002:a05:690c:6307:b0:794:18b2:1ea with SMTP id 00721157ae682-794399f155fmr13842437b3.59.1769131316639;
+        Thu, 22 Jan 2026 17:21:56 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943ae2d7f9sm4544437b3.0.2026.01.22.17.06.41
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943af13d62sm4457677b3.11.2026.01.22.17.21.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jan 2026 17:06:41 -0800 (PST)
-Date: Thu, 22 Jan 2026 20:06:40 -0500
+        Thu, 22 Jan 2026 17:21:56 -0800 (PST)
+Date: Thu, 22 Jan 2026 20:21:55 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 11/14] odb: introduce mtime fields for object info
- requests
-Message-ID: <aXLJoDdoEyKXKtBf@nand.local>
+Subject: Re: [PATCH v3 12/14] builtin/pack-objects: use
+ `packfile_store_for_each_object()`
+Message-ID: <aXLNM+AOpdQtmisC@nand.local>
 References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
- <20260121-pks-odb-for-each-object-v3-11-12c4dfd24227@pks.im>
+ <20260121-pks-odb-for-each-object-v3-12-12c4dfd24227@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,179 +76,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260121-pks-odb-for-each-object-v3-11-12c4dfd24227@pks.im>
+In-Reply-To: <20260121-pks-odb-for-each-object-v3-12-12c4dfd24227@pks.im>
 
-On Wed, Jan 21, 2026 at 01:50:27PM +0100, Patrick Steinhardt wrote:
-> There are some use cases where we need to figure out the mtime for
-> objects. Most importantly, this is the case when we want to prune
-> unreachable objects. But getting at that data requires users to manually
-> derive the info either via the loose object's mtime, the packfiles'
-> mtime or via the ".mtimes" file.
->
-> Introduce a new `struct object_info::mtimep` pointer that allows callers
-> to request an object's mtime. This new field will be used in a
-> subsequent commit.
+On Wed, Jan 21, 2026 at 01:50:28PM +0100, Patrick Steinhardt wrote:
+>  static int add_object_in_unpacked_pack(const struct object_id *oid,
+> -				       struct packed_git *pack,
+> -				       uint32_t pos,
+> +				       struct object_info *oi,
+>  				       void *data UNUSED)
+>  {
+>  	if (cruft) {
+> -		off_t offset;
+> -		time_t mtime;
+> -
+> -		if (pack->is_cruft) {
+> -			if (load_pack_mtimes(pack) < 0)
+> -				die(_("could not load cruft pack .mtimes"));
+> -			mtime = nth_packed_mtime(pack, pos);
+> -		} else {
+> -			mtime = pack->mtime;
+> -		}
+> -		offset = nth_packed_object_offset(pack, pos);
+> -
+> -		add_cruft_object_entry(oid, OBJ_NONE, pack, offset,
+> -				       NULL, mtime);
 
-The goal seems reasonable to me, but I am a little unsure about whether
-or not this is the right place to expose this information. I have some
-more thoughts below...
+OK, here's where we see the existing logic for determining the mtime of
+an object in the GC sense. I see there's a subsequent patch that also
+makes use of the object_info->mtimep field, and my guess is (not having
+completely read that patch yet) that having the same notion of mtime
+between the two callsites is desirable.
 
-> diff --git a/object-file.c b/object-file.c
-> index 65e730684b..c0f896673b 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -409,6 +409,7 @@ static int read_object_info_from_path(struct odb_source *source,
->  	char hdr[MAX_HEADER_LEN];
->  	unsigned long size_scratch;
->  	enum object_type type_scratch;
-> +	struct stat st;
+I still wonder whether imposing that notion of mtime at the object_info
+layer is the right choice. I wonder if it would make more sense to allow
+the caller to have a "statp" pointer filled out (or alternatively stick
+a "struct stat" in both the packed union type as well as the loose one,
+though the latter doesn't yet exist).
 
-I was a little confused why we were declaring a stat struct here...
+Then the caller could do something like:
 
->  	/*
->  	 * If we don't care about type or size, then we don't
-> @@ -421,7 +422,7 @@ static int read_object_info_from_path(struct odb_source *source,
->  	if (!oi || (!oi->typep && !oi->sizep && !oi->contentp)) {
->  		struct stat st;
->
-> -		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK)) {
-> +		if ((!oi || (!oi->disk_sizep && !oi->mtimep)) && (flags & OBJECT_INFO_QUICK)) {
->  			ret = quick_has_loose(source->loose, oid) ? 0 : -1;
->  			goto out;
->  		}
-> @@ -431,8 +432,12 @@ static int read_object_info_from_path(struct odb_source *source,
->  			goto out;
->  		}
->
-> -		if (oi && oi->disk_sizep)
-> -			*oi->disk_sizep = st.st_size;
-> +		if (oi) {
-> +			if (oi->disk_sizep)
-> +				*oi->disk_sizep = st.st_size;
+static time_t object_info_gc_mtime(const struct object_info *oi)
+{
+    if (!oi->statp)
+        BUG("oops!");
 
-...and then assigning it here without actually calling lstat() between
-the two. But the diff context elides the fact that there is another stat
-declaration within this block that we *do* lstat() into before reading
-it.
-
-That tripped me up a little while reviewing, but not a huge deal. I do
-wonder whether or not there is a clearer way to structure all of these
-conditionals. I *think* that what you wrote here is right, but the way
-that it has grown organically over time (to be clear, not the fault of
-your series) makes it a little difficult to follow.
-
-> +			if (oi->mtimep)
-> +				*oi->mtimep = st.st_mtime;
-> +		}
->
->  		ret = 0;
->  		goto out;
-> @@ -446,7 +451,21 @@ static int read_object_info_from_path(struct odb_source *source,
->  		goto out;
->  	}
->
-> -	map = map_fd(fd, path, &mapsize);
-> +	if (fstat(fd, &st)) {
-> +		close(fd);
-> +		ret = -1;
-> +		goto out;
-> +	}
-
-Makes sense. We were previously letting map_fd() take care of stat()-ing
-the file to know how large the mmap should be, but now we might need
-that information for the mtime as well. So doing what map_fd() is doing
-underneath here directly makes sense.
-
-> diff --git a/odb.c b/odb.c
-> index 65f0447aa5..67decd3908 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -702,6 +702,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
->  				oidclr(oi->delta_base_oid, odb->repo->hash_algo);
->  			if (oi->contentp)
->  				*oi->contentp = xmemdupz(co->buf, co->size);
-> +			if (oi->mtimep)
-> +				*oi->mtimep = 0;
-
-Assuming that you do not change the object_info request/response
-semantics, I wonder if it might make sense to zero out the entirety of
-the response section as a belt-and-suspenders mechanism in case future
-contributors forget to assign zero to the new fields themselves.
-
-> @@ -1619,16 +1620,34 @@ int packed_object_info(struct packed_git *p,
->  		}
->  	}
->
-> -	if (oi->disk_sizep) {
-> -		uint32_t pos;
-> -		if (offset_to_pack_pos(p, obj_offset, &pos) < 0) {
-> +	if (oi->disk_sizep || (oi->mtimep && p->is_cruft)) {
-> +		if (offset_to_pack_pos(p, obj_offset, &pack_pos) < 0) {
->  			error("could not find object at offset %"PRIuMAX" "
->  			      "in pack %s", (uintmax_t)obj_offset, p->pack_name);
->  			ret = -1;
->  			goto out;
->  		}
-> +	}
-> +
-> +	if (oi->disk_sizep)
-> +		*oi->disk_sizep = pack_pos_to_offset(p, pack_pos + 1) - obj_offset;
-> +
-> +	if (oi->mtimep) {
-> +		if (p->is_cruft) {
-> +			uint32_t index_pos;
-> +
-> +			if (load_pack_mtimes(p) < 0)
-> +				die(_("could not load cruft pack .mtimes"));
-
-Do you think it would be worth doing instead:
-
-    die(_("could not load .mtimes for cruft pack '%s'"), pack_basename(p));
-
-? Most repositories should only ever have one cruft pack in practice
-(even so, there should still be some value in identifying it by its
-checksum in case someone is repacking underneath us). But some
-repositories will have >1 cruft pack, so knowing which one is busted may
-be useful in that case.
-
-> +
-> +			if (maybe_index_pos)
-> +				index_pos = *maybe_index_pos;
-> +			else
-> +				index_pos = pack_pos_to_index(p, pack_pos);
->
-> -		*oi->disk_sizep = pack_pos_to_offset(p, pos + 1) - obj_offset;
-> +			*oi->mtimep = nth_packed_mtime(p, index_pos);
-> +		} else {
-> +			*oi->mtimep = p->mtime;
-> +		}
-
-I am a little stuck here on whether or not this is the right layer to
-determine an object's mtime. On the one hand, it makes sense to me that
-callers would want to know the mtime of an object, either by the mtime
-of the loose object on disk, or the mtime of the contain pack otherwise.
-
-But I'm not sure whether the GC-specific definition of "mtime" is what
-the caller would always want. For GC uses, yes, having mtime be aware of
-cruft packs makes total sense to me. But for non-GC uses, would there
-ever be a scenario where the caller would want to know the mtime of an
-object's containing pack, regardless of whether or not that pack is
-cruft?
-
-I suppose they could get around that today by doing something like:
-
-    if (oi->whence == OI_PACKED) {
-        struct packed_git *p = oi->u.packed.p;
+    switch (oi->whence) {
+    case OI_CACHED:
+        return 0;
+    case OI_LOOSE:
+        return oi->statp->st_mtime;
+    case OI_PACKED:
+        struct packed_git *p = oi->u.packed.pack;
         if (p->is_cruft) {
-            /* reinterpret the meaning of mtime... */
-            *oi->mtimep = p->mtime;
+            uint32_t pack_pos;
+
+            if (load_pack_mtimes(p) < 0)
+                die(_("could not load cruft pack .mtimes for '%s'"),
+                    pack_basename(p));
+            if (offset_to_pack_pos(p, oi->u.packed.offset, &pack_pos) < 0)
+                die(_("could not find offset for object '%s' in cruft pack '%s'"),
+                    oid_to_hex(&oi->oid),
+                    pack_basename(p));
+
+            return nth_packed_mtime(p, pack_pos_to_index(p, pack_pos));
+        } else {
+            return p->mtime; /* or oi->statp->st_mtime */
         }
+    default:
+        BUG("unknown oi->whence: %d", oi->whence);
     }
+}
 
-, but that feels a little clunky. I dunno, maybe this hypothetical
-doesn't really exist and I'm overthinking this. But I have this nagging
-feeling that we are exposing this information at too low of a level as
-to make the object store aware of cruft pack/GC-specific mechanics.
+I like the above because it encapsulates the GC-specific interpretation
+of an object's mtime outside of the object_info layer, while adding
+information (namely statp) that is generic enough to be potentially
+useful to other callers who may not be interested in the GC-specific
+interpretation.
 
+> +		add_cruft_object_entry(oid, OBJ_NONE, oi->u.packed.pack,
+> +				       oi->u.packed.offset, NULL, *oi->mtimep);
+>  	} else {
+>  		add_object_entry(oid, OBJ_NONE, "", 0);
+>  	}
+> @@ -4341,14 +4328,24 @@ static int add_object_in_unpacked_pack(const struct object_id *oid,
+>
+>  static void add_objects_in_unpacked_packs(void)
+>  {
+> -	if (for_each_packed_object(to_pack.repo,
+> -				   add_object_in_unpacked_pack,
+> -				   NULL,
+> -				   ODB_FOR_EACH_OBJECT_PACK_ORDER |
+> -				   ODB_FOR_EACH_OBJECT_LOCAL_ONLY |
+> -				   ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
+> -				   ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS))
+> -		die(_("cannot open pack index"));
+> +	struct odb_source *source;
+> +	time_t mtime;
+> +	struct object_info oi = {
+> +		.mtimep = &mtime,
+> +	};
+> +
+> +	odb_prepare_alternates(to_pack.repo->objects);
+> +	for (source = to_pack.repo->objects->sources; source; source = source->next) {
+> +		if (!source->local)
+> +			continue;
+
+OK, we dropped the ODB_FOR_EACH_OBJECT_LOCAL_ONLY flag when dispatching
+to the packfile_store iterator, but that's OK, since it's handled above
+here.
+
+Interestingly, packfile_store_for_each_object_internal() has a similar
+check:
+
+    if ((flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
+        continue;
+
+, but I'm wondering whether these are subtly different. Would a
+non-local source ever have packs for which the p->pack_local bit is set?
+Or is the locality of a pack determined relative to the source
+containing it, in which case we'd need to make the check here?
+
+> +		if (packfile_store_for_each_object(source->packfiles, &oi,
+> +						   add_object_in_unpacked_pack, NULL,
+> +						   ODB_FOR_EACH_OBJECT_PACK_ORDER |
+> +						   ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
+> +						   ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS))
+> +			die(_("cannot open pack index"));
+> +	}
+>  }
+>
+>  static int add_loose_object(const struct object_id *oid, const char *path,
+>
+> --
+> 2.53.0.rc0.250.g0ac79233d6.dirty
+>
 Thanks,
 Taylor
