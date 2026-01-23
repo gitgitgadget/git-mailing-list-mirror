@@ -1,64 +1,154 @@
-Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F5C2D6E61
-	for <git@vger.kernel.org>; Fri, 23 Jan 2026 06:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0891BCA1C
+	for <git@vger.kernel.org>; Fri, 23 Jan 2026 07:19:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769150301; cv=none; b=TORHAWSwAmQeDBlv8YJ69cRH9R/AXGmootzladEBddPUSvSNtDGXWt07rmu4yy4xj6ft8UnxEt78hW9/34ydL/LICtroE0xkCS9Hnj80WihY3Ik5mgpzNtbrUGMQSZC/Z3iLV500ocn/1dmNl17P5s3H006jom2k+XXX1BlrYd8=
+	t=1769152777; cv=none; b=MnJ9KLdAKQ5NzRsemDdQY2nBcpsOta0ao/rPhortRMm6hMW0l883gmm5ttujlv83Wfvsa9lMZNDLUmso0eAD21kVBK4nhUR1QWLMk0J4KpQSEeB2kTEGIu6xXjc7Ga/yL9jwxKiD3ePBfz8ENs4X5Jq8ECYHNExK5lrNOkA26Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769150301; c=relaxed/simple;
-	bh=McIC0my/BghT0wX0YVdRuztUPAiS4+0Ub9xdO8b2eRQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fN6zk+rqxDby6Oks+gnfNBgJPZ+f3T2rlf+pa53m6YNrKuAOlXsdfQdYDEiHIz73E7FqItzK3tHMhG8s8CSNXTyMjVG6A6AjXjN447en5wqlODhpqZx1Ssj7Fj82ZDVoDPtbMkJ00p7S1SFkov8OlRufs8IWS2M6P1fZQTBj6Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4dy7Xw63TYzRpLH;
-	Fri, 23 Jan 2026 07:38:08 +0100 (CET)
-Message-ID: <13ff1d94-401e-4fa7-b247-fe8396ca9970@kdbg.org>
-Date: Fri, 23 Jan 2026 07:38:08 +0100
+	s=arc-20240116; t=1769152777; c=relaxed/simple;
+	bh=IlO1Au05OtIeCzxTsG4Ed3bFys6fr3kHfsPpHmJQwdc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DB6UIPHVVeH/99mZzOhbYc1cOnXO6wC+Y/pvRrvuv7h100PdZ+bagb4GPB58ol60+d+VdREc0KR5Le+QC+ha4PGboD/+GgHrzg9eQJcBfIo+0vQmZRzn5wkQBP84bEkEjtfnYB1mZwTSbtTdTp83UlhtyX6DjIeDTEM80vLFeGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VcApGWoj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3YlGYKP; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VcApGWoj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3YlGYKP"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4F00F7A00D2;
+	Fri, 23 Jan 2026 02:19:34 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Fri, 23 Jan 2026 02:19:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769152774; x=1769239174; bh=D7GtWhQKcY
+	PeZ/q7fV9tlCPnbNU9A27vJIu7WPp3AO8=; b=VcApGWojHFn4YS1xgyzSnOizXr
+	LUJzybPbDicE1J0P21d8tJjbMa2ZQ0URilIGA/4Q3OCe2X3uI1RtHEXyA4T6iJ9e
+	Czi2u+XFtkJP707L+r2/H3tMGVeV5/0p9sBJsnvRawF7+W/QCYAQvZZEFP/kJB+C
+	As/yci4BbEuLdoXAtj/+Tl66X/ZFhh1Sw8ih5ez6pieePBKkiQdfHCGZApghAb31
+	/37rUnVYTfcJ/JMdgvSaiO+X9GU2nw9Dfv/XC2db3kxnZRK952oe77PwFzWKq2OZ
+	NCdA1qbpWvA49tFIWVfjBcKCB7zzxFb/pV3vRBGzNLkeK5tPD40EZRqMkW8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769152774; x=1769239174; bh=D7GtWhQKcYPeZ/q7fV9tlCPnbNU9A27vJIu
+	7WPp3AO8=; b=T3YlGYKPVjkNa8OVBIAgT1DsXvt3IVqjUkD3RR8XN81rtlAu88o
+	QZIJtLQwZRSYEog4Q4VXAoCsTTsAzYwMFSIqzZFuVn8W9sIyW9gBQ4/HhwQXf9Md
+	iQ/kF5tOPhMR0gstPzV4PuNUZ8RjEuYHvJpFcwqSngPE+0p//NFNgGRsLQ2tujRn
+	NXHEwNxWxrHGuRX2TRGz42yIuP9luRYiSNvVabMZ1I9VDyyj+HESNTyjmhwXt9Qh
+	NrC6UKERW8yd1O3wQ/MJ6rA96YJ1/Sw1q+Vtr+VyJojWwxaeOlE22kZ5Wf3RKFFy
+	iNWnCF/U/sWvAjAFTe03zZ7pRIgRfGiHNog==
+X-ME-Sender: <xms:BSFzaR4XpXFrOJxr_18cDb7oz4Q0gCX9HeBoaF6NB1RPX1AK2lnebQ>
+    <xme:BSFzaResazxYMTJVcuRTS3QZTKOusgDvSBZiDlFcggRu4GxtuosBvXv-9jcY5d9gU
+    FHHUq7O0t2cXQmHG9_9CfrWm8sJMORFrj7dVRS71yDWdYXmjyNQlA>
+X-ME-Received: <xmr:BSFzacHExpRIVpKd4uWbAXzxtS82n3qPb7phjmMiB-hGHn0bOzfuNI4VPQMC0XftbQK-YevCOsjuvp5HvMSyvi374XxQyxclIpk4Irv5NknW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeekgeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopegrughrihgrnh
+    drrhgrthhiuhestgholhhlrggsohhrrgdrtghomhdprhgtphhtthhopehsrghnuggrlhhs
+    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghhrhhishgusegrphgrtghhvgdrohhr
+    ghdprhgtphhtthhopegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
+    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:BSFzaaTh37q5UBzybvyXBRDcNtL51QIIICw0ffYPgg-NBdguKF4R1A>
+    <xmx:BSFzaaaavHJ4p5AwFR7mqpCmW3wJSTe-IB9lEyukkowAi-AH7yquqQ>
+    <xmx:BSFzad2y6OMJVd_eiiObIL8QGT76W4AAAba5-oK4h4QTEfHyPru5qg>
+    <xmx:BSFzaVqyiW3VK82a9cWcFlVjsEMuw1Y4N01yLZzr00VREr5KHT7oHQ>
+    <xmx:BiFzaeeEWYBY44ilrxK4ptaWc9gJQPJ6FlC2JjnD2S_nfxqdYHC-hovb>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 Jan 2026 02:19:32 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 76a3a560 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 23 Jan 2026 07:19:30 +0000 (UTC)
+Date: Fri, 23 Jan 2026 08:19:21 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Chris Darroch <chrisd@apache.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v7 06/12] hook: allow separate std[out|err] streams
+Message-ID: <aXMg-SKKhYzIXvv8@pks.im>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20260121215436.1473800-1-adrian.ratiu@collabora.com>
+ <20260121215436.1473800-7-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] revision: add --maximal-only option
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <pull.2032.git.1768703645125.gitgitgadget@gmail.com>
- <pull.2032.v2.git.1769097958549.gitgitgadget@gmail.com>
- <xmqqikctl3vj.fsf@gitster.g> <7daff220-f93a-463a-b586-dd876b51edae@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <7daff220-f93a-463a-b586-dd876b51edae@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260121215436.1473800-7-adrian.ratiu@collabora.com>
 
-Am 22.01.26 um 23:15 schrieb Derrick Stolee:
-> Unfortunately, it also says "print a minimal subset" which in some
-> sense is correct by "it cannot be made smaller without losing
-> information" but we actually choose the maximal set there, not a
-> minimal set.
-> ...
-> You are presenting interesting overlaps of terminology and needs.
-> One thing that is different about 'git rev-list --maximal-only' with
-> a list of starting commits is that it wants the maximal set from
-> the _union_ of the histories, instead of the _intersection_ like
-> 'git merge-base --independent' does.
+On Wed, Jan 21, 2026 at 11:54:30PM +0200, Adrian Ratiu wrote:
+> The hook API assumed that all hooks merge stdout to stderr.
 
-I don't quite understand how a union or intersection come into play
-here. The difference between the two is that `git rev-list
---maximal-only` permits negative revisions as input, but `git merge-base
---independent` does not. In the case where the input is only positive
-revisions, the result of --maximal-only should always be exactly
-identical to --independent, right? Even if the revisions are on
-disconnected histories?
+Tiny nit, not worth rerolling over: we typically write the observation
+in past tense. So s/assumed/assumes/
 
--- Hannes
+> diff --git a/hook.c b/hook.c
+> index 5ddd7678d1..fde1f88ce8 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -81,7 +81,7 @@ static int pick_next_hook(struct child_process *cp,
+>  		cp->in = -1;
+>  	}
+>  
+> -	cp->stdout_to_stderr = 1;
+> +	cp->stdout_to_stderr = hook_cb->options->stdout_to_stderr;
+>  	cp->trace2_hook_name = hook_cb->hook_name;
+>  	cp->dir = hook_cb->options->dir;
 
+The implementation looks easy enough. We convert the static value we had
+before into a configurable one, and...
+
+> diff --git a/hook.h b/hook.h
+> index 2169d4a6bd..7cbeef0a1e 100644
+> --- a/hook.h
+> +++ b/hook.h
+> @@ -34,6 +34,11 @@ struct run_hooks_opt
+>  	 */
+>  	int *invoked_hook;
+>  
+> +	/**
+> +	 * Send the hook's stdout to stderr.
+> +	 */
+> +	unsigned int stdout_to_stderr:1;
+> +
+>  	/**
+>  	 * Path to file which should be piped to stdin for each hook.
+>  	 */
+
+Another tiny nit that is not worth a reroll: might be worth mentioning
+that this is the default behaviour.
+
+> @@ -80,6 +85,7 @@ struct run_hooks_opt
+>  #define RUN_HOOKS_OPT_INIT { \
+>  	.env = STRVEC_INIT, \
+>  	.args = STRVEC_INIT, \
+> +	.stdout_to_stderr = 1, \
+>  }
+
+... make the old behaviour the default.
+
+Patrick
