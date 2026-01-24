@@ -1,186 +1,323 @@
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com [209.85.221.66])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA03C246BC6
-	for <git@vger.kernel.org>; Sat, 24 Jan 2026 10:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA2724B28
+	for <git@vger.kernel.org>; Sat, 24 Jan 2026 11:55:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769252064; cv=none; b=aaee/CPs4nBrXHifMqwUCL5tE6l//ofBUgwZCTA8E7X2Mg88C1hn9nzk3Z4Dx4Ay+v3mJp9R/vEeLzxexDkKoe5nxQF8L3vwnOiC2dwA4UknvQV8E8TlJu8oEJGs+mErTAZXoL7d7f9fNDnR1NEZX8k/tsYvpsudkzQmi3vsWtk=
+	t=1769255730; cv=none; b=Ng/onEjKmAmOpXSRQMDRX/CP73equrR9eBzhDLLXf9yJLvzuKahCWkWWqLQEK1p/ktDpNVpCI8IqmUzU25irQL3BGVj9X/pF7zT5vU/vPsM4e4Yro1RU4jXLho1TDz2r9ng7unCvDYbJUGXWFqn/AU/8j+eADLD8bBQWoTp9KME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769252064; c=relaxed/simple;
-	bh=Km70estWm3DkVkYkCI7BVooBWlbIPLncRrQyKhzLslQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pa6XOJRudHSYskNDxwBDZFjvlCRRfYANHzu+he6jUXebKfcj3FGXcCqgzkdoxapRnO50MfCWaj9XWyoH8js83y7JelZZY6uaQuwS51ogWlV2YAf47VEOBFvi00PSA9rSmDIDoRSVnSLKC2BO/TSeK0mZhRBv1sEb0A+3A9AxBvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Us1hUsYd; arc=none smtp.client-ip=209.85.221.66
+	s=arc-20240116; t=1769255730; c=relaxed/simple;
+	bh=k8qEmOQv69AznZlih66XG3HV99YVYMPfmX1Yaha8q24=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=GoR0kBCgwdkoUi1BBd60/qq+9OY7Qjq/KJFsXLV9VAoTcjcDNtdDBpXEun0zW/K5cXhO99gPRHENIkLc0+kfXof7je/gNfRJJVzc15WoGfd2xHvsk2q7KQeohCv1RzkQQBXo8z+6Vq2kXwAo2Q7zd5wVKjdivQXqNe5OiOOO3To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jjvMCF5x; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Us1hUsYd"
-Received: by mail-wr1-f66.google.com with SMTP id ffacd0b85a97d-42fbc305552so2614326f8f.0
-        for <git@vger.kernel.org>; Sat, 24 Jan 2026 02:54:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jjvMCF5x"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-43246af170aso1723955f8f.0
+        for <git@vger.kernel.org>; Sat, 24 Jan 2026 03:55:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769252061; x=1769856861; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zkaWJn5Jzps6T5Gnm6y+hKik3V1lhl43/3vlEqkK944=;
-        b=Us1hUsYdimqKruvlEdVmja1IEKmAhL5VnriWhWWIJuldxM0ZCzbULwtDsZdJn6rAN1
-         yX1zgXKbIFq3JnIUBfh6VDxYZr9SYtCqeta3+k0ElVmZddt/P0Ys81qnFjC9NMvOrozg
-         5MaG0ZMJrvhxx0leU5Xalbe2x8VtG2UQjwCFZmKuC+tunz9CLiNbooyDc2HQnkMVBHKa
-         or2EfvoJXZ/sZ7qJtwtHsSSKgQ7evRg8wV6eTe7TaLJgiyC3HyMqt4jxCNLuM82lK5bX
-         Td10aO7GgcmrAOVT56XI7jbsZgJdMfdk+tY2kWhsfpdWcSIaGmWrnhkFyg2J62pEzxr4
-         lQaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769252061; x=1769856861;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1769255726; x=1769860526; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zkaWJn5Jzps6T5Gnm6y+hKik3V1lhl43/3vlEqkK944=;
-        b=LDdgl07Qa+sKSddOKoFxKbZbON49iMdbEW9Rc8f0QBBVPZ7TVuwm3P8e8zsx/sVGnE
-         LHnHgPhSSRlT3rfUHG/D/xGI4NX0yE43gM2Vny32JCm4w0zfwxDGXitQ+zw29FKJl3Bl
-         OejxVcgYntSq6jQT0QPGZrCP9gPKkBx2Ds+mJa2sJpk/dyW7ILI6vRr/ohC6ompNmPXJ
-         IGmqdQdnisTs7gfcRnAhDVdkG0vrAQPoOJXISsljA3Pm/ixHakZgy+8UXI31cjlgtqv7
-         hU4GHHbEMPJ85beBRtcvjA7FsXs2uXZcKnV+nXu0icI9Cx9R0KpGkBMT71JnjSUKVM/g
-         5uEQ==
-X-Gm-Message-State: AOJu0YwRYIB206NB3uhGsZ7FRvoVCYZLlFEc1Ze19MjuumL1X57ajB7M
-	9lSgJKG9mdtCOlz2lSWww2pB99UOB/GQhkBUQUNmuynZzNqq0/hm16R6
-X-Gm-Gg: AZuq6aIqsuSkeddhYHEuaevBhpSo9XTA/Pew3oLFyvz3ErUQO22i8J4f6Ku3kxb2ASi
-	jQ29qd7XTQNSjMO9jqgVExLGuS2Upm4MC86IifavNGDPQWiHU1KmD5+uSv1bDKF1KKjl1OHqcAY
-	fZ2QfaOc9mMMcEzvCeL3fz6dybDi7ho3U6o6ukZYOvzT21px2S46gzUgJMjBqtoCFjCegSr6Fww
-	QGHZERIThki2Gcr3HUZt/aWPoPorfN0A67JwPJ+kHHMaKfK5YP5YoNzo1gwWtEwMO2xVE2LJtHo
-	VIXVgEffOjd+iPbUyRirw+IZGQM2MGGxOSwoo51n1BuPvTfaHMgl1/qs+rAhj71qeCCKbinCfH6
-	8vnGoKQMHAivuim+wmbs6ybvjrVZVgfSZrHu0DAYDw60a2O/3V7mcYLR78YecROxN5oE2WzFq4v
-	pck6BIQJwGiCoHWEBQw+zRzTfYTWsejr7Bmfl1a1d59rBxuBXZLGp5CE3eptQbjeGH5w==
-X-Received: by 2002:a05:6000:22c1:b0:42f:b707:56f0 with SMTP id ffacd0b85a97d-435b1605719mr10728150f8f.37.1769252060766;
-        Sat, 24 Jan 2026 02:54:20 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1c24f15sm13891551f8f.18.2026.01.24.02.54.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Jan 2026 02:54:20 -0800 (PST)
-Message-ID: <4fa413ae-f2a4-4de2-a2fb-0b1db379750b@gmail.com>
-Date: Sat, 24 Jan 2026 10:54:14 +0000
+        bh=DRisN4VnO6hvfac59pNnQYr23cseRH2VwRqOMphcsOg=;
+        b=jjvMCF5xV2+y/qXX2eCFN4vYTtfipa/Dqg4Otarg1ozVnHY509Q2vSZtZLo7d4zf+K
+         QXS+QyLhVl+iSEpTZPTrDqlUkbPC61QWed8BE6Ja8fy7Rq71sNgg3WzqK/WqyKl6wnVH
+         p3KaPoLjS6r5w2/W74t2m9QFkJ5vl8/MvHMka4wdXgKaAfLZyH4fvo0VgVa8j2zHqoQ+
+         S0qxNhjpLwARRM9r6O7H8OF+T/WG8q9NpXzWnJE8oohZatw618cRECXNqJ3j227ZN4tN
+         xcb2ivE3P4231HCqKIBs6YE1h0GIQCtOI8H8GbY5cB60k5SJo+7ufYV3nncpnNAfW5NA
+         ed5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769255726; x=1769860526;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=DRisN4VnO6hvfac59pNnQYr23cseRH2VwRqOMphcsOg=;
+        b=R2YiJikirj9ct4ZOoRApQjUcJKyPzmDuONDP3zDp9/0X2g4yKfDOjbKVbdVcsp223V
+         vK+QMZdL62WKNaNsuMDxbsA1VNuBjJMmTof7DppGQcCnsQdxoafYjYzT5wS74rxuKUdH
+         Hvmka+WV1CZ2KaQz2D4enP9chs39Zc9mA533ctkeh4ea3boB2m7tTlPtWVhBzyZbZd1X
+         F0TL5fzFKVB+DZ4vo38DU93FO1OeKlNzmFHBds/9SbTxvytBxPapRMcvV6bVSfJs9aCJ
+         BqN6mXhrJIb3x8cQo875twxfKEws13EOdpY77XREYR8EuTryc9wkdMVTf7YcWby5P1go
+         0UVg==
+X-Gm-Message-State: AOJu0Yyglb6veEA72by+K0UriO0jSSg1/nspXMb9ZqD2ViKvscoijYyI
+	FzFiZLXPdE7kn2GfZOAh0NdzZ1MJriguPUamStahjf6p/A8DRDW1gDN5
+X-Gm-Gg: AZuq6aJSxUgA8UOhqTBniQ0ARTg5lgww/N/4IMtePC7npS4Nh8eYDYiUy84wrNPxXWM
+	+A0a61iqQ04zM67fPF2sNrbFZh4A3tlKkBLou3m3QVVo9ch+ghWuLz/8wi01iiMlT3BMQOzIVQD
+	/oPf5ZPyMGmYUODNq/gl6ipTqDlPC6sGXqNxbnJgYjf2aBq2zGQtwpx4tvJzahCyRzZiwbbsdVP
+	DU9EDIXQ87HzSq3kQSLkAZnE8NL+g/jhnvkHdMeb7P16mJ5vAqgx3HHou7ha5DJ9x/GDemaONkj
+	jU0LpDBoyPZUya01yShLX3LXX8rZxbyFmcSfI4KmUKAgWGMSQIawS90nojwMHqF3YZGlHA3GKdp
+	KIIWnlXAjxuOpw5NyG/yO5UuttnCVhJkfpVU1xp4L35rS1PaZAhOe+3kB6W/a5Sx9zim227OUsE
+	7hCw==
+X-Received: by 2002:a05:6000:26c2:b0:435:97ff:7d35 with SMTP id ffacd0b85a97d-435b1ab8402mr11054998f8f.4.1769255726267;
+        Sat, 24 Jan 2026 03:55:26 -0800 (PST)
+Received: from ubuntu ([102.88.77.2])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1c02f71sm14393707f8f.6.2026.01.24.03.55.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Jan 2026 03:55:25 -0800 (PST)
+From: Olamide Caleb Bello <belkid98@gmail.com>
+To: git@vger.kernel.org
+Cc: toon@iotcl.com,
+	phillip.wood123@gmail.com,
+	gitster@pobox.com,
+	christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	me@ttaylorr.com,
+	karthik.188@gmail.com,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [Outreachy PATCH v4 0/3] store repo specific config values in new `struct repo_config_values`
+Date: Sat, 24 Jan 2026 12:55:03 +0100
+Message-Id: <cover.1769252118.git.belkid98@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <cover.1768681947.git.belkid98@gmail.com>
+References: <cover.1768681947.git.belkid98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] xdiff: re-diff shifted change groups when using histogram
- algorithm
-To: Junio C Hamano <gitster@pobox.com>,
- Yee Cheng Chin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Yee Cheng Chin <ychin.git@gmail.com>
-References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
- <xmqqikcusn8p.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqikcusn8p.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 21/01/2026 20:51, Junio C Hamano wrote:
-> "Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> @@ -915,6 +919,45 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->>   			}
->>   		}
->>   
->> +		/*
->> +		 * If this has a matching group from the other file, it could
->> +		 * either be the original match from the diff algorithm, or
->> +		 * arrived at by shifting and joining groups. When it's the
->> +		 * latter, it's possible for the two newly joined sides to have
->> +		 * matching lines. Re-diff the group to mark these matching
->> +		 * lines as unchanged and remove from the diff output.
->> +		 *
->> +		 * Only do this for histogram diff as its LCS algorithm makes
->> +		 * this scenario possible. In contrast, patience diff finds LCS
->> +		 * of unique lines that groups cannot be shifted across.
->> +		 * Myer's diff (standalone or used as fall-back in patience
->> +		 * diff) already finds minimal edits so it is not possible for
->> +		 * shifted groups to result in a smaller diff. (Without
->> +		 * XDF_NEED_MINIMAL, Myer's isn't technically guaranteed to be
->> +		 * minimal, but it should be so most of the time)
->> +		 */
->> +		if (end_matching_other != -1 &&
->> +				XDF_DIFF_ALG(flags) == XDF_HISTOGRAM_DIFF &&
->> +				(g.start != g_orig.start ||
->> +				 g.end != g_orig.end ||
->> +				 go.start != go_orig.start ||
->> +				 go.end != go_orig.end)) {
-> 
-> So the idea is to remember the original values in g and go (the
-> location of the group in the file and the other file) and if
-> shifting up and down changed any one of the four ends from the
-> original locations, we always take the fall-back route (if we are
-> doing histogram)?
+Hi Git Community,
+Over the course of my ongoing internship, which focused on moving repo specific
+global variables in environment.h into local scope, I have attempted to move some
+variables into the struct repo-settings.
+However there has been some design concerns as regards the use of
+`prepare_repo_settings()` with respect to when and where to call the
+function, and also the change in behaviours when the variable is lazily
+loaded as discussed in [1] and [2].
 
-I'm a bit confused why we need to check both groups. I think they're 
-supposed to move together (if we move "g" by n context lines we also 
-move "go" by n context lines) so I can't see how we can have
+After different deliberations, Phillip Wood proposed creating a new config
+struct [3], adding it to the repository struct and passing the repo struct to
+`git_default_config()` to store parsed repo specific config values per repo.
+This ensures the current behaviours will be retained.
 
-	g.start == g_orig.start && g.end == g_orig.end
+I have experimented with this approach for some values and I would
+appreciate feedbacks about this approach before we can move forward
+and use it for more variables related to `git_default_config()`.
 
-when
+For now, the parsed value is stored in `the_repository` in
+`git_default_*_config()` and further efforts to pass the repository
+parameter to `git_default_config()` as the callback parameter will
+be looked into later on.
+The link to the CI tests can be see in [4]
 
-	go.start != go.orig.start || go.end != go_orig.end
+1. https://lore.kernel.org/git/43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com/
+2. https://lore.kernel.org/git/a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com/
+3. https://lore.kernel.org/git/8899016f-eeef-404b-8da6-ff3a90e81cea@gmail.com/
+4. https://gitlab.com/gitlab-community/gitlab-org/git/-/pipelines/2266020513
 
-> By the way, this appears after the if/else if/ cascade that has:
-> 
-> 	if (g.end == earliest_end) {
-> 		... do nothing case (case #1)
-> 	} else if (end_matching_other != -1) {
-> 		... do the slide-up thing (case #2)
-> 	} else if (flags & XDF_INDENT_HEIRISTIC) {
-> 		... do the indent heuristic thing (case #3)
-> 	}
-> 
-> Am I reading the code correctly that, even though this new block
-> appears as if it is a post-clean-up phase that is independent from
-> which one of the three choices are taken in the previous if/elseif
-> cascade, it only is relevant to the second case?  I am wondering if
-> it would make it easier to follow if the new code were made into a
-> small helper function that is called from the (case #2) arm of the
-> existing if/else if cascade.
+Changes in v4:
+==============
+- Changed variable name in the struct to attributes_file
+- Modified commit messages in all patches to explain how the variable
+  being global can be overwritten when the process has multiple
+  repositories
+- Changed the variable name in patch 2 to apply_sparse_checkout
+- Changes the variable name in patch 3 to branch_track
 
-That's a good point
 
->> +			xpparam_t xpp;
->> +			xdfenv_t xe;
->> +
->> +			memset(&xpp, 0, sizeof(xpp));
->> +			xpp.flags = flags & ~XDF_DIFF_ALGORITHM_MASK;
->> +
->> +			memcpy(&xe.xdf1, xdf, sizeof(xdfile_t));
->> +			memcpy(&xe.xdf2, xdfo, sizeof(xdfile_t));
+Olamide Caleb Bello (3):
+  environment: stop storing `core.attributesFile` globally
+  environment: stop using core.sparseCheckout globally
+  environment: move "branch.autoSetupMerge" into `struct
+    repo_config_values`
 
-These would be safer as "xe.xdf1 = *xdf" so we don't have to worry about 
-getting the size correct (sizeof(*xdf) would also be safer but there is 
-no need for memcpy() here).
+ attr.c                      |  7 ++++---
+ branch.h                    |  2 --
+ builtin/backfill.c          |  2 +-
+ builtin/branch.c            |  2 +-
+ builtin/checkout.c          |  2 +-
+ builtin/clone.c             |  2 +-
+ builtin/grep.c              |  2 +-
+ builtin/mv.c                |  2 +-
+ builtin/push.c              |  2 +-
+ builtin/sparse-checkout.c   | 23 ++++++++++++-----------
+ builtin/submodule--helper.c |  2 +-
+ builtin/worktree.c          |  2 +-
+ dir.c                       |  2 +-
+ environment.c               | 28 ++++++++++++++++++----------
+ environment.h               | 14 ++++++++++++--
+ repository.c                |  1 +
+ repository.h                |  4 ++++
+ sparse-index.c              |  6 ++++--
+ unpack-trees.c              |  2 +-
+ wt-status.c                 |  3 ++-
+ 20 files changed, 68 insertions(+), 42 deletions(-)
 
-I also wondered if we need to do a diff or if we can just mark the 
-common prefix and suffix as unchanged but I suspect that wont will work 
-for more complicated examples.
+ Range diff versus v3:
+ =====================
+1:  1aa41da833 ! 1:  d28850bcdb environment: stop storing `core.attributesFile` globally
+    @@ Metadata
+      ## Commit message ##
+         environment: stop storing `core.attributesFile` globally
+     
+    -    The config value is parsed in git_default_core_config(), loaded eagerly
+    -    and stored in the global variable `git_attributes_file`.
+    -    Storing this value in a global variable can lead to unexpected
+    -    behaviours when more than one Git repository run in the same Git process.
+    +    The `core.attributeFile` config value is parsed in
+    +    git_default_core_config(), loaded eagerly and stored in the global
+    +    variable `git_attributes_file`. Storing this value in a global variable
+    +    can lead to it being overwritten by another repository when more than one
+    +    Git repository run in the same Git process.
+     
+         Create a new struct `repo_config_values` to hold this value and
+    -    other repository dependent values parsed by `git_default_config()` and
+    -    can be accessed per repository via `git_default_config()`.
+    +    other repository dependent values parsed by `git_default_config()`.
+    +    For now the value can be accessed via the_repository in
+    +    `git_default_config()`.
+         This will ensure the current behaviour remains the same while also
+         enabling the libification of Git.
+     
+         It is important to note that `git_default_config()` is a wrapper to other
+    -    `git_default_*_config()` such as `git_default_core_config()`.
+    +    `git_default_*_config()` functions such as `git_default_core_config()`.
+         Therefore to access and modify this global variable,
+    -    the change has to be made in the function which parses and
+    -    stores the value in the global variable.
+    +    the change has to be made `git_default_core_config()`.
+     
+         Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+         Mentored-by: Christian Couder <christian.couder@gmail.com>
+    @@ attr.c: const char *git_attr_system_file(void)
+     -	if (!git_attributes_file)
+     -		git_attributes_file = xdg_config_home("attributes");
+     +	struct repo_config_values *cfg = &the_repository->config_values;
+    -+	if (!cfg->attributes_file_path)
+    -+		cfg->attributes_file_path = xdg_config_home("attributes");
+    ++	if (!cfg->attributes_file)
+    ++		cfg->attributes_file = xdg_config_home("attributes");
+      
+     -	return git_attributes_file;
+    -+	return cfg->attributes_file_path;
+    ++	return cfg->attributes_file;
+      }
+      
+      int git_attr_system_is_enabled(void)
+    @@ environment.c: static int git_default_core_config(const char *var, const char *v
+      	if (!strcmp(var, "core.attributesfile")) {
+     -		FREE_AND_NULL(git_attributes_file);
+     -		return git_config_pathname(&git_attributes_file, var, value);
+    -+		FREE_AND_NULL(cfg->attributes_file_path);
+    -+		return git_config_pathname(&cfg->attributes_file_path, var, value);
+    ++		FREE_AND_NULL(cfg->attributes_file);
+    ++		return git_config_pathname(&cfg->attributes_file, var, value);
+      	}
+      
+      	if (!strcmp(var, "core.bare")) {
+    @@ environment.c: int git_default_config(const char *var, const char *value,
+     +
+     +void repo_config_values_init(struct repo_config_values *cfg)
+     +{
+    -+	cfg->attributes_file_path = NULL;
+    ++	cfg->attributes_file = NULL;
+     +}
+     
+      ## environment.h ##
+    @@ environment.h: extern const char * const local_repo_env[];
+      
+      struct strvec;
+      
+    -+/* Config values parsed by git_default_config() */
+     +struct repo_config_values {
+    -+	/* core config values */
+    -+	char *attributes_file_path;
+    ++	/* section "core" config values */
+    ++	char *attributes_file;
+     +};
+     +
+      /*
+2:  fd95169de4 ! 2:  e44ce7be3d environment: environment: stop using core.sparseCheckout globally
+    @@ Metadata
+     Author: Olamide Caleb Bello <belkid98@gmail.com>
+     
+      ## Commit message ##
+    -    environment: environment: stop using core.sparseCheckout globally
+    +    environment: stop using core.sparseCheckout globally
+     
+         The config value `core.sparseCheckout` is parsed in
+         `git_default_core_config()` and stored globally in
+    -    `core_appy_sparse_checkout`. This could cause unintended behaviours
+    -    when different Git repositories running in the same process access this
+    -    variable.
+    +    `core_apply_sparse_checkout`. This could cause it to be overwritten
+    +    by another repository when different Git repositories run in the same
+    +    process.
+     
+    -    Move the parsed value into `struct repo_config_values` to retains current
+    -    behaviours while achieving the repository scoped access.
+    +    Move the parsed value into `struct repo_config_values` in the_repository
+    +    to retain current behaviours and move towards libifying Git.
+     
+         Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+         Mentored-by: Christian Couder <christian.couder@gmail.com>
+    @@ builtin/backfill.c: int cmd_backfill(int argc, const char **argv, const char *pr
+      
+      	if (ctx.sparse < 0)
+     -		ctx.sparse = core_apply_sparse_checkout;
+    -+		ctx.sparse = repo->config_values.sparse_checkout;
+    ++		ctx.sparse = the_repository->config_values.apply_sparse_checkout;
+      
+      	result = do_backfill(&ctx);
+      	backfill_context_clear(&ctx);
+    @@ builtin/clone.c: static int git_sparse_checkout_init(const char *repo)
+      	 * for the later checkout to use the sparse-checkout file.
+      	 */
+     -	core_apply_sparse_checkout = 1;
+    -+	the_repository->config_values.sparse_checkout = 1;
+    ++	the_repository->config_values.apply_sparse_checkout = 1;
+      
+      	cmd.git_cmd = 1;
+      	if (run_command(&cmd)) {
+    @@ builtin/grep.c: static int grep_submodule(struct grep_opt *opt,
+      	 *	of these submodules are expanded unexpectedly.
+      	 *
+     -	 * 2. "core_apply_sparse_checkout"
+    -+	 * 2. "sparse_checkout"
+    ++	 * 2. "config_values.apply_sparse_checkout"
+      	 *	When running `grep` in the superproject, this setting is
+      	 *	populated using the superproject's configs. However, once
+      	 *	initialized, this config is globally accessible and is read by
+    @@ builtin/mv.c: int cmd_mv(int argc,
+      
+      		if (ignore_sparse &&
+     -		    core_apply_sparse_checkout &&
+    -+		    the_repository->config_values.sparse_checkout &&
+    ++		    the_repository->config_values.apply_sparse_checkout &&
+      		    core_sparse_checkout_cone) {
+      			/*
+      			 * NEEDSWORK: we are *not* paying attention to
+    @@ builtin/sparse-checkout.c: static int sparse_checkout_list(int argc, const char
+      
+      	setup_work_tree();
+     -	if (!core_apply_sparse_checkout)
+    -+	if (!the_repository->config_values.sparse_checkout)
+    ++	if (!the_repository->config_values.apply_sparse_checkout)
+      		die(_("this worktree is not sparse"));
+      
+      	argc = parse_options(argc, argv, prefix,
+    @@ builtin/sparse-checkout.c: static int set_config(struct repository *repo,
+      static enum sparse_checkout_mode update_cone_mode(int *cone_mode) {
+      	/* If not specified, use previous definition of cone mode */
+     -	if (*cone_mode == -1 && core_apply_sparse_checkout)
+    -+	if (*cone_mode == -1 && the_repository->config_values.sparse_checkout)
+    ++	if (*cone_mode == -1 && the_repository->config_values.apply_sparse_checkout)
+      		*cone_mode = core_sparse_checkout_cone;
+      
+      	/* Set cone/non-cone mode appropriately */
+     -	core_apply_sparse_checkout = 1;
+    -+	the_repository->config_values.sparse_checkout = 1;
+    ++	the_repository->config_values.apply_sparse_checkout = 1;
+      	if (*cone_mode == 1 || *cone_mode == -1) {
+      		core_sparse_checkout_cone = 1;
 
-Thanks
 
-Phillip
-
->> +
->> +			if (xdl_fall_back_diff(&xe, &xpp,
->> +					       g.start + 1, g.end - g.start,
->> +					       go.start + 1, go.end - go.start)) {
->> +				return -1;
->> +			}
->> +		}
->> +
->>   	next:
->>   		/* Move past the just-processed group: */
->>   		if (group_next(xdf, &g))
->>
->> base-commit: f0ef5b6d9bcc258e4cbef93839d1b7465d5212b9
-> 
+-- 
+2.34.1
 
