@@ -1,241 +1,236 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527B424B28
-	for <git@vger.kernel.org>; Sat, 24 Jan 2026 11:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4C329E11A
+	for <git@vger.kernel.org>; Sat, 24 Jan 2026 12:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769255740; cv=none; b=tDy57aqBjeijeTbEbhWJRukjQZu3EyWXH2hNSoQIqFCf6qZ1F8/olwDhh+ENVub5zABgCgITfHlfFnfuhK+ln24GDQeUrhbuQS9vkyrueBmw46tJh4pr+jPhvLEFtMvJ72xlDh1fugQsYde1Ur1BIO9oFnPGFERo+JOTochoc/4=
+	t=1769256545; cv=none; b=ptb1h3gNsWnWRczOYSp0EMymVShiI4QiaFg4DO0L2PTU2VD26fPaxu+KC0I1tgHgTdX3s0aewZaqbduWWekxlw9Z0wvlyxKqZe+69qc+eN/romb4Iy0lmFhqP41FMGlieAgEFwuXfPYfV7w4xipKarlr6BXztM2ev//eTOGMXNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769255740; c=relaxed/simple;
-	bh=dQFLH1oWDHSyKOjchYFFOSbSbDEYlOAgWgOJwZe4pq8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nrwlu0oeFIKVw726CGN7NBAXiEC6m3U+TaQNwOHWseGVt7b7Dv8DhC3Xzs4GzEy7sMGeekGocuwwH/urw+vfLANgJgSOls0cX7QEf8Agxe5+abttbRuoM+Of1dv9pVaU+eBpZKBQBaJ7mWVIYkldqyzO/krpjaJ4Njh4Yxc4zF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LKB1XAXJ; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769256545; c=relaxed/simple;
+	bh=soRhfYRcetgKbw/ShOY/8wRGICAT7cLfk94IArqli5w=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=VLwPf3Nb5kDdowv4E60xLPkNl66r+q0HbUQjFPhdNeiJ4f97/GV4UjXixoomeI6QcJfDQPJT/n7tBkk0zi10v/rcjHrqHwE+N6CS1PZRAM5RFZb4rz1+3ZBIHl3vP6f4inbGBffgEbdu2ww9u7LdSaFEB2SlJR/3vz9Z+VkH+hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=RPTS5kuG; arc=none smtp.client-ip=212.227.126.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LKB1XAXJ"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4801bc32725so23400325e9.0
-        for <git@vger.kernel.org>; Sat, 24 Jan 2026 03:55:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769255738; x=1769860538; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z90x8NhpwuGZk5ylIYQyIuRBrW2yXllDH7tDZpAl11o=;
-        b=LKB1XAXJZgqi/HE3zV0/Y4ri7uO2JajhbbTtSqzabra3krLtrn6P/C0+181VlfSRc2
-         Bpf7yN6lhbMWA+SeV05XUyzTBPS7McuzihC96afr5pQLGLW++JRSTEaYHHsCUiaFvoDO
-         DmvOZWzUvRNpQpeozw9z5CMIPLR+7iaX7x74wlW9+tx+Rx7lkiRGk4aoUGc8SrusEQQy
-         mRwg4eiKRXuIY/EiH7cVuJJ8nkJfAWLx+MQe8lLxqIc4EmrerAV+RlOKXOAKQxj2BW6R
-         8w0bG1KyYcpt9lO+PTG+FlC+SQXXu2tSRm3DW18e/7V/r647GRWwV1EzcN4j/5AlvnBB
-         oixw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769255738; x=1769860538;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Z90x8NhpwuGZk5ylIYQyIuRBrW2yXllDH7tDZpAl11o=;
-        b=vK+/0LUKRUEK1I7fX6sm8DwXZUH9zHeJEj78h9lytTq8SLAulFhFBMnVjLOniFog5N
-         jsTi6d8Gr1WU7rg5mGXKOXBsXnsID5ZyFZdcbdH5+Z7nL6F0dPf4FtsHXPbJMJRKTAOL
-         3zQHBL7EHOxfxsEpYt9JEkKs9l011SFe9w14b5cxqX3hdRhXTACkOKs017U9WYymtB/H
-         TDUHrSaDxSeRwTHlM71WJxeNFCnhT6Uz2dUz4gAYVODnPjd1BT2OumCVUbLOwzxtCViQ
-         2C5kS9SKPVRvz7pERadpJawW0p2m+XZng5rZYgtGSH/Jx955Q7od59wRrNp2vs96cXjY
-         NfGQ==
-X-Gm-Message-State: AOJu0YxU5yFKAB40TT0mjzEOYmeWndUQbd7Xx5tCtuAb7IxQUQHy2gKc
-	mj70ges/F81ULMXcHCpEfpRolQCcUzpzXvTZkRu6lslxbuGobBnPA5uf
-X-Gm-Gg: AZuq6aJfJHqI+xIPqKrRQQ9btyaZ5oUVr5S+E6c742mdZl3Otiv+udmK8Mt72qWDHvL
-	2vqrkzR98X1fX8VnX1lX9XmImwJ0+V5gIxodfIHVlM1VmA4CXhO7K6elrZap+R9+5DHiqq4wg8X
-	QG6FERx0ZoLvwwAMJSiI3sDMHtUrdvKQDXVFxOB0AEQAkPmPbn23TCagQBiFckS+hcQLdyGeW2l
-	SYWxidgNgKM1JC+FVuF/gNN8nP4E3vzAgx4Bg4B/UamL3VKd4900dRHYYGUTYLM5VTsFrenIf8W
-	/Gg2byILov0QkHbL+a3+5lrw8nknIKV9YatwKetgjfMNtWAoxtJcRo/npJrn+L1+Q4jqi1vawAp
-	1ej4Gz6D35YNAqDvA8JATyzG/LbCCI17QlV/TOpvX4V6RlxeZC+DLx+cwnqsc0Na8V/fKkLo93K
-	230wM=
-X-Received: by 2002:a05:600c:1c28:b0:45d:f81d:eae7 with SMTP id 5b1f17b1804b1-4804c9bfa86mr107836925e9.28.1769255737515;
-        Sat, 24 Jan 2026 03:55:37 -0800 (PST)
-Received: from ubuntu ([102.88.77.11])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-480470287c3sm216209365e9.3.2026.01.24.03.55.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jan 2026 03:55:37 -0800 (PST)
-From: Olamide Caleb Bello <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: toon@iotcl.com,
-	phillip.wood123@gmail.com,
-	gitster@pobox.com,
-	christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	me@ttaylorr.com,
-	karthik.188@gmail.com,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [Outreachy PATCH v4 3/3] environment: move "branch.autoSetupMerge" into `struct repo_config_values`
-Date: Sat, 24 Jan 2026 12:55:06 +0100
-Message-Id: <c74973d6e97745451ef54616a3d35d0e2a67cf8a.1769252118.git.belkid98@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1769252118.git.belkid98@gmail.com>
-References: <cover.1769252118.git.belkid98@gmail.com>
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="RPTS5kuG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1769256540; x=1769861340; i=christian@heusel.eu;
+	bh=9Vi3+VNYP6G3t/XFVto+sVJoc6NxCSN2byLyxVKO95w=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:
+	 MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=RPTS5kuGvx7Ek/mWAOMd6umTXy/zw7bktQQzR+v4XRbuLlAc2f9H938ixBxrvc7P
+	 Uqnwn3RUHxG5E+ueuemguTOwlAhEBnxIcA4OwuJgIM+6Y06w8NKX3R+95C/ZhKIAW
+	 ohpKfvKQWqU1f4X4l6VYalOH/Pg7GaddUmpKnFgXhZsQ9QUmZ4iO1fV65XLsB9znk
+	 bNN/7M+/XmJXE5+6nUzXTWJxGDVUEIEQ7vB64MkBmvkBiAEbf9Bn38Q/8+3lLDjYL
+	 E5iwtn05ptKhzvixwoc5ai5GSOLSqF4cfsEvCfLIknPQCdUvvxQtCFJpjt4Wnn4XE
+	 RnhTphJYAg493Jc+dg==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([94.31.75.239]) by mrelayeu.kundenserver.de
+ (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1M1Yl9-1vmeKJ0KmR-00Gno8; Sat, 24 Jan 2026 12:43:44 +0100
+Date: Sat, 24 Jan 2026 12:43:42 +0100
+From: Christian Heusel <christian@heusel.eu>
+To: Colin Stagner <ask+git@howdoi.land>, 
+	Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Christian Hesse <list@eworm.de>
+Subject: [regression][bisected] git-subtree remote desynchronization
+Message-ID: <755578cb-07e0-4b40-aa90-aacf4d45ccaa@heusel.eu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="fgp756gtcnponeyy"
+Content-Disposition: inline
+X-Provags-ID: V03:K1:GKWtfO+fQQxEqMnqRjZ66fTyL+Zu7zYTPUTUxhIQP7C75GLUwzT
+ cqA5UuSgMlHaC+R4XTeLfz0RzVw7I+ISLL0kUYpjttqpco2IcyudsiFUnuiUXQadbvo0Ns0
+ t7vde1HOYYUNjZKNzu030f6LAZ0DRah8f1jdWQFslzZXIl9QlOTax87H/tUi1wi0HXir6ZE
+ 7/8IkE78jd0G+PVlbVARw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:uUmtvwjflgw=;2YUQkoJ/dPTGi2s2e5TgHAGmlv/
+ q6mWjLN6mCnm1kFslBiQnqsKnlgvI+p814Ad72XyYAPilzSOYIYoioBydaqxTwMkuSKHBmgk2
+ e2wlEhRjPbxckEXCz635IWN3hK+R9yJ8hOH3649o8yz7jsz2zOI8NxRZOJAdVBproT8CFevDr
+ VASgYhn4Ft+cCKLaOqK/OluyyzDAvuXJn405QrL5deVSWOelPUi7DvEGYId/a8uawMqgLAMQw
+ XRBaRKX5IFrGOJ9PtmT9G1MmuruGXtr8fzYBaxClsd4uuE3G0oaGZj+A6ID67b2wY+cO7A10l
+ gp4DIRODvlCdu02EOu1rH2s0TDGNGZnEu++9gLruiYp1NJc/2i3XJ6UezCFY3JAL3RiZkr749
+ K1jvJoOkHmvx7UWuWOxXwD+FFQbU0TezIZsT8vsFs2v/8KRldbyAWrjcJsMewNsWcUjeXiX5u
+ nGW2GqEfxCulYxXmAxnQCSgvXEngMkxZ1NjgMSMQrNEAy/E3PD6AfTmZvjNrqQfueX3grsIwr
+ 34ejP2Pmrz4ol14Eh5Hq9AsOSSR0jla5jLLrsiQShfHOwGJGE2gf11cYSDmcKO3HZQbVakMI8
+ YJKOXDU/2AvoC5GNs3fG+TXbt37Un5tQdeF8ZMeanplGjek89iX/PlhHZwZ44ySxTPXPEwEAH
+ Zu9C1wXWIKOCcbCDSM3pF7AeJTtdzu+xpdRua6Kr+RL+INhvsUWP3Q53apfrSUmKPeIPu3f+X
+ xpKa/Ki3yn9GdP2Munlg5RALSOPXdd3cYpVDRiOC1AwyWYXQhspDPsN3zWBIGRgZSOA+Tcj4u
+ 2fzvg5KoZK8J765A0qOs5/wZed0tBAPiv/Sww4InmiIQEP8mEnRmC0hmw4XfMihIS70XYuPXS
+ glXqAvaJBmykp2z6emKJs5pqz1X2Wg4BtnAzdMaYjo7mRkTQmQ4KFlSnw7SuxSGqpBQgRC+9U
+ asLTCMjH0MABIOl9vi/+KIBxFJsSqCxgtfLMcdCLnanuckoWkzUtAvuXkmwUNOCN2C1i2FRIp
+ WG5Ys/itbYm5TPGX014neJM75Pc+3Vg5lvNwai/o7UtOhayXAC6uyoRQh6n7WYsyBgeypp2/C
+ wstr/MY+tFqCZUh/FL9JqhZIXJE0ksj4v4+ePK1bFeOYqoQtJsdBR1u8/g9J86t7AMkWq3kRK
+ Jlva11CXOhWxoXwmHTG14u+UMpO6WYa2h4mm/lnKkUMcI8FILt7EUPyD7i7JDUfOWO9iRw36p
+ WrmJBSEIqUYRzad1iZ9XILpKLRRLNBPd6WDiJRApK6QgnWLiFVkgl3XE/vvLTKdnZhOvPbAHD
+ 22WCtWG+5ulGSzZ/f8j9b5zrSfyza1bszaWY9qktE0REk+9vH5cSOqMse7HmKYl8BC0gGybQP
+ w23ZtDHh5zajuOoL2QlzD8fTT73WKZ+QBMuTheQg6jM7pi4cQAPxpMq0ylJci+pR3g25SCb5W
+ 6zOMsQx46NVNVQyw2p5gSpJhQwQSRU0ZgRZ8iuzzDcqAzx3p4eXgy8sQjgeUPvkcdvQI0UraS
+ CdO3QdVagaspKCFo034OzUq9sEhTTu2JzJi4pxYq92GeR705bbl0hnUX0hUc+L673RSY4bnu1
+ uFvRMwD1oiCA/Jre9QqUjq7Nqbo3Q2zY2GYuf6PFjebs9s58VrWy0XBDic8UXicQ68iFQuguN
+ A6cC1P88KICRBMz6PYnqp8Njvr9uT6dXC4r/YbK7NPnQ/KTbpRxeeZ7q6Pa7LSnjkjTknMuQp
+ 2g+7NwxAeoa50NfTJO8XmJF1qs0+2Lxrkyg==
 
-The config value `brach.autoSetupMerge` is parsed in
-`git_default_branch_config()` and stored in the global variable
-`git_branch_track`. This global variable can be overwritten
-by another repository when multiple Git repos run in the the same process.
 
-Move this value into `struct repo_config_values` in the_repository to
-retain current behaviours and move towards libifying Git.
-Since the variable is no longer a global variable, it has been renamed to
-`branch_track` in the struct `repo_config_values`.
+--fgp756gtcnponeyy
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: [regression][bisected] git-subtree remote desynchronization
+MIME-Version: 1.0
 
-Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
----
- branch.h                    |  2 --
- builtin/branch.c            |  2 +-
- builtin/checkout.c          |  2 +-
- builtin/push.c              |  2 +-
- builtin/submodule--helper.c |  2 +-
- environment.c               | 12 +++++++-----
- environment.h               |  4 ++++
- 7 files changed, 15 insertions(+), 11 deletions(-)
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-diff --git a/branch.h b/branch.h
-index ec2f35fda4..3dc6e2a0ff 100644
---- a/branch.h
-+++ b/branch.h
-@@ -15,8 +15,6 @@ enum branch_track {
- 	BRANCH_TRACK_SIMPLE,
- };
- 
--extern enum branch_track git_branch_track;
--
- /* Functions for acting on the information about branches. */
- 
- /**
-diff --git a/builtin/branch.c b/builtin/branch.c
-index c577b5d20f..7d27951a7e 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -795,7 +795,7 @@ int cmd_branch(int argc,
- 	if (!sorting_options.nr)
- 		string_list_append(&sorting_options, "refname");
- 
--	track = git_branch_track;
-+	track = the_repository->config_values.branch_track;
- 
- 	head = refs_resolve_refdup(get_main_ref_store(the_repository), "HEAD",
- 				   0, &head_oid, NULL);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 261699e2f5..ba6fea9aee 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1631,7 +1631,7 @@ static int checkout_branch(struct checkout_opts *opts,
- 		if (opts->track != BRANCH_TRACK_UNSPECIFIED)
- 			die(_("'%s' cannot be used with '%s'"), "--detach", "-t");
- 	} else if (opts->track == BRANCH_TRACK_UNSPECIFIED)
--		opts->track = git_branch_track;
-+		opts->track = the_repository->config_values.branch_track;
- 
- 	if (new_branch_info->name && !new_branch_info->commit)
- 		die(_("Cannot switch branch to a non-commit '%s'"),
-diff --git a/builtin/push.c b/builtin/push.c
-index 5b6cebbb85..7be20a1035 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -162,7 +162,7 @@ static NORETURN void die_push_simple(struct branch *branch,
- 		advice_pushdefault_maybe = _("\n"
- 				 "To choose either option permanently, "
- 				 "see push.default in 'git help config'.\n");
--	if (git_branch_track != BRANCH_TRACK_SIMPLE)
-+	if (the_repository->config_values.branch_track != BRANCH_TRACK_SIMPLE)
- 		advice_automergesimple_maybe = _("\n"
- 				 "To avoid automatically configuring "
- 				 "an upstream branch when its name\n"
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d537ab087a..f2b6f027d7 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3128,7 +3128,7 @@ static int module_create_branch(int argc, const char **argv, const char *prefix,
- 	};
- 
- 	repo_config(the_repository, git_default_config, NULL);
--	track = git_branch_track;
-+	track = the_repository->config_values.branch_track;
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 
- 	if (argc != 3)
-diff --git a/environment.c b/environment.c
-index 269cac6d6e..de8721657e 100644
---- a/environment.c
-+++ b/environment.c
-@@ -66,7 +66,6 @@ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
- enum eol core_eol = EOL_UNSET;
- int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
- char *check_roundtrip_encoding;
--enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
- enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
- #ifndef OBJECT_CREATION_MODE
-@@ -607,18 +606,20 @@ static int git_default_i18n_config(const char *var, const char *value)
- 
- static int git_default_branch_config(const char *var, const char *value)
- {
-+	struct repo_config_values *cfg = &the_repository->config_values;
-+
- 	if (!strcmp(var, "branch.autosetupmerge")) {
- 		if (value && !strcmp(value, "always")) {
--			git_branch_track = BRANCH_TRACK_ALWAYS;
-+			cfg->branch_track = BRANCH_TRACK_ALWAYS;
- 			return 0;
- 		} else if (value && !strcmp(value, "inherit")) {
--			git_branch_track = BRANCH_TRACK_INHERIT;
-+			cfg->branch_track = BRANCH_TRACK_INHERIT;
- 			return 0;
- 		} else if (value && !strcmp(value, "simple")) {
--			git_branch_track = BRANCH_TRACK_SIMPLE;
-+			cfg->branch_track = BRANCH_TRACK_SIMPLE;
- 			return 0;
- 		}
--		git_branch_track = git_config_bool(var, value);
-+		cfg->branch_track = git_config_bool(var, value);
- 		return 0;
- 	}
- 	if (!strcmp(var, "branch.autosetuprebase")) {
-@@ -761,4 +762,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
- {
- 	cfg->attributes_file = NULL;
- 	cfg->apply_sparse_checkout = 0;
-+	cfg->branch_track = BRANCH_TRACK_REMOTE;
- }
-diff --git a/environment.h b/environment.h
-index ddce69c6ba..27161d56ab 100644
---- a/environment.h
-+++ b/environment.h
-@@ -2,6 +2,7 @@
- #define ENVIRONMENT_H
- 
- #include "repo-settings.h"
-+#include "branch.h"
- 
- /* Double-check local_repo_env below if you add to this list. */
- #define GIT_DIR_ENVIRONMENT "GIT_DIR"
-@@ -88,6 +89,9 @@ struct repo_config_values {
- 	/* section "core" config values */
- 	char *attributes_file;
- 	int apply_sparse_checkout;
-+
-+	/* section "branch" config values */
-+	enum branch_track branch_track;
- };
- 
- /*
--- 
-2.34.1
+What did you do before the bug happened? (Steps to reproduce your issue)
 
+I have upgraded my local git installation from v2.53.0-rc0 to 2.53.0-rc1 and
+noticed that I can not use my local packaging repository monorepo (via
+aurpublish) anymore.
+
+The steps for reproduction are the following:
+
+1. Update to the 2.53.0-rc1 git release candidate
+2. Clone my monorepo for packages in the Arch User Repository:
+   ```
+   git clone https://github.com/christian-heusel/aur.git && cd aur
+   ```
+3. Push changes to one of the contained subtree remotes (this would normally be
+   done via `aurpublish google-chrome`):
+   ```
+   git subtree push -P "google-chrome" ssh://aur.archlinux.org/google-chrome.git master
+   ```
+
+What did you expect to happen? (Expected behavior)
+
+There are no changes expected since the repositories are synced after each
+modification to publish the updates to the AUR:
+```
+$ git subtree push -P "google-chrome" ssh://aur.archlinux.org/google-chrome.git master
+git push using:  ssh://aur.archlinux.org/google-chrome.git master
+Everything up-to-date
+```
+
+What happened instead? (Actual behavior)
+
+```
+$ git subtree push -P "google-chrome" ssh://aur.archlinux.org/google-chrome.git master
+git push using:  ssh://aur.archlinux.org/google-chrome.git master
+To ssh://aur.archlinux.org/google-chrome.git
+ ! [rejected]          70b3d81e370936e96f98d0aba357490b75ade7a9 -> master (non-fast-forward)
+error: failed to push some refs to 'ssh://aur.archlinux.org/google-chrome.git'
+hint: Updates were rejected because a pushed branch tip is behind its remote
+hint: counterpart. If you want to integrate the remote changes, use 'git pull'
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+What's different between what you expected and what actually happened?
+
+I would expect the `git subtree push` command to stay functionally equivalent
+and the change mentioned above regresses my workflow. This tool and setup is
+also not really special as a lot of users within the Arch Linux packaging
+ecosystem are relying on this workflow.
+
+Anything else you want to add:
+
+I have bisected the issue to the following commit:
+
+    28a7e27cff ("contrib/subtree: detect rewritten subtree commits")
+
+This is my bisection log:
+```
+$ git bisect start
+# status: waiting for both good and bad commits
+# good: [7264e61d87e58b9d0f5e6424c47c11e9657dfb75] Git 2.53-rc0
+git bisect good 7264e61d87e58b9d0f5e6424c47c11e9657dfb75
+# status: waiting for bad commit, 1 good commit known
+# bad: [83a69f19359e6d9bc980563caca38b2b5729808c] Git 2.53-rc1
+git bisect bad 83a69f19359e6d9bc980563caca38b2b5729808c
+# bad: [0a5dcc1259fa0c8f5c21352c90b3cd3d43273345] Merge branch 'tb/macos-iconv-workarounds'
+git bisect bad 0a5dcc1259fa0c8f5c21352c90b3cd3d43273345
+# good: [ffae4da0128e035acd1887654c98b4f02785adec] Merge branch 'kh/doc-patch-id'
+git bisect good ffae4da0128e035acd1887654c98b4f02785adec
+# good: [6edbb7b1d0b50c70e2af0b5f68b7db0984b10be2] Merge branch 'en/fsck-snapshot-ref-state'
+git bisect good 6edbb7b1d0b50c70e2af0b5f68b7db0984b10be2
+# good: [9813aace1e52765e01e688672cdcdcbe25336ec7] Merge branch 'je/doc-reset'
+git bisect good 9813aace1e52765e01e688672cdcdcbe25336ec7
+# good: [d28124151851e42a3bb92963f5b747ad843f33e0] utf8.c: enable workaround for iconv under macOS 14/15
+git bisect good d28124151851e42a3bb92963f5b747ad843f33e0
+# bad: [79e3055baba32e2952e6e8994cdcd4fc145ba7f0] Merge branch 'cs/rebased-subtree-split'
+git bisect bad 79e3055baba32e2952e6e8994cdcd4fc145ba7f0
+# bad: [28a7e27cff717e5ef91f7445e6a418068608082d] contrib/subtree: detect rewritten subtree commits
+git bisect bad 28a7e27cff717e5ef91f7445e6a418068608082d
+# first bad commit: [28a7e27cff717e5ef91f7445e6a418068608082d] contrib/subtree: detect rewritten subtree commits
+```
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.53.0.rc0
+cpu: x86_64
+built from commit: 7264e61d87e58b9d0f5e6424c47c11e9657dfb75
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: enabled
+libcurl: 8.18.0
+OpenSSL: OpenSSL 3.6.0 1 Oct 2025
+zlib-ng: 2.3.2
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Linux 6.19.0-rc6-1-mainline #1 SMP PREEMPT_DYNAMIC Mon, 19 Jan 2026 06:13:35 +0000 x86_64
+compiler info: gnuc: 15.2
+libc info: glibc: 2.42
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
+applypatch-msg
+commit-msg
+post-applypatch
+post-checkout
+post-commit
+post-merge
+pre-applypatch
+pre-commit
+pre-merge-commit
+pre-push
+pre-rebase
+prepare-commit-msg
+
+--fgp756gtcnponeyy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAml0sG4ACgkQwEfU8yi1
+JYU+DhAAwaxCEMvIdhIea3VC2QU8dygS0lDwim6gJTTL3VEkLhcPBMYX7vtN7WRf
+dqjMi7jrAugDsx8toBtl90PY5uI5m9uZ/nD/jTlWpapmxB4GI6ULpeJDLxj/0FkT
+hH9tAecoi/S6aUG/buaWkN2tT8CthsjWbPom9SQE5CqbPqXQSVujiF1ZyQjzBzYd
+b11PojCInrWErOpBDqYINa/icJ7FcxfH1hoCkf/1+olzzp4GxsXCj8zppNif2AWD
+jZVTXaQWjpKhTec68cott0/TsWt2R1QWyq7dlukeIcWlRmVNrA0+FmKXCrHjwERv
+5A+1X32ZIc4/XKPYrjX/+BIUdYql4aAf4o7TGBFjXok463qPjRD6gaXWW3Sc7sUG
+bOGSQg3OLzfwkRHpEx/28b7E57bE+zWoewsxkiDJEJt/TySMJCP4OD/3heOzl860
+5qPthJXFnaa8PTmT9c4hM1QRR1VuTM0upg9FL+l/grCRrvCjrUTyO92Z/bUBE27D
+TeEsM6rgXDAY582RWgXhdRl2ab2YD97POvVxWtot4pPXMuExpFE777DyOpSAVZBp
+9Tx7h2FyC1PCjdn12OQOuPdUiOrDO3pknLiTLltnivi9vzDRlKv0ACVh9/vHBd2K
+teT08rTh2m6q89O5lRfbGW1DZ5YF+8bY2XMHAhHuer6a9H0g4q4=
+=l+PA
+-----END PGP SIGNATURE-----
+
+--fgp756gtcnponeyy--
