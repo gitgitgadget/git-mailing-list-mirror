@@ -1,84 +1,84 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DC13EBF3A
-	for <git@vger.kernel.org>; Sun, 25 Jan 2026 02:44:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EED3EBF33
+	for <git@vger.kernel.org>; Sun, 25 Jan 2026 04:51:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769309050; cv=none; b=fZrLCcGMVGNJQ0L43pTow4kr6p+AwC8ielWAqk+JBRjvlzEM9b/AGjEpxXqZV/Y5tyU5P7cJd9DZ39JVfjxQtrxuoDr3TYbMdK4QgFER7QvEjWHOHc9J/B8sW9N80ichHkv4FYMSDEfbGvhlIqqbU2GAIRXpCmAWwRZJ4/pzVAk=
+	t=1769316716; cv=none; b=GmciZQkbmMdNcnw9Vl+hFcWPcinPeGSXq9Gzhabzt4mId6JOjtiJRnkz5XcT1cux84P3WQpKEQC3vzcoa6SZ9QEq2JkLKS2qf5uIzNpL6H8tqDUKOZa4bVc1hPaHifEJD2GibABAsfNq6kuDYUUSJ+XYvnWDR0zt2HReOmxQuhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769309050; c=relaxed/simple;
-	bh=AVu4iCoz3q2dfmRBGSvbH5dz4QFhRV7FNF8An1uXeCU=;
+	s=arc-20240116; t=1769316716; c=relaxed/simple;
+	bh=ofepOaOb7fhz2FePg1ZVHdDARS0pkOETD9erpcK1ti0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qOnrC8ETvd3nSeaWJrir8C3Lt9t3ZsmZ5ZEEkLMKhE0SJq24hX99SYpFoPHFsYnbHGY0pApX1b29c3nKbzahLL03ryEq/UIythkwDcVnGySY9dFUb+ozumC3umIQeWWdOoEKZpX8QZBGTEGOTPT9tltXcYXJyg63ibihKR9qi98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XguCIA8d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t6RHdiu3; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=Dk2wwxWj6ZUKufjSWqm8DOsI503NcHgL1+v2WKTH0/HLuX4AjXYkXytqNnHYOTeFyCafEYjbZvt+gS+SHmOLYWkegsL+ZdjcehHB0UKFET90ElWr7tEcQfxmTDX6sNNSx+O7/k8vxVk1U6xfsJ1yd6lKIeTzCt+cdR4P4PmB8Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PUi6vuKV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wfcqgl3b; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XguCIA8d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t6RHdiu3"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BA7701400049;
-	Sat, 24 Jan 2026 21:44:07 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 24 Jan 2026 21:44:07 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PUi6vuKV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wfcqgl3b"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2AF3B1400032;
+	Sat, 24 Jan 2026 23:51:54 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Sat, 24 Jan 2026 23:51:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769309047; x=1769395447; bh=ria/AN7trc
-	/2fgAKXUbsm6xQk0DDoblfiXtpJm1X7fg=; b=XguCIA8dwJwVQTYCZ+SOoL4Bmd
-	6URpeOHUVugR1+S9iWJkPQqN5yBSpLCx6vquNRGtS0XEeA/7zSiAO6i9DRiDugLs
-	6qQ/sPJBUyORWJW7UgKAd6uoMm9KFme6Pdktue9mfzeuD5Dy3X/+jGJZmF1/k8oe
-	PiCjGqDhpWRy0mvK3f4sBJ2xDQ5S0IK/akKwCXesTO0GVApN7MchwyarZtMM2aJV
-	d3QY/UYMl5GEeyKLMI3rCEBRCTppeelV6fIDXBtupO6dnKjbgz1jjEQyiVunXI78
-	hY542OpGjvtlSXsqS2V3aSd2CaDDDvQ8kPWpY7s3P1dqK3S32WLiEu0ZotQA==
+	:subject:to:to; s=fm1; t=1769316714; x=1769403114; bh=5pMyuxzvlG
+	miJ0zyAd5idaJQZAlDSVhlSsK/ICPf5uo=; b=PUi6vuKVPSlDnM8o7vnYWUw98z
+	f5F2FlU55VBVvhDLq4iFbZ5L/wYG+8ITeK96TPXSXPM4f6CZknpIbRoH4udGY6OK
+	jSVGKrNOIIbz5PQz2A+4YV14eWBitxtufWgkhom1Zd9759QL/NHhBtYzX5XEx9XF
+	zsGADvxJbTqBBwsnx196ABMWBO7RgeJk3E2WeDXJ7AEEPAiVlmAewxYZE1C+NZc9
+	gbpBT5KjY5go2e6GjOBpskbe7j5DN5lBNUZiPqYC2PeaoxwTS2tT5mY7AlH1E0pN
+	LNXOutQfoZkJLEoYveesWg+iQ++hzu0bOk4oNc0pjANdFGdH1Yytgw65Vd2g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769309047; x=1769395447; bh=ria/AN7trc/2fgAKXUbsm6xQk0DDoblfiXt
-	pJm1X7fg=; b=t6RHdiu3Z+BvIslDRpbyajjC2FJPbD453ifAB/IBEbF7Dyruk6n
-	ULUKnUpC1N/SLS47Q3Ln8Ik/Yw0WQPtR2di3rxmN8ZEWuEl1sDY4fnK6nNY+61Sr
-	hDjdR63yeKufKVZaA66clOFqs3uA51IPQOy54XhXCuQvd93CjP6DPOnmmahsq66V
-	Yf1enZzG9LyOXMqb+RcdYRyXaloJugTRCq0RM2EBsn5AQt8NBWoSixusozIX1UGc
-	yHA6JXynUvsRUXzYN4FSfOFx0JrRd28IGTk4N47TATe/4DHqrkBeS8xuL4Twrgqw
-	T7TWXTw/umUnWCmoMJcGXqD9t85oMwuvjUA==
-X-ME-Sender: <xms:d4N1af2gqHgEjLq6WhjBenxA-scv1X_p2w5R7Ig1AUd6rIbZJCzlPA>
-    <xme:d4N1aZlsvlJboSsmbgorqvI7GRPHsRv3fK-SZxRJMx6yvFEaimWz8vJ0kd5Rx6j0m
-    65raC4x2wAAF0SjfrT7EJ82iSDgrxvNW1iYAxliiGIFcrJbhtff>
-X-ME-Received: <xmr:d4N1aWXdUqESSJG4cQzfdERMTDcAXCO7PNiW8UQCvKkbaok3fpD2SpzYIM_M7sVgyZyz0MzICTttCtsrkoNbQ0OCMidOGvpbnHJctlg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheefieefucetufdoteggodetrf
+	1769316714; x=1769403114; bh=5pMyuxzvlGmiJ0zyAd5idaJQZAlDSVhlSsK
+	/ICPf5uo=; b=Wfcqgl3bYJJSPVwsExyMpFhPf7v0wegWHk6zJXdN4OmIpSvZGzs
+	PuTROUUQm7nuWNjm0vLX3NR6m7hB6VJpW/+PS0e8oTwlFdyjAQ/ueM8j/mkCtUZJ
+	czei1EaqAVR4jD6OGthHqnSYPZtfkyiQRj4+WdJ7gvnw2OxCMrIA5Rf3QlVP1SV5
+	coaN59vbeGOcSRMptDCMGgShZI3UiBVlJzO0Y0cY5Crx1carnK1XVjTrajdEhDXQ
+	SsadIAO984zHR0/WgEtgCby9ahmhXzE+fxLIJEBk0Gn01NyD0dQGrkxIXd6tTr9O
+	GYiLFs3nw/qKZlXbC9u7XKaI8bytGfhJhsQ==
+X-ME-Sender: <xms:aaF1aQOs_y_FRD-_BAjQHuJdb5b-6sOmtcAuj0EufICPTCXbk7pAzA>
+    <xme:aaF1ad3VV2z4yJWAoTJb_C517lHRaCek8SSDsKw9bWwhHVBghxN8PSQFtlAVnWJJI
+    zdEXBrAR5WXOpa2ieU8XSSeepTPO8zzH53N1x_8LlBdtsoCJWX9>
+X-ME-Received: <xmr:aaF1afkvWXzEVX6KGJsHtWSwABgcHciOiXNfqBcNEAEqFECPiDG1mQZMLMPFixwVpStdPFHRl3hF-htL9K5OxOIwk0LEywkpT0_eoeA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheefkeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepheevgeefleeuudefudduieduteefvdelgeelvdeihfegvdfgffffhefhffek
-    jeelnecuffhomhgrihhnpehgihhthhhusgdrtghomhdprghrtghhlhhinhhugidrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopegthhhrihhsthhirghnsehhvghushgvlhdrvghupdhrtghp
-    thhtoheprghskhdoghhitheshhhofiguohhirdhlrghnugdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhishhtsegvfihorhhmrdgu
-    vgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:d4N1afu-Ygdhx7r-n_gm605YiFCNlTAdVGaGzS2SO24exXnHsm3ukA>
-    <xmx:d4N1aZYsAZoAiidrmK6B_R76rYduiyV7Iqz83fec9Nnx3CxqqAoYYA>
-    <xmx:d4N1aeUHECXB8Wg9Uu4DY0_xMbjwswRSVmcENdxc3koy_BWutmqqlQ>
-    <xmx:d4N1aeRbeAOLy5ZO1nqyhHy6Yo_KF9Ts_Ydx4nipSNsLDIQR15bapw>
-    <xmx:d4N1aew71tlY3-sGaaFEMfYUIMQKkgMS2tkSfyO6Uqkpo-z61E1sqJJB>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnheshhgvuhhsvghlrdgvuhdprh
+    gtphhtthhopegrshhkodhgihhtsehhohifughoihdrlhgrnhgupdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhsthesvgifohhrmh
+    druggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:aaF1aUVNQMDM4o18ssW3CX3MeLZHxz5R93A553ldB8aOgQOJSG1vew>
+    <xmx:aaF1aVuhfudf9yIYkDKy_QmNKbiXGTNUUU85SOgxja8uiMDC3s4Zrw>
+    <xmx:aaF1aXbPwgP2_rHZxYcdXoGr-3tfzboqiSE2TMr9En6hkWL8ebki1A>
+    <xmx:aaF1aUWhV4uTAz2ByU3MCTsKyNQyYPTnV4v791UWlEJSc_Y51BFOHw>
+    <xmx:aqF1aWdNkM9GGjIjx7fI1oEng0-H7ZoxM9z0CVnSY2lBln6p3QwclL95>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 24 Jan 2026 21:44:06 -0500 (EST)
+ 24 Jan 2026 23:51:53 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Christian Heusel <christian@heusel.eu>
 Cc: Colin Stagner <ask+git@howdoi.land>,  git@vger.kernel.org,  Christian
  Hesse <list@eworm.de>
 Subject: Re: [regression][bisected] git-subtree remote desynchronization
-In-Reply-To: <755578cb-07e0-4b40-aa90-aacf4d45ccaa@heusel.eu> (Christian
-	Heusel's message of "Sat, 24 Jan 2026 12:43:42 +0100")
+In-Reply-To: <xmqqikcql8cq.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	24 Jan 2026 18:44:05 -0800")
 References: <755578cb-07e0-4b40-aa90-aacf4d45ccaa@heusel.eu>
-Date: Sat, 24 Jan 2026 18:44:05 -0800
-Message-ID: <xmqqikcql8cq.fsf@gitster.g>
+	<xmqqikcql8cq.fsf@gitster.g>
+Date: Sat, 24 Jan 2026 20:51:51 -0800
+Message-ID: <xmqqecnel2fs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,94 +88,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Heusel <christian@heusel.eu> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Thanks for noticing and reporting a regression before the change got
+> released in an official release.
+>
+> If a fix materializes and gets verified before -rc2 (scheduled for
+> coming Tuesday), we should revert the merge of the problematic
+> topic.
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
->
-> I have upgraded my local git installation from v2.53.0-rc0 to 2.53.0-rc1 and
-> noticed that I can not use my local packaging repository monorepo (via
-> aurpublish) anymore.
->
-> The steps for reproduction are the following:
->
-> 1. Update to the 2.53.0-rc1 git release candidate
-> 2. Clone my monorepo for packages in the Arch User Repository:
->    ```
->    git clone https://github.com/christian-heusel/aur.git && cd aur
->    ```
-> 3. Push changes to one of the contained subtree remotes (this would normally be
->    done via `aurpublish google-chrome`):
->    ```
->    git subtree push -P "google-chrome" ssh://aur.archlinux.org/google-chrome.git master
->    ```
-
-Thanks for noticing and reporting a regression before the change got
-released in an official release.
-
-If a fix materializes and gets verified before -rc2 (scheduled for
-coming Tuesday), we should revert the merge of the problematic
-topic.
-
-> What did you expect to happen? (Expected behavior)
->
-> There are no changes expected since the repositories are synced after each
-> modification to publish the updates to the AUR:
-> ```
-> $ git subtree push -P "google-chrome" ssh://aur.archlinux.org/google-chrome.git master
-> git push using:  ssh://aur.archlinux.org/google-chrome.git master
-> Everything up-to-date
-> ```
->
-> What happened instead? (Actual behavior)
->
-> ```
-> $ git subtree push -P "google-chrome" ssh://aur.archlinux.org/google-chrome.git master
-> git push using:  ssh://aur.archlinux.org/google-chrome.git master
-> To ssh://aur.archlinux.org/google-chrome.git
->  ! [rejected]          70b3d81e370936e96f98d0aba357490b75ade7a9 -> master (non-fast-forward)
-> error: failed to push some refs to 'ssh://aur.archlinux.org/google-chrome.git'
-> hint: Updates were rejected because a pushed branch tip is behind its remote
-> hint: counterpart. If you want to integrate the remote changes, use 'git pull'
-> hint: before pushing again.
-> hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-> ```
->
-> What's different between what you expected and what actually happened?
->
-> I would expect the `git subtree push` command to stay functionally equivalent
-> and the change mentioned above regresses my workflow. This tool and setup is
-> also not really special as a lot of users within the Arch Linux packaging
-> ecosystem are relying on this workflow.
->
-> Anything else you want to add:
->
-> I have bisected the issue to the following commit:
->
->     28a7e27cff ("contrib/subtree: detect rewritten subtree commits")
->
-> This is my bisection log:
-> ```
-> $ git bisect start
-> # status: waiting for both good and bad commits
-> # good: [7264e61d87e58b9d0f5e6424c47c11e9657dfb75] Git 2.53-rc0
-> git bisect good 7264e61d87e58b9d0f5e6424c47c11e9657dfb75
-> # status: waiting for bad commit, 1 good commit known
-> # bad: [83a69f19359e6d9bc980563caca38b2b5729808c] Git 2.53-rc1
-> git bisect bad 83a69f19359e6d9bc980563caca38b2b5729808c
-> # bad: [0a5dcc1259fa0c8f5c21352c90b3cd3d43273345] Merge branch 'tb/macos-iconv-workarounds'
-> git bisect bad 0a5dcc1259fa0c8f5c21352c90b3cd3d43273345
-> # good: [ffae4da0128e035acd1887654c98b4f02785adec] Merge branch 'kh/doc-patch-id'
-> git bisect good ffae4da0128e035acd1887654c98b4f02785adec
-> # good: [6edbb7b1d0b50c70e2af0b5f68b7db0984b10be2] Merge branch 'en/fsck-snapshot-ref-state'
-> git bisect good 6edbb7b1d0b50c70e2af0b5f68b7db0984b10be2
-> # good: [9813aace1e52765e01e688672cdcdcbe25336ec7] Merge branch 'je/doc-reset'
-> git bisect good 9813aace1e52765e01e688672cdcdcbe25336ec7
-> # good: [d28124151851e42a3bb92963f5b747ad843f33e0] utf8.c: enable workaround for iconv under macOS 14/15
-> git bisect good d28124151851e42a3bb92963f5b747ad843f33e0
-> # bad: [79e3055baba32e2952e6e8994cdcd4fc145ba7f0] Merge branch 'cs/rebased-subtree-split'
-> git bisect bad 79e3055baba32e2952e6e8994cdcd4fc145ba7f0
-> # bad: [28a7e27cff717e5ef91f7445e6a418068608082d] contrib/subtree: detect rewritten subtree commits
-> git bisect bad 28a7e27cff717e5ef91f7445e6a418068608082d
-> # first bad commit: [28a7e27cff717e5ef91f7445e6a418068608082d] contrib/subtree: detect rewritten subtree commits
-> ```
+Oops, sorry for an obvious typo.  "If" -> "Unless", of course.
