@@ -1,150 +1,212 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C32725FA05
-	for <git@vger.kernel.org>; Sun, 25 Jan 2026 20:23:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769372601; cv=pass; b=iMj2/zbUzOQnTvmfgI2YfqVrwEr6s1I34yElCGY1oAt2M2Mpy9098x0H816sqcLqizGVtrzYYgPHDNW5cZssIwbG2sLCPaD22X2kTOvL88xkyDouzvoQtvhI8V35LGwJtNTQR/XBSwYDw/b7FyT4fLpXNzr0467vRECsPH7s7D8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769372601; c=relaxed/simple;
-	bh=E8tb/oygs5c8qqBeSrQZzivGbqloxVlbdXmnUI6Mzbo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OhtFIS5g9IuSpjSl3goK+wBntRTjg0wgooBBupnkH0ow3gsc8DzWTc36C1UBLS/ovrEhxwC50C5tsJU+2/2OmhWbct2Qhs92eNp1oVWOB0Fw+5FULUUCNYMwQ1mLzs+L+xMfW7uI/Q3wkLDkjDoFnVJKB7VcchAjltSbzTvb16k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ndnvKems; arc=pass smtp.client-ip=74.125.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F502F3620
+	for <git@vger.kernel.org>; Sun, 25 Jan 2026 21:11:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769375511; cv=none; b=oRV1gPtJvCkLNXky5ER8/Z7E42R1HmR8wcDWSmYNJ5e1nrnoq3M2qzayNDG9EMcxIyLZZmVBzXAe0rp0n/hwgxcaQNAhp1kQwrij8EMHFtUYQ7HfiXN8H8hPNyfYLn508upqfX6QtjX4cjAEnhI9FquP9yxmeNAhMl74mY38p4M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769375511; c=relaxed/simple;
+	bh=v0paC9cXnnFqlhchzFmcKUtF64N8ibsqx7n7eXGsQAk=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=lZGa4gObjr33HMi0N2q1CsVkatDgq65klCI6tDUdxjE98kgUFIRgucfvbaJPTCvCpeGJRaJvIkpGizEJNZiR5W9Dv0hbcYPmCAhva8afpig0xtKDnGM53Q5VplqVZ+uj1Q5clDscMZoq+HSMTx6Rls3N4WgSjXxbDnnCuHSrf7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=lLcAVa3E; arc=none smtp.client-ip=212.27.42.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ndnvKems"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-649523df010so3367180d50.0
-        for <git@vger.kernel.org>; Sun, 25 Jan 2026 12:23:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769372599; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lxvtDYwAkh4ptd3191OrNnzuZcVh1z4Maun7aIr9Kjll7xTOZI8btKj89UZ4mvLiLU
-         mrngZogf7VGMe3RhQzJtyMXRPLTnWStnPSkXUnAyBnbhgICrBAhL5VMJzAFVYPFQ/TDD
-         hB6G3sohAADf09vQP24iVis7svH/U9O6kR202pE88VTBE5Es0taXwDpFng9A3p7YQHcV
-         l9bygYb64dJasYrAMIf0mWURx4gVycCg4iAzz20a594QoHfjM6C0cB/IkgkCBLSfM7Ma
-         sZlCjC0ttLe0um1IlRt6Cjvfm9PpSya1NUr564FeK1KX0Gw4di5fbrQWJB1vNXeqO55E
-         JNRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=VifCVUlH01DlyKv/FSXn6bPBaZJIVdf03hovDCE2C+Q=;
-        fh=HWyAIkdrobpCAvaSiR+nhPRDu/DGOsKx7ldMDWy/i7M=;
-        b=U7SIAHYyIbPuAwQF6M2FMoP0TtVtBhhCHM7yNacN/bw8xC5z6011s4w/NDKSGNQnRG
-         BM0Gq4Azyff7tLyKjYHsGsFXvAke1n6OjKYwMKTyqa2+l1mUykxIR3C2OIWlhqaNKubx
-         57YJ4CJ/4q6ga6baVxrqp9Unu+doMwcsKi7vtdeo4Zq5P18nWM/jofwrYTIc7JKqGLm6
-         nxerQYka4e0+an6aTI2zrLtcCqLBZgGar+69P2rVGEobqmeA/Cvxg/d0aB6Hc3p8CVED
-         XtTEwEUMXBsu0/e22G87DF2i3y1itIJxFmoUV0GGbS20a4Qp95Jc4iY+vWgdx/lXOMOH
-         yphQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769372599; x=1769977399; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VifCVUlH01DlyKv/FSXn6bPBaZJIVdf03hovDCE2C+Q=;
-        b=ndnvKemsejFnGg84Th4/WQqHerq9OBz7oWFQoF10RsnLkNHAlauD4jdYFZXhGg2g/q
-         2zK1wb1IxLoCwu3Dd8IZEyvfIpU8lH/cpT7Nzqv1pgUYYzo74VAnF/5gOyLpY9DGFv4D
-         zlCC/t3LSHn0cU2yBt/SF2HADVVVq7W107EB8UZcKHHLQS3Kyeh1MdYKBLfnhiSjfL54
-         3UCes0wpXjVkipVthzoAbqwiWdyNa1+7BXvidYhqWIZ7SGdw1A59bs0jWJ/3emsMZvhL
-         f+0clFebJyZIOU3zcDAe/KFlFJDkJrMuDChIQgHd7pI7Qlg387Tz1RXo0K6CTKVbi1wt
-         Uy3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769372599; x=1769977399;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VifCVUlH01DlyKv/FSXn6bPBaZJIVdf03hovDCE2C+Q=;
-        b=PKv7IwBROMLXbUSeEBHsTmvlIhNyx3efhDc5Hu/V45maf4cAMJ70X8U452cEjsXFL+
-         eNWsInhd38Idjoc1fR/5p0HklJIBwnCP5CE60H73XHNOuwBuATFz+PXEHAs3kACNjz1P
-         O3liDSKtgAiR+GjzAF5/XtepkacrK3WcPW/BqIItljEI/biMr6HUQJQI7Zb0dzchIVqQ
-         LLefKUHLNpDr93KNNb1Q678VBcFpY9YCH85x/4PzGzQ/5ITnWfk+YlJxw3T/n9C9Svab
-         rn91kzFdd2/OrZxwART1NcEsCCcb0sS8qut+RXaua7urj6VctkGP4KYnftSxvTgDkuTi
-         C+Ew==
-X-Gm-Message-State: AOJu0Yz61Bq7ZqTEP+F+T5J77YQHB7FQviEF3NN11ZDGyUDDsX74mOcZ
-	vBx+fZWM49OCMt7vEoaF9LAGEJhXpIfSbHeSWDN3ebbVAHkMUBHyp/13Y0AEPivDV26wlCImX3D
-	j5rCQ/mXmPbUesUTSRmJ5Ol0FgkGPkEQ=
-X-Gm-Gg: AZuq6aL8J1cd/GAUG5QBnyyAptLQW9lKKxrMR6XYi0ZfZ8yWgl74Bb7JJ1zpI2c6XW3
-	PGFDWl+MWPINT+qBHIZZN13DvTAhottU1k+47GiRcrBzhAD2sCK9IZS7tjDjUpLiq7UVllWkw5w
-	kkz3NUY+9ERSHCjh70TdeTzUgPk/xczdUMmQB3iumXwp5m1WG8e/l+yh+dBZmbMXjcSY/ERQoKu
-	8fyrPVeW3/KJlfHmV/2RlRhKQB0AwvkSkperKcQFgEJcuDbUWFKS8rsRzaE44/9RRNeQ5SfmwUF
-	02znxG0QLoYY+ZWp3UctapbR0XhS
-X-Received: by 2002:a05:690e:4188:b0:649:69a0:e0d0 with SMTP id
- 956f58d0204a3-64970d5ff12mr1768197d50.90.1769372599458; Sun, 25 Jan 2026
- 12:23:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="lLcAVa3E"
+Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:8f32:f2ea:1014:8a99])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 9A2155FFB1;
+	Sun, 25 Jan 2026 22:11:37 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1769375499;
+	bh=v0paC9cXnnFqlhchzFmcKUtF64N8ibsqx7n7eXGsQAk=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=lLcAVa3EWuQeL1GmYDABElkZyyfp5D+h7EqbFDmmzonrnQoNX0+OJtMKb/Xt2+Y2u
+	 PTjbZJPB3nBzhWKZJAMG1/O0dT/qFTpqqvN1SWqc60A1ZFCYSwLHqo2bEClJ67ZM4j
+	 FgozQ1Inj3xJVdQk01OZGMsdUoVHf9xFAaPiZj5TOszHbOBlTkUW4DpQZpssh7JZXc
+	 eVzG+yX/H2ObRvTzUE1l4uzlHz4QhD9UV/vOSTk5pSrTHe/BpgXZnOb2kcuHBuYaUS
+	 w3jLqEhKirNSkPdq00/oX3m6CZXvjsBb1jwfjCFGibh0jRxmdN6NQ0zhsk0l02kskr
+	 l8u3E7vs3UR+Q==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To:
+ =?UTF-8?B?SmVhbi1Ob8OrbA==?= Avila via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH 4/4] doc: convert git-show to synopsis style
+Date: Sun, 25 Jan 2026 22:11:37 +0100
+Message-ID: <3926333.kQq0lBPeGt@piment-oiseau>
+In-Reply-To: <51016c02-40de-431f-a4ba-e08cb1bb8235@app.fastmail.com>
+References:
+ <pull.2036.git.1769202903.gitgitgadget@gmail.com>
+ <d078e1d94fcf8511743787623f0c1abfd0321849.1769202903.git.gitgitgadget@gmail.com>
+ <51016c02-40de-431f-a4ba-e08cb1bb8235@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260122171523.94234-1-amishhhaaaa@gmail.com> <20260122171523.94234-2-amishhhaaaa@gmail.com>
- <xmqqcy31l2s2.fsf@gitster.g>
-In-Reply-To: <xmqqcy31l2s2.fsf@gitster.g>
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-Date: Mon, 26 Jan 2026 01:53:08 +0530
-X-Gm-Features: AZwV_QiUmB48C1G--nKvTWbQE5CykxGmxhm3jw0yal4XDQ_hc6W0bMTNvWk_ORs
-Message-ID: <CAPvEtreqaocdrHf0R+kMxhWXJQnDqV+4jKWd8UHqZ3zzfZBE+Q@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] Adding string_list_sort_u which sorts a list then
- deduplicates it.
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>, 
-	Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On Fri, 23 Jan 2026 at 03:37, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Amisha Chhajed <amishhhaaaa@gmail.com> writes:
->
-> > string_list_remove_duplicates is almost always preceeded by
-> > string_list_sort, hence adding string_list_sort_u which dedupliactes
-> > post sorting.
->
-> The usual way to compose a log message of this project is to
->
->  - Give an observation on how the current system works in the
->    present tense (so no need to say "Currently X is Y", or
->    "Previously X was Y" to describe the state before your change;
->    just "X is Y" is enough), and discuss what you perceive as a
->    problem in it.
->
->  - Propose a solution (optional---often, problem description
->    trivially leads to an obvious solution in reader's minds).
->
->  - Give commands to somebody editing the codebase to "make it so",
->    instead of saying "This commit does X".
->
-> in this order.
->
-> To those who have been intimately following the discussion, it often
-> is understandable without some of the above, but we are not writing
-> for those who review the patches.  We are primarily writing for future
-> readers of "git log" who are not aware of the review discussion we
-> have on list, so we should give something to prepare them by setting
-> the stage and stating the objective first, before going into how the
-> patch solved it.
->
-> With that in mind, perhaps something along this line ...
->
->
->     Subject: string-list: add string_list_sort_u() that mimics "sort -u"
->
->     Many callsites of string_list_remove_duplicates() call it
->     immediately after calling string_list_sort().  It is
->     understandable because the former requires the string-list to be
->     sorted, but at the same time, it is clear that these places are
->     sorting only to remove duplicates and for no other reason.
->
->     Introduce a helper function string_list_sort_u() that combines
->     these two calls that often appear together, to help simplify
->     these callsites.
->
-> ... probably?
->
-> The same comment applies to the way the other patch is explained.
->
-> Thanks.
->
+On Sunday, 25 January 2026 20:27:38 CET Kristoffer Haugsbakk wrote:
+> On Fri, Jan 23, 2026, at 22:15, Jean-No=C3=ABl Avila via GitGitGadget wro=
+te:
+> > From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
+> >=20
+> >  * add synopsis block definition in asciidoc.conf.in
+>=20
+> This is for e.g. ``<hash> <title-line>`` it looks like. Is the intent to
+> use italics on placeholders like `<hash>`?
 
-Very helpful, thank you so much, i will keep in mind.
+Yes, it is. It turns out that asciidoc.py treats differently, paragraph sty=
+les=20
+and block styles. Until now, we only used paragraph style for synopsis.
+
+> >  For plain blobs, it shows the plain contents.
+> >=20
+> > -Some options that 'git log' command understands can be used to
+> > +Some options that `git log` command understands can be used to
+>=20
+> Same here.
+>=20
+> It could be nice to s/`git log` command/linkgit:git-log[1]/ either on
+> this commit or in a separate one.
+
+The problem is that pretty-formats.adoc is also included in git-log.adoc an=
+d I=20
+don't think it makes sense to self-cross-reference. If we want to generaliz=
+e,=20
+it would need some conditional inclusion/replacement.=20
+
+> >>=20
+> >  built-in formats:
+> > -* `oneline`
+> > -
+> > -	  <hash> <title-line>
+> > +`oneline`::
+> > ++
+> > +[synopsis]
+> > +--
+> > +`<hash> <title-line>`
+> > +--
+>=20
+> HTML looks wrong in git-show(1) and others that include it. Something
+> like this:
+>=20
+>     oneline
+>         __<hash>__ __<title-line>__
+>=20
+
+The first edit was `<hash> <title-line>` but the rendering odd with the=20
+following items which where more spaced. So, I changed to synopsis block bu=
+t=20
+forgot the back-ticks.
+
+Will reroll.
+
+> This doesn=E2=80=99t happen when I run asciidoc(1) or asciidoctor(1) dire=
+ctly.
+>=20
+
+<snip>
+>=20
+> (For these pretty formats) The diff got confused I think but the
+> conversion looks correct.
+>=20
+
+It looks better but not perfect. It is difficult to render correctly when t=
+he=20
+usual grammatical signs are in fact keywords. See below for better=20
+explanation.
+
+> >  +
+> >  This format is used to refer to another commit in a commit message and
+> >  is the same as ++--pretty=3D\'format:%C(auto)%h (%s, %ad)'++.  By defa=
+ult,
+>=20
+> Not changed in this patch but this doesn=E2=80=99t render correctly for m=
+e. It=E2=80=99s
+> not inline verbatim/code all the way through. But it is correct if I
+> remove the `\`.
+>=20
+> I don=E2=80=99t know why `++` was used either.
+
+That's where the synopsis style fails. If we use backticks for this span, t=
+he=20
+parenthesis are interpreted as grammar signs, whereas here, we intend to pa=
+ss=20
+the whole span as verbatim.
+
+
+=46or asciidoc.py, using the verbatim form '++' ensures that the whole span=
+ is=20
+treated as such. On my computer (asciidoc.py version 10.2.1), this renders =
+as=20
+correctly.=20
+
+=46or asciidoctor unfortunately, the synopsis processing is performed very =
+late=20
+in the generation, after all parsing has been done. So, the '++' verbatim i=
+s=20
+processed the same way as backticked contents. I haven't found a better=20
+alternative. The output is this wrongly processed span here.
+
+This is the least breaking way I found. It means that for asciidoc.py, we c=
+an=20
+bypass the synopsis style with '++' formatting.
+
+If I remove the backslash in this, the span inside the single quotes is=20
+converted to italics by both engines.
+
+Can you describe your setup?
+
+
+
+>=20
+> This looks correct just looking quickly over.
+>=20
+> > -** `prefix=3D<value>`: Shown before the list of ref names.  Defaults to
+> > "{nbsp}++(++".
+>=20
+> All of these use the "(" style which doesn=E2=80=99t look good in my
+> opinion. But I=E2=80=99m guessing it has to do with some of them using sp=
+aces in
+> them and `"` being used as a boundary.
+
+Same here as above. I get the correct rendering for asciidoc.py. For=20
+asciidoctor, this is rendered as normal text. Not correct but not completel=
+y=20
+bogus.
+
+> >=20
+> > -++%(describe++`[:<option>,...]`++)++::
+>=20
+> > +++%(`describe++``[:<option>,...]`++)++::
+> This renders with backticks in HTML:
+>=20
+>     %(describe++`[:<option>,...]`)++
+>=20
+
+Ah, thanks for spotting. I mixed again synopsis and plain verbatim.
+Will reroll.
+
+
+
+> >=20
+> >     the literal formatting codes described above. To use comma as
+> >     separator one must use `%x2C` as it would otherwise be parsed as
+> >     next option. E.g., +%(trailers:key=3DTicket,separator=3D%x2C )+
+> >     shows all trailer lines whose key is "Ticket" separated by a comma
+>=20
+> Might as well s/"Ticket"/`Ticket`/ ?
+
+Difficult to say. This is not a keyword per se. Changing is ok for me.
+
+> The rest looks okay.
+
+
+
+
