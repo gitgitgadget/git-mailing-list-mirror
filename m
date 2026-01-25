@@ -1,66 +1,65 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005A130FC0E
-	for <git@vger.kernel.org>; Sun, 25 Jan 2026 22:52:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6C41DDC3F
+	for <git@vger.kernel.org>; Sun, 25 Jan 2026 22:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769381570; cv=none; b=nmQC2aD6RgMbHPJ0zIkzlV5rquoq0zIoZVU4f7My88tcDY+RWDtGsR7QwvcZoKQN5/6ifK62bkADhtNoL6DFp1TxMyQOwWgEeZ/xxY6cU+UWjSbxOJ7lCiOPz20RwBsTE69VNsO7cpPGuUaxC9yvuminlbZZo0NARAVCJ/YQncs=
+	t=1769381571; cv=none; b=PeaakdcKeBoH+oQH33S6dEbJBC22+W2yK0Ip6DkpcOumZOftAaZwf37SOu2LbKX+2RFVNFqo6aheKfWXcIoU75jpnpzeCXfaVwgPtZEdQKzI2OmAdf+/tfqQ3TPFt8vZwR2PklOnc0iEa7SUGDE5D1juBOi9ljMogym7BPyvsk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769381570; c=relaxed/simple;
-	bh=WZggZy5SS6pQxqND90mdtHtUUJyrUUigKvfQPUu3OBQ=;
+	s=arc-20240116; t=1769381571; c=relaxed/simple;
+	bh=QVCgPcu+8n0+pnvjlqciULn2iHaIdeO5AswVSSYpI5k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ekzl09CkRa47vi533j20crBTDQokJCnR/VO6Bqz6E4e/t4QRfwy6GBTawFRU7HCACF+jPqeYob0VBxIFd9HTFZKUV508qL+vBHNZrtf1VaUBkuR2Rq6tJlgEg/UXryCEREjUboA5cWd8MT0DwbejQufceHN/35+sRL2uHUAFYVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=klTaHZG6; arc=none smtp.client-ip=209.85.128.54
+	 In-Reply-To:To:Cc; b=i1bHYsb0HwACv2VslqXwwgIyzaRH3LJfiz+6khYShGD33HmgodgwoHWxEDq6O2E16BJ8F7+zUIOgD7rvjRN159i8lRH4sCoIo8b176gIThhmPSBF8ZfXasKO1yuM4LTtmQg2zRRM3aNoTCx2sFaaDiY5NaruiI2U8ditXeUSgtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NOX74IDa; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="klTaHZG6"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4805ef35864so3892225e9.0
-        for <git@vger.kernel.org>; Sun, 25 Jan 2026 14:52:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NOX74IDa"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47ee301a06aso45250715e9.0
+        for <git@vger.kernel.org>; Sun, 25 Jan 2026 14:52:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769381567; x=1769986367; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769381568; x=1769986368; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lLH216vjCZ0yr4d+yWryBtsEOEVL7e2pC5b/o4ecn9I=;
-        b=klTaHZG6uZ6WpVFrXSjbUrZLZSiA4yQPr8T668QuzIB2TK8uiYxOF0WggqdJ3U23YB
-         kBTRsCnCI8qen37cY/FQ8iXLwmCXiCT/GNx7bZYTyiFYim+JMsgW/gNcgIxS3YoCsFQY
-         P6Bhq0tOraiJXI00Wu/vCxECoqbQo/aG13xeLMuKMKGU61fqrf86GeEHN/s0bRIk6NCu
-         /jJiTOZXoaUsvAaCTuEodjG4MJCnlTYUPc05z8nft4UhN9U0+o/9jIZAEUxll7PejiRd
-         6+QkvaqBV6ulNjd7w1s6z4+ibtHv+yUUm/ICcwOlzlSAJaYFX7rECZ65Wl8kqa4mRPv4
-         ojNA==
+        bh=ZFdsjCLG22zeH25oN8mzD8T+Bx6rOvqESIF5/naLAgw=;
+        b=NOX74IDanIOMw8kl74SZ7nB/UFP68Q1Ke2Bzhmc/dIi78b0lU0JkVD/xr/ySnJ3Wg0
+         TxU0JcGRuV6g/S083BIzJc5qRK8uEE3aZcvN8aJ0x8vBg+ianHhQ5R0xb3fmD8dmlbqL
+         2i6vQhG2RRVXW+GRH/2cm9Mox0D8K+s+Ob71vQp47pZoObpFyAGzmnRX7WNssHdp/tUo
+         a7wDImDqHaQjzYwc3r7p7g4p2wZEWvw8odhffMjnSU011WiTAtzb9CKaKNaaskqNm5AA
+         LMb6VoSkPNTJNrh1M8xKD5OvS83+qKk0cuHqDdaqb/Uewbm70NlUDUbyKJVAdoTuEoTF
+         tnFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769381567; x=1769986367;
+        d=1e100.net; s=20230601; t=1769381568; x=1769986368;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=lLH216vjCZ0yr4d+yWryBtsEOEVL7e2pC5b/o4ecn9I=;
-        b=siJOBOngk8mfMEH2haejD9wVLbJuXug40VaTpMsuCY0mOo66aDx13X8czdxzXV5pmh
-         SdYK/dR4dDJ+8vYeNgQScc+f5iBL6b3TzoSgKaweDVwuD/IMk+GCQmaRLdTjpJFmK0sQ
-         5esqVTBQjVPqd2GUVVnpBveyphpzIRM3vEUGZ3c7Cz96xY9IvHVhTR3vZIIL0WzxNrvF
-         62GgUT4fUqEoC0pysketh1igHekEtQ/hqhMCMnTcJasFnEgaGBKnoVbSa0TBa4aYz3tY
-         dav6PrWTwcUeGvqoUnF11phljUMWeYhhHF/+9avRwFAsY+dAus4ySVRyd4TFsMK7huoO
-         FOqA==
-X-Gm-Message-State: AOJu0Yzb+brNTUzoPbgELX6DNL+X32ABKlYUZRBv5o3d0yyixIWP/B13
-	PoMVe8NJmgYraAlYpJk4cxTSsnALx6fB9YLSiEEAAl9DguE+TV1ls85Z
-X-Gm-Gg: AZuq6aJkQx5RsYdVgHDEdOOAlK4iIZ/tjKf+6o0CeQxcyuW7IKhMPR8jjr8rXRTWHl9
-	2u+G/Xo8kQI3p169sq/+1L1xYcP0Eqrpg5zwGrDBSQJngHmzIcSryrytmzbD3K+npoc1GqDn3R5
-	L57HCoY2kXZnnzA32is1tgVhxHQ1R+kIspkP7g0pBVisMxO239YK3nsyujGgPayTtIlBDglplMt
-	nIwqMzFNCo8LJXYqTeq+TB2NKmufCieRyQj+/ftJQ6rtacXZ2kc4mDoHECERP+f92DvuzFAdVQs
-	2fAES/iNEcrsppG9yrqsM/Jc77QqJNZhhRGUnWP3h2RmOfn4TmZsA5kQRzAHt0OXJWNf8uJAYKf
-	u1gr88I8X/sdI+SOwMtgSsbh20z+kSNRiWlMopJUETfjMUcdG0DS6zwdhPq/h/+Ku34/YpaDeM/
-	5nAp91/TaeDq4M+FpZwA==
-X-Received: by 2002:a05:600c:1c17:b0:47e:e8de:7420 with SMTP id 5b1f17b1804b1-4805ce67ec1mr51509355e9.22.1769381567211;
-        Sun, 25 Jan 2026 14:52:47 -0800 (PST)
+        bh=ZFdsjCLG22zeH25oN8mzD8T+Bx6rOvqESIF5/naLAgw=;
+        b=I2q1sVrrtKpKWTJvYjQRX0ef0tYkbQLzxsqzecA8hHpkh1j7GnZgAKpKBh+NwWlBJA
+         rs6lWyqhc56kA3XejFQNQPLmACXnRmMw9xMJYj/9RjwHI/LLPa+/60ujN4RZq/38eRuE
+         OZr400eXHIQ8lZbpEunkKZn4IiC3RGQW4F3N1bdLlOmjeLNru8bWTmcr3tG6BU+tRsOe
+         3cX3NSc/ZzMDxbOZKEWMVCXhyMa0xoXcLH0b6moOuu9HXrNp6/a9JUScxkE4LXKOj8n7
+         Edu/64EVEtZMh/vE/n9v8VBvBnX9faqSSPHEqBZaB2o/zP+oHt48xCjwsFXMgCCLXzDq
+         sL/w==
+X-Gm-Message-State: AOJu0YyZw0UQCfePrTUAl+frrFjLItF/KTBR9VKLVHD+9hEe2uKz1s9J
+	kLoxG4ApuCzthmR+LROyF5BbeDYpHKJkwNc3CBpjg5P8ocdykLHe2aBO
+X-Gm-Gg: AZuq6aLyo3BB4XRSKhB67DFDbv3MrA+Zo2HSUx7gc0/XHCHQd88lK8UbXY4psC12A/E
+	OhiFZtQAnjsIX84d0IDYVQTTy2pRofYJlsOvuiEic4czOyiA4tGzpnIGd/a2OvVq7hqELhzMmRL
+	nl5mztUIkj8e1FC/QfA4HTlX6KtgWNQGdxgmBUicy4N+B+MC0d9TnX1gqAlNq4wB5Atr0JeauPZ
+	HAXGI0L3xjeNV0rVgxjnIUoXthAq58/SyFk53pPNpGfXkIaImbZW4jYgreUArVFvEQhTncZ3phW
+	cd269o8u+TsbewH3g43NhUrQ0k6aTIBBWbe/pcTo9pTEqCYtp+MHNgGTSChwy0sU22t7QTeyXla
+	1ENx4pSYsGgVHbjB6z8ooRc+IBk1qjEgnR13KpKbETWiz0Zm6K4C0fBci52R71vjP+jkPpYJvSM
+	FmjAFaQPAf+ZCiBk45cF64ByImlTZI
+X-Received: by 2002:a05:600c:4ed2:b0:480:462e:d640 with SMTP id 5b1f17b1804b1-4805d06c8ddmr45161875e9.36.1769381568120;
+        Sun, 25 Jan 2026 14:52:48 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:ba14:1b51:e353:2193])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48047028928sm425263545e9.2.2026.01.25.14.52.45
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48047028928sm425263545e9.2.2026.01.25.14.52.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Jan 2026 14:52:46 -0800 (PST)
+        Sun, 25 Jan 2026 14:52:47 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Sun, 25 Jan 2026 23:52:38 +0100
-Subject: [PATCH v5 3/6] update-ref: utilize rejected error details if
- available
+Date: Sun, 25 Jan 2026 23:52:39 +0100
+Subject: [PATCH v5 4/6] fetch: utilize rejected ref error details
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,297 +68,113 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260125-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v5-3-d58f3a9edf98@gmail.com>
+Message-Id: <20260125-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v5-4-d58f3a9edf98@gmail.com>
 References: <20260125-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v5-0-d58f3a9edf98@gmail.com>
 In-Reply-To: <20260125-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v5-0-d58f3a9edf98@gmail.com>
 To: git@vger.kernel.org
 Cc: peff@peff.net, newren@gmail.com, gitster@pobox.com, 
  phillip.wood123@gmail.com, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12211;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=WZggZy5SS6pQxqND90mdtHtUUJyrUUigKvfQPUu3OBQ=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGl2nrgSyqt+f9OFfn4Z57m4RHWZlQv4CMgZ8
- aGp8gmIhGFuYYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpdp64AAoJED7VnySO
- Rox/fVcMAJlo4x683DeXwZGYWUIgkeftJR4lawNAxqwKltIh/3he9MYn2p6MKO/ANxcDgJSrSZz
- s6p7/B8UycuUpKP5FlJw5OPnuD2CKzsbyByb4eTDXsfCcaI2efVJdVqLsGe0TeepeBvasPjMKxG
- Gz/DB0Y0oiWzecxPcT67CswnBXOXY9enaDu2hDnxKmptNg07nteNrEBncnaITA6QMMmQxqSGS6H
- U+BYVhXlX8tRTBdyVrybM/balcKpGSN8OPY2F8VUG4SOWgGAEDfBjZhUtWNDQLTPlNCMoUssITY
- WzUUj3ojqJvODqif7Y42x+E2WI8x6gWdrCvM5lwWRINfOXSssKjqgqACTbrLVV4nifObUq/sXVm
- U69i5i9SqrHskCgVhpBDBBhvJIG12GBpv+keCHB73kY0gV8WDLJEsQ/YXPLpEGtyhALQvTBWPu4
- S21EWTx7yo02rCMHi0l0SNXT0n2bqhi8xoByoRuYMOXO5bIVjc278S/Ami53BZw8xZt/9UYIpY4
- 8Q=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4230; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=QVCgPcu+8n0+pnvjlqciULn2iHaIdeO5AswVSSYpI5k=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGl2nriGd0qJeusuVZwSXI2rhnCy0Qr3Rqf6E
+ 23FAI67DSxP1okBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpdp64AAoJED7VnySO
+ Rox/brML/Rf6h2CwMFS3qVaCWE+gPw6eqPO3L5BW8htCB811AY35z0MyL9q4uQyhlmqiwZ79aa5
+ X/83szpI3YsgCYjWq2C5ZVDqcF/AmN7PDGxKrj95+M3dn89Fq59kQ19Vbicomx9bOG30D2iNugh
+ NCXs7N7q/USl1odeI2TLKehJKr856gvGqHZjBrGyLldHQvKJ4Vh+pSdPX706NWJGrbcsTWlwkUy
+ MerpBXaWU/43t6Y8JrdqXJW+UmgZGfdLmMF5EaxacKrFBXJjcJrTXQhOTpjBCJ1k+SkUXSVZX2H
+ wB/0LA5ysP9uvok3cKorF7/0z2LFMbyIylNvTlhyodeyWqVEse8c6tR4Npz/8fpgagfPQuUimei
+ Rd/B4WJ3dp8CtoMWbmkLJehG7Cx9wupPy5zW6CTtEkan1kfoULXVZXdnsAYIRBrH3nGUBs1zCdo
+ AKq9g8udCJDSB8bYMjbvyWjNfLHnOHtNksW733nZBFKQdVguN4JcNHoxcbc0uMZRgWYniMXdS77
+ bg=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-When git-update-ref(1) received the '--update-ref' flag, the error
-details generated in the refs namespace wasn't propagated with failed
-updates. Instead only an error code pertaining to the type of rejection
-was noted.
+In 0e358de64a (fetch: use batched reference updates, 2025-05-19),
+git-fetch(1) switched to using batched reference updates. This also
+introduced a regression wherein instead of providing detailed error
+messages for failed referenced updates, the users were provided generic
+error messages based on the error type.
 
-This missed detailed error message which the user can act upon. The
-previous commits added the required code to propagate these detailed
-error messages from the refs namespace. Now that additional details are
-available, let's output this additional details to stderr. This allows
-users to have additional information over the already present machine
-parsable output.
-
-While we're here, improve the existing tests for the machine parsable
-output by checking for the entire output string and not just the
-rejection reason.
+Similar to the previous commit, switch to using detailed error messages
+if present for failed reference updates to fix this regression.
 
 Reported-by: Elijah Newren <newren@gmail.com>
 Co-authored-by: Jeff King <peff@peff.net>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/update-ref.c  |  8 +++---
- t/t1400-update-ref.sh | 71 ++++++++++++++++++++++++++++++---------------------
- 2 files changed, 47 insertions(+), 32 deletions(-)
+ builtin/fetch.c  | 10 ++++++----
+ t/t5510-fetch.sh |  8 ++++----
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 0046a87c57..2d68c40ecb 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -573,16 +573,18 @@ static void print_rejected_refs(const char *refname,
- 				const char *old_target,
- 				const char *new_target,
- 				enum ref_transaction_error err,
--				const char *details UNUSED,
-+				const char *details,
- 				void *cb_data UNUSED)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index d427adea61..49495be0b6 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1649,7 +1649,7 @@ static void ref_transaction_rejection_handler(const char *refname,
+ 					      const char *old_target UNUSED,
+ 					      const char *new_target UNUSED,
+ 					      enum ref_transaction_error err,
+-					      const char *details UNUSED,
++					      const char *details,
+ 					      void *cb_data)
  {
- 	struct strbuf sb = STRBUF_INIT;
--	const char *reason = ref_transaction_error_msg(err);
-+
-+	if (details && *details)
-+		error("%s", details);
+ 	struct ref_rejection_data *data = cb_data;
+@@ -1674,9 +1674,11 @@ static void ref_transaction_rejection_handler(const char *refname,
+ 			"branches"), data->remote_name);
+ 		data->conflict_msg_shown = true;
+ 	} else {
+-		const char *reason = ref_transaction_error_msg(err);
+-
+-		error(_("fetching ref %s failed: %s"), refname, reason);
++		if (details)
++			error("%s", details);
++		else
++			error(_("fetching ref %s failed: %s"),
++			      refname, ref_transaction_error_msg(err));
+ 	}
  
- 	strbuf_addf(&sb, "rejected %s %s %s %s\n", refname,
- 		    new_oid ? oid_to_hex(new_oid) : new_target,
- 		    old_oid ? oid_to_hex(old_oid) : old_target,
--		    reason);
-+		    ref_transaction_error_msg(err));
- 
- 	fwrite(sb.buf, sb.len, 1, stdout);
- 	strbuf_release(&sb);
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index db7f5444da..db6585b8d8 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -2093,14 +2093,15 @@ do
- 
- 			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
- 			format_command $type "update refs/heads/ref2" "$(test_oid 001)" "$head" >>stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref1 >actual &&
- 			test_cmp expect actual &&
- 			echo $head >expect &&
- 			git rev-parse refs/heads/ref2 >actual &&
- 			test_cmp expect actual &&
--			test_grep -q "invalid new value provided" stdout
-+			test_grep "rejected refs/heads/ref2 $(test_oid 001) $head invalid new value provided" stdout &&
-+			test_grep "trying to write ref ${SQ}refs/heads/ref2${SQ} with nonexistent object" err
- 		)
- 	'
- 
-@@ -2119,14 +2120,15 @@ do
- 
- 			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
- 			format_command $type "update refs/heads/ref2" "$head_tree" "$head" >>stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref1 >actual &&
- 			test_cmp expect actual &&
- 			echo $head >expect &&
- 			git rev-parse refs/heads/ref2 >actual &&
- 			test_cmp expect actual &&
--			test_grep -q "invalid new value provided" stdout
-+			test_grep "rejected refs/heads/ref2 $head_tree $head invalid new value provided" stdout &&
-+			test_grep "trying to write non-commit object $head_tree to branch ${SQ}refs/heads/ref2${SQ}" err
- 		)
- 	'
- 
-@@ -2143,12 +2145,13 @@ do
- 
- 			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
- 			format_command $type "update refs/heads/ref2" "$old_head" "$head" >>stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref1 >actual &&
- 			test_cmp expect actual &&
- 			test_must_fail git rev-parse refs/heads/ref2 &&
--			test_grep -q "reference does not exist" stdout
-+			test_grep "rejected refs/heads/ref2 $old_head $head reference does not exist" stdout &&
-+			test_grep "cannot lock ref ${SQ}refs/heads/ref2${SQ}: unable to resolve reference ${SQ}refs/heads/ref2${SQ}" err
- 		)
- 	'
- 
-@@ -2166,13 +2169,14 @@ do
- 
- 			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
- 			format_command $type "update refs/heads/ref2" "$old_head" "$head" >>stdin &&
--			git update-ref $type --no-deref --stdin --batch-updates <stdin >stdout &&
-+			git update-ref $type --no-deref --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref1 >actual &&
- 			test_cmp expect actual &&
- 			echo $head >expect &&
- 			test_must_fail git rev-parse refs/heads/ref2 &&
--			test_grep -q "reference does not exist" stdout
-+			test_grep "rejected refs/heads/ref2 $old_head $head reference does not exist" stdout &&
-+			test_grep "cannot lock ref ${SQ}refs/heads/ref2${SQ}: reference is missing but expected $head" err
- 		)
- 	'
- 
-@@ -2190,7 +2194,7 @@ do
- 
- 			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
- 			format_command $type "symref-update refs/heads/ref2" "$old_head" "ref" "refs/heads/nonexistent" >>stdin &&
--			git update-ref $type --no-deref --stdin --batch-updates <stdin >stdout &&
-+			git update-ref $type --no-deref --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref1 >actual &&
- 			test_cmp expect actual &&
-@@ -2198,7 +2202,8 @@ do
- 			echo $head >expect &&
- 			git rev-parse refs/heads/ref2 >actual &&
- 			test_cmp expect actual &&
--			test_grep -q "expected symref but found regular ref" stdout
-+			test_grep "rejected refs/heads/ref2 $ZERO_OID $ZERO_OID expected symref but found regular ref" stdout &&
-+			test_grep "cannot lock ref ${SQ}refs/heads/ref2${SQ}: expected symref with target ${SQ}refs/heads/nonexistent${SQ}: but is a regular ref" err
- 		)
- 	'
- 
-@@ -2216,14 +2221,15 @@ do
- 
- 			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
- 			format_command $type "update refs/heads/ref2" "$old_head" "$Z" >>stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref1 >actual &&
- 			test_cmp expect actual &&
- 			echo $head >expect &&
- 			git rev-parse refs/heads/ref2 >actual &&
- 			test_cmp expect actual &&
--			test_grep -q "reference already exists" stdout
-+			test_grep "rejected refs/heads/ref2 $old_head $ZERO_OID reference already exists" stdout &&
-+			test_grep "cannot lock ref ${SQ}refs/heads/ref2${SQ}: reference already exists" err
- 		)
- 	'
- 
-@@ -2241,14 +2247,15 @@ do
- 
- 			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
- 			format_command $type "update refs/heads/ref2" "$head" "$old_head" >>stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref1 >actual &&
- 			test_cmp expect actual &&
- 			echo $head >expect &&
- 			git rev-parse refs/heads/ref2 >actual &&
- 			test_cmp expect actual &&
--			test_grep -q "incorrect old value provided" stdout
-+			test_grep "rejected refs/heads/ref2 $head $old_head incorrect old value provided" stdout &&
-+			test_grep "cannot lock ref ${SQ}refs/heads/ref2${SQ}: is at $head but expected $old_head" err
- 		)
- 	'
- 
-@@ -2264,12 +2271,13 @@ do
- 			git update-ref refs/heads/ref/foo $head &&
- 
- 			format_command $type "update refs/heads/ref/foo" "$old_head" "$head" >stdin &&
--			format_command $type "update refs/heads/ref" "$old_head" "" >>stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			format_command $type "update refs/heads/ref" "$old_head" "$ZERO_OID" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref/foo >actual &&
- 			test_cmp expect actual &&
--			test_grep -q "refname conflict" stdout
-+			test_grep "rejected refs/heads/ref $old_head $ZERO_OID refname conflict" stdout &&
-+			test_grep "${SQ}refs/heads/ref/foo${SQ} exists; cannot create ${SQ}refs/heads/ref${SQ}" err
- 		)
- 	'
- 
-@@ -2284,13 +2292,14 @@ do
- 			head=$(git rev-parse HEAD) &&
- 			git update-ref refs/heads/ref/foo $head &&
- 
--			format_command $type "update refs/heads/foo" "$old_head" "" >stdin &&
--			format_command $type "update refs/heads/ref" "$old_head" "" >>stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			format_command $type "update refs/heads/foo" "$old_head" "$ZERO_OID" >stdin &&
-+			format_command $type "update refs/heads/ref" "$old_head" "$ZERO_OID" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/foo >actual &&
- 			test_cmp expect actual &&
--			test_grep -q "refname conflict" stdout
-+			test_grep "rejected refs/heads/ref $old_head $ZERO_OID refname conflict" stdout &&
-+			test_grep "${SQ}refs/heads/ref/foo${SQ} exists; cannot create ${SQ}refs/heads/ref${SQ}" err
- 		)
- 	'
- 
-@@ -2309,14 +2318,15 @@ do
- 				format_command $type "create refs/heads/ref" "$old_head" &&
- 				format_command $type "create refs/heads/Foo" "$old_head"
- 			} >stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
- 
- 			echo $head >expect &&
- 			git rev-parse refs/heads/foo >actual &&
- 			echo $old_head >expect &&
- 			git rev-parse refs/heads/ref >actual &&
- 			test_cmp expect actual &&
--			test_grep -q "reference conflict due to case-insensitive filesystem" stdout
-+			test_grep "rejected refs/heads/Foo $old_head $ZERO_OID reference conflict due to case-insensitive filesystem" stdout &&
-+			test_grep -e "cannot lock ref ${SQ}refs/heads/Foo${SQ}: Unable to create" -e "Foo.lock" err
- 		)
- 	'
- 
-@@ -2357,8 +2367,9 @@ do
- 			git symbolic-ref refs/heads/symbolic refs/heads/non-existent &&
- 
- 			format_command $type "delete refs/heads/symbolic" "$head" >stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
--			test_grep "reference does not exist" stdout
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
-+			test_grep "rejected refs/heads/non-existent $ZERO_OID $head reference does not exist" stdout &&
-+			test_grep "cannot lock ref ${SQ}refs/heads/symbolic${SQ}: unable to resolve reference ${SQ}refs/heads/non-existent${SQ}" err
- 		)
- 	'
- 
-@@ -2373,8 +2384,9 @@ do
- 			head=$(git rev-parse HEAD) &&
- 
- 			format_command $type "delete refs/heads/new-branch" "$head" >stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
--			test_grep "incorrect old value provided" stdout
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
-+			test_grep "rejected refs/heads/new-branch $ZERO_OID $head incorrect old value provided" stdout &&
-+			test_grep "cannot lock ref ${SQ}refs/heads/new-branch${SQ}: is at $(git rev-parse new-branch) but expected $head" err
- 		)
- 	'
- 
-@@ -2387,8 +2399,9 @@ do
- 			head=$(git rev-parse HEAD) &&
- 
- 			format_command $type "delete refs/heads/non-existent" "$head" >stdin &&
--			git update-ref $type --stdin --batch-updates <stdin >stdout &&
--			test_grep "reference does not exist" stdout
-+			git update-ref $type --stdin --batch-updates <stdin >stdout 2>err &&
-+			test_grep "rejected refs/heads/non-existent $ZERO_OID $head reference does not exist" stdout &&
-+			test_grep "cannot lock ref ${SQ}refs/heads/non-existent${SQ}: unable to resolve reference ${SQ}refs/heads/non-existent${SQ}" err
- 		)
- 	'
- done
+ 	*data->retcode = 1;
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index ce1c23684e..c69afb5a60 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -1516,7 +1516,7 @@ test_expect_success REFFILES 'existing reference lock in repo' '
+ 		git remote add origin ../base &&
+ 		touch refs/heads/foo.lock &&
+ 		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
+-		test_grep "error: fetching ref refs/heads/foo failed: reference already exists" err &&
++		test_grep -e "error: cannot lock ref ${SQ}refs/heads/foo${SQ}: Unable to create" -e "refs/heads/foo.lock${SQ}: File exists." err &&
+ 		git rev-parse refs/heads/main >expect &&
+ 		git rev-parse refs/heads/branch >actual &&
+ 		test_cmp expect actual
+@@ -1530,7 +1530,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensiti
+ 		cd case_insensitive &&
+ 		git remote add origin -- ../case_sensitive_fd &&
+ 		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
+-		test_grep "failed: refname conflict" err &&
++		test_grep "cannot process ${SQ}refs/remotes/origin/foo${SQ} and ${SQ}refs/remotes/origin/foo/bar${SQ} at the same time" err &&
+ 		git rev-parse refs/heads/main >expect &&
+ 		git rev-parse refs/heads/foo/bar >actual &&
+ 		test_cmp expect actual
+@@ -1544,7 +1544,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensiti
+ 		cd case_insensitive &&
+ 		git remote add origin -- ../case_sensitive_df &&
+ 		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
+-		test_grep "failed: refname conflict" err &&
++		test_grep "cannot lock ref ${SQ}refs/remotes/origin/foo${SQ}: there is a non-empty directory ${SQ}./refs/remotes/origin/foo${SQ} blocking reference ${SQ}refs/remotes/origin/foo${SQ}" err &&
+ 		git rev-parse refs/heads/main >expect &&
+ 		git rev-parse refs/heads/Foo/bar >actual &&
+ 		test_cmp expect actual
+@@ -1658,7 +1658,7 @@ test_expect_success REFFILES "FETCH_HEAD is updated even if ref updates fail" '
+ 		git remote add origin ../base &&
+ 		>refs/heads/foo.lock &&
+ 		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
+-		test_grep "error: fetching ref refs/heads/foo failed: reference already exists" err &&
++		test_grep -e "error: cannot lock ref ${SQ}refs/heads/foo${SQ}: Unable to create" -e "refs/heads/foo.lock${SQ}: File exists." err &&
+ 		test_grep "branch ${SQ}branch${SQ} of ../base" FETCH_HEAD &&
+ 		test_grep "branch ${SQ}foo${SQ} of ../base" FETCH_HEAD
+ 	)
 
 -- 
 2.52.0
