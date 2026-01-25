@@ -1,135 +1,302 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC53529A1
-	for <git@vger.kernel.org>; Sun, 25 Jan 2026 11:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769340317; cv=none; b=m903e/Zu0sxXXDsqffbUvUgSBgax+FlJAXNGmzbFUvFHJWLTQK2f/X10vJYsXEgrdnmMARAlhNG0pjLBYGXaz9uev5cGpMQwkYVkf+xzTac6upx44mjdCIfnyfYp+DWDsdPp+U+s32OdvZxP5h5SpI/ucWGTpYXthlnx2mvY2xc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769340317; c=relaxed/simple;
-	bh=8k5AUnFcPiLv3/AsKb49fRJjThjv4FynlwK8HSuPLdM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Su/U40AczV0XbmqSztZMjDWZ85CnKRxz7p9VpHLaa/9W4BKQqQnb1HaLBjvY6VgB7kDq6LtwGTjiY6HUKYE2on+yV44W5WMEoGwj1ElAzjv3rm7+bh3yxlX6nU7Qn64RdPsXD40xto6EV8X+2TvtTsGyuQmkwXeWZYxLbQgFVCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cewq0PID; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ys5VIQSp; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A1D29A1
+	for <git@vger.kernel.org>; Sun, 25 Jan 2026 11:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769340365; cv=pass; b=lrcGLdlVnf1A8JRH9T2+5b7cJF5Y9D33ot+MDdCZ/e3g0XzGj4l6Yj21dp07cfRCEufsoFn/ZqwAQ9D8E1ajbK6Uy9o8t4T2Yqf5//HVSNHN32Evk/YiV6b72Q5NbHlNP/GoQ7ECpnW2aaO5JzwZix0IPwmUT2EmP1w3tJm6Gow=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769340365; c=relaxed/simple;
+	bh=/1jyxVoL1sZfAkFe8auoIAAtVBEWW1xufZM7wSVPvJ0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XGBV7CAq2Ryqtd8nvZEjb1RvSsZmLp2tK2eSvjOxa76InI9cNetu8e5Xuu7JNy6qDARhrUo9PNNIz2VCPbZ3OwrnnMNEwxVrk3hUcXxWT3jrQGuzzw573RiZAV6LzMiWWxR+A4MkiH4Y+4APGGHNyuUXUtIDnkuTI3pG3aU6bWk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z92MyhQ4; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cewq0PID";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ys5VIQSp"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2A9197A0103;
-	Sun, 25 Jan 2026 06:25:15 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Sun, 25 Jan 2026 06:25:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1769340315;
-	 x=1769426715; bh=6+Z4L2cp340pxibVO+/0dlKQjptKqnD1YBMMdOa/66A=; b=
-	cewq0PIDwN+CsPQPHyhsk1pgD7e2UmF6W0bhjAoh9nBE+bfa9/o7CTy6yPtM3jiK
-	HG61qo1Mj6o0kykbUE4BZ6Lvr4ib7u65uF4YLwWX0eEnoph5GOWc7tAzk/T/rDDq
-	IVlCdKYP1H+VDx0AB0VDSLugNfbc/EdaOKMrr+ralnGwZnvcJYXxtyWQSIGu8L+D
-	G3MzWBnnNG7S9E/opw7ycQ9k5CQ2lMme2UytWW9hT1EWoN6jrQVR1e/sosOoiydv
-	l3z5/j+Qpl2bvXAIJ7b5wdfWzciDpp9NzGi95GyQGiPePb7LMn95DAN0g7bFY4C2
-	fygIT5g+CwVuL9B56bxklg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769340315; x=
-	1769426715; bh=6+Z4L2cp340pxibVO+/0dlKQjptKqnD1YBMMdOa/66A=; b=Y
-	s5VIQSpTUjdHuRapj1WlFia/oJbCj2pTcipbMeUWd443bq1Ls+st2a4E7ltmxzK9
-	P3+ETE/CihqLJcA9CMa/5PW5/QZVWRhrwALZIYyJnS/QClwub0FtYfzP6V9gdqGY
-	Q/UgdKHka2pcUFBnyNaL5jf1Yfe7TEpsw4/RZsJzIkSbAwl/mv2EzXJtG79CQyfW
-	+wFF+ipYCA3FROI0oJSQykZSDWKQ8KeMq08TRvKshpBhteGCfOFGEOibgZtDC/w0
-	NeV/6monU8ggzx2Lx4eAU/kHN4iiBPWPQwbja01xyB4SiXKQ2688tA4ZrzOMifbP
-	/vXRO6NPcniLSXtGtp+Ew==
-X-ME-Sender: <xms:mv11aU1zL4ZplBpf50QckiU2JarXZTTqra8jGKVZfLT6i8IxO4_LsB4>
-    <xme:mv11aZ4ZVrC8IOHMW2U8BR0smxhSeL9Uqrn0LpSE7EghI4qd29nIrokLafIGamnBO
-    C9RT5-OHJruYmIF5eeYv-5RP_JsbE-0ONrV1Iq8myzz8WGo1eDS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheegieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
-    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehguhhsthgvugestghouggvsggvrhhgrdho
-    rhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:mv11aXzRFXGuih2swJzpPiMhyWapA6RyoHYWyMwqCBKzkq0y7o_MbA>
-    <xmx:mv11aXAdmk-L2ea8VkWj7A5IL6uWodB-ugImzodgeWTvV5JyhVVodg>
-    <xmx:mv11aUaksgjiNNILAdN8xSffJ3xX7950sD-ehop4cs0fjK6nmBwtEg>
-    <xmx:mv11afhWwGKP65DQ-CsW8uLcZxRHXpOuk-09-FhzqviTTLgXAYrXdA>
-    <xmx:m_11afQzEi5gu8gvUthvKn4kEpLmsCaVEod-NktFZh1piT966iIvE03J>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 7F1811EA006B; Sun, 25 Jan 2026 06:25:14 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z92MyhQ4"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-79414ab1497so31998597b3.1
+        for <git@vger.kernel.org>; Sun, 25 Jan 2026 03:26:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769340362; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SXSpXLxHGPP2kvv7+IO92LkrM5pO9mZPJDupxMqr8a2ZjhrF8o8TtcmsB2NFsR0ZuF
+         jmSNp80c65y8Yo5ESHK8qfFOaosb3Dmmg5VhKRXdGtVPHJor/fFu3i4I5CXm3AG4BSPg
+         NdQ2ghN38WSrJTvD00baOHnBh1PIXjOdxvkZhPaNEXqzBMOH/Vx9VpiiVadhNhzJXqEx
+         lerwibpcBZNgiGCvw4vJ/P+4HjeFInuZQsXjcipyHWZAu43ai1/87BiQEFTLQMBoeOtl
+         WTMZTPY1+bAYjlqvimQFiS3fEk6+uJxBbsPKhpbfafReq5zjgo0KNHlj+sEyDeSotyKj
+         55Eg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=an3rsjOWcHZm3xzWEhJBQC+qLrfTmuYPXZFzOsKNJCc=;
+        fh=2NhxXAgqwynpj1LoL6hkNuKV0JIBnEXChUGwN726it4=;
+        b=YhrHcmo9lkX6TEUSBO+B2cYyO2ocDqetLs1MmuMdw1PxiOjcIK/wp4fEX4b3ahhBZ4
+         HkUfxwfiJ83NRTEA9OuBz9yliuhODmhDBqHFP6XmhmOU19kr11DTeznAdVUM35Cwywek
+         v98iK/nE4e8q/cC9VcWsAD4MZO6pn/zKuLGQsxwmHRuh0OhQjIAwT7qnBEA/yAqmR3im
+         +L782bM9kBootORjMd1pJGAWxsuAnF16G1HpPXGHtFsaH8EoUXt6sXcTgklyZNUUNWHS
+         1vx1CANLpKC0BfdlHjza4QqA8c0rtQnBn51+ZFMmKXfMg9cAcni1zaFGZ3BVPH8KfdM5
+         xQkQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769340362; x=1769945162; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=an3rsjOWcHZm3xzWEhJBQC+qLrfTmuYPXZFzOsKNJCc=;
+        b=Z92MyhQ4mdUZaw8q4IIFIL2B2JkD3vphCJNbslYglPIU4KWffJIqI2wyEulCBZvvjc
+         q4uZvjgUHK+N6i1hETKtR5VQh9SsJ5oBpsnwPnNSPHCCtKyXwUIROQAlh5OsaEZ8JSHU
+         L8Fyk1OfD5aiH1J1U2qzwNykcS6+vLcoUkI94QSTWMIyW9Vhed7wHZiPjMZ8sbImXUTw
+         5v5mDwn8ALMgHok2+HvPoeuu8NhshaU4z55H0fKYySd3jSGaZRShJDppEk6jPVs3unx0
+         ctEcUJlU1i74+ChlB3tCopy40/BM15S36z6B08TOJmqQP2474qIoW4X65EfSPAJ9hzMp
+         Nf5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769340362; x=1769945162;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=an3rsjOWcHZm3xzWEhJBQC+qLrfTmuYPXZFzOsKNJCc=;
+        b=Os9tf0lQCRLZaTX9ti+AZou5QuqZDoVT1o3nCzlehnfTBuambbqwvBtF5Yslk8oKo5
+         ODSM2qz3+pyfaH7rMcS8E3uAjY3+a+HS19V7pciIzVc1E5JKbw+8srZLOLSkc1XqF3Rw
+         DYUr7j9ZVPCqve+ANNj9eqm7H3P75h/jYscmA2mvZt/erUXzBpKZrOTQRed/2BSz9dmi
+         jSLo6S/+UAqPN5xGoA8sVzKBOndcH3sIhpF82BIc9OHLlSXPLP4ZE0hD8lYpEk5fz+OZ
+         Q0HsN754NW2D76LFuLe88BhGoggFwYv0B93FQxhuwgDJq4k90FAHEU14uE9WlSJ7ZsUZ
+         EeLg==
+X-Forwarded-Encrypted: i=1; AJvYcCUXVcKw9D7gyb6i67efANlKZNeLCoWAJDCgljYhb9YESNKf5DOvXeGWmdldkhgyDaUemS8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcfLYpLGtxDwa1ARst91PTOpYXQbntRMmhhGoVojnC4TmK0s1E
+	xLL7jjKN2qBj8HVFFOM/PnZuSAjJO6lRPV5c1MXVuQe926LQqQlHmkOHTdIlSceQ+8u6pxwlwBP
+	ms5PS8uK4XCFezzSSrae5keeS/ivXmZS2RRWW
+X-Gm-Gg: AZuq6aLKZYvgtjFL8IvRmsrOSSq5CDaf+c8Al/QuoiaaShRLHTkoanY4qaqvwQMMhBN
+	RkjCKUfHkD+EBQ964vFVvzRxj3NbXkuE4H0kVVssA33l5PjlaK2kLJTgbha5LvxhxTxXhejuQOb
+	hQI4Fzn12aqBEHC4Duh6PvvRLaBO0zTeaaYZw1lis7jSeW/YMSF81UYpldqkR6m3oGwgjuKo9DH
+	3aP/ZiMyNv6DBgN62N1RDqkNr4WwIhKrRMAethUsKnzWysLcJkrYDmOceb6bv6/ztP/dAkQDM02
+	QQeB
+X-Received: by 2002:a05:690c:d92:b0:794:2fed:5369 with SMTP id
+ 00721157ae682-7945a89710amr10809757b3.24.1769340362380; Sun, 25 Jan 2026
+ 03:26:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AOZQmOW8ie0Z
-Date: Sun, 25 Jan 2026 12:24:54 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Toon Claes" <toon@iotcl.com>, git@vger.kernel.org
-Cc: Gusted <gusted@codeberg.org>
-Message-Id: <0b97e8fd-1dfc-4a38-9c77-22467f38fd3b@app.fastmail.com>
-In-Reply-To: <20260120-toon-last-modified-zzzz-v3-4-9bffd4968b0e@iotcl.com>
-References: <20260120-toon-last-modified-zzzz-v3-0-9bffd4968b0e@iotcl.com>
- <20260120-toon-last-modified-zzzz-v3-4-9bffd4968b0e@iotcl.com>
-Subject: Re: [PATCH v3 4/4] last-modified: change default max-depth to 0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <CADMnYXDDbVBwZgETsFhwkOyn8cM8QU4+YQs2rRfTac6ec49-5A@mail.gmail.com>
+ <20260123210643.GA2728629@coredump.intra.peff.net> <xmqq8qdogdmu.fsf@gitster.g>
+ <20260124072814.GA3455597@coredump.intra.peff.net> <CADMnYXA6_uCZU42NR2vFKM9uhfaWOdu0tkzPi6Ya8WW2rzknGg@mail.gmail.com>
+ <CADMnYXAF5VV9jKbxm1rduR-x96TFEso572zCAVOU-JoMpnX1tg@mail.gmail.com>
+In-Reply-To: <CADMnYXAF5VV9jKbxm1rduR-x96TFEso572zCAVOU-JoMpnX1tg@mail.gmail.com>
+From: Klaus Sembritzki <klausem@gmail.com>
+Date: Sun, 25 Jan 2026 12:25:51 +0100
+X-Gm-Features: AZwV_QiLnYHyfkBdPjYv9TnaP0wp3W_aaEMLBTWS9QM0bBrFkBZX38b1HvX51N4
+Message-ID: <CADMnYXDBSTDHynvVcpfpU79V=BXNOksi1W0pHFRWgZBkqTf5Hw@mail.gmail.com>
+Subject: Re: The SHA256 of "xy\n" (ASCII, no CRLF) contains 1337, ACBAD in za,
+ and I am 1aa
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 20, 2026, at 22:47, Toon Claes wrote:
-> By default git-last-modified(1) doesn't recurse into subtrees. So when
-> the pathspec contained a path in a subtree, the command would only print
-> the commit information about the parent tree of the path, like:
+On Sun, Jan 25, 2026 at 10:47=E2=80=AFAM Klaus Sembritzki <klausem@gmail.co=
+m> wrote:
 >
->     $ git last-modified -- path/file
->     aaa0aab1bbb2bcc3ccc4ddd5dde6eee7eff8fff9	path
+> On Sat, Jan 24, 2026 at 10:25=E2=80=AFAM Klaus Sembritzki <klausem@gmail.=
+com> wrote:
+> >
+> > On Sat, Jan 24, 2026 at 8:28=E2=80=AFAM Jeff King <peff@peff.net> wrote=
+:
+> > >
+> > > On Fri, Jan 23, 2026 at 02:36:41PM -0800, Junio C Hamano wrote:
+> > >
+> > > > Jeff King <peff@peff.net> writes:
+> > > >
+> > > > > On Fri, Jan 23, 2026 at 09:16:46PM +0100, Klaus Sembritzki wrote:
+> > > > >
+> > > > >> $ # My initials (ks): 1aa
+> > > > >> $ echo ks | sha256sum
+> > > > >> $ 1aa44e718d5bc9b7ff2003dbbb6f154e16636d5c2128ffce4751af5124b653=
+37
+> > > > >>
+> > > > >> $ # 50566750337
+> > > > >> $ echo thinking | sha256sum
+> > > > >> $ 50566750337beb9e98e553fd9196d10576f9eb0cbc6b66e2586b9d73af4f35=
+2f
+> > > > >
+> > > > > Oh man, I've got deadbeef!
+> > > > >
+> > > > >   $ echo jk35252822 | sha256sum
+> > > > >   33f1a74529870456c56ad97c59cfed6bdeadbeef9b9bc3f4ff49bb203e36f96=
+b
+> > > > >
+> > > > > What could it all mean?
+> > > >
+> > > > Sorry, but I have to admit that I completely lack humor receptor
+> > > > cells.
+> > >
+> > > Probably because it was not that funny. :)
+> > >
+> > > The original message seemed to be looking for Numerology-style meanin=
+gs
+> > > in random data. I wasn't sure if it was serious or not, but I could n=
+ot
+> > > resist either playing along (if not) or trolling (if so).
+> > >
+> > > But here's my deadbeef brute-force program for fun.
+> > >
+> > > -Peff
+> > >
+> > > -- >8 --
+> > > #include <stdio.h>
+> > > #include <string.h>
+> > > #include <openssl/evp.h>
+> > >
+> > > int main(int argc, const char **argv)
+> > > {
+> > >         const char needle[] =3D { 0xde, 0xad, 0xbe, 0xef };
+> > >         const EVP_MD *algo =3D EVP_sha256();
+> > >         EVP_MD_CTX *ctx =3D EVP_MD_CTX_new();
+> > >
+> > >         EVP_DigestInit_ex(ctx, algo, NULL);
+> > >         while (*++argv)
+> > >                 EVP_DigestUpdate(ctx, *argv, strlen(*argv));
+> > >
+> > >         for (unsigned i =3D 0; ; i++) {
+> > >                 char buf[16];
+> > >                 char *p;
+> > >                 unsigned char digest[32];
+> > >                 EVP_MD_CTX *copy =3D EVP_MD_CTX_dup(ctx);
+> > >
+> > >                 p =3D buf + sizeof(buf);
+> > >                 for (unsigned v =3D i; v; v /=3D 10)
+> > >                         *--p =3D '0' + (v % 10);
+> > >                 EVP_DigestUpdate(copy, p, buf + sizeof(buf) - p);
+> > >                 EVP_DigestUpdate(copy, "\n", 1);
+> > >                 EVP_DigestFinal_ex(copy, digest, NULL);
+> > >                 EVP_MD_CTX_free(copy);
+> > >                 if (memmem(digest, sizeof(digest), needle, sizeof(nee=
+dle)))
+> > >                         printf("%d\n", i);
+> > >         }
+> > > }
+> >
+> > Incrementing the MSB instead of the LSB (indexing naturally starts
+> > with 1 in that case) seems to improve the performance, and it finds
+> > different solutions, if the program is terminated early.
+> > The rationale is that there is autocorrelation in the observations,
+> > though I cannot judge what that means in this concrete example. The
+> > speedup is not that dramatic here, so SHA256 seems to be pretty
+> > random.
+> >
+> > #include <stdio.h>
+> > #include <string.h>
+> > #include <stdint.h>
+> > #include <openssl/evp.h>
+> >
+> > #ifdef POLYFILL
+> > EVP_MD_CTX *EVP_MD_CTX_dup(const EVP_MD_CTX *in)
+> > {
+> >     EVP_MD_CTX *out =3D EVP_MD_CTX_new();
+> >
+> >     if (out !=3D NULL && !EVP_MD_CTX_copy_ex(out, in)) {
+> >         EVP_MD_CTX_free(out);
+> >         out =3D NULL;
+> >     }
+> >     return out;
+> > }
+> > #endif
+> >
+> > #define REVERTED_BIT(n, position, width) (((n & (1 << position)) >>
+> > position) << (width - position - 2))
+> >
+> > uint32_t revert_bits(uint32_t n, uint32_t width) {
+> >     uint32_t result =3D 0;
+> >     for (uint32_t i =3D 0; i < width; ++i) {
+> >         result |=3D REVERTED_BIT(n, i, width);
+> >     }
+> >     return result;
+> > }
+> >
+> > int main(int argc, const char **argv)
+> > {
+> >     const char needle[] =3D { 0xde, 0xad, 0xbe, 0xef };
+> >     const EVP_MD *algo =3D EVP_sha256();
+> >     EVP_MD_CTX *ctx =3D EVP_MD_CTX_new();
+> >
+> >     EVP_DigestInit_ex(ctx, algo, NULL);
+> >     while (*++argv)
+> >         EVP_DigestUpdate(ctx, *argv, strlen(*argv));
+> >
+> >     for (uint32_t n =3D 1; ; n++) {
+> > #if (COUNTER_WIDTH !=3D 0)
+> >         uint32_t i =3D revert_bits(n, COUNTER_WIDTH);
+> > #else
+> >         uint32_t i =3D n;
+> > #endif
+> >         // printf("%u %u\n", n, i);
+> >         char buf[16];
+> >         char *p;
+> >         unsigned char digest[32];
+> >         EVP_MD_CTX *copy =3D EVP_MD_CTX_dup(ctx);
+> >
+> >         p =3D buf + sizeof(buf);
+> >         for (uint32_t v =3D i; v; v /=3D 10)
+> >             *--p =3D '0' + (v % 10);
+> >         EVP_DigestUpdate(copy, p, buf + sizeof(buf) - p);
+> >         EVP_DigestUpdate(copy, "\n", 1);
+> >         EVP_DigestFinal_ex(copy, digest, NULL);
+> >         EVP_MD_CTX_free(copy);
+> >         if (memmem(digest, sizeof(digest), needle, sizeof(needle)))
+> >         {
+> >             printf("counter width: %2u | n: %10u | i: %10u\n",
+> > COUNTER_WIDTH, n, i);
+> >             return 0;
+> >         }
+> >     }
+> >     return 1;
+> > }
+> >
+> > cc -DPOLYFILL -DCOUNTER_WIDTH=3D32 jk_evp.c -lssl -lcrypto -o jk_evp_ms=
+b_32
+> > cc -DPOLYFILL -DCOUNTER_WIDTH=3D31 jk_evp.c -lssl -lcrypto -o jk_evp_ms=
+b_31
+> > cc -DPOLYFILL -DCOUNTER_WIDTH=3D30 jk_evp.c -lssl -lcrypto -o jk_evp_ms=
+b_30
+> > cc -DPOLYFILL -DCOUNTER_WIDTH=3D29 jk_evp.c -lssl -lcrypto -o jk_evp_ms=
+b_29
+> > cc -DPOLYFILL -DCOUNTER_WIDTH=3D0 jk_evp.c -lssl -lcrypto -o jk_evp_0
+> > counter width: 32 | n:  103832253 | i: 1588397616
+> > counter width: 31 | n:   62413559 | i: 1003915120
+> > counter width: 30 | n:  166340413 | i:  396135154
+> > counter width: 29 | n:  137077701 | i:  171728193
+> > counter width:  0 | n:  171728193 | i:  171728193
 >
-> Change the default behavior to give commit information about the exact
-> path instead:
+> I have to admit there is a bug in my previous code, it only works
+> correctly for even numbers. It should have been:
 >
->     $ git last-modified -- path/file
->     aaa0aab1bbb2bcc3ccc4ddd5dde6eee7eff8fff9	path/file
+> #define REVERTED_BIT(n, position, width) (((n & (1 << position)) >>
+> position) << (width - position - 2 + (width & 1)))
 >
-> To achieve this, the default max-depth is changed to 0 and recursive is
-> always enabled.
+> uint32_t revert_bits(uint32_t n, uint32_t width) {
+>     uint32_t result =3D 0;
+>     for (uint32_t i =3D 0; i < width; ++i) {
+>         result |=3D REVERTED_BIT(n, i, width);
+>     }
+>     return result;
+> }
 >
-> The handling of option '-r' is modified to disable a max-depth,
-> resulting in the behavior of this option to remain unchanged.
->
-> No existing tests were modified, because there didn't exist any tests
-> covering the example above. But more tests are added to cover this now.
->
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
+> The actual performance measurements are:
+> counter width: 32 | n:  103832253 | i: 1588397616
+> counter width: 31 | n:  103832253 | i: 1588397616
+> counter width: 30 | n:  166340413 | i:  396135154
+> counter width: 29 | n:  166340413 | i:  396135154
+> counter width: 28 | n:  268041599 | i: 2281045247 # 2**28 is close to
+> the first finding when counting by incrementing the LSB, so this is
+> slow.
+> counter width: 27: This does not find anything, because 2**27 is lower
+> than the first finding when counting by incrementing the LSB.
+> counter width:  0 | n:  171728193 | i:  171728193 #
+> math.log2(171728193) =3D 27.35555166834193
 
-Thanks. I think this makes more sense.
-
->[snip]
-> --- a/Documentation/git-last-modified.adoc
-> +++ b/Documentation/git-last-modified.adoc
-> @@ -25,13 +25,14 @@ OPTIONS
->
->  `-r`::
->  `--recursive`::
-> -	Instead of showing tree entries, step into subtrees and show all entries
-> -	inside them recursively.
-> +	Recursively traverse into all subtrees. By default, the command only
-> +	shows tree entries matching the `<pathspec>`. With this option, it
-
-This should be s/`<pathspec>`/_<pathspec>_ since this is a `[synopsis]`
-doc. But this is in `next` so it will have to be left for another time.
-
->[snip]
+As an interim solution, it could make sense to leave small input
+unmodified, and to permute large texts to get rid of the natural
+language manifold.
