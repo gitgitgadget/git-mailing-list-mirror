@@ -1,177 +1,182 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D7F26CE3B
-	for <git@vger.kernel.org>; Sun, 25 Jan 2026 17:34:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769362501; cv=none; b=eK8hGzBOV/P/L1zDlyecFKmRjMD+j3JstR/SqyGFDSm1i9rIV6w4527oGig8toWaVPvaqQOJ8Zop+TtnIFzSBcj4ldJ0WQuCao92MI3XGiM87yMr9afCBW2uZQnTch+cbewBFAZZht0Di6x0E7hPKHir58dTpIeeW1FcuACGPVM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769362501; c=relaxed/simple;
-	bh=xxzpMmuva2DJsHz6+tQzu2XXvrqeukYK3astdoJ+6Jc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oArdX8yhRDKdTBRqC4PzzMSkFrCy8LE8b7IFaXZQHBCka63x5old/6Wpc2epvSyMnH5Q9cbPqvBEwwWgXDEa4wc+8f1lgtgIW2lPGAyw5ZOX28CXoqJmaDDnpPdupfzWkcaKJhtpH/z3LRj/Ump3GbF5jPO5fiJnOgHQWGAGGck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hetq+vb/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fd58OmbH; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715D11DB95E
+	for <git@vger.kernel.org>; Sun, 25 Jan 2026 18:47:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769366857; cv=pass; b=WinWxpTI99/MC4N7pJsNX0r/uqjPjf9h40SjlFRi/lh2UfKf2Rl/AsX8ImkwZPNM+0d2XaB0qNLUpVpHIyNUOPRCt9GkeDFf/8STEamKxfTFJSfxFWmwda+jdyoH7XS+bDIYnRUoZhwB/eVLNL9jk2VrnJEp5cOvvvKG648/BhQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769366857; c=relaxed/simple;
+	bh=xabue5m/j+48XSSgtMZTG/evhFMRxWSKiwFDrdbIWgo=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ktECv9zlnAXhkKkz0/UT+Aw3iam+a9g8VYRGp/r1i8Zp9X888dRBicsaY9ghT9Kc4Xmb9G2LvM+d+Oohe5SfH9qkSVrYvc5Le6PSts4iZt39zAjOvVYBHjdyTwBY7jULS2cunRzu3GMnzvAPoxUOmkXJpXkKI/uqZJZOGq+o3h0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c1f/nQN8; arc=pass smtp.client-ip=209.85.222.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hetq+vb/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fd58OmbH"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B19A67A0103;
-	Sun, 25 Jan 2026 12:34:58 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Sun, 25 Jan 2026 12:34:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769362498; x=1769448898; bh=XRqTnq3y26
-	qq+3MG1x44IljsPEySjHNOQwNesHe2UWY=; b=hetq+vb/bvdh2r8K0xxH51JQ3h
-	pwwmNj/+cZdb+Hu2SwDQ/Kfg9esz7wOUBWJH447e0B10YpH7MD9vuqf4XdWYE+AZ
-	23UcI01FvC4L83q6SRoOPsC6vcM+odpy/4rzazmESOln1lJkDEE24NhmpJ3E3AM0
-	lUIjyoK7INhLluP1Xw/wafkJfovKdl9z9FZ78/jA4jSWybpOuj1lhSlnn/QEktM5
-	b8MQfc0nhYjiWbmwdGG3BI2dqPMdvRf8QV6k7SJWv/ljXxaSOa3zOM3IDuqDs4w8
-	IKJWSIq1+wp7UtzB4M6Leu7RtJQaOD2X8tt8JBGSS2bpgngnZrPF+2dY17Ig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769362498; x=1769448898; bh=XRqTnq3y26qq+3MG1x44IljsPEySjHNOQwN
-	esHe2UWY=; b=Fd58OmbHjp9obAoJybY6YTXGgB6YBXNs/W18/q/4uxLmZKfszBD
-	9EYYLIrdD6VMuzqaxDrr0hql5otknOKmOSdZq5tCKDCSMPvZJkGrWLJRgv2H/x0J
-	PXQjPFMUql8Qamk9NxrpzIIUsI6GR86iw1E4adXy1N6I0sE09uYvRH+KR9xx2Bpo
-	aY3StCefQPa9YiyCg8irfrUUpxBR+T1P8ClOP+bY8daEfNkMbCMeASGEQ632cWQ0
-	Q8E6Yiq4gKOOIzgo73FWnJV22dFtj4BaNWUJzhXGKox3EZbDC27vbFShzqLWu4Ra
-	3CumnWx+mQxsu5xFsNMg3A4TjbSVG9yHwmQ==
-X-ME-Sender: <xms:QlR2aVHXQuffGM7UFtBYURFyYbe4pA-Ju7TSr6qVHMtt1CZZ3vthgg>
-    <xme:QlR2aRNawVya-wohWaLWZ-tgvASg592M9l5gu0vlvawGAQCsKBsq8yxqzrlxhLomf
-    L0mKHb8S0IIpdxu2zuoVZfVNWrc8HEn3e_SIZLdszhTD8KFz0LOi2k>
-X-ME-Received: <xmr:QlR2aff-1ltuF433yvHdiZZpPV5o-tf6ieruEHvp90D-mUh9PRQ0dUnlEHfDs7C1Lv-_uI0-Y32fxKKbTpVa9CCmM9d0pvgb-Artc88>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheehgeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephi
-    gthhhinhdrghhithesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:QlR2aWuj8QYQUhI6F7VrYiDESGT5nTKWpvinpkxGIJu5WqLdDbFHHg>
-    <xmx:QlR2aYlzbrMOqFmUY7-gqNzUPEVTz0m6jXna3nWaqqPPDNNU-CyZZw>
-    <xmx:QlR2aQyhHPbUaS26-HpIyUWA_DQiTA8WEb4xQRjvsAQa6ny8ocKDnA>
-    <xmx:QlR2aSOiKrgJmVskXIcF4EZZLKaF9mciNI_ixdIXuI3RsovFeJFpsA>
-    <xmx:QlR2aV9Z64YO_GOYji15S4D_OnGOiBlaK6fxNGeMI4XeBdF0sAr4bA9A>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 25 Jan 2026 12:34:58 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Yee Cheng Chin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Yee Cheng Chin <ychin.git@gmail.com>
-Subject: Re: [PATCH] xdiff: re-diff shifted change groups when using
- histogram algorithm
-In-Reply-To: <4fa413ae-f2a4-4de2-a2fb-0b1db379750b@gmail.com> (Phillip Wood's
-	message of "Sat, 24 Jan 2026 10:54:14 +0000")
-References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
-	<xmqqikcusn8p.fsf@gitster.g>
-	<4fa413ae-f2a4-4de2-a2fb-0b1db379750b@gmail.com>
-Date: Sun, 25 Jan 2026 09:34:57 -0800
-Message-ID: <xmqqy0llk33y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c1f/nQN8"
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-94124140e02so3291186241.1
+        for <git@vger.kernel.org>; Sun, 25 Jan 2026 10:47:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769366855; cv=none;
+        d=google.com; s=arc-20240605;
+        b=KydDuptQ0PvgHk+5rXbRhhEiMrXtLDVehNTFS0z5EOMNX6oNwD0zgBgNa45J42t1iH
+         LiKCLthlwJXcFr1IjzRb5GSfQoBdbVJG0u3IwkYQlEAGwkPxPbU7gp3w+iqgC+2qEZgT
+         cp/md3/AR5GzP30mNVlB6aT47ry+EW/msfhcQZrLJ36NN68Q/tj8Mi6aznpmRgxJBh3V
+         Dqzl9Po5U60M62paqc2LIAHUBJvwB3KGh3bXLo/xGGN2UZXarNv3K1hHZzzckG1Wyx5Q
+         rYJCxY7pP5wXYOCBvLX0ypTboHfj2awJLki/EzV1NjGIaWsXEmfXjqQuY/V7FHRu/+sD
+         kUZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=FjWpObzefiWiAstJo6zQD7NTN+DkKdlGdZbmFdki7BA=;
+        fh=LrV0gm1y5AUAMOc6gVEyY+U3tdxxtrFOSNFgmZR9U/M=;
+        b=j1kj374YmsNyEELAxJ0YgtJz7CtTW2+cR15h8bemOlPojFyP/7Q5PPFe/CJYu66zlm
+         acgnAPHWxiYGSVgE896KFpA8dbPi0WFHltoESvY358YmsAw7RrdIPeVaXRgGtngUWl85
+         znn+HI++kDu4wE9SJXWteKK+2ZNqu6ZLf+qsKuYmWZZRzk+y1tQyX5mHXURsQ+nfQsNn
+         Kz3EHUVriAUvyA9GH43jc07sNFiHYik5LaSASYIYfkU25tbRuMPsEJSwsJONiIGqaW1t
+         cZu12n3RN7H+MbaIXbYCI+2TlrFbRLPYD7Y6p8N1AYh5eKQaIaLPThz5H0ZDwtI5oVUL
+         xN0w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769366855; x=1769971655; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FjWpObzefiWiAstJo6zQD7NTN+DkKdlGdZbmFdki7BA=;
+        b=c1f/nQN8b4WB9YW7beXVyKSUni32bvJG/Tlg9WJvSlUcAXpUgZlmNjcFBQKVo+DzFH
+         Ww9eg3jvo2vduOvEWlh+j2pLItGnMGYlR0GzRQCxVya5JFpAxY5WfdQ2DfOuEWq8Tr2M
+         I5/StUIvpmnJaODCWqVL09O1NkbK1cBGrT4enMsoN9InMy9vLukwJGZjaLWL2KDXWBAL
+         TT4TjHIfUmtv68tvXjdjuPR6DNvi29JQuZYugwr8bcJ9s48MpOzt1RMzQv/kfm7u5upo
+         7itSVdoYWmYCZS5eRIu6f0Q8pIHQK5f/LUSASx+L7cXxuOtkQNXsk6NYHjnX2mw/cheq
+         ZZuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769366855; x=1769971655;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FjWpObzefiWiAstJo6zQD7NTN+DkKdlGdZbmFdki7BA=;
+        b=dlqn6mWmNH4LPokJS1NsuPgfmT+p1mQSjol7+6Hxq1bZB58i4w7vrZa4ARh0nZSwPU
+         AM8DFCdlkmBk0lKJXdPTc0/0VcdnVBrHM9tZQ2ByNbbGLBXZ729xISBrP/O2NOeLLSrT
+         j1JaxEkpwvCuUp/UG/kbyBAGYUphTDj8BZMXmHeVvpFYj0LZ9L+s1xofdteN4xbG5+48
+         V8mK5tmV/Avd9v3WOZKn4HZNMzFQSVNHlLus3Zjc39HR4uY8F4bncJNvMZ9BhEO5jKEI
+         kQnpvUAllsVAXoYLtVgJ3RPBKvw0RB1N3C2JHgAPsY9WMnIGscQpfef/nfFaaSkDqSYJ
+         9y8A==
+X-Gm-Message-State: AOJu0Ywh8GrJt2ynte1gopLCg369O9DTAIhjLCVY+qb/yRXAeeS6odf0
+	yUmzxXGPhOJhmmabixbMmrUth11y+e12qGr/Z/8DmSlrOUB7MyRL5htQenzNDyAhZygY+jeIpTM
+	BuCD+95tN6oEPBXz211p/esPnGev7bc8=
+X-Gm-Gg: AZuq6aLGLE06NLmDsNporB6nVkmukvUCvn5RGD76EkdyEyquPi2CwQw0+6RiMtVG7sb
+	Z4bqS07lNbCkkorC5mnDqWZ6vq1ESROsonU0DcycM2rbmIj1HvK+pykqU89euPBKQ8UwTEikYiU
+	CUpcMiyIFhO2JtDlsJ0YldzeYU/WpbSLzocOdgRsZnUTh7kp7NBSAEpqN39hTyahSIopgB8Z7ql
+	REUQgrz9mAZO3abhJWiEmQTaG58jYxCLjd/YEXTTgCjfpaZ5hqlXu1nS8SqDMv8zBByz3DyyIBV
+	n1NdSH4neBLSVX9/Sri7AsLe70P+Q/GF25LwLN6B
+X-Received: by 2002:a05:6102:3908:b0:5db:e2c2:81a1 with SMTP id
+ ada2fe7eead31-5f576322594mr793026137.14.1769366855281; Sun, 25 Jan 2026
+ 10:47:35 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 25 Jan 2026 12:47:34 -0600
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 25 Jan 2026 12:47:34 -0600
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqjyx8gqkg.fsf@gitster.g>
+References: <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-0-2ddba0832440@gmail.com>
+ <20260122-633-regression-lost-diagnostic-message-when-pushing-non-commit-objects-to-refs-heads-v4-6-2ddba0832440@gmail.com>
+ <xmqqldhpmmrw.fsf@gitster.g> <CAOLa=ZSLPasvFrCgKzVOq7mDXiqX9SxoOf0MZdzBXOLn73okMQ@mail.gmail.com>
+ <xmqqjyx8gqkg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Sun, 25 Jan 2026 12:47:34 -0600
+X-Gm-Features: AZwV_Qj9gAiMx9UDvT0N_rOq9zsePV1YLHpbyMkKlAdFRyno9vTO4vb4-5I9cy0
+Message-ID: <CAOLa=ZTusX-JuvJAZXNRf=Ex+YUQnW++Xj9zOb7YcpWrdizLfw@mail.gmail.com>
+Subject: Re: [PATCH v4 6/6] fetch: delay user information post committing of transaction
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, peff@peff.net, newren@gmail.com, 
+	phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000e3132c06493ad24d"
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+--000000000000e3132c06493ad24d
+Content-Type: text/plain; charset="UTF-8"
 
-> On 21/01/2026 20:51, Junio C Hamano wrote:
->> "Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> 
->>> @@ -915,6 +919,45 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->>>   			}
->>>   		}
->>>   
->>> +		/*
->>> +		 * If this has a matching group from the other file, it could
->>> +		 * either be the original match from the diff algorithm, or
->>> +		 * arrived at by shifting and joining groups. When it's the
->>> +		 * latter, it's possible for the two newly joined sides to have
->>> +		 * matching lines. Re-diff the group to mark these matching
->>> +		 * lines as unchanged and remove from the diff output.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Also, after reading the first paragraph of the big comment again, it
-makes me wonder if it is saying the same thing as "When histogram is
-being used, we shouldn't bother shifting up and down to join groups,
-as the result will always worse than the fallback", but is it that
-bad?
-
->>> +		if (end_matching_other != -1 &&
->>> +				XDF_DIFF_ALG(flags) == XDF_HISTOGRAM_DIFF &&
->>> +				(g.start != g_orig.start ||
->>> +				 g.end != g_orig.end ||
->>> +				 go.start != go_orig.start ||
->>> +				 go.end != go_orig.end)) {
->> 
->> So the idea is to remember the original values in g and go (the
->> location of the group in the file and the other file) and if
->> shifting up and down changed any one of the four ends from the
->> original locations, we always take the fall-back route (if we are
->> doing histogram)?
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> I'm a bit confused why we need to check both groups. I think they're 
-> supposed to move together (if we move "g" by n context lines we also 
-> move "go" by n context lines) so I can't see how we can have
+>>>> +static void ref_update_display_info_free(struct ref_update_display_info *info)
+>>>> +{
+>>>> +	free((char *)info->summary);
+>>>> +	free((char *)info->success_detail);
+>>>> +	free((char *)info->fail_detail);
+>>>> +	free((char *)info->remote);
+>>>> +	free((char *)info->ref);
+>>>> +}
+>>>
+>>> This answers "no" to my previous question.  These are not borrowed,
+>>> but are owned by this structure.
+>>>
+>>
+>> Yup, cannot be borrowed, since those go out of scope much earlier.
 >
-> 	g.start == g_orig.start && g.end == g_orig.end
+> And the reason why they are marked "const char *" which typically
+> signals that they are borrowed is?  After all, that is where these
+> casts inside free() comes from.
 >
-> when
+> There are two schools of thought.  One (which I originally was in)
+> marks resources we own with "const", if these members will not
+> change once we initialize them and we want to avoid accidentally
+> muck with the contents of these pieces of memory during the course
+> of the program.  Those of us in the school often have to cast away
+> constness in their calls to free() like the above.
 >
-> 	go.start != go.orig.start || go.end != go_orig.end
 
-Interesting.
+That's my thought process too, to use 'const' to indicate that the value
+will not be modified post assignment.
 
->> By the way, this appears after the if/else if/ cascade that has:
->> 
->> 	if (g.end == earliest_end) {
->> 		... do nothing case (case #1)
->> 	} else if (end_matching_other != -1) {
->> 		... do the slide-up thing (case #2)
->> 	} else if (flags & XDF_INDENT_HEIRISTIC) {
->> 		... do the indent heuristic thing (case #3)
->> 	}
->> 
->> Am I reading the code correctly that, even though this new block
->> appears as if it is a post-clean-up phase that is independent from
->> which one of the three choices are taken in the previous if/elseif
->> cascade, it only is relevant to the second case?  I am wondering if
->> it would make it easier to follow if the new code were made into a
->> small helper function that is called from the (case #2) arm of the
->> existing if/else if cascade.
+> But I saw many of our developers squarely fall into the other camp,
+> where they always use a non-const pointer to point at the resource
+> the structure owns.
 >
-> That's a good point
+> The latter school of thought opens us up to bugs caused by mistaken
+> code that modifies these memory regions that those of us in the
+> former school would use "const" to avoid, but it makes it easier to
+> reason about memory ownership models by signalling if the enclosing
+> structure owns or borrows the resources.
 >
->>> +			xpparam_t xpp;
->>> +			xdfenv_t xe;
->>> +
->>> +			memset(&xpp, 0, sizeof(xpp));
->>> +			xpp.flags = flags & ~XDF_DIFF_ALGORITHM_MASK;
->>> +
->>> +			memcpy(&xe.xdf1, xdf, sizeof(xdfile_t));
->>> +			memcpy(&xe.xdf2, xdfo, sizeof(xdfile_t));
+> I'd say the latter school are majority of our developer base, and a
+> lot of existing structures follow that rule.  I was hinting that we
+> may want to follow suit in this new structure.
 >
-> These would be safer as "xe.xdf1 = *xdf" so we don't have to worry about 
-> getting the size correct (sizeof(*xdf) would also be safer but there is 
-> no need for memcpy() here).
+> Thanks.
 
-Very good readability enhancement suggestion.
+That was what you were implying. Yeah, I've seen that, but it hasn't
+been generally how I used to reason with using 'const'.
 
-Thanks.
+It does open up for modification bugs though. It's unfortunate that we
+have one axis to denote both Mutability and Ownership. To stay
+consistent, I'll make the change,
+
+Karthik
+
+--000000000000e3132c06493ad24d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: b0fdb1fdc5824039_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1sMlpUOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOWxOQy85U1A2eTJCR215ZU9mOTIrNEhTWnZKUGtBdgpWakkxdHlIcWZr
+VVZ5OXVMeFNVdkVzRVQwSjVlOVFUNnc2VHBLd2F1ZW01bkdraEVkMG9jcTg5TkZJZ2RYWTc5CjNq
+QUJJYUR3cGZpTHJIejhReEUyN3ZaZEh4RlBFdXQyOXA0QXlPaFNrRGNrOFozRkV2enR1THNJeENI
+TG4waUwKQlRUMndWcXdrb3JGNUlUcm4zSHBQd2kyV3ZZVEFGcmFybmdlMWxWTDhReWFZRUFPTC9D
+bW15TFlsOFdWZ2VEcgpQeWR3NHliVVU1SHRiSDN0Snlpdlp0eDlkUktvTk9zeWVPYk52cnVpTDJS
+SlpaYnpRTy9OR0dQSUNsS3VEOHQrCkRWOWcyZU9HbmNRVnJNUExpL3kvY1hLem1NWllIS3NTNEdy
+ZHNkcEVYOGROVmdqaXhjS0FINlF2cURQZ29EeWMKRzROMHk1SjY0VUpDZkJHZk9sYW9oUEZYamZh
+cC9lYnZXL3c4NFhkandhem1rTXhoVyt4Q2kva2dsRWMvMjZjYgozbjhVcVplZzU4Y0FWcjc4azF1
+Q3I4V216a3pTMzg4eDBKYXZ2Nmw2Zm5kQUtZUURLQUVXeUZUNUpTTVM3SElQCkRObStwK0NleFB0
+MVJVaDdPeWYyT29ldFVLbGV0NVBQMGJENFNYbz0KPTR3OFEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e3132c06493ad24d--
