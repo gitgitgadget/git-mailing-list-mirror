@@ -1,153 +1,121 @@
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E5F28D8D0
-	for <git@vger.kernel.org>; Sun, 25 Jan 2026 17:20:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.233.160.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55C92BD58A
+	for <git@vger.kernel.org>; Sun, 25 Jan 2026 17:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769361637; cv=none; b=Y/Bl4sBBbWiUED8WsjdA8TZ1on8KzzAsEpJ4HVmV4gMKRortlKDX4KfjWqemO0UlRS5S9Fa2I260sjFH9gSa0FQIRtf2vRriHV89feeUIFtaht/x3aIAXWfe3RHy5wQ4nJUPebUR2zdrqUWMwvqX0oCv0biMBB4tUTYHGxiy6EI=
+	t=1769362151; cv=none; b=CZ07wmCjKf6iIpqJq8HpHVcwLMDAUbtv4MVfbyIIWIcqePMVUWQQ5mzKBaUEnbMJIm4eaLqdGBSkVmuU8C2gZCckLVHZCjqTSAXqh1rYYBbPvY2gXyMAzM6sv6jAEFRdf/fVzMkxc1vGkeDu1wLqr7tEWwZqUquszGQd1ERRO3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769361637; c=relaxed/simple;
-	bh=EvVKc7h2vLG/hIrDxEVeHDNmEktcspK0Nuj8KaEHZ6E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=SOSCIAHNZcUnqwIdqiw4gqbxk+O6giMrtbba7Xihl3/tboSd2LYNSRXg3UHPaQk35qcEkFTv3kOK/hHCQ+3rVtd2S3vKFaAZteeqL1amWITGJxqtakV0vJ8x6IYDS2bpabrWT++Z9WoQk28zPLAOxXJNC446r22GPJQEDTjYRvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email; spf=pass smtp.mailfrom=iee.email; dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b=miNPI62S; arc=none smtp.client-ip=85.233.160.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iee.email
+	s=arc-20240116; t=1769362151; c=relaxed/simple;
+	bh=NX5DMkodmkBG52KrCbz8KCMKb0PuMa0OAkJasuuV9P8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XX5O4AZkEXF36kudsdYnPeKDqXLOPu5n5gWYn9YuaYcQXEphxeZS4SHszq9t4ZwfviBDf2Pk4lfd+sVVX668tNGnQ5jpTncMuBYO9wSnkmj/pMLboTgbIMv8SHfJp7d/+pDUiFOE5P1BRHwjSxM03C+eRnNRRJewv1GDB6WxytU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BCIwDOLT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q5h8WRmC; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b="miNPI62S"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
-	s=2025082600; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID; bh=zxA5APL0dX/Y3hwA7g+WNO4xRT/mL0MT/jJkiXc08yU=; b=miNPI6
-	2SeaMM3R6WIkiYVoUEpG1aSWRdXAEN6XD4XEsC0ZSgTF+KdrqjmpCltKY328GynNRLlxTF4xN1H2h
-	MRlka7KUgpvqVt+uZs5nODNlTHTHPdI5OpN8OXM+I7iMMtBeA10axCOEUrbyJJkzXcxonCxswwZI2
-	CxTAD1UNAKw=;
-Received: from host-78-146-7-210.as13285.net ([78.146.7.210] helo=[192.168.1.57])
-	by smtp.hosts.co.uk with esmtpa (Exim)
-	(envelope-from <philipoakley@iee.email>)
-	id 1vk2FV-00000000Ae3-651N;
-	Sun, 25 Jan 2026 15:42:02 +0000
-Message-ID: <f6cc0420-1be6-4855-8c0f-b79c683203ee@iee.email>
-Date: Sun, 25 Jan 2026 15:42:00 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BCIwDOLT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q5h8WRmC"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id E3B601D00046;
+	Sun, 25 Jan 2026 12:29:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sun, 25 Jan 2026 12:29:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769362148; x=1769448548; bh=v4alD22+v+
+	4UktAPGv+RMEpIfWm7nrA3XWTBc4SxuQg=; b=BCIwDOLTvDDKW13PMaVsNfjjqF
+	L+zuO8uArFpydsxrG7JcL07nvJHhLM9mQ57ZOPTx2O4AiQ1nObEOK4SiT8vs3Fv0
+	BZcsM02kTpPVxPhHmZJAogwVVwy8Mjb3Ei4ejCuowA40Cjews1nJ8S/S9rB6TbKd
+	ohGmpLBxgBgfDDt19O9ns34fxZsC03FDH2vWFOf1yHXwjKnNw1m+OEZtiQ93XDGa
+	CUIj8Byv+GBKyLTUgVhTbjjIv0KGzNh2s4JCCxEp7ANBg728GVt6pjYdouNc/n2I
+	F2hJar58z26y2dVquI9vHJGtQ5PNTko/lcprvn0VJ18YSD5/ThDGb3VvMeUw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769362148; x=1769448548; bh=v4alD22+v+4UktAPGv+RMEpIfWm7nrA3XWT
+	Bc4SxuQg=; b=q5h8WRmCGpJxeFen5xu86TZqcxej3nifgT+ByyHOyra7OfnRTrZ
+	xaFl5rD2TNj/WRtWG0GWuWsckkoLgchYxBmmDcKF7+qKwMLSDbrxj1MWz5GO4MMn
+	GY0PYwKsH3DN/I8FkUD7OoNdIJWKjdmoWrK3jtT5ZIgqyhxnVf311F2ADOvG6IVa
+	qm+0twUvI3Ty7aVHnIa/WMit7oVmI6KhlV2nndMRLkGuL9aTpn245wuX9ZdeW4eE
+	Ne6C58s5juaZ4pDgBp4034qDKZkuiksy6G/iDMOalyysm6Yi2tYGidUNwWOcfJhX
+	U4t00AhjLixFhY5nC3X+jWyvCBnUfBphzeg==
+X-ME-Sender: <xms:5FJ2aV_guaYytyJASQ2R6fNMCYkKIAI3T_XNl4XWgfqQpdeTKVnN3g>
+    <xme:5FJ2aQnJelFRCE4c5iZbce7O6dVq9DLXj591CROmKIS0plpU8G5y0Gip5FC9hhIhI
+    0UX-aHkLgd_ARc28HqaG38vM3UYS9MTkB_WUx9zViJexaKC1f2k7Q>
+X-ME-Received: <xmr:5FJ2abVBRMd0G0ZHeMIk-QX1w49N01_I__wY7oJ5OZqczTunBGSoi-aUIxwm9qZqhv76vhKSHSQlKqx-gg6B7uRFLlSXyJcymYnFFKc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheehfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvg
+    htsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:5FJ2aVHClTkOJahVni1TvbLlAa0wampPuE6PbPjL-7_18IAlkaYecw>
+    <xmx:5FJ2aXc_GqdrMSs0vkTig5wz5SveKfd-S61TbKFoyqC7r-R-aGnYDw>
+    <xmx:5FJ2aWJJ4nIafK6jhdVzOA9KuzTLEKez1yO6P93tSEUi4Kufk94XOg>
+    <xmx:5FJ2acGS2DA25mNoUs0FdprKJC4g0ZX98tG_CfcGpN5E3oRRYEKU7w>
+    <xmx:5FJ2abnsZM2vkctNThdS0ZbsrzePCwQJAuIyDoGFA8MQfBlxI8IDZi0v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 25 Jan 2026 12:29:08 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: peff@peff.net,  git@vger.kernel.org,  gitgitgadget@gmail.com
+Subject: Re: [PATCH v27 2/2] status: add status.compareBranches config for
+ multiple branch comparisons
+In-Reply-To: <20260124085034.8730-1-haraldnordgren@gmail.com> (Harald
+	Nordgren's message of "Sat, 24 Jan 2026 09:50:34 +0100")
+References: <20260122230656.GA2125611@coredump.intra.peff.net>
+	<20260124085034.8730-1-haraldnordgren@gmail.com>
+Date: Sun, 25 Jan 2026 09:29:07 -0800
+Message-ID: <xmqq4io9lhy4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Missing and omitted objects
-To: Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>
-References: <a612ea8e-a741-436d-8ed2-6ff09ba7945b@hogyros.de>
-From: Philip Oakley <philipoakley@iee.email>
-Content-Language: en-GB
-Cc: Jeff King <peff@peff.net>
-In-Reply-To: <a612ea8e-a741-436d-8ed2-6ff09ba7945b@hogyros.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 21/01/2026 11:54, Simon Richter wrote:
-> Hi,
-> 
-> we're having a bit of a discussion in Debian.
-> 
-> The goal is to move towards git based storage for source packages, away
-> from tarballs; ideally we'd like to reuse the upstream git archive as
-> far as possible, so it is easy to check for differences.
-> 
-> However, some projects are shipping files that aren't redistributable,
-> or that we want to omit for other reasons (such as vendored
-> dependencies, when there is a perfectly working common version
-> available, and we really really want to make sure these don't get used
-> accidentally).
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-There was a discussion about allowing objects to be 'redacted' back at
-the Git Merge 2020 (https://git-merge.com/),
-under [TOPIC 3/17] Obliterate.
-https://lore.kernel.org/git/5B2FEA46-A12F-4DE7-A184-E8856EF66248@jramsay.com.au/
+> I can apply the changes from these three messages, but I don't really
+> know the side-effects of it. Should I do it and submit a patch?
 
-> 
-> The goal here is to allow the recipient of such a bundle to verify that
-> any files received are unmodified, and get a list of paths that were
-> removed (which may be an entire subdirectory). Ideally, they could also
-> continue working on a clone of this and generate commits on top as long
-> as the affected paths aren't touched.
-> 
-That discussion on redacting objects didn't reach any actionable
-conclusion that allows objects to be omitted/redacted, while keeping the
-branch based directed graph flow. I've continued to consider options for
-deliberately creating 'counterfeit' objects (old name/oid, but
-new/limited content) which could then be 'verified' through a facsimile
-object with the same new/limited content but a properly hashed name/oid.
-I haven't shared any of that with the list.
+Please do not send code you cannot answer to questions on it,
+whether it is written by somebody else,  genAI, or your cat rolling
+on your keyboard ;-).
 
-> The minimal amount of data we'd want to archive is a single commit and
-> its tree and dependencies, plus optionally a signed tag pointing at it
-> if it exists (i.e. the same information we get if we use git-archive,
-> plus the signature on the tag, plus the option to clone from such a
-> snapshot). For the simple case where nothing is removed, this already
-> works well and covers most of the use cases, but, sadly, not all of them.
+I think we are getting close but will need more polish before we can
+allow users to reuse their already acquired knowledge of how refname
+DWIMmery can be used to spell various refs they mean.
 
-You could simply branch that special commit that will have all the
-deletions, plus a 'deletions' file diff file (assuming you want to
-highlight those deletions..), and then leave that branch as a stub, with
-a tag, and remove that old branch name such that the tag is the thing
-that retains the special commit in the hierarchy, and it's parent still
-holds within the regular git commit graph.
-> 
-> As a side effect, this could make recovery of a broken repository that
-> is missing objects more robust.
+If we support only @{push} and @{upstream} and error out when we see
+anything else (like "origin" or "origin/main") in the initial
+version we ship to the end-users, that would probably be a good
+stopping point.  On top of it, we can later add the DWIMmery Peff
+has shown (with necessary tweaks, as you found out, like supporting
+tags, perhaps), and that will be purely new feature that does not
+change any behaviour of what used to work for our users in the
+initial version.
 
-Broken repos are scarce, more often than not being compatibility issues
-between (*nix) Git and Git-for-Windows (case sensitivity, sizeof(long),
-character limits, etc.). However redaction and overlarge files still fit
-into the 'Don't do that' category (expect the unexpected..).
+Going that way is much safer and does not break end-user
+experiences, like shipping the first version with "we always prefix
+hardcoded refs/remotes/ unless it is @{something}", which will have
+to change the behaviour once the proper DWIMmery gets implemented.
 
-There is also the distinction between the meta-data and content. The
-former also includes the data that holds together the commit graphs
-integrity (hash of hashes) and filenames, directory names and commit
-texts (point 15 of the Git Merge discussion). Being inside the hash
-verified meta data makes it "hard" to break and create exceptions.
-
-A mechanism for marking leaf objects as 'removed'/abscissed/absconded
-would help here. It's tricky to do that safely for a commit, as it also
-carries parent information which must be retained.
-
-For a blob (leaf) object, with its free form text, it is possible to
-have a fixed format, fixed length (hash specific) counterfeit object,
-e.g. "Git redact abcd01245.."(*) which would then also exist as a
-facsimile (i.e.has a true hash oid) object within some authenticated
-part of the graph, and the counterfeit exist in place of the 'broken'
-blob object with that self referential "abcd01245.." oid.
-
-For trees, it becomes necessary to locate a bit of free text in the meta
-data to provide self reference, and make it appear as either the empty
-tree or empty file(blob). The true oid of such a counterfeit tree
-likewise would need a way of existing within some authenticated part of
-the wider graph. Perhaps a step too far at this stage of hand waving.
-
-> 
-> Right now, I'd like some feedback whether someone has a better idea, and
-> if such a feature could ever work or if it violates some fundamental
-> design principles.
-
-It's a big ask. Finding one specific feature (just on) that could
-actually be made to work would provide a toe hold for discussion.
-
-At least this is a solid desire from within the community's infrastructure..
-
-At present there is no mechanism for assuming that a piece of blob
-*content* is "correct" but that the oid it is stored under is incorrect
-/ does not match. We already have/had the `--literally` option for
-creating arbitrary content, but not it's corollary `--use-oid=abcd01245..`.
-see
-https://lore.kernel.org/git/20250516045010.GL22242@coredump.intra.peff.net/
-Peff cc'd
-> 
->    Simon
-> 
-(*) I more wanted "Git redact abcd01245.hexoid Base64oid" to reduce
-accidental creation of such objects and allow double checking of the
-oid. But maybe that's too cute.  ;-)
+In any case, that will have to happen all after the current cycle is
+over, it is way too late even for "@{push} and @{upstream} only"
+version for this cycle.
