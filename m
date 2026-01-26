@@ -1,82 +1,80 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D587D2C08D5
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 09:51:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DB0313543
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 09:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769421087; cv=none; b=KK74qUimTPFSFveYpRnX1dI1j5tGsPOw5RaJDWqQhSC9A6mdY4kf4svngZXBLi+4el5vLHJjImowY63bO99qkQsImWczfDQWTWcS2jy+613FTRDJPWnqbAUsSh/godA9a3+4E0DWLz3uwOIHSjWze7qtEnlknlE9JkIyYUrwz7Q=
+	t=1769421089; cv=none; b=QyBZ8IvqyEL73m6G544DmA3l7a/RMg9TfzCc14FUmBk9FrDyOOKBEkSJkyVdBzGue5r8RmO3lsfHA0U9ZWHm0vX0t8QXTCEcZuuf/S63eo5Q9gdFMz0G0Sg7VmJ9BKqfTIPBdyvd3LVj7Mu+241ZNQvBOIbQ1/CXvbzknnX12iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769421087; c=relaxed/simple;
-	bh=Mak6wINpe0ptCtYBHlnqsH1cL7H6iA4wNxFyRBFrH0U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=omVRMpI7kEQLjaYvlc+r6pnLJm4OgNHNzhjOiXGE4XUs3lSyq+CEL0OF2hzqOW3uyPoZMdciYsNWppyg1WilxWKYS8J5mtgTp0HLl8M9CT4hb25ArSYUWNzEgy7s6+0oz1P5leS9SfcBIpeMSQRB1lSVLmRhKtfqGHFOwYnZ0a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CtbmC0M5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dmsCYxa1; arc=none smtp.client-ip=202.12.124.153
+	s=arc-20240116; t=1769421089; c=relaxed/simple;
+	bh=pwc0spM5E1WW/zx6KBHb+nRhLlHSMAUZ0zrwQzNW2Is=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=hrrZQwSGXYq5k6yKxAeb7va6p+0gOHUm/6jIGJkqrYgl2oe9Ss3aOakhQ/APaXteECpR1WC0O4BQApXcbgWcYeoK7FBjpmxUjFCxRBti7fvsNh5ARiisf3c7t8lvZPW6RaCR5IF4DXBhNkphh5M5cD/Uu0Q+ANau0XmT5Jb5e7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f4CVbvhs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CUrRduLH; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CtbmC0M5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dmsCYxa1"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E00487A0044;
-	Mon, 26 Jan 2026 04:51:23 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f4CVbvhs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CUrRduLH"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4C77B1D00067;
+	Mon, 26 Jan 2026 04:51:26 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 26 Jan 2026 04:51:24 -0500
+  by phl-compute-02.internal (MEProxy); Mon, 26 Jan 2026 04:51:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1769421083;
-	 x=1769507483; bh=o+KObzns3po8J/8++ANVHV3z947oA+FetL8s/09FMAQ=; b=
-	CtbmC0M5qA3kglU3XWCNuNQ9Xpn5/UNxT0K+vAEvAIMajiGpZAlZuYi8DV9Bjd5r
-	DYHv5woGv1AofvWHN9nrdRF5Gym9SWNoeDNqF6iwoG850vTjzW9C3PtjPsyekofS
-	jK2oc1x5QwwsBosVF2xd/+UsBEMxpcEG0hl5/49dgctcPKEheYU/R7u5PIwG0O/r
-	mxaePyk/Xr0aCQjahz834PGuqCGjhpTnUPWDgEQ/tFPI3Z/PuAoJAVxtVlcol1i0
-	fphuMiDlpYTAnLDawo/SaJa+sX0U6rP8vFYiigEmKO4J88jX1BshS5R3pFlGSX3M
-	jfI4XqZ5EpJUtraWR3z+lg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1769421086;
+	 x=1769507486; bh=BjIoxomd3R1UnZa0q7WI4B27W5d7xQ33CNG9ZArdPjo=; b=
+	f4CVbvhsqSdfuLOmG0K2oi0E7sWOCzKCYxK3TeGoIoob4K/dHFhy311F4OrJxkOk
+	3vlO2xL4JRZspObzWSRE9MVgfuSdYls8utwPTJ1nbCGSlgeKSt++G5+xQOdFH7hr
+	xP4QCIbXHfLzTruYGBTIMdCUxWjVhoKcfJmV1nZOYjGOiOgZOSRhQxQyaolz7oRI
+	Kfb7VkDOb7Fb3iu/Cjaasikz7Qx7r4jBTc2OKQEGA4d/R0015kmOh9Dteqle1NtC
+	6rSlJw51XfjpvXqTWsgExtKZ5x280TI1UlJIhJT2lXTYwFiIkSmv9Ypi/BiOIWKs
+	Xg03kS/gqtNi4ZeSe3CK5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769421083; x=
-	1769507483; bh=o+KObzns3po8J/8++ANVHV3z947oA+FetL8s/09FMAQ=; b=d
-	msCYxa13exxH8OyhP/CWxGIsL8JHbUKq8f2NSiMScSv3ZROcnhYIob7MyDSog+NN
-	DzvWhf4rnreoZYWoM7jM0N4ooWy7rqZ7tAxcZoCi5ugnEarWRe5qSuKt+ffEL3um
-	LEFq55sGWHL2kwMGpM5lvsJ/PjBNZehEeIX2sk79s8qTpNIZLCN/GjMpggYgLX4U
-	oM3dqWTlOb7VxMwrAPfMeD85nLSr8n+6ncdth5OxDZkiN+BVUmnHi4q69rRS2Hbl
-	R3XrVT/1aDl9kwWkDgiKdBuoG8WPh78KGSuXtCvDiEHk1+GiswHyQpZLUw8CFFJA
-	P9KsYFDcQwreeVlwg2ZiQ==
-X-ME-Sender: <xms:Gzl3aRLg8p4wR3oPrLH5rCWIPhbVlNNZcQ9kdTNL1a-mHf4QtI-WQg>
-    <xme:Gzl3aUJUgHIl6wFJod_Euq6Wf4-V6VAIrRBIEez_g9o018-kUQjUrdMbTY1eFcU6S
-    -7Mkb3YFYPGwmkvPt5ik811ZT97ucC7Mki-yg2mS5vsN3CjLSfIkg>
-X-ME-Received: <xmr:Gzl3aes5GWMkDhjRVvzb2xSHbFuhCMzM-ZhLVkO4QSPtBvIXAvZnCcZF3PdH3grw1IH77T2oJfEgpaEQ2zNLBHCgESotBocoAacFqU7D37gBoA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769421086; x=
+	1769507486; bh=BjIoxomd3R1UnZa0q7WI4B27W5d7xQ33CNG9ZArdPjo=; b=C
+	UrRduLHmeCx1W1dRYCB+8I+6HeWMNTNs49JsBJQjfXUbXC003DeUmD8SmZUiSq8j
+	OA0vLbvLuCPboWqf5k8jG2Gy2pcohZKjr5hOk2XIfTfnG4lcfXxLOIEzjJFmjDKk
+	RAdY0La4Tfvv89KSsiHo5IHZjlj6yj+s3vP6YTh+xtRwy7TRff6Bi/1E1nbkuZ/N
+	YzXoJhfhqpbJcQm0xu4c+poVS7gfZY/jwP/1SztA6+3a0kOU0HpNxZQtMHNfu4Gx
+	7F5b6nfuZauGpA6TpDSlpl1T9oNcJaYmtYEcQPz1JZaUf9jkSgOTRn4eYGWAPVtD
+	PP9n/tnyErFwHq7PUmc2A==
+X-ME-Sender: <xms:Hjl3aXarjjEoxyGqFoifY7PsJHtPGmoXoi82ejus7QWTLiC8v66rQg>
+    <xme:Hjl3adbFwQ-VxCRfV4j-mLJDTtBuzYkX4eJDrl5Ert6zVKVvY-uovRrXVGC8MnSWa
+    4i9Pp3Bt8sF8BFc-FdesxYjflOgV_ksJNfT3lCECR6ijUJMeIhg7w>
+X-ME-Received: <xmr:Hjl3ae-NcTDTQeTJ8IhbeqtO8YMx8YBh7Ukvk76IIks7gNct-Ix6PmHUzh9CXNwfDfTFcNA7YhD6C1EOqzsmF4tO-_oIowZZ9mHmsrgR7K5nXA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheejfeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    gedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
-    thhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:Gzl3aRTZiuNm2mHFqRkYXZF2vkyvWrtHmuBYXhx2uXxBV7LjM_lmcw>
-    <xmx:Gzl3aUOb18S4cD2OpUHKCbcC9Zl9wo_zw9I3KJjcBDOP7ixO68xqFg>
-    <xmx:Gzl3aWabpQ_OdwEzySYCe6qKCwrCoAwB48IR516c3VfcrC6a1TATaA>
-    <xmx:Gzl3aezhE7FgqvyMauiaOseJakPT4cv-2PiWQuzcQtB72-Z_MzqatQ>
-    <xmx:Gzl3aePTBMF8AcxVoZsYMsABsTqZxo41UNnXlw-DYR_9tXQ541jDTTUe>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosg
+    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Hjl3acg2UpniK3We-rCP4MYhyUoWSoebDzWdsMMcBl1SLD20zyd4EA>
+    <xmx:Hjl3aec42sIBr3lK1Z63QfZV_zdzMOPiKKhfbMSMfxuLkj05RTTWoQ>
+    <xmx:Hjl3aToSlBs5GtIuSD9sxiv3LtJchYtJ3QRE6pGS6nob0-6zqEastw>
+    <xmx:Hjl3aTDyzmf1IID-7-Iqkk0ujjn2wYM29YahrRWUzJTL3AC01tM-iQ>
+    <xmx:Hjl3aefUCDIpotLjH9PLS8prgSD5WBNH-0iWjvPWR5KLQFhO2VKMVp7Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Jan 2026 04:51:22 -0500 (EST)
+ 26 Jan 2026 04:51:25 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8963d6e8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 26 Jan 2026 09:51:21 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 6a791b3d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Jan 2026 09:51:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 00/14] odb: introduce `odb_for_each_object()`
-Date: Mon, 26 Jan 2026 10:51:16 +0100
-Message-Id: <20260126-pks-odb-for-each-object-v4-0-5a64a038c791@pks.im>
+Date: Mon, 26 Jan 2026 10:51:17 +0100
+Subject: [PATCH v4 01/14] odb: rename `FOR_EACH_OBJECT_*` flags
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,477 +83,308 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIABU5d2kC/4XNzQ6CMAzA8VchO1uzFcaHJ9/DeIB1k2lkZCNEQ
- 3h3BweDB+Lx37S/Tixob3Vgp2RiXo82WNfFyA4JU23d3TRYis2QY86FkNA/AjhqwDgPulYtuOa
- u1QA5b4pSkeaVIRave6+Nfa3y5Rq7tWFw/r0+GsUy/W+OAjjITJR1JUhSVZ3j5tE+2QKOuEGQ7
- yMYEeJSNYZSyk35g6RbROwjaUQEqowMYYZYfJF5nj+j10d7RQEAAA==
-X-Change-ID: 20260115-pks-odb-for-each-object-60b78cde09fd
-In-Reply-To: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
-References: <20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im>
+Message-Id: <20260126-pks-odb-for-each-object-v4-1-5a64a038c791@pks.im>
+References: <20260126-pks-odb-for-each-object-v4-0-5a64a038c791@pks.im>
+In-Reply-To: <20260126-pks-odb-for-each-object-v4-0-5a64a038c791@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, 
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+Rename the `FOR_EACH_OBJECT_*` flags to have an `ODB_` prefix. This
+prepares us for a new upcoming `odb_for_each_object()` function and
+ensures that both the function and its flags have the same prefix.
 
-this patch series introduces a generic `odb_for_each_object()` function
-to iterate through objects and adapts callers to use it. The intent is
-to make iteration through objects independent of the actual storage
-backend.
-
-The series is structured as follows:
-
-  - Commits 1 to 2 do some cleanups for the for-each-object flags.
-
-  - Commits 3 to 7 introduce the infrastructure for
-    `odb_for_each_object()`.
-
-  - Commits 8 to 13 convert a couple of callers to use the new
-    interfaces.
-
-  - Commit 14 drops now-unused functions.
-
-The patch series is built on top of 8745eae506 (The 17th batch,
-2026-01-11) with the following two series merged into it:
-
-  - ps/read-object-info-improvements at a282a8f163 (packfile: move MIDX
-    into packfile store, 2026-01-09).
-
-  - ps/packfile-store-in-odb-source at 12d3b58b55 (packfile: drop
-    repository parameter from `packed_object_info()`, 2026-01-12) .
-
-Changes in v4:
-  - Convert the `odb_for_each_object()` object info into a read-only
-    request parameter. Instead, we now read into a "fresh" object info
-    in the backends so that there can be no stale data.
-  - Fix typo in `struct object_info *io` parameter.
-  - Document what's still missing to convert `batch_each_object()` to
-    use the generic `odb_for_each_object()` function.
-  - Document ambiguity of the `mtime`.
-  - Re-add the `ODB_FOR_EACH_OBJECT_LOCAL_ONLY` flag in
-    `add_object_in_unpacked_pack()`. It shouldn't make any difference,
-    but it makes the conversion a bit more straight-forward.
-  - Link to v3: https://lore.kernel.org/r/20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im
-
-Changes in v3:
-  - Fix error code propagation in last commit.
-  - Link to v2: https://lore.kernel.org/r/20260120-pks-odb-for-each-object-v2-0-d05cbfd3d6f8@pks.im
-
-Changes in v2:
-  - Clarify the comment of `odb_for_each_object()` to point out that
-    it's the callback that can abort iteration by returning a non-zero
-    error code.
-  - Document in the commit message that we don't yet convert all sites
-    to use `odb_for_each_object()`.
-  - Link to v1: https://lore.kernel.org/r/20260115-pks-odb-for-each-object-v1-0-5418a91d5d99@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (14):
-      odb: rename `FOR_EACH_OBJECT_*` flags
-      odb: fix flags parameter to be unsigned
-      object-file: extract function to read object info from path
-      object-file: introduce function to iterate through objects
-      packfile: extract function to iterate through objects of a store
-      packfile: introduce function to iterate through objects
-      odb: introduce `odb_for_each_object()`
-      builtin/fsck: refactor to use `odb_for_each_object()`
-      treewide: enumerate promisor objects via `odb_for_each_object()`
-      treewide: drop uses of `for_each_{loose,packed}_object()`
-      odb: introduce mtime fields for object info requests
-      builtin/pack-objects: use `packfile_store_for_each_object()`
-      reachable: convert to use `odb_for_each_object()`
-      odb: drop unused `for_each_{loose,packed}_object()` functions
+ builtin/cat-file.c     |  2 +-
+ builtin/pack-objects.c | 10 +++++-----
+ commit-graph.c         |  4 ++--
+ object-file.c          |  4 ++--
+ object-file.h          |  2 +-
+ odb.h                  | 13 +++++++------
+ packfile.c             | 20 ++++++++++----------
+ packfile.h             |  4 ++--
+ reachable.c            |  8 ++++----
+ repack-promisor.c      |  2 +-
+ revision.c             |  2 +-
+ 11 files changed, 36 insertions(+), 35 deletions(-)
 
- builtin/cat-file.c     |  36 ++++++++--
- builtin/fsck.c         |  57 ++++-----------
- builtin/pack-objects.c |  48 +++++++------
- commit-graph.c         |  46 +++++++++----
- object-file.c          | 125 ++++++++++++++++++++++-----------
- object-file.h          |  22 +++---
- odb.c                  |  31 +++++++++
- odb.h                  |  58 ++++++++++++++--
- packfile.c             | 184 +++++++++++++++++++++++++++++++++----------------
- packfile.h             |  19 ++++-
- reachable.c            | 129 ++++++++++------------------------
- repack-promisor.c      |   8 +--
- revision.c             |  10 ++-
- 13 files changed, 462 insertions(+), 311 deletions(-)
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 2ad712e9f8..6964a5a52c 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -922,7 +922,7 @@ static int batch_objects(struct batch_options *opt)
+ 			cb.seen = &seen;
+ 
+ 			batch_each_object(opt, batch_unordered_object,
+-					  FOR_EACH_OBJECT_PACK_ORDER, &cb);
++					  ODB_FOR_EACH_OBJECT_PACK_ORDER, &cb);
+ 
+ 			oidset_clear(&seen);
+ 		} else {
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6ee31d48c9..74317051fd 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3912,7 +3912,7 @@ static void read_packs_list_from_stdin(struct rev_info *revs)
+ 		for_each_object_in_pack(p,
+ 					add_object_entry_from_pack,
+ 					revs,
+-					FOR_EACH_OBJECT_PACK_ORDER);
++					ODB_FOR_EACH_OBJECT_PACK_ORDER);
+ 	}
+ 
+ 	strbuf_release(&buf);
+@@ -4344,10 +4344,10 @@ static void add_objects_in_unpacked_packs(void)
+ 	if (for_each_packed_object(to_pack.repo,
+ 				   add_object_in_unpacked_pack,
+ 				   NULL,
+-				   FOR_EACH_OBJECT_PACK_ORDER |
+-				   FOR_EACH_OBJECT_LOCAL_ONLY |
+-				   FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
+-				   FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS))
++				   ODB_FOR_EACH_OBJECT_PACK_ORDER |
++				   ODB_FOR_EACH_OBJECT_LOCAL_ONLY |
++				   ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
++				   ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS))
+ 		die(_("cannot open pack index"));
+ }
+ 
+diff --git a/commit-graph.c b/commit-graph.c
+index 6b1f02e179..7f1145a082 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1927,7 +1927,7 @@ static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
+ 			goto cleanup;
+ 		}
+ 		for_each_object_in_pack(p, add_packed_commits, ctx,
+-					FOR_EACH_OBJECT_PACK_ORDER);
++					ODB_FOR_EACH_OBJECT_PACK_ORDER);
+ 		close_pack(p);
+ 		free(p);
+ 	}
+@@ -1965,7 +1965,7 @@ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
+ 			_("Finding commits for commit graph among packed objects"),
+ 			ctx->approx_nr_objects);
+ 	for_each_packed_object(ctx->r, add_packed_commits, ctx,
+-			       FOR_EACH_OBJECT_PACK_ORDER);
++			       ODB_FOR_EACH_OBJECT_PACK_ORDER);
+ 	if (ctx->progress_done < ctx->approx_nr_objects)
+ 		display_progress(ctx->progress, ctx->approx_nr_objects);
+ 	stop_progress(&ctx->progress);
+diff --git a/object-file.c b/object-file.c
+index e7e4c3348f..64e9e239dc 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1789,7 +1789,7 @@ int for_each_loose_file_in_source(struct odb_source *source,
+ 
+ int for_each_loose_object(struct object_database *odb,
+ 			  each_loose_object_fn cb, void *data,
+-			  enum for_each_object_flags flags)
++			  enum odb_for_each_object_flags flags)
+ {
+ 	struct odb_source *source;
+ 
+@@ -1800,7 +1800,7 @@ int for_each_loose_object(struct object_database *odb,
+ 		if (r)
+ 			return r;
+ 
+-		if (flags & FOR_EACH_OBJECT_LOCAL_ONLY)
++		if (flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY)
+ 			break;
+ 	}
+ 
+diff --git a/object-file.h b/object-file.h
+index 1229d5f675..42bb50e10c 100644
+--- a/object-file.h
++++ b/object-file.h
+@@ -134,7 +134,7 @@ int for_each_loose_file_in_source(struct odb_source *source,
+  */
+ int for_each_loose_object(struct object_database *odb,
+ 			  each_loose_object_fn, void *,
+-			  enum for_each_object_flags flags);
++			  enum odb_for_each_object_flags flags);
+ 
+ 
+ /**
+diff --git a/odb.h b/odb.h
+index bab07755f4..74503addf1 100644
+--- a/odb.h
++++ b/odb.h
+@@ -442,24 +442,25 @@ static inline void obj_read_unlock(void)
+ 	if(obj_read_use_lock)
+ 		pthread_mutex_unlock(&obj_read_mutex);
+ }
++
+ /* Flags for for_each_*_object(). */
+-enum for_each_object_flags {
++enum odb_for_each_object_flags {
+ 	/* Iterate only over local objects, not alternates. */
+-	FOR_EACH_OBJECT_LOCAL_ONLY = (1<<0),
++	ODB_FOR_EACH_OBJECT_LOCAL_ONLY = (1<<0),
+ 
+ 	/* Only iterate over packs obtained from the promisor remote. */
+-	FOR_EACH_OBJECT_PROMISOR_ONLY = (1<<1),
++	ODB_FOR_EACH_OBJECT_PROMISOR_ONLY = (1<<1),
+ 
+ 	/*
+ 	 * Visit objects within a pack in packfile order rather than .idx order
+ 	 */
+-	FOR_EACH_OBJECT_PACK_ORDER = (1<<2),
++	ODB_FOR_EACH_OBJECT_PACK_ORDER = (1<<2),
+ 
+ 	/* Only iterate over packs that are not marked as kept in-core. */
+-	FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS = (1<<3),
++	ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS = (1<<3),
+ 
+ 	/* Only iterate over packs that do not have .keep files. */
+-	FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS = (1<<4),
++	ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS = (1<<4),
+ };
+ 
+ enum {
+diff --git a/packfile.c b/packfile.c
+index 402c3b5dc7..b65f0b43f1 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2259,12 +2259,12 @@ int has_object_kept_pack(struct repository *r, const struct object_id *oid,
+ 
+ int for_each_object_in_pack(struct packed_git *p,
+ 			    each_packed_object_fn cb, void *data,
+-			    enum for_each_object_flags flags)
++			    enum odb_for_each_object_flags flags)
+ {
+ 	uint32_t i;
+ 	int r = 0;
+ 
+-	if (flags & FOR_EACH_OBJECT_PACK_ORDER) {
++	if (flags & ODB_FOR_EACH_OBJECT_PACK_ORDER) {
+ 		if (load_pack_revindex(p->repo, p))
+ 			return -1;
+ 	}
+@@ -2285,7 +2285,7 @@ int for_each_object_in_pack(struct packed_git *p,
+ 		 *   - in pack-order, it is pack position, which we must
+ 		 *     convert to an index position in order to get the oid.
+ 		 */
+-		if (flags & FOR_EACH_OBJECT_PACK_ORDER)
++		if (flags & ODB_FOR_EACH_OBJECT_PACK_ORDER)
+ 			index_pos = pack_pos_to_index(p, i);
+ 		else
+ 			index_pos = i;
+@@ -2302,7 +2302,7 @@ int for_each_object_in_pack(struct packed_git *p,
+ }
+ 
+ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+-			   void *data, enum for_each_object_flags flags)
++			   void *data, enum odb_for_each_object_flags flags)
+ {
+ 	struct odb_source *source;
+ 	int r = 0;
+@@ -2318,15 +2318,15 @@ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+ 		for (e = packfile_store_get_packs(source->packfiles); e; e = e->next) {
+ 			struct packed_git *p = e->pack;
+ 
+-			if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
++			if ((flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
+ 				continue;
+-			if ((flags & FOR_EACH_OBJECT_PROMISOR_ONLY) &&
++			if ((flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) &&
+ 			    !p->pack_promisor)
+ 				continue;
+-			if ((flags & FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS) &&
++			if ((flags & ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS) &&
+ 			    p->pack_keep_in_core)
+ 				continue;
+-			if ((flags & FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS) &&
++			if ((flags & ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS) &&
+ 			    p->pack_keep)
+ 				continue;
+ 			if (open_pack_index(p)) {
+@@ -2413,8 +2413,8 @@ int is_promisor_object(struct repository *r, const struct object_id *oid)
+ 		if (repo_has_promisor_remote(r)) {
+ 			for_each_packed_object(r, add_promisor_object,
+ 					       &promisor_objects,
+-					       FOR_EACH_OBJECT_PROMISOR_ONLY |
+-					       FOR_EACH_OBJECT_PACK_ORDER);
++					       ODB_FOR_EACH_OBJECT_PROMISOR_ONLY |
++					       ODB_FOR_EACH_OBJECT_PACK_ORDER);
+ 		}
+ 		promisor_objects_prepared = 1;
+ 	}
+diff --git a/packfile.h b/packfile.h
+index acc5c55ad5..15551258bd 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -339,9 +339,9 @@ typedef int each_packed_object_fn(const struct object_id *oid,
+ 				  void *data);
+ int for_each_object_in_pack(struct packed_git *p,
+ 			    each_packed_object_fn, void *data,
+-			    enum for_each_object_flags flags);
++			    enum odb_for_each_object_flags flags);
+ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+-			   void *data, enum for_each_object_flags flags);
++			   void *data, enum odb_for_each_object_flags flags);
+ 
+ /* A hook to report invalid files in pack directory */
+ #define PACKDIR_FILE_PACK 1
+diff --git a/reachable.c b/reachable.c
+index 4b532039d5..82676b2668 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -307,7 +307,7 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
+ 					   int ignore_in_core_kept_packs)
+ {
+ 	struct recent_data data;
+-	enum for_each_object_flags flags;
++	enum odb_for_each_object_flags flags;
+ 	int r;
+ 
+ 	data.revs = revs;
+@@ -319,13 +319,13 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
+ 	data.extra_recent_oids_loaded = 0;
+ 
+ 	r = for_each_loose_object(the_repository->objects, add_recent_loose, &data,
+-				  FOR_EACH_OBJECT_LOCAL_ONLY);
++				  ODB_FOR_EACH_OBJECT_LOCAL_ONLY);
+ 	if (r)
+ 		goto done;
+ 
+-	flags = FOR_EACH_OBJECT_LOCAL_ONLY | FOR_EACH_OBJECT_PACK_ORDER;
++	flags = ODB_FOR_EACH_OBJECT_LOCAL_ONLY | ODB_FOR_EACH_OBJECT_PACK_ORDER;
+ 	if (ignore_in_core_kept_packs)
+-		flags |= FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS;
++		flags |= ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS;
+ 
+ 	r = for_each_packed_object(revs->repo, add_recent_packed, &data, flags);
+ 
+diff --git a/repack-promisor.c b/repack-promisor.c
+index ee6e0669f6..45c330b9a5 100644
+--- a/repack-promisor.c
++++ b/repack-promisor.c
+@@ -56,7 +56,7 @@ void repack_promisor_objects(struct repository *repo,
+ 	ctx.cmd = &cmd;
+ 	ctx.algop = repo->hash_algo;
+ 	for_each_packed_object(repo, write_oid, &ctx,
+-			       FOR_EACH_OBJECT_PROMISOR_ONLY);
++			       ODB_FOR_EACH_OBJECT_PROMISOR_ONLY);
+ 
+ 	if (cmd.in == -1) {
+ 		/* No packed objects; cmd was never started */
+diff --git a/revision.c b/revision.c
+index b65a763770..5aadf46dac 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3938,7 +3938,7 @@ int prepare_revision_walk(struct rev_info *revs)
+ 
+ 	if (revs->exclude_promisor_objects) {
+ 		for_each_packed_object(revs->repo, mark_uninteresting, revs,
+-				       FOR_EACH_OBJECT_PROMISOR_ONLY);
++				       ODB_FOR_EACH_OBJECT_PROMISOR_ONLY);
+ 	}
+ 
+ 	if (!revs->reflog_info)
 
-Range-diff versus v3:
-
- 1:  a080e62c44 =  1:  e7fa63f733 odb: rename `FOR_EACH_OBJECT_*` flags
- 2:  7980f241a9 =  2:  b462808c07 odb: fix flags parameter to be unsigned
- 3:  14b9251711 =  3:  00d77e9e45 object-file: extract function to read object info from path
- 4:  93af71f3c7 !  4:  b9899bd1cb object-file: introduce function to iterate through objects
-    @@ object-file.c: int for_each_loose_object(struct object_database *odb,
-      
-     +struct for_each_object_wrapper_data {
-     +	struct odb_source *source;
-    -+	struct object_info *oi;
-    ++	const struct object_info *request;
-     +	odb_for_each_object_cb cb;
-     +	void *cb_data;
-     +};
-    @@ object-file.c: int for_each_loose_object(struct object_database *odb,
-     +				      void *cb_data)
-     +{
-     +	struct for_each_object_wrapper_data *data = cb_data;
-    -+	if (data->oi &&
-    -+	    read_object_info_from_path(data->source, path, oid, data->oi, 0) < 0)
-    ++
-    ++	if (data->request) {
-    ++		struct object_info oi = *data->request;
-    ++
-    ++		if (read_object_info_from_path(data->source, path, oid, &oi, 0) < 0)
-     +			return -1;
-    -+	return data->cb(oid, data->oi, data->cb_data);
-    ++
-    ++		return data->cb(oid, &oi, data->cb_data);
-    ++	} else {
-    ++		return data->cb(oid, NULL, data->cb_data);
-    ++	}
-     +}
-     +
-     +int odb_source_loose_for_each_object(struct odb_source *source,
-    -+				     struct object_info *oi,
-    ++				     const struct object_info *request,
-     +				     odb_for_each_object_cb cb,
-     +				     void *cb_data,
-     +				     unsigned flags)
-     +{
-     +	struct for_each_object_wrapper_data data = {
-     +		.source = source,
-    -+		.oi = oi,
-    ++		.request = request,
-     +		.cb = cb,
-     +		.cb_data = cb_data,
-     +	};
-    @@ object-file.h: int for_each_loose_object(struct object_database *odb,
-     + * `odb_source_loose_read_object_info()` on the object.
-     + */
-     +int odb_source_loose_for_each_object(struct odb_source *source,
-    -+				     struct object_info *oi,
-    ++				     const struct object_info *request,
-     +				     odb_for_each_object_cb cb,
-     +				     void *cb_data,
-     +				     unsigned flags);
- 5:  ad0a28e2bb =  5:  03fe7d5b3b packfile: extract function to iterate through objects of a store
- 6:  e87126ddee !  6:  4648a18a9b packfile: introduce function to iterate through objects
-    @@ Commit message
-         packfile: introduce function to iterate through objects
-     
-         Introduce a new function `packfile_store_for_each_object()`. This
-    -    function is the equivalent to `odb_source_loose_for_each_object()` in
-    +    function is equivalent to `odb_source_loose_for_each_object()`, except
-         that it:
-     
-    -      - Works on a single packfile store and thus per object source.
-    +      - Works on a single packfile store instead of working on the object
-    +        database level. Consequently, it will only yield packed objects of a
-    +        single object database source.
-     
-           - Passes a `struct object_info` to the callback function.
-     
-    @@ packfile.c: int for_each_packed_object(struct repository *repo, each_packed_obje
-      
-     +struct packfile_store_for_each_object_wrapper_data {
-     +	struct packfile_store *store;
-    -+	struct object_info *oi;
-    ++	const struct object_info *request;
-     +	odb_for_each_object_cb cb;
-     +	void *cb_data;
-     +};
-    @@ packfile.c: int for_each_packed_object(struct repository *repo, each_packed_obje
-     +{
-     +	struct packfile_store_for_each_object_wrapper_data *data = cb_data;
-     +
-    -+	if (data->oi) {
-    ++	if (data->request) {
-     +		off_t offset = nth_packed_object_offset(pack, index_pos);
-    ++		struct object_info oi = *data->request;
-     +
-    -+		if (packed_object_info(pack, offset, data->oi) < 0) {
-    ++		if (packed_object_info(pack, offset, &oi) < 0) {
-     +			mark_bad_packed_object(pack, oid);
-     +			return -1;
-     +		}
-    -+	}
-     +
-    -+	return data->cb(oid, data->oi, data->cb_data);
-    ++		return data->cb(oid, &oi, data->cb_data);
-    ++	} else {
-    ++		return data->cb(oid, NULL, data->cb_data);
-    ++	}
-     +}
-     +
-     +int packfile_store_for_each_object(struct packfile_store *store,
-    -+				   struct object_info *oi,
-    ++				   const struct object_info *request,
-     +				   odb_for_each_object_cb cb,
-     +				   void *cb_data,
-     +				   unsigned flags)
-     +{
-     +	struct packfile_store_for_each_object_wrapper_data data = {
-     +		.store = store,
-    -+		.oi = oi,
-    ++		.request = request,
-     +		.cb = cb,
-     +		.cb_data = cb_data,
-     +	};
-    @@ packfile.h: int for_each_object_in_pack(struct packed_git *p,
-      
-     +/*
-     + * Iterate through all packed objects in the given packfile store and invoke
-    -+ * the callback function for each of them. If given, the object info will be
-    -+ * populated with the object's data as if you had called
-    -+ * `packfile_store_read_object_info()` on the object.
-    ++ * the callback function for each of them. If an object info request is given,
-    ++ * then the object info will be read for every individual object and passed to
-    ++ * the callback as if `packfile_store_read_object_info()` was called for the
-    ++ * object.
-     + *
-     + * The flags parameter is a combination of `odb_for_each_object_flags`.
-     + */
-     +int packfile_store_for_each_object(struct packfile_store *store,
-    -+				   struct object_info *oi,
-    ++				   const struct object_info *request,
-     +				   odb_for_each_object_cb cb,
-     +				   void *cb_data,
-     +				   unsigned flags);
- 7:  f437198d7a !  7:  3ec85ee10f odb: introduce `odb_for_each_object()`
-    @@ Commit message
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-    + ## object-file.h ##
-    +@@ object-file.h: int for_each_loose_object(struct object_database *odb,
-    + 
-    + /*
-    +  * Iterate through all loose objects in the given object database source and
-    +- * invoke the callback function for each of them. If given, the object info
-    +- * will be populated with the object's data as if you had called
-    +- * `odb_source_loose_read_object_info()` on the object.
-    ++ * invoke the callback function for each of them. If an object info request is
-    ++ * given, then the object info will be read for every individual object and
-    ++ * passed to the callback as if `odb_source_loose_read_object_info()` was
-    ++ * called for the object.
-    +  */
-    + int odb_source_loose_for_each_object(struct odb_source *source,
-    + 				     const struct object_info *request,
-    +
-      ## odb.c ##
-     @@ odb.c: int odb_freshen_object(struct object_database *odb,
-      	return 0;
-      }
-      
-     +int odb_for_each_object(struct object_database *odb,
-    -+			struct object_info *oi,
-    ++			const struct object_info *request,
-     +			odb_for_each_object_cb cb,
-     +			void *cb_data,
-     +			unsigned flags)
-    @@ odb.c: int odb_freshen_object(struct object_database *odb,
-     +			continue;
-     +
-     +		if (!(flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)) {
-    -+			ret = odb_source_loose_for_each_object(source, oi, cb, cb_data, flags);
-    ++			ret = odb_source_loose_for_each_object(source, request,
-    ++							       cb, cb_data, flags);
-     +			if (ret)
-     +				return ret;
-     +		}
-     +
-    -+		ret = packfile_store_for_each_object(source->packfiles, oi, cb, cb_data, flags);
-    ++		ret = packfile_store_for_each_object(source->packfiles, request,
-    ++						     cb, cb_data, flags);
-     +		if (ret)
-     +			return ret;
-     +	}
-    @@ odb.h: typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
-     + * Iterate through all objects contained in the object database. Note that
-     + * objects may be iterated over multiple times in case they are either stored
-     + * in different backends or in case they are stored in multiple sources.
-    ++ * If an object info request is given, then the object info will be read and
-    ++ * passed to the callback as if `odb_read_object_info()` was called for the
-    ++ * object.
-     + *
-     + * Returning a non-zero error code from the callback function will cause
-     + * iteration to abort. The error code will be propagated.
-    @@ odb.h: typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
-     + * an arbitrary non-zero error code returned by the callback itself.
-     + */
-     +int odb_for_each_object(struct object_database *odb,
-    -+			struct object_info *oi,
-    ++			const struct object_info *request,
-     +			odb_for_each_object_cb cb,
-     +			void *cb_data,
-     +			unsigned flags);
- 8:  75c0e7fb54 !  8:  069bcb600b builtin/fsck: refactor to use `odb_for_each_object()`
-    @@ Commit message
-     
-         Refactor these callsites accordingly.
-     
-    +    Note that `odb_for_each_object()` may iterate over the same object
-    +    multiple times, for example when it exists both in packed and loose
-    +    format. But this has already been the case beforehand, so this does not
-    +    result in a change in behaviour.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## builtin/fsck.c ##
-    @@ builtin/fsck.c: static int mark_used(struct object *obj, enum object_type type U
-      
-     -static void mark_unreachable_referents(const struct object_id *oid)
-     +static int mark_unreachable_referents(const struct object_id *oid,
-    -+				      struct object_info *io UNUSED,
-    ++				      struct object_info *oi UNUSED,
-     +				      void *data UNUSED)
-      {
-      	struct fsck_options options = FSCK_OPTIONS_DEFAULT;
- 9:  5a1c71af5f =  9:  cb472da9d5 treewide: enumerate promisor objects via `odb_for_each_object()`
-10:  b6dcd01b19 ! 10:  505243613c treewide: drop uses of `for_each_{loose,packed}_object()`
-    @@ builtin/cat-file.c: static void batch_each_object(struct batch_options *opt,
-     +	struct odb_source *source;
-      
-     -	for_each_loose_object(the_repository->objects, batch_one_object_loose, &payload, 0);
-    ++	/*
-    ++	 * TODO: we still need to tap into implementation details of the object
-    ++	 * database sources. Ideally, we should extend `odb_for_each_object()`
-    ++	 * to handle object filters itself so that we can move the filtering
-    ++	 * logic into the individual sources.
-    ++	 */
-     +	odb_prepare_alternates(the_repository->objects);
-     +	for (source = the_repository->objects->sources; source; source = source->next) {
-     +		int ret = odb_source_loose_for_each_object(source, NULL, batch_one_object_oi,
-11:  92a8225bca ! 11:  3dc547bb9d odb: introduce mtime fields for object info requests
-    @@ Commit message
-         to request an object's mtime. This new field will be used in a
-         subsequent commit.
-     
-    +    Note that the concept of "mtime" is ambiguous: given an object, it may
-    +    be stored multiple times in the object database, and each of these
-    +    instances may have a different mtime. Disambiguating these mtimes is
-    +    nothing that can happen on the generic ODB layer: the caller may search
-    +    for the oldest object, the newest object, or even the relation of object
-    +    mtimes depending on the specific source they are located in. As such, it
-    +    is the responsibility of the caller to disambiguate mtimes.
-    +
-    +    A consequence of this is that it's most likely incorrect to look up the
-    +    mtime via `odb_read_object_info()`, as this interface does not give us
-    +    enough information to disambiguate the mtime. Document this accordingly
-    +    and tell users to use `odb_for_each_object()` instead.
-    +
-    +    Even with this gotcha though it's sensible to have this request as part
-    +    of the object info, as the mtime is a property of the object storage
-    +    format. If we for example had a "black-box" storage backend, we'd still
-    +    need to be able to query it for the mtime info in a generic way.
-    +
-    +    We could introduce a safety mechanism that for example calls `BUG()` in
-    +    case we look up the mtime outside of `odb_for_each_object()`. But that
-    +    feels somewhat heavy-handed.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## object-file.c ##
-    @@ odb.c: static int do_oid_object_info_extended(struct object_database *odb,
-     
-      ## odb.h ##
-     @@ odb.h: struct object_info {
-    - 	off_t *disk_sizep;
-      	struct object_id *delta_base_oid;
-      	void **contentp;
-    -+	time_t *mtimep;
-      
-    ++	/*
-    ++	 * The time the given looked-up object has been last modified.
-    ++	 *
-    ++	 * Note: the mtime may be ambiguous in case the object exists multiple
-    ++	 * times in the object database. It is thus _not_ recommended to use
-    ++	 * this field outside of contexts where you would read every instance
-    ++	 * of the object, like for example with `odb_for_each_object()`. As it
-    ++	 * is impossible to say at the ODB level what the intent of the caller
-    ++	 * is (e.g. whether to find the oldest or newest object), it is the
-    ++	 * responsibility of the caller to disambiguate the mtimes.
-    ++	 */
-    ++	time_t *mtimep;
-    ++
-      	/* Response */
-      	enum {
-    + 		OI_CACHED,
-     
-      ## packfile.c ##
-     @@ packfile.c: static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
-    @@ packfile.c: int packed_object_info(struct packed_git *p,
-     +			uint32_t index_pos;
-     +
-     +			if (load_pack_mtimes(p) < 0)
-    -+				die(_("could not load cruft pack .mtimes"));
-    ++				die(_("could not load .mtimes for cruft pack '%s'"),
-    ++				    pack_basename(p));
-     +
-     +			if (maybe_index_pos)
-     +				index_pos = *maybe_index_pos;
-    @@ packfile.c: int packed_object_info(struct packed_git *p,
-      				    struct pack_window **w_curs,
-      				    off_t curpos,
-     @@ packfile.c: static int packfile_store_for_each_object_wrapper(const struct object_id *oid,
-    - 	if (data->oi) {
-      		off_t offset = nth_packed_object_offset(pack, index_pos);
-    + 		struct object_info oi = *data->request;
-      
-    --		if (packed_object_info(pack, offset, data->oi) < 0) {
-    +-		if (packed_object_info(pack, offset, &oi) < 0) {
-     +		if (packed_object_info_with_index_pos(pack, offset,
-    -+						      &index_pos, data->oi) < 0) {
-    ++						      &index_pos, &oi) < 0) {
-      			mark_bad_packed_object(pack, oid);
-      			return -1;
-      		}
-12:  658cbf8f12 ! 12:  0047a40d16 builtin/pack-objects: use `packfile_store_for_each_object()`
-    @@ builtin/pack-objects.c: static int add_object_in_unpacked_pack(const struct obje
-     +		if (packfile_store_for_each_object(source->packfiles, &oi,
-     +						   add_object_in_unpacked_pack, NULL,
-     +						   ODB_FOR_EACH_OBJECT_PACK_ORDER |
-    ++						   ODB_FOR_EACH_OBJECT_LOCAL_ONLY |
-     +						   ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
-     +						   ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS))
-     +			die(_("cannot open pack index"));
-13:  a28907a4b6 = 13:  c3bde2e822 reachable: convert to use `odb_for_each_object()`
-14:  7d235b6529 ! 14:  bf2f3c39a6 odb: drop unused `for_each_{loose,packed}_object()` functions
-    @@ object-file.c: int for_each_loose_file_in_source(struct odb_source *source,
-     -
-      struct for_each_object_wrapper_data {
-      	struct odb_source *source;
-    - 	struct object_info *oi;
-    + 	const struct object_info *request;
-     
-      ## object-file.h ##
-     @@ object-file.h: int for_each_loose_file_in_source(struct odb_source *source,
-    @@ object-file.h: int for_each_loose_file_in_source(struct odb_source *source,
-     -
-      /*
-       * Iterate through all loose objects in the given object database source and
-    -  * invoke the callback function for each of them. If given, the object info
-    +  * invoke the callback function for each of them. If an object info request is
-     
-      ## packfile.c ##
-     @@ packfile.c: int for_each_object_in_pack(struct packed_git *p,
-    @@ packfile.c: int for_each_object_in_pack(struct packed_git *p,
-     -
-      struct packfile_store_for_each_object_wrapper_data {
-      	struct packfile_store *store;
-    - 	struct object_info *oi;
-    + 	const struct object_info *request;
-     @@ packfile.c: int packfile_store_for_each_object(struct packfile_store *store,
-      		.cb = cb,
-      		.cb_data = cb_data,
-
----
-base-commit: 1ff0e42d332523a11cc3d61b8d8463db5f9f14e8
-change-id: 20260115-pks-odb-for-each-object-60b78cde09fd
+-- 
+2.53.0.rc1.267.g6e3a78c723.dirty
 
