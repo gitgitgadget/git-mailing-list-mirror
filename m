@@ -1,53 +1,53 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8007D3033E5
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 08:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B62A3033E0
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 08:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769417612; cv=none; b=NAMkzw2eO1ZxhWoRRLMF5FhS584dXYizFCQzcdzIHT9XchtlTHHkWWZXcEM5bowoTM86m8WVTBAJ8kww75WQ43GEqxFTXkFbZ4O7SBE8sP1qzbGLEBfGsZiALP8EOW5+TQ9/ufqni803ucluG0TBe/k1bSentoB3sLKalSFeiAg=
+	t=1769417618; cv=none; b=ZlkHtE4Z/N1llPfkkXrBUjuzNv3gkRS49F8qwgg0SLGM4cMhY+kqPr8TOlnyC0j8DhHkmKVMj1urfhHYDrcq885NYiOveEy5jI3NIcrtvdo/iJjAEsjHwkDCM1bztpDj8JkIV71Qj0ScMQSyrJaJbROP4RkXE3iJT11AO9igwAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769417612; c=relaxed/simple;
-	bh=l0YYW4BU3Pc+qTQoR5faHXDYdq/GiN1CSHQEAzffRHQ=;
+	s=arc-20240116; t=1769417618; c=relaxed/simple;
+	bh=W8ZcwAWcgL5lZ0QVk3bnEAJlG5zT1SWdMLFBJEvBH7w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lSq0WbnV//yt2Sm9ZOVH3yYx1uSJUzQV11K89iLCY+j3Qb9PjhquZlTp7o1iha0UqyXF8Hx4q67AppoBEEB4KpwpspMjEiMIoIn3mKF+ZH8lZNnE2qz71S45V2inZg8gcfzre7n/Vdo0F72BWdZrqnr9a49HSvm28sNPmCivk3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O/WtRDwE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hjKEAnDv; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=i8u03VNB3T8VMqtzaxo1PB5AsvwlR41mXzg9ivr/hikayy19+X1GIUnnF3hSRYYVgJB0czUx2P9b4WB7T15TbgBLK2yORwpwL2NDJJEkMnnNv6BhI9nqsuHJJCcqtPyh1yNqW1534f0hEoCxKGk3h8escMEPLCorYUXRUYtJn/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AZngm2VX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tZ/gdtd4; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O/WtRDwE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hjKEAnDv"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 615167A00BC;
-	Mon, 26 Jan 2026 03:53:29 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AZngm2VX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tZ/gdtd4"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id ED6B37A0108;
+	Mon, 26 Jan 2026 03:53:35 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 26 Jan 2026 03:53:29 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 26 Jan 2026 03:53:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769417609; x=1769504009; bh=0wHcMKZx28
-	yO4fJgLROx+zbUnD0cDhY6d1ud0+24Fe0=; b=O/WtRDwEfkuecHStgzBLpf3W6e
-	S55XmojGuTRn+dT/gQu+O9GbgOXOE80UjsC+PyJBUge03srddN4aIngYaQghPVPf
-	Pr7eYDCUQk7KiHDT2SBCQcHcrJ8P0XxkiScdVIW5pEmeEx5Q9RIINSRdoyRiizM2
-	b5QSgkAeSCrCj6xaEHOUkooWwCnpxJ3g9NbaZv86KMRjRM+oHz1yS1NbghQMMYVm
-	emNcoFJzGPA8U5Jy9z4tHvx2xNrDYP1zK+A3EhRXrBDVwtvYAr4cuE9m1YdSIsCI
-	3A6S1fb8rS3qGSV1xN6KGq0K6r+lIicBOXAgve/+QYvrAO9ZJT04BQjGRoPg==
+	:subject:to:to; s=fm2; t=1769417615; x=1769504015; bh=J2z9PyzeJz
+	qNfFdytZbmtKZSeWjrwsBgJyg4RinOV7E=; b=AZngm2VXoosQKMjOnFP7hzrRKx
+	6QeTVZFe43booEOEsRfhFoJ+HOkKl++is2nKfolFY3EkpHgNcsGkYBYAOe8fYfYU
+	jhUyZbNR+uMbrhG5LH9aHTCzh9+pveoFeGQBbdpXdzJx5/BCmrJJQXzlwVdpv8p8
+	AVfPeA6C0oPcj2E8YzyZkBZon1GmOrNqgJl2gQ4edfRHVrMP5FuX/pscFVKix8X6
+	NVX0FqLsdNnKsX4ts/z6SJ0SK442OujlnXCR8IDhqveNDMeODCGv+bmIaAqYauK5
+	WQDDu0tPgZPGuHyShrYWWbHph2JySU/R3ZplarnixvYW2CAdKOkU/YSwujEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769417609; x=1769504009; bh=0wHcMKZx28yO4fJgLROx+zbUnD0cDhY6d1u
-	d0+24Fe0=; b=hjKEAnDvIECa0IqDxlx1w8rT7W3FpaTDNIozLN4rpS3wPG+kegK
-	pduoOUpBe+UC87z4nBSjaluzzZLCccPrcIdHlyG9U+7YhK9f0Z59jrmRKC/9SgYM
-	O3TtWuaIJDVsBpj/a0369mtelUfTRaf5/3+conc3WUWNO6+dPl56tatTx2g0XcMG
-	Mi9YpoRoyYX11ce3+OIIN2VWLwcd4KTVbD1PRjD+acdBaknL2TLciYMiIOC7UY6s
-	EVNpUxJXb0pXswUgF9U6e5Y8o8L8vGuGCYKncFZagGqgMfldKaYXBRJ4en9AsSWG
-	rKBUTRBBAVl4JgahNDWOW2eNNC237/XjVRg==
-X-ME-Sender: <xms:iCt3aavdHzRjFev0666YvuElyHX_n1ft37egwxNRKI1fq5cI0qPB6w>
-    <xme:iCt3aWXqiZGNun2Ga3oOfSiz6kPvoA2cuYB2bUULjQBTRNpiFjfsRSnrko0LCDXq_
-    YprleG33_a-8YT6U8VCFhjNJS65i84Ke71h8zlYpe9Ijpn68t9UKNM>
-X-ME-Received: <xmr:iCt3aeEdfi5lzAhI3QNUAKtSyWju7Hbe1bdi0lSJvJ_ABP4iFAQwM37dyrVvAblN1SOdE_-J_fXrk9ORoowrgPrJy67ruSze-We4KGHWXGIHuA>
+	1769417615; x=1769504015; bh=J2z9PyzeJzqNfFdytZbmtKZSeWjrwsBgJyg
+	4RinOV7E=; b=tZ/gdtd4rPx7+SHga2jZzFeVRCW4LpyEnuZEfAQ4y6dUL0Y4jtF
+	KvF/UipvE8rNzMdptxe2ZZ0FHOrd1N238NY04esL1lDovxiIhQ38An+nqBaUbKUp
+	EW0ZWEW0ec0AxYHasUfz7c7n8setZa+2bH21tgGEh6tEktrP4ZGkECmOzYbRTnJj
+	hT66uk4qGXiQ9H65R4TSAQlMbdTrXcG13E4ZHxoFyqrKuLFaBn7AoTupxmLNARDD
+	782e2X3iCeQ20mr4L6ZS58zSvHnrthQZGm+cAc2a+o16E0Z+ooEmSTVAnLyHTqvc
+	e5ZArBxmc47rrgv7rrrrta/SjC4quSC5slA==
+X-ME-Sender: <xms:jyt3aeXr21Ypuq6BlSWAEzQNUPj-aNiL_W1ZDJehXNfd6Nl7AMoWPw>
+    <xme:jyt3aRcV3Lk2Ngl4xa3f1PIgEgxcHqEaEuL-tMPY963A65VLkRAXYt5qKonvG-0_o
+    TF0s9WmTB9pfdaqM8aARMOuCX-4vIj3AAOkJ2GE6MNGbAlEsOv5n1M>
+X-ME-Received: <xmr:jyt3aas37uNVvFE3vskbFRJoDjEZzPnbmkfzQSMEU-c4CFn8ceWa6zGUkMDfUYAk9Yk4QScXE5XgGzJota7wkQlVqpZhIH890HmxeWwPyW-y4A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheejvdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,35 +56,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheejvdegucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtoh
-    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:iCt3aQ0JmEn6FOvuy-pIbbgdof5cW3UegVgqDt-1uCJq6qmuJwzzkA>
-    <xmx:iCt3aYNF78DTnpQwJ05aqtxPo2d7kIlwFxKVboQqpLDccKXjso5Pig>
-    <xmx:iCt3aX6kFNH2wE7Uj_2Cq02HrTdKd0k9XaocH3eJuOGr5sxcZvSfAg>
-    <xmx:iCt3aa2F9M9-fl8RZrSJyQBj1z9nIVlWUO8gAP1pJmWMNsdJkHfjLA>
-    <xmx:iSt3aTP0uVWyONwzKBk7lDU8D3n1b2tXEfLkp77EGfQ7_crzxAIqT-q8>
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:jyt3aQ-AtjO3091NSH9WHqvxT2xEV3oeNgFdXRzJYmkEhh4Qvlvtrg>
+    <xmx:jyt3aV29q0DS81CX44ASAC1vqsFkE6gwOxBtHf6UKhddput5BY1zvw>
+    <xmx:jyt3aVCI-RCCa2Q1F_1DvMVYmZLwJHZ1I1g4AP6jaTcB-qdEYwR5pg>
+    <xmx:jyt3aRcysMpu0ucxxfpBqg2nKHfkJrb6tqYp9ac_kcdG9wBK3CHIYw>
+    <xmx:jyt3afX4cvkemK_7Hx-rJ22pp_x5yEULrw88QRtnqox3A9COGLHeylIr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Jan 2026 03:53:27 -0500 (EST)
+ 26 Jan 2026 03:53:34 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e9843968 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 26 Jan 2026 08:53:26 +0000 (UTC)
-Date: Mon, 26 Jan 2026 09:53:18 +0100
+	by mail (OpenSMTPD) with ESMTPSA id cb389c70 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Jan 2026 08:53:33 +0000 (UTC)
+Date: Mon, 26 Jan 2026 09:53:30 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 12/14] builtin/pack-objects: use
- `packfile_store_for_each_object()`
-Message-ID: <aXcrftLpfcG4S5AX@pks.im>
+Subject: Re: [PATCH v3 11/14] odb: introduce mtime fields for object info
+ requests
+Message-ID: <aXcrii58bIdLttI2@pks.im>
 References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
- <20260121-pks-odb-for-each-object-v3-12-12c4dfd24227@pks.im>
- <aXLNM+AOpdQtmisC@nand.local>
- <aXNCtCZwP57Tfu60@pks.im>
- <aXO/YLzRlDXD5IPY@nand.local>
+ <20260121-pks-odb-for-each-object-v3-11-12c4dfd24227@pks.im>
+ <aXLJoDdoEyKXKtBf@nand.local>
+ <aXNCq8h94i2Z6uSa@pks.im>
+ <aXO0cNaY3DWu6aQ2@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,208 +93,245 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aXO/YLzRlDXD5IPY@nand.local>
+In-Reply-To: <aXO0cNaY3DWu6aQ2@nand.local>
 
-On Fri, Jan 23, 2026 at 01:35:12PM -0500, Taylor Blau wrote:
-> On Fri, Jan 23, 2026 at 10:43:16AM +0100, Patrick Steinhardt wrote:
-> > On Thu, Jan 22, 2026 at 08:21:55PM -0500, Taylor Blau wrote:
-> > > On Wed, Jan 21, 2026 at 01:50:28PM +0100, Patrick Steinhardt wrote:
-> > > >  static int add_object_in_unpacked_pack(const struct object_id *oid,
-> > > > -				       struct packed_git *pack,
-> > > > -				       uint32_t pos,
-> > > > +				       struct object_info *oi,
-> > > >  				       void *data UNUSED)
-> > > >  {
-> > > >  	if (cruft) {
-> > > > -		off_t offset;
-> > > > -		time_t mtime;
-> > > > -
-> > > > -		if (pack->is_cruft) {
-> > > > -			if (load_pack_mtimes(pack) < 0)
-> > > > -				die(_("could not load cruft pack .mtimes"));
-> > > > -			mtime = nth_packed_mtime(pack, pos);
-> > > > -		} else {
-> > > > -			mtime = pack->mtime;
-> > > > -		}
-> > > > -		offset = nth_packed_object_offset(pack, pos);
-> > > > -
-> > > > -		add_cruft_object_entry(oid, OBJ_NONE, pack, offset,
-> > > > -				       NULL, mtime);
+On Fri, Jan 23, 2026 at 12:48:32PM -0500, Taylor Blau wrote:
+> On Fri, Jan 23, 2026 at 10:43:07AM +0100, Patrick Steinhardt wrote:
+> > > > diff --git a/odb.c b/odb.c
+> > > > index 65f0447aa5..67decd3908 100644
+> > > > --- a/odb.c
+> > > > +++ b/odb.c
+> > > > @@ -702,6 +702,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
+> > > >  				oidclr(oi->delta_base_oid, odb->repo->hash_algo);
+> > > >  			if (oi->contentp)
+> > > >  				*oi->contentp = xmemdupz(co->buf, co->size);
+> > > > +			if (oi->mtimep)
+> > > > +				*oi->mtimep = 0;
 > > >
-> > > OK, here's where we see the existing logic for determining the mtime of
-> > > an object in the GC sense. I see there's a subsequent patch that also
-> > > makes use of the object_info->mtimep field, and my guess is (not having
-> > > completely read that patch yet) that having the same notion of mtime
-> > > between the two callsites is desirable.
-> > >
-> > > I still wonder whether imposing that notion of mtime at the object_info
-> > > layer is the right choice. I wonder if it would make more sense to allow
-> > > the caller to have a "statp" pointer filled out (or alternatively stick
-> > > a "struct stat" in both the packed union type as well as the loose one,
-> > > though the latter doesn't yet exist).
+> > > Assuming that you do not change the object_info request/response
+> > > semantics, I wonder if it might make sense to zero out the entirety of
+> > > the response section as a belt-and-suspenders mechanism in case future
+> > > contributors forget to assign zero to the new fields themselves.
 > >
-> > The problem with filling out a `struct stat` though is that it will only
-> > apply to backends that actually have a path to stat. There may be other
-> > backends that don't. You could of course pretend that there was a file
-> > and fill in the `st_mtime` field. But I don't really see the benefit
-> > over having a standalone mtime field.
+> > Splitting up the request/response structure as you proposed in a
+> > previous patch could definitely help with this. I'd prefer to rather do
+> > such a bigger change as a follow-up though as it would lead to a lot of
+> > churn.
 > 
-> I understand what you're saying, but I don't think that this is unique
-> to stat. Looking through the object_info struct, there are a handful of
-> fields on the request side that are coupled to the objects themselves,
-> not their representation, such as typep, sizep, and contentp.
+> I'm OK with pushing the larger change down the road, but I am a little
+> uncomfortable with the interim state being introduced here. Perhaps a
+> compromise here would be to have the caller supply a pointer to an
+> object_info struct, whose request fields we honor. The response fields
+> would then be written into a separate object_info struct via an
+> out-parameter.
 > 
-> But there are a handful of fields in the request section which are *not*
-> properties of the objects themselves, but rather properties of the way
-> those objects are represented as part of the backend-specific
-> implementation.
+> I don't know. I think that ^ this suggestion is kind of ugly, but I'm
+> trying to come up with something that doesn't introduce the risk I
+> described above in the interim between this patch series and the one
+> you're proposing later on.
 
-Yes, the specific interpretation will change for some fields. But in
-general, most of the fields still apply to all backends.
-
-> For example, disk_sizep suggests that all objects are stored on disk and
-> have a clear notion of how much space they occupy. I could imagine a
-> backend implementation where perhaps the contents of objects are divvied
-> up into smaller chunks and deduplicated across many objects. I don't
-> think there is a clear answer to how much "disk size" an object occupies
-> in that case.
-
-This would still apply to other backends though. It's true that "disk"
-size is a bit of a misnomer now, and that it should probably rather be
-renamed to "storage" size. But overall, no matter the backend, you will
-still eventually end up storing the object data somewhere, and that
-takes up space.
-
-> delta_base_oid is another field that I'd argue is not a property of the
-> object itself, but rather its representation. Of course, objects stored
-> in packfiles may or may not be stored as a delta against some other
-> object, and thus being able to ask what that object is makes sense. But
-> loose objects don't have the same property as a result of how they are
-> stored.
-
-Yup. This field is specific to the packed backend indeed and ideally
-shouldn't be part of the `struct object_info`. In the best case it could
-be lifted into `struct object_info::u`, but I'm not sure whether that's
-easily possible.
-
-> To me this seems like an example where implementation-specific details
-> are already leaking through the object_info struct. So in that sense I
-> don't think that adding a "struct stat" here is meaningfully changing
-> anything.
-
-The thing is that I'm trying to clean up all the different messes that
-we have. So instead of adding _more_ leakiness, I'd rather prefer to
-remove some of it.
-
-> But I think the proposed mtimep field is a special case not only for the
-> reasons stated above, but because an object's mtime has multiple
-> interpretations already. For example, if I'm asking about an object's
-> mtime, and that object happens to be stored in a cruft pack, which mtime
-> am I referring to? Packed objects inherit their mtime from the mtime of
-> the *.pack itself, but cruft objects have an additional interpretation
-> which is read from the *.mtimes file corresponding to the cruft pack.
-
-This is a good question indeed though.
-
-> I don't love bolting another leaky abstraction onto the object_info
-> interface, but my broader concern is that the information here is not
-> just leaky but ambiguous. By adding a statp pointer, I think the
-> information is less ambiguous since the GC-specific interpretation of
-> mtime is done at a layer above stat(2).
-
-Fair point. For the current backend, mtime can be ambiguous as the same
-object may be stored multiple times: either as a loose object, or as
-part of any of the packfiles.
-
-In the context of `odb_for_each_object()` that info is not ambigous
-though: we would yield the same object multiple times, and every time we
-yield it we will may have a different mtime. And this is working as
-expected for the two callsites:
-
-  - In "reachable.c" we use the mtimep field in the context of recent
-    objects. So if at least one of the objects has a new-enough mtime we
-    would eventually see it.
-
- - In "builtin/pack-objects.c" we use basically the same logic as we
-   use after my patch seires, where we use either the cruft time or the
-   pack time. So things work as expected over there, too.
-
-So I'd claim that this is working sensibly for `odb_for_each_object()`,
-and there is no ambiguity involved. It's the caller that has to
-disambiguite, and that's already happening.
-
-But things are a bit different if you invoke `odb_read_object_info()`
-directly, as we have no way to disambiguate there. We only want to yield
-_a_ representation of an object, so the mtime will be derived from
-whatever data structure the object was found in first. This could be
-helped with better documentation.
-
-> > > Then the caller could do something like:
-> > >
-> > > static time_t object_info_gc_mtime(const struct object_info *oi)
-> > > {
-> > >     if (!oi->statp)
-> > >         BUG("oops!");
-> > >
-> > >     switch (oi->whence) {
-> > >     case OI_CACHED:
-> > >         return 0;
-> > >     case OI_LOOSE:
-> > >         return oi->statp->st_mtime;
-> > >     case OI_PACKED:
-> > >         struct packed_git *p = oi->u.packed.pack;
-> > >         if (p->is_cruft) {
-> > >             uint32_t pack_pos;
-> > >
-> > >             if (load_pack_mtimes(p) < 0)
-> > >                 die(_("could not load cruft pack .mtimes for '%s'"),
-> > >                     pack_basename(p));
-> > >             if (offset_to_pack_pos(p, oi->u.packed.offset, &pack_pos) < 0)
-> > >                 die(_("could not find offset for object '%s' in cruft pack '%s'"),
-> > >                     oid_to_hex(&oi->oid),
-> > >                     pack_basename(p));
-> > >
-> > >             return nth_packed_mtime(p, pack_pos_to_index(p, pack_pos));
-> > >         } else {
-> > >             return p->mtime; /* or oi->statp->st_mtime */
-> > >         }
-> > >     default:
-> > >         BUG("unknown oi->whence: %d", oi->whence);
-> > >     }
-> > > }
-> > >
-> > > I like the above because it encapsulates the GC-specific interpretation
-> > > of an object's mtime outside of the object_info layer, while adding
-> > > information (namely statp) that is generic enough to be potentially
-> > > useful to other callers who may not be interested in the GC-specific
-> > > interpretation.
-> >
-> > This isn't achieving the goal of making the logic pluggable though, as
-> > you now have backend-specific logic outside of the backends. Also, isn't
-> > the end result basically the same as what I have proposed, except that
-> > my version _is_ fully pluggable because the logic is entirely contained
-> > in the backend?
-> 
-> Yes, the end result is the same, both your patch and what I wrote here
-> implement the same GC-specific definition of an object's "mtime". I am
-> not following the argument about pluggability, though. The concern I
-> have above is that we are pushing domain-specific logic into the object
-> storage backend, not the other way around.
-
-To expand on the pluggability bit: every time you add a new backend
-you'll have to extend the above logic to understand how it represents
-the mtime. That by itself might be doable, but let's for example
-consider a backend that is a black box to us (like a shared library that
-may plug in arbitrary storage logic). In that case you would not even be
-able to derive the information unless you have a generic layer that lets
-you convey it to the caller.
-
-So overall I agree with you that there are nuances here, and that the
-mtimep pointer _can_ be used incorrectly. But I still think that the
-concept is generic enough across backends, and the refactored logic
-still works as extended. I'll try to expand the docs and commit message
-a bit to cover this discussion.
+I think it's actually not _that_ ugly, and I like the additional safety
+that it brings us.
 
 Thanks!
 
 Patrick
+
+diff --git a/object-file.c b/object-file.c
+index bc5209f2fe..6785821c8c 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1804,7 +1804,7 @@ int for_each_loose_file_in_source(struct odb_source *source,
+ 
+ struct for_each_object_wrapper_data {
+ 	struct odb_source *source;
+-	struct object_info *oi;
++	const struct object_info *request;
+ 	odb_for_each_object_cb cb;
+ 	void *cb_data;
+ };
+@@ -1814,21 +1814,28 @@ static int for_each_object_wrapper_cb(const struct object_id *oid,
+ 				      void *cb_data)
+ {
+ 	struct for_each_object_wrapper_data *data = cb_data;
+-	if (data->oi &&
+-	    read_object_info_from_path(data->source, path, oid, data->oi, 0) < 0)
++
++	if (data->request) {
++		struct object_info oi = *data->request;
++
++		if (read_object_info_from_path(data->source, path, oid, &oi, 0) < 0)
+ 			return -1;
+-	return data->cb(oid, data->oi, data->cb_data);
++
++		return data->cb(oid, &oi, data->cb_data);
++	} else {
++		return data->cb(oid, NULL, data->cb_data);
++	}
+ }
+ 
+ int odb_source_loose_for_each_object(struct odb_source *source,
+-				     struct object_info *oi,
++				     const struct object_info *request,
+ 				     odb_for_each_object_cb cb,
+ 				     void *cb_data,
+ 				     unsigned flags)
+ {
+ 	struct for_each_object_wrapper_data data = {
+ 		.source = source,
+-		.oi = oi,
++		.request = request,
+ 		.cb = cb,
+ 		.cb_data = cb_data,
+ 	};
+diff --git a/object-file.h b/object-file.h
+index af7f57d2a1..d9979baea8 100644
+--- a/object-file.h
++++ b/object-file.h
+@@ -128,12 +128,13 @@ int for_each_loose_file_in_source(struct odb_source *source,
+ 
+ /*
+  * Iterate through all loose objects in the given object database source and
+- * invoke the callback function for each of them. If given, the object info
+- * will be populated with the object's data as if you had called
+- * `odb_source_loose_read_object_info()` on the object.
++ * invoke the callback function for each of them. If an object info request is
++ * given, then the object info will be read for every individual object and
++ * passed to the callback as if `odb_source_loose_read_object_info()` was
++ * called for the object.
+  */
+ int odb_source_loose_for_each_object(struct odb_source *source,
+-				     struct object_info *oi,
++				     const struct object_info *request,
+ 				     odb_for_each_object_cb cb,
+ 				     void *cb_data,
+ 				     unsigned flags);
+diff --git a/odb.c b/odb.c
+index 67decd3908..9d9a3fad62 100644
+--- a/odb.c
++++ b/odb.c
+@@ -998,7 +998,7 @@ int odb_freshen_object(struct object_database *odb,
+ }
+ 
+ int odb_for_each_object(struct object_database *odb,
+-			struct object_info *oi,
++			const struct object_info *request,
+ 			odb_for_each_object_cb cb,
+ 			void *cb_data,
+ 			unsigned flags)
+@@ -1011,12 +1011,14 @@ int odb_for_each_object(struct object_database *odb,
+ 			continue;
+ 
+ 		if (!(flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)) {
+-			ret = odb_source_loose_for_each_object(source, oi, cb, cb_data, flags);
++			ret = odb_source_loose_for_each_object(source, request,
++							       cb, cb_data, flags);
+ 			if (ret)
+ 				return ret;
+ 		}
+ 
+-		ret = packfile_store_for_each_object(source->packfiles, oi, cb, cb_data, flags);
++		ret = packfile_store_for_each_object(source->packfiles, request,
++						     cb, cb_data, flags);
+ 		if (ret)
+ 			return ret;
+ 	}
+diff --git a/odb.h b/odb.h
+index 72d69ffcb3..8ad0fcc02f 100644
+--- a/odb.h
++++ b/odb.h
+@@ -492,6 +492,9 @@ typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
+  * Iterate through all objects contained in the object database. Note that
+  * objects may be iterated over multiple times in case they are either stored
+  * in different backends or in case they are stored in multiple sources.
++ * If an object info request is given, then the object info will be read and
++ * passed to the callback as if `odb_read_object_info()` was called for the
++ * object.
+  *
+  * Returning a non-zero error code from the callback function will cause
+  * iteration to abort. The error code will be propagated.
+@@ -500,7 +503,7 @@ typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
+  * an arbitrary non-zero error code returned by the callback itself.
+  */
+ int odb_for_each_object(struct object_database *odb,
+-			struct object_info *oi,
++			const struct object_info *request,
+ 			odb_for_each_object_cb cb,
+ 			void *cb_data,
+ 			unsigned flags);
+diff --git a/packfile.c b/packfile.c
+index e455150d65..57fbf51876 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2329,7 +2329,7 @@ int for_each_object_in_pack(struct packed_git *p,
+ 
+ struct packfile_store_for_each_object_wrapper_data {
+ 	struct packfile_store *store;
+-	struct object_info *oi;
++	const struct object_info *request;
+ 	odb_for_each_object_cb cb;
+ 	void *cb_data;
+ };
+@@ -2341,28 +2341,31 @@ static int packfile_store_for_each_object_wrapper(const struct object_id *oid,
+ {
+ 	struct packfile_store_for_each_object_wrapper_data *data = cb_data;
+ 
+-	if (data->oi) {
++	if (data->request) {
+ 		off_t offset = nth_packed_object_offset(pack, index_pos);
++		struct object_info oi = *data->request;
+ 
+ 		if (packed_object_info_with_index_pos(pack, offset,
+-						      &index_pos, data->oi) < 0) {
++						      &index_pos, &oi) < 0) {
+ 			mark_bad_packed_object(pack, oid);
+ 			return -1;
+ 		}
+-	}
+ 
+-	return data->cb(oid, data->oi, data->cb_data);
++		return data->cb(oid, &oi, data->cb_data);
++	} else {
++		return data->cb(oid, NULL, data->cb_data);
++	}
+ }
+ 
+ int packfile_store_for_each_object(struct packfile_store *store,
+-				   struct object_info *oi,
++				   const struct object_info *request,
+ 				   odb_for_each_object_cb cb,
+ 				   void *cb_data,
+ 				   unsigned flags)
+ {
+ 	struct packfile_store_for_each_object_wrapper_data data = {
+ 		.store = store,
+-		.oi = oi,
++		.request = request,
+ 		.cb = cb,
+ 		.cb_data = cb_data,
+ 	};
+diff --git a/packfile.h b/packfile.h
+index 8e0d2b7661..1a1b720764 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -343,14 +343,15 @@ int for_each_object_in_pack(struct packed_git *p,
+ 
+ /*
+  * Iterate through all packed objects in the given packfile store and invoke
+- * the callback function for each of them. If given, the object info will be
+- * populated with the object's data as if you had called
+- * `packfile_store_read_object_info()` on the object.
++ * the callback function for each of them. If an object info request is given,
++ * then the object info will be read for every individual object and passed to
++ * the callback as if `packfile_store_read_object_info()` was called for the
++ * object.
+  *
+  * The flags parameter is a combination of `odb_for_each_object_flags`.
+  */
+ int packfile_store_for_each_object(struct packfile_store *store,
+-				   struct object_info *oi,
++				   const struct object_info *request,
+ 				   odb_for_each_object_cb cb,
+ 				   void *cb_data,
+ 				   unsigned flags);
+
