@@ -1,80 +1,81 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F2F32E697
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 09:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A63832E6BB
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 09:52:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769421121; cv=none; b=dLcRBxERxvQgEMt98ap24IV7F21x5eRH/NhldAd6psQQ/Nj+kweYlZSW/U3oaB5tWesv+/vWomiKpbpK7L/dtinezDQDGMAMOJ4zU6Qc6e6ByLCAyhDd0HdP+nnpxw98Cd8ptmjB/FYjcXq9f9uq+23J5xbz8q79+aOMcVS1X3k=
+	t=1769421123; cv=none; b=nSFvvrgQybJA15F7ktF1RuZYwARaETB1iQON87oWZTg5MSjaod+/59wDrRCNTB+0U3spMSitH8e15ENvrGuoRpxMesigP3uDPKnVCaEmCzSSAiZDnfDJoY60bIr4YHTKGu6kkZAnfXc0nywdrIwWcP+FwS3nvNniDdAB+4EIPIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769421121; c=relaxed/simple;
-	bh=Naybh9ouKoHlvBxY96txO+iHE6OIAIT1Vy8RSLvITxk=;
+	s=arc-20240116; t=1769421123; c=relaxed/simple;
+	bh=SXkXowA4lgze8O22NBte/0qKXbPyRJ29jyMq8ue/qYE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QV37YNaJWunC0Mg9SS0akamgMOwqbhgifHqpn5a9uZOLCwh6fgBkhxb0SdoTr/UTHZmsbPpFrXNvGvSnfhH07BnU8fsvMSrvQqWTsZ0fVHNOY/xE/7UZ34zMD7qv8R483wKPFGoLv+KOGnawLu4Du7z5W1YJ1O7S2HeJcyor+8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bNJ+cPzq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QNNk4hJi; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=hYbpnAQy0CoYdrF6NN5D/D6yr3zcjL7AXtzCDZrSDddwrdMatrmxo6FGEr4Ij2oWHPx8jb4nwOTmJZDWCPM1YyCEVRZZ/1vECVuMLN0lnyZLMKYV9DGtU+a2b3+bAKjRTyB2PUZ7tC54emCXr/mussgSiTYo4KHSlWzcu4yRUFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XMdUVs27; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EiMG+3Qv; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bNJ+cPzq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QNNk4hJi"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id E82011D0009D;
-	Mon, 26 Jan 2026 04:51:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XMdUVs27";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EiMG+3Qv"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 507597A0013;
+	Mon, 26 Jan 2026 04:52:01 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 26 Jan 2026 04:51:59 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 26 Jan 2026 04:52:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1769421118;
-	 x=1769507518; bh=BrbD9ZF7wG4Ub2XU/n9aEfX36MsKRBSv6Ktur54WVXk=; b=
-	bNJ+cPzq025cpgOpzvTztCaQFv46efRABPS1lcxIWG7KzxliW0MZlFmgCjYBIvml
-	sdx3jc08HzNSHT1akm0ljTxOsRNwAsNtpGBzu3HWylK4Jyd4amxNrZZXivNGvInv
-	s1WrNjIlYn2OsQMrE06X5eG5X/f2nRyuKj3kDnNZsxeIAoSqu4XndQSNwkq3UsDv
-	5OxwIc56SNIsVjtNh2GM0dR4WqR1Gr20JSzZiI1nqR3BWK7H1T6Y7h8OCMv6tat4
-	7HjYKky1LwVRQfFlFn1D+eeWV+hrnZyXrQyguKvBCP2TWMXOVlZHpUzSDXqwUmcg
-	KW6D/qjUiw1gJ56T2SmQsg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1769421121;
+	 x=1769507521; bh=K/A1ztGXUmTnoE3dUNpk9qemXCaS+0MuelUJX0WTMds=; b=
+	XMdUVs27Cu9kHFNNvtjfQNrEMSIeiMfQeAeCy0zzpN+XOmrqrlhMVTBqTLTPcnI0
+	2cs4pJH4Lu+1mACT5E371MyApA+muRwVn4V1NerQxcSftaEP6DDEb3X69jJaSC71
+	CNFAj0XHEj8n2jVQFpHnhljydHsuVw6M5YA0pSsaeluS5ZJoZfek7xS1zMHHU8Hz
+	ZzFQafyyMI3mbsGenNhffbuiiWIN1xU67NLeyhE1fxFwJWZNHPt5Xkcx8feslQb6
+	5AKYPulQgoPLhYCFA4wEHTEfJUUoEnRkp2HAyZKuIpzF3F1c4U9FTZEm3kBVeKZV
+	f6QiX1v4SdbbgMoLnc7e4g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769421118; x=
-	1769507518; bh=BrbD9ZF7wG4Ub2XU/n9aEfX36MsKRBSv6Ktur54WVXk=; b=Q
-	NNk4hJi3quFaMEdwNjFNDQHz7QLa4Ym9S/l6aqx1FYL/lquy+mRSgKAAQ1P8Kw63
-	tG94HRDEiFLOXkz/91z9X40lUltknL31wDxdBiahdOBLX03WVn4PDa9j1Tn6YFZo
-	Iil8z5pnCONNrWuNEbd82YLVtWScMT382y6rkB7RBdFLiPf2dzf056gEcosiCSSc
-	7lPikNAMB6BxgDS7RLyA0xUu48Lo5wqoreUhVfB6A03TxHnl0KIO75IYoja3KHO/
-	wBWVz1RbmcjrIUS73FLXHisQ5nmAKxSrRhaRR4ZrafKWz84swHjaPH1zrg4RZW+z
-	IU2bKmrZJpopT4vQUwPug==
-X-ME-Sender: <xms:Pjl3aR0wsen6OK95PlYKq95zYIJ9eJolQ6Dlm2Op8c0uX1_M3DZdCw>
-    <xme:Pjl3afFKlpX5gdNZBgjQXit_P7HWGcfXnVg5fYh2Zyv-OP-6IHH_pkQk3Zsak9Z82
-    tbVUJg6-4l0EUC4_V4o732cDTNGgG6XA8LmrsdffA82FkK2Oy8qNg>
-X-ME-Received: <xmr:Pjl3aW58aDoGSu7eSxCT_bXnq1yplEUa1l-mk9h9j6XmYxKcIwUP4mFz8Z1xLvdcD9OyD8q470IONI4WRxMB3JDB7ZFNOfPFO7XDMks-8fRscg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769421121; x=
+	1769507521; bh=K/A1ztGXUmTnoE3dUNpk9qemXCaS+0MuelUJX0WTMds=; b=E
+	iMG+3QvdAwc19aJeLq6zdKW3Z2lgr6NIBcaloIKeOLG5QNgy5RMdxHu5i+jk2os5
+	EtKSl+onXr1agu6BJrMB+DZvbm2fQEWcZxZ3Po9PxgH9R0YxKsMqO1cb9vJGNe/X
+	tNmoZc6DFV3MckqqxMWwmHbc11MZkjy3QsMft399mNbIK3r7RufxyZr1UdPzAELv
+	wQbZ78FCebabaTaOEwdv3g05N3dpxaF/lkJzPiaWlQ/1UHE8HfQWKJC33dX0RRza
+	islDUu2TKKHGce6VJyJnEbW7AlcBld1pO6On06Rf2Qlwcc5kJrYVWcVgbdWfNmIM
+	8ZI5r3IiqCTc4qIPkFR8A==
+X-ME-Sender: <xms:QTl3aZWlBJkX5HzyD5QNcDooKqKVexDuVi2WCUCySy1Lu-endm28Og>
+    <xme:QTl3aQkfSZLxWeePq8fLEZPwbcakH9Zy65PnI6VD6lfmx6fAG93AFK7SeMnk_64Ek
+    HE4A9gdqWwgEyLE_1qc-RXnmfaVBHKOgRHJ2eCF5_W0iHdBWHKKLw>
+X-ME-Received: <xmr:QTl3aaZaOtOsFUeQ5Nw44mN8kLlE847oBF93oXsXShnIcpnDI6X6Vci8wjigdu1LHsziDwbQpsG2OS9161tjYOncgUvEFvYya5FmpWI3aoU6bA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheejfeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpeehnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Pjl3advcz7B0NHHgCHwY-FPsksuCq4_-3UPpGnLHlnOHLwiI3Rh_9A>
-    <xmx:Pjl3af4AEzr0eTFqwFMy3eo1rdzwzwsOmHUv5YjkHRMV4X6uVHCLFQ>
-    <xmx:Pjl3aQXuuUnONw_K5CXRCKRUMusovurJ_IapiUKNhD5UDtMMlIHGKw>
-    <xmx:Pjl3aZ_pibo5ZN9TMDrG4so0asLzDQ5ztzUTPmu7MqLDcvGuDmaAMg>
-    <xmx:Pjl3aSY4rCChIg0-CJLhyY2JUB3u37JRA7fmAA0zVmepjbNAxdSViLnE>
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:QTl3abPKcbu4ZJD89r-BcFFyFkLgD0QaCKm_idwZMlsQzgTbHSVblA>
+    <xmx:QTl3afZV1c_NKnZCzcyAR2Gr1C-NktTysKMbLX4DnBEq3dmwiaEhLQ>
+    <xmx:QTl3aZ3rbgqz32fq8V4iFPU_3-i_gCu2E4TqEg1fvfanHTAKuPZQtg>
+    <xmx:QTl3aVdzkPuGGtNTi0r4TmpUs5gf7RYq5wWNv0mcKawu6Ecp0SdKUA>
+    <xmx:QTl3aV4M9Q0nO-Cfp0Y0MXBsc-xAJcQDUSE1qhLgj-Ftg_8n1iaIJW1R>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Jan 2026 04:51:57 -0500 (EST)
+ 26 Jan 2026 04:52:00 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 029af5fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 26 Jan 2026 09:51:57 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 6a200348 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Jan 2026 09:51:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 26 Jan 2026 10:51:29 +0100
-Subject: [PATCH v4 13/14] reachable: convert to use `odb_for_each_object()`
+Date: Mon, 26 Jan 2026 10:51:30 +0100
+Subject: [PATCH v4 14/14] odb: drop unused
+ `for_each_{loose,packed}_object()` functions
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260126-pks-odb-for-each-object-v4-13-5a64a038c791@pks.im>
+Message-Id: <20260126-pks-odb-for-each-object-v4-14-5a64a038c791@pks.im>
 References: <20260126-pks-odb-for-each-object-v4-0-5a64a038c791@pks.im>
 In-Reply-To: <20260126-pks-odb-for-each-object-v4-0-5a64a038c791@pks.im>
 To: git@vger.kernel.org
@@ -91,189 +92,208 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.3
 
-To figure out which objects expired objects we enumerate all loose and
-packed objects individually so that we can figure out their respective
-mtimes. Refactor the code to instead use `odb_for_each_object()` with a
-request that ask for the object mtime instead.
+We have converted all callers of `for_each_loose_object()` and
+`for_each_packed_object()` to use their new replacement functions
+instead. We can thus remove them now.
+
+Do so and inline `packfile_store_for_each_object_internal()` now that it
+only has a single callsite again. This makes it a bit easier to follow
+the callback indirection that is happening there.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reachable.c | 125 +++++++++++++++++-------------------------------------------
- 1 file changed, 35 insertions(+), 90 deletions(-)
+ object-file.c | 20 ------------
+ object-file.h | 11 -------
+ packfile.c    | 99 +++++++++++++++++++++--------------------------------------
+ packfile.h    |  2 --
+ 4 files changed, 35 insertions(+), 97 deletions(-)
 
-diff --git a/reachable.c b/reachable.c
-index 82676b2668..101cfc2727 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -191,30 +191,27 @@ static int obj_is_recent(const struct object_id *oid, timestamp_t mtime,
- 	return oidset_contains(&data->extra_recent_oids, oid);
+diff --git a/object-file.c b/object-file.c
+index 5537ab2c37..6785821c8c 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1802,26 +1802,6 @@ int for_each_loose_file_in_source(struct odb_source *source,
+ 	return r;
  }
  
--static void add_recent_object(const struct object_id *oid,
--			      struct packed_git *pack,
--			      off_t offset,
--			      timestamp_t mtime,
--			      struct recent_data *data)
-+static int want_recent_object(struct recent_data *data,
-+			      const struct object_id *oid)
- {
--	struct object *obj;
--	enum object_type type;
-+	if (data->ignore_in_core_kept_packs &&
-+	    has_object_kept_pack(data->revs->repo, oid, KEPT_PACK_IN_CORE))
-+		return 0;
-+	return 1;
-+}
- 
--	if (!obj_is_recent(oid, mtime, data))
--		return;
-+static int add_recent_object(const struct object_id *oid,
-+			     struct object_info *oi,
-+			     void *cb_data)
-+{
-+	struct recent_data *data = cb_data;
-+	struct object *obj;
- 
--	/*
--	 * We do not want to call parse_object here, because
--	 * inflating blobs and trees could be very expensive.
--	 * However, we do need to know the correct type for
--	 * later processing, and the revision machinery expects
--	 * commits and tags to have been parsed.
--	 */
--	type = odb_read_object_info(the_repository->objects, oid, NULL);
--	if (type < 0)
--		die("unable to get object info for %s", oid_to_hex(oid));
-+	if (!want_recent_object(data, oid) ||
-+	    !obj_is_recent(oid, *oi->mtimep, data))
-+		return 0;
- 
--	switch (type) {
-+	switch (*oi->typep) {
- 	case OBJ_TAG:
- 	case OBJ_COMMIT:
- 		obj = parse_object_or_die(the_repository, oid, NULL);
-@@ -227,77 +224,22 @@ static void add_recent_object(const struct object_id *oid,
- 		break;
- 	default:
- 		die("unknown object type for %s: %s",
--		    oid_to_hex(oid), type_name(type));
-+		    oid_to_hex(oid), type_name(*oi->typep));
- 	}
- 
- 	if (!obj)
- 		die("unable to lookup %s", oid_to_hex(oid));
--
--	add_pending_object(data->revs, obj, "");
--	if (data->cb)
--		data->cb(obj, pack, offset, mtime);
--}
--
--static int want_recent_object(struct recent_data *data,
--			      const struct object_id *oid)
+-int for_each_loose_object(struct object_database *odb,
+-			  each_loose_object_fn cb, void *data,
+-			  enum odb_for_each_object_flags flags)
 -{
--	if (data->ignore_in_core_kept_packs &&
--	    has_object_kept_pack(data->revs->repo, oid, KEPT_PACK_IN_CORE))
-+	if (obj->flags & SEEN)
- 		return 0;
--	return 1;
--}
- 
--static int add_recent_loose(const struct object_id *oid,
--			    const char *path, void *data)
--{
--	struct stat st;
--	struct object *obj;
+-	struct odb_source *source;
 -
--	if (!want_recent_object(data, oid))
--		return 0;
+-	odb_prepare_alternates(odb);
+-	for (source = odb->sources; source; source = source->next) {
+-		int r = for_each_loose_file_in_source(source, cb, NULL,
+-						      NULL, data);
+-		if (r)
+-			return r;
 -
--	obj = lookup_object(the_repository, oid);
+-		if (flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY)
+-			break;
+-	}
 -
--	if (obj && obj->flags & SEEN)
--		return 0;
--
--	if (stat(path, &st) < 0) {
--		/*
--		 * It's OK if an object went away during our iteration; this
--		 * could be due to a simultaneous repack. But anything else
--		 * we should abort, since we might then fail to mark objects
--		 * which should not be pruned.
--		 */
--		if (errno == ENOENT)
--			return 0;
--		return error_errno("unable to stat %s", oid_to_hex(oid));
-+	add_pending_object(data->revs, obj, "");
-+	if (data->cb) {
-+		if (oi->whence == OI_PACKED)
-+			data->cb(obj, oi->u.packed.pack, oi->u.packed.offset, *oi->mtimep);
-+		else
-+			data->cb(obj, NULL, 0, *oi->mtimep);
- 	}
- 
--	add_recent_object(oid, NULL, 0, st.st_mtime, data);
 -	return 0;
 -}
 -
--static int add_recent_packed(const struct object_id *oid,
--			     struct packed_git *p,
--			     uint32_t pos,
--			     void *data)
--{
--	struct object *obj;
--	timestamp_t mtime = p->mtime;
+ struct for_each_object_wrapper_data {
+ 	struct odb_source *source;
+ 	const struct object_info *request;
+diff --git a/object-file.h b/object-file.h
+index b5eac0349e..d9979baea8 100644
+--- a/object-file.h
++++ b/object-file.h
+@@ -126,17 +126,6 @@ int for_each_loose_file_in_source(struct odb_source *source,
+ 				  each_loose_subdir_fn subdir_cb,
+ 				  void *data);
+ 
+-/*
+- * Iterate over all accessible loose objects without respect to
+- * reachability. By default, this includes both local and alternate objects.
+- * The order in which objects are visited is unspecified.
+- *
+- * Any flags specific to packs are ignored.
+- */
+-int for_each_loose_object(struct object_database *odb,
+-			  each_loose_object_fn, void *,
+-			  enum odb_for_each_object_flags flags);
 -
--	if (!want_recent_object(data, oid))
--		return 0;
--
--	obj = lookup_object(the_repository, oid);
--
--	if (obj && obj->flags & SEEN)
--		return 0;
--	if (p->is_cruft) {
--		if (load_pack_mtimes(p) < 0)
--			die(_("could not load cruft pack .mtimes"));
--		mtime = nth_packed_mtime(p, pos);
--	}
--	add_recent_object(oid, p, nth_packed_object_offset(p, pos), mtime, data);
- 	return 0;
+ /*
+  * Iterate through all loose objects in the given object database source and
+  * invoke the callback function for each of them. If an object info request is
+diff --git a/packfile.c b/packfile.c
+index 845633139f..57fbf51876 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2327,65 +2327,6 @@ int for_each_object_in_pack(struct packed_git *p,
+ 	return r;
  }
  
-@@ -307,7 +249,13 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
- 					   int ignore_in_core_kept_packs)
- {
- 	struct recent_data data;
--	enum odb_for_each_object_flags flags;
-+	unsigned flags;
-+	enum object_type type;
-+	time_t mtime;
-+	struct object_info oi = {
-+		.mtimep = &mtime,
-+		.typep = &type,
-+	};
- 	int r;
- 
- 	data.revs = revs;
-@@ -318,16 +266,13 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
- 	oidset_init(&data.extra_recent_oids, 0);
- 	data.extra_recent_oids_loaded = 0;
- 
--	r = for_each_loose_object(the_repository->objects, add_recent_loose, &data,
--				  ODB_FOR_EACH_OBJECT_LOCAL_ONLY);
--	if (r)
--		goto done;
+-static int packfile_store_for_each_object_internal(struct packfile_store *store,
+-						   each_packed_object_fn cb,
+-						   void *data,
+-						   unsigned flags,
+-						   int *pack_errors)
+-{
+-	struct packfile_list_entry *e;
+-	int ret = 0;
 -
- 	flags = ODB_FOR_EACH_OBJECT_LOCAL_ONLY | ODB_FOR_EACH_OBJECT_PACK_ORDER;
- 	if (ignore_in_core_kept_packs)
- 		flags |= ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS;
+-	store->skip_mru_updates = true;
+-
+-	for (e = packfile_store_get_packs(store); e; e = e->next) {
+-		struct packed_git *p = e->pack;
+-
+-		if ((flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
+-			continue;
+-		if ((flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) &&
+-		    !p->pack_promisor)
+-			continue;
+-		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS) &&
+-		    p->pack_keep_in_core)
+-			continue;
+-		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS) &&
+-		    p->pack_keep)
+-			continue;
+-		if (open_pack_index(p)) {
+-			*pack_errors = 1;
+-			continue;
+-		}
+-
+-		ret = for_each_object_in_pack(p, cb, data, flags);
+-		if (ret)
+-			break;
+-	}
+-
+-	store->skip_mru_updates = false;
+-
+-	return ret;
+-}
+-
+-int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+-			   void *data, unsigned flags)
+-{
+-	struct odb_source *source;
+-	int pack_errors = 0;
+-	int ret = 0;
+-
+-	odb_prepare_alternates(repo->objects);
+-
+-	for (source = repo->objects->sources; source; source = source->next) {
+-		ret = packfile_store_for_each_object_internal(source->packfiles, cb, data,
+-							      flags, &pack_errors);
+-		if (ret)
+-			break;
+-	}
+-
+-	return ret ? ret : pack_errors;
+-}
+-
+ struct packfile_store_for_each_object_wrapper_data {
+ 	struct packfile_store *store;
+ 	const struct object_info *request;
+@@ -2428,14 +2369,44 @@ int packfile_store_for_each_object(struct packfile_store *store,
+ 		.cb = cb,
+ 		.cb_data = cb_data,
+ 	};
++	struct packfile_list_entry *e;
+ 	int pack_errors = 0, ret;
  
--	r = for_each_packed_object(revs->repo, add_recent_packed, &data, flags);
-+	r = odb_for_each_object(revs->repo->objects, &oi, add_recent_object, &data, flags);
-+	if (r)
-+		goto done;
+-	ret = packfile_store_for_each_object_internal(store, packfile_store_for_each_object_wrapper,
+-						      &data, flags, &pack_errors);
+-	if (ret)
+-		return ret;
++	store->skip_mru_updates = true;
++
++	for (e = packfile_store_get_packs(store); e; e = e->next) {
++		struct packed_git *p = e->pack;
++
++		if ((flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
++			continue;
++		if ((flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) &&
++		    !p->pack_promisor)
++			continue;
++		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS) &&
++		    p->pack_keep_in_core)
++			continue;
++		if ((flags & ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS) &&
++		    p->pack_keep)
++			continue;
++		if (open_pack_index(p)) {
++			pack_errors = 1;
++			continue;
++		}
++
++		ret = for_each_object_in_pack(p, packfile_store_for_each_object_wrapper,
++					      &data, flags);
++		if (ret)
++			goto out;
++	}
++
++	ret = 0;
  
- done:
- 	oidset_clear(&data.extra_recent_oids);
+-	return pack_errors ? -1 : 0;
++out:
++	store->skip_mru_updates = false;
++
++	if (!ret && pack_errors)
++		ret = -1;
++	return ret;
+ }
+ 
+ struct add_promisor_object_data {
+diff --git a/packfile.h b/packfile.h
+index b7964f0289..1a1b720764 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -340,8 +340,6 @@ typedef int each_packed_object_fn(const struct object_id *oid,
+ int for_each_object_in_pack(struct packed_git *p,
+ 			    each_packed_object_fn, void *data,
+ 			    unsigned flags);
+-int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+-			   void *data, unsigned flags);
+ 
+ /*
+  * Iterate through all packed objects in the given packfile store and invoke
 
 -- 
 2.53.0.rc1.267.g6e3a78c723.dirty
