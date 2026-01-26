@@ -1,191 +1,128 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633AD27442
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 01:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9F31E7C34
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 05:14:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769391206; cv=none; b=ZXK71j2eMT8rosbGxSbpS/8T8fWlQDXCuv4FawQJOGxN5rn5QJuLU4DnB5/qAXIfcFVudohwts9vRDJm030ZUvDd9jALC2KEJHpCU7XI+4I6JZ8vD22Dob2M9JL3zK0rJdcUs9SUQCpCXOPt7RBUnw/L0utVeLYWSvA7WTsVlWA=
+	t=1769404492; cv=none; b=Qlxw/NNUgCXHILJFGdXqJz/jbgkZ+ic2XN2HQTASbLYMLEj/SJ0f3q1eBF0kL+6N7K745Mox7lrFWwq+p83VnemGVSz0VO1VKbvI9Sc5CTlBpnLOIfdJWD0IdWs6t/4a1JWfvMJJ9DAQnhGWje3pUxKTKWz7ck/vWhS3vn5EeiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769391206; c=relaxed/simple;
-	bh=UQtpX8wBxrJNe6nP/A9BbYplPC2ulpULNiNXeLQLuyo=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZFAep3Ept+gRkmTfPQvi9rHv1JRNjqN2hJ8EJGRXPVCheDkj1mH5Z0HUZpSVPCeOru+US042MflZFuhwDQfeSXLiEASkhKovnYkH5GJZdOhk2FYVoS6sT/2+9t+IYr3Ckl6OlxvJHw972ptkQkZZa0qou8cTknNOEtKow2QkxyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ijs3OUWd; arc=none smtp.client-ip=74.125.82.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769404492; c=relaxed/simple;
+	bh=eWaHxCk9CbWbVX/MtNhmSQ4Em6AiZNaTSueBEowbJVg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BkgsuEZrwtM42boTM+UZWp8delqxQX4M3EKh7ualpJGCa9yhtTvJXKvNH2bqvc8k0jRjY+gmBqHaMe4t706BWu+gk/XzBiEM1Eam+uWGRWJmdzVlxpx0ZX8Cx7HtoHvivEdtqtJqVFA4WSN1bfEh/Nyo4X3h2lnvmQIUmX1QDgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=T2SHiVds; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ijs3OUWd"
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-124566b6693so8978410c88.0
-        for <git@vger.kernel.org>; Sun, 25 Jan 2026 17:33:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769391204; x=1769996004; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=W1DMgfcOFVJxwzDlnGCBwP8bx2M5A5Hz1gJ4vcSrPns=;
-        b=ijs3OUWdcIggsBJYjfZJ09jJGZpSjAWz2g2WwG51e8J5tlwt/eJWH2YEEV3Zrfi+gG
-         +SgMdIusLhiPefz9m9iOcxVhewnd9ZvGXMwtZznh5wMh+SEnuuVnXbmGl+lqTQQ8fwoa
-         Zz5EswbxiTfY3JWqPCHRokMYI9cva7S0ykMCsNEEouecBfHQHwo1s+e2FmhKtx2Mknav
-         fBSwTTAF1f7EDXzfQbGI8/CJomLVdZ9IFW7fMOHNUvbNM8LS9kJ6qRuU6VCZ3T3TSXwO
-         LGvehsAeHx1pri6xfRIoT74V1TGfxCYo/CRBdSxD4UscTzAWUIVl3oK5Dmt4dCtPGKiK
-         DOYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769391204; x=1769996004;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W1DMgfcOFVJxwzDlnGCBwP8bx2M5A5Hz1gJ4vcSrPns=;
-        b=XktHz0ldzMJL9eJR9+Jz36+VWZXhWXcBMrmgEzPakF3/CknKIvRnz66HhHRoT0RgvT
-         ckHnF2DKyaWsiNAmcTexcsIgpwX7bFoK/g2mVs/Ne+7K//wvzfb0S7uvbt1JMfDz3v1J
-         5i2v3LdGn8iavd1Zd65ytvee4VsotRZmAdzSLoHXOGSsP2KDS4P6wJrkquOu90pjHZ9h
-         4b4ledGHi2r/oetEXPo++96DELR+VUiRevfgWdRqd1f01HNEKYL9Ub+6sR+rj2aEfkPj
-         kqyNssV+D/VteK/34NCnRaoc4Q6uPH4X1g9mJz7V5VhFQ4YkiMyAAnbZoVWjC7kP+JI4
-         Ej+g==
-X-Gm-Message-State: AOJu0Yw0FjAVhQZanHGbQCiRmNc3zVfOMpJ5MZIak18JLb2aWF9yzkdo
-	nC/lLq29mNFtWwNVp/de7A6OP5DtyYrkKO5YHdtFmBaiugrWnjrGIl/O1fu7+Q==
-X-Gm-Gg: AZuq6aLIYCd0IalYxAM0SOvsEINy/3rK/8B4MkQzWxyojxZmzVM68Z5aurZvw1r2iD9
-	wFTDD7ZapIb3lvyRrnEBmZagBu8LmCevv9WGdbHuIT7DmGUkwry/46EWbfb7Ey81j9qGjJ1yDWm
-	zbe0iEeMBHK68bwvxMH8CKdYJthNJboC3uxfoYE7iq7sPfg2edBjpHmfIUgxKjoYuuy8RUmfixL
-	iP9A3KmvXl00q+Kp7Ur9dptFOxjAGxUu3MJcdK2lKmoASHQU1OBgvqUC4/6ewTase3zrLAwSQ5a
-	xs4mpP2QSyYHqmtMsRioccIC9MIX+AKoXNCS/qJo1+D9EsbbmuEhJIJoxwi6c+day+aygcLuZyj
-	48RkDn5C08CdydLEh3FJ2klSUISDbYGZyuKwTi7Y2v52p2SwMUwbRtAPybt6nbRXaBmyjwp1BJb
-	41S+exoGu/sm7uUA==
-X-Received: by 2002:a05:7022:6190:b0:119:e569:f27a with SMTP id a92af1059eb24-1248ec62a7fmr1662383c88.35.1769391203928;
-        Sun, 25 Jan 2026 17:33:23 -0800 (PST)
-Received: from [127.0.0.1] ([52.159.243.179])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1247d91ca0fsm15149892c88.8.2026.01.25.17.33.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Jan 2026 17:33:23 -0800 (PST)
-Message-Id: <pull.2180.git.git.1769391202338.gitgitgadget@gmail.com>
-From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 26 Jan 2026 01:33:22 +0000
-Subject: [PATCH] fsmonitor: fix two bugs in watchman hook retry path
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="T2SHiVds"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1vkEvu-005ALN-Iu
+	for git@vger.kernel.org; Mon, 26 Jan 2026 06:14:38 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+	bh=hrgfG+jxckZBMWzZc5POUVxO+WMia2tH5fodEHIZZYM=; b=T2SHiVds1yyWkhM/yeSjlYkSZs
+	+FqzicfaW3lhWMbO8j1PhX4KxHSjlpmPM+tcgm1Msfz7xRgm79i//CU5qldAWSCIvchHjgpr4RjPC
+	MXQEfLovqtm2oV9hCkqSNL24nThZiimYT285b2COeyJJwBXYQXkyUKEWF/LR7K5j8XHCQbx/O9qdA
+	SCggpnGkW2AbD2MIltG5BBq4ovYBhUMoPLj6oGI6hklz0mLgq4D2QYJ1wsv5ziGMKxg197+oGS7HF
+	KXkS2XNLaYlSWUaJ4BEsOK3fsmvzh9/PqquA8Xf303C8FkrLmvxvgnfdvxjT0/NBJmneKNCQPtrZb
+	Pult9ngA==;
+Received: from [10.9.9.73] (helo=submission02.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1vkEvu-0006iH-2s; Mon, 26 Jan 2026 06:14:38 +0100
+Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1vkEvk-00BKD6-IV; Mon, 26 Jan 2026 06:14:28 +0100
+Message-ID: <023ae712-8f67-441c-aada-fb5b097ec617@howdoi.land>
+Date: Sun, 25 Jan 2026 23:14:25 -0600
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Claude <noreply@anthropic.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [regression][bisected] git-subtree remote desynchronization
+To: Junio C Hamano <gitster@pobox.com>, Christian Heusel <christian@heusel.eu>
+Cc: git@vger.kernel.org, Christian Hesse <list@eworm.de>
+References: <755578cb-07e0-4b40-aa90-aacf4d45ccaa@heusel.eu>
+ <xmqqikcql8cq.fsf@gitster.g> <xmqqecnel2fs.fsf@gitster.g>
+Content-Language: en-US
+From: Colin Stagner <ask+git@howdoi.land>
+In-Reply-To: <xmqqecnel2fs.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Claude <noreply@anthropic.com>
+On 1/24/26 22:51, Junio C Hamano wrote:
 
-The is_work_tree_watched() function in fsmonitor-watchman.sample has
-two bugs:
+> Unless a fix materializes and gets verified before -rc2 (scheduled for
+> coming Tuesday), we should revert the merge of the problematic
+> topic.
+Understood and no worries. This is a surprisingly complicated issue, and 
+while I've made progress I don't think I'll have a fix that is mergeable 
+by Tuesday. Feel free to revert as needed.
 
-1. Wrong variable in error check: After calling watchman_clock(), the
-   result is stored in $o, but the code checks $output->{error} instead
-   of $o->{error}. This means errors from the clock command are silently
-   ignored.
+The "exclude other subtrees" logic was first introduced in 98ba49ccc2 
+(subtree: fix split processing with multiple subtrees present, 
+2023-12-01). It was intended as a speed optimization only, but every 
+iteration of this logic—including mine—has changed the `git subtree 
+split` output in at least one practical repo.
 
-2. Double output violates protocol: When the retry path triggers (the
-   directory wasn't initially watched), output_result() is called with
-   the "/" flag, then launch_watchman() is called recursively which
-   calls output_result() again. This outputs two clock tokens to stdout,
-   but git's fsmonitor v2 protocol expects exactly one response.
+I am becoming increasingly convinced that any version of this logic is 
+likely to change someone's `subtree split` history, somewhere. Our tests 
+just don't cover everything that might be out there.
 
-Fix #1 by checking $o->{error} after watchman_clock().
+The documentation promises that,
 
-Fix #2 by removing the recursive launch_watchman() call. The "/"
-"everything is dirty" flag already tells git to do a full scan, and
-git will call the hook again on the next invocation with a valid clock
-token.
+> Repeated splits of exactly the same history are guaranteed to be
+> identical as long as the settings passed to split are the same.
 
-Apply the same fixes to the test helper scripts in t/t7519/.
+Maybe the safer approach is to gate this logic behind a new CLI option, 
+like "--fast-exclude," "--ignore-other-trees," or something to that effect?
 
-Signed-off-by: Paul Tarjan <github@paulisageek.com>
----
-    fsmonitor-watchman: fix variable reference and remove redundant code
-    
-    The is_work_tree_watched() function in fsmonitor-watchman.sample has two
-    bugs:
-    
-     1. Wrong variable in error check: After calling watchman_clock(), the
-        result is stored in $o, but the code checks $output->{error} instead
-        of $o->{error}. This means errors from the clock command are
-        silently ignored.
-    
-     2. Double output violates protocol: When the retry path triggers (the
-        directory wasn't initially watched), output_result() is called with
-        the "/" flag, then launch_watchman() is called recursively which
-        calls output_result() again. This outputs two clock tokens to
-        stdout, but git's fsmonitor v2 protocol expects exactly one
-        response.
-    
-    Fix #1 by checking $o->{error} after watchman_clock().
-    
-    Fix #2 by removing the recursive launch_watchman() call. The "/"
-    "everything is dirty" flag already tells git to do a full scan, and git
-    will call the hook again on the next invocation with a valid clock
-    token.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2180%2Fptarjan%2Fclaude%2Ffix-watchman-query-bug-sfbIw-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2180/ptarjan/claude/fix-watchman-query-bug-sfbIw-v1
-Pull-Request: https://github.com/git/git/pull/2180
+On 1/24/26 05:43, Christian Heusel wrote:
 
- t/t7519/fsmonitor-watchman                | 1 -
- t/t7519/fsmonitor-watchman-v2             | 5 +----
- templates/hooks/fsmonitor-watchman.sample | 5 +----
- 3 files changed, 2 insertions(+), 9 deletions(-)
+> 1. Update to the 2.53.0-rc1 git release candidate
+> 2. Clone my monorepo for packages in the Arch User Repository:
+>     ```
+>     git clone https://github.com/christian-heusel/aur.git && cd aur
+>     ```
+> 3. Push changes to one of the contained subtree remotes (this would normally be
+>     done via `aurpublish google-chrome`):
+>     ```
+>     git subtree push -P "google-chrome" ssh://aur.archlinux.org/google-chrome.git master
+>     ```
 
-diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
-index 264b9daf83..907bd1533c 100755
---- a/t/t7519/fsmonitor-watchman
-+++ b/t/t7519/fsmonitor-watchman
-@@ -109,7 +109,6 @@ sub launch_watchman {
- 		close $fh;
- 
- 		print "/\0";
--		eval { launch_watchman() };
- 		exit 0;
- 	}
- 
-diff --git a/t/t7519/fsmonitor-watchman-v2 b/t/t7519/fsmonitor-watchman-v2
-index 14ed0aa42d..2c59120c3d 100755
---- a/t/t7519/fsmonitor-watchman-v2
-+++ b/t/t7519/fsmonitor-watchman-v2
-@@ -141,15 +141,12 @@ sub is_work_tree_watched {
- 		# Watchman query just to get it over with now so we won't pay
- 		# the cost in git to look up each individual file.
- 		my $o = watchman_clock();
--		$error = $output->{error};
-+		$error = $o->{error};
- 
- 		die "Watchman: $error.\n" .
- 		"Falling back to scanning...\n" if $error;
- 
- 		output_result($o->{clock}, ("/"));
--		$last_update_token = $o->{clock};
--
--		eval { launch_watchman() };
- 		return 0;
- 	}
- 
-diff --git a/templates/hooks/fsmonitor-watchman.sample b/templates/hooks/fsmonitor-watchman.sample
-index 23e856f5de..21c81b6804 100755
---- a/templates/hooks/fsmonitor-watchman.sample
-+++ b/templates/hooks/fsmonitor-watchman.sample
-@@ -142,15 +142,12 @@ sub is_work_tree_watched {
- 		# Watchman query just to get it over with now so we won't pay
- 		# the cost in git to look up each individual file.
- 		my $o = watchman_clock();
--		$error = $output->{error};
-+		$error = $o->{error};
- 
- 		die "Watchman: $error.\n" .
- 		"Falling back to scanning...\n" if $error;
- 
- 		output_result($o->{clock}, ("/"));
--		$last_update_token = $o->{clock};
--
--		eval { launch_watchman() };
- 		return 0;
- 	}
- 
+I cannot `git subtree push` to your remote, but I can instead run:
 
-base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
--- 
-gitgitgadget
+     git subtree split -P 'google-chrome'
+
+which happens internally prior to the push.
+
+Before the bisected patch [1], running this on your aur.git's master 
+branch [2] generates a split commit with hash:
+
+     e6f4613797c0eea5a8939441a1fb58211e9184e0
+
+This is the result you expect, right?
+
+I am also testing the other subtrees of aur.git to make sure none of 
+them change, either. With the patch reverted, none of them appear to.
+
+I have made some progress on a fix, but I have not yet achieved 100% 
+hash equivalence across the board. The bisected patch will likely be 
+reverted while I work on a more permanent solution.
+
+
+
+[1]: 28a7e27cff (contrib/subtree: detect rewritten subtree commits, 
+2026-01-09)
+
+[2]: aur.git@29bfddf (upgpkg: rider-eap 1:261.17801.69-1, 2026-01-24)
+
