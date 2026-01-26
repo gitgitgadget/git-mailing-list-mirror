@@ -1,128 +1,152 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9F31E7C34
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 05:14:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3E421B191
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 05:58:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769404492; cv=none; b=Qlxw/NNUgCXHILJFGdXqJz/jbgkZ+ic2XN2HQTASbLYMLEj/SJ0f3q1eBF0kL+6N7K745Mox7lrFWwq+p83VnemGVSz0VO1VKbvI9Sc5CTlBpnLOIfdJWD0IdWs6t/4a1JWfvMJJ9DAQnhGWje3pUxKTKWz7ck/vWhS3vn5EeiI=
+	t=1769407107; cv=none; b=jMdcpB3/z+y1OUblK0jsiVFz1V2adVK6g2spV6bZ+klZYg45NCWPkipRtgalUgOLdT9NlmohLx9QYAJKNfl7C7Nz9FOpc0YReIIm73v3+3la/UH4hLWOvv2sFllPrRJJQBfkMa9ve5tvsPliMaCDMkfzkOouF/8AMUyeTxKluOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769404492; c=relaxed/simple;
-	bh=eWaHxCk9CbWbVX/MtNhmSQ4Em6AiZNaTSueBEowbJVg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BkgsuEZrwtM42boTM+UZWp8delqxQX4M3EKh7ualpJGCa9yhtTvJXKvNH2bqvc8k0jRjY+gmBqHaMe4t706BWu+gk/XzBiEM1Eam+uWGRWJmdzVlxpx0ZX8Cx7HtoHvivEdtqtJqVFA4WSN1bfEh/Nyo4X3h2lnvmQIUmX1QDgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=T2SHiVds; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1769407107; c=relaxed/simple;
+	bh=fyXqdEHJbHc3aKI/Cw9jEOEUOVTVWM8est+uVFFTbzo=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=krK6AsDY3akFv8Rly+wRJSEtb3KacRxILhlpGn3fHPexMjenOPkZeiqFwLQ/kWlE++lYCa+vjZJ3pNI619i6HnKFhqHy1KAKu8H3/lzw0StjgxdBn4X3X1tAYk9QNlThnJl2fgXqq5/m6upHQ8YjPoocDQCrCvcMD2cCnV1bd/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lhne+x3T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x4OYdHQe; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="T2SHiVds"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1vkEvu-005ALN-Iu
-	for git@vger.kernel.org; Mon, 26 Jan 2026 06:14:38 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
-	bh=hrgfG+jxckZBMWzZc5POUVxO+WMia2tH5fodEHIZZYM=; b=T2SHiVds1yyWkhM/yeSjlYkSZs
-	+FqzicfaW3lhWMbO8j1PhX4KxHSjlpmPM+tcgm1Msfz7xRgm79i//CU5qldAWSCIvchHjgpr4RjPC
-	MXQEfLovqtm2oV9hCkqSNL24nThZiimYT285b2COeyJJwBXYQXkyUKEWF/LR7K5j8XHCQbx/O9qdA
-	SCggpnGkW2AbD2MIltG5BBq4ovYBhUMoPLj6oGI6hklz0mLgq4D2QYJ1wsv5ziGMKxg197+oGS7HF
-	KXkS2XNLaYlSWUaJ4BEsOK3fsmvzh9/PqquA8Xf303C8FkrLmvxvgnfdvxjT0/NBJmneKNCQPtrZb
-	Pult9ngA==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1vkEvu-0006iH-2s; Mon, 26 Jan 2026 06:14:38 +0100
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1vkEvk-00BKD6-IV; Mon, 26 Jan 2026 06:14:28 +0100
-Message-ID: <023ae712-8f67-441c-aada-fb5b097ec617@howdoi.land>
-Date: Sun, 25 Jan 2026 23:14:25 -0600
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lhne+x3T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x4OYdHQe"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 02AB91D0005D;
+	Mon, 26 Jan 2026 00:58:23 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 26 Jan 2026 00:58:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1769407103;
+	 x=1769493503; bh=H4quCznUVE3Mch1K27U2Z52BjB5QZdw8qc0MTDYWKDk=; b=
+	lhne+x3TZlsbD03F73IeSK45ny+Vidpjj5/eWYjruHeFwoqL3kOWYbEO/EdKR8RW
+	CEta2X+tIlxHi4v1k6dsKfVfY28UuG5uViq6VqQy4/BzHlQEkJ4esInsc1OHyPzu
+	KfUkRX88OOqws5fpZnRmfkQLjyTSuJqJODRpzU5q8poNUL2kJdkYRnWgIX+MUZ8F
+	JZ7Vn/JtzBPQKD36s8s9GT+X++g2feZ1/KBBibG/zuxIGJeC65BfsSBjDpyhY0pa
+	/Rs6Z47/VVtchXFlzbJ7sH1M1cNlTbEYMZuNKyCwq81Bf6KsAahUiigt8iTu5EV5
+	+W8rrKRPA+u6S+f8io/Xbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1769407103; x=1769493503; bh=H
+	4quCznUVE3Mch1K27U2Z52BjB5QZdw8qc0MTDYWKDk=; b=x4OYdHQe4BN+TK9pa
+	XOvT1gEMeT9d6nKMRrgy7rvqY66KtLIRumPhUkw7gD3OrHwATsEcq1p6Edi8FlJb
+	4dIJ9lllUySO7uLOeXZ5Wlg6LaixXNvkVVFHZoNk+l4iCQPko4fzRXozcgMtAzAD
+	MLZHMZ/tixX7CsKxJmRP4ij6L0Ik3RE6jhLenZJjG2LVbX7SBqG3Jiwy1UHuUntJ
+	WBM5Fh9kJeH/CYBJJU4+ngoxWa5BIRHAg/m1sUvzT+R1Wn9M1/l6IBr3vOJ5+wuM
+	RWtqBTYOg5XwPTZWysdKgvZ/sxobmeLD4g19F+19ZZXFlcVUcQ1+2CKf9looGd7I
+	RB2yQ==
+X-ME-Sender: <xms:fwJ3aSa2I0RTEOeI_OCcCrD7qrb0rxMatCuVgIbUJyzha0N_mAwefi4>
+    <xme:fwJ3aQOGcdOnOiz99ve0W67i732VU6EfxHCJVj5FH14zCZnCC541gOP7WAGODcyx-
+    bPb0n5zxGzi5R2DYq8orRBdEIhioCv7u2NUBP6hmRexbyoLD-2a5Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheeikeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeevkefhgeejuddv
+    ffehlefgfeejuddvieevueeifefhhfelieekgfetffeuteefieenucffohhmrghinheprg
+    hstghiihguohgtthhorhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhgih
+    htghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:fwJ3ac2LaBl8HCobr0__vP5HRuWPu9UKBS7TyC60Uumc9u2zkS6ULA>
+    <xmx:fwJ3ae035E65h8FZhUwzzZGhhTj94kdF2lsl63sbMpQvr_Ujcppk1A>
+    <xmx:fwJ3aX85SCB-QBu3Km_Sc3aoY7j9luXHWe3W4mZOFn-sSiFpklHG2g>
+    <xmx:fwJ3aT0WDtCz8nIOkzUWuWV6wLEoDaIIjXwE73GRh6F-NOBh88s_JA>
+    <xmx:fwJ3aRUVI-QpeWBQkNtM6Vdf3aAkheNyaoh4ug3wAYZ8lxhjsYDI_L2r>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A65BD1EA006B; Mon, 26 Jan 2026 00:58:23 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [regression][bisected] git-subtree remote desynchronization
-To: Junio C Hamano <gitster@pobox.com>, Christian Heusel <christian@heusel.eu>
-Cc: git@vger.kernel.org, Christian Hesse <list@eworm.de>
-References: <755578cb-07e0-4b40-aa90-aacf4d45ccaa@heusel.eu>
- <xmqqikcql8cq.fsf@gitster.g> <xmqqecnel2fs.fsf@gitster.g>
-Content-Language: en-US
-From: Colin Stagner <ask+git@howdoi.land>
-In-Reply-To: <xmqqecnel2fs.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AC2L5HFm1BQs
+Date: Mon, 26 Jan 2026 06:58:03 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Message-Id: <0dec5e08-f4a2-4bcd-9324-b0fcbc2fabe0@app.fastmail.com>
+In-Reply-To: <3926333.kQq0lBPeGt@piment-oiseau>
+References: <pull.2036.git.1769202903.gitgitgadget@gmail.com>
+ <d078e1d94fcf8511743787623f0c1abfd0321849.1769202903.git.gitgitgadget@gmail.com>
+ <51016c02-40de-431f-a4ba-e08cb1bb8235@app.fastmail.com>
+ <3926333.kQq0lBPeGt@piment-oiseau>
+Subject: Re: [PATCH 4/4] doc: convert git-show to synopsis style
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 1/24/26 22:51, Junio C Hamano wrote:
+On Sun, Jan 25, 2026, at 22:11, Jean-No=C3=ABl AVILA wrote:
+>>[snip]
+>> >  +
+>> >  This format is used to refer to another commit in a commit message=
+ and
+>> >  is the same as ++--pretty=3D\'format:%C(auto)%h (%s, %ad)'++.  By =
+default,
+>>
+>> Not changed in this patch but this doesn=E2=80=99t render correctly f=
+or me. It=E2=80=99s
+>> not inline verbatim/code all the way through. But it is correct if I
+>> remove the `\`.
+>>
+>> I don=E2=80=99t know why `++` was used either.
+>
+> That's where the synopsis style fails. If we use backticks for this sp=
+an, the
+> parenthesis are interpreted as grammar signs, whereas here, we intend =
+to pass
+> the whole span as verbatim.
+>
+>
+> For asciidoc.py, using the verbatim form '++' ensures that the whole s=
+pan is
+> treated as such. On my computer (asciidoc.py version 10.2.1), this ren=
+ders as
+> correctly.
+>
+> For asciidoctor unfortunately, the synopsis processing is performed ve=
+ry late
+> in the generation, after all parsing has been done. So, the '++' verba=
+tim is
+> processed the same way as backticked contents. I haven't found a better
+> alternative. The output is this wrongly processed span here.
+>
+> This is the least breaking way I found. It means that for asciidoc.py,=
+ we can
+> bypass the synopsis style with '++' formatting.
+>
+> If I remove the backslash in this, the span inside the single quotes is
+> converted to italics by both engines.
+>
+> Can you describe your setup?
 
-> Unless a fix materializes and gets verified before -rc2 (scheduled for
-> coming Tuesday), we should revert the merge of the problematic
-> topic.
-Understood and no worries. This is a surprisingly complicated issue, and 
-while I've made progress I don't think I'll have a fix that is mergeable 
-by Tuesday. Feel free to revert as needed.
+    $ asciidoc --version
+    asciidoc 10.1.2
+    $ asciidoctor --version
+    Asciidoctor 2.0.20 [https://asciidoctor.org]
+    Runtime Environment (ruby 3.1.4p223 (2023-03-30 revision 957bb7cb81)=
+ [x86_64-linux]) (lc:US-ASCII fs:US-ASCII in:US-ASCII ex:US-ASCII)
 
-The "exclude other subtrees" logic was first introduced in 98ba49ccc2 
-(subtree: fix split processing with multiple subtrees present, 
-2023-12-01). It was intended as a speed optimization only, but every 
-iteration of this logic—including mine—has changed the `git subtree 
-split` output in at least one practical repo.
+Anything else that is relevant?
 
-I am becoming increasingly convinced that any version of this logic is 
-likely to change someone's `subtree split` history, somewhere. Our tests 
-just don't cover everything that might be out there.
-
-The documentation promises that,
-
-> Repeated splits of exactly the same history are guaranteed to be
-> identical as long as the settings passed to split are the same.
-
-Maybe the safer approach is to gate this logic behind a new CLI option, 
-like "--fast-exclude," "--ignore-other-trees," or something to that effect?
-
-
-On 1/24/26 05:43, Christian Heusel wrote:
-
-> 1. Update to the 2.53.0-rc1 git release candidate
-> 2. Clone my monorepo for packages in the Arch User Repository:
->     ```
->     git clone https://github.com/christian-heusel/aur.git && cd aur
->     ```
-> 3. Push changes to one of the contained subtree remotes (this would normally be
->     done via `aurpublish google-chrome`):
->     ```
->     git subtree push -P "google-chrome" ssh://aur.archlinux.org/google-chrome.git master
->     ```
-
-I cannot `git subtree push` to your remote, but I can instead run:
-
-     git subtree split -P 'google-chrome'
-
-which happens internally prior to the push.
-
-Before the bisected patch [1], running this on your aur.git's master 
-branch [2] generates a split commit with hash:
-
-     e6f4613797c0eea5a8939441a1fb58211e9184e0
-
-This is the result you expect, right?
-
-I am also testing the other subtrees of aur.git to make sure none of 
-them change, either. With the patch reverted, none of them appear to.
-
-I have made some progress on a fix, but I have not yet achieved 100% 
-hash equivalence across the board. The bisected patch will likely be 
-reverted while I work on a more permanent solution.
-
-
-
-[1]: 28a7e27cff (contrib/subtree: detect rewritten subtree commits, 
-2026-01-09)
-
-[2]: aur.git@29bfddf (upgpkg: rider-eap 1:261.17801.69-1, 2026-01-24)
-
+>
+>>
+>> This looks correct just looking quickly over.
+>>[snip]
