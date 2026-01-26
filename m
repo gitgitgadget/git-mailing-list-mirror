@@ -1,142 +1,262 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0E3308F38
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 22:32:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769466734; cv=none; b=o6nB7FLHmJ21krK0elY+Ii8Jnhyrpw3sGuTxjL4rg6XuQBPfpKW86eu5UtS5JLjHw5/H9PZd4Pf+fVQtWCjxedrx/TdA1rOyQpK0bdPUBwEzxGFOJbOQwETEMcUkCKZRE5P/MujVsuUlA0qXvg+Ymg68JyL09q8Sp2rwk9mWL7w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769466734; c=relaxed/simple;
-	bh=k3G/t8APawwshlr5hPBrMyfnTp4EkQkqthRyEFMKfdg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sGFzCABYiF37YQ4e0FORvisDTgguWz590/Fqg3Jm0RqF4DFg+cZJm4/0bEVefIzw4krSWwum+sz2khcZawlD3iIQr9+n6ooi/L7C4iQGAzElz+v1blkaOERVWAyWHLNi76Nt135Wyfi82wv9tQf/P+jNYdnHDC4MnZrecnT26yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kJMR1Wxh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FpHTPoh3; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644E526299
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 23:21:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769469667; cv=pass; b=frJZCnkqiZ9cuD/lNBfNV08OKeYXGClKGhI7qldE9tyRebNACpAE38IAptGa57EEQNSLoMxMY5NKoKRZ8WME1BNlsE0dPQB7vjeJj8UAhgQGBAY7V9xXCRM8EwkFPdPuLkvtgNjE+EFNCXyy1TDwKygSl7UWgidtV4wVc1F+44A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769469667; c=relaxed/simple;
+	bh=mP0TkfTNI3F9myrqOLj3QERte6y6ovrTIDYG2s55JBE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZJU69rNYENOJo8U2Afx41wsZxC8pjybHaXhVXgCE+rFMiAr2B+Kab/O6LnK3/blBnjc5jcG71SWzInbiae82+xDZw5Yk38wTMImXvyRcucw6zA1JYcaxpqu0zBQepc9qeLdpIworA0ZA0KFJS01MidWiKpE5EEm5/+gXvvfLRWw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JL2WmG0z; arc=pass smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kJMR1Wxh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FpHTPoh3"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D99FF7A00D4;
-	Mon, 26 Jan 2026 17:32:11 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Mon, 26 Jan 2026 17:32:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1769466731;
-	 x=1769553131; bh=xbMGw3Y7+IAIDe4VfLSW+B23R4FANWtenK4gkjFurrw=; b=
-	kJMR1Wxh1qE1bohw/62/Vcnb4mZ1E2YCWi40Ud+hn9/Z6S8d7H6DVTiWfRkJB3z3
-	f4WMRDECOeCBxFt/wAdRqWSR7Iz/JJW7j4QhppYYo76/pqVNbP/PelwdIETgeRK7
-	5pFwKFXQvhynndGN3S6IAVQakPmaOQhHRa9phxcQJsaKLrf0GIzYVO9bDv880z5b
-	L5pd279Vp5JxOigt10Zxl4DEcu8mAu4lyG+MclwnH97vwFrNGj/3YEdfLUVjR9cg
-	ZpKEI13dOXFHzDO3QXlF4Bc+8oxVxwQSq6Qd8CD+XxlQRDpLllbBhTxzvghWKcxi
-	j0gV+ept5Jm+7vL2Ha6+fg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769466731; x=
-	1769553131; bh=xbMGw3Y7+IAIDe4VfLSW+B23R4FANWtenK4gkjFurrw=; b=F
-	pHTPoh3sQVx5MxBeqtgiDHufw5SjtBSUDmG2x+9u9/q6GzxYAbmmINl/gYgaUpWB
-	43sTyF4kb5EVFq3z7fVHme7i9eE02wsKmjXsmSFxb3T+EeJzIJjcvl8QudEtgGJ6
-	KNcbIQ1gCPtbEX+RlHx0eGCufQhZkp0kpHiNO2gZom+Ic21gNHbKlqUMkFRdf0eT
-	61DXoVayJ4KWUoensChXb0PcEuxHYhSeTBi7GEmbE1zv2PlcqqjYXGRY/noPaEDP
-	2LaAsLVvf2PRYXA+tIxTRqZnl4CXCnPi1mkkB66B8APodrVEA4XWwoLjskjHsR+/
-	K4ymp/MI7NVd/+g+VfGhw==
-X-ME-Sender: <xms:a-t3aR_ULcCPydvaqqgUM-PpOEsJLX2eL5dAuFQU__6Fa27y3t7CaA>
-    <xme:a-t3aX8veW1p_w662W2GH9jwh611BV65z1FMR0Mu4dXadL3sPmAlFLruRuyUisgEA
-    ijWgVja8NtW4GGaYBewlaNXQb2fu2LJf2uC-6klkJSt3p7JxrNTqA>
-X-ME-Received: <xmr:a-t3aRQvnVNhMiMCF0S7GKL1opplnZft8prGGHB7qvfs_gOALCN4bFtC1US4J3SGqd_SpoqFq-JfdbZmSHHKkFJsS0lPPdCIAIwyqR8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheekkeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
-    epmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrg
-    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghr
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:a-t3abdxWB-VEeIbzFOJEcoqI7fHC6qHrs67mUV_L_j9JDyarrKYbQ>
-    <xmx:a-t3aVCpO51XmBJohYKNAiHVsWMDXnjEQwgtUYIXI7o6Z69XcxBCNg>
-    <xmx:a-t3adlWklSbHSpxQNtePQOfUq7nbHtstUGwXn7S4K-PE1STMcvmSA>
-    <xmx:a-t3aQdMPC5SKpV1uIBSWadKr8c4dPjkLYrwA-QIIleRhAUp3VF1kg>
-    <xmx:a-t3ab-neVaIIrzYLeCtrrRyeMEQkHSybmDwqyIytmGGa240ggFWcGHi>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Jan 2026 17:32:11 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
- Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 02/14] odb: fix flags parameter to be unsigned
-In-Reply-To: <20260122192337.GC2098026@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 22 Jan 2026 14:23:37 -0500")
-References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
-	<20260121-pks-odb-for-each-object-v3-2-12c4dfd24227@pks.im>
-	<20260121211128.GB723458@coredump.intra.peff.net>
-	<aXFosXv328ZPjlcw@nand.local> <xmqqcy31pscg.fsf@gitster.g>
-	<20260122192337.GC2098026@coredump.intra.peff.net>
-Date: Mon, 26 Jan 2026 14:32:09 -0800
-Message-ID: <xmqqsebsgg46.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JL2WmG0z"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-5014b5d8551so106991cf.0
+        for <git@vger.kernel.org>; Mon, 26 Jan 2026 15:21:06 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769469665; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ba9uqmAZPRW+9rgryoKoAh6TTuXV78XmxdJeD8A4F2xthACDDHWsRJZqw+Xc9/wLjn
+         3Ho445mJl9c7dSr0j98HPlM19gSv3Zzai6gdQOW+ya5BAM21dMUKvPKKqkuvNDbunDIj
+         lWhIZCQgXGENRuXuqMBvMX0vDYf5263mf0w+XGgoF0rOXSM2iyZslbZiaPJcIqsMfSXH
+         7FoPhMluUmme/NtvpjungPNwZbXDQyedzo2tkTvAH1VNVo0WbIM7vKE0XSRmFOd7vxey
+         49R+p7QDYWlnWkjDsVuCl+7kIYQK7WnHe/xsKkPrgHuPYqzGbNXzsLm7R0IzUPtiVMkD
+         kM0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=OMr4glMfgx1+LzQ7aWzR4wuE/lQJI1XLMnY+w0Lxq80=;
+        fh=INB6v7jaN1m+DgzCYr30VT5ZPUqyw5MGy8YuRnth5CI=;
+        b=LFid0Li/HMpW4rJBcoX2yyBe5tbekaOT6gmbqGbwEnH63sNTRpe9dbRBLEGK+z7UdD
+         0NkgUs0qTb1KkqkBfOzlTSW6drBRuyqprtPg/efZBnQlnR/xnyJiqnLogP95cghFQWm7
+         AvcmN3FLkeyAN5a1M67nnG+7POQn0v6bVLlDITSedAje0M+EWG+8ffCYsV2G87dJS6h+
+         8RSZtGOnjWZH9eJIQbVZIym8UQQZdm9oqE9WkTOrCLfvG/Tcy8Y+Tw07Z+TWGgHk7S17
+         D/mn2+euXqgjMMGP3nwNvEtYFfwChAJ5+sQlvUV2le+WVHIE9wVKNLqYNHgG5k/zYbio
+         V2Lw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1769469665; x=1770074465; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OMr4glMfgx1+LzQ7aWzR4wuE/lQJI1XLMnY+w0Lxq80=;
+        b=JL2WmG0zFroESv0q4S911fcJN5qmF+SYb7QQ3QgR9oaSmR89PsQA1btFk7OEtKGHjX
+         2MCQ3ePZD6U4j3nWPhj51jH5S0yAUeQwUQfQgQtU4gHJ2p3f6HO56su69EjmovBckgkK
+         ZYth1OzeoLZLtNbdmnKqsKml4mRSO7/++ErC3Lkr1peOuMB0NAoqjv4dQc6d+b50G6Rq
+         gHvD4gCNRtaxD5QRLl1N6ysVRONSvx3u5/PpXgiFr8mzF3tV4vjDjNzoeNT+AG/NrrcT
+         z7dnBP0zwjGSpBi4HsZVgkxx91+V7+ylmvl8cn375Igvwra7p8vkl68Z29bJaDQY0kSV
+         fR6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769469665; x=1770074465;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=OMr4glMfgx1+LzQ7aWzR4wuE/lQJI1XLMnY+w0Lxq80=;
+        b=koJJlbBk3+0o6kGi80VkIzsq21SGDKIu9/61PgS6cgnj/e/rBNuclNx/w7dNlr86a6
+         0wEMOtucU85fLBmf2dmjqwE99DzCE5FPSiZqmJ2IoYrci70h7Tv6EwPtsLdU4MEcMCSt
+         Nunrg3Htprk5enQtrj+ZBKicy7so/zK6/GQIWg/9ihzaeNA385cRd+etBo3rOpkRPteo
+         KeXk++Q99tB8tqGbSzFS9ZsBj8rs9a5QLHhi3is+9SAfD0fj/z2/L4rFFUE3m9Phmswr
+         5lV5fSq5D+5RRX1LAxw3WDthR4LdVYv/aG9xKG6k3y3j4e2AKS/c13rW0p4buIJJmXNh
+         PXzg==
+X-Gm-Message-State: AOJu0YxA1rxFfkegUhLt7z0pm6i8bQ2CMeCpVnW00V1ztgqBJBGO8uPG
+	g+dBmZzkM8IAvFq9pM7paOCXKtpFgoKTvxsU4EPOmENr7TIIyg5KxOiGDADbMOPGu5OdVEQv6XX
+	os/GFNmKQSl1HFmjoqKr+RfhIp6PxwGiGWQh3wO32
+X-Gm-Gg: AZuq6aKILIPkabpWyvUL6gOR6upWymZDZJOps7+Y80NPmSE4iITe7kBLGLDUcDfaS2E
+	Y0AeWYH/hSMgA+RFgvMNr6HhgKJXPjvwZcOCKfHdcgksYxfBUjjPL1ikSS1QwjoQRIy1Rnw0j3F
+	640QT9dBkoGjOyym4Ijflkwq17SLBiFhPsMsI0bKMA7DNNpkxAKNWQKK+dWbXuA3WQGyjYNAD1F
+	/nTvP2joNSpK3bXnJmL5nkU8LZblg6iQBd+8nqPbz8FRiEqemtYdmUV5e8hd9zPDUcApSgDtdLU
+	nCrj8N3XiDzReEwKZhYJJlNY7r5W7A==
+X-Received: by 2002:ac8:5ac7:0:b0:502:f58b:49bb with SMTP id
+ d75a77b69052e-50314355482mr5473631cf.9.1769469664955; Mon, 26 Jan 2026
+ 15:21:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20260121215436.1473800-1-adrian.ratiu@collabora.com> <20260121215436.1473800-11-adrian.ratiu@collabora.com>
+In-Reply-To: <20260121215436.1473800-11-adrian.ratiu@collabora.com>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Mon, 26 Jan 2026 15:20:53 -0800
+X-Gm-Features: AZwV_QibthehxUl92PHthOH8HI7YsnN0u06iHyGJjwBNvdloz9EwOUZhn2BcC7c
+Message-ID: <CAJoAoZn9Y1xqtc1hWDvM+_rmcANkGUtfSA1HGTaHjtw0DuXyAw@mail.gmail.com>
+Subject: Re: [PATCH v7 10/12] run-command: poll child stdin in addition to stdout
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	Patrick Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jan 21, 2026 at 1:55=E2=80=AFPM Adrian Ratiu <adrian.ratiu@collabor=
+a.com> wrote:
+>
+> Child input feeding might hit the 100ms output poll timeout as a
+> side-effect of the ungroup=3D0 design when feeding multiple children
+> in parallel and buffering their outputs.
+>
+> This throttles the write throughtput as reported by Kristoffer.
+>
+> Peff also noted that the parent might block if the write pipe is full
+> and cause a deadlock if both parent + child wait for one another.
+>
+> Thus we refactor the run-command I/O loop so it polls on both child
+> input and output fds to eliminate the risk of artificial 100ms
+> latencies and unnecessarily blocking the main process.
+>
+> This ensures that parallel hooks are fed data ASAP while maintaining
+> responsiveness for (sideband) output.
+>
+> It's worth noting that in our current design, sequential execution
+> is not affected by this because it still uses the ungroup=3D1 behavior.
+>
+> Reported-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+> Suggested-by: Jeff King <peff@peff.net>
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+> ---
+>  run-command.c | 61 ++++++++++++++++++++++++++++++++++++---------------
+>  1 file changed, 43 insertions(+), 18 deletions(-)
+>
+> diff --git a/run-command.c b/run-command.c
+> index aaf0e4ecee..dfd2aeda07 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1562,7 +1562,7 @@ static void pp_init(struct parallel_processes *pp,
+>
+>         CALLOC_ARRAY(pp->children, n);
+>         if (!opts->ungroup)
+> -               CALLOC_ARRAY(pp->pfd, n);
+> +               CALLOC_ARRAY(pp->pfd, n * 2);
+>
+>         for (size_t i =3D 0; i < n; i++) {
+>                 strbuf_init(&pp->children[i].err, 0);
+> @@ -1707,21 +1707,52 @@ static void pp_buffer_stdin(struct parallel_proce=
+sses *pp,
+>         }
+>  }
+>
+> -static void pp_buffer_stderr(struct parallel_processes *pp,
+> -                            const struct run_process_parallel_opts *opts=
+,
+> -                            int output_timeout)
+> +static void pp_buffer_io(struct parallel_processes *pp,
+> +                        const struct run_process_parallel_opts *opts,
+> +                        int timeout)
+>  {
+> -       while (poll(pp->pfd, opts->processes, output_timeout) < 0) {
+> +       /* for each potential child slot, prepare two pollfd entries */
+> +       for (size_t i =3D 0; i < opts->processes; i++) {
+> +               if (child_is_working(&pp->children[i]) &&
+> +                   pp->children[i].process.err > 0) {
 
-> I don't think there's any disagreement over using enums in general. It's
-> just a question of what type to declare in function interfaces.
->
->>  (1) enum gives a false sense of type safety to casual coders. If I
->>      have two enum types and pass one to as a parameter to a
->>      function that expects the other one, would the compiler help me
->>      catch that as a potential mistake?  -Wenum-conversion is not
->>      enabled even with -Wall so I am assuming that the compiler
->>      folks fells that it is not reliable enough.
->
-> It is enabled with -Wextra, which we turn on with DEVELOPER=1. I think
-> gcc will catch the most obvious mismatches like:
->
->   enum one { FOO };
->   enum two { BAR };
->   void func(enum one value);
->   void doit(void) { func(BAR); }
->
-> which yields:
->
->   $ gcc -c -Wall -Wextra foo.c
->   foo.c: In function ‘doit’:
->   foo.c:4:24: warning: implicit conversion from ‘enum two’ to ‘enum one’ [-Wenum-conversion]
->       4 | void doit(void) { func(BAR); }
->         |                        ^~~
+I only had the one tiny nit on this patch, which was to wonder if
+checking for pp->children[i].process.err is something that should also
+be behind a conveniently-named helper like child_is_working().
 
-This is good.  I think we just saw a potential use of this feature
-in Patrick's topic to turn a #define to an enum in <odb.h>.
-
->>  (2) it is not easy to force an enum type to be unsigned, unless you
->>      are at C23 or above.  If shifting enums are warned by the
->>      compilers by default, I wouldn't worry about it, but use of
->>      unsigned is more explicit in this regard.
+> +                       pp->pfd[2*i].fd =3D pp->children[i].process.err;
+> +                       pp->pfd[2*i].events =3D POLLIN | POLLHUP;
+> +               } else {
+> +                       pp->pfd[2*i].fd =3D -1;
+> +               }
+> +
+> +               if (child_is_receiving_input(&pp->children[i])) {
+> +                       pp->pfd[2*i+1].fd =3D pp->children[i].process.in;
+> +                       pp->pfd[2*i+1].events =3D POLLOUT;
+> +               } else {
+> +                       pp->pfd[2*i+1].fd =3D -1;
+> +               }
+> +       }
+> +
+> +       while (poll(pp->pfd, opts->processes * 2, timeout) < 0) {
+>                 if (errno =3D=3D EINTR)
+>                         continue;
+>                 pp_cleanup(pp, opts);
+>                 die_errno("poll");
+>         }
 >
-> Do we need to force unsignedness for bit-flags? The compiler will use a
-> type that is sufficiently large for the enum values defined, and I would
-> not expect anybody to shift them.
-
-Yes, as long as nobody shifts, it does not matter.  It's just not
-having to worry about it trumps having to declare that we would
-immediately notice if anybody does something strange like that ;-)
-
+> -       /* Buffer output from all pipes. */
+>         for (size_t i =3D 0; i < opts->processes; i++) {
+> +               /* Handle input feeding (stdin) */
+> +               if (pp->pfd[2*i+1].revents & (POLLOUT | POLLHUP | POLLERR=
+)) {
+> +                       int ret =3D opts->feed_pipe(pp->children[i].proce=
+ss.in,
+> +                                                 opts->data,
+> +                                                 pp->children[i].data);
+> +                       if (ret < 0)
+> +                               die_errno("feed_pipe");
+> +                       if (ret) {
+> +                               close(pp->children[i].process.in);
+> +                               pp->children[i].process.in =3D 0;
+> +                       }
+> +               }
+> +
+> +               /* Handle output reading (stderr) */
+>                 if (child_is_working(&pp->children[i]) &&
+> -                   pp->pfd[i].revents & (POLLIN | POLLHUP)) {
+> +                   pp->pfd[2*i].revents & (POLLIN | POLLHUP)) {
+>                         int n =3D strbuf_read_once(&pp->children[i].err,
+>                                                  pp->children[i].process.=
+err, 0);
+>                         if (n =3D=3D 0) {
+> @@ -1814,21 +1845,15 @@ static int pp_collect_finished(struct parallel_pr=
+ocesses *pp,
+>
+>  static void pp_handle_child_IO(struct parallel_processes *pp,
+>                                 const struct run_process_parallel_opts *o=
+pts,
+> -                               int output_timeout)
+> +                               int timeout)
+>  {
+> -       /*
+> -        * First push input, if any (it might no-op), to child tasks to a=
+void them blocking
+> -        * after input. This also prevents deadlocks when ungrouping belo=
+w, if a child blocks
+> -        * while the parent also waits for them to finish.
+> -        */
+> -       pp_buffer_stdin(pp, opts);
+> -
+>         if (opts->ungroup) {
+> +               pp_buffer_stdin(pp, opts);
+>                 for (size_t i =3D 0; i < opts->processes; i++)
+>                         if (child_is_ready_for_cleanup(&pp->children[i]))
+>                                 pp->children[i].state =3D GIT_CP_WAIT_CLE=
+ANUP;
+>         } else {
+> -               pp_buffer_stderr(pp, opts, output_timeout);
+> +               pp_buffer_io(pp, opts, timeout);
+>                 pp_output(pp);
+>         }
+>  }
+> @@ -1836,7 +1861,7 @@ static void pp_handle_child_IO(struct parallel_proc=
+esses *pp,
+>  void run_processes_parallel(const struct run_process_parallel_opts *opts=
+)
+>  {
+>         int i, code;
+> -       int output_timeout =3D 100;
+> +       int timeout =3D 100;
+>         int spawn_cap =3D 4;
+>         struct parallel_processes_for_signal pp_sig;
+>         struct parallel_processes pp =3D {
+> @@ -1876,7 +1901,7 @@ void run_processes_parallel(const struct run_proces=
+s_parallel_opts *opts)
+>                 }
+>                 if (!pp.nr_processes)
+>                         break;
+> -               pp_handle_child_IO(&pp, opts, output_timeout);
+> +               pp_handle_child_IO(&pp, opts, timeout);
+>                 code =3D pp_collect_finished(&pp, opts);
+>                 if (code) {
+>                         pp.shutdown =3D 1;
+> --
+> 2.52.0.732.gb351b5166d.dirty
+>
