@@ -1,169 +1,175 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E8433556A
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 12:18:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503EC3EBF33
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 12:48:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.233.160.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769429881; cv=none; b=Q2I3co34xhw9qdmJK4x7NlXvP/qCYfjTJOWWi4rvHXS3BxRV6jZ2NFcG4xQo034pEEQBuXm+oYxtf3znNmM6Y5FePN7JktneypqozB1/OZvnwAGqyRQRwGoxc5b1Xc0BOUCRWcWOFCswKqjnVBntO3gImYJsApgcK7YwysSkkG0=
+	t=1769431704; cv=none; b=c5UV5OIEd+FrEajVGCB/sHOU5g/MTxdN96dDiQW14okT5ECe2n4mhw3qhLVg7qT60yI3JNpFHww8JyqjkDDtTPIw1w923sjMAe+hYTDjRqqM4WqrTk83ad2DUmnhWaYTOPF4Yw+6n+QJyMZ8gcl1wIa4sj6niBhAqFFYffPX81k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769429881; c=relaxed/simple;
-	bh=AGukXQwHjQifmiWxVPdVvpljx9Un7aSGH2/EmrLYjdQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=P9dwDPbdw6/RiJ/Garf5/f2VCxnJli0buFn04FrvN8iDXu9ufgk8Ky+dd9SNzeN7BHVtHGomBvSAyZXGx4mKimWiB32j8uWDnXtwMMEDCQwbZQ8Bso2q9g6jX/vgEcwer/l/nzCt6UqJKZG6CHFLBWbjh4Onx1QRkDBe8euQ7WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nzd1UsNQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Taq1eQPD; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1769431704; c=relaxed/simple;
+	bh=e+aOvmEOiAvp5QI+pHXbnXxGC068qUR/WYMT18zWas8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=f11R65ZoU0pN3AP+JrQt1RiX7FchZD1bkGpvpadp+OenXzUlCqY4U++BRaR4ki1soOBJE5Hq+bPj35+lipwYC0Qf9nIeivYLJ8mUcjYf8Wk11SYd4YDX6IgKw6NGESe8ajA9/NlLKWHKYoQ65uF7kTkjwEqp9yBqQdcfkHu6xDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email; spf=pass smtp.mailfrom=iee.email; dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b=Wk9Pu/kp; arc=none smtp.client-ip=85.233.160.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iee.email
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nzd1UsNQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Taq1eQPD"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id A791FEC0175
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 07:17:59 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 26 Jan 2026 07:17:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1769429879;
-	 x=1769516279; bh=vMb3cXM/p/LwQvlnmipKZA+wmUVW0BL641NEO5U2PuA=; b=
-	Nzd1UsNQ4e3wd4b/ff/qLbKCkhASUPijnY68XphsMO0WxKDpzakovXJ8+PoA3ypL
-	u6QwR7TzypyOAR0SUOb9sA0uLNdgbvg5MhH5JnvteCv3ohWApn5JnHNsyqapmxma
-	Ns3RQvfdn1oT8MsjMrjKk0YMXTb452Ilg7ZH2H3VkZSFiTF3AN0bE8UyHTmwatfl
-	twrSCeWXzTfFnV0nTy/O3G6rFoXKvpn8OlffNApOf7A0bN2RoTgSX9t0p5hMiIZf
-	Kp1tgkNww1vs6kptaR0dnT7iq3a6XcwzL6IucWHfoYEoaUSlfQwHHvzqTob8pcf0
-	Fovtc0s/kP59oOGnClJjnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769429879; x=
-	1769516279; bh=vMb3cXM/p/LwQvlnmipKZA+wmUVW0BL641NEO5U2PuA=; b=T
-	aq1eQPD76uEIdCZl55OTRewelDskzDNTU7TA9h2wlHaR8EzJn1hRJG7C8CeRRXb+
-	3uFG5PN0WCB9rO04kT+FbKBnS0Wx3NRhB+HYgksCF8WJ6yTr9S+u2HsIEimiOwH+
-	5UKWFZC3qrLOi6buYSP+V2bmrr2JaVRIFh+6h+k14ArDPRJZKvLcmYl1Y6W3FJl3
-	tEnNGOA6Sc3S9VM5oSr7I/TsFqxsXSyhegZwNOcdkZIRIiFrZ0OHABqPSaA2V0AX
-	SaC0y/RrhgE9P3bqleKXsQLUM9L1C75TWV4ZFTktDg2qQUFzbEEGkGUyJPQJgB6W
-	Hm/4osN3T9uiF1Vpqe9Ig==
-X-ME-Sender: <xms:d1t3aXtFbZHWfl0PgPXm8UZ09Z4unOIdW0W-l7BrOCVokO0thXmIQw>
-    <xme:d1t3afYr93XngNREBLx7rWoGz9F9LQEo0eWrkjUMAVAwZbcWV_z-05QYsFqhruUgt
-    douzk6xRw9IMwCqzHzSlKQ4y-GpvZ089vJDCCKSPdlqofgfP0k1Fg>
-X-ME-Received: <xmr:d1t3aQYnp6L2d4Xpo3VlZdyRHKnuiyWrxcJOKFgTmqVztWfdTY_SA_KdGZa8QrOIkplaNewPBFlqDuMZmK74J3iJvBqPwrz_r09Q5PUoGG4QCg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheejieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:d1t3abWCOARKP529XG4_-QeGEJy8JVSRDs4l6MX_GxmE6WQBziw60w>
-    <xmx:d1t3aX06f6e_evadX6I3ufkGAzlMMMxz12Dr_iuWCTk5OLEVKQdb_g>
-    <xmx:d1t3aSYin7ItWc4YmDStCMi9DdiMF4JzdzjFp-VjCdvB7FzCA1tgtw>
-    <xmx:d1t3aaq3doQ_99fjtQ0ZNJQe7QTRJYZm3QBt5PZSmt73sPIzbOHduQ>
-    <xmx:d1t3aWfpVv8QvX57EQQJdR_kykr1VtroJp9oQA6WYKVL_WB3z31SdTVV>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 26 Jan 2026 07:17:59 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d77e2f21 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 26 Jan 2026 12:17:58 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 26 Jan 2026 13:17:43 +0100
-Subject: [PATCH 3/3] odb: drop gaps in object info flag values
+	dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b="Wk9Pu/kp"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
+	s=2025082600; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References
+	:To:From:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID; bh=eKXLG3CGJKYf/FxBH84kB+xfSBiGtcG3Seas3paH8p8=; b=Wk9Pu/
+	kpNoPlVImZlb9n5SA2oUaHdH5a33Jxgzi96RNUED51lVJh7DdkP6NcdRVpx/naz2rd1yGvKC+HgAl
+	TjaiANnLiTCk/byfO9fA/cLij92KQfPGSeh7Ev/OV1BlfEYJ/ekeiTMrPL2HV+52VSWtu+edpVxr5
+	o5BU8xMS6Yc=;
+Received: from host-78-146-7-210.as13285.net ([78.146.7.210] helo=[192.168.1.57])
+	by smtp.hosts.co.uk with esmtpa (Exim)
+	(envelope-from <philipoakley@iee.email>)
+	id 1vkM0x-0000000091V-8V0o;
+	Mon, 26 Jan 2026 12:48:19 +0000
+Message-ID: <92cd5477-c2fc-42c5-b678-aa95b0999b2a@iee.email>
+Date: Mon, 26 Jan 2026 12:48:18 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260126-b4-pks-read-object-info-flags-v1-3-e682a003b17c@pks.im>
-References: <20260126-b4-pks-read-object-info-flags-v1-0-e682a003b17c@pks.im>
-In-Reply-To: <20260126-b4-pks-read-object-info-flags-v1-0-e682a003b17c@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: Missing and omitted objects
+From: Philip Oakley <philipoakley@iee.email>
+To: Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>
+Cc: Jeff King <peff@peff.net>
+References: <a612ea8e-a741-436d-8ed2-6ff09ba7945b@hogyros.de>
+ <f6cc0420-1be6-4855-8c0f-b79c683203ee@iee.email>
+Content-Language: en-GB
+In-Reply-To: <f6cc0420-1be6-4855-8c0f-b79c683203ee@iee.email>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The object info flag values have a two gaps in their definitions, where
-some bits are skipped over. These gaps don't really hurt, but it makes
-one wonder whether anything is going on and whether a subset of flags
-might be defined somewhere else.
+Had a bit of a think overnight. Some parts probably don't apply to this
+application, see below.
 
-That's not the case though. Instead, this is a case of flags that have
-been dropped in the past:
+On 25/01/2026 15:42, Philip Oakley wrote:
+> On 21/01/2026 11:54, Simon Richter wrote:
+>> Hi,
+>>
+>> we're having a bit of a discussion in Debian.
+>>
+>> The goal is to move towards git based storage for source packages, away
+>> from tarballs; ideally we'd like to reuse the upstream git archive as
+>> far as possible, so it is easy to check for differences.
+>>
+>> However, some projects are shipping files that aren't redistributable,
+>> or that we want to omit for other reasons (such as vendored
+>> dependencies, when there is a perfectly working common version
+>> available, and we really really want to make sure these don't get used
+>> accidentally).
+> 
+> There was a discussion about allowing objects to be 'redacted' back at
+> the Git Merge 2020 (https://git-merge.com/),
+> under [TOPIC 3/17] Obliterate.
+> https://lore.kernel.org/git/5B2FEA46-A12F-4DE7-A184-E8856EF66248@jramsay.com.au/
+>
+The discussion is like still informative.
 
-  - The value 4 was used by `OBJECT_INFO_SKIP_CACHED`, removed in
-    9c8a294a1a (sha1-file: remove OBJECT_INFO_SKIP_CACHED, 2020-01-02).
+>>
+>> The goal here is to allow the recipient of such a bundle to verify that
+>> any files received are unmodified, and get a list of paths that were
+>> removed (which may be an entire subdirectory). Ideally, they could also
+>> continue working on a clone of this and generate commits on top as long
+>> as the affected paths aren't touched.
+>>
+> That discussion on redacting objects didn't reach any actionable
+> conclusion that allows objects to be omitted/redacted, while keeping the
+> branch based directed graph flow. I've continued to consider options for
+> deliberately creating 'counterfeit' objects (old name/oid, but
+> new/limited content) which could then be 'verified' through a facsimile
+> object with the same new/limited content but a properly hashed name/oid.
+> I haven't shared any of that with the list.
+> 
+The idea of eliminating objects by OID, totally, from the repo is not
+suitable for the use case. It would be an all-or-nothing response,
+rather than a tailored response.
 
-  - The value 8 was used by `OBJECT_INFO_ALLOW_UNKNOWN_TYPE`, removed in
-    ae24b032a0 (object-file: drop OBJECT_INFO_ALLOW_UNKNOWN_TYPE flag,
-    2025-05-16).
 
-Close those gaps to avoid any more confusion. While at it, convert the
-flags to be declared as an enum and use bit shifts to follow modern best
-practices.
+>> The minimal amount of data we'd want to archive is a single commit and
+>> its tree and dependencies, plus optionally a signed tag pointing at it
+>> if it exists (i.e. the same information we get if we use git-archive,
+>> plus the signature on the tag, plus the option to clone from such a
+>> snapshot). For the simple case where nothing is removed, this already
+>> works well and covers most of the use cases, but, sadly, not all of them.
+> 
+> You could simply branch that special commit that will have all the
+> deletions, plus a 'deletions' file diff file (assuming you want to
+> highlight those deletions..), and then leave that branch as a stub, with
+> a tag, and remove that old branch name such that the tag is the thing
+> that retains the special commit in the hierarchy, and it's parent still
+> holds within the regular git commit graph.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- odb.h | 38 ++++++++++++++++++++++----------------
- 1 file changed, 22 insertions(+), 16 deletions(-)
+This may still be a useful tailoring where a separate commit is
+generated which omits unwanted files/content. This is quite lightweight
+in terms of repo size because of the inherent de-duplication of common
+content. It's only the updated trees that need storing.
 
-diff --git a/odb.h b/odb.h
-index bab07755f4..1e4326b7f4 100644
---- a/odb.h
-+++ b/odb.h
-@@ -352,23 +352,29 @@ struct object_info {
-  */
- #define OBJECT_INFO_INIT { 0 }
- 
--/* Invoke lookup_replace_object() on the given hash */
--#define OBJECT_INFO_LOOKUP_REPLACE 1
--/* Do not retry packed storage after checking packed and loose storage */
--#define OBJECT_INFO_QUICK 8
--/*
-- * Do not attempt to fetch the object if missing (even if fetch_is_missing is
-- * nonzero).
-- */
--#define OBJECT_INFO_SKIP_FETCH_OBJECT 16
--/*
-- * This is meant for bulk prefetching of missing blobs in a partial
-- * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK
-- */
--#define OBJECT_INFO_FOR_PREFETCH (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK)
-+/* Flags that can be passed to `odb_read_object_info_extended()`. */
-+enum object_info_flags {
-+	/* Invoke lookup_replace_object() on the given hash. */
-+	OBJECT_INFO_LOOKUP_REPLACE = (1 << 0),
-+
-+	/* Do not reprepare object sources when the first lookup has failed. */
-+	OBJECT_INFO_QUICK = (1 << 1),
-+
-+	/*
-+	 * Do not attempt to fetch the object if missing (even if fetch_is_missing is
-+	 * nonzero).
-+	 */
-+	OBJECT_INFO_SKIP_FETCH_OBJECT = (1 << 2),
-+
-+	/* Die if object corruption (not just an object being missing) was detected. */
-+	OBJECT_INFO_DIE_IF_CORRUPT = (1 << 3),
- 
--/* Die if object corruption (not just an object being missing) was detected. */
--#define OBJECT_INFO_DIE_IF_CORRUPT 32
-+	/*
-+	 * This is meant for bulk prefetching of missing blobs in a partial
-+	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
-+	 */
-+	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
-+};
- 
- /*
-  * Read object info from the object database and populate the `object_info`
+Philip
 
--- 
-2.53.0.rc1.267.g6e3a78c723.dirty
+>>
+>> As a side effect, this could make recovery of a broken repository that
+>> is missing objects more robust.
+> 
+> Broken repos are scarce, more often than not being compatibility issues
+> between (*nix) Git and Git-for-Windows (case sensitivity, sizeof(long),
+> character limits, etc.). However redaction and overlarge files still fit
+> into the 'Don't do that' category (expect the unexpected..).
+> 
+> There is also the distinction between the meta-data and content. The
+> former also includes the data that holds together the commit graphs
+> integrity (hash of hashes) and filenames, directory names and commit
+> texts (point 15 of the Git Merge discussion). Being inside the hash
+> verified meta data makes it "hard" to break and create exceptions.
+> 
+> A mechanism for marking leaf objects as 'removed'/abscissed/absconded
+> would help here. It's tricky to do that safely for a commit, as it also
+> carries parent information which must be retained.
+> 
+> For a blob (leaf) object, with its free form text, it is possible to
+> have a fixed format, fixed length (hash specific) counterfeit object,
+> e.g. "Git redact abcd01245.."(*) which would then also exist as a
+> facsimile (i.e.has a true hash oid) object within some authenticated
+> part of the graph, and the counterfeit exist in place of the 'broken'
+> blob object with that self referential "abcd01245.." oid.
+> 
+> For trees, it becomes necessary to locate a bit of free text in the meta
+> data to provide self reference, and make it appear as either the empty
+> tree or empty file(blob). The true oid of such a counterfeit tree
+> likewise would need a way of existing within some authenticated part of
+> the wider graph. Perhaps a step too far at this stage of hand waving.
+> 
+>>
+>> Right now, I'd like some feedback whether someone has a better idea, and
+>> if such a feature could ever work or if it violates some fundamental
+>> design principles.
+> 
+> It's a big ask. Finding one specific feature (just on) that could
+> actually be made to work would provide a toe hold for discussion.
+> 
+> At least this is a solid desire from within the community's infrastructure..
+> 
+> At present there is no mechanism for assuming that a piece of blob
+> *content* is "correct" but that the oid it is stored under is incorrect
+> / does not match. We already have/had the `--literally` option for
+> creating arbitrary content, but not it's corollary `--use-oid=abcd01245..`.
+> see
+> https://lore.kernel.org/git/20250516045010.GL22242@coredump.intra.peff.net/
+> Peff cc'd
+>>
+>>    Simon
+>>
+> (*) I more wanted "Git redact abcd01245.hexoid Base64oid" to reduce
+> accidental creation of such objects and allow double checking of the
+> oid. But maybe that's too cute.  ;-)
+> 
 
