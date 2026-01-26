@@ -1,62 +1,62 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004293EBF0D
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 18:56:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F9323B61E
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 18:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769453781; cv=none; b=WgIQ8DX3P1YCcmsq2Sl7bScQpP6Xx1QmNYanTAsQyyuTlFvSpkVM5JEx9SUdQjYt8uwuVPCzpSTP9Aqbjm4yP0jK3HJQRvaA2Bs39FnFOILWGt0fXbniLre2Z68v03o3GvgFe8yFYw0qTcSmQBgZxlj3j0Sqfy0I+iS4Rk7rzNg=
+	t=1769453789; cv=none; b=IW0/b5zNhAZpbxKG7HuVwZwnNzkYRVgxiXJnKE0y3wquiB3V3SFfbwf0mcvQjUEKON02DcZC4tic5NaX2DNg3TbSnXgYLjTqono6udixbeOmWadUtUvBs/bV66JUrv1JgkBnLqRLpdggAemkvda9LxPYVAvd7LSKGdQApq4sOSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769453781; c=relaxed/simple;
-	bh=XXuYRge0vcoXsXqX1Og0hoabd2K9qXI5ES/fajW5qXo=;
+	s=arc-20240116; t=1769453789; c=relaxed/simple;
+	bh=yuUk3c+YzEJfyO/meItkbqepEAeepIApp/6/5/m8tsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIyijvO23+RjnCzUg1TCJSVonvSX5HhwhTJxvY29QaRtjRa9h8tM/XL1TPawqAL69eLzL3jeV1Ngpww7UxBY3yEaHiFJloPkwH4zZ9c+Xd+4sPdHzphTQXfvirZSodi+WZQ7sg8pfPpZqr/Hlkr8Tz4pc7uV+HTpr9jmPaBje9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JA88P/TS; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version; b=m+/YpfjnkOYC8M12kU5EuMdL59dye5BDcYg6R5Hwx/FVWip+p/iTa17+UBOFTwZjfO/Qr/smJhwYHMP7MFK6LVhsAzwiz+336imjPU29P8jOry+UBACrwu5yaNSQukAxdJmobavXe5otKdmgV+RfP/ckjRTn4Rf9zovPDSL0PCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hjOvbMtg; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JA88P/TS"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-435903c4040so2969258f8f.3
-        for <git@vger.kernel.org>; Mon, 26 Jan 2026 10:56:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hjOvbMtg"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-43596062728so3614676f8f.1
+        for <git@vger.kernel.org>; Mon, 26 Jan 2026 10:56:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769453778; x=1770058578; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769453786; x=1770058586; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AiOsP2ulk1NYjyuHO0mvInZQUH787ajZ+7wFQLdLeHs=;
-        b=JA88P/TS/CPpk97JtBI+dNDwSlCRUKsaotwiG5xvk9t76wcjgra7XoRKsZsW1cP1Fx
-         Nr3zOuogmmEFQH1P6DN+dUq2Eblu6jSKoR0va13HJ80UvrFo895po9Nn4Dc/YjZi91+N
-         jLydB3CkOBof7Fo9qEgqGk8kPo5DjnrxH5bMZ1guUBdq+tkMUwHCneR3Q/RvmDtCT3IB
-         75YbsF3JhY2mdif50Qw0cT8IOLgqgotMviFRDiOkvauQINBDM0hbJ16AwiiPQscIJ0DD
-         W64QX0qRkS7LOTFjyTEDIBuMTu4Y506zsW3z/RKE3uNmz6CHg4VX5A5gzLSiVWwdjPpz
-         5MRg==
+        bh=JYU4HC2heGfKUN6ZpqqKiA+YDj1ZwVaaQiNyb7anzxw=;
+        b=hjOvbMtgHdbiI/uRQJ5t2FR7ddR7EAs+u9FHrj3aAiHiZKDU5KeasrtIWYnQkqIiVJ
+         2ZZDrCoJrwrQaUWi4qjCjIln/Hnw/gExXOL5rJuaMXzaEjhwSY5npCiVL6Kb4z5U67ny
+         DNrWsCfWQl81zQOg2hVgfpV2HL8wtVs/AEOSEU0IXM74XpeEJeyX8uyoUilwqaUVH2dx
+         bIF/liSfRSntRa48Z9UAypVybWFaUCwEJwnN8/pA0ULPRw8e0t8n/A/skAlnPeAE/WAy
+         oGtO88BIoxdsbVmFEANWDKagX9zCbSWnUi4Hf+CiXO/SK1NmxCRNS92YS7sWr/2adeOm
+         j/Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769453778; x=1770058578;
+        d=1e100.net; s=20230601; t=1769453786; x=1770058586;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=AiOsP2ulk1NYjyuHO0mvInZQUH787ajZ+7wFQLdLeHs=;
-        b=p5w/cvl+w5bU9FqanUZeqjeEA10nAvk+zs3VIbZM/O9m17zK50s6i9TwmpLgJFSCIa
-         saiuyT97DCnZzKw53cfMMBbuoKO7vkel2mZOWouf4iJ1MNopTHcdJbqFmfIUrOdSSJZ9
-         7LHGyw40mpfT/Qmxj6SSEC4099ipyC3rTxE2dM/qtrz1iVe+RdnkK1O1quzPljZx8rOK
-         Wa9xAag5nM1TV4e9Hmfvvtelntnou8gbf6S1RDge7rcOy7wl7lnwsLQlOyjAQeIVRe7p
-         hScAeiYLfvNDqEJhN1Y+9fISyOPWTFkQJW4cbkiyYGLBopeasbsUhMjP2u6oXX/b5Yw9
-         Bt0g==
-X-Gm-Message-State: AOJu0YyqUCPXNYzeczSLRfDU8eg2l6OS0YjLxkUfetVXPhLktuSMYKw4
-	s9LRgX09dsPXWgg9jgTAdhwAGJIcyaiTFwLuICOxn8KhCq8HT2RLw0nH3Ej+5qbC
-X-Gm-Gg: AZuq6aIBIWyfc2E6tzfUREmKPbiKh2WCe84nG0+MmrsZ9l4GTJ88bSs8c6iHBRVCEXZ
-	4MRW7u5QacFFWWX65vI+MbzKCxh6Aa5E0k6JCF7+QVPyfYb4i3AaDA4QBs4kwKSvngOwQ+jTDCY
-	NKPtpAtKWhF3ZrTnHKuMqwk1OTYRfIMr0pRdHumKNwWAjREC/cUt0IvVL2Nhqdty6LGw4jD3Mvo
-	AKbKFv27jDsn6AtkbTqflMcEXqHWtXaPYOpB6nDfv78EQOWsJ4dM3knrlV20kXjK7/lFZUSS0Qj
-	vMGxovfLH4tc5dEXgUnHspvAAZnH4QR8336lnSeNgpTQ0yqpbup/FqRDvVcAR2iClVggQZgahUI
-	eh4+yyCD/+dCdKE/ft8W/7H5ISL8v+oZp0uAY4HxTtonF1nA07dnzNDgqiHiK+B8yS4iXWJ6OUx
-	lhQdXY7NT9cL9Ke/5RZ+02weFwkXd4x39JVg9GqLfbJSdxL82Igxgt48k+Y/t5qNlUjXb3
-X-Received: by 2002:a05:6000:2c01:b0:435:975a:131c with SMTP id ffacd0b85a97d-435ca19e67fmr7758650f8f.36.1769453777924;
-        Mon, 26 Jan 2026 10:56:17 -0800 (PST)
+        bh=JYU4HC2heGfKUN6ZpqqKiA+YDj1ZwVaaQiNyb7anzxw=;
+        b=MISiVTdeNXO+MEk+1kJIccmJy0Nm2pNdRZPhuXY20gGCHbDxUje0ipBJF6rxgDDzv5
+         7/9C13X0X0zwncmrfElpzxlsznxts3oIS9swTzYaOhJ3PnX5Vd1VFmpa+bjEQ3W7wKKI
+         ydrJgrj2U4gQPOFb3xOqiHGNlXROXv6TWicxBq+7hhR3JfPyZ1bUIfQ+Acww4MvQ8wn0
+         DWjv2aup51XnGZ9nUMnbNGflPKDZbE2nwaQCyOaOMl2wtd4c5G+pFVe1sAKCE0Ev63p3
+         cMCkOaVp2KXh4BVRmyyLsygxtcFpNkgJ/Q0yJ9YVT/159g6G9zVpQzURV0BmVh4eiSpo
+         TStg==
+X-Gm-Message-State: AOJu0YzttTmCYNCLFcJBkesfG0UWssj3xptNkcVEFzdUhxR8MDlMqt9f
+	QE29XenpEhK1zDV628bY8lQfAX+2g/YtMiJB9DyaGgPt2HfWt80lUVRVBnV8hZSS
+X-Gm-Gg: AZuq6aLagyqCPAtPEpJo06uTMHyTxxyNcwovlHhZqdbGKLatGjuhu9BB6t42+SlcSnq
+	bUeXyV5AYDmf0m5wbQMSFLVWGNAHvmr6jNml7hfwzmu5YWVWpN0p+jdRzmgGte8zIsxGwfqkB2l
+	B4pFFON5XjzWdsmiH8LJaoDbYnioEXOgvIma7/fVbW2uEmpxJhAZ/tz7YWOrLZNtsfW1KxDjzyX
+	O3syiy/OC2d/whxqd1dDzKjLepjOqvUL/II1jWst8bNbqJsvzdxa1IeKM7ao2nZ5AVoqYH485i1
+	HRKtifh97rr/IlJsDO7ylZ2jYeStbmj/kQntGSGzg1jn02EQ5RXlAQr7gpwSXqCGdKcfKkdGcFU
+	TawV9uTPqGyAvzqcdtqR8yl28+rUOWwI93vtyBCzIx7FpLrMF5No45W7mT+NF4pxmak2i750350
+	CQHACUbkYmi4lHF+8DyCqpfgmwXFBI1gm2gkLXWTyIZyVrl+14TxtwYhl/eBTLSsb/Ov2j
+X-Received: by 2002:a5d:64e8:0:b0:432:b953:b02b with SMTP id ffacd0b85a97d-435c9b1db2fmr10649475f8f.16.1769453786314;
+        Mon, 26 Jan 2026 10:56:26 -0800 (PST)
 Received: from localhost.localdomain ([115.98.235.156])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1b6e2besm32159135f8f.0.2026.01.26.10.56.13
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1b6e2besm32159135f8f.0.2026.01.26.10.56.21
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 26 Jan 2026 10:56:17 -0800 (PST)
+        Mon, 26 Jan 2026 10:56:25 -0800 (PST)
 From: Amisha Chhajed <amishhhaaaa@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -64,12 +64,13 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>,
 	Amisha Chhajed <amishhhaaaa@gmail.com>
-Subject: [PATCH v2 1/2] u-string-list: add unit tests for string-list methods
-Date: Tue, 27 Jan 2026 00:26:03 +0530
-Message-ID: <20260126185604.90089-1-amishhhaaaa@gmail.com>
+Subject: [PATCH v2 2/2] string-list: add string_list_sort_u() that mimics "sort -u"
+Date: Tue, 27 Jan 2026 00:26:04 +0530
+Message-ID: <20260126185604.90089-2-amishhhaaaa@gmail.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260122171523.94234-1-amishhhaaaa@gmail.com>
+In-Reply-To: <20260126185604.90089-1-amishhhaaaa@gmail.com>
 References: <20260122171523.94234-1-amishhhaaaa@gmail.com>
+ <20260126185604.90089-1-amishhhaaaa@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,93 +79,170 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Unit tests in u-string-list.c does not cover several methods
-in string-list, this gap in coverage makes it difficult to
-ensure no regressions are introduced in future changes.
+Many callsites of string_list_remove_duplicates() call it
+immdediately after calling string_list_sort(), understandably
+as the former requires string-list to be sorted, it is clear
+that these places are sorting only to remove duplicates and
+for no other reason.
 
-Add unit tests for the following methods to enhance coverage:
-string_list_remove_empty_items()
-unsorted_string_list_has_string()
-unsorted_string_list_delete_item()
-string_list_has_string()
-string_list_insert()
-string_list_sort()
-string_list_remove()
+Introduce a helper function string_list_sort_u that combines
+these two calls that often appear together, to simplify
+these callsites. Replace the current calls of those methods with
+string_list_sort_u().
 
 Signed-off-by: Amisha Chhajed <amishhhaaaa@gmail.com>
 ---
- t/unit-tests/u-string-list.c | 196 +++++++++++++++++++++++++++++++++++
- 1 file changed, 196 insertions(+)
+ builtin/clone.c              |  3 +--
+ builtin/fast-export.c        |  3 +--
+ builtin/pack-objects.c       |  6 ++----
+ builtin/sparse-checkout.c    |  6 ++----
+ help.c                       |  3 +--
+ notes.c                      |  3 +--
+ string-list.c                |  6 ++++++
+ string-list.h                |  6 ++++++
+ t/unit-tests/u-string-list.c | 34 ++++++++++++++++++++++++++++++++++
+ 9 files changed, 54 insertions(+), 16 deletions(-)
 
+diff --git a/builtin/clone.c b/builtin/clone.c
+index b19b302b06..f05364c268 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1136,8 +1136,7 @@ int cmd_clone(int argc,
+ 		int val;
+ 
+ 		/* remove duplicates */
+-		string_list_sort(&option_recurse_submodules);
+-		string_list_remove_duplicates(&option_recurse_submodules, 0);
++		string_list_sort_u(&option_recurse_submodules, 0);
+ 
+ 		/*
+ 		 * NEEDSWORK: In a multi-working-tree world, this needs to be
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index b90da5e616..0c5d2386d8 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -1118,8 +1118,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
+ 			free(full_name);
+ 	}
+ 
+-	string_list_sort(&extra_refs);
+-	string_list_remove_duplicates(&extra_refs, 0);
++	string_list_sort_u(&extra_refs, 0);
+ }
+ 
+ static void handle_tags_and_duplicates(struct string_list *extras)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ca44b7894f..649dab4ed0 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3849,10 +3849,8 @@ static void read_packs_list_from_stdin(struct rev_info *revs)
+ 		strbuf_reset(&buf);
+ 	}
+ 
+-	string_list_sort(&include_packs);
+-	string_list_remove_duplicates(&include_packs, 0);
+-	string_list_sort(&exclude_packs);
+-	string_list_remove_duplicates(&exclude_packs, 0);
++	string_list_sort_u(&include_packs, 0);
++	string_list_sort_u(&exclude_packs, 0);
+ 
+ 	repo_for_each_pack(the_repository, p) {
+ 		const char *pack_name = pack_basename(p);
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 15d51e60a8..25de7692c9 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -292,8 +292,7 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
+ 			string_list_insert(&sl, pe->pattern);
+ 	}
+ 
+-	string_list_sort(&sl);
+-	string_list_remove_duplicates(&sl, 0);
++	string_list_sort_u(&sl, 0);
+ 
+ 	fprintf(fp, "/*\n!/*/\n");
+ 
+@@ -316,8 +315,7 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
+ 
+ 	strbuf_release(&parent_pattern);
+ 
+-	string_list_sort(&sl);
+-	string_list_remove_duplicates(&sl, 0);
++	string_list_sort_u(&sl, 0);
+ 
+ 	for (i = 0; i < sl.nr; i++) {
+ 		char *pattern = escaped_pattern(sl.items[i].string);
+diff --git a/help.c b/help.c
+index 20e114432d..2070095b6f 100644
+--- a/help.c
++++ b/help.c
+@@ -420,8 +420,7 @@ void list_cmds_by_config(struct string_list *list)
+ 	if (repo_config_get_string_tmp(the_repository, "completion.commands", &cmd_list))
+ 		return;
+ 
+-	string_list_sort(list);
+-	string_list_remove_duplicates(list, 0);
++	string_list_sort_u(list, 0);
+ 
+ 	while (*cmd_list) {
+ 		struct strbuf sb = STRBUF_INIT;
+diff --git a/notes.c b/notes.c
+index 8e00fd8c47..090c48bbd5 100644
+--- a/notes.c
++++ b/notes.c
+@@ -921,8 +921,7 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
+ 	if (string_list_add_note_lines(&sort_uniq_list, new_oid))
+ 		goto out;
+ 	string_list_remove_empty_items(&sort_uniq_list, 0);
+-	string_list_sort(&sort_uniq_list);
+-	string_list_remove_duplicates(&sort_uniq_list, 0);
++	string_list_sort_u(&sort_uniq_list, 0);
+ 
+ 	/* create a new blob object from sort_uniq_list */
+ 	if (for_each_string_list(&sort_uniq_list,
+diff --git a/string-list.c b/string-list.c
+index 08dc00984c..020ed8fef7 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -247,6 +247,12 @@ void string_list_sort(struct string_list *list)
+ 	QSORT_S(list->items, list->nr, cmp_items, &sort_ctx);
+ }
+ 
++void string_list_sort_u(struct string_list *list, int free_util)
++{
++	string_list_sort(list);
++	string_list_remove_duplicates(list, free_util);
++}
++
+ struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+ 						     const char *string)
+ {
+diff --git a/string-list.h b/string-list.h
+index fa6ba07853..3ad862a187 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -239,6 +239,12 @@ struct string_list_item *string_list_append_nodup(struct string_list *list, char
+  */
+ void string_list_sort(struct string_list *list);
+ 
++/**
++ * Sort the list and then remove duplicate entries.  If free_util is true,
++ * call free() on the util members of any items that have to be deleted.
++ */
++void string_list_sort_u(struct string_list *list, int free_util);
++
+ /**
+  * Like `string_list_has_string()` but for unsorted lists. Linear in
+  * size of the list.
 diff --git a/t/unit-tests/u-string-list.c b/t/unit-tests/u-string-list.c
-index a2457d7b1e..6b2b16671c 100644
+index 6b2b16671c..9d11a2f3fb 100644
 --- a/t/unit-tests/u-string-list.c
 +++ b/t/unit-tests/u-string-list.c
-@@ -243,6 +243,132 @@ void test_string_list__filter(void)
+@@ -431,6 +431,40 @@ void test_string_list__remove_duplicates(void)
  	t_string_list_clear(&list, 0);
  }
  
-+static void t_string_list_has_string(struct string_list *list, const char *string, int expected)
-+{
-+	int has_string = string_list_has_string(list, string);
-+	cl_assert_equal_i(has_string, expected);
-+}
-+
-+void test_string_list__has_string(void)
-+{
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+
-+	t_create_string_list_dup(&list, 0, NULL);
-+	t_string_list_has_string(&list, "", 0);
-+
-+	t_create_string_list_dup(&list, 0, "a", "b", "c", NULL);
-+	t_string_list_has_string(&list, "a", 1);
-+	t_string_list_has_string(&list, "b", 1);
-+	t_string_list_has_string(&list, "c", 1);
-+	t_string_list_has_string(&list, "d", 0);
-+
-+	t_string_list_clear(&list, 0);
-+}
-+
-+static void t_string_list_insert(struct string_list *expected_strings, ...)
-+{
-+	struct string_list strings_to_insert = STRING_LIST_INIT_DUP;
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+	va_list ap;
-+
-+	va_start(ap, expected_strings);
-+	t_vcreate_string_list_dup(&strings_to_insert, 0, ap);
-+	va_end(ap);
-+
-+	for (size_t i = 0; i < strings_to_insert.nr; i++)
-+		string_list_insert(&list, strings_to_insert.items[i].string);
-+
-+	t_string_list_equal(&list, expected_strings);
-+
-+	string_list_clear(&strings_to_insert, 0);
-+	string_list_clear(&list, 0);
-+}
-+
-+void test_string_list__insert(void)
-+{
-+	struct string_list expected_strings = STRING_LIST_INIT_DUP;
-+
-+	t_create_string_list_dup(&expected_strings, 0, NULL);
-+	t_string_list_insert(&expected_strings, NULL);
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "b", NULL);
-+	t_string_list_insert(&expected_strings, "b", "a", "a", "b", NULL);
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "b", "c", NULL);
-+	t_string_list_insert(&expected_strings, "c", "b", "a", "c", "b", NULL);
-+
-+	t_create_string_list_dup(&expected_strings, 0, "", "a", NULL);
-+	t_string_list_insert(&expected_strings, "a", "a", "a", "", NULL);
-+
-+	t_string_list_clear(&expected_strings, 0);
-+}
-+
-+static void t_string_list_sort(struct string_list *list, ...)
++static void t_string_list_sort_u(struct string_list *list, ...)
 +{
 +	struct string_list expected_strings = STRING_LIST_INIT_DUP;
 +	va_list ap;
@@ -173,141 +251,34 @@ index a2457d7b1e..6b2b16671c 100644
 +	t_vcreate_string_list_dup(&expected_strings, 0, ap);
 +	va_end(ap);
 +
-+	string_list_sort(list);
++	string_list_sort_u(list, 0);
 +	t_string_list_equal(list, &expected_strings);
 +
 +	string_list_clear(&expected_strings, 0);
 +}
 +
-+void test_string_list__sort(void)
++void test_string_list__sort_u(void)
 +{
 +	struct string_list list = STRING_LIST_INIT_DUP;
 +
 +	t_create_string_list_dup(&list, 0, NULL);
-+	t_string_list_sort(&list, NULL);
++	t_string_list_sort_u(&list, NULL);
 +
-+	t_create_string_list_dup(&list, 0, "b", "", "a", NULL);
-+	t_string_list_sort(&list, "", "a", "b", NULL);
++	t_create_string_list_dup(&list, 0, "", "", "", "", NULL);
++	t_string_list_sort_u(&list, "", NULL);
 +
-+	t_create_string_list_dup(&list, 0, "c", "a", "b", "a", NULL);
-+	t_string_list_sort(&list, "a", "a", "b", "c", NULL);
++	t_create_string_list_dup(&list, 0, "b", "a", "a", "", NULL);
++	t_string_list_sort_u(&list, "", "a", "b", NULL);
++
++	t_create_string_list_dup(&list, 0, "b", "a", "a", "d", "c", "c", NULL);
++	t_string_list_sort_u(&list, "a", "b", "c", "d", NULL);
 +
 +	t_string_list_clear(&list, 0);
 +}
 +
-+static void t_string_list_remove(struct string_list *expected_strings, struct string_list *list, char const *str)
-+{
-+	string_list_remove(list, str, 0);
-+	t_string_list_equal(list, expected_strings);
-+}
-+
-+void test_string_list__remove(void)
-+{
-+	struct string_list expected_strings = STRING_LIST_INIT_DUP;
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+
-+	t_create_string_list_dup(&expected_strings, 0, NULL);
-+	t_create_string_list_dup(&list, 0, NULL);
-+	t_string_list_remove(&expected_strings, &list, "");
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", NULL);
-+	t_create_string_list_dup(&list, 0, "a", "a", NULL);
-+	t_string_list_remove(&expected_strings, &list, "a");
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "b", "b", NULL);
-+	t_create_string_list_dup(&list, 0, "a", "b", "b", "c", NULL);
-+	t_string_list_remove(&expected_strings, &list, "c");
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "b", "d", NULL);
-+	t_create_string_list_dup(&list, 0, "a", "b", "c", "d", NULL);
-+	t_string_list_remove(&expected_strings, &list, "c");
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "b", "c", "d", NULL);
-+	t_create_string_list_dup(&list, 0, "a", "b", "c", "d", NULL);
-+	t_string_list_remove(&expected_strings, &list, "e");
-+
-+	t_string_list_clear(&expected_strings, 0);
-+	t_string_list_clear(&list, 0);
-+}
-+
- static void t_string_list_remove_duplicates(struct string_list *list, ...)
+ static void t_string_list_remove_empty_items(struct string_list *expected_strings, struct string_list *list)
  {
- 	struct string_list expected_strings = STRING_LIST_INIT_DUP;
-@@ -304,3 +430,73 @@ void test_string_list__remove_duplicates(void)
- 
- 	t_string_list_clear(&list, 0);
- }
-+
-+static void t_string_list_remove_empty_items(struct string_list *expected_strings, struct string_list *list)
-+{
-+	string_list_remove_empty_items(list, 0);
-+	t_string_list_equal(list, expected_strings);
-+}
-+
-+void test_string_list__remove_empty_items(void)
-+{
-+	struct string_list expected_strings = STRING_LIST_INIT_DUP;
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+
-+	t_create_string_list_dup(&expected_strings, 0, NULL);
-+	t_create_string_list_dup(&list, 0, "", "", "", NULL);
-+	t_string_list_remove_empty_items(&expected_strings, &list);
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "b", NULL);
-+	t_create_string_list_dup(&list, 0, "a", "", "b", "", NULL);
-+	t_string_list_remove_empty_items(&expected_strings, &list);
-+
-+	t_string_list_clear(&expected_strings, 0);
-+	t_string_list_clear(&list, 0);
-+}
-+
-+static void t_string_list_unsorted_string_list_has_string(struct string_list *list, const char *str, int expected)
-+{
-+	int has_string = unsorted_string_list_has_string(list, str);
-+	cl_assert_equal_i(has_string, expected);
-+}
-+
-+void test_string_list__unsorted_string_list_has_string(void)
-+{
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+
-+	t_create_string_list_dup(&list, 0, "b", "d", "a", NULL);
-+	t_string_list_unsorted_string_list_has_string(&list, "a", 1);
-+	t_string_list_unsorted_string_list_has_string(&list, "b", 1);
-+	t_string_list_unsorted_string_list_has_string(&list, "c", 0);
-+	t_string_list_unsorted_string_list_has_string(&list, "d", 1);
-+
-+	t_string_list_clear(&list, 0);
-+}
-+
-+static void t_string_list_unsorted_string_list_delete_item(struct string_list *expected_list, struct string_list *list, int i)
-+{
-+	unsorted_string_list_delete_item(list, i, 0);
-+
-+	t_string_list_equal(list, expected_list);
-+}
-+
-+void test_string_list__unsorted_string_list_delete_item(void)
-+{
-+	struct string_list expected_strings = STRING_LIST_INIT_DUP;
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "c", "b", NULL);
-+	t_create_string_list_dup(&list, 0, "a", "d", "b", "c", NULL);
-+	t_string_list_unsorted_string_list_delete_item(&expected_strings, &list, 1);
-+
-+	t_create_string_list_dup(&expected_strings, 0, NULL);
-+	t_create_string_list_dup(&list, 0, "", NULL);
-+	t_string_list_unsorted_string_list_delete_item(&expected_strings, &list, 0);
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "d", "c", "b", NULL);
-+	t_create_string_list_dup(&list, 0,  "a", "d", "c", "b", "d", NULL);
-+	t_string_list_unsorted_string_list_delete_item(&expected_strings, &list, 4);
-+
-+	t_string_list_clear(&expected_strings, 0);
-+	t_string_list_clear(&list, 0);
-+}
-\ No newline at end of file
+ 	string_list_remove_empty_items(list, 0);
 -- 
 2.51.0
 
