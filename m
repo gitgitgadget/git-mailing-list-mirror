@@ -1,85 +1,83 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8744B34D4C4
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 17:32:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C261A168BD
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 17:35:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769448780; cv=none; b=DbsOrTjUVxhaT7ObJgTBl5WNnF++18mWqhabB8uYWBybbsjcVD4EPv7zCLC2aAbMPFO8mISwcz/k7rQ56Z+DH8RRJTVgDcxi+JDkjYt2zoFuI0YMX6VOhKHlNXZPcz5XP06pBbRYZsDmqLQVMrqr2W2GxOuAV7UPyO/rSUuZ0Uk=
+	t=1769448925; cv=none; b=PTGGtFYYj0j3CTfmBU9x0QPa6bD74YIN1CkyiVs+YunFWCDrqpF9B741OrB4SvI6fOtgCL0orgtvuQ0XUAQuUk5RiHCG9QvY6szbTvA848PJ6knfQJLy+21SQBDoVUL2/kSKkRCPRDKo7fn/ljm+lYZRrVok1I/fTa60nsGqzz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769448780; c=relaxed/simple;
-	bh=bEUfjk10HsB9C8MGtjzqkpwHDbWW/lnkmqDFnuP9k3w=;
+	s=arc-20240116; t=1769448925; c=relaxed/simple;
+	bh=EuYYST1aITEGKWU2MyFVCH2TztwLXbLeM7r6nA06t34=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RSYiLWgnMR+r1ONccxqnAZAJkD2e/n+P9xxmXk/UeeLOBkRCvw6WKy/6Q1qsdNU4ZknyBLjHlcPdKjXvlbAeWUejKhFamowL9RGVXd4KQMQAXf2t7nF1oMOl2xMGCHR6YYwRte997F2iWj7lvUwb6s3GwwFs8SzBG1TeJi+N9Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X/pe4L5r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jh/D7RUG; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=RrL+QlWsteQiz1iUOnqwU3c+dA5zsYWcd8AaobIuWAYbBNLV8h8agFpFl0laNud7xoRbSwuJ+XDAS1xGzzFJMTBkvabkiIgRH8Jf8WNGvCY7y6HGEllNRolQR093OHisXBVgDjx0oPih9ITBPw4IP7iWYewINIg5KaarUi9Iwhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QVtpj3+L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dhIE7aTk; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X/pe4L5r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jh/D7RUG"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9136D1D000C4;
-	Mon, 26 Jan 2026 12:32:58 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 26 Jan 2026 12:32:58 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QVtpj3+L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dhIE7aTk"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CCAD07A0111;
+	Mon, 26 Jan 2026 12:35:22 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Mon, 26 Jan 2026 12:35:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1769448778; x=1769535178; bh=NWr9cHd3PU
-	RpqYWWiAzDLwbiEfrxAfCeXLs7NO5/iyw=; b=X/pe4L5ryAzPmjs3/tm1tQzq9v
-	nsEHwu7i97WkRqvix0VStRNBqyDo8Q5Jg98wwi4E6rOPsiN+2Yc3vtsXJGW4hcfR
-	9bIII+dvotmBINQm5eCEgLQsXWpbOH5b57NFXUhq+QFJlVgLZAyE/RJo72CNEYS8
-	4UyTSLZQYvr3Fj9qDsAcNWFu8B5+QuaA8LLy5FWbe8XyFtqWm/j9UNIoReOYAe/O
-	/uyFtUk/TDvCVH+zts6LPAzJqcpGglWnVmX9GF86F2eDVSQzR3oOk/mEhE6mfXQY
-	9tRvrqY2reFusn63KoIqVJjtsnN/fEun6xB81HVx1+/DnAx2vOv1RVkr5g4A==
+	:subject:to:to; s=fm1; t=1769448922; x=1769535322; bh=SLGGwhete8
+	5uUoHgNY/XR1QShvL1+kVYTOlmF0fWLLs=; b=QVtpj3+LTRkNeZG1PjoviYnqSX
+	gbe7iCtm/O03V7dE9uSQdm/sM9+xGp2NOpyY2G67dPi9khluFdOc62fPqnvt/q73
+	q1F+WA7tj+zY4wYz6jMNsvF7RVZ+7/n2Razypf9kk+gxQhaBAPpP55imFICcfRFW
+	G1IFKVyQil+TTp2UEZK/ugbFUDW7sc94Bby5bOpq9mm8/i4wMFiriVdcDFU4v3IT
+	NhyS+U1x6sTqMYf17g47aNSPdgiYy7OWXEk8zrcVrpGf3fG0oa/uL6t6qUDxu/S4
+	Y0KLxXEWd4mccsMNO0Ayz978Ujv94g4uZuUyzl03qzvhVXa7Nwj4CU1DebDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769448778; x=1769535178; bh=NWr9cHd3PURpqYWWiAzDLwbiEfrxAfCeXLs
-	7NO5/iyw=; b=jh/D7RUGqCDvcorReunBW76CbQMVVEE2FTTsHP+ExirS1C+pjii
-	9WMg8gXdbKM46tXlCrvnjw9kJelXpu09IgdmQYMK4d+qDC+EUiquib7qThbhyYQg
-	8YlFZsfP957EuNogZua1nGGBaHL0km50sTh37kWGrDnnp4jlme9E5ubL5W+1LBXB
-	EBrJz2ub9xmrXr157YQCkShPGQmDUTyThLfWhO1Ma3tPx7TXXBsnmMSm8iddWYxW
-	oEi0YhtfcqkF7MPmatfTWN+2bYfL+g1jQKh6r6b85ubyx/2ntF212xv2rDOUORKm
-	NYh1FPjZfG+pKhY5knwiTbVxKtEN4nRaPkw==
-X-ME-Sender: <xms:SaV3aYt-jHlDgwqvzLmGVu2iM_CkJDOmrbSQXMaxlONlg_PjDzkvfQ>
-    <xme:SaV3acWp00f_-iPoqI69Xp_GEoB0KD5J9uw0lkDT1mof-NPeOcAVS86UnXCdHeSSl
-    3gWxJqyjRN5cSzzxFr8iWthcqVm13faO4vfBvjQNoZ_ALqKP-PYyXg>
-X-ME-Received: <xmr:SaV3acHZVLqQbg6hL-sa9axr0X3GT7LwBTmJO5Xzy22OqyvP-eWwcMeHOPkJo64JcOoNdjO-6ou3s-tWf2cZuDYutTbMzPiD3q4EMMI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheekvdekucetufdoteggodetrf
+	1769448922; x=1769535322; bh=SLGGwhete85uUoHgNY/XR1QShvL1+kVYTOl
+	mF0fWLLs=; b=dhIE7aTknD2yjdIrh0KiissqIAF6+1vQ0AJzl0dbDrOPV9SNi/k
+	bGV2Pin+YbThDD4bGwnbbkEIJVtycZ765zqE7PQ5Z9+top/0fm/ko+ZMPNJoJk2r
+	cTYyiR6NTKQ/6pebRWw5wuyu4eAJ2PEakstY9pM6BFTUEQ0pwgKqbQ410Vi96M5I
+	EPrs1kXWiMOvk3EgUFCEHXMZgp0mlA1iA4TWMgQI0j+GxoJvfaU96vkHGGJnJxf8
+	gkpff1G3LgI2KZcw0g+d/gsvnMU/OPbdDEfxA5LPjIokEx3qCD/XIdeajjsrlnOd
+	P/qm564UNn468S92AJgh7inrsquc+qR/BNw==
+X-ME-Sender: <xms:2qV3aZFM8sKRRGxq_ZbN2DnMfmKDtDsGkELDor1uwmTdCIB_DzbkLQ>
+    <xme:2qV3aVWgz2jIJzA3vzAQpIgWAMYeItnZC2BOpPIWt1OIDSa0QY_1Pp_k3Qv2TR-Id
+    pACN-vmalQrIgfA8tmoyRMOCNWL8LHvYDvKAVGfmfp0w3sJ1rahFw>
+X-ME-Received: <xmr:2qV3aQKwuRwT5XeqaNOeq7-FRvblLzQpc_cAyzS8Fh4s7p86hJtOFx3zSp83k7Vj4r03-8tGNLA8iSMU1nfx9WhWNWPX6r4wwtl3Y48>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheekvdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprghskhdoghhitheshhhofiguohhirdhlrghnugdprh
-    gtphhtthhopegthhhrihhsthhirghnsehhvghushgvlhdrvghupdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhsthesvgifohhrmh
-    druggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:SaV3aW1HUTPEvVrebLlu63hTGgscSC64wl-6dTZHWnm3p5KTC36J_g>
-    <xmx:SaV3aWMUWXNEBhcMmyQfklowgjr-RPJICYePfNr6VQOmS2oQhywsyg>
-    <xmx:SaV3ad75fs7vua80KQVVDitzF5PsfGdD3lko7HckfmpvXA8Ekb4usQ>
-    <xmx:SaV3aY0fbzN8uDUsLhxTB-SE18kxa6VulOAm0-Jvty89WhxgpARdXw>
-    <xmx:SqV3aY8ycxl_qpgmovLfMBpxDsG5_HhbNZjejyKUHPh1IOaETuyDWhee>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2qV3ad_KKeZPnDZTB9GvDez5ju6PVlgq9Z3XRLJ1PQ65F0wFxPKkVg>
+    <xmx:2qV3abLw5KAdgm8UoexvlaKRnCYab3H4SJA9a5s-60Em_MaV9PFpjw>
+    <xmx:2qV3aam1aMD8dAHP8cYjCzMgZBz_ZdyEjc5Hj1YNaBYZ8eaYyJN58g>
+    <xmx:2qV3aXNCgo0Fajm850y_41TF2lZPd8JIVC3nySVRNC6wXFAH6L_dlA>
+    <xmx:2qV3abosFokRFKDoF0RDAWT82Gqp_IgM-kdSw8qZUvmC1rQjLORHI3sh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Jan 2026 12:32:57 -0500 (EST)
+ 26 Jan 2026 12:35:22 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Colin Stagner <ask+git@howdoi.land>
-Cc: Christian Heusel <christian@heusel.eu>,  git@vger.kernel.org,  Christian
- Hesse <list@eworm.de>
-Subject: Re: [regression][bisected] git-subtree remote desynchronization
-In-Reply-To: <023ae712-8f67-441c-aada-fb5b097ec617@howdoi.land> (Colin
-	Stagner's message of "Sun, 25 Jan 2026 23:14:25 -0600")
-References: <755578cb-07e0-4b40-aa90-aacf4d45ccaa@heusel.eu>
-	<xmqqikcql8cq.fsf@gitster.g> <xmqqecnel2fs.fsf@gitster.g>
-	<023ae712-8f67-441c-aada-fb5b097ec617@howdoi.land>
-Date: Mon, 26 Jan 2026 09:32:56 -0800
-Message-ID: <xmqqy0lki8jb.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 0/2] xdiff: Remove unneeded members from xrecord_t and
+ xdlclass_t
+In-Reply-To: <cover.1769424529.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
+	message of "Mon, 26 Jan 2026 10:48:50 +0000")
+References: <cover.1769424529.git.phillip.wood@dunelm.org.uk>
+Date: Mon, 26 Jan 2026 09:35:21 -0800
+Message-ID: <xmqqtsw8i8fa.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,15 +87,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Colin Stagner <ask+git@howdoi.land> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On 1/24/26 22:51, Junio C Hamano wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
->> Unless a fix materializes and gets verified before -rc2 (scheduled for
->> coming Tuesday), we should revert the merge of the problematic
->> topic.
-> Understood and no worries. This is a surprisingly complicated issue, and 
-> while I've made progress I don't think I'll have a fix that is mergeable 
-> by Tuesday. Feel free to revert as needed.
+> This series has a couple of cleanups on top of 'en/xdiff-cleanup-2'
+> that reduce the sizes of the xrecord_t and xdlclass_t. Unfortunately
+> they conflict with 'en/xdiff-cleanup-3' in seen, in particular with
+> db8a50ca6b9 (xdiff: don't waste time guessing the number of lines,
+> 2026-01-02). I'm not particularly convinced that moving the call to
+> xdl_classify_record() out of xdl_prepare_ctx() in that commit is
+> a good idea, but if we decide that we do want to stop classifying
+> lines in xdl_prepare_ctx() we can start passing the hashes out in a
+> separate array rather than wasting space in xrecord_t.
 
-Done.  Thanks.
+Both patches look well reasoned and sensible.
+
+It is unfortunate that the en/xdiff-cleanup-3 wants to pull these
+fields in a different direction, but the topic has been dormant for
+quite a while, so let's tentatively kick it out of 'seen' and see
+how well this one does, until we decide how to consolidate the two
+topics.  Thanks.
