@@ -1,139 +1,102 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF5632F740
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 10:45:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C12A221FDE
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 10:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769424306; cv=none; b=Kj7osHSIdLrpUfyopwaFVeYV3T2DxbJ+LuYduKvVBm6hUIbiA7atHq/eOrK93JpQjOk8B6ZnmBy+ED81V4OHQW15g1n8bWSzJ/JcVNkuH66YAwTMLAzJp24iadhJ0BS1x0rwqglc1THZIkfJjQtJEGmsbUNXLO3GoeRmKiJ/fO8=
+	t=1769424567; cv=none; b=PmQhEq4AHfeATKWK9SHaSO2NI/w06w5tRMAjQUJUKW4/rrGvn6zbiBN7xkx6En6Z7bhzhycfKyCiMEKSdhP/Omez9GSwbN44TGhUMmfEQ5lOW8ZN3+EEHHzfBXIRpHUCLAgN4GkBFiPx7yY0aYheF4qUOiUaTawoZI6C0PoYWHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769424306; c=relaxed/simple;
-	bh=znj8ufIseHjjyhgT1Jnjk7+c5XgT/n0lh0kTKo7re5U=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=AdiF3BAr32WfC0X0Z+Y5GEUfpuL1P6Axf7fb1UDKfAlVx6vlWnQqFLHk+ZCfS4qiveT9oDVTOdsvr973W3CUqMxNWWa9jfr6+0VkLyD4KnciwjHEz06BASpsuUNSHuSjLvqec37dtPYYoiYwtkSuFw0OZyzS5NKTLRxpJq4q9/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HKs7Tl6J; arc=none smtp.client-ip=209.85.219.47
+	s=arc-20240116; t=1769424567; c=relaxed/simple;
+	bh=WZmg9nhOZz8DGFcR1QRnezVAKVn1MZB/UABNARecz7k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JVjlhjtOFr6wocyd0WlSEjUBs+7wMcfbRv2ZCQkl9ttWiRX4dIpf/EvltPL+/pStex7CtiVIXzW3Rjj/b0/KKSPCmCVbKh1tQQ9Rkp9p+0sjkImxfn32Xd6OlHNrUEf1yiQxHfyFQpXHlqn07+gkGkmOb1/fqrD0qjAZArZNjo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IinNfXnJ; arc=none smtp.client-ip=209.85.128.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HKs7Tl6J"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8946e32e534so59399586d6.3
-        for <git@vger.kernel.org>; Mon, 26 Jan 2026 02:45:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IinNfXnJ"
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-4801c731d0aso34156355e9.1
+        for <git@vger.kernel.org>; Mon, 26 Jan 2026 02:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769424303; x=1770029103; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1ycTNfnIRK6rIYqerJUkogVO9YlZ4dDhc4QOOIBMLD0=;
-        b=HKs7Tl6JaiMGGXjC3TamwWhDU8Qk5ayvgfLKRmAWwSFS1i/gmj7OgmFEhrEt1FDGoy
-         QVZFUIiPbbIxeTW64R6PLHeMC2ByG3juqBRh+EjGF8j2msGYmvQkI1wevbAV5MTysbrR
-         pxqmIWWN4VrpHwptCGUgj8LxeBKfTNe44Z6TwZQvri3f8kI/ME2O255BjRNPSiLkFL+k
-         N44kd27S1/+8tUvZU2ktDCG+sQBjG3xz5ViTqPRt5wmxDq1lGpHZFi1Of3P+UuBsIWNP
-         UoAdzQuIValpVYzOWzkVyc6BRHcTjjWmYShFTL1Im9Dybo95qyjgQNJ62L9KqJDHYAZU
-         knBQ==
+        d=gmail.com; s=20230601; t=1769424564; x=1770029364; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2UviGy3hzpgHwYeLYVf3j6QdDBqce3y5kLtlad5mKzc=;
+        b=IinNfXnJI3WCwGrWz2TpWu70TEieiLn+2+H5Y4feUGX9Qr0jxe6Lx7KshRRBOZMPCC
+         B+CwSuyb7DvmOGS00x8JKBBJCBFysxIfSMP1Dn0r7+0xZ0Djj7+YYZlTGCTjF6Fr0smN
+         aj4cov+Bxg5+IbEZ1UJ3+EYH8C5neBcaIcIwrvvyM02uIdh6hnwq/4JOmdA2asUcpLDz
+         8ObPM1vVafeejS2MZCdsy8i4QiA+DM+8LZum/k09tuJBYus79pZzCRA4vGIXOTALWeqk
+         wESGBaVJohZLSHv3n4YpM0I1GEYGPl3fxpOTrtsuuq2NM63Ehc4+yyU+Hvz3yLKeejjG
+         nZ6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769424303; x=1770029103;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1ycTNfnIRK6rIYqerJUkogVO9YlZ4dDhc4QOOIBMLD0=;
-        b=WqovFLIxaSEWZkI1Be9czTmaAtX3C7Vmey3fEX+HNiHLu6Vl+reiNUhK1SR/rzMSMQ
-         ZuMv/Onqxtwna7FlCQvhfYbEFBQ4RznpLT8HDHKylh8c21Iv8OyQARq6qCQXycsZu9X6
-         NXrGb+HmZLuJsyQZQktJPr+AY1XR5/ohE/McK/N9ySExGrntodFMfY9gdDaUWHDb1mqx
-         31q0e2ghOGjpymeWbGT+Zf204KuhNzFxAbqDjov786gKW78OSrtmJFefVf/LIdRhmYzf
-         3kuP6nrjQVfzOjmwLpZuRSFwE1Pf3i3CZOJi2PjrA6KDyydDGp1mp0dZz1v+cPJSb0Gz
-         XKXg==
-X-Gm-Message-State: AOJu0Yx/vnOZZiGyryPU9YkBwJYzP2wEMD1VNfIt7mG2tve31zf/xXwN
-	4LmaWun01zJ6TLKNwVjxSacFW7/VjjdEb5SSCITpX3YrqDkMzVbjCOI5HqTqoQ==
-X-Gm-Gg: AZuq6aK9R50vLxrx9qPX1T5OIK3S+L8Cjmh0tgh/02a2SJjNkpxhsqZ1ZS6fWahBIaP
-	Jepu3tVyh/WyEac4doBuWwhOBSfUlYJGAI1zkmuJjCPTdQVt/PqkZ0b///+KiI1Mk3E6DRIVJFU
-	cOptOg26qvDE8rx7mDCQb/qD+jyzXZZNiU8OAp/7SmSK73suwI1Ac7zF1gcTuk5RnRvD3jEHzki
-	9jTqwRgAZaalKLkP6egGt4aBMJx0jjLS6+8qZVPL2FFL6JSVOpdHGv6hQp0y9QFMSlN5errob72
-	GPYJMgW8K8yk9TnKZFZ4HXz/c09KGQbft3r8lWNzBW7eBg20LiIbfKroq8Tmn7bl2ht994EdLx6
-	nYZ/jPrNGXNEFhjbbTItkf9lRBrVjEvEU8vSrHZXWJhmz72m8OB5XEKhJV8cUOJ3W/J9uEA9IXV
-	YAYHph0Itnqxk5Ew==
-X-Received: by 2002:a05:6214:21e3:b0:88f:ca79:844a with SMTP id 6a1803df08f44-894b0782eb4mr50357286d6.48.1769424303452;
-        Mon, 26 Jan 2026 02:45:03 -0800 (PST)
-Received: from [127.0.0.1] ([64.236.134.169])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89491844d6asm91592756d6.21.2026.01.26.02.45.02
+        d=1e100.net; s=20230601; t=1769424564; x=1770029364;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2UviGy3hzpgHwYeLYVf3j6QdDBqce3y5kLtlad5mKzc=;
+        b=SCVaFunioLI5kHyF3llY3OJKKSyYawsw2PPxpoU3lubB07U8+t3/zL41PgTKbB/D8H
+         Z073d8HJXxIUZUsW6q5v8Li2yt4iHOIlt0RsSlH7JvVc7i/Ebk0t7nE9/35B9a/+BxD/
+         pYGe6NSv4HdoO5i1nPbwgQ2fSigLxftdgw/seYlNyRzJtO+M9uGfH/A/qyDa8SpLsH8R
+         EVERh3/u1qmAPZoUBzFZnjGAsKH5Ox3EKtud/bpaLH36f6L1aB9RsXNfLWYo2FeHH3lD
+         pFvI2HiWxKDinQKPbzle4M5DgR4o7fhwwmIONAWMKJxkGJreYRK7umIET4NXkreh55+c
+         TavA==
+X-Gm-Message-State: AOJu0YwgblUqAqqLaIhTXVHV0b4BejWfRjHJ5CuktjaineOMceLd/RqU
+	i4nBhFexndSE7zniRRh3lIMs9SGvbXoHMPUrP4QIYcSUzNohuq8rROOLoWFkGOoz
+X-Gm-Gg: AZuq6aL5rARM2CyEJugeXE++SS/IQuYmkz4M4NpIsLeU3H+eBl5AwL1vjiYAg9Gvp41
+	U+Xs51vRhKsgdUK7D/qy0yHbL+3ugnJssBqQi3YDer2r2qq+699ec8DvdrzQQRQqWeMjmZscFFu
+	1kAyBjp9Yq1TGGk0zUoFA1Xfl6PlOPtn+Q2C5idKy4WP2/8d5ac6Ldt8GNS1XbZmfXd7RaRnp0t
+	bB0rrPDKYudtt/pc2LtkJwB5xUZbwnvaMpZNfvGSHiJGvyc79HwH4AXBui4hYINUhMx9tunozC/
+	MgsAFXfBApu8t6S3KVnKQ8OgSU82gDhzLwdF8pHfjoUHeP7YADzIM6VrTmns8G/h+shMc/z7XPM
+	+inj/OlKFiu8I1YGbwYvrS2XmIg4bWoqfTF2kbrOe/g3hYg4b9/kLYIooycjov8PL2Jra4JO8Ex
+	caewpkKfRFLv7KVsptw7WK8K7e9A==
+X-Received: by 2002:a05:600c:5309:b0:47d:92bb:2723 with SMTP id 5b1f17b1804b1-4805cd407fdmr64494605e9.3.1769424563633;
+        Mon, 26 Jan 2026 02:49:23 -0800 (PST)
+Received: from berwick ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1e7156dsm30063907f8f.20.2026.01.26.02.49.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jan 2026 02:45:02 -0800 (PST)
-Message-Id: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com>
-From: "Chris Idema via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 26 Jan 2026 10:45:01 +0000
-Subject: [PATCH] diff.tcl: fixed alignment of tabs in git-gui diff by using
- spaces
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 26 Jan 2026 02:49:23 -0800 (PST)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: [PATCH 0/2] xdiff: Remove unneeded members from xrecord_t and xdlclass_t
+Date: Mon, 26 Jan 2026 10:48:50 +0000
+Message-ID: <cover.1769424529.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.52.0.362.g884e03848a9
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Chris Idema <github_chris_idema@proton.me>,
-    Chris Idema <github_chris_idema@proton.me>
+Content-Transfer-Encoding: 8bit
 
-From: Chris Idema <github_chris_idema@proton.me>
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Tabs were not properly rendered in TK regardless of tab width settings.
-Converting tab alignment to spaces before rendering in TK fixes this.
-Does not fix alignment issues in gitk.
+This series has a couple of cleanups on top of 'en/xdiff-cleanup-2'
+that reduce the sizes of the xrecord_t and xdlclass_t. Unfortunately
+they conflict with 'en/xdiff-cleanup-3' in seen, in particular with
+db8a50ca6b9 (xdiff: don't waste time guessing the number of lines,
+2026-01-02). I'm not particularly convinced that moving the call to
+xdl_classify_record() out of xdl_prepare_ctx() in that commit is
+a good idea, but if we decide that we do want to stop classifying
+lines in xdl_prepare_ctx() we can start passing the hashes out in a
+separate array rather than wasting space in xrecord_t.
 
-Signed-off-by: Chris Idema <github_chris_idema@proton.me>
----
-    diff.tcl: Fixed alignment of tabs in git-gui diff by using spaces.
+Base-Commit: 1faf5b085a171f9ba9a6d7a446e0de16acccb1dc
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fxdiff-cleanup-xrecord_t-and-xdlclass_t%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/1faf5b085...0d251dfba
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/xdiff-cleanup-xrecord_t-and-xdlclass_t/v1
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2179%2FChrisIdema%2Ffix-gitgui-diff-tab-alignment-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2179/ChrisIdema/fix-gitgui-diff-tab-alignment-v1
-Pull-Request: https://github.com/git/git/pull/2179
 
- git-gui/lib/diff.tcl | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+Phillip Wood (2):
+  xdiff: remove "line_hash" field from xrecord_t
+  xdiff: remove unused data from xdlclass_t
 
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index 442737ba4f..2e13f8c776 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -12,6 +12,27 @@ proc apply_tab_size {{firsttab {}}} {
- 	}
- }
- 
-+proc expand_tabs {line {startcol -1}} {
-+	# startcol set to -1, because in preview the lines start with a '+', '-', or ' '
-+	global repo_config
-+
-+	set col $startcol
-+	set out ""
-+
-+	foreach char [split $line ""] {
-+		if {$char eq "\t"} {
-+			set spaces [expr {$repo_config(gui.tabsize) - ($col % $repo_config(gui.tabsize))}]
-+			append out [string repeat " " $spaces]
-+			incr col $spaces
-+		} else {
-+			append out $char
-+			incr col
-+		}
-+	}
-+
-+	return $out
-+}
-+
- proc clear_diff {} {
- 	global ui_diff current_diff_path current_diff_header
- 	global ui_index ui_workdir
-@@ -495,7 +516,9 @@ proc read_diff {fd conflict_size cont_info} {
- 			}
- 		}
- 		set mark [$ui_diff index "end - 1 line linestart"]
--		$ui_diff insert end $line $tags
-+		set line [expand_tabs $line]
-+		$ui_diff insert end "$line" $tags
-+
- 		if {[string index $line end] eq "\r"} {
- 			$ui_diff tag add d_cr {end - 2c}
- 		}
+ xdiff/xprepare.c | 20 ++++++++++++--------
+ xdiff/xtypes.h   |  1 -
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
-base-commit: 1faf5b085a171f9ba9a6d7a446e0de16acccb1dc
 -- 
-gitgitgadget
+2.52.0.362.g884e03848a9
+
