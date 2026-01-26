@@ -1,337 +1,193 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B62A3033E0
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 08:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B55305962
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 09:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769417618; cv=none; b=ZlkHtE4Z/N1llPfkkXrBUjuzNv3gkRS49F8qwgg0SLGM4cMhY+kqPr8TOlnyC0j8DhHkmKVMj1urfhHYDrcq885NYiOveEy5jI3NIcrtvdo/iJjAEsjHwkDCM1bztpDj8JkIV71Qj0ScMQSyrJaJbROP4RkXE3iJT11AO9igwAY=
+	t=1769420236; cv=none; b=QJrILPtEQAcNs36nOJEVfxWZKY+M8i86YKmMiPqxLD3NBb0oDI5TWi5kint3ry/ZhIzE0KbLRG/2Z9nANyoMaaMz+6qEA0dLR0jEnIpBY1ttENuDn3lrXt9xGaO4CoqZ8mxYskm9Fqsbv5Jt7uDSXTcCX2rSDLBeO69+HGjvFMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769417618; c=relaxed/simple;
-	bh=W8ZcwAWcgL5lZ0QVk3bnEAJlG5zT1SWdMLFBJEvBH7w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i8u03VNB3T8VMqtzaxo1PB5AsvwlR41mXzg9ivr/hikayy19+X1GIUnnF3hSRYYVgJB0czUx2P9b4WB7T15TbgBLK2yORwpwL2NDJJEkMnnNv6BhI9nqsuHJJCcqtPyh1yNqW1534f0hEoCxKGk3h8escMEPLCorYUXRUYtJn/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AZngm2VX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tZ/gdtd4; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1769420236; c=relaxed/simple;
+	bh=cS5acPWbWfhazj/9+KzeJUiGDTSY/LHctFIloBpC/JI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lIUoBH5d3b/gtBwpakRA8QWUjT9s2pNBYxeNIH3+TEdASD+BqKM4A2cy/mHw2KbWiv52OBy78lZTGQDxFATLfEjF7aPv0Eh/5FkrYCthQDTYLgpHtvfO7t2VEX85X5eqbQWKA3WF6SqQuepWL7D5Q3YZKkEC5kTHxZ7+8BIKsbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FHlcaZ89; arc=none smtp.client-ip=209.85.221.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AZngm2VX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tZ/gdtd4"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id ED6B37A0108;
-	Mon, 26 Jan 2026 03:53:35 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 26 Jan 2026 03:53:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769417615; x=1769504015; bh=J2z9PyzeJz
-	qNfFdytZbmtKZSeWjrwsBgJyg4RinOV7E=; b=AZngm2VXoosQKMjOnFP7hzrRKx
-	6QeTVZFe43booEOEsRfhFoJ+HOkKl++is2nKfolFY3EkpHgNcsGkYBYAOe8fYfYU
-	jhUyZbNR+uMbrhG5LH9aHTCzh9+pveoFeGQBbdpXdzJx5/BCmrJJQXzlwVdpv8p8
-	AVfPeA6C0oPcj2E8YzyZkBZon1GmOrNqgJl2gQ4edfRHVrMP5FuX/pscFVKix8X6
-	NVX0FqLsdNnKsX4ts/z6SJ0SK442OujlnXCR8IDhqveNDMeODCGv+bmIaAqYauK5
-	WQDDu0tPgZPGuHyShrYWWbHph2JySU/R3ZplarnixvYW2CAdKOkU/YSwujEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769417615; x=1769504015; bh=J2z9PyzeJzqNfFdytZbmtKZSeWjrwsBgJyg
-	4RinOV7E=; b=tZ/gdtd4rPx7+SHga2jZzFeVRCW4LpyEnuZEfAQ4y6dUL0Y4jtF
-	KvF/UipvE8rNzMdptxe2ZZ0FHOrd1N238NY04esL1lDovxiIhQ38An+nqBaUbKUp
-	EW0ZWEW0ec0AxYHasUfz7c7n8setZa+2bH21tgGEh6tEktrP4ZGkECmOzYbRTnJj
-	hT66uk4qGXiQ9H65R4TSAQlMbdTrXcG13E4ZHxoFyqrKuLFaBn7AoTupxmLNARDD
-	782e2X3iCeQ20mr4L6ZS58zSvHnrthQZGm+cAc2a+o16E0Z+ooEmSTVAnLyHTqvc
-	e5ZArBxmc47rrgv7rrrrta/SjC4quSC5slA==
-X-ME-Sender: <xms:jyt3aeXr21Ypuq6BlSWAEzQNUPj-aNiL_W1ZDJehXNfd6Nl7AMoWPw>
-    <xme:jyt3aRcV3Lk2Ngl4xa3f1PIgEgxcHqEaEuL-tMPY963A65VLkRAXYt5qKonvG-0_o
-    TF0s9WmTB9pfdaqM8aARMOuCX-4vIj3AAOkJ2GE6MNGbAlEsOv5n1M>
-X-ME-Received: <xmr:jyt3aas37uNVvFE3vskbFRJoDjEZzPnbmkfzQSMEU-c4CFn8ceWa6zGUkMDfUYAk9Yk4QScXE5XgGzJota7wkQlVqpZhIH890HmxeWwPyW-y4A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheejvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:jyt3aQ-AtjO3091NSH9WHqvxT2xEV3oeNgFdXRzJYmkEhh4Qvlvtrg>
-    <xmx:jyt3aV29q0DS81CX44ASAC1vqsFkE6gwOxBtHf6UKhddput5BY1zvw>
-    <xmx:jyt3aVCI-RCCa2Q1F_1DvMVYmZLwJHZ1I1g4AP6jaTcB-qdEYwR5pg>
-    <xmx:jyt3aRcysMpu0ucxxfpBqg2nKHfkJrb6tqYp9ac_kcdG9wBK3CHIYw>
-    <xmx:jyt3afX4cvkemK_7Hx-rJ22pp_x5yEULrw88QRtnqox3A9COGLHeylIr>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Jan 2026 03:53:34 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cb389c70 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 26 Jan 2026 08:53:33 +0000 (UTC)
-Date: Mon, 26 Jan 2026 09:53:30 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 11/14] odb: introduce mtime fields for object info
- requests
-Message-ID: <aXcrii58bIdLttI2@pks.im>
-References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
- <20260121-pks-odb-for-each-object-v3-11-12c4dfd24227@pks.im>
- <aXLJoDdoEyKXKtBf@nand.local>
- <aXNCq8h94i2Z6uSa@pks.im>
- <aXO0cNaY3DWu6aQ2@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FHlcaZ89"
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-42fb4eeb482so2871752f8f.0
+        for <git@vger.kernel.org>; Mon, 26 Jan 2026 01:37:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769420233; x=1770025033; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jEfNKICi1ogB8DWc3MISXqkTjmFDtlgO5b2s/hu1p80=;
+        b=FHlcaZ89rZNseRZArKfYAHtOWWNMAlE5dR8boGQjmlrCUG6N2gOL5Gm+ZnAhcE6/mv
+         o3An//bd+GWkGFR37HSfhc1ptEDCjJUQmHAV1UAVnAhaMoVSfZS3Ro89TuL36WXI9Qeb
+         CpXaYUjJDmzu/bEzS44Bjzyvwyxa8YeHZvwQ8JCftLQprMXg38PvgYoG+iESG3XjqGE/
+         b6BlNG7TqNPEs9h/pMED6Vd/dVYxIUj10aIi9jxRQeFrTygyvp7WI8B/H8NwM4BW/eEr
+         6SxFAUZRHC0kmF3SSEajC6krsU7u6HgESphY2Hv1qERJSH3uS1RIJy4weGxeM1Z3KWAC
+         wMQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769420233; x=1770025033;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jEfNKICi1ogB8DWc3MISXqkTjmFDtlgO5b2s/hu1p80=;
+        b=aSB9lvwPQ3UiTsYjeaMNercKDiSuYuuDy/Cu7WRPz5FUjxPNb14uHqYb+6DL3KgvKA
+         jc1beZXsEx7YZN81/RJI73xnTdtu8JcL1tcQ9x39YkOGet3nZsPGUgBavInkAR0ddAlK
+         z9EHF+iMiC2em70d7qAwxhw50LFA7okBN6WNgMTgFXrpUnHhva9Z9vgKnQngV7nmCUfa
+         4o/80MMojpjCWyrhWJEJCG0C80baKypYo40gSbukXhdzNEBTr1UqSXidDhRvOfH0s5Sp
+         zn5yKKKk2QiIyslpw6PP0+NYORVaNABcHFSAIl++A98davY8Z4BdwL8csAgPLpv4DdDF
+         KTOA==
+X-Forwarded-Encrypted: i=1; AJvYcCW3q7fNUaOA2MBEHkU2CKYc4ptSKstFEHYgEPQvrfymuGkn4VIPUp5TR8ihVhdQn90z72E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz1PcnOMJEAr+cb/ZQSxv+Rsxm5oXJjooTp8yjABAWdFsfAPNCt
+	Bl7eWrdCw/KkOTQPpc6fjcSDctNJ2ne41Ho1AP9IWIgi0BAYTHmG/EKi
+X-Gm-Gg: AZuq6aJis1yA8ACHI+xo/ySReDT/zexELohTweXbh5tK7ZbkZFrBB0xGaDHPvLWMLD/
+	NxmF4bV7SYoxncjvN+llOlScEhp3yBFSPZBHKEJht+EH3v4x+FxKLg6qCt9j02c4dGLzfMxQdCp
+	4TzGx0qSZt7dLpcwbz0bKe4uyOevva5IgHgFKdgpNUemoLY79mVavYY841DACsWIszSdtHY7HjP
+	setmi5+jgB2TQ1TVqkXJZsWdoDDdo4svNxCtIO28qWbic9xfLz5mS2ZIT4y0NjOY1FFuGjK07wc
+	ixpkICwwpkiLKXwaIJPhR/XUUJGwsr0ZCyJIK5yK7FqFQme1Aj/dytbVUMqC7LOZU5HChLos8/+
+	sd0eu9A+u0/+EenaGW6lAr6LaCdbZ0tFCkicHuYq0JiXM+BocQFleyRIZ4J+mx3I/cnm1fVc6Cv
+	3wvtHGdhYRh8sB3hYrYiuWuj95KKZcRLfFdZCBp1jCc3YYvOyZOwB7KBozmVfsr+iHRA==
+X-Received: by 2002:a5d:588d:0:b0:431:764:c25d with SMTP id ffacd0b85a97d-435ca1a702emr6595030f8f.35.1769420233308;
+        Mon, 26 Jan 2026 01:37:13 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1c01783sm29666464f8f.3.2026.01.26.01.37.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jan 2026 01:37:12 -0800 (PST)
+Message-ID: <3aeb49dd-8618-42e0-b9f9-6a4fb8065793@gmail.com>
+Date: Mon, 26 Jan 2026 09:37:03 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aXO0cNaY3DWu6aQ2@nand.local>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] xdiff: re-diff shifted change groups when using histogram
+ algorithm
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Yee Cheng Chin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Yee Cheng Chin <ychin.git@gmail.com>
+References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
+ <xmqqikcusn8p.fsf@gitster.g> <4fa413ae-f2a4-4de2-a2fb-0b1db379750b@gmail.com>
+ <xmqqy0llk33y.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqy0llk33y.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jan 23, 2026 at 12:48:32PM -0500, Taylor Blau wrote:
-> On Fri, Jan 23, 2026 at 10:43:07AM +0100, Patrick Steinhardt wrote:
-> > > > diff --git a/odb.c b/odb.c
-> > > > index 65f0447aa5..67decd3908 100644
-> > > > --- a/odb.c
-> > > > +++ b/odb.c
-> > > > @@ -702,6 +702,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
-> > > >  				oidclr(oi->delta_base_oid, odb->repo->hash_algo);
-> > > >  			if (oi->contentp)
-> > > >  				*oi->contentp = xmemdupz(co->buf, co->size);
-> > > > +			if (oi->mtimep)
-> > > > +				*oi->mtimep = 0;
-> > >
-> > > Assuming that you do not change the object_info request/response
-> > > semantics, I wonder if it might make sense to zero out the entirety of
-> > > the response section as a belt-and-suspenders mechanism in case future
-> > > contributors forget to assign zero to the new fields themselves.
-> >
-> > Splitting up the request/response structure as you proposed in a
-> > previous patch could definitely help with this. I'd prefer to rather do
-> > such a bigger change as a follow-up though as it would lead to a lot of
-> > churn.
+On 25/01/2026 17:34, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> I'm OK with pushing the larger change down the road, but I am a little
-> uncomfortable with the interim state being introduced here. Perhaps a
-> compromise here would be to have the caller supply a pointer to an
-> object_info struct, whose request fields we honor. The response fields
-> would then be written into a separate object_info struct via an
-> out-parameter.
+>> On 21/01/2026 20:51, Junio C Hamano wrote:
+>>> "Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>
+>>>> @@ -915,6 +919,45 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>>>>    			}
+>>>>    		}
+>>>>    
+>>>> +		/*
+>>>> +		 * If this has a matching group from the other file, it could
+>>>> +		 * either be the original match from the diff algorithm, or
+>>>> +		 * arrived at by shifting and joining groups. When it's the
+>>>> +		 * latter, it's possible for the two newly joined sides to have
+>>>> +		 * matching lines. Re-diff the group to mark these matching
+>>>> +		 * lines as unchanged and remove from the diff output.
 > 
-> I don't know. I think that ^ this suggestion is kind of ugly, but I'm
-> trying to come up with something that doesn't introduce the risk I
-> described above in the interim between this patch series and the one
-> you're proposing later on.
+> Also, after reading the first paragraph of the big comment again, it
+> makes me wonder if it is saying the same thing as "When histogram is
+> being used, we shouldn't bother shifting up and down to join groups,
+> as the result will always worse than the fallback", but is it that
+> bad?
 
-I think it's actually not _that_ ugly, and I like the additional safety
-that it brings us.
+Looking at the example in the commit message the result of shifting up 
+and down and then calling the fallback is better than either the 
+unshifted diff or shifting without the fallback, so I don't think just 
+disabling shifting improves things. It would also stop us coalescing 
+changed lines, for example
 
-Thanks!
+-A             A
+  A     ->     -A
+-B            -B
 
-Patrick
+The indent heuristic seems to assume that we've shifted down as far as 
+possible before trying it so that would probably get messed up as well. 
+To me the problem is that the histogram diff does not always generate 
+particularly good diffs (maybe I'm biased - whenever I've tried 
+switching the default to "histogram" I've always switched back 
+"patience" fairly quickly after being presented with a diff that I found 
+hard to comprehend)
 
-diff --git a/object-file.c b/object-file.c
-index bc5209f2fe..6785821c8c 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1804,7 +1804,7 @@ int for_each_loose_file_in_source(struct odb_source *source,
- 
- struct for_each_object_wrapper_data {
- 	struct odb_source *source;
--	struct object_info *oi;
-+	const struct object_info *request;
- 	odb_for_each_object_cb cb;
- 	void *cb_data;
- };
-@@ -1814,21 +1814,28 @@ static int for_each_object_wrapper_cb(const struct object_id *oid,
- 				      void *cb_data)
- {
- 	struct for_each_object_wrapper_data *data = cb_data;
--	if (data->oi &&
--	    read_object_info_from_path(data->source, path, oid, data->oi, 0) < 0)
-+
-+	if (data->request) {
-+		struct object_info oi = *data->request;
-+
-+		if (read_object_info_from_path(data->source, path, oid, &oi, 0) < 0)
- 			return -1;
--	return data->cb(oid, data->oi, data->cb_data);
-+
-+		return data->cb(oid, &oi, data->cb_data);
-+	} else {
-+		return data->cb(oid, NULL, data->cb_data);
-+	}
- }
- 
- int odb_source_loose_for_each_object(struct odb_source *source,
--				     struct object_info *oi,
-+				     const struct object_info *request,
- 				     odb_for_each_object_cb cb,
- 				     void *cb_data,
- 				     unsigned flags)
- {
- 	struct for_each_object_wrapper_data data = {
- 		.source = source,
--		.oi = oi,
-+		.request = request,
- 		.cb = cb,
- 		.cb_data = cb_data,
- 	};
-diff --git a/object-file.h b/object-file.h
-index af7f57d2a1..d9979baea8 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -128,12 +128,13 @@ int for_each_loose_file_in_source(struct odb_source *source,
- 
- /*
-  * Iterate through all loose objects in the given object database source and
-- * invoke the callback function for each of them. If given, the object info
-- * will be populated with the object's data as if you had called
-- * `odb_source_loose_read_object_info()` on the object.
-+ * invoke the callback function for each of them. If an object info request is
-+ * given, then the object info will be read for every individual object and
-+ * passed to the callback as if `odb_source_loose_read_object_info()` was
-+ * called for the object.
-  */
- int odb_source_loose_for_each_object(struct odb_source *source,
--				     struct object_info *oi,
-+				     const struct object_info *request,
- 				     odb_for_each_object_cb cb,
- 				     void *cb_data,
- 				     unsigned flags);
-diff --git a/odb.c b/odb.c
-index 67decd3908..9d9a3fad62 100644
---- a/odb.c
-+++ b/odb.c
-@@ -998,7 +998,7 @@ int odb_freshen_object(struct object_database *odb,
- }
- 
- int odb_for_each_object(struct object_database *odb,
--			struct object_info *oi,
-+			const struct object_info *request,
- 			odb_for_each_object_cb cb,
- 			void *cb_data,
- 			unsigned flags)
-@@ -1011,12 +1011,14 @@ int odb_for_each_object(struct object_database *odb,
- 			continue;
- 
- 		if (!(flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)) {
--			ret = odb_source_loose_for_each_object(source, oi, cb, cb_data, flags);
-+			ret = odb_source_loose_for_each_object(source, request,
-+							       cb, cb_data, flags);
- 			if (ret)
- 				return ret;
- 		}
- 
--		ret = packfile_store_for_each_object(source->packfiles, oi, cb, cb_data, flags);
-+		ret = packfile_store_for_each_object(source->packfiles, request,
-+						     cb, cb_data, flags);
- 		if (ret)
- 			return ret;
- 	}
-diff --git a/odb.h b/odb.h
-index 72d69ffcb3..8ad0fcc02f 100644
---- a/odb.h
-+++ b/odb.h
-@@ -492,6 +492,9 @@ typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
-  * Iterate through all objects contained in the object database. Note that
-  * objects may be iterated over multiple times in case they are either stored
-  * in different backends or in case they are stored in multiple sources.
-+ * If an object info request is given, then the object info will be read and
-+ * passed to the callback as if `odb_read_object_info()` was called for the
-+ * object.
-  *
-  * Returning a non-zero error code from the callback function will cause
-  * iteration to abort. The error code will be propagated.
-@@ -500,7 +503,7 @@ typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
-  * an arbitrary non-zero error code returned by the callback itself.
-  */
- int odb_for_each_object(struct object_database *odb,
--			struct object_info *oi,
-+			const struct object_info *request,
- 			odb_for_each_object_cb cb,
- 			void *cb_data,
- 			unsigned flags);
-diff --git a/packfile.c b/packfile.c
-index e455150d65..57fbf51876 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2329,7 +2329,7 @@ int for_each_object_in_pack(struct packed_git *p,
- 
- struct packfile_store_for_each_object_wrapper_data {
- 	struct packfile_store *store;
--	struct object_info *oi;
-+	const struct object_info *request;
- 	odb_for_each_object_cb cb;
- 	void *cb_data;
- };
-@@ -2341,28 +2341,31 @@ static int packfile_store_for_each_object_wrapper(const struct object_id *oid,
- {
- 	struct packfile_store_for_each_object_wrapper_data *data = cb_data;
- 
--	if (data->oi) {
-+	if (data->request) {
- 		off_t offset = nth_packed_object_offset(pack, index_pos);
-+		struct object_info oi = *data->request;
- 
- 		if (packed_object_info_with_index_pos(pack, offset,
--						      &index_pos, data->oi) < 0) {
-+						      &index_pos, &oi) < 0) {
- 			mark_bad_packed_object(pack, oid);
- 			return -1;
- 		}
--	}
- 
--	return data->cb(oid, data->oi, data->cb_data);
-+		return data->cb(oid, &oi, data->cb_data);
-+	} else {
-+		return data->cb(oid, NULL, data->cb_data);
-+	}
- }
- 
- int packfile_store_for_each_object(struct packfile_store *store,
--				   struct object_info *oi,
-+				   const struct object_info *request,
- 				   odb_for_each_object_cb cb,
- 				   void *cb_data,
- 				   unsigned flags)
- {
- 	struct packfile_store_for_each_object_wrapper_data data = {
- 		.store = store,
--		.oi = oi,
-+		.request = request,
- 		.cb = cb,
- 		.cb_data = cb_data,
- 	};
-diff --git a/packfile.h b/packfile.h
-index 8e0d2b7661..1a1b720764 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -343,14 +343,15 @@ int for_each_object_in_pack(struct packed_git *p,
- 
- /*
-  * Iterate through all packed objects in the given packfile store and invoke
-- * the callback function for each of them. If given, the object info will be
-- * populated with the object's data as if you had called
-- * `packfile_store_read_object_info()` on the object.
-+ * the callback function for each of them. If an object info request is given,
-+ * then the object info will be read for every individual object and passed to
-+ * the callback as if `packfile_store_read_object_info()` was called for the
-+ * object.
-  *
-  * The flags parameter is a combination of `odb_for_each_object_flags`.
-  */
- int packfile_store_for_each_object(struct packfile_store *store,
--				   struct object_info *oi,
-+				   const struct object_info *request,
- 				   odb_for_each_object_cb cb,
- 				   void *cb_data,
- 				   unsigned flags);
+Thanks
+
+Phillip
+
+>>>> +		if (end_matching_other != -1 &&
+>>>> +				XDF_DIFF_ALG(flags) == XDF_HISTOGRAM_DIFF &&
+>>>> +				(g.start != g_orig.start ||
+>>>> +				 g.end != g_orig.end ||
+>>>> +				 go.start != go_orig.start ||
+>>>> +				 go.end != go_orig.end)) {
+>>>
+>>> So the idea is to remember the original values in g and go (the
+>>> location of the group in the file and the other file) and if
+>>> shifting up and down changed any one of the four ends from the
+>>> original locations, we always take the fall-back route (if we are
+>>> doing histogram)?
+>>
+>> I'm a bit confused why we need to check both groups. I think they're
+>> supposed to move together (if we move "g" by n context lines we also
+>> move "go" by n context lines) so I can't see how we can have
+>>
+>> 	g.start == g_orig.start && g.end == g_orig.end
+>>
+>> when
+>>
+>> 	go.start != go.orig.start || go.end != go_orig.end
+> 
+> Interesting.
+> 
+>>> By the way, this appears after the if/else if/ cascade that has:
+>>>
+>>> 	if (g.end == earliest_end) {
+>>> 		... do nothing case (case #1)
+>>> 	} else if (end_matching_other != -1) {
+>>> 		... do the slide-up thing (case #2)
+>>> 	} else if (flags & XDF_INDENT_HEIRISTIC) {
+>>> 		... do the indent heuristic thing (case #3)
+>>> 	}
+>>>
+>>> Am I reading the code correctly that, even though this new block
+>>> appears as if it is a post-clean-up phase that is independent from
+>>> which one of the three choices are taken in the previous if/elseif
+>>> cascade, it only is relevant to the second case?  I am wondering if
+>>> it would make it easier to follow if the new code were made into a
+>>> small helper function that is called from the (case #2) arm of the
+>>> existing if/else if cascade.
+>>
+>> That's a good point
+>>
+>>>> +			xpparam_t xpp;
+>>>> +			xdfenv_t xe;
+>>>> +
+>>>> +			memset(&xpp, 0, sizeof(xpp));
+>>>> +			xpp.flags = flags & ~XDF_DIFF_ALGORITHM_MASK;
+>>>> +
+>>>> +			memcpy(&xe.xdf1, xdf, sizeof(xdfile_t));
+>>>> +			memcpy(&xe.xdf2, xdfo, sizeof(xdfile_t));
+>>
+>> These would be safer as "xe.xdf1 = *xdf" so we don't have to worry about
+>> getting the size correct (sizeof(*xdf) would also be safer but there is
+>> no need for memcpy() here).
+> 
+> Very good readability enhancement suggestion.
+> 
+> Thanks.
 
