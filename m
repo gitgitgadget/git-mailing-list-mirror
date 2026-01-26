@@ -1,175 +1,89 @@
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+Received: from mail-10631.protonmail.ch (mail-10631.protonmail.ch [79.135.106.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503EC3EBF33
-	for <git@vger.kernel.org>; Mon, 26 Jan 2026 12:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.233.160.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547F031195A
+	for <git@vger.kernel.org>; Mon, 26 Jan 2026 13:32:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.31
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769431704; cv=none; b=c5UV5OIEd+FrEajVGCB/sHOU5g/MTxdN96dDiQW14okT5ECe2n4mhw3qhLVg7qT60yI3JNpFHww8JyqjkDDtTPIw1w923sjMAe+hYTDjRqqM4WqrTk83ad2DUmnhWaYTOPF4Yw+6n+QJyMZ8gcl1wIa4sj6niBhAqFFYffPX81k=
+	t=1769434367; cv=none; b=qAFBzEKke/aRD0kFxyl/r5srDcCtDgLXGTauGq0cz9bAx5+EwRxglihqmWfN5o87VjMjW1k+PvjjK6aj5VgPRov8ZIgUOn2u8uCC6svxhggI8RP6JRkjAMDQn5ZU4F44fPlK/rlilzs8eKf00JSOnQeLHJ4uFiAQHH8LHwONTn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769431704; c=relaxed/simple;
-	bh=e+aOvmEOiAvp5QI+pHXbnXxGC068qUR/WYMT18zWas8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=f11R65ZoU0pN3AP+JrQt1RiX7FchZD1bkGpvpadp+OenXzUlCqY4U++BRaR4ki1soOBJE5Hq+bPj35+lipwYC0Qf9nIeivYLJ8mUcjYf8Wk11SYd4YDX6IgKw6NGESe8ajA9/NlLKWHKYoQ65uF7kTkjwEqp9yBqQdcfkHu6xDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email; spf=pass smtp.mailfrom=iee.email; dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b=Wk9Pu/kp; arc=none smtp.client-ip=85.233.160.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iee.email
+	s=arc-20240116; t=1769434367; c=relaxed/simple;
+	bh=+brcYcXvJEwaqB7IINZfQ5X2s8MXcedyx3yEnrHAAMY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Q1iw7P4RgsnNdF1MBYV5qLDF6+loqXpvm89chEEl8jFfMiuAJa19r5+CA2FGMeFpuEbcbHG43+VFL0b0f39cKzJm1iohMz/rVCzsOFiyVTfEOto4M9txoQlwqAscwGfBvj3Gx1M2GjcPFqURq2dpRBg2LnUrX+Y3xsjHeT0b/Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=CYdtdVaT; arc=none smtp.client-ip=79.135.106.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b="Wk9Pu/kp"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
-	s=2025082600; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References
-	:To:From:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID; bh=eKXLG3CGJKYf/FxBH84kB+xfSBiGtcG3Seas3paH8p8=; b=Wk9Pu/
-	kpNoPlVImZlb9n5SA2oUaHdH5a33Jxgzi96RNUED51lVJh7DdkP6NcdRVpx/naz2rd1yGvKC+HgAl
-	TjaiANnLiTCk/byfO9fA/cLij92KQfPGSeh7Ev/OV1BlfEYJ/ekeiTMrPL2HV+52VSWtu+edpVxr5
-	o5BU8xMS6Yc=;
-Received: from host-78-146-7-210.as13285.net ([78.146.7.210] helo=[192.168.1.57])
-	by smtp.hosts.co.uk with esmtpa (Exim)
-	(envelope-from <philipoakley@iee.email>)
-	id 1vkM0x-0000000091V-8V0o;
-	Mon, 26 Jan 2026 12:48:19 +0000
-Message-ID: <92cd5477-c2fc-42c5-b678-aa95b0999b2a@iee.email>
-Date: Mon, 26 Jan 2026 12:48:18 +0000
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="CYdtdVaT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1769434353; x=1769693553;
+	bh=+brcYcXvJEwaqB7IINZfQ5X2s8MXcedyx3yEnrHAAMY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=CYdtdVaTur3kqYQMrc7VT1HmarFBg/yqgaYIvOziImyBD2OBY1F+SDD3UnR2NX1q+
+	 KKt201lBTgk0+iW0IXsZdveFxBPlULmPUqZlfUir7TdOwB/giAO6tnr1hmz/V1UlXi
+	 1wjrY7gyqt3K1wPZdF1r+NTQPVSC6V6nMkrU56dWDT0+C5kPNSJZGt5DPASsJCSobG
+	 spWRrgDfvyAi5/jibC2IM+z6wTPqJ4oimqEjJE8mOre1Rl+ysCqfW6pDp8iIpGHhI3
+	 +ol69QQoCYJIx173gnnxMH216M//TPi2bQaPsY8GEndDCv9InGvKtKkJ0y6u437U0F
+	 5stqRkt5A5gVg==
+Date: Mon, 26 Jan 2026 13:32:28 +0000
+To: Johannes Sixt <j6t@kdbg.org>
+From: GitHub Chris Idema <github_chris_idema@proton.me>
+Cc: git@vger.kernel.org, Chris Idema via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH] diff.tcl: fixed alignment of tabs in git-gui diff by using spaces
+Message-ID: <Lj9kojJwK1ZAtvE5nj6rTq5EXf1-QhsRlmBDM9YntbYeWb3J07mlbM-njNco2XT1pSPXsNVbo9Uc5kJOHihb11odjthYN4YtuhVdNwxSIqk=@proton.me>
+In-Reply-To: <01d0faaf-99fb-42a4-befd-bb7f359809bc@kdbg.org>
+References: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com> <01d0faaf-99fb-42a4-befd-bb7f359809bc@kdbg.org>
+Feedback-ID: 177675452:user:proton
+X-Pm-Message-ID: f5899f5a17ed8c74eb6061317f092960543b68e0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Missing and omitted objects
-From: Philip Oakley <philipoakley@iee.email>
-To: Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>
-Cc: Jeff King <peff@peff.net>
-References: <a612ea8e-a741-436d-8ed2-6ff09ba7945b@hogyros.de>
- <f6cc0420-1be6-4855-8c0f-b79c683203ee@iee.email>
-Content-Language: en-GB
-In-Reply-To: <f6cc0420-1be6-4855-8c0f-b79c683203ee@iee.email>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Had a bit of a think overnight. Some parts probably don't apply to this
-application, see below.
+> Sorry, I cannot reproduce what I read into this sentence. When I change
+the "Tab spacing" option in the Options dialog, the display changes to
+the specified tab width. I'm using Tcl/Tk 8.6.
 
-On 25/01/2026 15:42, Philip Oakley wrote:
-> On 21/01/2026 11:54, Simon Richter wrote:
->> Hi,
->>
->> we're having a bit of a discussion in Debian.
->>
->> The goal is to move towards git based storage for source packages, away
->> from tarballs; ideally we'd like to reuse the upstream git archive as
->> far as possible, so it is easy to check for differences.
->>
->> However, some projects are shipping files that aren't redistributable,
->> or that we want to omit for other reasons (such as vendored
->> dependencies, when there is a perfectly working common version
->> available, and we really really want to make sure these don't get used
->> accidentally).
-> 
-> There was a discussion about allowing objects to be 'redacted' back at
-> the Git Merge 2020 (https://git-merge.com/),
-> under [TOPIC 3/17] Obliterate.
-> https://lore.kernel.org/git/5B2FEA46-A12F-4DE7-A184-E8856EF66248@jramsay.com.au/
+I use git for Windows version "2.52.0.windows.1" on Windows 11.
+
+Here is how you can reproduce the problem:
+mkdir test_tabs
+cd test_tabs
+git init
+echo "" > test.c
+git add .
+git commit -m "initial commit"
+echo -e "int test1\t=3D 5;\nint test11\t=3D 6;\nint test111\t=3D 6;\n" > te=
+st.c
+git gui
+
+> Do "Stage Line/Hunk for Commit" still work after this conversion?
+I'm sorry but I don't know what this means.
+
+-- Chris
+
+-------- Original Message --------
+On Monday, 01/26/26 at 13:15 Johannes Sixt <j6t@kdbg.org> wrote:
+Am 26.01.26 um 11:45 schrieb Chris Idema via GitGitGadget:
+> From: Chris Idema <github_chris_idema@proton.me>
 >
-The discussion is like still informative.
+> Tabs were not properly rendered in TK regardless of tab width settings.
 
->>
->> The goal here is to allow the recipient of such a bundle to verify that
->> any files received are unmodified, and get a list of paths that were
->> removed (which may be an entire subdirectory). Ideally, they could also
->> continue working on a clone of this and generate commits on top as long
->> as the affected paths aren't touched.
->>
-> That discussion on redacting objects didn't reach any actionable
-> conclusion that allows objects to be omitted/redacted, while keeping the
-> branch based directed graph flow. I've continued to consider options for
-> deliberately creating 'counterfeit' objects (old name/oid, but
-> new/limited content) which could then be 'verified' through a facsimile
-> object with the same new/limited content but a properly hashed name/oid.
-> I haven't shared any of that with the list.
-> 
-The idea of eliminating objects by OID, totally, from the repo is not
-suitable for the use case. It would be an all-or-nothing response,
-rather than a tailored response.
+Sorry, I cannot reproduce what I read into this sentence. When I change
+the "Tab spacing" option in the Options dialog, the display changes to
+the specified tab width. I'm using Tcl/Tk 8.6.
 
+> Converting tab alignment to spaces before rendering in TK fixes this.
 
->> The minimal amount of data we'd want to archive is a single commit and
->> its tree and dependencies, plus optionally a signed tag pointing at it
->> if it exists (i.e. the same information we get if we use git-archive,
->> plus the signature on the tag, plus the option to clone from such a
->> snapshot). For the simple case where nothing is removed, this already
->> works well and covers most of the use cases, but, sadly, not all of them.
-> 
-> You could simply branch that special commit that will have all the
-> deletions, plus a 'deletions' file diff file (assuming you want to
-> highlight those deletions..), and then leave that branch as a stub, with
-> a tag, and remove that old branch name such that the tag is the thing
-> that retains the special commit in the hierarchy, and it's parent still
-> holds within the regular git commit graph.
+Do "Stage Line/Hunk for Commit" still work after this conversion?
 
-This may still be a useful tailoring where a separate commit is
-generated which omits unwanted files/content. This is quite lightweight
-in terms of repo size because of the inherent de-duplication of common
-content. It's only the updated trees that need storing.
+-- Hannes
 
-Philip
-
->>
->> As a side effect, this could make recovery of a broken repository that
->> is missing objects more robust.
-> 
-> Broken repos are scarce, more often than not being compatibility issues
-> between (*nix) Git and Git-for-Windows (case sensitivity, sizeof(long),
-> character limits, etc.). However redaction and overlarge files still fit
-> into the 'Don't do that' category (expect the unexpected..).
-> 
-> There is also the distinction between the meta-data and content. The
-> former also includes the data that holds together the commit graphs
-> integrity (hash of hashes) and filenames, directory names and commit
-> texts (point 15 of the Git Merge discussion). Being inside the hash
-> verified meta data makes it "hard" to break and create exceptions.
-> 
-> A mechanism for marking leaf objects as 'removed'/abscissed/absconded
-> would help here. It's tricky to do that safely for a commit, as it also
-> carries parent information which must be retained.
-> 
-> For a blob (leaf) object, with its free form text, it is possible to
-> have a fixed format, fixed length (hash specific) counterfeit object,
-> e.g. "Git redact abcd01245.."(*) which would then also exist as a
-> facsimile (i.e.has a true hash oid) object within some authenticated
-> part of the graph, and the counterfeit exist in place of the 'broken'
-> blob object with that self referential "abcd01245.." oid.
-> 
-> For trees, it becomes necessary to locate a bit of free text in the meta
-> data to provide self reference, and make it appear as either the empty
-> tree or empty file(blob). The true oid of such a counterfeit tree
-> likewise would need a way of existing within some authenticated part of
-> the wider graph. Perhaps a step too far at this stage of hand waving.
-> 
->>
->> Right now, I'd like some feedback whether someone has a better idea, and
->> if such a feature could ever work or if it violates some fundamental
->> design principles.
-> 
-> It's a big ask. Finding one specific feature (just on) that could
-> actually be made to work would provide a toe hold for discussion.
-> 
-> At least this is a solid desire from within the community's infrastructure..
-> 
-> At present there is no mechanism for assuming that a piece of blob
-> *content* is "correct" but that the oid it is stored under is incorrect
-> / does not match. We already have/had the `--literally` option for
-> creating arbitrary content, but not it's corollary `--use-oid=abcd01245..`.
-> see
-> https://lore.kernel.org/git/20250516045010.GL22242@coredump.intra.peff.net/
-> Peff cc'd
->>
->>    Simon
->>
-> (*) I more wanted "Git redact abcd01245.hexoid Base64oid" to reduce
-> accidental creation of such objects and allow double checking of the
-> oid. But maybe that's too cute.  ;-)
-> 
 
