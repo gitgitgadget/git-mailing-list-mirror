@@ -1,98 +1,128 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F8D27FD52
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 17:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD7132143D
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 17:04:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769533273; cv=none; b=tGuQEzZH0IDlf+sXIMQ08K4omA2+c4xsxbwgYcoT/Ng51M8vAYssgHcIQ6dYFk5WS0ONASuu9Itm/eqHGJQovUJosmJow+ZZm5Nq5B9ThXCYEkBaZDaZVEngKcfeMF038eZzeWofmxwelveiKxCvKmHQMrkWyyLJITxv9pfj0Ac=
+	t=1769533449; cv=none; b=U2m4ql63sexAEvJHP13xqlLNXVkVxvpQ82p4FdKI4Ptc0KVFDHgG4aIdIjXqooJlf7E/RF1rJwGnyj4tzLJAP879wCgwzAfV1lc1g30TCel+wLkb9ty6LkQZNBSXm4CE9HOdWN7OEW0NU0VWR8iXbVtdihaPbVPG0HdLdZ6BXXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769533273; c=relaxed/simple;
-	bh=APIpYh/dXYFS3YBopsxUdo23EXEDeIjNsp6ygNs4mto=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type; b=fLisQc1EpCS6i3yLx/Obxqn7FeIkEUClZflUYjUBRZ7Fg2pqjkp2VxpEz+8np7cbHBiSfLHTGqIL1qZSyPNWqMSg5q3LUccHeBdVYalAS0R1QEKNrTzuy2iRcIfHd9R9bvSK4rZk3l+R8I+rNrehJwWf5E7n7TFgysSTKtJNp8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bMXFkpsw; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769533449; c=relaxed/simple;
+	bh=olfMW4LUDfAjm73Bgwo5WiKyuVOQR0VFtA4cXE1GyLI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sHf5TxNNMhaBmYdi8E/Gth4Hiz6Q1cR6GFoOZ+yLDdZv3VMDWfikefHc8SEYpN1B6vd4Kv+JJDKUaaz5AWElTO2B+lyLOL9cEWyueGcGK4uCAP2jCdaFvFFpyt4fo7GkVNkJ/seAgPDOZsHSVt5WAof5Q0hAzCWUfKG+vynJ9Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QoqIkt4l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iZg7z9kv; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bMXFkpsw"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8c6d8751c88so626912185a.2
-        for <git@vger.kernel.org>; Tue, 27 Jan 2026 09:01:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769533271; x=1770138071; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:in-reply-to:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lCsAy7+31JTs926Xb7UoEsDkluYijyxVV0cg50BbFNw=;
-        b=bMXFkpswgm1+WnV94CPJUN1hfPK7auMq7hyVbSrYyEBM9/zvz7/GzijwgcAfoPR/qn
-         x/Gz6fwQl1dmr3F2nIt2s0FfSkpcD9uIbc1H8wFzZAXhU1ALhkkcTPQn8CJtXOt2d4e8
-         Wl8p9tC93ErZBC/J9vGCypoy9/mEJQRngKrp6NhUBNNsLUHuN9aGB4/QWe6U0gOVm5qd
-         bBm63ExbZbC/3lk4QoyQ+ssh23wTiiXFm7hyL7PQDUYSlz6Fu+/thrO+N61YQ+gGzr40
-         fm7uowTkHJ8IrUcQyMVzgPTDLD4V2NN41FOqoqbvcn2hzp6La9jilZfiXC+Fo8TvV3s1
-         aHJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769533271; x=1770138071;
-        h=content-transfer-encoding:mime-version:in-reply-to:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lCsAy7+31JTs926Xb7UoEsDkluYijyxVV0cg50BbFNw=;
-        b=Rzyw3LAot8S9GRoCn7EEQQTF0kq4OOuteddW1Sqw8tfw4Q8mWxrPJS1O0+tiPj9T08
-         FXqM+/Xmgi/NFYlXF2GfW9tEXLzAySs+E2+fpRETZDqjlp70flwmAIoTPOtNpRjmsCSc
-         UyrGuUF0r55PYVG3rMqKl8EHsWJ0fUBqD+HvFKlK10Qs1oD3ewli0itJByjZbHAbtcpF
-         ak/Qb+SEsBCOT4Q+VJLLYZwgm6djmeKpFbcfrIMi2wP2FpqRPqV+e6ahnYcnaga+dYPe
-         Rj10E7ryZhVwzNprBg01ZGV009doWmXcJybzB+gcke5GYiRQrfn5uTGSVThn4xkz04IX
-         l6aw==
-X-Forwarded-Encrypted: i=1; AJvYcCXGDWlE/CVLyZt+bGhX0EHFhkJYjH8hsivchMa8pZwiy+7kgy/+kvyiEgwbGB4HqBmfegg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYvC+lLSwL50TLSlS+3Ad1HbulLGjb2IqsBMngaeer3INv6Bg/
-	sEx85clkg8i/vVS67FAst6puRpQeF6FYJ+A/EJGTypjGsPbA7EXzomkhsI0ROQ==
-X-Gm-Gg: AZuq6aI2/K5cXCon/28SsjSl0YNzQjrUQeQlnP21OGrO6F9AcJfX9RjzdohFzG/z2Fj
-	CAmN4Ox6HO2HolfBGco/AQJHDeGPc2lgOhD5hLNmKN1L5PfJSLgCBYyNjnoeqaY2NdDzs9vYeMS
-	ZnsjoyydHNt6I0QtYTkRN2F76j+13kKGSxwEwjGUvQGOjsAxeTXW1WJVDjAWJXCQ5ZyFRjMQIVr
-	92edKOSfz4pPOLyWIXBGjqvFQyGk35A9OD/YZoH3HxTU/3maI6ft5M+40errdvNm44SpOegADgJ
-	fynZlaLH53q4ObrZjRAALZ/sE/ebaiFLokML4DlruB7WbzwidT1wkGMBqLToy4RT+KjxBP+onhB
-	17RfuVqBu6JeiqRj5oKFNNf8pPnPWDoaJIqf75UAhpyq1mcNToM6ha4lPFGPQgmLbTj86EtzLW2
-	5XEwXTSHSX98DqyNFwjDR28HcFIFQdmVLJc2pB1p42gaLh
-X-Received: by 2002:a05:620a:29cc:b0:8c6:e223:3ee9 with SMTP id af79cd13be357-8c70b8f8f3dmr291449085a.54.1769533266943;
-        Tue, 27 Jan 2026 09:01:06 -0800 (PST)
-Received: from daniel-desktop3.localnet ([204.48.77.24])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d375b640sm643016d6.39.2026.01.27.09.01.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jan 2026 09:01:06 -0800 (PST)
-From: Daniel Tang <danielzgtg.opensource@gmail.com>
-To: gitster@pobox.com
-Cc: cedricschwyter@bluewin.ch, git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Alias 'list'-subcommands to 'ls'
-Date: Tue, 27 Jan 2026 12:01:04 -0500
-Message-ID: <3411428.b9nUPlyArG@daniel-desktop3>
-In-Reply-To: <xmqqblh7nqmu.fsf@gitster.c.googlers.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QoqIkt4l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iZg7z9kv"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 57B2C7A0090;
+	Tue, 27 Jan 2026 12:04:07 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Tue, 27 Jan 2026 12:04:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769533447; x=1769619847; bh=FEx+AClWND
+	8uN38XjyuCFImLWfzYRBeyqhForlorAjI=; b=QoqIkt4lQYEFS6oxQ99ZPu0JqE
+	s9oWXETJBsz1gFSu16okG2MNzR1lOE3AotqGZzedouvXO2BBqPPSh9NfnZhcKzcL
+	6EQLaJePiFp/4qU0qI4+IP+pe102H7lGct/wExG11A/Orau/J+izKGsMVTgGSHha
+	bupRQyRILOg3wyNxbvAjMz18Kyz29QWREpRaj4oVVBls/F0fkwwui2y+uk01Wohr
+	ImGbWOagX+xqgswP/7EN0m7bvAR5mr0Lmi2VHK3KL9DarfoMhYlHdGrX2M6Ppq/B
+	CPqkrI2SFYGxrZxjWnmeOXSUJS3D2DGS+ZFzMPO5ZhigZKGA9fC0HmK6OJ0Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769533447; x=1769619847; bh=FEx+AClWND8uN38XjyuCFImLWfzYRBeyqhF
+	orlorAjI=; b=iZg7z9kvO0Ee+DBhMlASqevIT5rKuTWnTJUvf/Emm2oioMh0Rt+
+	v8SVkOTyDv2Gnhi8hFBjAtPIklkOVetTtVI8vnZw0tdjlF0SAXTzBEdOKboPipqA
+	9cF3v7wh+Gt1PRUcMLLWM8jUm7cqCbGgH4l7G3W8kP4aoJTdwQGHn6uOdKH6Y6Jp
+	TEh8iWcKxGWmJrOk/zxEEoTnXhlL/+pW43Yh6DtTbKT6nIAIG6E13u28M+0vZGtO
+	92VwLXbm0e3nWo8Eph225ylPm33ll9/PiUe9QF7sP+pmr0N6BJrkgSlPY1bstJ1l
+	SAqVYrykTh/t2Tddw0qOx3qrThCBct02AFg==
+X-ME-Sender: <xms:BvB4afQS2yq-fz-LV2PHQQlxg6omxC39nrK_WRgMt26ZxFqfvVEMcQ>
+    <xme:BvB4aTUq8lWcMWjz9bn42NLyrMeUp-eQAhXYZuzksJxNXm3eNIgxJtfh90wnrV_wx
+    pGZzmlvrj4ZemIPtkLoewcf6455X49dNyDE1JoGmQ6pDl6TZqFpBg>
+X-ME-Received: <xmr:BvB4aYdrAZCEQm_s_VKlyVk5Al6Qhm1zxy2HQwD0RLK2EmwXkP2fgTVjGq2wqEr6x9WQhSUZ1tvuK_V3ns3knUcIfLvaauC9QhKvN7M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedutdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
+    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
+    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:BvB4afLHNtcvJpYwEUPESEwfeMLGlZ3S207N5tlv5OSitLlIbODC4g>
+    <xmx:BvB4ady9joqpmufkk7xNEZiyBKzMTefHEY16cRj6xVNHS7hIeKT9fw>
+    <xmx:BvB4ads0zB1aJq1bCJfF-VItxv04rm59Z3evXDdyOtZvJDydQz9cxw>
+    <xmx:BvB4aYA_WpQCUk2klUkKhyylG005N_Wqt4YD3mQZQHdx7-4hWE-9Ng>
+    <xmx:B_B4aV8m3tM485hXWcmmCuK4uiY7ocmW1QkRIKCxL1Ha6fngRJT9NhFc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Jan 2026 12:04:06 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>,
+  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v2 0/1] Allow reworking with a file when making hunk
+ decisions
+In-Reply-To: <cover.1769522219.git.abrahamadekunle50@gmail.com> (Abraham
+	Samuel Adekunle's message of "Tue, 27 Jan 2026 16:43:06 +0100")
+References: <cover.1769522219.git.abrahamadekunle50@gmail.com>
+Date: Tue, 27 Jan 2026 09:04:04 -0800
+Message-ID: <xmqqtsw7f0mz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain
 
-> Is there a "git somecmd" that allows "git somecmd ls" form, while
+Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
 
-`git fast-import` comes close but isn't really it.
+> If there is only one file, neither of the options will be
+> available, if we are in the second of three or more file, both '<'
+> and '>' will be available and if we are at the last file, only '<'
+> will be available.
 
-> these "git stash list", "git worktree list" subcommands take "list"
-> and not "ls"?  If so, this change may make sense, but otherwise, not
-> really.
+An obvious alternative would be to treat the files as a ring, going
+next from the last one would take you to the first one, etc., but I
+think what you described is just as good.
 
-We have a precedent of aliases how `git remote rm` is aliased to
-`git remote remove`. Speaking of which, I'd also like an alias from
-`git remote mv` to `git remote rename`.
+> This will enable simultaneous hunk decisions between between files.
+> After all decisions have been made in a file, a prompt shows which asks
+> "All hunks decided. What now?" that allows reworking with the file,
+> moving to the next or previous file as the case may be.
 
-> Since many CLI-tools make use of this alias and many programmers are
-> used to it I thought I'd add it to git since I was missing such an alias.
+I forgot to mention this in the previous review, but this would be a
+change that existing users may be surprised by.  We _might_ need to
+introduce a flag to enable this as a new and optional feature.
 
-Yes, I run into this once a week. `git-ls-files`, `git-ls-remote`, and
-`git ls-tree` misleadingly imply that Git commonly writes "list" as
-"ls". I'm accustomed to `npm ls` being accepted, and even `ip link ls`
-ignores the extra subcommand. I perceive a command line convention to
-alias subcommands to coreutils abbreviations e.g. `git rm`/
-`docker container rm`/`docker container cp`.
+> The decision to use 'q' as a submit is because after some or all
+> the decisions have been made in a file, 'q' submits them as is
+> even though in the `help_patch_text` it say `q` will not stage the
+> current hunk and all hunks after it.
 
+The users do need to _knowingly_ leave some hunks undecided and
+apply what they already decided to use, and I think 'q' is an
+appropriate option to use.  It is what the current system does,
+and I do not think it changes with this new feature.
 
+Thanks.
