@@ -1,70 +1,75 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BD321B185
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 22:03:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A78F346ADC
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 22:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769551387; cv=none; b=uKlWv97s+na5a96H90fsJbmwJLszvtMfscv+ghmBwp6R0OBbHbB70vf9H0SvGtUzUpbUG8869G8Nzqek77hTkIgDfc9Y2140xdJCjzfSS7Al/wtkQ8rpZUbtD6cDFRtVo7Uo9PVxfEjUVbhY5/NFFLVuaqWuF5PhnXwZw3NQOdI=
+	t=1769552012; cv=none; b=fBJ82970kf58M9yefphShg0GGfkCVs1YxHRJmtRESU5kREG3vDq5GJNyXSm0MfSdAJMfdLpBT+ZZiU8pCDVRnivkpY1rq96k2tSB5XM6W1LHZrWis4T4oaUXV/LTM4SaahtSBEVJy183Q4xFkCYbvCecsSa2xPo7BThN4SlAT00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769551387; c=relaxed/simple;
-	bh=3eONVIQnRhHrhYu/j+3cl+NAFhGk2Cy6wY65DNmTncY=;
+	s=arc-20240116; t=1769552012; c=relaxed/simple;
+	bh=1yXEQQWbvzj5bzHlY/sBF2tok6hl1ii6Z1vfZgj53oY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ghufa8fg4JaAGkB8G0/5ADmPA1M+/GYOZbiKb6tXkkT68+vR0avUf7QDasre2tW7tDBSwZ8evZS7VeRQZ7Tzb/ZpV+KLwz7J+t+pLVHLCn00qOXBiwCnfsoWTguJb44It2vspz0C6B7Lhdg+5q4vz+hC4M8nOOyi46nokmi/r2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gxRTSz/F; arc=none smtp.client-ip=74.125.224.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=fF4AlDcl+2tOaicrq/K1CxZnF1yMpymia0ofrT9bz+RKTAQ4qUeR+6ofmenE/2MRyLnxrGIKPgmjk12+ab4m4WvT6FITnWTF29CZXyARx4qvf6GwgHLt/8RkuzqdsajRv+nltjpmSKJJhS1FfE+fD/XGStJT0jS94ADBCSK3vJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=OlOSaeVv; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gxRTSz/F"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-649523de905so503727d50.1
-        for <git@vger.kernel.org>; Tue, 27 Jan 2026 14:03:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="OlOSaeVv"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-88a26ce6619so79653906d6.3
+        for <git@vger.kernel.org>; Tue, 27 Jan 2026 14:13:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769551385; x=1770156185; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1769552010; x=1770156810; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a3fZ6bixlRt6uu2EdZSgNiXydSEHg1xlPxNQUA2vXlU=;
-        b=gxRTSz/FaPdPMfSUlF04gf7rTdJWOPH+Qoo8ES+OPyBgC1xm1qOZS57tsHMVaPOOFL
-         IHgeo0t1dVo74f6OJzsA4En9PdnC8Xr0Xc5T1xVVhKGmFRSqHFPE34Mnyt3eBq8lDW7z
-         IWdIaVoq8sikY9CJLRUVeEls/lhG7pXOP9MvoYm0SZn1qzexc0QXahhR2dgIotwZGe/D
-         GS1lrEkIfPlu/JgWpWAaTtvplkNh6BkxSmBMcYbVf+DLK5oUkxUtcgbcZ5HklVt2xwBw
-         x3Iz0PUtmoPYKZWNPupYu5aRm3jgUW9GPOHfZ3NOo+T2AEI+9ixBv2X5XoBa3iy+8j9I
-         LyjQ==
+        bh=ClsY0sU2ZX6iUtkXmDbY/gGn26IP+YZ+XnTCDuY9bzs=;
+        b=OlOSaeVvQym0x4bejnXmQ56phx5yL8VE6fhpH7t27JnnNciHREA/dAwYQI78b01WfH
+         hL6wUsDWJ3plgCE7UJoI8GZPTXl32o59FgxD7/q73ArhfHDJ1QG/9aSo9shvEogdrAKs
+         gAau51ojwJVtXrUM83bsylR5JpQ0AwFd3+hDwJuVFJ3Vw5OzbNBF4zk6fpHngwy2ajuo
+         310MUsYUHEKQld92nKvFUyZ6kKUIyWPN4tDJhXQbG5znFApzt5WqO5rV6oGW4sNNwpQu
+         kX8y2JuVVaf9Bif7dqBbYuWVUuGV17Sam+krBf5CqREH1smFeoLr5LwvFffvr75L7+y/
+         4/xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769551385; x=1770156185;
+        d=1e100.net; s=20230601; t=1769552010; x=1770156810;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=a3fZ6bixlRt6uu2EdZSgNiXydSEHg1xlPxNQUA2vXlU=;
-        b=OkK0uCmDkVW5VFyUiSVg3RrnERpnOxuKV/zGEaF/aV4MYX+1Of8K40szQTIl7teHmV
-         dJU5B07X7jixtcgoll7r5+Wn1fYvAN0IoIEWsxSrfDr8Nf1mwcmbyIDu7YNc+Vt0oRH3
-         8jmQrsZDHiBqDlR6l5ZkeY5H6VDpjmO5qu5Ee4LDWDET0a8O+sFwHOPapty3jUE0JElB
-         zpiyCXQXqoC1yYz7lrNwdw+MDX9qE3360QoERX9jMnhrZX9Od4XzM7L/Br1hlAYfIbqR
-         bDaqhw6MpGqsZZCdE0l+1lotIqYieGRXWL5agZ7G2fTjL7oxVLEi4pLyJM59hDSRrSJk
-         ndxg==
-X-Gm-Message-State: AOJu0Yyx6aXNuHlbHLoJjjN53eHAKWSOmEEvrW6Ut0FKVC+28hU3QiYC
-	jmh9t5MrecZtBhOZg3yDvZXIcXNGdoVUgIeZU1OJe0lPu7dBUfBZJxIt4jv2taVj8nDgomQztl1
-	xEj0zFB4=
-X-Gm-Gg: AZuq6aLhouaArr+UH4Z5sXcdi8W0gTutyRiXmRqKfhjF0Bi6JwkJO6OVjLq7YnOarNU
-	NxJaDvijrQ6HtAr2yx+wz+u/yyImeU869+Fr9Wm77yMtm2Yhwr16gHnxQ7sDXcatGrYZjFwKfyD
-	nwE3r41QBcjFacpSn9Pw+R1f5Qg+bEVuFMtsleD4CLZsNrsNYQd+xIfy0YkIe9Lkug7ke/mz2bQ
-	1Q9Q9kupWhj29mbJOI+V/gUY0kMKc1RM++648cxPGZlFySmqU9yjvjX76q3yFu183SccSMAcKg8
-	SUi4mDBApuP6iSXDHBn5ysb9TXYvntPVfN5mU1QJaYRE4busGqB+NEdBerKNCJ/SzzrMCUHEn+X
-	joXAL9mxpcO8XAHbWMEHH21njT1ETKej9AYBSlGUW0oAa1DItkG+Ji0AzcoGviDIsLtLFeVYp+o
-	MD8ZBjQIAJsj2oBy6awXEY3Ml1OQ9p8/YwtjZfRlWnMAWPkh7ucqsDVPFFaqGCICIedgUyD8vf+
-	IyHKxtNXL+Dr3Ae7Q==
-X-Received: by 2002:a05:690e:d08:b0:649:5789:ded with SMTP id 956f58d0204a3-6498fb06c9fmr2182208d50.29.1769551384866;
-        Tue, 27 Jan 2026 14:03:04 -0800 (PST)
+        bh=ClsY0sU2ZX6iUtkXmDbY/gGn26IP+YZ+XnTCDuY9bzs=;
+        b=w4PT9WR9xbdHpYlTpM8U2wAMfalkVG4iby+/QNZafTBD/aGBfeW+ek4EoM9C2nQWPH
+         sv/umUIIjhfsFfjKgjdo9Y/zbidd7RWNKHjVikFgGm/3LxH+Dae1TS5vgPPEJmeK9WnE
+         K8lRNpT03dFlqqmvXZtIBPX6uuFWsSlbw26PKcWYfvBIwXku0kH9ZYrHw+Z26qmpMrJB
+         jf5Xyj+3TyFr+wTSEChqAjAI1CWsILJ4KONrjANODHd+I1aSAwfrkp4x8p58F09BNs3o
+         CA1rzruAcrrUlM2AVY3OHqkm1ge7t/GZB5b4mw/T3RwaKXV9jzHYYBvBzWDNNQjck7F7
+         QqHQ==
+X-Gm-Message-State: AOJu0YzuD9qvpjEGcYoqL3geLEZcn+zcTDpBE2gbxfyFDMbsf1W1wpXA
+	T6PyqnEa0dATuYXNmVdV4PQn7363zJndr8uoSdZXd+FR6r0p+TRh0jBPgWmu3/5BZ9kJMs6sT5K
+	fN9K14Bo=
+X-Gm-Gg: AZuq6aKOviMYRd1wZb6C7TeEQSuYxDQHSvxhq0xiA42WIMlpy1rfSLFU6TltIkAwYOM
+	EmsCqxF8RmZyWXICPd7h8rTDZI7ajBGMGAy/d6dHR3ZgpS877VDJUdWqlmtAhd3pm4mm3wEdL+h
+	rF3MctNlnm2vRswicfVcljmfPSTadKOAgLX5/826LtUeGkSQvmU77l0kiMcJBRJbXNMWvETOXuS
+	Pqiex/GJo7CUMSynJd21YUsG3qoV5kk+MuEqQnlpAGrQTeCpxYbW1GkkYV5+oAD57SjlyPmaUR4
+	EkfFKQaBZ19o4jVQJbQMDMgImeV3D6gdjFcgVF3YjH/h5Bt4VTJYAZ42NT5WSkSEeUiuNfISyCU
+	Jmo/bprUs4Uq+Vjhnu8A89e0M7z1GV787vB6P8hfc1EOw/2yomcjZ0uNSE6fIsHEIArf2x8M1jC
+	Lyk9bsXRuX5GSa4eNfu+8Rm1usn5sIK1mVD0+kbE/pizCIkSPBLtEmqRS9Gbs0n+6CSkNglC91X
+	t2ORQpzziSB9cBeSg==
+X-Received: by 2002:a05:6214:262e:b0:894:2c12:aed9 with SMTP id 6a1803df08f44-894cc7d0a73mr44033686d6.5.1769552010256;
+        Tue, 27 Jan 2026 14:13:30 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-794828d157dsm2998937b3.40.2026.01.27.14.03.04
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d36a9bdbsm5195396d6.11.2026.01.27.14.13.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jan 2026 14:03:04 -0800 (PST)
-Date: Tue, 27 Jan 2026 17:03:02 -0500
+        Tue, 27 Jan 2026 14:13:29 -0800 (PST)
+Date: Tue, 27 Jan 2026 17:13:28 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <junio@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2026, #09)
-Message-ID: <aXk2FjTUMMThs5Kp@nand.local>
-References: <xmqqecnbeyvr.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 17/18] midx: implement MIDX compaction
+Message-ID: <aXk4iIHRu3mPxY6S@nand.local>
+References: <cover.1765053054.git.me@ttaylorr.com>
+ <cover.1768420450.git.me@ttaylorr.com>
+ <13336e864f4ed3a6954b782f0bcc090d92ac722c.1768420450.git.me@ttaylorr.com>
+ <aXhqroubXFbnBgJI@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,36 +78,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqecnbeyvr.fsf@gitster.g>
+In-Reply-To: <aXhqroubXFbnBgJI@pks.im>
 
-On Tue, Jan 27, 2026 at 09:42:00AM -0800, Junio C Hamano wrote:
-> * ps/odb-for-each-object (2026-01-26) 16 commits
->  - odb: drop unused `for_each_{loose,packed}_object()` functions
->  - reachable: convert to use `odb_for_each_object()`
->  - builtin/pack-objects: use `packfile_store_for_each_object()`
->  - odb: introduce mtime fields for object info requests
->  - treewide: drop uses of `for_each_{loose,packed}_object()`
->  - treewide: enumerate promisor objects via `odb_for_each_object()`
->  - builtin/fsck: refactor to use `odb_for_each_object()`
->  - odb: introduce `odb_for_each_object()`
->  - packfile: introduce function to iterate through objects
->  - packfile: extract function to iterate through objects of a store
->  - object-file: introduce function to iterate through objects
->  - object-file: extract function to read object info from path
->  - odb: fix flags parameter to be unsigned
->  - odb: rename `FOR_EACH_OBJECT_*` flags
->  - Merge branch 'ps/packfile-store-in-odb-source' into ps/odb-for-each-object
->  - Merge branch 'ps/read-object-info-improvements' into ps/odb-for-each-object
+On Tue, Jan 27, 2026 at 08:35:10AM +0100, Patrick Steinhardt wrote:
+> > +	if (!from_midx)
+> > +		die(_("could not find MIDX: %s"), argv[0]);
+> > +	if (!to_midx)
+> > +		die(_("could not find MIDX: %s"), argv[1]);
+> > +	if (from_midx == to_midx)
+> > +		die(_("MIDX compaction endpoints must be unique"));
+> > +
+> > +	for (m = from_midx; m; m = m->base_midx) {
+> > +		if (m == to_midx)
+> > +			die(_("MIDX %s must be an ancestor of %s"), argv[0], argv[1]);
+> > +	}
 >
->  Revamp object enumeration API around odb.
->
->  Will merge to 'next'?
->  source: <20260126-pks-odb-for-each-object-v4-0-5a64a038c791@pks.im>
+> These new checks all feel sensible to me.
 
-I have some lingering questions about the mtime-related changes. I am
-not opposed to the series in general, but I think some more time to
-continue the discussion in that thread would be beneficial before
-starting to merge it down.
+Thanks for taking a look and suggesting them in the first place!
+
+> > diff --git a/midx-write.c b/midx-write.c
+> > index ca2469213e6..afa077a09cc 100644
+> > --- a/midx-write.c
+> > +++ b/midx-write.c
+> > @@ -1120,12 +1216,23 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
+> > @@ -1162,6 +1270,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
+> >  		die(_("unknown MIDX version: %d"), ctx.version);
+> >
+> >  	ctx.incremental = !!(opts->flags & MIDX_WRITE_INCREMENTAL);
+> > +	ctx.compact = !!(opts->flags & MIDX_WRITE_COMPACT);
+> > +
+> > +	if (ctx.compact) {
+> > +		if (ctx.version != MIDX_VERSION_V2)
+> > +			die(_("cannot perform MIDX compaction with v1 format"));
+>
+> Right. So if the user has configured "midx.version=1" they cannot
+> compact.
+
+Exactly. I think the limitation here is a fundamental one, too, since by
+its nature compaction *must* retain the pseudo-pack order concatenated
+across each MIDX layer in the compaction range. With midx.version=1, we
+don't have a way to express that information in a backwards-compatible
+way, so midx.version=2 here is a requirement.
+
+> > @@ -1354,12 +1491,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
+> >  			ctx.large_offsets_needed = 1;
+> >  	}
+> >
+> > -	QSORT(ctx.info, ctx.nr, pack_info_compare);
+> > +	if (ctx.compact) {
+> > +		if (ctx.version != MIDX_VERSION_V2)
+> > +			BUG("performing MIDX compaction with v1 MIDX");
+>
+> Isn't this `BUG()` redundant with the above call to `die()`?
+
+Technically, though I put it in here as a sanity check to ensure that
+any potential regressions with the above die() don't cause us to get
+into a worse situation that would result in bitmap corruption.
 
 Thanks,
 Taylor
