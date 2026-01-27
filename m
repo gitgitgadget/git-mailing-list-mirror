@@ -1,214 +1,99 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2370236CDFD
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 19:29:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DD92135D7
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 20:33:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769542183; cv=none; b=oWCuDVfIhubk4klchGrermTfAn+hJZoFkVxQb56kqCvu5MYtdzp+Oc5KgwFsZafq8c29B5GpZFl6nOe8b2s0RMHdsxto2Dd1jbd1TVh7HR6TF1HEN0BCk3rAqE9b40fsexeEyM125RugGLb5SWmGVIqSDwJgu5J9aYW53Yo6pYI=
+	t=1769546000; cv=none; b=BJQqWAaHAI0CR96UoQioW/PyhJVBNzSJj3MDuUrXARGNZiERXIORuqkzpNEkX0BgLJJbGIVr3Dz3wYAdz1rRHZwPZoULOOiwZ1GOakMw12qbWw3wBJqdn+8D9t+7WrbpMRTsBfM2IBchKx3QsWyxzhEalqUlTr8j51IKG4Wpo5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769542183; c=relaxed/simple;
-	bh=3m2LMjbVVB+HfJXlPFt34XhsbB1ZhOXebuRXP0rMC+A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9kN5JHlOlPP5L8EA9NGaiesGJl6Ohs0Gz3zZPkwsN4RlSMMJ9G0L/m1ukMZVEl3kqhCg5lICkx4CyeWz0nVXCYtsC6Wd1pLOibYVqxjQKa9feFFTxHnRZSCYhl+EZRHmmbd91VKuNmmQVZTVY+XA05wQZxb5JZawt1tuNBUGEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S3BIfcwC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m+3KkkEo; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769546000; c=relaxed/simple;
+	bh=l9MkheN1Egkwm7MThufY+5CDrriqOy/KGg+y6N4sC+E=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Lwr4zGtcO/doZ/TfSKmwUdi//V1vAyy7HoGrtfwrzIT6J8nS2OcZTi07qHQuzdHjRR6Sz+HGqO7bI9bxIcVayAK2lCPgEyIniWmZp0kNPMYbWgp05Dm/MenFiJSlOzv83U/z7Co6Wj1ZHHPUZhnTw14xFbPFursKDk4igZhe2SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H+ZDbX6a; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S3BIfcwC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m+3KkkEo"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 55DA6EC010B;
-	Tue, 27 Jan 2026 14:29:41 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 27 Jan 2026 14:29:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1769542181; x=
-	1769628581; bh=BI8illkCGxbXUztqEWQ2fxKFZQ1OsR/Sey8FohTBEn8=; b=S
-	3BIfcwC98wXSas0bPzc3hRkcCaEvDSiReZ5bxy8oFoDX2lOM2EQm1IGaws2nKuh6
-	EwFiJXZ+GL7FbPBLw9LB1ElU1Du2Gx5gL9jgM7iUjRIRM1heWtNEEJNhNlrjPSDr
-	kCaXn2hz5zROTHHzJKTBVwvv+dGainnmx164CrDMW/MGzFoY75DzhTZBWhPi+1hm
-	vqk8sxc/rG/JXuDpKY3q3trG5mGMJtuVWCCciwRzSBjiGAGf3ncfhW0zEB+DUKDH
-	OxqmEcJRhX2GoR/iXNGhvWv4WtP5l8kvjUNIKJRa3SrGHDPn2zCpA1+hMHflPVlK
-	7PdKV0evYsZhrr4S8qNkw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1769542181; x=1769628581; bh=B
-	I8illkCGxbXUztqEWQ2fxKFZQ1OsR/Sey8FohTBEn8=; b=m+3KkkEo6MkMNn3ZG
-	ZFxb5Zs54bW9kFnjDJ7Zd3FrwKzT/nL5131rrDRUvPslrcGZFE8YD7/bGqBtSa10
-	JGaajXOMEDFdeoM2s4knp/JOEXIlVQXnZUwJJ4Ra1+TlICO/kmTegvcsGy1Smt7e
-	uQ0UlKdn4Z2gfa5ezhC4Hw0JjNbT2Uh+JVaIeabdsFzIoTlObOdKJCbEcy/+mrHS
-	MtxYBt3Rt45R27KM72JgGWiII9mNVNbSXq1Xp5H9iUXCGRvL6jiT5mEjS7ZoSnKQ
-	bpWd0j14zhRanDtAmOFJLdK2dv0SezO07ia9Jd9fipT8zIaVW2cvkGsFPhVr5pBG
-	sspKg==
-X-ME-Sender: <xms:JRJ5afDwt8ONaawcRggO6JULQEX1anvjSxephKuO6WKC7x4q7N8Clw>
-    <xme:JRJ5ac8t24Z-R6QuhZpoUuBuzXUl3mZ9VoDFXPoKolCan18Vf8mBHtEXIA9XeIg70
-    Db-blnbFIOoCq7zvcckzWHPazy6RfnkpnTKHb0xLEaR3XbAH2LWsQ>
-X-ME-Received: <xmr:JRJ5aX-DzEeP2BQ06axvo89cUXPFkmobDr2GRyRjhcdqG93icPn_6G3K9P5ylZ7qwTGZiQfpFYJv7SKzj3Hkrt7VsMOHTJx5ZKM-zRs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedufeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtkeertd
-    ertddtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedvffelhfeutefgkeettdfhudelff
-    duteelfeeiueelhfdvudeiueekhfdtvddukeenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgihqhhsihhmohhnsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:JRJ5abeaFpQ6_Bi2OuzwmxZYckm_MkkvWpvr743Y59dOq2VEG79D3A>
-    <xmx:JRJ5aYHFtRlH_nKx9fr6LokntcR1-K_3VvWWKtRlH5Bn4gKcj_my0g>
-    <xmx:JRJ5aRd_VD1JRfF0_8vud7Sf3TtvnaOleJpmR1aG_nlN_Ok4jc293Q>
-    <xmx:JRJ5aaHQL5B2I1vFsT5sJXyxYDjHkZmFB5Cv_Z8yKaLjhgMx6y-p7g>
-    <xmx:JRJ5acmsGROoSeMnRuXJc1VFOTm3XYC6BO_zfqtBFLPV4BD7ohMWzXyx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Jan 2026 14:29:40 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Simon Cheng <cyqsimon@gmail.com>
-Subject: [PATCH 2/2] checkout: tell "parse_remote_branch" which command is calling it
-Date: Tue, 27 Jan 2026 11:29:36 -0800
-Message-ID: <20260127192936.904719-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.53.0-rc2-135-gb1217c0133
-In-Reply-To: <20260127192936.904719-1-gitster@pobox.com>
-References: <20260127192936.904719-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H+ZDbX6a"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-88a288811a4so86929816d6.3
+        for <git@vger.kernel.org>; Tue, 27 Jan 2026 12:33:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769545997; x=1770150797; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H/QlC/RmCe76LTrcPqL5/aAOIVhzvfUw8/1gix8+yn8=;
+        b=H+ZDbX6aZwjVwImoRlNQz9DxvW/JrNSAVHgXmLnEpTxUTeIqzzTYhUkK3NISY7iI8l
+         wCMS2PvXq5qRs3hq490OKQ4h+I1dY0q6FmTpvoBbYbKCn5Cz0KWRta2mgH1giiJJkdnF
+         EsiCN+n4SrllGhQn5pp6Br3ig7hbnTp+TvXizie8xJG5k9cThbN74OVjV+VKQsPxDbsX
+         xbFUrbnAsqNMPdBjKuwgi6munDV1e3PFBJl/COiAu49+WiEniJuY/I5fbcIUM9bxNDO9
+         G5cg77w2KxupvCEbjbFm1PAN3a3nNFQoDRzEnYPueBSIPISkcEz/qQMoB2ExslPpugHi
+         eJRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769545997; x=1770150797;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=H/QlC/RmCe76LTrcPqL5/aAOIVhzvfUw8/1gix8+yn8=;
+        b=k1lOHDm4rVRjaxZpUZp1++bgxujX66EclxtfSgUXED9SKsM+2K9tIuWeOKWYNj3/X2
+         kIuPpOQn4GZZa5bNG3vCAHbtSHqjbdoekT2IIrwIbSBvQ+QmJAmhejBaohePK5eE2rLw
+         H8u+77MpBFM8FU/U5ocPmdCQBEm3UO8lH/lXaz19W3HXiq9xD455VHx/cuOrExMQ0+Nq
+         8tU5fTRGagxuLUrQ8FfHaZJryxgx/XY2SZ92km654xmY8E63Z7I7vcGvwDj3dB2XIbKs
+         gav3cORD6bTLapOs2R7vbtIaruVXHx+pi0rmyLTx6GTTCKDIzbyPAcSDctJV6nP9uGGD
+         3rVQ==
+X-Gm-Message-State: AOJu0Yw4cOc7lGntbE1UIWokzHxJm3054zsyMlQzIZlnC1ZlacM+7nSE
+	ftmDwk4mLfLKy7OIpnc6yJCLKXMCOsSN8w6LCJQp3KzPW8QP9/lk6S2evdHQOoiP
+X-Gm-Gg: AZuq6aI8Y1mgtXic4HI0RUG8Ud6dBnPCCmh+Xe+RcGFY5Rfh/B1zskmICB9PrV7n16C
+	861hGjIfZGvAr94brPABbWlTrHQZbCqdJBfmo+8L6NJIyaMwu3Vo86TTwSOihg7JQG7Zfo5inWZ
+	8pcqmldCYKg5qNYVvYErDAt2FYjHn1jgNunhp1gyVWFUqe2WBVcgTtODv5BWqobY3SY6rPv4rzv
+	rkYws1SwRjvcxNapu/kZq6XcYX/a9Wp2aiCnB7y60AtaM5Filh0KEQ6kQ4tHko1s95qVSY3CZX+
+	6f6aWHtMokdGiChNjYRc136AvAphGVqSR9o1HZrvRqiBJ/dkE3ZTGrvXJYQLqPVzntsn4rgzas/
+	1v4WaTXwqC4vOetSs5M4wZX4ffpkAz3cmcJrTlvXi3Xtq7Ysf8d5QVk4SeDGKc0qG7/uy+iz4AD
+	h+d/eJfIVBbOk=
+X-Received: by 2002:ad4:5cc3:0:b0:87d:e2b:cdf7 with SMTP id 6a1803df08f44-894cc94c1c3mr39321436d6.66.1769545997428;
+        Tue, 27 Jan 2026 12:33:17 -0800 (PST)
+Received: from [127.0.0.1] ([51.8.121.166])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d376e4a0sm3803596d6.51.2026.01.27.12.33.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jan 2026 12:33:16 -0800 (PST)
+Message-Id: <pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com>
+References: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com>
+From: "Chris Idema via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 27 Jan 2026 20:33:14 +0000
+Subject: [PATCH/RFC v2 0/2] diff.tcl: Fixed alignment of tabs in git-gui diff by using spaces.
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Chris Idema <github_chris_idema@proton.me>
 
-When "git checkout <dwim>" and "git switch <dwim>" need to error out
-due to ambiguity of the branch name <dwim>, these command give an
-advise message that tells a sample command to show how to
-disambiguate from the parse_remote_branch() function.  The sample
-command hardcodes "git checkout", since this feature predates "git
-switch" by a large margin.  To a user who said "git switch <dwim>"
-and got this message, it is confusing.
+cc: Johannes Sixt j6t@kdbg.org
 
-Pass the "enum checkout_command", which was invented in the previous
-step for this exact purpose, down the call chain leading to
-parse_remote_branch() function to change the sample command shown to
-the user in this advise message.
+Chris Idema (2):
+  diff.tcl: fixed alignment of tabs in git-gui diff by using spaces
+  diff.tcl: call "apply_tab_size 1" to fix alignment instead of spaces.
 
-Reported-by: Simon Cheng <cyqsimon@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/checkout.c        | 29 ++++++++++++++++++++++++-----
- t/t2027-checkout-track.sh | 21 +++++++++++++++++++++
- 2 files changed, 45 insertions(+), 5 deletions(-)
+ git-gui/lib/diff.tcl | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4f189fde48..17f31c30b2 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1286,7 +1286,8 @@ enum checkout_command {
- 
- static char *parse_remote_branch(const char *arg,
- 				 struct object_id *rev,
--				 int could_be_checkout_paths)
-+				 int could_be_checkout_paths,
-+				 enum checkout_command which_command)
- {
- 	int num_matches = 0;
- 	char *remote = unique_tracking_name(arg, rev, &num_matches);
-@@ -1299,14 +1300,30 @@ static char *parse_remote_branch(const char *arg,
- 
- 	if (!remote && num_matches > 1) {
- 	    if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME)) {
-+		    const char *cmdname;
-+
-+		    switch (which_command) {
-+		    case CHECKOUT_CHECKOUT:
-+			    cmdname = "checkout";
-+			    break;
-+		    case CHECKOUT_SWITCH:
-+			    cmdname = "switch";
-+			    break;
-+		    default:
-+			    BUG("command <%d> should not reach parse_remote_branch",
-+				which_command);
-+			    break;
-+		    }
-+
- 		    advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
- 			     "you can do so by fully qualifying the name with the --track option:\n"
- 			     "\n"
--			     "    git checkout --track origin/<name>\n"
-+			     "    git %s --track origin/<name>\n"
- 			     "\n"
- 			     "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
- 			     "one remote, e.g. the 'origin' remote, consider setting\n"
--			     "checkout.defaultRemote=origin in your config."));
-+			     "checkout.defaultRemote=origin in your config."),
-+			   cmdname);
- 	    }
- 
- 	    die(_("'%s' matched multiple (%d) remote tracking branches"),
-@@ -1318,6 +1335,7 @@ static char *parse_remote_branch(const char *arg,
- 
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
-+				enum checkout_command which_command,
- 				struct branch_info *new_branch_info,
- 				struct checkout_opts *opts,
- 				struct object_id *rev)
-@@ -1427,7 +1445,8 @@ static int parse_branchname_arg(int argc, const char **argv,
- 
- 		if (recover_with_dwim) {
- 			remote = parse_remote_branch(arg, rev,
--						     could_be_checkout_paths);
-+						     could_be_checkout_paths,
-+						     which_command);
- 			if (remote) {
- 				*new_branch = arg;
- 				arg = remote;
-@@ -1916,7 +1935,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			opts->dwim_new_local_branch &&
- 			opts->track == BRANCH_TRACK_UNSPECIFIED &&
- 			!opts->new_branch;
--		int n = parse_branchname_arg(argc, argv, dwim_ok,
-+		int n = parse_branchname_arg(argc, argv, dwim_ok, which_command,
- 					     &new_branch_info, opts, &rev);
- 		argv += n;
- 		argc -= n;
-diff --git a/t/t2027-checkout-track.sh b/t/t2027-checkout-track.sh
-index a397790df5..e9f8d8ec48 100755
---- a/t/t2027-checkout-track.sh
-+++ b/t/t2027-checkout-track.sh
-@@ -47,4 +47,25 @@ test_expect_success 'checkout --track -b overrides autoSetupMerge=inherit' '
- 	test_cmp_config refs/heads/main branch.b4.merge
- '
- 
-+test_expect_success 'ambiguous tracking info' '
-+	# Set up a few remote repositories
-+	git init --bare --initial-branch=trunk src1 &&
-+	git init --bare --initial-branch=trunk src2 &&
-+	git push src1 one:refs/heads/trunk &&
-+	git push src2 two:refs/heads/trunk &&
-+
-+	git remote add -f src1 "file://$PWD/src1" &&
-+	git remote add -f src2 "file://$PWD/src2" &&
-+
-+	# DWIM
-+	test_must_fail git checkout trunk 2>hint &&
-+	test_grep "hint: *git checkout --track" hint &&
-+	test_grep ! "hint: *git switch --track" hint &&
-+
-+	{ git update-ref -d refs/heads/trunk || :; } &&
-+	test_must_fail git switch trunk 2>hint &&
-+	test_grep ! "hint: *git checkout --track" hint &&
-+	test_grep "hint: *git switch --track" hint
-+'
-+
- test_done
+
+base-commit: 1faf5b085a171f9ba9a6d7a446e0de16acccb1dc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2179%2FChrisIdema%2Ffix-gitgui-diff-tab-alignment-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2179/ChrisIdema/fix-gitgui-diff-tab-alignment-v2
+Pull-Request: https://github.com/git/git/pull/2179
+
+Range-diff vs v1:
+
+ 1:  f2a09c15eb = 1:  f2a09c15eb diff.tcl: fixed alignment of tabs in git-gui diff by using spaces
+ -:  ---------- > 2:  e11aa6d811 diff.tcl: call "apply_tab_size 1" to fix alignment instead of spaces.
+
 -- 
-2.53.0-rc2-135-gb1217c0133
-
+gitgitgadget
