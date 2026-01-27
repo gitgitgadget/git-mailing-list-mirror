@@ -1,168 +1,156 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC34329C5F
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 06:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90D28F5B
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 06:58:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769495398; cv=none; b=jSfUXgiejy3ef6u+bDEpnomGobEvMY4dSTKvihUXuhY+yucnVeTXvy5HMHZsj3M61qTA+I14+Ik/2YZBe1/gCTzPhyezGnwsFYq5jg2khNNEBnGK51SXnR66Jnhq9jByeVXfkTTYM0Ix50D2QGS9QIyZrNKS58Ub0KZfcyeTmoE=
+	t=1769497124; cv=none; b=BWmyUctE7V4x6rsxe1i20VLQQ/EoMJc5FvyoNfItnc8IhtxbUdCGaM3DKYNuEY3X4EjTfINHnSqQNIDxbt3FK1AGn1jDocLVDmwSdf/zCDPhsyfMFeiXiqrV48Ofh8Onk7KMXBSpVYzDjvxfmjwoJV9Kd2toPn9u9vuyM+Lm+Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769495398; c=relaxed/simple;
-	bh=99eLSI0okIexEOW7nePOLVvFcSopJK2vVywLK9bePCE=;
+	s=arc-20240116; t=1769497124; c=relaxed/simple;
+	bh=v9fCH49btCjmHc/37f8GhYhUb1lG+khIhuasfX+Y6pk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B/4G6ggu0SUTYt17NLVuZVKTgnoz7HocPnmGCtYzdb306yjcACqVPIEcK1l6/+XaXuuGRmv4o61Oamq/xRj3hGm66//r43b9LMpxNY5VXfZet9zg22m5MPeWHe6F56i0r9MRiiS5o7nAweWs4fqaN6rYzidoWYubt2rNCMTGKU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S/mStkMn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UoCPlcWn; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=nDen+GnG1W++hM5wLHqstqA88sFEgcu9/A6FgOtSrrUnrJqx39/FymDNvqWExd505xvLHV5+sxbbnSU7h1lqkgDKOyG7Dv12bmwOP8HtsCqVDAjo0zm/tHz4XiQl2QxbX6b+KLCOhK94i1qhCON7P/4fYljriIa6UO6zExYpFDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZFPYi8RN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kg37WjCX; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S/mStkMn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UoCPlcWn"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3792B1400182;
-	Tue, 27 Jan 2026 01:29:55 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 27 Jan 2026 01:29:55 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZFPYi8RN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kg37WjCX"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 072AFEC0217;
+	Tue, 27 Jan 2026 01:58:42 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Tue, 27 Jan 2026 01:58:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1769495395;
-	 x=1769581795; bh=f15kjorqoLxpdPDNwpQcDiIta8RXZ5US57OGTDXrG70=; b=
-	S/mStkMnUzY7lzUL5gZmyezOyWXorsZ9qaAA7nc3KJI5w8nan9niZ8Kyl/MrFDUV
-	RNsuppII1e/emm7HIrSUWni7o6PQ+ZbfH94NtldILkSayDJ5aX+BKjYUetvy0Ycf
-	dKwFwwXp5gS77AQ99K2ysPdv2/ESG8BUi8Gcd7fnbb8wjRpzUtr3bWmysQmkvyRA
-	2Ruw07WK/FmlElYCLq712gIX0j+hLA1ijpmhDrqQl7tbW5U8aCNzLA+TM7CvS8qH
-	uoBXsaN3DLeXLywq0gz02Wco+EzVTU143gOWpn1wL2Nk+FQdu5iQaNpX4mFoxGkk
-	CWgKX5nsbeKon3YC8C1YwQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769497122; x=1769583522; bh=RzMVZA+v9Q
+	bTIHdtbXpseF08yz+uyUdJ1VZnUt8PSno=; b=ZFPYi8RNKb6A3uzlUcRRSEg1/g
+	X7b11jouS6oVlUL8VHurD0XAJfySnXOTfOYk/OBPbbpRxr/JSd8ejqIFtmdxe1xY
+	BJ8a4SMv/ivtIhoZI19BKSc4YKtAfPiz0m7eDZK3hndZHkN3p9lGA8gRIBx7MzwK
+	gbwkT7HlpzT6o1ONxa+xup64qV+0hAD2Ji5kVXMrjqfKdKL7CjjX+/ZHTTPLOokL
+	u+xvme52xob7x4dJ7lrZNDfHKJvZH2QBQWoNcSKybcJG3+cB/kh7IwBiDQ3ZSGLM
+	ZG9tBCnfHoMCcBknqefUzgDuO5JL2c6RM5V8EIY/Ah8D7oebNlvbKG0cPnHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769495395; x=
-	1769581795; bh=f15kjorqoLxpdPDNwpQcDiIta8RXZ5US57OGTDXrG70=; b=U
-	oCPlcWn1pC+fkNDqQD0n+WPl6ElXRXIGZInCG/gndpLK/8mumD/y0pNMaVmC3iHZ
-	g2KJVjHQzuDak7eCJnV5v4U+4bcFf+tQSoVWDMYspZ4yUC2YfLSE8SaAZXKRUUFY
-	gQxxLdoNFFMc7I1rovFSTXYhVIyChspzboDd7oHaMTJp1+nXCQ6rdbSov0IbWNTZ
-	JCWBNIDnJUMYEjEg9zxQ4PBHp4RGK2BQRd+yqbNX+TWGXaOHRtLJrg10hIGi/R4X
-	wsCGawD5yWB8wgOwQn14QfLjJmGfWt3gyTP4MeIvxxwiOij4rFcr1nxYwnLYW006
-	Me2NE9eDiA1GHHIjGoizg==
-X-ME-Sender: <xms:Ylt4aXWIWqjPogZjQwahISFm8X28QV0K9Y7JgiizmwksOWN-Eg6DRQ>
-    <xme:Ylt4aXAv0_jJshSCr2TUFwKj2GNfvPsNj3cKE6get5MDwyPh50RPq3G2dlI3aCRc4
-    dtzhHw4Ttt91iaJWTr36cqpvlGbd_A-Sbo5dlkie4PJG2E5SK3BOA>
-X-ME-Received: <xmr:Ylt4aQzbR76l6jLovOTULpzb5yJoRxzMocvUgewfVl50SoKGQ38kkFoYrVBM8sy4Qck9orKl4PNpO4vJjGOkUzRlnKDpRTyJqHPlXfPhbdsg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheelkedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769497122; x=1769583522; bh=RzMVZA+v9QbTIHdtbXpseF08yz+uyUdJ1VZ
+	nUt8PSno=; b=Kg37WjCXGrY+Xtvp5FwAI/RsgXjRENHxbFVgFuI5v/Nmdz1ve7+
+	vX/IW6PRsxXEHt3UZqsbNXp0erN106Mj1gn+KrotKA2Jxbk0xBNVazgeM6XF1stP
+	BZzsRay3Mh+7Q9+U1vSFnySiCC/BVmN/zkgqoX4X7599RR+w16GQbN2958HiEWE6
+	6WfSu4z2KykCy27Uo8hBz3kiBzYs5egrW/YcYUnXabO/8I4nx5GhSCkKUlKrTgr4
+	jSILWCeGtxBuD2Kw1D+dHE2lDHXYBbGOtLDjDu8mqkAE07vcG9pstcBzCeZQwVXO
+	8isPIHIbbgjc1RzjHIB7SQXfGZ0ehxnsq9w==
+X-ME-Sender: <xms:IWJ4aVIEx4zuvOxoYpBjkuJGgQQN05HmuYuQccswKWOakhrTi8V5eA>
+    <xme:IWJ4aYBpY_HHsVFkfgFEkV3yrRsq6IM8mGLG5XTF4AmBrGtaGfh19iMLU9fpJslgz
+    hJWhTEVFa5pIlVIHvIh6ieny8g0-K3x9OH2Ixf2oSFti1FfzmE7jCI>
+X-ME-Received: <xmr:IWJ4aWB-L_3BDNRPYnfsbA2bxXWqlMeDov8pF41hH__hejYRlTBB2YlmCOIrPc1GMv0ZbWBvGeiJKwcUu5q_Pv2e-xBOmUFC-OuOSF5ARXbj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheelkeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
-    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
-    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    eplhdrshdrrhesfigvsgdruggv
-X-ME-Proxy: <xmx:Ylt4acCPP9OZrhJA2VVb1SAPkSv56bJB0OB-4bgHYPFfjXCifWIyzA>
-    <xmx:Ylt4aVYwmHyl07P9KBDyAdEDDS6cL-BKCQLzkFnxJyZJUmTFe7QIFw>
-    <xmx:Ylt4achZE_a7szvM7VY5A_qeSDTdzvo0QzCUJCP7QcOA2Uy7h2l3Rg>
-    <xmx:Ylt4af7zGctl0qYEcr6oj1rYT0M4BTgTxFkncF6EYGuTBaNylSjm1g>
-    <xmx:Y1t4aUpyV0ng8wkR_2s67QlzhVORDjGbMU39j2BwSuQJY77f8Ik4sJO6>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
+    gvrhesghhmrghilhdrtghomhdprhgtphhtthhopegrvhhilhgrrdhjnhesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
+    eplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:IWJ4aSA55L5a2ofB72RRaHgKFtyUfwjsySENmdKWC3an80plnJeMnQ>
+    <xmx:IWJ4aZrPFPE4S_INWosfVKNuILAC9m54SM3dxFE4Okk1UhtwDw2_1Q>
+    <xmx:IWJ4aUkaVUoMQBlT8uwrfMot-wGsDXkTSWI59nfsrhLj3MX3J4hl_Q>
+    <xmx:IWJ4aRwPX_veMiNmijw4nNMv01AsZj8GewWoR1WgKSt9T5aTwBaATQ>
+    <xmx:ImJ4aVRD-T4rTPLpyAAxvwOgS4N6xZ0VSS8RIMTAxpOlUprGujGpLjU4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Jan 2026 01:29:54 -0500 (EST)
+ 27 Jan 2026 01:58:40 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b5b29ad0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Jan 2026 06:29:52 +0000 (UTC)
-Date: Tue, 27 Jan 2026 07:29:49 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 20d39bf4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Jan 2026 06:58:39 +0000 (UTC)
+Date: Tue, 27 Jan 2026 07:58:36 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] odb: drop gaps in object info flag values
-Message-ID: <aXhbXQo6taM33m-1@pks.im>
-References: <20260126-b4-pks-read-object-info-flags-v1-0-e682a003b17c@pks.im>
- <20260126-b4-pks-read-object-info-flags-v1-3-e682a003b17c@pks.im>
- <xmqqa4y0jop7.fsf@gitster.g>
- <add7c86f-9d5e-4136-8c3d-a04df523487b@web.de>
- <xmqqpl6wi6n4.fsf@gitster.g>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com,
+	avila.jn@gmail.com
+Subject: Re: [PATCH v5 1/2] repo: rename "keyvalue" to "lines"
+Message-ID: <aXhiHAFNFxgsXa0S@pks.im>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+ <20260123164900.35092-1-lucasseikioshiro@gmail.com>
+ <20260123164900.35092-2-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqpl6wi6n4.fsf@gitster.g>
+In-Reply-To: <20260123164900.35092-2-lucasseikioshiro@gmail.com>
 
-On Mon, Jan 26, 2026 at 10:13:51AM -0800, Junio C Hamano wrote:
-> René Scharfe <l.s.r@web.de> writes:
-> 
-> >> I wonder if this series can be restructured a bit to demonstrate the
-> >> benefit of moving to enum a bit more prominently.  For example, even
-> >> at the end of the three patches, odb_read_object_info_extended()
-> >> still takes an "unsigned flags" parameter, but it is meant to take
-> >> this new enum, isn't it?  If we do the "#define to enum" conversion
-> >> (without renumbering) first, then "unsigned to enum", would it, with
-> >> appropriate compiler warning flags, already reveal the existing bugs
-> >> that happened to be working OK as potential problems?  And with that,
-> >> fixes in 1/3 and 2/3 would demonstrate why #define to enum" is worth
-> >> doing very well.  And after all that, we can renumber the enums in a
-> >> separate and final step.
-> > With -Wenum-conversion you can get GCC to report implicit conversions
-> > between different enum types (like in the backfill case), but I don't
-> > see a way to warn about conversions from int (the fsck case).
-> 
-> Yes, that is why I suggested "unsigned to enum" change after doing
-> "#define to enum" conversion.  If a caller passes an enum with
-> HAS_OBJECT_* to odb_read_object_info_extended() that expects
-> "unsigned flags", it would not be warned, but if the callee expects
-> "enum object_info_flags", passing HAS_OBJECT_* enum to it would be
-> flagged, right?  We may need to give the currently-unnamed enum with
-> HAS_OBJECT_* a name first.
+On Fri, Jan 23, 2026 at 01:34:53PM -0300, Lucas Seiki Oshiro wrote:
+> The output format name "keyvalue" isn't so descriptive. Rename it to
+> "lines", since it describes better the syntax of the output format and
+> it isn't tied to key-value pairs.
 
-You can get it to generate a warning for one of the callsites:
+I think this commit message is a bit hand-wavy. Most importantly, the
+reader might wonder _why_ it isn't so descriptive, and why these
+concerns are strong enough to change the accepted value now.
 
-    ../builtin/backfill.c:71:9: error: implicit conversion from enumeration type 'enum odb_object_info_flag' to different enumeration type 'enum odb_has_object_flag' [-Werror,-Wenum-conversion]
-       70 |                 if (!odb_has_object(ctx->repo->objects, &list->oid[i],
-          |                      ~~~~~~~~~~~~~~
-       71 |                                     OBJECT_INFO_FOR_PREFETCH))
-          |                                     ^~~~~~~~~~~~~~~~~~~~~~~~
-    1 error generated.
+I would've written something like the following:
 
-Unfortunately, the other callsite wouldn't see a warning because we pass
-an integer constant, and the compiler doesn't complain about that at
-all. It also falls apart once you start to OR multiple flags together.
+    Both subcommands in git-repo(1) accept the "keyvalue" format. This
+    format is newline-delimited, where the key is separated from the
+    value with an equals sign.
 
-It would be great if there was a way to tell the compiler that a given
-flags field expects only enum values so that it could always warn about
-misuse. But I'm not aware of any way to do this.
+    The name of this option is suboptimal though, as it is both too
+    limiting while at the same time not really indicating what it
+    actually does:
 
-We could of course start to take a more heavy-handed approach and always
-accept an options struct instead. E.g.
+      - There is no mention of the format being newline-delimited, which
+        is the key differentiator to the "nul" format.
 
-    struct odb_read_object_info_options {
-            unsigned lookup_replace : 1,
-                     quick : 1,
-                     skip_fetch_object : 1,
-                     for_prefetch : 1,
-                     die_if_corrupt : 1;
-    };
+      - Both "nul" and "keyvalue" have a key and a value, so the latter
+        is not exactly giving any hint what makes it so special.
 
-That would give us full type safety, and it would be impossible to
-misuse without getting a compiler warning. Furthermore, with designated
-initializers it wouldn't be _that_ awful to use:
+      - "keyvalue" requires there to be, well, a key and a value, but we
+        want to add additional output that is only going to be newline
+        delimited.
 
-	if (!odb_read_object_extended(ctx->repo->objects, &list->oid[i],
-				      (struct odb_read_object_info_options) {
-		.skip_fetch_object = 1,
-	}) < 0) {
-		die("...");
-	}
+    Taken together, "keyvalue" is kind of a bad name for this output
+    format.
 
-But I wouldn't exactly call it ergonomic, either.
+    Luckily, the git-repo(1) command is still rather new and marked as
+    experimental, so things aren't cast into stone yet. Rename the
+    format to "lines" instead to better indicate that the major
+    difference is that we'll get newline-delimited output. This new name
+    will also be a better fit for a subsequent extension in git-repo(1).
 
-So I'm not sure whether this partial protection would be worth it, but
-if you think it is I'm happy to reroll.
+Please feel free to use this message or parts of it if you plan to
+reroll.
 
-Thanks!
+I was also briefly wondering whether it would make sense to call the new
+format "newlines" instead of "lines", but I'm not feeling strongly about
+this in any way.
+
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index 0ea045abc1..4031612bc8 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -26,7 +26,7 @@ typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
+>  
+>  enum output_format {
+>  	FORMAT_TABLE,
+> -	FORMAT_KEYVALUE,
+> +	FORMAT_LINES,
+>  	FORMAT_NUL_TERMINATED,
+>  };
+
+This feels a bit unbalanced to me, as `FORMAT_LINES` and
+`FORMAT_NUL_TERMINATED` look so different from one another. Maybe it
+would be better to call it `FORMAT_NEWLINE_TERMINATED`?
 
 Patrick
