@@ -1,127 +1,104 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3252857FA
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 09:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899405464F
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 10:10:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769506280; cv=pass; b=NGpojjZysJMd8HDZ1LR2hAaq+aZ9YGV7uow7e9kOCd2CC/8VVJOzz6X5FseDPC4UsLgfxMYfrdLGL5GjQHY5JbwbrW3jw4Wk5YTlvLCL2T5UN1TVzH6uaqkvKatpIUeGXBiojE2j5CpGYF3Zb41hTqoi0LVaYauzkO7nS12FMoY=
+	t=1769508653; cv=pass; b=PowmJZcuJxKmu6g5icND2j9qNEnmV3TnAQ+CoQ2JeaVAqTzK5v3MEeCfv+mGQ8Y4zqy9q/jveWss6aDR3lTjxVTteSp9lYSfFj/a3+sPXbhK4gNSXayuydnp/cPRuxMNIpLWIxGfydSWuvOUEnjHVlFFLWMf+ncCBJ4EpjLGCB8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769506280; c=relaxed/simple;
-	bh=qhwG4SbOvGugvlRKPHGAa0CqxmkAhwAKsKhvX6gF1Qs=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=g/HBx1maVBqWRXUKEJgZPb3JDlRk31M1Sqm+jFaJXy5VmBOX4MUgjlpzBRhIiKsWQPj+wFojnmUQ4nD27WyqUuUGE00/G7bxJqOVTE3byAQC5olgxKmy/mM7v2mniPY++W1t7jTcNHXWe9htQ78lHCFRKoLa0cyaI7W2/GlK4jE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSaJ3ZNl; arc=pass smtp.client-ip=209.85.221.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769508653; c=relaxed/simple;
+	bh=RJdwynF+C9+c6Ctxu1+v2V01u8WycHL9d4ZnScI7tMA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iHNy8d3mEzR4OoqkB50vMpQqLQzbSOeJIsS3qbRUvVAlE6q7NgiFlfb+sFaKhcC2OuUy+TVByqmZrC165RsJ1L275gs6/ZGHKtCK6hj6KK5sbOp4hGqLO0eThoxZ7g/5cGEg1GAi6IPgVKz/SqWhxQ80l0IunPXiUx1YDSeeRYc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=bFfpb8hb; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSaJ3ZNl"
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-560227999d2so1849906e0c.1
-        for <git@vger.kernel.org>; Tue, 27 Jan 2026 01:31:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769506278; cv=none;
-        d=google.com; s=arc-20240605;
-        b=T/woN49qzeQctECfWlAagGU4kYTXFrpwAnOV+addfRbBBtZqk9YhnJCFITM4NvL2K1
-         ge5K5jjonpwhQxk/JogUPfBZc+3akYXG6xFtFllTtrm5bxRyXlywPA57DK8pZ0aMvolR
-         LbTRH9qsFun0ol+5kM+tairlXYI55OUa39OwIHGsf2LucAzaLYbT2JrWcuWqnoZVT6mp
-         vZpjTyKXTTaQl/7X8gJhjjDUOmk29M8mDFXS6H6ir/tkAQOKH2dKZMz5C1O+FOpwXpoX
-         hnGjXijVmdnd1RDaQkjjfxkq/xRncqg6yKZn4c/GC4D4FmtNxb92kqwGsEIrMqxF3m9x
-         TEwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=W/Cymd/9+Vo7gZV63CmcXLZbWoG2QgFQKmydPvRE8hU=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=g6VND5Q+eh8wju8Q506KWtYKFLFceQtOcmTfxAN/HBvPDahdmrwbHQAJ3Lp0XtH129
-         kqMD5oUQ+cv/Sp5YQsLMRNyVBYPo0c2lC67s7YP1aZh60WjJj1ksehx1eTSfV0QyL/ZY
-         tq4PkZUGNGiy2B5WHV54JRgRLA1tIg6p6lMk2yCFU5lnV5ym4MPtxLevWC9xSgUH+fwM
-         ixyadxN3/XBFYV068J2Vtls2HNpD37rQQ+7DgntWzcAXjfLpdk/Enu43PucJKxzQ1NkW
-         o0s+INGpUXXlO2gwBKW/rIfuWX/rCDJGUjezt27fu/WNK998EQOyrJlWNAUbuNkT36SU
-         hetw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769506278; x=1770111078; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=W/Cymd/9+Vo7gZV63CmcXLZbWoG2QgFQKmydPvRE8hU=;
-        b=MSaJ3ZNl2EkQw+bXxdyUkyooclGlBwCsRua1jHTMgbGmd0ZTXZhNMjMIr6A1QQksvk
-         /bqi4XXMeyZJNFXpNdnG82rPADKn6zR+Z3/A9MAmGaYqfmZfILesxPaYkG0Vt7DM+XFy
-         KTVgu7ZCoWqf5YI9vm/e1GPjYm2zgJhqwgW4baKt7TxwTnaDUal3S/NLXzqoUC94TAVf
-         nPyGMDoXFWUIs4imDJhjzEh02zyCwdh+Aa7zDOMcDW8eTwAzApdc3fnoQZzsmXeEnKu9
-         qTUOOtjaaPG7xFMHSLfWsLG4XQ/moEdVIO8IVMUivYtawNnt7y8oH1yjBPpBC/C4uowO
-         AutA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769506278; x=1770111078;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W/Cymd/9+Vo7gZV63CmcXLZbWoG2QgFQKmydPvRE8hU=;
-        b=M9pXHRlCyzLxQWWb4xhRg7ouQYUMIlHXXpdeM0v4Mcd6cP3lbEUWNs+hsyEqlhpFVL
-         EBdu7jINFQ3K9iIp6wQ9zf3KDsBwXp1SrOu9cCdNO8CNhcxEC95mweoAfC1t7IT9omh3
-         EzdCyiAgNic5mQIJjcrnO0D2FTQRTmMGwCoN7DOfP50LORprtUQyJ4J4bzPleCqiHl2K
-         pB/h783QofxtcXoUEmnbaVr4L4txZCpUEw6jXg5HxdI/Ko2EU7MNhdsocKIw8noHkzcj
-         RItoUPSZkDBHPwvpjOeCYcbHEtVTSXTeir/RNKLeZnHQ2qW2zm2YhUNaZq07qEOkN6Pz
-         mKUQ==
-X-Gm-Message-State: AOJu0YxghEJcC2FVaNBzRz5pZ5r549RnI2oF0JDxvRTwk2qBAOJwjbvY
-	u4Fy8gS3wbfLWCnmZs7a6vqUsr/zv0sq9HjEEWJB7cCkfbC1uACzTH9+ayAWfdkiD8lbZYqNDiK
-	dS4u/FYJRVSV+caQK/FEv3nXKmFXA+riqNZq4tnk=
-X-Gm-Gg: AZuq6aI7C5AQUR9l9vLfzP6VZDe/vlxL7okCJ0meeHAYg22YXqU5LxYIsC/KCxfnw9/
-	7VslNuqAPHxZg4xsrjdy613VuBhMxjjUfL30yCpJLfwOD48z6kcl/wabtFyPHz2Nv8EJQifzzuq
-	88YZNEuPQMHgL348rqf0Co86gy8dp0rtrIQS2lw3G7eiTivFcSTYW5Hq0W1IoHtenXXlt2jHryW
-	ZjAzATTGhIaU54sSINY//6l+bjhaMQDEWT+10+/TQzx4qSzR/dXobH0rdQW/+XNo7IL9afiydVl
-	+3PJbZBB
-X-Received: by 2002:a05:6122:e242:b0:563:7b3e:d853 with SMTP id
- 71dfb90a1353d-5667957cf40mr297311e0c.9.1769506277724; Tue, 27 Jan 2026
- 01:31:17 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="bFfpb8hb"
+ARC-Seal: i=1; a=rsa-sha256; t=1769508636; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=B9wOvoC/obZmBCnVauRny7M3LFm5qy/XtXjxmRml0fN1XXJ8OyDmWNpbxa0ep7bnRd5iCEuZppq4DZkTsS77T3WluwibNbsrNUe3NroagtdupgX54ul8xrTekb0sfLgZvta4Q77SngBgswmf5kAW2y+KxN7cYdZrkDSMo4ZiV8I=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1769508636; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Z95ZLM2By/80IU3Jfe/JBUQGIGkFVHzwLuI0CMUw5Vc=; 
+	b=H4YfLVhfG9OPdHQv5bXih4aFj3PcvNkClrL9YaBgXHqGcOCOMKy99u6+su41E0vXm5q53iJbgzWFwcjXTpe7kXRJyh9KMOtRWIgQoICCx9qHszgyCZodtIIBEg8HmDSWFD9wyeJU1rLJeZaapovG1Z0FLiTx6bvLHbcMSSiAFJY=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769508636;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=Z95ZLM2By/80IU3Jfe/JBUQGIGkFVHzwLuI0CMUw5Vc=;
+	b=bFfpb8hbJPzfqKaxl0StJYYhn6ZNZq/gXUxpEMZ4fgoq9hDk/HwZrfExws9ya5H9
+	UZxbuh1nHK00bfamLsuQc0nMEcTP73lGRLKA9FeVi4zVhD3Rmd7jIgAMXsXVLcKh4lv
+	p8UkiYecSkl+TQxhLyYNhLyL7Dys8C0Ftfv7x1dE=
+Received: by mx.zohomail.com with SMTPS id 1769508634248610.6829600598626;
+	Tue, 27 Jan 2026 02:10:34 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>
+Cc: git@vger.kernel.org, Jeff
+ King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
+ <steadmon@google.com>, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v7 10/12] run-command: poll child stdin in addition to
+ stdout
+In-Reply-To: <xmqqms1zhq3s.fsf@gitster.g>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20260121215436.1473800-1-adrian.ratiu@collabora.com>
+ <20260121215436.1473800-11-adrian.ratiu@collabora.com>
+ <CAJoAoZn9Y1xqtc1hWDvM+_rmcANkGUtfSA1HGTaHjtw0DuXyAw@mail.gmail.com>
+ <xmqqms1zhq3s.fsf@gitster.g>
+Date: Tue, 27 Jan 2026 12:10:29 +0200
+Message-ID: <87ecnbmkmi.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Simon Cheng <cyqsimon@gmail.com>
-Date: Tue, 27 Jan 2026 17:31:06 +0800
-X-Gm-Features: AZwV_QgkiA3lHO-9Sn73oyJjwEEyGSMHdYykG6tVkWxb5tstfYbPoF1nH7n1LME
-Message-ID: <CA+itcS0iyqNyzOP0cueLg7B3yadoEr_VWJ-QoL+YPFUPJiE2RQ@mail.gmail.com>
-Subject: Remote tracking option hint for git-switch still shows git-checkout command
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-When `git-switch my-branch` is unable to guess a unique remote
-tracking branch, the shown hint still displays an example with the
-`git-checkout` command.
+On Mon, 26 Jan 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> Emily Shaffer <nasamuffin@google.com> writes:
+>
+>>> +       /* for each potential child slot, prepare two pollfd entries */
+>>> +       for (size_t i = 0; i < opts->processes; i++) {
+>>> +               if (child_is_working(&pp->children[i]) &&
+>>> +                   pp->children[i].process.err > 0) {
+>>
+>> I only had the one tiny nit on this patch, which was to wonder if
+>> checking for pp->children[i].process.err is something that should also
+>> be behind a conveniently-named helper like child_is_working().
+>
+> We already have
+>
+>  - child_is_ready_for_cleanup()
+>  - child_is_receiving_input()
+>  - child_is_working()
+>
+> What should the "child is working and process.err is positive" be
+> called?  child_is_spewing_error()?
 
-=E2=9D=AF git switch my-branch
-hint: If you meant to check out a remote tracking branch on, e.g. 'origin',
-hint: you can do so by fully qualifying the name with the --track option:
-hint:
-hint:     git checkout --track origin/<name>
-hint:
-hint: If you'd like to always have checkouts of an ambiguous <name> prefer
-hint: one remote, e.g. the 'origin' remote, consider setting
-hint: checkout.defaultRemote=3Dorigin in your config.
-fatal: 'my-branch' matched multiple (2) remote tracking branches
+Thank you Emily and Junio for the suggestion,
 
-Of course that works too, but it keeps the user guessing whether the
-`--track` option also exists for `git-switch`. Not to mention that
-`git-checkout` is now largely superseded by `git-switch` and
-`git-restore` and is no longer recommended, as far as I understand it.
+I think "child_is_sending_output" is a good name because:
 
-So I think it makes sense to either:
-1. make the recommended command match the one ran by the user, or
-2. always recommend `git-switch` as opposed to `git-checkout`
+1. It matches the previous naming convention nicely.
 
-git version 2.52.0
-cpu: x86_64
-built from commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: enabled
-libcurl: 8.17.0
-OpenSSL: OpenSSL 3.6.0 1 Oct 2025
-zlib-ng: 2.2.5
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
+2. all hooks except one (pre-push) have redirected stdout to stderr by
+default even in the ungroup/serialized execution case (not relevant for
+this code path).
+
+3. all hooks without exception do the stdout -> stderr redirect in the
+parallel execution case, so run-command can buffer/deinterlace output.
+
+In the current design, this codepath is taken only in the parallel
+execution case, since there is no polling/buffering for serialized
+execution (it's real-time like before).
+
+If you do not have any objection to the child_is_sending_output() name
+or another suggestion, I will send v8 using it shortly with a comment
+explaining why we're only polling the err fd.
