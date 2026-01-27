@@ -1,176 +1,383 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4017A2135D7
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 20:36:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052422853F2
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 20:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769546167; cv=none; b=H7STxiuQkNuj0cLvLEyGvtTaTNVf2lVBAK/iaVKxIW+eyrnNkjkf5kagIjsI1OzAqUAINAv3VDvEoqYUQd9mQrar6JXlUbnL9RGJSQrGpyVzHyr9gKo2cID+efjRBkFDE+hV+E+ru2u5dzDx1G2HtvG7rfCC5CYiDA9Q4IUzCo8=
+	t=1769546907; cv=none; b=TEFFB4+7KmZZU/VuBfMqrIYyZBycCVtKLyxZZEqCUsr/GkXsHCdYmfWE4fXWQQbSzp/a1PTgfhxNi2DEVuvGEn941mNDnYx2Z48jPZcaJ7rLg67LPP/o891GuT76sv6/M+YpYwobQhfy5vU+vOe/wg4v+MhaQT39/Ze6C/c/7/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769546167; c=relaxed/simple;
-	bh=jwwjPb2dv8hD2YZS2Ms/EpwybBZ770EyEQaYjQEUKVg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ksCklkwH99QePwSda1KbLBtTM7qMcKdenMbX1izrK6PJaRcMKz4KZ9tG25Q+2UIN1N4Dkh7Vk99g3b4uPtVkX2EuivLNhTYsRHlbrrVtd/Svk3Iy+zQ3ef8gAiNGW7wzfxMXTFYXHVm3yJklA21kwfz/eq9uGh8ZonI5j/+5tkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mz8rZrnl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CZjLbUlD; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1769546907; c=relaxed/simple;
+	bh=0f+6c72+t+yE0MaOnJ7S7xIJ8LLNh/Bp/pC2wuuk+9s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uzEgVSNi17+ioaVheukSGN4jFm5eAsL44rSDkXzxVrHvIz2p1JgUmwkWCbmv5YohL+m+kDQgj1HiAD+FOHJ8BEiv6Hp9LbjMGa+jDKAWvBByfJDld0Crj3Wwfe4D+ExzuYECDgEUSclh843P01i/XbqVCPFiQMZzc0vBpswYklI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q79GHSTv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DO8VRxka; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mz8rZrnl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CZjLbUlD"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 71F207A00BC;
-	Tue, 27 Jan 2026 15:36:04 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 27 Jan 2026 15:36:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1769546164;
-	 x=1769632564; bh=+QcJ3uLLjauvii6+9eHWoEEKII632pHz2WcsFPiOvxE=; b=
-	mz8rZrnl9vEsdtApabghmmzZfdGC8uMLhIMhBVqu2jacGOCRdiUXepIvCBwprW+w
-	HRLrGaU5xdydJ0anBu4BRZTlYYzKooE5f+2Zauh8V7S5sC9MeNn38q4LT53VtMXy
-	PQ8UHWawp2WXr7Gz4orwONY1aO7Pc0iFr+ZMQGL59Sjiew43JkapiaMwGjMba5Hz
-	TE4d6GzR8hn2dZbTGh5iF8LGQg9TYHStTguHdyh4AWfNIwRmLPh6Fkq9fH4vtmW7
-	WCeYsR10eSEmtFpeTC5ZTb4lwyu4C34qMl/x2LpgogZ4agwwFE/RfTwLsuGSS4s1
-	OFb0GfuiElYiZFyq+q28Ng==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q79GHSTv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DO8VRxka"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4CE95140008E;
+	Tue, 27 Jan 2026 15:48:24 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 27 Jan 2026 15:48:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769546904; x=1769633304; bh=GS+aabAL3v
+	dMlo1B8CL8Y9aKjUwiUPm1DeywtdV5mFk=; b=Q79GHSTva+9ljf64dd7JG9vql8
+	NUJvabtKqJgkUEHKV+DrXATZ6faL3YLfQ0QrU2h4x2bezuHhKxaT7haqbW8uzziu
+	2NuTNhQu76ax5MSr9A4dEfdli1aqWEJzRzs4ec8PgIxQsrO6ALAIqsWI53PO8r3H
+	UZifrj5se6crhm3GfLAqHCd1vlxZ6JwXj5MUOAfp0J5qMLVyDtPsMWcxzWsShVde
+	T5TwqZ65HwlZyZCUaBZ0nkCPktFsNm54eaJ3p8tgwDj5N6+C7U4Ra7Y1XD9al+nA
+	WlL34YoGY4+O1amvpelbhjwFlVCHL8S6G453pFvQ76g2We8XThzVPlTxYaQw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769546164; x=
-	1769632564; bh=+QcJ3uLLjauvii6+9eHWoEEKII632pHz2WcsFPiOvxE=; b=C
-	ZjLbUlDxzHjQ0FJJsgH7Q1VOxvH7T3lFxK/QSCizUy3Dx0g+xVMPWFIR1KGScQoG
-	007MBM8cwRAEKLuDVUGe3/irsCi5TBegJzWvFkJw8VPJYEuAcB4ipQnZTPFSNW30
-	rlnRDTPaOjblrN4o1DH2d2X9SEx2z/V2YbLkNlGgAk4BMEH8PY/ARTWb+4nTulIW
-	qcvn+a65suAvlk9tZk65TnjJRArEMEkrnnk91nTZGlwSRucXSBHNBVZqDEuogxA6
-	taf7uj0HLM1nsln/hmynjuE7ZATZGDAOJcx6G4oC4auWFeVdK2cRMPUG7V59X+/4
-	LWq+iOEIV9xi91M6ZCMow==
-X-ME-Sender: <xms:tCF5aR-uCg-MvFQ96z8ZlfHFlcON-L_8YERHDMbcekdNhzHtzq7zjb0>
-    <xme:tCF5aQjRHkJTYCwWtXeruH3M2wsFsTwl_3325nYgYfAfpdk6kXTXMhRF_2I5AQGci
-    OZx_bX5hjv-X1Mv_RmHoMtA5JGx9diZWMHJlHWfJDi4Tnr21ek3xZg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedugeeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769546904; x=1769633304; bh=GS+aabAL3vdMlo1B8CL8Y9aKjUwiUPm1Dey
+	wtdV5mFk=; b=DO8VRxkaosxIn1P18L3UR19kV6xgWj2X313ZjkCsVmiAzBH9IFh
+	4yInvd5zgQeuBWFH9PQYhngFQiqcWYir4Zpp5VjglIV3zz7aWbGeEthqyYuVTphI
+	ycYYzgVk090WQ6a4qwKGU4dMnKZ6NZUmfUAP6dAmax0VFVh5TzEsJchaUdfG3Gxc
+	kp8fyFcToL56sGDhjom6aop6LkEUSc5y+d/PpydFWeDbaMiKr53OwCQsclsC62pR
+	EEGoLOdlojbdPybZjavdUqoRPxXU1R/l37UV7js6x1KrddqFoy9SRgGkFELm2lZ2
+	SLH3BV0M9WkjRI0iDuMHqBuw23PpaJEOKGA==
+X-ME-Sender: <xms:mCR5aRqVjf481ZKTHIrdcNBJAip1021i8rT0bjcz_KktBhBS5zf8XA>
+    <xme:mCR5aWO46cjLEaKTT1N1GpbNx5d8VECyC2Pvr_6qX0K6YweI0gwKDMaJ7JPYR_KOS
+    9lpzJJ13-0UNlHLexVHUNeWFtNz4YC-8YU_5gYN21xmXg8drCr6Zw>
+X-ME-Received: <xmr:mCR5aR1JjuMk2EuwlIoHDS5ZkBOH8YPmmrR2xAhtpRB_XOKxqCa7ozy7p3ZMkoGYduFgnxSQKFWUObaIcVQaZ5ylIcwefA74X56nsV8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedugeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
-    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveej
-    gfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptg
-    ihqhhsihhmohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:tCF5aT6aMP0xwXr0VBxYe4qeyPTsLWDKuN1N6KX43NwBZ9A4prNzlA>
-    <xmx:tCF5aQrkN1ahyHbk3WkYgsjADuJ5a9h3sWZ6-4SqI2Qshv7lHdM7UA>
-    <xmx:tCF5adiPRjywsGkmp2u_SWvPWkNfEMFB93uO5uSh1Qp-56Tyl4f-oQ>
-    <xmx:tCF5aSLQ-AQJo6Y04GaQVvXjRKjEJqtbWOiVJccUIh41SbHrH-j1Iw>
-    <xmx:tCF5ac2KY2ceHwGG3SdBHapkTZa6jlyVUgrA0Aq-0eU_mg1sPp6VhORC>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1C2D01EA0076; Tue, 27 Jan 2026 15:36:04 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
+    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
+    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:mCR5adDkjVOFqnqL_lJdU4gvwMrm8dInxnVH_HlBjjGizMb3zqXVAw>
+    <xmx:mCR5aWJ8PeD6N4URTwKZ8irg1R4cnRA1lrpjKCbJK40Fc-HsXmVsfg>
+    <xmx:mCR5aem3529Jb01aguRovkn0vYYwArg8Ke9trZUxkiuvXIcbY32H9Q>
+    <xmx:mCR5aXagtzaUZAEp3_kTb3mroQ7JHn31ESzKGdAK-LIs-Z_TS09jWQ>
+    <xmx:mCR5aZ2MX28nIee8ioLyt4XjPUSa4i75shdjKhSlU3F_Mrrva99XNWnr>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Jan 2026 15:48:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>,
+  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v2 1/1] Allow reworking with a file after deciding on
+ all its hunks
+In-Reply-To: <9b21cb901ab14397af94b8ed2d09da1a9a6d862b.1769522219.git.abrahamadekunle50@gmail.com>
+	(Abraham Samuel Adekunle's message of "Tue, 27 Jan 2026 16:45:13
+	+0100")
+References: <cover.1769522219.git.abrahamadekunle50@gmail.com>
+	<9b21cb901ab14397af94b8ed2d09da1a9a6d862b.1769522219.git.abrahamadekunle50@gmail.com>
+Date: Tue, 27 Jan 2026 12:48:22 -0800
+Message-ID: <xmqq7bt2g4tl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AZ2ADYvVFUpw
-Date: Tue, 27 Jan 2026 21:35:43 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Cc: "Simon Cheng" <cyqsimon@gmail.com>
-Message-Id: <fa7f1648-3cf6-4e5f-bee9-fb5e8700d01d@app.fastmail.com>
-In-Reply-To: <20260127192936.904719-3-gitster@pobox.com>
-References: <20260127192936.904719-1-gitster@pobox.com>
- <20260127192936.904719-3-gitster@pobox.com>
-Subject: Re: [PATCH 2/2] checkout: tell "parse_remote_branch" which command is calling
- it
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Jan 27, 2026, at 20:29, Junio C Hamano wrote:
-> When "git checkout <dwim>" and "git switch <dwim>" need to error out
-> due to ambiguity of the branch name <dwim>, these command give an
+Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
 
-s/these command/these two commands/ or something.
+> diff --git a/add-patch.c b/add-patch.c
+> index 173a53241e..edb2fab3fd 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -1418,6 +1418,8 @@ N_("j - go to the next undecided hunk, roll over at the bottom\n"
+>     "e - manually edit the current hunk\n"
+>     "p - print the current hunk\n"
+>     "P - print the current hunk using the pager\n"
+> +   "> - go to the next file\n"
+> +   "< - go to the previous file\n"
+>     "? - print help\n");
 
-> advise message that tells a sample command to show how to
-> disambiguate from the parse_remote_branch() function.  The sample
-> command hardcodes "git checkout", since this feature predates "git
-> switch" by a large margin.  To a user who said "git switch <dwim>"
-> and got this message, it is confusing.
->
-> Pass the "enum checkout_command", which was invented in the previous
-> step for this exact purpose, down the call chain leading to
-> parse_remote_branch() function to change the sample command shown to
-> the user in this advise message.
+As I said earlier, these may have to be optional.  It may give
+existing users a jarring experience to be given a prompt after
+deciding on all the hunks in a file, when they expect to be on
+the next file already.
 
-The commit message could also say that it adds a regression test for
-this advice (for the first time).
+> @@ -1441,6 +1443,17 @@ static bool get_first_undecided(const struct file_diff *file_diff, size_t *idx)
+>  	return false;
+>  }
+>  
+> +static size_t get_file_diff_index(struct add_p_state *s, struct file_diff *file_diff) {
+> +	size_t idx = 0;
+> +	for (size_t i = 0; i < s->file_diff_nr; i++) {
+> +		if (s->file_diff + i == file_diff) {
+> +			idx = i;
+> +			break;
+> +		}
+> +	}
+> +	return idx;
+> +}
 
->
-> Reported-by: Simon Cheng <cyqsimon@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/checkout.c        | 29 ++++++++++++++++++++++++-----
->  t/t2027-checkout-track.sh | 21 +++++++++++++++++++++
->  2 files changed, 45 insertions(+), 5 deletions(-)
->[snip]
-> diff --git a/t/t2027-checkout-track.sh b/t/t2027-checkout-track.sh
-> index a397790df5..e9f8d8ec48 100755
-> --- a/t/t2027-checkout-track.sh
-> +++ b/t/t2027-checkout-track.sh
-> @@ -47,4 +47,25 @@ test_expect_success 'checkout --track -b overrides
-> autoSetupMerge=3Dinherit' '
->  	test_cmp_config refs/heads/main branch.b4.merge
->  '
->
-> +test_expect_success 'ambiguous tracking info' '
-> +	# Set up a few remote repositories
-> +	git init --bare --initial-branch=3Dtrunk src1 &&
-> +	git init --bare --initial-branch=3Dtrunk src2 &&
-> +	git push src1 one:refs/heads/trunk &&
-> +	git push src2 two:refs/heads/trunk &&
+Yuck.  Can't we lose the need for this function if we change the
+interface into patch_update_file so that it takes the index of the
+file (i.e., instead of "&s.file_diff[i]", pass "i")?  There is only
+one caller to patch_update_file() which is run_add_p(), so such a
+clean-up should be trivial.
+
+>  static int patch_update_file(struct add_p_state *s,
+>  			     struct file_diff *file_diff)
+>  {
+> @@ -1448,9 +1461,10 @@ static int patch_update_file(struct add_p_state *s,
+>  	ssize_t i, undecided_previous, undecided_next, rendered_hunk_index = -1;
+>  	struct hunk *hunk;
+>  	char ch;
+> -	struct child_process cp = CHILD_PROCESS_INIT;
+
+This is related to the hoisting of the actual patch application to
+the caller, but it is not explained why such a change is needed, and
+it byitself, even without the "jump to the next file before deciding
+on all the hunks" feature.  What problem is it solving???
+
+If it is necessary to move the code to run "git apply" to the
+caller, would it make sense to split this patch into at least two
+patches, one to do such a move, possibly another patch to change the
+function signature of patch_update_file() so that it takes the file
+index instead of file_diff struct, and finally another patch to
+allow jumping around the files?
+
+>  	int colored = !!s->colored.len, quit = 0, use_pager = 0;
+>  	enum prompt_mode_type prompt_mode_type;
+> +	size_t file_diff_index = get_file_diff_index(s, file_diff);
+> +	int all_decided = 0;
+>  
+>  	/* Empty added files have no hunks */
+>  	if (!file_diff->hunk_nr && !file_diff->added)
+> @@ -1467,7 +1481,9 @@ static int patch_update_file(struct add_p_state *s,
+>  			ALLOW_GOTO_NEXT_UNDECIDED_HUNK = 1 << 3,
+>  			ALLOW_SEARCH_AND_GOTO = 1 << 4,
+>  			ALLOW_SPLIT = 1 << 5,
+> -			ALLOW_EDIT = 1 << 6
+> +			ALLOW_EDIT = 1 << 6,
+> +			ALLOW_GOTO_PREVIOUS_FILE = 1 << 7,
+> +			ALLOW_GOTO_NEXT_FILE = 1 << 8
+>  		} permitted = 0;
+>  
+>  		if (hunk_index >= file_diff->hunk_nr)
+> @@ -1499,8 +1515,7 @@ static int patch_update_file(struct add_p_state *s,
+>  		/* Everything decided? */
+>  		if (undecided_previous < 0 && undecided_next < 0 &&
+>  		    hunk->use != UNDECIDED_HUNK)
+> -			break;
+> -
+> +				all_decided = 1;
+>  		strbuf_reset(&s->buf);
+>  		if (file_diff->hunk_nr) {
+>  			if (rendered_hunk_index != hunk_index) {
+> @@ -1548,6 +1563,16 @@ static int patch_update_file(struct add_p_state *s,
+>  				permitted |= ALLOW_EDIT;
+>  				strbuf_addstr(&s->buf, ",e");
+>  			}
+> +			if (file_diff_index >= 0 &&
+> +				file_diff_index < s->file_diff_nr - 1) {
+> +				permitted |= ALLOW_GOTO_NEXT_FILE;
+> +				strbuf_addstr(&s->buf, ",>");
+> +			}
+> +			if (file_diff_index > 0 &&
+> +				file_diff_index <= s->file_diff_nr - 1) {
+> +				permitted |= ALLOW_GOTO_PREVIOUS_FILE;
+> +				strbuf_addstr(&s->buf, ",<");
+> +			}
+
+As can be seen in what patch_update_file() does when the user says
+'J' or 'K', hunks in a file are treated as a ring, and these
+commands are enabled as long as there are more than one hunks.
+
+Perhaps that is more familiar than "when we hit the floor, we cannot
+sink deeper, and when we hit the ceiling, we cannot float more",
+which seems to be what the above implements.
+
+>  			strbuf_addstr(&s->buf, ",p,P");
+>  		}
+>  		if (file_diff->deleted)
+> @@ -1566,6 +1591,9 @@ static int patch_update_file(struct add_p_state *s,
+>  						: 1));
+>  		printf(_(s->mode->prompt_mode[prompt_mode_type]),
+>  		       s->buf.buf);
+> +		if (all_decided)
+> +			printf(_("\n%s All hunks decided. What now? "),
+> +				s->s.prompt_color);
+>  		if (*s->s.reset_color_interactive)
+>  			fputs(s->s.reset_color_interactive, stdout);
+>  		fflush(stdout);
+> @@ -1618,7 +1646,24 @@ static int patch_update_file(struct add_p_state *s,
+>  		} else if (ch == 'q') {
+>  			quit = 1;
+>  			break;
+> -		} else if (s->answer.buf[0] == 'K') {
+> +		} else if (s->answer.buf[0] == '>') {
+> +			if (permitted & ALLOW_GOTO_NEXT_FILE) {
+> +				quit = 0;
+> +				break;
+> +			} else {
+> +				err(s, _("No next file"));
+> +				continue;
+> +			}
+> +		} else if (s->answer.buf[0] == '<') {
+> +			if (permitted & ALLOW_GOTO_PREVIOUS_FILE) {
+> +				quit = 2;
+> +				break;
+
+What's the magic number "2"?  Should "quit" become an enum with
+elements that are more meaningfully named?
+
+> +			} else {
+> +				err(s, _("No previous file"));
+> +				continue;
+> +			}
+> +		}
+> +		else if (s->answer.buf[0] == 'K') {
+>  			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
+>  				hunk_index = dec_mod(hunk_index,
+>  						     file_diff->hunk_nr);
+> @@ -1775,33 +1820,6 @@ static int patch_update_file(struct add_p_state *s,
+>  		}
+>  	}
+>  
+> -	/* Any hunk to be used? */
+> -	for (i = 0; i < file_diff->hunk_nr; i++)
+> -		if (file_diff->hunk[i].use == USE_HUNK)
+> -			break;
+> -
+> -	if (i < file_diff->hunk_nr ||
+> -	    (!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
+> -		/* At least one hunk selected: apply */
+> -		strbuf_reset(&s->buf);
+> -		reassemble_patch(s, file_diff, 0, &s->buf);
+> -
+> -		discard_index(s->s.r->index);
+> -		if (s->mode->apply_for_checkout)
+> -			apply_for_checkout(s, &s->buf,
+> -					   s->mode->is_reverse);
+> -		else {
+> -			setup_child_process(s, &cp, "apply", NULL);
+> -			strvec_pushv(&cp.args, s->mode->apply_args);
+> -			if (pipe_command(&cp, s->buf.buf, s->buf.len,
+> -					 NULL, 0, NULL, 0))
+> -				error(_("'git apply' failed"));
+> -		}
+> -		if (repo_read_index(s->s.r) >= 0)
+> -			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
+> -						     1, NULL, NULL, NULL);
+> -	}
+
+It is not obvious why the above code needs to be hoisted to the
+caller.  
+
+>  	putchar('\n');
+>  	return quit;
+>  }
+> @@ -1813,7 +1831,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+>  	struct add_p_state s = {
+>  		{ r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+>  	};
+> -	size_t i, binary_count = 0;
+> +	size_t i, j, binary_count = 0;
+> +	size_t patch_update_result = 0;
+
+Hmph, I think patch_update_file() returns "int quit".  Why do we
+want overly wide type to store the result, which cannot even express
+negative number to potentially signal a failure?
+
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+>  
+>  	init_add_i_state(&s.s, r, o);
+>  
+> @@ -1852,11 +1872,56 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+>  		return -1;
+>  	}
+>  
+> -	for (i = 0; i < s.file_diff_nr; i++)
+> -		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr)
+> +	for (i = 0; i < s.file_diff_nr;) {
+> +		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr) {
+>  			binary_count++;
+> -		else if (patch_update_file(&s, s.file_diff + i))
+> -			break;
+> +			i++;
+> +			continue;
+> +		}
+> +		else {
+> +			patch_update_result = patch_update_file(&s, s.file_diff + i);
+> +			if (patch_update_result == 0) {
+> +				i++;
+> +				continue;
+> +			}
+> +			if (patch_update_result == 1)
+> +				break;
+> +			if (patch_update_result == 2) {
+> +				i--;
+> +				continue;
+> +			}
+> +		}
+> +	}
+> +	for (i = 0; i < s.file_diff_nr; i++) {
 > +
-> +	git remote add -f src1 "file://$PWD/src1" &&
-> +	git remote add -f src2 "file://$PWD/src2" &&
+> +			/* Any hunk to be used? */
+> +		for (j = 0; j < s.file_diff[i].hunk_nr; j++)
+> +			if (s.file_diff[i].hunk[j].use == USE_HUNK)
+> +				break;
 > +
-> +	# DWIM
-> +	test_must_fail git checkout trunk 2>hint &&
-> +	test_grep "hint: *git checkout --track" hint &&
-> +	test_grep ! "hint: *git switch --track" hint &&
+> +		if (j < s.file_diff[i].hunk_nr ||
+> +	    (!s.file_diff[i].hunk_nr && s.file_diff[i].head.use == USE_HUNK)) {
+> +			/* At least one hunk selected: apply */
+> +			strbuf_reset(&s.buf);
+> +			reassemble_patch(&s, s.file_diff + i, 0, &s.buf);
 > +
-> +	{ git update-ref -d refs/heads/trunk || :; } &&
-
-I don=E2=80=99t understand what the purpose of this is after `git checko=
-ut` but
-before `git switch`. I can delete it and the test still passes. Is it
-post-test cleanup?
-
-> +	test_must_fail git switch trunk 2>hint &&
-> +	test_grep ! "hint: *git checkout --track" hint &&
-> +	test_grep "hint: *git switch --track" hint
-> +'
-
-Maybe just the positive greps are enough. I read these a few times
-because I thought the order was wrong, i.e. that `hint` was overwritten
-before it got tested. The regression that they test are unlikely and
-these negative greps might not make immediate sense for future
-readers. I dunno.
-
-I was about to suggest parameterizing the command but that makes it
-harder to grep for that part of the advice.
-
-    checkout_with_cmd () {
-            cmd=3D"$1"
-            test_must_fail git $cmd trunk 2>hint &&
-            test_grep --fixed-string \
-                      "hint:     git $cmd --track origin/<name>" hint
-    }
-
-
+> +			discard_index(s.s.r->index);
+> +			if (s.mode->apply_for_checkout)
+> +				apply_for_checkout(&s, &s.buf,
+> +						s.mode->is_reverse);
+> +			else {
+> +				setup_child_process(&s, &cp, "apply", NULL);
+> +				strvec_pushv(&cp.args, s.mode->apply_args);
+> +				if (pipe_command(&cp, s.buf.buf, s.buf.len,
+> +						NULL, 0, NULL, 0))
+> +					error(_("'git apply' failed"));
+> +			}
+> +			if (repo_read_index(s.s.r) >= 0)
+> +				repo_refresh_and_write_index(s.s.r, REFRESH_QUIET, 0,
+> +								1, NULL, NULL, NULL);
+> +		}
 > +
->  test_done
-> --
-> 2.53.0-rc2-135-gb1217c0133
+> +	}
+
+One upside of having "git apply" at the end of patch_update_file()
+is that you can "^C" out of "git add -p" or your terminal connection
+can be cut off, after dealing with hunks in a few early files, and
+these early part of your work that you have already done are already
+reflected to the working tree files.  By hoisting the logic to the
+caller, this is making the update all-or-none, which is good in
+transactional systems, but can make a horrible experience for an
+interactive use where you make progress while thinking.
+
+So I am not yet convinced if this change makes sense---it could be
+because of the lack of justification for this change.
+
+
+
+>  
+>  	if (s.file_diff_nr == 0)
+>  		err(&s, _("No changes."));
