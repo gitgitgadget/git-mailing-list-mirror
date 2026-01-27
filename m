@@ -1,121 +1,114 @@
-Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1723570CA
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 13:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B093288C22
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 15:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769520406; cv=none; b=as8yahE/ubXKRgxtiExdaJVvq0zP8Rgj3qOeBoWQO185HfWFtaeXJtCU/nk2HRvJLlqF/iK19gK+ZVuk8gz5Wra+Afp9LnF6rndFfMPLClZ4QouH4TxCuHdR5jqDS4PukoDqmkKUXRDV6P3w6UgdxNvmgw74S2qlNbpUuC0Us2Q=
+	t=1769528579; cv=none; b=LPdg49vfGDZ7aKQWswFeReY1PGXT66EPet0A42cmAv77wKjH5qrR45wEJqoicGP33Qv6yCfQ3GfTKTDZRHT23xbxQKshNFY+HYeZJ9Z2JyY9O5lwDCOgPhHDpbzGwpZMKHdl6rreA5+b6TCvo2Ki3EwiGABM6Ac52euwJUX3DL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769520406; c=relaxed/simple;
-	bh=JLqqEeGW4exyvyl5kgag/bO7HV5O46W5FNyj+anUMSA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kZoQUP58WczPfaBdDLSsb0GLrTBrxR8S0x0zOBWukV/WV7g37UTGa03gkqLfxTDkFMELD+8TDpw+UqcuRmOvcbK/J/x5k9HXuXv6WqnhK0LvN6sZz19wgrn/gNvxOoy/pLBpDjprz/8/UTI+2rTuJAisq1ub8z7qr5l2hz6HjjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=VSd1pom5; arc=none smtp.client-ip=91.218.175.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1769528579; c=relaxed/simple;
+	bh=M+nFNY2yLQeRkVAyH3nFdjir/9mpH5v2c6nbXC98glg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=b3aELWWrTrw2ILKDtqIt7ytmmF+zlkj4pRRiJMHfboRAvp02jeXrKqaW0Qci7s2wwOBOSoKB/yrvOWuvQem7D2hOP76CHOXrsBiytTja7Wuftjt3dwN08SPKh1zLXmy23SQYSw7R6MX8tHI7Zsx1HjHdmPxVppeSFkLHQtIslFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e+xF72up; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="VSd1pom5"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1769520402;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0CLxYRT7fJdIHpQgY1Rn0sLLugF3HJaa00ECbUGDyAg=;
-	b=VSd1pom529AzY5HROK7abZYfz9iKL1P6VmJg5D25kE0W75i6r+GJNxHNW6VFASMFz78GXo
-	Iy9LH4mq1h8FITZNe6u5pNRNd50Xh6tlgUxa/itQwr5Z8dl1iUoVO212JkZLeMDL7jePPD
-	BSbaFGJGf1FeyUwz3HsE8RP0VBrKmwU=
-From: Toon Claes <toon@iotcl.com>
-Date: Tue, 27 Jan 2026 14:26:20 +0100
-Subject: [PATCH v5 4/4] last-modified: verify revision argument is a
- commit-ish
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+xF72up"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-480142406b3so39933565e9.1
+        for <git@vger.kernel.org>; Tue, 27 Jan 2026 07:42:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769528576; x=1770133376; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=k1xi+FXZHRRppiQVbDVnv4rwAr0AhBQmdcauU75b/7s=;
+        b=e+xF72upq3x7bMI4inST7KK9N0uAAl8shp+uitpwK5SOEdaGGhPkm1IbUwiOzMCalT
+         iA/Iwlpkm0Gb//b6hINmvfi3LWBz8yJOY/vjPYo1yQOmAwLaZ7IxRVsFUmp2W6i4BPMl
+         8HUDVD1+NSFNf23WxkpcPEUc8dSCGsBdxADfR/7IEoOvXJjmvi4WH/gRrrDz4XSa3DWM
+         1U3pG39FqJYcKAojG6U5PpjkzTQcEW2gRwmrIW4Hxg+XxryTixuCBJXelr7eRFx0wrCe
+         vf45VoRwWaHycZJu3+zvPBH3ZvFXcplyaeiqPwNRMJuYHWGPAk4J4iOhQB/MEgQyRZyP
+         7XkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769528576; x=1770133376;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k1xi+FXZHRRppiQVbDVnv4rwAr0AhBQmdcauU75b/7s=;
+        b=LjFuCeUiE+3urJ7hWjbPJhxNFdrlxQwzJK99yRo4K3IZ+uJkSkDwWh+po72mtY0Sxj
+         ZmieeMONvNJqFLw6+uTXxP+VA+WLuPKiFS6Jd7SEexIfe1Lrdukw7BfIUYCQkyTn+Y76
+         GOKC6zHOafe4fqpqVOxd9iW1JVx9UVtG6arMk5MHe7XKbZx86MJ0s6358tT0U+BxtEzo
+         kVrrwgO0HJqjjnNet070HDHz892sW6VdWva+DwyOse/hwn3IhY3S5wdonnQKSQwBEmGs
+         K7EhaKQP1jA8G7jqPPeXIoBdQitQljtWy8TsjuEwnCesgE8rcQ/aPoWhJ3AGT2nzi+Io
+         FJsA==
+X-Gm-Message-State: AOJu0YxTZVJoCf0MpJuYEHsmx8GULJ7q0WAFKz+VZNKW24w680LxmVL7
+	mlJCYGgzflOzB7RfAj+JZEHu6jXuHTrLvzdsZb3a20UTNSAdlhKJX0rBpN4L9zhc
+X-Gm-Gg: AZuq6aLZQLzc51N9BAbhFL3TROnhs47v9nUO7fp8G9qxmqBNKXLO8xk3z9qZYd1v9RD
+	Yrd2ETUWPCOCoXAkFD5DxMoY5YsrheozbY2MvGSNmKAaw2kGEf54SxEOEQZr2m3pb//y9OJkx8G
+	JIS2BZfHKwAW7aA1QpML5lPats8LymeNmnrn3aCrjgD1+fFWLtsLftH4dqFiRNm7zS4bkIUXFSI
+	8dq7t1aGNzprSmy3E2k+FNuRx1NGy6MaemlU7X1XWI5xoD/6+GC/UeeR+KN0pbd4NLpE0gM4zIO
+	kYfRDAOdm671bQ70jS+0HLKLH2TDw0d6vuaRH3nbkXNeC4NRbWfnD6CFFh++EcXOvT6jlf/c/TW
+	ZJNconmYzsDDiVA9OXh723JDpy9snbKm5lhaDOyZ2qnIeotg/snHAZ+L0Hzx9M1Nx2uTax+Rv6Y
+	QuvxRp2m2CCszgTkB6Sj4QWcAjeb8=
+X-Received: by 2002:a05:600c:1994:b0:47e:e2b0:15b8 with SMTP id 5b1f17b1804b1-48069bfa73bmr30443665e9.4.1769528575993;
+        Tue, 27 Jan 2026 07:42:55 -0800 (PST)
+Received: from localhost ([102.91.81.223])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4806cddffc0sm1190785e9.5.2026.01.27.07.42.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jan 2026 07:42:55 -0800 (PST)
+Date: Tue, 27 Jan 2026 16:43:06 +0100
+From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/1] Allow reworking with a file when making hunk decisions
+Message-ID: <cover.1769522219.git.abrahamadekunle50@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260127-toon-last-modified-tree-v5-4-38d18a0956d4@iotcl.com>
-References: <20260127-toon-last-modified-tree-v5-0-38d18a0956d4@iotcl.com>
-In-Reply-To: <20260127-toon-last-modified-tree-v5-0-38d18a0956d4@iotcl.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Toon Claes <toon@iotcl.com>, Gusted <gusted@codeberg.org>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1769164663.git.abrahamadekunle50@gmail.com>
 
-Passing a non-committish revision to git-last-modified(1) triggers the
-following BUG:
+Hello,
+After review and suggestions from Junio, I have been able to add the '<' and '>'
+options for going to the previous file and next file respectively.
+If there is only one file, neither of the options will be available, if we are in the
+second of three or more file, both '<' and '>' will be available and if we are at the last file,
+only '<' will be available.
 
-    git last-modified HEAD^{tree}
-    BUG: builtin/last-modified.c:456: paths remaining beyond boundary in last-modified
+This will enable simultaneous hunk decisions between between files.
+After all decisions have been made in a file, a prompt shows which asks
+"All hunks decided. What now?" that allows reworking with the file,
+moving to the next or previous file as the case may be.
 
-Fix this error by ensuring that the given revision peels to a commit.
+Since all hunks in the file have been decided, if the user navigates to a particular
+hunk with 'K' or 'J' and redecides on an already decided hunk with options such as, 'y' or 'n',
+the user is taken back to the first hunk with the "what now?" prompt shown.
 
-Reported-by: Gusted <gusted@codeberg.org>
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- builtin/last-modified.c  |  5 +++++
- t/t8020-last-modified.sh | 13 +++++++++++++
- 2 files changed, 18 insertions(+)
+The decision to use 'q' as a submit is because after some or all the decisions have been made
+in a file, 'q' submits them as is even though in the `help_patch_text` it say `q` will
+not stage the current hunk and all hunks after it. This is not true if hunks decisions
+have been made and the user navigates with 'K' and 'J' or uses 'a' to select all hunks and
+'q' after wards
 
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index e02ec8428b..d0944673f0 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -150,6 +150,11 @@ static int populate_paths_from_revs(struct last_modified *lm)
- 			goto out;
- 		}
- 
-+		if (!repo_peel_to_type(lm->rev.repo, obj->path, 0, obj->item, OBJ_COMMIT)) {
-+			ret = error(_("revision argument '%s' is a %s, not a commit-ish"), obj->name, type_name(obj->item->type));
-+			goto out;
-+		}
-+
- 		diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
- 			      &obj->item->oid, "", &diffopt);
- 		diff_flush(&diffopt);
-diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
-index d1aad12319..6024e8bd60 100755
---- a/t/t8020-last-modified.sh
-+++ b/t/t8020-last-modified.sh
-@@ -8,6 +8,7 @@ test_expect_success 'setup' '
- 	test_commit 1 file &&
- 	mkdir a &&
- 	test_commit 2 a/file &&
-+	git tag -mA t2 2 &&
- 	mkdir a/b &&
- 	test_commit 3 a/b/file
- '
-@@ -51,6 +52,13 @@ test_expect_success 'last-modified recursive' '
- 	EOF
- '
- 
-+test_expect_success 'last-modified on annotated tag' '
-+	check_last_modified t2 <<-\EOF
-+	2 a
-+	1 file
-+	EOF
-+'
-+
- test_expect_success 'last-modified recursive with show-trees' '
- 	check_last_modified -r -t <<-\EOF
- 	3 a/b
-@@ -236,4 +244,9 @@ test_expect_success 'last-modified complains about unknown arguments' '
- 	test_grep "unknown last-modified argument: --foo" err
- '
- 
-+test_expect_success 'last-modified expects commit-ish' '
-+	test_must_fail git last-modified HEAD^{tree} 2>err &&
-+	grep "revision argument '"'"'HEAD^{tree}'"'"' is a tree, not a commit-ish" err
-+'
-+
- test_done
+I have not attempted to work on the t/3701-interactive.sh yet but this will be done
+after concensus on the UI when all hunks have been decided.
+
+Abraham Samuel Adekunle (1):
+  Allow reworking with a file after deciding on all its hunks
+
+ add-patch.c | 139 ++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 102 insertions(+), 37 deletions(-)
 
 -- 
-2.53.0.rc1.267.g6e3a78c723
+2.39.5 (Apple Git-154)
 
