@@ -1,88 +1,87 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0812032D
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 07:35:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF50278E63
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 07:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769499311; cv=none; b=WGwU8F1GavWB6JxnrDqphpY0y0OFB3XkaosxYyQ9ngobvl7d00Qpl71i0PVGLkUR5zpo3G8HsBQtKOPvKDU2QpZ2TPovd0MYuQi2GiDtvt6KDcsV2jvZivk3vShCpTwcCoN2FpsemyJ59tKhGyn1dbuG+D5raCMigV7K5K8ty4s=
+	t=1769499316; cv=none; b=A1JOpNWghadcIHRHJqHOpsKk/cxc267ihYxMuGEN6xIvTZ5L/vK9ZKwygYtLYpiHKNAsApDW33V19BFmddUxV23XvrUi4NV0sdoFSQVj3gaKk5clJBjXCNhdYCc9LbPEl1YO+zaFWvAk0pHOrvj4YHrlOlljIqQGzgis08P61ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769499311; c=relaxed/simple;
-	bh=tpJqlFsfZhDKhuyFhRpYBNeL3PaKjkaJZUg6U6cFHuM=;
+	s=arc-20240116; t=1769499316; c=relaxed/simple;
+	bh=LcwLdsCXYkEwhfpkfdRuCFRR9bl9dIcrvF5VbpRvwb0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=swjqzvSU4uHa3pvVjXKcGz5F9Ccj7tq1kR5NGN3vgEJB3gouA6llgfWFZf4+8OlHenfrtPRZUQss0EP3hJchJsslUHqv6A8Ce/DkfxK4txYtoaXQq1n2Eq25OaG7KwYEPBddMcsDe6qcd0LVizSZkex1UgWxuRyid6u0gzuAYIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GrqvwB0M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G/hDmbYA; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=PXKqDhn12r0vffMKuQXjHnFK3jx2wrAPiJZCyZFvUiy6Hkhm29FfEBUlFOzxmsb7z5yIOVh+D4NcjhT1dh/9ilf9lX4Q1FJs4SBAgum/0clZnL59MjNBsgAc1mRnRg3ERTph19bVF+LmG+wrjHAisz3ypASHZQ1knqYwebNY14w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iDl2owGC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LSHd+bhZ; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GrqvwB0M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G/hDmbYA"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3FA7C1400304;
-	Tue, 27 Jan 2026 02:35:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iDl2owGC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LSHd+bhZ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 76753EC0217;
+	Tue, 27 Jan 2026 02:35:14 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 27 Jan 2026 02:35:09 -0500
+  by phl-compute-06.internal (MEProxy); Tue, 27 Jan 2026 02:35:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769499309; x=1769585709; bh=S0qCnkMhHb
-	r7C6wqC90VrMji2lySC660JhCfVPSWyH4=; b=GrqvwB0MsAgXQLLm4CC2/l8A43
-	dojET7Y8ULXKGK/hz4P+lFIbK0kvnvSpazOlWH6zXdwUpW1RCBYYO6/qcACfvOyp
-	VWoyOw4Krls31EbOaoxP9QD9w5G3IxqakZ/pANitq7O4B/N57wOpQ4PWjjA15k/F
-	Rx5NK23OnsUFe5QReQfje7Y+oqi5OzWSVFy/Yea5j2vob1Dz6yRnHqLxnK1CkAsi
-	n9+0QINVgv5VnlzehphxH8C3uHc4Y007Vq92OsU9IIMrR7U/vysR3EuIi2q/cYhp
-	avcPKfa/arlb8TIJsOCBek5uYSuIV0w1MD/7qlN5vidL5UaQdITL8jzL0TQA==
+	:subject:to:to; s=fm2; t=1769499314; x=1769585714; bh=3L7aBEuJ8d
+	TWoq3ixXrO/EfVkQ9WtCuC2Bv7PhGtbHg=; b=iDl2owGC0GkFd6V7i5gEaLmsVh
+	cQZx9x+wWm/kLXMD8A/uTA4LP8q5LRpXpM4XvjW2cVbY8e0DcfrOZcXHdhNKjev3
+	Uu2n7TEkEd27oSkrqdsalqCo7WeL/4BCanlAjxFxaiKgfQBMankAC3wbilk+H8R7
+	5bHgWT+JiaVzh2rotORom5v+pT8+/2tif1bayUtEUcP9AdCxZNmnZXbhXcHaGqc1
+	FaZOAvHX+nZ1SqMHOJPOaixACDZ9C7M1PNLhBpiAKSg1UWOXocIKhvg3xcVYkXov
+	1zbWO6K6W+H07uE+MG0ZPLA0pQN4TPeNfvBOY91D+YKL83+aTaK4wE5GoD2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769499309; x=1769585709; bh=S0qCnkMhHbr7C6wqC90VrMji2lySC660JhC
-	fVPSWyH4=; b=G/hDmbYAN6TqMWN3fVE6kJavzsQN/VYCz1QcTJyi+CoJlnMmds7
-	Ty3tizJpvVvz7sJHlFE4TZU/v67RJdGXJGR5uzWQiTXoy64tWbSeywZv704t5uaZ
-	J6w0AUYmq/pC070a0fpor9tfm6aTuPVN03wRCsuIcqdVbs2A81cy2G/9Fv+f6wj2
-	Kxb+vFZcPzQCp1kOVnkrxSacL2nE5rmptHUu5ueSIQdrrlKPLOrGi6U7RolRYxsi
-	4O/Zr3tLu8XUBU2AkYWYHd5KtU9KxgsWZB8vYLsk/VHqHmqhCkuUGKfc1V+ApMQU
-	IkNqeVyie2Vo+hszEO4ikIQCMWQ9mCxhT1A==
-X-ME-Sender: <xms:rWp4aS5LDL9zOYytkKIshfb6WUVTROtK-Exyb0S_29VFp-E17STyhQ>
-    <xme:rWp4aSw9XLHtBjHZxiujh-KyH4LSD_PIOhgaHyztNWasQUscU_EfQs01qIbNFYLnY
-    ME_gT8pXswdfpVukl_rsUGf6LgPyQNpK89TCtlUWBgn2LSyE8uhJw>
-X-ME-Received: <xmr:rWp4aZwm3pKSV3AJMSxfNxv9SHFM83Y4x1FJ9VIJsa4OOTpZJUk1aSJukI6MG-pX3okH4cfIc-l7gEDbQcA3bM1BMxORbeH8xDD5EYJO71cT>
+	1769499314; x=1769585714; bh=3L7aBEuJ8dTWoq3ixXrO/EfVkQ9WtCuC2Bv
+	7PhGtbHg=; b=LSHd+bhZc8q4XroQP9HEeJ8sq9aDZ2UeakdfVK6SBOxSFve7HtV
+	2oAMzGsXOfNknTCHXuTJgIaHZF7CvG/tg4szjvjV/heNW7KhrbM0K445Xc4+syrH
+	F2wYh3vV1hK0ZCo4aJybLZ+ys9fJbAy7teZ81SsDxNYnvaYE70NFSH6Gq+3qzx5x
+	L3rvBcn1UzWlMiP6wn374H9HnpMpgZvK84EQ9KJrvf1j8VALMU3+TUJ/MusvaLlJ
+	XoTzj/2MqOzTtpjDhgx4Wg23xJqYkd14YhsUzxE4RvTnr8+I2B1XJHqISRlAZi+g
+	bwX7ZkHDVppnUmhzbT7aM5D5ql5TZ3XM1Jw==
+X-ME-Sender: <xms:smp4aaAJEE_-tfJ48ncEMdX6FlnUDhqk6hPBOG6a1IxZrgbxfSm0xw>
+    <xme:smp4aba_Js2toWgZAiAkSNvbbt-LshYSVOxr9KWHxJE-UVCrnIjp194V_fDpW8E-g
+    _GUDhlFC0fbT8Sw-DJVFm_I_YBmdR0WAY97xNa-0Ub72TKVywc2NA>
+X-ME-Received: <xmr:smp4aV63l1zaGFjCajFYWyviUAY12L4fzOymGHpNTJU5JHssRtJoJ3TJ4ISO2KXXc19-jItmr0_raJBpNiDIFdLJ320Uzi47E7UzUPXVHxKb>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheelleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:rWp4aazCt4TFWeAN8pRHkeEwR-DHnecvPmBwqJC3row4p_aM_Hrx7A>
-    <xmx:rWp4aTYoym4Eqd_i3u9nBbrKWCBpvidW-L4WJXshMKKOMtFU5_A8Ww>
-    <xmx:rWp4abX897WZTFXDlxkdrrdTg_gO711GJKDefO7YlVQbBpy89zWOxA>
-    <xmx:rWp4aRh_toqkmDVaoSUhPRT_YX1OqGLhmZmg65_DOwtMqfMX40ybHA>
-    <xmx:rWp4aXQwPbsMIu4k_IgBfZ52K2vTxIR7V-4AZiSgHP62FIZZw03Dqp1c>
+    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:smp4aUaxoM-g5KMmDhLoo0TSCiVdLd_HJji__fQ_TduEiUTSaPJR1w>
+    <xmx:smp4acgbThx5gSeO3qXnnKdO41KqRwDfWkJvnCfWE7hePJmxXZDFPQ>
+    <xmx:smp4ad_dk0o_-V2viYtEP2kqwZtsyKS5QRrqORL1BQu1Rt1RhcutxQ>
+    <xmx:smp4afoZGdzqBhTfhDoFKkK3P_4SbR8SgBJZ9UAIHQTvbaaAMkE5kw>
+    <xmx:smp4aQ5zsncF1oRxTq8qKvQejGf4VZmC2rCOY7s2EhDHNurZlziECThD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Jan 2026 02:35:08 -0500 (EST)
+ 27 Jan 2026 02:35:13 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9798a853 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Jan 2026 07:35:06 +0000 (UTC)
-Date: Tue, 27 Jan 2026 08:34:59 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 12b67d1f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Jan 2026 07:35:13 +0000 (UTC)
+Date: Tue, 27 Jan 2026 08:35:10 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 10/18] midx: do not require packs to be sorted in
- lexicographic order
-Message-ID: <aXhqo3f-NeUcO2IM@pks.im>
+Subject: Re: [PATCH v2 17/18] midx: implement MIDX compaction
+Message-ID: <aXhqroubXFbnBgJI@pks.im>
 References: <cover.1765053054.git.me@ttaylorr.com>
  <cover.1768420450.git.me@ttaylorr.com>
- <72bcd4ed6c7f685f58bb3b905fe553173abe1845.1768420450.git.me@ttaylorr.com>
+ <13336e864f4ed3a6954b782f0bcc090d92ac722c.1768420450.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,97 +90,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <72bcd4ed6c7f685f58bb3b905fe553173abe1845.1768420450.git.me@ttaylorr.com>
+In-Reply-To: <13336e864f4ed3a6954b782f0bcc090d92ac722c.1768420450.git.me@ttaylorr.com>
 
-On Wed, Jan 14, 2026 at 02:54:45PM -0500, Taylor Blau wrote:
+On Wed, Jan 14, 2026 at 02:55:10PM -0500, Taylor Blau wrote:
+> diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+> index c0c6c1760c0..043ee8c478a 100644
+> --- a/builtin/multi-pack-index.c
+> +++ b/builtin/multi-pack-index.c
+> @@ -195,6 +204,70 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
 [snip]
-> Because this change produces MIDXs which may not be correctly read with
-> external tools or older versions of Git. Though older versions of Git
-> know how to gracefully degrade and ignore any MIDX(s) they consider
-> corrupt, external tools may not be as robust. To avoid unintentionally
-> breaking any such tools, guard this change behind a version bump in the
-> MIDX's on-disk format.
+> +	if (!from_midx)
+> +		die(_("could not find MIDX: %s"), argv[0]);
+> +	if (!to_midx)
+> +		die(_("could not find MIDX: %s"), argv[1]);
+> +	if (from_midx == to_midx)
+> +		die(_("MIDX compaction endpoints must be unique"));
+> +
+> +	for (m = from_midx; m; m = m->base_midx) {
+> +		if (m == to_midx)
+> +			die(_("MIDX %s must be an ancestor of %s"), argv[0], argv[1]);
+> +	}
 
-s/Because t/T/?
+These new checks all feel sensible to me.
 
 > diff --git a/midx-write.c b/midx-write.c
-> index 8a54644e427..5c8700065a1 100644
+> index ca2469213e6..afa077a09cc 100644
 > --- a/midx-write.c
 > +++ b/midx-write.c
-> @@ -36,10 +36,13 @@ extern int cmp_idx_or_pack_name(const char *idx_or_pack_name,
+> @@ -1120,12 +1216,23 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
+> @@ -1162,6 +1270,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
+>  		die(_("unknown MIDX version: %d"), ctx.version);
 >  
->  static size_t write_midx_header(const struct git_hash_algo *hash_algo,
->  				struct hashfile *f, unsigned char num_chunks,
-> -				uint32_t num_packs)
-> +				uint32_t num_packs, int version)
->  {
-> +	if (version != MIDX_VERSION_V1 && version != MIDX_VERSION_V2)
-> +		BUG("unexpected MIDX version: %d", version);
-
-Asking the function to write a MIDX header of an unsupported version
-would be a bug indeed.
-
-> @@ -105,6 +108,8 @@ struct write_midx_context {
->  
->  	uint32_t preferred_pack_idx;
->  
-> +	int version; /* must be MIDX_VERSION_V1 or _V2 */
-
-Tiny nit: this could be converted into an `enum` for implicit
-documentation.
-
-> @@ -1100,6 +1113,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
->  	struct tempfile *incr;
->  	struct write_midx_context ctx = {
->  		.preferred_pack_idx = NO_PREFERRED_PACK,
-> +		.version = MIDX_VERSION_V2,
->  	 };
->  	struct multi_pack_index *midx_to_free = NULL;
->  	int bitmapped_packs_concat_len = 0;
-
-Okay. Here we set the default version, ...
-
-> @@ -1114,6 +1128,10 @@ static int write_midx_internal(struct write_midx_opts *opts)
->  	ctx.repo = r;
->  	ctx.source = opts->source;
->  
-> +	repo_config_get_int(ctx.repo, "midx.version", &ctx.version);
-> +	if (ctx.version != MIDX_VERSION_V1 && ctx.version != MIDX_VERSION_V2)
-> +		die(_("unknown MIDX version: %d"), ctx.version);
-> +
 >  	ctx.incremental = !!(opts->flags & MIDX_WRITE_INCREMENTAL);
->  
->  	if (ctx.incremental)
-
-... but the user can change it. Good.
-
-> diff --git a/midx.c b/midx.c
-> index 19ef230d3fd..1327d0a3695 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -656,17 +658,40 @@ int cmp_idx_or_pack_name(const char *idx_or_pack_name,
->  	return strcmp(idx_or_pack_name, idx_name);
->  }
->  
+> +	ctx.compact = !!(opts->flags & MIDX_WRITE_COMPACT);
 > +
-> +static int midx_pack_names_cmp(const void *a, const void *b, void *m_)
-> +{
-> +	struct multi_pack_index *m = m_;
-> +	return strcmp(m->pack_names[*(const size_t *)a],
-> +		      m->pack_names[*(const size_t *)b]);
-> +}
+> +	if (ctx.compact) {
+> +		if (ctx.version != MIDX_VERSION_V2)
+> +			die(_("cannot perform MIDX compaction with v1 format"));
 
-Okay, this took a second to figure out. The `pack_names_sorted` is an
-array of `size_t` indexes into `m->pack_names`. So what we get here are
-these indices, and we can compare by using those indices via
-`m->pack_names`. Makes sense.
+Right. So if the user has configured "midx.version=1" they cannot
+compact.
 
-I was wondering whether this would be easier to follow if
-`pack_names_sorted` was a simple array of unowned pointers. So it would
-contain the same pointers as `pack_names`, but properly sorted. It would
-have the downside of more confusing ownership semantics though.
+> @@ -1354,12 +1491,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
+>  			ctx.large_offsets_needed = 1;
+>  	}
+>  
+> -	QSORT(ctx.info, ctx.nr, pack_info_compare);
+> +	if (ctx.compact) {
+> +		if (ctx.version != MIDX_VERSION_V2)
+> +			BUG("performing MIDX compaction with v1 MIDX");
 
-I assume we cannot live with a simple `bool sorted` field and then sort
-`pack_names` lazily?
+Isn't this `BUG()` redundant with the above call to `die()`?
 
 Patrick
