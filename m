@@ -1,332 +1,248 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1E73570B3
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 15:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1388E3164C3
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 16:29:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769528710; cv=none; b=oC73IGcse8HM0mtNswxbEZinQbzKOre0tWZv9Iw3hZ6DJWiO9Lj2my9jTyQONwTvqm5BOiZrmW+DpW9+r8bYnZrnEh9qPwWWjUHBWDAjk9gTYuqbILo65Kfov0Bkt/rY0VMC/dRuHqkeA6eycKRCS7HzKdNmSIoCSbLIx/bEi4Q=
+	t=1769531377; cv=none; b=SyYf4QdtqSQzrbAjBZ6f5G4I8iv/DslAhThGKwVOAduKeVM8Zd5BM7oVgTzIgeaglmj7AcXxaxpmnR/Id6K4gHO88GaatbUsTjI1u/66JWtqCjgdWix8L8AVW1BBkFYJY9fW6uSnRqQB0ctzQRcpQJvuQZV5zVkLlUQQWPSyjpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769528710; c=relaxed/simple;
-	bh=9/2FdQJZdd8UbbKkD4LozuCAGZffYNd56nGElo0bQAM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=klGbzFW7GE/f0AIbj556bXhh7VZzieLtIFS9ZEP2joYZX16Z0CR7bIpBsaZbhs6ILpoWIG2VXwOobgYiATWhwC15/TA51GTnOVFTIqhd8egXpDYAlJeHlGpuubAzXKMAfKCIzDvtT+mRPwsiuEIj8LeRCfrjxiUxQNmw98DrmC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YCc2Qsbh; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769531377; c=relaxed/simple;
+	bh=Wb2Y6Scpkk1QeuKMUXLYkzZ63zQJcN8tYrWyvD4RpEk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uLaii7nSo0LTMoHvAZV1JJgN/fp8anGavU07O/J1crz/+sRqzljhPqlDBnUxakoAsmSDrSBCuzuCDIegTXwEJTxG1SDHAws2fBD7CSFaoI3ZlYL68KLyWiEi2ZBJcFMcpl12itotsiir05WHUwNQLIqOGcPR/RWFrBHg08lVVkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WV3sQbQZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ESOkOuLi; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YCc2Qsbh"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-432da746749so3228507f8f.0
-        for <git@vger.kernel.org>; Tue, 27 Jan 2026 07:45:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769528707; x=1770133507; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a9O6FX03MPmgbRprtxSnskR1oj9HFa3PGHfIk+NOTHg=;
-        b=YCc2Qsbh+CnO+MkVmjBB9iMipMK4SSBd3uH6qvGoYx43qhgtc09jCaDS+LSqbmRjbW
-         Xv1FbLSopTlqkotdrE+9VuIxTDMBxHTwWk/Hf2JQkuA1iOadgKKG9CrZeK+unNLuOHCJ
-         sFYlq8GAjVpEmTBHELKkQ4YOHcQfMchbiPoTCrxL77gW7WEr1ISY6fy6P7jeIuYtXjtO
-         I+VmJ5X7jVhiXHwgoEYpJWlNHTihYZ92E18c/Iwk43oVkDkhFy5WizmK1jY7qzZP5fwT
-         ZN/9bSSSbqx6WUh7zcQz2LO7xXvexKyXEgxta1Z2SIHkNZcHEC27NnIwqfVHDZpJLr+V
-         gOSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769528707; x=1770133507;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a9O6FX03MPmgbRprtxSnskR1oj9HFa3PGHfIk+NOTHg=;
-        b=aqZzK6XmU5t3IT4Bl3fLk2nFLZ/QypNkCk+PZMfDIFxgnaNVrEeipJ4z3MqFdUNIT0
-         bSl7u+zQfz+oZKJ7MMcewbFF2x3duuJA5H9WRCwkObs0qxk585qNHQwJTL71GfWgY8W3
-         uC+cPILMD4n+75GUqQHxIzt1qmxkohM15Nhvm8+4j/Y6Uao1AU7VDFWtn3mcS34J+lCK
-         syNvTMeD4Hw3FkgGQLPeGTrxjhjZR4Q6pkBDChHpGI7Fl8Ll0uc9Jq5B4njTDc7M+UYQ
-         GemWtuLWLnhCPtHlVfvCwHzijOcSBmyRiIEDmJ0CQP5Z/bi0duFXFJZlrcWnUdoKl288
-         aeLg==
-X-Gm-Message-State: AOJu0Yydff/hqQcDQNI7eIQe5cNwAzkeR0F2Z1bBmdT4stpdicK2SLv1
-	MJDs2w6yNRTNFhVIlIRa3N8MxHzBflAgt0x3BboQ/Ab+fX+IBKkzDiV+g0NZewwi
-X-Gm-Gg: AZuq6aKR/qiLBrEl6LvI7+SFJUNXjYLqHPGsGzFk2WX120lRbw3AaV1lkF94mMcIQu7
-	mINgJ61NdSco8XW2jLO/sZwcBVry56Az/QUtXYQo2zqHb2yMVk4DaN49q914VqF0MFmLaIl3+Wg
-	pmCqZJRbnopWU26hqYF26ueenOH7NPGuFGh9jQwjFPJNW78OwuT71mJLViBeHrN6UhvZCRthvgz
-	YC/AAGoDIGRWImF92aHSd1B59tvmm8aYLPnW9zS9BKcq3aq1mua0I3v7jqc+gRBPH9Uqxeey/B5
-	w28mp/9OZJ08vf2CYLUoi9Y4LypeN4kOLM2tq8O51bPHtpn55/Vhqwz6WBStPx30wBqBR10lIJB
-	Ve7Yy0ImEpKMpZqifrpjEam3pbUgwdPKqvISGuYAHLTnkdRNPhozfP3dNtmPlWPyr+q6c5zBvaD
-	Uy8UtDhZUD+0wyiuXQ
-X-Received: by 2002:a05:6000:2c04:b0:432:85eb:a3cc with SMTP id ffacd0b85a97d-435dd02fda0mr2975228f8f.19.1769528707143;
-        Tue, 27 Jan 2026 07:45:07 -0800 (PST)
-Received: from localhost ([102.91.81.223])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1c24bedsm37283979f8f.17.2026.01.27.07.45.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jan 2026 07:45:06 -0800 (PST)
-Date: Tue, 27 Jan 2026 16:45:13 +0100
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/1] Allow reworking with a file after deciding on all its
- hunks
-Message-ID: <9b21cb901ab14397af94b8ed2d09da1a9a6d862b.1769522219.git.abrahamadekunle50@gmail.com>
-References: <cover.1769522219.git.abrahamadekunle50@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WV3sQbQZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ESOkOuLi"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5AEBC1D0018F;
+	Tue, 27 Jan 2026 11:29:35 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Tue, 27 Jan 2026 11:29:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1769531375;
+	 x=1769617775; bh=/C0hng8w0MzmY2cgqSay92m9Mt4qYcENIIVtI/mu2uU=; b=
+	WV3sQbQZ15NLZn/BToY2r8KVq+Cy2qL+Cn7zkSOJlWEKIaz4nJgF4BlufLpgfPTr
+	3Y44TGLwOPyUfm42tA0qJRfwCE8DJfpuYarwZQ3eUziUaVFgIxM5GT3CIyDp2hDk
+	A4JeB3w9ad41y3aRa5iwGA26mfuV3doJEQE8EuUPq7kn/uK+xQRvsY94XAbItB6m
+	sRT5UQn2ObNugmOI/skKMFax+M/a0m9KLHMdSHGR6T8I/Di6ROxLIFlINw6P0hWZ
+	LsuTsx6Ln9gDrlotSeoiKb3fjvGtRhud2Fc9T1pgiw6Ff5/R50s0yzBCqILrTB4I
+	ycEzjslnB6CIOE5cAfpgww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769531375; x=
+	1769617775; bh=/C0hng8w0MzmY2cgqSay92m9Mt4qYcENIIVtI/mu2uU=; b=E
+	SOkOuLig0af1ib7nJiGraR6PKcWL0Nv6jqc3LSxW6heIKfIsrG/wiO/wA+0OAreX
+	73Y3nZ+q48Z7X3vJx9L9kFSoa7F8assmtPXpfBGrMQ2U5TM9HQoyhyysNNdwuoWk
+	rTdWPzf8XV3gdhWBlE3IZXDoZlqOknvhOySWhzit0PAWHlLbfQMGvh/YY+hJkon/
+	xcNaDte4yz8Mn7zmNFopC0i4MoySWqsdy9Y5Xkk379+cJ3hqBRq3rnJy2kbWGDi3
+	1GG2cNdIABh4cTbGP9YYxakS66+51BnH7S6hpJeZXcyiRNVShJNmMhvNTR84YwIy
+	RIvBvvCZn3sMozu+KZ5SQ==
+X-ME-Sender: <xms:7-d4abxGodZ9vpLBDgnapow8tJ_RiWcDwZXFnVzkmhDu3bHpfN0-SQ>
+    <xme:7-d4aav9WTc6LpoZUfOn1gz16-Ed86wj-GswFMKXY9Y8UvcOBq_xrhYIXkMGuHEBu
+    EPOpi6lMogAHYm6zwtIdqNacjxLE8jmKdO_By42IRx7ocPGOOGhUA>
+X-ME-Received: <xmr:7-d4aSusWsPciaOlq8RLb5yasMxLhIpLF-1XU1RzPhQQKL1J_eLgjmPfSklgBNtjGQ0bUHedPYilqSCXQPAgZW_IyyEKbOCr45XKCgU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedtleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekof
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnhepleejleeuheektdetgfdvheeuve
+    eftddtjeffudffkeeuhedtjeekveegheeiheeknecuffhomhgrihhnpegthhgvtghkohhu
+    thdrtgifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtoheptgihqhhsihhmohhnsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7-d4afNzuI6aoEUpYGog2AeFWqUeg805zJ428SQORfsupdfF8P29AQ>
+    <xmx:7-d4aQ0sG4X2iuKZXHqMnapqfR4G77whPT0fz96QAlDuzxhp1dx1Fg>
+    <xmx:7-d4abPwsgImQm8hCctV__5Ko6WO4u3W8jVnj6kawkLLtk3O6fRaJQ>
+    <xmx:7-d4aQ1YSHeHMA2vBHhVLiMsICcbyLlPL-YM1AQRtX8qC3VVD66OBQ>
+    <xmx:7-d4aatLQgAZSSfR_XVw44DfHBG_5SNRGw2cyS74R5GhfDpiRNOTYjzm>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Jan 2026 11:29:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Simon Cheng <cyqsimon@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Remote tracking option hint for git-switch still shows
+ git-checkout command
+In-Reply-To: <CA+itcS0iyqNyzOP0cueLg7B3yadoEr_VWJ-QoL+YPFUPJiE2RQ@mail.gmail.com>
+	(Simon Cheng's message of "Tue, 27 Jan 2026 17:31:06 +0800")
+References: <CA+itcS0iyqNyzOP0cueLg7B3yadoEr_VWJ-QoL+YPFUPJiE2RQ@mail.gmail.com>
+Date: Tue, 27 Jan 2026 08:29:33 -0800
+Message-ID: <xmqqecnbggsy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1769522219.git.abrahamadekunle50@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-After deciding on all hunks in a file, the interactive session
-advances automatically to the next file if there is another,
-or the process ends.
+Simon Cheng <cyqsimon@gmail.com> writes:
 
-Now the process does not advance automatically. A user can choose to
-go to the next file by pressing '>' or the previous file by pressing '<',
-before or after deciding on all hunks in the current file.
+> When `git-switch my-branch` is unable to guess a unique remote
+> tracking branch, the shown hint still displays an example with the
+> `git-checkout` command.
+>
+> ❯ git switch my-branch
+> hint: If you meant to check out a remote tracking branch on, e.g. 'origin',
+> hint: you can do so by fully qualifying the name with the --track option:
+> hint:
+> hint:     git checkout --track origin/<name>
+> hint:
+> hint: If you'd like to always have checkouts of an ambiguous <name> prefer
+> hint: one remote, e.g. the 'origin' remote, consider setting
+> hint: checkout.defaultRemote=origin in your config.
+> fatal: 'my-branch' matched multiple (2) remote tracking branches
+>
+> Of course that works too, but it keeps the user guessing whether the
+> `--track` option also exists for `git-switch`. Not to mention that
+> `git-checkout` is now largely superseded by `git-switch` and
+> `git-restore` and is no longer recommended, as far as I understand it.
+>
+> So I think it makes sense to either:
+> 1. make the recommended command match the one ran by the user, or
+> 2. always recommend `git-switch` as opposed to `git-checkout`
 
-After all hunks have been decided in a file, a prompt appears,
-which allow the user to still rework with the file by applying
-the options available in the permit set for that hunk, and
-after all the decisions, the user presses 'q' to submit.
+Here is what I did while waiting for -rc2 to pass my local tests,
+which is unfinished, but it would be a good start.  What missing are
 
-Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
----
-Changes in v2:
-=============
-- Added '<' and '>' to the permit set
-- All patches are now applied after all decisions in all files have been
-  made by submitting with 'q'.
+(1) get rid of the usagestr[] parameter from checkout_main(), move
+    the usage strings for these three commands into the function
+    scope of checkout_main(), and choose among them based on the
+    value of which_command parameter;
 
- add-patch.c | 139 ++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 102 insertions(+), 37 deletions(-)
+(2) tests.
 
-diff --git a/add-patch.c b/add-patch.c
-index 173a53241e..edb2fab3fd 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1418,6 +1418,8 @@ N_("j - go to the next undecided hunk, roll over at the bottom\n"
-    "e - manually edit the current hunk\n"
-    "p - print the current hunk\n"
-    "P - print the current hunk using the pager\n"
-+   "> - go to the next file\n"
-+   "< - go to the previous file\n"
-    "? - print help\n");
- 
- static size_t dec_mod(size_t a, size_t m)
-@@ -1441,6 +1443,17 @@ static bool get_first_undecided(const struct file_diff *file_diff, size_t *idx)
- 	return false;
+We are not deprecating checkout in any way, so #1 is far more
+preferrable than #2.
+
+
+ builtin/checkout.c | 40 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 35 insertions(+), 5 deletions(-)
+
+diff --git c/builtin/checkout.c w/builtin/checkout.c
+index 0ba4f03f2e..4d0e70ea15 100644
+--- c/builtin/checkout.c
++++ w/builtin/checkout.c
+@@ -1293,9 +1293,17 @@ static void setup_new_branch_info_and_source_tree(
+ 	}
  }
  
-+static size_t get_file_diff_index(struct add_p_state *s, struct file_diff *file_diff) {
-+	size_t idx = 0;
-+	for (size_t i = 0; i < s->file_diff_nr; i++) {
-+		if (s->file_diff + i == file_diff) {
-+			idx = i;
-+			break;
-+		}
-+	}
-+	return idx;
-+}
 +
- static int patch_update_file(struct add_p_state *s,
- 			     struct file_diff *file_diff)
++enum checkout_switch {
++	CHECKOUT_CHECKOUT = 1,
++	CHECKOUT_SWITCH = 2,
++	CHECKOUT_RESTORE = 3,
++};
++
+ static char *parse_remote_branch(const char *arg,
+ 				 struct object_id *rev,
+-				 int could_be_checkout_paths)
++				 int could_be_checkout_paths,
++				 enum checkout_switch which_command)
  {
-@@ -1448,9 +1461,10 @@ static int patch_update_file(struct add_p_state *s,
- 	ssize_t i, undecided_previous, undecided_next, rendered_hunk_index = -1;
- 	struct hunk *hunk;
- 	char ch;
--	struct child_process cp = CHILD_PROCESS_INIT;
- 	int colored = !!s->colored.len, quit = 0, use_pager = 0;
- 	enum prompt_mode_type prompt_mode_type;
-+	size_t file_diff_index = get_file_diff_index(s, file_diff);
-+	int all_decided = 0;
+ 	int num_matches = 0;
+ 	char *remote = unique_tracking_name(arg, rev, &num_matches);
+@@ -1308,14 +1316,30 @@ static char *parse_remote_branch(const char *arg,
  
- 	/* Empty added files have no hunks */
- 	if (!file_diff->hunk_nr && !file_diff->added)
-@@ -1467,7 +1481,9 @@ static int patch_update_file(struct add_p_state *s,
- 			ALLOW_GOTO_NEXT_UNDECIDED_HUNK = 1 << 3,
- 			ALLOW_SEARCH_AND_GOTO = 1 << 4,
- 			ALLOW_SPLIT = 1 << 5,
--			ALLOW_EDIT = 1 << 6
-+			ALLOW_EDIT = 1 << 6,
-+			ALLOW_GOTO_PREVIOUS_FILE = 1 << 7,
-+			ALLOW_GOTO_NEXT_FILE = 1 << 8
- 		} permitted = 0;
+ 	if (!remote && num_matches > 1) {
+ 	    if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME)) {
++		    const char *cmdname;
++
++		    switch (which_command) {
++		    case CHECKOUT_CHECKOUT:
++			    cmdname = "checkout";
++			    break;
++		    case CHECKOUT_SWITCH:
++			    cmdname = "switch";
++			    break;
++		    default:
++			    BUG("command <%d> should not reach parse_remote_branch",
++				which_command);
++			    break;
++		    }
++
+ 		    advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ 			     "you can do so by fully qualifying the name with the --track option:\n"
+ 			     "\n"
+-			     "    git checkout --track origin/<name>\n"
++			     "    git %s --track origin/<name>\n"
+ 			     "\n"
+ 			     "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ 			     "one remote, e.g. the 'origin' remote, consider setting\n"
+-			     "checkout.defaultRemote=origin in your config."));
++			     "checkout.defaultRemote=origin in your config."),
++			   cmdname);
+ 	    }
  
- 		if (hunk_index >= file_diff->hunk_nr)
-@@ -1499,8 +1515,7 @@ static int patch_update_file(struct add_p_state *s,
- 		/* Everything decided? */
- 		if (undecided_previous < 0 && undecided_next < 0 &&
- 		    hunk->use != UNDECIDED_HUNK)
--			break;
--
-+				all_decided = 1;
- 		strbuf_reset(&s->buf);
- 		if (file_diff->hunk_nr) {
- 			if (rendered_hunk_index != hunk_index) {
-@@ -1548,6 +1563,16 @@ static int patch_update_file(struct add_p_state *s,
- 				permitted |= ALLOW_EDIT;
- 				strbuf_addstr(&s->buf, ",e");
- 			}
-+			if (file_diff_index >= 0 &&
-+				file_diff_index < s->file_diff_nr - 1) {
-+				permitted |= ALLOW_GOTO_NEXT_FILE;
-+				strbuf_addstr(&s->buf, ",>");
-+			}
-+			if (file_diff_index > 0 &&
-+				file_diff_index <= s->file_diff_nr - 1) {
-+				permitted |= ALLOW_GOTO_PREVIOUS_FILE;
-+				strbuf_addstr(&s->buf, ",<");
-+			}
- 			strbuf_addstr(&s->buf, ",p,P");
- 		}
- 		if (file_diff->deleted)
-@@ -1566,6 +1591,9 @@ static int patch_update_file(struct add_p_state *s,
- 						: 1));
- 		printf(_(s->mode->prompt_mode[prompt_mode_type]),
- 		       s->buf.buf);
-+		if (all_decided)
-+			printf(_("\n%s All hunks decided. What now? "),
-+				s->s.prompt_color);
- 		if (*s->s.reset_color_interactive)
- 			fputs(s->s.reset_color_interactive, stdout);
- 		fflush(stdout);
-@@ -1618,7 +1646,24 @@ static int patch_update_file(struct add_p_state *s,
- 		} else if (ch == 'q') {
- 			quit = 1;
- 			break;
--		} else if (s->answer.buf[0] == 'K') {
-+		} else if (s->answer.buf[0] == '>') {
-+			if (permitted & ALLOW_GOTO_NEXT_FILE) {
-+				quit = 0;
-+				break;
-+			} else {
-+				err(s, _("No next file"));
-+				continue;
-+			}
-+		} else if (s->answer.buf[0] == '<') {
-+			if (permitted & ALLOW_GOTO_PREVIOUS_FILE) {
-+				quit = 2;
-+				break;
-+			} else {
-+				err(s, _("No previous file"));
-+				continue;
-+			}
-+		}
-+		else if (s->answer.buf[0] == 'K') {
- 			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
- 				hunk_index = dec_mod(hunk_index,
- 						     file_diff->hunk_nr);
-@@ -1775,33 +1820,6 @@ static int patch_update_file(struct add_p_state *s,
- 		}
- 	}
+ 	    die(_("'%s' matched multiple (%d) remote tracking branches"),
+@@ -1327,6 +1351,7 @@ static char *parse_remote_branch(const char *arg,
  
--	/* Any hunk to be used? */
--	for (i = 0; i < file_diff->hunk_nr; i++)
--		if (file_diff->hunk[i].use == USE_HUNK)
--			break;
--
--	if (i < file_diff->hunk_nr ||
--	    (!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
--		/* At least one hunk selected: apply */
--		strbuf_reset(&s->buf);
--		reassemble_patch(s, file_diff, 0, &s->buf);
--
--		discard_index(s->s.r->index);
--		if (s->mode->apply_for_checkout)
--			apply_for_checkout(s, &s->buf,
--					   s->mode->is_reverse);
--		else {
--			setup_child_process(s, &cp, "apply", NULL);
--			strvec_pushv(&cp.args, s->mode->apply_args);
--			if (pipe_command(&cp, s->buf.buf, s->buf.len,
--					 NULL, 0, NULL, 0))
--				error(_("'git apply' failed"));
--		}
--		if (repo_read_index(s->s.r) >= 0)
--			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
--						     1, NULL, NULL, NULL);
--	}
--
- 	putchar('\n');
- 	return quit;
+ static int parse_branchname_arg(int argc, const char **argv,
+ 				int dwim_new_local_branch_ok,
++				enum checkout_switch which_command,
+ 				struct branch_info *new_branch_info,
+ 				struct checkout_opts *opts,
+ 				struct object_id *rev)
+@@ -1436,7 +1461,8 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 
+ 		if (recover_with_dwim) {
+ 			remote = parse_remote_branch(arg, rev,
+-						     could_be_checkout_paths);
++						     could_be_checkout_paths,
++						     which_command);
+ 			if (remote) {
+ 				*new_branch = arg;
+ 				arg = remote;
+@@ -1767,6 +1793,7 @@ static char cb_option = 'b';
+ 
+ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 			 struct checkout_opts *opts, struct option *options,
++			 enum checkout_switch which_command,
+ 			 const char * const usagestr[])
+ {
+ 	int parseopt_flags = 0;
+@@ -1893,7 +1920,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 			opts->dwim_new_local_branch &&
+ 			opts->track == BRANCH_TRACK_UNSPECIFIED &&
+ 			!opts->new_branch;
+-		int n = parse_branchname_arg(argc, argv, dwim_ok,
++		int n = parse_branchname_arg(argc, argv, dwim_ok, which_command,
+ 					     &new_branch_info, opts, &rev);
+ 		argv += n;
+ 		argc -= n;
+@@ -2032,6 +2059,7 @@ int cmd_checkout(int argc,
+ 	options = add_checkout_path_options(&opts, options);
+ 
+ 	return checkout_main(argc, argv, prefix, &opts, options,
++			     CHECKOUT_CHECKOUT,
+ 			     checkout_usage);
  }
-@@ -1813,7 +1831,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 	struct add_p_state s = {
- 		{ r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
- 	};
--	size_t i, binary_count = 0;
-+	size_t i, j, binary_count = 0;
-+	size_t patch_update_result = 0;
-+	struct child_process cp = CHILD_PROCESS_INIT;
  
- 	init_add_i_state(&s.s, r, o);
+@@ -2071,6 +2099,7 @@ int cmd_switch(int argc,
+ 	cb_option = 'c';
  
-@@ -1852,11 +1872,56 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 		return -1;
- 	}
+ 	return checkout_main(argc, argv, prefix, &opts, options,
++			     CHECKOUT_SWITCH,
+ 			     switch_branch_usage);
+ }
  
--	for (i = 0; i < s.file_diff_nr; i++)
--		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr)
-+	for (i = 0; i < s.file_diff_nr;) {
-+		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr) {
- 			binary_count++;
--		else if (patch_update_file(&s, s.file_diff + i))
--			break;
-+			i++;
-+			continue;
-+		}
-+		else {
-+			patch_update_result = patch_update_file(&s, s.file_diff + i);
-+			if (patch_update_result == 0) {
-+				i++;
-+				continue;
-+			}
-+			if (patch_update_result == 1)
-+				break;
-+			if (patch_update_result == 2) {
-+				i--;
-+				continue;
-+			}
-+		}
-+	}
-+	for (i = 0; i < s.file_diff_nr; i++) {
-+
-+			/* Any hunk to be used? */
-+		for (j = 0; j < s.file_diff[i].hunk_nr; j++)
-+			if (s.file_diff[i].hunk[j].use == USE_HUNK)
-+				break;
-+
-+		if (j < s.file_diff[i].hunk_nr ||
-+	    (!s.file_diff[i].hunk_nr && s.file_diff[i].head.use == USE_HUNK)) {
-+			/* At least one hunk selected: apply */
-+			strbuf_reset(&s.buf);
-+			reassemble_patch(&s, s.file_diff + i, 0, &s.buf);
-+
-+			discard_index(s.s.r->index);
-+			if (s.mode->apply_for_checkout)
-+				apply_for_checkout(&s, &s.buf,
-+						s.mode->is_reverse);
-+			else {
-+				setup_child_process(&s, &cp, "apply", NULL);
-+				strvec_pushv(&cp.args, s.mode->apply_args);
-+				if (pipe_command(&cp, s.buf.buf, s.buf.len,
-+						NULL, 0, NULL, 0))
-+					error(_("'git apply' failed"));
-+			}
-+			if (repo_read_index(s.s.r) >= 0)
-+				repo_refresh_and_write_index(s.s.r, REFRESH_QUIET, 0,
-+								1, NULL, NULL, NULL);
-+		}
-+
-+	}
+@@ -2107,5 +2136,6 @@ int cmd_restore(int argc,
+ 	options = add_checkout_path_options(&opts, options);
  
- 	if (s.file_diff_nr == 0)
- 		err(&s, _("No changes."));
--- 
-2.39.5 (Apple Git-154)
-
+ 	return checkout_main(argc, argv, prefix, &opts, options,
++			     CHECKOUT_RESTORE,
+ 			     restore_usage);
+ }
