@@ -1,140 +1,180 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A78F346ADC
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 22:13:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913D5250BF2
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 22:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769552012; cv=none; b=fBJ82970kf58M9yefphShg0GGfkCVs1YxHRJmtRESU5kREG3vDq5GJNyXSm0MfSdAJMfdLpBT+ZZiU8pCDVRnivkpY1rq96k2tSB5XM6W1LHZrWis4T4oaUXV/LTM4SaahtSBEVJy183Q4xFkCYbvCecsSa2xPo7BThN4SlAT00=
+	t=1769552361; cv=none; b=gMrbkw1LDKlIKpD906WmDo22x2fLYziGKFXUngKz23RPWlq+F+scWTbhc8Jo4i5/mV+Z9zAuGcEoXT6UAnelW63QLLgSG9XrTLYahD9L80dl+ebPaoiPCSgqhPLlYita149FxZV6xn7JxKHYybDUOyVRCmhbS5c8yRg29G2UEX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769552012; c=relaxed/simple;
-	bh=1yXEQQWbvzj5bzHlY/sBF2tok6hl1ii6Z1vfZgj53oY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fF4AlDcl+2tOaicrq/K1CxZnF1yMpymia0ofrT9bz+RKTAQ4qUeR+6ofmenE/2MRyLnxrGIKPgmjk12+ab4m4WvT6FITnWTF29CZXyARx4qvf6GwgHLt/8RkuzqdsajRv+nltjpmSKJJhS1FfE+fD/XGStJT0jS94ADBCSK3vJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=OlOSaeVv; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1769552361; c=relaxed/simple;
+	bh=aihn77Hjkotpbc4CjouvKGu9F7LXy8bc6aTrKilIhSY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H2akZaSDfAnmCdl2H3VQo3bakiUYehYYsS3RpsBetqQ93Wib3drgCKi6+izD/Uzzp0cvN7RNeojtW/XeSASgSEQYJH+O7pW4kiCMwVxu/uy22KYWj8wFMJDKEwkYXSMmR3wjOJTnCBgQ1P0MWkZckSFJeptFQoO2JBkkxJRYbYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QTo0Yud4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ruGlZq8i; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="OlOSaeVv"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-88a26ce6619so79653906d6.3
-        for <git@vger.kernel.org>; Tue, 27 Jan 2026 14:13:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769552010; x=1770156810; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ClsY0sU2ZX6iUtkXmDbY/gGn26IP+YZ+XnTCDuY9bzs=;
-        b=OlOSaeVvQym0x4bejnXmQ56phx5yL8VE6fhpH7t27JnnNciHREA/dAwYQI78b01WfH
-         hL6wUsDWJ3plgCE7UJoI8GZPTXl32o59FgxD7/q73ArhfHDJ1QG/9aSo9shvEogdrAKs
-         gAau51ojwJVtXrUM83bsylR5JpQ0AwFd3+hDwJuVFJ3Vw5OzbNBF4zk6fpHngwy2ajuo
-         310MUsYUHEKQld92nKvFUyZ6kKUIyWPN4tDJhXQbG5znFApzt5WqO5rV6oGW4sNNwpQu
-         kX8y2JuVVaf9Bif7dqBbYuWVUuGV17Sam+krBf5CqREH1smFeoLr5LwvFffvr75L7+y/
-         4/xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769552010; x=1770156810;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ClsY0sU2ZX6iUtkXmDbY/gGn26IP+YZ+XnTCDuY9bzs=;
-        b=w4PT9WR9xbdHpYlTpM8U2wAMfalkVG4iby+/QNZafTBD/aGBfeW+ek4EoM9C2nQWPH
-         sv/umUIIjhfsFfjKgjdo9Y/zbidd7RWNKHjVikFgGm/3LxH+Dae1TS5vgPPEJmeK9WnE
-         K8lRNpT03dFlqqmvXZtIBPX6uuFWsSlbw26PKcWYfvBIwXku0kH9ZYrHw+Z26qmpMrJB
-         jf5Xyj+3TyFr+wTSEChqAjAI1CWsILJ4KONrjANODHd+I1aSAwfrkp4x8p58F09BNs3o
-         CA1rzruAcrrUlM2AVY3OHqkm1ge7t/GZB5b4mw/T3RwaKXV9jzHYYBvBzWDNNQjck7F7
-         QqHQ==
-X-Gm-Message-State: AOJu0YzuD9qvpjEGcYoqL3geLEZcn+zcTDpBE2gbxfyFDMbsf1W1wpXA
-	T6PyqnEa0dATuYXNmVdV4PQn7363zJndr8uoSdZXd+FR6r0p+TRh0jBPgWmu3/5BZ9kJMs6sT5K
-	fN9K14Bo=
-X-Gm-Gg: AZuq6aKOviMYRd1wZb6C7TeEQSuYxDQHSvxhq0xiA42WIMlpy1rfSLFU6TltIkAwYOM
-	EmsCqxF8RmZyWXICPd7h8rTDZI7ajBGMGAy/d6dHR3ZgpS877VDJUdWqlmtAhd3pm4mm3wEdL+h
-	rF3MctNlnm2vRswicfVcljmfPSTadKOAgLX5/826LtUeGkSQvmU77l0kiMcJBRJbXNMWvETOXuS
-	Pqiex/GJo7CUMSynJd21YUsG3qoV5kk+MuEqQnlpAGrQTeCpxYbW1GkkYV5+oAD57SjlyPmaUR4
-	EkfFKQaBZ19o4jVQJbQMDMgImeV3D6gdjFcgVF3YjH/h5Bt4VTJYAZ42NT5WSkSEeUiuNfISyCU
-	Jmo/bprUs4Uq+Vjhnu8A89e0M7z1GV787vB6P8hfc1EOw/2yomcjZ0uNSE6fIsHEIArf2x8M1jC
-	Lyk9bsXRuX5GSa4eNfu+8Rm1usn5sIK1mVD0+kbE/pizCIkSPBLtEmqRS9Gbs0n+6CSkNglC91X
-	t2ORQpzziSB9cBeSg==
-X-Received: by 2002:a05:6214:262e:b0:894:2c12:aed9 with SMTP id 6a1803df08f44-894cc7d0a73mr44033686d6.5.1769552010256;
-        Tue, 27 Jan 2026 14:13:30 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d36a9bdbsm5195396d6.11.2026.01.27.14.13.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jan 2026 14:13:29 -0800 (PST)
-Date: Tue, 27 Jan 2026 17:13:28 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 17/18] midx: implement MIDX compaction
-Message-ID: <aXk4iIHRu3mPxY6S@nand.local>
-References: <cover.1765053054.git.me@ttaylorr.com>
- <cover.1768420450.git.me@ttaylorr.com>
- <13336e864f4ed3a6954b782f0bcc090d92ac722c.1768420450.git.me@ttaylorr.com>
- <aXhqroubXFbnBgJI@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QTo0Yud4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ruGlZq8i"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id D1E6DEC023C;
+	Tue, 27 Jan 2026 17:19:18 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 27 Jan 2026 17:19:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1769552358; x=1769638758; bh=VEhrlYhbJF
+	3fK4D2YCdpEphhMRZv4e3w8NRptJ3/Ays=; b=QTo0Yud4BV3+X7I35Fp5phpcT4
+	R4kljE+GI53O4buBbqp5eqiQiGvekW0I9tUMZpTup+n+NJV1rfzshvIrMOsktiBa
+	rG2MmXoCRRr3ET0OqF4SamzVNnjoZo9ZlMebsJ5UUCEP1OJCRCmptrwWfiuSQD1Q
+	i/d+9HH0DWfCWF07Qduaony+ci8TXc2VgGbl4au9qb13bqhoaLJPvU78enCiCoBu
+	bpUnbfNMJfz6nVDTRFT1+fuJZi47Y1UHq0PnZxiBlGTCgIAQy90e/yVGtwr28D5K
+	LO3AgWXbVP7NPEo4V9cIJ6qBCoD9CsjG89XTpovZgXPdyEgr0vPuFzCp/t2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1769552358; x=1769638758; bh=VEhrlYhbJF3fK4D2YCdpEphhMRZv4e3w8NR
+	ptJ3/Ays=; b=ruGlZq8i8D8vqXC9gCu0nAP24EIZMyBGD8iwRmFQ/CnVwHBaN6C
+	Vm9GLtLh0jkY17ViBbbDO9LfKwfXsqwav+LpZVdO8wLzcadL1Kz0m7jQXBPTr5tX
+	MNbKe1xjdCK+N75/WGuEptDv4ByK34MmvzTPuyiCiNGhs98SQ0tJsz7PcHm6wgdf
+	GZMAt/eP9dmB6treLTgJxGCBdHpWgkKjGdaDgruSNPDnsdBmDI39Qn/B9eseiRQZ
+	bD+JX+ho710/E/hdLQtn9NPT3EjZVVXp0j6yeQ9o5Hhl72vnXXfdVVq1fprTuf5O
+	l8llxEGIh9DEpQtXhRvdY/C4rgR1XYV4MfQ==
+X-ME-Sender: <xms:5jl5abuEpB2Ge7zJ8AT_2-2E5nBBCs_iZlt898H__gfnMK0PDMm_GA>
+    <xme:5jl5aTdG31fEYI3A4uPXFqTliync4PWBIKuEDUid0nKIg_utlmP4JidkxhgoWKnC5
+    v-Aa9f67_gSQwTAR_LPXAwVJKHMdL1FaXqljhHYQkcYWyaTLSGywA>
+X-ME-Received: <xmr:5jl5aTxdxN1kOmX4ypqEnQVzNy7oWvhQyAQXgJIPrE6_1hLCK0FL7Jx_BSTBI9puVEuJ-xqMAX5dg_LiImTtPvQfe_t3w85QWYzhwiM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieduieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhthhhusggptghhrhhishgpihguvghmrgesphhrohhtohhnrdhmvgdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:5jl5aZGoz6xx3zisrGnlCeB3C8yZwRQ4NvU8qxF2WrjJyv4QRqp8og>
+    <xmx:5jl5aXxByvZmArTTc580jxdsPr5ylrBxDIwHqc635E7atz5iya9W9A>
+    <xmx:5jl5aauX2f9eYxX2MngBv4YZ6nQjV-V0tXRfbSnAeB3b1xQlW4lAXA>
+    <xmx:5jl5aU1JeBHhoCB6uaKxE9cK89PKyEqS6NCBDejztcSBCwQEu4OXHQ>
+    <xmx:5jl5aTwyV2_a9qTpfUfgY9PmSVKSxgBQUIyYkd4Fic8MFygzqyBMp7li>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Jan 2026 17:19:18 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Chris Idema via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Chris Idema <github_chris_idema@proton.me>
+Subject: Re: [PATCH/RFC v2 2/2] diff.tcl: call "apply_tab_size 1" to fix
+ alignment instead of spaces.
+In-Reply-To: <e11aa6d811dcf868fd0f91b74cdceb8bc3f4229e.1769545996.git.gitgitgadget@gmail.com>
+	(Chris Idema via GitGitGadget's message of "Tue, 27 Jan 2026 20:33:16
+	+0000")
+References: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com>
+	<pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com>
+	<e11aa6d811dcf868fd0f91b74cdceb8bc3f4229e.1769545996.git.gitgitgadget@gmail.com>
+Date: Tue, 27 Jan 2026 14:19:16 -0800
+Message-ID: <xmqqsebqem1n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aXhqroubXFbnBgJI@pks.im>
+Content-Type: text/plain
 
-On Tue, Jan 27, 2026 at 08:35:10AM +0100, Patrick Steinhardt wrote:
-> > +	if (!from_midx)
-> > +		die(_("could not find MIDX: %s"), argv[0]);
-> > +	if (!to_midx)
-> > +		die(_("could not find MIDX: %s"), argv[1]);
-> > +	if (from_midx == to_midx)
-> > +		die(_("MIDX compaction endpoints must be unique"));
-> > +
-> > +	for (m = from_midx; m; m = m->base_midx) {
-> > +		if (m == to_midx)
-> > +			die(_("MIDX %s must be an ancestor of %s"), argv[0], argv[1]);
-> > +	}
+"Chris Idema via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Chris Idema <github_chris_idema@proton.me>
 >
-> These new checks all feel sensible to me.
-
-Thanks for taking a look and suggesting them in the first place!
-
-> > diff --git a/midx-write.c b/midx-write.c
-> > index ca2469213e6..afa077a09cc 100644
-> > --- a/midx-write.c
-> > +++ b/midx-write.c
-> > @@ -1120,12 +1216,23 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
-> > @@ -1162,6 +1270,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
-> >  		die(_("unknown MIDX version: %d"), ctx.version);
-> >
-> >  	ctx.incremental = !!(opts->flags & MIDX_WRITE_INCREMENTAL);
-> > +	ctx.compact = !!(opts->flags & MIDX_WRITE_COMPACT);
-> > +
-> > +	if (ctx.compact) {
-> > +		if (ctx.version != MIDX_VERSION_V2)
-> > +			die(_("cannot perform MIDX compaction with v1 format"));
+> Signed-off-by: Chris Idema <github_chris_idema@proton.me>
+> ---
+>  git-gui/lib/diff.tcl | 24 +-----------------------
+>  1 file changed, 1 insertion(+), 23 deletions(-)
 >
-> Right. So if the user has configured "midx.version=1" they cannot
-> compact.
+> diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+> index 2e13f8c776..0f0951cc57 100644
+> --- a/git-gui/lib/diff.tcl
+> +++ b/git-gui/lib/diff.tcl
+> @@ -12,27 +12,6 @@ proc apply_tab_size {{firsttab {}}} {
+>  	}
+>  }
+>  
+> -proc expand_tabs {line {startcol -1}} {
+> -	# startcol set to -1, because in preview the lines start with a '+', '-', or ' '
+> -	global repo_config
+> -
+> -	set col $startcol
+> -	set out ""
+> -
+> -	foreach char [split $line ""] {
+> -		if {$char eq "\t"} {
+> -			set spaces [expr {$repo_config(gui.tabsize) - ($col % $repo_config(gui.tabsize))}]
+> -			append out [string repeat " " $spaces]
+> -			incr col $spaces
+> -		} else {
+> -			append out $char
+> -			incr col
+> -		}
+> -	}
+> -
+> -	return $out
+> -}
+> -
+>  proc clear_diff {} {
+>  	global ui_diff current_diff_path current_diff_header
+>  	global ui_index ui_workdir
+> @@ -516,9 +495,8 @@ proc read_diff {fd conflict_size cont_info} {
+>  			}
+>  		}
+>  		set mark [$ui_diff index "end - 1 line linestart"]
+> -		set line [expand_tabs $line]
+> +		apply_tab_size 1
+>  		$ui_diff insert end "$line" $tags
+> -
 
-Exactly. I think the limitation here is a fundamental one, too, since by
-its nature compaction *must* retain the pseudo-pack order concatenated
-across each MIDX layer in the compaction range. With midx.version=1, we
-don't have a way to express that information in a backwards-compatible
-way, so midx.version=2 here is a requirement.
+Why does this series first add proc expand_tabs, only to remove its
+use in this second step?  Shouldn't these two patches be squashed
+into one, and explain why we want to use "apply_tab_size 1" here?
 
-> > @@ -1354,12 +1491,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
-> >  			ctx.large_offsets_needed = 1;
-> >  	}
-> >
-> > -	QSORT(ctx.info, ctx.nr, pack_info_compare);
-> > +	if (ctx.compact) {
-> > +		if (ctx.version != MIDX_VERSION_V2)
-> > +			BUG("performing MIDX compaction with v1 MIDX");
->
-> Isn't this `BUG()` redundant with the above call to `die()`?
+It smells fishy to do "apply_tab_size 1" here in "proc clear_diff".
 
-Technically, though I put it in here as a sanity check to ensure that
-any potential regressions with the above die() don't cause us to get
-into a worse situation that would result in bitmap corruption.
+It is called from "proc show_diff" but the latter, after it calls
+clear_diff, calls "apply_tab_size 0".  Doesn't that defeat the
+effect of this new call added to "proc clear_diff"?
 
-Thanks,
-Taylor
+By the way, this has nothing to do with your change, but the only
+existing use of "apply_tab_size 1" is also somewhat curious.  When
+"proc read_diff" detects that a patch hunk header has three (not the
+usual two) at-signs, it calls "apply_tab_size 1", presumably to
+adjust to the fact that combined diff has two leading columns used
+to signal added/removed/context lines, instead of one.
+
+Apparently the author of the original code thought that it is a good
+idea for such a payload if first tab moves 1 column, and second and
+subsequent tabs taking gui.tabsize after that tabstop.  A line in
+combined diff uses two leading columns for line prefix.  Isn't it
+curious that these two patches under discussion claim that the same
+exact setting of "apply_tab_size 1" is appropriate for _anything_
+that is shown in the $ui_diff widget prepared with "proc
+clear_diff"?
+
+Presumably most of the time, the output format would use just a
+single leading column for line prefix added (+), removed (-), or
+context ( ).
+
+Both cannot be correct at the same time, can they?
+
+So, either the original author is wrong and the current code is
+broken with or without your change when it shows a combined diff, or
+these patches is wrong and there is off-by-one bug somwhere.
+
+Puzzled and curious ...
+
