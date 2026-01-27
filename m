@@ -1,78 +1,82 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4454E2773C1
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 19:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95942366548
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 19:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769542180; cv=none; b=saC039W3O4WBpFLLpIW9HhuXolER0IjW/g6z8XB41zpNuzHr6DBOFrypAB+x3mhmcBoyNuZE2mtOp69dXLrxVrCDbo7X1uUJupYrE1MNJ+jzyQinRnwVBxy6Ghyq4MsOGIohjrxi2WXEX4+5D0WTePgSXXEiyQGQIPGfRrXtSp0=
+	t=1769542182; cv=none; b=D1/V3RGOrSXhZ9C+KLIRGogiZiw9b4im76D4Ft9O4zRIH4wR4A+eA0e9YhX2u3ZISQfWTuOXXiZzvWbG1jK5TmkSQjyOn9dyDEpdgMbRQ/OoDLetm+ENwi8cy29V+W09yVLKmYVQ9RUw5kF//pt+jqSSiZkWfKc/ly3aq17/m2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769542180; c=relaxed/simple;
-	bh=WmWSE+HnX6at3AMDxeeG8l81qU4fjy4ikzukxPzGBGE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o3B1piM1akhz6UPecjIdt/wf5MJDEiVK6AY+ljv3CY7hwicR3DXRaY3y7WK/EnAsYnBaSYYIEFoIME+wRG48WHYf7dxol7wTSGByRe+H6TwSL67to3OLIVRKWJsqVuvItNk/GG8vaSfi8zT1fWmFmnP8rhTKkTi+hCrO92t76Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UP9tFdIA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oWJKlaP9; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1769542182; c=relaxed/simple;
+	bh=Di9nJ6j36v1+tWFvX/aa+0EkNXvXl26zL2KV43pHF5Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=P2DRvYYR+JCeUmPMEhpA6YeycEJd/84faLnFuI6qoLbES7fO/MDkHFKQv4FxuHdgT58NDzrDQDFBR9Zcf95ZNqvQ3XOOFTsU9T0vunmOnTeW7zWRZojfUtq9WYJ3Hi4g9vK6oJtQQTv2H1G5uVDCWn8VkiKBGZBHIoI4D7l4EFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fbJA9MSv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s/uug0gj; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UP9tFdIA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oWJKlaP9"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 717B41400152;
-	Tue, 27 Jan 2026 14:29:38 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fbJA9MSv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s/uug0gj"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id D35F9EC00C4;
+	Tue, 27 Jan 2026 14:29:39 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 27 Jan 2026 14:29:38 -0500
+  by phl-compute-04.internal (MEProxy); Tue, 27 Jan 2026 14:29:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm1; t=1769542178; x=1769628578; bh=JO95qSgjkC50XX0/M1+ri
-	9y8uBqig0kl1vPco43cdE4=; b=UP9tFdIAQkb/3yOK03Ja94Bp0FmR4vvHpqiH4
-	RZ0yQfLXwWWmaPQYDP4RMfsIf4CkfSyGgu5tLqmhtZDwKazl8gOEBkLW5OF9xGJh
-	KKjh+49nxETRFWaMQnGVIVdY7fluCtw8Y2/Avrm8jlgafhnbfHVPtPusvpHq1qc3
-	T0xmovMcJSPDZL/NHBBct2Mxps9vfKvJinKYrRmKBab3u+5x6KQnpJnZQe1BUO+d
-	N562pZAq/aq21ivpxMWhxx4HfpF9HZIx8TsZXK+gC/An5v1Coa4I6VmNG05m036F
-	1KCC/lKr21+OP8hBn6C4iZfcZkVLdANQOgCgilyJxjRNy0OyA==
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1769542179; x=
+	1769628579; bh=r8n5wQwBhPYqkDmgp9OACJWrwHIPjumCWfzyTJxbGG8=; b=f
+	bJA9MSv/kwrB0ooXO2YdsVZ7ZDf/qAmcXFCKrDMMxswhVRr0JETIkGqEIRbygm66
+	sTIilMw5WH/3eOJOJI5EtznPXpXnruvJsVk3lNiHi7+bGZmurAV5frcu05Yazddx
+	3tr4n4A/QmQCXgnPiZT8D/mzSNM4u0i0ijhrkObAje29kRND98Jrtzd1Kuhg0gt+
+	ZUEttfZuAOqrgUoESNv7kvbbo9p7GCuZ9Kb3kzXjA3GNCQZSBgZwkhdKGdba0bf1
+	z4biiZGDmcPpVGEh869GTdNw8XZw+uzo+VvoEX0ven471DeGvtkXtQFAyGKqJy8R
+	8BnOKK1H+8+h0CXZV1QAQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1769542178; x=1769628578; bh=JO95qSgjkC50XX0/M1+ri9y8uBqig0kl1vP
-	co43cdE4=; b=oWJKlaP9a+Bjhgt12xtWWTNtLf9sDDWtlZEp57GKAPRabTKkHBT
-	5blx7Td8+HqE+OxmlGMGcbshwfTDvmToFlBCLcq0BvbgtKvRRXZJQOkEky2lVK0j
-	ZFRuGXRfZVjQmrC0ZLDRDB8iBDeLxBDUNSWuZONvVCfnY0uTnqOsDpjg7Q2NsE/u
-	x9miGTrVROOtm/Tmy3VEiImxbbvXf8daDRjCMIDImUmbaeSh2bRPceKJxQdSLYuo
-	iym1re/o1KNh9feMrSnTL9XDYdcH4Uy/O7Jv0NrOyZzjMRz6LSOhgA0geKJtD2xZ
-	TPA4LEIsRoaJYdo+cfyvuLYtLlk/KGL1EYw==
-X-ME-Sender: <xms:IhJ5aWwSXvGi39dr6lQ0OW44GRsiKYgdVFV4AomrgY380xWana143A>
-    <xme:IhJ5aZvX_J4zLQfaOBk_08FiMZ_9NvmpB2DToMxaGOQeAAeIRK5DQ-6UONy6Bv03w
-    hHssqlsDeeSVvhO33b9IDOLfLwwC800WqzAjD-tgNdIVqKM5JyPSQ>
-X-ME-Received: <xmr:IhJ5aVsXvzwxIp44EPQRvaMelma9GzF2Ggzcp82l1ResrpMXcHVkS9eFMb8DmgnD-zJ6X9wzUJjLZAPWUeUy9SDcJrmSx3iQxfRA9JU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedufeegucetufdoteggodetrf
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1769542179; x=1769628579; bh=r
+	8n5wQwBhPYqkDmgp9OACJWrwHIPjumCWfzyTJxbGG8=; b=s/uug0gjhPb4vSRyv
+	jHOCsASeq0fNLHjIkq+sBGZWsYZzkmWwLq9jVCjkJq5w9OT1Br/siwH7PqL7HChg
+	ntKj2274o/GFsbRoZeIQ73ZmL62vM0zzrANjJzClwa4Z8aCNFO3/MlvOXYVbnGjt
+	tt6j7m+kbf0Xnjm4ZTVMv6KyM7iqCDDk8reTwJrYwF+k8kgU2VXCpOHA8XiNJCwf
+	S3mvWIcCqAAO5oc0h5IGOCoUywlm2s3WajrIzloriF693Jb1zkEmFOyIWzKVHV18
+	wRyeUxN40EzVfjjJO2y+jNO+4a7H48OOVG/jsNlp4BCGgJsqDiEuHwmUYyHuvQgm
+	drvbg==
+X-ME-Sender: <xms:IxJ5aTlRNPCEKwAnxjkcTevKKqAcUIiQMQReOmxaULSSmvu0O8OR6w>
+    <xme:IxJ5aeTCnUe70F4CWltcak4fBAgI94bOlOgTExnkY8yAjf2ccDFr6surWiiKfKyHU
+    8BP6eYDS4YDtXCflSXyKWSpymVblvjPxRDNa0PSyndBl-qqBpX-rmA>
+X-ME-Received: <xmr:IxJ5aXDb8tG2yFqqH6pY0K4845Ve32kt_HLaBHCz0GnR2VQuyrZHsd1ZzUeB5cFqFidcnIElyYgMeN7IwlIYE4Cv-XZu40J30ZV_LrE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedufeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffoggfgsedtkeertdertd
-    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpedvjefgveethfetteekuedvteehudffvd
-    fhtefhkeevffegueeujeeitdehgeduudenucffohhmrghinhepkhgvrhhnvghlrdhorhhg
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopegthihqshhimhhonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:IhJ5aWM3B-fVwKZnx9LqOtJstojySB7Co9vwqaIhRgiO1SUGVH7bQg>
-    <xmx:IhJ5ab0Cey2YvRuZ4z2rUxOtXggO2wr7comShABPVDfqaE2vsKg1Kg>
-    <xmx:IhJ5aaN5o1iAZ-iMKBfolkFsMTBPlK4t5OQr47J6KbieA9lf9ymHNw>
-    <xmx:IhJ5aT1G-ob6aaylPr0zMSwbXXtjtl3h9HdHRgrBloErZ9G5JMqsAg>
-    <xmx:IhJ5aZvxTk7RyebOFlrfwKlmoVA0fI6WX_f6uDatn4SepaDJCufuc4IR>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtkeertd
+    ertddtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedvffelhfeutefgkeettdfhudelff
+    duteelfeeiueelhfdvudeiueekhfdtvddukeenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgihqhhsihhmohhnsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:IxJ5aVSSmOkgaFXQw2uz5480CNBOVjdwOo3maSp-93rkyBVxFj5pwQ>
+    <xmx:IxJ5aVpBP7EMf2LGMZKYmWrwij3vN_2n73U2jAKcwqemgfgFmpU6Eg>
+    <xmx:IxJ5aXwwL6Lk3VYcT-zJTtI5wdwE_ryAHjAOd7T7U-NJ0ItdzJeSMA>
+    <xmx:IxJ5aaIWyhtEEavcAgk0KavmVQKXlD2rpZYzgt8FV7pxIReIppqFbQ>
+    <xmx:IxJ5aSRyIsbl--8IzOulQE1SQpLBHqsR63taCLEIAkalvd5xBTVsgxbV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Jan 2026 14:29:37 -0500 (EST)
+ 27 Jan 2026 14:29:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Simon Cheng <cyqsimon@gmail.com>
-Subject: [PATCH 0/2] Improving advise messages from "switch"
-Date: Tue, 27 Jan 2026 11:29:34 -0800
-Message-ID: <20260127192936.904719-1-gitster@pobox.com>
+Subject: [PATCH 1/2] checkout: pass program-readable token to unified "main"
+Date: Tue, 27 Jan 2026 11:29:35 -0800
+Message-ID: <20260127192936.904719-2-gitster@pobox.com>
 X-Mailer: git-send-email 2.53.0-rc2-135-gb1217c0133
+In-Reply-To: <20260127192936.904719-1-gitster@pobox.com>
+References: <20260127192936.904719-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,35 +85,135 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Simon Cheng noticed [*] that "git switch <name>", in an attempt to
-create a local branch <name> after a remote tracking branch of the
-same name, fails correctly when multiple remotes have branches with
-that name, but gives an advise message to disambiguate using "git
-checkout".
+The "git checkout", "git switch", and "git restore" commands share a
+single implementation, checkout_main(), which switches error message
+it gives using the usage string passed by each of these three
+front-ends.
 
-Obviously, the user wanted to use "git switch", and "git switch" is
-equipped to do so, just like "git checkout" can, so it makes more
-sense to give hint based on "git switch".
+In order to be able to tweak behaviours of the commands based on
+which one we are executing, invent an enum that denotes which one of
+these three commands is currently executing, and pass that to
+checkout_main() instead.  With this step, there is no externally
+visible behaviour change, as this enum parameter is only used to
+choose among the three usage strings.
 
-The first patch of this series restructures the call chain of
-checkout, switch, and restore commands a bit, so that a helper deep
-in the callchain can find out what end-user command it is working
-for.  The second patch takes advantage of the new structure to tweak
-the advise message in question, given from a helper function in a
-fairly deep part of the call chain.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/checkout.c | 63 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 43 insertions(+), 20 deletions(-)
 
-[Reference]
-
- * https://lore.kernel.org/git/CA+itcS0iyqNyzOP0cueLg7B3yadoEr_VWJ-QoL+YPFUPJiE2RQ@mail.gmail.com
-
-Junio C Hamano (2):
-  checkout: pass program-readable token to unified "main"
-  checkout: tell "parse_remote_branch" which command is calling it
-
- builtin/checkout.c        | 92 ++++++++++++++++++++++++++++-----------
- t/t2027-checkout-track.sh | 21 +++++++++
- 2 files changed, 88 insertions(+), 25 deletions(-)
-
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f9453473fe..4f189fde48 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -43,22 +43,6 @@
+ #include "parallel-checkout.h"
+ #include "add-interactive.h"
+ 
+-static const char * const checkout_usage[] = {
+-	N_("git checkout [<options>] <branch>"),
+-	N_("git checkout [<options>] [<branch>] -- <file>..."),
+-	NULL,
+-};
+-
+-static const char * const switch_branch_usage[] = {
+-	N_("git switch [<options>] [<branch>]"),
+-	NULL,
+-};
+-
+-static const char * const restore_usage[] = {
+-	N_("git restore [<options>] [--source=<branch>] <file>..."),
+-	NULL,
+-};
+-
+ struct checkout_opts {
+ 	int patch_mode;
+ 	int patch_context;
+@@ -1293,6 +1277,13 @@ static void setup_new_branch_info_and_source_tree(
+ 	}
+ }
+ 
++
++enum checkout_command {
++	CHECKOUT_CHECKOUT = 1,
++	CHECKOUT_SWITCH = 2,
++	CHECKOUT_RESTORE = 3,
++};
++
+ static char *parse_remote_branch(const char *arg,
+ 				 struct object_id *rev,
+ 				 int could_be_checkout_paths)
+@@ -1767,12 +1758,44 @@ static char cb_option = 'b';
+ 
+ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 			 struct checkout_opts *opts, struct option *options,
+-			 const char * const usagestr[])
++			 enum checkout_command which_command)
+ {
+ 	int parseopt_flags = 0;
+ 	struct branch_info new_branch_info = { 0 };
+ 	int ret;
+ 
++	static const char * const checkout_usage[] = {
++		N_("git checkout [<options>] <branch>"),
++		N_("git checkout [<options>] [<branch>] -- <file>..."),
++		NULL,
++	};
++
++	static const char * const switch_branch_usage[] = {
++		N_("git switch [<options>] [<branch>]"),
++		NULL,
++	};
++
++	static const char * const restore_usage[] = {
++		N_("git restore [<options>] [--source=<branch>] <file>..."),
++		NULL,
++	};
++
++	const char * const *usagestr;
++
++	switch (which_command) {
++	case CHECKOUT_CHECKOUT:
++		usagestr = checkout_usage;
++		break;
++	case CHECKOUT_SWITCH:
++		usagestr = switch_branch_usage;
++		break;
++	case CHECKOUT_RESTORE:
++		usagestr = restore_usage;
++		break;
++	default:
++		BUG("No such checkout variant %d", which_command);
++	}
++
+ 	opts->overwrite_ignore = 1;
+ 	opts->prefix = prefix;
+ 	opts->show_progress = -1;
+@@ -2032,7 +2055,7 @@ int cmd_checkout(int argc,
+ 	options = add_checkout_path_options(&opts, options);
+ 
+ 	return checkout_main(argc, argv, prefix, &opts, options,
+-			     checkout_usage);
++			     CHECKOUT_CHECKOUT);
+ }
+ 
+ int cmd_switch(int argc,
+@@ -2071,7 +2094,7 @@ int cmd_switch(int argc,
+ 	cb_option = 'c';
+ 
+ 	return checkout_main(argc, argv, prefix, &opts, options,
+-			     switch_branch_usage);
++			     CHECKOUT_SWITCH);
+ }
+ 
+ int cmd_restore(int argc,
+@@ -2107,5 +2130,5 @@ int cmd_restore(int argc,
+ 	options = add_checkout_path_options(&opts, options);
+ 
+ 	return checkout_main(argc, argv, prefix, &opts, options,
+-			     restore_usage);
++			     CHECKOUT_RESTORE);
+ }
 -- 
 2.53.0-rc2-135-gb1217c0133
 
