@@ -1,121 +1,107 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5B2279DB3
-	for <git@vger.kernel.org>; Tue, 27 Jan 2026 22:20:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C9332C925
+	for <git@vger.kernel.org>; Tue, 27 Jan 2026 22:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769552450; cv=none; b=uLkA1XnLgtGZV5Mp5zKHwSfKMs4We3svTj4A2nr7olahlYeREXRe2p/BmWy83nNH45fFgyN0vIOivY21GsfI84A2n40m9Ig54Bq9eH6oNL9qfoE/BKlYPSGJaKoTBmP87v5ZUCHP2DnHC8ajv0nijprF2V/Jc7DcpKNHthdsq+Q=
+	t=1769552843; cv=none; b=UClztwbM2uA9EDOx5sU/U0bh0edFMMTGIN1JID1SQ9gNqV6+ycgGcP3ah1rHd9Cui4Fn2uc/SMc+X1NScor+T0NIf9my8693lBxvKUCh3h5HC/TP/OcLwx+Y9R4IhGU4c74uqgDTNf1tzSouygtXMmp6GvbHBA7dp5D9xKVEmdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769552450; c=relaxed/simple;
-	bh=X/6nMDmVFKYUp+1tHXfkcl0dzR9bt+V99N5oXZUDVig=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Gm0cA9zfkvt5RGSFxaAQsu8+Qt4sOTXA867fbVpv8G89m+sJXj9s0Dfq1zSxAoOCioRh+JSeqZpX6rDvDUw51E1IL5AYxzSxG6QHxJQnRJXEvG6DDg4ZEIHTfGYt/RgFyfU0TdFxTrNtU7d2bAdJMWnNFGAr3qsMvRHgVfHXdME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UmGtH43L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KRXT/yZf; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769552843; c=relaxed/simple;
+	bh=e7gcs1DN4SporflFdcUGF4xr9ST5pZiJqpG6fMc9vlY=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=JsgncDzV3RPyEyqa/HUedzvFK7hbzToEoIxpHA5+Y7V+YtO20cWHLoPduUD7cpb+8O9941c6mzWvvPqsvUnxKuBgqRhcZFh6DztHfRdXGuh7Ok5stcfEshCV3zwqI9HqocFdBahRTZLW+ygoiBAPp1kmxHPeXJjvfTkQqvUfQ0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MztB+zA1; arc=none smtp.client-ip=74.125.82.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UmGtH43L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KRXT/yZf"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 745AE1400183;
-	Tue, 27 Jan 2026 17:20:48 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Tue, 27 Jan 2026 17:20:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1769552448; x=1769638848; bh=IEtbWTLVDLXE4TPlD2tX3ojncn192iEh
-	54v1hJNxjXM=; b=UmGtH43LRxWl5jbYhEkXMHKfC9zKfekt8NAHvgJSLFVv24i3
-	lCYRbZnHcrx8uuFTkG8AuA13j0RfVJLwHD47NcIj1ouxSSGi4yjBkXkfszbCsfuC
-	mD9IOCzzOVIAwvItJjo9QzII6Yps4YV8C9eQTylGs4Z7aqMh1GZvGGZ5akXiVLpQ
-	U5Lx5GsX5aEY3rPvhn6UHVWY80n/CgNdCqSsiymghtAwTp5OGSzTbHIjuTjR+98B
-	tMNmg6klLvwMb2jv8f9BIvPlBqPxvbyItXbdNBEcBAhmGuNdXHWwYlPpFFeyoYgp
-	wLvEKh+rLTRU0+c/1k0eF8lyEaWzgYopB3/CxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769552448; x=
-	1769638848; bh=IEtbWTLVDLXE4TPlD2tX3ojncn192iEh54v1hJNxjXM=; b=K
-	RXT/yZfL4nFAWB5Tk70eHZwcu4qsiFc3QNA08fTkgrPWXpknYqsC2a1swwKzLn2J
-	+Z2IDyn1AGD24+arGAK6glFZZJXqSTgAdU+aYo/ohgQWHfsdXHfQrb2XToqPMVbX
-	i5t/BkW+n2nxt8THuHl7MsPCc3ufmCz4xNl521xTEKjgOSDRZFFlBIxIYDQ4EnKy
-	r/Hg71UYagt3He+6KJiB3fedkJd4AztVUksyi4GZujgFsiWMStofMTqdOtk5lo/t
-	jabyUpTSO+vbLz5JTLf+4xvUX9snWwyZRb+3IiF6outZaurNk8v0qRtbi1JSUtnB
-	2ENmxwB+fUC/Tp4P59B/Q==
-X-ME-Sender: <xms:QDp5aWeD6HOTtcmT4QeiKhQFaqM7cJdn4vUViBLlqWv1DQacoxVEOw>
-    <xme:QDp5aWMclo0B-ZkK5F7bMPmYFvTOyEmjckJjMVma7DMAbXJYRMBBS-SJxGTR7VIjk
-    YKF0X-MpPmRi6kRa3hVH-44QrP58iGz1Sn_YK2-JbnyF6xoorJ72w>
-X-ME-Received: <xmr:QDp5aVL-918RS9DQr7OXCZLHKCREOCJAjIsRxrBcGWvYLWno4ym_tvoB9AySC1adkvC2ScB4FLs7R7om9vU7FUsNylbMAfm9p70ovko>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieduieekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepledvfedtfedtkeefueevlefgleetieeuff
-    ffkefhgfekveehkefhgfetjefhffegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
-    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:QDp5afE9h2LRh7Gsi0yf2YpY30zL9T6HfJ5CjfvOHXfH3vm9uLDRjQ>
-    <xmx:QDp5aVRjLnea_2v-BXM-2Z9fBluscs4uaWG6GdL9T6zjiXONV1sDFA>
-    <xmx:QDp5aTGuBXNoZUwTb7wA49FRJ46GQ3UlmyJwokb-w0k0uBxMGQEwvg>
-    <xmx:QDp5aZ_jqwJykpO-CK4bQ-amqnNvK2by5FnJ6uaNTqxAvV4XjRUCnw>
-    <xmx:QDp5aR1RHiX3O4xVmlp90CI4s8CqfAw_PzXlk_vD_m-TmjlVGLLs6xv5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Jan 2026 17:20:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] RelNotes: a few spelling fixes
-Date: Tue, 27 Jan 2026 14:20:47 -0800
-Message-ID: <xmqqo6meelz4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MztB+zA1"
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2b785801c93so4601216eec.0
+        for <git@vger.kernel.org>; Tue, 27 Jan 2026 14:27:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769552841; x=1770157641; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e7gcs1DN4SporflFdcUGF4xr9ST5pZiJqpG6fMc9vlY=;
+        b=MztB+zA1Kk4eB+w8iPjr+6eoB8TE66UY0s1fUEacDqw+3jkHUKvVB22u1o9BHrrNKN
+         OEi4tZY7Cp4a7dRhl3KMOg8wwvN44mG21P8R3ZAQfNjhdZ/4jQU8KN2LdwSn0ISaOxhE
+         VSJdBT4Be7wN6KUIEPIJ5tjvMIPfBFpb8heUUHJemjoByNDYe0JqyZscLjzG35eJweI8
+         NybCmHfIWoP4VYdvsyReDg45BvXR+2LL0uv/+DnGpIx3bs/j1cZtIugwZgLN05xPBdyR
+         C+KCs/eNzkJmISULyQvjiar2vkh0yHZ2dRPfqIUITfvYa5HzcsGOUeu4U5tMJOCgjv0V
+         hDNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769552841; x=1770157641;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e7gcs1DN4SporflFdcUGF4xr9ST5pZiJqpG6fMc9vlY=;
+        b=aeSvV+KNwybgNuPNX9waDcmD6yyrJFvcP06voXF47g8dvNmk+fuilcnXcLymA/9yte
+         Dd35AmJtyzeeK0CYyvXLv5bkwVLIg8ukq0U4bH8Q9TjNm29m8cFzAO8uIG4biWY0HQwA
+         oPzqc8FKUAv8q/H4mJrJod8vni/Bw/CJFj0Kzff0V85KNP7KfWKui641roc7Qs0ttcfy
+         OZxIlP6NA4Ci+xKK0zW1Luv+qkdNxz2E62JM9r+UxR/W9ct8fKHUuZBPOiBWtq7NCrKP
+         2x4Bpc68V+pskq3TWEupNzA5nnoj6eekBB0YFTtlwCNmQDEKuMcl7IfjYbAUOaHL8Kr7
+         s2jw==
+X-Gm-Message-State: AOJu0YytemIfkh5SW/HbVYYMp0rWJEIxjkQHXL+atFFlR/RS7TSyMn/E
+	0wezrsOZaVUauPlidTaVaX/8wjHeRdgwLdHkCxLPDLD6BWLHBOCA1z/k
+X-Gm-Gg: AZuq6aL7u/1wkxc5MC688kNtHI2ss7ORr6EXt8BZA4H9emUayO+QgbzLUVCXa3wWYpk
+	7ihX2Qw4EkRg9mUf6U538K3k0Jc+kuPOEWK9RBikRao1/TF09Su8VdZnN0OiivL3IJsj4KVSr+D
+	11KJcI1hi0B6Fr+QZBEQXuD6V1VuqK3g8DCsAxCjJRM0H891FXSLhhUXSdAz1PE0igD62Ny62vq
+	upVBUbX2wqWA6jPTm1IVFD4pyKB4DGGy6EIPdPc7GGlmACLcOjsR9cMAVrkAszNCtEyjKNJTRLn
+	3E/wwikZuDhjQcfcInLpYcKHOrUJZzOjz/IHgTs+AZSk9DntgjHq+wyyk9vgMVMSYidGmNexzOs
+	qnpdiVYB9f3jxdi/YDG5+vkS/PgWp4mZ3/n5dd1fAZZoIeYfupvkvDFWopz6njxvZxJ1gzpHUto
+	5R+sMlvuyDD0+NrAQ10hWWEdwkcKiluCkXvjS+y1qg3Rk5pkiW
+X-Received: by 2002:a05:7300:a188:b0:2a4:3594:d540 with SMTP id 5a478bee46e88-2b78d90178cmr2171438eec.13.1769552840924;
+        Tue, 27 Jan 2026 14:27:20 -0800 (PST)
+Received: from smtpclient.apple ([2804:14c:32:8042:d8f4:8907:edd4:c45c])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a16ef40asm99313eec.13.2026.01.27.14.27.18
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Jan 2026 14:27:20 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v5 2/2] repo: add new flag --keys to git-repo-info
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <aXhiIQXBvMhzkFy9@pks.im>
+Date: Tue, 27 Jan 2026 19:27:05 -0300
+Cc: git@vger.kernel.org,
+ gitster@pobox.com,
+ jltobler@gmail.com,
+ avila.jn@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F857412A-6B47-4DE0-85BC-D8AC2E54669F@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+ <20260123164900.35092-1-lucasseikioshiro@gmail.com>
+ <20260123164900.35092-3-lucasseikioshiro@gmail.com> <aXhiIQXBvMhzkFy9@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
 
-Fix a few embarrassing typoes.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/RelNotes/2.53.0.adoc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+>>=20
+>> +`info --keys [--format=3D(lines|nul) | -z]`::
+>> + List all the available keys, one per line. The output format can be =
+chosen
+>> + through the flag `--format`. The following formats are supported:
+>> ++
+>> +`lines`:::
+>> + output the keys one per line. This is the default.
+>> +
+>> +`nul`:::
+>> + similar to `lines`, but using a _NUL_ character after each value.
+>=20
+> Shouldn' these sentences start with an upper-case character? I see =
+that
+> we don't do it either for the existing docs, but it reads a bit weird =
+to
+> me.
 
-diff --git a/Documentation/RelNotes/2.53.0.adoc b/Documentation/RelNotes/2.53.0.adoc
-index 8b98519268..a24677115c 100644
---- a/Documentation/RelNotes/2.53.0.adoc
-+++ b/Documentation/RelNotes/2.53.0.adoc
-@@ -64,13 +64,13 @@ Performance, Internal Implementation, Development Support etc.
- 
-  * "make strip" has been taught to strip "scalar" as well as "git".
- 
-- * Dockerised jobs at the GitHub Actions CI have been taught to show
-+ * Dockerized jobs at the GitHub Actions CI have been taught to show
-    more details of failed tests.
- 
-  * Code refactoring around object database sources.
- 
-  * Halve the memory consumed by artificial filepairs created during
--   "git diff --find-copioes-harder", also making the operation run
-+   "git diff --find-copies-harder", also making the operation run
-    faster.
- 
-  * The "git_istream" abstraction has been revamped to make it easier
-@@ -159,7 +159,7 @@ Fixes since v2.52
-  * Test leakfix.
-    (merge 14b561e768 jk/test-mktemp-leakfix later to maint).
- 
-- * Update a version of action used at the GitHub Actrions CI.
-+ * Update a version of action used at the GitHub Actions CI.
-    (merge cd99203f86 js/ci-github-setup-go-update later to maint).
- 
-  * The "return errno = EFOO, -1" construct, which is heavily used in
--- 
-2.53.0-rc2-139-g67c6667039
+Ok, I'll fix it.
 
+Btw, I'm collecting those nitpicks about the existing code and I'll send
+a patch series fixing them after finishing this :-)
 
