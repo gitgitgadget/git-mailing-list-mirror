@@ -1,117 +1,224 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11364331212
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 20:28:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769632139; cv=none; b=AMBWIkGIagGOYWWA0Ch53DFeQezk0RHZYwtHcJ/k8Prund3gwGahx2H/yTvp5RBls/Q1WKtHnaqyL1TA2sTmEVva0dxypqx/N6lsqMlEfKFyyXmzDlW75TMJMl4A2NB+w/xU6mSL+6D5hBFDajRxwjCDqaNqAiQFJcP4N4PIFV4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769632139; c=relaxed/simple;
-	bh=7KFlQGly0w3tLnYc8BjPoB448wiG9ot3aLA5EFzQB60=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=c4++CJ5OxDDRrVm4z3FFsTpU3eXs6Q1WriAZDGMBWcxwtCq+75WNzSrBk9ga/peensn26aZ+BTd1+CAW+ZIUZdwMGHdd3TubWAcmRg4tECmBmygETF6XRUJOQpUXPYkBNl9XC2M4kxNy5lk2WJOoEADSM/Mr6vZC2WBC6ZulzW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TcRTlSix; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22EB32E732
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 21:40:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769636410; cv=pass; b=mn36MC34LyktNqfaFUyKkylIHlAmTLgD0oGqKwLK5MNGSyjKeVYjlu+h2NqLKnN6BcxMDV3IG2P2xHR9Fyh7J0bhxbMy3U0MN3wGtch7neRHNd5+5TqnrPrA19+AxpL0ui2yROFsT9Kqhp4FSg1jmx7qiNTShQ8HnrEogo30Icc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769636410; c=relaxed/simple;
+	bh=p/taxJLAtQep2vugKs67EtqBxEOiI+1DrwGYhxby+4c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jmzgacB/rHfY/P9Aii83reqqn2hPpJiURMNpG1PGBsLSXCCgZs6TMRRcP7DZ5ABNMgR64Al93kRPcHCSoS2pHsp1RujrmFvwDIah+ZUyw4aNfqJh+XCAuZlo+NrBAkEeEqXUSWbsEP36Fd2cJ4vTXeYiT5z3JRIvDDxkSXhgNWk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=NW0OnQR7; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TcRTlSix"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2a7a94c6d4fso1003265ad.0
-        for <git@vger.kernel.org>; Wed, 28 Jan 2026 12:28:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769632137; x=1770236937; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7KFlQGly0w3tLnYc8BjPoB448wiG9ot3aLA5EFzQB60=;
-        b=TcRTlSixZCIG2POnGJMZvrfq7CePODu/28W7p1pJlxBAUt1QaLWIWm5eqbf8hL2867
-         ZdenvDtniJkGVv2Fif/AMqD5HoanEJ5Z7rWPrmoUkonrFTgGs81J15pHGxJEqQNL5JmQ
-         S6Tb5Wa/J8Ajo91C99EooQuuaMGYSCTXBlCQB7uCfjqU5WC2QNOKP/aRtmBxf14lElqE
-         7GXdmadmiwAm7RqLvKb3wa5XI9E7XKAyCXmv/6JALrKaIszTfL0OQppMLym1Kpv6pWhc
-         lllgb8W+Fu5Y0p73xk9iwt4P48OOKzum8autADlnlgY85SvnV0oRYc4kdbL5XRqILIPC
-         5Nxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769632137; x=1770236937;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7KFlQGly0w3tLnYc8BjPoB448wiG9ot3aLA5EFzQB60=;
-        b=MExzSYA/EAK7HZrpVwj5X+vxcCsJ44T5KfiPwAxeXTDZJ2KmRUED0TUtPk9BNO6lI/
-         KjWyOH2NzwmDUaFJt8h76vQRoo99Zfod61+8DMy0PttPfheBvjsS0nJXjsLq0ddpEB+c
-         G/JPwH+bE4LZl0FfYfgZsRbR5QIRXxCcy530liuWnTykRfDgC5lCzLsj6X52gkly/k5e
-         awTTH02viwQE3zZzHRfINQIIbm6QtvK933uImQ7ezwrfJjLk60v5N/V9odjMT0y9oOGf
-         T3rMK6Ta1M8VczZtFMhjz/Q6biMCs+Lz4dz69tPWFn+epw8NdyLEHVhDO2qlfFqPf/Mq
-         BIYA==
-X-Gm-Message-State: AOJu0Yy8j2RnlLR32f1uan/SOLg3E/HnC8/bRHb+ARNMDNeN81dNCPN/
-	lV8AwXmiF1uhQrEDv8qycFkDMu6Ixpm5PDKYj6rLlaR80jk9WcM6/3ll
-X-Gm-Gg: AZuq6aI+qiRPiSczJTh7eCuMBrTMJuq0lssFWgQQuvWPcGfvF1zH1JU4qpm4lDfRyhL
-	rLt5VhCVrdsz+6NIUJzcdVFd4vFCfJ+hGNlZIrsHLZjw///YBeUdUOf+jzqwyyYEXCQk/tBdRKn
-	WOCmdLqgmwVlsKFR/rtwIZA5t+K7ENm1Guer06wCsL3O80XExy8UMIPZjU6xqMykwDM1ZNFo+Y0
-	ruBKucNZvkrKwTZFOYbgc2QKlP+9nLFSVDE/5bJvzwRB6PAJCC4bRoW6orKLPadoXez2ffPaV6g
-	pEGgKgdsMTvP0oZ+jQcW0vhNk1HGDFkH+DuLIiz08ZixPbA1tzaMGTnw8SFgI5c70CXJKXXCVcG
-	hlYdwyJzhVgj+YdtZXQqlYMUOkivfMqV5eZddb/nM3YPMwZPA1Q2p2vr+vzmxtfvkqEXXdypEDa
-	dFpraRTkBEoIeZVxGWLRdMfl7W62DbDdXrTlKZKUolKEE=
-X-Received: by 2002:a17:903:98f:b0:2a7:90f2:2dea with SMTP id d9443c01a7336-2a870ddf241mr60029595ad.28.1769632137310;
-        Wed, 28 Jan 2026 12:28:57 -0800 (PST)
-Received: from ehlo.thunderbird.net ([2401:4900:ca8e:73eb:55c:ffe4:2790:e300])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b6e4110sm29266345ad.84.2026.01.28.12.28.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jan 2026 12:28:56 -0800 (PST)
-Date: Thu, 29 Jan 2026 01:58:52 +0530
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-CC: git <git@vger.kernel.org>, karthik nayak <karthik.188@gmail.com>,
- Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
- Junio C Hamano <gitster@pobox.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>,
- Justin Tobler <jltobler@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Meet Soni <meetsoni3017@gmail.com>,
- Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
- Bello Olamide <belkid98@gmail.com>,
- Usman Akinyemi <usmanakinyemi202@gmail.com>,
- Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: Git project and GSoC 2026
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAP8UFD0kEATc6sU4r2pVq9k2X737Tk+_VXrxXx8K=M6=ciL=vQ@mail.gmail.com>
-References: <CAP8UFD11txMWSfMTvDtcBJuuZA5mKffo6XUyR9LWk2d_N0RRtA@mail.gmail.com> <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com> <CAP8UFD0kEATc6sU4r2pVq9k2X737Tk+_VXrxXx8K=M6=ciL=vQ@mail.gmail.com>
-Message-ID: <BAD29E01-C358-456F-8E31-058AC0AED0C8@gmail.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="NW0OnQR7"
+ARC-Seal: i=1; a=rsa-sha256; t=1769636393; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Cx/V0s53ECWcSlBBbF6dgMOSfUNIhkgK1KQklG4uGXLdLHpgOeoRK1oyZU5LilZVys/3utZM5D7ezH1s61Pe46VzSv/6cfm855WF7TCAlwyxxvFRhGmZ5w87oX4SHR3aeRitNoZUQpPmOd+JYGCvRZDfM8v0Yao9zXplVRXBgjg=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1769636393; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=98LHmeuRBaUWeFWZsqST6kSl6IjseCUkABxdHpyPpZA=; 
+	b=eT91RJOGHpqPSgUX2u5+okK8BvLUqtNZRMN5JWAx/mhHk3I/rh7Q8NCHy1bSLjWF1mX0Unz9qBoClsKxFF1Ys0bnqD7sg7OKH5CR3XgRY775e4mDH2Q/7+ius4KRw8Ze8RxHuMUtE0/b08ZH8J5IFfhtEvA5oViK/V39Ebt5uVk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769636393;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=98LHmeuRBaUWeFWZsqST6kSl6IjseCUkABxdHpyPpZA=;
+	b=NW0OnQR7ReXwcWmiXTGymZKWwkMw6Nmv/kxwebCd/Oieg2z6XWDDO8zNlIbIrsM9
+	55I/KtkU1/emFLShuoowX9awS8AEzMpU71Nl7SfHZR5GRf1LdZJDMraX4D9rmVJL6XR
+	0/NNp5549tisvwmKIY7VfOdT/xMS5ROehguWcm0c=
+Received: by mx.zohomail.com with SMTPS id 1769636391077323.8517311439741;
+	Wed, 28 Jan 2026 13:39:51 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+Cc: Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v8 01/12] t1800: add hook output stream tests
+Date: Wed, 28 Jan 2026 23:39:16 +0200
+Message-ID: <20260128213927.3026875-2-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
+In-Reply-To: <20260128213927.3026875-1-adrian.ratiu@collabora.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20260128213927.3026875-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Hi all,
+Lack of test coverage in this area led to some regressions while
+converting the remaining hooks to the newer hook.[ch] API.
 
+Add some tests to verify hooks write to the expected output streams.
 
-On 22 January 2026 1:03:26 pm IST, Christian Couder <christian=2Ecouder@gm=
-ail=2Ecom> wrote:
->>
->> Wonderful to see that we already have 5 potential mentors! Keep them co=
-ming! Also, it would be nice to hear potential idea suggestions too=2E The =
-more the merrier :-)
->
->Yeah, project idea suggestions are very welcome=2E
+Suggested-by: Patrick Steinhardt <ps@pks.im>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+ t/t1800-hook.sh | 137 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 137 insertions(+)
 
-Just a gentle nudge for the project ideas=2E The deadline to apply for GSo=
-C is Feb 3 18:00 UTC=2E We need the ideas page ready a couple of days befor=
-e it at least=2E
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 4feaf0d7be..ed28a2fadb 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -184,4 +184,141 @@ test_expect_success 'stdin to hooks' '
+ 	test_cmp expect actual
+ '
+ 
++check_stdout_separate_from_stderr () {
++	for hook in "$@"
++	do
++		# Ensure hook's stdout is only in stdout, not stderr
++		test_grep "Hook $hook stdout" stdout.actual || return 1
++		test_grep ! "Hook $hook stdout" stderr.actual || return 1
++
++		# Ensure hook's stderr is only in stderr, not stdout
++		test_grep "Hook $hook stderr" stderr.actual || return 1
++		test_grep ! "Hook $hook stderr" stdout.actual || return 1
++	done
++}
++
++check_stdout_merged_to_stderr () {
++	for hook in "$@"
++	do
++		# Ensure hook's stdout is only in stderr, not stdout
++		test_grep "Hook $hook stdout" stderr.actual || return 1
++		test_grep ! "Hook $hook stdout" stdout.actual || return 1
++
++		# Ensure hook's stderr is only in stderr, not stdout
++		test_grep "Hook $hook stderr" stderr.actual || return 1
++		test_grep ! "Hook $hook stderr" stdout.actual || return 1
++	done
++}
++
++setup_hooks () {
++	for hook in "$@"
++	do
++		test_hook $hook <<-EOF
++		echo >&1 Hook $hook stdout
++		echo >&2 Hook $hook stderr
++		EOF
++	done
++}
++
++test_expect_success 'client hooks: pre-push expects separate stdout and stderr' '
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git init --bare remote &&
++	git remote add origin remote &&
++	test_commit A &&
++	setup_hooks pre-push &&
++	git push origin HEAD:main >stdout.actual 2>stderr.actual &&
++	check_stdout_separate_from_stderr pre-push
++'
++
++test_expect_success 'client hooks: commit hooks expect stdout redirected to stderr' '
++	hooks="pre-commit prepare-commit-msg \
++		commit-msg post-commit \
++		reference-transaction" &&
++	setup_hooks $hooks &&
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git checkout -B main &&
++	git checkout -b branch-a &&
++	test_commit commit-on-branch-a &&
++	git commit --allow-empty -m "Test" >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr $hooks
++'
++
++test_expect_success 'client hooks: checkout hooks expect stdout redirected to stderr' '
++	setup_hooks post-checkout reference-transaction &&
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git checkout -b new-branch main >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr post-checkout reference-transaction
++'
++
++test_expect_success 'client hooks: merge hooks expect stdout redirected to stderr' '
++	setup_hooks pre-merge-commit post-merge reference-transaction &&
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	test_commit new-branch-commit &&
++	git merge --no-ff branch-a >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr pre-merge-commit post-merge reference-transaction
++'
++
++test_expect_success 'client hooks: post-rewrite hooks expect stdout redirected to stderr' '
++	setup_hooks post-rewrite reference-transaction &&
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git commit --amend --allow-empty --no-edit >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr post-rewrite reference-transaction
++'
++
++test_expect_success 'client hooks: applypatch hooks expect stdout redirected to stderr' '
++	setup_hooks applypatch-msg pre-applypatch post-applypatch &&
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git checkout -b branch-b main &&
++	test_commit branch-b &&
++	git format-patch -1 --stdout >patch &&
++	git checkout -b branch-c main &&
++	git am patch >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr applypatch-msg pre-applypatch post-applypatch
++'
++
++test_expect_success 'client hooks: rebase hooks expect stdout redirected to stderr' '
++	setup_hooks pre-rebase &&
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git checkout -b branch-d main &&
++	test_commit branch-d &&
++	git checkout main &&
++	test_commit diverge-main &&
++	git checkout branch-d &&
++	git rebase main >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr pre-rebase
++'
++
++test_expect_success 'client hooks: post-index-change expects stdout redirected to stderr' '
++	setup_hooks post-index-change &&
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	oid=$(git hash-object -w --stdin </dev/null) &&
++	git update-index --add --cacheinfo 100644 $oid new-file \
++	    >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr post-index-change
++'
++
++test_expect_success 'server hooks expect stdout redirected to stderr' '
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git init --bare remote-server &&
++	git remote add origin-server remote-server &&
++	cd remote-server &&
++	setup_hooks pre-receive update post-receive post-update &&
++	cd .. &&
++	git push origin-server HEAD:new-branch >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr pre-receive update post-receive post-update
++'
++
++test_expect_success 'server push-to-checkout hook expects stdout redirected to stderr' '
++	test_when_finished "rm -f stdout.actual stderr.actual" &&
++	git init server &&
++	git -C server checkout -b main &&
++	test_config -C server receive.denyCurrentBranch updateInstead &&
++	git remote add origin-server-2 server &&
++	cd server &&
++	setup_hooks push-to-checkout &&
++	cd .. &&
++	git push origin-server-2 HEAD:main >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr push-to-checkout
++'
++
+ test_done
+-- 
+2.52.0.732.gb351b5166d.dirty
 
-Feel free to chime in to suggest ideas that would be achievable by someone=
- new-ish to the community=2E If you're doubtful whether an idea would be re=
-levant for GSoC, feel free to share the same and we can discuss it=2E
-
-The same goes for micro project suggestions=2E Feel free to share new ones=
- that could be added to the following microprojects page:
-
-<https://git=2Egithub=2Eio/SoC-2025-Microprojects/>
-
---=20
-Sivaraam
-
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
