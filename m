@@ -1,100 +1,69 @@
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A76E311597
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 17:02:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140861C3F36
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 19:03:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769619727; cv=none; b=i1cjq9MpCdz3enJ1IIxxpx4YJ6DRL5/oD5lAd3F/hHW38CV1qnOKfnYNqrqA8CLly2I+82jhvVpnXwkowabQx5sG6tDWYJMOMmGwG/M2LPGo4TY28QHpYjlmEsoY9OeWaitcpMdr8ZmIYjA6pk/A0kyXjBgcTEjQY59FoTsSS00=
+	t=1769626992; cv=none; b=WgktyrUf0H52hNkYw5CfweeiDwlPJAQOOhq1ohTOTtN3rjvfkqYL9tP9WeU2e1xVxE94f5KH4QEAmeWF03tvuvWYfDvVQDZCJAOKaZwZJoY4c0T8hdaj76SP/t33EVgXqDBvzYecjyVQeWBtK3BhJksA9lPzVSSDvI4L2cGNqfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769619727; c=relaxed/simple;
-	bh=8rP21hO7RmPTBSYz813w3IPyvyxh4aI6vSULRSEnYqk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WAbVk6mBIQH+CuAZp/DrJ9RCiUFiGA+K45aQfS3teKBKyfwTqU7j8x4i6pJNodsBAFx+fGvYu1IyOWMw67VW59kLEBcIFP23/gqvOPqDU8fG+DBL8aiVJdFvKaEcM2lBBY3IkqB/cY5C5pWU66LQzFriyNPnl2/vAoDXoGfqx44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4f1T8S5ztHzRnlK;
-	Wed, 28 Jan 2026 18:02:00 +0100 (CET)
-Message-ID: <547d261c-a716-4c57-8b93-09cf7d8fb176@kdbg.org>
-Date: Wed, 28 Jan 2026 18:02:00 +0100
+	s=arc-20240116; t=1769626992; c=relaxed/simple;
+	bh=5fzXKGX92ipThlg+Uqe3CvV6nPyV7QEVTD1+wRztWro=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uW1aBt6ddQtCsY7z+oBMxaBHlfn8bYqG6FmROHxkIo58BPXvQW6j0PC63ExXGqvswoZy6tVxYS/y9gINAttbt90jf1PsT62X/rqaDIq8bi6dVgd8gKGGfXn9Devl240Ny87QHal28eaKvwwWgtL3o1a+nw4Wm+DnQib8WZ0BQao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=U8TRLik8; arc=none smtp.client-ip=185.70.43.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="U8TRLik8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1769626980; x=1769886180;
+	bh=5fzXKGX92ipThlg+Uqe3CvV6nPyV7QEVTD1+wRztWro=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=U8TRLik8sGO529x+JX7s4pwryA5EtOj/aOArMJdEa2jNOnpwqb/EnOcFtVWTjOdqc
+	 Zg0Rtx2BfXgDLioZVJVfrTkXpvpfp9fPIVX7Bq/BJtFGxyuZEwfBW00vwgd/H7MLm3
+	 RoftOhUKoRMJo79tYGyNTMlO1N4NJonvnfBFBfTnQPS26wF0joiO3RRq6sabx6KBGy
+	 2xhIce6CwciX2Xzmdkeoc2IY7yMMDdIoWHyRbPpKjhdDCAHUDAiO4CxZua8dQEw5cI
+	 oEEZ63ytJY98UskSBlw1/ABAnxpBGE2UfsfWR5cEh8fFw6rqT8V7I8q2oGoOpHjI3u
+	 /AaJFzSSfXT6A==
+Date: Wed, 28 Jan 2026 19:02:56 +0000
+To: Johannes Sixt <j6t@kdbg.org>
+From: GitHub Chris Idema <github_chris_idema@proton.me>
+Cc: Junio C Hamano <gitster@pobox.com>, Chris Idema via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH/RFC v3] diff.tcl: made alignment of tabs in git-gui diff consistent with gitk
+Message-ID: <ltvoMavyjgCl1Axuv1HV0rBdQPT2AcZQi4z9mo50OHYwoJ6pjCqEmdWfTmv2YHVSQjYxk2HSdxBXjTTKysBJ2CkdPotiOUIkUSnOMyOvLPU=@proton.me>
+In-Reply-To: <547d261c-a716-4c57-8b93-09cf7d8fb176@kdbg.org>
+References: <pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com> <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com> <547d261c-a716-4c57-8b93-09cf7d8fb176@kdbg.org>
+Feedback-ID: 177675452:user:proton
+X-Pm-Message-ID: 05338aa7dbf70ea51958574f66d05f54bcff00b9
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH/RFC v3] diff.tcl: made alignment of tabs in git-gui diff
- consistent with gitk
-Content-Language: en-US
-To: Chris Idema <github_chris_idema@proton.me>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Chris Idema via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com>
- <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Am 28.01.26 um 11:20 schrieb Chris Idema via GitGitGadget:
-> From: Chris Idema <github_chris_idema@proton.me>
-> 
-> Tab stop width was not properly rendered in TK regardless of
-> tab width setting. The + or minus character at start of line made
-> tabs align incorrectly.
-
-This is a patch for Git GUI. Please use the subject prefix "git-gui:".
+> This is a patch for Git GUI. Please use the subject prefix "git-gui:".
 The file name need not be mentioned.
 
-Please have a look at existing commits and mimic the style of the commit
-subject and body text. In particular:
+Thank you.
 
-- Use present tense to describe the current state. Elaborate what the
-problem is. Assume that readers haven't looked at the code for some time
-and guide them to the problem point (i.e., provide some context).
+>If you look at commit a43c5f51a4b1, you will notice that it intended to
+apply "magic" tabstops only to 3-way-diffs
 
-- Use imperative mood to describe the change as if you instruct someone
-to make the change.
+I see it now.
+I was able to test:
+- "Modified, not staged", needs "apply_tab_size 1"
+- "Staged for commit", needs "apply_tab_size 1"
+- "Requires merge resolution", doesn't work and needs "apply_tab_size 2"
+- "Untracked, not staged", handled somewhere else, works
+- "Missing", needs "apply_tab_size 1"
+- "Staged for removal", needs "apply_tab_size 1"
 
-I suggest this subject:
+So I need to make some changes.
 
-git-gui: shift tabstops to account for the first column of context diffs
-
-> 
-> Signed-off-by: Chris Idema <github_chris_idema@proton.me>
-> ---
->     diff.tcl: made alignment of tabs in git-gui diff consistent with gitk
->     
->     cc: Johannes Sixt j6t@kdbg.org
-
-Just FYI, this message didn't arrive in my mailbox despite this line.
-
-> diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-> index 442737ba4f..7da6e5ccae 100644
-> --- a/git-gui/lib/diff.tcl
-> +++ b/git-gui/lib/diff.tcl
-> @@ -495,6 +495,7 @@ proc read_diff {fd conflict_size cont_info} {
->  			}
->  		}
->  		set mark [$ui_diff index "end - 1 line linestart"]
-> +		apply_tab_size 1
->  		$ui_diff insert end $line $tags
->  		if {[string index $line end] eq "\r"} {
->  			$ui_diff tag add d_cr {end - 2c}
-
-If you look at commit a43c5f51a4b1, you will notice that it intended to
-apply "magic" tabstops only to 3-way-diffs. It did not intend to "fix"
-regular patch text. Without the change, 3-way-diffs would become even
-more misaligned, because these have two initial positions instead of
-just one. To fix the additional misalignment, it applies the offset 1 to
-the tabstops. But this does not fix the original misalignment.
-
-You now want to fix the original misalignment. Therefore, you have to
-apply the offset 1 for regular patch text, but offset 2 to 3-way-diffs.
-And, in addition, no offset if file contents are displayed.
-
--- Hannes
-
+-- Chris
