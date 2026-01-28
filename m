@@ -1,242 +1,127 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B0B2264A9
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 05:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19E1311946
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 08:49:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769578790; cv=none; b=ulqPnJhfK54wiKSlRR9XhKSRRtKulQChLttGpoWJskbh+y/Wht1xCppEUNk7d16xJNGQmP/M3GtWp8SNsRtGmql4fg5g3iOaHNC1wVqSh52sETw8nBlgt27VwseEdHMdM0E97XtQQlMA4qs16nQNEtvgSrwe2sVsmB7XrGD4NTU=
+	t=1769590173; cv=none; b=dqtl1RWy6bjUJiGK1i3HZbRIBQXGTa2tYs8K2NoQwnoUK8GDU65fzjLxbUyiuLuwODej7j+8Zy9JL0e6lBa+p/0RrNcUW0XrYf5KO7O9EvYIp8QFuXO+LNi7Awux/dzZOaRkSlM4G5L5uAl3bDWKzKlcmcZf3MxVWaut9HYelkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769578790; c=relaxed/simple;
-	bh=zzLa+2OeiOzymppPPLFFg1Pry1JwYo2T/7LzpDBrvUc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=IXm0qCJu+u44eQKf9ZmYH6KrM/jAXZlljW3GMRs5TjYxGoxz0ehaNM34vKQDeT5rzx+hvQM0zic3HtB1g6ZdJOovr2iQYL+dZZ06N4cSi1kEiMaOS2Y//PauCe3Ky3vI53Zeei38VgqgO0aJBbFiLOHDjIeaaIVjxP6lj+WJgTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jtZfjw0P; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769590173; c=relaxed/simple;
+	bh=L4BFzNrWsVjauAEYWU8mKVxc2G6J1Cbk3bOH7PiGjS8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GheHQty7cE0geO4S3mxxRUNHXG/VLIgs+MqEUqh6JbHq/UwqPU8qHqi5AM2ShR5piI+SJtWN9Z13Dw44+V/vBgc8CwSmfIFX2wbcXTdfHSAI7NlZrBjb+OUKZe3+DI6KEycRylPrcuYHzLdo/utk6lZMb12XINale7ZoUYDNEps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y/cEs+zH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d88Nr1xb; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jtZfjw0P"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-894770e34afso106010816d6.0
-        for <git@vger.kernel.org>; Tue, 27 Jan 2026 21:39:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769578787; x=1770183587; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y/Psu++vvZgvJp3FMORh2bmneX9C3hfFtExAQQyv2b4=;
-        b=jtZfjw0PmAcLVrFDMRUR3BoG067VbuVNuzbjdY0JOP+Tr2VaiBAaPR2PP5HyAnq60Q
-         AvB8+SLHxWIkOdeZ/L4MujU6Y7xoONnfL0BmhmjIlTmugMYku8c8dMY9cP4PH5tiwbuE
-         ohNNQr+C/sdnDZtSOWTHoJSzO1+vPL5MFjFf6pL5/dE1lPklaw1KTAsd5rrJtTjyRWS5
-         VJfgJFvIFw619UDfWGHxYK1rd4Cim4Nb4MSO9gfmJhpIRMTIQ53JH0zVRI6z/Ymt2yLH
-         LB2kd2yVgh6eRyqG5B8rtK+aXaax0pXPjltXM0HMWHlzn2eA2sc8My7HSYA1u7+YGdFX
-         2Srg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769578787; x=1770183587;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Y/Psu++vvZgvJp3FMORh2bmneX9C3hfFtExAQQyv2b4=;
-        b=pBOPklS/Knguvs5Bqj9hCdxRuBzwST2kmu31Bk8bttK8h982dJXCes1wECe9Lrikdq
-         XUdt4wg/6TfrAwddtfDYBtx8Dj/4TNdqIBzJtyejE58TUpNXXs16Rrxa1zavUv1vKZx4
-         rRW5I2lQr3XtfYHUGVT/Ur6DTTJTx7jNP0Nrotn1O6WrbaHgA/vAcevHr67iSz6KdWnA
-         CjmzmY3el8qEhQizaGubWeP3f0b3AmS8lucplXOKgFQtOUsHG5kfpRQiOnDBdwsr05An
-         U4ESoqYIRVM8+Zb49l6cBwIMkhK2JiwtjIw/NAgs8Z5igaYNlxDz4/h8yua4NjKoir4Q
-         m9IQ==
-X-Gm-Message-State: AOJu0YxDLmIV+uD2f6GQf7BrF6qbsjz1Dc2xcVbEC48jPjRIlBhXI78w
-	aqSScflNqyluljjgQXN87nbr2Xll6UvxpYFqsD83sxpnu5iefLTX4ZnHWj6sVw==
-X-Gm-Gg: AZuq6aI4S1IaIMRy8hT+sRamVM+mAoH4RBhHI/xxww+XpM049j/2JNqiFEcnvnsxS/h
-	QxsylJ86oJF6OPtMCtS28EOg+EWbEpd3Y0a4PJqVU839fDk1WRV1mzM6yiEtVwK1MlbycjN6W7h
-	3E6pyvMxWaMJExrOndTpZI9/CMVpefAoXhf734fFK4uoI/uj81ZFuzzWeS0PT8nQUaC+9PpXrLY
-	2UVkxWhiILRqkAwlOj8Im3+Pgz6F201jLrz0dgt5tN4aEd+SoK508Iu+aCqjSGxrSdmR1KH09xS
-	VAw2ZlD8B1UXasJxisFLqNcSolYMV9+vKXg9j3OFxEXWgPKw3NMai/fXhwsYyaJROXrddSWx+p4
-	Dh1opvGwk/rdCBgIFFlcFE+2IA/ztdjtXHIeUecgeuvOFiruzmYXdtcEL9+UrLph7r+PnvDmo9E
-	ceFkIkrTvIcqd2GO2b4QGrpgr/
-X-Received: by 2002:a05:6214:e61:b0:880:3ce2:65ad with SMTP id 6a1803df08f44-894cc8fc097mr58380186d6.41.1769578786605;
-        Tue, 27 Jan 2026 21:39:46 -0800 (PST)
-Received: from [127.0.0.1] ([135.232.200.67])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d3740e62sm10963736d6.26.2026.01.27.21.39.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jan 2026 21:39:46 -0800 (PST)
-Message-Id: <pull.2135.v3.git.git.1769578785381.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2135.v2.git.git.1766168169.gitgitgadget@gmail.com>
-References: <pull.2135.v2.git.git.1766168169.gitgitgadget@gmail.com>
-From: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 28 Jan 2026 05:39:45 +0000
-Subject: [PATCH v3] worktree: clarify that --expire only affects missing
- worktrees
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y/cEs+zH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d88Nr1xb"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id AB042EC0184;
+	Wed, 28 Jan 2026 03:49:30 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Wed, 28 Jan 2026 03:49:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1769590170; x=1769676570; bh=PqeO8FRh1J
+	pHHvGl0Sycd1HZXMNXyBI5pFUvQ5GOLao=; b=Y/cEs+zHmJLtOXu7euIkiXhDvc
+	sjGoa+acKgqXQE0cy+AJx8qgl6hxbnXvgsJoqo5hjJhKX8ixzYnNrP/b43SkKo2o
+	oCCMGT8tXoFo5j4xsWPAPW7P95PN/4rX4QjqeZUkeXX9olRwfJd5BihfgfqIbNUR
+	mURkQcSsuVALif8nZRuI7SJ83+hqrvAHINOaSv8kap0RDesGQor2Efai3l/aKVmI
+	qsN9RoTQkJlWDUWpzErEoNgx/Myue6VQK+1nce1SmXKy9dhqrAGX2iE+bDkvFmzZ
+	vuSgs7CgrIQjcz0ojB6+qcE0jz+UdxB6tyerbYjJK2JvPchTbylPzkiSFbEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1769590170; x=1769676570; bh=PqeO8FRh1JpHHvGl0Sycd1HZXMNX
+	yBI5pFUvQ5GOLao=; b=d88Nr1xbNbD528J+08NdLaf/8lqJW1szIPMZPUD2dXnO
+	JM6xNc9HXdrWX2nplCh1TeXaXJOYGEIz5Y1yeLpJ45HL9UYJ96ymA8F3DJfNOfv9
+	N86NxfO3mB+LQWTBw61miy1tbNWKuL5vsbgMMAaLmy4/R8x65lD1ALn3EalVAKDe
+	YvD1YJIOPpnVlGyKeAFtyk5E+TqyMUf5zVw+fEckR49BY8D+0vc3mWUlF2VHbIs2
+	KIa++4XI08MmSF20dOkCzJ+ViWzjz4pIYss8a93UFAmJC2L8o3ZYwMk2/WGLrmzA
+	BCn91QtOY246NT4XdbxdS3536NHpYoPhNubPwAeZxg==
+X-ME-Sender: <xms:ms15ac1vTqPyUh7M98zGgIeZisiv6Ls4G2ZYLOdRc7qnHsFxQ692Cw>
+    <xme:ms15adFnZ7C6rS-Nt8buwGRO9Nxe8_HzImXqcmdwvVr1BaFAs_p579yfLwmtaJGwx
+    UpT-9iThQZcOB7SXBG_RlfWnilLFLByWzYCojiMnftvuhAeX5rDysc>
+X-ME-Received: <xmr:ms15aSjwQSrg-3sJr92vGkE-G4Yk9JYN9Px6pMTYgrycETYlwEUWBTjPWr1Xfg0rRVZsZORWcX_QOUhL_bYwUK52-k47-wPGqCh6mtNJTmE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedvleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhufffkfggtgfgvfevofesthejredtre
+    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetieegjeeuheeuudfgveelfeevhe
+    euhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ms15aQ96kXj_C8-jtMElZ4rOul7bVQSkl1AavjHlbXslq0aE3FPDPg>
+    <xmx:ms15aRrwNHs49dm5SNvcI6cVxsE4NwPlyqKvLIvlTH8RmfrhT_rp0g>
+    <xmx:ms15aX-C0YbarRJ6aNi_n7OyPQVE81EN0AJmBOo5F6Th7X0nAjk1cw>
+    <xmx:ms15adVcG-07Dfi2hfZzEO57kTk3r8XI7Iu7gMLjGpKon5qon8dH1Q>
+    <xmx:ms15aS95ll2Cs727LUdsCJ3Fek_TO0QwrdTUoTz4DB2obqbd2K_YExV1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Jan 2026 03:49:29 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a3f7edf2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 28 Jan 2026 08:49:28 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/3] Fix misuse of `refs_for_each_ref_in()`
+Date: Wed, 28 Jan 2026 09:49:19 +0100
+Message-Id: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAI/NeWkC/x2NQQrCMBQFr1L+2gdNWoN6FXER64v9iGnJp1Iov
+ buhy2FgZhNjUZrcmk0Kf2o65Qru1Mgwxvwm9FVZfOtD6/wFzx7zx5B0RZoKGIcRhQma8VVbjLi
+ GyODZuS6epXbmqnU9HvfHvv8BwqU+aHMAAAA=
+X-Change-ID: 20260128-b4-pks-fix-for-each-ref-in-misuse-96ae62e313a5
 To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-    Sam Bostock <sam.bostock@shopify.com>,
-    Sam Bostock <sam.bostock@shopify.com>
+Cc: Taylor Blau <me@ttaylorr.com>
+X-Mailer: b4 0.14.3
 
-From: Sam Bostock <sam.bostock@shopify.com>
+Hi,
 
-The --expire option for "git worktree list" and "git worktree prune"
-only affects worktrees whose working directory path no longer exists.
-The help text did not make this clear, and the documentation
-inconsistently used "unused" for prune but "missing" for list.
+this small patch series fixes a bug I have discovered where configuring
+"pack.preferBitmapTips" to an exact branch will cause Git to `BUG()`.
 
-Update the help text and documentation to consistently describe these
-as "missing worktrees", and use "prune" instead of "expire" when
-describing the effect on missing worktrees since the terminology is
-clearer.
+The root cause of this bug is misuse of `refs_for_each_ref_in()`: this
+function accepts a prefix to yield refs for, and then strips the prefix
+for each ref. Consequently, if passed an exact refname, then stripping
+the prefix would make us end up with an empty refname, and that is not
+supposed to happen.
 
-While at it, expand the description of the "prune" subcommand itself
-to better explain what it does and when to use it, as suggested by
-Junio.
+There was one other caller that got it wrong, too, and which is also
+fixed in this patch series.
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Sam Bostock <sam@sambostock.ca>
+Thanks!
+
+Patrick
+
 ---
-    worktree: clarify --expire applies to missing worktrees
-    
-    Changes from v2:
-    
-     * Squash into a single commit
-     * Expand the prune subcommand description per Junio's suggestion
-    
-    Changes from v1:
-    
-     * Use "prune" instead of "expire" in help text
+Patrick Steinhardt (3):
+      pack-bitmap: deduplicate logic to iterate over preferred bitmap tips
+      pack-bitmap: fix bug with exact ref match in "pack.preferBitmapTips"
+      bisect: fix misuse of `refs_for_each_ref_in()`
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2135%2Fsambostock%2Fexpire-missing-worktrees-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2135/sambostock/expire-missing-worktrees-v3
-Pull-Request: https://github.com/git/git/pull/2135
-
-Range-diff vs v2:
-
- 1:  ddd4191ecb ! 1:  a4483d9a20 worktree: clarify --expire applies to missing worktrees
-     @@ Metadata
-      Author: Sam Bostock <sam.bostock@shopify.com>
-      
-       ## Commit message ##
-     -    worktree: clarify --expire applies to missing worktrees
-     +    worktree: clarify that --expire only affects missing worktrees
-      
-     -    The `--expire` option for `git worktree list` and `git worktree prune`
-     +    The --expire option for "git worktree list" and "git worktree prune"
-          only affects worktrees whose working directory path no longer exists.
-          The help text did not make this clear, and the documentation
-          inconsistently used "unused" for prune but "missing" for list.
-      
-     -    This updates the help text and documentation to consistently describe
-     -    these as "missing worktrees".
-     +    Update the help text and documentation to consistently describe these
-     +    as "missing worktrees", and use "prune" instead of "expire" when
-     +    describing the effect on missing worktrees since the terminology is
-     +    clearer.
-      
-     +    While at it, expand the description of the "prune" subcommand itself
-     +    to better explain what it does and when to use it, as suggested by
-     +    Junio.
-     +
-     +    Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-     +    Helped-by: Junio C Hamano <gitster@pobox.com>
-          Signed-off-by: Sam Bostock <sam@sambostock.ca>
-      
-       ## Documentation/git-worktree.adoc ##
-     +@@ Documentation/git-worktree.adoc: with linked worktrees if you move the main worktree manually.)
-     + 
-     + `prune`::
-     + 
-     +-Prune worktree information in `$GIT_DIR/worktrees`.
-     ++Remove worktree information in `$GIT_DIR/worktrees` for worktrees
-     ++whose working trees are missing.  Useful after manually removing
-     ++a working tree that is no longer needed (but use "git worktree
-     ++remove" next time you want to do so).  Also, if you _moved_ a
-     ++working tree elsewhere causing the worktree information to become
-     ++dangling, see "git worktree repair" to reconnect the worktree to
-     ++the new working tree location.
-     + 
-     + `remove`::
-     + 
-      @@ Documentation/git-worktree.adoc: mismatch, even if the links are correct.
-       With `list`, output additional information about worktrees (see below).
-       
-       `--expire <time>`::
-      -	With `prune`, only expire unused worktrees older than _<time>_.
-     -+	With `prune`, only expire missing worktrees older than _<time>_.
-     ++	With `prune`, only prune missing worktrees if older than _<time>_.
-       +
-       With `list`, annotate missing worktrees as prunable if they are older than
-       _<time>_.
-     @@ builtin/worktree.c: static int prune(int ac, const char **av, const char *prefix
-       		OPT__VERBOSE(&verbose, N_("report pruned working trees")),
-       		OPT_EXPIRY_DATE(0, "expire", &expire,
-      -				N_("expire working trees older than <time>")),
-     -+				N_("expire missing working trees older than <time>")),
-     ++				N_("prune missing working trees older than <time>")),
-       		OPT_END()
-       	};
-       
- 2:  ff4732b72a < -:  ---------- worktree: use 'prune' instead of 'expire' in help text
+ bisect.c                    |  8 ++++----
+ builtin/pack-objects.c      | 19 ++-----------------
+ pack-bitmap.c               | 18 +++++++++++++++++-
+ pack-bitmap.h               |  9 ++++++++-
+ repack-midx.c               | 14 +++-----------
+ t/t5310-pack-bitmaps.sh     | 35 +++++++++++++++++++++++++++++++++++
+ t/t5319-multi-pack-index.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 7 files changed, 105 insertions(+), 34 deletions(-)
 
 
- Documentation/git-worktree.adoc | 10 ++++++++--
- builtin/worktree.c              |  4 ++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+---
+base-commit: ea717645d199f6f1b66058886475db3e8c9330e9
+change-id: 20260128-b4-pks-fix-for-each-ref-in-misuse-96ae62e313a5
 
-diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
-index f272f79783..22ef37ec02 100644
---- a/Documentation/git-worktree.adoc
-+++ b/Documentation/git-worktree.adoc
-@@ -131,7 +131,13 @@ with linked worktrees if you move the main worktree manually.)
- 
- `prune`::
- 
--Prune worktree information in `$GIT_DIR/worktrees`.
-+Remove worktree information in `$GIT_DIR/worktrees` for worktrees
-+whose working trees are missing.  Useful after manually removing
-+a working tree that is no longer needed (but use "git worktree
-+remove" next time you want to do so).  Also, if you _moved_ a
-+working tree elsewhere causing the worktree information to become
-+dangling, see "git worktree repair" to reconnect the worktree to
-+the new working tree location.
- 
- `remove`::
- 
-@@ -271,7 +277,7 @@ mismatch, even if the links are correct.
- With `list`, output additional information about worktrees (see below).
- 
- `--expire <time>`::
--	With `prune`, only expire unused worktrees older than _<time>_.
-+	With `prune`, only prune missing worktrees if older than _<time>_.
- +
- With `list`, annotate missing worktrees as prunable if they are older than
- _<time>_.
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index fbdaf2eb2e..3d6547c23b 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -252,7 +252,7 @@ static int prune(int ac, const char **av, const char *prefix,
- 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
- 		OPT__VERBOSE(&verbose, N_("report pruned working trees")),
- 		OPT_EXPIRY_DATE(0, "expire", &expire,
--				N_("expire working trees older than <time>")),
-+				N_("prune missing working trees older than <time>")),
- 		OPT_END()
- 	};
- 
-@@ -1070,7 +1070,7 @@ static int list(int ac, const char **av, const char *prefix,
- 		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
- 		OPT__VERBOSE(&verbose, N_("show extended annotations and reasons, if available")),
- 		OPT_EXPIRY_DATE(0, "expire", &expire,
--				N_("add 'prunable' annotation to worktrees older than <time>")),
-+				N_("add 'prunable' annotation to missing worktrees older than <time>")),
- 		OPT_SET_INT('z', NULL, &line_terminator,
- 			    N_("terminate records with a NUL character"), '\0'),
- 		OPT_END()
-
-base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
--- 
-gitgitgadget
