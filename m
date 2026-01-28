@@ -1,281 +1,467 @@
-Received: from mail-ej1-f68.google.com (mail-ej1-f68.google.com [209.85.218.68])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDB22BB1D
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 11:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.68
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769598928; cv=none; b=Ce+yZfkl+XyCOc2C7kWjRGs3XyioJxpG5QuH2QJ5p1GSGyHcw6pUUtD4QIYKp9y73raodibuiBMwx35Sz9g25io7ezKmYro8LFwinzHYDg5R++i68EWGQdLKM8huqyclTx/ZWFcsuAt7bmDj9Vku/56Obp4WOCUXmhDIjKm12cM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769598928; c=relaxed/simple;
-	bh=NL/DT5lFVHmc4AILTs8xEI9v/ziaQ6ccwKBLIe+LOZU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MElTTWsMeFIwkBYF8MwX03nU/xZca2kKpE1BJQwHH9AZUfmRFiZmlW+ydWd7OldygPyajT7OIArDqn1Mt+dCCL3RcKQ/7b3gVtiwmxDQeK9ibRaoWGpzI9cPGaiuW0Rm2TBscVwBXywqgRmNXtpR+fJyOhrVR6rNsv7FZV0mbDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V3KpZSO5; arc=none smtp.client-ip=209.85.218.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7902C08C8
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 11:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769599611; cv=pass; b=MQAwb5/qMcUwtubvRVmldJA6NmTNlqahKiBtA2T//uZMahCLVLGmEqk2OQuQCtjU5sKw2AkhzkZAKPbtg+wToB92TDro6t77O4ct9DnmNX3LQDImeCrvrJfx9l/LtPYK/yAsQGDqYddqL8vOOpNOGkYthIluEhA7iCL7IYBacdE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769599611; c=relaxed/simple;
+	bh=TvOYEDTZlRzBojGMpfIgWiD4+/wWktFLhqWCYmfI+9U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UlClkMAOK80EAWEKfnnTqPilA8RKtCOnoPe6FEz2j55UtL2TG5aieDunZFD8SDW5lKfWhKYyijbHogZ0FpKJ5EJ58hrM9zAUc6tVEl/+8V2iGpnZedy9Axn6aqMEFQlNOjPxS3t/dDG3x2dQmPuKHt0FVL86NZc3O7MWpUrSvws=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QP7U9kd3; arc=pass smtp.client-ip=209.85.221.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V3KpZSO5"
-Received: by mail-ej1-f68.google.com with SMTP id a640c23a62f3a-b872f1c31f1so920625266b.0
-        for <git@vger.kernel.org>; Wed, 28 Jan 2026 03:15:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QP7U9kd3"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-5664393d409so1398526e0c.0
+        for <git@vger.kernel.org>; Wed, 28 Jan 2026 03:26:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769599607; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SzpyH86J1aFE8qBOLjAqQUFQsxSjbYwj23sgWSy46yj50Wm0j5A/mNDsT28QRqB5Mb
+         iyRBVXy83jwEVbWGII8rAn8EQQ0haHfaY7e6bplMwKqAO7p2T2ePKLBwhCeB4+eY3hvo
+         4vcvXHl4LzA4nUYB6qQ2ZRrd90+9yzmV0X2s5iB7pk5Ou0J0csOxVroTA+FUw9PMPdOd
+         fhwI349+nCmMA20q/2vY1LDI8dut4fak9br9ssVC+k6OqmV1N52q0z1jpAKFOswUpQsS
+         rbQqX21pbhTL/ihtj4EqQghvwGJZch7HqOiLbtBlkNeafCvltP4Gi1TcH4TQjDLQO5h1
+         9Uig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kqQcwUABnwwnrUYXgY0cV9O+EOugGp8W/MtY5wluAR4=;
+        fh=shWxNb8qA0DxLN80W7Sz7Tg64EW8RLYpEjyr7bUBFds=;
+        b=ZwuUALbXdVeGiQ0yaIgJdDIfpLONujaZtjXwgm0b5Nor2Yo6aPFWG41IWBldvI0WA5
+         M6a8jSW27wV2e9dDf8H9E7NqwkPXmIVpVPH240JGxZebhXXQns1u3uXw6l/D6FYxSjRC
+         ISugmpEQ4yMwYFisU1eNCXdh9cMS6e9dqXskj5pvfWriIJabw/DCmsUAFF2FOK3SEDK+
+         MGKy9ZJxQdI7x770FMZDXYP8fW3MlPeMm9D6OgbsapvJfvgHwIxlQx6Qz+M9hlcfdmY+
+         qq+80Rw3HlEdvZtBPkBAl19G94GwC0gr1yagdfafeplCBAG/cAfCulJgy2Fpu2l4rbPp
+         JLXA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769598925; x=1770203725; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=EqFqSwKYc5TLYLGEBKfPN0OSPOSjNF/4qqN/6JkYfM4=;
-        b=V3KpZSO5NZLhf4ZJAx7nLECX6rNNFM4hFMAsLCyix+zaJ0IsOM5fjUZEgycgPCCjK8
-         MSe4WtjBwDP+6z3XqzTrh1AExnYIwIuvuEZsLPlUfI+4R43F+pAOzX/wXPGh8RDmenFM
-         FA05SFA4yjg5a5vFAwcYzEqPbac22svXPRH8zTNTDABtX5KRgXGRTHPrnpA1CHvGYiFx
-         aIbOHz/kLKBBaG0CRtk01v3dgiYaiZTJLQYAVZ1hSnDYKxkuKlDw5WoGVTMUTR9ZOkts
-         369UTpg5je83cIZa5VW/inP39G7PstE8FjiB7rwdzySzMC3ff0UFkqTdLPJF7g6RH5+d
-         c1yA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769598925; x=1770203725;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1769599607; x=1770204407; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EqFqSwKYc5TLYLGEBKfPN0OSPOSjNF/4qqN/6JkYfM4=;
-        b=wxg0aL0ym57PU3+dndgF1JTol1zO9P6I2vA86CSf43P5WKoUdBL3Qo2VY4opolw4fI
-         SKLn4BGFhQpyJpOKgSzVVfBtoP5YGOsi1XoM+yTqqB9H7QMhFC+BsXQcYRshu+BIR/sP
-         xNwHhmgX2lox9qfmMK/GMoTzEUFAXmoFgEcG6Dlyw/HDLe7JnpEcHVUusp+lv6nyzNIN
-         D/VNgingWJMcBT4jsL8scxT8wpS49B6HwlRHGYXK6jmp8GkfMT3O/wEQ2hIAhJnnvQ05
-         qHdFSCFp04Fv75FNyYba6D+LeOkUxuMGOBtJLvMKp98XVS7LTs9F5BUcWNlmTOqBzvbp
-         jUZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVBeTkC5r5y1hksyGebIR1CjkUsPdKFxJ6x7ZGmGhG+KNQxw9xzT4UwQpi5sbJxX1PxXtQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyjg270JtQL1bg9xt62I0yy8gmXtqpu+3ckaxTb0kBa3JxAG8hk
-	76qb8dsubwNw9vaNWqmbAagI3VVual1xQC7hixLQ4sotPCpjfkZ78kiR
-X-Gm-Gg: AZuq6aJScywD7DFrKHXWCFU/Z5tcm7tmcozTRkJyblvG67g6Idw+TyrY05yUwhD4qMQ
-	dd50aMunzyPY5WTCqdpOCXnku+Bbefje4pi6R/mUJdwCniq9cA4e8qG0nHMfEzhwxtI/l3PFTkf
-	4LxGeXlmsX9M680wRwMmf58W6bpCmkK+2c25s4m44rJWkLwLTrkThZbBcxdiob5uhPvrZUz3PAN
-	lqdWRNLIAoI5PkZ++DBanDw6qzxOiAvtISZvb9gRAAzpXFgd+EFxX0ufskpVwYA2TZQO84k3EcR
-	2ga4ewa6iuTIoe9KZZFuPPJuMyMyrA559wC1e/k+GhCp0jcOLHmrasp1ELwbrZG9kQiQI/QXp+K
-	gx5qPkei7fzivtPBeYl61Lg3l6u6F8w25/4L8Ieu1nrcdtEIsgO6Qd2t8WNLB0KyVznD7Odn2gv
-	spsxu3pzKV4e4zvcZHiD7dh/xo82c0pg1MVHIW21Zi8InnqPAwvY9FIy3Wf5fJ7f+Hv3grTSAx0
-	C3Y
-X-Received: by 2002:a17:907:7f8c:b0:b89:9631:2425 with SMTP id a640c23a62f3a-b8dab1938d8mr321149166b.19.1769598924273;
-        Wed, 28 Jan 2026 03:15:24 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8dbf2ed58fsm112953266b.66.2026.01.28.03.15.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jan 2026 03:15:23 -0800 (PST)
-Message-ID: <7d6dd22d-286e-4f7b-a211-44e00e711401@gmail.com>
-Date: Wed, 28 Jan 2026 11:15:22 +0000
+        bh=kqQcwUABnwwnrUYXgY0cV9O+EOugGp8W/MtY5wluAR4=;
+        b=QP7U9kd3CKQvcr8DMKdk/+kzlPnt4iHpa8j6v1xs8P9EZQGlK1UhndT9aA73DIgIlV
+         mo+PeUVMs7J3hyzeYKOR0w2uEjgEqR5A9F6qHRCcTTIh0aOtcoxY87IMH7GjPDKntR9O
+         MfrX8nuQVAvxYu9o9mK18uC7U//9FFzJ2BFqrPD3RG8HxBU8ME/wK46oIbm+gC1Bq/0m
+         bPSJ8XCeY3cpX6QhXPP1l+6Fd/yv2eCeBZzyTgAspPCQMkGJSiNvjVdYYIGU7xgls8d1
+         qI5bHomI4HYRzIELzsQNGLpDN42srRNJ/qhHWrEB+N4t83c0h7IBmFcs0lqQkJiyctLl
+         rEXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769599607; x=1770204407;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=kqQcwUABnwwnrUYXgY0cV9O+EOugGp8W/MtY5wluAR4=;
+        b=oE5jtrcYvOfPTWUz9aCVXaadGrKGpKKRh4DsCvTZwSmdjCflcUr+vhmaZxwp86oogW
+         79K/dAtyCUPK0MpNB7G3HiySZi/8hLp4u0+jo70o3J0G/oxS8TLFj2j7vvL3n+mOMKUj
+         PzHz+IjWmdJvo7+EabIjjWfhsnnr+/47PcBK2WEmxRsB5s2AwhkwpfgcoCzyQuT2zQBi
+         3brkb+b+/C7L52hj0Cpa7jv8aBCJ7vFBJMoayba0f/aw5/SkBnMdWlio8Ks6OGjex861
+         kZCx16wqL+a/PFmJPUG315/iS7ttGyOI/29bH+c1jngaUb57luUGr7JFNfZFBcbnV/rV
+         sp4Q==
+X-Gm-Message-State: AOJu0YyplrzGwZiGO8GmQlRHxtmd82EtH71GeRJrnmKkP+q49W644rce
+	bH7PCyNJVFjHiOjYu8HL7If+JThavOJxocpQLCNGjiJBCfUhiLTCkQnU+OdHtEw9j+9TulbLCcD
+	PCmZUgS46kDWm7UKOaiur8cnHMOTmnLs=
+X-Gm-Gg: AZuq6aITNa/9tm81iuVDkVVMrobWVy4kHeIVIWHOLNSJLptYPF+uZGA+bgFAQgQCLJu
+	3Cm+uSEBmShLPMkbDy8DGwJanr7AnZ3sJktCLyMSRhMFfZSHix9P3aJ28CGbP13h5qvU0SNo8bj
+	ImJm4bIL8aTo2i8JUFfl8/Lf7nSLUp7jtGf7IW7WSlzJt1ufL7uXVwSlFatYb+jZZAyUeH/o2mR
+	UYccYer9mgxhkYFF8CfqbEDvmq+hcq4KCmKPTQCjcVoXxObgfOWQJKQuZK8xZKnE2TZYA==
+X-Received: by 2002:a05:6122:82a9:b0:566:3c6d:b597 with SMTP id
+ 71dfb90a1353d-5667959e000mr1418482e0c.11.1769599607382; Wed, 28 Jan 2026
+ 03:26:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,
- Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
- <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
- <0437b899-5a36-4499-a30a-c2a074a80f7e@gmail.com>
- <CAH=ZcbA_HgEO2T2smn4Yg6gf4sm4jrR8A0ek1v9nqsa1MXbRJw@mail.gmail.com>
- <08318339-03c3-4068-92fa-7a711bd13da0@gmail.com>
- <CAH=ZcbAiGONrOyma7YjNKKLqNFoisU5LG=nGWjtOJ1wLfqX4cQ@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAH=ZcbAiGONrOyma7YjNKKLqNFoisU5LG=nGWjtOJ1wLfqX4cQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <cover.1769522219.git.abrahamadekunle50@gmail.com>
+ <9b21cb901ab14397af94b8ed2d09da1a9a6d862b.1769522219.git.abrahamadekunle50@gmail.com>
+ <xmqq7bt2g4tl.fsf@gitster.g>
+In-Reply-To: <xmqq7bt2g4tl.fsf@gitster.g>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Wed, 28 Jan 2026 12:26:48 +0100
+X-Gm-Features: AZwV_QjbxF38HkKYs7bU35d5vKtXnVg1PYBiopQXrKMwV2H8QRScLZ-96w-4lJ4
+Message-ID: <CADYq+fYeWh0tLEepOGVa=1i9tXZfWaGfyi6H+xUB7rbdQ=t5aQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] Allow reworking with a file after deciding on all
+ its hunks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 21/01/2026 21:39, Ezekiel Newren wrote:
-> On Tue, Jan 20, 2026 at 7:06 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> Hi Ezekiel
->>
->> On 15/01/2026 15:55, Ezekiel Newren wrote:
->>> On Thu, Jan 8, 2026 at 7:34 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>>>> +void ivec_reserve(void *self_, size_t additional)
->>>>> +{
->>>>> +     struct IVec_c_void *self = self_;
->>>>> +
->>>>> +     size_t growby = 128;
->>>>> +     if (self->capacity > growby)
->>>>> +             growby = self->capacity;
->>>>> +     if (additional > growby)
->>>>> +             growby = additional;
->>>>
->>>> This growth strategy differs from both ALLOC_GROW() and
->>>> XDL_ALLOC_GROW(), if there isn't a good reason for that we should
->>>> perhaps just use ALLOC_GROW() here.
->>>
->>> XDL_ALLOW_GROW() can't be used because the pointer is always a void*
->>> in this function.
->>
->> Oh right. I'm not sure that's not a reason to use a different growth
->> strategy though. The minimum size of 128 elements is probably good for
->> the xdiff code that creates arrays with one element per line but if this
->> is supposed to be for general use it is going to waste space when we're
->> allocating a lot of small arrays. ALLOC_GROW() uses alloc_nr() to
->> calculate the new side so perhaps we could use that here?
-> 
-> If ivec_reserve() isn't suitable then ivec_reserve_exact() should be
-> used instead.
+On Tue, Jan 27, 2026 at 9:48=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+>
+> > diff --git a/add-patch.c b/add-patch.c
+> > index 173a53241e..edb2fab3fd 100644
+> > --- a/add-patch.c
+> > +++ b/add-patch.c
+> > @@ -1418,6 +1418,8 @@ N_("j - go to the next undecided hunk, roll over =
+at the bottom\n"
+> >     "e - manually edit the current hunk\n"
+> >     "p - print the current hunk\n"
+> >     "P - print the current hunk using the pager\n"
+> > +   "> - go to the next file\n"
+> > +   "< - go to the previous file\n"
+> >     "? - print help\n");
+>
+> As I said earlier, these may have to be optional.  It may give
+> existing users a jarring experience to be given a prompt after
+> deciding on all the hunks in a file, when they expect to be on
+> the next file already.
 
-If some C code that pushes one element at a time to an array using 
-ALLOC_GROW() is converted to use an ivec then we don't want to change 
-the code behaves - that means it should grow the array in the same way. 
-I don't see how the suggestion to use ivec_reserve_exact() helps in that 
-situation. What is the advantage in having a different growth 
-characteristic?
+Yes I agree.
+I will work on making it an optional feature.
 
->>>>> +void ivec_push(void *self_, const void *value)
->>>>> +{
->>>>> +     struct IVec_c_void *self = self_;
->>>>> +     void *dst = NULL;
->>>>> +
->>>>> +     if (self->length == self->capacity)
->>>>> +             ivec_reserve(self, 1);
->>>>> +
->>>>> +     dst = (uint8_t*)self->ptr + self->length * self->element_size;
->>>>> +     memcpy(dst, value, self->element_size);
->>>>
->>>> If self->element_size was a compile time constant the compiler could
->>>> easily optimize this call away. I'm not sure that is easy to achieve though.
->>>
->>> The problem is that I didn't want all of ivec to be macros that looked
->>> like function calls. I wanted to minimize use of macros so that it was
->>> easier to port and verify that the Rust implementation matches the
->>> behavior of the C implementation.
->>
->> I think that's a reasonable concern. So is the plan to have a parallel
->> rust implementation of these functions rather than call the C
->> implementation from rust?
-> 
-> Yes, the Rust implementation will be independent of the C
-> implementation, but will behave the same way. That's why I'm calling
-> it an interoperable vec as opposed to a compatible vec. Rust can't
-> call the C ivec functions and C can't call the Rust ivec functions,
-> but they'll behave the same way.
+>
+> > @@ -1441,6 +1443,17 @@ static bool get_first_undecided(const struct fil=
+e_diff *file_diff, size_t *idx)
+> >       return false;
+> >  }
+> >
+> > +static size_t get_file_diff_index(struct add_p_state *s, struct file_d=
+iff *file_diff) {
+> > +     size_t idx =3D 0;
+> > +     for (size_t i =3D 0; i < s->file_diff_nr; i++) {
+> > +             if (s->file_diff + i =3D=3D file_diff) {
+> > +                     idx =3D i;
+> > +                     break;
+> > +             }
+> > +     }
+> > +     return idx;
+> > +}
+>
+> Yuck.  Can't we lose the need for this function if we change the
+> interface into patch_update_file so that it takes the index of the
+> file (i.e., instead of "&s.file_diff[i]", pass "i")?  There is only
+> one caller to patch_update_file() which is run_add_p(), so such a
+> clean-up should be trivial.
 
-Interesting - I'm curious what the advantage of that is over having rust 
-call the C implementation? I can see you wouldn't want to be calling 
-into C for each ivec.push() call, but checking if there is room to push 
-the new element in rust and calling into C to extend the vector if not 
-should be reasonable and then you don't have to re-implement everything 
-in rust.
+Ah yes this is definitely a sweet and better option.
 
->>>>> +void ivec_free(void *self_)
->>>>
->>>> Normally we'd call a like this that free the allocations and
->>>> re-initializes the members ivec_clear()
->>>
->>> In Rust Vec.clear() means to set length to zero, but leaves the
->>> allocation alone. The reason why I'm zeroing the struct is to help
->>> avoid FFI issues. If not zero then what should the members be set to,
->>> to indicate that using the struct is not valid anymore? In Rust an
->>> object is freed when it goes out of scope and _cannot_ be accessed
->>> afterward.
-> 
-> Maybe I should call this ivec_drop(). Though the notion of explicitly
-> freeing an object in Rust is _almost_ nonsense. The way you free
-> something in Rust is to let it go out of scope.
+>
+> >  static int patch_update_file(struct add_p_state *s,
+> >                            struct file_diff *file_diff)
+> >  {
+> > @@ -1448,9 +1461,10 @@ static int patch_update_file(struct add_p_state =
+*s,
+> >       ssize_t i, undecided_previous, undecided_next, rendered_hunk_inde=
+x =3D -1;
+> >       struct hunk *hunk;
+> >       char ch;
+> > -     struct child_process cp =3D CHILD_PROCESS_INIT;
+>
+> This is related to the hoisting of the actual patch application to
+> the caller, but it is not explained why such a change is needed, and
+> it byitself, even without the "jump to the next file before deciding
+> on all the hunks" feature.  What problem is it solving???
 
-Indeed - which means this wont be a public function in rust and so why 
-do we worry about naming it ivec_clear()? At least ivec_drop() does not 
-conflict with any of the standard function suffixes that we're already 
-using in git.
+I explained this below
 
->> I'm aware that Vec::clear() has different semantics (it does what
->> strbuf_reset() does). That's unfortunate but this function has different
->> semantics to all the other *_free() functions in git. Our coding
->> guidelines say
->>
->>    - There are several common idiomatic names for functions performing
->>      specific tasks on a structure `S`:
->>
->>       - `S_init()` initializes a structure without allocating the
->>         structure itself.
->>
->>       - `S_release()` releases a structure's contents without freeing the
->>         structure.
->>
->>       - `S_clear()` is equivalent to `S_release()` followed by `S_init()`
->>         such that the structure is directly usable after clearing it. When
->>         `S_clear()` is provided, `S_init()` shall not allocate resources
->>         that need to be released again.
->>
->>       - `S_free()` releases a structure's contents and frees the
->>         structure.
->>
->> As we write more rust code and so wrap more of our existing structs
->> we're going to be wrapping C code that uses the definitions above so I
->> think we should do the same with struct IVec_*.
-> 
-> I disagree. IVec isn't a wrapper around an existing struct.
+>
+> If it is necessary to move the code to run "git apply" to the
+> caller, would it make sense to split this patch into at least two
+> patches, one to do such a move, possibly another patch to change the
+> function signature of patch_update_file() so that it takes the file
+> index instead of file_diff struct, and finally another patch to
+> allow jumping around the files?
 
-So just because it is a new stuct it shouldn't have to follow the 
-existing naming conventions?
+Okay yes it would make much sense.
 
-> ivec is
-> meant to very closely mimic Rust's Vec while guaranteeing
-> interoperability. For things like strbuf I haven't conceived of a
-> solution for that yet. Making ivec diverge from Rust's Vec will result
-> in POLA violations due to different behavior when refactoring an
-> IVec<your_type_here> to Vec<your_type_here>.
+>
+> >       int colored =3D !!s->colored.len, quit =3D 0, use_pager =3D 0;
+> >       enum prompt_mode_type prompt_mode_type;
+> > +     size_t file_diff_index =3D get_file_diff_index(s, file_diff);
+> > +     int all_decided =3D 0;
+> >
+> >       /* Empty added files have no hunks */
+> >       if (!file_diff->hunk_nr && !file_diff->added)
+> > @@ -1467,7 +1481,9 @@ static int patch_update_file(struct add_p_state *=
+s,
+> >                       ALLOW_GOTO_NEXT_UNDECIDED_HUNK =3D 1 << 3,
+> >                       ALLOW_SEARCH_AND_GOTO =3D 1 << 4,
+> >                       ALLOW_SPLIT =3D 1 << 5,
+> > -                     ALLOW_EDIT =3D 1 << 6
+> > +                     ALLOW_EDIT =3D 1 << 6,
+> > +                     ALLOW_GOTO_PREVIOUS_FILE =3D 1 << 7,
+> > +                     ALLOW_GOTO_NEXT_FILE =3D 1 << 8
+> >               } permitted =3D 0;
+> >
+> >               if (hunk_index >=3D file_diff->hunk_nr)
+> > @@ -1499,8 +1515,7 @@ static int patch_update_file(struct add_p_state *=
+s,
+> >               /* Everything decided? */
+> >               if (undecided_previous < 0 && undecided_next < 0 &&
+> >                   hunk->use !=3D UNDECIDED_HUNK)
+> > -                     break;
+> > -
+> > +                             all_decided =3D 1;
+> >               strbuf_reset(&s->buf);
+> >               if (file_diff->hunk_nr) {
+> >                       if (rendered_hunk_index !=3D hunk_index) {
+> > @@ -1548,6 +1563,16 @@ static int patch_update_file(struct add_p_state =
+*s,
+> >                               permitted |=3D ALLOW_EDIT;
+> >                               strbuf_addstr(&s->buf, ",e");
+> >                       }
+> > +                     if (file_diff_index >=3D 0 &&
+> > +                             file_diff_index < s->file_diff_nr - 1) {
+> > +                             permitted |=3D ALLOW_GOTO_NEXT_FILE;
+> > +                             strbuf_addstr(&s->buf, ",>");
+> > +                     }
+> > +                     if (file_diff_index > 0 &&
+> > +                             file_diff_index <=3D s->file_diff_nr - 1)=
+ {
+> > +                             permitted |=3D ALLOW_GOTO_PREVIOUS_FILE;
+> > +                             strbuf_addstr(&s->buf, ",<");
+> > +                     }
+>
+> As can be seen in what patch_update_file() does when the user says
+> 'J' or 'K', hunks in a file are treated as a ring, and these
+> commands are enabled as long as there are more than one hunks.
+>
+> Perhaps that is more familiar than "when we hit the floor, we cannot
+> sink deeper, and when we hit the ceiling, we cannot float more",
+> which seems to be what the above implements.
 
-On the other hand, vec.reset() does not exist so you'd get a compiler 
-error if you forgot to rename those calls when changing from IVec to Vec 
-and the rust code wouldn't be calling ivec.clear(). I'm not sure citing 
-POLA concerns is very convincing as ivec_free() in C is a POLA violation 
-for anyone familiar with git's code base so it's not like there's a 
-choice that avoids that concern.
+Yes I understand this now.
+It does make sense this way.
+
+>
+> >                       strbuf_addstr(&s->buf, ",p,P");
+> >               }
+> >               if (file_diff->deleted)
+> > @@ -1566,6 +1591,9 @@ static int patch_update_file(struct add_p_state *=
+s,
+> >                                               : 1));
+> >               printf(_(s->mode->prompt_mode[prompt_mode_type]),
+> >                      s->buf.buf);
+> > +             if (all_decided)
+> > +                     printf(_("\n%s All hunks decided. What now? "),
+> > +                             s->s.prompt_color);
+> >               if (*s->s.reset_color_interactive)
+> >                       fputs(s->s.reset_color_interactive, stdout);
+> >               fflush(stdout);
+> > @@ -1618,7 +1646,24 @@ static int patch_update_file(struct add_p_state =
+*s,
+> >               } else if (ch =3D=3D 'q') {
+> >                       quit =3D 1;
+> >                       break;
+> > -             } else if (s->answer.buf[0] =3D=3D 'K') {
+> > +             } else if (s->answer.buf[0] =3D=3D '>') {
+> > +                     if (permitted & ALLOW_GOTO_NEXT_FILE) {
+> > +                             quit =3D 0;
+> > +                             break;
+> > +                     } else {
+> > +                             err(s, _("No next file"));
+> > +                             continue;
+> > +                     }
+> > +             } else if (s->answer.buf[0] =3D=3D '<') {
+> > +                     if (permitted & ALLOW_GOTO_PREVIOUS_FILE) {
+> > +                             quit =3D 2;
+> > +                             break;
+>
+> What's the magic number "2"?  Should "quit" become an enum with
+> elements that are more meaningfully named?
+
+Okay, yes an enum would be better.
+
+>
+> > +                     } else {
+> > +                             err(s, _("No previous file"));
+> > +                             continue;
+> > +                     }
+> > +             }
+> > +             else if (s->answer.buf[0] =3D=3D 'K') {
+> >                       if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
+> >                               hunk_index =3D dec_mod(hunk_index,
+> >                                                    file_diff->hunk_nr);
+> > @@ -1775,33 +1820,6 @@ static int patch_update_file(struct add_p_state =
+*s,
+> >               }
+> >       }
+> >
+> > -     /* Any hunk to be used? */
+> > -     for (i =3D 0; i < file_diff->hunk_nr; i++)
+> > -             if (file_diff->hunk[i].use =3D=3D USE_HUNK)
+> > -                     break;
+> > -
+> > -     if (i < file_diff->hunk_nr ||
+> > -         (!file_diff->hunk_nr && file_diff->head.use =3D=3D USE_HUNK))=
+ {
+> > -             /* At least one hunk selected: apply */
+> > -             strbuf_reset(&s->buf);
+> > -             reassemble_patch(s, file_diff, 0, &s->buf);
+> > -
+> > -             discard_index(s->s.r->index);
+> > -             if (s->mode->apply_for_checkout)
+> > -                     apply_for_checkout(s, &s->buf,
+> > -                                        s->mode->is_reverse);
+> > -             else {
+> > -                     setup_child_process(s, &cp, "apply", NULL);
+> > -                     strvec_pushv(&cp.args, s->mode->apply_args);
+> > -                     if (pipe_command(&cp, s->buf.buf, s->buf.len,
+> > -                                      NULL, 0, NULL, 0))
+> > -                             error(_("'git apply' failed"));
+> > -             }
+> > -             if (repo_read_index(s->s.r) >=3D 0)
+> > -                     repo_refresh_and_write_index(s->s.r, REFRESH_QUIE=
+T, 0,
+> > -                                                  1, NULL, NULL, NULL)=
+;
+> > -     }
+>
+> It is not obvious why the above code needs to be hoisted to the
+> caller.
+
+I explained this below.
+
+>
+> >       putchar('\n');
+> >       return quit;
+> >  }
+> > @@ -1813,7 +1831,9 @@ int run_add_p(struct repository *r, enum add_p_mo=
+de mode,
+> >       struct add_p_state s =3D {
+> >               { r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+> >       };
+> > -     size_t i, binary_count =3D 0;
+> > +     size_t i, j, binary_count =3D 0;
+> > +     size_t patch_update_result =3D 0;
+>
+> Hmph, I think patch_update_file() returns "int quit".  Why do we
+> want overly wide type to store the result, which cannot even express
+> negative number to potentially signal a failure?
+
+Sorry, this is a mistake on my part
+
+>
+> > +     struct child_process cp =3D CHILD_PROCESS_INIT;
+> >
+> >       init_add_i_state(&s.s, r, o);
+> >
+> > @@ -1852,11 +1872,56 @@ int run_add_p(struct repository *r, enum add_p_=
+mode mode,
+> >               return -1;
+> >       }
+> >
+> > -     for (i =3D 0; i < s.file_diff_nr; i++)
+> > -             if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr)
+> > +     for (i =3D 0; i < s.file_diff_nr;) {
+> > +             if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr) {
+> >                       binary_count++;
+> > -             else if (patch_update_file(&s, s.file_diff + i))
+> > -                     break;
+> > +                     i++;
+> > +                     continue;
+> > +             }
+> > +             else {
+> > +                     patch_update_result =3D patch_update_file(&s, s.f=
+ile_diff + i);
+> > +                     if (patch_update_result =3D=3D 0) {
+> > +                             i++;
+> > +                             continue;
+> > +                     }
+> > +                     if (patch_update_result =3D=3D 1)
+> > +                             break;
+> > +                     if (patch_update_result =3D=3D 2) {
+> > +                             i--;
+> > +                             continue;
+> > +                     }
+> > +             }
+> > +     }
+> > +     for (i =3D 0; i < s.file_diff_nr; i++) {
+> > +
+> > +                     /* Any hunk to be used? */
+> > +             for (j =3D 0; j < s.file_diff[i].hunk_nr; j++)
+> > +                     if (s.file_diff[i].hunk[j].use =3D=3D USE_HUNK)
+> > +                             break;
+> > +
+> > +             if (j < s.file_diff[i].hunk_nr ||
+> > +         (!s.file_diff[i].hunk_nr && s.file_diff[i].head.use =3D=3D US=
+E_HUNK)) {
+> > +                     /* At least one hunk selected: apply */
+> > +                     strbuf_reset(&s.buf);
+> > +                     reassemble_patch(&s, s.file_diff + i, 0, &s.buf);
+> > +
+> > +                     discard_index(s.s.r->index);
+> > +                     if (s.mode->apply_for_checkout)
+> > +                             apply_for_checkout(&s, &s.buf,
+> > +                                             s.mode->is_reverse);
+> > +                     else {
+> > +                             setup_child_process(&s, &cp, "apply", NUL=
+L);
+> > +                             strvec_pushv(&cp.args, s.mode->apply_args=
+);
+> > +                             if (pipe_command(&cp, s.buf.buf, s.buf.le=
+n,
+> > +                                             NULL, 0, NULL, 0))
+> > +                                     error(_("'git apply' failed"));
+> > +                     }
+> > +                     if (repo_read_index(s.s.r) >=3D 0)
+> > +                             repo_refresh_and_write_index(s.s.r, REFRE=
+SH_QUIET, 0,
+> > +                                                             1, NULL, =
+NULL, NULL);
+> > +             }
+> > +
+> > +     }
+>
+> One upside of having "git apply" at the end of patch_update_file()
+> is that you can "^C" out of "git add -p" or your terminal connection
+> can be cut off, after dealing with hunks in a few early files, and
+> these early part of your work that you have already done are already
+> reflected to the working tree files.  By hoisting the logic to the
+> caller, this is making the update all-or-none, which is good in
+> transactional systems, but can make a horrible experience for an
+> interactive use where you make progress while thinking.
+>
+> So I am not yet convinced if this change makes sense---it could be
+> because of the lack of justification for this change.
+
+What I observed after adding the '>' and '<' options is that if a user choo=
+ses
+to use a hunk A in file 1, and then goes to file 2 with '>', comes back to
+file 1 with '<', and decides on hunk A to skip it instead, because
+patch_update_file() has
+applied the file with the hunk the user initially decided to use
+before proceeding to file
+2 with '>', coming back to redecide and say skip does not apply the
+latest decision
+and when you check the index, the file with the hunks which the user
+initially decided to
+use but changed to skip is present in the index.
+
+But if the user initially decided to skip a hunk in a file, goes to
+the next file with '>'
+and back to the first file, changes the decision on the hunk to use,
+it applies the patch
+with the hunk because the hunk was not initially selected when the
+patch was applied.
+But if he now goes away and comes back to the file a third time and
+chooses to skip the
+hunk, then quits with 'q', because he had selected to use the hunk the
+second time,
+choosing skip again will not work.
+
+So basically, initially choosing to use a hunk in a file, going to
+another file and coming
+back to this file then choosing to skip it does not register the
+latest skip decision
+on that hunk.
+
+That was why I decided to do it this way.
+I will appreciate a better suggestion from you
 
 Thanks
-
-Phillip
-
->>>>> diff --git a/compat/ivec.h b/compat/ivec.h
->>>>> new file mode 100644
->>>>> index 0000000000..654a05c506
->>>>> --- /dev/null
->>>>> +++ b/compat/ivec.h
->>>>> @@ -0,0 +1,52 @@
->>>>> +#ifndef IVEC_H
->>>>> +#define IVEC_H
->>>>> +
->>>>> +#include <git-compat-util.h>
->>>>
->>>> It would be nice to have some documentation in this header, see the
->>>> examples in strvec.h and hashmap.h
->>>>
->>>>> +#define IVEC_INIT(variable) ivec_init(&(variable), sizeof(*(variable).ptr))
->>>>
->>>> This is a bit cumbersome to use compared to our usual *_INIT macros. I'm
->>>> struggling to see how we can make it nicer though as DEFINE_IVEC_TYPE
->>>> cannot define a per-type initializer macro and I we cannot initialize
->>>> the element size without knowing the type.
->>>
->>> I don't see what's cumbersome about it. Maybe an example use case
->>> would clarify things.
->>
->> It is cumbersome because it separates the initialization from the
->> declaration. Normally our *_INIT macros are initializer lists so we can
->> write
->>
->>          struct strbuf = STRBUF_INIT;
->>
->> which keeps the declaration and initialization together. Although
->> they're on adjacent lines in your example in real code the
->> initialization likely to be separated from the declaration by other
->> variable declarations.
-> 
-> Ah I see what you mean now. I'll experiment with making IVEC_INIT()
-> work like that. One wrinkle is that STRBUF_INIT is a single concrete
-> type whereas IVEC_INIT() is meant for generic types.
-
-If you can get it to work that would be great, but I can't think of a 
-way of getting it to work for a generic type.
-
-Thanks
-
-Phillip
-
+Abraham.
