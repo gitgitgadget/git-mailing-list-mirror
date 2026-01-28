@@ -1,114 +1,125 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B14B26CE2C
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 22:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C511531C1
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 23:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769640659; cv=none; b=PdoXn5nHzg56nlyj1MC/kgiSh/z+PLVJZGYGdUS+wY0KHYU51edBH4s9LUwDK+D3GX9Z4wPc4DAYR5DAvDwsZE4qyv8BZOK7TGpJaVmloUr/vwWRcfOzyjNyLX9lTErBXBuo7Q2aWfADin4V1ZEbVQ9CP6SEarlFnBmqJpTvgxw=
+	t=1769643740; cv=none; b=rjWi+lepDXF+8ZKEajxBeOR4dKSG29gfJsoHy5oQulwNiNX5KgDmsq39MfAJuSSr8LWoDkyzA6InYNFkSQXzXKMT3dk19xN0UFtcWyjG3wb87490VY9itCFx5LaVN65rU/jQMSWxPdTreLpekCrkp6WILrHMJx212t9EsOqZ/TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769640659; c=relaxed/simple;
-	bh=FLjv1aiBeFGH5zRsscQoSveON4AcCK/K8JZiWiVvMfw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IsJ+7st7L/AjkRUUw9haufV5KOGDf2Pi5waEo8xQGf2YtFqbpP4mClGGnYPUiM9ySoFiJZ1c7/DHmPb3RtNuEqYcBvt6PRcZzUpU5Qh90F9wArTIfMFxjsGjhBM601GpvBEhAUgKZoeUL7BmywQdZ+ttOa5N57S8QBjmsgMZjRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=alSvYu6k; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1769643740; c=relaxed/simple;
+	bh=NOmUhGkK11J2jAavhHOrYAcxhoJG8TBvtFwrsJMo7uI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dTve7OXYhJJvoL774cDwgkkEiA9SCspv/fS/rECeXQNChgTUskpGPB3WNedI2Jseys2Zjq2iSRiBVaZujS9ESu8GN0hbbUP/U5+HqMdbbh5CwaLjDW7L0BT0uO0PdNMAxYi0OHOux8Tkll86Lp5EpQ9n7O/R9vV1pdG6F/spLcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=2x8HueOT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L7XGG5T7; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="alSvYu6k"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1769640652;
-	bh=FLjv1aiBeFGH5zRsscQoSveON4AcCK/K8JZiWiVvMfw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=alSvYu6kQy5oaQFt3SAKcMeNU4Nh3tt8SCDu1ytUPjkH+PHwHEGiDG6Ol459RUKwK
-	 dabV/kA9tgUW55DUAv9dOoGs8LiI0nHUlF6Yi4LFv1wiQqLFxDuUZRSN3zZGPHHC1A
-	 iPnkmlfO6kPevDVW3oN46Vi6gI+8GPjNZQoWciavgv8yTdGszjn3MAUmak70mhYqhd
-	 tKFVU4gWxcqBi2dsB+HB9Aitp7rP21JZKqCnLUeY3xGjdg4adLzDmkEecDjf8aHVH7
-	 vmx9/taObyzShC9Vqk/nI1D+lebCOYiD1XvzwTZPkMl6Z0kpapKvR8JP+BMwe6hRra
-	 mzF0SKXK8PeHAMxGSwIN+VGORiVMBmvCAvCidZzbipJzgf0p+LCQGW4W0i0vB/EsOZ
-	 rZHOXRe/c7eT2zqIaSJ87UXsRS1cUtppYLsq8V/2F3te8NAIvkixgCAVs3vPL06RFS
-	 Cti3WXkggBmEh1O8NnQOIPAaOZ2pHGth6ViRiMfymbwDmp1CBAX
-Received: from fruit.crustytoothpaste.net (pool-99-237-158-163.cpe.net.cable.rogers.com [99.237.158.163])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 66970200B4;
-	Wed, 28 Jan 2026 22:50:52 +0000 (UTC)
-Date: Wed, 28 Jan 2026 22:50:50 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <junio@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2026, #09)
-Message-ID: <aXqSyn3Mfcgs8MUG@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
-References: <xmqqecnbeyvr.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="2x8HueOT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L7XGG5T7"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 67BDB1D00078;
+	Wed, 28 Jan 2026 18:42:17 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 28 Jan 2026 18:42:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769643737; x=1769730137; bh=NOmUhGkK11
+	J2jAavhHOrYAcxhoJG8TBvtFwrsJMo7uI=; b=2x8HueOTx+LgomDnXNbUkbnNJS
+	V6czpeswYZYFohXcgNLYEkYkYHNufytszOeLXNZ0tnzh/WBGpA09h/6+6f0XwKIe
+	4cuXUlyVFZka7W5Pi7ypOUeM2t//ufpwbsGMpD7IcZ20A6djsjXO+UQzPeEvVnbg
+	D29L3CTwbdUDsxPGW1iJlsf8C3ukWG9KOt01mCuQ0PE1F3Z9QqFbgZwOMX3Nj+Qa
+	uaHLFqNRWTUKiU71dLpPEmIXZFidAxjjs7CebJuou9MHIRkrbLFj/Rn2gPp5P6p8
+	xSoULM9tcVua0LjLp10Fk4F1lP/PLcXNGK4CIZNWW7lLV0nGTr1LNiSZBGYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1769643737; x=1769730137; bh=NOmUhGkK11J2jAavhHOrYAcxhoJG8TBvtFw
+	rsJMo7uI=; b=L7XGG5T7quRkKggraNk/mN58bNLFtfP6UICnoFiOUm0u84u23CV
+	f7ux/8JMR3BoqsO3vyrQIHpk1oGhrqZS4jpU+hh27ZAUV14OK+jLc7uzANoFD6pi
+	lHZR+a1l1XogANMluyNsCbsSRngtv4/NOC/HBjvMn5CwTLDGpywIHwlgwhXguI8Y
+	GvhIda/9lXpv4uyQDuQ+yW9k0gwCNo1Z4KD6miJJ2hoFzv4ZUuah6UuQE4D6ruCM
+	FBBdpqTyhdrzuJGIiuvCEtAd3N7iZPpML/h3qN52hoj+u0bcscvzPXpZ/+65qxbn
+	UskdAjry7KUtZmpUGC4O7NjcYZv3w+xgGcg==
+X-ME-Sender: <xms:2J56aVXrHE2fNLsWNuAx2wqaMp8ZP_HN6vge_9nc9u79QZUiAcV0xQ>
+    <xme:2J56aWT_yQeO77fznc5MIA8ApKeZMEWz9J5UADOSgAZYFWfVae2faoyZ81KiVP8mJ
+    oOuTjc2XisRMq-Df02uBaS5Zr8zx1U3O4W2wY-3XxN3dxXNLLsg>
+X-ME-Received: <xmr:2J56aflpWjymCK9AHT2_8SplWInOjwFlln6ZINzzpphSK-vC3lCGjL4lOLMu5jQwEP-VuMQVtynHAKtq1FOBdQ2smUQe3TZZ9FKz-44>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieegieeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepgh
+    hithhhuhgspggthhhrihhspghiuggvmhgrsehprhhothhonhdrmhgvpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmihgthhhisehitg
+    hoshgrhhgvughrohhnrdguvgdprhgtphhtthhopehprghtthhhohihthhssehushgvrhhs
+    rdhsohhurhgtvghfohhrghgvrdhnvghtpdhrtghpthhtohepghhithhgihhtghgrughgvg
+    htsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:2J56ac40jt-QRhyVFbny6ZAfmcqIYPL2arzYiTlVjDV0Kg23yuylpg>
+    <xmx:2J56aVjrv7gqLWyV1xkVobGGxQwf45nQ4q7_T7lHRyX7qya6MGBi3g>
+    <xmx:2J56aZE_serTQ14XDLzXBEqbRjU2LnP1e7BMuYy8UY3ybEDTaVbpYg>
+    <xmx:2J56abQUzRecRMbk0JvePv8LlrjgSZXxsAc_gSVwH8ySXtcWmzc7iA>
+    <xmx:2Z56afJFRFrtBanrV5wCUm4YYn6Ie5hwezK5RJ3y4w3SWoFCOuvs-sUR>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Jan 2026 18:42:16 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: GitHub Chris Idema <github_chris_idema@proton.me>,  git@vger.kernel.org,
+  Michael Lutz <michi@icosahedron.de>,  Pat Thoyts
+ <patthoyts@users.sourceforge.net>,  Chris Idema via GitGitGadget
+ <gitgitgadget@gmail.com>
+Subject: Re: [PATCH/RFC v2 2/2] diff.tcl: call "apply_tab_size 1" to fix
+ alignment instead of spaces.
+In-Reply-To: <bf8e6231-e1c0-4c0c-b4d5-20f8d0044211@kdbg.org> (Johannes Sixt's
+	message of "Wed, 28 Jan 2026 16:59:55 +0100")
+References: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com>
+	<pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com>
+	<e11aa6d811dcf868fd0f91b74cdceb8bc3f4229e.1769545996.git.gitgitgadget@gmail.com>
+	<xmqqsebqem1n.fsf@gitster.g> <xmqqfr7qeixq.fsf@gitster.g>
+	<71494127-c17d-4fd9-a69d-1f547205ac8f@kdbg.org>
+	<Rrnh0ugGQ5ef_s-3W0Tive8HA9R0_9Cq6yK7K6SS6Jr3kPigHai3jzxvphTRNXXNhCnor2TMV8UjKEi5U27VOLBf-R4g6VbJBLq8PQH9kCI=@proton.me>
+	<bf8e6231-e1c0-4c0c-b4d5-20f8d0044211@kdbg.org>
+Date: Wed, 28 Jan 2026 15:42:14 -0800
+Message-ID: <xmqq4io5e23t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="r23APUL11s926Hr7"
-Content-Disposition: inline
-In-Reply-To: <xmqqecnbeyvr.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Johannes Sixt <j6t@kdbg.org> writes:
 
---r23APUL11s926Hr7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> For us this bug is a show stopper that makes the diff in the
+>> git-gui window by default unreadable.
 
-On 2026-01-27 at 17:42:00, Junio C Hamano wrote:
-> * bc/sha1-256-interop-02 (2025-11-17) 15 commits
->  - object-file-convert: always make sure object ID algo is valid
->  - rust: add a small wrapper around the hashfile code
->  - rust: add a new binary object map format
->  - rust: add functionality to hash an object
->  - rust: add a build.rs script for tests
->  - hash: expose hash context functions to Rust
->  - write-or-die: add an fsync component for the object map
->  - csum-file: define hashwrite's count as a uint32_t
->  - rust: add additional helpers for ObjectID
->  - hash: add a function to look up hash algo structs
->  - rust: add a hash algorithm abstraction
->  - rust: add a ObjectID struct
->  - hash: use uint32_t for object_id algorithm
->  - conversion: don't crash when no destination algo
->  - repository: require Rust support for interoperability
->=20
->  The code to maintain mapping between object names in multiple hash
->  functions is being added, written in Rust.
->=20
->  Any progress on CI breakages???
->  source: <20251117221621.2863243-1-sandals@crustytoothpaste.net>
+> Earlier, I said that I'm not fond of such a change. But I changed my
+> mind. I hadn't noticed so far that Gitk applies customized tabstops. Git
+> GUI and Gitk need not emulate the behavor of terminal windows faithfully
+> and can be more clever as far as tabstops are concerned.
 
-Not yet, but I hope to spend some time on that this week or early next.
-I now have some more time to work on this at work and I can try to poke
-around and figure out what might be wrong, or at least try to beg a
-colleague to try things on their Windows VM.
+I just peeked what gitk does, and it does use "settabs 0" (the
+equivalent of "apply_tab_size 0" in gitk world) for plain files,
+"settabs 1" for one parent regular commits, and "settabs $np" for
+n-parent merges, so what Chris is doing here makes git-gui match
+what gitk has been doing since 32f1b3e4 (gitk: Fix the tab setting
+in the diff display window, 2007-09-28) for close to 20 years ;-).
 
-My apologies for the delay; things have been busy lately and I've had
-less personal time to work on Git.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Having said that, the fact that they have been allowed to be
+different for so long tells me that the way characters immediately
+after tabs have been displayed in git-gui bothered nobody for a long
+time, and calling it a "show stopper" and "unreadable" is a great
+exaggeration, I must say.
 
---r23APUL11s926Hr7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaXqSyQAKCRB8DEliiIei
-gd6KAQCnID4iTKKNhoGB1lOnaFlDKZ5p/9jL/7S+6mddlgDggAD/XOaFGy0r+oiF
-MVpPnK9IC/DRQNnh+j/FKL6tllJfrgw=
-=gwlq
------END PGP SIGNATURE-----
-
---r23APUL11s926Hr7--
+Thanks.
