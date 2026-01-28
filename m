@@ -1,129 +1,242 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C924224728F
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 04:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769574821; cv=pass; b=NKzjL6PMKkkcFFyxds9K8avHODCt7k9benv54zYbmIbMgF7q0U9y19cyuUpflWdPeIlH5921dzD4lTAyna88FFfhJHxMf6xBzoCRuopfol4FH2zDN7n7SB52m/ntWd5VTvoXWvi5vWt6eNupMjBx4lr2E+2iP4lqI61sW+f0Wig=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769574821; c=relaxed/simple;
-	bh=yicGsCpAmMjJfHZu/CdZdwGwkiP1E3k6DjK7dYb8r5M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=FwGKekrABRiM/F+9kvuTt8uvLlBjGcVsQU/J88FM2um87bLQxUq8GD/ASY9sGSpMJ8drr/1SCl7rthAPHsbP5tWdMdQLEXwWA5+9ouqCxt0jv9oMG4g2EFwLu3hUOVjP/NnODRffiz/fzLCgik9tSI/aoaJubu2+XsdKmCgZhUI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BTBaLIRb; arc=pass smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B0B2264A9
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 05:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769578790; cv=none; b=ulqPnJhfK54wiKSlRR9XhKSRRtKulQChLttGpoWJskbh+y/Wht1xCppEUNk7d16xJNGQmP/M3GtWp8SNsRtGmql4fg5g3iOaHNC1wVqSh52sETw8nBlgt27VwseEdHMdM0E97XtQQlMA4qs16nQNEtvgSrwe2sVsmB7XrGD4NTU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769578790; c=relaxed/simple;
+	bh=zzLa+2OeiOzymppPPLFFg1Pry1JwYo2T/7LzpDBrvUc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=IXm0qCJu+u44eQKf9ZmYH6KrM/jAXZlljW3GMRs5TjYxGoxz0ehaNM34vKQDeT5rzx+hvQM0zic3HtB1g6ZdJOovr2iQYL+dZZ06N4cSi1kEiMaOS2Y//PauCe3Ky3vI53Zeei38VgqgO0aJBbFiLOHDjIeaaIVjxP6lj+WJgTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jtZfjw0P; arc=none smtp.client-ip=209.85.219.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTBaLIRb"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-658323d1c91so1022342a12.3
-        for <git@vger.kernel.org>; Tue, 27 Jan 2026 20:33:39 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769574818; cv=none;
-        d=google.com; s=arc-20240605;
-        b=FJ1KUTBmHqrZECmWGEvMIeGXnFVAt2AxtHbYILIxSmX25uCgDp7IkNepSpfaApCT9q
-         9zgDOoaN1uE/T4tj/P+5jj6NhmOuyYcl8IWkFiYAAYzOQotpq1lrOt1fbZ3s/6wBlq8t
-         BRmS8PDhoBfoJHU1y3qngYSs4KJ3LBzzL18JO8PYh1no6SuPL0ucMXnEbpLI5/1OtQSy
-         8dEMlgfSSRJxWu9vds1NaXAs0IeCl3Vx1/vBRyJwxC6Wi56SeYDhtYNM5kAog/WY2NgJ
-         Ahnm4sW5BXaeyofscshKYfFn4lFvoWAR6GzDsUrPZ28uXEDoqmSbNtbBDoNfLJRusUKI
-         S6hw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=yicGsCpAmMjJfHZu/CdZdwGwkiP1E3k6DjK7dYb8r5M=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=f/EcakHOnUm4lbN4+fypb5UkpYuMw3zBsteUwhOZf2X5OVQ75Xf5n/5xGh4woC3zXV
-         ncbsOCYI6ONs1wpGJPFn8o+AnVsrcnav9fyOMQvLVnFHwikRSX5mbSXr5Kb7ryGePcxO
-         mt2/l+skmlo9hcJwgHXAeOofYFaov7LzZdTu0MaYyBtpgqDQ9P6AnLeyw6GaC2BoHRgW
-         Gua5tKrPxXkSWgD9SF1rKggL9Z9eV6++/KhaUUE51Am9QB5s77chjMdJzcbUiyF5hPj8
-         jcj7lL848Skb364Q4h0sBqGrpMFutdkOvI9Uua576YG9UGld/JHhWN1h2NuT06qGBLL4
-         udig==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jtZfjw0P"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-894770e34afso106010816d6.0
+        for <git@vger.kernel.org>; Tue, 27 Jan 2026 21:39:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769574818; x=1770179618; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1769578787; x=1770183587; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yicGsCpAmMjJfHZu/CdZdwGwkiP1E3k6DjK7dYb8r5M=;
-        b=BTBaLIRbXF/rt4L2ThWi4Av4cRq2TfJ0U9zCNYjzh0NZyJAQIojkh40Ipd4RG23QHX
-         sdjdebOU+n80oDhRwoOvujKVlxlbGVDoGBB8LSejbRqbrCm419/rY0pOGi7OZROMHMFq
-         1hBl27s9jilIH8DuKhEEFmhiXKVfvLnUNQTfB1SkR7SsQG3g1kpJ/YeMh03H3zWuqqeH
-         +BV1R68mZLhmlYHrjKpBI9pEelmPB42QJVtOa+FMCwkE5todF+x05wtcdECGDsp2PpMT
-         zXQa1agcS7ECdkZOuU+8VWojRFqg9zoxeD4sgFl6wr3kMSAQmWKTZd8zi9MlCIZl0Btq
-         mELw==
+        bh=Y/Psu++vvZgvJp3FMORh2bmneX9C3hfFtExAQQyv2b4=;
+        b=jtZfjw0PmAcLVrFDMRUR3BoG067VbuVNuzbjdY0JOP+Tr2VaiBAaPR2PP5HyAnq60Q
+         AvB8+SLHxWIkOdeZ/L4MujU6Y7xoONnfL0BmhmjIlTmugMYku8c8dMY9cP4PH5tiwbuE
+         ohNNQr+C/sdnDZtSOWTHoJSzO1+vPL5MFjFf6pL5/dE1lPklaw1KTAsd5rrJtTjyRWS5
+         VJfgJFvIFw619UDfWGHxYK1rd4Cim4Nb4MSO9gfmJhpIRMTIQ53JH0zVRI6z/Ymt2yLH
+         LB2kd2yVgh6eRyqG5B8rtK+aXaax0pXPjltXM0HMWHlzn2eA2sc8My7HSYA1u7+YGdFX
+         2Srg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769574818; x=1770179618;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1769578787; x=1770183587;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=yicGsCpAmMjJfHZu/CdZdwGwkiP1E3k6DjK7dYb8r5M=;
-        b=STKCx7HKQvhl7W9kiS7aGDd1rSERWbS0ga3aeEG8Mm8wSRaDkFzLtmWYCo8m7Wp+oR
-         CK/zvdMCvEw4zyOBDflCjnWwlvg2NRGhINpT5dPh6Cjyi0WX81MC6EVGXGHqOts948Gy
-         8Ccdf7QWrISDgOopVkR6E9CkTPi0jhoj0fulvvZPPV5+4iacMnNEDikWLAR83zK4Q+sA
-         DhKCZ0xKevndXYo4RoSu67JGiXAV82aZewK03krc09MwWV10BksjSVxOUnUDUKU236gl
-         VZT9WCib2R1wPCK+zdkMNwCC8P7W7/FcUeBXAhghVamWj4Mfq4aehe653GyC9dGz64jJ
-         XpzA==
-X-Gm-Message-State: AOJu0Yx2jqb1AOYaceel/wsGthi/hn/mkD7pagCIt3TZESNqPEjba4Wm
-	EaB0VBNJr1oyta7+jHaM2Ye5g+Bihn/euwiFJ+INHuM7ZJpDyGOrzrz5o6Gci/YmSXVU79KTSnn
-	HpdGDfuGU6Fnkmt8Tmq4FszD+I70CzK4yoUwGxUw=
-X-Gm-Gg: AZuq6aJnGiTiw8Bm3aMADK635eVf/OfQjGo6ZC8JbLwU9BEsytOdSZ5jb/mq+k6Qv3b
-	s9JhUJPGK5+eZQDnhfhuIy4fQz5M7mNjhC77wVlMkcA7JwKfHh6y2c3knQDRpfM+Nv6+J7g7A/G
-	xZSBUNFJtWYMCfeJAdrqiLXVckfBYBH+AG46bOPpoKvfXYQJmqFCUhgQhmriqDmIybEeP2iRGlE
-	l/5brXfMfGjsrg7VSRhGBjUezoD4PphE61y0R5DL6+s1x+8NVydyIicZpgoK3kpWehEAQ==
-X-Received: by 2002:a17:907:8687:b0:b83:95ca:22e1 with SMTP id
- a640c23a62f3a-b8dc7f66c05mr24838266b.1.1769574817932; Tue, 27 Jan 2026
- 20:33:37 -0800 (PST)
+        bh=Y/Psu++vvZgvJp3FMORh2bmneX9C3hfFtExAQQyv2b4=;
+        b=pBOPklS/Knguvs5Bqj9hCdxRuBzwST2kmu31Bk8bttK8h982dJXCes1wECe9Lrikdq
+         XUdt4wg/6TfrAwddtfDYBtx8Dj/4TNdqIBzJtyejE58TUpNXXs16Rrxa1zavUv1vKZx4
+         rRW5I2lQr3XtfYHUGVT/Ur6DTTJTx7jNP0Nrotn1O6WrbaHgA/vAcevHr67iSz6KdWnA
+         CjmzmY3el8qEhQizaGubWeP3f0b3AmS8lucplXOKgFQtOUsHG5kfpRQiOnDBdwsr05An
+         U4ESoqYIRVM8+Zb49l6cBwIMkhK2JiwtjIw/NAgs8Z5igaYNlxDz4/h8yua4NjKoir4Q
+         m9IQ==
+X-Gm-Message-State: AOJu0YxDLmIV+uD2f6GQf7BrF6qbsjz1Dc2xcVbEC48jPjRIlBhXI78w
+	aqSScflNqyluljjgQXN87nbr2Xll6UvxpYFqsD83sxpnu5iefLTX4ZnHWj6sVw==
+X-Gm-Gg: AZuq6aI4S1IaIMRy8hT+sRamVM+mAoH4RBhHI/xxww+XpM049j/2JNqiFEcnvnsxS/h
+	QxsylJ86oJF6OPtMCtS28EOg+EWbEpd3Y0a4PJqVU839fDk1WRV1mzM6yiEtVwK1MlbycjN6W7h
+	3E6pyvMxWaMJExrOndTpZI9/CMVpefAoXhf734fFK4uoI/uj81ZFuzzWeS0PT8nQUaC+9PpXrLY
+	2UVkxWhiILRqkAwlOj8Im3+Pgz6F201jLrz0dgt5tN4aEd+SoK508Iu+aCqjSGxrSdmR1KH09xS
+	VAw2ZlD8B1UXasJxisFLqNcSolYMV9+vKXg9j3OFxEXWgPKw3NMai/fXhwsYyaJROXrddSWx+p4
+	Dh1opvGwk/rdCBgIFFlcFE+2IA/ztdjtXHIeUecgeuvOFiruzmYXdtcEL9+UrLph7r+PnvDmo9E
+	ceFkIkrTvIcqd2GO2b4QGrpgr/
+X-Received: by 2002:a05:6214:e61:b0:880:3ce2:65ad with SMTP id 6a1803df08f44-894cc8fc097mr58380186d6.41.1769578786605;
+        Tue, 27 Jan 2026 21:39:46 -0800 (PST)
+Received: from [127.0.0.1] ([135.232.200.67])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d3740e62sm10963736d6.26.2026.01.27.21.39.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jan 2026 21:39:46 -0800 (PST)
+Message-Id: <pull.2135.v3.git.git.1769578785381.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2135.v2.git.git.1766168169.gitgitgadget@gmail.com>
+References: <pull.2135.v2.git.git.1766168169.gitgitgadget@gmail.com>
+From: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 28 Jan 2026 05:39:45 +0000
+Subject: [PATCH v3] worktree: clarify that --expire only affects missing
+ worktrees
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260126165618.596944-1-a3205153416@gmail.com> <CA+rU_o5pzpHvvo=PwMV1-JUUa37Qp=B+-X3QqeXh-VRdNdA9DA@mail.gmail.com>
-In-Reply-To: <CA+rU_o5pzpHvvo=PwMV1-JUUa37Qp=B+-X3QqeXh-VRdNdA9DA@mail.gmail.com>
-From: Tian Yuchen <a3205153416@gmail.com>
-Date: Wed, 28 Jan 2026 12:33:28 +0800
-X-Gm-Features: AZwV_QhfIzWNBoEATIWN2ks781tENPKrSlBopnG2nBGIGDPjCeHzue8RvxwUFxs
-Message-ID: <CA+rU_o7dZB=OCJHk9nGSbs4RLXmE9A3VUopa+6vF6oX0E9vxuQ@mail.gmail.com>
-Subject: Re: [PATCH V1][RFC] t/perf/p3400: speed up setup using fast-import
 To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+    Sam Bostock <sam.bostock@shopify.com>,
+    Sam Bostock <sam.bostock@shopify.com>
 
-Tian Yuchen <a3205153416@gmail.com> writes=EF=BC=9A
->
-> I noticed that while the setup phase is much faster (as shown in the comm=
-it
-> message), the actual rebase performance test regressed slightly by about =
-3
-> seconds (from ~2s to ~5s). I don't quite understand what led to this outc=
-ome.
->
-> Additionally, I haven't delved deeply into the technical details of
-> `git fast-import`,
-> and I'm not entirely sure if my approach is reasonable and compliant with=
- the
-> specifications.
->
-> I would greatly appreciate any guidance from those knowledgeable in these
-> area!
->
-> Regards,
-> Yuchen
+From: Sam Bostock <sam.bostock@shopify.com>
 
-I highly suspect that git fast-import generate the packfile that is NOT del=
-ta
-compressed. According to git fast-import documentation:
+The --expire option for "git worktree list" and "git worktree prune"
+only affects worktrees whose working directory path no longer exists.
+The help text did not make this clear, and the documentation
+inconsistently used "unused" for prune but "missing" for list.
 
->...For this reason it is strongly recommended that users repack the reposi=
-tory with
->'git repack -a -d' after fast-import completes, allowing Git to reorganize=
- the packfiles
->for faster data access...
+Update the help text and documentation to consistently describe these
+as "missing worktrees", and use "prune" instead of "expire" when
+describing the effect on missing worktrees since the terminology is
+clearer.
 
-Could this be the reason why it's even slower than handling =E2=80=9Cloose
-objects=E2=80=9D? I'm working
-on it currently.
+While at it, expand the description of the "prune" subcommand itself
+to better explain what it does and when to use it, as suggested by
+Junio.
 
-Regards,
-Yuchen
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Sam Bostock <sam@sambostock.ca>
+---
+    worktree: clarify --expire applies to missing worktrees
+    
+    Changes from v2:
+    
+     * Squash into a single commit
+     * Expand the prune subcommand description per Junio's suggestion
+    
+    Changes from v1:
+    
+     * Use "prune" instead of "expire" in help text
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2135%2Fsambostock%2Fexpire-missing-worktrees-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2135/sambostock/expire-missing-worktrees-v3
+Pull-Request: https://github.com/git/git/pull/2135
+
+Range-diff vs v2:
+
+ 1:  ddd4191ecb ! 1:  a4483d9a20 worktree: clarify --expire applies to missing worktrees
+     @@ Metadata
+      Author: Sam Bostock <sam.bostock@shopify.com>
+      
+       ## Commit message ##
+     -    worktree: clarify --expire applies to missing worktrees
+     +    worktree: clarify that --expire only affects missing worktrees
+      
+     -    The `--expire` option for `git worktree list` and `git worktree prune`
+     +    The --expire option for "git worktree list" and "git worktree prune"
+          only affects worktrees whose working directory path no longer exists.
+          The help text did not make this clear, and the documentation
+          inconsistently used "unused" for prune but "missing" for list.
+      
+     -    This updates the help text and documentation to consistently describe
+     -    these as "missing worktrees".
+     +    Update the help text and documentation to consistently describe these
+     +    as "missing worktrees", and use "prune" instead of "expire" when
+     +    describing the effect on missing worktrees since the terminology is
+     +    clearer.
+      
+     +    While at it, expand the description of the "prune" subcommand itself
+     +    to better explain what it does and when to use it, as suggested by
+     +    Junio.
+     +
+     +    Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+     +    Helped-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Sam Bostock <sam@sambostock.ca>
+      
+       ## Documentation/git-worktree.adoc ##
+     +@@ Documentation/git-worktree.adoc: with linked worktrees if you move the main worktree manually.)
+     + 
+     + `prune`::
+     + 
+     +-Prune worktree information in `$GIT_DIR/worktrees`.
+     ++Remove worktree information in `$GIT_DIR/worktrees` for worktrees
+     ++whose working trees are missing.  Useful after manually removing
+     ++a working tree that is no longer needed (but use "git worktree
+     ++remove" next time you want to do so).  Also, if you _moved_ a
+     ++working tree elsewhere causing the worktree information to become
+     ++dangling, see "git worktree repair" to reconnect the worktree to
+     ++the new working tree location.
+     + 
+     + `remove`::
+     + 
+      @@ Documentation/git-worktree.adoc: mismatch, even if the links are correct.
+       With `list`, output additional information about worktrees (see below).
+       
+       `--expire <time>`::
+      -	With `prune`, only expire unused worktrees older than _<time>_.
+     -+	With `prune`, only expire missing worktrees older than _<time>_.
+     ++	With `prune`, only prune missing worktrees if older than _<time>_.
+       +
+       With `list`, annotate missing worktrees as prunable if they are older than
+       _<time>_.
+     @@ builtin/worktree.c: static int prune(int ac, const char **av, const char *prefix
+       		OPT__VERBOSE(&verbose, N_("report pruned working trees")),
+       		OPT_EXPIRY_DATE(0, "expire", &expire,
+      -				N_("expire working trees older than <time>")),
+     -+				N_("expire missing working trees older than <time>")),
+     ++				N_("prune missing working trees older than <time>")),
+       		OPT_END()
+       	};
+       
+ 2:  ff4732b72a < -:  ---------- worktree: use 'prune' instead of 'expire' in help text
+
+
+ Documentation/git-worktree.adoc | 10 ++++++++--
+ builtin/worktree.c              |  4 ++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
+index f272f79783..22ef37ec02 100644
+--- a/Documentation/git-worktree.adoc
++++ b/Documentation/git-worktree.adoc
+@@ -131,7 +131,13 @@ with linked worktrees if you move the main worktree manually.)
+ 
+ `prune`::
+ 
+-Prune worktree information in `$GIT_DIR/worktrees`.
++Remove worktree information in `$GIT_DIR/worktrees` for worktrees
++whose working trees are missing.  Useful after manually removing
++a working tree that is no longer needed (but use "git worktree
++remove" next time you want to do so).  Also, if you _moved_ a
++working tree elsewhere causing the worktree information to become
++dangling, see "git worktree repair" to reconnect the worktree to
++the new working tree location.
+ 
+ `remove`::
+ 
+@@ -271,7 +277,7 @@ mismatch, even if the links are correct.
+ With `list`, output additional information about worktrees (see below).
+ 
+ `--expire <time>`::
+-	With `prune`, only expire unused worktrees older than _<time>_.
++	With `prune`, only prune missing worktrees if older than _<time>_.
+ +
+ With `list`, annotate missing worktrees as prunable if they are older than
+ _<time>_.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index fbdaf2eb2e..3d6547c23b 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -252,7 +252,7 @@ static int prune(int ac, const char **av, const char *prefix,
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+ 		OPT__VERBOSE(&verbose, N_("report pruned working trees")),
+ 		OPT_EXPIRY_DATE(0, "expire", &expire,
+-				N_("expire working trees older than <time>")),
++				N_("prune missing working trees older than <time>")),
+ 		OPT_END()
+ 	};
+ 
+@@ -1070,7 +1070,7 @@ static int list(int ac, const char **av, const char *prefix,
+ 		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
+ 		OPT__VERBOSE(&verbose, N_("show extended annotations and reasons, if available")),
+ 		OPT_EXPIRY_DATE(0, "expire", &expire,
+-				N_("add 'prunable' annotation to worktrees older than <time>")),
++				N_("add 'prunable' annotation to missing worktrees older than <time>")),
+ 		OPT_SET_INT('z', NULL, &line_terminator,
+ 			    N_("terminate records with a NUL character"), '\0'),
+ 		OPT_END()
+
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+-- 
+gitgitgadget
