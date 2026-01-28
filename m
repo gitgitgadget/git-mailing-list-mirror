@@ -1,183 +1,100 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F5830BBBC
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 16:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A76E311597
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 17:02:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616459; cv=none; b=LyNdpfJY+RSrr2Cqhj9r6KH+vHXaW1RjBr5c7hIr/tq7tLw8KcbrCAqhuPWguBmi9jMiAPAYSI0X/xx5/NnYdHdbBMup5hu8gzS7k2/6AJNxcxa/9rGJLbSfGxYIao7A5zY65/2NCaG0lyC+9iUHWZV2J0MpXBWckeuM8Sgi7cE=
+	t=1769619727; cv=none; b=i1cjq9MpCdz3enJ1IIxxpx4YJ6DRL5/oD5lAd3F/hHW38CV1qnOKfnYNqrqA8CLly2I+82jhvVpnXwkowabQx5sG6tDWYJMOMmGwG/M2LPGo4TY28QHpYjlmEsoY9OeWaitcpMdr8ZmIYjA6pk/A0kyXjBgcTEjQY59FoTsSS00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616459; c=relaxed/simple;
-	bh=FZAmOyz2aKqQ21x/VmeuRp2YHd71JwDdDd6j25GAhTk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aKAvj+ECfUtu7O21AgT2ssA7mfM48MiAHxWY07DIcBTYcTPMNCSYiogAm5SlNNIKc8dDl1g4ZN1fbZKw50nmPtoMMEuweIEgpETFhWUg9sFlv4k4e+TJVU2bWl/Nxew+G+TLdzWVHgzlLfQfh5kIvylnW8Joj/KZ2/R25QNfVw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AcmZbK79; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AcmZbK79"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-81f39693db5so559943b3a.2
-        for <git@vger.kernel.org>; Wed, 28 Jan 2026 08:07:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769616456; x=1770221256; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VUplcW6J8kivkKekRPFyGKca6WRIx7SvSvDyG/5zztA=;
-        b=AcmZbK79VWfS29oggPp/giAfVjF08WcZEMANWsEQrJmOBhX5G6/KiDq8D6CfCyDxgI
-         8cfml6U3QWxTfr1kf5ez2SRB+cmaZRYyr2dJDaHJQzzMeT7gPOqrpuKtxjn5xrpVvM9z
-         60A68LvRg7FwxPfUMuIzCZpT2hG7Vso0VNuz0dI9d4ZmCkHtyTRS7FxZwLVIMQtEgGHx
-         Xq4VwAtGsW5hOFbJLuVNyVxVud2yIn6QxB/+jYtlefjuloz7B10VXcd8+PQmJTYEe2kA
-         Zd4Ig04vnCpgl16oKBcYiRZs3xuL/DrLoubnj2uDeX3CUS4Cyo66L383DNayVbNUk61Q
-         DBOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769616456; x=1770221256;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=VUplcW6J8kivkKekRPFyGKca6WRIx7SvSvDyG/5zztA=;
-        b=jpoKB9GSDN5goXG6ETRqtlsm/VcRz3Yfg58TpxoE8kxUvpAzBjN43TiagB7aF+qnqe
-         gcPaTrt3uMMS80RIBmyl51VmcGuRYK2SKGiL0qj/fi05Mm1RdI45uWqf4S2ExjERZiw8
-         369R1avBYxQQ2dTF8jF3+V1NlhZuTTVHQVpQxRC6jRzERj8eBjzsEuUzyCAeek/ncryU
-         vS8JUF9B86PQJKxzOdjUhdA8/RTOHevuLLepzr5tljmsaPyazoR5qi1ZnBLexiSbp3WM
-         yXcHAwJl5IYMSPXU6J2IQFdK33F/D886fEcyIL5ajXYPDDKhQ0BZ4oYsr7qVQCr9qDAC
-         oQaQ==
-X-Gm-Message-State: AOJu0Yye51XKBA/yDBMQulEPIWaw0z42MKGLoCg9fo1hIl/OCi4np1MT
-	0if6IQByV/ehxiFpJOcMmcSj3jsetC+4fsVs5fJUA9myljkiPpsJlFgGU7Ss15JD
-X-Gm-Gg: AZuq6aLoJh4N7Sl0pdEcm9qPz3lZndtV0NagY5Yh70DHm/WsfYuMqIWQ6EZ+az6HsnS
-	W4U9e38ty4QjwLk87M9gtjUAczYQMWLhhe+p2TdXoC2LkkRB9yvNBG3+9gu2so/dbQ9JivUxywV
-	p7LDoKGkDKedG9ouSR/7sgYB3HlR21UpOUBUAZ5jT27X2EPbH0hLVDHGYs1UmjbmUncmrAldLvf
-	IWEBYmtvR4YDYBDOUQ2G7KCNW+H7cHguQD2klgL5RPYqbD94g8L7WbxSzce1/vlDPkk74nkJCRs
-	Q4XaK5mkYIR2CD+nl23CrG9+3SQMlzd+B844VTP7BBYrSbxF4AE7tUcogCYHPaERwI7fTOlOmpF
-	rTZnZWXzA1eiBGo/9snDRvTBtZKm/KHFQ6Z8U3vFoKlWh9tfp4ItWW8FNqyMDdLeWqBmp+Nz9Gf
-	gjxCiuXYxJO1NelQMN5BxH22NKAVQ=
-X-Received: by 2002:a05:6a00:39a9:b0:81f:4546:cdff with SMTP id d2e1a72fcca58-8238fa3cb25mr352285b3a.3.1769616455946;
-        Wed, 28 Jan 2026 08:07:35 -0800 (PST)
-Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379c2261esm2925736b3a.52.2026.01.28.08.07.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jan 2026 08:07:35 -0800 (PST)
-From: Tian Yuchen <a3205153416@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [PATCH v2] t/perf/p3400: speed up setup using fast-import
-Date: Thu, 29 Jan 2026 00:07:17 +0800
-Message-ID: <20260128160717.611391-1-a3205153416@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260126165618.596944-1-a3205153416@gmail.com>
-References: <20260126165618.596944-1-a3205153416@gmail.com>
+	s=arc-20240116; t=1769619727; c=relaxed/simple;
+	bh=8rP21hO7RmPTBSYz813w3IPyvyxh4aI6vSULRSEnYqk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WAbVk6mBIQH+CuAZp/DrJ9RCiUFiGA+K45aQfS3teKBKyfwTqU7j8x4i6pJNodsBAFx+fGvYu1IyOWMw67VW59kLEBcIFP23/gqvOPqDU8fG+DBL8aiVJdFvKaEcM2lBBY3IkqB/cY5C5pWU66LQzFriyNPnl2/vAoDXoGfqx44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.103] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4f1T8S5ztHzRnlK;
+	Wed, 28 Jan 2026 18:02:00 +0100 (CET)
+Message-ID: <547d261c-a716-4c57-8b93-09cf7d8fb176@kdbg.org>
+Date: Wed, 28 Jan 2026 18:02:00 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH/RFC v3] diff.tcl: made alignment of tabs in git-gui diff
+ consistent with gitk
+Content-Language: en-US
+To: Chris Idema <github_chris_idema@proton.me>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Chris Idema via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com>
+ <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The setup phase in 't/perf/p3400-rebase.sh' generates 100 commits to
-simulate a noisy history. It currently uses a shell loop that invokes
-'git add', 'git commit', 'test_seq', and 'sort' in each iteration.
-This incurs significant overhead due to repeated process spawning.
+Am 28.01.26 um 11:20 schrieb Chris Idema via GitGitGadget:
+> From: Chris Idema <github_chris_idema@proton.me>
+> 
+> Tab stop width was not properly rendered in TK regardless of
+> tab width setting. The + or minus character at start of line made
+> tabs align incorrectly.
 
-Optimize the setup by using 'git fast-import' to generate the commit
-history in a single stream. Additionally, pre-compute the forward and
-reversed file contents to avoid repetitive execution of 'seq' and 'sort'.
+This is a patch for Git GUI. Please use the subject prefix "git-gui:".
+The file name need not be mentioned.
 
-To ensure the test measures rebase performance against a consistent
-object layout (rather than the suboptimal pack/loose objects created
-by the raw import), perform a full repack (`git repack -a -d`) at the
-end of the setup.
+Please have a look at existing commits and mimic the style of the commit
+subject and body text. In particular:
 
-This reduces the setup time significantly while maintaining the validity
-of the subsequent performance tests.
+- Use present tense to describe the current state. Elaborate what the
+problem is. Assume that readers haven't looked at the code for some time
+and guide them to the problem point (i.e., provide some context).
 
-Performance enhancement:
-          Real         Rebase
-  Before: 29.045s      13.34s
-  After:  22.231s      12.78s
+- Use imperative mood to describe the change as if you instruct someone
+to make the change.
 
-Measured on Lenovo Yoga 2020, Ubuntu 24.04.
+I suggest this subject:
 
-Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
----
+git-gui: shift tabstops to account for the first column of context diffs
 
-Changes since v1:
-- Added 'git repack -a -d' at the end of the setup phase.
-- This fixes a performance regression observed in the subsequent rebase
-  test, ensuring the object layout is normalized before testing.
-- Updated setup timing in the commit message to reflect the repack overhead.
+> 
+> Signed-off-by: Chris Idema <github_chris_idema@proton.me>
+> ---
+>     diff.tcl: made alignment of tabs in git-gui diff consistent with gitk
+>     
+>     cc: Johannes Sixt j6t@kdbg.org
 
- t/perf/p3400-rebase.sh | 54 +++++++++++++++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 16 deletions(-)
+Just FYI, this message didn't arrive in my mailbox despite this line.
 
-diff --git a/t/perf/p3400-rebase.sh b/t/perf/p3400-rebase.sh
-index e6b0277729..9f4251aed6 100755
---- a/t/perf/p3400-rebase.sh
-+++ b/t/perf/p3400-rebase.sh
-@@ -9,25 +9,47 @@ test_expect_success 'setup rebasing on top of a lot of changes' '
- 	git checkout -f -B base &&
- 	git checkout -B to-rebase &&
- 	git checkout -B upstream &&
--	for i in $(test_seq 100)
--	do
--		# simulate huge diffs
--		echo change$i >unrelated-file$i &&
--		test_seq 1000 >>unrelated-file$i &&
--		git add unrelated-file$i &&
--		test_tick &&
--		git commit -m commit$i unrelated-file$i &&
--		echo change$i >unrelated-file$i &&
--		test_seq 1000 | sort -nr >>unrelated-file$i &&
--		git add unrelated-file$i &&
--		test_tick &&
--		git commit -m commit$i-reverse unrelated-file$i ||
--		return 1
--	done &&
-+
-+	test_seq 1000 >content_fwd &&
-+	test_seq 1000 | sort -nr >content_rev &&
-+
-+	(
-+		for i in $(test_seq 100)
-+		do
-+			echo "commit refs/heads/upstream" &&
-+			echo "committer WGYDY <author@mock.com> $i +0000" &&
-+			echo "data <<EOF" &&
-+			echo "commit$i" &&
-+			echo "EOF" &&
-+			
-+			if test "$i" = 1; then
-+				echo "from refs/heads/upstream^0"
-+			fi &&
-+
-+			echo "M 100644 inline unrelated-file$i" &&
-+			echo "data <<EOF" &&
-+			echo "change$i" &&
-+			cat content_fwd &&
-+			echo "EOF" &&
-+
-+			echo "commit refs/heads/upstream" &&
-+			echo "committer WGYDY <author@mock.com> $i +0000" &&
-+			echo "data <<EOF" &&
-+			echo "commit$i-reversed" &&
-+			echo "EOF" &&
-+			echo "M 100644 inline unrelated-file$i" &&
-+			echo "data <<EOF" &&
-+			echo "change$i" &&
-+			cat content_rev &&
-+			echo "EOF" || return 1
-+		done
-+	) | git fast-import &&
-+
-+	git repack -a -d &&
-+	git checkout -f upstream &&
- 	git checkout to-rebase &&
- 	test_commit our-patch interesting-file
- '
--
- test_perf 'rebase on top of a lot of unrelated changes' '
- 	git rebase --onto upstream HEAD^ &&
- 	git rebase --onto base HEAD^
--- 
-2.43.0
+> diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+> index 442737ba4f..7da6e5ccae 100644
+> --- a/git-gui/lib/diff.tcl
+> +++ b/git-gui/lib/diff.tcl
+> @@ -495,6 +495,7 @@ proc read_diff {fd conflict_size cont_info} {
+>  			}
+>  		}
+>  		set mark [$ui_diff index "end - 1 line linestart"]
+> +		apply_tab_size 1
+>  		$ui_diff insert end $line $tags
+>  		if {[string index $line end] eq "\r"} {
+>  			$ui_diff tag add d_cr {end - 2c}
+
+If you look at commit a43c5f51a4b1, you will notice that it intended to
+apply "magic" tabstops only to 3-way-diffs. It did not intend to "fix"
+regular patch text. Without the change, 3-way-diffs would become even
+more misaligned, because these have two initial positions instead of
+just one. To fix the additional misalignment, it applies the offset 1 to
+the tabstops. But this does not fix the original misalignment.
+
+You now want to fix the original misalignment. Therefore, you have to
+apply the offset 1 for regular patch text, but offset 2 to 3-way-diffs.
+And, in addition, no offset if file contents are displayed.
+
+-- Hannes
 
