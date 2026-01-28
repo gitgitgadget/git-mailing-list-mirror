@@ -1,117 +1,130 @@
-Received: from mail-10631.protonmail.ch (mail-10631.protonmail.ch [79.135.106.31])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C48121A457
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 14:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.31
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769608948; cv=none; b=CCanOzy4ewkuekHE5YQCibcZMDI9ihN79xzbRHaVX2G/nfAvRwIToT5FSVPqoCRub1Fkz5K2oLOsMGHM3IaGW4JYhpRnWRmWdbqWWO/J4nO6pgsc3oiMvhB0sNiY9gJvLCIo14MV2GsDWtX7S0sY4lZFFpePOxaqpO/tyOhoC5A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769608948; c=relaxed/simple;
-	bh=duTeb4QRP81G/1yfYLmNBMj749tEDV4uu4H5Y90HKnY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WUcoq4eDeTlIvG85WFyzmKiZ2FHbzEE1HfON3kFGgSS3tPYOsKx3ZvkpnXaWncA8gFOI13zA3GoPHTMfd9xv4XZjY7VR2A/po8BRmBRbg3wx1WzKokAbeOCl+lcNSXv7m7PT6kAO3h179Q+Ug22k/tb5wBh+zNHMB8fjyKZswDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=Awo8Bl9X; arc=none smtp.client-ip=79.135.106.31
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37497E105
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 14:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769609570; cv=pass; b=GYvF18G7Gte4dinFYa2wjwD6LKf8jMv79jgOjCGfwmZBP2A8Zimb6OHA2bOjZg8uIJi75V+0/UW7rBg5Fp01q2gFTDvbWp18MAOe0cqKbVFN5JymXERnbFsO/Co8oom1bFLAHsytlboH5lr2YQ2zZf6R2PmmyJ7ROZLESHHLrW4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769609570; c=relaxed/simple;
+	bh=dpSeV2DXwljdtWcg8K4KPohRf4+6r5IMFjKzgzF4pQQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=joUTwOkIOvSLAFG4MeWMU087TvZnv+PjBVT0792MWoCK53WsNb6taam85VppDF+hOa2AsO3Sgb5qq3UbVhiTTWMvptk5i4ruRfnYua0X9viNe56McTixex1GgvG5sumCPcUZ/GncgzoHmAhYAuyb1KK22shjBv79fLhzSp7RQhw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g9bbGWTC; arc=pass smtp.client-ip=74.125.224.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="Awo8Bl9X"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1769608937; x=1769868137;
-	bh=duTeb4QRP81G/1yfYLmNBMj749tEDV4uu4H5Y90HKnY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Awo8Bl9XTKU0SlK1/kgRfZSWig04dCedaxeCXA3POtRq3nFhiV2QDLV3ea2qdIbZO
-	 ouI717AgTR6iVL02b25lFWCgCvEzsv2GYqmW3SiGZClLZgFz5kQEm0cUr+G6+KkBrG
-	 xCz5qn4UkMiz45GZ4B9iQLKcJV9lyRNwqxr2WTEPglPoHmiLFIUliwWSO/ZVrECItw
-	 hG03YckCCBVpxn6agrPcIk8QY25JVaxNsNyMuORw+yUocC3PalRzA5e70sIHYj1Z86
-	 ttUx2LCfQrIrqHFRGHJQUgbVoTIHtUiUnIxq2oOLMNPWodM8hT/3OWyiV56yY9kunh
-	 Z+O3xzdTmy95Q==
-Date: Wed, 28 Jan 2026 14:02:13 +0000
-To: Johannes Sixt <j6t@kdbg.org>
-From: GitHub Chris Idema <github_chris_idema@proton.me>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Michael Lutz <michi@icosahedron.de>, Pat Thoyts <patthoyts@users.sourceforge.net>, Chris Idema via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH/RFC v2 2/2] diff.tcl: call "apply_tab_size 1" to fix alignment instead of spaces.
-Message-ID: <Rrnh0ugGQ5ef_s-3W0Tive8HA9R0_9Cq6yK7K6SS6Jr3kPigHai3jzxvphTRNXXNhCnor2TMV8UjKEi5U27VOLBf-R4g6VbJBLq8PQH9kCI=@proton.me>
-In-Reply-To: <71494127-c17d-4fd9-a69d-1f547205ac8f@kdbg.org>
-References: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com> <pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com> <e11aa6d811dcf868fd0f91b74cdceb8bc3f4229e.1769545996.git.gitgitgadget@gmail.com> <xmqqsebqem1n.fsf@gitster.g> <xmqqfr7qeixq.fsf@gitster.g> <71494127-c17d-4fd9-a69d-1f547205ac8f@kdbg.org>
-Feedback-ID: 177675452:user:proton
-X-Pm-Message-ID: 0edef27b91ec2e14b2ea2af4b1fbf31d4f576a7d
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g9bbGWTC"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-64938fce805so6423332d50.1
+        for <git@vger.kernel.org>; Wed, 28 Jan 2026 06:12:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769609568; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Kd3Hth33cYb6qqjWXLzkZA8NWWa7xiGLQdd8w2aHsDw2qRzpHIL0BaEQKgy7NbOU98
+         kC4mruk893bPwvti5WDc8c6+U1cB3GHLx/fLnJkqPixcJHBb+vfoXWHcvk9TpgDKPsEp
+         vvARBAm7NOkY5m8RNh35D5FPlIkpc6M1S2MAEVXFCltrltieLrfwIJ8F1p+YwaNSKQCI
+         sA9HurgmvxcJvoV+itXLiWkCMyN3TXvAfMK9KEjh5FKyqgqGmToOE6CJjJWsobXEQKR4
+         gPyLLQRhCWPMjhyC2eGyYncaZERPTSQHd+wPrvZwgl+Xfnz1Cjz5RTvFgtw81h2pBDE+
+         jZDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=FGMjQWBqjXjzZ/Ql4rHbzlcgxWPddVQW/tLStD+Kf+Y=;
+        fh=W5xr9cuwM2OpWRNobNUQzO2Q2SJDldIpJVIohgyAAlE=;
+        b=Jpi8LH4xDG+KqypIgxVl137lDVoKZtZYT0uceJP0XZf1G3AL4iSigfZOyVuvrDzlYE
+         UnhEuwlO9J2itNPFeAQ62C77rHNEKEVhzbqpUcw5XBzvPc0rnKSoCwi0Gcp1Qbn1BNWG
+         BZYYwaTJtPXRZdKmpogszkXlmmp9QTgAzM0M1PZr3Ly+gPZ2YjvjOpAjG3jpobfkgwP6
+         9bKoIw/OiuO6zwx+g2Ih2xLWF4mEi9VHP2K+jm/UC19boXn25k+OjlVkfFlqOTOVXdVc
+         rdppZ1jrx71oDYVWuJqL22HpJ2YnH12fPzs63fGfTs3OobUKrEHz3vg8hXJ6gFaORJMl
+         GuMQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769609568; x=1770214368; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=FGMjQWBqjXjzZ/Ql4rHbzlcgxWPddVQW/tLStD+Kf+Y=;
+        b=g9bbGWTCKHv5E7OWOX/8D3Gf4JIWa/FT9EnqEwh3L6jhlW8/20AAz8ldOkGw1YYs38
+         DVNBwedTfiagILdswv29aZr+15PbpPNqk8fqqi4EEq/jaIMOmZ0a+DgPksyMNx6OaF6S
+         7z06FtxfRLnfA7KaAZ47Mg9Y9JDGIUK3Uc99F3pCltxcZalz8W9wWjQIGXWwG90dr4q8
+         QGjsB8MGBOStRYrz0mytPuUzvQJ0VFie9EjNe4JoOIW0RCh1v2fRTg1zbwfn+SIgby4G
+         Tzjcf5ND69RwMHcfOzTrAUv8zo7twWznCAfSHfInDAi+ICf9XAwoyXQpe5wQtCNPlSPb
+         E/Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769609568; x=1770214368;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FGMjQWBqjXjzZ/Ql4rHbzlcgxWPddVQW/tLStD+Kf+Y=;
+        b=qyB65map8rIUTL9LRYhjDBsiet1j9AT2U4W9VafgOZmZOiwQcqv7aa2U/7se49RuJz
+         CNPb2Rov+YzFayn9ali1mZZn7jdjG+FqXzfoarWQ48cp9U4yNftcSshFflD49SJWiYxW
+         Lfc2QfVKo4hSCwH9qWXIoh8444ebcEfGoFlaqZCP9Xu1Uhbek1nQf0Z4moNoQaV54h02
+         j3rsV2WN+vdnjByS7WDVzn4TOUya5jJC6FRrmGW4emzCFNfFzbzXpN/7mWf4tosFI/yX
+         Pl0YbkKkePRXpVU0oL0qv1r7/PHnYkSw8sd4dUw2cp6djUuNBNXjemvGghbdlADWna7v
+         OSmQ==
+X-Gm-Message-State: AOJu0YwqcblSxvjt/H4lUfzTmFVXpB74mcS9Wf2CY5Zhhf1xS/gfjjjq
+	zsrc9FEoeq4Z4gs6hEvhIZqe3TtQSO/U+B2taxkpi3CZrUBs/9/wMaN5DNcE1auLOb5x6jSQkiL
+	c2iAOuKyKESso4PAzKTkUNkfmwS9fXhi+PTMR
+X-Gm-Gg: AZuq6aIGPw+Hs4RtgJzA95HVfmM+/BDtl/fQrmRNez+404rdYdxIQlO2lSbEyZNrTp9
+	TIi4fLfj1PCI6OdL8BBZcV8SUXDy35dn5h77xPEpvZ8H6WadEf7BhWjYLSqqQl1Xm9JjQvFgIB+
+	4bGVPbvJYcM/mhMlag50K3lLKlbD8bNFSDXQHLrmBvnk9eY0d9u1kDaZlaa/rYhkZmlVDNbekhm
+	tznwDslLWPLaxOZYK5WI7X5n1uWjtxtgNSz1WnQxDFQorl1n/p2eYnI5Ay9CAj6T/MDPMA=
+X-Received: by 2002:a05:690e:1301:b0:644:60d9:7519 with SMTP id
+ 956f58d0204a3-6498fc826c2mr3228568d50.93.1769609567553; Wed, 28 Jan 2026
+ 06:12:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Wed, 28 Jan 2026 19:42:34 +0530
+X-Gm-Features: AZwV_QhuXRt6530vsl7VsUVaxI9aSWCHsb09cuS1wMIHxL3J5mqYUF79jdLOjL4
+Message-ID: <CALE2CrQD11Qa+wGVhsF8JwkuwkLWkDf9kGvs1NM2dsYFuPgUKA@mail.gmail.com>
+Subject: [RFC] config --get-regexp: avoid rewriting regex patterns; consider REG_ICASE
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
->I concur. Also, "apply_tab_size 0" is needed when the contents of an
-unstaged file are shown instead of patch text.
+Hi,
 
-Can you explain why it's needed?
-The file in my example is unstaged and it's a patch text.
-So these are not mutually exclusive.
-Even for a staged file the context lines are indented by 1 space=20
-instead of a + or - character. So tab stop width is also incorrect=20
-for context lines.
-Can you show me how to get content without patch text in the window?
+While looking at builtin/config.c I noticed the following NEEDSWORK comment
+in get_value():
 
-> +=09if {$have_tk85 && $firsttab !=3D 0} {
+  /*
+   * NEEDSWORK: this naive pattern lowercasing obviously does not
+   * work for more complex patterns like "^[^.]*Foo.*".
+   */
 
-Gives me the error "can't read "have_tk85": no such variable"
-If I substitute 1 or 0 for have_tk85 it doesn't fix the alignment.
+Currently, git config --get-regexp emulates case-insensitive matching by
+lowercasing parts of the user-provided regex before compiling it. This
+breaks valid regular expressions and makes it impossible to express more
+complex patterns.
 
-I'm open for suggestions. My 1 line code change fixes the problem,
-but if it is not the official way to do it or if it introduces other
-problems feel free to suggest another fix.
+For example:
 
-For reference here are the screenshots of the problem:
-https://github.com/git/git/pull/2179#issuecomment-3799576864
+  git config --add Foo.Bar baz
+  git config --add foo.Baz qux
+  git config --get-regexp '^[^.]*Foo.*'
 
-For us this bug is a show stopper that makes the diff in the
-git-gui window by default unreadable.
+does not behave as expected because the pattern is rewritten before
+regcomp().
 
--- Chris
+POSIX regex also does not support inline modifiers like (?i), so users
+currently have no way to explicitly request case-insensitive matching.
 
-On Wednesday, January 28th, 2026 at 14:40, Johannes Sixt <j6t@kdbg.org> wro=
-te:
+The documentation says matching is performed against a canonicalized
+lowercase key, but the current implementation achieves this by modifying
+the regex itself.
 
-> Am 28.01.26 um 00:26 schrieb Junio C Hamano:
->=20
-> > It is clear that "apply_tab_size 0" is designed for a single-parent
-> > diff, while "apply_tab_size 1" is designed for two parents diff. If
-> > this new series to make sense, I think it should argue why that
-> > setting that users are already familiar with for the past 14 years
-> > is wrong, and "apply_tab_size 1" is more appropriate for a single
-> > parent diff (and presumably "apply_tab_size 2" is better for two
-> > aprent diff), I think.
->=20
->=20
-> I concur. Also, "apply_tab_size 0" is needed when the contents of an
-> unstaged file are shown instead of patch text.
->=20
-> > +proc apply_tab_size {{firsttab {}}} {
-> > + global have_tk85 repo_config ui_diff
-> > +
-> > + set w [font measure font_diff "0"]
-> > + if {$have_tk85 && $firsttab !=3D 0} {
-> > + $ui_diff configure -tabs [list [expr {$firsttab * $w}] [expr {($first=
-tab + $repo_config(gui.tabsize)) * $w}]]
->=20
->=20
-> I think that these values for tabstops aren't optimal. It does not make
-> sense to have tabstop at column 1 for diff output, because there is
-> always at least one character ('+', '-', or SP), so that the first tab
-> would jump right to the second stop. In Gitk, the initial version looked
-> like this as well, but it this was changed soon after.
->=20
-> > + } elseif {$have_tk85 || $repo_config(gui.tabsize) !=3D 8} {
-> > + $ui_diff configure -tabs [expr {$repo_config(gui.tabsize) * $w}]
-> > + } else {
-> > + $ui_diff configure -tabs {}
-> > + }
-> > +}
->=20
-> -- Hannes
+Would it make sense to stop rewriting the pattern and instead use REG_ICASE
+when compiling the regex? This would preserve user-provided regexes, suppor=
+t
+more complex expressions, simplify the code, and eliminate the NEEDSWORK.
+
+If this direction sounds reasonable, I=E2=80=99d be happy to follow up with=
+ a patch.
+
+Thanks,
+Pushkar
