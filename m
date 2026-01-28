@@ -1,41 +1,41 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A65133A9E0
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 21:40:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D633732FA37
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 21:40:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769636426; cv=pass; b=YnXz9Vrpbv1Ab3nflXyyrtCc0DjUfIKKv9B9qY28kGpmGf50brfRZ1LoJDLw7cK4GfTvZHgUqQutuZo494CQMJMkmNFfNMYWZ3z3V9V4+PqCQNin0aPKiMudHYmsjzbRJkuVWMMu+az46lDAyT/ozr06P7l0Uc0Bp0t5i6Zzr+g=
+	t=1769636429; cv=pass; b=Dm45lIbV9ZNChtfZWu9Uss4utYn+v7PisQvyks9w9sU7gTDJ+HK+SJ3fUnRGsxz4IP0Qt9YJkACR1s2PeXK7Myo/5iksRuXfILGMwnA5TXXmVUZvjBHXKtQ+lm7QNQ/5TqicFG8yqGq/+ehfwyVqjtj6/UxgLj8sHDc5xxQsbnM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769636426; c=relaxed/simple;
-	bh=b2U6ZC1yHbAxMPuPjFE6Lp/pMwziKYTDqF5quahFvH4=;
+	s=arc-20240116; t=1769636429; c=relaxed/simple;
+	bh=fJ+ObV6POrHDhD45fmsTjWU7NVQmX+Zsf4cxFOnfKzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r+T45cu24btAXQ3EWP15D0OJnPFfK4HudEtKErTOKvUWmae3JFBJniKKA4mj4QAQCFAGoJ32OmV9CCpH3wl1Xk3zToFagr2VRW8J4aCkcTK31aOIIcSA76KRSId9qC7ciw9B+uRMHFFc6L7Vi3D16Z80BwX5LtYZ+kGVxCv4Hic=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=R6q0x3SP; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version; b=NHZAjQs+IqCGTnYTyUiuzDPSpvvjp7bErIFd/F8PxYPl/A29lWzbpyRGehuwnQHOftWr8xxRc40tJsmc0PkBjueasTcVQ5h4JdsQwgipjus6aGfv9x3BwsIbEcmBYorXtbyamW48JNILKAXu56X2dhZRZfMA+DV8mDKbz4y4Z50=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=HXQybuRA; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="R6q0x3SP"
-ARC-Seal: i=1; a=rsa-sha256; t=1769636409; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="HXQybuRA"
+ARC-Seal: i=1; a=rsa-sha256; t=1769636415; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=ktf9jRoIygv2E8PNzauZZrxqAiGPd0C3HBDiEuCAY7OGXqt0CU89QU+OhUqOHvJ/ml9zTnIoQjaZRmPEDD2HUqf1JI11h20AvL45iUhZYWtg/EAeGUXAncwIgj9lMv67eoDxKD0g8iI0BdVe8bVTqm7C7+ccKZyFmzT0RGZo53c=
+	b=WlfqQrModNjoWfYIfkUAxQb7NUv6iblD9VhpPwi+L6D97B36OwohtGTpI6AShuYlYFe1QjsbtYnrn6cDp4Op1K91D/pA06zaGmpXGZQoA94GaLkY+vVKFnIbvQpkaC2GHJl2zat+sRsD035XsUVeM7oLmDHds6kWwmSYx1ZGiQs=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1769636409; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=0wY+N8ie+ZrUKi/h1gPOQs0mf85rTjzVDbBlyXiPRoU=; 
-	b=dXEk+IorU4IvihQdZZLmculZzOryiusi5QM6afNsEmVFGQIsNDkERA7rHEemAC1DR5Gek5B3b8fyxbgVDtEduqwnNcyLGgxmjcAyEjtv3XrIS7Sr7FGZzHml2FnaH0OrwsAqkSY2WqPMFT033u8qi+JOFzX8WONT/WwpI3bIhNc=
+	t=1769636415; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=4WtefoJEj/WpA3/l/0trI2QZPeK9MxitiNhV478MmH0=; 
+	b=YfnmQ7JkAAoUYnUjuvZNEpv3Xner/EYm7358LIV5DVFX0CtmdDUECAJW8yx2KKQTVJb1fBN/397GO3q/z7ViJ/xCrW/dBiL8kOQDfCOLT/K4h6pKBq2GRg7aPxa/EwW/9Jll7pcTOGMsNsBIFDcGXDjpOwJYcQJZWrr5+DWCiHs=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769636409;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769636415;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=0wY+N8ie+ZrUKi/h1gPOQs0mf85rTjzVDbBlyXiPRoU=;
-	b=R6q0x3SP4eAX1z7NgMrtDVfF4VigFXvATG4SK0VIocOHe2YH7URHmbQPBIysM1Cz
-	rREweT0Hol6kSQeIVUb9mQQ34TA1mX5Qmy4uwOqeIEaK3t1dq/avEHgZivIOpR+zkw/
-	5sHQ1JgksCt8ya0hAsciMoO5x+uYsnCbTOwBuwCQ=
-Received: by mx.zohomail.com with SMTPS id 176963640846482.37295331187215;
-	Wed, 28 Jan 2026 13:40:08 -0800 (PST)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=4WtefoJEj/WpA3/l/0trI2QZPeK9MxitiNhV478MmH0=;
+	b=HXQybuRAXjFbbl9R6C56uJ+qgDJjUXipFnUswtLk3olp2MwQc6M+2DayLQN1i+Vq
+	n6G40+0fSKw3aGYTL71dm/FzY8xxet34cxDC/xhPtsmBDAMBrnhMX3nsQngNC82ZOYj
+	d/jn3PBWbaTwyLKrBNfkuDfkGgl70Nc9/od7boOw=
+Received: by mx.zohomail.com with SMTPS id 1769636413364546.3080282934445;
+	Wed, 28 Jan 2026 13:40:13 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org,
 	Jeff King <peff@peff.net>
@@ -44,11 +44,10 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v8 07/12] transport: convert pre-push to hook API
-Date: Wed, 28 Jan 2026 23:39:22 +0200
-Message-ID: <20260128213927.3026875-8-adrian.ratiu@collabora.com>
+Subject: [PATCH v8 09/12] hook: add jobs option
+Date: Wed, 28 Jan 2026 23:39:24 +0200
+Message-ID: <20260128213927.3026875-10-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260128213927.3026875-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -59,144 +58,126 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-From: Emily Shaffer <emilyshaffer@google.com>
+Allow the API callers to specify the number of jobs across which
+hook execution can be parallelized. It defaults to 1 and no hook
+currently changes it, so all hooks run sequentially as before.
 
-Move the pre-push hook from custom run-command invocations to
-the new hook API which doesn't require a custom child_process
-structure and signal toggling.
+This allows us to both pave the way for parallel hook execution
+(that will be a follow-up patch series building upon this) and to
+finish the API conversion of builtin/receive-pack.c, keeping the
+output async sideband thread ("muxer") design as Peff suggested.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+When .jobs==1 nothing changes, the "copy_to_sideband" async thread
+still outputs directly via sideband channel 2, keeping the current
+(mostly) real-time output characteristics, avoids unnecessary poll
+delays or deadlock risks.
+
+When .jobs > 1, a more complex muxer is needed to buffer the hook
+output and avoid interleaving. After working on this mux I quickly
+realized I was re-implementing run-command with ungroup=0 so that
+idea was dropped in favor of run-command which outputs to stderr.
+
+In other words, run-command itself already can buffer/deinterleave
+pp child outputs (ungroup=0), so we can just connect its stderr to
+the sideband async task when jobs > 1.
+
+Maybe it helps to illustrate how it works with ascii graphics:
+
+ [ Sequential (jobs = 1) ]             [ Parallel (jobs > 1) ]
+
+ +--------------+                      +--------+   +--------+
+ | Hook Process |                      | Hook 1 |   | Hook 2 |
+ +--------------+                      +--------+   +--------+
+        |                                  |             |
+        | stderr (inherited)               | stderr pipe |
+        |                                  | (captured)  |
+        v                                  v             v
+ +-------------------------------------------------------------+
+ |                      Parent Process                         |
+ |                                                             |
+ |      (direct write)              [run-command (buffered)]   |
+ |             |                                 |             |
+ |             |                                 | writes      |
+ |             v                                 v             |
+ |      +-------------------------------------------+          |
+ |      |             stderr (FD 2)                 |          |
+ |      +-------------------------------------------+          |
+ |                           |                                 |
+ |                           | (dup2'd to pipe)                |
+ |                           v                                 |
+ |               +-----------------------+                     |
+ |               | sideband async thread |                     |
+ |               +-----------------------+                     |
+ +-------------------------------------------------------------+
+
+When use_sideband == 0, the sideband async thread is missing, so
+this same architecture just outputs via the parent stderr stream.
+
+See the following commits for the hook API conversions doing this,
+using pre-existing sideband thread logic from `copy_to_sideband`.
+
+Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- transport.c | 95 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 51 insertions(+), 44 deletions(-)
+ hook.c | 7 +++++--
+ hook.h | 9 +++++++++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/transport.c b/transport.c
-index c7f06a7382..e876cc9189 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1316,65 +1316,72 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
- 	die(_("Aborting."));
- }
+diff --git a/hook.c b/hook.c
+index fde1f88ce8..cde7198412 100644
+--- a/hook.c
++++ b/hook.c
+@@ -152,8 +152,8 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 		.tr2_category = "hook",
+ 		.tr2_label = hook_name,
  
--static int run_pre_push_hook(struct transport *transport,
--			     struct ref *remote_refs)
--{
--	int ret = 0, x;
--	struct ref *r;
--	struct child_process proc = CHILD_PROCESS_INIT;
-+struct feed_pre_push_hook_data {
- 	struct strbuf buf;
--	const char *hook_path = find_hook(the_repository, "pre-push");
-+	const struct ref *refs;
-+};
+-		.processes = 1,
+-		.ungroup = 1,
++		.processes = options->jobs,
++		.ungroup = options->jobs == 1,
  
--	if (!hook_path)
--		return 0;
-+static int pre_push_hook_feed_stdin(int hook_stdin_fd, void *pp_cb UNUSED, void *pp_task_cb)
-+{
-+	struct feed_pre_push_hook_data *data = pp_task_cb;
-+	const struct ref *r = data->refs;
-+	int ret = 0;
+ 		.get_next_task = pick_next_hook,
+ 		.start_failure = notify_start_failure,
+@@ -169,6 +169,9 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 	if (options->path_to_stdin && options->feed_pipe)
+ 		BUG("options path_to_stdin and feed_pipe are mutually exclusive");
  
--	strvec_push(&proc.args, hook_path);
--	strvec_push(&proc.args, transport->remote->name);
--	strvec_push(&proc.args, transport->url);
-+	if (!r)
-+		return 1; /* no more refs */
- 
--	proc.in = -1;
--	proc.trace2_hook_name = "pre-push";
-+	data->refs = r->next;
- 
--	if (start_command(&proc)) {
--		finish_command(&proc);
--		return -1;
-+	switch (r->status) {
-+	case REF_STATUS_REJECT_NONFASTFORWARD:
-+	case REF_STATUS_REJECT_REMOTE_UPDATED:
-+	case REF_STATUS_REJECT_STALE:
-+	case REF_STATUS_UPTODATE:
-+		return 0; /* skip refs which won't be pushed */
-+	default:
-+		break;
- 	}
- 
--	sigchain_push(SIGPIPE, SIG_IGN);
-+	if (!r->peer_ref)
-+		return 0;
- 
--	strbuf_init(&buf, 256);
-+	strbuf_reset(&data->buf);
-+	strbuf_addf(&data->buf, "%s %s %s %s\n",
-+		    r->peer_ref->name, oid_to_hex(&r->new_oid),
-+		    r->name, oid_to_hex(&r->old_oid));
- 
--	for (r = remote_refs; r; r = r->next) {
--		if (!r->peer_ref) continue;
--		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
--		if (r->status == REF_STATUS_REJECT_STALE) continue;
--		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
--		if (r->status == REF_STATUS_UPTODATE) continue;
-+	ret = write_in_full(hook_stdin_fd, data->buf.buf, data->buf.len);
-+	if (ret < 0 && errno != EPIPE)
-+		return ret; /* We do not mind if a hook does not read all refs. */
- 
--		strbuf_reset(&buf);
--		strbuf_addf( &buf, "%s %s %s %s\n",
--			 r->peer_ref->name, oid_to_hex(&r->new_oid),
--			 r->name, oid_to_hex(&r->old_oid));
-+	return 0;
-+}
- 
--		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
--			/* We do not mind if a hook does not read all refs. */
--			if (errno != EPIPE)
--				ret = -1;
--			break;
--		}
--	}
-+static int run_pre_push_hook(struct transport *transport,
-+			     struct ref *remote_refs)
-+{
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+	struct feed_pre_push_hook_data data;
-+	int ret = 0;
++	if (!options->jobs)
++		BUG("run_hooks_opt must be called with options.jobs >= 1");
 +
-+	strvec_push(&opt.args, transport->remote->name);
-+	strvec_push(&opt.args, transport->url);
+ 	if (options->invoked_hook)
+ 		*options->invoked_hook = 0;
  
--	strbuf_release(&buf);
-+	strbuf_init(&data.buf, 0);
-+	data.refs = remote_refs;
+diff --git a/hook.h b/hook.h
+index 2c8a23a569..20eb56fd63 100644
+--- a/hook.h
++++ b/hook.h
+@@ -16,6 +16,14 @@ struct run_hooks_opt
+ 	/* Emit an error if the hook is missing */
+ 	unsigned int error_if_missing:1;
  
--	x = close(proc.in);
--	if (!ret)
--		ret = x;
-+	opt.feed_pipe = pre_push_hook_feed_stdin;
-+	opt.feed_pipe_cb_data = &data;
-+
-+	/*
-+	 * pre-push hooks expect stdout & stderr to be separate, so don't merge
-+	 * them to keep backwards compatibility with existing hooks.
++	/**
++	 *  Number of processes to parallelize across.
++	 *
++	 * If > 1, output will be buffered and de-interleaved (ungroup=0).
++	 * If == 1, output will be real-time (ungroup=1).
 +	 */
-+	opt.stdout_to_stderr = 0;
- 
--	sigchain_pop(SIGPIPE);
-+	ret = run_hooks_opt(the_repository, "pre-push", &opt);
- 
--	x = finish_command(&proc);
--	if (!ret)
--		ret = x;
-+	strbuf_release(&data.buf);
- 
- 	return ret;
++	unsigned int jobs;
++
+ 	/**
+ 	 * An optional initial working directory for the hook,
+ 	 * translates to "struct child_process"'s "dir" member.
+@@ -90,6 +98,7 @@ struct run_hooks_opt
+ 	.env = STRVEC_INIT, \
+ 	.args = STRVEC_INIT, \
+ 	.stdout_to_stderr = 1, \
++	.jobs = 1, \
  }
+ 
+ struct hook_cb_data {
 -- 
 2.52.0.732.gb351b5166d.dirty
 
