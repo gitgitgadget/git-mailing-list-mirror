@@ -1,41 +1,41 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from sender4-pp-e103.zoho.com (sender4-pp-e103.zoho.com [136.143.188.103])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D499533B6CE
-	for <git@vger.kernel.org>; Wed, 28 Jan 2026 21:40:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4B2337689
+	for <git@vger.kernel.org>; Wed, 28 Jan 2026 21:40:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.103
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769636432; cv=pass; b=twMNcUgv5bvNJ86EMlLuaX01SktPA2a4fX8fiEhbahIC7ct/6VZFV4aXMy7C3dT+3eS27FXo2S0okbC1+fPW7TRVwXyWw2At+q4LjrMd+CScM1Gk4a0wVlKzu6V05hzZlG7a3f4HgtNVnTQCYk+oomAAJbgI9DKNzA+mjiDqE74=
+	t=1769636433; cv=pass; b=ap4zkcQZtdcRqzyTFKJ20l9RAnsCczfSt1m1wDstfpkDwTvzV3pzwJeclQtG/dwzmVDQwH2844d5pr4k8a9rfW1MGtsf816DUqAfoOmjRSatWhs3ovdaEvaqKqbyL8/2lpIa68lbIXB6SJQXESQiAY1NhFsA7UlJb6IGan8CzXA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769636432; c=relaxed/simple;
-	bh=Ab7rVmCJLl9NM21ttLx6Hd/azsR9MRvDlXcB6BDZlGU=;
+	s=arc-20240116; t=1769636433; c=relaxed/simple;
+	bh=tyFpk44Vjd9jbZS0uw09xpE8sB+6ySyIWx9QyK7XFuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rw+ayVj8KwhJvAof5Wz0KrJxx6A6RYTtoUqnNUIbq+4th/xrArl/qUmkWw4s8kTdXEfhiXiioDD8m2o9sYrL4FfwL+ZbSwyEqFcToXhiyEsnIiA+eBxG1mcUxbuNTDX37yz62NczkPNDQqXZW/BYnzfRMC7PprhTlqGAQG9Ax/4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=CbKBZ/H3; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=qiZG2Ymuvcu3oqEVq7uDVf3qr6jBKZgSSx1gVXW0rD5uV8rgcTIOcewL0DmPPk1HFR0OgnEkCAZp5n0F86amnRxdkid+7WzIksl36B5hjgSUloIYxVg6JncBrS3teSSAC4Yhrx45+uAOzS4UAzOK/gHyQr7xbwG2tIsIU7loKZk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=lYnKYLDo; arc=pass smtp.client-ip=136.143.188.103
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="CbKBZ/H3"
-ARC-Seal: i=1; a=rsa-sha256; t=1769636417; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="lYnKYLDo"
+ARC-Seal: i=1; a=rsa-sha256; t=1769636407; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=EBcPK7pXvW6Vs6Ij5dFi98F0wX7IhV/kXTKzAjy/B7QvVfQOsunF+xLFO+Yg6Qz5v1QnOPpDcvyyytAIokBaPfaSvG961gsYrapgHw0XNzsN1thTEP1GkCK4S2PPcEKQ+6e137bjXyNPRZJaJvyEV9CACsSh0tGZFQr6uwOhrNQ=
+	b=Hwip1PVJurtWgG+mhM3BCLthEgLeccb6kFv7FawM0Z5e57+H5kTCiZT1ujqXJb/VG9rt8Al+o8FLCRkr4Lb3B9xf1OHqUk1D4dcPMeSCnz3zDdacPt34FWSZa2qU/JZ0R8gxXxWHUiVcP001hzYzXWeS2NQH08Ej3YdlD0RurUE=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1769636417; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Ad7uh1ZHlqrWDEqtGd/FxQVAq6tQ9+/NmeBdQbohjSU=; 
-	b=EPBLxP6tuZiHCbtWliVPxcdAeGyn0Pqh1qp0Jn8SpX9S9B9vDOT9CX3wo6jBqPbPizvdEHjnlsTbw6AX8dRlOm42c6xfuAIdfzgU3ZhlFOPc62rNGKISHVzyqKklVBORfEn1Tdb8blYvuabDheDiHYPm0Uy0a4CHRg5iYOE9vu0=
+	t=1769636407; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=7bQh0gNJ7VMH4bbnUgmq7GMJIw6ygyRx1qjBY5guhfg=; 
+	b=KFkcz6bi9QGukaH1cbFMruqW4GvlcxxnrnEj/LoRvdqXNnJfu20NYIiYmQxLRFiNSu0nJMmc/EgLwWmrfUBwIXtoTIZEs5kUExfU6RL5nUaW6GZvPuDB6l412pGYRTkCOf4V3L1yRnil04lLQmC+CFe6q2QXk9UmMEyxBREdTEE=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769636417;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769636407;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=Ad7uh1ZHlqrWDEqtGd/FxQVAq6tQ9+/NmeBdQbohjSU=;
-	b=CbKBZ/H3sw1h5p0cOo+UQ6xFQLqS7hmyaeIgZ/K7secdqJkpMuPpiW86oMvcB5WO
-	f1xjxA2Hh+p3zhObmdtoDQazixTn+UViW5bufBqUQ9beGcQfftGI86w9N3K1PXQjSNS
-	UxE3RjVNkoYGI7831tCQtU2vtil9l5T/I9KlS8OQ=
-Received: by mx.zohomail.com with SMTPS id 1769636415590682.0345432358582;
-	Wed, 28 Jan 2026 13:40:15 -0800 (PST)
+	bh=7bQh0gNJ7VMH4bbnUgmq7GMJIw6ygyRx1qjBY5guhfg=;
+	b=lYnKYLDoDgt1AAfMxTvixb2Hwz7FUvKeBnC7bnP8TyMN0bApt3sAYIROxU9BFQm2
+	KOL/81oD9/nPRD5MHpar8f+0xhluct3H9ZEBwOaYDKBJwml3eC38p5on5NASv2hDEHR
+	Uf5cwtO2LzvDubGWJuHUdAW9aQL9m4DvgQP+vuto=
+Received: by mx.zohomail.com with SMTPS id 1769636406020573.1627068878372;
+	Wed, 28 Jan 2026 13:40:06 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org,
 	Jeff King <peff@peff.net>
@@ -44,10 +44,12 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v8 10/12] run-command: poll child input in addition to output
-Date: Wed, 28 Jan 2026 23:39:25 +0200
-Message-ID: <20260128213927.3026875-11-adrian.ratiu@collabora.com>
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	Chris Darroch <chrisd@apache.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v8 06/12] hook: allow separate std[out|err] streams
+Date: Wed, 28 Jan 2026 23:39:21 +0200
+Message-ID: <20260128213927.3026875-7-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260128213927.3026875-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -61,175 +63,67 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Child input feeding might hit the 100ms output poll timeout as a
-side-effect of the ungroup=0 design when feeding multiple children
-in parallel and buffering their outputs.
+The hook API assumes that all hooks merge stdout to stderr.
 
-This throttles the write throughput as reported by Kristoffer.
+This assumption is proven wrong by pre-push: some of its users
+actually expect separate stdout and stderr streams and merging
+them will cause a regression.
 
-Peff also noted that the parent might block if the write pipe is full
-and cause a deadlock if both parent + child wait for one another.
+Therefore this adds a mechanism to allow pre-push to separate
+the streams, which will be used in the next commit.
 
-Thus we refactor the run-command I/O loop so it polls on both child
-input and output fds to eliminate the risk of artificial 100ms
-latencies and unnecessarily blocking the main process.
+The mechanism is generic via struct run_hooks_opt just in case
+there are any more surprise exceptions like this.
 
-This ensures that parallel hooks are fed data ASAP while maintaining
-responsiveness for (sideband) output.
-
-It's worth noting that in our current design, sequential execution
-is not affected by this because it still uses the ungroup=1 behavior,
-so there are no run-command induced buffering delays since the child
-sequentially outputs directly to the parent-inherited fds.
-
-Reported-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Suggested-by: Jeff King <peff@peff.net>
+Reported-by: Chris Darroch <chrisd@apache.org>
+Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- run-command.c | 80 +++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 62 insertions(+), 18 deletions(-)
+ hook.c |  2 +-
+ hook.h | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/run-command.c b/run-command.c
-index aaf0e4ecee..3356463d43 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1499,6 +1499,14 @@ static int child_is_receiving_input(const struct parallel_child *pp_child)
- {
- 	return child_is_working(pp_child) && pp_child->process.in > 0;
- }
-+static int child_is_sending_output(const struct parallel_child *pp_child)
-+{
-+	/*
-+	 * all pp children which buffer output through run_command via ungroup=0
-+	 * redirect stdout to stderr, so we just need to check process.err.
+diff --git a/hook.c b/hook.c
+index 5ddd7678d1..fde1f88ce8 100644
+--- a/hook.c
++++ b/hook.c
+@@ -81,7 +81,7 @@ static int pick_next_hook(struct child_process *cp,
+ 		cp->in = -1;
+ 	}
+ 
+-	cp->stdout_to_stderr = 1;
++	cp->stdout_to_stderr = hook_cb->options->stdout_to_stderr;
+ 	cp->trace2_hook_name = hook_cb->hook_name;
+ 	cp->dir = hook_cb->options->dir;
+ 
+diff --git a/hook.h b/hook.h
+index 2169d4a6bd..2c8a23a569 100644
+--- a/hook.h
++++ b/hook.h
+@@ -34,6 +34,15 @@ struct run_hooks_opt
+ 	 */
+ 	int *invoked_hook;
+ 
++	/**
++	 * Send the hook's stdout to stderr.
++	 *
++	 * This is the default behavior for all hooks except pre-push,
++	 * which has separate stdout and stderr streams for backwards
++	 * compatibility reasons.
 +	 */
-+	return child_is_working(pp_child) && pp_child->process.err > 0;
-+}
- 
- struct parallel_processes {
- 	size_t nr_processes;
-@@ -1562,7 +1570,7 @@ static void pp_init(struct parallel_processes *pp,
- 
- 	CALLOC_ARRAY(pp->children, n);
- 	if (!opts->ungroup)
--		CALLOC_ARRAY(pp->pfd, n);
-+		CALLOC_ARRAY(pp->pfd, n * 2);
- 
- 	for (size_t i = 0; i < n; i++) {
- 		strbuf_init(&pp->children[i].err, 0);
-@@ -1707,21 +1715,63 @@ static void pp_buffer_stdin(struct parallel_processes *pp,
- 	}
++	unsigned int stdout_to_stderr:1;
++
+ 	/**
+ 	 * Path to file which should be piped to stdin for each hook.
+ 	 */
+@@ -80,6 +89,7 @@ struct run_hooks_opt
+ #define RUN_HOOKS_OPT_INIT { \
+ 	.env = STRVEC_INIT, \
+ 	.args = STRVEC_INIT, \
++	.stdout_to_stderr = 1, \
  }
  
--static void pp_buffer_stderr(struct parallel_processes *pp,
--			     const struct run_process_parallel_opts *opts,
--			     int output_timeout)
-+static void pp_buffer_io(struct parallel_processes *pp,
-+			 const struct run_process_parallel_opts *opts,
-+			 int timeout)
- {
--	while (poll(pp->pfd, opts->processes, output_timeout) < 0) {
-+	/* for each potential child slot, prepare two pollfd entries */
-+	for (size_t i = 0; i < opts->processes; i++) {
-+		if (child_is_sending_output(&pp->children[i])) {
-+			pp->pfd[2*i].fd = pp->children[i].process.err;
-+			pp->pfd[2*i].events = POLLIN | POLLHUP;
-+		} else {
-+			pp->pfd[2*i].fd = -1;
-+		}
-+
-+		if (child_is_receiving_input(&pp->children[i])) {
-+			pp->pfd[2*i+1].fd = pp->children[i].process.in;
-+			pp->pfd[2*i+1].events = POLLOUT;
-+		} else {
-+			pp->pfd[2*i+1].fd = -1;
-+		}
-+	}
-+
-+	while (poll(pp->pfd, opts->processes * 2, timeout) < 0) {
- 		if (errno == EINTR)
- 			continue;
- 		pp_cleanup(pp, opts);
- 		die_errno("poll");
- 	}
- 
--	/* Buffer output from all pipes. */
- 	for (size_t i = 0; i < opts->processes; i++) {
-+		/* Handle input feeding (stdin) */
-+		if (pp->pfd[2*i+1].revents & (POLLOUT | POLLHUP | POLLERR)) {
-+			if (opts->feed_pipe) {
-+				int ret = opts->feed_pipe(pp->children[i].process.in,
-+							  opts->data,
-+							  pp->children[i].data);
-+				if (ret < 0)
-+					die_errno("feed_pipe");
-+				if (ret) {
-+					/* done feeding */
-+					close(pp->children[i].process.in);
-+					pp->children[i].process.in = 0;
-+				}
-+			} else {
-+				/*
-+				 * No feed_pipe means there is nothing to do, so
-+				 * close the fd. Child input can be fed by other
-+				 * methods, such as opts->path_to_stdin which
-+				 * slurps a file via dup2, so clean up here.
-+				 */
-+				close(pp->children[i].process.in);
-+				pp->children[i].process.in = 0;
-+			}
-+		}
-+
-+		/* Handle output reading (stderr) */
- 		if (child_is_working(&pp->children[i]) &&
--		    pp->pfd[i].revents & (POLLIN | POLLHUP)) {
-+		    pp->pfd[2*i].revents & (POLLIN | POLLHUP)) {
- 			int n = strbuf_read_once(&pp->children[i].err,
- 						 pp->children[i].process.err, 0);
- 			if (n == 0) {
-@@ -1814,21 +1864,15 @@ static int pp_collect_finished(struct parallel_processes *pp,
- 
- static void pp_handle_child_IO(struct parallel_processes *pp,
- 				const struct run_process_parallel_opts *opts,
--				int output_timeout)
-+				int timeout)
- {
--	/*
--	 * First push input, if any (it might no-op), to child tasks to avoid them blocking
--	 * after input. This also prevents deadlocks when ungrouping below, if a child blocks
--	 * while the parent also waits for them to finish.
--	 */
--	pp_buffer_stdin(pp, opts);
--
- 	if (opts->ungroup) {
-+		pp_buffer_stdin(pp, opts);
- 		for (size_t i = 0; i < opts->processes; i++)
- 			if (child_is_ready_for_cleanup(&pp->children[i]))
- 				pp->children[i].state = GIT_CP_WAIT_CLEANUP;
- 	} else {
--		pp_buffer_stderr(pp, opts, output_timeout);
-+		pp_buffer_io(pp, opts, timeout);
- 		pp_output(pp);
- 	}
- }
-@@ -1836,7 +1880,7 @@ static void pp_handle_child_IO(struct parallel_processes *pp,
- void run_processes_parallel(const struct run_process_parallel_opts *opts)
- {
- 	int i, code;
--	int output_timeout = 100;
-+	int timeout = 100;
- 	int spawn_cap = 4;
- 	struct parallel_processes_for_signal pp_sig;
- 	struct parallel_processes pp = {
-@@ -1876,7 +1920,7 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
- 		}
- 		if (!pp.nr_processes)
- 			break;
--		pp_handle_child_IO(&pp, opts, output_timeout);
-+		pp_handle_child_IO(&pp, opts, timeout);
- 		code = pp_collect_finished(&pp, opts);
- 		if (code) {
- 			pp.shutdown = 1;
+ struct hook_cb_data {
 -- 
 2.52.0.732.gb351b5166d.dirty
 
