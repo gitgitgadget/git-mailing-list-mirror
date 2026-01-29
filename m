@@ -1,135 +1,106 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA20372B4C
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 23:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B525374171
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 23:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769727785; cv=none; b=NGw6IX4eQDMiL1sn56XM0+6+azOHHokTzfh5aeTEtn4/sbjCR0PiA6d0b2kSx8jKP6PaHtmuIrfmSLYim87ZMeW6ih+Gak5QXcLiMWYsaef1QeC5dQrWQA8HNYARnEyFtm5K/VsGXDYlsw2MLUlCbeNdqRdmfY9T5pJFHqL8o6M=
+	t=1769728332; cv=none; b=b9qajAEQnzv1b3/nVkH1M7bt2vORdszF34L14QF1d1MGQyyU77MIUsyjG9F36c4s+tSzIZ/+zqJgsNB1x/ZQL7CkmqHgLhoKQ5IAG562rcXcwkiyVqL/WKytib3PQwXYn7De6WgJPl3zCT3MOY66vsduxEM37VNf3IK4Z/j65m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769727785; c=relaxed/simple;
-	bh=D/xquznj+CI6etzLhlqF52GWfkylrr0KQ8ta2EZIy3U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TYgCUm3fumDj46SXOo+qjqhk+8dbaSG7Uq1Y9tih2bDo3qWhAUPorZHbkj92ex9Z7j9loyOIxWtQod9ximxLZEP5tDTID+0YpEAHmpR8vvvTZRqJ+z4PpnudxEUdfPuCSHRfVRaFZyF20v6dwYHx0MDrm+fw2RNKnFJbmK/9jj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NEpnptuw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IEY+1wY/; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769728332; c=relaxed/simple;
+	bh=gX9IBTujx02UlP662P2lXSyH38pQzB/0NXs+K7D64RE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pLRW/0xkJYmxhozbf6uDziwZT6kQqRxcAFX5z8Q4fKu6r/74T8uWpoUm+HKi/xWMH0LBQ1SkukSSryQle3DFjLRpiPmnohh4HrL9t3lt5y9HPseiqWwTGEpK8s1/+DzW+Prf04zK3v96VeCedKYbVGH0ZVrdV+IvRdahC8Czqyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=BnGV4lhQ; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NEpnptuw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IEY+1wY/"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A00DE140008B;
-	Thu, 29 Jan 2026 18:03:02 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 29 Jan 2026 18:03:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769727782; x=1769814182; bh=k0j/qJ+2qD
-	JLjP4UzQRSiZNA8hRnsSYKPC8U1JAwmjg=; b=NEpnptuwpgidXbjuJxLlkAsPzy
-	brQ/tcl0fN+my6HtHV+UfRUCKqHJ1XdyGcsEjvupq5noPK3R1amYjiZ8zti5XZqi
-	ky9pmwuJWnmqOfpUISDQkbHSz0ozvULgMgtBcwUNVGNX6m0TKIj6stFQCYVrOj5q
-	geVufGuYyOkT1kiLxW663cNFOXDSHe2MZIX8F1ke3SzrvVQK0s2YarZ/CUQe1bkc
-	CY8Zuk1+HGjBlFaevSkCsYOLG1lyiuYrYRy4Vz5udGZnBdV21GDle0rEWg3xxICA
-	rbLFkHG96OOT52NKsDrviOobiuvqxWB+/4rXTP+fWhCOi24SLGYD0XBb5rtQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769727782; x=1769814182; bh=k0j/qJ+2qDJLjP4UzQRSiZNA8hRnsSYKPC8
-	U1JAwmjg=; b=IEY+1wY/Ty8/GwSiPdX1V53pYdSwLByGWfGnZ26kNukQ0D9u/Qm
-	ym7GEkaxJwNIns2hNCBgF3mC3GwT7ClJTCz+P//fTRvRgYwXTUABjYu2jlnNuH6+
-	RGuE+Kb01E+hp4b5qlkKbut+z8gRx67O3xSMKlMWMbPCCdAv01Ev5K8QHtgW+Fco
-	H/AzsRx/L+4h4Hdz9jl1qMRz+dGFG4AeUcrfq3DcF+ITRe1LZOBqTE4btZ5dgLiS
-	gPVbphxK3oo4YPi5ss/mbh+j7OUZeZ/qbDsB3ev2GjUfDpXXjW7Nb9clSLGwgxMR
-	YjSo24+qMHYi8eWrj3BMBKjHnXrsn3W1QMA==
-X-ME-Sender: <xms:Jud7adDgBfoOvaXxWTygO30Pm8BZppuzfM1piytKjn78XgOvwHy3HQ>
-    <xme:Jud7aShZar9Eu6lzRSEss13d-Jteu8Qx9DHHZHx7l5itGW-g-L-m8S3rhNwMmQCfQ
-    TPcVRLP5VU6cCAAx969SWtroOovoLgFt09BBZ_RuSX5Dp4XVC6AUA>
-X-ME-Received: <xmr:Jud7adnzK1vZ6cb0C-G7dJwCfSAHZZ2xVMdbGLB62_uh3BX3DHa7djz0DvAQfZO5gbVo0sQRpuV3AWtJDqfmzR3rVKOabfgBd-YiT_M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieejgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
-    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Jud7aWrX9yEUJRNiUgyXO6A9TQyn4canvaE6pqH1kl_opQDwXWzGgw>
-    <xmx:Jud7aeEpCVGYRSAk3swq_BW1tG7LMFFrGlFzu55bbTvgQWiviqZ7sA>
-    <xmx:Jud7aaxIicRwbF3WPFuT1HsjzcSWkprykVQkG4WpkjqNkZ-xIn0e5Q>
-    <xmx:Jud7abqMObQ3Dp4O_MDS1ahEkdBGiAlhnffOuJGAtIyVsNSsLQzQPQ>
-    <xmx:Jud7aVEDXHvdixdFG8LQqbZFfV2ThUiUFbqOJh07AsAfA-GEXeyvJ_Ak>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 18:03:02 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BnGV4lhQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1769728330;
+	bh=gX9IBTujx02UlP662P2lXSyH38pQzB/0NXs+K7D64RE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=BnGV4lhQD+XJ6OXhATYeBc9Yege5IOhtazNc18GzBZDOGHz2mdIdbWflXkXyzv6uO
+	 ROkZNrbsoMDrwWxyY82235zMbCpOiMSuaGNNnAytPRaCgLHXqbt6dor97agH4YEwyy
+	 qlZ3+0DROS5zTFpPF9pkDTxlBV5uFYAprBJtRP6c50FDJsTlpoZJvAq8RsVUOKlB+j
+	 4KD7Spznt+QcMqNHISFeH+7qAmHb7mrphJlUqBO6PuUI6eRSt8QRIhsdrX82Ib+05g
+	 +8Nuw1Fy8T/2FQmgCj41gPgE8FApoCDcygk4Mt+hb8VB2AIkpJoz9lmLZIVCFSTE6l
+	 mITdP2JRVYf95TTRCjTC5lRv1nJnxdullLmTbKp2YafPBLL77d1MCSdtatB2JidK+m
+	 m799lJcbJLQ2GQOZT4EB+diO454aJKv+4Po+t9iOzP1ZH2fUcXHfs+FSIvXGPGh31L
+	 J5tMI1BAw3hk+kP8InhgVsOTyH1PI/NZSTGVyS34XImanJAC7fW
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:bf0d:4ae6:75ea:91b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 21D5E200B4;
+	Thu, 29 Jan 2026 23:12:10 +0000 (UTC)
+Date: Thu, 29 Jan 2026 23:12:08 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
 Subject: Re: [PATCH] show-index: warn when falling back to SHA-1 outside a
  repository
-In-Reply-To: <20260129153948.224156-1-shreyanshpaliwalcmsmn@gmail.com>
-	(Shreyansh Paliwal's message of "Thu, 29 Jan 2026 21:06:55 +0530")
+Message-ID: <aXvpSPpfvulKu57P@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com, ps@pks.im
 References: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
-	<20260129153948.224156-1-shreyanshpaliwalcmsmn@gmail.com>
-Date: Thu, 29 Jan 2026 15:03:00 -0800
-Message-ID: <xmqq5x8k9g4b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20260129153948.224156-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yJk+mQM5aHx5ZpYf"
+Content-Disposition: inline
+In-Reply-To: <20260129153948.224156-1-shreyanshpaliwalcmsmn@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
-> When 'git show-index' is run outside of a
-> repository and no hashing algorithm is
-> specified via --object-format, it silently
-> falls back to SHA-1, relying on the
-> historical default.
->
-> This works for existing SHA-1 based
-> index files, but the behavior can be ambiguous
-> and confusing when the input index file uses a
-> different hash algorithm, such as SHA-256.
->
-> Add a warning when this fallback happens
-> to make the assumption explicit and to
-> guide users toward using --object-format
-> when needed.
+--yJk+mQM5aHx5ZpYf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Line wrapping at 50 columns certainly makes the lines narrower than
-80 column limit, but let's not go to the extreme.  We recommend that
-the lines are still less than 80-columns after being quoted a few
-times in e-mail exchange (as you can see, I lost 2 columns by
-quoting once in the above), which means that around ~70 columns is
-the practical fill-column.
-
-> Additionally, wrap user-facing die() messages
-> with _() so they can be translated via gettext.
-
-It is somewhat distracting that such "while at it" changes dominate
-this ~100-line patch, whose "primary change" is a mere three lines
-we can see here: 
-
+On 2026-01-29 at 15:36:55, Shreyansh Paliwal wrote:
+>  	/*
+>  	 * Fallback to SHA1 if we are running outside of a repository.
+>  	 *
+> -	 * TODO: Figure out and implement a way to detect the hash algorithm in=
+ use by the
+> -	 *       the index file passed in and use that instead.
+> +	 * TODO: If a future implementation of index file version encodes the h=
+ash
+> +	 *       algorithm in its header, enable show-index to infer it from the
+> +	 *       header rather than relying on repository context or a default =
+fallback.
+>  	 */
 > -	if (!the_hash_algo)
 > +	if (!the_hash_algo) {
 > +		warning(_("assuming SHA-1; use --object-format to override"));
 >  		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
-> +	}
 
+If we're going to start producing a warning, can we also learn a
+`--quiet` option to silence it?
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Can we push the "while at it" message changes to a separate patch, a
-preparatory clean-up, on top of which another primary patch adds the
-above warning?  Alternatively, have the primary patch that adds the
-above warning and does nothing else, followed by a post clean-up patch
-to tweak the existing error messages?
+--yJk+mQM5aHx5ZpYf
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaXvpSAAKCRB8DEliiIei
+gTwJAQDr3LZyuv9imBldbAksc7HzB2kRHq9a1S4/pp6g5b/aFQEAgl5+9YrAwlWs
+u8iAE5lV6juOt+ovPXImEoO096yr8Aw=
+=P0op
+-----END PGP SIGNATURE-----
+
+--yJk+mQM5aHx5ZpYf--
