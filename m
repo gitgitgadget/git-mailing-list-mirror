@@ -1,227 +1,116 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D423207A32
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 15:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21EC2116E0
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 15:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769699720; cv=none; b=HUQE1OjiPj5uGkNuiz5gUhJ7hyk3JvHYBpZseXel04Oz2m1JaJFCmP0qbvkbDJUHdgBfL69ECjJUvkz5jt47tHHYUwjaIj4do2kDEiMTPglJOAO6WNg++gztz4gohw2Zo1PZZnY7R+9BAzbxl/50vGeQHAl5gogRAeYUpwZaBho=
+	t=1769699845; cv=none; b=tNtiOpCKLkI7uIeffjp3Ez3PbYbhb6AYm43t4xKFRnKKB9QFY4qkaE2PWMpnS3UC54dFDRWtbfAwMRhh6W8NbWn0EBEVFdoas4PcI3e1inj0FP6c7z6tYqM94AKNsX/kJ1/9FKzAWdaQdqYxyAjIv6W0QnL9bZtLX+BdraT3SPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769699720; c=relaxed/simple;
-	bh=VpPhZh5KexCBw8qVsyNLx/GvirxCRq847LAAlqDoGdQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AVDZW1QsEYj2HiwzpiNx2JLuD+sAQI6gIPin3Lh69BXd8glYgZafijCHkRxR0WlzgWdg0A0t+gMaiDtrbOPBwSygJl1o5SEdwzdF3FNILCcqcIjAJg9sOuQGdOE57DQxnA0BG8ohWGTHewQ1o12q7Jdd3nizMBQi+r+PdangxJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gY0+1uzq; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769699845; c=relaxed/simple;
+	bh=NF6AGLx2lUH9bjrgDTqEu8RTnswuwUc3c3yIrblrwjo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bvfGEfClPV2DILWQMZpUlTrF2V2JIUtW63crOx3NFrjAkXv2Q9boMhi4i3evzYcsq8DoL6n1gzCE7esLEsvpfdCkhkYQC8M5XJDnXx/5qyScOZUxDs2Z8Jc55pyikBrR9hgExTmnK2LLYDaO1EgqYgOry9ia54YkBrdAzwNmQ/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RWq3PTr9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XxivUS68; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gY0+1uzq"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2a8a7269547so10398645ad.0
-        for <git@vger.kernel.org>; Thu, 29 Jan 2026 07:15:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769699718; x=1770304518; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=F660/1esfhIfPHQgb5Y6SyZLbdDKJvUy/eAUpPQz8yI=;
-        b=gY0+1uzqltI5SShM50WytwRL6DiMbXU65TuqLif/FTLQ7XO1t09EIIJW/qKgHXXicw
-         KVyyUf4GDfuQvmpHOkDSQ5xvklscsm2niTSkXSNVlWTRS1ZlQsVgFdMBo+Lmcw/eQojC
-         ipWGpH9X8whdIydhhKpCNZgVCReZLw233zhbF3k2/v+amBqYDn2WZZeux8uYmia21aEL
-         vE4VobCXRWEd9GmjfRp/kff4Pv6WmNb94AkQZa3z0A3c/O+mlE7EB8Gw1E2DXTnHhA+s
-         vJpW5bs1upS3tw3Waxnla4DWKv0RBJZJ+jfMfgjZ1MxprJ5XPQw9UQV/htbNcV9eUI1v
-         qrIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769699718; x=1770304518;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F660/1esfhIfPHQgb5Y6SyZLbdDKJvUy/eAUpPQz8yI=;
-        b=woiv4FjSvCXE1k+9LqGjdhuiEjviXGCctBKDK5pj8RLxAiJmC2s5IzIxadJec7REn8
-         9WqpcvkuNcfxqR/mvZKRpQEnJWU+wEymDu8IqM846N4IjiY8ld76oaVg9jB6HVGtsAy4
-         7Vfh4Xk6A+ei1tUWgygZULKSli357E5NfSr5Mdku7ZGjMyssG14Uv5Zn+RE0BBSLHvUj
-         +hNP/NLDTmVfupHRqrPafaDllBelLn3gM/BL1xxaQ2/yZ7knESd/Ku9vwxdTGZdk7MSQ
-         4QsxmVATKw7CwFbEcYXm+O6Ie6DhDgT2b3Kuse6+FWiRjrTY24zIMgAZE52TZiNe6oO/
-         QGDQ==
-X-Gm-Message-State: AOJu0YwWKHCV1Ivswb6BmC6V1MK6GjExyrti3vWaxeAl6hWE4Yr4Vz1Q
-	6AwVs0CC0LfjohFWw/CvmY30VQ+HJBDlzXdiC0ZZQ+eGn1Bf1UK+iRwJlysYdE/f
-X-Gm-Gg: AZuq6aJxsqzJ09Gg423K4LyhW+LWTejTO3NPW6KnEg+ZGGwqKZ8l0deuvH//0INQSCg
-	+E1lR+TFEBIb7AeKdvYRHXPW4En049TrGhGB9QhgyBCKmV8c065YShV+DxMO5J2sVLvoPBYRFpZ
-	nGW6cm+IN7i3sQUH1lFJvJY+C4+yLRUKUIHc7HpY+DkQDbLCl8H06tEztz142V3wT/HJgWyXYI2
-	gIgTtv/JLSie1LKwuaUTagmi9UkT9TTe79mfYWVUo72t4lS9/uuTVoWGL2Tj6HfKEAW5Kc21dFA
-	DKho5kjCUsNEQYIkmKWfoZ36JVUpNnRLrcZC8D9wWsXwRWyOYfMEqNAH8CixngEzTkkveyqW6qC
-	Uwc2ew2J2p0Wnc0j05j2eGRMtM+ISJI3EbavFIBim5c/UbRNaQR8pVBHTpR1vTtVyL4WyYXdK5S
-	aQn2OwJwsCdc67PjXGcZATdGxwmfWZMrExG9MM3CKlrcU=
-X-Received: by 2002:a17:903:41cf:b0:2a0:d403:a2e3 with SMTP id d9443c01a7336-2a870dbeacbmr87126245ad.37.1769699718325;
-        Thu, 29 Jan 2026 07:15:18 -0800 (PST)
-Received: from Pushkar.xu.edu.in ([125.22.10.154])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4c40e1sm53945635ad.55.2026.01.29.07.15.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 07:15:17 -0800 (PST)
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-To: git@vger.kernel.org
-Cc: peff@peff.net,
-	gitster@pobox.com,
-	Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Subject: [PATCH] path: refactor normalize_path_copy_len()
-Date: Thu, 29 Jan 2026 14:54:35 +0000
-Message-ID: <20260129145434.29123-2-pushkarkumarsingh1970@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RWq3PTr9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XxivUS68"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 935CCEC054D;
+	Thu, 29 Jan 2026 10:17:22 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Thu, 29 Jan 2026 10:17:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769699842; x=1769786242; bh=BnSJA9elZm
+	we1CzKE0VEoJBPFIFUqgSpViuf00sx/Zw=; b=RWq3PTr9pKs0r6A5Q/mWlBs/l+
+	HXR0bOnwBPwiFL4Kt2SLNjB7YoO5RZNrAQolrDcAsfTDdGZW1FJN7e/+mmAUOaW6
+	ycfKBi/sSw+CfzxioT5fohD4WXidqTmsjUdCnW8uvhJOER5gF/Z1x1McdIYi30/h
+	gQuF4RRvBsKvUEpNYjlOd+EQgNEpbgAzZmc9NO8WfC7qLGW+rx5roTTGSy5k61tV
+	OOIgQFJ6VVxEugBpp664cgiYzJj6oznf3R6K/6oqCM2EVA+w93JMKyEw04r8A70r
+	8arECa0LWRRj6t0Mq6ZpygpDbxv1ChIKNUwK8T4NhUSFdAXXyX16cYfYGt1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1769699842; x=1769786242; bh=BnSJA9elZmwe1CzKE0VEoJBPFIFUqgSpViu
+	f00sx/Zw=; b=XxivUS68TZGxRyAVkoy48FBN9k3B5MI6RHiWIXjNPoqIH/f3+Vn
+	T/J2BHWfoUOBMRxh+1C9BRa1mm2TYDI31OtyBnJdXIZzETZ1yb5jcqH97tavZ5NB
+	1tDZIFNmg7yV6vQAXhh38iR5i25xdp6nfTWysxqpK7f2/VX87U+h/BhYBIPXMTo4
+	LTtQnEhAaGbLxFOwb0vpmUjShgZDWd/Y6sMvpAWmncBnGQWjE/T+xNHYEgC2RcIZ
+	dOtBVIBPAehxvxjxzD6e1EStbp2BmfFk5rBiMbSf4rWIkhKzbXarFX4kO/UGC1CV
+	P8TSXmm91/KNKthGJ55yJ+aAdNVGWSt535Q==
+X-ME-Sender: <xms:Anp7aVsyXPlnJSs2vc1o6IsnJoqFIwRxQG-aodhcSvzQQ_uQ2XzdWg>
+    <xme:Anp7afKgEua93tNt8en1d08yId8t7ffFmCXIhytZm8jsVOxEff_nvUWXl_o4dvYuV
+    RPGhmECTBrG-qfIDgekapLto6IEVz2jRWsDFcOEgaMAyRetDdFj2w>
+X-ME-Received: <xmr:Anp7aW_HVDWluFnUaHLvImOt95po2LcyV9JwPcbKzRMFMFV2GXHDw3KZM-m6UoIBV8cCyIoIUyz08t2AXD52hBuaznwe0EiPsqOyVF0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeiheefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepgh
+    hithhhuhgspggthhhrihhspghiuggvmhgrsehprhhothhonhdrmhgvpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmihgthhhisehitg
+    hoshgrhhgvughrohhnrdguvgdprhgtphhtthhopehprghtthhhohihthhssehushgvrhhs
+    rdhsohhurhgtvghfohhrghgvrdhnvghtpdhrtghpthhtohepghhithhgihhtghgrughgvg
+    htsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:Anp7aQwE6E7ncEymYqCDcBgHTL_EGit6wQSE_QIjYfB4Ut7Hm4Ja8Q>
+    <xmx:Anp7ab7cVqO2gV5NXl7CJmIKaTRR6m0CZOdh-xA65VGMHj8GQVE7yg>
+    <xmx:Anp7af-r32dEwZcXirjF-PRPVekNZbgNKxxf07mJoAaCYDKCIthsyw>
+    <xmx:Anp7aYoTZHOELwW6vrT72ZOs-_fBT2_5i1KITJL0gn6JGAsdaPa7YQ>
+    <xmx:Anp7abCF3cBKkeFt6ExwokTz9f6rG-_QXgCYyDFRAQyeUV1pjrmn3ixS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 29 Jan 2026 10:17:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: GitHub Chris Idema <github_chris_idema@proton.me>,  git@vger.kernel.org,
+  Michael Lutz <michi@icosahedron.de>,  Pat Thoyts
+ <patthoyts@users.sourceforge.net>,  Chris Idema via GitGitGadget
+ <gitgitgadget@gmail.com>
+Subject: Re: [PATCH/RFC v2 2/2] diff.tcl: call "apply_tab_size 1" to fix
+ alignment instead of spaces.
+In-Reply-To: <7f45bdc4-d164-42e4-8a84-36410654b4e0@kdbg.org> (Johannes Sixt's
+	message of "Thu, 29 Jan 2026 11:04:46 +0100")
+References: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com>
+	<pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com>
+	<e11aa6d811dcf868fd0f91b74cdceb8bc3f4229e.1769545996.git.gitgitgadget@gmail.com>
+	<xmqqsebqem1n.fsf@gitster.g> <xmqqfr7qeixq.fsf@gitster.g>
+	<71494127-c17d-4fd9-a69d-1f547205ac8f@kdbg.org>
+	<xmqqv7glcmee.fsf@gitster.g>
+	<AXTzN5mRXdWYZx55ARuBbRgndXW5zA51_wcnAV4KaUpk3kz6t8ZYfOk0Du5rg6zKhz0_O-4ZSkLNX6WkhTp4fjDFDMfCZAsTRCoBMH_IpMU=@proton.me>
+	<7f45bdc4-d164-42e4-8a84-36410654b4e0@kdbg.org>
+Date: Thu, 29 Jan 2026 07:17:20 -0800
+Message-ID: <xmqqikckcutb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Refactor normalize_path_copy_len() by extracting helpers for skipping
-slashes, handling dot components, and stripping the previous path
-component, making the control flow easier to follow.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-This is a mechanical refactor only; there are no functional changes.
-Behavior is unchanged, as verified by t0060-path-utils.sh.
+> Am 29.01.26 um 09:31 schrieb GitHub Chris Idema:
+>>> From: Junio C Hamano <gitster@pobox.com>
+>>> I noticed that gitk has code to deal with octopus merges
+>> 
+>> I would love to know how such a merge can be replicated.
+>> Is it also possible to have such a merge visible in Git Gui?
+> This case is not relevant for Git GUI, because it can only show what is
+> in the index. We have only "theirs" and "ours", and together with the
+> current file contents that's a 3-way diff.
 
-Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
----
- path.c | 105 ++++++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 67 insertions(+), 38 deletions(-)
-
-diff --git a/path.c b/path.c
-index d726537622..00845cc03f 100644
---- a/path.c
-+++ b/path.c
-@@ -1112,6 +1112,63 @@ const char *remove_leading_path(const char *in, const char *prefix)
-  * end with a '/', then the callers need to be fixed up accordingly.
-  *
-  */
-+
-+static const char *skip_slashes(const char *p)
-+{
-+	while (is_dir_sep(*p))
-+		p++;
-+	return p;
-+}
-+
-+static int handle_dot_component(const char **src)
-+{
-+	const char *s = *src;
-+
-+	if (*s != '.')
-+		return 0;
-+
-+	if (!s[1]) {
-+		*src = s + 1;
-+		return 1;
-+	}
-+
-+	if (is_dir_sep(s[1])) {
-+		*src = skip_slashes(s + 2);
-+		return 1;
-+	}
-+
-+	if (s[1] == '.') {
-+		if (!s[2]) {
-+			*src = s + 2;
-+			return 2;
-+		}
-+		if (is_dir_sep(s[2])) {
-+			*src = skip_slashes(s + 3);
-+			return 2;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static int strip_last_component(char **dst, char *dst0, int *prefix_len)
-+{
-+	char *d = *dst;
-+
-+	d--;
-+	if (d <= dst0)
-+		return -1;
-+
-+	while (dst0 < d && d[-1] != '/')
-+		d--;
-+
-+	if (prefix_len && *prefix_len > d - dst0)
-+		*prefix_len = d - dst0;
-+
-+	*dst = d;
-+	return 0;
-+}
-+
- int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- {
- 	char *dst0;
-@@ -1129,8 +1186,7 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- 	}
- 	dst0 = dst;
- 
--	while (is_dir_sep(*src))
--		src++;
-+	src = skip_slashes(src);
- 
- 	for (;;) {
- 		char c = *src;
-@@ -1143,29 +1199,14 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- 		 * (3) ".." and ends  -- strip one and terminate.
- 		 * (4) "../"          -- strip one, eat slash and continue.
- 		 */
--		if (c == '.') {
--			if (!src[1]) {
--				/* (1) */
--				src++;
--			} else if (is_dir_sep(src[1])) {
--				/* (2) */
--				src += 2;
--				while (is_dir_sep(*src))
--					src++;
--				continue;
--			} else if (src[1] == '.') {
--				if (!src[2]) {
--					/* (3) */
--					src += 2;
--					goto up_one;
--				} else if (is_dir_sep(src[2])) {
--					/* (4) */
--					src += 3;
--					while (is_dir_sep(*src))
--						src++;
--					goto up_one;
--				}
--			}
-+		int dot = handle_dot_component(&src);
-+
-+		if (dot == 1)
-+			continue;
-+		if (dot == 2) {
-+			if (strip_last_component(&dst, dst0, prefix_len))
-+				return -1;
-+			continue;
- 		}
- 
- 		/* copy up to the next '/', and eat all '/' */
-@@ -1180,20 +1221,8 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- 			break;
- 		continue;
- 
--	up_one:
--		/*
--		 * dst0..dst is prefix portion, and dst[-1] is '/';
--		 * go up one level.
--		 */
--		dst--;	/* go to trailing '/' */
--		if (dst <= dst0)
--			return -1;
--		/* Windows: dst[-1] cannot be backslash anymore */
--		while (dst0 < dst && dst[-1] != '/')
--			dst--;
--		if (prefix_len && *prefix_len > dst - dst0)
--			*prefix_len = dst - dst0;
- 	}
-+
- 	*dst = '\0';
- 	return 0;
- }
--- 
-2.43.0
-
+OK.  If it does not show existing merge commits, then I agree that
+only 3-way is relevant.  Thanks for a clarification.
