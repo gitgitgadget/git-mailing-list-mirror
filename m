@@ -1,140 +1,110 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D0D30BF79
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:26:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAAA227BA4
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:31:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769714763; cv=none; b=HZDK4BqnYB5QP8Y4lA1RvXnD7eMJ/uAD/7v+ugC56dI1HQ8+LZoX6VqMspMaLrNMXaElfhwUZAxZ/l/eNRQc+cHFloK6CmyswQEYdbN3ldAkUl8LwEZyAFcXIY/hdm6aJ0uZOG7bduU2KnUro38659ae4MfRn9JXKwakMc6tf5I=
+	t=1769715063; cv=none; b=CsPa4je3kUuVSB6Mby3cYSCYb3njCV7jhOkKVS36fzzNcP2wnE7ioovi82XBqDUr75bVglyu33tEcpFLFrgjZeIembi2xMSiN3rcjAiHd60IvH5SriHr1EN4UpoPwTYkx+KF164dwwqN9v9VALrUPUpKrxs62C6wQ2TMlqIZ+3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769714763; c=relaxed/simple;
-	bh=03zxGaBu7fp5r5boXeLpU/6MiyjGndNKVRYt38F/D74=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WW2nCmFFrbAZNUf/xRWvag834dmMp/kD8y/x+m/d6feISoo+6hTROISK4qVcGlYr+Nc7X9hrn0aaHKYfcwVEgG5CChcK5Y54v2JAJOY6o6UAuHSz8XT7icxaygAnwkP6U+IGE02NfCMw2p8c8D3hrt4foGEFJNtPwjfrRD2lJTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SUjb8moC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O51DfGBM; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769715063; c=relaxed/simple;
+	bh=I+UCM17eLIcVxBwPgTlWXfmRqgoQ8AZTphXhOfytvec=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BP2BJbGs0D1E7TxNylYe9bvp4TaxX8TFaHr117FWhT+5lgkHmMcTjwA2hcj6GHSslhxNgdKDklMAY0zrYM5/i8vwMPggxm5F15tIaTJ2g4J5zVhrdeN/OIHrApsGk75mkUZNA8dcuM2026heszsaZH9eOuuRMa34EaYdb/PDTCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NsMJdnc4; arc=none smtp.client-ip=209.85.210.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SUjb8moC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O51DfGBM"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0EF29EC06A7;
-	Thu, 29 Jan 2026 14:25:50 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 29 Jan 2026 14:25:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769714750; x=1769801150; bh=4lKYqOM3yn
-	xaQqQRZAIPqCrbZhylkLoaR4TGqv4Yx6A=; b=SUjb8moCUdNWxNq8UXixPXggvo
-	EmM6MmaUyeOHdbeYmPBRamIvIuM7rPuKfok7/Mie5ANEgluTgzC89UTFVAkE8pZY
-	/R0BdFanBHzOySJ2IK8EI1Jgag4ar1mKi5GKb9+K0o1bCFKc9Yt7Er2mQRGTtl4G
-	x6dGwDozcE3AE57KX9nSxx73/SkuW6enhkKbb6ABlr9ctQ+aJWKyiLn5HAEo+N2h
-	MQpktlt3/tg4XZNp3xt1M2FKyxnYhekIKlSfuNO3eDVN+0aXj1ETYy5FRdhfz/Mw
-	B6yaSAgiBJHnckNf1KXu+X9idnhbgCpMrhQ/80gwWykufQDFw+eDJhG8qlvQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769714750; x=1769801150; bh=4lKYqOM3ynxaQqQRZAIPqCrbZhylkLoaR4T
-	Gqv4Yx6A=; b=O51DfGBMutwIpQqIkYXmpmoImafoer287WW9kGo9GoPqHQD4TR6
-	Y5TCPMFkTcACUMh4g9PddbcjJfBQdURXKAFW2/o73beQ1acdKxhCdysCanAfJTuN
-	j1iXqhD+pLCJzUrHnXy9EIznVzRVfJedIux+BX7nMRxSOKBXnZkCD+dhXAvQ8b+A
-	74AkrDVwy0vH0LghF9V6C6k1TfhPMinAKsQIgGOGekWh1U6hz9iHXc2fn1OTionu
-	CXA/hIR9KXXhpGTw21Uxwzfa4lLgKq/iF5jlXWWkhSOUe7GqaoNO1yZpt99gZglv
-	BTcxem99EdBqJZGBN+5A41r3Z4GhcHvQpAQ==
-X-ME-Sender: <xms:PbR7aVajJKD1wwkisO2g5sd4ZdXr6A6u_RvxyaxjVzEXrm0OT5zfjg>
-    <xme:PbR7aTaQz6SSz81Gj1cmtJb3foLr1TkmK3elwPH7x3fuUHmAvM0tvdTQKa3uwgthJ
-    eCbb9myIds41qiTpCo9V84Eu65LEPScNkIh0kwsgJ834P-9L5CNKg>
-X-ME-Received: <xmr:PbR7ac_4otv0Ytp0SsaozYbuZVknleAtQVTC8Gc3PKKmNh97Aw-k7G2bNV6srVcRQBB2bP_YxScedv4I-ZmwgqD-y_Chr0l0IHRXIBo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieejtddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjlhhtoh
-    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PbR7aSj44alEMiyd68X8KxUaQy37AoSxKgufDzSgS6QxK-b_Bqagcg>
-    <xmx:PbR7acfOS3w8s491dNvCRqaCGQ5IVSMbihxK9erseC-OYKzrEfSHAA>
-    <xmx:PbR7aZoiGIgZcU9NR3yjJ1Ih0KVHaq-Bi4QnWyZjTnTKqbSHrY3M7A>
-    <xmx:PbR7aRArQJv3pinjFGMTsL31AEa3ou4mDojVlrSR7O3vLDGBi72mSg>
-    <xmx:PrR7afLnISwrVJOOSKvr--992dTc7RZ1Ibu1ZosoYO4Ag0YZo2bcc6Dx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 14:25:49 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NsMJdnc4"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7cfdf7e7d19so1197193a34.2
+        for <git@vger.kernel.org>; Thu, 29 Jan 2026 11:31:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769715061; x=1770319861; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=f/2cKv6GXzEo8dLieY5W/gpTtIqO6MnsVT+bX+eSHDo=;
+        b=NsMJdnc4LswTwneVbuS3KXQnqFWQe8f8A75xBywCTdVojPB7IjkW0Um6/8fZxZiQ1b
+         0VzSVrYopahR1pc9tmV8MRpNaDUuQQvDWZ8tPzePxrP7S1AcckZdNeFMVkVuTlaADGC3
+         hNrzpPfFdYsi1YapczEhBEh0FrsfDq3IPAm+Nk6c2tu5ymrS1sRze15cQdDsgtk1lSLY
+         dmpjHro0SXLhp6SyPWcMeyJsrAkbCX918JpOdaLu2Lt/eZ4AMIkPNFmHGi0+entHRW3c
+         fgvxRs4bx+UxEJoaRFm/AQJYzmka16MtCednw6rMRUO7WPkxwlJ7ofmZEzcTQ8fbnfHB
+         Yc7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769715061; x=1770319861;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=f/2cKv6GXzEo8dLieY5W/gpTtIqO6MnsVT+bX+eSHDo=;
+        b=Id3W299+MChPskI1kVqFIeQYPWMfIGjYMqrhMyjR8t2nC2Xq9zJ/fGDd8YmLp+tRfz
+         i7Evz2TLNMrhrHCQ9zQtRvxMhr82lhFtcirUZ91w+4P1bvKMoJ/CTvusHszdKhaKAIau
+         WXI97BlRdkegx+9tI8Q/+mN6v57vfl+tAdbXZYWrodmy8yMI+TIjvb9q5LTIugGjBKuY
+         lyuPBkc3cyU/em+kZEJCa5gJRWN5eaCfHB+d8ZCLQbWoy0aaxISuG3zw5vmTNDuQ5/xk
+         jjnkA7A8KmpGLBnc496jz54IzVrR8/k8LY2+rHeUmeg0aPUS1ifgA9Sv9ahDOwT9VxCm
+         43+Q==
+X-Gm-Message-State: AOJu0YzjjhFagWZ/QXVrVCNtlfcfoscB49C+DK1nKeNC8dWc4MgzSAVP
+	yUp4YHUAIqSpB1B47IbS3O6roDkQzqHddH7dBmZ8RGOi1+ETtWDOOAqKMUnlZw==
+X-Gm-Gg: AZuq6aI+lpoHT+quoY1T1/qoKFyCtFcdFuzGvI/xZyO2A1Kc+klkw8b/qG/gA7jZ+Ai
+	NXQ92wMlvMkEXiCndk6buFmJDMXcVPZ+EGz5EckAozrVzEDg3D7D8xYlGHHTg3ovr3JP/0bTDGl
+	Tl+4X6U3CzfCAS67AI2IjxUeh6E8KB7+fwsFR5DQskhYURL/5NowezHF5vtxhNO4yh4nkOSiBfD
+	bmdElyiA+1jWRq4BcElsIOM75dWKblrAfyJaNLvdikYLvnooo6vVxlmIKHOvPMCSBE9SNHvAYFN
+	EThzqvWcsocn6WMonA43c+RCVAyBIzQnJLGclMk236Sykmocn18RG+bwv1ugq+Jm2xLWNi01bUu
+	TfA/0kOxmxkEoaHdNacgnI0MN+dzN4l1jvNI6SORx0UDqI1cflZBLXkFUuIeePE3NXxyZkJMhQe
+	tPKIxRw57tt9q8Fgw=
+X-Received: by 2002:a05:6830:63ca:b0:7d1:8e24:724d with SMTP id 46e09a7af769-7d1a53d3833mr433596a34.38.1769715060931;
+        Thu, 29 Jan 2026 11:31:00 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d18c8016fdsm4159133a34.25.2026.01.29.11.31.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jan 2026 11:31:00 -0800 (PST)
+Date: Thu, 29 Jan 2026 13:30:54 -0600
+From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
+Cc: git@vger.kernel.org
 Subject: Re: [PATCH 1/4] odb: store ODB source in `struct odb_transaction`
-In-Reply-To: <aXtDYY0Ao24Mpgyb@pks.im> (Patrick Steinhardt's message of "Thu,
-	29 Jan 2026 12:24:17 +0100")
+Message-ID: <aXu1IDsaUbmUzHop@denethor>
 References: <20260128234519.2721179-1-jltobler@gmail.com>
-	<20260128234519.2721179-2-jltobler@gmail.com>
-	<aXtDYY0Ao24Mpgyb@pks.im>
-Date: Thu, 29 Jan 2026 11:25:48 -0800
-Message-ID: <xmqqcy2sb4qr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20260128234519.2721179-2-jltobler@gmail.com>
+ <aXtDYY0Ao24Mpgyb@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aXtDYY0Ao24Mpgyb@pks.im>
 
-Patrick Steinhardt <ps@pks.im> writes:
-
+On 26/01/29 12:24PM, Patrick Steinhardt wrote:
 > On Wed, Jan 28, 2026 at 05:45:16PM -0600, Justin Tobler wrote:
->> Each `struct odb_transaction` currently stores a reference to the
->> `struct object_database`. Since transactions are handled per object
->> source, instead store a reference to the source.
->
-> Makes sense.
->
->> diff --git a/object-file.c b/object-file.c
->> index e7e4c3348f..196509b252 100644
->> --- a/object-file.c
->> +++ b/object-file.c
->> @@ -728,7 +728,7 @@ static void prepare_loose_object_transaction(struct odb_transaction *transaction
->>  	if (!transaction || transaction->objdir)
->>  		return;
->>  
->> -	transaction->objdir = tmp_objdir_create(transaction->odb->repo, "bulk-fsync");
->> +	transaction->objdir = tmp_objdir_create(transaction->source->odb->repo, "bulk-fsync");
->>  	if (transaction->objdir)
->>  		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
->>  }
->
+> > diff --git a/object-file.c b/object-file.c
+> > index e7e4c3348f..196509b252 100644
+> > --- a/object-file.c
+> > +++ b/object-file.c
+> > @@ -728,7 +728,7 @@ static void prepare_loose_object_transaction(struct odb_transaction *transaction
+> >  	if (!transaction || transaction->objdir)
+> >  		return;
+> >  
+> > -	transaction->objdir = tmp_objdir_create(transaction->odb->repo, "bulk-fsync");
+> > +	transaction->objdir = tmp_objdir_create(transaction->source->odb->repo, "bulk-fsync");
+> >  	if (transaction->objdir)
+> >  		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
+> >  }
+> 
 > This makes me wonder whether we should first refactor the `tmp_objdir`
 > subsystem to receive a source instead of a repository as input.
 > Otherwise we "pretend" that the transaction is on the source level, but
 > we ultimately still end up creating the temporary directory in the
 > repository's object directory unconditionally.
->
+> 
 > It wouldn't really change anything right now as we only ever write
 > objects via the primary object source anyway, so the end result would be
 > the same. But it just feels like a good first step to me to fix this
 > conceptual inconsistency, and it shouldn't be too involved either as
 > `tmp_objdir_create()` only has three callsites.
 
-I agree with your "not really change anything right now" comment,
-but a new odb source that will be invented in the future may not
-even be file based, and a generic-sounding tmp_objdir_create() that
-creates a temporary directory on the filesystem may not even be an
-appropriate abstraction.
+Ya this seems reasonable and I agree that it makes sense to do as a
+first step. In the next version I'll make this change in a prepatory
+commit.
 
-If we have two or more odb sources both are filesystem based, on the
-other hand, I do not think it is particulary bad if these two odb
-sources belonging to the same repository took a temporary directory
-out of that repository.  As long as one temporary object directory
-taken by one odb source is not used to commit the transaction into
-the other odb source, it would be fine, no?
-
-Thanks.
-
-
+-Justin
