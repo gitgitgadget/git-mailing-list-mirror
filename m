@@ -1,71 +1,38 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1AE19ABC6
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 02:31:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4CC37F0F2
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 08:14:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769653888; cv=none; b=PiEhiZXjBpun6b79KwWCV3XDdy6iqKnt2EqBS6QbzHk3dQKLYLHgLdGrw+kQ29Db5vB+UMhUEBuLKDQz8EXcCrNGYYEpF6U5izHb16Owpa9FzZu9cftOuMV7WzNXo3cxkX7Nxcr33YzFf/JbuCUmIHe/kQ2s8gGn0RLfsHpy/a4=
+	t=1769674472; cv=none; b=rAqG7gEvoW0uE+Mlg2k4y68zBFGzGGI7lvhTCYHeLAfoE+afkg662JnzpwsIJcJQSatEpa7PLeN0diO8Um+/bb2bV4QmooyHnCPynDwpccV8CJmosutqvFCOa1givdYRAk/uWiSs4xrQwoJhSef9ZqvhhnIhacYZpteXOQUdPMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769653888; c=relaxed/simple;
-	bh=0Jw8b+INWHHQS/olWaqShnvSeGC8ZZHgC7N/YtDvXSg=;
+	s=arc-20240116; t=1769674472; c=relaxed/simple;
+	bh=z4T/FH1TVBrKIzgQbsOsdhlz5VpNtSclCBIrJ2SeImg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OqAv7UZk+rAu3rdAZVxuTttEvh3Cj5fP6NewZ91IbN4bCH+ld1hWs67UJurQRg79QGz0s3gF3B/m8Wse1oAZyvTFbeeRWyRR+RnMlamtK+ZO5hJoMnH7OT/mXuNL3pdou9xA8u3IKj7tvlBdHUfHioSVrl/7EARS6elAYX2Gaw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gIjPN3JC; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=J5DRfbz7jO2pl6/ffNOPQI3uwZsnAzwoNGN72y3WXSfWNndag81f3dxKl2es5YhS+plQXHhgyTS8e/3rTFgdJh6ZI3frTrrB+xJqpAikZd9GXqSuobxszki/GOozwxQ3aCntBg7H3+sKzbk2bNkhtgIdBYArJUxkKwW1hmtn2sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CUgc2J4i; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gIjPN3JC"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7942b9663f8so4821657b3.2
-        for <git@vger.kernel.org>; Wed, 28 Jan 2026 18:31:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769653886; x=1770258686; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AF22rS6fp1Kh29cvXv2bctrqL/lbfCBHgSWI9S1lguc=;
-        b=gIjPN3JC2shNBTp+6rOrlK29yUjEcfs7386udjYvjFObQzMIWl69jgO9BYI2FdMUhq
-         VGqAzLKtUE99qztjVP/W4cjRzguHwgPBeIIvehv9iXeXeUldiyzGCjPYd+xkIkod0xYb
-         /IdPG8GrtnfQRbkFEDbNiw8raeSWD+guzbf9CGbrImBVhfoJkBT19kxnFwxsKR5z3QSy
-         iksU6pmJiARVV4MtjDIzCqmP50C1jyfwkM1JETLPcgdaOWMHSt3q1wp4NQisAPjU1s2d
-         +BF1T1HctDApxlsyGOV8OewUj2Miy88D9IvCtm+UwOA1PMjksMqXhDRAqZjmkss9ZfAB
-         A0dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769653886; x=1770258686;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AF22rS6fp1Kh29cvXv2bctrqL/lbfCBHgSWI9S1lguc=;
-        b=COUbnQ8EAqukBvOI06EHDXaGA6eu0Y6d20jsJliFlUzh1gOaz1WPy4OfzUfgdCuh7T
-         MgVuGvV6Ql4+rhvFPXuJpD18gs1DmkxdywgShkTn9PRYtiD5gzCLTn2SX33LXUtdSjCf
-         /5Z4bakODXL+PxfhLmfy+4+ChLq1OzAievEOmNr+CAeReQ7TMAKooTjHU2yq2C8fQCaX
-         ierusmXHPAFOssmjtoTWobm9MYqQPpLywU2GDzv3CfxiaQb5+g2d0UXXO2zXEPDfLP/O
-         QapOICRLVSnZcYaMt9qiHPjxPeK9bkAWBdFs8INulK0UJJmxDih0IBvmxKo5Pco6gIGi
-         jAGw==
-X-Gm-Message-State: AOJu0YyH9RShwPWezg/xDpmYjjZLpArX++Gw8gVtYILNxbPrD8fO6B/r
-	CnNSOzPP8anUJ3OYEGadC6rUsZvp9OzkOqcH3xKeHPQwRw1c3XLtwI/cXkf0Ck0X1+U=
-X-Gm-Gg: AZuq6aKBE0iTxinteX7FkoVWbw85xkX3iWgTsRxwvALPvwtwq/zX2Ww8gYPM1b89iO+
-	BupEYBImkJ3hGOcvSDvG2AVcaCut0sYpWFrvrdQuv+jBH6iE627YHIVeZP+SDKUVkX4mdXnnla/
-	dfuWo3ao9HrPikdfDXfXVDKN8PhPKs2yH4rC7Xp+x7IJyXRI7i7IK+xQM+iUy3JPqCcl+MwFYRC
-	FI2sRrQIJjhWjGnZDQc0ldPjRasrKrgu/JXTo+FuD8RieauiQ4j9Q63HxRuOZHZS3zmbsfa1LLK
-	pHrniywPW5KbXP2O6HEn/s4fdV1KxbS/pDGN7oGp71W9N2mopxTfwn6GtETxaXAVXKejYVhtQ0I
-	CUueifB9CNOEpHAnB0NXnIkuW+bNLU3PGM0IXIZZu15Ot0phyzgyReFQfG6GHV6yClnBnXD5nlI
-	pkUG8bcxdOpOOv2f2hMW1yxta+vMnNb59xJkXifbFv/lDx3LQRBAgnmhxzIT6r/iTebNlhJjGPB
-	LMuhiebhwRcm0C+Lg==
-X-Received: by 2002:a05:690c:30c:b0:783:6f68:2a05 with SMTP id 00721157ae682-7947ab1cec8mr59150837b3.14.1769653886328;
-        Wed, 28 Jan 2026 18:31:26 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-794861d2086sm14176647b3.39.2026.01.28.18.31.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jan 2026 18:31:26 -0800 (PST)
-Date: Wed, 28 Jan 2026 21:31:24 -0500
-From: Taylor Blau <me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CUgc2J4i"
+Received: (qmail 209062 invoked by uid 109); 29 Jan 2026 08:14:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=z4T/FH1TVBrKIzgQbsOsdhlz5VpNtSclCBIrJ2SeImg=; b=CUgc2J4i1XhbzEsXuX795j1D/QqjKTh3r93ppSfPVDAwMxpWiI1JWfTtD8us+lTDNPIG743l3uJEE89sz15j6mNGKjXer7AxfjCPWj+M/6lKJq+XIamacI86Ko6XYFvjt8jlk+zUC/EqnMk8xwMd4d86hhk3kBZUYGrPFczyPxOPxQ+oHcGL+nA3H9OPVaBYRTMaXN9mYxfgAuJ9HZM3IBIHqCMaP50/VPVUiDm+cQV1XyAKMAwFM3rPaWH2EQU7RXpHLFNgAJfvsNFuhvv/F4DzUO65SK79wbWV/FBQTnFltvQZMopmapmRuMMnpMY8bpq+0cYokUPmF2kq+4WC0A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Jan 2026 08:14:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 397722 invoked by uid 111); 29 Jan 2026 08:14:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Jan 2026 03:14:25 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 29 Jan 2026 03:14:20 -0500
+From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] pack-bitmap: fix bug with exact ref match in
- "pack.preferBitmapTips"
-Message-ID: <aXrGfGUJQ34JAmuz@nand.local>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 3/3] bisect: fix misuse of `refs_for_each_ref_in()`
+Message-ID: <20260129081420.GA589284@coredump.intra.peff.net>
 References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
- <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-2-deccae3ea725@pks.im>
+ <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-3-deccae3ea725@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,71 +41,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-2-deccae3ea725@pks.im>
+In-Reply-To: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-3-deccae3ea725@pks.im>
 
-On Wed, Jan 28, 2026 at 09:49:21AM +0100, Patrick Steinhardt wrote:
-> The "pack.preferBitmapTips" configuration allows the user to specify
-> which references should be preferred when generating bitmaps. This
-> option is typically expected to be set to a reference prefix, like for
-> example "refs/heads/".
->
-> It's not unreasonable though for a user to configure one specific
-> reference as preferred. But if they do, they'll hit a `BUG()`:
->
->     $ git -c pack.preferBitmapTips=refs/heads/main repack -adb
->     BUG: ../refs/iterator.c:366: attempt to trim too many characters
->     error: pack-objects died of signal 6
+On Wed, Jan 28, 2026 at 09:49:22AM +0100, Patrick Steinhardt wrote:
 
-Oops. While we should definitely not BUG() here, I am not sure I
-understand the desired use-case of specifying a single reference as a
-value for pack.preferBitmapTips.
+> Furthermore, taking a closer look, we strip the prefix only to re-add it
+> in `mark_for_removal()`. This is somewhat roundabout, as we can instead
+> call `refs_for_each_fullref_in()` to not do any stripping at all. Do so
+> to simplify the code a bit.
 
-Looking at the implementation of bitmap_writer_select_commits(), we do
-not guarantee that *any* reference specified by pack.preferBitmapTips
-will receive a bitmap. That's because we don't necessarily enumerate the
-entire set of commits when determining which ones to bitmap.
+Yeah, I think the result is much better.
 
-For example, if I do something like (assuming that the bug described
-here is fixed):
+We might also want this simplification on top:
 
-    $ git -c pack.preferBitmapTips=refs/heads/foo \
-          -c pack.preferBitmapTips=refs/heads/bar repack -adb
+-- >8 --
+Subject: [PATCH] bisect: simplify string_list memory handling
 
-, and suppose "indexed_commits" list has the commits pointed to by "foo"
-and "bar" next to each other. We'll look at the next batch of bitmap
-candidates, realize that commit "foo" has the NEEDS_BITMAP flag set,
-mark it as chosen, and then skip ahead to the next chunk, all without
-having looked at "bar".
+We declare the refs_for_removal string_list as NODUP, forcing us to
+manually allocate strings we insert. And then when it comes time to
+clean up, we set strdup_strings so that string_list_clear() will free
+them for us.
 
-Looking at the code, I *think* it's the case that specifying a single
-preferred bitmap tip with an exact reference name will guarantee that we
-select it for bitmapping, but it's not the case in general.
+This is a confusing pattern, and can be done much more simply by just
+declaring the list with the DUP initializer in the first place.
 
-> One resulting weirdness is that two refs "refs/heads/base" and
-> "refs/heads/base-something" would now match if the user configured
-> "refs/heads/base" as bitmap tips. One could arguably change the
-> semantics of the configuration such that a string without a trailing
-> slash needs to be an exact reference match, whereas a string with a
-> trailing slash indicates a directory hierarchy. But such a change would
-> potentially cause regressions with dubious benefits, so this issue is
-> ignored for now.
+It was written this way originally because one of the callsites
+generated the item using xstrfmt(). But that spot switched to a plain
+xstrdup() in cf01f617b9 (bisect: fix misuse of `refs_for_each_ref_in()`,
+2026-01-28). That means we can now just let the string_list code handle
+allocation itself.
 
-(Setting aside the for_each_ref vs. for_each_fullref issue for a
-moment...)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Even before cf01f617b9 we could have done:
 
-Am I understanding this change correctly that doing something like -c
-pack.preferBitmapTips=refs/heads/foo would match both foo and foobar?
+  string_list_append_nodup(&refs, xstrfmt(...));
 
-If so, I am not sure that that is a desirable interface, especially
-since we went the opposite direction in 10e8a9352bc (refs.c: stop
-matching non-directory prefixes in exclude patterns, 2025-03-06). Having
-the two behave inconsistently from one another feels somewhat awkward to
-me and may lead to unexpected results.
+to get a similar simplification, but after that commit it is even
+easier.
 
-At the very least, if we do end up going in this direction (and I am not
-necessarily advocating that we do, since I would prefer a more
-consistent set of behavior), we should at minimum document it in
-git-config(1).
+ bisect.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-Thanks,
-Taylor
+diff --git a/bisect.c b/bisect.c
+index 2cd97bc9fe..6b9e9d81c3 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -1183,8 +1183,7 @@ int estimate_bisect_steps(int all)
+ static int mark_for_removal(const struct reference *ref, void *cb_data)
+ {
+ 	struct string_list *refs = cb_data;
+-	char *bisect_ref = xstrdup(ref->name);
+-	string_list_append(refs, bisect_ref);
++	string_list_append(refs, ref->name);
+ 	return 0;
+ }
+ 
+@@ -1193,16 +1192,15 @@ int bisect_clean_state(void)
+ 	int result = 0;
+ 
+ 	/* There may be some refs packed during bisection */
+-	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
++	struct string_list refs_for_removal = STRING_LIST_INIT_DUP;
+ 	refs_for_each_fullref_in(get_main_ref_store(the_repository),
+ 				 "refs/bisect/", NULL, mark_for_removal,
+ 				 &refs_for_removal);
+-	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
+-	string_list_append(&refs_for_removal, xstrdup("BISECT_EXPECTED_REV"));
++	string_list_append(&refs_for_removal, "BISECT_HEAD");
++	string_list_append(&refs_for_removal, "BISECT_EXPECTED_REV");
+ 	result = refs_delete_refs(get_main_ref_store(the_repository),
+ 				  "bisect: remove", &refs_for_removal,
+ 				  REF_NO_DEREF);
+-	refs_for_removal.strdup_strings = 1;
+ 	string_list_clear(&refs_for_removal, 0);
+ 	unlink_or_warn(git_path_bisect_ancestors_ok());
+ 	unlink_or_warn(git_path_bisect_log());
+-- 
+2.53.0.rc2.296.g6748ed0491
+
