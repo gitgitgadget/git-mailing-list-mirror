@@ -1,134 +1,194 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB042030A
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 00:14:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A06C35580E
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 02:16:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769645651; cv=none; b=vEqiJ66c17rjBg2kjgduyfAjiPTZuLoSR55ovN/S2cHz+ebRTIYG9s1BNOgp4B3ebH+CcdfKwQND7JEHk4hUZYVaQ7Py1wkpmdwyrLZtiKsZw6TUDF9M8N/rbhMsHQkYJPEkjQRLMaHIim9wmuXcTaRwDmMyD2ufUzxsYMGEA0g=
+	t=1769653016; cv=none; b=PCBhvXKPG/0O+Fdhzoxz2Un8MtRwOyWQiCi7AV0bMygz8HgkAodXMgV2eGao09VATaFaAk9IPn2bHcuSRnkYKhn/BWCEsrsIOuQo1gQpc3Yy6o/glSDlJwtoO2hlnfh2yGyAVZjBRxWmpmOFOVQD/yUj6+0iqmUNut0NKJ0Be08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769645651; c=relaxed/simple;
-	bh=Jp/M/Rw5KQq+Ij1Dvf+R2Qwc0LwfO79//o+98CkADWQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SdmPSWCOiBvnke1EaUKb8cSvL8JqktAtcdjbOwnu+1hezrgi4AM3E08Azg+FMZRM4IcRBKMJ6qNY2/YT6w1QJKwQotG/lxjjobIDwpYLuYfTdNKB/NeeXubqg3PxtIuw11Dukj/8p82XSaz4DusYMkRyDIC/N0AuTNW9P7G3WJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OH8rf5SW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fYzLK5Jd; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769653016; c=relaxed/simple;
+	bh=yKYfiX6rfZ0hb1nQGhYmRkcWnK2EJ3T7Xyr0kqKpMI4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fIGGxwne+rn5gxc2v94I4bYFw+SSkVwpmrB/YqkbPRufeB5V5T3bFMGB4ce6xFQNMk43kmgHrKUMFxTy1kvARofcYVmJqznoUGHhOhrCuyAOjQ3TAF3ynaNu/9UUdqAefNYv54YlJpxI6PPAzfx72JjC/8klEBXa7jSwaIyqJU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=EHGqY0x5; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OH8rf5SW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fYzLK5Jd"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5DF471400097;
-	Wed, 28 Jan 2026 19:14:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 28 Jan 2026 19:14:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769645649; x=1769732049; bh=MWqwDBSV4D
-	3G/3nOFbU9IzK7hO/zQ5U2p/04AW9EzMc=; b=OH8rf5SWfQRFoXMsx+bxTokLJK
-	iObrG17dmm5wEQXOFcIm1OKwsdymVf9pROrttz3edYirY5UF1tuczzSSTKOX4KKu
-	pqB4S0445tlqhzNxUFHT8k138nfSTFZvDYMOW5+dpPck4Z1WEJeXKsIR6UqwUHj/
-	rTrDHTbwk6U89sLVksOqGhZvn3eEj+lnNrKnd0qrsdlODq38vbEzE4vDmWe3ep6k
-	ve8ldFZGaeBzOJAsbL0+rWfzlm021uUJPzePkq8GceyCeAzUILFqCThDx5D0bm11
-	LuezgTafXIrZe3kOy25gG3b1F04OmIJFN5+mMiK82md+AWt7Cf8bvCZUltdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769645649; x=1769732049; bh=MWqwDBSV4D3G/3nOFbU9IzK7hO/zQ5U2p/0
-	4AW9EzMc=; b=fYzLK5Jdtx5pYSVXiWrRTu3yWIpgdaJk1Z0czqpBjP+fNksrBWP
-	udQEfj6hYIS14b7ZMJig65XMjKI7YQKFD2XzZFBWh+0ar4jcmSTPlgwO+JmCPov9
-	NuVJVdskP7EIcPygs3kZJGG+jzJLEBR6sqJ8gkSUSM6/eYwquGvtSoeMLbD8l0Pc
-	fiCOiAnym5wI2FwDn+IPMd8eA1zNMYVEZjWRUJmqTEfZXN/wJYSW8NnfZH6DMc6e
-	75O5a2CGPSDf1fFeasHzGzE19R10jJY1rRG77r1edGAJ3bXF1TaA/4L+lNy6Rro+
-	A6/o8dwcy+72GXqsZ/clQsOWVSvp2ineHzA==
-X-ME-Sender: <xms:UaZ6aTFaGwGgkMwelRHlKS504rxbVujvtjCp0Xf3gEF5mhsLyFegZA>
-    <xme:UaZ6aXNTBsoYNbr1nUMc_c7y4t-xOMELiO3cHdOYjD81raU0pmQzKpq0xSmNNBK4H
-    X01_wUjqbdm5250mDHXDM7-25MFZl0fvheTy3wKTIQ8oTO53qeNFA>
-X-ME-Received: <xmr:UaZ6addswf6DnKIIVg0sGaRaWK2JKfoDZG7rHa1fAS_Qgf5JjjDR4ruRA9-KHJAsxJGgpk765o2-DoyL-JMP827SFkFuRYxljt-lN0A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieegjeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:UaZ6acur-Y1mDJtgthee_ygfrH5xTxuIWQNAKmV2wOL7bhH5U_V3Eg>
-    <xmx:UaZ6aWlE4GE8kCdW5aZUav8hR5KtwN4at179sRifWG6KW3A_oNGI3A>
-    <xmx:UaZ6aWzQu0yjJhDJ1LVd2-s-El5gSIA-njjORnCSe0t9jFsONjNJmQ>
-    <xmx:UaZ6aQMOAovNvbTZAEogxyF6LB43fSgig6Vxx3-d8pcJc7yt6j-5vw>
-    <xmx:UaZ6acdauo398zVBA7pw6xMr0OqefZIIbEzoDmPJ7uGV6C4yA6M43sxi>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Jan 2026 19:14:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>,  git@vger.kernel.org,  Derrick Stolee via
- GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2] revision: add --maximal-only option
-In-Reply-To: <c506f9aa-31c9-4c37-98eb-d60076e2e8f5@gmail.com> (Derrick
-	Stolee's message of "Wed, 28 Jan 2026 09:28:49 -0500")
-References: <pull.2032.git.1768703645125.gitgitgadget@gmail.com>
-	<pull.2032.v2.git.1769097958549.gitgitgadget@gmail.com>
-	<xmqqikctl3vj.fsf@gitster.g>
-	<7daff220-f93a-463a-b586-dd876b51edae@gmail.com>
-	<13ff1d94-401e-4fa7-b247-fe8396ca9970@kdbg.org>
-	<xmqqecngjp87.fsf@gitster.g>
-	<f363c16c-1c36-4485-b1e9-22abe32b3a25@gmail.com>
-	<xmqqfr7wgq1p.fsf@gitster.g>
-	<c506f9aa-31c9-4c37-98eb-d60076e2e8f5@gmail.com>
-Date: Wed, 28 Jan 2026 16:14:07 -0800
-Message-ID: <xmqqqzr9cm28.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="EHGqY0x5"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-793fdbb8d3aso4816427b3.3
+        for <git@vger.kernel.org>; Wed, 28 Jan 2026 18:16:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1769653012; x=1770257812; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uPaQ6+aEUe6JZzesuXWcwByoAFtY7AMYqUN60q8djSU=;
+        b=EHGqY0x5y01yf7Hl6Al/VpDrpl1O/JgJNmaZA71iJX2SN8tXAQiPqddx0+is7vCtba
+         sMD+1wsvcVqVAxIFHjfR17qGRZegSI7fVrCg/qewtAf3EGwMXll3nP6/U2V38sWxL5Vc
+         Ad7ZmmRLE/+WhJAC8kjIDXqJkXjpO65n165UMFyfWgJPhLHgCo+yMZIjLiVKDu0tJOfr
+         0yZv41aPSfpUZZrqbJJ5YbWnHsZXlLxmMor/8m8R5aE5yV+gvPbSh4xSdaBCvch9YZA8
+         sG6+9td71mF3cEaH0caC8RE0TMo+35hlmcrTAWik+EM/OFNG4ImCvqxV5237dfI90fuB
+         5XEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769653012; x=1770257812;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uPaQ6+aEUe6JZzesuXWcwByoAFtY7AMYqUN60q8djSU=;
+        b=m2kZG3j0JcnWzTngKSclh12cdkxFqOVNiQWSxOzoP9ri2hELZVxtuetdTTUu9dht4K
+         Wht8koNqlvW03Ojylm8Dan66vSoczIc7rbK4ErtlI5ecOChgNljYNS3HlbR80cbTibhf
+         RcSbLvjWkZ+rjuwnUPbYdgahHEYkinoC8nwZB6poPKvuz818e9iMyEuEcc4mjsqefXSn
+         xGeBYMPXrwmqi2PbS80fj4QAimm5+GvbkodAatixRMh9mR73qPA7BcndrFoACyE+dE6k
+         M0eUfjReAhn7Q91AxzNXK3GqBi/P8pGP/xSukg47lgpHkmLAi6zWzTdyyiajGHNiXKCz
+         J8gA==
+X-Gm-Message-State: AOJu0YzyHWPBeS1Ldfvl+T+4PZOS4yhwk1VKS3A7UpZLtjDYFdAG2wQn
+	Gb/rTYk/kyWhUailX746ZRydG6AFme+YwkOXLbpA1eOeYLBA9n2SlQ2m3zM4jEAwi+k/AdTln4c
+	qIySQuCA=
+X-Gm-Gg: AZuq6aK9ZY4RafIkrSBJLtt/6Vtwwwoq9CRaip+oKEi0eSy/0uJvPt3wgxZsLcb9FTc
+	JYlSYLdm/UPzBhUkIyulbl2QY8N8mO0mIPizFLaZiZsYdd3xov1gD9u4ss024uugaq6bPz8fPh2
+	mg0iFruhJHKsoE37T8VCxN8RcH/JOVcasE0VotBntgIPbsxVS43RMEhr/tSilKtqgrs+6HZJWcn
+	rjP92D12D+sij606jWq59OzrAST1+lIto/u9pxkyC9PPllCC2mKjzs0MihD61fEM8zXKU2K1pah
+	5NnAoWoHzc1bKsBw/Cm/WK27SA8ww6Ya4BjvEI1Mefe957nIDeAGHAEizenS6nL0VbqqF+1e6BQ
+	hVz0+OEZZX4mNGt3TMrEHHIruonLpAPCp7Ep80Zqg6w5fWIoziPYPNAsrNcVfd4O1FBElJt/TiN
+	gQYHzp7bhva4T0YJqYDzKjiyBhqICSJPQ/2XZaJHs471eqByumG1r33EGIk1NKlmfzRHJyzw9eX
+	Kyi/PDC0kgYgY0E/A==
+X-Received: by 2002:a05:690c:62c7:b0:794:7866:263a with SMTP id 00721157ae682-7947ab160b5mr60680157b3.10.1769653012405;
+        Wed, 28 Jan 2026 18:16:52 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79482762a23sm19334997b3.3.2026.01.28.18.16.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jan 2026 18:16:51 -0800 (PST)
+Date: Wed, 28 Jan 2026 21:16:47 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/3] pack-bitmap: deduplicate logic to iterate over
+ preferred bitmap tips
+Message-ID: <aXrDD1H4lvBR1sF8@nand.local>
+References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
+ <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-1-deccae3ea725@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-1-deccae3ea725@pks.im>
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Wed, Jan 28, 2026 at 09:49:20AM +0100, Patrick Steinhardt wrote:
+> We have two locations that iterate over the preferred bitmap tips as
+> configured by the user via "pack.preferBitmapTips". Both of these
+> callsites are subtly wrong and can lead to a `BUG()`, which we'll fix in
+> a subsequent commit.
 
->> Yup, I do not think show-branch nor merge-base were good home for
->> the feature.  We only needed to make reduce_heads_replace()
->> available somewhere, and "git show --maximal-only A B C" might be a
->> much better way to express "show only the independent ones", as it
->> would allow using all kinds of output options the "log" family of
->> commands support.
+OK, so there is some bug here that is shared by both call-sites (one in
+the pack-objects case for single-pack bitmaps, and another in the MIDX
+code for multi-pack bitmaps). That bug is yet unspecified, but that
+makes sense since the point of this patch appears to be unifying the two
+implementations together so that both may be fixed at once.
+
+As of yet, it's not totally clear to me what that bug is having just
+read the cover letter. I don't know how much detail it's worth getting
+into here since you'll end up covering it in much greater detail in the
+following patch, though it might be nice to include at least a taste of
+what's to come beyond just "[they] are subtly wrong".
+
+> Prepare for this fix by unifying the two callsites into a new
+> `for_each_preferred_bitmap_tip()` function.
 >
-> I explored some of these directions, and I see the value of allowing
-> a --maximal-only option to them in the future. I have some concerns
-> about them not solving the needs I have that this 'git rev-list'
-> implementation provides. I believe that you're suggesting that these
-> are other places where a user could benefit from such an option, and
-> I agree.
+> This removes the last callsite of `bitmap_preferred_tips()` outside of
+> "pack-bitmap.c". As such, convert the function to be local to that file
+> only.
+
+OK, I think hiding this implementation from outside of the compilation
+unit makes sense, however I am not sure that we should keep it as a
+separate function.
+
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/pack-objects.c | 19 ++-----------------
+>  pack-bitmap.c          | 18 +++++++++++++++++-
+>  pack-bitmap.h          |  9 ++++++++-
+>  repack-midx.c          | 14 +++-----------
+>  4 files changed, 30 insertions(+), 30 deletions(-)
+
+> @@ -4710,7 +4694,8 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
+>  		load_delta_islands(the_repository, progress);
 >
-> Can we delay such extensions to another series?
+>  	if (write_bitmap_index)
+> -		mark_bitmap_preferred_tips();
+> +		for_each_preferred_bitmap_tip(the_repository, mark_bitmap_preferred_tip,
+> +					      NULL);
 
-Absolutely, as long as we all agree on what the longer term
-direction is, which includes educating existing users of
-"show-branch --independent" and "merge-base --independent" that
-"rev-list --maximal-only" is the future even for their "positive end
-only" use cases and it also can work on a history bounded by both
-positive and negative ends.
+This one looks good to me. The function mark_bitmap_preferred_tips()
+here is identical in its implementation to the new one introduced in
+pack-bitmap.c, and the callback is reused. Good.
 
-The only small thing we need to decide here in the above is that
-"--maximal-only" is understandable as an appropriate name for a
-superset of "--independent" by those who are used to what the
-latter has been doing for the past 15 years or so.
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 972203f12b..2f5cb34009 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -3314,7 +3314,7 @@ int bitmap_is_midx(struct bitmap_index *bitmap_git)
+>  	return !!bitmap_git->midx;
+>  }
+>
+> -const struct string_list *bitmap_preferred_tips(struct repository *r)
+> +static const struct string_list *bitmap_preferred_tips(struct repository *r)
+>  {
+>  	const struct string_list *dest;
+>
+> @@ -3323,6 +3323,22 @@ const struct string_list *bitmap_preferred_tips(struct repository *r)
+>  	return NULL;
+>  }
+>
+> +void for_each_preferred_bitmap_tip(struct repository *repo,
+> +				   each_ref_fn cb, void *cb_data)
+> +{
+> +	struct string_list_item *item;
+> +	const struct string_list *preferred_tips;
+> +
+> +	preferred_tips = bitmap_preferred_tips(repo);
 
-As long as with such understanding, it can be left to the future to
-even advertise this option as a better alternative for existing
-"--independent" option in the manual pages of these other two
-commands.
+OK, so this is the sole caller of bitmap_preferred_tips() you were
+referring to earlier. That function's implementation is hidden from the
+diff context, but it's effectively a thin wrapper around
+repo_config_get_string_multi().
 
-THanks.
+I wonder if we should just inline the implementation here into its sole
+caller. Is there a reason to keep them separate? I do not feel strongly
+here, just thinking aloud...
 
+> +	if (!preferred_tips)
+> +		return;
+> +
+> +	for_each_string_list_item(item, preferred_tips) {
+> +		refs_for_each_ref_in(get_main_ref_store(repo),
+> +				     item->string, cb, cb_data);
+> +	}
+
+The rest of this function looks identical to the one from pack-objects.
+
+> +}
+> +
+>  int bitmap_is_preferred_refname(struct repository *r, const char *refname)
+>  {
+>  	const struct string_list *preferred_tips = bitmap_preferred_tips(r);
+> diff --git a/pack-bitmap.h b/pack-bitmap.h
+> index 1bd7a791e2..d0611d0481 100644
+> --- a/pack-bitmap.h
+> +++ b/pack-bitmap.h
+> @@ -5,6 +5,7 @@
+>  #include "khash.h"
+>  #include "pack.h"
+>  #include "pack-objects.h"
+> +#include "refs.h"
+
+Oof. I wish that there was a way to forward-declare the each_ref_fn
+type, but there is not AFAIK.
+
+The rest looks good to me.
+
+Thanks,
+Taylor
