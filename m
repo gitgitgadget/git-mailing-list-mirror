@@ -1,90 +1,90 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766FE34FF47
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 18:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006101F09A8
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 18:37:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769710339; cv=none; b=tzxDYDH9VgMFOzma8piK47rlTjy5u/83EGmkHF2geowrd3r7veBpgCv24kQ7jfHJtpO+ard1uneAfYdaBkyc0U51tFhE6km4vEm4aWETbqE2iC/suk6IP80d7ug30GpBjkusJk5JBb3p+WFH656sOjdnDyiBCOHw4j1vprcPlVs=
+	t=1769711847; cv=none; b=BmNC0CD+z4kGEb/UEh6QBXGRyQrNRXX0GK0PXnWZswa3Wwax+xednYoP1oMTkEUUA3CpPAP3Yp3Hasny5kFlrFCTCr7+wZTCX/JMorOopiaZiXcg7Kt6jNNCvylA16KQRZ6Cxs26uVPP7HYLZ2Kb7pE6k4pSWVg1CRUyjOIsd5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769710339; c=relaxed/simple;
-	bh=lfjKB8oSjH9oiO4q/fI2bJDEqzXiGaLqVgUBFsaW+X8=;
+	s=arc-20240116; t=1769711847; c=relaxed/simple;
+	bh=Wmei5MJ6lOr0qFsoXTL58blSb5i74lP5PxUg/7S3yz8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dDC9T8LzpqMs89sGB03BEkwyJRGJJm6/bUb/zT9yU5D1tWQ8BjfrH0lhDPeylwO04uIBAL0W+3BZH96urw9DNEoWZroya26RYMZHjH6vCbhjR5PA7xgowbMrb9qRh3errJYS2pvb2otREXr9FMmXbulT94n8JF0mNHC81XooHE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oMIFgM/s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iihQcgX0; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=d/sqQncOLt3m5QX6pL1tepcddnG3XqFqtvDHaUIpzTpmz3p4o93eoPiC3+OF2mrDYe2wIRKyxK0IF00BLykJV/2TVPFS8hkjrsvHcssDD/ZE+l05Ye4XqY41KxobP+gShfrLwD7qPCDKT6lKlERRCtBtCY7521deQooGBOOpzJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ezK+lSKs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VHn370Lu; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oMIFgM/s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iihQcgX0"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id A59E8EC00A9;
-	Thu, 29 Jan 2026 13:12:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ezK+lSKs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VHn370Lu"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2AA8D140008A;
+	Thu, 29 Jan 2026 13:37:25 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 29 Jan 2026 13:12:17 -0500
+  by phl-compute-03.internal (MEProxy); Thu, 29 Jan 2026 13:37:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769710337; x=1769796737; bh=y5/RkYrmMM
-	amgsmOfg2kuRi6PLZFqG/zrXO4xGhytRE=; b=oMIFgM/sGAxVOmUdSCGaKBCIqE
-	7gKOyJl6czS2cwQYssdjNG/FySaJmdZ3D+8qIYhCcAka+KMRzZmSPGFKy9eXG6wj
-	aWAsN4yRlBCguOoG0KT39Ii4xbz7+NTaCyFQmy4C+QXabsc6Ma24StV9UKjQ8knJ
-	jNVm5gjjzTyKRktZcsVnE89W47qxOT7VuxhdPMEsAP+B7wGEO3cuedVNEyIr2c5f
-	ndNnWbYgOUOnm2uXGYMlJzPsD+52Va6LfQUH6z2Z1zwzw9oSd1u9o/xtT8eLhVNC
-	ciJ7bctvjQrN/rAlDvszqymWy1RV8md6QeoxQEQ/pHCgvOWDuxum4qxA8Xtg==
+	:subject:to:to; s=fm2; t=1769711845; x=1769798245; bh=9o+4DMArnU
+	tvHe39xB6GQueWFa5JQCNFxomGMY6THTw=; b=ezK+lSKsWNOpK7D5pagC+tYyXV
+	XTFMokcIQ3gdYw5EmHJcEXG4sg/1aTTAERKncszTTxfHgLuOTWQcJu79Kpn4a9pZ
+	pZkjOkMqVzrjhm2/9k2Q06pPJ6ejIK0wsBEpBtVIoIEq50sxa5mObwKFqZNDB36Y
+	iZDcHr+pAiXHBuY3LJzRrgl3lNfyEQnOYA1ZfmmjId7c6OPQDqwZkv4VJ+BC9X53
+	AwHfkG/zrhMUgmEeGmiH+EKFjBa1N60QSUVK4yND2jhb7rHhgrq1kMJmMP9GXgIZ
+	p6fvSwHQlxLzig6acm359DRJDzD3c/tT6eNrE0T74bIIsbkDSqC42WarjXAQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769710337; x=1769796737; bh=y5/RkYrmMMamgsmOfg2kuRi6PLZFqG/zrXO
-	4xGhytRE=; b=iihQcgX05pQ75g3lcc2uFbvP1jNNiiiq235g8mo0DN6Ep8ykPpZ
-	L5XPv+YVOnl7i6AhP9h8Uv4oDzppkEUtdvs4VDUZfxS3BZaw40bbYcA9QJVHxfnt
-	yMjFr4WlvdkWDicdva9sB/MYDa/nlTgpNJAtiDn1q4Mro61T10csAbrFocVIpeVY
-	U48ZDIX0FrrUPy/9YJetW6QIA9TJUSk5t3UcKuUDt8zWjZPGU4vy05e8uCxbgF48
-	BRmMv7umQjDcdXCsiwAxIuwd2QnBkYlkz93wnV+yzyRKBDHWsGxVyf6iiiMkAqLV
-	PWXeqv2/2L731kSdCsSxjTucZLjoRD9HSxQ==
-X-ME-Sender: <xms:AaN7ae6gylWjwg8k7rxqJgmoKnsT7Eg-9BYCB1GY26oj3iXsgy-Meg>
-    <xme:AaN7aUdAEMs6oXICLiHpMFeoT4vwk6Hc2_eom4s83MQaOFR0Dvk53rmzFhmiIpK3O
-    gvtvnkc45IqOa7WEzJ8InCF2-kUgeq1B-rhM2tZ1T6XaN-7hA--aw>
-X-ME-Received: <xmr:AaN7aR5hxVZwqPYZdq5o8cip8A8Bp9o4aMvDpKNr4k7wa8ft6FycNYaaRgkIBEnZfr65WmtH0KFBc1JVH0F4VYIitop1bSPaqTERuhM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeikeejucetufdoteggodetrf
+	1769711845; x=1769798245; bh=9o+4DMArnUtvHe39xB6GQueWFa5JQCNFxom
+	GMY6THTw=; b=VHn370Lu0znqG/YpruvPHOu+ki3Pb1mPVqXaaHsV706CsnW9n7y
+	juCuqVEuFTEI0SS7aREs/RcAvr39A3GwNI+BdSPMKaAkqXPrXCMbrd2mwAfJIJxM
+	0yjvDSYjNnjQLheHUM3P/POTXFXzAF3FLEGaYrj7h1gDQPkDgDd23b+tcA3RP7bJ
+	27ij3tptGYc8rbCJqYrehzG24WbI9CxBGRx1mGs8G6IN96FpEAT6izkh6/vbWe3A
+	hIEbf2ZjPp1rRhPm5mutPHH5UdJe8aMRmH14/aL3m3hH2xSZdGX1JsxoDC+C1T6p
+	n3WEuQHPjl95GvOCB4VKevWyypGkzANvy0Q==
+X-ME-Sender: <xms:5Kh7aWu0oFq1-TLHQPJeYoeQWoSVq_Ocb9NJLSqdJFw_XuGSVxxY9Q>
+    <xme:5Kh7aYDa9Iwzi7S6S9zRgkv48uOyS3Tf27HaOZedpdR0jxVmx3rNHZiIexupHrJu6
+    uElXjbaMCQgk88kNXA7hJ4a8u3wseBgU_7QAXh7mVN_XqjVxgqG4zc>
+X-ME-Received: <xmr:5Kh7aWNBNuKRrO4ES_y6kSJ9TqZ4NIi8PWldG2ND7gQ40hUMEuTff-HPFth4kq6feiyLGy7G1_PVKq0RSzsmsSEtk8qtgAX6co20l74>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeiledvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
     dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvlhhk
-    ihguleeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptg
-    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhs
-    mhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrg
-    hrthhitgdrshhivhgrrhgrrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
-    hlrdgtohhm
-X-ME-Proxy: <xmx:AaN7aR9PaANnuSwzrllFRTEaA4DJ9uk_OvUxq49eSmJWAqta6Spatg>
-    <xmx:AaN7aTFiMVnLK3HRXpP9f_E3GrJ7f6jPKk0cpUh6QeXL0uiPqkUyOA>
-    <xmx:AaN7aWVMbTSSwW8YqG9coYY5VlLgRrHQ2SomRYhd-AZcPwM5qS-3yA>
-    <xmx:AaN7af-tCBwFYghUgp_tE5IDq2msyiSYjgTm9baY1XEvqRTey-98rA>
-    <xmx:AaN7aYeq8H_wallOGdQk5amM_LkDJtgUOSlLc2jBpB6snlmj3CrBQIZv>
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeetudduveekgfeuteevudfgkeeffe
+    eghfeiudekiedugfektdelvdevudeggefggeenucffohhmrghinheprhgvphhoshhithho
+    rhihrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvlhhkihguleeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
+    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhgu
+    vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtd
+    dvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrghrthhitgdrshhivhgrrhgrrghm
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprh
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:5Kh7aYDKkWGisOFYeKAf8mH8DK1YMfVD5HYt6VgxRlAtr-dcRyLjAw>
+    <xmx:5Kh7aX4QIJHwUizHZoz7LxBkXAFsIusgBtn7llM_GMVVHsTtYPxfEg>
+    <xmx:5Kh7aS6xouoFqwhDNvr2RHGYd998uUfL5MKrvMCMdoGSkQ-CWQ2jwg>
+    <xmx:5Kh7aZQtneChu5CMnw8AafmLmBRNgyF-EbVKYt8jWs-4FIPpQi_P8g>
+    <xmx:5ah7aXRflyHA8DZErf6UODdengBlILUzW6JSFqVezTi_ijJRfJdgiXut>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 13:12:17 -0500 (EST)
+ 29 Jan 2026 13:37:24 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Olamide Caleb Bello <belkid98@gmail.com>
 Cc: git@vger.kernel.org,  toon@iotcl.com,  phillip.wood123@gmail.com,
   christian.couder@gmail.com,  usmanakinyemi202@gmail.com,
   kaartic.sivaraam@gmail.com,  me@ttaylorr.com,  karthik.188@gmail.com
-Subject: Re: [Outreachy PATCH v5 2/3] environment: stop using
- core.sparseCheckout globally
-In-Reply-To: <5e56e1cc4172cfff9e917a068184e102aa70bf1d.1769256839.git.belkid98@gmail.com>
-	(Olamide Caleb Bello's message of "Sat, 24 Jan 2026 13:21:12 +0100")
+Subject: Re: [Outreachy PATCH v5 3/3] environment: move
+ "branch.autoSetupMerge" into `struct repo_config_values`
+In-Reply-To: <e7f37bac87aac74ca13f85ae7e393a38d2079b9c.1769256839.git.belkid98@gmail.com>
+	(Olamide Caleb Bello's message of "Sat, 24 Jan 2026 13:21:13 +0100")
 References: <cover.1769256839.git.belkid98@gmail.com>
-	<5e56e1cc4172cfff9e917a068184e102aa70bf1d.1769256839.git.belkid98@gmail.com>
-Date: Thu, 29 Jan 2026 10:12:15 -0800
-Message-ID: <xmqqqzr8b85c.fsf@gitster.g>
+	<e7f37bac87aac74ca13f85ae7e393a38d2079b9c.1769256839.git.belkid98@gmail.com>
+Date: Thu, 29 Jan 2026 10:37:23 -0800
+Message-ID: <xmqqms1wb6zg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,33 +96,93 @@ Content-Type: text/plain
 
 Olamide Caleb Bello <belkid98@gmail.com> writes:
 
-> The config value `core.sparseCheckout` is parsed in
-> `git_default_core_config()` and stored globally in
-> `core_apply_sparse_checkout`. This could cause it to be overwritten
-> by another repository when different Git repositories run in the same
-> process.
->
-> Move the parsed value into `struct repo_config_values` in the_repository
-> to retain current behaviours and move towards libifying Git.
->
-> Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
-> ---
+> -enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
 
-A lot of changes, almost all of which are mechanical
+Unlike the other two, this global variable was not zero-initialized,
+so we can do something like this to initialize it statically in the
+new world order.  That way, we do not need to worry about the
+repo_config_values_init() helper function, which (1) we can easily
+forget to adjust, and (2) third-party may not be able to call.
 
-    s/core_apply_sparse_checkout/the_repository->config_values.apply_sparse_checkout/ 
 
-changes, which is very straight-forward.
 
-The same comment applies.  Do we want programs to require calling
-repo_config_values_init(), or should we rely on program load-time
-initialization, like all these globals that are moved to the
-repo_config_values struct used to do?
+diff --git i/repository.c w/repository.c
+index d308cd78bf..b540e2ba01 100644
+--- i/repository.c
++++ w/repository.c
+@@ -25,7 +25,11 @@
+ extern struct repository *the_repository;
+ 
+ /* The main repository */
+-static struct repository the_repo;
++static struct repository the_repo = {
++	.config_values = {
++		.branch_track = BRANCH_TRACK_REMOTE,
++	},
++};
+ struct repository *the_repository = &the_repo;
+ 
+ /*
 
-I do not have a good answer to this question, but so far, these two
-global variables that were both zero initialized for being in BSS do
-not *need* initialization byh an explicit runtime assignment that
-repo_config_values_init() allows us to do.
+
+
+
+
+
+
+>  enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
+>  enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
+>  #ifndef OBJECT_CREATION_MODE
+> @@ -607,18 +606,20 @@ static int git_default_i18n_config(const char *var, const char *value)
+>  
+>  static int git_default_branch_config(const char *var, const char *value)
+>  {
+> +	struct repo_config_values *cfg = &the_repository->config_values;
+> +
+>  	if (!strcmp(var, "branch.autosetupmerge")) {
+>  		if (value && !strcmp(value, "always")) {
+> -			git_branch_track = BRANCH_TRACK_ALWAYS;
+> +			cfg->branch_track = BRANCH_TRACK_ALWAYS;
+>  			return 0;
+>  		} else if (value && !strcmp(value, "inherit")) {
+> -			git_branch_track = BRANCH_TRACK_INHERIT;
+> +			cfg->branch_track = BRANCH_TRACK_INHERIT;
+>  			return 0;
+>  		} else if (value && !strcmp(value, "simple")) {
+> -			git_branch_track = BRANCH_TRACK_SIMPLE;
+> +			cfg->branch_track = BRANCH_TRACK_SIMPLE;
+>  			return 0;
+>  		}
+> -		git_branch_track = git_config_bool(var, value);
+> +		cfg->branch_track = git_config_bool(var, value);
+>  		return 0;
+>  	}
+>  	if (!strcmp(var, "branch.autosetuprebase")) {
+> @@ -761,4 +762,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
+>  {
+>  	cfg->attributes_file = NULL;
+>  	cfg->apply_sparse_checkout = 0;
+> +	cfg->branch_track = BRANCH_TRACK_REMOTE;
+>  }
+> diff --git a/environment.h b/environment.h
+> index ddce69c6ba..27161d56ab 100644
+> --- a/environment.h
+> +++ b/environment.h
+> @@ -2,6 +2,7 @@
+>  #define ENVIRONMENT_H
+>  
+>  #include "repo-settings.h"
+> +#include "branch.h"
+>  
+>  /* Double-check local_repo_env below if you add to this list. */
+>  #define GIT_DIR_ENVIRONMENT "GIT_DIR"
+> @@ -88,6 +89,9 @@ struct repo_config_values {
+>  	/* section "core" config values */
+>  	char *attributes_file;
+>  	int apply_sparse_checkout;
+> +
+> +	/* section "branch" config values */
+> +	enum branch_track branch_track;
+>  };
+>  
+>  /*
