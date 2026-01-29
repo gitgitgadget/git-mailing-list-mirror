@@ -1,152 +1,123 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697393859C2
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 11:09:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC1A239E7D
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 11:24:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769684948; cv=none; b=UMMq18aEV/1a9KFo2V03+VwvlvI9uh9cWIhN2JRYV2WH7dBlcZZHF4j05noEmQGlau83WLg2d4YVOR7BGe0lz4p3/uc/t2V9VSusfXfDgK8bHtCb5sXfwTrT1p5UEqdBOXZys5xxPdTeoinDZiX9UsfA0YkgPKRY1LgyNlzEeNA=
+	t=1769685867; cv=none; b=HA9xme3Gm2xUDwoRLZM/tGnFLufIrWS4J1fWKLxVhzq97Nq0SFW/Q1XFaISOlFgXrARXa3Pgxomb0XBPlRG3mnrGbZPtBmb61ehbJG3wjbX62F3ADpUFLPT4lRGcTt15qBxQPfJBPTkr6VmuzeH/jAoraayw0BJL46C+pTvcdwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769684948; c=relaxed/simple;
-	bh=dv9gIO1rbfttbCQGK/LgtMJhDYAOpp3tc5JHyQPgtts=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=sJ6n6IhBRMPWKb/cUQZDkpzOsbJroqHRAKnyn7JynKNgPtCIYwE7r6Hvh6xvzsNbUf2cFnltdk9CZ6Efb4AU5Ym0wNoid0haETZ40zyiVomiO/nukr5NkAmv5zAmp4IjTCQ7+ms3JYuyh7a+3v87cwlOffaEJBTvTWGn72Iabv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kb51iTtA; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769685867; c=relaxed/simple;
+	bh=hkYquxkLnRoZzQqhfF3gYQMGWC0H75Di4a9/rSgzW+U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oWvYOYXuaFl4/Hal9l+8FH5O0gmHgbMToMyuQNHbV176hXkDP9YqHEQ4eslNueXVHivKaCh4JJYyqZt+K908sj6NFlVuJG0PUD59Zn2YcyZd3t/UPr+G2hXJ6R0KixSM5i6XcGE15TByu4Cl+WQNLTKgxkPhLrDHerhBy92CmFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZTMPMVt9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gBxT5UsK; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kb51iTtA"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-894674a4c4aso15903176d6.3
-        for <git@vger.kernel.org>; Thu, 29 Jan 2026 03:09:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769684946; x=1770289746; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o8zZSt/mlfy9UgM+EI9Wt/losGeAh9xMkIFW87e/v10=;
-        b=Kb51iTtAdRUHHPC0ashHLWzd3spPrPXig8kfkxr70VpLzoT9eOrhbVxFuYBFMHmVZa
-         MIVZKDD+tJGsg6R5TngMJtS4vy4JMElwT3hANjSdQesVb+oDPNxnHDmGVb7btSkOQI2z
-         m0l3KjSVwddqiSprn+xB0ktZnC+nzOSAQxL7qU9wMZoVEWNot9txW9iZ2lit5LcH86NS
-         UkVUyRenVHNpZVi/3oGt8hzCUkSwEhtY5bufNqUfR60MyRwA7XuCs2YIiMzL46sw5GQs
-         ZHw/swxtZQrxJkbBB/xLlDdV8yYVObNGI2cbMUS6myyxvynsHsMLaWF/aZiyXDx3zV3I
-         qGig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769684946; x=1770289746;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=o8zZSt/mlfy9UgM+EI9Wt/losGeAh9xMkIFW87e/v10=;
-        b=hingntrIVn85nPNBlp9xAPagxAIO5ukjSb6/k6KuMuKKVee47nqvV9rtFzcTz95Fnw
-         xWQIl9Rf/FP6eRIr1n50ULgSrhRrFlgTAw+48XnTZtd5EzqR+lMoJjQvlr4ytBwwljDh
-         TedOomy5gktTv4NLm2zHQot68fg2x8saDd9AjayDj1h3VguOc2yO3JKqpkkmJ+hDtIeY
-         bFVjIasJ7xkmDb1L82vb4ywHtZTKMLjL1p0Y/Wp5JRi9tHRDHvUZSw3aPrksaDtzQklL
-         FFQUaO0aKZn7c765m8zBH6D+B3bC+5tp+PAvRzItcmFwuXDVfPJ0TsQcfQTJLFq9wWaF
-         0bFQ==
-X-Gm-Message-State: AOJu0Yxe4FcvFhV9ZnmBt4jccbYKUjjTmFKKuoT3Os1zvPQUPL6wlDEa
-	jswFlnMenLGM7ZH209iWgAuG9lOTqs6r1c7UWupWAdVc84UB7cWM17n4friQ5Q==
-X-Gm-Gg: AZuq6aL8RSTEjuqap3AeldHJQh1/x1s+J2qndhVGufY3x9wrtWvHdqAKF9EQFwl9NqK
-	UfbRgGKd9Eft5l9DLM8iPheTl2WGCk2BGbf8rdLRo2vKoZPs6hg3Xftmf9ftZ6xLgEeQs5tpPt/
-	KQKmPsXvIT8NRSbQKNvnyIWAseXEu9JRGxZ2Bp5EdJjYpDaRxm2vdtXcQlQPykTq812z9S6TbF1
-	rSE2P82Yz/gf0lY/qwwQqA9WtdaC3j1WgO0u2QSHCUBWArwCu+Ikmx1z3Y4dIoFY6p3wII/XQ+G
-	Lr+ZJ34ZBX1PGE3kaIf2eif66CFgoM0ScTdw8DFGFwNjUtxAh2lp44Df23iIAHGxWAN+FSulu7m
-	qOC7ow8tSjsgAV8rnw2aIeIbKoYJJ7TImcMYxgu7GsntJ5Q8CT6JcWqKFCNtnbxnYgsMbMUD35K
-	dz5FAs77mQYOPV3w==
-X-Received: by 2002:ac8:5709:0:b0:4ee:1f09:4c39 with SMTP id d75a77b69052e-5032fa030c2mr111812411cf.45.1769684945884;
-        Thu, 29 Jan 2026 03:09:05 -0800 (PST)
-Received: from [127.0.0.1] ([64.236.142.149])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5033746eec5sm33485051cf.9.2026.01.29.03.09.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 03:09:05 -0800 (PST)
-Message-Id: <pull.2179.v4.git.git.1769684944593.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com>
-References: <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com>
-From: "Chris Idema via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 29 Jan 2026 11:09:04 +0000
-Subject: [PATCH v4] git-gui: shift tabstops to account for the first column of
- context diffs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZTMPMVt9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gBxT5UsK"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2AB307A00EF;
+	Thu, 29 Jan 2026 06:24:24 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 29 Jan 2026 06:24:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1769685863; x=1769772263; bh=MZcin3jgM5
+	u6xabecfQ/ZIddI5r+EYRax0PtWw/TurQ=; b=ZTMPMVt9kGgWLxHaqAPqo7qj1N
+	bUd0riiNthS0/TqEJAZshciQ7J3i9PBe3bMCcYjF6ovkKhNf7Z4tr+CvCbnPbInm
+	6ePTRXJs1it0oFKFf0zDrPgHWcjfUzKlXDUqM7auiCm2OGgCXa53odK5RsMCdPE1
+	eJoWwpgzkpyAFtQsAx0x2PpgK3hOJqYplclFPUIXYIU2Hn7DSFxkYc21tEXwstGy
+	+h82qPZ+5b2bNX5nzvIk25zECgIO4KlKDwQ09wQXN2vbiB6JUnJjWHEsmQ5onp1M
+	OV6+IyiG0Bdh5Izs6VoTOOqXS+J0n1QwATujQ2QwIT43mys0dOK4VP3bCwOQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1769685863; x=1769772263; bh=MZcin3jgM5u6xabecfQ/ZIddI5r+EYRax0P
+	tWw/TurQ=; b=gBxT5UsKJj9wXKX9pXKq2M8GnarLudMGEGzuSOzUUkQxju+P3Rn
+	+xbjfiGXmdFVkXxyvYpGrJT+X1LOO68GIszH1ksn6KrvCubE9aSaXDDDgJ9tqmSW
+	u4tLlTgpwbr/BHWZ8eEdQRyfhEtLfVvPsyCKCzSjV/HF0/gYqsNw1TeoU1iyXKtH
+	AqkzspXHWs3frmOAHK965Js8xzBGU7TMGafTJV3XhwVmt0J6FhFwTXuYYnuJnXq/
+	fwczm7Ig1q9fIr4Aka4qJ5sUvAywkz3Yo8/s1c2BtHS1nh+tYcq1OCjOTkNRxv7/
+	74suloBVDo87a5tlIlGCeph34/Dd+7g/uFw==
+X-ME-Sender: <xms:Z0N7aQh_ahWDXvXLA-oagwYk-Ed192wjyU4ABSWtfuWQTgpBNmKHvA>
+    <xme:Z0N7afDlbLAtRVEw9K8QV-P571VBMW8GiKRzF47vbYnV_1Mf70VryNIVIGrF1iDrj
+    VXSWPUcfpbKzF1wvUl9ziZpeIQj24oTf9ndyk8HgC4E0UxXRnKvaw>
+X-ME-Received: <xmr:Z0N7aVt9fEIsYcEvRujz-Q0ntJ7yv9Edfn4CI9YKSeXvKBbOzQzCDIswdfPBav-rBWkWFoIF-JL2gHC7WWLjnXc8e3gmGc2QZOGX2uUp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeitdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Z0N7acZqX8krZ-jXpPJXLXMb-Y3N_PjyROU58Ja2MnVePzqmN_JTmQ>
+    <xmx:Z0N7aQXY3IOltVQKIE0JPT9DvY_Y5qdy_6nnXGO6xR3daCWvcFxKdg>
+    <xmx:Z0N7aY5jUKf-GQxbmekqCO-Gq25nEfX8FFk9FqT7flqRLoWi5QTD2A>
+    <xmx:Z0N7aTiqKD0M_ySM3pVflv9-xnOMrKo_z_TKAv99THnKNQQ3dDneqA>
+    <xmx:Z0N7aYQqFI9Mqc9wJ06Y-yw2iM0r9whmhB_BEQuPltGo6GSBGYvsEQCP>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 29 Jan 2026 06:24:22 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4a021cd6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 29 Jan 2026 11:24:21 +0000 (UTC)
+Date: Thu, 29 Jan 2026 12:24:17 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/4] odb: store ODB source in `struct odb_transaction`
+Message-ID: <aXtDYY0Ao24Mpgyb@pks.im>
+References: <20260128234519.2721179-1-jltobler@gmail.com>
+ <20260128234519.2721179-2-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Chris Idema <github_chris_idema@proton.me>,
-    Chris Idema <github_chris_idema@proton.me>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260128234519.2721179-2-jltobler@gmail.com>
 
-From: Chris Idema <github_chris_idema@proton.me>
+On Wed, Jan 28, 2026 at 05:45:16PM -0600, Justin Tobler wrote:
+> Each `struct odb_transaction` currently stores a reference to the
+> `struct object_database`. Since transactions are handled per object
+> source, instead store a reference to the source.
 
-When reviewing a file before staging you want its content aligned using
-gui.tabsize. The prefixing of lines with +, - or space characters should
-not change this alignment. In gitk this is done correctly. In Git Gui not.
+Makes sense.
 
-Signed-off-by: Chris Idema <github_chris_idema@proton.me>
----
-    git-gui: shift tabstops to account for the first column of context diffs
-    
-    cc: Johannes Sixt j6t@kdbg.org
+> diff --git a/object-file.c b/object-file.c
+> index e7e4c3348f..196509b252 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -728,7 +728,7 @@ static void prepare_loose_object_transaction(struct odb_transaction *transaction
+>  	if (!transaction || transaction->objdir)
+>  		return;
+>  
+> -	transaction->objdir = tmp_objdir_create(transaction->odb->repo, "bulk-fsync");
+> +	transaction->objdir = tmp_objdir_create(transaction->source->odb->repo, "bulk-fsync");
+>  	if (transaction->objdir)
+>  		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
+>  }
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2179%2FChrisIdema%2Ffix-gitgui-diff-tab-alignment-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2179/ChrisIdema/fix-gitgui-diff-tab-alignment-v4
-Pull-Request: https://github.com/git/git/pull/2179
+This makes me wonder whether we should first refactor the `tmp_objdir`
+subsystem to receive a source instead of a repository as input.
+Otherwise we "pretend" that the transaction is on the source level, but
+we ultimately still end up creating the temporary directory in the
+repository's object directory unconditionally.
 
-Range-diff vs v3:
+It wouldn't really change anything right now as we only ever write
+objects via the primary object source anyway, so the end result would be
+the same. But it just feels like a good first step to me to fix this
+conceptual inconsistency, and it shouldn't be too involved either as
+`tmp_objdir_create()` only has three callsites.
 
- 1:  18d25b90c4 ! 1:  1c91363568 diff.tcl: made alignment of tabs in git-gui diff consistent with gitk
-     @@ Metadata
-      Author: Chris Idema <github_chris_idema@proton.me>
-      
-       ## Commit message ##
-     -    diff.tcl: made alignment of tabs in git-gui diff consistent with gitk
-     +    git-gui: shift tabstops to account for the first column of context diffs
-      
-     -    Tab stop width was not properly rendered in TK regardless of
-     -    tab width setting. The + or minus character at start of line made
-     -    tabs align incorrectly.
-     +    When reviewing a file before staging you want its content aligned using
-     +    gui.tabsize. The prefixing of lines with +, - or space characters should
-     +    not change this alignment. In gitk this is done correctly. In Git Gui not.
-      
-          Signed-off-by: Chris Idema <github_chris_idema@proton.me>
-      
-       ## git-gui/lib/diff.tcl ##
-      @@ git-gui/lib/diff.tcl: proc read_diff {fd conflict_size cont_info} {
-     - 			}
-     + 		#
-     + 		if {[string match {@@@ *} $line]} {
-     + 			set is_3way_diff 1
-     ++			apply_tab_size 2
-     ++		} elseif {[string match {@@ *} $line]} {
-     + 			apply_tab_size 1
-       		}
-     - 		set mark [$ui_diff index "end - 1 line linestart"]
-     -+		apply_tab_size 1
-     - 		$ui_diff insert end $line $tags
-     - 		if {[string index $line end] eq "\r"} {
-     - 			$ui_diff tag add d_cr {end - 2c}
-     + 
-
-
- git-gui/lib/diff.tcl | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index 442737ba4f..8be1a613fb 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -385,6 +385,8 @@ proc read_diff {fd conflict_size cont_info} {
- 		#
- 		if {[string match {@@@ *} $line]} {
- 			set is_3way_diff 1
-+			apply_tab_size 2
-+		} elseif {[string match {@@ *} $line]} {
- 			apply_tab_size 1
- 		}
- 
-
-base-commit: 1faf5b085a171f9ba9a6d7a446e0de16acccb1dc
--- 
-gitgitgadget
+Patrick
