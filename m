@@ -1,91 +1,62 @@
-Received: from mail-244122.protonmail.ch (mail-244122.protonmail.ch [109.224.244.122])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362172E764D
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 08:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099E0379999
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 10:05:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769675504; cv=none; b=uf8tXSZfiXqnsyxZiKJqR2DOpacg5tz81XSyWQ54mYjkY16w5hzj0mo0u9lF33aUHDarlQxeYxZMAWXYMz012WrsZ7nn5QrHnaUydryaE+Z7rx16plMUsYwOjbjjZNZrayBHdwNeN2kr5qnzeZeudjK/eqnGvC6bSUWcmaRZT7g=
+	t=1769681104; cv=none; b=LG5XfAH7l4rv8ScJ/bGnj4gmUkYrgLWjjVz8bnUAkRcTOQiOpaorWJmCmJ4lyS5gnl0IwTW2qRvM3D8h6D9Z4AjASILMbb4ZJZ+gqiOX9bvT9Ol/Jgk6C05eXVR3add+6e5JBwx5nD0autA+4c7FdsUggPYzUxstcHYO3P43kTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769675504; c=relaxed/simple;
-	bh=RpInzi4wPUdbmIGlk/cbJ99A34X+QwJ/n8ExhlFaICY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d+bdhNwyvZM7lh1AUFcjSqNCTj9W7q9kgCKHPv1ulO6A7WRQx/O5OS8VA+mtSjjGbJ/ek8/I1eGR+c1OfDcNOmkIGwteH3Z+XbrlsRLWb5LQ6P8mpyg09M+x+yUIh+VdVUScidNimUnandmKrSm8wCXY7euGn75t4go0klrwS94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=haxKsPyr; arc=none smtp.client-ip=109.224.244.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="haxKsPyr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1769675490; x=1769934690;
-	bh=RpInzi4wPUdbmIGlk/cbJ99A34X+QwJ/n8ExhlFaICY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=haxKsPyrvE3nHqrMOi6gSsOyIu+Vz2mkVIxYO8K4QMk5rCYdbbruuRu+qK7PV0Uz1
-	 ZV57WqZdb7z55BIGMtzaoKXJRdF9aGH8GMSv2wX1gvFZuk+6zYlKzdY0n0K48nrn2/
-	 0GDKjHgEYaxeciEVIm7NAKUxyOcrUL1yGugvb/U5fNTYX+1g1GRUJBcxSG4jLdGxKv
-	 OeCwMyR36BNP5rF0gqYZ+cK9S2GdGbqM9KavX6LarmSty4Vdq7N/Lz7tk/nyGhhV1l
-	 fqPuJ2GraU4kQ0uWM+g6gkSht1bOLeFbW1sKfNoDlZe2qlV5w/PEVR/VTJfXUHD1q6
-	 7a5TmmTEIpovg==
-Date: Thu, 29 Jan 2026 08:31:24 +0000
-To: Junio C Hamano <gitster@pobox.com>
-From: GitHub Chris Idema <github_chris_idema@proton.me>
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, Michael Lutz <michi@icosahedron.de>, Pat Thoyts <patthoyts@users.sourceforge.net>, Chris Idema via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH/RFC v2 2/2] diff.tcl: call "apply_tab_size 1" to fix alignment instead of spaces.
-Message-ID: <AXTzN5mRXdWYZx55ARuBbRgndXW5zA51_wcnAV4KaUpk3kz6t8ZYfOk0Du5rg6zKhz0_O-4ZSkLNX6WkhTp4fjDFDMfCZAsTRCoBMH_IpMU=@proton.me>
-In-Reply-To: <xmqqv7glcmee.fsf@gitster.g>
-References: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com> <pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com> <e11aa6d811dcf868fd0f91b74cdceb8bc3f4229e.1769545996.git.gitgitgadget@gmail.com> <xmqqsebqem1n.fsf@gitster.g> <xmqqfr7qeixq.fsf@gitster.g> <71494127-c17d-4fd9-a69d-1f547205ac8f@kdbg.org> <xmqqv7glcmee.fsf@gitster.g>
-Feedback-ID: 177675452:user:proton
-X-Pm-Message-ID: 42a187b64477184aab6b6b2d79e48719ad901362
+	s=arc-20240116; t=1769681104; c=relaxed/simple;
+	bh=zfkGciEm8iT5iDl3S7Ia+cOcH9ajaEp+esqobvyM1Og=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cf+9AYy0tk8MaEXqRcJKtgnGwuQYTdmwL2T9gNlCUILQny9iW4GE0olg/3aySE9zneSY5Kr9zpr6EYnvKGUEDBBv1cKesPnpoyXaksvZG1lt/wo5YHnU6wjEsYO4I6eCUVUQe3l2GfYpMowfAvW1dG9Lf6WJUnb9Vh5+SsEV51M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp1.bon.at (unknown [192.168.181.104])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4f1vrl4fBfz7QcK0
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 11:04:55 +0100 (CET)
+Received: from [192.168.0.103] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4f1vrZ2lgLzRpWt;
+	Thu, 29 Jan 2026 11:04:46 +0100 (CET)
+Message-ID: <7f45bdc4-d164-42e4-8a84-36410654b4e0@kdbg.org>
+Date: Thu, 29 Jan 2026 11:04:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH/RFC v2 2/2] diff.tcl: call "apply_tab_size 1" to fix
+ alignment instead of spaces.
+To: GitHub Chris Idema <github_chris_idema@proton.me>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Michael Lutz <michi@icosahedron.de>,
+ Pat Thoyts <patthoyts@users.sourceforge.net>,
+ Chris Idema via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.2179.git.git.1769424301394.gitgitgadget@gmail.com>
+ <pull.2179.v2.git.git.1769545996.gitgitgadget@gmail.com>
+ <e11aa6d811dcf868fd0f91b74cdceb8bc3f4229e.1769545996.git.gitgitgadget@gmail.com>
+ <xmqqsebqem1n.fsf@gitster.g> <xmqqfr7qeixq.fsf@gitster.g>
+ <71494127-c17d-4fd9-a69d-1f547205ac8f@kdbg.org> <xmqqv7glcmee.fsf@gitster.g>
+ <AXTzN5mRXdWYZx55ARuBbRgndXW5zA51_wcnAV4KaUpk3kz6t8ZYfOk0Du5rg6zKhz0_O-4ZSkLNX6WkhTp4fjDFDMfCZAsTRCoBMH_IpMU=@proton.me>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <AXTzN5mRXdWYZx55ARuBbRgndXW5zA51_wcnAV4KaUpk3kz6t8ZYfOk0Du5rg6zKhz0_O-4ZSkLNX6WkhTp4fjDFDMfCZAsTRCoBMH_IpMU=@proton.me>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> From: Junio C Hamano <gitster@pobox.com>
->
-> calling it a "show stopper" and "unreadable" is a great
-> exaggeration, I must say.
+Am 29.01.26 um 09:31 schrieb GitHub Chris Idema:
+>> From: Junio C Hamano <gitster@pobox.com>
+>> I noticed that gitk has code to deal with octopus merges
+> 
+> I would love to know how such a merge can be replicated.
+> Is it also possible to have such a merge visible in Git Gui?
+This case is not relevant for Git GUI, because it can only show what is
+in the index. We have only "theirs" and "ours", and together with the
+current file contents that's a 3-way diff.
 
-We use clang-format to format most of our code.
-But we don't have that always available.
-So it's good to review indentation changes prior to commit.
-And we use either git diff or Git Gui for that.
-For many file changes I prefer Git Gui as you don't need to scroll.
+-- Hannes
 
-For git diff there is a way to configure tab size to 4:
-git config --global core.pager 'less -x1,5'
-source: https://stackoverflow.com/a/10584237/15307950
-
-For Git Gui and Gitk there is also a tab setting.
-But only in Git Gui it didn't work as expected.
-So with show stopper I meant that it's the only odd one.
-And since the code already uses apply_tab_size it makes sense to just=20
-apply it correctly in all scenarios.
-
-My latest commit was tested for:
-- "Modified, not staged"
-- "Staged for commit"
-- "Requires merge resolution"
-- "Untracked, not staged"
-- "Missing"
-- "Staged for removal"
-
-And it worked on my side.=20
-@@@ needs apply_tab_size 2
-@@ needs apply_tab_size 1
-the rest was already handled correctly
-
-> From: Junio C Hamano <gitster@pobox.com>
->
-> I noticed that gitk has code to deal with octopus merges
-
-I would love to know how such a merge can be replicated.
-Is it also possible to have such a merge visible in Git Gui?
-
--- Chris
