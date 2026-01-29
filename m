@@ -1,54 +1,54 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CBB3A1CD
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 16:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207D178F2F
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 16:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769704523; cv=none; b=ZvdMoGN1cs5W7BOe+yjYXGsx9KGzFJd5TMCLITrEMgB4PmHrZ0nM6bqjr7El96td8kOd2Mo/8ILuJjfsydXCXcIoCq3dtDwRvgIz4D0xkmW3KXtMQymF6VZD3YV8GfKyw2Yz0Swqh1u2gXwm7wYUiLBaTFhEu4Q2Qt3/09MpFVQ=
+	t=1769705567; cv=none; b=GEL1bwsxf18at0tPLdFnO9LZGJipBUj10OrLZwj8EcJzOetuifVYTwJ5nKQOrI9fnSkwLuwbg2rkyJQiTzQzSaP4AhAYotMjgn4lmJXGLRmwOMeDKSnV2a93YcELFtgw1ZJ88gjaD9bjEZC/ZMadtQb4WZJgp6HsEf1Yug8zH9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769704523; c=relaxed/simple;
-	bh=82pSJoYWZf6lyZSCm6kYiTARN1bVyS/3D+3rBPUNbIA=;
+	s=arc-20240116; t=1769705567; c=relaxed/simple;
+	bh=qXuavBIltjjxhrwHD1MuWp6xl2mjQelLiL33suBwkTc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h1A2Jc1f+CjM/W67rBccuNzgtVsj9R5EEpHlnsbarweuejVh+P8u59bPw31fxhzoGlkdsNeqv7ATBOOhqu+dV/kDb5kEomhvnoP35Um8lI+IsGqyLOpIWP5sGg0vReC46P0zr8mHzyAXIcM5h3/SQFvnVK+31E7tMi1AcbZTJsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bG1x/60L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pRuiWJxv; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=oavlegZvtw1bh1pmrKVUDaQI5QUPSeaJuWLxh6SDCfOQGWexvdTOAosIznAkSZjZE9Lg09YqqQj41m5EGJJGQhCnebTW6tNjl/RmEfbyX9z8a6VFngZmGX+4bKxlqj2Zp5s7KeNGj5ipnDphXanNc8VuBsd77fsD3thWRyeBVKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=1r4r5nmc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G6FCSI4g; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bG1x/60L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pRuiWJxv"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0EEE8EC023C;
-	Thu, 29 Jan 2026 11:35:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="1r4r5nmc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G6FCSI4g"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5FC1AEC0277;
+	Thu, 29 Jan 2026 11:52:45 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 29 Jan 2026 11:35:20 -0500
+  by phl-compute-02.internal (MEProxy); Thu, 29 Jan 2026 11:52:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769704520; x=1769790920; bh=4xrURCykS7
-	ZK+DqwIC9lMVx17ZYNP5pq++WvXLAyz10=; b=bG1x/60L2d8ZZHBeGhiWZsamLx
-	eFgdZBlUEAMLOWfqujxwsIba0UuizgDkh6gytaI/Xe/H8ADDa/WIPUsPS/kTSF4n
-	pjFgcsXLnjOQeD0Rp3KDkV5ZxmtK6T+QIvmYd2TI16YPESFMZA4YkIwW+SrOiKGC
-	J/xOqQvl35OmNYVt8ZDX9BTApfTCK0EmFJxMM2DGFp65rTOp0vrUdjFAoENT/9aP
-	xHI67vGFap1J11qtveDv9gqeeL1Ve1lE6jiKqriRFO5bTVqTcRxmgZOm9fAU2FyL
-	Up6SVOgdMSj/p7kITJpN8gR3GTs0O52IeRrUZrAGyqSatAzr+ODcpjQAqLvA==
+	:subject:to:to; s=fm2; t=1769705565; x=1769791965; bh=QF1j7VHkI6
+	/P39q5nxXMSHriYEZaP1BaDZjm6pmpGDo=; b=1r4r5nmcX0SpVOkDcopS9foypw
+	eD3D4ziDPMxL6G94uQXylVpq68HkzqJbKu7bx7qxJigs43fJqorzZ87Dcs70QyZn
+	pg4fyGXno8NelP6PLcMf+UQCkH9QlZM59SdBiThrHYNohQKXPXKWOiV/bx1nQPrd
+	QpQ/ce///JLu//QC7HdF7gabxfzHWLACQT7HwCBfSTE+2HhzpLIeD/3bDykQ7/Un
+	ixxPSKgupXXMYDvg94bW6I1MFnBSfldAB0JNUbHC8OzKrg+gP/zz/vfaXwrML0KX
+	0l9adPctTh4Qeri1PFVuQXUIKPdRVAfvPBwSccCfaLm7ObARdiVmEdCSIVlQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769704520; x=1769790920; bh=4xrURCykS7ZK+DqwIC9lMVx17ZYNP5pq++W
-	vXLAyz10=; b=pRuiWJxvggzwNdL/sNgdP/o0uBvAEm4P8FdIzNGdpctVPv8OB+i
-	MX7ByS3LnGNfdgQfQv8ff02T/ajtJI632HBEpyAd3oBiVWFxME16W5ONUTY474NB
-	buJdrKllbmuqhiQzlhkOme1HAge+dCl3f/gnDKEKaiv1aOYAGWgg980nTFhw6r+M
-	RGfGLPICDWLbtJbhC++uX58tcArciawTOiQ3lvslOcJaKzvKdKxkYLxAGW9EA1qG
-	HWg8MZID2Dx3Y2G5FUj9geBFrphG7N8UbEHM3LxDEZWD673XcoXQW3KXCSfE+4Tr
-	z+6cDCPCNtWeJXVCD9xDqi5Q9MyS9jlwY1A==
-X-ME-Sender: <xms:R4x7aQw4N8ZBHSosid4qlnpEAHk6vY7Fj7vR31GmtX1X4zseuJScGA>
-    <xme:R4x7abRlHHg--8OGOLCF0rlz6-dWxfn7VCzUvozgrw1e8W_CcZgWgXgMyf7szm0QR
-    5tuAUhIAgZeH80HJoVUsmSQpuep0ZoXn3pzGe78ziLSLFVAoy5Mfw>
-X-ME-Received: <xmr:R4x7aXUTUe_Hdu7jPnChiCsX58nY1lB2F4bRzklvVbqhKQ7ie-mz_maR_3QMHmQPJsX4tcMqgrh2fvN0qZNjZ1g5FqMoq-t8AoCfNEw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeiieekucetufdoteggodetrf
+	1769705565; x=1769791965; bh=QF1j7VHkI6/P39q5nxXMSHriYEZaP1BaDZj
+	m6pmpGDo=; b=G6FCSI4g3/hiyDu9cLZHzC20RLCFW5BCXcPeei//27YPAb/88VJ
+	HehkRJDCRIV4im6Qy89DdantQX+4zii/iIoSqjtEBwrkwhDMgzVRkZCEnRiSDlbp
+	BvRVMUPpnBFfk258D+C1g3CHvA5oWge1L2K8HFW0Yk1o/FYaweM6eLzHI7Q6XLK3
+	o7Gexxe2I1vfCEVxIJqY5CJNlbXLoJ5+ztwPBS+SzOb2htgKqddpkBMvzgExSDVM
+	e2moVOhEW8X7cIMIBCqiPb9vDViUcQwNjtw4L6IEBvFMTanZxWyPww30AX7kRxe2
+	NS0RbcacdcvUtWOKWOabmKh6LvVvM87mXBA==
+X-ME-Sender: <xms:XZB7acmRlpShAdShRsSZSn-W35mvkoSpe-G0Y56CaRZCZfkyE4cqIw>
+    <xme:XZB7aS1pkaESBE_vDiXlxSlbNnUdleA9xBEjXIExUUZoEYwjrSXZFs53dMaXCR_ot
+    nMFGa2g4hUNcqsy8L5uVHbF_6CLgsAPVQs5t1CbrLPFVDUJrLTmXA>
+X-ME-Received: <xmr:XZB7afpDzthOarTZS7DI8EEFYV20PCQ_GqY-LAxH6hJrs2KGnHMHeozVhWsCJlG2Cb7bTSiROXE7WMZWfzwOSLIcNkBlNg3NxT5OOI4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeijedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -59,26 +59,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeiieekucetufdote
     mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
     hopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:R4x7adZ0_PtOlfGaoYwxB-sTaksiEKUkptXHtXUTbmQNTXb2Dj_uhw>
-    <xmx:R4x7ad04_xHxtpyIRP5DU8egboBCDZXujF2HCklom419entTSnj43Q>
-    <xmx:R4x7afgRFFc-xhDQMpLblWKEC5BqvY0DsGE-32yp9e7FfNJ5jA3QjA>
-    <xmx:R4x7aRaKO0QPxddL58cLoQKGF3YlFEETXvZTmarxmFCRZBXG56AQsA>
-    <xmx:SIx7aWnOz1JAeDpZEGssfeUCM_ERlpUbRMJ0eY1B9SJ946tgqHyb9NVB>
+X-ME-Proxy: <xmx:XZB7aXebffBlXSVLgo8Oo_5rlB6mH7YCHuNekXKwZVxnOFV8a9vL8A>
+    <xmx:XZB7aWpRHXBqftKA63TbiEJup4XViyfYV5ppW9sEXPZ8x9MrqVFjQQ>
+    <xmx:XZB7aQE071vDweJk3scGYg0o4Wb54lkQ7KeFDQF7NfU7sWKWgHf4oQ>
+    <xmx:XZB7aesdaWQsTUJhde5fypNuvYcOTqs7JOMO3DK0ABL-l__PuagcbQ>
+    <xmx:XZB7aY7Xz2k3xzQcitBnVbDbf9naxAyE2ZHa8rIyY5f-knOUwhKZ8SJ8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 11:35:19 -0500 (EST)
+ 29 Jan 2026 11:52:44 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/3] pack-bitmap: deduplicate logic to iterate over
- preferred bitmap tips
-In-Reply-To: <aXrDD1H4lvBR1sF8@nand.local> (Taylor Blau's message of "Wed, 28
-	Jan 2026 21:16:47 -0500")
+Subject: Re: [PATCH 2/3] pack-bitmap: fix bug with exact ref match in
+ "pack.preferBitmapTips"
+In-Reply-To: <aXrGfGUJQ34JAmuz@nand.local> (Taylor Blau's message of "Wed, 28
+	Jan 2026 21:31:24 -0500")
 References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
-	<20260128-b4-pks-fix-for-each-ref-in-misuse-v1-1-deccae3ea725@pks.im>
-	<aXrDD1H4lvBR1sF8@nand.local>
-Date: Thu, 29 Jan 2026 08:35:17 -0800
-Message-ID: <xmqqecn8cr7e.fsf@gitster.g>
+	<20260128-b4-pks-fix-for-each-ref-in-misuse-v1-2-deccae3ea725@pks.im>
+	<aXrGfGUJQ34JAmuz@nand.local>
+Date: Thu, 29 Jan 2026 08:52:43 -0800
+Message-ID: <xmqq7bt0cqec.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,23 +90,35 @@ Content-Type: text/plain
 
 Taylor Blau <me@ttaylorr.com> writes:
 
->> +void for_each_preferred_bitmap_tip(struct repository *repo,
->> +				   each_ref_fn cb, void *cb_data)
->> +{
->> +	struct string_list_item *item;
->> +	const struct string_list *preferred_tips;
->> +
->> +	preferred_tips = bitmap_preferred_tips(repo);
->
-> OK, so this is the sole caller of bitmap_preferred_tips() you were
-> referring to earlier. That function's implementation is hidden from the
-> diff context, but it's effectively a thin wrapper around
-> repo_config_get_string_multi().
+> Looking at the implementation of bitmap_writer_select_commits(), we do
+> not guarantee that *any* reference specified by pack.preferBitmapTips
+> will receive a bitmap. That's because we don't necessarily enumerate the
+> entire set of commits when determining which ones to bitmap.
 
-True.  I found it easier to see from the way the patch was written
-that this is a pure refactoring patch, though.  IOW, we may want to
-do that on top as a further rewrite, but I am not sure if it makes
-the result easier to reason about.  Such helper functions that are
-file-scope static often help reading the logic flow of the program,
-and compilers would inline them when it is more beneficial anyway.
+Hmph.  Is this documented?
+
+	... Goes and looks ...
+
+Yes, it is documented.  We say "This is because ..." but it just
+explains it as what the chosen design of the implementation happens
+to do, without saying for what benefit the implementation was chosen,
+so it is unclear if this is designed behaviour, or more importantly,
+even if this were designed, what the rationale of choosing that
+design was.
+
+"When they are so close to fall into the same chunk, there is no
+point having bitmaps individually for them, as their bitmaps will be
+very similar anyway, so this design saves space without sacrificing
+the quality of the resulting set of bitmaps" or something?
+
+
+> At the very least, if we do end up going in this direction (and I am not
+> necessarily advocating that we do, since I would prefer a more
+> consistent set of behavior), we should at minimum document it in
+> git-config(1).
+
+The documentation says "... reference that is a suffix of any value
+of this configuration".  Is "refs/heads/foobar" a "suffix" of
+"refs/heads/foo"?  I actually find this phrasing fairly strange, as
+I do not think of "refs/heads/main" be a "suffix" of "refs/heads/".
 
