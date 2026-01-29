@@ -1,56 +1,56 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15F42D2491
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D9E3126C5
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769713582; cv=none; b=iIQ9dEurRskp6Zol2qZVT0EgnV0sq/l3hK55dRjTF7NjDN7hNXdzHpw7TfgAbeeUATyfkAuL88Xqc/cR3/2FIVLuLV/fcaEsBzGnrlG9CUxmy4be7Jytk6OSNXsW/fPwZmSdfS5N6OOG3jKtSzLrcLiLto4vxeAvlTGgJFE+K+o=
+	t=1769713583; cv=none; b=DpTwJhtUJd+viXdkomd/0V9raOT0KFGRbQN9PrnYKSQIL8TM4QPRhkmZK3Pn2h0sVsNOLZkNsygeb3ABq7oV5EBas0IrVrZ9NfLp/qpsMKcqBfSnKUP71AxS4y3XUKTRPJr/uf3UwF4MAIOzMmsx9g8ix+mLNpdfHO0d2z9GI7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769713582; c=relaxed/simple;
-	bh=QsPQ1IxTamIIO68NRowUoHLziA5nMyGcfg5Ar9qbkcc=;
+	s=arc-20240116; t=1769713583; c=relaxed/simple;
+	bh=BPVI0pQoGVuZGtEEyxc3aCE5r6x4+ezc8g0TeyZeqTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+R56hq6t+kQ0atvsFNBw501jW6dS57Sk5ZuERJ1ByHq/cfe8XHE3d/0mM5aanFIRZaYyumriUKh3b7V6ijnhlyZTJhdVPFD1tmr0YPMusy9OcS20J3HfzN5Ei05FBRpwCuiw6KgkrUvtvJWJVHPPPKzuEtJCpkoKBhJ77hPvwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dBfFgWnE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HW4lcAOf; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version; b=ZfRC2aUATmPo+1WVtOuDdlTqY8MnE5d29/v/kba5K7o7pxPHzb8waxmc+rei4+IipcF/sNE+F70fBQN5OoxMEFzZmadQd5PvKgtChcaD3R5HSpXxGUivoddtXmk7EfFeFKw+yq8U8pVLIMZk8oR2ktULqq8jXA2XifdsWGHGyM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XtUXjmPM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=InhNiOYN; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dBfFgWnE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HW4lcAOf"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 282D314000AF;
-	Thu, 29 Jan 2026 14:06:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 29 Jan 2026 14:06:20 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XtUXjmPM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="InhNiOYN"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8E66D1400094;
+	Thu, 29 Jan 2026 14:06:21 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 29 Jan 2026 14:06:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1769713580; x=
-	1769799980; bh=EJXBww2b6rAwnRDHSiSWJT0tLmkKC+HRES68MF8B2Bg=; b=d
-	BfFgWnEGQ20i/jb/fV07E0pRZ+FJOB+F5KkGlfI7+38rE9STTLTh7A4yexUNHf5V
-	61W25+XJk2+9FZHBPTj33/Q1S5YVSTvzAOLcJ01lTBiOFNeAIDw9FmObQf040vjQ
-	7t7hkyo1sQgSQyMZkQxbysnLFakUS5c5TKprVdeNEw7lTjPSk5HdO2nI3/5xSkEu
-	w/AL2LRuDQ3cJY9xAy8ojGcNPvhMKdfaeE5CR5vylHk0Ch2P9EAhNiRPUHUGnr1a
-	JE68OvY0RlEKYab/NRSlFcI09RcZXg9gQb7YLd/8FV3/hxXqybEa72tjygrf6p4x
-	qGSwCLQkK7DO5aHQXHZJw==
+	:reply-to:subject:subject:to:to; s=fm2; t=1769713581; x=
+	1769799981; bh=lF+FBG69nSeLdhb5Rxv5Lsr93QrdwM5as8CzzDlqvdA=; b=X
+	tUXjmPMVypXtMQWZzz9FvpgMbvGiAxKuueatORctu8ssjOIjFXdfuPetZwL4a+Cq
+	jkw7XOWvKV+YhEj1hjIaQAwt3vSQM6Ln/wJr085PdUi/62dVTvWh6D3i9BiVINBX
+	fnylWO9eLDrdvu14NDy+qMElkF2j9X97tE2MSBnTysLKJPIfw4TcDi4rcJdOqgMr
+	P4/DEDRALxrtT1u6K4BfrZ2GpZJDGEJZIsJqYmw8DeYZZ3alehFO9cF1riBtP+xN
+	u6j4SiUdAZ8xIwgMUS/dCJ7/kBBPCeBkigeQUk7m1q4gcpYGiwsr0ZJkHsmKAZ2m
+	avqyyB7EArgs9lEv5j02g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1769713580; x=1769799980; bh=E
-	JXBww2b6rAwnRDHSiSWJT0tLmkKC+HRES68MF8B2Bg=; b=HW4lcAOfdf2INM799
-	MxBXspT76J/9iwRdtDzaX0Hh7QvIf4tabA6ORMGoCRpnup3ewy1XUeTGlPzC5SfN
-	rE7AARRkvNixhi8Ug3AAeFr5do4CaoLywhvXLAy29MO0xyvxlGIRkoCiFrfN+A0Z
-	neSw4On1ogeLtaJG1vv4Ag+rrOhwBw0Ld9ne1P4STofZLtEkt5JhmJPc2MZJLI07
-	R9SPobP2b8uuPDcA6OZhWML46ilurNXYca3urTcPzGHDJvDZ0ojut7aC/3TG5jLT
-	YPIAa3Cm2DxP4nKxPGYJc2IBzdpNrxtYk1IlWTCVed0IpIweUCV2PEOqBC0bHwRY
-	zJ8TQ==
-X-ME-Sender: <xms:rK97aQ5ZRCODwUQL0IGFWDYfnTp2V1tJZZctmji5uKQtvrZfMawUNw>
-    <xme:rK97aY4_MwzCUKVVtd7izHhLVCprN2kh_KH4lO2Uc99ov03GuS7IyKUlb_UyXraaq
-    XZFlTt8fyWmZW7FyGvrrJxqAXK8fersygIdmFw3gWl_Nc7_-7Tg_A>
-X-ME-Received: <xmr:rK97aUexvWX5N-7MoMhnkbycdvSuu1iOtsznjfYpb4dhJSDtBUQ7PHMG9q9GzS_XNjYrIBu_q7bZaJmuuwDgy7zNDzwCMUtFFfKTkRU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeileelucetufdoteggodetrf
+	:x-me-sender:x-sasl-enc; s=fm3; t=1769713581; x=1769799981; bh=l
+	F+FBG69nSeLdhb5Rxv5Lsr93QrdwM5as8CzzDlqvdA=; b=InhNiOYNM9TD2GH5Q
+	A9g1IBySmUTRqASFqKRbgARjslXsUE9/TwgZSRoYAidIQatKaO5n1MW/ZQmpAdqM
+	8TNZ4aRpGjLf7OfrvK6sFMT1cGMbdzx1hT7+Ra/98cDc0iHcCYKicevi9+2vpKt7
+	hpiZbct73sjC26Oq865lvEZzFdigFiqN8ujNG3U0qC3nqoQptAhneRxcoytPRZ4q
+	kaQFPISDGN/UG8yUY3fyGkNO2iQAG/lVGaAdgGNLOcqvmAmjjzToaMXWCG4KD7Ci
+	WDG+4FZ4OSE2egDQGv2Gjrk9hKf274nKNxXj69VFdthsane7y5zTcoKfQbdUK0Rt
+	v7KVA==
+X-ME-Sender: <xms:ra97aepNMOQyjw592uUTUzqrmt7SM_5kyrEaIRe-1NnVoJArb5NGQw>
+    <xme:ra97aTopeLHfKQEi1nLTETXAco-1WCq3r0_bGq4vnB14jGR8Pl_c3rlBNxSTvXupu
+    k46bDXH5lRw907QpQBKtipUiBKkAvbtrzQ9KBHMlPfOtsLpN2D8nao>
+X-ME-Received: <xmr:ra97aYO3lUAGTuuChIct2sCkOrTS4zVvVfkY5a6eYDAC_MC5G09HozTBsPCpz3geMVnp1tKEaY9AnBY8tQZVIHPo8w0fvBINqx0thEk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeileekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcu
@@ -62,21 +62,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeileelucetufdote
     gtphhtthhopegthihqshhimhhonhesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhi
     shhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtth
     hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rK97aUBTnpfuacjOjVYEleN9JNCs2bzvKgoQ2H2DoZ1Z7M5FupA7_g>
-    <xmx:rK97af8ndrnAocU1KUZEr0Xq-7oL4uh1PERLHP3DJDspI21MpnorkA>
-    <xmx:rK97aXJv6G5G7Ia6LAx17DAnZjBnMkmrGQfOqxrqCk5lAXPi6UWvOg>
-    <xmx:rK97aQjzGi598SRL94eTTRddYhJjvuxkYpCT6CUl6Jb8t6Jimyn_Vg>
-    <xmx:rK97aT-WSYgCJt780zj_nw775nLUq2zH8nz-qcgDoPkGwFK6sair9jRq>
+X-ME-Proxy: <xmx:ra97aczigqK4ursxggGYyAd-_0SkHdAwU3UR05Bo975Rcd-_QT7UkA>
+    <xmx:ra97aZsOz3J597Gm_jao8TMrw3Na5t5QYnoNvRA2aSn9ziRNWsBM9g>
+    <xmx:ra97ad7HwhisKFjF_vl_4to9Js_b8dZd74fCd_1xBYr-e1-lHf9mdA>
+    <xmx:ra97aQShE9eVt826IGx6L2IhApS-HyfGVnH8ugo5kXTi-qRP_6Vh_w>
+    <xmx:ra97aXs_VXt5JomsWztpH7cF9vwmlZYqsFrPM7R6lsohxUcQB7LlVdA0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 14:06:19 -0500 (EST)
+ 29 Jan 2026 14:06:21 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Simon Cheng <cyqsimon@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v2 1/2] checkout: pass program-readable token to unified "main"
-Date: Thu, 29 Jan 2026 11:06:15 -0800
-Message-ID: <20260129190616.645471-2-gitster@pobox.com>
+Subject: [PATCH v2 2/2] checkout: tell "parse_remote_branch" which command is calling it
+Date: Thu, 29 Jan 2026 11:06:16 -0800
+Message-ID: <20260129190616.645471-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.53.0-rc2-149-g6536429cee
 In-Reply-To: <20260129190616.645471-1-gitster@pobox.com>
 References: <20260127192936.904719-1-gitster@pobox.com>
@@ -89,137 +89,131 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The "git checkout", "git switch", and "git restore" commands share a
-single implementation, checkout_main(), which switches error message
-it gives using the usage string passed by each of these three
-front-ends.
+When "git checkout <dwim>" and "git switch <dwim>" need to error out
+due to ambiguity of the branch name <dwim>, these two commands give
+an advise message with a sample command that tells the user how to
+disambiguate from the parse_remote_branch() function.  The sample
+command hardcodes "git checkout", since this feature predates "git
+switch" by a large margin.  To a user who said "git switch <dwim>"
+and got this message, it is confusing.
 
-In order to be able to tweak behaviours of the commands based on
-which one we are executing, invent an enum that denotes which one of
-these three commands is currently executing, and pass that to
-checkout_main() instead.  With this step, there is no externally
-visible behaviour change, as this enum parameter is only used to
-choose among the three usage strings.
+Pass the "enum checkout_command", which was invented in the previous
+step for this exact purpose, down the call chain leading to
+parse_remote_branch() function to change the sample command shown to
+the user in this advise message.
 
+Also add a bit more test coverage for this "fail to DWIM under
+ambiguity" that we lack, as well as the message we produce when we
+fail.
+
+Reported-by: Simon Cheng <cyqsimon@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- * No change relative to v1
-
- builtin/checkout.c | 63 +++++++++++++++++++++++++++++++---------------
- 1 file changed, 43 insertions(+), 20 deletions(-)
+ builtin/checkout.c        | 29 ++++++++++++++++++++++++-----
+ t/t2027-checkout-track.sh | 18 ++++++++++++++++++
+ 2 files changed, 42 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f9453473fe..4f189fde48 100644
+index 4f189fde48..17f31c30b2 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -43,22 +43,6 @@
- #include "parallel-checkout.h"
- #include "add-interactive.h"
+@@ -1286,7 +1286,8 @@ enum checkout_command {
  
--static const char * const checkout_usage[] = {
--	N_("git checkout [<options>] <branch>"),
--	N_("git checkout [<options>] [<branch>] -- <file>..."),
--	NULL,
--};
--
--static const char * const switch_branch_usage[] = {
--	N_("git switch [<options>] [<branch>]"),
--	NULL,
--};
--
--static const char * const restore_usage[] = {
--	N_("git restore [<options>] [--source=<branch>] <file>..."),
--	NULL,
--};
--
- struct checkout_opts {
- 	int patch_mode;
- 	int patch_context;
-@@ -1293,6 +1277,13 @@ static void setup_new_branch_info_and_source_tree(
- 	}
- }
- 
-+
-+enum checkout_command {
-+	CHECKOUT_CHECKOUT = 1,
-+	CHECKOUT_SWITCH = 2,
-+	CHECKOUT_RESTORE = 3,
-+};
-+
  static char *parse_remote_branch(const char *arg,
  				 struct object_id *rev,
- 				 int could_be_checkout_paths)
-@@ -1767,12 +1758,44 @@ static char cb_option = 'b';
- 
- static int checkout_main(int argc, const char **argv, const char *prefix,
- 			 struct checkout_opts *opts, struct option *options,
--			 const char * const usagestr[])
-+			 enum checkout_command which_command)
+-				 int could_be_checkout_paths)
++				 int could_be_checkout_paths,
++				 enum checkout_command which_command)
  {
- 	int parseopt_flags = 0;
- 	struct branch_info new_branch_info = { 0 };
- 	int ret;
+ 	int num_matches = 0;
+ 	char *remote = unique_tracking_name(arg, rev, &num_matches);
+@@ -1299,14 +1300,30 @@ static char *parse_remote_branch(const char *arg,
  
-+	static const char * const checkout_usage[] = {
-+		N_("git checkout [<options>] <branch>"),
-+		N_("git checkout [<options>] [<branch>] -- <file>..."),
-+		NULL,
-+	};
+ 	if (!remote && num_matches > 1) {
+ 	    if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME)) {
++		    const char *cmdname;
 +
-+	static const char * const switch_branch_usage[] = {
-+		N_("git switch [<options>] [<branch>]"),
-+		NULL,
-+	};
++		    switch (which_command) {
++		    case CHECKOUT_CHECKOUT:
++			    cmdname = "checkout";
++			    break;
++		    case CHECKOUT_SWITCH:
++			    cmdname = "switch";
++			    break;
++		    default:
++			    BUG("command <%d> should not reach parse_remote_branch",
++				which_command);
++			    break;
++		    }
 +
-+	static const char * const restore_usage[] = {
-+		N_("git restore [<options>] [--source=<branch>] <file>..."),
-+		NULL,
-+	};
+ 		    advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ 			     "you can do so by fully qualifying the name with the --track option:\n"
+ 			     "\n"
+-			     "    git checkout --track origin/<name>\n"
++			     "    git %s --track origin/<name>\n"
+ 			     "\n"
+ 			     "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ 			     "one remote, e.g. the 'origin' remote, consider setting\n"
+-			     "checkout.defaultRemote=origin in your config."));
++			     "checkout.defaultRemote=origin in your config."),
++			   cmdname);
+ 	    }
+ 
+ 	    die(_("'%s' matched multiple (%d) remote tracking branches"),
+@@ -1318,6 +1335,7 @@ static char *parse_remote_branch(const char *arg,
+ 
+ static int parse_branchname_arg(int argc, const char **argv,
+ 				int dwim_new_local_branch_ok,
++				enum checkout_command which_command,
+ 				struct branch_info *new_branch_info,
+ 				struct checkout_opts *opts,
+ 				struct object_id *rev)
+@@ -1427,7 +1445,8 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 
+ 		if (recover_with_dwim) {
+ 			remote = parse_remote_branch(arg, rev,
+-						     could_be_checkout_paths);
++						     could_be_checkout_paths,
++						     which_command);
+ 			if (remote) {
+ 				*new_branch = arg;
+ 				arg = remote;
+@@ -1916,7 +1935,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 			opts->dwim_new_local_branch &&
+ 			opts->track == BRANCH_TRACK_UNSPECIFIED &&
+ 			!opts->new_branch;
+-		int n = parse_branchname_arg(argc, argv, dwim_ok,
++		int n = parse_branchname_arg(argc, argv, dwim_ok, which_command,
+ 					     &new_branch_info, opts, &rev);
+ 		argv += n;
+ 		argc -= n;
+diff --git a/t/t2027-checkout-track.sh b/t/t2027-checkout-track.sh
+index a397790df5..c01f1cd617 100755
+--- a/t/t2027-checkout-track.sh
++++ b/t/t2027-checkout-track.sh
+@@ -47,4 +47,22 @@ test_expect_success 'checkout --track -b overrides autoSetupMerge=inherit' '
+ 	test_cmp_config refs/heads/main branch.b4.merge
+ '
+ 
++test_expect_success 'ambiguous tracking info' '
++	# Set up a few remote repositories
++	git init --bare --initial-branch=trunk src1 &&
++	git init --bare --initial-branch=trunk src2 &&
++	git push src1 one:refs/heads/trunk &&
++	git push src2 two:refs/heads/trunk &&
 +
-+	const char * const *usagestr;
++	git remote add -f src1 "file://$PWD/src1" &&
++	git remote add -f src2 "file://$PWD/src2" &&
 +
-+	switch (which_command) {
-+	case CHECKOUT_CHECKOUT:
-+		usagestr = checkout_usage;
-+		break;
-+	case CHECKOUT_SWITCH:
-+		usagestr = switch_branch_usage;
-+		break;
-+	case CHECKOUT_RESTORE:
-+		usagestr = restore_usage;
-+		break;
-+	default:
-+		BUG("No such checkout variant %d", which_command);
-+	}
++	# DWIM
++	test_must_fail git checkout trunk 2>hint.checkout &&
++	test_grep "hint: *git checkout --track" hint.checkout &&
 +
- 	opts->overwrite_ignore = 1;
- 	opts->prefix = prefix;
- 	opts->show_progress = -1;
-@@ -2032,7 +2055,7 @@ int cmd_checkout(int argc,
- 	options = add_checkout_path_options(&opts, options);
- 
- 	return checkout_main(argc, argv, prefix, &opts, options,
--			     checkout_usage);
-+			     CHECKOUT_CHECKOUT);
- }
- 
- int cmd_switch(int argc,
-@@ -2071,7 +2094,7 @@ int cmd_switch(int argc,
- 	cb_option = 'c';
- 
- 	return checkout_main(argc, argv, prefix, &opts, options,
--			     switch_branch_usage);
-+			     CHECKOUT_SWITCH);
- }
- 
- int cmd_restore(int argc,
-@@ -2107,5 +2130,5 @@ int cmd_restore(int argc,
- 	options = add_checkout_path_options(&opts, options);
- 
- 	return checkout_main(argc, argv, prefix, &opts, options,
--			     restore_usage);
-+			     CHECKOUT_RESTORE);
- }
++	test_must_fail git switch trunk 2>hint.switch &&
++	test_grep "hint: *git switch --track" hint.switch
++'
++
+ test_done
 -- 
 2.53.0-rc2-135-gb1217c0133
 
