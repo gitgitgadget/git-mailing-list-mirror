@@ -1,219 +1,140 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D9E3126C5
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:06:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D0D30BF79
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769713583; cv=none; b=DpTwJhtUJd+viXdkomd/0V9raOT0KFGRbQN9PrnYKSQIL8TM4QPRhkmZK3Pn2h0sVsNOLZkNsygeb3ABq7oV5EBas0IrVrZ9NfLp/qpsMKcqBfSnKUP71AxS4y3XUKTRPJr/uf3UwF4MAIOzMmsx9g8ix+mLNpdfHO0d2z9GI7s=
+	t=1769714763; cv=none; b=HZDK4BqnYB5QP8Y4lA1RvXnD7eMJ/uAD/7v+ugC56dI1HQ8+LZoX6VqMspMaLrNMXaElfhwUZAxZ/l/eNRQc+cHFloK6CmyswQEYdbN3ldAkUl8LwEZyAFcXIY/hdm6aJ0uZOG7bduU2KnUro38659ae4MfRn9JXKwakMc6tf5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769713583; c=relaxed/simple;
-	bh=BPVI0pQoGVuZGtEEyxc3aCE5r6x4+ezc8g0TeyZeqTE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfRC2aUATmPo+1WVtOuDdlTqY8MnE5d29/v/kba5K7o7pxPHzb8waxmc+rei4+IipcF/sNE+F70fBQN5OoxMEFzZmadQd5PvKgtChcaD3R5HSpXxGUivoddtXmk7EfFeFKw+yq8U8pVLIMZk8oR2ktULqq8jXA2XifdsWGHGyM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XtUXjmPM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=InhNiOYN; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1769714763; c=relaxed/simple;
+	bh=03zxGaBu7fp5r5boXeLpU/6MiyjGndNKVRYt38F/D74=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WW2nCmFFrbAZNUf/xRWvag834dmMp/kD8y/x+m/d6feISoo+6hTROISK4qVcGlYr+Nc7X9hrn0aaHKYfcwVEgG5CChcK5Y54v2JAJOY6o6UAuHSz8XT7icxaygAnwkP6U+IGE02NfCMw2p8c8D3hrt4foGEFJNtPwjfrRD2lJTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SUjb8moC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O51DfGBM; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XtUXjmPM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="InhNiOYN"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8E66D1400094;
-	Thu, 29 Jan 2026 14:06:21 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SUjb8moC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O51DfGBM"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0EF29EC06A7;
+	Thu, 29 Jan 2026 14:25:50 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 29 Jan 2026 14:06:21 -0500
+  by phl-compute-03.internal (MEProxy); Thu, 29 Jan 2026 14:25:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1769713581; x=
-	1769799981; bh=lF+FBG69nSeLdhb5Rxv5Lsr93QrdwM5as8CzzDlqvdA=; b=X
-	tUXjmPMVypXtMQWZzz9FvpgMbvGiAxKuueatORctu8ssjOIjFXdfuPetZwL4a+Cq
-	jkw7XOWvKV+YhEj1hjIaQAwt3vSQM6Ln/wJr085PdUi/62dVTvWh6D3i9BiVINBX
-	fnylWO9eLDrdvu14NDy+qMElkF2j9X97tE2MSBnTysLKJPIfw4TcDi4rcJdOqgMr
-	P4/DEDRALxrtT1u6K4BfrZ2GpZJDGEJZIsJqYmw8DeYZZ3alehFO9cF1riBtP+xN
-	u6j4SiUdAZ8xIwgMUS/dCJ7/kBBPCeBkigeQUk7m1q4gcpYGiwsr0ZJkHsmKAZ2m
-	avqyyB7EArgs9lEv5j02g==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769714750; x=1769801150; bh=4lKYqOM3yn
+	xaQqQRZAIPqCrbZhylkLoaR4TGqv4Yx6A=; b=SUjb8moCUdNWxNq8UXixPXggvo
+	EmM6MmaUyeOHdbeYmPBRamIvIuM7rPuKfok7/Mie5ANEgluTgzC89UTFVAkE8pZY
+	/R0BdFanBHzOySJ2IK8EI1Jgag4ar1mKi5GKb9+K0o1bCFKc9Yt7Er2mQRGTtl4G
+	x6dGwDozcE3AE57KX9nSxx73/SkuW6enhkKbb6ABlr9ctQ+aJWKyiLn5HAEo+N2h
+	MQpktlt3/tg4XZNp3xt1M2FKyxnYhekIKlSfuNO3eDVN+0aXj1ETYy5FRdhfz/Mw
+	B6yaSAgiBJHnckNf1KXu+X9idnhbgCpMrhQ/80gwWykufQDFw+eDJhG8qlvQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1769713581; x=1769799981; bh=l
-	F+FBG69nSeLdhb5Rxv5Lsr93QrdwM5as8CzzDlqvdA=; b=InhNiOYNM9TD2GH5Q
-	A9g1IBySmUTRqASFqKRbgARjslXsUE9/TwgZSRoYAidIQatKaO5n1MW/ZQmpAdqM
-	8TNZ4aRpGjLf7OfrvK6sFMT1cGMbdzx1hT7+Ra/98cDc0iHcCYKicevi9+2vpKt7
-	hpiZbct73sjC26Oq865lvEZzFdigFiqN8ujNG3U0qC3nqoQptAhneRxcoytPRZ4q
-	kaQFPISDGN/UG8yUY3fyGkNO2iQAG/lVGaAdgGNLOcqvmAmjjzToaMXWCG4KD7Ci
-	WDG+4FZ4OSE2egDQGv2Gjrk9hKf274nKNxXj69VFdthsane7y5zTcoKfQbdUK0Rt
-	v7KVA==
-X-ME-Sender: <xms:ra97aepNMOQyjw592uUTUzqrmt7SM_5kyrEaIRe-1NnVoJArb5NGQw>
-    <xme:ra97aTopeLHfKQEi1nLTETXAco-1WCq3r0_bGq4vnB14jGR8Pl_c3rlBNxSTvXupu
-    k46bDXH5lRw907QpQBKtipUiBKkAvbtrzQ9KBHMlPfOtsLpN2D8nao>
-X-ME-Received: <xmr:ra97aYO3lUAGTuuChIct2sCkOrTS4zVvVfkY5a6eYDAC_MC5G09HozTBsPCpz3geMVnp1tKEaY9AnBY8tQZVIHPo8w0fvBINqx0thEk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeileekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1769714750; x=1769801150; bh=4lKYqOM3ynxaQqQRZAIPqCrbZhylkLoaR4T
+	Gqv4Yx6A=; b=O51DfGBMutwIpQqIkYXmpmoImafoer287WW9kGo9GoPqHQD4TR6
+	Y5TCPMFkTcACUMh4g9PddbcjJfBQdURXKAFW2/o73beQ1acdKxhCdysCanAfJTuN
+	j1iXqhD+pLCJzUrHnXy9EIznVzRVfJedIux+BX7nMRxSOKBXnZkCD+dhXAvQ8b+A
+	74AkrDVwy0vH0LghF9V6C6k1TfhPMinAKsQIgGOGekWh1U6hz9iHXc2fn1OTionu
+	CXA/hIR9KXXhpGTw21Uxwzfa4lLgKq/iF5jlXWWkhSOUe7GqaoNO1yZpt99gZglv
+	BTcxem99EdBqJZGBN+5A41r3Z4GhcHvQpAQ==
+X-ME-Sender: <xms:PbR7aVajJKD1wwkisO2g5sd4ZdXr6A6u_RvxyaxjVzEXrm0OT5zfjg>
+    <xme:PbR7aTaQz6SSz81Gj1cmtJb3foLr1TkmK3elwPH7x3fuUHmAvM0tvdTQKa3uwgthJ
+    eCbb9myIds41qiTpCo9V84Eu65LEPScNkIh0kwsgJ834P-9L5CNKg>
+X-ME-Received: <xmr:PbR7ac_4otv0Ytp0SsaozYbuZVknleAtQVTC8Gc3PKKmNh97Aw-k7G2bNV6srVcRQBB2bP_YxScedv4I-ZmwgqD-y_Chr0l0IHRXIBo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieejtddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepvdfflefhueetgfektedthfduleffudetleefieeulefhvdduieeukefhtddv
-    udeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopegthihqshhimhhonhesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhi
-    shhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ra97aczigqK4ursxggGYyAd-_0SkHdAwU3UR05Bo975Rcd-_QT7UkA>
-    <xmx:ra97aZsOz3J597Gm_jao8TMrw3Na5t5QYnoNvRA2aSn9ziRNWsBM9g>
-    <xmx:ra97ad7HwhisKFjF_vl_4to9Js_b8dZd74fCd_1xBYr-e1-lHf9mdA>
-    <xmx:ra97aQShE9eVt826IGx6L2IhApS-HyfGVnH8ugo5kXTi-qRP_6Vh_w>
-    <xmx:ra97aXs_VXt5JomsWztpH7cF9vwmlZYqsFrPM7R6lsohxUcQB7LlVdA0>
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjlhhtoh
+    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:PbR7aSj44alEMiyd68X8KxUaQy37AoSxKgufDzSgS6QxK-b_Bqagcg>
+    <xmx:PbR7acfOS3w8s491dNvCRqaCGQ5IVSMbihxK9erseC-OYKzrEfSHAA>
+    <xmx:PbR7aZoiGIgZcU9NR3yjJ1Ih0KVHaq-Bi4QnWyZjTnTKqbSHrY3M7A>
+    <xmx:PbR7aRArQJv3pinjFGMTsL31AEa3ou4mDojVlrSR7O3vLDGBi72mSg>
+    <xmx:PrR7afLnISwrVJOOSKvr--992dTc7RZ1Ibu1ZosoYO4Ag0YZo2bcc6Dx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 14:06:21 -0500 (EST)
+ 29 Jan 2026 14:25:49 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Simon Cheng <cyqsimon@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v2 2/2] checkout: tell "parse_remote_branch" which command is calling it
-Date: Thu, 29 Jan 2026 11:06:16 -0800
-Message-ID: <20260129190616.645471-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.53.0-rc2-149-g6536429cee
-In-Reply-To: <20260129190616.645471-1-gitster@pobox.com>
-References: <20260127192936.904719-1-gitster@pobox.com>
- <20260129190616.645471-1-gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/4] odb: store ODB source in `struct odb_transaction`
+In-Reply-To: <aXtDYY0Ao24Mpgyb@pks.im> (Patrick Steinhardt's message of "Thu,
+	29 Jan 2026 12:24:17 +0100")
+References: <20260128234519.2721179-1-jltobler@gmail.com>
+	<20260128234519.2721179-2-jltobler@gmail.com>
+	<aXtDYY0Ao24Mpgyb@pks.im>
+Date: Thu, 29 Jan 2026 11:25:48 -0800
+Message-ID: <xmqqcy2sb4qr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When "git checkout <dwim>" and "git switch <dwim>" need to error out
-due to ambiguity of the branch name <dwim>, these two commands give
-an advise message with a sample command that tells the user how to
-disambiguate from the parse_remote_branch() function.  The sample
-command hardcodes "git checkout", since this feature predates "git
-switch" by a large margin.  To a user who said "git switch <dwim>"
-and got this message, it is confusing.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Pass the "enum checkout_command", which was invented in the previous
-step for this exact purpose, down the call chain leading to
-parse_remote_branch() function to change the sample command shown to
-the user in this advise message.
+> On Wed, Jan 28, 2026 at 05:45:16PM -0600, Justin Tobler wrote:
+>> Each `struct odb_transaction` currently stores a reference to the
+>> `struct object_database`. Since transactions are handled per object
+>> source, instead store a reference to the source.
+>
+> Makes sense.
+>
+>> diff --git a/object-file.c b/object-file.c
+>> index e7e4c3348f..196509b252 100644
+>> --- a/object-file.c
+>> +++ b/object-file.c
+>> @@ -728,7 +728,7 @@ static void prepare_loose_object_transaction(struct odb_transaction *transaction
+>>  	if (!transaction || transaction->objdir)
+>>  		return;
+>>  
+>> -	transaction->objdir = tmp_objdir_create(transaction->odb->repo, "bulk-fsync");
+>> +	transaction->objdir = tmp_objdir_create(transaction->source->odb->repo, "bulk-fsync");
+>>  	if (transaction->objdir)
+>>  		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
+>>  }
+>
+> This makes me wonder whether we should first refactor the `tmp_objdir`
+> subsystem to receive a source instead of a repository as input.
+> Otherwise we "pretend" that the transaction is on the source level, but
+> we ultimately still end up creating the temporary directory in the
+> repository's object directory unconditionally.
+>
+> It wouldn't really change anything right now as we only ever write
+> objects via the primary object source anyway, so the end result would be
+> the same. But it just feels like a good first step to me to fix this
+> conceptual inconsistency, and it shouldn't be too involved either as
+> `tmp_objdir_create()` only has three callsites.
 
-Also add a bit more test coverage for this "fail to DWIM under
-ambiguity" that we lack, as well as the message we produce when we
-fail.
+I agree with your "not really change anything right now" comment,
+but a new odb source that will be invented in the future may not
+even be file based, and a generic-sounding tmp_objdir_create() that
+creates a temporary directory on the filesystem may not even be an
+appropriate abstraction.
 
-Reported-by: Simon Cheng <cyqsimon@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/checkout.c        | 29 ++++++++++++++++++++++++-----
- t/t2027-checkout-track.sh | 18 ++++++++++++++++++
- 2 files changed, 42 insertions(+), 5 deletions(-)
+If we have two or more odb sources both are filesystem based, on the
+other hand, I do not think it is particulary bad if these two odb
+sources belonging to the same repository took a temporary directory
+out of that repository.  As long as one temporary object directory
+taken by one odb source is not used to commit the transaction into
+the other odb source, it would be fine, no?
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4f189fde48..17f31c30b2 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1286,7 +1286,8 @@ enum checkout_command {
- 
- static char *parse_remote_branch(const char *arg,
- 				 struct object_id *rev,
--				 int could_be_checkout_paths)
-+				 int could_be_checkout_paths,
-+				 enum checkout_command which_command)
- {
- 	int num_matches = 0;
- 	char *remote = unique_tracking_name(arg, rev, &num_matches);
-@@ -1299,14 +1300,30 @@ static char *parse_remote_branch(const char *arg,
- 
- 	if (!remote && num_matches > 1) {
- 	    if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME)) {
-+		    const char *cmdname;
-+
-+		    switch (which_command) {
-+		    case CHECKOUT_CHECKOUT:
-+			    cmdname = "checkout";
-+			    break;
-+		    case CHECKOUT_SWITCH:
-+			    cmdname = "switch";
-+			    break;
-+		    default:
-+			    BUG("command <%d> should not reach parse_remote_branch",
-+				which_command);
-+			    break;
-+		    }
-+
- 		    advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
- 			     "you can do so by fully qualifying the name with the --track option:\n"
- 			     "\n"
--			     "    git checkout --track origin/<name>\n"
-+			     "    git %s --track origin/<name>\n"
- 			     "\n"
- 			     "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
- 			     "one remote, e.g. the 'origin' remote, consider setting\n"
--			     "checkout.defaultRemote=origin in your config."));
-+			     "checkout.defaultRemote=origin in your config."),
-+			   cmdname);
- 	    }
- 
- 	    die(_("'%s' matched multiple (%d) remote tracking branches"),
-@@ -1318,6 +1335,7 @@ static char *parse_remote_branch(const char *arg,
- 
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
-+				enum checkout_command which_command,
- 				struct branch_info *new_branch_info,
- 				struct checkout_opts *opts,
- 				struct object_id *rev)
-@@ -1427,7 +1445,8 @@ static int parse_branchname_arg(int argc, const char **argv,
- 
- 		if (recover_with_dwim) {
- 			remote = parse_remote_branch(arg, rev,
--						     could_be_checkout_paths);
-+						     could_be_checkout_paths,
-+						     which_command);
- 			if (remote) {
- 				*new_branch = arg;
- 				arg = remote;
-@@ -1916,7 +1935,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			opts->dwim_new_local_branch &&
- 			opts->track == BRANCH_TRACK_UNSPECIFIED &&
- 			!opts->new_branch;
--		int n = parse_branchname_arg(argc, argv, dwim_ok,
-+		int n = parse_branchname_arg(argc, argv, dwim_ok, which_command,
- 					     &new_branch_info, opts, &rev);
- 		argv += n;
- 		argc -= n;
-diff --git a/t/t2027-checkout-track.sh b/t/t2027-checkout-track.sh
-index a397790df5..c01f1cd617 100755
---- a/t/t2027-checkout-track.sh
-+++ b/t/t2027-checkout-track.sh
-@@ -47,4 +47,22 @@ test_expect_success 'checkout --track -b overrides autoSetupMerge=inherit' '
- 	test_cmp_config refs/heads/main branch.b4.merge
- '
- 
-+test_expect_success 'ambiguous tracking info' '
-+	# Set up a few remote repositories
-+	git init --bare --initial-branch=trunk src1 &&
-+	git init --bare --initial-branch=trunk src2 &&
-+	git push src1 one:refs/heads/trunk &&
-+	git push src2 two:refs/heads/trunk &&
-+
-+	git remote add -f src1 "file://$PWD/src1" &&
-+	git remote add -f src2 "file://$PWD/src2" &&
-+
-+	# DWIM
-+	test_must_fail git checkout trunk 2>hint.checkout &&
-+	test_grep "hint: *git checkout --track" hint.checkout &&
-+
-+	test_must_fail git switch trunk 2>hint.switch &&
-+	test_grep "hint: *git switch --track" hint.switch
-+'
-+
- test_done
--- 
-2.53.0-rc2-135-gb1217c0133
+Thanks.
+
 
