@@ -1,107 +1,152 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEF8352940
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 20:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07473587C9
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 20:41:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769718535; cv=none; b=JCJeEOo+rJj1qqd4TIOJgUKlkXgRKo/H5FpoujWRyj7pwtaLEFq/XUI9Qvlut39krzuNw+C27yxj6n/vEP/VXlWA46J3uVPmK2vbazTHuS1LsCZhFiUWJT2I/UU7biNle4xtt9E94owU3OpURdp6ZyuJ7JP1p0b1zplN2C8JACU=
+	t=1769719298; cv=none; b=Xp/WpjYiFN/ZMEgObWAnZffqBPu7w/UGoEzIw92xWwX6zxxc860F0fdyKxZN0IfSrBaXnmL5ANTMCC1Lhb+q6JmzoV44nI6ux+RBw0C6uXQBJgBPzeGkI1Fvd9YF3rUyZkU8kuPoEHkn5gvVuRpdkipLz0YPOxxz+J228pJOi5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769718535; c=relaxed/simple;
-	bh=wckMW1k62qLlIftuqcb1XiLuZT5LiS8miP4rkwrJf+Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZmQBwIfJ20j4ondpG/ymlq6N4UcyHHhxUeV+Hv8wvPdwB0bc6ZIwvw8tUdEQicBkeVMUmhl42q8SZ0yl3loyT5HtORvYDcn2zdByJ3XGrEBpUYMk23lNX+W8ZficPOyh/VNbVCHfX68/b8rmcY6U90Q9IYQR8fmBsVp6kuFqBP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PWW2PeyL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fbh1boeA; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769719298; c=relaxed/simple;
+	bh=pHkvGv4PaRWZ9FbL6ArK9hplyr/lku2a/c9qG9BRZk8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=iLUgE2Tmwht3dIZ0VcHPIlhOL+RiXv0HlNtr6BSDSFvq/mryrDS6/E/OlYOxBYZxOibtSui9JjDorZXJD/d8HVZBzWbnRU7Ww4clrXZtZAGfCbK4G+ErgFR6toUviccKbKDlkwc1zVOAKjS6D7IrwUT4N7Hy4agrunqucBCaDo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IGQfW3L3; arc=none smtp.client-ip=74.125.82.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PWW2PeyL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fbh1boeA"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A09AC140008A;
-	Thu, 29 Jan 2026 15:28:53 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 29 Jan 2026 15:28:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769718533; x=1769804933; bh=cBcNtoh89g
-	FdO8qNvPcv7JA0Y9t6ixHiVLNtuwzGH04=; b=PWW2PeyLGgyWR4dAMrLqlhcOX2
-	ls9Hd0LlI4MmHYxQpGikSgnAUlUyBFP23LJ1CDzCSFoxxtdxE3pyjuMNqjxwLlxN
-	/VIDfRD2PL1thFj6gdcyNJY1DtJw6sdqi3NiaSTCtZtW3xq5S0FR3/Rohh9ZsoVG
-	ndHmIDQ2hazkF5ACfzWtlskiIKE8Sj+qXaYd76lCcJKL/ZCZccz/Nf8+Tdhgf5RW
-	a27MM37iCRdC3gbnwrkLE30tKRiWhvesl9hw1gUuO8GoYCF/YthfcfhNkLTzkbkQ
-	uP1VsLQ8t613SgZ5Kqc98C3INNPYrUxLylBjdKBVekjI4CNqU2CjFFhxHlCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769718533; x=1769804933; bh=cBcNtoh89gFdO8qNvPcv7JA0Y9t6ixHiVLN
-	tuwzGH04=; b=fbh1boeAVrh603x0N2im9pJrf3Vo4IpLfaUEY8cxI1NxkXlpWua
-	hA4ml+zPkW/54lpvMI481SlJDD3tjrYOox6gAhXuNDB8rXI78ozTamHFF/HQr2N/
-	T3Yb7CSdM+6V29tr+BENv8CSCoPDrV9C89DXcfj0PqAXFXnZxb+XF9S5AWFqVA6M
-	AX3u/A2DRMVL+atg3l7pzL4Bp4SaZuVWpgBVptz+uvzrXQJwtyU28S6147gRmBRa
-	CSadLUm3QDdfyReapNU3icP90IhXy6M33x41Yx/XWDMJ01O7vwofNU2GTqjJ3VE0
-	530fYvxnTFCQqxIKzYBXTOE1Dl1tjOrQJOQ==
-X-ME-Sender: <xms:BcN7aXu1KnkVAcoB4oulMxYJBSBX_UXczm7zmUqIWVMuxIF01IICig>
-    <xme:BcN7afeHzlBtExxGcI3BBf8Jo0614A9VLG98KH8XCwY0Nt6o45e2hddIAg_IA9ZBW
-    amyzNd0t0_QdX3-QLJ7kSDzJQT-nf1LOfT_2bBgc_LhixTFSy2tYg>
-X-ME-Received: <xmr:BcN7afzbte0wpN9qrXV2ojLHnPScIioebl5l1oe2NfNQUX7e8mJB-rH4GPm07L-9t0a75akWHbkb7ktHPHmZv7r-XmD9d1F9P2T127c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieejudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:BcN7aVEgg8fXD_FP8GEFwP7NpSZNizqzAnON5sx1-Nj77ppziwkj6A>
-    <xmx:BcN7aTy-ynfbrzi2lRzyhxTCuqiLfNl6li5kySYhGivvFBe2Kor2Eg>
-    <xmx:BcN7aWs1I96Xa8eRvpTnJ3kkpLAoATQ_CoG6fPdEmzHWd5V_En1SWw>
-    <xmx:BcN7aQ30isd__ksHfIsjczU5q3oA3yG5gs1RtFnK-gTKLChKHqv55g>
-    <xmx:BcN7aVt97juIJwO545WXC8UDZA-iGZDc7rjYyLi6_-s7ETGm4OcixOeL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 15:28:53 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/4] odb: store ODB source in `struct odb_transaction`
-In-Reply-To: <aXu4nttn-SWcMmLL@denethor> (Justin Tobler's message of "Thu, 29
-	Jan 2026 14:12:05 -0600")
-References: <20260128234519.2721179-1-jltobler@gmail.com>
-	<20260128234519.2721179-2-jltobler@gmail.com>
-	<aXtDYY0Ao24Mpgyb@pks.im> <xmqqcy2sb4qr.fsf@gitster.g>
-	<aXu4nttn-SWcMmLL@denethor>
-Date: Thu, 29 Jan 2026 12:28:52 -0800
-Message-ID: <xmqqwm109n97.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IGQfW3L3"
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2b70abe3417so3326224eec.0
+        for <git@vger.kernel.org>; Thu, 29 Jan 2026 12:41:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769719297; x=1770324097; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QHOn2h7gYSGCHJ9NBLyTXK07PplZsACC8fVUz1Ec4ys=;
+        b=IGQfW3L3gG//XVQqqtGmN3k2XK5o0qqMryx2rg4XXMGVVqvRs4tY93+RfeZQlQfGkM
+         fIF7m6rCSB1PQpXC8B1RBJtnFa/snO9oQHUtQWHsm1Ln/jxE+pWQnuAImNYuqscnrHD4
+         VyQ7xWTjlDBrK7Q9RSn7t489MbWGzfJfKaMZDfkq95AySEWcWuusvMJ3CCEFZIy+2u/0
+         ZJ0Uc9LCi7I3qhbUpAGnMh8t7aR9JHn6bE6GjUC/BNXpa0s3lKK7dXp6bOBPRAoUfNFc
+         3+y72BmD06uo5H+GsX/NK6JaTcwUNzJd6AGQRbIlAlUErY9TrcbfKtb8kqZY/6mHMg4n
+         JbDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769719297; x=1770324097;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QHOn2h7gYSGCHJ9NBLyTXK07PplZsACC8fVUz1Ec4ys=;
+        b=fP3AT+mLRNzn5rz3M2ROyQuMZchhH/QB5xURQU8g+z9hEL/H8kcnjqA1kgA59QHF8L
+         bNj8VDcQPOo/pTHqMu8W1PRTx02CiSCHr2yAPtvFW6QgXzW4AfuGBl93m9Ar7SNXEAWF
+         1TyHS7Z3F15GI1fwR0+NaRaV0E4FtofX61SReyR3C7lHyv72LC7TFbZx1ETYycoWTFlk
+         VhI/7HYc1bEz1KxLlhvTFMf2XMhV2//5lkhUrBwc9XhYvFjRXcv5ulQewwWCP0nFmLm9
+         e7RKSG8tZK3wjA1FDHU7Xckhp32GVj8SJRgxfB/0HHiNZs4MAJmrbtPuW4BYtXzASDGV
+         rAiA==
+X-Forwarded-Encrypted: i=1; AJvYcCWKTfWkeJQ9XFIYwEzCi4FMYn+nrJnZHGtdFq6unYoRUhhGBo9bmsZR5NaNH7d8ZPP/ilc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzb5kV+xUKPv1ieKhXpIC0f9D9r6/FhZoMkCq9hD5KZl+TCkE0Y
+	z2yxJwioOCNFhSZKAvZs286BXX9ixMutfHz9p1lBfOa9/QMWWTGppK27
+X-Gm-Gg: AZuq6aKo8kVF0o815zoS9gHIe3/SgP7PRiWCCehCFKEPN0m1y5Qr9mXsWfnsuZRpAfP
+	PhmJ3AUD0QW8v2FKBeQsmC9bviXl1nY7HWZ8VSJ4DF97qHB1THcdgmkRYHNb2bj8Kbq9hw8n7Bw
+	ITe2v702v8IJV5/3YWJzlwxeEuHoMjmJCf/sK0EQkl23x7GpwIWZwaTTMmZ5nPNrKGWAXQBR1Y+
+	8byNmD3v/cc+r2ebU8XXTZo3BnFKJhyobZJacEriWyPKcq9h/ELpHF7gh6W1Az6VYnb9YDL6cmh
+	9rQpQlG8gTlcOvE8CfE4loZv73oeStHk3fu4mDyt/StqKH1oacKzym8eGhowc+dC2zE0R43iwG7
+	balQnbgIv8PX1vDEUpsXQdjR/l2iXOJrCBxfxJdEDMTU3WNpXypso4ryYI/lKWVTJKNw/3wMcn9
+	f6hrssLD8fDSoXrW7mc/xidyB0e4yPFWtMK+4OoEEE
+X-Received: by 2002:a05:693c:2b13:b0:2b7:9934:c40b with SMTP id 5a478bee46e88-2b7c8902bbamr426046eec.31.1769719296719;
+        Thu, 29 Jan 2026 12:41:36 -0800 (PST)
+Received: from smtpclient.apple ([191.181.59.93])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a1adef97sm8257170eec.29.2026.01.29.12.41.31
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Jan 2026 12:41:36 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: Git project and GSoC 2026
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <CAP8UFD29LtG2dRRB4f6mZAHNGqDmDxUV4ULYw3w3OYg15ZBBYg@mail.gmail.com>
+Date: Thu, 29 Jan 2026 17:41:19 -0300
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+ git <git@vger.kernel.org>,
+ karthik nayak <karthik.188@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>,
+ Taylor Blau <me@ttaylorr.com>,
+ Junio C Hamano <gitster@pobox.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>,
+ Justin Tobler <jltobler@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Meet Soni <meetsoni3017@gmail.com>,
+ Bello Olamide <belkid98@gmail.com>,
+ Usman Akinyemi <usmanakinyemi202@gmail.com>,
+ Chandra Pratap <chandrapratap3519@gmail.com>,
+ Eric Ju <eric.peijian@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <21D9FA76-F382-483E-817F-C3947C939D16@gmail.com>
+References: <CAP8UFD11txMWSfMTvDtcBJuuZA5mKffo6XUyR9LWk2d_N0RRtA@mail.gmail.com>
+ <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com>
+ <CAP8UFD0kEATc6sU4r2pVq9k2X737Tk+_VXrxXx8K=M6=ciL=vQ@mail.gmail.com>
+ <BAD29E01-C358-456F-8E31-058AC0AED0C8@gmail.com>
+ <CAP8UFD29LtG2dRRB4f6mZAHNGqDmDxUV4ULYw3w3OYg15ZBBYg@mail.gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
 
-Justin Tobler <jltobler@gmail.com> writes:
 
-> Interestingly, it looks like there are only three users of odb-tmpdir:
-> remerge-diffs, git-recieve-pack, and ODB transactions. All of these
-> use-cases seems like a reasonble fit to create an ODB transaction
-> instead of managing the tmpdir directly. In the case of remerge-diffs
-> the transaction would need to always be aborted. If this is done, then a
-> tmpdir could become an internal detail of the ODB transaction for the
-> files backend.
+> 6) Improve `git repo info` so it can show more information than now.
 
-;-)  I agree 100%.
+=46rom my side, I have these features in my local backlog:
 
-"Prepare to create objects that may be undone in the end", "Now make
-these objects we created so far as parmanent part of the object
-store", "Reject those objects we created so far as the transaction
-created them is being aborted" are requests at the right abstraction
-level.  "Give me a temporary object directory" is not.
+- remove the dependency on `the_repository`
+- use the category as key
+- add the path-related values (copied from git-rev-parse "Options for
+  Files"):
+  - git-dir
+  - common-dir
+  - toplevel
+  - superproject-working-tree
+- add more values currently obtained through
+`git rev-parse --git-path`:
+  - grafts file
+  - index file
+  - objects directory
+  - hooks directory
+  - git-prefix
+  - other paths that are adjusted by update_common_dir()
+
+I already started to add those path-related values [1], but I think
+that the major problem is deciding whether we should use relative or
+absolute paths.
+
+I also think that we have room for other information that we retrieve
+through commands other than git-rev-parse.
+
+> 7) Improve `git repo structure` so it can show more stats than now.
+
+I don't know Justin's future plans for this command, but the idea
+was to bring some functionality from git-sizer [2] to Git.
+
+> I would be willing to mentor any of them, but I don't have much
+> knowledge on `git repo`, so I think it makes more sense for me to
+> avoid 6) and 7).
+
+If you want, I can share with you some information about
+git-repo-info.
+
+I really appreciate initiatives like git-repo-structure and
+git-history that bring features from other tools that make Git
+easier to use. This week, I was talked independently with two
+friends about how git-blame can be misleading sometimes since it
+only shows the last change in a line. One of them really likes
+`git log -S` for "blaming" strings and thinks that it's a too
+powerful feature that is hidden inside git-log. The other one
+showed me Cregit [3], a tool for blaming based on tokens
+instead of lines. A "string blame" or a "token blame" could be
+a nice GSoC project (but maybe for future editions).
+
+
+[1] https://github.com/lucasoshiro/git/compare/master...repo-info-path/
+[2] https://github.com/github/git-sizer
+[3] https://github.com/cregit/cregit=
