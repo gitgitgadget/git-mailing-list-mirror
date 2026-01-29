@@ -1,149 +1,125 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE847304BC6
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 10:20:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769682056; cv=pass; b=r4LQT0NnIWJKXo1Gq2hZ9HqFH2K9urCAPvBGS8EFuMvQOIGW/Q8W+i7fpcpAyFdTLWSTe1cwhvK+XOESHMTL+Drv1VtqZw9mW25lQ5KvY+nzDyADCjnWA0fLNIzY9dqQUhw76lorbXZJp2BGcv085KICcX7GtDOO52+/m4vh9oQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769682056; c=relaxed/simple;
-	bh=DickB8q6pcoqPVmWbcv5kKPLe+4M0lhm+hAJavb2CqE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ugvPEzb4jbcqDgM3arz9o/5qO2BruGHGlNQhHMeaUv+vzsJdYhiBitSCQbA3JB3ez1KfESvQWFW6s+8U4c6Qr+Yv72TCu3fmbEd9SQJsfTxG3L5Kf2MphwRlE3WCVc4QJJU0QminRvOlkwzv3ZjW4V0xLsTx6+4hMm4qnbjz0H4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cRTFd6Sm; arc=pass smtp.client-ip=74.125.82.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBE038170D
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 11:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769684923; cv=none; b=CkLwf2TcnezcDghdpSgMEz1jRHOvE4UoPfFijsUANjD5VCWr4tq/zwAM4JP5MeLeQdzWwoF06pn2qUS38n2wb/XgYw9Ba6Zqkljb4vwT2Nx7RKatahERSomUdRYe0JWBNaVj8fm+5vC532CPj6EJp2FJ4+d0LbsUdVMqXMmjUnc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769684923; c=relaxed/simple;
+	bh=EFwqeuOQE87dq1chVVmUiH43cX6Sp3mRjRvwXJfJglI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m7ixlvJHEp4hj+G7/KymxlAykMcmgIGcesixb27/aFKlswMFmYAqdHQkh/uLIKg4zJ3F6YTuZvACZvghFbRi7thsUBCyII+uhM4lrXv4Rb9UZVCjQiHNGeMKVLqwOYbEB8HkFEXP3FqtO2OwRFGT1nAjaFSb/OqeVoTsjmdR5Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=exj0N+pJ; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cRTFd6Sm"
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-1233bc1117fso1303113c88.0
-        for <git@vger.kernel.org>; Thu, 29 Jan 2026 02:20:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769682054; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UJnViW3SnKT1Da6oleS9+Y/FAoZGcRt0QF2N6bz8oEc66C63eSwS8tcJawvgqAKiYc
-         d1tZuQTvp4fZGhZ3u5mzAuQvwzdrUac9dLXopwFG4X9+g3Jwgj5FY5B1HwUWgo0bJglb
-         +pDrDMtnD++T37UhyVErnWHdw8+TtOFRayo1YsecCg8ybaKG/+nKIuvcEGWVTvYsr8CC
-         sIw4Esr5T64kCt0FjCzaPe2AgrlnDr2bzDPzkutRRYUnOGta59gr0ke/Xe1zR7563q9+
-         m3P3YInJnBXI6UgWBhmVtSvs4nCmYWq5Ysj14fHdpy2+BkcJ9V75B3mDfEfi1GzNidIF
-         EnxQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=DickB8q6pcoqPVmWbcv5kKPLe+4M0lhm+hAJavb2CqE=;
-        fh=O77PP+L+QSzUWpSStQ46GKSevIu+qGnIG7ur08/zwEE=;
-        b=j3khO3dXKVynbN+2o+smbjGRCIy4lS/0+xyfLOC7Jk62PIXqQ/bASUm5KKAf6QOZ06
-         JBakHqUIiWzHaqMxHJ0DS5H4hhzgLxDsOt9xy2INU0IAAeUd4lie8ErvfU7Gm5U66xdn
-         1j7875zbhyW1nlWUUI+LuuBKrzG/z8Ema+m53ZC7jYmzZN98slQGG8BUCzYjIWN1vOGQ
-         n/XI/iXWOIIiIP5C6kOYRmjOTus8PNn0l2N7JOPXCgMWqX2PEgzRCi2oj2NOXYIiks7e
-         TXwgNnXcfKJtsEgm4yIfjusCKSZSCH4vWztCFJXSev3XQCfihG8mD1J2Ua7LxDCoFPpd
-         WRrg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769682054; x=1770286854; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DickB8q6pcoqPVmWbcv5kKPLe+4M0lhm+hAJavb2CqE=;
-        b=cRTFd6SmRAiVgwNLVdfHVXYdHa/IL0rXhcXSbT4DtIgEWFA7RhUieedRG2T6TMr5o7
-         IgcWanwqhObPzNPbkLN3hFiywrXvUKtX+XcBRB8cR1UAxJlsis6qk54LftcyknLO01HP
-         ZgQhqYh3IBujidCnGCS6qLkoQf3W1pSZCcnrYYrncvD/IOssp/oqFQotDoCNTlenrP+P
-         rgji0zL7SB0aL1b9HtNUhZwzoY1csrFBbTtP5/UOq1GdLzHhvbzgZEsl7dMhlSea3amK
-         h66ZtUwXmeCo0oFuL47jwFRrKa7BT8+pZ1P4Wowh7jao99QIYIfjTFUh7ALIU539lC4V
-         TTmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769682054; x=1770286854;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=DickB8q6pcoqPVmWbcv5kKPLe+4M0lhm+hAJavb2CqE=;
-        b=CFzO7dghVOQlMcLTpoOCaxAsUzAdnhjHUKYGyyJofkD696JdounJ2Ees0jtlgOgHog
-         BHGr04en6+8Dy//71XnaIlZbCEShH+U1/bjSaVAnh+lPbgbBUgZ75VXTMys8MLhhssH9
-         YFgTt3NLW8lCuxlDX+Xm0bnkyGUPBpGQBGHg4HUJsXhkr+plUt42YOAOadZWzTVIAm0/
-         mF5K8WwTvcObMDRGL6KzrKCkl7LGo2DOQ+Wdkga4792BS3Hu5gXUvksq5x2TcqFwT89b
-         rZkGiKaEB/q9km7I+FjsdWPdZHB08s9bWP54pCEtij3B9l1aAG0m9oVm9HaTQkxcKoN4
-         vYaQ==
-X-Gm-Message-State: AOJu0YwAghSLVqNroUQQj/Xu5ygRqgIU5SMikeYQIR1HkWQXzJlcUmPu
-	gYVFSwM4FhQvqmStMN404T0Nur62nZw5LFI4weTjV6bFyR16OX/jRvlxwFeLhnS0zvzZFK8ICi8
-	cbFJ1pXQEF0i+UhjDhfEmrWOVxBH4bt0=
-X-Gm-Gg: AZuq6aL1hWWffQk8OR7PeQdw5WA7lK4uKcn6Byak15pSf9TMeWkLcpUSStsAxmUkqTZ
-	qvE3CFjNk5C+x8uQB91ECp6XltP0IrNV+42zf9iH5hY7CKQHBObJrxnS6a4EBsV9psZeJO3jpzO
-	DmJ4OPVZ54BvbNXUxmSl9QDL+AcVWngMc3HRZ9dzBvItfzGXRgHk2MeO2XCR6+as/mEhiY5LZXL
-	ME7zQuLpklLQXPVQgNh2fZIonntvAa10vYVlM/ppiMNB6DINtMeEcQ+IBjMeeXHpB3LkKLoSHrm
-	7t/mytuHJMi97Q+LlPcGbqhLgcaGyLnn/HCQExXXZ2T8k4aOLNfvG7ZpPFx3FF6zWJM=
-X-Received: by 2002:a05:7022:438d:b0:11a:468a:cf9b with SMTP id
- a92af1059eb24-124b1027c9cmr1449211c88.9.1769682053850; Thu, 29 Jan 2026
- 02:20:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="exj0N+pJ"
+Received: (qmail 209974 invoked by uid 109); 29 Jan 2026 11:08:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=EFwqeuOQE87dq1chVVmUiH43cX6Sp3mRjRvwXJfJglI=; b=exj0N+pJcQ2RgGYrEJz6kD/6A16XvbkfU2PrPtvpjLGsrunYpBJ4IkLKuvFzSwNg6V3ZP9pMzWkPm6PGgl99jQQq0wr0U2qnhs4MXGQCJ/B6d5OagCthU4VoL3BYOX1Khj153HhMOlCrGCmHsb4xaqOFb9FbII6ZQmbFbrsK+DWQtKekOyGaxH5ZdpQyRDlcXQ1eteVJOaYVzgXDVez6VPaOkSxko4SE0pSy1mINaWk/53ugMUJE1weMp4dJn1z5MwABRBZALEuBFvDB3uJOpS9UmSVJnyAm3hsBVQs4WCJy50hcCL/hXVjKU4D9mkg9TyUplNFkd2gPeoAJtHtz+w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Jan 2026 11:08:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 400454 invoked by uid 111); 29 Jan 2026 11:08:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Jan 2026 06:08:45 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 29 Jan 2026 06:08:39 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 12/14] builtin/pack-objects: use
+ `packfile_store_for_each_object()`
+Message-ID: <20260129110839.GA1285720@coredump.intra.peff.net>
+References: <20260121-pks-odb-for-each-object-v3-0-12c4dfd24227@pks.im>
+ <20260121-pks-odb-for-each-object-v3-12-12c4dfd24227@pks.im>
+ <aXLNM+AOpdQtmisC@nand.local>
+ <aXNCtCZwP57Tfu60@pks.im>
+ <aXO/YLzRlDXD5IPY@nand.local>
+ <aXcrftLpfcG4S5AX@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP8UFD11txMWSfMTvDtcBJuuZA5mKffo6XUyR9LWk2d_N0RRtA@mail.gmail.com>
- <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com> <CAP8UFD0kEATc6sU4r2pVq9k2X737Tk+_VXrxXx8K=M6=ciL=vQ@mail.gmail.com>
- <BAD29E01-C358-456F-8E31-058AC0AED0C8@gmail.com>
-In-Reply-To: <BAD29E01-C358-456F-8E31-058AC0AED0C8@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 29 Jan 2026 11:20:41 +0100
-X-Gm-Features: AZwV_QiHzqnIXH5qiM-Y9p4vozHpWEIqWZuYHIrkrlmR_WjRL0JmPiz65IrwJGk
-Message-ID: <CAP8UFD29LtG2dRRB4f6mZAHNGqDmDxUV4ULYw3w3OYg15ZBBYg@mail.gmail.com>
-Subject: Re: Git project and GSoC 2026
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git <git@vger.kernel.org>, karthik nayak <karthik.188@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Meet Soni <meetsoni3017@gmail.com>, 
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Bello Olamide <belkid98@gmail.com>, 
-	Usman Akinyemi <usmanakinyemi202@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>, 
-	Eric Ju <eric.peijian@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aXcrftLpfcG4S5AX@pks.im>
 
-Hi,
+On Mon, Jan 26, 2026 at 09:53:18AM +0100, Patrick Steinhardt wrote:
 
-On Wed, Jan 28, 2026 at 9:28=E2=80=AFPM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
+> > Yes, the end result is the same, both your patch and what I wrote here
+> > implement the same GC-specific definition of an object's "mtime". I am
+> > not following the argument about pluggability, though. The concern I
+> > have above is that we are pushing domain-specific logic into the object
+> > storage backend, not the other way around.
+> 
+> To expand on the pluggability bit: every time you add a new backend
+> you'll have to extend the above logic to understand how it represents
+> the mtime. That by itself might be doable, but let's for example
+> consider a backend that is a black box to us (like a shared library that
+> may plug in arbitrary storage logic). In that case you would not even be
+> able to derive the information unless you have a generic layer that lets
+> you convey it to the caller.
+> 
+> So overall I agree with you that there are nuances here, and that the
+> mtimep pointer _can_ be used incorrectly. But I still think that the
+> concept is generic enough across backends, and the refactored logic
+> still works as extended. I'll try to expand the docs and commit message
+> a bit to cover this discussion.
 
-> Just a gentle nudge for the project ideas. The deadline to apply for GSoC=
- is Feb 3 18:00 UTC. We need the ideas page ready a couple of days before i=
-t at least.
+There's a related concept that I saw while reading some of the earlier
+patches. When you converted fsck, I wondered how you would handle the
+call to read_loose_object(), which takes an actual path. And it needs to
+do so, because we want to make sure we are opening and reading that
+particular copy of the object, and not one from elsewhere.
 
-Thanks for the nudge!
+The answer is that you punted on it for this series, and we still get
+the path via for_each_loose_file_in_source(). ;) That is OK, but I think
+it will eventually run into the same issue: we will need some kind of
+cursor or context for the iterator to be able to get extended
+information about a particular copy of an object.
 
-> Feel free to chime in to suggest ideas that would be achievable by someon=
-e new-ish to the community. If you're doubtful whether an idea would be rel=
-evant for GSoC, feel free to share the same and we can discuss it.
+I think there are probably two approaches here:
 
-Here are ideas I came up with:
+  1. The abstract odb API tries to share as little as possible. It gives
+     the caller back an opaque context struct, and that struct can be
+     handed back to the odb to get object contents or other information
+     (perhaps even an mtime!). Under the hood for the current odb
+     implementation this is probably just a pointer to a string with the
+     filesystem path for loose objects, and the usual packed_git/offset
+     pair for packed objects.
 
-1) Continue the current work on removing global variables.
+  2. The odb API provides a set of information that a particular backend
+     _might_ implement, and callers can poke at that information and
+     decide how to handle it when it's not available. And so that might
+     include a filesystem path for loose objects, which some backends
+     may choose to leave NULL.
 
-2) Finish, and then maybe improve, some work Eric Ju started a long
-time ago on `git cat-file`.
+Option (1) presents a cleaner API for the odb, but it's also more
+restrictive. Anything that a caller _might_ want to do has to be pushed
+down into the API, and it has to start learning about things like
+mtimes. And how to decide what "mtime" means for non-filesystem
+backends.
 
-3) Improve git-backfill, or maybe a different command, so it can
-remove large local blobs when they are available on a promisor remote
-(for clients who want to get back disk space).
+Option (2) pushes more work onto the callers. They need to not only look
+up the mtimes themselves (like they do now), but they have to decide how
+to handle the case when no path is available. Which in the worst case
+means a special case for each type of backend, though I think in
+practice they'd probably fall into rough groups.
 
-4) Implement some kind of fetch order when more than 1 promisor remote
-is configured (this order could be passed from servers to clients
-through the promisor-remote protocol to make sure the fetches happen
-in the optimal order).
+I think one thing that appeals to me about option 2, though, is that it
+keeps a lot of the specialized "business logic" together in those
+callers. Most code doesn't are about concepts like mtime or specific
+copies of objects. But when it does, like in repack or fsck, there are
+often subtle assumptions and interpretations. I'd rather see all of that
+lumped together in the fsck code than have it split half-and-half
+between them and the odb code (which is really going to be some backends
+idea of how its concepts can be shoe-horned into the abstract API).
 
-5) Make the promisor-remote protocol useful when the server wants to
-advertise "better-connected" remotes (not just remotes the server
-uses) as Junio suggested some time ago (see
-Documentation/gitprotocol-v2.adoc).
-
-6) Improve `git repo info` so it can show more information than now.
-
-7) Improve `git repo structure` so it can show more stats than now.
-
-8) Improve fast-export/fast-import and maybe git-repo-filter regarding
-commit and/or tag signatures. This might conflict with GitLab people
-(including me) possibly working on that soon though.
-
-I would be willing to mentor any of them, but I don't have much
-knowledge on `git repo`, so I think it makes more sense for me to
-avoid 6) and 7).
+-Peff
