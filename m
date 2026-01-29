@@ -1,341 +1,165 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAD137FF72
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 12:14:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EC737F8B1
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 12:22:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769688868; cv=pass; b=YTu/Rc/fRYB8YkZ6/7yKtk472FfaR69zctfCLZOa8p2PhDrwnXcTdNDQZZE8LMvnzarKZjEmX+n+KEAVsnHDRRuq816Yw162eEsrWlAdc+0Zi8oPBygPufXFSIOu0nXUfBokW8iqzHz/qi686IggQOZw97HdmbH4s5wPGUSD/WU=
+	t=1769689372; cv=pass; b=iJXWWLch67/X84LiWPOpZVSK4fQobrmuxPVybRX3I3V5Dy1TtHCwj44Na8XJQ2BAF+0123TwkWxghL0mGRFZUzdoatphtUj/Bu5gRvUNPazrVJ++zL77z5jobeyDjXWix7IKXHYrOc6bMsutAXz0ZBbtFPOtPpIhbYMTEd+TK1w=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769688868; c=relaxed/simple;
-	bh=5ZhzwhkJW1cuKIhz2JIePEBcU7EWVZF4IMcJT9fyLKU=;
+	s=arc-20240116; t=1769689372; c=relaxed/simple;
+	bh=DVuf8LsvP8Cj5RXu9bhtc556KtOs2GDJL1GcHxe54QA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LoAV4nlesQMsT7dZSf4x4NoFiWXDZPpfyJEW9sxpdxRv3KdA+hzxokUvuv4afq7TgNY/yVEquO0IID+my67by3/kXghWMWPSLgv/816U2xIbmVYTHUEbO7gy5F8a0J2uZpkOcGTR3TdRSH2ylfFqad9vZHBwsLd7KMv3B+7hO+g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C9lWJ8i6; arc=pass smtp.client-ip=209.85.128.181
+	 To:Cc:Content-Type; b=Bs4Hbq0pIdBpxx4fefayLaFeb/XhAQDHwWL1ytaF6xb2AEm+LdWlULOI7DPQDTiSGEQz2c0cwKAtmm7Jvgvne9tzPh909l+SBb5dY59O5s6SWPRXGTcPmDEhkV3xq4I1nNGr5MdN/1DzZ/6eAwtcg5KdKlzkb2R6MZhez5UpP7w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGg0iH2g; arc=pass smtp.client-ip=74.125.224.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C9lWJ8i6"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-79495b1aaa7so4506157b3.1
-        for <git@vger.kernel.org>; Thu, 29 Jan 2026 04:14:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769688866; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGg0iH2g"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-64959e30705so817996d50.1
+        for <git@vger.kernel.org>; Thu, 29 Jan 2026 04:22:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769689370; cv=none;
         d=google.com; s=arc-20240605;
-        b=VwGtvGKyL8FR/ew+vmdP9jm6q4f0Jk4NSTKdL+1qtez73rzAmVVUUbBN7wWT/jC4QA
-         Wcb6zlt/y2usu4ApSMHzyccWrQZ1/H9l8EuTKhfE5u8BI7KCbv7+/yVxwPygJFHJgmm6
-         srcbPD82shdq6rQtbXTrHiOLdT6ezwSoai44cEjdkbpzjNXvjIocM/sUdn3GaMBED7UZ
-         hNxnZUzCgag918I3TP32wBG/J6XKxRJ7Bs2WPyTgnah5goKKrAvkXohqjnxoZb2zrj15
-         Kqd6vmcf25x1VUs6uE3awPGpO5yO7xoDedeO9KPkQvgJkt857gHw5+7/CFMvqgYqjXAC
-         bNPA==
+        b=QE4dH6z3ByNEmEKlX3nzdvT7QEmucEZj8uuwgVBiGGKxkSgIP6fSpHtbqIZLhNs9fr
+         0QMAweChvHLyicIg50fjI5Yxvk2AuwSrlF4+4NiVf3tlCGHX2gOcRogf90kSGtm21vsh
+         IEje3I+leVRqr8UYwF4wu1naoxwQzt6CuBifcNqVjHS16aenHz6yIqWSskX2EZtbHWr2
+         MExHrXY0Gq8G9/Uehn2DNZSHUZnO1PjuZD/BIhK8cP11l8UcPiRumM09m8HuztIHRugU
+         uje+DzvvFUIVfBZgFpaT2IyboKPZ8Khac4I/hkQncHD5VC3dgkhZ53YImBUHT3mKsGKC
+         2f4g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=ApjXXaxT9kCX2/VfcyW7iaMYB3LUbXbjeUtuyuJg2jI=;
-        fh=aziwdFByzEBA9Efkz1zTINAfytEihKd945UWwfzqmXM=;
-        b=Iwxomr8wG95JpcPd9A5sIodsfyrmPZK8E3uULC0phSnvXPNlHdpJhSSsuhJFC9lTfL
-         Vx6HkvKLEOg7BKQSRmnCXm2LMjHA1QTdJVskdr348OcHtipdIsPnMCaJvwHMIiyEgBrz
-         rmOFHjcl+MKvLyoprXttPMHeBz0SL2xE5HbLUhIyPc7JYZxJrYHyXOTk3OKW0tJT0m9L
-         OvCbSRY9Xnwz6TURDShp+625vnIYXTMPGO88kgz6dg/HipLYkUaDCRIdXaHzY0BFgF8u
-         JbbQGjbxP7C3tKETSA8Jw5mZEEdtHN85UZ5rp2WFO5UgB7syfoUZnyAXr3FEsmoMBK1h
-         1GPQ==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=334pvpZhH7LLkxDOjCWxKGmUQ9x+G/qAY5NOz4ub4VE=;
+        fh=F+28c4S1DLBLF8WAKGCbUdQDaSjxlCk8M97gm1UIdr8=;
+        b=Q1GDlDG4U52CFzCBO88Qrou3jioNZqPKG6SxZAJCw9aI9Y73kKFUlzPLlZQH6ccxEY
+         CWHy15BIIKhPKXlZ4PKjfJgX7SoDrDxLIR1c2RoIv5NJfSdC1evW/eozWlMNkIoktqdb
+         Kf2JLhSBfPeWU5JuU2HXrZU63lFOKCCBz/kcCzmeUlcEmDdNkghHzSv11xw/ne+HzCXs
+         fosPOAry+AsJ2g8TJKDs/LHz9piTVXvR8FppQ6WRdQr1d+K3pDqv5ge4aEe3e2V/rIlA
+         zon5l1DEGbJNhRwIo9K2I07rs1IPToWcsfv0vlNJRtkfsKlBnleKTxZ11ugB97XXzuO0
+         0cUg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769688866; x=1770293666; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ApjXXaxT9kCX2/VfcyW7iaMYB3LUbXbjeUtuyuJg2jI=;
-        b=C9lWJ8i6AV9xKHY57F5YqF90pvzgveT8rqwtaKHnDogPuVS9uzReYoLHyvVgigoOy0
-         6pJCnkG1N74MrB7DeKJqESc0qc5eva4BPbY1lGKoiUb7zEKinUYbFamgEPhpY0xS0s9n
-         ZVfEkcdT2A729e6nXCxkEkALfbmD8ExRsnp+1Y2PP8mJWll30QtAlkeAv7RAwyf9EeRs
-         /ybSgicHroA5YPa++edoHWokh2Nmni1UAWfK8uhfdzbLskHj0IyrlA9FswQ08YKUm9Hb
-         8wF8hH35gjm0SmuI/2wDXatTldbCVCDTlMh9jdh0jUJl4+hDnf4m0tl9GfHeGoPIM9iQ
-         r2+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769688866; x=1770293666;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1769689370; x=1770294170; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ApjXXaxT9kCX2/VfcyW7iaMYB3LUbXbjeUtuyuJg2jI=;
-        b=LtNIS8SX9uBCCIUlZrx1dt1m8/qi0Lvneh2osdbrlzL1vZstcYTnboSsfpNopYqGpY
-         DYLBF4O99oIcGhYlww7L/HQ/J5J1nRzmj0FmUbzYpPg9Jn5Wrf9aYFGw8kujEi7CHTqk
-         KbD6dSCbRHRCiZlHOgC22zoiTtWCqnHcQeeSHdsirw5Xj7ARiKzKyjzzKRuchgbgEgMC
-         ZruE8wbJc3EHFijPoWx9JVAaBFWHbTiaw3ETxhNzCAybfsuSuCJJmB+bqvHGxD0MRL1H
-         lGXnGUh1JayC+tFYnmHURTf0njmwd+DC5A+z6KZCuB6EIYYTlweLN8hMKX/kpTUwS1qT
-         FxDQ==
-X-Gm-Message-State: AOJu0Yx25YptTt6zituuZqIuYyd4TPsO7Cok/GPM2PcZQQRc/FTCPj8J
-	pceXd81CY5UfHIXM5FQ8Bkx+Kkf0ZF+g5NI9Kwe/bovnKBe1E293ojygJTDywjic3e3++AziGj3
-	UIuDJjUFdnBwHtGuwfUwwk0W2/Lv3EsuO7ml3
-X-Gm-Gg: AZuq6aJ/CLdgCN0f9KSaIFvjKtOa4M7KRNWtLaPJsJBPzxaAeOLtulDaISn6RPGI6lP
-	mL7qo42L0AHcnmkJCdINZK4/H0cZ+IiIbaRYJaq9C9RiSPBOf1JGoqBqqSK+WhZ3xBoQ6gG2RIA
-	xDeW7tqSL6+qKLOaG/Yq2NnA8pZzn0V4gFLDJGbt4LUQIIekUmr3whRkpPA4IR2UDUGfBWj85Fy
-	lUEMVlRaXfso6EIocQSHlZR13HTrSWQ/RuaMBArCi4ITrCSNhW4cy8rcQg12K74dM8W0yagAL17
-	fVS6daMLRTUdGsKkvmTRb93tsg==
-X-Received: by 2002:a05:690e:1188:b0:649:6139:b80c with SMTP id
- 956f58d0204a3-6498fc3fddfmr6105979d50.45.1769688865569; Thu, 29 Jan 2026
- 04:14:25 -0800 (PST)
+        bh=334pvpZhH7LLkxDOjCWxKGmUQ9x+G/qAY5NOz4ub4VE=;
+        b=bGg0iH2gHUFFjbZZI7vue3XunP+fX8EhMJ0HHN2my3O9C2I6Rosye/S9kGPGi6K4pE
+         nlsWCGXieygMADepEPoYcTnL9bQTg0TWAhqJktm77XvbuPKR98utVloDg95c6M8tvekE
+         BDlJQMiHUXm7mw5nKn6zl1qGuSEqdrTTceViilR2g9oHgrp/imMjDjskLGQLXpI7vkYP
+         IjR87bS6lVI2RjBdhNPwll9VBVaEpgux+q3EX81K01he/IL9mcbuFf6g34aRG1nCsS/r
+         RX+RrhIqmSqQBzRlD3kxV37byqHN5VqqZHDMRd+NWgTWG4sWEa7NMJUczOV+iR0a/kbb
+         jIoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769689370; x=1770294170;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=334pvpZhH7LLkxDOjCWxKGmUQ9x+G/qAY5NOz4ub4VE=;
+        b=avYUbqRmM21yq+rqF0ZZZDP7MgdqwlecXmYf6tOc6rNF1OFz4nk2AKBMLho5z8pRlg
+         RSSZn55Ok/LBxh5C6WI7eylaJSkFUZuweFVdXKRs7+GKdBnBFI8XkdsC3916aA/yvg5X
+         ebWeG00KRvrvdXZYvIg1Kr9IBcqt6j9OW4BSfOIBguGRr8k4OwwjAYzjuTUfGZ0ef8n8
+         aKVP+vnhE64sqpVSVISWk6hrtZQ/Tkt4hXCe8aX5PoOv4aN8x8wkxhxVqB6iVy1a4NMx
+         9YBhUEVCQUTPhYJPkw1Yro9pPEF6tBDVhx9cOH/pDTtSB8cKfnEk36RU169eDW5WaWZ6
+         DBvg==
+X-Gm-Message-State: AOJu0Yzqs1BvDcGV+KohSf7XbOZ9thuFTySZCrnU2gJSo1WAQ57nHX1C
+	BSbviT7ndja2ViZfFnLh7CfsdB+MuvY8Jh5MM9qOlMOcgMB7PjdJYsASMWGOnlM5s35gZJrVFq+
+	+N7yfiMXTspK1Q0/soQ01lJdh+Q8O4UYxiHY+l5g=
+X-Gm-Gg: AZuq6aIuZyjkOHtXjD3AdL01gLxAVBTCmLBXd4UaHiBdRww0Z9mRjHZzxhEy7rMNFm5
+	RKDXiMsFvLsMajxpcHM8MIQCWdh8CkUOf+cfIoOeOpPqV7gROUTlRYKWUaWUJFV28tnh5rTuZQq
+	KFjybuxkC8tB33oe/E7iQvMDuVKuX5ojplRQm+8gM2ptuaf4/NW++rqO1SpQyp0/now3uMI2Tky
+	dy0UaPpwF3/Issw6swO8wVXiWLlC9XavTmoyD83kG9BVJQJXaoGsZfkWIRTaP3BtdR/VPI=
+X-Received: by 2002:a05:690c:a0cc:b0:794:7131:3dce with SMTP id
+ 00721157ae682-7947ac02063mr119834227b3.34.1769689369893; Thu, 29 Jan 2026
+ 04:22:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260125201500.63904-2-amishhhaaaa@gmail.com> <20260129121220.69267-1-amishhhaaaa@gmail.com>
-In-Reply-To: <20260129121220.69267-1-amishhhaaaa@gmail.com>
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-Date: Thu, 29 Jan 2026 17:44:14 +0530
-X-Gm-Features: AZwV_QiioLJdZPkHsQcnKznadQyAySumLGRmslDQhW4Wxb92hIZ5JZx5CL4P2S4
-Message-ID: <CAPvEtrcHVaz_aROXhzomCkmgn6OyoSHnhnrc-tAZD+V79oOsTA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] u-string-list: add unit tests for string-list methods
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Derrick Stolee <stolee@gmail.com>, 
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+References: <CALE2CrQD11Qa+wGVhsF8JwkuwkLWkDf9kGvs1NM2dsYFuPgUKA@mail.gmail.com>
+ <20260129112446.GB1285720@coredump.intra.peff.net>
+In-Reply-To: <20260129112446.GB1285720@coredump.intra.peff.net>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Thu, 29 Jan 2026 17:52:39 +0530
+X-Gm-Features: AZwV_QjASU3Oig6b5dyJCyWBxONexky2PDU9JIe6xIAu09n5W5gVI9-dYsvJNlE
+Message-ID: <CALE2CrQVnv7wcvD+ewDD2js7=mUE4soLmsud1U2AoorBRwAoNw@mail.gmail.com>
+Subject: Re: [RFC] config --get-regexp: avoid rewriting regex patterns;
+ consider REG_ICASE
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 29 Jan 2026 at 17:42, Amisha Chhajed <amishhhaaaa@gmail.com> wrote:
+Thanks for the detailed explanation, that makes sense.
+
+I had missed the subsection case-sensitivity, so REG_ICASE would
+indeed be incorrect.
+
+Appreciate the context on the historical behavior and tradeoffs here.
+I'll drop this for now.
+
+Thanks,
+Pushkar
+
+On Thu, Jan 29, 2026 at 4:54=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
-> Unit tests in u-string-list.c does not cover several methods
-> in string-list, this gap in coverage makes it difficult to
-> ensure no regressions are introduced in future changes.
+> On Wed, Jan 28, 2026 at 07:42:34PM +0530, Pushkar Singh wrote:
 >
-> Add unit tests for the following methods to enhance coverage:
-> string_list_remove_empty_items()
-> unsorted_string_list_has_string()
-> unsorted_string_list_delete_item()
-> string_list_has_string()
-> string_list_insert()
-> string_list_sort()
-> string_list_remove()
+> > The documentation says matching is performed against a canonicalized
+> > lowercase key, but the current implementation achieves this by modifyin=
+g
+> > the regex itself.
+> >
+> > Would it make sense to stop rewriting the pattern and instead use REG_I=
+CASE
+> > when compiling the regex? This would preserve user-provided regexes, su=
+pport
+> > more complex expressions, simplify the code, and eliminate the NEEDSWOR=
+K.
+> >
+> > If this direction sounds reasonable, I=E2=80=99d be happy to follow up =
+with a patch.
 >
-> Signed-off-by: Amisha Chhajed <amishhhaaaa@gmail.com>
-> ---
->  t/unit-tests/u-string-list.c | 209 +++++++++++++++++++++++++++++++++++
->  1 file changed, 209 insertions(+)
+> No, I don't think that would yield correct results, because the whole
+> config key is not case-insensitive. The "subsection" (the middle part of
+> a key with two dots, like "section.SubSection.key") is case sensitive.
+> That's why we only lowercase the regex up to the first dot (and after
+> the last dot).
 >
-> diff --git a/t/unit-tests/u-string-list.c b/t/unit-tests/u-string-list.c
-> index a2457d7b1e..d469a06eca 100644
-> --- a/t/unit-tests/u-string-list.c
-> +++ b/t/unit-tests/u-string-list.c
-> @@ -243,6 +243,138 @@ void test_string_list__filter(void)
->         t_string_list_clear(&list, 0);
->  }
+> So as a concrete example:
 >
-> +static void t_string_list_has_string(
-> +       struct string_list *list,
-> +       const char *string,
-> +       int expected)
-> +{
-> +       int has_string = string_list_has_string(list, string);
-> +       cl_assert_equal_i(has_string, expected);
-> +}
-> +
-> +void test_string_list__has_string(void)
-> +{
-> +       struct string_list list = STRING_LIST_INIT_DUP;
-> +
-> +       t_create_string_list_dup(&list, 0, NULL);
-> +       t_string_list_has_string(&list, "", 0);
-> +
-> +       t_create_string_list_dup(&list, 0, "a", "b", "c", NULL);
-> +       t_string_list_has_string(&list, "a", 1);
-> +       t_string_list_has_string(&list, "b", 1);
-> +       t_string_list_has_string(&list, "c", 1);
-> +       t_string_list_has_string(&list, "d", 0);
-> +
-> +       t_string_list_clear(&list, 0);
-> +}
-> +
-> +static void t_string_list_insert(struct string_list *expected_strings, ...)
-> +{
-> +       struct string_list strings_to_insert = STRING_LIST_INIT_DUP;
-> +       struct string_list list = STRING_LIST_INIT_DUP;
-> +       va_list ap;
-> +
-> +       va_start(ap, expected_strings);
-> +       t_vcreate_string_list_dup(&strings_to_insert, 0, ap);
-> +       va_end(ap);
-> +
-> +       for (size_t i = 0; i < strings_to_insert.nr; i++)
-> +               string_list_insert(&list, strings_to_insert.items[i].string);
-> +
-> +       t_string_list_equal(&list, expected_strings);
-> +
-> +       string_list_clear(&strings_to_insert, 0);
-> +       string_list_clear(&list, 0);
-> +}
-> +
-> +void test_string_list__insert(void)
-> +{
-> +       struct string_list expected_strings = STRING_LIST_INIT_DUP;
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, NULL);
-> +       t_string_list_insert(&expected_strings, NULL);
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", "b", NULL);
-> +       t_string_list_insert(&expected_strings, "b", "a", "a", "b", NULL);
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", "b", "c", NULL);
-> +       t_string_list_insert(&expected_strings, "c", "b", "a", "c", "b", NULL);
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "", "a", NULL);
-> +       t_string_list_insert(&expected_strings, "a", "a", "a", "", NULL);
-> +
-> +       t_string_list_clear(&expected_strings, 0);
-> +}
-> +
-> +static void t_string_list_sort(struct string_list *list, ...)
-> +{
-> +       struct string_list expected_strings = STRING_LIST_INIT_DUP;
-> +       va_list ap;
-> +
-> +       va_start(ap, list);
-> +       t_vcreate_string_list_dup(&expected_strings, 0, ap);
-> +       va_end(ap);
-> +
-> +       string_list_sort(list);
-> +       t_string_list_equal(list, &expected_strings);
-> +
-> +       string_list_clear(&expected_strings, 0);
-> +}
-> +
-> +void test_string_list__sort(void)
-> +{
-> +       struct string_list list = STRING_LIST_INIT_DUP;
-> +
-> +       t_create_string_list_dup(&list, 0, NULL);
-> +       t_string_list_sort(&list, NULL);
-> +
-> +       t_create_string_list_dup(&list, 0, "b", "", "a", NULL);
-> +       t_string_list_sort(&list, "", "a", "b", NULL);
-> +
-> +       t_create_string_list_dup(&list, 0, "c", "a", "b", "a", NULL);
-> +       t_string_list_sort(&list, "a", "a", "b", "c", NULL);
-> +
-> +       t_string_list_clear(&list, 0);
-> +}
-> +
-> +static void t_string_list_remove(
-> +       struct string_list *expected_strings,
-> +       struct string_list *list,
-> +       char const *str)
-> +{
-> +       string_list_remove(list, str, 0);
-> +       t_string_list_equal(list, expected_strings);
-> +}
-> +
-> +void test_string_list__remove(void)
-> +{
-> +       struct string_list expected_strings = STRING_LIST_INIT_DUP;
-> +       struct string_list list = STRING_LIST_INIT_DUP;
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, NULL);
-> +       t_create_string_list_dup(&list, 0, NULL);
-> +       t_string_list_remove(&expected_strings, &list, "");
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", NULL);
-> +       t_create_string_list_dup(&list, 0, "a", "a", NULL);
-> +       t_string_list_remove(&expected_strings, &list, "a");
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", "b", "b", NULL);
-> +       t_create_string_list_dup(&list, 0, "a", "b", "b", "c", NULL);
-> +       t_string_list_remove(&expected_strings, &list, "c");
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", "b", "d", NULL);
-> +       t_create_string_list_dup(&list, 0, "a", "b", "c", "d", NULL);
-> +       t_string_list_remove(&expected_strings, &list, "c");
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", "b", "c", "d", NULL);
-> +       t_create_string_list_dup(&list, 0, "a", "b", "c", "d", NULL);
-> +       t_string_list_remove(&expected_strings, &list, "e");
-> +
-> +       t_string_list_clear(&expected_strings, 0);
-> +       t_string_list_clear(&list, 0);
-> +}
-> +
->  static void t_string_list_remove_duplicates(struct string_list *list, ...)
->  {
->         struct string_list expected_strings = STRING_LIST_INIT_DUP;
-> @@ -304,3 +436,80 @@ void test_string_list__remove_duplicates(void)
+>   git config foo.Bar.baz value
+>   git config --get-regexp foo.bar.baz
 >
->         t_string_list_clear(&list, 0);
->  }
-> +
-> +static void t_string_list_remove_empty_items(
-> +       struct string_list *expected_strings,
-> +       struct string_list *list)
-> +{
-> +       string_list_remove_empty_items(list, 0);
-> +       t_string_list_equal(list, expected_strings);
-> +}
-> +
-> +void test_string_list__remove_empty_items(void)
-> +{
-> +       struct string_list expected_strings = STRING_LIST_INIT_DUP;
-> +       struct string_list list = STRING_LIST_INIT_DUP;
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, NULL);
-> +       t_create_string_list_dup(&list, 0, "", "", "", NULL);
-> +       t_string_list_remove_empty_items(&expected_strings, &list);
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", "b", NULL);
-> +       t_create_string_list_dup(&list, 0, "a", "", "b", "", NULL);
-> +       t_string_list_remove_empty_items(&expected_strings, &list);
-> +
-> +       t_string_list_clear(&expected_strings, 0);
-> +       t_string_list_clear(&list, 0);
-> +}
-> +
-> +static void t_string_list_unsorted_string_list_has_string(
-> +       struct string_list *list,
-> +       const char *str, int expected)
-> +{
-> +       int has_string = unsorted_string_list_has_string(list, str);
-> +       cl_assert_equal_i(has_string, expected);
-> +}
-> +
-> +void test_string_list__unsorted_string_list_has_string(void)
-> +{
-> +       struct string_list list = STRING_LIST_INIT_DUP;
-> +
-> +       t_create_string_list_dup(&list, 0, "b", "d", "a", NULL);
-> +       t_string_list_unsorted_string_list_has_string(&list, "a", 1);
-> +       t_string_list_unsorted_string_list_has_string(&list, "b", 1);
-> +       t_string_list_unsorted_string_list_has_string(&list, "c", 0);
-> +       t_string_list_unsorted_string_list_has_string(&list, "d", 1);
-> +
-> +       t_string_list_clear(&list, 0);
-> +}
-> +
-> +static void t_string_list_unsorted_string_list_delete_item(
-> +       struct string_list *expected_list,
-> +       struct string_list *list,
-> +       int i)
-> +{
-> +       unsorted_string_list_delete_item(list, i, 0);
-> +
-> +       t_string_list_equal(list, expected_list);
-> +}
-> +
-> +void test_string_list__unsorted_string_list_delete_item(void)
-> +{
-> +       struct string_list expected_strings = STRING_LIST_INIT_DUP;
-> +       struct string_list list = STRING_LIST_INIT_DUP;
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", "c", "b", NULL);
-> +       t_create_string_list_dup(&list, 0, "a", "d", "b", "c", NULL);
-> +       t_string_list_unsorted_string_list_delete_item(&expected_strings, &list, 1);
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, NULL);
-> +       t_create_string_list_dup(&list, 0, "", NULL);
-> +       t_string_list_unsorted_string_list_delete_item(&expected_strings, &list, 0);
-> +
-> +       t_create_string_list_dup(&expected_strings, 0, "a", "d", "c", "b", NULL);
-> +       t_create_string_list_dup(&list, 0,  "a", "d", "c", "b", "d", NULL);
-> +       t_string_list_unsorted_string_list_delete_item(&expected_strings, &list, 4);
-> +
-> +       t_string_list_clear(&expected_strings, 0);
-> +       t_string_list_clear(&list, 0);
-> +}
-> --
-> 2.51.0
+> should not match (and does not currently). Whereas:
 >
-Fixed extra EOF lines and overlong lines in v3.
+>   git config --get-regexp foo.Bar.baz
+>
+> would (and does).
+>
+> If anything, I think we should consider deprecating the auto-lowercasing
+> of the regex.
+>
+> The "right" thing for callers to do is to downcase their regexes
+> themselves, in order to match the canonicalized name (which we do
+> document; I think it was added around the same time as the comment you
+> found). So any lowercasing we do is a favor to callers to make their
+> lives easier. The fact that we can't do it as thoroughly as possible is
+> perhaps OK, but I also think we could actually screw up their regex in
+> some extreme cases (say, by thinking we found a dot as a section
+> separator that isn't really one). Which is gross, but nobody seems to
+> have cared too much.
+>
+> OTOH, it does help the regex queries match the regular ones. We will
+> canonicalize "git config Foo.Bar.Baz" into "foo.Bar.baz", which we can
+> do unambiguously. And especially since we document names as camelCase,
+> people tend to write things like "fetch.unpackLimit" in their queries. I
+> don't think we'd ever want to stop making that work (though
+> interestingly, I do not think we document that anywhere).
+>
+> So probably I'd do nothing. ;)
+>
+> -Peff
