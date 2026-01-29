@@ -1,165 +1,168 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EC737F8B1
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 12:22:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769689372; cv=pass; b=iJXWWLch67/X84LiWPOpZVSK4fQobrmuxPVybRX3I3V5Dy1TtHCwj44Na8XJQ2BAF+0123TwkWxghL0mGRFZUzdoatphtUj/Bu5gRvUNPazrVJ++zL77z5jobeyDjXWix7IKXHYrOc6bMsutAXz0ZBbtFPOtPpIhbYMTEd+TK1w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769689372; c=relaxed/simple;
-	bh=DVuf8LsvP8Cj5RXu9bhtc556KtOs2GDJL1GcHxe54QA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Bs4Hbq0pIdBpxx4fefayLaFeb/XhAQDHwWL1ytaF6xb2AEm+LdWlULOI7DPQDTiSGEQz2c0cwKAtmm7Jvgvne9tzPh909l+SBb5dY59O5s6SWPRXGTcPmDEhkV3xq4I1nNGr5MdN/1DzZ/6eAwtcg5KdKlzkb2R6MZhez5UpP7w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGg0iH2g; arc=pass smtp.client-ip=74.125.224.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9751531C1
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 14:57:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769698679; cv=none; b=RgE66HNXyP/uP41Fq4EYmGdYw3jCflyH1WATTfG+kRE7sLDeJLuA1ZoYLhCMcxGpk6NwKwvOXyV3/5qJWbei88DK2INl6UTLqGFwei5zHWbGbx2ya4QPFCq/ykq+1RW+2fJongjnTsy9jORpE7sAtX2sNlQ283E1ceT3Am1zz/w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769698679; c=relaxed/simple;
+	bh=Uo8+McilCpOMMHH/bTCJATRhCN23nOFlU2UJqIPcaU0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VyfeLzFEcQBxJmIFbmcDhG9M45XHlrS9Wk/0NnhIAnAgtWcH1b/FzVbLEQQwGJ65FQoQrh3SOOkeRW2brUT2OIgTsrYJAn10M/OM+xVwvlImkmZCTVHOPpDWu3/V1M8SRIS/lK5rc8drCCP22ulN4w2u3Yh0eaeUp7a24wSm1gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N4OdcUet; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGg0iH2g"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-64959e30705so817996d50.1
-        for <git@vger.kernel.org>; Thu, 29 Jan 2026 04:22:50 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769689370; cv=none;
-        d=google.com; s=arc-20240605;
-        b=QE4dH6z3ByNEmEKlX3nzdvT7QEmucEZj8uuwgVBiGGKxkSgIP6fSpHtbqIZLhNs9fr
-         0QMAweChvHLyicIg50fjI5Yxvk2AuwSrlF4+4NiVf3tlCGHX2gOcRogf90kSGtm21vsh
-         IEje3I+leVRqr8UYwF4wu1naoxwQzt6CuBifcNqVjHS16aenHz6yIqWSskX2EZtbHWr2
-         MExHrXY0Gq8G9/Uehn2DNZSHUZnO1PjuZD/BIhK8cP11l8UcPiRumM09m8HuztIHRugU
-         uje+DzvvFUIVfBZgFpaT2IyboKPZ8Khac4I/hkQncHD5VC3dgkhZ53YImBUHT3mKsGKC
-         2f4g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=334pvpZhH7LLkxDOjCWxKGmUQ9x+G/qAY5NOz4ub4VE=;
-        fh=F+28c4S1DLBLF8WAKGCbUdQDaSjxlCk8M97gm1UIdr8=;
-        b=Q1GDlDG4U52CFzCBO88Qrou3jioNZqPKG6SxZAJCw9aI9Y73kKFUlzPLlZQH6ccxEY
-         CWHy15BIIKhPKXlZ4PKjfJgX7SoDrDxLIR1c2RoIv5NJfSdC1evW/eozWlMNkIoktqdb
-         Kf2JLhSBfPeWU5JuU2HXrZU63lFOKCCBz/kcCzmeUlcEmDdNkghHzSv11xw/ne+HzCXs
-         fosPOAry+AsJ2g8TJKDs/LHz9piTVXvR8FppQ6WRdQr1d+K3pDqv5ge4aEe3e2V/rIlA
-         zon5l1DEGbJNhRwIo9K2I07rs1IPToWcsfv0vlNJRtkfsKlBnleKTxZ11ugB97XXzuO0
-         0cUg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N4OdcUet"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8c6a50c17fdso108465385a.2
+        for <git@vger.kernel.org>; Thu, 29 Jan 2026 06:57:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769689370; x=1770294170; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=334pvpZhH7LLkxDOjCWxKGmUQ9x+G/qAY5NOz4ub4VE=;
-        b=bGg0iH2gHUFFjbZZI7vue3XunP+fX8EhMJ0HHN2my3O9C2I6Rosye/S9kGPGi6K4pE
-         nlsWCGXieygMADepEPoYcTnL9bQTg0TWAhqJktm77XvbuPKR98utVloDg95c6M8tvekE
-         BDlJQMiHUXm7mw5nKn6zl1qGuSEqdrTTceViilR2g9oHgrp/imMjDjskLGQLXpI7vkYP
-         IjR87bS6lVI2RjBdhNPwll9VBVaEpgux+q3EX81K01he/IL9mcbuFf6g34aRG1nCsS/r
-         RX+RrhIqmSqQBzRlD3kxV37byqHN5VqqZHDMRd+NWgTWG4sWEa7NMJUczOV+iR0a/kbb
-         jIoA==
+        d=gmail.com; s=20230601; t=1769698677; x=1770303477; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f9MX7SPZ/ZYxW+7HAtIwjXyRNxHw1gDd5tiaF6rJGos=;
+        b=N4OdcUet2+FQDiCsMLdatizgh7tB3qbHJPLli8Sm1tOhYD/nzD+7k7UR6uH89NtEcM
+         Uj4yKEy8NeQBPeRCUgUCnGjY8AK4bDdDDvzdUB3zZa8rHyfD8T9G92hRdv4gAcEWHFEP
+         om1zvwk39sFmtglxgZtnQnrV5ByeNrC0fh2pWRbDqbDef3cgmcl5Wc42g2gCjnsyZqp8
+         MltRejlwgKCxq/3SPhVuXht9ATrlJzxw68kPzfbxSrqgiKIlJZzhNGu9AOIdUpOVDW6n
+         FUq5fFJD5Kh+92r5bDny+Z0q3ynlLKVD4ooE0mCiT9MbnBgEdyY0c/b49Q7Xc6OSCRtn
+         HqwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769689370; x=1770294170;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=334pvpZhH7LLkxDOjCWxKGmUQ9x+G/qAY5NOz4ub4VE=;
-        b=avYUbqRmM21yq+rqF0ZZZDP7MgdqwlecXmYf6tOc6rNF1OFz4nk2AKBMLho5z8pRlg
-         RSSZn55Ok/LBxh5C6WI7eylaJSkFUZuweFVdXKRs7+GKdBnBFI8XkdsC3916aA/yvg5X
-         ebWeG00KRvrvdXZYvIg1Kr9IBcqt6j9OW4BSfOIBguGRr8k4OwwjAYzjuTUfGZ0ef8n8
-         aKVP+vnhE64sqpVSVISWk6hrtZQ/Tkt4hXCe8aX5PoOv4aN8x8wkxhxVqB6iVy1a4NMx
-         9YBhUEVCQUTPhYJPkw1Yro9pPEF6tBDVhx9cOH/pDTtSB8cKfnEk36RU169eDW5WaWZ6
-         DBvg==
-X-Gm-Message-State: AOJu0Yzqs1BvDcGV+KohSf7XbOZ9thuFTySZCrnU2gJSo1WAQ57nHX1C
-	BSbviT7ndja2ViZfFnLh7CfsdB+MuvY8Jh5MM9qOlMOcgMB7PjdJYsASMWGOnlM5s35gZJrVFq+
-	+N7yfiMXTspK1Q0/soQ01lJdh+Q8O4UYxiHY+l5g=
-X-Gm-Gg: AZuq6aIuZyjkOHtXjD3AdL01gLxAVBTCmLBXd4UaHiBdRww0Z9mRjHZzxhEy7rMNFm5
-	RKDXiMsFvLsMajxpcHM8MIQCWdh8CkUOf+cfIoOeOpPqV7gROUTlRYKWUaWUJFV28tnh5rTuZQq
-	KFjybuxkC8tB33oe/E7iQvMDuVKuX5ojplRQm+8gM2ptuaf4/NW++rqO1SpQyp0/now3uMI2Tky
-	dy0UaPpwF3/Issw6swO8wVXiWLlC9XavTmoyD83kG9BVJQJXaoGsZfkWIRTaP3BtdR/VPI=
-X-Received: by 2002:a05:690c:a0cc:b0:794:7131:3dce with SMTP id
- 00721157ae682-7947ac02063mr119834227b3.34.1769689369893; Thu, 29 Jan 2026
- 04:22:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1769698677; x=1770303477;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f9MX7SPZ/ZYxW+7HAtIwjXyRNxHw1gDd5tiaF6rJGos=;
+        b=hLYZRJ2hhOcICgt5vPxGY/i7iLkU4SHc0wyaF1UP8FRnrvx7T8tRXqjaTApVT4dqB5
+         b+8XgNdGijtx9YpgUkqHEyfmERpZDyHJldCqOEcIHcK0jMixxyh8mN0MULcU1eePzHjk
+         k/TCAEaYUStmt97LU9eqBjoKHwRBjkC8MWRbmeeL8BFx00vq5XcBDwuatx7FKO4WMwLu
+         R3f/AmoETxl2v87msWW/cQz0Ic0pmzVNA14tTSFGFwJuPHykeRmSvDYpTI/BEEsDqmud
+         RZH8w5EwnfDuVFb6a9FWYhUz9nM7tfLDQqLXzy8eZjp6vyuviN2ykJzNek+2OJcu90zK
+         Exlw==
+X-Forwarded-Encrypted: i=1; AJvYcCXOxJYmjvqZmQQAZN/qv6RHDaynJnwLEgMEKf7TpCSW7aSm3+Sce+rt4G70M+dT/46jNLk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywh7Sr3kuC7Dp3RKpg9OXLdXEEnKaLHcpdft76DhjX4mMw/RlKq
+	phBMCKi9hTfxiDWmBZWRTElscZKuMpyM4AYS55HUx8sk0U59YvLlnbes
+X-Gm-Gg: AZuq6aKTUySNbojjanNemiPaInV4yY5cFzaHvMJEwRYbgXvK5YzGgyVH3G6NHYNnva4
+	hadsVEszbvHhNCoKt7mc1TTjf5JM8eP6bJs4/yXTvr4I29gRHzB7sgpX2JVgURd0YCk+5f22piB
+	OHhyZ1iERKy/kPy3+gZzi+FL5zweHj3UFfMXoutbNr6ZCPNz06SygURKgorFymyRduy9IXxj/Fk
+	XUs45X8PMOpQsdMKrWUNqXXMrYJC6YG9hrNK5W2/8wyA9DgJrPHCEhnthhkMpc9AraYouf9hCUb
+	Po8+bLxixbH508BhpmatdNU17lZoS5DiREMwxsudldjaiAzVBZJAIYHND3pNsvQbxumPuQN6E8D
+	+GFVioLwOa40fJPjIFhz9Ks6XyAyJw85cXhD2n+tVkTQdV0plKLEJpCDH4D307BtZRA4zOJkKUf
+	Xdu97Uhtl4EPi7/ztKSFBmmlDWCOWmCkX0hYm3h2A+EBx81R/HWNC0liQRbt+rQzzVKiZT
+X-Received: by 2002:a05:620a:7112:b0:8c5:2ce6:dc2 with SMTP id af79cd13be357-8c70b8451f3mr1185754385a.17.1769698677403;
+        Thu, 29 Jan 2026 06:57:57 -0800 (PST)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d36c2413sm38513276d6.15.2026.01.29.06.57.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Jan 2026 06:57:56 -0800 (PST)
+Message-ID: <9193fab6-f7e9-41ab-bf76-c868feb86db1@gmail.com>
+Date: Thu, 29 Jan 2026 09:57:56 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALE2CrQD11Qa+wGVhsF8JwkuwkLWkDf9kGvs1NM2dsYFuPgUKA@mail.gmail.com>
- <20260129112446.GB1285720@coredump.intra.peff.net>
-In-Reply-To: <20260129112446.GB1285720@coredump.intra.peff.net>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Thu, 29 Jan 2026 17:52:39 +0530
-X-Gm-Features: AZwV_QjASU3Oig6b5dyJCyWBxONexky2PDU9JIe6xIAu09n5W5gVI9-dYsvJNlE
-Message-ID: <CALE2CrQVnv7wcvD+ewDD2js7=mUE4soLmsud1U2AoorBRwAoNw@mail.gmail.com>
-Subject: Re: [RFC] config --get-regexp: avoid rewriting regex patterns;
- consider REG_ICASE
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] revision: add --maximal-only option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.2032.git.1768703645125.gitgitgadget@gmail.com>
+ <pull.2032.v2.git.1769097958549.gitgitgadget@gmail.com>
+ <xmqqikctl3vj.fsf@gitster.g> <7daff220-f93a-463a-b586-dd876b51edae@gmail.com>
+ <13ff1d94-401e-4fa7-b247-fe8396ca9970@kdbg.org> <xmqqecngjp87.fsf@gitster.g>
+ <f363c16c-1c36-4485-b1e9-22abe32b3a25@gmail.com> <xmqqfr7wgq1p.fsf@gitster.g>
+ <c506f9aa-31c9-4c37-98eb-d60076e2e8f5@gmail.com> <xmqqqzr9cm28.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqqzr9cm28.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thanks for the detailed explanation, that makes sense.
+On 1/28/2026 7:14 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>>> Yup, I do not think show-branch nor merge-base were good home for
+>>> the feature.  We only needed to make reduce_heads_replace()
+>>> available somewhere, and "git show --maximal-only A B C" might be a
+>>> much better way to express "show only the independent ones", as it
+>>> would allow using all kinds of output options the "log" family of
+>>> commands support.
+>>
+>> I explored some of these directions, and I see the value of allowing
+>> a --maximal-only option to them in the future. I have some concerns
+>> about them not solving the needs I have that this 'git rev-list'
+>> implementation provides. I believe that you're suggesting that these
+>> are other places where a user could benefit from such an option, and
+>> I agree.
+>>
+>> Can we delay such extensions to another series?
+> 
+> Absolutely, as long as we all agree on what the longer term
+> direction is, which includes educating existing users of
+> "show-branch --independent" and "merge-base --independent" that
+> "rev-list --maximal-only" is the future even for their "positive end
+> only" use cases and it also can work on a history bounded by both
+> positive and negative ends.
 
-I had missed the subsection case-sensitivity, so REG_ICASE would
-indeed be incorrect.
+I agree to this direction and have some drafts in this direction.
 
-Appreciate the context on the historical behavior and tradeoffs here.
-I'll drop this for now.
+> The only small thing we need to decide here in the above is that
+> "--maximal-only" is understandable as an appropriate name for a
+> superset of "--independent" by those who are used to what the
+> latter has been doing for the past 15 years or so.
+
+My strong preference for using the word "maximal" somewhere over
+continued reliance on "independent" is that a set of commits can
+be "mutually independent" without any of the commits actually
+being maximal within the range.
+
+Here's an example:
+
+    A       B
+    |\     /|
+    D E   F G
+     \ \ / /
+      H I J
+       \|/
+        K
+
+In this commit history graph, each row is an "independent" set of
+commits:
+
+	{ A, B }
+	{ D, E, F, G }
+	{ H, I, J }
+	{ K }
+
+and some sets like { A, F, J } are also independent.
+
+Only A and B are "maximal" commits within the history.
+
+I describe this through an example mostly because I don't feel that
+I've adequately described this distinction in this thread and
+would not feel satisfied in my arguments without it.
+
+With my reasoning more completely described, I am more ready for
+someone to overrule my opinion with the argument that "independent"
+has enough historical context to mean "a maximal independent set".
+
+> As long as with such understanding, it can be left to the future to
+> even advertise this option as a better alternative for existing
+> "--independent" option in the manual pages of these other two
+> commands.
+
+The other, more complicated, task is to have the rev-list command
+use the algorithm that backs 'git merge-base --independent' when
+the input range and options is appropriate for that purpose. This
+performance-only feature will require more careful construction
+and review.
 
 Thanks,
-Pushkar
+-Stolee
 
-On Thu, Jan 29, 2026 at 4:54=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Jan 28, 2026 at 07:42:34PM +0530, Pushkar Singh wrote:
->
-> > The documentation says matching is performed against a canonicalized
-> > lowercase key, but the current implementation achieves this by modifyin=
-g
-> > the regex itself.
-> >
-> > Would it make sense to stop rewriting the pattern and instead use REG_I=
-CASE
-> > when compiling the regex? This would preserve user-provided regexes, su=
-pport
-> > more complex expressions, simplify the code, and eliminate the NEEDSWOR=
-K.
-> >
-> > If this direction sounds reasonable, I=E2=80=99d be happy to follow up =
-with a patch.
->
-> No, I don't think that would yield correct results, because the whole
-> config key is not case-insensitive. The "subsection" (the middle part of
-> a key with two dots, like "section.SubSection.key") is case sensitive.
-> That's why we only lowercase the regex up to the first dot (and after
-> the last dot).
->
-> So as a concrete example:
->
->   git config foo.Bar.baz value
->   git config --get-regexp foo.bar.baz
->
-> should not match (and does not currently). Whereas:
->
->   git config --get-regexp foo.Bar.baz
->
-> would (and does).
->
-> If anything, I think we should consider deprecating the auto-lowercasing
-> of the regex.
->
-> The "right" thing for callers to do is to downcase their regexes
-> themselves, in order to match the canonicalized name (which we do
-> document; I think it was added around the same time as the comment you
-> found). So any lowercasing we do is a favor to callers to make their
-> lives easier. The fact that we can't do it as thoroughly as possible is
-> perhaps OK, but I also think we could actually screw up their regex in
-> some extreme cases (say, by thinking we found a dot as a section
-> separator that isn't really one). Which is gross, but nobody seems to
-> have cared too much.
->
-> OTOH, it does help the regex queries match the regular ones. We will
-> canonicalize "git config Foo.Bar.Baz" into "foo.Bar.baz", which we can
-> do unambiguously. And especially since we document names as camelCase,
-> people tend to write things like "fetch.unpackLimit" in their queries. I
-> don't think we'd ever want to stop making that work (though
-> interestingly, I do not think we document that anywhere).
->
-> So probably I'd do nothing. ;)
->
-> -Peff
