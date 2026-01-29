@@ -1,141 +1,105 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D0D1EB5F8
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 23:17:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C1B3451C6
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 23:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769728643; cv=none; b=hKSx11lmbsKyRvxku458a/q3TK7AV8Reeod8K7QXSNF4QytVqF4XEL0YVefh3L483eaB5Y2zW38ttXfRBVhS7o/pQ0CFSjovFhWc6d30un4W7c94ULVBedyYfkT8g7VOoUXqeKxyhJhxMqScik7QloRI/5qgbRg8Wb/P+y4stSM=
+	t=1769729143; cv=none; b=KCoWQx6M8qkhAcwzKvflhApz6gCpIUPUXDB22nYDj4bpy/NMkDWF1vJuFbPnD10hQI0F4y43wXM5swmTLKI3e+cLNqRnno+jpkENlQVEO7XPbrLMwCGd7xxBGSDRuU1UpV+dP1qte5skGflnYd0SAYGUpOVHfDFg2lE1KddXO8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769728643; c=relaxed/simple;
-	bh=ecibmeXT3HVgCR3Xq30oOjWOOuw8bmdykriLWR+RcHk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Cna1rm1f4bYc5xYw5rHD6DMHSw9Km3V3FaeQYcuEB9fXFQ/+nUah0yyN/egfjuhq0h47QEBconORo1EpFLz95O041DXsIjXvlJbcW+hT4IUKTrMDYM5XiZ/G+Gr61+kh1sK2qjTfzmZWvu99y5weRED+i1mW8GRthBYNhEodm8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MlpJwTnV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=liyqZB7f; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769729143; c=relaxed/simple;
+	bh=mf2H48JKulTmoAfTPRotT+3vCcMkkCEFd03S04cIddU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b3Sn3lXn/da1sN6Ruz7vbnH/0JiT1S+ryLPVKTt+BlsxRU3QqaXtzcGYyA89/Zd40p7ese6UmTxdEi09Qxes9NhlSCSjXdiQzVaLiJeb5X9p5nUdBUDmwfKHSWI/qxs+ba4hUS9ozsCeHD/4mIFHojckhDhEok844hc3LflQk/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pTRhPxcb; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MlpJwTnV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="liyqZB7f"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id F242AEC0261;
-	Thu, 29 Jan 2026 18:17:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 29 Jan 2026 18:17:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769728640; x=1769815040; bh=5Oj5nzhIIA
-	mqnTc8mD21k/dq/0aBTUAhUfCtfWv8yMk=; b=MlpJwTnViMhMw0GgDUeH6u0wsX
-	Uj6pE+Ir2tOocpIaqwb/It6qSEhkSN04k45Jp9jqXp8zjJqvcNThjkki2NpdJFa6
-	hs8cOaty7JK4ggI8pDkmZvs7VwrRBzJ/ARIX9jV7VSnT7XtyRLRgB2yrL1MQvlCw
-	tuDQSZeGlQlk0ZSzI1rBZJmX/r0394p//skAVAVlmdYr/ILkA0AcmQSvDkzSnY/E
-	T3afFIGiQRx3tzkZ7z53DmMTdbrhTpfcLP7B6uEyYXszFGMPnnz/ilH0Y2+8ddP0
-	XFcQukzC5Y663x7A2LZYHoX14noageebpEAHWYvtHdketa83lEFJpLHmOvCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769728640; x=1769815040; bh=5Oj5nzhIIAmqnTc8mD21k/dq/0aBTUAhUfC
-	tfWv8yMk=; b=liyqZB7f6+beUN4xxWhplRdFVranOQFQeKJ4akle+Aeq/8uZbj0
-	rzzfTHMzMH7an5B02BEKvNfCJgNah2pQT9EG+nTmAIqoyYiuvOAtIa6p7bc+jJ7r
-	i/JTTeISF67TgzAfHUcN+SSo/ac9JHY0Ec2opmOuhHPxyFUpEHUkpdOGuZ2Pdu9K
-	qV81aMXgBix0ty0pUH7qsWQnpp0IfJJ2b8H4FD8JTT1Ig9+OePczeAPbdxVnirrE
-	Rsc69WPOYvDREJZ9Omd9e6Ca8LR4wo62GPhCwm332V7FRjrcakdDV5Bsn/ZOjAg8
-	1vCG4zuJ9UGQyVpvuymZ8w4trs7avwY8A5Q==
-X-ME-Sender: <xms:gOp7acEX13oHlOaV7FmBUjXLlseJxMRVPbJyZD7kf3n6gNOvtcPS-w>
-    <xme:gOp7acVDBzTuH46CmLZ-i_vG8x66uyKf0uASRfMa9vgO5swHq_endBjugMsH6P-ua
-    Q-JLlvSnE5IsqPv4_wLcdtLx2nSsA68Vl2QByMNidZ5h5AonDRSww>
-X-ME-Received: <xmr:gOp7abLmgGvHq7PJckxkMWoefoSKNY7R6Dq_KIPfXz1uE2-wkC_g1IDXKBN_0Y0SqK4UBvk3QeqRUjTIy6ENfZvBM-wal3R-gTIumr8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieejgeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:gOp7ac8zXnYjAeD6wcYzOWeqHli0VFbL8Bq3rX1YSUj3OWMKOSdPFw>
-    <xmx:gOp7aeI-vfqPnWyX3Qsq4cOtNqwhfG6jjOvhMCiDal30EseIbNeaeA>
-    <xmx:gOp7aRkgAQyKBp2yLN7SFUxgKDriLxR9QlMkeSt2n8jSBIxppBbI0g>
-    <xmx:gOp7aSM0SOyoyH9YWbbjD1FpeScS5wrnlmYxksA8N-w39iN_XFHz0Q>
-    <xmx:gOp7aUaRA-0f8OyPVfrQIL_IeXTmc3EEVv7u9gNyLDLiNLrIzFmKn9S1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 18:17:20 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/3] pack-bitmap: fix bug with exact ref match in
- "pack.preferBitmapTips"
-In-Reply-To: <aXu2Q1TgsaUIo30+@nand.local> (Taylor Blau's message of "Thu, 29
-	Jan 2026 14:34:27 -0500")
-References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
-	<20260128-b4-pks-fix-for-each-ref-in-misuse-v1-2-deccae3ea725@pks.im>
-	<aXrGfGUJQ34JAmuz@nand.local> <xmqq7bt0cqec.fsf@gitster.g>
-	<aXu2Q1TgsaUIo30+@nand.local>
-Date: Thu, 29 Jan 2026 15:17:19 -0800
-Message-ID: <xmqq1pj89fgg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pTRhPxcb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1769729136;
+	bh=mf2H48JKulTmoAfTPRotT+3vCcMkkCEFd03S04cIddU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=pTRhPxcbwsMwX1QimVBA/85tDUHGHowEjqgS+aljxG8OVulTAJnqVyp1bmGytzOiP
+	 c7+fywJnBsyzPNMuzDD/FystAMKO6AQVe5VxPpr1KOo+R4XkB7sTs9iBy+GwtT3mCO
+	 uG2wj5Wxar2W8yrGAsLC8wEK4jyqhyo1oJssDN+d+n05g4Xk5vFxAcmI/ujUp8sE4I
+	 Eugl7xGYf+XynIji9rSp9ko/oaw9dEVIRilIftEKgjpE/EE065FcC1RpTD7wotfAiu
+	 L1/jcKkidEApXRokmuxPMgtUfzLqW3U+lfvaAb+IrtBMw9XTp33u2WXVMWEJwUGPHy
+	 Sj6YEDCe2FIst2TbZxufL+x5tjD+McpX9km9FaMWAMic7a4DRPozuXLp9ESb7psfLN
+	 9SCKNorJ3o4tXcTV8+bL7TY3hMqjJfaq4ndnXA68X5OTCHryMCvbIkrkmeXXHqRI+L
+	 /fyEDiUKsr9dvQ/uwaBOvUkXbpnb4UxWLKiQXMnwPLZPjhhd/sx
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:bf0d:4ae6:75ea:91b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 257A7200B4;
+	Thu, 29 Jan 2026 23:25:36 +0000 (UTC)
+Date: Thu, 29 Jan 2026 23:25:35 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Eric Sunshine <ericsunshine@gmail.com>
+Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2026, #09)
+Message-ID: <aXvsb43Wq-YIYaVr@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Eric Sunshine <ericsunshine@gmail.com>,
+	Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+References: <xmqqecnbeyvr.fsf@gitster.g>
+ <aXqSyn3Mfcgs8MUG@fruit.crustytoothpaste.net>
+ <aXvYnCsXPV0yefyD@fruit.crustytoothpaste.net>
+ <CAPig+cStjN15WEKSN3b5VGLK-+N5pzj-dUDQ2rm15ne_9Q07FQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Taylor Blau <me@ttaylorr.com> writes:
-
-> When looking at the documentation, I ended up with the following:
->
-> --- 8< ---
-> diff --git a/Documentation/config/pack.adoc b/Documentation/config/pack.adoc
-> index 75402d5579d..b65cbaaebb4 100644
-> --- a/Documentation/config/pack.adoc
-> +++ b/Documentation/config/pack.adoc
-> @@ -168,7 +168,10 @@ pack.preferBitmapTips::
->  Note that setting this configuration to `refs/foo` does not mean that
->  the commits at the tips of `refs/foo/bar` and `refs/foo/baz` will
->  necessarily be selected. This is because commits are selected for
-> -bitmaps from within a series of windows of variable length.
-> +bitmaps from within a series of windows of variable length (in order to
-> +space bitmaps out throughout history), and we only select one commit per
-> +window. Thus if multiple preferred commits appear in the same window,
-> +only one will be selected.
-
-That's certainly better.
-
->> The documentation says "... reference that is a suffix of any value
->> of this configuration".  Is "refs/heads/foobar" a "suffix" of
->> "refs/heads/foo"?  I actually find this phrasing fairly strange, as
->> I do not think of "refs/heads/main" be a "suffix" of "refs/heads/".
->
-> I agree, the use of "suffix" is confusing at best. I think if/how we
-> change this section depends on the outcome of this series, but the
-> original intent was to say that preferring "refs/heads/foo" would make
-> the commits at the tips of "refs/heads/foo/bar" and "refs/heads/foo/baz"
-> preferred, but not "refs/heads/foobar".
-
-I am still not sure if naming an individual ref is an intended use,
-but I assume that the original intent of this part of the document
-was to specify the leading hierarchies and commits at the tip of
-refs that appear in one of the listed hiearchies are used as
-preferred candidates to give bitmaps.
-
-    pack.preferBitmapTips::
-
-	Specifies a ref hierarchy (e.g., "refs/heads/"); can be
-	given multiple times to specify more than one hierarchies.
-
-	When selecting which commits will receive bitmaps, prefer a
-        commmit at the tip of a reference that appears in one of the
-        hierarchies specified over any other commits ...
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ugjq23vmfMVjcJC9"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cStjN15WEKSN3b5VGLK-+N5pzj-dUDQ2rm15ne_9Q07FQ@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-or something?
+--ugjq23vmfMVjcJC9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2026-01-29 at 22:51:40, Eric Sunshine wrote:
+> On Thu, Jan 29, 2026 at 5:01=E2=80=AFPM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > I did not get a Windows VM working but I did discover the problem and
+> > I'm working on a patch and will send it out once I have CI green.
+> >
+> > The problem is roughly that both the MSVC linker and MSYS linker are
+> > both called link.exe.  When compiling with Rust against MSVC, the MSVC
+> > linker must be used, but the MSYS linker is first in PATH (because I
+> > believe installing the Git for Windows SDK causes that to be the case),
+> > causing build.rs to fail to compile.
+>=20
+> Didn't Ezekiel already tackle[*] this problem or am I misunderstanding?
+
+CI still fails when rebasing my branch on `master`, so it doesn't appear
+to have made it upstream quite yet.  I'll resume working on this
+tomorrow at $DAYJOB and then add a patch to my series.  I may steal the
+approach from Ezekiel's patch if it appears to work.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--ugjq23vmfMVjcJC9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaXvsbgAKCRB8DEliiIei
+gUBNAPsEh9KXb41QN1P7cNM549XvpTQtnMl4cMLZk0lCFP/YYwEAxhNLBWJ3s/1+
+GUG1b7Ifr+8BHm7P8mUMfJS3nQdqWQI=
+=sD+f
+-----END PGP SIGNATURE-----
+
+--ugjq23vmfMVjcJC9--
