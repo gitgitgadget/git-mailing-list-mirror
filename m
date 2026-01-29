@@ -1,290 +1,200 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090061A83F9
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 15:25:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9491E32CF
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 15:40:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769700356; cv=none; b=ngMcHU+oMi9lI6zpdlN1ykr4PyJN5n9CWU8q9RHvZ1pr5hw+h9V5cBhuhtfjJSIYkx/FhWJf64IiBvu/QnaTcxqA7zE96SeLaIupUa7905g1heC99yzo0iHVhKs4nqYLVlJaSShto2pr6iDcy0sxCNRVfIofH245g0EahtdLDjc=
+	t=1769701213; cv=none; b=Q3cq4vJEnLK2ci7HDooK+yLauXLIvr2j+JSFzyO6WgnKQ6g7s3soijFNskdbpxA545jJJ9bzJeoA+CWPgqnuU5bVkjTVqDy8f0RqUQiZpAiCW0sHg3gb0W7PxiuIb8JnkZEdKWEHj3YhmQP8KBd2LoXgJHH5oHxk2u1RVwThDC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769700356; c=relaxed/simple;
-	bh=EgSaG1uCSr8LcLjnaYxefgybkg0gt/HUPOxY5iJaCxI=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=F/OiJwR309mg46KO5+bWDGJcr/paSQk0DBvAD0rXZt1g/kld6buFOREcTnaiDsLFUVnab7eM93CPRJzHsJ63CmV2S+K4WcjHcR9896wQpoD3HbJmB67yUFUA52374OCVDE+WtmK2R1OYgV9uckSojPZiGaIOIfauvoyMna7i9Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XVDIbQGt; arc=none smtp.client-ip=209.85.222.180
+	s=arc-20240116; t=1769701213; c=relaxed/simple;
+	bh=X3vMllf4HWTik75AewoPAvknjPnRQDjOUJdf+mn6MwY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tqNtpmnsSB3PMTYyiaPH1HeWmUuI0P9poLJp1B6DM/SJVgZEm0D7WETjLYHnH2Tcu+ay0pAyccOax+heP/KbqhwJtaCkHzGiiyVAsvFi9vz9k0MO89eh2ePIy7hiXDu5ZkGovuF+ZID/5mvccz5xnUV5H5V8eR/tRG1QZYD8oOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zd5n2Hq2; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVDIbQGt"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8c70ce93afaso121991185a.0
-        for <git@vger.kernel.org>; Thu, 29 Jan 2026 07:25:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zd5n2Hq2"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-823075fed75so711299b3a.1
+        for <git@vger.kernel.org>; Thu, 29 Jan 2026 07:40:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769700353; x=1770305153; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=r2roo27ThyjbRe96Cdkm31QfnOe+askEPNzQWTC9V7o=;
-        b=XVDIbQGtiPwry20K2DbN9v2aZHdPBUYFPDaOVVZqgPeF6p2tHpVDF3GhCCYy0Ll0nO
-         LnsCc/oZ3pasZTcUdvncmjwLQgDLouqqV6n8E7q1NX8ScH2X9pxcn1V8AOv8auYHpOtV
-         A0p4lEjGDFuYdRa8T+/dQ5dlZSrF1o6+RdacJDdJcwA8eYDSu915FXqAurK+zI0PiDID
-         Kzav7NC2COBDOeCvkRMBcN77lh3bT8WVEzz934khO2CagqpjCMGnkMYeDGm8WYBfJHbQ
-         HwgiCenxfwKJKbVp41uyJl0JI0kSJI+hgaV+5c/rkhrSbH40f0bAkRXIIg9JgRKwZTX9
-         Te+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769700353; x=1770305153;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1769701212; x=1770306012; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=r2roo27ThyjbRe96Cdkm31QfnOe+askEPNzQWTC9V7o=;
-        b=Wb4HmajurUqAyRzKDdJa24kJlF6qkdc7D8uXsI8+XYul5tzXRLGBNyASUVd82nRkIs
-         YlghhegEU7u71BBFCill/YrpUdHNgnai73ms9qu3nFjlKmOHAtWVh26CeqIAm52Cz/Gl
-         WWqHDl0tIfFZ4Sb1PB9dAOUe5zwyzc20VVCNyX7TOqTnjA1XKTHx3ztKh2/71uxZ0tK1
-         dInyZ4CO78/+gXDvOQXpHdzJstW7vavkHP+7zg+fCDZ3T6NVy3HWRrEcBaFcQdxY8ha+
-         gRyoJZoknpqQMfsLs07/59UdVb/V6kJh+SfEidwHj3X/78FXMMtSFTL4aoCu0Qv1ZAq1
-         mPWw==
-X-Gm-Message-State: AOJu0YygH51fizmlbAEU50yDcWbeKQt1bY+JsnLjguiQMacn+PnP6xj4
-	6/yfMQBW4vB3o33Mkj6Y7CQ2P+U6pFdnD/iaBojz+nC5enni8HR7FXAIsJ+BoQA7
-X-Gm-Gg: AZuq6aI88K/b7gq2yK2iCLqa8TPDFLZw8ruR7V/cdqGlKBpvEmK8Rvm9yTQLc1Z5fQp
-	yZnierMdfeA7XTRWx+gXa/miFrJ/C9ztBLGF3OZnPvSPwJ/aPdF9WpdR2ymGxC+GQcg9iJUuqwt
-	+/I7pP6WQFQY7VNlUCXOmEEytS4RZuBJ68av5b3KHU9NqBYGCJVpzoCKj+R+M8ni+8tBJ56Scmf
-	it2vYSZ354S3zJby0s7HJdUAuiuPocTb5eGo3rMQr+GIybADpPJ+ZclL8JjYmCHkQUH4HBZQN0+
-	AZIayQT773AipbEenktlCsBHjww2SCGoBOVLJAhBUaSGZZsaYAlRj1gRuKC3f3mLGj2ZbEPeXSs
-	wx1XJLkKCTmDyhayYvLBSQB0rX5uuB8Gd8nuM5Ct7nw0vo3nePogCywjXaanexIBlCdLdfC7+DB
-	0xLIs61A0SyB4/
-X-Received: by 2002:a05:620a:3910:b0:8c6:f76e:c6f1 with SMTP id af79cd13be357-8c70b85a83cmr1134589985a.26.1769700353367;
-        Thu, 29 Jan 2026 07:25:53 -0800 (PST)
-Received: from [127.0.0.1] ([20.102.222.19])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c711d2cdbbsm404277385a.28.2026.01.29.07.25.52
+        bh=kmh9iebn0m/XRSpHBY/yAoPQMWvJlo1b+orXVuZVZ/0=;
+        b=Zd5n2Hq2J48MchQFH5hQaiTqtSa15d2Ow/UjkvGq2e/MK83pYNDatwakO5+fcaE05c
+         3Lr53JynFuGtSFw/113AFoJRHA5ujoSEqr0mFO33EqFQbI4ceP0OguTjHgi65aq9XBH+
+         wBAW2yBJvg/YrxmxGdaD6gqSs4wC4LV8tGJ0g8unTGCsUifM8X2bKmaPpr2CaZXvckG6
+         MCXy4quJtMW1Iaib77C0mTllazaQQfdFH8TtCFq+z4KSG7M/GVM88n06Zlyd54e3/nOA
+         jRxn6mDfymmGtNhV95HGY3qvFcNk3ZOyb5F9yi/839y59p8sumPtM8rgljWvY7BJWbXR
+         mygw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769701212; x=1770306012;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=kmh9iebn0m/XRSpHBY/yAoPQMWvJlo1b+orXVuZVZ/0=;
+        b=l2K4+2+kx9cmhgNOJ+wuX14Ns50osir5HJIhptwA2ph8F3qsz76UtLUjL5M2im9MBP
+         894n2JXpdbcr2274YUBN8EvO/BJw9FU+dPkcVOpXi/zEXQ7wKYx5S/gRfrZtR6GhE63o
+         SJmd/u3XYAM3cEdOHpqR/Md/+lB8HOWYN1uBkWWSA/wwWzHakeEUzDJHrsCWzCpfr0NJ
+         U4FMq9fn4LZxmi3PWL0pQBYdAsCW+qFD9q2gWx/3KRwtj1DO8GPI8EajPiFwcAyh3nCa
+         m69nvkeKIGGMaLYWzEqKsKekO3XNAlQSrkbRtbEVxGQlYTQVdIHEOS40v1qFUoAVy9eT
+         zg6g==
+X-Gm-Message-State: AOJu0YyiJk46VYQNBJ6eLmh7ysIUmDCBcsWIlCov3XT7FsDBSc99fiQR
+	O89lhIEYp0WWn+gisdRRMGwWbQaRkYk/4zD7J5b5vxJnqiuNkrsLpZ1RPtz1IA==
+X-Gm-Gg: AZuq6aITXj5RR5iqPlULEUNpR7t5+Nws5d+jiX0XxOX3Nz1Xyep9ODMr/6NDszJ/euV
+	Jrs0q8y1hGu5AIcylHW5/Rn+iJ37LASADnv8vpmOpob9mQ3y913wskT+OAhmFN/bHy1tm7fYKO7
+	5mL/5235QZN4US44uOhj9DFAq7oOWh2dFfPk8DFIOjFm/zy8oLJ+W4QAXCUMx/pz7cy0ZLMUJs9
+	gruUbOEwutPhTsHMHX5De+43oVnnXMGW3ua2wqKyVU0dACtpog6UMhYAEDBcRvhzgJEh2fyPj5d
+	uynfgcpoxlYdeomI5tfJWbj44GHRh22xZSkSjCcPMJ2L6vl7C1zWZRgLrQQkYMyljUtfnn5GKmL
+	wHzXdt+irObwQ+IgzMk0BYTKHhT2if1k4XQ8MOKMTahgBUvKyuUzTUAOUT49GgLidJ9MtnIHkAg
+	8I1UNZA7tNmeICi1QHdbjgymnjH2dBBavSOOWkwHb8tSe3/w==
+X-Received: by 2002:a05:6a00:c94:b0:81d:a508:f056 with SMTP id d2e1a72fcca58-823920f2a21mr3520579b3a.18.1769701211413;
+        Thu, 29 Jan 2026 07:40:11 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:40bc:fc2b:8fb6:a5e3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379b1ee43sm7073470b3a.4.2026.01.29.07.40.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 07:25:52 -0800 (PST)
-Message-Id: <pull.2183.git.git.1769700352081.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 29 Jan 2026 15:25:52 +0000
-Subject: [PATCH] revisions: add @{default} shorthand for default branch
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 29 Jan 2026 07:40:10 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH] show-index: warn when falling back to SHA-1 outside a repository
+Date: Thu, 29 Jan 2026 21:06:55 +0530
+Message-ID: <20260129153948.224156-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260120140901.517928-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+When 'git show-index' is run outside of a
+repository and no hashing algorithm is
+specified via --object-format, it silently
+falls back to SHA-1, relying on the
+historical default.
 
-Git already has shorthands like @{upstream} and @{push} to refer to
-tracking branches, but there is no convenient way to refer to the
-default branch of a repository (typically "main" or "master").
+This works for existing SHA-1 based
+index files, but the behavior can be ambiguous
+and confusing when the input index file uses a
+different hash algorithm, such as SHA-256.
 
-Users often want to switch to the default branch regardless of its
-name, especially when working across repositories with different
-default branch names. Currently they must either hardcode the branch
-name or query it via configuration, which is cumbersome.
+Add a warning when this fallback happens
+to make the assumption explicit and to
+guide users toward using --object-format
+when needed.
 
-Add a new @{default} shorthand that resolves to the default branch
-as determined by init.defaultBranch (or falls back to "main" or
-"master" depending on Git version). This allows users to write:
+Additionally, wrap user-facing die() messages
+with _() so they can be translated via gettext.
 
-  git checkout @{default}
-
-instead of having to know or look up the default branch name.
-
-The implementation follows the same pattern as @{upstream} and @{push},
-using a new branch_get_default() function that queries the default
-branch name and verifies it exists in the repository.
-
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 ---
-    revisions: add @{default} shorthand for default branch
-    
-    Git already has shorthands like @{upstream} and @{push} to refer to
-    tracking branches, but there is no convenient way to refer to the
-    default branch of a repository (typically "main" or "master").
-    
-    Users often want to switch to the default branch regardless of its name,
-    especially when working across repositories with different default
-    branch names. Currently they must either hardcode the branch name or
-    query it via configuration, which is cumbersome.
-    
-    Add a new @{default} shorthand that resolves to the default branch as
-    determined by init.defaultBranch (or falls back to "main" or "master"
-    depending on Git version). This allows users to write:
-    
-    git checkout @{default}
-    
-    instead of having to know or look up the default branch name.
-    
-    The implementation follows the same pattern as @{upstream} and @{push},
-    using a new branch_get_default() function that queries the default
-    branch name and verifies it exists in the repository.
-    
-    Signed-off-by: Harald Nordgren haraldnordgren@gmail.com
+ builtin/show-index.c | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2183%2FHaraldNordgren%2Fdefault_shorthand-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2183/HaraldNordgren/default_shorthand-v1
-Pull-Request: https://github.com/git/git/pull/2183
-
- Documentation/revisions.adoc | 17 +++++++++++++++++
- object-name.c                | 21 ++++++++++++++++++++-
- remote.c                     | 12 ++++++++++++
- remote.h                     |  6 ++++++
- t/t1508-at-combinations.sh   |  1 +
- t/t2012-checkout-last.sh     |  6 ++++++
- 6 files changed, 62 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/revisions.adoc b/Documentation/revisions.adoc
-index 6ea6c7cead..17bf42765f 100644
---- a/Documentation/revisions.adoc
-+++ b/Documentation/revisions.adoc
-@@ -149,6 +149,23 @@ from one location and push to another. In a non-triangular workflow,
- This suffix is also accepted when spelled in uppercase, and means the same
- thing no matter the case.
- 
-+'@\{default\}'::
-+  The suffix '@\{default}' refers to the default branch of the repository,
-+  typically `main` or `master`. This is determined by the `init.defaultBranch`
-+  configuration option, or falls back to `main` (or `master` in older Git
-+  versions) if not configured. The default branch must exist in the repository
-+  for this syntax to work.
-++
-+Here's an example:
-++
-+------------------------------
-+$ git checkout @{default}
-+Switched to branch 'main'
-+
-+$ git rev-parse --symbolic-full-name @{default}
-+refs/heads/main
-+------------------------------
-+
- '<rev>{caret}[<n>]', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
-   A suffix '{caret}' to a revision parameter means the first parent of
-   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
-diff --git a/object-name.c b/object-name.c
-index 8b862c124e..34172f9f80 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -947,6 +947,12 @@ static inline int push_mark(const char *string, int len)
- 	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
- }
- 
-+static inline int default_mark(const char *string, int len)
-+{
-+	const char *suffix[] = { "@{default}" };
-+	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
-+}
-+
- static enum get_oid_result get_oid_1(struct repository *r, const char *name, int len, struct object_id *oid, unsigned lookup_flags);
- static int interpret_nth_prior_checkout(struct repository *r, const char *name, int namelen, struct strbuf *buf);
- 
-@@ -998,7 +1004,8 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 					continue;
- 				}
- 				if (!upstream_mark(str + at, len - at) &&
--				    !push_mark(str + at, len - at)) {
-+				    !push_mark(str + at, len - at) &&
-+				    !default_mark(str + at, len - at)) {
- 					reflog_len = (len-1) - (at+2);
- 					len = at;
- 				}
-@@ -1707,6 +1714,12 @@ static int branch_interpret_allowed(const char *refname, unsigned allowed)
- 	return 0;
- }
- 
-+static const char *branch_get_default_mark(struct branch *branch UNUSED,
-+					   struct strbuf *err UNUSED)
-+{
-+	return branch_get_default_ref();
-+}
-+
- static int interpret_branch_mark(struct repository *r,
- 				 const char *name, int namelen,
- 				 int at, struct strbuf *buf,
-@@ -1798,6 +1811,12 @@ int repo_interpret_branch_name(struct repository *r,
- 					    options);
- 		if (len > 0)
- 			return len;
-+
-+		len = interpret_branch_mark(r, name, namelen, at - name, buf,
-+					    default_mark, branch_get_default_mark,
-+					    options);
-+		if (len > 0)
-+			return len;
+diff --git a/builtin/show-index.c b/builtin/show-index.c
+index 2c3e2940ce..14147c2ff2 100644
+--- a/builtin/show-index.c
++++ b/builtin/show-index.c
+@@ -36,39 +36,42 @@ int cmd_show_index(int argc,
+ 	if (hash_name) {
+ 		hash_algo = hash_algo_by_name(hash_name);
+ 		if (hash_algo == GIT_HASH_UNKNOWN)
+-			die(_("Unknown hash algorithm"));
++			die(_("unknown hash algorithm"));
+ 		repo_set_hash_algo(the_repository, hash_algo);
  	}
  
- 	return -1;
-diff --git a/remote.c b/remote.c
-index b756ff6f15..2c829c8c34 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1961,6 +1961,18 @@ const char *branch_get_push(struct branch *branch, struct strbuf *err)
- 	return branch->push_tracking_ref;
- }
+ 	/*
+ 	 * Fallback to SHA1 if we are running outside of a repository.
+ 	 *
+-	 * TODO: Figure out and implement a way to detect the hash algorithm in use by the
+-	 *       the index file passed in and use that instead.
++	 * TODO: If a future implementation of index file version encodes the hash
++	 *       algorithm in its header, enable show-index to infer it from the
++	 *       header rather than relying on repository context or a default fallback.
+ 	 */
+-	if (!the_hash_algo)
++	if (!the_hash_algo) {
++		warning(_("assuming SHA-1; use --object-format to override"));
+ 		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
++	}
  
-+const char *branch_get_default_ref(void)
-+{
-+	static struct strbuf default_ref = STRBUF_INIT;
-+	char *default_branch_name;
-+
-+	strbuf_reset(&default_ref);
-+	default_branch_name = repo_default_branch_name(the_repository, 1);
-+	strbuf_addf(&default_ref, "refs/heads/%s", default_branch_name);
-+	free(default_branch_name);
-+	return default_ref.buf;
-+}
-+
- static int ignore_symref_update(const char *refname, struct strbuf *scratch)
- {
- 	return !refs_read_symbolic_ref(get_main_ref_store(the_repository), refname, scratch);
-diff --git a/remote.h b/remote.h
-index 0ca399e183..5ebb27e173 100644
---- a/remote.h
-+++ b/remote.h
-@@ -366,6 +366,12 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
-  */
- const char *branch_get_push(struct branch *branch, struct strbuf *err);
+ 	hashsz = the_hash_algo->rawsz;
  
-+/**
-+ * Return the fully-qualified refname of the default branch.
-+ * I.e., what "@{default}" would give you.
-+ */
-+const char *branch_get_default_ref(void);
-+
- /* Flags to match_refs. */
- enum match_refs_flags {
- 	MATCH_REFS_NONE		= 0,
-diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-index 87a4286414..09d888df53 100755
---- a/t/t1508-at-combinations.sh
-+++ b/t/t1508-at-combinations.sh
-@@ -69,6 +69,7 @@ check "@{-1}@{u}" ref refs/heads/main
- check "@{-1}@{u}@{1}" commit main-one
- check "@" commit new-two
- check "@@{u}" ref refs/heads/upstream-branch
-+check "@{default}" ref refs/heads/main
- check "@@/at-test" ref refs/heads/@@/at-test
- test_have_prereq MINGW ||
- check "@/at-test" ref refs/heads/@/at-test
-diff --git a/t/t2012-checkout-last.sh b/t/t2012-checkout-last.sh
-index 1f6c4ed042..59999f0852 100755
---- a/t/t2012-checkout-last.sh
-+++ b/t/t2012-checkout-last.sh
-@@ -27,6 +27,12 @@ test_cmp_symbolic_HEAD_ref () {
- 	test_cmp expect actual
- }
+ 	if (fread(top_index, 2 * 4, 1, stdin) != 1)
+-		die("unable to read header");
++		die(_("unable to read header"));
+ 	if (top_index[0] == htonl(PACK_IDX_SIGNATURE)) {
+ 		version = ntohl(top_index[1]);
+ 		if (version < 2 || version > 2)
+-			die("unknown index version");
++			die(_("unknown index version"));
+ 		if (fread(top_index, 256 * 4, 1, stdin) != 1)
+-			die("unable to read index");
++			die(_("unable to read index"));
+ 	} else {
+ 		version = 1;
+ 		if (fread(&top_index[2], 254 * 4, 1, stdin) != 1)
+-			die("unable to read index");
++			die(_("unable to read index"));
+ 	}
+ 	nr = 0;
+ 	for (i = 0; i < 256; i++) {
+ 		unsigned n = ntohl(top_index[i]);
+ 		if (n < nr)
+-			die("corrupt index file");
++			die(_("corrupt index file"));
+ 		nr = n;
+ 	}
+ 	if (version == 1) {
+@@ -76,7 +79,7 @@ int cmd_show_index(int argc,
+ 			unsigned int offset, entry[(GIT_MAX_RAWSZ + 4) / sizeof(unsigned int)];
  
-+test_expect_success '"checkout @{default}" switches to default branch' '
-+	git checkout @{default} &&
-+	test_cmp_symbolic_HEAD_ref main &&
-+	git checkout other
-+'
-+
- test_expect_success '"checkout -" switches back' '
- 	git checkout - &&
- 	test_cmp_symbolic_HEAD_ref main
-
-base-commit: ea717645d199f6f1b66058886475db3e8c9330e9
+ 			if (fread(entry, 4 + hashsz, 1, stdin) != 1)
+-				die("unable to read entry %u/%u", i, nr);
++				die(_("unable to read entry %u/%u"), i, nr);
+ 			offset = ntohl(entry[0]);
+ 			printf("%u %s\n", offset, hash_to_hex((void *)(entry+1)));
+ 		}
+@@ -90,15 +93,15 @@ int cmd_show_index(int argc,
+ 		ALLOC_ARRAY(entries, nr);
+ 		for (i = 0; i < nr; i++) {
+ 			if (fread(entries[i].oid.hash, hashsz, 1, stdin) != 1)
+-				die("unable to read sha1 %u/%u", i, nr);
++				die(_("unable to read sha1 %u/%u"), i, nr);
+ 			entries[i].oid.algo = hash_algo_by_ptr(the_hash_algo);
+ 		}
+ 		for (i = 0; i < nr; i++)
+ 			if (fread(&entries[i].crc, 4, 1, stdin) != 1)
+-				die("unable to read crc %u/%u", i, nr);
++				die(_("unable to read crc %u/%u"), i, nr);
+ 		for (i = 0; i < nr; i++)
+ 			if (fread(&entries[i].off, 4, 1, stdin) != 1)
+-				die("unable to read 32b offset %u/%u", i, nr);
++				die(_("unable to read 32b offset %u/%u"), i, nr);
+ 		for (i = 0; i < nr; i++) {
+ 			uint64_t offset;
+ 			uint32_t off = ntohl(entries[i].off);
+@@ -107,9 +110,9 @@ int cmd_show_index(int argc,
+ 			} else {
+ 				uint32_t off64[2];
+ 				if ((off & 0x7fffffff) != off64_nr)
+-					die("inconsistent 64b offset index");
++					die(_("inconsistent 64b offset index"));
+ 				if (fread(off64, 8, 1, stdin) != 1)
+-					die("unable to read 64b offset %u", off64_nr);
++					die(_("unable to read 64b offset %u"), off64_nr);
+ 				offset = (((uint64_t)ntohl(off64[0])) << 32) |
+ 						     ntohl(off64[1]);
+ 				off64_nr++;
 -- 
-gitgitgadget
+2.52.0
