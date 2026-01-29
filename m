@@ -1,110 +1,150 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAAA227BA4
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:31:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA5E31D39F
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:34:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769715063; cv=none; b=CsPa4je3kUuVSB6Mby3cYSCYb3njCV7jhOkKVS36fzzNcP2wnE7ioovi82XBqDUr75bVglyu33tEcpFLFrgjZeIembi2xMSiN3rcjAiHd60IvH5SriHr1EN4UpoPwTYkx+KF164dwwqN9v9VALrUPUpKrxs62C6wQ2TMlqIZ+3c=
+	t=1769715279; cv=none; b=KBM9dmT4IFJXVK9xhAZDNoZHj32Hh8hrowcFpmN7cPDIHzJcafHgar/2Uom7nAsvvLQken0X5zpB9Py96YT2URe97tMgIEtG/4MqKxLRmVrKdCY+Q9yJeiWK7gyxQJEVaZEGtldQ1e9ea/CsQbDJp30aO0MM0xyEEOD9lXYevAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769715063; c=relaxed/simple;
-	bh=I+UCM17eLIcVxBwPgTlWXfmRqgoQ8AZTphXhOfytvec=;
+	s=arc-20240116; t=1769715279; c=relaxed/simple;
+	bh=Jrd1apgn1FCzDUfn/EGSLp3eHSet2bPW35Vh14A/ShI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BP2BJbGs0D1E7TxNylYe9bvp4TaxX8TFaHr117FWhT+5lgkHmMcTjwA2hcj6GHSslhxNgdKDklMAY0zrYM5/i8vwMPggxm5F15tIaTJ2g4J5zVhrdeN/OIHrApsGk75mkUZNA8dcuM2026heszsaZH9eOuuRMa34EaYdb/PDTCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NsMJdnc4; arc=none smtp.client-ip=209.85.210.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qn3ZDKi7VBBz2TFuI64BayJqQdoPH0woY5COlGzC6OrI94ySnMOdE+cSNna0rV9VODwUEWLY+4kvJRDnJALCHIUNuGyWcv7zrzIEKPB0CF7PkG06xtCCnrU2Tufvzf6ekzy9SGl0cXrWPINr4aQIMxdU9a3uSigsED1qRFkAKYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=kb8p8Dct; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NsMJdnc4"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7cfdf7e7d19so1197193a34.2
-        for <git@vger.kernel.org>; Thu, 29 Jan 2026 11:31:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="kb8p8Dct"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-78fba1a1b1eso21547577b3.1
+        for <git@vger.kernel.org>; Thu, 29 Jan 2026 11:34:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769715061; x=1770319861; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1769715277; x=1770320077; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=f/2cKv6GXzEo8dLieY5W/gpTtIqO6MnsVT+bX+eSHDo=;
-        b=NsMJdnc4LswTwneVbuS3KXQnqFWQe8f8A75xBywCTdVojPB7IjkW0Um6/8fZxZiQ1b
-         0VzSVrYopahR1pc9tmV8MRpNaDUuQQvDWZ8tPzePxrP7S1AcckZdNeFMVkVuTlaADGC3
-         hNrzpPfFdYsi1YapczEhBEh0FrsfDq3IPAm+Nk6c2tu5ymrS1sRze15cQdDsgtk1lSLY
-         dmpjHro0SXLhp6SyPWcMeyJsrAkbCX918JpOdaLu2Lt/eZ4AMIkPNFmHGi0+entHRW3c
-         fgvxRs4bx+UxEJoaRFm/AQJYzmka16MtCednw6rMRUO7WPkxwlJ7ofmZEzcTQ8fbnfHB
-         Yc7A==
+        bh=yjjSNdTVf2NqQOV+SpAet+B/2sZrxxPKoVbtRjzDv94=;
+        b=kb8p8Dctud4SIUkU+eReGi1wWnjEFwA760SXRNzKjU6YaVf0MlDZwALf2ZbjN21k/B
+         9xhETIUEQZ65dNtS4ADD55SocKEgpGznsEwHPZ3LRBksVlPk+U3lIbn9pwfoZyb7A7Ie
+         5U/QG2PGYxAmaWOhp5dLLxPhyoZkDj94/oLuR948J+GR75cB++n6l2eMc3YI/zbouYia
+         MXe1v6JrWU14QQSLh//S/pzYTtIbNVpjjWEWMpriVGMnX0thM0chkRWCY8ZGFKV4VI7E
+         sKQ3WbsO1enNP6vfhPjJgQyrQe9ouq9uV05IkoY92c4J/ynrP6FvkP56h7O+niD3GX3g
+         njNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769715061; x=1770319861;
+        d=1e100.net; s=20230601; t=1769715277; x=1770320077;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f/2cKv6GXzEo8dLieY5W/gpTtIqO6MnsVT+bX+eSHDo=;
-        b=Id3W299+MChPskI1kVqFIeQYPWMfIGjYMqrhMyjR8t2nC2Xq9zJ/fGDd8YmLp+tRfz
-         i7Evz2TLNMrhrHCQ9zQtRvxMhr82lhFtcirUZ91w+4P1bvKMoJ/CTvusHszdKhaKAIau
-         WXI97BlRdkegx+9tI8Q/+mN6v57vfl+tAdbXZYWrodmy8yMI+TIjvb9q5LTIugGjBKuY
-         lyuPBkc3cyU/em+kZEJCa5gJRWN5eaCfHB+d8ZCLQbWoy0aaxISuG3zw5vmTNDuQ5/xk
-         jjnkA7A8KmpGLBnc496jz54IzVrR8/k8LY2+rHeUmeg0aPUS1ifgA9Sv9ahDOwT9VxCm
-         43+Q==
-X-Gm-Message-State: AOJu0YzjjhFagWZ/QXVrVCNtlfcfoscB49C+DK1nKeNC8dWc4MgzSAVP
-	yUp4YHUAIqSpB1B47IbS3O6roDkQzqHddH7dBmZ8RGOi1+ETtWDOOAqKMUnlZw==
-X-Gm-Gg: AZuq6aI+lpoHT+quoY1T1/qoKFyCtFcdFuzGvI/xZyO2A1Kc+klkw8b/qG/gA7jZ+Ai
-	NXQ92wMlvMkEXiCndk6buFmJDMXcVPZ+EGz5EckAozrVzEDg3D7D8xYlGHHTg3ovr3JP/0bTDGl
-	Tl+4X6U3CzfCAS67AI2IjxUeh6E8KB7+fwsFR5DQskhYURL/5NowezHF5vtxhNO4yh4nkOSiBfD
-	bmdElyiA+1jWRq4BcElsIOM75dWKblrAfyJaNLvdikYLvnooo6vVxlmIKHOvPMCSBE9SNHvAYFN
-	EThzqvWcsocn6WMonA43c+RCVAyBIzQnJLGclMk236Sykmocn18RG+bwv1ugq+Jm2xLWNi01bUu
-	TfA/0kOxmxkEoaHdNacgnI0MN+dzN4l1jvNI6SORx0UDqI1cflZBLXkFUuIeePE3NXxyZkJMhQe
-	tPKIxRw57tt9q8Fgw=
-X-Received: by 2002:a05:6830:63ca:b0:7d1:8e24:724d with SMTP id 46e09a7af769-7d1a53d3833mr433596a34.38.1769715060931;
-        Thu, 29 Jan 2026 11:31:00 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d18c8016fdsm4159133a34.25.2026.01.29.11.31.00
+        bh=yjjSNdTVf2NqQOV+SpAet+B/2sZrxxPKoVbtRjzDv94=;
+        b=s1mZwCb+18/jE85F6+XX1wRNLmaihZ13gWhfVcvPzsdnwWhCkYlzhPnXzJ/HUDShvc
+         157EV0oNv8d3omQurCoFPmb3Ciqs3evYK8VvTrGao4otlY+A1nFANghLAeggdyzplJsM
+         O4DhTxtUlseeJSP3WcyaJZ1unm3V6JobxxSHxxPcGttWrMahO4yPqP7ERqD3eVSOuyXH
+         62dag1bZA1t8YVmS43tT8C44YktN6RAGiyc6Cw5xg92pVa2RbTFG+xmMZLzfQhGcN/AE
+         BgcQ036/AuTvcmOf0RZQAGCxv8Z6V0zaE+jP8ESBs4I7UhLm7Rcmloz1ITKtEJtP1mRd
+         AyiA==
+X-Forwarded-Encrypted: i=1; AJvYcCWlyWtADiocDmdKnxkO8aPq2xUDDjQQjaBs/dv3VxdpRFR/yk+nMqyYIXq054iH8V1zgfQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoKoX1Wqa4DHVdnBn4CVpqVe/CE6Z0UNUy0lY5m9Xdw9YuSOG1
+	8dUmkhrKeNmJv8l+W/jiQ3XMluSlnRwMvu5GITbxCvO5uAgA1lQnkNxZiwZI373F784dnVkafgi
+	5+74UfgE=
+X-Gm-Gg: AZuq6aKGAAWWf5ePZN7gk0xHfLbRr7DjBVYgCroDf36lg4BoztCmmLFfhs095cZnjvH
+	uaZp3Ra9GxcARAMYIUD3W7R8NxZefOoVGY/mM3145Ad8Afydy54StIhPaDKWXa1y0b6+4kG5Le5
+	JmzctTfth1YVA9dwtcY+c0VvePiVEdZextTL7tLfi6N4r2vRdLI4XeF1SwhmN0jTeMVXsKsrJht
+	PvuYTSz1c3ZrF0/lSOoozX73sHXjVw+Zg5E2M62N6bUtmlT+4fEs9I1Jhz3qF2M7CybYpA7hmqD
+	iT9aKq9deTuRava8nmvfb+2Ga/mXqSdEdkJyuC61xWaOcGks9wbrruUOQozC5zUQhYu2LYYSSEo
+	6eEF1eOK6wq2/Rr3Klimf7KhV3WFHe+6+5q69ZV7NosUlT9kCajbVmg7n4JwrwQoZcmxgV+EMoR
+	4xzXe9VZAiWvVqbEI4howIJtvrZK0TLW9xnLoNMzgq9zM15t7OCXz/EgoM+TwvJjqN+O0aoT85p
+	1TNvnpRci5to8WMXg==
+X-Received: by 2002:a05:690c:ec9:b0:787:badd:4f with SMTP id 00721157ae682-79490d3e622mr37602747b3.17.1769715277124;
+        Thu, 29 Jan 2026 11:34:37 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-794828f876fsm28025577b3.54.2026.01.29.11.34.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 11:31:00 -0800 (PST)
-Date: Thu, 29 Jan 2026 13:30:54 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/4] odb: store ODB source in `struct odb_transaction`
-Message-ID: <aXu1IDsaUbmUzHop@denethor>
-References: <20260128234519.2721179-1-jltobler@gmail.com>
- <20260128234519.2721179-2-jltobler@gmail.com>
- <aXtDYY0Ao24Mpgyb@pks.im>
+        Thu, 29 Jan 2026 11:34:36 -0800 (PST)
+Date: Thu, 29 Jan 2026 14:34:27 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] pack-bitmap: fix bug with exact ref match in
+ "pack.preferBitmapTips"
+Message-ID: <aXu2Q1TgsaUIo30+@nand.local>
+References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
+ <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-2-deccae3ea725@pks.im>
+ <aXrGfGUJQ34JAmuz@nand.local>
+ <xmqq7bt0cqec.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aXtDYY0Ao24Mpgyb@pks.im>
+In-Reply-To: <xmqq7bt0cqec.fsf@gitster.g>
 
-On 26/01/29 12:24PM, Patrick Steinhardt wrote:
-> On Wed, Jan 28, 2026 at 05:45:16PM -0600, Justin Tobler wrote:
-> > diff --git a/object-file.c b/object-file.c
-> > index e7e4c3348f..196509b252 100644
-> > --- a/object-file.c
-> > +++ b/object-file.c
-> > @@ -728,7 +728,7 @@ static void prepare_loose_object_transaction(struct odb_transaction *transaction
-> >  	if (!transaction || transaction->objdir)
-> >  		return;
-> >  
-> > -	transaction->objdir = tmp_objdir_create(transaction->odb->repo, "bulk-fsync");
-> > +	transaction->objdir = tmp_objdir_create(transaction->source->odb->repo, "bulk-fsync");
-> >  	if (transaction->objdir)
-> >  		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
-> >  }
-> 
-> This makes me wonder whether we should first refactor the `tmp_objdir`
-> subsystem to receive a source instead of a repository as input.
-> Otherwise we "pretend" that the transaction is on the source level, but
-> we ultimately still end up creating the temporary directory in the
-> repository's object directory unconditionally.
-> 
-> It wouldn't really change anything right now as we only ever write
-> objects via the primary object source anyway, so the end result would be
-> the same. But it just feels like a good first step to me to fix this
-> conceptual inconsistency, and it shouldn't be too involved either as
-> `tmp_objdir_create()` only has three callsites.
+On Thu, Jan 29, 2026 at 08:52:43AM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > Looking at the implementation of bitmap_writer_select_commits(), we do
+> > not guarantee that *any* reference specified by pack.preferBitmapTips
+> > will receive a bitmap. That's because we don't necessarily enumerate the
+> > entire set of commits when determining which ones to bitmap.
+>
+> Hmph.  Is this documented?
+>
+> 	... Goes and looks ...
+>
+> Yes, it is documented.  We say "This is because ..." but it just
+> explains it as what the chosen design of the implementation happens
+> to do, without saying for what benefit the implementation was chosen,
+> so it is unclear if this is designed behaviour, or more importantly,
+> even if this were designed, what the rationale of choosing that
+> design was.
+>
+> "When they are so close to fall into the same chunk, there is no
+> point having bitmaps individually for them, as their bitmaps will be
+> very similar anyway, so this design saves space without sacrificing
+> the quality of the resulting set of bitmaps" or something?
 
-Ya this seems reasonable and I agree that it makes sense to do as a
-first step. In the next version I'll make this change in a prepatory
-commit.
+The commits are generally presented in the order they are traversed
+(regardless of whether we are generating single- or multi-pack bitmaps).
+That makes it likely that commits within the same window are likely to
+generate very similar bitmaps, but it is not guaranteed.
 
--Justin
+When looking at the documentation, I ended up with the following:
+
+--- 8< ---
+diff --git a/Documentation/config/pack.adoc b/Documentation/config/pack.adoc
+index 75402d5579d..b65cbaaebb4 100644
+--- a/Documentation/config/pack.adoc
++++ b/Documentation/config/pack.adoc
+@@ -168,7 +168,10 @@ pack.preferBitmapTips::
+ Note that setting this configuration to `refs/foo` does not mean that
+ the commits at the tips of `refs/foo/bar` and `refs/foo/baz` will
+ necessarily be selected. This is because commits are selected for
+-bitmaps from within a series of windows of variable length.
++bitmaps from within a series of windows of variable length (in order to
++space bitmaps out throughout history), and we only select one commit per
++window. Thus if multiple preferred commits appear in the same window,
++only one will be selected.
+ +
+ If a commit at the tip of any reference which is a suffix of any value
+ of this configuration is seen in a window, it is immediately given
+--- >8 ---
+
+> > At the very least, if we do end up going in this direction (and I am not
+> > necessarily advocating that we do, since I would prefer a more
+> > consistent set of behavior), we should at minimum document it in
+> > git-config(1).
+>
+> The documentation says "... reference that is a suffix of any value
+> of this configuration".  Is "refs/heads/foobar" a "suffix" of
+> "refs/heads/foo"?  I actually find this phrasing fairly strange, as
+> I do not think of "refs/heads/main" be a "suffix" of "refs/heads/".
+
+I agree, the use of "suffix" is confusing at best. I think if/how we
+change this section depends on the outcome of this series, but the
+original intent was to say that preferring "refs/heads/foo" would make
+the commits at the tips of "refs/heads/foo/bar" and "refs/heads/foo/baz"
+preferred, but not "refs/heads/foobar".
+
+Thanks,
+Taylor
