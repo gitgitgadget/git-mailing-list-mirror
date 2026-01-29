@@ -1,246 +1,169 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FF4345750
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 16:53:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769705624; cv=pass; b=lHc6B/VWBo/S+xEoIfqJqGGgqCOanTE7cyWqAuXdiO4TACgD0ppdcvFklJjkumsMovFjZp67K9I3B7wAegERrxri6JfDdQ4v+W4jfky+po/J1Cdhtpw+r0Q8fgI2F3b2+CuPlcptOI6dWgnG27P6/Sqt9ITTa4jwzqBrbeaUPBg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769705624; c=relaxed/simple;
-	bh=p7DMZwaZws70tHd01qo4NzWvN17kEiAFXC5z+AEZvSs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sloxqXsYi+3FAACkWeNjTryYriIRx+Ha4l1peTm+y8OTRE7spVIUQ6sovOpysB/7JIZpEssPZQmGi1fhxA6b7mSP19/PaSFXy1Sfu1wbehdJebhZiTF2E8/RnITaE+8NT00REQgYbwP8oi6sXaYKDdOFMa77jRkrzS+A4jfQomk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jd6PSdEn; arc=pass smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CD334C81F
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 17:29:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769707743; cv=none; b=pM+Fpq26IIxj24yIpyqEM2pN+iZqNC3fDMQTrS89xYmn4SLa3OrPXkBfYKFxJANWJQuBGYI9kP9x+Sa0EZaWC5u6cPfnwSLhXS4lxscEF7OORzL9hauLz/xwi8xJyJygu5EBRrwApgPt2QElCfUhpFls0Jy2tzRWUB+zu5DY5XM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769707743; c=relaxed/simple;
+	bh=4SDXZggCKsJ+bYSokxa6ZdDg+L/TbXl7TGcUPd6mhTM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gWUNq9Swnp0GI9U3afyGoQXsow9sYGz0vAKIdglVJjwY2AXk/2cOx0xNdrae4Ir792ObN298UBB5JE4nPDEihpHhbsyvJRSKv7VyznN1gp12LFmiY552lrzrmkMJ65eIS4bIZ8xOhyIw9KsACcSWEhof9VkJy4uhDorJTE83Wjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ae33WeY4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hJcBj6Kr; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jd6PSdEn"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-432d2c96215so1066580f8f.3
-        for <git@vger.kernel.org>; Thu, 29 Jan 2026 08:53:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769705621; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JlTX1lhpThQW30QaHpoBBSK2A+vgF7glrFagGS2DzUtJ9ADC/BO1Wd6YmW0U4X+QsD
-         LHaW1RajGPT5LyJcvWcLDy+iXCPXUkU02JORmLkd8vEdR60ZqyJQFKtdwMX9uZ2oUbG4
-         SH3NRL7mVyo+RfgTnSEnod4mIAP0AiYT8+91bpSOqfNnWR5a1v2phJmqnkprgxhT/Vyc
-         LT+MktxR2/uxcKOyYf/dulNsXWTgeTIozVlvlJxbf77xm12dDxOHTkyedgLYEPOwEmSt
-         ee2VYMNWoin31fHv1Yn4SDAYO+w37ucafYUFfOh0OSM28j1D9GPQteUDaW23LBzbzzHP
-         wLRA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=rMojeZ+MT9IDMbhrg2bDU1juKMXTquLfNeETBN/OHKo=;
-        fh=Z23r5Gqkv0hfb7+AE+6cZSh8FYyyMto21+RV+PYI3xc=;
-        b=FjueGVowhDcQDmDsItqGolfIpoLhFxseR6yyEpejosP2yU2kWMrxn4zecBiu8qL4CK
-         0Kg1IdP0Y+Pvz4zHkD09PfbbYm03WyMeQRtt6Mgb33BaHqft7etz9LW89X0ltfWDc1d6
-         4j24k1xSjoxDDQupwGz8SQxwE7CoZJ89eiA8KZHmjGIVA7f1BrzRfrlN8S2mRbhN5cQD
-         Gm/SMaX/sfV7LnFSnw3R0nnU3kr6zySqu51wh5Ix3KMmbRlZqhLnBcM8m4cZSHKR9HZF
-         pRotCwO6U5N4qkZOz2yy4wF8DTIJgiEkMISJ3RQmKq3Fbu++6EY5gFFsAthbDBn2CMpk
-         fy4A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769705621; x=1770310421; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rMojeZ+MT9IDMbhrg2bDU1juKMXTquLfNeETBN/OHKo=;
-        b=jd6PSdEnmASLUPS83+6cvk+XfnKNgwv0W8wXSNzMwPBhe5DhBQyMt1IIa4KOkZSfcH
-         0sy4b428hOsob8oaP6ei5b0dRWAzrB416enp3K19d/VoaEDjq+bCnA6Dd9D1OYOQNR3d
-         Z2czUugOLs/+qGd42ZkMikiDsbHJB3JcYSGhAKtun0OYK6lHHujjszHLlugeMknO6cGX
-         JqgMPWy1by8Fb3HmJTHK7M5mLtUMJQZPydob0lpVM9+BVk01ex1olssUhtq2c4QbTOSu
-         GkhI1FQ0clfxMzdVhHH+RnlqEIQXYnGw7jXnekq7B2wJx5ZIzciJ0nJLRqBh11LS2FGK
-         X3ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769705621; x=1770310421;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rMojeZ+MT9IDMbhrg2bDU1juKMXTquLfNeETBN/OHKo=;
-        b=cZzC2573doP/JPdEo3wlFoddZ9lEkFDM5tO9Bs3B52V30CUvL1Lb7fKcSCVJlM9A/D
-         mOTKHBnPiJbmBfuUMaH1BQOzxp6+xqK5CQLvOtxtjrSqsyFA3fYshxkdkhZSnAQFolyh
-         XRFzElrsg5czD/8E8AppvOHyAexxCSAcNaDnnf9jKUTZ+QtSf5VtyCoggdrW0Wniyn3b
-         QwJnZx5Swa74HcqO+4YO0PT91M44EzvPWMux7jdcHUOTbviK95ZRhvn5uf0uMZMqiAPw
-         +0W6b+nHeNT2YSkvupk11cyJ4nsxmSz4xKpknKJW96cRoaLcvXrTzJ15Qd7yCdI1r+Ao
-         93fA==
-X-Forwarded-Encrypted: i=1; AJvYcCUJNh7RpVBz0opsg17dBsZNUS3fWwSu1SUf08OyWomA9EmFE1ML16Pbl9huACS/G65ToXQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOzM2wR7ef0mMEsGdt8McpjzhqSRbdnnmQjMVG4kzWn774CsvG
-	MCsdBLCGsL7ix7OtojxqqyX2QJZcP7rpL/IyCFxn5TKSxBw4tkLA1dAz/zqJkDlb9oJlZ4ZN91C
-	fcPlu0G1JnSkgkmsqjTxhNC5La/1bvHFEx4ap
-X-Gm-Gg: AZuq6aI1Vz18uSOW8vZQFPB2lxwC8T4i/NvrOWyShxkb1B0nDk0V2VuYrrxvnWl+TEF
-	zeteY+ZcoepM3O+wmyozgiFhmJ+gzWTGE+6qxeX5WukYtuPFkJokAOF14ZH86M32uxpzRWz3Jnh
-	m2Cdz3vOxelwU2CRS+3Iohjhq234j8mOcncGnAfrj211OjTkxAb7j8uAnFofoc8ewv8zFG+BjrN
-	63vZjfg8o7OtjnO0d6cDzoJM3Jci8WYEKA50Hm5dki/ocbkUX4yUqCqfNUY6ar6Uh19H1g=
-X-Received: by 2002:a05:6000:1446:b0:430:fbe1:382a with SMTP id
- ffacd0b85a97d-435f3ab8953mr399034f8f.54.1769705620567; Thu, 29 Jan 2026
- 08:53:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ae33WeY4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hJcBj6Kr"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A8500140005A;
+	Thu, 29 Jan 2026 12:29:00 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 29 Jan 2026 12:29:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769707740; x=1769794140; bh=wrKkvxHqyQ
+	Qg/Gq76+n+aDwUjSauZYcuMv3nUbubSgI=; b=Ae33WeY4sDzNrXmUeDNavt7Ar+
+	nkUeT4GO3X/AGiR0MkiUFlBYAPhHj/iFptjMwGhuQgUuYAwj/rbF60xm7ZcDJ5+e
+	uY7PpThRK3tBRjC4jcjSrEr812PeuyAIGnwzYlLs7v/gNyoQ06HjWOfhVRQxlpgc
+	MA1SKLTNzVNo6zrotBNErBpP2KJdSao4HZySsMGW/aA9HTbhuPKeCjfk56uHTPAn
+	M1/4blliDu/pCrHOVCASSvTsZcYCv0VH2HsfY72nCcSun9/wyov5N9mPL1x4psAD
+	vEKxbV5M3AXGpDrvGetp8xK2N+me6kpgQOyMc2XPsjRKAT60ZXqTXa8dwSgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1769707740; x=1769794140; bh=wrKkvxHqyQQg/Gq76+n+aDwUjSauZYcuMv3
+	nUbubSgI=; b=hJcBj6KrXBCJniXPTy8UKsT0TGzXnLPs0xTStDdcVAb+x/kLXsX
+	GJ07eZ0ufmhEiPJmmdin5sgmnxbOvvYAKx1Ohb9fqCJFtWmZBn+G6j1iHT/xf7sW
+	tWiEPoVnFau9INIlzloHOdxGAPJRMQSGBVwJkZb9dqOs252dAZbbfHEKY3oDXC+O
+	s8Qg9GRLQymAeftm8pMzrnI5bC/vLO5E29avUAfA4DALbT9D1q0BP7dkZAPXdtV4
+	Z9xg57vVh/uBPx9FmVSytFXJUx45Mn9nFAhVF9uhf8RAXtZUInNC0/VZvjQCFbY1
+	3bLHJkICQEo+uxdFkTuEyjUsS6bJ+qqVU1g==
+X-ME-Sender: <xms:3Jh7aULGG1QzrAQG0up_5usVtiVBaTIVaedu6feLxJ3OU-s-CdGGFQ>
+    <xme:3Jh7abCc99_hqLOqVwzmEcLfXZQmteXiKaex3qs8RgDic9HNml9nt8FePN46IyPWW
+    gYVQx1KbfT6JbkgdbuX6IPmgakPUMPs8FGNr6fP1cgNmvJQWXLxsg>
+X-ME-Received: <xmr:3Jh7adBphoi1BJB7GBK0Wp2J7kuxPneahZSOM6NICphPWW_vmUnVdqbOmftc7Gm0zHEqLQi_ZYHdaGPwLNEmJPP-iNi6wniJtlbnzig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeijeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3Jh7adAXrVWL4GqOaSykij3gxe09l6e-MOM048y4usmhmdMuUxPV8w>
+    <xmx:3Jh7aYrA7YZ4yL_sZLcuf9T6u3V4W83OeEzAGHTSpub4Fr4Q7yWsdA>
+    <xmx:3Jh7aXlQaz0FhWITZKn-7BtRKSGo0MQcjC2V7qfgYvyr9FzoxPDazg>
+    <xmx:3Jh7aYxBwwTh9XL3iq3xiLXlBDsyXoADMPSIY9SdOhHFyk1PwR3hIg>
+    <xmx:3Jh7aQReWWkwXHZhjCvaTwcAUW7kq2Cgtq0l1IZQHgcGxiJz00BFpx3y>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 29 Jan 2026 12:29:00 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH 3/3] bisect: fix misuse of `refs_for_each_ref_in()`
+In-Reply-To: <20260129081420.GA589284@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 29 Jan 2026 03:14:20 -0500")
+References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
+	<20260128-b4-pks-fix-for-each-ref-in-misuse-v1-3-deccae3ea725@pks.im>
+	<20260129081420.GA589284@coredump.intra.peff.net>
+Date: Thu, 29 Jan 2026 09:28:58 -0800
+Message-ID: <xmqq343ocopx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
- <xmqqikcusn8p.fsf@gitster.g> <4fa413ae-f2a4-4de2-a2fb-0b1db379750b@gmail.com>
- <xmqqy0llk33y.fsf@gitster.g> <3aeb49dd-8618-42e0-b9f9-6a4fb8065793@gmail.com> <xmqq343sjn4x.fsf@gitster.g>
-In-Reply-To: <xmqq343sjn4x.fsf@gitster.g>
-From: Yee Cheng Chin <ychin.git@gmail.com>
-Date: Thu, 29 Jan 2026 08:53:04 -0800
-X-Gm-Features: AZwV_QjkN6og4EYqzaZhB3O6VN_fKCT4Z8cnmRvq9LmFeCCn0JJfwaGVWMWLn8A
-Message-ID: <CAHTeOx8SOZmqvi0pkcheSjFpbEALmOwaUiX0tKLmNP7fqvjMXA@mail.gmail.com>
-Subject: Re: [PATCH] xdiff: re-diff shifted change groups when using histogram algorithm
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, 
-	Yee Cheng Chin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Thanks for the review and sorry for being a little late in replying.
-Aggregating all my inline replies in one email if that's ok.
+Jeff King <peff@peff.net> writes:
 
-On Wed, Jan 21, 2026 at 12:51=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> So the idea is to remember the original values in g and go (the
-> location of the group in the file and the other file) and if
-> shifting up and down changed any one of the four ends from the
-> original locations, we always take the fall-back route (if we are
-> doing histogram)?
+> On Wed, Jan 28, 2026 at 09:49:22AM +0100, Patrick Steinhardt wrote:
 >
-> By the way, this appears after the if/else if/ cascade that has:
+>> Furthermore, taking a closer look, we strip the prefix only to re-add it
+>> in `mark_for_removal()`. This is somewhat roundabout, as we can instead
+>> call `refs_for_each_fullref_in()` to not do any stripping at all. Do so
+>> to simplify the code a bit.
 >
->         if (g.end =3D=3D earliest_end) {
->                 ... do nothing case (case #1)
->         } else if (end_matching_other !=3D -1) {
->                 ... do the slide-up thing (case #2)
->         } else if (flags & XDF_INDENT_HEIRISTIC) {
->                 ... do the indent heuristic thing (case #3)
->         }
+> Yeah, I think the result is much better.
 >
-> Am I reading the code correctly that, even though this new block
-> appears as if it is a post-clean-up phase that is independent from
-> which one of the three choices are taken in the previous if/elseif
-> cascade, it only is relevant to the second case?  I am wondering if
-> it would make it easier to follow if the new code were made into a
-> small helper function that is called from the (case #2) arm of the
-> existing if/else if cascade.
+> We might also want this simplification on top:
 
-That's correct. This condition happens only in the 2nd case. The
-problematic scenario here only happens when the opposite side is
-non-empty. If the opposite is empty (case #3, where we run the indent
-heuristic algorithm), there's simply no need to re-diff anything
-because diff'ing against an empty hunk is pointless.
+Very good.  Thanks, both, for improvements.
 
-You made a good point about placing it in the if block itself. The
-existing code was a little confusing and took me re-reading the code
-before I remember the condition. I'll fix it in v2.
-
-On Sat, Jan 24, 2026 at 2:54=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
-> I'm a bit confused why we need to check both groups. I think they're
-> supposed to move together (if we move "g" by n context lines we also
-> move "go" by n context lines) so I can't see how we can have
+> -- >8 --
+> Subject: [PATCH] bisect: simplify string_list memory handling
 >
->         g.start =3D=3D g_orig.start && g.end =3D=3D g_orig.end
+> We declare the refs_for_removal string_list as NODUP, forcing us to
+> manually allocate strings we insert. And then when it comes time to
+> clean up, we set strdup_strings so that string_list_clear() will free
+> them for us.
 >
-> when
+> This is a confusing pattern, and can be done much more simply by just
+> declaring the list with the DUP initializer in the first place.
 >
->         go.start !=3D go.orig.start || go.end !=3D go_orig.end
+> It was written this way originally because one of the callsites
+> generated the item using xstrfmt(). But that spot switched to a plain
+> xstrdup() in cf01f617b9 (bisect: fix misuse of `refs_for_each_ref_in()`,
+> 2026-01-28). That means we can now just let the string_list code handle
+> allocation itself.
 >
-
-You are right. It was an over-specification. Looking through the code
-we should be able to just use "g" and there is no need to test for
-"g_orig". Will fix in v2.
-
-> >> +                    xpparam_t xpp;
-> >> +                    xdfenv_t xe;
-> >> +
-> >> +                    memset(&xpp, 0, sizeof(xpp));
-> >> +                    xpp.flags =3D flags & ~XDF_DIFF_ALGORITHM_MASK;
-> >> +
-> >> +                    memcpy(&xe.xdf1, xdf, sizeof(xdfile_t));
-> >> +                    memcpy(&xe.xdf2, xdfo, sizeof(xdfile_t));
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Even before cf01f617b9 we could have done:
 >
-> These would be safer as "xe.xdf1 =3D *xdf" so we don't have to worry abou=
-t
-> getting the size correct (sizeof(*xdf) would also be safer but there is
-> no need for memcpy() here).
-
-Will fix in v2.
-
-> I also wondered if we need to do a diff or if we can just mark the
-> common prefix and suffix as unchanged but I suspect that wont will work
-> for more complicated examples.
-
-Common prefix/suffix would not work for more complicated examples.
-Here's an example (imagine each character to be its own line):
-
-File 1:
-A AAyz AAA
-File 2:
-A xAA AAA
-
-The current Git histogram diff generates the following:
-A [-AAyz -]{+xAA +}AAA
-
-After the fix, we have:
-A {+x+}AA[-yz-] AA
-
-Note that there is no common prefix here, and we need a real diff
-algorithm if we want to solve this issue in a generic fashion. As I
-mentioned in the cover letter, I thought about implementing a "bespoke
-linear-time algorithm" but decided against it. What I meant was we
-could implement a simple diff algorithm that finds the common lines in
-both hunks that would run faster than Myer's, but isn't guaranteed to
-be a optimal minimal diff. I decided that it is unnecessary to
-overcomplicate things given that we can just call the fallback diff.
-
-On Mon, Jan 26, 2026 at 1:37=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+>   string_list_append_nodup(&refs, xstrfmt(...));
 >
-> On 25/01/2026 17:34, Junio C Hamano wrote:
-> > Also, after reading the first paragraph of the big comment again, it
-> > makes me wonder if it is saying the same thing as "When histogram is
-> > being used, we shouldn't bother shifting up and down to join groups,
-> > as the result will always worse than the fallback", but is it that
-> > bad?
+> to get a similar simplification, but after that commit it is even
+> easier.
 >
-> Looking at the example in the commit message the result of shifting up
-> and down and then calling the fallback is better than either the
-> unshifted diff or shifting without the fallback, so I don't think just
-> disabling shifting improves things. It would also stop us coalescing
-> changed lines, for example
+>  bisect.c | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
 >
-> -A             A
->   A     ->     -A
-> -B            -B
->
-
-I agree with you, but I think it is actually a nuanced decision. The
-histogram diff algorithm explicitly chose the specific
-alignment/anchor points to align both files due to the frequency of
-the lines. When we do the sliding / compaction step, we are
-essentially ignoring and overriding the algorithmic decision made by
-histogram, for the sake of other metrics that we value (compaction
-values fewer diff hunks, and indent heuristics values aligning by
-semantics approximated by indentation). I think those metrics do help
-which is why we added them, but there's a bit of design tension
-between the underlying algorithm and the cleanup step.
-
-> To me the problem is that the histogram diff does not always generate
-> particularly good diffs (maybe I'm biased - whenever I've tried
-> switching the default to "histogram" I've always switched back
-> "patience" fairly quickly after being presented with a diff that I found
-> hard to comprehend)
-
-FWIW I personally feel that way as well. I think the documentation and
-narrative that histogram diff is a "more advanced/extended version" of
-patience diff is sometimes problematic, as both algorithms are fairly
-different and have their own weaknesses. The Longest Common
-Subsequence (LCS) used for alignment in patience diff is global for
-the file and allows gaps, whereas the LCS in histogram diff requires
-consecutive lines. This means even if the diff has unique lines across
-both files the diff results could be quite different between histogram
-and patience. This consecutive requirement for a subsequence is why
-histogram diff runs faster than patience diff most of the time, but it
-does mean the patience algorithm is better at discovering a global
-"spine" across a file.
+> diff --git a/bisect.c b/bisect.c
+> index 2cd97bc9fe..6b9e9d81c3 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -1183,8 +1183,7 @@ int estimate_bisect_steps(int all)
+>  static int mark_for_removal(const struct reference *ref, void *cb_data)
+>  {
+>  	struct string_list *refs = cb_data;
+> -	char *bisect_ref = xstrdup(ref->name);
+> -	string_list_append(refs, bisect_ref);
+> +	string_list_append(refs, ref->name);
+>  	return 0;
+>  }
+>  
+> @@ -1193,16 +1192,15 @@ int bisect_clean_state(void)
+>  	int result = 0;
+>  
+>  	/* There may be some refs packed during bisection */
+> -	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
+> +	struct string_list refs_for_removal = STRING_LIST_INIT_DUP;
+>  	refs_for_each_fullref_in(get_main_ref_store(the_repository),
+>  				 "refs/bisect/", NULL, mark_for_removal,
+>  				 &refs_for_removal);
+> -	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
+> -	string_list_append(&refs_for_removal, xstrdup("BISECT_EXPECTED_REV"));
+> +	string_list_append(&refs_for_removal, "BISECT_HEAD");
+> +	string_list_append(&refs_for_removal, "BISECT_EXPECTED_REV");
+>  	result = refs_delete_refs(get_main_ref_store(the_repository),
+>  				  "bisect: remove", &refs_for_removal,
+>  				  REF_NO_DEREF);
+> -	refs_for_removal.strdup_strings = 1;
+>  	string_list_clear(&refs_for_removal, 0);
+>  	unlink_or_warn(git_path_bisect_ancestors_ok());
+>  	unlink_or_warn(git_path_bisect_log());
