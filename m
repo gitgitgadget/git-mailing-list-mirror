@@ -1,128 +1,126 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E6330AD00
-	for <git@vger.kernel.org>; Thu, 29 Jan 2026 18:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9C43093AB
+	for <git@vger.kernel.org>; Thu, 29 Jan 2026 19:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769712876; cv=none; b=plJyUFaR5j6dMkj8ti+aAPgCTcSvefEsCHY1bC9mfSIyU25WxELlkWV/2YsJjSVwHBaaDus/vzJav3jdGFJinx/8b4ZJvTMshKfO+R1rAg7cVJoSIbYL7xkDVCzYA3D+w9BylSUJ/GTeKL9BkCEaiyAZylXuqF8eihXWRK7vLK8=
+	t=1769713580; cv=none; b=HVvMItRI5QAju68mTcrF/XybHaubZf+zCQZdQzA+6Lnn6RoCzpcHd3Z9qZ3fxkwWEdXRPZskxS4KtJ6AoS5P/lNDxJkSMgqa8iwdzpMcAPalxzgs/F+EX5TLNV//oMxE4KZfvdARqF3ToG/8BK7soNAkmM6ZhhWLhY45hUP3iZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769712876; c=relaxed/simple;
-	bh=V/ILjVUJz4Ti/0E2WdmQdoLEX9ft55KxcwGmOUPGCLA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pNrw4uMmqT7Vv/7M5YuWj/4S0VQtuEytN5BPPUaHVEZUKiDIAozqZWDZP5TJ6nSctbd68DTyfxY9zR5cHOAzv6T55paQLTDFZz83/LTZ3p4AdQ+Ux+scIJylLxc7FvAemcFgIM6bHJ4p+f1ULjJvbRs3QcyDdpGirCMlwuRToOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AKULP8le; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EwZInyu7; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1769713580; c=relaxed/simple;
+	bh=P1hELCpSjg90wj+cUEJOTvNsbxq2wLkpvrxL91Piw8E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hOgEELeo0qBX4QR0FOsxfs6pgj8MxTTT4B6yHrtchYHCL+i7C07xpZ44/cwH/kgZnfcvSwIMpqHT/nS5sDR+bOjVu7XdjnccaTygS4fOlpBcLGC37O632VAFxQmvYFAhISvB9mQ9ZL+CaKwOWUEJsoKGpmF6RJ1lt6B7oIsaUKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I7R9/8Y+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IDmQQLvz; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AKULP8le";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EwZInyu7"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A2A4F140019C;
-	Thu, 29 Jan 2026 13:54:33 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I7R9/8Y+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IDmQQLvz"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9C7A914001A1;
+	Thu, 29 Jan 2026 14:06:18 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 29 Jan 2026 13:54:33 -0500
+  by phl-compute-03.internal (MEProxy); Thu, 29 Jan 2026 14:06:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769712873; x=1769799273; bh=VLKS/VNbBF
-	ELnmrpmq4VS/PYw5ao+q7M/gUsQJEJ3mE=; b=AKULP8lehCKhJ6cD0k1YWbRFgg
-	CVrxmSxSbRWilsv3yagPeBnWogQCb6q+JdntEMTJFZ8fNmgjFbqELdd5abkKQKKn
-	m1RzHuGk74BaiGcVF6BowArWaeacBwY3JcxwEtCNdkjs8RuYdlXK82u8vFthnS7t
-	mHVdvCCkanaGwhZzTx8tGD2c4LsSeBEdDg7IQ6bGxexGVU+v0YpaWdyZCdUxQAwO
-	ZCh2B7mwogqOnysdPx+Yu48cNZnFSEX8CpztuxF7KoufVOAA8IuzeOjL4HDvVCFh
-	Ps0y788kcnpnHklzUwEGoKzBu7rvEINBFIonrN9LR1O1/Ty+la0iRmxnRKVg==
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1769713578; x=
+	1769799978; bh=AxIn4PgQL9LlZ9oE42YsRVbC2sW2R1MHIxroasJHdL8=; b=I
+	7R9/8Y+56ZJjz4gKFN4Auro8j2Kpc/OsAMysDFF1VHMyDg/v3PecImkGPztFCmuZ
+	8hHxpte14jeRAFM2tP9Z1O08hBSlweDDWizjGqMjXaCELCyV2Mgkmrggya+uptNp
+	ainsJ9cNhuT+9U2wJf6BjyKkxQeGvtWmOxMHc1PNhbd5pls1Ft4p4kLyldp/2j4W
+	lZsQZFQ6ifT6vKaA/736Lr2DQL5a7CBoHbV0B2BXrG3RRkGKSkNsM1/F1xtLd6bz
+	mckwdvW9AYON0EqVBbFDgjTnCKIuCu8YEd84KI1vgQzVRPlY1NbwYXJQgUvh2TAG
+	RCYmXGojR28hKCq8g1pdQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769712873; x=1769799273; bh=VLKS/VNbBFELnmrpmq4VS/PYw5ao+q7M/gU
-	sQJEJ3mE=; b=EwZInyu7iyGHMk8IM88zaWPoBBlHrsmauhvjyDP/Akoj/OuHe41
-	0du9o+vwsotkJImVWTZhD8VwCAd+VZif5jdfkwpxEmyiKaobAL4P9Q8CPHlPXtzm
-	pGz7QPFs7Ujh2IXCrH8/efnZEv00GeSVXo/7jBKZ40rOCguvU+ZywdplAfUM0ryr
-	btY1RXB1cKMcZjvqwwCj4+VCwjRD2yjYXgoWtMPQ9oOOhcH/ncTB92FtwQp6ftjf
-	/ng2Zfcpi1O6TGalU7i/h1e5ibDxjqEozyQeiv5AFjMDDTmNZU6K9Tx6vWo/lwgj
-	7+l3P3vxUYPvF87amjQDY+Gyyb10NTPlMWA==
-X-ME-Sender: <xms:6ax7aaah4Fe3exA0flfYgWDiHBqAadsuoxKzsiPzgsKThYtJAvmUAw>
-    <xme:6ax7aUa4FphHU7CIXH2hRMk0srg-BSwnssK9Tf0rW3cuTIaFx0mizIp8vVBN1T6RU
-    uCvfmbgnAENyHK4KZzLsS4upczQbk-eb9imPzV2U02aIjZS8CSz8g>
-X-ME-Received: <xmr:6ax7aZ9nrS0tfJACn-CQrU22mrLOzdDDdQa9u6ePtAqS93YRcans73Q9Y5TBcBJ58KuppL6f2fFfvk8z2MPsPcb9xg-w-W3gE87xIWM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeileeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1769713578; x=1769799978; bh=A
+	xIn4PgQL9LlZ9oE42YsRVbC2sW2R1MHIxroasJHdL8=; b=IDmQQLvzDkIhLpT5g
+	bIWpgf2T7ELyL3Yka0bG58d1cB4BQWPREHqSaUtl75TuJaDG6v5wKKPCfVGB0ANj
+	TT7qCmp70ZilrdKUnTF0Rgk3Gc4Oycbwod/kGLNqgrB0LUqUpJPBQZttOpv+6Lsb
+	/MnmSpgKM0+T0S7QYIbXaz62xVrS91S5PDosTfOs9heURYQmfpFh0+GCnrl4Tfza
+	5Oq3mWusWlbOIUtNv6hWpAZpfR3FmBqC9i2Qr/P5VZ1YImX82wlPfbzKw35T2ABi
+	5OKWLBwMxFriXPvO+cqVwf9jyvI+TIPjLiudbPRGPHikx7vzHtYBfAHfWOpVglge
+	ZANIw==
+X-ME-Sender: <xms:qq97aawd4bhPA8xqRPgsr5EFjiE-B0EygQBmko5zwi98nRFVJNLnPA>
+    <xme:qq97adTqQN7O0IL6XYw-w3w20RvXzk4r3wqyDlxfY3AWzTxqXieMEDI8B6gZ_NmRm
+    pTmSa3aeG2U1qAW6JHhOmNXTfxUE5knWOaHO-MVAm9MBTRGBDwKZw>
+X-ME-Received: <xmr:qq97aRWC-LV4fbpdLzoIyetJp_oIfY8iW_lyg20I_Qb7SQ2KV_ToPBHwjjuet0gl4LDiKPKiKuCHj_BgDBwiLBsQr7isBjeQJWJ6ISU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeileekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepvedugfejvddvgedvtdeuueeffeduhfdtheevffeufeelteeiveevkefgjeeu
-    veeinecuffhomhgrihhnpehprghthhdrtgifnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgs
-    pghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhushhhkh
-    grrhhkuhhmrghrshhinhhghhduleejtdesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6ax7abgGon8DNBK4QpKjqhHiZGusdDdvZFSYB_I2iz_6NYmVB6ga5g>
-    <xmx:6ax7aRdi51gUS1K_pljsviJcz0joV-fR3AizzW7UKqdk_29OEefQDw>
-    <xmx:6ax7aaq7b2oRxaqXoSa53PExjim6guJTCMmFJxGHVNWfNLw5smzxPA>
-    <xmx:6ax7aeC20Kij36OWIH4y79rUezHbM4YTWFyn53DKHJ4hXKgWDRny6A>
-    <xmx:6ax7aX443nxjtqNGEGzBej_CFZc1TBNHxzD75nAd8kAn4c3Q1jWYHfXu>
+    htvghrnhepgfdvfeethfekgfeihfehkeeiffeugeeuhedtheefkeetieffheeuhfdthffh
+    tddtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgihqhhsihhmohhnsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
+    esfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:qq97afZOKrqNVHcyyctB8L0E65gFm_F2dbR0-Lts8crp2gIlo-t2lw>
+    <xmx:qq97aX3Y_RKuI7Mr4adsDoclhPsAUjAcFAeflTIrUyLzp08384UV-Q>
+    <xmx:qq97aRjJZ24Sb0DGEC1JvmC6keRbxm5bE-kiWJXIgfnpNd-BLrdYsw>
+    <xmx:qq97abZC5_r6m88aXkhXmERxIiDPwlVrmdjbXoQ1qxbXTWauQ-98nQ>
+    <xmx:qq97aY00VjJxdeBr2pkNNGR_NlrYlyyoC-u0NmEL9r5sbcx4Ae__dnju>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Jan 2026 13:54:33 -0500 (EST)
+ 29 Jan 2026 14:06:18 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net
-Subject: Re: [PATCH] path: refactor normalize_path_copy_len()
-In-Reply-To: <20260129145434.29123-2-pushkarkumarsingh1970@gmail.com> (Pushkar
-	Singh's message of "Thu, 29 Jan 2026 14:54:35 +0000")
-References: <20260129145434.29123-2-pushkarkumarsingh1970@gmail.com>
-Date: Thu, 29 Jan 2026 10:54:31 -0800
-Message-ID: <xmqqh5s4b66w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: git@vger.kernel.org
+Cc: Simon Cheng <cyqsimon@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: [PATCH v2 0/2] Improving advise messages from "switch"
+Date: Thu, 29 Jan 2026 11:06:14 -0800
+Message-ID: <20260129190616.645471-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.53.0-rc2-149-g6536429cee
+In-Reply-To: <20260127192936.904719-1-gitster@pobox.com>
+References: <20260127192936.904719-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
+Simon Cheng noticed [*] that "git switch <name>", in an attempt to
+create a local branch <name> after a remote tracking branch of the
+same name, fails correctly when multiple remotes have branches with
+that name, but gives an advise message to disambiguate using "git
+checkout".
 
-> Refactor normalize_path_copy_len() by extracting helpers for skipping
-> slashes, handling dot components, and stripping the previous path
-> component, making the control flow easier to follow.
+Obviously, the user wanted to use "git switch", and "git switch" is
+equipped to do so, just like "git checkout" can, so it makes more
+sense to give hint based on "git switch".
 
-The new helper for skip_slashes() may be a clear win as it extracts
-away verbosity from 3 places.
+The first patch of this series restructures the call chain of
+checkout, switch, and restore commands a bit, so that a helper deep
+in the callchain can find out what end-user command it is working
+for.  The second patch takes advantage of the new structure to tweak
+the advise message in question, given from a helper function in a
+fairly deep part of the call chain.
 
-Moving the logic to the "handle_dot_component()" helper, however,
-dissociates the actual code from the explanation on the 4 special
-cases in the comment, and at least to me, made it a lot harder to
-understand what is being done and why.  Also the "goto up_one" logic
-was easier to follow in the original than with the magic return
-values given by the new helper.  Quite honestly, use of that helper
-function looked like worsening the readablity of the logic.
+[Reference]
 
-Giving a descriptive name to what is done at the up_one label by
-using a single-shot helper function strip_last_component() may be an
-improvement, but I do not think it is a clear win.  Adding a
-single-liner /* strip the last component */ comment without moving
-the code may have made the result even easier to follow without
-disrupting the flow with an extra helper function.
+ * https://lore.kernel.org/git/CA+itcS0iyqNyzOP0cueLg7B3yadoEr_VWJ-QoL+YPFUPJiE2RQ@mail.gmail.com
 
- path.c | 2 ++
- 1 file changed, 2 insertions(+)
+Junio C Hamano (2):
+  checkout: pass program-readable token to unified "main"
+  checkout: tell "parse_remote_branch" which command is calling it
 
-diff --git i/path.c w/path.c
-index d726537622..53a87ab67a 100644
---- i/path.c
-+++ w/path.c
-@@ -1182,6 +1182,8 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- 
- 	up_one:
- 		/*
-+		 * strip the last component
-+		 *
- 		 * dst0..dst is prefix portion, and dst[-1] is '/';
- 		 * go up one level.
- 		 */
+ builtin/checkout.c        | 92 ++++++++++++++++++++++++++++-----------
+ t/t2027-checkout-track.sh | 18 ++++++++
+ 2 files changed, 85 insertions(+), 25 deletions(-)
+
+---
+
+This second iteration simplifies the tests in the second patch
+somewhat, and rewords its proposed log message, as suggested by
+Kristoffer Haugsbakk.
+
