@@ -1,135 +1,162 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE0333ADB0
-	for <git@vger.kernel.org>; Fri, 30 Jan 2026 16:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB3C34321B
+	for <git@vger.kernel.org>; Fri, 30 Jan 2026 16:20:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769789176; cv=none; b=hi1Rpk0FL67Rq/Az0b9uADOQ9twNG8bpuQkJc+dQX26fPCDJ3d3ZfqyyB0ecAWuDndnsNXoMzzNcujcmkyBbZ3LcBDNBkj5J68PFSmf8gxb+bGInwFKET6arNsLQCGsk80hOvTuDYnOL0jVKDHsb3jd89hdus0fEbCOUi2N+hYo=
+	t=1769790053; cv=none; b=SkcUi7qx+wzAP9iuH4C/5g+FoDt32cIZVPF1EQuXu507xbH6cQ7LQFBVmyamodzouL1mqhz6GuF8X6d/qhxFbV8xjRb3RM9HOernwm37Jexa1g/lMQkfhnvIq929zI4imeO9P/AjeDQEgiF90NhMlda/XB0P/Xo77i/5kEv5cs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769789176; c=relaxed/simple;
-	bh=vKdKbR+vqVt5p6D7QVzI7I+JXJ9KLgen9UpjX78gP8U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l91atGp+6ti3X3360Fb9clWZj9v8FfFcBaKVMeMfzRM83gZnnhFpPNlYLGZS1QhN6af1C4kmyo6g13nkbQ7B5SLDmLpbDlAwNc40kDspixbFOiTTAP/LpTpUOg9cm/Y+U0u+qhfGYRG/q41tXqX25EmTNVJLLzpxigHpJZZmjrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kt6nL7ZP; arc=none smtp.client-ip=209.85.128.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769790053; c=relaxed/simple;
+	bh=op95y2ynlWhjD07Nrb6ufAWxJSWRdgp7xk/YUqdlfjg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QyoBhWXl5SVrC0cZjNuGCVyCSP8YqD21Wr8/gL1nFtVRWZyBHoZbZiU6BBCUxk3gxv++rqUNzujOzidzQ9xayEeCJx+R/G4morkliPwsPMeaEjY6KUXXte8yYBcq1KFD63U6cifa0zlCgGRPhSZcBltkpj+gFnzqaTuamkXW+FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FUOPlRsN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fW0jm2VE; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kt6nL7ZP"
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-47ff94b46afso20481445e9.1
-        for <git@vger.kernel.org>; Fri, 30 Jan 2026 08:06:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769789173; x=1770393973; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=H3/rUYDQDvr9UeeMtn1MyZFZQglQYhuoOu8FVnUwHxU=;
-        b=Kt6nL7ZP7QW75eWuK0twr+NS+JxC2wmhvj/BXSDPxTCRtLGTOZRJau3AcWTu8wpIk8
-         +Szwpnf0/XXgXxOtD6P7Y9prA/Gtr8DJ/Ju58ttvAi+aCz3NU13hmCdPDviVfErRbC9x
-         1Qy/IdqcBGU+fTrISV3vFbN1YpWuCITQdHBiGI9U0dw75fGXtVoTbBN3YE/DzRu5+La2
-         ZASANYadVmhJmyOt/s40s0d60O8s6GcLnk3xhbmp0hrxlgXPUdJwHCkIt+OR2QYAp3Og
-         g51u8CiHcH39w09YE8LI4ScaQZJnlNCdN0vb1sdQQSnDlzpRpLG7HU/dW3C5j0GoSZ5t
-         z88A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769789173; x=1770393973;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H3/rUYDQDvr9UeeMtn1MyZFZQglQYhuoOu8FVnUwHxU=;
-        b=c0ckQjCFzFUEpJKCKhEP+Y1BmcRFyU1n9AiDnSuEUsVy0QhHeMdPV6duTgWF7q4rn/
-         fHOlGMxVPY1pPn+oiNhWw22Mb6GN7Iquo3jx3M7EUM4Vm3VMZeCQXhOnPdkvPh/kKBg4
-         c/4GGh9JWmpb6CbrzmcuTH8ozQjjqYySMl0FNNs6QqukNxcpJFQwTxf+E3iVKjX+00eZ
-         fMnGOhMiA4X2flVqnZQH3NYHkSDfRGMnaI9JCCh14YECRQS+IGdDXVSL38KOQGOderc7
-         6FNoUZGIY12DX5Semo6r4NDjqNC8n+5vxe1yGuGAqvcM+vkaw/VzPPvOAG/FkU1g+H78
-         3TGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXO75zj4LqnyihubwFA/qsSmm1Ux0MfqgciqUvoA8WFqaL5T2T2W7LcMrguN6ZvCizDPz4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyTpKj4Kn12u34YYaglawiKqz5IaS1ATX09K9HaWnAiz16Tl8uf
-	j4O70go8jHPGlxcmbLHYNCvaacnqGQtTfoD9NCOMbG3DuHXXnoGlTWoY
-X-Gm-Gg: AZuq6aLvC8zugzJZcc3QcR2Dz4RFyah+36M8QcsmpA28lR/wPl8kYqDmNSkgHYL+luQ
-	qWLilI50+vwAB48u+vGhkG5V/0mkiZABlu2+DUUZAtrXsdojoe6XrbajlAtgCZjIt78G0EpDjx+
-	yO0Jc3bszTaDOrJHIQsLFes6yl7EesT7oSPKJgmfPHTtLXx9JOK3sS6IlIu3LSMfA65WLpLNOdn
-	My+x6R33leEImb3Pl6u5qgZQcVDFe+9wORRJq0rFL/583wHHbQCEQV15TZ7CslgLnBFKd7UHMR4
-	OEUY/tQ3EugfYO1UW00Ss/WtY6oiAgLR8xbRMQQRYEc/aKDYlgh6H+hOkIUnjIL1/mRPhMMdmNL
-	qkZYVVwh5hV7Gk3kU561mS2Vb/xidkknJasRUysE1/oqHnwQ/KyIV3rjv0cFqMpEG2XkVF3QYMQ
-	RBvxOrURFrZQ5mpqCBktgNKEYb+SBNldCHSw+Qljjz0ktfoNlGKtUhNLgVcYraMJ3N/w==
-X-Received: by 2002:a05:600c:8b52:b0:479:1348:c63e with SMTP id 5b1f17b1804b1-482db476c30mr42473195e9.9.1769789173172;
-        Fri, 30 Jan 2026 08:06:13 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-482e047e644sm19119515e9.2.2026.01.30.08.06.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Jan 2026 08:06:12 -0800 (PST)
-Message-ID: <b66b8781-a826-44e0-9a2b-2c3a57547f06@gmail.com>
-Date: Fri, 30 Jan 2026 16:06:10 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FUOPlRsN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fW0jm2VE"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 45E8A1D0012B;
+	Fri, 30 Jan 2026 11:20:50 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 30 Jan 2026 11:20:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769790050; x=1769876450; bh=B9resUq81R
+	ehmULOwghiOkH0tTk98kgFoVDBKH52BxQ=; b=FUOPlRsNK4twoi77ZSyHk/wBFm
+	CElm8rhUYy1ahmY2CGj4Rvc38H0DmxOhgP5Gjirvtwc9Io9wjYCvO4y/cxINpmhE
+	CGSbTf5W15VqknlT/6iPRBW0cs5QVEY40jgAgHdvOkd3p00CheW18CZWUazlw0HE
+	tPad38X+8RHM9SfAHRVCcEsScsx7U9NAUnLZnkotet8O0R5HKH6Tj2xJwXmWseFX
+	d44ZZsee5s0F6ll4HbH6IIHvHJ+L1RjqKCgKra6kSesuSirEMugvKvrfwNnMVmzE
+	oLlfH1YPAGF7PJke34vPH3XIY2plAN3fRhSfOAsRUczhWbK0sc8vzzIHFBTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1769790050; x=1769876450; bh=B9resUq81RehmULOwghiOkH0tTk98kgFoVD
+	BKH52BxQ=; b=fW0jm2VEGbEkLOFD671qBf6oDONRx7+1imNdwqkuSb4Qnp++xvd
+	ccdyBCON5bbWzjQiL5fdTXtnrzbdvrsOVBooCXLw/eOxWBD1DN/xuEK2Ck7OGgJN
+	+VKsftNb+wulcmfyxe17Ntl1PHyIq/D9HBPFZYOCKslM9MLgFV2Ih99yekOn6K6U
+	L4aBvVEptGaawXbeaqfUEBQN76v+AZsawu4QvDTW5fIsNMoFPrDea2or4i4w8gVj
+	yPfwMB8zQe+zkydKSbX+UCnnCM33Hd4mikRaYYePs11pbQhAmYuNOLsoNIgO1gUL
+	8Ec6hLAJcvLfGME2hsPw7TK6Nhif8R2IF4Q==
+X-ME-Sender: <xms:Ydp8aeoO36bEQKjXBHpNdTxdKX_uPPpJoKLnc_ngjcieLqIYmddHFw>
+    <xme:Ydp8aYXOvZPP568u1ex5ZhZ16XzyItl-AorVyYb12SoImfrRipTGZ1Rc1hmFKF5ls
+    TwN4jNY7KKaCZV2YZk8iHrVJ0wvykDMTltdc_kIG5wSZjGF3BFssA>
+X-ME-Received: <xmr:Ydp8afptbVg2KVX3ETBObZgp5oD0aPq5TyAwXrrZcuDk0Ys-G8tp19ycdrhk_vY5hbkUnO3SscUIslUWhOgsfbtjaeF1Buj4CINrSdA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelhedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeetudduveekgfeuteevudfgkeeffe
+    eghfeiudekiedugfektdelvdevudeggefggeenucffohhmrghinheprhgvphhoshhithho
+    rhihrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvlhhkihguleeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
+    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhgu
+    vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtd
+    dvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrghrthhitgdrshhivhgrrhgrrghm
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprh
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Ydp8aXBH_IEgjZzCxxQmLuG2Vcb-PyBWhAcWCjambIhCAsQzoyPKWg>
+    <xmx:Ydp8aTiC29QO_ZGQjfNQLSf89k0gox4dnidHtTUzaXnQWlLyK9Ofig>
+    <xmx:Ydp8adYq1QeuZ5_fUUA8logxppsRT2uuCFIdM2vUCdPHCNL8U-x2QQ>
+    <xmx:Ydp8acmR-a0QWMVm87T0ycPa-SG173u0WWfsXVJrgXqCyGmHGAgfDw>
+    <xmx:Ytp8aQXXj5z_Pl6baQCUKz8hik7dyIFBHtvG6B5y0ZUJglAAU5XUI8Lp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 Jan 2026 11:20:49 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org,  toon@iotcl.com,  phillip.wood123@gmail.com,
+  christian.couder@gmail.com,  usmanakinyemi202@gmail.com,
+  kaartic.sivaraam@gmail.com,  me@ttaylorr.com,  karthik.188@gmail.com
+Subject: Re: [Outreachy PATCH v5 3/3] environment: move
+ "branch.autoSetupMerge" into `struct repo_config_values`
+In-Reply-To: <xmqqms1wb6zg.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	29 Jan 2026 10:37:23 -0800")
+References: <cover.1769256839.git.belkid98@gmail.com>
+	<e7f37bac87aac74ca13f85ae7e393a38d2079b9c.1769256839.git.belkid98@gmail.com>
+	<xmqqms1wb6zg.fsf@gitster.g>
+Date: Fri, 30 Jan 2026 08:20:47 -0800
+Message-ID: <xmqqikcj842o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] xdiff: re-diff shifted change groups when using histogram
- algorithm
-To: Yee Cheng Chin <ychin.git@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: Yee Cheng Chin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
- <xmqqikcusn8p.fsf@gitster.g> <4fa413ae-f2a4-4de2-a2fb-0b1db379750b@gmail.com>
- <xmqqy0llk33y.fsf@gitster.g> <3aeb49dd-8618-42e0-b9f9-6a4fb8065793@gmail.com>
- <xmqq343sjn4x.fsf@gitster.g>
- <CAHTeOx8SOZmqvi0pkcheSjFpbEALmOwaUiX0tKLmNP7fqvjMXA@mail.gmail.com>
- <xmqqsebo9lv6.fsf@gitster.g>
- <CAHTeOx-TLwqbcdGcb2drD4vE6D3M93EPMjcAeTNR+XNTbmTVZg@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAHTeOx-TLwqbcdGcb2drD4vE6D3M93EPMjcAeTNR+XNTbmTVZg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 30/01/2026 01:58, Yee Cheng Chin wrote:
-> 
-> Case #1 happens when no *remaining* shifting was necessary, but note
-> that this happens after the do/while loop above, where previous loops
-> could have shifted and compacted the diff blocks already. Case #2 just
-> means there's some remaining clean up work to be done.
+Junio C Hamano <gitster@pobox.com> writes:
 
-That's a good point - as well as commenting the new code, it would be 
-helpful to update the comment in case #1 to make it clear that we don't 
-need to shift back up to align with a matching block, not there there 
-was no shift possible. I agree with Junio that it would be useful to add 
-the example below as a test
+> Olamide Caleb Bello <belkid98@gmail.com> writes:
+>
+>> -enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+>
+> Unlike the other two, this global variable was not zero-initialized,
+> so we can do something like this to initialize it statically in the
+> new world order.  That way, we do not need to worry about the
+> repo_config_values_init() helper function, which (1) we can easily
+> forget to adjust, and (2) third-party may not be able to call.
+>
+> diff --git i/repository.c w/repository.c
+> index d308cd78bf..b540e2ba01 100644
+> --- i/repository.c
+> +++ w/repository.c
+> @@ -25,7 +25,11 @@
+>  extern struct repository *the_repository;
+>  
+>  /* The main repository */
+> -static struct repository the_repo;
+> +static struct repository the_repo = {
+> +	.config_values = {
+> +		.branch_track = BRANCH_TRACK_REMOTE,
+> +	},
+> +};
 
-Thanks
+After having slept over this one, I think a static initialization,
+which mimicks what we have been doing with the global variables very
+closely, is not what we want in the longer term.
 
-Phillip
+The aim of these patches is to prepare for a new world order in
+which we can add new Git subcommands that operates in two or more
+repositories at the same time, and have these repositories use their
+own versions of these "global" variables independently.  While the
+static initialization has these advantages:
 
-> Just for a concrete test case that will illustrate this in case
-> someone is running the code and want a demonstration:
-> 
-> File 1:
-> AXB*
-> 
-> File 2:
-> CD*XE*
-> 
-> The first "*" is used as the histogram alignment anchor, which will be
-> shifted resulting in a compaction, and therefore needs to trigger a
-> re-diff. The correct output is as follows (which will only happen if
-> we also run the re-diff in case #1):
-> 
-> {-A-}[+CD*+]X{-B-}[+E+]*
-> 
-> Otherwise we will get the wrong output (note how the "X" is
-> erroneuously included on both sides):
-> 
-> {-AXB-}[+CD*XE+]*
-> 
-> Because of that, I'm leaning on keeping the current code structure,
-> because it *is* indeed a cleanup step to be run after the previous
-> one. I could still refactor it into a separate function and put it
-> into the the case #1/#2 if blocks if you think that's cleaner.
-> 
-> I will also add the above to the test case in v2.
-> 
+ * Once the code is written, no new command can forget to initialize
+   them; initialization happens at the program load time.
 
+ * No programming error can wipe what has already been read from the
+   configuration by making a second repo_config_values_init() call
+   by mistake.
+
+neither of these advantages apply to second and subsequent
+repositories.  We'd need to somehow initialize an instance of a
+repository that is not "the_repo".
+
+And for that, repo_config_values_init() is needed, even though it
+adds the downsides that are opposite of the above two advantages of
+not having to have an "initialization" step.
+
+So, we need to take it as a given that repo_config_values_init()
+needs to exist.  Under that condition, I wonder if we can somehow
+have a cheap way to assert the following two things:
+
+ * Before a repository instance is used, repo_config_values_init()
+   has been called on it, as using an instance without initializing
+   is a no-no.
+
+ * repo_config_values_init() is never called twice on a repository
+   instance, as the second call will wipe what the first call and
+   subsequent reading of the configuration files have done.
+
+Thanks.
