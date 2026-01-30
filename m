@@ -1,80 +1,79 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0895D29D26B
-	for <git@vger.kernel.org>; Fri, 30 Jan 2026 13:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB482DB79E
+	for <git@vger.kernel.org>; Fri, 30 Jan 2026 13:28:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769779681; cv=none; b=mVOT8EpJQvh2LPgAJvT9DrAQFBOk9Ea258NDWPoDIIpeHROivszW8O7ncgxKy0wS+zuMtxmDTCPyo7bsBu5inQL8bi0opELW/3YVs4Jhl2oba22EmQBf9ak5u4vy+SW1Jqghsoy5sHs7wk+mfJLst0BTF2eQ4GXIKjcpP6sEdz0=
+	t=1769779688; cv=none; b=ScbzWYP/tfK1cugaiCL1Uf2lCvkmD1zgl9VSpcz/z3RDV9z0NvfXlBsYDpUPg4a1SF30MhbywDD1sneHWbbFwhlkx9pwmRH3Vkgtk3FA5nSs7Y7QxMEUslGp+ZRSE8QJ3gZW82xboPbZ4MlGcz8dp53DxQ2aEbxlRkKo+xmzAOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769779681; c=relaxed/simple;
-	bh=Lyc8Soa3NzWH3GoicK2zICehjQ+oZk61fPtodicKx/w=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=KeIXkhRHuDeDvsfqGCIeQuGKU83sO7lUUk6y5lam76bxMi+mEy/bmqfxp7Fj/iMmLV4uJK2JWF/WdcnIv05yvyDZEw2pnxu4heaRNvnMHGUuZXv0yTbp5LrDA0yZOsCop5uGxx5mJkY6D0xmJia8Sx3DmQPF7+5UTVX8/lqoejk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V5eZ/ILn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K9NeV2TT; arc=none smtp.client-ip=103.168.172.157
+	s=arc-20240116; t=1769779688; c=relaxed/simple;
+	bh=1I5ejJ4p8Ysv1EYJcXQaY5xwedwz+SSZKIhv90OGUHU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=V3wfBGzr12Paglg+7NZP2LBj4SzwRZc11y62pm4I8BQ3jvgW0aZgpnnlDzmnSbyW5hp4tvOL+NozHxuTbO/orrmM5hass/F4rRKkJAyjFlVqLqGVWrUAJHV3qg7M8RkLeAADUAEh2Z3al+ixei304UZEIMzdkslqyIUILK2yR1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NTzs+bLY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AoW/m7UI; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V5eZ/ILn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K9NeV2TT"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 55B301400151;
-	Fri, 30 Jan 2026 08:27:59 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NTzs+bLY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AoW/m7UI"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 466E1EC0562;
+	Fri, 30 Jan 2026 08:28:06 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 30 Jan 2026 08:27:59 -0500
+  by phl-compute-10.internal (MEProxy); Fri, 30 Jan 2026 08:28:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1769779679;
-	 x=1769866079; bh=CwjPlB8sU56XMF1N//rntcPqCpVTNFCyE9EjM5DA/6w=; b=
-	V5eZ/ILnR2MorVnLBOU9ClRJs7/1Gj2p7wSC7wdhB6grj3P9VejQ2Qms14HfkfTE
-	OjF2TPif2Fv5Km5WOyi/F+XOwyDf6GDsKS86+uDJPih8wCnJEIpj1vc/MBw3Wyht
-	EsyVY4+Yy8mFqI/8xlNjcW3czblxNKJPwyT+DNYlzqdTLU2ht88EdveJQjZhY2Oi
-	Nc2VyMQsbW7j1FfrSsWgx4NME6Dlj55CG/oFjkDgb3jMS31EnwrHCW2BD3WNiLwS
-	1K5FhuHRuDrTxHobYfOwAaUYOTpIxZyU2vWHgFumyRgGsGxrgjf148aT5vvo6AGi
-	QXOlcfBs+yz8+7jJ4XqgvA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1769779686;
+	 x=1769866086; bh=6rbh9q7f1+Th/KRi7BOKW6hhpNGNLjPNdGwNKJ6jtp8=; b=
+	NTzs+bLYwYSheY1fObfF8noWT52RpkQcngTdTUnl1HqIkpggz1MlmlH7D6X2F0Hz
+	HHyD+4QnZZIovJWT881fcLIliumllP7yKGhrBtXOvK2IQfkFgZYQv7F9B5XLVdgh
+	v3itNCHYfjltuDfuqZDZeUsjM+3SN/09yEYaX9xG/DmkJ2vIrzzezwbrwsx38nE4
+	aYj1Nc5O1k0gP9BEvWAvSX310MY1yk3rWV6QwahPqyeeHPJfeljLKxcMNdplIc8o
+	DQ4q5oxxvwiisv4kueuwUnzJ2q0S4xnHFSdBMKJo3XvUkyMtlUelub+/RwaTA4nu
+	frYyDsZ+v5QNqcJe6L6i5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1769779679; x=
-	1769866079; bh=CwjPlB8sU56XMF1N//rntcPqCpVTNFCyE9EjM5DA/6w=; b=K
-	9NeV2TTKRX0sK7Y1m3A2iRWs5tpiJVeiPcY4nXjsyjvb/lOND0701NAzUWmxdLM8
-	qpkYfHp0ADujQd+w7BYzCvaAyOuBNVk6YSZV8GmgVj02vBPXDpdfxDbLDB13TqyP
-	NzSKSzVD6B05C4DXFR1S3qRMilAIUalYwgzv6QmqOMNLCdUSe54J2z1T4DfQsHGZ
-	Ymuk3O/AfbNgKnmHjbe6GNhb/ZyWyzhGr8Cq3D77TNQrawjg8tze42wx1nvP1ik/
-	3bhPh7GzNfAUJf/AyUdwl7HpflzAHwmZ1tMLhCH2ywy3FVD0pZFE+nHk+ifVK7zx
-	wv3bl2Z6lzUMPGjC86mZA==
-X-ME-Sender: <xms:37F8aX43mEXNCU89M6EaDrbp_bs-LBEQoZQQCKYRgUNkQFgDu8XGDA>
-    <xme:37F8aUXMpIH_gnW06iZqK1otG_D_Q0yziDgKdoKdMLPFvhsJFBzf-H_UHAPFj0BFi
-    hIfXmQhtZeJ-MwLQopKStoguEgrMXuSUa49nCYhY2OF5E1u54Dn2w>
-X-ME-Received: <xmr:37F8ab3_ypxWaSZ6Dn8beSB-hGJ9hhcxZSX6je5vbHUG1fWRUMli2bEh1tZlCdsyzxYk7HCpzSX6lZ63hMKZ6LwasLBajGykffjX9tKlXw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeludeiucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1769779686; x=
+	1769866086; bh=6rbh9q7f1+Th/KRi7BOKW6hhpNGNLjPNdGwNKJ6jtp8=; b=A
+	oW/m7UIHWbV83QDAjG5pQwiwVpCyfPH9BqJ2fpTXJOB019YVKS8gXe3hH7ZwU2X4
+	4/xuNYTPYiPrOPPcqyvPPkT/Nxg9EmvLzSpotYAcWGhLol8/SVTjejWRdwxp2oyO
+	7Y24SpdzXiGFp9vVZenb085ZEEUBZIuUPmWL8nb9Jr26/VbMVIdHc2chGfMwyVlv
+	NjABPH9xF3XqxZsF56DK4lNaoWvREHCFwQV4fqxeSuFjwKvAqJCcGjUPCTXXkDY3
+	4oN3mZXrZS/9M4HPY1BiveXsQUzsNELDp2Zuy/AcSF2AnFIAEhDhjGfJ7Wb3K05F
+	Ec0sJG1BRoh3ok2P8fXNg==
+X-ME-Sender: <xms:5rF8adqsuvNxsoaBSxhmrs29brY99YkJ4rGq5XpoYSp_CbSFYJsc4A>
+    <xme:5rF8aVoUU7uYIFhGYUGhyk3fFq6CTrXZsMbgz6K7gy0ZvDHCfC961C2o48UUTIQLu
+    QrD1eV8QnGjH_K21wrvt8I4axG39lbmttwc9hRZ-6PxHl18JzndSg>
+X-ME-Received: <xmr:5rF8aX186WnE-FECxAfRUTIe5XnQZlQjUI17GCMAlpn2sAJqt5Qbb1dkaDxHvOQkpbjUc2X8fZTNNwpJpvYh0ylrKR_J3C6pgrzMCDugmw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeludehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhufffkfggtgfgjghfvfevofesthejre
+    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
     dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepteeuueehhffhiedtueehtddtieekfedtud
-    ehtdehfefhgeffveeggedthfehuedvnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:37F8aR01ObWEJXpC8jrpPaNgDpkaDPMM3o49XK42-QXuKkeNBGKXVg>
-    <xmx:37F8ae8mMRbRvFPFfUd3ISblH-_M_WenD1PGFyZzZX5W2W-CizXhCA>
-    <xmx:37F8ae3Ozcwnjr-tgQA2VB_P6gZzevD2bWneCsZ-GGC1J3PxJ8El9A>
-    <xmx:37F8ab8S2dHp4konMeS_BltuFFlYnMq7tJZnAhYV2PBWpeTORDFiFA>
-    <xmx:37F8adwg4e01sLP98rSiskXaD2EJoe00o02g5OKL0wIxUwA-on4g7Ujs>
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
+    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:5rF8aUCYWC-0rq3Ff7D5blKncMiH9cjJhdVJObzTmLAN5HmAIN0C4w>
+    <xmx:5rF8affQSIZx8t2yNmpQPq91Vae8bLsice4qEr9cfB4B406N_JhwpA>
+    <xmx:5rF8aZjOCgyyfxggnL3pi4Q7HUhxdN8JgaIgNqO99pUs1AtBrxr0QQ>
+    <xmx:5rF8aXo56_X3RAOTITtQxdyb3h5W5FAksmSiz3Wq-pswdZU6GsGKvg>
+    <xmx:5rF8aWy05-c1fralrfYHegp43IchVn0kX7B-M0m4SMfeUqyERaJLazfM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Jan 2026 08:27:58 -0500 (EST)
+ 30 Jan 2026 08:28:05 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 869e35bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Jan 2026 13:27:56 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d433876c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Jan 2026 13:28:05 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/4] Fix misuse of `refs_for_each_ref_in()`
-Date: Fri, 30 Jan 2026 14:27:41 +0100
-Message-Id: <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-0-0449b198a681@pks.im>
+Date: Fri, 30 Jan 2026 14:27:42 +0100
+Subject: [PATCH v2 1/4] pack-bitmap: deduplicate logic to iterate over
+ preferred bitmap tips
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,153 +82,174 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAM2xfGkC/5WNTQ6CMBCFr0Jm7RhaBH9W3sOwqGUqE0NLOtpgS
- O9u5QYuv/fyvreCUGQSuFQrREosHHwBvavAjsY/CHkoDLrWXa30Ce8HnJ+Cjhd0ISIZO2Ikh+x
- xYnkL4bkz1GlqVGNaKJ651LxsH7e+8MjyCvGzXSb1S/+xJ4U1DmStoYbMUbfXMtjzBH3O+QtuI
- SnBzwAAAA==
-X-Change-ID: 20260128-b4-pks-fix-for-each-ref-in-misuse-96ae62e313a5
-In-Reply-To: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
-References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
+Message-Id: <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-1-0449b198a681@pks.im>
+References: <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-0-0449b198a681@pks.im>
+In-Reply-To: <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-0-0449b198a681@pks.im>
 To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Cc: Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+We have two locations that iterate over the preferred bitmap tips as
+configured by the user via "pack.preferBitmapTips". Both of these
+callsites are subtly wrong: when the preferred bitmap tips contain an
+exact refname match, then we will hit a `BUG()`.
 
-this small patch series fixes a bug I have discovered where configuring
-"pack.preferBitmapTips" to an exact branch will cause Git to `BUG()`.
+Prepare for the fix by unifying the two callsites into a new
+`for_each_preferred_bitmap_tip()` function.
 
-The root cause of this bug is misuse of `refs_for_each_ref_in()`: this
-function accepts a prefix to yield refs for, and then strips the prefix
-for each ref. Consequently, if passed an exact refname, then stripping
-the prefix would make us end up with an empty refname, and that is not
-supposed to happen.
+This removes the last callsite of `bitmap_preferred_tips()` outside of
+"pack-bitmap.c". As such, convert the function to be local to that file
+only. Note that the function is still used by a second caller, so we
+cannot just inline it.
 
-There was one other caller that got it wrong, too, and which is also
-fixed in this patch series.
-
-Changes in v2:
-  - Explain my thought process against why I chose to also allow exact
-    ref matches in the second commit and clarify the documentation a
-    bit. As said, I'm very open to changing this if my spelled-out
-    thoughts are not convincing.
-  - Apply Peff's patch to further simplify code.
-  - Link to v1: https://lore.kernel.org/r/20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Jeff King (1):
-      bisect: simplify string_list memory handling
+ builtin/pack-objects.c | 19 ++-----------------
+ pack-bitmap.c          | 18 +++++++++++++++++-
+ pack-bitmap.h          |  9 ++++++++-
+ repack-midx.c          | 14 +++-----------
+ 4 files changed, 30 insertions(+), 30 deletions(-)
 
-Patrick Steinhardt (3):
-      pack-bitmap: deduplicate logic to iterate over preferred bitmap tips
-      pack-bitmap: fix bug with exact ref match in "pack.preferBitmapTips"
-      bisect: fix misuse of `refs_for_each_ref_in()`
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 5846b6a293..979470e402 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4554,22 +4554,6 @@ static int mark_bitmap_preferred_tip(const struct reference *ref, void *data UNU
+ 	return 0;
+ }
+ 
+-static void mark_bitmap_preferred_tips(void)
+-{
+-	struct string_list_item *item;
+-	const struct string_list *preferred_tips;
+-
+-	preferred_tips = bitmap_preferred_tips(the_repository);
+-	if (!preferred_tips)
+-		return;
+-
+-	for_each_string_list_item(item, preferred_tips) {
+-		refs_for_each_ref_in(get_main_ref_store(the_repository),
+-				     item->string, mark_bitmap_preferred_tip,
+-				     NULL);
+-	}
+-}
+-
+ static inline int is_oid_uninteresting(struct repository *repo,
+ 				       struct object_id *oid)
+ {
+@@ -4710,7 +4694,8 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
+ 		load_delta_islands(the_repository, progress);
+ 
+ 	if (write_bitmap_index)
+-		mark_bitmap_preferred_tips();
++		for_each_preferred_bitmap_tip(the_repository, mark_bitmap_preferred_tip,
++					      NULL);
+ 
+ 	if (!fn_show_object)
+ 		fn_show_object = show_object;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 972203f12b..2f5cb34009 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -3314,7 +3314,7 @@ int bitmap_is_midx(struct bitmap_index *bitmap_git)
+ 	return !!bitmap_git->midx;
+ }
+ 
+-const struct string_list *bitmap_preferred_tips(struct repository *r)
++static const struct string_list *bitmap_preferred_tips(struct repository *r)
+ {
+ 	const struct string_list *dest;
+ 
+@@ -3323,6 +3323,22 @@ const struct string_list *bitmap_preferred_tips(struct repository *r)
+ 	return NULL;
+ }
+ 
++void for_each_preferred_bitmap_tip(struct repository *repo,
++				   each_ref_fn cb, void *cb_data)
++{
++	struct string_list_item *item;
++	const struct string_list *preferred_tips;
++
++	preferred_tips = bitmap_preferred_tips(repo);
++	if (!preferred_tips)
++		return;
++
++	for_each_string_list_item(item, preferred_tips) {
++		refs_for_each_ref_in(get_main_ref_store(repo),
++				     item->string, cb, cb_data);
++	}
++}
++
+ int bitmap_is_preferred_refname(struct repository *r, const char *refname)
+ {
+ 	const struct string_list *preferred_tips = bitmap_preferred_tips(r);
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 1bd7a791e2..d0611d0481 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -5,6 +5,7 @@
+ #include "khash.h"
+ #include "pack.h"
+ #include "pack-objects.h"
++#include "refs.h"
+ #include "string-list.h"
+ 
+ struct commit;
+@@ -99,6 +100,13 @@ int for_each_bitmapped_object(struct bitmap_index *bitmap_git,
+ 			      show_reachable_fn show_reach,
+ 			      void *payload);
+ 
++/*
++ * Iterate over all references that are configured as preferred bitmap tips via
++ * "pack.preferBitmapTips" and invoke the callback on each function.
++ */
++void for_each_preferred_bitmap_tip(struct repository *repo,
++				   each_ref_fn cb, void *cb_data);
++
+ #define GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL \
+ 	"GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL"
+ 
+@@ -182,7 +190,6 @@ char *pack_bitmap_filename(struct packed_git *p);
+ 
+ int bitmap_is_midx(struct bitmap_index *bitmap_git);
+ 
+-const struct string_list *bitmap_preferred_tips(struct repository *r);
+ int bitmap_is_preferred_refname(struct repository *r, const char *refname);
+ 
+ int verify_bitmap_files(struct repository *r);
+diff --git a/repack-midx.c b/repack-midx.c
+index 74bdfa3a6e..0682b80c42 100644
+--- a/repack-midx.c
++++ b/repack-midx.c
+@@ -40,7 +40,6 @@ static int midx_snapshot_ref_one(const struct reference *ref, void *_data)
+ void midx_snapshot_refs(struct repository *repo, struct tempfile *f)
+ {
+ 	struct midx_snapshot_ref_data data;
+-	const struct string_list *preferred = bitmap_preferred_tips(repo);
+ 
+ 	data.repo = repo;
+ 	data.f = f;
+@@ -51,16 +50,9 @@ void midx_snapshot_refs(struct repository *repo, struct tempfile *f)
+ 		 die(_("could not open tempfile %s for writing"),
+ 		     get_tempfile_path(f));
+ 
+-	if (preferred) {
+-		struct string_list_item *item;
+-
+-		data.preferred = 1;
+-		for_each_string_list_item(item, preferred)
+-			refs_for_each_ref_in(get_main_ref_store(repo),
+-					     item->string,
+-					     midx_snapshot_ref_one, &data);
+-		data.preferred = 0;
+-	}
++	data.preferred = 1;
++	for_each_preferred_bitmap_tip(repo, midx_snapshot_ref_one, &data);
++	data.preferred = 0;
+ 
+ 	refs_for_each_ref(get_main_ref_store(repo),
+ 			  midx_snapshot_ref_one, &data);
 
- Documentation/config/pack.adoc |  7 +++----
- bisect.c                       | 16 +++++++---------
- builtin/pack-objects.c         | 19 ++-----------------
- pack-bitmap.c                  | 18 +++++++++++++++++-
- pack-bitmap.h                  |  9 ++++++++-
- repack-midx.c                  | 14 +++-----------
- t/t5310-pack-bitmaps.sh        | 35 +++++++++++++++++++++++++++++++++++
- t/t5319-multi-pack-index.sh    | 36 ++++++++++++++++++++++++++++++++++++
- 8 files changed, 111 insertions(+), 43 deletions(-)
-
-Range-diff versus v1:
-
-1:  dcdc4a5aa2 ! 1:  2a2558bb22 pack-bitmap: deduplicate logic to iterate over preferred bitmap tips
-    @@ Commit message
-     
-         We have two locations that iterate over the preferred bitmap tips as
-         configured by the user via "pack.preferBitmapTips". Both of these
-    -    callsites are subtly wrong and can lead to a `BUG()`, which we'll fix in
-    -    a subsequent commit.
-    +    callsites are subtly wrong: when the preferred bitmap tips contain an
-    +    exact refname match, then we will hit a `BUG()`.
-     
-    -    Prepare for this fix by unifying the two callsites into a new
-    +    Prepare for the fix by unifying the two callsites into a new
-         `for_each_preferred_bitmap_tip()` function.
-     
-         This removes the last callsite of `bitmap_preferred_tips()` outside of
-         "pack-bitmap.c". As such, convert the function to be local to that file
-    -    only.
-    +    only. Note that the function is still used by a second caller, so we
-    +    cannot just inline it.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-2:  5b14a8a680 ! 2:  5b4a33a0bd pack-bitmap: fix bug with exact ref match in "pack.preferBitmapTips"
-    @@ Commit message
-             lead to a somewhat weird result.
-     
-         Neither of these feel like viable options, so calling `BUG()` feels like
-    -    a sensible way out.
-    -
-    -    The root cause really is that we try to trim the whole refname. We can
-    -    thus easily fix the bug itself by calling `refs_for_each_fullref_in()`
-    -    instead. This function behaves the same as `refs_for_each_ref_in()`,
-    -    except that it doesn't strip the prefix. Consequently, it correctly
-    -    yields also exact refnames.
-    -
-    -    One resulting weirdness is that two refs "refs/heads/base" and
-    -    "refs/heads/base-something" would now match if the user configured
-    -    "refs/heads/base" as bitmap tips. One could arguably change the
-    -    semantics of the configuration such that a string without a trailing
-    -    slash needs to be an exact reference match, whereas a string with a
-    -    trailing slash indicates a directory hierarchy. But such a change would
-    -    potentially cause regressions with dubious benefits, so this issue is
-    -    ignored for now.
-    +    a sensible way out. The root cause ultimately is that we even try to
-    +    trim the whole refname in the first place. There are two possible ways
-    +    to fix this issue:
-    +
-    +      - We can fix the bug by using `refs_for_each_fullref_in()` instead,
-    +        which does not strip the prefix at all. Consequently, we would now
-    +        start to accept all references that start with the configured
-    +        prefix, including exact matches. So if we had "refs/heads/main", we
-    +        would both match "refs/heads/main" and "refs/heads/main-branch".
-    +
-    +      - Or we can fix the bug by appending a slash to the prefix if it
-    +        doesn't already have one. This would mean that we only match
-    +        ref hierarchies that start with this prefix.
-    +
-    +    The first fix leaves the user with strictly _more_ configuration
-    +    options: they can have prefix matches by not appending a slash to the
-    +    configuration, and they can have ref hierarchy matches by appending one.
-    +
-    +    Apply this fix and clarify the documentation accordingly.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-    + ## Documentation/config/pack.adoc ##
-    +@@ Documentation/config/pack.adoc: pack.usePathWalk::
-    + 
-    + pack.preferBitmapTips::
-    + 	When selecting which commits will receive bitmaps, prefer a
-    +-	commit at the tip of any reference that is a suffix of any value
-    +-	of this configuration over any other commits in the "selection
-    +-	window".
-    ++	commmit at the tip of a reference that matches any of the
-    ++	configured prefixes.
-    + +
-    +-Note that setting this configuration to `refs/foo` does not mean that
-    ++Note that setting this configuration to `refs/foo/` does not mean that
-    + the commits at the tips of `refs/foo/bar` and `refs/foo/baz` will
-    + necessarily be selected. This is because commits are selected for
-    + bitmaps from within a series of windows of variable length.
-    +
-      ## pack-bitmap.c ##
-     @@ pack-bitmap.c: void for_each_preferred_bitmap_tip(struct repository *repo,
-      		return;
-3:  2e1bfb0894 = 3:  1579608b04 bisect: fix misuse of `refs_for_each_ref_in()`
--:  ---------- > 4:  99a80bdb37 bisect: simplify string_list memory handling
-
----
-base-commit: ea717645d199f6f1b66058886475db3e8c9330e9
-change-id: 20260128-b4-pks-fix-for-each-ref-in-misuse-96ae62e313a5
+-- 
+2.53.0.rc2.206.g60c1bca835.dirty
 
