@@ -1,248 +1,640 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040A423D7FC
-	for <git@vger.kernel.org>; Fri, 30 Jan 2026 20:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA1D2F6935
+	for <git@vger.kernel.org>; Fri, 30 Jan 2026 20:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769804134; cv=none; b=Uwsj1y5MFI3UVto08CEFX2rPIYsVuQyvNnK4c9NvM1LUyHuAOY4woRXiYACQ6H/fd+uACpsqKAyZbsgQjQcg4+ACLjumdg+IwrhdOzgcOFw7YusPH367VvUKSv54JFcCzHsB0IQcvjqnhTO0NVaX2ri4sVkO3nNWnCkxq0PM62k=
+	t=1769805953; cv=none; b=SisYZVWLVo3q0fYT6el5mvw5DGy8Lwi6DBwERvkQYXrtr+XtFaZ3XKOCi2VaDJY5aubsNbOrbQceLleGvbni8IrpKOS0PsPEARXdTClxFr+ruOIkEecMy55HCE1lS61vo7RTL4nYyMEu9CTGeNzRKwyBi8dHsPa42svu0l7gCcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769804134; c=relaxed/simple;
-	bh=TyEllZoX5R1tei5d2n+UlYJdc8pIFOerfpoVVlKbn04=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EHvGgJeyytyYHsJ/quCTATPuMf1knj9qE9hDSaV/w1INZz1Jgi7+aUn4rLBLYyOqfPHlRBCgHDc+42wohjSNNkR+HmUkSe7ZRocMtoqXGyoMhSkpZKc/czwA5XV5pnjkVp+hGS2ct9W/HSLerJItEs3X69UrUE5OfgyGzPfZB4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WZ2exPBX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YbW7vz2A; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769805953; c=relaxed/simple;
+	bh=mH4kC8NEWT9vyoYQDywiOuygKR+6XjolVz6IR5tplqM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kqcs5q76Pu8Xvgxb47gj9F9p7Zpn1Ah3ycl+2xy0b+3CKpaq4VLEtoPbdwYAsXNIDH15rdoIXG9IQd7MkUx80IZ9KPa+oeRbzaB5FKYqfv38sjCFmV52Ox/XjP/xlju15RkwfqzzPrqOGLa6c4Gl9B4ZBKsSA4DmeE+f9AVuwgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QSDoRLxC; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WZ2exPBX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YbW7vz2A"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C78DC7A012A;
-	Fri, 30 Jan 2026 15:15:30 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 30 Jan 2026 15:15:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769804130; x=1769890530; bh=Ty3ayrfFGn
-	WpDI0PwjYoA+4s/E10cZ8wHRPQGqc9zlM=; b=WZ2exPBXuX7kbh8W0uzPEEDoHT
-	pGZEGuF27/HLLXjgVTxjb7ZJDCDoIWnLvpNzE9vzBp/w8CemhIN74AuY5czrhxr/
-	iYfKNh40jcAy7da3Xi/QU6AtrpKdxXNJNha6oSV97EauLRBFRpsmcdKN3zVth9LM
-	u/NPm6Yt7KEi0C9uZfBuZoYv7MgqJAOUKAW1jtvWYLzInvoPFIRlr2V7mi2TMZ7D
-	DxUj4+Ub26RBKu6qetwVA0LJlYLmAXa3zCqJCuf4r2RdcjCfptgjMlvPteg9TDZm
-	svsaJL7sLsBqKoAAhueh5ykE/qi9M97MAT8A5NcXZhb0eB/jhrojShxQdxNQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769804130; x=1769890530; bh=Ty3ayrfFGnWpDI0PwjYoA+4s/E10cZ8wHRP
-	QGqc9zlM=; b=YbW7vz2AY9XyRxFzXyQMfyUZnRuwCGC1z2PKcFN4qHD50LGG6/+
-	zcSShJIfgZGJDMKeLuchsKQttN+tzdK441AfmQ/zyqJmM0edoSFrE9ZzbnH9cmQE
-	vY2F6DhZWMZ1X9D/fqHBF7x5rrYCtYm0t1/74jVlUKngwOHL8DERReGVIk87Pl1U
-	gtwlKVuqeg/Wwfkt7c+E/BDfoYn5CywK1O1Mco+EgSRAbsXEj3TOiKRZ0T8fS9De
-	lDPu7rchQBhqd/fyy0eEbKl7VMvRqz35X+LGBvLgol09b4BOB1bQiCKahByd/F0k
-	9MBI1FgBnjalYZx2P0TEGxZ31bdr9iaD9hw==
-X-ME-Sender: <xms:YhF9abdoMztMu29s3GWiDmvgxPV5LYUYmdAM6nbKuZdrtBfDHUdr0Q>
-    <xme:YhF9adzmdxdnBOCKlowcusRE0iJccOCR0ILsSATTywY7bz59_YPBrwhL2Y3v9Jw7J
-    KmNQtkGPU97ffeSDL-zS2mHASCiRpHxGDoLDtnUAm7EfnW0QJPT-A>
-X-ME-Received: <xmr:YhF9aY8s7cXoQBneOKN5xuI8Kuc25uRA9Z7FIZ1fISf50bydokcA-P-KlFmAH8CqLowS_E_vGiaFupTfZUnre5pqBHifKeKTjQ_CCOo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtiedvheejfeehgfdtkeevueefue
-    ehhfffudejtdffjeeggedvueekfeekueehvdenucffohhmrghinheprghtthhrrdgtfidp
-    vghnvhhirhhonhhmvghnthdrtgifpdhrvghpohhsihhtohhrhidrtgifnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphho
-    sghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopegsvghlkhhiugelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrd
-    gtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtgho
-    mhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehkrggrrhhtihgtrdhsihhvrghrrggrmhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepkhgrrhhthhhi
-    khdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:YhF9aTx0TaJ-BUk7C1jsVpRZ7GZgZrldQuT-bEqev8VHhJ_5K-s9jQ>
-    <xmx:YhF9aYo91jwpUOMFp5WxAug7gEcrtabsfRhCW8RsQ33LDvEXCzYfuQ>
-    <xmx:YhF9aUqnvKIof-dU1Kbz9KMgSfYUAdvVm6R6ANUrxTLUjaHdm031oQ>
-    <xmx:YhF9aYAfmMD-YD5HHGWh8iL3mzvEu2HsaO0AYfQC1nM0MpBOmB-jbw>
-    <xmx:YhF9aVcQnV4m_N2guUiUJsSzQFJMTBa3pubd5DBiEH7N63qjSnRmRUHw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Jan 2026 15:15:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Olamide Caleb Bello <belkid98@gmail.com>
-Cc: git@vger.kernel.org,  toon@iotcl.com,  phillip.wood123@gmail.com,
-  christian.couder@gmail.com,  usmanakinyemi202@gmail.com,
-  kaartic.sivaraam@gmail.com,  me@ttaylorr.com,  karthik.188@gmail.com
-Subject: Re: [Outreachy PATCH v5 3/3] environment: move
- "branch.autoSetupMerge" into `struct repo_config_values`
-In-Reply-To: <xmqqikcj842o.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	30 Jan 2026 08:20:47 -0800")
-References: <cover.1769256839.git.belkid98@gmail.com>
-	<e7f37bac87aac74ca13f85ae7e393a38d2079b9c.1769256839.git.belkid98@gmail.com>
-	<xmqqms1wb6zg.fsf@gitster.g> <xmqqikcj842o.fsf@gitster.g>
-Date: Fri, 30 Jan 2026 12:15:28 -0800
-Message-ID: <xmqq5x8i7t7j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QSDoRLxC"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-2b71515d8adso2602783eec.1
+        for <git@vger.kernel.org>; Fri, 30 Jan 2026 12:45:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769805950; x=1770410750; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pyezaQIqpEgaU1Ocvp+tm+6mom3QKFYi65xhkcfpl8s=;
+        b=QSDoRLxCc5l+T8obq9V4WZbh3BsPWVgV7ijdU2i459h3OZSu9+6ry2tdemV7h7wZVn
+         D/ffCPHGA5A/povmIyagnYr2dX0NZQ1gatj1Kl28IK411bYuwqvPaRAJdCWFcjraEClI
+         rx4VeCC6r+6k6IEnhRxOiMXEjwpM+NUg2sZeqM7qh7ZrHQCbsOWw/u8AjiLcTNO9RTa+
+         I431IBOS9x++SJSgK1N9ODQroOSWyWSmCGT7mgm+psFCgpKONOAr/KajkVhmhXB/ZKUK
+         JD/Z5Juu9P64GmEJ+VRBim2frA5iqXuzc4FbIs3RCCKhS8hodjAC64SfusEGXQsrgVDM
+         spMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769805950; x=1770410750;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pyezaQIqpEgaU1Ocvp+tm+6mom3QKFYi65xhkcfpl8s=;
+        b=SOkEfmV9nhPC6rZgZcKgY/wBLqoVlnMMXOZBYEJPDkBUjQnLmP5yaGUQvNZfiRxl33
+         rH7DcY1gT3uUYu8cem6OyaE/h73UAgkghlQFy+9ub87xPysG3VU+PNNsGCEJFPmNnSbl
+         Pv2Q3oyjDf6DL2UMVxdJjBRTxIWrxPzS2gVjUMEKsmmO1dpHEnnMyQCpIkQhvh5WebD6
+         7+K6V2tvTGXN9Hp5iyucYW97o9eKL7homoIYjZp14or00ussUXac+bt8fphRSOkjBq6F
+         +Ws26UsG/TOTFJHLPPsK3kY8AZ2lLZZocdItEKmBhBzBT0i7lHneyHAlO9X84sxS7RN3
+         MMIw==
+X-Gm-Message-State: AOJu0YzkaxMAyVcQ0VNmbyuegIR1TAocxQ3pxGCpcytq6qY/sBhbefLi
+	x8jsPwix4tW3aWHw/4PiYQ5X13WVcxs2+pVnGMK6X+kXDDTFZc3AskeUUemRsw==
+X-Gm-Gg: AZuq6aIDpkKf38ooBGG7hMLZ6V+1wRXY8Oy5nRO0hgKeTdwtInNKSo4AAg83FPWRHJN
+	HtSOrOfL0Q85W/5rAJNQufNXp82rY3LTJGm9mjZT/LF3e072EDiyNzS4IjDASwuH7b382D1iMpo
+	pBZDfvYJec+zW1K2sYBex98qcwbxrFAS/3k9sogQQMRW15rusfUzCJOwJa56TJQak+M/tJVbC7+
+	e427wfCUK76SoTnIx8lHad0UNxZCOiQ6D3Wzh7+CXODFvKyFuOR+VMAnWZ55XrUH2z7y+kR6eSF
+	A6k/mUKLMI3KTGgXTmIbrdBhc7Sz9R9VIezWlsxF1rj7sSeQ461qK4zMmZz99cowbEqdGSrUMgP
+	4F/H9xK0Yfy1bUH5nvU2O1FLd7SywGbfR2CiJ++n5uStKm9H4OkqCK2JXqDBA1IWfyS0oT+as3C
+	FJcf1v5Fp6NASh
+X-Received: by 2002:a05:693c:2b13:b0:2ae:614a:330e with SMTP id 5a478bee46e88-2b7c8943db0mr2316746eec.41.1769805949756;
+        Fri, 30 Jan 2026 12:45:49 -0800 (PST)
+Received: from [127.0.0.1] ([104.209.5.146])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a16eab80sm12492241eec.9.2026.01.30.12.45.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jan 2026 12:45:49 -0800 (PST)
+Message-Id: <pull.2183.v3.git.git.1769805948018.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2183.v2.git.git.1769779599196.gitgitgadget@gmail.com>
+References: <pull.2183.v2.git.git.1769779599196.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 30 Jan 2026 20:45:47 +0000
+Subject: [PATCH v3] revisions: add @{primary} shorthand for primary branch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-> So, we need to take it as a given that repo_config_values_init()
-> needs to exist.  Under that condition, I wonder if we can somehow
-> have a cheap way to assert the following two things:
->
->  * Before a repository instance is used, repo_config_values_init()
->    has been called on it, as using an instance without initializing
->    is a no-no.
->
->  * repo_config_values_init() is never called twice on a repository
->    instance, as the second call will wipe what the first call and
->    subsequent reading of the configuration files have done.
+Git already has shorthands like @{upstream} and @{push} to refer to
+tracking branches, but there is no convenient way to refer to the
+primary branch of a repository (typically "main" or "master").
 
-Something like this squashed into your [1/3] would give us these two
-assertions, but I am not sure if it is a good idea or if I am overly
-paranoid.
+Users often want to switch to the primary branch regardless of its
+name, especially when working across repositories with different
+primary branch names. Currently they must either hardcode the branch
+name or query it via configuration, which is cumbersome.
 
-The main ideas are:
+Add a new @{primary} shorthand that resolves to the primary branch
+as determined by init.defaultBranch (or falls back to "main" or
+"master" depending on Git version). This allows users to write:
 
- * "struct repository" now knows if it has been initialized via its
-   "bool initialized" member.
+  git checkout @{primary}
 
- * "initialize_repository()" detects double initialization of the
-   repository struct itself.
+instead of having to know or look up the primary branch name.
 
- * "repo_config_values" member in "struct repository" has been
-   renamed to make it clear it is "private", and there is an
-   accessor function of the same name.  It barfs if you ask the
-   address of repo_config_values in a repository instance that
-   hasn't been initialized.
+The implementation follows the same pattern as @{upstream} and @{push},
+using a new branch_get_primary_ref() function that queries the primary
+branch name and verifies it exists in the repository.
 
- * Any code outside what implement the above are supposed to call
-   repo_config_values() on the repository they are working in, to
-   request the address of the repo_config_values instance to use.
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+    revisions: add @{default} shorthand for default branch
+    
+    cc: "Kristoffer Haugsbakk" kristofferhaugsbakk@fastmail.com
 
-It didn't barf when I ran all the tests, which means there isn't
-anybody who calls initialize_repository() twice in the current code.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2183%2FHaraldNordgren%2Fdefault_shorthand-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2183/HaraldNordgren/default_shorthand-v3
+Pull-Request: https://github.com/git/git/pull/2183
 
-I am not sure if this is being overly paranoid, or exercising a
-reasonable caution, but anyway,...
+Range-diff vs v2:
+
+ 1:  abe0f0c2b7 ! 1:  0fc9eb75ea revisions: add @{default} shorthand for default branch
+     @@ Metadata
+      Author: Harald Nordgren <haraldnordgren@gmail.com>
+      
+       ## Commit message ##
+     -    revisions: add @{default} shorthand for default branch
+     +    revisions: add @{primary} shorthand for primary branch
+      
+          Git already has shorthands like @{upstream} and @{push} to refer to
+          tracking branches, but there is no convenient way to refer to the
+     -    default branch of a repository (typically "main" or "master").
+     +    primary branch of a repository (typically "main" or "master").
+      
+     -    Users often want to switch to the default branch regardless of its
+     +    Users often want to switch to the primary branch regardless of its
+          name, especially when working across repositories with different
+     -    default branch names. Currently they must either hardcode the branch
+     +    primary branch names. Currently they must either hardcode the branch
+          name or query it via configuration, which is cumbersome.
+      
+     -    Add a new @{default} shorthand that resolves to the default branch
+     +    Add a new @{primary} shorthand that resolves to the primary branch
+          as determined by init.defaultBranch (or falls back to "main" or
+          "master" depending on Git version). This allows users to write:
+      
+     -      git checkout @{default}
+     +      git checkout @{primary}
+      
+     -    instead of having to know or look up the default branch name.
+     +    instead of having to know or look up the primary branch name.
+      
+          The implementation follows the same pattern as @{upstream} and @{push},
+     -    using a new branch_get_default() function that queries the default
+     +    using a new branch_get_primary_ref() function that queries the primary
+          branch name and verifies it exists in the repository.
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+     @@ Documentation/revisions.adoc: from one location and push to another. In a non-tr
+       This suffix is also accepted when spelled in uppercase, and means the same
+       thing no matter the case.
+       
+     -+'@\{default\}'::
+     -+  The suffix '@\{default}' refers to the default branch of the repository,
+     ++'@\{primary\}'::
+     ++  The suffix '@\{primary}' refers to the primary branch of the repository,
+      +  typically `main` or `master`. This is determined by the `init.defaultBranch`
+      +  configuration option, or falls back to `main` (or `master` in older Git
+     -+  versions) if not configured. The default branch must exist in the repository
+     ++  versions) if not configured. The primary branch must exist in the repository
+      +  for this syntax to work.
+      ++
+      +Here's an example:
+      ++
+      +------------------------------
+     -+$ git checkout @{default}
+     ++$ git checkout @{primary}
+      +Switched to branch 'main'
+      +
+     -+$ git rev-parse --symbolic-full-name @{default}
+     ++$ git rev-parse --symbolic-full-name @{primary}
+      +refs/heads/main
+      +------------------------------
+      +
+     @@ object-name.c: static inline int push_mark(const char *string, int len)
+       	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
+       }
+       
+     -+static inline int default_mark(const char *string, int len)
+     ++static inline int primary_mark(const char *string, int len)
+      +{
+     -+	const char *suffix[] = { "@{default}" };
+     ++	const char *suffix[] = { "@{primary}" };
+      +	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
+      +}
+      +
+     @@ object-name.c: static int get_oid_basic(struct repository *r, const char *str, i
+       				if (!upstream_mark(str + at, len - at) &&
+      -				    !push_mark(str + at, len - at)) {
+      +				    !push_mark(str + at, len - at) &&
+     -+				    !default_mark(str + at, len - at)) {
+     ++				    !primary_mark(str + at, len - at)) {
+       					reflog_len = (len-1) - (at+2);
+       					len = at;
+       				}
+     @@ object-name.c: static int branch_interpret_allowed(const char *refname, unsigned
+       	return 0;
+       }
+       
+     -+static const char *branch_get_default_mark(struct branch *branch UNUSED,
+     -+					   struct strbuf *err UNUSED)
+     ++static const char *branch_get_primary_mark(struct branch *branch,
+     ++					   struct strbuf *err)
+      +{
+     -+	return branch_get_default_ref();
+     ++	return branch_get_primary_ref(branch, err);
+      +}
+      +
+       static int interpret_branch_mark(struct repository *r,
+     @@ object-name.c: int repo_interpret_branch_name(struct repository *r,
+       		if (len > 0)
+       			return len;
+      +
+     -+		if (default_mark(at, namelen - (at - name))) {
+     -+			if (at - name > 0)
+     -+				return -1;
+     -+		}
+     -+
+      +		len = interpret_branch_mark(r, name, namelen, at - name, buf,
+     -+					    default_mark, branch_get_default_mark,
+     ++					    primary_mark, branch_get_primary_mark,
+      +					    options);
+      +		if (len > 0)
+      +			return len;
+     @@ object-name.c: int repo_interpret_branch_name(struct repository *r,
+       	return -1;
+      
+       ## remote.c ##
+     +@@ remote.c: static const char *error_buf(struct strbuf *err, const char *fmt, ...)
+     + 	return NULL;
+     + }
+     + 
+     +-const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
+     ++const char *branch_get_upstream_options(struct branch *branch, struct strbuf *err,
+     ++					int omit_remote)
+     + {
+     ++	static struct strbuf upstream_branch_buf = STRBUF_INIT;
+     ++	const char *dst;
+     ++
+     + 	if (!branch)
+     + 		return error_buf(err, _("HEAD does not point to a branch"));
+     + 
+     +@@ remote.c: const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
+     + 				 _("upstream branch '%s' not stored as a remote-tracking branch"),
+     + 				 branch->merge[0]->src);
+     + 
+     +-	return branch->merge[0]->dst;
+     ++	dst = branch->merge[0]->dst;
+     ++	if (!omit_remote)
+     ++		return dst;
+     ++
+     ++	strbuf_reset(&upstream_branch_buf);
+     ++	if (skip_prefix(dst, "refs/remotes/", &dst) && (dst = strchr(dst, '/')))
+     ++		strbuf_addf(&upstream_branch_buf, "refs/heads/%s", dst + 1);
+     ++	else
+     ++		strbuf_addstr(&upstream_branch_buf, branch->merge[0]->dst);
+     ++	return upstream_branch_buf.buf;
+     ++}
+     ++
+     ++const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
+     ++{
+     ++	return branch_get_upstream_options(branch, err, 0);
+     + }
+     + 
+     + static const char *tracking_for_push_dest(struct remote *remote,
+      @@ remote.c: const char *branch_get_push(struct branch *branch, struct strbuf *err)
+       	return branch->push_tracking_ref;
+       }
+       
+     -+const char *branch_get_default_ref(void)
+     ++const char *branch_get_primary_ref(struct branch *branch, struct strbuf *err)
+      +{
+     -+	static struct strbuf default_ref = STRBUF_INIT;
+     -+	char *default_branch_name;
+     -+
+     -+	strbuf_reset(&default_ref);
+     -+	default_branch_name = repo_default_branch_name(the_repository, 1);
+     -+	strbuf_addf(&default_ref, "refs/heads/%s", default_branch_name);
+     -+	free(default_branch_name);
+     -+	return default_ref.buf;
+     ++	return branch_get_upstream_options(branch, err, 1);
+      +}
+      +
+       static int ignore_symref_update(const char *refname, struct strbuf *scratch)
+     @@ remote.c: const char *branch_get_push(struct branch *branch, struct strbuf *err)
+       	return !refs_read_symbolic_ref(get_main_ref_store(the_repository), refname, scratch);
+      
+       ## remote.h ##
+     +@@ remote.h: int branch_has_merge_config(struct branch *branch);
+     + 
+     + int branch_merge_matches(struct branch *, int n, const char *);
+     + 
+     ++const char *branch_get_upstream_options(struct branch *branch, struct strbuf *err,
+     ++					int omit_remote);
+     ++
+     + /**
+     +  * Return the fully-qualified refname of the tracking branch for `branch`.
+     +  * I.e., what "branch@{upstream}" would give you. Returns NULL if no
+      @@ remote.h: const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
+        */
+       const char *branch_get_push(struct branch *branch, struct strbuf *err);
+       
+      +/**
+     -+ * Return the fully-qualified refname of the default branch.
+     -+ * I.e., what "@{default}" would give you.
+     ++ * Return the fully-qualified refname of the primary branch.
+     ++ * I.e., what "@{primary}" would give you.
+      + */
+     -+const char *branch_get_default_ref(void);
+     ++const char *branch_get_primary_ref(struct branch *branch, struct strbuf *err);
+      +
+       /* Flags to match_refs. */
+       enum match_refs_flags {
+       	MATCH_REFS_NONE		= 0,
+      
+     + ## t/t1507-rev-parse-upstream.sh ##
+     +@@ t/t1507-rev-parse-upstream.sh: test_expect_success 'log -g other@{u}@{now}' '
+     + 	test_cmp expect actual
+     + '
+     + 
+     ++test_expect_success '@{primary} resolves to correct full name' '
+     ++	echo refs/heads/main >expect &&
+     ++	git -C clone rev-parse --symbolic-full-name @{primary} >actual &&
+     ++	test_cmp expect actual
+     ++'
+     ++
+     + test_expect_success '@{reflog}-parsing does not look beyond colon' '
+     + 	echo content >@{yesterday} &&
+     + 	git add @{yesterday} &&
+     +
+       ## t/t1508-at-combinations.sh ##
+      @@ t/t1508-at-combinations.sh: check "@{-1}@{u}" ref refs/heads/main
+       check "@{-1}@{u}@{1}" commit main-one
+       check "@" commit new-two
+       check "@@{u}" ref refs/heads/upstream-branch
+     -+check "@{default}" ref refs/heads/main
+     ++check "@{primary}" ref refs/heads/upstream-branch
+       check "@@/at-test" ref refs/heads/@@/at-test
+       test_have_prereq MINGW ||
+       check "@/at-test" ref refs/heads/@/at-test
+     -@@ t/t1508-at-combinations.sh: nonsense "@{0}@{0}"
+     - nonsense "@{1}@{u}"
+     - nonsense "HEAD@{-1}"
+     - nonsense "@{-1}@{-1}"
+     -+nonsense "new-branch@{default}"
+     - 
+     - # @{N} versus HEAD@{N}
+     - 
+      
+     - ## t/t2012-checkout-last.sh ##
+     -@@ t/t2012-checkout-last.sh: test_cmp_symbolic_HEAD_ref () {
+     - 	test_cmp expect actual
+     - }
+     + ## t/t6040-tracking-info.sh ##
+     +@@ t/t6040-tracking-info.sh: test_expect_success 'checkout (up-to-date with upstream)' '
+     + 	test_grep "Your branch is up to date with .origin/main" actual
+     + '
+       
+     -+test_expect_success '"checkout @{default}" switches to default branch' '
+     -+	git checkout @{default} &&
+     -+	test_cmp_symbolic_HEAD_ref main &&
+     -+	git checkout other
+     ++test_expect_success 'checkout @{primary} (up-to-date with upstream)' '
+     ++	(
+     ++		cd test &&
+     ++		git checkout b6 &&
+     ++		git checkout @{primary} >../actual
+     ++	) &&
+     ++	cat >expect <<-EOF &&
+     ++	Your branch is up to date with ${SQ}origin/main${SQ}.
+     ++	EOF
+     ++	test_cmp expect actual
+     ++'
+     ++
+     ++test_expect_success 'status from @{primary} (up-to-date with upstream)' '
+     ++	(
+     ++		cd test &&
+     ++		git checkout @{primary} &&
+     ++		git status >../actual
+     ++	) &&
+     ++	cat >expect <<-EOF &&
+     ++	On branch main
+     ++	Your branch is up to date with ${SQ}origin/main${SQ}.
+     ++
+     ++	nothing to commit, working tree clean
+     ++	EOF
+     ++	test_cmp expect actual
+      +'
+      +
+     - test_expect_success '"checkout -" switches back' '
+     - 	git checkout - &&
+     - 	test_cmp_symbolic_HEAD_ref main
+     + test_expect_success 'status (diverged from upstream)' '
+     + 	(
+     + 		cd test &&
 
 
- attr.c        |  3 ++-
- environment.c |  2 +-
- environment.h |  3 +++
- repository.c  | 13 ++++++++++++-
- repository.h  |  5 ++++-
- 5 files changed, 22 insertions(+), 4 deletions(-)
+ Documentation/revisions.adoc  | 17 +++++++++++++++++
+ object-name.c                 | 21 ++++++++++++++++++++-
+ remote.c                      | 27 +++++++++++++++++++++++++--
+ remote.h                      |  9 +++++++++
+ t/t1507-rev-parse-upstream.sh |  6 ++++++
+ t/t1508-at-combinations.sh    |  1 +
+ t/t6040-tracking-info.sh      | 27 +++++++++++++++++++++++++++
+ 7 files changed, 105 insertions(+), 3 deletions(-)
 
-diff --git c/attr.c w/attr.c
-index b8b70e6dce..cd39e6d2bf 100644
---- c/attr.c
-+++ w/attr.c
-@@ -881,7 +881,8 @@ const char *git_attr_system_file(void)
+diff --git a/Documentation/revisions.adoc b/Documentation/revisions.adoc
+index 6ea6c7cead..d5c98bfdb1 100644
+--- a/Documentation/revisions.adoc
++++ b/Documentation/revisions.adoc
+@@ -149,6 +149,23 @@ from one location and push to another. In a non-triangular workflow,
+ This suffix is also accepted when spelled in uppercase, and means the same
+ thing no matter the case.
  
- const char *git_attr_global_file(void)
- {
--	struct repo_config_values *cfg = &the_repository->config_values;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
++'@\{primary\}'::
++  The suffix '@\{primary}' refers to the primary branch of the repository,
++  typically `main` or `master`. This is determined by the `init.defaultBranch`
++  configuration option, or falls back to `main` (or `master` in older Git
++  versions) if not configured. The primary branch must exist in the repository
++  for this syntax to work.
+++
++Here's an example:
+++
++------------------------------
++$ git checkout @{primary}
++Switched to branch 'main'
 +
- 	if (!cfg->attributes_file)
- 		cfg->attributes_file = xdg_config_home("attributes");
- 
-diff --git c/environment.c w/environment.c
-index c876589b05..208a52ce11 100644
---- c/environment.c
-+++ w/environment.c
-@@ -302,7 +302,7 @@ static enum fsync_component parse_fsync_components(const char *var, const char *
- int git_default_core_config(const char *var, const char *value,
- 			    const struct config_context *ctx, void *cb)
- {
--	struct repo_config_values *cfg = &the_repository->config_values;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	/* This needs a better name */
- 	if (!strcmp(var, "core.filemode")) {
-diff --git c/environment.h w/environment.h
-index 2b861a61de..254fec6b7c 100644
---- c/environment.h
-+++ w/environment.h
-@@ -84,11 +84,14 @@ extern const char * const local_repo_env[];
- 
- struct strvec;
- 
-+struct repository;
- struct repo_config_values {
- 	/* section "core" config values */
- 	char *attributes_file;
- };
- 
-+struct repo_config_values *repo_config_values(struct repository *);
++$ git rev-parse --symbolic-full-name @{primary}
++refs/heads/main
++------------------------------
 +
- /*
-  * Wrapper of getenv() that returns a strdup value. This value is kept
-  * in argv to be freed later.
-diff --git c/repository.c w/repository.c
-index d308cd78bf..4cb487b5b2 100644
---- c/repository.c
-+++ w/repository.c
-@@ -50,14 +50,25 @@ static void set_default_hash_algo(struct repository *repo)
- 	repo_set_hash_algo(repo, algo);
+ '<rev>{caret}[<n>]', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
+   A suffix '{caret}' to a revision parameter means the first parent of
+   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
+diff --git a/object-name.c b/object-name.c
+index 8b862c124e..1cdc9a0339 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -947,6 +947,12 @@ static inline int push_mark(const char *string, int len)
+ 	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
  }
  
-+struct repo_config_values *repo_config_values(struct repository *repo)
++static inline int primary_mark(const char *string, int len)
 +{
-+	if (!repo->initialized)
-+		BUG("config values from uninitialied repository?");
-+	return &repo->config_values_private_;
++	const char *suffix[] = { "@{primary}" };
++	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
 +}
 +
- void initialize_repository(struct repository *repo)
+ static enum get_oid_result get_oid_1(struct repository *r, const char *name, int len, struct object_id *oid, unsigned lookup_flags);
+ static int interpret_nth_prior_checkout(struct repository *r, const char *name, int namelen, struct strbuf *buf);
+ 
+@@ -998,7 +1004,8 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 					continue;
+ 				}
+ 				if (!upstream_mark(str + at, len - at) &&
+-				    !push_mark(str + at, len - at)) {
++				    !push_mark(str + at, len - at) &&
++				    !primary_mark(str + at, len - at)) {
+ 					reflog_len = (len-1) - (at+2);
+ 					len = at;
+ 				}
+@@ -1707,6 +1714,12 @@ static int branch_interpret_allowed(const char *refname, unsigned allowed)
+ 	return 0;
+ }
+ 
++static const char *branch_get_primary_mark(struct branch *branch,
++					   struct strbuf *err)
++{
++	return branch_get_primary_ref(branch, err);
++}
++
+ static int interpret_branch_mark(struct repository *r,
+ 				 const char *name, int namelen,
+ 				 int at, struct strbuf *buf,
+@@ -1798,6 +1811,12 @@ int repo_interpret_branch_name(struct repository *r,
+ 					    options);
+ 		if (len > 0)
+ 			return len;
++
++		len = interpret_branch_mark(r, name, namelen, at - name, buf,
++					    primary_mark, branch_get_primary_mark,
++					    options);
++		if (len > 0)
++			return len;
+ 	}
+ 
+ 	return -1;
+diff --git a/remote.c b/remote.c
+index b756ff6f15..a4a0a69176 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1842,8 +1842,12 @@ static const char *error_buf(struct strbuf *err, const char *fmt, ...)
+ 	return NULL;
+ }
+ 
+-const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
++const char *branch_get_upstream_options(struct branch *branch, struct strbuf *err,
++					int omit_remote)
  {
-+	if (repo->initialized)
-+		BUG("repository initialized already!");
-+	repo->initialized = true;
++	static struct strbuf upstream_branch_buf = STRBUF_INIT;
++	const char *dst;
 +
- 	repo->remote_state = remote_state_new();
- 	repo->parsed_objects = parsed_object_pool_new(repo);
- 	ALLOC_ARRAY(repo->index, 1);
- 	index_state_init(repo->index, repo);
- 	repo->check_deprecated_config = true;
--	repo_config_values_init(&repo->config_values);
-+	repo_config_values_init(repo_config_values(repo));
+ 	if (!branch)
+ 		return error_buf(err, _("HEAD does not point to a branch"));
  
- 	/*
- 	 * When a command runs inside a repository, it learns what
-diff --git c/repository.h w/repository.h
-index 638a142577..9717e45000 100644
---- c/repository.h
-+++ w/repository.h
-@@ -150,7 +150,7 @@ struct repository {
- 	const struct git_hash_algo *compat_hash_algo;
+@@ -1866,7 +1870,21 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
+ 				 _("upstream branch '%s' not stored as a remote-tracking branch"),
+ 				 branch->merge[0]->src);
  
- 	/* Repository's config values parsed by git_default_config() */
--	struct repo_config_values config_values;
-+	struct repo_config_values config_values_private_;
- 
- 	/* Repository's reference storage format, as serialized on disk. */
- 	enum ref_storage_format ref_storage_format;
-@@ -175,6 +175,9 @@ struct repository {
- 
- 	/* Should repo_config() check for deprecated settings */
- 	bool check_deprecated_config;
+-	return branch->merge[0]->dst;
++	dst = branch->merge[0]->dst;
++	if (!omit_remote)
++		return dst;
 +
-+	/* Has this repository instance been initialized? */
-+	bool initialized;
- };
++	strbuf_reset(&upstream_branch_buf);
++	if (skip_prefix(dst, "refs/remotes/", &dst) && (dst = strchr(dst, '/')))
++		strbuf_addf(&upstream_branch_buf, "refs/heads/%s", dst + 1);
++	else
++		strbuf_addstr(&upstream_branch_buf, branch->merge[0]->dst);
++	return upstream_branch_buf.buf;
++}
++
++const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
++{
++	return branch_get_upstream_options(branch, err, 0);
+ }
  
- #ifdef USE_THE_REPOSITORY_VARIABLE
+ static const char *tracking_for_push_dest(struct remote *remote,
+@@ -1961,6 +1979,11 @@ const char *branch_get_push(struct branch *branch, struct strbuf *err)
+ 	return branch->push_tracking_ref;
+ }
+ 
++const char *branch_get_primary_ref(struct branch *branch, struct strbuf *err)
++{
++	return branch_get_upstream_options(branch, err, 1);
++}
++
+ static int ignore_symref_update(const char *refname, struct strbuf *scratch)
+ {
+ 	return !refs_read_symbolic_ref(get_main_ref_store(the_repository), refname, scratch);
+diff --git a/remote.h b/remote.h
+index 0ca399e183..414187827b 100644
+--- a/remote.h
++++ b/remote.h
+@@ -347,6 +347,9 @@ int branch_has_merge_config(struct branch *branch);
+ 
+ int branch_merge_matches(struct branch *, int n, const char *);
+ 
++const char *branch_get_upstream_options(struct branch *branch, struct strbuf *err,
++					int omit_remote);
++
+ /**
+  * Return the fully-qualified refname of the tracking branch for `branch`.
+  * I.e., what "branch@{upstream}" would give you. Returns NULL if no
+@@ -366,6 +369,12 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
+  */
+ const char *branch_get_push(struct branch *branch, struct strbuf *err);
+ 
++/**
++ * Return the fully-qualified refname of the primary branch.
++ * I.e., what "@{primary}" would give you.
++ */
++const char *branch_get_primary_ref(struct branch *branch, struct strbuf *err);
++
+ /* Flags to match_refs. */
+ enum match_refs_flags {
+ 	MATCH_REFS_NONE		= 0,
+diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
+index cb9ef7e329..27b45442c2 100755
+--- a/t/t1507-rev-parse-upstream.sh
++++ b/t/t1507-rev-parse-upstream.sh
+@@ -259,6 +259,12 @@ test_expect_success 'log -g other@{u}@{now}' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '@{primary} resolves to correct full name' '
++	echo refs/heads/main >expect &&
++	git -C clone rev-parse --symbolic-full-name @{primary} >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success '@{reflog}-parsing does not look beyond colon' '
+ 	echo content >@{yesterday} &&
+ 	git add @{yesterday} &&
+diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
+index 87a4286414..88bf625c74 100755
+--- a/t/t1508-at-combinations.sh
++++ b/t/t1508-at-combinations.sh
+@@ -69,6 +69,7 @@ check "@{-1}@{u}" ref refs/heads/main
+ check "@{-1}@{u}@{1}" commit main-one
+ check "@" commit new-two
+ check "@@{u}" ref refs/heads/upstream-branch
++check "@{primary}" ref refs/heads/upstream-branch
+ check "@@/at-test" ref refs/heads/@@/at-test
+ test_have_prereq MINGW ||
+ check "@/at-test" ref refs/heads/@/at-test
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 0b719bbae6..039eb7108f 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -106,6 +106,33 @@ test_expect_success 'checkout (up-to-date with upstream)' '
+ 	test_grep "Your branch is up to date with .origin/main" actual
+ '
+ 
++test_expect_success 'checkout @{primary} (up-to-date with upstream)' '
++	(
++		cd test &&
++		git checkout b6 &&
++		git checkout @{primary} >../actual
++	) &&
++	cat >expect <<-EOF &&
++	Your branch is up to date with ${SQ}origin/main${SQ}.
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'status from @{primary} (up-to-date with upstream)' '
++	(
++		cd test &&
++		git checkout @{primary} &&
++		git status >../actual
++	) &&
++	cat >expect <<-EOF &&
++	On branch main
++	Your branch is up to date with ${SQ}origin/main${SQ}.
++
++	nothing to commit, working tree clean
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success 'status (diverged from upstream)' '
+ 	(
+ 		cd test &&
+
+base-commit: ea717645d199f6f1b66058886475db3e8c9330e9
+-- 
+gitgitgadget
