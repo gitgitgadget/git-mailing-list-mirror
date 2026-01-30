@@ -1,107 +1,130 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340B52F3C1D
-	for <git@vger.kernel.org>; Fri, 30 Jan 2026 16:50:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB7A3559C3
+	for <git@vger.kernel.org>; Fri, 30 Jan 2026 16:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769791828; cv=none; b=EiUJuMd9ZxSuGBq/E3CAC9FVfTvea5/k+qsZ7odnAgcF3pQ/L7WSl08n7ZCblVq0NMVPU54lmQAxmhVb8fk2M50nHbH+oqrdnaU6kgAEOrwrGEBa5neL4o77ZzvdgH8ZMKvsUZFIuIPm/htpLSTfBCB6hFKt9J4ZTDvzy3DYRS0=
+	t=1769792082; cv=none; b=Mrbr54izfwFHB4LR4urUC4L8HlRvICVbSMW2U0MfP7wM+Gm9zgI/3FtKDM1ohTKIL406WUpMI4iIbHaERe18UrD5vdCjXZAE2kuuJ1WCy4gT4LuNYVzuAE7XGRAyZMvg0ObQ30eEFtg8oE8L5nCvNvfyCYpC/bKvL1DPa4Xoa6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769791828; c=relaxed/simple;
-	bh=xb/oB6NvYWuPo4yOdWLciW2bG3DeDB/Vcp3p60K4UbQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c8+89fkABOBJjJbPB4ooxqBOfQcYmHChazqlJ04U2rFl8BZsJb46xitcBqY/Qv57foGsp9Fp0ziqCGyPfeEoJ3ZGmF5jm6FvqxY0nRNL/EBS+vXVtNi7rTtwwn6EkoVGgTzR2DmDwvA0U+U+GZZL2x005S4zCgcnBjAntrlryy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F3I6gT6v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j0bYoVzA; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769792082; c=relaxed/simple;
+	bh=euCrcPc0U/J+pg9UYeFdkjX8QElo86ELI3gaDevfodM=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=E3aGvMX0Z+UNfv7gsBiTQk88S6tsLk+8cy7xeESihPwRERQeqodL9vpEGjjDPmdEA1G7B6+QlKiLP9/B8mTdDujOYehLBgqU6jD9RkBsPR+LPO7LfOZiblZOXNEpPqNwe1OpfGE8nZK7J7ZVS25cGHf9uQrUEgMvmlMnrbeEtQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=qlZ3YxJr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qWtmcj06; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F3I6gT6v";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j0bYoVzA"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 78F8C1D000BD;
-	Fri, 30 Jan 2026 11:50:26 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 30 Jan 2026 11:50:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769791826; x=1769878226; bh=1FzsLHGfhQ
-	SysuNX71pMUFkisiFbwwT4m7pcAI54gpY=; b=F3I6gT6vAWzocohAWWgQPxLYW5
-	MJMLyJCwrYwd/PR5as6DPM5g4PIW+sNWBLImjyBUD/q2fMsQf4bN/8s2/A162kCr
-	D+A/bT2hELHspF1a1UO3bSA0uc4tic3hOrmJYRwBgByG+h5X/iR+zOu4IG9i/UgN
-	UwMFtdKggSVTWtvs3q2Eof878y3WAnOc0Hw9jsQYw85jvi7YmXi0E6+Yljdsj2mo
-	olcNQERkwYaEXjfDGkqCAHKDEscOjBLlKYXxWQZPdpNKIlr+ovoR08uw1lssT94/
-	yFt2agnLZbccsDOzmDEoniC9KvvyA7d2x0N7FIKpK7KgI9zPCJvh32u6dXHA==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="qlZ3YxJr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qWtmcj06"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0EF947A0133;
+	Fri, 30 Jan 2026 11:54:40 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Fri, 30 Jan 2026 11:54:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1769792079;
+	 x=1769878479; bh=OJrucrq+B94Rtun/IThb7Xtn4kjOj98pMOH0U7Hc0xs=; b=
+	qlZ3YxJrCOu3Rmed2gFhVCnqoh2JVCBZCIgM+3qbyj0vz1ScwlcMqBn/1G/3sNHF
+	sYTo5abwbf6tgKdvwbSJvDsMWgb3o+CskjcQ8puPi12xmYBQAqGl1luiquJnKb5G
+	8P4ki6tMmsMAloo7+zRj/xsopPo3WrkVaJGnBQh1klZhHuZqb4hyBzTFatMXI7QE
+	tJA9DBlhqjMzNalWkDWhtm6oa9g9gmS7J/QdoJWp28WRwejqNQEmRTo6AhkPubIp
+	RwcEWXl9Gp5PtnspzZNBVaBhXsP9V5MmtlvUl45PwmGDeTIuHVeXK5RjzonFggbA
+	vvEhRLbtWIO+cNC0Q8sIaw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769791826; x=1769878226; bh=1FzsLHGfhQSysuNX71pMUFkisiFbwwT4m7p
-	cAI54gpY=; b=j0bYoVzADHPeLJpWyTL+kkmzuuMpyhzht/cy646XON/09aypOdr
-	nBCxvAp5vwuyrCr/eMBpMpl1NWKAWuwpJAgPsMCiMj5q2nCHX6Fjw38J7vxnKS0O
-	hBReRhBulkl+KXRDDgEe24u/U4zaE1w/MnBh6PdRwAiZdjAL8lJnFEi8GpzDWZ1f
-	b7/OaO8C4jIoI/cGvjWz0lVjhuBpls6RFxgoMpOMEuJQMe2hBGIwmEhVgeEpcnz7
-	r6OdkYQZ70Q1qulIbvjiidxRfacKuwfllusN34+UYPq4wR1djGYAxtfRW0XXGM18
-	zQ8g2T3IOIrQsLqhMagaY//fM110+8ZNDHA==
-X-ME-Sender: <xms:UuF8aQftBj9cpf8qgbO648Kt7tf_B-kP6VhTpdzoG1D1YEQKgkH_Jw>
-    <xme:UuF8aZotLVXRUkxU8eNYSuCNyoyrChWyZ4HagRYZoz2F7cH6MrmUh5ajM-4UA2JvU
-    43tol_ylLoYddindjD42P4yoSZkiVE-PR0J7nkmkoOcoMGLsHI_zw>
-X-ME-Received: <xmr:UuF8ae7OqqXey65ysxSHJ1xYPV14S7UiRGZxZdGHYCgGIdn1n7BeoFVHUzIhVT_ASZx68S5rJRnfz2vbqIqhNI1F78456sUgDWgWPk8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelheeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1769792079; x=
+	1769878479; bh=OJrucrq+B94Rtun/IThb7Xtn4kjOj98pMOH0U7Hc0xs=; b=q
+	Wtmcj06MAh98TR+TZ03aKhT8oCmS+l0nJ0wkMzG3HbM8RIZUScXej/XC9QUp6/Rc
+	q2cHs5hOBwj4tynK6K5TGe/osXwYqTb2wOtHLmL2gm69yLmdkbtISZiQyw82RBBC
+	YmDmhOHksJ5UFmNO+l2khioi76lWx4sSQmoAwErKZckpMesEvBTYY6LL99xMNvrs
+	LmWq1unqIX7jgoWv0HOB07M5XXen1ITi7TgBQ6JloRe1t7oObV8rLEMOWbdl5rxs
+	qwBE//p6CO9q2xmvIh6lEBoIYI3PyrM1RbQBOIbEMoIae8Vthfkk4L/nZmDYig+Q
+	M5yRsI3VZWCeYCD1tG8Xg==
+X-ME-Sender: <xms:T-J8aRVHHIOzuFa2JsvSYnRoFizEbXpt1ErLFHtg83sL7HsFVn_q96A>
+    <xme:T-J8acb10dOkUWz4hBH1sPU3-MG67h-Tf0UtNRE8Ns7iRLluFkd22Qa6Jc-HdJoAh
+    j6V9-BmXl3NfD3t5cJAJ3Piil7ghtWTUHzC_zCUXISqXLnasAc9HjE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelheejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhushhhkhgrrhhkuhhmrghrshhinhhghhduleejtd
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:UuF8afpy1g_JPZYLZDtXs_vTP6wo8axxSWWWd9PSQM6fcAh8YKPcRw>
-    <xmx:UuF8aQgMdZ4P9tk7PamvfNSvVxjyUFicUGufhEfuR2AoYfBD9EOTLg>
-    <xmx:UuF8aZLQlrIP3XlDbTI9b_16BkdSe6YBMfy2Ry4RIO9rAlYUneHs5Q>
-    <xmx:UuF8aQAEBdpX52PAwPdY8q8LqygKT5qxnCjksO10iXfp2sLd0VHHBw>
-    <xmx:UuF8aVocqNDZtboYs2mgnAEzV9aquKG2u1NsDZoNpbL0ax1dIq6yw_c->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Jan 2026 11:50:25 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2026, #10)
-In-Reply-To: <20260130142451.7324-1-pushkarkumarsingh1970@gmail.com> (Pushkar
-	Singh's message of "Fri, 30 Jan 2026 14:24:51 +0000")
-References: <xmqqwm107za7.fsf@gitster.g>
-	<20260130142451.7324-1-pushkarkumarsingh1970@gmail.com>
-Date: Fri, 30 Jan 2026 08:50:24 -0800
-Message-ID: <xmqqv7gj6o4v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:T-J8aQS5h8RfNKvThymrSDS_M_jQ_VZQFxTEfrqcvNbfIRZuDnCmCA>
+    <xmx:T-J8aVjifY4OxpQpR4b5JrHkJ80ai-raXtmga3WuL8gm4-xKyn4AdA>
+    <xmx:T-J8aQ7rdSgQL22hgzGas5CfRABf0dhLw8fbcrN856B5vcEb3g_ijQ>
+    <xmx:T-J8aSAq3QptK81W-k30EXXYekzSidpdqsQoxE31ChcErTwHkGeN8A>
+    <xmx:T-J8aWRxOoReewu650wgS3ySHZFB5ZlGtb_zu53aL8UQKy4zacona2Z1>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id BEB731EA0070; Fri, 30 Jan 2026 11:54:39 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: A5dQvCCpYqNV
+Date: Fri, 30 Jan 2026 17:54:19 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: gitgitgadget@gmail.com, git@vger.kernel.org
+Cc: "Harald Nordgren" <haraldnordgren@gmail.com>
+Message-Id: <7b62316f-a30a-4895-808d-baa20be0f3af@app.fastmail.com>
+In-Reply-To: <pull.2183.v2.git.git.1769779599196.gitgitgadget@gmail.com>
+References: <pull.2183.git.git.1769700352081.gitgitgadget@gmail.com>
+ <pull.2183.v2.git.git.1769779599196.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2] revisions: add @{default} shorthand for default branch
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
-
-> On Thu, Jan 15, 2026 at 12:26 PM Junio C Hamano wrote:
->> * ps/validate-prefix-in-subtree-split (2026-01-15) 1 commit
->>  - subtree: validate --prefix against commit in split
->>
->>  "git subtree split --prefix=P <commit>" now checks the prefix P
->>  against the tree of the (potentially quite different from the
->>  current working tree) given commit.
->>
->>  Expecting a reroll?
->>  source: <20260115122652.18673-2-pushkarkumarsingh1970@gmail.com>
+On Fri, Jan 30, 2026, at 14:26, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
 >
-> Hi Junio,
->
-> Thanks for the update.
+> Git already has shorthands like @{upstream} and @{push} to refer to
+> tracking branches, but there is no convenient way to refer to the
+> default branch of a repository (typically "main" or "master").
 
-Sorry for the non-update ;-)  The expectation was against v2 of this
-patch, which was met with v3.
+I don=E2=80=99t use a lot of different repositories. But for the two I d=
+o use I
+use `origin`. (Really `o` since I name the regular remote `o`.) Most of
+the time I do not need to have the main *branch* as a branch. I am not
+working on the main branch. Using the remote-tracking branch directly is
+more convenient.
+
+> Users often want to switch to the default branch regardless of its
+> name, especially when working across repositories with different
+> default branch names. Currently they must either hardcode the branch
+> name or query it via configuration, which is cumbersome.
+
+*Query it* sounds like git-config(1). I have found `git var
+GIT_DEFAULT_BRANCH` useful for when I want to answer a question
+without hardcodig `main` or `master`.
+
+>
+> Add a new @{default} shorthand that resolves to the default branch
+> as determined by init.defaultBranch (or falls back to "main" or
+> "master" depending on Git version). This allows users to write:
+>
+>   git checkout @{default}
+>
+> instead of having to know or look up the default branch name.
+>
+> The implementation follows the same pattern as @{upstream} and @{push},
+> using a new branch_get_default() function that queries the default
+> branch name and verifies it exists in the repository.
+>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>[snip]
