@@ -1,135 +1,161 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54662C11D0
-	for <git@vger.kernel.org>; Fri, 30 Jan 2026 13:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA0A202F70
+	for <git@vger.kernel.org>; Fri, 30 Jan 2026 14:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769780433; cv=none; b=BXAIwnGNPmXnwnW0GVclWHoqagUuPT6jOdoqO3dqurN7Mb8bBE8mwiUk6Bk+JRPeZHtUtd0qEQnY2Afg+N+sx8rdw67JZu5ps6v4IOdQTM8qJV9jwmi812gVtijv/FiRXtidmF9zA5IOX0ZynzkXEU1AiQNJdF7hoMhxV03ITgk=
+	t=1769782034; cv=none; b=fZ/BIfGccYchhqj/5izDuEijLySg2v756eWT3ZCkTHwfAibe/QR3gdz487n+IH8XG0aujR08oHJJcGmwyjw76UFmUZJXELVCt7LTRDqvdE9aJKmAXpDdwFDsODekjnII6j1wDOXVp2yU+KrzfgsPQq3b02/H1Ga40MUvqxIYgSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769780433; c=relaxed/simple;
-	bh=hIs2js69pL9eEbu3Nk966kIaDg38x+KoZQ81p5q1N0Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nC98s4NYQqjCZG0bNowgJGqIlql3SDbQxKyVzVlYx+HReWZAViqJf51cpYIdshGHNjY8jxRzNXzX3mP/Q8rceSIVfKxDi7BOnIDWiBhfdXIsFB8LNe3inVMLI/klvJxxy8JrnHBJvOZNTi/WWdmjoj/eAyNxHzngbTMjdUy6XUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nl/mLJUS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nlKM49UH; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1769782034; c=relaxed/simple;
+	bh=pN7YS163cZvLU0vZNu0FruA6AYLxAaqtHxusOARUrxI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UjXSAe7sD0wlNXWkwLPN0k148YuYWzG3tMPbbaSv3ST79DF60vuTjM56I+MPjblDVcW6Hd07epa48/eiGAa9PMXb+RqeYF84FbXWb59Vj6kessxgeYRZ+FSY4P+YN7DbzHLf+Dme4wuDKdV8Pmo8hkUfaYXQhDKVcvCq6FdEAaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jgdkQswh; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nl/mLJUS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nlKM49UH"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1562FEC0554;
-	Fri, 30 Jan 2026 08:40:31 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 30 Jan 2026 08:40:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1769780431;
-	 x=1769866831; bh=7Rm7VDRaQua0g43mz/lgr4MUkCdM3Kfan6H7WqielQ0=; b=
-	Nl/mLJUSttNbHla3eyZIKcu7koKu3cNtJOVU1melLzvjrUm3AW34v9GUXw8yIMI2
-	7QNPDqzCX8/jBmYVvrwTzo5uvrh/Oyt//qZ/XTQjEITpor8nx1ryipVaG1rjyAwY
-	GzsWWxj3/y6bC+N1tNFrS/duah9UdwGp8DhTo3JstCBujk4zx4K+ifE3KY2l5JaJ
-	8UmjT3IGg1IO3aVcFYAlJ7mXI2AIum6hNo0F9ifcUCqUaMBbHc+AU8U/PKjxPhIl
-	MKSGABqUcNj9PRqj5da/LA19G2YJ6a/3oWII3gzv5xw422rl4mvhkudcfBvvo/vZ
-	cnWY1Pn8OWvYS9QSFvAv3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1769780431; x=
-	1769866831; bh=7Rm7VDRaQua0g43mz/lgr4MUkCdM3Kfan6H7WqielQ0=; b=n
-	lKM49UHTezD4UwkjnWXFE2lIoAKmRl7jIFc1JwwMxYwtbm/aOXUlagtGdq0c5T+N
-	wzbWCtfL3ZkwFqiqq6DJJ7Rafz8/ozT8sha0arX2WN5leYtfZdpup+vjjQQIgV8j
-	QKUMxWtRAIkMkmiiUiN4dS0+JhVN/cnC9/uKx60b8AzJjMGCdvuIXZVVrxFrwnJ3
-	570benS8+tdGWramDqXfcKYzAikOedqgh5wNvyj2+XyKVJzINbQn885q424glFkR
-	2Ills+LcOftk89QXS/8h/IiCBQ8Y+Xw2QCn2HzVKMcbr9ULTDZzTVx7RlhX9/k0O
-	NtFEy7IlATBpAAnvVOZ8A==
-X-ME-Sender: <xms:zrR8aYYa6XLPWRQhOsYslXvZTZ8cY67vKQl5MhQWWgBVzirw7cIZzw>
-    <xme:zrR8aaZvy2WXf6ckZV2bijWHdrj7pmWXlwBNUEq7Pp5orYo29fF-dT1LgXFcyUT8K
-    qCqV1RZAykFyE4Mx-kcF35heI8UObjnx-ubP6FzUk0zdpdUH9KJzA>
-X-ME-Received: <xmr:zrR8aX-732xmZ-vGYQikBULREHghvw1FH_iW362pyKrHls4VMFJoVzUcQvFyR4kf1XHEzuDubo8HitKCsvzf54iGr4B1UWFTDQcT0PFW0A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeludekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
-    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
-    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthho
-    ohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepshhhrhgvhigrnhhshhhprghlihifrg
-    hltghmshhmnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:zrR8aRj96jGijrrV96rD7lb8Hm1VVgeLxhq1f3Wzz4sQHdFMBCkCVw>
-    <xmx:zrR8afeI0i-Xy4mFEt6IrhhVwXGipJXHEjlsQhHi5Rm2k59ycXcOrg>
-    <xmx:zrR8aQqJ_EfmOSAsqHq0_kNIGson73VKxmFiagA93IKcT5q2TqHwmA>
-    <xmx:zrR8acBoyBI-UFBEZSL21CnfZtpcJf__PgYAZELupQE8sZawmu5OMw>
-    <xmx:z7R8aZowf-t8AbzkHGKHUZ1k02Fp73NPmPDe9mfnCU-eHIqU2rJJ48WB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Jan 2026 08:40:29 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2237c8d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Jan 2026 13:40:27 +0000 (UTC)
-Date: Fri, 30 Jan 2026 14:40:15 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, sandals@crustytoothpaste.net
-Subject: Re: [PATCH] show-index: warn when falling back to SHA-1 outside a
- repository
-Message-ID: <aXy0bife-Ubi9gnn@pks.im>
-References: <aXvpSPpfvulKu57P@fruit.crustytoothpaste.net>
- <20260130090525.254665-1-shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jgdkQswh"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c2a9a9b43b1so1223678a12.2
+        for <git@vger.kernel.org>; Fri, 30 Jan 2026 06:07:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769782033; x=1770386833; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TJ2fk2hPLeGY27yY7QIJzWdgo1ZvQRGA1sM5tlbGXZ4=;
+        b=jgdkQswhLywFtSVQuKIbc1sfNSUvjdl8oMzMja9P+g9WsRWGJexs/iIg03hA07YrAp
+         79MZSy0nRX6AYxtgVAySuaYByLYd4zca4VmVgK+d0f+du8h7GnaMX3l+pKLVSV9QGTIP
+         KvatrNNaR0KFYUTXuP3iFIkENySPELmudvtIrkKGBef4RGwLzyFSWs4ZEGm9GTVD0J6i
+         lFwlK1FIX7KwtQ5wucOxkApbWGN8t91e3jHhEzkCDwq+GNnrjit9Zklrkmw0z2V2VpHu
+         7O2HgtZXM46PNsGPMjKSC/ifKieRP2rs16gCKrdkyjxUh/9JZAdbHVgsw2ok7Hcg1kjq
+         962Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769782033; x=1770386833;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=TJ2fk2hPLeGY27yY7QIJzWdgo1ZvQRGA1sM5tlbGXZ4=;
+        b=Yg65G5cZxP7Ksv5lAO5YaLhIZUR+om6Ck3otk0ifAs5wyqTqDAXou0MzI7BvHy9mZI
+         JMcSoofr0RdPFqKM25WzY4RP5VasmIqahO6xolIw2GtMUVGogDtEO8SPYOfIRDZT9zRg
+         PLqGIqq2ulx2tyOw6C+tzOqmAI/mjQujZiXmvbaAOCKdVdH11Q0mHS2GkmHdXigI9rvB
+         w7vAhYxzRNldYmjp2RQLTdKmmmNpU0HMBm3AL+kofPlEoENoNX/qen3ZvL/a26NkyTOV
+         /P4swjGtD43im0UBfEFstZ9X5UvcZPnPQ7ysuqMi4nvuHRo7I8o9vwNK9ibKgTnxngS0
+         A8Og==
+X-Gm-Message-State: AOJu0YygZEyn7n6EhW5j+WrkXfUox6O3BkyPHbuiFzvpjYaP1Q4Sje/c
+	jcXHaQDhDhC/j2RJkh/s/M2vB7osQYDaGIysxrLimNOEEQ1QSAJTc0sO
+X-Gm-Gg: AZuq6aJ40YsjiuAHoKzybHUYxB1tkpbKgodHhcB30AI+EBkufW6y+N3KdHu3aYXhHh5
+	S+lERDkWJndA8hAntTb72fvoSbQglcXvUJJrlEwuW8V1LD2BHoSXROew4NwNge2KRnBzag0OVyl
+	KEpuuVDMPy6ADj/vM6ErmWGT2NPerV67tpIu5ePLt/CAI4VAGQ7alETIKWGEEw+cPLAJM35Ndse
+	uFv4lR/EmxCEdWtSesc+AzPK4N1ARJxhloDvM0U80LTWAGka1S986SVVMny6wPqXznSGhtnrKKu
+	JF7ayUc8U7ocE4GZg872YbJivEVJ0eoJVMUenDeG5PdhVwGnyUmW3R8gyBya369lu9Xdhgl6gUp
+	cfPfz59ToR9IjUUNI7hAInTe3N82e/m7PHsenufnt+PnHEvbiv2L9l2rbrPTPa6bGtDU9HLVt1l
+	Qx5hGNYY6qfuXtkeLUBHycBO/CVljT9oicFQJwEVWpr50=
+X-Received: by 2002:a05:6a20:94c7:b0:38d:f988:613f with SMTP id adf61e73a8af0-392e01b3642mr2932154637.80.1769782032500;
+        Fri, 30 Jan 2026 06:07:12 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f3edb50sm8605883a91.13.2026.01.30.06.07.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jan 2026 06:07:11 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	peff@peff.net,
+	pushkarkumarsingh1970@gmail.com
+Subject: [PATCH v2] path: factor out skip_slashes() in normalize_path_copy_len()
+Date: Fri, 30 Jan 2026 14:01:44 +0000
+Message-ID: <20260130140143.5579-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqqh5s4b66w.fsf@gitster.g>
+References: <xmqqh5s4b66w.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260130090525.254665-1-shreyanshpaliwalcmsmn@gmail.com>
 
-On Fri, Jan 30, 2026 at 02:34:53PM +0530, Shreyansh Paliwal wrote:
-> > On 2026-01-29 at 15:36:55, Shreyansh Paliwal wrote:
-> > >	/*
-> > >	 * Fallback to SHA1 if we are running outside of a repository.
-> > >	 *
-> > > -	 * TODO: Figure out and implement a way to detect the hash algorithm in use by the
-> > > -	 *       the index file passed in and use that instead.
-> > > +	 * TODO: If a future implementation of index file version encodes the hash
-> > > +	 *       algorithm in its header, enable show-index to infer it from the
-> > > +	 *       header rather than relying on repository context or a default fallback.
-> > >	 */
-> > > -	if (!the_hash_algo)
-> > > +	if (!the_hash_algo) {
-> > > +		warning(_("assuming SHA-1; use --object-format to override"));
-> > >		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
-> > 
-> > If we're going to start producing a warning, can we also learn a
-> > `--quiet` option to silence it?
-> 
-> Hi,
-> 
-> That is a good point.
-> However, the warning is only shown for a particular usecase: when 
-> 'git show-index' is run outside of a repository and --object-format
-> is not specified. Given that narrow scope, I’m wondering whether
-> adding a dedicated --quiet option for only this warning would be worthwhile.
-> 
-> Let me know what you think :)
+Hi Junio,
 
-I also wonder whether "--quiet" might be a bit _too_ generic in this
-context. I would rather want to use this flag for something that you
-actually have a good reason to silence, instead of only for a warning.
+Thanks for the detailed feedback.
 
-In theory, the user already has the ability to silence the warning: they
-can simply pass "--object-format=sha256". If you think that's not enough
-I'd buid on top of our `advice_if_enabled()` infra, so that the warning
-can be globally disabled by setting a config option.
+This version keeps skip_slashes(), but drops handle_dot_component() and
+restores the original control flow around the four dot-component cases.
+The up_one logic is kept inline, with a short explanatory comment as
+suggested.
 
-Thanks!
+Changes since v1:
+  - Keep skip_slashes() helper.
+  - Restore inline dot-component handling.
+  - Remove handle_dot_component() helper.
+  - Keep up_one logic inline and add a brief comment.
 
-Patrick
+Thanks for the review.
+
+Pushkar
+---
+ path.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/path.c b/path.c
+index d726537622..1772fcb21c 100644
+--- a/path.c
++++ b/path.c
+@@ -1112,6 +1112,14 @@ const char *remove_leading_path(const char *in, const char *prefix)
+  * end with a '/', then the callers need to be fixed up accordingly.
+  *
+  */
++
++static const char *skip_slashes(const char *p)
++{
++	while (is_dir_sep(*p))
++		p++;
++	return p;
++}
++
+ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
+ {
+ 	char *dst0;
+@@ -1129,8 +1137,7 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
+ 	}
+ 	dst0 = dst;
+ 
+-	while (is_dir_sep(*src))
+-		src++;
++	src = skip_slashes(src);
+ 
+ 	for (;;) {
+ 		char c = *src;
+@@ -1150,8 +1157,7 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
+ 			} else if (is_dir_sep(src[1])) {
+ 				/* (2) */
+ 				src += 2;
+-				while (is_dir_sep(*src))
+-					src++;
++				src = skip_slashes(src);
+ 				continue;
+ 			} else if (src[1] == '.') {
+ 				if (!src[2]) {
+@@ -1161,8 +1167,7 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
+ 				} else if (is_dir_sep(src[2])) {
+ 					/* (4) */
+ 					src += 3;
+-					while (is_dir_sep(*src))
+-						src++;
++					src = skip_slashes(src);
+ 					goto up_one;
+ 				}
+ 			}
+@@ -1182,6 +1187,8 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
+ 
+ 	up_one:
+ 		/*
++		 * strip the last component
++		 *
+ 		 * dst0..dst is prefix portion, and dst[-1] is '/';
+ 		 * go up one level.
+ 		 */
+-- 
+2.43.0
+
