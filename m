@@ -1,69 +1,69 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pj1-f68.google.com (mail-pj1-f68.google.com [209.85.216.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB502DCF46
-	for <git@vger.kernel.org>; Sat, 31 Jan 2026 19:01:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5D02DCF46
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 19:01:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769886098; cv=none; b=O+duB1lZnsW/q/hYPkp/NiHvNHmyuub6NjLyKE+ndhxRxlD9sTNdWDEoOBjym6595GKKvxnMUl0zRK7GWec2eA9sBfmsOlOhGuXaQ7XKMvpK1oPF4Y5jfKukly5X7atzXgkVpLbvpuZCZ7mCT0nC7+OMWVpz1cYkQ0fLHAY8h6o=
+	t=1769886102; cv=none; b=UUNIMOoqbhtblS6kk+7DjZuslN4MSN2LRRqJo/gNJkKGevaYOShOpxmTbs7T/29KOH01iUFOZ1vFSMkoEOslwYnwFJBlA1heAkvNjsuO+kNTOMvBkmkhfgqLPGQMJIT9YQ6ftfCxM/fA/jcexnBKM2fhLLvMC62qMvI1hgokJ+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769886098; c=relaxed/simple;
-	bh=VSlgOctRK22tTrwO9cTz3VP4/LXMgyv3M8qID2RJ/fA=;
+	s=arc-20240116; t=1769886102; c=relaxed/simple;
+	bh=AgW8uC2Byyxzz/h/h1TyCVZW2jxVRbfzMlHLG5uqC0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFEtd8aWZIosvuyaWAWdhespLwjEjo86+B8nLVyx9QrlQmy+cYjso0tHI7XhKtNDo67sgW48vtv0jhnLqvJNVTfxy55/ItKLJKYRSZriWtMj4pa+sxVBP8pumH9wdiTOEKc14MTgjTH338SFYxSigUflb98JMKQDY0t6Pn05bS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YgP+zKG8; arc=none smtp.client-ip=209.85.215.176
+	 MIME-Version; b=ONf00m4BK89O1883iO3lTuBl2iK8FZNho3uK6pHMAAoUzw05kYmC0xiW0lUxmou0Zqo4sXVMU7su31JHdfjGA6KwTxa65T2pYcuHR4d8/zSFn+1ZLBO7C6aoO4NPSTYyO9Dm6aouDMYkCKEp84qKK6Tzb0RecwARw3QYi/G6API=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ItLuqfN/; arc=none smtp.client-ip=209.85.216.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YgP+zKG8"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c62239decbeso1260704a12.2
-        for <git@vger.kernel.org>; Sat, 31 Jan 2026 11:01:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ItLuqfN/"
+Received: by mail-pj1-f68.google.com with SMTP id 98e67ed59e1d1-350fe1f8ea3so1472008a91.2
+        for <git@vger.kernel.org>; Sat, 31 Jan 2026 11:01:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769886097; x=1770490897; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769886100; x=1770490900; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mDxEouQG7DSRgKHQXCjZVm/yeOkmad++aspxKo6ZoR4=;
-        b=YgP+zKG8po20PY4770238WP1p86NYKTmEs8YVamnFif1p723+4NMV8sSsVfiuphGe3
-         xAHOSxENubN4+kVc+oxJtMV7Nm1EcGnqjUg451qCQhFh012FCN/QpGLGrEZjgOj6ZboC
-         WfZ8TWYg62qA9LFeWRB524vSUR24iQBB4PoqM8dIB4wlvkdw+HA+1k3NAju/hgocYJSI
-         lOydwXlmdhZgeBzOzha4/cb47aWfrste/lQQWuWafaa1o1VZtkPcEsm+BkE/tojDBFNp
-         pI3qoLABZEFe4VZlJTuKypaBkUNDTo8fQSGUbzMJcrdh6v4kpC8fVwflhyGN/XBwoY+7
-         At3Q==
+        bh=ni80rKjhZsb6vW5cpIgOxpcUuyybAZaMhsiGOJynX2E=;
+        b=ItLuqfN/f7ngrNvn78j1P40RVUmq1YKs48W5YIIctLUDdsaL4yFxCUC/c9wBfOwcc4
+         8OTYK5m5rXMCxW/WJA2nOerpSG5OAi/6ao3VdX2QcY3KCkKb2CHV+AUYylassf94tfBD
+         Ig0Mn5Xn8qtQgBri4Hur2aOqh7TV0S3KaIdyiU5ixvMp400nVJomgSTg0YfBg6ViqQu9
+         FQThoWEoSHchxucrVydnQ6fTT1Q81sNDSJE1JXCSE8jeNbj9K7fJuDc4tT7e+7Ubx/Uo
+         X37PBTvF3rI6kY6dvfMMMl+eRF6q9pOC52z9GuKm+rqlYpeqtKxHk4QoE1VaI88FJ5xZ
+         w8DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769886097; x=1770490897;
+        d=1e100.net; s=20230601; t=1769886100; x=1770490900;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=mDxEouQG7DSRgKHQXCjZVm/yeOkmad++aspxKo6ZoR4=;
-        b=FprtmOzDmXakGhTJX3k6DbF1YlBDKZQj5ToqaEFUF8JbTF2pQTKq5tvTwaojoToX7h
-         Li94uzMhMHhxN2NzdznPEWIqEQOmHd6IU445pH8JBNXewbsUZg3QXB/WWTMxs936UFpC
-         TJCwGACYfYql7+jhgVQfwz8A3WGmSTFOxPGbeVfnOPt3cVRGotVEUL/KzZMSIscH/Nfi
-         vOHu8k8v7i6jYsaBjoCJMfsQ0I0ZGuImh1sFO7FnBuNCib8RVQBu2OgSo8D66jktLzO+
-         N55ZzldkHjHxgiT6R1btXr5lU5XqpFUz18nBRJLr5lBBoDPok6tN44s2JVgA83w7r2DD
-         yGjw==
-X-Gm-Message-State: AOJu0YxeB0+mvbavX+Bvy0Of4rMTGJKYYsqDzQidfix8Wq4krKYYKrVh
-	4WyZEsoCscTWHbhJmjTUKbeQmyW1ZGYO1JxJLURrLJswar3VtL5FAyTt8N90IA==
-X-Gm-Gg: AZuq6aIb+IfLEvTD68T9PwEnAKiaBth3FibuuGk/kyN3MuaIa5A4d6hvv+iNSmk8Dwv
-	C2Id0gAIZjkg3Iov3qWryZzfXbjRW0ba4p2ApnbhvfEHXqQ9Nrt01jum4XNtbMy4C6dhRvKdKN+
-	e6bRoAOVQDaxuMMfgb5A/2PM/ltd0gSNIBaoI4dk55IUkxqTcf0ZtBpE8RsTbNU33Qu1pbMGAIp
-	dN6wkpj3ZMRov32e8WdFK2lhOXoOMis3oAg3IjsQwKtshC0aXfMcrOgD3U9s/VFPYzJNAUDSsb7
-	rKCJS98Sq53XGkKnJJ3ZqC1vlumoIS4TYQOUxjlJwcddxbHBYQV/VY8cRRpROeCwnJly79ljSpk
-	r6QMUOgogKhVlYRr889Dt19jAoyDM64jks8wWiR+OCiR7eqq67rZ8OOVC2gC1MzX8vk9f7FyFTU
-	d17OtS3kc4+8UwZdB0UnYKG0Jrb3XTtxI34t1GbuQ9rYQ9
-X-Received: by 2002:a17:90b:2712:b0:353:2e1:95f2 with SMTP id 98e67ed59e1d1-3543b2ebe34mr5842814a91.8.1769886096693;
-        Sat, 31 Jan 2026 11:01:36 -0800 (PST)
+        bh=ni80rKjhZsb6vW5cpIgOxpcUuyybAZaMhsiGOJynX2E=;
+        b=s7wrg+2wfs3oKidJm1fhkWzD0VjVR6ghgcx1GHRRH5jlCj8Y7ucmO2DZE99l71T79r
+         ssc6aTGJGc/7u6uTvWlFSn48htjtbcxG+dlb2ELVI+1Rx9CpK3tFqmmOaqW/AlYPTyvD
+         loW5MnKGBHZxC+lQZQtlmWx5r2x5uYUVzawbVF7LZ6HYO5nd2j0c7aFY1C7VhJ/MG7RX
+         2p2Y+cUCGJrT2wT4jlJ7CNh5usNy1GatL/VyH6rk6L2WreZfSjHs5lPRjIk4O3ZgPvtc
+         4rTbDEUQVSlFBoDIMM1u3BHI/pxs4fCjdF3fa6y7XFgvELC4sKza4I9i9aYkhbIk6Tm3
+         7qxg==
+X-Gm-Message-State: AOJu0YwpuzmtMjIEq38UctDRPR4yiovRRzEaxz/+0UDUUhK6f93RftVk
+	vxWbsWMwUKI1KfW4qUX/hS21hpOFCqowELMLSYi6R/Hj6RIZmsH1VJDAd0VyYJei
+X-Gm-Gg: AZuq6aLcfJFs9aztslOhRUcH08LWar+RaXO888MQFHf98mqgSotp4aW6i1OXI8510Tu
+	dY6xLNdhR1uwoCsmsGBuy2QjVPA80plxGjom5XM+igKSGQgkSdDWn4PQIzUmapNLC0z0LIRp5Lz
+	ig2Vn8s2HV21kjOWGv3DtDz9e0+87eJ6q8l8xTVV8sq0N1O6zQD0NBP3Gq9pukfqk+RgyVwK7HI
+	py/EsIQVozPFoacet+EGdjmjIoBbLz0LacxhjB1X66J3o7/sBTsY4WebkZiRtE3daLbDRuO3EL4
+	0BxZz5ikK/SUWirDun7KlQC5WthmYvN+eHnqQn+wj1PNPS7LZeeBHW9t6stwssQOGc6qg6Y7Kh2
+	GBgkgxEBB9leMfO6ZyhxHfaNiqmoYKhPI3ct25aH6Y80/KCIOncRaUZXhO6ObmLU4B5tYglsg42
+	8LQiUzdltwoMgpQLn95uw0gnrhtnX5PWbKHSJWs60IC0CH
+X-Received: by 2002:a17:90b:3a84:b0:34c:a29d:992a with SMTP id 98e67ed59e1d1-3543b41d025mr6382016a91.34.1769886099896;
+        Sat, 31 Jan 2026 11:01:39 -0800 (PST)
 Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:c36:249a:cab4:59a4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f2cb419sm11151747a91.1.2026.01.31.11.01.34
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f2cb419sm11151747a91.1.2026.01.31.11.01.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Jan 2026 11:01:36 -0800 (PST)
+        Sat, 31 Jan 2026 11:01:39 -0800 (PST)
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH 1/3] wt-status: replace uses of the_repository with local repository instances
-Date: Sun,  1 Feb 2026 00:27:37 +0530
-Message-ID: <20260131190106.389289-2-shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH 2/3] wt-status: pass struct repository and wt_status through function parameters
+Date: Sun,  1 Feb 2026 00:27:38 +0530
+Message-ID: <20260131190106.389289-3-shreyanshpaliwalcmsmn@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260131190106.389289-1-shreyanshpaliwalcmsmn@gmail.com>
 References: <20260131190106.389289-1-shreyanshpaliwalcmsmn@gmail.com>
@@ -75,163 +75,141 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Many instances of the_repository are used in wt-status.c even when a
-local repository is already available via struct wt_status or struct
-worktree.
+Some functions in wt-status.c relied on the_repository because no
+repository instance was available in their local scope.
 
-Replace direct uses of the global the_repository with the repository
-instance carried by the local structs (e.g. s->repo, wt->repo).
+Update these functions to accept struct repository or struct
+wt_status as parameters, and adjust callers accordingly.
 
-This helps reduce reliance on global repository state.
+Replace remaining uses of the_repository in these functions with the
+passed-in repository instance.
+
+This completely removes the use of the_repository global variable
+in wt-status.c.
 
 Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 ---
- wt-status.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ wt-status.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/wt-status.c b/wt-status.c
-index e12adb26b9..9f4d8fda7f 100644
+index 9f4d8fda7f..eb1a3a254b 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -150,11 +150,11 @@ void wt_status_prepare(struct repository *r, struct wt_status *s)
- 	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
- 	s->use_color = GIT_COLOR_UNKNOWN;
- 	s->relative_paths = 1;
--	s->branch = refs_resolve_refdup(get_main_ref_store(the_repository),
-+	s->branch = refs_resolve_refdup(get_main_ref_store(s->repo),
- 					"HEAD", 0, NULL, NULL);
- 	s->reference = "HEAD";
- 	s->fp = stdout;
--	s->index_file = repo_get_index_file(the_repository);
-+	s->index_file = repo_get_index_file(s->repo);
- 	s->change.strdup_strings = 1;
- 	s->untracked.strdup_strings = 1;
- 	s->ignored.strdup_strings = 1;
-@@ -646,7 +646,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+@@ -984,17 +984,17 @@ static int stash_count_refs(const char *refname UNUSED,
+ 	return 0;
+ }
  
- 	repo_init_revisions(s->repo, &rev, NULL);
- 	memset(&opt, 0, sizeof(opt));
--	opt.def = s->is_initial ? empty_tree_oid_hex(the_repository->hash_algo) : s->reference;
-+	opt.def = s->is_initial ? empty_tree_oid_hex(s->repo->hash_algo) : s->reference;
- 	setup_revisions(0, NULL, &rev, &opt);
+-static int count_stash_entries(void)
++static int count_stash_entries(struct repository *r)
+ {
+ 	int n = 0;
+-	refs_for_each_reflog_ent(get_main_ref_store(the_repository),
++	refs_for_each_reflog_ent(get_main_ref_store(r),
+ 				 "refs/stash", stash_count_refs, &n);
+ 	return n;
+ }
  
- 	rev.diffopt.flags.override_submodule_config = 1;
-@@ -1146,7 +1146,7 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
- 	rev.diffopt.ita_invisible_in_index = 1;
+ static void wt_longstatus_print_stash_summary(struct wt_status *s)
+ {
+-	int stash_count = count_stash_entries();
++	int stash_count = count_stash_entries(s->repo);
  
- 	memset(&opt, 0, sizeof(opt));
--	opt.def = s->is_initial ? empty_tree_oid_hex(the_repository->hash_algo) : s->reference;
-+	opt.def = s->is_initial ? empty_tree_oid_hex(s->repo->hash_algo) : s->reference;
- 	setup_revisions(0, NULL, &rev, &opt);
+ 	if (stash_count > 0)
+ 		status_printf_ln(s, GIT_COLOR_NORMAL,
+@@ -1287,10 +1287,10 @@ static void show_am_in_progress(struct wt_status *s,
+ 	wt_longstatus_print_trailer(s);
+ }
  
- 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
-@@ -1317,9 +1317,9 @@ static int split_commit_in_progress(struct wt_status *s)
- 	    !s->branch || strcmp(s->branch, "HEAD"))
- 		return 0;
+-static char *read_line_from_git_path(const char *filename)
++static char *read_line_from_git_path(struct repository *r, const char *filename)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+-	FILE *fp = fopen_or_warn(repo_git_path_append(the_repository, &buf,
++	FILE *fp = fopen_or_warn(repo_git_path_append(r, &buf,
+ 						      "%s", filename), "r");
  
--	if (refs_read_ref_full(get_main_ref_store(the_repository), "HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-+	if (refs_read_ref_full(get_main_ref_store(s->repo), "HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
- 			       &head_oid, &head_flags) ||
--	    refs_read_ref_full(get_main_ref_store(the_repository), "ORIG_HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-+	    refs_read_ref_full(get_main_ref_store(s->repo), "ORIG_HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
- 			       &orig_head_oid, &orig_head_flags))
- 		return 0;
+ 	if (!fp) {
+@@ -1325,8 +1325,8 @@ static int split_commit_in_progress(struct wt_status *s)
  	if (head_flags & REF_ISSYMREF || orig_head_flags & REF_ISSYMREF)
-@@ -1432,7 +1432,7 @@ static void show_rebase_information(struct wt_status *s,
- 				i++)
- 				status_printf_ln(s, color, "   %s", have_done.items[i].string);
- 			if (have_done.nr > nr_lines_to_show && s->hints) {
--				char *path = repo_git_path(the_repository, "rebase-merge/done");
-+				char *path = repo_git_path(s->repo, "rebase-merge/done");
- 				status_printf_ln(s, color,
- 					_("  (see more in file %s)"), path);
- 				free(path);
-@@ -1534,7 +1534,7 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
- 	else
- 		status_printf_ln(s, color,
- 			_("You are currently cherry-picking commit %s."),
--			repo_find_unique_abbrev(the_repository, &s->state.cherry_pick_head_oid,
-+			repo_find_unique_abbrev(s->repo, &s->state.cherry_pick_head_oid,
- 						DEFAULT_ABBREV));
+ 		return 0;
  
- 	if (s->hints) {
-@@ -1564,7 +1564,7 @@ static void show_revert_in_progress(struct wt_status *s,
- 	else
- 		status_printf_ln(s, color,
- 			_("You are currently reverting commit %s."),
--			repo_find_unique_abbrev(the_repository, &s->state.revert_head_oid,
-+			repo_find_unique_abbrev(s->repo, &s->state.revert_head_oid,
- 						DEFAULT_ABBREV));
- 	if (s->hints) {
- 		if (has_unmerged(s))
-@@ -1624,7 +1624,7 @@ static char *get_branch(const struct worktree *wt, const char *path)
+-	rebase_amend = read_line_from_git_path("rebase-merge/amend");
+-	rebase_orig_head = read_line_from_git_path("rebase-merge/orig-head");
++	rebase_amend = read_line_from_git_path(s->repo, "rebase-merge/amend");
++	rebase_orig_head = read_line_from_git_path(s->repo, "rebase-merge/orig-head");
+ 
+ 	if (!rebase_amend || !rebase_orig_head)
+ 		; /* fall through, no split in progress */
+@@ -1350,7 +1350,7 @@ static int split_commit_in_progress(struct wt_status *s)
+  * The function assumes that the line does not contain useless spaces
+  * before or after the command.
+  */
+-static void abbrev_oid_in_line(struct strbuf *line)
++static void abbrev_oid_in_line(struct repository *r, struct strbuf *line)
+ {
+ 	struct string_list split = STRING_LIST_INIT_DUP;
  	struct object_id oid;
- 	const char *branch_name;
- 
--	if (strbuf_read_file(&sb, worktree_git_path(the_repository, wt, "%s", path), 0) <= 0)
-+	if (strbuf_read_file(&sb, worktree_git_path(wt->repo, wt, "%s", path), 0) <= 0)
- 		goto got_nothing;
- 
- 	while (sb.len && sb.buf[sb.len - 1] == '\n')
-@@ -1691,7 +1691,7 @@ static void wt_status_get_detached_from(struct repository *r,
- 	char *ref = NULL;
- 
- 	strbuf_init(&cb.buf, 0);
--	if (refs_for_each_reflog_ent_reverse(get_main_ref_store(the_repository), "HEAD", grab_1st_switch, &cb) <= 0) {
-+	if (refs_for_each_reflog_ent_reverse(get_main_ref_store(r), "HEAD", grab_1st_switch, &cb) <= 0) {
- 		strbuf_release(&cb.buf);
+@@ -1362,7 +1362,7 @@ static void abbrev_oid_in_line(struct strbuf *line)
  		return;
- 	}
-@@ -1723,18 +1723,18 @@ int wt_status_check_rebase(const struct worktree *wt,
- {
- 	struct stat st;
  
--	if (!stat(worktree_git_path(the_repository, wt, "rebase-apply"), &st)) {
--		if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/applying"), &st)) {
-+	if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply"), &st)) {
-+		if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply/applying"), &st)) {
- 			state->am_in_progress = 1;
--			if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/patch"), &st) && !st.st_size)
-+			if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply/patch"), &st) && !st.st_size)
- 				state->am_empty_patch = 1;
- 		} else {
- 			state->rebase_in_progress = 1;
- 			state->branch = get_branch(wt, "rebase-apply/head-name");
- 			state->onto = get_branch(wt, "rebase-apply/onto");
+ 	if ((2 <= string_list_split(&split, line->buf, " ", 2)) &&
+-	    !repo_get_oid(the_repository, split.items[1].string, &oid)) {
++	    !repo_get_oid(r, split.items[1].string, &oid)) {
+ 		strbuf_reset(line);
+ 		strbuf_addf(line, "%s ", split.items[0].string);
+ 		strbuf_add_unique_abbrev(line, &oid, DEFAULT_ABBREV);
+@@ -1372,10 +1372,10 @@ static void abbrev_oid_in_line(struct strbuf *line)
+ 	string_list_clear(&split, 0);
+ }
+ 
+-static int read_rebase_todolist(const char *fname, struct string_list *lines)
++static int read_rebase_todolist(struct repository *r, const char *fname, struct string_list *lines)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+-	FILE *f = fopen(repo_git_path_append(the_repository, &buf, "%s", fname), "r");
++	FILE *f = fopen(repo_git_path_append(r, &buf, "%s", fname), "r");
+ 	int ret;
+ 
+ 	if (!f) {
+@@ -1384,7 +1384,7 @@ static int read_rebase_todolist(const char *fname, struct string_list *lines)
+ 			goto out;
  		}
--	} else if (!stat(worktree_git_path(the_repository, wt, "rebase-merge"), &st)) {
--		if (!stat(worktree_git_path(the_repository, wt, "rebase-merge/interactive"), &st))
-+	} else if (!stat(worktree_git_path(wt->repo, wt, "rebase-merge"), &st)) {
-+		if (!stat(worktree_git_path(wt->repo, wt, "rebase-merge/interactive"), &st))
- 			state->rebase_interactive_in_progress = 1;
- 		else
- 			state->rebase_in_progress = 1;
-@@ -1750,7 +1750,7 @@ int wt_status_check_bisect(const struct worktree *wt,
- {
- 	struct stat st;
- 
--	if (!stat(worktree_git_path(the_repository, wt, "BISECT_LOG"), &st)) {
-+	if (!stat(worktree_git_path(wt->repo, wt, "BISECT_LOG"), &st)) {
- 		state->bisect_in_progress = 1;
- 		state->bisecting_from = get_branch(wt, "BISECT_START");
- 		return 1;
-@@ -2099,7 +2099,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 		upstream_is_gone = 1;
+ 		die_errno("Could not open file %s for reading",
+-			  repo_git_path_replace(the_repository, &buf, "%s", fname));
++			  repo_git_path_replace(r, &buf, "%s", fname));
  	}
+ 	while (!strbuf_getline_lf(&buf, f)) {
+ 		if (starts_with(buf.buf, comment_line_str))
+@@ -1392,7 +1392,7 @@ static int read_rebase_todolist(const char *fname, struct string_list *lines)
+ 		strbuf_trim(&buf);
+ 		if (!buf.len)
+ 			continue;
+-		abbrev_oid_in_line(&buf);
++		abbrev_oid_in_line(r, &buf);
+ 		string_list_append(lines, buf.buf);
+ 	}
+ 	fclose(f);
+@@ -1413,8 +1413,8 @@ static void show_rebase_information(struct wt_status *s,
+ 		struct string_list have_done = STRING_LIST_INIT_DUP;
+ 		struct string_list yet_to_do = STRING_LIST_INIT_DUP;
  
--	short_base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
-+	short_base = refs_shorten_unambiguous_ref(get_main_ref_store(s->repo),
- 						  base, 0);
- 	color_fprintf(s->fp, header_color, "...");
- 	color_fprintf(s->fp, branch_color_remote, "%s", short_base);
-@@ -2233,7 +2233,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
- 		ab_info = stat_tracking_info(branch, &nr_ahead, &nr_behind,
- 					     &base, 0, s->ahead_behind_flags);
- 		if (base) {
--			base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
-+			base = refs_shorten_unambiguous_ref(get_main_ref_store(s->repo),
- 							    base, 0);
- 			fprintf(s->fp, "# branch.upstream %s%c", base, eol);
- 			free((char *)base);
+-		read_rebase_todolist("rebase-merge/done", &have_done);
+-		if (read_rebase_todolist("rebase-merge/git-rebase-todo",
++		read_rebase_todolist(s->repo, "rebase-merge/done", &have_done);
++		if (read_rebase_todolist(s->repo, "rebase-merge/git-rebase-todo",
+ 					 &yet_to_do))
+ 			status_printf_ln(s, color,
+ 				_("git-rebase-todo is missing."));
+@@ -2259,7 +2259,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
+  */
+ static void wt_porcelain_v2_print_stash(struct wt_status *s)
+ {
+-	int stash_count = count_stash_entries();
++	int stash_count = count_stash_entries(s->repo);
+ 	char eol = s->null_termination ? '\0' : '\n';
+ 
+ 	if (stash_count > 0)
 -- 
 2.52.0
+
