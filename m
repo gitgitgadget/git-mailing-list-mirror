@@ -1,106 +1,211 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-108-mta153.mxroute.com (mail-108-mta153.mxroute.com [136.175.108.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EE76BFCE
-	for <git@vger.kernel.org>; Sat, 31 Jan 2026 00:09:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFEB1F0994
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 12:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769818168; cv=none; b=Lx63t93IznSkpYBMQAs+UTxSQASRwzs8Kg4lpjc9T5I7lNFF+fbRTSROSPzvFdMibFbYC1PNOIthgj3iPKY/H4O5vDphJqm+dCx/bq1u6U/VKzCfXlAiIbujH0V/B50vlDwVnYiaUwNzICxeHKVD/SzQo0Qj3XL0YR7b8aiiHyA=
+	t=1769863150; cv=none; b=J4Hq30NkaLbu0UVstmW4U2s5sSS4Hd1dJOWs9HgBu/JSUHU4fVGyBrRDmarutSizeWZF65fa4J2IqJhFHOOFx5y4xsPzQ/qULOVwMZXqWJNiOt567TfO07S7T3vChON1b58rvY2BJ/00Ry5FeG0yfGdOP8fLC6BHDwo6rnR9nQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769818168; c=relaxed/simple;
-	bh=wPjdSYnmYbYCaYeAld9B0/H0B3Zubsn5PPkeQoy7tzg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OisOpfQdFsidldJVQ/eyc9BIDTU2JSucHdoqITeZl2I2A06K3lkeNCzUpK+rZd0O9HC729G3VIfoOxX1DxtjIivR6TaKdfizSXpsrAqy2IRQkcf5Y9ujgffmo5wMQOdISfWBV1lcRbg+REZD/quwnnnqstXwutRjczQ8T/IkjlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TK8Zrkyd; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769863150; c=relaxed/simple;
+	bh=hTvxHfllWFO7yRZr/Z+DP9+BmgZmsfD4W8TFy/SPEPE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fn6Bv2ceSigmPmLy1iCTdKyM/GOVRyC5GwVMFouTfSaVI8zT3R5ZP2WUIDd3/APVGBeFOWc1Kde/NYao0MtRztPpgYYEShpOCq6sZCJ7N+cW/sBefK6VSLntA/HZtq7rlha/PS0+6VRafKlbNyFJmqqyURINHHFmh2WS6gyILJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ashlesh.me; spf=none smtp.mailfrom=ashlesh.me; dkim=pass (2048-bit key) header.d=ashlesh.me header.i=@ashlesh.me header.b=rdj6p1pP; arc=none smtp.client-ip=136.175.108.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ashlesh.me
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ashlesh.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TK8Zrkyd"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-38319cbc8fbso22927581fa.1
-        for <git@vger.kernel.org>; Fri, 30 Jan 2026 16:09:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769818165; x=1770422965; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DG6hb161c5KiUrVHxj4Tk0QKLja73RbAVnfBOUAvXwM=;
-        b=TK8ZrkydSjYlIAbZ3SWFvsTPMf0oBViIeu/qaQx1tWF6goZsd+PrzWKXwbkfuO76se
-         i2ueoYnvujJKWNKL47QAHN5h6T2CWN5AC/1mTuvT0LnZmw3AIa7qccJgo9jFMgI/wnyY
-         kNQIojzHtFDr5bRNL0QFVIh4JrJCuhJll9R8l3yRG1rXqg3L0I+0eCiAgWiE9mg6p3HF
-         7psaIFetqutcE7uDrB28PZjme7g+vicg0NZxU2hGodOkj9ZxHjdCL8fyRT+SJVpZVFmD
-         weQz0WXC/qe1ndBwi4TPocCw80Iau21O9eAkE2C1sZRUDq2AHsUJtrbQ1TaJYODlHbxP
-         XKrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769818165; x=1770422965;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=DG6hb161c5KiUrVHxj4Tk0QKLja73RbAVnfBOUAvXwM=;
-        b=Rr0UEc6IaytlBjHGVi7RKrETDCPXbytnGWomRzeDYNVuOmfNP7tNhNxbeMlqHNm5/p
-         1m0Qg8GEXMHbXs9KLrxIYWXit2mjSMTkgxMCQECXZhBM77YdEkM4zGVzyDPaUDkZVhMY
-         9fq1L7xGOxsWmQ3ih4J3gtijAYYmHOeht0fxw8UUYDzDTYIBLuMo4+VYejSIJkHnGwmy
-         /9mS1oJ729kCONmXqk94WlAieyCJOE2kJuOWX7MFQ1YWao5KLkYqP/W7H0t+7EVEqJiH
-         /mxwb5M/7zr7JcJQ47qxccqJ/5QHlINNICVYGxvg5xzQrmqki6A9yUV4SmWR+MriIyYj
-         kb8w==
-X-Gm-Message-State: AOJu0YxwSX8/FTf0IA+oqXFqVMGrhyY6YdwFWkfD7wqCoxZ4K3Xq6X4N
-	tnz9pQ5c+HP19o4Ek9cYF8BOVYMqTfecw6cfHCC53U4WoyFlcbCBhc7V
-X-Gm-Gg: AZuq6aIwrtNuXbKT0x2d1h6WR3dm+BWZZrC6zX7RPbM2Ib3ZX2w34PRBqUscozCsuVk
-	M3H9C3rbvZDUnyY//VUiq1ojWncwTCxDwYTsDMFYkr+b/y2UBSTNy00egJvncyJleLK98UFyMJl
-	u+zSzYAdMXXrq2E92TJmq3FJ3KOpC+a+MMGCpAc/TX/upNIx7aKLSAptR6JprSgFLZSJojMX66Q
-	LI4reayHVUD0WjE+0kWP7dv1Cku4IgRedqEXrGYU0wo6qH+Skl6wgT4SDxGIXvMwdCQg4stx67J
-	I+I5WB6HSCcvNxunFVa33d4/6NPiqWfrTOa+EZnTyzgFPxSDw6e10PUgCVML6FqjXyhXULQVjen
-	kCfCeswEtAy+LPZCCY+PQIYUwEcuK8DUofSV6XUuce5wTO8dIR7YK+5yFQFgPpQLPpXRigK7GyY
-	7vXlZAlHGhipRXA/r4N6GyR5Rfk6RzBYd1ntOAG5glyqrMv7X2JFY7emXtEsn8Vn82np4vh5Q=
-X-Received: by 2002:a2e:a546:0:b0:383:32d:8ca9 with SMTP id 38308e7fff4ca-38646524554mr15614151fa.4.1769818165035;
-        Fri, 30 Jan 2026 16:09:25 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38625fca300sm16978751fa.46.2026.01.30.16.09.24
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 30 Jan 2026 16:09:24 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
-Date: Sat, 31 Jan 2026 01:09:23 +0100
-Message-ID: <20260131000923.70152-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqqpl6q69z8.fsf@gitster.g>
-References: <xmqqpl6q69z8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=ashlesh.me header.i=@ashlesh.me header.b="rdj6p1pP"
+Received: from filter006.mxroute.com ([136.175.111.3] filter006.mxroute.com)
+ (Authenticated sender: mN4UYu2MZsgR)
+ by mail-108-mta153.mxroute.com (ZoneMTA) with ESMTPSA id 19c140ba74d0009140.003
+ for <git@vger.kernel.org>
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Sat, 31 Jan 2026 12:33:53 +0000
+X-Zone-Loop: 57330a162aeec01758b35343592a6be9912b950699f2
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ashlesh.me;
+	s=x; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:Cc:
+	To:Subject:MIME-Version:Date:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=t4HFtw+LKSUg570Wil/Ds5HlMeW3G0JiLvnyUB2OaLs=; b=rdj6p1pPBQrrJrqWh08ce/gRKR
+	B/N1vtI9o4sr/QTi5kOEDbGkspxrDk5D5HbJWQgGFqlQmZWr8y9HqTc8+ivBQSy1XPt3cBgdEcFao
+	wwx/t4lJVLHnWBYCO5n8fTRvA/D8/4If/PK7rjUpbzd4bEe8Qk4ty4SAjwlS93UeFIGnvy/GjXZfE
+	54sUMZbhdXAYFJuUN38KAOi6CT3wxN/TR50Br9MiI+szzJS1+OSe+g6cW66/TVm8MZiX6pSoYAWj8
+	VSomZ6t0Y6IyD0hkrCxK4Grvdg1vQPvGe6enPOEYxq4qHBAXfkc+7RdIqHKdKHK0cB1hWb4GfQoUf
+	8qYrXXRw==;
+Message-ID: <49baf22b-ce7c-464c-8f6b-65ca7ed1e9f2@ashlesh.me>
+Date: Sat, 31 Jan 2026 18:03:30 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] t5550: add netrc tests for http 401/403
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net, gitster@pobox.com
+References: <20260106114029.763351-1-git@ashlesh.me>
+ <20260107074724.13165-1-git@ashlesh.me>
+Content-Language: en-US
+From: Ashlesh Gawande <git@ashlesh.me>
+In-Reply-To: <20260107074724.13165-1-git@ashlesh.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authenticated-Id: info@ashlesh.me
 
-> Meaning we should feel free to ignore v3 and possibly a few later
-> versions, until we hear from you?
+Any other comments or suggestions on this patch that I can address?
+(re-sending because the mailing list rejected my previous email for not 
+being plain text).
 
-I pushed v4 now. Please feel free to review it.
+Thanks
+Ashlesh
 
-> And from what I read as _your_ use case in an earlier message,
-> init.defaultBranch aka @{default} is not what you want 999/1, yet I
->think what the patch implements is still that one.  Puzzled...
-
-I'm agnostic with the regards to the implementation as long as it solves
-my problem.
-
-I changed my mind after realizing the other approach would have required
-me to set 'init.defaultBranch' on many repos -- or worse, badger the
-maintainers to set it. That does not scale.
-
-With the new approach, things run smoothly for all the repos on my machine,
-so my goal of convenience is achieved there. I ran this to check that:
-
-    for x in */*; do (
-      cd "$x" && \
-      echo && \
-      echo "$x" && \
-      /Users/Harald/git-repos/github.com/git/git/git checkout @{primary}
-    ); done
-
-
-Harald
+On 1/7/26 13:17, Ashlesh Gawande wrote:
+> git allows using .netrc file to supply credentials for HTTP auth.
+> Three test cases are added in this patch to provide missing coverage
+> when cloning over HTTP using .netrc file:
+>
+>    - First test case checks that the git clone is successful when credentials
+>      are provided via .netrc file
+>    - Second test case checks that the git clone fails when the .netrc file
+>      provides invalid credentials. The HTTP server is expected to return
+>      401 Unauthorized in such a case. The test checks that the user is
+>      provided with a prompt for username/password on 401 to provide
+>      the valid ones.
+>    - Third test case checks that the git clone fails when the .netrc file
+>      provides credentials that are valid but do not have permission for
+>      this user. For example one may have multiple tokens in GitHub
+>      and uses the one which was not authorized for cloning this repo.
+>      In such a case the HTTP server returns 403 Forbidden.
+>      For this test, the apache.conf is modified to return a 403
+>      on finding a forbidden-user. No prompt for username/password is
+>      expected after the 403 (unlike 401). This is because prompting may wipe
+>      out existing credentials or conflict with custom credential helpers.
+>
+> Signed-off-by: Ashlesh Gawande <git@ashlesh.me>
+> ---
+> Range-diff against v2:
+> 1:  0b68f1d1af ! 1:  25ef751f28 t5550: add netrc tests for http 401/403
+>      @@ Metadata
+>        ## Commit message ##
+>           t5550: add netrc tests for http 401/403
+>       
+>      +    git allows using .netrc file to supply credentials for HTTP auth.
+>      +    Three test cases are added in this patch to provide missing coverage
+>      +    when cloning over HTTP using .netrc file:
+>      +
+>      +      - First test case checks that the git clone is successful when credentials
+>      +        are provided via .netrc file
+>      +      - Second test case checks that the git clone fails when the .netrc file
+>      +        provides invalid credentials. The HTTP server is expected to return
+>      +        401 Unauthorized in such a case. The test checks that the user is
+>      +        provided with a prompt for username/password on 401 to provide
+>      +        the valid ones.
+>      +      - Third test case checks that the git clone fails when the .netrc file
+>      +        provides credentials that are valid but do not have permission for
+>      +        this user. For example one may have multiple tokens in GitHub
+>      +        and uses the one which was not authorized for cloning this repo.
+>      +        In such a case the HTTP server returns 403 Forbidden.
+>      +        For this test, the apache.conf is modified to return a 403
+>      +        on finding a forbidden-user. No prompt for username/password is
+>      +        expected after the 403 (unlike 401). This is because prompting may wipe
+>      +        out existing credentials or conflict with custom credential helpers.
+>      +
+>           Signed-off-by: Ashlesh Gawande <git@ashlesh.me>
+>       
+>        ## t/lib-httpd.sh ##
+>
+>   t/lib-httpd.sh             | 13 +++++++++++--
+>   t/lib-httpd/apache.conf    |  4 ++++
+>   t/lib-httpd/passwd         |  1 +
+>   t/t5550-http-fetch-dumb.sh | 25 +++++++++++++++++++++++++
+>   4 files changed, 41 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+> index 5091db949b..5f42c311c2 100644
+> --- a/t/lib-httpd.sh
+> +++ b/t/lib-httpd.sh
+> @@ -319,13 +319,22 @@ setup_askpass_helper() {
+>   	'
+>   }
+>   
+> -set_askpass() {
+> +set_askpass () {
+>   	>"$TRASH_DIRECTORY/askpass-query" &&
+>   	echo "$1" >"$TRASH_DIRECTORY/askpass-user" &&
+>   	echo "$2" >"$TRASH_DIRECTORY/askpass-pass"
+>   }
+>   
+> -expect_askpass() {
+> +set_netrc () {
+> +	# $HOME=$TRASH_DIRECTORY
+> +	echo "machine $1 login $2 password $3" >"$TRASH_DIRECTORY/.netrc"
+> +}
+> +
+> +clear_netrc () {
+> +	rm -f "$TRASH_DIRECTORY/.netrc"
+> +}
+> +
+> +expect_askpass () {
+>   	dest=$HTTPD_DEST${3+/$3}
+>   
+>   	{
+> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+> index e631ab0eb5..6b8c50a51a 100644
+> --- a/t/lib-httpd/apache.conf
+> +++ b/t/lib-httpd/apache.conf
+> @@ -238,6 +238,10 @@ SSLEngine On
+>   	AuthName "git-auth"
+>   	AuthUserFile passwd
+>   	Require valid-user
+> +
+> +	# return 403 for authenticated user: forbidden-user@host
+> +	RewriteCond "%{REMOTE_USER}" "^forbidden-user@host"
+> +	RewriteRule ^ - [F]
+>   </Location>
+>   
+>   <LocationMatch "^/auth-push/.*/git-receive-pack$">
+> diff --git a/t/lib-httpd/passwd b/t/lib-httpd/passwd
+> index d9c122f348..3bab7b6423 100644
+> --- a/t/lib-httpd/passwd
+> +++ b/t/lib-httpd/passwd
+> @@ -1 +1,2 @@
+>   user@host:$apr1$LGPmCZWj$9vxEwj5Z5GzQLBMxp3mCx1
+> +forbidden-user@host:$apr1$LGPmCZWj$9vxEwj5Z5GzQLBMxp3mCx1
+> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+> index ed0ad66fad..9530f01b9e 100755
+> --- a/t/t5550-http-fetch-dumb.sh
+> +++ b/t/t5550-http-fetch-dumb.sh
+> @@ -102,6 +102,31 @@ test_expect_success 'cloning password-protected repository can fail' '
+>   	expect_askpass both wrong
+>   '
+>   
+> +test_expect_success 'using credentials from netrc to clone successfully' '
+> +	test_when_finished clear_netrc &&
+> +	set_askpass wrong &&
+> +	set_netrc 127.0.0.1 user@host pass@host &&
+> +	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc &&
+> +	expect_askpass none
+> +'
+> +
+> +test_expect_success 'netrc unauthorized credentials (prompt after 401)' '
+> +	test_when_finished clear_netrc &&
+> +	set_askpass wrong &&
+> +	set_netrc 127.0.0.1 user@host pass@wrong &&
+> +	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc-401 &&
+> +	expect_askpass both wrong
+> +'
+> +
+> +test_expect_success 'netrc authorized but forbidden credentials (fail on 403)' '
+> +	test_when_finished clear_netrc &&
+> +	set_askpass wrong &&
+> +	set_netrc 127.0.0.1 forbidden-user@host pass@host &&
+> +	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc-403 2>err &&
+> +	expect_askpass none &&
+> +	grep "The requested URL returned error: 403" err
+> +'
+> +
+>   test_expect_success 'http auth can use user/pass in URL' '
+>   	set_askpass wrong &&
+>   	git clone "$HTTPD_URL_USER_PASS/auth/dumb/repo.git" clone-auth-none &&
