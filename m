@@ -1,123 +1,102 @@
-Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D77236921C
-	for <git@vger.kernel.org>; Sat, 31 Jan 2026 19:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933082C0F81
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 19:50:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769888610; cv=none; b=Ml5A7rqDDhpwSybuDs5fo1SDhl6lySJd/gR0X09JUrAD9bXafA7NXBsDsCdFwUUF0JuNiiXmb+LhfaX38d8jvfEaNls8XMm5j5zSxxH5Ja/LSjsL9mGXPJVkkGoaqfwUTK98bsmPa2abON1Ai00trYhwbadqoDV4/Q6uPmWBo6g=
+	t=1769889024; cv=none; b=JNCuh8Hwz0SKE09/oiIgDROSflJcOKOOv8pOTrRUMCpOuo6+V59ycJGUv+WpNriSL86gM8Y8PcnOpl3PQlibugUxT23Y7Z+9XRqM6oBCWVFkFGiXGuJqrvHtp9pmCJt5lx+Nj2otjgZGZKLbnU8QqyAuT8pPyNh+FcWg1IwY08o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769888610; c=relaxed/simple;
-	bh=fzBS7NO8Tj3v7wwtr8I8enkoQEFMT/XSWaFpr+k8dWM=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=cLuraHvCYFKeSnUGM4tD41XXS2yVMIzaD+SoFqcEg1HJm7pnMVBqN6cRa5CpX/nqV5RXMOjyEk0xmSbPmrGAHY+1VstWATbcIevoS5J+qwSDPdUzZ2T5/0kFSc6HTjovQo8Ho2x3OwUpgVM0GjEOTb4XmaiUGiHVutf2GWUHbs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=OdpOVuWQ; arc=none smtp.client-ip=185.70.43.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1769889024; c=relaxed/simple;
+	bh=RUFpHLuzctzmrmwzFOqJoku4Tk+4dEK31zAFInhAnqU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X4NovKFZ7OhRCWZcnkBKe7j+RtrHW6UF7/I3+BRQEFh/M+Gm+QoqMqMzeCMclA35gVSghcgdqYVnveuVc88YwUffQb4uBQ0aFXSO1WChUWAGBpg5ISjnJMF4x9fK1Dvjm/SPykOABHIkEKxFFYTo1/ZcU/OzskQcLoZYNkRs5eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MXAME/5x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BdjLi9Zn; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="OdpOVuWQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1769888606; x=1770147806;
-	bh=fzBS7NO8Tj3v7wwtr8I8enkoQEFMT/XSWaFpr+k8dWM=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=OdpOVuWQo4tg9bIYg8JPem1Gk1KKIgUe+LrC+8pIhWe8kl7PJHRiHLynv2bRZ9VQj
-	 8zcqI4dBzq+L9aKdpO8bvQSEmpccDFFPX9EEmc9Voec2/oKauF2ys61ytxloMEr0zD
-	 CCqQ4TaqSij/4ZtXhCKN5bfMn+uFkDMyPW580xjvFdcUtYkKFRPQXiF8d+oeY7i1B9
-	 1O2XZt0nGbmwPlHy0/d7/o6qHrA1VxCU1K+FhZ1texvla6VSH27AljAUKyEmtKJgUy
-	 J+hJsRsE/excrhITbXXkOWnmrfSMeei/5g9piBMa575R9qaOolPpEgdMfHcuejFoqm
-	 mSxQv0hWut1/Q==
-Date: Sat, 31 Jan 2026 19:43:20 +0000
-To: git@vger.kernel.org
-From: "Remy D. Farley" <one-d-wide@protonmail.com>
-Cc: "Remy D. Farley" <one-d-wide@protonmail.com>
-Subject: Bug: git add :!x . exits with error when x is in .gitignore
-Message-ID: <20260131194309.601838-1-one-d-wide@protonmail.com>
-Feedback-ID: 59017272:user:proton
-X-Pm-Message-ID: e419c90a630a7115758cd4fa7735a0d30e133378
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MXAME/5x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BdjLi9Zn"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8E0FA7A0044;
+	Sat, 31 Jan 2026 14:50:22 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 31 Jan 2026 14:50:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769889022; x=1769975422; bh=TV0GEkgvF2
+	f3Kwl6M8CO0ds1jmUD6k2HwD8oOjC6hXY=; b=MXAME/5x7/kwJv6a5Hqfj8vwbD
+	UjmQL3qOpaAE4LyIdEPwnqpfQwPxgLyZFN6m9iQfw+cjW5uSQMJrOThzI6oXWIuz
+	WCaGoWIH8G5QmfKkWo6D/+wE4wItDgAm/6PZkKkjTsAdHURd91o6BHB+QU4+M+BM
+	MV75Eg65VQHvsKRl0z8iAlMrALUFK0zu7kdg+fGhr+FKDX4ZSVD/aKmVvyZrgo4/
+	JnvljZ+CgBv55lOS7Yc5dWK3/UfoiKDUqEi+QriZCFLIGUkXmO5lK65uFIYI1tF/
+	/5dph0FPqqVsw6LFvhlhs7usTdlxy6mMKZBZvePSDFFntVWF/hRGQhqy9Ohg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1769889022; x=1769975422; bh=TV0GEkgvF2f3Kwl6M8CO0ds1jmUD6k2HwD8
+	oOjC6hXY=; b=BdjLi9ZnOlfslqt01qgZqb4JXT54BM6WUBFbqlTBVaeUQthvVE8
+	NeeROeq9N8axR6kWPWjsM2JHEJLQFCnV8Thpt2EVisVZVgGbcLzDE4qFzuXN1/cq
+	SuhkzWGj3E9EMYB26eaA7eetP6BsWQdC6wom6CSBpy+ImJgu3+xmATTXJE2sEmZM
+	mPsZWNPLIPMysbp9UrD4XoetY46GkDP5TGIL+aq6JcAvAL72iCkLmfFMatK5Tzb/
+	/qDhsxLZvkxKsbzQin/F4npVIjcjqn5u8xrAi4vHJnmrwwUbtC8Niw0qPvGZ2Q0r
+	TpQbn60fwy0TR8SGawF74r1hOpVKjtZ80+Q==
+X-ME-Sender: <xms:_lx-adqG1drbuJ1Xt-E0NRjR83O1uBKGSMrOEnl7YLto2y7WhTfeAA>
+    <xme:_lx-aXE-3BLw5mAt28YFKjSExuroK3VUNyI0NPcOUYq6MLb_sLoUQmH9stIWddTj7
+    hQT2PYgXfK-sogwZ-7b-pRKkIpLC5CXYesi5QT_uIcQ9ufYL6rmPXY>
+X-ME-Received: <xmr:_lx-aXkkiqq_s5q9mESVEo1ieZ8KKJyedbFl8qDN7p5LRU7XNjThnUf9Z2h4b-VDqTHEcSg7LD5R5AtZSwf5Xt_7qnTKDdrRNA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujedvkedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepgfevvdefjeehtedtgffffefhtdfgheettdekheejieekgefgteejgfekieef
+    keffnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithhhuhgsrdhiohenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopegvnhhgrdgrsggurghlrhhhmhgrnhdrrggsuggrlhhmohhnvghmsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:_lx-aSnB7C-8nZs3UZ5H5S0mAnmEziMmW9d0J4TBNS4R-83PNlYrgg>
+    <xmx:_lx-aQuQhieXqvtpWOz7UUDJUOJ3MKm64uy-9E3AwhAKacHbCKCDEQ>
+    <xmx:_lx-adm3ahj9iu2gbO75mytBbnYPoSPln9pZrIol6wEl5CtceEJwzA>
+    <xmx:_lx-aTtHfF4Ep3EDg1rr4K_C3dbYSjPnAkC9_H_QXCjXK-xAfYnKng>
+    <xmx:_lx-afH_TPTddEZBs6i36UBiIGLQgpBQ9H0vhyaENCfW8in0uFvyfyjv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 31 Jan 2026 14:50:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Abdalrhman Mohamed <eng.abdalrhman.abdalmonem@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] .github/CONTRIBUTING.md: fix broken link to
+ SubmittingPatches
+In-Reply-To: <20260131161401.48693-1-Eng.Abdalrhman.Abdalmonem@gmail.com>
+	(Abdalrhman Mohamed's message of "Sat, 31 Jan 2026 18:14:01 +0200")
+References: <20260131161401.48693-1-Eng.Abdalrhman.Abdalmonem@gmail.com>
+Date: Sat, 31 Jan 2026 11:50:20 -0800
+Message-ID: <xmqqms1t4l4z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-`git add :!x .`, which is executed as part `git stash :!x`, seems to treat
-pathspec with and without exclude magic the same, exiting with error when "=
-x"
-is in gitignore file. If file "x" isn't present, `git add x` still exits wi=
-th
-error as expected (although with a different one), but `git add :!x .` succ=
-eeds.
+Abdalrhman Mohamed <eng.abdalrhman.abdalmonem@gmail.com> writes:
 
-Git-add manpage doesn't specify that exclude pathspecs are treated anyhow
-differently from normal ones, so I'm not sure if it's really a bug. But it =
-does
-seem like one. I originally tried to exclude certain files from scripted st=
-ashes
-using pathspec, but had to switch to reusing core.excludesFile (which is
-probably a better fit for my use case).
+> -In addition, we highly recommend you to read [our submission guidelines](../Documentation/SubmittingPatches).
+> +In addition, we highly recommend you to read [our submission guidelines](https://github.com/git/git/blob/master/Documentation/SubmittingPatches).
 
+The line is overly long already in the original; can we make it a
+bit more readable?
 
-```sh
-$ sh repro.sh
-[...]
-+ echo x >.gitignore
-+ echo x >x
-+ git add -- ':!x' .
-Saved working directory and index state WIP on main: c8a842d Init
-The following paths are ignored by one of your .gitignore files:
-x
-hint: Use -f if you really want to add them.
-hint: Disable this message with "git config set advice.addIgnoredFile false=
-"
-+ echo exited with code 1
-exited with code 1
-```
+As to the contents, referring to our preformatted docs, like
 
+    https://git.github.io/htmldocs/SubmittingPatches
 
-```sh
-# repro.sh
-rm -rf repro; mkdir repro; cd repro
-trap 'echo exited with code $?' EXIT
-set -euo pipefail -o xtrace
-
-git init
-git commit -m Init --allow-empty
-
-# If we comment out either of the following lines, git add/stash commands b=
-elow succeed
-echo x >.gitignore
-echo x >x
-
-# Git add . is executed as part of git stash, as can be seen using strace -=
-ffeexecve
-git add -- ":!x" . # fails
-# git stash --include-untracked -- ":!x" # fails
-
-echo ok
-```
-
----
- dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/dir.c b/dir.c
-index b00821f2..0026bd65 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2264,7 +2264,7 @@ static int exclude_matches_pathspec(const char *path,=
- int pathlen,
- {
- =09int i;
-=20
--=09if (!pathspec || !pathspec->nr)
-+=09if (!pathspec || !pathspec->nr || pathspec->magic & PATHSPEC_EXCLUDE)
- =09=09return 0;
-=20
- =09GUARD_PATHSPEC(pathspec,
---=20
-2.51.2
-
-
+would probably be more appropriate, no?
