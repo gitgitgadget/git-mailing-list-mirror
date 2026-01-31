@@ -1,230 +1,130 @@
-Received: from mail-lj1-f196.google.com (mail-lj1-f196.google.com [209.85.208.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BED62D8DBB
-	for <git@vger.kernel.org>; Sat, 31 Jan 2026 20:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1E3366054
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 20:55:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769890957; cv=none; b=QBpucBDaRPePnu9jpdIEvspVMIYGf0URJMjT80bck6j79r3hoHopfnLAsab+jE9h9cHdP1MVKikD/Dasi8BR9c75JoZTjrlTZGZafecMbzn/FfQ2Lp8xBeyKMLSP+h/W88QSl2770RatBGMzg/FLfCBf4Stul4k4Jm9d+O+7qRk=
+	t=1769892921; cv=none; b=Lo/ORl8uJsel9Pt7Pndhc9QWXFbHhgwdKBcr/m6FihCf9oquexKhXCay2a6VGeTuIXK2kF0trcrs/bgGI4fh1tj3qoeFtRxrOq8EO3lRj59t8RjZTAgaOeTrWS9eS/l3rvzIMwoqSmVjLF0r5fTnqYFInrsAj9jd0TPwJQxjWrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769890957; c=relaxed/simple;
-	bh=RC+UJyLMZeNUg8d7jc5btPIYjeaDjtoxoPB4RY9KK/k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WteQ0cBl4UarxaR39bxjaLGhL0IzNTY2u3P6juPlQivSEuAMu6xxMtqwwVhKwj5vZGoHC63hs1fkdbmezKRVSrXx4Wy6AbbmUJHPYMnXOuEDDdABHA+Astqx99kz/f5QAJj3PjVgphHF8v3umbR2mPa8FEgy8eYR1UYaIRrLm5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HS2w9HuO; arc=none smtp.client-ip=209.85.208.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769892921; c=relaxed/simple;
+	bh=roLvNyR74Sxxb4vRIhWv5uWT2Ynik5C9rbddszNKPOA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T/yHQGUGnbr+NdiAArWoZYPGfkAxQc5NyJZS0zzibnWDCKnwSAGSCmcNVYGtYYsiLhhhROpsxjkmstLPgcnc3znUTflzaAQTquxK9VJkIHkfGxNMioJJWmi2CqkRMU8puUdrIlxuAE8H2P5/KmjbNmL3KExY75TKXo637XDO2Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gqlzQSGo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vleIfd3G; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HS2w9HuO"
-Received: by mail-lj1-f196.google.com with SMTP id 38308e7fff4ca-37fd6e91990so33353261fa.3
-        for <git@vger.kernel.org>; Sat, 31 Jan 2026 12:22:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769890954; x=1770495754; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5NDWrytkNnZDZSK4Kw3+Qp2KUA5VxFxYg11RseZRyZM=;
-        b=HS2w9HuOD3Hf3F0Y7g23xAyQMVbYxHpY8ZUC3Mt6Vi/dyB0UK1SEUJTCEScEdad/Wo
-         Ql0vDYD70BZiKSmpYoRHId0LQ7uyjPXJqnUGkvM2fmUZr68xn7sw5j/ujHa5Tildo8wi
-         tNeU92uPXK8bHCPf2WozdgpzNmIAUCDxn6pVbWUgan4svv3lT45RRoMCgkxb7BpLigwj
-         vLlGVkox2VS/2V+ySYTIFFT6kr+eEvW54gCiVYp+iMHwefquE/2hwbPl/yhJCMH5AJYl
-         bYu1PN+sG5+eqd/8mXsCPvF19BDOq8bP+6D+edku2TIivCuEfLZxbtIjfIfHg3A64IPS
-         WoSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769890954; x=1770495754;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=5NDWrytkNnZDZSK4Kw3+Qp2KUA5VxFxYg11RseZRyZM=;
-        b=fiZyrMUmlgUZysa/NcCtQzPkNNvsqnQ1xqoke1N4Gb5tvZPDqyifX8wLm7leU80GTL
-         acnReOYKoCkK+cf3C53gFyxPG86JAO108HsCFpm5EQkg/7M8JUnM0figCiBb31MB5lSZ
-         wQJLeh7ZSSFMhBmLSxOUWaAKJznMS8K69xOF1a1SzZR0w7cS8gVlMiGvZKsM+1hMJ9QR
-         2UwTPl8KnSrGEfSBUshv4Nx1DUalfkTZnMHOjutwdAtrPRX5TI2oTYNLBRwYOEm9qUwW
-         L1G9yBDUdw/0t4Js7auDbiMsAQ8SMHc64vd+NjeMRJMMTjf7AAO06IYNU5g/t7F+Z6mP
-         +5mw==
-X-Gm-Message-State: AOJu0Yy48g+pdCGoUiG/zFIETMhoBPtdZpNqdwYMT2JAFQsgHrl/OqKO
-	WkF0xLM41WUQcpjAUPaHm8xMOsGA8vKaes2Pjj6pI0KVCWfhG/iHe1qo
-X-Gm-Gg: AZuq6aJ2DISv/4b2BqqrKvek27SmBIRDE/4+KTcQrGBTlIQeyiGS/mR+N8TygDypEbB
-	OQ5WwC7214DJgTByIfkn8gII8aggkn3A89xtx30ypn27goRcVJrEOT6mVQOIzQ/CDLgDYSnxqow
-	LcZfE1+uLUayMcbLIUu2KgL0eQgXGHAXclWEp+Gk5Qe/PzVszXNgVHZkyTiVAjv8TGNlLUcGFG/
-	uM+7df4HeZi66shh6LYlewCnRq36mmJvv8DGwIF/937198lR8JGa3dU7aBqXu29b61g0y4ZLjfR
-	eKlfM6HTqASDMDmo+tkJ7LVQ0pmtQVjEKmbX7er+pmzjRwWjCuo5a67lm9uuWY2tMfJ+rz+e5RV
-	ze8rfL7JcwskkKmGDflMl+DymhgFXFh7NcMz+MtDZcu5zKXFxGgY3jAoigjRECP5CEWBs+BVWKZ
-	g2ztwfhRLixX8i9UZtU6dY7uVVmFDvhqbI0yv7oOH082M/NJL9qsW8z7kExUYTu+WGiq43M2U=
-X-Received: by 2002:a2e:bc0b:0:b0:37f:d17a:fa73 with SMTP id 38308e7fff4ca-38646716818mr26775991fa.36.1769890953486;
-        Sat, 31 Jan 2026 12:22:33 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38625fb17f5sm21072721fa.41.2026.01.31.12.22.32
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 31 Jan 2026 12:22:33 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
-Date: Sat, 31 Jan 2026 21:22:32 +0100
-Message-ID: <20260131202232.9213-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqqv7gh4mpw.fsf@gitster.g>
-References: <xmqqv7gh4mpw.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gqlzQSGo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vleIfd3G"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 567C7EC0304;
+	Sat, 31 Jan 2026 15:55:18 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Sat, 31 Jan 2026 15:55:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1769892918; x=1769979318; bh=laZU9L2Etc
+	cAN3analZeEkAskjE41m9JCV8SddPyJ/0=; b=gqlzQSGoZkjS/uzY0/OQaZcRRZ
+	qIfJiZK9xY7FAbXXnWAoxKWM7hSsKKA4ZpGCT02in7x9iQGNYrMrWyBi8PVLK/30
+	1G7EnSUF5p+4OUtADrh/wS78rTmPWEMHoodURxWVMW2AmmMtpvqDTQ0jxeKJHvbz
+	XgJqks1bgM6wCX9JL/s7AqGjdiqni6NR0cGHf0a07Q08Gja9RHY8zhQqOUJ4Doq0
+	fHaA696lcbFXOcCK2DDw+Bu+1HqfbjsGch6CnA5jwOgpCYqIvbcyPvfOvwglsnSy
+	DYfFxoCKNJHfB7EpjOXfN3Rcu88sQvFiDOcTAebhthaSfxbW+3ecgZ6LWFdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1769892918; x=1769979318; bh=laZU9L2EtccAN3analZeEkAskjE41m9JCV8
+	SddPyJ/0=; b=vleIfd3Gsj1J4uN1VrwZrfc5hzFGRgZxk19/MB3XMk9D3o3VNH8
+	wEV7Rcc7xJHevqEkoubjVN5TROVqkXXpYxWCdCJtBQnzaeDNF4nMsTARivMKTQpc
+	JRGb4FctNj7EaVwDLfQf2BonCfDve1L5Pc+IAjbUzm1gNrD+11byvPDQmGtvE7/s
+	5qsUPhoU6Ybf69TsW48agLmN9WuB2m8pEGP1y2uMxDHjDA3smIuLxNxIXVZAJLLV
+	UzFEKpuZZTrT1cAGuqkRWmkA4CZ02VHhmbqg8xlsN30YonL9I8MkJbnKkqqxgD85
+	SVrdBa+OgJ+TrFCCkdIKpl60E6bcK6crB4w==
+X-ME-Sender: <xms:Nmx-abJmAsW7v8bwhvDYsjPNVFdDCTVG_DvLyfDhokdUt8ybBLTSew>
+    <xme:Nmx-aWJmkHWm26KUmnJtXYlrBbajcwSBzRI3WgK_8VFIpxLvpCyyZrtO2qshgVzR7
+    qM6mBrpUPwY6PIarRuU-ioWZ414sZjYM3Un1quv_D5fSp3fRY9iyg>
+X-ME-Received: <xmr:Nmx-aYuxuZaw0qogDs6_ztWjiOrkdtqCkroUrih1EkFAtUjje2Jv_NwU2-DvxvO838Cj1BgX9lJJqaO0aqoKm2ZFCrEPYionYW8rRvXIzSoO3-3ElPOrl-0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujedvleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepvfhougguucgk
+    uhhllhhinhhgvghruceothhmiiesphhosghogidrtghomheqnecuggftrfgrthhtvghrnh
+    epjedvueekgfdugfdutefgueeitddtuedtkedujedtfeduvdehffduffelffehvefgnecu
+    ffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithhhuhgsrdhiohdpghhithdqshgtmh
+    drtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
+    ohepvghnghdrrggsuggrlhhrhhhmrghnrdgrsggurghlmhhonhgvmhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehnrghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Nmx-aTSI1xEmoaSzAc636C3AjeLy2fRy_eSdqHgtbVEuf3Y1qqoorQ>
+    <xmx:Nmx-aePrVJI61Z9ozzO2BGReDR8-lggG2beBpMwxgWnxcAzKIUXx3Q>
+    <xmx:Nmx-aYav8DdJ6ZpDFB_ANo9RSvUW2f5SX8abuonMrvYZPooJwPdz4A>
+    <xmx:Nmx-aYwzoJpI7h66gsXAKXS-_w_5wcgR2UlEf4NUkuIpVa0y3Vek-Q>
+    <xmx:Nmx-aS_b2ThXKxYNTnbwORTzglp2eazThuVMAZX8QBMMXDwZfZ2lSttE>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 31 Jan 2026 15:55:17 -0500 (EST)
+Date: Sat, 31 Jan 2026 15:55:16 -0500
+From: Todd Zullinger <tmz@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Abdalrhman Mohamed <eng.abdalrhman.abdalmonem@gmail.com>,
+	Emily Shaffer <nasamuffin@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] .github/CONTRIBUTING.md: fix broken link to
+ SubmittingPatches
+Message-ID: <aX5sNO4aMVE-qcrz@teonanacatl.net>
+References: <20260131161401.48693-1-Eng.Abdalrhman.Abdalmonem@gmail.com>
+ <xmqqms1t4l4z.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqms1t4l4z.fsf@gitster.g>
 
-> So in that sense, I do understand why somebody may find it useful if
-> there is a handy short-hand for refs/remotes/origin/main (or
-> whichever branch is pointed at by refs/remotes/origin/HEAD) in the
-> above picture.  And refs/remotes/origin/HEAD already does have a
-> handy short-hand, which is 'origin' ;-).
+Junio C Hamano wrote:
+> Abdalrhman Mohamed <eng.abdalrhman.abdalmonem@gmail.com> writes:
+> 
+>> -In addition, we highly recommend you to read [our submission guidelines](../Documentation/SubmittingPatches).
+>> +In addition, we highly recommend you to read [our submission guidelines](https://github.com/git/git/blob/master/Documentation/SubmittingPatches).
+> 
+> The line is overly long already in the original; can we make it a
+> bit more readable?
+> 
+> As to the contents, referring to our preformatted docs, like
+> 
+>     https://git.github.io/htmldocs/SubmittingPatches
+> 
+> would probably be more appropriate, no?
 
-'git checkout origin' doesn't work without resulting in a detached head.
+A few lines below, the document links to git-scm.com/docs:
 
-> As Kristoffer said in another message [*1*], I would too expect that
-> people would not work on their 'main' (or have their 'main' track
-> the upstream's 'main').  So the utility of the piping to sed we saw
-> above is dubious, unless we are talking about quite different
-> workflow, but I do not think of what that other workflow would look
-> like that makes a neutral synonym for 'main' useful.
+    Or, you can follow the ["My First Contribution"](https://git-scm.com/docs/MyFirstContribution)
+    tutorial for another example of the contribution process.
 
-I don't work directly on the main branch.
+I didn't look at any discussion around b75a219904 (docs:
+mention MyFirstContribution in more places, 2020-06-08)
+where that was added.  It would make sense to be consistent
+about where the links point, e.g.:
 
-However it serves and the only starting point for creating any new feature
-branches. This is the command I use, and would be nice if it could be
-simplified:
+    https://git-scm.com/docs/SubmittingPatches
 
-    git fetch --all
-    git checkout $(git remote | rg '^(origin|upstream)$' | tail -n1)/HEAD -b new_branch
+As CONTRIBUTING.md is in the .github directory, it's
+probably fine to link there for both.  On the other hand,
+having more references to the upstream site might be good
+for consistency across the various places the Git code is
+hosted.  Maybe that increases the standing of git-scm.com in
+search rankings too, I don't know.
 
-The main branch is used in my work frontend project for the app release
-command, so there I do
+Whatever the reasoning, it should probably apply to both
+links.
 
-    git checkout $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-    yarn release
-
-I think me as a non-hardcore Git maintainer spend more time in different
-repos than you two do, so maybe the pain of switching between systems is
-more pronounced. That's my motivation for unifying stuff.
-
-Just for reference, iterating all forked open-source repos on my machine
-these are the different upstream names I work with:
-
-    99designs/gqlgen
-    refs/remotes/upstream/master
-
-    amplitude/experiment-react-native-client
-    refs/remotes/upstream/main
-
-    Antonboom/testifylint
-    refs/remotes/upstream/master
-
-    cli/cli
-    refs/remotes/upstream/trunk
-
-    datastax/python-driver
-    refs/remotes/origin/master
-
-    dependabot/dependabot-core
-    refs/remotes/origin/main
-
-    derailed/k9s
-    refs/remotes/origin/master
-
-    elastic/go-elasticsearch
-    refs/remotes/upstream/main
-
-    git/git
-    refs/remotes/upstream/master
-
-    gitgitgadget/gitgitgadget
-    refs/remotes/upstream/main
-
-    github-linguist/linguist
-    refs/remotes/origin/main
-
-    go-redis/redis_rate
-    refs/remotes/origin/v10
-
-    golang-migrate/migrate
-    refs/remotes/upstream/master
-
-    golang/go
-    refs/remotes/origin/master
-
-    golangci/golangci-lint-action
-    refs/remotes/upstream/main
-
-    gradle/gradle
-    refs/remotes/origin/master
-
-    Homebrew/brew
-    refs/remotes/origin/main
-
-    jwalton/gh-docker-logs
-    refs/remotes/upstream/master
-
-    Khan/genqlient
-    refs/remotes/upstream/main
-
-    kubernetes-sigs/controller-tools
-    refs/remotes/origin/main
-
-    kubernetes/kompose
-    refs/remotes/origin/main
-
-    kubernetes/kubernetes
-    refs/remotes/origin/master
-
-    ldez/usetesting
-    refs/remotes/origin/main
-
-    liushuangls/go-anthropic
-    refs/remotes/upstream/main
-
-    matryer/moq
-    refs/remotes/upstream/main
-
-    mhemmings/revenuecat
-    refs/remotes/origin/master
-
-    ohmyzsh/ohmyzsh
-    refs/remotes/upstream/master
-
-    prettier/prettier
-    refs/remotes/origin/main
-
-    RevenueCat/docs
-    refs/remotes/upstream/main
-
-    RevenueCat/purchases-ios
-    refs/remotes/origin/main
-
-    RevenueCat/react-native-purchases
-    refs/remotes/origin/main
-
-    sashabaranov/go-openai
-    refs/remotes/upstream/master
-
-    stretchr/testify
-    refs/remotes/origin/master
-
-    vektah/gqlparser
-    refs/remotes/upstream/master
-
-
-> Doesn't repo_default_branch_name() do the right thing without being
-> noisy at all even in a repository without that configured, as the
-> function will fall back to the built-in default?  While I do not
-> think of a workflow in which a handy access to the value the
-> function gives would be so useful that it deserves a short-hand, it
-> would be a reasonable candidate of what to be called "@{default}",
-> if it proves useful, I would think.
-
-I'll play around with this a bit and see how it works. Thanks for the tip!
-
-
-Harald
+-- 
+Todd
