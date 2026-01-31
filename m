@@ -1,130 +1,111 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1E3366054
-	for <git@vger.kernel.org>; Sat, 31 Jan 2026 20:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E671366054
+	for <git@vger.kernel.org>; Sat, 31 Jan 2026 20:55:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769892921; cv=none; b=Lo/ORl8uJsel9Pt7Pndhc9QWXFbHhgwdKBcr/m6FihCf9oquexKhXCay2a6VGeTuIXK2kF0trcrs/bgGI4fh1tj3qoeFtRxrOq8EO3lRj59t8RjZTAgaOeTrWS9eS/l3rvzIMwoqSmVjLF0r5fTnqYFInrsAj9jd0TPwJQxjWrE=
+	t=1769892926; cv=none; b=sdXNVp9RTOsRw+PuD5IaCxYKWOkZKs6+YYSTZIsk1Hiahcnv4lhOwXQurHXs7EcX1V/VWxQogQwfOglDfBjQVc+b1tvJ2ncqAVL3pBjeiZfgvgO7d93mUQIeg6NLuhfHa0CdHgBwDxdzosArK2EetEZb88j5zUWem7UGvMRU1SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769892921; c=relaxed/simple;
-	bh=roLvNyR74Sxxb4vRIhWv5uWT2Ynik5C9rbddszNKPOA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T/yHQGUGnbr+NdiAArWoZYPGfkAxQc5NyJZS0zzibnWDCKnwSAGSCmcNVYGtYYsiLhhhROpsxjkmstLPgcnc3znUTflzaAQTquxK9VJkIHkfGxNMioJJWmi2CqkRMU8puUdrIlxuAE8H2P5/KmjbNmL3KExY75TKXo637XDO2Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gqlzQSGo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vleIfd3G; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1769892926; c=relaxed/simple;
+	bh=GiaGhFGOGw0K8El/yNhsjcmAuOHA+a+No2E020e/V+A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UyvXpb35cm5FUXvsWYrdvKsQHoapuKspGLt3f1NoJ5gsZWu5SLSzO8WvgEGPiFeQ7+kPNJyeZ4Qlmftyl0IrzbtWcgKHrOAjQ9ZXerR7A9vXuuekiIyR9RghXPPhbCa9PikCVf1nOk/hOM/gFNXu4rV4kb039tQZR/8lTh4UQuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HqzJJZdo; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gqlzQSGo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vleIfd3G"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 567C7EC0304;
-	Sat, 31 Jan 2026 15:55:18 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Sat, 31 Jan 2026 15:55:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1769892918; x=1769979318; bh=laZU9L2Etc
-	cAN3analZeEkAskjE41m9JCV8SddPyJ/0=; b=gqlzQSGoZkjS/uzY0/OQaZcRRZ
-	qIfJiZK9xY7FAbXXnWAoxKWM7hSsKKA4ZpGCT02in7x9iQGNYrMrWyBi8PVLK/30
-	1G7EnSUF5p+4OUtADrh/wS78rTmPWEMHoodURxWVMW2AmmMtpvqDTQ0jxeKJHvbz
-	XgJqks1bgM6wCX9JL/s7AqGjdiqni6NR0cGHf0a07Q08Gja9RHY8zhQqOUJ4Doq0
-	fHaA696lcbFXOcCK2DDw+Bu+1HqfbjsGch6CnA5jwOgpCYqIvbcyPvfOvwglsnSy
-	DYfFxoCKNJHfB7EpjOXfN3Rcu88sQvFiDOcTAebhthaSfxbW+3ecgZ6LWFdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1769892918; x=1769979318; bh=laZU9L2EtccAN3analZeEkAskjE41m9JCV8
-	SddPyJ/0=; b=vleIfd3Gsj1J4uN1VrwZrfc5hzFGRgZxk19/MB3XMk9D3o3VNH8
-	wEV7Rcc7xJHevqEkoubjVN5TROVqkXXpYxWCdCJtBQnzaeDNF4nMsTARivMKTQpc
-	JRGb4FctNj7EaVwDLfQf2BonCfDve1L5Pc+IAjbUzm1gNrD+11byvPDQmGtvE7/s
-	5qsUPhoU6Ybf69TsW48agLmN9WuB2m8pEGP1y2uMxDHjDA3smIuLxNxIXVZAJLLV
-	UzFEKpuZZTrT1cAGuqkRWmkA4CZ02VHhmbqg8xlsN30YonL9I8MkJbnKkqqxgD85
-	SVrdBa+OgJ+TrFCCkdIKpl60E6bcK6crB4w==
-X-ME-Sender: <xms:Nmx-abJmAsW7v8bwhvDYsjPNVFdDCTVG_DvLyfDhokdUt8ybBLTSew>
-    <xme:Nmx-aWJmkHWm26KUmnJtXYlrBbajcwSBzRI3WgK_8VFIpxLvpCyyZrtO2qshgVzR7
-    qM6mBrpUPwY6PIarRuU-ioWZ414sZjYM3Un1quv_D5fSp3fRY9iyg>
-X-ME-Received: <xmr:Nmx-aYuxuZaw0qogDs6_ztWjiOrkdtqCkroUrih1EkFAtUjje2Jv_NwU2-DvxvO838Cj1BgX9lJJqaO0aqoKm2ZFCrEPYionYW8rRvXIzSoO3-3ElPOrl-0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujedvleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepvfhougguucgk
-    uhhllhhinhhgvghruceothhmiiesphhosghogidrtghomheqnecuggftrfgrthhtvghrnh
-    epjedvueekgfdugfdutefgueeitddtuedtkedujedtfeduvdehffduffelffehvefgnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithhhuhgsrdhiohdpghhithdqshgtmh
-    drtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
-    ohepvghnghdrrggsuggrlhhrhhhmrghnrdgrsggurghlmhhonhgvmhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehnrghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Nmx-aTSI1xEmoaSzAc636C3AjeLy2fRy_eSdqHgtbVEuf3Y1qqoorQ>
-    <xmx:Nmx-aePrVJI61Z9ozzO2BGReDR8-lggG2beBpMwxgWnxcAzKIUXx3Q>
-    <xmx:Nmx-aYav8DdJ6ZpDFB_ANo9RSvUW2f5SX8abuonMrvYZPooJwPdz4A>
-    <xmx:Nmx-aYwzoJpI7h66gsXAKXS-_w_5wcgR2UlEf4NUkuIpVa0y3Vek-Q>
-    <xmx:Nmx-aS_b2ThXKxYNTnbwORTzglp2eazThuVMAZX8QBMMXDwZfZ2lSttE>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 31 Jan 2026 15:55:17 -0500 (EST)
-Date: Sat, 31 Jan 2026 15:55:16 -0500
-From: Todd Zullinger <tmz@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Abdalrhman Mohamed <eng.abdalrhman.abdalmonem@gmail.com>,
-	Emily Shaffer <nasamuffin@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] .github/CONTRIBUTING.md: fix broken link to
- SubmittingPatches
-Message-ID: <aX5sNO4aMVE-qcrz@teonanacatl.net>
-References: <20260131161401.48693-1-Eng.Abdalrhman.Abdalmonem@gmail.com>
- <xmqqms1t4l4z.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HqzJJZdo"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-382f9930e54so36265101fa.1
+        for <git@vger.kernel.org>; Sat, 31 Jan 2026 12:55:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769892923; x=1770497723; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZakMIOswgtQ6qJTKUhTj31EygDl+l47eTU2/jpHuIQ8=;
+        b=HqzJJZdoMYe90psKprupwaN6trg8tQ2GXIE5cMC0o9KLRPYEHVUYII8n+oHqwTL4uN
+         P0Du4am6a62zYgZ1Pb6vhkOTU1R3yb2H+gOQ48YGMGGKuytKNlt/Bl1YH6Sx+adgznJk
+         D6vM0U732aUVikRxIsuLLVeD8h0mJ9IVgBA4mAQzoaomt/ufQcqsQ3bePbZye88WaiTw
+         n+3T9DzO+fO915j/MIll2i5JHgdcEhjMf5m0BuuxakeoWfaNVkyjvFx6DWPyymq6IuJ6
+         kik90NhIlZyelz9NJ5H6wigUUsOAQ7GD4TkZeGhHZwP572V0j5itPrnWqOj0VKVAwMTY
+         DbVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769892923; x=1770497723;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ZakMIOswgtQ6qJTKUhTj31EygDl+l47eTU2/jpHuIQ8=;
+        b=mftZld1Yi5jjxdXI61X948gyaxx80Wn9knmGhBHt6ha4AkwPZ999pzwG92FSvPi7i/
+         FY8hhwCFXNZQk84bxWWdHm/FJ4KHDBy8nogJ4ouGgbTJMDAM51CqK8LY4+bNvW41KwCa
+         ZWsQl9qmwe2hdR/dt68Il0dzfYWuroc1GZXAbM9q7yg0EZWJ7T2gK52VM3gOWk5cB8jD
+         29t/fryeKnxVB8Y0n3qSnvG4CVkk5CVgxZwEUq+A8XjuelsYrGkfRJ4FISTYxeXcuK12
+         9io9Hc9fkCEbkdfEfyldT1PFRKz78ZowVEChsWjO5qirU35rWdztOPCmw88nI4kTo+/4
+         CWVA==
+X-Gm-Message-State: AOJu0YyyJZk3s+FpucOKCYf2iHFETAEhZlbIS07CbRe+thwod+soxkkf
+	0lWm2pqRzV9Ph8lhj4bRxEm5naAm7TyuO/uZaokOgtl/XVzrrTJcRtLk
+X-Gm-Gg: AZuq6aJWsrqR0nitmflFhmvtyuPQEzEjglUARvkNPfweMuL6n8bz9UfPNA7GVBNfE4r
+	042dl5cvuuT1L32LgGTQYe8PMLN0ojyaW12h2k3aagDcXpN9YlkkI7jQipus2HUcaIRLBZNrkMj
+	bEvT0+G6LwSznMK/Zkvb8rGSBqc53/sPES/dSqcjwTUz+gQYFIE0h+7wCTw7LzuJIaW/AMCs4TK
+	qSY3igt1zdEOAKAudcnhpSBEr6M4N4HV875M99EFNCoeEQjOs4cnCCmkkvbwXdZyudtuOAkBrmz
+	oJ6QxK8cphp3YrekCz9Udv9IFKulyl//962zSh5ACBDPs/Iltueh6QLeP8THtaDe+YcY0umEgDx
+	yUeaLhsOBYKtcGkV7KMBdAjWTqno3BxRXIu650u86L1Ptos8E06tW/o2/WihacAMIpRiOKJwqpJ
+	RDQL7WeuKDgYHeKU1LLfNzHv8ArcU3u+DN5JRBCZcxUDpnNyHNW68FazOklosjhckY2vNoAu8=
+X-Received: by 2002:a2e:a7cf:0:b0:382:4fcd:66a3 with SMTP id 38308e7fff4ca-386465e6806mr27412391fa.12.1769892922413;
+        Sat, 31 Jan 2026 12:55:22 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38625fbff42sm23537381fa.45.2026.01.31.12.55.21
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 31 Jan 2026 12:55:21 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: haraldnordgren@gmail.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	gitster@pobox.com
+Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
+Date: Sat, 31 Jan 2026 21:55:21 +0100
+Message-ID: <20260131205521.11876-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260131202232.9213-1-haraldnordgren@gmail.com>
+References: <20260131202232.9213-1-haraldnordgren@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqms1t4l4z.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano wrote:
-> Abdalrhman Mohamed <eng.abdalrhman.abdalmonem@gmail.com> writes:
-> 
->> -In addition, we highly recommend you to read [our submission guidelines](../Documentation/SubmittingPatches).
->> +In addition, we highly recommend you to read [our submission guidelines](https://github.com/git/git/blob/master/Documentation/SubmittingPatches).
-> 
-> The line is overly long already in the original; can we make it a
-> bit more readable?
-> 
-> As to the contents, referring to our preformatted docs, like
-> 
->     https://git.github.io/htmldocs/SubmittingPatches
-> 
-> would probably be more appropriate, no?
+> Doesn't repo_default_branch_name() do the right thing without being
+> noisy at all even in a repository without that configured, as the
+> function will fall back to the built-in default?  While I do not
+> think of a workflow in which a handy access to the value the
+> function gives would be so useful that it deserves a short-hand, it
+> would be a reasonable candidate of what to be called "@{default}",
+> if it proves useful, I would think.
 
-A few lines below, the document links to git-scm.com/docs:
+After looking a this, this is hard-coded. Not showing what is relevant for
+each repo that exists:
 
-    Or, you can follow the ["My First Contribution"](https://git-scm.com/docs/MyFirstContribution)
-    tutorial for another example of the contribution process.
+```
+char *repo_default_branch_name(struct repository *r, int quiet)
+{
+  const char *config_key = "init.defaultbranch";
+  const char *config_display_key = "init.defaultBranch";
+  char *ret = NULL, *full_ref;
+  const char *env = getenv("GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME");
 
-I didn't look at any discussion around b75a219904 (docs:
-mention MyFirstContribution in more places, 2020-06-08)
-where that was added.  It would make sense to be consistent
-about where the links point, e.g.:
+  if (env && *env)
+    ret = xstrdup(env);
+  if (!ret && repo_config_get_string(r, config_key, &ret) < 0)
+    die(_("could not retrieve `%s`"), config_display_key);
 
-    https://git-scm.com/docs/SubmittingPatches
+  if (!ret) {
+#ifdef WITH_BREAKING_CHANGES
+    ret = xstrdup("main");
+#else
+    ret = xstrdup("master");
+```
 
-As CONTRIBUTING.md is in the .github directory, it's
-probably fine to link there for both.  On the other hand,
-having more references to the upstream site might be good
-for consistency across the various places the Git code is
-hosted.  Maybe that increases the standing of git-scm.com in
-search rankings too, I don't know.
 
-Whatever the reasoning, it should probably apply to both
-links.
-
--- 
-Todd
+Harald
