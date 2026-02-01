@@ -1,113 +1,105 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0F12D7DD4
-	for <git@vger.kernel.org>; Sun,  1 Feb 2026 08:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3786A241690
+	for <git@vger.kernel.org>; Sun,  1 Feb 2026 09:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769935171; cv=none; b=i0sO3kOtTYPglTZoqqxMf76W300gR/5EY6o5UGHBdK9u3lMQaJp3UxCkWSD6dZMPfMA7foJg/EHysQpV/vlI1yWJdQImHCrjSkUg2vDKX9HEDJZjCdxatRckwdD/y6ap8l2fMVe6eMGG9d7qvuMOktyTJlF7T1VsToFMCKaTO74=
+	t=1769936592; cv=none; b=o1G2wvB11yIpjZflc9l9wzmpOxXnw3nd82h+K26vliLRmPfJXXYsRuLOAdRQX1HGRJt6IEmtIudJluu3AJIF+mMxu/XJUF+2rc7yau4FiKWYdM4PtoZL5D69EJdipYZQ7nOn51BiMwTRF8xcHtPxB5XTytj7L+Qk4M0ACRp4K2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769935171; c=relaxed/simple;
-	bh=hEJpJv1RM4/LNLF8K4dvdMvpO2vcdEjb2MDYqjTEsFs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rwwgz0WWNrj6ihhpc9/+3UmAPbCXTqINIqbKgKNhABwrxExZ0JDpW6lj3vcztNcuR9YBQz5mXC61aBxpT4lC/ua4OXdjmqDzST9Vfo1eDXTgkCMf1glIgDd4Xkj4RB7yPRx8rgc/EukHcRFeFpDL2F7CFNPeQhyXNCs6oPKOidM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=PFLU9UUI; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1769936592; c=relaxed/simple;
+	bh=52/Khxc/sjH9AVWGN5ET3FJ2gOAl6LBKZNsSNtQilYc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XxR3eeZAEWnJxUBXkA7R4wlAR8mjFxEGoKwQ0UloREpwKUwS/i0pkfipldXPitgRd3cO5TPIcoEM5Af9qWxM9lcxA1QzRbNtq/h6Ou9x2ffKggUKHD0U8Q9cGaDKMJePp2Q1krMosRWTxyj5WaTofR+fBYFEbQERIIGNJlAXvFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=UUUO+MCn; arc=none smtp.client-ip=212.27.42.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="PFLU9UUI"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id 0580714C2D6;
-	Sun,  1 Feb 2026 09:39:14 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1769935156;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OvxOuN3ZB32jLl3KrRDgIymipwaQiSfBRulPcI3Camg=;
-	b=PFLU9UUIlQpH39VNKYjAbOWDlWGBztjWQyX3Z0KxRaChYRRi62Cb/VkQ8VlaKt3o6Ae/fw
-	LFZXI7EN+6jrostEwV6MEo4enPOf6N4tqdCao51pWJq8fLggbPW5NoYwfKH2BgzeGR+bnR
-	qmJVNRpzyCwA8MrRfxOT6sZSLFuMNovz2QGhvRUldkuBuJBCxtMEFUWvlRycfhj6E+nF9T
-	Wm+6Wwal5Yhc7oo+ufVGK0P+rS8JhiZ8MrQ1ycJFSoT2jgHOeK7s6dT7MxWC0jx2hQmyMU
-	NG+/5Xc9r2PeKoErEjBgaWY4pmkE4s2uA7H9aof77kpMNN+boYnvCikxqMarmA==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 738afec5;
-	Sun, 1 Feb 2026 08:39:13 +0000 (UTC)
-Date: Sun, 1 Feb 2026 17:38:58 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Julien Moutinho <julm@sourcephile.fr>
-Subject: Re: [RFC PATCH] builtin/format-patch: print a warning for skipped
- merge commits?
-Message-ID: <aX8RIq0ZUSoIue8G@codewreck.org>
-References: <aVkKmcER2K8D9U4T@codewreck.org>
- <xmqqy0mep0y2.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="UUUO+MCn"
+Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:3d51:7a10:3981:3744])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 8103FB0051E;
+	Sun,  1 Feb 2026 10:03:01 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1769936587;
+	bh=52/Khxc/sjH9AVWGN5ET3FJ2gOAl6LBKZNsSNtQilYc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UUUO+MCnytinyhX0oBMcL6ENwLcuvt7BriGpfvZaYAFuJiFer2B1kkWxeAjBLsjPB
+	 +j2hWtLeGO6QHJkyKoXrRwkmDSXI8F/5mXZhMX5LQhZykuWjvMNnTJpfOms1Mpe9cD
+	 9fPWlDgJpaBArMWIVkxsN/HAU6hQ9YeO1eVIf0paBNDCEY7Lfifbtioksprtxgq0zP
+	 hpRjK6olNV/6V1BNLAkM9J8Yj0/dX0FeTjZgMZKPVJd+ixhV/f6xvJufdPi4m16b7u
+	 Nubnj4LlVN23xV4hqFdGdKx/xOxbbGmtQo8jcIn9ozjfhp5P5qS5K3+eksmRShp9n0
+	 3tdXj9CoPLeIA==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, William Hatfield <whatfield.git@gmail.com>, ps@pks.im
+Cc: glencbz@gmail.com, avarab@gmail.com,
+ William Hatfield <whatfield.git@gmail.com>
+Subject: Re: [PATCH 5/5] doc: document reversive traversal and related modes
+Date: Sun, 01 Feb 2026 10:03:01 +0100
+Message-ID: <4710431.LvFx2qVVIh@piment-oiseau>
+In-Reply-To: <20260131214309.1899376-6-whatfield.git@gmail.com>
+References:
+ <20260131214309.1899376-1-whatfield.git@gmail.com>
+ <20260131214309.1899376-6-whatfield.git@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqy0mep0y2.fsf@gitster.g>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-(It took me a while to get back to this...)
-
-Junio C Hamano wrote on Sun, Jan 04, 2026 at 11:27:01AM +0900:
-> Dominique Martinet <asmadeus@codewreck.org> writes:
-> > Okay, I can see this being confusing to people not used to format-patch
-> > even with a range, but I agree it'll be annoying more often than not in
-> > general so I'm fine with this.
+On Saturday, 31 January 2026 22:43:09 CET William Hatfield wrote:
+> Add documentation for the new --reverse-traversal, --append-superproject,
+> and --reversive flags to git-submodule.adoc. These flags enable post-order
+> traversal through nested submodule hierarchies, which is useful for
+> cleanup operations and dependency-ordered processing.
 > 
-> Yup, nobody stays to be newbie forever ;-).
+> The flags only take effect when used with --recursive.
+> 
+> Signed-off-by: William Hatfield <whatfield.git@gmail.com>
 
-I think I actually fell in this newbie category myself: I hadn't
-realized how hard it is to specify exactly only a merge commit in normal
-git usage.
+Hello,
 
-In "confusing case" I was consulted about, Julien had used jj to
-(involuntarily) make a merge commit that merged two parent commits like
-this:
-$ jj log
-○  mkwklvul Julien Moutinho 1 hour ago openvpn* 0ef9a661
-│  nixos/openvpn: format with nixfmt-rfc-style
-@    qsusmwyp Julien Moutinho 1 hour ago 14ef78b3
-├─╮  nixos/openvpn: add netns support
-○ │  vltlsmty Julien Moutinho 23 hours ago services.netns git_head() 204ac248
-├─╯  nixos/netns: init module to manage network namespaces
-◆  ktsspxvy Yohann Boniface 1 day ago master@NixOS 04245c47
-│  (empty) arduino-cli: 1.3.1 -> 1.4.0, use finalAttrs (#469365)
+git-submodule is being transitioned to `synopsis` style of markup.
+See https://lore.kernel.org/git/
+05e68e28257cd450463d253abe9b2995759bdc10.1769462744.git.gitgitgadget@gmail.com/
 
-So specifying `git format-patch 14ef78b3^-` wouldn't generate any
-commit;
-but in the normal merge case using foo^- will grab commits that are in
-the second parent that aren't in the first, so to get only the merge
-commit you'd need to write `foo^- --not foo^2` or some other more
-complex expression...
-At which point I'm not sure this warning has much benefit, and the real
-problem would more be that jj let him create such an useless merge
-commit with non-trivial content..
+In the same move, there is some work on style consistency of the manual pages. 
+
+Below are the remarks on what changed:
+
+> ---
+>  Documentation/git-submodule.adoc | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+> 
+> diff --git a/Documentation/git-submodule.adoc b/Documentation/git-
+submodule.adoc
+> index 95beaee561..2be477952d 100644
+> --- a/Documentation/git-submodule.adoc
+> +++ b/Documentation/git-submodule.adoc
+> @@ -437,6 +437,26 @@ options carefully.
+>  	only in the submodules of the current repo, but also
+>  	in any nested submodules inside those submodules (and so on).
+> 
+> +--reverse-traversal::
+
+Now, options in description lists are backticked:
+
+`--reverse-traversal`::
+
+> +	This option is only valid for the foreach command and requires
+> +	`--recursive`.  Process nested submodules in post-order (deepest
+> +	first) rather than the default pre-order.  This is useful for
+> +	cleanup operations where nested submodules must be processed
+> +	before their parents.
+
+Please start the description with the actual action of the option. Then, you 
+can add conditions, context, explanation:
+
+Process nested [...]. This option is only valid [...]. This is useful [...]
+
+Thanks
 
 
-If it was just very rarely useful I might still be tempted to send the
-patch, but it also breaks patch counting with e.g. `git format-patch -3`
-(test t4014-format-patch.sh "format-patch doesn't consider merge
-commits"):
-the -3 is done by common revision `.max_count` limit, so dropping
-`rev.max_parents = 1` makes format-patch skip through merge commits
-without re-adding further commits, and I'm not convinced this is all
-worth it.
-
-So, thank you for the quick replies (over new year festivities no
-less!), but let's leave it at this unless something compelling comes
-up...
-
-
-Thanks,
--- 
-Dominique Martinet | Asmadeus
