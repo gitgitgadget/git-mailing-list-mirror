@@ -1,100 +1,107 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156B81F09B3
-	for <git@vger.kernel.org>; Sat, 31 Jan 2026 23:14:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DFA26290
+	for <git@vger.kernel.org>; Sun,  1 Feb 2026 00:27:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769901243; cv=none; b=V1bITfZHG2Gahjtg/fDF8PtGfjn2rRP1yHun3KYzRqD8h8RSh04u5DaRmHCjRXR2BIWGIn1J0nthMFMZbx2BRALWQCaNO+bySp61JWiNH7rk4BYyguNuSf51zY89sYt6YRwfIbV84K5q5/uyOjgLvN8bjSi26tiKJ6HC0irkW48=
+	t=1769905629; cv=none; b=mVogZurRf+THr3d+ZlBxFv63MiRvW71PUjAuRdN8grUyybrmpXoGq6HWkRe63eColXxnyaHIKGqltUWrXDWjEUciwHP0KFY0eoNwcnuWmSyUuCNCL93xPEPzdMjrx+0TqZJkWj/Ddy0jtjwMcKDPBiRXorZynYw+iTe2OyvBWHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769901243; c=relaxed/simple;
-	bh=2rJ5ogleWqO+Pv9wOkcJBd6IsR5B9h1cxuWJkkTYNAg=;
+	s=arc-20240116; t=1769905629; c=relaxed/simple;
+	bh=23cEQy84AHV6oaeqQ6WLHnB8TckfOO3caSHmUT3OBTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XSzJQGe+p6t9AHCCY7gBY7955lfxM95QL3q9f3tr1A8ZztZ0zyasVAW8WwBz+SDhs4kQY2QL/As6qDMdLlBmvodw0N0tpxuXP2er5DA8O92hL1enJM1y/MGd8dKJ6WNPH6RDk4ORa61fpbMXit3+ogYD99niH8w1q3HWi5JKQdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GtVEAikm; arc=none smtp.client-ip=74.125.82.43
+	 MIME-Version; b=ixjZp1WKUyQIKz4KpQXgtchDPus9lPpAfX1HrfdBdO2ku54p6I4D9FThWATp8AuqCsWiCthpZ4UDfQDk9OdN5TW9iLht5uR2wHyAOlpQJTHLkfnQF+2ovt3CW8vevx0fhotfVGJISAwot+CTHhIhkOVgJLWzYz2iAoE+tcZ3lIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XZSzeYKe; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GtVEAikm"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-11f1fb91996so3050558c88.1
-        for <git@vger.kernel.org>; Sat, 31 Jan 2026 15:14:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XZSzeYKe"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4806ce0f97bso27469045e9.0
+        for <git@vger.kernel.org>; Sat, 31 Jan 2026 16:27:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769901241; x=1770506041; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769905627; x=1770510427; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yuvcbHXjsULPjxB1ZUiPkMzf+ZnvoF0nGvQuDvluwMA=;
-        b=GtVEAikmWebbWzomqkCqkYZ9z2Sw0WjDS+EDle6EeBb6JLRSZGLsSX8TGsgP6gPz6Y
-         F2jUDs1IBHGc0ebAv+xTb0ovJVaxn07MgvYNpvif4zzVQH8DR8u816xCCq2YeYmbrI++
-         hGRra8CRpVeHUltICgTlfyxz4w1sWVzBNZNg2m23AnGS9NtGy4EN3WQQggKwC4PplpQM
-         fOPpSlwdAQVJhev0TqBrNo/Dob9ewNRlhvSY+hdQPMViP/zQLZmMQ9pXwRCseCgo0R8C
-         n5NMkhocKEgzIq0K8sjSe95WjSrutD567TsNf1jlayqhghMZ76Ul0JEWvnN5ULf8UimV
-         tAIg==
+        bh=Oz4MmXSzDvzqR50Q9R0mIMA+x0dQSGdkvVNZcSMo2V4=;
+        b=XZSzeYKeF0PM6hAT1A64dMciKnRQMSTBoZygQCZ1uG7lEmdVJZWbAx5qKhu/OSfpKn
+         0CUP251EJ+JeMTLZ7UWTZ4AhvtURBFkuw7fV+5tAae6voMuFRgkX4S+ZKeO4TA8bInJF
+         ceqvp4/R8G56tSDBLMHeoUo9bzU+R6g+2P9+psvUeuVw88LWNE3C9JsF5eP5TbJtqqXc
+         HyUKa+1a7tWzI6Jjx6tYjYsTE3Y09Sn954ZT556UyPeXTebx7QCR69BYcMQZ+TuwPVHx
+         ty9ld1y/FSDecR577AJ+HLks1NHphREhuVj3jsoNyFqcVce+NokZF15en/9BG+IlicZR
+         hSPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769901241; x=1770506041;
+        d=1e100.net; s=20230601; t=1769905627; x=1770510427;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=yuvcbHXjsULPjxB1ZUiPkMzf+ZnvoF0nGvQuDvluwMA=;
-        b=YDmhydTzE3pimkFhct/ecLWAr4oz3KqEo8sUs4eP03fNdbhEyMxRQJykiSMufBEGMt
-         yXlmEM8uqKiD+enLcksHZji3B2XVVVJUYMvAYD2Jg52nC+buB34nUAuCb2QN6PlpNAnB
-         P1uI9zbA3iKoFb4CQB3rfPyhMmL6RCeB+a/ezxx6v5cxSiDUuJPANJeB/LpUxilgRgVU
-         FEVvETu3T7H6kYebbw3HP3wAUDzGNhQzVoHjb7+wywyGA6G1Y0wzSk3oJKSVsehlOFrs
-         5CDKjtM//nKqb8ClA3AMUNqOvtXXM/tdCjdRAACrUUG+7RAK/A71yf6rtz2iQsmZmuWo
-         L1Yg==
-X-Gm-Message-State: AOJu0YwjpjbhMZV9Kjq7vPn1C6AYeqekhVoiLTbaSvBkQGCs650FlQ//
-	xh0QEZ1/ovl0dLsSTi/SnJ6ITgi1xNeetXaK0Fy86sFQCpewbb9z7G413pRtGw==
-X-Gm-Gg: AZuq6aJkDEpoumEr49Y2eSTwl7j5h7Gj1vq1b9lWL7wQN2wa8p9cqZckwDf4jofSM8v
-	OiZpcKlcEzF8AvkKLYPZdmJVf8aGhuQK/a7kxqxNvl1RsZFH50Sq9QNB/YuENXxcROQAqU1UD1l
-	a6F9/aV7StwECIgSRdHJFjUwoqrbHkSckU9wcxQyOJQz05PIJ+uANhJbWZ6LGHun3JUePuGFXXn
-	R4M+unNrwQ42aocEmM176lj3TLE1wHcGsFhliXNksLx9FE0+YCtSLTWwRIoXRzmkFCAy5IdHvbE
-	KCatwxen3u/lkWB59MCgonAIXdDaFx/2Wo9RuGUNlALyMXkoUiOtpGYe7DS5yTqkIcv1K7iIG+u
-	EPn0M6Xvo+CTP0y2wTrQIpYgejrbMOxgd8xh1Bxdc3zHVtfF1OOtaCOEtqd8v539CQ2kxkS7rD8
-	rhFqonlVIb5qK2eKjQ1g2m9JVbrk78nbkR4J5fZUhCkvorRTCeU1DFdl/VSVPKvDTfD3oJlUYMI
-	MEY0CwL
-X-Received: by 2002:a05:7022:501:b0:11d:c91e:3b58 with SMTP id a92af1059eb24-125c1036184mr3289969c88.39.1769901240708;
-        Sat, 31 Jan 2026 15:14:00 -0800 (PST)
-Received: from mac.lan ([135.180.175.184])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-124a9e0304bsm15320411c88.14.2026.01.31.15.13.58
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 31 Jan 2026 15:14:00 -0800 (PST)
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-Subject: [PATCH] RelNotes: fully spell negation
-Date: Sat, 31 Jan 2026 15:08:48 -0800
-Message-ID: <20260131230848.4790-1-carenas@gmail.com>
+        bh=Oz4MmXSzDvzqR50Q9R0mIMA+x0dQSGdkvVNZcSMo2V4=;
+        b=AdjqLwaV5FaCnAhz1aN8oGuCeM42p5BaAkT38bBwJiiopf3ku8YX6RYnSQYGUgRMfh
+         /PuBUwdyoAZHnzzaVZ30grqF0MsqzeKfqn2HOVqGWYcy2BkDilwnT088JiS0YroyWo97
+         q5ANX6HuimWIGA6BgG3u6HLDmRaqO5knba3ZhfWG/E+mJIFapTV7wtN4il+pDsMtd33o
+         n4Pba9Jj4nol6/07QJDLKTK4QHgJK7TbmaC1dccWEAk/XvZOTxq+n67thQOG4LeHOGfs
+         8c1tfOAvjMyIOevWyEP6DKhg6um8GSAFA3ClMgjQ0FK77Pvmvlgz/EXPgth15CB3VZNy
+         XF5A==
+X-Forwarded-Encrypted: i=1; AJvYcCUgCNJPtZxIzQRu1NH0jEhBfCEjkARBl7ujJ0RKLBgZ8Ln1YYFtgTK+KE4aRtkUJI4UByI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5v+3wexhzBzQlH3Lws6qm5tuV5qlR4snNW6RJlrHMGzrdFN8H
+	zsV6R7VNcZt97kC9LC29pe+V9GRY++9+s7eEyP7QjXZfquVrkhWCF2lt
+X-Gm-Gg: AZuq6aLxI+hzl5cAbVtzGDVVhrk9qR5wvsHYF3UaMLc5xYFEMSNt33Yrv/scqf094LR
+	4Vvi1n3uY1intJBmsxK1GKWQrbTAR+sL7DeLiCYV5234Ppkk5kjY5lutdZBKedxEA4g/Wt86KhS
+	mOhBj8VFZC+bgBQDSgOKNE8HjqE/OjiRWqmDvBZVeurEuRSPT3Us+njq9u1ty13Hkwc4Lrpujam
+	ikaiTWf8u8EFQllGAWb0aLwh7ZNzVFmzZQ9ldqCWFygiz30oGdMtkfsiB43cbuS6AW4f07LYjsa
+	GbaFzSbCq2PIqA+2roDkC3p2o7kV6ijiya/MpzvWnB4iJ2jDrZ4t7NWTB6JCU83kLrhqmAV11ss
+	lH9B2cBT9ofNHJEWYI1oakewCbedFQoNaEvEmU3EEjksQuPVG4/wSq42LsQYpRdoP+2Kb0TmZ6b
+	vVuJPRpv0Q7U3ub9JshrBqMq/M8ynekV8dRlbZQw==
+X-Received: by 2002:a05:600c:818f:b0:47b:deb9:f8a with SMTP id 5b1f17b1804b1-482db491bfbmr90171335e9.30.1769905626489;
+        Sat, 31 Jan 2026 16:27:06 -0800 (PST)
+Received: from uranium ([156.210.131.223])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-482e047d863sm55541895e9.1.2026.01.31.16.27.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Jan 2026 16:27:05 -0800 (PST)
+From: Abdalrhman Mohamed <eng.abdalrhman.abdalmonem@gmail.com>
+X-Google-Original-From: Abdalrhman Mohamed <Eng.Abdalrhman.Abdalmonem@gmail.com>
+To: gitster@pobox.com
+Cc: tmz@pobox.com,
+	git@vger.kernel.org,
+	Abdalrhman Mohamed <Eng.Abdalrhman.Abdalmonem@gmail.com>
+Subject: [PATCH v2] .github/CONTRIBUTING.md: link to SubmittingPatches on git-scm.com
+Date: Sun,  1 Feb 2026 02:26:43 +0200
+Message-ID: <20260201002658.133153-1-Eng.Abdalrhman.Abdalmonem@gmail.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <xmqqpl6vezt3.fsf@gitster.g>
-References: <xmqqpl6vezt3.fsf@gitster.g>
+In-Reply-To: <aX5sNO4aMVE-qcrz@teonanacatl.net>
+References: <aX5sNO4aMVE-qcrz@teonanacatl.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- Documentation/RelNotes/2.53.0.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The relative link to SubmittingPatches is broken when viewed through
+GitHub's specialized "Contributing" tab. Update the link to point to
+the documentation on git-scm.com to be consistent with other links in
+the same file. Also, wrap the line to improve readability.
 
-diff --git a/Documentation/RelNotes/2.53.0.adoc b/Documentation/RelNotes/2.53.0.adoc
-index d3f6d18199..2668c2e996 100644
---- a/Documentation/RelNotes/2.53.0.adoc
-+++ b/Documentation/RelNotes/2.53.0.adoc
-@@ -138,7 +138,7 @@ Fixes since v2.52
-    (merge 42ed046866 jk/attr-macroexpand-wo-recursion later to maint).
+Signed-off-by: Abdalrhman Mohamed <Eng.Abdalrhman.Abdalmonem@gmail.com>
+---
+ .github/CONTRIBUTING.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/.github/CONTRIBUTING.md b/.github/CONTRIBUTING.md
+index c8755e38de..93042128d6 100644
+--- a/.github/CONTRIBUTING.md
++++ b/.github/CONTRIBUTING.md
+@@ -10,7 +10,8 @@ conveniently send your Pull Requests commits to our mailing list.
  
-  * Adding a repository that uses a different hash function is a no-no,
--   but "git submodule add" did nt prevent it, which has been corrected.
-+   but "git submodule add" did not prevent it, which has been corrected.
-    (merge 6fe288bfbc bc/submodule-force-same-hash later to maint).
+ Please read ["A note from the maintainer"](https://git.kernel.org/pub/scm/git/git.git/plain/MaintNotes?h=todo)
+ to learn how the Git project is managed, and how you can work with it.
+-In addition, we highly recommend you to read [our submission guidelines](../Documentation/SubmittingPatches).
++In addition, we highly recommend you to read
++[our submission guidelines](https://git-scm.com/docs/SubmittingPatches).
  
-  * An earlier check added to osx keychain credential helper to avoid
+ If you prefer video, then [this talk](https://www.youtube.com/watch?v=Q7i_qQW__q4&feature=youtu.be&t=6m4s)
+ might be useful to you as the presenter walks you through the contribution
 -- 
-2.50.1 (Apple Git-155)
+2.50.1
 
