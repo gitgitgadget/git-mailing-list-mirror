@@ -1,114 +1,140 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102E3387563
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 17:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB0B38947A
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 17:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770054992; cv=none; b=dm32wKL6YG6wkCEs0sf/gj6zC5PHMgCiY0AKxcJP5oYDHoXqyiwXo7ysOt6Lsp2clQyPprF+AjrF6OAnMpqT18B8RKErRaUSsWiFfAmCcRRTNKBO5X+Wbh2Muf1/ps391gRo5r/t3j1/BCzxSxjeHSSyRSGqrtNmJbYS9R2re2w=
+	t=1770055197; cv=none; b=ttPIIL+HR48Q75ebVAqhbYc0DfedtAzY7xMGCT/Fz7j4AQI3PBGV5j5HM5/4J6DAjh2pL+mfJ7qreUJchUsz+dCO7McJGW5+YJqyRz1ERbEHE8AIZt2rkA9fHi41TgnLz7Okzc4NPdaWAQj+ih0Sc1WwBp2wPJ/OB2evHMzuI7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770054992; c=relaxed/simple;
-	bh=ElDRDkdetT85AK3I2CJ2VkUQsm6n4XZhPnGbd6fwWgM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ik3QqI43dZjQxbNjZyosgmyp3evgqLJVU6AkG7Z49G2UE1YsEXxmPSnqiwvlPYR1+Vrsluha0PqaxLV9zWJBZb8/MhHP0GL4UY1MhI0tWEnM3c1cFuUH6tFtimqxtnsbxNej+zNoRW952VlX2dVAKZUyCA6pcB8xhvedRjSsSxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qbr3Baqq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QpiqzVw/; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770055197; c=relaxed/simple;
+	bh=L3YnSQSJ7eigB6kyc10h6kfclX7HerC/aXABnkwJims=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=SrupX8xt0ro9cda2UHQW3/PgEcwsUaINx5NUigeE2xZNrMVkmwu4A4P/21VK/W9guHclf7/q/UXEQodTNhoCwTYxRcrE+qSU7Wos/JHGx93bRTMKVD6fkL6ejcAI5X7W1NUYb5ZBBCHMwftpfPvkcS1OYl3UL55OMU6LuWOcVU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=etO4OfCl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z8mIKuNu; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qbr3Baqq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QpiqzVw/"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 327F71D000AB;
-	Mon,  2 Feb 2026 12:56:30 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 02 Feb 2026 12:56:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1770054989;
-	 x=1770141389; bh=+ttrtjMLyynu9Jga4lG80l3q8VcLiaKu59BR9R2QZRc=; b=
-	Qbr3Baqq6W5wDCsZpm/Ltz6WH9HEVvvU84jkD7sXnENdlS1GZnCRH7MYOnv2WRCO
-	Rg/H9f+mZAIGcsEZ83gohQukAEzDtYPUVv6Im29+0UzrURNMd01KnXHMICyXF7NZ
-	xBeybrmeuq6psvavBlSa2Mt4QHHhRIiU9rZNzgXqV6uOiD3Vi9hymVyii0YwPvWU
-	ac5k7BfvQxOwmcTUpqMTA0Hk94ci87XYfdSSsBlYR7JRmlk9xb30LQdn9eE25NYy
-	eEt8d8CNe+S4m3TQY33fwsolVADB+7J8DXqezbzVCNSlocNlFJ+14mrLSFj46BJf
-	uUkKymu0OBatcNaJ6UAjXw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="etO4OfCl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z8mIKuNu"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9C93E1D0006A;
+	Mon,  2 Feb 2026 12:59:54 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 02 Feb 2026 12:59:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm3; t=1770055194; x=1770141594; bh=MJ
+	sxehivOw2n/rFTLSf/EEB7ckhxjQw0TCyeQeORfrw=; b=etO4OfClDKZKUeh6nF
+	K+k3pn81OiiXRYK5uNRQhJZ7ms8OiwEE3aCOEwqSqjl4zDyr958DsHZ/S5pgo3Sa
+	gNQIHMIjBY82ezJAhVVpf3uyQRtEn7qHF+WTJ2vo8RxovH/PRJPWyUr0RDno+dCZ
+	G1VDHvr+eFCMXUo7yRjI+ys7mMPnmrLK8W4dbjzfaUvj6PfvX+zD3gLs4KGnbL54
+	TnJVdk78x6ja6mj8P9+xjWYWIXv39Qpzrf+mPzLUcx6V9UxdSW/z8fDDQOqf+a3C
+	Hww0IySQc0rhnSQdY+5gAiE9fbhsUOTlBAa7xSMZDYN8/LzZA5Uvz4N6bm0MTUDP
+	tj7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770054989; x=
-	1770141389; bh=+ttrtjMLyynu9Jga4lG80l3q8VcLiaKu59BR9R2QZRc=; b=Q
-	piqzVw/knV3UfZPKteSh+Ph2QhRRFVcAPx3I7YlWgiS2FLJxk4p83IjEotyK8n4Q
-	0IMl0u2NjnFQcQgvIcoBFIJK1VSn5JaGERofvRiZhJ/LlMN+yFqi6Pj45gJo+EIJ
-	QxUAGRZqnhM+bWFJHZwoDQKexUSpGYC9Xl/nM0vUUfsv+b5liNMoSFxp5h3WjTUn
-	7I3/3uqWNRkH9LtA9Z7dNU7ur1x6reHu+bSIblnAVLhXyC4NRjjurBT1KEcI2cx0
-	LgZumGvsKuiDT+N9T8gikjeQJMHZHGaePGjOropKimJcefJDLqzl3aVnCMxDBjwh
-	OqBzQjb3FRpUCLjmCL3OQ==
-X-ME-Sender: <xms:TeWAaTLaeYIRybXcT4J_Xv3gcRJaeJk_tgedpnhwhppi58XfIzN4JA>
-    <xme:TeWAaeKTMe2O6eKmrQ3akwqb0g_eEhNG-ZK5NbNABYTtpv8myYw7jDUVNlyXfYLwn
-    4vwuZ08Z9QNMVpRZGN5M8_VTl0u_AnJDj4YjE9F866qz2Jixsn8i4Q>
-X-ME-Received: <xmr:TeWAaQsRO0ejJxXyVtukCut_fp5F1G4b0telc0sv1nwKc5WTxuLL3J6k5h0W11AXkmf1nZKASxrlLvp88pvKw5Mup4t4lBu8JQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekvdelucetufdoteggodetrf
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1770055194; x=1770141594; bh=MJsxehivOw2n/rFTLSf/EEB7ckhx
+	jQw0TCyeQeORfrw=; b=Z8mIKuNuKIX4GzoV+/DGCcuCz5Q/y9FwSRgJbkfaXltr
+	RJ40JHnoVAyMoAr4VKNRIMNh0GOS6BMu7FOTUnKC51z+PM2j7spkyl73aE4jkEVO
+	kmmdopp/CehOPnsvtfToghuamQO5y73JxUADICppbysoNNJQKmaTUeEm6HUTERZ9
+	5aCJdEK2gNrUTI+XjTUHvWPCQVxllyxk7qN9hT7C8xqHJ8EMFfjN/xCJu7kSKm/Y
+	4Ich3adPZDFKO+k3udherttkkjpoZxJSDF6vYTwe1EQhMaI1e1DSF+u+QMUb2R9P
+	L5Cw7dLzJAhlkZdC68CmUczN/GhSs4vEQgNRRy5/sw==
+X-ME-Sender: <xms:GuaAafczYPxyOf3c0qwHF9WF3imUVSJ-eR0yX-_zgsgtCKLXzyp7qhc>
+    <xme:GuaAacPKiGB9bkBr8wCUZr2-9RwN3qrxvWPojD7jrd-MvXBR6J5VP0pe7bFLsL4Lg
+    uJr5FJo-ryj3yEXPaW0uxBEAwuDYa7pxv2-a4pcvpP8uDX_Fikzxw>
+X-ME-Received: <xmr:GuaAadiUF3QUTxDZpghgn8cRpycbqJHLBb3fQOhxuYgfM1n0_PA6flinxbyUkTy8ZLjS9hN_NI1DR2leauiCuXCgld1Lh6xNshK2GwE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekfedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdr
-    rhesfigvsgdruggvpdhrtghpthhtohepshgvthhhmhgtmhgrihhlsehpmhdrmhgvpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:TeWAabQxun4zz94t7nyvYl99uL_wGHIdgYNKiZEBFItBZW5RXHXPrw>
-    <xmx:TeWAaWMXINUWf6w2CTZjJ7qHu77YLF4GN8ZZ6urFrxufU2E7EF8UVQ>
-    <xmx:TeWAaQY1h0tn42nT82T8vbKYjbI9XdODZf7o7xHEEqxJV7YIcnhxNg>
-    <xmx:TeWAaQwLqD-RhOJsKRTdD7ghgj9zuNC9jgRAnhvu5tPjjdB8RjI0Lg>
-    <xmx:TeWAaU73TDGkhcXVQ3fr9zFxje3AMVMRAIiRbqnFxx_K0LuVk8hQQ2rl>
-Feedback-ID: if26b431b:Fastmail
+    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpefhvfevuf
+    ffkffogggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnheptefgkeejff
+    dufeefffegkeevgfevvdegffeujeejleegudfhtdffieekleefhffgnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhh
+    gruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghp
+    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorh
+    hrrdgtohhm
+X-ME-Proxy: <xmx:GuaAaf19BP4nR-Gl0F3wo4QTtWHQyOMN01TO-neIo-KUIq04sb3JRw>
+    <xmx:GuaAaXgomGlcUgcjl6yN1g6SvkZ2LUnRrJIIpk1eLuWG2MFUdQd83w>
+    <xmx:GuaAafdYW1esdeXl94StOnZL52FJEELRV0IjCCuc0ZeDfIhkj7uOAA>
+    <xmx:GuaAaanecQHbE5GPPs3YPRXgG5OCZYgpnyVBufAmOxXYEnRG8NmnqA>
+    <xmx:GuaAaRA5XLTAO4Luw3URhM3pdAXub2-epQmsY4xdGvBI3hDC4bomh70n>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Feb 2026 12:56:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Seth McDonald <sethmcmail@pm.me>,  git@vger.kernel.org
-Subject: Re: [PATCH] blame: fix coloring for repeated suspects
-In-Reply-To: <62e3ab10-bfa4-4ec7-9838-0bad89d04edd@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Mon, 2 Feb 2026 17:24:45 +0100")
-References: <aX8BjoOGPIytGXjD@McDaDebianPC>
-	<28ac1ee6-f3e9-4789-92b7-903788430697@web.de>
-	<xmqqfr7j2u6q.fsf@gitster.g>
-	<62e3ab10-bfa4-4ec7-9838-0bad89d04edd@web.de>
-Date: Mon, 02 Feb 2026 09:56:28 -0800
-Message-ID: <xmqqqzr3yqpf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 2 Feb 2026 12:59:53 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Jeff King <peff@peff.net>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] doc: shortlog: put back trailer paragraphs
+Date: Mon,  2 Feb 2026 18:59:42 +0100
+Message-ID: <shortlog_trailers.253@msgid.xyz>
+X-Mailer: git-send-email 2.53.0.13.gc85a2adbf80
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-René Scharfe <l.s.r@web.de> writes:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
->> While this should work, I am kind of surprised that this has to done
->> as a sepecial case.  It often happens that two adjacent blocks may
->> be originally pass their blames to different parents of a merge, but
->> then the blame passes down through both branches down to the same
->> ancestor, at which point these two blocks need to be merged back
->> into the same source again, and I was hoping that a helper function
->> for it would be called to take care of this case as well.
->
-> Do you mean blame_coalesce()?  It is called, but won't merge entries
-> that are not ignored with those that are.  And we do need to keep them
-> separate for blame.markignoredlines to work.
+47beb37b (shortlog: match commit trailers with --group, 2020-09-27)
+added the `trailer` bullet point with three paragraphs.[1] Later,
+3dc95e09 (shortlog: support arbitrary commit format `--group`s,
+2022-10-24) put the single-paragraph bullet point about `format` right
+after the first paragraph about `trailer`. That meant that the second
+and third paragraphs for `trailer` got moved to `format`.
 
-Yes, and sigh.  I know "ignore these commits" came much later than
-the main part of blame, and I am not surprised if the way it was
-bolted on was not designed to mesh well with existing framework like
-the blame_coalesce() helper and what it tried to achieve.
+Move the two paragraphs back to `trailer`. We now also need one blank
+line before the final bullet point so that it does not get joined with
+the second bullet point.
 
-Anyway, thanks for a fix.  Will queue.
+† 1: Technically the bullet list formatting was immediately fixed to
+     include all three paragraphs in 63d24fa0 (shortlog: allow multiple
+     groups to be specified, 2020-09-27)
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+ Documentation/git-shortlog.adoc | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-shortlog.adoc b/Documentation/git-shortlog.adoc
+index aa92800c69c..a11b57c1cd7 100644
+--- a/Documentation/git-shortlog.adoc
++++ b/Documentation/git-shortlog.adoc
+@@ -64,9 +64,6 @@ Each pretty-printed commit will be rewrapped before it is shown.
+    example, if your project uses `Reviewed-by` trailers, you might want
+    to see who has been reviewing with
+    `git shortlog -ns --group=trailer:reviewed-by`.
+- - `format:<format>`, any string accepted by the `--format` option of
+-   'git log'. (See the "PRETTY FORMATS" section of
+-   linkgit:git-log[1].)
+ +
+ Note that commits that do not include the trailer will not be counted.
+ Likewise, commits with multiple trailers (e.g., multiple signoffs) may
+@@ -77,6 +74,10 @@ Shortlog will attempt to parse each trailer value as a `name <email>`
+ identity. If successful, the mailmap is applied and the email is omitted
+ unless the `--email` option is specified. If the value cannot be parsed
+ as an identity, it will be taken literally and completely.
++
++ - `format:<format>`, any string accepted by the `--format` option of
++   'git log'. (See the "PRETTY FORMATS" section of
++   linkgit:git-log[1].)
+ --
+ +
+ If `--group` is specified multiple times, commits are counted under each
+
+base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+-- 
+2.53.0.13.gc85a2adbf80
+
