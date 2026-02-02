@@ -1,140 +1,123 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEB8387349
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 17:26:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770053193; cv=none; b=bEW+oFnltTiPCFv9TxZaYApFQFFr9A92mdpel3ME8DKuo/7XvkmvEP1s0/gn1yfd4pWg4OISWcIhQ3s0mTmmPD3u17Tu0f/S1zw0M7KVa0m+ceojfuS8VPTYjGNBcokm/nGQlHBr+PFbRrV/iyG40a2rpGFNG1jN1Wg4Q3UgDKg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770053193; c=relaxed/simple;
-	bh=XWZfMT7iVOd3YchlEporNCXhu5+KUb9hJnGq0P3ysOQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rTa7Y379TALHPYxhNvICD6oiNVaEvGJicEbhYUX50ghQzzg8J4EuwsGHanTiPjejxNtLU1zTq5rxbRvOo0E9MPvvga47madXWqICdV4IACHY6wvs1977A3YeME3IHr1Lel6DqRVuYZm4PCbnk3MFRxCCWURAE95Y8pFR0kYAenE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IF4iA4tO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wy1LuU85; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D826387348
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 17:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770053283; cv=pass; b=NQGgHgk7hkK9EknkLZ3Kgbiz2QDjsWHFZB0M3G+R17loIE64VgonfnHRtcvLTozDjOBkFVZAqVZCiz2OPL70cepyTKqmt4e0nhss2bX4u93s3q5OWUkFtK+ZsLfl5iMshihPc+N1y96MIqMyUSjmZAH0gzioGduXoTEVyRgNWwU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770053283; c=relaxed/simple;
+	bh=cXHX2poR96TLTQvVVK6W0whPKzjTM9fQ+iOOSUuzSVI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KJWROWu0m22bRbK+CDqpRDKKs98Mx6kgVZJ7q7dhon81mg8m9xho6N+rLqC8RiM7mIEvTxhkA0jv1NAdO9+ABJS5upvM8K4QTb7TZOnLvG5prOCbx0ML94huj4mCj9anpV2Kv5FgCRgySSSFuB16istKUCZ8NpziGn9SY7gmaLg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A9Q7MsDZ; arc=pass smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IF4iA4tO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wy1LuU85"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8CA2C1D0013B;
-	Mon,  2 Feb 2026 12:26:30 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 02 Feb 2026 12:26:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770053190; x=1770139590; bh=1Vgq96u9T+
-	uPoZd7h45F6ENSOBNiALh61anMea/dq6M=; b=IF4iA4tOAulCrnLyqEzGmIj2PH
-	INUHV384PdZLnQiu4J59hoARWUmbvbR0uY0xxZszdvMBkNMNgjAuhPGP8a/OsJqg
-	Ih2znvEouNeWaHGNT3AZxHpyXn7XZCqA0MsKMb740okbLXv/rH0sOvfs8B88XHqx
-	M+Hi8XVBBGzrfqY+0TxHRuRr6URWEdSq4C2Rmm0uE6+N3GBOT5xESJH9wnGQgVvV
-	zWElZp5KFGOZGwTGR6lWNc4xuX4D1MZOjM3gLXT6DMutlYdn9ydTyw41xBEat8oh
-	tzYh6FdJszOZDqin2jzCR/BEpQ7RPVD95rPU3tKRYQRpOhZsQ2flMlbeQI9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770053190; x=1770139590; bh=1Vgq96u9T+uPoZd7h45F6ENSOBNiALh61an
-	Mea/dq6M=; b=Wy1LuU85EiS+xHiHUbxiV03kfNNOyLG9/5nnz/NHY44MqsVFv1R
-	fm1q40e0vsdPcr20POlEq7jGCW12oGo0H3qkBvRoGWz+UJKbU8T1AWvvPbkWxQY5
-	MZURZDuwYs0ZLmgUeOM0Eglsy5zWC6FnDjH1pKZ2v4GWYCStHXjC+Gvy7d0egk8N
-	Vbu9eQ2mpFU6/yGkkdtdhoZWGMuDLafnnzjqA4rApzI3tSPwnDpFRZGSNZYt/nCm
-	dEqVdieGVbSCvzzJqNYW36Ljaq01TUTBWukgPX5aWN1zLXPq07WgdgjMeicXyl+g
-	1W1XveMUQWPn5vwBohPvH8vteyNf9N/SHFA==
-X-ME-Sender: <xms:Rt6AaYMeuYgiWArC7u2MYtf4LInDEJOwjyr2coH8VLN4hosGle5Bqw>
-    <xme:Rt6AaRiQs3XDGnFOoGH41DStR6iQxziMLwZbpCiAUGJBGOFrcvkEhWvP2VcTOxz9Z
-    FugC-mczZ0dq-VXWQHYgK_GY_52CS4Op0bb2qfhM6LzjA7F7HR6qjc>
-X-ME-Received: <xmr:Rt6AaS6_J56R0QcoL3VaVhiID5E-PEoslM3BuynGKAyj7BWhAFIP3MxI0_VvDz6yyKOkg7fCI_P_iM0r1QSNttDUW6UvhQ3f0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekvdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
-    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
-    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Rt6AaQ1wpDyMfQyil0IbMOVN2TeDfU1eqrJs1Qj5nV1GQ2qn3BvrKA>
-    <xmx:Rt6AaVuTK6LftmrYRztKV8XckA8S9uoYoOEKpqsJjcevDxUxXqpk3A>
-    <xmx:Rt6Aae41dwanUn0Fzu9AhCCTYi69eACkMvykZzaa4AGxfGZgMVwhaQ>
-    <xmx:Rt6AaZfGpL9rnYoeS6xVb2eVgmwBzJGMw7WaRUnyFJtMhXbOcdyOaA>
-    <xmx:Rt6AaUQ4DR_a391W3j1QYLHKD2EM-ELO86rBn0_FLyweSzyPMqZTWDOu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Feb 2026 12:26:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Samuel Abraham <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,
-  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 1/1] Allow reworking with a file after deciding on
- all its hunks
-In-Reply-To: <CADYq+fZFuvCRbFf=-XUR8TJsjW_YtjNdiXMzPv0mjMPbWcLO1g@mail.gmail.com>
-	(Samuel Abraham's message of "Mon, 2 Feb 2026 12:14:16 +0100")
-References: <cover.1769522219.git.abrahamadekunle50@gmail.com>
-	<9b21cb901ab14397af94b8ed2d09da1a9a6d862b.1769522219.git.abrahamadekunle50@gmail.com>
-	<xmqq7bt2g4tl.fsf@gitster.g>
-	<CADYq+fYeWh0tLEepOGVa=1i9tXZfWaGfyi6H+xUB7rbdQ=t5aQ@mail.gmail.com>
-	<CADYq+fbt7zHO=gAsRp=b5MTb=2aFfifCjWnW6u+58iv4dk6bMQ@mail.gmail.com>
-	<xmqqqzr54mam.fsf@gitster.g>
-	<CADYq+fZFuvCRbFf=-XUR8TJsjW_YtjNdiXMzPv0mjMPbWcLO1g@mail.gmail.com>
-Date: Mon, 02 Feb 2026 09:26:28 -0800
-Message-ID: <xmqqzf5rys3f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A9Q7MsDZ"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-649bd1f08acso1655714d50.1
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 09:28:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770053281; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ls7ZhM80z6Tw8ePAIZvUFxoa009R4YYbQMrTudeIcY20lVGxH8B7rZmtFUCsETL0Q+
+         YvUhwWiwyts7ozH9P+6XR3ZbMHdWBwwlM48J6O0rTYByoIJ6I9XnnNrCJJLPpykS4C6h
+         H4+RNcUWrw0XMgonTHPA9N95BJvOUzQ++p02T0ZIk6psJHcQlZx0t/m/nlN9A3o5AlB2
+         XIg3KCAtQjwG0SPK3+pTZDW3AwVagL48zz1N1Z11gEBGRpKqZtka+oqDD+eUrR2DwqnS
+         6DvEYPkyUWDVKY72O9XcImBOewSzbuXzBJyVVtY0f/aHFEmciCOWa1R0SmA5h7IJZg0a
+         dVPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=0x1FYj/K8IygG54EzP8mTcPMnAUdBftjCscxeAjBTHA=;
+        fh=2WzPN+ztcZisvd3z6A2Xqw1r3++8q21mmsxFUcgUVqA=;
+        b=Uqaw8gzI86XrFvghmlEgOUqCn0LqnvQIDryNwpGGUl4Sfsdj+WpbSkA9maLqe5KLFk
+         qtBFfqty55cmqi1SuPDrUGkQhGhcYbemhOdA25/dgR4w7fg4d6lgh6V/jAJSRP1EHoFP
+         /5ucBTo0ynx/v6rHQC2Q9GuvJxND+MS40TK9fnksKu9wciRVAyBjE9+sUI3d7+0zNTsp
+         CxYJ/HjfwIXH6P3iac2Of+ImLa5fhY1Nc0Rt9Zj0VsbupEieHz9MXnVLxONhvtLijkD7
+         i2e7BJfgSW9yhfJTXHap7ILNpA5noaF9rM/9Sx9rX02oNsPvZb1RxeDOFCx1+Jb63i6E
+         WtqA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770053281; x=1770658081; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0x1FYj/K8IygG54EzP8mTcPMnAUdBftjCscxeAjBTHA=;
+        b=A9Q7MsDZrCCXQFWpUnWizJvYTmq1+h2i1pgWkMazG+PV8AOAQHm7bwDQ3MuBVzuloO
+         nBkUAZRsylRRKqNpBw5L9MOw8PA1159H8kHNXG7a77fHfhDKIVJ63TsHpc2QNmy0W5qz
+         sMsq6T6SXKW5AMQHhJZgxVIkIGCpxKVjO7/twZg+55xykTAxBcSb5dDoEsRHdvpepuh8
+         GWrkqjf4fvwkG39Drgfdu3WHjDMPRZEqaozKxTdSFCFDdHeUz65p9wsF7/xQl7/Rbs/b
+         /LvQLMC418Mbl3qsJEBeKwggncCW3kWng5TDW7nITQ4HU3H3KRrrgkzmuRhzLPlVv3sr
+         JVxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770053281; x=1770658081;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0x1FYj/K8IygG54EzP8mTcPMnAUdBftjCscxeAjBTHA=;
+        b=PXSn5Lu8yXW16aACyHydc5cL8Udwfwg2BmGQap+RGfOdNBPogHrfcCLlBm7jmnzyit
+         pdH2XscQC3inyINji43amSHfEpgipvgVGQmWPcZ1TCR0KJZn3KZGINbClyW+03b+iX+Q
+         SYu/x1umPgD/La81LZJU+kFrR6agVwMJs1vcD6c7rqDLELduaZgcrHRN9sYGB8UtgtFD
+         znEqhAYgSp5WVT6P3KjUBS4GktHI3OwSZGNfOfZIdY0sMN7GezL+7xWJNjYGubjqalXD
+         ty2lGOM/3k0g9+Gra9g/+IScowLLcvRTg96sSqc0fGJaeiZghGvsQAb8HGkf4Cx3bHvl
+         Ey0A==
+X-Gm-Message-State: AOJu0YxoMQT6/UOAEXbJY7TBpwrPQ79huPITY2H1vajaVf/r+wtBGw2v
+	e55KJDIRLE+T5y6uEcCRwVA2leS+jUphB766WociNcl5W0tfg5ZcHWC7+32jRKlfd+HI4pQ+Kw7
+	X5uUMqG7Rh2xpHowCsUGB0OGkjpT2q7c=
+X-Gm-Gg: AZuq6aKLQ3PjCWbZjkpXkOaCvbciJhtVTBz1nYYsGOhvjMhFuxygtGVxfZLo5rePiQJ
+	JkdNzextH7YHiBsfx5IdZ2RD/PKLjvCi22DY6V7cp6nkzQ49y68i0g47PTj78SfM11JIB2CeO79
+	3MXJ1+o3WVqkQe5se1yZoCkNl5JE58sz82i4U1X4sTTEl+5705DNIO5SGIXtw442VjsU8qGOMvQ
+	j+Fr5FVPoonPDci9ze0DsGkyTLhvAmcaykr1tYk7ZirCm6OdWqC64GR9VVbV3BFr0v+7swWngYx
+	CGGiwQ==
+X-Received: by 2002:a05:690e:150b:b0:649:5210:2272 with SMTP id
+ 956f58d0204a3-649a84b471emr8940920d50.76.1770053280973; Mon, 02 Feb 2026
+ 09:28:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <trinity-ed0884d3-098e-44be-aa1a-a96f664ce7ca-1770049279182@trinity-msg-rest-gmx-gmx-live-5dd78c558c-fv4g4>
+In-Reply-To: <trinity-ed0884d3-098e-44be-aa1a-a96f664ce7ca-1770049279182@trinity-msg-rest-gmx-gmx-live-5dd78c558c-fv4g4>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Mon, 2 Feb 2026 22:57:49 +0530
+X-Gm-Features: AZwV_QgzuLEpHzY8INM_ORRFIZnUK7ERDkSIYQhO5aIYEH4t1yt6ERYGxSXM_2g
+Message-ID: <CALE2CrR5MS=LmXGYW8VbN_trLzMf1tk3BEkh3wv=hju9AWQbeg@mail.gmail.com>
+Subject: Re: [BUG] git log --graph --pretty=format misplaces graph characters
+ when -p given
+To: lolligerhans@gmx.de
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Samuel Abraham <abrahamadekunle50@gmail.com> writes:
+Hi,
 
->> I am not sure if I would like the end result or rather prefer your
->> "all-or-none", so please do not take this as "here is a better way
->> to implement it" suggestion.
->>
->> But you should be able to keep the current semantics, if you wanted
->> to, even if you apply the chosen hunks when you switch files, like
->> the original code has been doing forever since it was written.  You
->> know which hunks you applied, so after applying before moving on to
->> the next file, you can drop these hunks from the list of hunks to be
->> decided for application.  When the user comes back to the current
->> file to decide on other hunks, you know that the already used hunks
->> would get in the way, so why keep them?
->
-> Yes thank you so much for suggesting this approach.
+I can reproduce this on Git 2.43.0.
 
-Not so fast.  I explicitly said I am *NOT* suggesting anything.
+Minimal steps:
 
-And thinking about it more, I do not think it makes any sense to do
-anything other than "all-or-none" when the command is working in
-your new "you can move to different files before you decide on all
-hunks in the current file" mode (which I think we agreed to make it
-an optional mode).  Why?  After deciding yes, no, no among 5 hunks
-in the first file (leaving the hunks #4 and #5 undecided), you jump
-to the second file, do something there, and imagine that you come
-back.  If we drop the alrady applied hunks like the suggestion,
-which I did not make ;-), we'd then give you four hunks (as hunk #1
-has been already applied), and even though you have already decided
-not to use hunks #2 and #3, you *can* revisit them with "J" or "K",
-change your mind and use them if you wanted to.  But it is too late
-for the hunk #1.  It looks utterly inconsistent if you cannot change
-your mind on hunk #1 but can on hunks #2 and #3 and it reduces the
-usefulness of "you do not have to decide right now and visit other
-files before you do so" mode.
+    git init
+    echo first >test.txt
+    git add test.txt
+    git commit -m "first"
 
-Thanks.
+    echo second >>test.txt
+    git add test.txt
+    git commit -m "second"
+
+Then:
+
+    git log --graph --pretty='format:%h' -p
+
+I see the same trailing "|" after the commit hash:
+
+    * 0139218|
+    | diff --git ...
+
+So the graph character appears on the wrong line, matching your report.
+
+Tested on WSL/Linux.
+
+Thanks,
+Pushkar
