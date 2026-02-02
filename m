@@ -1,147 +1,90 @@
-Received: from mail-oi1-f196.google.com (mail-oi1-f196.google.com [209.85.167.196])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90C4309EEE
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 21:10:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CDC26FDAC
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 21:19:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770066620; cv=none; b=ArC2k+cT2Qg1TfhaC3Bq4x58EloHiBFmd3b8BcbhEgfdlnrEwlxAct6Z+NB0zqpKjZWatJkTKjHaDAikjADzvfLb1qJjJwQgm7eXyovFeFvtM6DnqpMVUjjE/1KLx76PcvrxQGAGN4RurIQCMxLWqZ0Qrpj9/AIZso3NN8fbSX8=
+	t=1770067164; cv=none; b=Jnf9QS7tYFcGx6VPAyOzQkNZO4eX+Md6tsLfD8sMnpOsMINC+3IeXyavXKmL8wkoWCLV45eMYIS0lBc/YaTJJrq2GaM/nkVauJNwMvYOgz/6a53FoZKgQcN1zxO6/DeoX9IwiQcdF3znmTtZhNZLwq5RPPyAXwpf8BBWfdHOFkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770066620; c=relaxed/simple;
-	bh=pO6bcpDDlPM3K/Pwa5obSBFjqqirAbpX5CqZXXsmddQ=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=FGY/UllYtzEnauyThq4ltJ4t8OgvO+asg3M1PZIET0fqHGi38nXZUNMz7oh0D0SWgXcKf9NyBUIl63BQzCo4Hjdtj5AFfPjrAW4nq6pyPngEUrPtBLKAqu33KwtGEO0gRHSFWry1DscmTw6XA3xn9BE6zZvwxsnumTZ1ONGHQyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M2Bw2MNz; arc=none smtp.client-ip=209.85.167.196
+	s=arc-20240116; t=1770067164; c=relaxed/simple;
+	bh=Z3KM5acezdgIxyratQNRjzk2BqpTFAURkbh/NJjoZFs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Lcjn4F4yJUxr5noSsbDqaqR31j6drzpJSEH7a9nQTzwRGgwVadfLhKtKQdv/x/ZV4FH+M3SljWdsnn1fDe1bWurdPBSuRX30EGfXYF/QEdE2qqWQhOR/p7R541qDNhdZZBilY6oPGVp0Qvx45XOxQiQFF7WjzRTkaAIYwF3aztw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iHdh6rTG; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M2Bw2MNz"
-Received: by mail-oi1-f196.google.com with SMTP id 5614622812f47-45c733ccc32so3131384b6e.0
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 13:10:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHdh6rTG"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-385b5174f54so41657371fa.3
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 13:19:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770066617; x=1770671417; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770067161; x=1770671961; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xNLcXOHMex49W3+QTKrLCKw59Py99c96RGPD45xGaNM=;
-        b=M2Bw2MNzYs1vuJp6fuvUFtzbju+tyM4N6JW3xALwoL+5x5Rec9dAnAU2IE1tlClzLy
-         c9Xrp/6mdaGxWC9jV0LDZlh4+odwGPzN66SVbRb2tr3tq3+e1Xrjoo8xpFQThF1ieV+e
-         H1KkSdax8h/BcZmTiKs2vFQu+sSYeNlc0ZhwM4WG5NrCNGsBU+0f3esBYV+2qFK7AQ6n
-         9mlZwFl2JxstWm2iH5oHnffQAktAh54DXHenDoph+udgSz0UyjXFDK3Dqwhbj1trArs4
-         D4BFIAagCoBG/9vDczE2D0zjtGrPadplUvFUjWwtYI9guBmUm0i8D6cxs5w1H1eOfAdx
-         MX5w==
+        bh=Z3KM5acezdgIxyratQNRjzk2BqpTFAURkbh/NJjoZFs=;
+        b=iHdh6rTGygp4AWqtH+EXuCwj+QrqivseK/lI4yoGgB3R2QPibG3WmIUqIVRYijQzHA
+         pZQvSFHtgMFM9hWhHKIyMRWS5WaYACIWT7ZuisVfALKrIkNDCT67mg+X1dJ1wKl/xYmy
+         zycl+WVzmnKZ0a5HKFjotY7xWRm/IH9FGNzJFot3vf8CTBhboSJ3IIo9CcuHtwl1Lar6
+         KR9kvnTRiJX2jUnV+7eYT2ISF4p26SmGXaq5yFhcP+aEBNZw1csMfs8I1+tB6UfPQFvj
+         8KaH/TBsZaeVVP/dSQugVr9+EhISOk2DmVH39b7hfIZl49pTNbWS00DUA+OLjhPNb62R
+         5DmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770066617; x=1770671417;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xNLcXOHMex49W3+QTKrLCKw59Py99c96RGPD45xGaNM=;
-        b=T2cgt5V6S1WSNq/m8vr69F5n46QRK8bk+uM5TmmDioEDopFFYBPwXBi4pe3x3NKeyA
-         S4OY8V19M8YVQHY4nsadAb2+fMD/s145c0QfwEzlvE2o4V59XbBtDprnQwF0eJposwn5
-         dFPH7CiS4r4W/4I+iJN9gSeMRerGkCu/Pdm+HNZX7fMDdH2eXrRsdJsO1ZU2c1GlpmqS
-         Ci6owkOt+/hP0a6ZS9JbpvDY830jzrc7xPliGoDCBfpwMJg0lsHKCdL/Sg1OcGUYl8td
-         HweCHW84+odE4NdVwwE9FrWl+fK6qrXPBHkTccYnMV4xgxXfV4Hsdiz7zgh0EPiovYEK
-         Tr6g==
-X-Gm-Message-State: AOJu0YzXE0wnTQTCLlZvOVvcAclWJXrv2sTCqCBhl4T+VKvD0slaG+PB
-	pudkzdvUT8T90ubWDl9lFMeS0hwLX8N9RA9MEJ//Fd7c182euS1oIQld
-X-Gm-Gg: AZuq6aKb4gcnkJL22VpY+BheCthcFvmaDgLbp4zSo+0apcFDL3GzUooRHILTOzj2uf9
-	097FYjwjGOaIf9Oeujv/+RaTh2sMfVNse3cr12IwBNCa2sLJ4hdUb1OWZRD2v8z2UdeHfArxCtp
-	PkO0gkMnc3KE+U5lhixDDkhQnkfgT5qldgzxzH3idvZ/Z2eDh2f3wVMwNwM+EbtQo8fBSssaXqo
-	UnduXZVT06gu6FxJPO4h2p3utQns6wX1SvlULAGzAuRRfa84PLpvS/60AoG16Kfteg2f6/DHWJS
-	PPBPU+TJjb+wR0IoEFtcxB1q1atrpL1FNobgrEWolPkpuwUBAWZRKdJbOS8tCiuIiPXCWqCU3WS
-	eX4sHXj/r8rl0SsrwcnkNn2MjPPcu221chYLSXdanKwUMbgy4o7NztucJtrRGtTN9/DGeY2r9JE
-	t/6+SPQgsAoI3Y1VjuSz3L1kYfe3lakEIs4wf+2YQTrRfT9IY=
-X-Received: by 2002:a05:6808:1312:b0:45e:f91f:9730 with SMTP id 5614622812f47-45f34d207a6mr5393281b6e.51.1770066617682;
-        Mon, 02 Feb 2026 13:10:17 -0800 (PST)
-Received: from smtpclient.apple ([107.11.98.107])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-45f08e23c09sm10135330b6e.9.2026.02.02.13.10.16
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Feb 2026 13:10:17 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
+        d=1e100.net; s=20230601; t=1770067161; x=1770671961;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Z3KM5acezdgIxyratQNRjzk2BqpTFAURkbh/NJjoZFs=;
+        b=O9UoZugtuU0CSQegQsqgqmHJAx27+SvS5TayCZt+AGTB1S3eDvhcJCPeBiT5iIdpTN
+         SHRx0ffEUJDti8qrjK47QHUHYVuQ1xkvce7cLpAI+8ha5K2RTuwAGTAv9cf5gu38vnxU
+         jOj1ru40ttKjPSE4wOmyEr96UBtm+yNP7ihfthZIVoFyDD1YZ6dDHp1cSU55/q4IY5Rz
+         WIYEoNSEtCkuD3ka3+gL08LRqLiYdcYrgx326RNBTZV55ZaZj+HAbVRqTh8devaAkm41
+         PtYNK8pclJ2+ED6sA6hYQaSvoUuj44362NVRwPOI74b2pjNkdp61JTB5fP+7//BG9xiU
+         XoGw==
+X-Gm-Message-State: AOJu0YwTNzupbyK0E7Qun2A30cwd0VvivW9S2EDOMVy2Lpno9FXrKa4o
+	fII3u3KbjSMjO9p0nZAPwDrxZq6hflCd3JQWuYvOo24YfFco5N+Dl+tC
+X-Gm-Gg: AZuq6aKg3Fd4IyqfD/nCrrzKaETl40O91t9RTskIFqVAMV0GMPQfbJJnGFjWUcsS5oj
+	fKpEuu2IdTCCGYbqYxo0V9hXPv9lVOozrsH4EAg3EAWGPSpiL2hxxhFXYrCAzhoZ7cvgEAzfJdD
+	5ZLQy8kyjU2aE7jJ5/DzZSFtD/z9Ea8LCQ2SfNt2K2/ac9xG9UBH/21521reT9EGzwxuu7+WjrJ
+	1wEAa5/NDkygy9p67Ub1Wh0ThAgrkai6pCJG7L+gLm92kO8IoxjtEfQDupK13WQz1+/ykbbZVDm
+	dQ6FNMBNuDsgzykZ6VCbM2qMDDAv5wXz9qIOhWUCIinM962xIm+3W9VsiVl3/AHaSNiyTqhfnzF
+	cZiRrBS/818K/Ji9gdnGUwwly9zEe7GtKP5vMnz2d/r1g4FkWyibZVIRnHlRQn//qFydz9C37Cu
+	bs+g5+m+MN3NIW2c5vsRJP1lpQQMKDE0dwhpIGLJAUXkBTkwbGTDoaylji5YGmcBNfgz60aIg=
+X-Received: by 2002:a2e:b8cd:0:b0:382:6067:a230 with SMTP id 38308e7fff4ca-386466ecc51mr49677061fa.40.1770067160606;
+        Mon, 02 Feb 2026 13:19:20 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38627876ab6sm31192771fa.49.2026.02.02.13.19.19
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 02 Feb 2026 13:19:20 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: ben.knoble@gmail.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	gitster@pobox.com,
+	haraldnordgren@gmail.com,
+	phillip.wood123@gmail.com,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
+Date: Mon,  2 Feb 2026 22:19:19 +0100
+Message-ID: <20260202211919.4968-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <CALnO6CDrdfSFuY8xjvno3+2MVB2JHUYdNsYTYqqRsfcDiWa1uQ@mail.gmail.com>
+References: <CALnO6CDrdfSFuY8xjvno3+2MVB2JHUYdNsYTYqqRsfcDiWa1uQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH 5/5] doc: document reversive traversal and related modes
-From: William Hatfield <whatfield.git@gmail.com>
-In-Reply-To: <4710431.LvFx2qVVIh@piment-oiseau>
-Date: Mon, 2 Feb 2026 16:10:05 -0500
-Cc: git@vger.kernel.org,
- ps@pks.im,
- glencbz@gmail.com,
- avarab@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <725FFEF5-90F5-4C6F-AACB-C372BBCC4C84@gmail.com>
-References: <20260131214309.1899376-1-whatfield.git@gmail.com>
- <20260131214309.1899376-6-whatfield.git@gmail.com>
- <4710431.LvFx2qVVIh@piment-oiseau>
-To: =?utf-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+> If you don't need to be on a branch, then "git switch -d origin" (or
+> upstream, or whatever your remote is) should work just fine.
+
+Thanks, but it needs to be a branch, do you use detached heads for
+anything? 🤗 For me, the only ever happen by accident.
 
 
-> On Feb 1, 2026, at 4:03=E2=80=AFAM, Jean-No=C3=ABl AVILA =
-<jn.avila@free.fr> wrote:
->=20
-> On Saturday, 31 January 2026 22:43:09 CET William Hatfield wrote:
->> Add documentation for the new --reverse-traversal, =
---append-superproject,
->> and --reversive flags to git-submodule.adoc. These flags enable =
-post-order
->> traversal through nested submodule hierarchies, which is useful for
->> cleanup operations and dependency-ordered processing.
->>=20
->> The flags only take effect when used with --recursive.
->>=20
->> Signed-off-by: William Hatfield <whatfield.git@gmail.com>
->=20
-> Hello,
->=20
-> git-submodule is being transitioned to `synopsis` style of markup.
-> See https://lore.kernel.org/git/
-> =
-05e68e28257cd450463d253abe9b2995759bdc10.1769462744.git.gitgitgadget@gmail=
-.com/
->=20
-> In the same move, there is some work on style consistency of the =
-manual pages.=20
->=20
-> Below are the remarks on what changed:
->=20
->> ---
->> Documentation/git-submodule.adoc | 20 ++++++++++++++++++++
->> 1 file changed, 20 insertions(+)
->>=20
->> diff --git a/Documentation/git-submodule.adoc b/Documentation/git-
-> submodule.adoc
->> index 95beaee561..2be477952d 100644
->> --- a/Documentation/git-submodule.adoc
->> +++ b/Documentation/git-submodule.adoc
->> @@ -437,6 +437,26 @@ options carefully.
->> only in the submodules of the current repo, but also
->> in any nested submodules inside those submodules (and so on).
->>=20
->> +--reverse-traversal::
->=20
-> Now, options in description lists are backticked:
->=20
-> `--reverse-traversal`::
->=20
->> + This option is only valid for the foreach command and requires
->> + `--recursive`.  Process nested submodules in post-order (deepest
->> + first) rather than the default pre-order.  This is useful for
->> + cleanup operations where nested submodules must be processed
->> + before their parents.
->=20
-> Please start the description with the actual action of the option. =
-Then, you=20
-> can add conditions, context, explanation:
->=20
-> Process nested [...]. This option is only valid [...]. This is useful =
-[...]
->=20
-> Thanks
-
-Thank you for the input. I will remedy the documentation as described.=
+Harald
