@@ -1,121 +1,168 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D36F2E0926
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 19:37:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309FB3064AF
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 19:40:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770061057; cv=pass; b=B+WGpUvrIaGTpS19Imr3dWoQgxHekKiIFFJ19P3mQuX3P/KWGqNKn8iQNDDIedpyfDXaQ3I9CCkPg0ul+NI5D0DS52IHrXbvRdJqIBAAmhaiyRY+bqXn1YSqi1BdTqObZEBClDo8EzcDXBLCRIFtViSGv+Mi4/jb0obuG6RRKTk=
+	t=1770061251; cv=pass; b=fC7TKiz0lfA6dhhH5fi2JV6UgBTzpk+EHanTkYKMK70gKV+pXAjVTi4t8Pq9bXu6viC5W8+gaV11ky6u6DqZtJr6SyX8pS30JCNHqo0U9dhJKU+q+dx3PBOT+8niSguYbJPX+02cazTVIzlqL39piUh7lz9UgauNTNOSI9JMufc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770061057; c=relaxed/simple;
-	bh=NWr+2TvOt+O5XAs9MvO3Wv1mzdef1RLzI1aUDNCcqY8=;
+	s=arc-20240116; t=1770061251; c=relaxed/simple;
+	bh=sln3pPNDQnIUIQqA4f4AYjGfBZDiM3Me87M0C4ZGZc8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BP2Oo9F7vXRXGye1stdkxNOlo71X24cPa6k/uhhPfiISIudci6yY/VLHUCMO7Dfiqu8Yr+6fPildZTn31pEp/5sMdmzS9zy6aXVGLn6H9XuydaIIM6T/3MrEx3SR1ajWa9ffET0it5x3hk9FQF8l8irrpLNyRDYn9xRrRgSuY2o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=As4ZKEWL; arc=pass smtp.client-ip=209.85.216.52
+	 To:Cc:Content-Type; b=KGVm44jJlqDpFGLGWwSdUbkdGG4+NYfuZHca9Z9qfcbPKxUrFy9OluYto05sOrZwkenR5MasfB69IrZdYGPDPzzrhSueQkev1NFVylFRO8hIVusQdARbnxBcMjV9doIfQE5MQTekdMgmFfSHSQA52mxdox3bbEcNMoO5kjb+H+o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zb7G8dai; arc=pass smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="As4ZKEWL"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-352dda4a34eso1987684a91.1
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 11:37:35 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770061055; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zb7G8dai"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2a7bced39cfso50957725ad.1
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 11:40:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770061249; cv=none;
         d=google.com; s=arc-20240605;
-        b=E4WM96Tgv9sPc8vDD7mWJVMof6zeHDKKQ68OwK8lsHA6k6UZLJhLwozZWr3jeNXVW2
-         iLm29ZVKM0XqWNxiQ7jTOj33xw0sH1+h31edPahMA2831lRpfDxFbRW2UHQj5fRRSsKh
-         YUs9P6fwnhLq0c3lrO+PV4gY1JgdqgBsNHArj7QwwZapiLDLXe1eYqrH/WaJpC90SigN
-         mmrshE8dzKOvsJEqrzkES7fvwS3RBwmkW58k7gzhqmeiiDhSwAkgZAJrqdKJukfT/nsl
-         v4PThsGUn2Zw2+UQkfeMXGeiaT0xchy0HQ3aEnpDBuDjBxE4Yf/EsBTSsblonLHXE63H
-         6zvA==
+        b=YBXAXObUofkhYp4wjQG8sR3ZJlc0NT6jltL8YN+s/jX2lyi//LRcvP6eq3xF6JFc6N
+         EkNlg4umc/4IVPwb2rUQo+gs5DYlcLJgX9z980wi3H83J0ICod1tsDCUVkl5/od0pw10
+         qNgudeUlXtZQZmdAuW32uVHOBa08mceeLgq7oBPVpaktAmjSXZvPko/gbYbD5zvgV/fj
+         mQ/3ZLyyfu4YdXnn96FOFCoZTQX9TepG2hV7x9Xqp5IaDiEWx+ZNAgew5Rvuvu/dsvVm
+         +kznMHaTDqn380nPuCL9r+JIAQox2QjHKb4mTk6DkneEPrKCR+nqi01WQGwD4DEtIzlU
+         kOAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=DKfjhh2l54X7r5mlOSalfqUoNDl5GKvXCiU4eKiwWr4=;
-        fh=/IwEVW501n8DRLoh5fN/gH9sIJri18P6YWs/9LMdh70=;
-        b=lkByc4Ttse171KCN50q4Kw3/GrVDxhZ3Pu/e3Hb3kzvvjJWanqU1UL/tftcCyYCtqp
-         i0+lf/CiV+vgVwxyhnpbrYDa5FIl7HIbe4tFi/3wI/M/BPwcTpPMSztQ3V/iihFLAiro
-         zdsh0oZcwccy8yoqDKrq3Bjc4qs2hhyfgdsBMiFEmqu45kUAITs27XmZjnIRyk5raJKZ
-         xAfIwYkWktIOlacD8PVKsPA3tpmJQwVxPmlZhL4WXZMSjdvzbpnNccZGqPSQz825e46A
-         cjebW/rpwUFzTrjVmjGR6tX4xuqChfHlAIouJNGpKtML87HbtmalQ9ppwml12xV5Q7eW
-         oUjg==;
+        bh=jpwKNyPgybAuFwBCFWg6bvtwxQ1OMxo2cVMCqd224Tc=;
+        fh=GZJZlaK26en7z8MdQHh+sFxrYOuYIPrApJ85JxJpF1I=;
+        b=XlqpmSMXgJUG23+Rdnw4FYcZqXEv/Goe701s1WiB6xTJ+G7Nj4I7rMcZ7yEp14CR3/
+         hGDFvUY8Q46ySiN2M4/C2p5GbkmNihnIejxaapcCpEyUDdMFTTRK5UUh0AwQdMcdPh2F
+         F3vEYy7Qs4EOTuudtKeacsGSfKkC6pQl/dIXDkkTDDNttUDX4umLJYhy3f4aukj+xPNs
+         OzKbKQfvg91DNln8InivK29BMjgww56fLhEys3ESid6TGBpllHEvENqEOprc7UjNOnrn
+         k1NNAg8PG6CVdZC+4DRelfCXSmzrWILDbBvC2J2aufBpsakSM6JHzVj9mCD0OBJG4U0Q
+         I0kg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770061055; x=1770665855; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770061249; x=1770666049; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DKfjhh2l54X7r5mlOSalfqUoNDl5GKvXCiU4eKiwWr4=;
-        b=As4ZKEWLgjYc59OnQ+lVprKoIE3PrnRKh5uD2i9Mc63sEC8XhjUlymYsAUT2CfSwx+
-         +LFdKvAckEQ7GwA3UpAolkw6x2POg8ABERgMCeryDXOsrGnuc+QIIom/SMAKBjygubFg
-         4znNp3xbniSW5Ddt102DfJu3/JorfG2DHAsn4N4fv97tGKeZaGqkHfDwf27yk51wr7c7
-         Uwkob/4FaJyaUcq4zxkG26JZYhQT/4YT/9k2rSpZhC6Gv4yOmHnFTJNUm/jKq9RdzI8h
-         97ZaYi39oqudODj5giHJ6XGA9YWsOE0M8chaoye7XrHa0LjPyoRzUbngE1iWLoqsbQ3K
-         3hpQ==
+        bh=jpwKNyPgybAuFwBCFWg6bvtwxQ1OMxo2cVMCqd224Tc=;
+        b=Zb7G8daiyYoYwUs4Dst8sMD14m1qr4ynpsvMRU4yECQmthQbVTq2keeIfLDp7tOq2q
+         0SJF5s5INfwsk05WA5GysRVvQQfdTlQhkegHwzQNTEtlN4VlpXYc3J3uPNTtyasFgI+X
+         YxZUL8KjNrKg7VMW44ue7W6ngdjBjWL4g+iRWn5OqUeg1RoMF+SSC7mH6y5HBnzyfMdN
+         T+EP+T1EXMIHtTtRDj8vCpRo8h3E/4r4QKJSctMS2gLEHxGUKQv4Hz8oM9ddKb/bTy5A
+         JQpq0kk6Hoxnot6q09uSw2/1Jrs6o+0EpsSMIzVAXUXCsfLcN46kWsr5os+wz769VPJL
+         Ys5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770061055; x=1770665855;
+        d=1e100.net; s=20230601; t=1770061249; x=1770666049;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=DKfjhh2l54X7r5mlOSalfqUoNDl5GKvXCiU4eKiwWr4=;
-        b=YxJVfdv9w0RmIAii6Ntg6hNuhFoFCbCA8RkDB0QXko1HnQ0DC2/Y1hoSrXYd9/3txY
-         yWtt/FtnFX3XezuzypXyRyfuc3FjlvIP9BlFcSMIPbv2blJv05cAUbhngKoPJQpOeJgy
-         8ZGgc/RJn1iUv3ICOJ9hNmtBQI9BHq+0wH+nf5aDV10L4azzkrIwGtI7JyYMc+u536g3
-         vs1/3QkuBy8+ba9AMtMGbCP0SQIbG3n43I63S8iBmZmdwGKdqayj0eU/wqyosKiYLJhe
-         86saQI0TWI9/PH6RL37ioZJ5TDWnu0If/LHBPAxwGjHg8pKtZvzMvvZPg217Igybd6St
-         2HXg==
-X-Forwarded-Encrypted: i=1; AJvYcCV86Hd2/3QJ1258DpFvS/xJZA6qh3m0qmSYDtKAhPPk4TqSSOmi1KkM01PiVd01p/M+Mww=@vger.kernel.org
-X-Gm-Message-State: AOJu0YywZUpiaYLS18t74apH0+LOQmBFmv2/PuEgl+IEOZNJ/hTZyKRk
-	FENnUhMJNeUfnKZkgQeA6FbUQUsGQNndBaB5hcYeNAJgzZm2x/bbnQshBU1D6Yn16uT54PH5gg2
-	AUMBQGBwOir2DYDjneNwkZxZ7UFu2Dfg=
-X-Gm-Gg: AZuq6aJaDvJ6dl1QWYpTYI9bl3/oIzZErjQh5gdHz+2gClMVC/qUuPTlzTxugeRXis+
-	MT1kxk7T5BBeDR2Ybl7wmI8eAxiaM3E/684OH7dMcA/xJsmXQNIbPbV9AXugXQ1lhGNwFwigrvb
-	MbPeHnqLrMwGeTUiClZahTijqLDwTj1UBR0Ky9F1tG/7l4cJ4+9Otzr/Y8kT5jJGrYi2caW0tNX
-	/ly2QkqAPZFNpswtOdd3v7v4/4/5Im0/Sa7G0c/a+W6v2UQCBiHzSw10cCHjMCIn8kl6rn7i00w
-	LGDJp9uv0NQLVHulenJHUf6mB9BW+Dv6c9D319pT4zayHKk7mb8xoMQGbSyB8upuNsaoa4EF71a
-	sM5Y=
-X-Received: by 2002:a17:90b:584f:b0:340:be44:dd11 with SMTP id
- 98e67ed59e1d1-3543b3d01b0mr11579388a91.27.1770061055335; Mon, 02 Feb 2026
- 11:37:35 -0800 (PST)
+        bh=jpwKNyPgybAuFwBCFWg6bvtwxQ1OMxo2cVMCqd224Tc=;
+        b=JWFRA3PIx8hrWIHXECOufAZU5tBPGhyT5LHK6gSXk43XX3kMEr2pma4usxL2F6Vfyp
+         f71Q0KXZOYDLg96+kbtn074mWd6+KjOOjdfLsS94GRygR01WDk60j6a0/G2oanwSpKaP
+         EsGbsDExUW12ujsswRUPK+zPMcMLHPUdSr08Kr4tTPB6qjfpUOtqEJC5RWAbGCwX3BVr
+         BmgSD/KIbdqmBNcJ2uGTSlHdEgyS7xcpyMwZ76H1flJr363AGGm7/JuFkEhc2mvdpNt7
+         BktLSDHPHe48274EFpZfFLG5its9BiPZ0WMh9beKw4G4fk5VaL5WWfPGYBYOXg1dBpuN
+         M/cg==
+X-Forwarded-Encrypted: i=1; AJvYcCXAMTSlbQCQRcI9lwS9WRb6PoY9fperJqn0rczP9XZpxaDndyolW7cDRUIcANRA+T04sDc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrLM+qAj8VBJbGbzAja7P/vDNJTCjbn6TRiCmSbfryjR7jJ71H
+	3oQU0p671oGh6ZLYtoG0An5+9IP9XvjR+zcFDIb7EPaQ26E0RQ/2jrEP/ehCmkLYVl6tAmTWxXJ
+	u8ss+QYP1pd0Y/Ux07VFAdQ6y5rmPL6c=
+X-Gm-Gg: AZuq6aIuRj+m8tLVSt5njTMkZhIJ6NHhOnVXwDzocucpniR3p15ocr/aP6BEzXUGGb6
+	PKeA0tLIF0GYyBBfwPk1Zc0oRN+8VaN/T4K0rE8txmbKh/8JaJYFS3bJ/oNVdcR7GK71kx6rmd0
+	2d1Ahu34XtiUmhlRsUdS0ye4FUOG01r6VCnr2RYmsKXbZxRE0vzrrDY0KMlTaSaMlL2+7KuX/4i
+	C6V+A+87dmo8m2hY9Sjiw+QCyjNZyuh9Z1KVLfaSXiVwFAINY5GYNjGRkxli4T7cC+D/cyqEI6q
+	n5ZO5LHeS8KfAe8zfE3rPA3MGyGvT0KEcs+68mXYh9n+xjb+zZvRoma5fEX6epYeDGSp
+X-Received: by 2002:a17:903:2f86:b0:2a1:10f7:9718 with SMTP id
+ d9443c01a7336-2a8d9937435mr118134345ad.30.1770061249493; Mon, 02 Feb 2026
+ 11:40:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260202131921.15175-2-pushkarkumarsingh1970@gmail.com> <CAOLa=ZQCuka+cSuCu=KnTHm=gk1iJ_QJhDjy1Ku8WLfSgkGorw@mail.gmail.com>
-In-Reply-To: <CAOLa=ZQCuka+cSuCu=KnTHm=gk1iJ_QJhDjy1Ku8WLfSgkGorw@mail.gmail.com>
+References: <d92bd08f-abee-49a6-89ad-3be5e0c06ad6@gmail.com> <20260202101445.13790-1-haraldnordgren@gmail.com>
+In-Reply-To: <20260202101445.13790-1-haraldnordgren@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 2 Feb 2026 14:37:24 -0500
-X-Gm-Features: AZwV_QgvWwiXL7djR4YwMWYW-j2iXyq8QXtPuJW3Z5XAMVfT7UMWopBEttwAbXg
-Message-ID: <CALnO6CDXwbxiQ-UjJLxgrjbgryQwxMro106BnewfFvcqchb2sw@mail.gmail.com>
-Subject: Re: [PATCH] stash: honor --no-overwrite-ignore when updating index
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>, git@vger.kernel.org, gitster@pobox.com, 
-	peff@peff.net, Patrick Steinhardt <ps@pks.im>
+Date: Mon, 2 Feb 2026 14:40:38 -0500
+X-Gm-Features: AZwV_QjQcmyrRUYfdT52k_lOsjOu_gM-fmhn1cpCqS1wVg3j5WuKXy8pWHQUfhQ
+Message-ID: <CALnO6CDrdfSFuY8xjvno3+2MVB2JHUYdNsYTYqqRsfcDiWa1uQ@mail.gmail.com>
+Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: phillip.wood123@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com, 
+	gitster@pobox.com, phillip.wood@dunelm.org.uk
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 2, 2026 at 9:13=E2=80=AFAM Karthik Nayak <karthik.188@gmail.com=
-> wrote:
-> To confirm, changing the test
+On Mon, Feb 2, 2026 at 5:19=E2=80=AFAM Harald Nordgren <haraldnordgren@gmai=
+l.com> wrote:
 >
-> modified   t/t3905-stash-include-untracked.sh
-> @@ -434,7 +434,7 @@ test_expect_success 'stash push
-> --no-overwrite-ignore preserves ignored files' '
->         git commit -m "add ignore" &&
+> > I don't really understand what you're trying to achieve and I'm not sur=
+e
+> > if the suggestion above is a good idea but it might help understand wha=
+t
+> > it is you're trying to do.
+> I didn't realize I was so bad at explaining =F0=9F=98=85
 >
->         echo after >ignored.txt &&
-> -       git stash push --no-overwrite-ignore &&
-> +       git stash push --overwrite-ignore &&
+> What I want is a shorthand for switching to the local version of the
+> default branch of the repo. This but with less voodoo:
 >
->         test_path_is_file ignored.txt &&
->         grep after ignored.txt
+>     git switch $(git rev-parse --abbrev-ref $(git remote | rg '^(origin|u=
+pstream)$' | tail -n1) | sed 's@.*/@@')
 >
-> still passes the test. We should be testing both scenarios.
+>
+> > you say you don't work directly on the main branch but then later on
+> > you're then creating a release from it. Is  "main" just a mirror of
+> > "origin/main" or are you merging local work into it as well?
+>
+> My main is a mirror of upstream/main. I never commit to it, just do
+> 'git pull' to create releases.
+>
+> Also, I switch to it when I discover a bug on my branch, to try to
+> understand if the bug is already on main or not. It's the baseline all wo=
+rk
+> is compared against.
+>
+> >>      99designs/gqlgen
+> >>      refs/remotes/upstream/master
+> >>
+> >>      amplitude/experiment-react-native-client
+> >>      refs/remotes/upstream/main
+> >>
+> >>      Antonboom/testifylint
+> >>      refs/remotes/upstream/master
+> >>
+> >>      cli/cli
+> >>      refs/remotes/upstream/trunk
+>
+> I want a shorthand so that when in any of these repos, I'm switching to t=
+he
+> default branch, I simply have to run
+>
+>     git switch @{primary}
+>
+> and I would end up with
+>
+>       99designs/gqlgen
+>       Switched to branch 'master'
+>
+>       amplitude/experiment-react-native-client
+>       Switched to branch 'main'
+>
+>       Antonboom/testifylint
+>       Switched to branch 'main'
+>
+>       cli/cli
+>       Switched to branch 'trunk'
+>
+>
+> Harald
 
-Hm. Using "git stash push" (no new flag) on my build of 2.53.0 with
-only this test added passes, so I agree it seems unlikely to be
-exercising the intent that led to the FIXME.
+If you don't need to be on a branch, then "git switch -d origin" (or
+upstream, or whatever your remote is) should work just fine.
+
+That just makes discovering the name of the remote the "interesting" part=
+=E2=80=A6
 
 --=20
 D. Ben Knoble
