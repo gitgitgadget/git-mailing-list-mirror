@@ -1,100 +1,141 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mxout1-he-de.apache.org (mxout1-he-de.apache.org [95.216.194.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C6575809
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 02:14:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1E9BA21
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 03:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.216.194.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769998463; cv=none; b=kAmgymUs8DoKbkpyxJyQcxC3Rkzc5uvh+8A7oNMCjG7VNlzWMCHdiBfVcz1Mvwkni66OQqX2rtN+VkfcKdF1BrkPQg7das/V6xTfhKIMoeeYmKMo1bJFn4q2vaNP3QODBCuYCTshbUkmN8d2AIjKf0bwDl/sYARHiq6QUSMG5C0=
+	t=1770003025; cv=none; b=X7sNetb1Kv/pkFJMfgb2jjk48oSWMuJJtapphfERpGVVabo4Dvh1hKbl3Y/Va961QQCVzSJJt0mgyq+Sb/rN/0VuAJ/dY/i6E2x2yP5IKrDwSra9vut9MdlLkSZbnyazak4jIZJQBW14zQsX/uFhti6ZF7h813GHg+ah3uQeyYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769998463; c=relaxed/simple;
-	bh=vnqO9PUBI0oH77LOWdcveKkVtYSH1cAWZquL3PLXE4c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FhkEIUz101XGpROs46pjhi1wwXyF2vXuwBKiKMMK1kGG4xp8a9ghLqvevc++fnWTzJ845fMsl8uFoLNwwhuz1fGUkmmnjcQ9cA6ZlF/hPIAZ/qvE+WEedOWWe6a67jJgYqConZy19VVUWwA9quVYLS0QhSUDRSjHlE2wJd7+PcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LOFjCpeK; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1770003025; c=relaxed/simple;
+	bh=W0HnzOmyksJS+DnqamYX4ONYu8RAGCy5VOOWvL+fTaU=;
+	h=To:Cc:References:From:Subject:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=F5pI8WcsH0K7cGdYsEznAq7246Y1SJ+rCqZj9CWKgPVrHx/2aRqZHx/ybZkT+hdHOqVvD0NihpjIVLehPTw57aK6IG0A0gmUp59EvkyVUB0XLZ/z2HbdWCTEJOEAbRlmyiF/+mmCBexMyP52B0IHXK2876yxdLUPnnyWmy6nBeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=apache.org; spf=pass smtp.mailfrom=apache.org; dkim=pass (2048-bit key) header.d=apache.org header.i=@apache.org header.b=DU/HrvyI; arc=none smtp.client-ip=95.216.194.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=apache.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apache.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LOFjCpeK"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-794d4f11a20so3961717b3.1
-        for <git@vger.kernel.org>; Sun, 01 Feb 2026 18:14:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769998461; x=1770603261; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vnqO9PUBI0oH77LOWdcveKkVtYSH1cAWZquL3PLXE4c=;
-        b=LOFjCpeKgN15sBMeehatO6GKDgwwYU5GospkRyeBoOS+Eplo62rExLNUc6Jg0C2/r5
-         wsnrQ2DbcVcCWzpzsyOAs/RIOelS1dahdxTAbZh1C1fA6KwqL3Y5AwrDwzCPugKMnBMX
-         ovUAx6FKVZtw/FvSbBrwxsUX4kpgDiznP6jxwcL0cCDliS465gy44y+N9Iad/7HwBt5P
-         As+mHYHThtH+cc8juRmkvZsqXAhDzJ/ORTwidyIwoWg8DL71fU+eXIXdlQkBmX1yT87c
-         Jx1Y4rOhIFJFQUTeXG0W5WQztfnJKj84XHaMdINEOL9WXeegv59KGPNqXeuJLnSgzHbe
-         8jSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769998461; x=1770603261;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vnqO9PUBI0oH77LOWdcveKkVtYSH1cAWZquL3PLXE4c=;
-        b=hnqh9VQmRHYfAoWlljulfWiW7zwZXgtUWb/sCv3JA0ofeej1afGxLgz/+a3BlCqTAL
-         1hDoEDHhRxl/xA84277O+HLeYLHmJsHtfEF+AhGqQewkbK/DcATnUo1p5ELjkHUv5fhx
-         VvDYnbWJgra6oEtgdD5dvhzuczL3K2BbBrZJXhrmX1WKg8foIq2ldBOoqMpUbOjmQfMd
-         2Ic6DBgTqFSayjVsNIU0NU4/fx66w1GI3IR2ZJejrt30QRYKvGeVJO7KuEWAo8VcERle
-         YgzN7qy5nyLA9fiM5VvlElMR4NRw8Ff4mt5WMQQFM29S3Qjz1uf21a1adxhYQE/GYsC2
-         YXuw==
-X-Forwarded-Encrypted: i=1; AJvYcCU6nH4y/0ds1beW1V06JeG4A6rYIgVSRKPEAalalQolRYGYUFWA8yGeZnm/syV7AgJBSnY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZUrFPOqvUYfxrMEZjKSlHT+qV/wLtspaudmPJxCurigjw0Cwh
-	h0szyprsyWBeIzsHula5W7YXUGw9dxcOkoE/+JbcUd11uM1ygEl/OTN6iahkH2XxLgc=
-X-Gm-Gg: AZuq6aKG3IMNMHrIlmHf4nvJ62Biql21ux5tSsRDgOb5rYpS0PAHIls9sKfn9n+X15R
-	n1pxi2SYJimETVAs8L4vzP9P+z/LIKWricrkwOQ7NEOPPfDrW7TJOPvZ2bXR9kWdBKFMUVMR6vG
-	nrbzq87dx4c49p8cErVoUoWVJesp2oD5a+Ya2pxMGb6suOh4XHFMFL8byeaBBXWDqFqZQtMuYFb
-	3HYShnHpYcBRgY3WL7JksC8u83r0gmOgt3MU3a7iJ6CIkb9tCJModDBNd/042zyMkz3QY+021UQ
-	3KC3N1klH/dfSRFX+wzJ33pCmqFrc3KlTQujyF5nNvf0yOC7x/iJ+TVh5N6PP2avMRFk8lXHUuu
-	spMdg/jHFNGb0BFsWdgW54MSn6fUfr/zeWSrQkJQxpVmJwGoA/n44JzCcVp94T5cmYt35m/ZVet
-	p9kRcTsCxDlENPItjgn5kkM9TWPlHnldIXuFR3liGzN69AvS1C+OkJ8aGvRoWU3nCs4yo4oFhr6
-	plogHAjj3oDlzdBxQ==
-X-Received: by 2002:a05:690c:498f:b0:794:cf56:5bc1 with SMTP id 00721157ae682-794cf56769bmr18105987b3.33.1769998461355;
-        Sun, 01 Feb 2026 18:14:21 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-794df377204sm2710087b3.5.2026.02.01.18.14.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Feb 2026 18:14:21 -0800 (PST)
-Date: Sun, 1 Feb 2026 21:14:20 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] bisect: simplify string_list memory handling
-Message-ID: <aYAIfKW8Vd0iBun9@nand.local>
-References: <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-0-0449b198a681@pks.im>
- <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-4-0449b198a681@pks.im>
- <xmqqqzr76nuj.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=apache.org header.i=@apache.org header.b="DU/HrvyI"
+Received: from mail.apache.org (mailgw-he-de.apache.org [IPv6:2a01:4f8:c2c:d4aa::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mxout1-he-de.apache.org (ASF Mail Server at mxout1-he-de.apache.org) with ESMTPS id CF48660034
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 03:23:04 +0000 (UTC)
+Received: (qmail 129521 invoked by uid 116); 2 Feb 2026 03:23:04 -0000
+Received: from mailrelay1-he-de.apache.org (HELO mailrelay1-he-de.apache.org) (116.203.21.61)
+ by apache.org (qpsmtpd/0.94) with ESMTP; Mon, 02 Feb 2026 03:23:04 +0000
+Authentication-Results: apache.org; auth=none
+Received: from [IPv6:2001:569:bef2:d200:63e1:9891:d2d4:fc0] (unknown [IPv6:2001:569:bef2:d200:63e1:9891:d2d4:fc0])
+	by mailrelay1-he-de.apache.org (ASF Mail Server at mailrelay1-he-de.apache.org) with ESMTPSA id 8A86741967;
+	Mon,  2 Feb 2026 03:23:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1770002584; bh=jY872yQ1c7EkIJ0Zb96Pmu6B6YqT8wCueS8HZY3nhto=;
+	h=To:Cc:References:From:Subject:Date:In-Reply-To:From;
+	b=DU/HrvyIeasF3LN7QoVzNBOrpE/Di2vZTzDqd7l0OottYGnd/Lr3M5JYY7mDlzwBa
+	 xpQCVQRJ3L/xJmiwqaa59wWC3Ug1lLTHz31Tn2meHCkFOsyTu0qzhaJfa1pBwykDOI
+	 B1du/C35Z2wRWU/7XmtO0xDbnA8uO1UeiltsFIwg9y/wo/d5+8425pID8/4j92qg9v
+	 zbM22y/YgFsq0pvmOYmvWnToVw5Wq5cUUsULb31UAjDENPyodsr6nRkyuZdmYg3+7m
+	 oYv1+eHBdb4QkKGzD83pU6h6ucSHYfRw40lp65nZItU+VRAST0Jr3UYVlkveJWm4pO
+	 xmzSXCyAj5ZQQ==
+To: Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
+ Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Josh Steadmon <steadmon@google.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20260128213927.3026875-1-adrian.ratiu@collabora.com>
+ <20260128213927.3026875-7-adrian.ratiu@collabora.com>
+From: Chris Darroch <chrisd@apache.org>
+Openpgp: preference=signencrypt
+Subject: Re: [PATCH v8 06/12] hook: allow separate std[out|err] streams
+Message-ID: <9a4d95c1-61d9-5192-2a41-d8b953088452@apache.org>
+Date: Sun, 1 Feb 2026 19:17:09 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Firefox/60.0 SeaMonkey/2.53.7.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqqzr76nuj.fsf@gitster.g>
+In-Reply-To: <20260128213927.3026875-7-adrian.ratiu@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 30, 2026 at 08:56:36AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > It was written this way originally because one of the callsites
-> > generated the item using xstrfmt(). But that spot switched to a plain
-> > xstrdup() in the preceding commit. That means we can now just let the
-> > string_list code handle allocation itself.
->
-> Thanks for an extra attention to the detail of the way to refer the
-> previous change ;-).
->
-> I think [2/4] is a good direction myself, but I'd prefer to hear
-> Taylor's opinion as well.
+Adrian Ratiu wrote:
 
-After thinking it over and re-reading the second round, I am still not
-quite convinced that this is the right approach. I left some more
-thoughts on possible alternatives in my response to [2/4].
+> The hook API assumes that all hooks merge stdout to stderr.
+> 
+> This assumption is proven wrong by pre-push: some of its users
+> actually expect separate stdout and stderr streams and merging
+> them will cause a regression.
+> 
+> Therefore this adds a mechanism to allow pre-push to separate
+> the streams, which will be used in the next commit.
+> 
+> The mechanism is generic via struct run_hooks_opt just in case
+> there are any more surprise exceptions like this.
+> 
+> Reported-by: Chris Darroch <chrisd@apache.org>
+> Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+> ---
+>  hook.c |  2 +-
+>  hook.h | 10 ++++++++++
+>  2 files changed, 11 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hook.c b/hook.c
+> index 5ddd7678d1..fde1f88ce8 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -81,7 +81,7 @@ static int pick_next_hook(struct child_process *cp,
+>  		cp->in = -1;
+>  	}
+>  
+> -	cp->stdout_to_stderr = 1;
+> +	cp->stdout_to_stderr = hook_cb->options->stdout_to_stderr;
+>  	cp->trace2_hook_name = hook_cb->hook_name;
+>  	cp->dir = hook_cb->options->dir;
+>  
+> diff --git a/hook.h b/hook.h
+> index 2169d4a6bd..2c8a23a569 100644
+> --- a/hook.h
+> +++ b/hook.h
+> @@ -34,6 +34,15 @@ struct run_hooks_opt
+>  	 */
+>  	int *invoked_hook;
+>  
+> +	/**
+> +	 * Send the hook's stdout to stderr.
+> +	 *
+> +	 * This is the default behavior for all hooks except pre-push,
+> +	 * which has separate stdout and stderr streams for backwards
+> +	 * compatibility reasons.
+> +	 */
+> +	unsigned int stdout_to_stderr:1;
+> +
+>  	/**
+>  	 * Path to file which should be piped to stdin for each hook.
+>  	 */
+> @@ -80,6 +89,7 @@ struct run_hooks_opt
+>  #define RUN_HOOKS_OPT_INIT { \
+>  	.env = STRVEC_INIT, \
+>  	.args = STRVEC_INIT, \
+> +	.stdout_to_stderr = 1, \
+>  }
+>  
+>  struct hook_cb_data {
+> 
 
-Thanks,
-Taylor
+   Thank you for all your work on this series!  FWIW, I can confirm
+that the Git LFS shell test suite continues to pass with your full v8
+patch series applied.
+
+Chris.
+
+-- 
+GPG Key ID: 088335A9
+GPG Key Fingerprint: 86CD 3297 7493 75BC F820  6715 F54F E648 0883 35A9
+
