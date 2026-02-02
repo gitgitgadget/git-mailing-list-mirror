@@ -1,94 +1,122 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2441D27E054
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 08:28:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43EF26FA6F
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 08:36:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770020937; cv=none; b=OEZzEAMwIA3749MY7xlICYkRyKeAUdSUZpfGZRdPnMxJCEnySNWrmMEFkO1OXpu4VQkuW9ckoVp9u5pYDBfirhGvGcyTTrVJtO8FEJ01O8qLhtJHrJNjLpdhAL+Hqrc8Zdnb6I9kZGewxgDeubm5AWTmBohIT/vycdWmhCjyHL8=
+	t=1770021391; cv=none; b=dFvlGRn4uGnwdy2jhzyiy9ze5CGaEojjANpP7R9qdh0HHEAqJpnLo75QnYXpoFSYmAJrGcDKZewvKueHkAdgZO0dEu5dHLaTwG0Q0d8kP5Qlyr1nBDoNU521SM3drjoWnoh+iY8b8WPr+afkoIs8wQF9qPOJ8iCo6Suqs9C6VJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770020937; c=relaxed/simple;
-	bh=LNSJMBZVhUxYT799rFeUTPzFPP3/Et54nw3qw3qbP/w=;
-	h=From:Date:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=BuKX+gsalIusy+T6ZYHaLgdTNpTFOlnRAQ4NR4x9xB/A+xXYmA140PxvLYGv4g7AwI0GN6sZ5i+Qg1VvF0xJwvFo/BBWxX2eO/l7PWcYELKh9wVI/vSbYXSIH369ak+M8nBflLHx41lQS5B9g4mkhPhQYEBLR5CAvkdgkIl70oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xc7fFmGY; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770021391; c=relaxed/simple;
+	bh=WuypQMNRKv5uDaVM/w1iPRRGHI1hQvesS7L69fE9sqo=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ATbcDJjDAkQC6lEUFtTnfPvFHUcRD3t6RK5JdG43DSDmIdVljSmSX0JUfnuLEliVBBpcHxPhWMrwMNqQyz9CYQvVeGzfHYg47KItxyyHDT1lCwiuP3dhEBO1mKlN8JvSi/77KFarqDjjnE4JQ2gVoD65DWAS4ppr+JSs+07LMJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Cq2l88OY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wCkgOO59; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xc7fFmGY"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4801bc32725so30485265e9.0
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 00:28:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770020934; x=1770625734; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:date:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LNSJMBZVhUxYT799rFeUTPzFPP3/Et54nw3qw3qbP/w=;
-        b=Xc7fFmGYR0aC1SyZw8m1RErrYCuqXL/XzfIyEnx171JF1NreEDs6CpTYHXsQlXvf+p
-         MGcrEcs3IKxq/3vtRioja65c64473fiyXwD4kuqTyySayXdbayqerS9hJAX+3KDLBE1d
-         JwGOTKUnUhO9UBeYnTnetOBDcHOWj1zkHnqFjGDFxrvmUJEfghapZGjMCaJDgcirCkgM
-         wiFDxmew9J8X/7sLd0M/BeAJ0JTSuIjOHoFmYROfrt4O6WD3V/HdrEl1PTLn9oc1+kVp
-         96WL4dBoqj6x0B9U0XxsayJB3xF5I5+LK3MAdixpyJhqZFZXFW4HcIuB9qewruaZCOuf
-         XZGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770020934; x=1770625734;
-        h=content-disposition:mime-version:message-id:subject:cc:to:date:from
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LNSJMBZVhUxYT799rFeUTPzFPP3/Et54nw3qw3qbP/w=;
-        b=pgJ/bcu3WhSjD88gmckepG8CDLFI42tp4v8YlSvggnHbtvfTOlhqg+MjXsEvSmzWxT
-         26wpEgqg+OQqiKS4dwePZCpLMBxD3IpTB4IiZeVDJ0X85z5+mbGhSM9Bynaw8SqOLLgU
-         +gvhGziz83j1fJoyo/Lo/bvUVmWI/Jshpdkt0W5u9EagG0KIJi0olAx/nUcWLwrOy6u5
-         IInTl9CHfhMVBwfv+Md3mm4s0oiw5lcgDhiFu2SivTz+MSWBvBSKiAPebUxcJR539zrR
-         0p3tO4qI2daH1qNE6VHA+XwmPyH/0H+vy0UQU1BVrC6LkD/T9pb6FNyRKCJd5gk97hNX
-         3N6A==
-X-Forwarded-Encrypted: i=1; AJvYcCWz7T9cxniIJeXHYw4DJsgrkl1ZFvxrIMzsvs4TOvRQ5Y3a1Y2wqUgyV2N+fYspO6Ie6XI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxbV11HQxyoSQBq9sL5oDIjd0qcPELTZIUDHcmC42bl+uV1LWXi
-	yua2v6+GFif1MVaklsFD5N5l1W9/Py2erodjD+m8PrXf7LUhm9ZEi8ZxmrSakhYp
-X-Gm-Gg: AZuq6aKQQlB3VEs7d+uYcjzrMSiaWY9maLIax3I/p4UshBohh88qj5vuDcZdzfWXb0r
-	+3NiggpuhqiWYF01FpNe/KshXN2s8vOTSlJWinRIiYZMYPkUYZmFMdTgfFfTkU8KXKavApvxi8+
-	WI1+VTfItoP/L15rLNYgpCwVEsnQuGU4zrfgsPUy+VOCDVoANAeQE9F69PlQXgwSOMISWcyf7Ls
-	uMLQU0NA4hbpxSLlBZphoZilC/40GAjNLUmCzxDTQAk+3mWwUb0RHEyOo7MvKbIpNWYyiEM2yXt
-	0mKxKFDffqOuKaaFlDWdPxyDJc6xR01LiOBnQ92I9wXlYsC0nlGI7k4EiqbS52UmmHn8UVVjy9+
-	YL1f2X6nESurCJJTzDSnBYHTjMkrwV1QfPrsen5MCMOonEeAsWqGJ5hLPrp9F/CgYdsdR5Fa6Gi
-	8P8f591QZnRsPJKhIwOrcDq85nPdJdonY6qEBUkOLYC3kHq16KwvUv4Q==
-X-Received: by 2002:a05:600c:4443:b0:475:dd8d:2f52 with SMTP id 5b1f17b1804b1-482db4a317bmr139507495e9.32.1770020934332;
-        Mon, 02 Feb 2026 00:28:54 -0800 (PST)
-Received: from localhost ([102.88.77.5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48066c40e04sm455080165e9.13.2026.02.02.00.28.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Feb 2026 00:28:54 -0800 (PST)
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-X-Google-Original-From: Abraham Samuel Adekunle <AbrahamSamuelAdekunle@adekunles-macbook-air.local>
-Date: Mon, 2 Feb 2026 09:28:59 +0100
-To: valusoutrik@gmail.com
-Cc: deveshigurgaon@gmail.com, git@vger.kernel.org
-Subject: Re: [Newcomer] [GSOC 2026] Introduction
-Message-ID: <aYBgS93v-7bCTc4Y@Adekunles-MacBook-Air.local>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Cq2l88OY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wCkgOO59"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id D680BEC02A4;
+	Mon,  2 Feb 2026 03:36:28 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 02 Feb 2026 03:36:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770021388;
+	 x=1770107788; bh=WuypQMNRKv5uDaVM/w1iPRRGHI1hQvesS7L69fE9sqo=; b=
+	Cq2l88OYWdYEmDNsPzwFDlKcDy7931dgh1gEfV/MfQxPRnvGm/XfQxYQYq4i8GSq
+	pvyNZeuyBHgbMhuWP4Ei+SDW2tpeatx1od6EykzD+MEqRmm7ilZZdr8akxeMV9fV
+	N8n508fSKAkdm/SeAFq/mwmXjEUtCAeQX3qaWoUB0LavMFen/WifCKENrDg8aHsv
+	0FuDNjBQgSnYsf2nEFklz7iy9Lh9Vo3bi968lEHioxlde7HpMVyVDH0O/DNRAGlW
+	eza5IXBH4UXLizhmpdKQ0zIadNzSDry9C1s79A6nnVrM5tOPubkbKJAIFnlJJ95V
+	AkQbxbFXnunZqz4JQnHv+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1770021388; x=1770107788; bh=W
+	uypQMNRKv5uDaVM/w1iPRRGHI1hQvesS7L69fE9sqo=; b=wCkgOO59hHuxzr4Oy
+	xRYvE0kNBLZuPyXQZ1Wifmv+VpViXtSgvw3EWghSH3km9Qb11qU9Kk7I1WxIeDSe
+	fTm/NUKHfp99Fh6aHoRvC67ZJhqaRvavqZglYqRXz0GtfBmjAiElHaEZGpNKpCbO
+	fYd8l7i22iRZ3q0PIhCCDT+TLiI8Gz+hhzSY0ftHqUSemJB1S7I+9mKwgQoN3d+O
+	6DNclUJuu/MtrG5/VWkyIhQtVAU6luU8HeUTFBKVRhEXOY86wRjErv7fdVIBz15O
+	MdTBRTnbhi2fl4t/sIwRyWOodb0JN5H7flJohH41jiHivqt+vLY15wQ5+ymOy4yR
+	bIzDg==
+X-ME-Sender: <xms:DGKAacWsIFSy1IZrb1eAapoFiw5m4C5seO2xp-heBkUjz_SyPA0Jte4>
+    <xme:DGKAabZhTSQzw8Qg7Xx1lYaz_TT_D-RfXWfZw4x75XEh4SO8DXVgcaixn3Er-fdSy
+    sBnlUc0JWVi_mzK-SPM4ryEys13J-Yz_xQK84a8SD76xd9i_HL0Og>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeejudejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudel
+    hfefkeehtefggeefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
+    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:DGKAaTTdsoEG1B-nSRcUkQckc2Bclr8blPFYk_B1qdKU5ZwFE7LPzQ>
+    <xmx:DGKAachqn9j4-sT1glcnM_4GrmuM6y8cVm6Ahr8p7F5_8tmA6NThfw>
+    <xmx:DGKAab6ikcBFYfDAugrlIY1QmPDJLP4sA3F158j6XUpM0lGBmB7krg>
+    <xmx:DGKAaRCA8qsIgDfQqrpZ8wo-wzL0gRfvX3vcNrqwfLAsjhHx8NHCvw>
+    <xmx:DGKAadN-EV9mg21OJ_TjVRH01xOjz7PZg41Nr0__rLDKaILevpq5mGiz>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A1C591EA006B; Mon,  2 Feb 2026 03:36:28 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-ThreadId: A-_DlS5lSLTB
+Date: Mon, 02 Feb 2026 09:36:08 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Message-Id: <bc69a105-5621-4ecb-b89e-82bbe1c4bc51@app.fastmail.com>
+In-Reply-To: <13939780.uLZWGnKmhe@piment-oiseau>
+References: <pull.2036.git.1769202903.gitgitgadget@gmail.com>
+ <3a5b642d05b9fcafb684631a0026959bfc362d2b.1769202903.git.gitgitgadget@gmail.com>
+ <6f7d027e-088a-4d66-92af-b8d1c32d730c@app.fastmail.com>
+ <13939780.uLZWGnKmhe@piment-oiseau>
+Subject: Re: [PATCH 2/4] doc: finalize git-clone documentation conversion to synopsis
+ style
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Thank you greatly for the direction. I did check the microproject
-> page, and the first contribution page. I haven't fully gotten all of
-> it , but I am making progress.Right now I am trying to understand the
-> first git commit's code by following this :
-> https://www.freecodecamp.org/news/boost-programming-skills-read-git-code/
+On Sun, Feb 1, 2026, at 14:14, Jean-No=C3=ABl AVILA wrote:
+>>[snip]
+>>
+>> Doesn=E2=80=99t need to be done now in this series, but the =E2=80=9C=
+stuck form=E2=80=9D of
+>> `--origin=3D<name>` is recommended by gitcli(7) for long optoins. Thi=
+s doc
+>> uses a mix of unstuck form (no `=3D`) and stuck form.
+>>
+>
+> Is this something that is automatically available, i.e can we already =
+convert
+> and advise so to writers in all pages?
+> For me, these synopsis series are a chance to push forward a larger ra=
+nge of
+> reworks on formal formats such as this one.
+>
+>[snip]
 
-Hello Soutrik, welcome to the community.
+I am not aware of any static analysis tool or helper.
 
-Try not to top-post as we favour interleaved quoting.
-https://en.wikipedia.org/wiki/Posting_style#Interleaved_style.
-
-Also while I think the resource you reference above is good. I think the
-My First Contribution page, as suggested by Deveshi Dwivedi is a good
-resource to get started, after which you can get a microproject to
-work on and push to the mailing list to understand the review process.
+I think I learned about in this combination with that gitcli(7) as well
+as Junio writing about the preferred way to write options.
 
 Thanks
-Abraham.
 
+Kristoffer
