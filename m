@@ -1,86 +1,84 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4994A34C121
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 22:28:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675E934DCCA
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 22:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770071301; cv=none; b=SI2GqQx5WDPf83bPR4SINQFJDGuoKSZmW1fIzWFOvRULMPSOYgZVCOEmzhUnr3bEbA2FKfMJUut64mpz7llz0mk8YDkPNBNZQX9Ua3G3ErmoJSv7WYcZBlJXoU1LVHoGrr9XLb0Xf9zWG3X3VeKp7nH1ceI9IddVfemFJ7vb0mc=
+	t=1770072112; cv=none; b=VY02PbENKhS8RfRHgFR2np1A5wlin4K86y5dR3/JvXEj3i+mDBDQ22aR3Sd2KDNosdEdWIEKu1D7Zgn7abGMxjeWvAIGMStkeyDtmHdsENNcGsS+2zB6a7dyJHxL4j2aT72Y6CZqQtfbBTkLL9yolRDqT3k3RKTRJatumsigklg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770071301; c=relaxed/simple;
-	bh=qB3Osbzwj/0Qgv1jn/nN3jy70Mki9MwOVHsTT15k6UA=;
+	s=arc-20240116; t=1770072112; c=relaxed/simple;
+	bh=Uw74/wNmlwMRGoX+PxgwR+Wz0jbM3X7uclquocBckCU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f+/kgmqlHLWAbZPkOSDDb/yroL07H1LhfWW9rig/ajMZlOL0W/X7OnaSwgpbdwSnQl69za+5bAXiERtA9m4fNeBRMV7KYI5Ur1VyzWt4th2w7Rj2LXaJatYYboAwU9j3RUqcrPV0t+IVx7zc9oNsOfCpurG9ZPH/rkX/qTg8i8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Th6qR6Wh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MJdKzUep; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=fU77MyFvoKCwp0sFuEDiJ1Pt2nv2pQcM4VvMTWqKY6H7oMrJxCiZBuZLQZRYI/sKCXrfZ/bohWL1rFUFS0D3xnoQdhPJRirXMB9xgtg7+gOzvyJQt1j3sEHCoZ1nkDo8fScsnQ03AxBVJ8WV/pP+Sdsc0tkziZ9+U2XsdQ3KtzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OMH1krQw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vvbFNL8c; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Th6qR6Wh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MJdKzUep"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 64F461D000DC;
-	Mon,  2 Feb 2026 17:28:19 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OMH1krQw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vvbFNL8c"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4DB0B7A0053;
+	Mon,  2 Feb 2026 17:41:50 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 02 Feb 2026 17:28:19 -0500
+  by phl-compute-02.internal (MEProxy); Mon, 02 Feb 2026 17:41:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770071299; x=1770157699; bh=obDmqZIzqK
-	Y1nG5F8reQHobWIfYtE9a1SHFszg9MqKU=; b=Th6qR6WhihYcoh9JEuMXTYhGNc
-	tVnIKRx89cniYF2QNIM9+pDDdsGoIbJwHd8PCBqjqSxAzqIRk9CLK9Wt777rnQUQ
-	kOes3vGKvw/J9A/VyM74yfsLlu+u10c3rmTKkS4KVkUmL4NxyXUjehK5YEbjZe5H
-	vwhOPBgCakS5mKTGIufmDgTHtMnPIK6A9860FwFDiWaCSOVkfgEtBbc5j+n8H8Zm
-	TSGmeu4CI6kGmAYrarUMgTDUV/bJtp8LUHgGcZd7A/NILYCVIx1dYD5Zz4OQlx14
-	Rim/x43bB35EHTvBwHD54vTGiSdW4DVLBxKgR5FAaG8aJ8OosvNhDU7XDqng==
+	:subject:to:to; s=fm2; t=1770072110; x=1770158510; bh=P+OhtObsBU
+	DdV2aFZlb7PxmhZoMv9gDRj7YAcSLi7gE=; b=OMH1krQwMJMGMky21gJ884zKj6
+	lH0to67uSF7k6TZ8T9Zz8Br2rM+liCPbBbTFotYt3brejlpJQaD+ygJBcaisgj6+
+	qNp2m6IVTJXbuvryDgjlyf/cjWHOA93bq8fyn6rQBU3ZmpcMOg2C6OHZjOv3MVnl
+	KaXixbqgNoePHDhNdiZLCJTnfcIb+3M6czPKaVbGkdDmdxIc3ohXymV5is4l189M
+	hf47DYtCsd8JcdtONyhGxBM5Sg4MV3K/4CMjNxCTkwsSRGIqhjw85Z5wgOoFUlt/
+	qLxDFRf3ENpbxSCfAq7WeT1cA8PloUtHOpV+Tl83toUjk2rbO3YZkURkEpHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770071299; x=1770157699; bh=obDmqZIzqKY1nG5F8reQHobWIfYtE9a1SHF
-	szg9MqKU=; b=MJdKzUep5pfI6402f6QWNnMza+ez0fa7BPBaf42lFQwZd5dWXwD
-	y7eEx9bapae+GwmS3k2E5K/ulzp24sw1G2PlBClRRJe8CgNfiZ5PPfuoLBOGzdeg
-	Fd4+tdkZYVSRv0Xror6CJ7yeoKMx3l8VSh6PdsqDQmBXYxHmTBYJka3mpFc90UFJ
-	35fc3EGOYLC7Um9bRSfXX+oRdBH2pSBreP3wPMDc7W1A4qKdBZXeq5Lo7ZPavxg1
-	nZJqlD4YBBx1GsmwuSztPmoNXQiHHmI34Oi9sWrk85elQNpn3SrvGv/zJqcFajah
-	yKNxO2e/BnWDbJlJ4hM31MNX6isE+95a/rQ==
-X-ME-Sender: <xms:AyWBab4-SsHDFdnlmW-5LkQLcTL6311CUoZnjhX_SWIZz34KeY4b6Q>
-    <xme:AyWBaXxRULfyKXpayWzhIfJVFXqoyCHO5P1lbq-ksYPbFkdB68aCNfvfhX0ZT6nCR
-    87X6SdCgg2WHwT0ixjnA_asrsmmn06-4-An4mtGnGfEn5mr_-YcGA>
-X-ME-Received: <xmr:AyWBaaysyn-6bThc4SL8pzkOdE7SyIHMjFQRxKHliji-SfFmbMYUEMKxyNFufkqFaUsBu8hAC1MLU5XgI7Ld6-Qc8gVyaC6CFw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekkeegucetufdoteggodetrf
+	1770072110; x=1770158510; bh=P+OhtObsBUDdV2aFZlb7PxmhZoMv9gDRj7Y
+	AcSLi7gE=; b=vvbFNL8c8m7fGcoC4zUqKnak2c4R1wdlhutGkBkq6ahxaoOn3Qs
+	d4hFKnpmlM+jzq2KwmZQZQW2MjIk6Aalq6XvcXk7gu6L5U0usudcV4NWknzOFJ+l
+	9nP045kKNsX1XGmEBoG2ee+pnPvJl6TilR22JyaqFwIGXLaGNcVzqMOMDr01heA0
+	P2158lQwkg5fW0LMtRTW2Vsn932rxJDiaT8kyeMqDFsMq3p4fIMz9VnARds2rlF4
+	KLjJK82awVjq8Jy6v9nEy3qVt6HV1GcQVR4+T7Lkg3MMpFVi9/fWuaz6Npz489n8
+	+saGuiPth/ufYpaPETX7QtMlTvHoE3vOxVw==
+X-ME-Sender: <xms:LiiBafectwcOzgWTLGLWsnJhhfztw1CQ-INIeA6O_Y4By_U55BBPyw>
+    <xme:LiiBacN_FonICsO9fnf86VbcOAuL84ADU7ur_dRs131tax7u-iVUGCF0RTE6o-jtN
+    8fpcqeICafy8CkqlcaHJTlB8IYbrySaxh08PsagpYBNaabRX17MUg>
+X-ME-Received: <xmr:LiiBadilC-Xq7LNOJUaoaqRxuC5hozsBZdDcoOs4jtp2oZZjkg_N79w0Bv3GLHe61FmUFuwVskwpSsdlVSEkVznnLngPlsz50A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekkeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:AyWBaXw3n1yz-kxbHVvqtMF_k_LIb2revGcP-gOoE_noZFPKq_d8Sg>
-    <xmx:AyWBacbECV_NgMzHq53M1Uzx49EgQCQ6aDcvlz-u4aha5xkTZogRhQ>
-    <xmx:AyWBaQUGd1yCKzpiQje1NU0sOYE8qLABOzxQwgPfP3fUcNGTA27vXg>
-    <xmx:AyWBaShW64ZkSzgyD3Tx6BwS6OgWq_Fqncy0kvbJ0OMELA-Smt1bEg>
-    <xmx:AyWBabBMIwV8HyUZdqyaOJczSN6OwzE1WMxxMNOjNFjhwso6f_PMSKlc>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
+    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddu
+    keeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:LiiBaf26NQnkT9SBepRs12sQ57H59d-Yib0K9GIjCtHil3xdfmtcTg>
+    <xmx:LiiBaXghXaaQcbVEgi2PvT0CWbUhr5vZkaiZrR60YNB_Iqw2KQD4ow>
+    <xmx:LiiBafdd77qFREH6l4OFAPWlpu-Q7HcEelp5L46iQaEtxIWZAIXV6g>
+    <xmx:LiiBaan_9f8V5f6ZZa-jZGWGwvWwDwD2yNLYbben4CwLpC6lRwNy2A>
+    <xmx:LiiBaRCKr6d8TuloFGu4AUZ21efEnihY428ecqKc0foi6MAY8IjShscE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Feb 2026 17:28:18 -0500 (EST)
+ 2 Feb 2026 17:41:49 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,  git@vger.kernel.org,
-  gitgitgadget@gmail.com
-Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
-In-Reply-To: <d92bd08f-abee-49a6-89ad-3be5e0c06ad6@gmail.com> (Phillip Wood's
-	message of "Mon, 2 Feb 2026 09:37:10 +0000")
-References: <xmqqv7gh4mpw.fsf@gitster.g>
-	<20260131202232.9213-1-haraldnordgren@gmail.com>
-	<d92bd08f-abee-49a6-89ad-3be5e0c06ad6@gmail.com>
-Date: Mon, 02 Feb 2026 14:28:17 -0800
-Message-ID: <xmqqcy2mwzjy.fsf@gitster.g>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com
+Subject: Re: [PATCH 1/3] wt-status: replace uses of the_repository with
+ local repository instances
+In-Reply-To: <20260202190155.79896-1-shreyanshpaliwalcmsmn@gmail.com>
+	(Shreyansh Paliwal's message of "Tue, 3 Feb 2026 00:27:14 +0530")
+References: <CAOLa=ZRv4xsy0adY_BcXQkypsgYkLNM6x5LhJGX+B+=aKCwmgg@mail.gmail.com>
+	<20260202190155.79896-1-shreyanshpaliwalcmsmn@gmail.com>
+Date: Mon, 02 Feb 2026 14:41:48 -0800
+Message-ID: <xmqq8qdawyxf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,40 +88,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
-> ... Please 
-> correct me if I'm wrong but I think maybe what you're asking for is a 
-> shorthand for the branch "$b" where
+>> > diff --git a/wt-status.c b/wt-status.c
+>> > index e12adb26b9..9f4d8fda7f 100644
+>> > --- a/wt-status.c
+>> > +++ b/wt-status.c
+>> > @@ -150,11 +150,11 @@ void wt_status_prepare(struct repository *r, struct wt_status *s)
+>> >	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+>> >	s->use_color = GIT_COLOR_UNKNOWN;
+>> >	s->relative_paths = 1;
+>> > -	s->branch = refs_resolve_refdup(get_main_ref_store(the_repository),
+>> > +	s->branch = refs_resolve_refdup(get_main_ref_store(s->repo),
+>> >					"HEAD", 0, NULL, NULL);
+>> 
+>> Wouldn't it make more sense to use the function argument 'r' here?
 >
-> 	git push origin $b
->
-> would update the remote tracking branch pointed to by "origin/HEAD". 
-> I've not really thought this through but if that is what you want maybe 
-> we could add "@{local}" to give that branch. Then, with the default 
-> refspecs and with "origin/HEAD" pointing to "origin/master", 
-> "origin@{local}" would be "refs/heads/master". If you created a feature 
-> branch with
->
-> 	git checkout -b feature origin
->
-> and you wanted to merge it into the local branch corresponding to the 
-> default branch on its upstream remote you could do
->
-> 	git checkout feature@{upstream}@{local}
-> 	git merge feature
+> In wt_status_prepare(), s->repo is initialized to r at the top of
+> the function, so both refer to the same repository instance. However,
+> using r directly is more explicit and avoids indirect use.
+> will change this in V2.
 
-I do not know if that is what Harald is looking for, but I did
-wonder if we have use cases like that where we can string together
-multiple @{modifier} after a branch name.  The @{local} thing that
-takes a remote-tracking branch and gives the local branch that would
-push to would be a "reverse" of @{push}; I wonder if three is need
-for a similar concept for a reverse of @{upstream} and if so, it
-would also be @{local-something-else}, and we may want to name this
-one not just @{local} but @{local-something}.
-
-That "feature@{upstream}@{local}" notation is a great food for
-thought.
-
-Thanks.
-
+Would we benefit from further clean-up, either before or after this
+change, to lose the "struct repository *r" parameter, if we know
+that we can depend on s->repo being the repository we are collecting
+the status information in the wt_status structure for?
