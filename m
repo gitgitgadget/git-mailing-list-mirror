@@ -1,109 +1,96 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBC13090D2
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 06:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770014768; cv=pass; b=qJ3EFCp/1h4VHjmHcOUR4LWOKXui9XU+jwZPZAYZucIUw2gvVoGscnTixbYAyMlj505YnLBudUNrKpyuSC2Z8/60y28KX33deGE9zrvsPovMoyR8lOtOHXenDpaIFgdzL0MQuM3FAWCI6Zj8FmhjEikD4Ncp15dMXKNlnX36j+8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770014768; c=relaxed/simple;
-	bh=L5Vh7pjEWyFa9wIEs22+rQZKVZc/HmSM40+HEzU7w4A=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=tr2jsKPm0M2gaX1O1Xe4rBKbhs3ajVn3j3LTB7JcsUUes8FwTOsYZVJ/vPoDe8tPtvtxVZVy1hlqtQcETwxDU0Mk864tjnWcRCLXOb01lY50SjgFMB9HFbDqxZt7cMAiEkWZG6BgVMo6WMUt8VqJfBQ5aZI5tYj7U5xxXNYEWoQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dbB/hG/C; arc=pass smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B1E33C51A
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 08:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770020166; cv=none; b=EjwNoVSwN75E3KC1jL5mHVN6dx+3WrMkIraULrYak5VhcIrcok4gzLwHhPy+bnVaoA6RmCqkcYQEmWAghnBpQvxpt+jo3qnVdU0MOZ0QqkagUp7zG/ftsiKrV49xFwbtO/5Bnkm7aB5gBsp2xpnntGVsPCCrXlOTlbKCqJ49Fw0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770020166; c=relaxed/simple;
+	bh=kq3D0KHzQt5hFJcOrYiEiaQdUxmKlQ4JZn1u+UJ6ZTs=;
+	h=From:Date:To:Cc:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=RGmpg3xoeaf4yhVOyp4tdOeyNSDjKOMuX/e6tJ5FskbsPNbXVbjHf/z6+sR+laZi3Wq1BDwiGfqEQt+Q5ZLZnQ5E0F2XKZTeXqjozgp8diJSquclgcI2zWv5QFwNAtrbuZmY9f1Mv29YCuViOu0g9IzZ7NfMzYHgY4/RGM5oZqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jk68Pnu1; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dbB/hG/C"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1248d27f2b9so5120576c88.0
-        for <git@vger.kernel.org>; Sun, 01 Feb 2026 22:46:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770014766; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Zkec1IsTOTQRNr0qx3KtOPyHeNmXdBrEhc6kJ4HDd2MOGBFomvA7xx5a41bO3mCQ41
-         tP1avZT8FPvn8BJKsyomy5wj3QQxHFmHwkLuHX/zVl47Oj5Gtzi0U1nMMmLaSslIxtQ8
-         HxrCiOZvRhVU/8jzPesmdM70TiX6W1mr2cH/goVlNDRx/dB7CHd6+jJQxV/2JIrg1ExB
-         oxQGVWP4XB8bzvZOrUtlmqfcaHOxRvkKAxvbIPNUUY6yyyyeH47b7k7YlPZ7klpkNepD
-         Lhf6UcLQTZAtZnhjRZ/puxRJs5uXqWTYwcESVRkItTZcOLQ7+nr171SzB98zxM6Eas8e
-         cI9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=FODzpoLyILkP3gh3k2SIvEgadXa5xlWtZIOXWyJGxWI=;
-        fh=DQcWdXvNWggLp4XCaJPRfMIVc816XpvXmPZ5FL6ExTQ=;
-        b=PDOHH7bsjcU2wJJtnZctNAjPzLcLybQk83YjQu14+2qjWjn55D0/cIcFYnLf7QBvNx
-         rjfhWoSjbS7FqpkPtU0Vlc8niKSvLJum70Fv9sPZJiVKnmXLWNwrfz4wAafXO2bXcQUe
-         F6MUoOzWZyw9aDJ74tfm2rGBfwt6xt2UEEkRWYXZ3AWigstvLJf3Igp7wU72FXfgHYeS
-         PtWVxUE5FLzCiwiHhN18UsUMqznGNPlq3PxxA1bT6rGoJ1vAoOYZRIMaW/DPZ4k3EAQo
-         zhLsg3IcCNZhgD85epKVuX5HrtQ0F5tCmwaPAKq13Fnl1p7gVEMeQUk7GvXFmroVFFY8
-         Oliw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jk68Pnu1"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-47ee2715254so21518055e9.3
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 00:16:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770014766; x=1770619566; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FODzpoLyILkP3gh3k2SIvEgadXa5xlWtZIOXWyJGxWI=;
-        b=dbB/hG/CLVPde7thV9EEDthSUy9k7tJA+e7LSgSQE4WjMZC1ldXoTB29dSw2uSh8/j
-         UfzeSQtl/dueh72LKVNPm0aodGh90KdSxQbcDdEwkgY8PEQPdSu8mzAbeUiXHs39TeeI
-         P3MPHUbXLHT0DNdikx2NiDiXvrsDuN585nPTIDvD80h9D2N6cQEIKWiuWBN5JzWH+FWw
-         gobZKNdFP6uklejrqlnBFURXLtjF1gWwP+l0Gj/7bJ1WPjY6X084x49NW5vTezTFz3tP
-         Jp/1Gwb0hPaK/alKwGF9AUU2gUT9gJu/pHS3kPOX8zr+mNGkWHcMQPvy0MD489KDcdqD
-         EV4w==
+        d=gmail.com; s=20230601; t=1770020161; x=1770624961; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:message-id:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kq3D0KHzQt5hFJcOrYiEiaQdUxmKlQ4JZn1u+UJ6ZTs=;
+        b=Jk68Pnu1jZyVtQFb33jVGIZWF8/J3MHWMo5takaHxR6CEenSXxoquzd2W1ZZcpHfIo
+         QgnSuWga06agk44prwOwNM8fKkuu5AEHRRRk8AhED99uFOaIOetG7XM5j7RNKxbz0zYE
+         Qv8F2g7AVNlpaSnprxtLOmYKLVZNR7ogPEZxBeZcz/R/8wjRbwsHedvJ4r1pcVWnlihX
+         Btmb7CHr/CJdIOTIHp9FYcMb+6Dz4iNOL7ZiKQ+PmR9kOPN5zAx2ukcUZadJZymw5TLz
+         GpW57Cg8hLsa8+AMMQL++JcSlFFuwsTKpPxjXRpbnsaeTngJlnhyqirgwxgHvw7xGtJG
+         o2dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770014766; x=1770619566;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FODzpoLyILkP3gh3k2SIvEgadXa5xlWtZIOXWyJGxWI=;
-        b=jJkjCYFmfcn2VQM5Wplu2S4UcXAsUpoy7rwL8P/egG9xfsSezatAUwoBm9sy/3lGHb
-         um34/6K/9J41O9wDN8IbEK1brEidAyCm+XiFBN6hCRNBdt1b2RSUVOVKkYtbVPv5xFUI
-         AfUp8HdRy0Rqo2qACsUSkMt6aki5XaKjh0JyrFgPf3sDmpHgfGQszYA/rhE41SGzSHvp
-         aIBjLnYSBcfmGJeK0T9c4q8ZTnHJP6vCEFqp5WssrfG2wTCLrYOrwpz1m0Iw+elQJLGm
-         DvGW9Qv7Fve6jDsU7AxQQqUUP2J2qypAXTXERF2H9xeKsFFoqGtgI3tIKkc0aWKNuxYe
-         U3kQ==
-X-Gm-Message-State: AOJu0Yyp9y8MVJsd3JvSTYTJpMLocmROYyrnrgt1by+1N4fmqnnYRmAb
-	JHlNgTfPoje1vzY85L6EtSCZfQTDRRIwjLPgl02Re6rjEc1cyNtudDlQwz3Kqb3xBZ0QOkiW/Xy
-	EDkwAP8AePfqQqNPARyBZI94RJnLPQq1pd6d+
-X-Gm-Gg: AZuq6aIdsAK28VWZ/XK4tnfdcNJZ1F7sFsMVUhLTepCfm5C7A1yqWEfO/YzjFrZ9o8k
-	pcPO8X/mDvTgYR7oTvH4T/wEAYK+pxxFcwTXbacmG0nbvlQ8m/wbxaprkqkzRpJbjZQe3qnrBqP
-	qsuOl2kKiodAQc/M6Sn8+ZC91RBpLDh7tvqj4IZHC1HUm6zhKIaYeqJB1cPjAJ2QtUPG/Xclcds
-	LJpDZ8Zj1ahz8CNYYJdW8fz1FNn5eNM1GNcqQDCEeHR2e4wUE9xMQEXMqeGDhx36xqRXEic6vXZ
-	DHQTfauLEFmb9U1r2msgtq6E+L442gk3GcI7RriiJycgDh3SeZ0Pxvdk
-X-Received: by 2002:a05:7022:1283:b0:119:e56c:18b3 with SMTP id
- a92af1059eb24-125c10009a6mr3759199c88.27.1770014765759; Sun, 01 Feb 2026
- 22:46:05 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770020161; x=1770624961;
+        h=in-reply-to:content-disposition:mime-version:message-id:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kq3D0KHzQt5hFJcOrYiEiaQdUxmKlQ4JZn1u+UJ6ZTs=;
+        b=O+DWfTz67eKxxIskxuakjVItHVe3GVQqTolYmEHL3AdCoNWHDCJ6uMGRdYelMqBnDn
+         fNpV9qLAKQbdU8xAyNidk7m1HRODnhnsla33tJt9rZKXyGRGrPdhpHUjqN25M5yZm328
+         BfRrhja9Ikx0yKuU9kaL+MjL3AnMMbxfY9FbUot3xI28dHy7cACE0m6XmqhRDqtv3jnw
+         apThE/hoG+879s6Ecp1gcQlvymI5OYAnMhhcDoao6TSXuDQs38K6WSZkLblhqRzuhLUj
+         L3xJS7FG4EFDeta36gZlkvB4n7mFEaxNuRZmkPC1nDF2BYb3ZhZvrW4DNI4ITr38fCk4
+         xHHw==
+X-Gm-Message-State: AOJu0YykEQFKLXZQMlU1oPF22OAqI7Q3vFvcPPhpYWOW/JceXyhtAt/7
+	2/wUe4frZ3IdtNLnMRKXHprVch+GOZCU0A3BaOXtHtrcGZ+LC8QPC9HR
+X-Gm-Gg: AZuq6aI9Q9UKAq36mEONxUMHDhTE/p6hxDWDylxdUNUb0TjASW1p5qvjRIIcZjDwDG3
+	6GXJYFeWZF3Cu1NtnG3F4eoITPbS18Ob9kobqAu/rZ+nL7DAm+0fYJGVUDf6EPHLxlRzCO4S66u
+	qfPBHYWAUoK5AYJ0FbGspMOpiDxB7upj/ZTt95Dd5n8OtzI2kpupPw125WRbyqVivOSjrRMmH4l
+	RqMczzmxvH73dv/1LRFdF9nck8ZwmjPhkTlF7RYfIbvuROMWuC6GkoH4eks1ktV0exHxncMk9Zq
+	tp3bTX98av+v9C0jhNu1Jy1O6Hj8GIUdSYNldmFVPkzxvC03nMwJA1LI82zDT/in6YcZK2ITk75
+	hdFYHKSyUZor1pxM+ay9kFLwUgpLjrLzKuGMA3Ysadb1H4QrB3+KE0HAmnK5xZ/+wf8oYMgKmUg
+	OyQ1KT/tsu2gQ5LcrkrnWJUuAgrrFRYKTa+JD6bGAeCiczSO/0zMzxrA==
+X-Received: by 2002:a05:600c:8716:b0:47a:80f8:82ab with SMTP id 5b1f17b1804b1-482db48d4c0mr141894185e9.24.1770020160933;
+        Mon, 02 Feb 2026 00:16:00 -0800 (PST)
+Received: from localhost ([102.88.77.2])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e10ee040sm41803641f8f.11.2026.02.02.00.15.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Feb 2026 00:16:00 -0800 (PST)
+From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+X-Google-Original-From: Abraham Samuel Adekunle <AbrahamSamuelAdekunle@adekunles-macbook-air.local>
+Date: Mon, 2 Feb 2026 09:16:10 +0100
+To: valusoutrik@gmail.com
+Cc: git@vger.kernel.org, deveshigurgaon@gmail.com
+Message-ID: <aYBc5rQeAgOFcrxc@Adekunles-MacBook-Air.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 2 Feb 2026 07:45:52 +0100
-X-Gm-Features: AZwV_Qg4EwY14p0UaSfMt0r1uGHcoqlncRu6NY0LSkvFlo9raAAmksgGXDihq2A
-Message-ID: <CAP8UFD2eGzRHj5EiSjEL4Ds1OkMjxM+SPcWW8E7tC4TA-4c3sQ@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 131
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Stefan Haller <lists@haller-berlin.de>, =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>, 
-	Collin Funk <collin.funk1@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Toon Claes <toon@iotcl.com>, lwn@lwn.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPHqhPkuCLS4nndNe+2Hib_Jipb06t+mSFMiON77RHMDxPY31g@mail.gmail.com>
 
-Hi everyone,
+> Thank you greatly for the direction. I did check the microproject
+> page, and the first contribution page. I haven't fully gotten all of
+> it , but I am making progress.Right now I am trying to understand the
+> first git commit's code by following this :
+> https://www.freecodecamp.org/news/boost-programming-skills-read-git-code/
+> , ie the initial 10 files. And from the microproject ideas of Gsoc
+> 2025 :
 
-The 131st edition of Git Rev News is now published:
+Hello Soutrik and welcome to the community.
 
-  https://git.github.io/rev_news/2026/01/31/edition-131/
+Please try not to top-post and favour interleaved style.
+https://en.wikipedia.org/wiki/Posting_style#Interleaved_style
 
-Thanks a lot to Toon Claes who helped this month!
+While I think the link you stated above is a good resource, I think the
+My First Contributions page is a good resource to get started, after which
+you can find a microproject to work on, push to the mailing list to understand
+how to send patches and the review process.
+I can see Deveshi Dwivedi has already suggested this to you.
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+Thanks
+Abraham.
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
-
-  https://github.com/git/git.github.io/issues/819
