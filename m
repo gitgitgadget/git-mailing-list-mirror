@@ -1,88 +1,175 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768151DA62E
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 15:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD0526738D
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 16:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770046249; cv=none; b=SLA1gjLrZ+qKKJxOibWsxVTrOemwy41yFFaJk5Mk8i3NKczVysCBBZ3pVLmTIFBOwESBJiR4Enpm7/7JZcPyEpInDX+kHca4HX9vYci0qRZTZELxBn0HfCtbbGTQzBVOSVqOUd6dhzEs4/slkpj9A2d+dzORBtDAAzQZCjMoSQU=
+	t=1770049277; cv=none; b=rxlle2Fu5TEGDDG7HSGYOysj4DGjWQxlAKw+W+QRH5Mi+Lh2pXNmxSrve7M94wbnLplNjmiZYLyiAZszbrjrFnYIBJXPVyfuSr7Klu7CZ2nUwSvSPyQysp6nwS5bHUbWUeR4OHMzIJjuEGJq4xYyiQB9+UFP+T8t7oAQ2K3tuOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770046249; c=relaxed/simple;
-	bh=HUdFvmrHwPL5SxJOb40of6asld6/2lSzH820D3JXGQ4=;
+	s=arc-20240116; t=1770049277; c=relaxed/simple;
+	bh=a8mCmuQV89PHML6tBa+t9k7RiqocWhD3MnKHOa5SUa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RXgdarwos2UMqP2SLwm2HyU+cTFNlAXYwLQmqnv75D7YM79t6e5k5JZks2ZLpl5pEKL17knHTowFnAkMwz4svaJNQ+c7rJI3G2kNdBekvH/qao0K+Z5nco6YyqHTaKLsAsqysVDwJTKO/Dfk17xA25Y9tJSKBCE39GdAkmk5NCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZLE2y1Lo; arc=none smtp.client-ip=209.85.208.176
+	 MIME-Version:Content-Type; b=g5jOIHneICLZTT5AsQaBca75Z0dVKj0PunpGVtdOTRSd+XxgynQpiWX0W7iNtlBb0R2F1tj5DVn5muxAJOsw5QVI67F7zq6ojct3h6NAf+7PZIv06fy9jfCWunz2JrbwJr7aN1JyKp40da1mPu7TcAMXmQW8Tna0SoQ79tSL0UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fYGe0uhT; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZLE2y1Lo"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-386714da2a2so7869861fa.1
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 07:30:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fYGe0uhT"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-50334dd44d2so54036411cf.1
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 08:21:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770046243; x=1770651043; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770049274; x=1770654074; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HUdFvmrHwPL5SxJOb40of6asld6/2lSzH820D3JXGQ4=;
-        b=ZLE2y1LoXSxoGjm7ZpHq03TeHrPR9AOck8E2imhj3NXuJuip42D0KWuqiYwMAB6R0B
-         06WKkvkpLWqJDLmgsSPtCuzkzE/7HOn3xPaUhzHaBBvqk5D1zariWu4/mUTxDMZxMgCx
-         rQfQTdvt0MjeRa09a/1iuohFBU7VqcqYHV/fFph+Dft9aLAZHgOodpmDatL30XedgFGq
-         T5oLCUMCF8rIrUkqMOBLpwlnkznZt3JgcHTuwPMm+xKWU/HUPsl2r/KdTLPhqna7bJwC
-         sPN87WxOI/7vIr/MUyC/Z8nhuqVa9LYDOhzp5jk88LWSzAnfV7xbEXaElr3EScUxPzhb
-         r4dQ==
+        bh=uG6Jfk6s6LjCYhL29YpFYzgcTGuPZp7+HiXdjm8I7io=;
+        b=fYGe0uhT7Sv4dnfO7p4e+xVHz6ZsX3Hag8n/oRGiEeIJ6osfl5jbHdGHwg1eoxhEmd
+         AXFUrNdY4XdwppoonIs12COrV24tuCfHClSBtByElaOBt8GMWjwhVRjrDMEC++HXRkhx
+         XRw5eZdGFGKdUzeAMq2QEK3wPynYUrSA/TseyOOVYwGZ9hFc+YtTSnXjsP4rvrKD6ZD8
+         mGihaXBE6M4I+4oVyRmyJ/M9BwDrDU0KHPKVreCM1cA3jeKsHmvxIyvlhBt4mX9ip8TO
+         Q+kmHEZ/jBwQgZY1yknsoD1AnhQBr4WkoK+c9chjfLHQxQHK9XiJn7cHcb28XLvUi1Vq
+         uQvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770046243; x=1770651043;
+        d=1e100.net; s=20230601; t=1770049274; x=1770654074;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=HUdFvmrHwPL5SxJOb40of6asld6/2lSzH820D3JXGQ4=;
-        b=E7o4Org957URVIgXNqa3GwEnyHKOA3E7eFmNKg1wft0GLo+l8bZs83Snih8GGHvhrh
-         Q3Ys7gIjdNjpD9qjgRb/VX2lGDk5N3QeiW3r83i/gwMPuZNXA/PHPLNTlSZRBeqUyH17
-         TMftvJONC+p2ya4TbH9fptKNW5IWHs5qT5cuqEZyxkvhhrRgYS3w17qJ3vPF4rZVhZBY
-         PfTvzsI52CubivkbVK6kUrB29E59nXk9/3RPRtiBkqT84h2LMUTv9+4Z5pkX0hUnS5Yr
-         BDp/sTHirhj6ivyu/FU4c1QRxFaVYhDbgYmlVyCB1vyvBOA9amVU/1DcpLRCXdjWFa5I
-         lwVg==
-X-Gm-Message-State: AOJu0Yy+x+IEeC9Z1TwN1jzvdDwIyAbu0UK0oaZut/STeFffvwODqRw4
-	6XoW4FIYUo8PhMscz7Dk3JiC/mO/udeZC60Ue06lRFFwabpjIf47zRe1xbGt1w==
-X-Gm-Gg: AZuq6aJu7w525sHggL+HHFn/1HinT8h+H/4q4+HpaYULVXkiSX5jGpHn3/Uq8ew0SuP
-	RHSiUcEsiJ3ZyFGaejuKy0XRNR3WnQo5slwoKqkdLlynDdPLniG0TlFkcWLqMKn0F7OHyUIuvwH
-	JpzK+jilioiQY2sefDSq2nN4VEJsaXtO9GZZSxpp53ghDaarsARh7qprUC2t3hLdJoqYBOkOU/y
-	ubEYpNvPQ904U+ukp0ZvKAual1CYIuy9/YHgSutWdTd4JTVKah3Gri+KaZWBx3kiqhPI25ZuuFZ
-	v8VmSDNZJ7jbnlElCvdAcDbqL/qaM8r3vwjr8YezNoHN1w+J/lkWqowfSQ4zr00JGAA7S36M4Ys
-	C5eWIaHYODo20Mt3i5yvGRUVpyKgj4N7dxNTTU2Dh01wxOQKDthw5B3fV4RR7MfzyDhM554M2ar
-	todsqjSaiIc+mzTn879aSxcQ9fex938UyiFxBWajQzuKXpW9ADpqSQMJ56dfBm71R/EI8ImzZlo
-	H1o
-X-Received: by 2002:a2e:ac12:0:b0:372:628b:5cb4 with SMTP id 38308e7fff4ca-386467224aamr42305011fa.45.1770046242582;
-        Mon, 02 Feb 2026 07:30:42 -0800 (PST)
-Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38625fd37a2sm34299481fa.50.2026.02.02.07.30.41
+        bh=uG6Jfk6s6LjCYhL29YpFYzgcTGuPZp7+HiXdjm8I7io=;
+        b=iIMvCN+OQarrJDjJOvstHasr08I+h8B02EEXfnXOFntBblXrZJZzl9vQsfxo/9P43r
+         4bt164eNiTD45Bnd71TFhEuZSaRc+0xsEIEK1Sjsq/Q3Ny+LvcLknsRyupU/B+d+codB
+         m/wbOs9K0Lr0HKUJz4kcc4oHsBmQ/8Tphb58RGbSaw+OE8KEVzvRdtqvYyef6sO5lqIR
+         nJUC5KhjOLY1PPuoOcnILm6M3g+s+FMNAkzddr0kiIz90t/qZZA3bKb8aEtSlWQLdMBw
+         X96MeQURkKN0BaY/Ab1eO78OG6TY9RhrWD6KZbBOLc6jNcU0MKeR4nW3EzopvSK/GqVz
+         8AvQ==
+X-Gm-Message-State: AOJu0YzF9cpPdULI0rNGouDvdi2KY2lJfCZ8waVNV6Ui1SGOkWGng78H
+	raHjzc1+E1JTdrL9HTgRsaCv8z2h81e817UtiRPypuIo8xNNcdbOBymDO30uYVOI
+X-Gm-Gg: AZuq6aJ6qQG0Mmiz01CqFUGnZRDFFZ2sebRMwB9+T5DglpD9BNvWTW57KMqxrm1R/zo
+	POEsCSy1axWSa4v9G1VNG5a8mghvHgGH7tA1vDISVD2bzwNz+8YPRB8xRwMBkBcd+cHwlSvwWna
+	txCJ3mPksRcVypXe7ETo4SGvrl7Y98n4c/qd/0ojtER/g6D+TjYdl6prLLbwipQH6nyX0xK5gub
+	dhYwamdZvWT62CRgGXT7ElIFbDAw5pC39vc8ul0ld/NMCSAv9Aw3KTdrNALGQq3o7ALmOOuUqfE
+	Gd7S+ovUAS+pFuLXihbjnwlNaL8dP5PXHNUaOFuSFIYQ4CeFwmGczfKH5Ms6yVUsVdPGJPxoeED
+	OgjWQfB0Bv4Y8Cmt4EkNT1LTUb2Buc+DM8tL+5qvNQI+5xNsnNPlo/v4VHrbTwkrG/83MhxL1p8
+	fKVci4xx7Mes1rTcMjtOLSaOEJyhqR4A==
+X-Received: by 2002:a05:622a:1810:b0:4ee:1b0e:861a with SMTP id d75a77b69052e-505d21531a7mr183394081cf.13.1770049274404;
+        Mon, 02 Feb 2026 08:21:14 -0800 (PST)
+Received: from MAC-XFC3JLX ([130.41.151.226])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5033745c426sm110096631cf.7.2026.02.02.08.21.12
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 02 Feb 2026 07:30:42 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
-Date: Mon,  2 Feb 2026 16:30:41 +0100
-Message-ID: <20260202153041.2939-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqqjywv2une.fsf@gitster.g>
-References: <xmqqjywv2une.fsf@gitster.g>
+        Mon, 02 Feb 2026 08:21:13 -0800 (PST)
+From: Hoda Salim <hoda.s.salim@gmail.com>
+To: git@vger.kernel.org
+Cc: HodaSalim <hoda.s.salim@gmail.com>
+Subject: [PATCH v2][GSoC] t9160:modernize test path checking
+Date: Mon,  2 Feb 2026 18:18:00 +0200
+Message-ID: <20260202161759.84355-2-hoda.s.salim@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <pull.2160.git.git.1767625195071.gitgitgadget@gmail.com>
+References: <pull.2160.git.git.1767625195071.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-> So the @{default} we originally discussed was not something that is
-> "relevant for each repo", and where refs/remotes/origin/HEAD points
-> at has a better chance of closer to the relevant name?
+From: HodaSalim <hoda.s.salim@gmail.com>
 
-This is a communication error on my side again, my goal was always to have
-someting that is relevant for every repo.
+Replace old-style path checks with Git's dedicated test helpers:
+- test -f → test_path_is_file
+- test -d → test_path_is_dir
+- test -s → test_file_not_empty
 
+Fix typos with the word "subsequent"
 
-Harald
+Found using: git grep "test -[efd]" t/
+
+This improves test readability and provides better error messages
+when path checks fail.
+
+Signed-off-by: HodaSalim <hoda.s.salim@gmail.com>
+---
+ t/t9160-git-svn-preserve-empty-dirs.sh | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/t/t9160-git-svn-preserve-empty-dirs.sh b/t/t9160-git-svn-preserve-empty-dirs.sh
+index 36c6b1a12f..de32cf2542 100755
+--- a/t/t9160-git-svn-preserve-empty-dirs.sh
++++ b/t/t9160-git-svn-preserve-empty-dirs.sh
+@@ -61,15 +61,15 @@ test_expect_success 'clone svn repo with --preserve-empty-dirs' '
+ 
+ # "$GIT_REPO"/1 should only contain the placeholder file.
+ test_expect_success 'directory empty from inception' '
+-	test -f "$GIT_REPO"/1/.gitignore &&
++	test_path_is_file "$GIT_REPO"/1/.gitignore &&
+ 	test $(find "$GIT_REPO"/1 -type f | wc -l) = "1"
+ '
+ 
+ # "$GIT_REPO"/2 and "$GIT_REPO"/3 should only contain the placeholder file.
+ test_expect_success 'directory empty from subsequent svn commit' '
+-	test -f "$GIT_REPO"/2/.gitignore &&
++	test_path_is_file "$GIT_REPO"/2/.gitignore &&
+ 	test $(find "$GIT_REPO"/2 -type f | wc -l) = "1" &&
+-	test -f "$GIT_REPO"/3/.gitignore &&
++	test_path_is_file "$GIT_REPO"/3/.gitignore &&
+ 	test $(find "$GIT_REPO"/3 -type f | wc -l) = "1"
+ '
+ 
+@@ -77,7 +77,7 @@ test_expect_success 'directory empty from subsequent svn commit' '
+ # generated for every sub-directory at some point in the repo's history.
+ test_expect_success 'add entry to previously empty directory' '
+ 	test $(find "$GIT_REPO"/4 -type f | wc -l) = "1" &&
+-	test -f "$GIT_REPO"/4/a/b/c/foo
++	test_path_is_file "$GIT_REPO"/4/a/b/c/foo
+ '
+ 
+ # The HEAD~2 commit should not have introduced .gitignore placeholder files.
+@@ -102,14 +102,14 @@ test_expect_success 'clone svn repo with --placeholder-file specified' '
+ 
+ # "$GIT_REPO"/5/.placeholder should be a file, and non-empty.
+ test_expect_success 'placeholder namespace conflict with file' '
+-	test -s "$GIT_REPO"/5/.placeholder
++	test_file_not_empty "$GIT_REPO"/5/.placeholder
+ '
+ 
+ # "$GIT_REPO"/6/.placeholder should be a directory, and the "$GIT_REPO"/6 tree
+ # should only contain one file: the placeholder.
+ test_expect_success 'placeholder namespace conflict with directory' '
+-	test -d "$GIT_REPO"/6/.placeholder &&
+-	test -f "$GIT_REPO"/6/.placeholder/.placeholder &&
++	test_path_is_dir "$GIT_REPO"/6/.placeholder &&
++	test_path_is_file "$GIT_REPO"/6/.placeholder/.placeholder &&
+ 	test $(find "$GIT_REPO"/6 -type f | wc -l) = "1"
+ '
+ 
+@@ -133,19 +133,19 @@ test_expect_success 'second set of svn commits and rebase' '
+ 
+ # Check that --preserve-empty-dirs and --placeholder-file flag state
+ # stays persistent over multiple invocations.
+-test_expect_success 'flag persistence during subsqeuent rebase' '
+-	test -f "$GIT_REPO"/7/.placeholder &&
++test_expect_success 'flag persistence during subsequent rebase' '
++	test_path_is_file "$GIT_REPO"/7/.placeholder &&
+ 	test $(find "$GIT_REPO"/7 -type f | wc -l) = "1"
+ '
+ 
+ # Check that placeholder files are properly removed when unnecessary,
+ # even across multiple invocations.
+-test_expect_success 'placeholder list persistence during subsqeuent rebase' '
+-	test -f "$GIT_REPO"/1/file1.txt &&
++test_expect_success 'placeholder list persistence during subsequent rebase' '
++	test_path_is_file "$GIT_REPO"/1/file1.txt &&
+ 	test $(find "$GIT_REPO"/1 -type f | wc -l) = "1" &&
+ 
+-	test -f "$GIT_REPO"/5/file1.txt &&
+-	test -f "$GIT_REPO"/5/.placeholder &&
++	test_path_is_file "$GIT_REPO"/5/file1.txt &&
++	test_path_is_file "$GIT_REPO"/5/.placeholder &&
+ 	test $(find "$GIT_REPO"/5 -type f | wc -l) = "2"
+ '
+ 
+-- 
+2.50.1 (Apple Git-155)
+
