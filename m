@@ -1,268 +1,296 @@
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
+Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1852A2D3725
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 09:37:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770025037; cv=none; b=KfkR4Frw8iYrKtC8vBpf7nwZ4tLX0o9jStaypWBuq1Kw6P7cZAqzyJg726X2PQZGei5Fx74SJe3bZPKr1BKghnPLN0ig5EdQMoyZJ0btM1RYWSo427AF6aBf9lbKLROTkpEmpLYbNqjzooGigJDQzoM4Ky6z+EV0a62UpwlEMzQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770025037; c=relaxed/simple;
-	bh=xsZScF3n8cXqZj6PudJsryFYg1wMmzQdyABEwu8yNTg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e1mr08HULkbCO/UmPSvyjC9Ty4KsN8oWO3YcPBG2qU45xrotwxatPd2+phquzXoWp2Jy0CNkQa83H1AhB+MP2KLbyNbZzaFnpEXU3OIW8wt/HjpKFfUAqxKwbglMOhkOvLeJUIU2RVDo/iezyJkhGRJf0DJvPD5EgdeSunBrxKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ay4Xnpyv; arc=none smtp.client-ip=209.85.128.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A2013DDA4
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 10:02:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770026534; cv=pass; b=MXkr6c0sHaBi/mhvP3qEOvcFdkn+Lbov5GPr+bAgfn1i76iGOCxjsdJX9ifmBhLRlw6YFqiMtNj1Bcr0TwnlXxXcp40uuScvqRevYC3thlfAnmDQLeiscBIYNfkFvJCDRXorh5Wd4OHunCH7UnqX30lP/ArocTl2AZ/GxXK7eLA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770026534; c=relaxed/simple;
+	bh=iksHaKVIt1dAInxrx1CoAQiNJQuXUquY1chlKXZscao=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=llotGSZZK2ydwPTPUKN8/2hDQb+w4kaurdWNqJMZm1ALNth8a1ny24783SQeURSKPJ/8ye954cujgS5vFnkaBmuXw7DNTcBalrWl3nQfl7bnfaf5eX3+/wu3cRC4UzHfqlaZFOXLeP2KVLXQsrlVk8iz2ly5lFC5MEzR5q2gQ4g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gC9RfKXJ; arc=pass smtp.client-ip=74.125.82.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ay4Xnpyv"
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-48068ed1eccso38517805e9.2
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 01:37:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gC9RfKXJ"
+Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-124a95e592fso4466545c88.0
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 02:02:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770026532; cv=none;
+        d=google.com; s=arc-20240605;
+        b=G/tEqC2zvK/NCZenyy0xOdE2jcY646uKhAe8SMPwoPJJ6Agws074Y9mlrB3irQVW14
+         nz3CRdL7Qmyuu/OS9svHhSLUMgg+fZFtAf+PTRWGPWUPQJZzuRp3pLjf967WWyz2iBoQ
+         lV1MlRMsCbrDL3jW6E+RYMIK19DzascNikmz5BhmiwHLPOOJu92WKrBaG9jHrWir2qh5
+         +YKrippnBEbxLDZrikSIPDRJIFw6Y1l1eZMz3Nv1U9yhSmPccDwBTtNyIblxdrXD8rbJ
+         DNrJgcDRftB99zn45VNs+SDzrRveGJiT/klRZ5lk8i8iSUnzzwE2bMmP75RGYXGDhcvP
+         VGQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=qwfHEmwHgqmaeJTOVJvonKcURy7EasFZeX4UN3P+ruo=;
+        fh=qWw2BFf3iBkt8X+yoRVRz87y5Qgl3Fk23Rta4toPL2U=;
+        b=KVr5B+J7fD6GEygTaTOqNXmQyKphS/3r/57oiHQLN9x6IbkFkb7RgfIETvEG+o//Fs
+         QzWTabx3X5IFdJaXRgh2z+EG3YPlEd4+yT8UpnK7vPPeaVL8SSE47NQWjyojPLdctIJC
+         mGMoe3IRBgWkffde9aWH8jnZHFoWCImYHGiBn5HRik5NpJxu9E8zRM9n7yYT0pD8T26D
+         gXsPaJ8B00ZVUSXPyiO3X82HAHKfKan++m+s3W8Ecg94BvWlAZ8zCUsfB6icTk0Bvxe3
+         vMUfrsmDzLggpzgGREtDq4KDQxl96LfkedqDMeSEZ1tPQrFeBr/TgF/ogc5bMkR+8lv8
+         1ztQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770025034; x=1770629834; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cmlfSpMEo/YiyLi1oKZgl2QGgr2yIaoUk2MKo/ecEJQ=;
-        b=Ay4XnpyvGWVVb9EU8tpHUvKTxWheWYsI8c7wOrbW8ixn80FkbgNQNDd+SZz66jAyCE
-         af4O1Kcp0mDD0l0N0npOlBueorteAMYTv5GsCdO0IJDtLIAOYodlLp17zqBoPf3rG2kp
-         nUoidyJ8QV0d9RAziL8vldMebWvOPLPEyDQxnpFFcqd2YR2n1ubL+OpK775IY3kJSc6k
-         iwhBcgPI+2qKfHo66tPyJKakQwREPClz4R7N15H6oG6FD8uyFDY4pMMlZNVRvzqF7ZEW
-         mTa2o1DAItdyCa0disGsk1o1SkCNOCbsc8oZM5Jy45kfo3rNPZheVhhEOvOi1pHv6XwP
-         j6AA==
+        d=gmail.com; s=20230601; t=1770026532; x=1770631332; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qwfHEmwHgqmaeJTOVJvonKcURy7EasFZeX4UN3P+ruo=;
+        b=gC9RfKXJBrN22Rxzo+YvQWiUuhetfWMgmfGRtowbxk7fV9Zlh6qje53OqcIwwawvei
+         7/eNNvbFMOkVnRhzG9rWyaSRC7eGkNeBi9Aj3P5FZtbuFtCJONrC79b7HaI6r83Yf3Rf
+         Kv3g2kJ104exbbJ9tK5bKwky7zG4nk3+7WWoU5VC4Sj3EBaNQ6dN7QmctNs51DDcSJLP
+         DoXYjg5w+0KHmAWqep7t0WkxBy4Z48Abynv3qr4CEcIrlwoYcjLv4heTBCUAK2FacAXH
+         k8Ltf04dLd1fyURoFT/bTtHfKuiZByf3KCrXKZ8otUhH2IYq1SiahwUGj36lFMoDQlLV
+         I5QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770025034; x=1770629834;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cmlfSpMEo/YiyLi1oKZgl2QGgr2yIaoUk2MKo/ecEJQ=;
-        b=da8JvvJH/+m6wmTsAyHaadbc1hF74nqDG3yShoygxgqSUKiht2+iJm1U8wjwWEb/l0
-         AiddasvKXLmi6hr2fOBkIMtyQ8Aa6Z2Vv0sREMIP1TdhsmvLgFOAhMf4D+yC7MRqBvME
-         SXdK+obUI1PwTgbL3XlEEqIqUfRTRiCMVxiHnWle5mNUr/LN6hc/rlbZAtHGjKc7iaLU
-         jFovNS9ptowaHnovFL8zxQ1++TQ/ZKbwcby4/Sn0QKuk8SI/A/cxwQsg1r8oJFJb2HHE
-         L6pGkUtBz+CBjmJfe9mJaJ+VLm96qyebDUhdlob+oJpPl7oFe0ta1Bcg6Q33rafEwuB2
-         ULhQ==
-X-Gm-Message-State: AOJu0YzZ+//27e27UFu1Ro2mPAFSWDEqkJ1H+pYgjUREclqy+LMerz9z
-	ZbQf7Ig8k3KjMGOWdu5TIXh0O0lSkyQo628pogYpHoQkehOPsNttMiQi
-X-Gm-Gg: AZuq6aK1hOMveanzxhN+bjtACvMdJsx89QlYr7NHzHVWWDuhs1Bk4Zngkb+YikC4e4e
-	zsPAtv52gSz4xNlcFghbeBgwAjha2DPKbgzszVSiW90OXPtVBqHAmJ6ePXRBhJwPB0Y8JiVzcLK
-	ZA7fK0Fb1h3IU41qqw35tXKoNSIM1EcNTH/huuQaGZD68ZSj0WXtEtFBt25DV03yNB2/CHrRQCw
-	w8IDN3ozRAEDhjHt+UA0UEJRfTYzgg65tcVyO6DmjTW+4gdlvtoFjYarik3w36rWN1aWRns8Fd0
-	4pg7L/g/eekGglvRr9VNYAnWdFNu1w0WaWm5rdSE7I/vW1VIl9hVl3hIr+YrP+Trgw0o4pl1NLB
-	BZmx0qoylSRF9gJONuZTqxz8kfmozg0Cu78+AFsDAaL1f8/WSCEyP/AxDBeqLiOLy0QBW08Vq9b
-	ASOrIDN8vYnQMAoPaet0T1eiyuWbpulOheobS+DFCFcxPTwagqouVz1f+dftSHatX5Eg==
-X-Received: by 2002:a05:600c:1385:b0:480:3b4e:41b8 with SMTP id 5b1f17b1804b1-482db497d9bmr138633035e9.33.1770025034139;
-        Mon, 02 Feb 2026 01:37:14 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e1353f8bsm40572190f8f.39.2026.02.02.01.37.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Feb 2026 01:37:13 -0800 (PST)
-Message-ID: <d92bd08f-abee-49a6-89ad-3be5e0c06ad6@gmail.com>
-Date: Mon, 2 Feb 2026 09:37:10 +0000
+        d=1e100.net; s=20230601; t=1770026532; x=1770631332;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qwfHEmwHgqmaeJTOVJvonKcURy7EasFZeX4UN3P+ruo=;
+        b=GlDwjGZatu1ZegWOctmHUfOCBmKx56dqrbYwqd0tOR+Cp6PIqS5U8B8+HInx77vOIM
+         gqdZLnWL15ie063rSITEGC7Ap7fpNJWyAXVfI8TnjXRJcg4xaqdDuceTqqvuf/Le7+0Q
+         c6lwfCEMcQF17iQcQO9AyGX4KjejCCk7RTUIDl/MMXl+sMEWkPolfBQljPWVeTf4bPn3
+         +fzdbrWoyrNS2V0FJLNAD++rkSCY6BTH48NRPGvlKDi1edN2TbjqSgqv6xhKGjZAWA9R
+         cZrgNk/ZqbgtVZ9rS63bTzksOu8ZDi6cFOHn2YmPVejQtDjm01sqnqlHm0Ruxa7BuVfz
+         IwwA==
+X-Forwarded-Encrypted: i=1; AJvYcCUw438kB4iS+6m6xwHeyH8lpvvFPYEcfDXy8P5t097d/HWtF5CD0Ms4OVrPgSRnPailBLE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDAr4NJV2gch50gPq1t/S4bJOsQxigzLrNJdNtZzehsbRSWGe/
+	tqEvSXEw93tZbTD2SjxY66DQaMtx2Lbny+3noPXZnk9nmWiYd2Q99yl935RAfVdC6FFJXiQw+1F
+	v1aPXqwtXbQeNSsDpJm+hsQLKt2CHIQ0=
+X-Gm-Gg: AZuq6aJggxTMaLfbEfsKNMgqM3kcVa51Pxzd9fUymYRLi2USbeGe+DfPbkwpbAYze9+
+	KjsSrzlJjw/yQMd4T5N0uQwta3Yz4HzZamcdDGfgQweeKZgTo78mBe8X4F0uqDfSfKCXehEbjV6
+	HcbGUh2zDyFRcpV8Ad4QjzxizIxOb5c/dRLPTH4YOlsDsO85TaTT5/jR12xKaH4UFxh43YQNAcv
+	KDlh2SZskI4irACICL5wgGZ2BIPkYUA/iZjBtYx+6j6bNgClQ2V7fZVdxjmut0i0MGXzCvMDfIb
+	dilui6tkvZbdJc/bP0twTnmSXdqnzA==
+X-Received: by 2002:a05:7022:418b:b0:11f:3d55:ab9a with SMTP id
+ a92af1059eb24-125c0fa6663mr6562194c88.13.1770026531946; Mon, 02 Feb 2026
+ 02:02:11 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 Feb 2026 05:02:08 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 Feb 2026 05:02:08 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260131190106.389289-2-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260131190106.389289-1-shreyanshpaliwalcmsmn@gmail.com> <20260131190106.389289-2-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
-To: Harald Nordgren <haraldnordgren@gmail.com>, gitster@pobox.com
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com
-References: <xmqqv7gh4mpw.fsf@gitster.g>
- <20260131202232.9213-1-haraldnordgren@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260131202232.9213-1-haraldnordgren@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 2 Feb 2026 05:02:08 -0500
+X-Gm-Features: AZwV_Qim1Ue1C-5qEmULIfKsPKeThTh4KMEOyo-TU466a1nD59nmIWkDZhTPNj0
+Message-ID: <CAOLa=ZRv4xsy0adY_BcXQkypsgYkLNM6x5LhJGX+B+=aKCwmgg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] wt-status: replace uses of the_repository with local
+ repository instances
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com
+Content-Type: multipart/mixed; boundary="000000000000ae75380649d46aa5"
 
-On 31/01/2026 20:22, Harald Nordgren wrote:
->> So in that sense, I do understand why somebody may find it useful if
->> there is a handy short-hand for refs/remotes/origin/main (or
->> whichever branch is pointed at by refs/remotes/origin/HEAD) in the
->> above picture.  And refs/remotes/origin/HEAD already does have a
->> handy short-hand, which is 'origin' ;-).
-> 
-> 'git checkout origin' doesn't work without resulting in a detached head.
+--000000000000ae75380649d46aa5
+Content-Type: text/plain; charset="UTF-8"
 
-That's expected because it refers to a remote tracking branch. Please 
-correct me if I'm wrong but I think maybe what you're asking for is a 
-shorthand for the branch "$b" where
+Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
-	git push origin $b
+> Many instances of the_repository are used in wt-status.c even when a
+> local repository is already available via struct wt_status or struct
+> worktree.
+>
 
-would update the remote tracking branch pointed to by "origin/HEAD". 
-I've not really thought this through but if that is what you want maybe 
-we could add "@{local}" to give that branch. Then, with the default 
-refspecs and with "origin/HEAD" pointing to "origin/master", 
-"origin@{local}" would be "refs/heads/master". If you created a feature 
-branch with
+One missing information is why is it safe to make this change? If is a
+repository field, is it holding the same information, is it always
+defined?
 
-	git checkout -b feature origin
+> Replace direct uses of the global the_repository with the repository
+> instance carried by the local structs (e.g. s->repo, wt->repo).
+>
+> This helps reduce reliance on global repository state.
+>
+> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+> ---
+>  wt-status.c | 38 +++++++++++++++++++-------------------
+>  1 file changed, 19 insertions(+), 19 deletions(-)
+>
+> diff --git a/wt-status.c b/wt-status.c
+> index e12adb26b9..9f4d8fda7f 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -150,11 +150,11 @@ void wt_status_prepare(struct repository *r, struct wt_status *s)
+>  	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+>  	s->use_color = GIT_COLOR_UNKNOWN;
+>  	s->relative_paths = 1;
+> -	s->branch = refs_resolve_refdup(get_main_ref_store(the_repository),
+> +	s->branch = refs_resolve_refdup(get_main_ref_store(s->repo),
+>  					"HEAD", 0, NULL, NULL);
 
-and you wanted to merge it into the local branch corresponding to the 
-default branch on its upstream remote you could do
+Wouldn't it make more sense to use the function argument 'r' here?
 
-	git checkout feature@{upstream}@{local}
-	git merge feature
+>  	s->reference = "HEAD";
+>  	s->fp = stdout;
+> -	s->index_file = repo_get_index_file(the_repository);
+> +	s->index_file = repo_get_index_file(s->repo);
+>  	s->change.strdup_strings = 1;
+>  	s->untracked.strdup_strings = 1;
+>  	s->ignored.strdup_strings = 1;
+> @@ -646,7 +646,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+>
+>  	repo_init_revisions(s->repo, &rev, NULL);
+>  	memset(&opt, 0, sizeof(opt));
+> -	opt.def = s->is_initial ? empty_tree_oid_hex(the_repository->hash_algo) : s->reference;
+> +	opt.def = s->is_initial ? empty_tree_oid_hex(s->repo->hash_algo) : s->reference;
+>  	setup_revisions(0, NULL, &rev, &opt);
+>
+>  	rev.diffopt.flags.override_submodule_config = 1;
+> @@ -1146,7 +1146,7 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
+>  	rev.diffopt.ita_invisible_in_index = 1;
+>
+>  	memset(&opt, 0, sizeof(opt));
+> -	opt.def = s->is_initial ? empty_tree_oid_hex(the_repository->hash_algo) : s->reference;
+> +	opt.def = s->is_initial ? empty_tree_oid_hex(s->repo->hash_algo) : s->reference;
+>  	setup_revisions(0, NULL, &rev, &opt);
+>
+>  	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
+> @@ -1317,9 +1317,9 @@ static int split_commit_in_progress(struct wt_status *s)
+>  	    !s->branch || strcmp(s->branch, "HEAD"))
+>  		return 0;
+>
+> -	if (refs_read_ref_full(get_main_ref_store(the_repository), "HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+> +	if (refs_read_ref_full(get_main_ref_store(s->repo), "HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+>  			       &head_oid, &head_flags) ||
+> -	    refs_read_ref_full(get_main_ref_store(the_repository), "ORIG_HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+> +	    refs_read_ref_full(get_main_ref_store(s->repo), "ORIG_HEAD", RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+>  			       &orig_head_oid, &orig_head_flags))
+>  		return 0;
+>  	if (head_flags & REF_ISSYMREF || orig_head_flags & REF_ISSYMREF)
+> @@ -1432,7 +1432,7 @@ static void show_rebase_information(struct wt_status *s,
+>  				i++)
+>  				status_printf_ln(s, color, "   %s", have_done.items[i].string);
+>  			if (have_done.nr > nr_lines_to_show && s->hints) {
+> -				char *path = repo_git_path(the_repository, "rebase-merge/done");
+> +				char *path = repo_git_path(s->repo, "rebase-merge/done");
+>  				status_printf_ln(s, color,
+>  					_("  (see more in file %s)"), path);
+>  				free(path);
+> @@ -1534,7 +1534,7 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
+>  	else
+>  		status_printf_ln(s, color,
+>  			_("You are currently cherry-picking commit %s."),
+> -			repo_find_unique_abbrev(the_repository, &s->state.cherry_pick_head_oid,
+> +			repo_find_unique_abbrev(s->repo, &s->state.cherry_pick_head_oid,
+>  						DEFAULT_ABBREV));
+>
+>  	if (s->hints) {
+> @@ -1564,7 +1564,7 @@ static void show_revert_in_progress(struct wt_status *s,
+>  	else
+>  		status_printf_ln(s, color,
+>  			_("You are currently reverting commit %s."),
+> -			repo_find_unique_abbrev(the_repository, &s->state.revert_head_oid,
+> +			repo_find_unique_abbrev(s->repo, &s->state.revert_head_oid,
+>  						DEFAULT_ABBREV));
+>  	if (s->hints) {
+>  		if (has_unmerged(s))
+> @@ -1624,7 +1624,7 @@ static char *get_branch(const struct worktree *wt, const char *path)
+>  	struct object_id oid;
+>  	const char *branch_name;
+>
+> -	if (strbuf_read_file(&sb, worktree_git_path(the_repository, wt, "%s", path), 0) <= 0)
+> +	if (strbuf_read_file(&sb, worktree_git_path(wt->repo, wt, "%s", path), 0) <= 0)
+>  		goto got_nothing;
+>
+>  	while (sb.len && sb.buf[sb.len - 1] == '\n')
+> @@ -1691,7 +1691,7 @@ static void wt_status_get_detached_from(struct repository *r,
+>  	char *ref = NULL;
+>
+>  	strbuf_init(&cb.buf, 0);
+> -	if (refs_for_each_reflog_ent_reverse(get_main_ref_store(the_repository), "HEAD", grab_1st_switch, &cb) <= 0) {
+> +	if (refs_for_each_reflog_ent_reverse(get_main_ref_store(r), "HEAD", grab_1st_switch, &cb) <= 0) {
+>  		strbuf_release(&cb.buf);
+>  		return;
+>  	}
+> @@ -1723,18 +1723,18 @@ int wt_status_check_rebase(const struct worktree *wt,
+>  {
+>  	struct stat st;
+>
+> -	if (!stat(worktree_git_path(the_repository, wt, "rebase-apply"), &st)) {
+> -		if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/applying"), &st)) {
+> +	if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply"), &st)) {
+> +		if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply/applying"), &st)) {
 
-I don't really understand what you're trying to achieve and I'm not sure 
-if the suggestion above is a good idea but it might help understand what 
-it is you're trying to do. Below you say you don't work directly on the 
-main branch but then later on you're then creating a release from it. Is 
-"main" just a mirror of "origin/main" or are you merging local work into 
-it as well?
+In the same file we make a call 'wt_status_check_rebase(NULL, state)',
+so wouldn't this break?
 
-Thanks
+>  			state->am_in_progress = 1;
+> -			if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/patch"), &st) && !st.st_size)
+> +			if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply/patch"), &st) && !st.st_size)
+>  				state->am_empty_patch = 1;
+>  		} else {
+>  			state->rebase_in_progress = 1;
+>  			state->branch = get_branch(wt, "rebase-apply/head-name");
+>  			state->onto = get_branch(wt, "rebase-apply/onto");
+>  		}
+> -	} else if (!stat(worktree_git_path(the_repository, wt, "rebase-merge"), &st)) {
+> -		if (!stat(worktree_git_path(the_repository, wt, "rebase-merge/interactive"), &st))
+> +	} else if (!stat(worktree_git_path(wt->repo, wt, "rebase-merge"), &st)) {
+> +		if (!stat(worktree_git_path(wt->repo, wt, "rebase-merge/interactive"), &st))
+>  			state->rebase_interactive_in_progress = 1;
+>  		else
+>  			state->rebase_in_progress = 1;
+> @@ -1750,7 +1750,7 @@ int wt_status_check_bisect(const struct worktree *wt,
+>  {
+>  	struct stat st;
+>
+> -	if (!stat(worktree_git_path(the_repository, wt, "BISECT_LOG"), &st)) {
+> +	if (!stat(worktree_git_path(wt->repo, wt, "BISECT_LOG"), &st)) {
+>  		state->bisect_in_progress = 1;
+>  		state->bisecting_from = get_branch(wt, "BISECT_START");
+>  		return 1;
+> @@ -2099,7 +2099,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+>  		upstream_is_gone = 1;
+>  	}
+>
+> -	short_base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
+> +	short_base = refs_shorten_unambiguous_ref(get_main_ref_store(s->repo),
+>  						  base, 0);
+>  	color_fprintf(s->fp, header_color, "...");
+>  	color_fprintf(s->fp, branch_color_remote, "%s", short_base);
+> @@ -2233,7 +2233,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
+>  		ab_info = stat_tracking_info(branch, &nr_ahead, &nr_behind,
+>  					     &base, 0, s->ahead_behind_flags);
+>  		if (base) {
+> -			base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
+> +			base = refs_shorten_unambiguous_ref(get_main_ref_store(s->repo),
+>  							    base, 0);
+>  			fprintf(s->fp, "# branch.upstream %s%c", base, eol);
+>  			free((char *)base);
+> --
+> 2.52.0
 
-Phillip
+--000000000000ae75380649d46aa5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a98e7583ecc7cfcd_0.1
 
->> As Kristoffer said in another message [*1*], I would too expect that
->> people would not work on their 'main' (or have their 'main' track
->> the upstream's 'main').  So the utility of the piping to sed we saw
->> above is dubious, unless we are talking about quite different
->> workflow, but I do not think of what that other workflow would look
->> like that makes a neutral synonym for 'main' useful.
-> 
-> I don't work directly on the main branch.
-> 
-> However it serves and the only starting point for creating any new feature
-> branches. This is the command I use, and would be nice if it could be
-> simplified:
-> 
->      git fetch --all
->      git checkout $(git remote | rg '^(origin|upstream)$' | tail -n1)/HEAD -b new_branch
-> 
-> The main branch is used in my work frontend project for the app release
-> command, so there I do
-> 
->      git checkout $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
->      yarn release
-> 
-> I think me as a non-hardcore Git maintainer spend more time in different
-> repos than you two do, so maybe the pain of switching between systems is
-> more pronounced. That's my motivation for unifying stuff.
-> 
-> Just for reference, iterating all forked open-source repos on my machine
-> these are the different upstream names I work with:
-> 
->      99designs/gqlgen
->      refs/remotes/upstream/master
-> 
->      amplitude/experiment-react-native-client
->      refs/remotes/upstream/main
-> 
->      Antonboom/testifylint
->      refs/remotes/upstream/master
-> 
->      cli/cli
->      refs/remotes/upstream/trunk
-> 
->      datastax/python-driver
->      refs/remotes/origin/master
-> 
->      dependabot/dependabot-core
->      refs/remotes/origin/main
-> 
->      derailed/k9s
->      refs/remotes/origin/master
-> 
->      elastic/go-elasticsearch
->      refs/remotes/upstream/main
-> 
->      git/git
->      refs/remotes/upstream/master
-> 
->      gitgitgadget/gitgitgadget
->      refs/remotes/upstream/main
-> 
->      github-linguist/linguist
->      refs/remotes/origin/main
-> 
->      go-redis/redis_rate
->      refs/remotes/origin/v10
-> 
->      golang-migrate/migrate
->      refs/remotes/upstream/master
-> 
->      golang/go
->      refs/remotes/origin/master
-> 
->      golangci/golangci-lint-action
->      refs/remotes/upstream/main
-> 
->      gradle/gradle
->      refs/remotes/origin/master
-> 
->      Homebrew/brew
->      refs/remotes/origin/main
-> 
->      jwalton/gh-docker-logs
->      refs/remotes/upstream/master
-> 
->      Khan/genqlient
->      refs/remotes/upstream/main
-> 
->      kubernetes-sigs/controller-tools
->      refs/remotes/origin/main
-> 
->      kubernetes/kompose
->      refs/remotes/origin/main
-> 
->      kubernetes/kubernetes
->      refs/remotes/origin/master
-> 
->      ldez/usetesting
->      refs/remotes/origin/main
-> 
->      liushuangls/go-anthropic
->      refs/remotes/upstream/main
-> 
->      matryer/moq
->      refs/remotes/upstream/main
-> 
->      mhemmings/revenuecat
->      refs/remotes/origin/master
-> 
->      ohmyzsh/ohmyzsh
->      refs/remotes/upstream/master
-> 
->      prettier/prettier
->      refs/remotes/origin/main
-> 
->      RevenueCat/docs
->      refs/remotes/upstream/main
-> 
->      RevenueCat/purchases-ios
->      refs/remotes/origin/main
-> 
->      RevenueCat/react-native-purchases
->      refs/remotes/origin/main
-> 
->      sashabaranov/go-openai
->      refs/remotes/upstream/master
-> 
->      stretchr/testify
->      refs/remotes/origin/master
-> 
->      vektah/gqlparser
->      refs/remotes/upstream/master
-> 
-> 
->> Doesn't repo_default_branch_name() do the right thing without being
->> noisy at all even in a repository without that configured, as the
->> function will fall back to the built-in default?  While I do not
->> think of a workflow in which a handy access to the value the
->> function gives would be so useful that it deserves a short-hand, it
->> would be a reasonable candidate of what to be called "@{default}",
->> if it proves useful, I would think.
-> 
-> I'll play around with this a bit and see how it works. Thanks for the tip!
-> 
-> 
-> Harald
-> 
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tQWRod1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNGJsREFDQm04anR0eTZISW1sR1g4aGxPb2xWeWRKeQpNMGNUZXN5Y1RX
+VFJ2VjJHOXZtWDBzTXcxZ3BHM1BqazdhSkxiUWM1RUZManBlNnhVZlZ2STV3bXZ2TTZvbTg0ClNn
+NVN4MTZsa0l1M0xhbDlmMVRjRjdlZGRVc1pvaFJmVEJEY3kyeFR4czVOUHJSZjZQMmIvTmxOdG5a
+S0xEMVMKdnRCK2xyaFdmRVhvVDVJYVV3SmR1S0lVRHRvOWxCdkw0YW45ZzJMWldKa2xMZUN1TVhr
+clBLNlAxd1RmbzdHWQpra0VZcUkvblJlRXJocnVQLzNoZmlRcGRYWXZCMzRWamY2N3IxZHlJKzFz
+aW1LQzZuUEJiNWNvNnFWMFRNRUc3CktabUlCM0xFVnE2U2JIc2IrRFo4N3VZQ205UnlNNlYxSzM0
+SlI2VTh5akdGcGVjbzZBK0cxckVuSklRWmlIeXMKcUIrSWFUR0t4c0tiMTI2aG5uMnpaN01DQzRN
+bTU3TXFHZlZsald1N1d0Y1NNY0xZM2xGa1F6d2t5ZjVkdE4yYwoycDRzRU5zZ3lJM0dieGd6em5Q
+Z0dmdFJ6dGQ2ZzNkSEZYRElXNTlaNmhUYjFsTlR2VUFtWXkweDFNZlZtQmVFCm5LVFhOT1BOajFo
+TWhwb01TZ01EOTRDRjAwMFVHenV6WkYvZEhRST0KPVFZZDYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ae75380649d46aa5--
