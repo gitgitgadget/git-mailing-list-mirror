@@ -1,72 +1,73 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363B875809
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 02:13:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C6575809
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 02:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769998427; cv=none; b=P9LVcyI4cOKxZ53pF8PZaY7rQIb5lyqvIFulbGbu69fhoAo4n3E3yrrxSMJ0PuQHqGIR5dzGOf5ccPZKxBHrbA6gaPF8l1stNYftgvlZzhRjADgauHZBIz3Gezyj72qVlzh6kEZnx/3PNNA96CNNtVQfvCtRHWMQdKGu+hFQqxg=
+	t=1769998463; cv=none; b=kAmgymUs8DoKbkpyxJyQcxC3Rkzc5uvh+8A7oNMCjG7VNlzWMCHdiBfVcz1Mvwkni66OQqX2rtN+VkfcKdF1BrkPQg7das/V6xTfhKIMoeeYmKMo1bJFn4q2vaNP3QODBCuYCTshbUkmN8d2AIjKf0bwDl/sYARHiq6QUSMG5C0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769998427; c=relaxed/simple;
-	bh=fpBzdgQwOPOxF8sa3LYzRNpzVeLX2a/ROxvEa6zV6ns=;
+	s=arc-20240116; t=1769998463; c=relaxed/simple;
+	bh=vnqO9PUBI0oH77LOWdcveKkVtYSH1cAWZquL3PLXE4c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gXoivgjVvmnnyHhHpI2GAlRvriI0E05uf3FxtrKcIw0LynYHEaFT22l8UWivDiM5Bh2vOYZWV0wGrpDLAvNaxa8pY8g+ABYqMzQ17mu2O8+9HSd1/ugvgjFiIWpCN2PuHypQZIz1HUmHX5+em+wVeft8QL0JeF2DMa6XRLwkxNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ADNwBqfy; arc=none smtp.client-ip=209.85.128.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=FhkEIUz101XGpROs46pjhi1wwXyF2vXuwBKiKMMK1kGG4xp8a9ghLqvevc++fnWTzJ845fMsl8uFoLNwwhuz1fGUkmmnjcQ9cA6ZlF/hPIAZ/qvE+WEedOWWe6a67jJgYqConZy19VVUWwA9quVYLS0QhSUDRSjHlE2wJd7+PcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LOFjCpeK; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ADNwBqfy"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-794d4f11a20so3958117b3.1
-        for <git@vger.kernel.org>; Sun, 01 Feb 2026 18:13:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LOFjCpeK"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-794d4f11a20so3961717b3.1
+        for <git@vger.kernel.org>; Sun, 01 Feb 2026 18:14:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1769998425; x=1770603225; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1769998461; x=1770603261; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vTP2ab4PF33jwa0THmiH7BpBhkXN8J49PZlSFTOdHjE=;
-        b=ADNwBqfyANchGBo1s9a9VXGsddKBsiU8LDLInPRVhgEWSdVwOOqS/h/rVY9hItM9tj
-         OUNsoEceGDDx0e2PiDWDsROhRPzE6bZNx0eK9hWbI/bNfIYwE/jMZvRRG98rovRz06uu
-         au+byzb/gtBefd6i2XAoQaruko7IDHZJRBSTamYSa93rtV3ZNjZMUwEdnAL1UVSgejyz
-         VC//ueWyBvPmLJEOCpg6+c6g9OSkmz0+YUYIy5aZt8bSX+wMfiK/3w3mHIgINsuSnMFH
-         POO/TiMi+LdUVu+gCvUYkwP/wk4gEet5bqGgg/9DmHw/TlbkLMnPXUlxXkXGVAx1cNTG
-         y1Dg==
+        bh=vnqO9PUBI0oH77LOWdcveKkVtYSH1cAWZquL3PLXE4c=;
+        b=LOFjCpeKgN15sBMeehatO6GKDgwwYU5GospkRyeBoOS+Eplo62rExLNUc6Jg0C2/r5
+         wsnrQ2DbcVcCWzpzsyOAs/RIOelS1dahdxTAbZh1C1fA6KwqL3Y5AwrDwzCPugKMnBMX
+         ovUAx6FKVZtw/FvSbBrwxsUX4kpgDiznP6jxwcL0cCDliS465gy44y+N9Iad/7HwBt5P
+         As+mHYHThtH+cc8juRmkvZsqXAhDzJ/ORTwidyIwoWg8DL71fU+eXIXdlQkBmX1yT87c
+         Jx1Y4rOhIFJFQUTeXG0W5WQztfnJKj84XHaMdINEOL9WXeegv59KGPNqXeuJLnSgzHbe
+         8jSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769998425; x=1770603225;
+        d=1e100.net; s=20230601; t=1769998461; x=1770603261;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vTP2ab4PF33jwa0THmiH7BpBhkXN8J49PZlSFTOdHjE=;
-        b=fklMrXy8OvCePhN3ned0CUSHaWZUx1uIdYpNCccM2dS3o4Y6YNAF9A8DDYpPnPuNMd
-         3CvuW/DltTmeaA0ImZKA/9tlw8u6RC/EWhJTLp4OaFLaVkFifdw/a329X7vPL44BC9Ni
-         M56nDLbn1Kzt49L3Ea/2+uDWXICo7wtZLAYuyorCj7T3UULRbTl7viZ7EubdZs0Xzvjz
-         1b5hJ5l0hfF05TzSiwMQ0N0Zv7Xs3BH1Pf5QIJE0jKU31Bkc47fLXgyJd8FfYYVxwi13
-         wsrVPlUWRNJAmvORyxE2jM5RiuU2d+fn0E34l9bAP96fb8Sf5UqhRMYzq/amTKwVTk6p
-         r+DA==
-X-Gm-Message-State: AOJu0Yx7iCSQyQiQj0in3MJ4SXsYyk1mVpqdGBkMk3w53xQ1lp4uvbbS
-	awIB1CUIg8eOgr4TiEpRUOPJEFwWK63l3kMGHHkd5MfBb2E2SCH/wty5NNIXcmO+v/k6bshmEZ7
-	/fEkKmO/kzg==
-X-Gm-Gg: AZuq6aK/tvMxF8hyK6h+h3HWq2TNOpogeSHMI+jeDjf3dyGdPeoQj4N2APQwZxE7IMO
-	oDy5NStlMC9h27Gym1vxh8MVAIV0Kxg0k+dWhq1Yor4qfJKeg7to3nDuYsdGptex53cOS6NMp3B
-	c4ojA27zjp021bRMFfzdfQlCN3eMaXPN+I8c5g+dAsVqCpwaLo6JOyoRSqLo+vZn+bScqmcmSi/
-	6RHvNTy8tB6uX5whbAYIRreicN9z1RtlneuQRwVLSyTmIujvaYX9XJXU5I3MHcrxczxsuMfFYrA
-	1UQW6BajPEVjOvgHu+2BW6VFczDBa3hf9/cHy3b0cIYkCKXO+ioXCB/4kQ5oyHe7qxco1Ixwmii
-	g8XbCPSu2PAxa5y2NeY1m84Bome3fNw8gWBBERLd5OsEe9cpjucotbPd3hDBOhfgh/Ve5orXLny
-	ttt7g7TPGB8RqukdzcZx9wbBXM2xIHLG5+y7BIIs16+ATEXSKKVLj7Mzzb3LZYqW0pN/asEXMfG
-	oS8urbmcTWZrln7rQ==
-X-Received: by 2002:a05:690c:c4f5:b0:794:c6fa:156e with SMTP id 00721157ae682-794c6fa23d7mr27728867b3.56.1769998425116;
-        Sun, 01 Feb 2026 18:13:45 -0800 (PST)
+        bh=vnqO9PUBI0oH77LOWdcveKkVtYSH1cAWZquL3PLXE4c=;
+        b=hnqh9VQmRHYfAoWlljulfWiW7zwZXgtUWb/sCv3JA0ofeej1afGxLgz/+a3BlCqTAL
+         1hDoEDHhRxl/xA84277O+HLeYLHmJsHtfEF+AhGqQewkbK/DcATnUo1p5ELjkHUv5fhx
+         VvDYnbWJgra6oEtgdD5dvhzuczL3K2BbBrZJXhrmX1WKg8foIq2ldBOoqMpUbOjmQfMd
+         2Ic6DBgTqFSayjVsNIU0NU4/fx66w1GI3IR2ZJejrt30QRYKvGeVJO7KuEWAo8VcERle
+         YgzN7qy5nyLA9fiM5VvlElMR4NRw8Ff4mt5WMQQFM29S3Qjz1uf21a1adxhYQE/GYsC2
+         YXuw==
+X-Forwarded-Encrypted: i=1; AJvYcCU6nH4y/0ds1beW1V06JeG4A6rYIgVSRKPEAalalQolRYGYUFWA8yGeZnm/syV7AgJBSnY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZUrFPOqvUYfxrMEZjKSlHT+qV/wLtspaudmPJxCurigjw0Cwh
+	h0szyprsyWBeIzsHula5W7YXUGw9dxcOkoE/+JbcUd11uM1ygEl/OTN6iahkH2XxLgc=
+X-Gm-Gg: AZuq6aKG3IMNMHrIlmHf4nvJ62Biql21ux5tSsRDgOb5rYpS0PAHIls9sKfn9n+X15R
+	n1pxi2SYJimETVAs8L4vzP9P+z/LIKWricrkwOQ7NEOPPfDrW7TJOPvZ2bXR9kWdBKFMUVMR6vG
+	nrbzq87dx4c49p8cErVoUoWVJesp2oD5a+Ya2pxMGb6suOh4XHFMFL8byeaBBXWDqFqZQtMuYFb
+	3HYShnHpYcBRgY3WL7JksC8u83r0gmOgt3MU3a7iJ6CIkb9tCJModDBNd/042zyMkz3QY+021UQ
+	3KC3N1klH/dfSRFX+wzJ33pCmqFrc3KlTQujyF5nNvf0yOC7x/iJ+TVh5N6PP2avMRFk8lXHUuu
+	spMdg/jHFNGb0BFsWdgW54MSn6fUfr/zeWSrQkJQxpVmJwGoA/n44JzCcVp94T5cmYt35m/ZVet
+	p9kRcTsCxDlENPItjgn5kkM9TWPlHnldIXuFR3liGzN69AvS1C+OkJ8aGvRoWU3nCs4yo4oFhr6
+	plogHAjj3oDlzdBxQ==
+X-Received: by 2002:a05:690c:498f:b0:794:cf56:5bc1 with SMTP id 00721157ae682-794cf56769bmr18105987b3.33.1769998461355;
+        Sun, 01 Feb 2026 18:14:21 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-794828f9cb2sm74592527b3.56.2026.02.01.18.13.44
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-794df377204sm2710087b3.5.2026.02.01.18.14.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Feb 2026 18:13:44 -0800 (PST)
-Date: Sun, 1 Feb 2026 21:13:43 -0500
+        Sun, 01 Feb 2026 18:14:21 -0800 (PST)
+Date: Sun, 1 Feb 2026 21:14:20 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] pack-bitmap: fix bug with exact ref match in
- "pack.preferBitmapTips"
-Message-ID: <aYAIVw5UMQeP3Ilr@nand.local>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/4] bisect: simplify string_list memory handling
+Message-ID: <aYAIfKW8Vd0iBun9@nand.local>
 References: <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-0-0449b198a681@pks.im>
- <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-2-0449b198a681@pks.im>
+ <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-4-0449b198a681@pks.im>
+ <xmqqqzr76nuj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,65 +76,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260130-b4-pks-fix-for-each-ref-in-misuse-v2-2-0449b198a681@pks.im>
+In-Reply-To: <xmqqqzr76nuj.fsf@gitster.g>
 
-On Fri, Jan 30, 2026 at 02:27:43PM +0100, Patrick Steinhardt wrote:
-> [...] There are two possible ways to fix this issue:
+On Fri, Jan 30, 2026 at 08:56:36AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >
->   - We can fix the bug by using `refs_for_each_fullref_in()` instead,
->     which does not strip the prefix at all. Consequently, we would now
->     start to accept all references that start with the configured
->     prefix, including exact matches. So if we had "refs/heads/main", we
->     would both match "refs/heads/main" and "refs/heads/main-branch".
+> > It was written this way originally because one of the callsites
+> > generated the item using xstrfmt(). But that spot switched to a plain
+> > xstrdup() in the preceding commit. That means we can now just let the
+> > string_list code handle allocation itself.
 >
->   - Or we can fix the bug by appending a slash to the prefix if it
->     doesn't already have one. This would mean that we only match
->     ref hierarchies that start with this prefix.
+> Thanks for an extra attention to the detail of the way to refer the
+> previous change ;-).
 >
-> The first fix leaves the user with strictly _more_ configuration
-> options: they can have prefix matches by not appending a slash to the
-> configuration, and they can have ref hierarchy matches by appending one.
+> I think [2/4] is a good direction myself, but I'd prefer to hear
+> Taylor's opinion as well.
 
-I would definitely like to err on the side of more flexible
-configuration options, but I am still concerned that this change would
-lead to somewhat surprising behavior.
-
-A couple of thoughts:
-
- - Like I mentioned in the earlier round, 10e8a9352bc (refs.c: stop
-   matching non-directory prefixes in exclude patterns, 2025-03-06)
-   takes the opposite approach as what is being proposed here. I worry
-   that users will find the difference in behavior between
-   pack.preferBitmapTips and for-each-ref's --exclude patterns to be
-   confusing.
-
- - If a user wants to list all references that start with
-   "refs/heads/ma" in the string prefix sense (that is, matching
-   "refs/heads/ma", "refs/heads/main", "refs/heads/master" and so on),
-   then they would do
-
-     $ git for-each-ref 'refs/heads/ma*'
-
-   , not 'refs/heads/ma'. In fact, enumerating 'refs/heads/ma' when
-   there exist references "refs/heads/ma/foo", "refs/heads/ma/bar",
-   etc., for-each-ref will output those three references (but only
-   "refs/heads/ma" itself if it exists).
-
-I suppose there is an argument to be made that we are dealing with
-"patterns" vs. "prefixes" here, but TBH I am not sure that is a
-distinction that is well-understood by users (nor should we expect it to
-be).
-
-The original intent of this configuration was that "suffix" in this
-context meant directory suffix or exact match, not string suffix. The
-implementation does not match that intent, but I think there is enough
-ambiguity here that I wouldn't consider the change I'm suggesting to be
-a breaking one.
-
-Overall, I think interpreting the pack.preferBitmapTips configuration as
-a reference pattern gives the user both (a) more flexibility in which
-references to match, and (b) does so in a way that is consistent with
-10e8a9352bc and the existing behavior of for-each-ref.
+After thinking it over and re-reading the second round, I am still not
+quite convinced that this is the right approach. I left some more
+thoughts on possible alternatives in my response to [2/4].
 
 Thanks,
 Taylor
