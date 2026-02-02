@@ -1,94 +1,127 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3FC358D28
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 23:03:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCF63542E8
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 23:03:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770073389; cv=none; b=ot2pwyDwC8K7quyYFaB7JQF6q8j7ySv8j0KH0lKeW9Jh+dY9KI6WLZ0qZppwfcAQiiD2g9UkBCQuUPtOLjKLqTqUY1e1jJ0IuMAZ1N7VLUfamI+BpUaFLC0gx4BJaP3KcqQyo0oelNrf/Tzqjzt0Vo/RxkWlHdY4Ebj1lC+8D8Y=
+	t=1770073417; cv=none; b=q0YUyE694Vb+57G0ZXC9a3+D3maK0ajyDBiV3if0ZWCXZon5maDeUWFE4NrZNaSs6zayjp/YHPlk9L1SGjsRONrDV9bpAsXOedhDXKYzR9MuLnARNOnM86QGF6qaQ+8T9Je/CDurNL+t+Z04BqbfdTbOr0SYx9pQaPnWRDbJYZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770073389; c=relaxed/simple;
-	bh=33xaeMo33Ep556z3MCI4a5CwexnNJdMX6sbuFiC5xWY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oFj8bbHal/ZpsTSp/s89XGVuNGXVFIvJ32y6FefE/ZfB+oGBATeCupe5+25UDbG/f0UixtrpXnGCxYK9OHIu7Y6+qsVn86yBpwHRW0PhwvYoa5SUDvYodl3XB3hSmBz7FZyJ8jcVX7pq4zaGaM5jeb/ISGnkuQO4lpp5+bv4D1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L78vQVok; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770073417; c=relaxed/simple;
+	bh=AIeg5nmOEaYfcWNVB0u0jdLj9TwKlsel674qP2x8wDk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GL78iHhWafcuySK9BhF49ihhAi/0Jj8owZK4l5LNcwOJOezmOaGGbuIrbJ1yf3JF0bRJiektU1LSXN0dR4thuLlvttUvCrFuRFluIpqE6lXdHwZn34udgnuo577/X3IkPgow+pOBkWEaXlgAVLvuCSr7ttkfE+arkzEj3vurFro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fu2dF+Fk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qCFL4REM; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L78vQVok"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-59dd490be5fso6502874e87.2
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 15:03:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770073385; x=1770678185; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nnJ4B2BU6r8wTkD3gFMBOHKOFK5lG3rjVpf24QT+QJw=;
-        b=L78vQVokXynNwWAprsiKC6c3wm5Y6Ejhlk23fJdhzg/8mNLvFYy4bDUkuRUqIsNjpW
-         s8mf8Q+4BdxC1DuVyMI/2kNPThh/g0cvSr8/N5Z0iElrjeREsd3AMgYZKK7hGyufXtKT
-         S8UKLgnRDLs7rsIvBt48EAyLem7BBKfzM3j3lg2P3skgTdNhj1ZjNfg7mleEZggfG9hz
-         6TdJw/V75Ir62cOk2J+05noIdEsvcfAEE/J/qW0HlC9+RCrN8rdvnFzXnHNiYPyPsg8l
-         gk88k9MyrFTDpNiAFFXeCYlcNybU8X+MZ7nUA/LyuYFJSHFbxxHmClHp2OgUgVIVIg4m
-         +pLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770073385; x=1770678185;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nnJ4B2BU6r8wTkD3gFMBOHKOFK5lG3rjVpf24QT+QJw=;
-        b=ibFg4LFJivInyt/BNGe2guGF/sdN+WBYHU+c2K6owKYDtxc84P7HpQIcWxltCVFo5/
-         Pb7OyjGP6umTBDcGHLGz5OsqhCvyPXodX5YNjDQ3AWsZSIwbATnzp7gs/eh2a4Lax3s6
-         uTljBm0f4tL2Amogq0EQ8f16hzyQlKjQ6PRgz/9yBYzk/dxEs1luBWDEWqFxbZ80BZBZ
-         zPrkv9YokCp1FaT8+k23wHeI4g8qE79+drYzdqTDWqOM6ngijpYanMT8wi2/FePyUhrB
-         xP+R4NijTsALg0vkJdhljq6LcWihcXLZLSZlws3gw67UuNrkAoVPlZ2CA/4t2vlOXHdB
-         qlmw==
-X-Gm-Message-State: AOJu0YyojHOuK8cAdttuJaaHtqo2WXR0QQg430mOCx9rX+PBBy1dnudC
-	9cdWOXO+THfqJdo5j/cT3i2qGRqW+0c01coAkWuVku170Tn3Xyf1vjd9
-X-Gm-Gg: AZuq6aKzYYiMxROcm5dYelV0wzk42TWyFKfAyr21+p04GnZ5hDj3eCHpsWEo81hmbPj
-	2TpWP2BawKvvA6+MrRXfFoNBtbmxAHtsxQf8ucPYXDgBkx04eDNIzL6hAMrBbPvRV8AkM3QMwvj
-	q0XUuQvtn38yxVBRUVyXwAgiey57cuNs0RuaubFfI4kZ/vJBWT3VBWIk9YpNb1BAnZUKJj5OY76
-	qCS5yoJuEDlLxWUgiuH12WImVdtFg+zF0kjBlVsPmPxoLb6LbChv18vf0ZMjRbA0jPgmvyW+r8s
-	H+eGecKj3qlsC9fea0ncak1x7Jnzb63SIAv16otScTxETQ4/FjjCDmi3QDT7s2X6VgXiSh8/TTH
-	fcQ/wlGTGxyLjagXt2W5j3oNTztHD7pNLD8R7f7ytyN5HvkczPQkGIJq3WTdKJrUPYAn/pPH54p
-	BNgAGBjhA4eZ4rC0IGyWzvclIUlnc24eIZL9QUASOzetBCNr5SPyUiKpK2TcmzMSHEf7Y59+M=
-X-Received: by 2002:a05:6512:1582:b0:59d:e7ac:619f with SMTP id 2adb3069b0e04-59e16400ae8mr4227649e87.18.1770073384349;
-        Mon, 02 Feb 2026 15:03:04 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59e074bbf76sm3814134e87.87.2026.02.02.15.03.03
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 02 Feb 2026 15:03:03 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: ben.knoble@gmail.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	gitster@pobox.com,
-	haraldnordgren@gmail.com,
-	phillip.wood123@gmail.com,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
-Date: Tue,  3 Feb 2026 00:03:02 +0100
-Message-ID: <20260202230302.13009-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <CALnO6CDrdfSFuY8xjvno3+2MVB2JHUYdNsYTYqqRsfcDiWa1uQ@mail.gmail.com>
-References: <CALnO6CDrdfSFuY8xjvno3+2MVB2JHUYdNsYTYqqRsfcDiWa1uQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fu2dF+Fk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qCFL4REM"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1B1271D00056;
+	Mon,  2 Feb 2026 18:03:35 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 02 Feb 2026 18:03:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770073414; x=1770159814; bh=jDMheoK3c7
+	sdNpgTN3UgB3kUnARR/aYh1qqD6DxPr0Q=; b=Fu2dF+FkPxFE52xWZvWh5aQmyG
+	rHAVvUgGH+weQqcsOMwXEz7LaNzJkJjQYOPJYN5DmSwcVjDWd1rnWjbMSLE+ZdsL
+	wmivIlQFz4aEr4OcK3ZH2WbB+EkUOQEbbQDNNrpXwnNO1sgvn7ULjBW2f4/4c9k2
+	v2GfvoYHIx+uXZ6+kTSADYaFK4hlPguH8AIw3QRF0nUAWrClYmokcaDTULN8uUJp
+	kO9Z0zWHCfV/jOMDiF80wG8bmwIBH1z9ioEqEC1ee6IIOxHbUC807wKbQGn6X7w7
+	I2rRIKqmn90JixNiLr2k8flS5uNa9IilwgO2LQ/UDSmldoXg1GIxnrz+e++A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770073414; x=1770159814; bh=jDMheoK3c7sdNpgTN3UgB3kUnARR/aYh1qq
+	D6DxPr0Q=; b=qCFL4REMOQ9TR3R+S+kT1Aei3j4uF0yMPUizCfbFU01Ql8HrkoN
+	daIe4buHKCkbucS9fj1G0xu/7Ln3csvfoo7jvydPg7k403RO8WJv/LWdY5L0E01M
+	fEfb/l8uqJ6LVkaxFrfxmkAHtpwiIchyXu0o7WI3Ynw2LsFVHp39M5mx2Cln3ZUk
+	RHjrwVtpPqxANntzXVtPMevyz1TE1Nc9BSiKnaR+RFkXLGJRJH/iz1Mv8gJ/LWlo
+	mRZ5MJ48K0XAtzQJjncfzSykHQLZxNCd8/0RlLcY4HscPONknLNoNCfAZVIn4pgQ
+	1kKHjhI+9ySx3pom4nar3a+SD8Mb7+6kpug==
+X-ME-Sender: <xms:Ri2BaZeMEdHO368wasnyVPL6w6jbg2MrsRFt4IRFuyedybrnUfTyGw>
+    <xme:Ri2BaeNGK7k8TG0RdDKhNoWJS838Cr941IMS1N-wpwoZt2mHzjU1Q4rwuqApqtsbm
+    i3-K1RCnaEfxXrE3iok-eguiSdxmKD3TqfM66Yjx-hAD_q7uunfVg>
+X-ME-Received: <xmr:Ri2BaXguS1qyxzOlXk1Q-I22_7ViTZ_Fu2A8A5s4-rSa7dS2u17MQeF9QzPj0RZaxaqQ0dP5bUNifcrhMQ73ESGQJuosilb2ew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekleduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
+    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddu
+    keeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:Ri2BaR2ngr2j-eg3WWUMQrrRmAxE3CtaSqaPJlHVeQoA5ZPP5IOHTQ>
+    <xmx:Ri2BaRhrwvTWYqjSBKLoD0DYb1A6EF571NIFT1YDSpoO5UnHtnO8mQ>
+    <xmx:Ri2BaRd3tbt66UZqtSAIRs5Nz5pUIt5PKA1P6b5rStqdf_ovr4kdyQ>
+    <xmx:Ri2BaUlyYTiz2XefWQxRaXEPqpDSfud0-5jFud_swpgOO7jUMm08AQ>
+    <xmx:Ri2BabAa1CeATTOq30FsQMgN2QcNx9KH_XFI3gYwoid7OLyj4O_RT_vT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Feb 2026 18:03:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com
+Subject: Re: [PATCH 1/3] wt-status: replace uses of the_repository with
+ local repository instances
+In-Reply-To: <xmqq8qdawyxf.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	02 Feb 2026 14:41:48 -0800")
+References: <CAOLa=ZRv4xsy0adY_BcXQkypsgYkLNM6x5LhJGX+B+=aKCwmgg@mail.gmail.com>
+	<20260202190155.79896-1-shreyanshpaliwalcmsmn@gmail.com>
+	<xmqq8qdawyxf.fsf@gitster.g>
+Date: Mon, 02 Feb 2026 15:03:33 -0800
+Message-ID: <xmqq4inywxx6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> That just makes discovering the name of the remote the "interesting" part…
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yeah, this is true! Discovering which is the upstream remote is still
-non-trivial. It's aggravated because the GitHub 'gh' tool will rename
-'origin' to 'upstream' when forking + creating PR from the CLI.
+> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+>
+>>> > diff --git a/wt-status.c b/wt-status.c
+>>> > index e12adb26b9..9f4d8fda7f 100644
+>>> > --- a/wt-status.c
+>>> > +++ b/wt-status.c
+>>> > @@ -150,11 +150,11 @@ void wt_status_prepare(struct repository *r, struct wt_status *s)
+>>> >	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+>>> >	s->use_color = GIT_COLOR_UNKNOWN;
+>>> >	s->relative_paths = 1;
+>>> > -	s->branch = refs_resolve_refdup(get_main_ref_store(the_repository),
+>>> > +	s->branch = refs_resolve_refdup(get_main_ref_store(s->repo),
+>>> >					"HEAD", 0, NULL, NULL);
+>>> 
+>>> Wouldn't it make more sense to use the function argument 'r' here?
+>>
+>> In wt_status_prepare(), s->repo is initialized to r at the top of
+>> the function, so both refer to the same repository instance. However,
+>> using r directly is more explicit and avoids indirect use.
+>> will change this in V2.
+>
+> Would we benefit from further clean-up, either before or after this
+> change, to lose the "struct repository *r" parameter, if we know
+> that we can depend on s->repo being the repository we are collecting
+> the status information in the wt_status structure for?
 
-Which I why I do this becomes necessary
+Clarification.  This function is like an initializer for the struct
+wt_status instance at 's', so it has to take both "struct repository"
+parameter, but what I meant was other wt_status_foo() functions that
+take both r and s as parameters.  Once s has been initialized and
+s->repo becomes valid, passing r as a separate parameter, as if you
+can feed a different instance of "struct repo", becomes confusing
+and a source of bugs.
 
-    git remote | rg '^(origin|upstream)$' | tail -n1
-
-
-Harald
