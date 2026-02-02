@@ -1,201 +1,166 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F107261C
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 20:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE762F290E
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 20:27:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770062470; cv=pass; b=NHYCGaaIJIEcEChHsbDxffElhlivuKkHQyAiSgg7wFI2gymmolXjMP1dM+2AmAtf2eAlrxFxm2X74krCaGNdcT/wErg6TCLsKM9MGtMFH5CRHoal8N82sDEVRVrRr+h7FY9GLHO5lxt4nyovwTB7jG4onz2Mh8I/wgy5zr7+ZGU=
+	t=1770064055; cv=pass; b=E1YkbHRlg7rEakVflyvAhe+bj7xG77Wsr7mzku9v2Oz/Jz9k4bJPDmGJovDsVxJNwcZP6YrHpO/oHpzd2WEtHxNmvk9ZMkCjlyUXspCHSGEa8RQk9RbWnyBx/z/O1oZxubVz9jyByzjm3TmMO/Xv+wNYFBzGL1WzOziL9N9UUyw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770062470; c=relaxed/simple;
-	bh=Zu/NLuH2tBj32MsUCSOdbg9qdPd15cvvL1Bbfm/gMew=;
+	s=arc-20240116; t=1770064055; c=relaxed/simple;
+	bh=HRIL7eccAsPnWD94vi79OuwsYTn27829MjGFNtVuKwo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cMz7WYnTiL6OBYEkfuiMMP9KOKC8T9A4oUYlUVZWyojBHexacSZyMtmn3X2ZVWYxYz3+ndO0uB+bzomUO5dni1S78NVilw58an1jpLx+Xo00gWYBY/VFMp6WHEfO0NM0gas+FhzvQprg9dbaQqyGSaJ8kbJ6P5cYrfjlMJnr740=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QRYOZlYm; arc=pass smtp.client-ip=209.85.216.50
+	 To:Cc:Content-Type; b=Lru9gffGIFDYzmYoesFdOry/LEAFE+6oBuCwcgLWJa6+9LtAdByCfzTF4QPbTQT1RGuzkP/hr6rEs7mOYFOFe94d+ueUwypuyxoNqgf4C1zf2adx8uguqGRc4MoZOm5cMCE4pyWwnk9nj2UbqDUSDgiiNHh0V+8QJQwCSi/1mrM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zhh3gCaa; arc=pass smtp.client-ip=209.85.215.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QRYOZlYm"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-34c21417781so2507524a91.3
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 12:01:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770062469; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zhh3gCaa"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c0ec27cad8cso1840596a12.1
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 12:27:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770064053; cv=none;
         d=google.com; s=arc-20240605;
-        b=FSoffnBLlkxUXkN/7uawU3ZV3wufk5LsM/diNHfcVsMd1fhEAn+ET8egUxKV7dNXgC
-         jWr95gCO4c7QC23BRlZL2EZma07oELVaXILFhaVi95kWA8NVMcKNTMX0yDNiN8SARlxK
-         pfUovwb32dXrECcJEMUlCmn5EsA+XAGzzwBsRNimKHB/6GX/Gp0TnD5t8Cv0ga5BAGN7
-         BFPP9uROh0oypLkPE36R2ZXDJ911GNlSJ3C6h8UtiFIZ0PDlf2Xp2+AebklTWuHd9Jyn
-         H+2EZ3pNlsi/OCYsG41n3Zjo8t5KZtCg9CtT8hZppzUpKCTC1z8MnUxFjCMWw9l3v4qt
-         23MQ==
+        b=VSg9Jk5ZERD8ja9OI6jWlJs/NotOqtxbfCU2pNUneoKW4aYu9InziK2SFCxBRP12OT
+         lFgsDtbTEPUiLK8KvZn2sHS8AZ82Q79PuV3/NwbNVWymkD9CLfHaLv7iVCe+CDLlE27m
+         uJhxDewMFKKcbXRdjCTbt5hNXeFn6nQOtu3/za9bdqjrZ+kSUjgh1TyBOWg9YR52XpDF
+         P0v+2a1AAkaC6QkabKluBcERTk0WYUHLln8Avo+CFmCDcFZ9cNphjksCc1xP6wImRfMp
+         RYH2DwtyN6lYuMY+1lIi2CYYwR2a1pUOWLDdyxB7dfPGGQyuyLBJyzFySyhES/un5n3O
+         ohEg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=EVc/5f9MnCLlC9pUzIyzSqoEJH/cNxtthyvArSPwMxY=;
-        fh=kud2QCBUESDoweLTDYivbcmQeKnY5vck4e/wP7UKJcI=;
-        b=Me3X/SCRnvJp0GVBKgCHLbvspr4ZVzbLJ9M7MT2WrNdx9KNMpOpuxtFD8RV1aY1emX
-         hqwLCiswPzeMLy92zwhjhDmYNDSQCxSCJ2xPWB3OOeus+PnpXLQZDUhBjafUGypM6X3E
-         BMAM2vf64iKtMMNuZJyJfZ3skfRhl3qOAqtJuqdfFav4Wz26482ONjWbgt+yPxotFEar
-         zPT3K3y7AfSjNC1mm+QT3ObJUYiG8/jwOaWTr3f0NSD4/b3cQSUXabB1v+mMEPRJjXpI
-         4dVDLbRvfpWdf+ye2wZse1viILjk9XxgFbZ+TbHNlUi/Ca19Y71ZAAQm7HuU0T5yq0pu
-         iirA==;
+        bh=ttYmC3pAp+8MDvQ5OnwuV51Sav2veC6Wv4qn6ebYixE=;
+        fh=9+c8rOkdYfwQUzgA2a2fehh41hVdPVj0SxMOVVwWAnE=;
+        b=OScuJ0mx0sAhIQ/YgqJaZlpil7TIij/6q402ubjJ8g8mbzXGltToi3pjMPieiAngY4
+         91iOFmg5ouIZNfICHMO2gbkAvHTxv/74xxV5zw+FLCa6deUjBH+/HdJ2hqatu0UaUVVy
+         0oU5opkhm5DEjoyRd+RmlflHNUfxr4OnrzNBcdu4Cg0lxc61AimRs83zLReEn+NL+Mge
+         FpVDLmWcNavMBfytSPfN4cWvC21xgIVMfJ3PIk/6ZivYmNV/XYcYMNP0dpIc2useK5xc
+         IqfToPUimQCl3O/XVcoS+pbsjt2laIPUAJyQKgVhNSsns0zTiRVQyDvUIzXAB7WIXB3N
+         lioQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770062469; x=1770667269; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770064053; x=1770668853; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EVc/5f9MnCLlC9pUzIyzSqoEJH/cNxtthyvArSPwMxY=;
-        b=QRYOZlYm1G34NCSk4EvHjVZd/tGE4NOGl70+fXdG1e52SC5c4yyMZKJsL4NLujEBrY
-         Sqmih57mqroxCnLy4zzYxM/H45JBa85fmx1Xneh2ytVzfpMZVx2JKb1FaTbY7v0SEVY4
-         UwttcS+Fyp7Uc4ieg34GGcSRRyAkTK/r7EgvLE7pJYEJ2E8ZT+aTkLbJuvkjfuzteC6S
-         aMnf3VFhFahKy535kmevvvjhOx5ePNFZxHKxh1kSwywcoQZZSgMMu2uUuwZnRCLrJ4mN
-         7/zs8+LcRb7eYJ40gjIclO802dkpfGZiqJck0hTyl6huKgnPygJqSHQObx5HmvEqqIcx
-         3bDg==
+        bh=ttYmC3pAp+8MDvQ5OnwuV51Sav2veC6Wv4qn6ebYixE=;
+        b=Zhh3gCaagjKXnuz0YDugSNp3QYQx09RtXPbm0tIdlWU4pK6LHQK2TGuPUr7+tZOlKQ
+         olL9QjBWm1TWCQdMqLGlzmOueCowzz65JwQKe1ZhXfZfVLIFjtsaQ0g2OMHLXc6d7mIG
+         IWMUBKXloIgNMiAjZLAmtKvOBXWInJltVgAx7BqQk2dUhRtUZlJK7OJvG6oLSwiEjACz
+         PwFwGHNvYdvWB0B6B9NuYUSkHrj2C+kDG/zrxar9s7XcJNrDdA49qom1D8OGt7qshIkj
+         8Rt9PHdJtfNqexTcVSDX51bIF9SyAq+Xuib3b74IlaVYCKUmXVhHhUIQ/kcJwBVutnHs
+         CDuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770062469; x=1770667269;
+        d=1e100.net; s=20230601; t=1770064053; x=1770668853;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=EVc/5f9MnCLlC9pUzIyzSqoEJH/cNxtthyvArSPwMxY=;
-        b=RkLytqZlnuwxBIqJTw2rLrKIlAgD0efEJ4QULp6FBvZcP+SUR/IvMCSSiQfikFMcB9
-         7KKW2mbwcjvGMN5gwUYQURGAWBlsgw/hhRZJKJkIjw9GlISE6iayJG2cfSvFuBcK5gP5
-         tMOn9sxevhzVoZoUgqXVQlY3YWYmN4vQjWn9IOZNaTP9wbvQBlE9FSv5p44aQC2WmXEz
-         2yyQh0kNZl6gdskE921zz8K+G51pcfjciWoYlZEtdEQGL1dYW7ttG1Nwk0Tu+ZjjV+Sg
-         wYKNTcflSzmaX79muOrevjU+emjyN2xnsog2GNmVwejgn6De3rNJaeFYEIouvBwT6Dqa
-         Xrlw==
-X-Gm-Message-State: AOJu0Yza292u3viLzdNccbATkf/aoJOlUL6iS4WYc8UV1teZh7bzL75h
-	ClzPPiZtqsR6r02ERxhtNNUYp4KiahhY4Rrzk/xt0yS70Aii+tc/e8WpITnk+YQ6fOCI9LoGCMT
-	y9Fz8rpkaV99RedknPmARFCVhh6bMURc=
-X-Gm-Gg: AZuq6aIryN8p/GJcPT/iteGZYGc4oiMKVTVrFDFiMuo0s9MtMTZ0M/2R3jR66skM5eg
-	0Osr05Q1aae6fNXvbb5XbetecrjEvfPyg/1hnMfq24TTs/FUkouhqTu50OHps3dCIkv8zHNmOcf
-	1xII/y5qMDF6FTP1J+tURU0zZj/BegkGOL5zzCJH3RLXXuVPy7JiPEzPhatuUc2O5+tAQ+NtHb3
-	T5lOqOFSBN6pxASmVAR13o+bopjPJiAGM9RaQ+yUdX08DiEWDWelKi0LQwp1vc/ptEyxk+tl4Wz
-	/tTw4AmFUdjbJ7SMY13wz00cnQCqGiKJ67Qc6uF7jJRMWCzOQbNxt8RTHWUlLK0VHOJ2
-X-Received: by 2002:a17:90a:d40d:b0:354:5ac4:2d5c with SMTP id
- 98e67ed59e1d1-3545ac43a26mr6029838a91.26.1770062468529; Mon, 02 Feb 2026
- 12:01:08 -0800 (PST)
+        bh=ttYmC3pAp+8MDvQ5OnwuV51Sav2veC6Wv4qn6ebYixE=;
+        b=VhOm/XeqLoEXheilWqDx5ZdKnj97fOrzeH5B/bkJ4E1iW3sfNSFcyYi1VdTUWdM+hX
+         cNUCa+hH9kBH2QjCIPEiohBoXRlrGjkwcPTf0FZQcOe32Ts+nLXvMYnjxUg/JMobUssM
+         4pX0uUPvYPFSE6VAJp1mol5WDSSzE7kTfsWBLYUSHtAl7ax2haPCS3aHdNn5yqxKBVjG
+         twKOqPrT0plI6HLYkMRfn61m1/dxuMUZZEh7h17iig4fU0apeiaht/GDuhHpOqfy3hdC
+         CRgSLPC7Yn6Oaut+YzfWpkWwqhZmlcNB9X1m/H/tnf0sFYxwfKbigC5sszKDrptAsBrz
+         aVkg==
+X-Gm-Message-State: AOJu0Yzi+7iHaLESXFJsEG9jSDTE7sE1Kuq8mGxQdRGTx+PJJ86FjP7f
+	RY+3XYB0L8CpvDX652VjegkCW1iCVNW9zFwRpRKals/FUUQX/hIoT1BQoZ7l7so1Gq+TT4rX4HK
+	K2UmEhgWV3UJ56YuG8+oH5IRRyopnG2s=
+X-Gm-Gg: AZuq6aL+jUBHSXGeJaJ+eGKFUSeuUumUdtKAJJOleJRHvdTEL9bvPaS2MJsJh2Z5qov
+	7aLQX5zUStJ3i6wcuQ0oNtOXoTqJW5O+dWNaZeAboc9GALefhTHyw7veM/+wHT0hfUjvxSNGkX8
+	NfWu2dd/q/WyzrXgkTbbq1R4c8zwi9oJJsDc2FfOgw3W37gcplJ+y9qF2sq7IT99kHT95B1vym0
+	Qxu67uMir3MKtmQFoJwfXtwS7Dy/YdbFuiseto1kkwbVQSIy73dUrDx6QmOxYJFM3V/vmMe6VC0
+	U1lKERuqZyOtxq1Mm0cClO3izGrA3svHbZqH7qPLmHkOn3V9WV6wZxa+DavqXH7Iz5un
+X-Received: by 2002:a17:90b:2dc8:b0:341:134:a962 with SMTP id
+ 98e67ed59e1d1-3543b3d6620mr11590187a91.28.1770064053519; Mon, 02 Feb 2026
+ 12:27:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260202131921.15175-2-pushkarkumarsingh1970@gmail.com> <20260202162225.35206-3-pushkarkumarsingh1970@gmail.com>
-In-Reply-To: <20260202162225.35206-3-pushkarkumarsingh1970@gmail.com>
+References: <trinity-ed0884d3-098e-44be-aa1a-a96f664ce7ca-1770049279182@trinity-msg-rest-gmx-gmx-live-5dd78c558c-fv4g4>
+In-Reply-To: <trinity-ed0884d3-098e-44be-aa1a-a96f664ce7ca-1770049279182@trinity-msg-rest-gmx-gmx-live-5dd78c558c-fv4g4>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 2 Feb 2026 15:00:57 -0500
-X-Gm-Features: AZwV_Qh9xkGmNC_CWhQwuoZ2YGesMK3ClKCDYhrRWsRGafD7YgPReD4x6v0j8Rk
-Message-ID: <CALnO6CDQiSo7QYnjUmwxgRJJ1=A15JZ5TTWaHKUMgfiMoJHsww@mail.gmail.com>
-Subject: Re: [PATCH v2] stash: honor --no-overwrite-ignore with --all
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net, 
-	karthiknayak@gmail.com, ps@pks.im, kh@pks.im
+Date: Mon, 2 Feb 2026 15:27:22 -0500
+X-Gm-Features: AZwV_QgL243KGbT4XBceVpGanpPHPQDZulX5fme9R8LHrm0z0Y40j7962ZuDxQ8
+Message-ID: <CALnO6CCqwnTcQWSUBPV+o3OO=sMZJjj6jRuMNnBjV3F-dYx+0w@mail.gmail.com>
+Subject: Re: [BUG] git log --graph --pretty=format misplaces graph characters
+ when -p given
+To: lolligerhans@gmx.de
+Cc: git@vger.kernel.org, Pushkar Singh <pushkarkumarsingh1970@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 2, 2026 at 11:37=E2=80=AFAM Pushkar Singh
-<pushkarkumarsingh1970@gmail.com> wrote:
+On Mon, Feb 2, 2026 at 11:22=E2=80=AFAM <lolligerhans@gmx.de> wrote:
 >
-> Teach stash push/save to avoid -a cleanup when --no-overwrite-ignore
-> is given by downgrading INCLUDE_ALL_FILES to include-untracked.
+> Hello,
 >
-> This fixes ignored files being incorrectly removed despite
-> --no-overwrite-ignore, and removes the stash FIXME by plumbing
-> overwrite_ignore into unpack_trees().
+> Git can pretty-print a commit graph with git log --graph and a custom --p=
+retty
+> format. I alias some uses of git log --graph --pretty, to which I then wa=
+nt to
+> manually add "-p" upon invocation.
 >
-> Add regression tests covering both overwrite and no-overwrite cases.
+> When using the working command
+>     git log --graph --pretty=3D'format:%h'
+> and appending "-p/--patch", the output appears erroneous:
+>     git log --graph --pretty=3D'format:%h' -p                            =
+     (1)
 >
-> Changes since v1:
-> - Use OPT_BOOL correctly for overwrite-ignore.
-> - Fix stash -a cleanup when --no-overwrite-ignore is given by downgrading
->   INCLUDE_ALL_FILES to include-untracked.
-> - Add regression test for --overwrite-ignore.
-> - Adjust no-overwrite-ignore test to explicitly use -a.
-> - Add Signed-off-by.
+> Expected output:
+>       1 !    * d0c34d4
+>       2      | diff --git a/git-bugreport-2026-02-02-1427.txt b/git-bugre=
+port-2026-02-02-1427.txt
+>       3      | index 5a83af1..2740fd4 100644
+>       4      | --- a/git-bugreport-2026-02-02-1427.txt
+>       5      | +++ b/git-bugreport-2026-02-02-1427.txt
+>       6      | @@ -1,22 +1,53 @@
+>       7      |  Some context-before line
+>       8      | -Some removed line
+>     ---      | ...
+>     101      | +Some added line
+>     102      |  Some context-after line
+>     103 !    |
+>     104 !    * 28299b2
+>     105      | diff --git a/git-bugreport-2026-02-02-1427.txt b/git-bugre=
+port-2026-02-02-1427.txt
+>     106      | new file mode 100644
+>     107      | index 0000000..5a83af1
+>     ---      | ...
 >
-> Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-> ---
->  builtin/stash.c                    | 14 ++++++++------
->  t/t3905-stash-include-untracked.sh | 16 ++++++++++++++--
->  2 files changed, 22 insertions(+), 8 deletions(-)
+> Actual output, shortened, with line numbers:
+>       1 !    * d0c34d4|
+>       2      | diff --git a/git-bugreport-2026-02-02-1427.txt b/git-bugre=
+port-2026-02-02-1427.txt
+>       3      | index 5a83af1..2740fd4 100644
+>       4      | --- a/git-bugreport-2026-02-02-1427.txt
+>       5      | +++ b/git-bugreport-2026-02-02-1427.txt
+>       6      | @@ -1,22 +1,53 @@
+>       7      |  Some context-before line
+>       8      | -Some removed line
+>     ---      | ...
+>     101      | +Some added line
+>     102      |  Some context-after line
+>     103 !
+>     104 !    * 28299b2|
+>     105      | diff --git a/git-bugreport-2026-02-02-1427.txt b/git-bugre=
+port-2026-02-02-1427.txt
+>     106      | new file mode 100644
+>     107      | index 0000000..5a83af1
+>     ---      | ...
 >
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 82d10520fe..c3ee33cce1 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -1858,9 +1858,7 @@ static int push_stash(int argc, const char **argv, =
-const char *prefix,
->                 OPT_SET_INT('a', "all", &include_untracked,
->                             N_("include ignore files"), 2),
->                 OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore,
-> -                       N_("update ignored files (default)")),
-> -               OPT_BOOL(0, "no-overwrite-ignore", &overwrite_ignore,
-> -                       N_("do not update ignored files")),
-> +                        N_("update ignored files")),
->                 OPT_STRING('m', "message", &stash_msg, N_("message"),
->                            N_("stash message")),
->                 OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
+> In the actual output, note the trailing "| " sequences in lines {1, 104} =
+and the
+> missing graph character in line 103. I believe the sequence in line 1 bel=
+ongs to
+> line 103.
 
-This doesn't apply on top of, say, the master branch; it looks like
-you generated this patch on top of the previous version?
-
-> diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-u=
-ntracked.sh
-> index 9c5421cd76..a979831a64 100755
-> --- a/t/t3905-stash-include-untracked.sh
-> +++ b/t/t3905-stash-include-untracked.sh
-> @@ -427,17 +427,29 @@ test_expect_success 'stash -u ignores sub-repositor=
-y' '
->         git stash -u
->  '
->
-> -test_expect_success 'stash push --no-overwrite-ignore preserves ignored =
-files' '
-> +test_expect_success 'stash push -a --no-overwrite-ignore preserves ignor=
-ed files' '
->         echo ignored.txt >>.gitignore &&
->         echo before >ignored.txt &&
->         git add .gitignore &&
->         git commit -m "add ignore" &&
->
->         echo after >ignored.txt &&
-> -       git stash push --no-overwrite-ignore &&
-> +       git stash push -a --no-overwrite-ignore &&
->
->         test_path_is_file ignored.txt &&
->         grep after ignored.txt
->  '
->
-> +test_expect_success 'stash push -a --overwrite-ignore overwrites ignored=
- files' '
-> +       echo ignored.txt >>.gitignore &&
-> +       echo before >ignored.txt &&
-> +       git add .gitignore &&
-> +       git commit -m "add ignore" &&
-> +
-> +       echo after >ignored.txt &&
-> +       git stash push -a --overwrite-ignore &&
-> +
-> +       ! grep after ignored.txt
-> +'
-
-After removing --overwrite-ignore from these 2 tests to run them on
-unmodified Git, the first one fails (good: exercising new feature and
-showing improvement) and the 2nd one succeeds (probably good:
-exercising existing behavior, but strange: see below).
-
-Use test_grep instead of plain grep. For example, it reveals that in
-the first test, ignored.txt doesn't exist in current Git! (Which is
-expected with -a, although should be changed by this series).
-
-For the second test, I think we're hitting a similar issue (test_grep
-complains ignored.txt doesn't exist, so while inverted grep would
-succeed, we actually want to see that the file doesn't exist, right?).
-Anyway, the current "! grep =E2=80=A6" passes on current Git because it's n=
-ot
-really the right test, plus "--overwrite-ignore" is the current
-behavior of "-a", so a modified version of this test _should_ pass on
-current Git. I think we want "test_path_is_missing" here?
+Yep. I think this is because format:%h doesn't add a newline by
+default. With tformat:%h or format:%h%n, the issue goes away. (See
+"git help log" under "tformat:"=E2=80=94this is probably what you want in
+order to get "oneline"-style format.)
 
 --=20
 D. Ben Knoble
