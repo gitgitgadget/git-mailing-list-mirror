@@ -1,115 +1,88 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3707F36C59C
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 14:21:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768151DA62E
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 15:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770042084; cv=none; b=Sx2qLh0cKHlf0OYTfzZsnyp5kxHgPgLZ9Atumn7/PiIGKC+5OeZTI8jRzLpna/CYiUTwAnW+aG14oUuTVlBrhfyg1Olsq7fVBIPR5rhPK+LT/A/r+Y9bWA4DBl1OP2SOVmLwHiKEDbe2JkJoTG8MJzXqNc+34A60yjte6v+m4z8=
+	t=1770046249; cv=none; b=SLA1gjLrZ+qKKJxOibWsxVTrOemwy41yFFaJk5Mk8i3NKczVysCBBZ3pVLmTIFBOwESBJiR4Enpm7/7JZcPyEpInDX+kHca4HX9vYci0qRZTZELxBn0HfCtbbGTQzBVOSVqOUd6dhzEs4/slkpj9A2d+dzORBtDAAzQZCjMoSQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770042084; c=relaxed/simple;
-	bh=6xkYH2cctTSQeYC19bjQfu27G5p2j+UJEX7QwEzzcdg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=YvbqVjmW7f20NU02iFdnMQD5OVcOGwTtOoVzvOe0QVyxrHthEPyUod9DiqBfmoNQCsuUOH7uBPRdM7U6M9STFCEXYtqcwVlCUlWWU9TPWGDXu9Dd+D3o05zd+j5zsFW89rZa7IKHv6livd5sBndVu72NMSIk4ct9Ymil22F1yF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=DpKZyVqN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XPxyb3Ro; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770046249; c=relaxed/simple;
+	bh=HUdFvmrHwPL5SxJOb40of6asld6/2lSzH820D3JXGQ4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RXgdarwos2UMqP2SLwm2HyU+cTFNlAXYwLQmqnv75D7YM79t6e5k5JZks2ZLpl5pEKL17knHTowFnAkMwz4svaJNQ+c7rJI3G2kNdBekvH/qao0K+Z5nco6YyqHTaKLsAsqysVDwJTKO/Dfk17xA25Y9tJSKBCE39GdAkmk5NCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZLE2y1Lo; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="DpKZyVqN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XPxyb3Ro"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4C8B41D0014E;
-	Mon,  2 Feb 2026 09:21:22 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 02 Feb 2026 09:21:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770042082;
-	 x=1770128482; bh=uB3XL0yCOyac7b53+b/9yWaQnxG3+HkczQJI5FHKN9k=; b=
-	DpKZyVqNFGwkFhDEAWFCeVS9Tx3CnlaDUxUufAzwb7d/IngsyUocWIjYUMBLtNeV
-	rA6M/84sSDyZsQ6DkXSpM64tgh8XoQSj1NvwRhVc1zYH3C9gnbha7C8kSdXLHsj1
-	Bzo2Ii56rZtNLJxR7Xhax+kuGUrAxfffvvEF9fB/Tp3FxL1/lF7bNAEGAmoLO43A
-	hS6GrqRf9KfaGphiRFqCCBdmdXNG8JJWHImQLeqYHpHtyT7CDjAlE1sQx+T3tQAA
-	/3euJAcwq6BTlOMCjdpq5XHuYy1n4ikTq9ekJ1cdnqGBTi5UIEhUPiwGtz+/Fmw0
-	LYhLh7kgheOLxITEmMDhgQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770042082; x=
-	1770128482; bh=uB3XL0yCOyac7b53+b/9yWaQnxG3+HkczQJI5FHKN9k=; b=X
-	Pxyb3RoOelDNkYPJxGwUq6Lh4wDadXDd1uDDJB9az1S1FAs3H3vesNPiNJrX9tML
-	TwcEl2HJQMKfgR51SC5kylyLDiD2Q3dLhSNwViwquqkkVaLDUttSVdkvvoXa93B7
-	X2xTNqmqI3CHlGcsFP8rbbaZnpGuLpeItlzmDVwnLEOeqhzousa5kLKKBGzGGlBD
-	6xhPGJPV7P+6W6BSUCgNZ1i44JZiXY/AEOWe351XqKw0s2cPIKt+jurPYbwU4fVM
-	xJGlnCq+VheIg7kHgF9bfWiV+EZg7MrMQHA1h6cP4q/jBqs4ip+CpqAufGN+CfL/
-	jxQBzD3cy+T8oBjQIO8Yw==
-X-ME-Sender: <xms:4rKAaX993KwohnbVrIfSjM5WrQw5XKK8TiHa3xbJ1pkRpOVALoCG7Y4>
-    <xme:4rKAaehcRGHAR6HLSZ8HvF_TGksdegX7CaHDADM9UpdRGO1JZhhIxYhsKCIFbQ5Od
-    2qC9DBq7Yk7gliO9wHhORHDYHma9X6mineHsUDXpotidT52X-Xx-w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeejkeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehpuhhshhhkrghrkhhumhgrrhhsihhnghhh
-    udeljedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:4rKAabn8-hf1t1783YccpOdrIfhIb7XxsVNMGnBaQtaHqKeBSkbGfw>
-    <xmx:4rKAacrel_Zqkbg9MXV38Wf8WdneU3dF-kV7o26YzDk5LsdvzGjNsQ>
-    <xmx:4rKAacGNTKwViD9_Z-2wFlhpcaZpKX3Qhi6955dgw3LTJzUGDR1YmQ>
-    <xmx:4rKAaQwPdn5Buz_RkxI4-pIA3tlTcXfcOWXRh1-FI-o1dKha-rJq2A>
-    <xmx:4rKAaTyT63nqGNyOKXZxrmJO-hFwaRfn-siqmndpHbWgNEZ7VW6b62D1>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 002441EA006B; Mon,  2 Feb 2026 09:21:21 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZLE2y1Lo"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-386714da2a2so7869861fa.1
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 07:30:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770046243; x=1770651043; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HUdFvmrHwPL5SxJOb40of6asld6/2lSzH820D3JXGQ4=;
+        b=ZLE2y1LoXSxoGjm7ZpHq03TeHrPR9AOck8E2imhj3NXuJuip42D0KWuqiYwMAB6R0B
+         06WKkvkpLWqJDLmgsSPtCuzkzE/7HOn3xPaUhzHaBBvqk5D1zariWu4/mUTxDMZxMgCx
+         rQfQTdvt0MjeRa09a/1iuohFBU7VqcqYHV/fFph+Dft9aLAZHgOodpmDatL30XedgFGq
+         T5oLCUMCF8rIrUkqMOBLpwlnkznZt3JgcHTuwPMm+xKWU/HUPsl2r/KdTLPhqna7bJwC
+         sPN87WxOI/7vIr/MUyC/Z8nhuqVa9LYDOhzp5jk88LWSzAnfV7xbEXaElr3EScUxPzhb
+         r4dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770046243; x=1770651043;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HUdFvmrHwPL5SxJOb40of6asld6/2lSzH820D3JXGQ4=;
+        b=E7o4Org957URVIgXNqa3GwEnyHKOA3E7eFmNKg1wft0GLo+l8bZs83Snih8GGHvhrh
+         Q3Ys7gIjdNjpD9qjgRb/VX2lGDk5N3QeiW3r83i/gwMPuZNXA/PHPLNTlSZRBeqUyH17
+         TMftvJONC+p2ya4TbH9fptKNW5IWHs5qT5cuqEZyxkvhhrRgYS3w17qJ3vPF4rZVhZBY
+         PfTvzsI52CubivkbVK6kUrB29E59nXk9/3RPRtiBkqT84h2LMUTv9+4Z5pkX0hUnS5Yr
+         BDp/sTHirhj6ivyu/FU4c1QRxFaVYhDbgYmlVyCB1vyvBOA9amVU/1DcpLRCXdjWFa5I
+         lwVg==
+X-Gm-Message-State: AOJu0Yy+x+IEeC9Z1TwN1jzvdDwIyAbu0UK0oaZut/STeFffvwODqRw4
+	6XoW4FIYUo8PhMscz7Dk3JiC/mO/udeZC60Ue06lRFFwabpjIf47zRe1xbGt1w==
+X-Gm-Gg: AZuq6aJu7w525sHggL+HHFn/1HinT8h+H/4q4+HpaYULVXkiSX5jGpHn3/Uq8ew0SuP
+	RHSiUcEsiJ3ZyFGaejuKy0XRNR3WnQo5slwoKqkdLlynDdPLniG0TlFkcWLqMKn0F7OHyUIuvwH
+	JpzK+jilioiQY2sefDSq2nN4VEJsaXtO9GZZSxpp53ghDaarsARh7qprUC2t3hLdJoqYBOkOU/y
+	ubEYpNvPQ904U+ukp0ZvKAual1CYIuy9/YHgSutWdTd4JTVKah3Gri+KaZWBx3kiqhPI25ZuuFZ
+	v8VmSDNZJ7jbnlElCvdAcDbqL/qaM8r3vwjr8YezNoHN1w+J/lkWqowfSQ4zr00JGAA7S36M4Ys
+	C5eWIaHYODo20Mt3i5yvGRUVpyKgj4N7dxNTTU2Dh01wxOQKDthw5B3fV4RR7MfzyDhM554M2ar
+	todsqjSaiIc+mzTn879aSxcQ9fex938UyiFxBWajQzuKXpW9ADpqSQMJ56dfBm71R/EI8ImzZlo
+	H1o
+X-Received: by 2002:a2e:ac12:0:b0:372:628b:5cb4 with SMTP id 38308e7fff4ca-386467224aamr42305011fa.45.1770046242582;
+        Mon, 02 Feb 2026 07:30:42 -0800 (PST)
+Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38625fd37a2sm34299481fa.50.2026.02.02.07.30.41
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 02 Feb 2026 07:30:42 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com
+Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
+Date: Mon,  2 Feb 2026 16:30:41 +0100
+Message-ID: <20260202153041.2939-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqqjywv2une.fsf@gitster.g>
+References: <xmqqjywv2une.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AlDtzHaItADV
-Date: Mon, 02 Feb 2026 15:21:01 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Pushkar Singh" <pushkarkumarsingh1970@gmail.com>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
-Message-Id: <1abb1fa0-3548-4258-95d9-0505ea446043@app.fastmail.com>
-In-Reply-To: <20260202131921.15175-2-pushkarkumarsingh1970@gmail.com>
-References: <20260202131921.15175-2-pushkarkumarsingh1970@gmail.com>
-Subject: Re: [PATCH] stash: honor --no-overwrite-ignore when updating index
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 2, 2026, at 14:19, Pushkar Singh wrote:
-> The stash code unconditionally cleared opts.preserve_ignored when
-> updating the index, leaving a FIXME suggesting this should depend on
-> an overwrite_ignore flag.
+> So the @{default} we originally discussed was not something that is
+> "relevant for each repo", and where refs/remotes/origin/HEAD points
+> at has a better chance of closer to the relevant name?
 
-The commit message should discuss what the code does without the patch
-in the present tense (SubmittingPathces, =E2=80=9Cpresent-tense=E2=80=9D=
-).
+This is a communication error on my side again, my goal was always to have
+someting that is relevant for every repo.
 
->
-> Introduce overwrite_ignore plumbing for git stash push/save and use it
-> to control preserve_ignored during reset_tree(). Add a test to verify
-> that --no-overwrite-ignore preserves ignored files.
->
-> This removes the long-standing FIXME and aligns stash behavior with
-> checkout/reset/merge.
 
-Missing signoff.
-
-> ---
->  builtin/stash.c                    | 11 ++++++++++-
->  t/t3905-stash-include-untracked.sh | 13 +++++++++++++
->  2 files changed, 23 insertions(+), 1 deletion(-)
->[snip]
+Harald
