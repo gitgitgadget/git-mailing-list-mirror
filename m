@@ -1,43 +1,88 @@
-Received: from mail-24424.protonmail.ch (mail-24424.protonmail.ch [109.224.244.24])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9577D3EBF3D
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 21:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FAA2C0281
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 21:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770067528; cv=none; b=bi1wmnNStszSI5TxTEYj9Y48kzBNPXFfsRqc1K/3mFcYJYSOC2wyt1mAV8YXoGifPjyMYLGNAiTlXPe4IPf54LyPVsFcffRMtW7qUo7qk8Btg4/gZDQ7+luIwDYk+fAi6TEZPQL6GS/EGEt3Letbf1HCWQwpYbGrhK8xbkGf3K4=
+	t=1770067545; cv=none; b=jRhFkoH+F5Zwp9wvZT/kkkl7jqJiNyshwr4SieOAULbcWtl/MM3WRzuXpYKtFQnzaaAybEfEgUuN/r9fUfdvfct0rQiV9kZiPtREQsfZYpvgu8KihpBUmCLgmNiziE4LaSm9K7l1sgDrm8Hu/yGV7OUjmq0i6BU3BAeKj01342M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770067528; c=relaxed/simple;
-	bh=yvaCzfSN0rZmpk2XqdkQ2pKmZEUesRhxcy2J7sm9u08=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=csIxbdp1FuMPxNZ7ixKLQ9cW+s0rxN/encO2EwownDJ2cPAcefJQYtPjLM6YNnbBQZgx9UakOk2qOjK9fcXPBacQoiE8++q6YYmBrE5fwfxWFvxw/Lpf4MftLTp+BUX6t2TcEp51XAeJU9z+PAc081E4IjyJ5Bp7iRpsnl7mJ7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=snJkbuek; arc=none smtp.client-ip=109.224.244.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1770067545; c=relaxed/simple;
+	bh=9/hDpxNaBoknE9ir+WPh5PkaQ9xm/9Bq30R8yo9fnfg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qqOMzj3ZwX/2PLSGMluwNDtuFhk8R7QW8vgM1hvLc3/VP5mNTShSqWLQXCEDkQ77CreCqZwHGjK3hdhj/KRal8MOZ2o4jlFvS0Xn2f7EBNhnb8X4wJsbQ9spjymDYzLCvjpfa1mtQqMgU5c6ueH17/ismJatg7FueYUWywCdUec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ysXZQL2b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mtAVI/AY; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="snJkbuek"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1770067518; x=1770326718;
-	bh=o1WajuS0BEIvwn/4wObspf1nPyHTlUY02KW7QtSsZHE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=snJkbuekGmXuC0eIxJQ34ZwECBKw89ws5b8qWxqwx1OcToXY/emOXjFJwxqxLuzsl
-	 sLD3zZv7qBD62+3eL9ARc22Gf9IjG7lv7sxgCJ5sByD/0a2jLqHtR3ivb54c+it3O+
-	 mIvmX+SOTwTg0oV2cHnc4zPRlmVIQL7gCv1GKmgQbU+4YEYZywIq2JtYEM7nleVOTy
-	 U/efa+x+qA4LkhtjDUpjpIdWn9JyDGgP72ZbFNbnSBWg6SnQciG5OUmehUZ330BGC4
-	 m9lbj42An5aMnZfMIbS71Aw32odjkRTe7S/9oD4TCNiR7LWlLa4YgLcNTNUDmBr7TK
-	 l6/eNbJVOWO/Q==
-Date: Mon, 02 Feb 2026 21:25:17 +0000
-To: a3205153416@gmail.com
-From: "Remy D. Farley" <one-d-wide@protonmail.com>
-Cc: git@vger.kernel.org, one-d-wide@protonmail.com
-Subject: Re: Bug: git add :!x . exits with error when x is in .gitignore
-Message-ID: <20260202212420.1185803-1-one-d-wide@protonmail.com>
-In-Reply-To: <1d560aa1-d452-47f5-aaf2-4cb1ccdab100@gmail.com>
-References: <20260131194309.601838-1-one-d-wide@protonmail.com> <1d560aa1-d452-47f5-aaf2-4cb1ccdab100@gmail.com>
-Feedback-ID: 59017272:user:proton
-X-Pm-Message-ID: 43598928c1f1a162fecca6aca0e19621624ac676
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ysXZQL2b";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mtAVI/AY"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id C1CBF1D0004E;
+	Mon,  2 Feb 2026 16:25:42 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 02 Feb 2026 16:25:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1770067542;
+	 x=1770153942; bh=xsiqOFjJqmX63rbn44zPQdurY8IrgTnxipGoIWwNHxc=; b=
+	ysXZQL2bUugDRhaYknrYyF+7vGVS9jbetDuOdiQn06rdEwRorYOoyXLD9iUJt535
+	DfKZkxSt7G6vD1Mfxbi2/RWlj0ENSLS2im71RsGQJaSM0YAp1XNpVSL/+VB7yd2y
+	24Ixb3gIT6hLxN4ubXhMXFemkcRSOHh5enb5Cms5ZosmnV0BxIAXzg1r2FLsBUr1
+	JNIFfArtDkZlm9GSVy1tAV+K+bfoTyO26kbOW/X8rEEuS4mdI/S416Ruf4Jdq7j1
+	+7k+JOgjFQbEE8HDsjmsHwUQIzdIfcpiCVTM0mi5+wSPxcSV7tRMWb7d8KlWBK+C
+	/qZkFykGMsd/W5I7sVPE9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770067542; x=
+	1770153942; bh=xsiqOFjJqmX63rbn44zPQdurY8IrgTnxipGoIWwNHxc=; b=m
+	tAVI/AYFDVx/UzVMQYxIYYGMwmsjSjxOg2CpWB17s4flY2rr1gyvZgSZ6NZsVSw5
+	u6qDJxmuCdnMM9Sc+9Am6s7f9JSW3ILhevJcp51JbIqRKZE/+NM26rZGVYx43HoB
+	30zwS3AYfpoe/DCHYxnIP7eq/YL0shUcR5fvJKL70sfV7nqQcuUlFLkRUoW+bsS4
+	ER5PP4wIbmcWU61BNeLj44b4Q8idOUY41rAll+qHdAmLgY/Jp7csg/cLG3zWJ/pr
+	97LbJLtFrSNc01uLq5BYdxJ/aQBQtPl/X/Xt2aL7abeyAhg+o6qVgZ+j/KA4szKt
+	ojKOfIP6SjMh055lDJjyA==
+X-ME-Sender: <xms:VhaBaQSVuEVdWMgJNV1S5wEnveDghuNiyQR_YjHRpMdQSJ2ovM02zg>
+    <xme:VhaBaRdMmlTYaRX1oyaKclTyV_cg8kN66qBRMGDALZIyyo69w_FtAv1gcwL6ZpNT-
+    3WUiO5NuloAtEaqre8savXyvhOTXtUjKdNKFRlyzRguQQRpYkrC0w>
+X-ME-Received: <xmr:VhaBaXpqBgaMOUJkyySOTjdFM9V4wFOLvmSUhaejOzlNZMYwKRI8cUUzZttwBw3EeYSv0_uQ89GXYsrn3zgMNcKhGPbVuFyJHQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekjeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepfihhrght
+    fhhivghlugdrghhithesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhlvghntggsiiesghhmrghilhdrtgho
+    mhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:VhaBaa9hyixjv_fyInUPpPCzIo9dtkr0hLO5--TRq0bug9M-bT2uLw>
+    <xmx:VhaBabeguBvtUprt-pXKGV2BlvpTnbT8hH0yXiGJuhSIz6c5VHUt4A>
+    <xmx:VhaBacL25BcvWkN5DRUYnAtwEmU45LDNiAt1xQgZos_hh6JBEUX3RQ>
+    <xmx:VhaBaTjTD6eIqQ68tZ-T5c5NlnJ03HEjb6hg_cI7uzzaVug5q8lrzQ>
+    <xmx:VhaBaZ2vNlBtLkZgeFmCCRuyvmY6xSDC1p2cBnJlykgKtTnpydaidEuY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Feb 2026 16:25:42 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: William Hatfield <whatfield.git@gmail.com>
+Cc: git@vger.kernel.org,  glencbz@gmail.com,  avarab@gmail.com,  ps@pks.im
+Subject: Re: [PATCH 0/5] submodule: add 'reversive' traversal options to
+ foreach
+In-Reply-To: <1F5D3AAF-3E5E-4AD0-A48B-90B9D545FB21@gmail.com> (William
+	Hatfield's message of "Mon, 2 Feb 2026 16:02:16 -0500")
+References: <20260131214309.1899376-1-whatfield.git@gmail.com>
+	<xmqqbji7yo3x.fsf@gitster.g>
+	<1F5D3AAF-3E5E-4AD0-A48B-90B9D545FB21@gmail.com>
+Date: Mon, 02 Feb 2026 13:25:40 -0800
+Message-ID: <xmqqecn2yh0r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,71 +90,42 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-> Thanks for the report and the patch! I also agree that the behavior you
-> described seems like a bug.
->=20
-> However, though I'm new to git community, I still have concerns about
-> the fix in 'dir.c':
->=20
-> > - if (!pathspec || !pathspec->nr)
-> > + if (!pathspec || !pathspec->nr || pathspec->magic & PATHSPEC_EXCLUDE)
-> > return 0;
->=20
->=20
-> I tried to analyze the logic and I believe this patch breaks the basic
-> functionality of the negative pathspec (:!):
->=20
-> (I didn't check the caller of exclude_matches_pathspec and I only focus
-> on the function itself. Tell me if I'm wrong :)
->=20
-> By returning 0 whenever PATHSPEC_EXCLUDE is set globally,
-> exclude_matches_pathspec will report "no match" for all files,
-> effectively disabling the exclusion mechanism entirely.
->=20
-> Instead of fixing the issue with ignored files, this patch causes valid
-> exclusions to be ignored.
->=20
-> We must check if the specific path matches the exclude pattern, not
-> short-circuit based on the global flag.
+William Hatfield <whatfield.git@gmail.com> writes:
 
+> Do you have any recommendation regarding names of these flags?
 
-Oops. Somehow I was convinced struct pathspec represents only a single path=
-.
-This way something like this would silently succeed, without actually index=
-ing x:
+Not really.  To be honest, I didn't even check to make sure what the
+behaviour was that your "--reverse" was implementing ;-).
 
-  touch x
-  echo x >.gitignore
-  git add -n ":(exclude)smth/else" x
+> Do you have a preference for: —postorder-traversal or —bottom-up-traversal?
 
-Thank you for pointing out.
+If all three kinds of *order makes sense to the submodule traversal,
+then --{pre,in,post}order would make sense.  In other words, does
+there exist a good answer to this question: 
 
+    What does "--inorder-traversal" would do and when would it be
+    useful, as opposed to --preorder and --postorder?
 
-> It will be great if we set a test script for this. I will be working on
-> it in the next few days.
+Otherwise, the distinction between --bottom-up vs --top-down may be
+sufficient to explain, and may explain the concept using more
+familiar terms to us non-mathematics types.
 
----
- dir.c | 3 +++
- 1 file changed, 3 insertions(+)
+> What about: —include-superpoject or —execute-in-superproject-last?
 
-diff --git a/dir.c b/dir.c
-index b00821f2..ed6b99e3 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2280,6 +2280,9 @@ static int exclude_matches_pathspec(const char *path,=
- int pathlen,
- =09=09const struct pathspec_item *item =3D &pathspec->items[i];
- =09=09int len =3D item->nowildcard_len;
-=20
-+=09=09if (item->magic & PATHSPEC_EXCLUDE)
-+=09=09=09continue;
-+
- =09=09if (len =3D=3D pathlen &&
- =09=09    !ps_strncmp(item, item->match, path, pathlen))
- =09=09=09return 1;
---=20
-2.51.2
+Depends on what you are trying to tell the command to do with these
+options.
 
+The former sounds as if you are saying "we usually do these things
+only in submodules and never in superproject. But with this option I
+am telling you to do the same in superproject after you are done
+doing them in all the submoudles".
+
+On the other hand, the latter sounds more like "do these things in
+each and every repository (both submodules and the superproject),
+but make sure the repository for superproject is handled after all
+others."
+
+Thanks.
 
