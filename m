@@ -1,157 +1,207 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC726366DC5
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 13:22:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770038575; cv=none; b=SEDpuiNm/rmc+0n2HqzbH1/POzQpnY6k3NDSEESSr3F6lC+7KXmBV6T3AipsEZCi47CcFWLTzWLLYIk1MDYzL0jfurIJdtL9BrcZNjBAEp/Kh0asWYkNMINmIlPL8xkzNE4/apgDAZlwsjy1wOujDqfHcx1Hv4zktyoZtvEex74=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770038575; c=relaxed/simple;
-	bh=yKqhJbL5CsqjmQZF9AJootYqnJDyKTDXd2JwgBAkuhE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WIMcR1hrs4QJvoGdaFHSqfo13qZNfZHCba5Ht+Or3zsXZ03mlCanw/pehywac+QNYfcdz3MDlWWTHQt8rvzFcb2/l3oQQfIBxCsuBZt2wSlap1sZ/0EE6PYgBWilQe4ofoo+gz1X/6STT7vq/pbF2sgOawmgoMOAxNsUbFP9sLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CYxjTMgU; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF8A36826F
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 13:36:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770039381; cv=pass; b=RBR7ncAwjGjR0kwoP5mTCctiShAoyQm58fIjfF4lMJDqUa1fYADi9S2hGrPEXRUgEjytDZkDXoysLIdL2iFcWVfoVQXg5fgQTmRsu8lTJDp7fEjeIFaLWKIUXIn1rCtEuGunsUHZzAj2JaMM/0+UTfVdkLQ67wvLycUUEo3Aw8s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770039381; c=relaxed/simple;
+	bh=IPqlsUGxo+P15t8tA3BVyYBGJxlImmsf4ihWO1uGQiU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=avAuRYVOdNTGxU8reSJOYHeR/wKCbUXMmIMgU+hP8+vXRjd9l/JFQWccjldOFoLgWswLYJdwkLOcPt8Rv1eby9afTC4YtilpI/6B/7349Dt2DHKltQtbTNqPhukps1W2b0O9GY6xwc/91z54WVr02JPVYxa8Og1KP0iQob2olpM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CinrkRnH; arc=pass smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYxjTMgU"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-29f30233d8aso28235045ad.0
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 05:22:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CinrkRnH"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-59dd4bec4ecso5014035e87.0
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 05:36:19 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770039377; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ZYA/9H9YiyqnemCyHWsWI0RuoKWohqpvi0qf1N3XCDC/bQQ62MXH/zXf/k0SyStulI
+         EfAHqBBnO5EF8QQfovdV2zIS2A7h+S+PZ2CSH4gYZdsismTp1av9jvnw7aD736rgThIA
+         ED3IPVgtQyxsqxWgbtYcNBPPNCBh4v4LcRe45ttF33MwbKmEj0CSReM99hFU+kfly84k
+         LyXqlxsaPFyk/EobzTReCOnWrLDozhP2ZgNrPjseCTKlF/8DThTYxttqOyHJVIp6ikHo
+         NQj8fguWIEoLxc568PVnQgeDfviZIyctsYJdY9cJ3ARO97Q9XmtkKIY2ZDejW0VftJAs
+         ugXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=ieApjL8A5wnX1+KIGBLVbM8V6Nmv0heR0TjOoF0di8A=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=PsXi+vxgDijWH0N1MZJQYDlsogIlSqbWJ81P8O8ZZKnvIUo2Mep7RFgykxwLTQYDHU
+         h7qzk4FpX3ztNmqwb+TbayM8526968wvcQBVxuibuCRIduA8Kgb86TvHBnKTJ5gp69Jz
+         huk6EWJFEOJ4t71CmXPlhmC6nt3SAU5c3/hw8TdjHhETiwBGea5+iwpLVDxiqLYvlSDC
+         +n4rRWGbxJSpjYy5JmaTMmi3pP++ucPJr/ppiiVigKJcPcOw6FX/f6STFU3SVJ+Zhosn
+         guQGqfstfm3YCC5bLhbyB9nClP3BJ8Oh1Cyq2pBOsMC99VkNrRnUpjSZekT68YCDh4R9
+         78kg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770038573; x=1770643373; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=z5KA6sX4YWxGdZ9yr7wNCYDt8HFJP+sep/n/2scEDa0=;
-        b=CYxjTMgUEN7/1LvirwuMDzKrhq3b23eeOv9F1Nj4o0/ottMRVZJoiqG+hUC4quM8yD
-         6nE4gzCAfwSiy7saC5of3NG7hIv9Wm0cDvU3hrCAINLbGlOnMu92Ta8RXuusNBcAqpAA
-         H0ObelWq1mafFKgZWhaQZE/5JqK11sSntK4hMeta6kq4VI43kECbb1iWRuD6gjAGQqYR
-         4W+ETu3gS5Af0Ii3Hxdn6qyh1wqSBeQQqiX5GzStha1ijldjMRNCuH1CU9XFyuEzd6nV
-         VV/ghRbKVbhMzzdhroYBY25O0cygXh9w+0ojeyz45XLhrAA+MdjhYo93FiH95y8m8pXh
-         JbyQ==
+        d=gmail.com; s=20230601; t=1770039377; x=1770644177; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ieApjL8A5wnX1+KIGBLVbM8V6Nmv0heR0TjOoF0di8A=;
+        b=CinrkRnHzDVj4JftW7z0/hJPXqtIscvI8qxUfkbZAXEYeK/j+yIwPdLnCMZxbnNoiD
+         SkZ0gOPwlxe8bZMQdJ/JsEj/qLmMNqGggmwzhjdUthQk78tdtJs2MbtiJ1KR1Y4yU5op
+         Jsv+0kEWbaRAS0Ml4aRzXvjlSYPOVkt/ftK6QsMbAleCYSw45GU9Ns1DFj3RQNRS6FP5
+         FRQHH5ttoXB326G0Yisfff/G0LTMJ7Kbj9Ox/FmVIZgbocij/P9X/YWttY5juzoSu2x8
+         9GC1FzbGStvl60ipML3FWNEQtoIxIQt/2QYFPBi5/l2Nr4GZ0MhIVuvUlqZTWM0telDI
+         3kWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770038573; x=1770643373;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1770039377; x=1770644177;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z5KA6sX4YWxGdZ9yr7wNCYDt8HFJP+sep/n/2scEDa0=;
-        b=KTLMRg8DMkWcWDBVnknwteHPBwe+zDRoqXDycWVwdaKI+l+oH0ZQwK7BFk09+Lh41C
-         BhqDI9IDKb8+Huxei7h9hbPFn3z3Z+VvbEFSEsiW2Jz9wvAm8/SjvfgdUVXoRQvFFoet
-         LdV311bF9JHaVwUZzNohf2LQ1N6GdZ58vsiDViaBEvm/3MwnwJczDldUAMqCyiHyDWmK
-         2Oo2gGnh6yzJ4AJJZB+hrZ44Tm5nSNwF20qxs5ZihqzttiMejdhmR36aVggrn6QdZWrS
-         B9A9Qr9vQ8iJYhIAWbSpCGVX9JhofMsm2BwKC2odF+s+RiyQtYCy9z3IO6az/1AYIJnA
-         TNJw==
-X-Gm-Message-State: AOJu0YzlS0l+uA+hx5NCll7k8ysxfv+MvuK31khKBG/ntvUhLPlrwyv/
-	VKM7HqkHBlc33hBEOF2rJXySC77PFBJGz3nkO2fAcKRsVQgL9wsJC7T104WWHQDW
-X-Gm-Gg: AZuq6aKmUCERM5WmPHoVRhGl+z8mKWXSoUBpM5GLJGkZqnWqScqFDsdhPwNJ39RQB0D
-	HbYbSHeV4j6eUinL0YQNE9pNYf3s0QnJcha33NeidvbQf5TE6K/r/LB6RPsKiKEEPRQGZUCgAU9
-	jo1yjnrQ2Qioe30wTnuuFmgI02IoHl8aFJOm8922qCJO9WlYYQHZLj/oTpd9vqR6F57nxjh75F/
-	hDFOYSwx2nUBSoxJgrk9yzkKdwzT2iZHSEsvagOO0sho8iydBEIdWpNSe9YrnNKMczkXmyL7tu5
-	pxdAhS9XqKpctcPrp/bbY5nOgT0+TU1Wy1Tn6+eyx98ECt14PxPH69bZWzKJHYy407WVDcnkScz
-	OZ67e3cFwhDPsYqTq9304qLHFi1NTPFSJCPHkWDQxTy8sFF+ImulEjQLJwVBD/FYRQSNiagCSV3
-	6UQ2nuCmJqXzD6K50SPr4YF6q7rjIPwOm9M1cVPNMdty0=
-X-Received: by 2002:a17:902:ebc1:b0:2a7:7872:8f52 with SMTP id d9443c01a7336-2a8d7ee6a5dmr106399975ad.26.1770038572959;
-        Mon, 02 Feb 2026 05:22:52 -0800 (PST)
-Received: from Pushkar.xu.edu.in ([125.22.10.154])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4c40a8sm179222465ad.51.2026.02.02.05.22.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Feb 2026 05:22:52 -0800 (PST)
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	peff@peff.net,
-	Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Subject: [PATCH] stash: honor --no-overwrite-ignore when updating index
-Date: Mon,  2 Feb 2026 13:19:22 +0000
-Message-ID: <20260202131921.15175-2-pushkarkumarsingh1970@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        bh=ieApjL8A5wnX1+KIGBLVbM8V6Nmv0heR0TjOoF0di8A=;
+        b=e2G7CDfgsAu4JezSFxoKgOSdUUANrntKCNBz7r8BiGqRZ2gCoDLQeKuKnYaT2OIVIq
+         mEEr3Hm0TXJZZCTyRnJy+gNgR2RZmq3EUMMxeHb43h9faYbo7jZd09Vt4zptXpoYMm2o
+         RJNA2ptc+e9BEj76QsP/XP8VmbhyT219XPC/+I1cPD+69GUdO67XAEmnHtxU4R/5d8W9
+         +OY3DgCp7/zio+clOoqKuYeQ8fDXenaOHYDM0/kegXzck3DFfMGIsm48JqBpm3Jq+8Zf
+         fIQGLImn0p8wpSRm2exHVSoDKjKLQQ0TjsMiVTIldN6aCGrp9wJpPacUsp8sm1Rq4WW3
+         STCQ==
+X-Gm-Message-State: AOJu0Yx243CNVI5dAYefhTn/5cY5h3r7wUYE+Nz8J1LRVO8sYvHE9WG5
+	CKSoU7KZDukbZkzoQMJQXzSQXEh/5v6JVEvrT28ck3xcfoT8vHFYMiQoXfOfFdpBRxZq+wf0NjS
+	GXR6cnAyhI9n2nmn6G8yj/GDrVV3NIok2hAPjeLc=
+X-Gm-Gg: AZuq6aKR9RgHj7KBtK69kNSGyetsDs1zXO1pX8zvcAR/lRxYOYUiQJJW9jXaP6ao89G
+	+0y/to9xIPcR6+PdkZsaJQzg5a67g5uXmbj4c2cc1L8Y/mIZQyF65cpRw7yXxligAapjEPLKSrn
+	7IazDGebIQnhJFEDMGNZOJTNJ0rIAS4mG2VVit6HQxu+ae6ocPTcGoaAao1deWJc9OxSc5XdrLg
+	Wo/yrMEV4gmLfAB9KTV+Wpx8pOoJLRpaV8roO/S0ETNSV4GUXI/FP/EIotv3tZEZ6kyZ1tr
+X-Received: by 2002:ac2:51c2:0:b0:59d:f545:f2e0 with SMTP id
+ 2adb3069b0e04-59e163f56d9mr3403016e87.6.1770039377267; Mon, 02 Feb 2026
+ 05:36:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Hoda Salim <hoda.s.salim@gmail.com>
+Date: Mon, 2 Feb 2026 15:36:04 +0200
+X-Gm-Features: AZwV_QgP078X29WU9hgjK8M0-ThnAdJtazDlOiXzF6fly0-kx__cCkaulrPTY3w
+Message-ID: <CAAGT0iKRA++yUcCxyRLZN14jLV0xNVSXcKr=F5vJ48dXVEn6PQ@mail.gmail.com>
+Subject: Re: [PATCH] [GSoC][PATCH] t9160:modernize test path checking
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The stash code unconditionally cleared opts.preserve_ignored when
-updating the index, leaving a FIXME suggesting this should depend on
-an overwrite_ignore flag.
+Hi everyone,
 
-Introduce overwrite_ignore plumbing for git stash push/save and use it
-to control preserve_ignored during reset_tree(). Add a test to verify
-that --no-overwrite-ignore preserves ignored files.
+I'm Hoda, and I'm interested in contributing to Git through GSoC 2026.
+This is my first patch to the project (my microproject), and I'd
+appreciate any feedback on it. The patch modernizes path checks in
+t9160 by replacing `test -f`, `test -d`, and `test -s` with Git's
+dedicated test helpers for better error messages and consistency. I'm
+happy to make any changes if needed!
 
-This removes the long-standing FIXME and aligns stash behavior with
-checkout/reset/merge.
+Thanks,
+Hoda
 ---
- builtin/stash.c                    | 11 ++++++++++-
- t/t3905-stash-include-untracked.sh | 13 +++++++++++++
- 2 files changed, 23 insertions(+), 1 deletion(-)
+Replace old-style path checks with Git's dedicated test helpers:
+- test -f =E2=86=92 test_path_is_file
+- test -d =E2=86=92 test_path_is_dir
+- test -s =E2=86=92 test_file_not_empty
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 193e3ea47a..82d10520fe 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -150,6 +150,7 @@ static int show_stat = 1;
- static int show_patch;
- static int show_include_untracked;
- static int use_index;
-+static int overwrite_ignore = 1;
- 
- /*
-  * w_commit is set to the commit containing the working tree
-@@ -360,7 +361,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
- 	opts.reset = reset ? UNPACK_RESET_PROTECT_UNTRACKED : 0;
- 	opts.update = update;
- 	if (update)
--		opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
-+		opts.preserve_ignored = !overwrite_ignore;
- 	opts.fn = oneway_merge;
- 
- 	if (unpack_trees(nr_trees, t, &opts))
-@@ -1856,6 +1857,10 @@ static int push_stash(int argc, const char **argv, const char *prefix,
- 			 N_("include untracked files in stash")),
- 		OPT_SET_INT('a', "all", &include_untracked,
- 			    N_("include ignore files"), 2),
-+		OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore,
-+			N_("update ignored files (default)")),
-+		OPT_BOOL(0, "no-overwrite-ignore", &overwrite_ignore,
-+			N_("do not update ignored files")),
- 		OPT_STRING('m', "message", &stash_msg, N_("message"),
- 			   N_("stash message")),
- 		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
-@@ -1959,6 +1964,10 @@ static int save_stash(int argc, const char **argv, const char *prefix,
- 			 N_("include untracked files in stash")),
- 		OPT_SET_INT('a', "all", &include_untracked,
- 			    N_("include ignore files"), 2),
-+		OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore,
-+				N_("update ignored files (default)")),
-+		OPT_BOOL(0, "no-overwrite-ignore", &overwrite_ignore,
-+				N_("do not update ignored files")),
- 		OPT_STRING('m', "message", &stash_msg, "message",
- 			   N_("stash message")),
- 		OPT_END()
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-index 7704709054..9c5421cd76 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -427,4 +427,17 @@ test_expect_success 'stash -u ignores sub-repository' '
- 	git stash -u
+Found using: git grep "test -[efd]" t/
+
+This improves test readability and provides better error messages
+when path checks fail.
+
+Signed-off-by: HodaSalim <hoda.s.salim@gmail.com>
+---
+    [GSoC][PATCH] t9160:modernize test path checking
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2160%=
+2FHodaSalim%2Fmicroproject%2Fmodernize-t9160-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
+pr-git-2160/HodaSalim/microproject/modernize-t9160-v1
+Pull-Request: https://github.com/git/git/pull/2160
+
+ t/t9160-git-svn-preserve-empty-dirs.sh | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/t/t9160-git-svn-preserve-empty-dirs.sh
+b/t/t9160-git-svn-preserve-empty-dirs.sh
+index 36c6b1a12f..b89c1cb93a 100755
+--- a/t/t9160-git-svn-preserve-empty-dirs.sh
++++ b/t/t9160-git-svn-preserve-empty-dirs.sh
+@@ -61,15 +61,15 @@ test_expect_success 'clone svn repo with
+--preserve-empty-dirs' '
+
+ # "$GIT_REPO"/1 should only contain the placeholder file.
+ test_expect_success 'directory empty from inception' '
+- test -f "$GIT_REPO"/1/.gitignore &&
++ test_path_is_file "$GIT_REPO"/1/.gitignore &&
+  test $(find "$GIT_REPO"/1 -type f | wc -l) =3D "1"
  '
- 
-+test_expect_success 'stash push --no-overwrite-ignore preserves ignored files' '
-+	echo ignored.txt >>.gitignore &&
-+	echo before >ignored.txt &&
-+	git add .gitignore &&
-+	git commit -m "add ignore" &&
-+
-+	echo after >ignored.txt &&
-+	git stash push --no-overwrite-ignore &&
-+
-+	test_path_is_file ignored.txt &&
-+	grep after ignored.txt
-+'
-+
- test_done
--- 
-2.43.0
 
+ # "$GIT_REPO"/2 and "$GIT_REPO"/3 should only contain the placeholder file=
+.
+ test_expect_success 'directory empty from subsequent svn commit' '
+- test -f "$GIT_REPO"/2/.gitignore &&
++ test_path_is_file "$GIT_REPO"/2/.gitignore &&
+  test $(find "$GIT_REPO"/2 -type f | wc -l) =3D "1" &&
+- test -f "$GIT_REPO"/3/.gitignore &&
++ test_path_is_file "$GIT_REPO"/3/.gitignore &&
+  test $(find "$GIT_REPO"/3 -type f | wc -l) =3D "1"
+ '
+
+@@ -77,7 +77,7 @@ test_expect_success 'directory empty from subsequent
+svn commit' '
+ # generated for every sub-directory at some point in the repo's history.
+ test_expect_success 'add entry to previously empty directory' '
+  test $(find "$GIT_REPO"/4 -type f | wc -l) =3D "1" &&
+- test -f "$GIT_REPO"/4/a/b/c/foo
++ test_path_is_file "$GIT_REPO"/4/a/b/c/foo
+ '
+
+ # The HEAD~2 commit should not have introduced .gitignore placeholder file=
+s.
+@@ -102,14 +102,14 @@ test_expect_success 'clone svn repo with
+--placeholder-file specified' '
+
+ # "$GIT_REPO"/5/.placeholder should be a file, and non-empty.
+ test_expect_success 'placeholder namespace conflict with file' '
+- test -s "$GIT_REPO"/5/.placeholder
++ test_file_not_empty "$GIT_REPO"/5/.placeholder
+ '
+
+ # "$GIT_REPO"/6/.placeholder should be a directory, and the "$GIT_REPO"/6 =
+tree
+ # should only contain one file: the placeholder.
+ test_expect_success 'placeholder namespace conflict with directory' '
+- test -d "$GIT_REPO"/6/.placeholder &&
+- test -f "$GIT_REPO"/6/.placeholder/.placeholder &&
++ test_path_is_dir "$GIT_REPO"/6/.placeholder &&
++ test_path_is_file "$GIT_REPO"/6/.placeholder/.placeholder &&
+  test $(find "$GIT_REPO"/6 -type f | wc -l) =3D "1"
+ '
+
+@@ -134,18 +134,18 @@ test_expect_success 'second set of svn commits
+and rebase' '
+ # Check that --preserve-empty-dirs and --placeholder-file flag state
+ # stays persistent over multiple invocations.
+ test_expect_success 'flag persistence during subsqeuent rebase' '
+- test -f "$GIT_REPO"/7/.placeholder &&
++ test_path_is_file "$GIT_REPO"/7/.placeholder &&
+  test $(find "$GIT_REPO"/7 -type f | wc -l) =3D "1"
+ '
+
+ # Check that placeholder files are properly removed when unnecessary,
+ # even across multiple invocations.
+ test_expect_success 'placeholder list persistence during subsqeuent rebase=
+' '
+- test -f "$GIT_REPO"/1/file1.txt &&
++ test_path_is_file "$GIT_REPO"/1/file1.txt &&
+  test $(find "$GIT_REPO"/1 -type f | wc -l) =3D "1" &&
+
+- test -f "$GIT_REPO"/5/file1.txt &&
+- test -f "$GIT_REPO"/5/.placeholder &&
++ test_path_is_file "$GIT_REPO"/5/file1.txt &&
++ test_path_is_file "$GIT_REPO"/5/.placeholder &&
+  test $(find "$GIT_REPO"/5 -type f | wc -l) =3D "2"
+ '
+
+
+base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
