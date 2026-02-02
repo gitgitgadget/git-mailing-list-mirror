@@ -1,137 +1,162 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E004356A05
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 10:14:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770027290; cv=none; b=O/Y1GqUGilF3GhQTBL3aZLT0Rk7q7wBiG779DO/eyighg1yPlcPZrt6OTZzVjsN9VIKD4x8ExoY34uW49Ty1dOIJS/jQep5OTa9pV+JPfNxd6+Lio7vBwDeHBu+mRsk6We4blL2KOpqro5l0nEo6rqjNWuIWoDiauBtSoQt5WQc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770027290; c=relaxed/simple;
-	bh=A8wii0uZ/BCem2V+X87yLnUG8TYgNmqT+TP5WvhFd5Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ev8BL2FOCiFfsw+dUuOOH3QkJZEr8IvgS3hIJfv/Q19eM4uXDIn9LW9t/AE9UU6CEvxg1qKMiVOzf7GC8jsSrhznpMMiAuM3x9YdHHYdc2wEFDhwI6OJRT4OqYdMwTDS3EevLHIg8Trl/+Cms2cCmE/ZNYYPpui/OOjwqrtgxWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SiNibcUm; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A00D1D5ABA
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 11:14:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770030856; cv=pass; b=a2xVte7Do9Wp4NoRM6qqI2ti6Ayf4tRw7BUvp40rBKNtr4wznNcimAKO7rG4JL6HvLdaKeIcBIRZf0EfYcgT8rVU7WxJTVhZLU1Fwq+RTdaZ6t6Zmaoi6GhVkHbxyrbJTCdm4wnVeGaz//vJSV5W4SZrBwGpSndHNOq3y1vwpsw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770030856; c=relaxed/simple;
+	bh=Ehkyfc/K1Wrrs/DPL1eco3j2S2vMHWh/Eoqb1yD8D4k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fAqFIa4MLObOt0smiK+Ooxhle3uR1HFfThAHz3R3vlIZ9G4TCtZuK/mevcLbfmlUk5Agg6lSE74G+h3RjjFqOPwMZMd3+892GKT1SMOU1cq9ECwLiOyG+jP8IbUSny5u9e5VDcbUsCs67kXwhhFCtQyrefGDdrD9/uM168dw4v4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ONH0DJlp; arc=pass smtp.client-ip=209.85.221.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiNibcUm"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-385b9be0759so33019771fa.3
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 02:14:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ONH0DJlp"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-5663601fe8bso3776053e0c.1
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 03:14:15 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770030854; cv=none;
+        d=google.com; s=arc-20240605;
+        b=AfSlfu2ThNS4VUeMKO1K2p0MsDzQZh2nxIFo66JObwP1zUVlwspXHTmYkmnHlCEYcI
+         cNnxIHZ+GskCzCsHfUpIGgLp463QZjw6Vya2Mrz4ClvRZiu61FMmasfJF17Gt9bhp334
+         cveGHrMcsLl9jn+RhCgl6pU0YNfxKysYD78wXveWbW7KXLHP/ES9f1tbO8ppPz0OOGMd
+         j3NZ4/n62708+5lZa/d57+DKkxO3hnZ7vHM4DPgpe0nbd8Fw9iohzcwO3nuelVYrOIpd
+         DhQKRRMzjwzaUQ805EeUSlEBJODK0Ltj0CWRiL8enbZ3H1nWegDzF3KxG8L92XRdq533
+         oqOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=3idpWBh7XD7+CFlw8YaqJsBP5ueLXgtM9eKAFJ5h4Fo=;
+        fh=shWxNb8qA0DxLN80W7Sz7Tg64EW8RLYpEjyr7bUBFds=;
+        b=bmQZ6fvruXMNs/lzqr8jf0LEwUeUvcJneppyab+R6wGRlHHGMnIHYPwZsstmK/S/uA
+         CObLt5qAMcCBgk4OhxsVxu8vUxqEeEjC2NlwfNvMgCbhshc3BSPAyZ+dM3hKStVSAU0z
+         0cGRcBjR5zRQ8jpahxnx99Ud2wsTbLdjf5fttaK6JEfvd4MGuBsR9qlu+JQ52fOS44yP
+         UK165fy7K6GZS+qBAH9oFO8gmK5wJtieP7XafXNBbgVXsAFUyzIURF0RJFrZ2LV/8FBd
+         wfbEn4anMI4ppL7m+slSjAoz8YwrewxTdf9ApiuHhLXAV/t8dIrFDfFkBj9moiCwPcfh
+         f5sw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770027287; x=1770632087; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770030854; x=1770635654; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y/Z7yJXYM5Ca/eK4CK+mJRhJw64WNgOZe/7Ad34M7e8=;
-        b=SiNibcUmI/5nw3YZsmOKXZAgGSLkj15odiY3RGWTDtLJvOvBkm4xVXu7xvpX0JKBGB
-         CcVBzIpGTMEQ//HuhV3un4WU9OBfS/pbKvTY7jCDH/6gqroIOiXSqjq0+HoZ4BiwN/lO
-         XJsvWBF8wlWMkrOyo61TRy1e1JsTPMF8y0695mnH2EywZo7vkqxuJgcJ/bFTeceeHriJ
-         IACDLSXbrzy6E8nXcB/lTSo3+cbGXo4mYYkMWQ9qWasac5Lb6DTO44VRflQJIy5kk06Z
-         GWx/TGs+KhK8bjzPKPBW1KQqsYSaEolcjfYZRrrdCspexhvAOChBY4RVw/s1bbJbY5BC
-         +j/g==
+        bh=3idpWBh7XD7+CFlw8YaqJsBP5ueLXgtM9eKAFJ5h4Fo=;
+        b=ONH0DJlpmtGTo1qoHUgMYcfnhEj3OzBnYFiMkD/0VRT8Asb29qsh7czJZelJCCaI5y
+         g3f5C+xN3FwUcmCHsbEHMoMKnmIDXZkE9sF+3BCWNdyi6CRnPvNX0SySqZCJHNlsabe/
+         pdDr7sZvbYApU+xI30y5cQ9JbcHajpp5J2dF9RpD4Fg5SF+xL6nAPLp7gCk9OnwD+xMb
+         5s3huuheZK02fhIRzb2Be2Q11/bQWooPB+q3Ca0C0QxQxkdiisYtwu8xMIvp+S2NO5Wf
+         R8qN86HBBI0qiOlG0pOoLUyv7VaNF92im4Fej+vl3mACJ4p8gN0YgGrhiOyxH3pPtGNw
+         xCdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770027287; x=1770632087;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1770030854; x=1770635654;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=y/Z7yJXYM5Ca/eK4CK+mJRhJw64WNgOZe/7Ad34M7e8=;
-        b=mosbQ954N3V8fFGLerSYbw3zXNtSnDpv3RyRPV6yJ12gHP0Qz9EF3NCmJJXWtvw2AT
-         th30P0HX8V1J2c55uvV9OISeW+okK/ZtMQ20Cj2Dg6X8lXPCbqRuPoNHWh+pCU4eJn6g
-         ub4RdOn5Dp+02d6XAKdi7wRQ1+FyoRsLJqwO88Rm4NVPhm/bozohiP2PPof07p3ZxNTw
-         1ggAeBoWAfj1EwkpYDr88ahxcHArTuIvakFnkAEX9pkvPrd5cGW37Vog3SE7XSHbbtRZ
-         stgZQsAk26pNXWILntL2cLa6WE48O8wxXFCo93kne2IvTzGpcisMLLefUsS+sEmqMGGe
-         41JA==
-X-Gm-Message-State: AOJu0YzDaXcwUof4CQ3B3yRWIQcXJ8y3UhmG+lxqtbcNmGll1+3nTmnX
-	E6UrvV40r8wYeQ3Om1PW4g8m3GSf1d6szaUEqHm0DRYyLnpwGUxeLPRg
-X-Gm-Gg: AZuq6aIP7bm78pAYA6sRo++OWDVgc2II18AJOeVieF/rwm5/BGHc66kP64LP/ZfNf/b
-	fyQIi0iwQKFdpBRlk3dn8w3TYwnUZfmsbr5ePXDQ7jL3AztMzEJLs/WVCNBgJKt5TyPf3FqGq54
-	+agqT4Q4IMpC8RwUpejgjt9DQiUfzF2B8GHPQhrDTR+svOk36iJ3ctiBS0XF0gxYzCqjJSA2ue+
-	kNJTo2LWS9NTXde1BGdE72lmFqnHJoHAFyF0jWAYs9Yy6A32+Aqijhs9uBG9Fxs7JQNc8R/BLPL
-	3z6y5N2Cbm9OHlRdcSiQQAbZVLDhZGqwyfZfstar6cOgkLAwbiMfKk03RrDe8+Jwouy3CILFpby
-	eQIRwi05URtA498+m2qV9OopGKBBNhHGYXQXdOPROTF+szt92DisUkzoCZYRaX3SV0yKQqVSluF
-	KkIYyfCyHCiuCB8z63DusEhDlHcw9G2BklEN2HZGKaOfuQTm7GoOPWiC5r7HWcKu8cUbF70IpLn
-	NSA
-X-Received: by 2002:a05:651c:3253:b0:385:f612:cb69 with SMTP id 38308e7fff4ca-386466ad707mr33233641fa.31.1770027286736;
-        Mon, 02 Feb 2026 02:14:46 -0800 (PST)
-Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38625c43e36sm29018351fa.8.2026.02.02.02.14.46
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 02 Feb 2026 02:14:46 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: phillip.wood123@gmail.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	gitster@pobox.com,
-	haraldnordgren@gmail.com,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
-Date: Mon,  2 Feb 2026 11:14:45 +0100
-Message-ID: <20260202101445.13790-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <d92bd08f-abee-49a6-89ad-3be5e0c06ad6@gmail.com>
-References: <d92bd08f-abee-49a6-89ad-3be5e0c06ad6@gmail.com>
+        bh=3idpWBh7XD7+CFlw8YaqJsBP5ueLXgtM9eKAFJ5h4Fo=;
+        b=uvT4a4NoAuN2Y8TRxmT+qgRJC+BIU7xAbO1ccgZwrjZcOE4Ww278ITdd/vdFcfwMIr
+         BBLF1wM1AssDZ2NfKVByxL2MYeMTRPfSCBQQ6NRm9pmagjGdigXbSFsyKK+6PX09zUw0
+         LDbfGS/D6MJrL/2gBJP7ai+hRutfrG0TP/QN5MI1Fm1mvOFK2eUVYTXowMdTrNf99ga4
+         OpluFnfQwGMMrMgYmFOqIgtJ2fqF2rupoFEzFlNETclKnEMtCvkelJ6trjq32+6meLhO
+         xSpYP8GYiwitglz+AsrpebirNBvX3gOBMAI3XmyUPJLI/0DtAEcAa9nlcomhYmpwsq6Z
+         8+Dw==
+X-Gm-Message-State: AOJu0Yz67NkpHV8TKb3aRTRiKmtPN9afy7mSJMYUWkOyH/gHczOuTP3B
+	MTAqBw/ygfgyTem5sb0Ub4KlF4XPAkFmD1ELEy3HlN7p9/6xXNq21ZQSWNbR+iW8mPnhnckCn4o
+	bgGlfoNUAhkTTrXqYZRCioJTUyGLBnTb2ypmgC+uhFA==
+X-Gm-Gg: AZuq6aLYES8OLqiQUz+uNUmx9UZ1fTMWmnUa8tOCq+3xIKl4/HSbgC6iKvBAnwq1ggg
+	ccASVx1zgmzQ7QCnO6lIORExXhSfa0nhp4aKtHhuAYXgk3cETULo0HEBLwoEAJXofLYxiAySEDT
+	feBa4pfdWtDv/Wnik0G3aNPVRtoOjsOz2IxyqHM91ax4OOiGOwQqT/Xi8hSRO9kUGyJpzrA1DBM
+	X9IKHMfLtbK7WeGTUKoiVmb7t0yUbQCQuz32nFgRNhQADK8+Gbi5BGd0ivfsAtGiHBe3zbI
+X-Received: by 2002:a05:6122:3b16:b0:566:cd52:313d with SMTP id
+ 71dfb90a1353d-566cd5233f0mr309446e0c.16.1770030854269; Mon, 02 Feb 2026
+ 03:14:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1769522219.git.abrahamadekunle50@gmail.com>
+ <9b21cb901ab14397af94b8ed2d09da1a9a6d862b.1769522219.git.abrahamadekunle50@gmail.com>
+ <xmqq7bt2g4tl.fsf@gitster.g> <CADYq+fYeWh0tLEepOGVa=1i9tXZfWaGfyi6H+xUB7rbdQ=t5aQ@mail.gmail.com>
+ <CADYq+fbt7zHO=gAsRp=b5MTb=2aFfifCjWnW6u+58iv4dk6bMQ@mail.gmail.com> <xmqqqzr54mam.fsf@gitster.g>
+In-Reply-To: <xmqqqzr54mam.fsf@gitster.g>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Mon, 2 Feb 2026 12:14:16 +0100
+X-Gm-Features: AZwV_Qg15vCtI5m57AupmmpbFi31X99PNB-PRKgfYMRR3nn5Ri9rGZCd8QJOZNY
+Message-ID: <CADYq+fZFuvCRbFf=-XUR8TJsjW_YtjNdiXMzPv0mjMPbWcLO1g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] Allow reworking with a file after deciding on all
+ its hunks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> I don't really understand what you're trying to achieve and I'm not sure 
-> if the suggestion above is a good idea but it might help understand what 
-> it is you're trying to do.
-I didn't realize I was so bad at explaining 😅
+On Sat, Jan 31, 2026 at 8:25=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Samuel Abraham <abrahamadekunle50@gmail.com> writes:
+>
+> >> What I observed after adding the '>' and '<' options is that if a user=
+ chooses
+> >> to use a hunk A in file 1, and then goes to file 2 with '>', comes bac=
+k to
+> >> file 1 with '<', and decides on hunk A to skip it instead, because
+> >> patch_update_file() has
+> >> applied the file with the hunk the user initially decided to use
+> >> before proceeding to file
+> >> 2 with '>', coming back to redecide and say skip does not apply the
+> >> latest decision
+> >> and when you check the index, the file with the hunks which the user
+> >> initially decided to
+> >> use but changed to skip is present in the index.
+>
+> I am not sure if I would like the end result or rather prefer your
+> "all-or-none", so please do not take this as "here is a better way
+> to implement it" suggestion.
+>
+> But you should be able to keep the current semantics, if you wanted
+> to, even if you apply the chosen hunks when you switch files, like
+> the original code has been doing forever since it was written.  You
+> know which hunks you applied, so after applying before moving on to
+> the next file, you can drop these hunks from the list of hunks to be
+> decided for application.  When the user comes back to the current
+> file to decide on other hunks, you know that the already used hunks
+> would get in the way, so why keep them?
 
-What I want is a shorthand for switching to the local version of the
-default branch of the repo. This but with less voodoo:
+Yes thank you so much for suggesting this approach.
 
-    git switch $(git rev-parse --abbrev-ref $(git remote | rg '^(origin|upstream)$' | tail -n1) | sed 's@.*/@@')
+>
+> Having said that, I think the all-or-none mode may be handy if one
+> makes the current working tree dirty with many little unrelated and
+> insignificant changes and the only way to make sense is to see the
+> "git diff --cached" output after adding some and leaving others, at
+> least in the way some people work.  I usually am very incremental
+> when doing "git add -p", in that while using the command in one
+> terminal, I run "git diff --cached" to see if I added unwanted
+> things by mistake and "git diff" to see if I left out necessary
+> things, so I would probably not be using the mode.  But that is just
+> my hunch without using the new interface long enough.
 
+Okay I think retaining "git apply" in patch_update_file() and dropping
+the hunks the user has already decided on when coming back to the file
+makes sense.
+By using this approach, we skip files that have been fully decided and appl=
+ied,
+only showing files that;
+i.  have been applied but also have undecided hunks.
+ii.  not been applied and still have undecided hunks
+when the user navigates with ">" and "<".
 
-> you say you don't work directly on the main branch but then later on
-> you're then creating a release from it. Is  "main" just a mirror of
-> "origin/main" or are you merging local work into it as well?
+This will allow you to still run git diff--cached to see what has been
+added while also being able
+to see what has not been added, while navigating around files.
 
-My main is a mirror of upstream/main. I never commit to it, just do
-'git pull' to create releases.
-
-Also, I switch to it when I discover a bug on my branch, to try to
-understand if the bug is already on main or not. It's the baseline all work
-is compared against.
-
->>      99designs/gqlgen
->>      refs/remotes/upstream/master
->> 
->>      amplitude/experiment-react-native-client
->>      refs/remotes/upstream/main
->> 
->>      Antonboom/testifylint
->>      refs/remotes/upstream/master
->> 
->>      cli/cli
->>      refs/remotes/upstream/trunk
-
-I want a shorthand so that when in any of these repos, I'm switching to the
-default branch, I simply have to run
-
-    git switch @{primary}
-
-and I would end up with
-
-      99designs/gqlgen
-      Switched to branch 'master'
- 
-      amplitude/experiment-react-native-client
-      Switched to branch 'main'
- 
-      Antonboom/testifylint
-      Switched to branch 'main'
- 
-      cli/cli
-      Switched to branch 'trunk'
-
-
-Harald
+Thank you.
+Abraham
