@@ -1,66 +1,65 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFE43644A2
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 12:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644653644D0
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 12:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770035226; cv=none; b=oFlsjs97sMFLvFOg1Bj7mrVDPWxUR7ApncLLTQRyWTZMIULR3Hg5slc0stZaTSYrF+6zzk1pETE+33s9fZTreapmobBTbuj7ke16Ujxvodhwlw6CymIAR1ZpydpF6wrQJlCCciqhj4IiaVUyarqVwxNggkq97MVrMiSqMyRwl28=
+	t=1770035227; cv=none; b=GaqSyq9QLMMc+Lk2ItzZ1GXKCuuCIdM6PZs6825p9LL/VodCPvgsAzpfwdBtkq+dkpai2t7BuQ3T72D+wni8JL+qjFLIsZuVDvcbwq+jeGB8U83BkYu18kV8cfP1GLrma0MHY1xCkrodHjQwbZbFAZ5mdqMVzjbkIHpxbddvLig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770035226; c=relaxed/simple;
-	bh=aGz6L376iPPyF75OXKTcSK3yslQTcnjW2A1VJk08g3M=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=p6ftGouVnDeZCaMgEaPaNVGjsyXhdutnGzyocBiYnbcfOyN+Z18rFNdxcmyPb4fQYkWjGOQgumW/UZs3d1XMsrpbvsqrqW/oAvszc4wy6I5fzZCIp6X5jqvg6SieivJbspoxR+rtf8oZclLfuixoDYMCjm9IPiwgC3RY7M8BTA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MTGef3Y1; arc=none smtp.client-ip=209.85.221.53
+	s=arc-20240116; t=1770035227; c=relaxed/simple;
+	bh=nHSxxUWvFHLTsVGY/FnrlLdeiSbURnIQ/2FE6l1xcbA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=CsnuUJag23txX4ZazyLqvvYymHLKEX4+HWYwr5PfPQCfsWMNAz1qYobYqmDSGxZlhXiNWUesyLVyIJbiZc9WvpIpZ4Gq6+9ArUBqEwpkqx0PcsX3bvf4AOP89nvLWkWqI1k/GOU6DanaFIyLKExIg6VJs5PufdTRspnpsWgWI2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SdgQxYpZ; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MTGef3Y1"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-43596062728so3336965f8f.1
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 04:27:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SdgQxYpZ"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-481188b7760so28464585e9.0
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 04:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770035223; x=1770640023; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1770035224; x=1770640024; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SpYcUjoZO1Ypzr8wUFhxXoDIfH2fh10Fkc4GQuLzLIk=;
-        b=MTGef3Y14ciLWtkcTzR5rXF2OcSev39Mn2DnbeV9ousbX+DHLzHjNcjVc6MHZxXA33
-         qx1Sggv/OP1QZQ1fcACWUIvmtFj7FuVcWlGydlrWpk4xJ7Na0ztSQZqZHxCqla/zEDaH
-         z+UzBASu0zAedPe4kuKWuwo6pDknX2X43IwRSwt8gFx/9+mcSMay+0MIgVdCfY2m25tp
-         RueFvSoxXQ2PaVxIHieDvawDVcwEzIQC/xmI/o1xioEcsK37A9jBlx/jSKl+YG6gQrOB
-         VE6QsQ1FFbxEwwNTE0IvUiEEFG6cowsziT0M+LxNGUp2so+bkXvpE58ikWTJMxDgpjio
-         HKKw==
+        bh=MB2B/tFFa2mGE3tNjcUn8zNaLzbED2v/6WYMuxVyyjg=;
+        b=SdgQxYpZfo/+8qaQhVwBO6XZq43LU8VtHzM99V7cDDIlyQfTOFdGLoGFE5KcOaqY6/
+         X5MMr6mxmW6LRZrR7hZjQ664IWHgixXz0KI788GNK+vdMTzliKX2H2Ba+TDRWn/mBMX0
+         /o+x7RC6UYXpyjZmbL3tOkJ/zLI2uUtKSDEbbIdfZstBBmNAROn3k/2Wr3G5iF0tVT78
+         bX5EAtkJvWoArupQBHkIJeKdSCwFEvG9XKIRE/cwQOEqxpLSSOjs4s9yueXDAidyknVK
+         Mzc1lrQ397QIFQLptko+zoA2tWOi0kmx5jXbt498dV8oN1dzRYSzUDnjj5joLdauOkW1
+         jkDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770035223; x=1770640023;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SpYcUjoZO1Ypzr8wUFhxXoDIfH2fh10Fkc4GQuLzLIk=;
-        b=heZfMfdqEqtmqImy+oz7qWEhIP5qPyTPGXa0EsCARlQkcl7gAHItOlnGPfKnxerdNz
-         N/rFWqXA0sp/ODNL10MPnMs9gJaoYGOA6cete+tOVA7M95nzhbBEnjJDXe+YdfjnoVr0
-         Bv0AZYow7sT7Wwbc9ZplOxHLZxpXnlT7dhS3Tl72EIvcXVhLopbsa/krwXiM/3Gu8xJM
-         DmhSzOgwAK00GcWauK0eEjDu58HUtnfMGvadyQPC8cKSB9L2qtQ1/l9aCT2muGqdiwJn
-         cjFuktyE+nrCvaKIZ9009jSb9HMOZlpXaBEpvmGSd2bPBy1ehMCxt5XETD6NVTlMUIPp
-         WYuA==
-X-Gm-Message-State: AOJu0YydoSboGYg/HzFygmbLdnwlxt0t2mArrsg+GWLX0sjxNb5iywIC
-	BtI4KN3HE0AjcPWfPa8I/2P9kjdECL0fa6+9AgUW1y5rW1czhIHvs+IW
-X-Gm-Gg: AZuq6aJLpdpoG4QdMCrLCP87XcjCeNBHRLO58j/O9Hn5HH9o/aHo/LeSxerSKpssQBc
-	y4HnQjfVfT2kcYQqIML64POoDkru22ZBX1spv/ApdIcvb40nUObWq0czZzQEQ0ZiSQRlObo6vtX
-	/bqsAsN5DwlSAm2ySWRs3/beqF9CCs9xupwlb/7d1xnfqyIIDywxW86W9MWy766MRkcpT3zGZbM
-	vUmObdH2HaiPDvX2MAiHTsMw7pTFAIOzE6hPRurUJMwIC1/blLKDszF+/HG6F8MZJKzmiWvKB7u
-	wBJ8Jrl41YmvSYz1wnoev7RhWn2D/z34y8oLU4sv7CHlZnFgqHnXlNw7oa4g7iNtoACf/iSxZWq
-	jOpykTtLeK1bpFxpijBuNgFqPV8kHdICBZYq2+OjSEUImuPxHbkt3QZ8EtqytopAj4VdYlTJm8a
-	eYlif/FexNubh9qVBwknM=
-X-Received: by 2002:a05:6000:2088:b0:435:db93:72e7 with SMTP id ffacd0b85a97d-435f428ae29mr16412196f8f.3.1770035222436;
-        Mon, 02 Feb 2026 04:27:02 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770035224; x=1770640024;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MB2B/tFFa2mGE3tNjcUn8zNaLzbED2v/6WYMuxVyyjg=;
+        b=O8G8cgzARLxa7ZAnh5Mv2QABZ0b85Flo6iXz5Y70iHgihf2zIjGWJ9Unn8YEwJy0v+
+         MKwpMlwH7IDnw9sbrEIgX6KgVk757b/rbEe1hBuS3Oqk6uTk+ACQP0RKT/z87w2P78Ye
+         nTc5LiZg5gQYx5fom/owW9AgWhAOjBOeuMWhF8shjCN9Tk/w1+QoBLX7WfzVjTzJDkxr
+         upZ8uo77h68O4kkOcUP4XLm5W9AN5wuRSftOFchKbnGBAaECtIDuwYsYHBVwLojfpGLA
+         4zxqwcT47usbj7z96HWIM1gkQfMOKGX6sLnad/9sXIbVRcbvy7mzsXrDQmrcjlbsPpOF
+         sdRw==
+X-Gm-Message-State: AOJu0YwAXzMbSGwoMZxKiPdmONDJtpoQJUGs1B+r6ek6+ORK/9/8Wwg9
+	zmeND738ZXMpQNWhn58JfN/kbEzJpMaDwprbV6XzLtxLqxpunWWwkanhV7qo9PI+
+X-Gm-Gg: AZuq6aJspr1GKEOqWKj0/EY4/0u4ZJyyIUwhUor0/TNUB8JK/qO/PVPHd2fxZzcHlbW
+	l82cxJ1i90X8mfXobv1gLoq/AaX/BkClGjcYfUjblzxL88N5BJM/jNFAfw388xFehZ+1DRb9/yC
+	eq8zw1Mggtd8v75J16nNEp1hWn9bJ0D6DeuOL2czX8ffxjrfHMO3BLQDJIpT9FFgKZ7HyXs6hxr
+	H42IeQKIsSFkxb/CjtACacrRTTw8AtYR9y2ve9Acz84BnC8sjtNgosoURP8NDOHUzpjxZe+lhzm
+	4HThHlQ5nODU4VGD+4jU4VsZMybjsH7nP+FiTwViy7/y/HmLvllzFYNirgpPKqzIEg6k1bRgsBf
+	KNd2PNoXl1OJvuBbMHCVIW9vDZiH5eboG25t8GqvTVPaWq82I97/Ls29pJ+FbPWZDdEQkwkvAah
+	Cf89R2xxMl8l3RqqzpLoUeli9BUVDDxA==
+X-Received: by 2002:a05:6000:2dc2:b0:435:b6ab:6c1a with SMTP id ffacd0b85a97d-435f3abb021mr14914162f8f.49.1770035223394;
+        Mon, 02 Feb 2026 04:27:03 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:4339:aac1:fb26:43f4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e10e4757sm45245735f8f.5.2026.02.02.04.27.01
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e10e4757sm45245735f8f.5.2026.02.02.04.27.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Feb 2026 04:27:01 -0800 (PST)
+        Mon, 02 Feb 2026 04:27:03 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 0/4] refs: allow setting the reference directory
-Date: Mon, 02 Feb 2026 13:26:29 +0100
-Message-Id: <20260202-kn-alternate-ref-dir-v4-0-3b30430411e3@gmail.com>
+Date: Mon, 02 Feb 2026 13:26:30 +0100
+Subject: [PATCH v4 1/4] refs: allow reference location in refstorage config
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,156 +67,254 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAPWXgGkC/3XNwQ6CMAyA4VchOzuzbgPBk+9hPIzRwSIMM8iiI
- by7g5hIjBz/Nv06kQG9xYGck4l4DHawvYshDwnRjXI1UlvFJpzxFICl9O6oakf0To1IPRpaWU8
- FpieOua4YGhJPH3Fhnyt7vcVu7DD2/rV+CbBMPyAU/8EAlFGpjVSF1HmJ1aXulG2Puu/IAga+Q
- Xi2g/CI5GVhMgO5yUT6i4gvwhnsICIiGqAsZFZqbtQWmef5Dd5rhuFCAQAA
-X-Change-ID: 20251105-kn-alternate-ref-dir-3e572e8cd0ef
-In-Reply-To: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
-References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260202-kn-alternate-ref-dir-v4-1-3b30430411e3@gmail.com>
+References: <20260202-kn-alternate-ref-dir-v4-0-3b30430411e3@gmail.com>
+In-Reply-To: <20260202-kn-alternate-ref-dir-v4-0-3b30430411e3@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im, Karthik Nayak <karthik.188@gmail.com>, 
- =?utf-8?q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Cc: gitster@pobox.com, ps@pks.im, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5903; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=aGz6L376iPPyF75OXKTcSK3yslQTcnjW2A1VJk08g3M=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGmAmA6IEWTKyBPfrSP4qCauIDmL6Muw55Vgx
- VUdZruhXtUr9IkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpgJgOAAoJED7VnySO
- Rox/1EoMAKQVTmUc6TVErC/fUZ6LAvn2L+dHaajf2IMsFpy61wKeXWqe2XyuPvsSFqUpAMje8H7
- aNhMq9yTAQG2DXNPnRycsUiMj/3Zpwc2Xh28WoJdSV3fJkUmVOnF6HuQod2bGqQTRZ83tnq2/15
- 7x+Ua3+vNEVF6aFsrdyIH/21mjuXNCXxWo1RG3fuYvu7b+ggJmkl9WHdiSFmmC8AhyZvnLzrhdZ
- fVU0xunHY+BN2MFxedK5qi2jTz/5lTu9eqql8GR0GIbv7r9Nr6+TjqDuQnJzWJNBQi3CreSBqKP
- wqGlNGIEXlZoYGhrM6ZO57zY15nZw9xObUc2wlxkCoGaA4TWUJAHApp8fS2o3e9naS2854+s1wV
- y1VIwBqBEARpu85FtuCoOGhjQcUKQfRw8kYfOnmeyMGaRWcqZT0dkQEsQgIr/in9WHp8SgyyZUZ
- JzBpjL69rkpG2EpiLAu3hK1/5dkBOtz0cvqk3c6T2sFqHXA2C205fjtSm1FiZVgLTLjb6gzMRR7
- BY=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8595; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=nHSxxUWvFHLTsVGY/FnrlLdeiSbURnIQ/2FE6l1xcbA=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGmAmBRT2zDKBJK/wIjKgwWObGK6WRaKVgh36
+ igKRPf2V6DUbYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpgJgUAAoJED7VnySO
+ Rox/4wEL/RHlXiQygtn4m0FqU5B6B+KAMJgVViVwy0YapyPzSOE6XaUv3iiUCKr2hoK89cxazw4
+ uA+tq+3nnqtHAavRDs93/3hRQe7ztlpCdBKEVBUGhWII+XgVmFaXqirb7PIYBgOnyLmp9acGdMd
+ Z/ZyaOZsush0hXxFdF8RFzyc/M6D3qAg3BbxekQYAfmNWHvywgNPCoI9jXyBfUf3Bn0RSbfMmMp
+ KfTL2A1t6lzGkJel32uMvWIEshY1Q4XDplHV526sEehYGNsRp0m91ra0YFHdQhzmQNbdrRo7dk1
+ 7m/32s1yH4BNYxMVQ8BTiJPHai8eWpTbxsr5HPO8P5EuIpGHpqSAUMsU6Rplq6sTF0OABPfM0Af
+ WUTOUKkM5F+9hDib6elsLKX2uPooDvX2o83p6RIzX9j758BNEkVRUG+KQv6Ss1efA2b8ZdXzJz9
+ lLQdIik3D5xNzODQyhR+a024HOEZD93iWoIh0ma1ACBzdkU6/HpD7Ihs7rHe5DZieSmU1aRbDF5
+ ok=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-While Git allows users to select different reference backends, unlike
-with objects, there is no flexibility in selecting the reference
-directory. Currently, the reference format is obtained from the config
-of the repository and the reference directory is set to the $GIT_DIR.
+The 'extensions.refStorage' config is used to specify the reference
+backend for a given repository. Both the 'files' and 'reftable' backends
+utilize the $GIT_DIR as the reference folder by default in
+`get_main_ref_store()`.
 
-This patch extends the config 'extensions.refStorage' to take in
-multiple forms of inputs:
+Since the reference backends are pluggable, this means that they should
+work with out-of-tree reference directories too. Extend the 'refStorage'
+config to also support taking an URI input, where users can specify the
+reference backend and the location.
 
-   - A format name alone (e.g., `reftable` or `files`) which uses the
-     default location (the repository's common directory).
+Add the required changes to obtain and propagate this value to the
+individual backends. A follow up commit will add the required changes on
+the backends to parse this value.
 
-   - A URI format `<format>://<location>` which explicitly specifies
-     both the format and location (e.g., `reftable:///foo/bar`).
-
-We also add in a new ENV variable GIT_REFERENCE_BACKEND which can be
-used to override the config.
-
-One use case for this is migration between different backends. On the
-server side, migrating from the files backend to the newly introduced
-reftable backend can be achieved by running 'git refs migrate'. However,
-for large repositories with millions of references, this migration can
-take from seconds to minutes.
-
-For some background, at GitLab, the criteria for our migration was to
-reduce the downtime of the migrate ideally to zero. So running 'git refs
-migrate --ref-format=reftable' by itself wouldn't work, since it scales
-with the number of references and we have repos with millions of
-references, so we need to migrate without loosing any information. We
-came up with the following plan:
-
-  1. Run git-pack-refs(1) and note timestamp of the generated packed-refs
-     file.
-  2. Run git refs migrate –dry-run.
-  3. If there are no ongoing reference requests (read/write)
-     a. Lock the repository by blocking incoming requests (done on a
-        layer above git, in Gitaly [1]).
-     b. If the timestamp of the packed-refs file has changed, unlock
-        the repo and repeat from step 1.
-     c. Apply all the loose refs to the dry-run reftable folder (this
-        requires support in Git to write refs to arbitrary folder).
-     d. Move the reftable dry-run folder into the GIT_DIR.
-     e. Swap the repo config
-     f. Unlock repo access
-
-Using such a route, scales much better since we only have to worry about
-blocking the repository by O(ref written between #1 and #3a) and not
-O(refs in repo). But for doing so, we need to be able to write to a
-arbitrary reference backend + path. This is to add the missing
-references to the dry-run reftable folder. This series, achieves that.
-
-Since there was a long gap between v3 <> v4, the version 4 onward is
-based on top of 2258446484 (RelNotes: correct "fast-import" option name,
-2026-01-30).
-
-[1]: https://gitlab.com/gitlab-org/gitaly
-
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
-Changes in v4:
-- Mostly re-wrote the code to also support worktree. Now, the existing
-  backends will store worktree references in 'ref_dir/worktrees/wt_id'
-  and add corresponding stubs in 'git_dir/worktrees/wt_id'.
-- We also support relative paths in the reference directories. These
-  relative paths are resolved relative to the GIT_DIR.
-- Link to v3: https://patch.msgid.link/20251201-kn-alternate-ref-dir-v3-0-c11b946bc2fa@gmail.com
+ builtin/clone.c |  3 ++-
+ repository.c    |  9 +++++++--
+ repository.h    |  5 ++++-
+ setup.c         | 39 ++++++++++++++++++++++++++++++++++-----
+ setup.h         |  2 ++
+ 5 files changed, 49 insertions(+), 9 deletions(-)
 
-Changes in v3:
-- Cleanup some stale code which wasn't removed.
-- Localize strings which will be output to the user.
-- Remove additional defensive checks which are not needed.
-- Link to v2: https://patch.msgid.link/20251126-kn-alternate-ref-dir-v2-0-8b9f6f18f635@gmail.com
+diff --git a/builtin/clone.c b/builtin/clone.c
+index b40cee5968..28412576b3 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1442,7 +1442,8 @@ int cmd_clone(int argc,
+ 	hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
+ 	initialize_repository_version(hash_algo, the_repository->ref_storage_format, 1);
+ 	repo_set_hash_algo(the_repository, hash_algo);
+-	create_reference_database(the_repository->ref_storage_format, NULL, 1);
++	create_reference_database(the_repository->ref_storage_format,
++				  the_repository->ref_storage_payload, NULL, 1);
+ 
+ 	/*
+ 	 * Before fetching from the remote, download and install bundle
+diff --git a/repository.c b/repository.c
+index c7e75215ac..9815f081ef 100644
+--- a/repository.c
++++ b/repository.c
+@@ -193,9 +193,12 @@ void repo_set_compat_hash_algo(struct repository *repo, int algo)
+ }
+ 
+ void repo_set_ref_storage_format(struct repository *repo,
+-				 enum ref_storage_format format)
++				 enum ref_storage_format format,
++				 const char *payload)
+ {
+ 	repo->ref_storage_format = format;
++	free(repo->ref_storage_payload);
++	repo->ref_storage_payload = xstrdup_or_null(payload);
+ }
+ 
+ /*
+@@ -277,7 +280,8 @@ int repo_init(struct repository *repo,
+ 
+ 	repo_set_hash_algo(repo, format.hash_algo);
+ 	repo_set_compat_hash_algo(repo, format.compat_hash_algo);
+-	repo_set_ref_storage_format(repo, format.ref_storage_format);
++	repo_set_ref_storage_format(repo, format.ref_storage_format,
++				    format.ref_storage_payload);
+ 	repo->repository_format_worktree_config = format.worktree_config;
+ 	repo->repository_format_relative_worktrees = format.relative_worktrees;
+ 	repo->repository_format_precious_objects = format.precious_objects;
+@@ -369,6 +373,7 @@ void repo_clear(struct repository *repo)
+ 	FREE_AND_NULL(repo->index_file);
+ 	FREE_AND_NULL(repo->worktree);
+ 	FREE_AND_NULL(repo->submodule_prefix);
++	FREE_AND_NULL(repo->ref_storage_payload);
+ 
+ 	odb_free(repo->objects);
+ 	repo->objects = NULL;
+diff --git a/repository.h b/repository.h
+index 6063c4b846..c648dab196 100644
+--- a/repository.h
++++ b/repository.h
+@@ -150,6 +150,8 @@ struct repository {
+ 
+ 	/* Repository's reference storage format, as serialized on disk. */
+ 	enum ref_storage_format ref_storage_format;
++	/* Reference storage information as needed for the backend. */
++	char *ref_storage_payload;
+ 
+ 	/* A unique-id for tracing purposes. */
+ 	int trace2_repo_id;
+@@ -204,7 +206,8 @@ void repo_set_worktree(struct repository *repo, const char *path);
+ void repo_set_hash_algo(struct repository *repo, int algo);
+ void repo_set_compat_hash_algo(struct repository *repo, int compat_algo);
+ void repo_set_ref_storage_format(struct repository *repo,
+-				 enum ref_storage_format format);
++				 enum ref_storage_format format,
++				 const char *payload);
+ void initialize_repository(struct repository *repo);
+ RESULT_MUST_BE_USED
+ int repo_init(struct repository *r, const char *gitdir, const char *worktree);
+diff --git a/setup.c b/setup.c
+index b723f8b339..44e393c251 100644
+--- a/setup.c
++++ b/setup.c
+@@ -632,6 +632,21 @@ static enum extension_result handle_extension_v0(const char *var,
+ 		return EXTENSION_UNKNOWN;
+ }
+ 
++static void parse_reference_uri(const char *value, char **format,
++				char **payload)
++{
++	char *schema_end;
++
++	schema_end = strstr(value, "://");
++	if (!schema_end) {
++		*format = xstrdup(value);
++		*payload = NULL;
++	} else {
++		*format = xstrndup(value, schema_end - value);
++		*payload = xstrdup_or_null(schema_end + 3);
++	}
++}
++
+ /*
+  * Record any new extensions in this function.
+  */
+@@ -674,10 +689,17 @@ static enum extension_result handle_extension(const char *var,
+ 		return EXTENSION_OK;
+ 	} else if (!strcmp(ext, "refstorage")) {
+ 		unsigned int format;
++		char *format_str;
+ 
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		format = ref_storage_format_by_name(value);
++
++		parse_reference_uri(value, &format_str,
++				    &data->ref_storage_payload);
++
++		format = ref_storage_format_by_name(format_str);
++		free(format_str);
++
+ 		if (format == REF_STORAGE_FORMAT_UNKNOWN)
+ 			return error(_("invalid value for '%s': '%s'"),
+ 				     "extensions.refstorage", value);
+@@ -850,6 +872,7 @@ void clear_repository_format(struct repository_format *format)
+ 	string_list_clear(&format->v1_only_extensions, 0);
+ 	free(format->work_tree);
+ 	free(format->partial_clone);
++	free(format->ref_storage_payload);
+ 	init_repository_format(format);
+ }
+ 
+@@ -1942,7 +1965,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 			repo_set_compat_hash_algo(the_repository,
+ 						  repo_fmt.compat_hash_algo);
+ 			repo_set_ref_storage_format(the_repository,
+-						    repo_fmt.ref_storage_format);
++						    repo_fmt.ref_storage_format,
++						    repo_fmt.ref_storage_payload);
+ 			the_repository->repository_format_worktree_config =
+ 				repo_fmt.worktree_config;
+ 			the_repository->repository_format_relative_worktrees =
+@@ -2042,7 +2066,8 @@ void check_repository_format(struct repository_format *fmt)
+ 	repo_set_hash_algo(the_repository, fmt->hash_algo);
+ 	repo_set_compat_hash_algo(the_repository, fmt->compat_hash_algo);
+ 	repo_set_ref_storage_format(the_repository,
+-				    fmt->ref_storage_format);
++				    fmt->ref_storage_format,
++				    fmt->ref_storage_payload);
+ 	the_repository->repository_format_worktree_config =
+ 		fmt->worktree_config;
+ 	the_repository->repository_format_relative_worktrees =
+@@ -2360,13 +2385,15 @@ static int is_reinit(void)
+ }
+ 
+ void create_reference_database(enum ref_storage_format ref_storage_format,
++			       const char *ref_storage_payload,
+ 			       const char *initial_branch, int quiet)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+ 	char *to_free = NULL;
+ 	int reinit = is_reinit();
+ 
+-	repo_set_ref_storage_format(the_repository, ref_storage_format);
++	repo_set_ref_storage_format(the_repository, ref_storage_format,
++				    ref_storage_payload);
+ 	if (ref_store_create_on_disk(get_main_ref_store(the_repository), 0, &err))
+ 		die("failed to set up refs db: %s", err.buf);
+ 
+@@ -2645,7 +2672,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+ 	} else {
+ 		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_DEFAULT;
+ 	}
+-	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format);
++	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format,
++				    repo_fmt->ref_storage_payload);
+ }
+ 
+ int init_db(const char *git_dir, const char *real_git_dir,
+@@ -2702,6 +2730,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 
+ 	if (!(flags & INIT_DB_SKIP_REFDB))
+ 		create_reference_database(repo_fmt.ref_storage_format,
++					  repo_fmt.ref_storage_payload,
+ 					  initial_branch, flags & INIT_DB_QUIET);
+ 	create_object_directory();
+ 
+diff --git a/setup.h b/setup.h
+index d55dcc6608..4d25a353ac 100644
+--- a/setup.h
++++ b/setup.h
+@@ -171,6 +171,7 @@ struct repository_format {
+ 	int hash_algo;
+ 	int compat_hash_algo;
+ 	enum ref_storage_format ref_storage_format;
++	char *ref_storage_payload;
+ 	int sparse_index;
+ 	char *work_tree;
+ 	struct string_list unknown_extensions;
+@@ -241,6 +242,7 @@ void initialize_repository_version(int hash_algo,
+ 				   enum ref_storage_format ref_storage_format,
+ 				   int reinit);
+ void create_reference_database(enum ref_storage_format ref_storage_format,
++			       const char *ref_storage_payload,
+ 			       const char *initial_branch, int quiet);
+ 
+ /*
 
-Changes in v2:
-- Added more clarification and proper intent in the cover message.
-- Changed the format from '<ref_backend>://<path>' to
-  `<ref_backend>://<URI-for-resource>` as it much clearer.
-- Added logic to check for the '//' in the provided URI and a test for
-  the same.
-- In the tests:
-  - Use test_must_fail() instead of ! git
-  - Fix looped tests not using the variables correctly and ensure that
-    the test description is correct.
-- Link to v1: https://patch.msgid.link/20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com
-
----
- Documentation/config/extensions.adoc |  16 ++-
- Documentation/git.adoc               |   5 +
- builtin/clone.c                      |  10 +-
- builtin/worktree.c                   |  35 +++++++
- environment.h                        |   1 +
- refs.c                               |  61 +++++++++++-
- refs.h                               |  13 +++
- refs/files-backend.c                 |  18 +++-
- refs/packed-backend.c                |   1 +
- refs/packed-backend.h                |   1 +
- refs/refs-internal.h                 |  15 +++
- refs/reftable-backend.c              |  38 +++----
- repository.c                         |   9 +-
- repository.h                         |   5 +-
- setup.c                              |  59 ++++++++++-
- setup.h                              |   2 +
- t/meson.build                        |   1 +
- t/t1423-ref-backend.sh               | 187 +++++++++++++++++++++++++++++++++++
- 18 files changed, 433 insertions(+), 44 deletions(-)
-
-Karthik Nayak (4):
-      refs: allow reference location in refstorage config
-      refs: extract out `refs_create_refdir_stubs()`
-      refs: parse and use the reference storage payload
-      refs: add GIT_REFERENCE_BACKEND to specify reference backend
-
-Range-diff versus v3:
-
-1:  a91a4d5ba3 < -:  ---------- refs: support obtaining ref_store for given dir
-2:  a9f126d724 < -:  ---------- refs: add GIT_REF_URI to specify reference backend and directory
--:  ---------- > 1:  c8ddb8ec8d refs: allow reference location in refstorage config
--:  ---------- > 2:  02acdc16b4 refs: extract out `refs_create_refdir_stubs()`
--:  ---------- > 3:  1b0e17e705 refs: parse and use the reference storage payload
--:  ---------- > 4:  8ca379edd6 refs: add GIT_REFERENCE_BACKEND to specify reference backend
-
-
-base-commit: 22584464849815268419fd9d2eba307362360db1
-change-id: 20251105-kn-alternate-ref-dir-3e572e8cd0ef
-
-Thanks
-- Karthik
+-- 
+2.52.0
 
