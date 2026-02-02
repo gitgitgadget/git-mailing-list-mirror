@@ -1,277 +1,161 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3524D26738D
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 16:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E04E27F005
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 16:24:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770049283; cv=none; b=skZLPqOft9eHDfG2ZewvU1moqmKLtr++OxWShIjsg7ZmUvgiN6GpwEg2pOaiXph0MR+1kJe3BI/G655plOCoW2GZkypDAY/OAj+mGkGd71Ir7ys739hQWQcJ33lSR3EaLgHDYt+m4hPu6nUdyOPsqwphxSFsxbPP1tw01SrRUnQ=
+	t=1770049492; cv=none; b=Bwv/BuU8u6ASPjSmi8WcrvlMRiuV7S6XDlCWubKQYD27QIgyNDxiwajAIZRPNamO6dl5hkJVX0vN5X9fpIgm0bn0NS5/8XyFHGAfTyvH0yclxR3ypBNYSMY2IVZCN2Z+hXpKkg8yZwkjOFqEwOfaI4XwGA4S3UpVn2RezDB85U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770049283; c=relaxed/simple;
-	bh=uHzqmo43e3tYdLqvNoLGy6HWDC5dsboROwlLHJy8kNI=;
-	h=MIME-Version:Message-ID:From:To:Subject:Content-Type:Date; b=tyiitrSJ5oKZ6+akTaEQhHU9NycpWNJsNFg8k5LNW2gAnDVXuq15dCw5SCWg4AFn5d/28thvYKsvFHX5KGVyzOM69ohV0sMmHbj0+2b3iRze3HvcCPB5ZG10c0nHarnk/DcLYYRlfzWOfqpjUjdBqETPthQ8Ta8zxG+Oq0vYIFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=lolligerhans@gmx.de header.b=KGFwYBC/; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1770049492; c=relaxed/simple;
+	bh=FlxaOnvYi+vVFwtf4i3clTHO+IfAL5vf0bJ5+X9EfZc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VO9uOmW9CSlgj0gMdhqqzELQNwi3/j7ENMc2JvQ2BFUQPTz91olqxDe0hUFVXVj6wt1vcjakLIAHnE3Eh3Ka4dZqfRe3jvpVdxc+2j4JVODPZH/krz6AyaxRAZO/jmH0vWqqVRXYHXSR9PHkb0FgfmSQ9dT6hOx6TTHRgqbWpJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=gKNdG+WG; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=lolligerhans@gmx.de header.b="KGFwYBC/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1770049279; x=1770654079; i=lolligerhans@gmx.de;
-	bh=OTVUwbc4zgE2/SMsJKG6gdOSKk+gjl+JVy3oUmfaGdU=;
-	h=X-UI-Sender-Class:MIME-Version:Message-ID:From:To:Subject:
-	 Content-Type:Date:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=KGFwYBC/wSchzZWalmboOq4RR/RJPDkq++jGbAIoyTh9eLokmc2AxH9fgLKF6jHP
-	 maVzrdI/ABD7E7oUNmIsIe5Q3xYK+JKtN9TyxsRbSlrOzK4p6mh7/r28pxrCzB/Ns
-	 vz/vhXPTZ+AW2E3Ue7FZpaIO/eV048Qz2cfYzevA0qGj7fF8YOQ+P7UA723Ay17eH
-	 AlLIDxHczclUgrfqZX1QInfnvYC4V7gssmu7G4ccgf1gMa//xeQ7l9DiPGMNWlWqr
-	 AhzXn50l4jAoPZRvXBpCnNCUNvOB4UmsZqZCi6TxtBNPobzFJ1ZVcK8QP41kToUd8
-	 x94WCnknL92bAxsVSA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [84.129.137.125] ([84.129.137.125]) by
- trinity-msg-rest-gmx-gmx-live-5dd78c558c-fv4g4 (via HTTP); Mon, 2 Feb 2026
- 16:21:19 +0000
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="gKNdG+WG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1770049486; x=1770654286; i=l.s.r@web.de;
+	bh=CB0fiJdJV7nCP7foKzW54jTsJSmjaafkEYWjmXJjSRg=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=gKNdG+WGlZa90amzXY3jtf+Q2RglZS8etfYgi7UqGdcJ46jpheowbDBPi2rAG12k
+	 q6nlh4OLPchgkAnjZMK7QoUi+RXrL0n8gTB/QWGW1FEj2cuD+v0fkBUcD6WQ6f7dn
+	 tYbhRFlyFkz5Vn5B86ShCbK1g/dE9lvQ6audXSWdgmcxMD/fvBiCJQNch4am+HW9Q
+	 YhLBZWlLH6mHeQKUgR9OU2jF+AIVohoU0ScTYUn96rL8gWaAMgktO77ub0KB2fxMb
+	 w69DZg3rTUqfhOVpPFFn+YAlDBV/7YRyV+o1DpXL4A3VxMt+Z3L3sIOjotw3f6wmb
+	 6tmaMg/Rv+YFsf6wAg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.22.157]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MKMA7-1w8aJO42tL-00LqIt; Mon, 02
+ Feb 2026 17:24:46 +0100
+Message-ID: <62e3ab10-bfa4-4ec7-9838-0bad89d04edd@web.de>
+Date: Mon, 2 Feb 2026 17:24:45 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <trinity-ed0884d3-098e-44be-aa1a-a96f664ce7ca-1770049279182@trinity-msg-rest-gmx-gmx-live-5dd78c558c-fv4g4>
-From: lolligerhans@gmx.de
-To: git@vger.kernel.org
-Subject: [BUG] git log --graph --pretty=format misplaces graph characters
- when -p given
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] blame: fix coloring for repeated suspects
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Seth McDonald <sethmcmail@pm.me>, git@vger.kernel.org
+References: <aX8BjoOGPIytGXjD@McDaDebianPC>
+ <28ac1ee6-f3e9-4789-92b7-903788430697@web.de> <xmqqfr7j2u6q.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqfr7j2u6q.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 2 Feb 2026 16:21:19 +0000
-X-UI-CLIENT-META-MAIL-DROP: W10=
-X-Provags-ID: V03:K1:WeKH9P861hSRHMyd3OOyQbdl6JHJfEYLiM5poniUBYA9QItwYsrUa5Bkf/1qNvla/Su5c
- lMxybUmOjly5LGP0GVGS/GLsa2SB10iRah5TEub2pEk76iFSzQJ0llSZRcojtsLaKlFM85MpQzha
- VLedQKrAKSs1LXWyJvkhUcZsddbpB3xHxP5AB2Ze6PpBsZV2t4lT0Pb4vvXlFkJT692/9MCI4sPW
- ixLFq9tf0uhYWLtqnjjly92PbLyCX6Z21BTMY9zcdBQHXsKuhFjHFpIdJVUw556nI8J0yXjzpk/G
- Hq833IZHjoTRdc3mVEAsUn0w4knhusKErRQTFTlqcNw/oRoCR00SacMG1aVJAkj7IyNr5dp/+O5o
- /yqn9tosOf4
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:BXOjw1vwjvI=;dVUJT7zxs1vnobiHBBP8fJeo8vG
- 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
- M9mJgaMoeDw+oL2rzQQ
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:fBcXVDmxhckomYzfRr75g14uH4JEyxW7cNyE87CAA7ywmYi9oXS
+ Mc44efhsd26K2qNOF+T9PrSPxzPSnGEvt6cLkjIK5Sn8eOE4F6ZYP+QRzMnVssE4TsXKyeM
+ YDIKT+Fxy6NYFqmZmDSFx8Qt1mAd+AcEElLYPNp5Pnc8vCyni8AjWIvYrijVylpSHeKF3Y4
+ dBQP3kjVG8ac2YfdJ84kg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:lxoRplJsvg4=;ttQgTr0CwgLhEdJ+3hkuPuRX928
+ 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
 
-Hello,
+On 2/2/26 1:42 PM, Junio C Hamano wrote:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+>> The option --ignore-rev passes the blame to an older commit.  This can
+>> cause adjacent scoreboard entries to blame the same commit.  Currently
+>> we only look a the present entry when determining whether a line needs
+>=20
+> "look at"?
 
-Git can pretty-print a commit graph with git log --graph and a custom --pr=
-etty
-format. I alias some uses of git log --graph --pretty, to which I then wan=
-t to
-manually add "-p" upon invocation.
+Yes.
 
-When using the working command
-    git log --graph --pretty=3D'format:%h'
-and appending "-p/--patch", the output appears erroneous:
-    git log --graph --pretty=3D'format:%h' -p                             =
-    (1)
+>> to be colored for --color-lines.  Check the previous entry as well.
+>=20
+> While this should work, I am kind of surprised that this has to done
+> as a sepecial case.  It often happens that two adjacent blocks may
+> be originally pass their blames to different parents of a merge, but
+> then the blame passes down through both branches down to the same
+> ancestor, at which point these two blocks need to be merged back
+> into the same source again, and I was hoping that a helper function
+> for it would be called to take care of this case as well.
+Do you mean blame_coalesce()?  It is called, but won't merge entries
+that are not ignored with those that are.  And we do need to keep them
+separate for blame.markignoredlines to work.
 
-Expected output:
-      1 !    * d0c34d4
-      2      | diff --git a/git-bugreport-2026-02-02-1427.txt b/git-bugrep=
-ort-2026-02-02-1427.txt
-      3      | index 5a83af1..2740fd4 100644
-      4      | --- a/git-bugreport-2026-02-02-1427.txt
-      5      | +++ b/git-bugreport-2026-02-02-1427.txt
-      6      | @@ -1,22 +1,53 @@
-      7      |  Some context-before line
-      8      | -Some removed line
-    ---      | ...
-    101      | +Some added line
-    102      |  Some context-after line
-    103 !    |=20
-    104 !    * 28299b2
-    105      | diff --git a/git-bugreport-2026-02-02-1427.txt b/git-bugrep=
-ort-2026-02-02-1427.txt
-    106      | new file mode 100644
-    107      | index 0000000..5a83af1
-    ---      | ...
-
-Actual output, shortened, with line numbers:
-      1 !    * d0c34d4|=20
-      2      | diff --git a/git-bugreport-2026-02-02-1427.txt b/git-bugrep=
-ort-2026-02-02-1427.txt
-      3      | index 5a83af1..2740fd4 100644
-      4      | --- a/git-bugreport-2026-02-02-1427.txt
-      5      | +++ b/git-bugreport-2026-02-02-1427.txt
-      6      | @@ -1,22 +1,53 @@
-      7      |  Some context-before line
-      8      | -Some removed line
-    ---      | ...
-    101      | +Some added line
-    102      |  Some context-after line
-    103 !   =20
-    104 !    * 28299b2|=20
-    105      | diff --git a/git-bugreport-2026-02-02-1427.txt b/git-bugrep=
-ort-2026-02-02-1427.txt
-    106      | new file mode 100644
-    107      | index 0000000..5a83af1
-    ---      | ...
-
-In the actual output, note the trailing "| " sequences in lines {1, 104} a=
-nd the
-missing graph character in line 103. I believe the sequence in line 1 belo=
-ngs to
-line 103.
-
-The actual output looks as if intended to be:
-    <asterisk> <format_string>                    <\n> <diff> <\n> <graph_=
-characters> <\n>
-but is in the wrong order accidentally:
-    <asterisk> <format_string> <graph_characters> <\n> <diff> <\n>        =
-            <\n>
-where the graph_characters "| " are misplaced.
-
-Note: I present the reordering of the offending parts as expected, but it =
-may be
-more reasonable to expect both not to exist. I.e., no trailing "| " in lin=
-e 1
-and no line 103 entirely.
-
-There are workarounds that hide this problem, with drawbacks. These workar=
-ounds
-keep the graph is visually intact, but their output may still differ from =
-what
-was originally intended:
-- Workaround: using "=3Dtformat:" instead of "=3Dformat:".
-    But: The diff is visually separated apart from the commit it belongs t=
-o and
-    next to the subsequent commit. I.e., it appears something is still
-    misplaced, and the result is better only coincidentally. Compare to
-        git log --graph --oneline -p
-    which does not use any separation for a --patch.
-- Workaround: using "%h%n" instead of "%h".
-    Ending the format string with explicit newline curiously fixes the dis=
-play
-    with --patch, but introduces many obsolete lines when used without --p=
-atch,
-    especially for one-line format strings.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-    1. Ensure at least 2 commits exist. Makes --graph meaningful.
-    2. Run the offending command (1):
-        git log --graph --pretty=3D'format:%h' -p                         =
-    (1)
-
-    Alternatively with shorter output:
-        git log --graph --pretty=3D'format:%h' -p --color=3Dalways | head =
--3
-
-What did you expect to happen? (Expected behavior)
-
-    The characters forming edges/vertices of the visual graph are printed =
-at the
-    beginning of lines, horizontally left of the other log contents.
-
-What happened instead? (Actual behavior)
-
-    Some characters semantically belonging to the visual graph are printed=
- at
-    the end of the line, after the format string.
-
-What's different between what you expected and what actually happened?
-
-    The actual output does not visually form the expected graph. It appear=
-s that
-    outputs are printed in unintended order.
-
-Anything else you want to add:
-
-    I did not check if "--format" instead of "--pretty=3Dformat:" behaves
-    identically.
-
-    I grepped for "pretty" in the commits v2.51.0..origin/next and the pro=
-blem
-    appears not to be addressed yet.
-
-    With more branches and colors, the visuals are consistent with what
-    I describe above.
-
-    I do not know what is going on here:
-        - Using format string "%s%n%b" appears to work fine.
-        - Using format string "%s  %b" does not work, but problems start o=
-nly at
-          the second commit, not first.
-        - Using format string "  %n%s" does not work.
-
-
-[System Info]
-git version:
-git version 2.51.0
-$SHELL (typically, interactive shell): /bin/bash
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Ren=C3=A9
 
