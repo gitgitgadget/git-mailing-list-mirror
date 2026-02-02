@@ -1,116 +1,104 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442C62D8365
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 19:05:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2AE2DC763
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 19:10:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770059109; cv=none; b=IaeEkyyN9O+l0CYrQHp6JSl8bgcsLayfB4mWeyQCJbc7VGmtNuyRVEhJG4dEAUz1o52KQgJTu20YWieXeRo1op+Tn1qYEp5Bg+HIuUsbcicdCv5xYUI4safwtEwYruZ5p5UPi6AGLrT93UIoGNmLozDeqahnWI5+4NUWf1I8sds=
+	t=1770059438; cv=none; b=T+ZKyUl56O5fFsM6G6e1B+KRAfKQOjy/vFGrQd0oamnkJLUDzA8WYtSuxlfpFwL6tbKFywB1TsMcNw2Woi6m5i7W65Xv6wlFfY2tIfDw3xb3JmUGHuPsbmGMKIfMvbLY+nRofK3JLg9yn1FTOnoX7rwRG84j/JViNyYYFIA4Dzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770059109; c=relaxed/simple;
-	bh=+w7d7+nxaVZM3fiZxj2M9U0KDiSqHxREzxOXjCSM8yw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=URZU9tUVMoNGa11ssxIFOm6CZK0SCjdqZ2RMye6WDU7Z0bM3leHJYQmrmMMviRCTzacUBHkO+Onm4ESTFAlNQEfx2MYqca8MUJ3os9q+7gRdoxjK2bNvKtaV1hOt/UNApctbOsgo7CHgpkZqWbIFQj9nG/8auvnMv9VKZHoP6+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Td5uMqnh; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770059438; c=relaxed/simple;
+	bh=Jy97xbBvzqr1HCW19AGQ8DUNKgQa83dGWG7vCz9X4B8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CSmob6Dj9l3Rq5pHa2KR6sENAwzv8wdFxngEcvbJV7To6X5X+nOXF+cG6kdJ5xWGivHlg5JZ2JE4UX+uCt4pjrIvSUDNBdJ/a1MgQH1R2wLpaUxyEbYaxiGiI0OB/7YS3wzjIqwBoer8CElzxzCJ3CsV1wcS6dX2N4LJ6L3GKp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DclvvPzN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Di2MOfMj; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Td5uMqnh"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-81f47610542so2710231b3a.0
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 11:05:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770059107; x=1770663907; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dzMCKnGfSQpmChM1+/YcvuvYSadsYbrz3yDlF1D5tSM=;
-        b=Td5uMqnhUfRYolXuoW4UFFclQu0kuRodAzHYeMWuUcgYdwi5qbaaeRCB+Vdx+Xjjcm
-         7UvDDUKNqxTtNh3Ps0zlhBYPpJlocSrEK6wSohzCK47npPlifRl0ttnFWZjMVCyv6J9i
-         7ypfARH5cBS/Y1e6z8i9zhCyMIuZdbyXpZbPkzMH3ykxUFOBPKQSSSZEQdrfJF11X9Vj
-         uLA0538A5JTRW9Iv1U3j0rgxvFsq3rVu2RXcSka6Sa+2CR7PUrqNNqLDYAap16m38lOH
-         b9RGVXeaiyAQLIxbE/Pso/8HRSRh/g/Q4I1domOdutbnIS121hAsLmI7B7JXXBduQcen
-         ezWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770059107; x=1770663907;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=dzMCKnGfSQpmChM1+/YcvuvYSadsYbrz3yDlF1D5tSM=;
-        b=AUCGCTFb+C6Mw5K3a0Z2aO1XwX/InbK7g5qNjO9Nw8agNZJPHnz6GThdJhqebpYVVn
-         FY8ueUzI4//moeGtktj25rmuUz3ychubEm/jpTwMj9EsMpEn6Yw0Ton/pDJ2CIDrc044
-         2+r42jNh5DjJ9hjjVtGgQCbt5oPHFkGJEp+x1YC4KzqPFM+Xg9sQRg9Z5DJeji5kQFBc
-         ZD9IabyhpB47AuJPLeLhgy4d/I+qUs2IVuUHFs9ykgwcWRjSk75B+Od2nT5G5ozUSk8q
-         zHkHfk0YV7HinD3bwcvzB/s7+m/fYzjCwRGsAxX6t+3BlOorqfpcJlakq4WgpcLAxu44
-         FBYQ==
-X-Gm-Message-State: AOJu0YzxaYhz68p8hdelvGavXByXQHooNhdnmYVDZDn4Kn6cfQ6U9Bm8
-	iVS5NVsTkxqj+EhAV8NUdVNS1X6DBXw3KYMvuXgHJN0OTKoUPA82OPL3kJAXhg==
-X-Gm-Gg: AZuq6aJLlzrv7GcXSD1SjEGy6aO1fIyUzZiCzWMN4ZS8I9AFVXJOZjsdMA95ShtvLoz
-	keNU3pvinDRU/H0eG5T2XuN1pc91cIhj1193SyatntzC/RfOAvL9JvYJMFNS96uuDFjtJXpuMlm
-	8oxOSRWZFacIDAymJwpUuWPtLPrBzIL7sDb+CqKiVgZti0KidrSWp1akuTS+fUVEWPDheEdqgFL
-	Lm5FX6TAzJcu9LnFKE49UnsyiL0X/+u2ft/IM36Q/C6lmtXp4ZspEbud7ggXnz4bhdJwdXXF2lb
-	SPQucRprG6IiyG4Mh49QIWdD5A87a6TjKLKWhuTsUBYFFIAcUlruYeHgHHM/DGVFdg2rjSHPEPP
-	0zlQRWX4NH2YvbI6/No0XVMyqW/ldO/KgrUthewQ9Yc0VgzXi9QvTKIxHKwSy7W1YzjHliYCAnL
-	vn5qxZSjbaPXvDxTy/MvC1vObo7QGL0DVklwkKpvS6yYYoeg==
-X-Received: by 2002:a05:6a00:9503:b0:81f:3bfa:f0da with SMTP id d2e1a72fcca58-823ab6c06f1mr11712851b3a.29.1770059107436;
-        Mon, 02 Feb 2026 11:05:07 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:da6f:d14f:dda8:8d6c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379bfd8b7sm15227590b3a.31.2026.02.02.11.05.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Feb 2026 11:05:07 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	karthik.188@gmail.com
-Subject: Re: [PATCH 3/3] wt-status: use hash_algo from local repository instead of global the_hash_algo
-Date: Tue,  3 Feb 2026 00:33:15 +0530
-Message-ID: <20260202190458.81443-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <CAOLa=ZT6ReeaPvJiNh967Sn2p3K8sQKEOOMJ+6-7ZdFO+wr8mg@mail.gmail.com>
-References: <CAOLa=ZT6ReeaPvJiNh967Sn2p3K8sQKEOOMJ+6-7ZdFO+wr8mg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DclvvPzN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Di2MOfMj"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 194147A0130;
+	Mon,  2 Feb 2026 14:10:36 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 02 Feb 2026 14:10:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770059435; x=1770145835; bh=Jy97xbBvzq
+	r1HCW19AGQ8DUNKgQa83dGWG7vCz9X4B8=; b=DclvvPzNHwqznkSoC6fm2bUwP4
+	S/YHdnWhR8flg0HaATcxn8WazwDngj1BHbPHZlBRfXT5uX8w5qIzXNPzY/4i9CMh
+	xx0i67LdkWtnGb5fO37a96OFEdIjEvS9Bb1H97cEWJjyUmvvM7wR2tZJZLubiBdP
+	3diZoIZWyyyBBWYt+XoLglRfBlO+gy1D6hvf7UBV+kod1O9TjIUaIiZ0jqKBx/ha
+	3MBKOedwNgi4CJUOQ12Aii6QLEKmA1vYotgsE5WBfdC0rB+3xxL/3bVwRRa+oYsW
+	ayQY9FOcSHKYKnP/7+DtpEQ1QhDBNvYibt6KC87A6DXtzDKqNtHukuAWPZZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770059435; x=1770145835; bh=Jy97xbBvzqr1HCW19AGQ8DUNKgQa83dGWG7
+	vCz9X4B8=; b=Di2MOfMj4y3lT5PKumEfBYBDY2lJlyp0Ls2KbC41SztbmyYEWZL
+	5xBH2zJ429cd7JNT5HZxGdwtaSjDP98eGQkMTt9h/mQ73OqhiAy9DtzjL9/qqRBI
+	ZzpE01NUkQoekZq2QQuApfBl0bIsYuCfWD9iht41ik8xo8F5w+Ez7pCIOlEcZY+v
+	zF8cbxJ8OkB+qr4xPvD6rU8xHiV8qNmlrbcxWPwwTUJyt4fypeSvSOtSuLp6Fhhi
+	DUA77tSxFHZ+vKq4o53eolWxhsZvJhBRhga/wJfUGxKzuFKi9E4yPhZ0K5MSP4HT
+	EZeZiSJiZcl4uG4ewIVt9ugAcbWdVT+LCNQ==
+X-ME-Sender: <xms:q_aAaRUHlHCDaX1c2Ue0CnICTYiVOReylZXVUOvoR6kBsoS8SXSSYw>
+    <xme:q_aAaYmi7g2uXB2BTU3CJ1pY5Hd858k1fFKzQVrLMpI8sQVKSjmS-FFi4OIo6uOr1
+    tMhWUBeyew5FZmTKXghTcib322Sv6NH_XrXIyx9zFn68NbGgRZLew>
+X-ME-Received: <xmr:q_aAaSZY2GaBkdneiaKn_e2WdFVdc5-CIpmO8ykRTpO0blhhgZWHIaYlDA6CI40Va6mSFr4dd96A_mIC6R5Xrqii0rtqN7WbXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekgeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprh
+    gtphhtthhopehpuhhshhhkrghrkhhumhgrrhhsihhnghhhudeljedtsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:q_aAaTO6dzlOGxmCvV3BWRsaQQzW3lpQ2YCwEEH2f-JbHpJ787ZhDQ>
+    <xmx:q_aAaXZPiZcIMddDlY1g2Wc9nmBXNMboGmRYdWdaPt9XVchZiuxQ4g>
+    <xmx:q_aAaR0nOcbCURZ4ecMHRnUor8iiCpyhYXNBpP8x2IcGqSWGd0aw3Q>
+    <xmx:q_aAadfIIHzZqgKuJCUM19iit89VSSegY8xAxPYFNgQay8dDnfxJRg>
+    <xmx:q_aAabK2lU8L5WOx7D6M7dEFYrbuU9BmXNjLzUcuEpHgVA4y1ZYdBHRs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Feb 2026 14:10:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3] subtree: validate --prefix against commit in split
+In-Reply-To: <7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
+	(Josh Steadmon's message of "Mon, 2 Feb 2026 10:54:13 -0800")
+References: <xmqqh5smdejc.fsf@gitster.g>
+	<20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+	<7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
+Date: Mon, 02 Feb 2026 11:10:33 -0800
+Message-ID: <xmqqwm0vx8pi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> > wt-status.c uses the global the_hash_algo even though a repository
-> > instance is already available via struct repository *r.
-> >
-> > Replace uses of the_hash_algo with the hash algorithm stored in the
-> > associated repository (r->hash_algo).
-> >
-> > This removes another dependency on global state and keeps wt-status
-> > consistent with local repository usage.
-> >
-> 
-> One final question is, does this mean we can remove
-> `USE_THE_REPOSITORY_VARIABLE` after these changes? If not, why?
+Josh Steadmon <steadmon@google.com> writes:
 
-We cannot remove `USE_THE_REPOSITORY_VARIABLE` yet, because the changes done only
-remove the direct use of the_hash_algo and the_repository,
-but 'USE_THE_REPOSITORY_VARIABLE' is for all the global variables
-that are still in use.
+> Unfortunately, it seems this patch breaks the subtree tests. We noticed
+> a failure in our build system at $WORK, and I was able to bisect the
+> failure to this commit:
+>
+> $ git bisect start 54b18a3513eed9ed5ced5c238ade55a434fd619a 66b2238f5c17644ddf15f75a53c76faeca6d9f1e
+> $ git bisect run sh -c 'make && make -C contrib/subtree && make -C contrib/subtree test'
+>
+> The tests fail on case 17 - split requires path given by option --prefix
+> must exist.
 
-In particular wt-status.c still relies on the following globals,
-
-* core_apply_sparse_checkout, this is already being addressed in an
-ongoing patch series [1], so I intentionally did not modify it.
-
-* comment_line_str and DEFAULT_ABBREV, these both still are used in
-wt-status.c but they dont have any local instance in wt-status.c,
-or in any other form.
-
-Removing these would require a wider refactoring (adding in struct wt_status,
-adding helper functions etc) and I believe is better handled as a separate patch series.
-
-Though I require some guidance on the preferred approach for handling
-comment_line_str and DEFAULT_ABBREV going forward.
-
-Thanks for reviewing.
-
-Best,
-Shreyansh
-
-[1]- https://lore.kernel.org/git/5e56e1cc4172cfff9e917a068184e102aa70bf1d.1769256839.git.belkid98@gmail.com/t/#u
+Thanks for a quick regression report while it is still in 'next', so
+that we can revert it out of 'next' without breaking the 'master'.
