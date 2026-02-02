@@ -1,112 +1,157 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB482BEC4A
-	for <git@vger.kernel.org>; Mon,  2 Feb 2026 12:42:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC726366DC5
+	for <git@vger.kernel.org>; Mon,  2 Feb 2026 13:22:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770036145; cv=none; b=m68yrN1FlyMXyTA/ylkh43j3YNKcCee04WxyDGOW0GgUjCkCs/zxc6rCYl07N4cQCjRM3YOzGzJSl1R0XmNc7peMPWaI3o0WI4RAe6rpAvOEC7rdFjgNYnRqZ+EqYaUNB+YEk2EROPqqlwUixb7uMueIkuJyjbWxdQLmrtKRKuk=
+	t=1770038575; cv=none; b=SEDpuiNm/rmc+0n2HqzbH1/POzQpnY6k3NDSEESSr3F6lC+7KXmBV6T3AipsEZCi47CcFWLTzWLLYIk1MDYzL0jfurIJdtL9BrcZNjBAEp/Kh0asWYkNMINmIlPL8xkzNE4/apgDAZlwsjy1wOujDqfHcx1Hv4zktyoZtvEex74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770036145; c=relaxed/simple;
-	bh=70EqrYCbcFtC/8jXsLEvo/gbn3H3TaQgK0dvBfT3oxo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tOeGZ37asKmp13IqdjgDp6L7Ry64gT/EqDrjr8Q/xQKMmA5smyY0nBs1rZA7N2ec7p/omnNGHRGmAh9uDPzbnOyo7GkyEp/5sU3YUM08PaBa/RFzt0JJ/6Up++0MChxtUMfil++jeogRk9eTtysKHGbfgehI7aHUXKFyxFkI2fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DPIhQBiy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f/qcd487; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770038575; c=relaxed/simple;
+	bh=yKqhJbL5CsqjmQZF9AJootYqnJDyKTDXd2JwgBAkuhE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WIMcR1hrs4QJvoGdaFHSqfo13qZNfZHCba5Ht+Or3zsXZ03mlCanw/pehywac+QNYfcdz3MDlWWTHQt8rvzFcb2/l3oQQfIBxCsuBZt2wSlap1sZ/0EE6PYgBWilQe4ofoo+gz1X/6STT7vq/pbF2sgOawmgoMOAxNsUbFP9sLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CYxjTMgU; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DPIhQBiy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f/qcd487"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5409E1D000BB;
-	Mon,  2 Feb 2026 07:42:23 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 02 Feb 2026 07:42:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1770036143;
-	 x=1770122543; bh=VaxZmd5aTuf+uQnDAGju+elzdSaCdlY0NarFtWTRjBI=; b=
-	DPIhQBiyZ+VPBpLNPIO/2bM8SfqSjWdVk2ehpt1rjKpbZsaM86l4Qg9o2ffGHRWX
-	caS+Kbkbc6dvpTpI0moJnbQp5gM8hhZvetKat8SiamYVaCwLkH04v03LQYeB/ERP
-	e0esXCk5WjirF8lbPntogA4K7ZCNKT7kovTu4UN/rjDZKklZCwXj22FZE2UKw9pY
-	WbFzxda+qITTuFy9kLdDvfJTxLLAjmjXuFX8rc/boUPx8SB1qSOcP40EL+pCVSB0
-	12MRy/AEERGB+UxddB+BPuh0R+C8A6M5gaVy5hFa3oUDKOuqnUuLeDZlmUHk1KGj
-	CREfiRIQLTNQPTgGCtq4XA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770036143; x=
-	1770122543; bh=VaxZmd5aTuf+uQnDAGju+elzdSaCdlY0NarFtWTRjBI=; b=f
-	/qcd487XUDUznki0BdnKpRXIm2YzZpo4NR0N8RL1ZVez7t3BK7/r7v8G9gyY9fqn
-	/L9uMkEtrktvtJwDea9A4WkolFKfPGPmKRhBDnpHgorlCfrx7C06J/GycAuEFr1l
-	nGAr0O4ww8RxrnFtttbZUCQyO5ZXD7miGJlrbVYcP+s0//BU9Ster6FmzYeVXAia
-	kXAs8IJHPhBY2H25CYdwnlEtTSjWk14UEFm+yWZgCiRdStyQ/XK9Qh2NOjM8vc6Y
-	vdnS5tb4NN6+7GwhFVNWDBfVLjYICq1yG5+PSvaqmHRj6mkicKKrVszSE66fyUzq
-	OyQQx0XNs9+SAZ4m1Pgfg==
-X-ME-Sender: <xms:r5uAaVfUkFF5nS9VkC_oSXcnJB7qixrmVyy7qyIhg_c4c9sdIGahuA>
-    <xme:r5uAaaNT0273lXQyuNLXFUoZ_eK4neE2G0h9TkZeCuu4DsXlwglG5ZpAYrBN1x6oE
-    1SNBjrr6066STdb0eWrvh4iYIstxGaQ22Q8SffogNVwn_D5iRedYQ>
-X-ME-Received: <xmr:r5uAaTgcTe_RqxShrPn1HKE9D9vZWAI309_-Nl2G3AOL103ScX5E7o1UZCyrpFoatDvVPybsnSf69cMlPb2SBo3bTAcpDSB4_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeejieejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdr
-    rhesfigvsgdruggvpdhrtghpthhtohepshgvthhhmhgtmhgrihhlsehpmhdrmhgvpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:r5uAad1h75fmeD9JCDf6Ft7uE0-uwyWQWjbORyeHlekdPBn8Bk8YAg>
-    <xmx:r5uAadhu1k3287mOojY-kWrRCm0dA9zR6ONDyvB13Gawi_c0S2NdXg>
-    <xmx:r5uAadePmZlhmQkyEoi99Ef9YARcN552gckCeHh2T1dLrO1re8Txlw>
-    <xmx:r5uAaQl8vPF-JPSRV5LAgBywATGToIskg3d77SKT6TdwgtnEKTvzSw>
-    <xmx:r5uAadty7cwFPoR5h4Tqyiu04u9mm__iRLjh-rtoy5rBWYLuksiA26gP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Feb 2026 07:42:22 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Seth McDonald <sethmcmail@pm.me>,  git@vger.kernel.org
-Subject: Re: [PATCH] blame: fix coloring for repeated suspects
-In-Reply-To: <28ac1ee6-f3e9-4789-92b7-903788430697@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sun, 1 Feb 2026 12:47:53 +0100")
-References: <aX8BjoOGPIytGXjD@McDaDebianPC>
-	<28ac1ee6-f3e9-4789-92b7-903788430697@web.de>
-Date: Mon, 02 Feb 2026 04:42:21 -0800
-Message-ID: <xmqqfr7j2u6q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYxjTMgU"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-29f30233d8aso28235045ad.0
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 05:22:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770038573; x=1770643373; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=z5KA6sX4YWxGdZ9yr7wNCYDt8HFJP+sep/n/2scEDa0=;
+        b=CYxjTMgUEN7/1LvirwuMDzKrhq3b23eeOv9F1Nj4o0/ottMRVZJoiqG+hUC4quM8yD
+         6nE4gzCAfwSiy7saC5of3NG7hIv9Wm0cDvU3hrCAINLbGlOnMu92Ta8RXuusNBcAqpAA
+         H0ObelWq1mafFKgZWhaQZE/5JqK11sSntK4hMeta6kq4VI43kECbb1iWRuD6gjAGQqYR
+         4W+ETu3gS5Af0Ii3Hxdn6qyh1wqSBeQQqiX5GzStha1ijldjMRNCuH1CU9XFyuEzd6nV
+         VV/ghRbKVbhMzzdhroYBY25O0cygXh9w+0ojeyz45XLhrAA+MdjhYo93FiH95y8m8pXh
+         JbyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770038573; x=1770643373;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z5KA6sX4YWxGdZ9yr7wNCYDt8HFJP+sep/n/2scEDa0=;
+        b=KTLMRg8DMkWcWDBVnknwteHPBwe+zDRoqXDycWVwdaKI+l+oH0ZQwK7BFk09+Lh41C
+         BhqDI9IDKb8+Huxei7h9hbPFn3z3Z+VvbEFSEsiW2Jz9wvAm8/SjvfgdUVXoRQvFFoet
+         LdV311bF9JHaVwUZzNohf2LQ1N6GdZ58vsiDViaBEvm/3MwnwJczDldUAMqCyiHyDWmK
+         2Oo2gGnh6yzJ4AJJZB+hrZ44Tm5nSNwF20qxs5ZihqzttiMejdhmR36aVggrn6QdZWrS
+         B9A9Qr9vQ8iJYhIAWbSpCGVX9JhofMsm2BwKC2odF+s+RiyQtYCy9z3IO6az/1AYIJnA
+         TNJw==
+X-Gm-Message-State: AOJu0YzlS0l+uA+hx5NCll7k8ysxfv+MvuK31khKBG/ntvUhLPlrwyv/
+	VKM7HqkHBlc33hBEOF2rJXySC77PFBJGz3nkO2fAcKRsVQgL9wsJC7T104WWHQDW
+X-Gm-Gg: AZuq6aKmUCERM5WmPHoVRhGl+z8mKWXSoUBpM5GLJGkZqnWqScqFDsdhPwNJ39RQB0D
+	HbYbSHeV4j6eUinL0YQNE9pNYf3s0QnJcha33NeidvbQf5TE6K/r/LB6RPsKiKEEPRQGZUCgAU9
+	jo1yjnrQ2Qioe30wTnuuFmgI02IoHl8aFJOm8922qCJO9WlYYQHZLj/oTpd9vqR6F57nxjh75F/
+	hDFOYSwx2nUBSoxJgrk9yzkKdwzT2iZHSEsvagOO0sho8iydBEIdWpNSe9YrnNKMczkXmyL7tu5
+	pxdAhS9XqKpctcPrp/bbY5nOgT0+TU1Wy1Tn6+eyx98ECt14PxPH69bZWzKJHYy407WVDcnkScz
+	OZ67e3cFwhDPsYqTq9304qLHFi1NTPFSJCPHkWDQxTy8sFF+ImulEjQLJwVBD/FYRQSNiagCSV3
+	6UQ2nuCmJqXzD6K50SPr4YF6q7rjIPwOm9M1cVPNMdty0=
+X-Received: by 2002:a17:902:ebc1:b0:2a7:7872:8f52 with SMTP id d9443c01a7336-2a8d7ee6a5dmr106399975ad.26.1770038572959;
+        Mon, 02 Feb 2026 05:22:52 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4c40a8sm179222465ad.51.2026.02.02.05.22.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Feb 2026 05:22:52 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	peff@peff.net,
+	Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Subject: [PATCH] stash: honor --no-overwrite-ignore when updating index
+Date: Mon,  2 Feb 2026 13:19:22 +0000
+Message-ID: <20260202131921.15175-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-René Scharfe <l.s.r@web.de> writes:
+The stash code unconditionally cleared opts.preserve_ignored when
+updating the index, leaving a FIXME suggesting this should depend on
+an overwrite_ignore flag.
 
-> The option --ignore-rev passes the blame to an older commit.  This can
-> cause adjacent scoreboard entries to blame the same commit.  Currently
-> we only look a the present entry when determining whether a line needs
+Introduce overwrite_ignore plumbing for git stash push/save and use it
+to control preserve_ignored during reset_tree(). Add a test to verify
+that --no-overwrite-ignore preserves ignored files.
 
-"look at"?
+This removes the long-standing FIXME and aligns stash behavior with
+checkout/reset/merge.
+---
+ builtin/stash.c                    | 11 ++++++++++-
+ t/t3905-stash-include-untracked.sh | 13 +++++++++++++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
 
-> to be colored for --color-lines.  Check the previous entry as well.
-
-While this should work, I am kind of surprised that this has to done
-as a sepecial case.  It often happens that two adjacent blocks may
-be originally pass their blames to different parents of a merge, but
-then the blame passes down through both branches down to the same
-ancestor, at which point these two blocks need to be merged back
-into the same source again, and I was hoping that a helper function
-for it would be called to take care of this case as well.
-
-In any case, thaks for a fix, and with a test, which is great.
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 193e3ea47a..82d10520fe 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -150,6 +150,7 @@ static int show_stat = 1;
+ static int show_patch;
+ static int show_include_untracked;
+ static int use_index;
++static int overwrite_ignore = 1;
+ 
+ /*
+  * w_commit is set to the commit containing the working tree
+@@ -360,7 +361,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
+ 	opts.reset = reset ? UNPACK_RESET_PROTECT_UNTRACKED : 0;
+ 	opts.update = update;
+ 	if (update)
+-		opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
++		opts.preserve_ignored = !overwrite_ignore;
+ 	opts.fn = oneway_merge;
+ 
+ 	if (unpack_trees(nr_trees, t, &opts))
+@@ -1856,6 +1857,10 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 			 N_("include untracked files in stash")),
+ 		OPT_SET_INT('a', "all", &include_untracked,
+ 			    N_("include ignore files"), 2),
++		OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore,
++			N_("update ignored files (default)")),
++		OPT_BOOL(0, "no-overwrite-ignore", &overwrite_ignore,
++			N_("do not update ignored files")),
+ 		OPT_STRING('m', "message", &stash_msg, N_("message"),
+ 			   N_("stash message")),
+ 		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
+@@ -1959,6 +1964,10 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+ 			 N_("include untracked files in stash")),
+ 		OPT_SET_INT('a', "all", &include_untracked,
+ 			    N_("include ignore files"), 2),
++		OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore,
++				N_("update ignored files (default)")),
++		OPT_BOOL(0, "no-overwrite-ignore", &overwrite_ignore,
++				N_("do not update ignored files")),
+ 		OPT_STRING('m', "message", &stash_msg, "message",
+ 			   N_("stash message")),
+ 		OPT_END()
+diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
+index 7704709054..9c5421cd76 100755
+--- a/t/t3905-stash-include-untracked.sh
++++ b/t/t3905-stash-include-untracked.sh
+@@ -427,4 +427,17 @@ test_expect_success 'stash -u ignores sub-repository' '
+ 	git stash -u
+ '
+ 
++test_expect_success 'stash push --no-overwrite-ignore preserves ignored files' '
++	echo ignored.txt >>.gitignore &&
++	echo before >ignored.txt &&
++	git add .gitignore &&
++	git commit -m "add ignore" &&
++
++	echo after >ignored.txt &&
++	git stash push --no-overwrite-ignore &&
++
++	test_path_is_file ignored.txt &&
++	grep after ignored.txt
++'
++
+ test_done
+-- 
+2.43.0
 
