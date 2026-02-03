@@ -1,268 +1,103 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DA53B9608
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 15:42:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0659538E125
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 15:54:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770133366; cv=none; b=ZvEhuwDa7coWI8xBz6umoGO7Ks12y+hfizdyjciyaVrnr0G59a5GlwGTVPm7t/83Dw3wyQ/W4wXlIEiUK8uiauel4rGRNSf3kwIwgRY0VhbqxHOhNqJCP6oLIpDtIeku8odovNaZr35d1NKBfEdN01TZSobm36SJkdmxmg5IPSk=
+	t=1770134086; cv=none; b=juThUCx69n1rTKJJOE8YTVoZXFRCInsECDL7x76P563ahsyoAlNCgJufG2DFB8Yvvb/r+bPXr/wTrjbKiYcq9kKz0VORNla9zIe8jvAf3nL6gM0t2TKnKYx4GadlU0gduTadScJ9nSyEl0ySSWfD7z3Qv+z9XeDIBZ0SyM4iHPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770133366; c=relaxed/simple;
-	bh=onpbucq9XEm7tONQBXLXYQYqe5KfbREv5FEkJm1Jes4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qj1JhcNLXzLLjAoUvSOtKP/sDfn6hv6GBZ14/2T/qQmLjtsKbW3q50HW1lkcw7iULu/oidxqfriziQewycb20SH7JM8p0+LHwp6rSSsg/E664NzmjAYhgDHgVuMFw3DqGNSNh8I1c67CTXglxsrb4TQI/YZjfajuupazXaqxlvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PFdYu9Kl; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770134086; c=relaxed/simple;
+	bh=5SFHuKYfxHkVkJuEZE0eRsuaaMB3CHTfMQPD04X76EY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cbPjI8h84YTCQa0QQNHuYwdY5cOEAd6pvXTHk010V8XgFFfDxhf5QjEtEshtzibIzZCDsRw44cfGZGCOml2GSCJ2s7zGVzeK/xPsrmohw5gW768XeZdODJLKsAUUZBAcjxW1374/9ZiRumlWXmJV7u3ti18oHcee7lo+oDXO82I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=TLX/19GK; arc=none smtp.client-ip=95.215.58.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PFdYu9Kl"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4801bc32725so44707385e9.0
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 07:42:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770133363; x=1770738163; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MyiEBWPLAXMilDQFsISUdy2H0+kkhpVXZIWynlrom3M=;
-        b=PFdYu9KlbS35NKEGc/NZ+cwdurf8RLaLqHDSCoQxwuRQlYWJx7hqU3gsL11NG3OQGs
-         InbzDFxgyjhcaTHNwhcq668Kf36jSsgxjFarRxiqBXe6y6GqtkyldNFwMut8bDZpw/Kq
-         WabFE5DT4IwAEBS6Xis936Fs/Fp6GcNG69My1zIze4/XP6fA4K4MXRdoNWe/YRIozq34
-         xzBjsf2uh9XeigAWuYnPfED2LX2uiLS2ATN5fM9xWcDs7FrqusUK2hCD2R3q+fSvUeJw
-         i9LT95D0BA+TFnT6qIjbZ+lfk8qQ875nT4UhIIySD3W6b4fmd5BaYoM7UrMUgiE3IiA3
-         PBNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770133363; x=1770738163;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=MyiEBWPLAXMilDQFsISUdy2H0+kkhpVXZIWynlrom3M=;
-        b=Dudve9Qda9mqIGXQlclDaFt0FnRp44VB/bPNNJ4qUnn1odUupRK7Nf5Oa8uoGIdAvs
-         ulM8nHUYz18Bmrv9t6CcYidmxgS/NcFjPrdY2m92ZlHmNEpvvVbRFrBezKNclEnKCnW9
-         BBoi7xz6emBMZSaSNamFjwTAalLZvtekPUAzkSa7ZdsIGPAkjodT6Fso8lMVjFn2dpCq
-         9xqypH9zKhvyjK7WzPCE6wyvufTb7WE9g65BV/FUvZ6zVOPlsSgPQQWKTZzeg7xqzoHT
-         agiwZqQBaSLrxikYk+fOaO+8zGHQ2LYsrJraBoufSrYUexQd1v5N8MKUsV9w6pfVXRpM
-         Betg==
-X-Gm-Message-State: AOJu0YylNubnZdYjJKVX8PV3jMwvBpJWy88i4DgOnmFxO0E46aqOtH8A
-	nW1DblH5v8A4Z5XiMxnqkI1axeP2/jdqV73oi364S8TNgKkFjPTKSdMb
-X-Gm-Gg: AZuq6aLRe23doMOFj5sNwmtqT5628kAhmBkoO3+6+WSJXFARYuL5OScd7YZRbJfOjOU
-	3p+00mn9O5v9s27JjRf8xq1q7sNzPMORcewyZV7A7/TlBVXkrLfDkXG3C0nDw7lD2T9sMfgmR+8
-	PwbWb2MWqJeRevrUvEEPfL3pUOWAFrco/YPxWJqeLEygZyezgaDPT0XEbcSoWIPoBDnxui3WBiM
-	qWygjzSaBpCmJHGx2ywiuj/kyqnvWzxXvbsfHeuBfuVHwLNbW81vIat3wEXokA0wIk5V05b+/jX
-	dF/kjkPX6VGIpKBCpJ8v/c66UhVbUVUTIhSW4EV4Cr1L5vF1NJXLzmtiA43DqJSp8A85tK/zbTs
-	K84bQftrBlipTnaLjrgnDxvS6xrKBAU7kr54IDJh9vbEC4//25wgWoI5ge2IooV9g9yPcRX+9XT
-	flxf0=
-X-Received: by 2002:a05:600c:1e1d:b0:47a:814c:ee95 with SMTP id 5b1f17b1804b1-4830e94d478mr979335e9.12.1770133363302;
-        Tue, 03 Feb 2026 07:42:43 -0800 (PST)
-Received: from ubuntu ([102.88.77.11])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-482e267b699sm121833995e9.16.2026.02.03.07.42.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 07:42:42 -0800 (PST)
-From: Olamide Caleb Bello <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: toon@iotcl.com,
-	phillip.wood123@gmail.com,
-	gitster@pobox.com,
-	christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	me@ttaylorr.com,
-	karthik.188@gmail.com,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [Outreachy PATCH v6 3/3] environment: move "branch.autoSetupMerge" into `struct repo_config_values`
-Date: Tue,  3 Feb 2026 16:42:11 +0100
-Message-Id: <60451b93a57faba9b6c782c7e290f7db7e8411ad.1770127568.git.belkid98@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1770127568.git.belkid98@gmail.com>
-References: <cover.1770127568.git.belkid98@gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="TLX/19GK"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1770134080;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JrBabMFCA5rARLVm6a+UOft5uEC3DKqiAjnQdZslGps=;
+	b=TLX/19GKvlW7wodgiI+ZP4TTlGvFTN5WNlGRqOry7UKYvjCMjs2+pSXqE5ikscroeLzAU2
+	Gk7k/SFKJ6E1/O0sH8J9L1HGa5LkxJcRP03L2PL3yk3TFul/S2tilg0rhjHQ/EswuqKkug
+	SOaDa0j4Jya6kEg9/igu7YpjqXxXEeI=
+From: Toon Claes <toon@iotcl.com>
+To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im, gitster@pobox.com, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 3/4] odb: prepare `struct odb_transaction` to become
+ generic
+In-Reply-To: <20260203001002.2500198-4-jltobler@gmail.com>
+References: <20260128234519.2721179-1-jltobler@gmail.com>
+ <20260203001002.2500198-1-jltobler@gmail.com>
+ <20260203001002.2500198-4-jltobler@gmail.com>
+Date: Tue, 03 Feb 2026 16:54:19 +0100
+Message-ID: <87o6m5rff8.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-The config value `branch.autoSetupMerge` is parsed in
-`git_default_branch_config()` and stored in the global variable
-`git_branch_track`. This global variable can be overwritten
-by another repository when multiple Git repos run in the the same process.
+Justin Tobler <jltobler@gmail.com> writes:
 
-Move this value into `struct repo_config_values` in the_repository to
-retain current behaviours and move towards libifying Git.
-Since the variable is no longer a global variable, it has been renamed to
-`branch_track` in the struct `repo_config_values`.
+> An ODB transaction handles how objects are stored temporarily and
+> eventually committed. Due to object storage being implemented
+> differently for a given ODB source, the ODB transactions must be
+> implemented in a manner specific to the source the objects are being
+> written to. To provide generic transactions, `struct odb_transaction` is
+> updated to store a commit callback that can be configured to support a
+> specific ODB source. For now `struct odb_transaction_files` is the
+> only transaction type and what is always returned when starting a
+> transaction.
+>
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  object-file.c | 80 ++++++++++++++++++++++++++++-----------------------
+>  object-file.h |  6 ----
+>  odb.c         |  5 +++-
+>  odb.h         | 17 +++++++++++
+>  4 files changed, 65 insertions(+), 43 deletions(-)
+>
+> diff --git a/object-file.c b/object-file.c
+> index 7b34a2b274..d7e153c1b9 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -710,15 +710,17 @@ struct transaction_packfile {
+>  	uint32_t nr_written;
+>  };
+>  
+> -struct odb_transaction {
+> -	struct odb_source *source;
+> +struct odb_transaction_files {
+> +	struct odb_transaction base;
+>  
+>  	struct tmp_objdir *objdir;
+>  	struct transaction_packfile packfile;
+>  };
+>  
+> -static void prepare_loose_object_transaction(struct odb_transaction *transaction)
+> +static void prepare_loose_object_transaction(struct odb_transaction *base)
+>  {
+> +	struct odb_transaction_files *transaction = (struct odb_transaction_files *)base;
 
-Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
----
- branch.h                    |  2 --
- builtin/branch.c            |  3 ++-
- builtin/checkout.c          |  3 ++-
- builtin/push.c              |  3 ++-
- builtin/submodule--helper.c |  3 ++-
- environment.c               | 12 +++++++-----
- environment.h               |  4 ++++
- 7 files changed, 19 insertions(+), 11 deletions(-)
+So you're assuming `struct odb_transaction` is the first field in
+`struct odb_transaction_files`?
 
-diff --git a/branch.h b/branch.h
-index ec2f35fda4..3dc6e2a0ff 100644
---- a/branch.h
-+++ b/branch.h
-@@ -15,8 +15,6 @@ enum branch_track {
- 	BRANCH_TRACK_SIMPLE,
- };
- 
--extern enum branch_track git_branch_track;
--
- /* Functions for acting on the information about branches. */
- 
- /**
-diff --git a/builtin/branch.c b/builtin/branch.c
-index c577b5d20f..a1a43380d0 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -724,6 +724,7 @@ int cmd_branch(int argc,
- 	static struct ref_sorting *sorting;
- 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
- 	struct ref_format format = REF_FORMAT_INIT;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	int ret;
- 
- 	struct option options[] = {
-@@ -795,7 +796,7 @@ int cmd_branch(int argc,
- 	if (!sorting_options.nr)
- 		string_list_append(&sorting_options, "refname");
- 
--	track = git_branch_track;
-+	track = cfg->branch_track;
- 
- 	head = refs_resolve_refdup(get_main_ref_store(the_repository), "HEAD",
- 				   0, &head_oid, NULL);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 261699e2f5..ea728e733c 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1588,6 +1588,7 @@ static void die_if_switching_to_a_branch_in_use(struct checkout_opts *opts,
- static int checkout_branch(struct checkout_opts *opts,
- 			   struct branch_info *new_branch_info)
- {
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	int noop_switch = (!new_branch_info->name &&
- 			   !opts->new_branch &&
- 			   !opts->force_detach);
-@@ -1631,7 +1632,7 @@ static int checkout_branch(struct checkout_opts *opts,
- 		if (opts->track != BRANCH_TRACK_UNSPECIFIED)
- 			die(_("'%s' cannot be used with '%s'"), "--detach", "-t");
- 	} else if (opts->track == BRANCH_TRACK_UNSPECIFIED)
--		opts->track = git_branch_track;
-+		opts->track = cfg->branch_track;
- 
- 	if (new_branch_info->name && !new_branch_info->commit)
- 		die(_("Cannot switch branch to a non-commit '%s'"),
-diff --git a/builtin/push.c b/builtin/push.c
-index 5b6cebbb85..7100ffba5d 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -151,6 +151,7 @@ static NORETURN void die_push_simple(struct branch *branch,
- 	const char *advice_pushdefault_maybe = "";
- 	const char *advice_automergesimple_maybe = "";
- 	const char *short_upstream = branch->merge[0]->src;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	skip_prefix(short_upstream, "refs/heads/", &short_upstream);
- 
-@@ -162,7 +163,7 @@ static NORETURN void die_push_simple(struct branch *branch,
- 		advice_pushdefault_maybe = _("\n"
- 				 "To choose either option permanently, "
- 				 "see push.default in 'git help config'.\n");
--	if (git_branch_track != BRANCH_TRACK_SIMPLE)
-+	if (cfg->branch_track != BRANCH_TRACK_SIMPLE)
- 		advice_automergesimple_maybe = _("\n"
- 				 "To avoid automatically configuring "
- 				 "an upstream branch when its name\n"
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d537ab087a..594cd107b3 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3126,9 +3126,10 @@ static int module_create_branch(int argc, const char **argv, const char *prefix,
- 		N_("git submodule--helper create-branch [-f|--force] [--create-reflog] [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start-oid> <start-name>"),
- 		NULL
- 	};
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	repo_config(the_repository, git_default_config, NULL);
--	track = git_branch_track;
-+	track = cfg->branch_track;
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 
- 	if (argc != 3)
-diff --git a/environment.c b/environment.c
-index 390af1ce54..1bc3adb75b 100644
---- a/environment.c
-+++ b/environment.c
-@@ -66,7 +66,6 @@ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
- enum eol core_eol = EOL_UNSET;
- int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
- char *check_roundtrip_encoding;
--enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
- enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
- #ifndef OBJECT_CREATION_MODE
-@@ -607,18 +606,20 @@ static int git_default_i18n_config(const char *var, const char *value)
- 
- static int git_default_branch_config(const char *var, const char *value)
- {
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
-+
- 	if (!strcmp(var, "branch.autosetupmerge")) {
- 		if (value && !strcmp(value, "always")) {
--			git_branch_track = BRANCH_TRACK_ALWAYS;
-+			cfg->branch_track = BRANCH_TRACK_ALWAYS;
- 			return 0;
- 		} else if (value && !strcmp(value, "inherit")) {
--			git_branch_track = BRANCH_TRACK_INHERIT;
-+			cfg->branch_track = BRANCH_TRACK_INHERIT;
- 			return 0;
- 		} else if (value && !strcmp(value, "simple")) {
--			git_branch_track = BRANCH_TRACK_SIMPLE;
-+			cfg->branch_track = BRANCH_TRACK_SIMPLE;
- 			return 0;
- 		}
--		git_branch_track = git_config_bool(var, value);
-+		cfg->branch_track = git_config_bool(var, value);
- 		return 0;
- 	}
- 	if (!strcmp(var, "branch.autosetuprebase")) {
-@@ -761,4 +762,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
- {
- 	cfg->attributes_file = NULL;
- 	cfg->apply_sparse_checkout = 0;
-+	cfg->branch_track = BRANCH_TRACK_REMOTE;
- }
-diff --git a/environment.h b/environment.h
-index 2e24160322..4bfd798757 100644
---- a/environment.h
-+++ b/environment.h
-@@ -2,6 +2,7 @@
- #define ENVIRONMENT_H
- 
- #include "repo-settings.h"
-+#include "branch.h"
- 
- /* Double-check local_repo_env below if you add to this list. */
- #define GIT_DIR_ENVIRONMENT "GIT_DIR"
-@@ -89,6 +90,9 @@ struct repo_config_values {
- 	/* section "core" config values */
- 	char *attributes_file;
- 	int apply_sparse_checkout;
-+
-+	/* section "branch" config values */
-+	enum branch_track branch_track;
- };
- 
- struct repo_config_values *repo_config_values(struct repository *repo);
+I think it would be safer to do this instead:
+
++	struct odb_transaction_files *transaction =
++		container_of(base, struct odb_transaction_files, base);
+
+(this also can be applied in a few other places in this patch)
+
 -- 
-2.34.1
-
+Cheers,
+Toon
