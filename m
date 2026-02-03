@@ -1,86 +1,105 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE3928DEE9
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 21:53:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBA92D97BB
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 22:18:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770155639; cv=none; b=NCUo1mfSYx7J1RiKdH0Qrb0MwxCcqmTubcUhlmytMK7F9oicAbgk/DiEgCaMV9374lz15OqaS6P/CYdleP2u2kgOFKOW6IGlKxj10lkhEypDJM3pYBuLsAjsK5AMPLw8x2GBHG+9q+QA9nmshXqLPuJYu0ghVKc/iS70m9nyy/s=
+	t=1770157116; cv=none; b=KP70wAINwaykwGZXPdaE4m5btUQvJhI+/btgCs+cL0/ii6AkV/LAzcX60pVlUYHEarasPjMB4ixqtO56KlOJGnexySJPkNFs/r4A9IxGrCCxbL+wFmDw4kwaglXbt8Uprs8D5h1KLKtN/ZQZfNFea4YgmSfpADoDzYhW/JhmyaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770155639; c=relaxed/simple;
-	bh=lkA3x7APm7CEfc/Un/Pyifk64iZboB4hvqKQaSISqcc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=upA9651SD1/n4CWQgjMIQyhGONouysB6+jD9Hvn4nMo1DXDGAgSJn+3Rtm6M9Ts6ZHjjIobmpPoAATWHgaKKCDozEF/YjP6y9ecY2+/XSKTbA/vH7t0sw0K/Ij0QTq0mBbB4mOmfDjaq085Z83X1ZqR7sAMXOcYed5pc9DpdwgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=RIwYdMKn; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1770157116; c=relaxed/simple;
+	bh=PgYMaPaavbB7k4WPHiHsDmaIJ+aH/0fXlKj4agGy+Oc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=u5Ef272g9bNuEL3Ft6iqlhoMAuThq1NMpGIK3Teo6ltvtcPZXpu9eCbym52aYfUzERh7SgP22fvvgwnxIRznn6E31LKm7VJyuvAkSotT5yaR4BE69mOLQf7KqmZSQ32QicFm4YG7wFy8O/K7dP1yQxxj6pAWwlKoxhjY9Kp+Q0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W5gp7p8v; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="RIwYdMKn"
-Received: (qmail 269999 invoked by uid 109); 3 Feb 2026 21:53:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lkA3x7APm7CEfc/Un/Pyifk64iZboB4hvqKQaSISqcc=; b=RIwYdMKnW0PAZQYs2wtWiSshPzvBADuY/eAVGAxMSsQtJX5FVkuEeA/NH5B5nVUTVlNxKbz/rJIB8M7FKs8m+QvpegRXXL1MERrtY0HK7f9dbVmRsHFr21bOYlPEf7YUDTubnF8mYNE+N88/hv2WwGIWDJWxfeIbcBvBhNqh/0LQCDbEotO+uGI3aeh0jQwYh6NUkSdaAE7Yz1ZlIxAl6r3rIXAwW/52BP2gPUNWATeSOzgZTwUCILEm2EnYduBhOwkuWXN1Fcb0aG0mpAvoCQ2zwI96EdanqGhjtOPomqELL4uJlijAiEKSnwMXve2m1AI5NRwKXQnnXSFAjyjmLQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Feb 2026 21:53:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 535263 invoked by uid 111); 3 Feb 2026 21:53:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Feb 2026 16:53:49 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 3 Feb 2026 16:53:47 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFH] adding test coverage for contrib/ in CI jobs
-Message-ID: <20260203215347.GA340210@coredump.intra.peff.net>
-References: <xmqqh5smdejc.fsf@gitster.g>
- <20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
- <7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
- <xmqqjywuyhu9.fsf@gitster.g>
- <xmqqsebhu9nn.fsf_-_@gitster.g>
- <xmqq7bstsemv.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W5gp7p8v"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6611cab8ca3so3895806eaf.3
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 14:18:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770157114; x=1770761914; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=87uIeoqydQXkP8z6os7SpoG3hKt4RiDpGcTaqez2VZs=;
+        b=W5gp7p8vlhwPWaOgjNZ96d3gSzWJqzF6WfzO3gaygIGL5cvt3UnWt1oXD4jy9fETYG
+         VFA1Nes69DTzn5L2cPuJUdHsczrI/dvP9N2nn1UK7JiL1fxo5ZFwVTQJO9x/eyLEIMi4
+         dA+hWa9OblQHKo6SkK+7gKAC4GZXOEGs5rF5N+gLO43BfBan8xEHrSiOQKi0vAJxQ1kZ
+         UYdBU0TIsLS6LdPkaDpfkh9CByIRxxVhts0/u68hgYYtylYe1Zc3NgX9LmLAeSin5S2Y
+         g1qWWhO9/Q+/0fDNPIyRAr4qIkWSh0cr44ZLlI2R5UkPS2mUBpXyMCJBHa8F0vYVQ2/T
+         j6dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770157114; x=1770761914;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=87uIeoqydQXkP8z6os7SpoG3hKt4RiDpGcTaqez2VZs=;
+        b=ARuVGW+8KuGArni0xmvTOjc6B0k2CL17stdVWLbAxRPUCd+QMB6qrZu5n2uC/ePwLK
+         aW73s8wwr6TLJENrECbafV/7kJdDQkKVTVFxlxSxkwxy3JhEOGiCsCiThNGphA7zckNY
+         L92kQQcw6mTVQTdp8DopH/ewZnxWolG8fOJlWTSeNMSAS173Qkm6xy9VeVRpIw7HMQVX
+         jk4+/MVEqHB1XRaRVr/jLRi984+o4rKzz9Hv1xiFLbhCgJFBH3oe+fJW0W88Bqz4Si/N
+         5MHJ+r/mS4xNFOMV54Tyc8Ts0ipbHlYKcePBzrVX/KpuwU/ayYZIw13AGE2Y2Q5Mx5yt
+         ar9w==
+X-Gm-Message-State: AOJu0Yy42BzVvxjMcXsBOr6Ksikp756GzLBDV8aoKut+t1Skny7qx2C8
+	11gdzjf3sUShWXv/5JwidYvABpoAulcu1BPtW5KJE1ySqpfzk8toUauVzesrtQ==
+X-Gm-Gg: AZuq6aKMit0IRJ8wKL5Dko9eyy5MZky87QZRGxSJcsTXq1vGI8ATUhUZ+dFVjYidBd9
+	kK/8iseSYVsmqNxZtEwTfplbR7LGZUndsE03nmJcpLiNWJ5HKf8BNXNKjBJF4DmX2yO2z5uaR6c
+	hvKMP4h71arvnmUuic5SIZCf3tz34Heo7H3qaFsVFG61PQZPf5XnJuBiRCEYK0v/WDXwnCpGJwr
+	RZvdpdKvgkvjviu1rN5VNzAfk1llLMeQ1xiewYi7NH9fajphz78Fl6NDH2MsX4Fwn28Xl6Ja7sy
+	JKZIYI/25DDNpJ0S1/ikdq6pP9RZJEuB8Sh7SK3kzuB6ZhxfV12VlH8LXNwYapZAwzUevVhXKiz
+	GnA5nNJ7uiKLgd+RPRb/GFxu+zx/xnWeAJGgzGs8VDlqgFFpjZRr0J6IAEKDv8d1HAtsanLAXq2
+	lqKmWTskEKpiJibvtEYgA=
+X-Received: by 2002:a05:6820:f0b:b0:663:39:173c with SMTP id 006d021491bc7-66a2342cc7dmr621853eaf.65.1770157113873;
+        Tue, 03 Feb 2026 14:18:33 -0800 (PST)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-40a53c3c4dasm479042fac.0.2026.02.03.14.18.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Feb 2026 14:18:33 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH 0/5] builtin/repo: include largest object information
+Date: Tue,  3 Feb 2026 16:17:53 -0600
+Message-ID: <20260203221758.1164434-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7bstsemv.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 03, 2026 at 01:26:00PM -0800, Junio C Hamano wrote:
+Greetings,
 
-> ----- >8 -----
-> Subject: diff-highlight: allow testing with Git 3.0 breaking changes
-> 
-> The diff-highlight (in contrib/) comes with its own test script,
-> which relies on the initial branch name being 'master'.  This is not
-> just encoded in the test logic, but in the illustration in the file
-> that shows the topology of the history.
-> 
-> Force the initial branch name to 'master' to allow it pass.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+The "structure" output for git-repo(1) currently provides count
+information for references/objects as well as total inflated/disk sizes
+of objects by type. Info regarding the largest individual objects in the
+repository is not yet collected, but would be useful to users wishing to
+identify such large objects.
 
-Thanks, I think this is a fine solution. In such cases it is sometimes
-nice to remove the dependence on the branch name entirely. But it looks
-like it would be a pain to do so in this case, and not worth the time.
+This patch series adds the following data points:
+- The OID and size of the largest objects by object type
+- The OID and parent count of the commit with the most parents
+- The OID and entries count of the tree with the most entries
 
-Most of the other instances of GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME set
-it to "main". I guess one day in the future, post v3.0, we might drop
-all of those and decide that "main" is here to stay. In which case we
-might also want to drop these outliers and just switch them to "main",
-too. But I am content to punt that off to another day.
+Thanks,
+-Justin
 
--Peff
+Justin Tobler (5):
+  builtin/repo: update stats for each object
+  builtin/repo: collect largest inflated objects
+  builtin/repo: add OID annotations to table output
+  builtin/repo: find commit with most parents
+  builtin/repo: find tree with most entries
 
-PS As you might have guessed, I have not run these tests in ages. I'd
-   only do so when actually changing something in diff-highlight, and
-   that hasn't happened in a while. In fact, I rarely run it at all
-   these days; I usually use the third-party "delta" program in its
-   "--color-only" mode, as it does a better job of true intra-line
-   tokenization and diffing.
+ Documentation/git-repo.adoc |   1 +
+ builtin/repo.c              | 249 +++++++++++++++++++++++++++++++-----
+ t/t1901-repo-structure.sh   | 143 +++++++++++++--------
+ 3 files changed, 313 insertions(+), 80 deletions(-)
 
-   I don't know what that means for diff-highlight. I'm happy to
-   continue to review patches for it, and I think it mostly Just Works
-   and doesn't need active maintenance. But I'm also OK if we dropped
-   it.
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+-- 
+2.53.0
+
