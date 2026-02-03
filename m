@@ -1,54 +1,54 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A53D23D2B1
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 22:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEFC21FF5F
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 22:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770158170; cv=none; b=bmZ8EkcQdywh1SHdgnIbWz+08GRzqauD3NFe6V9W6lrY0vFw7lqIGToKvKtxKqMwiJ4mcor9GCLRqhiid6aK/zlgjUwhjieCKt7drjQiZ3Eq+TxRStcSBWstFGroK8w706/kK8o/6DCTpGuH6b75kn4DHXGQvqOriOrO1BnVKOo=
+	t=1770158712; cv=none; b=Exv0mvlDrtHgLhNbRQJFHtOItoDuHVga1OAHvXq/5g/o9/O4Iwx0Q6ttHB7JUPQ4raYflQLZYyLCxJJ3jBAocIou18UgyKER0buTSlFlIB3GV7S/R7yEMrRLXBsq/2QbzC0IC5x8JF/emQzvB1M04TrkgA+ZngIeruAm5je2l7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770158170; c=relaxed/simple;
-	bh=O5qMnSiYvREntqHFZBniR7dv9vTHIdOfAFgDyLXCqQc=;
+	s=arc-20240116; t=1770158712; c=relaxed/simple;
+	bh=QRSMm8QPswVI2Tu43l62aNuHu5noLmXkLz28lovv9Is=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YkyMHlYwWfXseY+edn69T1GPEX01GJ6TRt/Xm58BFfCZg3/cVbrhgeMZ7xl1gvzC0UslFxB3zl25+LcfmYXpOJ03NK2+Qqk1MrfbKJJADQylhGFUAdpmZVsxPJbcNSzVGemPxmpnV1tfnp8V3mCtRuv/JBRQJ9/ZPLG1/RT4Euw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L5KBUdYL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vdhbob0o; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=MeY+S6/dk4Yi3seqzh4vlySTqSPXJkHJMkqD0vyp3foZ+AHt5NUEyPK605mdyiok8vCjsFd23zhHoZm+hj7Sgm3vVDT7/AyflNXgkqeP8LjVRUIWZeWbpcsE6PuJBydKbXtf1DOjQ/NT+unSf3hVsm0KE9IPuM31zYanqWJooZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lT0VRGUJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wFlLjLCa; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L5KBUdYL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vdhbob0o"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lT0VRGUJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wFlLjLCa"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id A1CE51D00127;
-	Tue,  3 Feb 2026 17:36:07 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id C5DF41D0017E;
+	Tue,  3 Feb 2026 17:45:10 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 03 Feb 2026 17:36:07 -0500
+  by phl-compute-01.internal (MEProxy); Tue, 03 Feb 2026 17:45:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770158167; x=1770244567; bh=K15UvZhPCr
-	2mns5PtSItdRrdbNlK9N0F3a0Px9/a2aQ=; b=L5KBUdYLCyvcaMdqaU8ayS0O21
-	Vdn7OmWRZHnbP86acJSX4vSGa1gvxk69WLcpHjWYPKlmBLPsfwoYBLix4Uu/CFCQ
-	W6UBg6+kxEE2i7z0rhqN27eIAKSqXqbxq0UUgKTETDsVwAaAU/rWTHWqEdY4MJQo
-	2p5bmrGjc7ayY61pSXffZYAWu0GMlmp+jwPhTTFGMlfEGE1GboNPwhLFlYJoX+2Q
-	jyIKWe5gFQD+hhf6djCe+CEzd0hpgqVSf7+m1z6ffC80/RW5JgVmZw7OeDKyTtxK
-	wnGPxWFuty3S+4uVwCPeNhUu+gz4YixrlOHr6TRAFMh6BovqD8/yJe/Ke/GA==
+	:subject:to:to; s=fm2; t=1770158710; x=1770245110; bh=xB/F0toS2l
+	kWLm4Pi7zBsHG22DBSJBvRy09kIRD5Tzc=; b=lT0VRGUJ1SCC0zauRJN36Szmi9
+	lXQVj0qRNG5S20idjTNVSCYmZ5n3cHv5pe7QGPhnNbBXr1RMuX4AcQFI+PxHPUKq
+	50ur363XYgCGyAupv6SmCYA+lw5Q2GQX+XIZAmtWcLjDah0bFQjyzoVlVKW+5Lhy
+	eAQJa8/DspYzv8p3u5egOUD7q0W25GAr84hGCw715huPujSnPC7lxDEb1DjEGF42
+	xlUZ63Cexj5LV6G9eOhk5dq/ZctzsyPwzU14wgWkvIGDD96QBJNaDHlbsWAMlQD+
+	f3PIKokJXKbfUdGAmEiziqZwFyddzhgmKl3e8AW4zK1aDlMpx+TZCnxu/tXA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770158167; x=1770244567; bh=K15UvZhPCr2mns5PtSItdRrdbNlK9N0F3a0
-	Px9/a2aQ=; b=Vdhbob0o8hYxoJa0sAZoMs6wkOlsA16z8rq0LTd4TfTPXw0TJSI
-	t+SxNwE3zYl8Gd6cSwWVOuMeGKOzra4yCW70Or5gFMF8VuHDNDSWmhrhrcIaP1TQ
-	fHT8RwwSCUXQ7EmuBmnu9rh0W+ptm9V72TXbsEwNWfSv0D+bjHY30siGLEUNmq6E
-	Kh8uCWZLT/NxA3YQYIgAgkhsi2qQnqQLnz/KyzV0xh6tcnCF+N7NT+gp7AK6hwUB
-	osoNzDDiO6AItOJ9ZImbFz5x5G+NSGnmfdCI2aEZKxjR+cDyGlCuy71uMQ5l3Z1B
-	IbEwdBd160rC7R71M/BUD2vUr0JrvoUaAlg==
-X-ME-Sender: <xms:V3iCacUduas2rBQ13NCSvrj6DhZe5X0vASnFw5f9MI527RIRytG5dw>
-    <xme:V3iCaYCi_meZPKo7a8tzcBYEZVYXctIOJh6CzeLAaQWr6FfNwM4baf652FTQGxklq
-    RibUyCk-blk8dHqk0fRBo6U4boaBbAb6MB9a2Vmtn9o9rMRjeKojQ>
-X-ME-Received: <xmr:V3iCadw46A_5gPt5ByqtjrSvuGYNOnupussw6eHJgP_2U7eGsqv9fyIjxB7glZpvbZmVrARCHkfOP0bD_LxvvmyPsEbhM_DsaQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeduvdehucetufdoteggodetrf
+	1770158710; x=1770245110; bh=xB/F0toS2lkWLm4Pi7zBsHG22DBSJBvRy09
+	kIRD5Tzc=; b=wFlLjLCaVuaw9lA6UBZkbRhQ+daAInYI/xt/yyCrGx2Z6UYEEhL
+	m0AYbkke2jj1Ttl4qQ0VzHHU30H5qQ8bMhi+Uhu83zntU0EqZ5VMAKjgCfSksAqo
+	S75oGusrb+4wkp23Km9yzu+YSYJkbF/lQ/EzLTvnrzdy+AmUe229RHwr/Lglql2E
+	IMPw8tzyz0rx8cJ3HTHOd3lIahWekIWxLQEmW6VsNX+8Uvaci6Em7+5d8t4evisV
+	fWUOfx4xkRqNWon3KQ7ppkYm7DwXTb5EiBmwl8nuP7roVlnOW8MBrakBIpwdDGpm
+	DADdY8B9YJ3lD+NZLMTTRl8P2S2f8ZAYxDQ==
+X-ME-Sender: <xms:dnqCaWZEYb-qZdV6MFwfZDlJK3ps5ffASfHKIiRZDpZbWEdh6TiU8w>
+    <xme:dnqCaQ27txMGKtQq9Hs3hCYhXDSmhQobppuGtgtDofrdRi2u6JhoDWoWQPF5cVVtq
+    8slrGGESkMuI5kYU1g57RkeIg6LShqLGkdkfELwIUFeSsg2WjVMFRY>
+X-ME-Received: <xmr:dnqCaeVawmEa9q16ADsZFSQtfPQ5RTBxBNbLfSUUq_RsKfUJiE1lDvpXFASURae_sc-Cq7cUN38Fy3wzcr-5puOp0PADdf1Zlw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeduvdejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -59,24 +59,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeduvdehucetufdote
     mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
     hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
     shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:V3iCaVBhkIQoWIH_2quKfa4Gw_kih-AR5eQ630-LUTVnl4IGa8uNUQ>
-    <xmx:V3iCaabKCKnPGRgoF1Cm42BLcJuztfp7MXgFp0T_QmRBpH2U-jPdlw>
-    <xmx:V3iCadjtaK7mlEYYBYi9RwVZqamW_uHfwkX2n_kEkwPK6GPastT-hQ>
-    <xmx:V3iCac5eUImNJmU-QFC7a799oPPkBHNC17-6i84eg32OsjqeQTHnoA>
-    <xmx:V3iCacBsYHvKaMyLJaTNUUdh_ofIMk3uxLaoRCPKiNFyswUpSsZkCEJK>
+X-ME-Proxy: <xmx:dnqCaSX1UIddPBw0erbHfziSZEkDbfhf3udHpFBG3ML1cFT2pD_n2w>
+    <xmx:dnqCaVcaNdgNU18wNHcRnkrXtsDX21ZB0EL2s3RybgtlaJQuOWII3w>
+    <xmx:dnqCaTXiC4m-R6F-EtEGq__FI1XKnLAZIVzHfZZ8zlQ6OumZcWEowQ>
+    <xmx:dnqCaWf4-fPd52tpHfkZeOPX2BJMRjyc4mVLxt8PBSpCOnv_u5rQaQ>
+    <xmx:dnqCaY3XizVAhBNDcwuNutqXjKEKP2CzQmhfizHCUPYGtbhPuLkJQVBf>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Feb 2026 17:36:07 -0500 (EST)
+ 3 Feb 2026 17:45:10 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] builtin/repo: update stats for each object
-In-Reply-To: <20260203221758.1164434-2-jltobler@gmail.com> (Justin Tobler's
-	message of "Tue, 3 Feb 2026 16:17:54 -0600")
+Subject: Re: [PATCH 2/5] builtin/repo: collect largest inflated objects
+In-Reply-To: <20260203221758.1164434-3-jltobler@gmail.com> (Justin Tobler's
+	message of "Tue, 3 Feb 2026 16:17:55 -0600")
 References: <20260203221758.1164434-1-jltobler@gmail.com>
-	<20260203221758.1164434-2-jltobler@gmail.com>
-Date: Tue, 03 Feb 2026 14:36:05 -0800
-Message-ID: <xmqqzf5pqwtm.fsf@gitster.g>
+	<20260203221758.1164434-3-jltobler@gmail.com>
+Date: Tue, 03 Feb 2026 14:45:09 -0800
+Message-ID: <xmqqv7gdqwei.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,69 +88,30 @@ Content-Type: text/plain
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> +		switch (type) {
-> +		case OBJ_TAG:
-> +			stats->type_counts.tags++;
-> +			stats->inflated_sizes.tags += inflated;
-> +			stats->disk_sizes.tags += disk;
-> +			break;
-> +		case OBJ_COMMIT:
-> +			stats->type_counts.commits++;
-> +			stats->inflated_sizes.commits += inflated;
-> +			stats->disk_sizes.commits += disk;
-> +			break;
-> +		case OBJ_TREE:
-> +			stats->type_counts.trees++;
-> +			stats->inflated_sizes.trees += inflated;
-> +			stats->disk_sizes.trees += disk;
-> +			break;
-> +		case OBJ_BLOB:
-> +			stats->type_counts.blobs++;
-> +			stats->inflated_sizes.blobs += inflated;
-> +			stats->disk_sizes.blobs += disk;
-> +			break;
-> +		default:
-> +			BUG("invalid object type");
-> +		}
->  	}
+> The "structure" output for git-repo(1) shows the total inflated and disk
+> sizes of reachable objects in the repository, but doesn't show the size
+> of the largest individual objects. Since an individual object may be a
+> large contributor to the overall repository size, it is useful for users
+> to know the maximum size of individual objects.
 
-The repetition above makes me wonder if it might be a better
-organization to have
+Hmph.  It is true that a byte is worth the same amount of money no
+matter what object it is used to represent, but comparing the size
+of a commit object and the size of a blob object feels inherently
+meaningless to me.
 
-    struct object_stat {       
-        struct type_stat {
-            size_t count;
-            size_t inflated_size;
-            size_t disk_size;
-	} tag, commit, tree, blob;
-	... possibly other members ...
-    } *stats;
+It all depends on what you are trying to learn out of the stats, but
+having many small blob objects that add up to 1GB and having medium
+number of medium sized tree objects that adds up to the same 1GB
+would give the same number in object_stats.inflated_sizes for both
+types, indicating that they are costing you about the same.  But the
+members in largest_objects for these types would be different,
+hinting (incorrectly) that one type may be costing more than the
+other.  Would that really tell us something useful, I have to
+wonder?
 
-or even
-
-    struct object_stat {       
-        struct type_stat {
-            size_t count;
-            size_t inflated_size;
-            size_t disk_size;
-	} t[4];
-	... possibly other members ...
-    };
-
-and have this part of the code be
-
-	struct type_stat *t;
-
-	if (OBJ_COMMIT <= type && type <= OBJ_TAG)
-		t = stats->t[type - 1];
-	else
-		BUG("invalid object type");
-
-	t->count++;
-	t->inflated_size += inflated;
-	t->disk_size += disk;
-
-but that is probably only because I am looking at this part of the
-code.  Other parts of the code may have good reasons to have the
-structure nested the other way around like you have.
+One thing that is related to "largest" that might be useful is how
+spiky size distribution is.  Among many medium sized blobs, if there
+is only a handful of super huge blobs, that is quite a notable thing
+to know (as opposed to the case where these super huge blobs are
+not so unusual).
 
