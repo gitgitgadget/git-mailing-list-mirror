@@ -1,102 +1,135 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4B8363C74
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 18:12:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BB32264AD
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 18:18:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770142373; cv=none; b=nP0F1Eo6FGUbt5PwijxicrD3GpyEAImFlSRPZSDOXF/japPSeAfPYAcP2mf+76S8caNb3eFamLxRrArTy7U7ocFI2adL3uzRy1XjU81eAE2QxcVg44f9DHiTKPsM8ZAhN2qUMWfMd7zNaw87zQURiFheH3aa2CD+rhfddfbBNwg=
+	t=1770142735; cv=none; b=hD4rWxSwbzB0euMiwX6/rlqZ/Xf+D2r0MBFVJmT4jSu99DCDnptoYBC5ijHZfwfkbQtILyEGMfnc2fEwFwCBqTOjtU1M3RiGjOE02eRvfXO7ydD+dFxNprZ8n3x9jjM9yQ3JUfPxassMTeH1Y8d0OW3q4uunmN689MBB1qXC07k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770142373; c=relaxed/simple;
-	bh=2Vid7g0tkvm0aM+cMRQK0H3Z+QqUvxQpizXKDDGlwCU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XiyxvoDFBFmxde6pBI2YDS7szC/Mpwdbn3loM9GkWtRJtNZIz0YPePJQ1kAnDYRoJGaO1CyxTrtKFMwKu9MMIrX6smwKnvdqmXlafZd+JnUBjZHfkN/wqngf/5o8/l0jV/UwJV10mvSDuqlaCUmsXxiW8AUZBydIIcA20KFzIWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aJjZgEmO; arc=none smtp.client-ip=209.85.218.41
+	s=arc-20240116; t=1770142735; c=relaxed/simple;
+	bh=H2OJyckKVm20X+OA6cS6CCbUI2Jv19fRPHo0REqDGYo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MB2bAtl/uWZcs3FIEozeQfbpgKcqJgg5EHQDrlrRWAQZ6h7mZYgM0YTUaKkC9n3q/ahuCwcfH5wZh383+OVnfOaR6vBVb5NQTJ34CBw0xK0B7ajGquA87kXHxTOE/XWZtbGt9nZoz2zRafAVWDPHqD5JLDokQaW6ZBtbJZkZY0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g3ilKVZg; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aJjZgEmO"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b8860d6251bso905826866b.3
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 10:12:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g3ilKVZg"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-81f47610542so3376734b3a.0
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 10:18:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770142370; x=1770747170; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=09GkdQ+4gJ1ssY6uCpIR6T9U/4CDhH+j+ipDxp3tWs4=;
-        b=aJjZgEmONP7pOx8jz7swa9LlBwiSTQYxLIQowsO/9k6kjkYnqosc2KsA7TtqQKedO/
-         9ImO5Va9OFGpZ9MJ+j0SY+xdPV3nFks6gNitmIEAORw+tk79hVTfYeO51MIareMXTACk
-         QLjbYBg9LyHe7uUpM7GdUum1GeWvjyX04L1RpTa2c3yjEdn1Hcld0G1zAXfhfGbUDHxE
-         Q77uH/wMY2y9qIehHHSFNX/GWchGIqDYzgHpdVLS1csX+OlKBbEjB3PO+VOXBTQlURHx
-         iNGXaarLcy5h+PGbDmHkaa6uUCUlE1cyWjArbztsaO5JDBwNry6i29kyIt1jj0dHag5w
-         +B+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770142370; x=1770747170;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770142733; x=1770747533; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=09GkdQ+4gJ1ssY6uCpIR6T9U/4CDhH+j+ipDxp3tWs4=;
-        b=hV5fubJxL/keaTtANV28QxBbRTiL6z2f7ToY6d7WIANqnkS4i1eFYWKMVShqDWSTzm
-         09rHxPsBKRIC/tSny2gybtEOUvh8YYokoHx6wTGAVFbuynCVca9gyrrKhA8nEbh8pPjJ
-         6RCgWR+0vvPzrNV8BTK+ZtKB+5YITvkIt4x/HkCiRrNUalk/crn1l1ndEMC4QL6RP7a3
-         avsIItucZvMQA9OKr1xe/N1QJYRlrDlvhi3uNhz8IlxpvdjnmLitMB+Az1DA6sQYAJR6
-         po1nz4jVbC/m8nGSRwEph+0+doHwZEuixj/tRy4NPsOQVWTmr2c+zZrZQd61pxQSE6Wi
-         p6Xg==
-X-Gm-Message-State: AOJu0Yw3SmrQE/FBylobERcTSrg/q+ugX+MBqy+Rj0mUsLqYJHUoN+0E
-	TsUC7A2jtz22/MFikKUNCpSCmwOTyj2mSKSnTzKDBLcuOg6H1v2Btfh+R0/sog==
-X-Gm-Gg: AZuq6aLv9ImkSmYd7tb671EHbI2cbLRxhuqMFntqaurCMWtYshwTvDCi+/ObVkbWIiv
-	FYsnFZ4kq+WGbk8o8deMRX9ki3tEEvPSf3hDzw6m67mBdtxzKI01Fk6GJWgq7gtCY/DFCvT1oSN
-	eg1ZVXeFo36BtuxAgbrfDW5nes+scZHqUSdX1xgPnmF0hYlYUG0eG6rrLMF1r0pFmX8iJADCplk
-	3a5aBCcd3Md2F6RsHE+Nin5O7fM14sGz2obXZJKUAhkvNI8qtYuo0YmhGt78HUizDVNnQuNHdyQ
-	qfZR90cGoZAjPsdtWPaKRAfGwevm0Zctz0HxClHWKZhCoUUxOr4fO9JSn9uD57gOWh7f9ZpYLf1
-	62LXM6CoAdK1E7h93KB7l9W5p9QMrU5udbWZn7fYBKvCwnlbMw0HRBNFxRB9dI2yYuKsomfFS7O
-	W0ht3+bHE=
-X-Received: by 2002:a17:907:3f16:b0:b87:34e3:a79e with SMTP id a640c23a62f3a-b8e9f14be8amr26180566b.12.1770142369577;
-        Tue, 03 Feb 2026 10:12:49 -0800 (PST)
-Received: from dev-phord.dev.purestorage.com ([208.88.159.128])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8e9fd0a2b6sm11138966b.18.2026.02.03.10.12.47
+        bh=H2OJyckKVm20X+OA6cS6CCbUI2Jv19fRPHo0REqDGYo=;
+        b=g3ilKVZgmROOUfZQpSvQ+XziLR2OVEJYrBFNptooIbKLPdlG/AeiAoQ1SfHCCt4sEN
+         9Ghkt7ucRHlrL6eV6nU/YCM9fFFhh9UoHWLsDJz3B6/o9CnKB/fjEaF07QXowqqCznUv
+         zGgB+3Ue4C36IojxA9vnVvB3GZ90f5oRwo2i8BiQpDnUT/qiMn1if7qmwP85jZmd382n
+         JE5b4fSinjVtjw3A/INIArOHLEJW77qwRp06EuRThLwEqylW7VM4VKC9wfwsJiJVUBFV
+         wq+JXOaOSqi15TxjkTcXUF+DDKJhrNAGD2VRliNQlU391F/1+viJS0cytjQTwUOpsBX3
+         RpQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770142733; x=1770747533;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=H2OJyckKVm20X+OA6cS6CCbUI2Jv19fRPHo0REqDGYo=;
+        b=mPnDtJzE75nFPyL5P3UGCtV/uC/6MzUjdleaeWDpXjj99RZLAW9VBlji9w4K3iYhYk
+         uURb8f56ZyrGHrE0OI6qB0BC9/lK0eY8F5sL5WhGhqgf/nVMCvxp6PjogeHUW2vsvQeP
+         +VvKQFu0xCZytwQkBzUsqhJCZkBmDEOxKlJQ2w0SbwWB5t877yaSf0QyuQ0RaGvyTsaC
+         FJzYKD8r4TZYgBdfupHmL5f/snAOpLoupfuTcWdl1i+WK5qVtTd00J+UU/1aYVUXeCCz
+         1JYIvXjETxSYPDw94zrFbLwDcyE0UOUGrbqh4fho1WAtLmul8P9O5TRpV48ScwxM5xqY
+         +r7g==
+X-Gm-Message-State: AOJu0YxQTOof/0w2Rctt9CMvA+fpCEwUztUoaty8bvlJCSaO/hoXYJrq
+	FASGb8wlGAYSh7J3xiOVWCTZ3d98nZHONbLxeQbeB5rSs4symO/QwMq/
+X-Gm-Gg: AZuq6aI3TD3Soy90QHIahSWOmhQa6YitrYAogEXWcO8ugRPCAJL5oO9PuhlGh3n1yJZ
+	OY3TSzZKxgivY8K2gCF8d8HNO7jE9ERsoBnyIpu6Bo0N/cXSAd9UORowU/oW5DKtbR30uzmLJF2
+	oz0kFeOLbE1eZS1ZS2+P6TBC4D2xVui175MqSn/4LfTZeHUmizujX08Of57ZfbJqfhKgbgqRBOz
+	hpDzMAJiRKpuqXxSZLKJk5x7GpR5lc3SYG32Y/JPbTr4vGb+00nLSaR7uCsKsMDApuAahHB978G
+	OcYHVOfhdoovPnorfr2O/udPtQTEgWz1LCdp/1sC03cgVwePDumx8t0GZuNvyKjrnXi3Gh4FjZY
+	0zqe1cE2lepmMCowaqnV2ZDqZ3WooSH4Z4xXnFh8n4kdHijMZ43xcDac3VRhvJ9vdVx8qTnovPv
+	pUzjnermKxqh0kHR+/0Oucb6KbnVxnlMvv
+X-Received: by 2002:a05:6a00:88c:b0:81f:394a:489e with SMTP id d2e1a72fcca58-8241c1630f1mr287078b3a.10.1770142733507;
+        Tue, 03 Feb 2026 10:18:53 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8241d163fb2sm58273b3a.14.2026.02.03.10.18.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 10:12:48 -0800 (PST)
-From: Phil Hord <phil.hord@gmail.com>
-X-Google-Original-From: Phil Hord
-To: git@vger.kernel.org
-Cc: Phil Hord <phord@purestorage.com>,
-	Phil Hord <phil.hord@gmail.com>
-Subject: [PATCH] .mailmap: fix email for Phil Hord
-Date: Tue,  3 Feb 2026 10:12:13 -0800
-Message-ID: <20260203181215.1615818-1-phil.hord@gmail.com>
-X-Mailer: git-send-email 2.51.2
+        Tue, 03 Feb 2026 10:18:53 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: newren@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	karthiknayak@gmail.com,
+	kh@pks.im,
+	peff@peff.net,
+	ps@pks.im,
+	pushkarkumarsingh1970@gmail.com
+Subject: Re: [PATCH v2] stash: honor --no-overwrite-ignore with --all
+Date: Tue,  3 Feb 2026 18:18:45 +0000
+Message-ID: <20260203181845.602979-1-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CABPp-BEZkhYW+fWgtGn8yHuLfak+UYo9A_HwdiCkAf5A0H6hBA@mail.gmail.com>
+References: <CABPp-BEZkhYW+fWgtGn8yHuLfak+UYo9A_HwdiCkAf5A0H6hBA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Phil Hord <phord@purestorage.com>
+Hi Elijah,
 
-My canonical and old emails were reversed, somehow. Also add
-an entry for a new email that may sneak in.
+Thanks for the detailed feedback. Much appreciated.
 
-Signed-off-by: Phil Hord <phil.hord@gmail.com>
----
- .mailmap | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> What's the basis for this patch? I don't see any "overwrite-ignore"
+> anywhere in builtin/stash.c .
 
-diff --git a/.mailmap b/.mailmap
-index 1337b199c3c9..8a39e93bf85c 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -224,7 +224,8 @@ Peter Krefting <peter@softwolves.pp.se> <peter@softwolves.pp.se>
- Peter Krefting <peter@softwolves.pp.se> <peter@svarten.intern.softwolves.pp.se>
- Petr Baudis <pasky@ucw.cz> <pasky@suse.cz>
- Petr Baudis <pasky@ucw.cz> <xpasky@machine>
--Phil Hord <hordp@cisco.com> <phil.hord@gmail.com>
-+Phil Hord <phil.hord@gmail.com> <hordp@cisco.com>
-+Phil Hord <phil.hord@gmail.com> <phord@purestorage.com>
- Philip Jägenstedt <philip@foolip.org> <philip.jagenstedt@gmail.com>
- Philip Oakley <philipoakley@iee.email> <philipoakley@iee.org> # secondary <philipoakley@dunelm.org.uk>
- Philipp A. Hartmann <pah@qo.cx> <ph@sorgh.de>
--- 
-2.51.2
+The basis was the existing behavior where git stash push -a would remove
+ignored files even when --no-overwrite-ignore is provided. The intent was
+to make stash honor --no-overwrite-ignore consistently with other callers
+of unpack_trees, limited specifically to the stash -a cleanup path.
 
+In v3 I rebased onto current master and also removed the commit message
+claim about removing the stash FIXME, since this series only addresses
+the concrete stash behavior and does not attempt to solve the broader
+unpack_trees issues.
+
+> This suggests that --all and --no-overwrite-ignore are incompatible,
+> yes? Shouldn't they be reported as such rather than having one silently
+> override the other?
+
+I agree they are philosophically contradictory. I chose to downgrade
+INCLUDE_ALL_FILES to include-untracked when --no-overwrite-ignore is given
+so that users explicitly requesting preservation of ignored files are not
+surprised by their removal.
+
+I am open to changing this to an explicit error instead if that is
+preferred. I went with downgrading to preserve backwards compatibility
+and to honor the more conservative option.
+
+> Also, the commit message claims you are removing a FIXME comment, but
+> no such removal is found in this patch.
+
+Yes, that was an error in v2. In v3 the commit message no longer claims
+to remove the FIXME and is scoped only to fixing stash -a behavior plus
+adding regression tests.
+
+Regarding tests, v3 now explicitly covers both:
+
+- stash push -a --no-overwrite-ignore preserving ignored files
+- stash push -a --overwrite-ignore removing them
+
+using test_grep and test_path_is_missing as suggested.
+
+Thanks also for the references to the broader unpack_trees and stash
+history. I understand this patch only addresses a small part of a much
+larger and messier area.
+
+Please let me know if you would prefer the -a plus --no-overwrite-ignore
+combination to error out instead of downgrading.
+
+Thanks,
+Pushkar
