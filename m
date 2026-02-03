@@ -1,70 +1,70 @@
-Received: from mail-dy1-f196.google.com (mail-dy1-f196.google.com [74.125.82.196])
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BB03115A1
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 10:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC303009DA
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 10:18:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770113895; cv=none; b=JRFKpkEDIQrQvxSk12DipgCmijF69YBChyyn4jd9QxyTOKtBqaBCgo69gP2So7fLjAF0hT0YOQNKFiRvscQZdgRZU89HLQ0t2YjTQOu+Cl23TpAfzNlpK/1iGxbEj1z2x7uyLrONd7ZNCUwc5bJwa35tVZQuVV8j32t5IY9AQ9I=
+	t=1770113897; cv=none; b=RM8cdlCT7bdAh0V81pgokjiGZ1nkAvECB2lFNcKTSVa1rpwx7gRgPFWoMhfxaLc7WX9Q0+Z+i22ipSOB2WTObJ4m20pcwGUVbPjW5szsFgPjvIvWhlBeOU7HMziLwrbC6fUMQcTfSJtYQMS5K1Gw5ZMq457H5Sad2HJdWI1TQjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770113895; c=relaxed/simple;
-	bh=yNYrvwcfd5r1r91f2g3wr5ucn4oLCzYTQj8edlJ5PPo=;
+	s=arc-20240116; t=1770113897; c=relaxed/simple;
+	bh=JilRf22FOk4sqDhkKfQ4cpIziKGq77Q4L6+kgyASSHk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MP37oCKxYl6sEeit2s3t6cGab7iVXIe/b5UzSty9dKMbm8HcmpDov1BzemCzXihbj/fR1sbhrSncTSr+IsZiiK9zrMdDm/+IaUSoKiUQejQTH+7cj597j6rNldspUZL2a1czOSKOU0djQACggCOVFG+wf/iJafrHKyB9mspdYGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dq/6jaGk; arc=none smtp.client-ip=74.125.82.196
+	 MIME-Version:To:Cc; b=d5KC/hNdcS9KTz4wk6tfbwDoBplrNhY74MZFqlgelPqwVYXO4M80H3FNuvAmDoqboczfU9hkRRdvHSojQHXof/lkIAyIfLSctYn2fE5SCG60fyq6Mb9mFASBWQnSuGrkR/DEw95k2KulWLOm7bS15yKh8znuJlBwzoZejKWMxfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RnDIZxSs; arc=none smtp.client-ip=74.125.82.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dq/6jaGk"
-Received: by mail-dy1-f196.google.com with SMTP id 5a478bee46e88-2b70abe3417so11640301eec.0
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 02:18:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RnDIZxSs"
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2b785801c93so2273462eec.0
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 02:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770113893; x=1770718693; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770113895; x=1770718695; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QctVCRZ1rxXoFemw4wgeie2Lkc+R3k48lN3nCwLm6P8=;
-        b=dq/6jaGkpBK8XRYEmvhtJ+RJBujfaodlyQzI3v8KfW6ImDKU9Cx+lW4zuGrLsWqDIq
-         F1NrEVSTDLDSsc2kZAw5vrxR4DnU+15ThwbvIMTRK5cppn6qgJyFG0WhxpQlN+hV9xb2
-         67dImYijdG9dSk7lioIri7VyEndMhRKih39tynOv4XshrrKiIMUtgdcT6njA8vAxqrlB
-         y+KEtLD+8TJFy26BQN/Qrtze3bfPRSqcXqLobcJ6te1+x2kw6lvL5DUkVoOVF/t99y5L
-         Sj5uQDkQF54wFlHbODk3NZTIRS+WEBtMgFy0LH0rnMTrfAFPwJdFybJr7YCVsQJcZGLd
-         Lp6Q==
+        bh=8jDu87aQA9bL7Q89axp5JuKV2r517roHG1sUk6Y3jdE=;
+        b=RnDIZxSssRxZ1VO+2PbjApO8N1h0gBVXt0FSjmsMwI7RRRdIv9tyFwKZ4EpleH0wXB
+         RqhoNUzsO9gH9EuPYW7OaIGBhvSWQxilDBWxwwUelMdBAiXJpykcbm3zdz0LzY/BuCxU
+         HhCDBQAyTtWIcFVbaBTZK/ed8a3dBkWclmu0/ZQ0GJAxr8kQrI3pyAsQw0UF4gVwJ1x9
+         ZZpbVCHYyToKCsg4sYR4bMlzRDCN1MoIZwrFmlN51tFgj3jxqkR8fiSU85YS+/Ljpj3N
+         kK3U9OXsDrUt0lLL+wIAJ7VIP3GW3ogaENQPCkWlqQZY8/lop0moik8vnEQOUfdp7UA2
+         nKOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770113893; x=1770718693;
+        d=1e100.net; s=20230601; t=1770113895; x=1770718695;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=QctVCRZ1rxXoFemw4wgeie2Lkc+R3k48lN3nCwLm6P8=;
-        b=AXHseDzd22dATnjx5x9+YLkDM7OUmWAMrlXP/gmVSxynAS4fhMG4MEpYWW7EFTo4Pc
-         fqZVGDDajJE8G6sYuKU6TehhJa5YwVvsz2AyALcga6S7LpKjZiA5JEra6easPPD9QX3G
-         jjtZLub8v5z+VJSANb1ZEZ3hsT0Ka7thcvVJJ1pANhcDpC8WupEEZIj0GYyh0shhTvoz
-         SEboN2CoI1qSRGs8ZwUdf+gd+Uzus86Pt1BzS8ozafoOXbqoIF0kQGjLx84bQ09KP5iS
-         hTaN2aDR8ciMtQzSZR23MMu0SOAWE4mozLdD1W9+KKh95XO+kN0Fltn5gFHDs0kmQqO4
-         fFOA==
-X-Gm-Message-State: AOJu0Yy7/Q/aTeJZ8w5yJb9Y53w8lHnbViQMLns2Z6bazWf+4ovVzmQb
-	M67KvB3XCfuxLTsowB5N9I1cjuVsEdDgYPdiPBAUjxkcjRu4CEjxtSlNs7Wsrc17f8g=
-X-Gm-Gg: AZuq6aIIwfFfDixz5mikhxISvdo4ksUSma+u2UNnSd9bD39jKmZwuGpRGcZ4zaeqtef
-	HJ7Fh5+U2EFDAIq9Cbs54dBoNkJ56vjxHY8j3u9WB6WzpPhaZ3PsxRtOPNu7KkclduDebA5YvE7
-	kItUlNzcFwTyhG2SQQTZJQ+PFUEGbHqueWqCJKDs3gE5tMtXZRsPSXSHJG7NiEFjbPOW9rcJLAo
-	YycWdUqn3gEtYXEOGvB7WNIs4QBDQqQiz4LVqcGfbSVh9Nab5PyeS86sjh/6BrXUF8YScH1Pn2K
-	V6jD5YlEhAzIhbDi72o/ESjvRorQHP5zkvuW3BbR1DvS7NJNZO9t2eLBrT0KK9OitamtgIEUaaS
-	XzmVHJsUAYd4fWVpqqMPeDG41kxvX3PIs9T/wlqO9jQX2jeZzZoLoguLfsuwG50jv+iYbvQEOHr
-	fxysd4nzYjB277Mg==
-X-Received: by 2002:a05:7300:e7ab:b0:2b7:3281:6c33 with SMTP id 5a478bee46e88-2b7c86469a1mr6736653eec.12.1770113892461;
-        Tue, 03 Feb 2026 02:18:12 -0800 (PST)
+        bh=8jDu87aQA9bL7Q89axp5JuKV2r517roHG1sUk6Y3jdE=;
+        b=JgySsq3asCXK9QJASpzswl/SSfrbC9cUQMfFA/kTNnkvCIk+4VOuidykXxY7vVhqfn
+         N754W9rTsWnA2R5GgY81qnXl1ww/Lydotvb+H20W4ki0969ZZaztoHecXfF0jvLLLLHi
+         ADnQZqtIQL/30jjD5C7Rjd+S0JdprUVP5eKVEzYuR9yK/uzbLR+QEnUoyxNpBZ90F8Sf
+         SCnZ6AfRNVv3vxkY1G+mu/3CEm8l6q5kofBO4d7kX1/cVc8jOeKDaKkKQ+iAaH2czh1k
+         Zw15fp6LFMv0m3M/rGgYEQiMzi8Mk8WOywf8lg8/QcfnkhJln32SCAhDy8w5AZ0fy+PT
+         CGXQ==
+X-Gm-Message-State: AOJu0YwKcI8ecMUlxAamKm35qtWKG6AOHnvgRYqYKDwqXcFmPQjuAczu
+	ryTxGM6Sy/tPUdp6SHDsb2Dv8y1k9VwtPWXM9xb5VVz62+wFuI4Wu2459/vCPnQS
+X-Gm-Gg: AZuq6aJlTvbDZRoK7qVaS5mYLJ8ia6vx2Mubi0CkR2g6vFIXRwSbmRwvk8N12+xQOV7
+	90qrX+NegR7pSdu6cudVY5f2MXe+UQb2sj5lz2id6YtpKBVihAZfNTigc/IrozetWiTJTuwAMEb
+	pLbp59pRVCKgvQjYOzQvpRJLmE0C2fQULG81Y1mZcoRfFBeJylPISPNugAAkx5H2Hnc57Rk0BX8
+	pVODonW0uZ48CJuRbOn//HMg3U6ninsjPNHrB/OXp+GTiaxjabQJDUWGC0GkpKJbEo1Nk+0WmLr
+	8iQBoP9dKV5RqJr9ivdW7MKiAi5Ng95gUGElZU/b5mX83wblRR1CGgw0n9KnIrVe5bElNFXCzPR
+	fcP9kdmuNTGJv5MeEL260olrcMO9T5Of88TCTaq0Gp16NJNox4gejeUxjJY3wwaGqcxdzADfs8F
+	gMvL3H1YkHbFyGiA==
+X-Received: by 2002:a05:7300:2303:b0:2b7:857:db6c with SMTP id 5a478bee46e88-2b7c88da439mr7077348eec.28.1770113894852;
+        Tue, 03 Feb 2026 02:18:14 -0800 (PST)
 Received: from [127.0.0.1] ([128.24.162.145])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a1add4c2sm21800066eec.27.2026.02.03.02.18.10
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a1af88c4sm21769929eec.31.2026.02.03.02.18.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 02:18:10 -0800 (PST)
-Message-Id: <ec48f1cba199d5ca466ad26cecfc4dfeb422fdf8.1770113882.git.gitgitgadget@gmail.com>
+        Tue, 03 Feb 2026 02:18:14 -0800 (PST)
+Message-Id: <692d1a63edca011c6f556d6b0577659cba0a1a00.1770113882.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
 References: <pull.1853.v3.git.1768602373.gitgitgadget@gmail.com>
 	<pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 03 Feb 2026 10:18:00 +0000
-Subject: [PATCH v4 4/6] sideband: add options to allow more control sequences
- to be passed through
+Date: Tue, 03 Feb 2026 10:18:01 +0000
+Subject: [PATCH v4 5/6] sideband: offer to configure sanitizing on a per-URL
+ basis
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,244 +87,251 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Even though control sequences that erase characters are quite juicy for
-attack scenarios, where attackers are eager to hide traces of suspicious
-activities, during the review of the side band sanitizing patch series
-concerns were raised that there might be some legimitate scenarios where
-Git server's `pre-receive` hooks use those sequences in a benign way.
+The main objection against sanitizing the sideband that was raised
+during the review of the sideband sanitizing patches, first on the
+git-security mailing list, then on the public mailing list, was that
+there are some setups where server-side `pre-receive` hooks want to
+error out, giving colorful messages to the users on the client side (if
+they are not redirecting the output into a file, that is).
 
-Control sequences to move the cursor can likewise be used to hide tracks
-by overwriting characters, and have been equally pointed out as having
-legitimate users.
+To avoid breaking such setups, the default chosen by the sideband
+sanitizing patches is to pass through ANSI color sequences.
 
-Let's add options to let users opt into passing through those ANSI
-Escape sequences: `sideband.allowControlCharacters` now supports also
-`cursor` and `erase`, and it parses the value as a comma-separated list.
+Still, there might be some use case out there where that is not enough.
+Therefore the `sideband.allowControlCharacters` config setting allows
+for configuring  levels of sanitizing.
 
+As Junio Hamano pointed out, to keep users safe by default, we need to
+be able to scope this to some servers because while a user may trust
+their company's Git server, the same might not apply to other Git
+servers.
+
+To allow for this, let's imitate the way `http.<url>.*` offers
+to scope config settings to certain URLs, by letting users
+override the `sideband.allowControlCharacters` setting via
+`sideband.<url>.allowControlCharacters`.
+
+Suggested-by: Junio Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config/sideband.adoc  |  9 ++-
- sideband.c                          | 91 ++++++++++++++++++++++++-----
- t/t5409-colorize-remote-messages.sh | 38 ++++++++++++
- 3 files changed, 123 insertions(+), 15 deletions(-)
+ Documentation/config/sideband.adoc  |  4 ++
+ sideband.c                          | 81 ++++++++++++++++++++---------
+ sideband.h                          | 14 +++++
+ t/t5409-colorize-remote-messages.sh | 24 +++++++++
+ transport.c                         |  3 ++
+ 5 files changed, 102 insertions(+), 24 deletions(-)
 
 diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
-index b55c73726f..2bf0426284 100644
+index 2bf0426284..32088bbf2f 100644
 --- a/Documentation/config/sideband.adoc
 +++ b/Documentation/config/sideband.adoc
-@@ -2,13 +2,20 @@ sideband.allowControlCharacters::
- 	By default, control characters that are delivered via the sideband
- 	are masked, except ANSI color sequences. This prevents potentially
- 	unwanted ANSI escape sequences from being sent to the terminal. Use
--	this config setting to override this behavior:
-+	this config setting to override this behavior (the value can be
-+	a comma-separated list of the following keywords):
- +
+@@ -22,3 +22,7 @@ sideband.allowControlCharacters::
+ 	`true`::
+ 		Allow all control characters to be sent to the terminal.
  --
- 	`default`::
- 	`color`::
- 		Allow ANSI color sequences, line feeds and horizontal tabs,
- 		but mask all other control characters. This is the default.
-+	`cursor:`:
-+		Allow control sequences that move the cursor. This is
-+		disabled by default.
-+	`erase`::
-+		Allow control sequences that erase charactrs. This is
-+		disabled by default.
- 	`false`::
- 		Mask all control characters other than line feeds and
- 		horizontal tabs.
++
++sideband.<url>.*::
++	Apply the `sideband.*` option selectively to specific URLs. The
++	same URL matching logic applies as for `http.<url>.*` settings.
 diff --git a/sideband.c b/sideband.c
-index eeba6fa2ca..0b420ca319 100644
+index 0b420ca319..a90db9e288 100644
 --- a/sideband.c
 +++ b/sideband.c
-@@ -29,9 +29,43 @@ static struct keyword_entry keywords[] = {
- static enum {
- 	ALLOW_NO_CONTROL_CHARACTERS  = 0,
- 	ALLOW_ANSI_COLOR_SEQUENCES   = 1<<0,
-+	ALLOW_ANSI_CURSOR_MOVEMENTS  = 1<<1,
-+	ALLOW_ANSI_ERASE             = 1<<2,
- 	ALLOW_DEFAULT_ANSI_SEQUENCES = ALLOW_ANSI_COLOR_SEQUENCES,
--	ALLOW_ALL_CONTROL_CHARACTERS = 1<<1,
--} allow_control_characters = ALLOW_ANSI_COLOR_SEQUENCES;
-+	ALLOW_ALL_CONTROL_CHARACTERS = 1<<3,
-+} allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
-+
-+static inline int skip_prefix_in_csv(const char *value, const char *prefix,
-+				     const char **out)
-+{
-+	if (!skip_prefix(value, prefix, &value) ||
-+	    (*value && *value != ','))
-+		return 0;
-+	*out = value + !!*value;
-+	return 1;
-+}
-+
-+static void parse_allow_control_characters(const char *value)
-+{
-+	allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
-+	while (*value) {
-+		if (skip_prefix_in_csv(value, "default", &value))
-+			allow_control_characters |= ALLOW_DEFAULT_ANSI_SEQUENCES;
-+		else if (skip_prefix_in_csv(value, "color", &value))
-+			allow_control_characters |= ALLOW_ANSI_COLOR_SEQUENCES;
-+		else if (skip_prefix_in_csv(value, "cursor", &value))
-+			allow_control_characters |= ALLOW_ANSI_CURSOR_MOVEMENTS;
-+		else if (skip_prefix_in_csv(value, "erase", &value))
-+			allow_control_characters |= ALLOW_ANSI_ERASE;
-+		else if (skip_prefix_in_csv(value, "true", &value))
-+			allow_control_characters = ALLOW_ALL_CONTROL_CHARACTERS;
-+		else if (skip_prefix_in_csv(value, "false", &value))
-+			allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
-+		else
-+			warning(_("unrecognized value for `sideband."
-+				  "allowControlCharacters`: '%s'"), value);
-+	}
-+}
+@@ -10,6 +10,7 @@
+ #include "help.h"
+ #include "pkt-line.h"
+ #include "write-or-die.h"
++#include "urlmatch.h"
  
- /* Returns a color setting (GIT_COLOR_NEVER, etc). */
- static enum git_colorbool use_sideband_colors(void)
-@@ -55,13 +89,8 @@ static enum git_colorbool use_sideband_colors(void)
- 		if (repo_config_get_string_tmp(the_repository, "sideband.allowcontrolcharacters",
- 					      &value))
- 			; /* huh? `get_maybe_bool()` returned -1 */
--		else if (!strcmp(value, "default"))
--			allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
--		else if (!strcmp(value, "color"))
--			allow_control_characters = ALLOW_ANSI_COLOR_SEQUENCES;
+ struct keyword_entry {
+ 	/*
+@@ -27,13 +28,14 @@ static struct keyword_entry keywords[] = {
+ };
+ 
+ static enum {
+-	ALLOW_NO_CONTROL_CHARACTERS  = 0,
+-	ALLOW_ANSI_COLOR_SEQUENCES   = 1<<0,
+-	ALLOW_ANSI_CURSOR_MOVEMENTS  = 1<<1,
+-	ALLOW_ANSI_ERASE             = 1<<2,
+-	ALLOW_DEFAULT_ANSI_SEQUENCES = ALLOW_ANSI_COLOR_SEQUENCES,
+-	ALLOW_ALL_CONTROL_CHARACTERS = 1<<3,
+-} allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
++	ALLOW_CONTROL_SEQUENCES_UNSET = -1,
++	ALLOW_NO_CONTROL_CHARACTERS   = 0,
++	ALLOW_ANSI_COLOR_SEQUENCES    = 1<<0,
++	ALLOW_ANSI_CURSOR_MOVEMENTS   = 1<<1,
++	ALLOW_ANSI_ERASE              = 1<<2,
++	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES,
++	ALLOW_ALL_CONTROL_CHARACTERS  = 1<<3,
++} allow_control_characters = ALLOW_CONTROL_SEQUENCES_UNSET;
+ 
+ static inline int skip_prefix_in_csv(const char *value, const char *prefix,
+ 				     const char **out)
+@@ -45,8 +47,19 @@ static inline int skip_prefix_in_csv(const char *value, const char *prefix,
+ 	return 1;
+ }
+ 
+-static void parse_allow_control_characters(const char *value)
++int sideband_allow_control_characters_config(const char *var, const char *value)
+ {
++	switch (git_parse_maybe_bool(value)) {
++	case 0:
++		allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
++		return 0;
++	case 1:
++		allow_control_characters = ALLOW_ALL_CONTROL_CHARACTERS;
++		return 0;
++	default:
++		break;
++	}
++
+ 	allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
+ 	while (*value) {
+ 		if (skip_prefix_in_csv(value, "default", &value))
+@@ -62,9 +75,37 @@ static void parse_allow_control_characters(const char *value)
+ 		else if (skip_prefix_in_csv(value, "false", &value))
+ 			allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
  		else
 -			warning(_("unrecognized value for `sideband."
 -				  "allowControlCharacters`: '%s'"), value);
-+			parse_allow_control_characters(value);
- 		break;
- 	default:
- 		break; /* not configured */
-@@ -94,7 +123,7 @@ void list_config_color_sideband_slots(struct string_list *list, const char *pref
- 		list_config_item(list, prefix, keywords[i].keyword);
- }
- 
--static int handle_ansi_color_sequence(struct strbuf *dest, const char *src, int n)
-+static int handle_ansi_sequence(struct strbuf *dest, const char *src, int n)
- {
- 	int i;
- 
-@@ -106,14 +135,47 @@ static int handle_ansi_color_sequence(struct strbuf *dest, const char *src, int
- 	 * These are part of the Select Graphic Rendition sequences which
- 	 * contain more than just color sequences, for more details see
- 	 * https://en.wikipedia.org/wiki/ANSI_escape_code#SGR.
-+	 *
-+	 * The cursor movement sequences are:
-+	 *
-+	 * ESC [ n A - Cursor up n lines (CUU)
-+	 * ESC [ n B - Cursor down n lines (CUD)
-+	 * ESC [ n C - Cursor forward n columns (CUF)
-+	 * ESC [ n D - Cursor back n columns (CUB)
-+	 * ESC [ n E - Cursor next line, beginning (CNL)
-+	 * ESC [ n F - Cursor previous line, beginning (CPL)
-+	 * ESC [ n G - Cursor to column n (CHA)
-+	 * ESC [ n ; m H - Cursor position (row n, col m) (CUP)
-+	 * ESC [ n ; m f - Same as H (HVP)
-+	 *
-+	 * The sequences to erase characters are:
-+	 *
-+	 *
-+	 * ESC [ 0 J - Clear from cursor to end of screen (ED)
-+	 * ESC [ 1 J - Clear from cursor to beginning of screen (ED)
-+	 * ESC [ 2 J - Clear entire screen (ED)
-+	 * ESC [ 3 J - Clear entire screen + scrollback (ED) - xterm extension
-+	 * ESC [ 0 K - Clear from cursor to end of line (EL)
-+	 * ESC [ 1 K - Clear from cursor to beginning of line (EL)
-+	 * ESC [ 2 K - Clear entire line (EL)
-+	 * ESC [ n M - Delete n lines (DL)
-+	 * ESC [ n P - Delete n characters (DCH)
-+	 * ESC [ n X - Erase n characters (ECH)
-+	 *
-+	 * For a comprehensive list of common ANSI Escape sequences, see
-+	 * https://www.xfree86.org/current/ctlseqs.html
- 	 */
- 
--	if (allow_control_characters != ALLOW_ANSI_COLOR_SEQUENCES ||
--	    n < 3 || src[0] != '\x1b' || src[1] != '[')
-+	if (n < 3 || src[0] != '\x1b' || src[1] != '[')
- 		return 0;
- 
- 	for (i = 2; i < n; i++) {
--		if (src[i] == 'm') {
-+		if (((allow_control_characters & ALLOW_ANSI_COLOR_SEQUENCES) &&
-+		     src[i] == 'm') ||
-+		    ((allow_control_characters & ALLOW_ANSI_CURSOR_MOVEMENTS) &&
-+		     strchr("ABCDEFGHf", src[i])) ||
-+		    ((allow_control_characters & ALLOW_ANSI_ERASE) &&
-+		     strchr("JKMPX", src[i]))) {
- 			strbuf_add(dest, src, i + 1);
- 			return i;
- 		}
-@@ -128,7 +190,7 @@ static void strbuf_add_sanitized(struct strbuf *dest, const char *src, int n)
- {
- 	int i;
- 
--	if (allow_control_characters == ALLOW_ALL_CONTROL_CHARACTERS) {
-+	if ((allow_control_characters & ALLOW_ALL_CONTROL_CHARACTERS)) {
- 		strbuf_add(dest, src, n);
- 		return;
++			warning(_("unrecognized value for '%s': '%s'"), var, value);
  	}
-@@ -137,7 +199,8 @@ static void strbuf_add_sanitized(struct strbuf *dest, const char *src, int n)
- 	for (; n && *src; src++, n--) {
- 		if (!iscntrl(*src) || *src == '\t' || *src == '\n') {
- 			strbuf_addch(dest, *src);
--		} else if ((i = handle_ansi_color_sequence(dest, src, n))) {
-+		} else if (allow_control_characters != ALLOW_NO_CONTROL_CHARACTERS &&
-+			   (i = handle_ansi_sequence(dest, src, n))) {
- 			src += i;
- 			n -= i;
- 		} else {
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-index e5092d3b42..896e790bf9 100755
---- a/t/t5409-colorize-remote-messages.sh
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -128,4 +128,42 @@ test_expect_success 'disallow (color) control sequences in sideband' '
- 	test_file_not_empty actual
- '
- 
-+test_decode_csi() {
-+	awk '{
-+		while (match($0, /\033/) != 0) {
-+			printf "%sCSI ", substr($0, 1, RSTART-1);
-+			$0 = substr($0, RSTART + RLENGTH, length($0) - RSTART - RLENGTH + 1);
-+		}
-+		print
-+	}'
++	return 0;
 +}
 +
-+test_expect_success 'control sequences in sideband allowed by default' '
-+	write_script .git/color-me-surprised <<-\EOF &&
-+	printf "error: \\033[31mcolor\\033[m\\033[Goverwrite\\033[Gerase\\033[K\\033?25l\\n" >&2
++static int sideband_config_callback(const char *var, const char *value,
++				    const struct config_context *ctx UNUSED,
++				    void *data UNUSED)
++{
++	if (!strcmp(var, "sideband.allowcontrolcharacters"))
++		return sideband_allow_control_characters_config(var, value);
++
++	return 0;
++}
++
++void sideband_apply_url_config(const char *url)
++{
++	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
++	char *normalized_url;
++
++	if (!url)
++		BUG("must not call sideband_apply_url_config(NULL)");
++
++	config.section = "sideband";
++	config.collect_fn = sideband_config_callback;
++
++	normalized_url = url_normalize(url, &config.url);
++	repo_config(the_repository, urlmatch_config_entry, &config);
++	free(normalized_url);
++	string_list_clear(&config.vars, 1);
++	urlmatch_config_release(&config);
+ }
+ 
+ /* Returns a color setting (GIT_COLOR_NEVER, etc). */
+@@ -80,20 +121,12 @@ static enum git_colorbool use_sideband_colors(void)
+ 	if (use_sideband_colors_cached != GIT_COLOR_UNKNOWN)
+ 		return use_sideband_colors_cached;
+ 
+-	switch (repo_config_get_maybe_bool(the_repository, "sideband.allowcontrolcharacters", &i)) {
+-	case 0: /* Boolean value */
+-		allow_control_characters = i ? ALLOW_ALL_CONTROL_CHARACTERS :
+-			ALLOW_NO_CONTROL_CHARACTERS;
+-		break;
+-	case -1: /* non-Boolean value */
+-		if (repo_config_get_string_tmp(the_repository, "sideband.allowcontrolcharacters",
+-					      &value))
+-			; /* huh? `get_maybe_bool()` returned -1 */
+-		else
+-			parse_allow_control_characters(value);
+-		break;
+-	default:
+-		break; /* not configured */
++	if (allow_control_characters == ALLOW_CONTROL_SEQUENCES_UNSET) {
++		if (!repo_config_get_value(the_repository, "sideband.allowcontrolcharacters", &value))
++			sideband_allow_control_characters_config("sideband.allowcontrolcharacters", value);
++
++		if (allow_control_characters == ALLOW_CONTROL_SEQUENCES_UNSET)
++			allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
+ 	}
+ 
+ 	if (!repo_config_get_string_tmp(the_repository, key, &value))
+diff --git a/sideband.h b/sideband.h
+index 5a25331be5..d15fa4015f 100644
+--- a/sideband.h
++++ b/sideband.h
+@@ -30,4 +30,18 @@ int demultiplex_sideband(const char *me, int status,
+ 
+ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max);
+ 
++/*
++ * Apply sideband configuration for the given URL. This should be called
++ * when a transport is created to allow URL-specific configuration of
++ * sideband behavior (e.g., sideband.<url>.allowControlCharacters).
++ */
++void sideband_apply_url_config(const char *url);
++
++/*
++ * Parse and set the sideband allow control characters configuration.
++ * The var parameter should be the key name (without section prefix).
++ * Returns 0 if the variable was recognized and handled, non-zero otherwise.
++ */
++int sideband_allow_control_characters_config(const char *var, const char *value);
++
+ #endif
+diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
+index 896e790bf9..3010913bb1 100755
+--- a/t/t5409-colorize-remote-messages.sh
++++ b/t/t5409-colorize-remote-messages.sh
+@@ -166,4 +166,28 @@ test_expect_success 'control sequences in sideband allowed by default' '
+ 	test_grep ! "\\^\\[\\[G" decoded
+ '
+ 
++test_expect_success 'allow all control sequences for a specific URL' '
++	write_script .git/eraser <<-\EOF &&
++	printf "error: Ohai!\\r\\033[K" >&2
 +	exec "$@"
 +	EOF
-+	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
-+	test_commit need-at-least-one-commit-at-least &&
++	test_config_global uploadPack.packObjectsHook ./eraser &&
++	test_commit one-more-please &&
 +
 +	rm -rf throw-away &&
 +	git clone --no-local . throw-away 2>stderr &&
 +	test_decode_color <stderr >color-decoded &&
 +	test_decode_csi <color-decoded >decoded &&
 +	test_grep ! "CSI \\[K" decoded &&
-+	test_grep ! "CSI \\[G" decoded &&
-+	test_grep "\\^\\[?25l" decoded &&
++	test_grep "\\^\\[\\[K" decoded &&
 +
 +	rm -rf throw-away &&
-+	git -c sideband.allowControlCharacters=erase,cursor,color \
-+		clone --no-local . throw-away 2>stderr &&
++	git -c "sideband.file://.allowControlCharacters=true" \
++		clone --no-local "file://$PWD" throw-away 2>stderr &&
 +	test_decode_color <stderr >color-decoded &&
 +	test_decode_csi <color-decoded >decoded &&
-+	test_grep "RED" decoded &&
 +	test_grep "CSI \\[K" decoded &&
-+	test_grep "CSI \\[G" decoded &&
-+	test_grep ! "\\^\\[\\[K" decoded &&
-+	test_grep ! "\\^\\[\\[G" decoded
++	test_grep ! "\\^\\[\\[K" decoded
 +'
 +
  test_done
+diff --git a/transport.c b/transport.c
+index c7f06a7382..1602065953 100644
+--- a/transport.c
++++ b/transport.c
+@@ -29,6 +29,7 @@
+ #include "object-name.h"
+ #include "color.h"
+ #include "bundle-uri.h"
++#include "sideband.h"
+ 
+ static enum git_colorbool transport_use_color = GIT_COLOR_UNKNOWN;
+ static char transport_colors[][COLOR_MAXLEN] = {
+@@ -1245,6 +1246,8 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 
+ 	ret->hash_algo = &hash_algos[GIT_HASH_SHA1_LEGACY];
+ 
++	sideband_apply_url_config(ret->url);
++
+ 	return ret;
+ }
+ 
 -- 
 gitgitgadget
 
