@@ -1,206 +1,162 @@
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AC0368260
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 05:23:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D1A3783DA
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 06:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770096188; cv=none; b=bz18duDtFAo0/iWUbbh+hBenhgnxqv0kiHK+dcIaYoSJCVI4+T7V+2DYq3ONS6osJJz0hLFabJLZGSiKbF888yZX93vdoFEU+yfP0SNdf8sNyWXS/9vZrKw+ns8ZBMtwqnsWTvxizjEEBYfu/kS8E6bbfGrlJVveY9qbYYm8Flc=
+	t=1770099941; cv=none; b=ihjZEDGNzu5FcThyOlfWp2rWMc5i4zNJWQVrKIJAgxjwldY6IIOHjnkNXWZfXnQEHpv5Drw9RooHPXewcRjDJuti8Eagr7Hroc5PriiOanpE22grkbJweTKcfiVpSL6OimUWumdvpcGpi+Va3m8rvCN6KpgH8bivn4uZSsTR9k8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770096188; c=relaxed/simple;
-	bh=KbDtmuVrPdo8LIJMvS2nRCY+z2bKLJ/VWYv6WnUKyfQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RK6K5NF9kkmn1CAYmnqMjZEIx4hv0MjF08A1gzMWzALgDZyKGvo18FcPb6fcLuBG9PseMXE8rlvw9eMv9RyxClid8xKsDA02Oetz8Tc2l8qIjHWVmhCMPTSD2qRqLWFmlOcE7SBfkEmONw5OShb4OHQ6/84dw9Y2EV9ZTXCb5ZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/Mm/IIt; arc=none smtp.client-ip=74.125.82.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770099941; c=relaxed/simple;
+	bh=fqgdR93YzX8ELE6MezWwfHOwUuQk2CFM9X1rNLC+ot8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E/6pCs6TjlKT9Yh5AS/UYjgogRaFCZ6t7NnKpAYss1cwP/1nPdUFDq/I5zBVj8y5HGN49DcO2KiWk3A/xIcc2Hs3fLOhNOTFq+qgiGvgWlsndRc3i0RZ+Rp4UQB0DMpJbC1veNbLQQdXljm7XMm6SNopMniFdqMLz4QOWnxVTsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gzH8Psuo; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/Mm/IIt"
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2b70abe3417so11264279eec.0
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 21:23:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770096186; x=1770700986; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ujJTHO0GuQTg8t4y1IAS9lVac29WLODqZ9jav3ioW/Q=;
-        b=A/Mm/IItlc6w3XjPJjsOyC/GGEfF/VjZlQ7NnnkRhKnKJKuXQwas5wbibEHFoVKF5L
-         wAekL8H2GpJIufvg9kZGi0Nms97iwBLPwWbifzo2rj80Nvz2W1s0tPSbvoZVdEqT8IaD
-         AKoVb+7c1Ust28f0sesEdYe1YmPHRYJusKyUiWZcBewTU+ViLej0TZEBoHX6IxROVkHf
-         n0bIh0fWN0z0mLLGShwdC6e1ijgtUx6TYjveaU1MtzRWybtIXDPnJhB7IvRY0g70gpSZ
-         YenwsAG2W6awFZMZSJ1ovK+7GbH3d0ZctyVnGUq+/r9b3eTzj1farNrGwnQvr6p8ToA4
-         KR4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770096186; x=1770700986;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ujJTHO0GuQTg8t4y1IAS9lVac29WLODqZ9jav3ioW/Q=;
-        b=Cbzd90PsoKv0G8HyEhmTb+AIVm2Wwu0USniqfHB4UcvSGinUZu9G/Qi3HybLygNYJF
-         Cy7NQbkoWAqvDKqP4p0rSaj1zYsMnm/wQeNNibYo7FsAu4UIChI0TdSUmnL+3oJhz67J
-         4zSZWG6JUYSvLeOjjpYfFBEnuFqCaMZkvmbZOzs81N/fsDwRf0To72adCq+hii3uyWoo
-         QsEVfs6Fb5mcdvn9FYZTTGftchUnuAY4Rt+pC7ZwGXQinJeQSVs8fHCg2qaBNFDSfd5m
-         4dDiByrcWUOpM3namW/Z+6UraBwPujQ2vYiekNP3hu26+1tVlQfSrk6Q4ne9W+H9k9Jq
-         enfw==
-X-Gm-Message-State: AOJu0YwLFqDcmPVTkS9Aj4oF8hCSK54UnVfar6vHSuE3Tq6FUNwvbYy7
-	Uygr+z49+v8HRAKUKawlGO/SSFvZSIFD8/vNxLFWfTRw1DMg8hM4U5Vu41JsWw==
-X-Gm-Gg: AZuq6aIEdFeS3hha0ANUzeWMzXbIRLQZdqXnsi0Ejl55pEKgHWKLVpqT9XRpdu3iIYo
-	r/3lTIZ+gXMzZc6VakIzSOG0Lq+1KRuCH8O3dp6OvTDZzn3By3hi6j31he43SLyZOOOCHy0kNmU
-	KuTn5gmWC32MdByrwWGTuCVLDTyISdRgJMtaGktpT4CiDoxBD9kKrej6j3nNKnhFOoNjs2Afdvb
-	KieWXFGIgk7/N2XetfqnA26RY1pkV0XhDWaGEDmO5PZF1AVhv0OXdiP1dYXkOORFOKVui8PNG3b
-	df9eH7xZ+jSoS7hKuKTR8iwQvLe6eMYFyAJY5l+BdfNyTGBlRTsBjbUTm4JAWA/NIpx4obthR1n
-	qojHUiJQNJjr0zInJb1udRJpvaj91JLsw8D/Ltgh/ORPPzR4VE+YCFfZyipK54AjIbAJhWM1Wij
-	qzABftYbNnGs1g
-X-Received: by 2002:a05:7300:dc8c:b0:2b7:1cbe:fd1f with SMTP id 5a478bee46e88-2b7c8940615mr7061212eec.36.1770096185746;
-        Mon, 02 Feb 2026 21:23:05 -0800 (PST)
-Received: from localhost.localdomain ([2601:646:8081:3770::996e])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a16cfaa8sm20895672eec.4.2026.02.02.21.23.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Feb 2026 21:23:05 -0800 (PST)
-From: Collin Funk <collin.funk1@gmail.com>
-To: git@vger.kernel.org
-Cc: Collin Funk <collin.funk1@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gzH8Psuo"
+Received: (qmail 261131 invoked by uid 109); 3 Feb 2026 06:25:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=fqgdR93YzX8ELE6MezWwfHOwUuQk2CFM9X1rNLC+ot8=; b=gzH8PsuoDLQTbMnFvAt/h+fGT8hfiY7JPAleUasJ7CfoxEq3aA3DIW6Lpd7MR8Lyf0ym02YW6FuM/XgtrJ1I0A0V12tdIVz4BJ6+KuXNRVi5vIk2hAa5fOCRzC1O/pDA/hAFK1k8Z7/Ok/DLbPFbic6ppErpocGtiC1bzbOUTKvmVbEd6crzY7GIQktqe6FAfYP5A+BLjZKnOQVcG7IXJ6CZ9xAfXi6lwEHD6OYkPYujbbLqxmoKGxEqtC7m0aGygUvYYERyI2ZQ8ob6slMNk/Qt7MxPReim3NTFheZqXSqcRjIwcZjePrao0+Hztk+DbLnRdIoNZe+8v4dpa7+k2Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Feb 2026 06:25:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 519615 invoked by uid 111); 3 Feb 2026 06:25:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Feb 2026 01:25:42 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 3 Feb 2026 01:25:37 -0500
+From: Jeff King <peff@peff.net>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Matthew John Cheetham <mjcheetham@outlook.com>,
-	Victoria Dye <vdye@github.com>,
-	Jeff King <peff@peff.net>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH] git-compat-util: make git_find_last_dir_sep return a const pointer
-Date: Mon,  2 Feb 2026 21:19:01 -0800
-Message-ID: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
-X-Mailer: git-send-email 2.52.0
+	Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] git-compat-util: make git_find_last_dir_sep return a
+ const pointer
+Message-ID: <20260203062537.GA286409@coredump.intra.peff.net>
+References: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
 
-Unsure if this should be tagged [RFC], but this patch clears up lots
-of warning spam with glibc 2.43 because of a change mentioned in the
-commit message.
+On Mon, Feb 02, 2026 at 09:19:01PM -0800, Collin Funk wrote:
 
-I plan to handle the rest of them and try to organize the changes by
-subsystem, for lack of a better term. But I figured it was best to
-submit just this one for review first.
+> Unsure if this should be tagged [RFC], but this patch clears up lots
+> of warning spam with glibc 2.43 because of a change mentioned in the
+> commit message.
 
--- 8< --
+Thanks for the heads-up. I can reproduce here by installing glibc 2.43
+via "apt install -t experimental libc6" on my debian unstable machine.
 
-The recent glibc 2.43 release had the following change listed in its
-NEWS file:
+> I plan to handle the rest of them and try to organize the changes by
+> subsystem, for lack of a better term. But I figured it was best to
+> submit just this one for review first.
 
-    For ISO C23, the functions bsearch, memchr, strchr, strpbrk, strrchr,
-    strstr, wcschr, wcspbrk, wcsrchr, wcsstr and wmemchr that return
-    pointers into their input arrays now have definitions as macros that
-    return a pointer to a const-qualified type when the input argument is
-    a pointer to a const-qualified type.
+Wow, there's...a lot of spots. Looks like ~65 of them based on my hacky
+first-pass. Many of them are quite obvious "s/char/const char/" fixes in
+variable declarations, that should have been const all along. I think
+those can all go together in one patch, as the compiler can verify that
+we never try to write to the result.
 
-When compiling with GCC 15, which defaults to -std=gnu23, this causes
-many warnings like this:
+And then, yeah, I'd do the tricky ones system by system. Some of the
+ones that do write to the resulting pointers are rather nasty, and seem
+to fall into one of two camps:
 
-        CC abspath.o
-    In file included from abspath.c:1:
-    git-compat-util.h: In function ‘git_find_last_dir_sep’:
-    git-compat-util.h:344:16: warning: return discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
-      344 |         return strrchr(path, '/');
-          |                ^~~~~~~
+  1. Some function interface takes a const pointer, even though we try
+     to write to it under the hood (after laundering it through strchr()
+     or similar). I think it would be worth refactoring these interfaces
+     when we can, though some of them are pretty questionable. For
+     instance, all of the rev-parse/revision.c "dotdot" parsing works on
+     a "const char *arg". Surely we feed this from command line options
+     in some cases? I guess argv is guaranteed to be writable by the
+     standard, though we tend to treat is as const everywhere.
 
-Most of the warnings are from git_find_last_dir_sep which calls strrchr
-on a "const char *" but returns a "char *". This patch addresses them by
-changing the return type to be const, since only one location needs the
-qualifier casted away.
+  2. We know we have a non-const pointer, but it is passed through a
+     const pointer that is used as an out-parameter to a function like
+     skip_prefix(). For instance, in http.c's redact_sensitive_header()
+     we have something like this:
 
-Signed-off-by: Collin Funk <collin.funk1@gmail.com>
----
- config.c          | 2 +-
- git-compat-util.h | 2 +-
- remote.c          | 2 +-
- scalar.c          | 8 ++++----
- strbuf.c          | 2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
+        const char *sensitive_header;
+	if (skip_iprefix(header->buf, "Cookie:", &sensitive_header)) {
+		const char *cookie = sensitive_header;
+		char *semicolon = strchr(cookie, "; ");
+		*semicolon = 0;
+		...
 
-diff --git a/config.c b/config.c
-index 7f6d53b473..156f2a24fa 100644
---- a/config.c
-+++ b/config.c
-@@ -160,7 +160,7 @@ static int handle_path_include(const struct key_value_info *kvi,
- 	 * based on the including config file.
- 	 */
- 	if (!is_absolute_path(path)) {
--		char *slash;
-+		const char *slash;
- 
- 		if (!kvi || kvi->origin_type != CONFIG_ORIGIN_FILE) {
- 			ret = error(_("relative config includes must come from files"));
-diff --git a/git-compat-util.h b/git-compat-util.h
-index bebcf9f698..fb4251564a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -339,7 +339,7 @@ static inline int is_path_owned_by_current_uid(const char *path,
- #endif
- 
- #ifndef find_last_dir_sep
--static inline char *git_find_last_dir_sep(const char *path)
-+static inline const char *git_find_last_dir_sep(const char *path)
- {
- 	return strrchr(path, '/');
- }
-diff --git a/remote.c b/remote.c
-index b756ff6f15..8c1a0a0c15 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2753,7 +2753,7 @@ void remote_state_clear(struct remote_state *remote_state)
-  */
- static int chop_last_dir(char **remoteurl, int is_relative)
- {
--	char *rfind = find_last_dir_sep(*remoteurl);
-+	char *rfind = (char *) find_last_dir_sep(*remoteurl);
- 	if (rfind) {
- 		*rfind = '\0';
- 		return 0;
-diff --git a/scalar.c b/scalar.c
-index c9df9348ec..54a75ad971 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -393,7 +393,7 @@ static int delete_enlistment(struct strbuf *enlistment)
- {
- 	struct strbuf parent = STRBUF_INIT;
- 	size_t offset;
--	char *path_sep;
-+	const char *path_sep;
- 
- 	if (unregister_dir())
- 		return error(_("failed to unregister repository"));
-@@ -479,11 +479,11 @@ static int cmd_clone(int argc, const char **argv)
- 		/* Strip suffix `.git`, if any */
- 		strbuf_strip_suffix(&buf, ".git");
- 
--		enlistment = find_last_dir_sep(buf.buf);
--		if (!enlistment) {
-+		const char *last = find_last_dir_sep(buf.buf);
-+		if (!last) {
- 			die(_("cannot deduce worktree name from '%s'"), url);
- 		}
--		enlistment = xstrdup(enlistment + 1);
-+		enlistment = xstrdup(last + 1);
- 	} else {
- 		usage_msg_opt(_("You must specify a repository to clone."),
- 			      clone_usage, clone_options);
-diff --git a/strbuf.c b/strbuf.c
-index 59678bf5b0..3939863cf3 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -1119,6 +1119,6 @@ void strbuf_stripspace(struct strbuf *sb, const char *comment_prefix)
- 
- void strbuf_strip_file_from_path(struct strbuf *sb)
- {
--	char *path_sep = find_last_dir_sep(sb->buf);
-+	const char *path_sep = find_last_dir_sep(sb->buf);
- 	strbuf_setlen(sb, path_sep ? path_sep - sb->buf + 1 : 0);
- }
--- 
-2.52.0
+     Our header->buf here is a strbuf, so we know we are working with a
+     non-const buffer. We launder away constness with the strchr()
+     assignment to "semicolon", which glibc now complains about. We
+     should make "cookie" non-const, which is easy. But now we'll get a
+     complaint about assigning the const "sensitive_header" to it. And
+     that one should _also_ be non-const, because it comes from
+     header->buf. But switching it will cause the compiler to complain
+     about passing it to skip_iprefix().
 
+     So we have the problem in reverse (instead of laundering a const
+     string to a non-const, we've accidentally added constness where it
+     is not needed). If we drop the const from skip_iprefix(), then that
+     has fallout in all the other spots that do pass in a const haystack
+     parameter.
+
+     I don't know what the right solution is here. I guess the best we
+     can do is probably adding casts with comments like "this is OK
+     because it comes from...". But I'm not sure if we are better to
+     cast away the constness in one spot, or to make all of the
+     variables non-const and cast the out-parameter to skip_iprefix().
+
+>  #ifndef find_last_dir_sep
+> -static inline char *git_find_last_dir_sep(const char *path)
+> +static inline const char *git_find_last_dir_sep(const char *path)
+>  {
+>  	return strrchr(path, '/');
+>  }
+
+This kind of recreates that reverse problem again, though: any caller
+who really does have a non-const "path" will get "const" added back into
+it. And that leads to casts like...
+
+>  static int chop_last_dir(char **remoteurl, int is_relative)
+>  {
+> -	char *rfind = find_last_dir_sep(*remoteurl);
+> +	char *rfind = (char *) find_last_dir_sep(*remoteurl);
+>  	if (rfind) {
+>  		*rfind = '\0';
+>  		return 0;
+
+...this one. Can we implement it as a macro? That lets the compiler do
+the right thing, because we do not declare any type then. It used to be
+a macro, but switched in bf7283465b (turn path macros into inline
+function, 2014-08-16). There's also a level of macro indirection; on
+Windows this expands to win32_find_last_dir_sep(), which of course casts
+away the constness manually. ;)
+
+I also wonder if we could do some gcc/glibc-specific magic to get the
+best of both worlds. That is, could we get the same "the return value is
+const if the input parameter was" type-checking that is happening with
+strchr()?
+
+Looking at strchr()'s declaration in string.h, which is defined like:
+
+  #  define strchr(S, C)                                          \
+    __glibc_const_generic (S, const char *, strchr (S, C))
+
+I think the answer is probably "yes". But it also doesn't quite solve
+our problem. That would give us type-checking of callers of our
+function, but we still have to convince the compiler not to complain
+about its implementation. For that we'd need to either cast away const
+manually, I guess.
+
+Yuck. What a mess. I do think that fixing these warnings will improve
+most of the call-sites I looked at, but some of them get a bit hairy.
+
+-Peff
