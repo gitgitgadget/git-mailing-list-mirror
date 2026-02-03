@@ -1,58 +1,58 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B6436165E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B804B36C5B9
 	for <git@vger.kernel.org>; Tue,  3 Feb 2026 22:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770157119; cv=none; b=OLuurbFWPD0S5pD1r4WP04SBV/j2q4nqYBgVj9R5kq6ZFulKyDGnwHpU7Hjv9LaxJfE9iMjHCXrU8BWpA4QrQYijsz3lZq3nMNQuQUAjcQIcpQv6df89Sl7Z0DOizzgXX9P+wfsF+IYegx1u4CVocYMXFHeAzeiaj0xpbo2vjMo=
+	t=1770157119; cv=none; b=NofU0HJd3x9h8KVMGgVrtC7CXx/tO2QPx/8x98ppYNSfov0su8lzohYITwLhqvd1rF70HACorYjhkzhp/XrrNpCsyQJdfAYA53OPFRtSY7jmg7S72CWL/rK1TQIriEu1yYWLH6fcIVTnm70667oj3OSlF1WhlUQPIiy9mWjjtBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1770157119; c=relaxed/simple;
-	bh=X6Qn3cNRBF0sEn5+MTCpm1yAynIcgtUrDS4NbjYPDa8=;
+	bh=jGH4K3DnO7EwoSXde6NtvVlN1nV1TO6+yn8df+5nrJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uALMnLQWlFmVZCOwaCD3jbUck1Co4M4vVkkXzpZxSz97sJ6PzrxbXIRIQm4ufxOy9hpSBzr05UBfMk7xniopW3XK9tmIdDm4j7T6gvEHd3NvwtM3qM/EE9f2rF4eclUf83EJO/DQ2QpdAXiQIOl40Bgb+m65h9xLp3rXdjjNL+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e/GjvbJO; arc=none smtp.client-ip=209.85.167.181
+	 MIME-Version; b=GsQzPn5zXSI3VWFigrv84JknaVnrX+R3b3ZwNA3skcH+gRqLZdHLHBf2aFr3ALRzb0zDFh1bpRITFI53DqiXUUtxlHd1kCHHLVXFI4B8MVpstO/yZjZsPVQSRUJzZzOe72tUruYEoAIjiWwvCc5ftS2XdiuJ5rZIDlAaX105dWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RdC8uJOj; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e/GjvbJO"
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-45c7a71ba20so2113671b6e.2
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 14:18:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RdC8uJOj"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-40959ad00f2so4276553fac.3
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 14:18:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1770157116; x=1770761916; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=d4LeWC9Sne1xumvZFzCtbtgJroSLIAhuQnfbFcFNYyU=;
-        b=e/GjvbJOk/P0Pm+6l+ykWHQVzuU/Vund5tAajH6z0u3WEsxoGRFPVoggua3AMVSKUQ
-         6a280jEsMCWmPgVQyqGSoQMdhhYRatETeyBkSBzgawkAtOLXhR6gcYjp1Nm8EM2ch8Ku
-         42MV5XiRk1ycTS51wl15g8OFkXitLdvQhRJKdWHR9HJWan75elowoEyhnt5E/UHi9fJ3
-         YNEaNre67XIT1lWJu4jHLNklvzuJK1u7U7MIH4UvGFVLD/Wxl+mRw0D3GQtKhpkaUWFo
-         eJH/PeyTXxhRhpfAcB5F8ynZah3KXI2IKuB8jPpCoF6bnt17Q0+OfrCKPBUpIrcR6mMG
-         ca+Q==
+        bh=xvrmB9NNX+5ES7hJl/0JtXYNvWiYAQ//2C3JeRpec3Y=;
+        b=RdC8uJOj6RDeRrtfVoBd8VKx4WDf03uvo+UcB92GlCrvQ2l8Hh+PXTV3f154ezVP89
+         ebW7jRuENgB1X9QxRzk1VfRSmKCG/S9KRigz7r9pQsuGwO5jtA8hlZxPEqPwnN/TZc9V
+         vlAUpQatgZGX7N67BoSNz0UegR7JDVot88+b3AQnQMT1i9mPMxSR3CPVWp6qfZOzhHED
+         baEqRY5krlqpAfM6OYNcc7YTbza2UpP9h4Lw+qM99MhKhQbVI2JPlkx4RaNwvoq67bJr
+         F831kpD62MpQR3AHwRp/mcN1JeECXDDK6Fgam7v+rPoHoMyZ1pJJG825voKtQDcc2qxe
+         dbww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1770157116; x=1770761916;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=d4LeWC9Sne1xumvZFzCtbtgJroSLIAhuQnfbFcFNYyU=;
-        b=FmyzvHhyOrzbekEPVgLXLyQyZjpeYECbCTX5OVM7mHRwMKXW+dnPl3j0uqiwGN6ZzF
-         iradWafjhChE/fqrC1tpBR0m+YNof1tiT6QgRMnB5nNZG+nnT6rrl0Zkc8JirRSRseLJ
-         3BrH7NuCQF6+g7dqFtTeg2Q+JROEKwEI+xaWDG6mkNRNKFKluWD3YvRBfSQMgbTpbTUG
-         dBc8dz/i/oGLCCDpxC98CLkP6fYf7FCqnyzFwCwxQ8Zh1df+tDHy9oQKxZOyUs8NzG7G
-         9y37oNCkHfWwCalr7cNg0jel0DJM23ghDwsH09qtLY5f7EtdeEE2lR2Vt8Ro+B4J8S+X
-         t5Eg==
-X-Gm-Message-State: AOJu0Yx29v/TRxCqhvaycfSvTLlB92D0KJaURn7E7ihXYM8vAI/ygZAc
-	hHHGaIFPnSC41T1jHdrWrgmmVSAzCnW8XIL7QpTLipWKajGXSco23VovID+3IA==
-X-Gm-Gg: AZuq6aK1FafCDjtMJj9vPEZ7Tuj2bv8U6UkdyIN2TdcSuIuvTBCmXo5xpysHUVqYPo7
-	6UAu/2Xoc9I5M55GDuxKngB6CsbRmAyb6+p9/GOiP5nN6srokLb/OjcGBbQtBsUx++7scWy06ip
-	vPeP0WCGgS35OjpWz8nZXyzevwXL0OlMLif3jNY3W2bUOY0tl4ij2WfPQZJ2BRtHaEF09DEAwKa
-	qeaOAZqpTCgtstW3sNXGyneDNqWEWA4081+Mdz2EPlwYpmuzzL4Dp+N/1LzsS1b6iVLOXNduHBG
-	GiGL/2VQ/vXiaktxdFUBdBapEdWAKW516/Ssd5SXMzQ4HmRDQha9sm1so6xE0iFAM/t5U0r4DKm
-	nDQoUznUPqXJXzGsuyVqosjgeaChTczdNy6Lfxjd9/mV+Pya4Hppt7rcBarjB/DS4HCtC6ViK2G
-	qjzc/X//zacgy8RRIaMyk=
-X-Received: by 2002:a05:6808:338a:b0:44f:ff2c:f65 with SMTP id 5614622812f47-462d5a28e1bmr479344b6e.38.1770157115715;
-        Tue, 03 Feb 2026 14:18:35 -0800 (PST)
+        bh=xvrmB9NNX+5ES7hJl/0JtXYNvWiYAQ//2C3JeRpec3Y=;
+        b=W8rGINASogGD+QcnHzWawpt24XXkrxDu71t6P4pXGa0zqTrZlvPNFxxbpJpx9ZmTEc
+         KuyGh2AmZAcU7lbbr7FszTBzHBXT0chuFqPXmelit28NsyKzUGB8BkOwQ0GuwguE1DjD
+         CGIy1553CUGuyM8UUcYLDnl39BJ8em16V+3pUA/wJNcuYLLarwKpocK04IArdQrfQPpi
+         5ww7Rr4cKQahbZBNuPYCrYz2h6CtZu/YH0T6xorL41o4vXaQOoSfexrn9jtrRyoGZtYu
+         uyilYU4Yqm1PFClxDDuQ+uG7HHWf8nesmZClP1SCAQpSrQd2zRhOCRRfULUYwtjn/0+j
+         WzOw==
+X-Gm-Message-State: AOJu0YwyhgA5oYVTPRvTfSeHQ2b896Zb5ix4pvEq/PDyaGiL6AgH07Yn
+	qtc6zMKkauuVdXIM71sIUfsHAkCm6/olVzMu2GYH4WUriPWQt73NWXq32/pnjA==
+X-Gm-Gg: AZuq6aIE6PyL3WOCfxraeWZbGN9dR3yWa8yGpXXgYcWDoMb1OYoNpjDoaEN+otqria5
+	627ooDmgJ2iXTzbg2xfgvlYlpP9MC3DvHN0p/GU+tUjF2FSI1c4y+mEsn/HKhOlLgBU41F4hpK9
+	tRzveCU3Ue6SWlRd0Nt+eTmWY6iZKeAWs6BppuSld5k38Lna10rJySsSCVPhr5/7mzdk8xWdXki
+	oBQZ98/6cTXYcyEbeRlfrOBK2r+UUUtALJ9x4aAgaiEzLB2pFzI2ACq7zhP0Hs5Yxh8VtFMJljk
+	K8xdXSZSRG5jWuQlgjCUdj+wH2dVKseGLgZE4i6KRDi9gx7fBUYILpeVrSLRdibn587rgVhM+tG
+	N0L8FNcsp1+x6ocOCI64f2qE8KGAZAHw6UXFF35n/+G3w2iXxwCgjfieLbFFKnShPJuF47OH0oE
+	+PfUR6S7y6KAnd84aAKRw=
+X-Received: by 2002:a05:6870:f209:b0:409:8bfb:c7ba with SMTP id 586e51a60fabf-40a53ef1800mr486892fac.37.1770157116277;
+        Tue, 03 Feb 2026 14:18:36 -0800 (PST)
 Received: from denethor.localdomain ([136.51.44.64])
         by smtp.gmail.com with ESMTPSA id 586e51a60fabf-40a53c3c4dasm479042fac.0.2026.02.03.14.18.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -60,9 +60,9 @@ Received: from denethor.localdomain ([136.51.44.64])
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 3/5] builtin/repo: add OID annotations to table output
-Date: Tue,  3 Feb 2026 16:17:56 -0600
-Message-ID: <20260203221758.1164434-4-jltobler@gmail.com>
+Subject: [PATCH 4/5] builtin/repo: find commit with most parents
+Date: Tue,  3 Feb 2026 16:17:57 -0600
+Message-ID: <20260203221758.1164434-5-jltobler@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260203221758.1164434-1-jltobler@gmail.com>
 References: <20260203221758.1164434-1-jltobler@gmail.com>
@@ -74,73 +74,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The "structure" output for git-repo(1) does not show the corresponding
-OIDs for the largest objects in its "table" output. Update the output to
-include a list of OID annotations with an index to the corresponding row
-in the table.
+Complex merge events may produce an octopus merge where the resulting
+merge commit has more than two parents. While iterating through objects
+in the repository for git-repo-structure, identify the commit with the
+most parents and display it in the output.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/repo.c            |  77 +++++++++++++++++---
- t/t1901-repo-structure.sh | 145 ++++++++++++++++++++------------------
- 2 files changed, 142 insertions(+), 80 deletions(-)
+ builtin/repo.c            |  47 ++++++++++++
+ t/t1901-repo-structure.sh | 151 ++++++++++++++++++++------------------
+ 2 files changed, 125 insertions(+), 73 deletions(-)
 
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 51a4359685..6fc2d9db12 100644
+index 6fc2d9db12..dc1ac7ad3b 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -238,6 +238,7 @@ struct repo_structure {
+@@ -1,6 +1,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
  
- struct stats_table {
- 	struct string_list rows;
-+	struct string_list annotations;
- 
- 	int name_col_width;
- 	int value_col_width;
-@@ -250,6 +251,8 @@ struct stats_table {
- struct stats_table_entry {
- 	char *value;
- 	const char *unit;
-+	size_t index;
-+	struct object_id *oid;
+ #include "builtin.h"
++#include "commit.h"
+ #include "environment.h"
+ #include "hash.h"
+ #include "hex.h"
+@@ -208,6 +209,8 @@ struct largest_objects {
+ 	struct object_data commit_size;
+ 	struct object_data tree_size;
+ 	struct object_data blob_size;
++
++	struct object_data parent_count;
  };
  
- static void stats_table_vaddf(struct stats_table *table,
-@@ -272,6 +275,12 @@ static void stats_table_vaddf(struct stats_table *table,
- 		table->name_col_width = name_width;
- 	if (!entry)
- 		return;
-+	if (entry->oid) {
-+		entry->index = table->annotations.nr + 1;
-+		strbuf_addf(&buf, "[%" PRIuMAX "] %s", (uintmax_t)entry->index,
-+			    oid_to_hex(entry->oid));
-+		string_list_append(&table->annotations, buf.buf);
-+	}
- 	if (entry->value) {
- 		int value_width = utf8_strwidth(entry->value);
- 		if (value_width > table->value_col_width)
-@@ -282,6 +291,8 @@ static void stats_table_vaddf(struct stats_table *table,
- 		if (unit_width > table->unit_col_width)
- 			table->unit_col_width = unit_width;
- 	}
-+
-+	strbuf_release(&buf);
- }
- 
- static void stats_table_addf(struct stats_table *table, const char *format, ...)
-@@ -321,6 +332,27 @@ static void stats_table_size_addf(struct stats_table *table, size_t value,
+ struct ref_stats {
+@@ -318,6 +321,27 @@ static void stats_table_count_addf(struct stats_table *table, size_t value,
  	va_end(ap);
  }
  
-+static void stats_table_object_size_addf(struct stats_table *table,
-+					 struct object_id *oid, size_t value,
-+					 const char *format, ...)
++static void stats_table_object_count_addf(struct stats_table *table,
++					  struct object_id *oid, size_t value,
++					  const char *format, ...)
 +{
 +	struct stats_table_entry *entry;
 +	va_list ap;
 +
 +	CALLOC_ARRAY(entry, 1);
-+	humanise_bytes(value, &entry->value, &entry->unit, HUMANISE_COMPACT);
++	humanise_count(value, &entry->value, &entry->unit);
 +
 +	/*
 +	 * A NULL OID should not have a table annotation.
@@ -153,271 +131,260 @@ index 51a4359685..6fc2d9db12 100644
 +	va_end(ap);
 +}
 +
- static inline size_t get_total_reference_count(struct ref_stats *stats)
+ static void stats_table_size_addf(struct stats_table *table, size_t value,
+ 				  const char *format, ...)
  {
- 	return stats->branches + stats->remotes + stats->tags + stats->others;
-@@ -389,19 +421,29 @@ static void stats_table_setup_structure(struct stats_table *table,
- 	stats_table_addf(table, "");
- 	stats_table_addf(table, "* %s", _("Largest objects"));
- 	stats_table_addf(table, "  * %s", _("Commits"));
--	stats_table_size_addf(table, objects->largest.commit_size.value,
--			      "    * %s", _("Maximum size"));
-+	stats_table_object_size_addf(table,
-+				     &objects->largest.commit_size.oid,
-+				     objects->largest.commit_size.value,
-+				     "    * %s", _("Maximum size"));
+@@ -425,6 +449,10 @@ static void stats_table_setup_structure(struct stats_table *table,
+ 				     &objects->largest.commit_size.oid,
+ 				     objects->largest.commit_size.value,
+ 				     "    * %s", _("Maximum size"));
++	stats_table_object_count_addf(table,
++				      &objects->largest.parent_count.oid,
++				      objects->largest.parent_count.value,
++				      "    * %s", _("Maximum parents"));
  	stats_table_addf(table, "  * %s", _("Trees"));
--	stats_table_size_addf(table, objects->largest.tree_size.value,
--			      "    * %s", _("Maximum size"));
-+	stats_table_object_size_addf(table,
-+				     &objects->largest.tree_size.oid,
-+				     objects->largest.tree_size.value,
-+				     "    * %s", _("Maximum size"));
- 	stats_table_addf(table, "  * %s", _("Blobs"));
--	stats_table_size_addf(table, objects->largest.blob_size.value,
--			      "    * %s", _("Maximum size"));
-+	stats_table_object_size_addf(table,
-+				     &objects->largest.blob_size.oid,
-+				     objects->largest.blob_size.value,
-+				     "    * %s", _("Maximum size"));
- 	stats_table_addf(table, "  * %s", _("Tags"));
--	stats_table_size_addf(table, objects->largest.tag_size.value,
--			      "    * %s", _("Maximum size"));
-+	stats_table_object_size_addf(table,
-+				     &objects->largest.tag_size.oid,
-+				     objects->largest.tag_size.value,
-+				     "    * %s", _("Maximum size"));
+ 	stats_table_object_size_addf(table,
+ 				     &objects->largest.tree_size.oid,
+@@ -587,6 +615,11 @@ static void structure_keyvalue_print(struct repo_structure *stats,
+ 	printf("objects.tags.max_size_oid%c%s%c", key_delim,
+ 	       oid_to_hex(&stats->objects.largest.tag_size.oid), value_delim);
+ 
++	printf("objects.commits.max_parents%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.largest.parent_count.value, value_delim);
++	printf("objects.commits.max_parents_oid%c%s%c", key_delim,
++	       oid_to_hex(&stats->objects.largest.parent_count.oid), value_delim);
++
+ 	fflush(stdout);
  }
  
-+#define INDEX_WIDTH 4
-+
- static void stats_table_print_structure(const struct stats_table *table)
- {
- 	const char *name_col_title = _("Repository structure");
-@@ -420,7 +462,8 @@ static void stats_table_print_structure(const struct stats_table *table)
- 		value_col_width = title_value_width - unit_col_width;
+@@ -674,16 +707,24 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 	for (size_t i = 0; i < oids->nr; i++) {
+ 		struct object_info oi = OBJECT_INFO_INIT;
+ 		unsigned long inflated;
++		struct commit *commit;
++		struct object *obj;
++		void *content;
+ 		off_t disk;
++		int eaten;
  
- 	strbuf_addstr(&buf, "| ");
--	strbuf_utf8_align(&buf, ALIGN_LEFT, name_col_width, name_col_title);
-+	strbuf_utf8_align(&buf, ALIGN_LEFT, name_col_width + INDEX_WIDTH,
-+			  name_col_title);
- 	strbuf_addstr(&buf, " | ");
- 	strbuf_utf8_align(&buf, ALIGN_LEFT,
- 			  value_col_width + unit_col_width + 1, value_col_title);
-@@ -428,7 +471,7 @@ static void stats_table_print_structure(const struct stats_table *table)
- 	printf("%s\n", buf.buf);
+ 		oi.sizep = &inflated;
+ 		oi.disk_sizep = &disk;
++		oi.contentp = &content;
  
- 	printf("| ");
--	for (int i = 0; i < name_col_width; i++)
-+	for (int i = 0; i < name_col_width + INDEX_WIDTH; i++)
- 		putchar('-');
- 	printf(" | ");
- 	for (int i = 0; i < value_col_width + unit_col_width + 1; i++)
-@@ -450,6 +493,13 @@ static void stats_table_print_structure(const struct stats_table *table)
- 		strbuf_reset(&buf);
- 		strbuf_addstr(&buf, "| ");
- 		strbuf_utf8_align(&buf, ALIGN_LEFT, name_col_width, item->string);
+ 		if (odb_read_object_info_extended(data->odb, &oids->oid[i], &oi,
+ 						  OBJECT_INFO_SKIP_FETCH_OBJECT |
+ 						  OBJECT_INFO_QUICK) < 0)
+ 			continue;
+ 
++		obj = parse_object_buffer(the_repository, &oids->oid[i], type,
++					  inflated, content, &eaten);
 +
-+		if (entry && entry->oid)
-+			strbuf_addf(&buf, " [%" PRIuMAX "]",
-+				    (uintmax_t)entry->index);
-+		else
-+			strbuf_addchars(&buf, ' ', INDEX_WIDTH);
+ 		switch (type) {
+ 		case OBJ_TAG:
+ 			stats->type_counts.tags++;
+@@ -693,11 +734,14 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 				      inflated);
+ 			break;
+ 		case OBJ_COMMIT:
++			commit = object_as_type(obj, OBJ_COMMIT, 0);
+ 			stats->type_counts.commits++;
+ 			stats->inflated_sizes.commits += inflated;
+ 			stats->disk_sizes.commits += disk;
+ 			check_largest(&stats->largest.commit_size, &oids->oid[i],
+ 				      inflated);
++			check_largest(&stats->largest.parent_count, &oids->oid[i],
++				      commit_list_count(commit->parents));
+ 			break;
+ 		case OBJ_TREE:
+ 			stats->type_counts.trees++;
+@@ -716,6 +760,9 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 		default:
+ 			BUG("invalid object type");
+ 		}
 +
- 		strbuf_addstr(&buf, " | ");
- 		strbuf_utf8_align(&buf, ALIGN_RIGHT, value_col_width, value);
- 		strbuf_addch(&buf, ' ');
-@@ -458,6 +508,11 @@ static void stats_table_print_structure(const struct stats_table *table)
- 		printf("%s\n", buf.buf);
++		if (!eaten)
++			free(content);
  	}
  
-+	if (table->annotations.nr)
-+		printf("\n");
-+	for_each_string_list_item(item, &table->annotations)
-+		printf("%s\n", item->string);
-+
- 	strbuf_release(&buf);
- }
- 
-@@ -473,6 +528,7 @@ static void stats_table_clear(struct stats_table *table)
- 	}
- 
- 	string_list_clear(&table->rows, 1);
-+	string_list_clear(&table->annotations, 1);
- }
- 
- static void structure_keyvalue_print(struct repo_structure *stats,
-@@ -695,6 +751,7 @@ static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
- {
- 	struct stats_table table = {
- 		.rows = STRING_LIST_INIT_DUP,
-+		.annotations = STRING_LIST_INIT_DUP,
- 	};
- 	enum output_format format = FORMAT_TABLE;
- 	struct repo_structure stats = { 0 };
+ 	object_count = get_total_object_values(&stats->type_counts);
 diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index 1999f325d0..918af7269f 100755
+index 918af7269f..d003d64a8e 100755
 --- a/t/t1901-repo-structure.sh
 +++ b/t/t1901-repo-structure.sh
-@@ -27,41 +27,41 @@ test_expect_success 'empty repository' '
+@@ -27,41 +27,42 @@ test_expect_success 'empty repository' '
  	(
  		cd repo &&
  		cat >expect <<-\EOF &&
--		| Repository structure | Value  |
--		| -------------------- | ------ |
--		| * References         |        |
--		|   * Count            |    0   |
--		|     * Branches       |    0   |
--		|     * Tags           |    0   |
--		|     * Remotes        |    0   |
--		|     * Others         |    0   |
--		|                      |        |
--		| * Reachable objects  |        |
--		|   * Count            |    0   |
--		|     * Commits        |    0   |
--		|     * Trees          |    0   |
--		|     * Blobs          |    0   |
--		|     * Tags           |    0   |
--		|   * Inflated size    |    0 B |
--		|     * Commits        |    0 B |
--		|     * Trees          |    0 B |
--		|     * Blobs          |    0 B |
--		|     * Tags           |    0 B |
--		|   * Disk size        |    0 B |
--		|     * Commits        |    0 B |
--		|     * Trees          |    0 B |
--		|     * Blobs          |    0 B |
--		|     * Tags           |    0 B |
--		|                      |        |
--		| * Largest objects    |        |
--		|   * Commits          |        |
--		|     * Maximum size   |    0 B |
--		|   * Trees            |        |
--		|     * Maximum size   |    0 B |
--		|   * Blobs            |        |
--		|     * Maximum size   |    0 B |
--		|   * Tags             |        |
--		|     * Maximum size   |    0 B |
-+		| Repository structure     | Value  |
-+		| ------------------------ | ------ |
-+		| * References             |        |
-+		|   * Count                |    0   |
-+		|     * Branches           |    0   |
-+		|     * Tags               |    0   |
-+		|     * Remotes            |    0   |
-+		|     * Others             |    0   |
-+		|                          |        |
-+		| * Reachable objects      |        |
-+		|   * Count                |    0   |
-+		|     * Commits            |    0   |
-+		|     * Trees              |    0   |
-+		|     * Blobs              |    0   |
-+		|     * Tags               |    0   |
-+		|   * Inflated size        |    0 B |
-+		|     * Commits            |    0 B |
-+		|     * Trees              |    0 B |
-+		|     * Blobs              |    0 B |
-+		|     * Tags               |    0 B |
-+		|   * Disk size            |    0 B |
-+		|     * Commits            |    0 B |
-+		|     * Trees              |    0 B |
-+		|     * Blobs              |    0 B |
-+		|     * Tags               |    0 B |
-+		|                          |        |
-+		| * Largest objects        |        |
-+		|   * Commits              |        |
-+		|     * Maximum size       |    0 B |
-+		|   * Trees                |        |
-+		|     * Maximum size       |    0 B |
-+		|   * Blobs                |        |
-+		|     * Maximum size       |    0 B |
-+		|   * Tags                 |        |
-+		|     * Maximum size       |    0 B |
+-		| Repository structure     | Value  |
+-		| ------------------------ | ------ |
+-		| * References             |        |
+-		|   * Count                |    0   |
+-		|     * Branches           |    0   |
+-		|     * Tags               |    0   |
+-		|     * Remotes            |    0   |
+-		|     * Others             |    0   |
+-		|                          |        |
+-		| * Reachable objects      |        |
+-		|   * Count                |    0   |
+-		|     * Commits            |    0   |
+-		|     * Trees              |    0   |
+-		|     * Blobs              |    0   |
+-		|     * Tags               |    0   |
+-		|   * Inflated size        |    0 B |
+-		|     * Commits            |    0 B |
+-		|     * Trees              |    0 B |
+-		|     * Blobs              |    0 B |
+-		|     * Tags               |    0 B |
+-		|   * Disk size            |    0 B |
+-		|     * Commits            |    0 B |
+-		|     * Trees              |    0 B |
+-		|     * Blobs              |    0 B |
+-		|     * Tags               |    0 B |
+-		|                          |        |
+-		| * Largest objects        |        |
+-		|   * Commits              |        |
+-		|     * Maximum size       |    0 B |
+-		|   * Trees                |        |
+-		|     * Maximum size       |    0 B |
+-		|   * Blobs                |        |
+-		|     * Maximum size       |    0 B |
+-		|   * Tags                 |        |
+-		|     * Maximum size       |    0 B |
++		| Repository structure      | Value  |
++		| ------------------------- | ------ |
++		| * References              |        |
++		|   * Count                 |    0   |
++		|     * Branches            |    0   |
++		|     * Tags                |    0   |
++		|     * Remotes             |    0   |
++		|     * Others              |    0   |
++		|                           |        |
++		| * Reachable objects       |        |
++		|   * Count                 |    0   |
++		|     * Commits             |    0   |
++		|     * Trees               |    0   |
++		|     * Blobs               |    0   |
++		|     * Tags                |    0   |
++		|   * Inflated size         |    0 B |
++		|     * Commits             |    0 B |
++		|     * Trees               |    0 B |
++		|     * Blobs               |    0 B |
++		|     * Tags                |    0 B |
++		|   * Disk size             |    0 B |
++		|     * Commits             |    0 B |
++		|     * Trees               |    0 B |
++		|     * Blobs               |    0 B |
++		|     * Tags                |    0 B |
++		|                           |        |
++		| * Largest objects         |        |
++		|   * Commits               |        |
++		|     * Maximum size        |    0 B |
++		|     * Maximum parents     |    0   |
++		|   * Trees                 |        |
++		|     * Maximum size        |    0 B |
++		|   * Blobs                 |        |
++		|     * Maximum size        |    0 B |
++		|   * Tags                  |        |
++		|     * Maximum size        |    0 B |
  		EOF
  
  		git repo structure >out 2>err &&
-@@ -89,41 +89,46 @@ test_expect_success SHA1 'repository with references and objects' '
+@@ -89,46 +90,48 @@ test_expect_success SHA1 'repository with references and objects' '
  		# git-rev-list(1) --disk-usage=human option printing the full
  		# "byte/bytes" unit string instead of just "B".
  		cat >expect <<-EOF &&
--		| Repository structure | Value      |
--		| -------------------- | ---------- |
--		| * References         |            |
--		|   * Count            |      4     |
--		|     * Branches       |      1     |
--		|     * Tags           |      1     |
--		|     * Remotes        |      1     |
--		|     * Others         |      1     |
--		|                      |            |
--		| * Reachable objects  |            |
--		|   * Count            |   3.02 k   |
--		|     * Commits        |   1.01 k   |
--		|     * Trees          |   1.01 k   |
--		|     * Blobs          |   1.01 k   |
--		|     * Tags           |      1     |
--		|   * Inflated size    |  16.03 MiB |
--		|     * Commits        | 217.92 KiB |
--		|     * Trees          |  15.81 MiB |
--		|     * Blobs          |  11.68 KiB |
--		|     * Tags           |    132 B   |
--		|   * Disk size        | $(object_type_disk_usage all true) |
--		|     * Commits        | $(object_type_disk_usage commit true) |
--		|     * Trees          | $(object_type_disk_usage tree true) |
--		|     * Blobs          |  $(object_type_disk_usage blob true) |
--		|     * Tags           |    $(object_type_disk_usage tag) B   |
--		|                      |            |
--		| * Largest objects    |            |
--		|   * Commits          |            |
--		|     * Maximum size   |    223 B   |
--		|   * Trees            |            |
--		|     * Maximum size   |  32.29 KiB |
--		|   * Blobs            |            |
--		|     * Maximum size   |     13 B   |
--		|   * Tags             |            |
--		|     * Maximum size   |    132 B   |
-+		| Repository structure     | Value      |
-+		| ------------------------ | ---------- |
-+		| * References             |            |
-+		|   * Count                |      4     |
-+		|     * Branches           |      1     |
-+		|     * Tags               |      1     |
-+		|     * Remotes            |      1     |
-+		|     * Others             |      1     |
-+		|                          |            |
-+		| * Reachable objects      |            |
-+		|   * Count                |   3.02 k   |
-+		|     * Commits            |   1.01 k   |
-+		|     * Trees              |   1.01 k   |
-+		|     * Blobs              |   1.01 k   |
-+		|     * Tags               |      1     |
-+		|   * Inflated size        |  16.03 MiB |
-+		|     * Commits            | 217.92 KiB |
-+		|     * Trees              |  15.81 MiB |
-+		|     * Blobs              |  11.68 KiB |
-+		|     * Tags               |    132 B   |
-+		|   * Disk size            | $(object_type_disk_usage all true) |
-+		|     * Commits            | $(object_type_disk_usage commit true) |
-+		|     * Trees              | $(object_type_disk_usage tree true) |
-+		|     * Blobs              |  $(object_type_disk_usage blob true) |
-+		|     * Tags               |    $(object_type_disk_usage tag) B   |
-+		|                          |            |
-+		| * Largest objects        |            |
-+		|   * Commits              |            |
-+		|     * Maximum size   [1] |    223 B   |
-+		|   * Trees                |            |
-+		|     * Maximum size   [2] |  32.29 KiB |
-+		|   * Blobs                |            |
-+		|     * Maximum size   [3] |     13 B   |
-+		|   * Tags                 |            |
-+		|     * Maximum size   [4] |    132 B   |
-+
-+		[1] 0dc91eb18580102a3a216c8bfecedeba2b9f9b9a
-+		[2] 60665251ab71dbd8c18d9bf2174f4ee0d58aa06c
-+		[3] 97d808e45116bf02103490294d3d46dad7a2ac62
-+		[4] 4dae4f5954f5e6feb3577cfb1b181daa3fd3afd2
+-		| Repository structure     | Value      |
+-		| ------------------------ | ---------- |
+-		| * References             |            |
+-		|   * Count                |      4     |
+-		|     * Branches           |      1     |
+-		|     * Tags               |      1     |
+-		|     * Remotes            |      1     |
+-		|     * Others             |      1     |
+-		|                          |            |
+-		| * Reachable objects      |            |
+-		|   * Count                |   3.02 k   |
+-		|     * Commits            |   1.01 k   |
+-		|     * Trees              |   1.01 k   |
+-		|     * Blobs              |   1.01 k   |
+-		|     * Tags               |      1     |
+-		|   * Inflated size        |  16.03 MiB |
+-		|     * Commits            | 217.92 KiB |
+-		|     * Trees              |  15.81 MiB |
+-		|     * Blobs              |  11.68 KiB |
+-		|     * Tags               |    132 B   |
+-		|   * Disk size            | $(object_type_disk_usage all true) |
+-		|     * Commits            | $(object_type_disk_usage commit true) |
+-		|     * Trees              | $(object_type_disk_usage tree true) |
+-		|     * Blobs              |  $(object_type_disk_usage blob true) |
+-		|     * Tags               |    $(object_type_disk_usage tag) B   |
+-		|                          |            |
+-		| * Largest objects        |            |
+-		|   * Commits              |            |
+-		|     * Maximum size   [1] |    223 B   |
+-		|   * Trees                |            |
+-		|     * Maximum size   [2] |  32.29 KiB |
+-		|   * Blobs                |            |
+-		|     * Maximum size   [3] |     13 B   |
+-		|   * Tags                 |            |
+-		|     * Maximum size   [4] |    132 B   |
++		| Repository structure      | Value      |
++		| ------------------------- | ---------- |
++		| * References              |            |
++		|   * Count                 |      4     |
++		|     * Branches            |      1     |
++		|     * Tags                |      1     |
++		|     * Remotes             |      1     |
++		|     * Others              |      1     |
++		|                           |            |
++		| * Reachable objects       |            |
++		|   * Count                 |   3.02 k   |
++		|     * Commits             |   1.01 k   |
++		|     * Trees               |   1.01 k   |
++		|     * Blobs               |   1.01 k   |
++		|     * Tags                |      1     |
++		|   * Inflated size         |  16.03 MiB |
++		|     * Commits             | 217.92 KiB |
++		|     * Trees               |  15.81 MiB |
++		|     * Blobs               |  11.68 KiB |
++		|     * Tags                |    132 B   |
++		|   * Disk size             | $(object_type_disk_usage all true) |
++		|     * Commits             | $(object_type_disk_usage commit true) |
++		|     * Trees               | $(object_type_disk_usage tree true) |
++		|     * Blobs               |  $(object_type_disk_usage blob true) |
++		|     * Tags                |    $(object_type_disk_usage tag) B   |
++		|                           |            |
++		| * Largest objects         |            |
++		|   * Commits               |            |
++		|     * Maximum size    [1] |    223 B   |
++		|     * Maximum parents [2] |      1     |
++		|   * Trees                 |            |
++		|     * Maximum size    [3] |  32.29 KiB |
++		|   * Blobs                 |            |
++		|     * Maximum size    [4] |     13 B   |
++		|   * Tags                  |            |
++		|     * Maximum size    [5] |    132 B   |
+ 
+ 		[1] 0dc91eb18580102a3a216c8bfecedeba2b9f9b9a
+-		[2] 60665251ab71dbd8c18d9bf2174f4ee0d58aa06c
+-		[3] 97d808e45116bf02103490294d3d46dad7a2ac62
+-		[4] 4dae4f5954f5e6feb3577cfb1b181daa3fd3afd2
++		[2] 0dc91eb18580102a3a216c8bfecedeba2b9f9b9a
++		[3] 60665251ab71dbd8c18d9bf2174f4ee0d58aa06c
++		[4] 97d808e45116bf02103490294d3d46dad7a2ac62
++		[5] 4dae4f5954f5e6feb3577cfb1b181daa3fd3afd2
  		EOF
  
  		git repo structure >out 2>err &&
+@@ -171,6 +174,8 @@ test_expect_success SHA1 'keyvalue and nul format' '
+ 		objects.blobs.max_size_oid=eaeeedced46482bd4281fda5a5f05ce24854151f
+ 		objects.tags.max_size=132
+ 		objects.tags.max_size_oid=1ee0f2b16ea37d895dbe9dbd76cd2ac70446176c
++		objects.commits.max_parents=1
++		objects.commits.max_parents_oid=de3508174b5c2ace6993da67cae9be9069e2df39
+ 		EOF
+ 
+ 		git repo structure --format=keyvalue >out 2>err &&
 -- 
 2.53.0
 
