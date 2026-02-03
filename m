@@ -1,218 +1,129 @@
-Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843E821B9FD
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 10:18:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770113899; cv=none; b=d7b2buYI0U86E8FYazoE85GjOAqpaBZHM16ZaN1+My/qCQTWIkglZf4hjfgh5u6fhHBtcNullTCYvxKrNSvR0Hb1AQEVfTiLCOMu82rnePG/nFrtCWlVfe8VBOKC2bA4LTn/4QbegdCGR89l2fP6znZM44r0kKH8jS0qK/8HJ5U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770113899; c=relaxed/simple;
-	bh=i7DypXkusYJ/mIDVIb9htUBWhDbTohx/pn8DB70gaJ0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=arXyyr+cxDpGZwYjd8VmltFSg8Cdy2SmDT6I+qylmXMjgw9VwtFweU3rVntSFIVWErHDwEtlCilo+SS2W9pjQ6eoxsR/eMWE/qY9tJuhCn48PC3dMXFAbJ7kvpFr2p+P+JgtG46n2973FZYfiDYfYUziF7XcKxSQKtrWmUjdeas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PfFyV+m0; arc=none smtp.client-ip=74.125.82.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F38B31812F
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 10:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770114186; cv=pass; b=q1nU8zPSQBW4Tu3oXcWZJR663wwihcCVeWtk6oDZD4lYvVoqC5Ty/CqrnsM9Kosfndl7KxoPyt7US5bxpSF/n0aY9AfqQzgyuJS1Ql7m0u1TRVkreTzl+9L9KxkixjK1+Tu9g0h/6dUOcc7T/sGguRNfPfVyLYrCJhBWxwJed3w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770114186; c=relaxed/simple;
+	bh=+87IevbjIsPLP9+5ln1Hv9YbbEq+z693nLFi17v0CiM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Zan4XeYJHHEI1rUkHiBu9ZsFFfzS40PeOd0hRf+ScF540pszW+tWeW2AbAWQbgdTNEe9i7LYC5z+CiWIpYiWz02+rrZD1SAs+IAHmLwpElTMnnEmcUrBCASS8ASgGB7CF76+dLKUXzhuW3u/V2pAtrv3CYYSgVJbPFeoEUwnxJo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nNS7Poz8; arc=pass smtp.client-ip=74.125.82.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PfFyV+m0"
-Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2b74f839bdfso424068eec.1
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 02:18:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nNS7Poz8"
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-124afd03fd1so8051369c88.0
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 02:23:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770114184; cv=none;
+        d=google.com; s=arc-20240605;
+        b=VgX+UBZ3QU0JEVgnw/zru1HBEAFWVG0g04cmh5i8GNlD/UyMupwq/3eggc2Dk2JkT1
+         iDub4aCkNPiVqIOzn38XUhs7dvRVqxuOFgPFjdgyYA59PR7a7/ZKaZgecg50qy7bG1ij
+         Hdd4TTpS9RDmX2bkO33RZ2UIz4dlaAzQoYo/C/gP/a+nnD6I1pSc1sNcACUNAdN5vlbO
+         zlgKRvFRErmuPL7zHKpVqDg8b+B2bkHI7FYcGzmrQT/QawnSNVxNhfVlm5rzdgK/5rhJ
+         riBRz0p4LJpKLSOuyBvIyrCEkBcFfLwZO4H6EE/mla9FKUZnniaLAOpf6gahcE2XZiYL
+         TocA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=+87IevbjIsPLP9+5ln1Hv9YbbEq+z693nLFi17v0CiM=;
+        fh=PDV3F6nQTWdTADIGVaiQ2XExtmkqO5nNGftqjraMlNk=;
+        b=SPqtxfYKqhBf29wSZgfbJW1wNn1mczDEYjDAnNwlaIzzCgcKrP+WM3eZuF5sQpXxZn
+         /Z4sl4w/MA4Wb0LGvv26YbGz0lY63HR6ZvYrVmvByDv3QQkYvgvLheERsdJRiq7sQYYf
+         91/e0AwNvKodNsIu9WlTfRpSudmz5Ah1KW+noTQgR7jsjorieJGfOI0Bp7sB4zHJUqbt
+         +mQaWC+OW5CFXnhxz2g7rZkd4FMQzmRkI+xOoV6iBfQTH2vFD/0xlonjzp3zCfbAo8bn
+         4pXixoUBLUyXggplZHOzHSZE2KpaxLcxWjcsK7n+k5UgIgLr5NWnBZyVbY0PueOupzws
+         rUtA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770113896; x=1770718696; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770114184; x=1770718984; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KKYAPYm9YMyqVe9lMMBT2g2xRMKT0mHTlOHspmscauE=;
-        b=PfFyV+m0XOyB7FIQ5rs6MwD8bF0S0ZzTuYr+UtgiyjCzSwMe2idf0UKrifK6HNssQ7
-         mQ7sWUdPOd/6nJM6PBn3QS4fzgjoQ6vyt6NYgHVA5tXyuXeNOlxzF2Dx1UCBbV9iRmDu
-         equ9Oq8rlu/XL2szsRfSdxD3sTeE3tu2Rsa33CGpOvdCczjrWNGaDUcr3DgpDwVTWCoN
-         HB641JZvqXHjmXMojWsSjQxzNc1385YaLxpRGZZi8qaR+yNfQjlWj+SLvzm1pVBveDOi
-         qfHnL4kP2sj3SD3oOcsy2cagOR4i/AYq9gLv81SKUCAqwsOn3sbJGsVvRVPdO0BSifpo
-         jz8w==
+        bh=+87IevbjIsPLP9+5ln1Hv9YbbEq+z693nLFi17v0CiM=;
+        b=nNS7Poz8uisaEp+xa5zhW2MWu4ug/v5HtO/LZbh9YOAr7ShbSXy3AHH48gO6UQeo/y
+         lbjyZU5E1Fva/fiikFYZCjP0dDC9E/+13sroDqdNflhh98ZmvnWqoHdLuC9pQhabfFoe
+         bsyv+0WIb+mhx9HNL+4P/QvdEo89x0VMDLfzHSgVAACc/RrIauIx2nd349If2Res41sp
+         vTg82YNQ/ImBop367EmYA+eYnCxIWk/RtWWdRw2OuMRiKzznKbGoDMzfB7hr3fkkovC/
+         7b62LKByGbGFDPYl7NV/GjkF6PHPVLlp62rS/1mmTE5dyQiRj5QN5Z+gUGGhMvJM0nR3
+         R4Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770113896; x=1770718696;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1770114184; x=1770718984;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=KKYAPYm9YMyqVe9lMMBT2g2xRMKT0mHTlOHspmscauE=;
-        b=JaKJQJtyDWjcBVt8nA+QffCn/BUrS+Z3NVO/W8wfpCT9gZcd6lZkc9ibokk/BtSRq9
-         swFyNLc0XOKVdFwB0bwkJj2FgGGIRnYwlMCicLXIj99YtpIkpLd5TWUP0lNEv7HRLknv
-         L2G+JWv+8TDQh9+ZmO1YGq9qyBMIS0aCTsenzRYb4pyXQM3EX7JO+HG0UCeyKyHiczvN
-         5vJ2gj1ALQjfcSJ/AWQgQUMLSQmtGw8o2sWrHHz2xppxz+BVpOi+bug0Pjz11NbreSD7
-         THV82Bj6FVkvov5WMpFcTA5782nuqZpZkQmM35mZhfiDitlSetA3jR3EFdS5JswZJlRt
-         Dj3w==
-X-Gm-Message-State: AOJu0YxuyA8R3mb0ff3NTHksyTQcIF66GmiAoRu2mLk4B512hOvgYzj4
-	EPA4b6LHJs34esy39wJdg1DeMp+QTQJAU8HIHcS6+fcdmd5e0gd+mP9GsGnca2lp
-X-Gm-Gg: AZuq6aJiftnSlJqpMN1IyhlhxCOIVyXZQqXaPOhz0Q4UBDWoqaGsLRW9HDNBI6yB6Mv
-	hYX2f4DdgiWzJ6wIFHTuvgyvg4N19CfbdWTP32pxDMJcUwVigeXaX3+o/zEWymKqsXxCEFYfD8r
-	7OH6HkOmT/BQedFI7o6WJG0EQx11U7alBpSrsuy8embhM/GYz7dFj0d3O6GDSg6Cm1leURjm/wD
-	/C3aqwphcu3teITag9r26DEYu7MkHjCTEVCOBhzhJ3F1OHqjaitdk/8XDLSfLL0L/YMNIJvBovb
-	NzBBCAV9PuTmZbrF7HjFxJ6Hlekg44zCd4hCBslGlu7AiXFYDRtaGYySVqKNkKs8iqv9E0c78zK
-	4++cQpQ5ZUU9ksvYF6O+/tnC2+DMZDPEczT1KPgD8Pq+6L4MxtiqASCmODOEU9HVoHuxowVe1Om
-	4QplWzF6agBgEmDQ==
-X-Received: by 2002:a05:7300:a90c:b0:2ad:a3d6:7446 with SMTP id 5a478bee46e88-2b820f26ab1mr873264eec.16.1770113896111;
-        Tue, 03 Feb 2026 02:18:16 -0800 (PST)
-Received: from [127.0.0.1] ([128.24.162.145])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-124a9de948esm21567968c88.9.2026.02.03.02.18.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 02:18:15 -0800 (PST)
-Message-Id: <8b8244eca96762aa1eba463506a564dba9916cee.1770113882.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
-References: <pull.1853.v3.git.1768602373.gitgitgadget@gmail.com>
-	<pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 03 Feb 2026 10:18:02 +0000
-Subject: [PATCH v4 6/6] sideband: delay sanitizing by default to Git v3.0
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=+87IevbjIsPLP9+5ln1Hv9YbbEq+z693nLFi17v0CiM=;
+        b=PXvNl00458JaXTxXZMQSrprL/te80e9tzG+n+OLoHJAJYU7vf++gWARzlN3S/1S/Yv
+         e+RkpNMO0BWFR2WYhIXIfx3LKW7w22+FMbpO++dFK2kkZNGOBmtmh+JnV1L/vZVk4tpJ
+         57XoBcSuvPZZKl2gGQSvwCo0XJFMeDXryazzGLjMMr62cDVHUOTW+y97KJX9jV9u6DGc
+         0bHnsdcrlbwJ39PCkp6NOHmAZ6VcjAmHbKCwJnRBqMHP9Ufc4zwiu/CZYrVv7WZONY4b
+         pnPwUW7lUBMAzDKxajLfMUDX8YELmkWQULj7EEUjcwOQGgz8zeXG6/2/ME6u07t2N12Q
+         Z+Rw==
+X-Gm-Message-State: AOJu0YysHXOJ1vnDhJy0hDQglq+gbpthtQ4LGC7G9gJG+zDysPSwP38T
+	jUMYpIKWawaOWn1W03aqbypjNKcA8StigcppI3wqo+lEj9RTTLFQYFclJfYO7tD80PBe4G0vjpx
+	U6bHBdj6MSyL2RTzo5yHGPdysJbHcOmw=
+X-Gm-Gg: AZuq6aJtSCUBZJ4DhmQCxgcaNY5cRgqczQ8UXzZEmJQQm1HUqIhPwNWCrRv/rbLAr+F
+	w/2ObIjEkk8uWNntSUizR/QuMsi1vyMY1UFj2xkS0wrFSY1T//NziC71LjwC9spTYQGDjd5aBoT
+	9gP1JfPv9p39Pa99rQKlr5QEWvEE4wIerErEK+mQ1Wr2eBnS9Q2khkVO7z+kthGQxUNBOIgQZrj
+	2vc5iMNSvHR7ynfc+tIZbWYl3Lv7oljWW+AUaAcgAdZyg6cA8ZCfmPhafH9PI/TWt3GNLAqhkPg
+	C7nWX8qkRE3xls8KDc0IPFheBkDudQYmeHoz3zUVUSrWDrmSwOMi3YJW
+X-Received: by 2002:a05:7022:628b:b0:119:e56b:91d1 with SMTP id
+ a92af1059eb24-125c0f7df73mr5434603c88.2.1770114184211; Tue, 03 Feb 2026
+ 02:23:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Andreas Schwab <schwab@linux-m68k.org>,
-    Ondrej Pohorelsky <opohorel@redhat.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Jeff King <peff@peff.net>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <CAP8UFD11txMWSfMTvDtcBJuuZA5mKffo6XUyR9LWk2d_N0RRtA@mail.gmail.com>
+ <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com> <CAP8UFD0kEATc6sU4r2pVq9k2X737Tk+_VXrxXx8K=M6=ciL=vQ@mail.gmail.com>
+ <BAD29E01-C358-456F-8E31-058AC0AED0C8@gmail.com> <CAP8UFD29LtG2dRRB4f6mZAHNGqDmDxUV4ULYw3w3OYg15ZBBYg@mail.gmail.com>
+ <21D9FA76-F382-483E-817F-C3947C939D16@gmail.com> <CAP8UFD0qtn_1VAA1SiAMjGVF7Qv9qC1GdDmsbkK1xvq=SFxTaQ@mail.gmail.com>
+ <CAP8UFD07yEVibYL-DwmRj4AQtdbE600LwQDR3Nf5j9FxnQ+mnQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD07yEVibYL-DwmRj4AQtdbE600LwQDR3Nf5j9FxnQ+mnQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 3 Feb 2026 11:22:52 +0100
+X-Gm-Features: AZwV_QiYZQIa5-OOZEbGvAWsXtNsuhIwVyE2dwsad3cSeTv8NtQxPifQUrgH1a0
+Message-ID: <CAP8UFD3Bf9y-sKfFXBXmq54MQ7AAgJ+5B5O0Yak==s2vUUXruw@mail.gmail.com>
+Subject: Re: Git project and GSoC 2026
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Chandra Pratap <chandrapratap3519@gmail.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	karthik nayak <karthik.188@gmail.com>
+Cc: git <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>, Meet Soni <meetsoni3017@gmail.com>, 
+	Bello Olamide <belkid98@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	Eric Ju <eric.peijian@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Feb 3, 2026 at 11:08=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Tue, Feb 3, 2026 at 10:37=E2=80=AFAM Christian Couder
+> <christian.couder@gmail.com> wrote:
+>
+> > Otherwise everyone who said they were interested in (co-)mentoring
+> > should be listed as a potential mentor of each of these projects.
+>
+> Lucas, Justin, Siddharth, Ayush and Chandra,
+>
+> I have also invited you as "Mentor" into the Git org on the GSoC
+> website. Let me know if you haven't received the invite or if you have
+> issues with it.
+>
+> Kaartic, and Karthik,
+>
+> You should still be Org Admin and Mentor respectively for the Git org
+> on the GSoC website.
+>
+> I have removed everyone else, but please let me know if you still want
+> to participate.
 
-The sideband sanitization patches allow ANSI color sequences through
-by default, preserving compatibility with pre-receive hooks that
-provide colored output during `git push`.
-
-Even so, there is concern that changing any default behavior in a
-minor release may have unforeseen consequences. To accommodate this,
-defer the secure-by-default behavior to Git v3.0, where breaking
-changes are expected.
-
-This gives users and tooling time to prepare, while committing to
-address CVE-2024-52005 in Git v3.0.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/config/sideband.adoc  | 11 +++++++++++
- sideband.c                          |  6 +++++-
- t/t5409-colorize-remote-messages.sh | 18 +++++++++++++-----
- 3 files changed, 29 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
-index 32088bbf2f..800a10a1ef 100644
---- a/Documentation/config/sideband.adoc
-+++ b/Documentation/config/sideband.adoc
-@@ -1,12 +1,23 @@
- sideband.allowControlCharacters::
-+ifdef::with-breaking-changes[]
- 	By default, control characters that are delivered via the sideband
- 	are masked, except ANSI color sequences. This prevents potentially
-+endif::with-breaking-changes[]
-+ifndef::with-breaking-changes[]
-+	By default, no control characters delivered via the sideband
-+	are masked. This is unsafe and will change in Git v3.* to only
-+	allow ANSI color sequences by default, preventing potentially
-+endif::with-breaking-changes[]
- 	unwanted ANSI escape sequences from being sent to the terminal. Use
- 	this config setting to override this behavior (the value can be
- 	a comma-separated list of the following keywords):
- +
- --
- 	`default`::
-+ifndef::with-breaking-changes[]
-+		Allow any control sequence. This default is unsafe and will
-+		change to `color` in Git v3.*.
-+endif::with-breaking-changes[]
- 	`color`::
- 		Allow ANSI color sequences, line feeds and horizontal tabs,
- 		but mask all other control characters. This is the default.
-diff --git a/sideband.c b/sideband.c
-index a90db9e288..650d00b36e 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -33,8 +33,12 @@ static enum {
- 	ALLOW_ANSI_COLOR_SEQUENCES    = 1<<0,
- 	ALLOW_ANSI_CURSOR_MOVEMENTS   = 1<<1,
- 	ALLOW_ANSI_ERASE              = 1<<2,
--	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES,
- 	ALLOW_ALL_CONTROL_CHARACTERS  = 1<<3,
-+#ifdef WITH_BREAKING_CHANGES
-+	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES,
-+#else
-+	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ALL_CONTROL_CHARACTERS,
-+#endif
- } allow_control_characters = ALLOW_CONTROL_SEQUENCES_UNSET;
- 
- static inline int skip_prefix_in_csv(const char *value, const char *prefix,
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-index 3010913bb1..07cbc62736 100755
---- a/t/t5409-colorize-remote-messages.sh
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -98,6 +98,13 @@ test_expect_success 'fallback to color.ui' '
- 	grep "<BOLD;RED>error<RESET>: error" decoded
- '
- 
-+if test_have_prereq WITH_BREAKING_CHANGES
-+then
-+	TURN_ON_SANITIZING=already.turned=on
-+else
-+	TURN_ON_SANITIZING=sideband.allowControlCharacters=color
-+fi
-+
- test_expect_success 'disallow (color) control sequences in sideband' '
- 	write_script .git/color-me-surprised <<-\EOF &&
- 	printf "error: Have you \\033[31mread\\033[m this?\\a\\n" >&2
-@@ -106,7 +113,7 @@ test_expect_success 'disallow (color) control sequences in sideband' '
- 	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
- 	test_commit need-at-least-one-commit &&
- 
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >decoded &&
- 	test_grep RED decoded &&
- 	test_grep "\\^G" stderr &&
-@@ -138,7 +145,7 @@ test_decode_csi() {
- 	}'
- }
- 
--test_expect_success 'control sequences in sideband allowed by default' '
-+test_expect_success 'control sequences in sideband allowed by default (in Git v3.8)' '
- 	write_script .git/color-me-surprised <<-\EOF &&
- 	printf "error: \\033[31mcolor\\033[m\\033[Goverwrite\\033[Gerase\\033[K\\033?25l\\n" >&2
- 	exec "$@"
-@@ -147,7 +154,7 @@ test_expect_success 'control sequences in sideband allowed by default' '
- 	test_commit need-at-least-one-commit-at-least &&
- 
- 	rm -rf throw-away &&
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
- 	test_grep ! "CSI \\[K" decoded &&
-@@ -175,14 +182,15 @@ test_expect_success 'allow all control sequences for a specific URL' '
- 	test_commit one-more-please &&
- 
- 	rm -rf throw-away &&
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
- 	test_grep ! "CSI \\[K" decoded &&
- 	test_grep "\\^\\[\\[K" decoded &&
- 
- 	rm -rf throw-away &&
--	git -c "sideband.file://.allowControlCharacters=true" \
-+	git -c sideband.allowControlCharacters=false \
-+		-c "sideband.file://.allowControlCharacters=true" \
- 		clone --no-local "file://$PWD" throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
--- 
-gitgitgadget
+I have also applied for the Git project as a GSoC 2026 Organization as
+the deadline was today at 18:00 UTC.
