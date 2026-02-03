@@ -1,125 +1,125 @@
-Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B32EEC3
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 14:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8143EBF36
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 15:16:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770129535; cv=none; b=PlZNoKJSVbkmiq4RC4GCq2YpUuOK3Ez0CXwSr0UnkyTcbBC5B4uHsSmCUN9V4VXrYvtwzUfqu5ZGBSRSIJC+lN3CZ0+HWIn9qfm/YNzdl84UTY+lpRVuiyMCeO3SVEJ98sQ75ZHEP3egZfcMLzxHdr6X68EpGyIDtkTZ+wyLAps=
+	t=1770131813; cv=none; b=UeqVqOVDqFss8wJ0ImkTSRgqi+145kOsVBH3tIBocn0o14ZHzrQkUOvCDWMJtVGFTDbxjvY55J8S/S7q/G3DQzSK6tCCEybvkGbzSWYgK3W8dFzctKTGh1OwjvdiOoVqOTEq0a4cHgt++d4TJPPCe/rOxQYEJrIXhJNY9aWAYqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770129535; c=relaxed/simple;
-	bh=Jhr79JEQDifjOTj48EjBAjgthH3VPdz1oE4c44EmVv0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=r5gEG7jteOJ3pWWDOV2y8JqvCLeQ/qI9pkql5Rw2ouSo05qntQPV0FmlKl9djLYhtb3R75HJhii1zdzPYaJx0cJ/da6AkcsO7qDDbG8Zg6jm9zC3zTvhvx+mfB8ImIPMypLFfv5TKPdnjw+AdcisuT9209MHqBYEJNibFOe1GNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E8XruytY; arc=none smtp.client-ip=209.85.221.68
+	s=arc-20240116; t=1770131813; c=relaxed/simple;
+	bh=S/CeKtbIfPGzjpWBjvhLdG+fjqsGPRjJ6FV9H8TnFZ8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EhYxL3Z2rmDKpuIB4Y2vL+UczW0S/0ofJuRlYsLF8rC0YFfc+d/ZI2B0MTyhM91yJzUO0KyNVdkp2cjYOiPr6ubDIj7PgBRvx+21sc064ELX9o+/0eYtoItPs2wcbHpWZjPrt5DvUB7ZM7roeW6tmiIWez07/+sakNika2X4IBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PC3cg72h; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E8XruytY"
-Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-4327790c4e9so3645174f8f.2
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 06:38:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PC3cg72h"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2a7bced39cfso60772845ad.1
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 07:16:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770129532; x=1770734332; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DNgoDGsxtO23eyxPZ1+02I1ORtgqTlj2vylUR7Ajx+o=;
-        b=E8XruytYt4xKZAjC785pGD1oheeMUCBIkdKa4eZjry9HBKiuHEodRrqDooF1Ciwd09
-         ZUidqL1pca1wmj0jjrP/yKiKin+8ywyav6u3GIHc3s3yNsdJz7K21/xKfsuouGTg9iIA
-         A1yIORv69gRdR+RLb7u7nqzixnIqV3iF4/3m8vO0GYVoTapJsEJjUSevE/slgmEadeHt
-         uYMB11uBz6XDYEI4TS5mPZVOv61529FqZzDFc4t9607OphSV/d13Wg5UKhKP5EfDUqTf
-         iE1/3sdrwRw4HrnbymlA4EuJ/JF4a9+zldUdtYGYRumCvPxIEjUUfA+3rWQzCy2Sxjpn
-         wx2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770129532; x=1770734332;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770131805; x=1770736605; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DNgoDGsxtO23eyxPZ1+02I1ORtgqTlj2vylUR7Ajx+o=;
-        b=hibBudGNTwFofNZmJ2qZgCYZjLpi5S7E2L4g8ng+HmArRFQ7pMpMIK3bx2kMzApLTk
-         T1x49HQjQMM0dAyNVULlN1qrIdmmfFqqmYKk6cBN6xckL6x5nSqQuppFXlRFlJxvyh6k
-         yvjTlLKMEccfSQZbVDoM4WeE5xQ5jKZx0WSCDAnbrajVZm7PE3rdizI/jltHOPj9G3pa
-         kDkqSkkKCCMoW7wMhXA4fw0vSUKZOjEyWaDv6+ygI66KPnb+qLrXMcj0+vSRZF07zfs7
-         +xvkLk97LLlxcRMbdo8CDxbR/tvxq3MkUZTQvnbKjBwLEQEv3NJFWZVRbXtu8B5CEvRg
-         evJg==
-X-Gm-Message-State: AOJu0Yx41AFakz84IJ9i8swbzolrPCvUIULEOi1zfwaySqfIhIkdWuK2
-	UB43boHxbjhnDQj7KWy7hRRrrikDGAgfcAkDIK5hiMIeLzqQucZJPnDt
-X-Gm-Gg: AZuq6aKlxnT9QTOM9I5b3hA7gaz2BcHG7ucdTmqeqLUQbl1VwGnSQ1Pmz9TVBQQAuvj
-	O2LEtbomU5nwUGi8FOEuiBymmKPFv/OLbk7yWTMIzuTSbuNfKdrJJ+cCFr8REmsydB3+14q+9EE
-	P0ptf4Of94JMFP7JkX7VFB44gJr0/TCIJKCZdZej13C0qKa7UE9/eIoUW2hqrDoFS/RWZjTQ1iA
-	F8D9s7m75SjkCqhCf9uCNriORVXdZkoNq2LVJ+zYwWotqMSnpSL8TdYXh2rCefBPbuPrr7gUt4A
-	+WZQyuL+MtmFtN0uXXTQy4sCo037S62wvy7R5YUZrG4XohkbpHRxBfsTeNPgjja5KcLvbMmFbjX
-	8U5h7eDPnmobV47V3Asg85VN4Ht4z47kl6cAKdVJzlsdbDma5on2pBRqB1SCjUGnYMyDp459lYV
-	3Ww13KUhJf+TxARmXx22hVtmjLdiKvFrTg4M7YhHe/m8rcwEtkwSLm9lHOstrRvH38mA==
-X-Received: by 2002:a05:6000:2409:b0:436:145a:e55a with SMTP id ffacd0b85a97d-436145ae7f7mr2714827f8f.16.1770129532173;
-        Tue, 03 Feb 2026 06:38:52 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e10e483asm50794447f8f.3.2026.02.03.06.38.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Feb 2026 06:38:51 -0800 (PST)
-Message-ID: <9120dbf3-f10f-4333-aa70-f24835d7ef02@gmail.com>
-Date: Tue, 3 Feb 2026 14:38:48 +0000
+        bh=Lx9BkMnyF4juV0FUKtOmpgjHIxZdtMfv418XdVd54IY=;
+        b=PC3cg72hd4WodZg0jfr8GE8d12kV6AFbrfbVBo9TlO1Gv4HvtyWi3LAF5LOJftNu4+
+         0Cd7y88XYM81MI+KwKNpMVYfPHLfHqokcVqueyqHOvIToKZPgV4uHFeT5hNYVZzbxKTq
+         0yGCh4GxOjDaS2Dg9mmN81xS4UtWp7Dr5Mzjc50PmKeokzJi1RB2jXdlg+I3rK01gP7U
+         qi15bL0iVSm5bPWlD4B8jjLFS+EmZSnA1+d/hBCF7/9/Kbd0b03a8RuUpURxgfKantB9
+         oLj0p1VRHRtBf9XIBbJDzvLHNP66Ub+RPD5fu12Cd8rYY7lsZhr1xtLGJmIgnA6N5q2J
+         sK1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770131805; x=1770736605;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Lx9BkMnyF4juV0FUKtOmpgjHIxZdtMfv418XdVd54IY=;
+        b=VzA7KMvpn0lx4MNIAghCJ2ezh2UIq/G2H8vFActWWhVZxRRkqZreg52TZkdEd11jxj
+         MSU3AjHfv8rF8kVjd2MmO4zCtOGVHYLjL+vAeUeSkx/B8mCiSXABJeuY9iYLYvTAPRQ4
+         VlGbMmvL+P3kbzUbGCphpjKaIKjTmY9c44VJX4URCxGpGSMDhfwmkYwZW76Hl1J9wuAE
+         gbsWOJYuAhyNe0SLcJ/F6vujgpsej02DFOVOSk01DLvyWy/yZzIqL4NHdFcJTS9otp6w
+         PEJNqqgSORpQaYQVxvMTh3s8lmQl8L+IS0IkPEayHCe3562atKG49zK/7dTb9fj7PlAo
+         SpUA==
+X-Gm-Message-State: AOJu0YxbesW6Kxq2CMeNnqtoIoaFGKmLQpKNfadkuzP+juZREWQq2CDI
+	sFkCOx3OejyTqhizJK9ssfMYAt7K2VfkPFr4i98QEQ4Lzmv2L/l4Jhqbr44rYw==
+X-Gm-Gg: AZuq6aIxcj3AnxI90XTzxayLa+yz1Ff1KhVypca9LeD7Y23bUkFlRv0WzJI13tbbHYV
+	BJ5In797lmcxr0ODQF3aYeub8cXjMF/u4AO/4uvNBMmcKszJHyu0S+5aFRL8+kkDnCBKqsZh79h
+	Nak85wD9bnIsnu9F/kDAZ+xe5xEcve29AC38BklD3iOHV9/kSS64BWcsKqi96Pk7ec9sq9Zmp5C
+	EfYY8j8G/ysQzh8PZjIqVmZYSr4LOBaxK0BAIokx7bJBCptmBYD4/qwOHOkLNZ5ojqQAhdpg675
+	Y61SSVNzFDE+n+tCAKLKcLq6TJD34MwmKM33ctgBMEPr4Bfe3siGhxniflYV99EJ3dkYnSZpbTg
+	AexIESudZo/fdIv+hwOn0vofcYNIEixiZKbI+do747gtiCMxXpzsFtOf1PHjnhLBKunyubGQhpC
+	t+YlGY2QpquTwLn54IbJCJ99orYmvVVBnzCeLR0zInGyI7
+X-Received: by 2002:a17:903:1786:b0:2a9:30d4:2af5 with SMTP id d9443c01a7336-2a930d42d7emr4588255ad.33.1770131804972;
+        Tue, 03 Feb 2026 07:16:44 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:3444:c9e4:e4a:f1df])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b5d9a7bsm182902805ad.79.2026.02.03.07.16.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Feb 2026 07:16:44 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	karthik.188@gmail.com,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH 1/3] wt-status: replace uses of the_repository with local repository instances
+Date: Tue,  3 Feb 2026 20:45:35 +0530
+Message-ID: <20260203151613.36957-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <50791aed-c64b-48fe-8cc7-8cacaec9d295@gmail.com>
+References: <50791aed-c64b-48fe-8cc7-8cacaec9d295@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] revisions: add @{default} shorthand for default branch
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, gitster@pobox.com,
- phillip.wood@dunelm.org.uk
-References: <d92bd08f-abee-49a6-89ad-3be5e0c06ad6@gmail.com>
- <20260202101445.13790-1-haraldnordgren@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260202101445.13790-1-haraldnordgren@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 02/02/2026 10:14, Harald Nordgren wrote:
->> I don't really understand what you're trying to achieve and I'm not sure
->> if the suggestion above is a good idea but it might help understand what
->> it is you're trying to do.
- >
-> I want a shorthand so that when in any of these repos, I'm switching to the
-> default branch, I simply have to run
+> > The replacement of all the_repository with s->repo in this patch are mostly
+> > to cases where a repository instance is already available via struct wt_status.
+> > 
+> > In the current flow, all functions operating on struct wt_status *s
+> > are called via commit.c. There, status_init_config() calls
+> > wt_status_prepare(), which initializes the struct wt_status and
+> > assigns s->repo from the repository instance passed in by the caller.
+> > As a result, s->repo is guaranteed to be initialized whenever these
+> > functions are invoked.
+> > 
+> > And commit.c itself still relies on the_repository, within wt-status.c,
+> > the local repository pointer refers to the same underlying
+> > repository object that the_repository would have pointed to, indirectly
+> > until we make commit.c also free of the_repository.
 > 
->      git switch @{primary}
+> Good explanation, that would be a very useful addition to the commit message
+
+Sure I will include this in v2.
+
+> >>> @@ -1723,18 +1723,18 @@ int wt_status_check_rebase(const struct worktree *wt,
+> >>>   {
+> >>>	struct stat st;
+> >>>
+> >>> -	if (!stat(worktree_git_path(the_repository, wt, "rebase-apply"), &st)) {
+> >>> -		if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/applying"), &st)) {
+> >>> +	if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply"), &st)) {
+> >>> +		if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply/applying"), &st)) {
+> >>
+> >> In the same file we make a call 'wt_status_check_rebase(NULL, state)',
+> >> so wouldn't this break?
+> > 
+> > Yes my bad, it would throw a segfault error.
+> > I think the best way to handle this is to explicitly check for the
+> > wt to be valid like this,
+> > 
+> >      if (wt==NULL)
+> >          return 0;
 > 
-> and I would end up with
-> 
->        99designs/gqlgen
->        Switched to branch 'master'
->   
->        amplitude/experiment-react-native-client
->        Switched to branch 'main'
->   
->        Antonboom/testifylint
->        Switched to branch 'main'
->   
->        cli/cli
->        Switched to branch 'trunk'
+> That would change the behavior of the function though as it will no 
+> longer check if the rebase directories exist. You should pass the 
+> repository down from the caller.
 
-I think I understand now. That sounds tricky to do in the general case 
-because we don't know what the remote is called. "origin" and "upstream" 
-are popular choices but the user can choose any name they want when they 
-run "git clone" (or rename the remote after they clone). If there is 
-only one remote then its simple because there is only one choice. It's 
-also simple if there are multiple remotes and they all use the same 
-default branch name and refspecs. If  remote.pushDefault is set we can 
-probably rule that remote out. If there's a branch checked out with an 
-upstream set we could use that remote but there's no guarantee that's 
-the remote the user wants. I don't think there's a robust way to 
-determine the remote the user wants in the general case.
+Yes agreed. 
+I will pass s->repo as struct repository *r in this function. Thanks.
 
-With the "@{local}" thing I suggested yesterday the user would have to 
-name the remote which makes everything well defined but I think you want 
-to avoid having to do that.
-
-Thanks
-
-Phillip
+Best,
+Shreyansh
