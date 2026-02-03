@@ -1,109 +1,206 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E829B155322
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 01:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AC0368260
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 05:23:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770081375; cv=none; b=mM6xXx17aTGrRUv1qVn7MKA8l6PwtIhOkw2eNVOdM5RVqZZglMmiIqu176mudjnjSGUIza2bHmu75D4g+jQTmLPIP71ls+5MfJRHwdTsxJ3+8b++HP+cRoG4rhyyIkUL1lbTQtE73U7LBfQSLa61hwFybJUb1M8dzzrlO3PjBHw=
+	t=1770096188; cv=none; b=bz18duDtFAo0/iWUbbh+hBenhgnxqv0kiHK+dcIaYoSJCVI4+T7V+2DYq3ONS6osJJz0hLFabJLZGSiKbF888yZX93vdoFEU+yfP0SNdf8sNyWXS/9vZrKw+ns8ZBMtwqnsWTvxizjEEBYfu/kS8E6bbfGrlJVveY9qbYYm8Flc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770081375; c=relaxed/simple;
-	bh=Z0oQj+01m7EWyY/k4C3J6HjdXGbMON/Se/cLC23aoP4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rTK5FudX2WWXqqJaUQ1k+AA5L4wjrcEuR4NiTUs1uxF0i+a1BK74ZFP/+sRem101Hq0t4ysCZuDusKTP5NVZOs0jMNVNpKQ8Qi661KB0zSXVC74QuVQv4ZM+oWWZO3f0r4NaX9vBf1Ti8LetoEOUi5mcqu8HxM9e1yQ+GP2gaBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GNqPNoUS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MYpKt13k; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770096188; c=relaxed/simple;
+	bh=KbDtmuVrPdo8LIJMvS2nRCY+z2bKLJ/VWYv6WnUKyfQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RK6K5NF9kkmn1CAYmnqMjZEIx4hv0MjF08A1gzMWzALgDZyKGvo18FcPb6fcLuBG9PseMXE8rlvw9eMv9RyxClid8xKsDA02Oetz8Tc2l8qIjHWVmhCMPTSD2qRqLWFmlOcE7SBfkEmONw5OShb4OHQ6/84dw9Y2EV9ZTXCb5ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/Mm/IIt; arc=none smtp.client-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GNqPNoUS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MYpKt13k"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2DE141D00009;
-	Mon,  2 Feb 2026 20:16:13 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 02 Feb 2026 20:16:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770081373; x=1770167773; bh=SmkU4DyQpr
-	LLYLZmsNefAzyx9RZ164sEOOvdZJhpcp4=; b=GNqPNoUSKeZ6Xcji0pHbMlatUx
-	wAVHbeJh2t7Xig4MNhFrRIQ1FaN78vrnEojqZeAxTPnWrIxlEVby8Hz8vtNWWMYl
-	UA3vI/LyjqUu+CLe7jCKwmXp2FZGjPbqTgCdGamr/X/poDcn2EKJgwk7KRUOqUtM
-	SoUBL40uKBpW2Fa4FOsIFgoRb249U80sahJ80j5GdAGd4XNVLQUZcEDTlW9c+npQ
-	xT0L8Mcdt87BNQEMktFv6HamGJ/6G2Pd2fLG/Xz7JExc4qHZoEHuvJTn7YV6g5Yc
-	ZF0e5urMUS547ATmctXqQsMacTec8/rKJ0hkgxjM42cRWbyI5ufeX5tshinA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770081373; x=1770167773; bh=SmkU4DyQprLLYLZmsNefAzyx9RZ164sEOOv
-	dZJhpcp4=; b=MYpKt13kFVwsICBq2HVcrximPJibWYA8ifDOtkgsbOV4Cx6FcJ9
-	JVa+OLWMXkM0rfaP2VMgW2S1mrjPli1f6l9U9oFBFYIuTxKu6jWpnsO1BlWyRUoe
-	XlCAmxx4wthkCLNomRMOGjS7QbMZzjCzsKvCZey8wZStBMxL/w9BZPIPDIwTvvnd
-	6iEehfUCUjgfYA/WxqFyuLm3xKgDKVPyY2Pdb8Y4GTIqnh2edahzSRB7ATvLCJGD
-	0kCJ29d5mBUnoHwGdUFmmbisKTZOSv3ZjsnIIfwll3o+Y/amS6drWLWqcBcG0u+Y
-	h80bU9SWUlADxrffpYafxa8zyd+PFgbLBRg==
-X-ME-Sender: <xms:XEyBaZg1LwVjV5Ho8bC_W6ntydGGwtYg4_IrbR4Sfy8h7ZsTGQ-dTg>
-    <xme:XEyBaVAijzp6gmnYKKUpvlDmingevCHhkXXrb4x4uDXP944ppeiC2hI81nqo6v32_
-    mhdsF82RwycjmGuSc1EyAtJ92SzU7bwrZGwml2xe2js2hY50pbOiA>
-X-ME-Received: <xmr:XEyBaeGJb_fyiKm_rRfrt6jdPH7Ero4xIqXdjkYIPUUUr0gFyaesuD6K0OzDcCh7d8RJ3xTBc7a0xMm_z1skKNuKixGoBhWxfA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeeludejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
-    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XEyBadLo6aIFIGet6AOrxMNivFDXvUyAtxpW8vRcFLI8fVfPIHGusg>
-    <xmx:XEyBaSkDnu8XU7kk3TaCuYArji-QGqwUXBvuwtQO0KjITXRvPxrGFg>
-    <xmx:XEyBaVR8gMNDDVzKcBoFil-Rgrg56rYsWBObYFHiAluX1vCEqlawlA>
-    <xmx:XEyBaUJ7w6rZjfBMcKYPLqaSjFNQls3a1rGiBw-xFYt07wD4PzT5oQ>
-    <xmx:XUyBaVlzrEyI-pwoDbBGioRU3LyX0c6gOni4btQ8tUTdz_EDxH8fVSTK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Feb 2026 20:16:12 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v2 0/4] odb: support ODB source specific transaction
- handling
-In-Reply-To: <20260203001002.2500198-1-jltobler@gmail.com> (Justin Tobler's
-	message of "Mon, 2 Feb 2026 18:09:58 -0600")
-References: <20260128234519.2721179-1-jltobler@gmail.com>
-	<20260203001002.2500198-1-jltobler@gmail.com>
-Date: Mon, 02 Feb 2026 17:16:11 -0800
-Message-ID: <xmqqjywuvd7o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/Mm/IIt"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2b70abe3417so11264279eec.0
+        for <git@vger.kernel.org>; Mon, 02 Feb 2026 21:23:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770096186; x=1770700986; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ujJTHO0GuQTg8t4y1IAS9lVac29WLODqZ9jav3ioW/Q=;
+        b=A/Mm/IItlc6w3XjPJjsOyC/GGEfF/VjZlQ7NnnkRhKnKJKuXQwas5wbibEHFoVKF5L
+         wAekL8H2GpJIufvg9kZGi0Nms97iwBLPwWbifzo2rj80Nvz2W1s0tPSbvoZVdEqT8IaD
+         AKoVb+7c1Ust28f0sesEdYe1YmPHRYJusKyUiWZcBewTU+ViLej0TZEBoHX6IxROVkHf
+         n0bIh0fWN0z0mLLGShwdC6e1ijgtUx6TYjveaU1MtzRWybtIXDPnJhB7IvRY0g70gpSZ
+         YenwsAG2W6awFZMZSJ1ovK+7GbH3d0ZctyVnGUq+/r9b3eTzj1farNrGwnQvr6p8ToA4
+         KR4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770096186; x=1770700986;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ujJTHO0GuQTg8t4y1IAS9lVac29WLODqZ9jav3ioW/Q=;
+        b=Cbzd90PsoKv0G8HyEhmTb+AIVm2Wwu0USniqfHB4UcvSGinUZu9G/Qi3HybLygNYJF
+         Cy7NQbkoWAqvDKqP4p0rSaj1zYsMnm/wQeNNibYo7FsAu4UIChI0TdSUmnL+3oJhz67J
+         4zSZWG6JUYSvLeOjjpYfFBEnuFqCaMZkvmbZOzs81N/fsDwRf0To72adCq+hii3uyWoo
+         QsEVfs6Fb5mcdvn9FYZTTGftchUnuAY4Rt+pC7ZwGXQinJeQSVs8fHCg2qaBNFDSfd5m
+         4dDiByrcWUOpM3namW/Z+6UraBwPujQ2vYiekNP3hu26+1tVlQfSrk6Q4ne9W+H9k9Jq
+         enfw==
+X-Gm-Message-State: AOJu0YwLFqDcmPVTkS9Aj4oF8hCSK54UnVfar6vHSuE3Tq6FUNwvbYy7
+	Uygr+z49+v8HRAKUKawlGO/SSFvZSIFD8/vNxLFWfTRw1DMg8hM4U5Vu41JsWw==
+X-Gm-Gg: AZuq6aIEdFeS3hha0ANUzeWMzXbIRLQZdqXnsi0Ejl55pEKgHWKLVpqT9XRpdu3iIYo
+	r/3lTIZ+gXMzZc6VakIzSOG0Lq+1KRuCH8O3dp6OvTDZzn3By3hi6j31he43SLyZOOOCHy0kNmU
+	KuTn5gmWC32MdByrwWGTuCVLDTyISdRgJMtaGktpT4CiDoxBD9kKrej6j3nNKnhFOoNjs2Afdvb
+	KieWXFGIgk7/N2XetfqnA26RY1pkV0XhDWaGEDmO5PZF1AVhv0OXdiP1dYXkOORFOKVui8PNG3b
+	df9eH7xZ+jSoS7hKuKTR8iwQvLe6eMYFyAJY5l+BdfNyTGBlRTsBjbUTm4JAWA/NIpx4obthR1n
+	qojHUiJQNJjr0zInJb1udRJpvaj91JLsw8D/Ltgh/ORPPzR4VE+YCFfZyipK54AjIbAJhWM1Wij
+	qzABftYbNnGs1g
+X-Received: by 2002:a05:7300:dc8c:b0:2b7:1cbe:fd1f with SMTP id 5a478bee46e88-2b7c8940615mr7061212eec.36.1770096185746;
+        Mon, 02 Feb 2026 21:23:05 -0800 (PST)
+Received: from localhost.localdomain ([2601:646:8081:3770::996e])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a16cfaa8sm20895672eec.4.2026.02.02.21.23.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Feb 2026 21:23:05 -0800 (PST)
+From: Collin Funk <collin.funk1@gmail.com>
+To: git@vger.kernel.org
+Cc: Collin Funk <collin.funk1@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	Victoria Dye <vdye@github.com>,
+	Jeff King <peff@peff.net>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH] git-compat-util: make git_find_last_dir_sep return a const pointer
+Date: Mon,  2 Feb 2026 21:19:01 -0800
+Message-ID: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Justin Tobler <jltobler@gmail.com> writes:
+Unsure if this should be tagged [RFC], but this patch clears up lots
+of warning spam with glibc 2.43 because of a change mentioned in the
+commit message.
 
-> Changes since V1:
->
-> - Renamed the files transaction type to be `odb_transaction_files`.
->   Associated functions were also renamed accordingly.
-> - Updated commit messages.
-> - The `tmp_objdir` subsystem has been left unchange in the version. In a
->   followup series, I plan to couple tmpdirs directly to ODB files
->   transactions.
+I plan to handle the rest of them and try to organize the changes by
+subsystem, for lack of a better term. But I figured it was best to
+submit just this one for review first.
 
-Ah, I was wondering why the changes are so small (it looked
-essentially s/loose/files/ and nothing else to me), but if we are
-leaving the tmp_objdir stuff out of the scope (which is sensible),
-then there aren't much left to do relative to the previous
-iteration.
+-- 8< --
 
-Looking good.  Will replace.
+The recent glibc 2.43 release had the following change listed in its
+NEWS file:
 
-Thanks.
+    For ISO C23, the functions bsearch, memchr, strchr, strpbrk, strrchr,
+    strstr, wcschr, wcspbrk, wcsrchr, wcsstr and wmemchr that return
+    pointers into their input arrays now have definitions as macros that
+    return a pointer to a const-qualified type when the input argument is
+    a pointer to a const-qualified type.
+
+When compiling with GCC 15, which defaults to -std=gnu23, this causes
+many warnings like this:
+
+        CC abspath.o
+    In file included from abspath.c:1:
+    git-compat-util.h: In function ‘git_find_last_dir_sep’:
+    git-compat-util.h:344:16: warning: return discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+      344 |         return strrchr(path, '/');
+          |                ^~~~~~~
+
+Most of the warnings are from git_find_last_dir_sep which calls strrchr
+on a "const char *" but returns a "char *". This patch addresses them by
+changing the return type to be const, since only one location needs the
+qualifier casted away.
+
+Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+---
+ config.c          | 2 +-
+ git-compat-util.h | 2 +-
+ remote.c          | 2 +-
+ scalar.c          | 8 ++++----
+ strbuf.c          | 2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/config.c b/config.c
+index 7f6d53b473..156f2a24fa 100644
+--- a/config.c
++++ b/config.c
+@@ -160,7 +160,7 @@ static int handle_path_include(const struct key_value_info *kvi,
+ 	 * based on the including config file.
+ 	 */
+ 	if (!is_absolute_path(path)) {
+-		char *slash;
++		const char *slash;
+ 
+ 		if (!kvi || kvi->origin_type != CONFIG_ORIGIN_FILE) {
+ 			ret = error(_("relative config includes must come from files"));
+diff --git a/git-compat-util.h b/git-compat-util.h
+index bebcf9f698..fb4251564a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -339,7 +339,7 @@ static inline int is_path_owned_by_current_uid(const char *path,
+ #endif
+ 
+ #ifndef find_last_dir_sep
+-static inline char *git_find_last_dir_sep(const char *path)
++static inline const char *git_find_last_dir_sep(const char *path)
+ {
+ 	return strrchr(path, '/');
+ }
+diff --git a/remote.c b/remote.c
+index b756ff6f15..8c1a0a0c15 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2753,7 +2753,7 @@ void remote_state_clear(struct remote_state *remote_state)
+  */
+ static int chop_last_dir(char **remoteurl, int is_relative)
+ {
+-	char *rfind = find_last_dir_sep(*remoteurl);
++	char *rfind = (char *) find_last_dir_sep(*remoteurl);
+ 	if (rfind) {
+ 		*rfind = '\0';
+ 		return 0;
+diff --git a/scalar.c b/scalar.c
+index c9df9348ec..54a75ad971 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -393,7 +393,7 @@ static int delete_enlistment(struct strbuf *enlistment)
+ {
+ 	struct strbuf parent = STRBUF_INIT;
+ 	size_t offset;
+-	char *path_sep;
++	const char *path_sep;
+ 
+ 	if (unregister_dir())
+ 		return error(_("failed to unregister repository"));
+@@ -479,11 +479,11 @@ static int cmd_clone(int argc, const char **argv)
+ 		/* Strip suffix `.git`, if any */
+ 		strbuf_strip_suffix(&buf, ".git");
+ 
+-		enlistment = find_last_dir_sep(buf.buf);
+-		if (!enlistment) {
++		const char *last = find_last_dir_sep(buf.buf);
++		if (!last) {
+ 			die(_("cannot deduce worktree name from '%s'"), url);
+ 		}
+-		enlistment = xstrdup(enlistment + 1);
++		enlistment = xstrdup(last + 1);
+ 	} else {
+ 		usage_msg_opt(_("You must specify a repository to clone."),
+ 			      clone_usage, clone_options);
+diff --git a/strbuf.c b/strbuf.c
+index 59678bf5b0..3939863cf3 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -1119,6 +1119,6 @@ void strbuf_stripspace(struct strbuf *sb, const char *comment_prefix)
+ 
+ void strbuf_strip_file_from_path(struct strbuf *sb)
+ {
+-	char *path_sep = find_last_dir_sep(sb->buf);
++	const char *path_sep = find_last_dir_sep(sb->buf);
+ 	strbuf_setlen(sb, path_sep ? path_sep - sb->buf + 1 : 0);
+ }
+-- 
+2.52.0
+
