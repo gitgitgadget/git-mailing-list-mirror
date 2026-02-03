@@ -1,173 +1,120 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB268325497
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 19:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770146792; cv=none; b=LM5uV0mFuPsUjQg9dwIUOMjdVVkw/B8ouOF+TJm4Iae7eQPN/mHOGKBRhmxNzARSLXo+Fe/lsPSjeZuAcS/GcsGwM8TY+u30l3dlK9KX8/57MIjHFuzBw8zgwKCBNLLGygHXQ7AuUNWZmOtSDSyKkSLNzUsyIEmtJLLG0qfVHuU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770146792; c=relaxed/simple;
-	bh=zXV8mEUrIu1qOyOT6iQ4HF3XMSeynh4KEbUI1HWOCCE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jQZYjXS3ugYrrClKc5U6N8btbxqYcJ/6SCcLlOozjFmCk99SIJSuFkYouiWksD6qkatI8cAnVDEjxi4uRH5DOkxO1ge1i5k6WGImL9VUYOP+vKkdKIpZ25SjmTk+95XhTgWVg2DPOJmbxL0NcVh59JWjPs5+2HvAx9rHkRKP3gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c/EAS5fj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qxvFXFMm; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4C061668
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 19:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770147047; cv=pass; b=eCnmhgr74oMG+ziQYoty2jQ8qe1oR2xG9ErpBZP1P8WQdNVxke7kZ7sn1VQCdDZd0FmX2ZKnr3k13tCOYHsSuAGYWIbkUBxzWeYW2KKeWxaBm+AnlQ5MrIhug/KTE4QsvRuyBOdMdNERMA50KJNP8RwWxB5+wTChHW/IIy7mjCw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770147047; c=relaxed/simple;
+	bh=ZmXDABIKYianlYyzFDIDXlGHIxvhMvMGy+QDLoC95ok=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lU6eNGyn0RqYaT17hTgsOZd0zvCBr2Z6Db370qrBBe0AFB59clDxtP0irSIr75IafHDw4D/gbfhmqsIEVDAY4fQuXf6OqyGv5GIS4cl2uqlfJMvJO633+7d9neF//wxHhpNrfxodNZMese6wgery/Wv95+GT2ckgXF+FD6CX8E8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NF+Ctu5T; arc=pass smtp.client-ip=74.125.82.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c/EAS5fj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qxvFXFMm"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 32EC57A00AB;
-	Tue,  3 Feb 2026 14:26:30 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Feb 2026 14:26:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770146790; x=1770233190; bh=SvSHgF+Aeq
-	tlsuRjVgdnAJnVZYW/cnItxiEEtZOA8xs=; b=c/EAS5fjPqQXsHKbe9SyXSxPxD
-	nC2Ge15I3p7FDTmrTtcJkgLtwpo37WnDCnvSU2gRMExkfmTT4Fc3KEx+WbyI49/N
-	vk5kR2hYApglP7iHEKKkKn5T98AMAb6Zz2x6OoduqctB46LTbSpCULOUi3XemB58
-	/T/S7OK66hh6MnQn2++HjAeNegVmF2Ra23SzBAG1CLwaTrYfgWNGeHtC+eZgj4Kz
-	sbkrUF2yRysihutTt1N0h9p7wxXE4h503++NQ2Oa+8Ult1tEsFLPGqCnhhEpoB+3
-	3yYjoeNcHx/p5dQAUX0ffGnQvUCJ67FY7CQfUcXRkgq80TGOKn5T6+pDE+SQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770146790; x=1770233190; bh=SvSHgF+AeqtlsuRjVgdnAJnVZYW/cnItxiE
-	EtZOA8xs=; b=qxvFXFMmTESfFOzjmO+BRjMa4wllZWfH5iSN4VYUeoxVsgQDAG5
-	MKu0VTt7m04/ZftKtE6xjvEp66oXy/DUo+9LS7yDBV/TloH1jzzazRaf1CDzAIFZ
-	eV2ipKgEl/sRv6okO4pBpRtaRAaW2YV/v4oPIlSAyxQvDw+kP8W+FBQ2jOs2poyW
-	AvCW2T0wJsh4D5ZwANi2oRkMot9RQ4sVN/ic+QfiJg/w3tSVzm7L+HFO1Vq2I8b8
-	vxdb+jp2aGRCo8K8PflLkliSrbcKhg24bZ6QaQy7+XndFX0+Xg7tf3uvwwC+mqA3
-	Nw55kOgX8mHiU+xEmsjFKTZ6fvR36pQO3bQ==
-X-ME-Sender: <xms:5UuCaeiWs8qOY-NHRYWy-E79LALgjpZMOBxhCjlsa7By6NdePdsZ0w>
-    <xme:5UuCaWBxGlmIPTKEwsVjq9cBayI29v-7piVX__EhbOp-HZwEJd49TESg_venvZS4N
-    p_HvAzvltOGy569mlAw720GuOZEyrA6q6BDCkbD_tuHJ9-URx2DIfo>
-X-ME-Received: <xmr:5UuCabGTiOTt7SXxy3HijQi-hkdfgdNlgsfDrRE3vhslYend6nGY8jW8lwcm_HWQvgwciJyKypslf67oZoEBdq_NTawRe8d6mw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedtkeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjrgihtggvtggrohehvddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:5UuCaWL2I4G5q5K34SLj-MxoxklZByOB5dHy_zZMvpECOY3TEJ_FSA>
-    <xmx:5UuCaXkpRRcW72YCBd4ku8AA7ZLP-UXOwppH8srZQC4yJD_TeUk4vQ>
-    <xmx:5UuCaWSs14PLf_mhlRLimkQk0jqrfxKStA22ohdxk_RFKcMEQwGQDg>
-    <xmx:5UuCaRJS0RNP0u1a2dDpFqaStAHW_OmmKtYSQlPAov2CpwIp6Pfvag>
-    <xmx:5kuCaVBXfC_QIGBvlyh8IhUzN-YHPPBKdyyVFnrXCkqk7ASSwx1r26xg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Feb 2026 14:26:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "NitroCao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  NitroCao <jaycecao520@gmail.com>
-Subject: Re: [PATCH v2] clone: fix segfault when using --revision and v0/v1
- protocol
-In-Reply-To: <pull.2185.v2.git.git.1770119773541.gitgitgadget@gmail.com>
-	(NitroCao via GitGitGadget's message of "Tue, 03 Feb 2026 11:56:13
-	+0000")
-References: <pull.2185.git.git.1769937818682.gitgitgadget@gmail.com>
-	<pull.2185.v2.git.git.1770119773541.gitgitgadget@gmail.com>
-Date: Tue, 03 Feb 2026 11:26:28 -0800
-Message-ID: <xmqqfr7hsk63.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NF+Ctu5T"
+Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-126ea4b77adso2091741c88.1
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 11:30:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770147045; cv=none;
+        d=google.com; s=arc-20240605;
+        b=F5yybXscvB+JcvWkF2BkEPEmC0zbtpWh8/xzFW83Zpz2npl/vVjODw3kzXkI2dX1Z4
+         iDYIFQHIOIJrh057MBLTsGuQtgHQZgLaKYxHGwRzuEHhtF/Luzfom9DgB4L1MwS+Y3+y
+         kiqwQkjVYI6tYXJTXuLmRSBnaCy9r6bLm5TAzCoMs1W64/fsNBoqKPibgiYajGMVBvq6
+         J8ylzCsXS7R8SJMPKMHPwCUfhlmXHhoXtmBxwrKDBjVKoX6KeVSuTv5CSAaj7it4iLOg
+         GJFDR5P7XkxGmZHAlH3AeIRkahamZdPtNn4+yisrwDJCuFTDHSnAjDPJDfROjUv+Azoh
+         acBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ZmXDABIKYianlYyzFDIDXlGHIxvhMvMGy+QDLoC95ok=;
+        fh=LXEaqkYlq1MJSGuXjMVMjrmBEUqUMHJICVIaOkcBcwA=;
+        b=FpRYVNhZxbQvSPFhWhDB30GUAPAkAe369uOqoUc6lhsE2et0f/Yydtr/9PEDGfOXIO
+         MYg7lFtd0pVPw/faWMj7U54E5QR/S0sl3E34EQ+k7FhEwg6hsZ9az1cV8FzabnCvSpKL
+         Mbr1BAaeWcsq0eZcWRKeAxBmaVvYUas7FBtLtx3GxSXaUnajA3Zx33qOhnHJ9hqKz0Y6
+         x/gprquHzqJIspYkFjxT44joEEQxLoLQCUljBgbcC8/VuJad+D1myfD8LPvhwJMaUry1
+         IDPf8Jmhbo4jXm3hH51Dv+rrAip/uyhMkRh8qtiHjURPG8aTkaiJ2EeMp+7rT3eoxmf+
+         9BFg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770147045; x=1770751845; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZmXDABIKYianlYyzFDIDXlGHIxvhMvMGy+QDLoC95ok=;
+        b=NF+Ctu5TjlJOFAqbxwLuNIwEvKWRDgxZWzZZd+iWBPvZ3++4CzV4flhHc5f8wFDD29
+         NOj1+MrzCFzs8jcBvSIxT6LvmhpXW99Z5/cc7d3OR/+esnvlQPOsojhT8NDR2IpXO4Qc
+         dFhIY5egFSBoyWtObyxQyafGEVj/EJPIE6UAmPi7DO3HlkSHmjKewoQ3Ji6Pw2UHfxqf
+         aQo3+znl+paAngS7vKgljlA+YtC8DJV/J1MWvOBQiVNjdzsgRfOEufkHdHw6M2hdp6MF
+         nik3rjJQ7ZVHMCt2xbWpu6qDhFwt9T81npNBXO3QYfSAp7zxQN1Cu6cT/BK3CMC5PJ9l
+         wr2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770147045; x=1770751845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ZmXDABIKYianlYyzFDIDXlGHIxvhMvMGy+QDLoC95ok=;
+        b=xOaL6iC/eJTxjj3aFR/pt97EOxt3UtynGJwtrDrUjOdFGINPOEZhdMyORFoG+XLu/C
+         mpjpG7tFS65BcvT83s/tthN7nL5p1517A+RWFejLzDYr9NC37CVMiJyIQvp/+yTMQZad
+         dzUPBxGubXJf39I5Tv6eraShrgawmU5dna77DLtQTVeQTxRRk8Ax221v1PSZ2ZINta2s
+         99KHDH/lR2oGMf188oPsWrSrI4h6kBZo+7VvgrLSo47haBmCyglQJAHM1M0CKBLUZKBC
+         gOrhuzRtlvfZBDd2gBLpaGEufcy3jcOYTig4WUqaJkztX0CkpcMSb6TrQLwcXb86aL/p
+         OrSg==
+X-Forwarded-Encrypted: i=1; AJvYcCWr6vwo8JeXZfxPlE+YGQyKgAKtNTNaMhA0/IPo6I+wJhaU4UQqjmpDrz2E4j9wlibT2vc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzABDi2OvFoezVGBch5WmQvlcG2fMxsK6MOirDbFd2c/gLtc2T1
+	Av0Ex9WG9zKgTJaXee30KySwiPUWMMNYVZsjlrmwOdk8K7CwP4vHE8gF2kE6eXEhNjlb72kIvsT
+	8Icq+WZDPoMXdvLyIZvxoeUI6tmXrACc=
+X-Gm-Gg: AZuq6aIVNAFR5HQNqvDaLiYpclZr+TyNjj423paqm5Xl1hETvXAU2ROVrvdNS2fEvR3
+	jmjo4kk6WmyYcVhc4fXOymU1cD8TxoO/hIDLs3TEr2NsFyov3VXtKphF49v+JPDJXpUKvAM41bn
+	UezEIhj+0ScShy4XnJJg+3rnVOh1g1dZDZeisYzlx5W2BQGnvzHeWfRnDAfqgThhtQbFmand/Lr
+	k5ryR5Ilqsn/0mboVa85fCq7IX717jUiAbteCmEcC7b5VkR6unMDqKHf5hbCIT5aU1VaZP2wbCs
+	oGh/plHfe2iBepFMWvNC/2NvXqFZXTPHKCXzZPw89IjPc7jTNG0Uo/e7
+X-Received: by 2002:a05:7022:e04:b0:119:e56c:18ab with SMTP id
+ a92af1059eb24-126f477dfd7mr228159c88.19.1770147045486; Tue, 03 Feb 2026
+ 11:30:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAP8UFD11txMWSfMTvDtcBJuuZA5mKffo6XUyR9LWk2d_N0RRtA@mail.gmail.com>
+ <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com> <CA+J6zkSo1LuFUdTU8m6z4vANrJ2r88EV6RDDC_0ZW3bWec2v2Q@mail.gmail.com>
+ <CAP8UFD15Fkx0t4DYcWjK+WgeZBOzfYNyOePQXGU46Fyf4+pFgA@mail.gmail.com> <CA+J6zkR0tvv1b7db+jQ_XW4ft3_p07bCJOm96B30VKx1abpF0w@mail.gmail.com>
+In-Reply-To: <CA+J6zkR0tvv1b7db+jQ_XW4ft3_p07bCJOm96B30VKx1abpF0w@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 3 Feb 2026 20:30:33 +0100
+X-Gm-Features: AZwV_Qj3Tgs1iigiTCN_98x4tGjT6deKJK_ZcSw5NWQz8pNLb2ozyR6rw_kfLXc
+Message-ID: <CAP8UFD0oPL1e1wcy5_q_kmrEv-3YkJHVXutgdFHsZ+hLtb+JvA@mail.gmail.com>
+Subject: Re: Git project and GSoC 2026
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, git <git@vger.kernel.org>, 
+	karthik nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Meet Soni <meetsoni3017@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
+	Bello Olamide <belkid98@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"NitroCao via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Nitro Cao <jaycecao520@gmail.com>
+On Tue, Feb 3, 2026 at 3:15=E2=80=AFPM Chandra Pratap
+<chandrapratap3519@gmail.com> wrote:
 >
-> When `git clone` is used with `--revision` and the protocol version is
-> v0 or v1, the client segfaults if the revision does not specify a peer
-> reference (e.g. `--revision master` instead of
-> `--revision refs/heads/master:master`).
+> On Tue, 3 Feb 2026 at 16:03, Christian Couder
+> <christian.couder@gmail.com> wrote:
+
+> > We don't have project ideas related to reftable or testing in our idea
+> > list, but we could add some. If you have preferences among the
+> > projects listed there, let us know though.
 >
-> This occurs because `update_remote_refs()` assumes that if
-> `remote_head_points_at` is set, `remote_head_points_at->peer_ref` is
-> also valid. However, for v0/v1 protocols, all references are fetched
-> without filtering, and if the revision lacks a peer reference,
-> `peer_ref` remains NULL.
->
-> Add a check for `remote_head_points_at->peer_ref` before dereferencing
-> it to prevent the segmentation fault.
+> Among the present ideas, I think I will be best able to help with "Comple=
+te
+> and extend the remote-object-info command for git cat-file". I could help
+> with the other projects as well but I think my co-mentor(s) would have to
+> pick up too much slack in that case.
 
-Hmph.
-
-While your change may skip the code that segfaults, wouldn't it also
-stop noticing a broken case where .peer_ref should have been set but
-didn't, even when --revision=<rev> parameter is not used in the
-command invocation?  IOW, it is better to segfault and draw attention
-by Git developers when a valid input is given by the end user and our
-code misbehaves (e.g., and fails to to set .peer_ref as it should).
-
-Stepping back a bit, "git clone --help" says the following on
-"--revision=<rev>":
-
-    `--revision=<rev>`::
-            Create a new repository, and fetch the history leading
-            to the given revision _<rev>_ (and nothing else),
-            without making any remote-tracking branch, and without
-            making any local branch, and detach `HEAD` to
-            _<rev>_. The argument can be a ref name
-            (e.g. `refs/heads/main` or `refs/tags/v1.0`) that peels
-            down to a commit, or a hexadecimal object name.  This
-            option is incompatible with `--branch` and `--mirror`.
-
-The intent of running the command with this option seems to me that
-we do not want to create any branches, neither remote-tracking nor
-local.  Looking at what is done in update_remote_refs(), I think we
-still want to honor check_connectivity even when we are in this
-"single revision only, detach the HEAD at that commit" mode in order
-to ensure the integrity of the data, but we cetainly do not want to
-call the write_remote_refs() and the write_followtags() helpers.
-
-Wouldn't the correct fix be more like the following?
-
- - split out parts from update_remote_refs() that are needed even in
-   option_rev mode into a separate helper function, and call that
-   from cmd_clone().
-
- - make the call to update_remote_refs() conditional---specifically,
-   we shouldn't be calling it when option_rev is in effect.
-
->  builtin/clone.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-Also, isn't this something we can specify the expected behaviour in
-tests?  Not only we want to ensure that nothing segfaults, we would
-want to make sure that the resulting repository has no refs and HEAD
-is detached at the specified revision.
-
-Thanks.
-
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index b40cee5968..ba8de92563 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -558,7 +558,7 @@ static void update_remote_refs(const struct ref *refs,
->  			write_followtags(refs, msg);
->  	}
->  
-> -	if (remote_head_points_at && !option_bare) {
-> +	if (remote_head_points_at && remote_head_points_at->peer_ref && !option_bare) {
->  		struct strbuf head_ref = STRBUF_INIT;
->  		strbuf_addstr(&head_ref, branch_top);
->  		strbuf_addstr(&head_ref, "HEAD");
->
-> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+Fine, I have removed you as a possible mentor for the two other projects th=
+en.
