@@ -1,160 +1,241 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDFA7E792
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 00:10:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32EEE55C
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 01:11:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770077418; cv=none; b=FJ/JMT/oz/1vzR8ZlgSqFWR94Mcu9d014EgqIkdE4FNur7CszSZLGXZcEjlF2SerEblDdtD4oGRHZkYdqrDbRqlUW5j8H1pSKgeeLf5+5WpjCTLM3f7T1aVGQYaqX05tdECT2aL8OqiDqsbEoUl1H/AfzsB7TfsM4pEzqhfMj4Y=
+	t=1770081106; cv=none; b=Ca9hNF1xE3AFO1jifmY8e6zfpUZc9s/dsiyeZc0HXTDLPtOJ2vU6qp5gDBL/BXYKmmk9Dh9IivCzX+w/230JE9qSAmdLPcCG966cXAUdhy/JPRK2cYznU7nvqjIeCNYee3OgFjqHFPQtn8m9zWViVlBvH9PjlkDODOr3txE5iN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770077418; c=relaxed/simple;
-	bh=xBsJx2oOgqlHuKFJvBttmGp/x5i3bvcArM8VwJtvKSU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4I/m9vVKOlubgVxQ14aL/TpatpdLEa66yOEXxWidGR6vWBLTqtMfaxwn/HrSLe8TQ6rBAu2rC4FyE+8K7e1VuFuj4DXzJCmIZGupHIqVveV6hltqf9iOqCJs29CEKyH7PuBPjzg9Peq8VamYS5k5X5JAxqrtoj/DsXjNdzqtMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kR39xnIg; arc=none smtp.client-ip=209.85.167.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770081106; c=relaxed/simple;
+	bh=7bUHjWGBvk+D1g4vuapZy+X4SOSWNwoO6yWcllyN9AQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=g0E9lreD5izNNCeg7dZIRIeOCM8PR6VkfWNzvGLr/IEEO33qq0gtNEPkIktnH2UFQo0zGSES30wVxOfl2sSZBkG4qdlSbou68QdmhMhX2KRanpIh49yRiQ31u8i1tHi9ojualeBxQcGYlQRPPYc5CM97/OtC2SH1CW8A89fHtt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lAtavySA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uf7F2x7X; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kR39xnIg"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-45c93313721so3326872b6e.2
-        for <git@vger.kernel.org>; Mon, 02 Feb 2026 16:10:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770077415; x=1770682215; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rvU7s5KSO/02wmThFqe8LzHqDXt9CikHenAHPQxa2Qw=;
-        b=kR39xnIgilNduPsM7ZrdC3I68au/6Q18CHs40Y7EfRwB76O4h4sr45LLxcRYnxyFft
-         f4SASN+xPfxi7yZnZTFf7l/Vppa3AyhEZCI32hMh6CRy0C4A8F5wKajUnyHOGmfrCB85
-         enUggblOEPJI/ZS3K6HKYHBQ35TARMIkDM0sPSb7Zb2zV2A3uCLxQ6RT/3QAGkSnGFOl
-         y8VPq9ua+ruisZBtIrqOjwH0LHAwdpUYuyZlEcwA0GbVzSxUbmuPBAvRdn63zM/uelVQ
-         3W4T6K9yz+zaavOfPQeuLpbXsLhG0wayiOPsHSTN7mL068TNZPvWYp3MWFmM58yRvWvS
-         JWWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770077415; x=1770682215;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rvU7s5KSO/02wmThFqe8LzHqDXt9CikHenAHPQxa2Qw=;
-        b=MJhdn4VNwIbodIx+jmch3ByEGfIIPYVGHLyMjl0lqjhYUSdxyt24EPsVbipWlFuxIH
-         qv7Cr68bqoNAnxvh4wp8Rgf896lrVaXuas3umPrsQpQQooUX7Nx8X7HtYs87VatBKX/G
-         //iLDjq0U+H6GaljlKKLRu3nrdE9k1zWuSXe80qOdPLEdnciZNkt08AIlEU1g4unDHcP
-         9C4FPjUQ/wT8LzlDYTBC43EblDZXTcovU7I6n6WaptCJsXdcpu6fCuvvBUzoHqUWWPwY
-         uMjBH7LXuwnyijizKF62iP13oAjb2q42NRlEj4DuWcJLsV/TPB9NC/k714ynTG17Wb2b
-         M+LQ==
-X-Gm-Message-State: AOJu0YxTNJsf3zmpnTSrUO03l3o5cLsu7L4kUVfToHxOslQkneq+8Yp5
-	yWsBKccEOdZBBQHMnBTYdKKKp/LmKqUUc6LxzYKYrvlkLXlFYxtMCODKNaQRGg==
-X-Gm-Gg: AZuq6aL3zgJQGEqjaPP9jMt8FYKX4BJTef0084ZegGwRpt+bIpoxRHNcOfoVy+IZums
-	9xId8h43NfmDDou88cdFvIgZyrGRHEN2wnrWpIz8pQ5fFQR1E4SRME1dVDFasg7slJXeR5KN/j+
-	xuq6jU6ncN29WbWZbO3JG3oBjQ4XUshCvdyFcChDobcTLTVv2dtu3U1Td2fBWACydHn0+kZ+kx+
-	Xl2kBIXo6LQd51YzCLOfwoEQNaDN2IUfaIc7xVbuKyfpF2zOPIzKbuUUexYOe5WE4SrlI+igyfL
-	k2Con4A5eLftJQJ3k5Tx9PvlUHLeuqxpMjIceGw/EEGHMjHm5PDNShpn1imCNqSAtQSDS38CwxA
-	miZ0/4TM9nEXxfEGDSNSYT4V+TYH9GAp+eTQBEL7WKFINBRqikLZTDXedO9+pm1tWoDU9vs3k6s
-	HtqsFu3844lkIV3VX+dNE=
-X-Received: by 2002:a05:6808:190e:b0:45f:21c:42a8 with SMTP id 5614622812f47-45f34b4e1damr8026381b6e.7.1770077415349;
-        Mon, 02 Feb 2026 16:10:15 -0800 (PST)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-45f08f6010esm9851179b6e.15.2026.02.02.16.10.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Feb 2026 16:10:14 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 4/4] odb: transparently handle common transaction behavior
-Date: Mon,  2 Feb 2026 18:10:02 -0600
-Message-ID: <20260203001002.2500198-5-jltobler@gmail.com>
-X-Mailer: git-send-email 2.52.0.373.g68cb7f9e92
-In-Reply-To: <20260203001002.2500198-1-jltobler@gmail.com>
-References: <20260128234519.2721179-1-jltobler@gmail.com>
- <20260203001002.2500198-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lAtavySA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uf7F2x7X"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 325161D000AC;
+	Mon,  2 Feb 2026 20:11:42 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 02 Feb 2026 20:11:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770081102; x=1770167502; bh=Le2UhMPfxT
+	wFUiyTgVdcd6UG0N9i2BDY5zD9Dxtdmfs=; b=lAtavySAQIMEr5k4Uf3cZVze+o
+	Lgo0UpCwVNUwSCObCbdof/DwFXhWRFTtRQcisNBcRu854HMJsBgJzlXetWgs3oEI
+	+fIpRpUYLYyE6utdmpvMix1mAKd+n+JxNcBN8ANhPc7w4uzbhPZDJAGRHp3qB+bi
+	qFVzO/HargsO06npORGYMBZcvUh9qJjyeVt9cV3hO7y4GZKJQGnAwH/d/fq/kQwX
+	GVsUXXZ6VeDKYjaZONr2pbu6rGneajV6nIlzt7mwb4w4rohRm0gtFCP6LOtgWQkj
+	XkdR7L7yBQZn/llvG/V0Re6l0jP6e87WJmb532iy9VOXjApFPi3kC093TKYg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770081102; x=1770167502; bh=Le2UhMPfxTwFUiyTgVdcd6UG0N9i2BDY5zD
+	9Dxtdmfs=; b=uf7F2x7Xzz4TLZEIy4RvZtXlYxl/NpGV2QcpXauEQIalCxf4mQH
+	iHneDJso+3zH9rHES/Mrg3wzCak7sreOb2rl6rZnFE0LFWJ33YhdKec0EN/vPGWK
+	MyJIJrHVB99nA1VpJDyf6v8r8tjE4FdrtBCul795Lsg9oeojiPkRnPbAUMWa4Jzt
+	F7TvTZ/gVPGVZG2lwmPU1VWiP9QeT70tq8sduJAc520LFON45wlRbn59qDV+MyJ3
+	M+i/z+v3C3ArJHEdh5ffMH5wssiWtTQtddH2h/M7sr1I6rz7eZGhsb+syabO1t+H
+	66IXuKMj600lyg04kiwPDsabhzxajnAHLaQ==
+X-ME-Sender: <xms:TUuBacTi6koR-DxO4MW-qTA0cTAf9AaDaCCAmFGSb7HvOvU1I7SFLA>
+    <xme:TUuBaWWMOmrJ7TuyDeS3img11EgSFtCifvCCxkzIxK3GQ8TG63EOblMFZai5BLKYy
+    QmUS-Rs2fjPvTahCPAbIVhihPxUpwF4cqY53PiGvaW3_BQsZ4cgOw>
+X-ME-Received: <xmr:TUuBaeS90ksGeaol30QhyaW01xuzpEK68yEFom_pR6gWU2m8gVsfKkjrw9ERA9pKAg9T5hE4Y7T4HDs2_2OEIaIo2bLaHvqs-Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeeludejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthht
+    ohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtph
+    htthhopehstghhfigrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepohhp
+    ohhhohhrvghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrsh
+    gthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:TUuBaW2z-pXR4uHChxXO2xASVlezh3hcHqf3wapfPawwS-kWHMn_gA>
+    <xmx:TUuBaWcrjGMBv3hh2KeKII7iyMKtk3bNn7c9iAzXGq3HodZcjGuBfA>
+    <xmx:TUuBaWN8o38AR_G2sFY0TjMUXwjxOqyOTfJfnBzIPJqp0Nohdzy3Rg>
+    <xmx:TUuBaSVRYVNlSOa8VKNLgaabbDfaXiwChOmjWjIjURHk8MXLRW5t5Q>
+    <xmx:TkuBaT8vuji7SMLLkOEGwU9YzX7MehafZ7afxHjjyjeGEgArEauCmaP_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Feb 2026 20:11:41 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  Johannes Schindelin via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Andreas Schwab <schwab@linux-m68k.org>,
+  Ondrej Pohorelsky <opohorel@redhat.com>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 4/4] sideband: add options to allow more control
+ sequences to be passed through
+In-Reply-To: <aWlz-0AOlsFLaBO9@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Thu, 15 Jan 2026 23:10:51 +0000")
+References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+	<pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
+	<fe109cd3319a5e3a1d1982a53963a601bb62b81f.1765981422.git.gitgitgadget@gmail.com>
+	<aWD2x154F5f-c3pL@pks.im>
+	<aWKLrIefrcSwReu2@fruit.crustytoothpaste.net>
+	<20260115211448.GF1053259@coredump.intra.peff.net>
+	<aWlz-0AOlsFLaBO9@fruit.crustytoothpaste.net>
+Date: Mon, 02 Feb 2026 17:11:39 -0800
+Message-ID: <xmqqo6m6vdf8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-A new ODB transaction is created and returned via
-`odb_transaction_begin()` and stored in the ODB. Only a single
-transaction may be pending at a time. If the ODB already has a
-transaction, the function is expected to return NULL. Similarly, when
-committing a transaction via `odb_transaction_commit()` the transaction
-being committed must match the pending transaction and upon commit reset
-the ODB transaction to NULL.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-These behaviors apply regardless of the ODB transaction implementation.
-Move the corresponding logic into `odb_transaction_{begin,commit}()`
-accordingly.
+> On 2026-01-15 at 21:14:48, Jeff King wrote:
+>> Is there any reason we cannot introduce the new functionality as a
+>> config option but _not_ enable it by default?
+>> 
+>> That gives people the tools to protect themselves if they want to bear
+>> the potential cost. It just feels a shame to deny them the tool because
+>> we can't agree on the default.
+>
+> Yes, I think that would be a fine and reasonable approach.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
+Absolutely.
+
+After a few weeks, however, nobody seems to have stepped up to help
+us move forward (unless I missed a patch or two, of course), so here
+is my attempt.  To be applied on top of Dscho's 5-patch series (v3)
+that ends at c5b95e19 (sideband: offer to configure sanitizing on a
+per-URL basis, 2026-01-16).
+
+Thanks.
+
+--- >8 ---
+From: Junio C Hamano <gitster@pobox.com>
+Date: Mon, 2 Feb 2026 17:06:03 -0800
+Subject: [PATCH 5/4] sideband: neuter the sideband filtering
+
+To prevent breaking settings that are working well for existing
+users, tone down the sideband filtering feature and turn it off by
+default.  This hopefully matches the way how distros like Fedora and
+RHEL are shipping this feature in theirs.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- object-file.c |  9 ---------
- odb.c         | 14 +++++++++++++-
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ Documentation/config/sideband.txt   | 14 +++++++-------
+ sideband.c                          |  6 ++----
+ t/t5409-colorize-remote-messages.sh | 12 ++++++++----
+ 3 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index d7e153c1b9..1b62996ef0 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1994,15 +1994,8 @@ static void odb_transaction_files_commit(struct odb_transaction *base)
- {
- 	struct odb_transaction_files *transaction = (struct odb_transaction_files *)base;
+diff --git a/Documentation/config/sideband.txt b/Documentation/config/sideband.txt
+index 32088bbf2f..d2cd86fa60 100644
+--- a/Documentation/config/sideband.txt
++++ b/Documentation/config/sideband.txt
+@@ -1,15 +1,15 @@
+ sideband.allowControlCharacters::
+-	By default, control characters that are delivered via the sideband
+-	are masked, except ANSI color sequences. This prevents potentially
+-	unwanted ANSI escape sequences from being sent to the terminal. Use
+-	this config setting to override this behavior (the value can be
+-	a comma-separated list of the following keywords):
++	By default, control characters that are delivered via the
++	sideband are all passed through.  To prevent potentially
++	unwanted ANSI escape sequences from being sent to the
++	terminal, use this config setting to override this behavior
++	(the value can be a comma-separated list of the following
++	keywords):
+ +
+ --
+-	`default`::
+ 	`color`::
+ 		Allow ANSI color sequences, line feeds and horizontal tabs,
+-		but mask all other control characters. This is the default.
++		but mask all other control characters.
+ 	`cursor:`:
+ 		Allow control sequences that move the cursor. This is
+ 		disabled by default.
+diff --git a/sideband.c b/sideband.c
+index a8cd142cd7..3d8534671e 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -61,9 +61,7 @@ int sideband_allow_control_characters_config(const char *var, const char *value)
  
--	/*
--	 * Ensure the transaction ending matches the pending transaction.
--	 */
--	ASSERT(base == base->source->odb->transaction);
--
- 	flush_loose_object_transaction(transaction);
- 	flush_packfile_transaction(transaction);
--	base->source->odb->transaction = NULL;
--	free(transaction);
- }
+ 	allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
+ 	while (*value) {
+-		if (skip_prefix_in_csv(value, "default", &value))
+-			allow_control_characters |= ALLOW_DEFAULT_ANSI_SEQUENCES;
+-		else if (skip_prefix_in_csv(value, "color", &value))
++		if (skip_prefix_in_csv(value, "color", &value))
+ 			allow_control_characters |= ALLOW_ANSI_COLOR_SEQUENCES;
+ 		else if (skip_prefix_in_csv(value, "cursor", &value))
+ 			allow_control_characters |= ALLOW_ANSI_CURSOR_MOVEMENTS;
+@@ -125,7 +123,7 @@ static int use_sideband_colors(void)
+ 			sideband_allow_control_characters_config("sideband.allowcontrolcharacters", value);
  
- struct odb_transaction *odb_transaction_files_begin(struct odb_source *source)
-@@ -2017,8 +2010,6 @@ struct odb_transaction *odb_transaction_files_begin(struct odb_source *source)
- 	transaction->base.source = source;
- 	transaction->base.commit = odb_transaction_files_commit;
+ 		if (allow_control_characters == ALLOW_CONTROL_SEQUENCES_UNSET)
+-			allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
++			allow_control_characters = ALLOW_ALL_CONTROL_CHARACTERS;
+ 	}
  
--	odb->transaction = &transaction->base;
--
- 	return &transaction->base;
- }
+ 	if (!git_config_get_string_tmp(key, &value))
+diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
+index 1d039cbdaf..47bc8bbef2 100755
+--- a/t/t5409-colorize-remote-messages.sh
++++ b/t/t5409-colorize-remote-messages.sh
+@@ -107,7 +107,8 @@ test_expect_success 'disallow (color) control sequences in sideband' '
+ 	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
+ 	test_commit need-at-least-one-commit &&
  
-diff --git a/odb.c b/odb.c
-index 349b4218a5..1679cc0465 100644
---- a/odb.c
-+++ b/odb.c
-@@ -1153,7 +1153,12 @@ void odb_reprepare(struct object_database *o)
+-	git clone --no-local . throw-away 2>stderr &&
++	git -c sideband.allowControlCharacters=color \
++		clone --no-local . throw-away 2>stderr &&
+ 	test_decode_color <stderr >decoded &&
+ 	test_grep RED decoded &&
+ 	test_grep "\\^G" stderr &&
+@@ -122,7 +123,8 @@ test_expect_success 'disallow (color) control sequences in sideband' '
+ 	test_grep "\\^G" stderr &&
  
- struct odb_transaction *odb_transaction_begin(struct object_database *odb)
- {
--	return odb_transaction_files_begin(odb->sources);
-+	if (odb->transaction)
-+		return NULL;
-+
-+	odb->transaction = odb_transaction_files_begin(odb->sources);
-+
-+	return odb->transaction;
- }
+ 	rm -rf throw-away &&
+-	git -c sideband.allowControlCharacters clone --no-local . throw-away 2>stderr &&
++	git -c sideband.allowControlCharacters \
++		clone --no-local . throw-away 2>stderr &&
+ 	test_decode_color <stderr >decoded &&
+ 	test_grep RED decoded &&
+ 	tr -dc "\\007" <stderr >actual &&
+@@ -148,7 +150,8 @@ test_expect_success 'control sequences in sideband allowed by default' '
+ 	test_commit need-at-least-one-commit-at-least &&
  
- void odb_transaction_commit(struct odb_transaction *transaction)
-@@ -1161,5 +1166,12 @@ void odb_transaction_commit(struct odb_transaction *transaction)
- 	if (!transaction)
- 		return;
+ 	rm -rf throw-away &&
+-	git clone --no-local . throw-away 2>stderr &&
++	git -c sideband.allowControlCharacters=color \
++		clone --no-local . throw-away 2>stderr &&
+ 	test_decode_color <stderr >color-decoded &&
+ 	test_decode_csi <color-decoded >decoded &&
+ 	test_grep ! "CSI \\[K" decoded &&
+@@ -176,7 +179,8 @@ test_expect_success 'allow all control sequences for a specific URL' '
+ 	test_commit one-more-please &&
  
-+	/*
-+	 * Ensure the transaction ending matches the pending transaction.
-+	 */
-+	ASSERT(transaction == transaction->source->odb->transaction);
-+
- 	transaction->commit(transaction);
-+	transaction->source->odb->transaction = NULL;
-+	free(transaction);
- }
+ 	rm -rf throw-away &&
+-	git clone --no-local . throw-away 2>stderr &&
++	git -c sideband.allowControlCharacters=color \
++		clone --no-local . throw-away 2>stderr &&
+ 	test_decode_color <stderr >color-decoded &&
+ 	test_decode_csi <color-decoded >decoded &&
+ 	test_grep ! "CSI \\[K" decoded &&
 -- 
-2.52.0.373.g68cb7f9e92
+2.53.0-162-gcda875bd0b
 
