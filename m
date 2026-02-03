@@ -1,112 +1,86 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272AA37E2EA
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 21:46:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE3928DEE9
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 21:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770155200; cv=none; b=nRWqzzEPuSRVElRm8gInZFZXgO4r1/v9BrzMSVDQCKpOF3IaywbiVlcRt3oAldxb+c9LLeTIzAecrjau+n6IvekPB5qen2spXp0P3StOukmolknWhLeO40vImgPXwuvEuI7u9n35Stvubdg65366LOWzMCr2ubIraIxegcw1Hoc=
+	t=1770155639; cv=none; b=NCUo1mfSYx7J1RiKdH0Qrb0MwxCcqmTubcUhlmytMK7F9oicAbgk/DiEgCaMV9374lz15OqaS6P/CYdleP2u2kgOFKOW6IGlKxj10lkhEypDJM3pYBuLsAjsK5AMPLw8x2GBHG+9q+QA9nmshXqLPuJYu0ghVKc/iS70m9nyy/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770155200; c=relaxed/simple;
-	bh=tPQwX0wogr2t46W2wyg0+d/9ulWsoTyO5UyrQ2qGkAc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=XmvLzDbX47n7HZRHERw/zy2r6zE2N9Xbu61lIq4gYloQTq44O9Jb0vJP0ZVt2QR0Rshzox/HH4WzNK250VBV3cKc8Wg3r5d48lUHZ0AJ443AgB2hINEv/7DvO//b8ngnY+Rc3+kkSaT2dYvA9ghfL5MDNd/dWcMPCdKjMmmRTRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ElpkCQOy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v8JcAv9I; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770155639; c=relaxed/simple;
+	bh=lkA3x7APm7CEfc/Un/Pyifk64iZboB4hvqKQaSISqcc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=upA9651SD1/n4CWQgjMIQyhGONouysB6+jD9Hvn4nMo1DXDGAgSJn+3Rtm6M9Ts6ZHjjIobmpPoAATWHgaKKCDozEF/YjP6y9ecY2+/XSKTbA/vH7t0sw0K/Ij0QTq0mBbB4mOmfDjaq085Z83X1ZqR7sAMXOcYed5pc9DpdwgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=RIwYdMKn; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ElpkCQOy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v8JcAv9I"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 583871D000A4;
-	Tue,  3 Feb 2026 16:46:38 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Feb 2026 16:46:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770155198;
-	 x=1770241598; bh=Demvq7mUMGXXdHF9z+BLlmpIAS2DUQqcrSIuRz8/OrA=; b=
-	ElpkCQOytBkwOysDOeaZquSO0dRM/cKtOmd+7kaFe0hCEeteFads63r3jtylc0nS
-	LDK6UL4EA3d91hZhRTf6a5CY1BE5GZwB1YvoeYkkdWFdQINF2AfpLOtGKQgHu3We
-	yfzU4h8ACeHzMrI0PbhtO3z/HJDR+pL8M/PlupsC6Dxs3ONv6Te6z6tKLm4vbGvZ
-	cXE9Dk8KuOzIXT5sclJ1XmmwiQUQtkLWCYZGEc+Wm+KCkpVoqV/PRiMGhZTfZmdR
-	grNm9/8hrnGVkr1ExdrWWyhIuIlJ0CZYzkIRS9ag/iCdBouKBO6GNJaJf7OP+YtN
-	2N2/RiLNSX3ZTSjvjB4H4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770155198; x=
-	1770241598; bh=Demvq7mUMGXXdHF9z+BLlmpIAS2DUQqcrSIuRz8/OrA=; b=v
-	8JcAv9I9pxjpmeuzPLPc3m7PcpTt4dE+9298d4PjA31n7VG1ISkBIYHPVdxPQsBa
-	jCnDolAsJHJqfdmF2Emte9f5VMi/5nXF1tH0cOoYwCGfF22XaDyYwYMYYwmVx9Fl
-	1zKcfSzxnJpvaPrWsiPBf0jtrGI0WfhAKzj8TCNDZOjR8MXyscuAJuIgJS7IIMxX
-	TQXJZDvL/6T+/LHeJPlZvmMlP4MNv4CO54xZ5G5WdDwp/Yij+AI8BEHUKELslVZb
-	nBTs13vrt2NgoQ8zLGtv7tAvq54w+ybTx82hJ1VzsjUPw0AzA5jOasn+8bymXY9c
-	OPGjUnGNvml+Bcgssdz2A==
-X-ME-Sender: <xms:vmyCaa4iBgagZmEgC0bw9XqXwkS-_rLBPsRIzJ3eBdDE3NLOnhL39bI>
-    <xme:vmyCaevru8skerZ294N2BZajjL6AZptGM00b3HT58WYr_yaXknuX6vYM8Fd8vT0eN
-    ulI-Sl5rWgC1LQlWBftBuKVhSPI9nrsnKMrjaAecQ4pLobGkZkAWw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeduudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepleejjeefuddv
-    hffhueffveffffdvgeffteettefhleehveduudfffeevkeefheetnecuffhomhgrihhnpe
-    gtohhnfhdrihhnpdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphho
-    uhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:vmyCaRV2eyMSXyGSaOww4iWXcwGB7QaWHKG28fty0JPyCnlNSDImDA>
-    <xmx:vmyCaZWozgGIg2K4X4Rb4bIrJnOpjIpVUEUs97cwOYhDbrqqJ2zcVg>
-    <xmx:vmyCaQchMXpWX4DDRq32w1SEpGx41mnBMtG9XtrEtn2PBUaok6rjYA>
-    <xmx:vmyCaSXbnLmASAg2hQmLxeGmYeO-77_crDdZPEvhXDT2mUG3FkhZHw>
-    <xmx:vmyCacwbkyKnatXJAzO_tMLjlPgDIelWRn_eO40Wlr0DiLOyhZyxK4Kh>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 17F441EA006B; Tue,  3 Feb 2026 16:46:38 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="RIwYdMKn"
+Received: (qmail 269999 invoked by uid 109); 3 Feb 2026 21:53:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lkA3x7APm7CEfc/Un/Pyifk64iZboB4hvqKQaSISqcc=; b=RIwYdMKnW0PAZQYs2wtWiSshPzvBADuY/eAVGAxMSsQtJX5FVkuEeA/NH5B5nVUTVlNxKbz/rJIB8M7FKs8m+QvpegRXXL1MERrtY0HK7f9dbVmRsHFr21bOYlPEf7YUDTubnF8mYNE+N88/hv2WwGIWDJWxfeIbcBvBhNqh/0LQCDbEotO+uGI3aeh0jQwYh6NUkSdaAE7Yz1ZlIxAl6r3rIXAwW/52BP2gPUNWATeSOzgZTwUCILEm2EnYduBhOwkuWXN1Fcb0aG0mpAvoCQ2zwI96EdanqGhjtOPomqELL4uJlijAiEKSnwMXve2m1AI5NRwKXQnnXSFAjyjmLQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Feb 2026 21:53:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 535263 invoked by uid 111); 3 Feb 2026 21:53:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Feb 2026 16:53:49 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 3 Feb 2026 16:53:47 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFH] adding test coverage for contrib/ in CI jobs
+Message-ID: <20260203215347.GA340210@coredump.intra.peff.net>
+References: <xmqqh5smdejc.fsf@gitster.g>
+ <20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+ <7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
+ <xmqqjywuyhu9.fsf@gitster.g>
+ <xmqqsebhu9nn.fsf_-_@gitster.g>
+ <xmqq7bstsemv.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AC2L5HFm1BQs
-Date: Tue, 03 Feb 2026 22:44:50 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <ed120bce-384d-4c2a-b334-024acd2dd5f8@app.fastmail.com>
-In-Reply-To: 
- <d179137d8122d152d96c7f5cd91255093c535821.1770138215.git.gitgitgadget@gmail.com>
-References: <pull.2036.v2.git.1769462744.gitgitgadget@gmail.com>
- <pull.2036.v3.git.1770138215.gitgitgadget@gmail.com>
- <d179137d8122d152d96c7f5cd91255093c535821.1770138215.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH v3 4/4] doc: convert git-show to synopsis style
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqq7bstsemv.fsf@gitster.g>
 
-On Tue, Feb 3, 2026, at 18:03, Jean-No=C3=ABl Avila via GitGitGadget wro=
-te:
-> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
->
->  * add synopsis block definition in asciidoc.conf.in
->  * convert commands to synopsis style
->  * use _<placeholder>_ for arguments
->  * minor formatting fixes
+On Tue, Feb 03, 2026 at 01:26:00PM -0800, Junio C Hamano wrote:
 
-For others: my comments were addressed here:
+> ----- >8 -----
+> Subject: diff-highlight: allow testing with Git 3.0 breaking changes
+> 
+> The diff-highlight (in contrib/) comes with its own test script,
+> which relies on the initial branch name being 'master'.  This is not
+> just encoded in the test logic, but in the illustration in the file
+> that shows the topology of the history.
+> 
+> Force the initial branch name to 'master' to allow it pass.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-https://lore.kernel.org/git/pull.2036.git.1769202903.gitgitgadget@gmail.=
-com/T/#m6011e94cd382640ec2cd21ab138d36956bb4c024
+Thanks, I think this is a fine solution. In such cases it is sometimes
+nice to remove the dependence on the branch name entirely. But it looks
+like it would be a pain to do so in this case, and not worth the time.
 
-So I=E2=80=99m happy with version.
+Most of the other instances of GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME set
+it to "main". I guess one day in the future, post v3.0, we might drop
+all of those and decide that "main" is here to stay. In which case we
+might also want to drop these outliers and just switch them to "main",
+too. But I am content to punt that off to another day.
 
->[snip]
+-Peff
+
+PS As you might have guessed, I have not run these tests in ages. I'd
+   only do so when actually changing something in diff-highlight, and
+   that hasn't happened in a while. In fact, I rarely run it at all
+   these days; I usually use the third-party "delta" program in its
+   "--color-only" mode, as it does a better job of true intra-line
+   tokenization and diffing.
+
+   I don't know what that means for diff-highlight. I'm happy to
+   continue to review patches for it, and I think it mostly Just Works
+   and doesn't need active maintenance. But I'm also OK if we dropped
+   it.
