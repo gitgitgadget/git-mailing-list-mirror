@@ -1,112 +1,166 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67670394466
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 16:46:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B223D3491
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 16:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770137188; cv=none; b=eMZ6EwbiooaRDwE9H2e5J54q7iDgKSKMGGNBClYz1furjZO55eIIIirBjqFOgo0yMuLGMOttoTo8XwYxUxU+d7xz9IX1FGWevjnRtJklbzNRA0z05xM66k0cof8eNV4bkH6wA9tGA8USWJpBrZKM6VrEXpm6mLFHHXE8X0IpIF8=
+	t=1770137983; cv=none; b=YUg3C4lO6PKQ/NOfMOJ8ZDLUVenglUQ7gWsdB1uhlkxwOGE0ftf0n6ZD9G60uIMMiMaQCOT7K1Vb4L3D70FUCrdnkK9siGFYgbhvSfzutF1sJ5g4fBWzRylDGUUPV7K0D6lSSgATD04kBs+LdIaBIfiLItnwySmTrnaWEHXPkqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770137188; c=relaxed/simple;
-	bh=kRJqPHaIwgBZjifaZtB28cTl/jreo/4ZVMWwMj96Zu0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lI30Q/G7APvZUcnTdQxTuP1Q+95r1M/ewUUlKEi6Yb4iqfU2MZ9nU/TzR/oQduE3SvHhp8XDfOIZEnUxw/hSCv1tBTXtG/zYi2lrVpzgznxgVRb7Tjtzm5O5BxVcnAqcAnQpIQoleveWLPA1ENxIrpjB895RmXcZKvoorqgGUaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g4Tn2SaE; arc=none smtp.client-ip=209.85.210.54
+	s=arc-20240116; t=1770137983; c=relaxed/simple;
+	bh=SEsyqBzN7RLcLZ9CCa6KWN4qysHHeKjskTPvox3ju4Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=abiVCU1xad9GZlY+Ityr7gCxsnwbl5SVTU5FoNDMe+cPdgAU053mcb7/4YG4hFcXKDj9zMhAzuWI2EwYqcHRkCE5kc8604ydiAk0DP1S4GPKP73aY/Y2h2udo1koHPBqoWivoDaQTTmXPTwtKkBH1kuDCVBpn87dUDohlpnVPsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h8UVgOZ6; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g4Tn2SaE"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7d196a2334fso2175a34.1
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 08:46:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h8UVgOZ6"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-81df6a302b1so5514561b3a.2
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 08:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770137186; x=1770741986; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rxEae6Pe/Mb4iyPPzwPmNBdYuIhNaejLutRqrXPNOYw=;
-        b=g4Tn2SaEGb+Nh6iVh/GXUD0+Q9PuTXr3zp9d3x7aH/egBzpwGmybuUnhU1aeFC8I1v
-         I+M6Q3LYhMPgQzFGWf9MbEoaGPK2y61wrYxTzHup1O0U/Lcfd9CycHnSRmNLXYxxeeYQ
-         9g3a4Xdgh4nRD7POgkFqwPixIBC03qoH1lOqYAngXwve2Ta7UV1/ZYcQ6DVCja4PYMIg
-         zHRrUfRVcQhiPe2DIhhJAAqoOoFpRE2TszR0EF8Ct1+SNVmn9kPXtV1eUfxK2kcKGpJS
-         iZW6PXmRGdR0XCLyoBt3kRc7JFWWNyhgjIkRdox4lJZw9zAl+wijDRGx7uiwJiWXPkOD
-         8cqw==
+        d=gmail.com; s=20230601; t=1770137981; x=1770742781; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2diaVpLMZgNOP0efVwv+G+/N51z4gROZv8k6L4s+WLM=;
+        b=h8UVgOZ6735QOCWl6YBX+33vGQE6/O9/LgwWHXE8Pu9Ai2RprsKHDyfr5LXQS8Rdcg
+         dWyQGLzgom6vvQOfi1J/rMxP/YURcWpjvfK9ST8lFhIzPj+6BCkut+nrKefWdIOSqYR2
+         gpSD0Sy1xjMUYrtcBrmOiTEq21JHk7eCdIyw7G4wsupLb8ykX/hFvDaFRS7oN18vuDKs
+         ERgle/CinYSrM1sdX+FccXDxZ9sYdwYTk57163PMxrYuufM0IUQ8mKdRNQbkf1fF8XoO
+         M0aB+LH8wr4JKO6dbqimuOmtcVWZXcYY0IyFPGCoZ0ZJLHCmb+ksoyo4mCEs8GKxpE4e
+         hYuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770137186; x=1770741986;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rxEae6Pe/Mb4iyPPzwPmNBdYuIhNaejLutRqrXPNOYw=;
-        b=iRa80b6CoKYIsnq9vYq019nS16wMtzU3fIMILHiGQtDWxPbdeVj8wqpQ21wuPE9oVp
-         8ljmH46eJDDJG+98H41d+NU/yc0vYXDpZGrz/y05O2yqh8yagx6FBQU63eHHSaAFTHss
-         RjfFXvn8d1DbokkkUnR+RpAMu7/H8ysmWZ9G9TZfwluh3DfQTG9wES+Miyb+/9ISAa10
-         /LJD0ThGjFSLc+ORB5yteffM07B8ayBS1FYC3+NwbCQOizX+YI39yiS/UgON0hwC7Q4O
-         ltRyJqz3L/z6FxsSWDtj+WTUtViHYgzO/e2tAy+tZRzmKlf5ZaIxFS1lWdPlbYr3wIAV
-         fHaw==
-X-Gm-Message-State: AOJu0Yx5P/X7sQ3v/PAayrv1IW8WdduSzVBLTc0rDtIKYRoCB7zIpx2j
-	kOYqfBaMBPBXwNnDq9CfGe5+OEi0i7gL8OjtZnARWHqsus6BDRK66Jgm
-X-Gm-Gg: AZuq6aJNjVz+rsn9U1/uE386lUwA4BGn/znCP+3p59Q1H9TCx/VN6Fg/2fHa7p0YedJ
-	NcfKlwZkYe9NxVDas0QecI00utkaDLgM4pSQM/TO+SM0CjPKdbHy+pJ/b1G6Hr2zPXJqvu3k6Ci
-	7LUToZliYKKm4t0OfvT+aySNNxUO4DM6yW/AU8ws28JOc6A7KrMb2xti5pvVlgMgF70I+tyFMky
-	Lc0rhpd9Jkijmz20yOFYQ1QRwh8bl+I8UaJYY5Q1SfVHw+XI1b9EwQtaN00Jsdi7bsy3fOGswH5
-	D3grOgi9JjvqPlNeS0RkMZbVJmyl/Q5dkvwE+1YZoy2MMhbUAFzTDtFlDdBFl0DAkL+dgZJXW24
-	xdKhBOEOZgmG3+LWQxp6nxiw1Ta4NsaCD2ecbFbH25FEdFGHH9JitKVANuZzPzZFKvD8d+SHj4y
-	UaENg2
-X-Received: by 2002:a05:6830:d0c:b0:7c7:68d8:f70f with SMTP id 46e09a7af769-7d449286610mr34324a34.3.1770137186138;
-        Tue, 03 Feb 2026 08:46:26 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d4491ffb19sm29503a34.18.2026.02.03.08.46.25
+        d=1e100.net; s=20230601; t=1770137981; x=1770742781;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2diaVpLMZgNOP0efVwv+G+/N51z4gROZv8k6L4s+WLM=;
+        b=H8ZG2funEVgBqN/ITAJGYUXzN/G/Ln48hvRJIEpyNZfx/kzO9LAYqtjJgmrOmQwsfs
+         FSoZ4PWODGPcrk1hoW3VvXf/HtJCR5u9BrIR/0vZcSBe7cQstudUzGdVAXxlusqSxn6c
+         h2m3JOnCKlGVt6Jj/BfWkAhGMurvkz8D7tBaQNzzkcUC3VJ9nxbkGXpVO4vEGxNHrP9e
+         uZrVIG+0FW0BW5zaLLhVyjonKJmBxnVUq8XLywsVJ41385VLHXuEJp3HxH/gzRhr4K3N
+         W71lxTHyWn/+roGW+P8Ly19L9KMIWKp+NH9WPPfyqThAfWBc3vDasgWN55IteN03Oan2
+         sK8w==
+X-Gm-Message-State: AOJu0YxvyMV2tF09Pze6XRCShgVTKdRBUyFwbGS4wF23Xn0VA6MqSa/Y
+	dnuLxBWWpYh6cSTQ9Eytre1yqrdHzZOjCaRIu832s4husXdBy5isOKROE0qb7K9K
+X-Gm-Gg: AZuq6aLbTH1cX/Qj+LYlX0ZvitvoyPA96e+X91DgwZAPcmFl0h42eqZK85tCl9BSbEv
+	R9FY0gOvD5m8m+taw1ZaiOyy1EQQjdHtU9jA0GyRQDS0AO8gPI1h4Xr9kjP8+DmnqSYV1xn9TM1
+	1ujORla3s7P3GsBRhP8NjPTbaeqfTPRzChjqzJ8wbBx3lEoGkk34pxS9kHXd8CRtBvkpS6Ee8/4
+	X2K58ngvXGh865BrXFQjC21h6StnrLW0ag1iT1Q9ujFEWQtcLNWgmLMpM5+ngijDolvFvbl6SOP
+	RneF/f4byQKOOYRtF0cqbQDIG+GXSzuxQA5JIYd2W+st7CNjCv3bWWOZ71lxUjCu8ca6z89LMWv
+	aw94T3OkH6dLLfwlwr6T2EHifhV7K4FTpnXirfFOMrw43rcSaNTJfPbZswnWYeJ8sWykEHdrOU4
+	ZS+Ib2TrHuReEPFoNDWi1sclRk/AzmqVCF
+X-Received: by 2002:a05:6a00:1587:b0:81f:3b74:5812 with SMTP id d2e1a72fcca58-8241c21f645mr67921b3a.31.1770137980943;
+        Tue, 03 Feb 2026 08:59:40 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379c54fcasm21643806b3a.66.2026.02.03.08.59.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 08:46:25 -0800 (PST)
-Date: Tue, 3 Feb 2026 10:46:22 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com
-Subject: Re: [PATCH v2 3/4] odb: prepare `struct odb_transaction` to become
- generic
-Message-ID: <aYIirIQveQiNWzsx@denethor>
-References: <20260128234519.2721179-1-jltobler@gmail.com>
- <20260203001002.2500198-1-jltobler@gmail.com>
- <20260203001002.2500198-4-jltobler@gmail.com>
- <87o6m5rff8.fsf@iotcl.com>
+        Tue, 03 Feb 2026 08:59:39 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Cc: pushkarkumarsingh1970@gmail.com
+Subject: [PATCH v4] subtree: validate --prefix against commit in split
+Date: Tue,  3 Feb 2026 16:48:16 +0000
+Message-ID: <20260203164815.68258-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+References: <20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87o6m5rff8.fsf@iotcl.com>
+Content-Transfer-Encoding: 8bit
 
-On 26/02/03 04:54PM, Toon Claes wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> > -static void prepare_loose_object_transaction(struct odb_transaction *transaction)
-> > +static void prepare_loose_object_transaction(struct odb_transaction *base)
-> >  {
-> > +	struct odb_transaction_files *transaction = (struct odb_transaction_files *)base;
-> 
-> So you're assuming `struct odb_transaction` is the first field in
-> `struct odb_transaction_files`?
+git subtree split currently validates --prefix against the working tree.
+This breaks when splitting an older commit or when the working tree does
+not contain the subtree, even though the commit does.
 
-Yes, `struct odb_transaction_files` contains a reference to `struct
-odb_transaction` as its first member which is the "base" transaction
-type. This way we can easily cast to the containing "concrete" type.
+For example:
 
-> I think it would be safer to do this instead:
-> 
-> +	struct odb_transaction_files *transaction =
-> +		container_of(base, struct odb_transaction_files, base);
-> 
-> (this also can be applied in a few other places in this patch)
+  git subtree split --prefix=pkg <commit>
 
-So long as `struct odb_transaction` remains the first member of `struct
-odb_transaction_files`, using `container_of()` is functionally the same
-thing as casting. This is also how we do things for `odb_read_stream`
-and `odb_loose_read_stream` so I don't think it is too big of a deal
-either way.
+fails if pkg was removed later, even though it exists in <commit>.
 
-I've made the change locally, but will hold off from sending another
-version unless folks feel strongly about this change or there is other
-feedback.
+Fix this by validating the prefix against the specified commit using
+git cat-file instead of the working tree.
 
-Thanks,
--Justin
+Add a test to ensure this behavior does not regress.
+
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+
+Changes since v3:
+- Fix regression in existing subtree tests by checking prefix existence
+  with git cat-file instead of git ls-tree -d
+- Preserve original error message to keep test 17 passing
+
+ contrib/subtree/git-subtree.sh     |  9 +++++++++
+ contrib/subtree/t/t7900-subtree.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 17106d1a72..d7f9121f2f 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -257,6 +257,9 @@ main () {
+ 		test -e "$arg_prefix" &&
+ 			die "fatal: prefix '$arg_prefix' already exists."
+ 		;;
++	split)
++		# checked later against the commit, not the working tree
++		;;
+ 	*)
+ 		test -e "$arg_prefix" ||
+ 			die "fatal: '$arg_prefix' does not exist; use 'git subtree add'"
+@@ -966,6 +969,12 @@ cmd_split () {
+ 	else
+ 		die "fatal: you must provide exactly one revision, and optionally a repository.  Got: '$*'"
+ 	fi
++
++	# Now validate prefix against the commit, not the working tree
++	if ! git cat-file -e "$rev:$dir" 2>/dev/null
++	then
++		die "fatal: '$dir' does not exist; use 'git subtree add'"
++	fi
+ 	repository=""
+ 	if test "$#" = 2
+ 	then
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 316dc5269e..e4f632f3af 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -368,6 +368,28 @@ test_expect_success 'split requires path given by option --prefix must exist' '
+ 	)
+ '
+ 
++test_expect_success 'split works when prefix exists in commit but not in working tree' '
++	subtree_test_create_repo "$test_count" &&
++	(
++		cd "$test_count" &&
++
++		# create subtree
++		mkdir pkg &&
++		echo ok >pkg/file &&
++		git add pkg &&
++		git commit -m "add pkg" &&
++		good=$(git rev-parse HEAD) &&
++
++		# remove it from working tree in later commit
++		git rm -r pkg &&
++		git commit -m "remove pkg" &&
++
++		# must still be able to split using the old commit
++		git subtree split --prefix=pkg "$good" >out &&
++		test -s out
++	)
++'
++
+ test_expect_success 'split rejects flags for add' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
+-- 
+2.43.0
+
