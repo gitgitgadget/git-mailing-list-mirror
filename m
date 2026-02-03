@@ -1,179 +1,125 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039973191CA
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 10:29:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770114570; cv=none; b=qxGnZu2krOjCsC4CPiMDeAty4ZZtUOeQaU3LNvXQR5uK3Z5Dy/oHi2V0o3BXhwvuY+dPr7dW+kXE2PEqK2ynoSQSZRK2EfWxQ0ydYnc52M+78NKbabU98ThYF/6Yc4UUmllez7/HJMueQaz26q+Al8j0ub4pjBnH+eZC4O+GBEQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770114570; c=relaxed/simple;
-	bh=MpDGHfjZOP2VbWFFV+jt0I+xKaxkMvxeWdR0iTbrbV4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VLOPW4zZHiGYBrs0ztQxXhVCQ8GUjPKE4pez4wwPvq6Nw2dzKyU87bnBJ6VUl4cvTniIB6oFOchqM0OLWw/rkY6n1GG+y6udpLyn7wZZxm8i6arJheurHIdqhaDmb0D1lPnzlgO79+cWsMUntB/4GFfJxN+W2F9ijYb8LwkPPGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=iwJvvam2; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D40830FC1F
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 10:33:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770114791; cv=pass; b=FSFIcsgjBawSLk2mdArzqjdF1rzHYIg6rpSM4hxPO18hozPsRLPoz8BnDT6e+5JPZgqdbpKYI5md9uRlYZizQ9DlJDnGI/8LhEEhr7QI9XCPnTnuhopzS8ADQAadviBcYRQipKg2/muhLMvge8RUUufhcrov0qlZhk+/Y4X9Ot4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770114791; c=relaxed/simple;
+	bh=3RCjLD7tYsDRQHhkohxZPqpuOxURgUSlKmgBtWFl7p4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HRWYqgJMk595X8HwjOLu06K7P6N2b1BX1MOl3mB4V+gW6YEhpYeGzhGi612rTyvyuSB7xZo0vNOcUEgv8QrzPJt0N/u3FhSAi1Vm0Cwn9xYYACvPOF0Tk5fQd3HehAlneLFDRyvQNrKj1XqwOPHMM7DkOfqTjXC70WwPy7LgliA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E5KxZk2A; arc=pass smtp.client-ip=74.125.82.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="iwJvvam2"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1770114566;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=DlJdNJIq5zgI/egpWdkRESb0g4P3BDHf8B4VuvCAq8I=;
-	b=iwJvvam2UyouRZaHcPsFKIif+rcSVVSHVWnmlAtIDd2UtEKEdTufFHHE3o92Pyy3uJKoGf
-	U3s3Mji0KadWGkrf4IgytIxg/S6mB4HYqU6KxG+sLkZ0pKebK/HjNpbMW8u7eBPK8z51I0
-	pF4dCtqwOeJ/lNzzTbkzy9afzmLWyZ4=
-From: Toon Claes <toon@iotcl.com>
-To: git@vger.kernel.org
-Cc: l.s.r@web.de,
-	Toon Claes <toon@iotcl.com>
-Subject: [PATCH] cocci: extend MEMZERO_ARRAY() rules
-Date: Tue,  3 Feb 2026 11:29:03 +0100
-Message-ID: <20260203102908.749954-1-toon@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E5KxZk2A"
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-12460a7caa2so8267170c88.1
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 02:33:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770114789; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ITVOvYCH1du7ixHLPshmXj1HKNhBYxUz786y5CoZsfOkIcdiqT3cRNeP4LVAV3VbW5
+         G8tuYm0wYxuaFfuiv8Fo6Iwiqw9shKMgqKzjXE86r0GanEt7b/dZXaYIl61Ik/VQcUX3
+         NQJTgC3JE2/d4CZ/PdOxNJZfZvwyVbGcmOaRXSj7VZ1ib/orcOC466Wel92P46B7McTr
+         BlXmj7to0zYi+UyozhHT8OGxNpv5zF1amL6NpSetWWYRR7J4ign7aFEoQVEjmyePZ6On
+         oAaniuzVgNBiALKtQkdAO75lEyknIwMLIk+48TAFY2zsiAoy8li/g6pdZN3cLkQkPFxu
+         kpSQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=3RCjLD7tYsDRQHhkohxZPqpuOxURgUSlKmgBtWFl7p4=;
+        fh=CMSbN3Ma0Ng/9zgOxaUlTX8hgMiXi2Q+UFWzZao/xPs=;
+        b=eyWhl6az4F5BnEOex8zJ5QIBK1NGWkCofudu21AqPSPA+ehvofVa1O/LQKTf/9NaNY
+         jQvh+ZI3omjLgCpkp4z+t5qiiR2kj6PJO0uYcIzPx9H41PCXCu7U4Nojfr/bN/3aO9k/
+         ZykthhZoWiC44x4jv7cLjW+LO0E4bYs9twU178/d5E81vk0XMHKiE8CU2Un683BgRzCX
+         uFec7cpZBPJR9zXLyL9fO8AuJ5r+52WyhH0IEaesdCk5Og0+Dhfe+V2si3MC50ezz9cN
+         KNMDMIPIPidQqJ8xogWPkOqJNd3aI13rIMMQ8W6Ne1BdYJLZQ3iECoomtccrW0bRWX2l
+         zbZA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770114789; x=1770719589; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3RCjLD7tYsDRQHhkohxZPqpuOxURgUSlKmgBtWFl7p4=;
+        b=E5KxZk2AEpgu/rq0Rt4R8RG24k+c/LWOq/oqmSRddefAbQLJB8sP3z7wZsvsXcU1rf
+         ahUXlVjqSQWtbVBhu0r5c4+tAndPBNfzXpJ8cHcOPOBVoTBdKsfT5NMXa7dFZdldHWUB
+         EYYYhITfsZvkDAH8sT01FMfCDI8DOfDdK/hmiuEgqKqIlavvBML9WD1RDi0s/N87FFok
+         ZeMaaufdcMujhF9Hb4a6wEgZrWqkMaMXN7k9mVyq5Rep3Yol9OW3yaWlA2O34x0Z9up7
+         egSekrVUYsXZ4WFBVD9JdYEWg0TegSF/pA9/iwwmgRIDWE7iRrAsCJQClIVAFfOoIOXf
+         WFRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770114789; x=1770719589;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3RCjLD7tYsDRQHhkohxZPqpuOxURgUSlKmgBtWFl7p4=;
+        b=UV+IQXQiTdWxqijmMYVUDFYL8ZvQVyAr277gfEXtdnhNzQCE9sJEw/7q5mu8pRuMju
+         pFSvguvDvjCbMPauPyKnhO/MJO/18ZIe9JXC+4FYzZtCQTL2udD30sJF6yRMdE9Ze3O/
+         zEW8ma2Qr74IynudxTuBk19wIT6Dd13VyG7IfXOjN+vi/CI1DgIrPmtGVVwe4QLVg+8W
+         p1xdC6hGWettYilZm3iQqGhf3bmhFW12qZ1hInxEWSnObjJg1trh32muV8ANBXGd0S3+
+         GHzUQTKs2NLdObAz3vrs8x+/VNJSfZE4OfTrGfSLzOtn0/3xBEZlJmgEG944Dtqn4qth
+         dxyg==
+X-Forwarded-Encrypted: i=1; AJvYcCXYaAvgYp7u8h5fBZWBIedgShW7byhPc3Ez/LHXEwxzs3SXFDn/+1RPfvVG5YdmkHcyw3o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzuZjP9IKWrajq2ZDpi1mCjp+++5U0zUXya1GRH4GXyV7lRgOIt
+	mnzKYXUdO0VtfiNBfvYPsIEAS1EQ754+hANbMDg9nQzaxkBdrZxNY4sBlrdFkfT0w6AsGc3neho
+	uJgNu1e6vIqvHDdVfSpZttTPJQ/D1RBc=
+X-Gm-Gg: AZuq6aJfQp1altnKU6/fjXP7Hqj6715VExOPrt71xlSOYTDNjuGFMrdYrS4IQ8/eWbC
+	ZKqY0M/rcfShyLMj4r2ON5Ezx5k1ILAdm6n6IPvN8uo5tkSgZvXbF/WkjeizQ6SOHmPVyYJ0BYi
+	a7q/zKErKcs79PIDNgWgZZL1IaPPCSjjZfhCbHpzzQd/F6V4L5SEOcWxyVnmmdQ4+kgoZ9/dX1n
+	0f3b8kqGNsHv3V7M5/mxnyHLM8vnCRs//jdOOyupb9OnGfO4KU15s9DjUHlEtQbeT3xVdZUy65/
+	34y038eIJuGjkpxwrh6xrEZfZHZbbajjhgOzITKErZVCkKJkdWw2LlmU
+X-Received: by 2002:a05:7022:2525:b0:11d:c04a:dc5b with SMTP id
+ a92af1059eb24-125c1000fbbmr6869841c88.30.1770114789343; Tue, 03 Feb 2026
+ 02:33:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+References: <CAP8UFD11txMWSfMTvDtcBJuuZA5mKffo6XUyR9LWk2d_N0RRtA@mail.gmail.com>
+ <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com> <CA+J6zkSo1LuFUdTU8m6z4vANrJ2r88EV6RDDC_0ZW3bWec2v2Q@mail.gmail.com>
+In-Reply-To: <CA+J6zkSo1LuFUdTU8m6z4vANrJ2r88EV6RDDC_0ZW3bWec2v2Q@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 3 Feb 2026 11:32:57 +0100
+X-Gm-Features: AZwV_Qjqf3SN_XW7P1b0nSNcPbFot-XcUG22N-PAQSPClBbO48fw4Mx0eRvI_bs
+Message-ID: <CAP8UFD15Fkx0t4DYcWjK+WgeZBOzfYNyOePQXGU46Fyf4+pFgA@mail.gmail.com>
+Subject: Re: Git project and GSoC 2026
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, git <git@vger.kernel.org>, 
+	karthik nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Meet Soni <meetsoni3017@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
+	Bello Olamide <belkid98@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In December we've added the MEMZERO_ARRAY() macro. I wrote the initial version,
-and Junio made improvements to it. But I realized not all cases where
-MEMZERO_ARRAY() was used were detected by coccinelle. So I've been improving the
-rules further. But due to the holidays I forgot had this patch laying around,
-and now during cleanup I ran into it again.
+Hi Chandra,
 
-As far as I can tell, all cases that now use MEMZERO_ARRAY() would have been
-converted by coccinelle automatically.
+On Thu, Jan 22, 2026 at 3:43=E2=80=AFPM Chandra Pratap
+<chandrapratap3519@gmail.com> wrote:
+> On Thu, 22 Jan 2026, 10:38 Kaartic Sivaraam, <kaartic.sivaraam@gmail.com>=
+ wrote:
 
-As pointed out by René[1], "0x0" can be replaced by "0", and coccinelle can also
-be used to drop unneeded parentheses.
+> > I would be glad to help as an org-Admin this year too. I could act as a=
+ fallback mentor in case any mentor / co-mentor becomes unavailable during =
+a particular period of the program.
+> >
+> > I also Cc-ed Chandra Pratap as they expressed interest to be a co-mento=
+r before.
+>
+> I'd be glad to help as a co-mentor. I think I'd be able to best help
+> with project ideas related to reftable or testing, seeing how I worked
+> on reftable tests in my GSoC project, but please let me know if I can
+> help with anything else as well!
 
-I'm not entirely sure it's worth applying this patch, as the original
-MEMZERO_ARRAY() date back a month or two. So I don't mind if this patch would be
-dismissed.
+Thanks for volunteering!
 
-[1]: https://lore.kernel.org/git/f02b628f-b9d7-4436-88ee-3255e02cb0f3@web.de/
-
-
-Kind regards,
-Toon
-
--- 8< --
-
-Recently the MEMZERO_ARRAY() macro was introduced. In that commit also
-coccinelle rules were added to capture cases that can be converted to
-use that macro.
-
-Later a few more cases were manually converted to use the macro, but
-coccinelle didn't capture those. Extend the rules to capture those as
-well.
-
-In various cases the code could be further beautified by removing
-parentheses which are no longer needed. Modify the coccinelle rules to
-optimize those as well and fix them.
-
-During conversion indentation also used spaces where tabs should be
-used, fix that in one go.
-
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- contrib/coccinelle/array.cocci | 36 ++++++++++++++++++++++++++++------
- diffcore-delta.c               |  2 +-
- ewah/bitmap.c                  |  4 ++--
- 3 files changed, 33 insertions(+), 9 deletions(-)
-
-diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.cocci
-index d306f6a21e..e71baea00b 100644
---- a/contrib/coccinelle/array.cocci
-+++ b/contrib/coccinelle/array.cocci
-@@ -107,9 +107,32 @@ type T;
- T *ptr;
- expression n;
- @@
--- memset(ptr, \( 0x0 \| 0 \), n * \( sizeof(T)
---                                 \| sizeof(*ptr)
---                                 \) )
-+- memset(ptr, \( 0 \| '\0' \), \( (n) \| n \) * \( sizeof(T)
-+-                                               \| sizeof(ptr[...])
-+-                                               \| sizeof(*ptr)
-+-                                               \) )
-++ MEMZERO_ARRAY(ptr, n)
-+
-+@@
-+type T;
-+T *ptr;
-+expression n;
-+@@
-+- memset(ptr, \( 0 \| '\0' \), \( sizeof(T)
-+-                              \| sizeof(ptr[...])
-+-                              \| sizeof(*ptr)
-+-                              \) * \( (n) \| n \) )
-++ MEMZERO_ARRAY(ptr, n)
-+
-+@@
-+type T;
-+T[] ptr;
-+expression n;
-+@@
-+- memset(ptr, \( 0 \| '\0' \), \( (n) \| n \) * \( sizeof(T)
-+-                                               \| sizeof(ptr[...])
-+-                                               \| sizeof(*ptr)
-+-                                               \) )
- + MEMZERO_ARRAY(ptr, n)
-
- @@
-@@ -117,7 +140,8 @@ type T;
- T[] ptr;
- expression n;
- @@
--- memset(ptr, \( 0x0 \| 0 \), n * \( sizeof(T)
---                                 \| sizeof(*ptr)
---                                 \) )
-+- memset(ptr, \( 0 \| '\0' \), \( sizeof(T)
-+-                              \| sizeof(ptr[...])
-+-                              \| sizeof(*ptr)
-+-                              \) * \( (n) \| n \) )
- + MEMZERO_ARRAY(ptr, n)
-diff --git a/diffcore-delta.c b/diffcore-delta.c
-index 2de9e9ccff..2b7db39983 100644
---- a/diffcore-delta.c
-+++ b/diffcore-delta.c
-@@ -135,7 +135,7 @@ static struct spanhash_top *hash_chars(struct repository *r,
- 			      st_mult(sizeof(struct spanhash), (size_t)1 << i)));
- 	hash->alloc_log2 = i;
- 	hash->free = INITIAL_FREE(i);
--	MEMZERO_ARRAY(hash->data, ((size_t)1 << i));
-+	MEMZERO_ARRAY(hash->data, (size_t)1 << i);
-
- 	n = 0;
- 	accum1 = accum2 = 0;
-diff --git a/ewah/bitmap.c b/ewah/bitmap.c
-index bf878bf876..c378e0ab78 100644
---- a/ewah/bitmap.c
-+++ b/ewah/bitmap.c
-@@ -46,7 +46,7 @@ static void bitmap_grow(struct bitmap *self, size_t word_alloc)
- {
- 	size_t old_size = self->word_alloc;
- 	ALLOC_GROW(self->words, word_alloc, self->word_alloc);
--	MEMZERO_ARRAY(self->words + old_size, (self->word_alloc - old_size));
-+	MEMZERO_ARRAY(self->words + old_size, self->word_alloc - old_size);
- }
-
- void bitmap_set(struct bitmap *self, size_t pos)
-@@ -192,7 +192,7 @@ void bitmap_or_ewah(struct bitmap *self, struct ewah_bitmap *other)
- 		self->word_alloc = other_final;
- 		REALLOC_ARRAY(self->words, self->word_alloc);
- 		MEMZERO_ARRAY(self->words + original_size,
--		              (self->word_alloc - original_size));
-+			      self->word_alloc - original_size);
- 	}
-
- 	ewah_iterator_init(&it, other);
---
-2.53.0.rc1.267.g6e3a78c723
+We don't have project ideas related to reftable or testing in our idea
+list, but we could add some. If you have preferences among the
+projects listed there, let us know though.
