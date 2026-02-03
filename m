@@ -1,125 +1,165 @@
-Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D40830FC1F
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 10:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770114791; cv=pass; b=FSFIcsgjBawSLk2mdArzqjdF1rzHYIg6rpSM4hxPO18hozPsRLPoz8BnDT6e+5JPZgqdbpKYI5md9uRlYZizQ9DlJDnGI/8LhEEhr7QI9XCPnTnuhopzS8ADQAadviBcYRQipKg2/muhLMvge8RUUufhcrov0qlZhk+/Y4X9Ot4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770114791; c=relaxed/simple;
-	bh=3RCjLD7tYsDRQHhkohxZPqpuOxURgUSlKmgBtWFl7p4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HRWYqgJMk595X8HwjOLu06K7P6N2b1BX1MOl3mB4V+gW6YEhpYeGzhGi612rTyvyuSB7xZo0vNOcUEgv8QrzPJt0N/u3FhSAi1Vm0Cwn9xYYACvPOF0Tk5fQd3HehAlneLFDRyvQNrKj1XqwOPHMM7DkOfqTjXC70WwPy7LgliA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E5KxZk2A; arc=pass smtp.client-ip=74.125.82.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63785285C91
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 10:58:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770116290; cv=none; b=EEZIB3am8Ox5y1FVgi0a/8gJ/0L7TSzXAHdc3OTos8cCRDA/f+39do+U9WKeuiz5Amw/gCDUMk4zvS0clpbHKUJVszKz4WapNvw5IybeHVBPEOcqhOsYKEzOcM9m7dbK7ijL2wfjPik6v9KxrOMzKjpAw6t+QgKMJB1ZbMKKA3E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770116290; c=relaxed/simple;
+	bh=bkzA6YCJhJaMkMcwgLw0LyXff49+MeYgRkZcF/ss8Cs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eynU2rc8paV7zAFGAZimrlBoic58q6kwl9DwYutstE3axpLv8KrYxjo+7eSO7cuxFmVzd7nklByHDCA2p149BIB0x57MoXow1o79S+lJthpL193MaYjsIUWXCAM25mD9rVHzqPKfTjKJKz9HB3FMKfW0GdnlE0v68i5eF2wqGsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nd7n6dMT; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E5KxZk2A"
-Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-12460a7caa2so8267170c88.1
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 02:33:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770114789; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ITVOvYCH1du7ixHLPshmXj1HKNhBYxUz786y5CoZsfOkIcdiqT3cRNeP4LVAV3VbW5
-         G8tuYm0wYxuaFfuiv8Fo6Iwiqw9shKMgqKzjXE86r0GanEt7b/dZXaYIl61Ik/VQcUX3
-         NQJTgC3JE2/d4CZ/PdOxNJZfZvwyVbGcmOaRXSj7VZ1ib/orcOC466Wel92P46B7McTr
-         BlXmj7to0zYi+UyozhHT8OGxNpv5zF1amL6NpSetWWYRR7J4ign7aFEoQVEjmyePZ6On
-         oAaniuzVgNBiALKtQkdAO75lEyknIwMLIk+48TAFY2zsiAoy8li/g6pdZN3cLkQkPFxu
-         kpSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3RCjLD7tYsDRQHhkohxZPqpuOxURgUSlKmgBtWFl7p4=;
-        fh=CMSbN3Ma0Ng/9zgOxaUlTX8hgMiXi2Q+UFWzZao/xPs=;
-        b=eyWhl6az4F5BnEOex8zJ5QIBK1NGWkCofudu21AqPSPA+ehvofVa1O/LQKTf/9NaNY
-         jQvh+ZI3omjLgCpkp4z+t5qiiR2kj6PJO0uYcIzPx9H41PCXCu7U4Nojfr/bN/3aO9k/
-         ZykthhZoWiC44x4jv7cLjW+LO0E4bYs9twU178/d5E81vk0XMHKiE8CU2Un683BgRzCX
-         uFec7cpZBPJR9zXLyL9fO8AuJ5r+52WyhH0IEaesdCk5Og0+Dhfe+V2si3MC50ezz9cN
-         KNMDMIPIPidQqJ8xogWPkOqJNd3aI13rIMMQ8W6Ne1BdYJLZQ3iECoomtccrW0bRWX2l
-         zbZA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nd7n6dMT"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4801d7c72a5so43162245e9.0
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 02:58:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770114789; x=1770719589; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3RCjLD7tYsDRQHhkohxZPqpuOxURgUSlKmgBtWFl7p4=;
-        b=E5KxZk2AEpgu/rq0Rt4R8RG24k+c/LWOq/oqmSRddefAbQLJB8sP3z7wZsvsXcU1rf
-         ahUXlVjqSQWtbVBhu0r5c4+tAndPBNfzXpJ8cHcOPOBVoTBdKsfT5NMXa7dFZdldHWUB
-         EYYYhITfsZvkDAH8sT01FMfCDI8DOfDdK/hmiuEgqKqIlavvBML9WD1RDi0s/N87FFok
-         ZeMaaufdcMujhF9Hb4a6wEgZrWqkMaMXN7k9mVyq5Rep3Yol9OW3yaWlA2O34x0Z9up7
-         egSekrVUYsXZ4WFBVD9JdYEWg0TegSF/pA9/iwwmgRIDWE7iRrAsCJQClIVAFfOoIOXf
-         WFRQ==
+        d=gmail.com; s=20230601; t=1770116287; x=1770721087; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X6k+BVpFG1D3ZiOifAUZQimvbbeKWQrYuJdGRGBqiOw=;
+        b=Nd7n6dMTzfhUmRk/HhjidP7A/PbXzoo8TwSroCRaZls6RK/6Eaq1Eyerst1UqaGoXZ
+         9ZOao/QN8KhzI0oNrYyC9cYEF9TyPXm/2iR2nLTCiBPGEAsZ5D4F78IbMzZtjPTCm6XK
+         Yk64iNF+z1ChvafI6OxGircY31EWGg8xMG2yb+Qtg3+fyEfoShiGWCLqmeL6Q4ZMRxO5
+         Up227z33d9MNbdaSX8S3XX7OTVTWX3JUfktBUwV89640bTofIIT+888Gk5boT6Czjcjg
+         Or73RN/bl2QbF5ceUVGw5ucg3h3AN6HbSb/fKPN++9oQyw8L9IESyUE8gn87+dusQbc3
+         3DJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770114789; x=1770719589;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3RCjLD7tYsDRQHhkohxZPqpuOxURgUSlKmgBtWFl7p4=;
-        b=UV+IQXQiTdWxqijmMYVUDFYL8ZvQVyAr277gfEXtdnhNzQCE9sJEw/7q5mu8pRuMju
-         pFSvguvDvjCbMPauPyKnhO/MJO/18ZIe9JXC+4FYzZtCQTL2udD30sJF6yRMdE9Ze3O/
-         zEW8ma2Qr74IynudxTuBk19wIT6Dd13VyG7IfXOjN+vi/CI1DgIrPmtGVVwe4QLVg+8W
-         p1xdC6hGWettYilZm3iQqGhf3bmhFW12qZ1hInxEWSnObjJg1trh32muV8ANBXGd0S3+
-         GHzUQTKs2NLdObAz3vrs8x+/VNJSfZE4OfTrGfSLzOtn0/3xBEZlJmgEG944Dtqn4qth
-         dxyg==
-X-Forwarded-Encrypted: i=1; AJvYcCXYaAvgYp7u8h5fBZWBIedgShW7byhPc3Ez/LHXEwxzs3SXFDn/+1RPfvVG5YdmkHcyw3o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzuZjP9IKWrajq2ZDpi1mCjp+++5U0zUXya1GRH4GXyV7lRgOIt
-	mnzKYXUdO0VtfiNBfvYPsIEAS1EQ754+hANbMDg9nQzaxkBdrZxNY4sBlrdFkfT0w6AsGc3neho
-	uJgNu1e6vIqvHDdVfSpZttTPJQ/D1RBc=
-X-Gm-Gg: AZuq6aJfQp1altnKU6/fjXP7Hqj6715VExOPrt71xlSOYTDNjuGFMrdYrS4IQ8/eWbC
-	ZKqY0M/rcfShyLMj4r2ON5Ezx5k1ILAdm6n6IPvN8uo5tkSgZvXbF/WkjeizQ6SOHmPVyYJ0BYi
-	a7q/zKErKcs79PIDNgWgZZL1IaPPCSjjZfhCbHpzzQd/F6V4L5SEOcWxyVnmmdQ4+kgoZ9/dX1n
-	0f3b8kqGNsHv3V7M5/mxnyHLM8vnCRs//jdOOyupb9OnGfO4KU15s9DjUHlEtQbeT3xVdZUy65/
-	34y038eIJuGjkpxwrh6xrEZfZHZbbajjhgOzITKErZVCkKJkdWw2LlmU
-X-Received: by 2002:a05:7022:2525:b0:11d:c04a:dc5b with SMTP id
- a92af1059eb24-125c1000fbbmr6869841c88.30.1770114789343; Tue, 03 Feb 2026
- 02:33:09 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770116287; x=1770721087;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X6k+BVpFG1D3ZiOifAUZQimvbbeKWQrYuJdGRGBqiOw=;
+        b=WhDnldnJ3HHfrNePhXzuKNvM9ShiBCO5HKWu//+rGKSYAMenQSY5UZ44XmaTM9Y1TG
+         dYGTAtyJh8gssBGKynVFT1rR3WDo4bSgeD1kE/Cv6QQGOC/oH72hz/bYx7SB9kkewXIV
+         R8ZKunHVlVVPFSAVPHmK48DxAYoxu08pP2WS3r0g0p0Pmreq0QWt2toYQS6C/jLpv4QT
+         GQ4xTjF0CzHJNAtsNfJa1vcJCNYEkbE1UWEr9Bde1FpEtnR8gCNshItFUOeMqDWiIFs3
+         Ej0xGfvHfjVPL5UF8maqdrB5pEwrVxgJRW1Cb6aVtHg6dqBUm8sXD5GWfOMRBhUKtm92
+         GgSA==
+X-Forwarded-Encrypted: i=1; AJvYcCUkzGY0rCidRLF2xbhhtigR1yWWbUncQ/CINHMnVxkmpqhf8rbyxXuwjvSlvq1jI0xdhpc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YydkNpeUvs6csMTHnqY9nWvXY6Ig1lcCgp/WrMZd+dfkwgjda+n
+	zB0/LbkFdXchA7z3xc+iRg7Z8h7Hsg4GTSnLPA11zw+3lM54TfS9Sw/G
+X-Gm-Gg: AZuq6aK2uJnCz+Ljk1ups0cB/wJremzMzAtPY57O9pt8gQ6tPAbJYk6kN84zcovk+Cg
+	SKDkJ9snmqI6exO4YwBstOcAC32OiP/PPtjTyPiD3ImjxI+LWCy/1YI8PzqlVzL4+9R5OtNBxLE
+	WFd/uNW4DoP4vfHbzELLGpVekDMRAAQFxxGwK6I0Ka00w8xUEj1bG9FVmynD7CVrXXhyw9ZNtYt
+	6yTBYXRwEqgswE5q1t+4dAqzxVYnTtubx1Ccd/dvTqKX210pUxj5v50i4oCt77uWfYCP6WgQ5f5
+	Xbgp3TXyQoED5GjmFKczVGXFN7cNyUj42L4lCiZWM3YD+kZ6pwfZ8LmZr8RFkce58Wfr6CW2oPZ
+	oPsMCzA7wg86g6+PNN2N4eXhQ6KVd9s4sijhRj0rdpsFk6IXXrqHRVJLmEosYJ+oH5jewdf/i7y
+	A/5eriIeCLPO8Tp1foS3wkikYzc3b48uYhiwVPloXs7sPsu556mfh4RUnvWJ4bzkE2tGW3f3s=
+X-Received: by 2002:a05:600c:45ca:b0:475:dd9a:f791 with SMTP id 5b1f17b1804b1-482db4e7d09mr189770765e9.28.1770116286499;
+        Tue, 03 Feb 2026 02:58:06 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:d511:bcf2:b462:9060? ([2a0a:ef40:627:1f01:d511:bcf2:b462:9060])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-482e04a082dsm118820815e9.3.2026.02.03.02.58.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Feb 2026 02:58:05 -0800 (PST)
+Message-ID: <50791aed-c64b-48fe-8cc7-8cacaec9d295@gmail.com>
+Date: Tue, 3 Feb 2026 10:58:05 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP8UFD11txMWSfMTvDtcBJuuZA5mKffo6XUyR9LWk2d_N0RRtA@mail.gmail.com>
- <35E56A79-FD65-4CBF-9A35-BCFB9A169BFA@gmail.com> <CA+J6zkSo1LuFUdTU8m6z4vANrJ2r88EV6RDDC_0ZW3bWec2v2Q@mail.gmail.com>
-In-Reply-To: <CA+J6zkSo1LuFUdTU8m6z4vANrJ2r88EV6RDDC_0ZW3bWec2v2Q@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 3 Feb 2026 11:32:57 +0100
-X-Gm-Features: AZwV_Qjqf3SN_XW7P1b0nSNcPbFot-XcUG22N-PAQSPClBbO48fw4Mx0eRvI_bs
-Message-ID: <CAP8UFD15Fkx0t4DYcWjK+WgeZBOzfYNyOePQXGU46Fyf4+pFgA@mail.gmail.com>
-Subject: Re: Git project and GSoC 2026
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, git <git@vger.kernel.org>, 
-	karthik nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
-	Junio C Hamano <gitster@pobox.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
-	Meet Soni <meetsoni3017@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
-	Bello Olamide <belkid98@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] wt-status: replace uses of the_repository with local
+ repository instances
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, karthik.188@gmail.com
+References: <CAOLa=ZRv4xsy0adY_BcXQkypsgYkLNM6x5LhJGX+B+=aKCwmgg@mail.gmail.com>
+ <20260202190155.79896-1-shreyanshpaliwalcmsmn@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260202190155.79896-1-shreyanshpaliwalcmsmn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Chandra,
+On 02/02/2026 18:57, Shreyansh Paliwal wrote:
+>>> Many instances of the_repository are used in wt-status.c even when a
+>>> local repository is already available via struct wt_status or struct
+>>> worktree.
+>>>
+>>
+>> One missing information is why is it safe to make this change? If is a
+>> repository field, is it holding the same information, is it always
+>> defined?
+> 
+> Yes I should have included explanation as well.
+> I have explained below, let me know if this thought process
+> is valid or not.
+> 
+> The replacement of all the_repository with s->repo in this patch are mostly
+> to cases where a repository instance is already available via struct wt_status.
+> 
+> In the current flow, all functions operating on struct wt_status *s
+> are called via commit.c. There, status_init_config() calls
+> wt_status_prepare(), which initializes the struct wt_status and
+> assigns s->repo from the repository instance passed in by the caller.
+> As a result, s->repo is guaranteed to be initialized whenever these
+> functions are invoked.
+> 
+> And commit.c itself still relies on the_repository, within wt-status.c,
+> the local repository pointer refers to the same underlying
+> repository object that the_repository would have pointed to, indirectly
+> until we make commit.c also free of the_repository.
 
-On Thu, Jan 22, 2026 at 3:43=E2=80=AFPM Chandra Pratap
-<chandrapratap3519@gmail.com> wrote:
-> On Thu, 22 Jan 2026, 10:38 Kaartic Sivaraam, <kaartic.sivaraam@gmail.com>=
- wrote:
+Good explanation, that would be a very useful addition to the commit message
 
-> > I would be glad to help as an org-Admin this year too. I could act as a=
- fallback mentor in case any mentor / co-mentor becomes unavailable during =
-a particular period of the program.
-> >
-> > I also Cc-ed Chandra Pratap as they expressed interest to be a co-mento=
-r before.
->
-> I'd be glad to help as a co-mentor. I think I'd be able to best help
-> with project ideas related to reftable or testing, seeing how I worked
-> on reftable tests in my GSoC project, but please let me know if I can
-> help with anything else as well!
+>>> diff --git a/wt-status.c b/wt-status.c
+>>> index e12adb26b9..9f4d8fda7f 100644
+>>> --- a/wt-status.c
+>>> +++ b/wt-status.c
+>>> @@ -150,11 +150,11 @@ void wt_status_prepare(struct repository *r, struct wt_status *s)
+>>> 	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+>>> 	s->use_color = GIT_COLOR_UNKNOWN;
+>>> 	s->relative_paths = 1;
+>>> -	s->branch = refs_resolve_refdup(get_main_ref_store(the_repository),
+>>> +	s->branch = refs_resolve_refdup(get_main_ref_store(s->repo),
+>>> 					"HEAD", 0, NULL, NULL);
+>>
+>> Wouldn't it make more sense to use the function argument 'r' here?
+> 
+> In wt_status_prepare(), s->repo is initialized to r at the top of
+> the function, so both refer to the same repository instance. However,
+> using r directly is more explicit and avoids indirect use.
+> will change this in V2.
 
-Thanks for volunteering!
+Yes, a few more context lines makes it is clear that either is safe.
 
-We don't have project ideas related to reftable or testing in our idea
-list, but we could add some. If you have preferences among the
-projects listed there, let us know though.
+>>> @@ -1723,18 +1723,18 @@ int wt_status_check_rebase(const struct worktree *wt,
+>>>   {
+>>> 	struct stat st;
+>>>
+>>> -	if (!stat(worktree_git_path(the_repository, wt, "rebase-apply"), &st)) {
+>>> -		if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/applying"), &st)) {
+>>> +	if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply"), &st)) {
+>>> +		if (!stat(worktree_git_path(wt->repo, wt, "rebase-apply/applying"), &st)) {
+>>
+>> In the same file we make a call 'wt_status_check_rebase(NULL, state)',
+>> so wouldn't this break?
+> 
+> Yes my bad, it would throw a segfault error.
+> I think the best way to handle this is to explicitly check for the
+> wt to be valid like this,
+> 
+>      if (wt==NULL)
+>          return 0;
+
+That would change the behavior of the function though as it will no 
+longer check if the rebase directories exist. You should pass the 
+repository down from the caller.
+
+Thanks for working on this
+
+Phillip
+
+> Falling back to the_repository in this case, would probably
+> defeat the purpose.
+> 
+
