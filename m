@@ -1,272 +1,173 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4BC316193
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 19:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770146591; cv=pass; b=gVSUcpAaR7BEgexG1RLhpelu6kWCvT8xOLHKk6aCe5WJA7Wb30ODWNDOAXge58ha5xXkCCmWgSqY6luQ+Bny45xQh4nN+4QoWoO5M97gqb/lvhZk66WD8FdCUBJDn+paVsdfH33TWCvRIkVSU/jqr1Pou5bppBuKqNRTv6/TrcM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770146591; c=relaxed/simple;
-	bh=qHwW1jZ3rW/0FOMcRwnxmn6OphRSliMYTL5Tiz7TMm0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FLF32UVIOg4LoT+GkcAzqeUq9pcOzUd0WHWppgJtukTvom3wORwbxNrweCy8AIn3tX8yaNi7t5fnOWHqBnjv5hdLYxEWtl6lwDN9FmAJbfhbSeFcWfkuqdhsyDhfsFx/QLFZcTIpqrH5hERLoVUGK8gWvnR023QSm9I9wrawPo8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IPViSHck; arc=pass smtp.client-ip=209.85.160.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB268325497
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 19:26:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770146792; cv=none; b=LM5uV0mFuPsUjQg9dwIUOMjdVVkw/B8ouOF+TJm4Iae7eQPN/mHOGKBRhmxNzARSLXo+Fe/lsPSjeZuAcS/GcsGwM8TY+u30l3dlK9KX8/57MIjHFuzBw8zgwKCBNLLGygHXQ7AuUNWZmOtSDSyKkSLNzUsyIEmtJLLG0qfVHuU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770146792; c=relaxed/simple;
+	bh=zXV8mEUrIu1qOyOT6iQ4HF3XMSeynh4KEbUI1HWOCCE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jQZYjXS3ugYrrClKc5U6N8btbxqYcJ/6SCcLlOozjFmCk99SIJSuFkYouiWksD6qkatI8cAnVDEjxi4uRH5DOkxO1ge1i5k6WGImL9VUYOP+vKkdKIpZ25SjmTk+95XhTgWVg2DPOJmbxL0NcVh59JWjPs5+2HvAx9rHkRKP3gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c/EAS5fj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qxvFXFMm; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IPViSHck"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-40429b1d8baso2034908fac.0
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 11:23:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770146589; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Tt1FRb9zuHhxB7NvYjCQ4ObtDvqFkMahCtfICEZoP4IwTKRoUTWwXVrBZocBxG6DjR
-         vfeWqim6k4O1OkGHv4Tyn0x876F1Uky06LTFHo2KSZYpzVPYI6Vz4fPFnUx7GyXwyQCG
-         s6ieIHg6gjGUZEYgRTu6ABgahsucEJWQOriTSg5JPMI/8M6NLymk7JawX8DpnlYdp2w1
-         4af9W4kolL1icWg5S18HcwJv+jTqm8RkoFDontpEKOqsX+OUq+9hpu2gWGnbbEf7dNp1
-         DmZv/auP1QtXOJd1J5DehPf9wIrDEULxtdlsv2RCqcX8BzT9ZvKg29O2+N3bnWT5VlOz
-         0YwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LAuRGZSuH9VBo2xe2WgTsx3DC6HKHB6O776WIQRUCK4=;
-        fh=epWJDPL5W/O17OQETcucKGZOPMkrHkOfUb6WPvdf4Ww=;
-        b=iEv8zp/U0eziMXGmvd48qw8UW3oRLTbjIVEojmESdKSZBJ/uYE8kYxVW4rv0LwekXP
-         ZGscmWaOEPC3B0hhoMayOKeSdLop9UGq9LqoKHpPGAzJFNe7leDTXGwhDAwzIQikrh6q
-         PRp30dg6gnCPs2DDn8cREvkmPmSDY3gdcY9WERmCBykst4VEp5j/xlCkdkBoqh4nAt5E
-         aYct6ccqgi6Ngg0bN3Ja1Wo4kS98zKp68v7bQXXyhyVni9i4Q8iAvd06xBi0E+Sg0IH9
-         WJz1GSf4skk4FJT3gFYXfG2DQrLerTJ4GB8AV0UumVD6mPNC/LlCLmnCVP7YvO0WECi8
-         BB+A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770146589; x=1770751389; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LAuRGZSuH9VBo2xe2WgTsx3DC6HKHB6O776WIQRUCK4=;
-        b=IPViSHckZtNYhAtwzqpYU2sXpWvbBhAKRFnz7iVZDImPtpfQV59bz67AjRCjLagKK9
-         4RDe/mlLerNNwC7WWsa+6+yvkC92YCJHGfUBj6RsUAY3m3UA8iEmf7C0eot5amR4JjHU
-         sJ9YSoX978vrF9e7Ww9ILT6TmwyaiFnZKyVj7oQsPJS6zg/FNPJ6vjfKs7OxzLiyE9tP
-         IuiNp0srb5yb4oqqs3ZKmJLnqk03BpJNd6pPM/zXrfmN3tywK1HMyiZPNkKnK9IJ4ZzG
-         b5x3nALWnklMEOHBBh52gQr5UcMRqyAxwGksSjl2Scz9PHCvGlHG112NgK+uBfiFGKrT
-         rJNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770146589; x=1770751389;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LAuRGZSuH9VBo2xe2WgTsx3DC6HKHB6O776WIQRUCK4=;
-        b=u2vOGXRu1K7aDqfbvoLkbJBJ9nuCVj8ioSgeNVWoG2h0Q94xqmh6uuXBZLAH34jdV4
-         F6uTuj0KykxaLcOoJn4aSOCeDxYYEbkwz91QxjXEntFCOFF2DWCKmFywvVCpZYRgzBmu
-         ChCu1JsHmXcg6s7MBLO6SSAZVe1703DUZnPxrLnRFqE47M7ya/mbpILkc/LTO4Up/lBQ
-         sIXl96tdCu1iSEuvt9YhKUTv40Bt5fTSdU9Ox598RkKe0chz9H43K2FhS++MVYMAnYB/
-         3dH0nTohPP1GpsdfR8zm7HGzVBXALk2NJITUGTaR2pR2MS2VnaIMTSJY7OfDe12jxzly
-         Nwlg==
-X-Gm-Message-State: AOJu0Yx5rmXhl9ooHCWF4ef+JWcln0pFD+Is4qX29160gkkkkeooAqGW
-	i767P4m/6MOMZzgGWvXe6mUI3hBjJ1g3NJO91vd5qzgHxfpuptuBULWJWJoDVfZEzVVu1tUs6k2
-	pYY05cPWn74u2rqLOsjxEHEjvBxbVppQ=
-X-Gm-Gg: AZuq6aIaCgCDpLjoFC/8BStMOS+Lt05tAvrrlJlcdefUaylnBJtpNP0mQgFAEd9/hIN
-	hoWEUabhe8y+mR5zJkUvbuhNArIYd3dpJPTSXVhCJrNuqSdcZLTBsTP3hcoSoAEAkym/stVUOjh
-	18VaGoSElXS2+BPcnVEYc3ABF40c9uGhqn5w14A/4k+93aDUwFCOtdr1mQl4FjZM+uZs51nz5W+
-	W2N9ImsVxd8V4x6uOPempSAAVJFIILMBVuBQHgY8WYWx+ZDlT4w+k53mae56zDO8zHP0FhWi/Ok
-	LDLtg3tsth+3RpuyarevHFfwWYDQ
-X-Received: by 2002:a05:6820:134a:b0:663:623:f2c3 with SMTP id
- 006d021491bc7-66a22690922mr352208eaf.54.1770146588612; Tue, 03 Feb 2026
- 11:23:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c/EAS5fj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qxvFXFMm"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 32EC57A00AB;
+	Tue,  3 Feb 2026 14:26:30 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 03 Feb 2026 14:26:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770146790; x=1770233190; bh=SvSHgF+Aeq
+	tlsuRjVgdnAJnVZYW/cnItxiEEtZOA8xs=; b=c/EAS5fjPqQXsHKbe9SyXSxPxD
+	nC2Ge15I3p7FDTmrTtcJkgLtwpo37WnDCnvSU2gRMExkfmTT4Fc3KEx+WbyI49/N
+	vk5kR2hYApglP7iHEKKkKn5T98AMAb6Zz2x6OoduqctB46LTbSpCULOUi3XemB58
+	/T/S7OK66hh6MnQn2++HjAeNegVmF2Ra23SzBAG1CLwaTrYfgWNGeHtC+eZgj4Kz
+	sbkrUF2yRysihutTt1N0h9p7wxXE4h503++NQ2Oa+8Ult1tEsFLPGqCnhhEpoB+3
+	3yYjoeNcHx/p5dQAUX0ffGnQvUCJ67FY7CQfUcXRkgq80TGOKn5T6+pDE+SQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770146790; x=1770233190; bh=SvSHgF+AeqtlsuRjVgdnAJnVZYW/cnItxiE
+	EtZOA8xs=; b=qxvFXFMmTESfFOzjmO+BRjMa4wllZWfH5iSN4VYUeoxVsgQDAG5
+	MKu0VTt7m04/ZftKtE6xjvEp66oXy/DUo+9LS7yDBV/TloH1jzzazRaf1CDzAIFZ
+	eV2ipKgEl/sRv6okO4pBpRtaRAaW2YV/v4oPIlSAyxQvDw+kP8W+FBQ2jOs2poyW
+	AvCW2T0wJsh4D5ZwANi2oRkMot9RQ4sVN/ic+QfiJg/w3tSVzm7L+HFO1Vq2I8b8
+	vxdb+jp2aGRCo8K8PflLkliSrbcKhg24bZ6QaQy7+XndFX0+Xg7tf3uvwwC+mqA3
+	Nw55kOgX8mHiU+xEmsjFKTZ6fvR36pQO3bQ==
+X-ME-Sender: <xms:5UuCaeiWs8qOY-NHRYWy-E79LALgjpZMOBxhCjlsa7By6NdePdsZ0w>
+    <xme:5UuCaWBxGlmIPTKEwsVjq9cBayI29v-7piVX__EhbOp-HZwEJd49TESg_venvZS4N
+    p_HvAzvltOGy569mlAw720GuOZEyrA6q6BDCkbD_tuHJ9-URx2DIfo>
+X-ME-Received: <xmr:5UuCabGTiOTt7SXxy3HijQi-hkdfgdNlgsfDrRE3vhslYend6nGY8jW8lwcm_HWQvgwciJyKypslf67oZoEBdq_NTawRe8d6mw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedtkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehjrgihtggvtggrohehvddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:5UuCaWL2I4G5q5K34SLj-MxoxklZByOB5dHy_zZMvpECOY3TEJ_FSA>
+    <xmx:5UuCaXkpRRcW72YCBd4ku8AA7ZLP-UXOwppH8srZQC4yJD_TeUk4vQ>
+    <xmx:5UuCaWSs14PLf_mhlRLimkQk0jqrfxKStA22ohdxk_RFKcMEQwGQDg>
+    <xmx:5UuCaRJS0RNP0u1a2dDpFqaStAHW_OmmKtYSQlPAov2CpwIp6Pfvag>
+    <xmx:5kuCaVBXfC_QIGBvlyh8IhUzN-YHPPBKdyyVFnrXCkqk7ASSwx1r26xg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Feb 2026 14:26:29 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "NitroCao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  NitroCao <jaycecao520@gmail.com>
+Subject: Re: [PATCH v2] clone: fix segfault when using --revision and v0/v1
+ protocol
+In-Reply-To: <pull.2185.v2.git.git.1770119773541.gitgitgadget@gmail.com>
+	(NitroCao via GitGitGadget's message of "Tue, 03 Feb 2026 11:56:13
+	+0000")
+References: <pull.2185.git.git.1769937818682.gitgitgadget@gmail.com>
+	<pull.2185.v2.git.git.1770119773541.gitgitgadget@gmail.com>
+Date: Tue, 03 Feb 2026 11:26:28 -0800
+Message-ID: <xmqqfr7hsk63.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260202162225.35206-3-pushkarkumarsingh1970@gmail.com> <20260203180359.602905-2-pushkarkumarsingh1970@gmail.com>
-In-Reply-To: <20260203180359.602905-2-pushkarkumarsingh1970@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 3 Feb 2026 11:22:57 -0800
-X-Gm-Features: AZwV_QggWPVPn5YUN5tmVQtrifwWF9fiUHtHM-WPXUpBK5cRPDXHRp9Pd3EUtF4
-Message-ID: <CABPp-BG6wM4p0wAizEppT7QdtY710xBJ8NwgfzrDpP3Oyg=a0w@mail.gmail.com>
-Subject: Re: [PATCH v3] stash: honor --no-overwrite-ignore with --all
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, karthiknayak@gmail.com, kh@pks.im, 
-	peff@peff.net, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Feb 3, 2026 at 10:09=E2=80=AFAM Pushkar Singh
-<pushkarkumarsingh1970@gmail.com> wrote:
+"NitroCao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Nitro Cao <jaycecao520@gmail.com>
 >
-> Teach stash push/save to avoid -a cleanup when --no-overwrite-ignore
-> is given by downgrading INCLUDE_ALL_FILES to include-untracked.
-
-This feels like you're regurgitating the patch with low-enough level
-of details ("-a cleanup", INCLUDE_ALL_FILES, include-untracked) that
-it'll only be intelligible to someone who has builtin/stash.c code
-fresh on their mind.  It doesn't explain the high-level purpose behind
-your patch, and, in fact, will likely lead readers to try to read the
-patch in order to understand the commit message, when usually we hope
-for the opposite.
-
-> This fixes ignored files being incorrectly removed despite
-> --no-overwrite-ignore.
-
-This claim makes no sense; --no-overwrite-ignore doesn't exist in git
-yet, and this is the first (and only) patch in your series, so at best
-you're claiming to fix something you introduced?  Very confusing.
-
-> Add regression tests covering both overwrite and no-overwrite cases.
+> When `git clone` is used with `--revision` and the protocol version is
+> v0 or v1, the client segfaults if the revision does not specify a peer
+> reference (e.g. `--revision master` instead of
+> `--revision refs/heads/master:master`).
 >
-> Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-> ---
-> Changes since v2:
-> - Use test_grep instead of grep
-> - Use test_path_is_missing for overwrite-ignore test
-> - Rebase onto current master so patch applies cleanly
-
-Great...but you still seem to be submitting a patch that is based on
-your previous (rebased?) patches, without submitting the previous
-patches, leaving us to guess how you got to your current state, as
-noted below.  You should have been editing your previous patch and
-then submitting the edited patch.  After v2, you should have squashed
-and resent.
-
->  builtin/stash.c                    | 14 ++++++++------
->  t/t3905-stash-include-untracked.sh | 18 +++++++++++++++---
->  2 files changed, 23 insertions(+), 9 deletions(-)
+> This occurs because `update_remote_refs()` assumes that if
+> `remote_head_points_at` is set, `remote_head_points_at->peer_ref` is
+> also valid. However, for v0/v1 protocols, all references are fetched
+> without filtering, and if the revision lacks a peer reference,
+> `peer_ref` remains NULL.
 >
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 82d10520fe..c3ee33cce1 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -1858,9 +1858,7 @@ static int push_stash(int argc, const char **argv, =
-const char *prefix,
->                 OPT_SET_INT('a', "all", &include_untracked,
->                             N_("include ignore files"), 2),
->                 OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore,
-> -                       N_("update ignored files (default)")),
-> -               OPT_BOOL(0, "no-overwrite-ignore", &overwrite_ignore,
-> -                       N_("do not update ignored files")),
-> +                        N_("update ignored files")),
+> Add a check for `remote_head_points_at->peer_ref` before dereferencing
+> it to prevent the segmentation fault.
 
-And here's where it's clear that this patch was broken in the same way
-as v2: "no-overwrite-ignore" has never appeared in any version of
-builtin/stash.c upstream (same with "overwrite-ignore"), so this patch
-is clearly against some local state you have.  The base of your series
-(or the base of your patch, since you only have one patch in this
-series) needs to be an upstream commit, not some other commit that
-only you have access to.  Might I interest you in using gitgitgadget,
-which would make it easier to submit patches?
+Hmph.
 
->                 OPT_STRING('m', "message", &stash_msg, N_("message"),
->                            N_("stash message")),
->                 OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
-> @@ -1894,6 +1892,9 @@ static int push_stash(int argc, const char **argv, =
-const char *prefix,
->         parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX_ORI=
-GIN,
->                        prefix, argv);
+While your change may skip the code that segfaults, wouldn't it also
+stop noticing a broken case where .peer_ref should have been set but
+didn't, even when --revision=<rev> parameter is not used in the
+command invocation?  IOW, it is better to segfault and draw attention
+by Git developers when a valid input is given by the end user and our
+code misbehaves (e.g., and fails to to set .peer_ref as it should).
+
+Stepping back a bit, "git clone --help" says the following on
+"--revision=<rev>":
+
+    `--revision=<rev>`::
+            Create a new repository, and fetch the history leading
+            to the given revision _<rev>_ (and nothing else),
+            without making any remote-tracking branch, and without
+            making any local branch, and detach `HEAD` to
+            _<rev>_. The argument can be a ref name
+            (e.g. `refs/heads/main` or `refs/tags/v1.0`) that peels
+            down to a commit, or a hexadecimal object name.  This
+            option is incompatible with `--branch` and `--mirror`.
+
+The intent of running the command with this option seems to me that
+we do not want to create any branches, neither remote-tracking nor
+local.  Looking at what is done in update_remote_refs(), I think we
+still want to honor check_connectivity even when we are in this
+"single revision only, detach the HEAD at that commit" mode in order
+to ensure the integrity of the data, but we cetainly do not want to
+call the write_remote_refs() and the write_followtags() helpers.
+
+Wouldn't the correct fix be more like the following?
+
+ - split out parts from update_remote_refs() that are needed even in
+   option_rev mode into a separate helper function, and call that
+   from cmd_clone().
+
+ - make the call to update_remote_refs() conditional---specifically,
+   we shouldn't be calling it when option_rev is in effect.
+
+>  builtin/clone.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Also, isn't this something we can specify the expected behaviour in
+tests?  Not only we want to ensure that nothing segfaults, we would
+want to make sure that the resulting repository has no refs and HEAD
+is detached at the specified revision.
+
+Thanks.
+
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index b40cee5968..ba8de92563 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -558,7 +558,7 @@ static void update_remote_refs(const struct ref *refs,
+>  			write_followtags(refs, msg);
+>  	}
+>  
+> -	if (remote_head_points_at && !option_bare) {
+> +	if (remote_head_points_at && remote_head_points_at->peer_ref && !option_bare) {
+>  		struct strbuf head_ref = STRBUF_INIT;
+>  		strbuf_addstr(&head_ref, branch_top);
+>  		strbuf_addstr(&head_ref, "HEAD");
 >
-> +       if (!overwrite_ignore && include_untracked =3D=3D INCLUDE_ALL_FIL=
-ES)
-> +               include_untracked =3D 1;
-> +
->         if (pathspec_from_file) {
->                 if (patch_mode)
->                         die(_("options '%s' and '%s' cannot be used toget=
-her"), "--pathspec-from-file", "--patch");
-> @@ -1965,9 +1966,7 @@ static int save_stash(int argc, const char **argv, =
-const char *prefix,
->                 OPT_SET_INT('a', "all", &include_untracked,
->                             N_("include ignore files"), 2),
->                 OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore,
-> -                               N_("update ignored files (default)")),
-> -               OPT_BOOL(0, "no-overwrite-ignore", &overwrite_ignore,
-> -                               N_("do not update ignored files")),
-> +                        N_("update ignored files")),
->                 OPT_STRING('m', "message", &stash_msg, "message",
->                            N_("stash message")),
->                 OPT_END()
-> @@ -1994,6 +1993,9 @@ static int save_stash(int argc, const char **argv, =
-const char *prefix,
->                         die(_("the option '%s' requires '%s'"), "--inter-=
-hunk-context", "--patch");
->         }
->
-> +       if (!overwrite_ignore && include_untracked =3D=3D INCLUDE_ALL_FIL=
-ES)
-> +               include_untracked =3D 1;
-> +
->
->         ret =3D do_push_stash(&ps, stash_msg, quiet, keep_index,
->                             patch_mode, &add_p_opt, include_untracked,
->                             only_staged);
-> diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-u=
-ntracked.sh
-> index 9c5421cd76..63b59de47b 100755
-> --- a/t/t3905-stash-include-untracked.sh
-> +++ b/t/t3905-stash-include-untracked.sh
-> @@ -427,17 +427,29 @@ test_expect_success 'stash -u ignores sub-repositor=
-y' '
->         git stash -u
->  '
->
-> -test_expect_success 'stash push --no-overwrite-ignore preserves ignored =
-files' '
-> +test_expect_success 'stash push -a --no-overwrite-ignore preserves ignor=
-ed files' '
->         echo ignored.txt >>.gitignore &&
->         echo before >ignored.txt &&
->         git add .gitignore &&
->         git commit -m "add ignore" &&
->
->         echo after >ignored.txt &&
-> -       git stash push --no-overwrite-ignore &&
-> +       git stash push -a --no-overwrite-ignore &&
-
-Not only is the patch broken ("no-overwrite-ignore" has never appeared
-in any version of git; so this patch is clearly against your local
-state), but the command line makes no sense:
-  -a : stash ignored files too
-  --no-overwrite-ignore: wait, we don't want to mess with ignored
-files, so nevermind, don't stash them
-
-Why wouldn't the user just leave off "-a" if they don't want them stashed?
-
->         test_path_is_file ignored.txt &&
-> -       grep after ignored.txt
-> +       test_grep after ignored.txt
-> +'
-> +
-> +test_expect_success 'stash push -a --overwrite-ignore overwrites ignored=
- files' '
-> +       echo ignored.txt >>.gitignore &&
-> +       echo before >ignored.txt &&
-> +       git add .gitignore &&
-> +       git commit -m "add ignore" &&
-> +
-> +       echo after >ignored.txt &&
-> +       git stash push -a --overwrite-ignore &&
-
-And this command line makes no sense either:
-  -a: stash ignored files too
-  --overwrite-ignore: yes, I'm explicitly giving you permission to pay
-attention to the fact that I already passed you the "-a" parameter.
-Please do what that other parameter says.
-
-Why would the user need an extra flag instead of just using "-a"?
-
-Additionally, if there is some user problem you're trying to solve
-here, then these tests look rather incomplete; they only test the push
-side and not the pop side.  What if someone runs "git stash push -a"
-followed by "git stash pop --no-overwrite-ignore"?  Or is that flag
-not going to be added to pop?  Do we only care about protecting
-ignored files at push/save time and not at pop time?  Why?  (And if we
-do care about pop time, won't we need to worry about both former
-untracked and former ignored files both having the possibility of
-overwriting files that are now ignored?  And if we do allow users to
-not overwrite ignored files at pop time, do we have a similar special
-flag to avoid overwriting untracked files at pop time?  If not, are
-ignored files thus more important or special than untracked files?)
-
-I don't understand the user-driven problem this patch is attempting to solv=
-e.
+> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
