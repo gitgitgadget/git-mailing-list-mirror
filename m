@@ -1,121 +1,140 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFD034D934
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 20:07:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770149249; cv=pass; b=EUkUbb4WRx6vnRpIKE2hOKxbwnZybjJdHiTPWaZ+dQ50eYdgyEv+KJeCTPsXSoUGBGZ5YHXlFIeK2ixOZoTbNsGy9djnut2Tohs1pCdvZHPtLj8NXqhQzm6ET72mxh24tpW1ZwDRrYRYJO+x/s9ehdqQOfw1/PlV0Hzb/rLh6sE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770149249; c=relaxed/simple;
-	bh=WeMZMfJ0h0hHDc/7qAVCEeLDfNbioneqQIxzjorgmMg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZLj9LDgkWYbivrTDHRRmMtEmM/jG0D45gQBPEX+x87taPk48JYKY5CFMBt1BrSll9UcVJAShOKvpHNF/POd9/MiqZpVDb8wOmNo2aMVGU7ySZ4G+cZhITSRiMiYJ73GHJD7NjhbMUxo0dx0BtdtQvQsf8diDtWpFvw/7aZSxKdE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ew6mV7JH; arc=pass smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF90342144
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 21:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770153966; cv=none; b=pFkD6LcKqGTmUtouF7+eGQRzntvrk2YpTDEihjsGS/Bce3LMVYKtPqbR74BHVGqlyhK79h6f0+I2fiFnZGKR5JCs16pVX+hjs49yLNK5UXXKfzt0WIj3tSGKItEwbmte0G3u1jADZFy5GgcT4RvKlzW6E+UfvygNGxqfYplnFHI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770153966; c=relaxed/simple;
+	bh=6ontD1G4omP8z9xp5RUG+ZCQDlNBYbClH5CHOJ6tZ4k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qfFekW82PcIX7Ae2KBStPjF8qJifBrvfJw8PvRNavx7bhO5X4FT4w+9FOUYXCOV+ob1SHLCPCZoj+r2ADm9lMnzXIY7tSQVSkiKm2P+K46p5EMih3464U3B9jY3CiYbJry6ZYJy2CvJolmojUSLnnSu0IvrJE/XDSk/TGLHWZEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S+9cMLKH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OGBmVrEN; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ew6mV7JH"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-649bb5a0ba1so3325171d50.1
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 12:07:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770149247; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ZW0RkLQznOdsExizTYE1rfZByfGejSq7A1SeAiM8/5qAmdJwehozGRKfLbgy5DKLMj
-         V7JhWYtM1Kqd7yZB4m3hRX6VNq9LiLqTnBzaZyv4k4FLJTOSLddgoeCSy7Jwq56q24Ct
-         JiuEnfAy9z8LsciupUkEuTCuexjxiDSGjQoEmZZu8WHEA5pZDn8u//E+TvaKTRqK1zKn
-         VPT8L0KYumaMwY0bJLaGMnxrSmreu/WAnYPR0zhoICtaAofsCuwyvv2Ds/1ieTS79yW3
-         8dtfX9XJHT6l+axIbN8X1YVGLgvAgpdCg9MmU9ObrgUYrXclmy7uZmlq+b6rcmMC1Xe2
-         wZBg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=WeMZMfJ0h0hHDc/7qAVCEeLDfNbioneqQIxzjorgmMg=;
-        fh=pbmclLzekcSTUamlGqn11MMiEh3skPEnNHW8Ns9xW1M=;
-        b=kNkhN/0xMarYFeExqpQp2PQw0xd4dBdS80I2QHJjchK76QaulyTlWXzJo3EvMGzBGO
-         UoUj0J5jmnYYi2i/Do7P/1XD5Gve0IXRqW3PvznxWIF32M+vxusKjTyiSSxzgnLVYuqV
-         czfE369mEg17Sx8VIIdAlhPnk6qPqQKlBht8KrIxJlBg8jG4OtRL+9TGuZlthlMabtqp
-         HL4YkT2KjpBTLisWz2CrNz1CjaV1FtNm4dly3iS1BiJ1l7sy3zP51K8CyN24T6Mo+Obl
-         IOwpPvDH5kZPl8O0YlGjIvwQVdWwEbi1ZiMm78V5dIcWQDCZYuOf3lREXQSmzhkmeGRW
-         qsUg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770149247; x=1770754047; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WeMZMfJ0h0hHDc/7qAVCEeLDfNbioneqQIxzjorgmMg=;
-        b=Ew6mV7JHUIM42tCufnYpEFgFqJrN7H1tvZdgyAtsRrDM3tS6hEo2RORrWuz06/azzK
-         LcOIO3ZXrPJyR5+ODJBj/1hwVNKfut4vr8E79ZZ7xYElLwZxyA7NLbOidXD577Hfly45
-         o2hcsvVN4XHeHjIcXlALCHYfgjn/57NagWCHzkTwgOE7dBw9U1xRG73ZWbgV58neLUA7
-         Dpat5hIGmP1ZZ0IY9s5efxGPq5thSjULE0teK73pcgQ/vGD2MpfQKsqnzmeMvtTOzf3d
-         2MACBYvn+DIk6CqtsaAxEmBCmeF7mcYOdVWDq8vXYcQKk2/yEOpO4Qxz9AoMFOrHlpSt
-         7Msg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770149247; x=1770754047;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WeMZMfJ0h0hHDc/7qAVCEeLDfNbioneqQIxzjorgmMg=;
-        b=SkB44LtLe5rNdTeo9/Y+J3zyb7weRc62XqKKCskLm0wsm2PAn3B0paZtZT4bZ8JSvO
-         zb+JYsvTYf1k+WMP5vTEt3jcVSrbYRGjG06+rMiS8OoFMdCIzXd8tJVRzsbkQLwPBTu/
-         BUAuvWxldIyyqfJfQSsc5PccEIXGKX6btUpHXHdq9FFEhUwNsoYlg68NBT9bdy7J8Eq0
-         2tQdhFYdmggZcFa9bZF+7s3q8+YrjwZbYfChqGUsuUGnPlPt/zox91bH7X7NeXOfdZ2F
-         bpXtHCThgH2mupLFwumAAAM5K6Q1HoR99IENtmdRaX2aReGMq3SRCyIOL0MXdeEiC7sL
-         ENnA==
-X-Gm-Message-State: AOJu0YwRjftkCs8OgTGjyMekzS9NaVsYynLCj1D/U648KLhaTKkQfsch
-	Tyv0U7NIR7MiaHh/4WF0tVwRq0x+L8i1U+q9YWaHsF3rlJ1WULqcsJ22yLAAC7wc+mI7AQS3TO0
-	sWVv2Dwpvv6WieXWs34mhlmzIFSgaUQw=
-X-Gm-Gg: AZuq6aJhC2Zd9EUH07nM1hcDZuJTg2nWAuXPwdim6gM4uWKjXpgizH52fZ/NprTwEun
-	n0iSrrwdwNfevekDeC2thkaav42nA/TZX0NUirwK8TMqU8UTOS22zSOyCIX8OP5FFwFZV49ypDL
-	+jBEbmu14P0hGhUKZnG+ed1124vY0nqR8W5OE/GN9yJecox3eREemle5Nq6Vr7ZujcJS6vqmALU
-	Wn683P90V1undaMSxc0Dwu6f+uBx8SXb28SBHGCEuqp5fJ/C2vWXecLibooa3vknuRAxQM=
-X-Received: by 2002:a05:690e:1247:b0:649:c512:1422 with SMTP id
- 956f58d0204a3-649db3583famr713994d50.42.1770149246914; Tue, 03 Feb 2026
- 12:07:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S+9cMLKH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OGBmVrEN"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 365641D0007D;
+	Tue,  3 Feb 2026 16:26:03 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 03 Feb 2026 16:26:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770153963; x=1770240363; bh=QKvMy3ErEm
+	kF/x74tlPrPqJQQUJOatjK5TMAN3TjGTU=; b=S+9cMLKHn9jkoKEedXaJPd6KsH
+	3QOBzqd/9v7c8AUCfE8Lmky9SwOATmn2nbj8nyh4HE0tCI4aIEb10mGgj3FOILcf
+	ccghGOoqEYbhTPtIUYoMEp7RyGhsK8z44ZMqY6ud1SEfuQKnqf2pCxbTLDFOyqb/
+	S4iFCafvARw31UuRjxiQBXbagsUMqR1GIqFAPZkT1fjriu6l2uOBML5BxhmEClxQ
+	YIXKICW8xr9UPoPYxs8YNEqQzjFzUjWIhYVDHfCprt4jZw2gIn5Mds8FaCwiYWYh
+	ciXb+e6yaBZpdHoA8eG2yvZRsjtGwov8VZu5yw3XzuC2T4ZOWLOLnXZxIkNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770153963; x=1770240363; bh=QKvMy3ErEmkF/x74tlPrPqJQQUJOatjK5TM
+	AN3TjGTU=; b=OGBmVrENEfZ/BSn9V7tH/pUC+Ey5w8+IAIgU/6MCflQhs4z/P7N
+	UrwfkYR+gIpxabcCyb1sqsTGzp/5Xqvgc0qsh1CT/Ov0lVQ/cAYO2R4+sJWoNyDt
+	+NyBA2W5zlyZ9nKBu/VnMZd9PDAh1xmmxoc0S8Ok1Qwuf8fVAG6E3scJESdouu76
+	8NEkgZy7USYx4jFwRJtxGg3nNjAcBoICQGvOTU3CpXSuimpIVx0LZAmDEFxBMI0P
+	oZ0qRjCF4lcVJK5ckDPa1Wl6Q8R9Xdb2Hu4GDcrdueV7cHFy2dHBKZdZCAyObDai
+	Ype/jv1CZdV2lveOJAs0VmbV1TvxhejoePw==
+X-ME-Sender: <xms:6meCaYC6jJbLvFEAP7SxgfUwaz5yInh8F5hvfuayP1Ljbro_h2xuxw>
+    <xme:6meCaR9gTClA9LFvQNZwUrvValDem1R54Ll739JghvdsccUldeX_o6USrjMjqbEyg
+    26AavXMHvNtZt_FBzs4MCQUIEH2-XXJsew6chBQ9BmklR3JusUqpg>
+X-ME-Received: <xmr:6meCaY_P8uYUhxnMcIDtHqVzJsyfG_WO-PCivkX4GR_ypEPd9POXARIv8TOHrnFMoiwDz4UPiIQhB6rAJD4biyuIC9ElGJX62g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeduudduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffie
+    ejgeefhfdtvdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgt
+    ohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:62eCaYdde743u4Co5-ukR_SN-yxiQbVSu9Bv8vu1-GkcOB3JBqazuw>
+    <xmx:62eCaRGYY6UklkC218P0-xBPFviw-kwKtQZipnTUIlP9I5blJhnR9A>
+    <xmx:62eCaWeGRN6MUTWDWHvC2OJwYyiClKIH295R3LUhlO4dpJLqoghv8g>
+    <xmx:62eCabHNtNpezFGt3C8p2u_cPyesY4fb4ySbPXIhjFHr0o0owTKz2w>
+    <xmx:62eCacvQRsbEDTf4zB07i2QMvyVr874Q_k3l8k-rKuZB1LesVXWxKfcj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Feb 2026 16:26:02 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>
+Subject: Re: [RFH] adding test coverage for contrib/ in CI jobs
+In-Reply-To: <xmqqsebhu9nn.fsf_-_@gitster.g> (Junio C. Hamano's message of
+	"Tue, 03 Feb 2026 07:30:36 -0800")
+References: <xmqqh5smdejc.fsf@gitster.g>
+	<20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+	<7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
+	<xmqqjywuyhu9.fsf@gitster.g> <xmqqsebhu9nn.fsf_-_@gitster.g>
+Date: Tue, 03 Feb 2026 13:26:00 -0800
+Message-ID: <xmqq7bstsemv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260202162225.35206-3-pushkarkumarsingh1970@gmail.com>
- <20260203180359.602905-2-pushkarkumarsingh1970@gmail.com> <CABPp-BG6wM4p0wAizEppT7QdtY710xBJ8NwgfzrDpP3Oyg=a0w@mail.gmail.com>
-In-Reply-To: <CABPp-BG6wM4p0wAizEppT7QdtY710xBJ8NwgfzrDpP3Oyg=a0w@mail.gmail.com>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Wed, 4 Feb 2026 01:37:15 +0530
-X-Gm-Features: AZwV_QhhNEQ2o9t3rZSQpagdq_Mexha0rUszWDIprrTyzvNa_EkZdXUvLpdo0yY
-Message-ID: <CALE2CrSwN7AB05Qd7G7LOGjSNu3=BbLLVBfoNf5a95SMRBm5WQ@mail.gmail.com>
-Subject: Re: [PATCH v3] stash: honor --no-overwrite-ignore with --all
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, karthiknayak@gmail.com, kh@pks.im, 
-	peff@peff.net, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Elijah,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thank you for taking the time to explain this so clearly.
+> Junio C Hamano <gitster@pobox.com> writes:
+> ...
+> Unfortunately, this seems to reveal existing other problems with
+> subtree tests (t7900), in addition to diff-highlight tests (t9400)
+> in various configurations.
+>
+>   https://github.com/git/git/actions/runs/21617099884
+>
+> This CI run is near the tip of 'seen', so there may be breakages
+> attributable to new topics in flight, but I suspect that many of
+> them are already in 'master', noticed by nobody because nobody ran
+> these tests in these configurations (like "breaking changes",
+> "sha256", "leaks", "reftable", "asan").
 
-You are absolutely right. I misunderstood what you meant by =E2=80=9Cbasis=
-=E2=80=9D
-and also approached this patch from the implementation side instead of
-starting from a concrete user problem.
+Test that comes with diff-highlight fails WITH_BREAKING_CHANGES CI
+job, which has multiple ways to work around.  The easiest one is to
+force the branch name that is documented in the comment part of the
+test file that illustrates the topology of the history, which is
+what I picked.
 
-I also realize now that I incorrectly stacked this on top of my local
-changes instead of rebasing and editing the previous version, which
-made the patch impossible to apply upstream. Sorry about that.
+----- >8 -----
+Subject: diff-highlight: allow testing with Git 3.0 breaking changes
 
-Given your feedback, I agree that I need to step back and rethink this
-from a user perspective (what real workflow is broken today, how -a
-should behave, and whether any new flags even make sense here), rather
-than trying to force consistency at a low level.
+The diff-highlight (in contrib/) comes with its own test script,
+which relies on the initial branch name being 'master'.  This is not
+just encoded in the test logic, but in the illustration in the file
+that shows the topology of the history.
 
-I will drop this series for now, spend time understanding stash
-behavior and the broader context you pointed out, and only resend if I
-can clearly articulate a user-driven problem with a clean patch based
-directly on upstream.
+Force the initial branch name to 'master' to allow it pass.
 
-Thanks again for your patience and guidance.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ contrib/diff-highlight/t/t9400-diff-highlight.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Pushkar
+diff --git c/contrib/diff-highlight/t/t9400-diff-highlight.sh w/contrib/diff-highlight/t/t9400-diff-highlight.sh
+index f6f5195d00..dee296739c 100755
+--- c/contrib/diff-highlight/t/t9400-diff-highlight.sh
++++ w/contrib/diff-highlight/t/t9400-diff-highlight.sh
+@@ -10,6 +10,8 @@ DIFF_HIGHLIGHT="$CURR_DIR"/../diff-highlight
+ CW="$(printf "\033[7m")"	# white
+ CR="$(printf "\033[27m")"	# reset
+ 
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . "$TEST_DIRECTORY"/test-lib.sh
+ 
+ if ! test_have_prereq PERL
