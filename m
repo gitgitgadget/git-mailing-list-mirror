@@ -1,140 +1,114 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF90342144
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 21:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67137106D
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 21:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770153966; cv=none; b=pFkD6LcKqGTmUtouF7+eGQRzntvrk2YpTDEihjsGS/Bce3LMVYKtPqbR74BHVGqlyhK79h6f0+I2fiFnZGKR5JCs16pVX+hjs49yLNK5UXXKfzt0WIj3tSGKItEwbmte0G3u1jADZFy5GgcT4RvKlzW6E+UfvygNGxqfYplnFHI=
+	t=1770155124; cv=none; b=HMzDXnEZDNf5yqD3PTgMfmRe42wELZqzXKhcB2POo0dVHbo7ji8qiDNChb00ia33mivrIvPj8TkrwOV3RICgEq38rfGZsGr7dDhquGXTq+2f6Z8g7Tag/HQsw/rPJ88lLhdIM9plG1MQ9jUiFXWzuEifWArjqgEnL230TRdOQLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770153966; c=relaxed/simple;
-	bh=6ontD1G4omP8z9xp5RUG+ZCQDlNBYbClH5CHOJ6tZ4k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qfFekW82PcIX7Ae2KBStPjF8qJifBrvfJw8PvRNavx7bhO5X4FT4w+9FOUYXCOV+ob1SHLCPCZoj+r2ADm9lMnzXIY7tSQVSkiKm2P+K46p5EMih3464U3B9jY3CiYbJry6ZYJy2CvJolmojUSLnnSu0IvrJE/XDSk/TGLHWZEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S+9cMLKH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OGBmVrEN; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770155124; c=relaxed/simple;
+	bh=mQTbD4VrQcsAh7y3/wSee/bt+SRtQZ+OpBV5nTKInlk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=KU6epxYvZO5IOFq+B0KBEIFlRgWhxhre1eq9v4b8+o7HFoeeG0jGpd9gbomjZ3Bbr5eu+va1W9NKb67nmGE8+CL5C7K1K/TPDZPHB05k+epzrAahH/lf78tT9fFfab9gBDUo10eo7/Yp75Lf5jWNb0z09KxA4weKsLggjJFPngc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=R3RO88WR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KSC8Yntt; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S+9cMLKH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OGBmVrEN"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 365641D0007D;
-	Tue,  3 Feb 2026 16:26:03 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Feb 2026 16:26:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770153963; x=1770240363; bh=QKvMy3ErEm
-	kF/x74tlPrPqJQQUJOatjK5TMAN3TjGTU=; b=S+9cMLKHn9jkoKEedXaJPd6KsH
-	3QOBzqd/9v7c8AUCfE8Lmky9SwOATmn2nbj8nyh4HE0tCI4aIEb10mGgj3FOILcf
-	ccghGOoqEYbhTPtIUYoMEp7RyGhsK8z44ZMqY6ud1SEfuQKnqf2pCxbTLDFOyqb/
-	S4iFCafvARw31UuRjxiQBXbagsUMqR1GIqFAPZkT1fjriu6l2uOBML5BxhmEClxQ
-	YIXKICW8xr9UPoPYxs8YNEqQzjFzUjWIhYVDHfCprt4jZw2gIn5Mds8FaCwiYWYh
-	ciXb+e6yaBZpdHoA8eG2yvZRsjtGwov8VZu5yw3XzuC2T4ZOWLOLnXZxIkNQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="R3RO88WR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KSC8Yntt"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id AF6C01D0005F;
+	Tue,  3 Feb 2026 16:45:22 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Feb 2026 16:45:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770155122;
+	 x=1770241522; bh=xSxeJKdEjmtKUQ04JI3zdXtWy7xQ+uFJHJPIks7OBdo=; b=
+	R3RO88WRUZV6qIJyLKptJw18hvZpFaEbzTGdV6o3V52wvwHRDsO0fAzNrxplAYXv
+	7G7OSUMuJy9K3L3g1jrCumpA+n2kXsiND8O1dIIc5hEeuAQd7jY15/bzPJhvrIqG
+	aQzdYg4oGOCg0m1hzYOUdB6eAMaG3bVcDlXV0ITBv4Ma2GSV3KkDeY7KQq7tbdj0
+	PUXhM5d+okhgX/xGzBSKOydoIK4ZKLPfO36Qm3GaEnZhR3fjgxKWLVxBsA08j1Wf
+	NTHcC/5XngWI5A+/PtGAo8anih1H8mp+nusTNTyZGguepRv8hMQFl1do2m7NQnPj
+	Y0cj/UpOdTWsE7rkfmEzuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770153963; x=1770240363; bh=QKvMy3ErEmkF/x74tlPrPqJQQUJOatjK5TM
-	AN3TjGTU=; b=OGBmVrENEfZ/BSn9V7tH/pUC+Ey5w8+IAIgU/6MCflQhs4z/P7N
-	UrwfkYR+gIpxabcCyb1sqsTGzp/5Xqvgc0qsh1CT/Ov0lVQ/cAYO2R4+sJWoNyDt
-	+NyBA2W5zlyZ9nKBu/VnMZd9PDAh1xmmxoc0S8Ok1Qwuf8fVAG6E3scJESdouu76
-	8NEkgZy7USYx4jFwRJtxGg3nNjAcBoICQGvOTU3CpXSuimpIVx0LZAmDEFxBMI0P
-	oZ0qRjCF4lcVJK5ckDPa1Wl6Q8R9Xdb2Hu4GDcrdueV7cHFy2dHBKZdZCAyObDai
-	Ype/jv1CZdV2lveOJAs0VmbV1TvxhejoePw==
-X-ME-Sender: <xms:6meCaYC6jJbLvFEAP7SxgfUwaz5yInh8F5hvfuayP1Ljbro_h2xuxw>
-    <xme:6meCaR9gTClA9LFvQNZwUrvValDem1R54Ll739JghvdsccUldeX_o6USrjMjqbEyg
-    26AavXMHvNtZt_FBzs4MCQUIEH2-XXJsew6chBQ9BmklR3JusUqpg>
-X-ME-Received: <xmr:6meCaY_P8uYUhxnMcIDtHqVzJsyfG_WO-PCivkX4GR_ypEPd9POXARIv8TOHrnFMoiwDz4UPiIQhB6rAJD4biyuIC9ElGJX62g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeduudduucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770155122; x=
+	1770241522; bh=xSxeJKdEjmtKUQ04JI3zdXtWy7xQ+uFJHJPIks7OBdo=; b=K
+	SC8YnttT9lKgq4eDFhI80uxDvb2stoVf9XIojS8qygICEi0vWkW86800vF0aAnfP
+	LcvuczkPtiCVZnWLXmKvDuYmCKAJUY7nWwz13978VajgSdgPgUddiQ4dS1U4QCbt
+	pZNVe+WO/d3cQM/dTIbZbXCVxt4iblcJKZogaKpxy6Vd/i+cHuoUb9g2Ttwo1jiw
+	8UnIEuvPkd7oqhd8ETKcz5IrI2tSzyKh1hi/xseqc55tCbS//eSVyF/GvBjrEo4I
+	3r9eI4qnl5wsRTTej6X52bvaSa6T6n4gWZSQSc4HD59T0oVO+5dHDIEgXM2+ggnK
+	o46KGUMLQ174JE+0Owjmg==
+X-ME-Sender: <xms:cmyCaRSwSuLSVznBVBBAv1Fvg1tX2gDvLDzwzlBlGHjDHjKYP6HzcJ4>
+    <xme:cmyCaVnE_flBWwDqU6scyjJtSa9vLFvmHH49K_HjQslAxJ3fIVoE6M5ii1DYU6d8e
+    6AJdmCAY6Bp3cDfYTdSRRLFoBkxf5yoGbGLMqLt8JGOvi0RRebJE2w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeduudehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffie
-    ejgeefhfdtvdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgt
-    ohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:62eCaYdde743u4Co5-ukR_SN-yxiQbVSu9Bv8vu1-GkcOB3JBqazuw>
-    <xmx:62eCaRGYY6UklkC218P0-xBPFviw-kwKtQZipnTUIlP9I5blJhnR9A>
-    <xmx:62eCaWeGRN6MUTWDWHvC2OJwYyiClKIH295R3LUhlO4dpJLqoghv8g>
-    <xmx:62eCabHNtNpezFGt3C8p2u_cPyesY4fb4ySbPXIhjFHr0o0owTKz2w>
-    <xmx:62eCacvQRsbEDTf4zB07i2QMvyVr874Q_k3l8k-rKuZB1LesVXWxKfcj>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Feb 2026 16:26:02 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>
-Subject: Re: [RFH] adding test coverage for contrib/ in CI jobs
-In-Reply-To: <xmqqsebhu9nn.fsf_-_@gitster.g> (Junio C. Hamano's message of
-	"Tue, 03 Feb 2026 07:30:36 -0800")
-References: <xmqqh5smdejc.fsf@gitster.g>
-	<20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
-	<7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
-	<xmqqjywuyhu9.fsf@gitster.g> <xmqqsebhu9nn.fsf_-_@gitster.g>
-Date: Tue, 03 Feb 2026 13:26:00 -0800
-Message-ID: <xmqq7bstsemv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdp
+    rhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:cmyCacuBXZna4o322PxLB34mfr2jm-EsGoJzZuHmtHSYFSDkIcOsKw>
+    <xmx:cmyCaRMpW-l3XYNXdHLX6ZarYVL-lhLxnmTvfP3ZFFEb8v2fZpYQ3g>
+    <xmx:cmyCaa0KnQQ-wjMXtqXEFqYDZQjbfG1ylyElYbaAahFGFq1JU9PVoA>
+    <xmx:cmyCadN6gvZy9BS0SYDl3CH5TVUSpK_XWE_3mC82YNxzpwRqlO6rfg>
+    <xmx:cmyCaZLqfvG16zdkMyeDVZmpUczEBBSoz86kdIQ9NkIhvr0Kp_EtJlHF>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5213F1EA006B; Tue,  3 Feb 2026 16:45:22 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AXMcA4Iy85D-
+Date: Tue, 03 Feb 2026 22:44:14 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Message-Id: <6480aae2-d2f2-49dc-b8da-ec7cfcfbda30@app.fastmail.com>
+In-Reply-To: <pull.2036.v3.git.1770138215.gitgitgadget@gmail.com>
+References: <pull.2036.v2.git.1769462744.gitgitgadget@gmail.com>
+ <pull.2036.v3.git.1770138215.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v3 0/4] doc: some more synopsis conversions and fixes
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
-> ...
-> Unfortunately, this seems to reveal existing other problems with
-> subtree tests (t7900), in addition to diff-highlight tests (t9400)
-> in various configurations.
+On Tue, Feb 3, 2026, at 18:03, Jean-No=C3=ABl Avila via GitGitGadget wro=
+te:
+> This time, git-show and git-submodule are converted. Some mistakes on
+> previous work were also spotted and fixed.
 >
->   https://github.com/git/git/actions/runs/21617099884
+> Changes since V1:
 >
-> This CI run is near the tip of 'seen', so there may be breakages
-> attributable to new topics in flight, but I suspect that many of
-> them are already in 'master', noticed by nobody because nobody ran
-> these tests in these configurations (like "breaking changes",
-> "sha256", "leaks", "reftable", "asan").
+>  * fix mistakes spotted by Kristoffer Haugsbakk
+>
 
-Test that comes with diff-highlight fails WITH_BREAKING_CHANGES CI
-job, which has multiple ways to work around.  The easiest one is to
-force the branch name that is documented in the comment part of the
-test file that illustrates the topology of the history, which is
-what I picked.
+By the way. Sorry that I managed to reply to the v1 1=E2=80=933 patches =
+on the
+previous round instead of v2. I noticed only now.
 
------ >8 -----
-Subject: diff-highlight: allow testing with Git 3.0 breaking changes
+Too much copy pasting.
 
-The diff-highlight (in contrib/) comes with its own test script,
-which relies on the initial branch name being 'master'.  This is not
-just encoded in the test logic, but in the illustration in the file
-that shows the topology of the history.
-
-Force the initial branch name to 'master' to allow it pass.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/diff-highlight/t/t9400-diff-highlight.sh | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git c/contrib/diff-highlight/t/t9400-diff-highlight.sh w/contrib/diff-highlight/t/t9400-diff-highlight.sh
-index f6f5195d00..dee296739c 100755
---- c/contrib/diff-highlight/t/t9400-diff-highlight.sh
-+++ w/contrib/diff-highlight/t/t9400-diff-highlight.sh
-@@ -10,6 +10,8 @@ DIFF_HIGHLIGHT="$CURR_DIR"/../diff-highlight
- CW="$(printf "\033[7m")"	# white
- CR="$(printf "\033[27m")"	# reset
- 
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . "$TEST_DIRECTORY"/test-lib.sh
- 
- if ! test_have_prereq PERL
+> Jean-No=C3=ABl Avila (4):
+>   doc: convert git-submodule to synopsis style
+>   doc: finalize git-clone documentation conversion to synopsis style
+>   doc: fix some style issues in git-clone and for-each-ref-options
+>   doc: convert git-show to synopsis style
+>[snip]
