@@ -1,127 +1,162 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D243395D8C
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 09:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770112507; cv=none; b=WFmx3Zvw4JxKNaya6XUAA1jg2xbdm/F6sAAxrUg/d9tCNQ+lJTbCp8NS5T10WXciAUlTXWeUoM+n/PKOCgpsa7VZFm3dQY+rJqDWkf5Zvy8ITrSII4DvMrQI/T60688UcxVjBGrkB0jwUyee9wUCyAJbnGeN3w79qimsXu7bxpM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770112507; c=relaxed/simple;
-	bh=ApPp35bV5DP9ooT9DufrvCqiLwlT3tuHfSZYAV/XLss=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jp5lkyj8n7PLNoPo8iCJ4azJRjRSfo976JTZqK6mgEk/u/318vrRXeUXGt/onX+8+Lbkxcea0G8Fnk6POwmchQm4jFUlK7TLjAkUYwaSKSlOK8DOHzYcErKCa/oVwUHXriwgB+rGfLQ5DTarlGCFoEIhR2BcxM/crGTFDAIKD14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LH2PRMsh; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C85A396D0D
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 09:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.179
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770112540; cv=pass; b=T1dU8l/kXfI2uG3/FmLNtdBYYYNlvdX/stYvslZWbQL1jfHlkDsJIGn/ACOXPYJgisH8k6XjFcJdEynp8U/guXwwgUGs2PPK0tM5fHJEiy4j2i81MG8x5gSXWJai4lEF3yFQdWofQ2BfUnGKt6DYATQjmergDNFF9pDfC4/CFcw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770112540; c=relaxed/simple;
+	bh=lK8L/a04UE0UcwrzaAwuaCDGzTgCh+pGLrK1XmQdH+I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pM2YWvszOH4V5D+nHnZihaIDwYsypJc4At6savSlIvnXVI4D0O8d2Vwmj4Adib/KOpkBZQGTcmS7RQwn7uhxfAQkudBkieOMiTxGIhxPzGMJEnw/7WQvvqCvqn/apA0J6pnrnE46ukIZ05EJNRkyWb4cGzM5gkYdFx6yN8iebmQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bpAQVXB8; arc=pass smtp.client-ip=209.85.221.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LH2PRMsh"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-81f39438187so3157126b3a.2
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 01:55:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bpAQVXB8"
+Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-5636274b338so464585e0c.1
+        for <git@vger.kernel.org>; Tue, 03 Feb 2026 01:55:38 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770112538; cv=none;
+        d=google.com; s=arc-20240605;
+        b=hwguqZJVgpVxHrTQTIKpEE4YomJaagOxZfxMoxU8oi3HLGmywXr2bn/6VeVHTdFh//
+         yOhtwymo05fkhtAmUNApnjmKRffeJvArJ0TZ5DYhX7kzW1EWqsv6Y0D+Y4lMdubev4OX
+         cWzlCS3oZKxBOPfryLI0998Xbd1gw3R5+tB1iyfXqXiWqjEFJJKINQbBDkyfWvUpu3WE
+         M81/ARe22UoVgtRK7jzNxEM42ylPwjvqOlqxXibcbN1kSfJgoCN4UYXn8bsU33Uht4eq
+         zVHHk0o0NY2Qtb3va+q+0owtJHZR16oKvJY5IdKprmS5zYYzg1nDB0TN/GxCQbQGyD4P
+         kKSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=es58V2keZOoa3RS5mi0FcVg0Nw7qszkyHzRwfdIMMDc=;
+        fh=shWxNb8qA0DxLN80W7Sz7Tg64EW8RLYpEjyr7bUBFds=;
+        b=TR1wuDlPSXMY0aFUidi8eQR/UhQUGqqifUhrihABHbQ5Mw0gjhXn8F1nxMiK1GESUh
+         Iud3fiBnANTEQhQqCOikQmAq8HOzDChPjwG0N3HBiRmsWpXceKQhTvghFY4nMTEzIl0L
+         mmI8U646v8RMQXvlbqb3AK/Uqpt01SbCsXIkBCIy78krwq5/SI0dofAIqKOjqNQ+F+gb
+         /vBAfHywj66ew1JNQhcn7AAalqRAucVuQxeitOAHKsS9Nmt5QpzH6nNEFWEvXA569dYs
+         U6/vgDPhK1RvfdDtNdMrzlBFx2Ol7YyF4bM2oNCcY+xskS0J2G6RadjYu4GbRzSlFAIg
+         /PYA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770112505; x=1770717305; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770112538; x=1770717338; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eZ8iA/uj18ahyPPCFYa4NIOhuZck+w0G0n0xKlP6s5Y=;
-        b=LH2PRMshtL1fLjXDc7JP7B96CcjPI+0aRaYqLCbvmrPy5rif1MRtCO36eW2Nqb4tDK
-         ohgtovDLzFxoLTbZzpFdqouKu704A6kkYPfJNBqiDjXJttWfIWMpn4Vv/zJmN7d7mVvQ
-         b1EdCPtN5NHrHQBZpm24QZ+AeCK0Htbt6ZWgRcxfllFK8umKGn/0bIIy8uJj34DNG2CZ
-         PKcdiUDP027kGXpCS5Biiowpb8VYVOpdSyy+oUIncREHavHKIapl9Rblo29jbkR67Kd5
-         b0ntVbnIQYwAQsMAEvu7CkxILBEKYFW9xj1cBWupDL5ocOzXS1CbCZc3CYo7n6P2AFRP
-         Uxxw==
+        bh=es58V2keZOoa3RS5mi0FcVg0Nw7qszkyHzRwfdIMMDc=;
+        b=bpAQVXB80PUmc03Pm3aE69KIpKfKKxIvlcHtEj1yXk75L+MmNlP3RbW53yHtUbpEdk
+         TKyJskc3QR2FBkUbsXe27PHXDzU9xpdHyfLrpKZK8uXUqXFqzAPYlez0T96KMa/1gWlX
+         5owd5A4tLR1ZyZmki+/GiK8vjIjVpBde5BjBQ0VNNmHj2z7lvL9eBY4S1xYVjCK68G1S
+         WNU7hLHQbCG4fxKeAmkHONzb4VA9xYuQFuIrcGnjFM4VMH/agAFI+R2C/wHpmOO1fEdr
+         8Zq+sKImegt60deRL0YEHIGx/leHijkIAZ+IErm8t5zFRNH3ipNuVCyr26L6OvLYuPhd
+         F/Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770112505; x=1770717305;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1770112538; x=1770717338;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=eZ8iA/uj18ahyPPCFYa4NIOhuZck+w0G0n0xKlP6s5Y=;
-        b=q4HVfQnmuQchwzJDtWioAUfNvG1uy9S5KzgUpbOQ3CcTKe1h1Y0bG6SpBoKKXSpBRs
-         Fc3ef7M0HXonmWPT77U3i0l8oCj8DhXcGMx8XH75IFYFS+7pV3D5xPe9cxszojztPXju
-         0xemgb8h2T/9/ORqgJTw31kg6yZJ0WEq7j4byz40MAsXOaAq+3Id/AHuyUiL0JbIJm2D
-         HOoYC8i1BGK4+Hqz880xDSYYubZpXjf1ROOAEUYcaGdlkS2fDIcoiv3rDhoGLr+aL+/C
-         TKsNfQ9gEo7PlokxPcM64atdXzGA4VA26lEU4/QTqfDYIh3hP4xAskK9kmIY/wHDUiZ9
-         70UQ==
-X-Gm-Message-State: AOJu0YxJsEQvcXEnJHC0Jyt/XdoF5AyDF6Qn3tE4PoorRFobzw8Wb4lx
-	mHdbs1Miy6IvAwzqUG2ra+ur9nUD7nZn1IcQQlIPP8uq3U5r4jVfEjFQ4dWbSg==
-X-Gm-Gg: AZuq6aItQyNgDZGn1HfX09dSJRqVU/g+KYFAFsZUafxehzRO/XlwsHYSC/CbLb9iSvA
-	IOswsmVb6woWLb2gUMvZ56luc0nQPbiaFw9hkIvEftyb97EK6k9BxDo3IKnBTXW4t18sHICOfxA
-	T3CooQsxBoLku7J4XcTzGfUsW1+Xi1eXaI6r+WOvwjhMHzyT9c2o2qnwM/PEeP0yAnqxcCEQTWV
-	upxCX0YixpVKqIFr8mmZV9GsTbiYcF5/iR+B++2Om9/eux09U0RjM9n9NYYSo/HiSiz5npF0X59
-	oRNFnLuAzt5zYaIKth5HXr0Phx0PtLcpndyH9HGB/5A1gU9Qi2omFHcHoPhPnQZ7+vW/6l2E/gn
-	9rJ+0cGogWnJVy6LB3i73k0hhWMo9rwVuWxJ5wgOfWu4/pBmHORFjN1C/WleWEbECNrSLPyPBfb
-	Gpj06pbJ2l3kUto25UtQPdyjWd6bR4Vd45sUTqV+1XMTqQwQ==
-X-Received: by 2002:a05:6a00:240d:b0:81f:4e0b:324e with SMTP id d2e1a72fcca58-823ab66fb69mr12952736b3a.15.1770112505395;
-        Tue, 03 Feb 2026 01:55:05 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:97ce:ef38:b9ca:7f92])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379bfcaadsm19942437b3a.37.2026.02.03.01.55.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 01:55:04 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	karthik.188@gmail.com
-Subject: Re: [PATCH 1/3] wt-status: replace uses of the_repository with local repository instances
-Date: Tue,  3 Feb 2026 15:23:11 +0530
-Message-ID: <20260203095446.10971-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqq4inywxx6.fsf@gitster.g>
-References: <xmqq4inywxx6.fsf@gitster.g>
+        bh=es58V2keZOoa3RS5mi0FcVg0Nw7qszkyHzRwfdIMMDc=;
+        b=LO3ny7ua5YqNba439AmY/a1hrXyfmEu0aX1UQOaztaHWY2DNEmxiSNKzS0l/3q/8iJ
+         Vbds71ntsSdgFKzRkKxWm7SLNPYPRDABUbGXYuAks7o0MPJ1VwiOn3uuWZqL9ekmXUV4
+         ZwZkxKK4LLAhcwlUpR0YO7oov3VnVEFl0wce34cC19Utlkvq2l6LrMdtlnUoADeCKeUJ
+         Z/52+7W9b4Mmauk5P6F3W8y5+U4PnBDjiaVzZ4RpGFLfs7q9olTSqzWnq6rkGfkrDKak
+         sKDfap9ac0oZ8g00G8P1dRngbI0o5p3eV35RnVm24EKpaDYgDXVbv+sg/3DvEym9uRtS
+         K5aw==
+X-Gm-Message-State: AOJu0YyduhdjWTIl5HMQbhQoT1bNaUn8vleo+ZU7yaoyZsIcCs1gE2ps
+	bRM3MVTvbUkrZp9oVtam3QClV+Oli7AhpfYKyJRWnFWOedqtkKrehUdXGWjTfp5xZYlGUvORejx
+	l55m73X00+WpAa+EartMlsJ3HwU4pWT0=
+X-Gm-Gg: AZuq6aLCqleKq1K4WzZHLeLxeoV5frWLeO7nBdl7jLQQKKXGoJBzZ3qmYrbqbUOTeFD
+	3ae2fNj+tgggDj7lJoIFRNFrcRAXeZFY6PtBLJK7vLFrwH6Hl9ah+AwnHEC22ghZxQBNAwePR4i
+	kCforkG+O/HjdXhFMRdOsVaBs1eaYSmJG1bW6mZF37FE3I++fM78QWQeqFHaeOdlIAndKy2/55M
+	1ah8QHOsBnG46Y05Afk3c4dDjBQh95g2rfiC9HRwyGO9/CGEuqR4xiIs/zKezRZ4MYO5DQ=
+X-Received: by 2002:a05:6122:4b0d:b0:563:45d3:9b1d with SMTP id
+ 71dfb90a1353d-566d8594fc5mr777021e0c.9.1770112537916; Tue, 03 Feb 2026
+ 01:55:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1769522219.git.abrahamadekunle50@gmail.com>
+ <9b21cb901ab14397af94b8ed2d09da1a9a6d862b.1769522219.git.abrahamadekunle50@gmail.com>
+ <xmqq7bt2g4tl.fsf@gitster.g> <CADYq+fYeWh0tLEepOGVa=1i9tXZfWaGfyi6H+xUB7rbdQ=t5aQ@mail.gmail.com>
+ <CADYq+fbt7zHO=gAsRp=b5MTb=2aFfifCjWnW6u+58iv4dk6bMQ@mail.gmail.com>
+ <xmqqqzr54mam.fsf@gitster.g> <CADYq+fZFuvCRbFf=-XUR8TJsjW_YtjNdiXMzPv0mjMPbWcLO1g@mail.gmail.com>
+ <xmqqzf5rys3f.fsf@gitster.g>
+In-Reply-To: <xmqqzf5rys3f.fsf@gitster.g>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Tue, 3 Feb 2026 10:55:38 +0100
+X-Gm-Features: AZwV_QjgiDBMdpn2-7k4oxEhEi2QXp-QbzubSg53H8kAhpmyrfjdHI1iCu4wHSI
+Message-ID: <CADYq+faasM8h0FJjop4GJeo_6fw-=_VXRZeqYURDbQFuR0CK1A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] Allow reworking with a file after deciding on all
+ its hunks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
-> >
-> >>> > diff --git a/wt-status.c b/wt-status.c
-> >>> > index e12adb26b9..9f4d8fda7f 100644
-> >>> > --- a/wt-status.c
-> >>> > +++ b/wt-status.c
-> >>> > @@ -150,11 +150,11 @@ void wt_status_prepare(struct repository *r, struct wt_status *s)
-> >>> >	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
-> >>> >	s->use_color = GIT_COLOR_UNKNOWN;
-> >>> >	s->relative_paths = 1;
-> >>> > -	s->branch = refs_resolve_refdup(get_main_ref_store(the_repository),
-> >>> > +	s->branch = refs_resolve_refdup(get_main_ref_store(s->repo),
-> >>> >					"HEAD", 0, NULL, NULL);
-> >>> 
-> >>> Wouldn't it make more sense to use the function argument 'r' here?
+On Mon, Feb 2, 2026 at 6:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Samuel Abraham <abrahamadekunle50@gmail.com> writes:
+>
+> >> I am not sure if I would like the end result or rather prefer your
+> >> "all-or-none", so please do not take this as "here is a better way
+> >> to implement it" suggestion.
 > >>
-> >> In wt_status_prepare(), s->repo is initialized to r at the top of
-> >> the function, so both refer to the same repository instance. However,
-> >> using r directly is more explicit and avoids indirect use.
-> >> will change this in V2.
+> >> But you should be able to keep the current semantics, if you wanted
+> >> to, even if you apply the chosen hunks when you switch files, like
+> >> the original code has been doing forever since it was written.  You
+> >> know which hunks you applied, so after applying before moving on to
+> >> the next file, you can drop these hunks from the list of hunks to be
+> >> decided for application.  When the user comes back to the current
+> >> file to decide on other hunks, you know that the already used hunks
+> >> would get in the way, so why keep them?
 > >
-> > Would we benefit from further clean-up, either before or after this
-> > change, to lose the "struct repository *r" parameter, if we know
-> > that we can depend on s->repo being the repository we are collecting
-> > the status information in the wt_status structure for?
-> 
-> Clarification.  This function is like an initializer for the struct
-> wt_status instance at 's', so it has to take both "struct repository"
-> parameter, but what I meant was other wt_status_foo() functions that
-> take both r and s as parameters.  Once s has been initialized and
-> s->repo becomes valid, passing r as a separate parameter, as if you
-> can feed a different instance of "struct repo", becomes confusing
-> and a source of bugs.
+> > Yes thank you so much for suggesting this approach.
+>
+> Not so fast.  I explicitly said I am *NOT* suggesting anything.
 
-Actually wt_status_prepare() is the only function which is taking both
-struct wt_status *s and struct repository *r, because it has to initialize
-'s' with the help of 'r'.
-But all the other wt_status_.. helper functions only take one of the following,
-i.e. either they take struct wt_status *s which is fine, or they take
-struct repository *r. 
+Yes you did.
 
-If we trace the callers of the functions with struct repository *r,
-they are either being called in wt_status.c in which s->repo is being passed
-as a parameter at the end so it shouldn't cause any issues,
-and for any other file callers, the_repository is being passed,
-so to remove struct repository *r, we would have to setup struct wt_status
-in those files as well.
+>
+> And thinking about it more, I do not think it makes any sense to do
+> anything other than "all-or-none" when the command is working in
+> your new "you can move to different files before you decide on all
+> hunks in the current file" mode (which I think we agreed to make it
+> an optional mode).  Why?  After deciding yes, no, no among 5 hunks
+> in the first file (leaving the hunks #4 and #5 undecided), you jump
+> to the second file, do something there, and imagine that you come
+> back.  If we drop the alrady applied hunks like the suggestion,
+> which I did not make ;-),
 
-Best,
-Shreyansh
+:D
+
+> we'd then give you four hunks (as hunk #1
+> has been already applied), and even though you have already decided
+> not to use hunks #2 and #3, you *can* revisit them with "J" or "K",
+> change your mind and use them if you wanted to.  But it is too late
+> for the hunk #1.  It looks utterly inconsistent if you cannot change
+> your mind on hunk #1 but can on hunks #2 and #3 and it reduces the
+> usefulness of "you do not have to decide right now and visit other
+> files before you do so" mode.
+>
+> Thanks.
+
+Okay yes that would be very inconsistent.
+
+I briefly thought about this.
+If a user decides USE on some hunks and goes to the next file, and we
+apply the patch, the user comes and decides SKIP on those hunk(s),
+can't we "unapply" those hunks using "git apply -R"?
+I have not really thought about the complexities but it seems to be
+something that might be complex.
+I just thought to share to hear your thoughts
+
+Thanks
+Abraham
