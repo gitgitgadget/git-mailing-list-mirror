@@ -1,133 +1,126 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E552FF14C
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 23:10:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827FB288510
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 23:15:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770160204; cv=none; b=F06cAeXCNUUdg50TiahOulwVft2QHvnpCdlVP++Y1N9e9CK0Y9C/SetqJJdW0aSloW2CNyhzpvLe9YSHt5LQgy6WPy/F3cedkELAIaRXG2HYKsN1iJOnKOsJMQU5HYtnuY7EZDinfWPyT2vbhdcZ1U0G5xGxHacsCiPldMYeFuQ=
+	t=1770160512; cv=none; b=mAFO43GV9YVIuVPvBF1KBetjDYItRYfW52ohlc+zRlMIeIi25VcZ8zzlfJpSHIonhGbfibYMorJlZwc00p4jR+9w7NN6PpWX2MsbV3LUzwL7V9zvUEGWMY7UOUSSQnrnT2OSb/RSam2zvR0rrXx9cf9bjbxzwJmlk+3B03w2dmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770160204; c=relaxed/simple;
-	bh=2e1kKilxrokwLsPC2aWeY5+iuwFiTU4YDTdmbhfpe2k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gCOikAj6iu35Js+owgTKqtIoDOaXOSGkOqdrXSXPYzWA7XvqF+N+2Sn/R9r/spBh6Kyk/ACwuVuAsJaKEJspsXYvUU0AW5i0b40nZjKJb+Ldaq0fgvt7GH+00FrWXOrbijNfrPaAKTt7VYij4YR91kyu7Xv8rMwvl0Bo+IC2xwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NQfJ0wcV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UcxMjpEE; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770160512; c=relaxed/simple;
+	bh=YnBWdy7DsnXx16/lPhW/m84SnFRU1VdqpNfWEbUpzZI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=mF8f8GoOziBxhZJ6FvN1AcCAeFHXiOWlsaLAsu2whibewElv8qN0QEqFp8+9ihOQyhy03Jyt5dmYO/pC3P0lQgDBKK6xLwZpP5eo1VceB7VA9smjkqhbv0eL5UHfikG3i1dtKQztiliSXXo25nFD/5tRcN3tLuQNoaxxNvFyYVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HTQopGRG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LqfBVcmg; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NQfJ0wcV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UcxMjpEE"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 596997A014E;
-	Tue,  3 Feb 2026 18:10:02 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 03 Feb 2026 18:10:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770160202; x=1770246602; bh=5MEfuGk6YQ
-	6wrw6rJm3oGyb/jKjkHGq0pvPC91vn71w=; b=NQfJ0wcVeV7DHmmecRsNrgTsE/
-	Nq1NoNaADgzi4+uK0EY6h4QGaGNCOnpgiM/n4Uk4jwtriGpGgJtiiHHzUe0qtF+8
-	VH4PZoNR4+fWZDaszDP47eQLfHTFyZeDyReMcseyw3tW5shYhSQE/UF1fyKA0RsY
-	i4RwVbjUwbEf1k5BHGnco5ULa0ISeN3IawGH5COoDJ0uWK7T7rRouS1OFkjIat67
-	oEgb38JnPM4NN2X6CVkRkiqwunpQ3bk2mDowMPByVwwIPQif43Wn28Y47ME0WTFh
-	aGcTfP3ALGLcRyOdK9nNgOpejFr06aEh/R0C/evQPDcTsdI7R2DywbDckiDw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HTQopGRG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LqfBVcmg"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C5D7014000BD;
+	Tue,  3 Feb 2026 18:15:09 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Feb 2026 18:15:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770160509;
+	 x=1770246909; bh=fPkzaj4GqukscFDmkpV2WEnqFMbeCDJOFF1zRlcBFBI=; b=
+	HTQopGRGFCakbL/6e21NoL871MNe3uIxij7CrOv4TPKb5dsZqevY9sVc9kBqG/76
+	EBeVYeY7UZ05Cr9/+L0CywB6y0BGK2DtOMAWG4ZCsZX5U4MRFaG/hcXmhpHc7Pam
+	J3EYG/oYTCHqHV2gO2aescT3XqrI8mkqJKfjEb5dmo30JnIXQKdsCRJGB0KrzyqK
+	tejzthl6EPP/XW0fulM5Vem+dzPmkiDk4qR0SHqcFkOZBAagHyOVZN36NG5wDsD8
+	+vNKPmUoH8eHaX4soQ8PJoIBRy8eBLoml+fuFEOXn2ZF9JSFuncTAnzAT7H0q5U7
+	Qe4TBvFPRT7apbd9qrRdiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770160202; x=1770246602; bh=5MEfuGk6YQ6wrw6rJm3oGyb/jKjkHGq0pvP
-	C91vn71w=; b=UcxMjpEEuZYZjh/vT8l17LIKkuYIXQ/OAmtngjswv3ueiy/L92Y
-	/Jo6pMrCO8Cz6Vf8gpoiH5/VAHvWbuxwSyZcfyho5BLxNvXS2IlmfRM0GAixhD44
-	EpIk+bNtkNYLB/C5PLTsbNEhtnHHIcfhV2C1kyyDhzspWHfSdSx+UpnFfYM4yIZm
-	Q4Cft95becGPo2Yg+DKNVThPLemmeqUV7pDMynensnLxyxbe99ct6Hv9ArooR7bM
-	lCuP6Q5d/bp0wtlBjdQA0qo16/74GJqi7JWQ+vT5tH2+NKv5fEFqDq7Tqt6zsLSf
-	9sd6BFxLRY/ZlqCd81pkKFDCoyJrd9kg+jQ==
-X-ME-Sender: <xms:SYCCafk3jJTRfPJrDW9VALXGgf2cQffQRmCaCv_E_HgnLzQDkzON_Q>
-    <xme:SYCCaVGPV8DhIPwj-8-RS7dI9CoG0NDdduCrXAHaAZisHXJrfKBatkRcFRnFuLNOv
-    N2wVI-5SO2l9S1HutPK0Fzc5Cr47i91yq2b8MLuHYAjvx5IUFDFxQ>
-X-ME-Received: <xmr:SYCCaX6n-tcfoKc0W-Ea1Jw_I8IACiHD-qHRAZ4i6t3zxon20a1vWhxKU6-vQwH3SZGPox_nvwZZhwkPTjNYD_fyLgwFwCLt-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedufedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770160509; x=
+	1770246909; bh=fPkzaj4GqukscFDmkpV2WEnqFMbeCDJOFF1zRlcBFBI=; b=L
+	qfBVcmgmZNylZnFGCOxEYYfjxrzZS6jcEPxtMq4tPgERVGLUm9t0AxsQ8ClJTeRw
+	5aos/QLXO5QrlqKesTOBIC6QtK6Qxl1j9M9CaUQIgStuGoRRRhwYehJS7ZG//sPL
+	ftpyN+8N1ieSC4eTmHElM+ZVWEX5jAH9h3bbPORaQOhuMKUb1X0jfxYLdbzhq5G+
+	THU2VK2RW4+x0I+Iet5mAbP9Hxv0gkrIqZgKwav337HUrYCg1lqSEAOrFgmiyP7i
+	8w25GSX2QWfqAbWitCg47TxJj1K8w5N0MI4Jg0BIDtk7ySyvWDKvzhYolMc5LX7f
+	AIRdDoJzyq+byu13H4wZQ==
+X-ME-Sender: <xms:fIGCaQ9sneAaS39RwOHamJmRBvnYcpbdpORkZfsxNtwYdUbhRrsWebw>
+    <xme:fIGCaThQf435ltJ59ckbmWsRpe6zl5TBp-7OxG2EQeLgeH4V8jNfZ1WGpPlNgpHfw
+    wJcmqQWBmI0wI6ajvJgqwZk4c2xEpwhb0iHOBNH_ScsYbkPnuKM3w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedufeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhushhhkhgrrhhkuhhm
-    rghrshhinhhghhduleejtdesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhksh
-    drihhmpdhrtghpthhtoheprghskhdoghhitheshhhofiguohhirdhlrghnugdprhgtphht
-    thhopehprghtrhhikhesphhsphgufhhkihhtrdgtohhmpdhrtghpthhtoheprggurghmse
-    guihhnfihoohguihgvrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:SYCCadnyC2NLk_NoabpKwP6PN-HW7MPEPZMLI8CHdItE0hIuRofORg>
-    <xmx:SYCCacowBj51btTDKzRcr1lG1-J6pWgN1JyaDgFDGHQEZV3rsmL2fQ>
-    <xmx:SYCCacuh_XD5RlO2zkN8FkFoZFDUhNNN0mOy4CTNMuhjqF8sSl6x-w>
-    <xmx:SYCCaRGhWKAH5J46LKguJeUkk-qSmnG7A8-_WemYXcM6jaCLZQxrSQ>
-    <xmx:SoCCaRkfEKhSkJsv2qobbrtj-C8pO_gpytJoJ_Il__8tcz8KVujBA-7S>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Feb 2026 18:10:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Colin Stagner <ask+git@howdoi.land>,
-    Patrik Weiskircher <patrik@pspdfkit.com>,
-    Adam Dinwoodie <adam@dinwoodie.org>
-Subject: Re: Re* [RFH] adding test coverage for contrib/ in CI jobs
-In-Reply-To: <xmqqjywtu58j.fsf_-_@gitster.g> (Junio C. Hamano's message of
-	"Tue, 03 Feb 2026 09:06:04 -0800")
-References: <xmqqh5smdejc.fsf@gitster.g>
-	<20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
-	<7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
-	<xmqqjywuyhu9.fsf@gitster.g> <xmqqsebhu9nn.fsf_-_@gitster.g>
-	<xmqqjywtu58j.fsf_-_@gitster.g>
-Date: Tue, 03 Feb 2026 15:09:59 -0800
-Message-ID: <xmqqa4xpqv94.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepvdehtdetvdei
+    gffhtdfgueegheeglefggefggfetledtudevieeggfegjeehgfdunecuffhomhgrihhnpe
+    hkvghrnhgvlhdrohhrghdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgep
+    tdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:fIGCaa5kM7w5PKKTWFhS5Zd5bWP0uGpJ12fxJKYP1U6kwSaAtxF1RQ>
+    <xmx:fIGCabq1iOsjDetRKSAjL_s_wXNJlXnkxs8_aM-9htAp2rRHTXkyVQ>
+    <xmx:fIGCacj3U1pZtfRyt5zZhyY2XpGOSElbFJzdgA_xS2IJgr2Y15oiPQ>
+    <xmx:fIGCaVKxT83ZHlzwznsrJf19vqNyUH_lSRxRjtub2FpwrPijzphumQ>
+    <xmx:fYGCaSq671rLiVt4zXfgW-PPUR1PTU_zQtinYFTP-Hn8Vf8mN6VeNeQ1>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 973F21EA006B; Tue,  3 Feb 2026 18:15:08 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AmklL-wrE5xZ
+Date: Wed, 04 Feb 2026 00:14:07 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Justin Tobler" <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <e48578d5-ec48-4369-901a-597de3be9455@app.fastmail.com>
+In-Reply-To: <xmqqpl6lqw86.fsf@gitster.g>
+References: <20260203221758.1164434-1-jltobler@gmail.com>
+ <20260203221758.1164434-5-jltobler@gmail.com> <xmqqpl6lqw86.fsf@gitster.g>
+Subject: Re: [PATCH 4/5] builtin/repo: find commit with most parents
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Feb 3, 2026, at 23:48, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 >
->> Unfortunately, this seems to reveal existing other problems with
->> subtree tests (t7900), in addition to diff-highlight tests (t9400)
->> in various configurations.
->>
->>   https://github.com/git/git/actions/runs/21617099884
->>
->> This Ci run is near the tip of 'seen', so there may be breakages
->> attributable to new topics in flight, but I suspect that many of
->> them are already in 'master', noticed by nobody because nobody ran
->> these tests in these configurations (like "breaking changes",
->> "sha256", "leaks", "reftable", "asan").
->>
->> I didn't look into the details of any of these (yet).
+>> Complex merge events may produce an octopus merge where the resulting
+>> merge commit has more than two parents. While iterating through objec=
+ts
+>> in the repository for git-repo-structure, identify the commit with the
+>> most parents and display it in the output.
 >
-> I didn't look into CI failures but spotted an easy one by
-> eyeballing.  As we seem to be lacking a dedicated subsystem
-> maintainer for this tool, I am CCing those who have touched this
-> test file during the past 24 months, plus our resident reftable
-> expert.
+> Does the size of octopus have anything more than a curiosity value?
 
-The subtree tests seems to be badly broken, so for now I've enabled
-the contrib tests at CI to only linux-TEST-vars job (which seems to
-be passing) and *-breaking-changes jobs.
+I=E2=80=99m guessing this stat is inspired by git-sizer.[1][2] This is a=
+ll that
+the project says about =E2=80=9Coctopus=E2=80=9D:
 
-Help by those who are more familiar with subtree is very much
-appreciated.  Start by looking at failures in
+    * Are there other bizarre and questionable things in your repository?
 
-    https://github.com/git/git/actions/runs/21649279837/job/62409376111
+        * Annotated tags pointing at one another in long chains?
+        * Octopus merges with dozens of parents?
+        * Commits with gigantic log messages?
 
-Thanks.
+It marks the max of 10 in this repo as a =E2=80=9Cone star=E2=80=9D (*) =
+concern
+(lowest). The 66 parent commit in the Linux Kernel gets six stars.
+
+By the way: why did this project stop doing 3+ parent merges?
+
+=F0=9F=94=97 1: https://lore.kernel.org/git/20251021182601.2687284-5-jlt=
+obler@gmail.com/
+=F0=9F=94=97 2: https://github.com/github/git-sizer
+
+>
+> The opposite, the commit with most direct children, might be even
+> more interesting, but that may be just me.
