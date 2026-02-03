@@ -1,101 +1,191 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57EB350A27
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 15:20:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D148EEAB
+	for <git@vger.kernel.org>; Tue,  3 Feb 2026 15:30:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770132019; cv=none; b=Rjid59onWsYfSzPfmg/KpiAcXAXMxdYBYNGLZIl+ns7PxEjNIagf/R7YfiT1/NcdFzWik73OdY1RqQLwzo/VQMqpJrX6Yvpwpm2646wo7OgP5rfgdR7BHgUNy7w1u7NO/JLYlVZzRvwMW0GObcgdLRTFE2PR7B4TstSawDHe74E=
+	t=1770132640; cv=none; b=CaQefW7MgIZbAQryUv8mDsYwelUNSRrUE0dT+TAZzYIuVUnz//MvDXov06bcOWrVahldXYkIapcmTxJEBim81gvNVocJHMtl2aO4WGr5sNEEo2ci616IWj+HvU8hD0cG7uw4rtMPHQwHkwXtEGjdwoL/x9NYGkjVsHGB40+wlKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770132019; c=relaxed/simple;
-	bh=SD7seyxlNp092fcjjia2uI95eesgIll/m2u9s+75jR8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S1gqvCIbKt6j5G3w4AucHugfzmFly52uqhC8mtxkXlTlw3NZNQFBHwcC6rnnSMWv1/EN9hofwm0cjhfouu3oGk1YN/mSVgKkKeXBoNhPAsOsTssl/XQX3k8/wqrcRnFaJ5HGiAThNetk6jjyfvC57Ew4UVqbFKJ54iUONt3hx7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UvArfCHk; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770132640; c=relaxed/simple;
+	bh=M1+aQ5+dW7C4AP5cSrhBz+eHVjRqpOpV6s5CoELCuAI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=f8VuUs1Jc8myaf8rvdvKShAlwuE50YBAdfGpKN5w9o97BDvtvMlZ/5yRpp/gp0Fz3oM0oKsRmnUaY8Lfwm6kOIWJmTjAX7A97cUQnxVrsEOoLC0ZLM6QZkHcAN7oWGn1RdISfdE2rELOOGR0pLRu9BQBmHMAvZ1fxVM+N0l3NHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xRpmUV4M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I/i9R8pn; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UvArfCHk"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-29f102b013fso59788405ad.2
-        for <git@vger.kernel.org>; Tue, 03 Feb 2026 07:20:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770132017; x=1770736817; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0ajFEZ8O0vpcEXAK6+/c48/0mtAaWU5q5xnddFlOjos=;
-        b=UvArfCHk5a64PrO8xaX9mRpRUpvFMmo7WByFUUCAwsWDYMWFyGKEzGucDvdv9FIPOG
-         eXkTlCYOeDiQGyS0UwjW0mGNksVQfETsS+2VtZRjTiDmQwGV4olw9UL8mf5yeywbgbhl
-         z2a/XbZEhfopo1P5fNpNc/8P9j4yF41wPGbpWBAZvvtguXf3jGe7/38tkZb3mh7JytCA
-         Sypi8VNifsYUQCbzs9Kfx2BqICWeO4TFgQusAq1e4HsttIR8EQzBKaXA+SQ8TBjSrTZ7
-         U5zzJHacfPamKPHhna7m6kPFEz8JUgPAw6PbQuLADuBmpRZqKhefJllfdz66RBzoH86N
-         7VUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770132017; x=1770736817;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=0ajFEZ8O0vpcEXAK6+/c48/0mtAaWU5q5xnddFlOjos=;
-        b=fYR2uUy/u7/+UFuAoG4e8uocsaAm/44P/N8infuF7s2XTkPVlNfVIDfeeHVVPm14Tp
-         jfn+2s8MaAMunMgmNj/ml/AOw8YgI3dCWuZJxfnZ8ByxGRy7ntvoYXdb7lrKsrhy6G2U
-         63rrkbs/yesSSrAYYVlXmVihf3QxhUGY4Fh0cw052Hrl20DN7DVH6qGCvwqCV4oTgC91
-         xQ2xSpqDqJnSjXIw1lS9xyhV1+BsdHFUc62QLQjpcwIQE9/nawbgncvhwQ+Oq0D7V4sn
-         vjbH+3KYw8V8ZU2TyjQcn32bUzwpnrnEOmpB9P3N5GBQ+7wMcPbAuw3H5KeOMqEbH3ib
-         ngLw==
-X-Gm-Message-State: AOJu0Yyk4ZxsRD9hwhFtoQCrUTttN4zjGNllvyAIb9iG6iBZPKuMg58d
-	NOGqE0E2RZlX7+snByUQP9lEOqGK+tp8W/rkOXR90WvuJHAwbUL7lCnO0lmfOQ==
-X-Gm-Gg: AZuq6aK1lcP6Qz3IwQ2F22Y3Ds6FsPQNjwd7Kw60VhAVHaDWxtaPZ9nJLf31/sDjFrO
-	A6C6Nokr1kxfmwcuxUvb5s5BKAkelz1cvOkOW1SV6M3ZMN1vOarkAxuHAN8o1HiMQNwIER37vpJ
-	BuKcMvzlYLh8KLWv2qLRGiXK+RYDwivfKsH7G6JysXrPabni5a10l2boufwUsnDZ29wpGhzzYqa
-	rD4AS9zxvFT+1lCpWH61VIOV6loxpXx8VpKFajxFtTaRADDi+1ChZnGi3Ke5S1fPBzxpmuS9NT8
-	olODdxOIZGvzRHbu+I48z7D4+RCqwXH7/D5FbAUoEk5aNdxWNlw2lqXdMy2Th04xBbBaENQ6Qe7
-	5IXjCMi5Pp9D92U+zsQ1y08fpsIHhXg1iMnn5ZrN4Iw4SjgbSTi7Syg8Qmy83A9gbbPgYq+T/PL
-	iL3P+QGDEBw/ET19WXhtKyMPjaKHC8ZramXMlW8fFAw8Ke
-X-Received: by 2002:a17:903:f8c:b0:2a7:5dbc:ed69 with SMTP id d9443c01a7336-2a8d96bc4cbmr156611045ad.27.1770132017035;
-        Tue, 03 Feb 2026 07:20:17 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:3444:c9e4:e4a:f1df])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b41474csm183278775ad.31.2026.02.03.07.20.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 07:20:16 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xRpmUV4M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I/i9R8pn"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4F3E97A003F;
+	Tue,  3 Feb 2026 10:30:38 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 03 Feb 2026 10:30:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770132638; x=1770219038; bh=bwP8L9b2Jz
+	CX4+OhYEqZpLAMskIZr6jm40w0NXBHbZg=; b=xRpmUV4MctgIoEZwPC53i/3l/X
+	GjWFrxGvibyfR1I9npc5zCb+k/2Er1BYTkp2oBnPixwJbNdbphXlQFqPbN2KgOzE
+	M14Ni+CUKTJBFlgXpPWSkVxxgAD2uJTKnWo+VgD7WJgxXwYxRTQq5Yi/vFAgFWtR
+	Hk/RDuW/kKKoDkNQKX58Q93vm3q8k3oJOyOMbAhNKoEdpB6VhDf0deMwNceTyn9s
+	1zMIbkBvPaCVgh7s8SC5pzLsAnglAH8gpuwMgWVJ6Pcc6aZKf5gNZSj+yX+5wufb
+	aDavksCc0GGL2sWWJJOklWGlpFrC+nX76IULuM/vE9XgHi9UrqEw3MEOFfNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770132638; x=1770219038; bh=bwP8L9b2JzCX4+OhYEqZpLAMskIZr6jm40w
+	0NXBHbZg=; b=I/i9R8pnB89v3E6yOx1wioVbpugpMyTFouCs+mNM8ZC5a9fsgbG
+	ZYg2Xds7Vf8zOhlGOwp0y4vIusJpRNu+W39QpcQ0pyFjhLVScEanCY3tjWyjqV9w
+	DDu3OuVeJiaOImYBIqDRmZm3cXOzs8POZQsvvh2HtSlpRrrvsl4DFtPWi4oeW9VX
+	i0ItdkJ4G+Bl7SfYPOejxTPcoDi9U5X2eqcXwGAy9GbUWYr9iy9+JwhKgA9sFpZz
+	Aw94IlOKzvMZuB1+6LCtC8ZB64JCBN6HQddxIWWMhfZTvhgOjxKmntlBLb5ScFe6
+	tPDe1c6IFgJcZPz3o/e/9p2dD8URwL9MhoA==
+X-ME-Sender: <xms:nhSCad34jPzADcKW3zfsz97EiVSoYmqISiDvxQRvQvSKBLQS59CAnQ>
+    <xme:nhSCabFEh6TinkmC5ifSEZkmvc-gPzhyfUG35p5b6dKfOWZdBLT8-fcKn0S2uo4hQ
+    Ol5kXASkrXvRs-V_pK2aONmPTTm9_eClqpXrfandHkJBYEx9iO8L8M>
+X-ME-Received: <xmr:nhSCaS5TZdR_4K-dZPDOe04OiydVsU1WID83ut5Ss0NkfWoUvj5rX-6IXzOH06k831doJE1iX-Ysv4s6y1dN48JCFB6-pRyQEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedtgeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhushhhkhgrrhhkuhhm
+    rghrshhinhhghhduleejtdesghhmrghilhdrtghomhdprhgtphhtthhopehsthgvrggumh
+    honhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:nhSCaZvMZ-OHvnQhkQaltRpQ5LvPg2hbKrjhNbjlxetd8kWMIztQEA>
+    <xmx:nhSCab6VKstG818Khxmpynuaj1dtlkCp8xu3Zb2FKAVae5yIsTiokw>
+    <xmx:nhSCacXDaOFP22o2vP_7LHTJODONJhp014P577cRBGjFV7ri0wsBMw>
+    <xmx:nhSCaV9sBfFmZkO63rEcrbz9j-AXrTu9cNTPMIHSw-yD1C_i3YtICg>
+    <xmx:nhSCaXpjxCr9Smqz6IUHBIhtfSrJZ5ROBO1jsK46CAVPR1MZOBP2wP52>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Feb 2026 10:30:37 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	karthik.188@gmail.com,
-	phillip.wood123@gmail.com
-Subject: Re: [PATCH 1/3] wt-status: replace uses of the_repository with local repository instances
-Date: Tue,  3 Feb 2026 20:50:03 +0530
-Message-ID: <20260203152007.38187-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <da3221b6-f724-49ea-99e3-9baed38d5bd3@gmail.com>
-References: <da3221b6-f724-49ea-99e3-9baed38d5bd3@gmail.com>
+Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>,  Josh Steadmon
+ <steadmon@google.com>
+Subject: [RFH] adding test coverage for contrib/ in CI jobs
+In-Reply-To: <xmqqjywuyhu9.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	02 Feb 2026 13:07:58 -0800")
+References: <xmqqh5smdejc.fsf@gitster.g>
+	<20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+	<7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
+	<xmqqjywuyhu9.fsf@gitster.g>
+Date: Tue, 03 Feb 2026 07:30:36 -0800
+Message-ID: <xmqqsebhu9nn.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> On 03/02/2026 09:53, Shreyansh Paliwal wrote:
-> >> 
-> >> Clarification.  This function is like an initializer for the struct
-> >> wt_status instance at 's', so it has to take both "struct repository"
-> >> parameter, but what I meant was other wt_status_foo() functions that
-> >> take both r and s as parameters.  Once s has been initialized and
-> >> s->repo becomes valid, passing r as a separate parameter, as if you
-> >> can feed a different instance of "struct repo", becomes confusing
-> >> and a source of bugs.
-> > 
-> > Actually wt_status_prepare() is the only function which is taking both
-> > struct wt_status *s and struct repository *r, because it has to initialize
-> > 's' with the help of 'r'.
-> > But all the other wt_status_.. helper functions only take one of the following,
-> > i.e. either they take struct wt_status *s which is fine, or they take
-> > struct repository *r.
-> 
-> You're correct, but I had the same reaction as Junio initially as I was 
-> confused by the functions that take a "struct repository" and "struct 
-> wt_status_state" which does not contain a repository, but at first 
-> glance looks a lot like "struct wt_status" which does.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ah, got it. Even I got confused by this once :)
+> Thanks.  I am tempted to propose us doing something like this, so
+> that you guys do not have to every time you import my 'next'.
+>
+> --- >8 ---
+> Subject: [PATCH] test: optionally test contrib in CI
+>
+> Recently it was reported that a topic merged to 'next' broke build
+> and test for contrib/subtree part of the system.
+>
+> Instead of having those who run 'next' or 'master' to hit the build
+> and test breakage and report to us, make sure we notice breakages in
+> contrib/ area before they hit my tree at all, during their own
+> presubmit testing.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * There should be a cleaner way to make sure any new Makefile with
+>    "test" target in contrib/* directores are added to the execution,
+>    but for now this should do.
+
+Unfortunately, this seems to reveal existing other problems with
+subtree tests (t7900), in addition to diff-highlight tests (t9400)
+in various configurations.
+
+  https://github.com/git/git/actions/runs/21617099884
+
+This Ci run is near the tip of 'seen', so there may be breakages
+attributable to new topics in flight, but I suspect that many of
+them are already in 'master', noticed by nobody because nobody ran
+these tests in these configurations (like "breaking changes",
+"sha256", "leaks", "reftable", "asan").
+
+I didn't look into the details of any of these (yet).
+
+
+
+>  Makefile                  |  6 ++++++
+>  ci/run-build-and-tests.sh |  2 ++
+>  contrib/Makefile          | 10 ++++++++++
+>  3 files changed, 18 insertions(+)
+>  create mode 100644 contrib/Makefile
+>
+> diff --git a/Makefile b/Makefile
+> index 8aa489f3b6..d0ab8fdb04 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -342,6 +342,9 @@ include shared.mak
+>  # If it isn't set, fallback to $LC_ALL, $LANG or use the first utf-8
+>  # locale returned by "locale -a".
+>  #
+> +# Define TEST_CONTRIB_TOO to make "make test" run tests in contrib/
+> +# directories.
+> +#
+>  # Define HAVE_CLOCK_GETTIME if your platform has clock_gettime.
+>  #
+>  # Define HAVE_CLOCK_MONOTONIC if your platform has CLOCK_MONOTONIC.
+> @@ -3369,6 +3372,9 @@ export TEST_NO_MALLOC_CHECK
+>  
+>  test: all
+>  	$(MAKE) -C t/ all
+> +ifdef TEST_CONTRIB_TOO
+> +	$(MAKE) -C contrib/ test
+> +endif
+>  
+>  perf: all
+>  	$(MAKE) -C t/perf/ all
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> index 8bda62b921..b07b89f954 100755
+> --- a/ci/run-build-and-tests.sh
+> +++ b/ci/run-build-and-tests.sh
+> @@ -5,6 +5,8 @@
+>  
+>  . ${0%/*}/lib.sh
+>  
+> +export TEST_CONTRIB_TOO=yes
+> +
+>  case "$jobname" in
+>  fedora-breaking-changes-musl|linux-breaking-changes)
+>  	export WITH_BREAKING_CHANGES=YesPlease
+> diff --git a/contrib/Makefile b/contrib/Makefile
+> new file mode 100644
+> index 0000000000..787cd07f52
+> --- /dev/null
+> +++ b/contrib/Makefile
+> @@ -0,0 +1,10 @@
+> +all::
+> +
+> +test::
+> +	$(MAKE) -C diff-highlight $@
+> +	$(MAKE) -C subtree $@
+> +
+> +clean::
+> +	$(MAKE) -C contacts $@
+> +	$(MAKE) -C diff-highlight $@
+> +	$(MAKE) -C subtree $@
