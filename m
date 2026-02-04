@@ -1,134 +1,140 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1948E3E95AA
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 11:13:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697353E9F82
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 11:19:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770203634; cv=none; b=YBv4G/Te8iahkpZdxw9yDoHe87qOQSZfOXakFU45I0nXOhaGmS+oAeJ9VT7PenJgXv+5hh6nG99XcE+w59frEv7AJg3D0gF5GjNWuSHkeO57ZyRVBitxk4oGulx5pekXvbcSIKFNDMbudHu0nIiqaAeln0Q7SGTtOcOiNUKEAZI=
+	t=1770203958; cv=none; b=tKeOP6hPscKrVP9+/M2NGLS1xmXmhTivp6IUXhdyfTxh5vFBrb1vka8QKaEQe29RwvAJ+Vd2h4JYzRuRFkddhquSfhAl9BipgKYHm1xZJX5hDcTcAOYQotgp2WJbr653Y5/K3LVjFfELxHY38vmPs1b+D7dt/Be7xKOtsjtKNWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770203634; c=relaxed/simple;
-	bh=2o0nL8mZqjac2GKQK7mFKP2PJLnfEGTpKGcYF8CrzXI=;
+	s=arc-20240116; t=1770203958; c=relaxed/simple;
+	bh=4I0ttxBthHNUmOPoteTCvUqqtFLYDlAdWBQOt8U2Gow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAhHZjp0tHjPbfiiPu9Vn3A6Si2sLqJ3L9ThgIRzKvq/RFHZyImS96i8LkNWRzn5TibQmOCrAPiP8jAK/qSUsPrrh9f607m4cFgf9QNji3gqtmMw449z/xWK7ygyouYUyAPYOpHbqjO3Lyi3DqL/GVtX0UKrmReHJNxI0dFxpkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PsFxX/ea; arc=none smtp.client-ip=209.85.210.174
+	 MIME-Version:Content-Type; b=sE+7VkTd4Xkz8shJm16hMezuFhIWsCLmEQhSSPAjGd3JDIU+G66SeZ6Gwzit81vrLNkxByz6EswoWB9kUK4tcjGSXGKDjVzhud7Blp6CQ/vS2B1uVpSZD5uPSFZBHyuoK6uauZKrASNbDqSRPX7JZ8tb4mpOrkV2Uq0QJj514po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Usm/rcAb; arc=none smtp.client-ip=209.85.221.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PsFxX/ea"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-81f4e136481so3401851b3a.3
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 03:13:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Usm/rcAb"
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-435a517be33so4033275f8f.0
+        for <git@vger.kernel.org>; Wed, 04 Feb 2026 03:19:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770203633; x=1770808433; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770203957; x=1770808757; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Tsv6bMh5ktnKPNDVdMN2FkusFh31uv+IxEGJYvQnV6c=;
-        b=PsFxX/eaEk2wln1DQ/HsLBS0PlzjCuy7tw8hZiOSDb+H88ruI1ZLMHh08sDcTl8gCP
-         B8dME6iLj9VRHo9YmhNTyo767tSZ58zM3kFp4g4LFfLtFt7anjtlqp6cQlQb2+fs55AJ
-         v58b0VQs7OvkQYGJnZ4OpFPgzGGBBU8yLDqjwF/8dkXRjmKyf2/TmXkiJn/BhlMV/ARi
-         G0Gedj/Z7DoVYy9xlGSKhcINIarCC9jaFJqgYAnk/Eo1xoZ5e6X9goPXTTb+jbZLMoVq
-         IYs1xP/3SylVMXHJ9ZO24bd4wPGSGdLiTKJ9WpbAIBAv1NcUTre0SZdnljcX1CXHJ/6q
-         b5Xg==
+        bh=BB+dfQE0m5Z0bUDfcUDS51JklrXNzN2F5QXzTub1JOg=;
+        b=Usm/rcAbZjDs11OF9QVWEDM75sckbLhldEUOaVUxUrecX9VNAiyOdfduqXFTaeF+ds
+         EYll/40zU8eafs3YjNjRWge7sSdEGWnepjeUB6CXXGLgcUCFCP53czF4Jl36Dgqf/nJo
+         Pmz4zBtB+LmTXhL47192SOEnEf7pVBnpaikFj7QPztwQBSUhpeIaremkOi720qYjwYWj
+         XR1goFRK0Mp54zlseg/9jeWY8/RUDaza2990hp6o2x3ZzD99D+K+uL2QIjWH+QQQFFTN
+         /J8lJnXTe4GBWcAe5rjAt8DjkdyZ5F8sQBLqITnrychgnfsqMcLeqDeDzCTcazgb5a57
+         5NoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770203633; x=1770808433;
+        d=1e100.net; s=20230601; t=1770203957; x=1770808757;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Tsv6bMh5ktnKPNDVdMN2FkusFh31uv+IxEGJYvQnV6c=;
-        b=TlT9geyqNlCMMZAwSllvKC8fjN2QKNfTPR8CWLbzIt8ThqaRFgrBlKbeQ2rH5D0/Wp
-         TogHTkjoaPgqp1QGLBJb9yQJ+mwiF1AfmvpwP76rNubr2K9+VexBdoQOzAZUptCzu9Ll
-         o2cf8aNYpeYp9xCNE0jlYoe73J2QUhLbzjdJeBUbhdmaeNlDtQBJiZaGrZ54MdCN88a9
-         N1tYm6QxAYzklhNaYGaxnU3yvQghVMZSOTMLPgYGnpu2MR/16qfrWnHEP+uFR9A89Udl
-         xCMCRh1lG7Dowfn7nprXIQmKqZlJIFPC8ldg5K9AovjUMUviIDJL5TlZ3A2v0hsLV5Af
-         PzoA==
-X-Gm-Message-State: AOJu0YxKRY/ZUMr3ElAXI36v+w5Z0yRRFERp2LALv3TLSovuGuQZ0mVb
-	/hq82KeBbSLg+76kDA2i65Bjnv9odPdZixbs1s53UMNgRRcwW2KxnsUsbxoC2g==
-X-Gm-Gg: AZuq6aKjXR7m7t/Em38Rp7gpPdWbjQ0vzOQ6QNCPunxhgtZQxHqWFEOBTdvia1Hvn1f
-	LvuWY0fwhZFlImrtgPLN9KNzL1BWx9AwfeykLPmqVWACrnT/sjzw2srhurZ8zVaMOpU1Ab4EzP7
-	J+/YfDrZ4wYJX+Jubb0kWpd6al7oVfHBLxQifb8kV+RhdeTuJgFKOCKGgt/NOTk6I0kTy34CRNw
-	OQvMBtR7QrTndm3j1BHA25r58OX+9pe3cpK3AtIfpxWJFcNB85hWe72IlusR8tFqBBkPJaD6uad
-	M/dnF3loid4Xvgtky0kZ0VAKHaI7/evWAUKMwBk/e2A3uFHkH+D85hLVqoX8kbgt4PD0SQ3ejj3
-	eckdZnxigcuKaKB1p+fLe3alE6eQUwww83/+0+0BPYKn0713JCjNmI5kssW1E/DhszkHarEijXK
-	xFALar6psDCk3iIfyb0x6wd97oUg2knfHCf9anhdYBzEWKER0tyOxnLXc=
-X-Received: by 2002:a05:6a20:1593:b0:38d:ecd6:60c with SMTP id adf61e73a8af0-393725d6aa2mr2391290637.77.1770203633203;
-        Wed, 04 Feb 2026 03:13:53 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:1b99:bc9:8a3a:dbe0])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8241d438f1dsm1942631b3a.32.2026.02.04.03.13.51
+        bh=BB+dfQE0m5Z0bUDfcUDS51JklrXNzN2F5QXzTub1JOg=;
+        b=ubSd2GNF1zw3JXU1UEJ8BpY3sY9GoyBA/yr+hXTcnofTC8Zp2umxM6PjZ+b3FxVIAN
+         JfK1EsEUriuxRaYZNC/GBb1HPwtCgTq/LIiF9v3GbL3Ay37HUbufob5R0Mr26YcgZ/Au
+         El84WvameI5n1HZBvyJgu9YE6k2JTAFvN2MiO2Gl/3kXOYSPBySRL7d4a/I3W9mO0vUw
+         6xtIvgFH7L0gsMLKBbf3WFDUGyyahMr2XKJxlYJuFlIODbuzabpicBZEbzRnzFBm2GGs
+         A9HrDkdMv50WDDKU3tDeDun6V9SFHPgXFPwlIw4LIpXp3DKp3lS7wqnlAQSShee8I5CO
+         mtNA==
+X-Forwarded-Encrypted: i=1; AJvYcCWEBdIQI6XdV0FG8wiAEf8pAG2FD+7o35dDOkrG+Oooez7p7aEqraBi6osCBWzaYzYED8M=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywg4Ed+9GEf3k0gWRgHCC848GmvFDWKyHmZoBxNrSyO332S4cYV
+	6M/CREag7Rco3hb3ZJGayFFkGliQwPCkcrQMod7UCR8zGZ9D6FBfJ6mX
+X-Gm-Gg: AZuq6aIQhHKsNFBkYdrTxfrpNZ+DYsm0EId/sz243giNnqTPuNE+KckjvwKkKtYW0l6
+	zpWKWmCTmQnTdJXOob16u1P0GmS6gpmdhSNmj9pPgZCzUGP+WCIGulqP2KRjZkImHF93NorAwrP
+	IRDxJ+qnOo6oCfVxw7SeN7g4nVXxHs1iUa79UIXgDFPEz64IxM4NmuGAzDfXIjD/+Xzbs3IMp4x
+	zIiWM0m2cZrw0kXEET/sjyz/jNgqLbH4gmbICv+ogGyDXzysnlmVxNtcZLTRERlzTFDyTupA7lU
+	VUgm9ubvigorMIqCeWV+DNhgSqJ+dDHWdFgwGtkj7nviQqPU5YSfp5dhjntg8MljIFHCskatDpS
+	h5x6JrGIXt08S+tqNUZ542vrCYb+11oGvgPrzoCw68JiURw9VehLpwzR61q7JDoN8T7zvQiQ4f2
+	T/KVTfQuWUBSBFRkvs+iOp8kZigj/4Cia4nhTFAEtEQdMyxgnx3qRlq3y5519ZVpnR/PNlnpSWQ
+	nAvrRYOWHFTo+omWPyKzLC8lM4=
+X-Received: by 2002:a5d:5d84:0:b0:435:e061:9e10 with SMTP id ffacd0b85a97d-43617e39658mr4089689f8f.12.1770203956591;
+        Wed, 04 Feb 2026 03:19:16 -0800 (PST)
+Received: from christian--20230123--2G7D3 ([62.35.114.108])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43617e3a3bbsm5687133f8f.15.2026.02.04.03.19.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 03:13:52 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: valusoutrik@gmail.com
-Subject: Re: [Newcomer] Question about inconsistencies in MyFirstContribution.adoc
-Date: Wed,  4 Feb 2026 16:43:04 +0530
-Message-ID: <20260204111343.71975-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <CAPHqhPmDSh8WRwYt0TJUQQajM5r84m6tc6RZsiM-YzeBbxzwaw@mail.gmail.com>
-References: <CAPHqhPmDSh8WRwYt0TJUQQajM5r84m6tc6RZsiM-YzeBbxzwaw@mail.gmail.com>
+        Wed, 04 Feb 2026 03:19:16 -0800 (PST)
+From: Christian Couder <christian.couder@gmail.com>
+To: avila.jn@gmail.com
+Cc: chriscool@tuxfamily.org,
+	christian.couder@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com,
+	karthik.188@gmail.com,
+	me@ttaylorr.com,
+	newren@gmail.com,
+	ps@pks.im
+Subject: Re: [PATCH 5/9] doc: fetch: document `--filter=<filter-spec>` option
+Date: Wed,  4 Feb 2026 12:19:07 +0100
+Message-ID: <20260204111908.2920406-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.53.0.rc2.10.g12663a1c75.dirty
+In-Reply-To: <4702585.LvFx2qVVIh@cayenne>
+References: <4702585.LvFx2qVVIh@cayenne>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-> Hi everyone,
-> Newcomer here, while going through the MyFirstContribution.adoc I
-> noticed some small inconsistencies , which might not be a problem to
-> anyone really, but since I was doubtful I am writing here.
-> 
-> > Add a line to #include "config.h" and #include"repository.h". Then, add the following bits to the function body: function body
-> 
-> And then the tutorial uses `git_default_config` , which I am assuming
-> used to be in `config.h` but now it's in `environment.h`.
-> 
+(Sorry but I cannot find the email send by Jean-Noël in Gmail so I am
+using `git send-email` instead of Gmail to reply.)
 
-Yes this is a valid inconsistency, but this is fixed in a recent patch [1].
-It is currently in the next branch.
+On Fri, 26 Dec 2025 14:33:38 Jean-Noël AVILA wrote:
+On Tuesday, 23 December 2025 12:11:09 CET Christian Couder wrote:
 
+> > diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-
+> options.adoc
+> > index fcba46ee9e..70a9818331 100644
+> > --- a/Documentation/fetch-options.adoc
+> > +++ b/Documentation/fetch-options.adoc
+> > @@ -88,6 +88,16 @@ linkgit:git-config[1].
+> >  This is incompatible with `--recurse-submodules=(yes|on-demand)` and takes
+> >  precedence over the `fetch.output` config option.
+> > 
+> > +--filter=<filter-spec>::
 > 
-> Another small thing was
-> > There are a number of single-key lookup functions like this one; you can see them all (and more info about how to use repo_config()) in Documentation/technical/api-config.adoc
+> The option itself must also be back-ticked.
 > 
-> But There is no api-config.adoc in ./Documentation/technical
+> `--filter=<filter-spec>`::
+
+Yeah, I have back-ticked it in v2.
+
+> +	Use the partial clone feature and request that the server sends
+> +	a subset of reachable objects according to a given object filter.
+> +	When using `--filter`, the supplied _<filter-spec>_ is used for
+> +	the partial fetch. For example, `--filter=blob:none` will filter
 > 
-> I couldn't find any other place where the repo_config() was explained
-> , Inside the Documentation folder it has been mentioned in 4 files
-> - MyFirstContribution.adoc : excluding this
-> - MyFirstObjectWalk.adoc : excluding this as well
-> - user-manual.adoc : used to explain what `builtin/cat-file.c` was doing
-> - 2.50.0.adoc : is about a release ?
-> So I assume the thing that the tutorial refers to is currently not present ?
-> 
-> While writing this mail , I checked two previous Patch mails:
-> One was about a patch by Arnav Kapoor (
-> https://lore.kernel.org/git/pull.1972.git.git.1748005233977.gitgitgadget@gmail.com/
-> ) another one was probably about rejecting this patch ? And then
-> From this ( https://lore.kernel.org/git/xmqq8qmso59i.fsf@gitster.g/#t
-> ) I am assuming repo-config used to be called git-config , but a
-> search on git-config shows up too many matches , and I think i should
-> stop here and ask for advice.
-> 
+> Isn't this second sentence redundant? What new information is brought?
 
-Actually the documentation for repo_config was shifted to config.h,
-to make it easier, see patch [2].
+I agree it's redundant, but I copied it from the `git-clone`
+documentation as-is because the goal here is not to improve on the
+existing documentation but to fix the fact that some documentation is
+missing.
 
-You can replace 'Documentation/technical/api-config.adoc' with 'config.h'.
+That's why the commit message said "in the same way as it is already
+documented for `git clone`". I have improved the commit message to
+make the commit goal clearer though.
 
-> I believe this won't count as a microproject for gsoc , but
-> nonetheless, it may or may not help newcomers.
-> Is this a possible patch ?
-> 
+If the documentation was wrong, I agree that copying it as-is would
+not be the right thing to do, but here it's not wrong. And it's better
+to have some docs that are a bit redundant than to miss some docs.
 
-Every change, even if it is a small documentation change is an improvement,
-but I would suggest apart from this doc change you can look into [3]
-for some more microproject ideas.
+Also I think it's better to improve on the documentation in a separate
+commit because this way:
 
-Best,
-Shreyansh
+- the `git-clone` documentation could be improved like the `git-fetch`
+  documentation in a single commit (so we get consistent documentation
+  using consistent documentation changes),
+  
+- how to best remove the redundancy is just a separate topic that I
+  prefer to avoid at least for now.
 
-[1]- https://lore.kernel.org/git/20260112195625.391821-1-shreyanshpaliwalcmsmn@gmail.com/
-[2]- https://github.com/git/git/commit/6c96630cb0900446f7069f64d3d58bac539c0a58
-[3]- https://git.github.io/SoC-2025-Microprojects/
+Thanks.
