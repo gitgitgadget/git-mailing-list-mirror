@@ -1,116 +1,138 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A608D1AA7A6
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 11:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841EE29ACDB
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 11:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770204193; cv=none; b=cMeYzSzwQrhHoONh/o3PajqQFDiABy2Hrm+N4xPAdOY/lCRvR1+mk8Wrx/R12xZMS8uTN/DHgJNhS+RWt0P9eMiXKHK02TnEjhXQN2rZ4lsCPuTLyPeAWUbu32+qhx0E/K5pOXYR7Rbc6Zi1M7/8Uu5wXzY4phNMc2BQ6RUedpQ=
+	t=1770206190; cv=none; b=YX7R9YULh/bNZY+zasn4gUov3L4lZaEYOKPIGgI/tQColZsQGEjgtUyH5lx0x2qsx8rNYpMQK5c9JocI3IlccstxyzIMrO6v215CIfWRZAKEGdg/gQWPtItO/INCt+D4E1uuvnKMv5ICimo9xjGT9qlDX7UD8TSDrtWTnC+QOUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770204193; c=relaxed/simple;
-	bh=Cprn/AEuQ2QvxvDA8T9L6RPRlLyO/ppQhsa+0XDR4IY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsPjSIG550yIThRqJFTZDuaLdTaAuag28PJFmj8Vrt9FxJLoQ+0MnyD+00udsdDnIq/vmr4p+WvaJswp3Iich26aZkOiIvTFhIzIqeYMi4MY0mSdFTZHn5gnlVB0bEz/BY0TflUCaB4MYVz+0jsE0E/vsDiD9BgpC98XlF8c5AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ypg40XL2; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770206190; c=relaxed/simple;
+	bh=Fb5OQj6wxI9Kur8Ar5vLcwaPaYBRSPbp4V2LWK5IxIw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jtLwKKA2qwikaod0b2aalYawnJE484TnagN/SrugMRLISuZx+NcgprnhklB4mWU/jXrbDtRZfNZG2lih33ptEonvxDHuJe4vxnGcahFFWeQVYupX6vObPCR5uEAJjujotm7mpbFfgJdrEwiXzuvoAItZewvinWwQd/7U0B69q6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ATz6og8N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VPW5YNH5; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ypg40XL2"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-3532aa9a77eso3158944a91.0
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 03:23:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770204193; x=1770808993; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r4xvp6ZhLRDWOf5D7BlZQyAhNOpyNdBZEkR/1PMc56g=;
-        b=Ypg40XL2FjV+WGPJNqpsk47gXUI5v4wHecvYEMRJjHpg1G5F42HzIUb84VERvb3tyB
-         bSeIYMVbLTGf9eSFND1GOf2mQzyS5fkpTVuRP0Z2GpFMqPaiVOiX2nEXszwug7gX118a
-         gCy6rUunzZFAuMFX0cWSV02jb9gUk5M9WGDQtv9Xlzxu2oknLSmJa3Juvk+Hk+s8XL4i
-         7uX20GfAxwSsmUEKJDtEvywV5/VQwJx8EJwxlyG871wk5fCo3cDTovt1UcXhRErNuF4q
-         OsI2y/JssyrGXUaKOpSZEWcEK0APMMgTiWasPt28hWr5fwBPSzxObdmko1na0UaAJl6l
-         0Zrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770204193; x=1770808993;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=r4xvp6ZhLRDWOf5D7BlZQyAhNOpyNdBZEkR/1PMc56g=;
-        b=DJDHgPnHJC8UkXmxKq2QJfbZ7JLFL2jw5MbN47khP7G4vPkGzoN4Gz+oGknU+MmeQP
-         3xFxaT5DTrHzKQeOplxY9+GJ0jyg0UUmub2huhICx7QIEgrsJKPqqtZSO46swqExUdCi
-         /wLbamq0JhSwEnNU3nq30CCNwRGk9Re7QrW3qzYhVtAoZ7iNRzsTaBDjaOAU0mlWRHUc
-         ct/6ZpnVvQqdJCYRXKuj9C5gFzGO7FrhhpfZPeKG6+g8yPjml0qkIuwGXbEkX2i8CQI5
-         NUiwka7IP95nOjxqXyAKMO/PD2yVSKX8QSOFRudgVsQqD6tayRowfA2NEe6dmlX0QRc/
-         P/zA==
-X-Gm-Message-State: AOJu0Yw5BP1PV4tk6SY6XV7El7TiDfS8KPzaIQ/CVoPGFMrxLcvis848
-	IFI+ujN2UJSaR+eUfur/jNDwGvANsNpQq3JbiCJAmrGABZhXGA1EInXZmvMfSQ==
-X-Gm-Gg: AZuq6aJCClWhjYRE3ZDJz4HsW2iDTpJCBoaMfo5XAw2gR453q3wSIyZ4BPOrY2MHV/y
-	+hixBzxB/U5EnlTLfT4mislEz7gD18takrv6IH8UA6/4BL6QIX6dTb0IwX3QX3GukREX91WT66u
-	bURDAQA1Wyrqf91PatxQoJBPqBn2y10DI6heYzZMIowPVINN6EIFzOXl4ykLNwKUE5zRPjCRE8J
-	yDtc6PlZm5ySwe9nACHSNdkZ30XLw9sm97AwBJsarXamswmZsNPFy6BfNInrpsFAJa0gMcjnqvO
-	ck+8mgjWVKtubqas/z9TqQvvqAOLdz0fw4h33P4wthrUJc1l82Q6zg0+ZnwC/NF/F9/ryW9kn62
-	v3eVFRTB0fYy1NHuKeCcu9gtVNH7k20L4PRXrcla30SRX+wTRsi9LVKCUDNtTUgffU0kfm466pD
-	GHBFKMjx5NY0WyoFyXS7L8mNSZmfQN10gOi1XnBXLlI8Pn
-X-Received: by 2002:a17:90b:270d:b0:34c:7182:cf9d with SMTP id 98e67ed59e1d1-354871bef81mr2081769a91.25.1770204192806;
-        Wed, 04 Feb 2026 03:23:12 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:1b99:bc9:8a3a:dbe0])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35485da2a03sm2278797a91.3.2026.02.04.03.23.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 03:23:12 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	karthik.188@gmail.com
-Subject: Re: [PATCH 3/3] wt-status: use hash_algo from local repository instead of global the_hash_algo
-Date: Wed,  4 Feb 2026 16:52:22 +0530
-Message-ID: <20260204112304.72727-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <CAOLa=ZS3MHhHQrD3yJfZYfaO_FRdjcXQ-G-A+tF4=e6xmABjow@mail.gmail.com>
-References: <CAOLa=ZS3MHhHQrD3yJfZYfaO_FRdjcXQ-G-A+tF4=e6xmABjow@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ATz6og8N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VPW5YNH5"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CD1817A0176;
+	Wed,  4 Feb 2026 06:56:29 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Wed, 04 Feb 2026 06:56:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1770206189; x=1770292589; bh=n0n0OeXSp+
+	fxgAzKzI/uMigd5XcRuRKyvOjQrVjr+Tc=; b=ATz6og8NwAefKF/we2nx5GgZ3W
+	zIARZQtNd1OsqJtJJfgTNx/wkF06wunCtRySVdJQOG3D5oiTOUzX7ushIu4Pzfur
+	/yUO12RGuLpg19zC5wKXibCWnl90PPYdRSFH9qMiEzBR01jNy/H3EdcE9TtrUHbF
+	M5NC3URu+fVAEINw841XWHVmMVP5Ysnt313FBSEkY9zfL/S91UdGx+TemLG2dD4K
+	qn0Xn/Ex8TTjiTh7n3cZ/7DPvYhYgbWJkzONuT19CoUpJfNEyHo1HBg+s2TQ10fE
+	x6+Sq8Y8QGqr0Rq+bMmFMMXUas6lqbKjWYan1kXAJztKP3wLFDAHgvzqJFgQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770206189; x=1770292589; bh=n0n0OeXSp+fxgAzKzI/uMigd5XcRuRKyvOj
+	QrVjr+Tc=; b=VPW5YNH5tjhb/9pUcVFAEGThy9/abyWCwGrJSL0cX9kjsFxVHGm
+	ZV94Np9RIzUNezqdIn2TIjDrQjF4gyn+kyC73MJIc2sa0k3rkjLueG3eaeQ7e7BZ
+	4SDvLCQl+FcF91I+V0pF1iEprNaRnOGsfO7tIybahX8IKUXEBd6cXW61DZWTtcwP
+	a1ZjkJeNFbj7vGWINXQpiwIFDXhS7GIlafTwgkE9p0GxFulTEr5jp83kDYFcb8d4
+	VZcBx1/3vmFy+vNsS+UvupbmyA81kvzSgCfSPwfp+NrwZ1QHhThppLEtROrt9QNz
+	AuHGKXxW1361yfVYYZemoG+gWZfV5AO2hQw==
+X-ME-Sender: <xms:7TODaWzA5zWPGuLkWPuFpYKlpCu_RS3qrWpQ4Bi4e-8vY3D2vCfv6A>
+    <xme:7TODaZvt7-diXKUJTlN29uNrnZAHyGK75QDWH7BHdBV1W44jSxxYzrQxl3MwBQwEl
+    cHgRkqsvx4r4zcgmX3MmhGDlOTaf8xaY_90njMxInE6NaU5utU>
+X-ME-Received: <xmr:7TODaVt1A_rCdI8byuIDCh8K0d5YX2b4a5izkRljAq_XN0dKd26Ys4jKSIdI0BXoXw183mBWzFe313C3waGwwR2RpwkNxcLFXmsLo8WtpX8Jgw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvfeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepkhgr
+    rhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:7TODaWM9l5FTQ0nGCclPlq_TpUtx_ZZWcPefgeGKoPd5yqDUL6JCVA>
+    <xmx:7TODab2QMbpTsLklcDrRctkrrBskboH6-1vDyCpi3L2CiD3uRhZB3A>
+    <xmx:7TODaaPv8S0-lySTbx8FiNsDKJgiLBBdNKnu-iDQ4cQDwQ0LEMus1A>
+    <xmx:7TODaT2EZp8U4LHOn40irXLJwHeHJ9Iv3FPyWZPZC6WTEJL9pzoVTg>
+    <xmx:7TODaTZ-zWC8uGc04AwAjICiej71Rz48Gdh6Sow8EIY1VCzEHT8xp928>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Feb 2026 06:56:28 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 25d5f226 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Feb 2026 11:56:26 +0000 (UTC)
+Date: Wed, 4 Feb 2026 12:56:24 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] meson: wire up gitk and git-gui
+Message-ID: <aYMz6A1kBUO6FQf9@pks.im>
+References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
+ <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
+ <CAOLa=ZSeyKJD07xHKezQzry6KuwNnB=DzwE81Sx0A+b2u41rjA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZSeyKJD07xHKezQzry6KuwNnB=DzwE81Sx0A+b2u41rjA@mail.gmail.com>
 
-> > We cannot remove `USE_THE_REPOSITORY_VARIABLE` yet, because the changes done only
-> > remove the direct use of the_hash_algo and the_repository,
-> > but 'USE_THE_REPOSITORY_VARIABLE' is for all the global variables
-> > that are still in use.
-> >
-> > In particular wt-status.c still relies on the following globals,
-> >
-> > * core_apply_sparse_checkout, this is already being addressed in an
-> > ongoing patch series [1], so I intentionally did not modify it.
-> >
-> > * comment_line_str and DEFAULT_ABBREV, these both still are used in
-> > wt-status.c but they dont have any local instance in wt-status.c,
-> > or in any other form.
-> >
+On Wed, Feb 04, 2026 at 05:00:11AM -0500, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> Understandable.
-> 
-> > Removing these would require a wider refactoring (adding in struct wt_status,
-> > adding helper functions etc) and I believe is better handled as a separate patch series.
+> > Wire up both gitk and git-gui in Meson as subprojects. These two
+> > programs should be the last missing pieces for feature compatibility
+> > with our Makefile for distributors.
 > >
-> 
-> Yeah, my intent wasn't to have all the cleanup done in this series, but
-> rather to ensure we have enough information presented. You've already
-> explained the reason. It would be great if you could add this
-> information to the cover.
-
-Yes sure, I will add in v2.
-
-> > Though I require some guidance on the preferred approach for handling
-> > comment_line_str and DEFAULT_ABBREV going forward.
+> > Note that Meson expects subprojects to live in the "subprojects/"
+> > directory. Create symlinks to fulfill this requirement.
 > >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> > Hi,
+> >
+> > I have upstreamed support for Meson into both gitk [1] and git-gui [2].
+> > This small patch series wires up support in Git.
+> >
+> > Changes in v2:
+> >   - Use symlinks instead of moving both gitk and git-gui into the
+> >     "subprojects/" directory.
+> >   - Rebased on v2.53.0, as it's been a while since v1 :)
+> >   - Link to v1: https://lore.kernel.org/r/20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im
+> >
+> > Thanks!
+> >
+> > Patrick
 > 
-> Happy to help out. Generally using an RFC patch series generally has the
-> best outcome, since it provides material to base discussions on.
+> 
+> So in the previous version, we moved these projects into 'subprojects/',
+> but we now use symlinks instead. Do you know if there is perhaps an
+> issue in Meson to support configurable subproject paths? If so, we could
+> eventually drop the symlink.
 
-Thanks, I will try to send an RFC patch series regarding this after the v2.
+There already is such support: you can configure subprojects to live in
+an arbitrary location by setting the `subproject_dir` parameter in the
+`project()` call. But there are some restrictions in place here:
 
-Best,
-Shreyansh
+  - It cannot be an absolute path.
+
+  - It must not start with a dot.
+
+  - It must not contain "../".
+
+So that means it's not possible to specify the top-level directory, and
+that seems to be a concious decision.
+
+Patrick
