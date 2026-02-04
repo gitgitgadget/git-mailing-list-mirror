@@ -1,102 +1,141 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F062EDD62
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 17:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7971E38F931
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 17:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770227433; cv=none; b=CXWOGERBx0ttT9tumOiaJGNnfwvQA4/txAkDkpGJ7+kO1ju8U09rRk2vUa84WZdEdcyDRTa7ehPuseiFbWSqNksfgOHHZhUUQCi2eIZsiytttr1WNrLDo4C1VCl1v2RgOBpcRmtH2ce52K1E9ZFK4GFguG33G2Oj5aJP84WZgz8=
+	t=1770227589; cv=none; b=pk0XaQBY/ka97Q8y7uQyPglYQ8X6QZ46CtTKeS3EQLPjwN1lDgmemecCh9i8ExJg3fb4WxlIZGAwNgnHh2k8dt5XwgiJx9Tzet49elu03IkajDWGLrRuK7n0Pek8Z+ZcwWcOmnIeamAHCJrvuMpqD2n2icKjFd9tJfz6ai6kNsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770227433; c=relaxed/simple;
-	bh=vwybE5O2NcV/YHNBah6aIEXxhsEt0gqP8E3nj4GRRVQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xpr+EXeb7ShpkgH/Vp+S8Pdr7F5oOPGzEp8tZlPeUcE2iBBYC9O7VpOKYEHNdDrWPWkIl/DF5tEt3FB4j7XBOQ+aDc+xFw1VruWxOZe1v8eY9ZZHeQky8E7iOK7yZyin2PcFFJGHs9k0SneVqIIRT6BdEjTMDoPG8yK1wxG3Ij0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y8+owR3t; arc=none smtp.client-ip=209.85.210.42
+	s=arc-20240116; t=1770227589; c=relaxed/simple;
+	bh=WbidgWkcOE56TSIh0kp7QiL13MYPgf6Yt6y8IHip+do=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PB9YYCQb0J3lqAVAKak0qyPF+wwwLaT68Q71HT/S5mT1EwRjTscYbulhFWOvwRkAwla+/dAZRts26j1D2tPHoRCW/pflzk6PCsUyWbqPMoKfFm+Mhc2pfAuyrRNqGpBZ3DalrSJ+ZNy/JBEsy+oRwK3F9mSrn1iH0qzYhGcDbAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RjIw23nX; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y8+owR3t"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7d1916d1e24so42062a34.3
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 09:50:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RjIw23nX"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2a8fbd09b09so188455ad.2
+        for <git@vger.kernel.org>; Wed, 04 Feb 2026 09:53:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770227432; x=1770832232; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NTLjgNdvbh7MIf9N8RHbgnts4sbNPAt7oZgF0Sy89y4=;
-        b=Y8+owR3tjYa77MlUw+PvuglTlG3hTI20pNbOuvGgJEJdUNUJRYNxLGWWqXLg8B4YT9
-         QZQn0/C2YJIOmyid0iT0lvfkj4FV7Z+vYzth79Je/XRSQzBu5jnxrWB6pWXtKxD5975k
-         UCAd8ZuauMGCLNh/2pOQAWo1W7O+6kBpzjMLUbvr1mHllsK3QUhqEbFADrsDVho+hH9u
-         lFT/Jqf+ev7nEP/dP/c/azwFYOrV2pfVsfwMrMLpBq5zhVm+QoPAao4NRMWYfDumWvlR
-         HDukhTaTpQEcjI8WH4S9MhkX/xOdOHw6qbS/ICK5aLXNh1S43yYjY9Kvc3rr89rsoqkO
-         IReA==
+        d=gmail.com; s=20230601; t=1770227589; x=1770832389; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B8szojqfM+Q2rGz2+0D3f7E9M4VB7oLMN231+0IDwxM=;
+        b=RjIw23nX4AX6/HphnIr9PIvROk2KXA6+dqOhltkY95ICK06/KbfNg2xJ0EEX+7NXwF
+         0yomWILtaYDX7+PHDaCGgQJKcDZ7Cmw1yjtJe/L7Qx/ZPDYeXy5HcEjZLdYXjV0Dy0ML
+         ZZmqkIIcf07Msx9f6lbv2qCxZ/S9HAbDVTrTosyJA1gUbKhB+UAt03wuHA44UEjRzW7I
+         /Kp7FdGaB3zqTxJ6VUE4JZhel0XkTrvy8Q3BOBoBt/WuYuKQ2exWSL/ahGfzVOTOx1EA
+         4y2RbxcXoy+jK/IZtz5SFvAotWyro6fWydr427XwdEtWHxuaCb/6sk52e7SQgR0PQioW
+         RKrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770227432; x=1770832232;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NTLjgNdvbh7MIf9N8RHbgnts4sbNPAt7oZgF0Sy89y4=;
-        b=lZNQ8J3PlaQuBvVoureE66vvj+sExvIBDOJpDtosmtSYz/xsYQnNeD6EK67CEld3Lg
-         6JOhGcULbeNOmQtHDCyVdXuN+FEs/qW7hmb9Fvp0gTz3Jmb7HjN30chNLsdfvdDjVY0R
-         osJDBp3uzfCDVwTnrRHR8ivPjykf4UYTtTBfN1SSdznDKuLnl5m/t4ctz8yTBkSJDSRt
-         Gfiy2PGtol3k9nGfxTg4NAHCUbd8bFenznQvMTULr5cHpoRGrno+RQ/XnSc5bH4a+MZV
-         rGxtGgSerXpXVCVVpaiu/E3kgoz7AUNPdl2B6fTejb31YHFAerk4SFkCGmLpe+YdAnJx
-         BajA==
-X-Gm-Message-State: AOJu0Yw6slIF27IZg5EIGx3lWo1RCkha8bP0W5gqfhoj3zHjMorsxLt0
-	Vv+nZrpoxFUDHtydJqzXxPsQBiHdThdKKaQWDrfzr4zILHDF7wgd/Fuu
-X-Gm-Gg: AZuq6aLVPC6WBe5fdmtWB8iiNZ+e8tr4XaBXjjb34ZujF9aYVDSiMAurLURq9ou4rt1
-	GcYkG/TRlYV8kllnxPKj5brHmWaF/MGapze9RYFaNZ2OR7Sp4HP5iFxIBQBCBNiw5LE2UvDKISc
-	3hVZ/3YH4FyAB8neGTnB1jDrZO/9gLR2hiVX7SflEl9XFlJiGBYvB+bFqPfuFSsEuE5Lhhfiuar
-	5LqNKVXMcwuM+6+Su52F4FYerBLDKI0x73T8zZ7fk404rcr3XdFAx8leMWXOke34AF9pIY/APAX
-	k9MYfVgVOb5Wu3rmNLJs76yHTFoAw2VRYpyv1S8do3S74EtXJqLyt9KB9khoLvzkTQgCCowkdLh
-	7NET3JOULogD3xXi7uhGxLfKxeAlTOKi3PCC+i6sdtE+XpBKuWcNSYGFLFXQ1maEK94YT7D+UQd
-	onJdmd
-X-Received: by 2002:a05:6830:488c:b0:7d1:956f:355f with SMTP id 46e09a7af769-7d4489a4c1dmr2221672a34.9.1770227432110;
-        Wed, 04 Feb 2026 09:50:32 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d4490f3c06sm2053236a34.2.2026.02.04.09.50.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 09:50:31 -0800 (PST)
-Date: Wed, 4 Feb 2026 11:50:29 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com
-Subject: Re: [PATCH v2 4/4] odb: transparently handle common transaction
- behavior
-Message-ID: <aYOEQUIPXPIYeCw-@denethor>
-References: <20260128234519.2721179-1-jltobler@gmail.com>
- <20260203001002.2500198-1-jltobler@gmail.com>
- <20260203001002.2500198-5-jltobler@gmail.com>
- <CAOLa=ZT_7o_YquQ_mAg6sn=gq0Rx4Tga4vNsVsPt3jCUh=3tzw@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1770227589; x=1770832389;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B8szojqfM+Q2rGz2+0D3f7E9M4VB7oLMN231+0IDwxM=;
+        b=aq+dnzv9eLxOrT4ef4fc19qruSuB3GPjJ05ZI15Cvb9Fy49FUaE3V5cREOs4TFO0Tp
+         x8irSj9jG4gjcGE6b4lICjabws/ygxvUsAEuEqZ74o4eK91KYLUJX/ERMSBDRCRtPqcO
+         Dsbv+2iC+XsE0lLvozipa3cOlL116tQ6lenQOL6RmqBFY84fVgMOkuURIoz73MEZAX3H
+         cO5NbUVq4ekbJEcAsEZEFmERfJanClpzg0FkCke1VlNmJsjI4AzONSvYeIxFN1/oz970
+         xImnjCgfNLdBXOYeBPeP5QyVus81MJ4m025eX8h9bUBBv3wzJsaPPqIKLRt/gPp1edaK
+         KFKw==
+X-Gm-Message-State: AOJu0YwOspGgM79lYBIqVr7TjPf5tFnQQiU1aP8Ab93bPhXvFdzjDkEs
+	UTc4LLYqxR3I175mDBw5Bts3oyI1ieFeJyClGhFlx5+lzGTl2Xk0FbBt
+X-Gm-Gg: AZuq6aLVdlLAC5P0nAUcdiibUayzSpJGogl1uaOMFYE18ejOZjsyCRww1PRjP5nF6dc
+	xJZ0x6VxSF2K3IwDxLvlPJ4juRsy5Hndr30c9BAxe8YzeJ/MLD338dCNV+qHDfZv0ySj8Y9+DXK
+	Cami64nCvYx+zlM5yA9eRkN9oWE7OnWfdvNKwuXWgXnd4GGuA6qfNEcKdbq0RETmsYdfJTpPS87
+	s8ERl5CLPBjU4n/aPa74qFS2tzeazHLX5pf6RbUCKMPMMSDtJL2/mk2tam/bnoG7N1h5+xbf6MW
+	3cGG2RxJf8w9Iypkg0aYmfIQw5S+BBFKXLhus56XEe/a5z0GFnRGE0+BmvAHq2Xc8qEJWKWePdX
+	sG8ijeMA8PW7NRGhS0tcsEwrvWs/Ey3z1WJNZRnD+BL8Dnqo8RjAzz/WLe2Esxf3G48Hl6LqZqB
+	V0F5NuVK5kipCKfrU=
+X-Received: by 2002:a17:903:1b43:b0:29f:f14:18a0 with SMTP id d9443c01a7336-2a933e518a2mr30394235ad.4.1770227588710;
+        Wed, 04 Feb 2026 09:53:08 -0800 (PST)
+Received: from [192.168.0.106] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a933965c3esm27249275ad.67.2026.02.04.09.53.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Feb 2026 09:53:08 -0800 (PST)
+Message-ID: <9c5be231-f340-4a97-850e-d43c78b2c889@gmail.com>
+Date: Thu, 5 Feb 2026 01:53:05 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZT_7o_YquQ_mAg6sn=gq0Rx4Tga4vNsVsPt3jCUh=3tzw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] fix git add :!x exiting with error when x is in
+ .gitignore
+To: Junio C Hamano <gitster@pobox.com>,
+ "Remy D. Farley" <one-d-wide@protonmail.com>
+Cc: git@vger.kernel.org
+References: <20260204132747.1564157-1-one-d-wide@protonmail.com>
+ <xmqqo6m4pi84.fsf@gitster.g>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <xmqqo6m4pi84.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 26/02/04 10:34AM, Karthik Nayak wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > A new ODB transaction is created and returned via
-> > `odb_transaction_begin()` and stored in the ODB. Only a single
-> > transaction may be pending at a time. If the ODB already has a
-> > transaction, the function is expected to return NULL. Similarly, when
-> > committing a transaction via `odb_transaction_commit()` the transaction
-> > being committed must match the pending transaction and upon commit reset
-> > the ODB transaction to NULL.
-> 
-> But isn't this merely a limitation of the current implementation of the
-> files transactions? Couldn't a potential ODB source support parallel
-> transactions where this might no longer hold?
+On 2/5/26 00:48, Junio C Hamano wrote:
+> "Remy D. Farley" <one-d-wide@protonmail.com> writes:
 
-Just to clarify, this limitation exists per Git process. For the time
-being, we only support writing objects to a single ODB source so a
-single transaction for object writes seems reasonable for now.
-Furthermore, the current "files" transaction backend relies on the
-tmp_odjdir subsystem which means only a single temp odjdir may exist for
-a Git process to write objects to. 
+> A question that immediately comes to mind is if it is appropriate
+> for a negated pathspec element to recuse itself like this from the
+> decision process and let other pathspec elements decide the fate of
+> the path, or if a negated pathspec element should take a more active
+> role of saying "no" (no, not by immediately returning 0, but this
+> loop may have to become a two step process if we wanted to implement
+> e.g., for the function to yield "yes", it has to match at least one
+> positive pathspec element and zero negated one, or something like
+> that).
 
--Justin
+You are right. To illustrate, if we run:
+
+git add ignored_file ":!ignored_file"
+
+Then following things might happen with the patch:
+-> For the first item,
+	- Does it match 'exclude'? No.
+	- Does it match 'path'? Yes.
+	- Return 1.
+-> For the second item,
+	- Is never reached
+-> Git complain,
+	'The following paths are ignored: ignored_file.'
+
+In other word, it's not the expected silent no-op (returning 0).
+
+As you suggested, The loop needs to verify that the path matches at 
+least one positive item AND matches none of the negative items. A 
+possible way to acheive it is:
+(Notice that we no longer return 1 in the half way)
+
+
+ >bool matched_positive = false;
+ >
+ >for (item in pathspec) {
+ >	if (item matches patch) {
+ >		if (item is exclude) {
+ >			return 0;
+ >		} else {
+ >			matched_positive = true;
+ >		}
+ >	}
+ >}
+ >
+ >return matched_positive ? 1 : 0;
+
+By the way, I think extreme cases like 'git add x :!x' should be added 
+into the test scripts.
+
+Regards,
+
+Yuchen
+
+
+
+
