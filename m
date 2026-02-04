@@ -1,163 +1,144 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B610038BF7C
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 19:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6169E31A7EA
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 20:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770234920; cv=none; b=XjXcw3KyOZhrele7kznyBf354SFXdHa5g5LDHvC+AbvK12co7JpA4UWpYoGds2DXjkX5hexbIAWZj7PNjoEgAPpgTKop3Y6wDZ3a0iF2rFFXuKNMtl8r8ityZZOR+CEBYGjKGj6iBWgFzPJY7557lr+RKibLHqVXfL2F1CLNoMk=
+	t=1770235905; cv=none; b=Zhy05nht3lEKb6Of/NMOjgJlUpjhkRq3r9mEbPMoxU26cKwiFfmi3U8hO87pYh4fMxFFa2Rrm6we+wH0/jKB3FD2kS9tpjj922joGFFbYyERvCZW22cHg7s2nOVtCegto7rjwpr/poedomWDU0jJf45cSVfoc/SPaKh4W/mMAqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770234920; c=relaxed/simple;
-	bh=lxuE/iF8m5kivIR7BIHqfFoUCISUIPml3ok4dqPm1P8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=htCq074o28xaQwComEtIBPRE9zhJj3jlTxEp9MnNGzX6y6Z0BJxDMrdRj+uO5x9NGcqLPgS3x/VlB/f4NxSp9x+mZC7KVLzRqjYz8mmB3kqzOitREuOeSleAccVKCtbZxW+tgJAvd//U2/X5AMrbBv79zCmbqPUEbuJd8K7EUeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SKllrK9Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dz/daLMB; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770235905; c=relaxed/simple;
+	bh=nz63wDUaZDcuUjdroxftV1EDTDszCpwJvEJNajzO0fo=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=vCFbX9qi7sDgcjQNe85mv3+1qNIISoZKf3nTplRYQaOR/VuBofe3EoeHAh/TFmGaflmZfoL89kQQ2UEPUSvxTDOoo0GiPex7aJaw/RzSew2GG06SY/14bQ/tCHrKipW+8DvrG6NGiCpPtVJyF3LhYVWUp0d3o8tBzO1XSUw6XgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=nJZqxS+o; arc=none smtp.client-ip=185.70.43.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SKllrK9Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dz/daLMB"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 08261EC0304;
-	Wed,  4 Feb 2026 14:55:19 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 04 Feb 2026 14:55:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770234919; x=1770321319; bh=XQEvDDnsdk
-	ZuYLYv8a3kqmi4JOSD7TJ6vupJ9DIX+Oo=; b=SKllrK9Zxs9uQfxVCXeJ0aOTT8
-	/rOykvZQPc+q/3aBq+V82dyTMRVI9/eH+oaODm0FzzfVRjrIFEy5FmxS1jCXTTtn
-	Q2uXmwnHWoMHLKd0H791WwA9Nt9VjsU7Sl0xO2HbVzBCOVapm9wh5bG054TH/YT1
-	A0uMd2MHUd2fDXG+SYNkkLTJJPCRGnBk7by0w8CQiAoy+we62jGjCddHRcEL7lhu
-	jXi0f+/oJGWeNOrYpFmDFrmfwipjQx95Boq7bhz+GV933W3nQbw/rZ41647uwEA4
-	FNkUPZ0C/HWCyImlgeDvBG78to4+B8jqrRZgYn81yiRs5GU+E8JaOfHAzjmw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770234919; x=1770321319; bh=XQEvDDnsdkZuYLYv8a3kqmi4JOSD7TJ6vup
-	J9DIX+Oo=; b=dz/daLMBCjp7OufT63L/VBjtfFou4StL9WdEq2nwnVxF/Ls7BeM
-	r0vOP4Pzs/YOVYI5c/7byR7bpch+d5vfX52oJunzhiQoKFWJmZ/MhYDvHAi/nauK
-	TP7teyzxM7Pr6g6ZG39J6Weu9vt3EXM5qURmwo5ABjCyIDeELQIKcMLwIbIMPd6K
-	+O8yxLJfehQRGPaE5iBLkiENMzfcs/4pYW0dlEWe09CxmxdMbRR4KhR1M9+J9bM6
-	tzMev4DscnU6+INxXCRkqhBfY3YmYs8kdSXBEvLS+Z7I8oDU7exC0yZWo5gpvvC9
-	7Eq26kdm3hPgaLOGCs2q18HgX/NbVK0IUpA==
-X-ME-Sender: <xms:JqSDadN83rQq_JwSy3r_xYj5vkLBJZftzFcrxdmOVO2ZJtQR2XE21g>
-    <xme:JqSDaTr51eqPG1tLgDokXFNnBqIMG50Q03w4xej-AnHcazWtQOdxLPByb5_V1dHYp
-    Imtc3VSy55uGhDDNYEhX-D5-bwYH3Ng-wwREazfXdvuYxQYuJNw>
-X-ME-Received: <xmr:JqSDaWGUQJHsf3aLVAa88FObn3Z9OF7v_DdHXRrSuQuNCMsRACG1iPlpkbjXU7DU-IuaJEVr7RbSQf0WLHkanlnrM3vMAvQgdw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeeffeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprghskhdoghhitheshhhofiguohhirdhlrghnugdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgr
-    thhrihhksehpshhpughfkhhithdrtghomhdprhgtphhtthhopegruggrmhesughinhifoh
-    houghivgdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:JqSDaQrDJ6nz-x0fYCpdf4x4oSQD_nHfxT27uZVJTxeJjixOn2WTgw>
-    <xmx:JqSDaXbW1p7HmScegqeVLxljnB4oJSCBfMm_qf-SCTaViuZg1N5yUA>
-    <xmx:JqSDaRVzHz77PcK8cqDizpgMzD6jsKr7JeDEZJddjqTH0Al7jRFmkw>
-    <xmx:JqSDaY9ULRAztpGOXDRjn2Nr38WcHH8UKmhLvZsJ8eWa1UbtqAcrAg>
-    <xmx:J6SDaYk0fJi14QWNfkIDiLXjQqc0Q2oxba-WMA9lOG9wZj5ykBjNiVwa>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 14:55:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Colin Stagner <ask+git@howdoi.land>
-Cc: git@vger.kernel.org,  Patrik Weiskircher <patrik@pspdfkit.com>,  Adam
- Dinwoodie <adam@dinwoodie.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: Re* [RFH] adding test coverage for contrib/ in CI jobs
-In-Reply-To: <20260204043812.814884-3-ask+git@howdoi.land> (Colin Stagner's
-	message of "Tue, 3 Feb 2026 22:38:11 -0600")
-References: <xmqqjywtu58j.fsf_-_@gitster.g>
-	<20260204043812.814884-3-ask+git@howdoi.land>
-Date: Wed, 04 Feb 2026 11:55:17 -0800
-Message-ID: <xmqqms1onv16.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="nJZqxS+o"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1770235896; x=1770495096;
+	bh=0e6gQAHYYGnbQvA6/GXmRJLKlbF46b7QxNwknBIG2oA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=nJZqxS+o4LgxG5YAg27sztiMWf+GI9Id9Mf2dh07VHQSPuzpW+iiqNWzY3FFF+TDD
+	 lHdKrHIdQD2hL4tywDPnZomtmePgMJ3wGj0L+ANuB5Q7ztI3HfrGuk+HqCsNvRVPeN
+	 4p4XQUoWenGo2Aw9unSv/Sueab0li5A3/k5XZQ2akmlzDzD8L9L7XHYoouLLQEjwR5
+	 ZD7nwSuvUDNGsUo21e0GOdhwver3VfaygN9BRXZuvJmkuFFeiByH/qJshXrO0DnXMG
+	 W6WQI+6dp/7wKni2yp+nWqlMSbUXd0+VhdacfnKo7Zz2dx993etWb3drOHrg7/UFDi
+	 Rou+9b0TDixKw==
+Date: Wed, 04 Feb 2026 20:11:32 +0000
+To: Junio C Hamano <gitster@pobox.com>
+From: "Remy D. Farley" <one-d-wide@protonmail.com>
+Cc: Tian Yuchen <a3205153416@gmail.com>, git@vger.kernel.org
+Subject: [PATCH] fix git add :!x exiting with error when x is in .gitignore
+Message-ID: <24VdqZCRHE7M9q7Rp-IH60MmQrEOW5lzhtd1-SUNqEhV_OTzGiCUkVDL5ngVJbyWRMDZ2GlWCJ9wkMSJLsJh8QYO4gRhDMGyzhfuGAODOs8=@protonmail.com>
+In-Reply-To: <xmqq5x8cpcrd.fsf@gitster.g>
+References: <20260204132747.1564157-1-one-d-wide@protonmail.com> <xmqqo6m4pi84.fsf@gitster.g> <9c5be231-f340-4a97-850e-d43c78b2c889@gmail.com> <xmqq5x8cpcrd.fsf@gitster.g>
+Feedback-ID: 59017272:user:proton
+X-Pm-Message-ID: 538da49bf62ab6fed2e4373fb165ab1c8b58760b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Colin Stagner <ask+git@howdoi.land> writes:
-
-> I'll see what I can do about any remaining failures. I'd like to
-> improve the test coverage for subtree split. split has a lot of
-> complicated logic that needs to be preserved across updates.
-
-Thanks.
-
-
-> Subject: contrib/subtree: fix tests with reftable backend
+Junio C Hamano <gitster@pobox.com> wrote:
+> A question that immediately comes to mind is if it is appropriate
+> for a negated pathspec element to recuse itself like this from the
+> decision process and let other pathspec elements decide the fate of
+> the path, or if a negated pathspec element should take a more active
+> role of saying "no" (no, not by immediately returning 0, but this
+> loop may have to become a two step process if we wanted to implement
+> e.g., for the function to yield "yes", it has to match at least one
+> positive pathspec element and zero negated one, or something like
+> that).
 >
-> One git-subtree test-case relies on git internals to infer the
-> default branch name. This test fails with the new reftable
-> backend.
+> What should
 >
->     GIT_TEST_DEFAULT_REF_FORMAT=reftable \
->       meson test t7900-subtree
+>     git add "$x" ":!$y"
 >
-> This test script already sets
+> do when a path <matches, does not match> $X and <matches, does not
+> match> $Y? We have four combinations to consider in such a case.
+> The code in the patch says it should behave identically to
 >
->     GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>     git add "$x"
 >
-> which eliminates the need to infer a branch name at runtime.
-> Hardcode the branch name.
+> and negated ":!$y" should not make any difference. Is that what we
+> want?
 
-Makes sense.  
 
-I didn't read the test script carefully enough to be certain that we
-were on the initial branch when the defaultBranch computation
-happened.
+I indeed failed to consider cases where pathspecs could interfere with each
+other, sorry.
 
-Thanks.  Will replace my hack with this version.
+It does seems like we don't want to just blanketly ignore negated pathspecs=
+,
+at least for the sake of consistency:
 
-> Signed-off-by: Colin Stagner <ask+git@howdoi.land>
-> ---
->  contrib/subtree/t/t7900-subtree.sh | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
+    git add -n :!a a/ignored/c # is ok (even on mainline, nothing is added)
+
+    git add -n :!a/b a/b # ok (same)
+
+Probably the same should hold after this patch if "a" or "a/b" were exclude=
+d.
+I'll try to think this through.
+
+
+Tian Yuchen <a3205153416@gmail.com> wrote:
+> By the way, I think extreme cases like 'git add x :!x' should be added
+> into the test scripts.
+
+
+I think this was already covered, though with a simplistic (wrong) approach=
+.
+
+>  for i in ign dir/ign dir/sub dir/sub/*ign sub/file sub sub/*
+>  do
+>  =09[...]
+> +=09test_expect_success "complaints for ignored $i with ignored :!ign" '
+> +=09=09rm -f .git/index &&
+> +=09=09test_must_fail git add "$i" :!ign 2>err &&
+> +=09=09git ls-files "$i" ign >out &&
+> +=09=09test_must_be_empty out
+> +=09'
+>  done
+
+
+Junio C Hamano <gitster@pobox.com> wrote:
+> One caveat.  The case without any positive pathspec entries needs
+> special consideration.  I suspect, but can be totally wrong as I
+> didn't think things through thoroughly, that
+>=20
+>     git add "!$y"
+>=20
+> would want to behave as if an implicit "everything matches" was
+> given, i.e.,
+>=20
+>     git add "!$y" .
 >
-> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-> index 316dc5269e..e7040718f2 100755
-> --- a/contrib/subtree/t/t7900-subtree.sh
-> +++ b/contrib/subtree/t/t7900-subtree.sh
-> @@ -1597,7 +1597,6 @@ test_expect_success 'push split to subproj' '
->  
->  test_expect_success 'subtree descendant check' '
->  	subtree_test_create_repo "$test_count" &&
-> -	defaultBranch=$(sed "s,ref: refs/heads/,," "$test_count/.git/HEAD") &&
->  	test_create_commit "$test_count" folder_subtree/a &&
->  	(
->  		cd "$test_count" &&
-> @@ -1614,7 +1613,7 @@ test_expect_success 'subtree descendant check' '
->  	(
->  		cd "$test_count" &&
->  		git cherry-pick $cherry &&
-> -		git checkout $defaultBranch &&
-> +		git checkout main &&
->  		git merge -m "merge should be kept on subtree" branch &&
->  		git branch no_subtree_work_branch
->  	) &&
-> @@ -1626,10 +1625,10 @@ test_expect_success 'subtree descendant check' '
->  	test_create_commit "$test_count" not_a_subtree_change &&
->  	(
->  		cd "$test_count" &&
-> -		git checkout $defaultBranch &&
-> +		git checkout main &&
->  		git merge -m "merge should be skipped on subtree" no_subtree_work_branch &&
->  
-> -		git subtree split --prefix folder_subtree/ --branch subtree_tip $defaultBranch &&
-> +		git subtree split --prefix folder_subtree/ --branch subtree_tip main &&
->  		git subtree split --prefix folder_subtree/ --branch subtree_branch branch &&
->  		test $(git rev-list --count subtree_tip..subtree_branch) = 0
->  	)
+> while a pathspec with one or more positive entries would not need
+> and want such an implicit "everything" treatment.
+
+
+This case is actually already handled by the pathspec itself.
+
+
+From pathspec.c:
+> void parse_pathspec(struct pathspec *pathspec,
+> =09=09    unsigned magic_mask, unsigned flags,
+> =09=09    const char *prefix, const char **argv)
+> {
+> =09[...]
+> =09/*
+> =09 * If everything is an exclude pattern, add one positive pattern
+> =09 * that matches everything. We allocated an extra one for this.
+> =09 */
+> =09if (nr_exclude =3D=3D n) {
+> =09=09int plen =3D (!(flags & PATHSPEC_PREFER_CWD)) ? 0 : prefixlen;
+> =09=09init_pathspec_item(item + n, 0, prefix, plen, ".");
+> =09=09pathspec->nr++;
+> =09}
