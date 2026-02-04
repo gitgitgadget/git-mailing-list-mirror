@@ -1,68 +1,68 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602B641B357
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:20:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB5641B35B
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770214821; cv=none; b=JJTQJsxZsvxzgYKZEBIzR1dmLV9HZPSIju3iJu1kBBnybHY8Szemb+hQRcSl99OlLL8Jz0jpSimEsn6VtTZoyr+Ct/0GpVqGWm8uVr69PaGuwj3nvUah9U23g25gDrEjF5AZvd/bP225lYyLqcxGLOjIkK6x96npgeFVHZ+OTEo=
+	t=1770214822; cv=none; b=Vrg22TmyghOeBXhq1vbkDLATGf9eeLLireMpgzLfqLmk3rIfAMn66964Ky5rRDdtgTGJ6w5/BeawnNNoUAfbbWKhj7u36OiAiMEuZC2yBfF7W8eSk1VIJECcy9t0vSc3t+snL6VVlrFPA05p/LdoikLfGjLtc4tudnrLBm+ojPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770214821; c=relaxed/simple;
-	bh=zB8XlH5itDak8dyCaYAVExeyOU0sey4+t8En9chFo+s=;
+	s=arc-20240116; t=1770214822; c=relaxed/simple;
+	bh=Hima8f3BlqQBYWHWfiCUiePOoZIaZMdOjSbJTxa1fuI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bxaU3ZbjnTVCKYxGYdix3skeVfgpK5TY2gWrTkW/qPuklC7riReMEE0YxcwNTx3f6ns60DgvuiA8dQZ8O4FoVKkurrUH5lxXirwztyq7d23nfM3ISvizwx5ZS01EyQXo3nv1v0QGwEmxInHBVgTPGE2h0Qu5PtZ/6Zt2MakS7ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xum6VBJ4; arc=none smtp.client-ip=209.85.161.54
+	 MIME-Version:To:Cc; b=RxCnKrkWAHvXyk8Bow8jnO5QUXCZpapuLfJyxx9ZJbHCKc7QwMdmz1EZIj4y++sIyoQvzJe7Wkdq9F7zAASuJ0dGbA/Gu0plfCtyt7yTy7o7+f5IeKmEbTGNF5ryGmpJZQgqbiUkXdJKvqSe+fbe6MFjeF9TQEcgb0EGJYzImF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hddlWlkM; arc=none smtp.client-ip=209.85.167.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xum6VBJ4"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-662f54771dcso2118179eaf.2
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:20:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hddlWlkM"
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-45c87d82bd2so4557728b6e.1
+        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:20:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770214820; x=1770819620; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770214821; x=1770819621; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QqLu8xJa7cc1IfiswIMWh2C2LEXuJh5tR0kyjHIO5OA=;
-        b=Xum6VBJ4/GLD7NUoZ/N3zmn/A5rFyMeIYudERlNAqQSS976mLlSsUWbN8l4EdTGr/X
-         HUY3EJVJBtu4ysGSr8jv1GMhLue/U9nzHadNTe/KRyWqeadOINWX9FFzg4K8CZjSpCa8
-         7DpmixhCHkgVXjokE69nwNJzKANGzmDmtBOTksAqBKBq/pP+cI3//wD063RH5KXODxLE
-         5pR3wkmCxA2tOHI+9bZB+1hP4u6OwfaAJXbGqumzLgikWgtnNdmsr/hvHooQXUdFqGPa
-         B/cOqvBTYQw1ik6MDovvptx4dgk4vdKtWkceAdYrfAbkBy67jvOYAGWWoboKAEFG5xTe
-         sHHg==
+        bh=theDrawoAnJAxlBeE5lT0JvtyS7Im48gsYMZVa7ym3k=;
+        b=hddlWlkMevBH6wQ98mMeo+lUjp4SPPAIoKk1D/dIlfWeoD/aUsyPJweUCKZld3YCw9
+         mXPCTqvHU8RNqQQ0pFHxyxYdMAsLS36SBAs7H7KjQerySOD4AGJV5q+PVCEh6HI36d1S
+         yADqjiqu8jnEshGInpwPUcENUd4gHeiQMk5l3xvYS/QsmZPmRm8LevcZmaBcvgW+P7e4
+         IbtvUqCNLHpctu28MF2IUKEwmo3NGBdrbSJ/fNwsHflfgiwRboMoCgBMVX6i6xptH7Ka
+         ANAfxdVjwTFntcvbYpZqV1BnxmeJpPBdvvZEniCmnZ2EECDr62mlu5CLSB0BarbSn0eI
+         bCrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770214820; x=1770819620;
+        d=1e100.net; s=20230601; t=1770214821; x=1770819621;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=QqLu8xJa7cc1IfiswIMWh2C2LEXuJh5tR0kyjHIO5OA=;
-        b=CuMOMHRVaA53/rQTme01vBqrt2EV96Dz4mWcVdgU9jDcqzpBMV+zj3fO5miCvi/Cq4
-         iJHCDknocbxHvnMmK1hRw4qF75ZP7cexV3wbub38HuuqhZaIg1EDSEPxptsXxkS/QCiR
-         IYqsayzOcaqi0+llOnGfZESPJTHEoP5+VKDfZpeU3ii+B3JV0GDiiLeuzfSiCQkhpF8r
-         fzg99DBE03HGIuZWFv2OPeXQWvZr2TpsVIS1Jv0ficeLYpIdJOflGqibUNRqiKBzzx86
-         U6KARa9kt4oD3v+IZOp1LatICHess9kdiQGfhQFk88Gma9un0tMilFFwVIJUP+lhBwT/
-         VE8g==
-X-Gm-Message-State: AOJu0YyBfmrsDnlAYafWWlP6Fbr1ddLzfqPJM2qs0rSNChygJ6pfQdjd
-	nRe+igc0f5zChv5i/gXeKsCyUjc608ZArr1y5be3gfFArZ/QSU323z8xw6Fo9Q==
-X-Gm-Gg: AZuq6aIhGRSpa4eSBtMAGzxS4h3UW68rLw+6F3YO2vmrCiff32gMwqiMvEIZNGU6ezZ
-	8tn4Oww1DBZ8vuM0FByhY5D7uxi6O+IdzgaVczemO7tXHIDVUiUO48jCqYrwryDJiaKff4JNSsf
-	kWrkKKqQ/kovJxyL33mj3p2UgY3ViK1drxt+a5YGv00ZHIEGN0L24Ge/flvwb9CuXQIdmfAzeFs
-	GFPg8f0lE7soJ6Rh0hg846+BumweEyS8YOdZGeZCLE52QfDq3hx/kyl/5KIWFSariCblQpXf4xN
-	woHC5mVi0D5MXd1TAsY8Y3ZyK5YjS5eJIahRRIzG+GcY2VuDR6yDAJ00aUjgdxrgcKtXGLwjjlG
-	UcQQ2U060WFampjdIs5AewVm+xoIQ8QwLb133I/joh5qPeYIaZQwc158IIHWV+b5YuZ3KGNz0jm
-	m+proyiwwH+4IjQg==
-X-Received: by 2002:a4a:e844:0:b0:65f:6d6c:530d with SMTP id 006d021491bc7-66a2088256cmr1435629eaf.18.1770214819818;
-        Wed, 04 Feb 2026 06:20:19 -0800 (PST)
+        bh=theDrawoAnJAxlBeE5lT0JvtyS7Im48gsYMZVa7ym3k=;
+        b=YH700VtQr2clT4dO14IA4XsI47TC2VTd58ucGAHM7rzU1kI5djrt47goKIQ8gu8hjQ
+         WHa6fMzFj3LGIcm/854iLr2NpSnbCxcrRxr5yGC/KRelAwWNPerfThApNEWfsm71asX3
+         ioNZJX4ohCxV/UpxIo/1uGxwEs+CYJrADQtKyfhfjzPFotduVsjFZ4nlYRdhAIxg5xNk
+         WqYeMGEv64phnsb5iqToKRbLOGS84iXVl8kCpaGA8K6WxyLTt41prCGcwZyhw2AevZCU
+         YibYP0NLX6u+NnAAiw8JykR3001YCaZx9ZqRiIpD3ud2QxHPP6KEfQDqS9KFw0GT8ABa
+         aVMg==
+X-Gm-Message-State: AOJu0YzdxCLgUib+cHsuDdPqaEHRaf9XOTE664kv7oyrWIjveZU8cy9V
+	fGBapFBO1jc6uei/Y2AtXYfj+Li2Noe72Rr7mVHFN5lFsXU5gDbAIkoZNwvHww==
+X-Gm-Gg: AZuq6aLs9AYr7khKI+8E2Y7sLzF5RivD9b/wbBYtyreszTVtlkXBfmMD5gLXdgC0tpM
+	76nwlCTuuF7PIBbFYzuuUQ2hmp3MCTFWd3COgdMGsQYuOpF25WbSX+gcddMA7fqA5kRtCv/TuuY
+	6cG9UDtIHaTjxTgSs+rKbv1Q6d9jsRoe8+rpJXOyNb/fWzCNzHZ0E32SOtSgSd+9y8cGqkzhyxh
+	ZrBHpCvrglvc7nAxwVLZs93Qe9RHASn6IBtaJr0PPLOGGIflSXzVNJCFWvxyO90pqudLlgo2udV
+	GUm5xKledZv6rwnXKkkutJ3AVdsKsQzoADyp8Bfw4SVNzdnXXxW1zbikf9dQ8CVApfRfcsCH1Cu
+	utzfvsB1TW5dee8KeoePUZrztJvRCZJMJ2dpahTBHoCq6IpemVuukFT6lDpHS9kgODUMIaSGvlU
+	o4NH9l+SzzU1Mgag==
+X-Received: by 2002:a05:6808:2393:b0:45e:84e7:c20b with SMTP id 5614622812f47-462d58dc548mr1676034b6e.25.1770214821024;
+        Wed, 04 Feb 2026 06:20:21 -0800 (PST)
 Received: from [127.0.0.1] ([52.173.182.164])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-66a32bb12d1sm1448621eaf.3.2026.02.04.06.20.18
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-462d6608c82sm1440592b6e.4.2026.02.04.06.20.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 06:20:19 -0800 (PST)
-Message-Id: <fdeef536f649bec811e8335d1c7151be8e352ff0.1770214803.git.gitgitgadget@gmail.com>
+        Wed, 04 Feb 2026 06:20:20 -0800 (PST)
+Message-Id: <cf4f054fb6d382875402511b49ee901486380476.1770214803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
 References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 04 Feb 2026 14:20:01 +0000
-Subject: [PATCH 09/11] config-batch: add 'set' v1 command
+Date: Wed, 04 Feb 2026 14:20:02 +0000
+Subject: [PATCH 10/11] t1312: create read/write test
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,261 +79,40 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-This new command is intended for single-value assignments to a specific
-chosen scope. More complicated versions of the 'git config set' command
-will be incorporated into future commands.
+This new test will be extended in the future to ensure that multiple
+commands that execute in order update the configuration state enough to
+reflect new written values as we read them in later commands.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-config-batch.adoc | 24 ++++++++
- builtin/config-batch.c              | 71 ++++++++++++++++++++++
- config.c                            | 27 +++++++++
- config.h                            |  3 +
- t/t1312-config-batch.sh             | 94 ++++++++++++++++++++++++++++-
- 5 files changed, 217 insertions(+), 2 deletions(-)
+ t/t1312-config-batch.sh | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/Documentation/git-config-batch.adoc b/Documentation/git-config-batch.adoc
-index 3c9a3bb763..feec85c4ef 100644
---- a/Documentation/git-config-batch.adoc
-+++ b/Documentation/git-config-batch.adoc
-@@ -111,6 +111,30 @@ get 1 missing <key> [<value-pattern>|<value>]
- where `<value-pattern>` or `<value>` is only supplied if provided in
- the command.
- 
-+`set` version 1::
-+	The `set` command writes a single key-value pair to a config
-+	file. It specifies which file by a `<scope>` parameter from
-+	among `system`, `global`, `local`, and `worktree`. The `<key>`
-+	is the next positional argument. The remaining data in the line
-+	is provided as the `<value>` to assign the config.
-++
-+------------
-+set 1 <scope> <key> <value>
-+------------
-++
-+These uses will match the behavior of `git config --set --<scope> <key>
-+<value>`. Note that replacing all values with the `--all` option or
-+matching specific value patterns are not supported by this command.
-++
-+The response of these commands will include a `success` message if the
-+value is written as expected or `failed` if an unexpected failure
-+occurs:
-++
-+------------
-+set 1 success <scope> <key> <value>
-+set 1 failed <scope> <key> <value>
-+------------
-+
- NUL-Terminated Format
- ~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/builtin/config-batch.c b/builtin/config-batch.c
-index 9829b16c6f..373b0cad47 100644
---- a/builtin/config-batch.c
-+++ b/builtin/config-batch.c
-@@ -16,6 +16,7 @@ static int zformat = 0;
- #define UNKNOWN_COMMAND "unknown_command"
- #define HELP_COMMAND "help"
- #define GET_COMMAND "get"
-+#define SET_COMMAND "set"
- #define COMMAND_PARSE_ERROR "command_parse_error"
- 
- static void print_word(const char *word, int start)
-@@ -379,6 +380,71 @@ cleanup:
- 	return res;
- }
- 
-+
-+/**
-+ * 'set' command, version 1.
-+ *
-+ * Positional arguments should be of the form:
-+ *
-+ * [0] scope ("system", "global", "local", or "worktree")
-+ * [1] config key
-+ * [2] config value
-+ */
-+static int set_command_1(struct repository *repo,
-+			 const char *prefix,
-+			 char *data,
-+			 size_t data_len)
-+{
-+	int res = 0, err = 0;
-+	enum config_scope scope = CONFIG_SCOPE_UNKNOWN;
-+	char *token = NULL, *key = NULL, *value = NULL;
-+	struct config_location_options locopts = CONFIG_LOCATION_OPTIONS_INIT;
-+
-+	if (!parse_token(&data, &data_len, &token, &err) || err)
-+		goto parse_error;
-+
-+	if (parse_scope(token, &scope) ||
-+	    scope == CONFIG_SCOPE_UNKNOWN ||
-+	    scope == CONFIG_SCOPE_SUBMODULE ||
-+	    scope == CONFIG_SCOPE_COMMAND)
-+		goto parse_error;
-+
-+	if (!parse_token(&data, &data_len, &key, &err) || err)
-+		goto parse_error;
-+
-+	/* Use the remaining data as the value string. */
-+	if (!zformat)
-+		value = data;
-+	else {
-+		parse_token(&data, &data_len, &value, &err);
-+		if (err)
-+			goto parse_error;
-+	}
-+
-+	if (location_options_set_scope(&locopts, scope))
-+		goto parse_error;
-+	location_options_init(repo, &locopts, prefix);
-+
-+	res = repo_config_set_in_file_gently(repo, locopts.source.file,
-+					     key, NULL, value);
-+
-+	if (res)
-+		res = emit_response(SET_COMMAND, "1", "failure",
-+				    scope_str(scope), key, value, NULL);
-+	else
-+		res = emit_response(SET_COMMAND, "1", "success",
-+				    scope_str(scope), key, value, NULL);
-+
-+	goto cleanup;
-+
-+parse_error:
-+	res = command_parse_error(SET_COMMAND);
-+
-+cleanup:
-+	location_options_release(&locopts);
-+	return res;
-+}
-+
- struct command {
- 	const char *name;
- 	command_fn fn;
-@@ -396,6 +462,11 @@ static struct command commands[] = {
- 		.fn = get_command_1,
- 		.version = 1,
- 	},
-+	{
-+		.name = SET_COMMAND,
-+		.fn = set_command_1,
-+		.version = 1,
-+	},
- 	/* unknown_command must be last. */
- 	{
- 		.name = "",
-diff --git a/config.c b/config.c
-index 9f1a7b45cf..fa72234750 100644
---- a/config.c
-+++ b/config.c
-@@ -3594,6 +3594,33 @@ int lookup_config(const char **mapping, int nr_mapping, const char *var)
- 	return -1;
- }
- 
-+int location_options_set_scope(struct config_location_options *opts,
-+			       enum config_scope scope)
-+{
-+	switch (scope) {
-+	case CONFIG_SCOPE_SYSTEM:
-+		opts->use_system_config = 1;
-+		break;
-+
-+	case CONFIG_SCOPE_GLOBAL:
-+		opts->use_global_config = 1;
-+		break;
-+
-+	case CONFIG_SCOPE_LOCAL:
-+		opts->use_local_config = 1;
-+		break;
-+
-+	case CONFIG_SCOPE_WORKTREE:
-+		opts->use_worktree_config = 1;
-+		break;
-+
-+	default:
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
- void location_options_init(struct repository *repo,
- 			   struct config_location_options *opts,
- 			   const char *prefix)
-diff --git a/config.h b/config.h
-index 6663964977..f6432c1ec2 100644
---- a/config.h
-+++ b/config.h
-@@ -180,6 +180,9 @@ struct config_location_options {
- 	.respect_includes_opt = -1, \
- }
- 
-+int location_options_set_scope(struct config_location_options *opts,
-+			       enum config_scope scope);
-+
- void location_options_init(struct repository *repo,
- 			   struct config_location_options *opts,
- 			   const char *prefix);
 diff --git a/t/t1312-config-batch.sh b/t/t1312-config-batch.sh
-index f7a74ddc2c..40f6f90ef2 100755
+index 40f6f90ef2..11380f4247 100755
 --- a/t/t1312-config-batch.sh
 +++ b/t/t1312-config-batch.sh
-@@ -47,9 +47,10 @@ test_expect_success 'help command' '
- 	echo "help 1" >in &&
- 
- 	cat >expect <<-\EOF &&
--	help 1 count 2
-+	help 1 count 3
- 	help 1 help 1
- 	help 1 get 1
-+	help 1 set 1
- 	EOF
- 
- 	git config-batch >out <in &&
-@@ -63,9 +64,10 @@ test_expect_success 'help -z' '
- 	EOF
- 
- 	cat >expect <<-\EOF &&
--	4:help 1:1 5:count 1:2
-+	4:help 1:1 5:count 1:3
- 	4:help 1:1 4:help 1:1
- 	4:help 1:1 3:get 1:1
-+	4:help 1:1 3:set 1:1
- 	15:unknown_command
- 	EOF
- 
-@@ -205,4 +207,92 @@ test_expect_success 'get config with -z' '
- 	test_cmp expect out
+@@ -295,4 +295,31 @@ test_expect_success 'set config by scope with -z' '
+ 	test_cmp expect-values values
  '
  
-+test_expect_success 'set config by scope' '
-+	test_when_finished git config remove-section test.set &&
-+	GIT_CONFIG_SYSTEM=system-config-file &&
-+	GIT_CONFIG_NOSYSTEM=0 &&
-+	GIT_CONFIG_GLOBAL=global-config-file &&
-+	export GIT_CONFIG_SYSTEM &&
-+	export GIT_CONFIG_NOSYSTEM &&
-+	export GIT_CONFIG_GLOBAL &&
++test_expect_success 'read/write interactions in sequence' '
++	test_when_finished git config remove-section test.rw &&
 +
 +	cat >in <<-\EOF &&
-+	set 1 system test.set.system system
-+	set 1 global test.set.global global
-+	set 1 local test.set.local local with spaces
-+	set 1 worktree test.set.worktree worktree
-+	set 1 submodule test.set.submodule submodule
-+	set 1 command test.set.command command
-+	set 1 inherited test.set.inherited inherited
++	get 1 local test.rw.missing
++	set 1 local test.rw.found found
++	get 1 local test.rw.found
++	set 1 local test.rw.found updated
++	get 1 local test.rw.found
 +	EOF
 +
 +	cat >expect <<-\EOF &&
-+	set 1 success system test.set.system system
-+	set 1 success global test.set.global global
-+	set 1 success local test.set.local local with spaces
-+	set 1 success worktree test.set.worktree worktree
-+	command_parse_error set
-+	command_parse_error set
-+	command_parse_error set
++	get 1 missing test.rw.missing
++	set 1 success local test.rw.found found
++	get 1 found test.rw.found local found
++	set 1 success local test.rw.found updated
++	get 1 found test.rw.found local updated
 +	EOF
 +
 +	git config-batch <in >out 2>err &&
@@ -341,58 +120,7 @@ index f7a74ddc2c..40f6f90ef2 100755
 +	test_must_be_empty err &&
 +	test_cmp expect out &&
 +
-+	cat >expect-values <<-EOF &&
-+	file:system-config-file	system
-+	file:global-config-file	global
-+	file:.git/config	local with spaces
-+	file:.git/config.worktree	worktree
-+	EOF
-+
-+	git config get --show-origin --regexp --all test.set.* >values &&
-+	test_cmp expect-values values
-+'
-+
-+test_expect_success 'set config by scope with -z' '
-+	test_when_finished git config remove-section test.set &&
-+	GIT_CONFIG_SYSTEM=system-config-file &&
-+	GIT_CONFIG_NOSYSTEM=0 &&
-+	GIT_CONFIG_GLOBAL=global-config-file &&
-+	export GIT_CONFIG_SYSTEM &&
-+	export GIT_CONFIG_NOSYSTEM &&
-+	export GIT_CONFIG_GLOBAL &&
-+
-+	cat >in <<-\EOF &&
-+	3:set NUL 1:1 NUL 6:system NUL 15:test.set.system NUL 6:system NUL NUL
-+	3:set NUL 1:1 NUL 6:global NUL 15:test.set.global NUL 6:global NUL NUL
-+	3:set NUL 1:1 NUL 5:local NUL 14:test.set.local NUL 17:local with spaces NUL NUL
-+	3:set NUL 1:1 NUL 8:worktree NUL 17:test.set.worktree NUL 8:worktree NUL NUL
-+	3:set NUL 1:1 NUL 9:submodule NUL 18:test.set.submodule NUL 9:submodule NUL NUL
-+	3:set NUL 1:1 NUL 7:command NUL 16:test.set.command NUL 7:command NUL NUL
-+	3:set NUL 1:1 NUL 9:inherited NUL 18:test.set.inherited NUL 9:inherited NUL NUL
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	3:set 1:1 7:success 6:system 15:test.set.system 6:system
-+	3:set 1:1 7:success 6:global 15:test.set.global 6:global
-+	3:set 1:1 7:success 5:local 14:test.set.local 17:local with spaces
-+	3:set 1:1 7:success 8:worktree 17:test.set.worktree 8:worktree
-+	19:command_parse_error 3:set
-+	19:command_parse_error 3:set
-+	19:command_parse_error 3:set
-+	EOF
-+
-+	test_zformat git config-batch -z >out <in &&
-+	test_cmp expect out &&
-+
-+	cat >expect-values <<-EOF &&
-+	file:system-config-file	system
-+	file:global-config-file	global
-+	file:.git/config	local with spaces
-+	file:.git/config.worktree	worktree
-+	EOF
-+
-+	git config get --show-origin --regexp --all test.set.* >values &&
-+	test_cmp expect-values values
++	test_cmp_config updated test.rw.found
 +'
 +
  test_done
