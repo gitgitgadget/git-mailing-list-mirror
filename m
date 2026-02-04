@@ -1,205 +1,125 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C59394476
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 08:38:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770194302; cv=none; b=g+5UZoJnP3kchQ1fFEm+L3ASkLD59kIBSn9YBl/hYPwBzQsjd4bcWUN+bHtg9UjI3rv8VA6xWmq3m2WDOXO2f2Jki10dIa9ENUqeKevvqqvMcdwOK97uyUGKN8DuDY6G0fU8LrxPwvipmixi960CdqPglIQAjOrDFb9pwrmFC90=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770194302; c=relaxed/simple;
-	bh=rD1cPVPxob51GbPXWJ5gyOQm4pIGqzSmXrZmDkT2s0Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=kefFQKkEKON29nUSLZYB/aR7kNfvjNLcnCf4Y+8vdJtJLpiI0GNjfiC2dUX1NkrHtabVp8DXCiWytU/hUKo7EPh8rUEGL8qsxZw463jYAmkG+wwNkU9s9CNxe/LqTA8wjl/2vH7Gux3C2Jb+leKxTHoXc5SKQNvYBmRlD+UAyhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nERz0d2j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dzG/3ZwQ; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DAC3A7834
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 09:31:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770197499; cv=pass; b=srtBolW9fjYpWQyCM0CzcyKuz7LaoiFAtXKBXU2lG3JjE2kWDekQI4Dd/n3P8a51h68+tZV2wuByWomS1PUdPbJwlE/3Mpej1OtS5Jkd0STJBvLVslc5TfYKc2TSIZVq4vArafKEniI5dY5ILZQbMecWAYktdwjCK1/N0ypiy2k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770197499; c=relaxed/simple;
+	bh=JAYi36UMtkDA71Cs/PVT8okfkMfNc3Qy36Bb4rj1lms=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=rJvda/0IjJ+odWqtUFEdgCuyO/epl/AwqAvmaWXN4HBMxa9H0o8ycB/Qp2RA84YSa5drJQUQKk+0wvQmGkTLjlxN7RDgSb/RSVX8NxWplIG5qkQuG5/kaQT3M706c1J3gKCSbwP3ulspXZLRLumYlmJYxh/FB0lilZ/Y9DpjbYk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PG5UCPqY; arc=pass smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nERz0d2j";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dzG/3ZwQ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 688AB1D00016;
-	Wed,  4 Feb 2026 03:38:21 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 04 Feb 2026 03:38:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770194301;
-	 x=1770280701; bh=rYMMQrR/CetGGOTl1aPcddQc1+F7HV6y/Nn8oSRt4XU=; b=
-	nERz0d2joH0xM8/ExZf0SGHg8Lb3z+ehqwwbBhU4ZO4ZehhS5aQ1oimByMFAj59Y
-	KOK30w72XsHaLZ2zHa0dKPqPJjJ5Y7/Im1T2GaDrifkjHDaarpdn4qbSQBSOXAFI
-	I1WrAea6vFFWAkLQhNZunsFkugM0Sxe1hJ9Q/drmy3J8hoUnYJfDmUgUjZgbw1+S
-	Uw+zyXzX5mIF8StnmzwzafcWTrWACre9pVSdz0g3t90QOZ0KQk0N8PC1iQbWErqu
-	viLgsgI2Dam9KIy9ZjdEtofLnwTAL1g1loBLJC872qg928PIN0CS1eMQsy0uwus4
-	e7qHfW1wdnMPcldK+lZ5UQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770194301; x=
-	1770280701; bh=rYMMQrR/CetGGOTl1aPcddQc1+F7HV6y/Nn8oSRt4XU=; b=d
-	zG/3ZwQE2Qm618b6481mfGbC7+q5q27w11sE0MavN6FJC6VLfShYvpuaLPwBAfRO
-	MRTTb9kc9qGmvo519CqWSiO9pgmTBDh4bRsuQo22Fz2wqW5XrQwp0HDUQ4f2zzMv
-	s0S21cg2TbYmz5BSpoZ+ECrXt8HIWlguldMfUnmF1XrjBXEzH3NH8+VpULVJw2yR
-	uj3PuGQfTUFJhYIy2Jjy46pxQPoC3E9x/lALhmiPsIYUNYVy/++VG7HWi9WeTvMd
-	POGL2b0QjlwqBsVwga1nK846QQgS1qRuL+FJPONvvECOat7xQlCmjrjyGtLcy3Gd
-	R5Lhy2g5vS/xyxCZHBypA==
-X-ME-Sender: <xms:fQWDaWUPUjhPau4hDKoD8Od7dCTyhDDbLKoWYnJYHf2JPZajk5fjHg>
-    <xme:fQWDaYnrdFTpdEkUhGO2QVojIkW83BCKB1PiqMllBSYsBNjvr2q48bM3N0Ye0Q4sZ
-    6PGH4-d3DH9J_kor5o4y0i_oRmCPGMsflyN0eFDSVb75u9ZTx1DZt0>
-X-ME-Received: <xmr:fQWDaYBV-iXWJr5JjI17ST0ykXVruFvIpswsMZZ_mNgLI9f1bHurfo6CWZEeEEGJyC_bjXqAdSfyqkCV090x7c7b_lruAFlhMLbQZ69qgTmpUA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvtdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkjghfvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepiedvffevleejjeduhedujeeiudevteduke
-    elueeiudfggeetueehueevtdekiefgnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
-    ghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehjiehtsehkuggsghdrohhrgh
-X-ME-Proxy: <xmx:fQWDaYewQQ5sKh_E3oxXOJUpLgQPgvsUuwxn6qHJPf_DcpBqtrSetQ>
-    <xmx:fQWDaTLxy876SpapIme-HZeo0eyqQYGmpIOJiAtBGkTJvwcoUGfm9g>
-    <xmx:fQWDabeJOJtjgBQ1tcEAhNXCnl1nfWbXpIXtk7_Mkfbqn3DLon04zA>
-    <xmx:fQWDaa2_FWUcIIvvZnObUIDYd90QJW_0rL9Wn1zWDLS0KWNE-FAScA>
-    <xmx:fQWDafAPhpgNuP_L7dOd23EHa_iMdXZkNyc1uvkPZOO1xUDYCg7EthdB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 03:38:20 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 43205968 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 4 Feb 2026 08:38:18 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 04 Feb 2026 09:38:11 +0100
-Subject: [PATCH v2] meson: wire up gitk and git-gui
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PG5UCPqY"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-64942ebf1a3so6054719d50.3
+        for <git@vger.kernel.org>; Wed, 04 Feb 2026 01:31:39 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770197498; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ben0WmGEDsmtG8Q6MMn8/LAv/joN8Q53nb1ZrFQHLeVplLN/cUZJy/YBGdpafMucFS
+         joXYXHP9pQoFcP60DafLIuSkmv1TCat9lK9Jm8WPXFF6RMsb0O7Jy3KJ3xuB7L3fuqza
+         A1V3n9wh+7Eg91t0KwiMnHSQiAUkt8kjdMLJ0cllhOAabJOGuMjUmPklQFX94D3vczK7
+         Ho3+2+gxXryi7TUEKzqi2yh6QnH5xT2HrmeQSChUrx331ntMK35FSncGxnESM7RXlHn6
+         d5mFK7hntjs/NC0xufan8j4isS99Uka++HCjUTU4vVSgb+eJEdAkPZj9dzNu6w0z/FgL
+         d5rg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=WbrdpCMmvmr4w+OLK58YuHckW1U5f8Y/Pwx1TdwnTRA=;
+        fh=HzzSnR4Rwro+v40uPs620AuPWprvsOw9+XSrcVIPbqo=;
+        b=CNkBIohLA7G7Q/AxyHOU6e2Znegd6YkZkOw8Ytiy5Swi6PQH+DURdB+VRO2KemzgU5
+         wNcTo/M/J/OFta5YzjKXRUhrn5tiONEU7ahM3o1uUDm6KtIWlvb65hm+TtSW4TQZ87Nm
+         Cc6+w8d2bs+vvcafyhsFqSFTzGfALacegxz76LH0U8fwuJOu6esN7XQYb7sQleVQJxQZ
+         szREkb991+AWfbADlJiIcrWza01JJsmnNYLUu7xW+o+ndC2DzRPb7r6f96hFXUkFT/kQ
+         rRk+oA5oUy1LVPWiGIyX7fskfkTV0LvOiR9Zq5b+e5Qrok+ap7sGVBo581isJye5Sa1Q
+         10Wg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770197498; x=1770802298; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=WbrdpCMmvmr4w+OLK58YuHckW1U5f8Y/Pwx1TdwnTRA=;
+        b=PG5UCPqYi3zYt9WHAXT1ZHEdm7Hno6K5vMqQaxz5QM1fux5CpjFjOCe4m9cgTX+yMb
+         VxZFcnrig+JR3yvPc/KR3bbMCwwjq8R+GBy3v93oq8be8cC3tTw1RQFDm0SvZGOjVzZN
+         85aH/fby/tPI6h+VoYTm0tipQk7S1/oO4IIzTcWY6/r9sep5sH3omnn3dM3UiUSLRXQg
+         9LxGyTnWuOOZ56kDZba2YLBMAVfZS/bu8Ge8bhKyUsd0PUR19+pmWsR05JhtSVvSFim0
+         EKgCjhWrehtcrQRtWwsTghCN1mrmb+/5UPswP66pEI5lLL3jG1KKIohWNkMIl3BOKWU3
+         WFNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770197498; x=1770802298;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WbrdpCMmvmr4w+OLK58YuHckW1U5f8Y/Pwx1TdwnTRA=;
+        b=uYoLu17QuTtpLQuYlxscfi9sN7THd2pN5rC9lFhhTwEldVReiQtWsfn3FuMaN6+SW7
+         15lZctAjRHNVe8PyC18iN3E4xeIw4Q2X5R8VgXjiqy4d46DqsFK9NdOqCgU7VOfzNQmq
+         QAqbT337Ti8EAfu7i9JNBHf2IFWzFZQ+q8NlaajhLNjRO3a+AzXOgMzxmbBiLW6B6axl
+         hUoi2a5EvusIIfLSWbKiniQgQcpDvUY9BUs3GiiHokJuuIWtFh3Z8KCsRFWNnVJhKXMz
+         z3fOwbj+xSB9nkGzpzjie5q1zvYHxnx3qNQ+mGyTSiy+ZaLGNFxlk0bRhEmpDfMaGZTm
+         o+nw==
+X-Gm-Message-State: AOJu0YxX7iokVsmssi40qHTjD9/jsmry3oDs8w0RX+9zujuLMuyo8R/z
+	5yESexnA0cSPdro4kbY7bvMDRQK1a0CNd1NxHf9Uz2+cOg/PuxFuc6giS0xN2Xr4trQySfKjRkQ
+	/YuW3BsU9CXwqshSZ33wnqZsYejH8d1w=
+X-Gm-Gg: AZuq6aLT0xIL46D5F/UYC/+7KN1x6NPreBaIl3fcBQm5XF/kOvXEuO86VqXgwYYc8sb
+	SOGF6v53FRmulPvsWk/gWfTUY2tNzR3z848yRwAwfmS1umqn2s1MCEyNsnP63umKsit95f6vD/N
+	OlbMLunTk5bWfSXSQyqAywXRed0Yux0ThjgB5JFNSHrtKLFkdwpsCdUiqlPtCCct6lgtaNMdc5i
+	KrPpWKedJNC92ExUNA+ySfUxOdieHyLtPdGMW6d0ewANWADzOKCIl9y263h9Peg/WOP1uEKma06
+	eL9IO0s0owm3ZZe1W/uJzqoKnhath57wAO4u9X2KN1zBKshdYmuBX7WVHNpyqTp+Zht18nR0kat
+	a6XmTSg==
+X-Received: by 2002:a05:690e:d4e:b0:649:67da:4a01 with SMTP id
+ 956f58d0204a3-649db48d152mr2101960d50.54.1770197498383; Wed, 04 Feb 2026
+ 01:31:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
-X-B4-Tracking: v=1; b=H4sIAHMFg2kC/22NwQ6CMBBEf4Xs2TVbhIKe/A/DgdZWNkhL2oZoC
- P9uxavHN5l5s0I0gU2ES7FCMAtH9i5DeShAD717GOR7ZiiprKmhE6oK5zHiZKJ3mPQT04hKNbU
- UUrdUtZCXczCWX7v11mUeOCYf3vvJIr7pz9eK81/fIpBQKt1bS0pTT9dcOfIE3bZtHxejLaezA
- AAA
-X-Change-ID: 20250703-b4-pks-meson-tcl-tk-bb75616c8048
-In-Reply-To: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
-References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
-To: git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>
-X-Mailer: b4 0.14.3
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Wed, 4 Feb 2026 17:31:27 +0800
+X-Gm-Features: AZwV_QgwZj4XYLdceBE7ixLjVysEG2BNIeCiBsWz_Glfdqi6OBl4qQ1mZUUof0U
+Message-ID: <CANYiYbFhshDwfttKWYGDfO+K1qAz3ptVHuuHrWXhD2oYBF7baQ@mail.gmail.com>
+Subject: [RFC] Introducing AI Agents to Git Localization
+To: Alexander Shopov <ash@kambanaria.org>, Mikel Forcada <mikel.forcada@gmail.com>, 
+	Ralf Thielow <ralf.thielow@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
+	Bagas Sanjaya <bagasdotme@gmail.com>, Dimitriy Ryazantcev <DJm00n@mail.ru>, 
+	Peter Krefting <peter@softwolves.pp.se>, Emir SARI <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>, 
+	=?UTF-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>, 
+	Teng Long <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>, 
+	Jordi Mas <jmas@softcatala.org>, =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>, 
+	Phillip Szelat <phillip.szelat@gmail.com>, =?UTF-8?Q?S=C3=A9bastien_Helleu?= <flashcode@flashtux.org>, 
+	insolor <insolor@gmail.com>, Kateryna Golovanova <kate@kgthreads.com>, 
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>, 
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= <pclouds@gmail.com>, 
+	Ray Chen <oldsharp@gmail.com>, =?UTF-8?B?5L6d5LqR?= <lilydjwg@gmail.com>, 
+	Fangyi Zhou <me@fangyi.io>, Jiang Xin <worldhello.net@gmail.com>, 
+	Franklin Weng <franklin@goodhorse.idv.tw>
+Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Wire up both gitk and git-gui in Meson as subprojects. These two
-programs should be the last missing pieces for feature compatibility
-with our Makefile for distributors.
+Dear Git l10n team members,
 
-Note that Meson expects subprojects to live in the "subprojects/"
-directory. Create symlinks to fulfill this requirement.
+Two commits have been introduced in the next branch of the git-po
+repository to better support AI-assisted workflows for Git l10n
+translation and quality checking:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
+ - https://github.com/git-l10n/git-po/commits/next/
 
-I have upstreamed support for Meson into both gitk [1] and git-gui [2].
-This small patch series wires up support in Git.
+Before submitting patches upstream, I invite the community to test
+using AI agents for day-to-day Git l10n tasks.
 
-Changes in v2:
-  - Use symlinks instead of moving both gitk and git-gui into the
-    "subprojects/" directory.
-  - Rebased on v2.53.0, as it's been a while since v1 :)
-  - Link to v1: https://lore.kernel.org/r/20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im
+To get started, work on the next branch:
 
-Thanks!
+    git clone git@github.com:git-l10n/git-po.git
+    git checkout -b next origin/next
 
-Patrick
+Please try using AI coding tools to update translations in po/XX.po or
+review historical translations, following the prompts below:
 
-[1]: https://github.com/j6t/gitk/pull/8
-[2]: https://github.com/j6t/git-gui/pull/9
----
- meson.build         | 14 ++++++++++++++
- meson_options.txt   |  4 ++++
- subprojects/git-gui |  1 +
- subprojects/gitk    |  1 +
- 4 files changed, 20 insertions(+)
+ - "Refer to @po/README.md to update translations in po/XX.po."
+ - "Refer to @po/README.md to review all translations in po/XX.po."
 
-diff --git a/meson.build b/meson.build
-index dd52efd1c8..e96953afec 100644
---- a/meson.build
-+++ b/meson.build
-@@ -239,7 +239,9 @@ git = find_program('git', dirs: program_path, native: true, required: false)
- sed = find_program('sed', dirs: program_path, native: true)
- shell = find_program('sh', dirs: program_path, native: true)
- tar = find_program('tar', dirs: program_path, native: true)
-+tclsh = find_program('tclsh', required: get_option('git_gui'), native: false)
- time = find_program('time', dirs: program_path, required: get_option('benchmarks'))
-+wish = find_program('wish', required: get_option('git_gui').enabled() or get_option('gitk').enabled(), native: false)
- 
- # Detect the target shell that is used by Git at runtime. Note that we prefer
- # "/bin/sh" over a PATH-based lookup, which provides a working shell on most
-@@ -2250,6 +2252,16 @@ configure_file(
-   configuration: build_options_config,
- )
- 
-+gitk_option = get_option('gitk').disable_auto_if(not wish.found())
-+if gitk_option.allowed()
-+  subproject('gitk')
-+endif
-+
-+git_gui_option = get_option('git_gui').disable_auto_if(not tclsh.found() or not wish.found())
-+if git_gui_option.allowed()
-+  subproject('git-gui')
-+endif
-+
- # Development environments can be used via `meson devenv -C <builddir>`. This
- # allows you to execute test scripts directly with the built Git version and
- # puts the built version of Git in your PATH.
-@@ -2276,6 +2288,8 @@ summary({
-   'curl': curl,
-   'expat': expat,
-   'gettext': intl,
-+  'gitk': gitk_option.allowed(),
-+  'git-gui': git_gui_option.allowed(),
-   'gitweb': gitweb_option.allowed(),
-   'iconv': iconv,
-   'pcre2': pcre2,
-diff --git a/meson_options.txt b/meson_options.txt
-index e0be260ae1..659cbb218f 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -43,6 +43,10 @@ option('expat', type: 'feature', value: 'enabled',
-   description: 'Build helpers used to push to remotes with the HTTP transport.')
- option('gettext', type: 'feature', value: 'auto',
-   description: 'Build translation files.')
-+option('gitk', type: 'feature', value: 'auto',
-+  description: 'Build the Gitk graphical repository browser. Requires Tcl/Tk.')
-+option('git_gui', type: 'feature', value: 'auto',
-+  description: 'Build the git-gui graphical user interface for Git. Requires Tcl/Tk.')
- option('gitweb', type: 'feature', value: 'auto',
-   description: 'Build Git web interface. Requires Perl.')
- option('iconv', type: 'feature', value: 'auto',
-diff --git a/subprojects/git-gui b/subprojects/git-gui
-new file mode 120000
-index 0000000000..c6d917088b
---- /dev/null
-+++ b/subprojects/git-gui
-@@ -0,0 +1 @@
-+../git-gui
-\ No newline at end of file
-diff --git a/subprojects/gitk b/subprojects/gitk
-new file mode 120000
-index 0000000000..b66ad18ae5
---- /dev/null
-+++ b/subprojects/gitk
-@@ -0,0 +1 @@
-+../gitk-git
-\ No newline at end of file
-
----
-base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
-change-id: 20250703-b4-pks-meson-tcl-tk-bb75616c8048
-
+--
+Jiang Xin
