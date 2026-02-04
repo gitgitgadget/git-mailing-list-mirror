@@ -1,132 +1,118 @@
-Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2492459C6
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:39:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8310423A77
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 15:23:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770215969; cv=none; b=Uh4RXCgxntmzeFOg7oVjtL6CX/t036NBrTrTPJ82CgKtmMD+aCWHqhFydtlWikOGJrCOQuj7BH1yvmQzoiqTTzcZaEyfpcfjRksjxBsRN6fk0iwZBmJ9vPBBFmmAH9q7M+f1VJ4yc2QnIfpMS4UFJUONjEJzZnzBg3QxUVMV/yk=
+	t=1770218606; cv=none; b=c/ZOM2sUomR0FsTfvYvUlS/hOBWDw+UICE2iRDBMXf+I8NQmlZ99ovUepondFgNv/GAR5xvFnwZW1QsfHpF6ZNoUjXmQdK43b4s16CHZ692/ybsO5M/MrTojxe+oObZd+kNhSqtZGIHrrv0qkM5X1GyyD6SBaMxMx2Vi+cyT1jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770215969; c=relaxed/simple;
-	bh=4ADdD3bu74uuW7HHAzKQk8D0iNPaFz85BIEr/marsH8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h8SBZ7OJKKPOmnfMcWzQcgLaU59PNc4damahzWZXrkjXDlJo130o52qXnqHfWyMKnnJtOeM1VjrDZCysmVK2UUjxgO7YX4cQLxv9xwUBF2jxKr/QKVR4Jsk8Rhs5J0x07lk8VYFbFsiYmCn9eKjVjOpb2neAyhkTxzlPDopDTNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KzL3zTXh; arc=none smtp.client-ip=209.85.210.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770218606; c=relaxed/simple;
+	bh=ulOW63tYmvhBSS5vaNU1xn1Gwxs8FeI+HAeCMZjfAqA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DPzqRYJY2woFqxFOkLfWiRrakg+Y5b5UDQVq7FFB4WVM0rykdU0NVdRQUN9m2/pEhVXpIigIguFSfNFle3iYB891KXo/DunhfHvu78//s6bom5XrKBljcRqimWxaBh5Oi9rtYx4Np20d5CjkRBzhUNwMPpGdFB88gv8KYBXbhsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mfK2milD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KzL3zTXh"
-Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-8230f8f27cfso3690698b3a.0
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:39:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770215968; x=1770820768; darn=vger.kernel.org;
-        h=disposition-notification-to:in-reply-to:content-transfer-encoding
-         :content-disposition:mime-version:references:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J66gf9aTvIBRnX3IQKdy2RyvPO/Csf+8zTpFBhE2QnI=;
-        b=KzL3zTXh+EL0dHzCxUXNnpU1BgK3hKt7IwYziIGNp75QUEynzt4ICDVkl2OM05YsXi
-         +54dIFojjT3uFP0fafY5abhMQrh79SjmmglC9NHAUwcLDv756TfzvlmTTxpmMgyeMleA
-         LMTvDMXnQpvZpJrNAi8g+D3/EYy2toQQ0SrkS+GmFJRMejyUm3PdAqJaG1Z5L7rnP2Oz
-         Ll0vNVppS8To/LvhGjAZZI+hQ5wmH0wcqa7V9m61hf8A0eLrMxpykfEVAhJvi2+2UCeM
-         D8wDHsT0M+fai2hstH7Dtr0DuA6NNDZWQiuEaXsmaBAnB43Yla675zzVXZFVr7r4f6jN
-         F8eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770215968; x=1770820768;
-        h=disposition-notification-to:in-reply-to:content-transfer-encoding
-         :content-disposition:mime-version:references:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J66gf9aTvIBRnX3IQKdy2RyvPO/Csf+8zTpFBhE2QnI=;
-        b=Yo87OkAS93Sh4/pOU44u2TODkqfbEyqkACZBVbF4KvWtRPmVEeOQHdKJs1gHUdnN25
-         YiQIP2TM2pcqQPFByH5nvgKkTsZLrZOHye0g+//KuBAb/lEge/U8+zwr9H56NJym+K25
-         tASZg8rc9/dKMDCfllHtah74j12AXebInDZ3PWlsuY5kZK+k/IcNSdB7sdkGozm0nbiX
-         7PnfbxR8dXgK12G347PRCoyf6TRmQ2gjIy03LKJllboAn1fVk7cMLOsA1LrSfWUGuijB
-         CzV8CW4QXlM7zIvWWooXA2ZKTU6dXyO0chRzushwRQpwE/ikOuNSSh97TQjts1Zp8zjW
-         rPNw==
-X-Forwarded-Encrypted: i=1; AJvYcCUasMhQnqaLYTA2Wbl5UODvNcNn9AZpC1m5KenVaCMJd1ku0R05PI39bxnBp8okW6+6nkM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6rPX8y9Iwe25T6TSLeUvrpMFI+NG/Rdjf1o6flq1YGBqO9HtY
-	y9eOK8/P1nyYlhXBM2NNeB+V/NHqqUTzfMFz+yogXu0De0boQ/170JZp
-X-Gm-Gg: AZuq6aJ2LUYVeZ/+A0hEQIEvNa4HorvwDsMDIgLwwFuWZkvwa2gzrJYtnfNgYd9jMho
-	AKZKxE/wkcGmKLn8vcZ0cKKNJ4U4VI6ivHqf8cIGeEJ3ZWlqLBQdYJUPlUoXanVawjRauKTa5Ow
-	adbgrG2Lux7wXYFX6TaoGN64yqqCrLSa0Ih93crmDMnu4hfBc5fJNyvnN0wamNptVPZpdfHXhvw
-	sQinaN1pIPPaOOYFNZhQAnA0EgTC0PqTfARMiYKTR3yR+mVURyWX0dFBGQe1LcptPnq4tpGV3Ox
-	Se8hYkHJZawwW9zhgZFP/M4egp7Pyh5sdJqFv+z+Fc4EY1+L/aaWCaioz5NBMsLhHzeJ7cg+iQ9
-	KkcerSCCYXOHz48ZFB60oiCr1BG2X1sFe3tPDVYqY/YJrGriAOCm4UW/DhjfnkTGtE4g1g9wRVr
-	5zOO3kwtWzMQVPdrTN1cc=
-X-Received: by 2002:a05:6a00:a227:b0:81c:6ca8:8007 with SMTP id d2e1a72fcca58-8241c7229b2mr3190764b3a.69.1770215968352;
-        Wed, 04 Feb 2026 06:39:28 -0800 (PST)
-Received: from localhost ([2a0c:b641:69c:caa0:bcb7:3b3c:acc6:a132])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8241d1d338bsm2689143b3a.28.2026.02.04.06.39.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 06:39:27 -0800 (PST)
-Date: Wed, 4 Feb 2026 22:38:54 +0800
-From: =?utf-8?B?5L6d5LqR?= <lilydjwg@gmail.com>
-To: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Mikel Forcada <mikel.forcada@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?iso-8859-1?Q?Jean-No=EBl?= Avila <jn.avila@free.fr>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>, Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>,
-	Jordi Mas <jmas@softcatala.org>,
-	Matthias =?iso-8859-1?Q?R=FCster?= <matthias.ruester@gmail.com>,
-	Phillip Szelat <phillip.szelat@gmail.com>,
-	=?iso-8859-1?Q?S=E9bastien?= Helleu <flashcode@flashtux.org>,
-	insolor <insolor@gmail.com>,
-	Kateryna Golovanova <kate@kgthreads.com>,
-	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Ray Chen <oldsharp@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-	Franklin Weng <franklin@goodhorse.idv.tw>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [RFC] Introducing AI Agents to Git Localization
-Message-ID: <aYNZ_jsPtXbn6Nu-@lilyforest.localdomain>
-References: <CANYiYbFhshDwfttKWYGDfO+K1qAz3ptVHuuHrWXhD2oYBF7baQ@mail.gmail.com>
- <534b9313b19a73bcee6e0ac1d7299e19@softwolves.pp.se>
- <aYNC5dlL8wdwdFuy@kitsune.suse.cz>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mfK2milD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA79C4CEF7;
+	Wed,  4 Feb 2026 15:23:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770218606;
+	bh=ulOW63tYmvhBSS5vaNU1xn1Gwxs8FeI+HAeCMZjfAqA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=mfK2milD/D8fGGJRU5Pdm0Ol6b7DljaTqV1xUUpvdOvXbxolrkv6U2EkGV5MK6dgX
+	 Ja6tyeLEWF3vXMKtxjiZRVNrrLjma7ifH97geffhp94utnyICbmiRpu+tWTQjH1yYR
+	 afkzyUth5Fko7TsGWrUqgydt/1KdNj1hZG4aGXwNk1bhmop7gpyl/RGST8vdi3r/Hs
+	 5dPbpzPQ+lFNUX2WGv1up8JFAOWBj9401jMjc7xIyEAWbIQDhnv1yZdFZudpLICgBD
+	 H+WHmIu1c+gKSDziLmbKRVFsB7LIh/4RjawdGa5YcbbzCnSguyzyRDaluC/6upMFKD
+	 voN3yXQSNj6uQ==
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: git@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Neal H. Walfield" <neal@walfield.org>
+Subject: [PATCH v1] gpg-interface: Signatures by expired keys are fine
+Date: Wed,  4 Feb 2026 16:23:06 +0100
+Message-ID: <20260204152306.1767112-2-ukleinek@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2711; i=ukleinek@kernel.org; h=from:subject; bh=ulOW63tYmvhBSS5vaNU1xn1Gwxs8FeI+HAeCMZjfAqA=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBpg2RaJjNsosOnRQBn7b5Fhqk4MOpX6sOlK6akx O03UiKdD56JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaYNkWgAKCRCPgPtYfRL+ Tg+nCAC0da8jc54NHOIJvOb2pYMk8uoe8n/Xu8pcyLsSnDbDxqpPooSBILrKHwFuYdBRkyrT/Ou EeooIKZSg5ZXKSQFfuSPtrly61O+VmtZrAlTTD7euACwkHEV1Mtlro2WYgkRuZcOsm10JgjcUht xeUaG/caYbPzLB+DwvJt3WaI/63FOigow4hnJYF5dX33Ef3JhQHiiFmWWQRPoKAuab1m7qJWMJt R0qU0Kidjx60QVtx8JIgCG8hznCR2RvyghjCB2+ARNxb2Wa6vpCrq4FBvhNv47bK9MSMv2HrpuL +/TLXVYE45OagHtHul4mwVw8ms2DmNrS0KXGFgtW51CLakhG
+X-Developer-Key: i=ukleinek@kernel.org; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aYNC5dlL8wdwdFuy@kitsune.suse.cz>
-X-Mailer: Mutt 2.3 (50e3b1f3) (2026-01-25)
 
-在 Wed, Feb 04, 2026 at 02:00:21PM +0100，Michal Suchánek 写道：
-> On Wed, Feb 04, 2026 at 12:58:05PM +0100, Peter Krefting wrote:
-> > 2026-02-04 10:31 skrev Jiang Xin:
-> > 
-> > > Please try using AI coding tools to update translations in po/XX.po or
-> > > review historical translations, following the prompts below:
-> > 
-> > No.
-> > 
-> > Please disable this altogether for the Swedish localization. "Translation"
-> > using stochastic parrots is not mature and just creates gibberish that takes
-> > more time to clean up than to do the translation from scratch manually.
-> 
-> Hello,
-> 
-> a similar attempt was widely reported, eg. here:
-> https://linuxiac.com/ai-controversy-forces-end-of-mozilla-japanese-sumo-community/
+If a signature is done with a valid key and that key later expires, the
+signature should still be considered good.
 
-FYI, less known is the fish (a command line shell) zh-CN translation
-fiasco. Last time I reviewed zh-CN translation for git there were
-a bunch of nonsense. And I'm pretty much given up the
-docs.python.org's zh-CN translation.
+GnuPG exmits in this case something like:
 
-I don't really care how others do things, but I hope that I'm not the
-gatekeeper to review or be fed up with rubbish sentences.
+	[GNUPG:] NEWSIG
+	gpg: Signature made Wed 26 Nov 2014 05:56:50 AM CET
+	gpg:                using RSA key FE3958F9067BC667
+	[GNUPG:] KEYEXPIRED 1478449622
+	[GNUPG:] KEY_CONSIDERED D783920D6D4F0C06AA4C25F3FE3958F9067BC667 0
+	[GNUPG:] KEYEXPIRED 1478449622
+	[GNUPG:] SIG_ID 8tAN3Fx6XB2NAoH5U8neoguQ9MI 2014-11-26 1416977810
+	[GNUPG:] EXPKEYSIG FE3958F9067BC667 Jason Cooper <jason@lakedaemon.net>
+	gpg: Good signature from "Jason Cooper <jason@lakedaemon.net>" [expired]
+	[GNUPG:] VALIDSIG D783920D6D4F0C06AA4C25F3FE3958F9067BC667 2014-11-26 1416977810 0 4 0 1 2 00 D783920D6D4F0C06AA4C25F3FE3958F9067BC667
+	gpg: Note: This key has expired!
+	      D783920D6D4F0C06AA4C25F3FE3958F9067BC667
 
+(signature and signed data in this example is taken from Linux commit
+756f80cee766574ae282baa97fdcf9cc). So GnuPG is relaxed and the fact that
+the key is expired is only worth a "Note" which is weaker than e.g.
+
+	gpg: WARNING: The key's User ID is not certified with a trusted signature!
+	gpg:          There is no indication that the signature belongs to the owner.
+
+which git still considers ok.
+
+So stop coloring the signature by an expired key red and handle it like
+any other good signature.
+
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+---
+Hello,
+
+the motivation for this patch originates from a mail correspondence with Linus Torvalds,
+see
+https://lore.kernel.org/ksummit/CAHC9VhRwMpSCphW_FsHojX1r12D5MOMUBm6MAzpGYD_FDjEVtA@mail.gmail.com/T/#m6cc3cc4b599658cab6012326993a1261fd641046
+for the details.
+
+Best regards
+Uwe
+
+ gpg-interface.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 47222bf31b6e..6635c6c8e16f 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -382,7 +382,7 @@ static int verify_gpg_signed_buffer(struct signature_check *sigc,
+ 
+ 	delete_tempfile(&temp);
+ 
+-	ret |= !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ");
++	ret |= !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ") && !strstr(gpg_stdout.buf, "\n[GNUPG:] EXPKEYSIG ");
+ 	sigc->output = strbuf_detach(&gpg_stderr, NULL);
+ 	sigc->gpg_status = strbuf_detach(&gpg_stdout, NULL);
+ 
+@@ -680,7 +680,7 @@ int check_signature(struct signature_check *sigc,
+ 	if (status && !sigc->output)
+ 		return !!status;
+ 
+-	status |= sigc->result != 'G';
++	status |= sigc->result != 'G' && sigc->result != 'Y';
+ 	status |= sigc->trust_level < configured_min_trust_level;
+ 
+ 	return !!status;
+
+base-commit: b2826b52eb7caff9f4ed6e85ec45e338bf02ad09
 -- 
-Best regards,
-lilydjwg
+2.47.3
+
