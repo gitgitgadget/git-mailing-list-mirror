@@ -1,116 +1,184 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14A339E6E1
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 23:26:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E97FEEC0
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 00:00:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770247576; cv=none; b=i30rV843Da/fdMMk5TOEcMdnu+W3a4Bc9TkoAdRHloY99qq7/2UGvppmgmaQt1qRIDj8KMmFCmdAwaLuLeMDSfQd0GB1tM60M2sVBqJl03TsWRdMaOwBbrm3gsaPiLQFMd9BPIKc7QqENIwPgLOkBhKnZvs7OdG4NfOGU2Mk3FI=
+	t=1770249656; cv=none; b=n3FzyNtXwUtBH5IYfgcHQcLNiazz9x/4NKMHZtuQQVD6/7I7BSdA+GoTicqNtYQ1AwuIm0ouB8+O6sQGGKgmTnHvHJ2ep4Ke4L2cqXNK/efdWtl7UujMJ/XG7w4rfuyIYa0YNLQJM40mGBkulYwqKl4ZySYRwH+ehvKggZahUJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770247576; c=relaxed/simple;
-	bh=ONyJwS3pTvvyeQSKSlfY70OqhgMjPhxZWiM3UZbuSMs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FHAXIl3jS9A/G10Q7csDoH0cz1IuAT53LuTg4p01x2sWrupvRVBQ9THO3UF0S3Q0W3Bkel9sB/hO00OHXKPzKOQCOl2KYmO3OznJZf6uKSVLAVXVyFjUIN4seSmzNnhQcVCwZjVCOSvOI5U+/5Ps+5dxHu5pwt94yHxP51G04nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EPlYNp92; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MKyvn8Ay; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EPlYNp92";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MKyvn8Ay"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0011BEC0575;
-	Wed,  4 Feb 2026 18:26:14 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Wed, 04 Feb 2026 18:26:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770247574; x=1770333974; bh=/mQxJcsSU6
-	XgADubxsyf3kAtfGnzcb0DDUWAWMN18RA=; b=EPlYNp920X8VHZAnGMNJDHd6gf
-	sV+mgMBzZA6wRWG8gz4bYrzh2tr2h/TsSst+Gd8NQJ1A34swbGOGd0KWFCgjQP+D
-	if4k+CxhAxIYinHz+w1Qe/1hD4nQQ+qYm7UjoCuAC9/xssTk5rb1prmGHLEwcFl8
-	DPzqEErYtgXZjxVv/A7VbExHsDrxPfsBGCPQ8M2Qv5BfX1ICb9Zremon8LVp1lGk
-	dUNpM5g9QbkVhZc6tkW3aIAd7AZDLzzS+3FcKJyV2P+SLyNMfnsNc/JghRfzx2Kj
-	gft8fPc4ot0dMOEQH1IbgTJa2MTucnD24uc/3emwcJx5/1LzYUKo5MjHFNOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770247574; x=1770333974; bh=/mQxJcsSU6XgADubxsyf3kAtfGnzcb0DDUW
-	AWMN18RA=; b=MKyvn8Ay93l7LZyY8c25uVAbhg8ataiMzf8uz1pyueJR37gRZVs
-	yJVPYwsNZ3RQOdft7cJ5ml80hGoAIHtJ2BfByGpCaet3XiRnMeZpkKmZpIez22AI
-	vYCaGSSa8Tm2QOTukKXwb9R6BXvo9LBCDsWuI9DXo3jsVEEcJmhr42jHpVJJlLUa
-	eBgg2YDAx7niOnK/DkQ022sUEOPtrkfUi0wC+30ncgfdd4hkha6wVirekUfuolyR
-	eSUO/Y7VGwQo1+LStxuv6ATBEf5HjClMSNEJTqnZsN+M3vbNgoSnWJ8hLdm87KRu
-	hmF+CmeTUw+vz/YQvw19PtSSStePNzcCLfQ==
-X-ME-Sender: <xms:ltWDaQ2jW8-nOqU0tu73MmFi2ytM_k1AcLqx7V_bcEVmMzPi0YTxjA>
-    <xme:ltWDaSHbrJcKOLxIDqz2bZ380US8vTBlEnjcOyAuoJp7RFbVwymkBODzAETUNYzsX
-    Rj8ZN9-66i9H37MIszIBZY2pE7uiGmrZRhHgB9ICom6lgj_x9rK_A>
-X-ME-Received: <xmr:ltWDad4Az-90mYFoS9Rox-IViaCeVMMUhtWnLQkSwim66Yjs9ww3YtjljFTaBL1uQPNfBhIccZS5_iwkcplF7paKp4d_YMJ9DQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeefjeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:ltWDaYvgsj8OyPYqiNuHRF6veZ_9XaL-o9zR0aK5yrk2XtYb0QAm9g>
-    <xmx:ltWDae6ySwzfxh0w0mONu0s02vCAu0tYi1xWo7BpG_lbpaWsF8tnYQ>
-    <xmx:ltWDaTVR--RkNkaDr0PqRM9ZAbpZDQkmsVKB5Fme2lHqPvxlewsHAg>
-    <xmx:ltWDaQ9FvqQ3vzxD5uwu1bb8pcxlHQ9MrqZ5FNVgk0gJr4ufHcd7Jw>
-    <xmx:ltWDaZaoSvuTVYJHlhlrVQdBV5_J9IXOWFGoaPdslG_Iwp2BTw6wY4pH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 18:26:14 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 02/11] config-batch: create parse loop and unknown command
-In-Reply-To: <ecd26a0f1fad5615aea07a388e34f02e9f33b870.1770214803.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Wed, 04 Feb 2026
-	14:19:54 +0000")
-References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
-	<ecd26a0f1fad5615aea07a388e34f02e9f33b870.1770214803.git.gitgitgadget@gmail.com>
-Date: Wed, 04 Feb 2026 15:26:13 -0800
-Message-ID: <xmqqv7gcm6p6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1770249656; c=relaxed/simple;
+	bh=DQ/rOBieK/5ygha+Q+V42NJLplrmN8ikceDMg3q/wgs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kCOfF0rKufPJLYu3gfVOi9J1YJj5XEy05mBneP9NZ6wySgu/xAXXuLT7hpCdkVDqT3opWNUfeLo7u9KCtbHwvj/3w/K8vQhAIPrLwAYwPYDE8yS6vnslBUNdlHtI5CEPBH2h2V1tFMBJUBL7eazMs4PEvYn4U44ieAz418OsA+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
+Received: from [2001:3b0:22:ba05:3c99:5d75:c899:ae5e] (helo=glandium.org)
+	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <glandium@glandium.org>)
+	id 1vnmCc-000000070nE-2upR;
+	Wed, 04 Feb 2026 23:22:32 +0000
+Received: from glandium by goemon with local (Exim 4.98.2)
+	(envelope-from <glandium@goemon>)
+	id 1vnmCU-00000006mFG-0pTI;
+	Thu, 05 Feb 2026 08:22:22 +0900
+From: Mike Hommey <mh@glandium.org>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	Mike Hommey <mh@glandium.org>
+Subject: [RFC PATCH] Move rust gitcore crate to a different subdirectory
+Date: Thu,  5 Feb 2026 08:22:08 +0900
+Message-ID: <20260204232208.1615320-1-mh@glandium.org>
+X-Mailer: git-send-email 2.53.0.1.g318204b87e.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+While `src/` is the default directory convention for Rust projects, it
+is too generic in the context of a multi-language project that is barely
+starting to (optionally) use Rust code.
 
-> +static struct command commands[] = {
-> +	/* unknown_command must be last. */
-> +	{
-> +		.name = "",
-> +		.fn   = unknown_command,
-> +	},
-> +};
+Additionally, having `Cargo.toml` at the top-level of the repository
+implies that one can run `cargo build` directly, but this doesn't
+produce anything useful on its own.
 
-A useful trick is to deliberately omit the trailing comma after the
-element that MUST be last.  You did that for the __NR enum element
-in a later step.
+Moving all Rust-specific files into a dedicated `rust/` subdirectory
+makes things clearer.
 
-> +#define COMMAND_COUNT ((size_t)(sizeof(commands) / sizeof(*commands)))
+---
 
-Isn't this ARRAY_SIZE(commands)?
+The above is a post hoc justification. I do think it makes sense to do,
+but I should mention my real immediate motivation.
 
+git-cinnabar, a git remote helper used to talk to Mercurial servers, is
+a project based on libgit (the C parts). As such, its repository
+includes the git codebase as a submodule.
 
-> +	while (!(res = process_command(repo)));
+As of about 3 years ago, most code that is not libgit in git-cinnabar is
+written in Rust, and is published on crates.io.
 
-Please write an empty statement on its own line, i.e.
+Part of publishing on crates.io involves running `cargo publish`, which
+does `cargo package` under the hood. `cargo package` has the feature
+of... not including directories that contain a Cargo.toml, so upgrading
+libgit to 2.52.0 breaks the publishing process because all of the git
+source code is skipped, and git-cinnabar can't be built as a result.
 
-	while (!(res = process_command(repo)))
-		;
+Of course, what this means is that this change is merely kicking the can
+down the road, because the problem will reappear when the rust code
+becomes non-optional in Git, thus why I'm making this RFC at the moment.
+
+ .gitignore                    |  2 ++
+ Makefile                      | 12 ++++++------
+ meson.build                   |  2 +-
+ Cargo.toml => rust/Cargo.toml |  1 +
+ {src => rust}/cargo-meson.sh  |  0
+ {src => rust}/lib.rs          |  0
+ {src => rust}/meson.build     |  0
+ {src => rust}/varint.rs       |  0
+ 8 files changed, 10 insertions(+), 7 deletions(-)
+ rename Cargo.toml => rust/Cargo.toml (89%)
+ rename {src => rust}/cargo-meson.sh (100%)
+ rename {src => rust}/lib.rs (100%)
+ rename {src => rust}/meson.build (100%)
+ rename {src => rust}/varint.rs (100%)
+
+diff --git a/.gitignore b/.gitignore
+index 78a45cb5be..c7453b6fb2 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -258,3 +258,5 @@ Release/
+ /contrib/buildsystems/out
+ /contrib/libgit-rs/target
+ /contrib/libgit-sys/target
++/rust/target
++/rust/Cargo.lock
+diff --git a/Makefile b/Makefile
+index 8aa489f3b6..d7e9b7fd75 100644
+--- a/Makefile
++++ b/Makefile
+@@ -939,9 +939,9 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+ LIB_FILE = libgit.a
+ 
+ ifdef DEBUG
+-RUST_TARGET_DIR = target/debug
++RUST_TARGET_DIR = rust/target/debug
+ else
+-RUST_TARGET_DIR = target/release
++RUST_TARGET_DIR = rust/target/release
+ endif
+ 
+ ifeq ($(uname_S),Windows)
+@@ -1545,8 +1545,8 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+ 
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+ 
+-RUST_SOURCES += src/lib.rs
+-RUST_SOURCES += src/varint.rs
++RUST_SOURCES += rust/lib.rs
++RUST_SOURCES += rust/varint.rs
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@OLD=$$(cat $@ 2>/dev/null || :) && \
+@@ -3007,8 +3007,8 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
+-$(RUST_LIB): Cargo.toml $(RUST_SOURCES)
+-	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
++$(RUST_LIB): rust/Cargo.toml $(RUST_SOURCES)
++	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS)
+ 
+ .PHONY: rust
+ rust: $(RUST_LIB)
+diff --git a/meson.build b/meson.build
+index dd52efd1c8..6732198042 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1723,7 +1723,7 @@ libgit_sources += version_def_h
+ cargo = find_program('cargo', dirs: program_path, native: true, required: get_option('rust'))
+ rust_option = get_option('rust').disable_auto_if(not cargo.found())
+ if rust_option.allowed()
+-  subdir('src')
++  subdir('rust')
+   libgit_c_args += '-DWITH_RUST'
+ 
+   if host_machine.system() == 'windows'
+diff --git a/Cargo.toml b/rust/Cargo.toml
+similarity index 89%
+rename from Cargo.toml
+rename to rust/Cargo.toml
+index 2f51bf5d5f..29e6d1f4e1 100644
+--- a/Cargo.toml
++++ b/rust/Cargo.toml
+@@ -6,5 +6,6 @@ rust-version = "1.49.0"
+ 
+ [lib]
+ crate-type = ["staticlib"]
++path = "lib.rs"
+ 
+ [dependencies]
+diff --git a/src/cargo-meson.sh b/rust/cargo-meson.sh
+similarity index 100%
+rename from src/cargo-meson.sh
+rename to rust/cargo-meson.sh
+diff --git a/src/lib.rs b/rust/lib.rs
+similarity index 100%
+rename from src/lib.rs
+rename to rust/lib.rs
+diff --git a/src/meson.build b/rust/meson.build
+similarity index 100%
+rename from src/meson.build
+rename to rust/meson.build
+diff --git a/src/varint.rs b/rust/varint.rs
+similarity index 100%
+rename from src/varint.rs
+rename to rust/varint.rs
+-- 
+2.53.0.1.g318204b87e.dirty
 
