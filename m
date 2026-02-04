@@ -1,187 +1,203 @@
-Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ADD194A60
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 13:30:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DB91C862F;
+	Wed,  4 Feb 2026 13:34:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770211853; cv=none; b=iELqivpT33eeUg76sbAONcD0HQBN5j9khg4cgCMBTStOleB12sUu72nkgSyBRUTOkwEfDo68UzrrJgkljUomKPV+GMPE1ty4a61S6hUJA/TdMpJLq0Ro8RlvxcJxH6zMdSMAwsEvMHXHfhOZRPqcUhSQ6cn4T0bE5kQbiD5mQGo=
+	t=1770212041; cv=none; b=uLv3BB6KGbMkfD3512ikpRaJtljEtZftzsHUw9DSANQnrS379f93JCRyTg3z0pys7R9shya+zm4PA+JoveMBhHIfEFY/oR5KHRle7sppcmSEP8NUe5BBcbYJ8hqtMVTeLJ7U66j7RPABTjyPHcZzj8No1UGS11kf4bjYvArd8II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770211853; c=relaxed/simple;
-	bh=XibJnJHQom3yfJ4qtt2FZLbEalLeDZ/USoprr9bC9+8=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=fD//HKJc5mVOx6KNDT01tLOZEtUWUEDzCUwz4xw07KEEhH3ZFRpNAPqbCbpU+inR7I6WF9a5eC0OrdYHNB/429as/meyt2zGgICp2A6Vsc6uJNv/JKp1qIguj8SB/kshqQtxPut+hh4AWmVL+67i484E50XIkfM0epLZGTG5xmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=x5gsLGhM; arc=none smtp.client-ip=185.70.43.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1770212041; c=relaxed/simple;
+	bh=xwpW+NxkA3r+ZyPa5hXyZXd3opTw6d2rS5Te40zczpE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nkHhXI5uWUHdmtjPsWrenWUtJDWYdrr/h2sYIN6sjr1/BK3EEoez+Gj1xsRIbOHpyRBFeXe/hRUt+sf07m+ZYz0hJh9BnXPMkxeGQ7K3Q++KyAshUmsVdgDbEQXpeSJy58RN/TYiE5rruSjDvabwT71X9+ux9HD0FxgnOVIV9pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NRrFbJeY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="x5gsLGhM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1770211842; x=1770471042;
-	bh=4OFX4/ooBjUTjxb2L/gUGAFln3+l/X6WethLRa3WwBE=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=x5gsLGhMXU5uqNbzjQj+1TLJwboDImIk/YU7lAngx6moyD5KIQ2BiFricEUbCUy36
-	 CTaHBTTJ/ZEcoBsbQAtoDW2AUnyx1Kij5igXBdEKQoxbL6rwGrlfs1rHW60cI+fUdf
-	 Y6jDi5ZwlBE0D0qlhZDnOOZEwptCdzsJEC8cG/ZNAkLJfIfcQau/uj4ziAeeYr5SkH
-	 dZk5C/XoVoZlCrYECAqDWlBlzFNMZMbABScI6m5bI99r4bmElHjKv1fn0B4Ppy0Q5W
-	 5gxyv8prpzs/W9NoinO6Z4BWRflYbXMOSOBViZCmdb0m+bpfvv18mgqQBWEbYmt1nB
-	 OgluJOWTYb0rw==
-Date: Wed, 04 Feb 2026 13:30:38 +0000
-To: git@vger.kernel.org
-From: "Remy D. Farley" <one-d-wide@protonmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Tian Yuchen <a3205153416@gmail.com>, "Remy D. Farley" <one-d-wide@protonmail.com>
-Subject: [PATCH] fix git add :!x exiting with error when x is in .gitignore
-Message-ID: <20260204132747.1564157-1-one-d-wide@protonmail.com>
-Feedback-ID: 59017272:user:proton
-X-Pm-Message-ID: f381e2d63d5b1120947d939e8fe99338544164e0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NRrFbJeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5897C4CEF7;
+	Wed,  4 Feb 2026 13:33:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770212041;
+	bh=xwpW+NxkA3r+ZyPa5hXyZXd3opTw6d2rS5Te40zczpE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NRrFbJeYo1Eu7PxHwYTEPDboxcYBFpqOj//ESFEPRKAT+JZXwYPFl3RpPqWYf/QEI
+	 ASx1p2Ib8mavdu/k7BnZh7ezib6V0wHKsQKnkiUW1ZicmZ6kOhsI/q5f5Vnt7jHigL
+	 m9EhaiZ9R7jA8EgWqJ8gtd9b/b7S6RdsJOVzdwbF+Z4h3HnCIQgc6Uqy0/rGSfIUgt
+	 ziK3eMnUGpjvJtqjgB/YssgM+9cTfWwhpTrTJfaSqvDWuG2yK9gmlrgqR7k1sH7R8u
+	 gmkwLkZEG38KOWrl+fpW+gSCKwTlQKcV9Xoz/NDJ/TbHvxCekSbWg26magBijtKMoo
+	 Mj9DMuvnYxCdw==
+Date: Wed, 4 Feb 2026 14:33:57 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: linux-man@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Alyssa Ross <hi@alyssa.is>, Greg KH <greg@kroah.com>, git@vger.kernel.org
+Subject: Re: [PATCH] CONTRIBUTING.d/: Document format of 'Fixes:' trailer
+ fields
+Message-ID: <aYNITpLKCEYFOOsw@devuan>
+References: <3a656e90329f26d743d0904f56ae847951c852c7.1770150003.git.alx@kernel.org>
+ <87zf5p8jgv.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="u5ambhypebfc6e5b"
+Content-Disposition: inline
+In-Reply-To: <87zf5p8jgv.fsf@gmail.com>
+
+
+--u5ambhypebfc6e5b
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: linux-man@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Alyssa Ross <hi@alyssa.is>, Greg KH <greg@kroah.com>, git@vger.kernel.org
+Subject: Re: [PATCH] CONTRIBUTING.d/: Document format of 'Fixes:' trailer
+ fields
+Message-ID: <aYNITpLKCEYFOOsw@devuan>
+References: <3a656e90329f26d743d0904f56ae847951c852c7.1770150003.git.alx@kernel.org>
+ <87zf5p8jgv.fsf@gmail.com>
+MIME-Version: 1.0
+In-Reply-To: <87zf5p8jgv.fsf@gmail.com>
 
-`git add :!x .`, which is also executed as part of `git stash :!x`,
-seems to treat pathspec with and without exclude magic the same, exiting
-with error when "x" exists and is in gitignore.
+[CC +=3D git@]
 
-Git-add manpage doesn't specify that exclude pathspecs should be treated
-anyhow differently from normal ones, which seems like a bug. Two
-inconsistencies I noticed: `git add :!ignored .` succeeds when "ignored"
-file doesn't exist, and `git add :!ignored/x .` succeeds even when
-"ignored/x" file exists.
+Hi Collin,
 
-This commit makes makes `git add :!x` not error on x being excluded path.
+On 2026-02-03T16:01:52-0800, Collin Funk wrote:
+> Alejandro Colomar <alx@kernel.org> writes:
+>=20
+> > Signed-off-by: Alejandro Colomar <alx@kernel.org>
+> > ---
+> >
+> > Hi!
+> >
+> > I hadn't yet documented how to produce the Fixes: trailer fields in the
+> > Linux man-pages project.  We require the commit-date to disambiguate
+> > possible hash (and subject) collisions.  This documents how to produce
+> > them easily.
+> >
+> > I hope this will be useful to other projects.  I've been using this
+> > format for some time, and it has some nice properties: it shows at first
+> > glance the date of a commit (which itself gives an idea of how many
+> > stable versions would need to be fixed).  It can also be parsed by a
+> > machine, by having a consistent and simple (unambiguous) format.
+> >
+> >
+> > Have a lovely night!
+> > Alex
+> >
+> >  CONTRIBUTING.d/git                 | 16 ++++++++++++++++
+> >  CONTRIBUTING.d/patches/description | 11 +++++++++++
+> >  2 files changed, 27 insertions(+)
+> >
+> > diff --git a/CONTRIBUTING.d/git b/CONTRIBUTING.d/git
+> > index 4b7a95472..3f944a23c 100644
+> > --- a/CONTRIBUTING.d/git
+> > +++ b/CONTRIBUTING.d/git
+> > @@ -43,6 +43,22 @@ Description
+> >  		$ git config --global \
+> >  			sendemail.sendmailcmd 'mutt -H - && true';
+> > =20
+> > +    Commit references
+> > +	'Fixes:' trailer fields should have the following format.
+> > +
+> > +		Fixes: 12-char-hash ([author-date,] commit-date; "subject")
+> > +
+> > +	where the author date is optional, and only included if it's
+> > +	somehow important.  The commit date is often more important, as
+> > +	it's sorted, and thus can be used to find (with a binary search)
+> > +	a commit whose hash and subject may have collisions.  To produce
+> > +	such fields, the following git aliases are useful.
+> > +
+> > +		$ git config --global alias.ref \
+> > +			"show --no-patch --abbrev=3D12 --date=3Dshort --format=3Dtformat:'%=
+C(auto)%h%C(reset) %C(dim white)(%cd%x3B \"%C(reset)%C(auto)%s%C(reset)%C(d=
+im white)\")%C(reset)'"
+> > +		$ git config --global alias.ref2 \
+> > +			"show --no-patch --abbrev=3D12 --date=3Dshort --format=3Dtformat:'%=
+C(auto)%h%C(reset) %C(dim white)(%ad, %cd%x3B \"%C(reset)%C(auto)%s%C(reset=
+)%C(dim white)\")%C(reset)'"
+> > +
+>=20
+> I would recommend taking a look at the one mentioned in git's
+> SubmittingPatches. It looks fairly similar to yours:
+>=20
+>     $ git ref HEAD
+>     d9fb823121b1 (2026-02-02; "maintainer-makefile: propagate MAKEINFO to=
+ gendocs")
+>     $ git show -s --pretty=3Dreference HEAD
+>     d9fb82312 (maintainer-makefile: propagate MAKEINFO to gendocs, 2026-0=
+2-02)
+
+I've seen that format before (while investigating all the --pretty=3D
+options).  I didn't know that was used in git(1)'s SubmittingPatches,
+though.
+
+I considered it, and concluded that it was suboptimal for several
+reasons:
+
+-  It is unclear whether ', 2026-02-02' is part of the commit message.
+   Since it's common practice to quote the subject in other projects
+   --such as the kernel--, a format that quotes the subject is
+   preferrable.
+
+-  The date is a short and fixed-width field.  Readability is better if
+   such fields go early, as they would be aligned.  Compare:
+
+	8df2abb81a90 (man/man3/stpncpy.3: wfix, 2026-01-06)
+	a17ed1cefd7f (man/man3type/intN_t.3type: STANDARDS: These conform to C23, =
+2026-01-06)
+
+	8df2abb81a90 (2026-01-06; "man/man3/stpncpy.3: wfix")
+	a17ed1cefd7f (2026-01-06; "man/man3type/intN_t.3type: STANDARDS: These con=
+form to C23")
+
+-  I use a semicolon, which is a stronger separator than a comma, as
+   that allows me to use a comma for adding another sub-field to the
+   date field.  In some cases, the author date is useful:
+
+	$ git ref2 8df2abb81a90
+	8df2abb81a90 (2026-01-06, 2026-01-06; "man/man3/stpncpy.3: wfix")
+
+   This also allows further future extension, for example for including
+   the author and/or committer names, as other fields.
+
+I wondered a few months ago whether I should let git know about this
+to improve --pretty=3Dreference.  I guess this is the time.  I've thus
+added them to CC.
 
 
-| $ sh repro.sh
-| [...]
-| + echo x >.gitignore
-| + echo x >x
-| + git stash --include-untracked -- ':!x'
-| Saved working directory and index state WIP on main: c8a842d Init
-| The following paths are ignored by one of your .gitignore files:
-| x
-| hint: Use -f if you really want to add them.
-| hint: Disable this message with "git config set advice.addIgnoredFile fal=
-se"
-| + echo exited with code 1
-| exited with code 1
+Have a lovely day!
+Alex
 
+> Collin
 
-| # repro.sh
-| rm -rf repro; mkdir repro; cd repro
-| trap 'echo exited with code $?' EXIT
-| set -euo pipefail -o xtrace
-|
-| git init
-| git commit -m Init --allow-empty
-|
-| # Commenting out either of the following lines makes git add/stash below =
-succeed
-| echo x >.gitignore
-| echo x >x
-|
-| # Git add . is executed as part of git stash, as can be seen using strace=
- -ffeexecve:
-| git add -- ":!x" . # fails
-| # git stash --include-untracked -- ":!x" # fails
-
----
-I'm not sure who else to cc, last commit touching this code is 2ec87741
-from 10 year ago, being a mere refactoring. I think this bug was simply
-overlooked when introducing PATHSPEC_EXCLUDE.
-
-Thanks to Tian Yuchen for looking at my earlier submission (and noticing
-an awkwardly stupid bug there).
----
- dir.c                              |  3 +++
- t/t2204-add-ignored.sh             | 14 ++++++++++++++
- t/t3905-stash-include-untracked.sh | 23 +++++++++++++++++++++++
- 3 files changed, 40 insertions(+)
-
-diff --git a/dir.c b/dir.c
-index b00821f294..ed6b99e337 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2280,6 +2280,9 @@ static int exclude_matches_pathspec(const char *path,=
- int pathlen,
- =09=09const struct pathspec_item *item =3D &pathspec->items[i];
- =09=09int len =3D item->nowildcard_len;
-=20
-+=09=09if (item->magic & PATHSPEC_EXCLUDE)
-+=09=09=09continue;
-+
- =09=09if (len =3D=3D pathlen &&
- =09=09    !ps_strncmp(item, item->match, path, pathlen))
- =09=09=09return 1;
-diff --git a/t/t2204-add-ignored.sh b/t/t2204-add-ignored.sh
-index 31eb233df5..76c53fbfde 100755
---- a/t/t2204-add-ignored.sh
-+++ b/t/t2204-add-ignored.sh
-@@ -47,6 +47,20 @@ do
- =09test_expect_success "complaints for ignored $i with unignored file outp=
-ut" '
- =09=09test_grep -e "Use -f if" err
- =09'
-+
-+=09test_expect_success "no complaints for unignored file with ignored :!$i=
-" '
-+=09=09rm -f .git/index &&
-+=09=09git add file ":!$i" &&
-+=09=09git ls-files file "$i" >out &&
-+=09=09test -s out
-+=09'
-+
-+=09test_expect_success "complaints for ignored $i with ignored :!ign" '
-+=09=09rm -f .git/index &&
-+=09=09test_must_fail git add "$i" :!ign 2>err &&
-+=09=09git ls-files "$i" ign >out &&
-+=09=09test_must_be_empty out
-+=09'
- done
-=20
- for i in sub sub/*
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-unt=
-racked.sh
-index 7704709054..028ff3efc0 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -206,6 +206,29 @@ test_expect_success 'stash push --include-untracked wi=
-th pathspec' '
- =09test_path_is_file foo
- '
-=20
-+test_expect_success 'stash push --include-untracked with :!pathspec' '
-+=09>foo &&
-+=09>bar &&
-+=09git stash push --include-untracked -- :!bar &&
-+=09test_path_is_file bar &&
-+=09test_path_is_missing foo &&
-+=09git stash pop &&
-+=09test_path_is_file bar &&
-+=09test_path_is_file foo
-+'
-+
-+test_expect_success 'stash push --include-untracked with :!pathspec in .gi=
-tignore' '
-+=09echo ignored > .gitignore &&
-+=09>foo &&
-+=09>ignored &&
-+=09git stash push --include-untracked -- :!ignored &&
-+=09test_path_is_file ignored &&
-+=09test_path_is_missing foo &&
-+=09git stash pop &&
-+=09test_path_is_file ignored &&
-+=09test_path_is_file foo
-+'
-+
- test_expect_success 'stash push with $IFS character' '
- =09>"foo bar" &&
- =09>foo &&
 --=20
-2.51.2
+<https://www.alejandro-colomar.es>
 
+--u5ambhypebfc6e5b
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmmDSr8ACgkQ64mZXMKQ
+wqmlUQ/9FkDRyOMehzwpNzi6BI49zmE+YpFll6oY/7q9SzWeE1Nwema4YMGC2qKX
+EN7YFaRGIUhO3uapY9Co2Jw3Xx7nQUlD7CgqF+4zYg3agfhuayUCJSYR+a+hSGxr
+tIjw1gmtFkMK/SEtINyS7IpVZyi0xr3pG/hnjO3BQ1wkzpjl9nGDjvdpUpVN1MWG
+wLQA2tB+a8xpGzeDfccNfCuZq8htGLoUvyai/flm7YusaMJijGzXQfaC/ZVeWZpq
+7H0tH1/2wu1FkTQcCNV3O/9rkt08SnSfWO+gLTCUr9WsON2h3v7WrOGsryECBQih
+opL0vK/ZJNgokEMeEXvaAl8s53519GSUBGywkCRfUt2YOL/RWKIxIjWpVKv8Z4QR
+5jVua+OiWOnexMD3yk/HmCP6d0Ub9W6pyu8xhBwS2B5I9kS0iUr0XfND7I4hbgXb
+MWq9JPovCnYoTP6RlUomcYflXT3pK1MI0rxXC6tL6YsAE1MMznll+FOmJMOU7ia4
+tFwt8qb2b5tAWwLFw/kYfbiNQo2Wl69fxmVdbiGdYz5jAxvzaijNSKPB6MakL75f
+GAh35Caip1fX0gNAuMN53nwAnwlk2dj5r6hoMk929hnhBw22FfwySLUL3mpI6Cbd
+tOsBQaeu8OsnhCX3Os9duCd6AXEvIgcd9XuuVyaKJzQWCU8Bsj0=
+=7Zc1
+-----END PGP SIGNATURE-----
+
+--u5ambhypebfc6e5b--
