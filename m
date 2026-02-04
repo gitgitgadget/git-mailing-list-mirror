@@ -1,79 +1,79 @@
-Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C82313526
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 10:57:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED753ACEED
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 11:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770202674; cv=pass; b=H2SVb2LCtwi+E8VWgNUY0DFhn/nsQ+6Tw7QlGslwCA8R75CYxYih2HzNUeAUm5oerygYduc4cs4AzPZIECKnxR3UK0i21MdHuNEmtLC0ShOxqnLwI7HcOjqXHnfDoLndCO2PXTds182AN6BD7ThSjZSWbSJ7plTXlnPyEUuw5b0=
+	t=1770203183; cv=pass; b=aBAPfDftMLs5s74E1UWkmN8oRrCe4MD6aZB0or4WW8MJa/u7acqh+1kMz4Wemf/3XmfNDduP0ZneupG1nsZ9aOIbLiZ36SKbOMg0u+VWQdsja5SNcHaNHupxRf7i/y0He3usnGZkLwJ0qVeluvYpR+8UWekso5o7Gr+2eAbZTws=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770202674; c=relaxed/simple;
-	bh=AwhygTrTIAgVa1N1ZRNud3o1zvuZF5HinsIcu7Xvgks=;
+	s=arc-20240116; t=1770203183; c=relaxed/simple;
+	bh=QVSu9HKEpxT8PtpWRHWIWMlLW1Gl0siDkU2NmfQPNAQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Tt4XhtKH63Rstuad6t3SJYti0Mk4zi9VnEPuSXJDL3q1vdXhWOjLLPh2NOBaqGJF5NIHoVdWsRfav5ftaFbcz8nWT7AlTU2oC8PfzmNiG4WK6lfbVAvvvo2lXf2vKOH6gZOMmhr9EIdhylZ3NHr0HNtHPm8bRWxMGbzS3q9/41o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h5SIcDzu; arc=pass smtp.client-ip=74.125.82.53
+	 To:Cc:Content-Type; b=X0OPi1c3/W3HI7cWc8ZLRjmOzQG6tGQmzWfONbbubGxTTXAYh1/VKKZnQ4Pn+hSCAeakqp+yJeFrxdow4r2wIKVVcsHStIVhR4tlSohwvwe59Mg5lF68Zp91nmUUYqbBkbtoQ+Ev151JI7m8FiW8X+76IOaUY0MGoSGS5AOR7lM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U7psdLEc; arc=pass smtp.client-ip=74.125.82.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h5SIcDzu"
-Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-124566b6693so6028452c88.0
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 02:57:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770202674; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7psdLEc"
+Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-1248d27f2b9so8254690c88.0
+        for <git@vger.kernel.org>; Wed, 04 Feb 2026 03:06:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770203182; cv=none;
         d=google.com; s=arc-20240605;
-        b=bx5a4hKCjB4Ll4UEZdjAiXaQwroRFItojTkcvWJybyEmiv8LkIvdOMchpEDQD9YCOG
-         xsHY/l0Ofy1kZl+3DQlhP6rbUqx8anyEjUc1MqQlposkL2suzQrJsYW5EM07771gX/IC
-         jYDcMfPipj7xDh2OCz61FgHDfVOucfgVqRJOyaaheWJFDGBVtY+9vPYQD5rIiVI4KClO
-         Q8Et4aKX0qlljutv2Omu51GlG/I6OJPqCsrFwrUlISl2GTJ6WFxDxBG32L44HPrNreva
-         IXSr0lMOWFdiD2XGuy+iCpAYPAlnjuQb6iHcMAIGWN0JFe3bA6TIlSUgDi4al0q9LDrd
-         txuw==
+        b=Qa7yVLsOhDIdhj+6vwqe2CxNSRhfvKD8k7/X8eSYab1rYAS/c50+NaoIW9HwuEgDkW
+         DpRu76YvmwzpmTdAHT+Qhoms+CEy5+Dl/oqmfZmZDIlrXRIttanHYBKn9HVjsNuLY706
+         llVMwQLYzPkRjQwuVwlmAs/NWatTLrxnihM/mBxwXh/6J/9mivd5bDy3mZByDfPF/axI
+         9vnFgQC8uyaODjkWqvQg4/8Aod7sZNCnFlIeF9B4EqyRtDP+Fwv7+B4APnLzaFxgIuQJ
+         84d/R5yt5aS4FEDKIOmESlI34tZj48+0NVXhipipMUkE51mfW/uiAYipD1Y0Rk4KJyI5
+         jzow==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=PlKn0d9XSOXoTnQmexH5QRiFrM8eZ0DCng2E7Yp0VXw=;
+        bh=zXCFcQEHglndombhqhyui6I3qYpP5srlcLz9sqsQH2U=;
         fh=aY+RodnsZwaVQgtho/D2F/LrJl8TcIGRGapA9S/T9w8=;
-        b=TR26MerRDJO3KsEmc0R0qXUy1UgM8BWw8n5aIpfYm2Dj2GFAOEK6gWwyIoH5SPI76c
-         v2pg0zZ5eQLVM/zMzCePBJDoCnBVl3BxmJ4FijW42DSFv4nuYsSAqiVebciyQXJOQ2bi
-         L5n8C0/oRtDy57mi+/RKOJv/hBkMwNAt0lycSX9vuDAtQqZEbKehpPGQcujSycmz35cW
-         /D4LJMUCwmVgp0hzSMNctPsI2AB6mY6c4Wd7n0awfTFYondOhtJMSV9xUfZtT6yzL4CU
-         3x9ui0LxEhciL1N+FNq0GYB4xhheBlQgPaTtfQFJjV/2R/77KqT4cYWq+xOBupQzU4Ae
-         yZCw==;
+        b=Vq6PHMXFbnKzEr4wZTOo04kP8X14+vQ7brv/VcjqkgYB9LHIsPDwEDpke/n/z8jJeQ
+         vz5cfofvA8eb1+sy2TPNYji83pgfNoL1wG4wqY8015L24QDXCX/nTHhR93/C5rxcQBvp
+         wWB1EwQPL9/WkkNCxqQDTwpfo+Odz34xQO0L2+bYl7gwXhjbnRk80dZhwkLGAAiRrMzu
+         CYdI/KaWUIlyXE6ahBXq3qy+bySLq53KdzrLDEEL5YRylEzG2p+5UqFNBGc601yhXJrj
+         uSnNUx19b/Mke1eIiBaxDKKf6Lr71cdQQwO7loV5wLwOOWrKo3FEfYCkCt0aHMSh+aWk
+         TByw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770202674; x=1770807474; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770203182; x=1770807982; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PlKn0d9XSOXoTnQmexH5QRiFrM8eZ0DCng2E7Yp0VXw=;
-        b=h5SIcDzulKG/n1EJfF0Isyd13ygoKow4ty3Ugu2k+N7jEBJCO0J2NmzyLazD7CQRKE
-         FAee+OC2qcRzNhsD+mE4jfBVxLaZEIddpsTxfA/ArkYD4XSECEORxJScsnMuA+vT4cJp
-         gpmeWPLFfMmFthup5nh3W2HdgdHbyPoAoTbccCIQrNMiwErDPkOiJlck3RLIwK2EMY0+
-         1WJxm6VujDAtBqDKkry6oGjMFfalhk921yLXh1hFBHuue1ugjxF70tq57QYHzJVMwObH
-         SrUfZGirn/tiPR42w1ZbcbH6cvqb1MegikPJu0jTwihY4eQ1ZUPrF+KE1JAjY46k2hgh
-         iaLQ==
+        bh=zXCFcQEHglndombhqhyui6I3qYpP5srlcLz9sqsQH2U=;
+        b=U7psdLEcquvCpsHk15E6trlmlgu3zyJC62b5z/GZ16uk/9q+j6xrtlRvpJ/U59MvR0
+         tBM0gJ2OL3SvIl6r+b9Ps6+Wnrcxj2uN7pmXQA0rbD2SyRYwFwylE9NEzbjs3AyAGQ5I
+         omJZRTl0kSm57IUpLz0Joz+Er4ibWAJ9mN2ZctI0ZKxU2inpt+C1A/azBNn2I1J+BR0n
+         Xg5cGCbhVEP3g6JJJgR+uONHN+l75f1TQ+E85pcgE5JsStbQclK6SY6h0ZbtzF5o4A+l
+         0iZx93av9gMA8qNfpMC3QsnCC4G/2rLbl0CPjc6KO9dPuDOb3yC37qdRe9Ay2BD34YFD
+         NYsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770202674; x=1770807474;
+        d=1e100.net; s=20230601; t=1770203182; x=1770807982;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PlKn0d9XSOXoTnQmexH5QRiFrM8eZ0DCng2E7Yp0VXw=;
-        b=TE7sMbI21TjjvZCRAHdr7cKs0cUyhpg54M7+h5pINTvBYBb6LFSSBZdDzAnyF5s42I
-         iH/svMitxJWuE2Y87QJw3J+PsIOFDl9aPuXUK/4/lP06FJvJ8rj6Afxb2yg28tZD6vxT
-         bgU+P3jfb5RH0qiBFctbiWlbmWFW2BUrY2oYtYIfcAkJ2e/6F6dGQhS/FPf2l/9SnMYR
-         8pFsPBrGSRZpBiHeriPK7dLQp12zPlCp+8ggmchfREm9doyqvsP7i5PuJapmbb24Ialn
-         +DLcAZsn7syzINj3P2Z2L3vNfmZEpwvKcT5+9R7FHZmbHkFFJy6eaCsSJ0C8neVIHXJJ
-         YF2g==
-X-Gm-Message-State: AOJu0Yyw/VhoLLMCu2m5CpYJp9WeO8PmFlTebWcUcqMj0l387YYbHz9y
-	W3jt8ETnUE/0UDRCLlbf0gJYWjqAXM9mB6CLJOnYxncM3r/n5KJcpLhay/98rOJW7oSleHiri6i
-	JlIXAr8OWQzijRa0c8aNVkX0R0dBDs2w=
-X-Gm-Gg: AZuq6aIYLDzQQLZBTpUhbqlBqhTwB848CEdkXqngEJlmhf55liqpSGenLms465FLd8X
-	Hmb9Sjedyg01efwtLYYROcb+yil65THe/+Kt+0+sYvo3IEI7J2XWYekGHd6e4s51HHuqN7Mq7rz
-	fHB44isXDttvZ6+wn4HY3ApKRzGsOoCILeGmfK5KIT2zOIPzFDEUkpC1kdYHoLoEQxCYwNo9t3w
-	42r6LWePr/Yvy0vxXyv1MlitOMuEDfclFTywqN8DiyBzh1ryblooRQcxDiVc3IVskx4hq2cApss
-	PcWi7yarzADyoRnY+bSrRzRk+PWqSfpPTYsUqgwmCd6vOrF06znfU5zR
-X-Received: by 2002:a05:7022:f83:b0:123:3462:3758 with SMTP id
- a92af1059eb24-126f47c46d4mr907825c88.28.1770202673685; Wed, 04 Feb 2026
- 02:57:53 -0800 (PST)
+        bh=zXCFcQEHglndombhqhyui6I3qYpP5srlcLz9sqsQH2U=;
+        b=E9eAONNB4kY26XIuEZv0ZaQcoDnH+EpSmtbe1aDT2xAZdVjQ0BkPRcNJnlrfMoinH+
+         YPesGvpXchOW/S5q3UAle4sM0Czf9bFIHOumcQ+j345D+HPzkTaXsYkMuh2rQsPdHjZn
+         3jOyyUs+LXregWMxQuvWbAXkC7LvHSyvlIKVIMl2TAYVaeij1LRV88f5CXCWhdOMxMul
+         GUEwS2IWiH6BeETYUvOBntKkcLcgkR4AnkiKV6nkq4sJ3AGiFuL3gvv5eAZUe3wmKjvE
+         NzuuDZRiweB8b8wMOXRi6PN1Dsdtz39N1br+CLFQ+BCUoAdMp5n3R6PdkxudJ2M2EN/A
+         YDgQ==
+X-Gm-Message-State: AOJu0Yxa+LwWcN8rrfXmpmznQAgjOAOJZGsPhTFe7mpNTtnlTOWatd1x
+	fumQD/9Wt2i7MoMbYBjW2rWvUmRbyHkbEobt+VUyOOfqgMsQIB+aZk0aJccCLA5j27sE1xKzJ4t
+	BpZ0rhFg/a1bgZFeLBLJQRWH9dNfxgoQ=
+X-Gm-Gg: AZuq6aKyoh6asEf3CINoQ9l9NBclRnKC0vp4yUKqeyHbmixTpbKLplakt/5u+YC000b
+	oAzRLWYMPMnG76aaDvVf3VezLCwew3LAeF7Q10ps59N76MXrDYX8fIcm90546l4g28FLtq4d0yJ
+	576IFIqPeJg8tY4cwvCznFE5PRArDz0JM4I7C6F1S/z78NZAfTAawPWTWqsOnrmZgSxQfyHsN6x
+	8bE+/rSiMtq2wACcgwwOMn25a2Yt7ZEh4qSt1PWn/TfilNDg5NYSAbLU+4bCO2h0MP54KqsNJiO
+	CNiAy1BQGaeHAM4GshldCRC1C83MuV9LPL3/GVmDQtPnBbfjz/DrvZIz
+X-Received: by 2002:a05:7022:ef0b:b0:123:3488:89a3 with SMTP id
+ a92af1059eb24-126f47c31cdmr1128040c88.24.1770203182199; Wed, 04 Feb 2026
+ 03:06:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,13 +81,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20251223111113.47473-1-christian.couder@gmail.com>
- <20251223111113.47473-9-christian.couder@gmail.com> <aV4v9WhL95Gcqr2t@pks.im>
-In-Reply-To: <aV4v9WhL95Gcqr2t@pks.im>
+ <20251223111113.47473-10-christian.couder@gmail.com> <aV4v--FYaHCLLrPz@pks.im>
+In-Reply-To: <aV4v--FYaHCLLrPz@pks.im>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 4 Feb 2026 11:57:42 +0100
-X-Gm-Features: AZwV_QgWmktdjTV5gquZNuwEF-jiuSO13k7vnWxbxQKN8pDO-GFgFwx2ZNXXjvE
-Message-ID: <CAP8UFD1za=FowTWBqjanyRFANKBsc-+LOcbSsuBzjeiK8T_fkw@mail.gmail.com>
-Subject: Re: [PATCH 8/9] promisor-remote: keep advertised filter in memory
+Date: Wed, 4 Feb 2026 12:06:10 +0100
+X-Gm-Features: AZwV_QgvDWGbEqoi1KRmDBNjw2ijMyqzqAvkPkn0x4Lv2W19uklG3UyXmsazPSc
+Message-ID: <CAP8UFD0kLyLCSXYA1Zw8BvBDTxYmTZeo0L44dz7_HC6uY683sg@mail.gmail.com>
+Subject: Re: [PATCH 9/9] fetch-pack: wire up and enable auto filter logic
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
 	Karthik Nayak <karthik.188@gmail.com>, Elijah Newren <newren@gmail.com>, 
@@ -98,56 +98,78 @@ Content-Transfer-Encoding: quoted-printable
 On Wed, Jan 7, 2026 at 11:05=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
 >
-> On Tue, Dec 23, 2025 at 12:11:12PM +0100, Christian Couder wrote:
-> > diff --git a/promisor-remote.c b/promisor-remote.c
-> > index 8d6d2d7b76..d5f3223cd0 100644
-> > --- a/promisor-remote.c
-> > +++ b/promisor-remote.c
-> > @@ -837,6 +838,7 @@ static void filter_promisor_remote(struct repositor=
-y *repo,
-> >       struct store_info *store_info =3D NULL;
-> >       struct string_list_item *item;
-> >       bool reload_config =3D false;
-> > +     struct string_list captured_filters =3D STRING_LIST_INIT_DUP;
-> >
-> >       if (!repo_config_get_string_tmp(the_repository, "promisor.acceptf=
-romserver", &accept_str)) {
-> >               if (!*accept_str || !strcasecmp("None", accept_str))
+> On Tue, Dec 23, 2025 at 12:11:13PM +0100, Christian Couder wrote:
+> > diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-opt=
+ions.adoc
+> > index 70a9818331..f7432d4b29 100644
+> > --- a/Documentation/fetch-options.adoc
+> > +++ b/Documentation/fetch-options.adoc
+> > @@ -92,11 +92,20 @@ precedence over the `fetch.output` config option.
+> >       Use the partial clone feature and request that the server sends
+> >       a subset of reachable objects according to a given object filter.
+> >       When using `--filter`, the supplied _<filter-spec>_ is used for
+> > -     the partial fetch. For example, `--filter=3Dblob:none` will filte=
+r
+> > -     out all blobs (file contents) until needed by Git. Also,
+> > -     `--filter=3Dblob:limit=3D<size>` will filter out all blobs of siz=
+e
+> > -     at least _<size>_. For more details on filter specifications, see
+> > -     the `--filter` option in linkgit:git-rev-list[1].
+> > +     the partial fetch.
+> > ++
+> > +If `--filter=3Dauto` is used, the filter specification is determined
+> > +automatically by combining the filter specifications advertised by
+> > +the server for the promisor remotes that the client accepts (see
+> > +linkgit:gitprotocol-v2[5] and the `promisor.acceptFromServer`
+> > +configuration option in linkgit:git-config[1]).
 >
-> Nit: I found the "captured" terminology to be somewhat confusing. Can we
-> maybe rename this to `advertised_filters` to clarify?
+> Okay, so if "promisor.acceptFromServer" enables a subset of advertised
+> promisors we will automatically use their advertised filters. But what
+> about the case where we already have a set of local promisors with their
+> own filters, would those also honored by "--filter=3Dauto"?
 
-Well "advertised_filter" is already used and I think it might be
-confusing to use a very similar name, so for now until we find a
-better name, I kept "captured" in v2 even if it's not the best.
+No, they wouldn't be honored. 'auto' means that the client fully
+accepts the filters advertised by the server. Maybe we could add a new
+mode for using the locally configured filter by default and only using
+the advertised filter if there is no locally configured filter for the
+remote, but we can do that later.
 
-What about using `server_filters`?
-
-> > @@ -935,3 +963,23 @@ void mark_promisor_remotes_as_accepted(struct repo=
-sitory *r, const char *remotes
-> >
-> >       string_list_clear(&accepted_remotes, 0);
-> >  }
+> > diff --git a/fetch-pack.c b/fetch-pack.c
+> > index 40316c9a34..12ccea0dab 100644
+> > --- a/fetch-pack.c
+> > +++ b/fetch-pack.c
+> > @@ -1661,6 +1662,25 @@ static struct ref *do_fetch_pack_v2(struct fetch=
+_pack_args *args,
+> >       struct string_list packfile_uris =3D STRING_LIST_INIT_DUP;
+> >       int i;
+> >       struct strvec index_pack_args =3D STRVEC_INIT;
+> > +     const char *promisor_remote_config;
 > > +
-> > +char *promisor_remote_construct_filter(struct repository *repo)
-> > +{
-> > +     struct string_list advertised_filters =3D STRING_LIST_INIT_NODUP;
-> > +     struct promisor_remote *r;
-> > +     char *result;
+> > +     if (server_feature_v2("promisor-remote", &promisor_remote_config)=
+) {
+> > +             char *remote_name =3D promisor_remote_reply(promisor_remo=
+te_config);
+> > +             free(remote_name);
+> > +     }
 > > +
-> > +     promisor_remote_init(repo);
+> > +     if (args->filter_options.choice =3D=3D LOFC_AUTO) {
+> > +             struct strbuf errbuf =3D STRBUF_INIT;
+> > +             char *constructed_filter =3D promisor_remote_construct_fi=
+lter(r);
 > > +
-> > +     for (r =3D repo->promisor_remote_config->promisors; r; r =3D r->n=
-ext) {
-> > +             if (r->accepted && r->advertised_filter)
-> > +                     string_list_append(&advertised_filters, r->advert=
-ised_filter);
+> > +             list_objects_filter_resolve_auto(&args->filter_options,
+> > +                                              constructed_filter, &err=
+buf);
+> > +             if (errbuf.len > 0)
+> > +                     die(_("couldn't resolve 'auto' filter: %s"), errb=
+uf.buf);
 >
-> Would we ever accept a promisor remote that _doesn't_ have an advertised
-> filter? If not, should we maybe `BUG()` in case the advertised filter
-> has not been set?
+> Now that I see it being used I think that the calling convention of this
+> function is a bit weird. I would've expected the function to return an
+> error code that the caller can consult instead of having to check for
+> `errbuf.len`.
 
-I think it should be fine to accept a promisor remote without an
-advertised filter. The server might prefer to not advertise filters
-because it thinks that the client should determine the best filter
-based on the client needs. That's how it works now.
+Right, anyway I have removed that `list_objects_filter_resolve_auto()`
+function altogether by removing the patch that introduced it in v2.
+
+Thanks!
