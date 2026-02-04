@@ -1,64 +1,68 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0E1335BA
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51695335BA
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770214807; cv=none; b=OeQOETTCZnllD7gw6PXCIXswcx0pbRvnIdgcbnMdBXNokX1vEwhbaR+y2/vbOTQyb52tTF4i42sScYzrZ7W37bMbWYGAnouauTgEwUfEnMXt+Z+LS8tk2Ascu/TbNBx+WM2H/3z1soQYMSs924bleOlke1FiWlNvL9I0ic+fUfI=
+	t=1770214809; cv=none; b=MYsFFRJ5N0d+DO8HmSypwQIcT7B61KPpB831iTnaEs/LUbl5lU2bjrbmsOZAFv31NIY7kdz/wkIZWVMDQLWbe2UPGcht7RvIy3kmyofnO+J+srZhmXJBoPlha1u5vWXJC8RI1n87Yra4poaV1SnS2EWWgvIulnQ4bJm1UKScgSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770214807; c=relaxed/simple;
-	bh=9Rn4gL8GzxJwVdnMWAduheH0ONvzAwt59CO4jl8rY6I=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Gh+2ENbxZunFWjMP1txPoWqQLlAa5SNLt5dus3kwwvQ97+dpTXkfuZF22h4uhoODEP9EOq/a/fjBtogqptcUDARv5aEBoNfzGMMQHc9BINzAyHMMYwKpcDml0zs3ADJXvf2usx4mxON3TsOeEDQbNCV7c5In123bosgYggjcU9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iI0bcnGl; arc=none smtp.client-ip=209.85.210.43
+	s=arc-20240116; t=1770214809; c=relaxed/simple;
+	bh=amG4UXjZUVvhmRW2ujDHO93tW2ouP4i5Myx/SozLAGY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=NasizrI0gvlJUjIblymkbdvsk6WWgNoc6+lilOph2buw5A3BnaEY+cz6zSkAgrR/vEyTha+db71r1Zb011edqkr1In2waUsZohHKFTBgaBAwzycJQH4ChS1ybQLg8m4HoKvQ4rXHmVhxgkfZKfMP1Pxqthwq6WRUIpz09WKhhCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NeCZOjhq; arc=none smtp.client-ip=209.85.167.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iI0bcnGl"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7cfccba483eso2426014a34.0
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:20:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NeCZOjhq"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-45c889aba0dso642425b6e.0
+        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:20:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770214805; x=1770819605; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770214808; x=1770819608; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mBvTdngeoAvSEWOSPYhVVueHfKoAwwdGj4vvmQej2uQ=;
-        b=iI0bcnGlDTYnOMI2UswVQNRJsMdE3KO+KXcpdKwjsN3Af0rZn76wKmjOB1satmU0Q9
-         LaBZyePRnYft50OYNBXP+qFCTlZzUMr99/9lBfOJGYNFQp8uyP1apkQ3tQWFt8+C1LpX
-         uAJUnkPN5b+c0Sy3TKt6DK8l/CdQZ01F8rfPbOD7R9csRVr5tYaRl9vPFoR5oFi8O0dH
-         oC4/PgRZyjmVid1rR54vxsKeyElnf1TdbLDPff7E96met4ulsBcD6r7NBI4RwVwHBnwY
-         4zyMfzKg2xT0u/lGlLuNH/MA1TGd9qUgVb7O3QOXt4nlr8mg8EyhXkm56xcme/tHHlep
-         /yDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770214805; x=1770819605;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mBvTdngeoAvSEWOSPYhVVueHfKoAwwdGj4vvmQej2uQ=;
-        b=foHiPWHwGxeIOE4OYCABggH75r3mnPPvk3fv3J7U/0rSCdoqFRKB0+2dHBsJTYOkWL
-         BnxqPdeSsEgzckMBtWur4mWjH7mdYol5KuR4UJklLLdMgN0rQnR8UNVMkfA2ibMyy1GD
-         D8O3JwRNPteJ1OTib6wphFrv6JNPlSGpE7G8DAA/Lnv/2yWb41JwajuvErwKCTPsuVlw
-         BFzNBMmiGMpzkZUpAeb9dAchGzgqCGFtteE0iUMuixdW6S9cIFLFZtj0tztmE1v/ip1F
-         ToYmV+LXlEDgkDYJB7Xjn6u8Dn0YPmIsBX5HHfsOr7/PxGMqy/fsSPtzQOTV8N4Frvw0
-         5i6Q==
-X-Gm-Message-State: AOJu0Yz+dkhT0K37MwyGZpqZZt8ihI1g9OtK/DEFWcduNDj9Uyfm+Vop
-	7e2Y0GyPo9MgWBUzx5Za0UxG9jmKg5jZeEJ8o6p7/mlteJw7HISdDS/6/WXXEA==
-X-Gm-Gg: AZuq6aL4BMw5zD/c6Y0N09i6QnhYJW6NFOfsolzoUP4Wgqee0rHE+Tbeo83MrpsZcoZ
-	Z1Qg6erl6fmDwwd6XvKuBrtLJi+HePnX3V15J/TFH0Nn5s6GMPNNUdz4/QUp8KTN9o1lSDmZK0z
-	3aCSeaBWnUt4GY/6VkYeS4ezzrH79TtXInnODWzV8MfH5iRV/e7NhToLnDxzmq60PGaNPxBRxmv
-	jm3/Jaeieonziy28l8q432qIeSI8KDnAW9hMnQ6YUTz5ZZAyCCyJhhMtYsb03uM2Nx5FLrgWk8H
-	bBOmJn/oUoM//hUn7ZdnjEQjTX7xavSV/qESBisinkMUVFn5LgNwzNYZui4k94d7ejzXySRUwC0
-	EoN1nlLoIgfF9TBGUcqo+llROikTQyyskaISMyeWJHXxM0th1zw6bh7ywywvy1C4g3P9024KgPl
-	daMgjWgHNSSZARmw==
-X-Received: by 2002:a05:6830:6ad3:b0:7b0:826e:4002 with SMTP id 46e09a7af769-7d448a7c27amr1816592a34.20.1770214805368;
-        Wed, 04 Feb 2026 06:20:05 -0800 (PST)
+        bh=cViUdUwvahlcnv7ISIdpbU2mwrIvhV/WWbIL/l5OuSs=;
+        b=NeCZOjhqFbo4TnWrXd26MM+ieqUkihdeTrifC+TIAjwBZggilh2BmM2zi08EcxJo9u
+         7aEuoAUKFPgXBHzBQp+pk1PcGCs1Lx2d7mGrxJSsFjO6xH928dA5K37U2K2E27qDECnC
+         Bkhta0ldePHzABpD96QQcBs5HiOG9bff/5zC0rvk9hcnouB5ActcC9SOWmlbLucvKBpZ
+         8pQOzUmbOq1OtpW/XPAQFcopjs0UccGD8JY6+rdfOsIczJwevPWYQnCix+M5+6/Df8eu
+         CJMLDADIOsLDiPSbP9NAh/uQ783y04eELyLc0gjkJFbWWxHXyRomffFyHVyQLJeE4G7B
+         +Qrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770214808; x=1770819608;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=cViUdUwvahlcnv7ISIdpbU2mwrIvhV/WWbIL/l5OuSs=;
+        b=gavnmfpxpzCns4BBwCCK/R+T20OgcZSeEl0+5bC+wQMuayf21YD8tnwzXz2WaO4d6z
+         cTXewPBQTPi7qmejua0hkXSk1Hbdo8SoVDtToex3FU1Ydd5ClHA0EgILPn9HjcqbSJ5t
+         Ahka6UFfReSXYaAINFCjjQUjD51aINY5p8S9DOmDuhjTVmUZSMYy7myD1Lm2rvlce3mU
+         +oxQPe5f4EULfuEJjKJA5PLE/g8Vx7ZrnMsfkdrr3XMxQzZmzEieXtGU3YcsQ/P84zBi
+         YfIxXy5YNR2E2CacJgzgxXwRfA6c/w1UT5OIpijYc0mb9XLj2C72S0P23VrdwgTdbhth
+         kOiQ==
+X-Gm-Message-State: AOJu0YxmPISooUnCoVmy+PcDmixa2266Om9p5bxag969xGhyYvCP0C47
+	E3PJzeeDySi0KLiDFVCvbDdQGH8lIFL1dhccjIY6dyN3SjN6mJ3ksOMKt24vXA==
+X-Gm-Gg: AZuq6aKj/ejaSzvYOEwiOEJAzX9nvNXCwFdqlODdzyBxlnCSvIYGj5RNidFPYFejrZw
+	JcyyWdjFz4Ev5EGIy+yrZ+R+DsVn3jfQ346TVCmdFzRvAramBkqIZ13THciECVt3IVa7NzoPVfF
+	i3LkoyvOlYh3S17NIGqkpLHOKLWV+qEXbr3fKbFsQNRoi93pWTbDfYXb9GsAu4rnPuqVtIZ/8SX
+	3xitTXAVqOgqBY505jI4WFv3IHxyXChKcyY2NBRhu0n1y1WPDjwzfs0Id3LjCnjzu1GXZJ11/b3
+	udnlh9Mtxx3XhZZmXFCXuONXw+TaNWwqq/cRseGEEPwu4rcIAD2M52mkmGGMTIyG5QCgyykOOQV
+	7fiTWAqSKPy+QCx7qz/f/P7vbyx7s9VkXhY23LW0pkHX0bSgrcUfcksj5EUQbDIvzBGHuvdFvCY
+	aLQgBjZ102t/HTuGGvA+NdRxSz
+X-Received: by 2002:a05:6808:1313:b0:453:58dc:c006 with SMTP id 5614622812f47-462d579e09bmr1547298b6e.3.1770214807645;
+        Wed, 04 Feb 2026 06:20:07 -0800 (PST)
 Received: from [127.0.0.1] ([52.173.182.164])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d4490f40d9sm1715064a34.5.2026.02.04.06.20.04
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-462d66590c3sm1440746b6e.9.2026.02.04.06.20.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 06:20:04 -0800 (PST)
-Message-Id: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
+        Wed, 04 Feb 2026 06:20:06 -0800 (PST)
+Message-Id: <c4dab0609613bc5d43bce705dca2f057674a5d5b.1770214803.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
+References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 04 Feb 2026 14:19:52 +0000
-Subject: [PATCH 00/11] [RFC] config-batch: a new builtin for tools querying config
+Date: Wed, 04 Feb 2026 14:19:53 +0000
+Subject: [PATCH 01/11] config-batch: basic boilerplate of new builtin
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,153 +74,236 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
+    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-This RFC explores a new git config-batch builtin that allows tools to
-interact with Git's config data with multiple queries using a single
-process. This is an orthogonal alternative to the effort to create a stable,
-linkable config API. Both approaches have different strengths.
+From: Derrick Stolee <stolee@gmail.com>
 
-My main motivation is the performance of git-credential-manager on Windows
-platforms as it can call git config get dozens of times. At 150-200ms per
-execution, that adds up significantly, leading to multiple seconds just to
-load a credential that already exists. I believe that there are other
-benefits to having this interface available, but I can't recall any
-specifics at the moment.
+Later changes will document, implement, and test this new builtin. For now,
+this serves as the latest example of the minimum boilerplate to introduce a
+new builtin.
 
-This RFC adds git config-batch with a protocol over stdin/stdout for
-executing multiple config queries. The implementation has a limited set of
-potential queries, but also creates a model for compatibility for tools to
-automatically adapt to different Git versions.
+Recently, we updated the comment in builtin.h about how to create a new
+builtin, but failed to mention the required change to meson.build files for
+some CI builds to pass. Fix that oversight.
 
-I'm submitting this as an RFC before I've polished all of the details
-because I want to make sure I'm going down a good direction. Please focus
-feedback in these questions:
-
- * Is this a worthwhile feature to add to Git?
- * Is this a reasonable protocol for stdin/stdout?
- * How can we structure the code to make it easier to contribute new
-   commands in the future?
- * This seems like a place where parallel contributions can be made once the
-   baseline is implemented. Is there interest in further contributions to
-   expand the commands?
-
-This RFC adds the following commands over stdin:
-
- 1. help lists the available commands, giving the caller an understanding of
-    what is available in this Git version.
- 2. get loads a value for a given key within a certain scope, with optional
-    value patterns.
- 3. set assigns a key-value pair in a given scope.
- 4. unset removes a key-value pair in a given scope with optional value
-    patterns.
-
-Each command has an associated version, in case we need to expand or alter
-the functionality in the future. This includes the potential to deprecate
-and remove certain versions that we no longer want to support, such as
-replacing set version 1 with a version 2 and making version 1 no longer
-available. I do hope that we will mostly be able to move with new command
-names, such as a set-all command including the options for git config set
---all ... instead of increasing the version of the set command.
-
-There is a -z option that changes the command interface to use
-NUL-terminated strings. Two NULs specify a command boundary, which promotes
-compatibility with a caller that sends an unknown command. However, this
-means that we cannot specify an empty string as a token within a command
-unless we add more data. This format uses <N>:<string> to provide the
-integer <N> which specifies the length of <string>. This is a little
-cumbersome, but the format is intended for tools, not humans.
-
-I have a test integration with git-credential-manager available [1] for
-testing. This includes a model for interacting with git config-batch in a
-compatible way that will respond to certain features not being available:
-
- 1. If git config-batch fails immediately, then all queries are handled by
-    git config.
- 2. If git config-batch starts without failure, then the first query is for
-    the help command.
- 3. As queries come to the config system, the query is checked against the
-    available commands advertised by git config-batch. If the appropriate
-    command is available, then the query is made in that process. If not,
-    then the query uses the existing git config command.
-
-One thing that I think would be valuable to include is a reload command that
-signals that the git config-batch process should reload the configset into
-memory due to config manipulations in other processes, especially while git
-config-batch doesn't have all capabilities from git config. I'll include
-that in the first version for review, if this RFC leads to positive support.
-
-[1] https://github.com/git-ecosystem/git-credential-manager/pull/2245
-
-I have a few concerns with this implementation that I'd like to improve
-before submitting a version for full review. I list them here so you can see
-the flaws that I already see, but also so you can add to this list:
-
- * We need a reload command (as mentioned above).
- * The tests need to include a submodule and submodule-level config.
- * When specifying the local scope to the get command, the matched value
-   does not include worktree or submodule config in the same way that git
-   config get --local <key> would.
- * The token-parsing API in this helper is still too complicated to use. I
-   should create parsing tooling similar to the parse-opts API so each
-   command could specify its use of positional values and optional
-   arguments.
- * The use of arg:<arg> to specify an optional argument creates the
-   inability to submit a value that starts with arg:. Consider alternative
-   ways to specify arguments or to specify that the remaining data in the
-   command (including spaces) is a final positional argument.
- * In general, I found myself implementing behavior based on the deprecated
-   forms of git config that use the --get or --unset style arguments instead
-   of git config (set|unset|get) subcommands. It's worth making sure that
-   any references to equivalent git config commands use the new modes.
- * I need to add an --[no-]includes option as a command-line argument that
-   signals whether include sections should be followed. I don't believe this
-   should be specified on a per-command basis, but I'm open to suggestions.
- * I have an early draft of a technical document detailing the plan for this
-   builtin. It has some lists of intended future commands that have not been
-   implemented. This would also be a good place to document any parsing APIs
-   built to help contributors adding to this builtin.
-
-Thanks, -Stolee
-
-Derrick Stolee (11):
-  config-batch: basic boilerplate of new builtin
-  config-batch: create parse loop and unknown command
-  config-batch: implement get v1
-  config-batch: create 'help' command
-  config-batch: add NUL-terminated I/O format
-  docs: add design doc for config-batch
-  config: extract location structs from builtin
-  config-batch: pass prefix through commands
-  config-batch: add 'set' v1 command
-  t1312: create read/write test
-  config-batch: add unset v1 command
-
- .gitignore                                |   1 +
- Documentation/git-config-batch.adoc       | 214 ++++++
- Documentation/meson.build                 |   1 +
- Documentation/technical/config-batch.adoc |  70 ++
- Makefile                                  |   1 +
- builtin.h                                 |   7 +
- builtin/config-batch.c                    | 772 ++++++++++++++++++++++
- builtin/config.c                          | 117 +---
- command-list.txt                          |   1 +
- config.c                                  | 116 ++++
- config.h                                  |  26 +
- git.c                                     |   1 +
- meson.build                               |   1 +
- t/meson.build                             |   1 +
- t/t1312-config-batch.sh                   | 372 +++++++++++
- 15 files changed, 1592 insertions(+), 109 deletions(-)
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ .gitignore                          |  1 +
+ Documentation/git-config-batch.adoc | 24 +++++++++++++++++++++++
+ Documentation/meson.build           |  1 +
+ Makefile                            |  1 +
+ builtin.h                           |  7 +++++++
+ builtin/config-batch.c              | 30 +++++++++++++++++++++++++++++
+ command-list.txt                    |  1 +
+ git.c                               |  1 +
+ meson.build                         |  1 +
+ t/meson.build                       |  1 +
+ t/t1312-config-batch.sh             | 12 ++++++++++++
+ 11 files changed, 80 insertions(+)
  create mode 100644 Documentation/git-config-batch.adoc
- create mode 100644 Documentation/technical/config-batch.adoc
  create mode 100644 builtin/config-batch.c
  create mode 100755 t/t1312-config-batch.sh
 
-
-base-commit: 83a69f19359e6d9bc980563caca38b2b5729808c
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2033%2Fderrickstolee%2Fbatched-config-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2033/derrickstolee/batched-config-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2033
+diff --git a/.gitignore b/.gitignore
+index 78a45cb5be..42640b5e24 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -44,6 +44,7 @@
+ /git-commit-graph
+ /git-commit-tree
+ /git-config
++/git-config-batch
+ /git-count-objects
+ /git-credential
+ /git-credential-cache
+diff --git a/Documentation/git-config-batch.adoc b/Documentation/git-config-batch.adoc
+new file mode 100644
+index 0000000000..dfa0bd83e2
+--- /dev/null
++++ b/Documentation/git-config-batch.adoc
+@@ -0,0 +1,24 @@
++git-config-batch(1)
++===================
++
++NAME
++----
++git-config-batch - Get and set options using machine-parseable interface
++
++
++SYNOPSIS
++--------
++[verse]
++'git config-batch' <options>
++
++DESCRIPTION
++-----------
++TODO
++
++SEE ALSO
++--------
++linkgit:git-config[1]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index f02dbc20cb..f5ad117921 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -29,6 +29,7 @@ manpages = {
+   'git-commit-tree.adoc' : 1,
+   'git-commit.adoc' : 1,
+   'git-config.adoc' : 1,
++  'git-config-batch.adoc' : 1,
+   'git-count-objects.adoc' : 1,
+   'git-credential-cache--daemon.adoc' : 1,
+   'git-credential-cache.adoc' : 1,
+diff --git a/Makefile b/Makefile
+index 8aa489f3b6..aa3868e513 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1390,6 +1390,7 @@ BUILTIN_OBJS += builtin/commit-graph.o
+ BUILTIN_OBJS += builtin/commit-tree.o
+ BUILTIN_OBJS += builtin/commit.o
+ BUILTIN_OBJS += builtin/config.o
++BUILTIN_OBJS += builtin/config-batch.o
+ BUILTIN_OBJS += builtin/count-objects.o
+ BUILTIN_OBJS += builtin/credential-cache--daemon.o
+ BUILTIN_OBJS += builtin/credential-cache.o
+diff --git a/builtin.h b/builtin.h
+index e5e16ecaa6..5f5a19635e 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -68,12 +68,18 @@
+  *
+  * . Add `builtin/foo.o` to `BUILTIN_OBJS` in `Makefile`.
+  *
++ * . Add 'builtin/foo.c' to the 'builtin_sources' array in 'meson.build'.
++ *
+  * Additionally, if `foo` is a new command, there are 4 more things to do:
+  *
+  * . Add tests to `t/` directory.
+  *
++ * . Add the test script to 'integration_tests' in  't/meson.build'.
++ *
+  * . Write documentation in `Documentation/git-foo.adoc`.
+  *
++ * . Add 'git-foo.adoc' to the manpages list in 'Documentation/meson.build'.
++ *
+  * . Add an entry for `git-foo` to `command-list.txt`.
+  *
+  * . Add an entry for `/git-foo` to `.gitignore`.
+@@ -167,6 +173,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix, struct repositor
+ int cmd_commit_graph(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_commit_tree(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_config(int argc, const char **argv, const char *prefix, struct repository *repo);
++int cmd_config_batch(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_count_objects(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_credential(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_credential_cache(int argc, const char **argv, const char *prefix, struct repository *repo);
+diff --git a/builtin/config-batch.c b/builtin/config-batch.c
+new file mode 100644
+index 0000000000..ea4f408ecb
+--- /dev/null
++++ b/builtin/config-batch.c
+@@ -0,0 +1,30 @@
++#define USE_THE_REPOSITORY_VARIABLE
++#include "builtin.h"
++#include "config.h"
++#include "environment.h"
++#include "parse-options.h"
++
++static const char *const builtin_config_batch_usage[] = {
++	N_("git config-batch <options>"),
++	NULL
++};
++
++int cmd_config_batch(int argc,
++		     const char **argv,
++		     const char *prefix,
++		     struct repository *repo)
++{
++	struct option options[] = {
++		OPT_END(),
++	};
++
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_config_batch_usage, options);
++
++	argc = parse_options(argc, argv, prefix, options, builtin_config_batch_usage,
++			     0);
++
++	repo_config(repo, git_default_config, NULL);
++
++	return 0;
++}
+diff --git a/command-list.txt b/command-list.txt
+index accd3d0c4b..57c7c7458d 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -83,6 +83,7 @@ git-commit                              mainporcelain           history
+ git-commit-graph                        plumbingmanipulators
+ git-commit-tree                         plumbingmanipulators
+ git-config                              ancillarymanipulators           complete
++git-config-batch                        plumbinginterrogators
+ git-count-objects                       ancillaryinterrogators
+ git-credential                          purehelpers
+ git-credential-cache                    purehelpers
+diff --git a/git.c b/git.c
+index c5fad56813..6b55a867dd 100644
+--- a/git.c
++++ b/git.c
+@@ -557,6 +557,7 @@ static struct cmd_struct commands[] = {
+ 	{ "commit-graph", cmd_commit_graph, RUN_SETUP },
+ 	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+ 	{ "config", cmd_config, RUN_SETUP_GENTLY | DELAY_PAGER_CONFIG },
++	{ "config-batch", cmd_config_batch, RUN_SETUP_GENTLY },
+ 	{ "count-objects", cmd_count_objects, RUN_SETUP },
+ 	{ "credential", cmd_credential, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "credential-cache", cmd_credential_cache },
+diff --git a/meson.build b/meson.build
+index dd52efd1c8..040bc32c2d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -582,6 +582,7 @@ builtin_sources = [
+   'builtin/commit-tree.c',
+   'builtin/commit.c',
+   'builtin/config.c',
++  'builtin/config-batch.c',
+   'builtin/count-objects.c',
+   'builtin/credential-cache--daemon.c',
+   'builtin/credential-cache.c',
+diff --git a/t/meson.build b/t/meson.build
+index 459c52a489..0e9f1826f8 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -186,6 +186,7 @@ integration_tests = [
+   't1309-early-config.sh',
+   't1310-config-default.sh',
+   't1311-config-optional.sh',
++  't1312-config-batch.sh',
+   't1350-config-hooks-path.sh',
+   't1400-update-ref.sh',
+   't1401-symbolic-ref.sh',
+diff --git a/t/t1312-config-batch.sh b/t/t1312-config-batch.sh
+new file mode 100755
+index 0000000000..f59ba4a0f3
+--- /dev/null
++++ b/t/t1312-config-batch.sh
+@@ -0,0 +1,12 @@
++#!/bin/sh
++
++test_description='Test git config-batch'
++
++. ./test-lib.sh
++
++test_expect_success 'help text' '
++	test_must_fail git config-batch -h >out &&
++	grep usage out
++'
++
++test_done
 -- 
 gitgitgadget
+
