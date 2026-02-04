@@ -1,107 +1,147 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from mail.dasr.de (mail.dasr.de [202.61.250.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9690727702D
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 15:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F95426D14
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 16:17:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.250.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218922; cv=none; b=lO0reTQJtNfHEiuHNvAxKTGFEFIF9zs4B+JIZ/ArMOw45hPL21RP2OYstBee66iRuvWZUbbyLoa4CS2AQQTxsg95mjn/Q3BnaPoHv6w6+s9qEjHFUQ62nEpgZ/4f4btLycFOb9QZdhw7lEG0LPRVyPqsCYKR0U7HmbU0Qr4oHCI=
+	t=1770221873; cv=none; b=SjHc2CsFD5Jo+AeJfiApuCkxm0jfO+QWQ4yGcjzn+iRJ1FIRupsVUkvMVkvs7gIWJf6eefFp7a670HrgYU/s2cbwlpcKgMFOopO548GhAKznYyu6JkDSariXZN8PW1QEFHBMAtzlZH4f9EOJN4Cz3KEPfgEv4EdB8ZQjc9/eKIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218922; c=relaxed/simple;
-	bh=wWHyEGDXjB7aPP+EVqE/6h5N0tK22WlvwV30EP0ALIc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TSGPQij5GQvcIQEfrq2XnJrJbS8y9mHcOIaCxLSgbSifoZpGApu8LeVOa5CotVSuvwvjzMor3kN3uVcwivNUiZh9EzBvW9H9cFyqSZ8fyrQxwl5ccOIFatszH/Iy+2KKCavM7jFzEHscRjpOs0o6YSn5HUGymOR3/LPPAihQvD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cyBJsqok; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PCuIqLXw; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cyBJsqok";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PCuIqLXw"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id B4B7D1D000FD;
-	Wed,  4 Feb 2026 10:28:40 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 04 Feb 2026 10:28:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770218920; x=1770305320; bh=1qYRVc8yWX
-	SSs+6CyDE0qDE4xutO12lqMv8CVl8XV8s=; b=cyBJsqokP/QTKW1U6KjetzGah2
-	z4lH9DZHLfeDc1daRlCFbaKSSGyu+YrDJRgkGVOC626ngKTiu7Tu0z+fjeQRlPyv
-	5r6+fUqGG1bEsFTcTy8oCRxvhXA7ui+o/vxaCIFj16VJtxQVuxG+S58Y1NsynB44
-	KjHDG+bLQSVWkNi3NF7zTbhrjSWEBklXvdf08AmZsmeA8IYGjhiP6N8pEtJKhWH5
-	dp0m2bYt2rS4Eao4vOynpEXazjJlL7t6t0PDgjeFEeliHAC3UcURRdkz5pkIFQMN
-	pz7M3NdMjldu/VCK/AtVbusM8jKRlqEQLSwpiRa4v4SZx3TcL6jeHOxjNPkw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770218920; x=1770305320; bh=1qYRVc8yWXSSs+6CyDE0qDE4xutO12lqMv8
-	CVl8XV8s=; b=PCuIqLXw8PzdYuFIxtU6LJ93c9wZeRFwoAvqbAef57NMQw2QSdx
-	Z8wiNoZFam8mdVaecIj1mtFRrFiltpaAJlTU7ZB5gBc3qQ1AkGvSblNWkjlMdD+o
-	3Xf0Xf/sAzqoMc/QfJ1xt6EP9Epom0JTDANBgNp6jRyf2CvsFh36mrwgbpG+egRW
-	ELjz8QDIFoGjtKaSUIl4IHzoo1crEZwDe8ClcL3GILZ/kGZ9Pjnz4tYwYheedV3a
-	ReiG2urmwZOCp8jLRrU0L/j0B+4rhBuuBMzPRDmg5PR+yc2BaGLvFQmXOnZ8Ff12
-	lxRHY3piV+y39s0RRVBekDucdgd4tvs4lhg==
-X-ME-Sender: <xms:qGWDaY0hVstzOk_b6rhsco5WZ-mBxJnjWbsBbWoi6skAbuLoSx3D7A>
-    <xme:qGWDaaG3-4xrIM1YOawwDJV2A2Pw4PX8OTeJrV1STjhdb8BW39vzhXz0TGULChTuo
-    cx2mBeGEFPFsn0IbLvv0gam3Cz7t6OmpB5qvh0WA8a0iGcsMziNKg>
-X-ME-Received: <xmr:qGWDaV7jfYKmlDAs_Y_8sWgSTPtd_vGNFe2SxRiNPvWY3YMNnucZt9sax9tnLUdoWpqPP0ctqDubiMx9S_0txBZpudZH1XJ51A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvkedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjlhhtoh
-    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:qGWDaQtRqKFmiwQAq5n3v0qiCtndEADE5mVX26vfVAiAUkJA-buHZA>
-    <xmx:qGWDaW6Z3_rzWKUEW1tSEkUb6qG7sRs9qCjHubZ0kigWF40Jxo2qFA>
-    <xmx:qGWDabV1C9lvAP4PSrenUCdR9Hw2ImPocdNthyK84B1cWPXQKfuhYQ>
-    <xmx:qGWDaY_PaLZF88K6s0oocG8AhNa-SS7ok4BGPxqD71cdi_yNFUmN9A>
-    <xmx:qGWDaRar_bUJSaS9bazbysOGfgpYLzdEE-mmLNqSWQHwV6HiQh5FOvwh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 10:28:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 5/5] builtin/repo: find tree with most entries
-In-Reply-To: <aYMDL4m7Ceifl1Ja@pks.im> (Patrick Steinhardt's message of "Wed,
-	4 Feb 2026 09:28:31 +0100")
-References: <20260203221758.1164434-1-jltobler@gmail.com>
-	<20260203221758.1164434-6-jltobler@gmail.com>
-	<xmqqldh9qw5d.fsf@gitster.g> <aYMDL4m7Ceifl1Ja@pks.im>
-Date: Wed, 04 Feb 2026 07:28:38 -0800
-Message-ID: <xmqqtsvwply1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1770221873; c=relaxed/simple;
+	bh=fClPz8lnvJrqcYkNqbc6W15OGjNdlxvxPvNYQDa+Lo0=;
+	h=Date:Message-ID:From:To:Cc:In-Reply-To:References:MIME-Version:
+	 Content-Type:Subject; b=qrxDmN73nKHf4da0r3cfty+Tvo6PxJogr5hYqekAXrLO35IBkhRdY/s08z+Fwi61Cl5z2gXKArcHOzHY5yQ/VaWmfu8rAK60/6PmYR6TgfavmbG70FMKKp6ibx+CxMoWga3j6lKdZZRQuJ7oh60q+luckPGAolgJEE9Syga0SjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=walfield.org; spf=pass smtp.mailfrom=walfield.org; arc=none smtp.client-ip=202.61.250.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=walfield.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=walfield.org
+Date: Wed, 04 Feb 2026 16:35:23 +0100
+Message-ID: <87fr7g1pz8.wl-neal@walfield.org>
+From: "Neal H. Walfield" <neal@walfield.org>
+To: Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+In-Reply-To: <20260204152306.1767112-2-ukleinek@kernel.org>
+References: <20260204152306.1767112-2-ukleinek@kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 192.168.20.191
+X-SA-Exim-Mail-From: neal@walfield.org
+X-Spam-Level: 
+Subject: Re: [PATCH v1] gpg-interface: Signatures by expired keys are fine
+X-SA-Exim-Version: 4.2.1 (built Wed, 06 Jul 2022 17:57:39 +0000)
+X-SA-Exim-Scanned: Yes (on forster.huenfield.org)
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
 
-> From my point of view that would be the cherry on top of the new tool :)
-> I'd personally still like to learn about maximum values in the table, as
-> I've found that info to be useful with some customer incidents in the
-> past. It's not giving you a trend, but it immediately gives you some
-> good signal that the repo shape might be weird if you have commits with
-> hundreds of parents.
->
-> So maybe this is another step we can do in a subsequent patch series?
+I think this change is an improvement over the status quo.  In my
+opinion, a signature should be accepted if it was made when the
+certificate sas not expired.  If the signature was made after the
+certificate expired it should be rejected.  That is:
 
-Oh, I didn't mean to say "the maximum alone is not interesting
-enough for me to bother, come back with histograms."  If you already
-have a good feel for normal range/distribution already, then one
-data point at the extreme is a sign enough for you to notice when
-there is something fishy going on.
+  t_s1: signature 1
+  t_e: certificate expires
+  t_s2: signature 2
 
-Thanks.
+  where: t_s1 < t_e < t_s2
+
+signature 1 should be accepted as t_s1 < t_e.
+
+signature 2 should be rejected as t_s2 > t_e.
+
+As GnuPG's interface does not provide enough information to make this
+distinction, this change is better.
+
+:) Neal
+
+On Wed, 04 Feb 2026 16:23:06 +0100,
+Uwe Kleine-K=F6nig wrote:
+>=20
+> If a signature is done with a valid key and that key later expires, the
+> signature should still be considered good.
+>=20
+> GnuPG exmits in this case something like:
+>=20
+> 	[GNUPG:] NEWSIG
+> 	gpg: Signature made Wed 26 Nov 2014 05:56:50 AM CET
+> 	gpg:                using RSA key FE3958F9067BC667
+> 	[GNUPG:] KEYEXPIRED 1478449622
+> 	[GNUPG:] KEY_CONSIDERED D783920D6D4F0C06AA4C25F3FE3958F9067BC667 0
+> 	[GNUPG:] KEYEXPIRED 1478449622
+> 	[GNUPG:] SIG_ID 8tAN3Fx6XB2NAoH5U8neoguQ9MI 2014-11-26 1416977810
+> 	[GNUPG:] EXPKEYSIG FE3958F9067BC667 Jason Cooper <jason@lakedaemon.net>
+> 	gpg: Good signature from "Jason Cooper <jason@lakedaemon.net>" [expired]
+> 	[GNUPG:] VALIDSIG D783920D6D4F0C06AA4C25F3FE3958F9067BC667 2014-11-26 14=
+16977810 0 4 0 1 2 00 D783920D6D4F0C06AA4C25F3FE3958F9067BC667
+> 	gpg: Note: This key has expired!
+> 	      D783920D6D4F0C06AA4C25F3FE3958F9067BC667
+>=20
+> (signature and signed data in this example is taken from Linux commit
+> 756f80cee766574ae282baa97fdcf9cc). So GnuPG is relaxed and the fact that
+> the key is expired is only worth a "Note" which is weaker than e.g.
+>=20
+> 	gpg: WARNING: The key's User ID is not certified with a trusted signatur=
+e!
+> 	gpg:          There is no indication that the signature belongs to the o=
+wner.
+>=20
+> which git still considers ok.
+>=20
+> So stop coloring the signature by an expired key red and handle it like
+> any other good signature.
+>=20
+> Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@kernel.org>
+> ---
+> Hello,
+>=20
+> the motivation for this patch originates from a mail correspondence with =
+Linus Torvalds,
+> see
+> https://lore.kernel.org/ksummit/CAHC9VhRwMpSCphW_FsHojX1r12D5MOMUBm6MAzpG=
+YD_FDjEVtA@mail.gmail.com/T/#m6cc3cc4b599658cab6012326993a1261fd641046
+> for the details.
+>=20
+> Best regards
+> Uwe
+>=20
+>  gpg-interface.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 47222bf31b6e..6635c6c8e16f 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -382,7 +382,7 @@ static int verify_gpg_signed_buffer(struct signature_=
+check *sigc,
+> =20
+>  	delete_tempfile(&temp);
+> =20
+> -	ret |=3D !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ");
+> +	ret |=3D !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ") && !strstr(gpg_=
+stdout.buf, "\n[GNUPG:] EXPKEYSIG ");
+>  	sigc->output =3D strbuf_detach(&gpg_stderr, NULL);
+>  	sigc->gpg_status =3D strbuf_detach(&gpg_stdout, NULL);
+> =20
+> @@ -680,7 +680,7 @@ int check_signature(struct signature_check *sigc,
+>  	if (status && !sigc->output)
+>  		return !!status;
+> =20
+> -	status |=3D sigc->result !=3D 'G';
+> +	status |=3D sigc->result !=3D 'G' && sigc->result !=3D 'Y';
+>  	status |=3D sigc->trust_level < configured_min_trust_level;
+> =20
+>  	return !!status;
+>=20
+> base-commit: b2826b52eb7caff9f4ed6e85ec45e338bf02ad09
+> --=20
+> 2.47.3
+>=20
+>=20
