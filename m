@@ -1,367 +1,132 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D409410D2C
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:20:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2492459C6
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770214824; cv=none; b=e/SnT7sPlaPuL6LVviKN6UJJ2vxMTY1pXtsAMpQ/WfsGxyxTzg8wQZvADxS6n1Oc81qpKDLx/B6pf8WkU+/7R8BPfPEb9qBsHqSn/8Gowtx3INMoCE2XZ9e3DI9GdYjrwj8jdmJjvdY4EfJkeThYWlty/tv/0tTZTDj1wfxUqtk=
+	t=1770215969; cv=none; b=Uh4RXCgxntmzeFOg7oVjtL6CX/t036NBrTrTPJ82CgKtmMD+aCWHqhFydtlWikOGJrCOQuj7BH1yvmQzoiqTTzcZaEyfpcfjRksjxBsRN6fk0iwZBmJ9vPBBFmmAH9q7M+f1VJ4yc2QnIfpMS4UFJUONjEJzZnzBg3QxUVMV/yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770214824; c=relaxed/simple;
-	bh=Ju/PC+a8MoHmVTBkrWEq5CQClgrNqLgY+4AzQjVQSso=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=eC+/053Kp/HMQ8zUtfbQ8J31zCAqtVgSOCpSS/cAgLi5U+Aw/YnyY71QtqJmdJzAqNMpCSmZA1WlAF2D8UAf7eqt9NmdnPXS1cXxNc6cEHNQOjIBFTzwUg/YA2qhhlHvqWnhMZPeDUfgd+TBQOh0U2jl+3FTuElRHyroIIcJd2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQnNNKvM; arc=none smtp.client-ip=209.85.210.48
+	s=arc-20240116; t=1770215969; c=relaxed/simple;
+	bh=4ADdD3bu74uuW7HHAzKQk8D0iNPaFz85BIEr/marsH8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h8SBZ7OJKKPOmnfMcWzQcgLaU59PNc4damahzWZXrkjXDlJo130o52qXnqHfWyMKnnJtOeM1VjrDZCysmVK2UUjxgO7YX4cQLxv9xwUBF2jxKr/QKVR4Jsk8Rhs5J0x07lk8VYFbFsiYmCn9eKjVjOpb2neAyhkTxzlPDopDTNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KzL3zTXh; arc=none smtp.client-ip=209.85.210.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQnNNKvM"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-7d1916d1e24so5507688a34.3
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:20:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KzL3zTXh"
+Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-8230f8f27cfso3690698b3a.0
+        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:39:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770214823; x=1770819623; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mWiNYyFdyWrMI0rPhu6cZU6g7HXRH1b/5UVz9nhislk=;
-        b=RQnNNKvMkSO5thYpd+xXwK3pah9Bzlxe7rX6Bfo9LYgMQnpwYCXQscy8TXPVZtTpjG
-         0AExTA4cJ6t5RK9b7VvzPnBHvqi2ANFmnJl0crNSCD8dpAOdM31YcmOUApALi19d7SHF
-         65tqu1HOpU8TteFovaakovqLZNrSvKtofnC4FeYosuBxqbCK1aL1KYOSlAx+WtRppAdB
-         BA2gMVUPrTuRqPvMDNodSoL/beyU0KikSEZLvnV5V2aXIUzvqStELP3pnD0FIklPUsMy
-         xPfXtJJ3lzRxHi+pBMvuEel4/ONU25mCCtt351tenKdYPEi1kBVabcO8NmgXQ3weHjoF
-         jd7Q==
+        d=gmail.com; s=20230601; t=1770215968; x=1770820768; darn=vger.kernel.org;
+        h=disposition-notification-to:in-reply-to:content-transfer-encoding
+         :content-disposition:mime-version:references:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=J66gf9aTvIBRnX3IQKdy2RyvPO/Csf+8zTpFBhE2QnI=;
+        b=KzL3zTXh+EL0dHzCxUXNnpU1BgK3hKt7IwYziIGNp75QUEynzt4ICDVkl2OM05YsXi
+         +54dIFojjT3uFP0fafY5abhMQrh79SjmmglC9NHAUwcLDv756TfzvlmTTxpmMgyeMleA
+         LMTvDMXnQpvZpJrNAi8g+D3/EYy2toQQ0SrkS+GmFJRMejyUm3PdAqJaG1Z5L7rnP2Oz
+         Ll0vNVppS8To/LvhGjAZZI+hQ5wmH0wcqa7V9m61hf8A0eLrMxpykfEVAhJvi2+2UCeM
+         D8wDHsT0M+fai2hstH7Dtr0DuA6NNDZWQiuEaXsmaBAnB43Yla675zzVXZFVr7r4f6jN
+         F8eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770214823; x=1770819623;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=mWiNYyFdyWrMI0rPhu6cZU6g7HXRH1b/5UVz9nhislk=;
-        b=P3s+q1gIy3NT3LHW9V0CXiZgwPDNaHNYGelk9fVGnYtBuYL8LOZHXlKIt+DRKcxioe
-         Qz+Ic/641gJTTSeK6TFB23xi8Jj4hRFWpD5HqMCIZQuRonsSvemCuvH+Kk9F9zmaaKIM
-         TgGhryTDzK3yJBMgZQC+99zkAhlt/kg4pRwn0LBBtpit3r453g7JnHM80ArpRMBqq62/
-         ef55NgBL8c1U33gwWxsyqIR/8Wt5/1BDBIpX7UJthOeSpQ070hrUzYX4TEsE7qjixjEH
-         Pnlbeq53eNTw/CjVlSKtXDiMgqXY9cYAQh99yBN8R8oUUnhK+IPLksKkBYfTWIPEPenb
-         lDNA==
-X-Gm-Message-State: AOJu0YyDN0ytZVM8RFelWSgbnfhtjoEZkPgoSAFnX7Kj2xayoQRLqc0q
-	/16a4KbC5OyFSnAgG6jjVt/YZQpaKaOTaQZY20Nswls4YXI0+5jTeuTLjQdwlA==
-X-Gm-Gg: AZuq6aI/zyfL2uV93ghBk62rJr6kwZatM6uDkSQv+wwg9VmwRIu3Rdn64SSfWpzXVct
-	dn5f7QxsFuY7TUBHqnQAyu1zfUUWxmYJ8sMcbi+Ihvfj6jdgrXI45kL9E78bjUlQnXWETU+lkkW
-	3ZozIxq8Skc4sH5LIVSPgGurQalek6SJB7Eh09hv32xyDeyfSmU2Nvcl59K5lFwjlxa9NCBpF/X
-	uJXwO9+AmB+3KoiJPOFoURb0JPUQ06UfA+l9RNtB0Lj7MZXte5lpd+BDnogQiS/G7HbIrQTmmjr
-	5nI7yhHsBEHF3IhueOlCyNPnyzl8lDCmwb+syHI8NiWjn1dOG/M2YpsiaprcFI3SSuqcVwAbcXE
-	9XNdBONVZGOiJd+TFb1Iotu9YwKq0P/ixdyvgB31uHeXQ2m+qtmxW4Esz8cKBL/wF/80iWSRN6p
-	UQUus8ZAujdT1YGQ==
-X-Received: by 2002:a05:6830:6f8c:b0:7cf:d2f3:af8a with SMTP id 46e09a7af769-7d448accbf9mr2084819a34.28.1770214822536;
-        Wed, 04 Feb 2026 06:20:22 -0800 (PST)
-Received: from [127.0.0.1] ([52.173.182.164])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d4499a49c9sm1569429a34.0.2026.02.04.06.20.21
+        d=1e100.net; s=20230601; t=1770215968; x=1770820768;
+        h=disposition-notification-to:in-reply-to:content-transfer-encoding
+         :content-disposition:mime-version:references:message-id:subject:cc
+         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J66gf9aTvIBRnX3IQKdy2RyvPO/Csf+8zTpFBhE2QnI=;
+        b=Yo87OkAS93Sh4/pOU44u2TODkqfbEyqkACZBVbF4KvWtRPmVEeOQHdKJs1gHUdnN25
+         YiQIP2TM2pcqQPFByH5nvgKkTsZLrZOHye0g+//KuBAb/lEge/U8+zwr9H56NJym+K25
+         tASZg8rc9/dKMDCfllHtah74j12AXebInDZ3PWlsuY5kZK+k/IcNSdB7sdkGozm0nbiX
+         7PnfbxR8dXgK12G347PRCoyf6TRmQ2gjIy03LKJllboAn1fVk7cMLOsA1LrSfWUGuijB
+         CzV8CW4QXlM7zIvWWooXA2ZKTU6dXyO0chRzushwRQpwE/ikOuNSSh97TQjts1Zp8zjW
+         rPNw==
+X-Forwarded-Encrypted: i=1; AJvYcCUasMhQnqaLYTA2Wbl5UODvNcNn9AZpC1m5KenVaCMJd1ku0R05PI39bxnBp8okW6+6nkM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6rPX8y9Iwe25T6TSLeUvrpMFI+NG/Rdjf1o6flq1YGBqO9HtY
+	y9eOK8/P1nyYlhXBM2NNeB+V/NHqqUTzfMFz+yogXu0De0boQ/170JZp
+X-Gm-Gg: AZuq6aJ2LUYVeZ/+A0hEQIEvNa4HorvwDsMDIgLwwFuWZkvwa2gzrJYtnfNgYd9jMho
+	AKZKxE/wkcGmKLn8vcZ0cKKNJ4U4VI6ivHqf8cIGeEJ3ZWlqLBQdYJUPlUoXanVawjRauKTa5Ow
+	adbgrG2Lux7wXYFX6TaoGN64yqqCrLSa0Ih93crmDMnu4hfBc5fJNyvnN0wamNptVPZpdfHXhvw
+	sQinaN1pIPPaOOYFNZhQAnA0EgTC0PqTfARMiYKTR3yR+mVURyWX0dFBGQe1LcptPnq4tpGV3Ox
+	Se8hYkHJZawwW9zhgZFP/M4egp7Pyh5sdJqFv+z+Fc4EY1+L/aaWCaioz5NBMsLhHzeJ7cg+iQ9
+	KkcerSCCYXOHz48ZFB60oiCr1BG2X1sFe3tPDVYqY/YJrGriAOCm4UW/DhjfnkTGtE4g1g9wRVr
+	5zOO3kwtWzMQVPdrTN1cc=
+X-Received: by 2002:a05:6a00:a227:b0:81c:6ca8:8007 with SMTP id d2e1a72fcca58-8241c7229b2mr3190764b3a.69.1770215968352;
+        Wed, 04 Feb 2026 06:39:28 -0800 (PST)
+Received: from localhost ([2a0c:b641:69c:caa0:bcb7:3b3c:acc6:a132])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8241d1d338bsm2689143b3a.28.2026.02.04.06.39.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 06:20:21 -0800 (PST)
-Message-Id: <59d19fee5f5bd34c5864bebb8243afdc6bc9ea7a.1770214803.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
-References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 04 Feb 2026 14:20:03 +0000
-Subject: [PATCH 11/11] config-batch: add unset v1 command
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 04 Feb 2026 06:39:27 -0800 (PST)
+Date: Wed, 4 Feb 2026 22:38:54 +0800
+From: =?utf-8?B?5L6d5LqR?= <lilydjwg@gmail.com>
+To: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?iso-8859-1?Q?Jean-No=EBl?= Avila <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>, Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>,
+	Jordi Mas <jmas@softcatala.org>,
+	Matthias =?iso-8859-1?Q?R=FCster?= <matthias.ruester@gmail.com>,
+	Phillip Szelat <phillip.szelat@gmail.com>,
+	=?iso-8859-1?Q?S=E9bastien?= Helleu <flashcode@flashtux.org>,
+	insolor <insolor@gmail.com>,
+	Kateryna Golovanova <kate@kgthreads.com>,
+	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Ray Chen <oldsharp@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+	Franklin Weng <franklin@goodhorse.idv.tw>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [RFC] Introducing AI Agents to Git Localization
+Message-ID: <aYNZ_jsPtXbn6Nu-@lilyforest.localdomain>
+References: <CANYiYbFhshDwfttKWYGDfO+K1qAz3ptVHuuHrWXhD2oYBF7baQ@mail.gmail.com>
+ <534b9313b19a73bcee6e0ac1d7299e19@softwolves.pp.se>
+ <aYNC5dlL8wdwdFuy@kitsune.suse.cz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aYNC5dlL8wdwdFuy@kitsune.suse.cz>
+X-Mailer: Mutt 2.3 (50e3b1f3) (2026-01-25)
 
-From: Derrick Stolee <stolee@gmail.com>
+在 Wed, Feb 04, 2026 at 02:00:21PM +0100，Michal Suchánek 写道：
+> On Wed, Feb 04, 2026 at 12:58:05PM +0100, Peter Krefting wrote:
+> > 2026-02-04 10:31 skrev Jiang Xin:
+> > 
+> > > Please try using AI coding tools to update translations in po/XX.po or
+> > > review historical translations, following the prompts below:
+> > 
+> > No.
+> > 
+> > Please disable this altogether for the Swedish localization. "Translation"
+> > using stochastic parrots is not mature and just creates gibberish that takes
+> > more time to clean up than to do the translation from scratch manually.
+> 
+> Hello,
+> 
+> a similar attempt was widely reported, eg. here:
+> https://linuxiac.com/ai-controversy-forces-end-of-mozilla-japanese-sumo-community/
 
-Add a new 'unset' command with version 1 that mimics 'git config
---unset' with optional regex pattern or '--fixed-value' arguments.
+FYI, less known is the fish (a command line shell) zh-CN translation
+fiasco. Last time I reviewed zh-CN translation for git there were
+a bunch of nonsense. And I'm pretty much given up the
+docs.python.org's zh-CN translation.
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- Documentation/git-config-batch.adoc | 28 ++++++++
- builtin/config-batch.c              | 99 +++++++++++++++++++++++++++++
- t/t1312-config-batch.sh             | 61 ++++++++++++++++--
- 3 files changed, 181 insertions(+), 7 deletions(-)
+I don't really care how others do things, but I hope that I'm not the
+gatekeeper to review or be fed up with rubbish sentences.
 
-diff --git a/Documentation/git-config-batch.adoc b/Documentation/git-config-batch.adoc
-index feec85c4ef..bdfd872d65 100644
---- a/Documentation/git-config-batch.adoc
-+++ b/Documentation/git-config-batch.adoc
-@@ -135,6 +135,34 @@ set 1 success <scope> <key> <value>
- set 1 failed <scope> <key> <value>
- ------------
- 
-+`unset` version 1::
-+	The `unset` command removes a single value from a config file.
-+	It specifies which file by a `<scope>` parameter from among
-+	`system`, `global`, `local`, and `worktree`. The `<key>` is the
-+	next positional argument. There could be two additional
-+	arguments used to match specific config values, where the first
-+	is either `arg:regex` or `arg:fixed-value` to specify the type
-+	of match.
-++
-+------------
-+unset 1 <scope> <key>
-+unset 1 <scope> <key> arg:regex <value-pattern>
-+unset 1 <scope> <key> arg:fixed-value <value>
-+------------
-++
-+These uses will match the behavior of `git config --unset --<scope> <key>`
-+with the additional arguments of `<value-pattern>` if `arg:regex` is
-+given or `--fixed-value <value>` if `arg:fixed-value` is given.
-++
-+The response of these commands will include a `success` message
-+if matched values are found and removed as expected or `failed` if an
-+unexpected failure occurs:
-++
-+------------
-+unset 1 success <scope> <key>
-+unset 1 failed <scope> <key>
-+------------
-+
- NUL-Terminated Format
- ~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/builtin/config-batch.c b/builtin/config-batch.c
-index 373b0cad47..25a942ba61 100644
---- a/builtin/config-batch.c
-+++ b/builtin/config-batch.c
-@@ -17,6 +17,7 @@ static int zformat = 0;
- #define HELP_COMMAND "help"
- #define GET_COMMAND "get"
- #define SET_COMMAND "set"
-+#define UNSET_COMMAND "unset"
- #define COMMAND_PARSE_ERROR "command_parse_error"
- 
- static void print_word(const char *word, int start)
-@@ -445,6 +446,99 @@ cleanup:
- 	return res;
- }
- 
-+/**
-+ * 'unset' command, version 1.
-+ *
-+ * Positional arguments should be of the form:
-+ *
-+ * [0] scope ("system", "global", "local", or "worktree")
-+ * [1] config key
-+ * [2] config value
-+ * [3*] match ("regex", "fixed-value")
-+ * [4*] value regex OR value string
-+ *
-+ * [N*] indicates optional parameters that are not needed.
-+ */
-+static int unset_command_1(struct repository *repo,
-+			 const char *prefix,
-+			 char *data,
-+			 size_t data_len)
-+{
-+	int res = 0, err = 0, flags = 0;
-+	enum config_scope scope = CONFIG_SCOPE_UNKNOWN;
-+	char *token = NULL, *key = NULL, *value_pattern = NULL;
-+	size_t token_len;
-+	struct config_location_options locopts = CONFIG_LOCATION_OPTIONS_INIT;
-+
-+	if (!parse_token(&data, &data_len, &token, &err) || err)
-+		goto parse_error;
-+
-+	if (parse_scope(token, &scope) ||
-+	    scope == CONFIG_SCOPE_UNKNOWN ||
-+	    scope == CONFIG_SCOPE_SUBMODULE ||
-+	    scope == CONFIG_SCOPE_COMMAND)
-+		goto parse_error;
-+
-+	if (!parse_token(&data, &data_len, &key, &err) || err)
-+		goto parse_error;
-+
-+	token_len = parse_token(&data, &data_len, &token, &err);
-+	if (err)
-+		goto parse_error;
-+
-+	if (token_len && !strncmp(token, "arg:", 4)) {
-+		if (!strcmp(token + 4, "fixed-value"))
-+			flags |= CONFIG_FLAGS_FIXED_VALUE;
-+		/* no special logic for arg:regex. */
-+		else if (strcmp(token + 4, "regex"))
-+			goto parse_error; /* unknown arg. */
-+
-+		/* Use the remaining data as the value string. */
-+		if (!zformat)
-+			value_pattern = data;
-+		else {
-+			parse_token(&data, &data_len, &value_pattern, &err);
-+			if (err)
-+				goto parse_error;
-+		}
-+	} else if (token_len) {
-+		/*
-+		 * If we have remaining tokens not starting in "arg:",
-+		 * then we don't understand them.
-+		 */
-+		goto parse_error;
-+	}
-+
-+	if (location_options_set_scope(&locopts, scope))
-+		goto parse_error;
-+	location_options_init(repo, &locopts, prefix);
-+
-+	res = repo_config_set_multivar_in_file_gently(
-+			repo,
-+			locopts.source.file,
-+			key,
-+			/* value */ NULL,
-+			value_pattern,
-+			/* comment */ NULL,
-+			flags);
-+
-+	if (res)
-+		res = emit_response(UNSET_COMMAND, "1", "failure",
-+				    scope_str(scope), key, NULL);
-+	else
-+		res = emit_response(UNSET_COMMAND, "1", "success",
-+				    scope_str(scope), key, NULL);
-+
-+	goto cleanup;
-+
-+parse_error:
-+	res = command_parse_error(UNSET_COMMAND);
-+
-+cleanup:
-+	location_options_release(&locopts);
-+	return res;
-+}
-+
- struct command {
- 	const char *name;
- 	command_fn fn;
-@@ -467,6 +561,11 @@ static struct command commands[] = {
- 		.fn = set_command_1,
- 		.version = 1,
- 	},
-+	{
-+		.name = UNSET_COMMAND,
-+		.fn = unset_command_1,
-+		.version = 1,
-+	},
- 	/* unknown_command must be last. */
- 	{
- 		.name = "",
-diff --git a/t/t1312-config-batch.sh b/t/t1312-config-batch.sh
-index 11380f4247..3bddbc0de3 100755
---- a/t/t1312-config-batch.sh
-+++ b/t/t1312-config-batch.sh
-@@ -47,10 +47,11 @@ test_expect_success 'help command' '
- 	echo "help 1" >in &&
- 
- 	cat >expect <<-\EOF &&
--	help 1 count 3
-+	help 1 count 4
- 	help 1 help 1
- 	help 1 get 1
- 	help 1 set 1
-+	help 1 unset 1
- 	EOF
- 
- 	git config-batch >out <in &&
-@@ -64,10 +65,11 @@ test_expect_success 'help -z' '
- 	EOF
- 
- 	cat >expect <<-\EOF &&
--	4:help 1:1 5:count 1:3
-+	4:help 1:1 5:count 1:4
- 	4:help 1:1 4:help 1:1
- 	4:help 1:1 3:get 1:1
- 	4:help 1:1 3:set 1:1
-+	4:help 1:1 5:unset 1:1
- 	15:unknown_command
- 	EOF
- 
-@@ -295,15 +297,60 @@ test_expect_success 'set config by scope with -z' '
- 	test_cmp expect-values values
- '
- 
--test_expect_success 'read/write interactions in sequence' '
--	test_when_finished git config remove-section test.rw &&
-+test_expect_success 'unset config by scope and filter' '
-+	GIT_CONFIG_SYSTEM=system-config-file &&
-+	GIT_CONFIG_NOSYSTEM=0 &&
-+	GIT_CONFIG_GLOBAL=global-config-file &&
-+	export GIT_CONFIG_SYSTEM &&
-+	export GIT_CONFIG_NOSYSTEM &&
-+	export GIT_CONFIG_GLOBAL &&
-+
-+	cat >in <<-\EOF &&
-+	set 1 system test.unset.key system
-+	set 1 global test.unset.key global
-+	set 1 local test.unset.key local with spaces
-+	set 1 worktree test.unset.key worktree
-+	unset 1 system test.unset.key
-+	unset 1 global test.unset.key arg:regex g.*
-+	unset 1 local test.unset.key arg:fixed-value local with spaces
-+	unset 1 worktree test.unset.key arg:fixed-value submodule
-+	unset 1 worktree test.unset.key arg:regex l.*
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	set 1 success system test.unset.key system
-+	set 1 success global test.unset.key global
-+	set 1 success local test.unset.key local with spaces
-+	set 1 success worktree test.unset.key worktree
-+	unset 1 success system test.unset.key
-+	unset 1 success global test.unset.key
-+	unset 1 success local test.unset.key
-+	unset 1 failure worktree test.unset.key
-+	unset 1 failure worktree test.unset.key
-+	EOF
-+
-+	git config-batch <in >out 2>err &&
- 
-+	test_must_be_empty err &&
-+	test_cmp expect out &&
-+
-+	cat >expect-values <<-EOF &&
-+	file:.git/config.worktree	worktree
-+	EOF
-+
-+	git config get --show-origin --regexp --all test.unset.key >values &&
-+	test_cmp expect-values values
-+'
-+
-+test_expect_success 'read/write interactions in sequence' '
- 	cat >in <<-\EOF &&
- 	get 1 local test.rw.missing
- 	set 1 local test.rw.found found
- 	get 1 local test.rw.found
- 	set 1 local test.rw.found updated
- 	get 1 local test.rw.found
-+	unset 1 local test.rw.found arg:fixed-value updated
-+	get 1 local test.rw.found
- 	EOF
- 
- 	cat >expect <<-\EOF &&
-@@ -312,14 +359,14 @@ test_expect_success 'read/write interactions in sequence' '
- 	get 1 found test.rw.found local found
- 	set 1 success local test.rw.found updated
- 	get 1 found test.rw.found local updated
-+	unset 1 success local test.rw.found
-+	get 1 missing test.rw.found
- 	EOF
- 
- 	git config-batch <in >out 2>err &&
- 
- 	test_must_be_empty err &&
--	test_cmp expect out &&
--
--	test_cmp_config updated test.rw.found
-+	test_cmp expect out
- '
- 
- test_done
 -- 
-gitgitgadget
+Best regards,
+lilydjwg
