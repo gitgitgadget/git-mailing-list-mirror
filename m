@@ -1,128 +1,118 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DA527B327
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 16:49:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770223742; cv=none; b=ZtM5adqGnZpG4SFrw0J3iS+TelD4+a49e0PH+Qa0AkaWtvMGc6NadN+8XQcAtdJ2nHTWkKKvyBZ1NunpV2VEfOzvV1MzumYyRNt1wqBRtOHrT+QbOL4uH0n+J+9kwetRR7bN+SpR1K5VxD9dO0KKCNhDtmEZ13ofu36HAtvCBkE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770223742; c=relaxed/simple;
-	bh=X/Xop6B+7+6jBxUf9DxRf/H4NkAHw5ZUbq7kji0xAwY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p0CXduTfYQVE2uVGUTbb2Rw6IGscO0uEUN4cefAu3dnQBFWXUzcm47XJTDkE6W93QMY0/LMkLelGwpwRc5BJctgmHvKri2SMKsdwICAV/UscQ6OSKG3mAlkyO6X7eRondXcISetJfNjonLXbwcpBOBN0Fy1nnzBtJaixUcdvVlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=T7ESlFkE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n8dnpsBt; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC60131197C
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 16:52:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770223921; cv=pass; b=bDokFRFZzSJNDQMp53z70vGeJjwYVFGvMf5gqBevnO4Zrqmz+fqEJf+fQbTe228/Gu83dfy/ITuVaz2cZ/hYgDy6R+QOoy+NWG/9AftpOJa9Iq9uSpicUHtBPXoIQ1nQK0F4ps84G14BfhUG6gG3Gb0+6KaQTJnzPmwnyQHUKYQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770223921; c=relaxed/simple;
+	bh=CPpOGOL6slVbmDOK3/SoPYnnTdt/MdicIkh5000siZI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OUNc7lUUK/z59KelHYTjgBUXa/jDQywiu7oQ1ESVI3MwA95pWb2cPwOxNJ/wfbN+Y4KHyFJ18W61f9oNbFqesYa06sfT9+JyJFq4Ag6q5rBgQ9t1VlTPTdnSS5qT2jClRYwFAKqVTWhsmNip3yp/ZPpSNsgGSUbXvfCg2k8cqD8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=iW9Bdb0y; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="T7ESlFkE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n8dnpsBt"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5C9581D000E2;
-	Wed,  4 Feb 2026 11:49:01 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 04 Feb 2026 11:49:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770223741; x=1770310141; bh=8CUV+NhcUb
-	qes/g2zKa6VJCPQPlT3fCw+DbukW1i11E=; b=T7ESlFkE134DXY64ErGrULUQT1
-	pQNNWaYlSMECDtEKJgXlVNsX41Egs7jbs7B9nO275/gb1iG2cEZm3QnjAOG6gmzW
-	jhMGHVeiNH8InRzPRj5BuiD9Ip5eXomfYSmi8BMLeEg34GJuO2wH+ZZoYRZcb5A9
-	E4N1TSVaYWoqO9my3J7FvPzOC2gbcQ5HxFZov5XZ8DmM/JA49orptsL9RdmmLZOy
-	5zjsftz0d0CAyvu3iYC0aBIl5NgXI6JCh1yPKuI5CI1ViXmfPK978Z8mnwtSS7Xi
-	jKExrtxXl+Rk0BmTFYcTDBQufHkhba/cgY5jquLGtpeHdws+jDsbMZUTAxHw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770223741; x=1770310141; bh=8CUV+NhcUbqes/g2zKa6VJCPQPlT3fCw+Db
-	ukW1i11E=; b=n8dnpsBt7jPf7xHVsQ2cjdKiDo6Jb7Nor+hByPBCtJRfFXnt0ZB
-	6/gfU4PiM6YPV0avWZL1FiDU+y5twE7/kHME/MS+BMO6C1mvSa/SxW+TIV6RP2qK
-	cURsaJDDqq3fZ+G6ypJHAloOQQRMeJbY5uFbJjtc9SA9TL0aQHXVI2uxZZAXFIkC
-	FrI1qgNwAa7JZfmQDDn7+gCnvvo4z7slSlN6PBJmdiLVsVqvuzK2ypu/Vu4oLsVu
-	tcEF2MJKBS/tnBAYaQHeTWpGBgODT9STGHrfC5hDAksqWLb2yy4EAH3jH3rAei//
-	NvMH+zfOEXe6yDuYlRWoPGB+A8VWVSuJtuA==
-X-ME-Sender: <xms:fXiDac2TSQOu4WPrn7HBjBsX_e1u1buCRZh6Usmo0slY8BCwEAJe4A>
-    <xme:fXiDaeHcSOtxY3ANRqAD_pTFH_bKG21KNKItC2XDOW1q1JnRyYrO_6YRyiEC_nDds
-    f-eZCtYoGbZ8jH_knJ3PKIy32ZMkR_8HhqKMoD7RqziDhNAehI9uQ>
-X-ME-Received: <xmr:fXiDaZ4_zs_a6l4cb3DHjiIdpJ1dy-k4O2SFqt0jq1_gYyM6U9SSEG3NBDXBVrQbvUEmgnp5MAA2Gc9MqBPBL3kcy7dV8x-8zQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvleeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehonhgvqdgu
-    qdifihguvgesphhrohhtohhnmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrfedvtdehudehfeegudeisehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:fXiDaUsYwUoP-wWAgg3rGdqPf_2Tjj6zxoK1fwNqTVbgjgB2FG5UmQ>
-    <xmx:fXiDaa7vb2zR3im-VfoDSX1cHuRLsVuwg3JlOC9OAGZzK3YDdGTPBA>
-    <xmx:fXiDafWu_eMnNhYAQ9-pb-unO3zeTSvfGYYKT6ufCy8REnGhv-Di7g>
-    <xmx:fXiDac-v-kW6EJMQgjg7CwelUhLj_9Z50Kdi9u16Y2s26Zz7JBGztA>
-    <xmx:fXiDaX7tUU-HVSUdbQ0bIk8VJkpeDkiuY0N5wo9NXNJoFNYMoJYB-AIQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 11:49:00 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Remy D. Farley" <one-d-wide@protonmail.com>
-Cc: git@vger.kernel.org,  Tian Yuchen <a3205153416@gmail.com>
-Subject: Re: [PATCH] fix git add :!x exiting with error when x is in .gitignore
-In-Reply-To: <20260204132747.1564157-1-one-d-wide@protonmail.com> (Remy
-	D. Farley's message of "Wed, 04 Feb 2026 13:30:38 +0000")
-References: <20260204132747.1564157-1-one-d-wide@protonmail.com>
-Date: Wed, 04 Feb 2026 08:48:59 -0800
-Message-ID: <xmqqo6m4pi84.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="iW9Bdb0y"
+ARC-Seal: i=1; a=rsa-sha256; t=1770223906; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=L4RoNIxwaqrWxUXuQ5cC6HyeNTDv56S0ZHyPda86icTfoZOa4TaHqSd5DjEjsCjaGMtHc1r+RpKttq/UMVPYNnp6loRdHRxuYyXYyeZLWcOYJrQwM31YtWnZd5g4IYF1htVbvmVVztJNZjfvrHDq9utIIdYJInD6MHZ360BwS+w=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1770223906; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=k63GSY/V3oCN5C8kJsYiWdZNg2qmGBeUvt0omyA01bc=; 
+	b=GU0SoKd1XPamJ3tshc4NW/Hyp7/KZphReGoEBpWvMkHh/Is5LtJk8gRzoAoeQlHd8hk2dwx0xljyUzIxjMzQxRCoFEi3/rZsJrsQpbEcBkuaMp5mPYLxgF+E929N8jrzuHDm4aA4huNl5YFWq7Kk9RumnyXjXha7iYcCv0jxHME=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1770223906;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=k63GSY/V3oCN5C8kJsYiWdZNg2qmGBeUvt0omyA01bc=;
+	b=iW9Bdb0yOLY2UMnXU3mHZsvykZsVuOYUlcP4HfpVw8wqQC2aA7XJ1xeIj+zdK9Dl
+	bOuwCb2NfWQoIj/oTGyREq2Uj6YQvY5KuDhyYSTAnJTdgQhK1RqyUSEK8tE3gsGWoXd
+	MfGYaRwtpw3qr8KmCq6slneHjiQgIJxQKUHetSh8=
+Received: by mx.zohomail.com with SMTPS id 1770223902895723.222180560817;
+	Wed, 4 Feb 2026 08:51:42 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH 0/4] Specify hooks via configs
+Date: Wed,  4 Feb 2026 18:51:22 +0200
+Message-ID: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-"Remy D. Farley" <one-d-wide@protonmail.com> writes:
+Hello everyone,
 
-> diff --git a/dir.c b/dir.c
-> index b00821f294..ed6b99e337 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2280,6 +2280,9 @@ static int exclude_matches_pathspec(const char *path, int pathlen,
->  		const struct pathspec_item *item = &pathspec->items[i];
->  		int len = item->nowildcard_len;
->  
-> +		if (item->magic & PATHSPEC_EXCLUDE)
-> +			continue;
-> +
->  		if (len == pathlen &&
->  		    !ps_strncmp(item, item->match, path, pathlen))
->  			return 1;
+This series adds a new feature: the ability to specify commands to run
+for hook events via config entries (including shell commands).
 
-A question that immediately comes to mind is if it is appropriate
-for a negated pathspec element to recuse itself like this from the
-decision process and let other pathspec elements decide the fate of
-the path, or if a negated pathspec element should take a more active
-role of saying "no" (no, not by immediately returning 0, but this
-loop may have to become a two step process if we wanted to implement
-e.g., for the function to yield "yes", it has to match at least one
-positive pathspec element and zero negated one, or something like
-that).
+The config schema is identical to the one developed by Emily and AEvar
+a few years ago [1] though the implementation is significantly different
+because it's based on the new / cleaned-up hook.[ch] APIs. [2].
 
-What should
+For simplicity, hooks are still executed sequentially (.jobs == 1) in
+this series, just like before. Parallel execution will be enabled in
+a separate series based on this one.
 
-	git add "$x" ":!$y"
+The hook execution order is this:
+1. Hooks read from the config. If multiple hook commands are specified
+   for a single event, they are executed in config discovery order.
+2. The default hooks from the hookdir.
 
-do when a path <matches, does not match> $X and <matches, does not
-match> $Y?  We have four combinations to consider in such a case.
-The code in the patch says it should behave identically to
+The above order can be changed if necessary.
 
-	git add "$x"
+Again, this is based on the latest v8 hooks-conversion series [2] which
+has not yet landed in next or master.
 
-and negated ":!$y" should not make any difference.  Is that what we
-want?
+Branch pused to GitHub: [3]
+Succesful CI run: [4]
 
-Thanks.
+Many thanks to all who contributed to this effort up to now, including
+Emily, AEvar, Junio, Patrick, Peff, Kristoffer, Chris and many others.
+
+Thank you,
+Adrian
+
+1: https://lore.kernel.org/git/20210715232603.3415111-1-emilyshaffer@google.com/
+2: https://lore.kernel.org/git/20250925125352.1728840-1-adrian.ratiu@collabora.com/T/#m41f793907f46fd04f44ff1b06c53d20af38e6cb2
+3: https://github.com/10ne1/git/tree/refs/heads/dev/aratiu/config-hooks-v1
+4: https://github.com/10ne1/git/actions/runs/21676691521
+
+Emily Shaffer (4):
+  hook: run a list of hooks
+  hook: introduce "git hook list"
+  hook: include hooks from the config
+  hook: allow out-of-repo 'git hook' invocations
+
+ Documentation/config/hook.adoc |  17 +++
+ Documentation/git-hook.adoc    | 131 ++++++++++++++++++++++-
+ builtin/hook.c                 |  53 ++++++++++
+ builtin/receive-pack.c         |  23 +++-
+ git.c                          |   2 +-
+ hook.c                         | 188 ++++++++++++++++++++++++++++-----
+ hook.h                         |  55 +++++++++-
+ refs.c                         |  23 +++-
+ t/t1800-hook.sh                | 158 +++++++++++++++++++++++++--
+ transport.c                    |  23 +++-
+ 10 files changed, 633 insertions(+), 40 deletions(-)
+ create mode 100644 Documentation/config/hook.adoc
+
+-- 
+2.52.0.732.gb351b5166d.dirty
+
