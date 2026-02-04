@@ -1,99 +1,72 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE942877FE
-	for <git@vger.kernel.org>; Tue,  3 Feb 2026 23:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F53214812
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 02:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770161619; cv=none; b=tYRX8eSfeK2vmilF8KRXXIH9mzii06cQdi38l3IY6SMB2bIVreP9bYFkT1fa1Ogm3N9DwjulfBDHPoFlWS6edKxSYms1RM87rNl848/X3mqmFPKEVTJ1i8RSEgeZ0HI2SpDNqUoH+SVPLRVOY34Yh9rc3G7Rp5tCVWcrrLpl0qA=
+	t=1770170955; cv=none; b=Kypc61d7dNq5sDJAlbwN0kx+AfYovxp18ucj7q71CK5XbDZVG0ItwACpfCdJyeS4zshijnR4+rthXupsEBCczj3H7ZT1gsGw4s90YbuHfhvyQmE1hCuouG9ptZkrzxuq4KvXOwxwOwaVHnRnu0rOr47scpKi8L40TuwG8mEd+8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770161619; c=relaxed/simple;
-	bh=TNi6EQhdL2xkEgG3A1zt6DOCrWOxl7pMbXGo6/qQ6Fc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pjsE00HRXfRx0yxfK+eM++fE68W1PSPY73AmpkdJvS5tuGRD9emq3aCbGnoFZknuGIXsE6E/c7WCcrD66PtIU05HZ93W4OL2XbxcQwP2nvx+8DJKZ6Gx313MGS0JfRPy8lXx8j2R1gWaD4BzhsK5pEPeECpk32m/Aqv8X0SWE2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n0R8OSpR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C12ycC+M; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770170955; c=relaxed/simple;
+	bh=LpWWp0jfofE1vmLZAy0LMrasZPPZRPouLyV78ZmPZZc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tbJzBmEKOyz5QcMzKT8F42OPtpGuyFoBrU92TCUDljUONlik5LLC/T5LM7hRa9IDX0gw44ldNBqeiIUsWhrKCe6pvZX5TrKw8XMnX2dgPi3KeJCqHgEbCRw4HeEmoBhVjI2ssG/plAuDo94Y428/spysY0FJJK2FYOAijA7f0W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cTVobcZ7; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n0R8OSpR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C12ycC+M"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3C0121D00130;
-	Tue,  3 Feb 2026 18:33:37 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 03 Feb 2026 18:33:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770161616; x=1770248016; bh=tJRHpByXXx
-	0mkVSW0+p+BOSdqF9fMp8p3SwadR3MizY=; b=n0R8OSpR0yVRFWlh9SrWyxuvP5
-	twaIYo5FMfkiYvLY7EkHVY+ynhexHu6T+JdKW5ZZgdJJtMhPrtB8dXkzC8QCq5Bp
-	SYa16AQYazL29sdVFIty/XWyN2zdLaWXrwyD6rcdagBuMTFdekkIhWm8NWBGiFxS
-	MJIhX744hZ+QyG1CKCiIaMt7f/506mvlqojD9PXf6vr8gZ7m19zTscjNIJ1KtLKx
-	V8zpbIIBkgPAU14DbW82RFZfPah4scqLg5vxIRyyf3p8tPLixSaYR6eNpBa6BIxI
-	BkGM5txX65IDS+Bx+8RhC87PdRjOrz/+UTz3oRUI8x/9Wg+Uk4RmTp50qy8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770161616; x=1770248016; bh=tJRHpByXXx0mkVSW0+p+BOSdqF9fMp8p3Sw
-	adR3MizY=; b=C12ycC+M1jI0q6ctTjOPunIMXek81GJ87oJ09vy9vdhpJwudFyG
-	pCDfUs8qDu1lepkD2DYkHFR5Q8ukXKGvragPgzNynAFLUbyF/lfwtjmDttWzHPmj
-	ZLOwPTn2bwPz0gnzDtjMTu8nHPAzDIUh6oW+6o9YHnqMqqVSEBv2nxh8b4HpSX7e
-	1uYom5Ftw1Ms+TeNcgtT037jlnrKuCZ1Twa+L2YZoMA/+XVWGDnjfSuF6NfapLFU
-	XOcjVkvX+JHsSnHPbmcOY928lfvdMmqxp80qsOrop3CnbcqAMvQqTU+p1sOqQLhS
-	IaGatw9AncRnvCBoWUTB74Vfbv0n2G/4Qdw==
-X-ME-Sender: <xms:0IWCadA-t7gxUpYXoS7hXP8kQZb6Iwy0KOI5xwh80Jj1DZmoVeEi4A>
-    <xme:0IWCaShfY_OX1QseCjFkO-8zcZ-72_SF30kbu6M_e88rfQgJBIBAkJbxYSvIRDGIB
-    IToCj8oL4tXKgebZ6VsqsmlsZoDcsU20dTQXvZd8WTLj7YWEYnxjw>
-X-ME-Received: <xmr:0IWCadmBl792_dxrVs9kfJRKL9fnLX6OEWJYnAUNujpkH6eIqLJlYfuREKs6jMZkrSTvNBiNAqJG4foRjEypkU-pKrRguzYAJg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedufeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:0IWCaWpNV200lfQhWX9CzxSa6VrCVMQgZeXrILsgk4NgEIKpZiq1fw>
-    <xmx:0IWCaeFnsvTbsKXf3pbWu2wAu4FD2pVP0G7AwNeAT7JmwXiO7bS05g>
-    <xmx:0IWCaayuTKmu2BQLzXsvumbxGPeSSMervvLvV-8-F3OEowdPZiglVg>
-    <xmx:0IWCabr6D7Hv2oauGVJa9MLIilH9vijBztiu38kw_slq9HJE8Zo4OQ>
-    <xmx:0IWCaVERhfbrJrErcnZ1Ro73kRgehRA6XuprGqGaE746H_yVoSNg7Ixx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Feb 2026 18:33:36 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Justin Tobler" <jltobler@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 4/5] builtin/repo: find commit with most parents
-In-Reply-To: <e48578d5-ec48-4369-901a-597de3be9455@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 04 Feb 2026 00:14:07 +0100")
-References: <20260203221758.1164434-1-jltobler@gmail.com>
-	<20260203221758.1164434-5-jltobler@gmail.com>
-	<xmqqpl6lqw86.fsf@gitster.g>
-	<e48578d5-ec48-4369-901a-597de3be9455@app.fastmail.com>
-Date: Tue, 03 Feb 2026 15:33:35 -0800
-Message-ID: <xmqqy0l9pflc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cTVobcZ7"
+Received: (qmail 273036 invoked by uid 109); 4 Feb 2026 02:09:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=LpWWp0jfofE1vmLZAy0LMrasZPPZRPouLyV78ZmPZZc=; b=cTVobcZ7gd6bNoiyDxV0M29i+PxNHY7fvOYopB6SnwsHc9vcIt2OZRHe7GeJ4Ez4hGB0gJxAH5Fx30siCaqt0yF0hhcTpgZL3h3Kz1Rp9qgGeX/qyVg+w1NHPIhJY0lt29w6e9+ldLdbNHyiNJghW9tvItYWziY1azYH8mnwEiLJ1RHt2RY/Cw+kOz55m7dajOkCA86F/K/XMZaYmW2RcAbFfAzDvwKh2+he1M3fEquuE5TqBw0QcauXyAGDofl502nyRFgykJKGfxZuqTucV6dTmQs3IrK/+3f2u35aiBea3y26yDAaTLLblKfm3GA2bMae1qM9hl3LZqBW7i9fsw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Feb 2026 02:09:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 540595 invoked by uid 111); 4 Feb 2026 02:09:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Feb 2026 21:09:16 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 3 Feb 2026 21:09:12 -0500
+From: Jeff King <peff@peff.net>
+To: Chris Packham <judge.packham@gmail.com>
+Cc: GIT <git@vger.kernel.org>
+Subject: Re: git format-patch --no-renames
+Message-ID: <20260204020912.GA350923@coredump.intra.peff.net>
+References: <CAFOYHZDn-e5P9Rs3=2oS857QvYnHbpYq23x3RCkDWTTVGg5gNA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFOYHZDn-e5P9Rs3=2oS857QvYnHbpYq23x3RCkDWTTVGg5gNA@mail.gmail.com>
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+On Wed, Feb 04, 2026 at 08:58:29AM +1300, Chris Packham wrote:
 
-> By the way: why did this project stop doing 3+ parent merges?
+> The man page section for the --no-renames options says "Turn off
+> rename detection, even when the configuration file gives the default
+> to do so."
+> 
+> But I can't actually see what option that might be.Does git
+> format-patch use the same config as git -diff?
 
-If you mean Git, the primary reason is because I do not see much
-value in Octopus merges, which is very hostile to bisection.  It was
-"interesting" to view them in gitk while the tool was young and
-nobody has seen such a structure, but curiosity rapidly wanes ;-).
+Yes, it's just diff.renames, which controls rename detection for most
+commands, including git-diff and git-log. The notable exception is for
+plumbing commands like diff-files.
+
+> Selfishly I'd like `git diff` to show renames but `git format-patch`
+> to output things that can be applied by `patch` (specifically a
+> version that doesn't understand renames).
+
+There's no way to do that right now via config. You'll have to use
+"--no-renames" or "-c diff.renames=false", either manually or using a
+command alias.
+
+If you want to change that, the usual approach is to have a
+command-specific option that defaults to the more generic one. So add
+format.renames, and if it's not set, fall back to diff.renames as we do
+now. There's some prior art in the merge.renames and status.renames
+options.
+
+-Peff
