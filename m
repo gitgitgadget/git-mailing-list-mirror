@@ -1,130 +1,139 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AA52F99B8
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 17:26:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770225973; cv=none; b=WmLpMHJqgJ5IlMSuzILi8WN6wCL1U2SXWouGg6SoOWvVuw/oiGG4mdq4KK1GkZcz9oQKwECSv/b7IqxrTHILrsm6sOSlfzbqc5n/Wzk5S9+4As37OkKo8UgLzwBMVfpZo9RW5F6YaGCgJvqnZCjYhszMO8LpazHMv8HIxaDPkTI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770225973; c=relaxed/simple;
-	bh=WYEr82azxoMtoD04MFTxgFZwa+HKJlPGyVg9rYazBU8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XQxQ1xQhW130E+fjL7TUai7Xp0ZsNWNwoCMz9zeS/1AMn5JGBYy09Mub8FmXB0rMBLSb3Tl3xLU/D+ISQXhvXj7ZeC1YMt1SJVCffWp6o2rOqgAbvUpImHfzgghh/RqQFV5DLS4qi4D/qg7Cn6zInYcG01YR8Wo+u30bkSUIE+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rjj5XGve; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y3zD4CIB; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1F12556E
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 17:34:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770226448; cv=pass; b=IOPNb5lxMG9bbg5be1hylLzWNRiVNEwR7YME1H+C+AOE5Eg0CqsX6Ae/Jr7SDiSENwes3lu82uTjlwHsE/bqxmt7apaRjEncnaeDZ6u9zbOmV4S+m7eIRzlKJZXzZk+JRyb0s4cF4jH+p1p1g/enThqEr8QKRFR1blqFkITAabw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770226448; c=relaxed/simple;
+	bh=NwuSpYj1Gt8pxbO8NxrG7+L7a52RShqJKGfIiSN/H8g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UTWpUOjlao5fzZRcnck6MejI4tJkv03Hz+ibEqrz2Phv3VZkFccwITKzLKKDoOH7FBk7+8U5TFDH3a1ndaxjudZpQQe1V0NNnd45dWXyrnKMGEAnCmkxffUnH88FW3q8fVFWAdmbasY6/Sqv8qs2My1AIL5zaaZjn6bL0o9noxs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=XoczUkZm; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rjj5XGve";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y3zD4CIB"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AC69C7A014E;
-	Wed,  4 Feb 2026 12:26:11 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 04 Feb 2026 12:26:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1770225971;
-	 x=1770312371; bh=+pPmU9mYuc9zubhjdlNOJb0wzQ/wQ4j3SgzKz+Xer6Y=; b=
-	rjj5XGve14WY7V/RgM34K6xMzy6YapQKdhzcAe8AFjrgAJvEdIy3OpIpLNbRtZ8P
-	MLtOYpNMVO0IgN9geWR6gNY3f7SxLs70UO4TwWOfJzZP7Y7a7vhb2Fztj/qPpsJb
-	MmdAVdu/r/WuX3yymYB4nbRT0ameH2gDuZq+5hw6vT7F+GEWdlJDR1EDs4zi6Wpm
-	9Uxnfj60UQFaJZ2gNnr4HR7z81OQ3MvSllbrSAUY/G8YUNkS0qdbZsmYJJwfnVQE
-	RtA7UqEqX2Vv12zHWKlEAgujGYNB69MN//yDgD8wJgtPIsuNZgOyt1h6yq4oGfj4
-	pCk1Hm305hTdmft9vRQpkg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770225971; x=
-	1770312371; bh=+pPmU9mYuc9zubhjdlNOJb0wzQ/wQ4j3SgzKz+Xer6Y=; b=Y
-	3zD4CIBzq2zH1UiFZsC3925Gp23lx7pYsGrZ2CBQA/Zp2L0VtZpoLL3rcOMrmSnE
-	7xZsE97bZBpdv2hltF5t3XMcs/FXtPKnEXkeTcYaJjanE7H9kR6zCl4DGkqKgogu
-	SJrW78BkSwW+nwlB5R2zjtkNgzGq7ySgw98HD7nBCm/4PrUMn8+vCxcNbRD6BHpg
-	36mGSGbzCU8F6bEv4aP645DZBQDKFFrp+lD6iFXJaIk63MqiBQ1FljWlLmGGc/n7
-	k53kf8QdHV1/Ro4jwVi/Cz3rz94IHinaBL70/AeE7yhyflvUP0rb+gxJgTuAjIJJ
-	TMgWRmUEg4SAq5IHPhsGw==
-X-ME-Sender: <xms:M4GDaWb1FAxfq5csbtXKVGPEE5mNrJPZc2Bz62cqwmyXWEw3nEQN3w>
-    <xme:M4GDaQQHm8J4soNB_ybxo8vjtqITFT0gDAIp3_-Rt_r7xq-P7bcIcSIX-5jt9wLVz
-    sOS6xWZDk5m86c7UM-s2vtCFz-gQS5nU7-9yXTN3u7euyF4kqfXog>
-X-ME-Received: <xmr:M4GDaZQnErf-yVF96cHOTPv_DI2uU0MRQqeQ5BIfUAOskdCgxDVZMiXMb0dmGUGluBZE5HSyX-XTeM36LqqyQ9pXZ1HWjsIBSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeeftdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehukhhlvghinhgvkheskhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeht
-    ohhrvhgrlhgusheslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoh
-    epnhgvrghlseifrghlfhhivghlugdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:M4GDaUT8Wpw3GxlWZ6f1Bid2psdvyYYsGnnod4r1NZnlepIrSytpLA>
-    <xmx:M4GDae49KA09WPE_TbIWxOFJBIcQGxu9ovud28kWaFmetznWXfqvWA>
-    <xmx:M4GDaQ2MKkEAsgzLrbtfPydPCfrNJ5L6-vpeJ-3nHYfXzPySPW-fXQ>
-    <xmx:M4GDaZCXJrFz9yyQtHvDSfN0EuLlyv25ExwZ10INepkIFlg8RaFI6Q>
-    <xmx:M4GDaXszRmxpGGX_7QFv1DcYDRftTrs7ye6Q2DWCBsF3QMMW--GqCUx5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 12:26:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Cc: git@vger.kernel.org,  Linus Torvalds <torvalds@linux-foundation.org>,
-  "Neal H. Walfield" <neal@walfield.org>
-Subject: Re: [PATCH v1] gpg-interface: Signatures by expired keys are fine
-In-Reply-To: <20260204152306.1767112-2-ukleinek@kernel.org> ("Uwe
-	=?utf-8?Q?Kleine-K=C3=B6nig=22's?= message of "Wed, 4 Feb 2026 16:23:06
- +0100")
-References: <20260204152306.1767112-2-ukleinek@kernel.org>
-Date: Wed, 04 Feb 2026 09:26:09 -0800
-Message-ID: <xmqqjywspgi6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="XoczUkZm"
+ARC-Seal: i=1; a=rsa-sha256; t=1770226435; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=TFEYhtONaUH/AOvxWj0YJOSiosC3P0wQ6GDptyZnHbUqV2aY80pvzlCCxqp19lVxbZHpyv0qbJwdHrOdNy78burcc0ObIGJYFfnYEl5gKMwK+G1l2HrAWrIG7FwLJak9oJGKrPej5Wz3A4lRbLQQ/lM0DCMNL/FpiAmSdA3xsZA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1770226435; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=fSIKayg6nXAoV58TO4VuvBCX//UnO0b40FfquzwFelE=; 
+	b=JKpdmfqpGKlnI9vWsP2N9OowoDzqZ4Ks3tMBGn92A2fQFs1gssd52YD4yBpb4PxXPS8do9dHX22+ivcNlOBzDiLM5YAUNFLm56BsRqH0fuKkhRg+eJQHwKJvu7PKEUx/yH+flUrWefFOa7BOH97WT62fTkOpChea7pEitTdbqkc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1770226435;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=fSIKayg6nXAoV58TO4VuvBCX//UnO0b40FfquzwFelE=;
+	b=XoczUkZmPtef4XtHgW2M4bhO2EZg+MUaXXViDflvudckoMuZy216Nrijig4bXzpe
+	uhJ+XhsnOZsgDDcIxrE8i3q6JXGRCg3CFbb1os6qmIN3Oi6HS3xmXFrOcP3QJ0aflZC
+	9PkvVrVSFhfm1Dfn3TrsiOtVykSVADQVlxrYbf2o=
+Received: by mx.zohomail.com with SMTPS id 1770226432197165.27706670566135;
+	Wed, 4 Feb 2026 09:33:52 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH 0/4] Run hooks in parallel
+Date: Wed,  4 Feb 2026 19:33:24 +0200
+Message-ID: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Uwe Kleine-König <ukleinek@kernel.org> writes:
+Hello everyone,
 
-> If a signature is done with a valid key and that key later expires, the
-> signature should still be considered good.
->
-> GnuPG exmits in this case something like:
+This enables running hook commands in parallel and is based on the patch
+series enabling config hooks [1], which added the ability to run a list
+of hooks for each hook event.
 
-"emits".
+For context, hooks used to run sequentially due to hardcoded .jobs == 1
+in hook.c, leading to .processes == 1 in run-command.c. We're removing
+that restriction for hooks known to be safe to parallelize.
 
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 47222bf31b6e..6635c6c8e16f 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -382,7 +382,7 @@ static int verify_gpg_signed_buffer(struct signature_check *sigc,
->  
->  	delete_tempfile(&temp);
->  
-> -	ret |= !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ");
-> +	ret |= !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ") && !strstr(gpg_stdout.buf, "\n[GNUPG:] EXPKEYSIG ");
+The parallelism enabled here is to run multiple hook commands/scripts
+in parallel for a single event, for example the pre-push event might
+trigger linters / spell checkers / unit tests to run at the same time.
 
-Makes sense; I'll wrap this overlong line while queuing, though.
+Another kind of parallelism is to split the hook input to multiple
+child processes, running the same command in parallel on subsets of
+the hook input. This series does not do that. It might be a future
+addition on top of this, since it's kind of a lower-level parallelism.
 
->  	sigc->output = strbuf_detach(&gpg_stderr, NULL);
->  	sigc->gpg_status = strbuf_detach(&gpg_stdout, NULL);
->  
-> @@ -680,7 +680,7 @@ int check_signature(struct signature_check *sigc,
->  	if (status && !sigc->output)
->  		return !!status;
->  
-> -	status |= sigc->result != 'G';
-> +	status |= sigc->result != 'G' && sigc->result != 'Y';
->  	status |= sigc->trust_level < configured_min_trust_level;
->  
->  	return !!status;
->
-> base-commit: b2826b52eb7caff9f4ed6e85ec45e338bf02ad09
+The pre-push hook is special because it is the only known hook to break
+backward compatibility when running in parallel, due to run-command
+collating its outputs via a pipe, so I added an extension for it.
+Users can opt-in to this extension with a runtime config.
+
+Suggestions for alternative solutions to the extension are welcome.
+
+Again, this is based on the latest v1 config hooks series [1] which
+has not yet landed in next or master.
+
+Branch pushed to GitHub containing all dependency patches: [2]
+Successful CI run: [3]
+
+Many thanks to all who contributed to this effort up to now, including
+Emily, AEvar, Junio, Patrick, Peff and many others.
+
+Thank you,
+Adrian
+
+1: https://lore.kernel.org/git/20260204165126.1548805-1-adrian.ratiu@collabora.com/T/#mdb138a39d332f234bc9068b7f4e05b10c400e572
+2: https://github.com/10ne1/git/tree/refs/heads/dev/aratiu/parallel-hooks-v1
+3: https://github.com/10ne1/git/actions/runs/21680184456
+
+Adrian Ratiu (3):
+  config: add a repo_config_get_uint() helper
+  hook: introduce extensions.hookStdoutToStderr
+  hook: allow runtime enabling extensions.hookStdoutToStderr
+
+Emily Shaffer (1):
+  hook: allow parallel hook execution
+
+ Documentation/config/extensions.adoc |  15 ++
+ Documentation/config/hook.adoc       |  14 ++
+ Documentation/git-hook.adoc          |  14 +-
+ builtin/am.c                         |  10 +-
+ builtin/checkout.c                   |  13 +-
+ builtin/clone.c                      |   6 +-
+ builtin/hook.c                       |   7 +-
+ builtin/receive-pack.c               |   9 +-
+ builtin/worktree.c                   |   2 +-
+ commit.c                             |   2 +-
+ config.c                             |  28 +++
+ config.h                             |  13 ++
+ hook.c                               |  51 ++++-
+ hook.h                               |  20 +-
+ parse.c                              |   9 +
+ parse.h                              |   1 +
+ refs.c                               |   2 +-
+ repository.c                         |   1 +
+ repository.h                         |   1 +
+ sequencer.c                          |   4 +-
+ setup.c                              |  17 ++
+ setup.h                              |   1 +
+ t/t1800-hook.sh                      | 270 ++++++++++++++++++++++++++-
+ transport.c                          |   9 +-
+ 24 files changed, 476 insertions(+), 43 deletions(-)
+
+-- 
+2.52.0.732.gb351b5166d.dirty
+
