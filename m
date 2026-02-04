@@ -1,144 +1,202 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF83A199E89
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 04:41:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A2C4369A
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 05:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770180092; cv=none; b=SiEnb3TfK3NobrsEP+Fec0m5mnR7qLZnqnMwik4z1P8KJH/bzNletJPYpmpB11FI3xARkDUSuP17jGsjbBgZ7/rabX26dgx1ZuBz9hvWrV1TbO4JNU/mI2Pz/4LNXEaKlW0v0CsedYtamFq/xOovSbxNrgUULWoyZO6le+WmHr0=
+	t=1770183141; cv=none; b=YHNIoGZqNuWu67ekd7X/gI44g11WAZMuJ9pItsdZE5LPdU4HZoybVwhl5yov//iq+73m38GBYrcX78WFTWwrMDEn6HeVwuDpcR1Id5jrdEsbasigyBext44DkZAKIc/8bmoMbgfJDU6Gt5cxMrjo8wrBgTdQbeEaSSYWaE/ocrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770180092; c=relaxed/simple;
-	bh=Ibsl6lT6fSgZehW7ddai5a+Z0wC8E7JOq5+aOgk+xuQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dP95yXbM3mn/rOpYiWVAzY/8hem8NA6lWe2Fzs5b6/NDnC7LjpKLhuw7oAxJFZRGpwmjbtmJWHa8bOrSj8JbFBCzXZzTkHX+eaZS0JONVTSuc5rlVO/+PLmST6BrFTnMlScOXs4WiRZkg9SVLpZJPwbrkxiYCOvHwCdKzE2h33w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=QHhNfE4I; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1770183141; c=relaxed/simple;
+	bh=3pqIAcYmXkU4x+0QqNjPC2hIbSibAYECOOQzSq9+uyI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z69wADeuyHzU9jUHZo/e/vtLHQJyAWjFIXt0rwu0gz6ZyOBoR1JpiT2E2p6caz5xk1DdMR0J4P0uyiSOXZTo63iT8a7AsYAqQwbHOaGZaq1wdF2iPNu/v/wOIKaf4BOBiaIZv+Q0NGAuQ1/VlD9CwzW9MbVH7OKJibCxE+QmLgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EbmXQRSs; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="QHhNfE4I"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1vnUhc-00HCky-6j; Wed, 04 Feb 2026 05:41:20 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector2; h=Content-Transfer-Encoding:MIME-Version:References:
-	In-Reply-To:Message-ID:Date:Subject:Cc:To:From;
-	bh=h6qxGRF4pUweWwjVf2H1rKsS7N39l7Gz/IOhzDs8T1Y=; b=QHhNfE4Ixq+pEfcVLm5bwF6HxN
-	M64Jj4GQXf9tii9S9DNhx+kmgNBrvbs5r4QnJY6L17bEMLLnOeuIa08qqfgC0LS5V6d6uBeDf9Acl
-	SbxT+H8kpEtYJMUJfssTFw3LNcdpHfQCrfzyxQT9GprKLxPdYXcAzF4V/7XNBZpo3dgqLyshqWTww
-	mK+rj8AJ/LkOzJdQZDU826RKK2o15ER7oJ/ohL0ArxB3QcetZ+oXr0JSlrOUSD3qAnLq3IG3j4zaU
-	WHVZmbUcAoNxykgXFtDdGnxiyiHbVeYM+0lxCyNnpWlepNj/1tLpxIhSb37eLBIpy4b3NuW5oknCx
-	qKI8fg9Q==;
-Received: from [10.9.9.72] (helo=submission01.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1vnUhb-0005pC-68; Wed, 04 Feb 2026 05:41:19 +0100
-Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1vnUhW-000TMt-Np; Wed, 04 Feb 2026 05:41:15 +0100
-From: Colin Stagner <ask+git@howdoi.land>
-To: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Cc: Colin Stagner <ask+git@howdoi.land>,
-	Patrik Weiskircher <patrik@pspdfkit.com>,
-	Adam Dinwoodie <adam@dinwoodie.org>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re* [RFH] adding test coverage for contrib/ in CI jobs
-Date: Tue,  3 Feb 2026 22:38:11 -0600
-Message-ID: <20260204043812.814884-3-ask+git@howdoi.land>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <xmqqjywtu58j.fsf_-_@gitster.g>
-References: <xmqqjywtu58j.fsf_-_@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EbmXQRSs"
+Received: (qmail 275685 invoked by uid 109); 4 Feb 2026 05:32:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3pqIAcYmXkU4x+0QqNjPC2hIbSibAYECOOQzSq9+uyI=; b=EbmXQRSsAiW7MuY6WujotKmvGD+mNUM31l91UhMo/B5BaX+JM/fWlN3ahHpV0/IH2bI6wQFjbQlqirNOJb2gxUK+i+DJQfDJGQGMxdNOsvAR7nSdoW2FN5Cu1YTT98ZyhKfdvypoCav5jhH42VeG3TMwD+ulk8r7ZzPOuStXQgHkVSq6k0OpziwMqg3G3S++7tnjjg69yTrkSiqEiEZ21E2XcVcNCTKBAy8+21/8OQQpkC3D8E83i7JLbqsnZ/I5IvA9Es0itFVJShrgOraNPDuYozNEik5824DuyTvP+1JzafGAx0XSs8EkLHU1QomSkENGFXg6yDe3AFwcNVQHAQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Feb 2026 05:32:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 544370 invoked by uid 111); 4 Feb 2026 05:32:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Feb 2026 00:32:23 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 4 Feb 2026 00:32:18 -0500
+From: Jeff King <peff@peff.net>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] git-compat-util: make git_find_last_dir_sep return a
+ const pointer
+Message-ID: <20260204053218.GA942606@coredump.intra.peff.net>
+References: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
+ <20260203062537.GA286409@coredump.intra.peff.net>
+ <87ecn18aip.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ecn18aip.fsf@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Feb 03, 2026 at 07:15:10PM -0800, Collin Funk wrote:
 
-> I didn't look into CI failures but spotted an easy one by
-> eyeballing.
+> And that plan makes sense to me. I'll create a seperate patch handling
+> the obvious 's/char/const char/' conversions that make sense regardless
+> of this glibc change.
 
-[snip]
+Sounds good. BTW, thank you for working on this! I think some of it will
+be a slog. :)
 
->--- c/contrib/subtree/t/t7900-subtree.sh
->+++ w/contrib/subtree/t/t7900-subtree.sh
->@@ -1597,7 +1597,8 @@ test_expect_success 'push split to subproj' '
+> Yes, I see. I think the "arg" there is from the command line or from a
+> buffer read using fgets() in get_object_list from
+> builtin/pack-objects.c, so it is safe to write to there.
 > 
-> test_expect_success 'subtree descendant check' '
-> 	subtree_test_create_repo "$test_count" &&
->-	defaultBranch=$(sed "s,ref: refs/heads/,," "$test_count/.git/HEAD") &&
->+
->+	defaultBranch=$(git -C "$test_count" symbolic-ref --short HEAD) &&
+> It's also called like this though:
+> 
+>     handle_revision_arg("HEAD", &revs, 0, 0);
+> 
+> We can't write to the string "HEAD", but it doesn't have a "dotdot" so
+> we don't. It could probably be cleaned up a bit.
 
-The subtree tests set GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME, so
-this is one alternative.
+Oof, yeah. So this is a trap waiting to happen, and any code like:
 
-I'll see what I can do about any remaining failures. I'd like to
-improve the test coverage for subtree split. split has a lot of
-complicated logic that needs to be preserved across updates.
+  handle_revision_arg("..HEAD", &revs, 0, 0);
 
--- >8 --
+would segfault. That's something we're unlikely to write, which is how
+it's managed to hang around for so long. But I'm happy that the new
+warning will help us find and fix such cases.
 
-Subject: contrib/subtree: fix tests with reftable backend
+This is a case where I think the interface really should be a const
+string, and we should just pay the cost to make a NUL-terminated
+version. I.e., something like this:
 
-One git-subtree test-case relies on git internals to infer the
-default branch name. This test fails with the new reftable
-backend.
-
-    GIT_TEST_DEFAULT_REF_FORMAT=reftable \
-      meson test t7900-subtree
-
-This test script already sets
-
-    GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-
-which eliminates the need to infer a branch name at runtime.
-Hardcode the branch name.
-
-Signed-off-by: Colin Stagner <ask+git@howdoi.land>
----
- contrib/subtree/t/t7900-subtree.sh | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 316dc5269e..e7040718f2 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -1597,7 +1597,6 @@ test_expect_success 'push split to subproj' '
+diff --git a/revision.c b/revision.c
+index ba0da18f26..289af7507c 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2143,16 +2143,17 @@ static int handle_dotdot(const char *arg,
+ 			 int cant_be_filename)
+ {
+ 	struct object_context a_oc = {0}, b_oc = {0};
+-	char *dotdot = strstr(arg, "..");
++	const char *dotdot = strstr(arg, "..");
++	char *lhs;
+ 	int ret;
  
- test_expect_success 'subtree descendant check' '
- 	subtree_test_create_repo "$test_count" &&
--	defaultBranch=$(sed "s,ref: refs/heads/,," "$test_count/.git/HEAD") &&
- 	test_create_commit "$test_count" folder_subtree/a &&
- 	(
- 		cd "$test_count" &&
-@@ -1614,7 +1613,7 @@ test_expect_success 'subtree descendant check' '
- 	(
- 		cd "$test_count" &&
- 		git cherry-pick $cherry &&
--		git checkout $defaultBranch &&
-+		git checkout main &&
- 		git merge -m "merge should be kept on subtree" branch &&
- 		git branch no_subtree_work_branch
- 	) &&
-@@ -1626,10 +1625,10 @@ test_expect_success 'subtree descendant check' '
- 	test_create_commit "$test_count" not_a_subtree_change &&
- 	(
- 		cd "$test_count" &&
--		git checkout $defaultBranch &&
-+		git checkout main &&
- 		git merge -m "merge should be skipped on subtree" no_subtree_work_branch &&
+ 	if (!dotdot)
+ 		return -1;
  
--		git subtree split --prefix folder_subtree/ --branch subtree_tip $defaultBranch &&
-+		git subtree split --prefix folder_subtree/ --branch subtree_tip main &&
- 		git subtree split --prefix folder_subtree/ --branch subtree_branch branch &&
- 		test $(git rev-list --count subtree_tip..subtree_branch) = 0
- 	)
--- 
-2.43.0
+-	*dotdot = '\0';
+-	ret = handle_dotdot_1(arg, dotdot, revs, flags, cant_be_filename,
++	lhs = xmemdupz(arg, dotdot - arg);
++	ret = handle_dotdot_1(arg, lhs, revs, flags, cant_be_filename,
+ 			      &a_oc, &b_oc);
+-	*dotdot = '.';
++	free(lhs);
+ 
+ 	object_context_release(&a_oc);
+ 	object_context_release(&b_oc);
 
+This isn't a hot enough code path for the allocation to matter, and
+simple and safe is the best approach (IMHO). I suspect many cases you'll
+find are similar.
+
+> FYI, that code would also be made much clearer if not all of the
+> declarations were at the top of the function. I guess it just hasn't
+> been touched in a long while.
+
+Though mixed statements and declarations are allowed by modern C99
+(which we require these days), I think we still prefer not to use it as
+a point of style. And we enforce it via -Wdeclaration-after-statement,
+at least with all of our developer warnings on.
+
+Speaking of which: I noticed your original patch introduced one such
+case. Make sure you're building with "make DEVELOPER=1" as you build and
+test.
+
+All that said, there are often cases where variable declarations could
+be pushed down into the inner block where they are used, and those sorts
+of cleanups are welcome. We also allow declaring variables in loop
+initializers these days.
+
+> > Looking at strchr()'s declaration in string.h, which is defined like:
+> >
+> >   #  define strchr(S, C)                                          \
+> >     __glibc_const_generic (S, const char *, strchr (S, C))
+> >
+> > I think the answer is probably "yes". But it also doesn't quite solve
+> > our problem. That would give us type-checking of callers of our
+> > function, but we still have to convince the compiler not to complain
+> > about its implementation. For that we'd need to either cast away const
+> > manually, I guess.
+> 
+> That macro depends on Generic selections from C11 [1]. I wasn't sure if
+> Git would like that, given it is conservative with other C features.
+
+We definitely can't rely on it everywhere. But if there is a solution
+that is conditionally compiled, and can kick in only when these extra
+warnings also kick in, that would be OK. Assuming the result is not too
+painful to look at, of course.
+
+Probably the best path forward for most spots is just fixing the code to
+make it more obvious about its use of const. We may find there are not
+enough left for us to try to get too clever afterwards.
+
+Even though I think the skip_iprefix() thing is a general problem with
+constness in C (the same one faced by strchr() in the first place!), in
+practice we can probably just rewrite the code in the few cases where it
+matters. For instance, the "cookie" example I gave could probably just
+do something like this:
+
+diff --git a/http.c b/http.c
+index 7815f144de..e6f0913691 100644
+--- a/http.c
++++ b/http.c
+@@ -749,15 +749,16 @@ static int redact_sensitive_header(struct strbuf *header, size_t offset)
+ 			sensitive_header++;
+ 
+ 		cookie = sensitive_header;
+ 
+ 		while (cookie) {
+-			char *equals;
+-			char *semicolon = strstr(cookie, "; ");
+-			if (semicolon)
+-				*semicolon = 0;
+-			equals = strchrnul(cookie, '=');
++			const char *equals;
++			const char *semicolon = strstr(cookie, "; ");
++
++			equals = semicolon ?
++				 memchr(cookie, '=', semicolon - cookie) :
++				 strchr(cookie, '=');
+ 			if (!equals) {
+ 				/* invalid cookie, just append and continue */
+ 				strbuf_addstr(&redacted_header, cookie);
+ 				continue;
+ 			}
+
+Though note there is another bug lurking in this code! If we hit the
+"!equals" case, we will continue the loop without advancing "cookie" at
+all, and loop forever. But in the current version of the function, that
+is dead code, because strchrnul() will never return NULL (you get either
+the matched char or the end-of-string). Probably the "continue" should
+be a "break", though perhaps we could keep parsing past the next
+semicolon.
+
+Not necessarily a problem we need to solve, but as I've written it
+above, the dead code becomes live. So I wanted to give fair warning. ;)
+
+-Peff
