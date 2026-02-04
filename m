@@ -1,202 +1,118 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A2C4369A
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 05:32:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3CC309F09
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 06:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770183141; cv=none; b=YHNIoGZqNuWu67ekd7X/gI44g11WAZMuJ9pItsdZE5LPdU4HZoybVwhl5yov//iq+73m38GBYrcX78WFTWwrMDEn6HeVwuDpcR1Id5jrdEsbasigyBext44DkZAKIc/8bmoMbgfJDU6Gt5cxMrjo8wrBgTdQbeEaSSYWaE/ocrs=
+	t=1770186364; cv=none; b=lbaVu1mPIchTAmJeaZuwmRPj+JfEt9T+qAs1thek3hft3bbN1AhU5Gf//Kj32mO0BtC4DJ72Zbn8xKuPCNlDRU/3PguoYfBAKQI3KRDSxQP7jFWnnWomiXvWtgDM0uQDtjzgkPpzRJlPEQFC/c0jTnKK1XvoAl6T+k3loSQVivQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770183141; c=relaxed/simple;
-	bh=3pqIAcYmXkU4x+0QqNjPC2hIbSibAYECOOQzSq9+uyI=;
+	s=arc-20240116; t=1770186364; c=relaxed/simple;
+	bh=Gr8qr/jocO/1RBgDQrtUkDXjaXkXB7D9LPK1FHQUghA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z69wADeuyHzU9jUHZo/e/vtLHQJyAWjFIXt0rwu0gz6ZyOBoR1JpiT2E2p6caz5xk1DdMR0J4P0uyiSOXZTo63iT8a7AsYAqQwbHOaGZaq1wdF2iPNu/v/wOIKaf4BOBiaIZv+Q0NGAuQ1/VlD9CwzW9MbVH7OKJibCxE+QmLgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EbmXQRSs; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=YB4looTAFrEiAj8NYQrZE3LLuV4tSw1SqRGH593P5a0RFBS/9KTi1X5WJzkkGTb3YKWETF31lMqksIiqg5dPX75kILoKMWopsI6X6Q+m3FXchQfLJDSivWb+7DM3qkmcPamOqCcyeFYZN0tlW+xBg8f6iMmxwpLfoFIv19ChR1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Eo5aoGgy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wAkfDbXT; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EbmXQRSs"
-Received: (qmail 275685 invoked by uid 109); 4 Feb 2026 05:32:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3pqIAcYmXkU4x+0QqNjPC2hIbSibAYECOOQzSq9+uyI=; b=EbmXQRSsAiW7MuY6WujotKmvGD+mNUM31l91UhMo/B5BaX+JM/fWlN3ahHpV0/IH2bI6wQFjbQlqirNOJb2gxUK+i+DJQfDJGQGMxdNOsvAR7nSdoW2FN5Cu1YTT98ZyhKfdvypoCav5jhH42VeG3TMwD+ulk8r7ZzPOuStXQgHkVSq6k0OpziwMqg3G3S++7tnjjg69yTrkSiqEiEZ21E2XcVcNCTKBAy8+21/8OQQpkC3D8E83i7JLbqsnZ/I5IvA9Es0itFVJShrgOraNPDuYozNEik5824DuyTvP+1JzafGAx0XSs8EkLHU1QomSkENGFXg6yDe3AFwcNVQHAQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Feb 2026 05:32:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 544370 invoked by uid 111); 4 Feb 2026 05:32:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Feb 2026 00:32:23 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 4 Feb 2026 00:32:18 -0500
-From: Jeff King <peff@peff.net>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Matthew John Cheetham <mjcheetham@outlook.com>,
-	Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] git-compat-util: make git_find_last_dir_sep return a
- const pointer
-Message-ID: <20260204053218.GA942606@coredump.intra.peff.net>
-References: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
- <20260203062537.GA286409@coredump.intra.peff.net>
- <87ecn18aip.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Eo5aoGgy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wAkfDbXT"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A36407A0158;
+	Wed,  4 Feb 2026 01:26:02 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Wed, 04 Feb 2026 01:26:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1770186362; x=1770272762; bh=nJe8NtOj86
+	uZPmOzHcockygga0TiQMw+obsY8cbxZKc=; b=Eo5aoGgylNTCUVgj4jGos58hSu
+	fVw+zxXQxDZC5p6CX1J9iGmmBq5U6h++Wlfr3Pht3vZh2fdT3w2E3RW2oeRvSnEw
+	WS7YojSzD01c9fyxh0UF3EYZ01vudejGI3pXZCT8r3srCQxs1nPtSkFRLIxNsy2h
+	ZAiV6xbluAl1HrDnZ8/Qk/pR4QstuMUcT+J1eUtephaxo/MLco/0Hjgz0h3J/D4w
+	FckAO/CpdT7dNCYye7s1YEvZmVcFNxbCqIPEUFBLMyqG/yRZe9Q5NL1F9e1Wly8m
+	asSSK1Hm/TJmohb0O2l2OiaiBC7opK3MQxFu/2NiOzHIRgi7q3eMFFQHaHzw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770186362; x=1770272762; bh=nJe8NtOj86uZPmOzHcockygga0TiQMw+obs
+	Y8cbxZKc=; b=wAkfDbXThs3M//BeXquDFqW9P9bnTwZkzYZetlJHjCfv6D14TEM
+	qTKYiBCQjfcMEwAPFfu4m5QzXohO3oI1YCc5QoL+XxhYGUa1ZoR9o7Jt6MF7J3j2
+	HpzxCpoggqvAoiuG01Qax3UlAgxqCdronRW+SVtC52R9YHQsbPx2sGCKqJFZraNR
+	rYKnPyVlcqLkyR9Rr5BfjJK7YBlKNA2+ppCFqk/Eiu8vLtkSAjIP9ubbq9pcO4Zr
+	aC5lFw4NenYABWA6QzXGFDEXxV1Yh2zEJ4eBdxNubdBqgwZO/3LmKCAz/DmGisgV
+	DkfhcrlPayIzFHtLoHkINj6r6wv7lhnTgKw==
+X-ME-Sender: <xms:euaCaSlVvn4u9mOLugrZtXSXjEjzCzCWaaFzcWXWTa790uN3WL9_fA>
+    <xme:euaCaRQQK7nTyJdVguLEe1p5lZIND9-cQ4ZMJdemCjOA2RRVeewpvLDAB9rvQl58b
+    CoLH4trg2J_4WMnVfOKDdvfDUbRtQCGJPP2VX_suDRFCrq1EHJKaw>
+X-ME-Received: <xmr:euaCaeDYtea4VK_pxmq2hpjjpBVKysaTetZaRytAdoBgPyf9e8MiPBqkNmaVu4aPJUaxpek7RSUv_EUwV9_gLJec-OvMID8HLi-anCg83ioOxw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeduleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
+    ohhm
+X-ME-Proxy: <xmx:euaCaQQbkbOlz7dpXG2vopkaeEXD7norvhmomp5gbrPsrN8-nYa2nQ>
+    <xmx:euaCaUqUH50iberQ-HaK9KKrGJunruBuPvhmH0vkqGimuQOP3gWqeQ>
+    <xmx:euaCaawgdjCZCZO7UFc2Mo_fGDUq0H3r3sUHtpp2Ftc0AJ_VWED38g>
+    <xmx:euaCaRJ7CXiyN0vyh6UOPQxNUrlP7nqzESd7j-Zst4huDZhcOwMeDQ>
+    <xmx:euaCaVQbMsXGtAEFwbZetKPanaqiD2edXmHkHvOgPKcFdzbyIHP26pE9>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Feb 2026 01:26:01 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ce4a1a5d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Feb 2026 06:25:59 +0000 (UTC)
+Date: Wed, 4 Feb 2026 07:25:56 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] odb: support ODB source specific transaction
+ handling
+Message-ID: <aYLmdIh8WB7nSZPL@pks.im>
+References: <20260128234519.2721179-1-jltobler@gmail.com>
+ <20260203001002.2500198-1-jltobler@gmail.com>
+ <xmqqjywuvd7o.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87ecn18aip.fsf@gmail.com>
+In-Reply-To: <xmqqjywuvd7o.fsf@gitster.g>
 
-On Tue, Feb 03, 2026 at 07:15:10PM -0800, Collin Funk wrote:
-
-> And that plan makes sense to me. I'll create a seperate patch handling
-> the obvious 's/char/const char/' conversions that make sense regardless
-> of this glibc change.
-
-Sounds good. BTW, thank you for working on this! I think some of it will
-be a slog. :)
-
-> Yes, I see. I think the "arg" there is from the command line or from a
-> buffer read using fgets() in get_object_list from
-> builtin/pack-objects.c, so it is safe to write to there.
+On Mon, Feb 02, 2026 at 05:16:11PM -0800, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> It's also called like this though:
-> 
->     handle_revision_arg("HEAD", &revs, 0, 0);
-> 
-> We can't write to the string "HEAD", but it doesn't have a "dotdot" so
-> we don't. It could probably be cleaned up a bit.
-
-Oof, yeah. So this is a trap waiting to happen, and any code like:
-
-  handle_revision_arg("..HEAD", &revs, 0, 0);
-
-would segfault. That's something we're unlikely to write, which is how
-it's managed to hang around for so long. But I'm happy that the new
-warning will help us find and fix such cases.
-
-This is a case where I think the interface really should be a const
-string, and we should just pay the cost to make a NUL-terminated
-version. I.e., something like this:
-
-diff --git a/revision.c b/revision.c
-index ba0da18f26..289af7507c 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2143,16 +2143,17 @@ static int handle_dotdot(const char *arg,
- 			 int cant_be_filename)
- {
- 	struct object_context a_oc = {0}, b_oc = {0};
--	char *dotdot = strstr(arg, "..");
-+	const char *dotdot = strstr(arg, "..");
-+	char *lhs;
- 	int ret;
- 
- 	if (!dotdot)
- 		return -1;
- 
--	*dotdot = '\0';
--	ret = handle_dotdot_1(arg, dotdot, revs, flags, cant_be_filename,
-+	lhs = xmemdupz(arg, dotdot - arg);
-+	ret = handle_dotdot_1(arg, lhs, revs, flags, cant_be_filename,
- 			      &a_oc, &b_oc);
--	*dotdot = '.';
-+	free(lhs);
- 
- 	object_context_release(&a_oc);
- 	object_context_release(&b_oc);
-
-This isn't a hot enough code path for the allocation to matter, and
-simple and safe is the best approach (IMHO). I suspect many cases you'll
-find are similar.
-
-> FYI, that code would also be made much clearer if not all of the
-> declarations were at the top of the function. I guess it just hasn't
-> been touched in a long while.
-
-Though mixed statements and declarations are allowed by modern C99
-(which we require these days), I think we still prefer not to use it as
-a point of style. And we enforce it via -Wdeclaration-after-statement,
-at least with all of our developer warnings on.
-
-Speaking of which: I noticed your original patch introduced one such
-case. Make sure you're building with "make DEVELOPER=1" as you build and
-test.
-
-All that said, there are often cases where variable declarations could
-be pushed down into the inner block where they are used, and those sorts
-of cleanups are welcome. We also allow declaring variables in loop
-initializers these days.
-
-> > Looking at strchr()'s declaration in string.h, which is defined like:
+> > Changes since V1:
 > >
-> >   #  define strchr(S, C)                                          \
-> >     __glibc_const_generic (S, const char *, strchr (S, C))
-> >
-> > I think the answer is probably "yes". But it also doesn't quite solve
-> > our problem. That would give us type-checking of callers of our
-> > function, but we still have to convince the compiler not to complain
-> > about its implementation. For that we'd need to either cast away const
-> > manually, I guess.
+> > - Renamed the files transaction type to be `odb_transaction_files`.
+> >   Associated functions were also renamed accordingly.
+> > - Updated commit messages.
+> > - The `tmp_objdir` subsystem has been left unchange in the version. In a
+> >   followup series, I plan to couple tmpdirs directly to ODB files
+> >   transactions.
 > 
-> That macro depends on Generic selections from C11 [1]. I wasn't sure if
-> Git would like that, given it is conservative with other C features.
+> Ah, I was wondering why the changes are so small (it looked
+> essentially s/loose/files/ and nothing else to me), but if we are
+> leaving the tmp_objdir stuff out of the scope (which is sensible),
+> then there aren't much left to do relative to the previous
+> iteration.
 
-We definitely can't rely on it everywhere. But if there is a solution
-that is conditionally compiled, and can kick in only when these extra
-warnings also kick in, that would be OK. Assuming the result is not too
-painful to look at, of course.
+Yeah, agreed. As long as there is a subsequent patch series that fixes
+the `tmp_objdir` thing I'm happy. It'd be a no-op refactoring for now
+anyway given that we always write via the temporary object directory,
+but it's a good cleanup to do on top.
 
-Probably the best path forward for most spots is just fixing the code to
-make it more obvious about its use of const. We may find there are not
-enough left for us to try to get too clever afterwards.
+Anyway, I'm happy with the status quo of this patch series, thanks!
 
-Even though I think the skip_iprefix() thing is a general problem with
-constness in C (the same one faced by strchr() in the first place!), in
-practice we can probably just rewrite the code in the few cases where it
-matters. For instance, the "cookie" example I gave could probably just
-do something like this:
-
-diff --git a/http.c b/http.c
-index 7815f144de..e6f0913691 100644
---- a/http.c
-+++ b/http.c
-@@ -749,15 +749,16 @@ static int redact_sensitive_header(struct strbuf *header, size_t offset)
- 			sensitive_header++;
- 
- 		cookie = sensitive_header;
- 
- 		while (cookie) {
--			char *equals;
--			char *semicolon = strstr(cookie, "; ");
--			if (semicolon)
--				*semicolon = 0;
--			equals = strchrnul(cookie, '=');
-+			const char *equals;
-+			const char *semicolon = strstr(cookie, "; ");
-+
-+			equals = semicolon ?
-+				 memchr(cookie, '=', semicolon - cookie) :
-+				 strchr(cookie, '=');
- 			if (!equals) {
- 				/* invalid cookie, just append and continue */
- 				strbuf_addstr(&redacted_header, cookie);
- 				continue;
- 			}
-
-Though note there is another bug lurking in this code! If we hit the
-"!equals" case, we will continue the loop without advancing "cookie" at
-all, and loop forever. But in the current version of the function, that
-is dead code, because strchrnul() will never return NULL (you get either
-the matched char or the end-of-string). Probably the "continue" should
-be a "break", though perhaps we could keep parsing past the next
-semicolon.
-
-Not necessarily a problem we need to solve, but as I've written it
-above, the dead code becomes live. So I wanted to give fair warning. ;)
-
--Peff
+Patrick
