@@ -1,138 +1,87 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841EE29ACDB
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 11:56:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397B0314A7A
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 12:28:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770206190; cv=none; b=YX7R9YULh/bNZY+zasn4gUov3L4lZaEYOKPIGgI/tQColZsQGEjgtUyH5lx0x2qsx8rNYpMQK5c9JocI3IlccstxyzIMrO6v215CIfWRZAKEGdg/gQWPtItO/INCt+D4E1uuvnKMv5ICimo9xjGT9qlDX7UD8TSDrtWTnC+QOUU=
+	t=1770208136; cv=none; b=OkUVH7yoYH3BKONCfQL9+3Gfi4lzruABmTEibx6yv5OIPlKoyLQjEyzCsJ0vDCL+Px+SSbx8Mp9X5RIGos/jgTq3w4HC8RMBtvjCTaCpkngizLCZuNrF64LHXE/vXnPNFKKcUma9yXMxqfAe6mSKhkqBEpiAO8n6K1LvVefK1g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770206190; c=relaxed/simple;
-	bh=Fb5OQj6wxI9Kur8Ar5vLcwaPaYBRSPbp4V2LWK5IxIw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jtLwKKA2qwikaod0b2aalYawnJE484TnagN/SrugMRLISuZx+NcgprnhklB4mWU/jXrbDtRZfNZG2lih33ptEonvxDHuJe4vxnGcahFFWeQVYupX6vObPCR5uEAJjujotm7mpbFfgJdrEwiXzuvoAItZewvinWwQd/7U0B69q6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ATz6og8N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VPW5YNH5; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1770208136; c=relaxed/simple;
+	bh=JnXxMHea+DWg9XuOa+z699hxjibZoAskSZQwDkyPBg0=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=cp115kywH9DovPeRKhBfNrxhOQYrXvWa0XYcH0mni5FuxuW/4azLobO7jfY3l601lYOe++Skd4lV4qyL8AcVZPEZUm8fwOHm8cGrme8AGLYNdGu4fENnKStKOijnJBgKvFRMK8e0+Om3vKSzKDPFthQk302xDOf2Z0osE46b/C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=QgIq7h69; arc=none smtp.client-ip=185.114.57.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ATz6og8N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VPW5YNH5"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CD1817A0176;
-	Wed,  4 Feb 2026 06:56:29 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 04 Feb 2026 06:56:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770206189; x=1770292589; bh=n0n0OeXSp+
-	fxgAzKzI/uMigd5XcRuRKyvOjQrVjr+Tc=; b=ATz6og8NwAefKF/we2nx5GgZ3W
-	zIARZQtNd1OsqJtJJfgTNx/wkF06wunCtRySVdJQOG3D5oiTOUzX7ushIu4Pzfur
-	/yUO12RGuLpg19zC5wKXibCWnl90PPYdRSFH9qMiEzBR01jNy/H3EdcE9TtrUHbF
-	M5NC3URu+fVAEINw841XWHVmMVP5Ysnt313FBSEkY9zfL/S91UdGx+TemLG2dD4K
-	qn0Xn/Ex8TTjiTh7n3cZ/7DPvYhYgbWJkzONuT19CoUpJfNEyHo1HBg+s2TQ10fE
-	x6+Sq8Y8QGqr0Rq+bMmFMMXUas6lqbKjWYan1kXAJztKP3wLFDAHgvzqJFgQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770206189; x=1770292589; bh=n0n0OeXSp+fxgAzKzI/uMigd5XcRuRKyvOj
-	QrVjr+Tc=; b=VPW5YNH5tjhb/9pUcVFAEGThy9/abyWCwGrJSL0cX9kjsFxVHGm
-	ZV94Np9RIzUNezqdIn2TIjDrQjF4gyn+kyC73MJIc2sa0k3rkjLueG3eaeQ7e7BZ
-	4SDvLCQl+FcF91I+V0pF1iEprNaRnOGsfO7tIybahX8IKUXEBd6cXW61DZWTtcwP
-	a1ZjkJeNFbj7vGWINXQpiwIFDXhS7GIlafTwgkE9p0GxFulTEr5jp83kDYFcb8d4
-	VZcBx1/3vmFy+vNsS+UvupbmyA81kvzSgCfSPwfp+NrwZ1QHhThppLEtROrt9QNz
-	AuHGKXxW1361yfVYYZemoG+gWZfV5AO2hQw==
-X-ME-Sender: <xms:7TODaWzA5zWPGuLkWPuFpYKlpCu_RS3qrWpQ4Bi4e-8vY3D2vCfv6A>
-    <xme:7TODaZvt7-diXKUJTlN29uNrnZAHyGK75QDWH7BHdBV1W44jSxxYzrQxl3MwBQwEl
-    cHgRkqsvx4r4zcgmX3MmhGDlOTaf8xaY_90njMxInE6NaU5utU>
-X-ME-Received: <xmr:7TODaVt1A_rCdI8byuIDCh8K0d5YX2b4a5izkRljAq_XN0dKd26Ys4jKSIdI0BXoXw183mBWzFe313C3waGwwR2RpwkNxcLFXmsLo8WtpX8Jgw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvfeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepkhgr
-    rhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:7TODaWM9l5FTQ0nGCclPlq_TpUtx_ZZWcPefgeGKoPd5yqDUL6JCVA>
-    <xmx:7TODab2QMbpTsLklcDrRctkrrBskboH6-1vDyCpi3L2CiD3uRhZB3A>
-    <xmx:7TODaaPv8S0-lySTbx8FiNsDKJgiLBBdNKnu-iDQ4cQDwQ0LEMus1A>
-    <xmx:7TODaT2EZp8U4LHOn40irXLJwHeHJ9Iv3FPyWZPZC6WTEJL9pzoVTg>
-    <xmx:7TODaTZ-zWC8uGc04AwAjICiej71Rz48Gdh6Sow8EIY1VCzEHT8xp928>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 06:56:28 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 25d5f226 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 4 Feb 2026 11:56:26 +0000 (UTC)
-Date: Wed, 4 Feb 2026 12:56:24 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2] meson: wire up gitk and git-gui
-Message-ID: <aYMz6A1kBUO6FQf9@pks.im>
-References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
- <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
- <CAOLa=ZSeyKJD07xHKezQzry6KuwNnB=DzwE81Sx0A+b2u41rjA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="QgIq7h69"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=softwolves.pp.se; s=x; h=Content-Transfer-Encoding:Content-Type:Message-ID:
+	References:In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=UAx9wVMoI5WruKIEMzecyLV/egwLXgd24f1AGOcqlJQ=; b=QgIq7h69V6JyAnHN57q+F2B1BK
+	rlZVqrzJ5pfv5mmB7HxvSHpyP3DRpT3Alz6mUzSp7YQQYXdLo5sh8riWyERg7WRHcaFUuiTtfM6Tx
+	kj7Z07spvc7jP2JqsouIHGRGUl4mWu4qpmjg5B66IRd2YxM2aIju+LyDLB0FI9C5qztPzKM/zDWzp
+	dfeVCVnl7oCwKkw777lo/OWvEvZwJY3k3dIKVN5x2/c6fJlQA0sqhQ0Y1ntUn+9eLnsUyb3IaTf8s
+	2pzOZJdG/QVBYyJWwptxyLuadHdIxaa+6+8KGHhn9fBewe286RIerbSJzdGdd2udK56e2Wlnv6jx9
+	Y+2ikW8Q==;
+Received: from mail01.osl1.nordkapp.net ([185.114.57.50] helo=mail.nordhost.no)
+	by web23.osl1.nordkapp.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.99.1)
+	(envelope-from <peter@softwolves.pp.se>)
+	id 1vnbWz-0000000768F-1KQe;
+	Wed, 04 Feb 2026 12:58:49 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSeyKJD07xHKezQzry6KuwNnB=DzwE81Sx0A+b2u41rjA@mail.gmail.com>
+Date: Wed, 04 Feb 2026 12:58:05 +0100
+From: Peter Krefting <peter@softwolves.pp.se>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Alexander Shopov <ash@kambanaria.org>, Mikel Forcada
+ <mikel.forcada@gmail.com>, Ralf Thielow <ralf.thielow@gmail.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, Bagas Sanjaya
+ <bagasdotme@gmail.com>, Dimitriy Ryazantcev <DJm00n@mail.ru>, Emir SARI
+ <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>, =?UTF-8?Q?V=C5=A9_T?=
+ =?UTF-8?Q?i=E1=BA=BFn_H=C6=B0ng?= <newcomerminecraft@gmail.com>, Teng Long
+ <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>, Jordi Mas
+ <jmas@softcatala.org>, =?UTF-8?Q?Matthias_R=C3=BCster?=
+ <matthias.ruester@gmail.com>, Phillip Szelat <phillip.szelat@gmail.com>,
+ =?UTF-8?Q?S=C3=A9bastien_Helleu?= <flashcode@flashtux.org>, insolor
+ <insolor@gmail.com>, Kateryna Golovanova <kate@kgthreads.com>,
+ =?UTF-8?Q?Tr=E1=BA=A7n_Ng=E1=BB=8Dc_Qu=C3=A2n?= <vnwildman@gmail.com>,
+ =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= <pclouds@gmail.com>,
+ Ray Chen <oldsharp@gmail.com>, =?UTF-8?Q?=E4=BE=9D=E4=BA=91?=
+ <lilydjwg@gmail.com>, Fangyi Zhou <me@fangyi.io>, Franklin Weng
+ <franklin@goodhorse.idv.tw>, Git List <git@vger.kernel.org>
+Subject: Re: [RFC] Introducing AI Agents to Git Localization
+In-Reply-To: <CANYiYbFhshDwfttKWYGDfO+K1qAz3ptVHuuHrWXhD2oYBF7baQ@mail.gmail.com>
+References: <CANYiYbFhshDwfttKWYGDfO+K1qAz3ptVHuuHrWXhD2oYBF7baQ@mail.gmail.com>
+Message-ID: <534b9313b19a73bcee6e0ac1d7299e19@softwolves.pp.se>
+X-Sender: peter@softwolves.pp.se
+Organization: /universe/earth/europe/norway/oslo
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+X-Authenticated-Id: peter@softwolves.pp.se
 
-On Wed, Feb 04, 2026 at 05:00:11AM -0500, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Wire up both gitk and git-gui in Meson as subprojects. These two
-> > programs should be the last missing pieces for feature compatibility
-> > with our Makefile for distributors.
-> >
-> > Note that Meson expects subprojects to live in the "subprojects/"
-> > directory. Create symlinks to fulfill this requirement.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> > Hi,
-> >
-> > I have upstreamed support for Meson into both gitk [1] and git-gui [2].
-> > This small patch series wires up support in Git.
-> >
-> > Changes in v2:
-> >   - Use symlinks instead of moving both gitk and git-gui into the
-> >     "subprojects/" directory.
-> >   - Rebased on v2.53.0, as it's been a while since v1 :)
-> >   - Link to v1: https://lore.kernel.org/r/20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im
-> >
-> > Thanks!
-> >
-> > Patrick
-> 
-> 
-> So in the previous version, we moved these projects into 'subprojects/',
-> but we now use symlinks instead. Do you know if there is perhaps an
-> issue in Meson to support configurable subproject paths? If so, we could
-> eventually drop the symlink.
+2026-02-04 10:31 skrev Jiang Xin:
 
-There already is such support: you can configure subprojects to live in
-an arbitrary location by setting the `subproject_dir` parameter in the
-`project()` call. But there are some restrictions in place here:
+> Please try using AI coding tools to update translations in po/XX.po or
+> review historical translations, following the prompts below:
 
-  - It cannot be an absolute path.
+No.
 
-  - It must not start with a dot.
+Please disable this altogether for the Swedish localization. 
+"Translation" using stochastic parrots is not mature and just creates 
+gibberish that takes more time to clean up than to do the translation 
+from scratch manually.
 
-  - It must not contain "../".
-
-So that means it's not possible to specify the top-level directory, and
-that seems to be a concious decision.
-
-Patrick
+-- 
+\\// Peter - http://www.softwolves.pp.se/
