@@ -1,147 +1,115 @@
-Received: from mail.dasr.de (mail.dasr.de [202.61.250.5])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F95426D14
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 16:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.250.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F191841C2EC
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 16:25:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770221873; cv=none; b=SjHc2CsFD5Jo+AeJfiApuCkxm0jfO+QWQ4yGcjzn+iRJ1FIRupsVUkvMVkvs7gIWJf6eefFp7a670HrgYU/s2cbwlpcKgMFOopO548GhAKznYyu6JkDSariXZN8PW1QEFHBMAtzlZH4f9EOJN4Cz3KEPfgEv4EdB8ZQjc9/eKIw=
+	t=1770222311; cv=none; b=GuosBnPurNzNWmQ8UakjEcUUIz+gp5SI/O8yrJbbfV2ciYG7l/G2KEjQxz8W3z22lth54l1RmH0m9LhqvtmKbNg1TrSZA7dUrBC10vUI7/lo3v4SPXmzmlP0LqJQKmsvUc2X3knFX/2fBvNOkDUmgiCAW9T/1xVUjdfZCh/I0W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770221873; c=relaxed/simple;
-	bh=fClPz8lnvJrqcYkNqbc6W15OGjNdlxvxPvNYQDa+Lo0=;
-	h=Date:Message-ID:From:To:Cc:In-Reply-To:References:MIME-Version:
-	 Content-Type:Subject; b=qrxDmN73nKHf4da0r3cfty+Tvo6PxJogr5hYqekAXrLO35IBkhRdY/s08z+Fwi61Cl5z2gXKArcHOzHY5yQ/VaWmfu8rAK60/6PmYR6TgfavmbG70FMKKp6ibx+CxMoWga3j6lKdZZRQuJ7oh60q+luckPGAolgJEE9Syga0SjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=walfield.org; spf=pass smtp.mailfrom=walfield.org; arc=none smtp.client-ip=202.61.250.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=walfield.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=walfield.org
-Date: Wed, 04 Feb 2026 16:35:23 +0100
-Message-ID: <87fr7g1pz8.wl-neal@walfield.org>
-From: "Neal H. Walfield" <neal@walfield.org>
-To: Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-In-Reply-To: <20260204152306.1767112-2-ukleinek@kernel.org>
-References: <20260204152306.1767112-2-ukleinek@kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
- Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=arc-20240116; t=1770222311; c=relaxed/simple;
+	bh=sPltjPZALAQB56x+EnBKh3NI+/HTKZrug8UGqlM6Atg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=PPIMUdQd8HWqFce6Jt69kURwXeZz6iyx0zcC8z/k/dXGTkOoYbGQy42rAruQAJ/1/h7zS7cGgA3X1yACn3iZudCYLJUdN+djxYmxBnlcV9RQAC8f4Bb8bvmeF9bDG1gObQXSTZWDr6GZ+8CCvlRpAi59DSd+0MFci2WeiVRZ/YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KMVLxjgl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gRmu0hO3; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KMVLxjgl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gRmu0hO3"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 434B57A0137;
+	Wed,  4 Feb 2026 11:25:10 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Wed, 04 Feb 2026 11:25:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770222310;
+	 x=1770308710; bh=sPltjPZALAQB56x+EnBKh3NI+/HTKZrug8UGqlM6Atg=; b=
+	KMVLxjglifbThs5lk+PkZDxVOvfSo2pq6rY++TdrQV8LRCVrWgbHypf62jJ2RBHY
+	SyjRUw2jFfxRFVg81MmOROw98SilP1Bl04169GAWXfZKm4gek0k394/nv8cg2ATk
+	2xcSIGu5Vz4W8fWRs9Q3f5M0/5o3uONZhsRkTJsc5zSXDB6lvI1JqjEJOfPoL3uZ
+	im/YaQGu+1DoWB2hAcIXh41V21Po7j00V8WbC5/KA5AFTo8WDcNjCwOScYJFrrdN
+	+mJk3udNwZtzGNFBo0GgB1jfsxX2L7HTC+nGKDhp9Hete+k14eWCvblq0mEDMy9a
+	eiCKnXdzIjiWCL7C4o4Kjg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770222310; x=
+	1770308710; bh=sPltjPZALAQB56x+EnBKh3NI+/HTKZrug8UGqlM6Atg=; b=g
+	Rmu0hO3VXyLcuRkXzu7/cebau0BOvRNAfkyxfQagTBR3YWBHTSapSudkpjMNdli3
+	f0Ff9Qt+n/9+AURgDqbsRrkFREYa8vq7IEek3CNu5g+FZLKM6T7v6ULKdPxbwnK/
+	4LpbAoZOG/aG1g4MICFhAuMoR3RqGavszlBwH93U2C+rO9zIKzvqMJfoEN9KUaI2
+	mU+sN95Aa91PG7bpLCUrVKqi2HBfTjFJ/JbIHYsCy3LPp7Cudivn8u/NM8cvUPOn
+	1ODlvIwjcMoQI4p5YrPdOCWukgmFxt8CYKJRmME2zI28YyFBFTcSFpvIIJH1oyGy
+	gk6l2XDMcgL5LDYytWiTA==
+X-ME-Sender: <xms:5nKDaXNJ8ISET13TfwS4rWzjQKeMOerr1JjkhIzXUEP0ijXia3-7eHU>
+    <xme:5nKDacxr38dxtqNb9Ai7WouLS8qsfATdav3p_fI7OhFnPc587WqKSbavmBnY96WOh
+    3n8GIaSjEKx3qa5yVGnlS9QmMLHV7yem8sm506FJwycuWrFdNU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvleduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfef
+    gfffvdfhffdvveevgeehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpe
+    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhgihhtghgrug
+    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrgh
+X-ME-Proxy: <xmx:5nKDafIPFjkxJdthNyi8LwegP2ZkWVcbLbGecjgO1Qr7YTk9CdCdPA>
+    <xmx:5nKDaa65mpiUptBuAJeOBnOX5E6H367OOmw9MN3S_GIAdatwf6h5yw>
+    <xmx:5nKDaazefHeuECyfxiKkV3YW_k5Ym2fvt-mltr4QiSf0oiy-mDLhMg>
+    <xmx:5nKDaWbYWokC0Byo12p3iWJb-_qqW-7HrGK7VQlrLIXPTxf5uMh0lw>
+    <xmx:5nKDaWGVj-TKJ1j9Dixs4BJtdUvxXjXp6cOIfHQn9rAu8QBsZF0Kr-JJ>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id EC8FE1EA006B; Wed,  4 Feb 2026 11:25:09 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=ISO-8859-1
+MIME-Version: 1.0
+X-ThreadId: AXMcA4Iy85D-
+Date: Wed, 04 Feb 2026 17:24:49 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Message-Id: <24d69fa4-bcf3-4297-b75d-5e45a8ca50da@app.fastmail.com>
+In-Reply-To: <6480aae2-d2f2-49dc-b8da-ec7cfcfbda30@app.fastmail.com>
+References: <pull.2036.v2.git.1769462744.gitgitgadget@gmail.com>
+ <pull.2036.v3.git.1770138215.gitgitgadget@gmail.com>
+ <6480aae2-d2f2-49dc-b8da-ec7cfcfbda30@app.fastmail.com>
+Subject: Re: [PATCH v3 0/4] doc: some more synopsis conversions and fixes
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-SA-Exim-Connect-IP: 192.168.20.191
-X-SA-Exim-Mail-From: neal@walfield.org
-X-Spam-Level: 
-Subject: Re: [PATCH v1] gpg-interface: Signatures by expired keys are fine
-X-SA-Exim-Version: 4.2.1 (built Wed, 06 Jul 2022 17:57:39 +0000)
-X-SA-Exim-Scanned: Yes (on forster.huenfield.org)
 
-Hi,
+On Tue, Feb 3, 2026, at 22:44, Kristoffer Haugsbakk wrote:
+>>[snip]
+>
+> By the way. Sorry that I managed to reply to the v1 1=E2=80=933 patche=
+s on the
+> previous round instead of v2. I noticed only now.
+>
+> Too much copy pasting.
+>[snip]
 
-I think this change is an improvement over the status quo.  In my
-opinion, a signature should be accepted if it was made when the
-certificate sas not expired.  If the signature was made after the
-certificate expired it should be rejected.  That is:
+And here is a trailer for the next round:[1]
 
-  t_s1: signature 1
-  t_e: certificate expires
-  t_s2: signature 2
+Reviewed-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-  where: t_s1 < t_e < t_s2
+I will of course look over that one as well. But I think I will be out
+of nitpicks by then. :)
 
-signature 1 should be accepted as t_s1 < t_e.
+Thanks for doing this work!
 
-signature 2 should be rejected as t_s2 > t_e.
-
-As GnuPG's interface does not provide enough information to make this
-distinction, this change is better.
-
-:) Neal
-
-On Wed, 04 Feb 2026 16:23:06 +0100,
-Uwe Kleine-K=F6nig wrote:
->=20
-> If a signature is done with a valid key and that key later expires, the
-> signature should still be considered good.
->=20
-> GnuPG exmits in this case something like:
->=20
-> 	[GNUPG:] NEWSIG
-> 	gpg: Signature made Wed 26 Nov 2014 05:56:50 AM CET
-> 	gpg:                using RSA key FE3958F9067BC667
-> 	[GNUPG:] KEYEXPIRED 1478449622
-> 	[GNUPG:] KEY_CONSIDERED D783920D6D4F0C06AA4C25F3FE3958F9067BC667 0
-> 	[GNUPG:] KEYEXPIRED 1478449622
-> 	[GNUPG:] SIG_ID 8tAN3Fx6XB2NAoH5U8neoguQ9MI 2014-11-26 1416977810
-> 	[GNUPG:] EXPKEYSIG FE3958F9067BC667 Jason Cooper <jason@lakedaemon.net>
-> 	gpg: Good signature from "Jason Cooper <jason@lakedaemon.net>" [expired]
-> 	[GNUPG:] VALIDSIG D783920D6D4F0C06AA4C25F3FE3958F9067BC667 2014-11-26 14=
-16977810 0 4 0 1 2 00 D783920D6D4F0C06AA4C25F3FE3958F9067BC667
-> 	gpg: Note: This key has expired!
-> 	      D783920D6D4F0C06AA4C25F3FE3958F9067BC667
->=20
-> (signature and signed data in this example is taken from Linux commit
-> 756f80cee766574ae282baa97fdcf9cc). So GnuPG is relaxed and the fact that
-> the key is expired is only worth a "Note" which is weaker than e.g.
->=20
-> 	gpg: WARNING: The key's User ID is not certified with a trusted signatur=
-e!
-> 	gpg:          There is no indication that the signature belongs to the o=
-wner.
->=20
-> which git still considers ok.
->=20
-> So stop coloring the signature by an expired key red and handle it like
-> any other good signature.
->=20
-> Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@kernel.org>
-> ---
-> Hello,
->=20
-> the motivation for this patch originates from a mail correspondence with =
-Linus Torvalds,
-> see
-> https://lore.kernel.org/ksummit/CAHC9VhRwMpSCphW_FsHojX1r12D5MOMUBm6MAzpG=
-YD_FDjEVtA@mail.gmail.com/T/#m6cc3cc4b599658cab6012326993a1261fd641046
-> for the details.
->=20
-> Best regards
-> Uwe
->=20
->  gpg-interface.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 47222bf31b6e..6635c6c8e16f 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -382,7 +382,7 @@ static int verify_gpg_signed_buffer(struct signature_=
-check *sigc,
-> =20
->  	delete_tempfile(&temp);
-> =20
-> -	ret |=3D !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ");
-> +	ret |=3D !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ") && !strstr(gpg_=
-stdout.buf, "\n[GNUPG:] EXPKEYSIG ");
->  	sigc->output =3D strbuf_detach(&gpg_stderr, NULL);
->  	sigc->gpg_status =3D strbuf_detach(&gpg_stdout, NULL);
-> =20
-> @@ -680,7 +680,7 @@ int check_signature(struct signature_check *sigc,
->  	if (status && !sigc->output)
->  		return !!status;
-> =20
-> -	status |=3D sigc->result !=3D 'G';
-> +	status |=3D sigc->result !=3D 'G' && sigc->result !=3D 'Y';
->  	status |=3D sigc->trust_level < configured_min_trust_level;
-> =20
->  	return !!status;
->=20
-> base-commit: b2826b52eb7caff9f4ed6e85ec45e338bf02ad09
-> --=20
-> 2.47.3
->=20
->=20
+=E2=80=A0 1: Context in https://lore.kernel.org/git/bd07e62d-b185-4d1a-9=
+bb5-7c075d6508c2@app.fastmail.com/
