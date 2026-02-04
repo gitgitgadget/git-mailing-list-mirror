@@ -1,68 +1,68 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C874410D26
-	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4071521FF4C
+	for <git@vger.kernel.org>; Wed,  4 Feb 2026 14:20:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770214810; cv=none; b=jWbQD2mY/6mRFzem2PbAc9rVQzSCefkUsQohHFrGqU21AN4qmIL9V2aAVY1OmGceklONbiE+iI79uyuMYw1i2n8kPWvUDCtL6nPgBEUMjOiYIABVLSfkk1ouxwPdmUnfPr0cr4tARGonOMhyyhZQkWv7iBMMe/SLSRX0L0x8JkA=
+	t=1770214812; cv=none; b=Ft7MHi3p9bnSztH+yB4C8H3nSAUFhmD4LUpfmINM4yzpHfEgMxrq2XcvLgdrs/YwS0gOkbF2d0IjIMEPt+CGqkdp3YHauvtgKlh3CgIHfL3M2/M2Kyp5gp8aUNWaiGgtlc7+BskYqkggORxvbs5DK9Zk48fUOlILsDTcZWOlIpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770214810; c=relaxed/simple;
-	bh=ccWdiLpy7kALrjGCju/Hp8/WI+glHU7XKduOYuanv90=;
+	s=arc-20240116; t=1770214812; c=relaxed/simple;
+	bh=qxIRJRcBB7hL2opOx/7aclVJ39myew4HMq27d6csVqk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=pYoJqWKRHVuWkvgFK4Au2ZC/PgLd/T49oZc3p08gxLYu4e77FtO3e9S+8GctnF0py2jKJBwTsQC+aSQZgBJztTe/Sn5/3tx7om0P2Rpa3rAu49wI/NzDrQcYI0Brfr6lVO4e/6AKmAhGjwiwkwUmRl4B+nd+6Ip7IJ5FBNM+wn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cljZqkPk; arc=none smtp.client-ip=209.85.167.177
+	 MIME-Version:To:Cc; b=KfWGTow2lmp5BkAx6f15YxsuqUSrsrfLiY0YNqKZDUr3ULnQBKEifdZM4u4j8u6z3Qg+zzeuytFt2+S4PFmRd3vzHU7v+1Ha13BV3GFkGElhvI+QFRhFq6scazHngsb8+owVi8KGMx7X2CRjbEclLLUygwVu59rY5C+zwZ4J3hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CyFYD0sW; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cljZqkPk"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-45c92df37fdso317465b6e.3
-        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:20:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CyFYD0sW"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7cfd6f321b5so4378474a34.2
+        for <git@vger.kernel.org>; Wed, 04 Feb 2026 06:20:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770214809; x=1770819609; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770214811; x=1770819611; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gdaCr6fROeY6WwNSIBp+wvIcQf490PPVQUHu146e4hs=;
-        b=cljZqkPkUS0iwwn6Ft9RchZDOTEhLyH2x/1xpEysEoKTIERAi61Vnovtk1U1ZqHfez
-         jBADbgXkz2E3ma5obL9uaHQYgPSvwqqhyRlg1FoeXL6WvpWvejMUQ9TzsWpRcAvktTfg
-         zUCABb/Hx4j6qte4nLvD3w9KMa/yynLR48UGvc1qdiTuvEHPS5KPqx8LW2DnQonFkH7u
-         B1kj2L/DNpnICGtWL2lkmok20FxgmO5cVSNDwIqqW8pRqpuXGjD8M81h5UCNAWXBIUQY
-         X4gEBsOBKUmAmY1RC57O8xJU0hUnRLmQQS7sJed/BEkBNMgXgXtcb6msYvinKrCYZhEs
-         /qlg==
+        bh=ZDLGnKOyQ8YrKOUkc8A9rt2Q9oR/+T7IB6v266HRd+g=;
+        b=CyFYD0sWKKIaxrkkir7j92i0kY5ih7NPot0utMd6moCW4QWDm8UVZDIWZtpI7xOArN
+         WDTbPIgy3GfNArb3zmlIdskqRczgolKktlcfLkI1xw8JWg/1zwsnjK/++JvYEvPwKtpZ
+         576Gi4N35BZsAoKiMKsNb6bUB3HY62SAxF1/vORHvmOx1iXFU2gVP4ihIhfFMAHTT/VQ
+         98yTKoKi7j+DT9BUGSM/iEbcJ2XqxLCguC4P03H+xYajIMA/DKSreLZEcTJYG6W9QFgX
+         wes4aM54UUBW2SbygAFYwNxi5NnyV2WLcySwnMfQxgDsxcZZblI1PopiJyXgNO3whvn4
+         GiJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770214809; x=1770819609;
+        d=1e100.net; s=20230601; t=1770214811; x=1770819611;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=gdaCr6fROeY6WwNSIBp+wvIcQf490PPVQUHu146e4hs=;
-        b=dll2w92HUt9QtFjEVBZSEhGBG7OXh53T7HtYnT+iLUxPEu6xcaBEmXGeocM+h6w5tF
-         FmO7jiaHE4ODy8HMGr4Ien2dgGSK0KJ3udrx2IuQ63RDfB8aqK23NFvwRWQ2/1ahIVYi
-         K5KPUZ9Ef1W+XcL5x66lbGiZuVlOJd/KCZEC4VTqU9NhAibI7ArpJwX3OK/1N2d4Gim0
-         DeZKhgE79BQJZsF4Mx6SgrFJYbfkY7HJSaQ0PtdYGAXHBtO4Jw+5PP2HJUdCuOkbl9dq
-         MT044x1X9Sc4ajmLc26qojmNI5jzMX+ARD6Ngt0VyZfQDT9ZnpJkCzWsyMporbhdOe+f
-         CCgA==
-X-Gm-Message-State: AOJu0YzzB/UOenx4/Uar25rmUltE1lf1SqFUUsbI8bnzCLBrQ7a97sdF
-	y47DmtJtB7uQlRClHmPp7qKlgVP2VJc7cDPxmW44S8whGETfTZrk1RxDkoPsow==
-X-Gm-Gg: AZuq6aLRCZ4/2FII4cwhI8zPHZ7rXKCxBfQBIq3cD81aqIqTwgykscytFNAxpvgQBz6
-	MOet2aSebP3zlcs3sPucsTp6y6euyLn+SBR8W6NxYHfMChGA300qsONLkyarnoT1+wobbvSi5vv
-	HFdWYyrSe81suD+ARrBICuyc3S1ppz6PKu769MooWFDDbZljELq1gCWmFTK7xzoC6J08oQW9ArF
-	reN7fy7NWnjSwSJl+ZZbOGQ57EuQpmsIVrNUqWutR1PvFMYVTmEE3V2tMFqG+VXJSKBAxlu6c+Z
-	sSrTT8MODKygY2b+SPdgBNXkokttuNUp+0QA0td3LV9zYIeazTlBqh61Wx7T7vz85CZ7dI8pjAx
-	F+s3ErnWh117+xxlLxVGk4MyZPVFPpb6oyinrObF6rOzNb1YVTPzDEU2WAuMsqGvgxQVfKWBZnW
-	i12J35WRxwSDsiNk9GA3EF2Erw
-X-Received: by 2002:a05:6808:10d3:b0:459:a26c:2c3c with SMTP id 5614622812f47-462d58c1b66mr1760504b6e.26.1770214808878;
-        Wed, 04 Feb 2026 06:20:08 -0800 (PST)
+        bh=ZDLGnKOyQ8YrKOUkc8A9rt2Q9oR/+T7IB6v266HRd+g=;
+        b=GvABIYeSqu3A2VqlpxAXxraJOgYxsKOLwVupNHk1s/qSSPDSflMjgnKDXNSfukXE7J
+         1QsqRYMAN/vVrYsz6lA/JQ21CgYOmry+3UBr4qhc4yxcm1exz6d8fHFS21BgNBgjNWcR
+         +eldx0vitYxztmPRXE50PsKM/ZcV+j1svMwiHAh5LjgYzISFkmW5prCz6CKh6gTGQeKH
+         3jOoJX817Yo98olQ6vh6M8hL8dbbnZtLXzk1FGfUVwngA+ngtGeDhj1MKfY+lXaPbyvd
+         PKrn+447uNQWYSPfzZrnuNtOeLwnAZuTDKXZJFBod70+8qUZKGlenfPQomy7zJdxChXv
+         IoSg==
+X-Gm-Message-State: AOJu0Yx0wrk5jy++r3CMkWENHFpqx8b4fxotonYw9Ei/8vtoVz4wyyj3
+	3oos/evkMy3rwZzyE0dU9lllTYfnb7lTUasCFwspZ4FuQzClXRbhI12vUpV0fA==
+X-Gm-Gg: AZuq6aL3oK3PoOS2BM8A+ZcQDJsmAZOViM/WnI4Obzhn4LloQWeLSoq9CQs4Hc+w1C4
+	M3Xaaf5NPMrXbdsYw+VfmXfd+PnrtE9pWlsXutgZqSENWQp7hP1PP4Wvf5/7rxnUxXByJ/O/2oE
+	o5UamClvwx/YG3wWifjhpvTqI44U6WuW5211SrFWXbzMroMo7+4/jYNzlGHKnmkpytRebi2JBUr
+	vKn7XIoLFrSesnAaRIl2IdnuuwN85XPCI7Ho3Mh3jZ9GZO/guNMUmoNHBoTAkVFBgonDW8Rjbu6
+	U4SaMSBGcLrE0S++DJUBRrMGHIHRqPHH3LOTX+Z819Qd09cn0CQ6pbxbAdnG/6fVG/is03Jnn9g
+	vwyvP+diS/2JaTJxbUfK9cbzZXs24XQ4uvzNg3grrc7t0OWp7zMW3QnGqkO4Q4rnEEMfPexEyLo
+	d3JkBiLfZnwEK/Zw==
+X-Received: by 2002:a05:6830:34a4:b0:7c7:827f:872f with SMTP id 46e09a7af769-7d448af97fbmr1741259a34.37.1770214810476;
+        Wed, 04 Feb 2026 06:20:10 -0800 (PST)
 Received: from [127.0.0.1] ([52.173.182.164])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-40a5442668esm1686796fac.14.2026.02.04.06.20.08
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d4490f3c06sm1741473a34.2.2026.02.04.06.20.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 06:20:08 -0800 (PST)
-Message-Id: <ecd26a0f1fad5615aea07a388e34f02e9f33b870.1770214803.git.gitgitgadget@gmail.com>
+        Wed, 04 Feb 2026 06:20:09 -0800 (PST)
+Message-Id: <3de1bba3b10668f0200e27def9128571f51c1f68.1770214803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
 References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 04 Feb 2026 14:19:54 +0000
-Subject: [PATCH 02/11] config-batch: create parse loop and unknown command
+Date: Wed, 04 Feb 2026 14:19:55 +0000
+Subject: [PATCH 03/11] config-batch: implement get v1
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,245 +79,513 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-As we build new features in the config-batch command, we define the
-plaintext protocol with line-by-line output and responses. To think to the
-future, we make sure that the protocol has a clear way to respond to an
-unknown command or an unknown version of that command.
+The 'get' command for the 'git config-batch' builtin is the first command
+and is currently at version 1. It returns at most one value, the same as
+'git config --get <key>' with optional value-based filtering.
 
-As some commands will allow the final argument to contain spaces or even be
-able to parse "\ " as a non-split token, we only provide the remaining line
-as data.
+The documentation and tests detail the specifics of how to format requests
+of this format and how to parse the results.
+
+Future versions could consider multi-valued responses or regex-based key
+matching.
+
+For the sake of incremental exploration of the potential in the 'git
+config-batch' command, this is the only implementation being presented in
+the first patch series.
+
+Future extensions could include a '-z' parameter that uses NUL bytes in the
+command and output format to allow for spaces or newlines in the input or
+newlines in the output.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-config-batch.adoc |  23 ++++-
- builtin/config-batch.c              | 133 +++++++++++++++++++++++++++-
- t/t1312-config-batch.sh             |  19 +++-
- 3 files changed, 170 insertions(+), 5 deletions(-)
+ Documentation/git-config-batch.adoc |  53 +++++-
+ builtin/config-batch.c              | 251 +++++++++++++++++++++++++++-
+ config.h                            |   3 +
+ t/t1312-config-batch.sh             | 101 +++++++++++
+ 4 files changed, 405 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-config-batch.adoc b/Documentation/git-config-batch.adoc
-index dfa0bd83e2..9ca04b0c1e 100644
+index 9ca04b0c1e..31dd42f481 100644
 --- a/Documentation/git-config-batch.adoc
 +++ b/Documentation/git-config-batch.adoc
-@@ -13,7 +13,28 @@ SYNOPSIS
+@@ -32,9 +32,58 @@ set. Thus, if the Git version includes the `git config-batch` builtin
+ but doesn't understand an input command, it will return a single line
+ response:
  
- DESCRIPTION
- -----------
--TODO
-+Tools frequently need to change their behavior based on values stored in
-+Git's configuration files. These files may have complicated conditions
-+for including extra files, so it is difficult to produce an independent
-+parser. To avoid executing multiple processes to discover or modify
-+multiple configuration values, the `git config-batch` command allows a
-+single process to handle multiple requests using a machine-parseable
-+interface across `stdin` and `stdout`.
+-```
++------------
+ unknown_command LF
+-```
++------------
 +
-+PROTOCOL
-+--------
-+By default, the protocol uses line feeds (`LF`) to signal the end of a
-+command over `stdin` or a response over `stdout`.
++These are the commands that are currently understood:
 +
-+The protocol will be extended in the future, and consumers should be
-+resilient to older Git versions not understanding the latest command
-+set. Thus, if the Git version includes the `git config-batch` builtin
-+but doesn't understand an input command, it will return a single line
-+response:
-+
-+```
-+unknown_command LF
-+```
++`get` version 1::
++	The `get` command searches the config key-value pairs within a
++	given `<scope>` for values that match the fixed `<key>` and
++	filters the resulting value based on an optional `<value-filter>`.
++	This can either be a regex or a fixed value. The command format
++	is one of the following formats:
+++
++------------
++get 1 <scope> <key>
++get 1 <scope> <key> arg:regex <value-pattern>
++get 1 <scope> <key> arg:fixed-value <value>
++------------
+++
++The `<scope>` value can be one of `inherited`, `system`, `global`,
++`local`, `worktree`, `submodule`, or `command`. If `inherited`, then all
++config key-value pairs will be considered regardless of scope. Otherwise,
++only the given scope will be considered.
+++
++If no optional arguments are given, then the value will not be filtered
++by any pattern matching. If `arg:regex` is specified, then the rest of
++the line is considered a single string, `<value-pattern>`, and is
++interpreted as a regular expression for matching against stored values,
++similar to specifying a value to `get config --get <key> "<value-pattern>"`.
++If `arg:fixed-value` is specified, then the rest of the line is
++considered a single string, `<value>`, and is checked for an exact
++match against the key-value pairs, simmilar to `git config --get <key>
++--fixed-value "<value>"`.
+++
++At mmost one key-value pair is returned, that being the last key-value
++pair in the standard config order by scope and sequence within each scope.
+++
++If a key-value pair is found, then the following output is given:
+++
++------------
++get 1 found <key> <scope> <value>
++------------
+++
++If no matching key-value pair is found, then the following output is
++given:
+++
++------------
++get 1 missing <key> [<value-pattern>|<value>]
++------------
+++
++where `<value-pattern>` or `<value>` is only supplied if provided in
++the command.
  
  SEE ALSO
  --------
 diff --git a/builtin/config-batch.c b/builtin/config-batch.c
-index ea4f408ecb..dffedb8ca2 100644
+index dffedb8ca2..5782004080 100644
 --- a/builtin/config-batch.c
 +++ b/builtin/config-batch.c
-@@ -3,17 +3,144 @@
- #include "config.h"
- #include "environment.h"
- #include "parse-options.h"
-+#include "strbuf.h"
-+#include "string-list.h"
- 
- static const char *const builtin_config_batch_usage[] = {
- 	N_("git config-batch <options>"),
- 	NULL
+@@ -12,6 +12,8 @@ static const char *const builtin_config_batch_usage[] = {
  };
  
-+#define UNKNOWN_COMMAND "unknown_command"
-+
-+static int emit_response(const char *response, ...)
+ #define UNKNOWN_COMMAND "unknown_command"
++#define GET_COMMAND "get"
++#define COMMAND_PARSE_ERROR "command_parse_error"
+ 
+ static int emit_response(const char *response, ...)
+ {
+@@ -30,6 +32,11 @@ static int emit_response(const char *response, ...)
+ 	return 0;
+ }
+ 
++static int command_parse_error(const char *command)
 +{
-+	va_list params;
-+	const char *token;
++	return emit_response(COMMAND_PARSE_ERROR, command, NULL);
++}
 +
-+	printf("%s", response);
+ /**
+  * A function pointer type for defining a command. The function is
+  * responsible for handling different versions of the command name.
+@@ -46,11 +53,248 @@ typedef int (*command_fn)(struct repository *repo,
+ 			  char *data, size_t data_len);
+ 
+ static int unknown_command(struct repository *repo UNUSED,
+-			  char *data UNUSED, size_t data_len UNUSED)
++			   char *data UNUSED, size_t data_len UNUSED)
+ {
+ 	return emit_response(UNKNOWN_COMMAND, NULL);
+ }
+ 
++static size_t parse_whitespace_token(char **data, size_t *data_len,
++				     char **token, int *err UNUSED)
++{
++	size_t i = 0;
 +
-+	va_start(params, response);
-+	while ((token = va_arg(params, const char *)))
-+		printf(" %s", token);
-+	va_end(params);
++	*token = *data;
 +
-+	printf("\n");
-+	fflush(stdout);
++	while (i < *data_len && (*data)[i] && (*data)[i] != ' ')
++		i++;
++
++	if (i >= *data_len) {
++		*data_len = 0;
++		*data = NULL;
++		return i;
++	}
++
++	(*data)[i] = 0;
++	*data_len = (*data_len) - (i + 1);
++	*data = *data + (i + 1);
++	return i;
++}
++
++/**
++ * Given the remaining data line and its size, attempt to extract
++ * a token. When the token delimiter is determined, the data
++ * string is mutated to insert a NUL byte at the end of the token.
++ * The data pointer is mutated to point at the next character (or
++ * set to NULL if that exceeds the string length). The data_len
++ * value is mutated to subtract the length of the discovered
++ * token.
++ *
++ * The returned value is the length of the token that was
++ * discovered.
++ *
++ * 'err' is ignored for now, but will be filled in in a future
++ * change.
++ */
++static size_t parse_token(char **data, size_t *data_len,
++			  char **token, int *err)
++{
++	if (!*data_len)
++		return 0;
++
++	return parse_whitespace_token(data, data_len, token, err);
++}
++
++enum value_match_mode {
++	MATCH_ALL,
++	MATCH_EXACT,
++	MATCH_REGEX,
++};
++
++struct get_command_1_data {
++	/* parameters */
++	char *key;
++	enum config_scope scope;
++	enum value_match_mode mode;
++
++	/* optional parameters */
++	char *value;
++	regex_t *value_pattern;
++
++	/* data along the way, for single values. */
++	char *found;
++	enum config_scope found_scope;
++};
++
++static int get_command_1_cb(const char *key, const char *value,
++			    const struct config_context *context,
++			    void *data)
++{
++	struct get_command_1_data *d = data;
++
++	if (strcasecmp(key, d->key))
++		return 0;
++
++	if (d->scope != CONFIG_SCOPE_UNKNOWN &&
++	    d->scope != context->kvi->scope)
++		return 0;
++
++	switch (d->mode) {
++	case MATCH_EXACT:
++		if (strcasecmp(value, d->value))
++			return 0;
++		break;
++
++	case MATCH_REGEX:
++		if (regexec(d->value_pattern, value, 0, NULL, 0))
++			return 0;
++		break;
++
++	default:
++		break;
++	}
++
++	free(d->found);
++	d->found = xstrdup(value);
++	d->found_scope = context->kvi->scope;
 +	return 0;
 +}
 +
-+/**
-+ * A function pointer type for defining a command. The function is
-+ * responsible for handling different versions of the command name.
-+ *
-+ * Provides the remaining 'data' for the command, to be parsed by
-+ * the function as needed according to its parsing rules.
-+ *
-+ * These functions should only return a negative value if they result
-+ * in such a catastrophic failure that the process should end.
-+ *
-+ * Return 0 on success.
-+ */
-+typedef int (*command_fn)(struct repository *repo,
-+			  char *data, size_t data_len);
-+
-+static int unknown_command(struct repository *repo UNUSED,
-+			  char *data UNUSED, size_t data_len UNUSED)
++static const char *scope_str(enum config_scope scope)
 +{
-+	return emit_response(UNKNOWN_COMMAND, NULL);
++	switch (scope) {
++	case CONFIG_SCOPE_UNKNOWN:
++		return "unknown";
++
++	case CONFIG_SCOPE_SYSTEM:
++		return "system";
++
++	case CONFIG_SCOPE_GLOBAL:
++		return "global";
++
++	case CONFIG_SCOPE_LOCAL:
++		return "local";
++
++	case CONFIG_SCOPE_WORKTREE:
++		return "worktree";
++
++	case CONFIG_SCOPE_SUBMODULE:
++		return "submodule";
++
++	case CONFIG_SCOPE_COMMAND:
++		return "command";
++
++	default:
++		BUG("invalid config scope");
++	}
 +}
 +
-+struct command {
-+	const char *name;
-+	command_fn fn;
-+	int version;
-+};
-+
-+static struct command commands[] = {
-+	/* unknown_command must be last. */
-+	{
-+		.name = "",
-+		.fn   = unknown_command,
-+	},
-+};
-+
-+#define COMMAND_COUNT ((size_t)(sizeof(commands) / sizeof(*commands)))
-+
-+/**
-+ * Process a single line from stdin and process the command.
-+ *
-+ * Returns 0 on successful processing of command, including the
-+ * unknown_command output.
-+ *
-+ * Returns 1 on natural exit due to exist signal of empty line.
-+ *
-+ * Returns negative value on other catastrophic error.
-+ */
-+static int process_command(struct repository *repo)
++static int parse_scope(const char *str, enum config_scope *scope)
 +{
-+	static struct strbuf line = STRBUF_INIT;
-+	struct string_list tokens = STRING_LIST_INIT_NODUP;
-+	const char *command;
-+	int version;
-+	char *data = NULL;
-+	size_t data_len = 0;
-+	int res = 0;
-+
-+	strbuf_getline(&line, stdin);
-+
-+	if (!line.len)
-+		return 1;
-+
-+	/* Parse out the first two tokens, command and version. */
-+	string_list_split_in_place(&tokens, line.buf, " ", 2);
-+
-+	if (tokens.nr < 2) {
-+		res = error(_("expected at least 2 tokens, got %"PRIu32),
-+			    (uint32_t)tokens.nr);
-+		goto cleanup;
++	if (!strcmp(str, "inherited")) {
++		*scope = CONFIG_SCOPE_UNKNOWN;
++		return 0;
 +	}
 +
-+	command = tokens.items[0].string;
-+
-+	if (!git_parse_int(tokens.items[1].string, &version)) {
-+		res = error(_("unable to parse '%s' to integer"),
-+			    tokens.items[1].string);
-+		goto cleanup;
-+	}
-+
-+	if (tokens.nr >= 3) {
-+		data = tokens.items[2].string;
-+		data_len = strlen(tokens.items[2].string);
-+	}
-+
-+	for (size_t i = 0; i < COMMAND_COUNT; i++) {
-+		/*
-+		 * Run the ith command if we have hit the unknown
-+		 * command or if the name and version match.
-+		 */
-+		if (!commands[i].name[0] ||
-+		    (!strcmp(command, commands[i].name) &&
-+		     commands[i].version == version)) {
-+			res = commands[i].fn(repo, data, data_len);
-+			goto cleanup;
++	for (enum config_scope s = 0; s < CONFIG_SCOPE__NR; s++) {
++		if (!strcmp(str, scope_str(s))) {
++			*scope = s;
++			return 0;
 +		}
 +	}
 +
-+	BUG(_("scanned to end of command list, including 'unknown_command'"));
++	return -1;
++}
++
++/**
++ * 'get' command, version 1.
++ *
++ * Positional arguments should be of the form:
++ *
++ * [0] scope ("system", "global", "local", "worktree", "command", "submodule", or "inherited")
++ * [1] config key
++ * [2*] multi-mode ("regex", "fixed-value")
++ * [3*] value regex OR value string
++ *
++ * [N*] indicates optional parameters that are not needed.
++ */
++static int get_command_1(struct repository *repo,
++			 char *data,
++			 size_t data_len)
++{
++	struct get_command_1_data gc_data = {
++		.found = NULL,
++		.mode = MATCH_ALL,
++	};
++	int res = 0, err = 0;
++	char *token;
++	size_t token_len;
++
++	if (!parse_token(&data, &data_len, &token, &err) || err)
++		goto parse_error;
++
++	if (parse_scope(token, &gc_data.scope))
++		goto parse_error;
++
++	if (!parse_token(&data, &data_len, &gc_data.key, &err) || err)
++		goto parse_error;
++
++	token_len = parse_token(&data, &data_len, &token, &err);
++	if (err)
++		goto parse_error;
++
++	if (token_len && !strncmp(token, "arg:", 4)) {
++		if (!strcmp(token + 4, "regex"))
++			gc_data.mode = MATCH_REGEX;
++		else if (!strcmp(token + 4, "fixed-value"))
++			gc_data.mode = MATCH_EXACT;
++		else
++			goto parse_error; /* unknown arg. */
++
++		/* Use the remaining data as the value string. */
++		gc_data.value = data;
++
++		if (gc_data.mode == MATCH_REGEX) {
++			CALLOC_ARRAY(gc_data.value_pattern, 1);
++			if (regcomp(gc_data.value_pattern, gc_data.value,
++				    REG_EXTENDED)) {
++				FREE_AND_NULL(gc_data.value_pattern);
++				goto parse_error;
++			}
++		}
++	} else if (token_len) {
++		/*
++		 * If we have remaining tokens not starting in "arg:",
++		 * then we don't understand them.
++		 */
++		goto parse_error;
++	}
++
++	repo_config(repo, get_command_1_cb, &gc_data);
++
++	if (gc_data.found)
++		res = emit_response(GET_COMMAND, "1", "found", gc_data.key,
++				    scope_str(gc_data.found_scope),
++				    gc_data.found,
++				    NULL);
++	else
++		res = emit_response(GET_COMMAND, "1", "missing", gc_data.key,
++				    gc_data.value, NULL);
++
++	goto cleanup;
++
++
++parse_error:
++	res = command_parse_error(GET_COMMAND);
 +
 +cleanup:
-+	strbuf_reset(&line);
-+	string_list_clear(&tokens, 0);
++	if (gc_data.value_pattern) {
++		regfree(gc_data.value_pattern);
++		free(gc_data.value_pattern);
++	}
++	free(gc_data.found);
 +	return res;
 +}
 +
- int cmd_config_batch(int argc,
- 		     const char **argv,
- 		     const char *prefix,
- 		     struct repository *repo)
- {
-+	int res = 0;
- 	struct option options[] = {
- 		OPT_END(),
- 	};
-@@ -26,5 +153,9 @@ int cmd_config_batch(int argc,
+ struct command {
+ 	const char *name;
+ 	command_fn fn;
+@@ -58,6 +302,11 @@ struct command {
+ };
  
- 	repo_config(repo, git_default_config, NULL);
- 
--	return 0;
-+	while (!(res = process_command(repo)));
+ static struct command commands[] = {
++	{
++		.name = GET_COMMAND,
++		.fn = get_command_1,
++		.version = 1,
++	},
+ 	/* unknown_command must be last. */
+ 	{
+ 		.name = "",
+diff --git a/config.h b/config.h
+index ba426a960a..966a228f0e 100644
+--- a/config.h
++++ b/config.h
+@@ -44,6 +44,9 @@ enum config_scope {
+ 	CONFIG_SCOPE_WORKTREE,
+ 	CONFIG_SCOPE_COMMAND,
+ 	CONFIG_SCOPE_SUBMODULE,
 +
-+	if (res == 1)
-+		return 0;
-+	die(_("an unrecoverable error occurred during command execution"));
- }
++	/* Must be last */
++	CONFIG_SCOPE__NR
+ };
+ const char *config_scope_name(enum config_scope scope);
+ 
 diff --git a/t/t1312-config-batch.sh b/t/t1312-config-batch.sh
-index f59ba4a0f3..f60ef35e38 100755
+index f60ef35e38..e638b54d13 100755
 --- a/t/t1312-config-batch.sh
 +++ b/t/t1312-config-batch.sh
-@@ -4,9 +4,22 @@ test_description='Test git config-batch'
+@@ -16,10 +16,111 @@ test_expect_success 'unknown_command' '
+ 	test_cmp expect out
+ '
  
- . ./test-lib.sh
- 
--test_expect_success 'help text' '
--	test_must_fail git config-batch -h >out &&
--	grep usage out
-+test_expect_success 'no commands' '
-+	echo | git config-batch >out &&
-+	test_must_be_empty out
++test_expect_success 'completely broken input' '
++	echo "not_even_two_tokens" >in &&
++	test_must_fail git config-batch 2>err <in &&
++	test_grep "expected at least 2 tokens" err &&
++	test_grep "an unrecoverable error occurred during command execution" err
 +'
 +
-+test_expect_success 'unknown_command' '
-+	echo unknown_command >expect &&
-+	echo "bogus 1 line of tokens" >in &&
+ test_expect_success 'failed to parse version' '
+ 	echo "bogus BAD_VERSION line of tokens" >in &&
+ 	test_must_fail git config-batch 2>err <in &&
+ 	test_grep BAD_VERSION err
+ '
+ 
++test_expect_success 'get inherited config' '
++	test_when_finished git config --unset test.key &&
++
++	git config test.key "test value with spaces" &&
++
++	echo "get 1 inherited test.key" >in &&
++	echo "get 1 found test.key local test value with spaces" >expect &&
++	git config-batch >out <in &&
++	test_cmp expect out &&
++
++	echo "get 1 global test.key" >in &&
++	echo "get 1 missing test.key" >expect &&
 +	git config-batch >out <in &&
 +	test_cmp expect out
 +'
 +
-+test_expect_success 'failed to parse version' '
-+	echo "bogus BAD_VERSION line of tokens" >in &&
-+	test_must_fail git config-batch 2>err <in &&
-+	test_grep BAD_VERSION err
- '
- 
++test_expect_success 'set up worktree' '
++	test_commit A &&
++	git config extensions.worktreeconfig true &&
++	git worktree add --detach worktree
++'
++
++test_expect_success 'get config with arg:regex' '
++	test_when_finished git config --unset-all test.key &&
++	GIT_CONFIG_SYSTEM=system-config-file &&
++	GIT_CONFIG_NOSYSTEM=0 &&
++	GIT_CONFIG_GLOBAL=global-config-file &&
++	export GIT_CONFIG_SYSTEM &&
++	export GIT_CONFIG_NOSYSTEM &&
++	export GIT_CONFIG_GLOBAL &&
++
++	git config --system test.key on1e &&
++	git config --global test.key t2wo &&
++	git config test.key "thre3e space" &&
++	git config --worktree test.key 4four &&
++
++	cat >in <<-\EOF &&
++	get 1 inherited test.key arg:regex .*1.*
++	get 1 inherited test.key arg:regex [a-z]2.*
++	get 1 inherited test.key arg:regex .*3e s.*
++	get 1 inherited test.key arg:regex 4.*
++	get 1 inherited test.key arg:regex .*5.*
++	get 1 inherited test.key arg:regex .*6.*
++	EOF
++
++	cat >expect <<-\EOF &&
++	get 1 found test.key system on1e
++	get 1 found test.key global t2wo
++	get 1 found test.key local thre3e space
++	get 1 found test.key worktree 4four
++	get 1 found test.key command five5
++	get 1 missing test.key .*6.*
++	EOF
++
++	git -c test.key=five5 config-batch >out <in &&
++	test_cmp expect out
++'
++
++test_expect_success 'get config with arg:fixed-value' '
++	test_when_finished git config --unset-all test.key &&
++	GIT_CONFIG_SYSTEM=system-config-file &&
++	GIT_CONFIG_NOSYSTEM=0 &&
++	GIT_CONFIG_GLOBAL=global-config-file &&
++	export GIT_CONFIG_SYSTEM &&
++	export GIT_CONFIG_NOSYSTEM &&
++	export GIT_CONFIG_GLOBAL &&
++
++	git config --system test.key one &&
++	git config --global test.key two &&
++	git config test.key "three space" &&
++	git config --worktree test.key four &&
++
++	cat >in <<-\EOF &&
++	get 1 inherited test.key arg:fixed-value one
++	get 1 inherited test.key arg:fixed-value two
++	get 1 inherited test.key arg:fixed-value three space
++	get 1 inherited test.key arg:fixed-value four
++	get 1 inherited test.key arg:fixed-value five
++	get 1 inherited test.key arg:fixed-value six
++	EOF
++
++	cat >expect <<-\EOF &&
++	get 1 found test.key system one
++	get 1 found test.key global two
++	get 1 found test.key local three space
++	get 1 found test.key worktree four
++	get 1 found test.key command five
++	get 1 missing test.key six
++	EOF
++
++	git -c test.key=five config-batch >out <in &&
++	test_cmp expect out
++'
++
  test_done
 -- 
 gitgitgadget
