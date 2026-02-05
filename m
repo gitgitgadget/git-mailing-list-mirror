@@ -1,176 +1,153 @@
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F340D35581F
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 11:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A573ACF14
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 11:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770290461; cv=pass; b=W0e+4PFuUv7APFBn2BPnXZUs5n6WfLxLCOzIlsrM1vSIOd/1dLOL8SV4Vw0wC3YmxIs6xp+oFwpG5fDHMBRTFTUWYtlOj1NQn3l7yczg8nY/AlHhPLHZOeaTNrbaOF2Tj1loazg6W//8SSjnfOO0rNl52iFGyH1ssXjJChuTzoU=
+	t=1770290544; cv=pass; b=IFlzD7iTzkRdkp32hiOFC9PnzOep5ur7FC6KB/p/nLj5XBGq51dDFd+mxI4mG5fnor6UxOQ0lC2JKhJzdW2c5lIW4/Uebeuhby7MFz0Jr0G9/5Wpi/vvEnryI/iZY3/62FhQVZhuH8CkUwMJNOErYA3nbvcwIuZPMptM0JFOgCw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770290461; c=relaxed/simple;
-	bh=gTF6kRCU9K17TdI10QMiS2xDr+dkw9/2R18jYMbwOqo=;
+	s=arc-20240116; t=1770290544; c=relaxed/simple;
+	bh=ijZQKDrbhHGgmHr0w8vwrYzCU3QudqnxbHcl15pgs+o=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lTKc3Wx13oDBkZE/ddtL0aW79KywiaOMuZTHlaJLnDNa3q6bGoDMqhvzHsLFYhTriTluiLYaPJDCaw1GLoDwATQlMm/D0iBh9J/j2Yp2jCSKXzh9fXcM/ZILd9Vqp5VuGOX7aRZdCmE29YtVYFf6JIASzSmwxYUYZLUqAgpKUJI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SVu98nS+; arc=pass smtp.client-ip=209.85.217.46
+	 To:Cc:Content-Type; b=mAO387hJSyEg9FOlVfmjN0RNaKxiAxkbULS8jrUxKswJOQvrz6evJVN+v6TPqu6oysrdjIcLBWi/GOGgFTaiAUpFHq4L/qJq7USJIy7kwJImV9eywN7fWtVGrdQuLC1i64hJfPOJKueLyCeQatTJEIu6QzdCA4IszyRvUmFaZnQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sc8oisHv; arc=pass smtp.client-ip=209.85.217.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SVu98nS+"
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-5ecddf73062so485521137.1
-        for <git@vger.kernel.org>; Thu, 05 Feb 2026 03:21:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770290460; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sc8oisHv"
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-5fa26e497abso299401137.3
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 03:22:23 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770290543; cv=none;
         d=google.com; s=arc-20240605;
-        b=ly9uOpu1WtbtjRrcCNuIbTJusO3O5L9Q95d1hbDjXNtyR8X0mVCSeOboBQKMzAkSuh
-         x2l/JxigjzH16MZStc6xY4REqUbCmsGY9XJnRlX8iIgVK6/luFBcUQ4DyZpod9rQ5aCz
-         1+biz4LRqklb0tfp+Juju0LpXjE/UOtHmPzAtLCq5lZlXA2wW36FoUxdbmYLRf02cVNC
-         dlvkBK6yXXKou6o+LYOuy/DiNf87dAVm88+o3VyGO8QsG4ss2rnCY3DmNcMm3oEUAuJE
-         IVg2U53Ob8yLQNdbmf2NEhKRSCVPPOalkT7PUpmSHscschYGlUbdfhHtF52i8qXvrKPR
-         r0vw==
+        b=D52EBkX50RdEwWY7NLjdpAefuqE2uwZ5NN+xwhZEZKbtV2qLffv+Am/C38dHXa1DeG
+         Kh6/69qScEOAHcG1ci8jn0UkLKgS5Q2Y9vdoLGrmTzEm9j4/bU9xEAG2uvC5LUzo6VRj
+         JFT/hpMuU1QsmIOpfZtAZ+WiPcxFay4QHFH/TmoYzLlhvcgBHvQopcwwzTrnybJyw1ms
+         HSjId08zTL0x1NpXtvRUhNyQoaxGieicNtoCtx2YY0oRwp2vaAycKubOU9tfS4KEgyEG
+         QD19GTS4QsQpOOpjBwZPx5bifLfzeYRlRWQhXz0QONqspnQ2Y819ONO0BUi5Yw7C043r
+         o3MQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=+WPQlq+9IbSOubp5oCjBhz4mumhQLZAsTWWucFLTp+4=;
+        bh=ijZQKDrbhHGgmHr0w8vwrYzCU3QudqnxbHcl15pgs+o=;
         fh=5qca7/jlTeJ+EQxzugJG47P9PlCzUHj/yIqbONCC4Hw=;
-        b=X2AkjLRX5S8MMj2M/hqgJb9BxSWdAF9Y0ReTmHug5a942vLzd7+qXYb9Z/jPQKmFMh
-         yQTNjsbY/AGbGUr/g/4Qf4y8r9EEV3nuQDWrH5wWArmBPr4Sw9bo+WeVAp+GR/alZmRO
-         F98Uxt3cyN/7Jrr66Om6LQkEHVPzfeExtwp4byieoA0FZDi481tRxEr0B6utcDhFcGu5
-         GM8n04D4FrP2MNKsiTyylMaiwA0lTX6ezdacRhhC2XHEDsn9w/wXQbwINEQ4TvdVZ76I
-         DdtSHCJ4RAvx/w3PUnKtQU+3cJin10z3ogW7lQCnw0grkRGXu/OD0b627ergreMxNYbV
-         VaAA==;
+        b=EfndYP3rRv4+IIoTO/3+0csB8obYw2hGZ1p4GN8f4WNTQcU1l2tnNimv4Ur2BE6Y3E
+         MgRx071MZ8AfMS45/IBZK+8sOTZX4qXZtr6SOeNnjrjFhsJY5w1C0zdqp1nQBGuJHkyQ
+         0yAZCE9lWEv3lNFLP+jT+U/tqpwYbzfGvc16nNjSMsvRFr3/OdZgj4k2OA7GwFk0Gkxm
+         qoX2Vo+yMVdT+1PXINvzfgkFARaNox74Ms5zXVYrrZVhYfgLsp1q//SwNcj9fJuj2KzA
+         IE12585DBoadRnz554yeJ+lYeXFJcpJpSvMsx7i1Wu9B9SKEFfCMSLY2ucB9YTSrRkAT
+         Rsyw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770290460; x=1770895260; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770290543; x=1770895343; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+WPQlq+9IbSOubp5oCjBhz4mumhQLZAsTWWucFLTp+4=;
-        b=SVu98nS+BIXsy4eS3v5K5of8CE2u7S50/MunVROvEgupO7Tg6TJnTFOM6Fy8zUYJ9h
-         QRwsbhIMSj4oRilr/EN1IvgRihZrDpWNo3pcOiyak/HHjV1lpoWxRdetf0nboK1RCS00
-         tAM1HUCxSFmv5nuxz3SNNpZoS4wwb82MjaNVTmkeKxjN6rrzAV/Pqpys1DLkEUImbRdA
-         kUyHu3F3SqvlP6y9vdLtZr+0f04xq5vQ8iuPDVlI1teql/sQQGsuyZnQsgVWsFuqmN9H
-         OZLN99MYhNUQ2mxJYAoiBeOT5Y8VgbSHe0SMWRj9rlClEYdmrmRBy77yH4evS9mHH+eN
-         1daw==
+        bh=ijZQKDrbhHGgmHr0w8vwrYzCU3QudqnxbHcl15pgs+o=;
+        b=Sc8oisHvTsYP0QFc4uzSpJgo5LQDFu1hk6NGWbdcyZzx3MNMYNJtdf/WjIAGPA+vSk
+         NWPQ0q9WJJlUFI/78lMTOJcDwflkzk4P/6pCbSgxL+3DgoE8cZ0yroOqjygxEfjQwYPZ
+         cueHJf4+Jmo7weCiN0aWSTbVdQ0fhL8SIyTupQNmdby6LGgaRZg4s4ksgGBKAGAQBGmQ
+         RDHAO1HIsSnSt4TqUOG4Zd/iHkN6MgGP8DAgQ8siZ4cDXPj0XQsM7STiDgqToLz8oAG5
+         +WZAnNIaNV3ueA1bBuwLFMegQq288v60Xp5mfPIjAw1vhAGguXAUIml83C8zSAl9iDSF
+         oacA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770290460; x=1770895260;
+        d=1e100.net; s=20230601; t=1770290543; x=1770895343;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+WPQlq+9IbSOubp5oCjBhz4mumhQLZAsTWWucFLTp+4=;
-        b=sUbzzKpzxQmjiFb3L1PD7xbKTZUTGVaOLJCcPzufW0yBDETQigDyTI0Af3QffcSPx1
-         rARau6Q5sQjb1inT3JlngP+7z09kuon4Kx+1dtz35AGqMgyRuaGE/WNm4Apa4IP6ROsl
-         RlvXpBj9i4cI4QbwgnHscmn8bmdurwxpwnE69Qy88h2LXW5M48io6raelc8Dng1jNk1d
-         C/XoKX9TW+tjYmK87dlXnCOyyYhvZIQgvVxc45H/Qjp3yQVXC4LJgygcmX+gcaMYC+Ka
-         KXFHIuceXPUwAXq7/jHTpQxW7c2GmQJNzYkAieNkAG3Ka0RJCZF9jDDYgPyNmTHzFO5W
-         Jm8w==
-X-Gm-Message-State: AOJu0YyOtTus21YdIPAcqlhF4ZoyUixqm3oVGvdk+y9zneGFAOSu0JAj
-	8l2CzOP4UM/Khu7dFLLjRfqr03Wu5YDz9p4b5hFYfmKlTxIO+JezCUq8yAGPDTr9sK1tuA1uR0M
-	lBPshJlXaJ2DPuVG1N0WgUejh0xfUmG0=
-X-Gm-Gg: AZuq6aK5nP5/BbbFZekeIxW0myI/Wcu8K8nqhsmAsOGPY6yT5bCmtPbTuxk5NArBb2y
-	rA7RAIQWltKPm3tGw8YPsTp41mQE0GIPWJPNAbglEgBPkOmXxOZzoCiw2lMtNr6PjusieNlC0Ac
-	z3ePYlqR3o1ydQwIR563WSXYiLzaXMCkzKUH93NjdPNXfl70297cHd/npt2N3KOTVsoJXITcgXO
-	mBWOKuoeb9VWEfVZrag3xFWTTnVjENBFLLjJuu9XuNqyR8diR8Md4j8Cv18rRiZffUJTu9rReWt
-	2B2Gt/GgRYmREi8C8pLkF5ShckMGeg==
-X-Received: by 2002:a05:6102:3f42:b0:5ee:a6f8:f93b with SMTP id
- ada2fe7eead31-5f94cfedc5dmr1014446137.2.1770290459814; Thu, 05 Feb 2026
- 03:20:59 -0800 (PST)
+        bh=ijZQKDrbhHGgmHr0w8vwrYzCU3QudqnxbHcl15pgs+o=;
+        b=NElCZSaFco5c8a0985OHh7d3pReeLebok1U19XukMJNSuqijdNnxOium40uCNilPc8
+         vW5/0sC8TYriRzz2RSCVu9ZnCLmDeQ0mfOXUiTjceblG38YUlSkJVdsljsSLUk4BNjq+
+         Hfn00tQXtgTcVjA/0Q49N1ARKS0auYIh/IKGni8ho029O9Y/wRQ/7dlDpqQNnkmYmz/C
+         TgOQHilmoe1M+qRxqU6JkqDNnoffdy1Ze9BFzPR35lu+JIW3+pFqEOoBZL9yALxZ/+pi
+         pPJtZDtXscOp3uEJ6X1oWEUt64UD12qJUwEuFcZ9cBjYJtVivgtraD0dVqHPZPIzuiAH
+         InNA==
+X-Gm-Message-State: AOJu0YyVjwfAaX5ZkST2suNv5scbfuHBbI2qcmL0p3Eq9pZNF1HjYFIb
+	ojTXbqPQ+ozHSxZe5tFX9HkNurhz1e0HbDo2RQzHq9hRTw2B0Z4DbTipS/F2QBnCAqBMQzl2mhX
+	dRvOmZPlUjDg4b9dTZiio3NdKPpBLPvM=
+X-Gm-Gg: AZuq6aIZqVJS0+5cccvpEOw+2MgCAkq7yjOBMrmCAIISf+sDHfjRFyeTYihAnorx8+o
+	zCs7TtoIzPoWU93YvIF0JJQ+qgeQ0FQgSorzOUL2Jaqaym7FlinTqYhckB8tF1b5xp3w1P8EXHd
+	dg38jSbMXSke8lOqI1qotWfWI6I4RaGJIjYqSBXSEDj0MjYDtlvKHnfYIDWpKMPRAq7+LX1XKXy
+	FZNDOSM+w67fbGgocUcUMRCG9BzhKAyRaq7Jg9bkHPw595vh961jHpcjPx0lm5KaJcCpGGm60PS
+	yDiiP7jwZNFF6GfJGJSNzcRAIvssgA==
+X-Received: by 2002:a05:6102:2ac2:b0:5f5:3c96:983f with SMTP id
+ ada2fe7eead31-5f93947defamr2141288137.1.1770290542773; Thu, 05 Feb 2026
+ 03:22:22 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Feb 2026 06:20:57 -0500
+ HTTPREST; Thu, 5 Feb 2026 06:22:21 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Feb 2026 06:20:57 -0500
+ HTTPREST; Thu, 5 Feb 2026 06:22:21 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aYOCm3vzfDmnZhhu@denethor>
+In-Reply-To: <aYOEQUIPXPIYeCw-@denethor>
 References: <20260128234519.2721179-1-jltobler@gmail.com> <20260203001002.2500198-1-jltobler@gmail.com>
- <20260203001002.2500198-4-jltobler@gmail.com> <CAOLa=ZRb1eVSD42Obr_m+3KUy0Bh=0XmOZt8ofrbzy4Mp8xfwQ@mail.gmail.com>
- <aYOCm3vzfDmnZhhu@denethor>
+ <20260203001002.2500198-5-jltobler@gmail.com> <CAOLa=ZT_7o_YquQ_mAg6sn=gq0Rx4Tga4vNsVsPt3jCUh=3tzw@mail.gmail.com>
+ <aYOEQUIPXPIYeCw-@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 5 Feb 2026 06:20:57 -0500
-X-Gm-Features: AZwV_QjSSHKCAVdB14Gez_wKAXamSEg_1WVJCDqT32RLnq2C_jhYJ6cpZC_s1jM
-Message-ID: <CAOLa=ZSdU5jRqQhaehvqnVebcXT8TiMqCdSSqFYEh5XVJtrNdA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] odb: prepare `struct odb_transaction` to become generic
+Date: Thu, 5 Feb 2026 06:22:21 -0500
+X-Gm-Features: AZwV_Qj6cupxGHU9rvMCsfyr4Kg9SKcKUITKVX9rNDabVdZYLZmfTZXcWwdieq8
+Message-ID: <CAOLa=ZQyW4VPuYC+isjx7h1m5-vix0N9M5+TsXocHaFU+Aydbg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] odb: transparently handle common transaction behavior
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="00000000000001c034064a11de36"
+Content-Type: multipart/mixed; boundary="000000000000f3a2fd064a11e203"
 
---00000000000001c034064a11de36
+--000000000000f3a2fd064a11e203
 Content-Type: text/plain; charset="UTF-8"
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> On 26/02/04 02:31AM, Karthik Nayak wrote:
+> On 26/02/04 10:34AM, Karthik Nayak wrote:
 >> Justin Tobler <jltobler@gmail.com> writes:
 >>
->> [snip]
+>> > A new ODB transaction is created and returned via
+>> > `odb_transaction_begin()` and stored in the ODB. Only a single
+>> > transaction may be pending at a time. If the ODB already has a
+>> > transaction, the function is expected to return NULL. Similarly, when
+>> > committing a transaction via `odb_transaction_commit()` the transaction
+>> > being committed must match the pending transaction and upon commit reset
+>> > the ODB transaction to NULL.
 >>
->> > +
->> > +/*
->> > + * A transaction may be started for an object database prior to writing new
->> > + * objects via odb_transaction_begin(). These objects are not committed until
->> > + * odb_transaction_commit() is invoked. Only a single transaction may be pending
->> > + * at a time.
->> > + *
->> > + * Each ODB source is expected to implement its own transaction handling.
->> > + */
->> >  struct odb_transaction;
->>
->> Nit: Wouldn't it be nicer to just the below `struct odb_transaction`
->> here and drop this line?
+>> But isn't this merely a limitation of the current implementation of the
+>> files transactions? Couldn't a potential ODB source support parallel
+>> transactions where this might no longer hold?
 >
-> I assume you mean drop the typedef in favor of defining it directly in
-> the struct and thus removing the need for the forward declation. I kind
-> of like having a typedef for the function callback, but I don't feel too
-> strongly either way. I've ammended locally, but will hold off from
-> sending another version unless there is other feedback.
+> Just to clarify, this limitation exists per Git process.
+
+I missed this, makes sense now.
+
+> For the time
+> being, we only support writing objects to a single ODB source so a
+> single transaction for object writes seems reasonable for now.
+> Furthermore, the current "files" transaction backend relies on the
+> tmp_odjdir subsystem which means only a single temp odjdir may exist for
+> a Git process to write objects to.
 >
+> -Justin
 
-All good.
+Thanks
 
->> > +typedef void (*odb_transaction_commit_fn)(struct odb_transaction *transaction);
->> > +struct odb_transaction {
->> > +	/* The ODB source the transaction is opened against. */
->> > +	struct odb_source *source;
->> > +
->> > +	/* The ODB source specific callback invoked to commit a transaction. */
->> > +	odb_transaction_commit_fn commit;
->> > +};
->> >
->> >  /*
->> >   * The object database encapsulates access to objects in a repository. It
->> > --
->> > 2.52.0.373.g68cb7f9e92
->>
->> Just a question in general, is the idea to eventually also add support
->> for {prepare, rollback} within odb transactions?
->
-> I'm not quite sure yet about "prepare", but certainly an "abort" or
-> "rollback" will be introduced in a followup series. This will be useful
-> as we expand ODB transaction usage to other operations that require the
-> ability to remove temporary objects such as remerge-diffs.
->
-
-Alright.
-
---00000000000001c034064a11de36
+--000000000000f3a2fd064a11e203
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: ef4830e13e1c6eed_0.1
+X-Attachment-Id: c0c53cb68679aa8_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tRWZSY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNWF5Qy85OUJsNUFxMVJLUk9iNVF3Vk9HTGNyMDhqZwpHVVlUaWZSMjdn
-K1J6N0xBR3dSTWNod2hNV2JtYVN6dkVzdGYyb3VsSDVKRkQ3cStnakVKNXJtWUNVcnkwRVpyClgy
-Z0kxV3FhL0cvSC8rZkNwbEhEY0c2TFBkU0xmN0NleDJ0TktPNG9OdW84UE5uc3VXOHEyQmdYajNV
-UmdJdDYKVGcvMlp5eVYvek92VzJRVjlNR25LVkxxRFZDMWhSaHdhbXY2NVVjUGRrVTkxMzk4dkV6
-RzU0VlcrN3N5WGhEawovbEh3djR4eXNNYTJOK3NCeFVBNnY3RHFrbkpET1hlamlsRHNBTTlXSC82
-QStMNythZGI1YXJZL2ZYU2xFcGdwCkVUQnpWRXhORXJGT2JXM1RRNGw0MUl3T2ozSjhoVDVWOXEy
-K3F4Ni9zU2xtVHZ0U1JxQmUrK2p2SEl3N2gvczcKL2xLNzVHOFJ4WFhYb0o0RHJ2RXoxZnZ6RkFD
-VkxjN3huTmlYekx5ZzJ0MGQ0Ui9qQ28yTkRqdVRjTkR6NDljTwp2K1FmZmJMQ0h1ME4xd1RaNlMz
-UnNFRFQyR2FIZzRkZkFKUlBnd0QycEtteTlwbWRmRkN2c3hNd1BLTWl0U2o0CndOYzlSREY0UzZ6
-eWNwQW15S01CT2UxaWM4VDcxcm1Lb0FaejhuTT0KPVBYdFkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tRWZXc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meXpvREFDS21wYnZNNUg5djArVkZXODNIUHNZMEIwRQpTaklRd1dvWGZ1
+OGtZMjJFMFJGVHZXcDAzeEVsQkZHK015cHFYclJFMnZQb3ViejJiWndCeFVXNytOYjV0cG91Cldk
+QjFtZk9HWHVNRDIrL1luVk44Q2JYbkd1OTFLUFB5UU1kNEY5aUpTVmtNaklUL0NNcnlUWmtwUm4r
+b3dDa24KbEJLUzVobUZNSUQrU0VGd3NsZ2FTQkVzZ2hsSTlPN3RERDhGTm1EVS9MSVlJRTcvdXpI
+Wi9tMzBkOVRWTm91dwpvUm94UkYwWXVLcUMwUmRLQXJrYW1tRUJpWEIzODVtNTdkRWJubWp0RWNT
+L3pCby9CbTZQa3VTQjlYZXliNjFwClhRa2tPWFkvb0NmQ3U5RnpXMlQ4d25pYk42Q1ZRcnU2MTlP
+U2tRL25JdzdZUVJYMWVXZXBWZTRMUmdHOWI0eDEKazRsOUU5UTZ3d3dGSzlhZnlWYWlhTGdIQi8w
+b2wvSkJNZzMwckxINWQxcjJyZTBnUzhsbTZiQ2owbDF2UStDcgp1VmhWWnJ4ZmRoR2hOTUJ4cUFa
+cGgxUW5nR0g2dzNTL2VQMm9uREtqQkVBMGx3M0xpSVg5Ull2b0Y0N1V6Y0tMCnVidDc0bzk3Mmgw
+cUdjTXdjQjd3elU1aUNQeHJBRnhSQnZxREJSUT0KPTV5U2EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000001c034064a11de36--
+--000000000000f3a2fd064a11e203--
