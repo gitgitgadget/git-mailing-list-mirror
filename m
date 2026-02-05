@@ -1,64 +1,68 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C857543635F
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 16:05:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC00436354
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 16:05:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770307514; cv=none; b=bWeXOL7gwbIppQ0m4lHqU7XrgYb2U9klo7eYOgJ2TRK8GJgmgGQ5kA3x0OllI24hu0hI+WNhlgoIMvr7YX+x2ZDnD/D6/nvKZAHWMSUskTaIVGWB9fEOaPVbKVYAwWi6+iprk6b+anF3w/JyBG+o5PEfU9imXET62adSiGrFYGs=
+	t=1770307516; cv=none; b=MfDo0sEivc6n6nJO7ubDpfg9F/YW2yTtNa7MxaZ+by9jqLYg4lAZbWkzl/U9AxNU1z+YyPGyHth+WWTe2SQJGYAB7HZm5uf2VF9vqX5f5sFTAXLbKgCI+OLaOuaaEs5rHN2MCS6dCFMfVJgJEr9iDgFrUecrANUkP6BnECP+MCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770307514; c=relaxed/simple;
-	bh=HZ3PXWAcELwp6dGZhEmPK6K5I02H0xdJoS0haJP6BYY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=sxS/fNnw98u42KaVbmVSJPjSYkmEBJqk0U9L/RkxGH8eSPnVua0WriBCPPxVHzeZajTu5X51NF2QjUHO7xm+J0ciEbwmtmLwIZC2f4CgXKv1Rp6Zxg8hZu/eIvLc2lQMX8EqcRbPILXE4Sv9a4Yny5nGLn8HwUZVQYMeD0C3gNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DwFKmV8I; arc=none smtp.client-ip=74.125.82.42
+	s=arc-20240116; t=1770307516; c=relaxed/simple;
+	bh=rkMqX46HmLM1K1QwuNFM+4Un7gCvbyV4dyM7nPMzkNs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=TyfoN7+mI3KVndizIaE6O+cPFteG9IgSgG8Uuiit9UM8F97kOBiZZaytdk26CUeaNzteUp58odqv3JJpRkEZRlNCtAuIJobi0sjPAd1+JuQJ0wu5r7RK0j4GwZWdq3CMZFxUuiK7Y7h1S/eNJ9w3YUGsZS0/YjQjMnPbPw/eRJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e/4bYr2t; arc=none smtp.client-ip=74.125.82.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DwFKmV8I"
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-12339e2e2c1so656659c88.1
-        for <git@vger.kernel.org>; Thu, 05 Feb 2026 08:05:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e/4bYr2t"
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2b71320f501so1777903eec.1
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 08:05:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770307512; x=1770912312; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770307515; x=1770912315; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VsWH5VhVrzQGmzhAClDRazQJEf90LQoLuslRYSy2eH4=;
-        b=DwFKmV8Ibz90awoB7m2XDS2eOR/0GhIx9C51NAsPUFLhkMORBIZw248q2z386AQLpt
-         ij2z+IJ9FDuuEZADaD3CcyIZ1wRwrAQO+WFS6E1ME0HiZtcqMRVFCB1GlwHX7o1fcnAY
-         fwMCMFOo3P8ssv4pm+3JbF0U8a3HxmQA5zj5PxPGQpUMOWiy3wXy/plRZiADTuDPr1ma
-         ulBRq2NU1peCvbF4jDWQ28zhf+xIRkefjy3f3YQXAY6gGNQX9pANXP49ru9nK2PYQDJa
-         9RHzP/G4htLmldIpw8gY6430e14MuzCVN9yUIqbksVMI4r1Ep2FL0oFnFN3GYWkFar3l
-         eo3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770307512; x=1770912312;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VsWH5VhVrzQGmzhAClDRazQJEf90LQoLuslRYSy2eH4=;
-        b=PGeSjEKoSuUVU8jAbU2NRWytgSi8iVSC7awP34BYOoZgsrmOcZno03ew143q+BTg5Z
-         BXeRN1y38RFJwi6PKgrW+ff3WeNC+iTXzkvT55kZySELidl3rTCaXcBn1/YYATjpLUj+
-         FSUBrO/1RHXzJNWd8G1jL6tizt7IPTy0AUf0dTWDz8ftW8JytEOTLTENpWBk3Jtupx0q
-         SHMpGP5k71jIBUkhw/0wBtrKOzhANduD//+VRBTbwBUpmR29lEYpSc6CaoSc3mclzJI/
-         LcIJtNl/cQZVnXXyaL+bvo2mV191D4X0ECC7rGD3q4zswbHNz2bO8tvrIXJcuqWzIAQV
-         2pAA==
-X-Gm-Message-State: AOJu0YzsqosSh7+8BeXZybSFeLtl9WIqNM6lm207b6nwK8qtFo9GEI2V
-	zA0DKwN+F2xLwWONfBbNqHmEJKSp9jMknfKsq/ThHiML6Mu7tUSFZwwT8le1tw==
-X-Gm-Gg: AZuq6aJgMBO+KmLFSR6NZYdrlloHkP6cqBTqNr1LlWTDxx4bXQwsrJMJAFjnQd6NiID
-	MKBLcRDbDhKQMsM0zMbWAlVHhP+eRZk/9o/nAulZwiS49ndS4DJy87mqS/bCkLeqKZq6/qJePD2
-	4ji03swPwPW+0Z/Jh+gl56ZtVgk7kuop7Lb50FJ9u8RkORoF86EsIQk6butC3byf2t9wOgLMJ5I
-	ZfOd7w7BAkxHu9DiOJRWsNNZg0MiyXf8RZal+SeStojrw0/tOKpJiiaG/5gsl9Lhm6+9RYyd172
-	4ktWzGZUUeXJ7MBcDO1pQlGInTvvjU5zYG9csGTn0yakz2KKYgBzXaGidi3ckXMzCCuhUabRotk
-	bwpGeQvRL1766ZRI3/LlkrBEpkwzbhURgY8n+yZsE4rWB1yDDakCYCQEYID+TZQLoU7OBMFhy3l
-	oKhHwg7fPD2UEd9Q8=
-X-Received: by 2002:a05:7022:504:b0:123:35cb:96d2 with SMTP id a92af1059eb24-126fc30a808mr1339115c88.21.1770307512313;
-        Thu, 05 Feb 2026 08:05:12 -0800 (PST)
+        bh=Hy6jw949WTjHztk/H8m+HjX5Cvsqwr9+IhQISrYmkck=;
+        b=e/4bYr2tOZjtEJ1RFyrgufVdU30tVkagfuFn/CmIX1Yb+7v3z39VF8aGpMXV4bODUD
+         xgSOwWn3MRXpR2EJXHvXdDMMxn+BBSn7lZ88HwYtdP8ERbZEXBrylV69Ig6iVxtW1PJW
+         BbaQGijh9r/KAYrqKCrh3tYtK5A1drY4NVHiVCa+sAsfVSiILdI/RLLetbuCJdF+UMVU
+         XFoHp+ctKk3i1NAE8r///Kdty4TqwwyZ5uUtGauNHOQp7bAC3XX94Mx843eW3/Dkmubd
+         U0VrbU6u2ciql2lspOmyc6XwnsElm/zRpM0EMWqUBp7ZjDYE4pdU3KD/emfILtRGrIi/
+         Kn0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770307515; x=1770912315;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Hy6jw949WTjHztk/H8m+HjX5Cvsqwr9+IhQISrYmkck=;
+        b=bgnl/0EIt0K31gF79HYCY2IYbE9fVyZvuLKYVky6QmWnNQZCQoQL1VSvF81+4Sc9jV
+         yII3NcGOS+nEIxZ1Ooy7NoAaZp1XcWcTHhE4EnjZAztcY3BilEOpnJuyIsDrPhhidY8O
+         k8a6IJ0F/GLhbOSZKs6YEOMT+MnDxC+vdOUMcTfhp1ofYdiqyUQXPqdGomzwTXp8Q+9m
+         jKWss12Rm1aNCnscfC5+HyxINysw3v/KxXpSR7hyJnvmg0TdC2ueNCBwFwLtNyrvP8lx
+         z8411s4DspexHD1Nlkd4yAQvozPwFGdQskqH6WmIV0yfxNmKWEKOdxQExWewW7LfWzzs
+         UERg==
+X-Gm-Message-State: AOJu0YyErhSKV8fNPOcRitmBR9YC33JFhXn5pNRcwRZElOz4Ixs83MjJ
+	3loesh8IGvhcJDtgsckt1NjZ2Z/Eul9uREEE2LcD0YkdYRt15UvziXQUUnsNqQ==
+X-Gm-Gg: AZuq6aICXR4mNffVR1MC6wKgxZ+GGXbVRUFXX0x8w6IzN8AGKMXd2rfIWvHOU2KCqo0
+	ROgChh7SvUT1IMbV1JnXH1SOvw+CZaC9aZE6tRhu8EE/3EMPDrmF3kVMPIyA41vZ5M4Fr4IhhGO
+	E354CLWB48Io3hiUHZPNtpw2Ld3JbA/tRUU8pfTmFa6omTfrQ47aL/9yJueb9D0T6pc+PFCoyF4
+	z58CAWlRMc2VtyhZ3UO27rm77YQCzb99Q0FtSJYrlmqKtR3qxohsSgXgHOBzeGGl7OdyjbInCer
+	yiKIh8Y1m0jD0o4HoblszN/GyKFVAGn6Q7FieygX0kiRJD10m+yNjUtk2mOu93XyO+eo1mTjrMD
+	jU2yxoEqM+qokXQjt+5inO978N0yCELE6+dv9s7AVroy+U8oY4PrCD+ZV++1KUK83cwoPA0Cyar
+	9XDmvF8uQ5oM6n2Pw=
+X-Received: by 2002:a05:7301:9bc2:b0:2ae:57be:86ef with SMTP id 5a478bee46e88-2b83296f244mr3461235eec.4.1770307515150;
+        Thu, 05 Feb 2026 08:05:15 -0800 (PST)
 Received: from [127.0.0.1] ([172.182.194.212])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b832e1298esm3601652eec.3.2026.02.05.08.05.11
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b832fd7ae9sm3351282eec.31.2026.02.05.08.05.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Feb 2026 08:05:11 -0800 (PST)
-Message-Id: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
+        Thu, 05 Feb 2026 08:05:14 -0800 (PST)
+Message-Id: <c786a038f31f0d3b5f612e9124e3dfb23e56a027.1770307510.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
+References: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
 From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 05 Feb 2026 16:05:06 +0000
-Subject: [PATCH 0/4] trace2: add macOS and Windows process ancestry tracing
+Date: Thu, 05 Feb 2026 16:05:08 +0000
+Subject: [PATCH 2/4] build: include procinfo.c impl for macOS
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,42 +76,59 @@ To: git@vger.kernel.org
 Cc: gitster@pobox.com,
     stolee@gmail.com,
     johannes.schindelin@gmx.de,
+    Matthew John Cheetham <mjcheetham@outlook.com>,
     Matthew John Cheetham <mjcheetham@outlook.com>
 
-In 353d3d77 (trace2: collect Windows-specific process information)
-Windows-specific process ancestry information was added as a data_json event
-to TRACE2. Furthermore in 2f732bf1 (tr2: log parent process name) similar
-functionality was added for Linux-based systems, using procfs.
+From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Let's teach Git on macOS to also gather process ancestry information, and
-emit it as a cmd_ancestry TRACE2 event.
+Include an implementation of trace2_collect_process_info for macOS.
 
-Furthermore, let's refactor the Windows implementation to align with the
-Linux and macOS versions - by emitting the ancestry information as a
-cmd_ancestry event. We keep the older, custom data_json event type on
-Windows for compatibility for consumers of the TRACE2 data that use the
-older event.
+Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+---
+ config.mak.uname                    | 2 ++
+ contrib/buildsystems/CMakeLists.txt | 2 ++
+ meson.build                         | 2 ++
+ 3 files changed, 6 insertions(+)
 
-Thanks, Matthew
-
-Matthew John Cheetham (4):
-  trace2: add macOS process ancestry tracing
-  build: include procinfo.c impl for macOS
-  trace2: refactor Windows process ancestry trace2 event
-  trace2: emit cmd_ancestry data for Windows
-
- compat/darwin/procinfo.c                 | 99 ++++++++++++++++++++++++
- compat/win32/trace2_win32_process_info.c | 58 ++++++++------
- config.mak.uname                         |  2 +
- contrib/buildsystems/CMakeLists.txt      |  2 +
- meson.build                              |  2 +
- 5 files changed, 138 insertions(+), 25 deletions(-)
- create mode 100644 compat/darwin/procinfo.c
-
-
-base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2040%2Fmjcheetham%2Ftrace2-macos-ancestry-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2040/mjcheetham/trace2-macos-ancestry-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2040
+diff --git a/config.mak.uname b/config.mak.uname
+index 1691c6ae6e..baa5018461 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -148,6 +148,8 @@ ifeq ($(uname_S),Darwin)
+ 	HAVE_NS_GET_EXECUTABLE_PATH = YesPlease
+ 	CSPRNG_METHOD = arc4random
+ 	USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS = YesPlease
++	HAVE_PLATFORM_PROCINFO = YesPlease
++	COMPAT_OBJS += compat/darwin/procinfo.o
+ 
+ 	# Workaround for `gettext` being keg-only and not even being linked via
+ 	# `brew link --force gettext`, should be obsolete as of
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index edb0fc04ad..d489f0cada 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -274,6 +274,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+ 	add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
+ 	list(APPEND compat_SOURCES unix-socket.c unix-stream-server.c compat/linux/procinfo.c)
++elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
++	list(APPEND compat_SOURCES compat/darwin/procinfo.c)
+ endif()
+ 
+ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+diff --git a/meson.build b/meson.build
+index 1f95a06edb..32d470e4f7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1292,6 +1292,8 @@ if host_machine.system() == 'linux'
+   libgit_sources += 'compat/linux/procinfo.c'
+ elif host_machine.system() == 'windows'
+   libgit_sources += 'compat/win32/trace2_win32_process_info.c'
++elif host_machine.system() == 'darwin'
++  libgit_sources += 'compat/darwin/procinfo.c'
+ else
+   libgit_sources += 'compat/stub/procinfo.c'
+ endif
 -- 
 gitgitgadget
+
