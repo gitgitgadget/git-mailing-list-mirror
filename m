@@ -1,119 +1,113 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CF842DFE0
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 15:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C857543635F
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 16:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770307130; cv=none; b=bLb9QO/7ITFNVxYXeiwReKlPbOmRfZJU916J2oRNrJtHn86jPgxbWzZ+lZrDFELc5nvwoFgdRn5ZUr5e7hxPDKNpSIskErpiVrUkkjI34xmcPGWg52mq1xIXT5KA+rJTdnu2FzRHfC72zKuD4lZtqkVA/J0we5DhdCJItfrVErU=
+	t=1770307514; cv=none; b=bWeXOL7gwbIppQ0m4lHqU7XrgYb2U9klo7eYOgJ2TRK8GJgmgGQ5kA3x0OllI24hu0hI+WNhlgoIMvr7YX+x2ZDnD/D6/nvKZAHWMSUskTaIVGWB9fEOaPVbKVYAwWi6+iprk6b+anF3w/JyBG+o5PEfU9imXET62adSiGrFYGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770307130; c=relaxed/simple;
-	bh=U5WXy7u8i0xhbQw2L5xz31RkAvqc3z8aYxjKGjnKRjQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tFKZmrckbPXKMthi1JrlG9E882xuz8MO97PI6CRuisyWKHbcJVYH5UEU7KtdZXaC8RmiFT0qt0A8m7KMZNXrwvt8/RGm7oPab+suWmvD/7K4wo5mrpGdICGSjXvLU1EBvaDlH/kB1ja30BGQGGaYDz0RmMgZXCIUgmPXUCFsCdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PC6A6gLG; arc=none smtp.client-ip=209.85.128.66
+	s=arc-20240116; t=1770307514; c=relaxed/simple;
+	bh=HZ3PXWAcELwp6dGZhEmPK6K5I02H0xdJoS0haJP6BYY=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=sxS/fNnw98u42KaVbmVSJPjSYkmEBJqk0U9L/RkxGH8eSPnVua0WriBCPPxVHzeZajTu5X51NF2QjUHO7xm+J0ciEbwmtmLwIZC2f4CgXKv1Rp6Zxg8hZu/eIvLc2lQMX8EqcRbPILXE4Sv9a4Yny5nGLn8HwUZVQYMeD0C3gNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DwFKmV8I; arc=none smtp.client-ip=74.125.82.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PC6A6gLG"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-48068ed1eccso11824925e9.2
-        for <git@vger.kernel.org>; Thu, 05 Feb 2026 07:58:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DwFKmV8I"
+Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-12339e2e2c1so656659c88.1
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 08:05:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770307129; x=1770911929; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1770307512; x=1770912312; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=HNQAHSlzwJl7Nc7gNh3vWs5zYcNs7b02MOe6l05V78Q=;
-        b=PC6A6gLG0j4OSXvHcJtqFNNKtP1ugjKbvIeH6LWn2xHnP6MF/Ur/gDIXrTjKvyS5LD
-         z15IzhudTH9hjzaNasCiMExfZbY1VfGByov9vcylgJ+vW91aIsukMYmxCPTG9FLP/5wr
-         auwHUcILsp/HbkJoTFTWJNA3a4CdQhxtbq2VqG4VsA/U7lkzA2IburPGXItmhg4uA1+n
-         jTV8yCubLVlfS9LNJcLonVm2vSUVe+vY+EwQ7eNMg8zMh7YmvzBolwOIk0GBlwisYg6f
-         FF+9bbD0yXS3EgKi7BgImDX2KswcLz5YN+D1WdKFw+Y/gKhdxFNyujX0eBDTBNwBCTtm
-         8JsA==
+        bh=VsWH5VhVrzQGmzhAClDRazQJEf90LQoLuslRYSy2eH4=;
+        b=DwFKmV8Ibz90awoB7m2XDS2eOR/0GhIx9C51NAsPUFLhkMORBIZw248q2z386AQLpt
+         ij2z+IJ9FDuuEZADaD3CcyIZ1wRwrAQO+WFS6E1ME0HiZtcqMRVFCB1GlwHX7o1fcnAY
+         fwMCMFOo3P8ssv4pm+3JbF0U8a3HxmQA5zj5PxPGQpUMOWiy3wXy/plRZiADTuDPr1ma
+         ulBRq2NU1peCvbF4jDWQ28zhf+xIRkefjy3f3YQXAY6gGNQX9pANXP49ru9nK2PYQDJa
+         9RHzP/G4htLmldIpw8gY6430e14MuzCVN9yUIqbksVMI4r1Ep2FL0oFnFN3GYWkFar3l
+         eo3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770307129; x=1770911929;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1770307512; x=1770912312;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HNQAHSlzwJl7Nc7gNh3vWs5zYcNs7b02MOe6l05V78Q=;
-        b=q6oH/Ytph5hCSeRmMojj5J2XboA0vk4+YnRWdPTrs6tnik7KHyWof/T8HnL0khGoiJ
-         LWr0afzM8xqivVPvLQphEDOU7FKwWAWcSFDBehR2Zrqc3ttRBJQLri8DaDO6IKL6J/Wt
-         sPhrKqNt9Bef62/Wi2Hbcu7SsOBlQhf8Z5qdjLx5YsOTe1WyZTcJVeKACGCoZ2/8hTet
-         z63U33rKLYWVU0V6AUVkqdDJk6rUd10iWWU9WxndoJQ7hCxkShk84j+p7rc0Ty2BxH57
-         qvRnOxtNdxWMa7lZ28MDlj3I0MPclEhJ67xgJ0IzZGXGs+B9cvfQ/06fnZtbFlUiQTBp
-         vJCw==
-X-Forwarded-Encrypted: i=1; AJvYcCUaYpuz9+n3NgsBfZRmo7RUpT0O2z8T2BABOFhnY9Uq+K7mrOI81tOS64KvPu81WGYwGu8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxaoPdaLft0yjy70Wz5ToBqg5hrtRku/p9SVjgDn1xkVP8G1+t3
-	ylLXeTGIRhAb1UR3jzv1kGZriamRlg0hIsi0Zqg5lSNY46I9nNGoAdwk
-X-Gm-Gg: AZuq6aKW4kYnF2gmQnwj6bCmj2TI2MxnBxz2M4uyrrLQ4B6iNTnJCMtEee6/UFT4GZz
-	nxRT4sBSEEYywjxBFZMz/KXLrUioXq14ybTzPnSjpIcQ0cjRG+Z1xZdanxWAOWWxeK/HcOn0V51
-	KA/0QNjAsM9nU1R1VDWTcZTnurjWdO4x6FXu9eSxYKGicVOHI2DvN/UvqhD9sZLoYvNfe5uetmK
-	bjhBkh53Qr5q7DmXE4c1ZHKd4e0YbHuAKTElIAHApu3kh9lpxNs+YIepTZTXk/5A/ObybKcSnA2
-	x9DUsPJiFnHJqWPxkTV+AKVtM42C2WYMPtJx+I4rn+1ErzaEN59sND+/aYoVeJpw8jeUnnj94hK
-	GX+wNskWd7xNBqwsKqiBnDkbRIP07ypmZBQZycSMCfayjh38NucESDmDRw9QnKJvrE0n/Ak7Are
-	RQ2aicjV8h3hcR4L0rMHLZkJSwJ505HDAJW/ShdqFhZmET9XO6nqjK9je7W/gtwaTOWw==
-X-Received: by 2002:a05:600c:8b0f:b0:477:a54a:acba with SMTP id 5b1f17b1804b1-4830e97938fmr105694135e9.17.1770307128777;
-        Thu, 05 Feb 2026 07:58:48 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48317d2c88dsm92272315e9.5.2026.02.05.07.58.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Feb 2026 07:58:48 -0800 (PST)
-Message-ID: <f432e771-8247-4305-afef-94333729033d@gmail.com>
-Date: Thu, 5 Feb 2026 15:58:47 +0000
+        bh=VsWH5VhVrzQGmzhAClDRazQJEf90LQoLuslRYSy2eH4=;
+        b=PGeSjEKoSuUVU8jAbU2NRWytgSi8iVSC7awP34BYOoZgsrmOcZno03ew143q+BTg5Z
+         BXeRN1y38RFJwi6PKgrW+ff3WeNC+iTXzkvT55kZySELidl3rTCaXcBn1/YYATjpLUj+
+         FSUBrO/1RHXzJNWd8G1jL6tizt7IPTy0AUf0dTWDz8ftW8JytEOTLTENpWBk3Jtupx0q
+         SHMpGP5k71jIBUkhw/0wBtrKOzhANduD//+VRBTbwBUpmR29lEYpSc6CaoSc3mclzJI/
+         LcIJtNl/cQZVnXXyaL+bvo2mV191D4X0ECC7rGD3q4zswbHNz2bO8tvrIXJcuqWzIAQV
+         2pAA==
+X-Gm-Message-State: AOJu0YzsqosSh7+8BeXZybSFeLtl9WIqNM6lm207b6nwK8qtFo9GEI2V
+	zA0DKwN+F2xLwWONfBbNqHmEJKSp9jMknfKsq/ThHiML6Mu7tUSFZwwT8le1tw==
+X-Gm-Gg: AZuq6aJgMBO+KmLFSR6NZYdrlloHkP6cqBTqNr1LlWTDxx4bXQwsrJMJAFjnQd6NiID
+	MKBLcRDbDhKQMsM0zMbWAlVHhP+eRZk/9o/nAulZwiS49ndS4DJy87mqS/bCkLeqKZq6/qJePD2
+	4ji03swPwPW+0Z/Jh+gl56ZtVgk7kuop7Lb50FJ9u8RkORoF86EsIQk6butC3byf2t9wOgLMJ5I
+	ZfOd7w7BAkxHu9DiOJRWsNNZg0MiyXf8RZal+SeStojrw0/tOKpJiiaG/5gsl9Lhm6+9RYyd172
+	4ktWzGZUUeXJ7MBcDO1pQlGInTvvjU5zYG9csGTn0yakz2KKYgBzXaGidi3ckXMzCCuhUabRotk
+	bwpGeQvRL1766ZRI3/LlkrBEpkwzbhURgY8n+yZsE4rWB1yDDakCYCQEYID+TZQLoU7OBMFhy3l
+	oKhHwg7fPD2UEd9Q8=
+X-Received: by 2002:a05:7022:504:b0:123:35cb:96d2 with SMTP id a92af1059eb24-126fc30a808mr1339115c88.21.1770307512313;
+        Thu, 05 Feb 2026 08:05:12 -0800 (PST)
+Received: from [127.0.0.1] ([172.182.194.212])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b832e1298esm3601652eec.3.2026.02.05.08.05.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Feb 2026 08:05:11 -0800 (PST)
+Message-Id: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
+From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 05 Feb 2026 16:05:06 +0000
+Subject: [PATCH 0/4] trace2: add macOS and Windows process ancestry tracing
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH V2 2/3] wt-status: pass struct repository and wt_status
- through function parameters
-To: Karthik Nayak <karthik.188@gmail.com>,
- Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com
-References: <20260131190106.389289-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260205101524.125452-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260205101524.125452-3-shreyanshpaliwalcmsmn@gmail.com>
- <CAOLa=ZSkTH8KC04KubktP1EkU4EHYs0CtmUPkPVe74zi0wcTBA@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAOLa=ZSkTH8KC04KubktP1EkU4EHYs0CtmUPkPVe74zi0wcTBA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    stolee@gmail.com,
+    johannes.schindelin@gmx.de,
+    Matthew John Cheetham <mjcheetham@outlook.com>
 
-On 05/02/2026 11:09, Karthik Nayak wrote:
-> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
-> 
->> Some functions in wt-status.c relied on the_repository because no
->> repository instance was available in their local scope.
->> There is also a specific case in wt_status_check_rebase() where the
->> worktree can be NULL, so accessing wt->repo may lead to a segfault.
->>
->> Update these functions to accept a struct repository or struct
->> wt_status parameter, and adjust callers accordingly.
+In 353d3d77 (trace2: collect Windows-specific process information)
+Windows-specific process ancestry information was added as a data_json event
+to TRACE2. Furthermore in 2f732bf1 (tr2: log parent process name) similar
+functionality was added for Linux-based systems, using procfs.
 
-These callers pass wt->repo so it's important to explain that the 
-callers all have a non-NULL worktree instance so passing wt->repo to 
-wt_status_check_rebase() is safe.
+Let's teach Git on macOS to also gather process ancestry information, and
+emit it as a cmd_ancestry TRACE2 event.
 
->> Replace the
->> remaining uses of the_repository in these functions with the
->> passed-in repository instance.
->>
->> This removes the use of the_repository global variable from
->> wt-status.c completely.
->>
-> 
-> Okay, but this doesn't fix the issue I stated in the previous commit. I
-> do wonder if we can re-order the commits and pass the repo struct to
-> functions like 'get_branch()'.
+Furthermore, let's refactor the Windows implementation to align with the
+Linux and macOS versions - by emitting the ancestry information as a
+cmd_ancestry event. We keep the older, custom data_json event type on
+Windows for compatibility for consumers of the TRACE2 data that use the
+older event.
 
-That sounds like a good suggestion
+Thanks, Matthew
 
-Thanks
+Matthew John Cheetham (4):
+  trace2: add macOS process ancestry tracing
+  build: include procinfo.c impl for macOS
+  trace2: refactor Windows process ancestry trace2 event
+  trace2: emit cmd_ancestry data for Windows
 
-Phillip
+ compat/darwin/procinfo.c                 | 99 ++++++++++++++++++++++++
+ compat/win32/trace2_win32_process_info.c | 58 ++++++++------
+ config.mak.uname                         |  2 +
+ contrib/buildsystems/CMakeLists.txt      |  2 +
+ meson.build                              |  2 +
+ 5 files changed, 138 insertions(+), 25 deletions(-)
+ create mode 100644 compat/darwin/procinfo.c
 
+
+base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2040%2Fmjcheetham%2Ftrace2-macos-ancestry-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2040/mjcheetham/trace2-macos-ancestry-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2040
+-- 
+gitgitgadget
