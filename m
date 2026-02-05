@@ -1,227 +1,128 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCC632ED2A
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 20:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B616432ABCD
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 20:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770324757; cv=none; b=Ly5eEW9MMZ1/v3LwEgVTCuh82Hri94I8ubjeGMK9XgVGksPWxioWQqbkmk/EOMyWynj7tMV+ugAJDuzvQ/vUnuJRx8L8q1wk2PvC5rjL6We3+/d0J3Nn3QjAl1x7mk/qCQjet1230KvIqdK2aYHgc4ibVmy4uFPcehwJrWE3AiM=
+	t=1770324862; cv=none; b=hqeG8eIbSQRzEf7oTDbgcxHx1W+xyrMSWnOe8B1dY7fI6lgY13Yg0b60zFlOiMsO7oVrSn6HAHopElsVdOY5NUPT00SpC46v/D49FW5s08otRS9NK2S3F1dlpomuQT1FKCeKOOFB4Ebygl6kSZKnZOJPwFnlZEcBfLPqQXHJw68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770324757; c=relaxed/simple;
-	bh=HyjEwgfnTnrLmGkolMj3gTU1TtKJqvo7OUz8/Rd4gYM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=KaWimxVoqBy9+tn/lzXjSFnTRL0RAf//J0zC4Tgp+TVAeDas12YROi0SreF27s4kwvdjeh6sz/oFzA0+0U7QDnwiQZVSdDcQbY53P5MgJwtArKHEj2TBM6e70SzH6j+OhAGIkoE+Ds/Lsz9bKrnDI/YNKoyuxYY7vRqsPzJQCA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=f4tN0bKI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gkbh8dym; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770324862; c=relaxed/simple;
+	bh=z7DVlee3pl2y6HGsckoeb6FeXZxMj2jV0U0ZYO5P85k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QILQ8JZFbzAPQ234aUu7zGHkxYrGr7s5nGi8oKb8acbCE7UmC1KWpNu4srW17U26mv33UjsRZd4YUDp50NErqXYLPRO3j29jAx/nGEvdqrmX67MbHMN1/33M2Wmi1CmyPJbWCgvQjlkSAUwxyxYW1S60pe5FQZAqEFxSj6tgCFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zR3zHdjg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TH3uKj3I; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="f4tN0bKI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gkbh8dym"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 327FE140012D;
-	Thu,  5 Feb 2026 15:52:36 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 05 Feb 2026 15:52:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770324756;
-	 x=1770411156; bh=Qdr2dmk7STK7K+8ONTxhm0Iaub0xXGiB3RvGnDL1cqE=; b=
-	f4tN0bKI+Ul21SFeiNPxAkWOmP+5hlNgCppQqNDmVwPQmoXfhxEijbgNShKee75R
-	nVQvLN01gO4jgjb444XXWZ9aflIBb4URo1YeHlLLbBMEGl1S21O4Zt9iLFYhiatT
-	m4g+qJl2ujBS/n4SZQ1TKTVWAR9PV99NQKNgJfVGtUJZIcWdrZpa0ZU4lXyGyGFD
-	WBzwg5+vouER2GrkM5eo48C9a2s8tV6dzZqpCJNZ54eyQcwaJJ+rUFkAUROxU8HM
-	Vbw6psMXr3wUSAlsCe3venttBT2y3c82yIV7xw1HBryK0T4LH19PYX+Bm/os++zi
-	2QauN7kugiePRUA8GsMJyg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zR3zHdjg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TH3uKj3I"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E5B83140000F;
+	Thu,  5 Feb 2026 15:54:20 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 05 Feb 2026 15:54:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770324860; x=1770411260; bh=nyN3gOWBzP
+	xuUy8dkU51KwHAuOcEldCUCN3Y6cypUJ4=; b=zR3zHdjgkdnvuNHdNZPw1co5JU
+	YTVm59LNq5rVhTPwbGbVhtHFybsTwup/JBNhAIXPqeP6YXYlrH2SmjT6hrRqxtII
+	1pAnrv68Qr2Z38hMTA9md5CjmEKlcLrcvR+gf32/bAjd4/LJwIAoPL0Ta4jq8Jv8
+	DEivRgE+wXYGdN8rveu82Dy74xS2Etm6lqOGF45Rb64wTAoKJGZa3Im1HeLHR4xc
+	JCh9ppribAM0KO0zOWcLP6kOcsejyVqv73BTQwWqSDb13ueB1bcKLI1ytwgbnxdH
+	YLjilTQjklZkBgV/fvOSUkK+FrQNuHOkGinJeV7KxhHxO/JBzCBHmOtVrmzA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770324756; x=
-	1770411156; bh=Qdr2dmk7STK7K+8ONTxhm0Iaub0xXGiB3RvGnDL1cqE=; b=G
-	kbh8dymQCOlAqvv+CztwXPjHeDpdLKviu1hOamnq8QanTfRTZkyz3BEuVFZWNUIi
-	6OyTVswBm5H/3ZVqWZmi37Xdk16J4EQku/S4qBe6CxTrZRbExjZ/MsBPcnbleLxY
-	VPsaWB42EseGnvRPyDmUxZs6/3IlFcc5pc/nVZphup6ZcYLxB5LxUwpiEEJUwk4h
-	4FvO6PR7UzlNiooYspsC2DSF8EwRDda7hzmeGcMvYuR+k5efdYb5COOOaK2I4uSv
-	Fyl17R+wraoaJRy5J3S9jHzWg0dmDvoArpwEZ1/YZYwKgVtaLUCR20OF1YNK8Nsc
-	JbiulGS26FAqrCJMuZ/+g==
-X-ME-Sender: <xms:FAOFaRfZzEFTa2sp62IB3Xp2iamkI8nvnFCKqU_JVY-OMmmqB0mautU>
-    <xme:FAOFaaDsBf4_BRkzgw2VRjnGWf2E67_c3Kag2C4KG7WhJxYwmIwAPLrnHCT5JexJT
-    4C5Wyv2nbOh_k_chY_pEZRt_yDX6UYydYAlophB2-ozxkeZ0a91LQ>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770324860; x=1770411260; bh=nyN3gOWBzPxuUy8dkU51KwHAuOcEldCUCN3
+	Y6cypUJ4=; b=TH3uKj3ICYMAqsam/dWrk+ER3aQhQpQll0mkVPH/EueUQOgEdXr
+	b2KnicN6a+8o+RYadtnyRXbXckiF3JwI0ZELLrUAY20RaFqOx6JdXK1mQXEBke2+
+	cnV37jG2o3baZsIToQHimnuKK/BggpTeFf/5bdWnBDKAbAwgfJ2SsTJ+TEI32YqT
+	RgKzuPcSRB501ZuhUwxidbCUw1YFpwFJrUadaRS6xdeCalRpvNwr6WpJFRMuW87U
+	XVvlHsDpI9RSY2ijmhqMeyhkecoq6WnMiPFzlQkX51ll67ryIQqQ2ruUC6gGZs/9
+	mg+ubL35vn7XaqkUfRMigHbo5zclnv9WT8Q==
+X-ME-Sender: <xms:fAOFaatAzGogL3hVurrGL6hK4cZv4ZT7zbl7q5i-Jri84C4BBD5sPw>
+    <xme:fAOFaTJsJtqNw1vRdBcCz37BNqaQiDmt0ZWa9uXdsRlxK6KzPYdaHG0U_rDKv1_DC
+    eX1n1QD7runV1OmIz2Xq326BrIyUNnG7Pavwc-bgIZLgjZtREtOUQ>
+X-ME-Received: <xmr:fAOFaflXbMqbsYM9PU1KE28eI5coCKShVtSyeFcCoSmHJyQmQA5DqkwVz-dWndAjS8M33wGia_6TeCbtOdiBN29DxG7HzuOF0A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeeifeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepmhgrnhhuvghlrdhlvghrtghhnhgvrhesqhhurghnthgtohdrtghomh
-    dprhgtphhtthhopeihrghnnhhikhdrthgruhhstghhsehquhgrnhhttghordgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeguvg
-    hvseihthgruhhstghhrdguvg
-X-ME-Proxy: <xmx:FAOFaUBQBPzIP-mpUP90KQNx6lzqGrWv2bK072vTCMeTYidbFIJQfw>
-    <xmx:FAOFaYDVkC4ip3Z0brsqtkDc4ug4FI8beGrGAuygd4rul9DzkMAcNg>
-    <xmx:FAOFaXqkkfq3eaxELXu0Rpx4iUJKU-ZNwSU4O0BR7C02Vu8qxXxfJw>
-    <xmx:FAOFaan9PPro-IQSodwGW1YGr8-7BAky8ggyKoC1e4v5Wt1nHvTihQ>
-    <xmx:FAOFaSfvPPP2ecgHaNiKwW6rnW1fRZKUDHpZjj3L-f_Mn4ehYOE6stqc>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id F08BF1EA006B; Thu,  5 Feb 2026 15:52:35 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrsh
+    hkodhgihhtsehhohifughoihdrlhgrnhgupdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepph
+    grthhrihhksehpshhpughfkhhithdrtghomhdprhgtphhtthhopegruggrmhesughinhif
+    ohhoughivgdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:fAOFacKapHJVFdD1Ah6a7Sz0mqfR6yhDsG7LRX5RObkeJX3Y1JDQeA>
+    <xmx:fAOFac7_bQDuPc0O_j5bEIxFoY0zfcK4tIzKCL1pPO5pfTZS4qCa6Q>
+    <xmx:fAOFaY0dwQf_Ve4IQjtW4SBcMKcuuyZ8bOe7KfQTWj6X1PwuN3h-0Q>
+    <xmx:fAOFaae5yl_oGVSUJOrgEQM6WKt45JcGyhDVnXmY2I5K_c8JPaCIVw>
+    <xmx:fAOFaZp7kjZU5uOe0PTq8gYEdB1OnqgRlQmAZJQgtzpuxrT00oD2JS5r>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Feb 2026 15:54:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Colin Stagner <ask+git@howdoi.land>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Patrik
+ Weiskircher <patrik@pspdfkit.com>,  Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: Re* [RFH] adding test coverage for contrib/ in CI jobs
+In-Reply-To: <xmqqikcbm9ew.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	05 Feb 2026 08:39:51 -0800")
+References: <xmqqh5smdejc.fsf@gitster.g>
+	<20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+	<7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
+	<xmqqjywuyhu9.fsf@gitster.g> <xmqqsebhu9nn.fsf_-_@gitster.g>
+	<xmqqjywtu58j.fsf_-_@gitster.g>
+	<ef128e1d-dd3e-4573-bfcd-6a98a0a1f394@howdoi.land>
+	<xmqqikcbm9ew.fsf@gitster.g>
+Date: Thu, 05 Feb 2026 12:54:19 -0800
+Message-ID: <xmqq4inulxms.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ArEMSgAokomg
-Date: Thu, 05 Feb 2026 21:51:51 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Yannik Tausch" <dev@ytausch.de>, "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Manuel Lerchner" <manuel.lerchner@quantco.com>,
- "Yannik Tausch" <yannik.tausch@quantco.com>
-Message-Id: <fa7fc215-03eb-492d-9af4-457482c56a48@app.fastmail.com>
-In-Reply-To: <3724733C-FECB-47F5-841C-84DE9792332D@ytausch.de>
-References: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de>
- <xmqq4invm2dk.fsf@gitster.g>
- <3724733C-FECB-47F5-841C-84DE9792332D@ytausch.de>
-Subject: Re: [PATCH] merge-file: honor merge.conflictStyle outside of a repository
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Feb 5, 2026, at 21:27, Yannik Tausch wrote:
->[snip]
-> From bed0035d38072c67e0be8eedb0cf98da936cbac6 Mon Sep 17 00:00:00 2001
-> From: Yannik Tausch <dev@ytausch.de>
-> Date: Thu, 5 Feb 2026 21:09:52 +0100
-> Subject: [PATCH] merge-file: honor merge.conflictStyle outside of a re=
-pository
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Colin Stagner <ask+git@howdoi.land> writes:
+> ...
+>> At least some of the subtree failures on linux-reftable, such as
+>>
+>> <https://github.com/git/git/actions/runs/21617099884/job/62298228602#step:10:421>
+>>
+>> are actually due to a bug in ubuntu:rolling's "dirname" implementation. 
 >
-> When running outside a repository, git merge-file previously ignored
-> the merge.conflictStyle configuration variable entirely. Teach it to
-
-Preferably the message should discuss the code as it exists without the
-patch applied in the present tense. (SubmittingPatches present-tense)
-
-> read from system and user configuration files using
-> read_very_early_config(), so that users can set their preferred
-> conflict style globally and have it honored even outside a repository.
-
-The update to the documentation might merit an =E2=80=9Calso=E2=80=9D? I=
- dunno.
-
+> Ahh, rust bites again?
 >
-> Signed-off-by: Yannik Tausch <dev@ytausch.de>
-> ---
->  Documentation/git-merge-file.adoc |  3 +++
->  builtin/merge-file.c              | 11 +++++-----
->  t/t6403-merge-file.sh             | 34 +++++++++++++++++++++++++++++++
->  3 files changed, 43 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/git-merge-file.adoc
-> b/Documentation/git-merge-file.adoc
-> index 71915a00fa..773037aa14 100644
-> --- a/Documentation/git-merge-file.adoc
-> +++ b/Documentation/git-merge-file.adoc
-> @@ -86,6 +86,9 @@ object store and the object ID of its blob is written
-> to standard output.
->  --zdiff3::
->  	Show conflicts in "zdiff3" style.
->
+> Is there /etc/alternatives/dirname like /etc/alternatives/sudo that
+> we used in fddb4842 (ci: fix broken jobs on Ubuntu 25.10 caused by
+> switch to sudo-rs(1), 2025-10-10) to work a breakage around, I have
+> to wonder...
 
-You need to replace this blank line with a `+` if you want this to be
-the second paragraph on this option.
+So I tried a custom CI run that has
 
-> +The `--diff3` and `--zdiff3` options default to the value of the
-> +`merge.conflictStyle` configuration variable (see linkgit:git-config[=
-1]).
-> +
->  --ours::
->  --theirs::
->  --union::
-> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-> index 46775d0c79..1b6e16b9cb 100644
-> --- a/builtin/merge-file.c
-> +++ b/builtin/merge-file.c
-> @@ -95,12 +95,13 @@ int cmd_merge_file(int argc,
->  	xmp.style =3D 0;
->  	xmp.favor =3D 0;
->
-> -	if (startup_info->have_repository) {
-> -		/* Read the configuration file */
-> +	if (startup_info->have_repository)
->  		repo_config(the_repository, git_xmerge_config, NULL);
-> -		if (0 <=3D git_xmerge_style)
-> -			xmp.style =3D git_xmerge_style;
-> -	}
-> +	else
-> +		read_very_early_config(git_xmerge_config, NULL);
-> +
-> +	if (0 <=3D git_xmerge_style)
-> +		xmp.style =3D git_xmerge_style;
->
->  	argc =3D parse_options(argc, argv, prefix, options, merge_file_usage=
-, 0);
->  	if (argc !=3D 3)
-> diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
-> index 06ab4d7aed..9df9f878c8 100755
-> --- a/t/t6403-merge-file.sh
-> +++ b/t/t6403-merge-file.sh
-> @@ -428,6 +428,40 @@ test_expect_success '"diff3 -m" style output (2)'=
- '
->  	test_cmp expect actual
->  '
->
-> +test_expect_success 'merge.conflictStyle honored outside repo' '
-> +	test_config_global merge.conflictStyle diff3 &&
-> +	cat >nongit-base <<-\EOF &&
-> +	line1
-> +	original
-> +	line3
-> +	EOF
-> +	cat >nongit-ours <<-\EOF &&
-> +	line1
-> +	ours
-> +	line3
-> +	EOF
-> +	cat >nongit-theirs <<-\EOF &&
-> +	line1
-> +	theirs
-> +	line3
-> +	EOF
-> +	cat >nongit-expect <<-\EOF &&
+ * a temporary patch that demotes ubuntu:rolling to ubuntu:latest in
+   GitHub workflows
 
-Some tests in this file already use the regular expect/actual but there
-are also many one-off names like expect.c/myers_output.c. I don=E2=80=99t
-understand why. But I=E2=80=99m just thinking out loud here.
+ * your subtree test fix to use the hardcoded 'main'
 
-> +	line1
-> +	<<<<<<< ours
-> +	ours
-> +	||||||| base
-> +	original
-> +	=3D=3D=3D=3D=3D=3D=3D
-> +	theirs
-> +	>>>>>>> theirs
-> +	line3
-> +	EOF
-> +	test_must_fail nongit git merge-file -p \
-> +		-L ours -L base -L theirs \
-> +		"$PWD/nongit-ours" "$PWD/nongit-base" "$PWD/nongit-theirs" >nongit-=
-actual &&
+ * a similar fix for diff-highlight test <xmqq7bstsemv.fsf@gitster.g>
 
-It seems you might as well break the lines for this command further with
-some `\` to get closer to the soft limit.
+ * a change to run "make test" in contrib/* directories <xmqqjywuyhu9.fsf@gitster.g>
 
-> +	test_cmp nongit-expect nongit-actual
-> +'
-> +
->  test_expect_success 'marker size' '
->  	cat >expect <<-\EOF &&
->  	Dominus regit me,
-> --
-> 2.52.0
+on top of 'master'.  Everything seems to be happy.      
+
+https://github.com/git/git/actions/runs/21726017981
+
