@@ -1,123 +1,110 @@
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE566438FE2
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 16:05:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBC9421F1B
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 16:08:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770307519; cv=none; b=FPjnFOD2RYsYa9n5QltdbCQQyuUQ1uNcNsL2mL/K+VVUDUHHKMq2Co71w5+L1rCE/ugKhW7qJUx3Ut14cT6Gj09VFqtL1sg0L77//xvDw1892yAm++rSENqZ8JfHYrzRC7QhZjcoF0RwyZlkAnZY9B3MGu9hUL9Gjm+A913tCSM=
+	t=1770307708; cv=none; b=GfgsmOruSIOjGJ3sjOLwE4JElJiHmvbekQrMKFouu0x2LSiQ6eCVIUYQIE4IW3LlNMeCtpE/sScxzmkrZEJbyGhOzjOEvf5tlcckaW7HtYCP8i40DlUgbBxJMg2AzY6nogoRrMH99Gq+WJD3hA3H6lhLHZ7zJ9BRshkYjqLpu58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770307519; c=relaxed/simple;
-	bh=4APc/fzTnWF53ABp0SmRgr3dgC0UsIXEWMLom/pSClc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=j0r4JkrW/+IJ8/kSBPezqXhu7HoUhLJj/XAN0CO62v+mzz3/mA288DFdt4cKXdkyM1HMt+wzH3bYZUmitHDgvOY0Ra9JUOfZbogl0ae20o20tCEneC/p2R0UOwULx1QD5jpHyASPo1GbRDoj1cuFbliMZTtrABvvTJtlwKsTraA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XoIFzFtm; arc=none smtp.client-ip=74.125.82.181
+	s=arc-20240116; t=1770307708; c=relaxed/simple;
+	bh=i+wNF1vGeCbZ7/yNG5xnfdZRrIY8S/L0lkPilGlo1s8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lHHcrp3TWqS7N0bnnNoNDSiXLrWtyBGABoXARYl0G3kGFnzYsELb38NrI2fL2Ow7PEib2X1hsYzXRE2U8a5xImr5yfFTKXjjVuDRbOP13wib9VurE9/ddMI17Olom4A7xReM60BXvj3kawD+FEhQysoDbxTJnGKV6VlQ0oO178U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LtaV9Mn9; arc=none smtp.client-ip=209.85.221.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XoIFzFtm"
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2b4520f6b32so1540625eec.0
-        for <git@vger.kernel.org>; Thu, 05 Feb 2026 08:05:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LtaV9Mn9"
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-42fbc305552so1244584f8f.0
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 08:08:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770307518; x=1770912318; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+iEXSLsucYL7gPUKrQcG35rkXe4PkmtieSowxyCVZqo=;
-        b=XoIFzFtmjV3LfweUM6A6cYl+PEJ/dKBblwUsY7IdS3j56Cag5or4AcbzFzoz2TURm8
-         5fkf65KOTCwj+Q6454v30ARIYRRnhKOGb9gc6eejrTSqYVehiB9iHJtyy+28b4hS7m8z
-         eiMPI7Za4INu4epdYq8RT0xMYwlUOALZFfTAonfV4Rhb9Q0EEKYNC2hIeqeEwKp68H5X
-         aCVGhi+Y2VR0v5DfKohKshQ8y7qrkwk4kMKZlUZ1/Inw0pg6ZK70nVg6wzGcboiEQFbf
-         S9BLPNstMfBFqwBlspFTwBCr9huTrw3BxzN3efK6xHs3A6+l1DHyxmBXGN8xedfZezHZ
-         1ifg==
+        d=gmail.com; s=20230601; t=1770307707; x=1770912507; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zRPxu5OgdhOZtP9gq7jRmnKT/O1DVlvAHF0c/6+juEs=;
+        b=LtaV9Mn9Z/YwJqA0fgtp+vTXV6nHDPKVdzVc61McyXCm43xUjyR/n05f9Ap8Jh+u6W
+         RapZm0wmkj1jzYaafeRN8SHKf/3ruUs3fzu/LdiZqdA3DL47Gz490kTYfpWox+h5EeqG
+         aLKQMqJ5zpCLoolM/PRTPsRHIF5DhmsOHIvTaxQxlb9x6IbYtJg0/0Nu+BVBtQtU57eE
+         c2Ynb3Zuo3Xe3XZ2AbWo5XAQL7iar5kXstnBzhbu5WLXWvFaYwIeGVY44kh9EV35IUtd
+         By0pDXKeyhQReG5zjumTjSOLs3fzL6HvTR0VqRN1DajXTqyO0WiFlFGvvNPQDvD6Yn+Y
+         2fLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770307518; x=1770912318;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+iEXSLsucYL7gPUKrQcG35rkXe4PkmtieSowxyCVZqo=;
-        b=F8SPRZ4VSAATdlY0i7pNqaQ5Qy9x7Khe7vNpgR+9TLr4NCNhMVhtCZA9RvRiUHkHP5
-         1p2KM5qKuEbm0pXEcuTof1LV9bhYC5zboOX+hAegyWv6R7zaFgAq3VBzitjkLI4NqpYP
-         LhtfT+6I5DjA8M0gL8YVwJ5GPZmzhaWmjadZmnGyHKHKYyupwNiHsN1rmRzRaadT0E0F
-         ebEJFPZtHFGnX64OYu3rP9e1dlO+IncBBWjmAWyCRnASsQgEr235SoYzsJZmdXEVEAgt
-         7LLIJqTx95qtV8ie+CwDCBbak11DGU5zPf6+NsPtKeC8MvFIq/vIYMjLjazOpJyKBAZs
-         Vdvw==
-X-Gm-Message-State: AOJu0YwYJQQ0HVUADHyiIrPUMDJrA41wlU/7QtoMWGlhnPJHVgQozLb1
-	E/cWXVVDofgAXA+3dJR0R6CdiHO9iehLIaztI7VUO69cD8WX0DBVGt46VUWO4fJu
-X-Gm-Gg: AZuq6aI+JwVrMIwQOhRJzLUisvpisUO2xVpf2rR2+37SpgbPmibTQUL4TNaQ808BqV2
-	dqjfE1fLB2lncg5oM96BFPAZYDKiAEnqwS5TT9X/yHdWADe/gFcfU18c/jTYjhvBqC3gg+Hemgo
-	fKDgh0KSSMn3O8AGmS+GJ0UD/Xm4t/cUkHme1mRkkoYhVnhEExp5blWS9ygMJPuKhg8U201liZT
-	ef3bsLofw1zahBT6yEeb4qL09Uq9JSsXgP4xZiwBaQhtS/pcCnLegtjS+GQYFAhKNXZ8+wuKzNU
-	HMHr4GdnKigafIOxm0Tyzu4qj1g+fAeTHrU+hkyBFs4OpjFVYE+brlU/3Hw5j88Gt8nL9QyTnY8
-	Cs6NhHw06Li+alr4Qf3CnyW6VG/AK19AyUWwJabtt2x+AGV1lKk3l7XdJn4lnOR3YWvXDEADjSZ
-	CdyV/waLvYehZp7QA=
-X-Received: by 2002:a05:7300:f196:b0:2b7:a27f:3a6a with SMTP id 5a478bee46e88-2b8328f9f60mr3350106eec.4.1770307518333;
-        Thu, 05 Feb 2026 08:05:18 -0800 (PST)
-Received: from [127.0.0.1] ([172.182.194.212])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b832fb363esm3608737eec.26.2026.02.05.08.05.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Feb 2026 08:05:17 -0800 (PST)
-Message-Id: <a06344dc753698ece37f8d066b0a51931b7fa16f.1770307510.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
-References: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
-From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 05 Feb 2026 16:05:10 +0000
-Subject: [PATCH 4/4] trace2: emit cmd_ancestry data for Windows
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1770307707; x=1770912507;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zRPxu5OgdhOZtP9gq7jRmnKT/O1DVlvAHF0c/6+juEs=;
+        b=MdWeBnlkGzxvuDKPiy8kpk9KU1kkW1O6UVBfpj/NP60rIixbjAwanw4FBjTKLglfOG
+         iky7uYLBcwgJD01IzIMc/1GEDE+2P6m+JetKZwHm5xvNwG1bvdVMOh3rjo2U9gTGI3at
+         kiv9HpeiH0Z5snTzOPHU0ZoKNEpFiIPFJewCFwRIFHTqaDW8A6tdneS9oaeX29/NH11R
+         RbgL3b9yiM3Bsv3Bf+s0SDyEwDCcDtDPTkRRVQem3NemLpBefZbpTdGbTW/kdg7mdP6z
+         IjLjjFh26Jl1HGFxItXB6LECXle1MwGHU228XsvNX5cFcl0pNZ5aOK61s0TLSi+DTs15
+         +AeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVjnZr/dDof19km8PNiIWlDJrSsd6Wc4F8NAxcaQXrMSV35YAk5ovfm69tMJr38KBwns6M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxjvAe0ysGKoAbQ8rUekJ/anu6U856Te2la31HNCEc2V8+pqfLl
+	poqd4a3RyMcEBafGL/C9iNoMCK50o1L8gmx5iBfuHFHzrme8BF+K+HJd
+X-Gm-Gg: AZuq6aJISmnfDPKEUpxaWIv8qi5aAMFghXkw43X3TvRzb4p8UX0iWLS2eMUylEV8mDg
+	jb13DrBv7JHnb6GZQoUMlb3XWYPYKuucWfMXfK5sofOueqcxv7N37m4Z7QrIxj1ePP1xIco9C3d
+	dSN1LozrjKzX6aXYgm5zgPBIjCS9PmWHEGmh+bp3ikZnI4cS0NrsMXcFF9cV6Dbpy4a/0pw5Mxl
+	FZn9mbeNMAbybPhy7loj111HTrI/ibzxlGmQLXBovMK6tuUyZVR8a5Ec71/j74iikyHTqbmhGNI
+	alK1uULlmSYUo7iGdrtTv1XmUm3loCUcU0VcYPF2VoOoEx0bBNuD4JN/LDkQEfqLzhXQ6b2ANj3
+	ypRTZcqkJPJLxWQ1Yl4FutB1tx/FEUc3OaH9WANUTN3rIvzuzIzomFo2dGbD0B4S3Y93hSWJFA+
+	wMlYvDvg9MSxYz4XcORNv3eMaYPtoIXJbxaAqoX9o+ulTVCAbPcG2m6aUcQSchY60AUAagFVJFb
+	lSo
+X-Received: by 2002:a05:6000:2909:b0:430:ff81:2961 with SMTP id ffacd0b85a97d-4361805d057mr11296375f8f.51.1770307706499;
+        Thu, 05 Feb 2026 08:08:26 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-436180588bfsm15088190f8f.26.2026.02.05.08.08.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Feb 2026 08:08:26 -0800 (PST)
+Message-ID: <c1349ba0-656f-43c0-a451-14a97dd158b8@gmail.com>
+Date: Thu, 5 Feb 2026 16:08:25 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    stolee@gmail.com,
-    johannes.schindelin@gmx.de,
-    Matthew John Cheetham <mjcheetham@outlook.com>,
-    Matthew John Cheetham <mjcheetham@outlook.com>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH V2 1/3] wt-status: replace uses of the_repository with
+ local repository instances
+Reply-To: phillip.wood@dunelm.org.uk
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, karthik.188@gmail.com
+References: <CAOLa=ZTFUZF_8YFk=TkMXVYptP6q9_bJRUoBYYsjCMW02NKc7w@mail.gmail.com>
+ <20260205121839.38752-1-shreyanshpaliwalcmsmn@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260205121839.38752-1-shreyanshpaliwalcmsmn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Matthew John Cheetham <mjcheetham@outlook.com>
+On 05/02/2026 12:18, Shreyansh Paliwal wrote:
+>>
+>> One question, did you run the entire test suite with these changes? I
+>> would hope that we have tests which would fail if my inference is
+>> correct. If not, there's a gap in our tests too.
+> 
+> You’re right, I hadn’t run the tests initially, as I assumed
+> this was a refactor-only change.
 
-Since 2f732bf1 (tr2: log parent process name) it is now possible to emit
-a specific process ancestry event in TRACE2. We should emit the Windows
-process ancestry data with the correct event type.
+The whole point of regression tests is to check that refactors do not 
+change the behavior. If you have an account on github or gitlab there 
+are some instructions for setting the up the CI to run when you push in 
+Documentation/SumbittingPatches.
 
-To not break existing consumers of the data_json "windows/ancestry"
-event, we continue to emit the ancestry data as a JSON event.
+Thanks
 
-Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
----
- compat/win32/trace2_win32_process_info.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Phillip
 
-diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
-index aceea05430..6a6a396078 100644
---- a/compat/win32/trace2_win32_process_info.c
-+++ b/compat/win32/trace2_win32_process_info.c
-@@ -172,6 +172,11 @@ void trace2_collect_process_info(enum trace2_process_info_reason reason)
- 		get_is_being_debugged();
- 		get_ancestry(&names);
- 		if (names.nr) {
-+			/*
-+			  Emit the ancestry data as a data_json event to
-+			  maintain compatibility for consumers of the older
-+			  "windows/ancestry" event.
-+			 */
- 			struct json_writer jw = JSON_WRITER_INIT;
- 			jw_array_begin(&jw, 0);
- 			for (size_t i = 0; i < names.nr; i++)
-@@ -180,6 +185,9 @@ void trace2_collect_process_info(enum trace2_process_info_reason reason)
- 			trace2_data_json("process", the_repository,
- 					 "windows/ancestry", &jw);
- 			jw_release(&jw);
-+
-+			/* Emit the ancestry data with the new event. */
-+			trace2_cmd_ancestry(names.v);
- 		}
- 
- 		strvec_clear(&names);
--- 
-gitgitgadget
+> 
+> After running the tests, I do see failures, which confirms the issue.
+> I’ll make sure to always run the tests before sending a patch going
+> forward.
+> 
+> Thanks for pointing this out :)
+> 
+
