@@ -1,72 +1,117 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125C833EAF8
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 07:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEB935F8B2
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 07:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770277311; cv=none; b=aEez0Q6WxUK+HwBU6SCRNDjQqDFMeg6FsVfVXRT95R2PUeIv7iZoaTwn/++h3IqlfmvIzMie2uSpClOpReuBdiqjWYKRpxZU082bew+KRp9WV8qCaoO/cgc3Rv7Vx8VJFatmzieIRd/LDJHKIxkNQb6p1eQs52YXkKrNsewDico=
+	t=1770277520; cv=none; b=cBKaWdpV164+Esko9x1milw6WZHlFJS10cR3Cbli977CRjs/ssWj3maoXKnBaf+eRiNdePFJYR3WjjirMcVSj2ZTBOpMSbjW1tP8TQlta3NP4kZZf1msMz9Y0tYts79c/IC5U5bU9sb2Xo68J4SNEoDFBXFBE7py+lvB2HHMJ7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770277311; c=relaxed/simple;
-	bh=6njmBYfZIyg4bokTqmBy6HJgyf5ljAF/IgVSHOkR5hQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qylY+FXPI/57PZczgEp2QnRtPqYmkJ/yDuINf7q9u6aijfGbSDz7MmbRzal8tdZ1eS5K8lLsOTEr7jU5B5Juq381tW1YHxKc6j3z8fm2wcxxQJ7VuNaizZk9hHeUqIVU+CmpIywGDrlI1QmV7djpR3C/ESocOyLU6OYHAtJjga0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eP44Zz80; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1770277520; c=relaxed/simple;
+	bh=sIB5ybrGcxI8ugNmKC/tVTUP2+7gz4cpRJ3sSr9VTVA=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=Tdu+2/u3DUiSh4uLFosKchEHQz5lzXf3+nhVy88eC1YZSNppEL7eEqusPU2YpdlXU7xWZpvVann2Nm09edGywypCTivinpz5EQzX7f5D71PDbhbnKyl0855cE7kMEa6wyKvkxoRVdaF5JAoYYkq6IGgXu+H8mjB7YRaeJtMDFgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=dOxjmvEv; arc=none smtp.client-ip=185.70.43.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eP44Zz80"
-Received: (qmail 289881 invoked by uid 109); 5 Feb 2026 07:41:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6njmBYfZIyg4bokTqmBy6HJgyf5ljAF/IgVSHOkR5hQ=; b=eP44Zz80JRCefnarIM3viHBhDJP+m+LysaLVQ/dCkb0At0ZAlEH5FpB99u4LkPidYoN+5jvzds0oXK3dsM4VA31WVOdktb5W4R6UJQC+2uPHQIT/MwT56lOsLcMPMtNooZy5KOlF3Morkg9UGWW8aG6eMclTagKVVXKFYkugD+ETu3g4AcbBdgLwkCprmDUB7YoDEc5BUTOV3XoxGFq3hdDxHPcOD7f3JJlV6T+iSc7zfsXqnvskhFtCnB2ZtyAAEWG6w3xW/vRNA8fqDXpoeD4EhEhNpP4UMQfzoeRlnoXEH/okHltwrdkc4vg7Nd15qdemkcm7mS+nfXaTLjD4/A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Feb 2026 07:41:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 572878 invoked by uid 111); 5 Feb 2026 07:41:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Feb 2026 02:41:44 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 5 Feb 2026 02:41:39 -0500
-From: Jeff King <peff@peff.net>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] global: constify some pointers that are not written to
-Message-ID: <20260205074139.GA1019015@coredump.intra.peff.net>
-References: <342b01acd42f1fcaa3abefa38dc589e12ccb1134.1770261829.git.collin.funk1@gmail.com>
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="dOxjmvEv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1770277517; x=1770536717;
+	bh=+3iFJCNjTwjoAr/B7ehbGMN4ZabzDOuF8p8C4p1N7Ck=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=dOxjmvEvMUneB+YBM/TZSm4/zqbeKvJeOiJr38Ay0JzL3MNTeQOu9Mtq6VQy2k41a
+	 5f1vM5XtsUpwICHbWO07w9MBk508yTdZAnO+Oy4sf6VnFblwwsz8rSPUQTDgbMJMhr
+	 rOQQa/MXPZ8wwW54pz4LaYTczLq+ABEbH396R+CoJ4+yCzjkI9wu4yvPow9MmLFyJp
+	 Bigy/ME5g/GExlRhStm9on38uvwAPmMd13aks6s4QC/wMBD42L2Pj3gGq7dUVm5W1H
+	 97GUAIOlJwWhrXEBPioeAQPoGWVGeoZyjdD2omjpsGaaK3mGlEc4pSK557O851xFJe
+	 6dhIo1kzlxmpA==
+Date: Thu, 05 Feb 2026 07:45:14 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Seth McDonald <sethmcmail@pm.me>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Document that perf tests require GNU time
+Message-ID: <WXxKFs_utzKHnZYkPTmI_Ewz1HmpkwsthhFwToulAYj6ZHlHizXkGELxquKLhQsJUx9aMxvIUhZEjknWNNGEH0zfDlRbD2FOy9Jz4JZNb8I=@pm.me>
+Feedback-ID: 171233811:user:proton
+X-Pm-Message-ID: 35f914d0c133bc242efb1da7737326c5fa689611
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <342b01acd42f1fcaa3abefa38dc589e12ccb1134.1770261829.git.collin.funk1@gmail.com>
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------e3cdfe7e16a29a14c511e0c2697c4d7a3bddc446d538fc674620f47ef7df1a5f"; charset=utf-8
 
-On Wed, Feb 04, 2026 at 07:24:19PM -0800, Collin Funk wrote:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------e3cdfe7e16a29a14c511e0c2697c4d7a3bddc446d538fc674620f47ef7df1a5f
+Content-Type: multipart/mixed;boundary=---------------------6f3361e356b2fdf9d92dae24da066b24
 
-> This patch fixes the more obvious ones by making them const when we do
-> not write to the returned pointer.
+-----------------------6f3361e356b2fdf9d92dae24da066b24
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-Thanks, this looks like a good start. All of the changes look correct to
-me (and can be confirmed with the compiler). I also cross-checked them
-against my own earlier hacky pass. The only difference was in this hunk:
+Hi all,
 
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 47222bf31b..87fb6605fb 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -398,7 +398,7 @@ static void parse_ssh_output(struct signature_check *sigc)
->  {
->  	const char *line, *principal, *search;
->  	char *to_free;
-> -	char *key = NULL;
-> +	const char *key;
+For context, this occurred on my Debian GNU/Linux 13 environment with
+GNU bash 5.2.37.
 
-You've dropped the NULL initialization here. That's OK to do, as the
-NULL is never used (we assign "key" immediately before the first time we
-look at it). But it probably makes sense for this patch to change only
-one thing. So either leave the dead initialization, or remove it as a
-separate patch.
+I recently cloned the Git repo and began exploring it by first
+attempting to compile and run Git and its tests.  Following the INSTALL
+file, I ran `make profile` which showed all normal tests passing (sans
+the expected failures), but *every* perf test failing.
 
--Peff
+I read any in-repo documentation I could find about the perf tests that
+seemed relevant, but couldn't find any possible causes for the failures.
+It was only after reading and following the perf tests' shell code that
+I came across this in t/perf/perf-lib.sh (lines 206-208, master branch):
+
+	$ sed -n '206,208p' t/perf/perf-lib.sh
+	# Perf tests require GNU time
+	case "$(uname -s)" in Darwin) GTIME=3D"${GTIME:-gtime}";; esac
+	GTIME=3D"${GTIME:-/usr/bin/time}"
+
+While I did have time(1), I didn't have the GNU implementation.  I
+confirmed this was the issue by installing GNU time and again running
+`make profile-fast`, which now showed all perf tests running
+successfully.
+
+So to prevent anyone from having the same experience, I would recommend
+that either
+- the perf tests' dependency on GNU time be more clearly documented.
+  Places that seem reasonable for this include INSTALL, t/README, and
+  t/perf/README (this file seems most apt IMO).  Or
+- in the case that GNU time isn't found, the perf tests output an error
+  message explicitly documenting this dependency.
+
+(I would include a patch with this, but I'm certainly not yet familiar
+enough with the Git repo to confidently do so.)
+
+Take care,
+	Seth McDonald.
+
+-- =
+
+
+On-list:  2336 E8D2 FEB1 5300 692C =C2=A062A9 5839 6AD8 9243 D369
+Off-list: 82B9 620E 53D0 A1AE 2D69 =C2=A06111 C267 B002 0A90 0289
+-----------------------6f3361e356b2fdf9d92dae24da066b24--
+
+--------e3cdfe7e16a29a14c511e0c2697c4d7a3bddc446d538fc674620f47ef7df1a5f
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wrsEARYKAG0FgmmESogJEFg5atiSQ9NpRRQAAAAAABwAIHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmcXDh+gcM+as6Gb5NNC5CQd4nLOciSGHX+Gcoir
+ClRKDBYhBCM26NL+sVMAaSxiqVg5atiSQ9NpAABFaQD/UYSfNtd2f/xaVUR/
+4f1FhtE9d7VHDEpni4Iw5/DYXdEBAOQctHWjvdZWQykTbQgbhb5blZfF1ONI
+B43UD26vpi0K
+=rfpG
+-----END PGP SIGNATURE-----
+
+
+--------e3cdfe7e16a29a14c511e0c2697c4d7a3bddc446d538fc674620f47ef7df1a5f--
+
