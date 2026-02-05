@@ -1,144 +1,112 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5CA8632A
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 19:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99673279DB3
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 19:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770318088; cv=none; b=VjVSxQiSrHIKY2jtsOvtEQ47rZnOolYUb9WnZBMwDN0QODg7gofBnwtjMryqHqFa2ktQtvguB2ULkdkPLsphU5iqNbDGmhgtgcLxD/3MkYfA+a9wr8yP7jxFzReoj2Y1d5pAb2BUESgrdOoJBcer4AjpW6LA2IcPcA3PczwYe38=
+	t=1770318714; cv=none; b=illsKUKQLkfr4LIxaAXNRWvVJnHiZVHdlI4VNpvsz2EHhH5w9PeNXRn+FLCjWrz+cumxtyGcvfkBv3UdciUWJ/WtYND1cDxQ/9RoBRjQNYu8Bhy5UHb9hN+gdzQ50hWng1w9rEb+f/+BBhQMnB/tXd6N9RmcpyuIxcYAxx66SuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770318088; c=relaxed/simple;
-	bh=LTucDu1dYxel4kNqvKAYyYwfjYJhL+IHFZWYIAZuqvU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=RxkfsAESVbV+mzOUvg7ogEAvN/sgVvbH4i7Ox102NgM0+afSpMY4bjSQZe/hS2e1x4C3EH7SfKz+cltKNpUGL1IcqNseg9kWGIAiWNgozSpIMPyKFDsUnL54/xBtqQviDlIVkVhfFzM/HVO6z4kql6D17TBxFTbgt2Lmb/8hOZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HUrIdm3e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZNmFvER9; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770318714; c=relaxed/simple;
+	bh=O/9+qh5JT3l/ZmgDgfuwTni7x6tu6EVQnt0TlvXpMJ8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=osZ74c9lHBDpHubtL1tCDLtvgek7JfwNbzczkRXxKbk/4oEnLynr8Rfzon9UpLxxub/0wyg2b1nbPhSc8CqTg1Qk9lIRNtn44WpbOOKJTllVssebaVWWWT7d7Owo9kFEXG5JluoVh9spM7lYv8kW7aOtEZJdP0EOLYDGuRAFhVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iqqR601Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PjrqcP41; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HUrIdm3e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZNmFvER9"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5189B14000AE;
-	Thu,  5 Feb 2026 14:01:27 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 05 Feb 2026 14:01:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770318087;
-	 x=1770404487; bh=uqXw5tM/9Yq3oigJpUb5xg+bYLRmhxD+xWDTO79awno=; b=
-	HUrIdm3evnoARbG+KarL3SXdi/YTYx4Pw0Psji6s6skHM0itfB7wTVjOhXvOJPae
-	XxrXiOBRL9OqWz8o0SCs7aCZI54I94ho0914BSU9S2+wEkLwi0nUqiXsXnMfvMju
-	ieFBNCofmIHMVQjaL12/ra2lXOEOCQxKUzKnOmAaJ/77GsZERPjt5Lbj/rBTT7RS
-	qzrRIKYIb7bNPPgLHl42MMXk+n4zfq/WE2zFD5mg7nxc2FVnU+DqVXkZGrihDByM
-	ulUlox42gd6xkTJ4lbD+JjwtrHv9BWrYRC1qjaeGb++f/mPUejwhI+yzI38kN86y
-	ao5Qz1+c++zqVljMFEvBmg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iqqR601Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PjrqcP41"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id C6298EC00DE;
+	Thu,  5 Feb 2026 14:11:53 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 05 Feb 2026 14:11:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770318713; x=1770405113; bh=115j4pUhiP
+	Q8cS2sUKPk/ZC+L44A0ZMy65CAIJk3L/A=; b=iqqR601Z3anFbMzgLSmEIslgwq
+	Z6WVKQHt28Y2NfSR5APOj+W10bL3dY9xEV3DzY1WbttbAnju+6isovdxfKOX1SPx
+	rEL6Y3npi8LstACtdAY0ctiZAD+vpbecj4JxeK3QJf3J205q2I1JEBN9GZQWWUe4
+	WYhHLclIFIyYQXeZU4EL2yQZh5k7S1JbfAXAIGxx9/QAuNRSVTLNbJineAcIGc2C
+	eRiAtB1As75PkNL0PEiyCwsVn8unXFYhC32vpvAwybSTZ4DdZlWjhcLu6rdZy4T9
+	H6F+HAxiZ/dzxNm9QhMxs0aF/BxRvRp9/iccD2iyN8rVghNBb6Rl0IwNsRcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770318087; x=
-	1770404487; bh=uqXw5tM/9Yq3oigJpUb5xg+bYLRmhxD+xWDTO79awno=; b=Z
-	NmFvER9QQhqZJ3fjciHSN20DzwI/rFfgIRMqe+pSlJRSPLN4Ff0MOJuZ6nbCmYiE
-	fG4ubt0erCRW/pNyp3lF1SpOKoEH+zrHu6EAgLxy0qGQA2A7ZbeRPZ9/0YspjCXO
-	1RRFGchkGlsUQSij+p75MOM7/0hX1vbVz2V+g1rMxIy2t7+gJS3UBvZnMdhRNQZ6
-	E9nMrNqlpcVGXi0xfWEchYYOkrjPmEI04IvVo5aEHFUm8JJrV5dPild4cjf4KC1/
-	PpSvDHqaYtm40Z+tVmF+TqzXrvo5Rne+iO3ERZ3fZg6Tm2THC0WWULwlJSAzR/Ne
-	3TTM1UKa5ESEf9TsCHzKg==
-X-ME-Sender: <xms:B-mEaazmtDC5EhwHoetDyNW7BSzfDByBcjepyHwO8AKit9_vUZnCm5E>
-    <xme:B-mEaRGTY-4vMtLn1mPzbEvDZ5mq9M0hKJZ5WPmwPKP6M33vOuTuScSSIYBThoZ6Z
-    yEMGDtvM1z1iY1T22BgBt2qunKPal7MXqPGfwDtr6DXZpGbeZrI830>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeeitdekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770318713; x=1770405113; bh=115j4pUhiPQ8cS2sUKPk/ZC+L44A0ZMy65C
+	AIJk3L/A=; b=PjrqcP41H0DSI8nxeC1xVvv9AFoGBbnXhBtvZX/XTAxZX0w6n00
+	SplbOl5lf4UnuZXozpYQefDjp/X2THW2ENpgKS2b9DKUhBMEMkBXdd3fuedY+1vb
+	l4i8qtYCIS4iyrd77cgjyUeUDXv/Ponjw9zHO7LXbKIvVifxVqsanjyR2UqCE3gG
+	h0KlK1BdkuNTzjo+3OHCQrt7AFR80EuMU3fcgtT8BmA4VwszCC+Wp51a+rS+6QLC
+	T5A742L+B21CeuhZOsSNzVaGGMARR+k/gqFmHHpqI1YnFzg1Z7PkIafLsXdUIoWS
+	GCkbck2wwL3ecJrCzB0dfYwEJHXDHV91YPw==
+X-ME-Sender: <xms:eeuEaQbOu9QZ-XAcd6rSK-w57y5At4qnvv-SLNZ3FxCl1rayIhmzzA>
+    <xme:eeuEaSQDxYt3NYVrgN9RBKXFgleLOAIv6041nfNHFN8qqa9rcJq3YEbgNIPUcWzHJ
+    KEzDNZdI00vK85n94xYJOGxtclzcNIJaJx385a9XPLegCvC0Bv4Cw>
+X-ME-Received: <xmr:eeuEaTRB90PuBRyfimoWL9h60lBQE-NmeNKLajSYDVMzH1YzYKU3ryTSayF3Fm9Pxyfk-s3exdEXfzhi0hCXNeFd7g54F3o-IQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeeiudduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:B-mEaZZPZ75_nZXjDczUzGWl4GCGe6UGhO1_3P2CeOoYiUUbhKCiFg>
-    <xmx:B-mEaeO05S5_pvC9Bw75DdI_saHU2rHYcxZzwW2OtbZzJHCjJeQKBA>
-    <xmx:B-mEaWYs16CBhSPc6T-QzMK8DyZdp-9qC8kFdRNntfORsVrt1kx4bw>
-    <xmx:B-mEaU3ZH36jk_siYZ_dqqRDZ-jmGqk1n9R96nXngO66yuw082XG2g>
-    <xmx:B-mEaV_hQRLY60xtqYR-Wc4usNUgkGK8CdC7ixECb-uHwrjO_HzkjQ51>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 276C61EA0070; Thu,  5 Feb 2026 14:01:27 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepuggvvheshihtrghushgthhdruggvpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmrghnuhgvlhdr
+    lhgvrhgthhhnvghrsehquhgrnhhttghordgtohhmpdhrtghpthhtohephigrnhhnihhkrd
+    htrghushgthhesqhhurghnthgtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:eeuEaWSlbM7Ws3eUiwQkKXs976BmBEdZafVBpZFgjeu4F_HTifxTzA>
+    <xmx:eeuEaY4AIOb32zkNEV1zLnywgFmUd9gD-X7y_HOfuoggPhG6H3U7oA>
+    <xmx:eeuEaS0qBGfpdwUgL-dk1g9yht7ZleubPQEh5XEwb9cJEUiLiarilg>
+    <xmx:eeuEaTCrX9j8G6_UW2_A4i_7wE7Yt8UN8EXy-Boa6Zc_Jvq9T1cULg>
+    <xmx:eeuEabu7mz4o9Qc-jqu6UYYEaQiTB09tcpgXUGBxRCDA0Pp44P6Jm4Rq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Feb 2026 14:11:53 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Yannik Tausch <dev@ytausch.de>
+Cc: git@vger.kernel.org,  Manuel Lerchner <manuel.lerchner@quantco.com>,
+  Yannik Tausch <yannik.tausch@quantco.com>
+Subject: Re: [DOC] merge-file: document that merge.conflictStyle requires a
+ repository
+In-Reply-To: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de> (Yannik
+	Tausch's message of "Thu, 5 Feb 2026 16:06:04 +0100")
+References: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de>
+Date: Thu, 05 Feb 2026 11:11:51 -0800
+Message-ID: <xmqq4invm2dk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A478TlyV4oB-
-Date: Thu, 05 Feb 2026 20:01:06 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Derrick Stolee" <stolee@gmail.com>
-Message-Id: <1cb68e4f-930d-456d-ba1b-b153e7a66524@app.fastmail.com>
-In-Reply-To: 
- <fdeef536f649bec811e8335d1c7151be8e352ff0.1770214803.git.gitgitgadget@gmail.com>
-References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
- <fdeef536f649bec811e8335d1c7151be8e352ff0.1770214803.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH 09/11] config-batch: add 'set' v1 command
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Feb 4, 2026, at 15:20, Derrick Stolee via GitGitGadget wrote:
->[snip]
-> +`set` version 1::
-> +	The `set` command writes a single key-value pair to a config
-> +	file. It specifies which file by a `<scope>` parameter from
-> +	among `system`, `global`, `local`, and `worktree`. The `<key>`
-> +	is the next positional argument. The remaining data in the line
-> +	is provided as the `<value>` to assign the config.
-> ++
-> +------------
-> +set 1 <scope> <key> <value>
-> +------------
-> ++
-> +These uses will match the behavior of `git config --set --<scope> <ke=
-y>
+Yannik Tausch <dev@ytausch.de> writes:
 
-`--set` doesn=E2=80=99t exist. I think you meant `set`.
+> We noticed that `git merge-file` only respects the `merge.conflictStyle`
+> configuration when run inside a repository. Outside a repository, the
+> setting is ignored and only the `--diff3`/`--zdiff3` flags work.
+>
+> Looking at the history, this appears to be intentional since b541248467
+> ("merge.conflictstyle: choose between merge and diff3 -m styles", 2008),
+> which explicitly gates config reading on being inside a repository.
+>
+> This behavior surprised me, and I couldn't find it documented anywhere.
+> Would a small documentation patch to git-merge-file.txt be welcome,
+> noting that the config is only read when inside a repository?
 
->[snip]
-> +int location_options_set_scope(struct config_location_options *opts,
-> +			       enum config_scope scope)
-> +{
-> +	switch (scope) {
-> +	case CONFIG_SCOPE_SYSTEM:
-> +		opts->use_system_config =3D 1;
-> +		break;
-> +
-> +	case CONFIG_SCOPE_GLOBAL:
-> +		opts->use_global_config =3D 1;
-> +		break;
-> +
-> +	case CONFIG_SCOPE_LOCAL:
-> +		opts->use_local_config =3D 1;
-> +		break;
-> +
-> +	case CONFIG_SCOPE_WORKTREE:
-> +		opts->use_worktree_config =3D 1;
-> +		break;
-> +
-> +	default:
-> +		return -1;
-> +	}
+Or even better, teach the command to read (limited set of)
+configuration files.
 
-Is there support for a user-provided file? (`git config --file=3D...`)
-
-> +
-> +	return 0;
-> +}
-> +
->[snip]
+By definition, you cannot read from per-repository configuration
+file when working outside a repository, but these days we let our
+commands read configuration from system and personal configuration
+files, I think.  Back in 2008, it is understandable we couldn't.
