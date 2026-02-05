@@ -1,127 +1,121 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A36288B8
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 16:24:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93CB42DFFD
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 16:39:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770308667; cv=none; b=I3MlgSEgeccaVOJtm42Q9fYTvgjcIPhcZT9GJpxFysr6T7DD7yEJUzoNM8hvIArLrHLRfFtesupb+izEUIYPW7vwWG6vjtZChFvzbfH44Sxa3g9Htgqd+kIeqwNj/dVDaO9/eIkCIkdBi/u25xyYEvdElCcRWAcRXiwnQGyDybk=
+	t=1770309595; cv=none; b=YFuWd3UcBUc0qnyvgnmXLRlPJ3c6uYAOmp9Vv/6jdf2oWkdy+tD64rNqZz8vybSD9b0CvFGlLh5oWRO8wIHth+VlLS+jqTXtLcPEi1i6hScvsA7f46+HMEOx44rnq6l8A994mIIU15CoxOhFWMxkgKKNppylUam0hSogjcQmkqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770308667; c=relaxed/simple;
-	bh=imE+gZPkp4MAIR2E3y0b19Xenw1KCU0xwM97dSCQ0Ks=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=otiQulFrqBD9ie5wYj1WstWmCggFt4aMIuECRA6HyyRMjVPDbjFI1OnE3il0H48ryNB9j+nf0wkxeQQeSS849jn+Yn/V8QZUWYAobOXnrMedmOZt+PF/F+V1xMtJGB1K7FZ0W5IKxbJFBuIfCExyqSNXh/7wiRwZV5JQY2/Ovwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=U89Fwf0f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AbCDo9a0; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770309595; c=relaxed/simple;
+	bh=FZy/DbRfq4icAMc2V8KXzKWyKmOiEpn/eAH9AgPEY2o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G1qC6Y8nOwHbsAlJRkHyBhRb5b7rwWwBMIyAYtUU5ieFkFvU0iyFcI8zv4GcOBMocUE/p7Zjn1+2Jcx8hDicxXGWvTQ+Kl4fpKODuex6BLazTtPSaocM8jQ2qPO/2Qy7pHRYENbgaaTyIOvZN7jKn0kjeyST0Qs/RGq2jLfP0UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CD83GEh9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KuN7soha; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="U89Fwf0f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AbCDo9a0"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 53A0C140019B;
-	Thu,  5 Feb 2026 11:24:26 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 05 Feb 2026 11:24:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770308666;
-	 x=1770395066; bh=vIZ0yUUVwvE4SlFUX91+fACiTBChgx/DetLqRK86zU8=; b=
-	U89Fwf0foVvlPTWjXUE4czztRtgLb7QE9PJwlESKi1kJHs/AZKVt74fqirnJaoMA
-	3glj83lfGi1GowxspTW6/hdPQeOIX5DHCTD9Ct3ni25RMZ+k3TO5DJ/psqf+n+zo
-	HejVPcFbSUVYzp7ETf6LpWql8toeEt9omOg927ajL7P/4isH68bOxIarFZCcdMRe
-	7cmsaacKOzYeiO9whxK1DUnsf7Zrb35pYNioY6c41MKa0jVlVn0xEZf7J+JsYyIh
-	UWEGh9fbmAeFMOxnoytlvDvlIC7rqe7pU0grVaL82X5+pasCBQXV8ID1qcjYpW1/
-	nIB7y3QBtTmMQ8bS2cFnZg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CD83GEh9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KuN7soha"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6E1B87A0190;
+	Thu,  5 Feb 2026 11:39:54 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 05 Feb 2026 11:39:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770309594; x=1770395994; bh=gPYeaaHdxK
+	eFXKF/Y7BL8FZlCk5VD4drWsdol4Zgza8=; b=CD83GEh9ocvslnWdAsGpouYeAL
+	VFsBKfdJXm/uP9LHd+83NjKwQw14WHa5OsFrlTEyOgqg3Z7nCl0NrvxGPLCbm2Hc
+	J/+wSDl7eU9LfK/WQNVvAwDwiCrjTCYwjhwdstdTTN9FmLo46H7+psTlmHSv+LI0
+	+doskxHeVgAPocfp0bHWd/g/y9L43gzmgbCCCtig+eydo579QcB10MFc9kZhWz0m
+	8zfHUKWut7eVskM6P+nzEHmVVwpI//itWlfAUt/Bq8OzCg9+nvvvbwqq+R4yMe84
+	G+FPibStjGWJTcckEB4jdk6MSsiEZPDUiuQT/BAQF+js5AOOTeOvOGVeVkGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770308666; x=
-	1770395066; bh=vIZ0yUUVwvE4SlFUX91+fACiTBChgx/DetLqRK86zU8=; b=A
-	bCDo9a0W2NXaGGlHcr5OyCbCCCaD+zJWczrNo7pyt1KP7Hz7/S12O+vNskFomBOP
-	plyy/zRkG2y68vGJ0nS4dPIYYl4DK5AXzpGrxklj5GsOW37noKSzlODb2JsOOMXV
-	IUAkSykIG3GcBG+gVgB15iG4UG0SBLwZhpDuKnVgnIUdnkFuCFncV3EXxlCaRSnM
-	AMW+FrfN5aqZ3xI2/XBFYi7kIav8Z0xrxTmzfnsDjYV5bM2Kf3CKtCOpXJNE4bxg
-	KWc6QittTmZvWOERVSQH8gmkZfMzBm47BUHjiVc6sq8tdrxumcWx801fShHpHiT2
-	xM75sXuoUb8cpmu+RbuPw==
-X-ME-Sender: <xms:OsSEaREPDP8ZN7DBDJa5WuMGmWPi_KV37Kr2M7Yd-XWs3tJXgvG9sX0>
-    <xme:OsSEadVwhnIg_-GJL8o_NMh9SVdP9sIzQmMMpEsqbRirAk2_ljXZ0m4dgrNo1YYTL
-    xx78nSs-L7YqPc8It23XS_Zh9WD1UdbF6DopAf6appxMKAz9HIMMg>
-X-ME-Received: <xmr:OsSEaYJ247SFtSIe-8BAIBhPxTcVG3rzaJiFRJWCT25yB4gsWelvrCuqvJyj5AKNa3wXgVxyproS3-XB5IUgKBZ3lS0o0_BUMHY9juw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeehjeejucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770309594; x=1770395994; bh=gPYeaaHdxKeFXKF/Y7BL8FZlCk5VD4drWsd
+	ol4Zgza8=; b=KuN7soha/d7cXG030wxOzdjDG7gOSgVMKI4y3Jp0LkkpeVyW2Pl
+	5twEWHuHYO5FQJ+LGKR4cdtpEnsB3YMnMOv3kU630H3dVxZCnMqhf2dxAqwHajkx
+	NxC4fvjiez39SB24u7/tHFDysRndO2NcUSiwGRtW1Q0PtgpnUGfJJJoGU2761G6X
+	hwHTdF9D3hom53IK9hHRu0fawl2OUcjsc/96PvoUMe9pL57Iiarg8IbgzbR1bIRs
+	Pxvg1cleiGSWKiYptKzgcexS0e2IoqznhWJxNLpOl+pw0Slm28E5yPIUaAl9w68O
+	5HHmsNoKLkMhrSa6Wbk9saAzr8+Gqw/Rvqg==
+X-ME-Sender: <xms:2ceEaS_VuiMqvHnxzTt8jXC9Ze6oUe7iTNGEQyLiYC1eN513DUZknA>
+    <xme:2ceEaWZA2lJc_ihl0xpzRDFdnQZY3RGKKoFrkIBFOOifZW-PIBB31z-kyag3w8mv0
+    6jRaiI1rV3p3GNcToeD7tFtREw0SAtq-ew5-7iNlH8QwCWX1F1cMZ0>
+X-ME-Received: <xmr:2ceEaR1qlHfq2BPFZLm0BaC_-upbO4mDBLmO780OuM0JxLHlwnrtPHEJUkdzIJ2WV8azwOOb4CPAqtZ1FyqTxQFUhXBUkMP-MQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeehkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
-    jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
-    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
-    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgt
-    vghplhestggvphhlrdgvuhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
-    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:OsSEaV9PSjbibR134hYuZSg2csZxR8jY5Z6CwsfQ2TxYUonjpHZ2SA>
-    <xmx:OsSEaTJbyBv12NUzIl3sP3cwv0cbLr9D_mP9HNW5BZ5g-rWeNDR6Lw>
-    <xmx:OsSEaSkO7JLV5rRQngFLD3sxJMLRCC2tktICN40P4k5wp98n37M23Q>
-    <xmx:OsSEafPw8cbwUwaBcgzavjKsRn_PwRR4rNjsxGK8wSyvGQLtfM5DnQ>
-    <xmx:OsSEaexTGNSts3AKD0ASTJ9w-booD6_ns0yCQc3q9MFrCS8Gshfrzjc8>
-Feedback-ID: i8b11424c:Fastmail
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrsh
+    hkodhgihhtsehhohifughoihdrlhgrnhgupdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepph
+    grthhrihhksehpshhpughfkhhithdrtghomhdprhgtphhtthhopegruggrmhesughinhif
+    ohhoughivgdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2ceEaRasMB6HnthaS39mhp0UN3LhsjwOpYpwxMw-9lVUCCnTRcod_Q>
+    <xmx:2ceEaZLYErS4XvK0wVhNN8nb9zEBbAJ7f5KesO8GvLUdZPpnT2sKDA>
+    <xmx:2ceEaQGBYWxbsiohljNbb8UTKD3HS208XEWR6noQC8ZZf37CnayFpA>
+    <xmx:2ceEaQtKX5iPqfADD7Qo6Kc7WAVNVPgsieK35ASGVo9D4yzgfCy5Gw>
+    <xmx:2seEaf4Rjlom7rnmYcZY9q8s2ESuvGHE4VLajf5nOiR-litIbkIvT8LS>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Feb 2026 11:24:25 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Mat=C4=9Bj=20Cepl?= <mcepl@cepl.eu>,
-	ps@pks.im,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v3] doc: send-email: correct --no-signed-off-by-cc misspelling
-Date: Thu,  5 Feb 2026 17:24:01 +0100
-Message-ID: <V3_--no-signed-off-by-cc.260@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
-In-Reply-To: <20250218085913.1381537-1-mcepl@cepl.eu>
-References: <20250218085913.1381537-1-mcepl@cepl.eu>
+ 5 Feb 2026 11:39:53 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Colin Stagner <ask+git@howdoi.land>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Patrik
+ Weiskircher <patrik@pspdfkit.com>,  Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: Re* [RFH] adding test coverage for contrib/ in CI jobs
+In-Reply-To: <ef128e1d-dd3e-4573-bfcd-6a98a0a1f394@howdoi.land> (Colin
+	Stagner's message of "Thu, 5 Feb 2026 00:05:59 -0600")
+References: <xmqqh5smdejc.fsf@gitster.g>
+	<20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+	<7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
+	<xmqqjywuyhu9.fsf@gitster.g> <xmqqsebhu9nn.fsf_-_@gitster.g>
+	<xmqqjywtu58j.fsf_-_@gitster.g>
+	<ef128e1d-dd3e-4573-bfcd-6a98a0a1f394@howdoi.land>
+Date: Thu, 05 Feb 2026 08:39:51 -0800
+Message-ID: <xmqqikcbm9ew.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Matěj Cepl <mcepl@cepl.eu>
+Colin Stagner <ask+git@howdoi.land> writes:
 
-I don’t think there is an option --signed-off-cc (without -by)
-for git send-email.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Unfortunately, this seems to reveal existing other problems with
+>> subtree tests (t7900), in addition to diff-highlight tests (t9400)
+>> in various configurations.
+>> 
+>> https://github.com/git/git/actions/runs/21617099884
+>> 
+>> This Ci run is near the tip of 'seen', so there may be breakages
+>> attributable to new topics in flight
+>
+> At least some of the subtree failures on linux-reftable, such as
+>
+> <https://github.com/git/git/actions/runs/21617099884/job/62298228602#step:10:421>
+>
+> are actually due to a bug in ubuntu:rolling's "dirname" implementation. 
 
-Signed-off-by: Matěj Cepl <mcepl@cepl.eu>
-[kh: rebased and changed subject to house style]
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+Ahh, rust bites again?
 
-Notes (series):
-    v3:
-    I left the rest of the commit message alone because I think it is okay.
-
- Documentation/git-send-email.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
-index ebe8853e9f5..44ae2ed5bff 100644
---- a/Documentation/git-send-email.adoc
-+++ b/Documentation/git-send-email.adoc
-@@ -435,7 +435,7 @@ Automating
- +
- Default is the value of `sendemail.suppressCc` configuration value; if
- that is unspecified, default to `self` if `--suppress-from` is
--specified, as well as `body` if `--no-signed-off-cc` is specified.
-+specified, as well as `body` if `--no-signed-off-by-cc` is specified.
- 
- --suppress-from::
- --no-suppress-from::
-
-base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
--- 
-2.53.0.26.g2afa8602a26
+Is there /etc/alternatives/dirname like /etc/alternatives/sudo that
+we used in fddb4842 (ci: fix broken jobs on Ubuntu 25.10 caused by
+switch to sudo-rs(1), 2025-10-10) to work a breakage around, I have
+to wonder...
 
