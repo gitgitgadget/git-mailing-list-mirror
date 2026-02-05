@@ -1,117 +1,98 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEB935F8B2
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 07:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4FC31B824
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 08:09:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770277520; cv=none; b=cBKaWdpV164+Esko9x1milw6WZHlFJS10cR3Cbli977CRjs/ssWj3maoXKnBaf+eRiNdePFJYR3WjjirMcVSj2ZTBOpMSbjW1tP8TQlta3NP4kZZf1msMz9Y0tYts79c/IC5U5bU9sb2Xo68J4SNEoDFBXFBE7py+lvB2HHMJ7s=
+	t=1770278958; cv=none; b=aKFEvXq/4f2wRw00WaBBRboVWQ9GMx6M557cwcFyGR2aU6QYZb4csheDC42rz/gKb/qIaFLv0IZpv52U2i8fDqPI8+QJvQyM5TGnNLiu2cjuNb+CGp7Fenpt6kaxEsSL2al7fuhKHuEop+zA1YasekPA+0d3/sjiaifOgAdDz3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770277520; c=relaxed/simple;
-	bh=sIB5ybrGcxI8ugNmKC/tVTUP2+7gz4cpRJ3sSr9VTVA=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=Tdu+2/u3DUiSh4uLFosKchEHQz5lzXf3+nhVy88eC1YZSNppEL7eEqusPU2YpdlXU7xWZpvVann2Nm09edGywypCTivinpz5EQzX7f5D71PDbhbnKyl0855cE7kMEa6wyKvkxoRVdaF5JAoYYkq6IGgXu+H8mjB7YRaeJtMDFgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=dOxjmvEv; arc=none smtp.client-ip=185.70.43.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1770278958; c=relaxed/simple;
+	bh=nEa0DPfgqiqALi8rfL2i9yr7V7Hrmp80AIIAVIv6q/0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ajiN7xxbwJ6FdreK5qCFgez6PjnybbFyJOKk3mC1sl83HIydsSuJGxeYZqiYn4Jdnd0zMlRx7GDTlsJ2F8L2F3UIBfgn+58XX27RHlD/iAfdf6UfmBniehIxs2p3Fu4HfOQIHvVxKShFMwJR9up0n1E0EGHYQraus3o19o+TkY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FPZbBhyk; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="dOxjmvEv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1770277517; x=1770536717;
-	bh=+3iFJCNjTwjoAr/B7ehbGMN4ZabzDOuF8p8C4p1N7Ck=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=dOxjmvEvMUneB+YBM/TZSm4/zqbeKvJeOiJr38Ay0JzL3MNTeQOu9Mtq6VQy2k41a
-	 5f1vM5XtsUpwICHbWO07w9MBk508yTdZAnO+Oy4sf6VnFblwwsz8rSPUQTDgbMJMhr
-	 rOQQa/MXPZ8wwW54pz4LaYTczLq+ABEbH396R+CoJ4+yCzjkI9wu4yvPow9MmLFyJp
-	 Bigy/ME5g/GExlRhStm9on38uvwAPmMd13aks6s4QC/wMBD42L2Pj3gGq7dUVm5W1H
-	 97GUAIOlJwWhrXEBPioeAQPoGWVGeoZyjdD2omjpsGaaK3mGlEc4pSK557O851xFJe
-	 6dhIo1kzlxmpA==
-Date: Thu, 05 Feb 2026 07:45:14 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Seth McDonald <sethmcmail@pm.me>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Document that perf tests require GNU time
-Message-ID: <WXxKFs_utzKHnZYkPTmI_Ewz1HmpkwsthhFwToulAYj6ZHlHizXkGELxquKLhQsJUx9aMxvIUhZEjknWNNGEH0zfDlRbD2FOy9Jz4JZNb8I=@pm.me>
-Feedback-ID: 171233811:user:proton
-X-Pm-Message-ID: 35f914d0c133bc242efb1da7737326c5fa689611
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPZbBhyk"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-81f5381d168so789640b3a.2
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 00:09:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770278957; x=1770883757; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qcEg1B8RIp7H+k8tMvvL3Rjd1nYIMDUZkWYoNJUEByI=;
+        b=FPZbBhyka3sOFP8t1UtAkD3u5d6JD+HW0z0evFGshNleO1YDFxpLMOYJHQ9rldoI6e
+         JE7lV/MaeaLhwndCmrIT2hDPF9VZKqas8/Jmj7tEaIijFaryOtyig+KsrpgrF4aK/sUB
+         iOFy03yatq1AeRkTw9/Ouig4MIV9Id/wvawuJ6c344flBZ6JNQGQneLPAqMGUGl+5A2Y
+         XFdCD6LBwtSsvm0012g1/D/39X7ZyUKwPNS+8U/glzfdy7XOZbwQA0rO2uOeoYV37jq9
+         59FKbAIZNUetVl7pDM99vwhrk0oZ+bLllfQd5JY+y+RmkSdFjdOIrC3yb1Vhc6lkslct
+         BQwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770278957; x=1770883757;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qcEg1B8RIp7H+k8tMvvL3Rjd1nYIMDUZkWYoNJUEByI=;
+        b=aseCqslgzqWteTL/TSusWER989e5bN22NftdgZieCFh2K5XpujYPeZjXg/f8bdcppN
+         Zb//6XZdrA1wmrqit2ZoOVJYa4xol/JkjwInHxlLzDsattP7HYTM7FSWPQh2WD4PWHQN
+         Zckwz5coVZYBDXbsVm3n4iOBN/LmvN7V4Or0EW+e11kPD3yhY05eJQuSPK0GcsGh5yFB
+         T6zJ5mZqoUHvCno4I0jNZcmcJaDUMteYGl2LUb5E7GtqjhaFDCYtKnzT+VQAskwUqqU0
+         Kl/hgEeNW4XxSZA5/Q2aFxnUn8ApI/Q3Te8BJPMKONCrAF3PM1TZM3Mi+6CFMfaMue3h
+         /T6Q==
+X-Gm-Message-State: AOJu0Yz8oHZcVNLnXkhujHXLH7eRRFFUqfjkDqjpP2UUwQdqbx0auMEP
+	0VoqzgBH+JtsHaq/rFFnGUSq4OBZZ2UJ1zGcS9dSgIiaRp+KSyDedjbe+DJI/P1k
+X-Gm-Gg: AZuq6aItfjjeXcf7VrM2k7nWZW3SAGsqe0dQ33Sa4PJ0GDXGijLKrOOnrC/4+7yZ2E+
+	8Dlf69YyEo54q1nt1a8D+BklAHT9PYUhZWYqQWOUJwWBbhgCHXhpadmSqD8t8Bg1JBhbrSknXIK
+	N874VHdKBgu4oqHKn2YKQxmn3Xu9PywmL9PjFpbpuDvdeJdBCn5SdR4cECuQ4urjHmWVRvCTva/
+	hZRVG555qhLQQLiV59VTHFLgUEK6RPXup8xHPx1yDdopdrtf2jKk2gneZNnxXsrwna3+xy1XvH7
+	hk8TiLrl8ZG0R5uAMxxGHIHDsWa5EAQ8Sa6i43lPpy4aw9YW0Xy8iiwg8CJK89i/JlPWbdtYEY/
+	iYjOrXPKAPE8XO/8PxvTlig7tHc+iWeKNCNbAqdzkxgqwHTXxi18O8nLR1R69hv62G4b5qo1cEw
+	U2QyoTSh9PiPZu7mzmv6MMziTk
+X-Received: by 2002:a05:6a00:2195:b0:81e:2bca:d133 with SMTP id d2e1a72fcca58-8241c1de444mr5535081b3a.24.1770278957082;
+        Thu, 05 Feb 2026 00:09:17 -0800 (PST)
+Received: from AyushJha ([2409:40e4:1234:cb55:d0d6:d9e0:3b14:24c])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8241d1aed12sm5547958b3a.18.2026.02.05.00.09.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Feb 2026 00:09:16 -0800 (PST)
+From: Ayush Jha <kumarayushjha123@gmail.com>
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org,
+	Ayush Jha <kumarayushjha123@gmail.com>
+Subject: [GSoC PATCH] doc: fix typo in tree-walk.h comment
+Date: Thu,  5 Feb 2026 13:38:52 +0530
+Message-ID: <20260205080853.2034-1-kumarayushjha123@gmail.com>
+X-Mailer: git-send-email 2.53.0.windows.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------e3cdfe7e16a29a14c511e0c2697c4d7a3bddc446d538fc674620f47ef7df1a5f"; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------e3cdfe7e16a29a14c511e0c2697c4d7a3bddc446d538fc674620f47ef7df1a5f
-Content-Type: multipart/mixed;boundary=---------------------6f3361e356b2fdf9d92dae24da066b24
+Fix a duplicated word in a comment describing the return value.
 
------------------------6f3361e356b2fdf9d92dae24da066b24
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+No code or behavior change.
 
-Hi all,
+Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
+---
+ tree-walk.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-For context, this occurred on my Debian GNU/Linux 13 environment with
-GNU bash 5.2.37.
-
-I recently cloned the Git repo and began exploring it by first
-attempting to compile and run Git and its tests.  Following the INSTALL
-file, I ran `make profile` which showed all normal tests passing (sans
-the expected failures), but *every* perf test failing.
-
-I read any in-repo documentation I could find about the perf tests that
-seemed relevant, but couldn't find any possible causes for the failures.
-It was only after reading and following the perf tests' shell code that
-I came across this in t/perf/perf-lib.sh (lines 206-208, master branch):
-
-	$ sed -n '206,208p' t/perf/perf-lib.sh
-	# Perf tests require GNU time
-	case "$(uname -s)" in Darwin) GTIME=3D"${GTIME:-gtime}";; esac
-	GTIME=3D"${GTIME:-/usr/bin/time}"
-
-While I did have time(1), I didn't have the GNU implementation.  I
-confirmed this was the issue by installing GNU time and again running
-`make profile-fast`, which now showed all perf tests running
-successfully.
-
-So to prevent anyone from having the same experience, I would recommend
-that either
-- the perf tests' dependency on GNU time be more clearly documented.
-  Places that seem reasonable for this include INSTALL, t/README, and
-  t/perf/README (this file seems most apt IMO).  Or
-- in the case that GNU time isn't found, the perf tests output an error
-  message explicitly documenting this dependency.
-
-(I would include a patch with this, but I'm certainly not yet familiar
-enough with the Git repo to confidently do so.)
-
-Take care,
-	Seth McDonald.
-
--- =
-
-
-On-list:  2336 E8D2 FEB1 5300 692C =C2=A062A9 5839 6AD8 9243 D369
-Off-list: 82B9 620E 53D0 A1AE 2D69 =C2=A06111 C267 B002 0A90 0289
------------------------6f3361e356b2fdf9d92dae24da066b24--
-
---------e3cdfe7e16a29a14c511e0c2697c4d7a3bddc446d538fc674620f47ef7df1a5f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wrsEARYKAG0FgmmESogJEFg5atiSQ9NpRRQAAAAAABwAIHNhbHRAbm90YXRp
-b25zLm9wZW5wZ3Bqcy5vcmcXDh+gcM+as6Gb5NNC5CQd4nLOciSGHX+Gcoir
-ClRKDBYhBCM26NL+sVMAaSxiqVg5atiSQ9NpAABFaQD/UYSfNtd2f/xaVUR/
-4f1FhtE9d7VHDEpni4Iw5/DYXdEBAOQctHWjvdZWQykTbQgbhb5blZfF1ONI
-B43UD26vpi0K
-=rfpG
------END PGP SIGNATURE-----
-
-
---------e3cdfe7e16a29a14c511e0c2697c4d7a3bddc446d538fc674620f47ef7df1a5f--
+diff --git a/tree-walk.h b/tree-walk.h
+index 29a55328bd..9646c47ac5 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -177,7 +177,7 @@ struct traverse_info {
+ 
+ /**
+  * Walk trees starting with "tree_oid" to find the entry for "name", and
+- * return the the object name and the mode of the found entry via the
++ * return the object name and the mode of the found entry via the
+  * "oid" and "mode" parameters.  Return 0 if the entry is found, and -1
+  * otherwise.
+  */
+-- 
+2.53.0.windows.1
 
