@@ -1,206 +1,131 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFB23D522A
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 13:18:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3392868B4
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 13:52:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770297484; cv=none; b=mXVml6y0eeaAhWi0LLbDseyyjnRaZVgpzzCY9Aa2jRGEV4BfGdVwzTDZBH2pNdO1ZBrACcihpPhlOMqolFMIAdoabtw9mqO/EgN/Pv9DokHFw8QhTNt73gx4B+uX2w6O7rYUHjoVV8DeU6fNKcQRu79EnfDREpEhy+xy8P7S5ok=
+	t=1770299535; cv=none; b=JEFHfaJlJsavYXbqqKPPwBxTNZe6TWNGDKP8h3Yvo0tia1VvFfR5b1NBLOGvF+ZgHqwozyNVIKGb1Bx0rRtrExDvJzM+2v9Ye3ihIDIepNHfWIEPHMnFK+mNR7xUqSMAzOPsXA/njQMMEEVsAShWZXbdXuNhNozRYywRoTAEShQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770297484; c=relaxed/simple;
-	bh=71eKy7h6dAOrgeTJtGNU0ILTIwa9/H254o1AZ+QAMbw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PcB1gUGhYDsiUZqEGpIWO+QN5Md4a9M+7en8Z1FSVg4kK8oem99l7d3PJZomUckw3bBEFz/ZlOblx+cQUwIuE6EAs7c9EY92SS8hKJvjXWq5AlAC9qpoKuniXzAeXCr+sRuPxUIc2qz3oRY0+UYlNTPo0mw/osG72tSmQc21NsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=v+VB0ixU; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=4pe5xYxv; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=v+VB0ixU; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=4pe5xYxv; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1770299535; c=relaxed/simple;
+	bh=BsaApHkxLsK7yjxMT63wjZA1EjFjFrFCNWCXolp0mlQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=JCCkAUguBMWbxMgDHvlFO3xNJ6ol3qWA5ahi7AjOFkpzX41Qz2V5H47D4VaM26uMQeos/JXqY9LgppMAt08ZPzohFx0m23mq8CmxSTONHkRsTYrvEMnMNk7hlI29qzZPSqLyKM0siywGgD1BX5SmCKlsvEjG0zTuDwf/mCUmYjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cOnvHOGo; arc=none smtp.client-ip=209.85.219.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="v+VB0ixU";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="4pe5xYxv";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="v+VB0ixU";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="4pe5xYxv"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 9512A5BD9A;
-	Thu,  5 Feb 2026 13:18:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1770297482; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1MiXviQ4+D0hXudX02+RaHSD0vsYav4AVMGxYz8KVMQ=;
-	b=v+VB0ixUL0EHuw6NWE2kTuuIYTlEFujV+Wv8yiU8vifiFpfXWzk8XXgm0EQOMewysiQTvP
-	2IR041OPGYgPCjfwY8og+PaJrEexIgEh+CVRaEgJ8PsG36iGav7aT9JLS8jey8qLqC+qEJ
-	W+huRt8TdZsfMj375VwX1Tym8pUg7YU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1770297482;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1MiXviQ4+D0hXudX02+RaHSD0vsYav4AVMGxYz8KVMQ=;
-	b=4pe5xYxv14hbyS7Mx7B+S7cU0vR11FbH9G9OTcJKQdQgYSu1ZDNl/mGA5eWE2UQO0aoQlr
-	ESlpDJxoqJLb0RDw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1770297482; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1MiXviQ4+D0hXudX02+RaHSD0vsYav4AVMGxYz8KVMQ=;
-	b=v+VB0ixUL0EHuw6NWE2kTuuIYTlEFujV+Wv8yiU8vifiFpfXWzk8XXgm0EQOMewysiQTvP
-	2IR041OPGYgPCjfwY8og+PaJrEexIgEh+CVRaEgJ8PsG36iGav7aT9JLS8jey8qLqC+qEJ
-	W+huRt8TdZsfMj375VwX1Tym8pUg7YU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1770297482;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1MiXviQ4+D0hXudX02+RaHSD0vsYav4AVMGxYz8KVMQ=;
-	b=4pe5xYxv14hbyS7Mx7B+S7cU0vR11FbH9G9OTcJKQdQgYSu1ZDNl/mGA5eWE2UQO0aoQlr
-	ESlpDJxoqJLb0RDw==
-Date: Thu, 5 Feb 2026 14:18:01 +0100
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Jiang Xin <worldhello.net@gmail.com>
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Mikel Forcada <mikel.forcada@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?iso-8859-1?Q?Jean-No=EBl?= Avila <jn.avila@free.fr>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>, Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>,
-	Jordi Mas <jmas@softcatala.org>,
-	Matthias =?iso-8859-1?Q?R=FCster?= <matthias.ruester@gmail.com>,
-	Phillip Szelat <phillip.szelat@gmail.com>,
-	=?iso-8859-1?Q?S=E9bastien?= Helleu <flashcode@flashtux.org>,
-	insolor <insolor@gmail.com>,
-	Kateryna Golovanova <kate@kgthreads.com>,
-	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Ray Chen <oldsharp@gmail.com>,
-	=?utf-8?B?5L6d5LqR?= <lilydjwg@gmail.com>,
-	Fangyi Zhou <me@fangyi.io>,
-	Franklin Weng <franklin@goodhorse.idv.tw>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [RFC] Introducing AI Agents to Git Localization
-Message-ID: <aYSYiSEXnahZtpAZ@kitsune.suse.cz>
-References: <CANYiYbFhshDwfttKWYGDfO+K1qAz3ptVHuuHrWXhD2oYBF7baQ@mail.gmail.com>
- <534b9313b19a73bcee6e0ac1d7299e19@softwolves.pp.se>
- <aYNC5dlL8wdwdFuy@kitsune.suse.cz>
- <CANYiYbF295W88XUXqeiO9SXjDTMbJo9h8=mNk3xNALPHTXwvsQ@mail.gmail.com>
- <aYRVElg21EdWkjxi@kitsune.suse.cz>
- <CANYiYbEJymkh1bqz-iJeSOZ4D344Mx7G6iD6hiCpjzMnQx0SnA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cOnvHOGo"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-88ffcb14e11so13648036d6.0
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 05:52:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770299534; x=1770904334; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=cPi5UQ6+r2/qoBP0t/ja8NHI9c9XmP4fU/4yiXL5LuY=;
+        b=cOnvHOGo+dzzFUoctd8ibtWgELLPYC59SlopB2ZyU2gekewImQYbOk66IfSOZHSHsH
+         B/nvRD22+w5v4qSIhxR5ffqQPNSbWAfrLENIhr0etnHct5YGL+AqSHlfBoPYjtHDw8sC
+         DYf6h8sAQVmXTPAsJZxSdRmqThy/dNyLxie0tQ5D0nbxiXGbg6dBgl5yZQ3A74UKTJLV
+         S5+jzV8ISMzpSTT6nsOxA53p91bOPfEblbeFIeOXCcoGbXh8q6lEoLIxjX8Pj6s8xxDi
+         3QJ+rIPk2H3L+jX8wCNGzPkYLwTb8dTZ4FNluPxwcCBGDJdMxcyl4BlYzoIKwelHO7bX
+         A60Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770299534; x=1770904334;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cPi5UQ6+r2/qoBP0t/ja8NHI9c9XmP4fU/4yiXL5LuY=;
+        b=QH687oQ99bAy5an/WSy/vjhIy9sGqTksGntBMYYRKcue+fJ0NwWekR2H8+/Tvn3gvM
+         KHqE0jk2K2YFK5n0QEkbznJEUvMAMxpQaHGEjyL9ZnORvgOwnlGAAT95Tc/ranNlvk1W
+         9rcLYPEB4JtMmRDmIMw7vBs6DAIzwSv9er1UQmRHf7f2TWQSYZpc4EQ7S0Q84bwwk84h
+         DQi9jubDgkIuCXdzYoCHnT0f+5eZwQeyDScGpO/xiQNszP4UPJANKMK4J4I4h0gdcjXm
+         LrW8aOB5FUbnEXPS7EiKdmanQMjCkecy01KCVoKaNr2lGp2zVL1s1bFukqrPDQPXCwXa
+         bOaA==
+X-Forwarded-Encrypted: i=1; AJvYcCUJaaquMXimnDZvSMYYNqo/a9EP8ooDB2UKa9Ka1M4J94mpkjnhNsv/LW34rdrMId0z2Qo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUmxRmjKMegpPWO27jGzgCO3nhsF/C5faT1jjt4w/C4O6HjxuP
+	zyhAJfR1SkWmJ0MCY+OUgjef443JPMNfhZjAUyROZc+nHOnNsfWIdfKe
+X-Gm-Gg: AZuq6aK0L+KRboHna8zsg9e6e163tfky1CFZxIwVV0WUCTgZN/y44WsvjT6xpIi6hXi
+	h+5UV+ap45VT22jTbZ/E3VhJUj5xrfsP+MahlOVL5wlrN09W3ckgp1hL6RMKUJMUgfPFyg/r5fi
+	ei4Wi1S68/0jgruGC+75JaGjqYWxC+x8BvpncuZZroYQmStb4TciWm7QuK/8vLV/6COkZfkH7o3
+	Vp1cgYqOEZmOPPA5ADGTVmHK/gd3Jb3Odptov9BmlJwOx4rWowUloOG9ojzCp0nK0o1BI8uNec1
+	gJfvW9xEG+GPvWzbbjj4DZPA1BWSd9mHBNWEruWKxJ9svw/G09GAQP2gIs/Sh9xCaNUp1zocu3F
+	ZKLwbQV0VUPw6PSQ8P9y2cn6VCeWNLxSTIUSQm0q47GIcj56SW2yNyjl0tZTU4ikVzjLpdC8KoE
+	Am6CnsFku1ES0HpQFAGZd/VwA6JmkrZQ/z8qrwxVfkS6TR2pTuaV9VjaxyXA==
+X-Received: by 2002:a05:6214:194c:b0:895:b3b:228b with SMTP id 6a1803df08f44-8952219cb17mr98275786d6.43.1770299534085;
+        Thu, 05 Feb 2026 05:52:14 -0800 (PST)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89521bff135sm40379476d6.10.2026.02.05.05.52.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Feb 2026 05:52:13 -0800 (PST)
+Message-ID: <f6687192-58dd-479e-8df5-a422c01f03f4@gmail.com>
+Date: Thu, 5 Feb 2026 08:52:12 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANYiYbEJymkh1bqz-iJeSOZ4D344Mx7G6iD6hiCpjzMnQx0SnA@mail.gmail.com>
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_DN_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_TO(0.00)[gmail.com];
-	ARC_NA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,free.fr,mail.ru,me.com];
-	FREEMAIL_CC(0.00)[softwolves.pp.se,kambanaria.org,gmail.com,free.fr,mail.ru,me.com,cho.red,softcatala.org,flashtux.org,kgthreads.com,fangyi.io,goodhorse.idv.tw,vger.kernel.org];
-	R_RATELIMIT(0.00)[to_ip_from(RL1uo9aieqzxhgb7dnxpsea1ka)];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[26];
-	RCVD_COUNT_ZERO(0.00)[0];
-	MISSING_XM_UA(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-X-Spam-Flag: NO
-X-Spam-Score: -2.80
-X-Spam-Level: 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/11] [RFC] config-batch: a new builtin for tools
+ querying config
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, gitster@pobox.com
+References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
+ <aYPeiqkw41ln7De_@fruit.crustytoothpaste.net>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <aYPeiqkw41ln7De_@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Feb 05, 2026 at 07:16:44PM +0800, Jiang Xin wrote:
-> On Thu, Feb 5, 2026 at 4:30 PM Michal Suchánek <msuchanek@suse.de> wrote:
-> >
-> > On Thu, Feb 05, 2026 at 10:06:58AM +0800, Jiang Xin wrote:
-> > > On Wed, Feb 4, 2026 at 9:00 PM Michal Suchánek <msuchanek@suse.de> wrote:
-> > > >
-> > > > On Wed, Feb 04, 2026 at 12:58:05PM +0100, Peter Krefting wrote:
-> > > > > 2026-02-04 10:31 skrev Jiang Xin:
-> > > > >
-> > > > > > Please try using AI coding tools to update translations in po/XX.po or
-> > > > > > review historical translations, following the prompts below:
-> > > > >
-> > > > > No.
-> > > > >
-> > > > > Please disable this altogether for the Swedish localization. "Translation"
-> > > > > using stochastic parrots is not mature and just creates gibberish that takes
-> > > > > more time to clean up than to do the translation from scratch manually.
-> > > >
-> > > > Hello,
-> > > >
-> > > > a similar attempt was widely reported, eg. here:
-> > > > https://linuxiac.com/ai-controversy-forces-end-of-mozilla-japanese-sumo-community/
-> > > >
-> > > > As pointed out the availiability of the tools is not necessarily a
-> > > > problem in itself. The problem in that particular case was that Mozilla
-> > > > automatically applied the tools to existing translations, even
-> > > > well-maintained ones.
-> > >
-> > > Thank you for the context—this is a good reminder that automation
-> > > should never override community judgment.
-> > >
-> > > To be clear, using AI as a translation aid is entirely up to each
-> > > contributor. In Git 2.53’s l10n cycle, I temporarily handled the
-> > > Chinese translation (as the usual lead was unavailable), translated
-> > > all new strings, and fixed many issues in older translations—both
-> > > speed and quality were surprisingly good.
-> > >
-> > > As an l10n coordinator, I’ve long struggled with reviewing PRs: while
-> > > git-po-helper catches technical errors, it can’t assess translation
-> > > quality or detect irrelevant content like ads or political text. Here,
-> > > AI can help flag such issues during review.
-> >
-> > That is really sad.  'ads or political text' sounds like something that
-> > would be visible immediately if somebody looked at the change at all.
-> > Which implies that you do not want to look at it, and have AI review
-> > it. That is put AI in charge. That's not going to go well.
+On 2/4/2026 7:04 PM, brian m. carlson wrote:
+> On 2026-02-04 at 14:19:52, Derrick Stolee via GitGitGadget wrote:
+>> This RFC explores a new git config-batch builtin that allows tools to
+>> interact with Git's config data with multiple queries using a single
+>> process. This is an orthogonal alternative to the effort to create a stable,
+>> linkable config API. Both approaches have different strengths.
+>>
+>> My main motivation is the performance of git-credential-manager on Windows
+>> platforms as it can call git config get dozens of times. At 150-200ms per
+>> execution, that adds up significantly, leading to multiple seconds just to
+>> load a credential that already exists. I believe that there are other
+>> benefits to having this interface available, but I can't recall any
+>> specifics at the moment.
+
+>>  * Is this a worthwhile feature to add to Git?
 > 
-> Git supports 19 languages, 14 of which have received active updates in
-> the past year. How am I supposed to perform semantic-level reviews for
-> languages I'm not familiar with?
-> 
-> In principle, I should trust all pull requests provided by team
-> leaders, but having an AI-powered semantic-level code review
-> available, especially for extreme scenarios or to assist contributors,
-> isn't necessarily a bad idea.
+> Git LFS has the same needs, but I believe it can use `git config -l -z`
+> to do that and parse the config options itself.  If this is just config
+> fetching, I'm not sure of the additional utility that such a feature
+> would add.  If that interface _almost_ meets your needs, could we add
+> functionality there instead of a new interface?
 
-Is it not or is it?
+This is a good suggestion to look into as a potentially-easier solution.
 
-When you do not understand the language in question you cannot verify
-the AI review. Neither for false positives nor for false negatives. So
-far AI has been shown to provide lower quality reviews than actual
-humans.
+There may be some work required on the consumer to interpret multiple
+values and the right inheritance rules. This is relatively minor
+compared to attempting a full parser with complicated 'includeIf'
+logic.
+ > If you need to set many keys, I'm curious as to why that is.
 
-If the team leaders employ AI for typo and grammer review they can rule
-out the false positives but you cannot. In the end you need to trust
-them or learn all those 19 languages.
+I know that the credential manager does more than just query the config,
+but also sets and unsets config. The full interface is here [1]. However,
+the performance-critical parts may not require mutating configuration
+values, and hence such a 
 
-Thanks
+[1] https://github.com/git-ecosystem/git-credential-manager/blob/main/src/shared/Core/GitConfiguration.cs#L31
 
-Michal
+Thanks for the pointer to git-lfs as a similar use case. I see that it
+has a way to get the full list of config values [2] with '-l' (but not
+'-z'). It also has methods for getting values on a per-key (or even
+per-file) basis. I have not tracked the uses of config code into its
+consumers to know how often one is used over the other.
+
+[2] https://github.com/git-lfs/git-lfs/blob/bb65882304a655ffa8abf2be6922e53ff18af5a5/git/config.go#L208
+
+Thanks,
+-Stolee
+
