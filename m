@@ -1,63 +1,107 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0581A76BB
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 04:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321DC30C372
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 06:06:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770267329; cv=none; b=alUvXmfCyAdM86bxbMw6OxUcYOQdrlRBJfLv4LfV9hr5LPe8fyj2MNahZjkC+RHBT0esRkf8kxDRnrBfVzD/+hFpv/VMSYEETmvxI0BZ1oSQ6KEzKgHNt9qnSB0iyCNQkij1O1uqtGaj42iMKIKh+oxvlOyrLBKVU0EKeqVjo5s=
+	t=1770271577; cv=none; b=Wo/jqi7DUADjmnUwxW3oI0JyXbMbui0cwG/Wz10bzIHhlfTEhji24EXVCBOzsMadosCZsVexANr2bqXfu6mekwstM+o1IXS/zd98HRnrMbzzt1hQrP6zQhFdSXz4A0q/+gi4RAVqeYoyV9Y0Ib/U7Kda21f6tKAVCRaFaQk15Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770267329; c=relaxed/simple;
-	bh=3G+riXJfjpyw79PngTYcJTPzV7fZL06H0/Gezm+tltM=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q+33khBKqN+5e6EBe3Q5142/Q3nPgxJLo5qPqaPXpec1IqDs6PMh7QiT1YIBaM2ntOVyKstV/j9dRUR4qAle0DTrA73brQZcfMBDcSNWlvWT3Kv+CyShbs35+zQR1zfWIqzLkiQHVOFvZJddXOtzN4Od6QBa+m7vWjTBz3mw1iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from [2001:3b0:22:ba05:3c99:5d75:c899:ae5e] (helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <mh@glandium.org>)
-	id 1vnrOm-00000007bNq-2yos;
-	Thu, 05 Feb 2026 04:55:25 +0000
-Received: from glandium by goemon with local (Exim 4.98.2)
-	(envelope-from <mh@glandium.org>)
-	id 1vnrOe-00000007xlu-3IbH;
-	Thu, 05 Feb 2026 13:55:16 +0900
-Date: Thu, 5 Feb 2026 13:55:16 +0900
-From: Mike Hommey <mh@glandium.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	gitster@pobox.com, ps@pks.im
-Subject: Re: [RFC PATCH] Move rust gitcore crate to a different subdirectory
-Message-ID: <nabuy27x5sqyp5sjselp7lbxqnvov2mtemvke7geucn6a2ixg2@62s4t5gkhsdo>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-References: <20260204232208.1615320-1-mh@glandium.org>
- <aYPf9CnNLjJtinqw@fruit.crustytoothpaste.net>
- <5h7fs4smilvvuqyry4uef3rjgky5woodmapb3fy72src2hvlzv@o3bbh7zxqqvt>
- <aYP7KKD1tDsormI3@fruit.crustytoothpaste.net>
+	s=arc-20240116; t=1770271577; c=relaxed/simple;
+	bh=WwKb9M/5HqtcjnH/FS9RVu4cx1wLdaqbsUAbTu+UtAk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=K7hy8qLzpvd+TE6jKUlhKLQFYezo+mMjE5f6vx8OGc14+bwQMiIn0t3yyKVDV7exYOeWSdy7sgjZyHhzCruAMA5M34zJmZoNgZ4nGoYsyFRUqbmYkn0zx2beTlQMFcqoOjB1kcBx3pdt9M6ZvjQH2T1OOniF+Z8K7JyfzHtCM80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=In2zIWuk; arc=none smtp.client-ip=185.226.149.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="In2zIWuk"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1vnsVI-003zRD-8c; Thu, 05 Feb 2026 07:06:12 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+	References:Cc:To:Subject:From:MIME-Version:Date:Message-ID;
+	bh=4P6DhQfnttO3v4sOhIaZSWh70THqamNOTPtBNObtiCU=; b=In2zIWukOvSBu8/zpfIE8DSQ8I
+	NRaI326DPkPAghDEjvK/N8WNNA2mip23H88fx80BWfnfjfpM9QK0FqNPOIZoU+VlP1Swua9gkWH2A
+	iFQwNpyOCFuHTbwM7e0lTK8gaenMIiaQMt7O6H6XL3hSR3sxjNLWK17T21r69FuCZHn4Pc4cQltUi
+	HD252oV1gxRsTQxMC4hDIOIG4ki4zY2M0+KkuMwjjmwJnilK7kbW4uqLTi/4BUTRQuMNhPIVTurai
+	VAdFFrYvlla1bsrK3Gq91SeD5fhrucTKzABBqGOOLuHBIdXBHsOdfl5GrUXuKSO4xUBfQuEzL9HbP
+	WQehdIRg==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1vnsVH-0006Rw-4l; Thu, 05 Feb 2026 07:06:11 +0100
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1vnsV8-003zR8-Td; Thu, 05 Feb 2026 07:06:03 +0100
+Message-ID: <ef128e1d-dd3e-4573-bfcd-6a98a0a1f394@howdoi.land>
+Date: Thu, 5 Feb 2026 00:05:59 -0600
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aYP7KKD1tDsormI3@fruit.crustytoothpaste.net>
+User-Agent: Mozilla Thunderbird
+From: Colin Stagner <ask+git@howdoi.land>
+Subject: Re: Re* [RFH] adding test coverage for contrib/ in CI jobs
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Patrik Weiskircher <patrik@pspdfkit.com>,
+ Adam Dinwoodie <adam@dinwoodie.org>
+References: <xmqqh5smdejc.fsf@gitster.g>
+ <20260115175403.3971-3-pushkarkumarsingh1970@gmail.com>
+ <7k7ewvrb5hj3jyesiigy6dvo5w5pl67rk7ihztsuxbtqpymafv@ey64nvhzhacg>
+ <xmqqjywuyhu9.fsf@gitster.g> <xmqqsebhu9nn.fsf_-_@gitster.g>
+ <xmqqjywtu58j.fsf_-_@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqjywtu58j.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Feb 05, 2026 at 02:06:32AM +0000, brian m. carlson wrote:
-> I can tell you from my experience that mrustc's cargo implementation is
-> extremely limited and does only the bare minimum in terms of
-> functionality.  It already needs some help to work with static
-> libraries, but I'd really like to minimize the work that needs to be
-> done on it since it's not lovely code, and using a standard layout is
-> going to help with minimizing the necessary changes.  I will admit that
-> I haven't tested using a non-standard layout, but I fully expect it will
-> not work based on my experience of the codebase.
+Junio C Hamano <gitster@pobox.com> writes:
 
-For what it's worth, it looks like mrustc supports non-standard layout
-just fine[1], and that's not totally surprising, because the rustc codebase
-used to use non-standard layouts a lot (although that's not true
-anymore)
+> Unfortunately, this seems to reveal existing other problems with
+> subtree tests (t7900), in addition to diff-highlight tests (t9400)
+> in various configurations.
+> 
+> https://github.com/git/git/actions/runs/21617099884
+> 
+> This Ci run is near the tip of 'seen', so there may be breakages
+> attributable to new topics in flight
 
-1. https://github.com/thepowersgang/mrustc/blob/7ff9513adb7cdbe0f8799e7b1f2e4df00ae21a14/tools/minicargo/manifest.cpp#L772
+At least some of the subtree failures on linux-reftable, such as
+
+<https://github.com/git/git/actions/runs/21617099884/job/62298228602#step:10:421>
+
+are actually due to a bug in ubuntu:rolling's "dirname" implementation. 
+This was fixed upstream in late January [1].
+
+bug behavior demo:
+
+     podman run --rm -it -q docker.io/library/ubuntu:questing-20251217 \
+       dirname whatever/.
+
+outputs "whatever"
+
+     podman run --rm -it -q docker.io/library/ubuntu:25.10 \
+       dirname whatever/.
+
+outputs "."
+
+
+subtree has an up-front call to
+
+     dir="$(dirname "$arg_prefix/.")"
+
+which encounters the defect. It then attempts to do things like
+
+     git read-tree --prefix=. $someref
+
+that error out with messages like "error: invalid path './sub1'"
+
+
+[1]: https://github.com/uutils/coreutils/issues/10508
+
