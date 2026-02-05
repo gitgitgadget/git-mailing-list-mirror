@@ -1,125 +1,72 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AE4355055
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 06:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125C833EAF8
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 07:41:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770274746; cv=none; b=tZ2EkVKHM/XdIqbIaqSVL4nHRBeTIGDOAMorj+xMOUJm8UvQlb4T7ojmb8Mf4w5YOrck1ehzFP5tVCqKnybmLsbYW6I9wu5yGP0cI8VKyyb+r9a606klMvOLhWmykG9psSFHAPErSasMlAy40vMyIGfp1sBgzrJlkyxa3peqzsc=
+	t=1770277311; cv=none; b=aEez0Q6WxUK+HwBU6SCRNDjQqDFMeg6FsVfVXRT95R2PUeIv7iZoaTwn/++h3IqlfmvIzMie2uSpClOpReuBdiqjWYKRpxZU082bew+KRp9WV8qCaoO/cgc3Rv7Vx8VJFatmzieIRd/LDJHKIxkNQb6p1eQs52YXkKrNsewDico=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770274746; c=relaxed/simple;
-	bh=H1O+/Be4+nqL5GpaEr3yIGLNVc4qZEFmScUjZjWuReE=;
+	s=arc-20240116; t=1770277311; c=relaxed/simple;
+	bh=6njmBYfZIyg4bokTqmBy6HJgyf5ljAF/IgVSHOkR5hQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=llbhEU+M4dQzmJLuULULvksKXKsCCQxsOiJns1ZvX5nmVQNgPkG/60jsAkzK49oPuJEYjmpuP/sZWt9G3kG8kuRO/XRY4ufzR0W++kfIRK9ZRW592ewiOP4EI1brj4WTKUlS8fos65MFiu1OQqi3ISURRewab4ExxPILG9bm/ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Lb7Iq8mW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aG/rmamq; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=qylY+FXPI/57PZczgEp2QnRtPqYmkJ/yDuINf7q9u6aijfGbSDz7MmbRzal8tdZ1eS5K8lLsOTEr7jU5B5Juq381tW1YHxKc6j3z8fm2wcxxQJ7VuNaizZk9hHeUqIVU+CmpIywGDrlI1QmV7djpR3C/ESocOyLU6OYHAtJjga0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eP44Zz80; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Lb7Iq8mW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aG/rmamq"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EF42114001A3;
-	Thu,  5 Feb 2026 01:59:04 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Thu, 05 Feb 2026 01:59:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770274744; x=1770361144; bh=FnxBqC5V9t
-	MQAnNazOv/VYeJGbRceYZmjXyg4OqvpfU=; b=Lb7Iq8mW7cnNgfhzWHv6HJPf64
-	jSS7GRnUESuASvqMiVfPCboodF6E3GI42nXCYFLw8M3Cy5RjTKIfzcI3wgHL62gf
-	yPuzaa/8Ve9uaGDHP6gpisuhAnTNl87JqTBBiWkDrQurxxqAmyudIWd4rLKv8KQq
-	v5NLcxIrBTG+33ZSXJLtbLTTSY4vG570VjSU7YOiOmHVl+dKkRWkqjnwXuRTL9Lm
-	YRTAh2krd6gQMUyyUzfAkWRG7vh8JoOaXaybsfLJ7vS4M/yPEMjmTEl3RD+mGPkh
-	oM3AUi93+oyZWJYIlzNq2v5o6eAtcWxGuA8OaSO84x3tAMxZluuDdSGhNv0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770274744; x=1770361144; bh=FnxBqC5V9tMQAnNazOv/VYeJGbRceYZmjXy
-	g4OqvpfU=; b=aG/rmamqBmN22a2ALoAnIlomc0jU2Tc4/YWxKMWWFht0wubETJh
-	kfD0GG4aJ2snF7ayuTCkPgVIK/jJ0uBRWVULgp45N2MHY+W1ivM5w4WlQD1nbiSA
-	hbfvd0m+s1xoVXkZvlNiO5wZVDw/IQP6601CZedd5noQUWyyVib4f+Qh0V2a0uLg
-	lwxu1aXQ7Kw+Qiird4kOnoPlwP/64GeEXArLWxPa2Ps43JZGrJClSv5oJ09h84fR
-	Ve+giu26DbofR8XMyS5mWi91apjdca05Q3nfZVmtfYJV73ykWFpuZJVUrEbItSVF
-	gaYtT2Whsg/+AXKSxfL07uucYXhlfrNgdpg==
-X-ME-Sender: <xms:uD-EaZ9czelbDO1v7BGtZpHATnx6Qa-Le9Ag4L6CxrcmKRb9dxHn7Q>
-    <xme:uD-EaVJBDQRLq1-uZbkOh2dzQ-2P3Ez5h9FuIyXi-VNI7LVxsT9WZifTGXaBH2czX
-    FzTrpNMIakC_I9eoz1T8DkdM8pSB1TVHBVjMvOX8RT3ThqDOjE9Z2I>
-X-ME-Received: <xmr:uD-EaUaEaip1CJbXuNbcn-5UjI-7tfVcGUT5CGmGddPRMXIu4yPacGCDprs8fhgjcQELIM5O7LxoBQh41Q94TcorKkwldWwN-7z0rHkIOiSx8Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeegieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hjiehtsehkuggsghdrohhrgh
-X-ME-Proxy: <xmx:uD-EaXK5g08awZJXPkwR6xTZj_AKfyW_Gikt8EbLgVjBch4X9XSUmw>
-    <xmx:uD-EaSDdK28ghGGu4OWtr8pX3ZXdguHxHqOhf_qnTmazjhjSPF2f_g>
-    <xmx:uD-EacpnaWKzvlukKXvafk8ZyRoYdAkTLPpxfRY8KCLhcDN8buR8Bg>
-    <xmx:uD-Eadi2K-Ktt0SNU-KbSBAwh8rz4vj2nOra8fAel3tc8nxoxVUh5A>
-    <xmx:uD-EaX3fO9hKtOLLxVoNHw0caj2NEUs4_7YIaDxWvMRtbzmUZxj49-t9>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Feb 2026 01:59:03 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 15573348 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Feb 2026 06:59:01 +0000 (UTC)
-Date: Thu, 5 Feb 2026 07:58:58 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2] meson: wire up gitk and git-gui
-Message-ID: <aYQ_sk7bWv1dFo09@pks.im>
-References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
- <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
- <xmqqa4xopf95.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eP44Zz80"
+Received: (qmail 289881 invoked by uid 109); 5 Feb 2026 07:41:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6njmBYfZIyg4bokTqmBy6HJgyf5ljAF/IgVSHOkR5hQ=; b=eP44Zz80JRCefnarIM3viHBhDJP+m+LysaLVQ/dCkb0At0ZAlEH5FpB99u4LkPidYoN+5jvzds0oXK3dsM4VA31WVOdktb5W4R6UJQC+2uPHQIT/MwT56lOsLcMPMtNooZy5KOlF3Morkg9UGWW8aG6eMclTagKVVXKFYkugD+ETu3g4AcbBdgLwkCprmDUB7YoDEc5BUTOV3XoxGFq3hdDxHPcOD7f3JJlV6T+iSc7zfsXqnvskhFtCnB2ZtyAAEWG6w3xW/vRNA8fqDXpoeD4EhEhNpP4UMQfzoeRlnoXEH/okHltwrdkc4vg7Nd15qdemkcm7mS+nfXaTLjD4/A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Feb 2026 07:41:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 572878 invoked by uid 111); 5 Feb 2026 07:41:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Feb 2026 02:41:44 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 5 Feb 2026 02:41:39 -0500
+From: Jeff King <peff@peff.net>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] global: constify some pointers that are not written to
+Message-ID: <20260205074139.GA1019015@coredump.intra.peff.net>
+References: <342b01acd42f1fcaa3abefa38dc589e12ccb1134.1770261829.git.collin.funk1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqa4xopf95.fsf@gitster.g>
+In-Reply-To: <342b01acd42f1fcaa3abefa38dc589e12ccb1134.1770261829.git.collin.funk1@gmail.com>
 
-On Wed, Feb 04, 2026 at 09:53:10AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Wire up both gitk and git-gui in Meson as subprojects. These two
-> > programs should be the last missing pieces for feature compatibility
-> > with our Makefile for distributors.
-> >
-> > Note that Meson expects subprojects to live in the "subprojects/"
-> > directory. Create symlinks to fulfill this requirement.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> > Hi,
-> >
-> > I have upstreamed support for Meson into both gitk [1] and git-gui [2].
-> > This small patch series wires up support in Git.
-> >
-> > Changes in v2:
-> >   - Use symlinks instead of moving both gitk and git-gui into the
-> >     "subprojects/" directory.
-> 
-> Just being curious (as I cannot offer an alternative if the answer
-> turns out to be "oops, no"), but is Windows, which has been symlink
-> challenged for quite some time, happy with this?
+On Wed, Feb 04, 2026 at 07:24:19PM -0800, Collin Funk wrote:
 
-I think the answer is "it depends". Modern Windows does have native
-symlink support enabled in case Developer Mode is turned on to the best
-of my knowledge, but not by default. Solutions like Cygwin or MSYS2 know
-to emulate symlink support -- in the case of Cygwin they look and behave
-like symlinks for most of the part, in MSYS2 they use a deep copy.
+> This patch fixes the more obvious ones by making them const when we do
+> not write to the returned pointer.
 
-So I expect that it should work in those cases, but I have not tested on
-Windows.
+Thanks, this looks like a good start. All of the changes look correct to
+me (and can be confirmed with the compiler). I also cross-checked them
+against my own earlier hacky pass. The only difference was in this hunk:
 
-Patrick
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 47222bf31b..87fb6605fb 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -398,7 +398,7 @@ static void parse_ssh_output(struct signature_check *sigc)
+>  {
+>  	const char *line, *principal, *search;
+>  	char *to_free;
+> -	char *key = NULL;
+> +	const char *key;
+
+You've dropped the NULL initialization here. That's OK to do, as the
+NULL is never used (we assign "key" immediately before the first time we
+look at it). But it probably makes sense for this patch to change only
+one thing. So either leave the dead initialization, or remove it as a
+separate patch.
+
+-Peff
