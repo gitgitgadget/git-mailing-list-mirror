@@ -1,158 +1,136 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCB32F362D
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 17:44:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7212EC561
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 17:49:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770313485; cv=none; b=nKfMr3IYKAf/PcjGpMe1dcLgKFpASuL6rMTLTqtSU+2s6guJRkoTj/bT/2zTU+7eQh6Fhet1SOSMPzPdxz+iYKAsFZZDkzHrEdZ6HmKYW3JIRYB/HT9AM9cyCc2z2u+frqYQ+YyUf6R8ZFqZNznuYyb8QV0vY51YIAaHYM5sYXU=
+	t=1770313776; cv=none; b=gwUOGLMrxfQi/PAnYIJNtGamk1DuQIRdOi9WRwjc2Wr594SPw526SWnZls07V0BOjPj+yMS+BlcTs9GOVBYThBeab8xMJGG2Aye8rUqvES+aBV+5iNifh9tL20BJYmVAHPA9lAItq1ymX0mjqm2qjcXTbz0CIFe1pa9MycdsytU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770313485; c=relaxed/simple;
-	bh=6CV7z2uHO1P4cJTFL0HymR2DThSculuzJsICWXbkH3U=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=oGGm1DCq+YWeERodQ3jiAroCPJBnQoBm2/w3s6OC6Gk4c3ecwLilb8feSDFSPcJIWAQwpfJBbBXS/wN9Iw96yzSldaT0dByUVo6zy1B3EBh6ckCof1pRcv2pJExpy1bvzisu4y0lncpKD3mdjxZWWBx8ZYVQhCsIWPBQbAnYTFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=gtwF7fZR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hLVzyMj0; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770313776; c=relaxed/simple;
+	bh=s1oslCudkfnhdT5IO1WmyqQEh424THFOryC4ac75TnU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Bm4sWiG1SicK3Q8RW1ba/X+ZcWrojpxWPuc8wCU44QvDG5IpgS+CO3XbIqrbQHpXQYl+d10K5xZRqHTCeH3rwD1MiIQuuu/n2KCZR3kcWORtRVwK3zek9ZkLx8AlnRTpSlSKC+6go/rHM6qxbssHcw3QLJWTJSn0WW7JCcQS3NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SPHZmZYu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FsnBZQPy; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="gtwF7fZR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hLVzyMj0"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 66402EC0231;
-	Thu,  5 Feb 2026 12:44:44 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 05 Feb 2026 12:44:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770313484;
-	 x=1770399884; bh=aMwT5A4j3+5MFG4AB3FCtt+mpWTRUOeMrX4nwLuUKaA=; b=
-	gtwF7fZR7EQkpLBzoqny14U85Q+lalG3qSz90yvsGNawhRpXGQ6RKuKJ+UfLweDq
-	X9R5iq3ZdyEFanPyJfK+AVsqxjj80S7So9T2nZzwZNfrkrIxm5I8iWOvma431XcZ
-	QRzYMxc2ikMZmJ9yNpfi+YwEJaIdjcocR0G8c/SlkUT1Na8Qq6eobjZV2j428m+O
-	8jpoIrB1g2vJdep81PwV7sVwoBeopWi6nlGpw7aQlzC0syxTtDeKpnzYn0S/XhvZ
-	4Y/ofCiLWqUqM2Iv/68c1BZcdodCP8pgOCuuUgrazYeUqOQV/Nw5K2A2C2EFuLZd
-	Thi2OcWfrTRJq7cbtOqEXg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SPHZmZYu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FsnBZQPy"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E2E8C7A0101;
+	Thu,  5 Feb 2026 12:49:34 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 05 Feb 2026 12:49:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770313774; x=1770400174; bh=s3TRIAhFIy
+	bP1kCDl9qIZdfMVV7alC+C3YQi3kUmcIA=; b=SPHZmZYuu5ZtMqY2S4aWH5VeU3
+	/ayQpgyn2vBFYVxJI1pnabzPsJrIcmeNFsrHW8icgKTprAQBuBXrxxMExo7TpIca
+	vghe8Voy4Tga48GYQ04oUC72d9yA59x6ewztC49Y0+8JAesvB5vWEqrEdRzpaGSV
+	kBJ76ovJN/vliLNf6T/4c7T74MOrRWAkSwvuspRSMTO8gX8HburGRXfDUErZFYMI
+	R13OnaHBaUQ54eNcrah00X/QBh2ltB+OZ7R6K+n2/kRiXHRPFCdpaWzbzgAAm2Wk
+	TQV5PIMj89WTnDulP6NPd7u6cwgbF5kGxkNe/KSbGlg1h0GNIRtx5QTnc6TA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770313484; x=
-	1770399884; bh=aMwT5A4j3+5MFG4AB3FCtt+mpWTRUOeMrX4nwLuUKaA=; b=h
-	LVzyMj0KvkDQmWIK0JHHevjJBv8rprXIuStXMGdGGAdgY1LvsAOSJiCbdFxXcsM6
-	0MltUpdLJodO7XWwKeOHPnid75vb9Q7Ori+0Lugte3pylY5g9P7e9K7npUxc0wQF
-	fLzQNm8SWZ9H6huLldbxrU9F29gbD9n2O8rCvWPV3hAFfXpSCuAL/Pczz5Uzsja+
-	BSP/V5+HOO6HKnyn9t1nUKOl6gt47dVAcy+pzw9cvusOHSW27rrC8qjvwPx2r5DD
-	ORqOxLBMGGNLwzF6NdGk5DuQwPDyt0gi9KW6myfX/B1/7NrKdXoxMy8ESAhnOUwM
-	vMDvyMe/HMe7X4RfLq+aw==
-X-ME-Sender: <xms:DNeEaQbCj_9tDPWUScw1wZV_0bmFxlCXMq3_93yQDybMmEoRfA9tGNs>
-    <xme:DNeEaWPUneW5uim7G6qFztM5XPVITKPsmoP539yU-p4Yi07vwh753_JkKPnZGAe2j
-    5kpYj_rkhGa33g8zMXSfD4oKF-bvHizCEmGlG0VinYwxVU-QR2WuCE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeehleefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770313774; x=1770400174; bh=s3TRIAhFIybP1kCDl9qIZdfMVV7alC+C3YQ
+	i3kUmcIA=; b=FsnBZQPyU6cmsa3pgcdlmpiG7sDOxdDIt87/yxohWOWX5NmM0Jg
+	hS5NRRK7scBN9gekYFxt6VSe04gmldPGapR+saWwPv/Ux4Fig0pzZjYWM1u1TKcY
+	LMMh8lublHGZOxc1sUA0hwcoUTcj/iTw78eSLnrWEBj3xExrmzbOQgNXal4osWYj
+	XHgInFNiT4FBTuqxdNZQLv2qYAT+yzigzGi/q3C4bXqJcYx1l4ukN23dJx52Lahj
+	I+cpWTzlkaOCksUJidiLUYckfh6cIA+vNUxw0gWm8aPyjtlMUUouhaqBj6bWabVA
+	Q/CP1Trb93kxRphGysPBB3s7t8Fu0mrjmTQ==
+X-ME-Sender: <xms:LtiEactbbJImGQoZyoDFWNQu9s4cbPgtXAZcsHVLB10SOUkETR2--w>
+    <xme:LtiEadK4MFNhvnf-362ayH2h5D9w1sOWmS1BfLgaPkPQ33-MC136x86ejoKQZJh2Q
+    5jj4i4_eLw2SvXUCW9AQ8inNIiggCNkLpjkpXWJL2z9Vsf1gKpdXA>
+X-ME-Received: <xmr:LtiEaRm4JvjOJTjOPCHD-sqjZ7MA0bZXnLqq0UMnB9I5tM_I6iqaTwkaFopDfxVpX1qx-A-9OXJ9nsbe5HrTGYxva1jXF2MSQg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeehleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfef
-    gfffvdfhffdvveevgeehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtoh
-    hlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:DNeEaVDu-2uzqk8WsiPIYc1WOstEABnISHoO9b1Qyrv1mU6gmHqhaw>
-    <xmx:DNeEaRVmQD22Y9cFU_ygsBMm6peMWKQys_1T3RDn5Bj5JqVckzbsdA>
-    <xmx:DNeEabCKv-42gmgzf5oirkY3X71Qobg_BBKcHxn-1zMsGVek4wzQoQ>
-    <xmx:DNeEac96_oZPfPcoJychlvAgwzgYYXCM9d1lPcYHV-YlmOxvivevNw>
-    <xmx:DNeEaYgYKp-8BhDYARiAIHiDOEhD1kE_Jwp0fprvyB3e1JTeZ2z4BIEl>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 460651EA006B; Thu,  5 Feb 2026 12:44:44 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
+    homhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:LtiEaWJI3LptTJH9w13uj8Vz_76hLVnPdEL6_9TU5py-VgqKV23zhA>
+    <xmx:LtiEae6soJXhHZ_Lxet6c_LBTVOHffH-1BAcNiAP8Ek7DiKxGJiFBg>
+    <xmx:LtiEaS2UX2-UitOj6SC6IFNjzoeDHBypFcAj5vvP3Oqo1fQp24BqBA>
+    <xmx:LtiEacf7VvizSSbyz2dVOHh-AHcUK7bXgh659XS6hIAgfinVft_IUQ>
+    <xmx:LtiEadKy8u_ijgpEIYN_oFoocJxzgHsG4Oiomj92cGurxAIXPGy01-uH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Feb 2026 12:49:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
+ <me@ttaylorr.com>,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] global: constify some pointers that are not written to
+In-Reply-To: <342b01acd42f1fcaa3abefa38dc589e12ccb1134.1770261829.git.collin.funk1@gmail.com>
+	(Collin Funk's message of "Wed, 4 Feb 2026 19:24:19 -0800")
+References: <342b01acd42f1fcaa3abefa38dc589e12ccb1134.1770261829.git.collin.funk1@gmail.com>
+Date: Thu, 05 Feb 2026 09:49:32 -0800
+Message-ID: <xmqqecmzm66r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AYkm7GZ-qd47
-Date: Thu, 05 Feb 2026 18:44:23 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Derrick Stolee" <stolee@gmail.com>
-Message-Id: <e3f3fa17-fde7-45a0-8474-aa25290ff1bc@app.fastmail.com>
-In-Reply-To: 
- <33faa3f134c81761631c34600477dcbf82e619e5.1770214803.git.gitgitgadget@gmail.com>
-References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
- <33faa3f134c81761631c34600477dcbf82e619e5.1770214803.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH 05/11] config-batch: add NUL-terminated I/O format
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Feb 4, 2026, at 15:19, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <stolee@gmail.com>
->[snip]
-> +OPTIONS
-> +-------
-> +
-> +`-z`::
-> +	If specified, then use the NUL-terminated input and output
+Collin Funk <collin.funk1@gmail.com> writes:
 
-It seems to me that using the imperative mood for options might be
-preferred now. Like:
-
-    Use NUL-terminated input and output...
-
-See: https://lore.kernel.org/git/bcd6fcd1190fe21c667b5253a4a33b833e65860=
-9.1769462744.git.gitgitgadget@gmail.com/
-
->[snip]
-> -	line provides the count of possible commands via `help count <N>`.
-> -	The next `<N>` lines are of the form `help <command> <version>`
-> +	line provides the count of possible commands via `help 1 count <N>`.
-> +	The next `<N>` lines are of the form `help 1 <command> <version>`
->  	to state that this Git version supports that `<command>` at
->  	version `<version>`. Note that the same command may have multiple
->  	available versions.
->  +
-> -Here is the currentl output of the help text at the latest version:
-> +Here is the current output of the help text at the latest version:
-
-Innocent intra-series typofix.
-
->  +
->  ------------
->  help 1 count 2
-> @@ -102,6 +111,48 @@ get 1 missing <key> [<value-pattern>|<value>]
->  where `<value-pattern>` or `<value>` is only supplied if provided in
->  the command.
+> This patch fixes the more obvious ones by making them const when we do
+> not write to the returned pointer.
 >
-> +NUL-Terminated Format
-> +~~~~~~~~~~~~~~~~~~~~~
-> +
-> +When `-z` is given, the protocol changes in some structural ways.
+> Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+> ---
+>  add-patch.c                    | 2 +-
+>  apply.c                        | 2 +-
+>  builtin/commit.c               | 2 +-
+>  builtin/receive-pack.c         | 2 +-
+>  builtin/remote.c               | 2 +-
+> ...
+>  wrapper.c                      | 2 +-
+>  28 files changed, 34 insertions(+), 31 deletions(-)
 
-It might flow better with =E2=80=9COption `-z` changes the protocol...=E2=
-=80=9D ?
+Indeed, the number of files makes it look worse than it really is.
 
-I don=E2=80=99t know how usual it is to say =E2=80=9COption <x>=E2=80=9D.
+> diff --git a/pkt-line.c b/pkt-line.c
+> index fc583feb26..3fc3e9ea70 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -384,10 +384,10 @@ int packet_length(const char lenbuf_hex[4], size_t size)
+>  		hexval(lenbuf_hex[3]);
+>  }
+>  
+> -static char *find_packfile_uri_path(const char *buffer)
+> +static const char *find_packfile_uri_path(const char *buffer)
+>  {
+>  	const char *URI_MARK = "://";
+> -	char *path;
+> +	const char *path;
+>  	int len;
+>  
+>  	/* First char is sideband mark */
 
->[snip]
-> +static void print_word(const char *word, int start)
-> +{
-> +	if (zformat) {
-> +		printf("%"PRIu32":%s", (uint32_t)strlen(word), word);
-> +		fputc(0, stdout);
-> +	} else if (start)
+Everything other than this hunk is adding "const" to local pointers
+and compilers will complain if we depended on them being writable,
+so this is an easy patch to review.  We can trust even this hunk to
+compilers, as the callers of this function would be flagged if they
+tried to write through the return value from it.
 
-All of the arms should get braces here.
+Looking good.  I agree with Peff that the removal of unused NULL
+initialization would have been much better done in a separate patch.
 
-> +		printf("%s", word);
-> +	else
-> +		printf(" %s", word);
-> +}
-> +
->[snip]
+Thanks.
