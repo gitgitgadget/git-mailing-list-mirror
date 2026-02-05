@@ -1,135 +1,200 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F67281376
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 20:08:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0A732C937
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 20:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770322080; cv=none; b=PihBl5dAGVUmNGf2Y9s3SAPl6U3O9/Sug8zfwQ0i5E7DBHKdFhSOwDSflVipJHJpMFLw1eLDiZ3eidMYQlK8CNFu5T4GyFblS1Iuc98yE01u/dXOjDcgc+cPRqaKeuKumk4XOM3kH9kXcV5L9kB63KLzlXKzrhJgcCKs8HDI9ew=
+	t=1770323265; cv=none; b=anpHS+qjeC+uxnVk+k9pQYi8wnuPzw/Lwqrq7i4+y2T3oymXCotOELXa4CNIvRTF0Svz1Vf4JB7txAmV8VvoTPpqw5It6jaPK2r73JOW93Rmn/PlUsCQ7+B1B28b2UueaHg3e25LUx1/brsTUxzGE949KNVpzlS04bvN8UnJwX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770322080; c=relaxed/simple;
-	bh=9+WqyWDA3e+5G6xHFQKtRAOVvLaA7Ld6OBbZeV3t4wg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Mt+UaZk8+8z6iMu1o4o6XWHt3Hc14yWo5EYxitxrDRl+vNbFIHTG370hB/YIQdW75jjFmb88ltbTXEK7I2hcpfTXqVZTodhsOmlcs1TXXNvS6ztHXoWioPvlhTzx2Y19h8Fdv01NlEXaZ3VXxOmxp2dU74IWyySUjW4nLys6m8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wbispIpd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JKgzqk8q; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770323265; c=relaxed/simple;
+	bh=SpUDqDxD4cmnzV2kYWw4caHE2Ovkm9VKFSUaHc9f8/Q=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=SwPPNkvuKImSfwA0Pofh9MiH6yby27y7du7yiKOtAK2TDhLpNYoK9Afbsp8R7KW8YvdGcN1em2RYfa9/2ygAx5W+ATs3M/T60VmsNCYDznnkj0I9Dk3O20bGpvP0fxXGOxcRIy7DFNvXBga5c6KnC8skXkqWaBSPLOXkfKeFJ54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de; spf=pass smtp.mailfrom=ytausch.de; dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b=GQA94EhA; arc=none smtp.client-ip=80.241.56.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ytausch.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wbispIpd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JKgzqk8q"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7CC49EC009B;
-	Thu,  5 Feb 2026 15:07:59 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 05 Feb 2026 15:07:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770322079; x=1770408479; bh=LGfgfLdlxi
-	9DLmNoj4qkkTlgKhoGHiPfmcAIhRpK1LM=; b=wbispIpd/xwpUdJEq7sRHsyUuo
-	6d448BuTopZ5BhadgrCLJRxgi8Ot2QF2OgVNPTJsUHn5oyyz+iaPttjHwbMYQvGU
-	WR86f4PgBHA6j4zDGJyl5EJdsPEpVgMU04uBCpk4DdAsnplzqP+FYBGs2jJLOSKW
-	axXdkTzjRn3kj8a00Sg1dSZXiYIj/o1GwsH8nhhjtsNWwDFXlVVZVxAKyvxsp35k
-	o8gFoxM8aQVKPvW6UBVxH/PrM5zWBm62iJLnkHlLVAEG/EFexQ26FVQoEQAWv5LL
-	dorKTJwu/L+oYEBvHegUT9ODJX61ucYSvZqsMHqBns4lmRkHGfvdNRq4TTZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770322079; x=1770408479; bh=LGfgfLdlxi9DLmNoj4qkkTlgKhoGHiPfmcA
-	IhRpK1LM=; b=JKgzqk8qq8jp/46ef3K2/H7i/Y3Jx54qhQPclsa6YMEphiVUwGm
-	Ux7cpS0aYpV+tsb/nv8+JKPzYa78vPMsIAELsiARLlwCuFwc4F9XuLWHMYO42VEN
-	ysUkKDpIbDOl1lpFoPVwL07c68jegV6RDSSB6KzIRPhMiDYEjdr7i8oXoaYoDdQY
-	xBYx6JfoD7Sj1DLDB11wKhUBXR+iZPBbC3QHX5hE3rwFRGF1kzAeQpoz3bOXMpR6
-	Ol7snJR2LR+9dDnVcKHm9AZGScz9KO/3QWluqc9shdh0vUTwIYiYt0voR5o32wQh
-	t4XkYtnSQStgLUBjtSbLMvWfy1rKb2+B46Q==
-X-ME-Sender: <xms:n_iEadK9ZniOrxIs1NW_lWCYKoxD5jbRyMzGfCEEqjyZMIRphA_f3g>
-    <xme:n_iEaQl2s10Loni_ErSAbgQgUPYT3rYd-ECvsVe1Ca-oIIdpFu9Cd3xmYxE-FLLk1
-    TpEFDbrU60WmOl-bVHhxgX0hXYaxtcNxRjPXZvuL6T1ToQlZBvGRyI>
-X-ME-Received: <xmr:n_iEaTFgP_SEHsTZO9ZU85VdrgXctEupz21IhWTwjTaOeVlPzd6BPLaDLrpuiloKJW_VqsFlbr75TrCbh2JCrzRa4uNXMvOCQA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeeivddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeifohhrlhgu
-    hhgvlhhlohdrnhgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:n_iEaYF-XgP0S_zFQA38UFfd9fpMcRal-3S3VXFbnFf2J7QEN3sitg>
-    <xmx:n_iEaYM-MTxh-v-aQbYxZByddg1Xg0T9D9YdyHO4NUJeh5CLBuBuJQ>
-    <xmx:n_iEafHQdiQaME4FeLUgMdjXlsPfQOGqBUnwmHuUtaj586CYUzJJEw>
-    <xmx:n_iEaXOGTlA3RfeWgzawFseZLCHK5KbNfE2mXar__ayqoUX1cSaksw>
-    <xmx:n_iEaYml5FhPA8EJbT83HQrDHUWyQ_fG0t6pXRmWMatkhJjXS6wqqaX6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Feb 2026 15:07:59 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 1/2] l10n: add .gitattributes to simplify location
- filtering
-In-Reply-To: <00d6cbf44f88fbd402375a2d41d7f9059d339e5d.1770296405.git.worldhello.net@gmail.com>
-	(Jiang Xin's message of "Thu, 5 Feb 2026 21:00:27 +0800")
-References: <CANYiYbFhshDwfttKWYGDfO+K1qAz3ptVHuuHrWXhD2oYBF7baQ@mail.gmail.com>
-	<00d6cbf44f88fbd402375a2d41d7f9059d339e5d.1770296405.git.worldhello.net@gmail.com>
-Date: Thu, 05 Feb 2026 12:07:57 -0800
-Message-ID: <xmqqtsvvkl7m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b="GQA94EhA"
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4f6TKx6PXBz9tQk;
+	Thu,  5 Feb 2026 21:27:33 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ytausch.de; s=MBO0001;
+	t=1770323253;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LQytuBk35YtXmrH08AFtK6JZB7vnIW1hEocuF4yQyRI=;
+	b=GQA94EhA568Tr6W7B+nVsWXYF13Fu19IkfIHMymbbiAVHqfagYkKv0UBedhZ9l7mecNgo2
+	5nLm0wB8IgIGUa/6SMWdgU09W2kNKzuFIWQ0czweKURQSlrvkr8EzPNkSJls1/+LoAwwDH
+	lUm0zfUGm1zcuCYQ4USJnMUfK6UIRjc3DVNdemAXMkUsZfwNYndeQsLUj/4qWThvVfR+v0
+	wsKB/dwUGu5SVLqioSdGOzHzGnbj5f3cwMfHzCfZ5w6k9Nqg6y8zM4wx7DirTzrrMnjl7Q
+	jtugKj36urtKZR1PNQZki+Lw7f16THymtmq/RmuB58kL0//CNivTiQ79Z2Rhrw==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of dev@ytausch.de designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=dev@ytausch.de
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Subject: [PATCH] merge-file: honor merge.conflictStyle outside of a repository
+From: Yannik Tausch <dev@ytausch.de>
+In-Reply-To: <xmqq4invm2dk.fsf@gitster.g>
+Date: Thu, 5 Feb 2026 21:27:21 +0100
+Cc: git@vger.kernel.org,
+ Manuel Lerchner <manuel.lerchner@quantco.com>,
+ Yannik Tausch <yannik.tausch@quantco.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3724733C-FECB-47F5-841C-84DE9792332D@ytausch.de>
+References: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de>
+ <xmqq4invm2dk.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Rspamd-Queue-Id: 4f6TKx6PXBz9tQk
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> Yannik Tausch <dev@ytausch.de> writes:
+>=20
+>> We noticed that `git merge-file` only respects the =
+`merge.conflictStyle`
+>> configuration when run inside a repository. Outside a repository, the
+>> setting is ignored and only the `--diff3`/`--zdiff3` flags work.
+>>=20
+>> Looking at the history, this appears to be intentional since =
+b541248467
+>> ("merge.conflictstyle: choose between merge and diff3 -m styles", =
+2008),
+>> which explicitly gates config reading on being inside a repository.
+>>=20
+>> This behavior surprised me, and I couldn't find it documented =
+anywhere.
+>> Would a small documentation patch to git-merge-file.txt be welcome,
+>> noting that the config is only read when inside a repository?
+>=20
+> Or even better, teach the command to read (limited set of)
+> configuration files.
+>=20
+> By definition, you cannot read from per-repository configuration
+> file when working outside a repository, but these days we let our
+> commands read configuration from system and personal configuration
+> files, I think.  Back in 2008, it is understandable we couldn't.
 
-> To simplify the location filtering process for l10n contributors when
-> committing po/XX.po files, add the filter attributes for .po files to
-> the repository. This ensures all contributors automatically get the
-> same filter configuration without manual setup in .git/info/attributes.
->
-> Contributors still need to manually define the filter drivers using
-> git-config as documented in po/README.md.
->
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
->  po/.gitattributes | 37 +++++++++++++++++++++++++++++++++++++
->  po/README.md      | 19 +++++++++++--------
->  2 files changed, 48 insertions(+), 8 deletions(-)
->  create mode 100644 po/.gitattributes
+Thanks for the suggestion. Here's a patch:
 
-OK.  It is slightly sad that two camps cannot agree on a single
-filter, which may allow us to just do
+=46rom bed0035d38072c67e0be8eedb0cf98da936cbac6 Mon Sep 17 00:00:00 2001
+From: Yannik Tausch <dev@ytausch.de>
+Date: Thu, 5 Feb 2026 21:09:52 +0100
+Subject: [PATCH] merge-file: honor merge.conflictStyle outside of a =
+repository
 
-	*.po	filter=one-single-filter-agreed-upon
+When running outside a repository, git merge-file previously ignored
+the merge.conflictStyle configuration variable entirely. Teach it to
+read from system and user configuration files using
+read_very_early_config(), so that users can set their preferred
+conflict style globally and have it honored even outside a repository.
 
-but I guess this is a good start.  And having sample configuration
-lines that can readily be cut-and-pasted to help the contributors is
-very good.
+Signed-off-by: Yannik Tausch <dev@ytausch.de>
+---
+ Documentation/git-merge-file.adoc |  3 +++
+ builtin/merge-file.c              | 11 +++++-----
+ t/t6403-merge-file.sh             | 34 +++++++++++++++++++++++++++++++
+ 3 files changed, 43 insertions(+), 5 deletions(-)
 
-> +The filter configuration is defined in the "po/.gitattributes" file.
-> +
-> +Then define the driver for the filter. Most languages use the
-> +"gettext-no-file-no-location" clean filter, which strips out both filenames and
-> +locations from the comments. To set this up, run the following command:
->  
->  ```shell
-> -git config --global filter.gettext-no-location.clean \
-> +git config --global filter.gettext-no-file-no-location.clean \
->             "msgcat --no-location -"
->  ```
->  
-> -For users who have gettext version 0.20 or higher, it is also possible
-> -to define a clean filter to preserve filenames but not locations:
-> +Some languages use the "gettext-no-location" clean filter, which preserves
-> +filenames but not locations. For these, install gettext version 0.20 or higher
-> +and setup the driver as below:
->  
->  ```shell
->  git config --global filter.gettext-no-location.clean \
+diff --git a/Documentation/git-merge-file.adoc =
+b/Documentation/git-merge-file.adoc
+index 71915a00fa..773037aa14 100644
+--- a/Documentation/git-merge-file.adoc
++++ b/Documentation/git-merge-file.adoc
+@@ -86,6 +86,9 @@ object store and the object ID of its blob is written =
+to standard output.
+ --zdiff3::
+ 	Show conflicts in "zdiff3" style.
+=20
++The `--diff3` and `--zdiff3` options default to the value of the
++`merge.conflictStyle` configuration variable (see =
+linkgit:git-config[1]).
++
+ --ours::
+ --theirs::
+ --union::
+diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+index 46775d0c79..1b6e16b9cb 100644
+--- a/builtin/merge-file.c
++++ b/builtin/merge-file.c
+@@ -95,12 +95,13 @@ int cmd_merge_file(int argc,
+ 	xmp.style =3D 0;
+ 	xmp.favor =3D 0;
+=20
+-	if (startup_info->have_repository) {
+-		/* Read the configuration file */
++	if (startup_info->have_repository)
+ 		repo_config(the_repository, git_xmerge_config, NULL);
+-		if (0 <=3D git_xmerge_style)
+-			xmp.style =3D git_xmerge_style;
+-	}
++	else
++		read_very_early_config(git_xmerge_config, NULL);
++
++	if (0 <=3D git_xmerge_style)
++		xmp.style =3D git_xmerge_style;
+=20
+ 	argc =3D parse_options(argc, argv, prefix, options, =
+merge_file_usage, 0);
+ 	if (argc !=3D 3)
+diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
+index 06ab4d7aed..9df9f878c8 100755
+--- a/t/t6403-merge-file.sh
++++ b/t/t6403-merge-file.sh
+@@ -428,6 +428,40 @@ test_expect_success '"diff3 -m" style output (2)' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'merge.conflictStyle honored outside repo' '
++	test_config_global merge.conflictStyle diff3 &&
++	cat >nongit-base <<-\EOF &&
++	line1
++	original
++	line3
++	EOF
++	cat >nongit-ours <<-\EOF &&
++	line1
++	ours
++	line3
++	EOF
++	cat >nongit-theirs <<-\EOF &&
++	line1
++	theirs
++	line3
++	EOF
++	cat >nongit-expect <<-\EOF &&
++	line1
++	<<<<<<< ours
++	ours
++	||||||| base
++	original
++	=3D=3D=3D=3D=3D=3D=3D
++	theirs
++	>>>>>>> theirs
++	line3
++	EOF
++	test_must_fail nongit git merge-file -p \
++		-L ours -L base -L theirs \
++		"$PWD/nongit-ours" "$PWD/nongit-base" =
+"$PWD/nongit-theirs" >nongit-actual &&
++	test_cmp nongit-expect nongit-actual
++'
++
+ test_expect_success 'marker size' '
+ 	cat >expect <<-\EOF &&
+ 	Dominus regit me,
+--=20
+2.52.0
+
