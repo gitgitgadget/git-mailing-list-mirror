@@ -1,70 +1,90 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA841E86E
-	for <git@vger.kernel.org>; Thu,  5 Feb 2026 22:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB7331AA8E
+	for <git@vger.kernel.org>; Thu,  5 Feb 2026 22:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770328853; cv=none; b=ZEPCANNyL+fwVVof2GGzO9dxYC0xXL4wazKUUvYh1GTiJ1iSVIbpxhQyzfdMroEm4p/KCxXiE8sLcMnpUleo+zl/YVqK96v8Mn3W1P1XzLq71Rkk9/JM4JNIBmaObbTSq9dC4/HtnjSwLVfjLbzDuWBkzmhpqfIQ8kW1zaGPCvQ=
+	t=1770329154; cv=none; b=rz0/Z++XebI+BomGh0zHS/JvET7CleQnmnioiz6oPPXV9GwKXcL9fvAQ7Y3xVUtSBxBKZtsB2vBbt4VLEfvQ6oQ3AA1QacmOp9To5EEmc6geMWSxQCE9j1dgUFRRbVjofex5cZCwv0qdAzVE9NEdGnmmptnnL8UdmOf+UZ1lQIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770328853; c=relaxed/simple;
-	bh=8NT2iFuBAfAkPQhHFYL1D3RgIqw5nwJ9n5pwJXD48JI=;
+	s=arc-20240116; t=1770329154; c=relaxed/simple;
+	bh=cIDOxXZDfmQY4aucSQ/lnpqpqBdp5WTURO4fnBsSYEg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nw2Co1ProRrLC+yahCyOTPK+9I98LoBuI0lwSKJUE41MS6RrwSRJUawAlDQBjg+8OFveR8+goHIKMFW+6jPcmYk9laMMmfHrEXYFjn4wQ1RAFCJPjp0PG+qeAya3x/07dfXIscm/JGWTN3SiEiIDVk4rYjJvbwiJ91CG1uu+jDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eKFH+uK5; arc=none smtp.client-ip=74.125.82.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=MZsH9aIYmtsi/PzWCER0Dvyit89Vd25W4DmxygE/2zyxWph78RrnMHyY/VyvJShCp6xv5thw8DCknniBP3krmrePYrSEKgoCl1BiTC0U9Vph1Q8z+kVktk0m8LdKqjBpv/G9drX7xkIDbeKEVIafaLuYAtfeJrXhRkgdH8jAvEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U+jsPeio; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=utIMLhp8; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eKFH+uK5"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2b7070acfdcso69539eec.0
-        for <git@vger.kernel.org>; Thu, 05 Feb 2026 14:00:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770328853; x=1770933653; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jGRtag+wuArWyMrJhUkzWLYlR/IxmExEpA69riX048s=;
-        b=eKFH+uK5hoVB0DdxCuHWXG4FGTEdlRQ9DxdtBnwsN486Qk/idHvTp6Ky/11g7q9pG2
-         dULXrJCb5jPUvi5rqMqSBS2/6CW8yCdp2s1D9rOoN835CXWi0u8icNtYsYLU3t94cklv
-         9MHM6ZbpJT9UY4k/rWt+Y6Fhmi5Sq4PY7KQke0q5HIOaGsCEnK59L+QXgr0xHUFvL7LX
-         +NMZWAD4dwxUF6TJbiQgnT5okAymXpUvv2wKvk8kfKixqzdGSaQUJV9jrOl7hw0UqqLz
-         S2JqFP938phSfWpZOsuu1bXUqi4TKkRhHe5oOE9RkFe8A5TAnZcWXpPhI7VDNG1SDvtz
-         qCdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770328853; x=1770933653;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jGRtag+wuArWyMrJhUkzWLYlR/IxmExEpA69riX048s=;
-        b=WGJ5V3HxqErabqfTQ40aH3mfrTEtPYUcN8Z1zmN7olmu7pin1ystMVfKwPps+8l3VY
-         MI5TvPoXdvAritBmKoA6FtTKQ/oVHzy5nUYV8VqGbE3dasinf4SPg/WxG2epSPNzfvgJ
-         qfIHsYQrv1yyGxFQNvZDWWYWSzRWQgVG1bLYSZvj5F+fte8AViRGLtkdzlQeI6xakp0W
-         UKVQWr0PHZTBnZY+ChYc8Z9jUitmdISTlHk05ojqA1W9klq1ZUS/7KzCWUaNXJS1cqWy
-         /XL3j6H/v37q09oiN8TUzvspOXTP4Li9T5iCV9VHIcLSpsZQt7ZBwhR9E9/EjRjhmKZ5
-         ddMw==
-X-Gm-Message-State: AOJu0YyMhizAwi5cifb/tATOv05LaR0Yj7r6S1tjjJy6cd1m9L1MeT+6
-	wc+tS4TPqqhTyDZYuORNSFdGlA/LV8y4yiJX3hr5iLrQJC3fReed+qkP
-X-Gm-Gg: AZuq6aJluSHr1WRT3+ZxmzQz8/NodoU4P3kWamHjZs6bxBNSPGZVOJ61pDByxSRp8x2
-	cuUIqcWt33yeTt2/GSZ47WKixQdF1utWYC4QwlDhrFUX+syOVCeT56Y7Y+vsyyU6HpJTMSGQQHq
-	myU3bNw8YYWo6Mscz+T9uZ7y2pgzGB5A1PBTSnQl/qFcG6dML3zyMwKh0sMR0Apqxak2cPxCqIW
-	S7d1qe3eFqguSWMGi6aW067xnIqOfUK1jdNkiPs9iaAxT84R1rhWjUHzLVMBwHyWvDQGWx/N01C
-	qYfVmtFzWKBlatVFxxmNFk2Tvpjc/hqwD6TXTb7t9w1GFH/p6nHRONwntwSMJXZ9hlclOe9boQh
-	CVWn5ftFZ6Wu2EdY1VkkVh3qdAlOcC0GHmH01U/QrwOkAqN40s/0hY7qtKzQaR8OtQAAa
-X-Received: by 2002:a05:693c:2b0f:b0:2a4:3593:ddf9 with SMTP id 5a478bee46e88-2b856a45ee5mr253116eec.38.1770328852012;
-        Thu, 05 Feb 2026 14:00:52 -0800 (PST)
-Received: from fedora ([2601:646:8081:3770::996e])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1270433ab31sm423597c88.11.2026.02.05.14.00.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Feb 2026 14:00:51 -0800 (PST)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] global: constify some pointers that are not written to
-In-Reply-To: <xmqqecmzm66r.fsf@gitster.g>
-References: <342b01acd42f1fcaa3abefa38dc589e12ccb1134.1770261829.git.collin.funk1@gmail.com>
-	<xmqqecmzm66r.fsf@gitster.g>
-Date: Thu, 05 Feb 2026 14:00:50 -0800
-Message-ID: <87343ec0kt.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U+jsPeio";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="utIMLhp8"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 53887EC00D6;
+	Thu,  5 Feb 2026 17:05:53 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 05 Feb 2026 17:05:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770329153; x=1770415553; bh=M4H/6UfKqy
+	A+c5sDjWnOffAaZcMFIexYP73CUW1hJKo=; b=U+jsPeioJ7lQx8hRwlOJmfGoo8
+	gCfWB1DsuJFchy+XYi9iUeVamBVHfqApJ1ajveO81N7mzpXNIjeR9vbDJwhZDxc9
+	BWLE3cBTzjBBthbbDGk9ZU/sR/bGcSLZvj3KgFUnCcgmnLlTNvThbyshR+n5UgyR
+	6BCTDIHjbfG/e5+uZjQW4HEaEBAnkD4uJzJ3OFYZOQVLl+3rieebiMTDuhIvAMHt
+	aw8UwOEga8MdMPWD6DQ5CSliNMYnYsh070IYsFoXTbZNsDZ+mIFhrEgvxApRcmQu
+	831OOBSsz1XnMIpvOtoH8VQtHcFMHuwE13+bFZcnkpAyd+QxZUVaaPx+j4jg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770329153; x=1770415553; bh=M4H/6UfKqyA+c5sDjWnOffAaZcMFIexYP73
+	CUW1hJKo=; b=utIMLhp8O1Ju97vxTJ3KB16RVXP5WLw444HRuhjplkYlMamVMaa
+	KsIbt7Qs1VBhDmtEQ1cgxliUQftN1LkL1kEnb3UixA8Vlana4A/bSfG3tO1dNsOF
+	FP5059zgI8kDoskYeOf6yA/sThXvdyjsq1JX3MveUQHr1VIYMUbBbpOevekVDSA0
+	1SpWuw//l0r1vQb0dWp1vfVANc9+Ozbq2mWmTtMhZDOxgyJ5p7fV6tt8WtD7E3zm
+	g/64TJjqMQpTaLLL63qFtndYxyhhB3/L/HDVK7B380tpb9ZX/9bNbG2ifD3pDVrZ
+	/4X8tj6NoZuvM1fhGljJSWJpatGxb69Hwkw==
+X-ME-Sender: <xms:QRSFaYxKjmFYBZO1eMh0fTqIHlWWLmvz9P3OrrP8gwNhS0Jnl7n5EQ>
+    <xme:QRSFaTJszJwUdGGDIaPD1ji90r8rpL4DcY1tmBC9ga77HFr4Sq1vQHDHTT4Nmosri
+    kMBMQ_rzTA3lRX2aov6ZSFC1eEmdXgxkFY26IlK9WJFh8aHshuXIQ>
+X-ME-Received: <xmr:QRSFaSqQaSlJIiqtTXzQdz6Q_CbfY29tzZ5xg6AFcz86-JJwFXBTLeNWPnIeMawo70l87srlkdpxFdIGDtMXq32rgQ_CC3x2Ug>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeeigeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeduudeiteelleefvedtffejffdtheduiefhieekfffgueefheeuleetvddu
+    heelnecuffhomhgrihhnpegtohhrrhgvtghtlhihrdgtshenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    gtlhgruhhsrdhstghhnhgvihguvghrsegvfhhitghouggvrdgtohhmpdhrtghpthhtohep
+    ghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougdu
+    vdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:QRSFaSJI0VHSf8rjhpNzhOYhFfX0wwEbBIo67YHFkhGO2sFoWi2WUw>
+    <xmx:QRSFaXT_Vw20eWBiUfbH7TKIbcbDZeiXrY6CdKqwfy5qEfo5v2mJ9A>
+    <xmx:QRSFaRtW5tiQ9iD0Qvte1IDe76SKsvg-wwRDiZr6hNXv0NrjuJZR_A>
+    <xmx:QRSFaYYzjGxQ4GMBpbMo2vTw74WPMJCRqDyzDBMa39lSHW9tG8wzug>
+    <xmx:QRSFaWe81U9wmJZsZN8-lMwm65yLO7-jxs0LLNmcXgd2LXRgvuy3lqZj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Feb 2026 17:05:52 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Claus Schneider <claus.schneider@eficode.com>
+Cc: Claus Schneider via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 0/5] git-add : Respect submodule ignore=all and only
+ add changes with --force
+In-Reply-To: <CA+GP4brx2CB5giQ+7Duh2yS4qXYEuWmBVrYG9RpZdtE7FOoWKA@mail.gmail.com>
+	(Claus Schneider's message of "Thu, 5 Feb 2026 09:51:45 +0100")
+References: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
+	<pull.1987.v2.git.1763057433.gitgitgadget@gmail.com>
+	<xmqqzf8pln62.fsf@gitster.g>
+	<CA+GP4bob2A+GsVUo5vy+Mw0qJHDD5g+pyo2Ka1726ouUuS_=Wg@mail.gmail.com>
+	<CA+GP4brx2CB5giQ+7Duh2yS4qXYEuWmBVrYG9RpZdtE7FOoWKA@mail.gmail.com>
+Date: Thu, 05 Feb 2026 14:05:51 -0800
+Message-ID: <xmqqms1mkfr4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,40 +94,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Claus Schneider <claus.schneider@eficode.com> writes:
 
->> diff --git a/pkt-line.c b/pkt-line.c
->> index fc583feb26..3fc3e9ea70 100644
->> --- a/pkt-line.c
->> +++ b/pkt-line.c
->> @@ -384,10 +384,10 @@ int packet_length(const char lenbuf_hex[4], size_t size)
->>  		hexval(lenbuf_hex[3]);
->>  }
->>  
->> -static char *find_packfile_uri_path(const char *buffer)
->> +static const char *find_packfile_uri_path(const char *buffer)
->>  {
->>  	const char *URI_MARK = "://";
->> -	char *path;
->> +	const char *path;
->>  	int len;
->>  
->>  	/* First char is sideband mark */
+> Hi
 >
-> Everything other than this hunk is adding "const" to local pointers
-> and compilers will complain if we depended on them being writable,
-> so this is an easy patch to review.  We can trust even this hunk to
-> compilers, as the callers of this function would be flagged if they
-> tried to write through the return value from it.
+> I have implemented the --ignore option. I believe it is done. Please
+> review it again for integration to 'next'.
 >
-> Looking good.  I agree with Peff that the removal of unused NULL
-> initialization would have been much better done in a separate patch.
+> Best regards
+> Claus Schneider
 
-Ack. I figured it would be okay since I was already changing the line.
-But noted that Git is a bit more organized than me.
+Sorry, but I am confused to see this follow-up to [v2 0/5], after I
+saw at least two messages from you that said something like
 
-I'll send a V2 later which splits that into a separate patch.
+    Thanks for feedback. Noted and will be fixed as this:
 
-Thanks both for the review.
+in review thread for the [v3].  I admit that "What's cooking" report
+often has stale entries, but for this topic, I think its recent
+editions reflect the latest status of this thread correctly.
 
-Collin
+* cs/add-skip-submodule-ignore-all (2026-01-13) 5 commits
+ - Documentation: update add --force option + ignore=all config
+ - tests: fix existing tests when add an ignore=all submodule
+ - tests: t2206-add-submodule-ignored: ignore=all and add --force tests
+ - read-cache: submodule add need --force given ignore=all configuration
+ - read-cache: update add_files_to_cache take param ignored_too
+
+ "git add <submodule>" has been taught to honor
+ submodule.<name>.ignore that is set to "all" (and requires "git add
+ -f" to override it).
+
+ Expecting a reroll.
+ cf. <CA+GP4bqY02wcESuz1vPMcknigx_fUXFfi_xQ1EG_muGw6EszRg@mail.gmail.com>
+ cf. <CA+GP4bpwMui5RT9ixo8iWyZ6XZDw3GnYhvgiqVmRq8dW7yo5RQ@mail.gmail.com>
+ source: <37fe7956e089394bb1d75f4c8af4a3347b204803.1768376879.git.gitgitgadget@gmail.com>
+
