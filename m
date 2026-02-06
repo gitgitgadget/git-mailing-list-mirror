@@ -1,69 +1,70 @@
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E618A368260
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 13:23:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E67A368260
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 13:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770384184; cv=none; b=sP1BB5E5+1MW3jMkWxetfONzNNwHSFipVXO5OG9zTsm/okcxJ+etpC9i0nEqgGg3AKfhJmBQWD46UycKwK23EtJ0jpl/h10hFJP1QUoZkDkr1Zn2OIoTkbFumJ7hGk2Mmm9U+KgBfh0hSeP1xup2mu9z0mSNb4qGixAO6LWmKfw=
+	t=1770384185; cv=none; b=Vr8e8S6gi3w6X6eIV5NvNZHY8eeZU9BkxsWZb1SQ6qBCPSSmqLvBagQAYkYQBsp3ql8lybNVCmKH1Yt7JzZ4qM9qTMhTv1zic+sGFHzFOH3YDQe6eJNFJ/qmFf0wom5fi6Ia1Oia5bVwpH3uTWSZzpvTU69+83Wq1+p+6x7bh/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770384184; c=relaxed/simple;
-	bh=Nk/LaxX2xewqHpX37WHNzb6QYPAuqPM3gtBJeBMUUFI=;
+	s=arc-20240116; t=1770384185; c=relaxed/simple;
+	bh=mXeUwRR+zKhyUYeDKpK2DlYXTh0o+jQGmcb15BDfmt4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=TrcHcOpW6sFL0eycmveAqNstG4IzBKVcmWIyBYMUTZGfFl7lS0CrRgAi4s6xVwCF2Ho10fV5iK/vXOUx0MC9dS5IuXcFJtSTX/a1dHonVF7s2CtS2dW2hLhN5TXfQLT7OFyw7/huOGFAiWII6XYgy9FyAQyIS2cwPiterErvPi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YooLXgvh; arc=none smtp.client-ip=74.125.82.46
+	 MIME-Version:To:Cc; b=chsaDcsMsU9VmFdtwgjbAbr/yIMS1QNDp0hsHmaFcdd3wU9Cpn0GcTtAh38S6BwSShLoa/MzRGAChK45TDII+kJY1eqVv7Q+xiEsyZKOKfY2yIZIrHktuc+Onq6bm3x+0K3LC8fSmDUloalcLNDjIXRL+ZeowJCHKQKlKxgu41U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O7jhLyew; arc=none smtp.client-ip=74.125.82.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YooLXgvh"
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-12460a7caa2so717269c88.1
-        for <git@vger.kernel.org>; Fri, 06 Feb 2026 05:23:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O7jhLyew"
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2b4520f6b32so3057905eec.0
+        for <git@vger.kernel.org>; Fri, 06 Feb 2026 05:23:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770384182; x=1770988982; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770384184; x=1770988984; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xa2TSeCB4cMsfKGL1BvJtgRV4Z4CyBv67XXlxfZkyrI=;
-        b=YooLXgvh/7uf5Njujds9qTLIaHMnJvGyDL7e0ElEwRfrZQAmy9pznNTfrxRv5IFKig
-         /sTW4TNogfP3fON0VCRb35nBMULfPNEMH5hMfuudw9Yp0jUnhtufJxVRyXYrw12pXZ8t
-         /8lA5Lj8hwvKkyBdlc+9nknqFp/3EjopxfYCArZfnQqVRWAjjagkVI0ilZ6P4+RlH2Da
-         rQswtSyAXDGlaWfc0SkbBdvIkNd105KiVuovKU3T5Zti15jMCQSMSbgyAaMk1l/3ZJox
-         LdYEu9FdogYGp9SVomwIq7MPYFKC9BxdRHbxn5gXikq+48xy+8GkfGESIfJYMuJZwv3C
-         VqnQ==
+        bh=7c4Hi9VeW6Sch7oz86sYAybCT+hK00MonnSVesYMBPM=;
+        b=O7jhLyewwe6YzhSdTRQQ0kDuvMiuf3n8BNjIGMV6R66O5TzJzTgOQfeHHmmMS8+Ibz
+         2jCAr4g8D/4R18v/Nnm2ZJUXz0mFH2Uh226f5YDUmnO9B4Kmy92TtkHsCBGT8XHe5A24
+         UEqPDGEmKaHIwl67h7i5Iy7JOcorZNglCZvGgxyY/idBNh3ElH7LslwYaJCPm+YVqhDN
+         mvX+As7qPTZr0xyXEGaidsxL8JcEwIT06jsTDLi/Kaesbf0BOoWdhvFKgS9T5DOFd71Z
+         NgXitoOwXfC48DvvmnLmPUAHp2JemmbnENRvE6xbfCDv6obYB3gF6iTj/P/wxvpP8M/v
+         LeFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770384182; x=1770988982;
+        d=1e100.net; s=20230601; t=1770384184; x=1770988984;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Xa2TSeCB4cMsfKGL1BvJtgRV4Z4CyBv67XXlxfZkyrI=;
-        b=AfriFb//9cv9X0alpX5ExrHHpNwZyJgDQLl/cXAF1chAfUaz9STJkQjNvJIsgFwHhS
-         91YW5PLl2ha/xOxZG2g7bHJ4orMD3MxOfnjeaIeNOS/HkfE9vlEyYk29ReelpAgumAsz
-         LuTkwm3P83vPRDyOYiYPYypvC5BEKODuG4XXXvuiOwCHFjKWatZIMaKXKtk1pm9qAkU5
-         HDLrwsHnWRoCTEof2p9RXoRCUj1kgUZVdpFOQ85zln9Jve4u2GkPtY0O+GNMgyymubJ+
-         GiAn5mO96LMSpHye0nTH0kYyFZFt/gq+PAdgW3y7ck0L4nAgBdctszc9TDvXCEGLrSyT
-         umMA==
-X-Gm-Message-State: AOJu0Ywh0Kp8l7cRRvSD2R017j01OkzrnpzVaB4p2ql2fNV7EAbocwRX
-	B6gtGo/QthE57ChquK1q7WFhQW/NsFTWXl8e9rLA+/ZdqYt9HQLnA2h6h8xHAQ==
-X-Gm-Gg: AZuq6aKcjwvQMT2UPl/381PN7pHszXTDxNFapXe8zv+5bjoO1HLrUoPV8RchTxHrRI+
-	X2ClYwe8WPWqBAHz21s5ipoT6XdiIgrk9F2Poid6IG9w9VD5CELbDQhQdUJFvH2Mz9Iqkbo81FT
-	eaosn0jfxSzIIg+kwR2nCThYG0YDT0j1n/RgPDBE6SVq6IPD/71hII5SLLmg/6Bl9HhtrHKGoRD
-	fQd6tYP05BAwew9iKgnR7Mc1+zPv7Acv2GdPd2uZPjelDTsWdRlzbaQq2SDmmoBSNEH876naF2U
-	Qe/GLZ4+YXm4ovFeg5wQrouFTV18kGnqqscu05KZy5hBbOSwy0NxsIUCjDcxYbsX1DKtJ/eDj/L
-	VWNJFRYoH8TDxX0PVtP/PHlDJ/tcrq990/VjU3EfsOy4b9CjtmLfGH+55k5iURbpwBy1N6W4ZD4
-	j2XnpCbGnpVhwG
-X-Received: by 2002:a05:7022:10e:b0:119:e569:f626 with SMTP id a92af1059eb24-12703fd06a5mr1201590c88.31.1770384182281;
-        Fri, 06 Feb 2026 05:23:02 -0800 (PST)
+        bh=7c4Hi9VeW6Sch7oz86sYAybCT+hK00MonnSVesYMBPM=;
+        b=PF7T7MyJ0z2ovTlhWToen5DYVomZUwBXm+HSnQcULO25SA0e8Eq31DoV1z/2mVe0eE
+         UiuSZvDSCm48JTI4o7Q+WgnHMXWJ9bPjR8bXj6CX7u5FEpgtoXHv9y1x0uxSHInFJDAD
+         +5MToKSoeJPC77TFOg7bIpGurt0x6qINzWFzyj4vivxswcYB+Jfdn4XVnJyak7RgfsXY
+         D9bf3jMG1ajV9l8JYBj8iDI57cQ+NO6Z9bIuuQKaZqtZ3MVlpnyR27Kb6uED8MCzWrgy
+         4vpbRpwozVyAV4wZqTRNk9pH6D0KAY7YQ4TLjGOLdNqJ2505CYXJMmulAczhO2AySJtd
+         DuJQ==
+X-Gm-Message-State: AOJu0YzkmGay+3IWKr0KgjV8EsJWjlQCNlQHK1lIXBpjtxZyGNCazvEU
+	pMzqcYFHX1faGDUASUoAMK7x9wiUkJAmS2+7tZRXhINzKFv9G6FbHCXBUE4u7A==
+X-Gm-Gg: AZuq6aJlVptves2hJZ1Oi91YYTzKfmqJyuT1mafZFi0i7ouXUAl1yLLHsddvLhvxd4y
+	ax7m1p56t0ocK8Hl8xhtH9NkvB9faQFlrX6HagHdDCDa6NrCASgkLRfA5JvpYLrXcGCk7Nf3zy4
+	PMI9YFlkzpgHxjmDAHufOQdUQMH2w7xff3ivtM/zIkYydQnni7IlW2FwQRkizQKRXqxZ2GLM04X
+	TsvJUr0i0jrRN+9Q8FCauEptgc4bTg/1+L0362IvA0P+Ucg7Djdc1Np43FGy87DMHMLciq3yUH0
+	hnRC8nvcfSnBHuD6X+EzCx/pYsi5Sdx3fWcVcKe5+I6CLLzZGAbC2r9DKUoqggyVzKwOWJlEswQ
+	pcJf/M1WLVQD6s3xmLZGNG3cEFGZpFUy1lAwjB/iJwNsTI7SAIoAOeQXrtEfeiyRFLIH/PB81wh
+	UeJ5UGWtTKZegPDglQclr8aXu4
+X-Received: by 2002:a05:7301:1293:b0:2b0:4fcc:4c69 with SMTP id 5a478bee46e88-2b85647c805mr1126243eec.16.1770384183860;
+        Fri, 06 Feb 2026 05:23:03 -0800 (PST)
 Received: from [127.0.0.1] ([57.151.137.36])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127041d94cesm1714225c88.3.2026.02.06.05.23.01
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b855af78f5sm1680390eec.12.2026.02.06.05.23.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Feb 2026 05:23:01 -0800 (PST)
-Message-Id: <pull.1987.v4.git.1770384180.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1987.v3.git.1768376879.gitgitgadget@gmail.com>
+        Fri, 06 Feb 2026 05:23:03 -0800 (PST)
+Message-Id: <69e0065b1bfe469c25f023592a5a6600d49348dc.1770384180.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1987.v4.git.1770384180.gitgitgadget@gmail.com>
 References: <pull.1987.v3.git.1768376879.gitgitgadget@gmail.com>
-From: "Claus Schneider via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 06 Feb 2026 13:22:55 +0000
-Subject: [PATCH v4 0/5] git-add: Skip submodules with ignore=all unless --force and explicit path
- used
+	<pull.1987.v4.git.1770384180.gitgitgadget@gmail.com>
+From: "Claus Schneider(Eficode) via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 06 Feb 2026 13:22:56 +0000
+Subject: [PATCH v4 1/5] read-cache: update add_files_to_cache take param
+ ignored_too
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,124 +82,121 @@ Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
     Claus Schneider <claus.schneider@eficode.com>,
     Ben Knoble <ben.knoble@gmail.com>,
     Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Claus Schneider <claus.schneider@eficode.com>
+    Claus Schneider <claus.schneider@eficode.com>,
+    "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
 
-The ignore=all configuration for submodules is currently honored by status
-and diff, but not by add. This inconsistency causes friction when working
-with submodules:
+From: "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
 
- * Developers unintentionally stage submodule updates, leading to conflicts
-   and unnecessary changes.
- * Tracking branches in submodule configs causes friction as updates to the
-   submodule SHA1 are added without intent.
+The ignored_too parameter is added to the function
+add_files_to_cache for usage of explicit updating the index for the updated
+submodule using the explicit patchspec to the submodule.
 
-This patch aligns git add with the behavior of status and diff:
+Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
+---
+ builtin/add.c      |  2 +-
+ builtin/checkout.c |  2 +-
+ builtin/commit.c   |  2 +-
+ read-cache-ll.h    |  2 +-
+ read-cache.c       | 10 ++++++++--
+ 5 files changed, 12 insertions(+), 6 deletions(-)
 
- * Submodules marked ignore=all are skipped by default.
- * Attempting to add such a submodule explicitly now requires --force.
-
-A submodule can frictionless track a branch in the configuration or manually
-switched to and use update --update --remote without unintentionally add the
-changes to the super-project.
-
-Tests that previously added submodules without --force have been updated
-accordingly. A new test is added to test the behavior of git add with and
-without --force.
-
-Claus Schneider(Eficode) (5):
-  read-cache: update add_files_to_cache take param ignored_too
-  read-cache: submodule add need --force given ignore=all configuration
-  tests: t2206-add-submodule-ignored: ignore=all and add --force tests
-  tests: fix existing tests when add an ignore=all submodule
-  Documentation: update add --force option + ignore=all config
-
- Documentation/config/submodule.adoc |  13 +--
- Documentation/git-add.adoc          |   5 +-
- Documentation/gitmodules.adoc       |   5 +-
- builtin/add.c                       |   2 +-
- builtin/checkout.c                  |   2 +-
- builtin/commit.c                    |   2 +-
- read-cache-ll.h                     |   2 +-
- read-cache.c                        |  80 ++++++++++++++++-
- t/lib-submodule-update.sh           |   6 +-
- t/meson.build                       |   1 +
- t/t2206-add-submodule-ignored.sh    | 134 ++++++++++++++++++++++++++++
- t/t7508-status.sh                   |   2 +-
- 12 files changed, 235 insertions(+), 19 deletions(-)
- create mode 100755 t/t2206-add-submodule-ignored.sh
-
-
-base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1987%2FPraqma%2Frespect-submodule-ignore-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1987/Praqma/respect-submodule-ignore-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1987
-
-Range-diff vs v3:
-
- 1:  d2b66286c2 = 1:  69e0065b1b read-cache: update add_files_to_cache take param ignored_too
- 2:  de72bf0a91 ! 2:  504edcb0f5 read-cache: submodule add need --force given ignore=all configuration
-     @@ Commit message
-          unless overridden by --force and the submodule path is explicitly specified.
-      
-          A message is printed (like ignored files) guiding the user to use the
-     -    --force flag if the user has explicitely want to update the submodule
-     -    reference.
-     +    --force flag if the user explicitly wants to update the submodule reference.
-      
-     -    The reason for the change is support submodule branch tracking or
-     -    similar and git status states nothing and git add should not add either
-     -    as a default behaviour. The workflow is more logic and similar to regular
-     -    ignored files even the submodule is already tracked.
-     +    The reason for the change is to support branch tracking in submodules
-     +    with configuration `submdule.<name>.branch` or similar workflows where the
-     +    user is not interested in tracking each update of the sha1 in the submdule.
-     +    You can additionally set `submodule.<name>.ignore=all` and the `git status`
-     +    will state nothing and, with this patch, the `git add` does not either - as
-     +    the default behaviour. This patch changes the workflow to a more logical
-     +    behaviour and similar to workflow for ignored files.
-      
-     -    The change opens up a lot of possibilities for submodules to be used
-     -    more freely and simular to the repo tool. A submodule can be added for many
-     -    more reason and loosely coupled dependencies to the super repo which often
-     -    gives the friction of handle the explicit commits and updates without
-     -    the need for tracking the submodule sha1 by sha1.
-     +    The patch gives more scenarios for submodules to be used effectively with
-     +    less friction similar to the "repo" tool. A submodule can be added for many
-     +    different reasons than a hard dependency. It can be added as loosely
-     +    coupled dependencies whereas the user wants the latest based on the
-     +    configuration `submoule.<name>.branch`, but are not interested to track
-     +    each commit in the `super-repo`. Currently it gives friction of handling
-     +    conflicts between branches even the sha1's are fast-forward and the user
-     +    just wants the latest in any way. The user can still add a sha1 explicitly
-     +    to track updates.
-      
-          Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
-      
- 3:  d7b97e12d3 = 3:  d5ea8eb6e0 tests: t2206-add-submodule-ignored: ignore=all and add --force tests
- 4:  6e44ab6804 = 4:  df5c85d9f2 tests: fix existing tests when add an ignore=all submodule
- 5:  37fe7956e0 ! 5:  8bfaa14d44 Documentation: update add --force option + ignore=all config
-     @@ Documentation/config/submodule.adoc: submodule.<name>.fetchRecurseSubmodules::
-      -	commit when it has been staged), "dirty" will ignore all changes
-      -	to the submodule's work tree and
-      +	a submodule as modified.
-     -+	Set to "all" will never consider the submodule modified. It can
-     ++	When set to "all" will never consider the submodule modified. It can
-      +	nevertheless be staged using the option --force and it will then show up
-      +	in the output of status.
-     -+	Set to "dirty" will ignore all changes to the submodule's work tree and
-     ++	When set to "dirty" will ignore all changes to the submodule's work tree and
-       	takes only differences between the HEAD of the submodule and the commit
-       	recorded in the superproject into account. "untracked" will additionally
-       	let submodules with modified tracked files in their work tree show up.
-      -	Using "none" (the default when this option is not set) also shows
-      -	submodules that have untracked files in their work tree as changed.
-     -+	Set to "none"(default) It is also shows submodules that have untracked
-     -+	files in their work tree as changed.
-     ++	When set to "none"(default) It also show submodules as changed if they have
-     ++	untracked files in their work tree.
-       	This setting overrides any setting made in .gitmodules for this submodule,
-       	both settings can be overridden on the command line by using the
-       	"--ignore-submodules" option. The 'git submodule' commands are not
-
+diff --git a/builtin/add.c b/builtin/add.c
+index 32709794b3..eef4959ee3 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -584,7 +584,7 @@ int cmd_add(int argc,
+ 	else
+ 		exit_status |= add_files_to_cache(repo, prefix,
+ 						  &pathspec, ps_matched,
+-						  include_sparse, flags);
++						  include_sparse, flags, ignored_too);
+ 
+ 	if (take_worktree_changes && !add_renormalize && !ignore_add_errors &&
+ 	    report_path_error(ps_matched, &pathspec))
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f9453473fe..88d6a68022 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -899,7 +899,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			 */
+ 
+ 			add_files_to_cache(the_repository, NULL, NULL, NULL, 0,
+-					   0);
++					0, 0);
+ 			init_ui_merge_options(&o, the_repository);
+ 			o.verbosity = 0;
+ 			work = write_in_core_index_as_tree(the_repository);
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 0243f17d53..1a00642090 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -455,7 +455,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 		repo_hold_locked_index(the_repository, &index_lock,
+ 				       LOCK_DIE_ON_ERROR);
+ 		add_files_to_cache(the_repository, also ? prefix : NULL,
+-				   &pathspec, ps_matched, 0, 0);
++				   &pathspec, ps_matched, 0, 0, 0 );
+ 		if (!all && report_path_error(ps_matched, &pathspec))
+ 			exit(128);
+ 
+diff --git a/read-cache-ll.h b/read-cache-ll.h
+index 71b49d9af4..2c8b4b21b1 100644
+--- a/read-cache-ll.h
++++ b/read-cache-ll.h
+@@ -481,7 +481,7 @@ int cmp_cache_name_compare(const void *a_, const void *b_);
+ 
+ int add_files_to_cache(struct repository *repo, const char *prefix,
+ 		       const struct pathspec *pathspec, char *ps_matched,
+-		       int include_sparse, int flags);
++		       int include_sparse, int flags, int ignored_too );
+ 
+ void overlay_tree_on_index(struct index_state *istate,
+ 			   const char *tree_name, const char *prefix);
+diff --git a/read-cache.c b/read-cache.c
+index 032480d0c7..0f4981d79f 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3881,9 +3881,12 @@ void overlay_tree_on_index(struct index_state *istate,
+ 
+ struct update_callback_data {
+ 	struct index_state *index;
++	struct repository *repo;
++	struct pathspec *pathspec;
+ 	int include_sparse;
+ 	int flags;
+ 	int add_errors;
++	int ignored_too;
+ };
+ 
+ static int fix_unmerged_status(struct diff_filepair *p,
+@@ -3925,7 +3928,7 @@ static void update_callback(struct diff_queue_struct *q,
+ 		default:
+ 			die(_("unexpected diff status %c"), p->status);
+ 		case DIFF_STATUS_MODIFIED:
+-		case DIFF_STATUS_TYPE_CHANGED:
++		case DIFF_STATUS_TYPE_CHANGED: {
+ 			if (add_file_to_index(data->index, path, data->flags)) {
+ 				if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
+ 					die(_("updating files failed"));
+@@ -3946,7 +3949,7 @@ static void update_callback(struct diff_queue_struct *q,
+ 
+ int add_files_to_cache(struct repository *repo, const char *prefix,
+ 		       const struct pathspec *pathspec, char *ps_matched,
+-		       int include_sparse, int flags)
++		       int include_sparse, int flags, int ignored_too )
+ {
+ 	struct odb_transaction *transaction;
+ 	struct update_callback_data data;
+@@ -3956,6 +3959,9 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
+ 	data.index = repo->index;
+ 	data.include_sparse = include_sparse;
+ 	data.flags = flags;
++	data.repo = repo;
++	data.ignored_too = ignored_too;
++	data.pathspec = (struct pathspec *)pathspec;
+ 
+ 	repo_init_revisions(repo, &rev, prefix);
+ 	setup_revisions(0, NULL, &rev, NULL);
 -- 
 gitgitgadget
+
