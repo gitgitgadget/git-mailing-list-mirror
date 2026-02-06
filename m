@@ -1,152 +1,151 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2A93451B0
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 07:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770364215; cv=none; b=UlF67c3lTAghjJxsrtklybX7R+iCtCFC6dx/6Fm/U+t/wEw8tA5BaqMuLm89BBg2mNGqsDd6Pw4G5Q3uYbq0kSPhL8hQm/bL/PVFIt6+W3Q4T6KR8O6RNp/xzchzNndGgK4HNN3lzsrfY5igFVfBJvP98vDdPRVLaQ7tnJVGsI0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770364215; c=relaxed/simple;
-	bh=JqGZkDva/JwmPAnAWROpzC7UtPxINCmKntlSahiKKz0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KcVqbuZm9Ecjz4MqU5RuJbKwdmfzy28REqb6sCm2rioJ/2wnWjQWsnHkMnjYMCXqKuefI3o2NYNotwGb5doC2mclvrgVkayCbjJqS2rTi6xPd9qlMioDusHz9jtFC/pBosKMVjhKsB9c8kIQA9lBKEIJzxg25Y/61B3zE3c8Iq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OpYbn69Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jvjpk0qt; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B33718B0A
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 08:05:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770365105; cv=pass; b=F5K6EH1dQ+VyxgdyUmaJr9HInYKAiXQbzja+gqx5DYj9p2cexWynGwqve+w5SVyiHpXkhxD7TE6PW0y4GX98CrAxvbwR/92uoJ8/JlrUxOAG3myFy7DYGkWH9wsDAvVMhI7xzQbM2I3gAfRCTs+zYzipDth4ojU733AbShWJ3yE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770365105; c=relaxed/simple;
+	bh=MawWIdHiVTZYkqUpvIjZRH9byP/aWcGdpyFZECKKLyI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ks516FNqmUR1iDVHb1hpu+R1PBRFYPm5F9oqMFoK9M1uZt+7CUjlT/WIhJSLvF00p7fHJJrcPPiy8i2JVY4W4AZQdbAXpngZjpUJfUI7E/IlyP9hIc1Ckj9BH4AOAfZrQOCgiqtmqXLcd8sVpqOH7fpeDtHlCGDpbSidKLgYNco=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CR6bZT82; arc=pass smtp.client-ip=209.85.160.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OpYbn69Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jvjpk0qt"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BFB877A0137;
-	Fri,  6 Feb 2026 02:50:14 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 06 Feb 2026 02:50:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770364214;
-	 x=1770450614; bh=khCG9c8LeWaAWT6WZ57yGYADaqpoWM9+d4e/VzvI4Ak=; b=
-	OpYbn69YwpR6iSpf3FutExXpG7iZ0qJSUPQQ/1Zf2L49ZA7FnZrJBmrls23P6jUX
-	dSLhLphJaYveGJrvY3TpWPgq4r1oJ8tsg+CO8IZo/DZBAzS5duodwrfBjINoHSQK
-	vvsv9m8snHHt5biIlIKk4lq5yzkm/Cx7HOvwiA487Vnr6K9unCzGytGplgp6JBAD
-	EZ71/k7Hyhdvv3cMbxsAN7Ek6U6rpoidgzMxcPDmRK//+UTb39QgZmuWS9Yd6/UM
-	k1yHn0kXc4uqR+lJMNgS742RivcIfsf52sSy8kMaKFVi+iQMyg+xcW5oyBJkANeD
-	e3Ycl+hDk/QCTOOQzUkwJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770364214; x=
-	1770450614; bh=khCG9c8LeWaAWT6WZ57yGYADaqpoWM9+d4e/VzvI4Ak=; b=J
-	vjpk0qtQdiICpZm+XGz36LNlVgWI4QfdSy2eWeuNnYtHZVFpKKP9dm0y0zOIhnRm
-	Azf6i9V21+nCbJHBFCqHQE3hhwrsPG8tQ/TriMGxYFhHbx5MlnWl06wd0sRb0xdO
-	i8qTPnBczT81vg5c/l8jr3in6H8dR2oTmeLaA68Ypa7eSb8P+Gw0poiUEPr8IG4A
-	GlDCe+zw8uRzNEHeprfK/qCaBKqwSLmyPfSdbwt9XpNyEMu4lMhn2FjjVGjIFTGC
-	LhNyd9yxPmaJ3sbgBQrZvTDN5888fcB95zcJ5XCORurrqGjO7USKc2ZXUU0s6XeW
-	GMULblyLAObgsW35aaegQ==
-X-ME-Sender: <xms:Np2FaVdtcXNlgCPTmMoLoysTWudoA29Yj-CA48pmYawjG3ADUR4jfQ>
-    <xme:Np2FaaN46rDvjz2GDkCqsVm4TtWHkhK-BziY81Qzkpg6TLrBSVliF683Iwxaz1qhM
-    XBh_P2Jr5yh9LQaIVczEKxs7wEddOGV6JiVabWG_1M3m_rxYMZcuw>
-X-ME-Received: <xmr:Np2FaTjdZfrc34UmgzgXteNmCsDDVHzRuXgq0Epu-R2L4mu9O0ZBidxCbL7S3wMPu6sdCJc998SazFDUA6d1bYN8FYsu1rNQS_33-jh0XeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeejieduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:Np2Fad2O33q64VtPCXlg0taJsJFPI0PsIUGr4C1kWV7lrdfaciFIZw>
-    <xmx:Np2FadiXhzLlDMmzEKABa18aCphO33rfT2Cg45zHzlAxAMkudm0RfA>
-    <xmx:Np2FadcE3u_QYlhrlCqiE_TfY8koaXMJywdarTYwttgDhAnusk8LcQ>
-    <xmx:Np2FaQlNAAozvT9y3AMOxjw2_EFpnekAwFEZFUcht9ddjJX27vrcVg>
-    <xmx:Np2FaXC51IuuRNgP5ci7cRFHmst4hlbJeJ3FwhTRoSbWuDA_haAzbgz6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 02:50:13 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d78f5ac9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Feb 2026 07:50:13 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 06 Feb 2026 08:49:59 +0100
-Subject: [PATCH v3 4/4] bisect: simplify string_list memory handling
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CR6bZT82"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-4042cd2a336so1338487fac.0
+        for <git@vger.kernel.org>; Fri, 06 Feb 2026 00:05:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770365104; cv=none;
+        d=google.com; s=arc-20240605;
+        b=QPjPQfa484LQhkc2S106CiE6msLVtKrCkiMBDPEOPF+5Aq2ermcinLEUP5PXGXsSz8
+         8lSCdTEmtkCILORJkdZXsMrWBe3UwQsu4N+8vFZdI5pvy6mDORyDhKUfhoM0s2L35hLI
+         iIKv4PzgN0tOnd/Z3UCCgXPr+E2fRvSEtZmraC4Um2T1GaeafboxoNYtP8IlsREdvx4m
+         JUMIkC3AckiCoAvV6ibeoDWdmYaTmuTh/8tIOt0bWNfChv7ZbZJOB6rjvpIvD4M9HJ5x
+         L8sWQeiyDG+YDpgn4OYclQy1ylgs2LUfnB3vSDjBPrEB7vuyL1YutQipAYpaBAXiamM6
+         Xgkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=GhyC4Jl4tzqyRnayhh+jis88T4m02oiF63k2M8+Fxbg=;
+        fh=FvrUBQN1yUWtc3xTK+GAU5ZkN09eSlkw2Ifnce5hllo=;
+        b=Cx/yXlI98hmgKifxg2JBSKn9kUGhmw4LLEClyVWdhp5xN2jvBBV3URhLzCNj4kVnQx
+         oAssRwwjRWYdkoGLlXhqcSM1GGCvRezg2RmuHm6f/DT9IZs6RTqugAAcKHSzDo860/p7
+         6DsLyGkYA0KzEuscDDhyr7m1hBy+LAWu7rvpt11dIa/cUIgJC7ubD3lNEQutZNdsCFsp
+         wsmod4usd/D5dz/zVYWKY7XH9nPymJ3NGO5Lv5I5eMgEa8IL74cjHj2v8YzlkVgWNXNe
+         +NEii/zqXY0DwESHQZTReKz1lPKVvVvLzwHq8cOhf0wCleEie6WPu8A1bbJwM06KPxPZ
+         MwLQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770365104; x=1770969904; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GhyC4Jl4tzqyRnayhh+jis88T4m02oiF63k2M8+Fxbg=;
+        b=CR6bZT82EIW6fue1AwmyZLu4U4dZNDisapl5XO2zHH6//4u+x5nXNb4Z5W/+fg8U62
+         CwOYQHiiEA1zBUAqrrmaC6HuMd+XqC7asEioUiJW9rKFDwd0OeXg7UCmlsl0BNEyqTJM
+         cuDkUsUVtioavoJ8RZnELSwvRqZjTlWF2ly1H7W0WhfBfV8HyGS1rvURBZHw4vDEyRKI
+         dk94+eP4j3/Owx76f/ynaenhoyB4ksoimA1b7crVOFvd8ko0u/baU4IalzOiwVXXixeT
+         uoa+3FeQyDqZd7G3Fa4+uDTEe+BdXE1fHJ62w6GL9XNtYMmsgEq+UzN3tgMCm3mWXzu2
+         8qWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770365104; x=1770969904;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GhyC4Jl4tzqyRnayhh+jis88T4m02oiF63k2M8+Fxbg=;
+        b=U7QLcN+blNC0Jo7avxPZR++zMABLYonpIwGo0Y1Xnb20ZKJLAHf42sokXgpFSYftkG
+         wFlWXhn+YI4rinTkJlDDexHwD6PdfwThLUbeqCqE5J39QtS97WjNy4xGskYkkuOHHurj
+         7V7Zh2qaPZeavOXp3K6TZD09PkAxTmwJRPMVcn6MRCAMNzgGiIgMVh15Du3yp94QlEUP
+         XZ0FRKx8ZhREVC63VqL4nNJSeGJC7k6ZE65YlWQ7KOWZz4E7UVuGthDQr8/B7MRUdhUX
+         M6fYU8kKC3IwqeWp/R0vgEoKtwPc53piEQgKsCNTvzGXDshjF4FaR76KT7V1WFg+NRck
+         XnMg==
+X-Gm-Message-State: AOJu0YyNORmAtca89E0xHsOgXcCEZMpWPJHpeGo7MP3TEW4QqVkG2zGQ
+	d1wQnC7pzLJ3Y8mC0rcEpMaeLS7cYN9pbbkJC/f9bSPEbC1Zvd4V8/jUQNHniumjDR+d4svxYQU
+	YGS3hmPD1BhGvM003diTt2/ex8esodJIGXg==
+X-Gm-Gg: AZuq6aIG03FuToi7zNyNBeRU5C+AgcKp28CLZMB0hfZUEsWCsnQil9PjvoHje5l8feQ
+	iOmux/o9P+vscbnmfgqTu5nXupvXVW8IFcpGjGLCnXcQyOH/3Dp5XYXOlOOQFwe7ceqzYCxpWMH
+	o9KFxZ9O5GJwjNKI6ZrWmxLWlwcQCy0HT4AcQraIzwka6TB+h3vTRk1+3C8P1PsOgEozVGr059L
+	WDTqb8ayEFrp9u4nhs5CvRkJhZFp7/XAWpGRl6vvEh8vFSCx0lQTPjLreGvEvocY8Ca3A==
+X-Received: by 2002:a05:6820:169e:b0:662:8b01:c7cb with SMTP id
+ 006d021491bc7-66d0d8ce415mr817017eaf.84.1770365103921; Fri, 06 Feb 2026
+ 00:05:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260206-b4-pks-fix-for-each-ref-in-misuse-v3-4-1e050c3d6a50@pks.im>
-References: <20260206-b4-pks-fix-for-each-ref-in-misuse-v3-0-1e050c3d6a50@pks.im>
-In-Reply-To: <20260206-b4-pks-fix-for-each-ref-in-misuse-v3-0-1e050c3d6a50@pks.im>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, 
- Jeff King <peff@peff.net>
-X-Mailer: b4 0.14.3
+References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
+In-Reply-To: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Fri, 6 Feb 2026 00:04:54 -0800
+X-Gm-Features: AZwV_Qjov84vuF2vjMXHyJktA8XOpIuNmYe0ZLzoBE5wcIds3CFhSMMkFJxdkWo
+Message-ID: <CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
+Subject: Re: git-am applies commit message diffs
+To: Matthias Beyer <mail@beyermatthias.de>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Jeff King <peff@peff.net>
+On Thu, Feb 5, 2026 at 11:50=E2=80=AFPM Matthias Beyer <mail@beyermatthias.=
+de> wrote:
+>
+> Hi,
+>
+> I am not sure whether this was already reported, searching the lore did
+> not yield anything for me, but I might have overlooked it...
+>
+> This was just posted on mastodon[0]:
+>
+>     PSA: Did you know that it=E2=80=99s **unsafe** to put code diffs into=
+ your commit messages?
+>
+>     Like https://
+>     github.com/i3/i3/pull/6564 for example
+>
+>     Such diffs will be applied by patch(1) (also git-am(1)) as part of th=
+e code change!
+>
+>     This is how a sleep(1) made it into i3 4.25-2 in Debian unstable.
+>
+> TL;DR: If you put a diff in the commit message, that diff will be
+> applied by git-am.
+>
+> This looks clearly like unintended and might be an attack-vector, right?
+>
 
-We declare the refs_for_removal string_list as NODUP, forcing us to
-manually allocate strings we insert. And then when it comes time to
-clean up, we set strdup_strings so that string_list_clear() will free
-them for us.
+It is certainly surprising. I am not certain I would consider it an
+attack-vector since you should definitely be reading the commit
+messages before applying, but I could see the fact that its
+unintentional is a problem.
 
-This is a confusing pattern, and can be done much more simply by just
-declaring the list with the DUP initializer in the first place.
+I'm surprised patch would apply since it would likely fail due to
+other non-patch formatted text, no? I suspect this is something that
+could be handled by using the scissors marker  "-- >8 --" in the patch
+description to indicate the diff is not part of the patch, or perhaps
+the splitting of the email should somehow indicate this, for example
+when formatting a patch with a diff in it.
 
-It was written this way originally because one of the callsites
-generated the item using xstrfmt(). But that spot switched to a plain
-xstrdup() in the preceding commit. That means we can now just let the
-string_list code handle allocation itself.
+I checked by formatting a patch from my own commit message with an
+embedded diff, and there is nothing in place to prevent that diff
+section from being applied. In practice, I think the advice is "don't
+put diffs in your commit message" or "indent the diff text so that it
+won't  be parsed as a diff hunk by patch or am."
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- bisect.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+It seems like a good idea to me to improve the format patch output and
+the git am patch splitting to somehow try and detect the end of a
+valid commit message and not treat it as a patch content, but I am
+really uncertain how to go about doing so safely without risking
+backwards compatibility (modifying format-patch to insert a marker
+that properly denotes end of commit would cause issues with older
+versions of git, so we need to use some marker that a well formatted
+patch already does.
 
-diff --git a/bisect.c b/bisect.c
-index 4f0d1a1853..268f5e36f8 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -1180,8 +1180,7 @@ int estimate_bisect_steps(int all)
- static int mark_for_removal(const struct reference *ref, void *cb_data)
- {
- 	struct string_list *refs = cb_data;
--	char *bisect_ref = xstrdup(ref->name);
--	string_list_append(refs, bisect_ref);
-+	string_list_append(refs, ref->name);
- 	return 0;
- }
- 
-@@ -1190,16 +1189,15 @@ int bisect_clean_state(void)
- 	int result = 0;
- 
- 	/* There may be some refs packed during bisection */
--	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
-+	struct string_list refs_for_removal = STRING_LIST_INIT_DUP;
- 	refs_for_each_fullref_in(get_main_ref_store(the_repository),
- 				 "refs/bisect/", NULL, mark_for_removal,
- 				 &refs_for_removal);
--	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
--	string_list_append(&refs_for_removal, xstrdup("BISECT_EXPECTED_REV"));
-+	string_list_append(&refs_for_removal, "BISECT_HEAD");
-+	string_list_append(&refs_for_removal, "BISECT_EXPECTED_REV");
- 	result = refs_delete_refs(get_main_ref_store(the_repository),
- 				  "bisect: remove", &refs_for_removal,
- 				  REF_NO_DEREF);
--	refs_for_removal.strdup_strings = 1;
- 	string_list_clear(&refs_for_removal, 0);
- 	unlink_or_warn(git_path_bisect_ancestors_ok());
- 	unlink_or_warn(git_path_bisect_log());
-
--- 
-2.53.0.239.g8d8fc8a987.dirty
-
+> Best,
+> Matthias
+>
+> [0]: https://mas.to/@zekjur/116022397626943871
