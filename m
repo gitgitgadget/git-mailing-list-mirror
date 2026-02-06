@@ -1,86 +1,74 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADEA283FC8
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 15:39:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02DA2C3255
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 15:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770392376; cv=none; b=d7UqZ6qLkdOcS2vPeL6CAlcOuut/ZvtPicDZs3Jr2XwXb1jYErKIxq22Qh0x1heO5aqTTYt6W9cCeMDst+zVsCZQHwxDQWeYi8JD/+OMjMBu7ibCoj9xNzWg8bplcbifUSGnHpKxmL1fSmQFEuaoZ7lwa0NedYDJKhoM4gXu9/0=
+	t=1770393158; cv=none; b=DptXKcYAw+HToxnK4VvULIVGCK3cE8xSGyvpM5pY0lWSxWJXgvZkLvEeJdZVhsLoJoyFH3I9G0FXr+Axgfoxv8SQ4lju5q1QK2bN2kObkoeDkjZAw8XbTrNae+UTXoY/MIkKf3zG1UXLeIVFB8YZeqJp5ajYm6dl766ieDb7ilM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770392376; c=relaxed/simple;
-	bh=8pk0p09b0tPlH4mJ2bepO/0XLMUKlMH5cqTJ3oHk7bE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gjQ9b41LuGuKVLPG8bWP0nnaov1SHUXMEybWycGGHMr435ZI9lxuuPugFxP4LjCMZTjOxbHs38towORqoWhMBKUC31OMF0/9TYEv0xuCBcyrDLCybG0XSGD4ABLqmzZr3d6LL/bSkmk9Shqywoh/8xuyxLl1aCYMugjLe/qr2jM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gSCJwFIl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OoUrQl5Z; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1770393158; c=relaxed/simple;
+	bh=dOHJwWhB12aP7LXN2VHivX6b3bMfnilQwvI81FSx3CA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=c/WS2TtGPlaulngPdHsVY+ZieHSH/pkdCNdWC5o3i+1SbplygdNb+0SnADPxXDdsv/ytVi1R1gv6FSyh1FxpHOGMgg73GD4ROpEFYeAPJTrNVUAHl7W3lT8P6dqp7Ti9vxlYoH9rNmkiD0PzKjetYwJp1rofrso1n1v98Z0r9fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IfcWxm5D; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gSCJwFIl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OoUrQl5Z"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id CA5F31D00082;
-	Fri,  6 Feb 2026 10:39:35 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 06 Feb 2026 10:39:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770392375; x=1770478775; bh=BUyOP0MwMl
-	rQNXUmZHkqHeLgucJGoT3OW9xxnL6Vc6w=; b=gSCJwFIlrt4naelg6zTp5ypTqP
-	N1ewwvawScI8XiL3eR5kFgq7I3Hn4h43NcZRg90FMWaD5ReOFunHCsaTwzrG29qv
-	ULSP4M5RiNHTW6utaWEVqRqYdCCOpENgjKeXK5uubNcYksHgZ+SaL4oFDQaztaOz
-	y9fRH4TZVD80uMCp3sbyah8FE0lXLXTBC/+oxXDF0rxaOxMnoe8OtuQbSJq4pBR7
-	6BbL6D66gDYkQnD2l2OTsw8M1CWOadEk7do6YM7WJ7A5O4yjCrFmvwuye2pXDC/I
-	8TYxR9lAdqn/n0FLwyeyfDvsbi0yHM6Etb47aYlb042brdPxs3W69vE/eCnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770392375; x=1770478775; bh=BUyOP0MwMlrQNXUmZHkqHeLgucJGoT3OW9x
-	xnL6Vc6w=; b=OoUrQl5ZIq3M3DyQroNj+eksgAPu4wTtEC93leMqyuxiC7EI/lB
-	lI9hQv82SnP0yeXgsNGPmzEZYGOqnABzxbM3YIZm2i+ndUJv8Jwp/MChU5G1NojU
-	0kgW97p2paguLVBh1C9IzR+xzryaiRIVpqL18G+0mU6pKkvP82BcHAGmC2Q7EJbh
-	2UvC5vN/29wBF4DGd3KIsJJ6Rqgvf3xNM3KXxbH+fo5UQi6AgRJtkV7oE2hXN60d
-	uD0YFH5yNtrmEYbK8+vBsPvRSaVJCgcJ12XTRDmy9RQEoNPMEMpfn6dL3ZDvb+dL
-	MAjGn7ZjNeqbokVgiWn8rEwDdIveP6ZNL6g==
-X-ME-Sender: <xms:NwuGaX2S48yhgdpKwkNtiZt_E-6BgQFwy4HMuzi1i8Dg_YpoDj-kMg>
-    <xme:NwuGadFt7IbVBSJVdXLNo02id3ZkPaLYVyF8SLZq045HBzhJHGVWu0DPH09G9_qm4
-    Uw28UDt5gchghPIWRY9ubLE-Tq_0xuWw5FWYWeVXoUGbSRd7QOs4A>
-X-ME-Received: <xmr:NwuGac6V6sXr43zFkbqBd61-U3SzU72KJ_QgZGL6pytuSfFxOlpcDgCTLi6H-nltZ9SBYm4n5r7RtxyOh09tbPoc4VDIRADzCPGBprjIX7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekheehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpefhiefgvdffvddtuefhlefgleehgfefveeute
-    ffudfgheetgfevlefhueeuveeuvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
-    phhtthhopehjiehtsehkuggsghdrohhrgh
-X-ME-Proxy: <xmx:NwuGabvqgJ4sHQOpMeMnoPKAy0-8mVGrUNkqD40ke-dreMcUT8hyuQ>
-    <xmx:NwuGaV4pbYvLNfERGZtLQyCzty1pHF6uZ1ZGqWxMnk2RJTmiA7uV0A>
-    <xmx:NwuGaeVe42VuW-ZneinoBUWC7sIMvcS0551w-XFSq3kcNG9NlavjJA>
-    <xmx:NwuGaf84GEKGqZ9jPLr5M5_vwE7ClOksBfJCJCo9XgWb6Znn5dsrvA>
-    <xmx:NwuGaY5HTivwGNiQdKEcCOjGaFJyGmCvzkTAyVHZ4BTVKllXUjviTuhW>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 10:39:34 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7134e1ec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Feb 2026 15:39:32 +0000 (UTC)
-Date: Fri, 6 Feb 2026 16:39:24 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] meson: wire up gitk and git-gui
-Message-ID: <aYYLLI2Gb7YlBtKt@pks.im>
-References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
- <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
- <20260205093748.GA2177239@coredump.intra.peff.net>
- <aYSFGG7lCg6Sw8vy@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IfcWxm5D"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4801d7c72a5so7798655e9.0
+        for <git@vger.kernel.org>; Fri, 06 Feb 2026 07:52:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770393156; x=1770997956; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lEy9uHl9ssQ/tuSeW66+za/tEj2UNS97U+DuT/24HLU=;
+        b=IfcWxm5DFtq2EibKFnWB3hZ49UvA5hmeYR0qI9aXlySIJ6bdvfGfeXG/CUgLgqCZax
+         jADSjN2oI/RsZllzArJsUb0d5BHWMY5phGY9wKbHef9ey24Wovzy5hEJ2e3plE/vddiO
+         5IsVXyxNo5rGafmvPHhdIUqGLF1o513g63CAWmrTYLnRKeq+Hc+wbeRTeX0rrBFZDAg4
+         l/tQASYyMfBAmsigu9Xl2b/pv4dg8JyYolyf5o+tLMf9c3TyJiebjGaKOXMj95fqmVTA
+         hXIgNzIuAdl+SpNYlX74ABcuw4MzAKUrOPSx6cRz8Qckb2equAqf3g5RkTZRWOwh9kSM
+         ccmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770393156; x=1770997956;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lEy9uHl9ssQ/tuSeW66+za/tEj2UNS97U+DuT/24HLU=;
+        b=WmVA6vS2xsLyJqb4iXLQrvTmFqEmrEL4MlNa6MOY6lpz9wscS85UsS6+O/A3L+Or32
+         aQWF9WLPuVTg6eYRl2zHj0WWqx8o262qHn7AZ1byALRw7thNZ7rkw0DaNH6TsIVCFq6q
+         PEakmlv7r9YdzmRSfRCKVXEqfS/6Nq4z2+KfvLGY0mBMyOVQmuexEdvidFsL82dNY+vj
+         BtoyiSgCNdq4MFFToTtZX2wAi+5ZjQP5fx3n5vUT3m7SbL+SynVyYUf7iKiclDeoijUI
+         pmngXpBxLI66k966btsUyYjIUoFJMKdRrVXafO2KrURhYRmwkiplgTWRfXLDh0aiaZH0
+         Mzhg==
+X-Gm-Message-State: AOJu0Yzjrv1uAXQ6dQPUVgng5DxbUhI14otdSdX6LHS10wdb1yuwloP0
+	14/eYAHTJYg2nGkkY3QCHRdVTB3qt4GA2kdVvj4dgPiOKZbQfRDvHzGimq4Hq2Fnt1k=
+X-Gm-Gg: AZuq6aJFMQHisOx+3inpOXXdVn8nzFy7wDNB7ihD3qAoNzaXz8LQ9PTkfsd3lGuSpxw
+	Zp5FjpqRBfJacj+NxN6Ti3HTOeuX3r90COjy/zcq22wgfxnCgNfhA9D33JTv0f6AcaId/OramXz
+	oNnVFArKcePDdIIv48fIrW2k8Y94KWQL6EdwwVVhoWWnfo4npt6JuypDlcIASvTRqU36CmGlvLv
+	nzgkrm7ONpWYzyGwYTrcxbmjQOduPIQhd34Z+BR1smByZ6nBB5XAMLjgeDVgnh0I/1S/ETyfdya
+	4jm4VCw7FEzJXKks6YGhTGabgZIdH6KA1s5pY5OeEg9DHzCCPa/fyzKhDOTdNRfkjNduwOjBPir
+	QdAz6iO+1WFiLzcrbzBey11/RBk/yhcFbItUk2AALHIIZQBjsYaMCpVdhTWRjE9B7buYDruqFjL
+	Z2nnfpDOkGU6zjUZtY3/3h
+X-Received: by 2002:a05:600c:8411:b0:480:426e:9d38 with SMTP id 5b1f17b1804b1-4832021d688mr44119085e9.27.1770393155582;
+        Fri, 06 Feb 2026 07:52:35 -0800 (PST)
+Received: from localhost ([102.91.81.223])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-436297462a8sm6560117f8f.30.2026.02.06.07.52.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Feb 2026 07:52:35 -0800 (PST)
+Date: Fri, 6 Feb 2026 16:52:39 +0100
+From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v3 0/3] introduce new option `rework-with-file`
+Message-ID: <cover.1770390576.git.abrahamadekunle50@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,54 +77,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aYSFGG7lCg6Sw8vy@pks.im>
+In-Reply-To: <cover.1769522219.git.abrahamadekunle50@gmail.com>
 
-On Thu, Feb 05, 2026 at 12:55:04PM +0100, Patrick Steinhardt wrote:
-> On Thu, Feb 05, 2026 at 04:37:48AM -0500, Jeff King wrote:
-> > On Wed, Feb 04, 2026 at 09:38:11AM +0100, Patrick Steinhardt wrote:
-> > 
-> > > Wire up both gitk and git-gui in Meson as subprojects. These two
-> > > programs should be the last missing pieces for feature compatibility
-> > > with our Makefile for distributors.
-> > > 
-> > > Note that Meson expects subprojects to live in the "subprojects/"
-> > > directory. Create symlinks to fulfill this requirement.
-> > 
-> > The GitHub Actions win+Meson job fails for 'jch' with:
-> > 
-> >   Project name: gitk
-> >   Project version: undefined
-> >   Program sh found: YES (C:\Program Files\Git\bin\sh.EXE)
-> >   Program wish found: YES (C:\Program Files\Git\mingw64\bin\wish.EXE)
-> >   Program chmod found: YES (C:\Program Files\Git\usr\bin\chmod.EXE)
-> >   Program mv found: YES (C:\Program Files\Git\usr\bin\mv.EXE)
-> >   Program sed found: YES (C:\Program Files\Git\usr\bin\sed.EXE)
-> >   Program msgfmt found: NO
-> > 
-> >   subprojects\gitk\meson.build:28:3: ERROR: Program 'msgfmt' not found or not executable
-> > 
-> > I didn't investigate, but presumably it is related to this topic.
-> 
-> Oh, indeed. It seems like the logic to handle a missing msgfmt
-> executable already exists, but that I forgot to mark the executable as
-> optional itself. So we need the below patch to fix this.
-> 
-> The nice thing is that this verifies that things actually work with the
-> symlink on Windows :)
-> 
-> I've created https://github.com/j6t/gitk/pull/37 to fix the issue,
-> thanks!
+Hello,
+After further review from Junio, I have been able to make reworking with a
+file during hunk selection an optional feature by passing the `rework-with-file`
+flag to the --patch option in the interactive machinery.
 
-The fix has been merged upstream. I've created [1] to verify that the CI
-now succeeds.
+With the option, users can navigate in between files and while deciding on
+hunks as they wish with the '>' and '<' option for going to the next and
+previous file respectively if there are more than one file.
 
-Junio, I'm not really sure how to proceed here, as I cannot send the
-subtree merge via mail to the best of my knowledge. Shall I instead send
-a new version that just includes the upstream commit, or will you handle
-the update?
+The process shows a prompt which allows reworking with the file and changing
+previous decisions if need be, going to the next or previous file if possible
+or using 'q' to submit and end the process.
 
-Thanks!
+Patch 1 implements the new 'rework-with-file' options, Patch 2 makes some changes
+to allow interfile navigation when the option is supplied and Patch 3 modifies
+the code to allow the patches to be applied only after all decisions have
+been made and session ends when this option is enabled.
 
-Patrick
+Abraham Samuel Adekunle (3):
+  interactive -p: add new `--rework-with-file` flag to interactive
+    machinery
+  add-patch: Allow interfile navigation when selecting hunks
+  add-patch: Allow proper 'git apply' when using the --rework-with-file
+    flag
 
-[1]: https://github.com/git/git/pull/2190
+ add-interactive.c     |   3 +
+ add-interactive.h     |   5 +-
+ add-patch.c           | 161 +++++++++++++++++++++++++++++++-----------
+ builtin/add.c         |   4 ++
+ builtin/checkout.c    |   6 ++
+ builtin/reset.c       |   4 ++
+ builtin/stash.c       |   8 +++
+ t/t9902-completion.sh |   1 +
+ 8 files changed, 148 insertions(+), 44 deletions(-)
+
+-- 
+2.39.5 (Apple Git-154)
+
