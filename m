@@ -1,159 +1,121 @@
-Received: from mail-108-mta244.mxroute.com (mail-108-mta244.mxroute.com [136.175.108.244])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2A729B200
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 15:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.244
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DF9248886
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 16:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770393535; cv=none; b=KNJnG4+SaTZn4SU/StoG2KQ+DlLvgsTMRkHVvssFKYw/loEAZMM/LDnpL/F5L+YHX2TnolxexZ9xAQELZRRTJPvpHg3WwHf/bqrHCpruLpKynsvhll16ZjDUj24H7wAl/kDtx3ksaQ9vC5pdkxxu47RMxCRd3GVk/DZ5Ha1YYxs=
+	t=1770393922; cv=none; b=JkdnEX5It4BKw+Nast1ip17+Gxu8taVLfEUjNIVOft9xBzuQAOCeDLj7gCINKEXWkc9t64Yms8A0u1fwWqrD63y43X+M6QnuLat4qP4iascc9eSaSR70dibdXvNlkjaKzj3jpx1Q6VUfsbcO+KIVdYVexZeOeO3FHHkdGfCi7Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770393535; c=relaxed/simple;
-	bh=TEVY5lLM2T/QAMHdDceYP2d4jBFSi1btNxXMcSrzGps=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=tkCqLjXMssnavAjqPTgERMlX+WmSROIbFYNhutSEQe5jqElD6LGNIr2035cud5qbjgeXgk0X9CGgWef4oGAyOMdv76Zu/dGXwxIeq9Tp1eN8FuCQT9F12qY5evmkdAv1NxyLuoBIC0o7ZAGKGSVz26K9BZUPEaGB+CJqLTCcwSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ashlesh.me; spf=none smtp.mailfrom=ashlesh.me; dkim=pass (2048-bit key) header.d=ashlesh.me header.i=@ashlesh.me header.b=YUsSfqxh; arc=none smtp.client-ip=136.175.108.244
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ashlesh.me
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ashlesh.me
+	s=arc-20240116; t=1770393922; c=relaxed/simple;
+	bh=luuMFOQCLL8Lw0VdXvn9FPAg9JDtaaEUT+NXPhUHr2o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SCyE+SwXMPM6EO613EsjYOwpIfPKbNT60zwbdEnYOWFJLmlTes1Cbrz0mJyoaSQsqRvXvG6EOrjpomPjT8WsW62BbxGNVboeqjkZLwwd9me8U7tp1J3XzrYFARDn6j5IPRW8ZsFzxhINWBmhcFemNwpXAvfaWobT5VYzh1o+AdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ROSUPneJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d+xRr6Bm; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ashlesh.me header.i=@ashlesh.me header.b="YUsSfqxh"
-Received: from filter006.mxroute.com ([136.175.111.3] filter006.mxroute.com)
- (Authenticated sender: mN4UYu2MZsgR)
- by mail-108-mta244.mxroute.com (ZoneMTA) with ESMTPSA id 19c33a8abe60009140.004
- for <git@vger.kernel.org>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Fri, 06 Feb 2026 15:53:38 +0000
-X-Zone-Loop: ebac1d30d376ca9774acd78104e217f97f31f94070dc
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ashlesh.me;
-	s=x; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:Cc:To:
-	From:Subject:MIME-Version:Date:Sender:Reply-To:Content-ID:Content-Description
-	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=S7aRZVU4l7vnPsDqZvoUVNbpdE1EHMlr+30an5Geis8=; b=YUsSfqxhbRDw+D11jz6XBVH+t/
-	HnMJAkRCsoT7r7BaKFKpWturY7rV1+bZFnXDE9Dc23FZcVAO1939Qgt1P1+Apbqgl5B0KlLpwwfbv
-	aLlREVSKdvfX37KN9CbGbHfmHRrMmB2HyN/SbCmc0sPVTNDww6UWDq1a8kHcOMmFUD5lWZVI1QZtl
-	Y8CRqts9Pk28vcq2vEQMX2+/jNmucb7Vfgn3cKIJyQaMi5LcOhcDmo1Za+mJB40HC8Cl86Nk1Sthq
-	RDNAe8Q05OuDIbhLJ/EdY4LC25rb/IF+TeI1/2Dnq+5KP+swHTAauKHtzWCxrbyExrH+xxLAsKx1b
-	OXQjSaKw==;
-Message-ID: <7583bd2c-4f2f-4a43-a36f-7e0698da8a57@ashlesh.me>
-Date: Fri, 6 Feb 2026 21:23:18 +0530
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ROSUPneJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d+xRr6Bm"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 571357A00AB;
+	Fri,  6 Feb 2026 11:05:21 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Fri, 06 Feb 2026 11:05:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1770393921; x=1770480321; bh=RRrqkhVNdd
+	vmg8PJ1Q1mVjHNe/YhqE6l4+CkXhSX+HE=; b=ROSUPneJnAvl2miuyZg4x3T+KC
+	X4RRqn4leX0c1KOf7jdD6bgaiNN4AVqJdPTvaMjC+0WtzfoMmGu46K+52hlFqCfA
+	FoYtmJOE70P3oV3veLJsWT2v/tzaM1NI9TJUa2OAGeIxEflTHeB+WASU8RGzyevY
+	LclD0w1/ifL8gDS681hJzw36GPiqDtnfpw8jj3eNDvZuZPHT/Su5T+8gODxV7kFE
+	lsouHAd8Y/7tA7gfFkgaCgR1OikmluhTMBQsyV1TGjssPseCaXGM0KQonaZRdMRv
+	yS22KndC4Y9bqg5+F+ScN0RGJr/bDuoUpGl83/K9uOX0aKspgmn+BsZcCQLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770393921; x=1770480321; bh=RRrqkhVNddvmg8PJ1Q1mVjHNe/YhqE6l4+C
+	kXhSX+HE=; b=d+xRr6Bm9v75dendNk1WE7iPLTRX4tT5iFmmmap9+7RK0eaXNXP
+	Q48QKUe8Ty9gzv8bZH55dnhBtMKTzA2dYbajlrIE/3L0NkZbMQeANQKOFvRFi8XN
+	bnoAdMPXVtUwu/xtkTrRaGBQNtQl1CRMqq5mBY+mq8SKHNLvHhInoazdGt/+/N1T
+	hLusSBhh4JXusNA23POfED4N4ozLQvNwKgDWAA/yPVyDdOBmcmBdSnLj/2BurWfj
+	u+k/T+oszWcfruTY+yM5MCaD4m6UG9NohYeatFskZa8UrigsP7xraRdkAcH7Vdft
+	Iqz4X/QUtZsIX83weODD+BuW8v6/xy6frLw==
+X-ME-Sender: <xms:QRGGaeEPhO7Wo4FIYptV3btOjIcqvf4E22aP_aUOV3wwd_FZf49A3g>
+    <xme:QRGGaWWpGVnD6C0XfwbMIPg7xlzuBqbivkKbJwpht1GGzD-VFfgVPJNZcnXk_qYAj
+    fS7ZZ-FDv1Ywc6p0teRqO06JT6_xwid05uN1Uy_5FJvgQSvBOsi9P8>
+X-ME-Received: <xmr:QRGGadLrIyt8shaaAwyCtlbC-N_5VVRTTfaWSS616qDtm5-zBIBmXB3dCxAB1Kt1PBwPD-q4X1aUZa6QuDDEeBgxXoklkKjce3OaLa9ZfiA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthihqshhimh
+    honhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhm
+X-ME-Proxy: <xmx:QRGGaW8i4v4Qhw5_2i-blJ1eBMaqgtJS2Fmwa19tqyOb9GxILT_fJQ>
+    <xmx:QRGGaQKZzV6JJzOWml_I2WSjAJhoGpNQdARzE0LBXhQqw8MR23vg5A>
+    <xmx:QRGGabk_cC2vEIRG2qpo09nWpIcvGavaTYn52cxq23JlFPBBjnztEg>
+    <xmx:QRGGaUNrgubAN4jeha-GhmmE9I_U3mMkttUrTdtF13PqmCP0bByATA>
+    <xmx:QRGGaYpMY67r0ZXTc_5JHZIgZMtRbormXoOi5vn53U-KOZmFI5uqUzYv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Feb 2026 11:05:20 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a792f21a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Feb 2026 16:05:18 +0000 (UTC)
+Date: Fri, 6 Feb 2026 17:05:15 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Simon Cheng <cyqsimon@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 1/2] checkout: pass program-readable token to unified
+ "main"
+Message-ID: <aYYROwDxrHU-H3n_@pks.im>
+References: <20260127192936.904719-1-gitster@pobox.com>
+ <20260129190616.645471-1-gitster@pobox.com>
+ <20260129190616.645471-2-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] t5550: add netrc tests for http 401/403
-From: Ashlesh Gawande <git@ashlesh.me>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net
-References: <20260106114029.763351-1-git@ashlesh.me>
- <20260107074724.13165-1-git@ashlesh.me> <xmqqms1mihqo.fsf@gitster.g>
- <20260206093840.GC2761602@coredump.intra.peff.net>
- <8ac465f8-6fda-43a1-8bfc-3e88f30d1ca5@ashlesh.me>
-Content-Language: en-US
-In-Reply-To: <8ac465f8-6fda-43a1-8bfc-3e88f30d1ca5@ashlesh.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authenticated-Id: info@ashlesh.me
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260129190616.645471-2-gitster@pobox.com>
 
+On Thu, Jan 29, 2026 at 11:06:15AM -0800, Junio C Hamano wrote:
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index f9453473fe..4f189fde48 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+[snip]
+> +	switch (which_command) {
+> +	case CHECKOUT_CHECKOUT:
+> +		usagestr = checkout_usage;
+> +		break;
+> +	case CHECKOUT_SWITCH:
+> +		usagestr = switch_branch_usage;
+> +		break;
+> +	case CHECKOUT_RESTORE:
+> +		usagestr = restore_usage;
+> +		break;
+> +	default:
+> +		BUG("No such checkout variant %d", which_command);
+> +	}
 
-On 2/6/26 20:55, Ashlesh Gawande wrote:
->
-> On 2/6/26 15:08, Jeff King wrote:
->> On Thu, Feb 05, 2026 at 09:05:51PM -0800, Junio C Hamano wrote:
->>
->>>>    - Third test case checks that the git clone fails when the 
->>>> .netrc file
->>>>      provides credentials that are valid but do not have permission 
->>>> for
->>>>      this user. For example one may have multiple tokens in GitHub
->>>>      and uses the one which was not authorized for cloning this repo.
->>>>      In such a case the HTTP server returns 403 Forbidden.
->>>>      For this test, the apache.conf is modified to return a 403
->>>>      on finding a forbidden-user. No prompt for username/password is
->>>>      expected after the 403 (unlike 401). This is because prompting 
->>>> may wipe
->>>>      out existing credentials or conflict with custom credential 
->>>> helpers.
->>> Nicely summarised.  So we say 401 when we do not know you, while we
->>> say 403 when we know you and do not want you to be accessing the
->>> resource.  We test for both.
->> I think it is fine to check the 403 handling, but note that this _isn't_
->> how GitHub would respond. If you try to fetch from a repository you
->> don't have access to, it will return a 401 first (so you try to log in)
->> and then a 404. The idea being to avoid revealing the existence of the
->> repository to unauthorized users.
-> In the case of fine-grained access token such that the token has read 
-> access to the repository
-> but not write access GitHub does return a 403.
-> (I think this is correct behavior as the token has read access so user 
-> is authorized/knows about the repository).
-So should I modify that test case to do a push instead for this specific 
-scenario (and update the description)?
->>> Just out of curiosity, do we test for these codes with other
->>> credential helpers or is this only relevant for .netrc users?
->> The netrc support here should not involve credential helpers at all. It
->> is all being done internally by curl. So in this (third and final) test:
->>
->>>> +test_expect_success 'netrc authorized but forbidden credentials 
->>>> (fail on 403)' '
->>>> +    test_when_finished clear_netrc &&
->>>> +    set_askpass wrong &&
->>>> +    set_netrc 127.0.0.1 forbidden-user@host pass@host &&
->>>> +    test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" 
->>>> clone-auth-netrc-403 2>err &&
->>>> +    expect_askpass none &&
->>>> +    grep "The requested URL returned error: 403" err
->>>> +'
->> ...what is happening is roughly:
->>
->>    - curl sends the first request with no credentials, which gets a 401
->>
->>    - curl internally, without returning a response to Git, looks up the
->>      netrc value and repeats the request with an Authorization header
->>
->>    - curl returns the resulting 403 to Git
->>
->>    - Git calls this an error (just like it would a 404) and bails
->>
->> But from Git's perspective the use of netrc here is not really
->> interesting. We don't even know it happened! And if the server did
->> return a 401, we'd happily try to get credentials (from the user or from
->> a helper) in the usual way. And that's what happens in the second test:
->>
->>>> +test_expect_success 'netrc unauthorized credentials (prompt after 
->>>> 401)' '
->>>> +    test_when_finished clear_netrc &&
->>>> +    set_askpass wrong &&
->>>> +    set_netrc 127.0.0.1 user@host pass@wrong &&
->>>> +    test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" 
->>>> clone-auth-netrc-401 &&
->>>> +    expect_askpass both wrong
->>>> +'
->> Curl tries the credential under the hood, but we have no idea, and we
->> process a 401 in the usual way.
->>
->> And in the first one:
->>
->>>> +test_expect_success 'using credentials from netrc to clone 
->>>> successfully' '
->>>> +    test_when_finished clear_netrc &&
->>>> +    set_askpass wrong &&
->>>> +    set_netrc 127.0.0.1 user@host pass@host &&
->>>> +    git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc &&
->>>> +    expect_askpass none
->>>> +'
->> We do not ever even see the 401, and curl just magically handles it for
->> us. We see only the successful 200 code, just as if authentication was
->> not required in the first place.
->>
->>
->> So really, none of this is testing anything novel in Git at all that is
->> not covered elsewhere, except for the fact that we pass the flag to curl
->> that says "you may use netrc". And so there's some value in adding it in
->> that case. But trying to answer your question about other credential
->> helpers, no, they're not even entering the picture here.
->>
->> -Peff
->>
->
+Tiniest nit, really not worth addressing on its own: BUG messages
+typically start with a lower-case letter.
+
+Other than that I like that we have less global constants with this
+change.
+
+Patrick
