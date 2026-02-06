@@ -1,156 +1,175 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC41D346E4F
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 19:02:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B849F3093D8
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 19:16:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770404525; cv=none; b=P8LQNbEskXdX8qhJk3uXo2xYDUD9F5a1zOYkeEXia56eRiQGEMy37+slHMedAuIHovxQ0i8PSP2hKvUqvr0MPmCVsRLt0+fdTElLg9iTVkcLfrcigK9n+0eeHrY4g5dfXJh+9wL+d32r0LJXP1E+MlQ12YOzZHtOm4NuZNGQtro=
+	t=1770405386; cv=none; b=hRdfEO8EMH7dGOPYGNC9QJ91xciNR1nAcuBXEaE74fER7WyAJ+21TDg689lvMEq4I4wE2rZRBz1vzGTpUD9YD7PAlk3a2zpUSBwbdC1p8iQwUoPn9ezCXFPJxqGTQtES1ID1RKWOX+2Jl2SH2tuscVtk1j+6JkDOHCtVBV/Ivoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770404525; c=relaxed/simple;
-	bh=olNwR12lEkCPYrpps5nUEulYIrRMFNZwvviqAuuVEII=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DjVl1/MWBsnl7o1qh+HKfSliUYNeDP+tWMC5hlin7uzYi0jDkdLx2NZN3t5xel/VEcfYgo6qOSEkKSEuh0ryngX1s+XprX8WtmnHEwaQ6n93Ukul+/wL1T9C8bupmUlT9LIChBmV25zj0F5bX0DeaTQ6HBQO5qos7DZBH05G2RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W75aHnWy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IhkCj35X; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770405386; c=relaxed/simple;
+	bh=5OyAoPWFAMKQXE0Wvv63JCdNhdv14U+XDWqhDbUMHTY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ST2VBMy2poNjZM/2/68yMzqHeF/H0R+6ZVHbl7l1hmcuun9J8qd6rDAFbUJ3vBNgL2qutJPkm/hh7XhzaIuM3bPr6NV0TOOGSCge/LFevsR589gzHrA44gHT6ufHVfEgX6j4dSsSGCcfJC/jTkACXihN/XM0zB7+41bIzXL+L6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gZsQVSP/; arc=none smtp.client-ip=74.125.82.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W75aHnWy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IhkCj35X"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3EF851400052;
-	Fri,  6 Feb 2026 14:02:04 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 06 Feb 2026 14:02:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770404524; x=1770490924; bh=OYM0wc9X2F
-	o8oUEpD2j5+Kvm8kzHE+UEMn6HQiG/Aco=; b=W75aHnWyAQo1cNIqikDC4z4N5m
-	3tJ/FfpSa58uwlKldAJllSkUQ1jjTTs6yZBNjozwosJm39nhqnXUB0Yz4Si+2o1r
-	C0IlrxYbcSVyCxpSXOSSD3TQYmgYUAS1VjwWAAS9O1O3iTdaWbifik/LiFVem5s4
-	vi9GYh+BIA9AqnaB6umDTStSdY0hi3VULYJSMr+z5ztgsPeO4kzwmpNdD49I8Aif
-	eAQ+Txw7K/5rOl5hZkNsV/6aRiTpDyUm2+RzmpSomgQCWT+QX6xHSgyveFREjCMY
-	yjah3+AQP3avKTWHNeCoCPCzvAhDmWDWB0jS4FWFsixYbebkvvfHQkEBH+Jw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770404524; x=1770490924; bh=OYM0wc9X2Fo8oUEpD2j5+Kvm8kzHE+UEMn6
-	HQiG/Aco=; b=IhkCj35Xis3anBOpx0nXMpQ2wiQvIiIbPoxjhJNTKkPrfQY6H9H
-	0+SNlUb30kkchlCTaAalxXc4/iuua51qOzokrl51zBMt650Avf75WZlWRDxpqmlP
-	ehwjA3hlF+CQ5REuQtYLWOuAQDSz5YUIaqx9YL75oaHVqpohLcrKVquMbFFgPOL5
-	UNZhE2dBKXP5B/Ws9rEgC8iyvZYcLqAriVUOz/NR4br31l1cF3+ddcoyjqg/6sTx
-	frak2yYZTwXp3ZzDbiMg5j4T6x95BCX7Z+wDa0BJk6Ciz5h1l7vnS8bO8wmcSQvz
-	LAJaAk4TYORXH/g+tD1/D03HNEZedjw0frg==
-X-ME-Sender: <xms:rDqGaTupJ3RyjBxYOconlzeVIODai_g8yeenfyV9jeEfpknP3IT2pA>
-    <xme:rDqGaQJJ-LZvQB-6CJFtR9PWqI-1NQ0sMzWhEHfGYdsH4ScoOhvMo797VTtXmCeDP
-    qXW4v3Pyca7RIYc50q3y8H7GArdMb_MPSyodxLGG-3lK2c3zqQhzos>
-X-ME-Received: <xmr:rDqGaTPjmzOSxYfP-s6PC9WZs-y-VZs7Aou7FO0JPuyDoHCkSScd0xSJV3RkEWUSEHOnsWLU5yN5QAQWjUFa1os-tGx9K6-Mfw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekleeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegrsghrrghhrghmrgguvghkuhhnlhgvhedtsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
-    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhm
-    rghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
-    rghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilh
-    drtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:rDqGabVmoRB1rzI8Ags5Xb9I1P42yhYzJS_6z6LRY8qQIIm_0VuHHg>
-    <xmx:rDqGaZnQ3ZTJ5bLnWcV0EN2R2GFngM_rGekl5kmPbJD4GUF6ug-X5Q>
-    <xmx:rDqGaSOwpzpA6nfYaA8CIZPsWz7Aa3RRy64F2yAcXKK45NXL9WKVSQ>
-    <xmx:rDqGaZKBWx4vILONEvjV-8Seqox-2-PnuOhUZ4vZqh_BPj_y3UeF9g>
-    <xmx:rDqGad8n9GGw36JbiqlhOEUuj4Gzck18-Z4_5aoUvKzbINsfv5OFxyic>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 14:02:03 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,
-  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
-  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 3/3] add-patch: Allow proper 'git apply' when using
- the --rework-with-file flag
-In-Reply-To: <10c0a4cb36534f5ed1ebed783b37d03a56007f97.1770390576.git.abrahamadekunle50@gmail.com>
-	(Abraham Samuel Adekunle's message of "Fri, 6 Feb 2026 16:57:35
-	+0100")
-References: <cover.1770390576.git.abrahamadekunle50@gmail.com>
-	<10c0a4cb36534f5ed1ebed783b37d03a56007f97.1770390576.git.abrahamadekunle50@gmail.com>
-Date: Fri, 06 Feb 2026 11:02:02 -0800
-Message-ID: <xmqqqzqxelw5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZsQVSP/"
+Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-124566b6693so2651420c88.0
+        for <git@vger.kernel.org>; Fri, 06 Feb 2026 11:16:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770405385; x=1771010185; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PUYJcPZI5sQhDIqpw7lEfqsEF1sb4U4IS260pdTaQL0=;
+        b=gZsQVSP/fZbpK+6IRX2qMWGGYT8TAkJjvBETYfgGHBNWWKf6kqP4YCFOv741k2geij
+         ydXgjytXepWfOya/Ofh8mnzStamNkRXIRwUyWRNVO7sZA0cMDE4L+yxoHMk6RK+Ku4v9
+         sdv8KYx4ikiA5ZBry7ZAAZcrndsxattWlT6s7iKbCe3FfTJn+/Yl6akGHcfQBzBqK7cn
+         QDO4vmXMXrygIGTb9Z2ylWa4qDlg5BeGGkGzQAk/oj+YwgMYPu6782EkeTvLM3oJGPyx
+         IXAXLk2l9OIAIJxCi5dAvRjF5ELDV9HNrx00dYukPaM6urlNwIcfhncw+UFKJaExfD/U
+         fJww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770405385; x=1771010185;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=PUYJcPZI5sQhDIqpw7lEfqsEF1sb4U4IS260pdTaQL0=;
+        b=YfylhCQNkNeB7fhfmJKGsJEXDnv7yGh1lLiiwK18qPsiif8PFjTWfPJT6WHjjQh/E2
+         57F+TjMXrCjIhpt1rTrYGbQfirOIDCzwUWeEyAjHhoBss9vZq5pNLhKszNWymZRhd0tP
+         iTxD6+mQ0grj+8cEsaDf9LbcIXOgio9yb8rrBsbGDtTGoinS3c5kaSqtbJnWNm9xi0V5
+         SVMXbz9iZEtBC0C9CWU8Lc8lSdcVJVr9hGxOlEYOyGjfNFBBNaVITBDrCgyx4pVPGzNt
+         Ua8hWi3ogvIQCY96PhaP2ZFj/ftSgbDyC2SKd0z8/DYqclCY3yK424dAHT0K2IFnNUJm
+         TQTw==
+X-Gm-Message-State: AOJu0YxGdvLoFQrtUhc+3bJzoJFmHKhUheVs9VwGGodJvWAFk7nHc8vm
+	XFxGcgEiPOcOI0OUR/c2piVtisomP7IEKrg+Xl6aOdcnJSbI+Zmw8MkIz7QldQ==
+X-Gm-Gg: AZuq6aLV+kaxf8+V2z2lih0qvxiLlBMJAmL8QBjRFaoVHS9T0bDz9Eyw3A4BgFbwx6m
+	O6hmK7MUbmgGuU4JIAzAR1pZKh47RCAdEE6kgktnke28M8O+I3o0pLohFdPPd1GnxltACH7KIh3
+	bDki/5t3GBw/Bt1tVokhrff326L7arGOzPaGnf9EZxsEfvqtY8TecGe5K43W151Tc9U/REmTxQZ
+	9z84JA5QB3j3gGHIr0D6B9/MuBk/fgJ1itHCykYi58bvJrFmaWZbI7nrpXCTJ8XNDZ+K+KJ7cm0
+	WD8u94Dy76d1jTyKYrszs6dBkgH3+MZny3d1hB49b7fnNWq/DYP/xWN/gD2gX56JUJ+5x7sJqRt
+	0xlYZZ2utiEfiMVLiIrCb4IEDTOz7m1rdlpsuFOmH7PhShJBlBzs3e+7LqEh8gERBPqyQjwiH4Z
+	fCzi0MGTAv981opQ==
+X-Received: by 2002:a05:7022:523:b0:123:2c98:f65d with SMTP id a92af1059eb24-12703ff1d2bmr1864090c88.13.1770405385268;
+        Fri, 06 Feb 2026 11:16:25 -0800 (PST)
+Received: from [127.0.0.1] ([172.182.209.49])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1270414f28bsm2821763c88.0.2026.02.06.11.16.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Feb 2026 11:16:24 -0800 (PST)
+Message-Id: <pull.2189.v2.git.git.1770405383.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
+References: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
+From: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 06 Feb 2026 19:16:21 +0000
+Subject: [PATCH v2 0/2] merge-ours: sparse-index integration
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Sam Bostock <sam@sambostock.ca>
 
-Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+This short series teaches merge-ours to work with a sparse index as a small
+step toward broader sparse-index support.
 
-> Subject: Re: [PATCH v3 3/3] add-patch: Allow proper 'git apply' when using the --rework-with-file flag
+Patch 1 is a preparatory cleanup that converts merge-ours away from
+the_repository global, using the repo parameter instead.
 
-Style.  Downcase "Allow".  Applies to [2/3].
+Patch 2 adds the actual sparse-index integration and tests.
 
-Avoid "proper" as it is not obvious to everybody what you find
-proper and why you find it proper.  Applies to any value-judgement
-adjective.
+Changes since v1:
 
-    Subject: [PATCH v3 3/3] add-patch: allow all-or-none application of a patch
+ * Patch 1: note in commit message that RUN_SETUP guarantees repo is never
+   NULL (Patrick, Junio)
+ * Patch 2: rewrite commit message to follow the project's standard log
+   message structure (Junio)
 
-or something?
+Thanks Junio and Patrick for the review.
 
-> +static void apply_patch(struct add_p_state *s, struct file_diff *file_diff)
-> +{
-> +	struct child_process cp = CHILD_PROCESS_INIT;
-> +	size_t j;
-> +
-> +		/* Any hunk to be used? */
+Developed with AI assistance (Claude).
 
-Funny indentaion?
+Sam Bostock (2):
+  merge-ours: drop USE_THE_REPOSITORY_VARIABLE
+  merge-ours: integrate with sparse-index
 
-> +	for (j = 0; j < file_diff->hunk_nr; j++)
-> +		if (file_diff->hunk[j].use == USE_HUNK)
-> +			break;
-> +
-> +	if (j < file_diff->hunk_nr ||
-> +		(!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
-> +		/* At least one hunk selected: apply */
-> +		strbuf_reset(&s->buf);
-> +		reassemble_patch(s, file_diff, 0, &s->buf);
-> +
-> +		discard_index(s->s.r->index);
-> +		if (s->mode->apply_for_checkout)
-> +			apply_for_checkout(s, &s->buf,
-> +					s->mode->is_reverse);
-> +		else {
-> +			setup_child_process(s, &cp, "apply", NULL);
-> +			strvec_pushv(&cp.args, s->mode->apply_args);
-> +			if (pipe_command(&cp, s->buf.buf, s->buf.len,
-> +					NULL, 0, NULL, 0))
-> +				error(_("'git apply' failed"));
-> +		}
-> +		if (repo_read_index(s->s.r) >= 0)
-> +			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
-> +							1, NULL, NULL, NULL);
-> +	}
-> +
-> +}
+ builtin/merge-ours.c                     | 15 +++++++++------
+ t/t1092-sparse-checkout-compatibility.sh | 14 ++++++++++++++
+ 2 files changed, 23 insertions(+), 6 deletions(-)
 
-I suspect that the extraction of this helper function out of its
-original place in patch_update_file() should be done in its own
-patch.
 
-Do we need new tests to cover this new feature?
+base-commit: b2826b52eb7caff9f4ed6e85ec45e338bf02ad09
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2189%2Fsambostock%2Fsb%2Fmerge-ours-sparse-index-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2189/sambostock/sb/merge-ours-sparse-index-v2
+Pull-Request: https://github.com/git/git/pull/2189
+
+Range-diff vs v1:
+
+ 1:  6cb970e512 ! 1:  775d76df69 merge-ours: drop USE_THE_REPOSITORY_VARIABLE
+     @@ Metadata
+       ## Commit message ##
+          merge-ours: drop USE_THE_REPOSITORY_VARIABLE
+      
+     -    Use the `repo` parameter passed to cmd_merge_ours() instead of
+     -    `the_repository`, and drop the USE_THE_REPOSITORY_VARIABLE macro that
+     -    is no longer needed.
+     +    The merge-ours built-in uses the `the_repository` global to access
+     +    the repository. The project is moving away from this global in favor
+     +    of the `repo` parameter that is passed to each built-in command.
+     +    Since merge-ours is registered with RUN_SETUP, `repo` is guaranteed
+     +    to be non-NULL and can be used directly.
+     +
+     +    Drop the USE_THE_REPOSITORY_VARIABLE macro and use `repo` throughout.
+      
+          While at it, remove a stray double blank line between the #include
+          block and the usage string.
+ 2:  20b9e0bf6e ! 2:  55d39ff778 merge-ours: integrate with sparse-index
+     @@ Metadata
+       ## Commit message ##
+          merge-ours: integrate with sparse-index
+      
+     -    The merge-ours builtin reads the index only to compare it against HEAD
+     -    via index_differs_from(), whose diff machinery (run_diff_index) is
+     -    already sparse-aware.
+     +    The merge-ours built-in opens the index to compare it against HEAD.
+     +    The machinery used to do this (i.e. run_diff_index()) is capable of
+     +    working with a sparse index, but the start-up sequence of this
+     +    command does not take the necessary steps, so we end up expanding the
+     +    index fully before doing the comparison.
+      
+     -    Teach merge-ours to opt out of requiring a full index by setting
+     -    command_requires_full_index to 0. Because merge-ours is invoked as a
+     -    subprocess by "git merge -s ours" and never previously read config,
+     -    the global variables core_apply_sparse_checkout and
+     -    core_sparse_checkout_cone remained unset, causing
+     -    is_sparse_index_allowed() to return false and the index to be expanded
+     -    anyway. Add a repo_config() call with git_default_config to populate
+     -    these globals.
+     +    In order to convince sparse-index.c:is_sparse_index_allowed() to
+     +    return true, we need to:
+      
+     -    Add tests to t1092 verifying that "git merge -s ours" produces
+     -    identical results across full-checkout, sparse-checkout, and
+     -    sparse-index modes, including verifying the resulting merge commit
+     -    structure, and that the sparse index is not expanded during the
+     -    operation.
+     +     - Read basic configuration with git_default_config so that global
+     +       variables like core_apply_sparse_checkout are populated.
+     +       merge-ours currently does not read configuration at all.
+     +
+     +     - Set command_requires_full_index to 0.
+     +
+     +    With that, the command can work without expanding the index fully
+     +    before doing its work.
+      
+          Signed-off-by: Sam Bostock <sam@sambostock.ca>
+      
+
+-- 
+gitgitgadget
