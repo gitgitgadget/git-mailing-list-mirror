@@ -1,92 +1,117 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756EA25A655
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 20:53:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3B7168BD
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 21:27:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770411209; cv=none; b=mKqryQXKb20pXWfZ3FXLoiIipj2rkHNAwf1MpSYFN3qkHLHEBT545JjUzR6hfOHDqZl+1dndhobxsR9YgZGDSnwk3kBvzaIHJ7Tx69wyqewgwA4KWrnAsqMIUS3VbpRqEnSUgq6v8tYng5frf37sVkYTWAiJ3gYdzGKSuWouTuk=
+	t=1770413266; cv=none; b=fxT6NV22wpJLG2K62/rAhgFtDqS0+274RSf66tN73fzrKBgIMmRYu6PTnMafT9JvNGyZOEOdB4BAOHqhcrIIWOy0yMSSq+pYrMViwSp5PPLwkBWlVfpJDgfledohWJHInU4FqQ4X1tbo0Ouo7YBzpY6yQV1ZG+NHfC/5+yzVxrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770411209; c=relaxed/simple;
-	bh=3fkNqAC1InWaTJhVK3ekrnr0VVwWxYdNtlDaz93qDII=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qMEi2VGUyEnavuubuPsuQD7TDGlZcaxdNBmkvrVZ0SuTDvcHVqFqlsW9dfm8lOhHoxjNoZMsuou1wrv76oip2tdhO2RDwradiFMnhHFqLZzg/V2mISUh60wbr0BZeAPd/dCTdMtLRnkld2FuLbtiYtJMSaqLJgvNsFfL1Ac6M1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OS17xLUQ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1770413266; c=relaxed/simple;
+	bh=aDmPgkthyLurvqCXpQ6+jMI+LofBuawLLvvQlUoA34M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TPIEtGclK0SKGw07cWpD5Hy68CWTS9hXzeMbTZnWc/H3+EIT2fFeV0mA53TCNRONmwWNhJHHqDkpvzXE0V4OY4gGpg5nu8G3JMB2xi+NUI7QMob9SSAzBdz3lGv6LYEdFYHjh0J0v3ODS6kvRk8zF7NmPbOvmVsU7Rj7aFfmRTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PQTeOV+O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d5cpFR1R; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OS17xLUQ"
-Received: (qmail 304884 invoked by uid 109); 6 Feb 2026 20:53:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3fkNqAC1InWaTJhVK3ekrnr0VVwWxYdNtlDaz93qDII=; b=OS17xLUQpa7RWPmNcehnGBxZcmInPC7V3tOQkLcbcIjhnC6ad9nLu6lpwXxNB5rz1qe8MMov1O8YrtXq1VxVwciusDtCuz/YQ/mOYChr89sYtAWljteJgmCQRWou5wOuqFAoXkM88vSPqgepy7n+6wCRUCY4NxWNSB8Pdwqdkf3vqAd1zFkcoWAQPa/365JE/jhl6KNcXQAaBqJ4mL0Di7cIjv59fEitUBw7F2AgglsUo2Wvn32/zdp6F0HB14Q821nNcDRfoaD1YD6i+FX97CskmDaK6C09YjhdIpdDkTWMeku2ncdXDabZgIlS1BsgiCva+/ivgnvzs1lJnZ7AAQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Feb 2026 20:53:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 608896 invoked by uid 111); 6 Feb 2026 20:53:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Feb 2026 15:53:30 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 6 Feb 2026 15:53:27 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ashlesh Gawande <git@ashlesh.me>, git@vger.kernel.org,
-	sandals@crustytoothpaste.net
-Subject: Re: [PATCH v3] t5550: add netrc tests for http 401/403
-Message-ID: <20260206205327.GB2787536@coredump.intra.peff.net>
-References: <20260106114029.763351-1-git@ashlesh.me>
- <20260107074724.13165-1-git@ashlesh.me>
- <xmqqms1mihqo.fsf@gitster.g>
- <20260206093840.GC2761602@coredump.intra.peff.net>
- <xmqqtsvtg49h.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PQTeOV+O";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d5cpFR1R"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 827FE1400086;
+	Fri,  6 Feb 2026 16:27:45 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 06 Feb 2026 16:27:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770413265; x=1770499665; bh=k5QZCGQXFG
+	/Rp14qZJPZHrbb/MzaDCgXsO1MKfeP/Uk=; b=PQTeOV+OtLd6RKmYK7PBnMJ92u
+	8Hrs6Wai1U/SSMJmPS6sCON+tgpqmMgG+To/XiC9E86FapT2pyLXiG+9+unz+HA3
+	fmRt3gT9FWLbqAntL6325xU+F45kIqNpNgv1CkkHKgOSZk2Hf5TUVVTuwMtBkTUY
+	pv0AAXWF3KB880CIVRGQf/iDbyqgsIiPNB8a5McvxCNz+mkMBY4RhapcBiGmmXxl
+	MDceveAIyFCGFMGLbbpH3cTiflVyUbWnK1qMT6NeGVss1WftA3foJF2MrUNPbfd6
+	O8I3v91rDIE3EGI+XHAwFY+oNL5LrlDlGj3970JfjDPSHyPENhV2+KJszQKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770413265; x=1770499665; bh=k5QZCGQXFG/Rp14qZJPZHrbb/MzaDCgXsO1
+	MKfeP/Uk=; b=d5cpFR1R68lY7vyz8CPsc6AEDc8iG7GGlrpqkz4clISpqDHZT4v
+	hygtoCPCuNqJ1JjSa27TxY9jdMGyrPtHJTuM3RvYFipf4ZxnAqvoyYs2Q9LVqNTC
+	TVNrj3cW6umQeTbIZHCawdhzzrcfX/pNKc6y7qcn61+KlrI0ofZAtNZnNPI9bxml
+	pOjVqLchM7q/pV1bV2mICaB9U6OFfWuxJtHue/5t9KOd5QXVarntID1d2M9yugZx
+	9n+cSE+SbE0qu9gl4zeUaE3yXjZHARWxIrMNCVJEsclDco5wwHe8oXN33LvEHHW2
+	E0gQtDMSXJuuzqHsdCwUvEkPJR3FNBhVCpg==
+X-ME-Sender: <xms:0VyGaaB35dW3oIN6qHkOPpHXQu1ErprLKgYz06UcROquTryEwwdcrg>
+    <xme:0VyGab-mf_WTeICePsb2LMMD38-nK_wxpcf2WF3-nzBuWMGPF6f6_Xq59_ei68sbu
+    0OjG_wpag8zMb1nFsVRPe4FbjokBqgftHZI1L6k6dmQDXNdLlC0kz0>
+X-ME-Received: <xmr:0VyGaa-hu8VySIQymABECRePrpiSb5on68jgWhCQWU27r6TE9kCHIayQEYSl9RL7dzeHxju0OGx1S7PRx09HkUX3FktWvCKdqw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeelvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:0VyGaSeVRXwC3W0q52ux51iIr6Xh2_UP7fDgXu1aA_NezRgEyA-MFQ>
+    <xmx:0VyGaTEH9yljjwzxpIOd9O36bOFWNaCIwF-bzY188bMvi62XetgcyA>
+    <xmx:0VyGaQeXYfiZkMaeFMNVqakshn9QMBZbatCads_nC7Xut-8xSAWmqw>
+    <xmx:0VyGadGhhCnxsnAy2ep51-KVYj0HPfFdDiWzSmFBH-yA2yH1nmuvpQ>
+    <xmx:0VyGaenzQoMtQMY0ej_ozmtUmb-B6T5nngwyEHN3NHUGzCaVykT4-gb3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Feb 2026 16:27:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH RFC] graph: implement git-log(1) --untangle
+In-Reply-To: <20260206-toon-log-graph-no-merge-base-v1-1-a6f983991a1d@iotcl.com>
+	(Toon Claes's message of "Fri, 06 Feb 2026 19:49:18 +0100")
+References: <20260206-toon-log-graph-no-merge-base-v1-1-a6f983991a1d@iotcl.com>
+Date: Fri, 06 Feb 2026 13:27:43 -0800
+Message-ID: <xmqqv7g9d0kw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtsvtg49h.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Feb 06, 2026 at 09:39:54AM -0800, Junio C Hamano wrote:
+Toon Claes <toon@iotcl.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I think it is fine to check the 403 handling, but note that this _isn't_
-> > how GitHub would respond. If you try to fetch from a repository you
-> > don't have access to, it will return a 401 first (so you try to log in)
-> > and then a 404. The idea being to avoid revealing the existence of the
-> > repository to unauthorized users.
-> 
-> That is a sensible thing to do on the server side.  Presumably when
-> we talk with such a server we would report 404, right?  It is not
-> like we behave all that differently with either type of errors---as
-> long as we just give up and do not fall into an infinite loop of
-> asking "oops, that password did not work, try again", it would be
-> OK.
+> I would argue the problem here are not the merge commits, but it's the
+> way this is displayed.
 
-Right, we'd report the 404. We never loop on trying to authenticate, but
-do a maximum of two tries (and then only if we get a 401 on the first
-request and did not already provide a credential ourselves to curl).
-Curl might make multiple requests under the hood for each "try", but we
-won't even know about them.
+I am curious, as anybody else who has read this message up to this
+point, how your --untangle option improves the same section of the
+history you drew above (which I did not include).
 
-And all of that is independent of which HTTP error code was returned
-(except for 401, obviously). We do eventually produce a different
-message for 404 vs a 403, but that's at the top-level of remote-curl.c.
+> There are still some bugs in this implementation. And a bunch of memory
+> leaks. Also am I not sold on the name `--untangle`. It sounds catchy,
+> but it's name isn't very meaningful for most users. I've been thinking
+> about `--ignore-merge-base` or `disconnect-merge-base`, but I'm open to
+> better suggestions. That's why I'm submitting this as a RFC. Before I
+> continue work on this, I'm curious if the project is open to such
+> contribution? And if so, which direction it should go?
 
-The interesting bits are in http_request_reauth(), though some of the
-logic is in handle_curl_result().
+In any case, I am very happy to see another person who is not afraid
+of our C codebase to have looked at this part of the system (I have
+a long-standing pet peeve, unrelated to this issue, in this area).
 
-> > The netrc support here should not involve credential helpers at all. It
-> > is all being done internally by curl.
-> 
-> Yeah, I phrased my question in a wrong way.  As the code paths
-> involving credential helpers are separate, I wondered if we have
-> similar test coverage there as well.
-
-The workings are hopefully covered by the explanation above. As far as
-test coverage, I think t5550 covers this already. When we provide the
-wrong password, we bail rather than asking repeatedly (e.g., in "cloning
-password-protected repository can fail").
-
--Peff
+>  struct column {
+> +	/*
+> +	 * When only_first_merge_base is set this column might be ignoring it's
+> +         * merge-base, store it here.
+> +	 */
+> +	struct commit_list *ignored_merge_bases;
+>  	/*
+>  	 * The parent commit of this column.
+>  	 */
