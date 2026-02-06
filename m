@@ -1,154 +1,314 @@
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C914326ED41
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 02:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770345129; cv=none; b=u8n88e0kFBu7FJ3yx/hCM/ElXsOJpC8MfvI5ydYDj4TZNb1GdTxTD+4pgZPthzI6UwKjGH3AWP6vpIFh8vPJ/RX+Y5Slkajd+kfftFlpfWFOtkodp4uryq9a4sXxlJL5Pz/KIbgjZkTcUk0zaZRomgBZVMGIL8XbnlhGR6bHFm0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770345129; c=relaxed/simple;
-	bh=jvGos0F5iWopsEFl4ZKTPVRbNqOBwsPWVwIDXMP5/eo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FduN2VmkJf6sxN8TQnnGj+sdd55Orj1rLiXzMliZQW1R2UfHxULlgweTiaTbJBPeehEeDfEST8hbyKB6Vn6TAiL/EC6QtLfj5YeL30E0ahuoyiFbqkRwoCzjF5VcsXhQy0aoere4ldP1UQCWFCDI5HfSPInnwQcMhXx9h24NUFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N8Sg2Qab; arc=none smtp.client-ip=74.125.82.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF34326A0C7
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 02:38:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770345530; cv=pass; b=nmBEr6T2c/g970YmVJvh9L+ah/l1hhc+F2U+oD2dPp4LEDcK2IgZhqZPFAIfegsW0WBVUC1QhW0EXeBvQPW8q0xYlLziamuAq7L4kZnvg4vsTC0uhTaiSzZFH6qVeBbsRCOW92qW2S099tQnGnz/kvgkEMjqIGgFkRseiHSPJds=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770345530; c=relaxed/simple;
+	bh=A4XA2GpvZVriDuyGcgda8mWwIcKwUu7BPGZHmbSiKCs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sQJoxar1nve/ageRPNBjl18KgEYfXBur4O5M4Hb0p7Uetj/U0QhCA7lbmSaUSyTP/AovtSfDDyNVwwgkMrOzGgmYOiZ+xPHvn/pFxOLMbOQcp2NU4YmmKBUgD/qt6z3/6GKJFIg9qs/s0SYYlDbzjZ5Wandw/w66b/JIj8noeR8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fms+rV7c; arc=pass smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N8Sg2Qab"
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-2b704f08e73so942715eec.1
-        for <git@vger.kernel.org>; Thu, 05 Feb 2026 18:32:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fms+rV7c"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-794d3bba0ccso14494167b3.2
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 18:38:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770345529; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jNcvM6uOZ8B9smSNlINlbdYCY9Ql2YLUPaIA3wIZT/5UCqjwdmL5RRQYek7nGS/C36
+         m0Laafb6hIqDZDBV3BOmZzuT13jyeThkE0RUURn20fvHQ9yGR/p/aOOG1lrNOUpC3Pqp
+         zfcavkyqLYWi+p1okgDK5EHG2s26KewLofNi9S2S1pAh7IKGTT82XCnT7Covaw5Et+l4
+         yi1Fmd/PGfIOPKAGKPpnGAPrJPgPHnatm7FI8UtRVYsOYSAjFy6aihr2YxxiNf9iqbcs
+         Gi+rzIvHoOLq+SeaPaXUT3n2CL4lpdwMyzMsdv4elyULlaVsGY0YzzSmzZGJoMID38rP
+         aj5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=xo7uKrhrZaoUEtVIYtw9M/SGHxqY/t9CokkihZl0KZA=;
+        fh=m/7UfAVYDenrDJ6TImYck104PYGXAbpZsWw/GNKCBEE=;
+        b=Glpf7YvBWpyXt835plTrHVHJBWY+gR3/aLdth+20f2mVqbtVQQ0D81yEd0lkeNwRsj
+         hkpO+hOTn5QIdptH7PYvynQ9lHAmobsutUay5JRSpPj3cLG1KiDYh8y3zLvgyM7j5GFi
+         wqS2kh3xUuJptSDdn4si1IYQj/28xxhQw3Bz+JF8+ST2Hk5UEj5mlu5Txl+yEvRwuGP1
+         1u5JUybSDftcea91+CGJQzUuqDmHL7kWm+rB3GNRmn936F7AvgyPv90Z7NWyVBMEB2gg
+         N66LPbN1HI0OAzXhSbdc0aV/1Q+d6RQO8xGqKPcHCYlFrz77Ju0y11A32efoNf78H3FN
+         qOsQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770345128; x=1770949928; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770345529; x=1770950329; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3N+KQH7lkAQmYwgkg5BZsb6v75YTdREmrEu7xz7yiCs=;
-        b=N8Sg2QabcDWcdfaKDo8KB9oSiESSlCnCGueUCzeiFMEC7Ud0UhvM4/HQictTN23RbY
-         OQANKu1+dVPUS7XpfC0fhkOX97slrG/FJHxO8aMAsKoFP7hm/ZFUI7rtxonElyvIkq/N
-         eoNxxuo+BBTyYZnL8LgnzbfCT/6fkdVqfXSj1KcnT1Mwx7aBFzjn3lfm//NYOvE0aKg0
-         Pln3jIZ4ge1HfPcRjvxSUNUomJI4hJOzBgxFZjhauAlu4ti0aDe5ev6JdUvr/AOehw09
-         esaYZ6rObRUtoQVQwxxzmfVSm+dQlYwZDxmplD6rEp4l1V6QjRmAWel2SI4g00RWVm9Q
-         8WJA==
+        bh=xo7uKrhrZaoUEtVIYtw9M/SGHxqY/t9CokkihZl0KZA=;
+        b=Fms+rV7chOUZDObcS4z9c3Ub6nq53yS1bLa7noyo+Kt0jVIpahT1PkkdHSmgeYVYS4
+         gsHLrz2+3nuItZG+g6m7/+QnQwM6eCs2GgBtcRFk9WnE/Ia4sBLVM0jIJR/2/oaSsOqA
+         BlwOOu0alj4C8zst1uW44kdasJkaQr3k4MRp6IwJBk//9A5Pf8N7B5J5JcE0UhdUP9F1
+         5zpIloXkbkszU+oZwIL7VD+q7U1GrBL4oDw84NmLw+CcEBSWIB8UBcfAYpxrxbt9NTkS
+         aq9g5jYdgqgnEAuOf4nl1GCjFUGxLVolLt0ydSJ0wV4/ehIXHjNuKItDdxxW+LXf1+yX
+         9+zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770345128; x=1770949928;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1770345529; x=1770950329;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=3N+KQH7lkAQmYwgkg5BZsb6v75YTdREmrEu7xz7yiCs=;
-        b=ct/VG6cwcxmmZ+PQCTsvZuormBQPJXBX9B6HKWRmk2ZLWyEkGoAVZeyIypSz8RXGPX
-         Rl0rkKKghAQsvS7CjxvhxrRoU6II28EqCxTEaVeRbSPs9X/7IjstPHtYZYdjOCVO29aH
-         XPvwIOsfpGI0giNr1WFVAU+BCzwsLgAKgRysd/bUtQ2vGrRNtT4QrV474heRst09ZMF6
-         pfRAcWYZENS+2aimv+0X10wG23ghIztqVObMD3moFwNf9u8Y0UCV5KZp9IZ9QkKaEMiy
-         wo0USsWkUt1PDO+c7U1tGKRbdvchOuNOlVqqD0qtHA1EfMemfKYqbWGq8//syyTd4gTz
-         1P/Q==
-X-Gm-Message-State: AOJu0YzjKJ+l0WLw1g/E42Mme6U+9SwEiRQLmPUZgZNdZ9RKtjVoTwvv
-	lEpbkcUr3sK/N/UvV/cspTA6SDCGkhHRFIVMkGHQizYYDwIpu4/khO7b2HtgaK9c
-X-Gm-Gg: AZuq6aL/JMkm0rXqNtwFWHv8h0ujQ+l7I89N17kmg0h50e1YlfZMMcofKT95y7BDMmM
-	Jk2wYEXJ6v5LobBcPa+Ac51Hp41/tq8V5WKdgVxv08vw4TZv1s4ZnZZ9t7K0GnnjDhz1lSw2Igl
-	sfJl1isxQUPGOjkSpijPIeA3snHfVFeslFjmz2LMumWh8JD41OpnymetkXCTBmOuiCgHk3dX3m0
-	LfAyYVyPQsxS6+O2AWWbHEGc2whEO1TUV74Sp6Fakq35mjX0Ncyz3+7iwAbvA4R4ZolVumJuIlV
-	LJZ7QZXALoBihqkmOE8MblTBRRxyFhs3PVsdy7KDi4zwXzXZmwXrg3ywwCuC2/4vXF9pNLnPP4H
-	2GXu9+cM1d4C1HxSjYfiBM/MlW1UJYsU885FTvAuQJcEV9kgutlijTY+SNeHCZGOwtqIrh4F4Hy
-	KioRWsA3t1fQ==
-X-Received: by 2002:a05:7300:dc8c:b0:2b8:49cc:7318 with SMTP id 5a478bee46e88-2b855c7ad8bmr555691eec.11.1770345128360;
-        Thu, 05 Feb 2026 18:32:08 -0800 (PST)
-Received: from [127.0.0.1] ([20.163.4.32])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b855b1a6d3sm807227eec.15.2026.02.05.18.32.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Feb 2026 18:32:07 -0800 (PST)
-Message-Id: <20b9e0bf6e2b12eea1ff50b14d0d2809c601a943.1770345124.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
-References: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
-From: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 06 Feb 2026 02:32:04 +0000
-Subject: [PATCH 2/2] merge-ours: integrate with sparse-index
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=xo7uKrhrZaoUEtVIYtw9M/SGHxqY/t9CokkihZl0KZA=;
+        b=ayq3u1Zd4oa+Loj7ScQrRsQ+L8F9KLjnayX7JpEsEKfDXA+Yx4/aJK98p/HCrC8qYg
+         Kf88oQqHwBEGjYe1mxqFkW5SHV6tbBUHqFRHQy31gmgNXHpohV4p5c6BtCmL0yIuy953
+         DZal3EDAVKDSrEejdTOzlojyEJLr7KexJ4/Iik/upcgPLF7IfZJ/yBxkVTDupPjf83JW
+         BIbY2T0rSm9hHZeS67f+6qXmPckpb2+CwuOSU0nAB9SwRX/f48gFT09zWxe0+J8kv2uW
+         uGdQv30E+EYR20iHIzJ+90diQIt5HTG4vDAjcpDxHTzp/WuWbhHTJ7sZOefN5sdQmA5A
+         ygLQ==
+X-Gm-Message-State: AOJu0Yz2AhyU49/FAyaJYXfh31plCUbdk2Xp83j75DMlB3yq3UER07va
+	fUfbPrmGoDpo30Fr2G4a4fxH9BTVM4TpWDTED2urOaDnOpG0xe+hFusdij5OUV9Jn042OD1yRE8
+	mQOVEbfUtG85lCRmKqWHfgUf32aGRMRKFhDQ29o4=
+X-Gm-Gg: AZuq6aIgjR3Ximne6skYpN6ICMo/aM2upx7BLFs7wM1SfFRNAVThWBYPRyZQKanTxy7
+	tEwuUhO5gIp+3iFPhhOGE0vSB0hOWKQJs26knDsW9YB5AeNuS/I6aKB0hpvmqSFkxIbRTyG4Guf
+	Zd6//wHob8+41DWePK19gNRIzchxjo0fOL1fJil5HuZqrdKKOYxGJXua+xZlBYoEkkZwwTYPlfp
+	q1kJ/0YVsB1mf3/iTvRv6VViY9TfXyOXvq3OUoo+HzJJnvvWNuv0UZW9b5q57vE7mntc2iCiC26
+	vmSDtNzS+M+4uSdpgXIrVdobjp/jwOyJ7JjVQykG+SY9ia4BLQwb5YaYr62/lTMsp1YCaKU=
+X-Received: by 2002:a05:690c:a92:b0:794:b2be:f488 with SMTP id
+ 00721157ae682-7952ab397a6mr12389717b3.36.1770345528707; Thu, 05 Feb 2026
+ 18:38:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Sam Bostock <sam@sambostock.ca>,
-    Sam Bostock <sam@sambostock.ca>
+References: <CANYiYbFhshDwfttKWYGDfO+K1qAz3ptVHuuHrWXhD2oYBF7baQ@mail.gmail.com>
+ <71bfd9231e339cf43af86cfbffbbdde753d3fb82.1770296405.git.worldhello.net@gmail.com>
+ <xmqqfr7fkjx4.fsf@gitster.g>
+In-Reply-To: <xmqqfr7fkjx4.fsf@gitster.g>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Fri, 6 Feb 2026 10:38:37 +0800
+X-Gm-Features: AZwV_QjkmvaQUy2aosi26LW71mFa5w6uO3iqYGVvwcWfy8DYDRSW91yHdlX2_0o
+Message-ID: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] l10n: README: document AI assistant guidelines
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Sam Bostock <sam@sambostock.ca>
+On Fri, Feb 6, 2026 at 4:35=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+> > Add guidelines for using AI tools as optional assistants in Git
+> > localization work, while emphasizing human translators remain in
+> > control.
+> >
+> > Also update `git-po-helper` command examples to include the
+> > `--pot-file=3Dbuild` option.
+> >
+> > Example usage in prompts to AI assistants:
+> >
+> >   - "Update translations in `po/XX.po` following the guidelines
+> >     in @po/README.md"
+> >   - "Review all translations in `po/XX.po` following the guidelines
+> >     in @po/README.md"
+> >
+> > Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> > ---
+> >  po/README.md | 294 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 291 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/po/README.md b/po/README.md
+> > index ad7f72ba83..6ba082376a 100644
+> > --- a/po/README.md
+> > +++ b/po/README.md
+> > @@ -227,8 +227,8 @@ L10n coordinator will check your contributions usin=
+g a helper program
+> >  (see "PO helper" section below):
+> >
+> >  ```shell
+> > -git-po-helper check-po po/XX.po
+> > -git-po-helper check-commits <rev-list-opts>
+> > +git-po-helper check-po --pot-file=3Dbuild po/XX.po
+> > +git-po-helper check-commits --pot-file=3Dbuild <rev-list-opts>
+> >  ```
+> >
+> >
+> > @@ -430,7 +430,7 @@ There are some conventions that l10n contributors m=
+ust follow:
+> >    your commit:
+> >
+> >    ```shell
+> > -  git-po-helper check-po <XX.po>
+> > +  git-po-helper check-po --pot-file=3Dbuild <XX.po>
+> >    ```
+> >
+> >  - Squash trivial commits to make history clear.
+>
+> Is everything above specific to using AI assistants to help your
+> translation process, or do people who do not (yet) use them also
+> benefit from these updated examples?  If the latter, it probably
+> should belong to a separate patch.
 
-The merge-ours builtin reads the index only to compare it against HEAD
-via index_differs_from(), whose diff machinery (run_diff_index) is
-already sparse-aware.
+When git-po-helper is used in GitHub Actions, it cannot build the POT
+template from source code because the CI workflow uses a partial clone
+of the Git repository with only =E2=80=9Dpo/*.po=E2=80=9C files checked out=
+.
+Therefore, by default, git-po-helper downloads a prebuilt POT template
+file instead of compiling from source. However, building from source
+code (--pot-file=3Dbuild) should be the safe and default behavior when
+working in a complete source tree. I will update the git-po-helper
+code to automatically detect the environment and set the appropriate
+default behavior for both scenarios, eliminating the need to document
+the --pot-file=3Dbuild option explicitly.
 
-Teach merge-ours to opt out of requiring a full index by setting
-command_requires_full_index to 0. Because merge-ours is invoked as a
-subprocess by "git merge -s ours" and never previously read config,
-the global variables core_apply_sparse_checkout and
-core_sparse_checkout_cone remained unset, causing
-is_sparse_index_allowed() to return false and the index to be expanded
-anyway. Add a repo_config() call with git_default_config to populate
-these globals.
+> > +AI tools, if used, serve only to accelerate routine tasks. They do not=
+ make
+> > +decisions, do not replace human judgment, and do not understand cultur=
+al
+> > +nuances or community needs.
+>
+> They may very well do any of the above.  It is your responsibility
+> as humans to monitor their decisions, judgement, and understanding,
+> and countermand them as needed.
 
-Add tests to t1092 verifying that "git merge -s ours" produces
-identical results across full-checkout, sparse-checkout, and
-sparse-index modes, including verifying the resulting merge commit
-structure, and that the sparse index is not expanded during the
-operation.
+Agreed. I'll adopt your suggested wording.
 
-Signed-off-by: Sam Bostock <sam@sambostock.ca>
----
- builtin/merge-ours.c                     |  6 ++++++
- t/t1092-sparse-checkout-compatibility.sh | 14 ++++++++++++++
- 2 files changed, 20 insertions(+)
+> > +### Preparing your translation environment for effective AI use
+> > +
+> > +If you choose to use AI assistance, investing time in preparation will
+> > +significantly improve the quality of AI-generated suggestions:
+> > +
+> > +1. **Maintain a glossary**: Add a "Git glossary for XX translators" se=
+ction in
+> > +   the header comments of your `po/XX.po` file (before the first `msgi=
+d`). List
+> > +   key Git terms with their approved translations. AI tools can read a=
+nd follow
+> > +   this glossary.
+>
+> A few random sampling of po/XX.po files seems to tell me that this
+> is already the case for some languages but no all of them.  Perhaps
+> refer translators for other languages an existing example to help
+> them start their glossary in their po/XX.po file?
 
-diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
-index 2312e58ab3..405b2989f7 100644
---- a/builtin/merge-ours.c
-+++ b/builtin/merge-ours.c
-@@ -10,6 +10,8 @@
- 
- #include "git-compat-util.h"
- #include "builtin.h"
-+#include "config.h"
-+#include "environment.h"
- #include "diff.h"
- 
- static const char builtin_merge_ours_usage[] =
-@@ -22,6 +24,10 @@ int cmd_merge_ours(int argc,
- {
- 	show_usage_if_asked(argc, argv, builtin_merge_ours_usage);
- 
-+	repo_config(repo, git_default_config, NULL);
-+	prepare_repo_settings(repo);
-+	repo->settings.command_requires_full_index = 0;
-+
- 	/*
- 	 * The contents of the current index becomes the tree we
- 	 * commit.  The index must match HEAD, or this merge cannot go
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index b0f691c151..d98cb4ac11 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2559,4 +2559,18 @@ test_expect_success 'cat-file --batch' '
- 	ensure_expanded cat-file --batch <in
- '
- 
-+test_expect_success 'merge -s ours' '
-+	init_repos &&
-+
-+	test_all_match git rev-parse HEAD^{tree} &&
-+	test_all_match git merge -s ours merge-right &&
-+	test_all_match git rev-parse HEAD^{tree} &&
-+	test_all_match git rev-parse HEAD^2
-+'
-+
-+test_expect_success 'sparse-index is not expanded: merge-ours' '
-+	init_repos &&
-+	ensure_not_expanded merge -s ours merge-right
-+'
-+
- test_done
--- 
-gitgitgadget
+Will do. I'll add: "See `po/zh_CN.po` for an example."
+
+> > +2. **Keep translations up-to-date**: Regularly sync your `po/XX.po` wi=
+th
+> > +   upstream. AI learns from existing translations. The more complete a=
+nd
+> > +   consistent your PO file, the better AI suggestions will be.
+>
+> I am not sure what this means.  When you are working on updating
+> translations for your language, you'd want to be working from or
+> near the tip anyway, regardless of what tools you would use, no?
+
+Agreed. I'll remove this redundant point.
+
+> > +3. **Document style guidelines**: If your language team has specific f=
+ormatting
+> > +   or style preferences, document them in your `po/XX.po` header. AI c=
+an
+> > +   incorporate these guidelines into its output.
+>
+> If we have an example in po/XY.po that translators to other
+> languages can learn from?
+
+I originally kept that point because I wanted to document how to
+generate the location-less file format in the PO file header, but it's
+now obsolete since I added a repository-level gitattributes file in a
+previous commit.
+
+> > +4. **Choose appropriate AI coding tools**: Evaluate and use models and=
+ tools
+> > +   that work best for your target language. Different AI models have v=
+arying
+> > +   levels of proficiency across languages. Test multiple tools to find=
+ which
+> > +   produces the most natural and accurate translations for your langua=
+ge.
+> > +
+> > +
+> > +### Technical guidelines for AI tools
+> > +
+> > +The following sections provide technical specifications for AI tools t=
+hat
+> > +assist with Git translation. These guidelines ensure AI-generated sugg=
+estions
+> > +are technically correct and follow Git l10n conventions. Human transla=
+tors
+> > +should be familiar with these requirements to effectively review AI ou=
+tput.
+>
+> Are the subsections of this section meant to be fed as part of
+> prompt to the tools?  Otherwise they look mostly repetitions of what
+> human translators already have learned elsewhere in the document.
+>
+>
+> > +#### Scope and context
+> > +
+> > +- Primary files: `po/XX.po` for translations, `po/git.pot` for the sou=
+rce
+> > +  template (generated on demand; see "Dynamically generated POT files"=
+).
+> > +- Source language: English. Target language: derived from the language=
+ code in
+> > +  the `po/XX.po` filename based on ISO 639 and ISO 3166.
+> > +- Glossary: Git l10n teams may add glossary sections (e.g. "Git glossa=
+ry for
+> > +  Chinese translators") in the header comments of `po/XX.po` immediate=
+ly before
+> > +  the first `msgid` entry. If a glossary exists, read it and keep term=
+inology
+> > +  consistent.
+>
+> This overlaps "Preparing #1"; do you want to cover "Preparing #4" as well=
+?
+
+"Preparing #1" tells humans to maintain a glossary; this section tells
+AI tools to read and use it (add to the context). Different audiences,
+complementary purposes.
+
+> > +#### Quality checklist
+> > +
+> > +- Accuracy: faithfully conveys the original meaning; no omissions or d=
+istortions.
+> > +- Terminology: uses correct, consistent terms per glossary or domain s=
+tandards.
+> > +- Grammar and fluency: grammatically correct and reads naturally.
+> > +- Placeholders: preserves variables (e.g. `%s`, `{name}`, `$1`) exactl=
+y. If
+> > +  reordering is needed for the target language, use positional paramet=
+ers as
+> > +  described below.
+> > +- Plurals and gender: handles plural forms, gender, and agreement corr=
+ectly.
+> > +- Context fit: suitable for UI space, tone, and usage (e.g. error vs. =
+tooltip).
+> > +- Cultural appropriateness: avoids offensive or ambiguous content.
+> > +- Consistency: matches prior translations of the same source string.
+> > +- Technical integrity: do not translate code, paths, commands, brand n=
+ames, or
+> > +  proper nouns.
+> > +- Readability: clear, concise, and user-friendly.
+>
+> The fact that these are important does not change if you use AI
+> tools or not, no?  As I am not sure the purpose of these repeated
+> instructions in the "Tech guidelines for AI tools" section, I've
+> trimmed most of the contents in it here.
+
+You're right that these standards apply universally. However, the
+following sections reference this checklist explicitly (e.g., "Apply
+the quality checklist to every translation" in the workflow section,
+and "Apply the quality checklist to each message you review" in the
+review process). Without defining the checklist here, we'd need to
+repeat a shorter version of quality standards in multiple places.
+
+I'll evaluate translation quality with different versions of
+"po/README.md" and share some data in v2 to demonstrate whether the
+AI-specific guidance adds value.
+
+
+Best regards,
+Jiang Xin
