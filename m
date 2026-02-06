@@ -1,146 +1,112 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873FB2C0F90
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 05:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16815285041
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 06:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770354354; cv=none; b=XHXplMUUeX9S+YNT4IJ1rHpDgddF0mu2u4lhmqeundsesQ/lh4ospXtC8MAH4rWZZKufQAgEKt0zV5WNxJkg4mDDHEP5Dimq39auyKwhdoeDFXCQvbegVI9la6EIsv7reyAAx86wpFzDTBZye3qcO6aVfLFvR5qRTK/agIQKNms=
+	t=1770357724; cv=none; b=i0ixkrjZlZ9dg+j8kosU7K82kAr79PcsOjCyX5BDylxQfRQMyh480ygOTSdCyG4D/s3VWS6ZeL8qmhEYwnbOUUgU04EVTomAvalEA+Hsa8DIpZHRFtsSLKwxfLAsw0dHpvmh0+Wwn+IqgrdT9nKN9GmovBBxj7Ij2/8foul8ey8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770354354; c=relaxed/simple;
-	bh=9yyLl214TOpFaCugJQxPqKL7Jy9oKqPfcHCSS26kUSY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Tc9tXuo9MykilnypqaPo/qjZxB6QtK8i/RH5RGrTuAPN9GAJBArb6YL8321o9G71HHsFLbKyrBKk2q+E04sP8Gh4df3wcx35r41TlrgJoZF5AvkQkPE0Tyb063rydMtdsp49VIfcgyWqKvEkkNNcXsoofokrVG09+xQOaIvRTsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fclsNIUW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iCJIr8k5; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770357724; c=relaxed/simple;
+	bh=OWd1PVH0+yQf75/RMMGjbqUc4EegivpCOKlx3r5Boz4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZHfBnVquHwHdrrPbg9w9uYMD9x5oqhnOZN1ZTcY33bpHVhPlwL6VEF1X8J92GFlbedNZ237n0wT4HHrECPvCHqeEyxJRYNn7iBTgPXvvPSm0L6V2BVeIsKouqVSCbAbvbr6p9hW45CbAHfxHkB0u57oDPbx76cjibfxT6E6t2v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLomcUTU; arc=none smtp.client-ip=209.85.214.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fclsNIUW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iCJIr8k5"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id B4816EC059A;
-	Fri,  6 Feb 2026 00:05:53 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 06 Feb 2026 00:05:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770354353; x=1770440753; bh=YZXRWykiWI
-	6rmENDIYBaNK4ZIywycjxqrGqa+n0adHs=; b=fclsNIUWH1/77G9KW5vjQ6o706
-	d6Hgcmz+QenoOpALKcQ4tHs8x0MuAwTm9O/72zdX9vNFdpqMxPSAi3b0Yj1P+YUH
-	SKxM2VpnXv7szEHMA6+9lrAra+FyQuenanHNX5gIrdqWdBxRlOCUGcFQ8qDkiTzr
-	Fs8wNKBro8WKVKC8yb8tlhhHLSwuOg3CWSRORG3Y6X0FD7rh8X/IiNatjPlFTyGa
-	eqJfwmdOKs9H1t3MstJl31dKSsUQMyHaTbPZM3oSFuPFLNIiAV9/jZwg1F8Hrc8v
-	y4My1nvSHB6MLr2XdYapzNrGGFDuJF078zUuyN4TwfRjZAkQTKmDX9bekAzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770354353; x=1770440753; bh=YZXRWykiWI6rmENDIYBaNK4ZIywycjxqrGq
-	a+n0adHs=; b=iCJIr8k5ZWlol2u39++y2JKE2ZYEKyb0lnLpaSycxfWX44cB/Wl
-	8NsSfbNRmbsGSUTiWawWl069xtlTP2qFvLxUlMjdJzmH4Mwy9a0CmoLhd6h4qWJp
-	5VMyeDugJcodfY6CX4paM3iiTs6Ffz0231HvzhQ1E2XJJv5KruMqbDhgFJJ9Zzrn
-	bnuYWY9LRqYQruFgSnzzOvueSEg8zpc6+/E2vhrfB/TKdX4rWUudVEk625dC53nE
-	pDTE+KiBB/37GW+sCo7ada5SCqzWUJUJatoqdEtURroMfX3uNKBINTnAe89DbhSp
-	/YihGPV+TuJMkfF2DSGqcWsQLbLCpYGuF8Q==
-X-ME-Sender: <xms:sXaFaclsbSyzbX4VduWYFKM-p7zOIJ2BO4PAuFS5autj-eu3DoG5cg>
-    <xme:sXaFaS2ozjQHMLWpCDkfeUqyBvJU9p2FYf1bkpPhzNQH0RJBmCg4y5gOr_ITLzpy7
-    eXiT5sU-lTS-2j0gKiZjUhFmy3QSOiG-M2Dl-DH-sY4UZpLVJcpAA>
-X-ME-Received: <xmr:sXaFafoWfKReJP1K-qdwVsWzbqpzNjyEPbiw26Y13ZIAQtvLgdVa67009g7KiYiE8Qcoz0FC3z37QnDhcipsPOwsBJHbdbST-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeejvdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsegr
-    shhhlhgvshhhrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhn
-    vghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:sXaFaXdyElm9rBv0vzg9-7PBluMMyHgUVMeUN74kMqsU6G3RDByrbw>
-    <xmx:sXaFaWrcpuQ0aKZYc7aM6Njj5lJ9JiU32mo7MBB0XFwZ8t-cZtKdUw>
-    <xmx:sXaFaQFjYbEL1FDWyh9pBKmb6U2dBDq1kvuDhI1hvCh7-3pVGIH6sQ>
-    <xmx:sXaFaesgQbBQNt0UxSvxuZMCbcF3Ou_Gm1tcdJrzoIyQzaDzhQGO2Q>
-    <xmx:sXaFaa7JWDRfS8xnxjKi_wEGxD7HIK8D-ZNmvOnrIGvJjQZubMT4N1Yv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 00:05:53 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ashlesh Gawande <git@ashlesh.me>
-Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net
-Subject: Re: [PATCH v3] t5550: add netrc tests for http 401/403
-In-Reply-To: <20260107074724.13165-1-git@ashlesh.me> (Ashlesh Gawande's
-	message of "Wed, 7 Jan 2026 13:17:24 +0530")
-References: <20260106114029.763351-1-git@ashlesh.me>
-	<20260107074724.13165-1-git@ashlesh.me>
-Date: Thu, 05 Feb 2026 21:05:51 -0800
-Message-ID: <xmqqms1mihqo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLomcUTU"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-2a79ded11a2so12436345ad.3
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 22:02:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770357723; x=1770962523; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Zr4byqaaTVhIa0i+H9vnWXvPXvA4XJo1ve6Zd3rPMBY=;
+        b=OLomcUTUQSo/f0ZuDxy/9oG02moHg5/3eGnaK6VDAq8oUmGIuoYT37gWNqqIWtNIA7
+         JLqZSAwcH7mDOQmDu4X4HeeMZiUbTj6OQcjryyIDTloDHCsu+7HEgu4d8otlvkZUKs5V
+         3N45qZGL7O6np5br3u36rCCGwU5dc6fn27iLRc2NgVbOpjyGhjX7E099eGUNK//1APaT
+         Sbx6FpxBSyxydyM31W4g3QPHCZ40kdolpHlKvQwWrHTTMX2pFFn0UlF4i4J3zC5ncOAQ
+         N7ijnIPXFa3xueF2qJ6+/UaS5h++of5gWMhaBU4p2d+2Fc29lQ+lMg7NvELVjFfHhiqV
+         2lTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770357723; x=1770962523;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Zr4byqaaTVhIa0i+H9vnWXvPXvA4XJo1ve6Zd3rPMBY=;
+        b=JjrYQl3loszQfF2lcgN0+JgGfnjnjGI5hIoedCoOfmMqx6QwX/aCctb3XyC55jBUwX
+         8i/G5RjSpIkrko8XtVSBUOyI8dODvBGoQFXVY4uilHrwIxA3ZHaXyRfyABVd7vG/uAFK
+         LGD8SlGVMn1IYX2UgIDcGQUGOkoclKMvEBLBNyZ1xOB/wONfnIHTFZo5SBZvXvN8AEAl
+         /mu2bG1FpCBYvWkRJ7AUXGRoHHZFxu7TKOEy4BCePjlAcqjLRM0XIEq785HUHegY3/Gd
+         KP+D39niJSoR0U3W3LvNDkfBhuw2f3O7+S/uvaj+eKB2+vTrLCoEaOoKflqbpLiPsxVu
+         IV3w==
+X-Gm-Message-State: AOJu0YwxzWi4l+XfBZOcl7hLdPtikuqM/ADDYHzYJHTI10UF6glrGvlS
+	bS/VhUffFv2auoJoji+52Gn5seUXZlzaIfyvBvnGGzji0BYT3FMizM9/
+X-Gm-Gg: AZuq6aKy3KmxmfOWvfU1+YZVN9Kv3ktSP+HTSUpuxaSXkpSUGOjvvNTrcpOgrgE/FWE
+	oHlIEJHvuoy/HU4lkWtHsP8bCa7/tB1v5kmVFWOAEO3LwWvy5RTmfKq3neCavNyljEpfyuz/sg7
+	yOz1Tusrk62SlT7k26/CHXFkcnjmCE7+vvYdssALZyXTfwxfaAvUC3I1cvdbzo/wBjPWOWOKJiR
+	nF7wYE5ri7T+X9cSEyNkJPOtXmAgONDg8aAIeVyQSpU53+m3UnFVvaoz2d4gwdfqL/+YrwU7CxN
+	9XhZkvI3EgjLhdN99UURysHJn7n6I/8INnjrex/L8M0MsU8b/y7bwrViATEmizZEJShssNtg+zp
+	ji0GTi8+QQsJV1lal3CtNm13mvKWIfNUCfArJ/5T/pO8EecSZrnBi0abbPSmjlOWLNHk76/2bL+
+	HuYgB9ZeVZMX8oRD5FyWzvAEq8px/0SUOqOkd/UW7+6EnnAOGPW4JLxv9dVBUZ93Q2Sm7XkMnII
+	0PaUpcu51WatESeHmZH/ntKnGLDpws/Ihte9InQe8mXNt70Ffig4E4YLliheHU=
+X-Received: by 2002:a17:902:cf03:b0:2a8:d469:9b2c with SMTP id d9443c01a7336-2a95170bd94mr17727515ad.44.1770357723246;
+        Thu, 05 Feb 2026 22:02:03 -0800 (PST)
+Received: from localhost.localdomain ([14.139.195.218])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a951c8096dsm12243885ad.29.2026.02.05.22.02.00
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 05 Feb 2026 22:02:02 -0800 (PST)
+From: SoutrikDas <valusoutrik@gmail.com>
+To: shreyanshpaliwalcmsmn@gmail.com
+Cc: git@vger.kernel.org,
+	valusoutrik@gmail.com
+Subject: Re: [PATCH] doc: fix repo_config documentation reference
+Date: Fri,  6 Feb 2026 11:31:56 +0530
+Message-ID: <20260206060156.73753-1-valusoutrik@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260205131132.44282-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260205131132.44282-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Ashlesh Gawande <git@ashlesh.me> writes:
+- Documenation spelling corrected
 
-> git allows using .netrc file to supply credentials for HTTP auth.
-> Three test cases are added in this patch to provide missing coverage
-> when cloning over HTTP using .netrc file:
+> First describe the current problem statement which describes the 
+> current state in the present tense like 
+> "In MyFirstContribution.adoc, the link to the repo_config() 
+> documentation is invalid because the documentation related was 
+> moved to a different file."
+
+Let this be A 
+
+> Then you instruct somebody to make changes to the code to make it 
+> better like 
+> Replace the path for the repo_config() documentation from 
+> 'Documentation/technical/api-config' to 'config.h'.
+
+Let this be B
+
+So the Commit will be 
+> <short tile> 
+> 
+> <B> 
+
+And the cover mail for that patch will be 
+> <short tile same as commit message ? > 
+> 
+> <A>
 >
->   - First test case checks that the git clone is successful when credentials
->     are provided via .netrc file
->   - Second test case checks that the git clone fails when the .netrc file
->     provides invalid credentials. The HTTP server is expected to return
->     401 Unauthorized in such a case. The test checks that the user is
->     provided with a prompt for username/password on 401 to provide
->     the valid ones.
->   - Third test case checks that the git clone fails when the .netrc file
->     provides credentials that are valid but do not have permission for
->     this user. For example one may have multiple tokens in GitHub
->     and uses the one which was not authorized for cloning this repo.
->     In such a case the HTTP server returns 403 Forbidden.
->     For this test, the apache.conf is modified to return a 403
->     on finding a forbidden-user. No prompt for username/password is
->     expected after the 403 (unlike 401). This is because prompting may wipe
->     out existing credentials or conflict with custom credential helpers.
+> <B> 
 
-Nicely summarised.  So we say 401 when we do not know you, while we
-say 403 when we know you and do not want you to be accessing the
-resource.  We test for both.
+I configured my git send-email because I couldnt reply to your email
+with gitgitgadget ... maybe it was my mistake. Anyway I wanted to ask
+Now that I have changed the commit message , what should I do ? 
+Should I send a [PATCH v2] as a seperate thread or send it here ?
 
-Just out of curiosity, do we test for these codes with other
-credential helpers or is this only relevant for .netrc users?
-
-> +test_expect_success 'using credentials from netrc to clone successfully' '
-> +	test_when_finished clear_netrc &&
-> +	set_askpass wrong &&
-> +	set_netrc 127.0.0.1 user@host pass@host &&
-> +	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc &&
-> +	expect_askpass none
-> +'
-> +
-> +test_expect_success 'netrc unauthorized credentials (prompt after 401)' '
-> +	test_when_finished clear_netrc &&
-> +	set_askpass wrong &&
-> +	set_netrc 127.0.0.1 user@host pass@wrong &&
-> +	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc-401 &&
-> +	expect_askpass both wrong
-> +'
-> +
-> +test_expect_success 'netrc authorized but forbidden credentials (fail on 403)' '
-> +	test_when_finished clear_netrc &&
-> +	set_askpass wrong &&
-> +	set_netrc 127.0.0.1 forbidden-user@host pass@host &&
-> +	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc-403 2>err &&
-> +	expect_askpass none &&
-> +	grep "The requested URL returned error: 403" err
-> +'
-> +
->  test_expect_success 'http auth can use user/pass in URL' '
->  	set_askpass wrong &&
->  	git clone "$HTTPD_URL_USER_PASS/auth/dumb/repo.git" clone-auth-none &&
