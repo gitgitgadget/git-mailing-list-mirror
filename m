@@ -1,37 +1,37 @@
 Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AE22E62C3
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 04:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B562459C9
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 05:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770353910; cv=none; b=puYrpdxAw64CjpA35mhl7x1hbt0qbZRTtR1A0knzD9mskM9t4jJ+37RSFqlPfxjyUZlJ/UkJwM+zc8T///rqDMqYll5HgqCTZpZKtoPAZ058U2PysGU2nMjvceRSUXckYqtdMyOg9IKfeXorZcJ7thn+AEYxVFkbltjchPpvL54=
+	t=1770354308; cv=none; b=XHK0yAQCKs6yzJH6EihaqyJ7yQMWVTUH8gjKxHUNzxwKdaDw+vl/pR9K7QQRPKRRn9ScMNTl3e/ebGYTHO5ojJ5x4TEWKIzjSwUaqj3H54mmigMpaBHmsbq87MNphVSXdCHamUxZc9rsbi6IgziMluBCrLcdQFVnWmvV2dmwQWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770353910; c=relaxed/simple;
-	bh=j+gKVS6dvD8oQBZv6VK1vaTfrXRskBA17erMxVry2go=;
+	s=arc-20240116; t=1770354308; c=relaxed/simple;
+	bh=nRNRWsQNg/DvxMZbdWn6yi+xN6xnz8GJiIKnz1nPr2I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tgv7SET4sCGWrGoPoyRFc2qA2V6SwdHFuXWXUbvQML0oMTDwIQv5gUg2rzFNFi5/HUT4uOUPBnMKUg8+tVqsQuTFi7PRw1+DSWMLHEGr8fF4Ozf9X21dCk5LviFT5OM9/GcyNJYe5OvwT2kCvNSPm5c+59AXt0yd7tDiPcgSJAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=LNsNYg+D; arc=none smtp.client-ip=212.27.42.1
+	 In-Reply-To:Content-Type; b=P2W+FI//9HZ5b+Q4Ar4Y5ZQE4Jl/v+C81db/tig7msDrZ3Sz2Wa0+Im71Ke0n8gVwi1zA00MgNrAFkrC9QxFNOPIXJn15AIPbqQGxKuaZpeVPLEkIkZMIFVTbeIKS5p8p1342Hk1/0f0Zfof3SsiHU6tuVMJC/BT8gtWicidIb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=HhMHiKsJ; arc=none smtp.client-ip=212.27.42.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="LNsNYg+D"
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="HhMHiKsJ"
 Received: from [192.168.43.16] (unknown [37.168.1.79])
 	(Authenticated sender: jn.avila@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 8A075B00535;
-	Fri,  6 Feb 2026 05:58:23 +0100 (CET)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 8EB60B00548;
+	Fri,  6 Feb 2026 06:05:01 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1770353908;
-	bh=j+gKVS6dvD8oQBZv6VK1vaTfrXRskBA17erMxVry2go=;
+	s=smtp-20201208; t=1770354306;
+	bh=nRNRWsQNg/DvxMZbdWn6yi+xN6xnz8GJiIKnz1nPr2I=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LNsNYg+D4crFpEUP1xP60vXIoclnys/qYALiyLn/yWB+kGN5hhT8fpu+rYDM2ES4f
-	 P7VCQVVFfuIGI+djJ9E1KIm8Fvr4Vf28PBZsP5X6X5xUcn+Jmke2bcSltv1vnluCXU
-	 eTxRfPSZc2lgeFTgoSs9P7J09Tsy2ZFG6xmOLq8zQRHe9AbUxL8IVX1IdqPk78wS/i
-	 ttelgaf6yBp8l3U9K+ghJxdlQRhTAmFtTAjGJ60h3Vzq77Xp9KW6iRDye/wxhj/mpT
-	 xV8Ngh9cM6hhBVcASKNpk/Vcu23gGytV+Pco3YGJcRHS3t8TIfB/VVVSAtARwfm51t
-	 IChBrQW3hrhpQ==
-Message-ID: <7204ff93-79d3-44f6-989d-184f00b86a2a@free.fr>
-Date: Fri, 6 Feb 2026 05:58:21 +0100
+	b=HhMHiKsJCtVOGjyOdKSW6ureTWGFChMCwPZ5pWkx3U3Gx/mvO0028Pf22uplc2rma
+	 THzEHPFn1s9d3Nm6RQ3duBYugNVfThBAuQnR4hmjuaUMMjl4EtY0+zt0EXW4bPHIWB
+	 L69t3WM0UEvH3Aw0M3O5FZp+w/qhliWDEedlqBpjuxsnsY9tDtx4SwQ10VOGu+aIKl
+	 Q9WMlwCCesiRO2DW8Gn8h34zaBy6xGnPJVWCCSkYYCdlaYIeGuEQ+qOH0f60u+oio+
+	 1UK+ceOYUOGm+pDASEB2alt6X23ZxVcsy6fP9HWOZpmkyS4BR2+XIDNS80pg3LI/zY
+	 43uerttsPnNkg==
+Message-ID: <5861406e-0ac7-4b96-9bde-cd3860ad5c4d@free.fr>
+Date: Fri, 6 Feb 2026 06:04:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,140 +39,76 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/11] config-batch: add NUL-terminated I/O format
+Subject: Re: [PATCH 09/11] config-batch: add 'set' v1 command
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: gitster@pobox.com, Derrick Stolee <stolee@gmail.com>
 References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
- <33faa3f134c81761631c34600477dcbf82e619e5.1770214803.git.gitgitgadget@gmail.com>
+ <fdeef536f649bec811e8335d1c7151be8e352ff0.1770214803.git.gitgitgadget@gmail.com>
 From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
 Content-Language: fr
-In-Reply-To: <33faa3f134c81761631c34600477dcbf82e619e5.1770214803.git.gitgitgadget@gmail.com>
+In-Reply-To: <fdeef536f649bec811e8335d1c7151be8e352ff0.1770214803.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Le 04/02/2026 à 15:19, Derrick Stolee via GitGitGadget a écrit :
+Le 04/02/2026 à 15:20, Derrick Stolee via GitGitGadget a écrit :
 > From: Derrick Stolee <stolee@gmail.com>
 > 
-> When using automated tools, it is critical to allow for input/output formats
-> that include special characters such as spaces and newlines. While the
-> existing protocol for 'git config-batch' is human-readable and has some
-> capacity for some spaces in certain positions, it is not available for
-> spaces in the config key or newlines in the config values.
-> 
-> Add the '-z' option to signal the use of NUL-terminated strings. To
-> understand where commands end regardless of potential future formats, use
-> two NUL bytes in a row to terminate a command. To allow for empty string
-> values, each token is provided in a <length>:<value> format, making "0:"
-> the empty string value.
-> 
-> Update the existing 'help' and 'get' commands to match this format. Create
-> helper methods that make it easy to parse and print in both formats
-> simultaneously.
+> This new command is intended for single-value assignments to a specific
+> chosen scope. More complicated versions of the 'git config set' command
+> will be incorporated into future commands.
 > 
 > Signed-off-by: Derrick Stolee <stolee@gmail.com>
 > ---
->  Documentation/git-config-batch.adoc |  57 ++++++++-
->  builtin/config-batch.c              | 188 +++++++++++++++++++++++++---
->  t/t1312-config-batch.sh             |  69 ++++++++++
->  3 files changed, 293 insertions(+), 21 deletions(-)
+>  Documentation/git-config-batch.adoc | 24 ++++++++
+>  builtin/config-batch.c              | 71 ++++++++++++++++++++++
+>  config.c                            | 27 +++++++++
+>  config.h                            |  3 +
+>  t/t1312-config-batch.sh             | 94 ++++++++++++++++++++++++++++-
+>  5 files changed, 217 insertions(+), 2 deletions(-)
 > 
 > diff --git a/Documentation/git-config-batch.adoc b/Documentation/git-config-batch.adoc
-> index 1fff68a13c..3c9a3bb763 100644
+> index 3c9a3bb763..feec85c4ef 100644
 > --- a/Documentation/git-config-batch.adoc
 > +++ b/Documentation/git-config-batch.adoc
-> @@ -21,6 +21,15 @@ multiple configuration values, the `git config-batch` command allows a
->  single process to handle multiple requests using a machine-parseable
->  interface across `stdin` and `stdout`.
->  
-> +OPTIONS
-> +-------
-> +
-> +`-z`::
-> +	If specified, then use the NUL-terminated input and output
-
-This boilerplate preliminary does not convey information, it is simpler
-to just jump to the action performed by the option:
-
-Use the _NUL_-terminated input and output…
-
-> +	format instead of the space and newline format. This format is
-> +	useful when the strings involved may include spaces or newlines.
-> +	See PROTOCOL for more details.
-> +
->  PROTOCOL
->  --------
->  By default, the protocol uses line feeds (`LF`) to signal the end of a
-> @@ -41,13 +50,13 @@ These are the commands that are currently understood:
->  `help` version 1::
->  	The `help` command lists the currently-available commands in
->  	this version of Git. The output is multi-line, but the first
-> -	line provides the count of possible commands via `help count <N>`.
-> -	The next `<N>` lines are of the form `help <command> <version>`
-> +	line provides the count of possible commands via `help 1 count <N>`.
-> +	The next `<N>` lines are of the form `help 1 <command> <version>`
->  	to state that this Git version supports that `<command>` at
->  	version `<version>`. Note that the same command may have multiple
->  	available versions.
->  +
-> -Here is the currentl output of the help text at the latest version:
-> +Here is the current output of the help text at the latest version:
-
-OK, the typo was fixed here.
-
->  +
->  ------------
->  help 1 count 2
-> @@ -102,6 +111,48 @@ get 1 missing <key> [<value-pattern>|<value>]
+> @@ -111,6 +111,30 @@ get 1 missing <key> [<value-pattern>|<value>]
 >  where `<value-pattern>` or `<value>` is only supplied if provided in
 >  the command.
 >  
-> +NUL-Terminated Format
-> +~~~~~~~~~~~~~~~~~~~~~
-> +
-> +When `-z` is given, the protocol changes in some structural ways.
-> +
-> +First, each command is terminated with two NUL bytes, providing a clear
-> +boundary between commands regardless of future possibilities of new
-> +command formats.
-> +
-> +Second, any time that a space _would_ be used to partition tokens in a
-> +command, a NUL byte is used instead. Further, each token is prefixed
-> +with `<N>:` where `<N>` is a decimal representation of the length of
-> +the string between the `:` and the next NUL byte. Any disagreement in
-> +these lengths is treated as a parsing error. This use of a length does
+> +`set` version 1::
+> +	The `set` command writes a single key-value pair to a config
 
-I thought this length encoding was used to allow _NUL_ in the config
-values. But here it is considered a parse error.
+Please use direct imperative form.
 
-> +imply that "`0:`" is the representation of an empty string, if relevant.
-> +
-> +The decimal representation must have at most five numerals, thus the
-> +maximum length of a string token can have 99999 characters.
-> +
-> +For example, the `get` command, version 1, could have any of the
-> +following forms:
-> +
+> +	file. It specifies which file by a `<scope>` parameter from
+> +	among `system`, `global`, `local`, and `worktree`. The `<key>`
+> +	is the next positional argument. The remaining data in the line
+> +	is provided as the `<value>` to assign the config.
+> ++
 > +------------
-> +3:get NUL 1:1 NUL 5:local NUL 14:key.with space NUL NUL
-> +3:get NUL 1:1 NUL 9:inherit NUL 8:test.key NUL 9:arg:regex NUL 6:.*\ .* NUL NUL
-> +3:get NUL 1:1 NUL 6:global NUL 8:test.key NUL 15:arg:fixed-value NUL 3:a b NUL NUL
+> +set 1 <scope> <key> <value>
+> +------------
+> ++
+> +These uses will match the behavior of `git config --set --<scope> <key>
+
+This "--<scope>" form is new in the synopsis grammar. Would we just cite
+all alternatives or use a "normal" placeholder _<scope>_ ?
+
+> +<value>`. Note that replacing all values with the `--all` option or
+> +matching specific value patterns are not supported by this command.
+> ++
+> +The response of these commands will include a `success` message if the
+> +value is written as expected or `failed` if an unexpected failure
+> +occurs:
+> ++
+> +------------
+> +set 1 success <scope> <key> <value>
+> +set 1 failed <scope> <key> <value>
 > +------------
 > +
-> +The output is modified similarly, such as the following output examples,
-> +as if the input has a parse error, a valid `help` command, a `get`
-> +command that had a match, and a `get` command that did not match.
-> +
-> +------------
-> +15:unknown_command NUL NUL
-> +4:help NUL 1:1 NUL 5:count NUL 1:2 NUL NUL
-> +4:help NUL 1:1 NUL 4:help NUL 1:1 NUL NUL
-> +4:help NUL 1:1 NUL 3:get NUL 1:1 NUL NUL
-> +3:get NUL 1:1 NUL 5:found NUL 8:test.key NUL 5:value NUL NUL
-> +3:get NUL 1:1 NUL 7:missing NUL 8:test.key NUL NUL
-> +------------
-> +
-> +
->  SEE ALSO
->  --------
->  linkgit:git-config[1]
+
+Please use synopsis style block for these too.
+
+>  NUL-Terminated Format
+>  ~~~~~~~~~~~~~~~~~~~~~
+>  
