@@ -1,134 +1,121 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8440212542
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 15:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F413E9F6E
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 15:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770390144; cv=none; b=tg3hzl98wfb95AOAL1S3c4DkHuaM71GK4OYwCVNW4KECiIxKMRBXrGtcsMYD9QbLHRQ4Qeqge5dZIOxapkiM3QkjZHZgkN4/rmohT+3oGE5DFAPFHjHhRkdZwoAL/42utLx/bq4EbLIBcBlL1oQ71AIBX3pEfc+6RiL3e0t+g2s=
+	t=1770391216; cv=none; b=SOcUxDWcH/NrBwDHfyLntEA7NLZ+9LhCNl7EVVyzFLboCC1X9H9Z2xVVznz6uxjvyLSSCHn9+UtHINeFhfRNyP3MCz4CFTcM81BCqI3nM9Nm2aqrzxqORJXv1I994Embang0gZP1RHHJkR6NrudrXF6fcOSqqe40rvrOcoo2WW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770390144; c=relaxed/simple;
-	bh=YpSF1V4Hqal0GkBqHfpNnTzIcxuF2uVYiFYvaMI0jHU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=obfp/W170h66xR7bfgL/tIgu07pce8J5KRWH6Q05qMLTo05kFzx5VTifLxyFmPJzZj/g8l35Ts3AtJ3/iHDiXYKUaG4si8emR4Y5M0qonAfPZJjNXgaguIGzuM2sx3DdRvGpBV8ict+zIq7f4+NObYb4CBvBdZM1Xul8MdeiLtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IkKNvyhP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PZ5jGksy; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1770391216; c=relaxed/simple;
+	bh=bUyk5H/itUq4WJ76MISND2x2BavMyiUyN9nXIo/CjlY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ess/f/P1Qdlp2hZXb2y96vFp6xQhBhSCBVzTdhoSLrvjcHZ0Vn2cro4Icfvs8XX+fagNk7AX83TGZkAc2gzWP8LEXeCMJJ1M62f3Mz4V82XFtdwlxoguycI73c3zdhAh9PXBblOsiHieSFOLhUC1LwG6eFynxTAHyRvqmnhnnBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ht1eS/Hg; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IkKNvyhP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PZ5jGksy"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 208E21D0017C;
-	Fri,  6 Feb 2026 10:02:24 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 06 Feb 2026 10:02:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770390143; x=1770476543; bh=9oexe5obbp
-	ml1Rst4OIXzfwCUscFoGnxo3t5YSAVFiY=; b=IkKNvyhPZKlBnUWg5t44NU4cOb
-	yiTsdEAhb/vCw1C4CAn4NuowihECvIzTrB+sSOROrwvIc2Kzes2y/kSqmLDNHsQs
-	afHdOzZOxAEL8jODrpgywPX67Qf2KJcLntbKd6+wKpCjl8hZLe/do0w3eo2VvpBx
-	QQLQV9OVfkB6mWBu49RrdrcOfGqikWb/9HUdLPYvCUi5uAY62lhqp68YxzpfHveh
-	ziFgy/YQ8WPYdHDIYQqOkPl6nARzLQFk8Qu/3bOM7QF7HPhhU4BnqrO5Ew31rSoc
-	5VMvk8eMK0KV1QUVFiOo0afuLJlLBculOBhUY8OsU4n6os3gEgX5uAwnswqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770390143; x=1770476543; bh=9oexe5obbpml1Rst4OIXzfwCUscFoGnxo3t
-	5YSAVFiY=; b=PZ5jGksy189NrXfIV4iBmo1vJgulvs158HTPHvXflnmctKRTmc9
-	qOA72giE7gogY03vWxdaqBHk7m9FKoX2sWHmXGduRsyYMdNKplvKB/o6XQMVwM4O
-	ZGH+uxwxwNEcKcYWvxJaUX5O/8edemmqYHrsz73RqbbF+G+m/GjlyGL6Nhl0giT8
-	US42MbC/WDk/Dxg6GNj7Gh1PBQWt6iYdtDe51Z1BOdu6/iVN9vcB6eXOZcVEEk5l
-	ep+z8ZxGcm9W/uN7wsGqLHtt1msQWIpU73pvNrwaSq9hfyIlKBXtpsEUyedbHPO/
-	wtCp540CsMlCACCUxaw3NjxGu1A1QUqGuIA==
-X-ME-Sender: <xms:fwKGaVWAPKN9fABtmg4M1Wn5qVAdpl8EoOIXfW4QfqF-7w6tWHwlYQ>
-    <xme:fwKGadD5PJKzF3iDumK-4WQbumfCDMa5LZn3seUsCfW7uuxSqoyFD0tsr0emCiDg8
-    euWCjuNNqJFM68yajWU-CmLRoUOckJcldw0ZUzyDJ46oZRanN0ZMQ>
-X-ME-Received: <xmr:fwKGaexFpewloeEjdKimgUMllSON8SN2HA20tB-tUmTOf2qwsKoqs1AyepnqGlpSD3sErblnweKAmgDA_3BfFeefwpHUhj-zBcL28g-nIww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekgeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhith
-    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehsrghmsehsrghmsghoshht
-    ohgtkhdrtggr
-X-ME-Proxy: <xmx:fwKGaSBRi0Vp9zFQFBduRKDx7Zpf6RE8jJPV8cB_BB-qE1RWKQyNvA>
-    <xmx:fwKGaTbGFbvpJtEX9dK8xAIJHIdgWrFHAZW7durNWHru1TFCSK370A>
-    <xmx:fwKGaShqs9Aipv5XTymxNtb6i6nkm6sXg9sRdjqdDdeG-28tOcVR-Q>
-    <xmx:fwKGad4sdwhv-9khOQlcjMr5gkC4e-GoipBgJAWRt-m3A0mycuuTWg>
-    <xmx:fwKGaRAI5_hMO5SJQ_h5gKs-We86IBsZyeNRB4-BtP02dNgGUvfXN6ts>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 10:02:22 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6897a8bf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Feb 2026 15:02:21 +0000 (UTC)
-Date: Fri, 6 Feb 2026 16:02:18 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Sam Bostock via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Sam Bostock <sam@sambostock.ca>
-Subject: Re: [PATCH 1/2] merge-ours: drop USE_THE_REPOSITORY_VARIABLE
-Message-ID: <aYYCesJsZMdHu1Ia@pks.im>
-References: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
- <6cb970e512c02f0db11b8aae247aaa1675b31ef0.1770345124.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ht1eS/Hg"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-354a69b1455so809180a91.3
+        for <git@vger.kernel.org>; Fri, 06 Feb 2026 07:20:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770391215; x=1770996015; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tqiChtztxgSmkaLVlfvZ01zqXtr4TBIab7kollCKZeU=;
+        b=ht1eS/HgOBQoGddOhfIrzXmwZdEcAiSGeV8VZ+PsTacPRPEkLGryicibC/6l/guNNX
+         e4pbMcxQWj3sZqQyYDkieOaySU+ow9hLph+iMCRl+JpEZaMi4Dx1uxYvK0WzD9iFg40L
+         MebH7mnmUeCGfqSA+0EcR83LBEEDT50/YvK3GrsIXLaH4bTnzCYlE1RUf7FcZd951aFz
+         lEYMgp3NWPOzHHoL8ja6Bi8Q0VHPP+aqjrYH4TiUckw1j+Jr4k+uVtfrxXcNPydPUYMR
+         MgUlvWoezYlHJeX7CFcKbX1N6j32n7sqjzLOp6aiK0YmVxiqeR3Eq5nYi1gpHU5/qpNT
+         6b6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770391215; x=1770996015;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tqiChtztxgSmkaLVlfvZ01zqXtr4TBIab7kollCKZeU=;
+        b=BQP9Dp5YF0vxNQLNCtXcnzdQmpRM87/KqnVksMW5qSkCCny2C9dcMNyg95Qots0lqO
+         mPnr0viLZA60w4w6CSsRyX93NDFCDPrIwv7flc907gJLoyk/JKBW8DmepiCcqXXvCJdN
+         RadPha+rGYUB75bz5MXhZeCi9QpIi9+OjSWBbkHl/trjWhIpKdA623Jj07q/YgBPe99B
+         dZYJ9Yjk0wqaOXZTHgtZik/AlAAfF6BWSFPPkFluN3ywe1QdPViTteoxq9yqn0+kbitP
+         TpDs3NOXQjfTsI/yD76Wgdi0SskpkZwqPkIoUigwiMAc4ERYjqphI/Aa3PSEbhyYqVBV
+         jMrA==
+X-Gm-Message-State: AOJu0Yx3YUXhiqmU0918vj6DBWlpOuTOYvtbL5e01T+0gpWwQgfyTodK
+	vuoxWGRNpOIeHQ1dNqqTGWHMFOG1OwbLAZ7q2OZdejgY5Nk7B675K/3iPECabADV
+X-Gm-Gg: AZuq6aIzMTgcYneYnEhjEdARaqosNxyf1L7W6/NHTMoEvEx43tEZyr+BjdiyywuHQdl
+	9JqSNJ3eu6Dq2Du2BnA2gGKwzUDnO+xqVWu/P5Kg+sP4Q25aWEjXJGO1jcll20P47IE4r6orsK0
+	E2XVq2mthwvm9quEnMnBOT3N6B7ftJ85HbSG/N6fQ7g0dAq4IR2MRBWN1e3Tv/HaAN/vvH3ULEr
+	G1JegJdSRX6ioSDsQE6Cl1NW3miytB2Tn3XzVI1HXzhcewMARqMRLuhTb2Yf2jbH2uWLVrz58LW
+	zNnGLQGwOmvTzeuz/uvh9N6uG9A2Pbqge9RvXafijkaUPOt+r6ZF+6N11Y+BBcq8Emo2qBSWN0R
+	Q06/faFbC4msL6qw/FB85hciVo/jzaKnrFIZHjWQ80CKnIsaGo1IihzfqyMlbtRybPRearzyF3H
+	FL1PHzwvmb2ZA0YizmRSfLqYnUUXFQUaI=
+X-Received: by 2002:a17:90b:35cc:b0:354:a546:5edd with SMTP id 98e67ed59e1d1-354b3c6d932mr2714634a91.11.1770391214891;
+        Fri, 06 Feb 2026 07:20:14 -0800 (PST)
+Received: from AyushJha ([2409:40e4:9:a13a:caf:c2b6:5dc8:e5cd])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c6dcb4fb24dsm2202078a12.7.2026.02.06.07.20.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Feb 2026 07:20:14 -0800 (PST)
+From: Ayush Jha <kumarayushjha123@gmail.com>
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Siddharth Asthana <siddharthasthana31@gmail.com>,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+	Chandra Pratap <chandrapratap3519@gmail.com>,
+	Ayush Jha <kumarayushjha123@gmail.com>
+Subject: [PATCH] [RFC][GSoC 2026] builtin/repo: avoid global state in get_layout_bare
+Date: Fri,  6 Feb 2026 20:50:02 +0530
+Message-ID: <20260206152002.1244-1-kumarayushjha123@gmail.com>
+X-Mailer: git-send-email 2.53.0.windows.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6cb970e512c02f0db11b8aae247aaa1675b31ef0.1770345124.git.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 06, 2026 at 02:32:03AM +0000, Sam Bostock via GitGitGadget wrote:
-> From: Sam Bostock <sam@sambostock.ca>
-> 
-> Use the `repo` parameter passed to cmd_merge_ours() instead of
-> `the_repository`, and drop the USE_THE_REPOSITORY_VARIABLE macro that
-> is no longer needed.
-> 
-> While at it, remove a stray double blank line between the #include
-> block and the usage string.
+The get_layout_bare() function accepts a struct repository *repo
+argument but marks it UNUSED and instead relies on
+is_bare_repository(), which depends on global state.
 
-Nice to see that the required changes are this small, only :)
+As bareness is a per-repository property, this causes the function
+to always report the status of the global repository, even when a
+specific repository instance is provided.
 
-> diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
-> index 97b8a792c7..2312e58ab3 100644
-> --- a/builtin/merge-ours.c
-> +++ b/builtin/merge-ours.c
-> @@ -8,20 +8,17 @@
->   * Pretend we resolved the heads, but declare our tree trumps everybody else.
->   */
->  
-> -#define USE_THE_REPOSITORY_VARIABLE
-> -
->  #include "git-compat-util.h"
->  #include "builtin.h"
->  #include "diff.h"
->  
-> -
->  static const char builtin_merge_ours_usage[] =
->  	"git merge-ours <base>... -- HEAD <remote>...";
->  
->  int cmd_merge_ours(int argc,
->  		   const char **argv,
->  		   const char *prefix UNUSED,
-> -		   struct repository *repo UNUSED)
-> +		   struct repository *repo)
->  {
->  	show_usage_if_asked(argc, argv, builtin_merge_ours_usage);
+This change computes the bare status using the passed-in repository
+instance (based on core.bare and the absence of a worktree),
+thereby removing the dependency on global state.
 
-One important part of the puzzle here is that git-merge-ours(1) cannot
-run outside of a repository, as it is tagged with `RUN_SETUP`. So as a
-consequence, `repo` will never be `NULL`, and thus all the changes to
-s/the_repository/repo/ are safe.
+This patch is sent as an RFC to solicit feedback on whether using
+repository-local state here is the preferred approach.
 
-Patrick
+Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
+---
+ builtin/repo.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 0ea045abc1..b2619cc77c 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -35,9 +35,12 @@ struct field {
+ 	get_value_fn *get_value;
+ };
+ 
+-static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
++static int get_layout_bare(struct repository *repo, struct strbuf *buf)
+ {
+-	strbuf_addstr(buf, is_bare_repository() ? "true" : "false");
++	int is_bare_cfg = -1;
++	repo_config_get_bool(repo, "core.bare", &is_bare_cfg);
++
++	strbuf_addstr(buf, is_bare_cfg && !repo_get_work_tree(repo) ? "true" : "false");
+ 	return 0;
+ }
+ 
+-- 
+2.53.0.windows.1
+
