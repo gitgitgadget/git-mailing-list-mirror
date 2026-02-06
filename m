@@ -1,85 +1,85 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11602AE77
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 17:33:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AB3361670
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 17:39:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770399186; cv=none; b=Wk3KEDupwKRgXLg0Usx7zrHDEXsG6iCg7v4UAs+nanHH8zrIskx3LkIRsb5iVwBHEAmePkrM42NjMVlkAHsXfbGaYn0yX3cJVyiVREeOtiASQBokbWGEoiIKIWpPy2byLo819FOxLa5BXy2pGJ1Xak0rWuZAl1a9d7wSaWTuf8U=
+	t=1770399596; cv=none; b=l3V29bU0aKbCbgUaBjBOizxVkzjfyuuF+3wZ8KXl1qsCnQQDwLAEkjg/T/sy8oZL20c1fZDWHyS8p0xtEeRiLZA7mZ4zgsv/9LZu9Vg16uDGkLV9B5StnorIvddWnIBeWgJV6Z6v2N1nZtPbu25NSnSqd25a5PWiP3qM/haZryY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770399186; c=relaxed/simple;
-	bh=1WChsRNlO2TBwj3pW47OtSVBwWOYEoyd1Jl5QncbIAI=;
+	s=arc-20240116; t=1770399596; c=relaxed/simple;
+	bh=UYA2F12Ha+nDVXgxI2pCPmcpEjercaMXN4PQjvRj8rM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gpwq1lK9WV+POzINS1SLAFUusK8Gr5w7VVlf5ey0yEQlzrEyYbDZJ54njxkuL0wRMFCdCVmaKCtdPJMXtwQULKefD7vzJrCnTdH48k6wN4qLYPc9HQyLWjP282GvTUWOv9VnaCNnUaEXUghsepn55tvhCTjTCAX41r54TiqRijU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hxhV/jMg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q+3zwEyg; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=t6zt+dvxdQATKX0U2pyTJ1wUIxVZNbGaH0l7WZt77AfIsfgmv2DGhJRnuiA5vdhUOVg/tYNSf7bmVdjCvDfhOwtXh7UHuqLzsQeIAiZ1ptBA3G++CGVw8hoAWLinmGluo4LU26Ah6R4z0iyZ97q1HC892NAfSn/ZcLsWeDBY+yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gZof5y26; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d9L69WPh; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hxhV/jMg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q+3zwEyg"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D315314001B8;
-	Fri,  6 Feb 2026 12:33:04 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Fri, 06 Feb 2026 12:33:04 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gZof5y26";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d9L69WPh"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id C8B12EC0084;
+	Fri,  6 Feb 2026 12:39:55 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Fri, 06 Feb 2026 12:39:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770399184; x=1770485584; bh=Nc4dvtMcdb
-	2Ejq7zwNtij1YhQ9RZQYlrNCssMGRXuNI=; b=hxhV/jMgzrmGWm0eUze6Jyc+mL
-	9aCRRIN4/it9qA3obBXEAB8cZEQKEZCJpA0/4x4kj8Xew+D48vlh3ZjzHXXgzaJ/
-	WNPzLzSCksbuVRpFY2wNF46aKDesHapkKFB6dRQ6aBHCKrFdFdxu3GtiQGzTG9lT
-	iJ3Kgg0GNLZufHzu1l3jkVXScg0OQkXRxeUkWwTB+b9IzmLyNx0usU0TTbp95uP4
-	eLLUJ8wsxuH4nse/WUatkxDtPjCQgR3VudN4YxfBNU4T7kclR4HZCilHDK655Xj9
-	gjWRn/1SgoXUEoG2YeQCOil5QF4dH07CJtOPe+bXPzacUFKDttUEnJII/BQQ==
+	:subject:to:to; s=fm2; t=1770399595; x=1770485995; bh=mnD1Olw/wh
+	x/yT3Fu8JOWi1CeXH7Hdpg5ixGkICj1gY=; b=gZof5y26c4qubrQzQqIhr33PVY
+	qTx+Pn4wOj21I4sJi9YqElRoUp6ocO45AaxVrAt2hfYFme2pE5I22uwvqlMB4S9F
+	6XWFEVuLMYDQhev8LvROWVHNrHF66o2JYx1HpcTWi2JJSsPTDBIT0qOGEr1J3Zmp
+	8a2/+VlDvvsWHZOr/wzVvKl0PmFIEP9XdCS8AfvJsZ3XrWTJHP8EVcXEQ/07stHu
+	CRtp9JKMkmyWeHHaI7FYbFwIu9Ux2F4vICDs+JU0ebznYuxDNyMvRHnJFxCuQFA7
+	djvbsr8++5p9AkVx4crDQ+MfC4l3Gd1dad8uS+lfp1wrUBToQyI5R3vlnc4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770399184; x=1770485584; bh=Nc4dvtMcdb2Ejq7zwNtij1YhQ9RZQYlrNCs
-	sMGRXuNI=; b=Q+3zwEygqnJ9id+niu2GvN1C96XdVe18VOC+lubea21WVgexkNc
-	4YeaTisZKPVZXQOOHw+Skgk4dNQXxuaNwJG1Asipj/5AJNXvUE5sEcL1ih8vKzVj
-	hRLRRhDJhdMWz7dy8Gv+dsWGvrty4O4OqdYAnS6Ub7RmWU42xfwGEV5LpX8FWnSm
-	mR2AWciO7amRSEccQJbv0Un5nHsetDXBNYiqrIXP/wUPLFzlN/Es/jda3sXbV1Lz
-	K/Vqi1HoR79SOuKioMb5ksPecTOfXZGF3IvhETYZA5LbkGFDMAh8Un4752xwYDc0
-	oNI/eHvXS/96SOv5O57v0/WH7tt0Q9cKXqA==
-X-ME-Sender: <xms:0CWGacljm6p-GkfjAi93pN8dOTgxv9QmgOfOlI30xhfbBIUttmHFUw>
-    <xme:0CWGaSv5SKbFNjpBKZLRgVH1NA3W30-vh7U0bGqD7Z2Q4q5Q0cO96MqLLkQzaJvFq
-    01FJrDlV7kQQVtILh_193OQKd9TjoCH2Nl6n6AsVcS2i7dUcGvQLOE>
-X-ME-Received: <xmr:0CWGaS9Mpf2aIc6opdDVjD97DCGtTp-U8RpHKfJbAUqbIzIvPu2lAWDZfn23w-brL18abZyZrtfGf0SMroEdS6flrei6NHp0Og>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekjeejucetufdoteggodetrf
+	1770399595; x=1770485995; bh=mnD1Olw/whx/yT3Fu8JOWi1CeXH7Hdpg5ix
+	GkICj1gY=; b=d9L69WPha7JG8s67BMXR2N9gtV509Uy2UG/iB+SpIQVOyN2Jzrr
+	F0gzeqb3xVKbjbxQW8cNnIwEi7Es2UGiwW0r5oe20+313zZ6Hfc433vkf59/Bc3Z
+	B2x7kOpMmvVVoyjib4jtPnxZNVsh793rDh/Af5wccUPsG4TYvfT97ecCpSETB6Ff
+	ijhrA1kGFhPOGra0YPU8dEM9XtiJlSWgPbDROKfxHwTHOhW8WOQ2yqMAPRHKm+K+
+	fKKWU8Xj5kKSH+6UflNyZpYlxTZ70cEL6yMq4SQvVNniXg57vi5iBPNUsD33j40P
+	Rq2OAbhald9BVLt8L0fzwjLkt+nihPlf5Ig==
+X-ME-Sender: <xms:ayeGaVc9kp5kEHaw-sYAq_xuDz2lNtuOZUaefv7LGNlICl6L-rUqfg>
+    <xme:ayeGaaEuwQC6YwPK43aQPhgWpI0r-2yxltUO_TcN7us0mVOWuByXK3AMHBvLtmnyO
+    aINZUDPlK95LzakyTdt4gf7STtbOK1YTDobM8h6seDFFcUmuqVTBw>
+X-ME-Received: <xmr:ayeGaW0TpB-ZhTB_jEQMYsP5TwQWc8XI8CJpiZV9HBV5FyOVtdeWkVJyR8tOcXvSz4F-zqbtL6DYz7-iUpvU1MS9may3luhatA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekjeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
-    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrmhesshgrmhgsohhsthhotghkrdgtrg
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:0CWGaUPUyATVV5ckJFHTev5PzIzpldKs5PNc2JnD0KN8fSSoBkA_zA>
-    <xmx:0CWGaYFPEHWLprOA2ZzCn2epNO6iCHqI1xWNdWNGytSBpBuJFeycnQ>
-    <xmx:0CWGaaQZSKwfXPQboJnKZfIKcfgXPdcptGPvk7NuaDGac410H5rnoQ>
-    <xmx:0CWGaduKJVP8DmGllPsCMyksSk2VPN9SbOK0INxQBpd6hb17fvx0yQ>
-    <xmx:0CWGaYoSLgT00p_7znB-2zc64pfEX4yWMvxeeR9Xbh7n7u5Whp3xOJyp>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesrghshhhlvghshhdrmhgvpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggr
+    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ayeGaaldbdaimX6SI_ND8RcE7Hg07tdKHS3Ib0dasqF4in30cc7hvQ>
+    <xmx:ayeGae9zmKlDV8rTkdTTdkD7zE3AQwvp9BkD097E0smL6NaeIYTUrA>
+    <xmx:ayeGaXpwYlSTOGjv89J1sMhQ96nZCoasQu_lxcePOM8JW9erZnLB1g>
+    <xmx:ayeGafnHqDGNQk9aEautz4DkpKU9Sa1qJi30GSZjM0ztqztpzp21Rg>
+    <xmx:ayeGac7KxBrOSNsyeQFj3VurWvgxD7DQrz8od-H6gOSb7-1DXuFR_qem>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 12:33:04 -0500 (EST)
+ 6 Feb 2026 12:39:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Sam Bostock via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Sam Bostock <sam@sambostock.ca>
-Subject: Re: [PATCH 1/2] merge-ours: drop USE_THE_REPOSITORY_VARIABLE
-In-Reply-To: <aYYCesJsZMdHu1Ia@pks.im> (Patrick Steinhardt's message of "Fri,
-	6 Feb 2026 16:02:18 +0100")
-References: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
-	<6cb970e512c02f0db11b8aae247aaa1675b31ef0.1770345124.git.gitgitgadget@gmail.com>
-	<aYYCesJsZMdHu1Ia@pks.im>
-Date: Fri, 06 Feb 2026 09:33:03 -0800
-Message-ID: <xmqqy0l5g4kw.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Ashlesh Gawande <git@ashlesh.me>,  git@vger.kernel.org,
+  sandals@crustytoothpaste.net
+Subject: Re: [PATCH v3] t5550: add netrc tests for http 401/403
+In-Reply-To: <20260206093840.GC2761602@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 6 Feb 2026 04:38:40 -0500")
+References: <20260106114029.763351-1-git@ashlesh.me>
+	<20260107074724.13165-1-git@ashlesh.me> <xmqqms1mihqo.fsf@gitster.g>
+	<20260206093840.GC2761602@coredump.intra.peff.net>
+Date: Fri, 06 Feb 2026 09:39:54 -0800
+Message-ID: <xmqqtsvtg49h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,17 +89,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
->> -		   struct repository *repo UNUSED)
->> +		   struct repository *repo)
->>  {
->>  	show_usage_if_asked(argc, argv, builtin_merge_ours_usage);
+> I think it is fine to check the 403 handling, but note that this _isn't_
+> how GitHub would respond. If you try to fetch from a repository you
+> don't have access to, it will return a 401 first (so you try to log in)
+> and then a 404. The idea being to avoid revealing the existence of the
+> repository to unauthorized users.
+
+That is a sensible thing to do on the server side.  Presumably when
+we talk with such a server we would report 404, right?  It is not
+like we behave all that differently with either type of errors---as
+long as we just give up and do not fall into an infinite loop of
+asking "oops, that password did not work, try again", it would be
+OK.
+
+>> Just out of curiosity, do we test for these codes with other
+>> credential helpers or is this only relevant for .netrc users?
 >
-> One important part of the puzzle here is that git-merge-ours(1) cannot
-> run outside of a repository, as it is tagged with `RUN_SETUP`. So as a
-> consequence, `repo` will never be `NULL`, and thus all the changes to
-> s/the_repository/repo/ are safe.
+> The netrc support here should not involve credential helpers at all. It
+> is all being done internally by curl.
 
-Indeed.  It may be worth recording that reasoning in the log
-message.
+Yeah, I phrased my question in a wrong way.  As the code paths
+involving credential helpers are separate, I wondered if we have
+similar test coverage there as well.
+
+> So really, none of this is testing anything novel in Git at all that is
+> not covered elsewhere, except for the fact that we pass the flag to curl
+> that says "you may use netrc". And so there's some value in adding it in
+> that case. But trying to answer your question about other credential
+> helpers, no, they're not even entering the picture here.
