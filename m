@@ -1,89 +1,100 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60BD34678C
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 08:59:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D5C355029
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 09:04:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770368380; cv=none; b=emfKpa9LWr0fe1hQSKSfLNuVKQB2222/s1+j8W1R9wEB/sWlaP/IvOhfST6xT0sSJjRoqcMbqs2Oynf4DaVjOrhLyBWB6X5jQNgV9S/Spbiiv4DHIQOllJXN9XNCtLB/J14/ekUgNZUBtyjV88OabpmexFwXQSefg0mn17QnHZ0=
+	t=1770368646; cv=none; b=hEVoS6xUCjcLiGvpn0Dpebtf30yWME6oJfXauu7E+nLWW1DgPpB+sL0ceFzQL5DJU98JYFAJjh1MISi5hyJwxGjKaLI2m+HLdeoqgBS4R3dD9V1Qz8OphKjjktjPHkl7nVikCPqb1C/pka5OfMPDBhtg9JYzMr8d85J4ewakafI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770368380; c=relaxed/simple;
-	bh=A/FE2a2Hk5ksyEKBVTZDxZXguU4TLLks6RbJ8DWlSg4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AFnb+D3lnCntsFX4kP8UQ5GXmtBKnDnFQMgQ+Kvg01dAXuUUbjP89rMIt1ANHYBRgwZiV9R34M0fYE3ZCj/7cH9XT56zzPyGPnQfFu/Q68+u4OFt9EFCB9/mj250lbLqf27iGyNx8GHWMTA/rMLNM8bMwGWCwBz4WSE7ndetle4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SvFZPSAT; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1770368646; c=relaxed/simple;
+	bh=aLVhwG0VMzr+zTq4kDdYQ2OQ86VeTkX4hlL2+5ecSRk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kfQu5MhdE7hkZ4dLc5oisdFiLVFej1AFtn5PMmJDCF48pQD+ea+WJxa022hd7Qr52wHZncYQzR/IFwA319Ouzc/7mub+OZpMZ0/qytcQaOX16CejJ6Ka/KQBb5VJb5SJdH2oL+RhAStHCZ1qYT74uoe1IJWfLJpOJcB9lQLtjcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CoYakeAL; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SvFZPSAT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1770368378;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OX6a5BwNzndEsYY/cPRe1/c/ZE1Qrq7bQspFQBYdVRc=;
-	b=SvFZPSAT4D2CYKU1kJQ3KFkhbXFYix+21idvAC2dky39jaKDE50T36dU0DpUHNaOT0gImg
-	kFkuNr4fwnMeeQtStuOZYHppQqfYxqJLpDIqwn47eK9tCyT/CEBbSPNGYp5C7BcLpf/zBk
-	9HX+uZHvvNDj7768emI02r9ulRy9VBs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-TM6sET9kP9WVNqq8yCD1lw-1; Fri,
- 06 Feb 2026 03:59:37 -0500
-X-MC-Unique: TM6sET9kP9WVNqq8yCD1lw-1
-X-Mimecast-MFC-AGG-ID: TM6sET9kP9WVNqq8yCD1lw_1770368376
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 01B801955F12;
-	Fri,  6 Feb 2026 08:59:36 +0000 (UTC)
-Received: from fweimer-oldenburg.csb.redhat.com (unknown [10.44.32.247])
-	by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 99CD619560A7;
-	Fri,  6 Feb 2026 08:59:34 +0000 (UTC)
-From: Florian Weimer <fweimer@redhat.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-Cc: Matthias Beyer <mail@beyermatthias.de>,  git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CoYakeAL"
+Received: (qmail 297785 invoked by uid 109); 6 Feb 2026 09:03:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=aLVhwG0VMzr+zTq4kDdYQ2OQ86VeTkX4hlL2+5ecSRk=; b=CoYakeALVWWcQIALtHltOEXm3mPIM4v0KFEINIWOk7m6cFZ9r2XZBaIKk3YNkY+VvnOXYe2P1E9uLNjx8zSplkINNCfnLu+N7enpj/MviSFqwez4wrk/cI4yTVOALTOo2x9VBxls5BSGv0Ha0ZAi/lAGphDy128oxBEXEFyvb8eD33otOXaB9/hl9d27PDZtJv9xs/4F3Bvw19kwmKcEtN6SxVwd4WxQhyrowz1BJiHAYh9Yie9aMHKICehs7RsTGQlzptvUjiJV+wWy6M/jkuqz4NHfVBHHlrD8ezDLRWlI6jlzLZeFZLNYpA0YEX5WFNDewSlb4pg98MixHia1Fg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Feb 2026 09:03:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 598296 invoked by uid 111); 6 Feb 2026 09:04:03 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Feb 2026 04:04:03 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 6 Feb 2026 04:03:58 -0500
+From: Jeff King <peff@peff.net>
+To: Matthias Beyer <mail@beyermatthias.de>
+Cc: Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org,
+	pyokagan@gmail.com
 Subject: Re: git-am applies commit message diffs
-In-Reply-To: <CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
-	(Jacob Keller's message of "Fri, 6 Feb 2026 00:04:54 -0800")
+Message-ID: <20260206090358.GA2761602@coredump.intra.peff.net>
 References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
-	<CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
-Date: Fri, 06 Feb 2026 09:59:31 +0100
-Message-ID: <lhutsvuuu18.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
+ <hn6q2mdjdqezzvtxfxffmatctnlf4ttvwedfk7wnw7xw75gy4g@hetctv53f7bh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <hn6q2mdjdqezzvtxfxffmatctnlf4ttvwedfk7wnw7xw75gy4g@hetctv53f7bh>
 
-* Jacob Keller:
+On Fri, Feb 06, 2026 at 09:18:50AM +0100, Matthias Beyer wrote:
 
-> It seems like a good idea to me to improve the format patch output and
-> the git am patch splitting to somehow try and detect the end of a
-> valid commit message and not treat it as a patch content, but I am
-> really uncertain how to go about doing so safely without risking
-> backwards compatibility (modifying format-patch to insert a marker
-> that properly denotes end of commit would cause issues with older
-> versions of git, so we need to use some marker that a well formatted
-> patch already does.
+> That said, I am no expert in either C or the git codebase at all, but
+> from what I saw from reading the git-am codebase, it looks like it tries
+> to find the patch by looking for three dashes on a line with a linebreak
+> behind ("---\n").
 
-Isn't the format-patch output already unambiguous because the sequence
-of diffs is preceeded by the non-diff statistics section, and only then
-the commit message follows?  It's just not possible to process this
-correctly in one pass because only at the end of the input, you know
-that you have just seen the to-be-applied diffs.
+Yes, that is how the split is made.
 
-The other tool to look at is git rebase.  There have been problems with
-the lack of "From " encoding in commit messages in the past, which
-caused rebases to fail due to commit message contents (but I can totally
-imagine that this might have resulted in commit injection with more
-carefully crafted commit messages).
+> From what I read, it looks for that from the first line.
+> What I would think of here is looking for that "patchbreak" from the
+> _end_ of the email rather than from the top, that would have prevented
+> this issue, right?
 
-Thanks,
-Florian
+The patch itself may legitimately contain "---" on a line by itself (it
+would indicate that the line "--" was removed from a file). That would
+confuse your parser, including in a way that we end up only applying
+part of the diff (everything before that fake "---" becomes commit
+message, and everything after becomes cover-letter material up to the
+next "diff" line).
 
+I suspect it also creates corner cases with cover-letter material
+(between the "---" and the diff itself) that itself contains any "---"
+marker.
+
+I don't think there is a way to unambiguously parse the single-stream
+output that format-patch produces. This is a reasonably well-known
+gotcha (at least around here). E.g., some earlier discussions:
+
+  2024: https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org/
+  2022: https://lore.kernel.org/git/d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br/
+  2015: https://lore.kernel.org/git/CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com/
+
+There are probably more, but it's actually a tricky thing to search for
+in the archive, so I stopped digging. ;)
+
+I think the general attitude has been that such things are a nuisance
+when you trigger them accidentally, but probably an unlikely security
+issue if we assume a human is reading the patch (and if they're not, all
+bets are off anyway).
+
+Ironically, you can ask format-patch to split the message and patch
+using the "--attach" option, which should be unambiguous (they are in
+two mime parts). But git-mailinfo (which powers git-am under the hood)
+decodes the two parts into a single stream, and still takes a "diff"
+line in the commit message part as the start of the diff.
+
+Arguably that could be improved, but I suspect might break other cases
+(I think it is trying to be forgiving to folks who have shoved the whole
+patch into an attachment). So you'd have to pull the attachments apart
+yourself and feed them individually to "git apply" and "git commit -F".
+
+-Peff
