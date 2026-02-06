@@ -1,127 +1,89 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E03A34CFA7
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 08:44:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60BD34678C
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 08:59:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770367462; cv=none; b=I2/w9HVQ5lqLVT19beLVR6rGJRqlEyiwoFrKIjIGngEL/4K/ZZYIHkPhxJHf6r8OXJCSj6W5pclCB1/XmF7B7hixxoJ/f8PTlb8FgL6/GZOcDS5+zhNSYHx9R7iWQMvrVeKrtmNqT8tiOTaw/qaHMtvivW8CybyMtulsWGYg1NM=
+	t=1770368380; cv=none; b=emfKpa9LWr0fe1hQSKSfLNuVKQB2222/s1+j8W1R9wEB/sWlaP/IvOhfST6xT0sSJjRoqcMbqs2Oynf4DaVjOrhLyBWB6X5jQNgV9S/Spbiiv4DHIQOllJXN9XNCtLB/J14/ekUgNZUBtyjV88OabpmexFwXQSefg0mn17QnHZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770367462; c=relaxed/simple;
-	bh=WajLYhBdYkaDd/ouLrO5LUBuFFtQaVRc4xkUMehSIHo=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=E7x8uAxCuLSL/z66I7p3m0TC4Df8lIbKpI6ShIdobOYCe92UioZALa9Xb+KVYnl8Ij8UnkOLvVN2cBa9BDoRU8kedZt0EFZp7mVxB2IbrvF4jIkxcMCTMUqCRI3U6uBuWaj7AdbI3sZmcdPFtnP5GKzRPvrSoNX2fkLqcYMQ8eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=wAZfNY8B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FriI1t7H; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770368380; c=relaxed/simple;
+	bh=A/FE2a2Hk5ksyEKBVTZDxZXguU4TLLks6RbJ8DWlSg4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AFnb+D3lnCntsFX4kP8UQ5GXmtBKnDnFQMgQ+Kvg01dAXuUUbjP89rMIt1ANHYBRgwZiV9R34M0fYE3ZCj/7cH9XT56zzPyGPnQfFu/Q68+u4OFt9EFCB9/mj250lbLqf27iGyNx8GHWMTA/rMLNM8bMwGWCwBz4WSE7ndetle4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SvFZPSAT; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="wAZfNY8B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FriI1t7H"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id C43141D001A4;
-	Fri,  6 Feb 2026 03:44:20 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Fri, 06 Feb 2026 03:44:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770367460;
-	 x=1770453860; bh=+cS4o0TLVXkfC7LhOkShC4gO50ZdMRMa0bC7NfQehJI=; b=
-	wAZfNY8BqQgBs3e8LwczDy9ISrHoMAoQ6Ar1R6+Sl13wS1hurHHFXjKz8MqsVmaT
-	Ln9oH9UImWUbl/4SA/ZO1h6HEm3mG+4ZTMJChdJPantSUVnBp3/3Yo5XjAQii0ke
-	kvnebnD3oD54BKNxZC4uWakbevRbvGu+Qya2jpuW6oUj0/eAGt/XYQLoBZIukWqC
-	isU/CfMPDh2uYuqzg1NDdTykewvOml4NIhdGMbFGNp8Ff4ieZK87rFSKzZ/tmGhL
-	sKc/cGpj0Laksu+sYFuJ/969z0utTWxhk6mRB3a3z4r9+WuKaTsnkeRDi/mK8im+
-	0DkyNDxyglHFP1jFihORaw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1770367460; x=1770453860; bh=+
-	cS4o0TLVXkfC7LhOkShC4gO50ZdMRMa0bC7NfQehJI=; b=FriI1t7Hog1UBLpmy
-	FYdFCHGh5mBqlOkAzVh2bPgfNI5FHt9T0+6yZoHp4EqALazPR35WMthTi4aNgS4h
-	kedV5ybTRlAyDr7CcM4zEm3SAtWTh+TUq9BrbxSjttY4hKDzvkLO9/fa5LAOjEuZ
-	fS198d25CDjuMEOXS+VGC3CvnQKG+WNkscqf+pK60y4o7ui09At2vOaTQUjBT/0T
-	GClbGAaE907Qol7VGdjnlBSH7vn+5Q3h556Z3Aa33YOED6SEHOlu7l4s8sxuGRnk
-	ObGy4ZKTt2lqrUvivSu6h2lQUC0cB0U/qLIj5J7T5ufMkIcFSxdmMLlwmpg6nk72
-	wAmIA==
-X-ME-Sender: <xms:5KmFaQ42UpayvJPwgiEOMe7IlASI53qnst9cJvTojTEUJZ9ZmwCUPv8>
-    <xme:5KmFactrCLI8QgfQm7tt4y5Mc9qIGXrIh1fh-7Di_sBWvivSww5lPevzbfJtrRb8e
-    4woo45mzdgKTJPDMovtoGogWxJGtmvBKbXqtTP9b8L8XKnzMvIJwQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeejjedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtqhertd
-    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnhepjeefheehffekheelhfeifeegheetjeekffejffelteevgfetveek
-    leejfeeukedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpkhgvrhhnvghlrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprh
-    gtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghilhessggv
-    higvrhhmrghtthhhihgrshdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:5KmFabk87ojAwb6VwmPcI510fdAIvv9sgPpPxRfKuzYxDGun_qOlPQ>
-    <xmx:5KmFacxZZOhf72N8u6jViRZqKeBMnbfXG6ctcTKBroTTRXUebBIqRA>
-    <xmx:5KmFaZMBPrUo8K5vSehwhKBy926rsrsNEldLrd9tmpMF31iEAc9ZVA>
-    <xmx:5KmFaQSp7GtusHnEGX5bzQN7ldytDomt3PO1YvP6y436NWfwdQ1xxw>
-    <xmx:5KmFaQL--8zK6HH5MDAxiGvlFSmDvl5f3XT2ZktPcsMobhG1FeIfFIX0>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6B1881EA006B; Fri,  6 Feb 2026 03:44:20 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SvFZPSAT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1770368378;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OX6a5BwNzndEsYY/cPRe1/c/ZE1Qrq7bQspFQBYdVRc=;
+	b=SvFZPSAT4D2CYKU1kJQ3KFkhbXFYix+21idvAC2dky39jaKDE50T36dU0DpUHNaOT0gImg
+	kFkuNr4fwnMeeQtStuOZYHppQqfYxqJLpDIqwn47eK9tCyT/CEBbSPNGYp5C7BcLpf/zBk
+	9HX+uZHvvNDj7768emI02r9ulRy9VBs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-TM6sET9kP9WVNqq8yCD1lw-1; Fri,
+ 06 Feb 2026 03:59:37 -0500
+X-MC-Unique: TM6sET9kP9WVNqq8yCD1lw-1
+X-Mimecast-MFC-AGG-ID: TM6sET9kP9WVNqq8yCD1lw_1770368376
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 01B801955F12;
+	Fri,  6 Feb 2026 08:59:36 +0000 (UTC)
+Received: from fweimer-oldenburg.csb.redhat.com (unknown [10.44.32.247])
+	by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 99CD619560A7;
+	Fri,  6 Feb 2026 08:59:34 +0000 (UTC)
+From: Florian Weimer <fweimer@redhat.com>
+To: Jacob Keller <jacob.keller@gmail.com>
+Cc: Matthias Beyer <mail@beyermatthias.de>,  git@vger.kernel.org
+Subject: Re: git-am applies commit message diffs
+In-Reply-To: <CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
+	(Jacob Keller's message of "Fri, 6 Feb 2026 00:04:54 -0800")
+References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
+	<CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
+Date: Fri, 06 Feb 2026 09:59:31 +0100
+Message-ID: <lhutsvuuu18.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A2RKoXrlnTsZ
-Date: Fri, 06 Feb 2026 09:43:04 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Matthias Beyer" <mail@beyermatthias.de>, git@vger.kernel.org
-Message-Id: <1b1f8959-aa11-4bce-8535-7245c8567d6a@app.fastmail.com>
-In-Reply-To: 
- <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
-References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
-Subject: Re: git-am applies commit message diffs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 
-On Fri, Feb 6, 2026, at 08:43, Matthias Beyer wrote:
-> Hi,
->
-> I am not sure whether this was already reported, searching the lore did
-> not yield anything for me, but I might have overlooked it...
->
-> This was just posted on mastodon[0]:
->
->     PSA: Did you know that it=E2=80=99s **unsafe** to put code diffs i=
-nto your
-> commit messages?
->
->     Like https://
->     github.com/i3/i3/pull/6564 for example
->
->     Such diffs will be applied by patch(1) (also git-am(1)) as part of
-> the code change!
->
->     This is how a sleep(1) made it into i3 4.25-2 in Debian unstable.
->
-> TL;DR: If you put a diff in the commit message, that diff will be
-> applied by git-am.
->
-> This looks clearly like unintended and might be an attack-vector, righ=
-t?
+* Jacob Keller:
 
-Related: https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c=
-9eb19.camel@scientia.org/
+> It seems like a good idea to me to improve the format patch output and
+> the git am patch splitting to somehow try and detect the end of a
+> valid commit message and not treat it as a patch content, but I am
+> really uncertain how to go about doing so safely without risking
+> backwards compatibility (modifying format-patch to insert a marker
+> that properly denotes end of commit would cause issues with older
+> versions of git, so we need to use some marker that a well formatted
+> patch already does.
 
-But for the magic string that git-format-patch(1) uses at the start of
-each email.
+Isn't the format-patch output already unambiguous because the sequence
+of diffs is preceeded by the non-diff statistics section, and only then
+the commit message follows?  It's just not possible to process this
+correctly in one pass because only at the end of the input, you know
+that you have just seen the to-be-applied diffs.
 
-Like Jacob said the cure is to use indentation for code blocks.
+The other tool to look at is git rebase.  There have been problems with
+the lack of "From " encoding in commit messages in the past, which
+caused rebases to fail due to commit message contents (but I can totally
+imagine that this might have resulted in commit injection with more
+carefully crafted commit messages).
 
-https://lore.kernel.org/git/xmqqttcmv8a6.fsf@gitster.g/#t
+Thanks,
+Florian
 
-Indentation for code blocks: just stylistic until it isn=E2=80=99t. ;-)
