@@ -1,78 +1,78 @@
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD02930DEDD
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 20:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6700030E858
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 20:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.175
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770410229; cv=pass; b=OztxbY2zKplo6eJwIKEcGfJmli3TtlLpF2M8BUT2RjuHza2+GBvx+7v4+gVntxm4yEyS21vUJvw1QXa5uYh1uiRE/T7jPh+paM+XkkgZQHR56abbRE3QwPCk+9DSW0EonWcsE0J+04jtxDD37TrKLzyHld5VBGOf404xJieuaaA=
+	t=1770410358; cv=pass; b=Dd8NlnBrAKT7lN3MmuPzmV/RbPxL5fccVjMuBUYg6GC/L3hpWMTqPPNg6EC3L1kW4t3HKcUIv6/qxi5C8GcTdZSBrcrVEAsxjGq4l5K9CGfANmJ8l8W2W+I23Lm26sRA8JmQijO7I4MxtgU5aM/zmDjgnDizooV0kuTJ2riv4xM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770410229; c=relaxed/simple;
-	bh=WKiBdWT2873jWoqffe9k2ABs+gtdm9Jgaqznt0YBYGs=;
+	s=arc-20240116; t=1770410358; c=relaxed/simple;
+	bh=aF7OFLi+0wlziWaV8l/fLaQWYRYi+neLrdB1pfZP/WI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BUEAAAIedE2ER3Zjw5klZPpfcuhzsxQ04VxL1EMm1H1mt1w4F5SPSDCD4k1YRlff4l/fayMa2ny0q83JMYhbXZvrCuuL2ngRVaIJ+lacrnCXVlQKk2fwc++vM0kZBsr32I+Nx96JYZRgX09QArAx4Bv518+r19S9QNXiKQHZINU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSzwC1At; arc=pass smtp.client-ip=209.85.221.179
+	 To:Cc:Content-Type; b=qKL7mbmp/sMTIfHS7d8qfRarfsqrKl7N8Qg3eZ/itjRnTcPC58dWFD5W/mpDj58YUsUKaM3jUDtOTT1qFsxnObB3NvtIW4S77qqGdnNPgPFUOPax/hX8jZr2yjxH0dwDxozAimCZ5/VCzEZotN6IRKbOC5fulhG7aEMaXnhoGM0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KTez1hlu; arc=pass smtp.client-ip=209.85.221.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSzwC1At"
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-56646a34c18so986335e0c.0
-        for <git@vger.kernel.org>; Fri, 06 Feb 2026 12:37:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770410228; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KTez1hlu"
+Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-5636274b338so1826832e0c.1
+        for <git@vger.kernel.org>; Fri, 06 Feb 2026 12:39:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770410357; cv=none;
         d=google.com; s=arc-20240605;
-        b=fRpeGp8avfmBcux4Cxco2SkUzA3FElM0Hxn1wy8HDZA1kiinp368rITuQNXFk48plg
-         f0oCvP4OnUi9RfWllwSPZF2iBmhz/Yw4uYZdlvIhtkXnDzzRBjuRSd2qDWmSyof0dFn0
-         eivF0nd5PBFXv7PHFN8x9OzQjBLRB2alA7joT6QvCktQcjw6UohVWlBpWs849tuWJBPI
-         hGpMHhJXLsFN775khshorj60nbHj24pLEqIIo0Olt20gn+TVultAH7MBIt1iXoKwIjDX
-         VLhQwkXitCX7VUvZy7k1CIUNz9G14KPoGx/o859fL6Nweb0TeBPLLcv85rmnBeUF0Ygf
-         QxIw==
+        b=bKmZlResHnO7oVcPqzYK56xj9RRO1i736YN8/+l83pINEQB7Edx2vvT0fMq/V3DaCF
+         vh7fFmoe+Ixe2+/txgTPm5ydv4pc4A3fqMbIALDdlLvBI8BQER7xPgo0hcbeurb2UdTB
+         IbRT0OlpNvK9uInYgTC1S05SJGLAIdFygT2a2liQpxZRSL3WvMD03btULsuna/7v6XA+
+         BTxcZ6dvjI2bfWZ4ZRuMKfN0Vz9vyh3ZtR8gTBzJ3gX+KGR2COHQvf3tZIBU3Q5ZbKYd
+         5rTSooCp7r79RaBboneUFdM+RnMwIHT2lwxUSsZh9/mo0XweSjtRdFchFy9MhqcHdtxC
+         5JYQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=7b2RwNNQpgAPg1iMm7Ahim+1RZjGKK5bdwGSIW23TcM=;
+        bh=Q9BpxcFjaNxfZmJWwXgiYEiFIxOdpbllzdz5l36zJl4=;
         fh=392ryK1TiLXjQymH8YuTlaSLgmX4+VbMxfQfkGuHyGc=;
-        b=LEBy49uMUcEFsbC8l+k2vZsRGQ1ttbeyapjUid3PZTKAhVCgf31X3+eOU/DgydrE9u
-         aIOsldDU9tCYEzeiDxv25w7veSIoMvUom4l+xonXYl4zg5cDP6FS6eIgw6cAtIHmZ7hw
-         Hfzw63ybelg/sPikAwEKNhnKbV/3zXx1s0mON9mhPfZg+svlG/6JgsoC8b8oiQ4RqJWZ
-         HE6BNaYjhBBgQ8sooBEscL+25VPDoVm8NN20eXMFxxmypfbtztcp8LLT1/JVpi+AFnUR
-         +4kFUX7CVbS0a7xz8tGlX7eNQOzJh/WuYCoANZ863V0DoUFF58NtIYyqWJugePomlqvB
-         RWRg==;
+        b=Jm94lnHTZU0yoP49pPEQYcJeZZU84Jf4yCs4FTp48M5kQ4Y9SrLg8jfIzulb5CeYaZ
+         pjMgOUPqjAGpegW+wDqjdabODj66KFhMlLRNWBBP0zOvbq7pWoJouP2ywIC3tH5Cmala
+         l/lmIY6sZ1XMOGqUQ2rETh8RlN64DfUm9fDi4IiADHDkyZsPlEdHcZTNsO2FRMpoAAtv
+         eWp6z6LR1Zv9vcnPFPVVR3yAPx6ClxwFe8OGHtLRbXK0h/LmA/udc/wXKSx3G5tHd8mL
+         5aY70OX0tI+LMQiajbHvZrDHCDyolARyTRSy6VqSszFp3mfug3KrHKC/mocrZYFQPbTs
+         +gyA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770410228; x=1771015028; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770410357; x=1771015157; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7b2RwNNQpgAPg1iMm7Ahim+1RZjGKK5bdwGSIW23TcM=;
-        b=MSzwC1AtjOWgChWGd1jZkrMxaHUzVW5zB03JUhJeUruvlLkxF7/B4Tdap1KDZbRkhA
-         KQsf0150PPG+A0yuyKZHTgRHGB+lZQYOOQNiPC6q7ZgyVjpx9za7sIsWMVKpKP0xptGp
-         a/2pBJICwKzLYTzLchODbfwV+FXfsWnbV4P4p0QdFcQ5GotPLzqSEjPeyfu0ntNyPZ8o
-         8GhZDOyNVQRnIhAcrodNH5Myd8u4JuwsbreNFL67NYvsBRcw7utvrn3M4l43y8VIen39
-         aoX8nnAj3mK3vTUG1I0Wv5GCTlasX/S6cNeLvrF8mf37JU1V2AVba69ESJUSSgJHard/
-         EzWw==
+        bh=Q9BpxcFjaNxfZmJWwXgiYEiFIxOdpbllzdz5l36zJl4=;
+        b=KTez1hluTJrr+9GvH17LHF25Zm/xfa01Lwva+9Ey9lObZgR1jNNMYdRokjZx0yb/KK
+         IpcNkvRTPcJUoTDm3eBI/d8KDBQMr5VACbIKn6+LeHHcN5KSx9APDb2RWvSD6s3hqvTb
+         VGeBdzcLsvo97IUa7SvTStoy2ocedX91eoKKOsifkVJhL+4zDq2RJ5Cj7j92XIFPn2Ii
+         PLoqiYtHiW+K/dlkFrHN+NDMNqKBmx7FmEcQGQdBm00KbZDfaz8Cofm5soM61b8ovWul
+         sg2Jd9G3ts33P9mVH6d9KSjp8ZwHkeMXkgY6yveivl2e2sG0sPFAcDpAHDpLTFK8XNHn
+         1rXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770410228; x=1771015028;
+        d=1e100.net; s=20230601; t=1770410357; x=1771015157;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7b2RwNNQpgAPg1iMm7Ahim+1RZjGKK5bdwGSIW23TcM=;
-        b=MmsREZVeWhvX7uBEcaohlLI1TcY3DLYktpM2TTeH1rlSchSOVUfIkB8yihavDH/rSK
-         8L1JQ++e92nBLTItQI/1FPWroUlUwd2VADTAdLn4fHRa2Z3T54kxEH0oBeOq3TEB/eRX
-         CGE2ZWWNTaiGWBce5xQWO0WH+CUl71z6yH539OYEI8T2Gjo39W2sX8cVG35jWgrf+e2z
-         d84ByaeyJMIZRk1lj6RW8TGgyccJJEn6KJZxwBiUbFXd44HuCY8oxK5tIEnu06T1IPHW
-         TjTx91hzl7hjd3d3jRb2Vl/Bip0dtTNwQVibIpKmPkHyqHOyxksa3xzUi5rovQG/aQ4S
-         3frQ==
-X-Gm-Message-State: AOJu0YzsKPt0DvwalR36CjBzkHJFi0ndVLlGcxOdqNaCXH+93sY1CnMr
-	uNvX8wfoOdoeBrgbBmC64+AzXqeltCvfZOOUIlYdHiKRtruOB6u9UxoqxQRNvIXc173gdg8qjwG
-	kPeVzFFXXvt2YnHM9NoNs8vB/emXLdP0=
-X-Gm-Gg: AZuq6aIkU1/wm9Rdny1ZK1n4QjuLri8YtYL/Z+lL1oS4TLoiiRfXKLX3/pNXxSPUvH7
-	CPSzt0JJf/L4aIJJ/JSZJh60VBBDo24zwrSu2iyiz2plG3yV3yOx4hLykfdQTRgZ3YPFkUJh/2a
-	RH3nYOW6pul77wqhg8u79Y2kkraB00NqvjMwKss+GmcmTe2nUt3WHt5Te77kME1HElpmW2+eSm3
-	9u76BV27whLOTZ7XzH9s6B/fhI02TjU0fZWuyEDyZg0yhXKZ53ZFFGSKJ2+UzP9pBcbADLk58I=
-X-Received: by 2002:a05:6122:3383:b0:55b:305b:4e2e with SMTP id
- 71dfb90a1353d-56706086977mr1192949e0c.21.1770410227586; Fri, 06 Feb 2026
- 12:37:07 -0800 (PST)
+        bh=Q9BpxcFjaNxfZmJWwXgiYEiFIxOdpbllzdz5l36zJl4=;
+        b=u7Mu1bY9yEllFZioXy7t6JRDSw57B0mOGR6Oif6a6uoe5wD3rqxIIX7DuCApvPvyBG
+         YDSoWL8V05i85BmqnC3r+BGsFZXmGwS0m63384jYcGuSHC2lxz6qe+ruLQT8mKO2B9GB
+         cwk9ozeHSejrJstMS1JTfPo3rtiCD42UlSsq3RqoB8PK3kFyY3ywvzHcAZfYcYoWu5bB
+         Evy+De9zqgDq0mcV/tRaYoGhSD0RETicvnSFT0dT8yoNsAVapRupYOZ2HT9rIOPzWv5+
+         1c4a36XjN0O+Rb7GHJw2GxmZ48rvIf/3T7lIav1wlkYs9GKA658q5rKbRn0aQWadQHIz
+         LluQ==
+X-Gm-Message-State: AOJu0YyjjWCnAwDbCbwX3HFKYR8N/ENeJuugNN9wr6ontM/X9MINLhi9
+	e87fytnf4AmaG8m1ow0GUtnNHLBgvMPGDw3BLObaEh0oj2AjHTTpHFGG7YKwTBNJHLcYapAPb8O
+	QLv1lPCIulY/IuW6rixE8S7s/AoPyW7I=
+X-Gm-Gg: AZuq6aIl1fEikoLEj/k+tr0G1DBWj40dgF8J6v8yphJsWAi76MteKF1yGlE2umYAMhB
+	BrIiSVw72+UMMqe8mhuvaNvq8CaQ5+UkjKBhGQFi289u0zSpqTIXOJrOMLzCd1jGF3l7PU2NcLO
+	4Tlp+PLWwuPnILhkxrYjR16OTStPNLzvMZId/a+TC3o7jZVubsnMP9uhIPja0oTzTB5FafHpEe2
+	nTPIL3T/ivnZzHiA0mezXTRAk9QRFwn/X9DctbGXb5yvwKjk6Tc0D56lWOUzFtAiO5gmfvCo5Q=
+X-Received: by 2002:a05:6122:2492:b0:566:222b:c164 with SMTP id
+ 71dfb90a1353d-56706408a2emr1213724e0c.4.1770410357367; Fri, 06 Feb 2026
+ 12:39:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,15 +80,15 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <cover.1770390576.git.abrahamadekunle50@gmail.com>
- <24692afa3f0a67d3f3eba776cc745287c5d71e94.1770390576.git.abrahamadekunle50@gmail.com>
- <xmqqikc9ekzz.fsf@gitster.g>
-In-Reply-To: <xmqqikc9ekzz.fsf@gitster.g>
+ <10c0a4cb36534f5ed1ebed783b37d03a56007f97.1770390576.git.abrahamadekunle50@gmail.com>
+ <xmqqqzqxelw5.fsf@gitster.g>
+In-Reply-To: <xmqqqzqxelw5.fsf@gitster.g>
 From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Fri, 6 Feb 2026 21:37:08 +0100
-X-Gm-Features: AZwV_QjrdOogi-K4J2Q7K0KBbvoyLBdc9y5TzZaHjtblAb319_vFcX1eJsd8BWs
-Message-ID: <CADYq+fYzJS+=DVBAAEbaHjp=sRBxsxZqQCkVMiJhJPSSpUqu7A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] add-patch: Allow interfile navigation when
- selecting hunks
+Date: Fri, 6 Feb 2026 21:39:19 +0100
+X-Gm-Features: AZwV_QgzIVgl7I59VtR6MOFMnaB5dq2vZJOplrbkvGI6btzQJ5zjgY71RSL94ys
+Message-ID: <CADYq+fb3zP0KiPSGGnnbHsX86wc0fWGjbv8s4BNaKPsO+T7znA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] add-patch: Allow proper 'git apply' when using the
+ --rework-with-file flag
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
 	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
@@ -98,32 +98,82 @@ Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 6, 2026 at 8:21=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+On Fri, Feb 6, 2026 at 8:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
 rote:
 >
 > Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
 >
-> > @@ -1566,11 +1589,14 @@ static int patch_update_file(struct add_p_state=
- *s,
-> >                                               : 1));
-> >               printf(_(s->mode->prompt_mode[prompt_mode_type]),
-> >                      s->buf.buf);
-> > +             if (s->s.no_auto_advance && all_decided)
-> > +                     printf(_("\n%s All hunks decided. What now? "),
-> > +                             s->s.prompt_color);
+> > Subject: Re: [PATCH v3 3/3] add-patch: Allow proper 'git apply' when us=
+ing the --rework-with-file flag
 >
-> This gives an ordinary prompt for the hunk and then another one
-> after it if we notice everything has been decided.  I am wondering
-> if it wants to be more like
+> Style.  Downcase "Allow".  Applies to [2/3].
 >
->         if (!s->auto_advance && all_decided)
->                 say What now?
->         else
->                 ask the usual
+> Avoid "proper" as it is not obvious to everybody what you find
+> proper and why you find it proper.  Applies to any value-judgement
+> adjective.
 >
-> ?
+>     Subject: [PATCH v3 3/3] add-patch: allow all-or-none application of a=
+ patch
+>
+> or something?
 
-Okay noted
-Thank you
+Okay
+
+>
+> > +static void apply_patch(struct add_p_state *s, struct file_diff *file_=
+diff)
+> > +{
+> > +     struct child_process cp =3D CHILD_PROCESS_INIT;
+> > +     size_t j;
+> > +
+> > +             /* Any hunk to be used? */
+>
+> Funny indentaion?
+
+Sorry
+
+>
+> > +     for (j =3D 0; j < file_diff->hunk_nr; j++)
+> > +             if (file_diff->hunk[j].use =3D=3D USE_HUNK)
+> > +                     break;
+> > +
+> > +     if (j < file_diff->hunk_nr ||
+> > +             (!file_diff->hunk_nr && file_diff->head.use =3D=3D USE_HU=
+NK)) {
+> > +             /* At least one hunk selected: apply */
+> > +             strbuf_reset(&s->buf);
+> > +             reassemble_patch(s, file_diff, 0, &s->buf);
+> > +
+> > +             discard_index(s->s.r->index);
+> > +             if (s->mode->apply_for_checkout)
+> > +                     apply_for_checkout(s, &s->buf,
+> > +                                     s->mode->is_reverse);
+> > +             else {
+> > +                     setup_child_process(s, &cp, "apply", NULL);
+> > +                     strvec_pushv(&cp.args, s->mode->apply_args);
+> > +                     if (pipe_command(&cp, s->buf.buf, s->buf.len,
+> > +                                     NULL, 0, NULL, 0))
+> > +                             error(_("'git apply' failed"));
+> > +             }
+> > +             if (repo_read_index(s->s.r) >=3D 0)
+> > +                     repo_refresh_and_write_index(s->s.r, REFRESH_QUIE=
+T, 0,
+> > +                                                     1, NULL, NULL, NU=
+LL);
+> > +     }
+> > +
+> > +}
+>
+> I suspect that the extraction of this helper function out of its
+> original place in patch_update_file() should be done in its own
+> patch.
+
+Okay
+
+>
+> Do we need new tests to cover this new feature?
+
+Yes I will include the tests in the next version.
+Thanks
 
 Abraham
