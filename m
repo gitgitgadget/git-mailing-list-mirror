@@ -1,89 +1,76 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AD2242D76
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 15:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A59B2D7D3A
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 15:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770393339; cv=none; b=cN83D3dKkgHbdDNNeTU+QMl6GKxYkJ41iiwBGFbOeAxVZB7m5dGyKo5L6tuwukOIbqDBgmq21gSfhykgpB591AgD7Lql/oRPVUzxwatOHuQzX68jrxqeJu0igEuOsHc5EDOgq1qo5yRACwgLMY2m/Hl/bgYdpmsLXJ8aFhfTC7U=
+	t=1770393366; cv=none; b=Hq12ojnbaUYz6MFBxctLxukDruILe6xu9fvCzUGWCCZUJgNA2c+d5cxSGHKLV2m+wiPQbXqQljRx5mWBRvLR84zI8u0uDHTBQ08aQb8WG0WP4glIRzIw+1hH3Ea9C1E2XWVft+QkP511uxEY8BEEfcZXE+rDQ3bveuM+eVtzB/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770393339; c=relaxed/simple;
-	bh=GL1eXzRN7SISTmnUlksnutYzFLDubCnM6Nrwm4qJO2k=;
+	s=arc-20240116; t=1770393366; c=relaxed/simple;
+	bh=qmsIJYq8t+5EJXxEwqWROJyIsLI+DEtKJbHb73uq4KM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xc1y1BldjE9vKzXumrkheFFBYBwuQF57X3YmjfEmKDEelBH1MDKli5Sxu7PBbl67A+pJb8p06jQZatCuHZWFXv6wyh3FA0wO6/VObsgx9TBLcEYU7GbFmqHOnnARH0hcFNSi7NVHVnRy+XdJezQCzzoWefjKm0YDX6FT611ullA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DNm4ydmQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZMzNXyCM; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=gxw+G6sYhSz//fu4cdqISWDZ1Cmt6AwYAIyETtYzUXnTbB1zrMAp4aHZxsoZW3iYx0tL4X602fDeDsJ4BjSU8GuN9Qas962oze1WIj7Q0OccAWDzXKTSvZf+SNsV8AKtq2mAGbFIbwzAyoWZj5YqCG/XNaZZo8naYM6z5Rf+oLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lr8gIgL3; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DNm4ydmQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZMzNXyCM"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id A71A41D0007F;
-	Fri,  6 Feb 2026 10:55:38 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Fri, 06 Feb 2026 10:55:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770393338; x=1770479738; bh=99KPGfCVlQ
-	u8UF33ADDFYuBLkLBw0rcfIqO94adlK48=; b=DNm4ydmQGCoELJFNjtOz3qnM8T
-	/FsB/LolaBst7IYozAu6ia0vNExZCqpJwJpT2Lo9tqSJ9QzisRMM41tSZCjxEJXu
-	8rymXRdcvdf1/lBVCUlMthm1xbzy29gmSqimh554Z4AsttFFznWj5ZNFWfCe8TKe
-	dz6LKHYnL0igSvxEBRnmNvfGJVtoCJxyaOSub8DcESiKKYcq8X6yZqGpt3UI7FiA
-	HkmN8fh6MEYFypIsaND1eFyKwwO4Ptxo8qFQXsVBtSB1cbdrDw+X0aO7ErEdMQDg
-	EK0lKq06FktWxoQruKJ4DMXNcEdl0pdsuoQAsnktED2s8vkaDdDfRNe828yg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770393338; x=1770479738; bh=99KPGfCVlQu8UF33ADDFYuBLkLBw0rcfIqO
-	94adlK48=; b=ZMzNXyCMMhPZN3yGhO2cgGRrq6dJj0KgzA5yxuqFxA1STK955Hj
-	eCLi8884KJfoH9qy2a9fCGpW7ZQ/Qt3qjGob92/UZum85Y1HHfQkzCGfeOmFrgRJ
-	Q1Bu5zR5nd4sjfPyu4+zhigJqK/QObii9/Q0d9hcxDkU7r1BreNi+Pf6CxHjjCuf
-	7HRQHnnin6Ar8NEdeqYmR8db+m2xwlrXfXO8yDE3n3R5gZHC37y6BK6Js4pSJXqz
-	4s5ShoziHqlVLJVWvVmWPS5UenBpG2DsvhF9VzkfJJhv1RacWdCfHEurRXkH12NS
-	XnfXI7xjR2Q1rfsLPUjs/59Gx6brb9ICjEQ==
-X-ME-Sender: <xms:-g6GaQyzLmQ_BvZ5GTlIjrLTLcHy1hXCuTg9Y_kBYagW_tCnNY-SEA>
-    <xme:-g6GabLq-y7iqxbz5pjC26-nSA3MQnmmgtL6ouQ9Etgtyg3D51T4S_3tnP79KQGq1
-    9eRcndi9LjzGkd-1q93MM1hnvOOWqP3ThFs9w4gnSNwgj5xWyw>
-X-ME-Received: <xmr:-g6GaapsSbF-r1Juz1KYdKIRG7Z9J1FkzOHzA3NWL13n4xlBQWB7WW1g0ZIXIGpeRtUu6QiJFgXxm3L2if8RAmUGDT6kskR5c1piAKzGUo0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekheekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epfedutdduhfdtleffieekvdfgheegvdevgedtudefvddvffdtteduvdehfedufedtnecu
-    ffhomhgrihhnpehmshhgihgurdhlihhnkhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhushhtvggusegtohguvggsvghrghdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepthhoohhnse
-    hiohhttghlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
-    khesfhgrshhtmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:-g6GaaIqPZLQItZn5BCdWB2WzhMg0NUtvQG5ftXfZQ_QqwofwyM2Xg>
-    <xmx:-g6GafRvxjaQtJunsU6cQVdIB6kue_kBAh1ruaTiwoFQf_Fg8rN8fA>
-    <xmx:-g6GaZs8_2s8tdcDizLX07rzrWqP4WRtOqTFhYEsw-bZotxD36msHA>
-    <xmx:-g6GaQZYPeuaB9l62VNPux_Sz_xzNEy9zP0ec7tW2IRQWgMQk0p3Vw>
-    <xmx:-g6GaSm005kSVRSQVgA5HaBUj2KVbfizIHgbeN9wG4GAdFA2RbXS3Hbg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 10:55:37 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 75c50a20 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Feb 2026 15:55:36 +0000 (UTC)
-Date: Fri, 6 Feb 2026 16:55:33 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lr8gIgL3"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47ee3a63300so24275315e9.2
+        for <git@vger.kernel.org>; Fri, 06 Feb 2026 07:56:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770393364; x=1770998164; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fPezk/hQPGcwxxjbe09BfXBAtuNoOJ0CzrP3WyMRqdA=;
+        b=lr8gIgL3Hrki8l+t0n1JvixoX/40hjeQdTlKo/rMARwzOoy/BvvEDm+rFeFgubdu1L
+         LNsqY8pGOa6S3CxCZMBG0CToBmyw5qMdd1WCGUUWNpgvM0+Qov88Ezdf1dJ9OqHH7BeI
+         DOlhU5Et5Qp3kZUfcH5wAU0kKnFy/iay1cKWzr9DnGWIU+otnH2wskIJsGCPRxkQh7IA
+         Linj5a8DWPAA+vseLGhAzRzN64Su4Wp2SS/9g1eQaQ6o1AdrTqaqeVvEdIGAMR/gXJnq
+         hw3XcNuqSbikBqOJE/xPdaYxOnKXtPVPVbkcYUGW9ifXS8ExxJ22LVQJZq4HxGqR3WSM
+         oJSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770393364; x=1770998164;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fPezk/hQPGcwxxjbe09BfXBAtuNoOJ0CzrP3WyMRqdA=;
+        b=w1YOBnPD5gf48iU0Y++rkVY5j5HYlkn7e6lIFl3ks90rLD22fXGExfQ/UowB12k0Wr
+         M6Q482W7ekU1iN5fvjCcPgrtV2AXaU7uHJhXoDybLtShPaCK/396vjmPzEDrVxNJfrXR
+         HDfedetUU6kfiNHl+WedpsDtZ4R+8FIFUPiz9B//Zv2Pb35X5ixwacgPB8UMGqqqad5F
+         UvuHsi0MPKRix2mFM9/Ir5IMFIrN0r4ftTNu4EIbnpXw4N7GO200B5oISPKzpubUPtUO
+         9rpAMB+aVYtEWp1UHWoh3XQZWKukutsVvBy9KvydCBKjQU0PgcJstDSusIbOT+ZRvozw
+         X9PA==
+X-Gm-Message-State: AOJu0YzDbPv0lusUtoDSUA+ZwcUGlOklG9loryQrmgh82FMtMatCu8nK
+	3hY5KTmF/JRCNkralScY50mFDoYjjA739k5mM0Wh0VUxPQJBCeuCHfmIPjJaLXsfv38=
+X-Gm-Gg: AZuq6aJWfU2/qu61yRMseTNy2S1mdxGz3sNiYJIGe7Y93xlGxwNieN5Fm811G6tAiCz
+	bwrmEaUcdftytRh2XxJVo3+xVGE3gcQc4awN6V3F4+KyNDRbtSvCNkBPoxFFX3/+6MVMikNWZwn
+	pDfzjfSfE8g/i+aaHfXdQkhckBjHrd2dJCF75/5uLxYPrhmmBn/8McX4o3gs32AZHxB4f2K+yR+
+	7UyZfukoF2IclvNPRGO3C9D+c8RFlUY857q7tzk2/C0tifvEUjkwWvapJMgaxITw6lT8IPfLVx+
+	PN7dkFvOB5nWue2xffwpqtRhVNSjJ2P/zHiS6C4v2WTsc52jytfCmDtODT2+RbzAHNm7F3FqlLT
+	6JCBlkXjU/utUMsqKoBsoKQhhEXGlOX/uxL8DlcfKX9gjaCfsVwJr04yzxNRdyR+v8nScoSq4ax
+	EwgxtM/hpr7Lo8yxJWDaj2
+X-Received: by 2002:a05:600c:3590:b0:477:79c7:8994 with SMTP id 5b1f17b1804b1-48320236b01mr50963225e9.30.1770393364069;
+        Fri, 06 Feb 2026 07:56:04 -0800 (PST)
+Received: from localhost ([102.91.81.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-436296b2ed9sm6658198f8f.5.2026.02.06.07.56.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Feb 2026 07:56:03 -0800 (PST)
+Date: Fri, 6 Feb 2026 16:56:14 +0100
+From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Gusted <gusted@codeberg.org>
-Subject: Re: [PATCH v6 0/4] Fix git-last-modified(1) bug triggered when
- passing a tree-ish
-Message-ID: <aYYO9SxiC5zFbB71@pks.im>
-References: <20260127-toon-last-modified-tree-v5-0-38d18a0956d4@iotcl.com>
- <20260130-toon-last-modified-tree-v6-0-db827e5df985@iotcl.com>
- <xmqqecn76nca.fsf@gitster.g>
+	Ben Knoble <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v3 2/3] add-patch: Allow interfile navigation when selecting
+ hunks
+Message-ID: <24692afa3f0a67d3f3eba776cc745287c5d71e94.1770390576.git.abrahamadekunle50@gmail.com>
+References: <cover.1770390576.git.abrahamadekunle50@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,18 +79,224 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqecn76nca.fsf@gitster.g>
+In-Reply-To: <cover.1770390576.git.abrahamadekunle50@gmail.com>
 
-On Fri, Jan 30, 2026 at 09:07:33AM -0800, Junio C Hamano wrote:
-> Toon Claes <toon@iotcl.com> writes:
-> 
-> > Changes in v6:
-> > - Fix CI failure with Meson on Windows.
-> > - Link to v5: https://patch.msgid.link/20260127-toon-last-modified-tree-v5-0-38d18a0956d4@iotcl.com
-> 
-> Replaced.  Thanks.
+After deciding on all hunks in a file, the interactive session
+advances automatically to the next file if there is another,
+or the process ends.
 
-From my point of view this series looks good to be merged down to 'next'
-now. Thanks!
+Now using the `--rework-with-file` flag with `--patch` the process does not
+advance automatically. A user can choose to go to the next file by pressing
+'>' or the previous file by pressing '<', before or after deciding on all
+hunks in the current file.
 
-Patrick
+After all hunks have been decided in a file, a prompt appears,
+which allow the user to still rework with the file by applying
+the options available in the permit set for that hunk, and
+after all the decisions, the user presses 'q' to submit.
+
+This feature is enabled by passing the `--rework-with-file` flag
+to `--patch` option of the subcommands add, stash, reset,
+and checkout
+
+Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+---
+ add-patch.c | 95 ++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 80 insertions(+), 15 deletions(-)
+
+diff --git a/add-patch.c b/add-patch.c
+index 173a53241e..2bd839f17e 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1418,6 +1418,8 @@ N_("j - go to the next undecided hunk, roll over at the bottom\n"
+    "e - manually edit the current hunk\n"
+    "p - print the current hunk\n"
+    "P - print the current hunk using the pager\n"
++   "> - go to the next file\n"
++   "< - go to the previous file\n"
+    "? - print help\n");
+ 
+ static size_t dec_mod(size_t a, size_t m)
+@@ -1430,6 +1432,12 @@ static size_t inc_mod(size_t a, size_t m)
+ 	return a < m - 1 ? a + 1 : 0;
+ }
+ 
++enum patch_update_response {
++	NEXT_FILE = 0,
++	QUIT,
++	PREVIOUS_FILE,
++};
++
+ static bool get_first_undecided(const struct file_diff *file_diff, size_t *idx)
+ {
+ 	for (size_t i = 0; i < file_diff->hunk_nr; i++) {
+@@ -1441,7 +1449,7 @@ static bool get_first_undecided(const struct file_diff *file_diff, size_t *idx)
+ 	return false;
+ }
+ 
+-static int patch_update_file(struct add_p_state *s,
++static enum patch_update_response patch_update_file(struct add_p_state *s,
+ 			     struct file_diff *file_diff)
+ {
+ 	size_t hunk_index = 0;
+@@ -1449,12 +1457,14 @@ static int patch_update_file(struct add_p_state *s,
+ 	struct hunk *hunk;
+ 	char ch;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+-	int colored = !!s->colored.len, quit = 0, use_pager = 0;
++	int colored = !!s->colored.len, use_pager = 0;
+ 	enum prompt_mode_type prompt_mode_type;
++	int all_decided = 0;
++	enum patch_update_response ret = NEXT_FILE;
+ 
+ 	/* Empty added files have no hunks */
+ 	if (!file_diff->hunk_nr && !file_diff->added)
+-		return 0;
++		return NEXT_FILE;
+ 
+ 	strbuf_reset(&s->buf);
+ 	render_diff_header(s, file_diff, colored, &s->buf);
+@@ -1467,7 +1477,9 @@ static int patch_update_file(struct add_p_state *s,
+ 			ALLOW_GOTO_NEXT_UNDECIDED_HUNK = 1 << 3,
+ 			ALLOW_SEARCH_AND_GOTO = 1 << 4,
+ 			ALLOW_SPLIT = 1 << 5,
+-			ALLOW_EDIT = 1 << 6
++			ALLOW_EDIT = 1 << 6,
++			ALLOW_GOTO_PREVIOUS_FILE = 1 << 7,
++			ALLOW_GOTO_NEXT_FILE = 1 << 8
+ 		} permitted = 0;
+ 
+ 		if (hunk_index >= file_diff->hunk_nr)
+@@ -1498,9 +1510,12 @@ static int patch_update_file(struct add_p_state *s,
+ 
+ 		/* Everything decided? */
+ 		if (undecided_previous < 0 && undecided_next < 0 &&
+-		    hunk->use != UNDECIDED_HUNK)
+-			break;
+-
++		    hunk->use != UNDECIDED_HUNK) {
++				if (s->s.no_auto_advance)
++					all_decided = 1;
++				else
++					break;
++			}
+ 		strbuf_reset(&s->buf);
+ 		if (file_diff->hunk_nr) {
+ 			if (rendered_hunk_index != hunk_index) {
+@@ -1548,6 +1563,14 @@ static int patch_update_file(struct add_p_state *s,
+ 				permitted |= ALLOW_EDIT;
+ 				strbuf_addstr(&s->buf, ",e");
+ 			}
++			if (s->s.no_auto_advance && s->file_diff_nr > 1) {
++				permitted |= ALLOW_GOTO_NEXT_FILE;
++				strbuf_addstr(&s->buf, ",>");
++			}
++			if (s->s.no_auto_advance && s->file_diff_nr > 1) {
++				permitted |= ALLOW_GOTO_PREVIOUS_FILE;
++				strbuf_addstr(&s->buf, ",<");
++			}
+ 			strbuf_addstr(&s->buf, ",p,P");
+ 		}
+ 		if (file_diff->deleted)
+@@ -1566,11 +1589,14 @@ static int patch_update_file(struct add_p_state *s,
+ 						: 1));
+ 		printf(_(s->mode->prompt_mode[prompt_mode_type]),
+ 		       s->buf.buf);
++		if (s->s.no_auto_advance && all_decided)
++			printf(_("\n%s All hunks decided. What now? "),
++				s->s.prompt_color);
+ 		if (*s->s.reset_color_interactive)
+ 			fputs(s->s.reset_color_interactive, stdout);
+ 		fflush(stdout);
+ 		if (read_single_character(s) == EOF) {
+-			quit = 1;
++			ret = QUIT;
+ 			break;
+ 		}
+ 
+@@ -1616,9 +1642,26 @@ static int patch_update_file(struct add_p_state *s,
+ 				hunk->use = SKIP_HUNK;
+ 			}
+ 		} else if (ch == 'q') {
+-			quit = 1;
++			ret = QUIT;
+ 			break;
+-		} else if (s->answer.buf[0] == 'K') {
++		} else if (s->s.no_auto_advance && s->answer.buf[0] == '>') {
++			if (permitted & ALLOW_GOTO_NEXT_FILE) {
++				ret = NEXT_FILE;
++				break;
++			} else {
++				err(s, _("No next file"));
++				continue;
++			}
++		} else if (s->s.no_auto_advance && s->answer.buf[0] == '<') {
++			if (permitted & ALLOW_GOTO_PREVIOUS_FILE) {
++				ret = PREVIOUS_FILE;
++				break;
++			} else {
++				err(s, _("No previous file"));
++				continue;
++			}
++		}
++		else if (s->answer.buf[0] == 'K') {
+ 			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
+ 				hunk_index = dec_mod(hunk_index,
+ 						     file_diff->hunk_nr);
+@@ -1803,7 +1846,7 @@ static int patch_update_file(struct add_p_state *s,
+ 	}
+ 
+ 	putchar('\n');
+-	return quit;
++	return ret;
+ }
+ 
+ int run_add_p(struct repository *r, enum add_p_mode mode,
+@@ -1814,6 +1857,7 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 		{ r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+ 	};
+ 	size_t i, binary_count = 0;
++	enum patch_update_response ret;
+ 
+ 	init_add_i_state(&s.s, r, o);
+ 
+@@ -1852,11 +1896,32 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 		return -1;
+ 	}
+ 
+-	for (i = 0; i < s.file_diff_nr; i++)
+-		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr)
++	for (i = 0; i < s.file_diff_nr;) {
++		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr) {
+ 			binary_count++;
+-		else if (patch_update_file(&s, s.file_diff + i))
+-			break;
++			i++;
++			continue;
++		}
++		else {
++			ret = patch_update_file(&s, s.file_diff + i);
++			if (ret == NEXT_FILE) {
++				if (s.s.no_auto_advance && i == s.file_diff_nr - 1)
++					i = 0;
++				else
++					i++;
++				continue;
++			}
++			if (ret == QUIT)
++				break;
++			if (s.s.no_auto_advance && ret == PREVIOUS_FILE) {
++				if (i == 0)
++					i = s.file_diff_nr - 1;
++				else
++					i--;
++				continue;
++			}
++		}
++    }
+ 
+ 	if (s.file_diff_nr == 0)
+ 		err(&s, _("No changes."));
+-- 
+2.39.5 (Apple Git-154)
+
