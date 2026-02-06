@@ -1,64 +1,68 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B99156CA
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 02:32:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADE92673AA
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 02:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770345127; cv=none; b=gYxKENyZYHsPpGXHx6oPWGM4EDKcEK9zONcKCntWFEfN0KiJz02SDj/yGNJn7sGqMVk+MpdJe5G8GpD7ws/NqTHFmrUCyAJjNp1MFfNmabS9UBu/uEEMYBAsv8aH5IsZIVSMr7M9NSVHIfmJOnIwuboFPQxbAWbqU3fy4NMe1fA=
+	t=1770345128; cv=none; b=OaUsPolCm7ukqt5l7yka3AKuTwv1HTYu8cqCuko14e5D9n1HSSwE1bKD4POkT/992V07pQxaRI7IMI/oB9K+DRAip8L4MnxIat7WzYXx+9pNT3ifU8/nc+ojSdh4tfKBak9NNDirDg+4szbQe8tF20CzGNDPPyQjjQaF4N0C5WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770345127; c=relaxed/simple;
-	bh=TFpLL3B2QvDBAWyPwR0Yy/2VUWnI8NC3rp9YOCjtdsI=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=SNbZIZkFmw6N7DqN7UisUtxJLBgilJPZia1yfxfMnn80ew4ldKZhmlqc+NlYJBUcJ9kUp/EnY0ze4EB3bTlSVHHCYhc8irSPNqzxDnfzIlSoheOwJcLTCmQ2rZz9SYG82cIONE1a5HswHcSXNedUx+VYSp9Zcl5GXIiRYvo3U9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lKJVKLbb; arc=none smtp.client-ip=74.125.82.47
+	s=arc-20240116; t=1770345128; c=relaxed/simple;
+	bh=KoA6+UtHngIjx4EUDm3qqUEtdJczte7ep3zXpj5db0s=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=merZqsHsqI47zQzgvTf9CqipIw6EQP2ebRZi9LxBiVCOciSh74vYZ8BDjDg/k7t4i9XrcNs2CTHvAeBGoZXWDUUATg/LNxF+j2Wi/3+cmOkDIFE3X8/YVYz71ybpDJuTab70xs4QHpR8setGaJFckEjXjvKS+u2QmdV7xdhAsVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/SdImze; arc=none smtp.client-ip=74.125.82.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lKJVKLbb"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1248d27f293so4057202c88.0
-        for <git@vger.kernel.org>; Thu, 05 Feb 2026 18:32:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/SdImze"
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2b785801c93so644257eec.0
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 18:32:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770345126; x=1770949926; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770345127; x=1770949927; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pVErAzwxw2xQeTpm66VTBPEVadzotuDadLzXlioGRbo=;
-        b=lKJVKLbbm7Z9aGN8WlcrH/PoWKo/rMPpBOowTek4vJQJgblZhBMaRxviuj3ua6DdPT
-         L3HFihYpnLsK1azyYFXdqd2ENIF15zCk82eq5G8dEfcvByhjFsd4KrkVehfxFIx7KPWG
-         S9UZ3CrFB+AitVktMOE5SiOoH/DyVGYiMVGLIGWaZRTOL+VR+8mZhn9dSZYFw5tFeaI/
-         QvJrEXE+8YDoSxtdGZ9Ocd1wveGBSwu8NmE3WB5kqRK/sKwfYx41xFlJTZd4FCaOO6dE
-         a2khyijizvKOlYmSHxvPp2cNmONuiAdnqNU5rHM3Gz0niG5UI6OcCU6mR36SsYdFlw3Y
-         3CSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770345126; x=1770949926;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pVErAzwxw2xQeTpm66VTBPEVadzotuDadLzXlioGRbo=;
-        b=oLvLkaBG/XLzy/qbM3NJ/e67IOZMSNrtIQICwEQCy6iBsdOQ+k/lmrYNVapklCVns7
-         JH0tKzBx4M4hIp/LWHsjE1SEkJYz/9nSTndk6SS8t8w26C91Xv7iESreirG//wSTT/dC
-         EwS2towyFqy/au+8pWqtyw+w7KhxLtW7TpJCApU4yIYbL8ApyJHzkqDauTXsjXrmW/nr
-         tzRsLAZgfwPMdIdGS6SsXjGJLA2+wwGST2Tn3e+9m90l42hO84Ws0RAs3aoNC1//G4x6
-         WvfiUlw76EgA7wPUVtZgMl9cxde0qKmAlV89RZccna3fOAHd6lqZN12dF0RzlFyJpsLu
-         Dj/A==
-X-Gm-Message-State: AOJu0Yyj324UU2Qp8U3XlzidrfgpHFr1dyJqosUK6XuVDCCJFRTALdTW
-	sumcP3r49HgWcappmxucTPcWwaxS3Ht8uKbPZseehRzsNxD8lsweUbq8HsILPA==
-X-Gm-Gg: AZuq6aKGwFGAn8pNLmo0Tt1slDb2WH16jF7EhvWpSC2PccRqRVT4kGHcdCgXNSAwSQf
-	pj0I1I1KzFjcm8ogwzXzJC96qwWDokYabGvB363dL25vHlUojksWUV1th6LX86YQF5JoUZdxyjT
-	rFUnqQRQYBVJHsRsLkHKOPjytl3Dy7rrZC6neg6Q9g3TmE7gqA38vZZZnLYB7Fs3Z4Xrz+03K26
-	v9u4g7OVkjgmX6PBrmvtZ+qVbKPevqLHQfVvnIzUOqcVuueyOrfBn2uURWUyOpylRa20S8a0p+Z
-	v04z6CVWTL+JYF1NbZlhM8mcVUkO7LQoAfAXhu5IXSUFrCwetXbF+9FocxDa7FTfUtuGwJx0/Qn
-	T8U+ts6dPtwNoANYf4lLZfzyA2bnEjGMG8s3DI8csb+P53U25xrnxJxzAIlaiiws1FCPvOhQXHm
-	gTMch9jsuTrg==
-X-Received: by 2002:a05:7022:4597:b0:123:348b:979c with SMTP id a92af1059eb24-12703fe453emr579277c88.6.1770345125759;
-        Thu, 05 Feb 2026 18:32:05 -0800 (PST)
+        bh=1Jvh9KsioJ9wPweAdU3pfAswUCRZKcZ6z2a4xdIIhZA=;
+        b=V/SdImze3SJFRpckvdGgDvo65vfPJ/T/iLbP0BOIrZaQBecvtYYZeWoo+zF0ngBdZO
+         OqlDZ57IFW/JaGNaoNEHZaZ6imIlh4XLA0itOK4OcRUij6kfYE2C90fEq/Nzg/K+p3ez
+         nFRKCDi0zaMcernuf5dQVsvPORFMPxmBbK4i1BvsLg9/X64tZg6HoTIYaJ/h1QV4m2gH
+         imJRSelOJkiTm3GZudl4H9fTpul/2gL6zjAt/1TJ86SQ7hAEsBLyJjS5H5mP1b2oLaiD
+         F58BpFQjUfuVAVAt533SW7ULRls2BToT+49Owb/BR7o9n7RxguFSmhm2OIcaenR1Q/k9
+         DGJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770345127; x=1770949927;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1Jvh9KsioJ9wPweAdU3pfAswUCRZKcZ6z2a4xdIIhZA=;
+        b=MoA4f0BEBDidO0YElKPnYymZhUqweX/tG/f3v1+Ch+O98xzshxiRjUHJr/j/2qik2S
+         5HkBYA7PXeZrp/2ua+1VGPtaTPzdhTuCtJMFCy95A4R6m8pvTlKE8bT2T2tfF0nzNcW0
+         lzVdZKu3C148T2E+k1YbnvjWbz7e7IgGdfqwKnY7+E3fZjfULWbJ2P1FU44UdPcFzjPe
+         LLQdCsiyImBrWevLJBhqen9Zz9nz1yKSLeoTHBRqVX8bL0HQhRX4YJcEofKLCd2Id7il
+         Djc3+0YTAiZMsw1Vl4eZLnGRi/KldWTO6hBvVB+P3o+sFegvivnHj7oEOk/a/mQWrYYx
+         31Jw==
+X-Gm-Message-State: AOJu0YxTu3RW2S3ruKkOTk3edjLdXwNrF/M3YZDQoS78Kd3YEPpOV2KJ
+	JZFPeNbmWR3+tYi+8NTSnd25GtwyfkA8us5+BnnizdkkXtOsyxWqGI/bQCMCDpR+
+X-Gm-Gg: AZuq6aKhxaRKPa93Q8i3QUTRiO/zfLC2qRYUOO0A5PFWGVawhatrfvyWrLsG7+o9rSC
+	8V1ZIwj7o/6kpyiA2kXzaWItPO22a7UESzR7ZHG/qdTvjCiW+ArnHrf4btxf66NZD3MjALlj8VP
+	BZ2nGhTALF5m8AOztdEa/ilPQb0rstaA+RQ3yqO6K9FBZFZrzoUXv+8OM2m8XyWV05yqzE795KI
+	oKD+Hm1PmjzK1lx625Hjnffe/ow2Xt4eV8Fv5uC4uXkwmNmmx2e2FjtKGRNW9RJVfBZM8iBOgr+
+	PZ+rvgX/IoLNrm5i6y0Pyw5RU9NAgWc3zJPrt1J5ySt+GX0yfMWj1bIvfJKn8w+w1IPGAlvByTh
+	nXolFlVCV/hXGx7ccJT5DCicx/TJr2XnCfz/tueKxyjglMqf4+5sMewci+b+CJCPax8iw6UE9PA
+	0ZQ+qF/4X5F2KEgcH3k+I+
+X-Received: by 2002:a05:693c:37c7:b0:2b7:97a:75fb with SMTP id 5a478bee46e88-2b856484a62mr529951eec.11.1770345127010;
+        Thu, 05 Feb 2026 18:32:07 -0800 (PST)
 Received: from [127.0.0.1] ([20.163.4.32])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1270433abdfsm832517c88.12.2026.02.05.18.32.04
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b855c89695sm820279eec.31.2026.02.05.18.32.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Feb 2026 18:32:05 -0800 (PST)
-Message-Id: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
+        Thu, 05 Feb 2026 18:32:06 -0800 (PST)
+Message-Id: <6cb970e512c02f0db11b8aae247aaa1675b31ef0.1770345124.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
+References: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
 From: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 06 Feb 2026 02:32:02 +0000
-Subject: [PATCH 0/2] merge-ours: sparse-index integration
+Date: Fri, 06 Feb 2026 02:32:03 +0000
+Subject: [PATCH 1/2] merge-ours: drop USE_THE_REPOSITORY_VARIABLE
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,32 +73,61 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Sam Bostock <sam@sambostock.ca>
+Cc: Sam Bostock <sam@sambostock.ca>,
+    Sam Bostock <sam@sambostock.ca>
 
-This short series teaches merge-ours to work with a sparse index.
+From: Sam Bostock <sam@sambostock.ca>
 
-Patch 1 is a preparatory cleanup that converts merge-ours away from
-the_repository global, using the repo parameter instead.
+Use the `repo` parameter passed to cmd_merge_ours() instead of
+`the_repository`, and drop the USE_THE_REPOSITORY_VARIABLE macro that
+is no longer needed.
 
-Patch 2 adds the actual sparse-index integration and tests. Because
-merge-ours is invoked as a subprocess by git merge -s ours and never
-previously read config, the sparse-checkout globals remained unset, causing
-the index to be expanded unconditionally. A repo_config() call fixes this.
+While at it, remove a stray double blank line between the #include
+block and the usage string.
 
-Developed with AI assistance (Claude).
+Signed-off-by: Sam Bostock <sam@sambostock.ca>
+---
+ builtin/merge-ours.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-Sam Bostock (2):
-  merge-ours: drop USE_THE_REPOSITORY_VARIABLE
-  merge-ours: integrate with sparse-index
-
- builtin/merge-ours.c                     | 15 +++++++++------
- t/t1092-sparse-checkout-compatibility.sh | 14 ++++++++++++++
- 2 files changed, 23 insertions(+), 6 deletions(-)
-
-
-base-commit: b2826b52eb7caff9f4ed6e85ec45e338bf02ad09
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2189%2Fsambostock%2Fsb%2Fmerge-ours-sparse-index-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2189/sambostock/sb/merge-ours-sparse-index-v1
-Pull-Request: https://github.com/git/git/pull/2189
+diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
+index 97b8a792c7..2312e58ab3 100644
+--- a/builtin/merge-ours.c
++++ b/builtin/merge-ours.c
+@@ -8,20 +8,17 @@
+  * Pretend we resolved the heads, but declare our tree trumps everybody else.
+  */
+ 
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "builtin.h"
+ #include "diff.h"
+ 
+-
+ static const char builtin_merge_ours_usage[] =
+ 	"git merge-ours <base>... -- HEAD <remote>...";
+ 
+ int cmd_merge_ours(int argc,
+ 		   const char **argv,
+ 		   const char *prefix UNUSED,
+-		   struct repository *repo UNUSED)
++		   struct repository *repo)
+ {
+ 	show_usage_if_asked(argc, argv, builtin_merge_ours_usage);
+ 
+@@ -30,9 +27,9 @@ int cmd_merge_ours(int argc,
+ 	 * commit.  The index must match HEAD, or this merge cannot go
+ 	 * through.
+ 	 */
+-	if (repo_read_index(the_repository) < 0)
++	if (repo_read_index(repo) < 0)
+ 		die_errno("read_cache failed");
+-	if (index_differs_from(the_repository, "HEAD", NULL, 0))
++	if (index_differs_from(repo, "HEAD", NULL, 0))
+ 		return 2;
+ 	return 0;
+ }
 -- 
 gitgitgadget
+
