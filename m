@@ -1,127 +1,115 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mailgate02.uberspace.is (mailgate02.uberspace.is [185.26.156.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA3B31987D
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 07:40:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612533451B0
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 07:50:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.26.156.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770363608; cv=none; b=sA1+4LxHeQwwhTodiGHxuGT1jHXPtfK1cKaYbKOzqLAE7EJXYnEXMBD7HcfIxQLnoeQn6H94n7J1cdWGl6khsMpVsfMs5kv5Le3FMxQpPczChlDG0mzH8ohV5EXocDIkpYlnRRlTblhYjYsbSqj+wfC+A37EsgwOcaJZIgKVSxI=
+	t=1770364205; cv=none; b=iW2+I6396a5MOPFVkO4a/hz8MaHRBRPERwM5TlqEzc8zMb8LS/T6O9eeXt7Rc6K0qHQmmQvM7WOteUMVbgWUeI/OR/mgKFdwkDlQbVpUxV7DuoJfdqY6B6Cg5FaAnR1XaAlrZXC+XUI/8SqpWsCcz+pN6PNlqBqudeVzXjds0lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770363608; c=relaxed/simple;
-	bh=b0DMdLy55Ii7b7MPt2LL9+tTG0Ju4tzxSZptd0vnSCg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LF3tGTU3r9Q0vOyLyVOU4mbXSwfGSpZccQSwI8WzrOSQU1e/I2WVnkQgFjTd4AI8l5+ppqrghsB7HcUW4OIZtHJy/HXyN6S/QF9/pJHQc+At0CK68Y33gjGeOaKVaDUGaF9s7d71VprNB3cXVD5gQp2VVJjrpMn88PEvTQbszpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W8x211R/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q5N2C27l; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1770364205; c=relaxed/simple;
+	bh=gzpYlT1YQkzhZ3dj9WvxVrrZH3Gbat+9FS01Q0bSshw=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=RNH1uv7Lq1FaAxGcntHCS2NCdNS9Wxi70frt89uLiVGXoqySjpC0cDpOkcQ/XFxgqX61+o9GDB9UHQMcdqArf1mfvvhDcDsE+mkXPRapeBKDDN2zaPgrUb8H4PxRfdGuIw9upHuTDhBXEqSl0bpKA/wZM0wCF0VBV6fqXKi3LYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=beyermatthias.de; spf=pass smtp.mailfrom=beyermatthias.de; dkim=fail (0-bit key) header.d=beyermatthias.de header.i=@beyermatthias.de header.b=R5YJ3Zgq reason="key not found in DNS"; arc=none smtp.client-ip=185.26.156.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=beyermatthias.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=beyermatthias.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W8x211R/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q5N2C27l"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 719A91D00172;
-	Fri,  6 Feb 2026 02:40:06 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 06 Feb 2026 02:40:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770363606; x=1770450006; bh=OuxymK+W0/
-	ckJLYyinaG9lmfY5GEZPvIbi5Me8aqiZU=; b=W8x211R/9fBrwEvGpsEcuv//g1
-	3F+2qrs9CjBGRa6quxZhKLKRRJyDnegFhhFNM5eOWsDXhkt2xBQDHL5DdpHN4iR3
-	udT5IeRmFIRqXgDMtHkJ2Y410cqQg05rV++ipxFRDQpoGesZ2xWE+2wuJ6Ayo1Br
-	mai5dMhwAeOYKVdOMHbNJfvLKQU4KCFu0w4IEcWPSPyPt1x2tapWFb2VsHv3EFXn
-	LyDP4nD9U3SReYd1AXqogznQriGyFJX4vCn+CN66IA0gq5sbf761OMd/g2f6oRzJ
-	LedxO4996pqsVydyErVqHFP0yKJtnEBIQiyuBB3+7gC9AKHqD4pgrdsvXWBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770363606; x=1770450006; bh=OuxymK+W0/ckJLYyinaG9lmfY5GEZPvIbi5
-	Me8aqiZU=; b=q5N2C27lLDFa+pYe42BLEOJC36Yf+aJc+LCLAuH+YF+iU4VjJj/
-	bqkJL91EmdTOXtDQ7xetP8BX/SpzwVyE2JqzIYUrmCT6fBzeaSXqz6KBN566YpyH
-	+4mNS6fv0Z613GRuwTwn6rerJ1GaEtXF/+XXtGvqqozwl6IU9tztFP03VGaWJiGR
-	NweUdcrU0Pq9gi4r6iT02C6kZlc0tpfdL/4oC5UIdiXjoXIq7yQUz1g1xc7WLWHX
-	pVa2i+SX71NPTwNtu9PsDhGonsbNv611z8OQFOBay5i7Ffm3HphayadMHF4EmLUu
-	uUWoibYSsRiC6lHUSbM1E1uqCNXDboPW1lg==
-X-ME-Sender: <xms:1ZqFaRAXFGhVxHwezbSfmkUtB_WCic2FJg5kDokEOafomHtfRq_pjg>
-    <xme:1ZqFaW8p2DHkGiCWq2pfdfduB43AtGeqS6IbSQL59daZjjt1qj_5-VVk9EHOfYkc1
-    BUzQF0AJS5pIuL9u-ld1yxE25WqHei7BceTNTT_bne-vny-rUFiV4A>
-X-ME-Received: <xmr:1ZqFaZ9mFRfuCYNgVFHAuiFH2kqwGX-Mxyzn9v_4gj8j2JyeBUvDYkDm63GKAKQQAqauGFkFxyX9QuIpnownHrvaVUlXqnMMC7IwvC-Hnf4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeejiedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeejvedugefgffffieegtefhgfeikeevfeefhe
-    evvdegieetgeeujeeliefhiedtueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheprghskhdoghhitheshhhofiguohhirdhlrghnugdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:1pqFaVcPrnOUxdvg8AfQUr52KAQf0hxMLFlnBtsm45N9whD3aRuPGg>
-    <xmx:1pqFaaEteqMxGsTO3XDhaY2RGqmhTskTRa_tIi5n0JNw_3c3zcfh2Q>
-    <xmx:1pqFabeUARn1NhopjmtfV2osR8krc_gGVTHIjucyoAXufOMdpzV4jQ>
-    <xmx:1pqFacHFz0mpemoKPXVV6eabbygRk50qOWxzR3WVOrXzPHFS4ipejg>
-    <xmx:1pqFaTJN4KAnMgVA66zvzBNE_62x2EQ-yzQDlfiTF_vL6WCv4VB3AEto>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 02:40:05 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ccc418c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Feb 2026 07:40:03 +0000 (UTC)
-Date: Fri, 6 Feb 2026 08:39:54 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Colin Stagner <ask+git@howdoi.land>
-Subject: Re: [PATCH] ci: avoid ubuntu:rolling in most jobs for now
-Message-ID: <aYWaytvnR8wOdc1s@pks.im>
-References: <xmqqy0l6khkd.fsf@gitster.g>
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=beyermatthias.de header.i=@beyermatthias.de header.b="R5YJ3Zgq"
+Received: from cressida.uberspace.de (cressida.uberspace.de [185.26.156.202])
+	by mailgate02.uberspace.is (Postfix) with ESMTPS id 7E9DE180344
+	for <git@vger.kernel.org>; Fri, 06 Feb 2026 08:43:58 +0100 (CET)
+Received: (qmail 21215 invoked by uid 989); 6 Feb 2026 07:43:58 -0000
+Authentication-Results: cressida.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+	by cressida.uberspace.de (Haraka/3.1.1) with ESMTPSA; Fri, 06 Feb 2026 08:43:58 +0100
+Date: Fri, 6 Feb 2026 08:43:56 +0100
+From: Matthias Beyer <mail@beyermatthias.de>
+To: git@vger.kernel.org
+Subject: git-am applies commit message diffs
+Message-ID: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="26qcnwcrtgbsuqeg"
 Content-Disposition: inline
-In-Reply-To: <xmqqy0l6khkd.fsf@gitster.g>
+X-Rspamd-Bar: --
+X-Rspamd-Report: BAYES_HAM(-1.082338) MID_RHS_NOT_FQDN(0.5) SIGNED_PGP(-2) MIME_GOOD(-0.2)
+X-Rspamd-Score: -2.782338
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=beyermatthias.de; s=uberspace;
+	h=from:to:subject:date;
+	bh=gzpYlT1YQkzhZ3dj9WvxVrrZH3Gbat+9FS01Q0bSshw=;
+	b=R5YJ3ZgqRURyUyZhm+OBuWf3o0sATbmzzpnPy5yM3RjO5V0ajiJOh8jRwQZnRyRAp0YWGRK/XN
+	7gTmaB5XBtmnBHtRO0PIS+fy3cWAZaYPgYWLXdUTjZwt9Mn1de3V7mjkuoIWXXzPPa24Ifh70QKo
+	bM5w09+8A1zHhzlhkJlwBFpPhsgA3aGC2PB8Lo1SbvGcSHW3Yw4bgiVhu/foevebJykZqR81tqIw
+	Y/eVMJ9Y3eFbxMovsKtxPydN5OJSVeX+nM/82cP/PAjKkwdQ/bBbPD8TjyGMqDtLaB1LznYB6dWR
+	RG7U+JUIjUZeisW2wbR90OUIoMvrpHxG++OJA53LP7u2SgvyS67aPmqmJifC5Cisj9s6SwY3GpTz
+	U1ffgu9WsU9512Qwf826IaBYFhPzwOYUw2cFujoQ89eqrpHtHlqh83iRTyVy4Qlhe2lR90ckKnq3
+	CvviTa58X9tWtYJDtvDcW+6pNjakvsMNBpJA/R62dlXqA9LcVWP3wLmm2SXq7snoQn2AUOqniaes
+	9JYpn+G2jjPcjwvRj1+uPUFLOS8KglflMnqNlC7wJUPPvZ9sQmCYiPKTBi9Z6Vn2/i5ogTTVAebt
+	gk2UoX5TWvW4cd4zYe3C/EnPLgMfSWemSe4avZHkiXaLr5u7VQpkwhWaoGqbYAkaE1cXxWOA2I9A
+	0=
 
-On Thu, Feb 05, 2026 at 01:26:42PM -0800, Junio C Hamano wrote:
-> We just was hit by buggy uutils dirname in ubuntu:rolling.
-> Avoid breakage caused by being on the bleeding edge.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  * So here is what I have near the merge of "let's test contrib/
->    stuff as well" in 'seen' for today's integration to avoid getting
->    hit by broken dirname in ubuntu:rolling reported earlier in
-> 
->     https://lore.kernel.org/git/ef128e1d-dd3e-4573-bfcd-6a98a0a1f394@howdoi.land/
-> 
->    Until uutils used by ubuntu:rolling stabilizes a bit more, we may
->    want to keep a patch like this in our CI jobs.  Or we may offer
->    ourselves as a guinea-pig?  I do not have strong preference
->    either way.
 
-I think being a guinea-pig and reporting any issues we find to upstream
-would be the best outcome. It's feasible that eventually, Ubuntu may
-fully switch over to uutils, and if that's the case it would be great if
-we had already ironed out all the bugs that we happen to hit ourselves.
+--26qcnwcrtgbsuqeg
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: git-am applies commit message diffs
+MIME-Version: 1.0
 
-So I think demoting to "latest" is a fine intermediate step to fix our
-CI, but ideally we'd do a similar workaround to the sudo.ws workaround
-we have in "ci/install-dependencies.sh" so that we only disable the
-pieces that _don't_ work. That'd make it easy to contiue using the parts
-that _do_ work, and once the bug has been fixed upstreamed and has
-become part of Ubuntu we can then disable the workaround.
+Hi,
 
-I plan to have a deeper look at our CI next week anyway to fix some
-small warts and a test failure that we hit on GitLab with the MSVC job.
-So maybe we commit your fix as an intermediate step, and I'll then
-revert it and come up with a more localized fix?
+I am not sure whether this was already reported, searching the lore did
+not yield anything for me, but I might have overlooked it...
 
-Thanks!
+This was just posted on mastodon[0]:
 
-Patrick
+    PSA: Did you know that it=E2=80=99s **unsafe** to put code diffs into y=
+our commit messages?
+
+    Like https://
+    github.com/i3/i3/pull/6564 for example
+
+    Such diffs will be applied by patch(1) (also git-am(1)) as part of the =
+code change!
+
+    This is how a sleep(1) made it into i3 4.25-2 in Debian unstable.
+
+TL;DR: If you put a diff in the commit message, that diff will be
+applied by git-am.
+
+This looks clearly like unintended and might be an attack-vector, right?
+
+Best,
+Matthias
+
+[0]: https://mas.to/@zekjur/116022397626943871
+
+--26qcnwcrtgbsuqeg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEUJGUus1GMTrRclzcEKWX9Kitz80FAmmFm7sACgkQEKWX9Kit
+z82Q4BAAgE5L0dW4IwqPspOQhh0soHP6zCUD/Z5kOL22DnjBlqs7XVSqWv6FCTeX
+zw+shPpCmH9RDOW0bffhqV5pwo8khpB6gQkGcTFoE0Uis1G88+oiHSVQYd6blHsB
+wxXug8nZ8PWeOQcBactAJ+wXXlyaupclD8eJNmJ9Ffs1G4kb2EweMDNR4DPmcP4C
+Zp2cGTFH87No8CTskZt6/d7FSMPcEMxWkv5jQPW/X6bjyFzE5Ttd5C6FU+8QEjyY
+GVn33xlUI7jqHz0obkpdKr6G5zwYCFs0mJCxGh/9UpGtPCTSsYtj4bWeHPLFte7r
+qV6c0L2BeaawOQNSw6WQ+bOxtPb6A4+CNtPbz+BoayORl0LkheY9fus4rWzz8hyp
+4CcBKVvp0wPBmx0unOqdXjZfgC+t4P0IWdFpdhwaJImp8+/VubBTVRnnibSlAlBp
+0MaQwaoK9ZHaR6Rp4OJ+6wEa7ZDmg3gbUZHjyqZ4K0Kpp1aq+E/WwjoISxDDszpi
+hI11BIwAczG21XvdGRdE7ovslnI3lW0SO1mjK5DKhyUjOXu0/J5x6G6su1gyDQtK
+52yTR6rGKHlTkTIVYsPoqEnGxF+jDEY4hCtfAVzk11hTbL9iIRgJXWGoCuEtGvEx
+aN3uJHZgJwMFPHCCtMcQhBPhDBkzav7Uku+Gqi8x3YoqSmv92uw=
+=8vD6
+-----END PGP SIGNATURE-----
+
+--26qcnwcrtgbsuqeg--
