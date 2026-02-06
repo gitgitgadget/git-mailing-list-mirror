@@ -1,77 +1,120 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38433136351
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 09:24:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A5E345740
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 09:33:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770369865; cv=none; b=Vx3OVL9821YfHCMHtIx0kBcJFcDVVDiJwnCknPY6r5dgCjYHJ0MIShkhKoibcfKebjT12v4nqxA4T3o5mi50e3hEyCxeSgXpEYbVMXzslBN3q5HSVxi8QKETpnDZ2Ohk/HHF179/cmedZxLB7zWt2zzauAgXckVxw0ew+1NdPgE=
+	t=1770370389; cv=none; b=jWJx5qINChIdnEuteuf24TkVRz/8SHnr7kdrk7TW9SNp8FI6EmZRBIbIBTW3ripRExoxwoYY7xlmni9GqZMa/1dZWWtsabH6yMxqzuqQgLebmbFpw2qWxyUUv7Cz1nNp1ExAYEECm7Z7HVzxQa4sePrP3GCe4fSiKDZHzhm2UNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770369865; c=relaxed/simple;
-	bh=HyDFqOZtJhrRHDSP2pp2taaXyYvTSa6hnNNaRi1erLY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TA97iaFyEH5qpafdtQfPumv1Q+fZ/wEJuaf71M2svQDUcMVicgqPt9jpKOrxKR7EJglb7z4AZNxmhsupYzwYwSZfm3RKa6vsJz05Zp+0jzItqc3AmGepgLbBZcXsmw7qNh4Dm4yI+ZLdS26GGG2q3+ehq45cC0Vxsg7lvt0OGrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=E9WXPiMk; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1770370389; c=relaxed/simple;
+	bh=oQJr5YlF/6jCcqeI/kRcJ0ouEyCH5TuqOuoRc9f7evM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YXIwpfifqNReVGNbEAsd2Jlqu7/X1KPplyC09K+s6dUlPDm3/lBcH2SBV6d69TTGLlKwM5XAo1wspgIxSXgtb8Kix3/yubzVlcydHNQwj3yHVjeh93VC0E/eurDqOUbAfvVEbX9KH2wNFGoa+RGiOuv2ojR23D5rqGKV2KZVbtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ChT2nYfT; arc=none smtp.client-ip=209.85.214.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="E9WXPiMk"
-Received: (qmail 298093 invoked by uid 109); 6 Feb 2026 09:24:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HyDFqOZtJhrRHDSP2pp2taaXyYvTSa6hnNNaRi1erLY=; b=E9WXPiMkeUV1Hf4YCjRWL7nfAlamTrbZKZT/u8aptWB9rpWQkedIlcQYu+xBlcMuuoHx+N0HG1kG0s9IZa3vPvjvEKPK56b5LUG3iyJ31yjw2JRb0mukKASDbipT6UrJBjah2DVAWUI2KgbdoQPsCrq82dYTVGc4t2ZVrG1VBcstEIVB+ycVFodwQyWIl8Tya84TKBNotehlSvXiwkSCINU7LjnUNk2qI7iKEmQGgM96dzQGJjdbYzNPQSaU6LG5XbPKEyuh/ZOK1CVWBdHr2dUkctVMu1Iv1/k4jy4Ct3zehwm6T/ElY/NzgCLoW4anzMyL3X0JYlSwInFFwYd62A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Feb 2026 09:24:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 599006 invoked by uid 111); 6 Feb 2026 09:24:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Feb 2026 04:24:28 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 6 Feb 2026 04:24:23 -0500
-From: Jeff King <peff@peff.net>
-To: Florian Weimer <fweimer@redhat.com>
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	Matthias Beyer <mail@beyermatthias.de>, git@vger.kernel.org
-Subject: Re: git-am applies commit message diffs
-Message-ID: <20260206092423.GB2761602@coredump.intra.peff.net>
-References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
- <CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
- <lhutsvuuu18.fsf@oldenburg.str.redhat.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ChT2nYfT"
+Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-2a79998d35aso15315015ad.0
+        for <git@vger.kernel.org>; Fri, 06 Feb 2026 01:33:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770370389; x=1770975189; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k4177legnpo0s8KmfMo/Of9kPzaHTHz3fsChAQiq1OM=;
+        b=ChT2nYfTCVnvWJGa0KnFdpQ9QUmUIeOl9oa3kzl2hcWP1FNzEL6MMVFV46KMNxyKka
+         U1dJte+zw20omKK8J7bWA6bkEtWLuuNxexPoVDvJ5cErZToFSo62R1OOSnEQ/fi/KvrK
+         +vpC5ETf6syrf9MkrYbSDzNEfFNTNyipldicUK5Ul5ZZOv86oUmHHuSo0eRW4erwKE/v
+         TXIORYX69YNzRCH1v9HpaDxTgWf7rR2CRSnOAP93ploRnBuqzBwbUa2UvSTov89oJOpT
+         uFJeh7TCPPu7b1qJ+tsgWYl81wpxXh1SDl5xLZdlcdzhGD5LhlDjCd4eovtR63xQktnC
+         AokA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770370389; x=1770975189;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=k4177legnpo0s8KmfMo/Of9kPzaHTHz3fsChAQiq1OM=;
+        b=WpPTTj/m1ucQKbSn9KObYhu+PpSq+KXUuqINOWvJuQpVi4U0cFjzOTmwxyRE5rsUeb
+         4u+LREBWJdoOjNv+ZVMdwW9lOVEVvW7u8k9/1USRWIYxhw4O3y4TPxKY14eQT0yprf+i
+         KOgdwI1UPRYBWxj5FZlYH8kqJDwpnjNaSil56pDyyrUPxpPFZiCriPdwtNViGt9gOvNd
+         3A4UgJ6D+eMRoJP2fbqopAiRn2NXTmLhfw8VrFlcflZItKGPd3GQ2kX8YNaSBG7t6oUK
+         reemdocirPnHBkvQltQo+Hfqud0iPKhIRqdFbv0dQ31g6N7NWTDNk3gLwUc43+uR8hy3
+         Cu6A==
+X-Gm-Message-State: AOJu0YzKuOd4/IknGfJ+jE69x/PKWdxDAfLPJGdN83qsEXBcijX5BgdA
+	T6PP7qNlncFAP9PVImQrjLqLciSIAxVV5u46UGGuSgNNL5P2O/srohuXCtKFk0ys
+X-Gm-Gg: AZuq6aKRWLaOTX9OW9YdL+Utghb9kfiJ4XQPyISAEZlHPELPxyUswCeXr3L31NG6nkQ
+	T9hRnnBPfCQX3P2UvnudW3VzxL7EnTbTSDBwOdOrNuFjUWFR2MLAeeGmR7pKQkBxfwqTVA4XPuh
+	xvjrhr5Yf/4GrAfacDYi+DvoavUnioziXH5P4tM/lcS8nyJiXiLYibndDoThsfCjjwxLTMTrO5p
+	Sn01K7lSCbAxPXUBnGLDqiwS/DNCdOE+zmKzIVRZHr9PDQG08qLnNPNmF5SIkwe8CPfJuF0Qo59
+	yBRyeK+2YTd42ju2se2JKAgrb97Q5gSPIoNimAp/ElWsFTDFBmz0Q4FrHmBxonbiEa0sTqRcVCs
+	1IhHNSD0CK2EVeUz+gTmnrbGBCTkGR/NOtrOaPBghAd5+Ierzv/azYwFORHkJDrylX1egMJ0l2P
+	sv9IWkVzOK+3NWSJOUOtPouZkxHkLiUYygdcq3/98PWraAle4=
+X-Received: by 2002:a17:902:d58a:b0:29f:2944:9774 with SMTP id d9443c01a7336-2a9521f3218mr21720365ad.33.1770370388798;
+        Fri, 06 Feb 2026 01:33:08 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:2479:7de1:4f9f:e55e])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a951c9189bsm18937755ad.36.2026.02.06.01.33.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Feb 2026 01:33:08 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	karthik.188@gmail.com,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH V2 2/3] wt-status: pass struct repository and wt_status through function parameters
+Date: Fri,  6 Feb 2026 15:02:29 +0530
+Message-ID: <20260206093257.1178858-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <CAOLa=ZR21J6sPDh0cUgzv+td70Mwck1-Ev-43OtZ7mYBX17z5A@mail.gmail.com>
+References: <CAOLa=ZR21J6sPDh0cUgzv+td70Mwck1-Ev-43OtZ7mYBX17z5A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <lhutsvuuu18.fsf@oldenburg.str.redhat.com>
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 06, 2026 at 09:59:31AM +0100, Florian Weimer wrote:
+> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+> 
+> >> > Some functions in wt-status.c relied on the_repository because no
+> >> > repository instance was available in their local scope.
+> >> > There is also a specific case in wt_status_check_rebase() where the
+> >> > worktree can be NULL, so accessing wt->repo may lead to a segfault.
+> >> >
+> >> > Update these functions to accept a struct repository or struct
+> >> > wt_status parameter, and adjust callers accordingly. Replace the
+> >> > remaining uses of the_repository in these functions with the
+> >> > passed-in repository instance.
+> >> >
+> >> > This removes the use of the_repository global variable from
+> >> > wt-status.c completely.
+> >> >
+> >>
+> >> Okay, but this doesn't fix the issue I stated in the previous commit. I
+> >> do wonder if we can re-order the commits and pass the repo struct to
+> >> functions like 'get_branch()'.
+> >
+> > Sorry, I didn’t fully think through what you were pointing out in the
+> > previous version. I initially assumed you were only referring to the
+> > specific call involving wt_status_check_rebase(NULL, state).
+> >
+> > So struct worktree *wt is not guaranteed to be defined and can be
+> > NULL. Because of that, relying on wt->repo is unsafe.
+> > Instead, rather than depending on the worktree for repository access (wt->repo),
+> > we can pass struct repository explicitly through the relevant call
+> > stack, like in functions get_branch() and wt_status_check_bisect().
+> > I hope I have understood it correctly.
+> >
+> > Best,
+> > Shreyansh
+> 
+> I would say its not that black and white. There's a lot of context
+> around it. There are places where `struct worktree *wt` should
+> definitely be defined. So we have to take it on a case by case basis.
+> Which is what makes these refactors a bit tricky.
 
-> Isn't the format-patch output already unambiguous because the sequence
-> of diffs is preceeded by the non-diff statistics section, and only then
-> the commit message follows?  It's just not possible to process this
-> correctly in one pass because only at the end of the input, you know
-> that you have just seen the to-be-applied diffs.
-
-That diffstat is optional, and not parsed by the receiving format-patch
-at all. Keep in mind that in the world for which it was originally
-designed, people were not necessarily using Git to generate their
-emails. They could be patches emailed by random folks using "diff"
-themselves.
-
-> The other tool to look at is git rebase.  There have been problems with
-> the lack of "From " encoding in commit messages in the past, which
-> caused rebases to fail due to commit message contents (but I can totally
-> imagine that this might have resulted in commit injection with more
-> carefully crafted commit messages).
-
-It has been a long time since I looked at it, but IIRC we did have a
-problem with fidelity of commit message in git-rebase, since it was
-based on a format-patch/am pipeline. And we solved it by teaching "git
-am" a magic "--rebasing" flag which tells it to ignore the email
-contents and find the actual commit in the object database. Gross, but
-it works. But of course the same does not work for a true emailed patch,
-since the point is that the receiver does not have the commit object
-yet.
-
--Peff
+But lets say if we do pass struct repository explicitly wherever it is doubtful,
+rather than relying on worktree, does it have any downside ?
