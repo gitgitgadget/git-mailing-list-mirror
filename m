@@ -1,54 +1,54 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45913101DC
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 18:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC41D346E4F
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 19:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770404096; cv=none; b=dBwWXPQg/L4jZI13DwhEUToo1uAslinw9P1ZpbgyG23MIDT4BEF/NRzjycpV71dsgPe4eWIFToSW5xcFrxzL/sp9nFkcqztCVNGsuYVSwwnuj4UfSFTdyGtZuXUk0VWl+wGTLXYgxwYd5cml7zmwzRD2uMutm8K8YtUU3RTNjIs=
+	t=1770404525; cv=none; b=P8LQNbEskXdX8qhJk3uXo2xYDUD9F5a1zOYkeEXia56eRiQGEMy37+slHMedAuIHovxQ0i8PSP2hKvUqvr0MPmCVsRLt0+fdTElLg9iTVkcLfrcigK9n+0eeHrY4g5dfXJh+9wL+d32r0LJXP1E+MlQ12YOzZHtOm4NuZNGQtro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770404096; c=relaxed/simple;
-	bh=mKiZOQuTmUN/skbMBwAouIhTKzUaM0/Kj4gKJrfwYEE=;
+	s=arc-20240116; t=1770404525; c=relaxed/simple;
+	bh=olNwR12lEkCPYrpps5nUEulYIrRMFNZwvviqAuuVEII=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M+9YBAF/H7AhaG14eJRE71KjCxJDP82Mp4u/jpfZ+L+XBS8gD/q3tEJr4OT8bhlK83jtT9ktM4RBuXQ9/26uz+BMq/I35pc3O+odU6k5Wbqq0CpfMlk5mCH71BktAT47hHB3OMlGnjjtOMBAfAYBawrKxGZnonBje7tNFoy9RSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vMy0AtRO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UNa3sp6B; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=DjVl1/MWBsnl7o1qh+HKfSliUYNeDP+tWMC5hlin7uzYi0jDkdLx2NZN3t5xel/VEcfYgo6qOSEkKSEuh0ryngX1s+XprX8WtmnHEwaQ6n93Ukul+/wL1T9C8bupmUlT9LIChBmV25zj0F5bX0DeaTQ6HBQO5qos7DZBH05G2RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W75aHnWy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IhkCj35X; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vMy0AtRO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UNa3sp6B"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 051641400094;
-	Fri,  6 Feb 2026 13:54:55 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W75aHnWy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IhkCj35X"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3EF851400052;
+	Fri,  6 Feb 2026 14:02:04 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 06 Feb 2026 13:54:55 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 06 Feb 2026 14:02:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770404095; x=1770490495; bh=X+kofe+wKt
-	n5cfrtgGqVqwrUv1Q+3g+GO1T3uE72N6E=; b=vMy0AtROud6QDvIk+DHZTA0dc0
-	Z3kEiMFdFC/Dyk4oZDqwrgCzckbXZNJrJ+gmTGPSkT2vT5SN9zOvoKH7quluVHzd
-	FOKAkjgMAsjhTUFcyPNchWmUlCMLWAqiJBe+Ek2MioEVYDVDAQDu8R7FneRPKG4y
-	7tE4AOKHLvglUJpdtK3OiXAGPn0gg1nfzj5plUMPjC6swgz1/o/ofGKdNc/AWIgM
-	Gc3/ilMCxwoZU1maarfkxdcNxQmFG+hErmKC6MLAFWIXy+ZAMKvc7zHqeXKZcv8G
-	g4gPntGpgCJzsVnnyYnGrffks5mKJC+lsBVlAq/42/0ELOC6k+TfZsU7xHfQ==
+	:subject:to:to; s=fm2; t=1770404524; x=1770490924; bh=OYM0wc9X2F
+	o8oUEpD2j5+Kvm8kzHE+UEMn6HQiG/Aco=; b=W75aHnWyAQo1cNIqikDC4z4N5m
+	3tJ/FfpSa58uwlKldAJllSkUQ1jjTTs6yZBNjozwosJm39nhqnXUB0Yz4Si+2o1r
+	C0IlrxYbcSVyCxpSXOSSD3TQYmgYUAS1VjwWAAS9O1O3iTdaWbifik/LiFVem5s4
+	vi9GYh+BIA9AqnaB6umDTStSdY0hi3VULYJSMr+z5ztgsPeO4kzwmpNdD49I8Aif
+	eAQ+Txw7K/5rOl5hZkNsV/6aRiTpDyUm2+RzmpSomgQCWT+QX6xHSgyveFREjCMY
+	yjah3+AQP3avKTWHNeCoCPCzvAhDmWDWB0jS4FWFsixYbebkvvfHQkEBH+Jw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770404095; x=1770490495; bh=X+kofe+wKtn5cfrtgGqVqwrUv1Q+3g+GO1T
-	3uE72N6E=; b=UNa3sp6BWkJl0G0j6MROGGwv0+u6QOy1XWmJq6/Wcen21N1iift
-	80JGoPphSLAZWeCyTnW8qgQbMzB0EjJ4RSob1BSrOj3HFoZflWb+dGkS4Mi2pzDt
-	wKqBJA18rN5HyOGcor/FYhCD/ZkDB6bD4cSYkS8sI5qmbstqAIFHGkGkJUmKobgC
-	53hV0QDBvE93I3otOq1MVvwtEsMRmU2umod5nIN16F5CQtm2cNEQEeRe4Jp9zC3M
-	Hg19UwxlF2P13ho94AeEHjftNnnfJ/JnDmsVKLbyOkIw+d/v7QWHPNB1WPGJPbd4
-	FsuWNDzMSLpaRAGDnV67kHF4zGHMb3oSD8A==
-X-ME-Sender: <xms:_jiGaanfKDx3NH96wKNpHgdH6AWF0FNTCT4s4qjTnk3uYJKvHW82EA>
-    <xme:_jiGaeb38IuOiKxEtUHRl_0b77rV64F0p1hKEtp4ijbez4cVoMxX5cX72Y2DRtRrw
-    9LoqGEq43N0Y3ufIZB6JAEjHkI7Ze2FCm9JQaxu0ljG5gVaZjJgOw>
-X-ME-Received: <xmr:_jiGadFpAIRHfQxi9D0B9eb2sz6KMImZXk85rl5-K4kq1Gqx4jgVeymhpYtfoM-Wt7vsblkyOXNIgCL83w6RwL8bTPhmf66HAQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekleegucetufdoteggodetrf
+	1770404524; x=1770490924; bh=OYM0wc9X2Fo8oUEpD2j5+Kvm8kzHE+UEMn6
+	HQiG/Aco=; b=IhkCj35Xis3anBOpx0nXMpQ2wiQvIiIbPoxjhJNTKkPrfQY6H9H
+	0+SNlUb30kkchlCTaAalxXc4/iuua51qOzokrl51zBMt650Avf75WZlWRDxpqmlP
+	ehwjA3hlF+CQ5REuQtYLWOuAQDSz5YUIaqx9YL75oaHVqpohLcrKVquMbFFgPOL5
+	UNZhE2dBKXP5B/Ws9rEgC8iyvZYcLqAriVUOz/NR4br31l1cF3+ddcoyjqg/6sTx
+	frak2yYZTwXp3ZzDbiMg5j4T6x95BCX7Z+wDa0BJk6Ciz5h1l7vnS8bO8wmcSQvz
+	LAJaAk4TYORXH/g+tD1/D03HNEZedjw0frg==
+X-ME-Sender: <xms:rDqGaTupJ3RyjBxYOconlzeVIODai_g8yeenfyV9jeEfpknP3IT2pA>
+    <xme:rDqGaQJJ-LZvQB-6CJFtR9PWqI-1NQ0sMzWhEHfGYdsH4ScoOhvMo797VTtXmCeDP
+    qXW4v3Pyca7RIYc50q3y8H7GArdMb_MPSyodxLGG-3lK2c3zqQhzos>
+X-ME-Received: <xmr:rDqGaTPjmzOSxYfP-s6PC9WZs-y-VZs7Aou7FO0JPuyDoHCkSScd0xSJV3RkEWUSEHOnsWLU5yN5QAQWjUFa1os-tGx9K6-Mfw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekleeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -64,14 +64,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeekleegucetufdote
     hilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
     rghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilh
     drtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:_jiGaVbVX44inqbN_VtDgcwtMOknAG5bMiTh4dPW2HLmNksIcRLzkQ>
-    <xmx:_jiGaZzx3lMU7sF5efTXHP_Edp-Fd6fzEgZLpsaJChDEIJrgYrUFWw>
-    <xmx:_jiGafR-0d9yoG7JvTPkKVWwUEgE9-xanyt2UelFDYjdVOoLUefQFg>
-    <xmx:_jiGaeKu8rgE3zBr6z6kYTGkwvOSRCDpYTuTCY8dxJGiKEx7hVwXng>
-    <xmx:_ziGaYMPGO8yNRCwixJX54qaODUfgVrJ5hdmP2dp4FEjw45onaLVvjyR>
+X-ME-Proxy: <xmx:rDqGabVmoRB1rzI8Ags5Xb9I1P42yhYzJS_6z6LRY8qQIIm_0VuHHg>
+    <xmx:rDqGaZnQ3ZTJ5bLnWcV0EN2R2GFngM_rGekl5kmPbJD4GUF6ug-X5Q>
+    <xmx:rDqGaSOwpzpA6nfYaA8CIZPsWz7Aa3RRy64F2yAcXKK45NXL9WKVSQ>
+    <xmx:rDqGaZKBWx4vILONEvjV-8Seqox-2-PnuOhUZ4vZqh_BPj_y3UeF9g>
+    <xmx:rDqGad8n9GGw36JbiqlhOEUuj4Gzck18-Z4_5aoUvKzbINsfv5OFxyic>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 13:54:54 -0500 (EST)
+ 6 Feb 2026 14:02:03 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
@@ -80,15 +80,15 @@ Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
   Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
  <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
   Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 2/3] add-patch: Allow interfile navigation when
- selecting hunks
-In-Reply-To: <24692afa3f0a67d3f3eba776cc745287c5d71e94.1770390576.git.abrahamadekunle50@gmail.com>
-	(Abraham Samuel Adekunle's message of "Fri, 6 Feb 2026 16:56:14
+Subject: Re: [PATCH v3 3/3] add-patch: Allow proper 'git apply' when using
+ the --rework-with-file flag
+In-Reply-To: <10c0a4cb36534f5ed1ebed783b37d03a56007f97.1770390576.git.abrahamadekunle50@gmail.com>
+	(Abraham Samuel Adekunle's message of "Fri, 6 Feb 2026 16:57:35
 	+0100")
 References: <cover.1770390576.git.abrahamadekunle50@gmail.com>
-	<24692afa3f0a67d3f3eba776cc745287c5d71e94.1770390576.git.abrahamadekunle50@gmail.com>
-Date: Fri, 06 Feb 2026 10:54:52 -0800
-Message-ID: <xmqqwm0pem83.fsf@gitster.g>
+	<10c0a4cb36534f5ed1ebed783b37d03a56007f97.1770390576.git.abrahamadekunle50@gmail.com>
+Date: Fri, 06 Feb 2026 11:02:02 -0800
+Message-ID: <xmqqqzqxelw5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -100,74 +100,57 @@ Content-Type: text/plain
 
 Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
 
-> +	for (i = 0; i < s.file_diff_nr;) {
-> +		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr) {
->  			binary_count++;
-> +			i++;
-> +			continue;
-> +		}
+> Subject: Re: [PATCH v3 3/3] add-patch: Allow proper 'git apply' when using the --rework-with-file flag
 
-This "continue" is a commonly seen good trick to avoid having the
-nesting go too deep.  As we know the case where the condition holds
-have already been dealt with and moved to the next iteration at this
-point, we can ...
+Style.  Downcase "Allow".  Applies to [2/3].
 
+Avoid "proper" as it is not obvious to everybody what you find
+proper and why you find it proper.  Applies to any value-judgement
+adjective.
+
+    Subject: [PATCH v3 3/3] add-patch: allow all-or-none application of a patch
+
+or something?
+
+> +static void apply_patch(struct add_p_state *s, struct file_diff *file_diff)
+> +{
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	size_t j;
+> +
+> +		/* Any hunk to be used? */
+
+Funny indentaion?
+
+> +	for (j = 0; j < file_diff->hunk_nr; j++)
+> +		if (file_diff->hunk[j].use == USE_HUNK)
+> +			break;
+> +
+> +	if (j < file_diff->hunk_nr ||
+> +		(!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
+> +		/* At least one hunk selected: apply */
+> +		strbuf_reset(&s->buf);
+> +		reassemble_patch(s, file_diff, 0, &s->buf);
+> +
+> +		discard_index(s->s.r->index);
+> +		if (s->mode->apply_for_checkout)
+> +			apply_for_checkout(s, &s->buf,
+> +					s->mode->is_reverse);
 > +		else {
+> +			setup_child_process(s, &cp, "apply", NULL);
+> +			strvec_pushv(&cp.args, s->mode->apply_args);
+> +			if (pipe_command(&cp, s->buf.buf, s->buf.len,
+> +					NULL, 0, NULL, 0))
+> +				error(_("'git apply' failed"));
+> +		}
+> +		if (repo_read_index(s->s.r) >= 0)
+> +			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
+> +							1, NULL, NULL, NULL);
+> +	}
+> +
+> +}
 
-... omit this extra "else" block and write what is inside for
-everybody (not just "those who did not pass the if condition above",
-which is what "else" tells us).
+I suspect that the extraction of this helper function out of its
+original place in patch_update_file() should be done in its own
+patch.
 
-> +			ret = patch_update_file(&s, s.file_diff + i);
-> +			if (ret == NEXT_FILE) {
-> +				if (s.s.no_auto_advance && i == s.file_diff_nr - 1)
-> +					i = 0;
-> +				else
-> +					i++;
-> +				continue;
-> +			}
-> +			if (ret == QUIT)
-> +				break;
-> +			if (s.s.no_auto_advance && ret == PREVIOUS_FILE) {
-> +				if (i == 0)
-> +					i = s.file_diff_nr - 1;
-> +				else
-> +					i--;
-> +				continue;
-> +			}
-
-The asymmetry between next/quit and prev feels curious.
-
-The patch_update_file() helper returns QUIT when the user tells us
-to (regardless of auto-advance setting), PREVIOUS when '<' is given
-but that is only possible with auto-advance disabled, and NEXT in
-all other cases.  The check inside the NEXT case for auto-advance is
-to decide if we want to overflow 'i' beyond file_diff_nr to complete
-the session, or we want to wrap-around back to the first file.
-
-But ret can be PREV only under auto-advance disabled, so the check
-there feels totally redundant.
-
-And we want to treat the list of files as a ring buffer only when
-auto-advance is set to false.  This may work in practice but the
-logic feels convoluted.  
-
-The patch_update_file() knows how many files there are to decide if
-we want to offer '<' and '>'.  It also knows the file index within
-the file_diff_nr for the file it is handling.  I wonder if it should
-do a bit more with its return value to help the caller?  E.g.,
-perhaps it can return the next 'i' if it wants the caller to advance
-(and decide to do the ring-buffer if needed), or if it wants to tell
-the caller that everything is done by returning some sentinel value
-(e.g., -1)?  Then this part of the caller can just be
-
-	if ((i = patch_update_file(&s, i)) < 0)
-		break; /* all done */
-
-perhaps?
-
-By the way, I just noticed that the new local variable you added to
-patch_update_file() is called "ret" but that is hiding a different
-variable "int ret" that is used to handle the '/' command.  It
-should be renamed to avoid the name collision.
-
+Do we need new tests to cover this new feature?
