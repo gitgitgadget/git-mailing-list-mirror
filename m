@@ -1,68 +1,69 @@
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4B930F555
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 04:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC5730F555
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 04:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770351150; cv=none; b=Ba29p+FrK7C58XxQelY6yVM7SPfK7+1DWnMEAogvbTQvVkKtr1ullBbotk7euzWME4SoNw0jAJ1fdpOYqd+dNGkhaT6cQ/Gj6JqUWDAdJFWNQugTNh0U/KdyPCjELsSSQ4kczUAXYbbUzAvyyDSl4qlcoRx+Sxxl6muduuitVXA=
+	t=1770351152; cv=none; b=P7xXaVp0H0sPAwCrTRRPvdGompJD8a/jmGMfP173UyzwP/ZWDe2CPDa3zQHy4cn4M7ex32cA/H4BPPQPokJYl9wVJCMzX3HVd9vbzysEMuqR8lXc/x1DKvJWq+aVwS6JqgIK0/Hdw0dGSzn42ofsonbbM3FbadIvmmfReG8pn1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770351150; c=relaxed/simple;
-	bh=bx4zbV+/zbuLKojN3cIhCKY6w4K9a80otYvqZ/xOptQ=;
+	s=arc-20240116; t=1770351152; c=relaxed/simple;
+	bh=1vBoFkcDpFbrwKHFrXD749UtMFaguDaws4BvNzEsxfQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=RJEEFAdqLXz5SVc+aBFXrPHtt6Li6E/4zWTZTkjrneNi6J7Lq95C2OdqoBaf5WdlapKLAI/DcvOxpz9YrF16Hse3Bqz2cfdDHci8Ae9j2TZ826mHfDtevumXqQmHJVpMlgiZpAb6+qxzl2aCvzNUz5gY0BumgrmbpCGQN4saOBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KkWrWu43; arc=none smtp.client-ip=74.125.82.175
+	 Content-Type:To:Cc; b=rbZxgGjswU9TgdSiq2ccuBxVAPruq6T6G/wky8cOG51QLUygqUCxwo+eQPl1QEx+NTULx3DT5N/3K3jVY/8H1A0AZ2D7WEZwQETKNajDz2PR5cMavhXaHrkqnJumP0p//beXlmeY618lXtKz6Ku1I9m1rWEztDP5eFGynI524Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZFPLFnrl; arc=none smtp.client-ip=74.125.82.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KkWrWu43"
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2b8397e3e09so2182703eec.0
-        for <git@vger.kernel.org>; Thu, 05 Feb 2026 20:12:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFPLFnrl"
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2b71320f501so2761283eec.1
+        for <git@vger.kernel.org>; Thu, 05 Feb 2026 20:12:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770351149; x=1770955949; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770351151; x=1770955951; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vuAAyabzPVCJGMyLCYA+3MC5tuGIytu7EcZgkpqc1go=;
-        b=KkWrWu43LTh/5lsGMl+oJcVfY5092V3hS0CR81A5SSliALrnW05PgP9gb6iQbgg0mH
-         bM/9uBniYr+EjiZFCH5dVEYqeyQ4hWHkb9o7lWEabUqHLxCHL2JtnyYY4KXFsm20qc0C
-         nWKeISQGAfUjkZoP1HFIKOS+ge2YzOp6VlMGKU0uX0eF5m950Dpxb4ePVBSXYUfcPrbQ
-         x9LfSzi/YXmybGvnF3QzX60eywSDgwDOJXxEr9yh+ORezy8bJzp/VF0ZVkzB1GeXDmOV
-         tV43yG6P/aPdFOXfmgJBcbTa6t5uRE52chsJyIowICwzwqTGY3BP2r5nH0Lq8l5qYgUL
-         I7RQ==
+        bh=rvAgFmG6Iuh3dOKqAg8KmSHil4QEb3SorgSoTOlO6As=;
+        b=ZFPLFnrlyBL/jHxxtRlA6jpCvNoSgCNZyV5mLl7eNl5mqyj4AW3KtflItOOB8M+KEp
+         AHd/gD1wxgIxNu3g0RsBBrXD5QIv1RRpD8QcGbYPY6u4FzQ8h7Ce/YEYPN4XPuUHW/BL
+         oAUVY28OIWpJx9Mg8M78fHbvR4ucRyro55KqRw+V1aJtXK0pDSW2VNtBYqAdchJ5zzjl
+         bztKLDCIG9TCOhGa3M2aemGm3cSJzz8c7NoLNEhNLwer3F6j/WnRRYGuJR+9U3s0fMAj
+         XEuaarE8U9D3u+i+/R1Pf4/k0zALU33CNeL3h0PsbMohaqFtKDawiEia2Lah4mR/RY+p
+         d4aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770351149; x=1770955949;
+        d=1e100.net; s=20230601; t=1770351151; x=1770955951;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=vuAAyabzPVCJGMyLCYA+3MC5tuGIytu7EcZgkpqc1go=;
-        b=I1PONQ/pW68op29dxZ14WD3TYVZfgS6Z1bkcWFIr44DBSPqhhJIDRUskJmXa0YzE/j
-         Up4BwrkZPRWOBjZq9R4unBWYStU5J6PWIrhqD4d6UfNTRVJkCbeYy3Kuy1ASxmr75KRH
-         AGGkvOpSQggVBlw2G44G0SL7DbJnW+uao840zHS1VIv4DukuMFaAtmt5Vea20+Aajv7h
-         qrzls8G2yEZQkzJt1ptBbhDbQFiF9H8NgNcnrrB3VUI/cGgv+FUAL8QjlFmiUNEmk2qF
-         AlVtdktK6c/UWordeJmHMw3JLTf4JpEQzBeZQxghLE2Dc76hUYjvddkIggaHQLIZayRe
-         uSQQ==
-X-Gm-Message-State: AOJu0Yx3jt4cMAe+Ecywz1tk+Tx99ftA1c+pkbNtbpPDZWPUT3+7LUy9
-	1ZqJDuZVpxtfVuoi1NacPuOgwKiea/6ZLM4ZqDYyQbxZ7/nw+D487Gye7iTwmA==
-X-Gm-Gg: AZuq6aJmh/0vherp/zENESDkydqS/HvXyZOtndxhZTtopiWI812K3aoqEsq8QIuWEvK
-	kD0H3VTUqS8xJaMMQii1J9BKM6rWhUYuDj37BzOyZTPcOqxQSIDZ+BUpFecbEqWESxz8ylrnZIS
-	vCuwGvLT/NS534ucjYQozjrLT8i3peQe9YO13Fr1gC86Jl4PvJeWdmjprHiuiNDtyKA8RqNPjrT
-	CPQOYnY8reG82wqcJubPUPfuIoXmsRQ1Acq45flpTNY18prYu0uVIQiwVJMlefyIFSePSmNqy/J
-	S6eu2YJpDAm1qaQb18uWvQr/cm5ozIFVIULU/Eivi1/8w5QChCcrNiRERMmXpJPrDCjr/u9wubC
-	Qu2nfSC1VxJj4/eZqaQCiLEqU/uVYW/VpI78PSNOvGwJ249cskNjRkiPlt8KCED7Aj2n5YXMqds
-	ZZ8BilsFjwXSU=
-X-Received: by 2002:a05:7301:1293:b0:2b4:7c92:3f7c with SMTP id 5a478bee46e88-2b85645ef66mr758479eec.6.1770351148596;
-        Thu, 05 Feb 2026 20:12:28 -0800 (PST)
+        bh=rvAgFmG6Iuh3dOKqAg8KmSHil4QEb3SorgSoTOlO6As=;
+        b=LR5Mlm0INGEeUEFPC6w/zisONz1sm8xLdweA9C1MlRTFwXjfNzJnkPP1U3W45JXrEi
+         NciLNL9qTqdKkeRfVwIAU0KkfWgxHwM9HY4ZQYUt5HnMtuaoNc17lcdwnp2UghTwvg6/
+         MrRvOXVjKJcZDzKOpXPbDPUac+v95LdG+LQuZlyTB5NocXcazzMLaO2NCk1+A1i/yYOX
+         fP+tNmMED/Tzay+qvkUWGQjpCyfq/56618lpjhQI7mU2YNyKdu5VjIppjivS3QcYoH/y
+         sz/KOi0sNTRtYwts+5kp6eg8qLPsEoRghhHrW0Jf80YN+pUGyGnidicK3MyY0/rVbIOI
+         3yHw==
+X-Gm-Message-State: AOJu0YwVJb6TFDkLA072iZfd9zonhP7cCD7bROKQ0AiFB3MqeCx/ytid
+	zSSeJIR8vOlyBWhJMACA0StpXGMuOaUW0R7m35E/CUIFKpSIjq9bSDalTBqD9A==
+X-Gm-Gg: AZuq6aKir9BpJvPleduZigbdAcaZsqXIOqRBorYu6IuFLufM1IhJmqQoTM7eKAMxX4B
+	9NkSirLDffiodWxiWDEwZLI6IkuSP8Wqm9wuGFFt37ALWM0TaJ3BaKVcLOEAnB/it6nk5Jy5UkG
+	eYKwRh3zmPUf1p3f5HCBzf96vlRhfjJQ1aJ3L3yKzcluthdyGid38ODe0ZdvWCW37Y0j5RQFdWR
+	XNiK93ZavzKf8qmim1G52+i3TbJpPDYZ8ofgyVktLwa+XAF8zHweRTAN7nyqzN+dztKTMfEVjI9
+	O49TV66gEY1lRzTkUNBDksI9RKd5bdPLDPFfJzI8bF0/i1EwgKHw9mIqQSNPmvd5JtfiUk7moYR
+	i4jXJJ+060MI84yfaYA60ktaL7BHSXBnXROR6zPT3I932bT3+gny9yXhBU4B22M4xLYN6Eb7KHA
+	CO09MYL+S3/N8=
+X-Received: by 2002:a05:693c:37c7:b0:2b7:f964:6852 with SMTP id 5a478bee46e88-2b85683313fmr587876eec.33.1770351150287;
+        Thu, 05 Feb 2026 20:12:30 -0800 (PST)
 Received: from [127.0.0.1] ([52.225.25.49])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127041d9a67sm1111898c88.4.2026.02.05.20.12.27
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b855b1a6d3sm935868eec.15.2026.02.05.20.12.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Feb 2026 20:12:27 -0800 (PST)
-Message-Id: <pull.2036.v4.git.1770351146.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2036.v3.git.1770138215.gitgitgadget@gmail.com>
+        Thu, 05 Feb 2026 20:12:29 -0800 (PST)
+Message-Id: <7798802b59cd75f521ae2743e05d4043477352db.1770351146.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2036.v4.git.1770351146.gitgitgadget@gmail.com>
 References: <pull.2036.v3.git.1770138215.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 06 Feb 2026 04:12:22 +0000
-Subject: [PATCH v4 0/4] doc: some more synopsis conversions and fixes
+	<pull.2036.v4.git.1770351146.gitgitgadget@gmail.com>
+From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 06 Feb 2026 04:12:23 +0000
+Subject: [PATCH v4 1/4] doc: convert git-submodule to synopsis style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,142 +75,634 @@ Content-Transfer-Encoding: 8bit
 Fcc: Sent
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-This time, git-show and git-submodule are converted. Some mistakes on
-previous work were also spotted and fixed.
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Changes since V1:
+ * convert commands to synopsis style
+ * use _<placeholder>_ for arguments
+ * convert inline lists into proper definition lists
+ * minor formatting fixes
 
- * fix mistakes spotted by Kristoffer Haugsbakk Changes since V2:
- * more fixes Changes since V3:
- * again more fixes, origin and HEAD
+Reviewed-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ Documentation/git-submodule.adoc | 395 ++++++++++++++++---------------
+ 1 file changed, 199 insertions(+), 196 deletions(-)
 
-Jean-Noël Avila (4):
-  doc: convert git-submodule to synopsis style
-  doc: finalize git-clone documentation conversion to synopsis style
-  doc: fix some style issues in git-clone and for-each-ref-options
-  doc: convert git-show to synopsis style
-
- Documentation/asciidoc.conf.in          |   6 +
- Documentation/for-each-ref-options.adoc |   4 +-
- Documentation/git-clone.adoc            |  54 ++--
- Documentation/git-show.adoc             |  16 +-
- Documentation/git-submodule.adoc        | 395 ++++++++++++------------
- Documentation/pretty-formats.adoc       | 169 +++++-----
- Documentation/ref-storage-format.adoc   |   4 +-
- 7 files changed, 341 insertions(+), 307 deletions(-)
-
-
-base-commit: d8af7cadaa79d5837d73ec949e10b57dedb43e9b
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2036%2Fjnavila%2Fgit_submodule-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2036/jnavila/git_submodule-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2036
-
-Range-diff vs v3:
-
- 1:  8d22e6952a ! 1:  7798802b59 doc: convert git-submodule to synopsis style
-     @@ Commit message
-           * convert inline lists into proper definition lists
-           * minor formatting fixes
-      
-     -    Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-          Reviewed-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-     +    Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-      
-       ## Documentation/git-submodule.adoc ##
-      @@ Documentation/git-submodule.adoc: git-submodule - Initialize, update or inspect submodules
-     @@ Documentation/git-submodule.adoc: COMMANDS
-       have to use `../foo.git` instead of `./foo.git` - as one might expect
-       when following the rules for relative URLs - because the evaluation
-       of relative URLs in Git is identical to that of relative directories).
-     -@@ Documentation/git-submodule.adoc: If the superproject doesn't have a default remote configured
-     + +
-     + The default remote is the remote of the remote-tracking branch
-     + of the current branch. If no such remote-tracking branch exists or
-     +-the HEAD is detached, "origin" is assumed to be the default remote.
-     ++the `HEAD` is detached, `origin` is assumed to be the default remote.
-     + If the superproject doesn't have a default remote configured
-       the superproject is its own authoritative upstream and the current
-       working directory is used instead.
-       +
-     @@ Documentation/git-submodule.adoc: URL in `.gitmodules`.
-       	SHA-1. Each SHA-1 will possibly be prefixed with `-` if the submodule is
-       	not initialized, `+` if the currently checked out submodule commit
-       	does not match the SHA-1 found in the index of the containing
-     -@@ Documentation/git-submodule.adoc: submodules with respect to the commit recorded in the index or the HEAD,
-     +@@ Documentation/git-submodule.adoc: If `--recursive` is specified, this command will recurse into nested
-     + submodules, and show their status as well.
-     + +
-     + If you are only interested in changes of the currently initialized
-     +-submodules with respect to the commit recorded in the index or the HEAD,
-     ++submodules with respect to the commit recorded in the index or the `HEAD`,
-       linkgit:git-status[1] and linkgit:git-diff[1] will provide that information
-       too (and can also report changes to a submodule's work tree).
-       
-     @@ Documentation/git-submodule.adoc: in submodules and updating the working tree of
-      -	checkout;; the commit recorded in the superproject will be
-      -	    checked out in the submodule on a detached HEAD.
-      +`checkout`;; the commit recorded in the superproject will be
-     -+checked out in the submodule on a detached HEAD.
-     ++checked out in the submodule on a detached `HEAD`.
-       +
-       If `--force` is specified, the submodule will be checked out (using
-       `git checkout --force`), even if the commit specified
-     @@ Documentation/git-submodule.adoc: to distribute the default upstream branch with
-      -	superproject. If this option is given, the submodule's HEAD will not
-      +`--rebase`::
-      +	Rebase the current branch onto the commit recorded in the superproject.
-     -+	This option is only valid for the update command. The submodule's HEAD will not
-     ++	This option is only valid for the `update` command. The submodule's `HEAD` will not
-       	be detached. If a merge failure prevents this process, you will have
-       	to resolve these failures with linkgit:git-rebase[1].
-      -	If the key `submodule.$name.update` is set to `rebase`, this option is
-     @@ Documentation/git-submodule.adoc: to distribute the default upstream branch with
-      ---name::
-      -	This option is only valid for the add command. It sets the submodule's
-      -	name to the given string instead of defaulting to its path. The name
-     +-	must be valid as a directory name and may not end with a '/'.
-      +`--name=<name>`::
-      +	Set the submodule's name to the given string instead of defaulting to its path. _<name>_
-     - 	must be valid as a directory name and may not end with a '/'.
-     ++	must be valid as a directory name and may not end with a `/`.
-       
-      ---reference <repository>::
-      -	This option is only valid for add and update commands.  These
- 2:  5fd9f6d41a ! 2:  41aefe8147 doc: finalize git-clone documentation conversion to synopsis style
-     @@ Commit message
-      
-          Use backticks where appropriate for command-line options
-      
-     -    Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-          Reviewed-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-     +    Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-      
-       ## Documentation/git-clone.adoc ##
-      @@ Documentation/git-clone.adoc: objects from the source repository into a pack in the cloned repository.
- 3:  d097065303 ! 3:  fe928fe0ed doc: fix some style issues in git-clone and for-each-ref-options
-     @@ Commit message
-           * Use asciidoc NOTE macro
-           * fix markups
-      
-     -    Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-          Reviewed-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-     +    Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-      
-       ## Documentation/for-each-ref-options.adoc ##
-      @@ Documentation/for-each-ref-options.adoc: TAB %(refname)`.
- 4:  d179137d81 ! 4:  6a2b94e720 doc: convert git-show to synopsis style
-     @@ Commit message
-           * use _<placeholder>_ for arguments
-           * minor formatting fixes
-      
-     -    Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-          Reviewed-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-     +    Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-      
-       ## Documentation/asciidoc.conf.in ##
-      @@ Documentation/asciidoc.conf.in: endif::backend-xhtml11[]
-
+diff --git a/Documentation/git-submodule.adoc b/Documentation/git-submodule.adoc
+index 95beaee561..722d827908 100644
+--- a/Documentation/git-submodule.adoc
++++ b/Documentation/git-submodule.adoc
+@@ -8,19 +8,19 @@ git-submodule - Initialize, update or inspect submodules
+ 
+ SYNOPSIS
+ --------
+-[verse]
+-'git submodule' [--quiet] [--cached]
+-'git submodule' [--quiet] add [<options>] [--] <repository> [<path>]
+-'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+-'git submodule' [--quiet] init [--] [<path>...]
+-'git submodule' [--quiet] deinit [-f|--force] (--all|[--] <path>...)
+-'git submodule' [--quiet] update [<options>] [--] [<path>...]
+-'git submodule' [--quiet] set-branch [<options>] [--] <path>
+-'git submodule' [--quiet] set-url [--] <path> <newurl>
+-'git submodule' [--quiet] summary [<options>] [--] [<path>...]
+-'git submodule' [--quiet] foreach [--recursive] <command>
+-'git submodule' [--quiet] sync [--recursive] [--] [<path>...]
+-'git submodule' [--quiet] absorbgitdirs [--] [<path>...]
++[synopsis]
++git submodule [--quiet] [--cached]
++git submodule [--quiet] add [<options>] [--] <repository> [<path>]
++git submodule [--quiet] status [--cached] [--recursive] [--] [<path>...]
++git submodule [--quiet] init [--] [<path>...]
++git submodule [--quiet] deinit [-f|--force] (--all|[--] <path>...)
++git submodule [--quiet] update [<options>] [--] [<path>...]
++git submodule [--quiet] set-branch [<options>] [--] <path>
++git submodule [--quiet] set-url [--] <path> <newurl>
++git submodule [--quiet] summary [<options>] [--] [<path>...]
++git submodule [--quiet] foreach [--recursive] <command>
++git submodule [--quiet] sync [--recursive] [--] [<path>...]
++git submodule [--quiet] absorbgitdirs [--] [<path>...]
+ 
+ 
+ DESCRIPTION
+@@ -34,34 +34,34 @@ COMMANDS
+ With no arguments, shows the status of existing submodules.  Several
+ subcommands are available to perform operations on the submodules.
+ 
+-add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--ref-format <format>] [--depth <depth>] [--] <repository> [<path>]::
++`add [-b <branch>] [-f | --force] [--name <name>] [--reference <repository>] [--ref-format <format>] [--depth <depth>] [--] <repository> [<path>]`::
+ 	Add the given repository as a submodule at the given path
+ 	to the changeset to be committed next to the current
+ 	project: the current project is termed the "superproject".
+ +
+-<repository> is the URL of the new submodule's origin repository.
+-This may be either an absolute URL, or (if it begins with ./
+-or ../), the location relative to the superproject's default remote
+-repository (Please note that to specify a repository 'foo.git'
+-which is located right next to a superproject 'bar.git', you'll
++_<repository>_ is the URL of the new submodule's `origin` repository.
++This may be either an absolute URL, or (if it begins with `./`
++or `../`), the location relative to the superproject's default remote
++repository (Please note that to specify a repository `foo.git`
++which is located right next to a superproject `bar.git`, you'll
+ have to use `../foo.git` instead of `./foo.git` - as one might expect
+ when following the rules for relative URLs - because the evaluation
+ of relative URLs in Git is identical to that of relative directories).
+ +
+ The default remote is the remote of the remote-tracking branch
+ of the current branch. If no such remote-tracking branch exists or
+-the HEAD is detached, "origin" is assumed to be the default remote.
++the `HEAD` is detached, `origin` is assumed to be the default remote.
+ If the superproject doesn't have a default remote configured
+ the superproject is its own authoritative upstream and the current
+ working directory is used instead.
+ +
+-The optional argument <path> is the relative location for the cloned
+-submodule to exist in the superproject. If <path> is not given, the
+-canonical part of the source repository is used ("repo" for
+-"/path/to/repo.git" and "foo" for "host.xz:foo/.git"). If <path>
++The optional argument _<path>_ is the relative location for the cloned
++submodule to exist in the superproject. If _<path>_ is not given, the
++canonical part of the source repository is used (`repo` for
++`/path/to/repo.git` and `foo` for `host.xz:foo/.git`). If _<path>_
+ exists and is already a valid Git repository, then it is staged
+-for commit without cloning. The <path> is also used as the submodule's
+-logical name in its configuration entries unless `--name` is used
++for commit without cloning. The _<path>_ is also used as the submodule's
++logical name in its configuration entries unless `--name <name>` is used
+ to specify a logical name.
+ +
+ The given URL is recorded into `.gitmodules` for use by subsequent users
+@@ -75,10 +75,10 @@ URL in `.gitmodules`.
+ If `--ref-format <format>`  is specified, the ref storage format of newly
+ cloned submodules will be set accordingly.
+ 
+-status [--cached] [--recursive] [--] [<path>...]::
++`status [--cached] [--recursive] [--] [<path>...]`::
+ 	Show the status of the submodules. This will print the SHA-1 of the
+ 	currently checked out commit for each submodule, along with the
+-	submodule path and the output of 'git describe' for the
++	submodule path and the output of linkgit:git-describe[1] for the
+ 	SHA-1. Each SHA-1 will possibly be prefixed with `-` if the submodule is
+ 	not initialized, `+` if the currently checked out submodule commit
+ 	does not match the SHA-1 found in the index of the containing
+@@ -91,11 +91,11 @@ If `--recursive` is specified, this command will recurse into nested
+ submodules, and show their status as well.
+ +
+ If you are only interested in changes of the currently initialized
+-submodules with respect to the commit recorded in the index or the HEAD,
++submodules with respect to the commit recorded in the index or the `HEAD`,
+ linkgit:git-status[1] and linkgit:git-diff[1] will provide that information
+ too (and can also report changes to a submodule's work tree).
+ 
+-init [--] [<path>...]::
++`init [--] [<path>...]`::
+ 	Initialize the submodules recorded in the index (which were
+ 	added and committed elsewhere) by setting `submodule.$name.url`
+ 	in `.git/config`, using the same setting from `.gitmodules` as
+@@ -103,7 +103,7 @@ init [--] [<path>...]::
+ 	the default remote. If there is no default remote, the current
+ 	repository will be assumed to be upstream.
+ +
+-Optional <path> arguments limit which submodules will be initialized.
++Optional _<path>_ arguments limit which submodules will be initialized.
+ If no path is specified and submodule.active has been configured, submodules
+ configured to be active will be initialized, otherwise all submodules are
+ initialized.
+@@ -116,12 +116,12 @@ that is set to a custom command is *not* copied for security reasons.
+ You can then customize the submodule clone URLs in `.git/config`
+ for your local setup and proceed to `git submodule update`;
+ you can also just use `git submodule update --init` without
+-the explicit 'init' step if you do not intend to customize
++the explicit `init` step if you do not intend to customize
+ any submodule locations.
+ +
+ See the add subcommand for the definition of default remote.
+ 
+-deinit [-f|--force] (--all|[--] <path>...)::
++`deinit [-f | --force] (--all|[--] <path>...)`::
+ 	Unregister the given submodules, i.e. remove the whole
+ 	`submodule.$name` section from .git/config together with their work
+ 	tree. Further calls to `git submodule update`, `git submodule foreach`
+@@ -139,7 +139,7 @@ If you really want to remove a submodule from the repository and commit
+ that use linkgit:git-rm[1] instead. See linkgit:gitsubmodules[7] for removal
+ options.
+ 
+-update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--ref-format <format>] [--depth <depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter <filter-spec>] [--] [<path>...]::
++`update [--init] [--remote] [-N | --no-fetch] [--[no-]recommend-shallow] [-f | --force] [--checkout | --rebase | --merge] [--reference=<repository>] [--ref-format=<format>] [--depth=<depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter=<filter-spec>] [--] [<path>...]`::
+ +
+ --
+ Update the registered submodules to match what the superproject
+@@ -148,38 +148,38 @@ in submodules and updating the working tree of
+ the submodules. The "updating" can be done in several ways depending
+ on command line options and the value of `submodule.<name>.update`
+ configuration variable. The command line option takes precedence over
+-the configuration variable. If neither is given, a 'checkout' is performed.
++the configuration variable. If neither is given, a `checkout` is performed.
+ (note: what is in `.gitmodules` file is irrelevant at this point;
+ see `git submodule init` above for how `.gitmodules` is used).
+-The 'update' procedures supported both from the command line as well as
++The `update` procedures supported both from the command line as well as
+ through the `submodule.<name>.update` configuration are:
+ 
+-	checkout;; the commit recorded in the superproject will be
+-	    checked out in the submodule on a detached HEAD.
++`checkout`;; the commit recorded in the superproject will be
++checked out in the submodule on a detached `HEAD`.
+ +
+ If `--force` is specified, the submodule will be checked out (using
+ `git checkout --force`), even if the commit specified
+ in the index of the containing repository already matches the commit
+ checked out in the submodule.
+ 
+-	rebase;; the current branch of the submodule will be rebased
+-	    onto the commit recorded in the superproject.
++`rebase`;; the current branch of the submodule will be rebased
++onto the commit recorded in the superproject.
+ 
+-	merge;; the commit recorded in the superproject will be merged
+-	    into the current branch in the submodule.
++`merge`;; the commit recorded in the superproject will be merged
++into the current branch in the submodule.
+ 
+ The following update procedures have additional limitations:
+ 
+-	custom command;; mechanism for running arbitrary commands with the
+-	    commit ID as an argument. Specifically, if the
+-	    `submodule.<name>.update` configuration variable is set to
+-	    `!custom command`, the object name of the commit recorded in the
+-	    superproject for the submodule is appended to the `custom command`
+-	    string and executed. Note that this mechanism is not supported in
+-	    the `.gitmodules` file or on the command line.
++`!<custom-command>`;; mechanism for running arbitrary commands with the
++commit ID as an argument. Specifically, if the
++`submodule.<name>.update` configuration variable is set to
++`!<custom-command>`, the object name of the commit recorded in the
++superproject for the submodule is appended to the _<custom-command>_
++string and executed. Note that this mechanism is not supported in
++the `.gitmodules` file or on the command line.
+ 
+-	none;; the submodule is not updated. This update procedure is not
+-	    allowed on the command line.
++`none`;; the submodule is not updated. This update procedure is not
++allowed on the command line.
+ 
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in `.gitmodules`, you can automatically initialize the
+@@ -195,20 +195,20 @@ If `--filter <filter-spec>` is specified, the given partial clone filter will be
+ applied to the submodule. See linkgit:git-rev-list[1] for details on filter
+ specifications.
+ --
+-set-branch (-b|--branch) <branch> [--] <path>::
+-set-branch (-d|--default) [--] <path>::
+-	Sets the default remote tracking branch for the submodule. The
++`set-branch (-b|--branch) <branch> [--] <path>`::
++`set-branch (-d|--default) [--] <path>`::
++	Set the default remote tracking branch for the submodule. The
+ 	`--branch` option allows the remote branch to be specified. The
+-	`--default` option removes the submodule.<name>.branch configuration
+-	key, which causes the tracking branch to default to the remote 'HEAD'.
++	`--default` option removes the `submodule.<name>.branch` configuration
++	key, which causes the tracking branch to default to the remote `HEAD`.
+ 
+-set-url [--] <path> <newurl>::
+-	Sets the URL of the specified submodule to <newurl>. Then, it will
++`set-url [--] <path> <newurl>`::
++	Set the URL of the specified submodule to _<newurl>_. Then, it will
+ 	automatically synchronize the submodule's new remote URL
+ 	configuration.
+ 
+-summary [--cached|--files] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]::
+-	Show commit summary between the given commit (defaults to HEAD) and
++`summary [--cached | --files] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]`::
++	Show commit summary between the given commit (defaults to `HEAD`) and
+ 	working tree/index. For a submodule in question, a series of commits
+ 	in the submodule between the given super project commit and the
+ 	index or working tree (switched by `--cached`) are shown. If the option
+@@ -220,27 +220,31 @@ summary [--cached|--files] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]:
+ Using the `--submodule=log` option with linkgit:git-diff[1] will provide that
+ information too.
+ 
+-foreach [--recursive] <command>::
+-	Evaluates an arbitrary shell command in each checked out submodule.
+-	The command has access to the variables $name, $sm_path, $displaypath,
+-	$sha1 and $toplevel:
+-	$name is the name of the relevant submodule section in `.gitmodules`,
+-	$sm_path is the path of the submodule as recorded in the immediate
+-	superproject, $displaypath contains the relative path from the
+-	current working directory to the submodules root directory,
+-	$sha1 is the commit as recorded in the immediate
+-	superproject, and $toplevel is the absolute path to the top-level
+-	of the immediate superproject.
+-	Note that to avoid conflicts with '$PATH' on Windows, the '$path'
+-	variable is now a deprecated synonym of '$sm_path' variable.
+-	Any submodules defined in the superproject but not checked out are
+-	ignored by this command. Unless given `--quiet`, foreach prints the name
+-	of each submodule before evaluating the command.
+-	If `--recursive` is given, submodules are traversed recursively (i.e.
+-	the given shell command is evaluated in nested submodules as well).
+-	A non-zero return from the command in any submodule causes
+-	the processing to terminate. This can be overridden by adding '|| :'
+-	to the end of the command.
++`foreach [--recursive] <command>`::
++	Evaluate an arbitrary shell _<command>_ in each checked out submodule.
++	The command has access to the variables `$name`, `$sm_path`, `$displaypath`,
++	`$sha1` and `$toplevel`:
+++
++--
++`$name`;; the name of the relevant submodule section in `.gitmodules`
++`$sm_path`;; the path of the submodule as recorded in the immediate
++	superproject
++`$displaypath`;; the relative path from the
++	current working directory to the submodules root directory
++`$sha1`;; the commit as recorded in the immediate superproject
++`$toplevel`;; the absolute path to the top-level of the immediate superproject.
++--
+++
++Note that to avoid conflicts with `$PATH` on Windows, the `$path`
++variable is now a deprecated synonym of `$sm_path` variable.
++Any submodules defined in the superproject but not checked out are
++ignored by this command. Unless given `--quiet`, foreach prints the name
++of each submodule before evaluating the command.
++If `--recursive` is given, submodules are traversed recursively (i.e.
++the given shell command is evaluated in nested submodules as well).
++A non-zero return from the command in any submodule causes
++the processing to terminate. This can be overridden by adding ++||:++
++to the end of the command.
+ +
+ As an example, the command below will show the path and currently
+ checked out commit for each submodule:
+@@ -249,26 +253,26 @@ checked out commit for each submodule:
+ git submodule foreach 'echo $sm_path `git rev-parse HEAD`'
+ --------------
+ 
+-sync [--recursive] [--] [<path>...]::
+-	Synchronizes submodules' remote URL configuration setting
++`sync [--recursive] [--] [<path>...]`::
++	Synchronize submodules' remote URL configuration setting
+ 	to the value specified in `.gitmodules`. It will only affect those
+-	submodules which already have a URL entry in .git/config (that is the
++	submodules which already have a URL entry in `.git/config` (that is the
+ 	case when they are initialized or freshly added). This is useful when
+ 	submodule URLs change upstream and you need to update your local
+ 	repositories accordingly.
+ +
+ `git submodule sync` synchronizes all submodules while
+-`git submodule sync -- A` synchronizes submodule "A" only.
++`git submodule sync -- A` synchronizes submodule `A` only.
+ +
+ If `--recursive` is specified, this command will recurse into the
+ registered submodules, and sync any nested submodules within.
+ 
+-absorbgitdirs::
++`absorbgitdirs`::
+ 	If a git directory of a submodule is inside the submodule,
+ 	move the git directory of the submodule into its superproject's
+ 	`$GIT_DIR/modules` path and then connect the git directory and
+ 	its working directory by setting the `core.worktree` and adding
+-	a .git file pointing to the git directory embedded in the
++	a `.git` file pointing to the git directory embedded in the
+ 	superprojects git directory.
+ +
+ A repository that was cloned independently and later added as a submodule or
+@@ -279,72 +283,70 @@ This command is recursive by default.
+ 
+ OPTIONS
+ -------
+--q::
+---quiet::
++`-q`::
++`--quiet`::
+ 	Only print error messages.
+ 
+---progress::
+-	This option is only valid for add and update commands.
+-	Progress status is reported on the standard error stream
+-	by default when it is attached to a terminal, unless -q
++`--progress`::
++	Report progress status on the standard error stream
++	by default when it is attached to a terminal, unless `-q`
+ 	is specified. This flag forces progress status even if the
+-	standard error stream is not directed to a terminal.
++	standard error stream is not directed to a terminal. It is
++	only valid for `add` and `update` commands.
+ 
+---all::
+-	This option is only valid for the deinit command. Unregister all
+-	submodules in the working tree.
++`--all`::
++	Unregister all submodules in the working tree. This option is only
++	valid for the `deinit` command.
+ 
+--b <branch>::
+---branch <branch>::
++`-b<branch>`::
++`--branch=<branch>`::
+ 	Branch of repository to add as submodule.
+ 	The name of the branch is recorded as `submodule.<name>.branch` in
+ 	`.gitmodules` for `update --remote`.  A special value of `.` is used to
+ 	indicate that the name of the branch in the submodule should be the
+ 	same name as the current branch in the current repository.  If the
+-	option is not specified, it defaults to the remote 'HEAD'.
+-
+--f::
+---force::
+-	This option is only valid for add, deinit and update commands.
+-	When running add, allow adding an otherwise ignored submodule path.
+-	This option is also used to bypass a check that the submodule's name
+-	is not already in use. By default, 'git submodule add' will fail if
+-	the proposed name (which is derived from the path) is already registered
+-	for another submodule in the repository. Using '--force' allows the command
+-	to proceed by automatically generating a unique name by appending a number
+-	to the conflicting name (e.g., if a submodule named 'child' exists, it will
+-	try 'child1', and so on).
+-	When running deinit the submodule working trees will be removed even
+-	if they contain local changes.
+-	When running update (only effective with the checkout procedure),
+-	throw away local changes in submodules when switching to a
+-	different commit; and always run a checkout operation in the
+-	submodule, even if the commit listed in the index of the
+-	containing repository matches the commit checked out in the
+-	submodule.
+-
+---cached::
+-	This option is only valid for status and summary commands.  These
+-	commands typically use the commit found in the submodule HEAD, but
+-	with this option, the commit stored in the index is used instead.
+-
+---files::
+-	This option is only valid for the summary command. This command
+-	compares the commit in the index with that in the submodule HEAD
+-	when this option is used.
+-
+--n::
+---summary-limit::
+-	This option is only valid for the summary command.
+-	Limit the summary size (number of commits shown in total).
++	option is not specified, it defaults to the remote `HEAD`.
++
++`-f`::
++`--force`::
++	Force the command to proceed, even if it would otherwise fail.
++	This option is only valid for `add`, `deinit` and `update` commands.
++`add`;; allow adding an otherwise ignored submodule path.
++This option is also used to bypass a check that the submodule's name
++is not already in use. By default, `git submodule add` will fail if
++the proposed name (which is derived from the path) is already registered
++for another submodule in the repository. Using `--force` allows the command
++to proceed by automatically generating a unique name by appending a number
++to the conflicting name (e.g., if a submodule named 'child' exists, it will
++try 'child1', and so on).
++`deinit`;; the submodule working trees will be removed even
++if they contain local changes.
++`update`;; (only effective with the checkout procedure),
++throw away local changes in submodules when switching to a
++different commit; and always run a checkout operation in the
++submodule, even if the commit listed in the index of the
++containing repository matches the commit checked out in the
++submodule.
++
++`--cached`::
++	Use the index to determine the commit instead of the `HEAD`.
++	This option is only valid for `status` and `summary` commands.
++
++`--files`::
++	Make the `summary` command compare the commit in the index with that in
++	the submodule `HEAD`.
++
++`-n<n>`::
++`--summary-limit=<n>`::
++	Limit the `summary` size (number of commits shown in total) to _<n>_.
+ 	Giving 0 will disable the summary; a negative number means unlimited
+ 	(the default). This limit only applies to modified submodules. The
+ 	size is always limited to 1 for added/deleted/typechanged submodules.
+ 
+---remote::
+-	This option is only valid for the update command.  Instead of using
+-	the superproject's recorded SHA-1 to update the submodule, use the
+-	status of the submodule's remote-tracking branch.  The remote used
++`--remote`::
++	Instead of using the superproject's recorded SHA-1 to update the
++	submodule, use the status of the submodule's remote-tracking branch.
++	This option is only valid for the `update` command. The remote used
+ 	is branch's remote (`branch.<name>.remote`), defaulting to `origin`.
+ 	The remote branch used defaults to the remote `HEAD`, but the branch
+ 	name may be overridden by setting the `submodule.<name>.branch`
+@@ -363,7 +365,7 @@ SHA-1.  If you don't want to fetch, you should use `submodule update
+ --remote --no-fetch`.
+ +
+ Use this option to integrate changes from the upstream subproject with
+-your submodule's current HEAD.  Alternatively, you can run `git pull`
++your submodule's current `HEAD`.  Alternatively, you can run `git pull`
+ from the submodule, which is equivalent except for the remote branch
+ name: `update --remote` uses the default upstream repository and
+ `submodule.<name>.branch`, while `git pull` uses the submodule's
+@@ -372,105 +374,106 @@ to distribute the default upstream branch with the superproject and
+ `branch.<name>.merge` if you want a more native feel while working in
+ the submodule itself.
+ 
+--N::
+---no-fetch::
+-	This option is only valid for the update command.
++`-N`::
++`--no-fetch`::
+ 	Don't fetch new objects from the remote site.
++	This option is only valid for the `update` command.
+ 
+---checkout::
+-	This option is only valid for the update command.
+-	Checkout the commit recorded in the superproject on a detached HEAD
+-	in the submodule. This is the default behavior, the main use of
+-	this option is to override `submodule.$name.update` when set to
++`--checkout`::
++	Checkout the commit recorded in the superproject on a detached `HEAD`
++	in the submodule. This option is only valid for the `update` command.
++	This is the default behavior, the main use of
++	this option is to override `submodule.<name>.update` when set to
+ 	a value other than `checkout`.
+-	If the key `submodule.$name.update` is either not explicitly set or
++	If the key `submodule.<name>.update` is either not explicitly set or
+ 	set to `checkout`, this option is implicit.
+ 
+---merge::
+-	This option is only valid for the update command.
++`--merge`::
+ 	Merge the commit recorded in the superproject into the current branch
+-	of the submodule. If this option is given, the submodule's HEAD will
++	of the submodule. This option is only valid for the `update` command.
++	If this option is given, the submodule's `HEAD` will
+ 	not be detached. If a merge failure prevents this process, you will
+ 	have to resolve the resulting conflicts within the submodule with the
+ 	usual conflict resolution tools.
+-	If the key `submodule.$name.update` is set to `merge`, this option is
++	If the key `submodule.<name>.update` is set to `merge`, this option is
+ 	implicit.
+ 
+---rebase::
+-	This option is only valid for the update command.
+-	Rebase the current branch onto the commit recorded in the
+-	superproject. If this option is given, the submodule's HEAD will not
++`--rebase`::
++	Rebase the current branch onto the commit recorded in the superproject.
++	This option is only valid for the `update` command. The submodule's `HEAD` will not
+ 	be detached. If a merge failure prevents this process, you will have
+ 	to resolve these failures with linkgit:git-rebase[1].
+-	If the key `submodule.$name.update` is set to `rebase`, this option is
++	If the key `submodule.<name>.update` is set to `rebase`, this option is
+ 	implicit.
+ 
+---init::
+-	This option is only valid for the update command.
+-	Initialize all submodules for which "git submodule init" has not been
+-	called so far before updating.
++`--init`::
++	Initialize all submodules for which `git submodule init` has not been
++	called so far before updating. 	This option is only valid for the `update`
++	command.
++
+ 
+---name::
+-	This option is only valid for the add command. It sets the submodule's
+-	name to the given string instead of defaulting to its path. The name
+-	must be valid as a directory name and may not end with a '/'.
++`--name=<name>`::
++	Set the submodule's name to the given string instead of defaulting to its path. _<name>_
++	must be valid as a directory name and may not end with a `/`.
+ 
+---reference <repository>::
+-	This option is only valid for add and update commands.  These
+-	commands sometimes need to clone a remote repository. In this case,
++`--reference=<repository>`::
++	Pass the local _<repository>_ as a reference when cloning the submodule.
++	This option is only valid for `add` and `update` commands.
++	These commands sometimes need to clone a remote repository. In this case,
+ 	this option will be passed to the linkgit:git-clone[1] command.
+ +
+-*NOTE*: Do *not* use this option unless you have read the note
++NOTE: Do *not* use this option unless you have read the note
+ for linkgit:git-clone[1]'s `--reference`, `--shared`, and `--dissociate`
+ options carefully.
+ 
+---dissociate::
+-	This option is only valid for add and update commands.  These
+-	commands sometimes need to clone a remote repository. In this case,
++`--dissociate`::
++	After using a reference repository to clone from, do not rely on it anymore.
++	This option is only valid for `add` and `update` commands.
++	These commands sometimes need to clone a remote repository. In this case,
+ 	this option will be passed to the linkgit:git-clone[1] command.
+ +
+-*NOTE*: see the NOTE for the `--reference` option.
++NOTE: See the NOTE above for the `--reference` option.
+ 
+---recursive::
+-	This option is only valid for foreach, update, status and sync commands.
+-	Traverse submodules recursively. The operation is performed not
++`--recursive`::
++	Traverse submodules recursively. This option is only valid for `foreach`,
++	`update`, `status` and `sync` commands. The operation is performed not
+ 	only in the submodules of the current repo, but also
+ 	in any nested submodules inside those submodules (and so on).
+ 
+---depth::
+-	This option is valid for add and update commands. Create a 'shallow'
+-	clone with a history truncated to the specified number of revisions.
+-	See linkgit:git-clone[1]
++`--depth=<depth>`::
++	Create a 'shallow' clone with a history truncated to the _<depth>_ revisions.
++	This option is valid for `add` and `update` commands. See linkgit:git-clone[1]
+ 
+---recommend-shallow::
+---no-recommend-shallow::
+-	This option is only valid for the update command.
++`--recommend-shallow`::
++`--no-recommend-shallow`::
++	Recommend or not shallow cloning of submodules.
++	This option is only valid for the `update` command.
+ 	The initial clone of a submodule will use the recommended
+ 	`submodule.<name>.shallow` as provided by the `.gitmodules` file
+ 	by default. To ignore the suggestions use `--no-recommend-shallow`.
+ 
+--j <n>::
+---jobs <n>::
+-	This option is only valid for the update command.
+-	Clone new submodules in parallel with as many jobs.
++`-j<n>`::
++`--jobs=<n>`::
++	Clone new submodules in parallel with _<n>_ jobs.
++	This option is only valid for the `update` command.
+ 	Defaults to the `submodule.fetchJobs` option.
+ 
+---single-branch::
+---no-single-branch::
+-	This option is only valid for the update command.
+-	Clone only one branch during update: HEAD or one specified by --branch.
++`--single-branch`::
++`--no-single-branch`::
++	Clone only one branch during update: `HEAD` or one specified by `--branch`.
++	This option is only valid for the `update` command.
+ 
+-<path>...::
++`<path>...`::
+ 	Paths to submodule(s). When specified this will restrict the command
+ 	to only operate on the submodules found at the specified paths.
+-	(This argument is required with add).
++	(This argument is required with `add`).
+ 
+ FILES
+ -----
+ When initializing submodules, a `.gitmodules` file in the top-level directory
+-of the containing repository is used to find the url of each submodule.
++of the containing repository is used to find the URL of each submodule.
+ This file should be formatted in the same way as `$GIT_DIR/config`. The key
+-to each submodule url is "submodule.$name.url".  See linkgit:gitmodules[5]
++to each submodule URL is `submodule.<name>.url`.  See linkgit:gitmodules[5]
+ for details.
+ 
+ SEE ALSO
 -- 
 gitgitgadget
+
