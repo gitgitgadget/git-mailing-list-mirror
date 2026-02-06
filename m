@@ -1,120 +1,133 @@
-Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A5E345740
-	for <git@vger.kernel.org>; Fri,  6 Feb 2026 09:33:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF49630BBAE
+	for <git@vger.kernel.org>; Fri,  6 Feb 2026 09:38:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770370389; cv=none; b=jWJx5qINChIdnEuteuf24TkVRz/8SHnr7kdrk7TW9SNp8FI6EmZRBIbIBTW3ripRExoxwoYY7xlmni9GqZMa/1dZWWtsabH6yMxqzuqQgLebmbFpw2qWxyUUv7Cz1nNp1ExAYEECm7Z7HVzxQa4sePrP3GCe4fSiKDZHzhm2UNQ=
+	t=1770370722; cv=none; b=dPoNFk6pVbZZQkOFcHPGcV0geT3u/19WhF9ps55Cq24tDJyPtrFXcr1u5GPdeLgKyANFvG8KhHXBa0+qye/eHucPa97GVIttyqxzGwoqkwz3NWTD6El6L5C1U/i0iOeaqRylKWFNQPp0tNSJNYnZ9SsXR/I3XrzmnYk4McRaBNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770370389; c=relaxed/simple;
-	bh=oQJr5YlF/6jCcqeI/kRcJ0ouEyCH5TuqOuoRc9f7evM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YXIwpfifqNReVGNbEAsd2Jlqu7/X1KPplyC09K+s6dUlPDm3/lBcH2SBV6d69TTGLlKwM5XAo1wspgIxSXgtb8Kix3/yubzVlcydHNQwj3yHVjeh93VC0E/eurDqOUbAfvVEbX9KH2wNFGoa+RGiOuv2ojR23D5rqGKV2KZVbtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ChT2nYfT; arc=none smtp.client-ip=209.85.214.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770370722; c=relaxed/simple;
+	bh=OJk85Z61cW7kBwOS/GHxCM7MRN60klJusTSrNtale7Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hqeMoECdsq4YckNLVFZzXc+AOVznvLiVxDre5159Afavqw1lYhN6MVycMgH/zypKg3/CwbaQ7xm/zo6diPJWXmqpUaWHAMxfA/t1nRGMnvMhQQk0Foi//f1av7gE58QQcFD9tsxE3j3z2utHqO2OUS42Hhmbbf2n2Ss/LidkGqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PBb5CYUc; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ChT2nYfT"
-Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-2a79998d35aso15315015ad.0
-        for <git@vger.kernel.org>; Fri, 06 Feb 2026 01:33:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770370389; x=1770975189; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k4177legnpo0s8KmfMo/Of9kPzaHTHz3fsChAQiq1OM=;
-        b=ChT2nYfTCVnvWJGa0KnFdpQ9QUmUIeOl9oa3kzl2hcWP1FNzEL6MMVFV46KMNxyKka
-         U1dJte+zw20omKK8J7bWA6bkEtWLuuNxexPoVDvJ5cErZToFSo62R1OOSnEQ/fi/KvrK
-         +vpC5ETf6syrf9MkrYbSDzNEfFNTNyipldicUK5Ul5ZZOv86oUmHHuSo0eRW4erwKE/v
-         TXIORYX69YNzRCH1v9HpaDxTgWf7rR2CRSnOAP93ploRnBuqzBwbUa2UvSTov89oJOpT
-         uFJeh7TCPPu7b1qJ+tsgWYl81wpxXh1SDl5xLZdlcdzhGD5LhlDjCd4eovtR63xQktnC
-         AokA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770370389; x=1770975189;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=k4177legnpo0s8KmfMo/Of9kPzaHTHz3fsChAQiq1OM=;
-        b=WpPTTj/m1ucQKbSn9KObYhu+PpSq+KXUuqINOWvJuQpVi4U0cFjzOTmwxyRE5rsUeb
-         4u+LREBWJdoOjNv+ZVMdwW9lOVEVvW7u8k9/1USRWIYxhw4O3y4TPxKY14eQT0yprf+i
-         KOgdwI1UPRYBWxj5FZlYH8kqJDwpnjNaSil56pDyyrUPxpPFZiCriPdwtNViGt9gOvNd
-         3A4UgJ6D+eMRoJP2fbqopAiRn2NXTmLhfw8VrFlcflZItKGPd3GQ2kX8YNaSBG7t6oUK
-         reemdocirPnHBkvQltQo+Hfqud0iPKhIRqdFbv0dQ31g6N7NWTDNk3gLwUc43+uR8hy3
-         Cu6A==
-X-Gm-Message-State: AOJu0YzKuOd4/IknGfJ+jE69x/PKWdxDAfLPJGdN83qsEXBcijX5BgdA
-	T6PP7qNlncFAP9PVImQrjLqLciSIAxVV5u46UGGuSgNNL5P2O/srohuXCtKFk0ys
-X-Gm-Gg: AZuq6aKRWLaOTX9OW9YdL+Utghb9kfiJ4XQPyISAEZlHPELPxyUswCeXr3L31NG6nkQ
-	T9hRnnBPfCQX3P2UvnudW3VzxL7EnTbTSDBwOdOrNuFjUWFR2MLAeeGmR7pKQkBxfwqTVA4XPuh
-	xvjrhr5Yf/4GrAfacDYi+DvoavUnioziXH5P4tM/lcS8nyJiXiLYibndDoThsfCjjwxLTMTrO5p
-	Sn01K7lSCbAxPXUBnGLDqiwS/DNCdOE+zmKzIVRZHr9PDQG08qLnNPNmF5SIkwe8CPfJuF0Qo59
-	yBRyeK+2YTd42ju2se2JKAgrb97Q5gSPIoNimAp/ElWsFTDFBmz0Q4FrHmBxonbiEa0sTqRcVCs
-	1IhHNSD0CK2EVeUz+gTmnrbGBCTkGR/NOtrOaPBghAd5+Ierzv/azYwFORHkJDrylX1egMJ0l2P
-	sv9IWkVzOK+3NWSJOUOtPouZkxHkLiUYygdcq3/98PWraAle4=
-X-Received: by 2002:a17:902:d58a:b0:29f:2944:9774 with SMTP id d9443c01a7336-2a9521f3218mr21720365ad.33.1770370388798;
-        Fri, 06 Feb 2026 01:33:08 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:312c:2479:7de1:4f9f:e55e])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a951c9189bsm18937755ad.36.2026.02.06.01.33.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Feb 2026 01:33:08 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	karthik.188@gmail.com,
-	phillip.wood123@gmail.com
-Subject: Re: [PATCH V2 2/3] wt-status: pass struct repository and wt_status through function parameters
-Date: Fri,  6 Feb 2026 15:02:29 +0530
-Message-ID: <20260206093257.1178858-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <CAOLa=ZR21J6sPDh0cUgzv+td70Mwck1-Ev-43OtZ7mYBX17z5A@mail.gmail.com>
-References: <CAOLa=ZR21J6sPDh0cUgzv+td70Mwck1-Ev-43OtZ7mYBX17z5A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PBb5CYUc"
+Received: (qmail 298277 invoked by uid 109); 6 Feb 2026 09:38:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=OJk85Z61cW7kBwOS/GHxCM7MRN60klJusTSrNtale7Y=; b=PBb5CYUc+/OccVafz4XvwNMzF+nkimsHtS2fHnTADn93ChvHcpLlNvSlNk/l01TExEWcKPOgqml/6vzMY90CH6GM2YPr2YkUzPzftsDf4it1H53UB0AXxHpWwZlUmVfVCsMvTic4Gyp57Wui176iOi3AzzMwpa+l4hXZlNGlbUk28FspJSDWtheb4mYe9tgh7CZoN7Eo8jV8hW8y9YqA6RQrLfSQ7E346vIEwEW+CVw4l4uLB2Wy9ZoCLFgSkBX7WERBUivJ76WmUz6LeK5tUL4gvyhVsMSPlYiBs/lk6OafRQHpVYrOLCzCevurO0XUWvohQw1eqDtnqymcPB1Cyg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Feb 2026 09:38:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 599208 invoked by uid 111); 6 Feb 2026 09:38:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Feb 2026 04:38:45 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 6 Feb 2026 04:38:40 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ashlesh Gawande <git@ashlesh.me>, git@vger.kernel.org,
+	sandals@crustytoothpaste.net
+Subject: Re: [PATCH v3] t5550: add netrc tests for http 401/403
+Message-ID: <20260206093840.GC2761602@coredump.intra.peff.net>
+References: <20260106114029.763351-1-git@ashlesh.me>
+ <20260107074724.13165-1-git@ashlesh.me>
+ <xmqqms1mihqo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqms1mihqo.fsf@gitster.g>
 
-> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
-> 
-> >> > Some functions in wt-status.c relied on the_repository because no
-> >> > repository instance was available in their local scope.
-> >> > There is also a specific case in wt_status_check_rebase() where the
-> >> > worktree can be NULL, so accessing wt->repo may lead to a segfault.
-> >> >
-> >> > Update these functions to accept a struct repository or struct
-> >> > wt_status parameter, and adjust callers accordingly. Replace the
-> >> > remaining uses of the_repository in these functions with the
-> >> > passed-in repository instance.
-> >> >
-> >> > This removes the use of the_repository global variable from
-> >> > wt-status.c completely.
-> >> >
-> >>
-> >> Okay, but this doesn't fix the issue I stated in the previous commit. I
-> >> do wonder if we can re-order the commits and pass the repo struct to
-> >> functions like 'get_branch()'.
-> >
-> > Sorry, I didn’t fully think through what you were pointing out in the
-> > previous version. I initially assumed you were only referring to the
-> > specific call involving wt_status_check_rebase(NULL, state).
-> >
-> > So struct worktree *wt is not guaranteed to be defined and can be
-> > NULL. Because of that, relying on wt->repo is unsafe.
-> > Instead, rather than depending on the worktree for repository access (wt->repo),
-> > we can pass struct repository explicitly through the relevant call
-> > stack, like in functions get_branch() and wt_status_check_bisect().
-> > I hope I have understood it correctly.
-> >
-> > Best,
-> > Shreyansh
-> 
-> I would say its not that black and white. There's a lot of context
-> around it. There are places where `struct worktree *wt` should
-> definitely be defined. So we have to take it on a case by case basis.
-> Which is what makes these refactors a bit tricky.
+On Thu, Feb 05, 2026 at 09:05:51PM -0800, Junio C Hamano wrote:
 
-But lets say if we do pass struct repository explicitly wherever it is doubtful,
-rather than relying on worktree, does it have any downside ?
+> >   - Third test case checks that the git clone fails when the .netrc file
+> >     provides credentials that are valid but do not have permission for
+> >     this user. For example one may have multiple tokens in GitHub
+> >     and uses the one which was not authorized for cloning this repo.
+> >     In such a case the HTTP server returns 403 Forbidden.
+> >     For this test, the apache.conf is modified to return a 403
+> >     on finding a forbidden-user. No prompt for username/password is
+> >     expected after the 403 (unlike 401). This is because prompting may wipe
+> >     out existing credentials or conflict with custom credential helpers.
+> 
+> Nicely summarised.  So we say 401 when we do not know you, while we
+> say 403 when we know you and do not want you to be accessing the
+> resource.  We test for both.
+
+I think it is fine to check the 403 handling, but note that this _isn't_
+how GitHub would respond. If you try to fetch from a repository you
+don't have access to, it will return a 401 first (so you try to log in)
+and then a 404. The idea being to avoid revealing the existence of the
+repository to unauthorized users.
+
+> Just out of curiosity, do we test for these codes with other
+> credential helpers or is this only relevant for .netrc users?
+
+The netrc support here should not involve credential helpers at all. It
+is all being done internally by curl. So in this (third and final) test:
+
+> > +test_expect_success 'netrc authorized but forbidden credentials (fail on 403)' '
+> > +	test_when_finished clear_netrc &&
+> > +	set_askpass wrong &&
+> > +	set_netrc 127.0.0.1 forbidden-user@host pass@host &&
+> > +	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc-403 2>err &&
+> > +	expect_askpass none &&
+> > +	grep "The requested URL returned error: 403" err
+> > +'
+
+...what is happening is roughly:
+
+  - curl sends the first request with no credentials, which gets a 401
+
+  - curl internally, without returning a response to Git, looks up the
+    netrc value and repeats the request with an Authorization header
+
+  - curl returns the resulting 403 to Git
+
+  - Git calls this an error (just like it would a 404) and bails
+
+But from Git's perspective the use of netrc here is not really
+interesting. We don't even know it happened! And if the server did
+return a 401, we'd happily try to get credentials (from the user or from
+a helper) in the usual way. And that's what happens in the second test:
+
+> > +test_expect_success 'netrc unauthorized credentials (prompt after 401)' '
+> > +	test_when_finished clear_netrc &&
+> > +	set_askpass wrong &&
+> > +	set_netrc 127.0.0.1 user@host pass@wrong &&
+> > +	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc-401 &&
+> > +	expect_askpass both wrong
+> > +'
+
+Curl tries the credential under the hood, but we have no idea, and we
+process a 401 in the usual way.
+
+And in the first one:
+
+> > +test_expect_success 'using credentials from netrc to clone successfully' '
+> > +	test_when_finished clear_netrc &&
+> > +	set_askpass wrong &&
+> > +	set_netrc 127.0.0.1 user@host pass@host &&
+> > +	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc &&
+> > +	expect_askpass none
+> > +'
+
+We do not ever even see the 401, and curl just magically handles it for
+us. We see only the successful 200 code, just as if authentication was
+not required in the first place.
+
+
+So really, none of this is testing anything novel in Git at all that is
+not covered elsewhere, except for the fact that we pass the flag to curl
+that says "you may use netrc". And so there's some value in adding it in
+that case. But trying to answer your question about other credential
+helpers, no, they're not even entering the picture here.
+
+-Peff
