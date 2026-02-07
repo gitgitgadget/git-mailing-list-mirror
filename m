@@ -1,73 +1,76 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BFE2D3EEA
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 21:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B108430F7E9
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 21:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770500694; cv=none; b=lUgkugtkfruJa/owkqyS+L6UXn5BdZdAMqVnz3720q4VyygSiI+SGSvsoYgZxhCd+DjR2c+rEcmeSD37gagwztcm3Qc4xv/E6L1JKnQjHSv24Y8krBNETlP8ASetMS3GUnXz2ldwfhO4sGciel/EWNiIoGnVaJNrq4H2D5E+oAo=
+	t=1770500885; cv=none; b=B98VUUpmNp76hwHSB0R0HCHuVp62190h0Dl4h/KErltMseYG0Jmyrh5Iv/B+L6Rg4t+RIGhYL0rY8LA3TDp44It83y3f70ijDlNyh+lh6XpvM8Himo8X1H7cC11YaxjpfsbkhIvyX1tHUWZ7v2ssbc92vjeArxYPueIUd+qKPBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770500694; c=relaxed/simple;
-	bh=RuWE74SKDodbeYyZz9PxnZ4O2FwAiHrGVajFNmh59cE=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=nCrYE9eWg+AUsLGHWcwdfIVqcpPFShlUdU76yihXPwtL61MOmSdAIXTt3++uLcgj2mCH8smQ1EemJo8Ij4kIOTzqXMyT2IPub6qSQzvc+3bgSKnwG3AJ/vpq6irgSHVhalHfTi3P+RsP1iLJ9+ebw/87IZE5cXi2V1fy6eoWPu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HX9UxPZi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZHw1F+cT; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1770500885; c=relaxed/simple;
+	bh=GkzRfrz+GTq+5yKNn8SSSCmU2c+u3N1fTNfefhG3MX0=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=nJDAeny7P/i+JhArcxF6avkabmhChBsbVL8vEJfqiLGJqb69FOW1w1CrVzSNWXQyYqLe0h9/TtrhGU7/CC7/A14A0oJvkK9SzOQF9QCelc2t7OUU2VV+WP7iCu6adxxna7KB4caOczxJVywtQ5qR2o6rrX2v3uHYAC9nStklaiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Tbn5B7Aa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sn1Nn5Dv; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HX9UxPZi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZHw1F+cT"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Tbn5B7Aa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sn1Nn5Dv"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 37548140009C;
-	Sat,  7 Feb 2026 16:44:53 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 22071140009D;
+	Sat,  7 Feb 2026 16:48:05 -0500 (EST)
 Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Sat, 07 Feb 2026 16:44:53 -0500
+  by phl-compute-06.internal (MEProxy); Sat, 07 Feb 2026 16:48:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770500693;
-	 x=1770587093; bh=a9IHXM8VEq0pPQMnWhjod7sCWDgVO6WAL3dq06Ountw=; b=
-	HX9UxPZi/o4DUUfjMmKsi+pBZWJDtk0b6ppNdbte94IxTS5PfeR7xLfku3I2lcqS
-	kJat/VBE6bfTVqO1uCa4dL3ohJnoCnuRoj4hf2Bu68+ohRZTkiQx82VigOBpfzpq
-	my3EixT6c5v+rS/JJfisUXkZtvUPwAtxd2oDfHWZ+dp7T8FlSRzz/PrEsDJX4mch
-	TKUKT+rKUbDUJd2U+sLbCsFAHrsUTqyhp1SzAccswUMGWFmgoKaopdNXo2XMeDcA
-	PqLD0Nt2KXy8RK29jbllaZ9hl3lUUgk+/FybXd3fBZGK9VExvcP29/F30iy9AGgq
-	HZHaQhwcvmoCWle9tuIjyg==
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770500885;
+	 x=1770587285; bh=emmjXy+eSX6NS/6gbo0ehxn+4X9HzuZPYjM+oPU46+s=; b=
+	Tbn5B7AamJUvBnX9hN2cH/AIXY2ydAg+otPEH4G0InOw8VTKpPuSVpoIyWSqWCia
+	i2a6W1c3TJO+m2clRVg5NzMHRGmywGtju3+Z4t/KKYiIrZk2j+qkVdL/StkU+42w
+	Vl6R+NkPlPeAnVxoWJJyCrG7J6smEA2xW9j2fIKnp/DzvoJ4r7fHIgI0i13fgbu+
+	DwOs5+QbbRyVATXJFFpHMc0uN8jGXL8whCrFdxDTgmEjyG2s1oTJ0YRIFBJfaVwZ
+	B2q85G++PfANVdlHphqvzNArArf4NnxUYzZ8k8dHPHqWyYWvyKFO0+PN4JXv7tFu
+	OanAqfo4ELNJjFWgh34Y6Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1770500693; x=1770587093; bh=a
-	9IHXM8VEq0pPQMnWhjod7sCWDgVO6WAL3dq06Ountw=; b=ZHw1F+cTtCls51DXp
-	ehDfL96heEOr+lPoWd86C7qhLLj+CH1lErulpuEhQs+mGALsOZueZlAf8kwbXvcr
-	SEQjngO4FZEWrtP+3GE2NAChe6RBjabOQbZIrQezRGEdyNg+t01fSwF6tlICmTPB
-	iNkkmPd8n5XoQyRenxnwtRWkDxAhIpZnz4pPd7WGKT4AXj444LRI6TGXO3xcN1gf
-	guZEzsDUeBBq86RhSOe9qiUnBM8hYGK2uMf+Mt0/MUkOuZjRFwp2pvIUTVy0j3i2
-	h1pV4MV+3acIV8X4772cSgzazHyGhJUpUtEmjVm3VtQBkFX9utCfJ9R4MSRdWeb4
-	gVOHA==
-X-ME-Sender: <xms:VbKHacouFv0ARW3ja1_YPXR3FOODGSka_K7nuw8T7Gny7D4nFmUNFYM>
-    <xme:VbKHadc7QtrNyuunjXXjd8WzkElvExx0aEOEkAcmsrus9prL4YivEsF_pozZHWZ_G
-    X8-XTMJYXJRhY_pe_Ge87d-2ekwEpv1l2_qW2kBDaj0YrWK14Sohg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledvudeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770500885; x=
+	1770587285; bh=emmjXy+eSX6NS/6gbo0ehxn+4X9HzuZPYjM+oPU46+s=; b=S
+	n1Nn5DvRyA8S6Bo8QjtFCEq4Axm5L0OaldSWcB2nVUsPLYZDAI9lnCLUjcL7tClD
+	uf+FWlLT7pb9BcC6c6MLfnvuWpK7eZGDmuFKq582kLgakWoryaoSO4+uOSOhk1Qu
+	UODDtB9iRbahA1FqLLbitTU/90aE8U6eTkFJmsh9ZtFX9LO9khl6HuSsAKkUccwY
+	GgGscpzEHXE8dJ3uQfNDYX7xCKBzo5NcjUuLZA6/ujit8tEqDiRqOMnE+6TKqeib
+	yu38HK6I1KmqQoJ0ya+yy8JKgCdOT3MyQkLK8plvYwqU2+pJK7Y0lKI2aSu7UNAG
+	3ak4u4bPQ0oPMlE19JuAw==
+X-ME-Sender: <xms:FbOHaRAOon2BjN3ylf-52xElKDvxo-sQZFSHBXRiPpV3Rp9sVP8dhVU>
+    <xme:FbOHaaUw8cjD4S1cTd5ua76rE2iXq1i44PAsGuQkDixi0m37aqLfIguYI-AyO0WNw
+    Xp_2Zaigqx9VDI9GBn8ui1Bsd2uDQXWy0dUPeeKUA4r6YUXxeqhhC0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledvudejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtqhertd
-    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnhepffejkedvjeegieegfeejkeegleevheeiteettddvvdeghfegheeg
-    leelleevffdunecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrihhlsegsvgihvghrmhgrthhthhhirghs
-    rdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:VbKHaXXc0V0k_t8IqIXuHbMoPLz37MHuwWi5OCy0QDSdZLMHITMF_A>
-    <xmx:VbKHadhEIljtyGOo_lzNUaCc3CFAmYE0o_rEtBm_4TTrlGXBA3t9Sw>
-    <xmx:VbKHaa_dVwFg_VXHWN-pMISKSGdmYfI-OTx5ANUGxz-c0dId34XoEw>
-    <xmx:VbKHafCIgECFiwwcgkVmR3YEA44FvsPwn-Fis5CZRQqzxp0_nAk3Jg>
-    <xmx:VbKHaa5z6ARqDgdsUuRe4w7Ll5XITnaR6_jLPNvoN2WVncfkgdMlMXVL>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepmhgrnhhuvghlrdhlvghrtghhnhgvrhesqhhurghnthgtohdrtghomh
+    dprhgtphhtthhopeihrghnnhhikhdrthgruhhstghhsehquhgrnhhttghordgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeguvg
+    hvseihthgruhhstghhrdguvg
+X-ME-Proxy: <xmx:FbOHaeFowiMSu7bNR9TS2pdiapKQxug_7WvCK1sEPyztqytWQPzodw>
+    <xmx:FbOHaQ34DTdT47Ynys0GZgdi3TQXwfs-nWzWQOjmYGbmZgl9tyMimA>
+    <xmx:FbOHaYMI4CRCwTEGBZ3p4RhZbkiqBxzzANuvEkLHAGAv6XScovCpKQ>
+    <xmx:FbOHaX6ryXHL7TxnIlxHXfOpg1id_3oSlXwf5tUk2Ue9-JjC5DzjRw>
+    <xmx:FbOHaZDYItii8PXhb-COZYT8wDsRKGchAL2LgVGlRQvskvTWDyKx8DKC>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 10CA41EA006B; Sat,  7 Feb 2026 16:44:53 -0500 (EST)
+	id EBC991EA006B; Sat,  7 Feb 2026 16:48:04 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -75,42 +78,48 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A2RKoXrlnTsZ
-Date: Sat, 07 Feb 2026 22:44:31 +0100
+X-ThreadId: ArEMSgAokomg
+Date: Sat, 07 Feb 2026 22:47:44 +0100
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Matthias Beyer" <mail@beyermatthias.de>, git@vger.kernel.org
-Message-Id: <2dc92f55-c252-43db-a412-342fc8d45e4c@app.fastmail.com>
-In-Reply-To: 
- <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
-References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
-Subject: Re: git-am applies commit message diffs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Yannik Tausch" <dev@ytausch.de>, "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Manuel Lerchner" <manuel.lerchner@quantco.com>,
+ "Yannik Tausch" <yannik.tausch@quantco.com>
+Message-Id: <825e7404-f781-4739-a37b-ae3d095fda4d@app.fastmail.com>
+In-Reply-To: <3488DCC3-D127-465B-BB95-3D87BB2E48F6@ytausch.de>
+References: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de>
+ <xmqq4invm2dk.fsf@gitster.g>
+ <3724733C-FECB-47F5-841C-84DE9792332D@ytausch.de>
+ <fa7fc215-03eb-492d-9af4-457482c56a48@app.fastmail.com>
+ <D514F3BA-36DD-4DAD-BF73-609730390A27@ytausch.de>
+ <xmqqqzqxczeb.fsf@gitster.g>
+ <75AA7DD7-F8D8-48DC-ADA0-74E56CFF351D@ytausch.de>
+ <3488DCC3-D127-465B-BB95-3D87BB2E48F6@ytausch.de>
+Subject: Re: [PATCH v2] merge-file: honor merge.conflictStyle outside of a repository
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Fri, Feb 6, 2026, at 08:43, Matthias Beyer wrote:
-> Hi,
+On Sat, Feb 7, 2026, at 22:37, Yannik Tausch wrote:
+> When running outside a repository, git merge-file ignores the
+> merge.conflictStyle configuration variable entirely. Since the
+> function receives `repo` from the caller (which is NULL outside a
+> repository), and repo_config() falls back to reading system and user
+> configuration when passed NULL, pass `repo` to repo_config()
+> unconditionally.
 >
-> I am not sure whether this was already reported, searching the lore did
-> not yield anything for me, but I might have overlooked it...
+> Also document that merge.conflictStyle is honored.
 >
-> This was just posted on mastodon[0]:
->
->     PSA: Did you know that it=E2=80=99s **unsafe** to put code diffs i=
-nto your
-> commit messages?
->
->     Like https://
->     github.com/i3/i3/pull/6564 for example
->
->     Such diffs will be applied by patch(1) (also git-am(1)) as part of
-> the code change!
->
->     This is how a sleep(1) made it into i3 4.25-2 in Debian unstable.
->
-> TL;DR: If you put a diff in the commit message, that diff will be
-> applied by git-am.
->
-> This looks clearly like unintended and might be an attack-vector, righ=
-t?
+> Signed-off-by: Yannik Tausch <dev@ytausch.de>
+> ---
 
-I have an idea for a proposal to note this in the documentation.
+This looks good to me. Based on my previous feedback.
+
+>
+> Notes:
+>    Changes since v1:
+>    - Use repo parameter directly with repo_config() (Junio)
+>    - Fix AsciiDoc continuation, rename test files, break long
+>      lines (Kristoffer)
+
+Nice and tidy change notes/changelog.
+
+>[snip]
