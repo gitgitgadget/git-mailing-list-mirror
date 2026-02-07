@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585DF33C19E
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 20:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD0633B97E
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 20:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770494706; cv=none; b=KM25ZJU4KcUeREQXviZOPnXrylboabNWfKT+HMGpTUzZCkMKEfguQ1/g2/zKBXNTsjIGMK2T+4Hx69tlU1he1Tndf+f0goH/7vOpvrnfuc/nxFH+PU2Kw5e0FOKsJIAp+bvXi8WTrtMmi/UGs/IFeTa+zxoNd915pbEk8mq/HcM=
+	t=1770494706; cv=none; b=WQOsG6EIbtDYdaCH3vxWUgva03OmfktRCpRh8HD8He06lToh7QASWE6sUziMKuasr/iWQ2u1iu9iKeoHArbhslutVUM/QlmctT05cHDPnhIWPonrLdYMsm0watplrdelrEP5cwH4HKRHDqnT/BYzFDwlo4pHG/JYO5vDXr/iRLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1770494706; c=relaxed/simple;
-	bh=Lo+vVknVElOBA9UQM8jltxXSkTFkdb7NKYT9Iszwglg=;
+	bh=msibDcX0KIUKydgw9oOTJERE49dOGfjiKXGY73h8WNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YpRaOLGe81EkvPhdKfUY9Dk+MJUReIvAXwyH4vv/a1RINo5qJuHlEF0GDWIqZ5xwbKu/4UeDqxeBtuEo8GVaeDVrj78qKM2dJlCo2WfEqMrGf5LJv5mNANS6gc6O9dpY7wQHgJaKYuL2Qd/sL7K2hRxf6CX8/wQFs28+9q2m9gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=qAo9rKrZ; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=TEDg4bxlgINaKiAPXJlM/8bveBSOpAnOB3HNthXYwlsclEG4lumuC0hVewxMia06D/Pk3+BPnREt6xcZq5V0UsR/fFseM8tCqjsD5YPSqaWjEzP+5WLigvvYuY2NPj2gduKhKc1IicaaLBpvLAuCpB0MZmermwkkajjyBhlTn3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=raeFV5XV; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="qAo9rKrZ"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="raeFV5XV"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1770494697;
-	bh=Lo+vVknVElOBA9UQM8jltxXSkTFkdb7NKYT9Iszwglg=;
+	bh=msibDcX0KIUKydgw9oOTJERE49dOGfjiKXGY73h8WNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=qAo9rKrZE7GqSDiUDE8ZVlCflVE/edTWzsbsDzccnOFTBOE8EkD4IbOyddARhoeAj
-	 j7hlwhfMonfVmfPIu1AcAEu6bKEMVJ+stdWydCWqDCaO8A4FxbxPr5u23iaGCyCeKa
-	 pJGdhh4Mn+6wLEXeVGmk8qqCwo9XzOzokADQ0qEHkmZ7u6ZdkZnWY1D6ROrh0vw3IB
-	 ZmaQPjjZJp1+dBeGdTwcwiTJiaGfP2VvIQ5jsscZ28FpaLKNJF2IqTuyk0ULq5rl08
-	 9Aqih3VZwoA2RxwlUwT2R79mcVl/CbaQ2FR1bHTZWnjcRpA/dpglZ2FrCNf/WaiBjh
-	 3RHjo/av5zeRNwy+ER65fJ8tWk6G6z93qVrRj9oZ5AbNXArX5ohlb7XHntwt8Wt+3W
-	 noka7fH/YdTLLRWlUChJfbUa+mbKKrZ2iDZaOZYSSxoMmPM64fZja+NA1GLMp4A24h
-	 OW9jZIg5hjZ4E6ChRCUb0gTO2A88C/YcYKdaZJP+HAwB8hF5764
+	b=raeFV5XVGvZJUz7lNM+W97A4c7tjLvTMVfY7SGlztYio6/TIJmorzL+LqSn+Dn7wi
+	 vZncmjdK7rdhHGbxGIKHN/QKVBd6njmUQe/lSu0I4/1W4HND7s7pqqy8B+YaddIquX
+	 v7qyL2yC4UrEGGxnaov+SL3HSR+rrasy492KZjM3AyAcybqCmeQcxqRoWWtEATkFdK
+	 qfFNKXJMyXFb5QHn4uffew1pQ/IcDPQGE/Gmg3aNaApI1sVhts+YNi1Qsez9f9tnb2
+	 YPQZjlr7NtzAy+bT2W2B8MJYBk7l+b6VHL1Y98bNek0gSgZt2qbJAKhfkRSK376etb
+	 ZcZvKwHwFzrVzB+cR8JDhZ3TYD7Ca3gVX+78I9fEtk24OdfQdOaDxykcx0Q9mjz9kp
+	 rFbHmlWpZV5ps5U1deZ22EbdbitYRGOVpUS3iKrOi2XM+R81Co+ad27oPj2aDkcFRp
+	 zeKbnlmxJfLEtS76nkfS45Y+Y1XUmRYxvLavrhVYCFwRJbp8dYf
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9a58:ad83:8db9:6f4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id EBC00243EB;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C62B2243CB;
 	Sat,  7 Feb 2026 20:04:57 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ezekiel Newren <ezekielnewren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 15/16] rust: add a small wrapper around the hashfile code
-Date: Sat,  7 Feb 2026 20:04:45 +0000
-Message-ID: <20260207200446.2837699-16-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 11/16] rust: fix linking binaries with cargo
+Date: Sat,  7 Feb 2026 20:04:41 +0000
+Message-ID: <20260207200446.2837699-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20260207200446.2837699-1-sandals@crustytoothpaste.net>
 References: <20251117221621.2863243-1-sandals@crustytoothpaste.net>
@@ -56,141 +56,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Our new binary object map code avoids needing to be intimately involved
-with file handling by simply writing data to an object implement Write.
-This makes it very easy to test by writing to a Cursor wrapping a Vec
-for tests, and thus decouples it from intimate knowledge about how we
-handle files.
+From: "brian m. carlson" <bk2204@github.com>
 
-However, we will actually want to write our data to an actual file,
-since that's the most practical way to persist data.  Implement a
-wrapper around the hashfile code that implements the Write trait so that
-we can write our object map into a file.
+When Cargo links binaries with MSVC, it uses the link.exe linker from
+PATH to do so.  However, when running under a shell from MSYS, such as
+when building with the Git for Windows SDK, which we do in CI, the
+/ming64/bin and /usr/bin entries are first in PATH.  That means that the
+Unix link binary shows up first, which obviously does not work for
+linking binaries in any useful way.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+To solve this problem, adjust PATH to place those binaries at the end of
+the list instead of the beginning.  This allows access to the normal
+Unix tools, but link.exe will be the compiler's linker.  Make sure to
+export PATH explicitly: while this should be the default, it's more
+robust to not rely on the shell operating in a certain way.
+
+The reason this has not shown up before is that we typically link our
+binaries from the C compiler.  However, now that we're about to
+introduce a Rust build script (build.rs file), Rust will end up linking
+that script to further drive Cargo, in which case we'll invoke the
+linker from it.  There are other solutions, such as using LLD, but this
+one is simple and reliable and is most likely to work with existing
+systems.
+
+Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+Signed-off-by: brian m. carlson <bk2204@github.com>
 ---
- Makefile         |  1 +
- src/csum_file.rs | 81 ++++++++++++++++++++++++++++++++++++++++++++++++
- src/lib.rs       |  1 +
- src/meson.build  |  1 +
- 4 files changed, 84 insertions(+)
- create mode 100644 src/csum_file.rs
+ src/cargo-meson.sh | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index acb7768cb8..9e16ce64e2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1545,6 +1545,7 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
+index 38728a3711..75f3cd1265 100755
+--- a/src/cargo-meson.sh
++++ b/src/cargo-meson.sh
+@@ -19,6 +19,18 @@ do
+ 	esac
+ done
  
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
++case "$(cargo -vV | sed -n 's/^host: \(.*\)$/\1/p')" in
++	*-windows-msvc)
++		LIBNAME=gitcore.lib
++		PATH="$(echo "$PATH" | tr ':' '\n' | grep -Ev "^(/mingw64/bin|/usr/bin)$" | paste -sd: -):/mingw64/bin:/usr/bin"
++		export PATH
++		;;
++	*-windows-*)
++		LIBNAME=gitcore.lib;;
++	*)
++		LIBNAME=libgitcore.a;;
++esac
++
+ cargo build --lib --quiet --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
+ RET=$?
+ if test $RET -ne 0
+@@ -26,13 +38,6 @@ then
+ 	exit $RET
+ fi
  
-+RUST_SOURCES += src/csum_file.rs
- RUST_SOURCES += src/hash.rs
- RUST_SOURCES += src/lib.rs
- RUST_SOURCES += src/loose.rs
-diff --git a/src/csum_file.rs b/src/csum_file.rs
-new file mode 100644
-index 0000000000..7f2c6c4fcb
---- /dev/null
-+++ b/src/csum_file.rs
-@@ -0,0 +1,81 @@
-+// This program is free software; you can redistribute it and/or modify
-+// it under the terms of the GNU General Public License as published by
-+// the Free Software Foundation: version 2 of the License, dated June 1991.
-+//
-+// This program is distributed in the hope that it will be useful,
-+// but WITHOUT ANY WARRANTY; without even the implied warranty of
-+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+// GNU General Public License for more details.
-+//
-+// You should have received a copy of the GNU General Public License along
-+// with this program; if not, see <https://www.gnu.org/licenses/>.
-+
-+use crate::hash::{HashAlgorithm, GIT_MAX_RAWSZ};
-+use std::ffi::CStr;
-+use std::io::{self, Write};
-+use std::os::raw::c_void;
-+
-+/// A writer that can write files identified by their hash or containing a trailing hash.
-+pub struct HashFile {
-+    ptr: *mut c_void,
-+    algo: HashAlgorithm,
-+}
-+
-+impl HashFile {
-+    /// Create a new HashFile.
-+    ///
-+    /// The hash used will be `algo`, its name should be in `name`, and an open file descriptor
-+    /// pointing to that file should be in `fd`.
-+    pub fn new(algo: HashAlgorithm, fd: i32, name: &CStr) -> HashFile {
-+        HashFile {
-+            ptr: unsafe { c::hashfd(algo.hash_algo_ptr(), fd, name.as_ptr()) },
-+            algo,
-+        }
-+    }
-+
-+    /// Finalize this HashFile instance.
-+    ///
-+    /// Returns the hash computed over the data.
-+    pub fn finalize(self, component: u32, flags: u32) -> Vec<u8> {
-+        let mut result = vec![0u8; GIT_MAX_RAWSZ];
-+        unsafe { c::finalize_hashfile(self.ptr, result.as_mut_ptr(), component, flags) };
-+        result.truncate(self.algo.raw_len());
-+        result
-+    }
-+}
-+
-+impl Write for HashFile {
-+    fn write(&mut self, data: &[u8]) -> io::Result<usize> {
-+        for chunk in data.chunks(u32::MAX as usize) {
-+            unsafe {
-+                c::hashwrite(
-+                    self.ptr,
-+                    chunk.as_ptr() as *const c_void,
-+                    chunk.len() as u32,
-+                )
-+            };
-+        }
-+        Ok(data.len())
-+    }
-+
-+    fn flush(&mut self) -> io::Result<()> {
-+        unsafe { c::hashflush(self.ptr) };
-+        Ok(())
-+    }
-+}
-+
-+pub mod c {
-+    use std::os::raw::{c_char, c_int, c_void};
-+
-+    extern "C" {
-+        pub fn hashfd(algop: *const c_void, fd: i32, name: *const c_char) -> *mut c_void;
-+        pub fn hashwrite(f: *mut c_void, data: *const c_void, len: u32);
-+        pub fn hashflush(f: *mut c_void);
-+        pub fn finalize_hashfile(
-+            f: *mut c_void,
-+            data: *mut u8,
-+            component: u32,
-+            flags: u32,
-+        ) -> c_int;
-+    }
-+}
-diff --git a/src/lib.rs b/src/lib.rs
-index 442f9433dc..0c598298b1 100644
---- a/src/lib.rs
-+++ b/src/lib.rs
-@@ -1,3 +1,4 @@
-+pub mod csum_file;
- pub mod hash;
- pub mod loose;
- pub mod varint;
-diff --git a/src/meson.build b/src/meson.build
-index 1eea068519..45739957b4 100644
---- a/src/meson.build
-+++ b/src/meson.build
-@@ -1,4 +1,5 @@
- libgit_rs_sources = [
-+  'csum_file.rs',
-   'hash.rs',
-   'lib.rs',
-   'loose.rs',
+-case "$(cargo -vV | sed -n 's/^host: \(.*\)$/\1/p')" in
+-	*-windows-*)
+-		LIBNAME=gitcore.lib;;
+-	*)
+-		LIBNAME=libgitcore.a;;
+-esac
+-
+ if ! cmp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a" >/dev/null 2>&1
+ then
+ 	cp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a"
