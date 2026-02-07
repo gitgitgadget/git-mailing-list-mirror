@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE412F39C7
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 20:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6354233B6D9
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 20:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770494704; cv=none; b=rjNkIWSiWJUCOoEGUpZR92/ZNr9vQn7tgzNfOGRr5z6GjPltp9FZ+xiSfFaM9FoaI15RMGOy03Ks/r28eKpguQyPDHug6DlRtMgqntO0MKHW/xxL61mnA8+yVo0yiNh809bk7BVzq2U9hDH5EW+0CprUlqXWtddFnm2xDECuQso=
+	t=1770494705; cv=none; b=Bjsg4ATSuOC96bHNpKjJLpb3GkQT969NHM+TyubNMNWAqDRwkKK6ZxVBBrn/Rju/pgHPJgCstaDhsTM2ITJc4FnJfIcRSRGruo+t5V6Aq81FSCxbVX/GfI3Re1VsclFeizgYc6PbV1Dz4zMlKpFHu3aHrRhQloG2Ulu1F4oE3nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770494704; c=relaxed/simple;
-	bh=DqZYWZIedr1ub4WUN8A/eaY6UnwrrShF7V6itNKbPzg=;
+	s=arc-20240116; t=1770494705; c=relaxed/simple;
+	bh=BoVHsOEpMhz2oujucIoXGPS78UYW47nLkiVdhQ8NsdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iADF9xRn6wQQL0Q9HBRyb7At5267Iyq+iiddCptlizWXGnfgLGu1oCyD0f7Tm0iqmBRBnkHEkEuHewd7vKr35dnYgEXvDwLiXUE7pj6+hRho6Aai2P2GtfrRJWwGedapbcm42xVfO2MBubB3q1SGh8Yd85oFMzkLy/j+RJHKySo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=N3qA3J2r; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=fv/Qzj0vpo9F/PEVRQ6QBzJZ4SIaoONtUoDsSGc5Oyr9ZNSNo7igxvCsqyY+sSj0NvDxn7ax1lWup0CQVHuvzk2fZtcuf0JTkw9BsBYOXYKXU5fmYzB3QZeaqxtDwJ9LmNOf5paA1FJYD8F4A9SSKdCj7YkS39Arv8GIyQE8JAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mV2zQn3z; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="N3qA3J2r"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mV2zQn3z"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1770494697;
-	bh=DqZYWZIedr1ub4WUN8A/eaY6UnwrrShF7V6itNKbPzg=;
+	bh=BoVHsOEpMhz2oujucIoXGPS78UYW47nLkiVdhQ8NsdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=N3qA3J2rMn8IwL9BcNIKVLoumO5VNeb2tM+31QPinTPWTQAOmlUQR5aJtZy2s5Am4
-	 dBsHO00jHYgpAdNQxzh3YsG5iyZMOkS4wv2ElFgu0KSApEEgPPEuzbuHqoBmsxx/MJ
-	 Ppw5htDrSnsDD6hD2uRl3jq2TiR9FlOIgGiOKXxBGlHg/IC0IDOft9WjwqXf0Z2a1K
-	 hMDo9SJyE7QtA4oxKa8V7o9VAJa18ygrUrIAdeod2o07R37v8o8M6VOKO6RienOkBO
-	 TdyY9W/2jwnzp1eUChwMje9iI5nXPhi7XdCKAswDRHtwuagNftSa/UxfuGHA/P5GU0
-	 v7d2r2RT/JL+UUxHKj10M39siPb04Yvw1KLSb5WfVJ34wQWcrWA/qJWcFjEn7tI4lN
-	 e2ESu1Zcbp+ZLJfN4/o1WoZSGIQouk+c33b+wXKjBkl5tkTzkmyvwrE6Dt8UmxVEwS
-	 4eUlRwJXf/b0cTSsAKFslEJxcthLEYr1xa64V6lq+tGfq4MSaeS
+	b=mV2zQn3zcA2qHazPwo40aPA8gZX4bgN+t94BOxuX3bSM4cL4T77g4IszZZK2jDl4K
+	 6D5SpS0bZ3asl9XDg/vRu/smOemiUuMCUfD8KWr/PaVaPzdxNe+zGPfVyxRZ7tFCnH
+	 DN7Wl/OE8VvnoJusq7W4UJPCCIATVCEvpPVeW33wnB48d5OnkaKsb+gFZgTP82Wh+q
+	 GwcoIL3uhFyGW/epUPWRQO+Kt29G1Idyol8lu+lggTXUi8qbd0UeHrkTaExgm/U/2E
+	 +7fJ0PsigeIqerdj9Z6qGsGSF9u23NDpxMfv9C56+wgopw0su68gGBV+aaLeAejBHV
+	 spdENNsjfmXDTQOgZxNW5KtgOE+t/p5pM40XXBd2AfwlFEWpiYMWOOZHl++rUk3EFF
+	 vg7rddS9rm6kTFWNNVV/6LdwcEyPzPOcOEqF+z2O5ARl8nwd99cbabaCoMtLPzxVBu
+	 Vh0owpxdiuWqX+A3fnqO20jbh5hy0qXQtDdhbDY5CMrZBjLikRq
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9a58:ad83:8db9:6f4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 76CF4231F8;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A3CE8243C6;
 	Sat,  7 Feb 2026 20:04:57 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ezekiel Newren <ezekielnewren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 03/16] hash: use uint32_t for object_id algorithm
-Date: Sat,  7 Feb 2026 20:04:33 +0000
-Message-ID: <20260207200446.2837699-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 07/16] rust: add additional helpers for ObjectID
+Date: Sat,  7 Feb 2026 20:04:37 +0000
+Message-ID: <20260207200446.2837699-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20260207200446.2837699-1-sandals@crustytoothpaste.net>
 References: <20251117221621.2863243-1-sandals@crustytoothpaste.net>
@@ -56,149 +56,184 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We currently use an int for this value, but we'll define this structure
-from Rust in a future commit and we want to ensure that our data types
-are exactly identical.  To make that possible, use a uint32_t for the
-hash algorithm.
+Right now, users can internally access the contents of the ObjectID
+struct, which can lead to data that is not valid, such as invalid
+algorithms or non-zero-padded hash values.  These can cause problems
+down the line as we use them more.
+
+Add a constructor for ObjectID that allows us to set these values and
+also provide an accessor for the algorithm so that we can access it.  In
+addition, provide useful Display and Debug implementations that can
+format our data in a useful way.
+
+Now that we have the ability to work with these various components in a
+nice way, add some tests as well to make sure that ObjectID and
+HashAlgorithm work together as expected.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- hash.c       |  6 +++---
- hash.h       | 10 +++++-----
- oidtree.c    |  2 +-
- repository.c |  6 +++---
- repository.h |  4 ++--
- serve.c      |  2 +-
- 6 files changed, 15 insertions(+), 15 deletions(-)
+ src/hash.rs | 133 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 132 insertions(+), 1 deletion(-)
 
-diff --git a/hash.c b/hash.c
-index 4a04ecb50e..81b4f87027 100644
---- a/hash.c
-+++ b/hash.c
-@@ -241,7 +241,7 @@ const char *empty_tree_oid_hex(const struct git_hash_algo *algop)
- 	return oid_to_hex_r(buf, algop->empty_tree);
+diff --git a/src/hash.rs b/src/hash.rs
+index 70bb8095e8..e1fa568661 100644
+--- a/src/hash.rs
++++ b/src/hash.rs
+@@ -32,7 +32,7 @@ impl Error for InvalidHashAlgorithm {}
+ 
+ /// A binary object ID.
+ #[repr(C)]
+-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq)]
++#[derive(Clone, Ord, PartialOrd, Eq, PartialEq)]
+ pub struct ObjectID {
+     pub hash: [u8; GIT_MAX_RAWSZ],
+     pub algo: u32,
+@@ -40,6 +40,27 @@ pub struct ObjectID {
+ 
+ #[allow(dead_code)]
+ impl ObjectID {
++    /// Return a new object ID with the given algorithm and hash.
++    ///
++    /// `hash` must be exactly the proper length for `algo` and this function panics if it is not.
++    /// The extra internal storage of `hash`, if any, is zero filled.
++    pub fn new(algo: HashAlgorithm, hash: &[u8]) -> Self {
++        let mut data = [0u8; GIT_MAX_RAWSZ];
++        // This verifies that the length of `hash` is correct.
++        data[0..algo.raw_len()].copy_from_slice(hash);
++        Self {
++            hash: data,
++            algo: algo as u32,
++        }
++    }
++
++    /// Return the algorithm for this object ID.
++    ///
++    /// If the algorithm set internally is not valid, this function panics.
++    pub fn algo(&self) -> Result<HashAlgorithm, InvalidHashAlgorithm> {
++        HashAlgorithm::from_u32(self.algo).ok_or(InvalidHashAlgorithm(self.algo))
++    }
++
+     pub fn as_slice(&self) -> Result<&[u8], InvalidHashAlgorithm> {
+         match HashAlgorithm::from_u32(self.algo) {
+             Some(algo) => Ok(&self.hash[0..algo.raw_len()]),
+@@ -55,6 +76,41 @@ impl ObjectID {
+     }
  }
  
--int hash_algo_by_name(const char *name)
-+uint32_t hash_algo_by_name(const char *name)
- {
- 	if (!name)
- 		return GIT_HASH_UNKNOWN;
-@@ -251,7 +251,7 @@ int hash_algo_by_name(const char *name)
- 	return GIT_HASH_UNKNOWN;
++impl Display for ObjectID {
++    /// Format this object ID as a hex object ID.
++    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
++        let hash = self.as_slice().unwrap();
++        for x in hash {
++            write!(f, "{:02x}", x)?;
++        }
++        Ok(())
++    }
++}
++
++impl Debug for ObjectID {
++    /// Format this object ID as a hex object ID with a colon and name appended to it.
++    ///
++    /// ```
++    /// assert_eq!(
++    ///     format!("{:?}", HashAlgorithm::SHA256.null_oid()),
++    ///     "0000000000000000000000000000000000000000000000000000000000000000:sha256"
++    /// );
++    /// ```
++    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
++        let hash = match self.as_slice() {
++            Ok(hash) => hash,
++            Err(_) => &self.hash,
++        };
++        for x in hash {
++            write!(f, "{:02x}", x)?;
++        }
++        match self.algo() {
++            Ok(algo) => write!(f, ":{}", algo.name()),
++            Err(e) => write!(f, ":invalid-hash-algo-{}", e.0),
++        }
++    }
++}
++
+ /// A hash algorithm,
+ #[repr(C)]
+ #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
+@@ -192,3 +248,78 @@ pub mod c {
+         pub fn hash_algo_ptr_by_number(n: u32) -> *const c_void;
+     }
  }
- 
--int hash_algo_by_id(uint32_t format_id)
-+uint32_t hash_algo_by_id(uint32_t format_id)
- {
- 	for (size_t i = 1; i < GIT_HASH_NALGOS; i++)
- 		if (format_id == hash_algos[i].format_id)
-@@ -259,7 +259,7 @@ int hash_algo_by_id(uint32_t format_id)
- 	return GIT_HASH_UNKNOWN;
- }
- 
--int hash_algo_by_length(size_t len)
-+uint32_t hash_algo_by_length(size_t len)
- {
- 	for (size_t i = 1; i < GIT_HASH_NALGOS; i++)
- 		if (len == hash_algos[i].rawsz)
-diff --git a/hash.h b/hash.h
-index fae966b23c..99c9c2a0a8 100644
---- a/hash.h
-+++ b/hash.h
-@@ -211,7 +211,7 @@ static inline void git_SHA256_Clone(git_SHA256_CTX *dst, const git_SHA256_CTX *s
- 
- struct object_id {
- 	unsigned char hash[GIT_MAX_RAWSZ];
--	int algo;	/* XXX requires 4-byte alignment */
-+	uint32_t algo;	/* XXX requires 4-byte alignment */
- };
- 
- #define GET_OID_QUIETLY                  01
-@@ -344,13 +344,13 @@ static inline void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx
-  * Return a GIT_HASH_* constant based on the name.  Returns GIT_HASH_UNKNOWN if
-  * the name doesn't match a known algorithm.
-  */
--int hash_algo_by_name(const char *name);
-+uint32_t hash_algo_by_name(const char *name);
- /* Identical, except based on the format ID. */
--int hash_algo_by_id(uint32_t format_id);
-+uint32_t hash_algo_by_id(uint32_t format_id);
- /* Identical, except based on the length. */
--int hash_algo_by_length(size_t len);
-+uint32_t hash_algo_by_length(size_t len);
- /* Identical, except for a pointer to struct git_hash_algo. */
--static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
-+static inline uint32_t hash_algo_by_ptr(const struct git_hash_algo *p)
- {
- 	size_t i;
- 	for (i = 0; i < GIT_HASH_NALGOS; i++) {
-diff --git a/oidtree.c b/oidtree.c
-index 151568f74f..324de94934 100644
---- a/oidtree.c
-+++ b/oidtree.c
-@@ -10,7 +10,7 @@ struct oidtree_iter_data {
- 	oidtree_iter fn;
- 	void *arg;
- 	size_t *last_nibble_at;
--	int algo;
-+	uint32_t algo;
- 	uint8_t last_byte;
- };
- 
-diff --git a/repository.c b/repository.c
-index 9ebbb7afd8..08422d2188 100644
---- a/repository.c
-+++ b/repository.c
-@@ -39,7 +39,7 @@ struct repository *the_repository = &the_repo;
- static void set_default_hash_algo(struct repository *repo)
- {
- 	const char *hash_name;
--	int algo;
-+	uint32_t algo;
- 
- 	hash_name = getenv("GIT_TEST_DEFAULT_HASH_ALGO");
- 	if (!hash_name)
-@@ -179,12 +179,12 @@ void repo_set_gitdir(struct repository *repo,
- 			repo->gitdir, "index");
- }
- 
--void repo_set_hash_algo(struct repository *repo, int hash_algo)
-+void repo_set_hash_algo(struct repository *repo, uint32_t hash_algo)
- {
- 	repo->hash_algo = &hash_algos[hash_algo];
- }
- 
--void repo_set_compat_hash_algo(struct repository *repo MAYBE_UNUSED, int algo)
-+void repo_set_compat_hash_algo(struct repository *repo MAYBE_UNUSED, uint32_t algo)
- {
- #ifdef WITH_RUST
- 	if (hash_algo_by_ptr(repo->hash_algo) == algo)
-diff --git a/repository.h b/repository.h
-index 7141237f97..46a3beabec 100644
---- a/repository.h
-+++ b/repository.h
-@@ -202,8 +202,8 @@ struct set_gitdir_args {
- void repo_set_gitdir(struct repository *repo, const char *root,
- 		     const struct set_gitdir_args *extra_args);
- void repo_set_worktree(struct repository *repo, const char *path);
--void repo_set_hash_algo(struct repository *repo, int algo);
--void repo_set_compat_hash_algo(struct repository *repo, int compat_algo);
-+void repo_set_hash_algo(struct repository *repo, uint32_t algo);
-+void repo_set_compat_hash_algo(struct repository *repo, uint32_t compat_algo);
- void repo_set_ref_storage_format(struct repository *repo,
- 				 enum ref_storage_format format);
- void initialize_repository(struct repository *repo);
-diff --git a/serve.c b/serve.c
-index 53ecab3b42..49a6e39b1d 100644
---- a/serve.c
-+++ b/serve.c
-@@ -14,7 +14,7 @@
- 
- static int advertise_sid = -1;
- static int advertise_object_info = -1;
--static int client_hash_algo = GIT_HASH_SHA1_LEGACY;
-+static uint32_t client_hash_algo = GIT_HASH_SHA1_LEGACY;
- 
- static int always_advertise(struct repository *r UNUSED,
- 			    struct strbuf *value UNUSED)
++
++#[cfg(test)]
++mod tests {
++    use super::HashAlgorithm;
++
++    fn all_algos() -> &'static [HashAlgorithm] {
++        &[HashAlgorithm::SHA1, HashAlgorithm::SHA256]
++    }
++
++    #[test]
++    fn format_id_round_trips() {
++        for algo in all_algos() {
++            assert_eq!(
++                *algo,
++                HashAlgorithm::from_format_id(algo.format_id()).unwrap()
++            );
++        }
++    }
++
++    #[test]
++    fn offset_round_trips() {
++        for algo in all_algos() {
++            assert_eq!(*algo, HashAlgorithm::from_u32(*algo as u32).unwrap());
++        }
++    }
++
++    #[test]
++    fn slices_have_correct_length() {
++        for algo in all_algos() {
++            for oid in [algo.null_oid(), algo.empty_blob(), algo.empty_tree()] {
++                assert_eq!(oid.as_slice().unwrap().len(), algo.raw_len());
++            }
++        }
++    }
++
++    #[test]
++    fn object_ids_format_correctly() {
++        let entries = &[
++            (
++                HashAlgorithm::SHA1.null_oid(),
++                "0000000000000000000000000000000000000000",
++                "0000000000000000000000000000000000000000:sha1",
++            ),
++            (
++                HashAlgorithm::SHA1.empty_blob(),
++                "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
++                "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391:sha1",
++            ),
++            (
++                HashAlgorithm::SHA1.empty_tree(),
++                "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
++                "4b825dc642cb6eb9a060e54bf8d69288fbee4904:sha1",
++            ),
++            (
++                HashAlgorithm::SHA256.null_oid(),
++                "0000000000000000000000000000000000000000000000000000000000000000",
++                "0000000000000000000000000000000000000000000000000000000000000000:sha256",
++            ),
++            (
++                HashAlgorithm::SHA256.empty_blob(),
++                "473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813",
++                "473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813:sha256",
++            ),
++            (
++                HashAlgorithm::SHA256.empty_tree(),
++                "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321",
++                "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321:sha256",
++            ),
++        ];
++        for (oid, display, debug) in entries {
++            assert_eq!(format!("{}", oid), *display);
++            assert_eq!(format!("{:?}", oid), *debug);
++        }
++    }
++}
