@@ -1,129 +1,149 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28605279DC3
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 10:13:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737F633893D
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 11:40:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770459240; cv=none; b=pFQRIIhENCnCjd3jdEh2vLcucKbcwjq4ZCLEBcBmMvmEFxsbY2s3/gr9T5T4/LTilByBEf6QriATEjse3zCB5E/blEKEHAG17dP2Od2G/5jvWY20ndIADAYF2shKqQDhCVqQLMQQqlwfYd+suwroZrTrarQ2s0NEFaqY0B9aFfg=
+	t=1770464423; cv=none; b=Kc+jLDk9XVLIOcM9U0QKwet1dldIZepFt/AgTHCxkSMV4iiHMfa8UDl0fMBViHfOJJ9QFLpFNSpNoDl2fa4rltQkjvcIoSD9MSOGpGl6BpN9CdCxaAFqoLaJF+WyRJgROieDyfelw4UH+HRIcKdqrVzSZ/eXUuGKISi3dnvLiNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770459240; c=relaxed/simple;
-	bh=MDzG04AoFqkK+ENRYg3doX1GR31+Wy8jGnmSuqEswXU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=FobjvBdnUEe6hUjXpOdsZBetYLieJMA1kSdhRlPd5j8HYcM1bpPPnMf//8GvVQJP+/WFbYQl3vwym5XsehcTSC2L3qq1X0XOcdqv8gjJu2OuVPwA/ynBLM5PqvegQXb0F1bScI1wJJutbQb3ShvGVyuB+nnaHI/yPUuqt3tOntQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.103])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4f7QjJ6gKbz7QTlV
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 10:32:36 +0100 (CET)
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4f7Qj71kw6zRnlX;
-	Sat,  7 Feb 2026 10:32:25 +0100 (CET)
-Message-ID: <ad776ca0-1038-43f7-860d-2f3a78a5db6d@kdbg.org>
-Date: Sat, 7 Feb 2026 10:32:25 +0100
+	s=arc-20240116; t=1770464423; c=relaxed/simple;
+	bh=M7v1ADnsiL0R0q1Nlxg4GfuZy6/HkETTyDYMshMbU0c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RefCxI7ZVdl+OrQe8wW7uq6Qj7DQpmVfrn/oSaQ9fYZipC936EWmzyNRFPE4ZVmlSD2QoTTWLZyPeeB1DKPRGJiWB06LOa46lw/bCBMSADTqRjcWVaNMTB4TiahIxkeH+DOshYrUfcVp0fqIIUOUSbTCR9pTrLZO7+MqVBQqXHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QAx2lLVS; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QAx2lLVS"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-352e2c59264so2002389a91.0
+        for <git@vger.kernel.org>; Sat, 07 Feb 2026 03:40:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770464422; x=1771069222; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bi/MJ+lBUKRsaKz9xG0VER9VH9PUMqCIyO+tXpLEqog=;
+        b=QAx2lLVSBePmnU9ON1TGvU44i242/odnci+n2n9+fZWSs256DtN/fifeu6a8B/Z/w3
+         GST92fELlFtH15COCQbUy1iE9bX+ZuXB/PRX93vkeCmOwN5vWhaQN3Yfgyek+7CdB50I
+         QwhyjZ6JnW9QPVLygPES9Q9lfL0HCu7KlHKWAnBtf8V5fAR7Qo/j0ICtBPWw1PjMVhOK
+         /TAJW81RVBvk71LJBBcK43Q3ZPmnVs1upPmdVCwWwoU/PB48Lnxf2yTzOCuPQWcI8qT5
+         o+4oqKWa3/jCcNsrUD2J3fiNZC2PrDl4G1OZ3+WeewjyZ7KMaQGgFznhR4om+hiVka3+
+         CKAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770464422; x=1771069222;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bi/MJ+lBUKRsaKz9xG0VER9VH9PUMqCIyO+tXpLEqog=;
+        b=GZROF28HTOXtqN5EVAmhElRzVywuJV5fo440fwgFMlQaeonBmfnGiDoNGYEaYB5lcD
+         bSJB6rJeGYuOSm8whlTp0q5NYS8IJ3xlYn1CACJlWu2AlkqfA6WZBN9Raw28uJtLO34K
+         NskQNlPXJzQad5TPAE8Im6VGqqQH7R21HXXVrvPq+eMJi8QQpISUYnngXo1MQebZYj8j
+         jcbv3jy/NIwitb6omCUcf24pto30/1gw2hAhhk2e+WvePKZ9snBmbRQwtfXOZWjJ8IAb
+         4TDmfO+W0nJVBkVdX8eFCsdOeJFRNqik6xmpNZfHJ9FQCU/l9nMBReqxoh+sWZcXv9yU
+         tPuA==
+X-Gm-Message-State: AOJu0YyXwh0NRL4OV5M8/JI0LH7RlgxJOaGWeGqOFfE1DCUYTt6nlBnE
+	SZM740HLp+miiuuEslJIoYpyDddmOFNwg5kz5ofWRYQhe7TNbompzc+D0BQtMNL1
+X-Gm-Gg: AZuq6aJw6a4Zgb90gLVzbd2DaJCUk0OCmN/nPOj88OxNGtjXrrb4mdV37vykRLQruxJ
+	+rzPT5rBMrGR7DoZtuh6rEUDZLFRkXH+ZJ1Y2nIzTj7PMNlIu+D4nQSQDEOAZ+LHD7M3Ww6tpNt
+	8NHGmc1upT1/EGXvvYetAxE4fabOba+gxYmPeMKCA3HVihZd11qZt50Zu2s/L6zBvb+6aucjukD
+	HiJsku3uPjJB/6k9PYiZU/Jj0f11iUygPMYV5ji/UL9v67nQ3W4jx72f9V07gWc/uvV1M1s61lF
+	F1wAoZq7pfhxCYjxc/KvoivuriA/CzmcFHsIE6G0rnk0JJQhC/YDP/UIWStIJogl9qbQBfLeNLn
+	Cm9T85aNMPExz4z7P3FOxvw20tVsevJ4kftmbnd7b3tEtWjecaPM3GWdB90moBRzfreLtQZjmba
+	UP1P/iyXkcVuMQHH4GQpLEb4Y=
+X-Received: by 2002:a17:90a:ec87:b0:356:268e:ffa7 with SMTP id 98e67ed59e1d1-356268f0393mr47502a91.7.1770464421784;
+        Sat, 07 Feb 2026 03:40:21 -0800 (PST)
+Received: from AyushJha ([2409:40e4:4b:7889:a803:a194:3c70:2073])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3551a042ad6sm1701008a91.3.2026.02.07.03.40.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Feb 2026 03:40:21 -0800 (PST)
+From: Ayush Jha <kumarayushjha123@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Siddharth Asthana <siddharthasthana31@gmail.com>,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+	Ayush Jha <kumarayushjha123@gmail.com>
+Subject: [PATCH] [RFC][GSoC][PATCH] attr: use local repository state in read_attr
+Date: Sat,  7 Feb 2026 17:10:07 +0530
+Message-ID: <20260207114007.40-1-kumarayushjha123@gmail.com>
+X-Mailer: git-send-email 2.53.0.windows.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] graph: implement git-log(1) --untangle
-To: Toon Claes <toon@iotcl.com>
-References: <20260206-toon-log-graph-no-merge-base-v1-1-a6f983991a1d@iotcl.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-In-Reply-To: <20260206-toon-log-graph-no-merge-base-v1-1-a6f983991a1d@iotcl.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Am 06.02.26 um 19:49 schrieb Toon Claes:
-> The output of `git log --graph` can be cluttered when dealing with
-> long-living branches or octopus merges.
-> 
-> For example consider this graph:
-> 
->     * left
->     | *-.   octopus-merge
->     |/|\ \
->     | | | * 4
->     | | * | 3
->     | | |/
->     | * / 2
->     | |/
->     * / 1
->     |/
->     * initial
-> 
-> The reason this looks messy, is because for each merged branch there is
-> a line back to the source branch. But in most cases, the user doesn't
-> care when merged branches are branched of.
-> 
-> To simplify the graph, implement option `--untangle`.
-> 
->     * left
->     | *-.   octopus-merge
->     |/|\ \
->     | | | * 4
->     | | * 3
->     | * 2
->     * 1
->     * initial
+read_attr() currently relies on is_bare_repository(), which
+implicitly depends on the global the_repository.
 
-IMNSHO, we need a better way to show where links to parents were
-truncated. Otherwise, I must consider this chart an incorrect
-representation of the history above.
+As attr.c is a reusable library component used by multiple
+commands, this prevents correct behavior when operating on
+secondary repositories (e.g. submodules or in-process repos)
+whose bareness may differ from the_repository.
 
-> As you can see, this untangles the arms of the octopus.
+Update read_attr() to determine bareness using the repository
+associated with istate->repo, based on repository configuration
+and worktree presence, instead of relying on global state.
 
-This example is too small to show any real improvement. But I think I
-understood what the goal is.
+No functional change is intended for the primary repository case.
 
-> To implement this feature, merge commits are treated a differently. For
-> each parent commit (except the first one) of a merge, the merge-base
-> with the first parent is found. That merge-base is saved in the column
-> for that branch and when the next commit for the column would be that
-> merge-base, no lines are drawn no more.
+Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
+---
+ attr.c | 36 ++++++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 14 deletions(-)
 
-So, the option's effect is to untangle visual representation of the
-history. It is achieved by truncating links between merge-bases and
-commits that appear in non-first parent links.
-
-How does this work with criss-cross merges?
-
-  Z
- / \
-o   o
-|\ /|
-| x |
-|/ \|
-o   o
- \ /
-  A
-
-(not sure how --graph would represent this...)
-
-How does this work with backward merges?
-
-* main
-|\
-* | C
-| * sync with main
-|/|
-* | B
-| * A
-|/
-* initial
-
-How does this interact with --boundary?
-
-Speaking of which, boundary commits are listed last. Since they need to
-be linked to the commits for which they are the boundary, a whole lot of
-these "unnecessary" lines accumulate the longer the list of commits is.
-If only there were a way to show boundary commits as soon as possible,
-then this accumulation would not happen.
-
--- Hannes
+diff --git a/attr.c b/attr.c
+index 4999b7e09d..f2d25b1863 100644
+--- a/attr.c
++++ b/attr.c
+@@ -848,21 +848,29 @@ static struct attr_stack *read_attr(struct index_state *istate,
+ 		res = read_attr_from_index(istate, path, flags);
+ 	} else if (tree_oid) {
+ 		res = read_attr_from_blob(istate, tree_oid, path, flags);
+-	} else if (!is_bare_repository()) {
+-		if (direction == GIT_ATTR_CHECKOUT) {
+-			res = read_attr_from_index(istate, path, flags);
+-			if (!res)
+-				res = read_attr_from_file(path, flags);
+-		} else if (direction == GIT_ATTR_CHECKIN) {
+-			res = read_attr_from_file(path, flags);
+-			if (!res)
+-				/*
+-				 * There is no checked out .gitattributes file
+-				 * there, but we might have it in the index.
+-				 * We allow operation in a sparsely checked out
+-				 * work tree, so read from it.
+-				 */
++	} else {
++		int is_bare;
++		int is_bare_cfg = -1;
++
++		repo_config_get_bool(istate->repo, "core.bare", &is_bare_cfg);
++		is_bare = is_bare_cfg && !repo_get_work_tree(istate->repo);
++
++		if (!is_bare) {
++			if (direction == GIT_ATTR_CHECKOUT) {
+ 				res = read_attr_from_index(istate, path, flags);
++				if (!res)
++					res = read_attr_from_file(path, flags);
++			} else if (direction == GIT_ATTR_CHECKIN) {
++				res = read_attr_from_file(path, flags);
++				if (!res)
++					/*
++					 * There is no checked out .gitattributes file
++					 * there, but we might have it in the index.
++					 * We allow operation in a sparsely checked out
++					 * work tree, so read from it.
++					 */
++					res = read_attr_from_index(istate, path, flags);
++			}
+ 		}
+ 	}
+ 
+-- 
+2.53.0.windows.1
 
