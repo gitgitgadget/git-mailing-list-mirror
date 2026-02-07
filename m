@@ -1,258 +1,137 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8708A33BBC6
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 20:05:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8783F23D7CE
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 21:03:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770494708; cv=none; b=LbvRijvx4CJSrbIR8osDK89C2i7A4GcnfrqvpdbIael+bfn0GyQgCeHR6pdg/1rsIzhUq5y13MqfAD7A5+DfeYDWFpZx9v9zwEh3azPM6i8OWUEzkeX0A8cZk6i5wX8SyCdcYtLwmQbZkf47HHqI/BY+jwd0oMTwdZljmhWvz8w=
+	t=1770498182; cv=none; b=cOb0d1kTn3qqLt0UDnwIU2Ao5hEv1HDZ3jIonmqBWzonBpF7Gv4xZyeEw0kBW0rzVsvEQ0oFHLWweQcoi2kZvFDjjnL0LhJc0B/in7aTua8hCFGrCk2ddAgyXn5gScvrfxEW6xWVrIemJqYGIByNhyMQpssAzufWYAydbz7EAc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770494708; c=relaxed/simple;
-	bh=sOuFYs9pn5OTqrFh3NgZcxC4HzeCIKpiHWOn9CEJJOU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdIbDXiGz3xpSyEybPuV8uT6TgCLbheaGG5AIB9R4cT80ffsbaDCq/Ez2ooWlKeyo9FGsC9xd4EodVChV6HMwZumYeuDjoW1rOTcxyZyoi9gYR8QemUnTD4dAXQPh9t+kii7msEbxSSdEl468vxJ+8R2Xj2eoG1Kc4LZRoYrgkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=R1dPLfb7; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1770498182; c=relaxed/simple;
+	bh=tfYpSbOj0ikEDgHCT6PruMMldK62Y58rzIvm/3xFUKU=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=iIDcUVrwB8iSN9dm9RkhuPilhy6pTZSYYzJhVhDRwQ9g7WORRbqqHuX0KDbHaLYemdQPwu9i1ZZ3BEAe8J0o3AslCnYN9xKwPLh8srCy8W8tyUtt5w31m5WN2IEiaweCur43HuIWnJsEmHIuh1MFNgI1wXiA11F7R4RFiW0rf0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jKtZ8H27; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="R1dPLfb7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1770494697;
-	bh=sOuFYs9pn5OTqrFh3NgZcxC4HzeCIKpiHWOn9CEJJOU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=R1dPLfb70GlBKMhQnnQr8nToo3UpPajLoJQhQrPqSwvl+BN/qRzfrymNyf+Pk16DQ
-	 QEcO6Ain5exZvPQ+GKEOzW+axuHaZKAFlCQHKSA6iF3/JcmgUsKhhOYnc/pg5ajkZl
-	 wyxNqPTEXd4v7peOixU6VIreCixuR8kjGx7rRri5hUqHDy1KmQ/UAbNDgD7UsxBOoT
-	 pi/RWcd6jshUvquMnMPHUta8ePhqJgrAROylZcrYhb+2g0FmNxNjImVfOLDK9kMuwT
-	 wL16WvkoKcNNpYI3F9MbiwHlTY7ifuluTbesX90VogiEiCasLQ/W3CVaVj6nGssJfJ
-	 riesnpGrOIw4AiNYAVzt2HpFjbvGnSLwlrBNFRu2qHdwj03vqx8CwXRQ8K4ZxuHC3F
-	 NRuFzRPcbgjirLVxDNdX0ZgDRm95JVTRgfYEPV1rLoEI6BNNC+guoSGMN8pkq4EmsL
-	 IvSHMOFeQbUqrHnq+Z9t+5tPoaBwS+88e0XwENByEwIq+qDA2rA
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9a58:ad83:8db9:6f4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D7F6F243E9;
-	Sat,  7 Feb 2026 20:04:57 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 13/16] rust: add functionality to hash an object
-Date: Sat,  7 Feb 2026 20:04:43 +0000
-Message-ID: <20260207200446.2837699-14-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
-In-Reply-To: <20260207200446.2837699-1-sandals@crustytoothpaste.net>
-References: <20251117221621.2863243-1-sandals@crustytoothpaste.net>
- <20260207200446.2837699-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKtZ8H27"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-79639c2ceb6so2389617b3.1
+        for <git@vger.kernel.org>; Sat, 07 Feb 2026 13:03:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770498181; x=1771102981; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pd4FfgI3Cl9Krl8DOVs8P7qTluKQf+TsZkeCMH9PVms=;
+        b=jKtZ8H27QJ8BqkqFcJCzeOnDEUzqQruB96p/4m42sfgpllkt2/vUYaW5LELhXOqcSN
+         ukqUfnqh3HCnKiYaSCHRKvUf8duGRM6PmYaZsMD8nNTCPrn3F7+nsy1P/DsCGiqA8P3e
+         klXdwiw/kFphRxxg7uL1+2kK2NbpR2rSPpN0m+VlJy0jnWbQWCwIsV7A+Ziuj6RzqdMq
+         c3tSKYnOs66zr3sxDY/nbL7uLpcXHztSYqM2lWXqwekf3tzMthVXVvhR0fIay6erSbw+
+         TWJ1CiXe89IfyZ12Z61MGP3M9sqXvTQlYmiq6O/t2os9RJD3MgH6JSQj9Dzb6mBiyO/L
+         OjBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770498181; x=1771102981;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Pd4FfgI3Cl9Krl8DOVs8P7qTluKQf+TsZkeCMH9PVms=;
+        b=SQcmUocIUpXP9l5qsECKU273Mg8WGQbtGrLlVPyRNgOsrGAmPnkB8OyX5zqp5vdcRV
+         ybBrYATzVV9wgwdr53yJ4khs86VAdYtaMa8/VwiFeDpjSyYgPTNnPAjJEjYNhOU6T2bU
+         w1OF6w2FWZkfmS0WgXRnO5kfJldKZB94rMiY4I+B/u/QKgMDLQxS9WvZjuwmI14YLZdw
+         WQjYfRRbpT3mg9CyJsSBLohtgfD5gaSjJNO2SkpRbyRQGT7q+/P/e/w8hh6xkUJJ8PnM
+         /lRzXeNhh4TlD7916iPMCNqXDozQDLdBATUrubyhyxhhqwXcwMnJuPLzWbcPiT7pYahe
+         5cJw==
+X-Gm-Message-State: AOJu0Yw7B2FUCnGrQJsx7/GlQyJpNH9WZfHotEB4mOSDL0pa4RK//73i
+	Ol/zAYaASMq3ID7z2HB4XB9Db3QurW7cS7d/hbxK3o07WtXlWtLSJTdi
+X-Gm-Gg: AZuq6aLJDYoLd/TMSeXuK6JZDUcFyvRbYzRguj9G01Kx8i9DaF/Qb8PONebrPJ30i4e
+	MLiGQhpbsvAKV/bogWQySTGoP44/p8m5eSr4OYmlJKicKowYAAv1UVPTjBxcWglAuhWmpK5z9LV
+	BNKeq5bFNfftkqqzW8I/rV3dgbG2HQsG6fcp+7HZfEoStH/5cAMHPC4fSkVQn5tndcTJJEhN0Ww
+	Q4KEp1Rz9vGETF7IWg+ocL5WBjAD/RIJVQg1AivuM8M3B53NAhyK1ozjSWt9hZT7Whb0IlH8Sd8
+	V5oCE6pxahd2DrpuWnfn5Jas8RV6d0bdzVXeRV/9zETb5nQ/n8f+0dvM+GT6b2+jPWQ+5cHH8Of
+	C/FoQR8WzmtFSXkzR4Gk3yh2VLokJm71rgsBl3MtoHxCJ9yMiWs0cgXgbVNCYHgbpQRpEsKv+vt
+	Yho5wREHb7hy85K5c+5w4Ds562cXi+fcpHGMWTkhSf
+X-Received: by 2002:a05:690c:450f:b0:796:2ee6:3f9f with SMTP id 00721157ae682-7962ee645bemr30891227b3.14.1770498181448;
+        Sat, 07 Feb 2026 13:03:01 -0800 (PST)
+Received: from smtpclient.apple ([191.181.59.93])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7961f313e02sm43604277b3.48.2026.02.07.13.02.58
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 07 Feb 2026 13:03:01 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH] [RFC][GSoC][PATCH] attr: use local repository state in
+ read_attr
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <20260207114007.40-1-kumarayushjha123@gmail.com>
+Date: Sat, 7 Feb 2026 18:02:46 -0300
+Cc: git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>,
+ Justin Tobler <jltobler@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <E605A7F6-AF4D-463F-8316-6BE69AFE0369@gmail.com>
+References: <20260207114007.40-1-kumarayushjha123@gmail.com>
+To: Ayush Jha <kumarayushjha123@gmail.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
 
-In a future commit, we'll want to hash some data when dealing with an
-object map.  Let's make this easy by creating a structure to hash
-objects and calling into the C functions as necessary to perform the
-hashing.  For now, we only implement safe hashing, but in the future we
-could add unsafe hashing if we want.  Implement Clone and Drop to
-appropriately manage our memory.  Additionally implement Write to make
-it easy to use with other formats that implement this trait.
+Hi Ayush!
 
-While we're at it, add some tests for the various hashing cases.
+Thanks for your interest in helping git-repo-info, even though
+this second patch changes the focus. It was my GSoC project last
+year. 
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- src/hash.rs | 143 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 142 insertions(+), 1 deletion(-)
+Nitpick: there are two [PATCH] in the subject, and usually we use
+only one subject prefix. I also think that this could be a v2 of
+your first patch [1]. This way, this subject should be:
+"[RFC GSoC PATCH v2] attr: use local repository state in read_attr".
 
-diff --git a/src/hash.rs b/src/hash.rs
-index e1fa568661..dea2998de4 100644
---- a/src/hash.rs
-+++ b/src/hash.rs
-@@ -12,6 +12,7 @@
- 
- use std::error::Error;
- use std::fmt::{self, Debug, Display};
-+use std::io::{self, Write};
- use std::os::raw::c_void;
- 
- pub const GIT_MAX_RAWSZ: usize = 32;
-@@ -111,6 +112,100 @@ impl Debug for ObjectID {
-     }
- }
- 
-+/// A trait to implement hashing with a cryptographic algorithm.
-+pub trait CryptoDigest {
-+    /// Return true if this digest is safe for use with untrusted data, false otherwise.
-+    fn is_safe(&self) -> bool;
-+
-+    /// Update the digest with the specified data.
-+    fn update(&mut self, data: &[u8]);
-+
-+    /// Return an object ID, consuming the hasher.
-+    fn into_oid(self) -> ObjectID;
-+
-+    /// Return a hash as a `Vec`, consuming the hasher.
-+    fn into_vec(self) -> Vec<u8>;
-+}
-+
-+/// A structure to hash data with a cryptographic hash algorithm.
-+///
-+/// Instances of this class are safe for use with untrusted data, provided Git has been compiled
-+/// with a collision-detecting implementation of SHA-1.
-+pub struct CryptoHasher {
-+    algo: HashAlgorithm,
-+    ctx: *mut c_void,
-+}
-+
-+impl CryptoHasher {
-+    /// Create a new hasher with the algorithm specified with `algo`.
-+    ///
-+    /// This hasher is safe to use on untrusted data.  If SHA-1 is selected and Git was compiled
-+    /// with a collision-detecting implementation of SHA-1, then this function will use that
-+    /// implementation and detect any attempts at a collision.
-+    pub fn new(algo: HashAlgorithm) -> Self {
-+        let ctx = unsafe { c::git_hash_alloc() };
-+        unsafe { c::git_hash_init(ctx, algo.hash_algo_ptr()) };
-+        Self { algo, ctx }
-+    }
-+}
-+
-+impl CryptoDigest for CryptoHasher {
-+    /// Return true if this digest is safe for use with untrusted data, false otherwise.
-+    fn is_safe(&self) -> bool {
-+        true
-+    }
-+
-+    /// Update the hasher with the specified data.
-+    fn update(&mut self, data: &[u8]) {
-+        unsafe { c::git_hash_update(self.ctx, data.as_ptr() as *const c_void, data.len()) };
-+    }
-+
-+    /// Return an object ID, consuming the hasher.
-+    fn into_oid(self) -> ObjectID {
-+        let mut oid = ObjectID {
-+            hash: [0u8; 32],
-+            algo: self.algo as u32,
-+        };
-+        unsafe { c::git_hash_final_oid(&mut oid as *mut ObjectID as *mut c_void, self.ctx) };
-+        oid
-+    }
-+
-+    /// Return a hash as a `Vec`, consuming the hasher.
-+    fn into_vec(self) -> Vec<u8> {
-+        let mut v = vec![0u8; self.algo.raw_len()];
-+        unsafe { c::git_hash_final(v.as_mut_ptr(), self.ctx) };
-+        v
-+    }
-+}
-+
-+impl Clone for CryptoHasher {
-+    fn clone(&self) -> Self {
-+        let ctx = unsafe { c::git_hash_alloc() };
-+        unsafe { c::git_hash_clone(ctx, self.ctx) };
-+        Self {
-+            algo: self.algo,
-+            ctx,
-+        }
-+    }
-+}
-+
-+impl Drop for CryptoHasher {
-+    fn drop(&mut self) {
-+        unsafe { c::git_hash_free(self.ctx) };
-+    }
-+}
-+
-+impl Write for CryptoHasher {
-+    fn write(&mut self, data: &[u8]) -> io::Result<usize> {
-+        self.update(data);
-+        Ok(data.len())
-+    }
-+
-+    fn flush(&mut self) -> io::Result<()> {
-+        Ok(())
-+    }
-+}
-+
- /// A hash algorithm,
- #[repr(C)]
- #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
-@@ -239,6 +334,11 @@ impl HashAlgorithm {
-     pub fn hash_algo_ptr(self) -> *const c_void {
-         unsafe { c::hash_algo_ptr_by_number(self as u32) }
-     }
-+
-+    /// Create a hasher for this algorithm.
-+    pub fn hasher(self) -> CryptoHasher {
-+        CryptoHasher::new(self)
-+    }
- }
- 
- pub mod c {
-@@ -246,12 +346,21 @@ pub mod c {
- 
-     extern "C" {
-         pub fn hash_algo_ptr_by_number(n: u32) -> *const c_void;
-+        pub fn unsafe_hash_algo(algop: *const c_void) -> *const c_void;
-+        pub fn git_hash_alloc() -> *mut c_void;
-+        pub fn git_hash_free(ctx: *mut c_void);
-+        pub fn git_hash_init(dst: *mut c_void, algop: *const c_void);
-+        pub fn git_hash_clone(dst: *mut c_void, src: *const c_void);
-+        pub fn git_hash_update(ctx: *mut c_void, inp: *const c_void, len: usize);
-+        pub fn git_hash_final(hash: *mut u8, ctx: *mut c_void);
-+        pub fn git_hash_final_oid(hash: *mut c_void, ctx: *mut c_void);
-     }
- }
- 
- #[cfg(test)]
- mod tests {
--    use super::HashAlgorithm;
-+    use super::{CryptoDigest, HashAlgorithm, ObjectID};
-+    use std::io::Write;
- 
-     fn all_algos() -> &'static [HashAlgorithm] {
-         &[HashAlgorithm::SHA1, HashAlgorithm::SHA256]
-@@ -322,4 +431,36 @@ mod tests {
-             assert_eq!(format!("{:?}", oid), *debug);
-         }
-     }
-+
-+    #[test]
-+    fn hasher_works_correctly() {
-+        for algo in all_algos() {
-+            let tests: &[(&[u8], &ObjectID)] = &[
-+                (b"blob 0\0", algo.empty_blob()),
-+                (b"tree 0\0", algo.empty_tree()),
-+            ];
-+            for (data, oid) in tests {
-+                let mut h = algo.hasher();
-+                assert!(h.is_safe());
-+                // Test that this works incrementally.
-+                h.update(&data[0..2]);
-+                h.update(&data[2..]);
-+
-+                let h2 = h.clone();
-+
-+                let actual_oid = h.into_oid();
-+                assert_eq!(**oid, actual_oid);
-+
-+                let v = h2.into_vec();
-+                assert_eq!((*oid).as_slice().unwrap(), &v);
-+
-+                let mut h = algo.hasher();
-+                h.write_all(&data[0..2]).unwrap();
-+                h.write_all(&data[2..]).unwrap();
-+
-+                let actual_oid = h.into_oid();
-+                assert_eq!(**oid, actual_oid);
-+            }
-+        }
-+    }
- }
+Tip: use `--subject-prefix='RFC GSoC PATCH'` in this case, and
+set `format.subjectPrefix='GSoC PATCH'` for your future GSoC
+patches.
+
+> read_attr() currently relies on is_bare_repository(), which
+> implicitly depends on the global the_repository.
+
+So, wouldn't it be better to make is_bare_repository depend
+on a `struct repository *repo` instead of `the_repository`?
+
+I don't know how feasible it is to do that, but it seems to
+me that your change could benefit other places that depend
+on that function.
+
+
+> + int is_bare;
+> + int is_bare_cfg = -1;
+> +
+> + repo_config_get_bool(istate->repo, "core.bare", &is_bare_cfg);
+
+This function returns 0 when the config key is found. If the key
+can't be found, it returns 1 and doesn't touch `is_bare_cfg`.
+This means that if "core.bare" doesn't exist (which is unlikely,
+but, who knows...) we'll proceed with is_bare_cfg = -1, and...
+
+> + is_bare = is_bare_cfg && !repo_get_work_tree(istate->repo);
+
+since -1 is a truthy value in C, then in this case we're
+deciding it based on having or not a work tree. I don't know if
+someone with more experience than me see something wrong with
+this but it seems ok to me. However, I found this way a little
+confusing to read. Perhaps it would be clearer if it was written
+like this:
+
+int is_bare;
+
+if (repo_config_get_bool(istate->repo, "core.bare", &is_bare_cfg))
+	is_bare = !repo_get_work_tree(istate->repo);
+
+
+[1] 20260206152002.1244-1-kumarayushjha123@gmail.com
