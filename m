@@ -1,146 +1,160 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from smtp-good-out-3.t-2.net (smtp-good-out-3.t-2.net [93.103.246.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CB92EA147
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 04:56:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCBD4086A
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 05:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.103.246.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770440193; cv=none; b=IjpRleYFdYCLj3Quq+da4+8wGGsQ3sDchxft87alHQGZ/A7hWsVpezgL5FuX8p62XWMKeGRukO/z4kk7X48cECYIQ5o1U/QwtlGDO7nwH8rrCkgOXnAtezUk69k7D3PNit3q4TBHJyW/50CbprrjSa93ne+PScXXOjo4+Fg3fLY=
+	t=1770441342; cv=none; b=TF7S7nC6can7rYD3Cqr/lTUhkGK8yumj5UgIhZRT0ql7N2bLLoF9yx2rWKXxO826HA5E6Xaaa3LOTvyGjTqU7In/mGvPYhSHsmJn8YwpAXTn9OxJTjc2Am1EcAGl/pShbHl9yqbLOgSa2e9pgCj3THAVug5SWdhsJgEm5bkq6fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770440193; c=relaxed/simple;
-	bh=n2jfw3tb18rxAp9hVW8GmgH+eGcn2CsZZ5V/eMTk7Kg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nYtqZ8oHAP8iZCB8uix/HK6lqpQXCmUjR1nrl0vL37pG8P+4HuZ/1qESPdWb9g4UCl561IJ0a6GYUq0ssy2id4wI19myCNZugC9GmMeYaGvBHwkHTPIfc4M0+nHOhZBawApEY7jpCwy4VnjF7hEXQda/xEYZ1SO6WCxAxqraUaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rJnvPoGM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S3/3T1QP; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770441342; c=relaxed/simple;
+	bh=cZSlJm5r+G//6bhoPR3IwsbEvCg0XPhlMrkY/d22ohs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=WGb/eXiPW3XwMQM1pXK7kc00+SK0O8c6/vYGlmwtiX++ULdR16xm6zuzULg5K+uQqwq9B8NwjOP5REl5ZisDwHMp2imGqQu+P1vjp+3dm2UjWcyytbbb8t6oX8D2ISXChxKHqqCgVF63JD+sBqigjZr/PoLnkg6b6cepP0xpa3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=t-2.net; spf=pass smtp.mailfrom=t-2.net; dkim=pass (1024-bit key) header.d=t-2.net header.i=@t-2.net header.b=UpeXrzkH; arc=none smtp.client-ip=93.103.246.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=t-2.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=t-2.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rJnvPoGM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S3/3T1QP"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 98A4D1D0000F;
-	Fri,  6 Feb 2026 23:56:31 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 06 Feb 2026 23:56:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770440191; x=1770526591; bh=rUkz7v6dw7
-	q73rEt+OwRNZFW+mfY8p+tafN5cqYafEY=; b=rJnvPoGMGz7hnphcrZTI8IyYm+
-	x5MAxhti6A4a5bkjxw5qlYvNoJE5JP7Fr/CZuyDsj/mInxU20/vOknKiKLOavisg
-	2fZbSbyabGMrJs6KnaDo9xMKLnA+aVLa2EQEwsCDPjFLzKprwc+m4HDuaRQcQY5Q
-	bbjTW24yg+9SBYefCq1CzFwMJe7e7KWFMtVIHVLaOUoCP//Eb8fJJSIHacsGEczR
-	j33tfXqTZuYariI28xk2szKrN3yYRv0glVT6a2HxGz7T+AIUwKP2F1ssmMwrOW2I
-	PVUZBSymr7cFjrrFyr9Gyb5TQGEPrCCA1yPCRROQpNHqUYysr+PDcdOh3HjQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770440191; x=1770526591; bh=rUkz7v6dw7q73rEt+OwRNZFW+mfY8p+tafN
-	5cqYafEY=; b=S3/3T1QP58zk3H1rccRj9CxTwUBwsPyXBWgefvckEjTFWezXnj+
-	fOULtrt3e25kbNoK4L16rW/1Z/w1bbi7s6M6ueskgx/EyH+Vswe/n46DHaGGp2+m
-	Y6ZZKGBoosyDgx1P7FbyizYYt+TRuGon7nrqZzl8WU3BgGmiPu7vBi20onDW9jJm
-	CIyYmHSY3TaklC3ruiOej3r3Jj1d+SU18fTB1ovYg6SJPJcIT6IAkuqHVlD+ODVB
-	rSSippGT7XJpKx1j3JPvTzX4ELXMKNE2Ofq0oDNPyA2XZe0G7oT9m+SqlNyc4VLi
-	SGJb60JnEzeK6Q360SGZSWVI0acXaJLHM6Q==
-X-ME-Sender: <xms:_8WGaaykBujnUubd8ariIXhfuyTVtZdVcTlrq67Ypa9zhnHI7LRIlA>
-    <xme:_8WGadRlhRynIxkdOR1oZYLAT04k_ldG14K_OA5HMOkNIWyFrcQNsDGqq3IHCKL9L
-    kUozBwdk4Tp8XosAL47sPOvzSoHECFZ2ztcxBfSav-FTEqE_Xi_qhM>
-X-ME-Received: <xmr:_8WGaRXhoiOwQUKaGgRQiP3QS1VJIV1av5IbpWZYNyN7q4fhh-O2oH9N1-GgYX3uzuCiu4WfcEmN5VFOra58Vojji4wgnYjj7w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledtudegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrsh
-    hkodhgihhtsehhohifughoihdrlhgrnhgupdhrtghpthhtohepphhssehpkhhsrdhimhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_8WGafbBDhECmZodltNbwQkwqS-AT4LUXGTtISsMtXCk7tiRwJrVqg>
-    <xmx:_8WGaX3PlFXkQlxk0N3XmBNwND6VJujqWy8zEuyfgiPVhM-2onLSLA>
-    <xmx:_8WGaRj0mB5_fgX6rLeadFWYWO4qTyiAbGdfKZyTfTKPBpfBlv_vNQ>
-    <xmx:_8WGabaReNBA93RGYNqGaRQFm6HBLzNXfKY7Zl0FRV5puElmaEDwow>
-    <xmx:_8WGae6kz8PzNFWIcRVinc40FXR8iNvzq7_t1xVeQh6q71jNlRwTJAwP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Feb 2026 23:56:30 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Colin Stagner <ask+git@howdoi.land>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH] ci: avoid ubuntu:rolling in most jobs for now
-In-Reply-To: <20260207042703.1180704-1-ask+git@howdoi.land> (Colin Stagner's
-	message of "Fri, 6 Feb 2026 22:27:03 -0600")
-References: <xmqqy0l6khkd.fsf@gitster.g> <aYWaytvnR8wOdc1s@pks.im>
-	<20260207042703.1180704-1-ask+git@howdoi.land>
-Date: Fri, 06 Feb 2026 20:56:29 -0800
-Message-ID: <xmqq343dcfsy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=t-2.net header.i=@t-2.net header.b="UpeXrzkH"
+Received: from smtp-2.t-2.si (smtp-2.t-2.si [IPv6:2a01:260:1:4::1f])
+	by smtp-good-out-3.t-2.net (Postfix) with ESMTP id 4f7JpL1fq1z9vhVZ;
+	Sat,  7 Feb 2026 06:06:34 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-2.net;
+	s=smtp-out-2; t=1770440794;
+	bh=cZSlJm5r+G//6bhoPR3IwsbEvCg0XPhlMrkY/d22ohs=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=UpeXrzkHcl71x13W+HM2VjWWYrzU3giXUijtUencPyTB6kdUbcOOK2n1fDKKvNlC5
+	 5uVju3PSoOD8tIIei/HRgvBcjx6JsLGUs3MBCtlBEQZ1YTNK6U9Hc6W5WONQowBrA0
+	 xTG0wnR58AVKyWkWo5PC6p2R/Rax1M6Nc22y1DEo=
+X-Virus-Scanned: amavis at mail.t-2.net
+Received: from [IPv6:2a00:1a20:21af:ffcd:1d53:4716:83f4:8209] (unknown [IPv6:2a00:1a20:21af:ffcd:1d53:4716:83f4:8209])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: samo_pogacnik@t-2.net)
+	by smtp-2.t-2.si (Postfix) with ESMTPSA id 4f7Jp34CCtzMrVGq;
+	Sat,  7 Feb 2026 06:06:19 +0100 (CET)
+Message-ID: <a60fc6aed8ab7345219118f933ac0eb61140334f.camel@t-2.net>
+Subject: Re: [PATCH v2] shallow: set borders which are all reachable after
+ clone shallow since
+From: Samo =?UTF-8?Q?Poga=C4=8Dnik?= <samo_pogacnik@t-2.net>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>
+Date: Sat, 07 Feb 2026 06:06:01 +0100
+In-Reply-To: <3253600a3c96144744d3371a7ec2a66cb87d4b60.camel@t-2.net>
+References: <pull.2107.git.git.1763807914242.gitgitgadget@gmail.com>
+	 <pull.2107.v2.git.git.1763926552033.gitgitgadget@gmail.com>
+	 <xmqqh5ujuekq.fsf@gitster.g> <xmqqfr80xanx.fsf@gitster.g>
+	 <3253600a3c96144744d3371a7ec2a66cb87d4b60.camel@t-2.net>
+Autocrypt: addr=samo_pogacnik@t-2.net; prefer-encrypt=mutual;
+ keydata=mQINBFwCXogBEAC4B5dfY/m82d0d5VBtFeVAjtUrOOdrLgbYJZFUXsX9pya5x0QdYeTP4
+ afUZ73e7zMe0ozH8UMz6iv1niPfPkMorUzNcALDcotZ8Vvf3bMdndV7lHk8jScAMoW2L7VHGn1N+H
+ 8yJ5WufqF/yNBLqmVqaLqNjHejZN+Ld+/4AaJ/gQzWVqYH6EaJZd/LSqppJWGOHGGURFakFSDp3Bi
+ 6n8SOQmarOt6mGX5wsiHNwa8NtNX1cEJPT8YCQUR7o5fTHb3AEemLRFJoGjeH2RjzPloyTlwSjLXd
+ Egph2uUGqiBKD1dREfIuIWtFAJF+iMRHhIEJSF4hvUYrYAV+7ZTlIo3NnDLIeNn40Qmn++9Uh8FbL
+ YdFb14dyBkw8MBBQPQNCCpBflK7aaSFWpHv6nk/Z7fGrkwrD51CHsDut8PGQMtmSYMoSCWRI1wChn
+ peoZn4Cq3yG1rj90IVv/rxmvL3oMQfE2oSMAhpyRPi0vK68cG4ILpO65Aulr0wr4JFdZBNmpf8BCF
+ 4jqpN1HsQJCYUYBMeMeOMkH9Gz3DBWuszvjjs7wmesMkEz5C92UlK6FWGUz6Ioi2bfRGOzx0+AjpZ
+ rUaSIQ+5MCPxjWkxl3EQQFL2U3ItxxpaDO46AoRFj4oKKeHoteiwpziY8whIFmDXWfy7nDfp76RiS
+ riLtyZiFEuzLwARAQABtCZTYW1vIFBvZ2HEjW5payA8c2Ftb19wb2dhY25pa0B0LTIubmV0PokCTg
+ QTAQoAOBYhBNCCwgeDpWpcp2HPBvAkWUZaOuMIBQJcAl6IAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4
+ BAheAAAoJEPAkWUZaOuMIKE8QAJ04bxv8nXpY3Tp5nWOIOsBmEHWvVEIdD2kxjC9YCQeKx4gJLADa
+ RcuXhFbwi0NQtuSRf1G11ZGqxBM/YHvSd4Rtqbag4P9UY/ZdvMAe1zW4HTO9c2mtoWN3WYxS/gkX+
+ wBLVIy+eqrsG5peJmRlq3fTbCxLprgqp6B2IUcTEBa8Iynv7B/1qsG2rd0y8pY+ZHIUtz2ZJHoYz2
+ Lx091uYwy9aozibWRot+vZNx4QipOmsoZOm+e5FvTf4yvmFYJ3iR8fUfq9gpCokRNtPG5NvqNLApk
+ EwEAlaXH7flAUwF/uRBUASZeyEeKGRtXOUYeGXFyOgykbmIs9IXDms8OLj/TZlSzECeoSX25I0P8M
+ QrMb7GChMME4W9i9+ZZc8VWPyYW8W6dyNfBb05lu0XMB62oiYim7cOXiDV49EBYtiXIwUnbfQYVSA
+ U8MTvZKS4ek2KGc9OJNLnm8dP2u31jvMUts7AEoU3vxwv8tUBEm4Zpzv8+HvzpAGAnbGc/kiLClaH
+ j8E5d/3XIyq0TXlZf7B5Fq+lwa3gXMiLWko7m3PfOFtvbsSWPxplka6r2T2GMt9e51sctckfd7V/F
+ unQvSwML0gpE6YicA/OcoFFOwoipilJ4D0YcqLgO8FNQdXukJciq0xeeBWY4t8Oo5M88J4YzAKMr9
+ PU/BhjCBDTyCb2b1
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-0RYztxfzct9VwP7EuR8J"
+User-Agent: Evolution 3.52.3-0ubuntu1.1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
 
-Colin Stagner <ask+git@howdoi.land> writes:
 
-> Subject: [PATCH] ci: ubuntu: use GNU coreutils for dirname
->
-> The uutils version of `dirname` has output that is inconsistent
-> with GNU coreutils. Prefer the GNU implementation of this command.
->
-> Signed-off-by: Colin Stagner <ask+git@howdoi.land>
-> ---
->  ci/install-dependencies.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+--=-0RYztxfzct9VwP7EuR8J
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hmm, this certainly is a more focused solution.  Let me revert my
-demote-from-rolling-to-latest hack and replace it with this one.
+On Wed, 2026-01-28 at 05:23 +0100, Samo Poga=C4=8Dnik wrote:
+> On Tue, 2026-01-20 at 12:59 -0800, Junio C Hamano wrote:
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >=20
+> > > > ...
+> > > > The modified implementation of a generic shallow boundary finder
+> > > > based on rev-list ensures that all shallow border commits are reach=
+able
+> > > > also after being grafted. This is achieved by inspecting all parent=
+s
+> > > > of each initial border commit candidate. The border commit candidat=
+e
+> > > > is set border only when all its parents wern't on the initial list =
+of
+> > > > candidates. Otherwise the border commit candidate is not set as bor=
+der
+> > > > however its parents that weren't on the list of candidates are set =
+as
+> > > > borders.
+> > >=20
+> > > It is a minor point, but there are "boundary" and "border" used more
+> > > or less interchangeably in the proposed commit log message, and
+> > > would make the readers wonder if there are differences (I do not
+> > > think we use the word "border" anywhere in our documentation).=C2=A0 =
+It
+> > > is minor as we do not have such mixture in the end-user facing part
+> > > of the documentation with this patch.
+> > >=20
+> > > I'll let those (cc'ed) who may be more familiar with, or, at least
+> > > have more code than I have in, the shallow infrastructure to comment
+> > > on the way the updated code uses the revision machinery.
+> >=20
+> > After this exchange, the topic has been dormant for almost full two
+> > months.=C2=A0 As I do not deal with shallow clones myself, even though =
+I
+> > understand that some folks rely on it working, I'd really prefer to
+> > see somebody who are familiar with the underlying logic to review
+> > this patch if we were to move forward with it.
+> >=20
+>=20
+> I=E2=80=99m currently rewriting the patch and the commit message trying t=
+o
+> address the boundary/border dilemma. I hope to be able to send a new
+> version by the end of this week.
+>=20
 
-If we hit more breakages and at unacceptable high frequency, we may
-want to change our mind and write off rolling as not stable enough
-yet, but if we are lucky we won't have to.  Knock, knock...
+I posted a new version of patch '[PATCH v3] shallow: ensure all boundary co=
+mmits
+are reachable with --shallow-since' on 31st of January. I hope you've seen =
+it.
 
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index 6ee8216a05..617b90cbc9 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -71,16 +71,27 @@ ubuntu-*|i386/ubuntu-*|debian-*)
->  	# sudo(1) or sudo-rs(1), with the latter being the default. The problem
->  	# is that it does not support `--preserve-env` though, which we rely on
->  	# in our CI. We thus revert back to the C implementation.
->  	if test -f /etc/alternatives/sudo
->  	then
->  		sudo update-alternatives --set sudo /usr/bin/sudo.ws
->  	fi
->  
-> +	# on uutils v0.2.2 from rust-coreutils,
-> +	#     dirname "foo/."
-> +	# outputs "." instead of "foo" like it should.
-> +	# Use GNU coreutils to provide dirname instead.
-> +	#
-> +	# See <https://github.com/uutils/coreutils/issues/10508>.
-> +	if test -x /usr/bin/gnudirname
-> +	then
-> +		ln -sfT /usr/bin/gnudirname /usr/bin/dirname
+thanks, Samo
 
-"-T" is somewhat exotic, certainly outside POSIX, and is not needed
-in this case, no?
+--=-0RYztxfzct9VwP7EuR8J
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-> +	fi
-> +
->  	case "$distro" in
->  	ubuntu-*)
->  		mkdir --parents "$CUSTOM_PATH"
->  
->  		wget --quiet --directory-prefix="$CUSTOM_PATH" \
->  			"$P4WHENCE/bin.linux26x86_64/p4d" \
->  			"$P4WHENCE/bin.linux26x86_64/p4" &&
->  		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4" || {
->
-> base-commit: 3e0db84c88c57e70ac8be8c196dfa92c5d656fbc
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE0ILCB4OlalynYc8G8CRZRlo64wgFAmmGyDkACgkQ8CRZRlo6
+4wgRYQ//RRsQ6+UOyRjYfWOPuAwnKy83hTXAR6yv87fDM1swVcNCMNUyjOXz9yMf
+EUqX1aEjAbA1RD1wB0ueX+iPj3aeSx3btm/s1WPl+Pk/nt+JVi27oAXFaGxAnjxN
+5CVI3KgqCl3irjXi8D3XhbnuHp3eijOohMPcww5vVpa+6Hv/ehFTaSGCIrkrf+OZ
+6mt4FV0l7C+h3iGoh4SgbYhQSUgVMIyzP2OuPfw3ci46Tx+VZhoRRzqzhfI++uz2
+Cg8wMYQ/fr9lwHmYjRStHmgy2jaNDhyNm3+E3nQe7KZtcCjtjP+tKUv9VXo8kVJC
++L8cpzO17Z05LjVeDq7+8rV5z2zLrKXVXA9+FcbWay2fYSEZYLA/SIVhm1vbbcq4
+OxkoaR0yg52N9WkLwb8NonO8GZ2g80OQQdoQ+q5jkXteWI5m2+PBo9V6ZuJnjBb7
+AwhnAovIM/bvbjSv3Sn8y8/UUNTFDYaCmpD4rrCqB05dUtNWPcgcQ/iYU+IeCS1Q
+cTGwwuICx6OgxRhRlgFHJxctYQlBJrJDlEyGMMtJ5Tr7w0EPSZDHPiLWnQuo0uXA
+0lNhbdcxiH+6O0Ai/M5D6clwvBQCQVU76y4JHElJwb608xi+T49bpqgb8A4WqF0P
+Oiask8pMEjpYOpk0SKt+QqRXrUI/YyL8FSdmZeRzq/Kjo6ygQ88=
+=toxU
+-----END PGP SIGNATURE-----
+
+--=-0RYztxfzct9VwP7EuR8J--
