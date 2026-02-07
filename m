@@ -1,83 +1,82 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635DB3502A7
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 15:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890D2352F8C
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 15:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770476819; cv=none; b=qGDahB2ntjpFFcedWFSK8eoaxxI1nW9ToyTbqz1+ZRN15MdKBPa78kalFhxeAq0jXhKqs7c76piJrwoQFjgTcpXMbQi0gyEv3OG71wE3Kfdgev1lQPbLmEIsyaGYliIPFSrljLReDXVEJUqlGFia5n/mkyNmSMtKFOTLYco1hHE=
+	t=1770476837; cv=none; b=IPktTNpnmQi+o+hfl2HjOm2MuCZsF3b6PsyR+xAzKQANX4PIg8F0qfXaB3HDXP0qaIDU3/64wskmIa/fkMdpX1t9iEQC17Jw09IVHqp4Jf5yROd0CtIrmE7sPciyOeCc7d4aQIslnMgZPZ+fCRFIRRu43LK2wOU2m8JISFpWFAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770476819; c=relaxed/simple;
-	bh=SYxZefGyWWHAdVOBhUMDOA8HuEPCjhHZcnyo+7a+vg8=;
+	s=arc-20240116; t=1770476837; c=relaxed/simple;
+	bh=a7mwJYVq9bZeW9gnEoGOwytnJAJMLG2+SajreQZc2mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sFY54WgxjKsBBa7mw548DRR66CT6+bpBt0lmJO/JVTLpcPbPLk/RCqUftTCPeO43ctlgOaAmVEYj77TwsACPZr/zmyl/2ah737DippCADC9EbX+gDasYo8CjxUdN8hS3iRz/CzdHbDHZ7rZLAM2Z6/NSYWfObf8Vdvt/IsEbqgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=kBpzA0yh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cXNhzZ58; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=HGxEX4h3F+bnMqpM9x4hfpBO+NPRk/imeZVDnI6g6a+X7pdvX7U+ilfiJLk+xVCUMvNFnCbljXrSUUOH1TGMG8/aqj07dyuaN3W2Pxe/ZhGadd5Zfe3lGIsut9UCzrw8Ewll9CpD9YcaleDOy6/LuxmbTY7nqm2VQgx6qBwnKHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mUFu1u5n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MXIWMCxk; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="kBpzA0yh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cXNhzZ58"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9AA36140017E;
-	Sat,  7 Feb 2026 10:06:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mUFu1u5n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MXIWMCxk"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D7F29140017E;
+	Sat,  7 Feb 2026 10:07:16 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Sat, 07 Feb 2026 10:06:58 -0500
+  by phl-compute-06.internal (MEProxy); Sat, 07 Feb 2026 10:07:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1770476818; x=
-	1770563218; bh=5WIseoxFOmylCkw1/uLk9KhiYR1Gx05aBb6b0eCrNrE=; b=k
-	BpzA0yhmjSUyjSWkG3jK8hvGMOFLEU+DkPu/Q9SYXDi4WH6R9/jemRlvT5nZ1s6s
-	9K2BNsUD+w96MfZ55EMi95nKnDbw5rF2ku2Z7aMADMOu+K4k8JkbaHe+Oe92MB4A
-	ede9bRSo/dkNn09cIvl/RQsRkgg1Jc5OEmmlJ+xCJkrRToDLFFxVm/2JxbfyD41S
-	gcQQnWpCzSE0yOPGrdMfQCtPVnv+uCcXOu1BsDlO58xBa7m4KUUW7AjDoERaDS8W
-	YaArDRI6ZcUHjU9HIDLt0+cuZFYv+wVMZBAsM96S4CEf7ieCki5TA3r9TmiVqoiq
-	2IPhSwvSnFwOzznrGEmpg==
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770476836;
+	 x=1770563236; bh=Tq7b2IeU6z3eGR7oqiH+vAT+Uljr3ctDD1qh/LUAyAs=; b=
+	mUFu1u5n1b2UtYY8JJqIOxwR9u7zg3BektqCzy4BxXVozrLELt+t2OOaaCkhBRJM
+	XJqZFPcVXN3t3jP03RCBKe98twiahLNsaRCs34Qd7K5xwD56U5jCIM5kzA35i4r7
+	mLXdK+xhcD1bSKl616rVLIbCz433keFphBpPUE/+w/sy0KtmpZuQJ9C7ru4zNywC
+	QS2PaPB3gp676ME6z2y+ssJeyW3WXsBsYPjzQLthann4azpKKPKli7ZjHO1rCNGR
+	XGKSnd9FGpJ0UaGfF8q/jwG6jqvahjY1Z/ImX6eCSP/ycRRC/X6902stGR4Zv7n9
+	QxFgoUYU65qr2wKI7+vxvg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1770476818; x=1770563218; bh=5
-	WIseoxFOmylCkw1/uLk9KhiYR1Gx05aBb6b0eCrNrE=; b=cXNhzZ58H7ioiPo3K
-	mtGdglvkKeuVGUG6sZLa6Um5eZlGRMZU/+u1QsCkUESaP5vcZ/6oAcEvY/lJX5vt
-	knQo/SJB6YSENBMAiazx9heVWup8F/BuDYNfsOg7pGsIQylkVM2x9cU4PFDSIdJb
-	da2IAw2eP/fOtJ81deI41CAFYV4zXvZn1rRg6PIeEdLXFWBapkI3/bn+MFY4nl5j
-	KO3SPVGicTeOLT3NKhhXIeEE9Fw6EYzRpdO1W9AtCJmNJ23XzuWt48OG/ydKxGGV
-	pfMphesm14Sg0IVJ+hJ1L3Q9+w9cnRqB9QWZokReShxq8nCcweHl+mDpXJh9aN1G
-	N4L8Q==
-X-ME-Sender: <xms:ElWHadlmfprKJnZepRMiO1lngDvG6JXCllYk12Bx6o-YAGgQkJ7t7vs>
-    <xme:ElWHaQS4Fgj1_zkrkyIhPRhygZtKW0f2v3olhfMQGVO_A9gRcdl1_ON8fC2I_0kQ7
-    nMKjVxmxqP2rGQWqlFfKxsNEHjRomns6ljQ-UO7W8QHshYlSGA0AQ>
-X-ME-Received: <xmr:ElWHaRD6LSvOKaIttkqWiS_THSPjL0oF-lADGZiEe0AHKg1vSZnqe7h5GxGdSeIWfeN0ZGo8hTsxwFedLDesXUmINCWyQ3Toiya8aeXxrlZ-KqlJLFlIHVODZw>
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770476836; x=
+	1770563236; bh=Tq7b2IeU6z3eGR7oqiH+vAT+Uljr3ctDD1qh/LUAyAs=; b=M
+	XIWMCxkb8P4xcjwk6hVuH7Ag/XqqQsYv2wOHcqON6Y44P/1SujycOqBOUqQrsRev
+	Kf2Vy2Dis4lxRBDTIFyJHIWh8a+4RLfCe1y+DMPiuIGD0wb6ixPQ5DlBAcEW7K60
+	f4aRr0f+bUdLnBle8MKF1gT2iWhX5jy+YzjpDcw3MRuPR3/DIxEW/lVPDyS7G5GE
+	+RX6K1xgoWc4MsoDNO3rW6AF6JT8pp2xr3j+b9IGNSAAo69fjI5MGaMt70dA9N63
+	VQ72bXLApuKghFIUyfZ8k8Wd8TUbGuvZYdXl2aPPOVS1ZM+tBB646o/ryRaaLETr
+	DryGMl9tmRsXva+w7H+uQ==
+X-ME-Sender: <xms:JFWHaeYjZCojri-Az20EW7D1i6GnLAzG6il0rrDxy8g4SDigXdrhvcY>
+    <xme:JFWHaY3kvUKBLGAa8Kj9-SRsO-G8OG9Oo5rGph4WzRKBORsHLTaSjRrKMBQ4gkWrq
+    82LGwDANdngrrHMa4D84aGiV1wI9Na9mbnaSb9AVS0H6KPYqPahNA>
+X-ME-Received: <xmr:JFWHaWUGqzIo5wue-MJ1VBgLcRcbOM0TTpFnx7RGNj65mnqEYoZH2c0P4LUFSiM8y8henYuevye0bTpxNY6KKuyVy1IjbmdnpGr4EcPyrVM6b8jyg70hqcGKFQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledufeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlvdefmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
-    necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhenucggtffrrghtthgvrhhnpedvgfetiefffeejgfeigfdukeejleeutddtgeei
-    leegieelgedvkeetjeehjeekfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthho
-    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtth
-    hopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmh
-    gvpdhrtghpthhtohepthhorhhvrghlughssehlihhnuhigqdhfohhunhgurghtihhonhdr
-    ohhrgh
-X-ME-Proxy: <xmx:ElWHaXRcyADmQiRevWA8xmx_pKsFomXfGpTAeaRFDYyIsc_Axc4uRw>
-    <xmx:ElWHafoQsZVYUoJ6ckN7jaB88Edx_Q4Sm_elsbq8toWh-_EMmSVbQg>
-    <xmx:ElWHaZxXrk6grYAwFII4F6AK4PivZ51oHCfpW_NCaJHM6EFPlGjt8w>
-    <xmx:ElWHaUJ_lJx7Ob8gzTYZQzoLhlkbajTXAM_387Xco68Av1Sjk0tuOA>
-    <xmx:ElWHaUQPVRKrZcehhSkBp357AfJfRwzLdmKgG6IVrE_Mb13fNKfhEBvS>
+    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
+    jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
+    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
+    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepthhorhhvrghlughsse
+    hlihhnuhigqdhfohhunhgurghtihhonhdrohhrgh
+X-ME-Proxy: <xmx:JFWHaaX6dp6pnxqTsXEr5HVVGko5Q9MFZmF_1eE31_5p6XH73pCo7g>
+    <xmx:JFWHaddxVu4m0kRQD6iRlzmIsFFZYA_H3l7WXnF808UazPtEg7EAxQ>
+    <xmx:JFWHabUj25M7Y2PjqfapDgz1RrwmN2ck7G20Rod0_jY5z4PGHZVhGQ>
+    <xmx:JFWHaefbESVUkG8FFm04l7DdCl_brN7IvfCSUY3Ba_Y4Go6zMSf8WQ>
+    <xmx:JFWHaQ3h1AAllQ-WxBXPfA5Q7emfyED_M_aiW5Le3YLMX-L7c4duWT4Z>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Feb 2026 10:06:57 -0500 (EST)
+ 7 Feb 2026 10:07:15 -0500 (EST)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 2/3] doc: patch-id: add script example
-Date: Sat,  7 Feb 2026 16:05:27 +0100
-Message-ID: <mapper_example.277@msgid.xyz>
+Subject: [PATCH 3/3] doc: patch-id: see also git-cherry(1)
+Date: Sat,  7 Feb 2026 16:05:28 +0100
+Message-ID: <link_git-cherry.278@msgid.xyz>
 X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
 In-Reply-To: <CV_doc_patch-id_4.275@msgid.xyz>
 References: <CV_doc_patch-id_4.275@msgid.xyz>
@@ -87,88 +86,30 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-The utility and usability of git-patch-id(1) was discussed
-relatively recently:[1]
+git-cherry(1) links to this command. These two commands are similar and
+we also mention it in the “Examples” section now. Let’s link to it.
 
-    Using "git patch-id" is definitely in the "write a script for it"
-    category. I don't think I've ever used it as-is from the command
-    line as part of a one-liner. It's very much a command that is
-    designed purely for scripting, the interface is just odd and baroque
-    and doesn't really make sense for one-liners.
-
-    The typical use of patch-id is to generate two *lists* of patch-ids,
-    then sort them and use the patch-id as a key to find commits that
-    look the same.
-
-The command doc *could* use an example, and since it is a mapper command
-it makes sense for that example to be a little script.
-
-Mapping the commits of some branch to an upstream ref allows us to
-demonstrate generating two lists, sorting them, joining them, and
-finally discarding the patch ID lookup column with cut(1).
-
-[1]: https://lore.kernel.org/workflows/CAHk-=wiN+8EUoik4UeAJ-HPSU7hczQP+8+_uP3vtAy_=YfJ9PQ@mail.gmail.com/
-
-Inspired-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
-
-Notes (series):
-    The script will not list the commits in rev-list order because of
-    the sorting.
-
- Documentation/git-patch-id.adoc | 38 +++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ Documentation/git-patch-id.adoc | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.adoc
-index e95391cd255..19780f86425 100644
+index 19780f86425..fb9ec211bb6 100644
 --- a/Documentation/git-patch-id.adoc
 +++ b/Documentation/git-patch-id.adoc
-@@ -68,6 +68,44 @@ This is the default if `patchid.stable` is set to `true`.
- +
- This is the default.
+@@ -106,6 +106,10 @@ join -a1 "$for_branch" "$for_upstream" | cut -d' ' -f2,3
+ Now the first column shows the commit from your branch and the second
+ column shows the patch ID equivalent commit, if it exists.
  
-+EXAMPLES
++SEE ALSO
 +--------
-+
-+linkgit:git-cherry[1] shows what commits from a branch have patch ID
-+equivalent commits in some upstream branch. But it only tells you
-+whether such a commit exists or not. What if you wanted to know the
-+relevant commits in the upstream? We can use this command to make a
-+mapping between your branch and the upstream branch:
-+
-+----
-+#!/bin/sh
-+
-+upstream="$1"
-+branch="$2"
-+test -z "$branch" && branch=HEAD
-+limit="$3"
-+if test -n "$limit"
-+then
-+    tail_opts="$limit".."$upstream"
-+else
-+    since=$(git log --format=%aI "$upstream".."$branch" | tail -1)
-+    tail_opts=--since="$since"' '"$upstream"
-+fi
-+for_branch=$(mktemp)
-+for_upstream=$(mktemp)
-+
-+git rev-list --no-merges "$upstream".."$branch" |
-+    git diff-tree --patch --stdin |
-+    git patch-id  --stable | sort >"$for_branch"
-+git rev-list --no-merges $tail_opts |
-+    git diff-tree --patch --stdin |
-+    git patch-id  --stable | sort >"$for_upstream"
-+join -a1 "$for_branch" "$for_upstream" | cut -d' ' -f2,3
-+----
-+
-+Now the first column shows the commit from your branch and the second
-+column shows the patch ID equivalent commit, if it exists.
++linkgit:git-cherry[1]
 +
  GIT
  ---
