@@ -1,133 +1,189 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7014F353EFD
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 21:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DF61E515
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 21:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770500311; cv=none; b=Z+jl3jnSEiX2t/QTcB/5drc95qrLmJ6FpSqwGQyAnFBRbAwkIWkwf2Nd/EgQSZqGFMM+/y18YxpU6oTaZrE7AUoeGnnK8gj6igNddD2g9ohZvD9/t5AQgIwT5esubxXm5Bu9EdZxFSxMyD3IJnnmBX52snPaXE8slCvNVVd+/I0=
+	t=1770500310; cv=none; b=TfVJcRVmSKQAf7GdBa5BQxljJyZIKDvNSQ0+XiabccF9V0oabfvSFpOrFeN1+EsX1xUfj3PUQUCkTVzbA76V01Woa4pKfHLA3p4q8VGllbCTE7UZ+ONHHGFUrdxTz2sH4IHEo+Ncq/H5qRhQ3dHv7iuUP0B5cC5Sg0OCIdCgq8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770500311; c=relaxed/simple;
-	bh=EjBCcbDDOYChtCMYQ0kWMm7mzPvJWDmNDmB4zOqUWNQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=SyG/FqXs8L5s3uT8bPDNnw1Dp1TyOwJrcC03n+Slnm/Y6JS6k17a3fQ/Q33h5GvlrlLRepx8qocLieWWgvHyGTyN6IrfPzlYiFUuXb2f13fIM0D6S2lDckPLsqvrQh95SAbXqvVQ6nCTK3bFqnFJJKm4qjF6RrUEFvpv6ywXoqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=n6881Q07; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tusGI57A; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770500310; c=relaxed/simple;
+	bh=jLLWluFfvvh0GY5Ft8Qf9nWpyFUqaj+9886NK2F1Cp8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=qaWiBkIzIHGERTVbaB4L0lC6f6963sI/TrJtFYtjVjtQhBZIDq0eepfnT9aiaw0Qutp+LKbeVhGrnBKS0BLMQ/v+WjzUKUf8uO5Z/J8OaX6GMM2lGbSEiQcKchzrdDVLiLKrbsnALj3z62+KuRqT5zwuGRPeCUUibU8TwhuHKH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de; spf=pass smtp.mailfrom=ytausch.de; dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b=uSR2zK4F; arc=none smtp.client-ip=80.241.56.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ytausch.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="n6881Q07";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tusGI57A"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AC19314000F5;
-	Sat,  7 Feb 2026 16:38:30 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Sat, 07 Feb 2026 16:38:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770500310;
-	 x=1770586710; bh=kIDMAmjTdZXO+8R9MtCqLIS/w4mSB7n8K/RoL+qEjSM=; b=
-	n6881Q07qsL+YnRgI/fh3yy49mntIVq5eVvalWXu/GkpUMf01qC95mQ55dbxnneS
-	xsuASnww9h0294xVTFPGOTy2e3LpDfM2SJrxRBw9G7APaKcMpioGhSgb0rI/73Z3
-	ikCyM5Io/ujKgJU7+t043FVCx87ACFi3prHt/EvqluLj2j5dUA8qZUZGuij8OUq+
-	TkmEIu9Q9sF3gKI5QMPXmJ6YRpgHKGh/bxWSH1eBR1SXbkm0xNK0d2Wq5HJOPmQG
-	a1/iqAjcVQhldlVhVGsLcuIoTqNF9t+6eWL8L1IQEJmgILMqvMSysvqCRYbTq/oE
-	HyOQ1f2yrkKWc9Jw1wQn8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770500310; x=
-	1770586710; bh=kIDMAmjTdZXO+8R9MtCqLIS/w4mSB7n8K/RoL+qEjSM=; b=t
-	usGI57AW4fISpHQE4Bbp0fRKkB3JktdK782iiSpgUemqwCUayXtPRhRQfTywn0f7
-	Vle4s+Qpe5tw1qMJJbADQDMlJfpnn1lffU69UGorcSBMlHpMGT8oaWDTUwSzwubx
-	lwRTGEVCzai5uNu6ORMWfucD4S7LxgqQuTHO40HhLQIU52ZmGj5vY2XAXYLYlwUu
-	k9MTdDAqbKDM86jiX6xZuqonHO4tEvg8mtXo3ZKHWlbjG4Jc1yLDfkVWIHjm4+ng
-	1LTmKr8B20Z8/iAkZhVKABsKxdNVRG9IgApfRCYgJz9/xiUpKkYWt2+dgYFbnK0q
-	GPCdKqRhZxDUaOzVkgKnA==
-X-ME-Sender: <xms:1rCHaeHpCZPAd5kLy8kc9QYmuA3kUYLII3pj4VCfsS9DV8i1L1Y0qlw>
-    <xme:1rCHaaKOUxi46mHcpK0DBsQEieneU-s9HDPug5kKVZ5R9FuvunjNXFlI-J-Md59LA
-    L0UQPbbO9CnYmrwGOXC9hGdr-Fw4WFXrkceT8St1IZFfpndRq85xA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledvudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfef
-    gfffvdfhffdvveevgeehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopehjrggtoh
-    gsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdif
-    ohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphihohhkrghgrghnsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:1rCHaQcwGeNOUQNPEGP48WZQGQWnBunxSxMTNXd99Rc9a7UklU2WuQ>
-    <xmx:1rCHaS4rAzoBGENm9ZBfPfSisGouBO4gapMDaMot6NBnYcQIY_eO7g>
-    <xmx:1rCHafuKQYYvmtfbhNksHkSOGMe1Kri5axh_aUwcF8CQ7-X_YrYJ6Q>
-    <xmx:1rCHaagOdyie3hDswU7_OYzDZmZ3AukDd1jS_yMz4O6ZqeVJUqpyBg>
-    <xmx:1rCHaWUjaAFNPyGiBOD5caCySA068HsDE1sAQRrfoRJW9_uPtojTMgoY>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6E63F1EA006B; Sat,  7 Feb 2026 16:38:30 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b="uSR2zK4F"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4f7kpf3STGz9sxM;
+	Sat,  7 Feb 2026 22:38:18 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ytausch.de; s=MBO0001;
+	t=1770500298;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=w6cVA2g18qfW/9axGNwtpNqktiDJenRHR5NrKGTGdNE=;
+	b=uSR2zK4FsEbwwN5Z7VjsuEiBf0vMjJS3aTTKRbOv0QN5TxmIcilhMJh4HK2RZl+Y6W3Q86
+	58k191fhnvCHatvDn7TVbOyFjTOH7AhLbYTuGdb9mmgVdH9fkaPaduu0oc8KSJmviZYfP5
+	i1RbWwY4efMoYsixc/PxVDC5Eea/rCyBi/TAQR4KBKGfip/YKGK1fIqBlfoST67nQmgrme
+	3hYp4yISzpMNBGTxnFEgPprNKgXMf+NV+IufK08cyKTi3fph5YA/kD5f/ST4sE3L49h8Am
+	4wDZUfMOR047XJ8ZJLB6IMsM5aVHdORaycoMpRMpOd7qsBw1sns/4JYYsL9euA==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of dev@ytausch.de designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=dev@ytausch.de
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: A2HMo44wO33B
-Date: Sat, 07 Feb 2026 22:38:10 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>,
- "Matthias Beyer" <mail@beyermatthias.de>,
- "Jacob Keller" <jacob.keller@gmail.com>, pyokagan@gmail.com
-Message-Id: <32614598-48f0-4e3d-ba8c-e8d96b71dbd9@app.fastmail.com>
-In-Reply-To: <xmqqldh4b5y2.fsf@gitster.g>
-References: <20260206090358.GA2761602@coredump.intra.peff.net>
- <cover.1770476279.git.phillip.wood@dunelm.org.uk>
- <83c100a73ec722bf72a15b7b40b0c82bf8829168.1770476279.git.phillip.wood@dunelm.org.uk>
- <xmqqldh4b5y2.fsf@gitster.g>
-Subject: Re: [PATCH 3/3] templates: detect messages that contain a separator line
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+Subject: [PATCH v2] merge-file: honor merge.conflictStyle outside of a
+ repository
+From: Yannik Tausch <dev@ytausch.de>
+In-Reply-To: <75AA7DD7-F8D8-48DC-ADA0-74E56CFF351D@ytausch.de>
+Date: Sat, 7 Feb 2026 22:37:48 +0100
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org,
+ Manuel Lerchner <manuel.lerchner@quantco.com>,
+ Yannik Tausch <yannik.tausch@quantco.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <3488DCC3-D127-465B-BB95-3D87BB2E48F6@ytausch.de>
+References: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de>
+ <xmqq4invm2dk.fsf@gitster.g>
+ <3724733C-FECB-47F5-841C-84DE9792332D@ytausch.de>
+ <fa7fc215-03eb-492d-9af4-457482c56a48@app.fastmail.com>
+ <D514F3BA-36DD-4DAD-BF73-609730390A27@ytausch.de>
+ <xmqqqzqxczeb.fsf@gitster.g>
+ <75AA7DD7-F8D8-48DC-ADA0-74E56CFF351D@ytausch.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-Rspamd-Queue-Id: 4f7kpf3STGz9sxM
 
-On Sat, Feb 7, 2026, at 22:27, Junio C Hamano wrote:
->>[snip]
->
-> I have no qualms about the topic up to the previous step, but I know
-> one of the things that I sometimes do will be broken with the change
-> in this step, namely, when I know what I want to write below the
-> three-dash lines, I would commit with "---" and additional notes
-> below it, so that I do not forget during "format-patch".
->
-> When the commit is turned into a patch email, possibly with some
-> other material like "--notes=3D<ref>" that adds notes there, the
-> resulting message will have two three-dashes lines, but because "am"
-> cuts at the first one, and "apply" knows that the garbage lines at
-> front, including three-dash lines, do not matter until it sees "^diff",
-> this works out perfectly well.
->
-> Admittedly, I myself do not send out so many patches as I used to,
-> but I suspect that there are others who have discovered this trick
-> independently, and they would be unhappy to be interrupted by
-> commit-msg hook like this.
->
-> A saving grace is that when the user is stopped with this,
-> pre-commit hook that inspects the contents to be committed
-> have already run successfully, so rerunning with "--no-verify"
-> is not with too much risk.  But still, I am not sure if this is a
-> good thing to do overall.
+When running outside a repository, git merge-file ignores the
+merge.conflictStyle configuration variable entirely. Since the
+function receives `repo` from the caller (which is NULL outside a
+repository), and repo_config() falls back to reading system and user
+configuration when passed NULL, pass `repo` to repo_config()
+unconditionally.
 
-Maybe this is not the right tool[1] but perhaps the hook could respect
-an env. variable to disable this check and hint about it in the error
-output?
+Also document that merge.conflictStyle is honored.
 
-=F0=9F=94=97 1: https://lore.kernel.org/git/cover.1709495964.git.code@kh=
-augsbakk.name/
+Signed-off-by: Yannik Tausch <dev@ytausch.de>
+---
+
+Notes:
+   Changes since v1:
+   - Use repo parameter directly with repo_config() (Junio)
+   - Fix AsciiDoc continuation, rename test files, break long
+     lines (Kristoffer)
+
+ Documentation/git-merge-file.adoc |  3 +++
+ builtin/merge-file.c              | 12 +++++------
+ t/t6403-merge-file.sh             | 36 +++++++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/git-merge-file.adoc =
+b/Documentation/git-merge-file.adoc
+index 71915a00fa..9dc5d8a370 100644
+--- a/Documentation/git-merge-file.adoc
++++ b/Documentation/git-merge-file.adoc
+@@ -85,6 +85,9 @@ object store and the object ID of its blob is written =
+to standard output.
+=20
+ --zdiff3::
+ 	Show conflicts in "zdiff3" style.
+++
++The `--diff3` and `--zdiff3` options default to the value of the
++`merge.conflictStyle` configuration variable (see =
+linkgit:git-config[1]).
+=20
+ --ours::
+ --theirs::
+diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+index 46775d0c79..f9de636884 100644
+--- a/builtin/merge-file.c
++++ b/builtin/merge-file.c
+@@ -60,7 +60,7 @@ static int diff_algorithm_cb(const struct option *opt,
+ int cmd_merge_file(int argc,
+ 		   const char **argv,
+ 		   const char *prefix,
+-		   struct repository *repo UNUSED)
++		   struct repository *repo)
+ {
+ 	const char *names[3] =3D { 0 };
+ 	mmfile_t mmfs[3] =3D { 0 };
+@@ -95,12 +95,10 @@ int cmd_merge_file(int argc,
+ 	xmp.style =3D 0;
+ 	xmp.favor =3D 0;
+=20
+-	if (startup_info->have_repository) {
+-		/* Read the configuration file */
+-		repo_config(the_repository, git_xmerge_config, NULL);
+-		if (0 <=3D git_xmerge_style)
+-			xmp.style =3D git_xmerge_style;
+-	}
++	/* Read the configuration file */
++	repo_config(repo, git_xmerge_config, NULL);
++	if (0 <=3D git_xmerge_style)
++		xmp.style =3D git_xmerge_style;
+=20
+ 	argc =3D parse_options(argc, argv, prefix, options, =
+merge_file_usage, 0);
+ 	if (argc !=3D 3)
+diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
+index 06ab4d7aed..4d6e748320 100755
+--- a/t/t6403-merge-file.sh
++++ b/t/t6403-merge-file.sh
+@@ -428,6 +428,42 @@ test_expect_success '"diff3 -m" style output (2)' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'merge.conflictStyle honored outside repo' '
++	test_config_global merge.conflictStyle diff3 &&
++	cat >nongit-base <<-\EOF &&
++	line1
++	original
++	line3
++	EOF
++	cat >nongit-ours <<-\EOF &&
++	line1
++	ours
++	line3
++	EOF
++	cat >nongit-theirs <<-\EOF &&
++	line1
++	theirs
++	line3
++	EOF
++	cat >expect <<-\EOF &&
++	line1
++	<<<<<<< ours
++	ours
++	||||||| base
++	original
++	=3D=3D=3D=3D=3D=3D=3D
++	theirs
++	>>>>>>> theirs
++	line3
++	EOF
++	test_must_fail nongit git merge-file -p \
++		-L ours -L base -L theirs \
++		"$PWD/nongit-ours" \
++		"$PWD/nongit-base" \
++		"$PWD/nongit-theirs" >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'marker size' '
+ 	cat >expect <<-\EOF &&
+ 	Dominus regit me,
+--=20
+2.52.0
+
