@@ -1,119 +1,212 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890D2352F8C
-	for <git@vger.kernel.org>; Sat,  7 Feb 2026 15:07:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4845633B6FA
+	for <git@vger.kernel.org>; Sat,  7 Feb 2026 19:12:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770476837; cv=none; b=IPktTNpnmQi+o+hfl2HjOm2MuCZsF3b6PsyR+xAzKQANX4PIg8F0qfXaB3HDXP0qaIDU3/64wskmIa/fkMdpX1t9iEQC17Jw09IVHqp4Jf5yROd0CtIrmE7sPciyOeCc7d4aQIslnMgZPZ+fCRFIRRu43LK2wOU2m8JISFpWFAM=
+	t=1770491543; cv=none; b=WT3NDZ4VAgTDaBlCkr/plnC9YN+eNdCiVmeeCE2JfmZJLCUjs9PJ7HewU00EEbUz6LgIY82tck7QqUl2ie2ZIq10fs2vtL9oO0/30U5sEbXUVgkPVqR4imkEknjf1qOEruxtd002s+O8UR3ZVeCu0xu3aTJ0cZ0gbPQ9PgFPWmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770476837; c=relaxed/simple;
-	bh=a7mwJYVq9bZeW9gnEoGOwytnJAJMLG2+SajreQZc2mo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HGxEX4h3F+bnMqpM9x4hfpBO+NPRk/imeZVDnI6g6a+X7pdvX7U+ilfiJLk+xVCUMvNFnCbljXrSUUOH1TGMG8/aqj07dyuaN3W2Pxe/ZhGadd5Zfe3lGIsut9UCzrw8Ewll9CpD9YcaleDOy6/LuxmbTY7nqm2VQgx6qBwnKHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mUFu1u5n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MXIWMCxk; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770491543; c=relaxed/simple;
+	bh=kQVQksnrr5tWMRSC4bUQuR50PHVM0/KjXD02WvbHFZA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hqLeJel/3rpcD9ukxOilbS+HmUFLVUO65aqQ4R6zxJMsUHnIYIm4W6N8xVXRu/4GJpMxJhyYQYy7Kot03roKKgfG9+fX/uNnTfnpXtntUyuWokN3wnCvoK3mWVXEzqTRzXT4RFwwIZ8onAo64ZX6IbyjXD4bPd89OANVMfFmrOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GV/HL0YX; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mUFu1u5n";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MXIWMCxk"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D7F29140017E;
-	Sat,  7 Feb 2026 10:07:16 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Sat, 07 Feb 2026 10:07:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770476836;
-	 x=1770563236; bh=Tq7b2IeU6z3eGR7oqiH+vAT+Uljr3ctDD1qh/LUAyAs=; b=
-	mUFu1u5n1b2UtYY8JJqIOxwR9u7zg3BektqCzy4BxXVozrLELt+t2OOaaCkhBRJM
-	XJqZFPcVXN3t3jP03RCBKe98twiahLNsaRCs34Qd7K5xwD56U5jCIM5kzA35i4r7
-	mLXdK+xhcD1bSKl616rVLIbCz433keFphBpPUE/+w/sy0KtmpZuQJ9C7ru4zNywC
-	QS2PaPB3gp676ME6z2y+ssJeyW3WXsBsYPjzQLthann4azpKKPKli7ZjHO1rCNGR
-	XGKSnd9FGpJ0UaGfF8q/jwG6jqvahjY1Z/ImX6eCSP/ycRRC/X6902stGR4Zv7n9
-	QxFgoUYU65qr2wKI7+vxvg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770476836; x=
-	1770563236; bh=Tq7b2IeU6z3eGR7oqiH+vAT+Uljr3ctDD1qh/LUAyAs=; b=M
-	XIWMCxkb8P4xcjwk6hVuH7Ag/XqqQsYv2wOHcqON6Y44P/1SujycOqBOUqQrsRev
-	Kf2Vy2Dis4lxRBDTIFyJHIWh8a+4RLfCe1y+DMPiuIGD0wb6ixPQ5DlBAcEW7K60
-	f4aRr0f+bUdLnBle8MKF1gT2iWhX5jy+YzjpDcw3MRuPR3/DIxEW/lVPDyS7G5GE
-	+RX6K1xgoWc4MsoDNO3rW6AF6JT8pp2xr3j+b9IGNSAAo69fjI5MGaMt70dA9N63
-	VQ72bXLApuKghFIUyfZ8k8Wd8TUbGuvZYdXl2aPPOVS1ZM+tBB646o/ryRaaLETr
-	DryGMl9tmRsXva+w7H+uQ==
-X-ME-Sender: <xms:JFWHaeYjZCojri-Az20EW7D1i6GnLAzG6il0rrDxy8g4SDigXdrhvcY>
-    <xme:JFWHaY3kvUKBLGAa8Kj9-SRsO-G8OG9Oo5rGph4WzRKBORsHLTaSjRrKMBQ4gkWrq
-    82LGwDANdngrrHMa4D84aGiV1wI9Na9mbnaSb9AVS0H6KPYqPahNA>
-X-ME-Received: <xmr:JFWHaWUGqzIo5wue-MJ1VBgLcRcbOM0TTpFnx7RGNj65mnqEYoZH2c0P4LUFSiM8y8henYuevye0bTpxNY6KKuyVy1IjbmdnpGr4EcPyrVM6b8jyg70hqcGKFQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledufeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
-    jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
-    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
-    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepthhorhhvrghlughsse
-    hlihhnuhigqdhfohhunhgurghtihhonhdrohhrgh
-X-ME-Proxy: <xmx:JFWHaaX6dp6pnxqTsXEr5HVVGko5Q9MFZmF_1eE31_5p6XH73pCo7g>
-    <xmx:JFWHaddxVu4m0kRQD6iRlzmIsFFZYA_H3l7WXnF808UazPtEg7EAxQ>
-    <xmx:JFWHabUj25M7Y2PjqfapDgz1RrwmN2ck7G20Rod0_jY5z4PGHZVhGQ>
-    <xmx:JFWHaefbESVUkG8FFm04l7DdCl_brN7IvfCSUY3Ba_Y4Go6zMSf8WQ>
-    <xmx:JFWHaQ3h1AAllQ-WxBXPfA5Q7emfyED_M_aiW5Le3YLMX-L7c4duWT4Z>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Feb 2026 10:07:15 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 3/3] doc: patch-id: see also git-cherry(1)
-Date: Sat,  7 Feb 2026 16:05:28 +0100
-Message-ID: <link_git-cherry.278@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
-In-Reply-To: <CV_doc_patch-id_4.275@msgid.xyz>
-References: <CV_doc_patch-id_4.275@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GV/HL0YX"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-81e931923b5so476114b3a.1
+        for <git@vger.kernel.org>; Sat, 07 Feb 2026 11:12:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770491542; x=1771096342; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=12TcyZNscYYNJSh6Q6Qu8vSvx/bAIOlGFkAmOeD6WxM=;
+        b=GV/HL0YXl0ZgIFl49TJQWMIi7022PciXTx7Eb3dIkb4C2XI0ZSGbbn16rANhFuWcXt
+         MYFbhQpa+UAD62Iew245QS3I8vAfzA3141fggSZT70tSSEASu2fw5038LoEDzD31Pb7Q
+         grqeWXsIbN/SvBx50mxbCjuhEQ4XB8cOTB1K2x7T0ke8kZZ8Yux8UQ8HVJVXD4yS+UZU
+         tVkBsI5ZpfPKB8DF8nkGOZssMjtsW89AaP6PqWtZSL27PNxq5cEaJyJdT49ZVDOVOwo+
+         vC+WtrjGCDxIREBiXubuzRZh6mddKQ7guQv8esbyTDs+r5515kmrnHfk6vDbwUNYl+pe
+         BZ3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770491542; x=1771096342;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=12TcyZNscYYNJSh6Q6Qu8vSvx/bAIOlGFkAmOeD6WxM=;
+        b=Dc6IGINt0WpM2FykRtoVA5jjM5oyHx4fwrKG37teEPBziJYiVFUgnCzO66QCcinw9S
+         ZvJwiPvUh4lEULA7iKjjOJ8fQ8xmUdBndHFgF069yTS4CzZlPwGZYxviiw/X5NtZ7OzF
+         tgv7MYXuPjpToxHcTSOy3YqHoBg+XTIoGqxfXuBrGB1HJJ/7mrXi5QXorGzV9ZoOLYR5
+         6MAtpqrOC904dW4s21dh96qo2FBCCI/g+kJ7oZRzl37/enyWz7PNXB7ubiu1cRIr35gM
+         TgnsHNfM6mS89pXgMD26Hs+ECJMmlkeHdrQfZmCvlpfaBSltjczFcLdmTYF9y2vXqxRp
+         b13g==
+X-Forwarded-Encrypted: i=1; AJvYcCWG1GDfA5GPTZyF8BQmiBBIOne3b3jfKSLNNND0iOUWjhQYhMuvJ+BVLBhSMoX9midqZAI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws9FHUIk+c8DqlAtQLq2pLy3B3P4ff/2W5uKKhsiM8rRy8+TH7
+	HG+wbfc+RVFaAqrG0B6DfZgGi/GIs8MHFUxkfKBCOxz9+KCe9aSqOFia
+X-Gm-Gg: AZuq6aJaRFlnrBgBAhqpdPHdN1X3x9MhlvhMdjAawl1fs8if7j2jGY2aJQXOZESRY/9
+	t56MxTw4iAplQ5htUnerbu1VEpTC260VbdMAnr/vQUm7136a2uprbj6XPjw6OBMyEPO4vgTWDDl
+	R7QSgpTnyKQVAaoPiEZKTiDGwf0qyemTr+G7nrZM2ptOcYeYiZj8qUoPSohGMmGZ3s+DO7xVhEF
+	6Ka0KwCsrnca/6QvLvprwVyaNn1TCCiIKvLzh4V5L0Cr9b+WfucEjoW3XE5m2CEjLY6HIz25L7B
+	LLTvXU/i7Omv5Yu/WhxgVd6gz3NyBMFGqga22BzK23C7XvE6Sr6wr7SGmNC30IyUa2eIVySp9bJ
+	Y6PkZEUeMgZoAadaAv1oWoIGVAJ0s3e+qW5YuMei/Qo5rATHFHiLeOHGDMwNarktsAyUEiFHB+F
+	Wp+lis4wa11tXGvbs=
+X-Received: by 2002:a05:6a00:39a3:b0:823:1077:2e88 with SMTP id d2e1a72fcca58-824417246fcmr4435356b3a.6.1770491542214;
+        Sat, 07 Feb 2026 11:12:22 -0800 (PST)
+Received: from [192.168.0.107] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82457ef1000sm2284619b3a.34.2026.02.07.11.12.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 07 Feb 2026 11:12:21 -0800 (PST)
+Message-ID: <cc2f400e-49c2-4de0-9c51-9a5c0294735e@gmail.com>
+Date: Sun, 8 Feb 2026 03:12:16 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] [RFC][GSoC][PATCH] attr: use local repository state in
+ read_attr
+To: Ayush Jha <kumarayushjha123@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>,
+ Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+References: <20260207114007.40-1-kumarayushjha123@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260207114007.40-1-kumarayushjha123@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On 2/7/26 19:40, Ayush Jha wrote:
+> read_attr() currently relies on is_bare_repository(), which
+> implicitly depends on the global the_repository.
+> 
+> As attr.c is a reusable library component used by multiple
+> commands, this prevents correct behavior when operating on
+> secondary repositories (e.g. submodules or in-process repos)
+> whose bareness may differ from the_repository.
+> 
+> Update read_attr() to determine bareness using the repository
+> associated with istate->repo, based on repository configuration
+> and worktree presence, instead of relying on global state.
+> 
+> No functional change is intended for the primary repository case.
+> 
+> Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
+> ---
+>   attr.c | 36 ++++++++++++++++++++++--------------
+>   1 file changed, 22 insertions(+), 14 deletions(-)
+> 
+> diff --git a/attr.c b/attr.c
+> index 4999b7e09d..f2d25b1863 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -848,21 +848,29 @@ static struct attr_stack *read_attr(struct index_state *istate,
+>   		res = read_attr_from_index(istate, path, flags);
+>   	} else if (tree_oid) {
+>   		res = read_attr_from_blob(istate, tree_oid, path, flags);
+> -	} else if (!is_bare_repository()) {
+> -		if (direction == GIT_ATTR_CHECKOUT) {
+> -			res = read_attr_from_index(istate, path, flags);
+> -			if (!res)
+> -				res = read_attr_from_file(path, flags);
+> -		} else if (direction == GIT_ATTR_CHECKIN) {
+> -			res = read_attr_from_file(path, flags);
+> -			if (!res)
+> -				/*
+> -				 * There is no checked out .gitattributes file
+> -				 * there, but we might have it in the index.
+> -				 * We allow operation in a sparsely checked out
+> -				 * work tree, so read from it.
+> -				 */
+> +	} else {
+> +		int is_bare;
+> +		int is_bare_cfg = -1;
+> +
+> +		repo_config_get_bool(istate->repo, "core.bare", &is_bare_cfg);
+> +		is_bare = is_bare_cfg && !repo_get_work_tree(istate->repo);
+> +
+> +		if (!is_bare) {
+> +			if (direction == GIT_ATTR_CHECKOUT) {
+>   				res = read_attr_from_index(istate, path, flags);
+> +				if (!res)
+> +					res = read_attr_from_file(path, flags);
+> +			} else if (direction == GIT_ATTR_CHECKIN) {
+> +				res = read_attr_from_file(path, flags);
+> +				if (!res)
+> +					/*
+> +					 * There is no checked out .gitattributes file
+> +					 * there, but we might have it in the index.
+> +					 * We allow operation in a sparsely checked out
+> +					 * work tree, so read from it.
+> +					 */
+> +					res = read_attr_from_index(istate, path, flags);
+> +			}
+>   		}
+>   	}
+>   
 
-git-cherry(1) links to this command. These two commands are similar and
-we also mention it in the “Examples” section now. Let’s link to it.
+Hi Ayush,
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-patch-id.adoc | 4 ++++
- 1 file changed, 4 insertions(+)
+I'm new to the community ;)
 
-diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.adoc
-index 19780f86425..fb9ec211bb6 100644
---- a/Documentation/git-patch-id.adoc
-+++ b/Documentation/git-patch-id.adoc
-@@ -106,6 +106,10 @@ join -a1 "$for_branch" "$for_upstream" | cut -d' ' -f2,3
- Now the first column shows the commit from your branch and the second
- column shows the patch ID equivalent commit, if it exists.
- 
-+SEE ALSO
-+--------
-+linkgit:git-cherry[1]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
--- 
-2.53.0.26.g2afa8602a26
+Initially, the concern that replacing 'is_bare_repository' with 
+'repo_config_get_bool()' inside 'read_attr()' might introduce a 
+performance regression came to my mind immediately. To verify this, I 
+ran a benchmark using hyperfine, and the script was like:
 
+ >#!/bin/bash
+ >mkdir -p perf-test && cd perf-test
+ >git init
+ >
+ >git config user.email "malon7782@yahoo.com"
+ >git config user.name "ILOVEGIT"
+ >
+ >for i in {1..10000}; do
+ >	echo "content" > "file_$i.txt"
+ >done
+ >
+ >git add .
+ >git commit -m "initial commit"
+ >
+ >echo "* test=auto" > .gitattributes
+ >git add .gitattributes
+ >git commit -m "add attr"
+
+Then
+
+ >'git ls-files > files_list.txt'
+
+( I wrote it this way primarily because I didn't anticipate that too 
+many files would return a 126 error code. So I improvised my switching 
+to reading from standard input:/
+
+It didn't result in a noticeable performance difference (Even if the 
+number of loop was increased to 300000). Then I started to create a 
+stricter benchmark environment to defeat the attribute stack caching:
+
+
+ >mkdir -p dir_A dir_B
+ >
+ >echo "* text=auto" > dir_A/.gitattributes
+ >echo "* text=auto" > dir_B/.gitattributes
+ >
+ >for i in {1..5000}; do
+ >    echo "dir_A/file"
+ >    echo "dir_B/file"
+ >done > thrashing_list.txt
+
+Still, no difference in performance. Has anyone else conducted any 
+similar performance test? Were the results the same as mine? Is it 
+normal, or there is something wrong with my test?
+
+Regards,
+
+Yuchen
