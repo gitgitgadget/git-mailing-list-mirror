@@ -1,132 +1,188 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BE11D7E5C
-	for <git@vger.kernel.org>; Sun,  8 Feb 2026 18:50:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19AB6FC3
+	for <git@vger.kernel.org>; Sun,  8 Feb 2026 20:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770576630; cv=none; b=Reh6z8fbH43ZRElzh3Va1B3ks84ARp+TkfcVdwODIoSoDms/z7BqShT1tBZVQi4jgUExbCOGPytshkZyfUVvXF0S7165uW8XPb9NMdIj/2aYfEYhEC4/jo+LiRoHmy8odvJwELQ36gbgZOuVYbCM5AvsGNQvukhDqLyHdiO0qKY=
+	t=1770582533; cv=none; b=FT+7Oq3S/dgztT5Ey5+1k+v4q1W7EAU7C87603YBOrppDI4qrCGByrzWh/LKNW3LOO9FELXK80C5fnDZQBPWh/ijpwqSyY4lqnIJpuOeAy1X+bqey8b+BkCXHN3Lean7Ks7mevUG6OIjOZu/caoDWP5jgR5Yk6vTMybQ0Poc1Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770576630; c=relaxed/simple;
-	bh=F8mpIKivSJNbDTE2ERKkZHyC+zr2ZYvoSfxdc7Iv8SA=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kZbhnk73fRl6qcMmu48FpuKl2esCX3gW9BnMhpu8omZ/URdR/NprRo6eOVqdoWKP0D4+6bT3HcI1YmcRdpnuW1O7eVC/eeVazmAOgJuggSpgjhBeJS2DEYRPGjglH9a+lI1OHlYEKpCGHS1J/ffXmxI6fnuAOn+w83pitePUTZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XnFYsqiD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770582533; c=relaxed/simple;
+	bh=VTjUdduDk7+PSEwsLAlh3YxLmkCPNe06rEezSMQ7HfM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=J9SQTrBE81jnZcjFiGaDsNd5lAW19WxPQrR2JmqkANNYJvI4clV29JYLLv6YYrnsK/t/Ewgb2dQDFsP+0IAnCywuWiB9tvRasu5Rc0srY4QHcCSkNXf6ZqHkfGTF4fuFYKmL9fxFitMVieIVUvtEXneYxW9pamEP7Oc/Zfs3phM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CLtNCmjE; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XnFYsqiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AF2C4CEF7
-	for <git@vger.kernel.org>; Sun,  8 Feb 2026 18:50:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770576629;
-	bh=F8mpIKivSJNbDTE2ERKkZHyC+zr2ZYvoSfxdc7Iv8SA=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=XnFYsqiDv46ojDHu7nquXsUUblboAJ/0+sZdghONUHBPeNO4k4PWFYJMixFv14DLj
-	 wwRuMN7hlz/9c9NI++p1MjV3qGRXtxo72o5DXLxxCvBwDdyYeUgZXpteQ3T36wjsjG
-	 N2IM0J5IytW7xt8DjLEMsi5K6AzBPLg6iZ9C990bhNfAGWnHCLZWWUX+rsBnbK5Wm/
-	 RsN32NWCDRQRcGknKxHB4H/fG0ZXok2YmDudIRtRJthDdmMsPalmzMCUZ1RFx2xjc4
-	 s3YYG4H80TIl7CrSdHwmlcCKMHh//QAdeijuMShgVk0RH7d43XaLe/79NH+clkxOHk
-	 ZA8JSQ5OUBsng==
-Date: Sun, 8 Feb 2026 19:50:27 +0100
-From: Alejandro Colomar <alx@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CLtNCmjE"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-47fedb7c68dso40319955e9.2
+        for <git@vger.kernel.org>; Sun, 08 Feb 2026 12:28:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770582531; x=1771187331; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xwpYOHgOZthReS+6WzbzDTR3GlpXl+3p/hitjIbqp1E=;
+        b=CLtNCmjECHhH/Mm2nKOmNVFtyk5QsNvLkttQHaQc2TbQrOnmrs0Ig6TI7MtMYQ5DiN
+         E70MKOdH+iqvJesk+ENF9F+Uxc/61Z92uWeySI+hK2qrF9zhk2mYEN2TScpc3zddlSKh
+         jK83pYUGksv+mjq5O+Hyodq4Qp8GdTmg9K8e/j4Bc8p3D9BYmYHk6NJKZXJbxCb5EPeQ
+         zDM1Yv55TjXBQb3EC36yRBApeW/BCulkwCOyPUMMlpLyxuExG6x58WJ7Rql3zMeSTn9Q
+         vVtrn2zuqEtSy/fNVkAkDrvAHW9f8hG0g41vXXD53z0AmrcL05fSdZjtP9dWUmexojW5
+         6nOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770582531; x=1771187331;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xwpYOHgOZthReS+6WzbzDTR3GlpXl+3p/hitjIbqp1E=;
+        b=wjESM9s8ubZR66vG5GLx0ulC/cTEstrLgvyEwYOprWsS+9fTQXH++TotjkKARS4Z2Q
+         yR3oUdXA9yqwrm0o9oN/TdBYmW+YQyUeVmYkQHvuajfqsE8TlCPMn7d2KrV/pEYEArA9
+         rNdW0a6lph86yQvL5FJYbrUsXY4yAa3QSVhcZlWfqPjxC8BbT5CxlF4Bp6XQcfnPhfu4
+         ffTbM2W0zB2j719kcgQCymxX1/ZBada3tfm/p/sUQ84eCfQHWIv86y5Qs0lTaW4DcnLW
+         UYt0KJoysDKE8D4G7aYOtnlGh5LHzNElta5eWPhqX0DCMBJ1vUqtXwrlb97Xl5D2QxyE
+         /79g==
+X-Gm-Message-State: AOJu0YwBuc2+2WxOiDoAToVfloTmBBhGV5TkieowTyM3R4ZCHFDtIcKR
+	GNXEFjmtpkeJmjQ2wjzCzbNNezdZZv2RYPIxaevueDcMViGYtI42VFVd036tbw==
+X-Gm-Gg: AZuq6aJXm18sNQi8hFaM3+5cg0hwlmuszCGRCiuK+UOQUJFMAGw60obAaSq8hekAUaM
+	/ul+uCNpsPEFkkkWr9SgizWRN+acdIus+Bkioz4pC6dmaA0mpyg8v37W5FbmoV95rgCfB1O5M9I
+	6r2lbqNoikysICbRMTQ/dwyJusqwWHdckIj/M7nYKMrAhRxt28gT8H0HI98HZyOwRQ1DUlyyxxY
+	QTcUqbBW0sc+DFgsXQLcms/5mkwi75x+FJ+W3b0pKzJZYx/7nKzzvsUs52YZDyJ0F/3PNJcyWop
+	OJQnVHZ8RjIytJyO5MI09KDAEg6HjETRpifSdIC043ND5O6lgtFGlHcLJNcU0TdVya6239wgHDY
+	FRUYV/5Fhf1rE1/nXiapDLtxDLMgJ1BVqPtC5teTjnouknPBHdvlcxZodCjeworaGgjes6MHlFZ
+	si1ut4+h2AUxbQRNo=
+X-Received: by 2002:a05:600c:314e:b0:47e:e8c2:905f with SMTP id 5b1f17b1804b1-48320928e3fmr127604085e9.8.1770582530565;
+        Sun, 08 Feb 2026 12:28:50 -0800 (PST)
+Received: from fedora ([159.146.42.144])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4832097d8dbsm117268895e9.4.2026.02.08.12.28.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Feb 2026 12:28:49 -0800 (PST)
+From: =?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
 To: git@vger.kernel.org
-Subject: Re: color.diff.<slot> for commit headers (Author, Date, ...)
-Message-ID: <aYjauDayL_WIBXV2@devuan>
-References: <aYjVlRqvafWeePvi@devuan>
+Cc: christian.couder@gmail.com,
+	gitster@pobox.com,
+	=?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
+Subject: [GSOC PATCH] t2003: modernize test path helpers
+Date: Sun,  8 Feb 2026 23:28:09 +0300
+Message-ID: <20260208202809.270523-1-bkkaracay@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lsmqh6ymojrveyxb"
-Content-Disposition: inline
-In-Reply-To: <aYjVlRqvafWeePvi@devuan>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+The old style 'test -f' and 'test -d' checks are silent on failure,
+which makes debugging difficult.
 
---lsmqh6ymojrveyxb
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: git@vger.kernel.org
-Subject: Re: color.diff.<slot> for commit headers (Author, Date, ...)
-Message-ID: <aYjauDayL_WIBXV2@devuan>
-References: <aYjVlRqvafWeePvi@devuan>
-MIME-Version: 1.0
-In-Reply-To: <aYjVlRqvafWeePvi@devuan>
+Replace them with the 'test_path_is_*' helpers which provide verbose
+error messages when a test fails.
 
-On 2026-02-08T19:32:40+0100, Alejandro Colomar wrote:
-> Hi!
->=20
-> According to git-config(1):
->=20
->      color.diff.<slot>
->          Use customized color for diff colorization.  <slot> specifies
->          which part of the patch to use the specified color, and is one
->          of context (context text - plain is a historical synonym),
->          meta (metainformation), frag (hunk header), func (function in
->          hunk header), old (removed lines), new (added lines), commit
->          (commit headers), whitespace (highlighting whitespace errors),
->          oldMoved (deleted lines), newMoved (added lines),
->          oldMovedDimmed, oldMovedAlternative,
->          oldMovedAlternativeDimmed, newMovedDimmed, newMovedAlternative
->          newMovedAlternativeDimmed (See the <mode> setting of
->          --color-moved in git=E2=80=90diff(1) for details), contextDimmed,
->          oldDimmed, newDimmed, contextBold, oldBold, and newBold (see
->          git=E2=80=90range=E2=80=90diff(1) for details).
->=20
-> color.diff.commit (commit headers) would seem to be the slot for
-> coloring Author, Date, etc.  However, that colors the commit hash
-> exclusively.
->=20
-> The documentation should be updated to reflect reality.  Maybe
->=20
-> 	s/headers/hash/
->=20
-> Also, I'm interested in coloring the actual header fields; that is
-> Author, Date, etc.  I think a good name for that slot could be
-> 'header'.  Would you mind adding that?
+Signed-off-by: Burak Kaan Karaçay <bkkaracay@gmail.com>
+---
+ t/t2003-checkout-cache-mkdir.sh | 49 ++++++++++++++++-----------------
+ 1 file changed, 24 insertions(+), 25 deletions(-)
 
-Another thing I'd like to be able to color independently is the subject
-(the first line of the commit message).  'subject' would be a good name
-for that slot.
+diff --git a/t/t2003-checkout-cache-mkdir.sh b/t/t2003-checkout-cache-mkdir.sh
+index ff163cf675..5844389c88 100755
+--- a/t/t2003-checkout-cache-mkdir.sh
++++ b/t/t2003-checkout-cache-mkdir.sh
+@@ -24,27 +24,27 @@ test_expect_success SYMLINKS 'have symlink in place where dir is expected.' '
+ 	mkdir path2 &&
+ 	ln -s path2 path1 &&
+ 	git checkout-index -f -a &&
+-	test ! -h path1 && test -d path1 &&
+-	test -f path1/file1 && test ! -f path2/file1
++	test_path_is_dir_not_symlink path1 &&
++	test_path_is_file path1/file1 && test_path_is_missing path2/file1
+ '
+ 
+ test_expect_success 'use --prefix=path2/' '
+ 	rm -fr path0 path1 path2 &&
+ 	mkdir path2 &&
+ 	git checkout-index --prefix=path2/ -f -a &&
+-	test -f path2/path0 &&
+-	test -f path2/path1/file1 &&
+-	test ! -f path0 &&
+-	test ! -f path1/file1
++	test_path_is_file path2/path0 &&
++	test_path_is_file path2/path1/file1 &&
++	test_path_is_missing path0 &&
++	test_path_is_missing path1/file1
+ '
+ 
+ test_expect_success 'use --prefix=tmp-' '
+ 	rm -fr path0 path1 path2 tmp* &&
+ 	git checkout-index --prefix=tmp- -f -a &&
+-	test -f tmp-path0 &&
+-	test -f tmp-path1/file1 &&
+-	test ! -f path0 &&
+-	test ! -f path1/file1
++	test_path_is_file tmp-path0 &&
++	test_path_is_file tmp-path1/file1 &&
++	test_path_is_missing path0 &&
++	test_path_is_missing path1/file1
+ '
+ 
+ test_expect_success 'use --prefix=tmp- but with a conflicting file and dir' '
+@@ -52,10 +52,10 @@ test_expect_success 'use --prefix=tmp- but with a conflicting file and dir' '
+ 	echo nitfol >tmp-path1 &&
+ 	mkdir tmp-path0 &&
+ 	git checkout-index --prefix=tmp- -f -a &&
+-	test -f tmp-path0 &&
+-	test -f tmp-path1/file1 &&
+-	test ! -f path0 &&
+-	test ! -f path1/file1
++	test_path_is_file tmp-path0 &&
++	test_path_is_file tmp-path1/file1 &&
++	test_path_is_missing path0 &&
++	test_path_is_missing path1/file1
+ '
+ 
+ test_expect_success SYMLINKS 'use --prefix=tmp/orary/ where tmp is a symlink' '
+@@ -63,10 +63,10 @@ test_expect_success SYMLINKS 'use --prefix=tmp/orary/ where tmp is a symlink' '
+ 	mkdir tmp1 tmp1/orary &&
+ 	ln -s tmp1 tmp &&
+ 	git checkout-index --prefix=tmp/orary/ -f -a &&
+-	test -d tmp1/orary &&
+-	test -f tmp1/orary/path0 &&
+-	test -f tmp1/orary/path1/file1 &&
+-	test -h tmp
++	test_path_is_dir tmp1/orary &&
++	test_path_is_file tmp1/orary/path0 &&
++	test_path_is_file tmp1/orary/path1/file1 &&
++	test_path_is_symlink tmp
+ '
+ 
+ test_expect_success SYMLINKS 'use --prefix=tmp/orary- where tmp is a symlink' '
+@@ -74,9 +74,9 @@ test_expect_success SYMLINKS 'use --prefix=tmp/orary- where tmp is a symlink' '
+ 	mkdir tmp1 &&
+ 	ln -s tmp1 tmp &&
+ 	git checkout-index --prefix=tmp/orary- -f -a &&
+-	test -f tmp1/orary-path0 &&
+-	test -f tmp1/orary-path1/file1 &&
+-	test -h tmp
++	test_path_is_file tmp1/orary-path0 &&
++	test_path_is_file tmp1/orary-path1/file1 &&
++	test_path_is_symlink tmp
+ '
+ 
+ test_expect_success SYMLINKS 'use --prefix=tmp- where tmp-path1 is a symlink' '
+@@ -84,10 +84,9 @@ test_expect_success SYMLINKS 'use --prefix=tmp- where tmp-path1 is a symlink' '
+ 	mkdir tmp1 &&
+ 	ln -s tmp1 tmp-path1 &&
+ 	git checkout-index --prefix=tmp- -f -a &&
+-	test -f tmp-path0 &&
+-	test ! -h tmp-path1 &&
+-	test -d tmp-path1 &&
+-	test -f tmp-path1/file1
++	test_path_is_file tmp-path0 &&
++	test_path_is_dir_not_symlink tmp-path1 &&
++	test_path_is_file tmp-path1/file1
+ '
+ 
+ test_expect_success 'apply filter from working tree .gitattributes with --prefix' '
+-- 
+2.52.0
 
-
-Cheers,
-Alex
-
->=20
->=20
-> Have a lovely day!
-> Alex
->=20
-> --=20
-> <https://www.alejandro-colomar.es>
-
-
-
---=20
-<https://www.alejandro-colomar.es>
-
---lsmqh6ymojrveyxb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmmI2uwACgkQ64mZXMKQ
-wqnygw/+J4mqJKDcMm++Sje1p2rqoEzHL1sQnpMbWL7jg0f9iPZLsHZ5mDmLZObD
-v2iDLTgvaMajvaW6p59gLthFe+hmRCksI7A2fJV2X4sOX+78UltnW+V0VhTlBYx5
-EGnXuPjk4EWH6cum8SREt4paypcU9pVr10/PblFVIBK9uCX9pekz++xb7plPE/+5
-g1yhaooTt2U1RfXo2WFxxaKSng6Bt2MR3yrx9Ov1VSOim0KvQQ8JK/hL5fWfCvcl
-RnFbxBkr1qzFkYXhrc82sw24N6+5ZVc3bOnQaTX+bAYSvYZncSCTQtc3uVjUI9Ch
-Mvwry9lMLypdzLy6sI9TCJqWmfsdMCM8/LVyFkJKmYAes7eX7ZMwHtJMqoMXOIO2
-WS0G1SRf3sJF5QKILLsCkpijcyOI86WK+IESQBiTO58FkMuro/nALrQ4DEhTlV02
-UWWO47TZ3kDoga0x3rOKwazhuNbnvIrP6HSuNxvskSA0tUocZHaVatrrFwu1bcpr
-i63dBZisa8ZCNPPLKEyAVKJowp8UpHUXqGO7tDkpseYzzrBxJwFXU3f2MuuWdS9B
-j5vkE+mONb/g9yLFzZanQs6g/LCbP8yVk93RSapjZSsRtDnQrNm2UEWagNakD9Ey
-97gO2JEmm5M0s4yJCIc1EE0qxfw9X5mD6adwth35yAXstX49lr0=
-=y6uW
------END PGP SIGNATURE-----
-
---lsmqh6ymojrveyxb--
