@@ -1,116 +1,116 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE50338F35
-	for <git@vger.kernel.org>; Sun,  8 Feb 2026 07:59:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770537567; cv=none; b=lLi5QtRC6/wbhaWmUHXyNK57QqEgL4Cff5xd1mJ6N2NLooEUDzTSLKqPhfELKRtPX+j9tITb3tYUZIYP5K4TW21AwFQjK06Gdp1mdPGnTf9Hs6L2xSKYFQ+uC1+foi6FPAXiIX7Afe7COtcvbeyqFz31Al81Q1mSdH5VrUgLAJ0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770537567; c=relaxed/simple;
-	bh=P0ed+dfj7xFliKCtyg5jJ/vbWEtM8vKWI49C/9NKtlc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QM+kWlHNuFYYrZDLJKF8Yjg+d5trYQ3hr/NIWDcfAoe5vNZEv65c4xHmEVL7SuqY1dG7K6K0GCEbdJI0FIX1B1UpSWdEOUexPcNzfBMdVdKIDRJVhtc2nP7LoWBcA0D6N1myGbgKek6+QCZWJGnVxJtX3E7sKc3WhOESH8bJ61A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DwfmToyw; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F57822F01
+	for <git@vger.kernel.org>; Sun,  8 Feb 2026 09:13:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770542030; cv=pass; b=m8gqWT/OWOPzhCy98xWmCHeFWfC8MVq25eO8hSiWpTVl/tJnosYKKNoqxuFRYcmUE6oInAd4OhwnG+CRl6wgJhVNkjRClKfFxc2b1xuix6uDikWZXA17YtsLfBdDGHVUBaozsCicoVmv0GGlAJ0ECGrQ2DmvMekzyGnBul+57K8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770542030; c=relaxed/simple;
+	bh=kXv7FU95bMNa6stO1/kqqAUJcC/mu3S+U0lCuxdIHvI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=b+LRK5a7pMDMOWvVNRBbWJIK5v1i0IqHAdQJozesdGyfdma+sQAuLOVT8VCiIkCBFuh/4OZdnbelYRE2cAeKdp/MPb5zEA7HR5w4kFYtI06k3hfBwZWUMmRX2lu9o7dV8c6hrmMNu7tLq9qfRjvgy1UiG2KFu8+1EOKH08Z1/JY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j71MuTgq; arc=pass smtp.client-ip=74.125.224.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DwfmToyw"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a9296b3926so23274295ad.1
-        for <git@vger.kernel.org>; Sat, 07 Feb 2026 23:59:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j71MuTgq"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-64ad79df972so879025d50.1
+        for <git@vger.kernel.org>; Sun, 08 Feb 2026 01:13:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770542029; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Zla2i2nIan8T1E2tTPqUR/Yv4XcMJTwMiG4jc+mB/zVol+x9P7jPjeOFW4GHwuA480
+         fFWR/eNlUuXBm0YVJqgirLeJNH5MqzDaQ/ZkD4LlwVEi3XTdO/hA0LV8EeL7o9QPRoPE
+         KqgABLykBQw71MOFUVp5tk0tB2S95Ukq+Kvz3FF05/Z6J9j2vWfApbC7UPZfGo5Ahmld
+         kKP9Nqb3Mrjuylq8E5aZmbLcrPrSofeYR7D+8xUAHNdQf01aADZdDfMDBIYDmOnSf71h
+         icjesKfFoYFXrTkARyI7/a1vvYr7WpBIw9f5Wwf8NN6MJg4RJMKHy3STDfWTYstd+FaL
+         YAjw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kXv7FU95bMNa6stO1/kqqAUJcC/mu3S+U0lCuxdIHvI=;
+        fh=xVMIxISUY/RdXpPx1mEUvTSih6h5WjicUO0jcPODdF4=;
+        b=XGkfoXri+tTrUgvWYnVUb/dL0Z2PMy4vuH7PxeDsW0Rup3aaLZeCe43DLojQehOTJm
+         AuKXqujGKbhrSscb5zJrG1x3VaAynN1/6sEyG5KAI/E8Sdk66l3CnL2kzBfa4ilO6rNZ
+         RKSUpe/EKEXwXbZAqBMtDlfM88gsW6wMvRjLVbYv7iPOmpOQBkIa2T+L53tYwROmeleY
+         BdYLNiyVZipSY1lpjMBm8owftOm4N1xsmSNHT3Od6SQdefcQg0E4GogvEQc8E+7Fqj0S
+         OHF8bau0RxACyFoB8pfGdK4c+FaMqu+FLalub4E5JJkJiWtkTZJvSwrUDRWFsvQutl+2
+         bujA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770537566; x=1771142366; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770542029; x=1771146829; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bP70Y6Nj4zA+30S55eb1y0qsmhjQ7M6a9j/ugvjuDp8=;
-        b=DwfmToywG7CP2eQCbJZDcLJ1SjdsapSQXOG9f7MBueO1Y/pHrBLqtyWYTfjanr6Eon
-         KEs59XmtkNGPL61dWrTN68ArcgoVmW7DSCEh0P2Eq+r0TwphmMXhRcETY4/eNAG4bKIN
-         c3OOHqzatJAjrhBITxg9U2qttoH+Hm0W6FP6oHb6ki8A51qExBEzobEozt4GsYeXmTCk
-         Z/WZ89ackzes/vzvZzglWYg3yQT6TZRc6z6f2F2CYvcLQFWyQKZbHxvhesprvRyjvwXi
-         SAtwgBvJM+xVdKBWSENAcvYi1dlaBWkJn56d2iZCqn1KWWiTVyeN0evYKekVcBn64DFL
-         IjNQ==
+        bh=kXv7FU95bMNa6stO1/kqqAUJcC/mu3S+U0lCuxdIHvI=;
+        b=j71MuTgq0J4fs8XGO24sBrN1qpoC9/CdhnesuCrxQZ8SXpwFtY9AVEHu7va7t0ljS4
+         0bsRE4xHj9e+APEDbhtP/R82WluzOAHQj1OYRleqYmcIHZFIVoIVXmA12YJn9wKF+msV
+         tcDHVqtYv+DjhcFFM1YgrC+ETJpiOFHb5VGL8jHQIFivlj4dj3qkVKcW96xtZ4tcbvUR
+         D+5/Ovz0gakntcQV5UfdqTbRyvsUJ7ZXybpUdmZjXz4Cw0CsAPXb2eDmw8KusRnlm+NL
+         GPCv9k+td8GR7oJHjDi+MQyl0+Ir3v1ilR0IjUgIe8Xhx3V3xeyngVqizl2wxBKTvGLF
+         Vr6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770537566; x=1771142366;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1770542029; x=1771146829;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=bP70Y6Nj4zA+30S55eb1y0qsmhjQ7M6a9j/ugvjuDp8=;
-        b=GuqvcHK6Zfmhc1JBoGx0dfbK3caDUBYy+oRX9PJBQ8OjXx4INW9NALKeHLx2KYy1Qp
-         zYTa3mm0jMGIcTcJx461VFyghyzdAKCc4aO94AQeXBXzq+eZD6zjEY9msrOMeMyAOVoX
-         oGYSeKbisUi/lkyoZP6D+su5R6OY0+okHquarWs5RWaq3G5XCzmayK10henN23jEhdt9
-         Dm+eJpf7rkEvGpJ0tiNpqSwfuEf4J+vheADsL9GWrV8E31Ut+/2poUoycv+JXsSAJ7aZ
-         72zgA1bfdBaVXYup6HweS4vit6FnjphT6LQqLf7YGfyzoeo98LlWodygnpng3mj8LXsw
-         4dRQ==
-X-Gm-Message-State: AOJu0Yw858LGUHaICMTZup0ifScfKE0zQOeItxy/lj+am1AeX9GMLe7y
-	iNlovZEtHl13Vh1iDfDMQsMnDf83IA3x5g7UZQ9Wnps3N8wL8Q9eW2/7ESzBd5Q/
-X-Gm-Gg: AZuq6aLOuGExsJz5/OgVFNIxLO7+12i2rbzbVxR2dEi2z+jYjFZMh28EjHiTTBl8h8s
-	YyRiOZFxa3kJBiXg1p92ianGuRwqynNSi7GS8TpXwgNPvS8jzuoQAOKT6UaQSMy5DbZg35SrGZD
-	UqrdWiTWD0iU63sGCkQu1ZKT/HFb6FXwY44Taqp6z7zN5M6YuaPPdsHOwmAoh/keTL4rSte7Ym6
-	VaW2+ViM782iLa4VtCtmF1FKvcYxQ6ICDQgvuoBt7G24nwF1PUOtjxDUgUZthk29ACjn6I3ibQB
-	g6Cwg+soknu1h9UjjaKQMsayEgMKWNKNEyASF4Kq/n8yn5ewdyw8SclCxcyXN2QrJKborsdP5/X
-	kFseW6yNL0EbOciiIeRundX3T7DE8WitWqkTFF2jzKCuTNqZtxwD2SUt0ReyAWWeLc/lcVMQ6p8
-	Y+mqEQYkQdUNNnMXTsRy5KI2WBTsoVI6RIhKCD
-X-Received: by 2002:a17:902:f651:b0:2aa:d647:e1b4 with SMTP id d9443c01a7336-2aad647e468mr23901975ad.34.1770537566029;
-        Sat, 07 Feb 2026 23:59:26 -0800 (PST)
-Received: from AyushJha ([2409:40e4:1220:63bf:40c2:a75d:9eb0:2777])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a9522287d1sm67309435ad.91.2026.02.07.23.59.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Feb 2026 23:59:25 -0800 (PST)
-From: Ayush Jha <kumarayushjha123@gmail.com>
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-	Ayush Jha <kumarayushjha123@gmail.com>
-Subject: [RFC GSoC PATCH v3 2/2] attr: use local repository state in read_attr
-Date: Sun,  8 Feb 2026 13:29:05 +0530
-Message-ID: <20260208075905.1807-2-kumarayushjha123@gmail.com>
-X-Mailer: git-send-email 2.53.0.windows.1
-In-Reply-To: <20260208075905.1807-1-kumarayushjha123@gmail.com>
-References: <20260208075905.1807-1-kumarayushjha123@gmail.com>
+        bh=kXv7FU95bMNa6stO1/kqqAUJcC/mu3S+U0lCuxdIHvI=;
+        b=qk1r1XtWzr/RGTPHNYBWzop3aZSLig6eT9/v2Atf+xq6TvvUFRMKA6U3dtSxb01EOf
+         dg7DkKEoqbn8tk6dlMcC9zotKCORlHy/WfV0YGYVLTEdxw/fF3ToRyLT0ZRX7yns3rwF
+         0DWEsjIlgC+4TS604VpjKukk/WlJrghaNDA/M9GUsJpJl6veC6x7ro5c1dA38F+s4aqU
+         bGPVb7+gA3tX7D21F0eFsuUK2XzshLrsEwkyF4HXeBY/iKnlzWzSm15okJa4DxGqY4ns
+         JTyNvE2sSP5broUtX7GMFkzo+GdEnqCtfEi+9Fv8dI7IwJvsiZRUFVZCzuDr5JrM65Sy
+         gc4g==
+X-Gm-Message-State: AOJu0Yx42CezcemQ3RxPorllSwAwBaiSvznTGFFXpn5+3ZDq0DJI/G84
+	VqV355XLfyOqDTFBC7w7vnUW6R+xWCEtHlA64J41V/jgMbY/+bgJxrRCcQb3jz4Rn8C2txc0u+X
+	O7WuIroSEJbES8JhuOn2068a5YQ1GxjfW/vYkFJQ=
+X-Gm-Gg: AZuq6aJRlLmD3m2lcyZwUe6F6u2ZnpXHOHAP34rLT6TVJR6kXHZsW9Kbbyj6XKm+LAH
+	k6SGAr5cUB9+17Eq5KrCh4vknakeL89U4ShWUz1NIo4pH08Yq4KZBbGvu2sbI2m60UlieafS6E1
+	aHnlWQA8iVNUgns0Xlty0MtNFrWu9rfqoV1Pukd2s8R3QRGxrW8D6tlAtQ3T/xunYRbiK75I4hS
+	Ya8S5/Y4ZfZamEwAShXlfKFYRpUJEaAW8cVe69D0istaRzLNwzgL1FyL2Vr6IbAJ40lCoztTcIX
+	vth2/A==
+X-Received: by 2002:a05:690e:1913:b0:64a:db6f:e682 with SMTP id
+ 956f58d0204a3-64adb6fe81fmr2240653d50.56.1770542029628; Sun, 08 Feb 2026
+ 01:13:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAPHqhPmiMYLE_v03i-CzsBmonsNiY2PeeaGgP_AUthKhK=NoCA@mail.gmail.com>
+In-Reply-To: <CAPHqhPmiMYLE_v03i-CzsBmonsNiY2PeeaGgP_AUthKhK=NoCA@mail.gmail.com>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Sun, 8 Feb 2026 14:43:38 +0530
+X-Gm-Features: AZwV_Qhqh9EZvl6Ia7w7lAswh6kbI5NE-yyhNQ53kx7Ys4ePzyrBNhZzf7AtdcM
+Message-ID: <CALE2CrR_Xrei32pc_gJ16mArZPjZ-+bNWWFnsJ3i+OGqbxwPcg@mail.gmail.com>
+Subject: Re: [GSOC] Is adding 'dart' to userdiff.c a valid microproject?
+To: soutrik das <valusoutrik@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The read_attr function currently relies on is_bare_repository() to decide whether to check the index or working tree for attributes. This function implicitly depends on the_repository, which is incorrect for library code handling secondary repositories.
+Hi Soutrik,
 
-Update read_attr to use the new  repo_settings_get_is_bare(istate->repo)
-helper. This ensures the logic respects the context of the specific repository associated with the index, while also benefiting from the lazy-loading optimization added in the previous commit.
+On Sun, Feb 8, 2026 at 9:50=E2=80=AFAM soutrik das <valusoutrik@gmail.com> =
+wrote:
+>
+> I saw that the 'dart' language was not present in userdiff.c's list of la=
+nguages.
 
-Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
----
- attr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Yes, adding a new language entry to userdiff.c is a valid contribution
+and a good way to get familiar with Git=E2=80=99s workflow and review proce=
+ss.
 
-diff --git a/attr.c b/attr.c
-index 4999b7e09d..2e1cde4615 100644
---- a/attr.c
-+++ b/attr.c
-@@ -23,6 +23,7 @@
- #include "refs.h"
- #include "revision.h"
- #include "odb.h"
-+#include "repo-settings.h"
- #include "setup.h"
- #include "thread-utils.h"
- #include "tree-walk.h"
-@@ -848,7 +849,7 @@ static struct attr_stack *read_attr(struct index_state *istate,
- 		res = read_attr_from_index(istate, path, flags);
- 	} else if (tree_oid) {
- 		res = read_attr_from_blob(istate, tree_oid, path, flags);
--	} else if (!is_bare_repository()) {
-+	} else if (!repo_settings_get_is_bare(istate->repo)) {
- 		if (direction == GIT_ATTR_CHECKOUT) {
- 			res = read_attr_from_index(istate, path, flags);
- 			if (!res)
--- 
-2.53.0.windows.1
+> Can anyone clarify if this is a viable GSOC microproject?
+It=E2=80=99s fine as a starting point. For GSoC, it usually helps if you al=
+so
+follow this up with additional small, focused contributions over time,
+but there=E2=80=99s nothing wrong with beginning here.
 
+Hope that helps.
+
+Thanks,
+Pushkar
