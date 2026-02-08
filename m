@@ -1,54 +1,54 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB55819F135
-	for <git@vger.kernel.org>; Sun,  8 Feb 2026 01:14:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0364781AA8
+	for <git@vger.kernel.org>; Sun,  8 Feb 2026 01:21:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770513273; cv=none; b=qilpf/qp3PjEGZdAxOKBPBzZYTABMmO9VadYEJpJRlA5MhF9hHqWZw2duZhu93RxV6pFGwJtABzdOKOHjwRfQd6vIo2La0+Lb+tyvGxOWnIVG6/OFNvnwRjIVWpjRt1hvLISezJyTfQrThkpsx93J6nQ9ILklu5yHABPrT5zxII=
+	t=1770513703; cv=none; b=BIolcFOU/h8409VLPBFpb/28quK2P/8i5EWJ2zUMp/mEY822hk7XGH3R7SvJbfQKlCJ3UpqvbtaCcvv0zKtWMxKjYJFR/CJeuVZlIOOv/JbyFpRARH2p+tnoO+O/6xup88A7xANV2c/prM03HZkh7w7TH3uxUD2HWbQlDgvBsxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770513273; c=relaxed/simple;
-	bh=qs25PSRdprfwyWg/yWfW1fa6CSxRrUWgFUoMSiiiVFI=;
+	s=arc-20240116; t=1770513703; c=relaxed/simple;
+	bh=bV1NVIiiXbbFD4szEnyLPth2MyIy4gLew8bVhipIbqY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XtK7l4uDYBALuByKsUvPFCj3bpz3nLqlsLxnGuDpMudwOawBABGWAuO2q6norIfrrdOZzh+0L5IipGLNDZC8TNZ2uSBYP6hlIvlrf+PyPix+suOWmybUrSzC6+hafodUzjs4jFikCB27pIH0Sw72YiSbHtr8uAGpH2MjX5QjYFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iPtJPfbY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vvzjWEG5; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=n0bNdnECtN1zV+x/eVIvDIZTShd+Aj7DNrRI7sGyy+GycksFNL0AbgICyVDVsna5KqIP0BKGfcz05Tdv+cfrKFTBzalHPnlbYcitwEtNTQ2IQU2QLV0zLZxMXK5F0Wt15oPHlN1QmERPEPtn5VEh5jcK9WIsQbGuxcmN/TEPBwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RKnzErI+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nf4Hrauv; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iPtJPfbY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vvzjWEG5"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 05D6214000A9;
-	Sat,  7 Feb 2026 20:14:32 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RKnzErI+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nf4Hrauv"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0B3F31400017;
+	Sat,  7 Feb 2026 20:21:42 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sat, 07 Feb 2026 20:14:32 -0500
+  by phl-compute-05.internal (MEProxy); Sat, 07 Feb 2026 20:21:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770513272; x=1770599672; bh=gZqxtTUtVU
-	lH10rWsXAJA15VbBLQM32TKhQQkyOd5Jk=; b=iPtJPfbYesoy87h3arYKTPhswY
-	uvcAShdl/EwYSK9KH2IbnkDnnB9cmERYIYIsk4Xrqov6ZBVXvJwsWRBSVefLMCCl
-	DhkY4QM6NdZnN4OYCMBvI/djsznOiebiePrerKdWc7CM4lTy/EvgZjwmMPfiptmT
-	n+ifVf8wwPoAac8tpBEUh6xLHmTCk0hm8OK0aBZxan1TojDBugif8lKka6oOHFD5
-	yiSTY9vkRVBVzlru+oawV1XgdaH9FJafIjEZVZmOe9z71unNF72eQ2xeyxeIwGkB
-	3cqMk/tV+kUV8xRUh+60HzKEokseHDxdBHIua73/4ced/W3pIkuwHD3UAVOA==
+	:subject:to:to; s=fm2; t=1770513702; x=1770600102; bh=hgtgzpgeB6
+	rS9w1ByYEJnTx9E4TyPLxoTsodMWkbEcI=; b=RKnzErI+e8XIbvuhIXiafcdQqh
+	qua7RQxlZodC+l8eDCE49KxPYPf7ziUUq+FZQ9lmovIzYyjlirBay+tsOpnNsqgK
+	jYeFXp74fTYCXys7xMMZuTNwulipBDTObo1SbgEVAifcGT8bnTsySoc6dHHv1ETY
+	4Jb++FZDZBhRzfqWVoHqLZW/2KgN5aIR2LQn4y24EUsSr/nn3GmcQPvwc7JAXo8U
+	k+CzfTOUF+h6uiIw2QkpOFLxSWiRYEvZvn+ZvH6boz/1FkoLwZBvN7Va5ks4vgI6
+	HnCkWnaqPXs+xWj2YPh6TfbzIGUDH+dtqjSe2wjxpzR85S4T73WMFOBAu+Ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770513272; x=1770599672; bh=gZqxtTUtVUlH10rWsXAJA15VbBLQM32TKhQ
-	QkyOd5Jk=; b=vvzjWEG5r3SW5qaK+9+2r3pRJdGIF7AA8U8Dn4di7AdgON2PVww
-	H7FLE/Beug39RtD0cnl00dnNg1wzUtKKDRR/tzgpqwA+PKb62aYBydNGsvcXZ6qw
-	6F+r5v87oKLImbybQ5I2UMicZAnbpG2Ftl+91CTbRowg8nSEjbNwWiGxwyPVy6Vk
-	IWSXhUwBu3mm8ILZ9IM/XayeGLljEPyoNVuNQ3p48x3uQx8PdoBK8Rl7s40mB7mA
-	Uj9FID+rAsrbKgUNTIC5MwiHe+wvETQdrYGJYWajf16rJDzg1oJAZpUmQ3TWBpzw
-	q59+0w0iT0pHsECBqsOZJaToPxNKbk7FwWQ==
-X-ME-Sender: <xms:d-OHaZ9WENy2XlBwBTko4usVS60plVrqz7fOqWzl6O93UZ4STLMYcA>
-    <xme:d-OHaUmiiDjPw-UrhFhF8DHmGSv_FUOEUjmnpU_vQS6Ii9VXiw8rPH1u14WEk_DTw
-    EfAiKXazBjprnkwGNXfpx0QvS-Cx3uTyQj3XBhDVEvHbtGdHGIs>
-X-ME-Received: <xmr:d-OHafVBWWD83s9WdM0tj9HEa_nEgOE5uyILamuMALpLV0O7EuJ0cWAFGycyEXuN5ZCYsCjt8Ny6HnBzqHM0sU0DZHklsBq4mw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledvheekucetufdoteggodetrf
+	1770513702; x=1770600102; bh=hgtgzpgeB6rS9w1ByYEJnTx9E4TyPLxoTso
+	dMWkbEcI=; b=nf4HrauvPUTVXdGNG/ZRibCKlw+PHXX+iprNY5nC2GWrBMFxVUd
+	TxVJptdxUTuw2EAppGfEvTWjIAh7qem400rcOpEIMflmKGbNSGzSDjA+oHKBarRh
+	3jGSqRSqnwgsaSGQYygRtWrgJRDWwIHUH70UR2YBEihMlKSBLOcUL2XWFaSKmtKo
+	ICQJmf1ZZkphk3SHSbNLNFjI3QgnsJt+LlBgpnPquaLaXY0UCeb0r0JA0xPhnFXl
+	NbSZ9N8p8wcjVnJm7dcH9pEiZ8JUNz4Qn7rDQLn5hVH/1x69sGXNw1PE3gBDtQDC
+	wCqSP9xGAmDOpi3dpyCYypRK/fLOuyKH2qw==
+X-ME-Sender: <xms:JeWHaT5pDndYEKdQE1K8Bde8mPM6ZX2bLYaf83WyIzlxp9xA4P9yuQ>
+    <xme:JeWHafxpBYit2Ynr-L2TDt5M2dvMrkTy_B5tVYwanmCur0N-BW6HGm0GKblEbLxKW
+    rIXBCOanWJZB0etKVy8-_E7gz0jSY47mL3wpiajCea-sS2Tswdo>
+X-ME-Received: <xmr:JeWHaSwb6aZAVsbqGrAWTtMTPN23_hLQLevyTgFV5-bvRvfeiJox0HtzlK7gauOSZpgMu9WoSujw-giqIVSgOubQLvGZTmTe0g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledviedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
     dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
@@ -60,14 +60,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledvheekucetufdote
     hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddu
     keeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfe
     esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:d-OHaZFdwACoyY6rVwvEYYp3c1A9xl9tQisHEKwQJNIwxYbmHHcXOQ>
-    <xmx:d-OHabfZuVqiQRSZTYm85cudAmWXCVsmlUhy8PhDCC37nDEEhhF9Rg>
-    <xmx:d-OHaaJ2bAUg1Fv_U5eyc2n6Xiyn6WJ6_ldlCc2s8ZpLpT1ohBSQPw>
-    <xmx:d-OHaQFXVfGqkt-mD1Btc6gQP9cwfx6GZl_y1nMWEfgiED8m6XiA7Q>
-    <xmx:eOOHaQX_s7LVZyWHWOzNWe3Nw9J715BpSss4XKPsI4bip7FU01WDHMLW>
+X-ME-Proxy: <xmx:JeWHafxD2zlTeDHp4kv_YnZzKWgzw3JLJj1e-7HYS-F9LxH2gce0NA>
+    <xmx:JeWHaUYX1gqoZ4nlub6r0cXP1LBqDahC0Ja-Kj27nvB8VtdY8CdRxA>
+    <xmx:JeWHaYUmlSInWLhY3Ka5X2uV2GPuS7TSXPHsTvISJViRPsk1f33YDQ>
+    <xmx:JeWHaags8uj70e1HgRSzjHUq_kU19QJgn8Kl8eJMs4aVgFApeyf6Dg>
+    <xmx:JuWHaTD5u2Tj_BLTkvHrAARe7wvsM6l74nK-8swkmH3lsHnDgIGvyCtL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Feb 2026 20:14:31 -0500 (EST)
+ 7 Feb 2026 20:21:41 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 Cc: git@vger.kernel.org,  karthik.188@gmail.com,  phillip.wood123@gmail.com
@@ -78,8 +78,8 @@ In-Reply-To: <20260207100322.1786368-2-shreyanshpaliwalcmsmn@gmail.com>
 References: <20260205101524.125452-1-shreyanshpaliwalcmsmn@gmail.com>
 	<20260207100322.1786368-1-shreyanshpaliwalcmsmn@gmail.com>
 	<20260207100322.1786368-2-shreyanshpaliwalcmsmn@gmail.com>
-Date: Sat, 07 Feb 2026 17:14:30 -0800
-Message-ID: <xmqqzf5k9guh.fsf@gitster.g>
+Date: Sat, 07 Feb 2026 17:21:40 -0800
+Message-ID: <xmqqtsvs9gij.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,34 +91,20 @@ Content-Type: text/plain
 
 Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
->  branch.c    |  4 ++--
->  worktree.c  |  4 ++--
->  wt-status.c | 48 +++++++++++++++++++++++++-----------------------
->  wt-status.h |  6 ++++--
->  4 files changed, 33 insertions(+), 29 deletions(-)
->
-> diff --git a/branch.c b/branch.c
-> index 243db7d0fc..e3cf273339 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -412,7 +412,7 @@ static void prepare_checked_out_branches(void)
->  			free(old);
->  		}
->  
-> -		if (wt_status_check_rebase(wt, &state) &&
-> +		if (wt_status_check_rebase(wt->repo, wt, &state) &&
+> -int wt_status_check_rebase(const struct worktree *wt,
+> -			   struct wt_status_state *state)
+> +int wt_status_check_rebase(struct repository *r,
+> +	 			const struct worktree *wt,
+> +			    struct wt_status_state *state)
 
-I am not sure if this is an improvement for callers of the API.
+Funny indentation.
 
-Isn't wt_anything() that takes a worktree "wt" supposed to work with
-the wt->repo repository?  Or is the API designed to be used to take
-any repository object that is _different_ from wt->repo?  I am
-assuming it is the former, and if so, the only effect of adding a
-repository parameter to a function that already takes struct
-worktree is to invite a programming error to pass a repository that
-the wt is not designed to work with, isn't it?
+Besides, should we adding a yet another repository parameter to the
+function?  The worktree wt knows what repository it belongs to.
 
-> -		if (wt_status_check_bisect(wt, &state) &&
-> +		if (wt_status_check_bisect(wt->repo, wt, &state) &&
+> -int wt_status_check_bisect(const struct worktree *wt,
+> +int wt_status_check_bisect(struct repository *r, 
+> +			   struct worktree *wt,
+>  			   struct wt_status_state *state)
 
-Ditto.
+Same comment about "r" vs "wt->repo" applies here.
