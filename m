@@ -1,82 +1,94 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45E0202F70
-	for <git@vger.kernel.org>; Sun,  8 Feb 2026 01:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC3D2FFFA6
+	for <git@vger.kernel.org>; Sun,  8 Feb 2026 01:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770514412; cv=none; b=Jk6qfxgtH6koOgFQ4WsBkgBibdbVedu+448S3YkP8RCHShEpPj9Uq8HO6zMpBZIgjyfB9Ww77XqU05220m86xfeZJu52Px4VBYNbKIJkYhCRrr3aZndv02y6fHLUnI6DGGmynW+KyeXp2Y6lx+rkiAzEibxERy5YaoShT5uqOXQ=
+	t=1770514754; cv=none; b=l0ijqxhhiSz3ofWKJZXUZlAO0dcWUQKDnYsxNsGYi6lLsxr5U6xoqP+7mI1r/uwIKsTkoB+0TNoDNjwU3LSalvpXA0rDbijrvV7hRSexdz1FRv3vq75tKmOrMKtjHFR9y5EnAIr3jhtsCdUj3u+QFC7atwUuofM7Khp4CfPvPSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770514412; c=relaxed/simple;
-	bh=1yRI+W59108MQR60o4QOypcVFA6BDqUJWiN1yq45smo=;
+	s=arc-20240116; t=1770514754; c=relaxed/simple;
+	bh=vuB8vfcX6tWTzfJx05PxGeqkttkmDEMvDynqTkXsnuk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JpMUzqhz+SMUVJINAxC2NNNHCinMBX0OnC3Pjb9P5tvHQgi/4at1sFQF/qamNx/Hz4WhnoYhFV9xAVhe+MLDyxvnmHEvb4T5c4vnZXg3OVarSJ2AOQ1LNhDaqeAUBKdx1WpSIHO44H0zFrReNCPIMkZo8YH85FZfY7nRo0sBw3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PS+EVWIo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TbO+tRr6; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=O85yegC601xWfK6AutSWK39jW6Tjm870tCJtlItMsBS3ZZKCIgyD97mwmzC3r0tWq5LIsOKgOv16ZHmFgJa6tFdaIKbj1U7ZbeoJQHySaaGonfW6Ve6mRRc4CqaNcuw5ZlaZjwY5iGchvOY6OGtG8uad9iY0+A0qnfPuLuJ5yxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lt8EhrWi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wLXnHxT+; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PS+EVWIo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TbO+tRr6"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 288B714000A2;
-	Sat,  7 Feb 2026 20:33:31 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 07 Feb 2026 20:33:31 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lt8EhrWi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wLXnHxT+"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 975811400190;
+	Sat,  7 Feb 2026 20:39:13 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sat, 07 Feb 2026 20:39:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770514411; x=1770600811; bh=ELhvdr4RxH
-	xeYY82Qb4avghgZWBrWKbdsb7f5cw62bw=; b=PS+EVWIoq9dVDnaRRCGxJ3fPsM
-	fa7J2It75faTT5eWwA2xMkB3pwyWJ0GvIWIh7iXsXXSWq9WQeJAjNdc6DuDOemUX
-	bNRl4uccafZ1wBuCHcbHTDBhNL70FKH1SXUl9vLb8NeQLExe4kgWb2zYG2TYunH7
-	MpN/48j7TahWBDwlPiTb9DhPivDQm9bCx3KQyOUpfPOfmSVu6NEhlQlYqjQtwcWx
-	mVeJGtEufYAfWuKECLPAYbVpFJL/q/eWwIfNuKSToVpo4pV4pcPe8+XNKB9g3wBS
-	YOws0K9Mqj+hSjbkTDjT8JS1MUt/5V3e53VUKYJP3bNPl8Tgy5dSTuUbhQQA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1770514753;
+	 x=1770601153; bh=bgmC1Evusa4ivPcsLiVHkGpv9KlyCTX3yb6FmWCGirU=; b=
+	lt8EhrWiujDN76QdM3toDXIa0cnAKtt5gTK5VZXzmbD550Dm5sTAYBw8HpVQZlUP
+	XdVsyhU+ITPy2oFd4t3mWQDLdlywVwsvknJuil7tObWjlh9q539UVSkJdm6yMymD
+	j8kg02Oevvq9xJgN3daegvdb09G+HXUIMo5vbvb/K24vfAZrC2Z7IEdFVUtmsGUd
+	I6pr3y/u9py1uDRtR3/mauZYEtqRHJz9HXYvbrM8VCMZ5zUx/TLsf027LeS7a5b2
+	c8Vd/IZVutDkN6VMlAkbuu2GsKx2NniXzguCSgNqvuv4hz8nVxanfV4f9CWbQ5GC
+	hj/u4T7J4/Y0G162lTfesA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770514411; x=1770600811; bh=ELhvdr4RxHxeYY82Qb4avghgZWBrWKbdsb7
-	f5cw62bw=; b=TbO+tRr680LZTtah8z19D+L4fyn/5DW0qaj9iAc+gdjFLtkESiy
-	r00CNFExMdlD8YK8YvYUe7i11S4/pjT82zKFRVStdU5oWsnsnQF2/TL4oTLmkRvA
-	d5sTiLu0z92WhbpSFYoZiacE8nw0XuriV7pTL4wIW7HLwRGr5+eDXH91lAICI302
-	3VaXZgFwvpRXVbiq+3NcjmaTs37OwXqPBzk6LcboXQcNW3yTEcpTVzKBNiwdeGEA
-	SBDaQLUGCyZW4TCbACt6zCmn7mKZHc3qb8HaE4cJCIPOfNfKC2Jbpkbs5FqxISCD
-	vz7NySeDmUHtDDNhvK+OZenuOSbvMJEy5oQ==
-X-ME-Sender: <xms:6-eHaZtamES9R9Wl-2sd9Xn7RcoAbdO4kYBD6i6lGmYtSeP1vp3vcw>
-    <xme:6-eHaZeWWGpaVkArqqLf3TdfF00lxZU_nfXGr564ZKE7LypoPvOPmF8ghFxZUHMFT
-    7tNLmqdBKP1l4NLnRZG3x9hf2FyzyQ-5iLyO0Vz07Lmqh8vBOYl0w>
-X-ME-Received: <xmr:6-eHaRzWIRI2-j9KcYUgguH7ux86qqW1YqZTNPx5LYwXjgGb61ynaM3pIJCROe05LJKnJ8e7es506ganBRG7lzcig-bRKrVTVQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledviedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770514753; x=
+	1770601153; bh=bgmC1Evusa4ivPcsLiVHkGpv9KlyCTX3yb6FmWCGirU=; b=w
+	LXnHxT+RGRJkSiJxM6hZhp25suI3vJoLV6i5uYcK7SFNQWKptEs5ZFZvmf6qbQgB
+	LA335gcBDKayBynoN8X1xNcWA723Teaq4BElg3M2JoXYf01Y1hUSRw6jsxxuScjK
+	yr3ikGnn3W2WjDD/SbWOieJtPYcksfPz35Q+uF8w250n5X9Cr7Qv4erQoQ8/XX+c
+	8lBLsPSQSwXsVkUiUtwzcK6EU2vw2brwP/zBESv/EQMddXZaLWxTJ5Cow6vxUozl
+	9g3Th88L587Bf+0euBFm+oiI0ZnxSPXtRnKD9rNa0Hi2PAZGdyv3SNV40NPP05PM
+	tmTMU5SQIeDCNKIjzKOhg==
+X-ME-Sender: <xms:QemHaQRCe40JFNA-TeK8zfW7hw94F6JeEcs5A9PRzmkOB6PzUQV90w>
+    <xme:QemHaQWULoFmIvvhK4l6OnqadfMNJS5d10TPhKFGd3OFxvwxJKch16Y4FAwDfhH7y
+    nwD0GKy5e6oX5GjEKp3ctiFRnjV5sAmIh5eNT3CQGHeFN0MsnEr2w>
+X-ME-Received: <xmr:QemHaRdZiyt9I4GFIuTGITqZIV1dR6sH0chDh0wUOgQoZmyXSzfIstFFGaF0Dc2epvEoiS4dyC2wBO8BxTJArChkUomvsN7OHA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledvieefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtoheplhhiuhdruggvnhhtohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:6-eHafFftaE3Bii62tbHjs_ftRU91m__j2f19yT__GXXjgMeE-ns8g>
-    <xmx:6-eHaVyV2esJhDqk8K5bvL3U_Z-45f9XA30q-brSTOvbV-d89bM4rQ>
-    <xmx:6-eHaQuOO6_yttsGjwCIp-aJRxd32UIi7G3RSu-0gKLEtGRRLiT1Qg>
-    <xmx:6-eHaS1wCCIcmI1eeTqJYIv1-x3jtPbP9kP7_BYwSPo_GaTlGM2nkw>
-    <xmx:6-eHaVQ3h1k_0q45XCvQpfuhGDbxrBCgDdij7mt92tpOJyUqzYvOajTR>
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeeifefgiedviedugfeiudejtdejgfdvueetveefueffffeiffeltdfgfffg
+    gedukeenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohep
+    mhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopegtrghlvghsth
+    ihohesshgtihgvnhhtihgrrdhorhhgpdhrtghpthhtohepmhgrthhhvghushdrthgrvhgs
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhuughgvgdrphgrtghkhhgrmhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehsuhhrhehrsehsuhhrhehrrdhnvghtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:QemHaUJOIN3k-oVuaH_3yDvR5iHsEbuXQ6HalYD2Wy3rnPG5_ZXaOA>
+    <xmx:QemHaezNaA-FuZSU8dkQBGEMvJzI3QkFGY3uAzGz67wN8avYTvDdfA>
+    <xmx:QemHaatr00e7TiBPCrdXJZqpDcZX88I3khPaH-DmPZn_AxsH_Hp-8g>
+    <xmx:QemHaRB2a9xtG0SnriQ1-faNjANj77efgO-RdNJ_L3e3b-OEv_iGbA>
+    <xmx:QemHab18dD6NmSunBC5K251pX7d1I96M-1ZZXCiBi_nbWXqG7EmrF_2p>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Feb 2026 20:33:30 -0500 (EST)
+ 7 Feb 2026 20:39:12 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org,  Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH] completion: add stash import, export
-In-Reply-To: <20260207215924.28863-1-ben.knoble+github@gmail.com> (D. Ben
-	Knoble's message of "Sat, 7 Feb 2026 16:59:16 -0500")
-References: <20260207215924.28863-1-ben.knoble+github@gmail.com>
-Date: Sat, 07 Feb 2026 17:33:29 -0800
-Message-ID: <xmqqpl6g9fyu.fsf@gitster.g>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  Matthias Beyer <mail@beyermatthias.de>,  Christoph Anton Mitterer
+ <calestyo@scientia.org>,  Matheus Tavares <matheus.tavb@gmail.com>,  Chris
+ Packham <judge.packham@gmail.com>,  Jakob Haufe <sur5r@sur5r.net>
+Subject: Re: [PATCH] doc: add caveat about roundtripping format-patch
+In-Reply-To: <format-patch_caveats.281@msgid.xyz>
+	(kristofferhaugsbakk@fastmail.com's message of "Sun, 8 Feb 2026
+	01:11:17 +0100")
+References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
+	<format-patch_caveats.281@msgid.xyz>
+Date: Sat, 07 Feb 2026 17:39:11 -0800
+Message-ID: <xmqqjywo9fpc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,54 +96,82 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+kristofferhaugsbakk@fastmail.com writes:
 
-> These newer commands lack completion; implement basic support for
-> options and arguments.
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> git-format-patch(1), git-send-email(1), and git-am(1) deal with
+> formatting commits as patches, sending them (perhaps directly), and
+> applying them, respectively. Naturally they use a few delimiters to mark
+> where the commit message ends. This can lead to surprising behavior when
+> these delimiters are used in the commit message itself.
+>
+> git-format-patch(1) and git-send-email(1) will accept any commit message
+> and not warn or error about these delimiters being used.[1]
+>
+> Moreover, the presence of unindented diffs in the commit message will
+> cause git-am(1) to apply both the diffs from the commit message as well
+> as the patch section.[2]
+>
+> It is unclear whether any commands in this chain will learn to warn
+> about this. One concern could be that users have learned to rely on
+> the three-dash line rule to conveniently add extra-commit message
+> information in the commit message, knowing that git-am(1) will
+> ignore it.[4]
+>
+> All of this is covered already, technically, However, we should spell
+> out the implications.
+>
+> † 1: There is also git-commit(1) to consider. However, making that
+>      command warn or error out over such delimiters would be disruptive
+>      to all Git users who never use email in their workflow.
+> [2]: Recently patch(1) caused this issue for a project, but it was noted
+>      that git-am(1) has the same behavior[3]
+> [3]: https://github.com/i3/i3/pull/6564#issuecomment-3858381425
+> [4]: https://lore.kernel.org/git/xmqqldh4b5y2.fsf@gitster.g/
+>
+> Reported-by: Matthias Beyer <mail@beyermatthias.de>
+> Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
+> Reported-by: Matheus Tavares <matheus.tavb@gmail.com>
+> Reported-by: Chris Packham <judge.packham@gmail.com>
+> Helped-by: Jakob Haufe <sur5r@sur5r.net>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > ---
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 538dff1ee5..a8e7c6ddbf 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -3465,7 +3465,7 @@ _git_sparse_checkout ()
->  
->  _git_stash ()
->  {
-> -	local subcommands='push list show apply clear drop pop create branch'
-> +	local subcommands='push list show apply clear drop pop create branch import export'
-
-Makes sense, but in the longer term, we should devise a way to make
-this script and parse-options infrastructure cooperate so that we do
-not have to update it, just like options are completed using the
-special "git cmd --git-completion-helper" option.
-
-In any case, will apply.  Thanks.
-
-> @@ -3491,6 +3491,9 @@ _git_stash ()
->  	show,--*)
->  		__gitcomp_builtin stash_show "$__git_diff_common_options"
->  		;;
-> +	export,--*)
-> +		__gitcomp_builtin stash_export "--print --to-ref"
-> +		;;
->  	*,--*)
->  		__gitcomp_builtin "stash_$subcommand"
->  		;;
-> @@ -3502,7 +3505,10 @@ _git_stash ()
->  					| sed -n -e 's/:.*//p')"
->  		fi
->  		;;
-> -	show,*|apply,*|drop,*|pop,*)
-> +	import,*)
-> +		__git_complete_refs
-> +		;;
-> +	show,*|apply,*|drop,*|pop,*|export,*)
->  		__gitcomp_nl "$(__git stash list \
->  				| sed -n -e 's/:.*//p')"
->  		;;
 >
-> base-commit: 2a3d6836805534f45cf545da7be25ce1c759c514
+> Notes (series):
+>     There might be other things to do here. Mention it in gitfaq(5)?
+>     
+>     § Trailers
+>     
+>     • Reported-by: Matthias Beyer <mail@beyermatthias.de>
+>       • From this thread
+>     Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
+>       • From https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org/T/#u
+>     Reported-by: Matheus Tavares <matheus.bernardino@usp.br>
+>       • From https://lore.kernel.org/git/d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br/#t
+>     Reported-by: Chris Packham <judge.packham@gmail.com>
+>       • From https://lore.kernel.org/git/CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com/
+>     
+>     (These were all linked in https://lore.kernel.org/git/20260206090358.GA2761602@coredump.intra.peff.net/ )
+>     
+>     Helped-by: Jakob Haufe <sur5r@sur5r.net>
+>       • For the part about patch(1): https://lore.kernel.org/git/f6e4cdb4-ff82-4853-aca5-0c152f287286@app.fastmail.com/T/#mc389dbd2ae02a007cbe57cd16ca4790ecc5a84f7
+
+The space after three-dash line is to give additional information to
+help readers, but the above does not qualify as one.
+
+> +Furthermore, the presence of an unindented diff in the commit message
+> +will not only cut the message short but cause that very diff to be
+> +applied, along with the patch in the patch section.
+
+A line that matches "^diff " is taken as the end of the log message,
+and everything that follows is passed to the patch application
+machinery, and the above description is a consequence of that.  If
+you have more than one such diff, they may be either applied, or
+some of them may not match the patch target and the whole thing may
+be rejected.  Neither is a happy outcome.
+
+Queued.  Thanks.
