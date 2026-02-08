@@ -1,188 +1,102 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19AB6FC3
-	for <git@vger.kernel.org>; Sun,  8 Feb 2026 20:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C7A2494F0
+	for <git@vger.kernel.org>; Sun,  8 Feb 2026 21:13:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770582533; cv=none; b=FT+7Oq3S/dgztT5Ey5+1k+v4q1W7EAU7C87603YBOrppDI4qrCGByrzWh/LKNW3LOO9FELXK80C5fnDZQBPWh/ijpwqSyY4lqnIJpuOeAy1X+bqey8b+BkCXHN3Lean7Ks7mevUG6OIjOZu/caoDWP5jgR5Yk6vTMybQ0Poc1Qo=
+	t=1770585228; cv=none; b=FO1wo7ilYDK+fESKfJPMNRq/8jOv8B7T7LQCM08Nr88xkujlyNk7JlSuYhpqGYAjcr1JOZAWagg7A/SOfqP2ipF+QgCd0YY2SvelDFhv9Ca6fOnnUgp9RT1aRDlra0j7QUjaiEKkUJ/MXtS9uTlf6Pt5ojW89khbi4z+kt7ujHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770582533; c=relaxed/simple;
-	bh=VTjUdduDk7+PSEwsLAlh3YxLmkCPNe06rEezSMQ7HfM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=J9SQTrBE81jnZcjFiGaDsNd5lAW19WxPQrR2JmqkANNYJvI4clV29JYLLv6YYrnsK/t/Ewgb2dQDFsP+0IAnCywuWiB9tvRasu5Rc0srY4QHcCSkNXf6ZqHkfGTF4fuFYKmL9fxFitMVieIVUvtEXneYxW9pamEP7Oc/Zfs3phM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CLtNCmjE; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770585228; c=relaxed/simple;
+	bh=IUcbqfUxbGYkfCTsgoxR6sWTYN5HGakyhMOFVEZnni0=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=EGD7lcwydrIF7qiC0Zfa6jcE1fhF0x7zBtS7M+2W1D804AFShSXP5HTGhDRViVGMMBTH9BJA+1cC9D2afadH/O6Q3M0d9FIrSIqF2z4Je0o5tLPrSEdiX28mUFFI8rBciac03/dP5Ep1P2gfbt4QFAsC0gyts5yZg3DBxvVv+HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=jrwRPvXv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uJSL6/5k; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CLtNCmjE"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-47fedb7c68dso40319955e9.2
-        for <git@vger.kernel.org>; Sun, 08 Feb 2026 12:28:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770582531; x=1771187331; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xwpYOHgOZthReS+6WzbzDTR3GlpXl+3p/hitjIbqp1E=;
-        b=CLtNCmjECHhH/Mm2nKOmNVFtyk5QsNvLkttQHaQc2TbQrOnmrs0Ig6TI7MtMYQ5DiN
-         E70MKOdH+iqvJesk+ENF9F+Uxc/61Z92uWeySI+hK2qrF9zhk2mYEN2TScpc3zddlSKh
-         jK83pYUGksv+mjq5O+Hyodq4Qp8GdTmg9K8e/j4Bc8p3D9BYmYHk6NJKZXJbxCb5EPeQ
-         zDM1Yv55TjXBQb3EC36yRBApeW/BCulkwCOyPUMMlpLyxuExG6x58WJ7Rql3zMeSTn9Q
-         vVtrn2zuqEtSy/fNVkAkDrvAHW9f8hG0g41vXXD53z0AmrcL05fSdZjtP9dWUmexojW5
-         6nOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770582531; x=1771187331;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xwpYOHgOZthReS+6WzbzDTR3GlpXl+3p/hitjIbqp1E=;
-        b=wjESM9s8ubZR66vG5GLx0ulC/cTEstrLgvyEwYOprWsS+9fTQXH++TotjkKARS4Z2Q
-         yR3oUdXA9yqwrm0o9oN/TdBYmW+YQyUeVmYkQHvuajfqsE8TlCPMn7d2KrV/pEYEArA9
-         rNdW0a6lph86yQvL5FJYbrUsXY4yAa3QSVhcZlWfqPjxC8BbT5CxlF4Bp6XQcfnPhfu4
-         ffTbM2W0zB2j719kcgQCymxX1/ZBada3tfm/p/sUQ84eCfQHWIv86y5Qs0lTaW4DcnLW
-         UYt0KJoysDKE8D4G7aYOtnlGh5LHzNElta5eWPhqX0DCMBJ1vUqtXwrlb97Xl5D2QxyE
-         /79g==
-X-Gm-Message-State: AOJu0YwBuc2+2WxOiDoAToVfloTmBBhGV5TkieowTyM3R4ZCHFDtIcKR
-	GNXEFjmtpkeJmjQ2wjzCzbNNezdZZv2RYPIxaevueDcMViGYtI42VFVd036tbw==
-X-Gm-Gg: AZuq6aJXm18sNQi8hFaM3+5cg0hwlmuszCGRCiuK+UOQUJFMAGw60obAaSq8hekAUaM
-	/ul+uCNpsPEFkkkWr9SgizWRN+acdIus+Bkioz4pC6dmaA0mpyg8v37W5FbmoV95rgCfB1O5M9I
-	6r2lbqNoikysICbRMTQ/dwyJusqwWHdckIj/M7nYKMrAhRxt28gT8H0HI98HZyOwRQ1DUlyyxxY
-	QTcUqbBW0sc+DFgsXQLcms/5mkwi75x+FJ+W3b0pKzJZYx/7nKzzvsUs52YZDyJ0F/3PNJcyWop
-	OJQnVHZ8RjIytJyO5MI09KDAEg6HjETRpifSdIC043ND5O6lgtFGlHcLJNcU0TdVya6239wgHDY
-	FRUYV/5Fhf1rE1/nXiapDLtxDLMgJ1BVqPtC5teTjnouknPBHdvlcxZodCjeworaGgjes6MHlFZ
-	si1ut4+h2AUxbQRNo=
-X-Received: by 2002:a05:600c:314e:b0:47e:e8c2:905f with SMTP id 5b1f17b1804b1-48320928e3fmr127604085e9.8.1770582530565;
-        Sun, 08 Feb 2026 12:28:50 -0800 (PST)
-Received: from fedora ([159.146.42.144])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4832097d8dbsm117268895e9.4.2026.02.08.12.28.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Feb 2026 12:28:49 -0800 (PST)
-From: =?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	gitster@pobox.com,
-	=?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
-Subject: [GSOC PATCH] t2003: modernize test path helpers
-Date: Sun,  8 Feb 2026 23:28:09 +0300
-Message-ID: <20260208202809.270523-1-bkkaracay@gmail.com>
-X-Mailer: git-send-email 2.52.0
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="jrwRPvXv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uJSL6/5k"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 20B587A00C0;
+	Sun,  8 Feb 2026 16:13:46 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Sun, 08 Feb 2026 16:13:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770585226;
+	 x=1770671626; bh=8PRRLmN/791EtKSEdnxCCDaXKJB4UG89MF2NORypLus=; b=
+	jrwRPvXvihuDzjFIzbMeBC/0mQVuTQz99ubc/RFvYaHKrgH/x8MfTqlqh7EtYP2B
+	2OYGcPAe2qICUJL6sO3sosFUaNR3xvBWZylKuqOWoZ80aILHq295bSHGrHSGk0KA
+	ztQuO3YXdlgumQYRV+vhA1NjVtQORseSUYblrfU0QEJ/jplGe9I/MOX84nItIvyU
+	X+OLh94V4CEu/3E9ifTsIcN+ai2J+QWhJ4MHGSLSkQ3gFEhbJ0iM0k/A0Scb9GZd
+	j6U25HLtetkEgowmxYJPPtr2Wu/Mf8x1RKvlhsqyjBewuUCY2h96P1prcTjf96fK
+	kQvKpWJswUmNcfYgm7UYnA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1770585226; x=1770671626; bh=8
+	PRRLmN/791EtKSEdnxCCDaXKJB4UG89MF2NORypLus=; b=uJSL6/5kBeX/TpZWF
+	Ed9g4+V5l0zAfQ9ieSDpU80rbWVZqOaiTk8WXuW1xH70xVNmaAc9CeSKcS++l+4r
+	LF30106S2dvNNj16gEldaooO36EdObjQLv6Rw8/x/bIILKLFkOATR9KZ1jSHaQd2
+	xymcCzuHkzD6/z1uf13At+1oAxm48tZMje6BE50M1+VrBC2UpaLxkgBu2+bYPrPB
+	HmAj5WUnBD666c8unU+apBD2ali0oxg0T+hwunqbHmhSPDW+/6hrPYIryae4xiDw
+	LqjTcuCthxLfoayYjxnujm7k+WLGaum9XxySVOS08mzv/l5KN8ovSn3nWoqm7oTw
+	+Y5Bg==
+X-ME-Sender: <xms:ivyIaRXJTEe1L5_CfaFjW_QOvOmliRAI2vPIsnL5xQy254Kpjm3ZR0k>
+    <xme:ivyIacZPRclkHaP46hy3_wVasaK07j0wDS38G0s_BZfrCWlNuIFAzHW_YqzoKlLbB
+    Dh315nmohEtHYaUl_WcMJdDQy_b7VragDdj2DqV6zSopkYDsNcZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleegleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertd
+    ertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
+    ftrfgrthhtvghrnhepvdeigedtgfetgefhffetteeludevheetfeekffehheefieehudek
+    veelveffhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ivyIaYCf36w_NQn8mXDEIutxptvOKHfyjZMJVM5bo9gnufaqnzcB4g>
+    <xmx:ivyIaYcyXrYjyCdnkxHiHzBKSk3Tw3Uu5Ii7KrlLGnEd8Ph3yyMnXA>
+    <xmx:ivyIaTJLu9cWuyNPsDKPPi4EuqR0Q3BguyprKxsX8lgwMDI-ROskZQ>
+    <xmx:ivyIabfb_WvqXyCRDBtqKfz7897hEeCd8Cz66FBV2pUnhygD8KkijA>
+    <xmx:ivyIaUKSSXq94HrnBXm2t2WXXRTo9wgryMQMwyMRdobdOveMUs4PY5AK>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 97AA81EA006B; Sun,  8 Feb 2026 16:13:46 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AeRUUZKvU2Z-
+Date: Sun, 08 Feb 2026 22:13:21 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <9d452bb3-104a-46ef-84fb-ec3ca0be990a@app.fastmail.com>
+In-Reply-To: <xmqq7bsob0wo.fsf@gitster.g>
+References: <xmqq7bsob0wo.fsf@gitster.g>
+Subject: Re: What's cooking in git.git (Feb 2026, #03)
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-The old style 'test -f' and 'test -d' checks are silent on failure,
-which makes debugging difficult.
+On Sun, Feb 8, 2026, at 00:15, Junio C Hamano wrote:
+> * ja/doc-synopsis-style-even-more (2026-02-05) 4 commits
+>  - doc: convert git-show to synopsis style
+>  - doc: fix some style issues in git-clone and for-each-ref-options
+>  - doc: finalize git-clone documentation conversion to synopsis style
+>  - doc: convert git-submodule to synopsis style
+>
+>  A handful of documentation pages have been modernized to use the
+>  "synopsis" style.
+>
+>  Will merge to 'next'?
 
-Replace them with the 'test_path_is_*' helpers which provide verbose
-error messages when a test fails.
-
-Signed-off-by: Burak Kaan Karaçay <bkkaracay@gmail.com>
----
- t/t2003-checkout-cache-mkdir.sh | 49 ++++++++++++++++-----------------
- 1 file changed, 24 insertions(+), 25 deletions(-)
-
-diff --git a/t/t2003-checkout-cache-mkdir.sh b/t/t2003-checkout-cache-mkdir.sh
-index ff163cf675..5844389c88 100755
---- a/t/t2003-checkout-cache-mkdir.sh
-+++ b/t/t2003-checkout-cache-mkdir.sh
-@@ -24,27 +24,27 @@ test_expect_success SYMLINKS 'have symlink in place where dir is expected.' '
- 	mkdir path2 &&
- 	ln -s path2 path1 &&
- 	git checkout-index -f -a &&
--	test ! -h path1 && test -d path1 &&
--	test -f path1/file1 && test ! -f path2/file1
-+	test_path_is_dir_not_symlink path1 &&
-+	test_path_is_file path1/file1 && test_path_is_missing path2/file1
- '
- 
- test_expect_success 'use --prefix=path2/' '
- 	rm -fr path0 path1 path2 &&
- 	mkdir path2 &&
- 	git checkout-index --prefix=path2/ -f -a &&
--	test -f path2/path0 &&
--	test -f path2/path1/file1 &&
--	test ! -f path0 &&
--	test ! -f path1/file1
-+	test_path_is_file path2/path0 &&
-+	test_path_is_file path2/path1/file1 &&
-+	test_path_is_missing path0 &&
-+	test_path_is_missing path1/file1
- '
- 
- test_expect_success 'use --prefix=tmp-' '
- 	rm -fr path0 path1 path2 tmp* &&
- 	git checkout-index --prefix=tmp- -f -a &&
--	test -f tmp-path0 &&
--	test -f tmp-path1/file1 &&
--	test ! -f path0 &&
--	test ! -f path1/file1
-+	test_path_is_file tmp-path0 &&
-+	test_path_is_file tmp-path1/file1 &&
-+	test_path_is_missing path0 &&
-+	test_path_is_missing path1/file1
- '
- 
- test_expect_success 'use --prefix=tmp- but with a conflicting file and dir' '
-@@ -52,10 +52,10 @@ test_expect_success 'use --prefix=tmp- but with a conflicting file and dir' '
- 	echo nitfol >tmp-path1 &&
- 	mkdir tmp-path0 &&
- 	git checkout-index --prefix=tmp- -f -a &&
--	test -f tmp-path0 &&
--	test -f tmp-path1/file1 &&
--	test ! -f path0 &&
--	test ! -f path1/file1
-+	test_path_is_file tmp-path0 &&
-+	test_path_is_file tmp-path1/file1 &&
-+	test_path_is_missing path0 &&
-+	test_path_is_missing path1/file1
- '
- 
- test_expect_success SYMLINKS 'use --prefix=tmp/orary/ where tmp is a symlink' '
-@@ -63,10 +63,10 @@ test_expect_success SYMLINKS 'use --prefix=tmp/orary/ where tmp is a symlink' '
- 	mkdir tmp1 tmp1/orary &&
- 	ln -s tmp1 tmp &&
- 	git checkout-index --prefix=tmp/orary/ -f -a &&
--	test -d tmp1/orary &&
--	test -f tmp1/orary/path0 &&
--	test -f tmp1/orary/path1/file1 &&
--	test -h tmp
-+	test_path_is_dir tmp1/orary &&
-+	test_path_is_file tmp1/orary/path0 &&
-+	test_path_is_file tmp1/orary/path1/file1 &&
-+	test_path_is_symlink tmp
- '
- 
- test_expect_success SYMLINKS 'use --prefix=tmp/orary- where tmp is a symlink' '
-@@ -74,9 +74,9 @@ test_expect_success SYMLINKS 'use --prefix=tmp/orary- where tmp is a symlink' '
- 	mkdir tmp1 &&
- 	ln -s tmp1 tmp &&
- 	git checkout-index --prefix=tmp/orary- -f -a &&
--	test -f tmp1/orary-path0 &&
--	test -f tmp1/orary-path1/file1 &&
--	test -h tmp
-+	test_path_is_file tmp1/orary-path0 &&
-+	test_path_is_file tmp1/orary-path1/file1 &&
-+	test_path_is_symlink tmp
- '
- 
- test_expect_success SYMLINKS 'use --prefix=tmp- where tmp-path1 is a symlink' '
-@@ -84,10 +84,9 @@ test_expect_success SYMLINKS 'use --prefix=tmp- where tmp-path1 is a symlink' '
- 	mkdir tmp1 &&
- 	ln -s tmp1 tmp-path1 &&
- 	git checkout-index --prefix=tmp- -f -a &&
--	test -f tmp-path0 &&
--	test ! -h tmp-path1 &&
--	test -d tmp-path1 &&
--	test -f tmp-path1/file1
-+	test_path_is_file tmp-path0 &&
-+	test_path_is_dir_not_symlink tmp-path1 &&
-+	test_path_is_file tmp-path1/file1
- '
- 
- test_expect_success 'apply filter from working tree .gitattributes with --prefix' '
--- 
-2.52.0
+This is ready in my opinion.
 
