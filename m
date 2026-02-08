@@ -1,177 +1,108 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC3D2FFFA6
-	for <git@vger.kernel.org>; Sun,  8 Feb 2026 01:39:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770514754; cv=none; b=l0ijqxhhiSz3ofWKJZXUZlAO0dcWUQKDnYsxNsGYi6lLsxr5U6xoqP+7mI1r/uwIKsTkoB+0TNoDNjwU3LSalvpXA0rDbijrvV7hRSexdz1FRv3vq75tKmOrMKtjHFR9y5EnAIr3jhtsCdUj3u+QFC7atwUuofM7Khp4CfPvPSg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770514754; c=relaxed/simple;
-	bh=vuB8vfcX6tWTzfJx05PxGeqkttkmDEMvDynqTkXsnuk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O85yegC601xWfK6AutSWK39jW6Tjm870tCJtlItMsBS3ZZKCIgyD97mwmzC3r0tWq5LIsOKgOv16ZHmFgJa6tFdaIKbj1U7ZbeoJQHySaaGonfW6Ve6mRRc4CqaNcuw5ZlaZjwY5iGchvOY6OGtG8uad9iY0+A0qnfPuLuJ5yxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lt8EhrWi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wLXnHxT+; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE3713E02A
+	for <git@vger.kernel.org>; Sun,  8 Feb 2026 02:28:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770517693; cv=pass; b=ZXmhPGnMc7blo8OmQhtxZx/EM5ZNB53a+QrrF0cMwsd41FEN/G5e0/DkCIyPQpR/brHuZl+/8dWM2gBzhAkY7ArQXjtvppxMhDqIlxCx+7yTi4CQu/O+/9bMFOc1JquTxmHVIW6ZxRUgERdmoQuhCrqUGii4VCjl3HhNJ/T/oWc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770517693; c=relaxed/simple;
+	bh=L8GzZlqqtNOGAoHkdalWVv4I/wupcj8UVz0ukxEvSLg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oz98ct9pyQ3Al3++3wPqz9OIYPKx5WARx//iYJnHybRc/3rKtLxAkxNaUejUQvX0V0LuxLprlr6RZRqd+gt8Qr9cASXXiFwEzc+Kek/IAAsmIFUb9qkpM4H0NEoNZuoVgZb78WuTHgzRglhhjlV6mdSSjiq97ClKVziCF2prZl0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z/jQYrdb; arc=pass smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lt8EhrWi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wLXnHxT+"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 975811400190;
-	Sat,  7 Feb 2026 20:39:13 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 07 Feb 2026 20:39:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1770514753;
-	 x=1770601153; bh=bgmC1Evusa4ivPcsLiVHkGpv9KlyCTX3yb6FmWCGirU=; b=
-	lt8EhrWiujDN76QdM3toDXIa0cnAKtt5gTK5VZXzmbD550Dm5sTAYBw8HpVQZlUP
-	XdVsyhU+ITPy2oFd4t3mWQDLdlywVwsvknJuil7tObWjlh9q539UVSkJdm6yMymD
-	j8kg02Oevvq9xJgN3daegvdb09G+HXUIMo5vbvb/K24vfAZrC2Z7IEdFVUtmsGUd
-	I6pr3y/u9py1uDRtR3/mauZYEtqRHJz9HXYvbrM8VCMZ5zUx/TLsf027LeS7a5b2
-	c8Vd/IZVutDkN6VMlAkbuu2GsKx2NniXzguCSgNqvuv4hz8nVxanfV4f9CWbQ5GC
-	hj/u4T7J4/Y0G162lTfesA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770514753; x=
-	1770601153; bh=bgmC1Evusa4ivPcsLiVHkGpv9KlyCTX3yb6FmWCGirU=; b=w
-	LXnHxT+RGRJkSiJxM6hZhp25suI3vJoLV6i5uYcK7SFNQWKptEs5ZFZvmf6qbQgB
-	LA335gcBDKayBynoN8X1xNcWA723Teaq4BElg3M2JoXYf01Y1hUSRw6jsxxuScjK
-	yr3ikGnn3W2WjDD/SbWOieJtPYcksfPz35Q+uF8w250n5X9Cr7Qv4erQoQ8/XX+c
-	8lBLsPSQSwXsVkUiUtwzcK6EU2vw2brwP/zBESv/EQMddXZaLWxTJ5Cow6vxUozl
-	9g3Th88L587Bf+0euBFm+oiI0ZnxSPXtRnKD9rNa0Hi2PAZGdyv3SNV40NPP05PM
-	tmTMU5SQIeDCNKIjzKOhg==
-X-ME-Sender: <xms:QemHaQRCe40JFNA-TeK8zfW7hw94F6JeEcs5A9PRzmkOB6PzUQV90w>
-    <xme:QemHaQWULoFmIvvhK4l6OnqadfMNJS5d10TPhKFGd3OFxvwxJKch16Y4FAwDfhH7y
-    nwD0GKy5e6oX5GjEKp3ctiFRnjV5sAmIh5eNT3CQGHeFN0MsnEr2w>
-X-ME-Received: <xmr:QemHaRdZiyt9I4GFIuTGITqZIV1dR6sH0chDh0wUOgQoZmyXSzfIstFFGaF0Dc2epvEoiS4dyC2wBO8BxTJArChkUomvsN7OHA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledvieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeeifefgiedviedugfeiudejtdejgfdvueetveefueffffeiffeltdfgfffg
-    gedukeenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhkvghrnhgvlhdrohhrghenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohep
-    mhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopegtrghlvghsth
-    ihohesshgtihgvnhhtihgrrdhorhhgpdhrtghpthhtohepmhgrthhhvghushdrthgrvhgs
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhuughgvgdrphgrtghkhhgrmhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehsuhhrhehrsehsuhhrhehrrdhnvghtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:QemHaUJOIN3k-oVuaH_3yDvR5iHsEbuXQ6HalYD2Wy3rnPG5_ZXaOA>
-    <xmx:QemHaezNaA-FuZSU8dkQBGEMvJzI3QkFGY3uAzGz67wN8avYTvDdfA>
-    <xmx:QemHaatr00e7TiBPCrdXJZqpDcZX88I3khPaH-DmPZn_AxsH_Hp-8g>
-    <xmx:QemHaRB2a9xtG0SnriQ1-faNjANj77efgO-RdNJ_L3e3b-OEv_iGbA>
-    <xmx:QemHab18dD6NmSunBC5K251pX7d1I96M-1ZZXCiBi_nbWXqG7EmrF_2p>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Feb 2026 20:39:12 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  Matthias Beyer <mail@beyermatthias.de>,  Christoph Anton Mitterer
- <calestyo@scientia.org>,  Matheus Tavares <matheus.tavb@gmail.com>,  Chris
- Packham <judge.packham@gmail.com>,  Jakob Haufe <sur5r@sur5r.net>
-Subject: Re: [PATCH] doc: add caveat about roundtripping format-patch
-In-Reply-To: <format-patch_caveats.281@msgid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Sun, 8 Feb 2026
-	01:11:17 +0100")
-References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
-	<format-patch_caveats.281@msgid.xyz>
-Date: Sat, 07 Feb 2026 17:39:11 -0800
-Message-ID: <xmqqjywo9fpc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z/jQYrdb"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c698873a1deso1650118a12.0
+        for <git@vger.kernel.org>; Sat, 07 Feb 2026 18:28:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770517692; cv=none;
+        d=google.com; s=arc-20240605;
+        b=RrpxGSBAMZQouFZQPlqm9DHg2dcO9rO4PmzXITBBV7JgJnjmugs/GZ9QHzr1D4g3bI
+         qGKTUGbdOoPzeODLUtzYs5NCjVH9RvLn7J71sozZEtrorO7r3KoLYhxNeRofpznlda6S
+         Vc82tsXDEE7aIKzAgtgVBEYKocUMWaw5zAQEdZtS+CXFey4SUb570zoRNrx9xdeHSlyl
+         m6dEid0LGIKCv0zewtoPIeciM/iN9yj3ESe3og3zL6TtI6AoKqkouVEPwhjnclJodF43
+         dSNMZNijfJe8YUhYymsK6LlUzIvKs8Hwt76Z+FGz3HHEC+Vg0UktLHaBvwynoduBxv5t
+         nnnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=L8GzZlqqtNOGAoHkdalWVv4I/wupcj8UVz0ukxEvSLg=;
+        fh=gvIsCH6h5VpgUnY7aF+K/brDuP4oJiTe2ppwfN4WE1g=;
+        b=k5BS8ssWWXtizjsHxhPvc+qoUXxxuLn1t/WoxCxvYIkXvndtCD3ySlsq3Rnd0HDhEU
+         RDvfEnk1AeT53+okteY7lcTY2hIZGPlOUoF76rTICbGdXjYXYtPo1abhE8XPmiggFGLQ
+         f4DtpGDKTvfyfl9+FUhrLCdBHn+h1mUFd/V3FrnzmrINp4sj2FXUQC7NX19HRc1TCOXy
+         TnyqztvvYitYWAI02vhKxNWpqZuyjVt5jrFGXjQXlyRAClm7B5e28GIQKyun9spwoxn7
+         NwL8+Cin9FDIOdZYZRUbLvrUxD6IjafzKlR1r1UeF7vscy3u+6gMgxJCuirtQjlqVvyb
+         U2hQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770517692; x=1771122492; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L8GzZlqqtNOGAoHkdalWVv4I/wupcj8UVz0ukxEvSLg=;
+        b=Z/jQYrdbzfShyZuSDNsMNc/BGlBh+jLSNv3gfwS12tysHWsXANWjvz0MjwbKFwUY3a
+         ZcYa510OwXvRTf5bI37IlM0EaKYC6ukaNuP2wY81bF5+YI1rkJApGsH6dMoFQsNl+xDx
+         nIUlVDnuFQwlSDM0e3AAUkn9oFioE65N5I55cu0zJ1v4D9QqI/tzp+nxnhucGe23DLeV
+         IVZi9xoHCqVa1x8Js7W2IDHpFYqmQrMfwvxhpYcB1Mjo70cw2GpCVqPHLLJ5MD/NgPDf
+         nkWSY1u24dZWxtPoSIoOp61hBY9K8GVjRQe5BiP8kU6FMRNqa2xSdiUiYWLKjXdISY7X
+         wNKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770517692; x=1771122492;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=L8GzZlqqtNOGAoHkdalWVv4I/wupcj8UVz0ukxEvSLg=;
+        b=smlbTkwaxlasJMYGJyiRKmwiluFDWlFS9yDTbUiWNHpDHZzuhLMp44Sbbn1qtjNd9x
+         NbTofFg9jyal44nq9TZ37+4vpO1jtUQbuJhhxme2c4dMbCBfwaANgXS5Fm0pCUyW0IDB
+         uqeB84wbdNFga7dgGvL2YHOS8jlNAx4DStFsQRCVgNl6tQ8SzUZ8YQBacV5rW/+Q7n86
+         Usmkky2htRJHKhiofm1RaI/F0LShT825xR67MDitHeW0wPh4xaQsplQ1AoeF9y4HLXrD
+         Y5yjWERpk1k2/9lDCjq++21csZmQqYbQU2C+aiazSG8Cpn/JTderSOfzRpVsoNXS2/cD
+         uiMg==
+X-Gm-Message-State: AOJu0YyRBM+mMC3JzrsawzK9sqzRBCT4FYZMF3LdYozdWiAblzfEp7qV
+	jj4QT1l3EKQLukXn1YDAR+n8wi+WwYzjjKV4XNOWoaE+GrL2gjVB2/rsu56nXjknDo66EcZ0j0m
+	rl1TPl9NKyWmdiZBmUbtIHiS5DMOrdM0=
+X-Gm-Gg: AZuq6aJtZuIQ2GU3dIudGGAIOWiy/gtuPllaOp0mOSlPnW2rcXlK72RhWCajBLlDegW
+	ou6CxUMyJm6WdqHdZkn+KU8+oigfKM/JD6Is3CudTFmNG5AdYPVQeZQ84jAUoxjcC4keYXs/lvj
+	f9yIsKKdr8c5t6OneOX6yjumoEGf1Etrec61lHlocHphkO4wdbyct16GsgSqgfKmpIJ4klRiBYa
+	c3sdsbmoH0+0UnjzYzRK0hmOhdY4JRMiyWLlWwOMOMzqcri9zeXCSe0nAARKkEFY13MzrPL8bja
+	GEr7aKtqUITT2vQqMeD/dyOHV55AlaHWpJC38H3NW5Lg+aIvGC1mPxBmwdS4shIQqL2TiMbZULX
+	1iWtWJdSCO6CmfkizSktZIapr1Q==
+X-Received: by 2002:a17:903:1aa7:b0:2a9:5e25:4708 with SMTP id
+ d9443c01a7336-2a95e255b6emr47366995ad.3.1770517692444; Sat, 07 Feb 2026
+ 18:28:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CADjtP1FSAQZRyBCjPZ00Y2g=fdtRZWHP44XLqjor-OrYXAN-vw@mail.gmail.com>
+In-Reply-To: <CADjtP1FSAQZRyBCjPZ00Y2g=fdtRZWHP44XLqjor-OrYXAN-vw@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sat, 7 Feb 2026 21:28:01 -0500
+X-Gm-Features: AZwV_QhN2I0OvvLmYTjfGcSqsTLwPS-YpoqNjcitKjmPpNj_r-NjtJJcLJinltw
+Message-ID: <CALnO6CAS5bpxDuqZ1Tf=SeY5Z6JpRpm1vbPCUtnyj6AsNqGJ8Q@mail.gmail.com>
+Subject: Re: git clean ignore
+To: Sylvain Rabot <sylvain@abstraction.fr>
+Cc: git <git@vger.kernel.org>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-kristofferhaugsbakk@fastmail.com writes:
+On Sat, Feb 7, 2026 at 9:53=E2=80=AFAM Sylvain Rabot <sylvain@abstraction.f=
+r> wrote:
+>
+> Hi,
+>
+> I'm a big user of git clean -fdx which is the shortest path to a clean wo=
+rktree.
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> git-format-patch(1), git-send-email(1), and git-am(1) deal with
-> formatting commits as patches, sending them (perhaps directly), and
-> applying them, respectively. Naturally they use a few delimiters to mark
-> where the commit message ends. This can lead to surprising behavior when
-> these delimiters are used in the commit message itself.
->
-> git-format-patch(1) and git-send-email(1) will accept any commit message
-> and not warn or error about these delimiters being used.[1]
->
-> Moreover, the presence of unindented diffs in the commit message will
-> cause git-am(1) to apply both the diffs from the commit message as well
-> as the patch section.[2]
->
-> It is unclear whether any commands in this chain will learn to warn
-> about this. One concern could be that users have learned to rely on
-> the three-dash line rule to conveniently add extra-commit message
-> information in the commit message, knowing that git-am(1) will
-> ignore it.[4]
->
-> All of this is covered already, technically, However, we should spell
-> out the implications.
->
-> † 1: There is also git-commit(1) to consider. However, making that
->      command warn or error out over such delimiters would be disruptive
->      to all Git users who never use email in their workflow.
-> [2]: Recently patch(1) caused this issue for a project, but it was noted
->      that git-am(1) has the same behavior[3]
-> [3]: https://github.com/i3/i3/pull/6564#issuecomment-3858381425
-> [4]: https://lore.kernel.org/git/xmqqldh4b5y2.fsf@gitster.g/
->
-> Reported-by: Matthias Beyer <mail@beyermatthias.de>
-> Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
-> Reported-by: Matheus Tavares <matheus.tavb@gmail.com>
-> Reported-by: Chris Packham <judge.packham@gmail.com>
-> Helped-by: Jakob Haufe <sur5r@sur5r.net>
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->
-> Notes (series):
->     There might be other things to do here. Mention it in gitfaq(5)?
->     
->     § Trailers
->     
->     • Reported-by: Matthias Beyer <mail@beyermatthias.de>
->       • From this thread
->     Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
->       • From https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org/T/#u
->     Reported-by: Matheus Tavares <matheus.bernardino@usp.br>
->       • From https://lore.kernel.org/git/d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br/#t
->     Reported-by: Chris Packham <judge.packham@gmail.com>
->       • From https://lore.kernel.org/git/CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com/
->     
->     (These were all linked in https://lore.kernel.org/git/20260206090358.GA2761602@coredump.intra.peff.net/ )
->     
->     Helped-by: Jakob Haufe <sur5r@sur5r.net>
->       • For the part about patch(1): https://lore.kernel.org/git/f6e4cdb4-ff82-4853-aca5-0c152f287286@app.fastmail.com/T/#mc389dbd2ae02a007cbe57cd16ca4790ecc5a84f7
+If you can't drop -x for some reason, consider "git worktree add" ?
 
-The space after three-dash line is to give additional information to
-help readers, but the above does not qualify as one.
-
-> +Furthermore, the presence of an unindented diff in the commit message
-> +will not only cut the message short but cause that very diff to be
-> +applied, along with the patch in the patch section.
-
-A line that matches "^diff " is taken as the end of the log message,
-and everything that follows is passed to the patch application
-machinery, and the above description is a consequence of that.  If
-you have more than one such diff, they may be either applied, or
-some of them may not match the patch target and the whole thing may
-be rejected.  Neither is a happy outcome.
-
-Queued.  Thanks.
+--=20
+D. Ben Knoble
