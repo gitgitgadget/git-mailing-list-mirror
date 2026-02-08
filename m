@@ -1,85 +1,82 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0364781AA8
-	for <git@vger.kernel.org>; Sun,  8 Feb 2026 01:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45E0202F70
+	for <git@vger.kernel.org>; Sun,  8 Feb 2026 01:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770513703; cv=none; b=BIolcFOU/h8409VLPBFpb/28quK2P/8i5EWJ2zUMp/mEY822hk7XGH3R7SvJbfQKlCJ3UpqvbtaCcvv0zKtWMxKjYJFR/CJeuVZlIOOv/JbyFpRARH2p+tnoO+O/6xup88A7xANV2c/prM03HZkh7w7TH3uxUD2HWbQlDgvBsxs=
+	t=1770514412; cv=none; b=Jk6qfxgtH6koOgFQ4WsBkgBibdbVedu+448S3YkP8RCHShEpPj9Uq8HO6zMpBZIgjyfB9Ww77XqU05220m86xfeZJu52Px4VBYNbKIJkYhCRrr3aZndv02y6fHLUnI6DGGmynW+KyeXp2Y6lx+rkiAzEibxERy5YaoShT5uqOXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770513703; c=relaxed/simple;
-	bh=bV1NVIiiXbbFD4szEnyLPth2MyIy4gLew8bVhipIbqY=;
+	s=arc-20240116; t=1770514412; c=relaxed/simple;
+	bh=1yRI+W59108MQR60o4QOypcVFA6BDqUJWiN1yq45smo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n0bNdnECtN1zV+x/eVIvDIZTShd+Aj7DNrRI7sGyy+GycksFNL0AbgICyVDVsna5KqIP0BKGfcz05Tdv+cfrKFTBzalHPnlbYcitwEtNTQ2IQU2QLV0zLZxMXK5F0Wt15oPHlN1QmERPEPtn5VEh5jcK9WIsQbGuxcmN/TEPBwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RKnzErI+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nf4Hrauv; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=JpMUzqhz+SMUVJINAxC2NNNHCinMBX0OnC3Pjb9P5tvHQgi/4at1sFQF/qamNx/Hz4WhnoYhFV9xAVhe+MLDyxvnmHEvb4T5c4vnZXg3OVarSJ2AOQ1LNhDaqeAUBKdx1WpSIHO44H0zFrReNCPIMkZo8YH85FZfY7nRo0sBw3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PS+EVWIo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TbO+tRr6; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RKnzErI+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nf4Hrauv"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0B3F31400017;
-	Sat,  7 Feb 2026 20:21:42 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sat, 07 Feb 2026 20:21:42 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PS+EVWIo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TbO+tRr6"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 288B714000A2;
+	Sat,  7 Feb 2026 20:33:31 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 07 Feb 2026 20:33:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770513702; x=1770600102; bh=hgtgzpgeB6
-	rS9w1ByYEJnTx9E4TyPLxoTsodMWkbEcI=; b=RKnzErI+e8XIbvuhIXiafcdQqh
-	qua7RQxlZodC+l8eDCE49KxPYPf7ziUUq+FZQ9lmovIzYyjlirBay+tsOpnNsqgK
-	jYeFXp74fTYCXys7xMMZuTNwulipBDTObo1SbgEVAifcGT8bnTsySoc6dHHv1ETY
-	4Jb++FZDZBhRzfqWVoHqLZW/2KgN5aIR2LQn4y24EUsSr/nn3GmcQPvwc7JAXo8U
-	k+CzfTOUF+h6uiIw2QkpOFLxSWiRYEvZvn+ZvH6boz/1FkoLwZBvN7Va5ks4vgI6
-	HnCkWnaqPXs+xWj2YPh6TfbzIGUDH+dtqjSe2wjxpzR85S4T73WMFOBAu+Ig==
+	:subject:to:to; s=fm2; t=1770514411; x=1770600811; bh=ELhvdr4RxH
+	xeYY82Qb4avghgZWBrWKbdsb7f5cw62bw=; b=PS+EVWIoq9dVDnaRRCGxJ3fPsM
+	fa7J2It75faTT5eWwA2xMkB3pwyWJ0GvIWIh7iXsXXSWq9WQeJAjNdc6DuDOemUX
+	bNRl4uccafZ1wBuCHcbHTDBhNL70FKH1SXUl9vLb8NeQLExe4kgWb2zYG2TYunH7
+	MpN/48j7TahWBDwlPiTb9DhPivDQm9bCx3KQyOUpfPOfmSVu6NEhlQlYqjQtwcWx
+	mVeJGtEufYAfWuKECLPAYbVpFJL/q/eWwIfNuKSToVpo4pV4pcPe8+XNKB9g3wBS
+	YOws0K9Mqj+hSjbkTDjT8JS1MUt/5V3e53VUKYJP3bNPl8Tgy5dSTuUbhQQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770513702; x=1770600102; bh=hgtgzpgeB6rS9w1ByYEJnTx9E4TyPLxoTso
-	dMWkbEcI=; b=nf4HrauvPUTVXdGNG/ZRibCKlw+PHXX+iprNY5nC2GWrBMFxVUd
-	TxVJptdxUTuw2EAppGfEvTWjIAh7qem400rcOpEIMflmKGbNSGzSDjA+oHKBarRh
-	3jGSqRSqnwgsaSGQYygRtWrgJRDWwIHUH70UR2YBEihMlKSBLOcUL2XWFaSKmtKo
-	ICQJmf1ZZkphk3SHSbNLNFjI3QgnsJt+LlBgpnPquaLaXY0UCeb0r0JA0xPhnFXl
-	NbSZ9N8p8wcjVnJm7dcH9pEiZ8JUNz4Qn7rDQLn5hVH/1x69sGXNw1PE3gBDtQDC
-	wCqSP9xGAmDOpi3dpyCYypRK/fLOuyKH2qw==
-X-ME-Sender: <xms:JeWHaT5pDndYEKdQE1K8Bde8mPM6ZX2bLYaf83WyIzlxp9xA4P9yuQ>
-    <xme:JeWHafxpBYit2Ynr-L2TDt5M2dvMrkTy_B5tVYwanmCur0N-BW6HGm0GKblEbLxKW
-    rIXBCOanWJZB0etKVy8-_E7gz0jSY47mL3wpiajCea-sS2Tswdo>
-X-ME-Received: <xmr:JeWHaSwb6aZAVsbqGrAWTtMTPN23_hLQLevyTgFV5-bvRvfeiJox0HtzlK7gauOSZpgMu9WoSujw-giqIVSgOubQLvGZTmTe0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledviedtucetufdoteggodetrf
+	1770514411; x=1770600811; bh=ELhvdr4RxHxeYY82Qb4avghgZWBrWKbdsb7
+	f5cw62bw=; b=TbO+tRr680LZTtah8z19D+L4fyn/5DW0qaj9iAc+gdjFLtkESiy
+	r00CNFExMdlD8YK8YvYUe7i11S4/pjT82zKFRVStdU5oWsnsnQF2/TL4oTLmkRvA
+	d5sTiLu0z92WhbpSFYoZiacE8nw0XuriV7pTL4wIW7HLwRGr5+eDXH91lAICI302
+	3VaXZgFwvpRXVbiq+3NcjmaTs37OwXqPBzk6LcboXQcNW3yTEcpTVzKBNiwdeGEA
+	SBDaQLUGCyZW4TCbACt6zCmn7mKZHc3qb8HaE4cJCIPOfNfKC2Jbpkbs5FqxISCD
+	vz7NySeDmUHtDDNhvK+OZenuOSbvMJEy5oQ==
+X-ME-Sender: <xms:6-eHaZtamES9R9Wl-2sd9Xn7RcoAbdO4kYBD6i6lGmYtSeP1vp3vcw>
+    <xme:6-eHaZeWWGpaVkArqqLf3TdfF00lxZU_nfXGr564ZKE7LypoPvOPmF8ghFxZUHMFT
+    7tNLmqdBKP1l4NLnRZG3x9hf2FyzyQ-5iLyO0Vz07Lmqh8vBOYl0w>
+X-ME-Received: <xmr:6-eHaRzWIRI2-j9KcYUgguH7ux86qqW1YqZTNPx5LYwXjgGb61ynaM3pIJCROe05LJKnJ8e7es506ganBRG7lzcig-bRKrVTVQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledviedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
-    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddu
-    keeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfe
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:JeWHafxD2zlTeDHp4kv_YnZzKWgzw3JLJj1e-7HYS-F9LxH2gce0NA>
-    <xmx:JeWHaUYX1gqoZ4nlub6r0cXP1LBqDahC0Ja-Kj27nvB8VtdY8CdRxA>
-    <xmx:JeWHaYUmlSInWLhY3Ka5X2uV2GPuS7TSXPHsTvISJViRPsk1f33YDQ>
-    <xmx:JeWHaags8uj70e1HgRSzjHUq_kU19QJgn8Kl8eJMs4aVgFApeyf6Dg>
-    <xmx:JuWHaTD5u2Tj_BLTkvHrAARe7wvsM6l74nK-8swkmH3lsHnDgIGvyCtL>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheplhhiuhdruggvnhhtohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:6-eHafFftaE3Bii62tbHjs_ftRU91m__j2f19yT__GXXjgMeE-ns8g>
+    <xmx:6-eHaVyV2esJhDqk8K5bvL3U_Z-45f9XA30q-brSTOvbV-d89bM4rQ>
+    <xmx:6-eHaQuOO6_yttsGjwCIp-aJRxd32UIi7G3RSu-0gKLEtGRRLiT1Qg>
+    <xmx:6-eHaS1wCCIcmI1eeTqJYIv1-x3jtPbP9kP7_BYwSPo_GaTlGM2nkw>
+    <xmx:6-eHaVQ3h1k_0q45XCvQpfuhGDbxrBCgDdij7mt92tpOJyUqzYvOajTR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Feb 2026 20:21:41 -0500 (EST)
+ 7 Feb 2026 20:33:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v3 1/3] wt-status: pass struct repository through
- function parameters
-In-Reply-To: <20260207100322.1786368-2-shreyanshpaliwalcmsmn@gmail.com>
-	(Shreyansh Paliwal's message of "Sat, 7 Feb 2026 15:30:46 +0530")
-References: <20260205101524.125452-1-shreyanshpaliwalcmsmn@gmail.com>
-	<20260207100322.1786368-1-shreyanshpaliwalcmsmn@gmail.com>
-	<20260207100322.1786368-2-shreyanshpaliwalcmsmn@gmail.com>
-Date: Sat, 07 Feb 2026 17:21:40 -0800
-Message-ID: <xmqqtsvs9gij.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org,  Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH] completion: add stash import, export
+In-Reply-To: <20260207215924.28863-1-ben.knoble+github@gmail.com> (D. Ben
+	Knoble's message of "Sat, 7 Feb 2026 16:59:16 -0500")
+References: <20260207215924.28863-1-ben.knoble+github@gmail.com>
+Date: Sat, 07 Feb 2026 17:33:29 -0800
+Message-ID: <xmqqpl6g9fyu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,22 +86,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
-> -int wt_status_check_rebase(const struct worktree *wt,
-> -			   struct wt_status_state *state)
-> +int wt_status_check_rebase(struct repository *r,
-> +	 			const struct worktree *wt,
-> +			    struct wt_status_state *state)
+> These newer commands lack completion; implement basic support for
+> options and arguments.
+>
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> ---
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 538dff1ee5..a8e7c6ddbf 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -3465,7 +3465,7 @@ _git_sparse_checkout ()
+>  
+>  _git_stash ()
+>  {
+> -	local subcommands='push list show apply clear drop pop create branch'
+> +	local subcommands='push list show apply clear drop pop create branch import export'
 
-Funny indentation.
+Makes sense, but in the longer term, we should devise a way to make
+this script and parse-options infrastructure cooperate so that we do
+not have to update it, just like options are completed using the
+special "git cmd --git-completion-helper" option.
 
-Besides, should we adding a yet another repository parameter to the
-function?  The worktree wt knows what repository it belongs to.
+In any case, will apply.  Thanks.
 
-> -int wt_status_check_bisect(const struct worktree *wt,
-> +int wt_status_check_bisect(struct repository *r, 
-> +			   struct worktree *wt,
->  			   struct wt_status_state *state)
-
-Same comment about "r" vs "wt->repo" applies here.
+> @@ -3491,6 +3491,9 @@ _git_stash ()
+>  	show,--*)
+>  		__gitcomp_builtin stash_show "$__git_diff_common_options"
+>  		;;
+> +	export,--*)
+> +		__gitcomp_builtin stash_export "--print --to-ref"
+> +		;;
+>  	*,--*)
+>  		__gitcomp_builtin "stash_$subcommand"
+>  		;;
+> @@ -3502,7 +3505,10 @@ _git_stash ()
+>  					| sed -n -e 's/:.*//p')"
+>  		fi
+>  		;;
+> -	show,*|apply,*|drop,*|pop,*)
+> +	import,*)
+> +		__git_complete_refs
+> +		;;
+> +	show,*|apply,*|drop,*|pop,*|export,*)
+>  		__gitcomp_nl "$(__git stash list \
+>  				| sed -n -e 's/:.*//p')"
+>  		;;
+>
+> base-commit: 2a3d6836805534f45cf545da7be25ce1c759c514
