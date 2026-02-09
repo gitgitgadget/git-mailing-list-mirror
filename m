@@ -1,324 +1,125 @@
-Received: from pio-pvt-msa1.bahnhof.se (pio-pvt-msa1.bahnhof.se [79.136.2.40])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8B612B94
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 22:02:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.40
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770674530; cv=none; b=KETmHHBmlk35yXrpYxYEUOwndxRoeVzhkAEOJKmUWYSsSgyNDj9MGELIw76eMbSyP/9hzxDyoIT0kg4DvvHUoEgz+k7c+2LHoiKN+EwxpSQODKNrpAKGhgaaZB9eQRr32Hmm/RQw0P+IX/UiFEOjhgHHXTVPmRyN/2MS40kV44Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770674530; c=relaxed/simple;
-	bh=PQZRenoxJ1zO+fmcJJV58wzWLzAwnPLnuApPAwaYZio=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZYGDt4R5Jlhoh+KLG9bR+bAAXh4lvwtZEv7U67SE3AuTrSweWeIVasfRDzHQZxcp3qGWovdIiC4n8zLwmqFiwiNc0EHliTr2BCHCTuKgskGtaCZNVzQ3DS4EPLCHD/cffWvjx53etOySqXSAPz1R1blBR7t+vozjKK/kP7gXOTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=cxQGDdBo; arc=none smtp.client-ip=79.136.2.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D5812B94
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 22:03:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770674611; cv=pass; b=W96Fi7MgvYNcVtKQTh+/Payn2NfoE9IaZxSHv7GjPhf6b+YiCnNLhwWDPD0QRFUJy6m22qlP1beauvQ8epjlj+hGzlnjE6p4QDzkgxKa97D6NUNM/JVrIVcXEkycxu8+aHncjv3Y+XWG4idaBrocYyoMkpMpklt56PEWDKFwzOI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770674611; c=relaxed/simple;
+	bh=V4x4urWd9owbe6b8HwLMpM3SDIf1SlRwgvchoZaulkI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MM2Mr07jCznTK2MsDqBeMdhnQurSej/yplR49ZbbrFUnB8x2hNLd16xiQORFG18CWh8iVhlUAfS1BpeHxnrVS0BI15RIsJHgl7qxB3wlKgkPSKFWDK2oSvmby92hqHIQE+bceMEbhr0FK6UUgnt7M7QAJKf8gZ9xrraTdLCatjs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mbL2USDJ; arc=pass smtp.client-ip=209.85.161.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="cxQGDdBo"
-Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 186BA40936;
-	Mon,  9 Feb 2026 23:02:06 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.099
-X-Spam-Level:
-Authentication-Results: pio-pvt-msa1.bahnhof.se (amavisd-new);
-	dkim=pass (2048-bit key) header.d=jontes.page
-Received: from pio-pvt-msa1.bahnhof.se ([127.0.0.1])
-	by localhost (pio-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zboFdyYkFJPQ; Mon,  9 Feb 2026 23:02:05 +0100 (CET)
-Received: 
-	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id C74E640915;
-	Mon,  9 Feb 2026 23:02:04 +0100 (CET)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id CBCA2B1E31;
-	Mon,  9 Feb 2026 23:01:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
-	t=1770674468; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=pdH1Zj+XsGv4zz4tu9FyPxhsq/kyzE/idfdttRS/0nE=;
-	b=cxQGDdBowu6qJS7JsCXIARfZG4rC/2KvYymdDsAzgUMeFzJQhFIa5rptz/lbKz3HkT4Po/
-	JddcJym4glP8nW7/vExsFuqb7hloEkD06+KJTglJ+jCS2RakOzH0fRDCyLpYPQhlZrYv2i
-	Q5NAfqRHePRI3Psx6v1itxn3OitHdOKbdLrvI6rQrY0KZvE/P9+KcXZA2ptebovznHIsio
-	TYL0kxdKm/Pabf5sBvXZz/SM04zkp2FuYZSbz5eYNUehhDbbSVlaYaIm47EuGOmE4mB5Ll
-	ims1wRV5isAxWebLwAEf8mIQ34Kjspj7PHtrqiOEeiRZBKODMCzBmWhA2hxpXg==
-From: Jonatan Holmgren <jonatan@jontes.page>
-To: git@vger.kernel.org
-Cc: peff@peff.net,
-	gitster@pobox.com,
-	"D . Ben Knoble" <benknoble@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Jonatan Holmgren <jonatan@jontes.page>
-Subject: [PATCH v1] alias: support UTF-8 characters via subsection syntax
-Date: Mon,  9 Feb 2026 23:01:15 +0100
-Message-ID: <20260209220115.461109-1-jonatan@jontes.page>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mbL2USDJ"
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-66314fa03c9so3078941eaf.2
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 14:03:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770674609; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lkdp3iR38xTFwcblslFRloaMlqGes6wR9LPpNUpyyfrV9ChiB32akDTsQ8N03T1Mky
+         XuzPkYoQ5QFdZ0vWnpDgIbNrvCudjP51L0ihH40WaMrK7tAoAygxxIgfyetFPghWlPvT
+         QlI9uF4pOACkKlKn/ZLgNEvtdeGvQcH2qcMy6ITtwxH0ytO4n3bk5yYjFnPcK7+G0rAU
+         8uTGgHmYTTP4J01KwPdg/N+sOnmkYRlYt+rpAVqm4V02l6m8KvWDzZze/e1rnDwTE941
+         V1LpVbDmfZo7QeK2pg89dI6NB0SCOt2EpdfnpF9xPeHR7C2zZLU+VzGE8xztAeehlSXB
+         2Scg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=V4x4urWd9owbe6b8HwLMpM3SDIf1SlRwgvchoZaulkI=;
+        fh=1UVtMVfN4NkFYvZWBqNAxKjSOTNJXlJ6OKe1tQ4K4n4=;
+        b=X8R/8i72FJH2jvUu2hVIpG80AaodHNbdq3/vBoNpEjdhSzL8X6F3z0woDYYlirPN9B
+         Yy1crBafQGaed7f8m2qcj4pqOBr2nO1w8RTrVz2kDuGdn7Js5mEyNr4hS1gyJEjbACtw
+         715edpp/1GbQWuAetBWJ04osGvU02XOWUc+xSscvmeQbp71mGoUyRWRy/K7XWYUjMZ6D
+         JKd65OauEFAYI8c34jgqORNKtYtGujtPWZYmMlN7X7NmlKDSBboD1pmBtokvWOAmDtGp
+         v6GxdnS22DJ3f1d2cvOuQvmZOrVQNd9bSxTO2W4/8YYfB/bbLkbS8k63p4pP7wT1MiSV
+         gqrA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770674609; x=1771279409; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V4x4urWd9owbe6b8HwLMpM3SDIf1SlRwgvchoZaulkI=;
+        b=mbL2USDJjK4laLHnWQXAzkq3T5cCQtoAVcIxqGGXN2O4iDhwWpYZX6MYTnkk+Hs+eJ
+         DiCjv6xrJ06/xehSuzbujWY7FFNiLj/XFTsD2j/HUgmcpss443RAPb4qJhjnNjOoDg5k
+         +RfRDRUbuGxmi/cFPqG5o0RnaZhsDNtwtdhZ7kceGF7nIzi5rSYCGM4du8xJeG9/nUI4
+         eJo+qkfjFZ9jA9OxopfK7dL1IpfEtO3V1LUCUBVrdV8gUSjj3JQJR6gVjuGy6N6PoQUS
+         C6Fg5XAJpszo+KZH9zrAqXasMJKt2eZrZ3YkPriWp0k0TIv5kwqzpANRMPSZOfDS0xw5
+         6qdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770674609; x=1771279409;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=V4x4urWd9owbe6b8HwLMpM3SDIf1SlRwgvchoZaulkI=;
+        b=s7xeYdWbg/U+JYxIdUs6XKpkZQa0b7no11Gw8uvGDt0EHqpQicCI9swCvTYFinW+9q
+         rGIrOB9lmi7CLSGnkEwKlw5Bz3pM2NLMIqeD3CCPtDoAvgPWBBfBktB6qbdhx2k4tPZJ
+         mLHLYrZg6n0pDIbh/tRmPfUeoYLtcPy5XsPbiqOwc9THVFpnlAA98uYmsNVzk4nYcRGx
+         H3D1eCDY+a1VwN3asSI8KK3u5LkUOnU+TXHRA+KEvx5JCP0y8Lh3ZgFazBwYtxKMPhXO
+         YW6FU/k628hby8f1nAYOMiaBeaNMV0G3lmlnXS6FJrS1ga1o++TXgnA27MBdaIpZRCcR
+         8FhQ==
+X-Gm-Message-State: AOJu0Yywccyjbrr/XNyrfsBondJmtjY+cgOoEw6vXpAPxHxKTfwzzS9d
+	G2ZlT95DArZje2MmCPe3Hw2v9cHQ1j6RWxaLoKJ3JTwJH2nMdds8o8NSohGWsz9FEq+Rrza7/XH
+	1sNqPE9VHkBrpwMrndRbn/EMMWL7uj0nLfO3c
+X-Gm-Gg: AZuq6aLnclB0UQzr9ssTfInHtLM42qvzI1o44WSlLcWSTRO5g/uSrWiWrq3mUz68500
+	I2SikGnVFn028l7CWIwWXhV+PTmz6BpyqWzO4RpDIy8HXX+wj3LD7yLSUCC5ikwjWdHPUiix1Ou
+	BKXmzs7O0NIm6Uzceyi6aEn7k8iAqVV2j0TjBHdpA/yQXAWUTUM1aG/q5lyv9S8b1czhNZ4F4he
+	O8s81sW1vHlpfsq36nChizW7h7KCQ11cGGiHe2T0BIJGwNj8e1yUiWCeMM4bbiEE9/6W1gW8qPj
+	bdMwNB8ew9WiuK6SKauAyx+1aWdsp617ezn5mZ9NlXOPiutQBoncAxFbaEyyeX4F13ftKCONOse
+	8F6SH
+X-Received: by 2002:a17:90b:224e:b0:353:883:affc with SMTP id
+ 98e67ed59e1d1-354b3c8a795mr10903447a91.18.1770674598071; Mon, 09 Feb 2026
+ 14:03:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+References: <ae4cb197-1edc-44c4-afbb-bbb24df509e8@web.de>
+In-Reply-To: <ae4cb197-1edc-44c4-afbb-bbb24df509e8@web.de>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 9 Feb 2026 17:03:06 -0500
+X-Gm-Features: AZwV_QiNOJ_wVn5waQSVqIVJi8p5Diu2lmwpoCluIXqO_T15c2T1GmVvsNPQAec
+Message-ID: <CALnO6CCMPCMdhMoei=bPSWC47n=+Uw_qP3joX8DPitUTcwNyaA@mail.gmail.com>
+Subject: Re: missing git documentation for "git clone --recursive"
+To: markusd112@web.de
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Git aliases are currently restricted to ASCII characters due to
-config key syntax limitations. This prevents non-English speakers
-from creating aliases in their native languages.
+On Mon, Feb 9, 2026 at 3:35=E2=80=AFPM <markusd112@web.de> wrote:
+>
+> Hi,
+>
+> I am missing the argument "--recursive" for the git clone command in the
+> git-clone documentation
+>
+> https://git-scm.com/docs/git-clone
+>
+> Is this --recursive argument outdated? In some projects there is the
+> following command in the documentation that clones the repository
+> including init and update submodules:
+>
+> git clone --recursive (url)
+>
+> In the git documentation only "--recurse-submodules" is mentioned as
+> allowed argument, but not "--recursive".
+>
+> Thanks
+>
+> Markus
 
-Add support for UTF-8 alias names using config subsections:
+The latter is a (now-undocumented) alias for the former. See
+5c387428f1 (parse-options: don't emit "ambiguous option" for aliases,
+2019-04-29) and referenced commits (like ccdd3da652 (clone: Add the
+--recurse-submodules option as alias for --recursive, 2010-11-04)) for
+some details.
 
-    [alias "förgrena"]
-        command = branch
-
-The subsection name is matched verbatim (case-sensitive), while the
-existing flat syntax (alias.name) remains case-insensitive for
-backward compatibility. This approach uses existing config
-infrastructure and avoids complex Unicode normalization.
-
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
----
- Documentation/RelNotes/2.54.0.adoc |  8 +++++
- Documentation/config/alias.adoc    | 53 +++++++++++++++++++++++++-----
- alias.c                            | 38 +++++++++++++++++----
- t/t0014-alias-utf8.sh              | 44 +++++++++++++++++++++++++
- t/t0014-alias.sh                   | 32 ++++++++++++++++++
- 5 files changed, 161 insertions(+), 14 deletions(-)
- create mode 100755 t/t0014-alias-utf8.sh
-
-diff --git a/Documentation/RelNotes/2.54.0.adoc b/Documentation/RelNotes/2.54.0.adoc
-index 20c660d82a..8cb00a21bb 100644
---- a/Documentation/RelNotes/2.54.0.adoc
-+++ b/Documentation/RelNotes/2.54.0.adoc
-@@ -7,6 +7,14 @@ UI, Workflows & Features
-  * "git add -p" and friends note what the current status of the hunk
-    being shown is.
- 
-+ * Git aliases now support UTF-8 characters in alias names through
-+   subsection syntax: `[alias "name"] command = value`. This enables
-+   aliases in non-English languages. The flat syntax continues
-+   to work for backward compatibility.
-+
-+ * The new subsection syntax uses case-sensitive matching and
-+   the flat syntax remains case-insensitive for backward compatibility.
-+
- 
- Performance, Internal Implementation, Development Support etc.
- --------------------------------------------------------------
-diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
-index 80ce17d2de..feba1e2022 100644
---- a/Documentation/config/alias.adoc
-+++ b/Documentation/config/alias.adoc
-@@ -1,12 +1,49 @@
- alias.*::
--	Command aliases for the linkgit:git[1] command wrapper - e.g.
--	after defining `alias.last = cat-file commit HEAD`, the invocation
--	`git last` is equivalent to `git cat-file commit HEAD`. To avoid
--	confusion and troubles with script usage, aliases that
--	hide existing Git commands are ignored except for deprecated
--	commands.  Arguments are split by
--	spaces, the usual shell quoting and escaping are supported.
--	A quote pair or a backslash can be used to quote them.
-+alias.*.command::
-+	Command aliases for the linkgit:git[1] command wrapper. Aliases
-+	can be defined using two syntaxes:
-++
-+--
-+1. **Simple syntax** (case-insensitive): `alias.name = value`
-+2. **Subsection syntax** (recommended for UTF-8/special characters):
-+   `[alias "name"]` with `command = value`
-+
-+The subsection syntax allows alias names containing UTF-8 characters,
-+spaces, or special characters, as the subsection preserves the exact
-+bytes including case.
-+--
-++
-+Examples:
-++
-+----
-+# Simple syntax (ASCII names)
-+[alias]
-+    co = checkout
-+    st = status
-+
-+# Subsection syntax (UTF-8 and special characters)
-+[alias "hämta"]
-+    command = fetch
-+[alias "gömma"]
-+    command = stash
-+[alias "my alias with whitespace"]
-+    command = "status --short"
-+----
-++
-+After defining these, you can run `git co`, `git hämta`, `git gömma`,
-+and `git "my alias with whitespace"` (note the quotes for aliases with spaces).
-++
-+**Note:** The flat syntax `alias.name` remains case-insensitive for
-+backward compatibility. The new subsection syntax is case-sensitive:
-+`[alias "Foo"]` and `[alias "foo"]` are different aliases.
-++
-+E.g. after defining `alias.last = cat-file commit HEAD`, the invocation
-+`git last` is equivalent to `git cat-file commit HEAD`. To avoid
-+confusion and troubles with script usage, aliases that
-+hide existing Git commands are ignored except for deprecated
-+commands.  Arguments are split by
-+spaces, the usual shell quoting and escaping are supported.
-+A quote pair or a backslash can be used to quote them.
- +
- Note that the first word of an alias does not necessarily have to be a
- command. It can be a command-line option that will be passed into the
-diff --git a/alias.c b/alias.c
-index 1a1a141a0a..f0c5f12fdd 100644
---- a/alias.c
-+++ b/alias.c
-@@ -17,19 +17,45 @@ static int config_alias_cb(const char *key, const char *value,
- 			   const struct config_context *ctx UNUSED, void *d)
- {
- 	struct config_alias_data *data = d;
--	const char *p;
-+	const char *cmd, *subkey;
-+	size_t cmd_len;
-+	int is_subsection;
- 
--	if (!skip_prefix(key, "alias.", &p))
-+	/* Use parse_config_key() to handle both 2-level and 3-level keys */
-+	if (parse_config_key(key, "alias", &cmd, &cmd_len, &subkey) < 0)
- 		return 0;
- 
-+	/*
-+	 * Support two syntaxes:
-+	 * 1. alias.name = value (simple, 2-level key)
-+	 * 2. [alias "name"] command = value (new, 3-level key)
-+	 */
-+	if (cmd) {
-+		if (strcmp(subkey, "command"))
-+			return 0;
-+		is_subsection = 1;
-+	} else {
-+		cmd = subkey;
-+		cmd_len = strlen(cmd);
-+		is_subsection = 0;
-+	}
-+
- 	if (data->alias) {
--		if (!strcasecmp(p, data->alias)) {
-+		int match;
-+		if (is_subsection) {
-+			match = (strlen(data->alias) == cmd_len &&
-+				 !strncmp(data->alias, cmd, cmd_len));
-+		} else {
-+			match = (strlen(data->alias) == cmd_len &&
-+				 !strncasecmp(data->alias, cmd, cmd_len));
-+		}
-+
-+		if (match) {
- 			FREE_AND_NULL(data->v);
--			return git_config_string(&data->v,
--						 key, value);
-+			return git_config_string(&data->v, key, value);
- 		}
- 	} else if (data->list) {
--		string_list_append(data->list, p);
-+		string_list_append_nodup(data->list, xmemdupz(cmd, cmd_len));
- 	}
- 
- 	return 0;
-diff --git a/t/t0014-alias-utf8.sh b/t/t0014-alias-utf8.sh
-new file mode 100755
-index 0000000000..d55b5a7213
---- /dev/null
-+++ b/t/t0014-alias-utf8.sh
-@@ -0,0 +1,44 @@
-+#!/bin/sh
-+
-+test_description='UTF-8 support in git aliases via subsection syntax'
-+
-+. ./test-lib.sh
-+
-+# Skip if filesystem/locale doesn't support UTF-8
-+test_lazy_prereq UTF8_LOCALE '
-+	test_have_prereq !MINGW &&
-+	test_set_prereq UTF8_LOCALE
-+'
-+
-+test_expect_success 'setup test repository' '
-+	git init &&
-+	test_commit initial
-+'
-+
-+test_expect_success UTF8_LOCALE 'setup UTF-8 aliases' '
-+	git config alias."förgrena".command branch &&
-+	git config alias."分支".command "branch --list" &&
-+	git config alias."test name".command status
-+'
-+
-+test_expect_success UTF8_LOCALE 'UTF-8 alias with Swedish characters' '
-+	git förgrena >output &&
-+	test_grep -E "^(\* )?(main|master)" output
-+'
-+
-+test_expect_success UTF8_LOCALE 'UTF-8 alias with CJK characters' '
-+	git 分支 >output &&
-+	test_grep -E "^(\* )?(main|master)" output
-+'
-+
-+test_expect_success UTF8_LOCALE 'alias with spaces in name' '
-+	git "test name" >output &&
-+	test_grep "On branch" output
-+'
-+
-+test_expect_success 'list UTF-8 aliases' '
-+	git config --get-regexp "^alias\\..*\\.command" >output &&
-+	test_line_count -ge 3 output
-+'
-+
-+test_done
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 07a53e7366..b19a8a5061 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -111,5 +111,37 @@ test_expect_success 'cannot alias-shadow a sample of regular builtins' '
- 		cannot_alias_regular_builtin "$cmd" || return 1
- 	done
- '
-+test_expect_success 'flat syntax still works' '
-+	git config alias.testlegacy status &&
-+	git testlegacy >output &&
-+	test_grep "On branch" output
-+'
-+
-+test_expect_success 'new subsection syntax works' '
-+	git config alias.testnew.command status &&
-+	git testnew >output &&
-+	test_grep "On branch" output
-+'
-+
-+test_expect_success 'subsection syntax only accepts command key' '
-+	git config alias.invalid.notcommand "value" &&
-+	test_must_fail git invalid 2>error &&
-+	test_grep -i "not a git command" error
-+'
-+
-+test_expect_success 'simple syntax is case-insensitive' '
-+	git config alias.LegacyCase status &&
-+	git legacycase >output 2>&1 &&
-+	test_grep "On branch" output
-+'
-+
-+test_expect_success 'subsection syntax is case-sensitive' '
-+	test_commit case-test &&
-+	git config alias.SubCase.command "log --oneline" &&
-+	git config alias.subcase.command status &&
-+	git SubCase >upper.out 2>&1 &&
-+	git subcase >lower.out 2>&1 &&
-+	! test_cmp upper.out lower.out
-+'
- 
- test_done
--- 
-2.53.0
-
+--=20
+D. Ben Knoble
