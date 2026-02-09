@@ -1,147 +1,126 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1836E7082F
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 15:59:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC0C36F425
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:13:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770652744; cv=none; b=oszvH4DK37445HwcJ26UeWgOCM+Va2edxP6kkFK1YySBOczJRsr+kqDU+SwVpepc7pm1NR0HTsri+jVnyeMI2rFER1XC1qvwnMzmVhG0IrfwBh90BY60M9n84XYf58tUR8STowpqDRczJiljlUgBCpBjQ1nZAIlHYOgf/pYdN1A=
+	t=1770653597; cv=none; b=f7qIGSCIIAHNCwxwEu8WJSy0iLb0inWPogWVVBLsA7YO9/WJf4NUUlMW/YjJfjoAm2hu18X609A+MtvalCTeUdueLgxX2B6uXZf6Zjc2zzHUcgxQt3fbUuJQ2MpbnziQdpu+hB0AgPwDV2d+ITamfvUpD6IVqJMBmvrQTdBwJLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770652744; c=relaxed/simple;
-	bh=UapVMwQFh3XYhZQSP7NHXe5s/NgSMkZ/56ldzdKX+y0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t/FdFVwaXhvxfgNJtBVz5UuWuWlMpZQc6hiH5dA4is0Y8LEyIGtZOGuiUrrbQwYLN3kP0HUMMFKkUQbya7jbFSmAq1kEHMSZaUrOqbXhAuBlP/zP8GG/FP3mePwhwcFGP9WsTDux+tdBI29yvUZ0QGhsHcMUnJPuuBXD8FJmqAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d4rqd2pW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E0yIQqXz; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1770653597; c=relaxed/simple;
+	bh=2CWpQKGFI32qBG0XW6gzOARHLT6JkIn2mwspvEOqD7U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VNPYpQVdoLzB+y+gnlWcaTlcAivqJFlXXNxj1aZTR08lNNR10ohqC8+09yuTZ0sZB8Xw79B1c8F+nUjSxSgRFgdKm3VyXMukmIsTvBvmaVu6Ux4dRPAhsEQaaz7n7XSHQy2vlNCMsSlK36SMa3LO8fTnfFUHpas1VYEAzgVKDAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iz7hLTvj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aFlq+8go; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d4rqd2pW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E0yIQqXz"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iz7hLTvj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aFlq+8go"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 200CF1D0013B;
-	Mon,  9 Feb 2026 10:59:03 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 09 Feb 2026 10:59:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 771597A012E;
+	Mon,  9 Feb 2026 11:13:16 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 09 Feb 2026 11:13:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770652742; x=1770739142; bh=Qm45VMr/fb
-	7if8fOHlZQBINY41V64BVGqsD7LeB1DjA=; b=d4rqd2pW/KuV5KMds7JNh4wLKV
-	nooC7KI2Zo6ql6C5/8xa9sHZc+X9ph0GHJWApY3LSjKS6XEQTzvBeCQOwLPXDfI7
-	YmdCIwEtKTgB1J5xjpGQ2mmaVR1L9wKdWliSwAzM+kRw8wTuZDdnQdfGpbcNORWa
-	nh58ntVb0L4baWcY9geigMubq2kIh2kj4Ww9EupbAEepjsYRj9eZ2+OnPeZiMS8A
-	i0tx4GhPxM7huV0HNReW89PwB3XhXTzVXLcso5fDrMfytlS6aS4r0YcxhY7HQI9j
-	tw4X1ra5E8iqj8mHZybimAcLK0nKy2TD4ZhX636q9gzq2N6tdNYqBzrlUefA==
+	:subject:to:to; s=fm2; t=1770653596; x=1770739996; bh=T/m2/dPIHg
+	WobYiwbL5JSLVls6O6AvDYXwNeeSvc1Ko=; b=iz7hLTvj/6vjek3IMGbZ+CqIGd
+	PDx+gj+RWUHoDuTXHdYAKkwDvW6K7j2w5Cuj3CpgevvUGUaTaFv6ih54ExNQL7o4
+	mbB0ddl7eHpt6ELOG+T5fiwbz9KcM7OP+j0UQmjXe4SaDT/dnaJsX3GhGvZ+E5Nx
+	SWzPUV9XGp2iWZpm0O1rTFaJE/quUgPSuQpoSBt92tGtmoweAd5Es8thZKEWLTC6
+	N/ZOABTrzK2cZJoTjej6l2Wt5QCxSP5wUqtJhieFEUvmhwMSDSnWzuXtfV4vfVLK
+	G8dBOZbRN00V2YPnWzWj1A4Cr6czKWA/IdL/tbU2eCjYkJoshd4A75cBCx9A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770652742; x=1770739142; bh=Qm45VMr/fb7if8fOHlZQBINY41V64BVGqsD
-	7LeB1DjA=; b=E0yIQqXzPjssaeJATUxXdUxriHn3H3TcApVzzQcDKk13AR5x6ce
-	tMjdU8GZoTgILNOsR0mjSrZC7aSRbayGQBrBw1nqpxpnEyaChEXey7nY+Y4mI4JX
-	Pc6Cv9y87NctPMp9km3Y9YIKwS8Nhg2GG/4z2WddTDF92REa8XPSw6QcZlOB7kVx
-	YgksqMHB+z6ba92pwafuMS5cTO25pSI4oRPUGi54pZ5BGgChsCrU63aAxVEmBcOf
-	TaHBC9iDrjvYA/7I2rq7P6BAcEar0m6Z/lV4c821Ge37GocTf1NI0vv8Hnjozk3Q
-	p/mmenyqmvW+ROMmtSLenLpWK8w/mu5Cw3g==
-X-ME-Sender: <xms:RgSKaW8i6ykValkRnKSTYbnNxEK_NtV0FWbPLBRJJHaNK9t3d6W1RA>
-    <xme:RgSKadlJjjV7LktJsFViMbBQ3YNLqHxkW6Xx8ASB8thoHGRecOm4iMvJJzx0azmSj
-    a8-3PpqVm4m9qLD9WesNk-2dkftrbH_pMlGCNgYug4hb9bFrQmBuA>
-X-ME-Received: <xmr:RgSKaUX6DIkftRsd45Co11uXFnUcVDFglC8uSNKVpjimJlTL1akMorhCe7jVDEkDlrrEHqoL77giyHRRFGpBhqpuvMp_8Tmy3Ibt5jckcPM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejvdefucetufdoteggodetrf
+	1770653596; x=1770739996; bh=T/m2/dPIHgWobYiwbL5JSLVls6O6AvDYXwN
+	eeSvc1Ko=; b=aFlq+8golEKQqQb9My1j5r65q0stgZnmgXg24tbSt8zgQjhsLxl
+	G8Sedv3gc9EyiuxdMX307CbjNzWpUDpppsQx73URxX55/xN9q4WluVwopw5ftnFy
+	YEbVAL1BWBINMaaNQda8kkHqu9SHed1m/hX0WQyKsWve47YASzfXu7QYwsPQoKSP
+	yujOMXTTpdkATwEehjm2/u5itSpi40Ln0I7cKefezBcJbRtEEcn0fFkg1CMhPUhR
+	qjMifBo5/qCCt3jSjAZY9diwau66B9GXKtm1T4wE1neo7b7Ydszd67/rlhWUaL77
+	oU5pawq0UGBpqIhGU9w9a9gMFvvCBf5riDg==
+X-ME-Sender: <xms:nAeKaTpT92vdurGsRlly2ZT9LCX5YTvG_uesUcWD2nraAq3RRg0EMg>
+    <xme:nAeKaUhyuU1z9VRKH7hLCfOEAhgcPoFt98IBUBxJAUupopUGw-kWLvb6xkPYnu9KR
+    w7YIzw8Fnl5GbTOizas38ZaYkpRsqSmIE4e_muoQevMzXGbD0Cl6g>
+X-ME-Received: <xmr:nAeKaYjrFCJ_oM93IlfORClXSwHlMJ2hywGwf04T2SUJcUbJvlDHSpLH1q6QpOw5VYJ7X3ey9h10SbQUYMHpoHi9Tia_QZ4WfQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejvdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepjhgrtghosgdrkhgvlhhlvghrsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehmrghilhessg
-    gvhigvrhhmrghtthhhihgrshdruggvpdhrtghpthhtohepphihohhkrghgrghnsehgmhgr
-    ihhlrdgtohhm
-X-ME-Proxy: <xmx:RgSKaaG3nRYBDywhigkL6mU9Iamjiyal7aeA99IPeHE2rXnqfL6dUg>
-    <xmx:RgSKaYeSo29bL7Jx4ex9_KW4zZwDFao1s0MFtN0Z6i-nwcSuWthffQ>
-    <xmx:RgSKaTIHu6jWURrHHDE5k_DAlEM8g1XtTYAEycuRJFqqOK6aOgofnA>
-    <xmx:RgSKaVFEajSYEN5bUmZcx26g579-BOrnNtjU_1DI2VpsP08C0b9AIw>
-    <xmx:RgSKaS20h9GjJU-VewU-QxqrVtQrfA3sSUsjGsBHWBpVodPONhRnUvGt>
-Feedback-ID: i197146af:Fastmail
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehshhhrvgihrghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:nAeKaSijheWEr1Qdq2pFgvTUnhAyIFpT8LTW58lH4OQ89yff5pUMmw>
+    <xmx:nAeKaQIlchi4J21cKYgYMLkIXA-2SAAvp46f8EbzHTLtG-NdDElBvg>
+    <xmx:nAeKaZHnrdPl--tlK0wD1DakFXzgM71LUHgPnWUVMZUjm_9LLqdX2Q>
+    <xmx:nAeKacQm_eyP6mdS0wJ_6k8NHtGfuJU3OXCWlfzWuXHkz9vLV9K5nw>
+    <xmx:nAeKaVyHuLYw1Btouz_RCe0Wuw9yPdzGfI2PH-Es4AfV_lBi2XfjRRwj>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 10:59:01 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b6bb40b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Feb 2026 15:58:59 +0000 (UTC)
-Date: Mon, 9 Feb 2026 16:58:51 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Matthias Beyer <mail@beyermatthias.de>,
-	Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org,
-	pyokagan@gmail.com
-Subject: Re: git-am applies commit message diffs
-Message-ID: <aYoEO0CcVt2Qjgnb@pks.im>
-References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
- <CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
- <hn6q2mdjdqezzvtxfxffmatctnlf4ttvwedfk7wnw7xw75gy4g@hetctv53f7bh>
- <20260206090358.GA2761602@coredump.intra.peff.net>
+ 9 Feb 2026 11:13:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
+  git@vger.kernel.org,  phillip.wood123@gmail.com
+Subject: Re: [PATCH V2 2/3] wt-status: pass struct repository and wt_status
+ through function parameters
+In-Reply-To: <CAOLa=ZRaWA14sootWSPo5g4Yi4GBXf6HjdkdBY1Tt_+V0szCjg@mail.gmail.com>
+	(Karthik Nayak's message of "Mon, 9 Feb 2026 01:02:12 -0800")
+References: <xmqq4inrahti.fsf@gitster.g>
+	<20260208152811.73213-1-shreyanshpaliwalcmsmn@gmail.com>
+	<CAOLa=ZRaWA14sootWSPo5g4Yi4GBXf6HjdkdBY1Tt_+V0szCjg@mail.gmail.com>
+Date: Mon, 09 Feb 2026 08:13:14 -0800
+Message-ID: <xmqq5x857v51.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260206090358.GA2761602@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Fri, Feb 06, 2026 at 04:03:58AM -0500, Jeff King wrote:
-> On Fri, Feb 06, 2026 at 09:18:50AM +0100, Matthias Beyer wrote:
-> 
-> > That said, I am no expert in either C or the git codebase at all, but
-> > from what I saw from reading the git-am codebase, it looks like it tries
-> > to find the patch by looking for three dashes on a line with a linebreak
-> > behind ("---\n").
-> 
-> Yes, that is how the split is made.
-> 
-> > From what I read, it looks for that from the first line.
-> > What I would think of here is looking for that "patchbreak" from the
-> > _end_ of the email rather than from the top, that would have prevented
-> > this issue, right?
-> 
-> The patch itself may legitimately contain "---" on a line by itself (it
-> would indicate that the line "--" was removed from a file). That would
-> confuse your parser, including in a way that we end up only applying
-> part of the diff (everything before that fake "---" becomes commit
-> message, and everything after becomes cover-letter material up to the
-> next "diff" line).
-> 
-> I suspect it also creates corner cases with cover-letter material
-> (between the "---" and the diff itself) that itself contains any "---"
-> marker.
-> 
-> I don't think there is a way to unambiguously parse the single-stream
-> output that format-patch produces. This is a reasonably well-known
-> gotcha (at least around here). E.g., some earlier discussions:
-> 
->   2024: https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org/
->   2022: https://lore.kernel.org/git/d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br/
->   2015: https://lore.kernel.org/git/CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com/
-> 
-> There are probably more, but it's actually a tricky thing to search for
-> in the archive, so I stopped digging. ;)
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Maybe we can't parse it unambiguously. But what we _can_ detect is that
-a patch is ambiguous in the first place, right? So maybe we could extend
-git-am(1) to bail by default with a hint that tells the user that:
+> I would like to point out that we already have a function which provides
+> a main worktree, see both `get_main_worktree()` & `is_main_worktree()`.
+> In short, a worktree with id = NULL seems to be treated as the main
+> worktree.
+>
+> The harder part would be correcting all code where `struct worktree *`
+> is passed and has special meaning for NULL vs non-NULL. See
+> `strbuf_worktree_gitdir()` which also distinguishes between `wt ==
+> NULL`, `wt->id == NULL` and `wt->id != NULL`.
+>
+> So cleanup would require identifying all such spots and fixing them too.
 
-  - They ought to double-check the patch.
+Yup.  That is why I upfront said "if you are ambitious" ;-)
 
-  - They can override the check with "--accept-ambiguous-patch".
+> This also is tricky. We currently already store all worktrees in the
+> repository in `struct strmap worktree_ref_stores`. Here, for the main
+> worktree we use '\' (see `get_worktree_ref_store()`). So perhaps we
+> should formalize using `\` for the main worktree everywhere.
 
-It at least notifies the user that something potentially-fishy is going
-on, even though it still shifts the burden onto the person that applies
-the patch. But I guess that cannot ever be avoided anyway, at least in
-the general case.
+Is this a joke, is my terminal broken, or is my MUA hallucinating?
+I see a couple of backslashes in the above, and in the code I have
+a forward slash instead.
 
-Patrick
+But you are right, ref-store-map does use a slash to indicate the
+primary one, while worktree itself uses a NULL, which is somewhat
+understandable (NULL would not be a convenient hashmap key).  And I
+do not think I see any downsides (other than "This used to take NULL
+as the sign of primari-ness but now we need to use a '/' instead"
+fixes we need everywhere) to use "/" on the wt->id side offhand.
+
+Thanks.
