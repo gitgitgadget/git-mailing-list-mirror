@@ -1,225 +1,133 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68C31E7C2E
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 09:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770627735; cv=pass; b=CtFUknDNaoJZkkCoea6Ghv1Gn7jrikqOxD0o9KIXD7IxZ90l+tRXW0Cr3lxp6icyNQ+eZo121CLG/xk17Y58SSKZBZWfunpC0Y1m6rlVTI3jnLGQk3F4uPZdcD2I8a7H+t3eGWlDzvx+lHWY8yyonaqBvRwmdFrjQ9SuWSp0hTg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770627735; c=relaxed/simple;
-	bh=8kcZb+PnmENFDZ5foYlqeIVT9nTQu9WjmMtr8IpS5pE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZPtjf2WFW0FtGqIqdDDOQ/86KkJ+6iUYJS6gBWfv23lEb8YjRYm1eQHbljUvgPKpuMZn7OScdK8lvf74uvTJ6SlZYHxQa9L+VvZbeRJPqPvJiDBX5bmGy9zcps6ZmCpmO+QhW6wyIyQ18b8Tfo+MTui/Xbpi3zBJW48gdu6mnBY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AAyLt0A4; arc=pass smtp.client-ip=209.85.222.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9738632BF2F
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 09:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770628118; cv=none; b=lo08dQlkBgQL1hXrB+tk5G3qs0B0qFTzPXhZIdakzVqZz+e8s2o1Sj1gFEdK8vIejJTMhZnkWQB0e7PvWexLm+NXpwr+5IlPzmXEqBTA8D1nqpHPp9bkyyO1uccNefAV/OWK7x6Roi2x31u+IJbwbkvh98kv62eA5/AmZlNt+ks=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770628118; c=relaxed/simple;
+	bh=TlG2rLRwRFqgQPvB+UzHNxMX621T2kJSvCIH+HczjrE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=auztRbGiFsWlKn2aoGweKhV/6INmJaBupf8E75yD/ppwRSAXqaQGWxYXigBH1F1kNOeZgfkNro3WAtuDaxsMhK+MNMwyWdsKkjYSUbeexVZlodWnPJ4jOP1PXOf1CchlStmZt311XD7LU2y1F0kBaUaYBn+aJmOnCO+NcUx24uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UutcfBTO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JbRhfiPW; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AAyLt0A4"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-94acb3d6cceso670211241.2
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 01:02:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770627734; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bIbkOvUK0PSow0Xx2EOKonxrv7Xsw5BmjvZc0iQjhP8GVRpr7SuRnR8f1lL5as4Wmi
-         Bpx9YMRxt2h7y5nPiC4r8+4vNaV9cl9x5zJfm3Tm/o4wcG9XueZhFb9A7aJ2JwYBC8pY
-         VLpmvtJJovcHzAkFDK5hbVOQAMd18fyoVLj7CRcpR9NdGr2doPrVQ8aZPY1ijJDlm2dE
-         wHdj4NYDeod8QZzneJMif++/eevapAc8f4wYuu1xEaQBamgY1XqOK0BtXlXVywLawPVm
-         U8sBf135udQK3yislFLa7nONX/eH+iwpK6K1H2drBaffaQ9e+JmSliZvVbGtkOhjLQtY
-         F8Pg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=yghgKHSoOv5sGvs6wZ58u4UbyC8WfxfrKqJIy6jMpbw=;
-        fh=OKF0WwHv+iEEvf4wXtW8IYLPavoiJm4Et2FBGP1+bQ0=;
-        b=luVU5dglZJQ++6zYurQxnaQLxDXMRmQP2weTIALsR85Vo7oU6qWVgMrY7m/sLG7Dql
-         Ld9u98wqHo0n7r11tPS8HO54a2PA1hbccmR8o511LifO631hdeSwvvkPfrWDEGYITdZX
-         jQDpWEh36d4rn14OJsH3qg6Pc77gLap2SPIKcqogSyzNpH9hNs3cx+njlqrdwVDCPYk0
-         ZKKMkJ5h32442B6SgHlNibJHxW7F0AfcN7uGwApI1jUa/dhhasU1eersEgj1DbSgZ878
-         4VbYBfv36RCyKQqohkzSY2okJm/bqXXv1N9fI5RKBKwaCAuvWKnO3/56t9KRdOIvsQ7b
-         h1VA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770627734; x=1771232534; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yghgKHSoOv5sGvs6wZ58u4UbyC8WfxfrKqJIy6jMpbw=;
-        b=AAyLt0A41+7dzK/ZH+pCHqd4qCHpJw7Yijsy442Jdh6tj8Dw+yNEy+AGdLae9Ycp/K
-         Lo0YjVlZ7rFC8jJE6fR6InVvgDy7JptYvYWQLPF+G94E963R+b2QGoRt507Mt5iupBIB
-         Gm/Eoya5oPcma2CRPYC/xzugO4rD1i0yiN5pan4QU/IHYbZZIRB+PpQ0mipR/D5GYKql
-         DpIHGkyIv9h3FVHd0LO5dxKCZWjb7NxSnOrmIns0/qPWFFqqOBlgQ2dFv1zUbjK0ulRj
-         j1R4pv3oU5mm3CErLMV2IF2rGcKe6E2P9pgixip4bTtBFakCCsPC0xaTUwM+5xu63DTO
-         B6Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770627734; x=1771232534;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yghgKHSoOv5sGvs6wZ58u4UbyC8WfxfrKqJIy6jMpbw=;
-        b=s8J+miEanaz5JMbQ+IIwW1KjBqH5xURQA71LQ9IhaFIONyaFkM3jXkbLVBscdipHAV
-         d9M24b5LTMO+0mOUjfUTc1Zv/ZjpNZTfXzCu3/wtbIZfiaHTYubOYyEPbxMP9R/GsyVh
-         3N+RB6wsBxrhZ/wX6/2af0gCB9RdkWxWHVFUJNBjTx646x/vroNiYUIgBbmGiXDpuJtx
-         BU/6R9rDwNYAwK2Ms2T7UR4EdP0kP+jFIg3c7jRY2moXpgPbuTtS9IVFRa3kGX0XMnck
-         JDbCboUdwTWPoKLYCksf+nJBFslBKbYWURwmmuFV/FwXTCQuqDBb2t4lN6HbWmfSAoa8
-         rYoA==
-X-Forwarded-Encrypted: i=1; AJvYcCXWu9UDzhvEQMom8H5bOJWkPgcIf3oXxIo6S3obq6Tfcb9jEiCWukLVUC2gb9Nv/TRNvkw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWHbteO1dKMVJo0Vjc+plFzW6nl9omXHSAwTWZCM5Q5J5js1fT
-	cRcVeXW1G3PRp1oAatzNs3wkbL1bBRKnbKGAyltbLs7ZSjEax63yIGA6cFaBp3xji1ajozH5I7t
-	ygv14OZ9dQ8KbANpOfOw3pfQ6bl3deYY=
-X-Gm-Gg: AZuq6aLd7olPxz2V20QerAMASqzafqVlOBa59j9yhBqxB6t3iF4KbZhZvWFHXxLByYW
-	Qg01eJfhVUTfLlKyc7czleoXld4HfFq7TK/MLWqJ87C6A5ZBmAbpFnxz9LUcKmMPVymyDXFkblA
-	r9ivQEuWYF9MCw6o6qicxn/Y2Db3SAkElRJt3RW7Qj6eHKZuAQY3KflR2pxw/yy2hg9nOR5MVc7
-	PkvvQl2VkcDsb2ohrnGxkNfOkzxUc2D7xxGFOa+obT/JfdJd+AFe6FoBYFf9s8nAZkgoZxgU6/k
-	nr2hMmRwpjnh/5HGomBw83Acm9F1tw==
-X-Received: by 2002:a05:6102:441b:b0:5ee:a590:6b11 with SMTP id
- ada2fe7eead31-5fae8c12648mr2779849137.36.1770627733728; Mon, 09 Feb 2026
- 01:02:13 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 9 Feb 2026 01:02:12 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 9 Feb 2026 01:02:12 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260208152811.73213-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <xmqq4inrahti.fsf@gitster.g> <20260208152811.73213-1-shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UutcfBTO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JbRhfiPW"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 91DE81D00177;
+	Mon,  9 Feb 2026 04:08:37 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 09 Feb 2026 04:08:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1770628117; x=1770714517; bh=BDscBYNa8S
+	U5L4CWTNB5BbjINYI53jGeZsR7xEu93Pw=; b=UutcfBTOhGLph4GDO6EFNPunjp
+	5lfFDnASoOgJHM8wJYqyCA0Nn+R/syvwxKeE8UlF4bxh8OkyP7pJTZJ9VsBmVdnV
+	NGj8C4umEGEedGLnlT53LWgjmMXYmzJWPK0ABSXij0CApqUXKaHnYrDv07MhxtAf
+	FhiFg3WrK5OdBLE+h2qelbncL3CpcAVG38RKQpdeolHgqNswIDgVP88eQto+yXp/
+	21k8gudrQaAiDiiL6JVhu1W1sllmglxxbgTaAYU/m7RmobNDB4Dc9ecIb9Te5x3b
+	pyhFuh6RylcGNRVK/4vY+7r/ybHRoprBfyvxnfRa4+jBvWgmeM7Kb+rD7pmw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770628117; x=1770714517; bh=BDscBYNa8SU5L4CWTNB5BbjINYI53jGeZsR
+	7xEu93Pw=; b=JbRhfiPWvkw2Z+2w6wTwSCCuRHYOGoe0BHJak+Sy2PcABp1gilI
+	2j8j1ru20lDTEqmNi03M4IHfIRV2jOD/+OExXXsWGVjvhj53u2tkiF6TFtrUuIXD
+	vqoIU+xN1ivWKVYHsSTll2U0j90PbNbOsGQmMdrCkPOsh7C3U+OzQWrMjERTc3PU
+	qEtQLpd1voAHPnaNsfICrIJZLdpxc7XVprE2aB3J7KdAfMArEgbX3zLjlO869Pem
+	+0J5nUnPzFKQmYhRhLHSv9SDL0xQicsg0FSdr1XzFm+ifbtvZwcDqDReM76mUFte
+	3sBNKxU/VhmJfW65qwB1x5sOqyEqz9B0dyw==
+X-ME-Sender: <xms:FKSJaUjUCXwSgpyMwcrAKOEEOx4ACIAgmvZVn9zpxBMrcB-UJSpQdA>
+    <xme:FKSJaQtUub6O9eMyR9fAop8vkMtX_av1-490Kuru83esBDG4tYjuETZr2OGEhupvq
+    Jb4Oj5TaWd-zMFmt1VDLuJy9sUnDJIHmN6t9ffuvOQSb96bB_jIeQ>
+X-ME-Received: <xmr:FKSJaV4FUgMtbW1w5kO_Ad5HZ_lyhjyQltqSVYshNcVuLWJVrLMlWyIXA2_Yf_0ImbRoe48D3TD7d6YTRf46zKcay5HhW5RUSbykRWpveXM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleeigeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehm
+    rghnuhgvlhdrlhgvrhgthhhnvghrsehquhgrnhhttghordgtohhmpdhrtghpthhtohepug
+    gvvheshihtrghushgthhdruggvpdhrtghpthhtohephigrnhhnihhkrdhtrghushgthhes
+    qhhurghnthgtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:FKSJacMsVHX78B_-hd4MaFNA3fe5jdUjJY4i95foHN1COPQeTu9W1w>
+    <xmx:FKSJaTsQSFnPpbnxFIQnTC-Eax6YIL6TVmtmkUwdBHI4f3k_O8bgAQ>
+    <xmx:FKSJafYJ2HED2SKqCqob6P2zf_fUF348SZSMDxtnX4YVaxTiOGQg2g>
+    <xmx:FKSJaVy4vyKIBGrFKOsgDIrG1y0qMNO-dsGilkcTcX53hYiqOknX3Q>
+    <xmx:FaSJaV1tT_y_7HiGYAJCBstH2oWPbELmS3-Fd-1PG0SAMnQQzjaW3HHK>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Feb 2026 04:08:35 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ba5c6c8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Feb 2026 09:08:34 +0000 (UTC)
+Date: Mon, 9 Feb 2026 10:08:24 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Yannik Tausch <dev@ytausch.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Manuel Lerchner <manuel.lerchner@quantco.com>,
+	Yannik Tausch <yannik.tausch@quantco.com>
+Subject: Re: [PATCH v2] merge-file: honor merge.conflictStyle outside of a
+ repository
+Message-ID: <aYmkCLbhZPPjKqNK@pks.im>
+References: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de>
+ <xmqq4invm2dk.fsf@gitster.g>
+ <3724733C-FECB-47F5-841C-84DE9792332D@ytausch.de>
+ <fa7fc215-03eb-492d-9af4-457482c56a48@app.fastmail.com>
+ <D514F3BA-36DD-4DAD-BF73-609730390A27@ytausch.de>
+ <xmqqqzqxczeb.fsf@gitster.g>
+ <75AA7DD7-F8D8-48DC-ADA0-74E56CFF351D@ytausch.de>
+ <3488DCC3-D127-465B-BB95-3D87BB2E48F6@ytausch.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 9 Feb 2026 01:02:12 -0800
-X-Gm-Features: AZwV_Qh4klKyY10ZhkxGr4jCri2Jzd-9rbjzKcAhIn2tCuCW4-_PVEs76KzjCk0
-Message-ID: <CAOLa=ZRaWA14sootWSPo5g4Yi4GBXf6HjdkdBY1Tt_+V0szCjg@mail.gmail.com>
-Subject: Re: [PATCH V2 2/3] wt-status: pass struct repository and wt_status
- through function parameters
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000001950cb064a606564"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3488DCC3-D127-465B-BB95-3D87BB2E48F6@ytausch.de>
 
---0000000000001950cb064a606564
-Content-Type: text/plain; charset="UTF-8"
+On Sat, Feb 07, 2026 at 10:37:48PM +0100, Yannik Tausch wrote:
+> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+> index 46775d0c79..f9de636884 100644
+> --- a/builtin/merge-file.c
+> +++ b/builtin/merge-file.c
+> @@ -95,12 +95,10 @@ int cmd_merge_file(int argc,
+>  	xmp.style = 0;
+>  	xmp.favor = 0;
+>  
+> -	if (startup_info->have_repository) {
+> -		/* Read the configuration file */
+> -		repo_config(the_repository, git_xmerge_config, NULL);
+> -		if (0 <= git_xmerge_style)
+> -			xmp.style = git_xmerge_style;
+> -	}
+> +	/* Read the configuration file */
+> +	repo_config(repo, git_xmerge_config, NULL);
+> +	if (0 <= git_xmerge_style)
+> +		xmp.style = git_xmerge_style;
+>  
+>  	argc = parse_options(argc, argv, prefix, options, merge_file_usage, 0);
+>  	if (argc != 3)
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+Makes sense. I was briefly wondering about error handling in the old/new
+code, but unknown keys are already handled by `git_xmerge_config()`, and
+we'd die in case we see one.
 
-[snip]
+So this patch looks good to me overall, thanks!
 
->> > Actually adding another repository parameter to both of these functions
->> > is needed because of the calls like wt_status_check_rebase(NULL, state)
->> > and wt_status_check_bisect(NULL, state) from wt_status_get_state().
->> > In the case where wt is NULL, accessing wt->repo can lead to issues.
->>
->> But stopping thought at that point is not a reasonable thing to do,
->> immediately after you notice that wt is sometimes NULL.  It merely
->> means that unconditionally dereferencing wt->repo without thinking
->> is not good enough, doesn't it?
->>
->> And what is the case where worktree is NULL?  What are we doing with
->> worktree set to NULL?  Is it when secondary worktrees do not come
->> into the picture at all and you can safely use the_repository?
->>
->>     ... goes and looks ...
->>
->> Ahh, I think the real culprit that needs cleaning up is the worktree
->> API, where they pass NULL to mean "the primary worktree that has its
->> .git/ directory at its natural place".  So it may not necessarily be
->> the_repository we are dealing with.  There is *no* such client code
->> right now, but we could imagine that a program that starts in a
->> repository visits the primary worktree of another repository and
->> asks the worktree status there, and once such a client code appears,
->> we need to be able to say "we are dealing with the primary worktree
->> for this repository".
->>
->> In the longer run, I think we should fix the worktree API so that
->> even for the primary worktree we will always have a non-NULL "struct
->> worktree" object, perhaps with its .id member set to NULL to signal
->> that it is the primary worktree, so that we do not have to have this
->> strange "we must pass repository redundantly even though we are
->> passing worktree" API elsewhere.  Not just this code you are making
->> worse, path.c:worktree_git_path() already is a victim of this
->> misdesign of the worktree API.  It has "if wt is given, then the r
->> parameter should be the same as wt->repo" nonsense, which we
->> wouldn't have had to have if we had a worktree object even for the
->> primary worktree,  Look at how ugly that code is, and weep X-<.
->>
->> And the same misdesign of the worktree API has caused your [1/3] to
->> pass 'r' but yet still depend on the_repository, which you had to
->> fix in [2/3], in this function.
->>
->> So, I dunno.  If you are ambitious, you may want to clean up the
->> worktree API before this series.  Alternatively you may be able to
->> punt on the parts of the wt-status that interact with worktree API,
->> and move the rest of wt-status less dependent on the_repository, but
->> I am not sure.
->
-> Thank you very much for the detailed explanation and for pointing towards
-> the bigger picture.
->
-> From what I have understood, the worktree being NULL refers to the
-> primary worktree (as it does not indicate which repository so it means in
-> respect to the_repository). So if we want to access the primary worktree
-> of a specific repository or even the local repository, NULL does not carry
-> enough information.
-> And obviously, using NULL as primary worktree introduces extra checks and
-> measures as we saw in the previous discussion.
->
-> I would be very interested (and the more logical step) to fixing worktree api
-> first, and then revisiting the wt-status series on top of that, once the API
-> makes it possible to rely on wt->repo without the NULL risks.
->
-> So a possible in the worktree api cleanup approach could be,
->
-> * Make primary worktree as an instance of struct worktree but seperate
-> it by having a marker like id = NULL.
->
-
-I would like to point out that we already have a function which provides
-a main worktree, see both `get_main_worktree()` & `is_main_worktree()`.
-In short, a worktree with id = NULL seems to be treated as the main
-worktree.
-
-The harder part would be correcting all code where `struct worktree *`
-is passed and has special meaning for NULL vs non-NULL. See
-`strbuf_worktree_gitdir()` which also distinguishes between `wt ==
-NULL`, `wt->id == NULL` and `wt->id != NULL`.
-
-So cleanup would require identifying all such spots and fixing them too.
-
-> * Add this primary worktree in the struct repository (e.g. repo->primary_wt).
->
-
-This also is tricky. We currently already store all worktrees in the
-repository in `struct strmap worktree_ref_stores`. Here, for the main
-worktree we use '\' (see `get_worktree_ref_store()`). So perhaps we
-should formalize using `\` for the main worktree everywhere.
-
-> * Update/add functions, then find places that currently pass NULL
-> and convert them to use primary worktree object instead.
->
-> Let me know if I have the right understanding with this, and also would love
-> to hear more guidance on the direction with this worktree api cleanup. Thanks.
->
-> Best,
-> Shreyansh
-
-Karthik
-
---0000000000001950cb064a606564
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 841b38bd8e7c159_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tSm9wSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMWoyREFDWGRPYWhaMzNoMVRaVHdWRTdaenVvK214egpUaDBJWWQzMmIr
-SGgrVUY5Mm8xeWl6S0hYejd6Wk1lNnJrRHhZb01MY1YyVVpWWFExcUoyamVyVWsxNW5ldTJwCi96
-ZVplYmZXRHRUTVFIeUdwamlaNkhzZmN6Z21PWFZmamNYaGpjU0NZclVzUUVDUXdqd3dEd0dYUnlX
-SjN1UGwKTmJsYytDSmluN0JJSTVqcFgwZVpQeGFNdndqRnYwR2dncUpCdG1kQXQ1WVRHaVo4VDZp
-azRBRm50OWRHakxDRQo3dVl2WnhnWGE1WGxUTFIzQnZnK20xMFZiSWxVTW5sclhaM0JqM3h3ejhT
-NUN3eHNzdjR1aldZdEdyUFlaOE0zCkVQWU5YdlZCS1doNGNMekZER0RJMUp6QXM3MzgxYjdRNGZu
-OHQrWS9ZTEpUbzZ3S2NzK1IvSm1NTTVZbnllSkkKNlpJeHlmbHVpeXdlczVNZTlFVldVZjBoYVh3
-b2FNQThDTjlMUlBEQ1BEMGlUTHNYTkw1QVFKcUtnVUE4ZGFmZApzZHBKa0o2Zy82ZHNGcG0rQitz
-dXowYVJNN2dJeVBUVmk3WThYZ3lqaEVUZDkvdVBUNlZmOE9HWHY5Q2oxcjdrCkh0dVdtZGVReS9q
-a3NYdUxVUnZ5Q0FYT3RHeHBWcTFLWm9rb2FIND0KPTNZL3cKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001950cb064a606564--
+Patrick
