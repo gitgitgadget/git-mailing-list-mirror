@@ -1,126 +1,106 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EF8318ED0
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 23:14:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC4D317701
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 23:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770678875; cv=none; b=elEdBiUcCviVvRuZy9d4dXTzsufCx6Bl3SMob7UiDxuNvrnlq5yxMCI/6l4YUi810iWVrmqSWmbFvNGU5fMYpn0HhGhIG0LpgccQKe1tkqNWhnUHcUnPBNe24MM+TLsC7WdxCaxo4hro3HZ7bPyVMJt1h5cidb06uikq3Ch5DSI=
+	t=1770679044; cv=none; b=dDo3QMDbJqDTkz8jL5FDbgvJj7Kho9dt1zu64B/55IktXjheQMppXgSukKbWRAUZ//OVAA3rHQqD4P9wcYC9oD54E82eVorCL5CMFPufAyt52F34K1K43C2jF3THB6Omw5ZCa2Le2SImm5v58JhLY0bAmIESYK0npK06ZGmcuFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770678875; c=relaxed/simple;
-	bh=OenXSpbmP043oImIfxcerqePVLxqTrYakm9mAS1KOWE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=D3q9KzGYQ3OO1RHB1Q/W0eA4TPs6lzmPnIl18WXcRU+azn8eJ3VP9SECRUWMqehbXr2kKLME2dM2W5DiLAHt0LnAO0UGRlMjlG/QMVupCbyMQeCIQPCMc4gLnNuqkrWeG5qH0j/lNGsTEqcVIVXEGTe8C/PPK21fqpNt3hVdmCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ogYHefce; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dXku2Is/; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770679044; c=relaxed/simple;
+	bh=BM9uEcdC+hudU2S5Cte37dGjT5eObDiHy0m51k5unuE=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=pdWeACHNQdC5UMo2gd650w89LKzeCSD7UWLEWkMObS/gCZ8wipD9MHzsHXjWDHorgMpXDzt+a+9HJVvbQk6B/k2qNuh/LiSiVkQ0QLVGumd9ZYiIY2toQfQ25SyG46F4rRn9tYOe5Olrm20MMzfNh0wJgZwYqPjLsCZ1k1QltR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M6UXNyMW; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ogYHefce";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dXku2Is/"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5F7D71400176;
-	Mon,  9 Feb 2026 18:14:33 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 09 Feb 2026 18:14:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770678873; x=1770765273; bh=lne8hlNgyx
-	qxLh9fnRPvCI+1lxH2yNHcvXwwO++VT3E=; b=ogYHefcessllRxPcM7NECx1QdY
-	3WMsS41Z5pYJX1CFZIUVJA9TJi4hna8kxB0HEkn+xlOWUzPuAwgV+h9iEDA6+lN1
-	DNWVkJdZFFK/dRP35mN2ZUH/9tGouU9r5cvl6A0KcsuCiMkl7hxbwcapLYRoaxyQ
-	zbgAcQgjt+g8gzjMYTi5DS6JIsyJ+gPX1PiiYRjU0vcnFvZwudUkCeVWoF5GYkgL
-	pTIJmz4czTNsIwRu6BTRCk/RqDGV/9/w5Wxrz1bTjYWr9OL0If1FfcoB5SnbBkgp
-	nKG7EmCO1A65/ddq0pz1ejo4QRHWChgvxriks3CT7Mnmpm1tf0HZF/cZPfKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770678873; x=1770765273; bh=lne8hlNgyxqxLh9fnRPvCI+1lxH2yNHcvXw
-	wO++VT3E=; b=dXku2Is/oh/jYuqqVJLhq1J0H4WEeki8BpLY9nFc+CtZQbqnJy0
-	ZDf7nC+G9yHVHItd9qOmWCKImwNartq2L20drWu6Z+B77JTyKN9BTMdIyH1ji22Q
-	RL3CcSeYCT2/EOioYk9oZC5Hdc/6rgJ+JQGeBSW1AcfE59oam2qrvSGz1Oz8Xt9J
-	1apQTWeo1Qbf6oj74pe0OIHnM91OnW4ihlUGog9oviChi+CyBmbWdoOu3wbj9QOr
-	kmy2j4aT6056tkwiG5l+UbOorn0Znt0INCuNhaNfGthpRhaJC6kDOF3DKu6hT2FK
-	fGZJBcJRUXay5XRjQ0zf56AXUzSB3qC4K+A==
-X-ME-Sender: <xms:WWqKaZV_HgYmUq46FiE6Y-fAAWPXEvMKDuquO-QyOFxzCr84LaqstQ>
-    <xme:WWqKaQnxJjhpp78qii5rgE2wXENOXSX7oUsmNs4h9HhZo2N4XYQvqD3Zia4PBNDey
-    xfrqJ8pVNohb59xx96YnQqvYCkmVpr-k3PknZf4WfOHb3Wo4cw4D6M>
-X-ME-Received: <xmr:WWqKaabEWFUgboz5nlDCLadk06xlHe2WkeKBhXfNxu1S4OFoeYKfr1nyYwZ6o34a1W63dFRM6RcyCnXk6VYWQfV1516VkXy_0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleekuddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhprghgvgdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WWqKabPsoC1hi6Wpx6SuzM3prWv7O5CJz2i7YQtOmQp8JAwanz8_LA>
-    <xmx:WWqKafbPch5uPqod9Cugck54MA77wxevqtr9FK1fqo6l4M2yDL7Q-g>
-    <xmx:WWqKaZ3dF3cwqq5LNPbNxRbAZ9B892TtbqbKSKOWhjdFE46eoJonjA>
-    <xmx:WWqKaVd96yCwIzlnVPGRA9naRs7oK-iS1-B6Ya-1nLwF1ugQD8YE6g>
-    <xmx:WWqKaRUJTDXRa5_xjBgjDd77mBoHbUZXQuf7JUYrNG_-vrVUIxFp6IPn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 18:14:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Jonatan Holmgren <jonatan@jontes.page>,  git@vger.kernel.org
-Subject: Re: [RFC] Support UTF-8 characters in Git alias names
-In-Reply-To: <aYpiSHSxYS2fUUS1@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Mon, 9 Feb 2026 22:40:08 +0000")
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
-	<aYkaepCu4lwT3xNl@fruit.crustytoothpaste.net>
-	<xmqqikc66k5k.fsf@gitster.g>
-	<aYpiSHSxYS2fUUS1@fruit.crustytoothpaste.net>
-Date: Mon, 09 Feb 2026 15:14:31 -0800
-Message-ID: <xmqqecmt33xk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M6UXNyMW"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-896f82e5961so2388516d6.0
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 15:17:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770679041; x=1771283841; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tSq0PNQVrqZsL2QTVF7Vs8KWfL+gIllTtZacy+7yqvM=;
+        b=M6UXNyMWP+x5MsMLR8cvW9vVUZuH+1H4MOZG1j2ox5DkrMQ3ZxMmLCfXI/UwB3LeZo
+         8HWtXD+MjY62FxKMza1IZeIDyqJY5u2aVATrfL35dQJePFYOHFt1iQvFdYvI61+n9NwB
+         9PqogWRQ292B0fmN+tyRVsVS2ojOtkQOuhXzdsjDoDTei5MsWVBxPFDmvSpsLF/RusPw
+         w8LlRV82wSQ7Pmcm+F4Y42houm1OE5sPTye3xkoNq9coiWwpR2Lz/cor4yy+1KkdDEA1
+         llaL8DaLUx93SoaUNXZhmMSxG9UpM4FLfZpNpLvvVS0zywgQgawlhuDcAIq/eGS50pvd
+         0REA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770679041; x=1771283841;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=tSq0PNQVrqZsL2QTVF7Vs8KWfL+gIllTtZacy+7yqvM=;
+        b=LXGsXs4h7UdY9AEwVTBnRJDOOzQ+cuSvd8vDZbSPPGVUyGqWIv0mePeHdH3E20Uxek
+         NOd+1YjkMvR9NEjziuByhDCiesH1TKa4nLHCbqrnE0J5dSXyhN10xBJTYeQbjA5GHn5L
+         Urhi4naYBcm6p0YJ/YbKxxZQJWc1H6FFWdpvReHC71Sjzzc+yasIjVAzftzLKUTUDILT
+         YkasffTe/MJhD0ccX7qWtmU8J53XOr7HtZ+xsGJiUSIrbRzfDyHFBqBSJAuYqUh5w8bg
+         jM5nnOcu3QUHRhQR29jx5T6IC9VjiOQHdHybxb741RPRCW4HjRrxxUSK4LQgL11JB082
+         6Skg==
+X-Gm-Message-State: AOJu0YwzxH8UuGUf5co5BeVEbXGCyuskTOoGgbX3p6Be28UmimNnHHAS
+	MCTyrn6CHyhkwxuOk88ix87qjNWqvOxGPdxLHTh+kK5k4Uc/4EYMilIJE76z5A==
+X-Gm-Gg: AZuq6aLlWTlSeBj7nh47Lc0Zw6XFqoaWxOsyqH7nv4+exTZss09eQ/oqihoh1+OVkRN
+	Gf046puVG2Va5iX8DY0sDwKdQGwi+jXOEJNX41MmUhCpcezxhpINTNEu5U371dYpRSRs3qwmejM
+	Grn4mpUFTeyY3k2sHxw8uUzBIaM1OG510Cfl4NKYyJPYuBEdI6M3PA+4mA9EpQwbcwg07CcWUak
+	6eGSCK4yQXxZAKsLZuCJWU2D8UzrBYlYjWdYqUb2Gw7B/YOPsxIwND36SEarxqs+xzkErFh3PQo
+	nUSBGBC3Uvmij5qeshX3PuSeDWNOYbIO35Y3tPb4QP84CKiWLliLkFyqLJTXAsD7N+gtaFG6M2f
+	xDkZF6gzC4vM6rl95tp6PjRMFxtkV+vejmj6fttjrxsjHyF+MXamsH4qJ5FkKRmcEZGWid+cNMU
+	tB5jh9MsoQDkQ8v0JiRTQSXfUF
+X-Received: by 2002:a05:6214:5085:b0:892:6660:d758 with SMTP id 6a1803df08f44-8953cb97780mr185095506d6.55.1770679041558;
+        Mon, 09 Feb 2026 15:17:21 -0800 (PST)
+Received: from [127.0.0.1] ([64.236.200.85])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cafa3bff8asm904983485a.51.2026.02.09.15.17.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Feb 2026 15:17:21 -0800 (PST)
+Message-Id: <ff85e97ceedd206f723061ced972b7b7ba431b56.1770679038.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2043.git.1770679038.gitgitgadget@gmail.com>
+References: <pull.2043.git.1770679038.gitgitgadget@gmail.com>
+From: "Rito Rhymes via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 09 Feb 2026 23:17:14 +0000
+Subject: [PATCH 1/5] gitweb: add viewport meta tag for mobile devices
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Rito <rito@ritovision.com>,
+    Rito Rhymes <rito@ritovision.com>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+From: Rito Rhymes <rito@ritovision.com>
 
-> On 2026-02-09 at 14:55:51, Junio C Hamano wrote:
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->> 
->> > I don't think we have any Unicode normalization code at all in Git,
->> > though, so if you want a quality implementation, that may be a thing we
->> > need.
->> 
->> Isn't NKC/NKD a macOS-only issue in practice?  Anything on the
->> command line "git" potty and "git-blah" built-in commands receive
->> goes through precompose_argv_prefix() to be normalized on that
->> platform.
->
-> Normalization is not a macOS-only issue.  Many accented characters can
-> be written in multiple ways,...
+Without a viewport meta tag, phone browsers render gitweb at desktop
+width and scale the whole page down to fit the screen.
 
-Yup, but that wasn't what I brought up macOS for.  No sane person
-would write the same string in multiple ways on purpose and
-everybody would want to stick to one, so that byte-for-byte
-comparison can decide paths they created in the filesystem can be
-matched with a list of paths they added in .gitignore, for example.
-And for that everybody uses normalization form C, no?
+Add a viewport meta tag so the layout viewport tracks device width.
+This is the baseline needed for mobile CSS fixes in follow-up commits.
 
-But the macOS makes it harder to stick to a single way when it
-involves filesystem entities; the pathname you gave to a new file
-with your creat/open(2) may be normalized in macOS specific way when
-it comes back from readdir(2).  Ahd for that glitch, we massage the
-strings we got from the command line and readdir(), which are in the
-normalization form D, into normalization form C.
+Signed-off-by: Rito Rhymes <rito@ritovision.com>
+---
+ gitweb/gitweb.perl | 1 +
+ 1 file changed, 1 insertion(+)
 
-I think the suggestion here is to assume that the users are doing
-the right thing and treat alias names (which eventually end up being
-pathname components) as bytes, and everything should be happy, even
-on macOS.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b5490dfecf..fde804593b 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4214,6 +4214,7 @@ sub git_header_html {
+ <head>
+ <meta name="generator" content="gitweb/$version git/$git_version$mod_perl_version"/>
+ <meta name="robots" content="index, nofollow"/>
++<meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <title>$title</title>
+ EOF
+ 	# the stylesheet, favicon etc urls won't work correctly with path_info
+-- 
+gitgitgadget
+
