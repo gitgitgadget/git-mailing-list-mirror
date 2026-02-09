@@ -1,127 +1,128 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFFB163
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 22:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FC1163
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 22:40:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770676687; cv=none; b=uAupWoU6HwWHPWy5RTBYs3f1XjQIV2whAjtreSQH/cXVfABmCUsNXdZuk32StwjLZTUNp7Vxykm3l8c/A2U6fUNfkpt02MqWE2dKYEojsXmULCfo8Ef0zwlexA31oH6orGIZr/8e1gPPXIsd+08NHqSad20CfW+6jBf74zVXyfA=
+	t=1770676812; cv=none; b=QRuVP1nm6LsTXucCxUeL00NOqWV7jW4EOM2HtFGesYDH86vyoLPA73Gj1CfUtsEp/RhUvUABxI5WkGTxTD7rIzE7SloBVfF5u589wqfLptuifw/bI0BnuSy0uOxvEuMFWOZx22dTqn25RB70Irs8iRlXksk/QlobZea1ACs1dOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770676687; c=relaxed/simple;
-	bh=xmXHle3vdJnhSKFLVQWZJYAftK21PwWpKeiLX0AdN6o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZRWb4zx4Ebxk4nSHNzj7rhAibM9w9dwahkPNwI/LpoAuCX/NVholslV/l8I4KZZTv+p7maL9+ERzWdA6VlGYjdkvzPdbJzSniRTk+OOLLTIrjKGnVt6HGO2jDEFkvUrU0vo/HmLGvn9Hi2aSuix6EfVmXp5fdygx/aIuto38ahg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hvolac1F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VQpJ3R9d; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770676812; c=relaxed/simple;
+	bh=RdUThU86smN/4PtlkHsu4Ttd+ol7mTXQTrVMNVQUHW8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=vBrZEm794jP0XqdTrj9Rx/qelEOnJPHrDvAm/8a1W9CKcPZ1eBkmjPEPjo/fzR/Uyl5s4ZYHlcRfuktX5N+eoBBuO18LdQ1zzCxQCWpQcRBdWaY5T891BeDKFC0jHv4nP5MuRk6u49WWymyGe5Lc8xwkqvJPeZnK1dQeUcgUung=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=coFKssSf; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hvolac1F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VQpJ3R9d"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id C68C6EC0305;
-	Mon,  9 Feb 2026 17:38:05 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Feb 2026 17:38:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770676685; x=1770763085; bh=hLJuPetdoQ
-	e58ZrPMl8Su91OfrxdCcgiD7fECXtcZZo=; b=Hvolac1FmlDf05LppNO5E/alN8
-	f/OsdiMys4PJovDhDGwxZDfPtr5bQ+goKszp48fIEQybcb+NxdyYJ1lKEVl7zmn9
-	Z6o8K/QNUC6nwxFUHFVQHoKGMBrnJrL6PFqlJmHKeVrozeqR6bV1wX9z1nTDwh0H
-	XJgWYQedcyeJVv4MTDw/3utcNDV+ZrbVY7Qpj7ghXo5ymmvE+foRdsRsUsCarCHD
-	F4j+iU6AghZRqyeQCBZFe8o4ELc7WBIZbn+0cdvB3/5VRkmvk4fqVdrt8Xo0YYFS
-	0x8Y45bQO7AKGOYgvyhmN9lTaSgaq70eaK2og+f6B5OqgEtXu2Wad+M9/DDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770676685; x=1770763085; bh=hLJuPetdoQe58ZrPMl8Su91OfrxdCcgiD7f
-	ECXtcZZo=; b=VQpJ3R9dWgA0AT3B6e5kGKOFwekhN20B7zvjv+cAOA0CBnOo+yo
-	6LcVdCWzWf5lkrf9FDJ7Ija6/z668EeYBzLib+gPM/cUz7rnLpFPl4pe8xNeyC4+
-	PP0UEQIf15Bp7GUJSMZ+1bihGnxgwe7CT8txZAVO43BcZixEadG1TDINQlFT5h7i
-	88vi/9l3oYSYEtMFaLExNqY2nv/KkdfzBF4nU/ieg0q0oGKmCr1r8ovmibvxM7UZ
-	NQqfgGL/NJDJJFt15rTs3roDucs2TLdTPQTWuxcCM4NbsuQ9MjaaBzKlKthJJ/9r
-	/3962KAnaovTzCNgj7L6/JMg+q8BVshq/bQ==
-X-ME-Sender: <xms:zWGKacRk_2lOi9a5Slre8hb31qGwzc5F0qhg3Q-8v2QHcMCY5OwUQg>
-    <xme:zWGKaQzAJNaU9iV7SPLUcaHB_HWbFtjhV08nnQyR6WOH3qmf43K3ksAlvV_dgRxIP
-    vUM8Wv5hYP_AaaulGID4JHeegv_m2DNFZGhqTpUaNN19dVkQgfdPhc>
-X-ME-Received: <xmr:zWGKae2aKhOqpnKUPcE_Ot9JKxuIyxJ0DM5lzq4K65k85RAYG-D1YjNLwFopEIvJ9rKmgi4C4VtTOR6sO08vgkQCm3rpLKZygQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleektdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtoheprhihrghnrdhjohhhnhhsohhnrdgtohguvgesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:zWGKae7y8KHDq3uXwKvV5kyN9gvlrOBMGwCXMtA3g7ZT4Qixwk1oXg>
-    <xmx:zWGKaRV5gnKbxj0bRLUKJ9XZQvUCnD7IXqgolT9RekRqZ5or52vDgA>
-    <xmx:zWGKadC5SB4EB-ZAaLDCZnhpANs3PVoXss_GEJ64U12wSwLD5o4lzg>
-    <xmx:zWGKaQ4Rk2_nQEc8n3I7zkFj98wcVXIFbrTKRLW25bEOiPL2pQocsQ>
-    <xmx:zWGKaWXL9ulXktuUsl2Yncbaj3IWB6bCnOYetc0im9Pj00iPONebKse4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 17:38:05 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Ryan Johnson <ryan.johnson.code@gmail.com>,  git@vger.kernel.org
-Subject: Re: git branch behavior after git init needs fixing
-In-Reply-To: <xmqqjywl6e0w.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	09 Feb 2026 09:08:15 -0800")
-References: <DS0PR03MB72900848B03D2B87A6846DCAA365A@DS0PR03MB7290.namprd03.prod.outlook.com>
-	<D1CA4E13-B279-4931-81EF-364169564612@gmail.com>
-	<xmqqjywl6e0w.fsf@gitster.g>
-Date: Mon, 09 Feb 2026 14:38:03 -0800
-Message-ID: <xmqqms1h35mc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="coFKssSf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1770676809;
+	bh=RdUThU86smN/4PtlkHsu4Ttd+ol7mTXQTrVMNVQUHW8=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=coFKssSflBbW7prr8Bucu08qG2NWwsChczP+Y4pmIxr+d2Y8jqVjo9u5agfsM50+R
+	 OrhjahChlJ14sc9MmtOCr+IVKvKEtW92dlUWtxRwQyKow9ExcVsFxHtGfhTIEQ7NEV
+	 7eyefe0PLyRvMhgUE8LizhWJsoT54fG0pAK+H5i015GobRjQwjHUc/cqh4jaREVMQb
+	 9BpYkEeusdQSOGy6coOwLdW0AID0zeXWkt4KDMNf+GPywqvhB1sdwy5kZD8kLHXiMS
+	 gmkL6hGL1bQbUgxiZvXIFXWwbNLW9gd1GI2LdtdNYV8+yF4XYgJtwzJq4PAuF0pgnu
+	 KZxTTwhl7LaVIV6d3JyXCB2hMrDma/UAK3Vi7UBCBhVlbrW1b1P3PebGZ50d51lLcB
+	 VOggXwTjgUtm5Uy+XhspZ1p2WABbZ8AbMzH3iqPzvvaHWLdnaFSjS3HQ9yzvC+ju1I
+	 MemIR1d/9eh8LCelHfLT0KnKdcx/fOPBkEnEQRm0MJL/kzYG0AI
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:67a7:98fd:8394:6003])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C5977200B0;
+	Mon,  9 Feb 2026 22:40:09 +0000 (UTC)
+Date: Mon, 9 Feb 2026 22:40:08 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jonatan Holmgren <jonatan@jontes.page>, git@vger.kernel.org
+Subject: Re: [RFC] Support UTF-8 characters in Git alias names
+Message-ID: <aYpiSHSxYS2fUUS1@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonatan Holmgren <jonatan@jontes.page>, git@vger.kernel.org
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+ <aYkaepCu4lwT3xNl@fruit.crustytoothpaste.net>
+ <xmqqikc66k5k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="38m/r41GcZxuGIhl"
+Content-Disposition: inline
+In-Reply-To: <xmqqikc66k5k.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Ben Knoble <ben.knoble@gmail.com> writes:
->
->> You are probably looking for init.defaultBranch and the 3.0
->> breaking changes plan (which will make main the default).
->
-> In other words, run
->
->     $ git config --global init.defaultbranch main
->
-> just once to live in the future?  That sounds like a sensible
-> suggestion to me.
+--38m/r41GcZxuGIhl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-And that is excatly what "git init" gives our users already, until
-s/he sees it sufficiently often and declines to see it anymore, at
-which point they are on their own ;-)
+On 2026-02-09 at 14:55:51, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > I don't think we have any Unicode normalization code at all in Git,
+> > though, so if you want a quality implementation, that may be a thing we
+> > need.
+>=20
+> Isn't NKC/NKD a macOS-only issue in practice?  Anything on the
+> command line "git" potty and "git-blah" built-in commands receive
+> goes through precompose_argv_prefix() to be normalized on that
+> platform.
 
-After temporarily disabling init.defaultBranch setting in my
-configuration files (and I left advice.defaultBranchName setting to
-the default), here is what I (or anybody) would get.
+Normalization is not a macOS-only issue.  Many accented characters can
+be written in multiple ways, one composed and one decomposed.  If the
+alias in the file is composed and what's on the command line is
+decomposed, they will not match bytewise even though they are logically
+and graphically identical.
 
-$ git init
-hint: Using 'master' as the name for the initial branch. This default branch name
-hint: will change to "main" in Git 3.0. To configure the initial branch name
-hint: to use in all of your new repositories, which will suppress this warning,
-hint: call:
-hint:
-hint: 	git config --global init.defaultBranch <name>
-hint:
-hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
-hint: 'development'. The just-created branch can be renamed via this command:
-hint:
-hint: 	git branch -m <name>
-hint:
-hint: Disable this message with "git config set advice.defaultBranchName false"
-Initialized empty Git repository in /var/tmp/x/.git/
+For instance, here is the word for "where" in French, first composed,
+then decomposed:
+
+o=C3=B9
+ou=CC=80
+
+The former is U+006F U+00F9 and the latter is U+006F U+0075 U+0300.
+Obviously, if I write one of those in my config file and the other on
+the command line, I intended to execute the same alias, but they are not
+bytewise identical unless both are normalized identically.
+
+This is why many websites don't accept Unicode in passwords: because
+logging in on different systems can produce different sequences and they
+must be properly normalized to avoid hard-to-reproduce problems.
+
+There are also canonical (NFC and NFD) and compatibility (NFKC and NFKD)
+normalizations.  For instance, a Greek question mark looks like an
+English semicolon.  Canonical normalizations preserve this distinction,
+but compatibility ones do not.
+
+I'll note that the Mac-native normalizations do not match any standard
+Unicode normalizations for any version, so we'd need separate
+normalization code.  I also don't think UTF-8-MAC is available on all
+versions of libiconv, either.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--38m/r41GcZxuGIhl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaYpiRwAKCRB8DEliiIei
+gYxdAQCGq+7u1MFGs1HLENCHewJTrwsX0xbqZkBM3uNT/SgeZgEAqRBOjTdJ8WOY
+tgR+/EEJVAaTnoDyekZ91aBzLKeupAE=
+=QurV
+-----END PGP SIGNATURE-----
+
+--38m/r41GcZxuGIhl--
