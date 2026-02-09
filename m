@@ -1,157 +1,377 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84873491E1
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 14:14:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A0C35CB6B
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 14:28:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770646484; cv=none; b=uQoAUgkplR3idbkHMcmhN3MheAuFpo2HnqhoDJ3M/F2GmfOzVR0XJQDvjsBV2ggAP3JATGes60zH5E7r7a2IGSv5yt0Hdzy9Ga57xxt8XCkGwCQGEYHdgFTAUWAGwD9+9zzKocnkKBGcPJFcRLd3je2BKA2jvrRDq575AjDhAIU=
+	t=1770647285; cv=none; b=iVVKbIj+HEVuTFwDZwTnDBxetbOmOn3Fb0epoZvJjo2ENQue69VEwbncCYf29BvwmbpesZSm0dMS89oi3Sz89UZtpR0+dQrC6OY6q8CGoFS8NkDossoVuYJXCDyFS621a7G/reBB2FvtQZoWISyWic+hLs8nkANHLHxLHA5N6K0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770646484; c=relaxed/simple;
-	bh=mK2xtocOTxkfJpxDM+ofcBOSW8KvCTlU0Idw8D5sEBs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MdHaLJX2suelEKtg3P40M7kiAv/vkkYQMZK+b4OSo9X911koD/OGVSPW57DRGOzQnNkm0jCzyaV1ViV2N6ENh2POPzuH0tFocKC9TsXw6N3RMo0eHFxAn3h/rIAmPF2b4LIj0xUCTgik5TGQxhHCf18prKXo4e+Bd0xKucrdqIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ECGraG7M; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1770647285; c=relaxed/simple;
+	bh=WN092fGgVqjgKyRs6j2hgkLNXDI5Wlk40R+7Tgd/C2M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lbd6VDMDTWJ0tXqrSqLmKlquQlEiT1k8RxoG4CI8Bl0axq6wPpU0PgcOz//tJxIFJ+l19r7ufMvl/uyenY5K5Sl2ZD0LsEGyqsBxIQst5HDj9coEfy3ayhoMAgGckYBJzVq25Ljs9DG655SzQ5tTFN22KEYfaZPBMzjtfJmpE7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oOhT6wD/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e64D8z4S; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ECGraG7M"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1770646473; x=1771251273; i=l.s.r@web.de;
-	bh=G5GP/ceMeqw0gkYcfTNfh26oGHeHnHY6lEblTnLBOzU=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=ECGraG7Mde2u7f4ncqhJtG1H4MUCv2uMENa5DKn6Scfx8RUwtmDwEokZQI3bg1D4
-	 MyzwBqjNB7ZP3IVymalpRNI1PJMuYUASQZ+3o3JEvMTYcsc/CWqFeiHZC3HjlcUeQ
-	 go9edGJ+4wzQnrc1Ieo8SP0pPVMqpBu0rDGVmSm4I2dKt7hRrhbQ6Tr4XhGOP2gYg
-	 HQdJyUxGasQYE0j8/VVb+EGQB8sgIbclvC1gpai22SfKUgHzJciZE20iNLQ1Rt+ct
-	 hgVMTcDZkZu/Gn/Fwy+97X1WWOq/GuGItVH2RkfpkOpjFN0UXJM/fw+fuVJIWYDnz
-	 tLcL2OARCc5AEHE8mQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.22.157]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M1rTG-1vnF6f23rs-00A15S; Mon, 09
- Feb 2026 15:14:33 +0100
-Message-ID: <ee549683-1c80-4a9b-83b4-a44fafb1a47f@web.de>
-Date: Mon, 9 Feb 2026 15:14:33 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oOhT6wD/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e64D8z4S"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4EDEB7A01D1;
+	Mon,  9 Feb 2026 09:28:04 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 09 Feb 2026 09:28:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1770647284; x=1770733684; bh=GGYel5qugW
+	IZwAMJUTai5k/aUdatAfsRrkEplilQHWg=; b=oOhT6wD/Dhf2N1sl7RKQvtnb+F
+	BlJY32XAw+VL/rSAZys544jdkyjDVcnR3OwUkTW4k6kDQgPgCzF3jjPSShfDMLuT
+	Kq5V5QWSYpQ08fBF5oQkcxHInN6x1KRfleAp+CiWOiqhpd40UnRinfYs9hdEdFF8
+	CqWVTn+Bo05joKhEt0RhPzKUPNN+iIz3c+N+AN0OYZbuC9Kgi7U9XAVXLytkeV6v
+	JX3aYfgYGlAwpQrscsrs3VC+WHHQIheAQq1jUUQQ08ZNJqJXLhnWT4T1/nZCgHJG
+	OF/tYd4H+BTyIBvbdeFF1f7kBk6z/IB2rzYbN9dEKCBT95pYrjKFTcs8dsFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770647284; x=1770733684; bh=GGYel5qugWIZwAMJUTai5k/aUdatAfsRrkE
+	plilQHWg=; b=e64D8z4S0qFN6ZsrpfzTr3OMuFZv8ydOJYo2wLyiKYb6HzdI44z
+	dzd/B7DaI2+LKDDZYtc/SGfJaxPfj4DkTEFcrNOcJK9rozbVULNR9WwoDq3PNR6q
+	l3n5ByLIZmaMyslWVfrNKeJzpeLfI7g6FshC2ctrLtj0OaYJENg+XJatQNpzdmPE
+	CN9nAq5Ho9O26TAi8xQpuZYTJuhtjMuiSCwWbAC2RkHUA6TVclGCuLuKGm+uFgGq
+	kutSRf+4cZSywcNGNqKtQRvMWpJR+N/scfo9Dfn6Zi7GpACJNFVCdd+QfkLM66rq
+	GLkGDxAW4cCmXBfmBI9B4fkjquP8vYZuQvg==
+X-ME-Sender: <xms:8-6JaclAagR53CqZ3lxN_yebPfILlj2B2g_cXflQ7HnDOIw9NLJCKg>
+    <xme:8-6JaeEvjF2oTZxVo4Y3GjUJCvJ_UrJkHO-D1XwEZZbRwyWMsVNSdenlZG7ATmbnB
+    -sZds4M27WLnESWUz1k7txltvvwTJ0xO1iCgRktptHBUDp4G-65hg>
+X-ME-Received: <xmr:8-6Jac5kZPQAMja181mB2kaSk_rCvR979vCJKJ6UJfKFglfoDcA3TG6KjGTneH8f8zfOHMCKZ8E3sZtevGNp26fh8L-h8bJlai0jSudcmlI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejtdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtoh
+    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopegr
+    ughrihgrnhdrrhgrthhiuhestgholhhlrggsohhrrgdrtghomhdprhgtphhtthhopehsth
+    gvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepvghmihhlhihshhgrfhhf
+    vghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:8-6Jaelt52GpikW7umCk7rcE0DxZbV57o64iOW4Qycp6lbSZ4R9JmQ>
+    <xmx:8-6JaZr2yUQyj-de6sv5ZCU4mCDx7TDVtSHKKGSAa2wXcoE_dmLMwg>
+    <xmx:8-6JaVu70fEHACGcSOz9Egetku4fkC6MHNhl518M30Rq4MnpzYt7Mg>
+    <xmx:8-6JaWHjXnrGQ4OO0xTc8gLFsPnF3Y2O6A0P41s2-2mg2vwH9wqRNA>
+    <xmx:9O6Jaa5l7YrDqfF8zm9mnYEnfPiHUKkFoFWMMWA6GFpqhRG-RrVA44sM>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Feb 2026 09:28:01 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 227f7dae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Feb 2026 14:28:00 +0000 (UTC)
+Date: Mon, 9 Feb 2026 15:27:57 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH 1/4] hook: run a list of hooks
+Message-ID: <aYnu7e_hbSBwu9_N@pks.im>
+References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+ <20260204165126.1548805-2-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] xdiff-interface: stop using the_repository
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Git List <git@vger.kernel.org>
-References: <f58fa33d-b015-4339-819a-9d91be60cd0c@web.de>
- <aYmtab_uqMZBygAG@pks.im>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <aYmtab_uqMZBygAG@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:8/iLyPgocA2DkJXGlG4d7g+yQnxpuQTMs1B9G7wi7nwCWyQQSOC
- 773CiBX5Atx+Ule9+7KClDDErTduLYKWyZhYZLWppv103eGQ/0arM/WDg++KaknfgMG9cjx
- 2tji9B6cp5Ak7K3gBqRc9cjwkWmifBdV9EuxDLyGtxsIKCx7VEh2GhsvYxgDX/g7srdlwCL
- IAo7GAbyb+e0DeVPrmFpg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:jadsBI5EFUY=;P5QtNisSRHKh4RtseNpmgEgdXfW
- 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
- wSTsj0gB12u2WmIX6ptL/A8eYjmMxqZ0VngouC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260204165126.1548805-2-adrian.ratiu@collabora.com>
 
-On 2/9/26 10:48 AM, Patrick Steinhardt wrote:
-> On Sun, Feb 08, 2026 at 02:47:40PM +0100, Ren=C3=A9 Scharfe wrote:
->> diff --git a/xdiff-interface.c b/xdiff-interface.c
->> index 1a35556380..cd7493730b 100644
->> --- a/xdiff-interface.c
->> +++ b/xdiff-interface.c
->> @@ -7,6 +6,7 @@
->>  #include "config.h"
->>  #include "hex.h"
->>  #include "odb.h"
->> +#include "repository.h"
->>  #include "strbuf.h"
->>  #include "xdiff-interface.h"
->>  #include "xdiff/xtypes.h"
->=20
-> It's a bit surprising that we have to add this include, but I assume
-> that we use a function that's declared in this file?
+On Wed, Feb 04, 2026 at 06:51:23PM +0200, Adrian Ratiu wrote:
+> From: Emily Shaffer <emilyshaffer@google.com>
+> 
+> Teach hook.[hc] to run lists of hooks to prepare for multihook support.
+> 
+> Currently, the hook list contains only one entry representing the
+> "legacy" hook from the hookdir, but next commits will allow users
+> to supply more than one executable/command for a single hook event
+> in addition to these default "legacy" hooks.
+> 
+> All hook commands still run sequentially. A further patch series will
+> enable running them in parallel by increasing .jobs > 1 where possible.
+> 
+> Each hook command requires its own internal state copy, even when
+> running sequentially, so add an API to allow hooks to duplicate/free
+> their internal void *pp_task_cb state.
 
-Good point, we don't actually need it.  It's left over from an earlier
-version that had a struct repository pointer as new parameter. :-|
+I think the order in this commit message is a bit off. We typically
+first state the problem that we aim to solve before presenting the
+solution.
 
-Ren=C3=A9
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index b5379a4895..72fde2207c 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -849,7 +849,8 @@ struct receive_hook_feed_state {
+>  
+>  static int feed_receive_hook_cb(int hook_stdin_fd, void *pp_cb UNUSED, void *pp_task_cb)
+>  {
+> -	struct receive_hook_feed_state *state = pp_task_cb;
+> +	struct string_list_item *h = pp_task_cb;
+> +	struct receive_hook_feed_state *state = h->util;
+>  	struct command *cmd = state->cmd;
+>  
+>  	strbuf_reset(&state->buf);
+> @@ -901,6 +902,24 @@ static int feed_receive_hook_cb(int hook_stdin_fd, void *pp_cb UNUSED, void *pp_
+>  	return state->cmd ? 0 : 1;  /* 0 = more to come, 1 = EOF */
+>  }
+>  
+> +static void *copy_receive_hook_feed_state(const void *data)
 
+Nit: our coding guidelines say that the name of the struct should come
+first. So this would be `receive_hook_feed_state_copy()`.
+
+> +{
+> +	const struct receive_hook_feed_state *orig = data;
+> +	struct receive_hook_feed_state *new_data = xmalloc(sizeof(*new_data));
+> +	memcpy(new_data, orig, sizeof(*new_data));
+> +	strbuf_init(&new_data->buf, 0);
+> +	return new_data;
+> +}
+> +
+> +static void free_receive_hook_feed_state(void *data)
+
+Likewise, this would be `receive_hook_feed_state_free()`.
+
+> diff --git a/hook.c b/hook.c
+> index cde7198412..fb90f91f3b 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -47,9 +47,49 @@ const char *find_hook(struct repository *r, const char *name)
+>  	return path.buf;
+>  }
+>  
+> +/*
+> + * Provides a list of hook commands to run for the 'hookname' event.
+> + *
+> + * This function consolidates hooks from two sources:
+> + * 1. The config-based hooks (not yet implemented).
+> + * 2. The "traditional" hook found in the repository hooks directory
+> + *    (e.g., .git/hooks/pre-commit).
+> + *
+> + * The list is ordered by execution priority.
+> + *
+> + * The caller is responsible for freeing the memory of the returned list
+> + * using string_list_clear() and free().
+> + */
+> +static struct string_list *list_hooks(struct repository *r, const char *hookname)
+> +{
+> +	struct string_list *hook_head;
+> +
+> +	if (!hookname)
+> +		BUG("null hookname was provided to hook_list()!");
+> +
+> +	hook_head = xmalloc(sizeof(struct string_list));
+> +	string_list_init_dup(hook_head);
+> +
+> +	/*
+> +	 * Add the default hook from hookdir. It does not have a friendly name
+> +	 * like the hooks specified via configs, so add it with an empty name.
+> +	 */
+> +	if (r->gitdir && find_hook(r, hookname))
+> +		string_list_append(hook_head, "");
+
+Why is there a check for `r->gitdir` here? Do we ever execute hooks
+outside of a fully-initialized repository?
+
+Other than that, we now insert hooks into the list. It's somewhat
+surprising that we insert hook "names" here, instead of for example
+adding the full hook path to the list. Is there any specific reason for
+this decision?
+
+> +	return hook_head;
+> +}
+> +
+>  int hook_exists(struct repository *r, const char *name)
+>  {
+> -	return !!find_hook(r, name);
+> +	int exists = 0;
+> +	struct string_list *hooks = list_hooks(r, name);
+> +
+> +	exists = hooks->nr > 0;
+> +
+> +	string_list_clear(hooks, 1);
+> +	free(hooks);
+> +	return exists;
+>  }
+>  
+>  static int pick_next_hook(struct child_process *cp,
+
+And here we verify that there's at least one such hook that we found.
+Which would currently mean that the hook in ".git/hooks/" exists.
+
+> @@ -58,10 +98,11 @@ static int pick_next_hook(struct child_process *cp,
+>  			  void **pp_task_cb)
+>  {
+>  	struct hook_cb_data *hook_cb = pp_cb;
+> -	const char *hook_path = hook_cb->hook_path;
+> +	struct string_list *hook_list = hook_cb->hook_command_list;
+> +	struct string_list_item *to_run = hook_cb->next_hook++;
+>  
+> -	if (!hook_path)
+> -		return 0;
+> +	if (!to_run || to_run >= hook_list->items + hook_list->nr)
+> +		return 0; /* no hook left to run */
+
+Hm, okay. Wouldn't it be a bit more ergonomic to instead store the index
+of the current hook instead of storing the string list item itself? In
+that case we could verify whether `hook_cb->hook_cur < hook_list.nr` or
+something like this.
+
+> @@ -85,33 +126,50 @@ static int pick_next_hook(struct child_process *cp,
+>  	cp->trace2_hook_name = hook_cb->hook_name;
+>  	cp->dir = hook_cb->options->dir;
+>  
+> -	strvec_push(&cp->args, hook_path);
+> +	/* find hook commands */
+> +	if (!*to_run->string) {
+> +		/* ...from hookdir signified by empty name */
+> +		const char *hook_path = find_hook(hook_cb->repository,
+> +						  hook_cb->hook_name);
+> +		if (!hook_path)
+> +			BUG("hookdir in hook list but no hook present in filesystem");
+> +
+> +		if (hook_cb->options->dir)
+> +			hook_path = absolute_path(hook_path);
+> +
+> +		strvec_push(&cp->args, hook_path);
+> +	}
+
+We could avoid this special casing if we stored the absolute paths in
+the hook list right away. But maybe there is a good reason you don't.
+
+> +	if (!cp->args.nr)
+> +		BUG("configured hook must have at least one command");
+> +
+>  	strvec_pushv(&cp->args, hook_cb->options->args.v);
+>  
+>  	/*
+>  	 * Provide per-hook internal state via task_cb for easy access, so
+>  	 * hook callbacks don't have to go through hook_cb->options.
+>  	 */
+> -	*pp_task_cb = hook_cb->options->feed_pipe_cb_data;
+> -
+> -	/*
+> -	 * This pick_next_hook() will be called again, we're only
+> -	 * running one hook, so indicate that no more work will be
+> -	 * done.
+> -	 */
+> -	hook_cb->hook_path = NULL;
+> +	*pp_task_cb = to_run;
+>  
+>  	return 1;
+>  }
+>  
+> -static int notify_start_failure(struct strbuf *out UNUSED,
+> +static int notify_start_failure(struct strbuf *out,
+>  				void *pp_cb,
+> -				void *pp_task_cp UNUSED)
+> +				void *pp_task_cb)
+>  {
+>  	struct hook_cb_data *hook_cb = pp_cb;
+> +	struct string_list_item *hook = pp_task_cb;
+>  
+>  	hook_cb->rc |= 1;
+>  
+> +	if (out && hook) {
+> +		if (*hook->string)
+> +			strbuf_addf(out, _("Couldn't start hook '%s'\n"), hook->string);
+> +		else
+> +			strbuf_addstr(out, _("Couldn't start hook from hooks directory\n"));
+> +	}
+> +
+>  	return 1;
+>  }
+
+Okay, here we can give a bit more detail in the error message. But that
+alone doesn't quite feel worth the additional complexity.
+
+> @@ -172,26 +231,50 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+>  	if (!options->jobs)
+>  		BUG("run_hooks_opt must be called with options.jobs >= 1");
+>  
+> +	/*
+> +	 * Ensure cb_data copy and free functions are either provided together,
+> +	 * or neither one is provided.
+> +	 */
+> +	if ((options->copy_feed_pipe_cb_data && !options->free_feed_pipe_cb_data) ||
+> +	    (!options->copy_feed_pipe_cb_data && options->free_feed_pipe_cb_data))
+> +		BUG("copy_feed_pipe_cb_data and free_feed_pipe_cb_data must be set together");
+
+I wonder whether it would make the commit a bit easier to review if you
+split it up into two:
+
+  - One commit that introduces the copy/free callback functions.
+
+  - One commit that introduces the hook list.
+
+Then the changes would be a bit more focussed.
+
+>  	if (options->invoked_hook)
+>  		*options->invoked_hook = 0;
+>  
+> -	if (!hook_path && !options->error_if_missing)
+> -		goto cleanup;
+> -
+> -	if (!hook_path) {
+> -		ret = error("cannot find a hook named %s", hook_name);
+> +	if (!cb_data.hook_command_list->nr) {
+> +		if (options->error_if_missing)
+> +			ret = error("cannot find a hook named %s", hook_name);
+>  		goto cleanup;
+>  	}
+>  
+> -	cb_data.hook_path = hook_path;
+> -	if (options->dir) {
+> -		strbuf_add_absolute_path(&abs_path, hook_path);
+> -		cb_data.hook_path = abs_path.buf;
+> +	/*
+> +	 * Initialize the iterator/cursor which holds the next hook to run.
+> +	 * run_process_parallel() calls pick_next_hook() which increments it for
+> +	 * each hook command in the list until all hooks have been run.
+> +	 */
+> +	cb_data.next_hook = cb_data.hook_command_list->items;
+> +
+> +	/*
+> +	 * Give each hook its own copy of the initial void *pp_task_cb state, if
+> +	 * a copy callback was provided.
+> +	 */
+> +	if (options->copy_feed_pipe_cb_data) {
+> +		struct string_list_item *item;
+> +		for_each_string_list_item(item, cb_data.hook_command_list)
+> +			item->util = options->copy_feed_pipe_cb_data(options->feed_pipe_cb_data);
+>  	}
+
+Makes sense. We cannot just peform a shallow copy of the callback data
+as it may contain data itself that needs to be copied. So we have to
+handle the copying ourselves.
+
+One thing I wondered is whether it would lead to a cleaner design if
+this was instead provided as a callback to allocate and initialize a
+completely _new_ callback data. In that case the caller wouldn't have to
+first initialize the data only to copy it in a different place, all the
+logic would be self-contained in that one callback.
+
+The downside would of course be that we cannot use for example the
+stack, and it might make it harder to reuse state across multiple hook
+invocations, if that's a feature we care about.
+
+Patrick
