@@ -1,113 +1,147 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45AE2FE07D
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 18:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA5B32ED30
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 18:33:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770661652; cv=none; b=CfvmqAq9ucHlzpcnSOWbdnmWXAa32abkYBZ6Ua8P0FqyuIKSfhXUDTvxim9VBjzgaocKm/ijpf0moRaTduMxdBKohnGcRCc77VCRYkkWRba/8IlV/0e5SuFxKjsLay59ZouXJVkA9zdwO9W0iCB+K6W4DY79lqcKapaKj+4nyhk=
+	t=1770662034; cv=none; b=h12i4TQUutta9R6s6uyTJOkD+i17wnBOvksZtsvcB7UVB8d4bIy5wfwTp6NpstkpMotR3Flr5uYI9O3Z+VB3FKnQ9M7PfuFw+7oX3LqWXahHK2/rJ3JNEcR6G1IXsNly43o38UE7R4HkFp+s6qrVbKAssVhXvBhoNt3MbcnFMKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770661652; c=relaxed/simple;
-	bh=JWvgoRUgrUPmbbnjDy4pj80EsjQvljf29gdY8i8UE/I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YDbPDeC6rYLESitnTkm+iXjkPgGidrO/9+PFk0Bcd2rWoXqzIJvXntFkJQgu4L2a5QHyC2H17+hGsGaMRPjKCGyBhhAs+1SPHEd2kQt2detfv7Q6zC32pNgPE3umI7DNA9kzZ5AKjef0ZV2jJlOmRMIfgZhqtMQNo/RemlNj9Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fd9xbiSS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l7EaxVDE; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770662034; c=relaxed/simple;
+	bh=dy6h8WHtJv7HuIscC5OJfpQihxwn71i0aFMukdIhQqc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DML8QV+/V0bShTusIWRpja1y0JCPhE18aHmVVSWSfeqPSvDIMyNy77K86oMOhbve709+g7aU5or6kvGNya9+a4uRRQjP29fgnZKSpGGlwONAqq+RWY3lqt2FRD4j3rCGWXqVN/AC16WSAnq5ze2lGxXVdBgosNcUMMMPflFT2Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O56LeUMv; arc=none smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fd9xbiSS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l7EaxVDE"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 370301400165;
-	Mon,  9 Feb 2026 13:27:31 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 09 Feb 2026 13:27:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1770661651; x=1770748051; bh=Wt1xy0zABqu6HwZFXNcYausjg9b/ZwWJ
-	aPk96hy0bC4=; b=Fd9xbiSS14lsgAxmnjmxeiF0RpKkpNXmz+NQxg3CSJT9UpAo
-	6b7aFmzARbChyBoNmS6C77HHgdIVZv82iCFlr/TeO8f8PNrOaJ7Qvw9i4aILroeg
-	+6paU1wzKrm4yRGyrBhjCFH9mUFagEN6q39re8YqGyUozxbDfWzGheJM1Atq2rPD
-	7LLed0+gRrI4oDXSEHstTxcXb5h/I7JhmXBcI4/yYuIJ8SWF8YI2GFPa3UJx1q8J
-	ZzVqZOPLKgH2wg6UiTM9Wj0ytyXxnREseVeh0WHl231U7sgHxS+lcC+pQXYY17cl
-	z9dvo6u9EnifVWWWem7MmOq0al8/1/NE5SNAzg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770661651; x=
-	1770748051; bh=Wt1xy0zABqu6HwZFXNcYausjg9b/ZwWJaPk96hy0bC4=; b=l
-	7EaxVDEBk2xqQ/vvb7ZWeZpdVV6wPw0NOsJ/UBjFkJ0lD093s20RUMdCCd4QE6hQ
-	MozgVE94sp7g0+BO5nlYgG1amERG8al8XgBTZNvZP5Vbz9U0Z099EaINibgJ2zFG
-	ybTVGoTJjkKg9Cw0Cp5tpzE/m0sv0H1HV2qJXo9SahN6Bd/tGGBQA7GLbq0L6wKl
-	9E2Ts4mMXsfTtFUoB7ufsz/G+QjgRP7f1+NuIOMz4HQ9XokYPnOHv/EfV6QhpC2+
-	tr/ZzuI/tNl6HoVuuGlUWiPa+Md2/hK6EeOeLHAAaRtBkMwGerCI47C6Cqmym7Xz
-	kySwnu9oNQqqBfsiJ76+A==
-X-ME-Sender: <xms:EyeKaSOfIIuZok7cdG3bWJ9tW86cJjNzXPTYjM9GuE2vs5_QmD57vg>
-    <xme:EyeKaYYr80tHQPYWHi0Ue3Lvn7VynU5VoqzrKN1IGn5cHLrmA5m10w2CBJxLBKC9l
-    MWWjR4OC2VyJoo6Y-zo9a77R3UVoTA-NKgoThOCQFG7sG_-4T8q7Q>
-X-ME-Received: <xmr:EyeKaWr0qVeIysJgYTj8KzYAsClb6FJ01hO46Qh7gq-NzG45jr4_gwUvnN8KFg1WBLlIbBgep5i_fxVipSQlx7QXcnjPUDB4gw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejheefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkfgfgggtsehttdertddtre
-    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeejhffgfedvkeeftdfhjeegffeiveeiie
-    efgeeuiefhjeelueefffejteekffffjeenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
-    gtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkh
-    drnhgrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:EyeKacbQdivWtbk9aRYF-1RuCvNI62DivNsXVRIlAXTuxlC330kxVg>
-    <xmx:EyeKaeRDEtYrBIuMWxSRL74ofqgCGH53BGCevOtgQwAlaUwaovqBWQ>
-    <xmx:EyeKaT5Bh-ecSIkltfIX8dFCdcUaOEvWHJHKqbCWIyDQGhcfy4I0Kg>
-    <xmx:EyeKaTyFL3CZOjGhgIQpmAz9ITZQ3BKLH86OAK7_uvx1wUYc8UoqIQ>
-    <xmx:EyeKaYjUOPBfy1JWXDMncQa52fqK-mJhMe5JeXbDtPicZ5Rg8jl-4eJZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 13:27:30 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] rerere: minor documantation update
-Date: Mon, 09 Feb 2026 10:27:29 -0800
-Message-ID: <xmqqikc54vse.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O56LeUMv"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-45effa36240so3239224b6e.1
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 10:33:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770662033; x=1771266833; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XDb1LR7w3qjyBwgvTbbckQFgWxnSEnxLSOca29yCMvc=;
+        b=O56LeUMve6pEDWmhSnQ5p4QAa4BOJC8f1Q5oCEe/PrY8hhAS6hIzYrAfVKEtgVxvy1
+         okAftziz3rkTjv0Zp7Yl0JuU9S0O49W2dwR+cN2ToXsbLVUtEfSQ1IXnoRAucWMY5LAk
+         7S86igjP3dQ6qyVb3fUR4UCeYFhprgErK8uZwVHAp9OwsqraL/lSCpodizTx9CPQjzzy
+         sZAmB9YXnGMLb98dk8JHuYHTfp/xmirqF4yepauwWUt35S/IODkgUFndwRuVyq/F1dxW
+         JXumG9cO0fPrE6M6X/5sPk3dldximr3JeEf5Y8tmmUkvHTewfWo++jax9lpCW+QQh+Ix
+         sSzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770662033; x=1771266833;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XDb1LR7w3qjyBwgvTbbckQFgWxnSEnxLSOca29yCMvc=;
+        b=fwI3+4AOH+k2Ah6ZYgdfw103z2ot9jGWVRfdDVbg8sCo5C0hOA0NjGm/pmkjlerP95
+         laY9KK0xJoCXxgS7Z/MXAOKacvOYGSXmALM4NDUtcgv8jRdzPd7DkcfT01TjplXzb2Jj
+         3gfcBTFoyTpwjcpK03wYtFpbQqaVBkrL744vhfQ6+CO/qas+A1dALhCx7Ub1EbvbNp2G
+         y5V3i4HSMhBlvy2EUZOqam613H7LczUz6a+dFQnJVQMDuKz/9u2k2meJ16mWNab6mf80
+         m6637yD06kM8peBC4Fcy8IX5yxMz+RZXIEpiDOra7c/c3oeorqCfOYSNRT4SsBK9W1zv
+         Kk/Q==
+X-Gm-Message-State: AOJu0YzdAlkTw7qXbTL+yUYnYrnNK+0BZYbDw7R8DR+J88ZjTByhYuVO
+	bBwzmhMmQFDl0YWmIC1lxvryxeeDnVkLR0a4PWsmfMgZt6TveMUKWhzc
+X-Gm-Gg: AZuq6aIfp42/rgBZH8qaByprhdUAvx6+blpEOuFYZZsHdNUnjxeYLVdMMxy63PGKr6P
+	9Sbb6fivChOZeQp6JrDqOLn1QRuARg2yynSf7YFSrU/lsADAvtHORaCtrV78qnLuzAkj89mYTbf
+	f+2eFg9bCpmxVfC0xUNDlke8jzBW4rTJIQFOVsElzgwu7sKx1f7LayvlKN97Yzoi65ETwxHY41z
+	wo6aOgPMmhyurqA14You+yaYPA/CeYu5e5yZagd4BmdPaUdUf4oXD7H91C+7eDoGNW/lP53eQvt
+	4OsT6Aq4NbNyPPFbGCOw2SRsy6ViPikya3B9riGMHDkX7Fv6oKKekNJ9kx6Pl3Dkb385htFI3dw
+	svA8cDPc5ByMe71RwcQPCTsjPcobpXoFwi60ei2Qa+5DNaPlFZS0yk3hDivFR1GWwaIFoTbMMak
+	O17Mu1
+X-Received: by 2002:a05:6808:3c44:b0:45f:434:9c1c with SMTP id 5614622812f47-462fca2114bmr5979681b6e.12.1770662033501;
+        Mon, 09 Feb 2026 10:33:53 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-462feb0d71bsm6785981b6e.10.2026.02.09.10.33.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Feb 2026 10:33:52 -0800 (PST)
+Date: Mon, 9 Feb 2026 12:33:50 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 5/5] gitlab-ci: handle failed tests on MSVC+Meson job
+Message-ID: <aYolvOd4erKFhSUE@denethor>
+References: <20260209-b4-pks-ci-meson-improvements-v1-0-38444dec4874@pks.im>
+ <20260209-b4-pks-ci-meson-improvements-v1-5-38444dec4874@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260209-b4-pks-ci-meson-improvements-v1-5-38444dec4874@pks.im>
 
-Let's not call our users "it".  Also "rerere forget \*.c" does not
-forget resolutions for just '*.c'; it forgets for all the files
-whose filenames end with ".c".
+On 26/02/09 05:56PM, Patrick Steinhardt wrote:
+> The MSVC+Meson job does not currently have any logic to print failing
+> tests, nor does it upload the failed test artifacts. Backfill this logic
+> to make help debugging efforts in case any of its jobs has failed.
+> 
+> GitHub already knows to do this, so we don't need an equivalent change
+> over there.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  .gitlab-ci.yml | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+> index 04857b479d..71b8a6e642 100644
+> --- a/.gitlab-ci.yml
+> +++ b/.gitlab-ci.yml
+> @@ -157,6 +157,8 @@ test:mingw64:
+>    parallel: 10
+>  
+>  .msvc-meson:
+> +  variables:
+> +    TEST_OUTPUT_DIRECTORY: "C:/Git-Test"
+>    tags:
+>      - saas-windows-medium-amd64
+>    before_script:
+> @@ -164,12 +166,13 @@ test:mingw64:
+>      - choco install -y git meson ninja rust-ms
+>      - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+>      - refreshenv
+> +    - New-Item -Path $env:TEST_OUTPUT_DIRECTORY -ItemType Directory
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-rerere.adoc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Before the script starts we create the test output directory.
 
-diff --git c/Documentation/git-rerere.adoc w/Documentation/git-rerere.adoc
-index 992b469270..99f967b7a4 100644
---- c/Documentation/git-rerere.adoc
-+++ w/Documentation/git-rerere.adoc
-@@ -32,7 +32,7 @@ COMMANDS
- --------
- 
- Normally, 'git rerere' is run without arguments or user-intervention.
--However, it has several commands that allow it to interact with
-+However, it has several commands that allow users to interact with
- its working state.
- 
- 'clear'::
-@@ -44,7 +44,7 @@ will automatically invoke this command.
- 'forget' <pathspec>::
- 
- Reset the conflict resolutions which rerere has recorded for the current
--conflict in <pathspec>.
-+conflict in paths that match <pathspec>.
- 
- 'diff'::
- 
+>  build:msvc-meson:
+>    extends: .msvc-meson
+>    stage: build
+>    script:
+> -    - meson setup build --vsenv -Dperl=disabled -Dbackend_max_links=1 -Dcredential_helpers=wincred
+> +    - meson setup build --vsenv -Dperl=disabled -Dbackend_max_links=1 -Dcredential_helpers=wincred -Dtest_output_directory="$TEST_OUTPUT_DIRECTORY"
+
+Now we set the test output directory build option accordingly.
+
+>      - meson compile -C build
+>    artifacts:
+>      paths:
+> @@ -185,10 +188,19 @@ test:msvc-meson:
+>    script:
+>      - |
+>        & "C:/Program Files/Git/usr/bin/bash.exe" -l -c 'ci/run-test-slice-meson.sh build $CI_NODE_INDEX $CI_NODE_TOTAL'
+> +  after_script:
+> +    - |
+> +      if ($env:CI_JOB_STATUS -ne "success") {
+> +        & "C:/Program Files/Git/usr/bin/bash.exe" -l -c 'ci/print-test-failures.sh'
+> +        Move-Item -Path "$env:TEST_OUTPUT_DIRECTORY/failed-test-artifacts" -Destination t/
+> +      }
+
+Here we print any failures and move them so they are stored as a CI
+artifact.
+
+>    parallel: 10
+>    artifacts:
+> +    paths:
+> +      - t/failed-test-artifacts
+>      reports:
+>        junit: build/meson-logs/testlog.junit.xml
+> +    when: on_failure
+
+This patch also looks good.
+
+-Justin
