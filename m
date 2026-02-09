@@ -1,161 +1,113 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5102F3815FA
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 17:36:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF13730BF6C
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 17:45:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770658603; cv=none; b=LrDW7m2BfGEeDBTGjKyZJ2r3ia/hEkczkmFsRSlrtLtj8+crPBsTh6kDTClTW/X4ea9Hp13CUDq2WaEO5581nmbMKYCmg3HqnBPV98JSBHZD4Dh4+OnUa+LEusWln4v6AsJ3sdANFqL4Og5j8Rf2xQS39W7EzCvp8hL4fXOBkpU=
+	t=1770659120; cv=none; b=ucsI+8QhycAP0twsj1/Wbdb4Gury/IyzJrSHpYAam3eStRhOiNCGTGl3mpRogzmVmZPrQpMjgPbtHsrNEplgmMX5WHnVfPatetAwqGG1sizLM2/tJkti3ZLkHQVWzW6RvoPRINexFtiCOZ9RmdRef57shYW2PuN23g2Sgxxwi+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770658603; c=relaxed/simple;
-	bh=xN72koI6bpg0Ps4OnTSi944YwMEJ4IYeo1TRvTNVH+w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nlJH4i9pTmojt+TRqcyeDs4veXxzqK6dc1AHYLH6A7JvRVu2h2153bzJCvBQn8dAZ4G8cBCoZYD6kZau+pmxpY0rlkq2XZVT3uVrXXNC88/7yPZq7IL2R7rMa+VXJlHKTZM4UOB1xy1E6zOi8MQkqC+C+M9XwAWzLa1GmcOwwzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Kh0/d/+t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PWYQF1Pj; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770659120; c=relaxed/simple;
+	bh=elJ2GorxcO3HF8Q2++JEU72OUpXPcWxXjJDTHgm1uxY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=D+OGZXRviJI+6mT3Vzs3G9aevxUNCA0C+aQzbqGiFByp4hMAtaPdVG5pdHCjbSPS46yWszNTLlrWHDpeeo4BMYcrgiaUrUJqsVK6twGLOOtttHjETXjnFXvQ/vIio5Goi8CywnbYyMoki2hHWB1vKKHZfQzbaef4EKLBM2guvao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YhGS/nD/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pogkWSdm; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Kh0/d/+t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PWYQF1Pj"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C7E51400195;
-	Mon,  9 Feb 2026 12:36:42 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 09 Feb 2026 12:36:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YhGS/nD/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pogkWSdm"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 28FC67A00D5;
+	Mon,  9 Feb 2026 12:45:20 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 09 Feb 2026 12:45:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770658602;
-	 x=1770745002; bh=VQI1fUpNH4F9EQhzUNkPfWscedZpDFo0SjB7jJv9O7U=; b=
-	Kh0/d/+t7iXyxlogC/VK1zlPSv1ILyed4BQ1QXRsYxM+wGDWoM+20ER0ye77myc3
-	fQ5jiXv7jvxgo09DE85QHlD3xpL5fTb3uOsUJXpsEwCwNHTlRkGUQtRYjHldQ9Fw
-	T6f2Bycs6COjzFWYKICzaplRUnK/oBKmnHfg4mcfkaRH8dI2i2xRWBOV30kw2Ncd
-	YyM21xO0H14Um54I1Nby2MnXcXYS6ysLH9luSVGr/6sQkChYVaiQtayTnJ1X7m1R
-	62tlLHRyeVb96N8SOBR0t/mIQk9CXR5t/reTv674NMIg7lQkSp9LDK2ktpQ24ZE4
-	ZXO9pEQ373KYjTwSSaCW4g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1770659120;
+	 x=1770745520; bh=vKDoPEb8ZsYoFe5eaPeG69LOYEcdJ3nfiBfnMthvxGo=; b=
+	YhGS/nD/EFfLRwAZ6UuVcc5rna60wdI/NLZrJa+4QhF7CQDPp1jXwl6pyhiu5DUU
+	OxmLr6JIlfeeYw6rUzxLgW49ZKTHSSHPPsQCliB8DSq0r+3uY95SRmluZl0W6Tak
+	/++vf7HoYQ37yTw1ZkaTlnInsrHPfXcHUKAPeHhFHeg5MZPQ+Dd7konO9zg+RZKh
+	6hsyJyJc67MU9WwiB2ZYHaQBL7mVKCsSUw+0NKhy+1RF6evasz0bnJ8RmSCf9mK/
+	6BcX84kZkWB4KtgulvXaNFKStx+XPZ1IwvG/Ws856c16aPFuIYYUfLGS32qnXxD/
+	CGC4Ka097pRdBCT3nuxWtw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770658602; x=
-	1770745002; bh=VQI1fUpNH4F9EQhzUNkPfWscedZpDFo0SjB7jJv9O7U=; b=P
-	WYQF1Pj0NCxALgGvLICRdZM26B9CthnUSdtfxAshjjfE4DHIAxoJh0BVw2MsBCTx
-	8cYqqChD4cXyV3Xpkkmdotn4OmLq1p/RwkI7sJV/KZLDrGYqDcRd5Aun5eARZlPv
-	H6RLurxp2ynHANFVSLjh/0Hvatk/BWku4eWvnqanV7ev4/PDjxgZkzq6wcgt36ja
-	8E8dc71MJOo70G88fqouDT9xI0DEwyMYEXrotnCWn1kEnRJgLTvts+qUW9g50j2k
-	Wr/gtu3FogBFSk0SYngKEcohlD4HUs/OJjke4TLAVNzal3nZP3AREFTT4XZsFxG5
-	JrBLNGWp1xOPA1B09dh0w==
-X-ME-Sender: <xms:KhuKaX5bHZyP3BFYk_GHc_1X-R7sS4ytGT7s94j1DVYYlcSD_N1n8tM>
-    <xme:KhuKaS7Ibk1jr3VozQyFBeo6W1p6Sor9BaTUvWchL26hEmlwBeexn72DKHom3nmEP
-    ewvKvoQMlRknaNnHi6DuAB0nejJ4DUqqWGPuz5DcS8FlTCbOkGmaCo>
-X-ME-Received: <xmr:KhuKacGFtSL5WA5yD8OijJn9sUesxn31yE4Zc0NV9Ju61j5gqACgRJfhXl6BH63nzlw-MGrugp_f6uXaQeCDKakKkOgLd9U9LYFEEdg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejgedvucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770659120; x=
+	1770745520; bh=vKDoPEb8ZsYoFe5eaPeG69LOYEcdJ3nfiBfnMthvxGo=; b=p
+	ogkWSdmGziwKC1VSeRczmVDFYkFqj3FR+0APXYyAEQBl7Lnqh/GXirTCweQzsfw2
+	2KlyPeTQvC9xfVx8XNRS6/lppQCyMGI5DM5ySyGWFMfeGw/bz9Facrm4zzIstQxc
+	qnJUmzsd2pjNP0RCIHIMX+bm5QLmK88EaAzGHWDaS+uqLxxDJbgaMH5QjOwZk6RP
+	fVH6Bgi+KA1dA+3EgYcW2i5xb36kiCvrkw/vsEgWPEzppNLOZKOCEoiJiid9C0a7
+	tBTyIHAk5lz4A8onbwd2OYbP9BbLRgw5Guf/PXb3f/t2GQwHTx1hxaWYEH8FOGSH
+	OPjFcPRoc0QKsywTlsshQ==
+X-ME-Sender: <xms:Lx2KaVPrDJ8V3Ct60aQ8qkhkhSnW3AcMuAVVPNjxjGsc1si_zGkUUA>
+    <xme:Lx2Kafa7QvD5_3DdQrLvZT3u632ZxydqNLLZ7OaAjUaBMeBHrbjg0gCSGt1ZIVXhI
+    kubRatlYz_IefDyBFGckyYJL0gGCDmpAFCPealhZzv-I3PVqAYmkQ>
+X-ME-Received: <xmr:Lx2KaRoUjxC_uFG5K7ULB5nUrG7jJiIf30ZI7HQo90bCkqWMQKSAKpnNSiaFe14RaWcHBylF7DRHYaA4O73i-CYO3ZNCpwAFtw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejgeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlvdefmdenucfjughrpefhvfevuf
-    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepudelgf
-    euieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffgnecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:KhuKaTSiO7G__XNCdU8VKrU758R6_eXJZdXtDBm1zHyXCs09iRwR_g>
-    <xmx:KhuKadtF1ZOquCZFjXxFaE-yVUKMTjRytRYpEoTXhDxfpCTL5YUirQ>
-    <xmx:KhuKaaxrDXzQ-1ymHZIOHEdeCDCEcig3mRkpC7kO41kOgv3HXH4pRQ>
-    <xmx:KhuKaf4SmCYYTK6iJRmy6_SpAddaNo7iHzuVwfgU-7opUOpWvGQZkQ>
-    <xmx:KhuKabQA7LtsA-A8FlzO_AmZd98II8g6SIixz1K9F6L0PvMLjPNBOd2T>
-Feedback-ID: i8b11424c:Fastmail
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdr
+    rhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Lx2KabZuvZW0czmV7dY_UsRuVR6GjDzq9QOgLJK5L7nHnxabY726Ug>
+    <xmx:Lx2KaRQjSUF5hP2b_ZU8kt0FB_q2LgYjXAD0muhNo6CTIHruYsYOMA>
+    <xmx:Lx2Kaa5oqTqr01J71VbF0QBh4Tnro0xgvGfl8TK6w8xI1e3YfJKpew>
+    <xmx:Lx2KaezvaAA1dfHy4S66m2LxDXKN2_T2L9vq9bg-pO111o_Uv58OcA>
+    <xmx:MB2KafACsP6OVw0bVtpKtIKCkj9gPrM3LwtWZ0ogee0tJFM3xZT7BWzJ>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 12:36:41 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH 4/4] doc: am: fill out hook discussion
-Date: Mon,  9 Feb 2026 18:34:37 +0100
-Message-ID: <am_hooks.325@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
-In-Reply-To: <doc_am_gitlinks_and_am.messageId.321@msgid.xyz>
-References: <doc_am_gitlinks_and_am.messageId.321@msgid.xyz>
+ 9 Feb 2026 12:45:19 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] xdiff-interface: stop using the_repository
+In-Reply-To: <b05f81aa-6e8a-4e90-ac9e-85fb72784afb@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Mon, 9 Feb 2026 16:21:36 +0100")
+References: <f58fa33d-b015-4339-819a-9d91be60cd0c@web.de>
+	<xmqqms1i6uc8.fsf@gitster.g>
+	<b05f81aa-6e8a-4e90-ac9e-85fb72784afb@web.de>
+Date: Mon, 09 Feb 2026 09:45:18 -0800
+Message-ID: <xmqqbjhx6cb5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+René Scharfe <l.s.r@web.de> writes:
 
-Document `--verify` and rephrase the `--[no-]verify` section to lead
-with the default, in imperative mood.[1]
+>>> -	ptr->ptr = odb_read_object(the_repository->objects, oid, &type, &size);
+>>> +	ptr->ptr = odb_read_object(odb, oid, &type, &size);
+>>>  	if (!ptr->ptr || type != OBJ_BLOB)
+>>>  		die("unable to read blob object %s", oid_to_hex(oid));
+>>>  	ptr->size = size;
+>
+> My initial version did that.  Then I realized that read_mmblob() is just
+> a thin odb_read_object() wrapper that converts null_oid to
+> empty_blob_oid and dies on non-blobs, though, so requiring a full repo
+> pointer seemed excessive.  And all callers also use other odb_*
+> functions already.
 
-Historically it makes sense that only the negated forms are documented;
-they are all run by default and thus you only need to use hook options
-if you want to turn some of them off. But, beyond just desiring uniform
-documentation,[2] it’s very much possible to have, say, a Git alias with
-`--no-verify` that you might sometimes want to turn back on with
-the *positive* form.
+Absolutely.  Passing the narrowest thing the callee needs is the
+right approach and that is what is done in the version posted.
 
-Also mention the options in the “Hooks” section and mention that
-`post-applypatch` cannot be skipped.
-
-† 1: See e.g. acffc5e9 (doc: convert git-remote to synopsis style,
-     2025-12-20)
-† 2: https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    Does not need an update to the usage in `builtin/am.c` because it is
-    excluded in `t/t0450/adoc-help-mismatches`.
-
- Documentation/git-am.adoc | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-am.adoc b/Documentation/git-am.adoc
-index 5e0d6e6fe02..84ec9fee8df 100644
---- a/Documentation/git-am.adoc
-+++ b/Documentation/git-am.adoc
-@@ -9,7 +9,7 @@ git-am - Apply a series of patches from a mailbox
- SYNOPSIS
- --------
- [verse]
--'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8] [--no-verify]
-+'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8] [--[no-]verify]
- 	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
- 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
- 	 [--whitespace=<action>] [-C<n>] [-p<n>] [--directory=<dir>]
-@@ -150,11 +150,14 @@ Valid <action> for the `--whitespace` option are:
- --interactive::
- 	Run interactively.
- 
-+--verify::
- -n::
- --no-verify::
--	By default, the pre-applypatch and applypatch-msg hooks are run.
--	When any of `--no-verify` or `-n` is given, these are bypassed.
--	See also linkgit:githooks[5].
-+	Run the `pre-applypatch` and `applypatch-msg` hooks. This is the
-+	default. Skip these hooks with `-n` or `--no-verify`. See also
-+	linkgit:githooks[5].
-++
-+Note that `post-applypatch` cannot be skipped.
- 
- --committer-date-is-author-date::
- 	By default the command records the date from the e-mail
-@@ -290,6 +293,8 @@ This command can run `applypatch-msg`, `pre-applypatch`,
- and `post-applypatch` hooks.  See linkgit:githooks[5] for more
- information.
- 
-+See the `--verify`/`-n`/`--no-verify` options.
-+
- CONFIGURATION
- -------------
- 
--- 
-2.53.0.26.g2afa8602a26
+Thanks.  I presume that a small and final reroll is expected, if
+only to remove the now unnecessary #include, if not splitting it
+into three parts?
 
