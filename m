@@ -1,147 +1,108 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838D731771E
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 23:11:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDF1318ED0
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 23:12:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770678720; cv=none; b=NhVTglWG0QkIRqSLS65hgKBybWGU4Ga7c1wu0rh4ycuVUqLL+rFfenZNj67JTpG+ni2woY/LWMLOTSLDfVuTm5yHBjVjCuvi/zPKelZOIcs66oBIzrFV+eJ00T1Gp8ol9VCVqV5sM2tYcyfFmer4DTg4ZZsLA2DfxdLiOyiJUjQ=
+	t=1770678749; cv=none; b=oSq8Gw3yXp5ebEU66ZDkYeJhxh9Gmq1J15oEO0xIVO/GJGbC1ejMeB6HwTo8mXP6uR+eqz/oXbCsB4WVPaCdC21+6o6CYxxtyHvnD2JEqzTJ/pLNt+vvmF10XN+wocmFkE0cfYEWliKdWQ5DdHraHkSaukTZgGIzDUfBMW7D5uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770678720; c=relaxed/simple;
-	bh=PQlyV/yTdURS/qeTu5S7fZ6H51J293mEX3HNzuliejY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=bLbhY5B1k7oi5mZKtp5iDrq3E/D7/Yfg6dcxqN1FvFp+EmZfog0OwPoqqK9iAT++wz+HUQ6Guwrxy1FY+NX4a9Fx1h4ZTGENFNkuK9/KyFgpg4kTp9Wn72sAvzmTkkft+GuwIwPKVsCJ6lac3w6oWBlrJmuM/tKSYc3s84tMDaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WGzNMVrt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pNg3lf0O; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770678749; c=relaxed/simple;
+	bh=qHqSp5xICR/cmRtsMFTtoPyTiO+Uw3TDGjdnlyEO3Gc=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=bGLha5EUEhPgvFB2Pu0wgniOZwk8zHCUDwhr4mfg37j527hyl//2h+PsHqgX7zMWpSodie+ygphCsW0yhAIKGrb5NBxrXnJpCOH7M9/w2hZl5aQdRzYxZ+eCVYg+s49HF2/Gg4Vo45jqQLrsKdO8sJfGjU35gfOcLYeNyVOTIo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HXxtFJIj; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WGzNMVrt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pNg3lf0O"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id CEA05EC00A6;
-	Mon,  9 Feb 2026 18:11:58 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 09 Feb 2026 18:11:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770678718;
-	 x=1770765118; bh=M+bKr2jsGcVUTLrv8zW1NZc+pUX+lrTWhAqyCF4Fiaw=; b=
-	WGzNMVrtbMXZJzg0G8Ko6gd8JCDPnGPsYqH6osBW8KjB2xzGKSZbjkFeCRXl2Yqy
-	Wcb/13YPB/WFW1yIBnMrpkqmm9LEAuAYsO1oQ+2KH17e5dHgzUQV0S2ZXoBu9gJ/
-	i8uVaxlBHDUs9vVjb3Z7fSJWH+DiQR0Jh1HPKJhU3ReJo+8QzW8c+P5f1dvAOmFN
-	CnHzSbWWClwQVs8ew0oT/WRqn/o58zV1YLgeoxHbDlWWiU4hdOKRShxUQhC8PH1U
-	w3gUngnXFyNMs96JhjEzTHLwNp0o9R91GN2FeXTRxBo3Rr9DI+aJzcrblX5BvbT/
-	VQ2P9wacLlz1BdZqlkJrag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770678718; x=
-	1770765118; bh=M+bKr2jsGcVUTLrv8zW1NZc+pUX+lrTWhAqyCF4Fiaw=; b=p
-	Ng3lf0OgHx15agTzzwZY0ZFZg0DH9vTdFIeOW94GtBWIz/z5LQiwlxBEjJ2m55F2
-	cmFxDB+Vz2PfSmYUt3EIpd3gzaaecE7VVp+hN6BxjowuBmEALEma8ou20m+PPTVo
-	7R31rl2PijQHIUo7OMwd/HOuNYTb033tYnipjEnjNvsobiodBpw4yE5eEgBx952d
-	8ZeRi/4b0SSw7uZgWRySYM0QEKfGzu70ltYRgGeWlF/thMMZ1vGZXUOj+zGt3gBN
-	DLzD/cRuF1Ku2fOn+mKApBQ11cGSeiRNVF/gJIN0q/IXlUf3j7pC51z0QDy2D7DG
-	8FCWDZ87td1i25hU3ya6g==
-X-ME-Sender: <xms:vmmKaY1A5Ai1fU_0-V3kXNfttH10fmKt8xJkGo2OQpTTxoSYFbvi8rk>
-    <xme:vmmKad79uH48fCDsJE_QIeB0WccAVLdnUWqrGkXvChGnRT43ywJemMvipEvFMwdR2
-    pUe5nni8_OlfqX5vHjG9rRpsRVrNQ6InpmlLnWG7-Sc46b2RpJ2Hg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleektdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeelpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehmrghilhessggvhigvrhhmrghtthhhihgr
-    shdruggvpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrgh
-    druhhkpdhrtghpthhtohepjhhuughgvgdrphgrtghkhhgrmhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehmrghthhgvuhhsrdhtrghvsgesghhmrghilhdrtghomhdprhgtphhtth
-    hopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptggrlhgvshhthihosehstghivghnth
-    hirgdrohhrghdprhgtphhtthhopehsuhhrhehrsehsuhhrhehrrdhnvghtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:vmmKadHtLoHCp4tsAT0bpB1r_c5jy7iJCgCNSjs4gfnE3Nr7-H3ZZA>
-    <xmx:vmmKaSy-8rarnGgV7yYhhYLjoTuM1SqrqT_jFicNx_uqpizXXuUPpQ>
-    <xmx:vmmKaf18zT3tiaf_7DtKMXQTJ6A84nR0mm3xLu_IP-axIUI87-xfoA>
-    <xmx:vmmKaaps0QXMWrI8Gy8U4yaX2FjDaXhdWFV6BNUpDAYyHGXZcpPgVg>
-    <xmx:vmmKadd_ke46vwdkMoZCM_d7NsE-T56HHWkmlHPacYOGb80Vozyuvw-4>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 362DA1EA006B; Mon,  9 Feb 2026 18:11:58 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HXxtFJIj"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-79430ef54c3so32414457b3.2
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 15:12:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770678747; x=1771283547; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+/6b1rs4AD22HYKGqXAZBpgrH6NbBzxZ8cnv8uy7/QI=;
+        b=HXxtFJIjM6iOEwWUx0WrOE4JrGXZFjHNwR6icV3HCD99Ii7RaRTS1N76V0SUwjzto/
+         PofBsr647usBmXdW8k4pu41XEDSarsMJgHf2WLf3TOZ8LhMYIHrWo9f2k4nJZOKVWezU
+         417EwTelHg3CaFlAvfSYJf5BreWqElLPBbEClxghx5oRgSsEiDoGwOD1KBf3xqUt8IFV
+         rUr5JoDYimYaBkjcks+YAHXnZGfFFRAI0ULBDmDHNvTrov/W4KvJn/2T83oBIFJujnDF
+         aZxMjdXhxazmZ9ZBa++CWiaTz2WRE7DrXaxaoU0BDtCryQNRaQY340ccBHb1EBzUm8bO
+         HtJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770678747; x=1771283547;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+/6b1rs4AD22HYKGqXAZBpgrH6NbBzxZ8cnv8uy7/QI=;
+        b=EvmLXdr48ZJVAta20/1AX1YdfUXqNgy+pd3nBfQ88evEUsC66eMUjIsmnsnf6uL/P/
+         o8ad0IxaZraA0Pr08HQG7wvfZRd3iD7p54fc9BIoaUE6DMGVIromCyJ2esuCA61ZWXY+
+         c7pozGkTYlWClmH7G80UZIBiLyJXXposc03tlf/Pn7q30xBJXBTOKcAaoBlH0s68Fh8k
+         DtIzFRrsOSvdsSDkfAv7QpcUkIG71ZkXyGreNjXqePxeo4KZN7EJYdMb2f6nP1o2ZjJ1
+         vVLCEblPvOOz0cSuW5HHdoXYQ/yBm8HSqto7eHEc+X//npjIUodBskAbUruNpaSjkQgv
+         RM1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVI9Suo4rKe7jsL6mFgXwkH5sjpBqk6N/9WQ23vf+qV3UtW+tw3wEAWVdpZUBRQ+u4ITZg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWM68vD5W2lu/CqtwFK+70kFulyJM9SrEWjXjTvnbOs8e/mNTJ
+	tlp7OB3rhfbZvNj03qiB9QqOXlr7/1UZTx2EWI7e2j27XI4Sg76JaTCD
+X-Gm-Gg: AZuq6aIfgqe5Khf0GePzfFaJtt73FsaUPqdgy663sTMvHxzSivyEMu0ULVpxq0RDYIX
+	xe1b94DLcXj1+p3Os1Y1VadXhkYj9MUI9pHPsS9hlIW8Z0IOt2b9ZP6MzBMMCQx+uMERzCNg8NK
+	mIXzy5rvh5huC0zB+QIngQEPWWd9GjFcXD/FJtE8qDWDsMG/GQMVpzLiR1Zq1H5ZoMz1x1k+O0Y
+	msyDX1u6zPUmfYRD0t2867baU6dE9lzJhOh5lZbIvtsTO0v/6TxSeTZ27QNUjC0kK2YPpbeqPgJ
+	c8fwN3a+Y9GLEYjpfyaAMuzUZrBwiTietyiO4R/pyU2Yppnc/qdTLRTOfriATWptkNcpanudLCZ
+	BY0h015g6yfAPfp/PV/VlMJ+oK/mWxBacbSZr0er5cxfh/vGnUBKrsiTmr59vSpuZiNhg4khdfF
+	FrclsS1avAhjle2seXtIIRuRMaFOIbXYXY6ZQ2YX1P+D9Y9FpQVrqsnjhh+YV8plSeXeI5LNutP
+	cd2gnKn/QsgQF9w1r3da11GWd7tOkqehQ==
+X-Received: by 2002:a05:690c:d8b:b0:78c:6ae6:3c7c with SMTP id 00721157ae682-7952ab56762mr125475107b3.48.1770678747119;
+        Mon, 09 Feb 2026 15:12:27 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90eb:5600:1cfa:97ae:441a:82ab])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7964da6641esm30370787b3.12.2026.02.09.15.12.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Feb 2026 15:12:26 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: A2LExlyUAPtc
-Date: Tue, 10 Feb 2026 00:11:00 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Matthias Beyer" <mail@beyermatthias.de>,
- "Christoph Anton Mitterer" <calestyo@scientia.org>,
- "Matheus Tavares" <matheus.tavb@gmail.com>,
- "Chris Packham" <judge.packham@gmail.com>, "Jakob Haufe" <sur5r@sur5r.net>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Message-Id: <80bbe45f-2c9e-465f-87aa-c7cb64175ccb@app.fastmail.com>
-In-Reply-To: <xmqqikc534mk.fsf@gitster.g>
-References: <format-patch_caveats.281@msgid.xyz>
- <V2_format-patch_caveats.34b@msgid.xyz> <xmqqikc534mk.fsf@gitster.g>
-Subject: Re: [PATCH v2] doc: add caveat about roundtripping format-patch
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] doc: rerere-options.adoc: link to git-rerere(1)
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <xmqqzf5h36dc.fsf@gitster.g>
+Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>
+Date: Mon, 9 Feb 2026 18:12:16 -0500
+Message-Id: <A9E7502B-3AAC-4242-9BAA-47D5B4C7D151@gmail.com>
+References: <xmqqzf5h36dc.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
-On Mon, Feb 9, 2026, at 23:59, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->
->> diff --git a/Documentation/format-patch-caveats.adoc b/Documentation/=
-format-patch-caveats.adoc
->> new file mode 100644
->> index 00000000000..c666d709742
->> --- /dev/null
->> +++ b/Documentation/format-patch-caveats.adoc
->> @@ -0,0 +1,36 @@
->> +Patches produced by linkgit:git-format-patch[1] are inline. This mea=
-ns
->> +that the output from that command can lead to a different commit mes=
-sage
->> +when applied with linkgit:git-am[1]. It can also mean that the patch
->> +that is applied is not the same as the one that was generated, or th=
-at
->> +the patch application fails outright.
->> +ifdef::git-am[]
->> +See the <<discussion,DISCUSSION>> section above for the syntactic ru=
-les.
->> +endif::git-am[]
->
-> It is news to me that adjective "inline" has such a meaning.
 
-The original intent was to emphasize that the commit message and the
-patch being in the same =E2=80=9Cstring=E2=80=9D means that there has to=
- be some
-delimiter. And that can trip things up since there is no escaping.
+> Le 9 f=C3=A9vr. 2026 =C3=A0 17:21, Junio C Hamano <gitster@pobox.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BF"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+>=20
+>>> diff --git a/Documentation/rerere-options.adoc b/Documentation/rerere-op=
+tions.adoc
+>>> index b0b920144a6..115882edab1 100644
+>>> --- a/Documentation/rerere-options.adoc
+>>> +++ b/Documentation/rerere-options.adoc
+>>> @@ -4,6 +4,6 @@
+>>>       the current conflict to update the files in the working
+>>>       tree, allow it to also update the index with the result of
+>>>       resolution.  `--no-rerere-autoupdate` is a good way to
+>>> -       double-check what `rerere` did and catch potential
+>>> +       double-check what linkgit:git-rerere[1] did and catch potential
+>>>       mismerges, before committing the result to the index with a
+>>>       separate `git add`.
+>> Minor: should this adjacent be linkgit too? I thought yes, but on
+>> second read we really are talking about the command.
+>> Anyway, agreed that rerere should get linked. Thanks!
+>=20
+> If you are happy with the end result, I would not complain, but
+> which _other_ potential thing were you wondering if it should
+> acquire "linkgit:"?
 
-But you=E2=80=99re right. This part can be dropped. It is already clear =
-that we
-are talking about delimiters that can occur in the commit message.
-
->
-> Whenever I see somebody writes "X. This means Y", I try to see if it
-> makes the result easier to understand to more people by just saying
-> "Y" without mentioning X, and to me, this is such an occasion.  I'd
-> rather see that sentence, plus "This means", taken away.
-
-So write it like this:
-
-    The output from git-patch-format(1) can lead to a different commit
-    message ...
-
-I=E2=80=99ll make that change.
+Doh, typo: the =C2=AB git add =C2=BB as Kristoffer read my mind ;)=
