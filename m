@@ -1,69 +1,69 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF97F32ABE1
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 23:17:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4348232B98A
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 23:17:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770679046; cv=none; b=SrDTQJiI9SIlW7GHRalowDms8wfjd9NVB0iBqqy11pGThzUCdH/8TkHdeHgD3kzureGwnZXA63/wsBGyO2BDhzJi2Y2gMSRDSuyK62JcUoq2R99g0cuaplGCcZ/RVsHPu5gQRDSnuF1ECeklzuAk0lzLmPSUBOi4ETR9eoo+isE=
+	t=1770679047; cv=none; b=eDsX29+zpwwHbzdLUA6CArzQ3L66q2ItKRfG++9wSJdHpAF6Uzfal0a4hMDCm4fO+MZOEeCt/WXNQk/Aw/0rXUNma08xkreWP5zbvtvPZCRLlGC8vJ/tcac6vLDJNvy6ujbswvGWN2Y8+W92Sd208wbWpbbYmnRcPLMIt7UfxRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770679046; c=relaxed/simple;
-	bh=MbGcfwHVdL4dzsJOXlKYouv6kq5fRZ6SZ2wIwk+JCyQ=;
+	s=arc-20240116; t=1770679047; c=relaxed/simple;
+	bh=PKdxmFhqJuSfGubCcJ/aUBRKoxhz2PbD/YRYCrt0T4Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VN2+Za0fdDWFTXq+TMWED213y1oFCb6kQW/7MmME7Q2xRx4K8QU7DIFNyeiKf7D8fIvKFb5k2B2t7LnsVpbFZQKa3vFY9FsOtv343P12mwj97yf77q7YEcyrnvUp4e/oos17VQDG10GBHTLHeDBfMy5C+iZRF+tKPdU61x/CHqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RhDqRxKL; arc=none smtp.client-ip=209.85.160.170
+	 MIME-Version:To:Cc; b=MIL/W9CvLDsgTzVB82J3O2EfaGImsgjfJcNNROWdxeF6Z45kotQoDGIPdWm/mniiu9SXlxafZpVXSazeVmuYJBJGkzdEaepkLSHXaJnXhwYP+mCQldtxs6lMjSb22CNzAmb2Yq0Blvc7JNKLeOGhNxFoPsRBYxVdNhGWsAAvooo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TBtAPLhF; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RhDqRxKL"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-5036d7d14easo43759751cf.1
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 15:17:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TBtAPLhF"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-89503a3bb83so2142236d6.1
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 15:17:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770679043; x=1771283843; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770679045; x=1771283845; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9G4q4rL17wtR++d+Q8UtgqD30XNkcy1XttO7HKUB/sA=;
-        b=RhDqRxKLnRz+A9//bw4W4/njow8tsETWYIFxNTfhorbt5j8ZwLU06IcfjQOQJrIbfE
-         E4XFQ7n1ydJJCV6Bkkvus2z+k6UBUnjSriRlDLQgdnlSqLjedX8k+CwU6+tErkL+Gh9u
-         CL8IKhQwPqW/Lq0ZRmhhOPYxChopcwk/NjhAodJl7KMuZWiXmMEM3RpLBl9SGxwxuBPE
-         KdbLqySvs890o3dP1UdxawIUMM47/AZ80/erBroxuwpx5Iv/aDWriSnZ1XlaadMEjoqr
-         JAUqxCbEkSz02eVmJXripdwTfXAqPvuEcaBkzhYFwoe3zsIqLqJe0NaPkRpIdOITW8Al
-         Ztgg==
+        bh=PG22K+dIRdSMs44ZCswSk6PNADFPAw4PYUhefcm/3j4=;
+        b=TBtAPLhFhWku8ps3O349I5+MwQzuS+/uhztt60GgXI2eAgV/1iMrvSMJkQIGqPo0k1
+         UiGNZn4zdQH3sJ/WJ8vmCElgMDr6UeHwgted9SIO5Tdbf06/KgPLAqkR/jFvAnzyaWN0
+         MdavsQDmyQbJyLG8nS77hBcXXwbZM1Y1M/Pu+6frEs2lO1sF5QnrSQ03X5AknAUUt+nA
+         gyTtOa6Vgw6oa5lrRSgK3yoZbJnZ8nxppopGr6HFEzFgovZP5o1zhpxcTPs8kq/JoQ6Z
+         XhxSlANduO9d84Q66MlAInsV3vF9juZxpht3Ry6S9BusOMFIpSjdHxHPP5zF4tcpeO+S
+         WUyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770679043; x=1771283843;
+        d=1e100.net; s=20230601; t=1770679045; x=1771283845;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=9G4q4rL17wtR++d+Q8UtgqD30XNkcy1XttO7HKUB/sA=;
-        b=UYHyWXArWvz0DQkLXq/AHxXVche24xiJj64ZLGJcFfwEUvHTJyxL+1ZK5rsLtT25qy
-         +lzk/4D48uTwM8n5o7Zu7uDYlfIuNRTwZQdaKmFh89OmNmIlFsAkUl/0S9hgK56nylsY
-         xMHWO4eQHprhY/Zzk33AGDtDCOu8d+Qx7rlEpDyI5KuUU06Qy8/LLdz8bqNdbaRvdgm/
-         nhkuHTZlaWPS0kg90nO3n2yWOPMqvea/CK/fQsmh64gmWZwQlAgFwdumE8B7HCgHt+5I
-         1GDR8j20yS9Z7BNkVBKO9tCkDDG4XHXUlvzYa+Epmx/TZSH34V3dZ7I2QP0lakCOw7DP
-         Y6fQ==
-X-Gm-Message-State: AOJu0YwMdvd+ove9Z49ypS54oSij9ZdI5YOe77JvK69gd0VR+5aLKFb2
-	Wj7f7fUSJC63EKNRYtbVOIQj6ubVSBdosLCaOmwX4nLLBCB12+dv3okqa7/lZg==
-X-Gm-Gg: AZuq6aIF7MAhHHyTWOTGm+gjEHTR1JenUHS1IaEFsCaz3GvC7ZNabX1UK4KG+lgcVed
-	GdtNKXm/Tc5YQUMNEMSC0+DgNhmQ70i3qdJ1aGYpvo0pb8GLTQsbcJsfKKCJvHSKLYr/jXGpuA2
-	FW8PO3e+5gBxAXbqY/q4VYSzpbVKdcOH8uHHtF/1Sz6i0DDc+/3Xn06HePcZvJIuZukI4TEvkvv
-	nZ8UGLuTW/8Xyf8btxU7I7ucM0tgfcH66teexGLhWWP7gPrL0pHSogkJqgA6ljz5q0/LEk1V5Q+
-	wQlKEqPO2uYoQTy5v7+BEwN7OaJ6QUWj3Q+hkOh706Mm+edpBPYE64f2mLE9BEGjwx2458ZUPnz
-	bpjPCE5t4oIBZQVP4BAqGCqZzxgPCZA1vUj2BbEa5jt68Jg3ZuZfbg4KCYwAtsgqI1jmtnJMZo3
-	Hup+aUzCn1by7LG7tEen1cNSTt
-X-Received: by 2002:ac8:5dc6:0:b0:4ed:ddd9:1402 with SMTP id d75a77b69052e-506398a1d62mr188676331cf.24.1770679043568;
-        Mon, 09 Feb 2026 15:17:23 -0800 (PST)
+        bh=PG22K+dIRdSMs44ZCswSk6PNADFPAw4PYUhefcm/3j4=;
+        b=gkh+Mcu8+7XPLS0/pnZrvqvST54BuLs66gxcglcbIHN+1xahAagV3FVpn2BLMvNQM+
+         Gg6SnOlI59kvh4jZRO8jFJiAc3PRKjIZK4tk70afL48jV1wcDhApMlr2Ts4E/BbBZAPO
+         8FUNLMICkv1ldz8aoOBKYXm44ncTezkKfFjgX575rgpSTrVe+RTAxM3Qfob3eWY74w9F
+         ZRlDPKTciFbRarFKBFKWBdEGFLbDf0XmhBGP+VbIFr3r1u8xBfRlrJOthiiRW+iIZvuF
+         lkcvL46pwV6iGzhIku2185BYUwWo1cdl8w1N6wjtLAv0wnqdZOTynAFTUYroTE51tMQa
+         u4Fg==
+X-Gm-Message-State: AOJu0YxJ3oztpbsmfio5ChQ8E7MKzoQetpBZQpJqHtWh9NdrljNt5t0Y
+	yroQ23vJXYuuPPUUZ9XO7Y/DFREe6UfTJoLFx7G7bQtkf/dzV6176v3QE+UlPQ==
+X-Gm-Gg: AZuq6aLPvfbC50nIsju4rRNmxRleh+IwEDuUclIXbvIhSFExBvDagmDCDSrDgCvjWKQ
+	Dquj0AorXFgIreTG2UkVI1Km+ARGplGLV/hNYNBPSB14c2ck3Nk9gtDkt2sfDDSb2/worzJm1ze
+	YXyY9CRGQNKUbv9hI/aFXzqFMXkyaYg8R2jGs8KRNPmxHIV9wk7QN/6mGN2G2DsEIDKFc/4XAy3
+	9ZLaVY/dYcA+Pn/bjWJBzdt3NJ57XJi0bo13tcxk50+KVxWgiw8j/pRVuXuXITq12RgJgdE7/zH
+	BIA32rvIMQhRXFqy+dr1pcLnmFRKqRRBHwSjCRuA7ri5ZM4Q0FGbzIxRBqpZgZ4KUMdRl+7mSBI
+	L7a0upIBATo+WHi5MESBkbqvEWw+1wlvmPNQTUaiPuJT5aJdBQSfIbJHRJSpMKlDPxIc4C1DV/U
+	XdRco6nvypnJLA
+X-Received: by 2002:a05:622a:155:b0:505:e7b8:5524 with SMTP id d75a77b69052e-506398d1397mr167311881cf.11.1770679044748;
+        Mon, 09 Feb 2026 15:17:24 -0800 (PST)
 Received: from [127.0.0.1] ([64.236.200.85])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5064e7825d9sm57958981cf.23.2026.02.09.15.17.22
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50648d97e72sm68555601cf.2.2026.02.09.15.17.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Feb 2026 15:17:23 -0800 (PST)
-Message-Id: <bec6b10d500794365581905be41980e53d1f264a.1770679038.git.gitgitgadget@gmail.com>
+        Mon, 09 Feb 2026 15:17:24 -0800 (PST)
+Message-Id: <7b785b6064966aefe6883ce3c45e80bb74fe79f4.1770679038.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2043.git.1770679038.gitgitgadget@gmail.com>
 References: <pull.2043.git.1770679038.gitgitgadget@gmail.com>
 From: "Rito Rhymes via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 09 Feb 2026 23:17:15 +0000
-Subject: [PATCH 2/5] gitweb: prevent project search bar from overflowing on
- mobile
+Date: Mon, 09 Feb 2026 23:17:16 +0000
+Subject: [PATCH 3/5] gitweb: fix mobile page overflow across
+ log/commit/blob/diff views
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,35 +79,113 @@ Cc: Rito <rito@ritovision.com>,
 
 From: Rito Rhymes <rito@ritovision.com>
 
-On narrow screens, the project search input can exceed the available width
-and force page-wide horizontal scrolling.
+On mobile-sized viewports, gitweb pages in log/commit/blob/diff views can
+overflow horizontally due to desktop-oriented paddings and fixed-width
+preformatted content.
 
-Add side padding to the search container and cap the input to its container
-width with border-box sizing, so the form stays within the viewport.
+Add a shared mobile media query to rebalance those layouts: reduce or clear
+paddings in log/commit sections, keep header/search content within the
+viewport, and allow horizontal scrolling for preformatted blob/diff content
+instead of forcing page-wide overflow.
 
 Signed-off-by: Rito Rhymes <rito@ritovision.com>
 ---
- gitweb/static/gitweb.css | 7 +++++++
- 1 file changed, 7 insertions(+)
+ gitweb/static/gitweb.css | 71 ++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 64 insertions(+), 7 deletions(-)
 
 diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-index 48d2e51015..1fe120cd95 100644
+index 1fe120cd95..135590b64c 100644
 --- a/gitweb/static/gitweb.css
 +++ b/gitweb/static/gitweb.css
-@@ -537,6 +537,13 @@ div.search {
+@@ -123,6 +123,7 @@ div.title_text {
+ 
+ div.log_body {
+ 	padding: 8px 8px 8px 150px;
++	overflow-wrap: anywhere;
+ }
+ 
+ span.age {
+@@ -537,13 +538,6 @@ div.search {
  div.projsearch {
  	text-align: center;
  	margin: 20px 0px;
-+	padding: 0 8px;
-+	box-sizing: border-box;
-+}
-+
-+div.projsearch input[type="text"] {
-+	max-width: 100%;
-+	box-sizing: border-box;
+-	padding: 0 8px;
+-	box-sizing: border-box;
+-}
+-
+-div.projsearch input[type="text"] {
+-	max-width: 100%;
+-	box-sizing: border-box;
  }
  
  div.projsearch form {
+@@ -691,3 +685,66 @@ div.remote {
+ .kwb    { color:#830000; }
+ .kwc    { color:#000000; font-weight:bold; }
+ .kwd    { color:#010181; }
++
++@media (max-width: 768px) {
++	div.page_body {
++		overflow-x: auto;
++		-webkit-overflow-scrolling: touch;
++	}
++
++	div.page_body div.pre {
++		min-width: max-content;
++	}
++
++	div.projsearch {
++		padding: 0 8px;
++		box-sizing: border-box;
++	}
++
++	div.projsearch input[type="text"] {
++		max-width: 100%;
++		box-sizing: border-box;
++	}
++
++	div.title_text {
++		overflow-x: auto;
++		-webkit-overflow-scrolling: touch;
++		padding-left: 4px;
++		padding-right: 4px;
++		box-sizing: border-box;
++	}
++
++	div.title_text table.object_header {
++		width: max-content;
++	}
++
++	div.log_body {
++		padding: 8px;
++		clear: left;
++	}
++
++	div.patchset div.patch {
++		width: max-content;
++		min-width: 100%;
++	}
++
++	div.diff.header {
++		padding: 4px 8px 2px 8px;
++		white-space: nowrap;
++		overflow-wrap: normal;
++	}
++
++	div.diff.extended_header {
++		padding: 2px 8px;
++		white-space: nowrap;
++		overflow-wrap: normal;
++	}
++
++	div.diff.ctx,
++	div.diff.add,
++	div.diff.rem,
++	div.diff.chunk_header {
++		padding: 0 8px;
++		white-space: pre;
++	}
++}
 -- 
 gitgitgadget
 
