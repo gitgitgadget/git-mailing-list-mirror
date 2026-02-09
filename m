@@ -1,86 +1,86 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4D038170B
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB493815F1
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:34:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770654872; cv=none; b=pluMW5XQUVSPG8/gVOT3+NlHZjWRLsh2acSbFz2rm8ccSUSH4uyyN116oEsTw7EsEVhd6LFmRSWjad3NaAzYOHJMgyQFQ1zLqJRVpI9r++HWw/QWFoXjSGvQn0NtMcdhUhU48oJAbwv95lAkKc8Ljt19ipSDp3q83x0hRMmA8lo=
+	t=1770654880; cv=none; b=eVJCRVIDNSUVWZLAxuAbhLsmyi6Jjvl3PC5tuNbNxoLyjFUZiV2u/DPdJfGkWvsEhpgGp8xTm347C3MH9Gg/1l1uBDBEzDKPdO2DO+9EVyIiiKWUfz4s8S62Qd+XqvxK/BFFHUmmPOnlkWwujcz4sQCnC01TgeMhI45BLEHcODc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770654872; c=relaxed/simple;
-	bh=X0+GAa6S29i1lOi+vB4rBwpPWk6tK5XflZaLtAWKKF8=;
+	s=arc-20240116; t=1770654880; c=relaxed/simple;
+	bh=Gz1uPdvWqRdzZ1OToPXQrXYr2doLBHzsqarzNNT/2Sw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S8HvP4or8CVgnYUf5XxPL4iTnJ7tsOmGiPCGr8h142dAI/NEZFQ98bgO8JKlGYfy6ytHZKo6EpBl+hf8uAi3iQvzqJcYGJYp7OZb1ziX9nMRJWNqeSf0v/CT4bTms1zlryj0yHuGnunuXZuchuZbKWECLcEjsENaJb/C1tCyKQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OWgQeodE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IOUHH7aX; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=fyoHm5Su/bQGe+Oz0ZWHmi5TDcRm1FQ/UqbaC/bu1GrWEIzCuqqbjM1fpNxbFBeTiL+TX/66AWWHby8Oze0Dvtgw5Wls7tHRtVv+vlApKZs+fcIT5jkMZdfQE7WbxaO91JqKhRiQ8N945bi9agTuIERu4+DYohEgsuyJ4dyvs1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TjEtM+eh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jPXbbqaO; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OWgQeodE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IOUHH7aX"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 221F17A0227;
-	Mon,  9 Feb 2026 11:34:32 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TjEtM+eh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jPXbbqaO"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 91D231D00231;
+	Mon,  9 Feb 2026 11:34:39 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Feb 2026 11:34:32 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 09 Feb 2026 11:34:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770654871; x=1770741271; bh=YGx0/XsvMY
-	Mp85CmCY7eIeq33/04qvaNgHdnRypYeEY=; b=OWgQeodEPBbaDgg1LFse2ph6ga
-	M49aHDgVAQEXYhvpif3wE842oESgHPrQxkEGD8xVas2IZbXXaGXfp06zEF6d64Qs
-	xPpXvvtMSvJbWd/DkNg0CQLYmANXoyUyzVsmvA2VKRYvBD9yjJd5mCwEa/B6aXaf
-	kEu5IEb79rSSDCeiLtRv69yn47t8JPOdNoMIooNgZLvcGNDNi3VwdknicxOhvzs8
-	8UfvKLTf1CgasQ7xT98NjXLWmJzAusGaOx3PZj7KAugbfXsdtz0JnOiiCZfLqVez
-	+MiV3bXbQFMr1ygwY7SXfJyAyrpgXK2M3gK3hCUJ5894AarHc7Tk62nvaSIQ==
+	:subject:to:to; s=fm3; t=1770654879; x=1770741279; bh=Lc4HThGw0u
+	SVF9OsCKY2eaDzJRltKYTvr9sEzYjh1RQ=; b=TjEtM+ehQXnCIoyGuovfeZLk8R
+	qgAnzQkdgNp95AeFg+JO6FtUY28OdTisWV7R4LZJUxxc4Xcvt/wOJlfa/fi7M66T
+	RZmC5aaJlKc8pN3qGXbBy130wo1G3FPKsjn0NFnZh18cUUX/V8Vrd73cEK/qWNIJ
+	JW5whvKbncp/7MuHNnbM7v27XuKH8i+TYRo6ARypRwy6mtfudXX9+tObkIng/Tw3
+	AU+8beMaAJl5w0xitCY0roYYcnK/O1gdl4HQoDIB1DZivDTogFqfObFfGIrDJCPp
+	eATk/QOxhu4xnyOzRNLrlvLeO/2+ByPmDMfVnaroPIjRnee3yF2ezjwYpPYQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770654871; x=1770741271; bh=YGx0/XsvMYMp85CmCY7eIeq33/04qvaNgHd
-	nRypYeEY=; b=IOUHH7aX88Wg7hy7XYtt9QTO2gzBfBK9lYFRIEHFxJ5S4bn0xcw
-	IegpVih/yIX0xVR7GauzRI7IHca/NzN/Lq8K//k2y0MqW6HxfFIxuj50LXYNcUfm
-	aBxED15vM1LzF2e7O38UtTFZ0NPXDNxyvv+s2/58kPIkw1vG0w5lVioMtS7ULuNd
-	rq/Co0hqRIWdLBM3OQS8+xq3B1FSGKNjfw5mCWFv/Tt3JaWpDcf23NMRU+TH9CEn
-	ZJiyN+5ns5xBC8Vo2mhq3saVoeALoRYGkkfSjpUY/Nv+bEIWYkxWOBO9i8fFBVs+
-	sdhrZu+zeaJ9J80NZxjT4dlLelBYDZTnfHw==
-X-ME-Sender: <xms:lwyKaQZWQhvu82UDiYNxAO03C2kL9zStX9OFjZqEvCaPTylkdjdEsg>
-    <xme:lwyKaSbFPhmGfgPii2Gu59O9M9teIFXZaDkni5SxIYChXbIwsSCRKdkL_O_mu23oX
-    6zV-u_b2IhA8MRY9EOwJC4UM2OAwA-vCnkvkigi9gfx4GKG0LBlGTM>
-X-ME-Received: <xmr:lwyKaf8izEVUrfCL0x1Eg9Y95ldlbCryAkFTn8aPzby8rMGDbiZxxjXcIysp-mKXR77JTG_s0Xm9iFYkR_dCYfxUrsbv9Tbeb0P3Y9sFDPg>
+	1770654879; x=1770741279; bh=Lc4HThGw0uSVF9OsCKY2eaDzJRltKYTvr9s
+	EzYjh1RQ=; b=jPXbbqaO2ejj4zYmYRi/dFV9j7FezWeavFER9MA+OXKq2Jhl55L
+	YML33rDlXifgTfhKzIbSHT+hO1pxcE/bQ5UcMaWbOGHJ7iI1X0dPRrn/6G8e6kFW
+	Fa92KWFyOPooqUAk2SgbknznMLelAoZ+fv+1qrLwGQOHofFHrEtE6MyTXzM20KRw
+	s4yN5mtH+5ykU/5y4r/kVuaoUlaDjLwxuADPBKMC+7m7Xza0ton/zLuD8QIweFLX
+	nzB02aPnFgKSvbnkXuLFuBn3uoM+4wBIxqDDaKzWTsZsob6PKmoU3o4j0ahqJXYY
+	tIlCBBvGuIUmNp+ykE8vD153bl7zgFfGKzA==
+X-ME-Sender: <xms:nwyKaUQWouTtl1YVkxuTs16s-LpwdzanYxkh_2f8Y9g3ii9_aFrggA>
+    <xme:nwyKaYxT49p9jwORBgwQTJAXdi3je4qrEIhpff7QW4aoQvYj-srJOBDt7-urLF5xJ
+    810ZMT24FjDtCJPpYA9tXqN_2aW9wDEHkOpJssImHSWZJKQcGiBqw>
+X-ME-Received: <xmr:nwyKaW1o1Eo4oMnBIaLyLVnpzyvvpJbgr4W6xjK7KgEkcbGxyfy8Ug3XtoyxndH4NPQLhp5zQ6uEdMdp34dajtHuR2clGf_eRR26KcoBxso>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejfedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:lwyKaZgOkF2jAGZm0fYehooEDGPpG9YALIBcXXqm8Q0L8IoClZ-NHg>
-    <xmx:lwyKaXf80zRdEqeuNsuJZHK0CAt0I1KJallIemz1vjsUFn3Hy9jfqQ>
-    <xmx:lwyKaYq2XzFReKi1s_ZTrqzzrk-82UnzDEOfi_iTTrGMIj4pVMBR9w>
-    <xmx:lwyKaUDI435pHoFsmIVdlN5yWlF4x-q_CXnoFoQwNxnQUfIwhHpbLA>
-    <xmx:lwyKaU-CHB2jhKDlVG45xuO4QqDeguDu8811ifzSGJcduuwfQgh4riV4>
+    epjeevgfduudehiefhfeekkefgteejkedthfejhfetleffleehgeduieejtedvteehnecu
+    ffhomhgrihhnpehmshhgihgurdhlihhnkhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:nwyKaW5y3lWEnggHXCRjQD7xm0LaknxbdtgNta-lcy-g8to0e5QbAQ>
+    <xmx:nwyKaZXCLvluo9qr1JVoV8dGTyS7lpnp0SdG5fY5fKqultJjE-ta8Q>
+    <xmx:nwyKaVAFrQE5k2xsblHAOjiv_P-By92gv6-2gVB-lL9XdY_LlZ7sAw>
+    <xmx:nwyKaY42HPfHbiTgjVml1w0eDolgMktVzmpTxAtKxHcJ8p-Dlg6tSw>
+    <xmx:nwyKad0JkaJbpT7ZLk0P6MbqtqQsuUJS9BQ0WQ1i-C2ehbbph9YHpi8w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 11:34:31 -0500 (EST)
+ 9 Feb 2026 11:34:38 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3d4d2e68 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Feb 2026 16:34:30 +0000 (UTC)
-Date: Mon, 9 Feb 2026 17:34:27 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 8f22a03e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Feb 2026 16:34:37 +0000 (UTC)
+Date: Mon, 9 Feb 2026 17:34:34 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org,
 	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 	gitster@pobox.com
-Subject: Re: [PATCH v5 3/4] refs: allow reference location in refstorage
- config
-Message-ID: <aYoMk5HmpSyN1azt@pks.im>
-References: <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
- <20260209-kn-alternate-ref-dir-v5-3-740899834ceb@gmail.com>
+Subject: Re: [PATCH v5 0/4] refs: allow setting the reference directory
+Message-ID: <aYoMmhClPzdmLjII@pks.im>
+References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
+ <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,172 +89,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260209-kn-alternate-ref-dir-v5-3-740899834ceb@gmail.com>
+In-Reply-To: <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
 
-On Mon, Feb 09, 2026 at 04:58:20PM +0100, Karthik Nayak wrote:
-> The 'extensions.refStorage' config is used to specify the reference
-> backend for a given repository. Both the 'files' and 'reftable' backends
-> utilize the $GIT_DIR as the reference folder by default in
-> `get_main_ref_store()`.
-> 
-> Since the reference backends are pluggable, this means that they could
-> work with out-of-tree reference directories too. Extend the 'refStorage'
-> config to also support taking an URI input, where users can specify the
-> reference backend and the location.
-> 
-> Add the required changes to obtain and propagate this value to the
-> individual backends also add the necessary documentation and tests.
+On Mon, Feb 09, 2026 at 04:58:17PM +0100, Karthik Nayak wrote:
+> Changes in v5:
+> - Moved around the commits, to ensure that the code to handle the config
+>   in the backend is first. Previously, we added the config first, which
+>   meant the commit allowed users to provide a URI but it was simply
+>   ignore.
+> - Fix typos and grammar and rename variables.
+> - Clean up the description and documentation to actually specify
+>   protocol over location.
+> - Avoid an extra memory allocation by detaching the strbuf value.
+> - Link to v4: https://patch.msgid.link/20260202-kn-alternate-ref-dir-v4-0-3b30430411e3@gmail.com
 
-This reads as if this should have been two sentences.
+I've got some more smallish nits, but this version looks mostly good to
+me. The one thing that I think still needs to be extended quite a bit is
+the tests we have. The new feature has quite a broad impact, and we
+should at least verify that classes of commands work as expected:
 
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index fbdaf2eb2e..94480be5c4 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -425,6 +425,39 @@ static int make_worktree_orphan(const char * ref, const struct add_opts *opts,
->  	return run_command(&cp);
->  }
->  
-> +/*
-> + * References for worktress are generally stored in '$GIT_DIR/worktrees/<wt_id>'.
+  - Commands that create a repository should create the ref backend as
+    expected.
 
-s/worktress/worktrees/
+  - Commands that access refs (read/write) should know to use the
+    correct location.
 
-> diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
-> new file mode 100755
-> index 0000000000..9c777b79f3
-> --- /dev/null
-> +++ b/t/t1423-ref-backend.sh
-> @@ -0,0 +1,159 @@
-> +#!/bin/sh
-> +
-> +test_description='Test reference backend URIs'
-> +
-> +. ./test-lib.sh
-> +
-> +# Run a git command with the provided reference storage. Reset the backend
-> +# post running the command.
-> +# Usage: run_with_uri <repo> <backend> <uri> <cmd>
-> +#   <repo> is the relative path to the repo to run the command in.
-> +#   <backend> is the original ref storage of the repo.
-> +#   <uri> is the new URI to be set for the ref storage.
-> +#   <cmd> is the git subcommand to be run in the repository.
-> +run_with_uri() {
-> +	repo=$1 &&
-> +	backend=$2 &&
-> +	uri=$3 &&
-> +	cmd=$4 &&
-> +
-> +	git -C "$repo" config set core.repositoryformatversion 1
-> +	git -C "$repo" config set extensions.refStorage "$uri" &&
-> +	git -C "$repo" $cmd &&
-> +	git -C "$repo" config set extensions.refStorage "$backend"
-> +}
-> +
-> +# Test a repository with a given reference storage by running and comparing
-> +# 'git refs list' before and after setting the new reference backend. If
-> +# err_msg is set, expect the command to fail and grep for the provided err_msg.
-> +# Usage: run_with_uri <repo> <backend> <uri> <cmd>
-> +#   <repo> is the relative path to the repo to run the command in.
-> +#   <backend> is the original ref storage of the repo.
-> +#   <uri> is the new URI to be set for the ref storage.
-> +#   <err_msg> (optional) if set, check if 'git-refs(1)' failed with the provided msg.
-> +test_refs_backend() {
-> +	repo=$1 &&
-> +	backend=$2 &&
-> +	uri=$3 &&
-> +	err_msg=$4 &&
-> +
-> +	git -C "$repo" config set core.repositoryformatversion 1 &&
-> +	if test -n "$err_msg";
-> +	then
-> +		git -C "$repo" config set extensions.refStorage "$uri" &&
-> +		test_must_fail git -C "$repo" refs list 2>err &&
-> +		test_grep "$err_msg" err
-> +	else
-> +		git -C "$repo" refs list >expect &&
-> +		run_with_uri "$repo" "$backend" "$uri" "refs list" >actual &&
-> +		test_cmp expect actual
-> +	fi
-> +}
-> +
-> +test_expect_success 'URI is invalid' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	test_refs_backend repo files "reftable@/home/reftable" \
-> +		"invalid value for ${SQ}extensions.refstorage${SQ}"
-> +'
-> +
-> +test_expect_success 'URI ends with colon' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	test_refs_backend repo files "reftable:" \
-> +		"invalid value for ${SQ}extensions.refstorage${SQ}"
-> +'
-> +
-> +test_expect_success 'unknown reference backend' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	test_refs_backend repo files "db://.git" \
-> +		"invalid value for ${SQ}extensions.refstorage${SQ}"
-> +'
-> +
-> +ref_formats="files reftable"
-> +for from_format in $ref_formats
-> +do
-> +
-> +for to_format in $ref_formats
-> +do
-> +	if test "$from_format" = "$to_format"
-> +	then
-> +		continue
-> +	fi
-> +
-> +
-> +	for dir in "$(pwd)/repo/.git" "./"
+  - Commands that create worktrees should know where to initialize the
+    refs.
 
-As "./" is a relative directory I expect it to be resolved relative to
-"$GIT_DIR", right? Also, I don't see any tests that create the ref
-directory outside of the repository. Should we maybe add one?
+  - Reference migration should correctly migrate to/from an out-of-tree
+    directory.
 
-> +	do
-> +
-> +		test_expect_success "$read from $to_format backend, $dir dir" '
-> +			test_when_finished "rm -rf repo" &&
-> +			git init --ref-format=$from_format repo &&
-> +			(
-> +				cd repo &&
-> +				test_commit 1 &&
-> +				test_commit 2 &&
-> +				test_commit 3 &&
-> +
-> +				git refs migrate --dry-run --ref-format=$to_format >out &&
-
-Okay, we do the migration, but with "--dry-run". This should result in a
-temporary staging directory, which is in fact somewhat interesting given
-that "to_format" can now contain a payload. I assume it wouldn't have an
-impact if such a payload was set here?
-
-> +				BACKEND_PATH="$dir/$(sed "s/.* ${SQ}.git\/\(.*\)${SQ}/\1/" out)" &&
-
-Hm. I have no idea what this is doing :)
-
-> +				test_refs_backend . $from_format "$to_format://$BACKEND_PATH" "$method"
-> +			)
-> +		'
-
-In general I think it would be sensible to also have a couple tests here
-that exercise specific formats directly. Like:
-
-  - Are the files created in the right spots for the files and reftable
-    backend with a specific backend?
-
-  - Does `git refs migrate` know to write the files into the correct
-    location in case "--dry-run" wasn't passed?
-
-  - Does git-init(1) and git-clone(1) initialize the refstore in a
-    different location as expected?
-
-  - Does creating a worktree work?
+Thanks!
 
 Patrick
