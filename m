@@ -1,53 +1,53 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F323374174
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4D038170B
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770654860; cv=none; b=Jr4B9pdwwkwOVXW4PJ7VCU7rUd6wtlLLwjOMh/WxHdKbgqiX96WTzNGzqFy7eBegj3eNdFN16QH6wF4P+FvIG3o6+Wq4JcA2C26cmBNzgUZ87iBhTOdgdr4KH83eIsSeCiyCB3UtxFoW/IxAVwPWWBxAI0ygY8SKRoS2nikP7vo=
+	t=1770654872; cv=none; b=pluMW5XQUVSPG8/gVOT3+NlHZjWRLsh2acSbFz2rm8ccSUSH4uyyN116oEsTw7EsEVhd6LFmRSWjad3NaAzYOHJMgyQFQ1zLqJRVpI9r++HWw/QWFoXjSGvQn0NtMcdhUhU48oJAbwv95lAkKc8Ljt19ipSDp3q83x0hRMmA8lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770654860; c=relaxed/simple;
-	bh=2DDUBGBs/noJPwp/q57vWTWKAXq8EVXq9srGu3BQqDg=;
+	s=arc-20240116; t=1770654872; c=relaxed/simple;
+	bh=X0+GAa6S29i1lOi+vB4rBwpPWk6tK5XflZaLtAWKKF8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=McoJ0LGwdc8IM9BiD7U+2VNfFXvtbCbJMtJhNk+QeCOtSGqWUkMnzvEf3lXoucKKHu0sv7qjPkosCgpES5VzSET5A0BmpB4QZwMb31mb8HXjGhJsq8Pxo5BWlkHGYQsFhLXP4LGLejZ4gFb2o3tjb9ni7QdnTCWUb90GneQyi1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rSdjfDRM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dIreJ4ru; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=S8HvP4or8CVgnYUf5XxPL4iTnJ7tsOmGiPCGr8h142dAI/NEZFQ98bgO8JKlGYfy6ytHZKo6EpBl+hf8uAi3iQvzqJcYGJYp7OZb1ziX9nMRJWNqeSf0v/CT4bTms1zlryj0yHuGnunuXZuchuZbKWECLcEjsENaJb/C1tCyKQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OWgQeodE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IOUHH7aX; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rSdjfDRM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dIreJ4ru"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C7677A025C;
-	Mon,  9 Feb 2026 11:34:19 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 09 Feb 2026 11:34:19 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OWgQeodE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IOUHH7aX"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 221F17A0227;
+	Mon,  9 Feb 2026 11:34:32 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 09 Feb 2026 11:34:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770654858; x=1770741258; bh=4aLAj1wc/1
-	ExMZz19hVGYCwWpeyjwMrdPV+xZi2TZa4=; b=rSdjfDRMkf3JlFrpvMcNz/lW+4
-	uPU2Z/cOQfDCnrozqKkJCkTEgicfP9dLgvHiJ631xfhGG3oen9QVIjz0V02i3Q6r
-	8kYI9T+H8zHgRZRfaDGk/hfNaUPOUpj6j3tIW1Yk2lxDngT1DaSlrIS/zJ8LsuCa
-	quEOqnJC7AHAiEzC8r75c1oi9oJ/WLpvjWptFCggiRpJ2unef3lgxQ6bmdN/iIke
-	hvnymkIxwHbNfkc+KkCQvDLH1ZS+kfpzI4IpR1aq0JOgIszEIkD1iYa9v9skx2fI
-	Wo5rTmm2hTFHY0BGNaY8FK0seCwG9fbe/WBHz5/Emi6mBRlSh69cpuZ6bYrA==
+	:subject:to:to; s=fm3; t=1770654871; x=1770741271; bh=YGx0/XsvMY
+	Mp85CmCY7eIeq33/04qvaNgHdnRypYeEY=; b=OWgQeodEPBbaDgg1LFse2ph6ga
+	M49aHDgVAQEXYhvpif3wE842oESgHPrQxkEGD8xVas2IZbXXaGXfp06zEF6d64Qs
+	xPpXvvtMSvJbWd/DkNg0CQLYmANXoyUyzVsmvA2VKRYvBD9yjJd5mCwEa/B6aXaf
+	kEu5IEb79rSSDCeiLtRv69yn47t8JPOdNoMIooNgZLvcGNDNi3VwdknicxOhvzs8
+	8UfvKLTf1CgasQ7xT98NjXLWmJzAusGaOx3PZj7KAugbfXsdtz0JnOiiCZfLqVez
+	+MiV3bXbQFMr1ygwY7SXfJyAyrpgXK2M3gK3hCUJ5894AarHc7Tk62nvaSIQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770654858; x=1770741258; bh=4aLAj1wc/1ExMZz19hVGYCwWpeyjwMrdPV+
-	xZi2TZa4=; b=dIreJ4ruCUeRdbyrtrdYMc23GDiz9NaZ64vqPsZZ5RRB8i+cQ9N
-	7Z5+UTjtvQ8bAFeih+oROWPZKUUgvUaa0remN/G3mOgmbMHjPjz4VHwCWPn+04oa
-	J4AUfs2j09OeX0N0GDLOmeKIYExeSW7awLKArZFECExzLxdsRWPDfRgF/1qbVRuG
-	OG/V6X+hewYtoVgLy9p8L8SCSiQ37xbw8h1Fk83/x6SsogbQVMGwijrBxTibJqKJ
-	L/1R6W6ONc/Opf5loCXUMX0zIjivjfQKdiUVmgALEThYZjqR2sqXZoEaWVcFxqZd
-	Opuu2LgV4T+5Bw3opPtZLpKzDjwW5Z4s6bA==
-X-ME-Sender: <xms:igyKaZr_l8R23dtGUj33pKHLifq1ZJlc16XO7hMgLu2yE1QCap0vzw>
-    <xme:igyKaSrxgtWdRA2nlqRbsoyjfNqK8aEtQsLVN6d0M3OYHLDLwtJZUEPsnXZ3cm1Fv
-    O0h48pd0qzNwKa5Sz2lZGhhUlzvbXU9nEeVnQH936a4xD6hznG1hA>
-X-ME-Received: <xmr:igyKabN4Drq6vx65Ak63QPU_qgehBRhzPvQyTbo0UM_DVyd4PwNTPQW_ndsR_HmqIscTqS4WXBZ3moeUu0S04hmhEVy-25A9193JQFoYv-I>
+	1770654871; x=1770741271; bh=YGx0/XsvMYMp85CmCY7eIeq33/04qvaNgHd
+	nRypYeEY=; b=IOUHH7aX88Wg7hy7XYtt9QTO2gzBfBK9lYFRIEHFxJ5S4bn0xcw
+	IegpVih/yIX0xVR7GauzRI7IHca/NzN/Lq8K//k2y0MqW6HxfFIxuj50LXYNcUfm
+	aBxED15vM1LzF2e7O38UtTFZ0NPXDNxyvv+s2/58kPIkw1vG0w5lVioMtS7ULuNd
+	rq/Co0hqRIWdLBM3OQS8+xq3B1FSGKNjfw5mCWFv/Tt3JaWpDcf23NMRU+TH9CEn
+	ZJiyN+5ns5xBC8Vo2mhq3saVoeALoRYGkkfSjpUY/Nv+bEIWYkxWOBO9i8fFBVs+
+	sdhrZu+zeaJ9J80NZxjT4dlLelBYDZTnfHw==
+X-ME-Sender: <xms:lwyKaQZWQhvu82UDiYNxAO03C2kL9zStX9OFjZqEvCaPTylkdjdEsg>
+    <xme:lwyKaSbFPhmGfgPii2Gu59O9M9teIFXZaDkni5SxIYChXbIwsSCRKdkL_O_mu23oX
+    6zV-u_b2IhA8MRY9EOwJC4UM2OAwA-vCnkvkigi9gfx4GKG0LBlGTM>
+X-ME-Received: <xmr:lwyKaf8izEVUrfCL0x1Eg9Y95ldlbCryAkFTn8aPzby8rMGDbiZxxjXcIysp-mKXR77JTG_s0Xm9iFYkR_dCYfxUrsbv9Tbeb0P3Y9sFDPg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejfedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,31 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejfedtucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhr
-    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:igyKaTxEvpAiFrv1puzCZIYsBD3mV6lR_T_FHnpf58Bb4Ig9YDJuzQ>
-    <xmx:igyKaUsr4i7QJdKiBHCCGx5-5ChogK3GkIrlUqAebJJ_zs9usFIXcw>
-    <xmx:igyKac4e7GosbIPZvQ6D4GP2FMR4yVRuU9P9MuEti15u6vG5KkjJ0g>
-    <xmx:igyKaTRFCTzykcnZ9wwthXrZqymhdmbm-cJWs3-7dj5TodkM70Svsw>
-    <xmx:igyKacOCbRw8mmJP--titeoPKsRixKnIWha7A3cLYsgLut70CpAiRWyO>
+    ohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepkhgrrhhthhhikhdrud
+    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:lwyKaZgOkF2jAGZm0fYehooEDGPpG9YALIBcXXqm8Q0L8IoClZ-NHg>
+    <xmx:lwyKaXf80zRdEqeuNsuJZHK0CAt0I1KJallIemz1vjsUFn3Hy9jfqQ>
+    <xmx:lwyKaYq2XzFReKi1s_ZTrqzzrk-82UnzDEOfi_iTTrGMIj4pVMBR9w>
+    <xmx:lwyKaUDI435pHoFsmIVdlN5yWlF4x-q_CXnoFoQwNxnQUfIwhHpbLA>
+    <xmx:lwyKaU-CHB2jhKDlVG45xuO4QqDeguDu8811ifzSGJcduuwfQgh4riV4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 11:34:17 -0500 (EST)
+ 9 Feb 2026 11:34:31 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id db945f04 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Feb 2026 16:34:16 +0000 (UTC)
-Date: Mon, 9 Feb 2026 17:34:09 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 3d4d2e68 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Feb 2026 16:34:30 +0000 (UTC)
+Date: Mon, 9 Feb 2026 17:34:27 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org,
 	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 	gitster@pobox.com
-Subject: Re: [PATCH v5 2/4] refs: forward and use the reference storage
- payload
-Message-ID: <aYoMdqDDbt-BArQQ@pks.im>
+Subject: Re: [PATCH v5 3/4] refs: allow reference location in refstorage
+ config
+Message-ID: <aYoMk5HmpSyN1azt@pks.im>
 References: <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
- <20260209-kn-alternate-ref-dir-v5-2-740899834ceb@gmail.com>
+ <20260209-kn-alternate-ref-dir-v5-3-740899834ceb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,140 +89,172 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260209-kn-alternate-ref-dir-v5-2-740899834ceb@gmail.com>
+In-Reply-To: <20260209-kn-alternate-ref-dir-v5-3-740899834ceb@gmail.com>
 
-On Mon, Feb 09, 2026 at 04:58:19PM +0100, Karthik Nayak wrote:
-> An upcoming commit will add support for providing an URI via the
-> 'extensions.refStorage' config. The URI will contain the reference
-> backend and a corresponding payload. The payload can be then used for
-> providing an alternate locations for the reference backend.
+On Mon, Feb 09, 2026 at 04:58:20PM +0100, Karthik Nayak wrote:
+> The 'extensions.refStorage' config is used to specify the reference
+> backend for a given repository. Both the 'files' and 'reftable' backends
+> utilize the $GIT_DIR as the reference folder by default in
+> `get_main_ref_store()`.
 > 
-> To prepare for this, modify the existing backends to accept such an
-> argument when initializing via the 'init()' function. Both the files
-> and reftable backends will parse the information to be filesystem paths
-> to store references.
+> Since the reference backends are pluggable, this means that they could
+> work with out-of-tree reference directories too. Extend the 'refStorage'
+> config to also support taking an URI input, where users can specify the
+> reference backend and the location.
+> 
+> Add the required changes to obtain and propagate this value to the
+> individual backends also add the necessary documentation and tests.
 
-Maybe add: "to store references. Given that no callers pass any payload
-yet this is essentially a no-op change for now."
+This reads as if this should have been two sentences.
 
-> diff --git a/refs.c b/refs.c
-> index 36f3441632..d9df25d7c0 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3425,3 +3426,33 @@ void refs_create_refdir_stubs(struct repository *repo, const char *refdir,
->  
->  	strbuf_release(&path);
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index fbdaf2eb2e..94480be5c4 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -425,6 +425,39 @@ static int make_worktree_orphan(const char * ref, const struct add_opts *opts,
+>  	return run_command(&cp);
 >  }
-> +
-> +void refs_compute_filesystem_location(const char *gitdir, const char *payload,
-> +				      bool *is_worktree, struct strbuf *refdir,
-> +				      struct strbuf *ref_common_dir)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +
-> +	strbuf_addstr(refdir, gitdir);
-> +	*is_worktree = get_common_dir_noenv(ref_common_dir, gitdir);
-> +
-> +	if (!payload)
-> +		return;
-
-I think you should add a comment here that explains why it's not
-necessary to modify the `refdir` in case `*is_worktree`. I'd arguably
-even move that code into `if (!payload)`, as we otherwise only set it to
-reset it later. So:
-
-        if (!payload) {
-                /*
-                 * We can use `gitdir` as `refdir` without appending the
-                 * worktree path because...
-                 /
-                 strbuf_addstr(refdir, gitdir);
-        }
-
-> +	if (!is_absolute_path(payload)) {
-> +		strbuf_addf(&sb, "%s/%s", ref_common_dir->buf, payload);
-> +		strbuf_realpath(ref_common_dir, sb.buf, 1);
-> +	} else {
-> +		strbuf_realpath(ref_common_dir, payload, 1);
-> +	}
-> +
-> +	strbuf_reset(refdir);
-
-And then you can drop this call to `strbuf_reset()`.
-
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 240d3c3b26..b192ce606d 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -106,19 +106,24 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
->   * set of caches.
->   */
->  static struct ref_store *files_ref_store_init(struct repository *repo,
-> +					      const char *payload,
->  					      const char *gitdir,
->  					      unsigned int flags)
->  {
->  	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
->  	struct ref_store *ref_store = (struct ref_store *)refs;
-> -	struct strbuf sb = STRBUF_INIT;
-> +	struct strbuf ref_common_dir = STRBUF_INIT;
-> +	struct strbuf refdir = STRBUF_INIT;
-> +	bool is_worktree;
-> +
-> +	refs_compute_filesystem_location(gitdir, payload, &is_worktree, &refdir,
-> +					 &ref_common_dir);
->  
-> -	base_ref_store_init(ref_store, repo, gitdir, &refs_be_files);
-> +	base_ref_store_init(ref_store, repo, refdir.buf, &refs_be_files);
->  	refs->store_flags = flags;
-> -	get_common_dir_noenv(&sb, gitdir);
-> -	refs->gitcommondir = strbuf_detach(&sb, NULL);
-> +	refs->gitcommondir = strbuf_detach(&ref_common_dir, NULL);
->  	refs->packed_ref_store =
-> -		packed_ref_store_init(repo, refs->gitcommondir, flags);
-> +		packed_ref_store_init(repo, payload, refs->gitcommondir, flags);
-
-It's a bit weird that we end up passing the payload even though we
-unconditionally ignore it in `packed_ref_store_init()`. I'd argue that
-we should either pass a `NULL` pointer as payload, or let the packed
-backend call `refs_compute_filesystem_location()` itsefl.
-
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index 4ea0c12299..028fbc0585 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -212,6 +212,7 @@ static size_t snapshot_hexsz(const struct snapshot *snapshot)
->  }
->  
->  struct ref_store *packed_ref_store_init(struct repository *repo,
-> +					const char *payload UNUSED,
->  					const char *gitdir,
->  					unsigned int store_flags)
->  {
-
-And here we should probably explain why we don't have to respect the
-payload.
-
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index c7d2a6e50b..bd09b1280c 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -666,4 +667,18 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
->  					  unsigned int initial_transaction,
->  					  struct strbuf *err);
 >  
 > +/*
-> + * Given a gitdir and the reference storage payload provided, retrieve the
-> + * 'refdir' and 'ref_common_dir'. The former is where references should be
-> + * stored for the current worktree, the latter is the common reference
-> + * directory if working with a linked worktree. If working with the main
-> + * worktree, both values will be the same.
-> + *
-> + * This is used by backends such as {files, reftable} which store references in
-> + * dedicated filesystem paths.
-> + */
+> + * References for worktress are generally stored in '$GIT_DIR/worktrees/<wt_id>'.
 
-I guess we can say "This is used by backends that store store files in
-the repository directly."
+s/worktress/worktrees/
+
+> diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
+> new file mode 100755
+> index 0000000000..9c777b79f3
+> --- /dev/null
+> +++ b/t/t1423-ref-backend.sh
+> @@ -0,0 +1,159 @@
+> +#!/bin/sh
+> +
+> +test_description='Test reference backend URIs'
+> +
+> +. ./test-lib.sh
+> +
+> +# Run a git command with the provided reference storage. Reset the backend
+> +# post running the command.
+> +# Usage: run_with_uri <repo> <backend> <uri> <cmd>
+> +#   <repo> is the relative path to the repo to run the command in.
+> +#   <backend> is the original ref storage of the repo.
+> +#   <uri> is the new URI to be set for the ref storage.
+> +#   <cmd> is the git subcommand to be run in the repository.
+> +run_with_uri() {
+> +	repo=$1 &&
+> +	backend=$2 &&
+> +	uri=$3 &&
+> +	cmd=$4 &&
+> +
+> +	git -C "$repo" config set core.repositoryformatversion 1
+> +	git -C "$repo" config set extensions.refStorage "$uri" &&
+> +	git -C "$repo" $cmd &&
+> +	git -C "$repo" config set extensions.refStorage "$backend"
+> +}
+> +
+> +# Test a repository with a given reference storage by running and comparing
+> +# 'git refs list' before and after setting the new reference backend. If
+> +# err_msg is set, expect the command to fail and grep for the provided err_msg.
+> +# Usage: run_with_uri <repo> <backend> <uri> <cmd>
+> +#   <repo> is the relative path to the repo to run the command in.
+> +#   <backend> is the original ref storage of the repo.
+> +#   <uri> is the new URI to be set for the ref storage.
+> +#   <err_msg> (optional) if set, check if 'git-refs(1)' failed with the provided msg.
+> +test_refs_backend() {
+> +	repo=$1 &&
+> +	backend=$2 &&
+> +	uri=$3 &&
+> +	err_msg=$4 &&
+> +
+> +	git -C "$repo" config set core.repositoryformatversion 1 &&
+> +	if test -n "$err_msg";
+> +	then
+> +		git -C "$repo" config set extensions.refStorage "$uri" &&
+> +		test_must_fail git -C "$repo" refs list 2>err &&
+> +		test_grep "$err_msg" err
+> +	else
+> +		git -C "$repo" refs list >expect &&
+> +		run_with_uri "$repo" "$backend" "$uri" "refs list" >actual &&
+> +		test_cmp expect actual
+> +	fi
+> +}
+> +
+> +test_expect_success 'URI is invalid' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	test_refs_backend repo files "reftable@/home/reftable" \
+> +		"invalid value for ${SQ}extensions.refstorage${SQ}"
+> +'
+> +
+> +test_expect_success 'URI ends with colon' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	test_refs_backend repo files "reftable:" \
+> +		"invalid value for ${SQ}extensions.refstorage${SQ}"
+> +'
+> +
+> +test_expect_success 'unknown reference backend' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	test_refs_backend repo files "db://.git" \
+> +		"invalid value for ${SQ}extensions.refstorage${SQ}"
+> +'
+> +
+> +ref_formats="files reftable"
+> +for from_format in $ref_formats
+> +do
+> +
+> +for to_format in $ref_formats
+> +do
+> +	if test "$from_format" = "$to_format"
+> +	then
+> +		continue
+> +	fi
+> +
+> +
+> +	for dir in "$(pwd)/repo/.git" "./"
+
+As "./" is a relative directory I expect it to be resolved relative to
+"$GIT_DIR", right? Also, I don't see any tests that create the ref
+directory outside of the repository. Should we maybe add one?
+
+> +	do
+> +
+> +		test_expect_success "$read from $to_format backend, $dir dir" '
+> +			test_when_finished "rm -rf repo" &&
+> +			git init --ref-format=$from_format repo &&
+> +			(
+> +				cd repo &&
+> +				test_commit 1 &&
+> +				test_commit 2 &&
+> +				test_commit 3 &&
+> +
+> +				git refs migrate --dry-run --ref-format=$to_format >out &&
+
+Okay, we do the migration, but with "--dry-run". This should result in a
+temporary staging directory, which is in fact somewhat interesting given
+that "to_format" can now contain a payload. I assume it wouldn't have an
+impact if such a payload was set here?
+
+> +				BACKEND_PATH="$dir/$(sed "s/.* ${SQ}.git\/\(.*\)${SQ}/\1/" out)" &&
+
+Hm. I have no idea what this is doing :)
+
+> +				test_refs_backend . $from_format "$to_format://$BACKEND_PATH" "$method"
+> +			)
+> +		'
+
+In general I think it would be sensible to also have a couple tests here
+that exercise specific formats directly. Like:
+
+  - Are the files created in the right spots for the files and reftable
+    backend with a specific backend?
+
+  - Does `git refs migrate` know to write the files into the correct
+    location in case "--dry-run" wasn't passed?
+
+  - Does git-init(1) and git-clone(1) initialize the refstore in a
+    different location as expected?
+
+  - Does creating a worktree work?
 
 Patrick
