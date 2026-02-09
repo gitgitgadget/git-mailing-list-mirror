@@ -1,83 +1,40 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD8F2110
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 00:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016102D9EED
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 06:19:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770598554; cv=none; b=tHNh/38kBNbVoRsypM85RQhizNoFI8WtxW/NMoaYDsnIea63vCIrO7DzmCdaV5OJb5ae+cv6iw1KK67Q+KQ6VaHG2FxycHwcJrteFskMdcqhp54uArRJs59RUPz8o28orQ9XIB43vGpldiljcKnQA5j7mxGVKuttna+IVfH1Ltg=
+	t=1770617994; cv=none; b=FA1GSDuFylNXFo2HK1t6ZGtlNejzLjYZpF7+kwHX9pYJnfkLzxIs/HiiDB+MO7qNGNQzb1FxER3T3CTyhXBkee3Y2JCc4v3DuH3f6RMiGq2kuMQQM7RtD2u2x3x1R0InnoMUG5DGsOECyqR4BhVY6u+lnPeBHZPCyHJ9ByhcX+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770598554; c=relaxed/simple;
-	bh=0TwuBfg+dIAVRwgwy9R9KUv3N52wX3oonGM2cAjaLGI=;
+	s=arc-20240116; t=1770617994; c=relaxed/simple;
+	bh=R4C2w3D4sJ+VGJCaEojoUBvT8chDc+DSp8D1yFhOmoM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=J2Rp7slqs3kCrl/S5yq100zd9NeQ9yDD7csGydlYmiSHwcz0yjAKCv7Rkzy91oAc0lyTGZ8sFud2s72voUQT6nbOLOB2LA6NO4CaSZE5SXSrPff0gamJDkAGeZwzhzS5WZ4WCIWDRRwlRoZDTtM2PbdMDJl5ICxc7r5dHjJvz+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JrnsQ9UV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sFfiVjCD; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=DB8ogjNDKvGeAqOpSGw458SutIdFyMujeJmf+7Ml/6Ew/xQ/I0RomdP5EM6TR0p5i1zBz/ppGWvErw/YozUqIUwjgumoJlhhU5/TQ4ZLoGyDwPcFRe1LRKqRpGvhuXWBmsl7pQa+cgKDL20JkIEZ5/ROHrIX2NrnPKH78oAGG8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=VyX+01Z1; arc=none smtp.client-ip=91.218.175.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JrnsQ9UV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sFfiVjCD"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id B29241D00089;
-	Sun,  8 Feb 2026 19:55:53 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sun, 08 Feb 2026 19:55:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770598553; x=1770684953; bh=y7MlywbUJE
-	HgPQwi0wDuRmL74D2kVbqmXpyFwhWPqJs=; b=JrnsQ9UV/SFcSZNnf/s8DiXQ60
-	AiYG5ulZF7QsPmmHnfvxtIcs6axfw419+Xp2/8ERKES9g1lFcfWPfbgpLvhpnLVM
-	/ZDt4huWIUf7XX8UNkkMvFqtR//A19VQLD6NegRQcfRFGBFA4jqSx20eWe8fHEOR
-	Me6NEMVzG2sIZUt9twNrVmyObmml9bs1Wcl0w3l/VnSD+YurVXFaZ5raX9GKSHQ4
-	UfxIJckVWj3X48w9Vd71iNzNYB+rJwwjHzX/E540crkjXXN5f9FANsnpDId2TV/z
-	1c6icQyBCCOAzp9xtwoZseZ1aTpa0bzM+EbJvu8Tlmx0SVQPdD9LQf6AgSRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770598553; x=1770684953; bh=y7MlywbUJEHgPQwi0wDuRmL74D2kVbqmXpy
-	FwhWPqJs=; b=sFfiVjCDV8VBxgauIjFRHRKCYKfpMtqI+0Xuj2QQnYo8S/V2pBj
-	CJ3VMlkZ6w9U86qmOjwiv9znjLcyCi80WtTX1GFINtzbfBvGYSukMMeZzOvyyN8j
-	cXYvWpMzPUtz9WB8Rx1+TV3jBpyQbAog2IJCk6vhXFzFDSo+JfdaB0Xo9S+P+WRn
-	Y0yd9rX4dMcXjx5TRQltDjhQOXvHxqsAzP8xvsJOBsHL1ViDbdsGIVBh9prb1j33
-	sbjupBrVxtWq0r/i5hPD+n6sHs6AAUnu7kp6BRzJS8eFf8C07+QP6LuVZ6EaT3+K
-	YWkQa+rZNUjz3hWmBtKrxJlkrwx1SG7xwXA==
-X-ME-Sender: <xms:mTCJae8KDrWcfbnhEHWlFasFkdcZgHUyw2i73osCNIIlr944PjR6sA>
-    <xme:mTCJaWJZ87x_MQtFLSP1PL9_QXj8sdAsD9ucjuDHqr94Rg2gAkGVw8Fky4k53CRiR
-    GdmKafhyc-BY8wv5B3A1jbb5BQccxxf-JE0FPxzhhHNJchjYUqc-g>
-X-ME-Received: <xmr:mTCJaRYjwayQFxO9K61TqWBfrA1mI89CrChN43r5DJHWkcB8aQZP4SUv3KzjqwrpouiBFGiXSB8ePGtl8aiVWjl1Me8xQUEF-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleehgedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggr
-    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:mTCJaQI41GiYdTnYhIwrQXnZGK2KhlNWYKNpLbaSXZS-T4TeLGzuEQ>
-    <xmx:mTCJaXAg5xQknsBETpjFoNBYC46g_BXXLV-CcCghyZUhl58a_PQCJw>
-    <xmx:mTCJadrwXp_FL3wZWkEhjSggqqyV8Tf35GoijXsSkK1-0jb3F_k5mQ>
-    <xmx:mTCJaahym6r9FUdvRMP0jUtobiq_J7UeULIwgwBfvUZiQEIBqleyEQ>
-    <xmx:mTCJaQ2_Xouei5Mk5p3O7CA5FJKZXFNtvnE7UrLQp3hmNXumv3TexRjd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Feb 2026 19:55:52 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="VyX+01Z1"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1770617990;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=7iEHgLcEt/yRDYpFXvt3n+761bRSLxJj7hO1KHZ4Xws=;
+	b=VyX+01Z1wYI8Cj4qagpFcl3Pq/UTMSeyKTSoqtcGHq+Vk6dRlUjTK4pDK+8c0yRQXPK0gS
+	MWVX7FIB/2Hwh3d6i2Vuo2uudI+JfZSC6gRv/MtrLLmE6FVU76SqlGeCRqv1v8CuONb8QS
+	d3aZnX75bgusajnpdk6xDQioLTrLuso=
+From: Toon Claes <toon@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2026, #03)
-In-Reply-To: <aYkX3rIkpIvLsej0@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Sun, 8 Feb 2026 23:10:22 +0000")
-References: <xmqq7bsob0wo.fsf@gitster.g>
-	<aYkX3rIkpIvLsej0@fruit.crustytoothpaste.net>
-Date: Sun, 08 Feb 2026 16:55:51 -0800
-Message-ID: <xmqqv7g67n1k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: [PATCH RFC] graph: implement git-log(1) --untangle
+In-Reply-To: <xmqqv7g9d0kw.fsf@gitster.g>
+References: <20260206-toon-log-graph-no-merge-base-v1-1-a6f983991a1d@iotcl.com>
+ <xmqqv7g9d0kw.fsf@gitster.g>
+Date: Mon, 09 Feb 2026 07:19:35 +0100
+Message-ID: <87jywmqw08.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,62 +42,123 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 2026-02-07 at 23:15:51, Junio C Hamano wrote:
->> * bc/sha1-256-interop-02 (2025-11-17) 15 commits
->>  - object-file-convert: always make sure object ID algo is valid
->>  - rust: add a small wrapper around the hashfile code
->>  - rust: add a new binary object map format
->>  - rust: add functionality to hash an object
->>  - rust: add a build.rs script for tests
->>  - hash: expose hash context functions to Rust
->>  - write-or-die: add an fsync component for the object map
->>  - csum-file: define hashwrite's count as a uint32_t
->>  - rust: add additional helpers for ObjectID
->>  - hash: add a function to look up hash algo structs
->>  - rust: add a hash algorithm abstraction
->>  - rust: add a ObjectID struct
->>  - hash: use uint32_t for object_id algorithm
->>  - conversion: don't crash when no destination algo
->>  - repository: require Rust support for interoperability
->> 
->>  The code to maintain mapping between object names in multiple hash
->>  functions is being added, written in Rust.
->> 
->>  Any progress on CI breakages???
->>  source: <20251117221621.2863243-1-sandals@crustytoothpaste.net>
+> Toon Claes <toon@iotcl.com> writes:
 >
-> I just sent v3 yesterday which fixes the CI breakages.
+>> I would argue the problem here are not the merge commits, but it's the
+>> way this is displayed.
+>
+> I am curious, as anybody else who has read this message up to this
+> point, how your --untangle option improves the same section of the
+> history you drew above (which I did not include).
 
-Yup, I replaced the topic with the latest one, and the draft for the
-next issue of "What's cooking" has this entry updated already.
+I didn't want to clutter my email with a lot of examples, I would rather
+have people give it a try. But since you asked.
 
-Thanks.
+Without --untangle:
 
+    * 67ad42147a (tag: v2.53.0, origin/master, origin/maint, origin/HEAD, master) Git 2.53
+    *   6f328bc9e3 Merge tag 'l10n-2.53.0-v1' of https://github.com/git-l10n/git-po
+    |\
+    | *   532543fa46 Merge branch 'jx/zh_CN' of github.com:jiangxin/git
+    | |\
+    | | * eb816ef79e l10n: zh_CN: standardize glossary terms
+    | | * 3065daed59 l10n: zh_CN: updated translation for 2.53
+    | | * eb3cfc6b2f l10n: zh_CN: fix inconsistent use of standard vs. wide colons
+    | * |   5a83d800f3 Merge branch 'l10n/zh-TW/git-2-53' of github.com:l10n-tw/git-po
+    | |\ \
+    | | * | b47610d61d l10n: zh_TW.po: update Git 2.53 translation
+    | * | |   e996719801 Merge branch 'po-id' of github.com:bagasme/git-po
+    | |\ \ \
+    | | * | | 6ef4d11472 l10n: po-id for 2.53
+    | | |/ /
+    | * | |   8ef65d7efd Merge branch 'l10n-ga-2.53' of github.com:aindriu80/git-po
+    | |\ \ \
+    | | * | | d534a373e7 l10n: ga.po: Fix git-po-helper warnings
+    | | * | | 0c19f7f950 l10n: ga.po: Update Irish translation for Git 2.53
+    | * | | |   b386b3aea7 Merge branch 'master' of github.com:alshopov/git-po
+    | |\ \ \ \
+    | | * | | | 06045e3984 l10n: bg.po: Updated Bulgarian translation (6091t)
+    | * | | | |   af1a298e2c Merge branch 'fr_2.53' of github.com:jnavila/git
+    | |\ \ \ \ \
+    | | * | | | | 72dd507505 l10n: fr: v2.53
+    | | | |_|/ /
+    | | |/| | |
+    | * | | | |   6f75c474d7 Merge branch 'tr-l10n' of github.com:bitigchi/git-po
+    | |\ \ \ \ \
+    | | * | | | | d63adbbbd5 l10n: tr: Update Turkish translations
+    | | |/ / / /
+    | * | | | |   3eaaa7fea4 Merge branch 'master' of github.com:nafmo/git-l10n-sv
+    | |\ \ \ \ \
+    | | |_|_|_|/
+    | |/| | | |
+    | | * | | | cba7353aed l10n: sv.po: Update Swedish translation
+    * | | | | | 239b7f686c RelNotes: fully spell negation
+    * | | | | | 2258446484 RelNotes: correct "fast-import" option name
+    |/ / / / /
+    * | | | | ea717645d1 RelNotes: a few spelling fixes
+    * | | | | ab380cb80b (tag: v2.53.0-rc2) Git 2.53-rc2
+    | |/ / /
+    |/| | |
+    * | | | ab689ea7f9 Revert "Merge branch 'cs/rebased-subtree-split'"
+    * | | |   6959eee16e Merge branch 'master' of https://github.com/j6t/git-gui
 
-* bc/sha1-256-interop-02 (2026-02-07) 16 commits
- - object-file-convert: always make sure object ID algo is valid
- - rust: add a small wrapper around the hashfile code
- - rust: add a new binary object map format
- - rust: add functionality to hash an object
- - rust: add a build.rs script for tests
- - rust: fix linking binaries with cargo
- - hash: expose hash context functions to Rust
- - write-or-die: add an fsync component for the object map
- - csum-file: define hashwrite's count as a uint32_t
- - rust: add additional helpers for ObjectID
- - hash: add a function to look up hash algo structs
- - rust: add a hash algorithm abstraction
- - rust: add a ObjectID struct
- - hash: use uint32_t for object_id algorithm
- - conversion: don't crash when no destination algo
- - repository: require Rust support for interoperability
+With --untangle:
 
- The code to maintain mapping between object names in multiple hash
- functions is being added, written in Rust.
+    * 67ad42147a (tag: v2.53.0, origin/master, origin/maint, origin/HEAD, master) Git 2.53
+    *   6f328bc9e3 Merge tag 'l10n-2.53.0-v1' of https://github.com/git-l10n/git-po
+    |\
+    | *   532543fa46 Merge branch 'jx/zh_CN' of github.com:jiangxin/git
+    | |\
+    | | * eb816ef79e l10n: zh_CN: standardize glossary terms
+    | | * 3065daed59 l10n: zh_CN: updated translation for 2.53
+    | | * eb3cfc6b2f l10n: zh_CN: fix inconsistent use of standard vs. wide colons
+    | *   5a83d800f3 Merge branch 'l10n/zh-TW/git-2-53' of github.com:l10n-tw/git-po
+    | |\
+    | | * b47610d61d l10n: zh_TW.po: update Git 2.53 translation
+    | *   e996719801 Merge branch 'po-id' of github.com:bagasme/git-po
+    | |\
+    | | * 6ef4d11472 l10n: po-id for 2.53
+    | *   8ef65d7efd Merge branch 'l10n-ga-2.53' of github.com:aindriu80/git-po
+    | |\
+    | | * d534a373e7 l10n: ga.po: Fix git-po-helper warnings
+    | | * 0c19f7f950 l10n: ga.po: Update Irish translation for Git 2.53
+    | *   b386b3aea7 Merge branch 'master' of github.com:alshopov/git-po
+    | |\
+    | | * 06045e3984 l10n: bg.po: Updated Bulgarian translation (6091t)
+    | *   af1a298e2c Merge branch 'fr_2.53' of github.com:jnavila/git
+    | |\
+    | | * 72dd507505 l10n: fr: v2.53
+    | *   6f75c474d7 Merge branch 'tr-l10n' of github.com:bitigchi/git-po
+    | |\
+    | | * d63adbbbd5 l10n: tr: Update Turkish translations
+    | * 3eaaa7fea4 Merge branch 'master' of github.com:nafmo/git-l10n-sv
+    | * cba7353aed l10n: sv.po: Update Swedish translation
+    * 239b7f686c RelNotes: fully spell negation
+    * 2258446484 RelNotes: correct "fast-import" option name
+    * ea717645d1 RelNotes: a few spelling fixes
+    * ab380cb80b (tag: v2.53.0-rc2) Git 2.53-rc2
+    * ab689ea7f9 Revert "Merge branch 'cs/rebased-subtree-split'"
+    *   6959eee16e Merge branch 'master' of https://github.com/j6t/git-gui
 
- Comments?  v1 saw a lot of discussions, v2 didn't, and this is v3,
- which is essentially identical to v2 with CI fixes (which work!).
- source: <20260207200446.2837699-1-sandals@crustytoothpaste.net>
+>> There are still some bugs in this implementation. And a bunch of memory
+>> leaks. Also am I not sold on the name `--untangle`. It sounds catchy,
+>> but it's name isn't very meaningful for most users. I've been thinking
+>> about `--ignore-merge-base` or `disconnect-merge-base`, but I'm open to
+>> better suggestions. That's why I'm submitting this as a RFC. Before I
+>> continue work on this, I'm curious if the project is open to such
+>> contribution? And if so, which direction it should go?
+>
+> In any case, I am very happy to see another person who is not afraid
+> of our C codebase to have looked at this part of the system (I have
+> a long-standing pet peeve, unrelated to this issue, in this area).
+
+I'm happy to learn more about those pet peeves. git-log(1) --graph could
+definetily use some love.
+
+-- 
+Cheers,
+Toon
