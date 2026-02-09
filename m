@@ -1,148 +1,243 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f68.google.com (mail-yx1-f68.google.com [74.125.224.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954BE24C676
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 20:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA11221B9C0
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 21:51:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770669298; cv=none; b=hjxetewgoVLf0QQWUUzbNIHepoT18IXK1bdjyFU3dDETI8+aHvjDYJioto8Hwo8oWdK5EJp+vmLHF78hf+4dnfQICiVs0WUsumus5rf5bISg/x8Cms0rUOoH3JKdCvN/FOcU+YPM+n/AdlXafVn1QNZ93vVhrdxK7hco0HJmUbg=
+	t=1770673877; cv=none; b=aq8o+XQ88OICEH/JgbGQnl75Pxn33gp946SLYaPsGlCU3q6SSJB/KgPBo3CM5dCbqjdnUw5Q4HDEIdzaAZeBoTUibl0k4Ciz9czs5XpoKNdNgLSc2YFNJqwXxuKzFJ1sJdUhkvFPN8mxHOqcNJO31DNzFIE3cBOFEJnzoLHJ8Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770669298; c=relaxed/simple;
-	bh=+Vczv7bUo7T3HFWAQyP1HVdmdp/4pxZssEl9wLDm1GY=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=og874SGWBmj3NkPMy3LkMuzLxyde8TqqFFK5h7zIZqSrOLAC7EGleoPPK5tcM2IwKaZiA12cfBpzEV7MijCw83/FSiWTyTbDhtqQx+seYAt5V7c00gZ5e/1DyhqMRSeWrxF/k5sRhHZSzX7nnw8DFNjzfQOcgY0tfURnGkp881o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markusd112@web.de header.b=nwfKVPli; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1770673877; c=relaxed/simple;
+	bh=gj078jq0vWGO2ag9KAn50jvBmwnjpvqh7s9gmB4tzoY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=P4IwfMXXXJxfeWrVyimPMXuNgLmJW90KVfL7bocpfMdRng5mfNxDylGs9iHPRgayHEQ8UipKfOtfPv0fkuTJlGIkrAoNsXzWlmRP3PARsAzhvMDQviKrLqoHvCz/Id7JfpUm2NzhZqiq3RyNojYB8Ugxx5EcVAIJYLgmVHXIP9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fzH/bQcK; arc=none smtp.client-ip=74.125.224.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markusd112@web.de header.b="nwfKVPli"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1770669288; x=1771274088; i=markusd112@web.de;
-	bh=+Vczv7bUo7T3HFWAQyP1HVdmdp/4pxZssEl9wLDm1GY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=nwfKVPli//eJyyw32fcb7uChN5haXMMaEr2FPvnQHuKGTKqie8TjZFBp7ezYCpgS
-	 tpK2xjPRcPTH34U2M7Df8iqLUU5UnEeMjd9BJH5J+WdgDFmGxY6usEPaRbvwvXpBW
-	 28TIshsqc/hMjWmCjUbF66P2R7dLX8qASMrHYa/oYqHMPiMRz5mTxrz0R+iyS8W4j
-	 kBDiVnlgSCnUMgIs41YNYaDjP7lSBXKDXVF6c97IypBqyGmWL9jm31Opv+meLpOAb
-	 JG+aNyQVd0pIyPN9oD1Wea6OJievUy8LIvrIYFf1KJWp0Zb7VhQpZroAFeyz/BCEy
-	 zO9sRWqFTAsTdgxBSA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [10.20.0.89] ([93.202.97.228]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MTfol-1wF5gz2crF-00HcmK for
- <git@vger.kernel.org>; Mon, 09 Feb 2026 21:34:48 +0100
-Message-ID: <ae4cb197-1edc-44c4-afbb-bbb24df509e8@web.de>
-Date: Mon, 9 Feb 2026 21:34:48 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fzH/bQcK"
+Received: by mail-yx1-f68.google.com with SMTP id 956f58d0204a3-64ad019bb5eso3195965d50.1
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 13:51:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770673875; x=1771278675; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T90Uc+Iex9Dwz4pi3fr6wE+otLtnEvZ96eZ2prVlWrY=;
+        b=fzH/bQcKwiyMC19cjtTkL2nnwCB041ZlGdq5+CZiXqVj4fTXkZwgpvD3kv9iTbjdZV
+         pQEtM3+m+TZnDt5wYaVtDftXHzG5YocMdb3ZzL03mjUKTWJ5cKI1v0y/902PwJnZb8CL
+         73PnHxqCIW7FtXh0+q66pciL69uVju49rCc/ZodlZhrrDqtr8U++zUTSiKg6tkbeh/hd
+         jekJh77WOk9sZJ8Ep3KvYcKZc3PCbh2Xp7SM5U+qwHcWPRXtgcL0rRlAnEXMMqRRQzI1
+         L85RtkSY2Quoc5pTRLzHuCCYPNaXYZ7ql1fCpvHoAjHcFi8tw0TrRr7rPB8g6PxzTWyV
+         2hvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770673875; x=1771278675;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T90Uc+Iex9Dwz4pi3fr6wE+otLtnEvZ96eZ2prVlWrY=;
+        b=hzcIyiFIRHvhkDZEhZJfzck+/q9AfwgyU9MXeVgxEVlJuCKX6kVhmkQCmKFiL8mbAe
+         kO8zTH4t6i8s/TikFVx6K0vOJ/XBLry9S8yNxYYXj78gG1M0wPA2SYQgUoJ/wz/HvXcH
+         cb02srKW9Zofdh0mR6nRpVv3iCnM3Ti5jFIQG1VebHc2eT9wCDRSlsztFKhT6N0yxveW
+         DhiuQZSnaqK9Pdc+sOcWFHNABKf/tFczp1vqneioEEEsw/ayYsaJbPU239hUxQS9VuDf
+         rfIXBTsK0aL1AdSr5V6JJrlLAtlXJFPv3yL5tTQLtNjHMJFUWpy2C+e7rpGspUY/CIzE
+         KGMw==
+X-Gm-Message-State: AOJu0YzEnDjX1Q0K+fjUDIoSs63gibiuwA86vGa7P3r2z7p+3NCpGM5G
+	QlmEupWNctnkkEu0nDKOEbphrI+ekUmJsBKtLA8vc3Y+4iMaDiq/sqgfQvJjjsyM
+X-Gm-Gg: AZuq6aIzOqbWv30D8yCBmtxDnW2E/hq+LXgFBEl6bX0/5VES80PKEY3PLq+rg3/vSWb
+	i8So8gXUHLz4agsDBRbpIG2iWR1uP7HfFEKH59gEg1QevwAbokg4Ponp2CYKJ5ydTR9xqACcr7a
+	lfqcLT4J235M5JDkRDeeB3oVRJU3X9LfKTCKzsT2zv2vTib/+SxwqIGZrW8/R4dWlzCeQ64Bejq
+	MRWyOQ99SDwB+U8iej/nrb2ijcrdeIJQSFMjX9s2IpgGdp79zSzu5nZr4WZFRQ0NUt8Z9dHkAxf
+	22bf8DaXAlSzKEqW4EJnWlWlH8hVmn9KLZ+XBf2QTfGOAi9jYAN/Y6LxHabKtAOpP4n7nCSBSPt
+	c7q9Hcj1nHc6OW3qyRmjBorpx/7s9a2AV9xZrn0JU60KVREw3D73lyN7N6PlYkQBzo0r/vBRAz2
+	lUWp7O5rbXWDQHyfpui6yPGj9lxd8jxEXQMaMtP/1frQa8YSDz3p/tIMW57deIj8I4owwrwLOGJ
+	5WSIevsYYl2gwo=
+X-Received: by 2002:a05:690e:1502:b0:649:b4cd:b53e with SMTP id 956f58d0204a3-64af211bd9bmr52874d50.41.1770673874441;
+        Mon, 09 Feb 2026 13:51:14 -0800 (PST)
+Received: from localhost.localdomain ([2605:a601:90eb:5600::9])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7964e371479sm28110187b3.15.2026.02.09.13.51.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Feb 2026 13:51:14 -0800 (PST)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Martin <evan.martin@gmail.com>
+Subject: Re: [PATCH] meson: regenerate config-list.h when Documentation changes
+Date: Mon,  9 Feb 2026 16:50:06 -0500
+Message-ID: <20260209215015.25867-1-ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.52.0.rc0.1018.g3ad6585c12.dirty
+In-Reply-To: <aYn8XKv2hH2HX2xO@pks.im>
+References: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: de-DE
-From: markusd112@web.de
-Subject: missing git documentation for "git clone --recursive"
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zGnz+6VTu60LEYJqUCTdYt0EV4u2lHgaqHjLr4v/wTZiZyrBdQV
- 9jDaA8zlg7egR9rSYwY/aMQT9THdnZAi2eZ59lQaSnkONVtkZUEd5617ExRkafwFNk7YY0Q
- O9RZh2pJi/SUwoVaIe4ldkqS6o+uFDuivy9ktqXcah30/WQ/G59rGuSNJbyITZXOdCCcRJj
- VtvLRRE9X3sgzi/82f3sA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Ze7ls7JRI74=;y77eSKHE213+S+v3WdIN6JBMQ6Q
- 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
- xSudA==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi,
+Hi Patrick,
 
-I am missing the argument "--recursive" for the git clone command in the=
-=20
-git-clone documentation
+> On Sat, Feb 07, 2026 at 04:59:17PM -0500, D. Ben Knoble wrote:
+> > The Meson-based build doesn't know when to rebuild config-list.h, so the
+> > header is sometimes stale.
+> >
+> > For example, an old build directory might have config-list.h from before
+> > 4173df5187 (submodule: introduce extensions.submodulePathConfig,
+> > 2026-01-12), which added submodule.<name>.gitdir to the list. Without
+> > it, t9902-completion.sh fails. Regenerating the config-list.h artifact
+> > from sources fixes the artifact and the test.
+> >
+> > Teach the meson build to depend on the Documentation files that
+> > generate-configlist.sh reads by having it use the output of
+> > generate-configlist-deps.sh as a list of dependency files, since Meson
+> > does not have (or want) builtin support for globbing like Make.
+> >
+> > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> > ---
+> >
+> > Notes (benknoble/commits):
+> >     I considered having generate-configlist.sh write its own dependency
+> >     list, which Meson also supports… idk though. Input welcome :)
+>
+> I think that would actually be the better approach, also because the
+> list of files with `run_command()` would only be computed at setup time.
 
-https://git-scm.com/docs/git-clone
+Oh, interesting. I didn't consider that, but it seems that adding a new file
+doesn't cause the dependency list to get updated in my version. Good catch
 
-Is this --recursive argument outdated? In some projects there is the=20
-following command in the documentation that clones the repository=20
-including init and update submodules:
+> I guess it could look something like the below patch -- please feel free
+> to reuse it at will.
+>
+> Thanks!
+>
+> Patrick
 
-git clone --recursive (url)
+[snip patch]
 
-In the git documentation only "--recurse-submodules" is mentioned as=20
-allowed argument, but not "--recursive".
+I've applied this locally as so (tinkering since I saw the same symptoms below
+with your version):
 
-Thanks
+---- 8< ----
+diff --git c/generate-configlist.sh w/generate-configlist.sh
+index 75c39ade20..2c93ffc58a 100755
+--- c/generate-configlist.sh
++++ w/generate-configlist.sh
+@@ -2,10 +2,11 @@
+ 
+ SOURCE_DIR="$1"
+ OUTPUT="$2"
++DEPFILE="$3"
+ 
+ if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
+ then
+-	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
++	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT> [<DEPFILE>]"
+ 	exit 1
+ fi
+ 
+@@ -36,3 +37,9 @@ print_config_list () {
+ 	echo
+ 	print_config_list
+ } >"$OUTPUT"
++
++if test -n "$DEPFILE"
++then
++	printf "$OUTPUT: %s\n" "$SOURCE_DIR"/Documentation/*config.adoc \
++	    "$SOURCE_DIR"/Documentation/config/*.adoc >"$DEPFILE"
++fi
+diff --git c/meson.build w/meson.build
+index 3a1d12caa4..fb5d7367f5 100644
+--- c/meson.build
++++ w/meson.build
+@@ -720,11 +720,13 @@ endif
+ 
+ builtin_sources += custom_target(
+   output: 'config-list.h',
++  depfile: 'config-list.h.d',
+   command: [
+     shell,
+-    meson.current_source_dir() + '/generate-configlist.sh',
++    meson.current_source_dir() / 'generate-configlist.sh',
+     meson.current_source_dir(),
+     '@OUTPUT@',
++    '@DEPFILE@',
+   ],
+   env: script_environment,
+ )
+---- 8< ----
 
-Markus
+Only, things are behaving oddly. For example:
 
+    λ meson setup build2
+    λ ninja -C build2
+
+works fine, but
+
+    λ ls -l build2/config*
+    -rw-r--r-- 1 benknoble benknoble 17169  9 févr. 16:39 build2/config-list.h
+
+I don't see the dependency file. Further, re-building seems to get stuck (I get
+similar symptoms if I add or remove a relevant config.adoc file, but let's keep
+it simple for now):
+
+    λ ninja -C build2
+    ninja: Entering directory `build2'
+    [1/28] Generating GIT-VERSION-FILE with a custom command (wrapped by meson to set env)
+
+Of course, if I invoke the command myself, I can fix the build:
+
+    λ grep generate-config build2/build.ninja
+     COMMAND = /usr/bin/sh /home/benknoble/code/git/generate-configlist.sh /home/benknoble/code/git config-list.h config-list.h.d
+    λ (cd build2 && ../generate-configlist.sh .. config-list.h config-list.h.d)
+    λ ninja -C build2
+    ninja: Entering directory `build2'
+    [7/7] Linking target git-upload-pack
+
+but I certainly wouldn't have expected to have to do that!
+
+Interestingly, after the "setup" step, build2/meson-info/intro-targets.json has
+this block
+
+  {
+    "name": "config-list.h",
+    "id": "config-list.h@cus",
+    "type": "custom",
+    "defined_in": "/home/benknoble/code/git/meson.build",
+    "filename": [
+      "/home/benknoble/code/git/build2/config-list.h"
+    ],
+    "build_by_default": false,
+    "target_sources": [
+      {
+        "language": "unknown",
+        "compiler": [
+          "/usr/bin/sh",
+          "/home/benknoble/code/git/generate-configlist.sh",
+          "/home/benknoble/code/git",
+          "@OUTPUT@",
+          "@DEPFILE@"
+        ],
+        "parameters": [],
+        "sources": [],
+        "generated_sources": []
+      }
+    ],
+    "extra_files": [],
+    "subproject": null,
+    "dependencies": [],
+    "depends": [],
+    "installed": false
+  },
+
+which doesn't mention the .d file anywhere. The _only_ reference to it is
+build2/build.ninja. This doesn't change (nor are there more references to the
+generate-config script) that I can find inside build2/ after any of these steps,
+which is odd.
+
+I can't think of any good next debugging steps, so I'm open to ideas on this
+oddity.
