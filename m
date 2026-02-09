@@ -1,181 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11220125A0
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 07:36:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD042EC559
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 08:33:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770622564; cv=none; b=OwGCHycuSxFXPKyeishoAaOG8F75R4QLCi/RENUrqhH1i/pTyAfzFCgGnvDpiQPjqQpybYRfjeGOBxm34dsYimnGFhrhQKvVKyMwyVQcGl0pDK5P4uTSjuaTFMVuMzA/4OlkabKClFxrMt7NQ7c/NiotHIBLzjCaBTSoH1IS7bg=
+	t=1770625983; cv=none; b=gXynuut3MS5WLVJgZWc2b7AmSHk40xcW1w+2HJjTyjUeo8Vl3IFkBlw8cKJvKEiex3XPArA+FWHgJeoxG4tbThT3rPEKYU/vIhJP4STNR/q3MD/RGX842+YBl7BgL5Yhmt46vFDxUvScaRbv7RitcTblaqNXG1C+IcHy+HI/vk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770622564; c=relaxed/simple;
-	bh=xTt4RFLBgUyxEtSe9gnRjHTcpmN+zxUBm7pZMK21b+0=;
+	s=arc-20240116; t=1770625983; c=relaxed/simple;
+	bh=ludTtqKN+GKmvOEO/wJnyIQdMCVttbx3+nhuJbWjBCQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WgpYaTW9+UxWf5vOOLHZBcz1QaFRVGxropvPHS0lMvA9Nfa2oUcTamULRRfD7r39nD0W3zUjXHQvzKWbGAQVNW0wWNT/uU+RCgmOXaX3xq6yzc8Xf1i2HMHvvALRQ4i09DgA/CsoMTQn7NzJzpN/b6MD0S+A7xg0IKvu2UTS4fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=euXVAZIO; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=pas8xovYZZUyf/ROI/sVO4jHx/NdqOxY6kfxZNk1S72O7IsdLIA5+tPMPBZ2mhOl7DnGGZ48WAbGGHCfI1wVbgI+rXPQdfVSbfNdSQqoG3wvm35nEjwig5BJIRYkMHNUM1Qi4PsIsMrtBvvc7GoIb3VOq7HZu0q9PbjlSFhlQFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XWem9ASx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ia9U+h2/; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="euXVAZIO"
-Received: (qmail 339669 invoked by uid 109); 9 Feb 2026 07:36:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xTt4RFLBgUyxEtSe9gnRjHTcpmN+zxUBm7pZMK21b+0=; b=euXVAZIOll5sfry1Xxbl/VLv4Yp3x7K/N18ooAN0BZEM1PmIOEanTAzWRKLoUV9ge6h/ARO+kpAAitz59HNytswyPRAF+cMAZKA30na/t/kL30T6kxdwDYF8Wfeho98tahBm3PNZqpjUnAHW3XIc75aLX2n9SJkA/yR5DG17H1Tnh+UYpBKFys53swsExZa0RKGWam3Q44SzSa3fOJgJWqrKA2flLOqjE6ClRnfg3o+IDTDX5xYMGKOve/+UAILVHUDmjguoFj3UiK5B7xQRVdeddz9bmzAyRS6E33BNjLyQ9rOaq+c6zHVeyHB5lOctCwIeKkZStRkHzxd7o8Dddg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Feb 2026 07:36:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 670328 invoked by uid 111); 9 Feb 2026 07:36:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Feb 2026 02:36:07 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 9 Feb 2026 02:36:02 -0500
-From: Jeff King <peff@peff.net>
-To: Jonatan Holmgren <jonatan@jontes.page>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC] Support UTF-8 characters in Git alias names
-Message-ID: <20260209073602.GC585828@coredump.intra.peff.net>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XWem9ASx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ia9U+h2/"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8E04B7A0158;
+	Mon,  9 Feb 2026 03:33:02 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 09 Feb 2026 03:33:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1770625982; x=1770712382; bh=Q19nZEyaPB
+	bQ2TtAxv3k68oj6Ixl3Vrdc6NqLv1WVCc=; b=XWem9ASxGQOyXWD1tV5/T2GV5H
+	NqH1AJ0fvW/jMjWeEgakLh6g/0sjhXTN+6pxZVsRkVv6efSEYg8Qo3ShoMAq7HZz
+	jVPZIwtPU5U0M2tBD8b61YGJRov5pANZDnk5vkOAwPD6AFBiau4zd3H3csefi047
+	0O9JdRDZ5eG+XLbrO3yVRocq8mrzgKCxHEUaQrYOv1Ip1kCXXHADDd9cDQPtmj46
+	8LnJY06BaVNTgFNR242zhO6Ka4Q5LV3J1TlwxVcJtOON+QQtczt659MyWrPS7R0M
+	9ptQx8lfN2f6J63R6eRxvie65jFL/Bkg4uf902nhqpoBWW7vQE4A6DTGPYhg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770625982; x=1770712382; bh=Q19nZEyaPBbQ2TtAxv3k68oj6Ixl3Vrdc6N
+	qLv1WVCc=; b=Ia9U+h2/PMspJelRBCXtX4vFyTiRxEIn4mAOGHkKjWH0gCmQqlF
+	ydRE0SljV7a6y7Vs0olsCaEuayjnDVLG2+wZRXA3B/0GpAmOxniSddR//nuQSlYu
+	qTxyaZU/5YnAdEk5R6vFFTU5lQnG7SzgfJWHaX99uBm3LBEIr55D0jk645I802yK
+	dvM6ucSga+5XaSmG6cU0QXMsYYyr1S7r9lE3r1KUGWmsajcwiRNrsBadcB8KSTYq
+	JVoMZ8hComBE7KNrnvGyvjK2pToUE1lCNZIyUQVI8FTASrhe350G2y8RMzpXDoSO
+	jXk1C/kg547tlNezJCTFCMmZXGTmTqURN9Q==
+X-ME-Sender: <xms:vZuJaaBfZAWO1QQx9VLYn7M8G2EbJVZfMOaQXSwEh-XsG4DSjcVuJg>
+    <xme:vZuJabg3VcTAAR7MeG6BVttZVdHTVxQSpuPjhvhbi1za26KxgyNBIllMezfI2bymP
+    57OS3BL3cHH6bTtZ1xCABGIulMi_meXop94v0DaUal9xaNOW-fpHPA>
+X-ME-Received: <xmr:vZuJaSkX4oMMOXuAyzh-bkx8awPXmv3hWD0IV9FafPJvoVazEuHNqgzZkzf3N6tw7JpzoevumLsprFkFuovuaO2r7sU57qpOL6MGVOYi2_U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleeifeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
+    thhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:vZuJaXrA_ggjlQwyYxX2LW0J3gRaFlyX8qJPBoUK6eLQC7jo983MRA>
+    <xmx:vZuJabHFHp_9e0LusTIdaOlCR8UH3YhxfCUZAdpDp7tu1TsKGJHF4w>
+    <xmx:vZuJaTyAeXEjng7tIHRpP8gI8Ll8scD7tPpwsIPoht-x265EdxJNUw>
+    <xmx:vZuJaQqVLEF2CQAvFL8GD6Ux8nwTWqM4rod4UvpJqGfqlynrim0i9Q>
+    <xmx:vpuJafFQ-yxYQXg-iLOETyvynJAVbrFbH1PcPJSxjjP6MvtgIH9BqOFX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Feb 2026 03:33:01 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f9e1cb5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Feb 2026 08:32:59 +0000 (UTC)
+Date: Mon, 9 Feb 2026 09:32:56 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] meson: wire up gitk and git-gui
+Message-ID: <aYmbuLXiyGthSE0u@pks.im>
+References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
+ <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
+ <20260205093748.GA2177239@coredump.intra.peff.net>
+ <aYSFGG7lCg6Sw8vy@pks.im>
+ <aYYLLI2Gb7YlBtKt@pks.im>
+ <xmqqms1lcy0i.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+In-Reply-To: <xmqqms1lcy0i.fsf@gitster.g>
 
-On Sun, Feb 08, 2026 at 04:30:02PM +0100, Jonatan Holmgren wrote:
-
-> I think the best approach is to support UTF-8 specifically for alias.*
-> variables, which would mean modifying the git_config_parse_key() fn to allow
-> UTF-8 bytes and make non-ascii aliases case-sensitive to avoid complex
-> locale-dependent case folding.
+On Fri, Feb 06, 2026 at 02:23:09PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> The main pain point would be making sure all platforms handle this nicely,
-> esp since mac uses NFD and not NFC Unicode.
+> > The fix has been merged upstream. I've created [1] to verify that the CI
+> > now succeeds.
+> >
+> > Junio, I'm not really sure how to proceed here, as I cannot send the
+> > subtree merge via mail to the best of my knowledge. Shall I instead send
+> > a new version that just includes the upstream commit, or will you handle
+> > the update?
 > 
-> Before implementing this, I'd like to hear:
-> 
-> 1. Is this a feature the project would like?
-> 2. Is my implementation approach reasonable?
-> 3. What concerns should be addressed in said design?
-> 4. Any compat requirements I should be aware of?
+> Whenever j6t says his tree is ready, I'll pull from him to get the
+> update.  This "wire up" patch does not need any changes, right?  If
+> so, things will start working when I pull from j6t.
 
-I think supporting non-ascii aliases is a good goal.
+Yeah, exactly. Thanks!
 
-However, I'm not sure that special-casing the parsing of alias config
-keys is the best direction. Since it's a syntactic change, the special
-case would have to be understand by all code that reads or writes
-config, not just git_config_parse_key(). And then you'd potentially run
-into problems with older versions of Git, or alternate implementations
-(of which there are several).
-
-Plus it doesn't solve all of the issues. E.g., should we allow new
-characters like "_" (for a potential "git foo_bar")? That is doable, but
-what about "." (for "git foo.bar")? I think that introduces new
-ambiguities into the syntax.
-
-Taking a step back, I think the root of the issue is that the schema for
-alias keys is poorly designed. Git's config syntax allows for three
-levels: section, subsection, and key. The section and key fields are
-restricted to alnum and dash, but the subsection is designed to be
-unrestricted (modulo NUL bytes).
-
-And that's why we have:
-
-  [branch "foo/bar"]
-  remote = origin
-
-for example, because branch names don't follow the same syntax rules as
-config keys. And it's the same issue here: the alias.* schema is trying
-to use one syntax (alnum config keys) to store another (command names).
-They _usually_ overlap, but not always. The pager.* config has the same
-problem.
-
-We've discussed this before, e.g., in:
-
-  https://lore.kernel.org/git/20150206124528.GA18859@inner.h.apk.li/
-
-There the immediate problem was that "git foo_bar" caused an error
-message. We hacked around it by suppressing the error, but it was still
-impossible to add an alias or pager config. We knew that was a
-limitation, but punted until somebody came along who actually cared
-about making it work. Now you get to be that somebody. ;)
-
-So what I'd propose instead is introducing a new schema like:
-
-  - setting "alias.foo.command" to "bar" would alias "git foo" to "bar";
-    this should work for any command name, as it is just a byte stream
-
-  - a given command subsection is matched verbatim. So alias.foo.command
-    matches "git foo" but not "git Foo". Likewise, we do not do any
-    normalization. You put what you want into your config, and it should
-    match the command you invoke. This is perhaps less friendly, but it
-    punts on any normalization or case-folding that we have to do, and
-    matches how the rest of Git works (paths are likewise streams of
-    bytes, and it is mostly up to the user to use them consistently).
-
-  - leave "alias.foo" as a historical synonym for "alias.foo.command",
-    so that existing config continues working
-
-  - optionally add new keys within alias.foo.* sections. For example, we
-    could allow alias.foo.help to provide text shown during "git help
-    foo". For the most part that could come later, so I'm just
-    illustrating possible eventual directions that the new schema would
-    allow. But it might be worth pondering a little now to avoid
-    painting ourselves into a corner. E.g., you could imagine a schema
-    where alias.foo.shell is set to "true" instead of sticking a "!" at
-    the front of the value of alias.foo.command. I don't know if that's
-    a good idea or not, but if we were going to do stuff like that, we'd
-    want to decide now before setting the alias.foo.command behavior in
-    stone.
-
-  - likewise, optionally do the same for pager.*
-
-I hacked together some illustrative code below. Note that we do use
-strcasecmp() currently to match command names (which kind of makes
-sense, since if you had "alias.Foo" in your config, the parser would
-downcase it to "alias.foo"). So probably that historical code should
-continue to behave like that, but the new "alias.Foo.command" should be
-more verbatim (the patch below just feeds them both to strcasecmp).
-
--Peff
-
----
-diff --git a/alias.c b/alias.c
-index 1a1a141a0a..44bdde58af 100644
---- a/alias.c
-+++ b/alias.c
-@@ -17,19 +17,30 @@ static int config_alias_cb(const char *key, const char *value,
- 			   const struct config_context *ctx UNUSED, void *d)
- {
- 	struct config_alias_data *data = d;
--	const char *p;
-+	const char *cmd, *p;
-+	size_t cmd_len;
- 
--	if (!skip_prefix(key, "alias.", &p))
-+	if (parse_config_key(key, "alias", &cmd, &cmd_len, &p) < 0)
- 		return 0;
- 
-+	if (cmd) {
-+		/* The only 3-level key we understand is alias.*.command */
-+		if (strcmp(p, "command"))
-+			return 0;
-+	} else {
-+		/* alias.foo is the same as alias.foo.command */
-+		cmd = p;
-+		cmd_len = strlen(p);
-+	}
-+
- 	if (data->alias) {
--		if (!strcasecmp(p, data->alias)) {
-+		if (!strncasecmp(cmd, data->alias, cmd_len)) {
- 			FREE_AND_NULL(data->v);
- 			return git_config_string(&data->v,
- 						 key, value);
- 		}
- 	} else if (data->list) {
--		string_list_append(data->list, p);
-+		string_list_append_nodup(data->list, xmemdupz(cmd, cmd_len));
- 	}
- 
- 	return 0;
+Patrick
