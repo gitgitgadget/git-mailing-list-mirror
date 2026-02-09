@@ -1,145 +1,225 @@
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7278238C1A
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 08:54:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68C31E7C2E
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 09:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770627283; cv=pass; b=RfAmgKMxkVoS4a21wktqWIFjMGcO4GTMPj0CrCReSJhyqeJVAmCLqwHCwPmHbjAN74++MTnSuNycB+2a5h9ePhHp3Ie80tWLvGbqHmzW71j0LxYHFjh+oVdlDukOCKczSYfZKfXkUO8BuS89kZrnhFaI3xzT4FnIedSX0ZHC5WI=
+	t=1770627735; cv=pass; b=CtFUknDNaoJZkkCoea6Ghv1Gn7jrikqOxD0o9KIXD7IxZ90l+tRXW0Cr3lxp6icyNQ+eZo121CLG/xk17Y58SSKZBZWfunpC0Y1m6rlVTI3jnLGQk3F4uPZdcD2I8a7H+t3eGWlDzvx+lHWY8yyonaqBvRwmdFrjQ9SuWSp0hTg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770627283; c=relaxed/simple;
-	bh=fQw4tszLgtag1uYzUD7NnOaqXCZIdxg5UI1UCWsn76E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VtD2+FZKbVzh/UbkIHaqqlY39z4CJLaIt6vO32FBHc8q4vEu9ulu6pFfLEjDvT/11yEaQ1fTt8C1/xhr9Vn76h9SpLZw3FZeyk2QXL2NZzyuYjCaYJ35dRox5LNsHiLSQ3F9KMIGMnPCYBkvfAWYzJw45Xi5JYWTOvI5mmHIPRw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TWxegFrW; arc=pass smtp.client-ip=74.125.82.46
+	s=arc-20240116; t=1770627735; c=relaxed/simple;
+	bh=8kcZb+PnmENFDZ5foYlqeIVT9nTQu9WjmMtr8IpS5pE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZPtjf2WFW0FtGqIqdDDOQ/86KkJ+6iUYJS6gBWfv23lEb8YjRYm1eQHbljUvgPKpuMZn7OScdK8lvf74uvTJ6SlZYHxQa9L+VvZbeRJPqPvJiDBX5bmGy9zcps6ZmCpmO+QhW6wyIyQ18b8Tfo+MTui/Xbpi3zBJW48gdu6mnBY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AAyLt0A4; arc=pass smtp.client-ip=209.85.222.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TWxegFrW"
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-12713e56abdso704668c88.1
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 00:54:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770627283; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AAyLt0A4"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-94acb3d6cceso670211241.2
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 01:02:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770627734; cv=none;
         d=google.com; s=arc-20240605;
-        b=TRzfda38E+E/a2WWJcEsm/MkBuikO8f+gxvxykSfgFZ6dMK/0da12R2iv/ciS7a9xu
-         UJmT1NZ6EEuOQla8H4l/InKcMzAn08Ctf+x92e43TgEsMBPMnH/pqBpTZbgYZDeCsbi3
-         UCGmUEc5yi+u7VtLeNesLvGh8QEy7x4qc1409UWUhYZVfKX+8SP39SJn0i28DTTH2Y9W
-         ByBJ+5zM4f+rtxhYTYsCWvPK1s0FdfS3bZnBzJ2OYPIK/d/ZMUtC31rI7vXerUg3SAs3
-         myi7M8fAfYLfqlkPyny1ATzHnBXEWVwR9ocX8zHRG8QO6NQ6YgaYQ2I22RK6KT5OWtfP
-         W5+w==
+        b=bIbkOvUK0PSow0Xx2EOKonxrv7Xsw5BmjvZc0iQjhP8GVRpr7SuRnR8f1lL5as4Wmi
+         Bpx9YMRxt2h7y5nPiC4r8+4vNaV9cl9x5zJfm3Tm/o4wcG9XueZhFb9A7aJ2JwYBC8pY
+         VLpmvtJJovcHzAkFDK5hbVOQAMd18fyoVLj7CRcpR9NdGr2doPrVQ8aZPY1ijJDlm2dE
+         wHdj4NYDeod8QZzneJMif++/eevapAc8f4wYuu1xEaQBamgY1XqOK0BtXlXVywLawPVm
+         U8sBf135udQK3yislFLa7nONX/eH+iwpK6K1H2drBaffaQ9e+JmSliZvVbGtkOhjLQtY
+         F8Pg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=sAjy+xK+0nW25dsWuRmybU0NfLM6/Atf3kTT6piT/Nw=;
-        fh=Gqer47B7wVpRcxG24DI2tH3SWYFh2covFErHXp173OY=;
-        b=RvyRo+LeqOJd35cd8uJLKAlPDFHPMsRBBTJJai97vz4pySVX45gAr39H/pCiZMEuDm
-         sG+y9DExMSPFuHD+d5rEE+N2ZG+gK8gGRPMxJojyZ1w9B608goGRMkJyf2qtnsHsvhpX
-         T+rVQUht9zHjBC08W/Lir3UTO0zfVUCFdVyljtWzXx7urwsBqv67zO35I5WTzNi9Vilh
-         WJiP0rlIIy49woYY7cCzn1qD/AmtdqautDLo0zu7qoUv0kHWCU/CDLep13dC8jUOx/B2
-         86YLULL0H6dxsv0ESwjSqroOFvoLKj7BiloEtCGN+4MXKYXEZMzqhRxFMIM1V1kf0gYy
-         AJcQ==;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=yghgKHSoOv5sGvs6wZ58u4UbyC8WfxfrKqJIy6jMpbw=;
+        fh=OKF0WwHv+iEEvf4wXtW8IYLPavoiJm4Et2FBGP1+bQ0=;
+        b=luVU5dglZJQ++6zYurQxnaQLxDXMRmQP2weTIALsR85Vo7oU6qWVgMrY7m/sLG7Dql
+         Ld9u98wqHo0n7r11tPS8HO54a2PA1hbccmR8o511LifO631hdeSwvvkPfrWDEGYITdZX
+         jQDpWEh36d4rn14OJsH3qg6Pc77gLap2SPIKcqogSyzNpH9hNs3cx+njlqrdwVDCPYk0
+         ZKKMkJ5h32442B6SgHlNibJHxW7F0AfcN7uGwApI1jUa/dhhasU1eersEgj1DbSgZ878
+         4VbYBfv36RCyKQqohkzSY2okJm/bqXXv1N9fI5RKBKwaCAuvWKnO3/56t9KRdOIvsQ7b
+         h1VA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770627283; x=1771232083; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sAjy+xK+0nW25dsWuRmybU0NfLM6/Atf3kTT6piT/Nw=;
-        b=TWxegFrWxaTR1I9xNQQBmsrzOAXeqJmNA63i/v79Ggui22vm/dVKrZ7OuIn+rEllW9
-         ps1jACC7AKr9bC39GyMESht6BcLk/Wshw2npCEi6xFk9SLd6BhLcfh8oyN5J5Rtauhwd
-         9xuv5RqJiOKXW2lFH6aO0KVEb+OTlPOl514+OfJxRxCbhs6mmilwmEhh3MItJloUTSFS
-         k4HxoOCZ2z/z1vw4Sv6CanO+F/uoT5uSgNWKBD0Eq0bHctk+A6TYIGMhl38ASAggXdGz
-         xVRla6Y8g1DYASSbdq1bWq622hSH+V2hufwSMpCjI09nx20AoWfmq6JcfxmdQL2GdyVb
-         30rQ==
+        d=gmail.com; s=20230601; t=1770627734; x=1771232534; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yghgKHSoOv5sGvs6wZ58u4UbyC8WfxfrKqJIy6jMpbw=;
+        b=AAyLt0A41+7dzK/ZH+pCHqd4qCHpJw7Yijsy442Jdh6tj8Dw+yNEy+AGdLae9Ycp/K
+         Lo0YjVlZ7rFC8jJE6fR6InVvgDy7JptYvYWQLPF+G94E963R+b2QGoRt507Mt5iupBIB
+         Gm/Eoya5oPcma2CRPYC/xzugO4rD1i0yiN5pan4QU/IHYbZZIRB+PpQ0mipR/D5GYKql
+         DpIHGkyIv9h3FVHd0LO5dxKCZWjb7NxSnOrmIns0/qPWFFqqOBlgQ2dFv1zUbjK0ulRj
+         j1R4pv3oU5mm3CErLMV2IF2rGcKe6E2P9pgixip4bTtBFakCCsPC0xaTUwM+5xu63DTO
+         B6Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770627283; x=1771232083;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sAjy+xK+0nW25dsWuRmybU0NfLM6/Atf3kTT6piT/Nw=;
-        b=vTWT4GeZW6oHDmx6nRJb/+b54Bm5nGrx/IHIhjQEsnry+165shtOHrOKTExG193kSp
-         VMw0NDOkSexng7h3AyyeUyIXn1Q762c+uHRaxZQThldwNpdfqAkfgp2nu/Dem5f5MB1P
-         RZ6/BkxRtAFiHgUN7F80pC5o5YUussqWcpknSNEZbylUR2OsxadEJIQHZqQoaG7pr+HV
-         NiqcpPWSFtex1KnA0WU63aBvOb1ulw3GCYHMxqejHYG6U/JpZgfEb/SinxqZeorJcX/j
-         2SHezkIpSRZMPj3tgE50KhyMaNsNZuGfUgdLcGebG+l8DWCeCC6ztk02tcI4aFBKCyvX
-         dXpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVQLneCY/fbvllK1pemeomcpgpAaW9TdvCVOy/kYrSqi9ppjVHLkSsAYsCPSBaGjRoTZ8k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRclcE2RH4lRuj90c9NzqKiQ7W1uMlB1SziZSbneMBLBsS3p/0
-	XpS98lwV43LxJAa6oxFUEE4sZXNca9R2Qo4/UwbTeDlYKxpBpr3liGv7Yye+G+MJecXW0ekX9Fj
-	DVvh0fEv207wPdCl/jMaMzjnZO3LhIkY=
-X-Gm-Gg: AZuq6aLWrSz7Bc4N2fDVwY4Kq3Z7qPgkKSsh5m/kVIx1TacRU5SGQyIf7t5YGp03JeZ
-	18x4Yw7cx0sGualLkIUuto1uCtrTth9uPC1R8Y3r59fkWEoDwZTN/5VX2aksSxzMKclzXYppeEl
-	aLHS835LwcKtHW2yaiS1LkSH39Md2kVIcuf2BTBNDProAFwyc3Jlkt0cT9Gjc/dkkDNZ5nLBQaU
-	gXKG2c9DYOJ34U16mNcZLvZAIn/MrqNqnH8ESu+NiUHrLpcFs6P3udY9271B2F1tmGaGb9VHxE=
-X-Received: by 2002:a05:7022:698c:b0:11e:3e9:3e92 with SMTP id
- a92af1059eb24-126fc1e223fmr5795208c88.23.1770627282659; Mon, 09 Feb 2026
- 00:54:42 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770627734; x=1771232534;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yghgKHSoOv5sGvs6wZ58u4UbyC8WfxfrKqJIy6jMpbw=;
+        b=s8J+miEanaz5JMbQ+IIwW1KjBqH5xURQA71LQ9IhaFIONyaFkM3jXkbLVBscdipHAV
+         d9M24b5LTMO+0mOUjfUTc1Zv/ZjpNZTfXzCu3/wtbIZfiaHTYubOYyEPbxMP9R/GsyVh
+         3N+RB6wsBxrhZ/wX6/2af0gCB9RdkWxWHVFUJNBjTx646x/vroNiYUIgBbmGiXDpuJtx
+         BU/6R9rDwNYAwK2Ms2T7UR4EdP0kP+jFIg3c7jRY2moXpgPbuTtS9IVFRa3kGX0XMnck
+         JDbCboUdwTWPoKLYCksf+nJBFslBKbYWURwmmuFV/FwXTCQuqDBb2t4lN6HbWmfSAoa8
+         rYoA==
+X-Forwarded-Encrypted: i=1; AJvYcCXWu9UDzhvEQMom8H5bOJWkPgcIf3oXxIo6S3obq6Tfcb9jEiCWukLVUC2gb9Nv/TRNvkw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWHbteO1dKMVJo0Vjc+plFzW6nl9omXHSAwTWZCM5Q5J5js1fT
+	cRcVeXW1G3PRp1oAatzNs3wkbL1bBRKnbKGAyltbLs7ZSjEax63yIGA6cFaBp3xji1ajozH5I7t
+	ygv14OZ9dQ8KbANpOfOw3pfQ6bl3deYY=
+X-Gm-Gg: AZuq6aLd7olPxz2V20QerAMASqzafqVlOBa59j9yhBqxB6t3iF4KbZhZvWFHXxLByYW
+	Qg01eJfhVUTfLlKyc7czleoXld4HfFq7TK/MLWqJ87C6A5ZBmAbpFnxz9LUcKmMPVymyDXFkblA
+	r9ivQEuWYF9MCw6o6qicxn/Y2Db3SAkElRJt3RW7Qj6eHKZuAQY3KflR2pxw/yy2hg9nOR5MVc7
+	PkvvQl2VkcDsb2ohrnGxkNfOkzxUc2D7xxGFOa+obT/JfdJd+AFe6FoBYFf9s8nAZkgoZxgU6/k
+	nr2hMmRwpjnh/5HGomBw83Acm9F1tw==
+X-Received: by 2002:a05:6102:441b:b0:5ee:a590:6b11 with SMTP id
+ ada2fe7eead31-5fae8c12648mr2779849137.36.1770627733728; Mon, 09 Feb 2026
+ 01:02:13 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 9 Feb 2026 01:02:12 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 9 Feb 2026 01:02:12 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260208152811.73213-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <xmqq4inrahti.fsf@gitster.g> <20260208152811.73213-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1770127568.git.belkid98@gmail.com> <7e3082125df08d3e5fb2195d73698c4c28c6645e.1770127568.git.belkid98@gmail.com>
- <xmqq7bspcq3c.fsf@gitster.g> <88570b6c-2ff3-416f-b63f-2fb7c80c5af8@gmail.com>
-In-Reply-To: <88570b6c-2ff3-416f-b63f-2fb7c80c5af8@gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Mon, 9 Feb 2026 09:54:43 +0100
-X-Gm-Features: AZwV_QhAMY6-ZZq4XC8Xyad6Qf1ugjqr38qclcwOCv1gWN_opK7jTczDQeZzgcI
-Message-ID: <CAD=f0L9ZeFGo=fD0oOS4rjprBjJTGZiGL8EodsjMj9DFk0hO2w@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v6 1/3] environment: stop storing
- `core.attributesFile` globally
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, toon@iotcl.com, 
-	christian.couder@gmail.com, usmanakinyemi202@gmail.com, 
-	kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com
+Date: Mon, 9 Feb 2026 01:02:12 -0800
+X-Gm-Features: AZwV_Qh4klKyY10ZhkxGr4jCri2Jzd-9rbjzKcAhIn2tCuCW4-_PVEs76KzjCk0
+Message-ID: <CAOLa=ZRaWA14sootWSPo5g4Yi4GBXf6HjdkdBY1Tt_+V0szCjg@mail.gmail.com>
+Subject: Re: [PATCH V2 2/3] wt-status: pass struct repository and wt_status
+ through function parameters
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000001950cb064a606564"
+
+--0000000000001950cb064a606564
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 8 Feb 2026 at 12:14, Phillip Wood <phillip.wood123@gmail.com> wrote:
+Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+
+[snip]
+
+>> > Actually adding another repository parameter to both of these functions
+>> > is needed because of the calls like wt_status_check_rebase(NULL, state)
+>> > and wt_status_check_bisect(NULL, state) from wt_status_get_state().
+>> > In the case where wt is NULL, accessing wt->repo can lead to issues.
+>>
+>> But stopping thought at that point is not a reasonable thing to do,
+>> immediately after you notice that wt is sometimes NULL.  It merely
+>> means that unconditionally dereferencing wt->repo without thinking
+>> is not good enough, doesn't it?
+>>
+>> And what is the case where worktree is NULL?  What are we doing with
+>> worktree set to NULL?  Is it when secondary worktrees do not come
+>> into the picture at all and you can safely use the_repository?
+>>
+>>     ... goes and looks ...
+>>
+>> Ahh, I think the real culprit that needs cleaning up is the worktree
+>> API, where they pass NULL to mean "the primary worktree that has its
+>> .git/ directory at its natural place".  So it may not necessarily be
+>> the_repository we are dealing with.  There is *no* such client code
+>> right now, but we could imagine that a program that starts in a
+>> repository visits the primary worktree of another repository and
+>> asks the worktree status there, and once such a client code appears,
+>> we need to be able to say "we are dealing with the primary worktree
+>> for this repository".
+>>
+>> In the longer run, I think we should fix the worktree API so that
+>> even for the primary worktree we will always have a non-NULL "struct
+>> worktree" object, perhaps with its .id member set to NULL to signal
+>> that it is the primary worktree, so that we do not have to have this
+>> strange "we must pass repository redundantly even though we are
+>> passing worktree" API elsewhere.  Not just this code you are making
+>> worse, path.c:worktree_git_path() already is a victim of this
+>> misdesign of the worktree API.  It has "if wt is given, then the r
+>> parameter should be the same as wt->repo" nonsense, which we
+>> wouldn't have had to have if we had a worktree object even for the
+>> primary worktree,  Look at how ugly that code is, and weep X-<.
+>>
+>> And the same misdesign of the worktree API has caused your [1/3] to
+>> pass 'r' but yet still depend on the_repository, which you had to
+>> fix in [2/3], in this function.
+>>
+>> So, I dunno.  If you are ambitious, you may want to clean up the
+>> worktree API before this series.  Alternatively you may be able to
+>> punt on the parts of the wt-status that interact with worktree API,
+>> and move the rest of wt-status less dependent on the_repository, but
+>> I am not sure.
 >
+> Thank you very much for the detailed explanation and for pointing towards
+> the bigger picture.
 >
+> From what I have understood, the worktree being NULL refers to the
+> primary worktree (as it does not indicate which repository so it means in
+> respect to the_repository). So if we want to access the primary worktree
+> of a specific repository or even the local repository, NULL does not carry
+> enough information.
+> And obviously, using NULL as primary worktree introduces extra checks and
+> measures as we saw in the previous discussion.
 >
-> On 07/02/2026 01:14, Junio C Hamano wrote:
-> > Olamide Caleb Bello <belkid98@gmail.com> writes:
-> >
-> >> Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-> >> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> >> Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> >> Helped-by: Junio C Hamano <gitster@pobox.com>
-> >> Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
-> >> ---
-> >>   attr.c        |  7 ++++---
-> >>   environment.c | 12 +++++++++---
-> >>   environment.h | 11 ++++++++++-
-> >>   repository.c  | 12 ++++++++++++
-> >>   repository.h  |  7 +++++++
-> >>   5 files changed, 42 insertions(+), 7 deletions(-)
-> >
-> > I bisected our recent CI failures that break fuzz smoke test down to
-> > this change.
+> I would be very interested (and the more logical step) to fixing worktree api
+> first, and then revisiting the wt-status series on top of that, once the API
+> makes it possible to rely on wt->repo without the NULL risks.
 >
-> The documentation for the LibFuzzer [1] notes
+> So a possible in the worktree api cleanup approach could be,
 >
->      * The fuzzing engine will execute the fuzz target many times with
->        different inputs in the same process.
+> * Make primary worktree as an instance of struct worktree but seperate
+> it by having a marker like id = NULL.
 >
-> and the first thing that the callback in oss-fuzz/fuzz-commit-graph.c
-> does is
+
+I would like to point out that we already have a function which provides
+a main worktree, see both `get_main_worktree()` & `is_main_worktree()`.
+In short, a worktree with id = NULL seems to be treated as the main
+worktree.
+
+The harder part would be correcting all code where `struct worktree *`
+is passed and has special meaning for NULL vs non-NULL. See
+`strbuf_worktree_gitdir()` which also distinguishes between `wt ==
+NULL`, `wt->id == NULL` and `wt->id != NULL`.
+
+So cleanup would require identifying all such spots and fixing them too.
+
+> * Add this primary worktree in the struct repository (e.g. repo->primary_wt).
 >
->         initialize_repository(the_repository);
+
+This also is tricky. We currently already store all worktrees in the
+repository in `struct strmap worktree_ref_stores`. Here, for the main
+worktree we use '\' (see `get_worktree_ref_store()`). So perhaps we
+should formalize using `\` for the main worktree everywhere.
+
+> * Update/add functions, then find places that currently pass NULL
+> and convert them to use primary worktree object instead.
 >
-> so I think the problem is that the assumption that a process will only
-> initialize "the_repository" once is incompatible with the way LibFuzzer
-> works. Maybe we should add
+> Let me know if I have the right understanding with this, and also would love
+> to hear more guidance on the direction with this worktree api cleanup. Thanks.
 >
->         memset(the_repository, 0, sizeof(*the_repository));
->
-> before the call in initialize_repository()?
->
-> Thanks
->
-> Phillip
->
-> [1] https://llvm.org/docs/LibFuzzer.html
->
-Thank you Phillip, I will try this.
-I noticed something like this.
+> Best,
+> Shreyansh
+
+Karthik
+
+--0000000000001950cb064a606564
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 841b38bd8e7c159_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tSm9wSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMWoyREFDWGRPYWhaMzNoMVRaVHdWRTdaenVvK214egpUaDBJWWQzMmIr
+SGgrVUY5Mm8xeWl6S0hYejd6Wk1lNnJrRHhZb01MY1YyVVpWWFExcUoyamVyVWsxNW5ldTJwCi96
+ZVplYmZXRHRUTVFIeUdwamlaNkhzZmN6Z21PWFZmamNYaGpjU0NZclVzUUVDUXdqd3dEd0dYUnlX
+SjN1UGwKTmJsYytDSmluN0JJSTVqcFgwZVpQeGFNdndqRnYwR2dncUpCdG1kQXQ1WVRHaVo4VDZp
+azRBRm50OWRHakxDRQo3dVl2WnhnWGE1WGxUTFIzQnZnK20xMFZiSWxVTW5sclhaM0JqM3h3ejhT
+NUN3eHNzdjR1aldZdEdyUFlaOE0zCkVQWU5YdlZCS1doNGNMekZER0RJMUp6QXM3MzgxYjdRNGZu
+OHQrWS9ZTEpUbzZ3S2NzK1IvSm1NTTVZbnllSkkKNlpJeHlmbHVpeXdlczVNZTlFVldVZjBoYVh3
+b2FNQThDTjlMUlBEQ1BEMGlUTHNYTkw1QVFKcUtnVUE4ZGFmZApzZHBKa0o2Zy82ZHNGcG0rQitz
+dXowYVJNN2dJeVBUVmk3WThYZ3lqaEVUZDkvdVBUNlZmOE9HWHY5Q2oxcjdrCkh0dVdtZGVReS9q
+a3NYdUxVUnZ5Q0FYT3RHeHBWcTFLWm9rb2FIND0KPTNZL3cKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000001950cb064a606564--
