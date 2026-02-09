@@ -1,188 +1,121 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30483081BA
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 22:49:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2F030B50F
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 22:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770677355; cv=none; b=BiL/TManmMSXVrBfcFVb9GtmVlQCFw251EvLJ6TlHOHNys77LZPLK3wR4HhWMdfV6vRqT/HDsf5uQ5PmAcUYcyJMCiJfBGV/WoJ3G8ayiIwBYoaBVO5Twq5GQEPmgl0NGm/FJOp5V/g5S1ew6xD4dbwq0Xz2Uwjni5b/T/TxNbI=
+	t=1770677975; cv=none; b=NSbKqeSmHpOicmSbWj8+Ods2JMzYrSeU+rCzHk0qc2GfQ4M4aqfKcSwyCjrY4cdmIXRUvtUJHm0Qb9byTdOhmTv2ISETgk+Wbi17lCLQCr1d0JxqOoNyqENRgoAwYOfpsceUFXY5T5WmvhsjfO2bU9hsf8LilZG0B5uU1wCBXVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770677355; c=relaxed/simple;
-	bh=OzRpEH8RCEE19DjkcPAWfB3AoN9RhZtfRwI4EM3SQXM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fi17wfHx5H4h36AFjqiB1Fh/bNKo3o24bRpNgfWZHtDsipbOPoanuA7roLuYl9/ahvOrzm5tdpv83gARUVXEyAKcWDeZ4zzTghjOMGkEWQC7H7aj4dzn22AVEVGrjOZGpD7AN9XBJf9NRxfa65W/0MRHxKP8c81Yje4xGUFQnt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from [2001:3b0:22:ba05:3c99:5d75:c899:ae5e] (helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <glandium@glandium.org>)
-	id 1vpa3x-00000001MZc-24oj;
-	Mon, 09 Feb 2026 22:49:02 +0000
-Received: from glandium by goemon with local (Exim 4.98.2)
-	(envelope-from <glandium@goemon>)
-	id 1vpa3p-00000005wc5-0ay8;
-	Tue, 10 Feb 2026 07:48:53 +0900
-From: Mike Hommey <mh@glandium.org>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	sandals@crustytoothpaste.net,
-	Mike Hommey <mh@glandium.org>
-Subject: [PATCH v2] Move rust gitcore crate to a different subdirectory
-Date: Tue, 10 Feb 2026 07:48:47 +0900
-Message-ID: <20260209224847.1416916-1-mh@glandium.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260204232208.1615320-1-mh@glandium.org>
-References: <20260204232208.1615320-1-mh@glandium.org>
+	s=arc-20240116; t=1770677975; c=relaxed/simple;
+	bh=dPq9U5F/O8YhMIsiHHGV+snkC1miHME2P2PFVpCIlm8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sH/YnHm9E4yYJgZe2SipLBEwdul1ccNJWr9FR7UyWoFnJD+pTr9j0PIwcJtnbxXxpcFLPheW4sCzp63gzmAQk/b+M0J3LLFTgk23vMkHqQcBb8b9h991qpGlbbZAhdr+0p6OAKuFoPCp+PW/j05PpEi/dGpAzpQsd/9lgoKdwQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IbCjamyU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MFWyG2HR; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IbCjamyU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MFWyG2HR"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1976CEC0551;
+	Mon,  9 Feb 2026 17:59:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 09 Feb 2026 17:59:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770677973; x=1770764373; bh=5JJ+M2rZs7
+	2JTWP0Bww2NS/Qnb1/yDbPDjY4xnGD72c=; b=IbCjamyUK75AkwEEmAn0af86Q7
+	X5AInp2LntxmWsl4hMKV1JS47/IzGfKj4eAmxHiH5zPMJ4MnAfbBDHNrl0MOcYRP
+	rWNy46OJ4QzawdyszjWWJxyRskQHTga+YgZjCWhBRfHtkLvLD9GJd6FvE/SFPTaD
+	L4v8F4ERjox7Y0trm2g2HnJiLvxVo4uuE6qtjwb6vkbGEnrfDGwcJzVR3rQTOSkm
+	r51WXLYbfnU8xbP+MRn9kB5+avKVLNkz8bgGxRzBYL8mcu2wyG0+ly4hBj0Jh5pU
+	VTHS+NrGCol0oKSZGVQYMnE+w158Bj58JXBiW/+P6LKVLLOKbAcKZrFv2Kgg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770677973; x=1770764373; bh=5JJ+M2rZs72JTWP0Bww2NS/Qnb1/yDbPDjY
+	4xnGD72c=; b=MFWyG2HRAu8GU90ph1POU1Cdxw727MvcjXn28CZmp0SEO8VG5pc
+	/oAhjUyBBgqFwlf7BLKt2XPzn1AaW0DASlez0vQbURsJtjRRaJ4pcFRXSN9rcKPC
+	8AodsF3vZoXnYRXEBjBSqUfESWYimramQTi8W2/tNhyDlwTPulJUF7uRWSz0pBF1
+	xDtGrjg0ixobT5jlEZwEwvrI6BipVz5AOVhd/s16brMOGN5GK8k16C0xkf0kMXd1
+	85XZMH0T7hxoN+OPXLN1c7nEUB6nlHOKw+9YSxVTuVdkgx+EIq6dJ0/DbM1dOUH9
+	4amHidXHFVekFA/3MBX/zEmBQbPVof12ang==
+X-ME-Sender: <xms:1GaKaSVj3Swi67H0hSt4aRi3oEyPP-o7N_1vM9Aalg93XXehdUFSpA>
+    <xme:1GaKaRp2561RtmNZNDtJSYIrcs6Q6dST0VlFXAHfW4zP1P970LOHlUJZ-DXpFaNA0
+    8nHvvG-GLgZ_qQnbHnGhQwQYxALuH5PKyLty1h_tkc6cOlYYhuciiQ>
+X-ME-Received: <xmr:1GaKaRB9vsfqPTG-aZyCdUtRsg9R0NQ_kClr7J0vvkyWwneOofDZyD5ZbugjofY4a-eko1LMfcxgrmm4QdHXR6bR11Ip3bWE5w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleektdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtg
+    hpthhtohepmhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopegt
+    rghlvghsthihohesshgtihgvnhhtihgrrdhorhhgpdhrtghpthhtohepmhgrthhhvghush
+    drthgrvhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhuughgvgdrphgrtghkhhgr
+    mhesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhrhehrsehsuhhrhehrrdhnvghtpd
+    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhk
+X-ME-Proxy: <xmx:1GaKaVgXOjRLniK0_1Rf2lYXWEFmpyFA8sjpJennQvVEkQOkK8Dbag>
+    <xmx:1GaKaXZpldaS-S7F44epq8C3Ra3i8Fhac4BlwunRKiC8NP8l82zW9g>
+    <xmx:1GaKaen7l-l4wf9x_wv55oHOPbQqAzhiSo5Q6bHMn9ay8aOAfSF-Jg>
+    <xmx:1GaKaVhaUNTU7Qu_UX84cCBdOQVuBi1tOA4RG6cLB18W39OjwkiwnA>
+    <xmx:1WaKadCiLJMjoKtwgw9L6nwDdeewiWJZPjH_ZnLKKugAF8UiYwAkuubO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Feb 2026 17:59:32 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  Matthias Beyer <mail@beyermatthias.de>,  Christoph Anton Mitterer
+ <calestyo@scientia.org>,  Matheus Tavares <matheus.tavb@gmail.com>,  Chris
+ Packham <judge.packham@gmail.com>,  Jakob Haufe <sur5r@sur5r.net>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2] doc: add caveat about roundtripping format-patch
+In-Reply-To: <V2_format-patch_caveats.34b@msgid.xyz>
+	(kristofferhaugsbakk@fastmail.com's message of "Mon, 9 Feb 2026
+	23:37:05 +0100")
+References: <format-patch_caveats.281@msgid.xyz>
+	<V2_format-patch_caveats.34b@msgid.xyz>
+Date: Mon, 09 Feb 2026 14:59:31 -0800
+Message-ID: <xmqqikc534mk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-While `src/` is the default directory convention for Rust projects, it
-is too generic in the context of a multi-language project that is barely
-starting to (optionally) use Rust code.
+kristofferhaugsbakk@fastmail.com writes:
 
-Additionally, having `Cargo.toml` at the top-level of the repository
-implies that one can run `cargo build` directly, but this doesn't
-produce anything useful on its own.
+> diff --git a/Documentation/format-patch-caveats.adoc b/Documentation/format-patch-caveats.adoc
+> new file mode 100644
+> index 00000000000..c666d709742
+> --- /dev/null
+> +++ b/Documentation/format-patch-caveats.adoc
+> @@ -0,0 +1,36 @@
+> +Patches produced by linkgit:git-format-patch[1] are inline. This means
+> +that the output from that command can lead to a different commit message
+> +when applied with linkgit:git-am[1]. It can also mean that the patch
+> +that is applied is not the same as the one that was generated, or that
+> +the patch application fails outright.
+> +ifdef::git-am[]
+> +See the <<discussion,DISCUSSION>> section above for the syntactic rules.
+> +endif::git-am[]
 
-Moving all Rust-specific files into a dedicated `rust/` subdirectory
-makes things clearer.
+It is news to me that adjective "inline" has such a meaning.
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- .gitignore                    |  2 ++
- Makefile                      | 12 ++++++------
- meson.build                   |  2 +-
- Cargo.toml => rust/Cargo.toml |  0
- {src => rust}/cargo-meson.sh  |  0
- {src => rust}/meson.build     |  6 +++---
- {src => rust/src}/lib.rs      |  0
- {src => rust/src}/varint.rs   |  0
- 8 files changed, 12 insertions(+), 10 deletions(-)
- rename Cargo.toml => rust/Cargo.toml (100%)
- rename {src => rust}/cargo-meson.sh (100%)
- rename {src => rust}/meson.build (87%)
- rename {src => rust/src}/lib.rs (100%)
- rename {src => rust/src}/varint.rs (100%)
-
-diff --git a/.gitignore b/.gitignore
-index 78a45cb5be..c7453b6fb2 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -258,3 +258,5 @@ Release/
- /contrib/buildsystems/out
- /contrib/libgit-rs/target
- /contrib/libgit-sys/target
-+/rust/target
-+/rust/Cargo.lock
-diff --git a/Makefile b/Makefile
-index 8aa489f3b6..b60af704ed 100644
---- a/Makefile
-+++ b/Makefile
-@@ -939,9 +939,9 @@ TEST_SHELL_PATH = $(SHELL_PATH)
- LIB_FILE = libgit.a
- 
- ifdef DEBUG
--RUST_TARGET_DIR = target/debug
-+RUST_TARGET_DIR = rust/target/debug
- else
--RUST_TARGET_DIR = target/release
-+RUST_TARGET_DIR = rust/target/release
- endif
- 
- ifeq ($(uname_S),Windows)
-@@ -1545,8 +1545,8 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
- 
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
- 
--RUST_SOURCES += src/lib.rs
--RUST_SOURCES += src/varint.rs
-+RUST_SOURCES += rust/src/lib.rs
-+RUST_SOURCES += rust/src/varint.rs
- 
- GIT-VERSION-FILE: FORCE
- 	@OLD=$$(cat $@ 2>/dev/null || :) && \
-@@ -3007,8 +3007,8 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
- $(LIB_FILE): $(LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
- 
--$(RUST_LIB): Cargo.toml $(RUST_SOURCES)
--	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
-+$(RUST_LIB): rust/Cargo.toml $(RUST_SOURCES)
-+	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS)
- 
- .PHONY: rust
- rust: $(RUST_LIB)
-diff --git a/meson.build b/meson.build
-index dd52efd1c8..3a92936241 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1723,7 +1723,7 @@ libgit_sources += version_def_h
- cargo = find_program('cargo', dirs: program_path, native: true, required: get_option('rust'))
- rust_option = get_option('rust').disable_auto_if(not cargo.found())
- if rust_option.allowed()
--  subdir('src')
-+  subdir('rust/src')
-   libgit_c_args += '-DWITH_RUST'
- 
-   if host_machine.system() == 'windows'
-diff --git a/Cargo.toml b/rust/Cargo.toml
-similarity index 100%
-rename from Cargo.toml
-rename to rust/Cargo.toml
-diff --git a/src/cargo-meson.sh b/rust/cargo-meson.sh
-similarity index 100%
-rename from src/cargo-meson.sh
-rename to rust/cargo-meson.sh
-diff --git a/src/meson.build b/rust/meson.build
-similarity index 87%
-rename from src/meson.build
-rename to rust/meson.build
-index 25b9ad5a14..9490272521 100644
---- a/src/meson.build
-+++ b/rust/meson.build
-@@ -10,7 +10,7 @@ libgit_rs_sources = [
- cargo_command = [
-   shell,
-   meson.current_source_dir() / 'cargo-meson.sh',
--  meson.project_source_root(),
-+  meson.current_source_dir(),
-   meson.current_build_dir(),
- ]
- if get_option('buildtype') == 'release'
-@@ -19,7 +19,7 @@ endif
- 
- libgit_rs = custom_target('git_rs',
-   input: libgit_rs_sources + [
--    meson.project_source_root() / 'Cargo.toml',
-+    meson.current_source_dir() / 'Cargo.toml',
-   ],
-   output: 'libgitcore.a',
-   command: cargo_command,
-@@ -31,7 +31,7 @@ if get_option('tests')
-     args: [
-       'test',
-       '--manifest-path',
--      meson.project_source_root() / 'Cargo.toml',
-+      meson.current_source_dir() / 'Cargo.toml',
-       '--target-dir',
-       meson.current_build_dir() / 'target',
-     ],
-diff --git a/src/lib.rs b/rust/src/lib.rs
-similarity index 100%
-rename from src/lib.rs
-rename to rust/src/lib.rs
-diff --git a/src/varint.rs b/rust/src/varint.rs
-similarity index 100%
-rename from src/varint.rs
-rename to rust/src/varint.rs
--- 
-2.52.0
-
+Whenever I see somebody writes "X. This means Y", I try to see if it
+makes the result easier to understand to more people by just saying
+"Y" without mentioning X, and to me, this is such an occasion.  I'd
+rather see that sentence, plus "This means", taken away.
