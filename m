@@ -1,53 +1,53 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC0C36F425
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD21C3806BE
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770653597; cv=none; b=f7qIGSCIIAHNCwxwEu8WJSy0iLb0inWPogWVVBLsA7YO9/WJf4NUUlMW/YjJfjoAm2hu18X609A+MtvalCTeUdueLgxX2B6uXZf6Zjc2zzHUcgxQt3fbUuJQ2MpbnziQdpu+hB0AgPwDV2d+ITamfvUpD6IVqJMBmvrQTdBwJLk=
+	t=1770653640; cv=none; b=neV8up1vOE3KhYfiQkVDFaiH972Z3j5M5rYTzL+3b4/qTkLZ0zHZQ7jBI6HrVpJ3A1zw8f/THesp5jcrlOUhYlNj7NhoefM9GTzxJ+zobvdoayCwlwU0cNlLQ79UMtaA5Bcq9SviPZk8+M+HeUsTrthS4eu8vHE4wyoaIIGAukc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770653597; c=relaxed/simple;
-	bh=2CWpQKGFI32qBG0XW6gzOARHLT6JkIn2mwspvEOqD7U=;
+	s=arc-20240116; t=1770653640; c=relaxed/simple;
+	bh=LxRqCrTNyqn9K5gKZbrT5geEwRb90NJ1W3LWpnPbDKg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VNPYpQVdoLzB+y+gnlWcaTlcAivqJFlXXNxj1aZTR08lNNR10ohqC8+09yuTZ0sZB8Xw79B1c8F+nUjSxSgRFgdKm3VyXMukmIsTvBvmaVu6Ux4dRPAhsEQaaz7n7XSHQy2vlNCMsSlK36SMa3LO8fTnfFUHpas1VYEAzgVKDAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iz7hLTvj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aFlq+8go; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=jPuqK15yGh1rWNtN0Q1SA0VjNldoQo40oRpzWKd7ema82nx9TMuovySCDiHn16vX/SFUhSe9YtYo7THubHTZR9JdCSWjX84kQtngJc7C0S/IHFSOy1WmrRUNcjf6zPDCvrFXVJvLjScO2sdYNTm9mXoGOmufOpyGirSrGYPTotE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SECTR4tu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gt/6slU8; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iz7hLTvj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aFlq+8go"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 771597A012E;
-	Mon,  9 Feb 2026 11:13:16 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SECTR4tu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gt/6slU8"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 038837A0114;
+	Mon,  9 Feb 2026 11:13:58 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 09 Feb 2026 11:13:16 -0500
+  by phl-compute-08.internal (MEProxy); Mon, 09 Feb 2026 11:13:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770653596; x=1770739996; bh=T/m2/dPIHg
-	WobYiwbL5JSLVls6O6AvDYXwNeeSvc1Ko=; b=iz7hLTvj/6vjek3IMGbZ+CqIGd
-	PDx+gj+RWUHoDuTXHdYAKkwDvW6K7j2w5Cuj3CpgevvUGUaTaFv6ih54ExNQL7o4
-	mbB0ddl7eHpt6ELOG+T5fiwbz9KcM7OP+j0UQmjXe4SaDT/dnaJsX3GhGvZ+E5Nx
-	SWzPUV9XGp2iWZpm0O1rTFaJE/quUgPSuQpoSBt92tGtmoweAd5Es8thZKEWLTC6
-	N/ZOABTrzK2cZJoTjej6l2Wt5QCxSP5wUqtJhieFEUvmhwMSDSnWzuXtfV4vfVLK
-	G8dBOZbRN00V2YPnWzWj1A4Cr6czKWA/IdL/tbU2eCjYkJoshd4A75cBCx9A==
+	:subject:to:to; s=fm2; t=1770653638; x=1770740038; bh=2cBoE9oCq2
+	H4yhT+3hENYJdcfhu754dpTVI02K29c+E=; b=SECTR4tuGS11RYLfoAOf0HuYWj
+	6hJmaqgF3AEj2DgpjXcJbLOxIwnl6cYlS8iwzFn9VIhomoBpN60E7vE5ZrP3TBug
+	i5tf27hB8VtEbdw/ZET8Sfd5HRJwGlMwFWtphHeQjqlHBtMexGGpzp+dq/2FxmKl
+	nBgLzfU5ZB4ENzP//MGF1m9uQdHRog8tqmpbAXSRk/Yj8lLPpNudIBV5OWFIttnL
+	JrkNx++Gr84QDWnoXDZIjEIAbDjbX4bVKAxGlthq0mS4214lEh6JqDWM0QydcvcU
+	6N3P9htNncD09LE+uN0ZshpJqSetrtQMuZTWG4FShPY192FEfb4EUABIrLUg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770653596; x=1770739996; bh=T/m2/dPIHgWobYiwbL5JSLVls6O6AvDYXwN
-	eeSvc1Ko=; b=aFlq+8golEKQqQb9My1j5r65q0stgZnmgXg24tbSt8zgQjhsLxl
-	G8Sedv3gc9EyiuxdMX307CbjNzWpUDpppsQx73URxX55/xN9q4WluVwopw5ftnFy
-	YEbVAL1BWBINMaaNQda8kkHqu9SHed1m/hX0WQyKsWve47YASzfXu7QYwsPQoKSP
-	yujOMXTTpdkATwEehjm2/u5itSpi40Ln0I7cKefezBcJbRtEEcn0fFkg1CMhPUhR
-	qjMifBo5/qCCt3jSjAZY9diwau66B9GXKtm1T4wE1neo7b7Ydszd67/rlhWUaL77
-	oU5pawq0UGBpqIhGU9w9a9gMFvvCBf5riDg==
-X-ME-Sender: <xms:nAeKaTpT92vdurGsRlly2ZT9LCX5YTvG_uesUcWD2nraAq3RRg0EMg>
-    <xme:nAeKaUhyuU1z9VRKH7hLCfOEAhgcPoFt98IBUBxJAUupopUGw-kWLvb6xkPYnu9KR
-    w7YIzw8Fnl5GbTOizas38ZaYkpRsqSmIE4e_muoQevMzXGbD0Cl6g>
-X-ME-Received: <xmr:nAeKaYjrFCJ_oM93IlfORClXSwHlMJ2hywGwf04T2SUJcUbJvlDHSpLH1q6QpOw5VYJ7X3ey9h10SbQUYMHpoHi9Tia_QZ4WfQ>
+	1770653638; x=1770740038; bh=2cBoE9oCq2H4yhT+3hENYJdcfhu754dpTVI
+	02K29c+E=; b=gt/6slU8PavD5doU8R3k3mXJlzNV1jEDC+PRlhGgBtstBzbpt2U
+	M6/YYBb6E/uTcOkrdxgRulaSezmPV5EzN4tDytILBYH9wTI8M0ivuoEbUOjFJhAY
+	Jjfd1zuqZwzKhZqXZvGY8ZC2D7TRjXdeeEQ/8dk4epkQLKclgX83B+VanIB4cfJx
+	LSzy37OCHBf0m1CFl48SIXRGui+BnAqAPN4PB+cNjGXMjTuer5xDjfvYoSfpAgi7
+	U0tJ1Ci/Ne4OBuA5aQNZixtBsUzJva/yU4WOj+BKu0OWC1vrHT67HudvWgrRHxG0
+	hJcAZHolVmPgMMpD3x8bThdH5ZZ3+ZF5NrQ==
+X-ME-Sender: <xms:xgeKaZ1iiYXK35836JUggHyPZNXJY8hh900hlya0lUIWm6HdHkD4xw>
+    <xme:xgeKaSUPolf7V1Deh7_QQ3eZfQB68vIWHHQkoWV1zatxXDnmza_04LQyjJs7ehTeF
+    egstxYimFsgy0IMtmVrdC__4Wjmys2RgdfY53V6l0xApL53vyx-Rw>
+X-ME-Received: <xmr:xgeKacKM--CHY_7L0gMfd-0jSG0lswJmTstTrLeXu4hsWkLHNgUHRI451BDWEDetiXNb6sLJkM6xFu5mk0LmlUeAz5wYU_pWFw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejvdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -55,33 +55,41 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejvdeiucetufdote
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehshhhrvgihrghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:nAeKaSijheWEr1Qdq2pFgvTUnhAyIFpT8LTW58lH4OQ89yff5pUMmw>
-    <xmx:nAeKaQIlchi4J21cKYgYMLkIXA-2SAAvp46f8EbzHTLtG-NdDElBvg>
-    <xmx:nAeKaZHnrdPl--tlK0wD1DakFXzgM71LUHgPnWUVMZUjm_9LLqdX2Q>
-    <xmx:nAeKacQm_eyP6mdS0wJ_6k8NHtGfuJU3OXCWlfzWuXHkz9vLV9K5nw>
-    <xmx:nAeKaVyHuLYw1Btouz_RCe0Wuw9yPdzGfI2PH-Es4AfV_lBi2XfjRRwj>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopeguvghvse
+    ihthgruhhstghhrdguvgdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggr
+    khhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepmhgrnhhuvghlrdhlvghrtghhnhgvrhesqhhurghn
+    thgtohdrtghomhdprhgtphhtthhopeihrghnnhhikhdrthgruhhstghhsehquhgrnhhttg
+    hordgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xgeKac2oGFnBC_zj0PdEZGedJiWaMkgMfuaq-Uo9_s6Pb50rZy8i6g>
+    <xmx:xgeKaa7h2MFbKHQQz_G7txGOQZb_gpTVvVDEnbwPGj4XVYSy3h-Umw>
+    <xmx:xgeKad_Kz6bz8B1cfH5UdH9vSPDgU49VLY7Go06mMslDh6SzSVYtog>
+    <xmx:xgeKaZUWLJL7iXxdh5rdgKeZ1dWod__Ew3fMhBppnhFyXO_zis29vQ>
+    <xmx:xgeKaXhxhw_z9QogB228LKNQGvMOibTj9Qr8lStZT-utEHtZ-hz7RrjZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 11:13:15 -0500 (EST)
+ 9 Feb 2026 11:13:57 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
-  git@vger.kernel.org,  phillip.wood123@gmail.com
-Subject: Re: [PATCH V2 2/3] wt-status: pass struct repository and wt_status
- through function parameters
-In-Reply-To: <CAOLa=ZRaWA14sootWSPo5g4Yi4GBXf6HjdkdBY1Tt_+V0szCjg@mail.gmail.com>
-	(Karthik Nayak's message of "Mon, 9 Feb 2026 01:02:12 -0800")
-References: <xmqq4inrahti.fsf@gitster.g>
-	<20260208152811.73213-1-shreyanshpaliwalcmsmn@gmail.com>
-	<CAOLa=ZRaWA14sootWSPo5g4Yi4GBXf6HjdkdBY1Tt_+V0szCjg@mail.gmail.com>
-Date: Mon, 09 Feb 2026 08:13:14 -0800
-Message-ID: <xmqq5x857v51.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Yannik Tausch <dev@ytausch.de>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  git@vger.kernel.org,  Manuel Lerchner
+ <manuel.lerchner@quantco.com>,  Yannik Tausch <yannik.tausch@quantco.com>
+Subject: Re: [PATCH v2] merge-file: honor merge.conflictStyle outside of a
+ repository
+In-Reply-To: <aYmkCLbhZPPjKqNK@pks.im> (Patrick Steinhardt's message of "Mon,
+	9 Feb 2026 10:08:24 +0100")
+References: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de>
+	<xmqq4invm2dk.fsf@gitster.g>
+	<3724733C-FECB-47F5-841C-84DE9792332D@ytausch.de>
+	<fa7fc215-03eb-492d-9af4-457482c56a48@app.fastmail.com>
+	<D514F3BA-36DD-4DAD-BF73-609730390A27@ytausch.de>
+	<xmqqqzqxczeb.fsf@gitster.g>
+	<75AA7DD7-F8D8-48DC-ADA0-74E56CFF351D@ytausch.de>
+	<3488DCC3-D127-465B-BB95-3D87BB2E48F6@ytausch.de>
+	<aYmkCLbhZPPjKqNK@pks.im>
+Date: Mon, 09 Feb 2026 08:13:56 -0800
+Message-ID: <xmqq1pit7v3v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,36 +99,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> I would like to point out that we already have a function which provides
-> a main worktree, see both `get_main_worktree()` & `is_main_worktree()`.
-> In short, a worktree with id = NULL seems to be treated as the main
-> worktree.
+> On Sat, Feb 07, 2026 at 10:37:48PM +0100, Yannik Tausch wrote:
+>> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+>> index 46775d0c79..f9de636884 100644
+>> --- a/builtin/merge-file.c
+>> +++ b/builtin/merge-file.c
+>> @@ -95,12 +95,10 @@ int cmd_merge_file(int argc,
+>>  	xmp.style = 0;
+>>  	xmp.favor = 0;
+>>  
+>> -	if (startup_info->have_repository) {
+>> -		/* Read the configuration file */
+>> -		repo_config(the_repository, git_xmerge_config, NULL);
+>> -		if (0 <= git_xmerge_style)
+>> -			xmp.style = git_xmerge_style;
+>> -	}
+>> +	/* Read the configuration file */
+>> +	repo_config(repo, git_xmerge_config, NULL);
+>> +	if (0 <= git_xmerge_style)
+>> +		xmp.style = git_xmerge_style;
+>>  
+>>  	argc = parse_options(argc, argv, prefix, options, merge_file_usage, 0);
+>>  	if (argc != 3)
 >
-> The harder part would be correcting all code where `struct worktree *`
-> is passed and has special meaning for NULL vs non-NULL. See
-> `strbuf_worktree_gitdir()` which also distinguishes between `wt ==
-> NULL`, `wt->id == NULL` and `wt->id != NULL`.
+> Makes sense. I was briefly wondering about error handling in the old/new
+> code, but unknown keys are already handled by `git_xmerge_config()`, and
+> we'd die in case we see one.
 >
-> So cleanup would require identifying all such spots and fixing them too.
+> So this patch looks good to me overall, thanks!
+>
+> Patrick
 
-Yup.  That is why I upfront said "if you are ambitious" ;-)
-
-> This also is tricky. We currently already store all worktrees in the
-> repository in `struct strmap worktree_ref_stores`. Here, for the main
-> worktree we use '\' (see `get_worktree_ref_store()`). So perhaps we
-> should formalize using `\` for the main worktree everywhere.
-
-Is this a joke, is my terminal broken, or is my MUA hallucinating?
-I see a couple of backslashes in the above, and in the code I have
-a forward slash instead.
-
-But you are right, ref-store-map does use a slash to indicate the
-primary one, while worktree itself uses a NULL, which is somewhat
-understandable (NULL would not be a convenient hashmap key).  And I
-do not think I see any downsides (other than "This used to take NULL
-as the sign of primari-ness but now we need to use a '/' instead"
-fixes we need everywhere) to use "/" on the wt->id side offhand.
-
-Thanks.
+Yeah, looking good.  Thanks, both of you.
