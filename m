@@ -1,114 +1,191 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A795437BE8B
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 18:02:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F39D37F8AD
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 18:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770660159; cv=none; b=cGDm5KivAvNIYEHReu7y3EsVFl5mxLs6M9LtX20GkqyZd4l5+1fsKcyN0Sma7GMWjqBjDt94eGi2psb+UrVsICeXom2+EexRNTSBivsR0bVcjjyaCjNYKcTV3SWRGq5TULybfW/I2ZQcAru477FVDr08kG5FzKU+cQCQsYLMHNM=
+	t=1770660433; cv=none; b=T/PYdiUgT/FY15uuik7DQfwRsyyE1UEOhGonsGEDdL32O9TI3fb2SApoINQOpj04WAKNTH0ZcaMuSoIrbNfDEnIS946OWDntgC5qn12wTcz96T9P4Xm5KNHoQ+HhwCsezVTeLzT6RC8nQpbH6Tl+htJcOQZ7GUVu2PpjQ0HBQOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770660159; c=relaxed/simple;
-	bh=yTGJ2JGizKiIAkn141sG4FNyqTPyqUFEnLVBCtLLvmk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PqFQdAmtBJlIxwcAOnE76zgs+FU1o9/XXDna/edRsZ7NXd3CLolMtMTKWi5oO9q6Vq1N5bXurGZqCSGpvXCzs+BVICcAWa0vsmut/83YBpZImZjg/ZH99WL5RaYIj6BlsB/hW4CYlrM1D58zG/8759cmhb1fTlyVCwRHso5S3Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PuDxJYB7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vdyR26Uu; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770660433; c=relaxed/simple;
+	bh=s+WYZo714Rnlv48UtjZf/jC4jTotJHihdwLmJt4Oe9g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I39m/s2K/d9kl3Ihbr/AIKrgjDnoubFPwcGEIGxItdM4WDhB9qv57r61CvZCZZrsNoeaWfWtlGFfixwY+4lvadpumeMRytZ6kOJRtNHPBxXHMSi2iD+QM9ejIanqdjm8+WB3k47TrvArZ7pm0scdQAHZ3EAS63C8EuZmjmPwRlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UUJov6FD; arc=none smtp.client-ip=209.85.167.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PuDxJYB7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vdyR26Uu"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DCBEB14000CE;
-	Mon,  9 Feb 2026 13:02:37 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Feb 2026 13:02:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770660157; x=1770746557; bh=FaC5BPUPcT
-	VYuqdOIFQU9zILBDQst7fpdVc/brybdxI=; b=PuDxJYB7YQmieWzXfGg1y3RahA
-	5iKpJMIvqRGxekXPN38GowjpyiM8ZEK/pw8KKoTfB5HWLewfBLuTMDnH99stY2FE
-	cFpcWMWdoWUzCAiaxY2sQHW+qxnEjdS3825b928g+xxDzaxLYKpP8Ow8kH/rwTpR
-	tVICtBFXRGpqmIDPTvc0z251Mm0M+SQOms+Nf6XYWCnXLiZhYoE/GGd0tYuL/gBA
-	1DWGjG4XK/ZM+8JuzA29AUR8WxLeFF/F0s4FfZvRyTCIh+FXLKJIAbIyCWo/9FQo
-	PoCLFzFDQkN+NdP127n7SP18N+KfOHX5856sWriMjXbG3f9wRjPT5ZKTgqMw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770660157; x=1770746557; bh=FaC5BPUPcTVYuqdOIFQU9zILBDQst7fpdVc
-	/brybdxI=; b=vdyR26Uu/WzQZgP9yFsusXDv16HikJbITd67SEsbqJyVC2+rOPR
-	Srz3yvK9j1lYsH3V9BD2hVRmqDlJaco26DqaFWFxOSGJyeAZnhNm6WdURu2wtLWh
-	bS3jKXLJbbOGok0Nk/z0hO3T8cOCZ+Rnd+Xs0jmUf96QI5i/zfstC8edRO9rfwLu
-	tdr5zZH2wa9yg9fvkRJmBJJVfeCZoqFzqJPD9j/5ee6axLmXM3s+qLoNBv9Jklg3
-	vaUnuTYJFQtE0OBau/kzpC86Uexid9OnAk4qB0v57bc5KEFU16p40YTnZKGNiXdm
-	MWq3sWMV3rZrwDYxmSjdCQgG21Q6Hv9FvcQ==
-X-ME-Sender: <xms:PSGKaSi4RsTpISDUhAJl8sEcM_YvnT5UH73ZK3oWvp5ZuBQLHoBzRQ>
-    <xme:PSGKaZ4_naswRDpy7T_xc6m-SnGySDSaVnAuZ-_I9RIDLz6xkTdTZl3nrzNrqzCrA
-    mdq9W-wOBTGue1giH7E-ahKEKsy29n5xkEpB8LgWZdbVw89fjbJRQ>
-X-ME-Received: <xmr:PSGKaSad1qVelySnM6f_H0xZ5if81WPX7uvc_0yyv7AxyhKXUBhAlyi9SwMhdosCiUi1UPuW_sYWpu_bjTqPQrpUULhGQnhTLg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejgeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdevleejtdduueeljeeugfeitefhteeltdefgeelheelleelhefgfeetkeeu
-    ueejnecuffhomhgrihhnpehmshhgihgurdhlihhnkhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrg
-    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
-    epjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:PSGKaW43OsbUMi7zkvaXWSLt-Xq00QYcCy80vlcw9DJ_QvoNyAO7Hw>
-    <xmx:PSGKadAqFGcdK1Ast3yUD-SNeLPtt1_sLt_Y1t8d7LBMpJkcIQF4rA>
-    <xmx:PSGKaUd0yd0xw34NWTZ0veB2GGNZpFIrg0rCGAaEKfqKgV8yTDPRlQ>
-    <xmx:PSGKaUKU64Y5BPUzl8mIAKarH99vMLV6MafXwWSRvXg9_Jf0QSVQjg>
-    <xmx:PSGKaYU1YtaeUkzrOe3sUPfV6xaCVG5novhEbIBBZVV4GPl20TjxNr7D>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 13:02:37 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Jean-?=
- =?utf-8?Q?No=C3=ABl?= Avila
- <jn.avila@free.fr>
-Subject: Re: [PATCH v5 0/4] refs: allow setting the reference directory
-In-Reply-To: <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
-	(Karthik Nayak's message of "Mon, 09 Feb 2026 16:58:17 +0100")
-References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
-	<20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
-Date: Mon, 09 Feb 2026 10:02:36 -0800
-Message-ID: <xmqqtsvp4wxv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UUJov6FD"
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-45f194e9a98so1393331b6e.3
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 10:07:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770660432; x=1771265232; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=H8baVbVrWy5IQM19U8HUJGcKlimCpIUPKD0yY5yeA40=;
+        b=UUJov6FDB3yLQpBGVAJI0YdVO3Pgx2LZ5Il+c+x7Usq4pxwJHNWBvDvcIPuFtYIKdi
+         VioHdfYHKLfs1mPbe9yyB/rLuOkkdUolp2Cq5C2Bt/DU0Odvg9WnF5EOkhicm7Xwhgcs
+         3MmiqzU3Ujk3KwqCFqqQnzhB86/EcBR5ozGAN+QpNQCL/akMaftJaxF3N7aAdOwPPCN/
+         H/30Yqu8qgT1fd1IcPhO85Pk64HIkr5LlL4XFHTqzczc2ZthaDZiyrdLDaesFdossaMD
+         iMsUtWU8PSeElhhxvGjAwPTDUN8yN3Kw1mx6wEQyS3/PO4ZiJeOTJB9/TYsmg+OAMNOo
+         8fKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770660432; x=1771265232;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H8baVbVrWy5IQM19U8HUJGcKlimCpIUPKD0yY5yeA40=;
+        b=ZizqpGgdrG88QUcnsJ0/hUTjpZUhY2tumI2swcMMcHDEo6vDPD/FIQlTvQLcdvQPXj
+         hWXStO4s6r0sF+2vK7dYhLW49LThwzTz0IMRYS9xhdrCm7ehoUpXHPPdUvDDJnXuFaeb
+         N4Vv3R3AyRDHTtKuiTL1lpf93wRGRj2KXnNDToXSc7ZLYjg0YRzABnmuI33GIDL6DZY2
+         fAF9+HLL1QhUjAAZtn0LG4M7DHKBuFSSpu36sSnxeUAgpNHrXxksUJxU2SbbTjhyIe82
+         fKvTlD1zEvD/5wZrBEbm0BgYo/bSBMxCurjnl0CmIAlqk3+hLNSWbVHkLlRZ3nXBQyFO
+         WAGw==
+X-Gm-Message-State: AOJu0Yye4j1nteQbIuVnpfnXMySHcjJCYqmOH6EVK2mSHXovSHvCovmw
+	to3tfWNU7AEX+V5R9G19ro9oHhz6dmX6tdxuFVo2EIIBItKVh37BsLmbmrrAxg==
+X-Gm-Gg: AZuq6aIa0jPwi6UDZlKYzOfFKlFRPsBJoLnbIpM6bdSq5z17mQaZLbr7sCFXzuGOcsY
+	FvZosLYltD7NCw3hWZwXi9uxUrNp5s6ZbSiZY03KgvZDwdaLAVIIMN1v5qWNRSz51pJ234SCKky
+	augXdShWQPiP5HWoEuPYnY0zjOdpcmehF0aQYD34KtlPPjfk42GMpgsIM2wNHGcaz/JACqEJ9kN
+	cvljOBaoNyOv8oo7UcYx5ciwd2YwWBhEFyilvhfaEyYI5FwE7z+4KdnAbJl3KWF7xrdMTo6iiVF
+	9HTwX3nJwbJnos7MP3RgklpLxutunYA4YZPl+nK/lEl962EN7YO1ANP2USXn8arQ63aMBCe9G63
+	Jo9GlSGS+kGBpBUpi1Nu3zR15YvsPPkfFoOm6pz+0FtFYFXsPbO2RImFpRgLjo7a4tjWYiA5HYY
+	YPwANW
+X-Received: by 2002:a05:6808:c1a8:b0:45e:f91f:6529 with SMTP id 5614622812f47-462fcb7c8f0mr6742878b6e.65.1770660432377;
+        Mon, 09 Feb 2026 10:07:12 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-462feb5455dsm6724545b6e.17.2026.02.09.10.07.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Feb 2026 10:07:11 -0800 (PST)
+Date: Mon, 9 Feb 2026 12:07:11 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/5] ci: don't skip smallest test slice in GitLab
+Message-ID: <aYofxzIvnhv3arR8@denethor>
+References: <20260209-b4-pks-ci-meson-improvements-v1-0-38444dec4874@pks.im>
+ <20260209-b4-pks-ci-meson-improvements-v1-2-38444dec4874@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260209-b4-pks-ci-meson-improvements-v1-2-38444dec4874@pks.im>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On 26/02/09 05:56PM, Patrick Steinhardt wrote:
+> The "ci/run-test-slice.sh" script can be used to slice up all of our
+> tests into N pieces and then run each of them on a separate CI job.
+> This is used by both GitLab and GitHub CI to speed up Windows tests,
+> which would otherwise be painfully slow.
+> 
+> The infra itself is fueled by `test-tool path-utils slice-tests`. This
+> tool receives as input an "offset" and a "stride" that can be combined
+> to slice up tests. This framing can be misleading though: you are
+> expected to pass a zero-based index as "offset", and the complete number
+> of slices to the "stride". The latter makes sense, but it is somewhat
+> surprising that the offset needs to be zero-based. And this is in fact
+> biting us: while GitHub passes zero-based indices, GitLab passes
+> `$CI_NODE_INDEX`, which is a one-based indice.
+> 
+> Ideally, we should have verification that the parameters make sense.
+> And naturally, one would for example expect that it's an error to call
+> the binary with an offset larger than the stride. But with the current
+> framing as "offset" it's not even wrong to do so, as it is of course
+> well-defined to start at a larger offset than the stride.
 
-> Changes in v5:
-> - Moved around the commits, to ensure that the code to handle the config
->   in the backend is first. Previously, we added the config first, which
->   meant the commit allowed users to provide a URI but it was simply
->   ignore.
-> - Fix typos and grammar and rename variables.
-> - Clean up the description and documentation to actually specify
->   protocol over location.
+It was also suprising for me to see that the "offset" could be set to a
+value higher than the stride. I can't see any reason that we would want
+this to be the case.
 
-This one looked good.
+> This means that we get this wrong on GitLab's CI, as we pass a one based
+> index there, and this causes us to skip one of the tests. Interestingly,
+> it's not the lexicographically first test that we skip. Instead, as we
+> sort tests by size before slicing them, we skip the _smallest_ test.
+> 
+> Reframe the problem to instead talk about "slice number" and "total
+> number of slices". For all of our use cases this is semantically
+> equivalent, but it allows us to perform some verifications:
+> 
+>   - The total number of slices must be greater than 1.
+> 
+>   - The selected slice must be between 1 <= nr <= slices_total.
 
-> - Avoid an extra memory allocation by detaching the strbuf value.
+This seems reasonable to me.
 
-So did this (thanks Stolee for spotting the opportunity).
+> As the indices are now one-based it means that GitLab's CI is fixed.
+> The GitHub workflow is updated accordingly.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  .github/workflows/main.yml |  2 +-
+>  t/helper/test-path-utils.c | 18 ++++++++++++------
+>  2 files changed, 13 insertions(+), 7 deletions(-)
+> 
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index f2e93f5461..2b175dc5c6 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -150,7 +150,7 @@ jobs:
+>      - uses: git-for-windows/setup-git-for-windows-sdk@v1
+>      - name: test
+>        shell: bash
+> -      run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
+> +      run: . /etc/profile && ci/run-test-slice.sh ${{ matrix.nr + 1 }} 10
 
-> - Link to v4: https://patch.msgid.link/20260202-kn-alternate-ref-dir-v4-0-3b30430411e3@gmail.com
+Here the GitHub CI is updated to be one-based indexed. The GitLab CI is
+already set up that way.
 
-Replaced.  Hopefully this is now ready for 'next'?
+>      - name: print test failures
+>        if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+>        shell: bash
+> diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+> index f5f33751da..874542ec34 100644
+> --- a/t/helper/test-path-utils.c
+> +++ b/t/helper/test-path-utils.c
+> @@ -477,14 +477,20 @@ int cmd__path_utils(int argc, const char **argv)
+>  
+>  	if (argc > 5 && !strcmp(argv[1], "slice-tests")) {
+>  		int res = 0;
+> -		long offset, stride, i;
+> +		long slice, slices_total, i;
+>  		struct string_list list = STRING_LIST_INIT_NODUP;
+>  		struct stat st;
+>  
+> -		offset = strtol(argv[2], NULL, 10);
+> -		stride = strtol(argv[3], NULL, 10);
+> -		if (stride < 1)
+> -			stride = 1;
+> +		slices_total = strtol(argv[3], NULL, 10);
+> +		if (slices_total < 1)
+> +			die("there must be at least one slice, got '%s'",
+> +			    argv[3]);
 
-Thanks.
+Here we validate the slices count is greater than one.
+
+> +
+> +		slice = strtol(argv[2], NULL, 10);
+> +		if (1 > slice || slice > slices_total)
+> +			die("slice must be in the range 1 <= slice <= %ld, got '%s'",
+> +			    slices_total, argv[2]);
+
+Here we validate the provided slice index is in the correct range.
+
+> +
+>  		for (i = 4; i < argc; i++)
+>  			if (stat(argv[i], &st))
+>  				res = error_errno("Cannot stat '%s'", argv[i]);
+> @@ -492,7 +498,7 @@ int cmd__path_utils(int argc, const char **argv)
+>  				string_list_append(&list, argv[i])->util =
+>  					(void *)(intptr_t)st.st_size;
+>  		QSORT(list.items, list.nr, cmp_by_st_size);
+> -		for (i = offset; i < list.nr; i+= stride)
+> +		for (i = slice - 1; i < list.nr; i+= slices_total)
+>  			printf("%s\n", list.items[i].string);
+>  
+>  		return !!res;
+
+This patch looks good.
+
+-Justin
