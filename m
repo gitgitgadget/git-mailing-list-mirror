@@ -1,40 +1,43 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D3B28A72B
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 06:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09316450F2
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 07:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770620234; cv=none; b=buvP8qu7hJYHVH8146moWQ/xMUviJ1KRMGXewTCJdy/8gZaDWHMu4GQzMsf6sjVA7h0vjD3tDEOQ8XUeKfnlq69b4gy+vEaBjKWooRcXMDxyb6dcHcCPlMcABYb9XmaOTqj6K3Gh9/06az8r6JnKkVztDFbq8uMHJTnVmfVsr5w=
+	t=1770620420; cv=none; b=V/8/oPuQ/m4rcP3l87ggZhqR8rt3wn5zRypMLgBEJoMPupQMoyqLKLPwd1D2JP8hDV7E6jCsj34X9z8mYGuTYS27PEVt9CM7ZYWV0ByOwpfbC00EYN6Mg5U7hkxE/QfM2Z3JphYOsJgfMzaSajbaI5TDu8c6kzVC04Glo74owqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770620234; c=relaxed/simple;
-	bh=1goK0/BX3dy9HZO57cBtZqutSZ+6iB7vCyP2/VzLrGc=;
+	s=arc-20240116; t=1770620420; c=relaxed/simple;
+	bh=zGW5ayRU3POBiyKx9BbM5HqwoWPFFQ0VSHHU2Yg5K8g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gApkdr4V7Fm2zcKYD3o7MxvCirveuYSJrUyrPwylsXT212/JVkBt2wfCRpIgGOMkhEHliZhIdQDmCe/ef6Z6o/i1FpgyUum9b+hPC/sIQ6Oxes+Ta8LEjU4EGnSvBx/sUVyAgtoK5AlL6/Imv3c/eXg9tXmx3Bwu1CksCzpmoY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YGW8qfT6; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=srUCQW2Iw7WNbgLoqMlR8iP+uHeaLhysSHjRcxcLlOtR/63YEX/OXyVFDGU02vh2RLJALAKzZZsg/CIhkGbSS0sxhGzjuIXZsVH7X8xhx2wjJ3wIDyAI+A3ZbV6BYVNwMEUzYCxJBNlBr0b83HyQ1azHyPnCvtN84VnF3vuJUqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EUuJC4Bm; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YGW8qfT6"
-Received: (qmail 339317 invoked by uid 109); 9 Feb 2026 06:57:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1goK0/BX3dy9HZO57cBtZqutSZ+6iB7vCyP2/VzLrGc=; b=YGW8qfT6aqGZpErQ6aiZX/MzieP8CRrCmHIxy8tZoLOLlU+PejWkE7qopSjUUMJ+QnBNdlowM+8vbdA/MzWSXjwOdwEnGnpsMbEOun7IzpmUKpoiKikobvEXG3FaoR2cA63yqTY3vUHGbFMwmJtJc8bG3DCpDQ1M5wtN+CwcC1f0hRwTUi/mPQ3Vbavr3T55CqBEbgsEp4/ocabh8KdPhFzgqM4Q35VkDGUGZNSqq8P0Xv7Hj3GtvJ+gj8VugP4aAUhWq9KhxfyDa11Z+nwqzrU0QiP5j8A5x3oYQQ+acbYMxsTNdFHv4Z+ZsTv+QxIPKW8uApbo+Nc/phdKk0AUIA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EUuJC4Bm"
+Received: (qmail 339363 invoked by uid 109); 9 Feb 2026 07:00:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=zGW5ayRU3POBiyKx9BbM5HqwoWPFFQ0VSHHU2Yg5K8g=; b=EUuJC4BmBsMO+8J6nVqyfxsHBI4KgDOT51jzrOjXR7sqOva7OMTx7cVhhBqyhdtUJylJ2BB/4uEenbEHjw8dtrC/6cAoSZpBgdAByRDMFZWP4faePFRWJKaKnXin7qCitOpfylJcL/C2pi3YInfMrsDTLQY6FihHXFUc/XB892J3JRAPsgJKSRFwIwCZpPpMgEg+rwxUKS7BvB/7q18KnV3FFaAsGnm8x2QDolmW9Mq8QGEQ2Inxdj5FCLjWRKSrncnb3Lua3eYTmgbI6A9t795m9MhL/1p3KUEg6UhD6ea/UsThGQJeL5foDE+wumBhTXsndbUriaj5UZUTOLG4Ew==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Feb 2026 06:57:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Feb 2026 07:00:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 669843 invoked by uid 111); 9 Feb 2026 06:57:07 -0000
+Received: (qmail 669923 invoked by uid 111); 9 Feb 2026 07:00:23 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Feb 2026 01:57:07 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Feb 2026 02:00:23 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 9 Feb 2026 01:57:03 -0500
+Date: Mon, 9 Feb 2026 02:00:18 -0500
 From: Jeff King <peff@peff.net>
-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Matthias Beyer <mail@beyermatthias.de>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	Matthias Beyer <mail@beyermatthias.de>,
 	Jacob Keller <jacob.keller@gmail.com>, pyokagan@gmail.com
-Subject: Re: [PATCH 0/3] commit-msg.sample: reject messages that would
- confuse "git am"
-Message-ID: <20260209065703.GA585828@coredump.intra.peff.net>
+Subject: Re: [PATCH 3/3] templates: detect messages that contain a separator
+ line
+Message-ID: <20260209070018.GB585828@coredump.intra.peff.net>
 References: <20260206090358.GA2761602@coredump.intra.peff.net>
  <cover.1770476279.git.phillip.wood@dunelm.org.uk>
+ <83c100a73ec722bf72a15b7b40b0c82bf8829168.1770476279.git.phillip.wood@dunelm.org.uk>
+ <xmqqldh4b5y2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,52 +46,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1770476279.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <xmqqldh4b5y2.fsf@gitster.g>
 
-On Sat, Feb 07, 2026 at 02:57:59PM +0000, Phillip Wood wrote:
+On Sat, Feb 07, 2026 at 01:27:01PM -0800, Junio C Hamano wrote:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> I have no qualms about the topic up to the previous step, but I know
+> one of the things that I sometimes do will be broken with the change
+> in this step, namely, when I know what I want to write below the
+> three-dash lines, I would commit with "---" and additional notes
+> below it, so that I do not forget during "format-patch".
+>
+> When the commit is turned into a patch email, possibly with some
+> other material like "--notes=<ref>" that adds notes there, the
+> resulting message will have two three-dashes lines, but because "am"
+> cuts at the first one, and "apply" knows that the garbage lines at
+> front, including three-dash lines, do not matter until it sees "^diff",
+> this works out perfectly well.
 > 
-> On 06/02/2026 09:03, Jeff King wrote:
-> > I don't think there is a way to unambiguously parse the single-stream
-> > output that format-patch produces. This is a reasonably well-known
-> > gotcha (at least around here). E.g., some earlier discussions:
-> >
-> >    2024:https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org/
-> >    2022:https://lore.kernel.org/git/d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br/
-> >    2015:https://lore.kernel.org/git/CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com/
-> 
-> If we cannot improve "git am" perhaps we should update our sample
-> "commit-msg" hook to reject messages that will cause problems. Here
-> are some patches to do that.
+> Admittedly, I myself do not send out so many patches as I used to,
+> but I suspect that there are others who have discovered this trick
+> independently, and they would be unhappy to be interrupted by
+> commit-msg hook like this.
 
-I'm not entirely opposed to it, but my initial reaction was two bits of
-skepticism:
-
-  1. I imagine that hardly anybody runs commit-msg hooks in the first
-     place, let alone our sample hook. So I doubt this will get the
-     attention of many people.
-
-  2. I'd guess that these days only a small minority of people care
-     about sending patches by email. So for most people, a warning about
-     their commit message containing a diff or "---" will be mostly
-     useless, if not outright confusing.
-
-I'd imagine that documentation updates would be more likely to get read
-by users than the sample hook. And a warning in git-commit itself would
-be even more obvious (but fall even more afoul of (2) above). Adding a
-warning to format-patch would help with (2), but at that point it may be
-too late to change the commit message.
-
-> We could perhaps think about adding a more prominent warning to the
-> "git am" and "git format-patch" documentation. The docs for "git am"
-> mention that it splits the message on a line starting with "diff -"
-> but maybe we should spell out what that means for commit messages that
-> include a diff. In principle "git format-patch" could also warn or
-> error out if it creates a mail that "git am" cannot import verbatim,
-> I don't know how hard that would be in implement.
-
-I think the patch from Matheus linked above added that format-patch
-check.
+I do it, too, though not all that often. Once upon a time I had a patch
+to teach git-commit to auto-convert lines after "---" into a note (which
+would then be formatted back out via format-patch). But I found for my
+git.git workflow that just letting the "---" ride along in the commit
+object was simpler and easier (since I don't care about having pristine
+commit objects, as their ultimate fate is to be dropped in favor of what
+is applied upstream).
 
 -Peff
