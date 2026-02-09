@@ -1,96 +1,81 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9738632BF2F
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 09:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031523385A5
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 09:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770628118; cv=none; b=lo08dQlkBgQL1hXrB+tk5G3qs0B0qFTzPXhZIdakzVqZz+e8s2o1Sj1gFEdK8vIejJTMhZnkWQB0e7PvWexLm+NXpwr+5IlPzmXEqBTA8D1nqpHPp9bkyyO1uccNefAV/OWK7x6Roi2x31u+IJbwbkvh98kv62eA5/AmZlNt+ks=
+	t=1770628479; cv=none; b=jgcB00Clz8X0D6D1NZlhxmW1XXnfscb2RKm/TGuqfBQ+ajrO3oek9fzk4diGPcZI7xLxACQQBI28xWZ4i6ga9q9sytDZ33qoNc22k1oErX7vuCKH/1VLuLOlmuikGIYP0geygEypRbwRwibBhLDTAqrHIDb3/0xB0WmO3sIJkIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770628118; c=relaxed/simple;
-	bh=TlG2rLRwRFqgQPvB+UzHNxMX621T2kJSvCIH+HczjrE=;
+	s=arc-20240116; t=1770628479; c=relaxed/simple;
+	bh=CbTPKrBYn65suZfVRE79Ig/7ZfYvEGPXHjF0wuaZUfE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=auztRbGiFsWlKn2aoGweKhV/6INmJaBupf8E75yD/ppwRSAXqaQGWxYXigBH1F1kNOeZgfkNro3WAtuDaxsMhK+MNMwyWdsKkjYSUbeexVZlodWnPJ4jOP1PXOf1CchlStmZt311XD7LU2y1F0kBaUaYBn+aJmOnCO+NcUx24uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UutcfBTO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JbRhfiPW; arc=none smtp.client-ip=202.12.124.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=qAjubNgNsqQzgIXEZZC1YjDZP14OELiNIghjK6QKnseNuA+nGCmaCT1SiGXXxqlEvP+ajI9bgwxJFibyIle1P6efvyN6/C5dfDdoJ3nWrkV6AvshS8wCx+FTz+9XvsWvvTtZ8p5Jp/F+ouXVxP41B61E9lA/wq4ELwBqb1fP248=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WEIS7fow; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=etNejl5N; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UutcfBTO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JbRhfiPW"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 91DE81D00177;
-	Mon,  9 Feb 2026 04:08:37 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Feb 2026 04:08:37 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WEIS7fow";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="etNejl5N"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4F28A1D0016A;
+	Mon,  9 Feb 2026 04:14:38 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 09 Feb 2026 04:14:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770628117; x=1770714517; bh=BDscBYNa8S
-	U5L4CWTNB5BbjINYI53jGeZsR7xEu93Pw=; b=UutcfBTOhGLph4GDO6EFNPunjp
-	5lfFDnASoOgJHM8wJYqyCA0Nn+R/syvwxKeE8UlF4bxh8OkyP7pJTZJ9VsBmVdnV
-	NGj8C4umEGEedGLnlT53LWgjmMXYmzJWPK0ABSXij0CApqUXKaHnYrDv07MhxtAf
-	FhiFg3WrK5OdBLE+h2qelbncL3CpcAVG38RKQpdeolHgqNswIDgVP88eQto+yXp/
-	21k8gudrQaAiDiiL6JVhu1W1sllmglxxbgTaAYU/m7RmobNDB4Dc9ecIb9Te5x3b
-	pyhFuh6RylcGNRVK/4vY+7r/ybHRoprBfyvxnfRa4+jBvWgmeM7Kb+rD7pmw==
+	:subject:to:to; s=fm3; t=1770628478; x=1770714878; bh=2rjX8okKrf
+	yHrJooRHMJ8oLdg7+aXFetThjfbdm8vfo=; b=WEIS7fowc/T+rb5lt6ebCb4/Yk
+	aKHLa30ZN5eUftWVYJsbQdVwJIDC/F8q6fJCzhXSnMAYUxXX8gRyVn5zE+Oellmr
+	HIzRdtBZM8Bnj1hOgQOuPWLHVAZPx4MiQcrKdgXSRfb4Tdqs+FhRRkmgYzuhDS6s
+	xReLYwAxPWpkOZVkdhfpfPlYr4nXqu32zlZ2Zt7LAm1B7evPbYv5kjeNNBTGK0Y2
+	kdZkXaQo3hS+7QpltGklmbYbFs2d/4WgfnqyZl10WTBjA7L/3y7ESCCxofU24i6Y
+	7rybbsS+d9qfoIzl5x+B5lF+TJVvY+I0UKTv4sz5QGPbPx+yn8M2XWeAwYbw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770628117; x=1770714517; bh=BDscBYNa8SU5L4CWTNB5BbjINYI53jGeZsR
-	7xEu93Pw=; b=JbRhfiPWvkw2Z+2w6wTwSCCuRHYOGoe0BHJak+Sy2PcABp1gilI
-	2j8j1ru20lDTEqmNi03M4IHfIRV2jOD/+OExXXsWGVjvhj53u2tkiF6TFtrUuIXD
-	vqoIU+xN1ivWKVYHsSTll2U0j90PbNbOsGQmMdrCkPOsh7C3U+OzQWrMjERTc3PU
-	qEtQLpd1voAHPnaNsfICrIJZLdpxc7XVprE2aB3J7KdAfMArEgbX3zLjlO869Pem
-	+0J5nUnPzFKQmYhRhLHSv9SDL0xQicsg0FSdr1XzFm+ifbtvZwcDqDReM76mUFte
-	3sBNKxU/VhmJfW65qwB1x5sOqyEqz9B0dyw==
-X-ME-Sender: <xms:FKSJaUjUCXwSgpyMwcrAKOEEOx4ACIAgmvZVn9zpxBMrcB-UJSpQdA>
-    <xme:FKSJaQtUub6O9eMyR9fAop8vkMtX_av1-490Kuru83esBDG4tYjuETZr2OGEhupvq
-    Jb4Oj5TaWd-zMFmt1VDLuJy9sUnDJIHmN6t9ffuvOQSb96bB_jIeQ>
-X-ME-Received: <xmr:FKSJaV4FUgMtbW1w5kO_Ad5HZ_lyhjyQltqSVYshNcVuLWJVrLMlWyIXA2_Yf_0ImbRoe48D3TD7d6YTRf46zKcay5HhW5RUSbykRWpveXM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleeigeduucetufdoteggodetrf
+	1770628478; x=1770714878; bh=2rjX8okKrfyHrJooRHMJ8oLdg7+aXFetThj
+	fbdm8vfo=; b=etNejl5NWoleO++HEvOPxmRkcr/b8EQ7GqlqxDugFTcyJ5J7kaZ
+	+WoL7nWsy6/i38QSFy38AW7xGppQoXyNxC/5Cq57Vth6nFNWRzMqZBqa5KQ5TrAs
+	JJRhHs1AzR5/QT/Rd5m8ne7sirfXmCczbMF2vg5UbuCs0YKn/TBmN7EaylsY7WtX
+	ARUjsbR6AFF8EKLIY58hlWqHM7f4mkkkL0LQ7049QQGAOzTGB83al9TjIaCfjiqe
+	FZEJEGot7u6ZO7CLU0vcv4Ay0E0/BZU9VI8KVXidrFKRK7G9VlRSSGQ9L5jItua5
+	ATUmdRkjsHVUG1l0RC4I1aclgPvwzRsn53Q==
+X-ME-Sender: <xms:fqWJaXxa0DccWTDEhHuWCWjoNXGIVs3KU8E8SPnuQGg_vSs1eit6hQ>
+    <xme:fqWJaVSO5b8BQNIO3kiRIuVAlKL8iaVKOXgpMB9uVpN80-224kL6EW5dfl4oR5ngN
+    zaAhQa3py2miychIAtoScU0MWG2Zucot4X3XMevUKkGUwOOoRi-GQ>
+X-ME-Received: <xmr:fqWJae8HVjQewiAYrf-0TIWXEwxLc5gikrEtreauuc3JVi5xw2wI7tjCdZ9J6Lng80i4IHRnhNpbftDubfVlcYiwhkz0nG2WLSoWDQgXpHs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleeigedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehm
-    rghnuhgvlhdrlhgvrhgthhhnvghrsehquhgrnhhttghordgtohhmpdhrtghpthhtohepug
-    gvvheshihtrghushgthhdruggvpdhrtghpthhtohephigrnhhnihhkrdhtrghushgthhes
-    qhhurghnthgtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:FKSJacMsVHX78B_-hd4MaFNA3fe5jdUjJY4i95foHN1COPQeTu9W1w>
-    <xmx:FKSJaTsQSFnPpbnxFIQnTC-Eax6YIL6TVmtmkUwdBHI4f3k_O8bgAQ>
-    <xmx:FKSJafYJ2HED2SKqCqob6P2zf_fUF348SZSMDxtnX4YVaxTiOGQg2g>
-    <xmx:FKSJaVy4vyKIBGrFKOsgDIrG1y0qMNO-dsGilkcTcX53hYiqOknX3Q>
-    <xmx:FaSJaV1tT_y_7HiGYAJCBstH2oWPbELmS3-Fd-1PG0SAMnQQzjaW3HHK>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpedugffgvdevvefhgfeihfeugeetkeejveegje
+    euffefffetvddvveduffdvledtteenucffohhmrghinhepughofihnrdhpshenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
+    hmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:fqWJacpj8E0xn8DdFOJnIoin9cNmYJRG71KqIAb8RgHOHDtDOiTU9g>
+    <xmx:fqWJabl2AD0xHWsN9gfDgDvdwO6PZsD_a5mrXTHF9ZDlfP5edCCD5w>
+    <xmx:fqWJaTKuAOLOfY9JYdstaYJZrO7s2kbJKoJK5qMpcpw0CbZvMPRlVQ>
+    <xmx:fqWJaQzKd6R7wBiB1ty6c8mv_kQ7mfKuf4FPkc5RKiUX2SV0vBy86Q>
+    <xmx:fqWJabJWMKoMu6v13DKJu_UAwWhqDDhMDdJkRInd9U2-hlBXGQfSnGEV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 04:08:35 -0500 (EST)
+ 9 Feb 2026 04:14:37 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ba5c6c8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Feb 2026 09:08:34 +0000 (UTC)
-Date: Mon, 9 Feb 2026 10:08:24 +0100
+	by mail (OpenSMTPD) with ESMTPSA id ea6e4a3d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Feb 2026 09:14:35 +0000 (UTC)
+Date: Mon, 9 Feb 2026 10:14:32 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Yannik Tausch <dev@ytausch.de>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	git@vger.kernel.org, Manuel Lerchner <manuel.lerchner@quantco.com>,
-	Yannik Tausch <yannik.tausch@quantco.com>
-Subject: Re: [PATCH v2] merge-file: honor merge.conflictStyle outside of a
- repository
-Message-ID: <aYmkCLbhZPPjKqNK@pks.im>
-References: <48B1AA62-D7FF-439E-B770-1127E1EE0E79@ytausch.de>
- <xmqq4invm2dk.fsf@gitster.g>
- <3724733C-FECB-47F5-841C-84DE9792332D@ytausch.de>
- <fa7fc215-03eb-492d-9af4-457482c56a48@app.fastmail.com>
- <D514F3BA-36DD-4DAD-BF73-609730390A27@ytausch.de>
- <xmqqqzqxczeb.fsf@gitster.g>
- <75AA7DD7-F8D8-48DC-ADA0-74E56CFF351D@ytausch.de>
- <3488DCC3-D127-465B-BB95-3D87BB2E48F6@ytausch.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2026, #03)
+Message-ID: <aYmleK3kGqzLXyJe@pks.im>
+References: <xmqq7bsob0wo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,35 +84,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3488DCC3-D127-465B-BB95-3D87BB2E48F6@ytausch.de>
+In-Reply-To: <xmqq7bsob0wo.fsf@gitster.g>
 
-On Sat, Feb 07, 2026 at 10:37:48PM +0100, Yannik Tausch wrote:
-> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-> index 46775d0c79..f9de636884 100644
-> --- a/builtin/merge-file.c
-> +++ b/builtin/merge-file.c
-> @@ -95,12 +95,10 @@ int cmd_merge_file(int argc,
->  	xmp.style = 0;
->  	xmp.favor = 0;
->  
-> -	if (startup_info->have_repository) {
-> -		/* Read the configuration file */
-> -		repo_config(the_repository, git_xmerge_config, NULL);
-> -		if (0 <= git_xmerge_style)
-> -			xmp.style = git_xmerge_style;
-> -	}
-> +	/* Read the configuration file */
-> +	repo_config(repo, git_xmerge_config, NULL);
-> +	if (0 <= git_xmerge_style)
-> +		xmp.style = git_xmerge_style;
->  
->  	argc = parse_options(argc, argv, prefix, options, merge_file_usage, 0);
->  	if (argc != 3)
+On Sat, Feb 07, 2026 at 03:15:51PM -0800, Junio C Hamano wrote:
+> * yt/merge-file-outside-a-repository (2026-02-05) 1 commit
+>  - merge-file: honor merge.conflictStyle outside of a repository
+> 
+>  "git merge-file" can be run outside a repository, but it ignored
+>  all configuration, even the per-user ones.  The command now uses
+>  available configuration files to find its customization.
+> 
+>  Will merge to 'next'?
+>  source: <D514F3BA-36DD-4DAD-BF73-609730390A27@ytausch.de>
 
-Makes sense. I was briefly wondering about error handling in the old/new
-code, but unknown keys are already handled by `git_xmerge_config()`, and
-we'd die in case we see one.
+This patch looks good to me.
 
-So this patch looks good to me overall, thanks!
+> * ps/meson-gitk-git-gui (2026-02-04) 1 commit
+>  - meson: wire up gitk and git-gui
+> 
+>  Plumb gitk/git-gui build and install procedure in meson based
+>  builds.
+> 
+>  Expecting a reroll.
+>  source: <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
+
+Probably makes more sense to say that this is waiting on a pull request
+of gitk, as the patch series itself doesn't need to change.
+
+> * jc/checkout-switch-restore (2026-01-29) 2 commits
+>  - checkout: tell "parse_remote_branch" which command is calling it
+>  - checkout: pass program-readable token to unified "main"
+> 
+>  "git switch <name>", in an attempt to create a local branch <name>
+>  after a remote tracking branch of the same name gave an advise
+>  message to disambiguate using "git checkout", which has been
+>  updated to use "git switch".
+> 
+>  Comments?
+>  source: <20260129190616.645471-1-gitster@pobox.com>
+
+I think this is a good change, and I'm happy with the current layout. I
+had the tiniest nit on the first patch, but really don't think the
+series needs a reroll because of it.
+
+> * ps/for-each-ref-in-fixes (2026-02-05) 4 commits
+>  - bisect: simplify string_list memory handling
+>  - bisect: fix misuse of `refs_for_each_ref_in()`
+>  - pack-bitmap: fix bug with exact ref match in "pack.preferBitmapTips"
+>  - pack-bitmap: deduplicate logic to iterate over preferred bitmap tips
+> 
+>  A handful of places used refs_for_each_ref_in() API incorrectly,
+>  which has been corrected.
+> 
+>  Will merge to 'next'?
+>  source: <20260206-b4-pks-fix-for-each-ref-in-misuse-v3-0-1e050c3d6a50@pks.im>
+
+I expect it's ready, but I'd like to wait for Taylor to have a final
+look before we merge it down.
+
+> * ps/object-info-bits-cleanup (2026-01-26) 3 commits
+>  - odb: drop gaps in object info flag values
+>  - builtin/fsck: fix flags passed to `odb_has_object()`
+>  - builtin/backfill: fix flags passed to `odb_has_object()`
+> 
+>  A couple of bugs in use of flag bits around odb API has been
+>  corrected, and the flag bits reordered.
+> 
+>  Comments?
+>  source: <20260126-b4-pks-read-object-info-flags-v1-0-e682a003b17c@pks.im>
+
+I'm pulling in some reviewers to move the series forward.
 
 Patrick
