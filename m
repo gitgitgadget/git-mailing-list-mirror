@@ -1,134 +1,128 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0492FE567
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 21:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128F442049
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 21:57:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770674245; cv=pass; b=oxidobL3WzfOjKACtMfbIRmqHKnY4T/+hEAgQsEIKrxv0wSGVHpXlBNlXqjKX5GeKrzOPLhJJejqaK5Y6JuV+d71XiAAv3lZ3GZZGryxJjo65VMFWT5AzNvSSb2FQe5BStqyb7v1SsWmmaSRDi/T/N7dYL3yVsDRnaLyQF5C1jc=
+	t=1770674278; cv=pass; b=IYt02FjxyVMvX8xMXOIUA+abThqpDurB3ga11/cT7H69D9UWo/6OoVlMdTz0Z+Q4kL2PTHEJ9SrwiNIO7kGn3mrwuEIlw/Dr0Amg6xwXDVt8LZW9XH1hzzUgmUvdb2c0snvLuVYl+RptVU40O7ss1CqfYE34w54NriSmMXMEwNo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770674245; c=relaxed/simple;
-	bh=GCIQXwaKWy5JBDsas6QAhst3ppNxtbt0vciVA0Ot9nA=;
+	s=arc-20240116; t=1770674278; c=relaxed/simple;
+	bh=wbER0JCUh6hOW2yAla+z4SuFsgdwFsyQjtvcjmzel0k=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ncs1zfDWJywwqw16gsLwUu9Y9peQEKn+QR48T08eT+xDFDGzqkfP1bjphe9rQYlM6CT2uMjR4dNV1vo3MM2klR4JiZmfRUVuiqb0JIETwPfqsljnCS3xi5fuoEwBqMhPbDuhn81OG3+WUJ4GxJd5NiD0IhdxNJOVGVeQBNFg5Bc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gk3BEMF+; arc=pass smtp.client-ip=209.85.214.182
+	 To:Cc:Content-Type; b=thA+8krLwtaqgg2kopor+oHyhDYNU6UKVFzTrFOiEQAQcO0Ym+FnfVIj2bcfFMPEAN99WXpmeUuItvLS65cXXUQKL1o1McYEeTw33b8PGFBNpd+P/LYNdb0WzjrMZq17A+lYslAaaOwp8VYAWM1TGSFJ7iQLpwIiJDUJqUDurn0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Afdxw5e8; arc=pass smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gk3BEMF+"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2a7a9b8ed69so926075ad.2
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 13:57:24 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770674243; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Afdxw5e8"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-354a7b089bbso2879172a91.2
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 13:57:56 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770674276; cv=none;
         d=google.com; s=arc-20240605;
-        b=fME4sLCPDuFGiqIBy9wm2ALa3G0zh1/4D/yGYChFQdSl+82NfA22tPLm9KTuQFq9pD
-         nYYJoYmP5mlKp2rCR+QhDJ7SdwdtX+gIkOzh9uG79KSNBwrTCAdYn+ShFR3r0+n0+c7o
-         vlev+ZOaa6TzgQGRENN25uBFRB711K2tXRe7f1XeGbGJ9MKUj9xcwBwWQH/99wczQ2Ff
-         cC4tZX6BfEqnHTDu1fQ8L1si/b3o8990qF5hleg17UsMIora03jegDKDnu09m+9A16nl
-         Bl9lg18yuU/glY6uTFTSftY9Rj6PBBspfDZIFwJvLGVoebm32rZ32rJG/1fPUcIdJXLT
-         Hlcg==
+        b=Cel/n3O3SNgyIniaQmTgfBam5qAG4XgWGEBmaMjMYggje+hLR7AcRIaqQ5bo25UVEa
+         6+9P8HCW09HV3FnGCF/9h8Rb6eN8T0q18ymVUxX1FMzmP01mvZa5Oa5cVb0m6QqNby8o
+         UQsWJaLSK+eohBzhGPMYHDESJKLO/02XTLinsjjwSSI3ZJ0tWULpZ2cuGywN07WvWYVj
+         zmbs/SVPmRZUM3shiWWz4CjxyDlNvYZx3TCuNZ9AV1gY6LeWfZC+3v9HOeYbjmfLttj5
+         lC9GzAwHU6VbZ/HGB9iHuIT5R9ZqYU4KIL5DzX2ypB0fCAr5YIh1sboAbQVGQjJXPq54
+         UT6w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=+7jWTVQ/qbRPGfVTsT2aBiJz11Y0YvcCpr92xrJGx10=;
+        bh=9o6C4nybvWwzWRcLRSP947nJWIZV1hD0hlEHEj75fvk=;
         fh=mJbBesx+oRc26OZKm2CZILTBbLe8BCinXbh84KNv+5A=;
-        b=GdIQOVa/d+QGsYgg4fYHCZ7WDlj5R4PcSIPHLAytiJpLcikCXQXjrEtGdrrRe6PF/g
-         0CdMDr4k9hXbS7NQgkBkEbpPnDuE0cpwvC80ETxkajkA1mdAg5tjki9hXBBuh+dDwc/l
-         f9s3sC43uuNLr4wBHv+nMcJgs0JZwOu4Iu47PDiYFCn2gmio287QneOgtRlsENiPdpRo
-         b98Zm9pABRJveTNa6aIlFemI2vRPClbqgTZA05pPFio2P0ttcjh5hAE4FyfraXAbrt3v
-         +9hG5lEGyBWHKDzvkmMRgdbC/2aPn81ELjNec/BnPbnyANoX3PTrgQVxTzq9ZafbByaz
-         oSxg==;
+        b=GnR+UVSYw9wMnDH3L7Et0PFFMo1MgdYKHxe40r35pSzrHExFuhKRD/eYP86Fffq+th
+         +bUN/9vGL2AxczyqMP/yWChwHg5P+bzM5UD1aES44X2xLCQt9I+hDBqicpLmUnHpO3c6
+         liE80AKxZNoMMjIvoJgdeWWeTgkTnAi8I3E0MgJoH4vqcOqGvfF2y2syx0TN2n7QV8DO
+         6QLGskwp7LZUMeZN5IQPOLfbf4UwYCWJimXrNKcI2SISB1WZa4o52faLKgfstYzUep3Z
+         9eDXZ+WsiaNLpusozKBCFvhRk0PECS5DL1JmpjwM38WVPE5PZXwFrotcpR7qyc1hWWG0
+         aMjg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770674243; x=1771279043; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770674276; x=1771279076; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+7jWTVQ/qbRPGfVTsT2aBiJz11Y0YvcCpr92xrJGx10=;
-        b=Gk3BEMF+141OMrknPpi9/kwD3HaQrXoC6FWT1uGJVAS+U8Ff1fpLn+s5FNUp0WbneK
-         U93f1r7ZFzhV3vxKetVzOl4XN9vpY9gAK8IYnr3U488BllyXFF7d1ZcNtSF8etPLlE55
-         5WzD3tnzb7RZ+UTSsrFG6lmksatHqzTWu1IhSAtAqahXhMSUlVFmvX81zquENLpuqoMN
-         +/NzTrq77XZ6DAKiQmnO5LlvFzCoXqJ8FYO3NOrSt5kv/ud2sOGe8iHbtcMNTUdMOAb8
-         imRSEqamQmgcKleXTEJ0reymRuhOTxYl9rf9p/ghad8V2iNmLQOz+lALSuMijmHx+tBg
-         /XNQ==
+        bh=9o6C4nybvWwzWRcLRSP947nJWIZV1hD0hlEHEj75fvk=;
+        b=Afdxw5e8retGqX/E9YnPhH7u4NEmDKWGcP2i/fKk2+ce+E61YMuFyUoa4Ilmm9WrU6
+         rkKAh94OWwalHn/M+kWYO7Yw9om7z5NHgwAyM++YrDSGQYWbr3hV/hDOT8Bh2/GREsAL
+         1Bk4fKkYz+GqzCRWl7LLAze5T8tl+z96wNSDyvfdx09cIzyK2bBR9UftWK3NzafR729+
+         XpCuJUnhmC1xm7hPgs7HlQMgtZ4u0x37apsDGq50+r8gODQ1bFO1izEGhILy4qanxMJO
+         fZft8WcnVsF8GWOZabZ8HA1jt72lIGy6X8dR373YafzT8jyXZd3e3Q/rNbp5m0IlEyPr
+         E6Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770674243; x=1771279043;
+        d=1e100.net; s=20230601; t=1770674276; x=1771279076;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=+7jWTVQ/qbRPGfVTsT2aBiJz11Y0YvcCpr92xrJGx10=;
-        b=DmO4+yV4bvE5SI3/uaVKM5QvPFyiZLgKVjTwFrFxGzy7He0Y3FGgUWwSFt0ylZgX38
-         bbZ9dHdnXNLqgXr0U2ZY7LlT6zVRHWeYr8fMTe3fi2/IwjK3GsEWGiRHRtqIE+/ZlAe0
-         fsYV5vsO3nbY8A30VX+Cbpu985EnG//SQlJVYblw7pCbXXj8gKNjCLGn26ZC9I1Vg6/n
-         nue7xk2mfrTZs/B/qLgbfRcUU2V2RsZVRWCl/Pf1KWGYkPY5Z13DJBsPJKavlMFKSa60
-         lvfRiNwiRXd4sDYiK33vbsPQ/m5L5b7sQFX4sW1LNTGAgd3GkyDJA4sfS2n0ZEjS6ouH
-         9zLA==
-X-Gm-Message-State: AOJu0YyCbCxO2MX5UpIincsF8w6PqovqHwWUBp99Ttj+Ubhgwkt5a5hb
-	60PM3ZoHD4rry4p4xOJwkPZkFRNZrewOS0gZxhTlVdgvawO3Au8Y0c1O6SNjfjTySvFBCqYvF77
-	yWsdRTtJ1n5eOgUlomLoe36hEmMxVg7QYSA==
-X-Gm-Gg: AZuq6aK4CN33ed9rDbZSntpM7AMRds9kOBeXDZeCSaDzPRuZ14E+iGRpuIZjykeqtoQ
-	oIo1A5ApfH/5AiIhIhlDYSF3TRwWtvpODp5C3miW8qury7cJwRcHzAsM5hcdakUm99kMKPVaTLB
-	hSLxbYX2ykdmALjhkbkdh9ezj0I2avaurGSGCFrnkNwizp+RfKldA9Yll/lx0SqsWa0jijNkBvo
-	ouGpnIwpFH8G999q0cFDBj/LNz6N7Xt8Y0nAZ2+uyR8o9y5TxicnEQfeA/yCWf+tXnaP53aBbt0
-	1zsd1spQH2/K8gCLCTT1M5mt5YVKV02aPr6mV51laqlxgs/5+o5+K7ZpikvgmZVOCxB7
-X-Received: by 2002:a17:903:2289:b0:2aa:d1e1:29d5 with SMTP id
- d9443c01a7336-2aad1e12c0dmr76779345ad.50.1770674243461; Mon, 09 Feb 2026
- 13:57:23 -0800 (PST)
+        bh=9o6C4nybvWwzWRcLRSP947nJWIZV1hD0hlEHEj75fvk=;
+        b=oOS5ySm9Z0bdgeQ+oIofRLmB/QAaJLV4Ar0hygTumQd35JxEHHgIyz9Ad32hn5B8TO
+         kUqlqSms4NiUW3Fl0tRcxII0WIJUOYpKEh3ckOxrxa4AoSVPkKWiQgArHdFPiojIVLWr
+         LMWvd4mpDAaCp+fnD2xdVLpZrAAyd3ooCuIG1Y+f5eMqa45Nbfs2tbLyBFwPNuRjOsWo
+         w6WmgzjZyATEpXncBEcIT6ahJ0Vmr+ogdp0rycIMRkt2M9S5aYq00TCn96ob7uqTHMpm
+         z2tsDBoCdAc2dqNsQIrZzcSsrsOYN2nlYD3kPAky1xtbIkydMTX60YyNlVXFEaHYTgeq
+         36xA==
+X-Gm-Message-State: AOJu0Yzw1bix7YeGnbmszGLGwDoLBPsDEihodELGAPFUoSfm8fhpyhwD
+	rUkGEtgjOMoWM0gyamSgkuiCgWKbZ07H+qNAyvsgbZ7SWqwbL20XeA0xSlceJQrxFySB/8gM3z5
+	4n9Qa94+DHBRgZaDoUeqQB89z3dTyZAukWg==
+X-Gm-Gg: AZuq6aJ3O6uXledLbBSbb5qsn5All4hZALJScCDhb3ui9wkA2uJtWfDOfDgvaHL5Vv9
+	WQjPX//WxPWwRU4F9/6GwsReI8gOnKvFpHIY/GbGgIlve8h0GuyR/WE62gHyMOPhrW1DCDvjP/1
+	4aBUYdns8Lis2pXSd93CED61X0EW1OTHJYVjTCCwqrmKNUR3A9KZi0rIuhNbzv2y8UQHJrI/DIt
+	KAY8XzHqts/sli4NrxPy7mBQUlPA4OrDeHWC2uIs+MSHyAQyE6QVp0Su1KySIvsK4mOf7IUmBIi
+	mF/NtLOtqOK2ypkgb+tEUJvYxn6u9WTRK+2J8idIoEbMqSzKeNjiElf6cS+3pxoZKwqc
+X-Received: by 2002:a17:90b:5748:b0:354:7be4:a250 with SMTP id
+ 98e67ed59e1d1-354b3bd326dmr12468251a91.12.1770674276258; Mon, 09 Feb 2026
+ 13:57:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <doc_link_rerere.328@msgid.xyz>
-In-Reply-To: <doc_link_rerere.328@msgid.xyz>
+References: <doc_am_gitlinks_and_am.messageId.321@msgid.xyz>
+In-Reply-To: <doc_am_gitlinks_and_am.messageId.321@msgid.xyz>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 9 Feb 2026 16:57:11 -0500
-X-Gm-Features: AZwV_Qgpr_sLDLuv-Uln0gi200AiHjQrR2CwFsEXd2aCFgKVLbgAlAhDZ_yEVqY
-Message-ID: <CALnO6CAET9GOsNCdmd3_Jp5Qr3Rfxn8cgmu9n0N8s7uNYpCchg@mail.gmail.com>
-Subject: Re: [PATCH] doc: rerere-options.adoc: link to git-rerere(1)
+Date: Mon, 9 Feb 2026 16:57:45 -0500
+X-Gm-Features: AZwV_QgyzHi3fh7bKobwE2ej3flFw_lFMkPYq16wkhj-XRbsrW11hNa0QVNcZI0
+Message-ID: <CALnO6CBTWTqfVNerHQb0X4Y4UKXggRdqzgXqYKd_O05shC+jNA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] doc: am: improve command linking and add am.messageId
 To: kristofferhaugsbakk@fastmail.com
 Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 9, 2026 at 1:14=E2=80=AFPM <kristofferhaugsbakk@fastmail.com> w=
-rote:
+On Mon, Feb 9, 2026 at 12:35=E2=80=AFPM <kristofferhaugsbakk@fastmail.com> =
+wrote:
 >
 > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> Five commands include these options. Let=E2=80=99s link to the command so=
- that
-> the curious user can learn more about what =E2=80=9Crerere=E2=80=9D is ab=
-out.
+> Topic name: kh/doc-am-messageid
 >
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
+> Topic summary: I noticed that `am.messageId` was not documented. In the
+> process I thought that the way that git-am(1) refers to commands is a
+> bit off. Replace all things like 'git am'/`git rebase` with
+> `linkgit`. Also fill out hook documentation.
 >
-> Notes (series):
->     Topic name: kh/doc-link-rerere
+> Notes to the maintainer: this conflicts with topic
+> kh/doc-am-format-sendmail in `seen` because of an adjacent paragraph.
 >
->  Documentation/rerere-options.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Kristoffer Haugsbakk (4):
+>   doc: am: normalize git(1) command links
+>   doc: am: say that --message-id adds a trailer
+>   doc: am: add missing config am.messageId
+>   doc: am: fill out hook discussion
 >
-> diff --git a/Documentation/rerere-options.adoc b/Documentation/rerere-opt=
-ions.adoc
-> index b0b920144a6..115882edab1 100644
-> --- a/Documentation/rerere-options.adoc
-> +++ b/Documentation/rerere-options.adoc
-> @@ -4,6 +4,6 @@
->         the current conflict to update the files in the working
->         tree, allow it to also update the index with the result of
->         resolution.  `--no-rerere-autoupdate` is a good way to
-> -       double-check what `rerere` did and catch potential
-> +       double-check what linkgit:git-rerere[1] did and catch potential
->         mismerges, before committing the result to the index with a
->         separate `git add`.
+>  Documentation/config/am.adoc | 24 +++++++++------
+>  Documentation/git-am.adoc    | 58 ++++++++++++++++++++----------------
+>  2 files changed, 47 insertions(+), 35 deletions(-)
+>
+>
+> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+> --
+> 2.53.0.26.g2afa8602a26
 
-Minor: should this adjacent be linkgit too? I thought yes, but on
-second read we really are talking about the command.
-
-Anyway, agreed that rerere should get linked. Thanks!
+From a quick glance I don't spot any issues. Thanks!
 
 --=20
 D. Ben Knoble
