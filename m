@@ -1,172 +1,127 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from pio-pvt-msa1.bahnhof.se (pio-pvt-msa1.bahnhof.se [79.136.2.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA36237E31D
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 15:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628383793C6
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 15:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770650723; cv=none; b=IuHRcEvu+rTMoSKyuef/jWPgYcafSpoS330EdlbYM6La3/djPQFur7WNQKRzAfpUhA49aTNK/ynXI7hyB71bNe0inF8tTv3o3fG3k7Tp7wFNL/uABQtvhafHGoCD8/juEhXmapQuh2YcMyZzKsxteKHLLBKUyyBKsa6twG2e7Ko=
+	t=1770650984; cv=none; b=jib2oHj7yBP3wT9xXR1/MNou/jqwO3u7DnSMRpp10VfrzBA7CBD8+SETJe0+bqerQCWWfAdObR1ZwE+ZY+4KcB9HKeyqh868srnBhCFnRDHdFAx9Q19831ETG15NyqT2JwnKvIiyqQoSxhcC/LtsiypTtyStGPsqOyboH0jfj0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770650723; c=relaxed/simple;
-	bh=XY5ldasO+mMdKrugym32lJ2PUpLuFIYaM1iKlK9d04Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dbHsHjdwKOh42mpTeCqZOGsimOP/CQXGIw28zOFLjvh4/DzwNTJ292HDfplsQ8UjqQTFL1MxHumw0ucPNoM7skRno0cGeW4xzPNk5ljZAbvoFlY/0DBaVikcheWAggIMQqsuEE2p0lCDg3ftkBoSWgaLlQguOjzXadKE8ddoT88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JJCdASiz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cCPrWNRN; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1770650984; c=relaxed/simple;
+	bh=eI9zj/EXtA/m4xzoU/BqHguSqYEPeamuL0wfM4y85OU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=R5QeaP3OGZBV5T5O8/kKsRMwdt+xXEXH7UWokwIQa52+Q4PT6B7zIL5zwXD5YTzIxYS5A2462K75nOkVnDreBupR/CMISKxlglyYGwJYsdRtrmmH+M3nbXX6f99PR27w7jJrYbHDvQhaWMqxmDx2vc1W2yh2xsKK7CLBtqFtNrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=bhdX/w07; arc=none smtp.client-ip=79.136.2.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JJCdASiz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cCPrWNRN"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B7397A01A0;
-	Mon,  9 Feb 2026 10:25:21 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 09 Feb 2026 10:25:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770650721;
-	 x=1770737121; bh=E36cdBdczLWauaVnnlcD52EOtI6/n/C9dSfoKOrz+sM=; b=
-	JJCdASizYzgU35ZBADaYoj1bdwNo5JAKsHAFfZnmE/6juIOrVPucdGKTR0DY6QQC
-	3bP7eJZWA2clG7KRmMxHrVcpMOHcx05ommzV/2bvyYoYghYGV1+JwYEO5GAdx41a
-	nZ3qavLYxhyq1uHlM5ECF5fqu5fSt46JxIm9gdyDXLDY+y8lMhkyFoCeY/mFTcaJ
-	eIw2OjWioFDG4KKP6Ak8wySRxjsI1xmh0tFkunyLnRv0p/OlaqZiRMEhotu+mHsr
-	dazrTERVGFzvtyk5di78PPhoti99WQ5qSRBsxfrqeMPhoSiBcAAgxL1cyIr32Bov
-	TTfLuJypDzJWputYF0aKQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770650721; x=
-	1770737121; bh=E36cdBdczLWauaVnnlcD52EOtI6/n/C9dSfoKOrz+sM=; b=c
-	CPrWNRNpEO+rVO3MxuGB+bX6y83QL46GHM1uBQHhMgHDP04z6XMLky6+6T6PZmd5
-	nwWH6WENm1+Gkkkb8N5G+WZ4UtLzGxQPm9reZ1D79XEK3IR6NeI+FMKsuvhkoMLq
-	LnZg0FxET+uq1hHs61ShZa73U17vKpqTVnrHkUbNXrVBh/Va/odvGhsagfuT1EOa
-	22BnGQ06wu8cGcxeoHDw9F6w9LUevBbtXPYi2iYC9V+f2L4jslK/KYaRkb5xCBw3
-	t0wGQEqXtqyp/hmPIOBeyM9qAIi0BuUo+eIyo5oGI14hi8XQPtBqGhgbH2njUWAe
-	Ue1MZugwb/JIz+Co67fmw==
-X-ME-Sender: <xms:YfyJaeeAbee-Bvu80yioo45Q_fYvnSXbdQ-XjXisknZHuwR19r8PeQ>
-    <xme:YfyJafMsknW0ZkOhLjRzkR3ZrwIHNMby0wBnF1iU7Nm1QJ1512qdMLNBcLmze2OWu
-    iPQty0tv0XwcEulpLxvV1DgsVXp9Moi0GW5WRR_5jzMZzsyApXWxw>
-X-ME-Received: <xmr:YfyJaUiDjftcjWnJWX2zwCCMoKv3CbM2UTHUApT75rNV0qGu-6wJ9AUQPiBbfOY4mzlugeu162t2kbG6T3-yCzL8Z_3wjwz82nJPN1KIyXc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejudeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghvrghnrdhmrg
-    hrthhinhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhi
-    thhhuhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:YfyJaa2js46MY2ZUKQ4pVgCu8c0pVGI4VfOIQS7jwweTdnxPelQkqw>
-    <xmx:YfyJaWhUR74-IkaIpXyYSV3G11OHbuzIlI6ldEc-Izoz4RvvtB-fqw>
-    <xmx:YfyJaSeuqmjTmZ5sMbjxYV2Gkts-DONQI18BhKBPPz-YIMOcBGMi1w>
-    <xmx:YfyJaRlEAs8wMvD-2ar0Ezyiu6nFuOK57kZQryEI-Pw8ko3mrKoMvg>
-    <xmx:YfyJaYCTshyvuA8_YTbbvKqZ4aF1ZUvzAuiUgRQy7Ghkk1TahFvC0jhO>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 10:25:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="bhdX/w07"
+Received: from localhost (localhost [127.0.0.1])
+	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 7257A3F7DB;
+	Mon,  9 Feb 2026 16:20:00 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -2.099
+X-Spam-Level:
+Authentication-Results: pio-pvt-msa1.bahnhof.se (amavisd-new);
+	dkim=pass (2048-bit key) header.d=jontes.page
+Received: from pio-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (pio-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id njeKi05r_cTR; Mon,  9 Feb 2026 16:19:59 +0100 (CET)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3bad4f0d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Feb 2026 15:25:19 +0000 (UTC)
-Date: Mon, 9 Feb 2026 16:25:16 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Evan Martin <evan.martin@gmail.com>
-Subject: Re: [PATCH] meson: regenerate config-list.h when Documentation
- changes
-Message-ID: <aYn8XKv2hH2HX2xO@pks.im>
-References: <20260207215924.28863-2-ben.knoble+github@gmail.com>
+	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id BCE413F7AB;
+	Mon,  9 Feb 2026 16:19:58 +0100 (CET)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 55A26B1E35;
+	Mon,  9 Feb 2026 16:19:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
+	t=1770650343; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=IBgWOQDLd9n9fjq1m77qBnQ985YtoIKsSZtivBqIP14=;
+	b=bhdX/w07Z++CuvLFdZkqTVCbnOXUJBuq0EJdwus3vc0XWjmb9OApiZuUgGLhaFdQAvNdk5
+	F0QxGK6Mmz3wDSlKeO7GOhClZ8Ku4QFIYacPVBXk09yvY5Kru7gUWHN1qLvNPXRqOh5VwA
+	hr3BMmbacK/GbtCNw449LnueRSwY4csxVcu9SPTEqmOex0XC5kQP9etmhlbHKKJ0kueied
+	q8cbB7pDcdzpn5i4QF0HuIHncrKkLlH+OT0NFoqEs54fSg6DmJsfeBmEKhHMAOQ3Pu/MIB
+	sOoeRuPNkfrbbTw6jpj0ShQq6XA9mcD8U2HRoKlcun29q9fsNZwu82K5wGgKdw==
+Message-ID: <c3445fa2-a217-4e48-b0d0-ad41a563c6c4@jontes.page>
+Date: Mon, 9 Feb 2026 16:19:55 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] Support UTF-8 characters in Git alias names
+To: Junio C Hamano <gitster@pobox.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+ <aYkaepCu4lwT3xNl@fruit.crustytoothpaste.net> <xmqqikc66k5k.fsf@gitster.g>
+Content-Language: en-US
+From: Jonatan Holmgren <jonatan@jontes.page>
+In-Reply-To: <xmqqikc66k5k.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260207215924.28863-2-ben.knoble+github@gmail.com>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Sat, Feb 07, 2026 at 04:59:17PM -0500, D. Ben Knoble wrote:
-> The Meson-based build doesn't know when to rebuild config-list.h, so the
-> header is sometimes stale.
+Thanks for chiming in!
+
+ > Isn't NKC/NKD a macOS-only issue in practice?  Anything on the
+ > command line "git" potty and "git-blah" built-in commands receive
+ > goes through precompose_argv_prefix() to be normalized on that
+ > platform.
+
+If we use Jeff's proposed alias.*.{keyname} approach with literal byte
+matching macOS should already handle the normalization at the argv level 
+before Git even sees it, correct? I'm not very familiar with how macOS 
+handles this.
+
+ > I am not fundamentally against this, as long as such an addition
+ > does not introduce unnecessary bugs and ambiguities.  IOW, do not
+ > force me to read bug reports in this area after it is done.
+
+Understood. Jeff's subsection approach seems safest, it uses existing
+config infrastructure that already supports arbitrary bytes in
+subsections. This would enable
+
+     [alias "förgrena"]
+         command = branch
+
+as an alternative to (not a replacement for) the current ASCII-only:
+
+     [alias]
+         forgrena = branch
+
+Is this sound?
+
+Jonatan
+
+On 2026-02-09 15:55, Junio C Hamano wrote:
+> "brian m. carlson"<sandals@crustytoothpaste.net> writes:
 > 
-> For example, an old build directory might have config-list.h from before
-> 4173df5187 (submodule: introduce extensions.submodulePathConfig,
-> 2026-01-12), which added submodule.<name>.gitdir to the list. Without
-> it, t9902-completion.sh fails. Regenerating the config-list.h artifact
-> from sources fixes the artifact and the test.
+>> I don't think we have any Unicode normalization code at all in Git,
+>> though, so if you want a quality implementation, that may be a thing we
+>> need.
+> Isn't NKC/NKD a macOS-only issue in practice?  Anything on the
+> command line "git" potty and "git-blah" built-in commands receive
+> goes through precompose_argv_prefix() to be normalized on that
+> platform.
 > 
-> Teach the meson build to depend on the Documentation files that
-> generate-configlist.sh reads by having it use the output of
-> generate-configlist-deps.sh as a list of dependency files, since Meson
-> does not have (or want) builtin support for globbing like Make.
+>>> Before implementing this, I'd like to hear:
+>>>
+>>> 1. Is this a feature the project would like?
+>> I think this would be useful.  I don't personally plan to use it, but I
+>> can imagine a lot of other people would, and in general I'm in favour of
+>> better i18n and l10n support.
+> I am not fundamentally against this, as long as such an addition
+> does not introduce unnecessary bugs and ambiguities.  IOW, do not
+> force me to read bug reports in this area after it is done.
 > 
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> ---
-> 
-> Notes (benknoble/commits):
->     I considered having generate-configlist.sh write its own dependency
->     list, which Meson also supports… idk though. Input welcome :)
+>>> 2. Is my implementation approach reasonable?
+>>> 3. What concerns should be addressed in said design?
+>> As I said, Unicode normalization may be a thing you want to support
+>> here.  Not having it isn't a complete dealbreaker, but it would prevent
+>> hard-to-debug breakage.
+> A buggy normalization implementation would be also a source of
+> unnecessary bugs.  We cannot have and eat that cake so easily 😉.
 
-I think that would actually be the better approach, also because the
-list of files with `run_command()` would only be computed at setup time.
-I guess it could look something like the below patch -- please feel free
-to reuse it at will.
-
-Thanks!
-
-Patrick
-
-diff --git a/generate-configlist.sh b/generate-configlist.sh
-index 75c39ade20..2c93ffc58a 100755
---- a/generate-configlist.sh
-+++ b/generate-configlist.sh
-@@ -2,10 +2,11 @@
- 
- SOURCE_DIR="$1"
- OUTPUT="$2"
-+DEPFILE="$3"
- 
- if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
- then
--	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT> [<DEPFILE>]"
- 	exit 1
- fi
- 
-@@ -36,3 +37,9 @@ EOF
- 	echo
- 	print_config_list
- } >"$OUTPUT"
-+
-+if test -n "$DEPFILE"
-+then
-+	printf "$OUTPUT: %s\n" "$SOURCE_DIR"/Documentation/*config.adoc \
-+	    "$SOURCE_DIR"/Documentation/config/*.adoc >"$DEPFILE"
-+fi
-diff --git a/meson.build b/meson.build
-index dd52efd1c8..03ad7a2152 100644
---- a/meson.build
-+++ b/meson.build
-@@ -718,11 +718,13 @@ endif
- 
- builtin_sources += custom_target(
-   output: 'config-list.h',
-+  depfile: 'config-list.h.d',
-   command: [
-     shell,
--    meson.current_source_dir() + '/generate-configlist.sh',
-+    meson.current_source_dir() / 'generate-configlist.sh',
-     meson.current_source_dir(),
-     '@OUTPUT@',
-+    meson.current_build_dir() / 'config-list.h.d',
-   ],
-   env: script_environment,
- )
