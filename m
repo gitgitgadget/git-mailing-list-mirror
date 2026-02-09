@@ -1,255 +1,140 @@
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFF437FF77
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1BB1DFD96
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 16:56:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770655365; cv=none; b=HvMO6t3cyhR++8xbGeOUNjeOSXbxewAQCjvFYWa71Ef/fKCAARezyqrJoW3F+aZTniMd6SEnQUsTg7glVLUSYDC4bCMr2TpuqWEuPbO4+gfexdTjpksKQMS4P4HVOemB8zGtL33hjQbYKYfcf9QFro7/TS+EVwWYM7T48jXdJ+I=
+	t=1770656186; cv=none; b=Ll+DZ54SLkfZTxzbAs8G+Rb2cN1qBdKivmmeqkfQY0hC0++WdSqujXStjPQSnaHpLcL0qIQiqRGuH+Qs3mR1JsdocmQL13NWzUaR8mETWxA6woCG1UHZoBEp9Khzcz3AOB7baYWic8QAV54Rv3h/H9kAgvKDjhlHMHkQjo4WYgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770655365; c=relaxed/simple;
-	bh=qVUfy8mkYM3CYWrY29NFyNm5EaHY2h+2TIcTJA0/ay8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jLK3P1Vu+Gac635h5xWsQLIs8CoLQzpzaYe+vK4Ar7Hb0/vw150WMSSd0t5EKHFd+P8gadkaYAiR3bsQkjz9GqR77ctAZ/RdUoAZYxTupNAPUlq79A2z1Mxtoyttie2RAwLKAoi2TLwmjoX6hxhN7chVW1TTRz9YKkyN8IDFe3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vj9PJDit; arc=none smtp.client-ip=209.85.128.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770656186; c=relaxed/simple;
+	bh=svHLSlsBHHOsbzG0lvNaDTihyiF8PDBPeUC4vM1dS+g=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WJZ386hiGUY2Mm3B5wqGjzuxLsMp7E+KY01rlvzyi6M57C3q+cu2ozXwkPdT3AvIYVs7iEgOek2MZCkFUw5SnyC3mnIJcloq5XqmcQAZD35DXbil3K8T4H1SpUJro6/p0Sd5ME1M+NQkbVS4ZrzIFH088y4JU0iVMOUntFG/EoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B9NVfgTn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KkElW6zi; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vj9PJDit"
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-48329eb96a7so13449225e9.3
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 08:42:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770655364; x=1771260164; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=C/EnEbB3GiiUaSVAW/qRMVbCo+uEjcQAkzOQRjvI908=;
-        b=Vj9PJDithKnqv/cQvdW2lpwBeh30gHk6DIpr1jkYoqxtqj9H4Huy92OXwx+OhnE0co
-         4p9iLntb4K7GHNJkIlYikfIHtsFC6wWxT+BqMjUktMXweZlYSeOhPby9MAktS8V5tR44
-         gv+8Nz+5VOyGv89z2WjnT4oMNt8abhoBPVgl5WnMrPCTMw6OQm9CJuLQJ8NK5bNmFrew
-         gH4UyNfZGcbopOB9jLLAsTiHX6xc08l3XeNf3Rsq9RJp+h/SRBRZMy4MZH+MIOdwACGx
-         MRQ7wAav14IN1QrjVlSYRPgm3+9pPwYT5DzbLOjuC/aHQwXa/fw+Ul/IdRO8tNaDfSLR
-         zR/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770655364; x=1771260164;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=C/EnEbB3GiiUaSVAW/qRMVbCo+uEjcQAkzOQRjvI908=;
-        b=PUBklGO6yqXO/oOW4BxoD18wnsWJSpnSWtR3VGZZwk6Vr+lU16v7F6fI/lUPxRHP7S
-         zLvxzRQnvANWSrlZBY+7vh8lzHObO8nGP53MiaXGrF8n78WcFSKPo3RurwBhupGjcJpb
-         iyGm/6gBZhSiMUZh/CGmK7IZwsnWBgqX5SINGs0TkV2tf49RcfxGOgYmJuGldhTo8chf
-         o3w2F4TuRoFqlgDIFqd7Qx7w1kH1khUTL+TWYUdzcJesEvVbBEIR0TSXGjWzBxZqy2ev
-         f+bXklXHxWBrcxr39pLlgSrGLbjEdvtrI9WhvXoKknX3ZxUOY4KGJgfA3uCGsSsEacbW
-         YLPA==
-X-Forwarded-Encrypted: i=1; AJvYcCWwRFZCW/+Yyx/rD6LxO6c4BoCtAFPzikUOIOMOeUbBI6XbzWiWWzp1lrqsHj8b93TXx2A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxD6vcESkm3zZryfaUFdn3zaza7GcdMXpvZM30qQUJav8hQmKLM
-	DvIC6dBoeyCdJIWPQem/AFZZ3RRV+C8MqMdeyqewyNxwHP5IL5yAf0Rd
-X-Gm-Gg: AZuq6aIrF35SWQjaFBgim1RHQ53GherQ2R7qlcA5HU7l8R8yPf+Mf7jeg+9JsRb0/Pm
-	2b83P3XX4ASuhM+mZWFiTelXVy4w0lQJcss84WHmLBkiGaP5IBFl4sDbzaZ3KA63lSBr3nOuZDN
-	+pZq8GwPbvW6RMpiPyqpnAaOwt8JTsq8Z/UdzljkmXJo1IFOVhhHquQ5DUEDm0z8AWmUb1tH87m
-	4OZF1YsGgp7cSgMncomib73eIF6BnrsyzVzDw56kqhozCxnhGk7jSoyRzzF8QrgnLkl6EeWdijO
-	lnaPn5Ho94VLqd4IDWkRgC7t1nRFU0rL5FRkYzpph3AgegJXvHxZ9UYhP06nmig2Mh/H18TQVaS
-	GTHYbqB0vENv75Gcy1G/iKg6eDGSmJOiiaihbV1uwOsQ6Lf2cdPmQv4gXnQft0GX8xrdf37z9UW
-	LxzTfRX7Sb1+Ac5v2daDZADOxBVaI4XMe8XpH88iw32DXpvA5OjHd7eGBrS0midr1/7Sit7H9WB
-	SMAEg==
-X-Received: by 2002:a05:600c:1912:b0:482:df17:bbbc with SMTP id 5b1f17b1804b1-48320966cf7mr133571595e9.20.1770655363388;
-        Mon, 09 Feb 2026 08:42:43 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d835f6bsm343565e9.14.2026.02.09.08.42.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Feb 2026 08:42:42 -0800 (PST)
-Message-ID: <bf5d1e84-2a59-4e1b-a524-c8b251dbae70@gmail.com>
-Date: Mon, 9 Feb 2026 16:42:41 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B9NVfgTn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KkElW6zi"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 08BB51D0017A
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 11:56:26 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 09 Feb 2026 11:56:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1770656185; x=1770742585; bh=/ViZrlNqPb
+	GyQiNBBuSdC9LLMCNUIm6qRmE2r1addY8=; b=B9NVfgTnrXh4F02hllGu1rTk3V
+	HuM3J59WEuaNUfLw+k7D8g63VqNNEt1VKRlQW3Li94elK0pgmu94zP93hXKP8Qgf
+	JN3JTjuAaLWlCKaS2SU6+Z0wcTF1NhXFiOORh0XWUy3AG69SfUFqNvnf67OZTvhU
+	4lj2f6EY72ivUsl+uqHMwLJyv8LMIw6+a3FRiyDwKB4LSeL4dORY8ZeMeQFc9F42
+	b/ewNEvJW+xWGdmhYNBam/33Pm9VZ9EXg0smTAdyM3OVLs9W/X37bJXWU1oP0hsU
+	kGI4EEMO1SSOpW3cUayVluwyQbGnbXyEjuTH8rH5lwEtglcfpznAttzwNAtQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1770656185; x=1770742585; bh=/ViZrlNqPbGyQiNBBuSdC9LLMCNU
+	Im6qRmE2r1addY8=; b=KkElW6zic2n3dUqLUmEPEMIYB2iuUAW5Y4uzzsE2sNud
+	EI+YGm0pxoBXBTRCiLARqJxdu/6yW2hVZaxqct4XYMFebG74LEzySZU1uTw4aq8i
+	juUc3fXlUy5jtLvqEAiz+9RDdb4pcNgkI4ipcqZIUsLq2BVON2YGVBKQBj+4R3UQ
+	cEy9YWYGIWBY3VuPZDUpSeZdBPMtnrRw2KKL6JFKNPuvh+Db+09Xs4gJFyAk96BR
+	D/H0in4N4AaKC6uTb8mscGIL70HfK9rgvxf7VNJiD1dnOEFvrLTGWvi61C8lmWoI
+	MDD+lDcRoD9GI3zpQWRgiUd3EGbgqV0P/KWI6q0hHg==
+X-ME-Sender: <xms:uRGKaTroeBwVGAx5FAph9YNhq9NepEr31HtB5PeOE8BJVTRaDJRiEg>
+    <xme:uRGKaUkRN8gJOkmniYRbra00x1_1yVZVZIA6ukG8HaHLu_DIChozinM3PC_vHfqdj
+    _EQjd_rKAVvlRjTVQA4ix1VlZ1eA-GPXcebK5anPibFlvTb9iQvKQ>
+X-ME-Received: <xmr:uRGKaV1daHLTR2bbPe5J5zNjsKwRg5ARoR2Yws8l2mngu9RrcLA16DdvqpKk2QbK14nEzwX8nR0lgs3VNgho0GqeFZlv30nGzM3Fc49U5hM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejfeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
+    dmnecujfgurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeefkeelvdfggfdufefhhfdugfelhfefleehueeftdekgfffffevtdegudevteeh
+    ieenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
+    ohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:uRGKacDPgpoxYS9KcdzShChOaR9TaFkPrd0kjTvnyMwDKwERQUxpeg>
+    <xmx:uRGKaSzqffZXAvPWqjFkiSs3n2FXo8J2LQc0WL_X9mUAALlLdZjKVg>
+    <xmx:uRGKaakpO96fqXpTn6xzo3hYGJo9QY6ziBl4UQfp3OPzAI2_5F-Cgw>
+    <xmx:uRGKaXGcactICDqBWpnUdjxbEzZbZSOsIyVnK5Jbd2zJgU0Q8xbVnw>
+    <xmx:uRGKaTKPysWu4eDivmoKzv1qQwHPnUvPpH-4wtCdMmosVxjukwYQpn3p>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 9 Feb 2026 11:56:25 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ca2c28c5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 9 Feb 2026 16:56:23 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/5] Some assorted fixes for GitLab CI
+Date: Mon, 09 Feb 2026 17:56:10 +0100
+Message-Id: <20260209-b4-pks-ci-meson-improvements-v1-0-38444dec4874@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] doc: add caveat about roundtripping format-patch
-To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
- Matthias Beyer <mail@beyermatthias.de>,
- Christoph Anton Mitterer <calestyo@scientia.org>,
- Matheus Tavares <matheus.tavb@gmail.com>,
- Chris Packham <judge.packham@gmail.com>, Jakob Haufe <sur5r@sur5r.net>
-References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
- <format-patch_caveats.281@msgid.xyz>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <format-patch_caveats.281@msgid.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKoRimkC/x3MSwqFMAwAwKtI1gZqFT/vKuJCbarh0Q+NiCDe3
+ eJyNnODUGIS+BU3JDpZOPiMqixg3We/EbLJBq10q7QacGkw/gVXRkcSPLKLKZzkyB+CQ236ubL
+ WGN1BLmIiy9fXj9PzvMmu1LFuAAAA
+X-Change-ID: 20260209-b4-pks-ci-meson-improvements-93d8a1ffdd27
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.3
 
-Hi Kristoffer
+Hi,
 
-Thanks for working on this. I've left a few comments below but I think 
-what you have here is pretty good already.
+I recently had the pleasure of debugging a couple of failing
+MSVC+Windows jobs in GitLab CI, which hasn't been quite fun because we
+didn't know to print error logs, and neither did we upload the failed
+test artifacts. This patch series is the result of this frustration and
+fixes a couple of smaller issues in the context of our CI:
 
-On 08/02/2026 00:11, kristofferhaugsbakk@fastmail.com wrote:
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> 
-> git-format-patch(1), git-send-email(1), and git-am(1) deal with
+  - I noticed that test slicing is slightly wrong because of a
+    difference between zero- and one-based indices, which causes us to
+    skip the first test on GitLab.
 
-I found the mention of git-send-email here and in the documentation a 
-bit distracting as it doesn't do any formatting itself - it just runs 
-"git format-patch"
+  - I deduplicated how we run Meson tests so that both GitLab and GitHub
+    use the same "run-test-slice-meson.sh" script.
 
-> † 1: There is also git-commit(1) to consider. However, making that
->       command warn or error out over such delimiters would be disruptive
->       to all Git users who never use email in their workflow.
+  - I add logic to handle failing tests via "print-test-failures.sh".
 
-This reference is formatted differently to the rest.
+The result can be found at [1]. Note that tests are failing, but those
+failures are fixed in a separate patch series via [2]. In any case, I
+guess those test failures also serve as a good demonstration how the
+failing tests show up now.
 
-> [2]: Recently patch(1) caused this issue for a project, but it was noted
->       that git-am(1) has the same behavior[3]
-> [3]: https://github.com/i3/i3/pull/6564#issuecomment-3858381425
-> [4]: https://lore.kernel.org/git/xmqqldh4b5y2.fsf@gitster.g/
+Thanks!
 
-> diff --git a/Documentation/format-patch-caveats.adoc b/Documentation/format-patch-caveats.adoc
-> new file mode 100644
-> index 00000000000..2accf2763fd
-> --- /dev/null
-> +++ b/Documentation/format-patch-caveats.adoc
-> @@ -0,0 +1,39 @@
-> +Patches produced by linkgit:git-format-patch[1] or
-> +linkgit:git-send-email[1] are inline. This means that the output of
-> +these two commands can lead to a different commit message when applied
-> +with linkgit:git-am[1]. It can also mean that the patch is not applied
-> +correctly.
+Patrick
 
-Is this last sentence referring to diffs in the commit message being 
-applied? I don't think there are circumstances where the patch itself is 
-not applied correctly.
+[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/497
+[2]: <20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im>
 
-> +The commit message might contain a three-dash line (`---`) which was
-> +perhaps meant to be a thematic break. That means that the commit message
-> +will be cut short. The presence of a line starting with "Index: " can
-> +cause the patch not to be found, giving an error about an empty patch.
-> +
-> +Furthermore, the presence of an unindented diff in the commit message
-> +will not only cut the message short but cause that very diff to be
-> +applied, along with the patch in the patch section. The commit message
-> +might for example have a diff in a GitHub MarkDown code fence:
-> +
-> +----
-> +```
-> +diff ...
-> +```
-> +----
+---
+Patrick Steinhardt (5):
+      ci: handle failures of test-slice helper
+      ci: don't skip smallest test slice in GitLab
+      ci: make test slicing consistent across Meson/Make
+      gitlab-ci: use "run-test-slice-meson.sh"
+      gitlab-ci: handle failed tests on MSVC+Meson job
 
-I'm not sure the markdown really adds anything here
+ .github/workflows/main.yml |  4 ++--
+ .gitlab-ci.yml             | 17 +++++++++++++++--
+ ci/run-test-slice-meson.sh |  2 +-
+ ci/run-test-slice.sh       |  6 +++---
+ t/helper/test-path-utils.c | 18 ++++++++++++------
+ 5 files changed, 33 insertions(+), 14 deletions(-)
 
-> +The solution for this is to indent the diff instead:
-> +
-> +----
-> +    diff ...
-> +----
-> +
-> +This loss of fidelity might be simple to notice if you are applying
-> +patches directly from a mailbox. However, a commit authored long ago
-> +might be applied in a different context, perhaps because many changes
-> +are being integrated via patch files and the
-> +linkgit:git-format-patch[1] format is trusted to import changes of a
-> +Git origin.
 
-This last sentence lost me a bit. Is this talking about commits that 
-have been pushed to a forge and then some downloads it as a patch? It 
-would certainly be helpful to explain that even if you're not using an 
-email based workflow, it is possible to be caught out by these issues.
-
-> +One might want to use a general-purpose utility like patch(1) instead,
-
-"Given these limitations, one might be tempted to ..."?
-
-> +given these limitations. However, patch(1) will not only look for
-> +unindented diffs (like linkgit:git-am[1]) but will try to apply indented
-> +diffs as well.
-
-This is useful context.
-
-Thanks
-
-Phillip
-
-> diff --git a/Documentation/git-am.adoc b/Documentation/git-am.adoc
-> index 0c94776e296..18f5b950825 100644
-> --- a/Documentation/git-am.adoc
-> +++ b/Documentation/git-am.adoc
-> @@ -259,10 +259,13 @@ message.  Any line that is of the form:
->   * a line that begins with "Index: "
->   
->   is taken as the beginning of a patch, and the commit log message
->   is terminated before the first occurrence of such a line.
->   
-> +This means that the content of the commit message can inadverently
-> +interrupt the processing (see the <<caveats,CAVEATS>> section below).
-> +
->   When initially invoking `git am`, you give it the names of the mailboxes
->   to process.  Upon seeing the first patch that does not apply, it
->   aborts in the middle.  You can recover from this in one of two ways:
->   
->   . skip the current patch by re-running the command with the `--skip`
-> @@ -281,10 +284,16 @@ Before any patches are applied, ORIG_HEAD is set to the tip of the
->   current branch.  This is useful if you have problems with multiple
->   commits, like running 'git am' on the wrong branch or an error in the
->   commits that is more easily fixed by changing the mailbox (e.g.
->   errors in the "From:" lines).
->   
-> +[[caveats]]
-> +CAVEATS
-> +-------
-> +
-> +include::format-patch-caveats.adoc[]
-> +
->   HOOKS
->   -----
->   This command can run `applypatch-msg`, `pre-applypatch`,
->   and `post-applypatch` hooks.  See linkgit:githooks[5] for more
->   information.
-> diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-> index 9a7807ca71a..36851aaf5e1 100644
-> --- a/Documentation/git-format-patch.adoc
-> +++ b/Documentation/git-format-patch.adoc
-> @@ -796,10 +796,14 @@ CAVEATS
->   Note that `format-patch` will omit merge commits from the output, even
->   if they are part of the requested range. A simple "patch" does not
->   include enough information for the receiving end to reproduce the same
->   merge commit.
->   
-> +'''
-> +
-> +include::format-patch-caveats.adoc[]
-> +
->   SEE ALSO
->   --------
->   linkgit:git-am[1], linkgit:git-send-email[1]
->   
->   GIT
-> diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
-> index ebe8853e9f5..0b118df6498 100644
-> --- a/Documentation/git-send-email.adoc
-> +++ b/Documentation/git-send-email.adoc
-> @@ -690,10 +690,15 @@ Links of a few such community maintained helpers are:
->   	  (cross platform client that can send emails using the ProtonMail API)
->   
->   	- https://github.com/AdityaGarg8/git-credential-email[git-msgraph]
->   	  (cross platform client that can send emails using the Microsoft Graph API)
->   
-> +CAVEATS
-> +-------
-> +
-> +include::format-patch-caveats.adoc[]
-> +
->   SEE ALSO
->   --------
->   linkgit:git-format-patch[1], linkgit:git-imap-send[1], mbox(5)
->   
->   GIT
-> 
-> base-commit: 3e0db84c88c57e70ac8be8c196dfa92c5d656fbc
+---
+base-commit: 3e0db84c88c57e70ac8be8c196dfa92c5d656fbc
+change-id: 20260209-b4-pks-ci-meson-improvements-93d8a1ffdd27
 
