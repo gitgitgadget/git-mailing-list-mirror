@@ -1,66 +1,66 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3B637998B
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 14:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99FC36828A
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 14:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648090; cv=none; b=U60vSWEBTcSAvkfEHtfllf8UxbyQ6fpi1pbd/XJJK9OmmjPCNVp6TEp1cnjMwaI4G8d+1DReADKSPYDO6ZhqaaTD+kzy9owxYObURqfcWdepRwvaSlswk/MU+3YOPYlR/e2Nuz3yF7Hc3lfr5s3Cpu3u40m9RDDeodm4cJB+Mbc=
+	t=1770648151; cv=none; b=lg7M+ZPW8mbCbuRgmX9pqexzZTbI9XVXxWnHIYYQoqkaui4tZ3pFOK4/iMTNDIXHNeKGjJrcXgA925Iuy+XYTqh18f1iuhIGxcNFmIeIK5+b2Yrmi76GYpnonlnZSp3T0LorNKcrPejXF5BJ2A12BOYe51ekjVmWoAsjbg27g5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648090; c=relaxed/simple;
-	bh=YiasL5ASGT3jHOh5IGu83OYIja0FgWK7zVlwaFopXTM=;
+	s=arc-20240116; t=1770648151; c=relaxed/simple;
+	bh=QO3DnNua3Ou6cVriTuf4BJSEg6+qTrHwoUtf0k6bP8w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l/leGdr+QWvME58VoJRT1pPe6XJc6F8zCpNNClg6BxH7KUusBRsvhjc3fdYa/iRjx5EXuaTJdoEkzB8hIE5wenelRyyT2WFuQt+pUjoleGgO6ODQje6LWui1YqL0LoT2dRJODSce9gGkiPYYCZDykhggRbviA02vsaqF/QlDWU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=joEPgUnj; arc=none smtp.client-ip=209.85.219.53
+	 In-Reply-To:Content-Type; b=XGUjaaPuo3cdViYlwb/HYk2HUyDUupNnpXlwJZ+rkAqvY0l6nBHL5GbvZEkVdznR+CZ47evI1oxYZB5AluwZEl64TIrY2hUVaeRXdz3Xp4OWbF6qV/Mb47D1UeGPSaT6tewbbK9Jq0fkWsF8s387mGigTrWJ+DlPeJYzW9yvuuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YZPFemfV; arc=none smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="joEPgUnj"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-895341058b1so44537876d6.3
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 06:41:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YZPFemfV"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-896f632d206so14266446d6.0
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 06:42:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770648089; x=1771252889; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770648150; x=1771252950; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=36dNQd/w6hxznUl+TtxanriY6DfrSW+9E/uKTh8AtA8=;
-        b=joEPgUnjLD/nJ1K77l+HvJmNw2DkKd+hDN0BXFvJGLDVlsVE/F/0YsaFecfnKOEyYA
-         vsWSitM+fJ8+CAMfc2+4zAKLjID/2KtMJ4h0RId2GMuIULCnn7Y4jSbBBzR6hcoHHtJU
-         xvOboS/X/8sk3p3VpLA9vj/nQO2h4tP59G0Os44W1Ug6Mo0pwgONfapQjHFKrHOgCT2A
-         zJEA+FbukB64qTBjLGJDyfPLoaEEHgE55BI6fJyjPX2I4/3s0tInlDEZlYwBnvFBXV/m
-         zTOsyp8vCeQgN/iqOoXehRPBdehN5o9M6SaQQvFvD9kYanJ/0SUeQnWxpxa/T7qBHH+G
-         w8qw==
+        bh=QO3DnNua3Ou6cVriTuf4BJSEg6+qTrHwoUtf0k6bP8w=;
+        b=YZPFemfVXe4iSEL05cY25Ua4hZUcx1pokWQfKQPYbH/OxRhlhveo76E+8U6L8h3rA6
+         FByuZKZ/8CQln23jmoWwuVjeLYBRFr9dl+FuXjQdyvS+RIq9Nrf9uHWZFwQ4WhG0f+0u
+         qAVEc/ct8hbbX3IRS3glwj/CQoxYylHQqv+neQW0gzs+jVBM4BZ1K0et3OsSoVt+iftY
+         /H2+sePTJD45PVFFEqVyn34IW+z9itoRO6XUrxjQYZCFAIND6GMKwr6VZoFXClZKF2Zy
+         pX1CKIxKPfkDBIT5JqXc/3OyviqMMHtyTO5/DuqK4sup+sZ6WlL4h2UVNpTQG2I1PULT
+         j5sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770648089; x=1771252889;
+        d=1e100.net; s=20230601; t=1770648150; x=1771252950;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=36dNQd/w6hxznUl+TtxanriY6DfrSW+9E/uKTh8AtA8=;
-        b=d7HB165oKlP9oN4r3UvOiBWLiR/MLRkhIUyhL0LxGPvTtwOXQ4viZ4Y6O74M9qMdCD
-         +H0/dzQvmyXVP03QqtEvfpLlEF5fewVXyYlVhIzdq/23VhQOSK1JSL5SCUz/CalQHntj
-         CI9YsnimJFufSm3xwKpUvfsejDgyRZzhXCfr0keVgfAIAkAoF8o/9GXasLS+eUftNYzS
-         DsYZXcr+Q29663nja8LSM6YI6nm5hJOCwkwOiCS3nKgVc7rVklzymLojl1iybjP9zVbn
-         5YS/AlyLIFtGWvmC/sFct+BwHUV+oFaYfhe/d+rAXFeAqGUgkyLBBUPC9fwq7XkwXwmV
-         Uf3w==
-X-Forwarded-Encrypted: i=1; AJvYcCVBq20L/2GyfSNVTX45VWk+PO7jnaiTlrjJqe/bGxd87gYk8bp+PSzTLQqB47OPXIyd+oI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxw1+Gfwz0Ad2XCr4h545eh77ve4jakQg3PT9GNEnAYYVsQjRul
-	mrbRYNMO+GLpfW772W14ZjRvoatB7Hdzsla31pMteV1A4X9nWdyLd5MQ
-X-Gm-Gg: AZuq6aJ9F2126RaXdRgxxPOMxB34B/gSXcgEybPgQHIxU6dUsi9q46pra7pNOqHv2qy
-	RaFx2Rel/g9XScMV2w/eeIxDt51S5CNHNU7MjnYbGKApiN3B+MhHF2WRUzlubyFP7/YiSyks1WQ
-	QgJumtaZodze0Kozh5Y2se5nvKCddlG3nhPELrequxChSKskRyEslZ6EaE99NfL7k/Z20eX7Cqs
-	CZ0eogNZcEkPEr6r74HGlvPFzItSUb+bRmDAJR2TBKyByhc1+Qq972HpuSPVtj+09v4JY5APT5x
-	/7U/135diRu6sGrp4Yns+VqK2B5F6VNP3xWxq3vh2a91v0PbS4b79N/bmxvNp3B+7ZNHm+gCQNn
-	+IBNyWUpqJnQTCV1h5WmG7Z+obhZ8la2UHqmGam+Nzq0sWuWyY5oi+iOd2fSZKVXm/R06Yx5kKh
-	V80PhTN75ldHp/jdRazlXz6LGJPZ0MW1AfMccsmyGBBV0jqbh0sEk31b2qFQ==
-X-Received: by 2002:a05:6214:3012:b0:87c:22f9:dac4 with SMTP id 6a1803df08f44-8953c7dab25mr167411746d6.15.1770648089101;
-        Mon, 09 Feb 2026 06:41:29 -0800 (PST)
+        bh=QO3DnNua3Ou6cVriTuf4BJSEg6+qTrHwoUtf0k6bP8w=;
+        b=jc4lOxbxbPEd0eO7n2zqxf9odre/OSyFxJ4jVmm6/TgR8NKPdK5Q4JLl3jaHmXwQpL
+         vW3SdWBUp5+mYpis3+KZv9G2Ef1/NgKV/U5h1vIkg2QHb+d2/+Q0z9hkw5+kGPjkUmei
+         3c3ycN47f/pRNYL7IWhi6dPdE4m29m4hdopNJxqU26CWCsoTLVI21mJGJLEN+rTSh+G3
+         2Xll+wAukL0kxVsSS7IG/+lCtMiiEqj6EgBB72LCr1WUGs2q5mWFChbAIYjBAwenwQHS
+         53UFOEOI+wRV8JV6NHN3U7RY9mIu7wD2vgnWODsXRPH6C0BvEni2fNJr6CaVcmPj6Fa+
+         y3vA==
+X-Forwarded-Encrypted: i=1; AJvYcCUy6ew9aptAfiOHTwAeUJo7lMVa+9YIWFhn0nQktHUdh00fTYzX/DtORtl98OZyFCeqhj8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSwt9b4cPpAvPOBIvD9g1mdt7npUSfvFnagknrZbXnPe7dd7R7
+	wzzfORGn/WnAIsLVSto0qqP/bGbr2s0JmXM0VCzWE7hS0SUJKlhWOXZkJSXOLw==
+X-Gm-Gg: AZuq6aIHAJPFYiXA8Gg0+1HdiY06guVTSkZCEpURwxGJC6elvd6A/FJCvoQqJ2miAIn
+	h5DYEuhSMcGlGoEOoXkLYzESlFpDY0nUQ3lej8mmcN/MfV4oJsEWL7VlZ67aFj253LL+Ez4LYDM
+	yMH+UYGH6jW+oeO/B+yfVVwUjc4TE5teQ2U85nAqIrsi0bhuEYTEBqlFwEkTOfq91hYI4mNbg0r
+	x+UPn4/n05dLTyYWlpiYLswWIl3AX4p9dRB+YafJtkSgxHSeNJ9Pmefo+tfejMuDw6G9F8CvZZ5
+	e5ST9l3Tx9HnmxYvV1FWOgayt1dmY1ireWmZ8vXSXdEwKs3yqgfGyX0O0JjS0BjqTG1w8WNOHrP
+	w/hkMh7CmQFZhsU0u+sbknObiYthujEgI0RYkmKp1K7MzfLSmqMgHo+5MVkO8ybYjU/YddUltiL
+	5XttZeA7c2cUpmr8nTQKEXmdPnnw7N8cBvAzV7UUfqbFMnbSJ/sZM3O+hc2g==
+X-Received: by 2002:ad4:5aac:0:b0:896:f42f:bf15 with SMTP id 6a1803df08f44-896f42fcb95mr73796456d6.10.1770648149925;
+        Mon, 09 Feb 2026 06:42:29 -0800 (PST)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8caf7aeed8bsm842495885a.20.2026.02.09.06.41.28
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8953c03fc95sm78425446d6.26.2026.02.09.06.42.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Feb 2026 06:41:28 -0800 (PST)
-Message-ID: <1a282a1c-866e-49fc-b396-014921135cc4@gmail.com>
-Date: Mon, 9 Feb 2026 09:41:28 -0500
+        Mon, 09 Feb 2026 06:42:29 -0800 (PST)
+Message-ID: <86a56091-edb7-4f94-b894-63b987eb1ba9@gmail.com>
+Date: Mon, 9 Feb 2026 09:42:28 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,108 +68,25 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] trace2: refactor Windows process ancestry trace2
- event
+Subject: Re: [PATCH 4/4] trace2: emit cmd_ancestry data for Windows
 To: Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: gitster@pobox.com, johannes.schindelin@gmx.de,
  Matthew John Cheetham <mjcheetham@outlook.com>
 References: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
- <7ccd0a9a6d89decaa5856494a184c71bc0d678e9.1770307510.git.gitgitgadget@gmail.com>
+ <a06344dc753698ece37f8d066b0a51931b7fa16f.1770307510.git.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <7ccd0a9a6d89decaa5856494a184c71bc0d678e9.1770307510.git.gitgitgadget@gmail.com>
+In-Reply-To: <a06344dc753698ece37f8d066b0a51931b7fa16f.1770307510.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 2/5/2026 11:05 AM, Matthew John Cheetham via GitGitGadget wrote:
-> diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
-...
->  #include "../../json-writer.h"
+> To not break existing consumers of the data_json "windows/ancestry"
+> event, we continue to emit the ancestry data as a JSON event.
 
-Are we able to delete this after your change?
-
->  	pid = GetCurrentProcessId();
->  	while (find_pid(pid, hSnapshot, &pe32)) {
-> -		/* Only report parents. Omit self from the JSON output. */
-> +		/* Only report parents. Omit self from the output. */
->  		if (nr_pids)
-> -			jw_array_string(jw, pe32.szExeFile);
-> +			strvec_push(names, pe32.szExeFile);
->  
->  		/* Check for cycle in snapshot. (Yes, it happened.) */
->  		for (k = 0; k < nr_pids; k++)
->  			if (pid == pid_list[k]) {
-> -				jw_array_string(jw, "(cycle)");
-> +				strvec_push(names, "(cycle)");
->  				return;
->  			}
->  
->  		if (nr_pids == NR_PIDS_LIMIT) {
-> -			jw_array_string(jw, "(truncated)");
-> +			strvec_push(names, "(truncated)");
->  			return;
->  		}
-
-Nice replacement of JSON with strvec logic.
-
-> @@ -105,24 +101,14 @@ static void get_processes(struct json_writer *jw, HANDLE hSnapshot)
->  }
->  
->  /*
-> - * Emit JSON data for the current and parent processes.  Individual
-> - * trace2 targets can decide how to actually print it.
-> + * Collect the list of parent process names.
->   */
-> -static void get_ancestry(void)
-> +static void get_ancestry(struct strvec *names)
->  {
->  	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
->  
->  	if (hSnapshot != INVALID_HANDLE_VALUE) {
-> -		struct json_writer jw = JSON_WRITER_INIT;
-> -
-> -		jw_array_begin(&jw, 0);
-> -		get_processes(&jw, hSnapshot);
-> -		jw_end(&jw);
-> -
-> -		trace2_data_json("process", the_repository, "windows/ancestry",
-> -				 &jw);
-> -
-> -		jw_release(&jw);
-> +		get_processes(names, hSnapshot);
->  		CloseHandle(hSnapshot);
-
-Nice simplification!
-
->  void trace2_collect_process_info(enum trace2_process_info_reason reason)
->  {
-> +	struct strvec names = STRVEC_INIT;
-> +
->  	if (!trace2_is_enabled())
->  		return;
->  
->  	switch (reason) {
->  	case TRACE2_PROCESS_INFO_STARTUP:
->  		get_is_being_debugged();
-> -		get_ancestry();
-> +		get_ancestry(&names);
-> +		if (names.nr) {
-> +			struct json_writer jw = JSON_WRITER_INIT;
-> +			jw_array_begin(&jw, 0);
-> +			for (size_t i = 0; i < names.nr; i++)
-> +				jw_array_string(&jw, names.v[i]);
-> +			jw_end(&jw);
-> +			trace2_data_json("process", the_repository,
-> +					 "windows/ancestry", &jw);
-> +			jw_release(&jw);
-
-Ah, you still have JSON logic at this point.
-
-I see that in your next patch you export the names vector itself _and_
-this older JSON version. We should consider a future where we drop this
-JSON altogether, but it's nice to have both for a few versions so tool
-makers have time to respond.
+This is the important compatibility statement. When this merges, we should
+make a claim that in two major versions we will drop this compatibility.
 
 Thanks,
 -Stolee
