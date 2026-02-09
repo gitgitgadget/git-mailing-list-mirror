@@ -1,163 +1,189 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E63314A8D
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 08:36:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC2C30BBBA
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 08:47:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770626200; cv=pass; b=SESqXfaOqDXkysX0Nzg8hMqhrSvwh3pn77dTVFpx68/xuSq7NiA1x5uLy0oi0CYoCmUGWsuiG85QV6gFXN0ocCEbcUVZRdHgpHY+mSVfcMdu2nI3+2pwLc0MRQNwa96mQ2fkgiIhf8dJbHnpq45xUhqNLRJMGm0nDGzkAnY5VtE=
+	t=1770626825; cv=pass; b=kIOQ1iN16l51d27fjC+hpiA/e38Rdz4EqMaMWwO4KGUUharBItmEVJTTc8rA2uJgeXFFf6k6cpLZANytralfL3BmGrjcP7huAOp6w597g+2pDR7KHOZLQESD40tt5hIwWI+IaIGVgfXSpND7rPsWBnCx6h8k/r68/X751ZvwoqY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770626200; c=relaxed/simple;
-	bh=lqqWxhitrfNQVN67yJKvDK48IrI7zCBDe1+Qb35KRmk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jp3+yu53l7CEBmlMBR22vZeiyZ5tWUmrwnvNUMFeRbKTRb+eN4LM/Na1VryLnrp2JUCRhwWXjB/B6EI1ZsPYHYyBlUwCzJSvvCCim/bBcc+AlPWR6ltOlrVLZ4fE7w43xcPOtdMwblGeMOHrpncYsso0veC3olDIGcdTwIJFQOA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eaiwrwFi; arc=pass smtp.client-ip=209.85.217.49
+	s=arc-20240116; t=1770626825; c=relaxed/simple;
+	bh=PFEsHSSyNOAqDbCb0foP0N5YWVI5L7KiZa5vk+zRLoE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nvP8p5qhZILa1cF4qE8YQ0S50z28I7zA+BTHrN6/4DXFPd/HwzXAXX2VBorawGJ71ndh+oQG+Zqzl+ag62Ip3lhN+niXHDqJDUXfZkubk5gJOPR84X1y6t1UpydxapMp1+ulzRWY8USpig2d6XUG1Hyz/8Rfq6XfkyhySYrumzM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+rMg81a; arc=pass smtp.client-ip=74.125.82.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eaiwrwFi"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-5faddf6db62so2592366137.0
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 00:36:40 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770626199; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+rMg81a"
+Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-126ea4e9694so1415906c88.1
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 00:47:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770626825; cv=none;
         d=google.com; s=arc-20240605;
-        b=ENPb+aV47aihhjzLwS3yYDbaOxFDO8IWFEYpmEByI6AZPDn7KPGpejTP0wwfIjQGxF
-         V5lMCT36NqYlHm4nleBeRbRfpRXhvFH8vDiihqLu3w+4S6j1jn6Z/UVl0n4/Rm4Z/79l
-         FmBvgpPIlvbLVoIFo2UqFJ8jQz19I1awDSYMkx+xmCi3iOIxF8IpNG+SWPMjP4nQcBrU
-         jMzv+hBq5vISog4UDEm9VWcJ5W2sQRa0WHgjhgf+LTZCnUUN9fiVfcBFV1gG/qKKMtor
-         21HQqZw3bZ86q7eyndgPXsSpcqwo19BW57ny48AnulNm235EOnRusnvx79PYg9bX+2wu
-         HOiA==
+        b=V7EkOSLf3hDQR8v9rMnSgqgKakW8KY8fDXPZgsJzL+O+acmOsJ3bi3OrotzwpRZG35
+         Mq7cX8o5RBE8YD5ZyLvHznezV67JQ6mj2GrXOnxXjXr+q86temP+QcoyQFNUADziwg0j
+         JuPJpj3hUIaqIIxFvw8slzYG+09Jz7YtNVtuittFxxTAcZ1fdoYc9q71Yo/HPsxFvk1N
+         669NBu6sswWAMiGtEoYdQq5c6SJDqRWAr+lpN6VF++tbT7UNn2h5Ntr6Y4ktKYgJB+Ux
+         lxQfmzpxS1wyGizuGSE4Ld1+tpoCCx7k6/6an6AEBbhdLiA/uS/YIwQfpObN8R5xh222
+         LSiw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=kjqG/UIF9eOutkWsxn2TnJlr1g0yMlzrEX6fdt7wyv8=;
-        fh=36GvrYCWw5OkaeaSdsqipPhEw7Gn7pSb2MA75dK6swI=;
-        b=Tr1X1wrnMdtoC8Wgvcanyecrf54ZX00NaxqSG26h0GMaDXBVS4FAxtNqMXtk1z6G8H
-         +D5Ng+FKb7tqmyQBZEvBwhHzBiIrzwkk3Ns/IQvUAAOLGff63fNtDB2gPWf51H/88mRy
-         S3wYkZ4ThNaNPw07Mx+PhUXEwBhtP+OC3j2NVwaJDx3EAGppSJYAUwKhhm4vLwqfxydH
-         /TxhtRt5nPopqdLLSPths1awneybCr9XhQHLYvwcLur1tFZwK/9grDq34/2WNvEoqruS
-         LLAgfryqWIn5W4IqhjH4iyRs5nLb91zJGnUclt6xSbNNOKRFfktPJrD5SBerHcbJ7jJg
-         p0cQ==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=vLLmqcSOSksK+bV+aA17i9PiyIs7S8SOTMUSmvCKWdo=;
+        fh=+/BIGTbGi8YYiGT0Jxkq8sLozbzTo0iJIgcx+Hzmam8=;
+        b=Osek6KfQUwLueQ1j+WAENitGZMUXNujfjMrGgtbGdWCwPd9iNlPYkRNOTekPYzlc/3
+         KcPd9P37AwyrM3GNvk0f74DzpogZwME/7j1xC0tN32p9RYR9C4S7q0ueTNdlX6s3KPcl
+         +7a1VlFwzdMxC9pPHBRp0uGI8fYBQ4Ieee++4HzvK7LIHyEl1Ekfev9ExCidiXN+GB8q
+         d/DH0AuitViVqGNF8GBPG6FUO1r/BQ3AT99pB2DqD65iK9d2Gvv3wdcfKkRwW/zoZj0Y
+         seV+9hdNPZOjtJEbz5W0jYgBhqVwkdl96D0oDUk0BB8t3IckRc/+bM2nfCj4qkznCK4C
+         AbUw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770626199; x=1771230999; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kjqG/UIF9eOutkWsxn2TnJlr1g0yMlzrEX6fdt7wyv8=;
-        b=eaiwrwFivJgBaoBjLpjT+qOite1bvqHWOOtKvoLJrlkd+C+ZME073ykIAlhd1o6SYH
-         sL7s+F+Mvvw5xkNv7eQwznGHzZhFW6BFX4uGLvoxcJpXj/IblAnS0ICDwDvdo35LjStt
-         L9H5Z33UmDWNQpp6XMiWM1q3KcyO25WRyFXl24y07/RYUaJRwaF2AtkyGBmCAX/MPBO5
-         5fhc11T/5CJz3riVTk747s1OMaTuJ/fEcitFbS/5KMO3D8nr46RD+lao33NC4ycBCYsK
-         pOW97OrB407lxQqccxFXE1UZql+Hpf37HlWI9AEw/3hf+PV8rkjzsv9cQXU45QzyNfDY
-         DcXA==
+        d=gmail.com; s=20230601; t=1770626825; x=1771231625; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vLLmqcSOSksK+bV+aA17i9PiyIs7S8SOTMUSmvCKWdo=;
+        b=g+rMg81aPIiOJVVCabhJ9fqdHZ823yhdmSAjfstJ1j6ArP+tAEGHEf79qaci1kzQoH
+         uXfU9RVsOTNqZrPYCYkGOwbkNBInvdti0xu5ndEK2U8fj4e8fU5uW3USTVKbOC+fhBWx
+         /mSn6BI3AegL5fsL579O9c7y/mk011sezY002J9NveB3/mO2OQWnx01cGiJBZKdnE0fl
+         JsBzBGA1x9/XxABlhhGJDcdefllNErh4IUyPeDifIcMaEnSyT4e8m3tcBmmKGMFKJFRF
+         lfiRlf8fjNfsewaEql8GvADKhCr5nFlNrM2H1IkQ38s5Io26MrmaNRQehWGrSmt2vHsN
+         slcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770626199; x=1771230999;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kjqG/UIF9eOutkWsxn2TnJlr1g0yMlzrEX6fdt7wyv8=;
-        b=Rjgr2m9gmzAgT1KUFyvRHpd2bxFCr+GCSGoVeSVm4/MkjEIBEOBvAaiDrjtMYBMc0x
-         4unw6SnHDgMgil37fhjkifS6fZWN2rfaP5Xyq2D+Ixn1dG2KCpI8aZ4iICxUkig/B0rU
-         Mz271Wmbe3r4K4EzgkQthIisXdNQcYdTdcBJ5mf+q8Ub59vgthbTEklw4NpMr2XPf4Cv
-         p8az5/IrW6/+3vDrchvppo/m5i2fDYSIg4IAsVdH/Fz3n3JDeQNjNaCivpFhQdfkUMVn
-         5wEkDY9qpSXNPOd4qabnxebXNJMWtZD2Frf9VzyEFhyifsVCXXUd85chb618+aAEh4SG
-         24Pw==
-X-Gm-Message-State: AOJu0YwI5oTCL0m0RMJWN37IQpB56qE4c3+WGoUeZbjYdJtSbOICl/vr
-	I9vY9zBJnFdM7BhUOjEpiHOoMu9gnqFIHdky4Fa+vSKQnuErwoOj9C5DgPR+SK4KXr8Qfw9lrpQ
-	Djw0a15ovuhrj3ZfXLLK6XcTAV4cQBUQ=
-X-Gm-Gg: AZuq6aJSTwxlgeVKmSh6uUCzoGarCy8id87KkvXlCtKIOQPiAlp+s43VcfJ0lKXOIrd
-	nf0k60KSUUT8DaBNH8/6Yg3ZA6HTei8z+9B3BANw87EPdNkM44h9pRdzT3rnDphVsUVNQWMOwhM
-	ELZhMqlR4AjxT7hoDBPGX7QX3JbXH8iDPhNnkTeMIReW+eAeWuBXM19w8F+x3LPxYavuBk0gnUj
-	qy15jhNVAnTSj4kezQ2a2km+BtaTiBjxjUtTQpqnXHfuQAzItCQWp2KEWZ2IvW9DLpdZh8SZ/ov
-	mgzIAOwwIRhVO0S2XeZpNh9Vwl8w5JUGxYgfAmjI
-X-Received: by 2002:a05:6102:3a07:b0:5f7:2468:83b7 with SMTP id
- ada2fe7eead31-5fae8c9bfa2mr3158409137.45.1770626199296; Mon, 09 Feb 2026
- 00:36:39 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 9 Feb 2026 00:36:38 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 9 Feb 2026 00:36:38 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqzf5k9guh.fsf@gitster.g>
-References: <20260205101524.125452-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260207100322.1786368-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260207100322.1786368-2-shreyanshpaliwalcmsmn@gmail.com> <xmqqzf5k9guh.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1770626825; x=1771231625;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vLLmqcSOSksK+bV+aA17i9PiyIs7S8SOTMUSmvCKWdo=;
+        b=u7KdZqEudBgf36JIQTB50iJlVOLZydLrnHa6YG7f0tgX7Xp4xgBaWTwQ+YaNRnIaFq
+         F4W2yBaAMTLG5ggNQ6RVOSpu2CsUwZkcmmeysMGMLFdjtkZ/piWR6Dx9XavFJYfj5SZp
+         KvVcR5f6tCZGihQdq7IM79NoN144J+GTDT9e2n6FLAX8UXQ5LoAxc1OsKGAQI3rCAUye
+         jb5SCxTkOt7yxq0reOk+sVKa2wjAXx/umYT9fZsL7O9EssGViDZjbUH8yYVOQyKO5SaW
+         MQ9sMPfBP7Jr6mfE5Pns97WGlI0J/pvBbW3x8Lybli3KKroJ4kleolyvhzKC+Mtv8z0a
+         wAqg==
+X-Gm-Message-State: AOJu0YydReH3EYZKWSA/+y2Fhy7BZPGW+CGkGdWhnjIWzA58EaKyWpIK
+	jK4CaoVKK2852ojrgZ0x8B0Nh2mL+lSKkrn852FCD6q6ypPQAx15vZ5MHuZamabhY4+NxJE9yoV
+	UMef+eQ0roagFGPyjNa0ddkCJJ7xc30Q=
+X-Gm-Gg: AZuq6aJ4GdO4wUx3ahAiivXtrwPUt1Vr64l2LXj26ZQ0koe53VTNfZCSSXLHas/the7
+	BSHkTvx2lUWm1CtAcwbjb0FYcxTubf83gs/wG/7ukWaH3QFS1nEAsAZ96w6vUFzMhULWIJCIzdj
+	5yQvbSLHLpszQdm3Iz3IheUxIY/fAhBDkmZHOqp/m1QpFAw6EmTjoHoaui/4rDv0rpMcnUPo0PD
+	eUkY689tLRAN53aNPi5LRhwW9oh2xeg7Yde6aDP5Ei4zQ2A7CkrnMlsKbriOzIA/K/ZY7YyzVg=
+X-Received: by 2002:a05:7022:24a0:b0:11a:335d:80d3 with SMTP id
+ a92af1059eb24-12703f9b5afmr5621227c88.22.1770626824373; Mon, 09 Feb 2026
+ 00:47:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 9 Feb 2026 00:36:38 -0800
-X-Gm-Features: AZwV_QgGdTiY6FwuyTrCDDHXQVo5ad-LRxmL4B8MMk7czPj2ZDx79QJG79ha394
-Message-ID: <CAOLa=ZQB3C9mr1z7QdxzFp34d0uV71ho6nRxgYLgpRV6sNkBYg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] wt-status: pass struct repository through function parameters
-To: Junio C Hamano <gitster@pobox.com>, Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org, phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000a3b935064a600995"
-
---000000000000a3b935064a600995
+References: <cover.1770127568.git.belkid98@gmail.com> <7e3082125df08d3e5fb2195d73698c4c28c6645e.1770127568.git.belkid98@gmail.com>
+ <c95a7730-7b14-4be0-a4e4-861b2f5430ea@gmail.com>
+In-Reply-To: <c95a7730-7b14-4be0-a4e4-861b2f5430ea@gmail.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Mon, 9 Feb 2026 09:47:05 +0100
+X-Gm-Features: AZwV_QiVMt8UFX0_F5KIIO0JoU3oWzcVpK6DCMyMxK6VLhc9H4L2L8eALBorXtk
+Message-ID: <CAD=f0L9h-_pqak2tjjpASmt91mx2RPha2ZW7bsvmBNdhEv=VAw@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v6 1/3] environment: stop storing
+ `core.attributesFile` globally
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, toon@iotcl.com, gitster@pobox.com, 
+	christian.couder@gmail.com, usmanakinyemi202@gmail.com, 
+	kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+On Wed, 4 Feb 2026 at 17:39, Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
->>  branch.c    |  4 ++--
->>  worktree.c  |  4 ++--
->>  wt-status.c | 48 +++++++++++++++++++++++++-----------------------
->>  wt-status.h |  6 ++++--
->>  4 files changed, 33 insertions(+), 29 deletions(-)
->>
->> diff --git a/branch.c b/branch.c
->> index 243db7d0fc..e3cf273339 100644
->> --- a/branch.c
->> +++ b/branch.c
->> @@ -412,7 +412,7 @@ static void prepare_checked_out_branches(void)
->>  			free(old);
->>  		}
->>
->> -		if (wt_status_check_rebase(wt, &state) &&
->> +		if (wt_status_check_rebase(wt->repo, wt, &state) &&
+> On 03/02/2026 15:42, Olamide Caleb Bello wrote:
+> > The `core.attributeFile` config value is parsed in
+> > git_default_core_config(), loaded eagerly and stored in the global
+> > variable `git_attributes_file`. Storing this value in a global variable
+> > can lead to it being overwritten by another repository when more than one
+> > Git repository run in the same Git process.
+> >
+> > Create a new struct `repo_config_values` to hold this value and
+> > other repository dependent values parsed by `git_default_config()`.
+> > This will ensure the current behaviour remains the same while also
+> > enabling the libification of Git.
+> >
+> > An accessor function 'repo_config_values()' is created and used to access
+> > the new struct member of the repository struct.
+> > This is to ensure that we detect if the struct repository has been
+> > initialized and also prevent double initialization of the repository.
 >
-> I am not sure if this is an improvement for callers of the API.
+> Sounds sensible. This paragraph could be reflowed.
+
+Okay
+
 >
-> Isn't wt_anything() that takes a worktree "wt" supposed to work with
-> the wt->repo repository?  Or is the API designed to be used to take
-> any repository object that is _different_ from wt->repo?  I am
-> assuming it is the former, and if so, the only effect of adding a
-> repository parameter to a function that already takes struct
-> worktree is to invite a programming error to pass a repository that
-> the wt is not designed to work with, isn't it?
+> > It is important to note that `git_default_config()` is a wrapper to other
+> > `git_default_*_config()` functions such as `git_default_core_config()`.
+> > Therefore to access and modify this global variable,
+> > the change has to be made `git_default_core_config()`.
+>
+> I'm not sure what this paragraph is saying with regard to the changes in
+> this patch.
+
+Okay I will fix it.
+
+>
+> > --- a/environment.c
+> > +++ b/environment.c
+> > @@ -756,3 +757,8 @@ int git_default_config(const char *var, const char *value,
+> >       /* Add other config variables here and to Documentation/config.adoc. */
+> >       return 0;
+> >   }
+> > +
+> > +void repo_config_values_init(struct repo_config_values *cfg)
+> > +{
+> > +     cfg->attributes_file = NULL;
+> > +}
+>
+> Should we be free()ing cfg->attributes_file when the repository instance
+> is free()d? At the moment we're using "the_repository" which points to a
+> static instance so it does not make any practical difference but once we
+> start storing the config per-repository instance we will need to free
+> the config when the repository instance is free()d.
+
+Okay I will keep this in mind.
+
+>
+> > diff --git a/repository.c b/repository.c
+> > index c7e75215ac..a9b727540f 100644
+> > --- a/repository.c
+> > +++ b/repository.c
+> > @@ -50,13 +50,25 @@ static void set_default_hash_algo(struct repository *repo)
+> >       repo_set_hash_algo(repo, algo);
+> >   }
+> >
+> > +struct repo_config_values *repo_config_values(struct repository *repo)
+> > +{
+> > +     if(!repo->initialized)
+> > +             BUG("config values from uninitialized repository");
+>
+> This check and the one in initialize_repository() below assume that the
+> repository instance is zeroed out when it is created, that's a
+> reasonable requirement but we should probably document it as our other
+> data structures tend not to require that they're zeroed out before they
+> are initialized. For example
+>
+>         struct strbuf buf;
+>         strbuf_init(&buf, 0);
+>
+> is perfectly fine as strbuf_init() does not assume the instance passed
+> to it has been zeroed out.
+>
+> As we only support retrieving values from "the_repository" at the moment
+> we should perhaps add
+>
+>         if (repo != the_repository)
+>                 BUG("trying to read config from wrong repository instance");
+
+Okay noted
+
+>
+> Everything else looks fine to me
 >
 
-Absolutely, In a previous version, the patched directly used `wt->repo`.
-I pointed out that there are instances where `wt` could be NULL as per
-the existing flow. So this change is in accordance with that. Overall I
-think the fix should ideally be around how we work with worktrees.
-
->> -		if (wt_status_check_bisect(wt, &state) &&
->> +		if (wt_status_check_bisect(wt->repo, wt, &state) &&
->
-> Ditto.
-
---000000000000a3b935064a600995
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: dd04bef36da17bb3_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tSm5KUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK0JuQy85bFRyL1JQYjJaMUxKNnc5VHY4TlhOV21xTgpBUVByTWhyVlJt
-TlpsUGZiaFFnblJoUGVqZ3EwM0h1NkM0TTNJdjhTSnQzMnNaM2MzcWwycG15UVRnaXQvMkJ4Cnl0
-Y3k5TEcvZUNETlgzTUdsWitaaTNUcDRKMXRDdGZWeFpMTm1xNjB3bEsyMjg2RUMyZmpPQ2hjdE9K
-dmMzOU0KVG1yN2pwcXhXeDREa2IzYStIOTEzSjlJTjZ2LzFEZEUxWTg1QTQ1MkVpak5veXBsNGdV
-ZEI2VVkvQlZsU0Y1MQpTL1cxaDZXZUJlcUpLdXd5cG01WlhkYllSZlJBNWR1b3QyN3ZMMi9mMWRO
-anY5UXN4K1pHb09RNEk5NlFKRmpmCldpUGJMVmI5Sk1nSmY4N3VxeHZyQkxvSTh0Wk9HMlFmTzdI
-K3dGQjJpRTVSSmxicG5qV0Z3c0Z3L2lBNmVVSkkKN0YycnRVOFZOMjd6Q0FrWElBQ3NkRmg5ejJ1
-eEhYTXlmc2hNSEJsZm11N1E0a0xMYUNrM2lPa0dWVmpSMmNuUwpZR2RmUmlJTmlzVXNCdUwvRStN
-UDRCQTVTN00ydEhTMlA3OWxzamZ3Wk1mczVYTEhjSlZURWdDRXIzYU5FOGFTCmhZVThkY3gySEpN
-Y3lCWThHRDJGYmQ2Z3pXK09NRkZIYktqaHdGVT0KPWZsd1EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000a3b935064a600995--
+Thanks
