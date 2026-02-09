@@ -1,139 +1,101 @@
-Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E1330AD10
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 19:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33C91A267
+	for <git@vger.kernel.org>; Mon,  9 Feb 2026 19:50:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770666298; cv=none; b=LuuwrSCM+a09zJui+4RyqycHPfghgGr41zvMEvU+zxyXf+DSFazwedIDlP+mX+f9W+bW77LqO8c2AlA5XN52SaV/UokI0G+f0HvLCN9EQBeBGf42Mt2BNBUOFtmzyZgi8Kn1MhAQpvuksq1tCIRYNauGGnuQtqGr+B9PEImfiRQ=
+	t=1770666607; cv=none; b=aL7VYGKQ6txKQO1IFFtFCw8Q8DtGg67W6OvwrgaVbB/MPZbL5EmOO8cSpNSzg0PHD3obB7+nSCSbPCjU1pLfwWzhT9jQYCw+pbnHHlsAn5Ttaq6LKP/M/MeeI9DgDBGP9dl22qHKcySQchFv5jyQ6jfyI+Cj4EJgkWpglBX9Rgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770666298; c=relaxed/simple;
-	bh=HGQ1lix13jFBbQMU4wIeHHL5GWl6+VtcVVrEE8SgE0U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=atov6DL2NfQ1XR1Z081OX8D2Zae7yoPe59Utd6U+yBMulkH7DecuWvUV2BIax99F0GFrYZC0+PCEktYYsoxatINisFoikV2BWEVo5OvwiAi30Gnzu+9JrrFQW2wdHfJ7pdws4RGD05vSViK36nkBOSmFhR4QSbK4ORsh1riSP6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=NUyJ9R7K; arc=none smtp.client-ip=84.93.230.244
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1770666607; c=relaxed/simple;
+	bh=3evYLbTZXlYV3/hqDCtt65/+yHhRYtTBUQNHqvrrCxY=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=COVYyxmFigMONyVq84FZRfaKdGf6xDq6tzrBkBGJn78E6SdbEYOTIc6g537tH72D2s1gSD3CrFhPegN8tlSIXk+jymBYlP+Fl4p6ey2ytL4YIp/BOuDB0I2lZJdoUfKRK03VnHf+xGu0nu8/bLLHUg6rkNnWobEILNh5ahpMW9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=iEhoJEVk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K+syvUC5; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="NUyJ9R7K"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id pX8kvZqMC4vCcpX8lvqqvA; Mon, 09 Feb 2026 19:41:48 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1770666108; bh=gDsoP5/QnbMdXY3ku+lZYnCrQUfoHRjBogDWmyg31+s=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=NUyJ9R7KbHbkMhZOQtfwwToYQrHU0t5pP9CAQd+7nfltpLfCSpG3V4CPPDneZws9d
-	 p29GijjgSXNE3KvQGtpZAftYDh/5MWg1nsjXon+5fGM3xjAtCfzdGAVPiSJrSeNMAT
-	 BF1VQvJOnnC+1paE9IcHTlzPEuQ9ydA0S6HBAOTyeUyOGeeGBYazOtBUYllPAiBZDn
-	 8U7rpbKQoqOCY9PWy8tQv47UCnZSk+c70IudtGHsG7mO9F115Np9zF6eJpUQ9fzljj
-	 +2hUk1pKfV9le5lRfwl+0Vtf0u9NrzbhEkO8EpujN6P08za+VY3TcUJagmBL9P9PAj
-	 Eh0tgy+2Hxs+g==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=KZZxshYD c=1 sm=1 tr=0 ts=698a387c
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=_wWHIzhCZQMUI-R4TOgA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <c29e0c1d-337c-4411-8d52-07c9155e8abe@ramsayjones.plus.com>
-Date: Mon, 9 Feb 2026 19:41:30 +0000
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="iEhoJEVk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K+syvUC5"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id EE3A9EC0585;
+	Mon,  9 Feb 2026 14:50:05 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 09 Feb 2026 14:50:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1770666605;
+	 x=1770753005; bh=jBa8jOBc0tUVe1iyMSsXcIkI9T+2a8/bauW5LhaOSwc=; b=
+	iEhoJEVkSKvqlhxE1ZsTM+hM+vj8qBa3NSMq/wJqXgX0x580OKwZ5TkYqhkU4Mie
+	L4/tKJox+Z9rKXKDhKmKehWpO2L1rOhx4EYd792QFrTimnj7aDXBw4ymLkrjMuMx
+	cSliRShTHYhBaohHA9eraFk/VZELs24PtUY4YUgr99RBi3ozohgAxRM/mQWZTpCL
+	l47TQsykzLcU9pBwmoh+fr3NifMgBF4AYoRynOqz2lLZ5fNPWa6Mj1dho5bN+rLv
+	2RQX8QT8ci8WOto0eT3et65UCW4gmJpa9W2p8ehhgYLNP5gxxONfM05pxt7/Y7bA
+	Bc/kyDLjrPrCPlcFMy07wg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1770666605; x=1770753005; bh=j
+	Ba8jOBc0tUVe1iyMSsXcIkI9T+2a8/bauW5LhaOSwc=; b=K+syvUC5lDxpKCjAl
+	gQ89finIiteXLHcd1tsDw+eJw7bkCYwmuBUcJM9zZhCcGLZkMrnDlNss9N05wuWD
+	LpJEq8i3ahGvOrzNWkz8x0Ily4bk6PLCE5F5v6gOPTSyETOSLdYSg0AbJxwZaHlR
+	xlFQhK+d1RLOu9iCa3Osm4rrR0K63hR/wYVVPBmtuppmN7DrIDRTjYNu/KruA+/V
+	KUwuuKpnMqN8Qfc/e5X390JfQ+WhQvaQh/jXaAy2ox53So9eS5ard9uqUwKMVweU
+	JEbD8lqsCCKq3dA7Ce9bJ4GQaVcq83rZeVwdHMx81h94a/8fYfMDQ6rlRyb6Ixy8
+	rqPkw==
+X-ME-Sender: <xms:bTqKacApcSqUwOUx8RdOKjRy_oZWipmHHHxPm3npWUoPJM31ZQKB_LQ>
+    <xme:bTqKaZUaQJa8CF9TZ2oy4ydl6tbyIvREYsOWMXlqRlsnFvYBlXX91Kt2kPN7KPlkZ
+    6GQkVNxJ_25lnBCAtb9vhGlOLR0E4CaUTad0Iv5OccMd-4zZ5JBBA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertd
+    ertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegt
+    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepueffhe
+    etfeelgefgfeehkeejkeevtdevueelhfeuteejteejheektdefgfeigefhnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruh
+    hgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:bTqKaeuAWY_GSYoHAKWsR5Nq7AidZhPitvFwIcTF_fEBcusxS_9vjQ>
+    <xmx:bTqKaRZPbT3HypS9nCzCULxYwOPfpfTetOfENn3NX_zFI3hU7SfgFg>
+    <xmx:bTqKaRXupkIbMnlvUMatXCiQJ7u_JxVB_y0kG_Sl-GOVJIt7a1TWcA>
+    <xmx:bTqKaV4o7qlmrxEPMSxhULwMVHZe_pL2anREJCoe2ZD-QlmLd56S3w>
+    <xmx:bTqKaWHPLnMP1Oc5DacIby671xtpW9poT166OMQ4HKFDqWIAa_4YmOSz>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id C75591EA006C; Mon,  9 Feb 2026 14:50:05 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: What's cooking in git.git (Feb 2026, #03)
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <xmqq7bsob0wo.fsf@gitster.g> <aYmleK3kGqzLXyJe@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <aYmleK3kGqzLXyJe@pks.im>
-Content-Type: text/plain; charset=UTF-8
+X-ThreadId: A05Gi23CChc-
+Date: Mon, 09 Feb 2026 20:48:57 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <e14ebaf9-0035-49be-8321-3449abcd9c6b@app.fastmail.com>
+In-Reply-To: <xmqqikc54vse.fsf@gitster.g>
+References: <xmqqikc54vse.fsf@gitster.g>
+Subject: Re: [PATCH] rerere: minor documantation update
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfPsZ4YlkP8+j9Xz2oHJJJhfXZQ7Q5b2H6JMpZdLaLdgf92HB1TZOoiz1Xwmjn08SW7QX2wrYg9hC7cD3m50Q3Hzca2f0X1ANDjrcHegfSpfZta+I3/KZ
- xVCZzxUnsPs1dqalFWRZ6GEcFSKqTioVlI2UfIrB+8fLYQxqgmzD5qCHSk01WDlQbNuNVQalRb0g9H7+NgA3XH1p79h3GDueLms=
 
+> [PATCH] rerere: minor documantation update
 
+s/documantation/documentation/
 
-On 09/02/2026 9:14 am, Patrick Steinhardt wrote:
-> On Sat, Feb 07, 2026 at 03:15:51PM -0800, Junio C Hamano wrote:
-[snip]
-> 
->> * ps/meson-gitk-git-gui (2026-02-04) 1 commit
->>  - meson: wire up gitk and git-gui
->>
->>  Plumb gitk/git-gui build and install procedure in meson based
->>  builds.
->>
->>  Expecting a reroll.
->>  source: <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
-> 
-> Probably makes more sense to say that this is waiting on a pull request
-> of gitk, as the patch series itself doesn't need to change.
-> 
+On Mon, Feb 9, 2026, at 19:27, Junio C Hamano wrote:
+> Let's not call our users "it".  Also "rerere forget \*.c" does not
+> forget resolutions for just '*.c'; it forgets for all the files
+> whose filenames end with ".c".
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>[snip]
 
-So, I should probably wait until Junio pulls from Johannes Sixt, but as it stands
-on the seen branch (@203d64cf67), I have warning against 'git-gui' on Linux (but
-not cygwin). On Linux, I see:
-
-  $ cat build/meson-logs/meson-log.txt
-  ...
-  Executing subproject git-gui
-
-  Project name: git-gui
-  Project version: undefined
-  Program sh found: YES (/usr/bin/sh)
-  Program tclsh found: YES (/usr/bin/tclsh)
-  Program wish found: YES (/usr/bin/wish)
-  Configuring GIT-GUI-BUILD-OPTIONS using configuration
-  Program msgfmt found: YES (/usr/bin/msgfmt)
-  Build targets in project: 694
-  NOTICE: Future-deprecated features used:
-   * 0.64.0: {'copy arg in configure_file'}
-  Subproject git-gui finished.
-  ...
-  $ 
-
-Note that on cygwin I don't get the warning and the number of build targets
-is 693, rather than 694 (I don't know if that's relevant). Also the version
-of meson on linux is 1.3.2, but on cygwin is 1.5.2 (so, I would have thought
-that the deprecation warning would also appear on cygwin! ;) ).
-
-The make and meson builds appear very similar, although some paths and version
-numbers differ:
-
-  $ diff build/subprojects/git-gui/git-gui git-gui/git-gui
-  1c1
-  < #!/usr/bin/sh
-  ---
-  > #!/bin/sh
-  6c6
-  < 	echo 'git-gui version 0.21.GITGUI'; \
-  ---
-  > 	echo 'git-gui version 0.21.0.257.g1a729'; \
-  10c10
-  <  exec '/usr/bin/wish' "$argv0" -- "$@"
-  ---
-  >  exec 'wish' "$argv0" -- "$@"
-  12c12
-  < set appvers {0.21.GITGUI}
-  ---
-  > set appvers {0.21.0.257.g1a729}
-  378c378
-  < set _shellpath {/usr/bin/sh}
-  ---
-  > set _shellpath {/bin/sh}
-  $ 
-
-Anyway, just an FYI.
-
-Thanks.
-
-ATB,
-Ramsay Jones
-
-
-
-
+Looks good.
