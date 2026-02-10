@@ -1,150 +1,148 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B80525B662;
-	Tue, 10 Feb 2026 14:31:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B831E0FB
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 15:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770733863; cv=none; b=PC96DsIl97DG9VVyxRqhr+bJvlWEkxEJagdNgb+ZOLsHt5k0YQsFUwNW9qtbjuNUvHkRDZjwYuwOrKRZGZ3nolMp1T8eOFf9ABA9qHiPtQWWrdYiRLQiwzkBum/wVjCp1Q1ATNfjWgJfqaq66TPagxG5wkv3/RYfYgymJBo7aA0=
+	t=1770736066; cv=none; b=NpwHXdIyHh6qjT2KqEIcxp0bIUtssmF5YWJylKDSJHTLdV0QuzFol7+Op5QVr9Y6T0ICTWvRr3v0BJW58iHj7eFdW3OE7u9f/ZSFdfNwbt7lYG3hu+8DT0vz7eATRO8Dtp+FssteZPZQ3I1Zyo+p3OfNBqd2D8aRVQncWwkqcG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770733863; c=relaxed/simple;
-	bh=/6D7mtlSsxu6MuFgsjjumKvjX6uQ8f2ofDlklCQlVfM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h8SaZ+uZrXulzIRiomysUP0hUQVuRurOLUTxPYN24oZNsLQlOdGgPKlYUreATMaBrMzN1Zub1b8jGtfUCIMTj/ANLFKlXPK+Lhy7js5lUMCO1vaAi3EZtdcVHlJWwsDYQlKWtTqe0a5Ha1Zq4CqUwamvWLnaLy27SHBmCw8jyWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=okTrY1E+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770736066; c=relaxed/simple;
+	bh=Vl9mt62CWPpnnNG77jXuxXmGabI8ZMPwthtqgAi9j00=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tv3KnirCSJUmLJjlDZR5Oehev7PUI/f4zaEDlUxvA+IigAvnRsGbTAK7Zd4DCxEboSfwRQApn8Dzr9qT2CTu2euuoDau6QCKndN9x2bAR29tGzFZxmyXNdh+p2QHtv1IDr5jhRHKys88YmLyS4r1gunFbLOQa2k3qp4I5ZDI/QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GymD0YWe; arc=none smtp.client-ip=209.85.128.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="okTrY1E+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D03C116C6;
-	Tue, 10 Feb 2026 14:31:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770733863;
-	bh=/6D7mtlSsxu6MuFgsjjumKvjX6uQ8f2ofDlklCQlVfM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=okTrY1E+yUyV2iINPeTNPULJHjHE+XQUyeUn3deAvg3Sd/zwSV0X+89rQp9UAtxyi
-	 0dWILd7CCuzamAhE6RsrA1pb+Ex/SQZTmA2k7X+b0DIxZZ3PFZmiMTAQDopilZM5FD
-	 dx8CdobMLYJ8c/36LXYYqpxv5HoixIQjN2bUjjiCxH7GboQsNF+QSpa8Ifn89iL/Wn
-	 KCevEtuK4bvnBYrL/W+IGRwiNQPhsMk9d7pd5OqX0LjvmoCirnk9B83gGoJeZ+AacF
-	 GcbAaOBS5xqh2DRfrFw3ry0YS8nv1K1YgtoOlF4dPqME3H372UFHmlOi6BsJ8KjDV+
-	 TETVQ/dmlzN0A==
-Date: Tue, 10 Feb 2026 15:30:59 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: git@vger.kernel.org, 
-	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>
-Cc: linux-man@vger.kernel.org
-Subject: Re: [PATCH v2] futex_waitv.2: new page
-Message-ID: <aYtAknObJpjszCaj@devuan>
-References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
- <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
- <aYpg1XelZBzpw4ZL@devuan>
- <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GymD0YWe"
+Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-47ee07570deso38605765e9.1
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 07:07:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770736063; x=1771340863; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VVwMTEzNFNUOt7v3IxAdw73+UDgciuc3NtDd0gB37RM=;
+        b=GymD0YWehas7sUz+WJSVMvXhbTRVtpaepSuF4+6j6GFezeV2wjlpc1QHHrO2pcAwhu
+         XwdDEngMA6JHsLzR5o5dlCvSqkJHQNi9nhuVwd6V/GSt9CJFt6mqWqHdN4L8if9ZFIYu
+         MNFRO1Zq2xNI2e5ONpS902HQmS8P+Nj3pybndort3u1enc7zsOBp8W24OaCY/NcwzjJ2
+         cbSd6m3+1ed9bJofiDWLCxEusyBz6Y0Yv0jP/ZMnKgtOcNWeEU/J3CT8Hn1mucukgXO0
+         y9mx4/huZzemd4zA5ZZbqW7Nz78mCg23nsXw91YVYpLVDwBJMjG53UAxdazNTsBvOp19
+         SnbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770736063; x=1771340863;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VVwMTEzNFNUOt7v3IxAdw73+UDgciuc3NtDd0gB37RM=;
+        b=k/gxofK5a6y8xnqX6ZPGRjReUMBAJ+aL04I9ZrTEH9CVhNqsPzcmcX5ozF+oS5AnhS
+         bMNpmHoZ0oID7B+c5KGTT7Vx7n0zS/x7K70l8ipfW9Rw6/+Q5liitbvjBKWazuvVehEg
+         pztB159VWy+U7umJBCf11mW6h9AaD4ndpUtxH/naG2KBkyndlIL63JAmzQmcmO3jzgJG
+         w+Ii2qfvnQfZpkgrDrOGMrJMMzQ7WmeswxFIDWpmFxEKms5bBBTm/v7EpjZ9DObefdN5
+         a+E22LfFoLxEFcR6uSmmO0vx4AXqQU3UhNkxzow8hWWH+d4O+Epe2xlmF/7Fd+5m1ka9
+         OSJw==
+X-Forwarded-Encrypted: i=1; AJvYcCUbPiG3EK+FNdaAbEgDZ8lSK/VRw5PTMXV9yBD3LVb9LxUA8NWHj+v+WKztvybgjP/pexs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmSGuBBcUD0FtCBFc02fbkWmkgyTIiG4i1rSmgAsz7s1zkvc3K
+	R/LTJt5W0/zq33Cgh7vd/D8gzR74fGCxcOh6WiDLcLbWqxbhFlBAdKmf
+X-Gm-Gg: AZuq6aI5p5gDmy+cMYmX8l1oiEoYJf7AKixPELmnQJavzT/kFCNOGofW78cUfHvYrGm
+	15KWfoPY56MSQhm0xShi+HbnadwvvFqxBHmNkDMt+oUOOZnqENtTI4c9u/xuBNvH6QhvaXI2MNI
+	DCvBhQughKuz025CaD/QOox/K/2zGiHGvOHybyx92ImC+y7czNEJrjsuw2s765GtYIQDQwNVYxZ
+	aJ5AEvIFyjZYHw5If2DDZFGYarYmUh1Tmcndg4QB/7UVV0jqgkybYGolnQf+s486aL79p6oCEGY
+	2bV8S4ig8ZajW+m1Vz4pO3xZhKtK43SJ8qAQyJrXPhSvQCxuhmhVLZvufrTddZu/vWwGv3cNiDk
+	9288mboLl0i9kz4Gx/PaGRX+fi+JMcT4ioBXM4O+AFpbC4EzyPkwZ6kGpdFkzlsPYEcMgwpDfBC
+	j6jrkYVS8MB3r9b+YG2T5pjJQltkIUWnLgXLPhqs+PwQRzkyHUCs337PEaq7sJjSatoOGfcThAT
+	XQQWA==
+X-Received: by 2002:a05:600c:3512:b0:459:db7b:988e with SMTP id 5b1f17b1804b1-483201e25c4mr231691835e9.13.1770736063087;
+        Tue, 10 Feb 2026 07:07:43 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4832096c438sm206299455e9.3.2026.02.10.07.07.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Feb 2026 07:07:42 -0800 (PST)
+Message-ID: <0a45d72a-2a11-4363-ad2b-9fabff70bc9f@gmail.com>
+Date: Tue, 10 Feb 2026 15:07:41 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ozagggnj4k7r53xj"
-Content-Disposition: inline
-In-Reply-To: <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy PATCH v6 1/3] environment: stop storing
+ `core.attributesFile` globally
+To: Bello Caleb Olamide <belkid98@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, toon@iotcl.com,
+ christian.couder@gmail.com, usmanakinyemi202@gmail.com,
+ kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com,
+ phillip.wood@dunelm.org.uk
+References: <aYsEpvFwCSHb5DYO@ubuntu>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <aYsEpvFwCSHb5DYO@ubuntu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 10/02/2026 10:17, Bello Caleb Olamide wrote:
 
---ozagggnj4k7r53xj
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: git@vger.kernel.org, 
-	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>
-Cc: linux-man@vger.kernel.org
-Subject: Re: [PATCH v2] futex_waitv.2: new page
-Message-ID: <aYtAknObJpjszCaj@devuan>
-References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
- <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
- <aYpg1XelZBzpw4ZL@devuan>
- <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
-MIME-Version: 1.0
-In-Reply-To: <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
+> Initialized empty Git repository in /home/ubuntu/Code/open_source/git/t/trash directory.t4027-diff-submodule/sub/.git/
+> [master (root-commit) 4431e0b] submodule
+>   Author: A U Thor <author@example.com>
+>   1 file changed, 1 insertion(+)
+>   create mode 100644 world
+> BUG: repository.c:56: trying to read config from wrong repository instance
+> Aborted (core dumped)
 
-Hi!
+What does the backtrace show if you load the coredump into gdb? If 
+you're using systemd you should be able to run
 
-On 2026-02-10T15:17:55+0100, =D0=BD=D0=B0=D0=B1 wrote:
-> Hi!
->=20
-> On Mon, Feb 09, 2026 at 11:35:53PM +0100, Alejandro Colomar wrote:
-> > On 2026-02-07T23:00:49+0100, =D0=BD=D0=B0=D0=B1 wrote:
-> > > Signed-off-by: Ahelenia Ziemia=C5=84ska <nabijaczleweli@nabijaczlewel=
-i.xyz>
-> >=20
-> > For some reason, the patch doesn't want to apply.  I don't see anything
-> > obviously wrong, so it may be an issue in my side?
-> >=20
-> > 	Applying: futex_waitv.2: new page
-> > 	error: affected file 'man2/futex_waitv.2' is beyond a symbolic link
-> > 	error: man7/futex.7: does not exist in index
-> > 	Patch failed at 0001 futex_waitv.2: new page
-> > 	hint: Use 'git am --show-current-patch=3Ddiff' to see the failed patch
-> > 	hint: When you have resolved this problem, run "git am --continue".
-> > 	hint: If you prefer to skip this patch, run "git am --skip" instead.
-> > 	hint: To restore the original branch and stop patching, run "git am --=
-abort".
-> > 	hint: Disable this message with "git config set advice.mergeConflict f=
-alse"
-> > 	Press any key to continue...
->=20
-> Hm, I did recently set
->   $ git config diff.noprefix
->   true
-> I didn't expect this to affect format-patch diffs
-> (since it doesn't affect diffs shown by git add -p),
-> or, if it did, I expected the designated consumer of format-patch
-> diffs (am) to understand this. perhaps not;
-> maybe -p0 to git am?
->=20
-> A quick search yields
->   https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#eaa0323ec4eed=
-441b37caf96e1b136529b298dbac
-> where you're in the thread and the maintainer says "queued" for a patch
-> that would ignore noprefix for format-patch for this reason precisely.
-> But clearly not, since my patches were with noprefix=3Dtrue and came out =
--p0.
+     coredumpctl gdb
 
-Oh, that bites again!
+to start gdb on the last coredump (you can list them with "coredumpctl 
+list" if you need to select a different one) and then you can run
 
-Junio, do you still have this queued?
-<https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#m6f42ff4f0cb2d6d=
-d1d68f12a533d04c822b68a80>
+     bt full
 
+in gdb to get a backtrace.
 
-Have a lovely day!
-Alex
+If you have an actual coredump file then you can just run "gdb 
+path/to/coredump"
 
->=20
-> Best,
+Thanks
 
+Phillip
 
+> not ok 1 - setup
+> #
+> # test_tick &&
+> # test_create_repo sub &&
+> # (
+> # cd sub &&
+> # echo hello >world &&
+> # git add world &&
+> # git commit -m submodule
+> # ) &&
+> #
+> # test_tick &&
+> # echo frotz >nitfol &&
+> # git add nitfol sub &&
+> # git commit -m superproject &&
+> #
+> # (
+> # cd sub &&
+> # echo goodbye >world &&
+> # git add world &&
+> # git commit -m "submodule #2"
+> # ) &&
+> #
+> # git -C sub rev-list HEAD >revs &&
+> # set x $(cat revs) &&
+> # echo ":160000 160000 $3 $ZERO_OID M sub" >expect &&
+> # subtip=$3 subprev=$2
+> #
+> 1..1
+> 
+> Thanks
+> 
 
---=20
-<https://www.alejandro-colomar.es>
-
---ozagggnj4k7r53xj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmmLQR0ACgkQ64mZXMKQ
-wqlDpw/9E2TyUu3WnmEPciM7JuGN5a1yAO34c5ttqJQv9xdXYRwkd3TgFZcjU4ca
-uvV2n7CJgY+RDWH6YJEyP4tiAJgJT/ogBFV0IDBvw8tmEyeNkQqOe9+euLtFBMZG
-+GGuHtX6y3cYXuQtCfOR6vrbgUDxqLtm7aj+X70sCkn16IJa6Oc7jRNreHoeihoK
-m4CbYcRoITygTLqYj5C/4NzN26HGD+A4fm6zrfO9+PwdkIZPl8BBfbmyLP2A4lw0
-O/2LLtTVi99DgXhwo/Jugx7uxMYTJb0dCUJdsuvPh3Do9SJz+5rQOdANZAao4kyg
-ruY0iPZ+QrEUYfkMUobPkwpEbefMwCxZ0lrKzbf3pBzXYwFGQ7XvzCBKWpHWgJyt
-rtDutnGSG/T9joaQy0yp+OsKqZsn6EodyUr6DaQuoZiAYdmxg6qPiMxcd/1u79qi
-W1rRrusyQmMW2V4Sknxm9Whq5DxwmcoeOmJtchbcEDHidQ3dVA1JaivuV+n4J+pi
-PM+zidcoPExMp0/qPOpX4cBGbIIIkFvY8UNp9K/1+NvbpbR5K2yHS5LwbTeY57Fe
-c0Es3qtgf1TKbRHX29Vu71XeZMuh/8DbpQ45AkDcUlQcop7bZiVCdiVZz61LBcxw
-n5pKJV5cYnGh/tNo2XEo/FcC6Zch7FWJ3/u4mf/x6okgGhUh2vs=
-=5yH5
------END PGP SIGNATURE-----
-
---ozagggnj4k7r53xj--
