@@ -1,164 +1,276 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25E92F9984
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 09:50:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C293491E1
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:09:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770717004; cv=pass; b=XpAHTTR6HUWuMLePC6POwoyopjrDsZMZ4C9Uq54gIgukGQwsiynTtPRHCz4eFME+TPhOrAVRbTBIMS4x8uymeE6DKBvSY8sLkStxUpYEvDmvh5PbxyN8ZpScgyyup3c0QWnhHVecWw0Bp2WmYTm/ztnfBEL8mWFQVZmz/EUayYc=
+	t=1770718160; cv=pass; b=gPOneFi+t8YBCvmM7PY7KkCGpHg92y/DpL4xLbmsFQtqfYA+XAyWYslGVMybdCtx40st6SnUGNmaEzr2xQYcdH+uA6NgTq6bqdj7SLY7pdqBVHV7F08hS6AELuzlyDlhGZ52ucBgj452qasrwzdMaDeKf8WviuUyjs+lYZbNIzY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770717004; c=relaxed/simple;
-	bh=3Ajuf7kOBDtRPcuaMDh8DBWz8IS9VWexrW//tVSRD7E=;
+	s=arc-20240116; t=1770718160; c=relaxed/simple;
+	bh=2DKnegsaCBCk5o+DnbUgQA0+MqBDCCi5QB1+jGJ69dU=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YFJgYXvOLsiSQ9ixNB2R65k/Bu3Z3cXmeeUhnnPaBnBs0Lf9fdpTAsKQFXV4IYrrO3u/bWOIaheKACgi4a7hD0pCM4wns+K6ybvqnGG4l8bmfOhL8Vgh2CtTXfEpTdKb7EFpK0juXybj6F2A5NLJ1HIMbQxMce98bv2dF/Cv9/s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gbEHX/0K; arc=pass smtp.client-ip=209.85.222.50
+	 To:Cc:Content-Type; b=IG6Orvgt62nK1gu2hglMVKyzKBK6pa8/y/T7Ljy6TYThXQXkUHuNiTEw8iBtAz5B77J8FJtL8hIP5PiJv9hxQOe0H3qJ1lluiQg7q4fyEuMBA/TJIdMGl/YBbENjmin/8R14yeU1rUKEeoP61lrZ8jUsnq5hpb8eF84S8Pdf2Pw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CJHV/0Ns; arc=pass smtp.client-ip=209.85.222.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gbEHX/0K"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-948af5e704cso1219650241.3
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 01:50:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770717002; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CJHV/0Ns"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-948bff012f0so800608241.2
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 02:09:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770718157; cv=none;
         d=google.com; s=arc-20240605;
-        b=Z6iCNzdbTXDcGV99hcmBCWpTurqZrNcogXKNy4gYpfWubwZndCI4TtQduQHHu4+rY9
-         J05vYUFGaGeZwI6aFW83gK/QsOzA5W1HFDcehLAdR5QQwv8eDo/7cOu/05qL0hjUFUxt
-         D1zhG/U77Z604ldFtX/0r/g5ADYtOb4T3FKcpahSvYRnRUGIUGie9S7pewvKRUzbQzZm
-         GC3V6foX+ls/go86oDVSHg9TO/ZyDog55z+XWn4sGRBESNcFTEPV+SJQNKMixOYPlaEt
-         cHqSVzg67hfjiBwCPUobrE/ivTJdifd5c8nrrE7VsdPbgOb5ghKnblBSc83mpeZZuK9l
-         q5sg==
+        b=FeYC3ntQPhgwxv5Qj0z9pGbrjQXRNyClGjuL4obiL5cPMlY77zg0yX6auRpTLET1sf
+         2xdr+7h1+tfKBy8T/VUPGX7j+21xPbot4of+U3Lc2VdTi9KUqSio5w/FLs8Oa+oH9D/V
+         0nn07e88iFR9J7aCRH12Y9koYgaz0jjWRAttglVFnL1B/ymso8IE3feixBMDGu7guGMc
+         JAvCJrKKW/+e/98u/atNnY88Ao6B24x3YmpUxtW0B++r0FdUpycwAlflv2HCkQ5MvBpH
+         cuh+LyuIJGWRJzFW+nZiPxH/hzZ9V9aq6wSPP4kEgTEf1EVAaXunz/drHEVlR9KAXdTz
+         rW0g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=nEWWJy28z3zUO+X/uvIExMOEGUHa2gsqc5rV/aaoSQk=;
-        fh=odhZ9wCYhVF3RnjMJT5QV7Z4qNS7uNJPwz+vEHKzBg0=;
-        b=Ar373qLZUP1sM/Fl+yt3O2+1MGAAu9sVIPNZkY0zWTs49sBo/E6YSWoAjY1LLRDLck
-         cgRy+mEf817JbuRU9wM4F051wByUVyt44LeAzC1VLL6kHFIKltb0N3HMvh9U0ctGDIIs
-         /A/CzHA5a1rmwRqCcCtekwAb1ILpQwhQnvMdR1dsOzTNeiwrHVhTVQPhb3u1WogMCquC
-         GF7sx2Bi/vdFsLm8XZFvxo7conkBgkTBx97QBIqQWjEZSPhITmLCx/A3fqh5n44tpmt2
-         93CCSew67Zw4nC7wVcTXI8EpyYunkY73/QcKm7Fm7Tqt5hX8IjuArckkx1pyZ/S+GcSw
-         nuNw==;
+        bh=MQ9WuLkb9QHiMlJgTeiIaVd0MKgrNLwEHGCUDYUc/qI=;
+        fh=ty73qu/mjp6olkAb0/G4VGZeH6SWOLNBs8YQa03/qaY=;
+        b=fuzJaJL3gQEtvNRKZqt6v4JPFva2CPqd+74sut4wuPrJbScExaodUjH3jFRmSpBFGO
+         Lxq+29A5VRZGICLRPUnx15MHABQXh47/KkEXC4Dvlp3nPmxz1TQVj4fyApZ80xkp4dP9
+         WmqvCrplYGosjSqDxQPYHD4Axv9g8X+2MYH54S9UHS5MgJreBYVArzZ6TtVoKNzPbsw5
+         74Di5ns8vVeZi3IPqtSyoEOLosJh8o3vw2K66QoTdan6PZl40OJlDjqZXYBcbeJHyWbe
+         zke5vCIymIaxqekeXGyPNQCoYvAvWxcZSc4h9xzcrF9Tdihkhnqf0IRGXKmmRih3r1oU
+         AxXw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770717002; x=1771321802; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770718157; x=1771322957; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nEWWJy28z3zUO+X/uvIExMOEGUHa2gsqc5rV/aaoSQk=;
-        b=gbEHX/0Kip9ePRsZ170EB8IHP2qtuQdG7vzhlrptHh2IWtalxpK4Wck7KvXalUe/4l
-         00VpB/1ywOzVoCKZTBUiOdpjgQY6XSWuZBIe6nUaWgg9OUw7ZgayZvcRfyaBBcfE0Keh
-         bMvbuqaSzIinVpcmWPO3s35wV9vdv6jrXl5wFL+Z5mV+bnXxdX3BEya7M2TPauDhh0Xn
-         7j3YpLgTIBGZZrOVZAbqripa1SAjv0WGWUvxxc5ZG/R8LhEKojxm1GTMzXneUTQNkfs7
-         uNQY7osq4cQ8s6OnIVUwaGg6TXlH5PvVg9CG8UuLVt6f0/OhH0PnwQkRMCF3nLEaToo+
-         uBvg==
+        bh=MQ9WuLkb9QHiMlJgTeiIaVd0MKgrNLwEHGCUDYUc/qI=;
+        b=CJHV/0NsEd00g6CY/GbGr0Rn/HB5AlwGNyvv0/Kil+uwA3SUMUekPk6ofToYXwbP7L
+         88gBEJUL6gJdMcxBtLYaPV2RTTZbNKXLjbzoPmYw5MdvsMH2/0I4z/HY2/nbQomW9GDz
+         4TdyHX/UvNWjida3m1Uwzg0/7D2HZI1RDCRmYXTxzLN3hOJQLo4U70n6WcwTrWUJerZN
+         WLxEpc5FQdp3O6qmWIziIINNs/kfBxleBETZ3vFVRjuLBdI3Cmr8yCNAZvKBBKN+a4aa
+         csF3/2wYB4QBH1A2T6h0sBLpaTWpwfKiswgef8HGmEL2g4LgvSwXs1MobDslxu6EZMmH
+         P26w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770717002; x=1771321802;
+        d=1e100.net; s=20230601; t=1770718157; x=1771322957;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nEWWJy28z3zUO+X/uvIExMOEGUHa2gsqc5rV/aaoSQk=;
-        b=hY44i6fnnTyTM0d+3hufEvlHZhWLbEZSJbGvQVlvurWUt0qNKeWxjUnEU5V5j8DaXp
-         UyP7NHEyYc8eghWSLrK+LE5O8VJO3OimsaT0tOdmAoxFgi12bl3GgKY9P7s+KPe5EiQT
-         8uzBAdpunus6dvCl8zD+qybpUEl1X+L3ajM0VUBQYN5J8uBgjTpL7cr0P7yEEOGX7hsr
-         Y84CLeVk2KN/dNwVDMdgdIp9irBstG1zB/Mbb8tgWYxtxCpGCSDi+OdQES0bmIm8kvjP
-         7WCkRUhQaHpU7nE128XtwEJgG65KZ3XVHxiCzuLUQf+EezP/WbtcUIctWQ2zZVReMoAV
-         TDzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUMVhoYxLsdVMgwZzaR1q5oDYSbl6LrSq8EKn5x7byZbaLa4Pycu2VNqHTCCyDV6U4u5Ew=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzsYQUaS9GQlSWyGbIENmWHlPDeuXaRe2I+1oZyl2xrV6E5NowW
-	/KFkyPAHMLrzOkvUuCjyxedXlXKK3/WB2cMSDtihyzX2yR44ylfFYgH604VaKhXFLtvIIO4doxL
-	6WRlGxuPXMW+zPNU1FmSmv7RehZx/dCw=
-X-Gm-Gg: AZuq6aLp9wBsnvdQYq2a6yA8v/gE10WQb3eOqDrtj4wg5s6b0LGtog8Lv1DoKkCNc2K
-	MAmeMqo2bews6BR9Wt6wbV3+46ucZpgYML1/B1ntb/qxDjoCyLsbdQGGUR+uRfzlQmgWr3EkmTE
-	T4LQJZszlt9aYmSMbbHTZpxt8idgLQSEdNUYdmpxGmTQDuHtgZuH83aiXkCpgr0T+guAsY3qX50
-	vmlLFKbwQyp8qVDPU4PPjfdzYblj9OD9O9vSHEWfh9m8AcydNTvj/XP8l2YqdBkmW3YGXBWkqYr
-	F5kMgvTTyMdfVxsEtR9j/knNDocV1ZlZLPndPNurmFWHDI5xAdF+
-X-Received: by 2002:a05:6102:c49:b0:5f5:30e4:c8cd with SMTP id
- ada2fe7eead31-5fae8c90cb9mr3333087137.42.1770717001619; Tue, 10 Feb 2026
- 01:50:01 -0800 (PST)
+        bh=MQ9WuLkb9QHiMlJgTeiIaVd0MKgrNLwEHGCUDYUc/qI=;
+        b=D5VqMdX+e1PpFK58l68CYyZDT7sRb30OdZopX9qYKKhz9QZSZeWGo5mzWHKaMuXvta
+         fRyO0ZgiiL6wXiE6GD9QLxilIF5znRX/v4BI2eOzKabyGKXe4w9GgmD8yXGQUpj2Ry1m
+         gwS+GDUa9trOCoAO9hTI9CtZw6u8cqBIXdKwYH8VPPDDRxat1cU47+iRIPPvi7ZnZ72w
+         sg2UZpt6sPjbcvjz15n0IvwjkRCEEDdugOZF0dtYWqsnN4O7A4p5GFfAo7eci6cswNu3
+         uaZx8QNKKvIL2tplcPTAkxKH0FbPrA555Ghc1Ry8UwfeBlmNcMtrETt19r/msqtoL5E9
+         tOoQ==
+X-Gm-Message-State: AOJu0Yxl+v6UZ1NAYKX8ojUfoziuq3aGvNTFsinfpf7MeURc6unKChtE
+	e98WY8NO66izbjCM+9uYGZRq0DlPd8NZMNMI//KjIkj8nqP5rERwBRj8U1vLPSEUdoaxxerbXmf
+	/aX8YNjsd+RsdyxyieUKkaiE9orszBMlnDLvE
+X-Gm-Gg: AZuq6aLbqlsXSGiWdZpKw8Vnh6ix+I3605To/6qQmCP0Kjp3H7hTH/aCYxkvS9BC/xL
+	9cvqRVsr+IZylF9f0dEslW+X6iXafpxsebyxr6fLtZAU0o+99dnUX9OuugAMAdpX870qV6A/vz1
+	jxvQkVMqSo2wFYCYX/T5uS0i/h/mmMMvIArchbBxXqlJcXI88b98E8yV7427Jt+XchTkvoricoN
+	gOBehGAU8ivLYtsK0JK3AR/rMiEQimVTuIO5VaXYm6y6ObIFr4qlfp2MY4ci4jbV296OEIzxxte
+	OhvDw3QdIGwyi5mcy6PlvBxdIZCWh4G1KEsWfl6Pqywohh3hOqxo
+X-Received: by 2002:a05:6102:d8a:b0:5dd:84f1:b51a with SMTP id
+ ada2fe7eead31-5fae8c57374mr3479120137.43.1770718157496; Tue, 10 Feb 2026
+ 02:09:17 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Feb 2026 01:50:00 -0800
+ HTTPREST; Tue, 10 Feb 2026 02:09:16 -0800
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Feb 2026 01:50:00 -0800
+ HTTPREST; Tue, 10 Feb 2026 02:09:16 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq5x857v51.fsf@gitster.g>
-References: <xmqq4inrahti.fsf@gitster.g> <20260208152811.73213-1-shreyanshpaliwalcmsmn@gmail.com>
- <CAOLa=ZRaWA14sootWSPo5g4Yi4GBXf6HjdkdBY1Tt_+V0szCjg@mail.gmail.com> <xmqq5x857v51.fsf@gitster.g>
+In-Reply-To: <aYoMdqDDbt-BArQQ@pks.im>
+References: <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
+ <20260209-kn-alternate-ref-dir-v5-2-740899834ceb@gmail.com> <aYoMdqDDbt-BArQQ@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 10 Feb 2026 01:50:00 -0800
-X-Gm-Features: AZwV_QhLJr0POuhfxp7PD6fIjEDe219K1FQb1p8dc2fCzDr5Upsa3PL6XGCGbwc
-Message-ID: <CAOLa=ZSkMgvi+KjVxzPe6oq1xfgDwrVvSgkkTn1ptu1hwpKDpg@mail.gmail.com>
-Subject: Re: [PATCH V2 2/3] wt-status: pass struct repository and wt_status
- through function parameters
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org, 
-	phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000e14c81064a752d81"
+Date: Tue, 10 Feb 2026 02:09:16 -0800
+X-Gm-Features: AZwV_QhwdE9TWI9iGR0k18-ezTz8vjLuZjH8M41s0fU0Gt1eXvXpX5vZNmDbZx0
+Message-ID: <CAOLa=ZTQzckcqOcEgw+4pH+iXFTM3c7QX_tOnVSEujH1VWk4mw@mail.gmail.com>
+Subject: Re: [PATCH v5 2/4] refs: forward and use the reference storage payload
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
+	gitster@pobox.com
+Content-Type: multipart/mixed; boundary="000000000000c688de064a75724e"
 
---000000000000e14c81064a752d81
+--000000000000c688de064a75724e
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> I would like to point out that we already have a function which provides
->> a main worktree, see both `get_main_worktree()` & `is_main_worktree()`.
->> In short, a worktree with id = NULL seems to be treated as the main
->> worktree.
+> On Mon, Feb 09, 2026 at 04:58:19PM +0100, Karthik Nayak wrote:
+>> An upcoming commit will add support for providing an URI via the
+>> 'extensions.refStorage' config. The URI will contain the reference
+>> backend and a corresponding payload. The payload can be then used for
+>> providing an alternate locations for the reference backend.
 >>
->> The harder part would be correcting all code where `struct worktree *`
->> is passed and has special meaning for NULL vs non-NULL. See
->> `strbuf_worktree_gitdir()` which also distinguishes between `wt ==
->> NULL`, `wt->id == NULL` and `wt->id != NULL`.
+>> To prepare for this, modify the existing backends to accept such an
+>> argument when initializing via the 'init()' function. Both the files
+>> and reftable backends will parse the information to be filesystem paths
+>> to store references.
+>
+> Maybe add: "to store references. Given that no callers pass any payload
+> yet this is essentially a no-op change for now."
+>
+
+Will add.
+
+>> diff --git a/refs.c b/refs.c
+>> index 36f3441632..d9df25d7c0 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -3425,3 +3426,33 @@ void refs_create_refdir_stubs(struct repository *repo, const char *refdir,
 >>
->> So cleanup would require identifying all such spots and fixing them too.
+>>  	strbuf_release(&path);
+>>  }
+>> +
+>> +void refs_compute_filesystem_location(const char *gitdir, const char *payload,
+>> +				      bool *is_worktree, struct strbuf *refdir,
+>> +				      struct strbuf *ref_common_dir)
+>> +{
+>> +	struct strbuf sb = STRBUF_INIT;
+>> +
+>> +	strbuf_addstr(refdir, gitdir);
+>> +	*is_worktree = get_common_dir_noenv(ref_common_dir, gitdir);
+>> +
+>> +	if (!payload)
+>> +		return;
 >
-> Yup.  That is why I upfront said "if you are ambitious" ;-)
+> I think you should add a comment here that explains why it's not
+> necessary to modify the `refdir` in case `*is_worktree`. I'd arguably
+> even move that code into `if (!payload)`, as we otherwise only set it to
+> reset it later. So:
 >
->> This also is tricky. We currently already store all worktrees in the
->> repository in `struct strmap worktree_ref_stores`. Here, for the main
->> worktree we use '\' (see `get_worktree_ref_store()`). So perhaps we
->> should formalize using `\` for the main worktree everywhere.
+>         if (!payload) {
+>                 /*
+>                  * We can use `gitdir` as `refdir` without appending the
+>                  * worktree path because...
+>                  /
+>                  strbuf_addstr(refdir, gitdir);
+>         }
 >
-> Is this a joke, is my terminal broken, or is my MUA hallucinating?
-> I see a couple of backslashes in the above, and in the code I have
-> a forward slash instead.
+>> +	if (!is_absolute_path(payload)) {
+>> +		strbuf_addf(&sb, "%s/%s", ref_common_dir->buf, payload);
+>> +		strbuf_realpath(ref_common_dir, sb.buf, 1);
+>> +	} else {
+>> +		strbuf_realpath(ref_common_dir, payload, 1);
+>> +	}
+>> +
+>> +	strbuf_reset(refdir);
+>
+> And then you can drop this call to `strbuf_reset()`.
 >
 
-Seems like my fingers didn't type what my mind thought of.
+Fair enough, will do this.
 
-> But you are right, ref-store-map does use a slash to indicate the
-> primary one, while worktree itself uses a NULL, which is somewhat
-> understandable (NULL would not be a convenient hashmap key).  And I
-> do not think I see any downsides (other than "This used to take NULL
-> as the sign of primari-ness but now we need to use a '/' instead"
-> fixes we need everywhere) to use "/" on the wt->id side offhand.
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index 240d3c3b26..b192ce606d 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -106,19 +106,24 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
+>>   * set of caches.
+>>   */
+>>  static struct ref_store *files_ref_store_init(struct repository *repo,
+>> +					      const char *payload,
+>>  					      const char *gitdir,
+>>  					      unsigned int flags)
+>>  {
+>>  	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
+>>  	struct ref_store *ref_store = (struct ref_store *)refs;
+>> -	struct strbuf sb = STRBUF_INIT;
+>> +	struct strbuf ref_common_dir = STRBUF_INIT;
+>> +	struct strbuf refdir = STRBUF_INIT;
+>> +	bool is_worktree;
+>> +
+>> +	refs_compute_filesystem_location(gitdir, payload, &is_worktree, &refdir,
+>> +					 &ref_common_dir);
+>>
+>> -	base_ref_store_init(ref_store, repo, gitdir, &refs_be_files);
+>> +	base_ref_store_init(ref_store, repo, refdir.buf, &refs_be_files);
+>>  	refs->store_flags = flags;
+>> -	get_common_dir_noenv(&sb, gitdir);
+>> -	refs->gitcommondir = strbuf_detach(&sb, NULL);
+>> +	refs->gitcommondir = strbuf_detach(&ref_common_dir, NULL);
+>>  	refs->packed_ref_store =
+>> -		packed_ref_store_init(repo, refs->gitcommondir, flags);
+>> +		packed_ref_store_init(repo, payload, refs->gitcommondir, flags);
 >
-> Thanks.
+> It's a bit weird that we end up passing the payload even though we
+> unconditionally ignore it in `packed_ref_store_init()`. I'd argue that
+> we should either pass a `NULL` pointer as payload, or let the packed
+> backend call `refs_compute_filesystem_location()` itsefl.
+>
 
-Yeah I share the same sentiment.
+I'm considering passing in a NULL and relying on the 'gitdir'. Mostly
+because the packed-refs backend always comes linked to the files-backend
+and as such should simply rely on the 'gitdir' provided by it. Let me
+know if you think we should go the other way.
 
---000000000000e14c81064a752d81
+>> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+>> index 4ea0c12299..028fbc0585 100644
+>> --- a/refs/packed-backend.c
+>> +++ b/refs/packed-backend.c
+>> @@ -212,6 +212,7 @@ static size_t snapshot_hexsz(const struct snapshot *snapshot)
+>>  }
+>>
+>>  struct ref_store *packed_ref_store_init(struct repository *repo,
+>> +					const char *payload UNUSED,
+>>  					const char *gitdir,
+>>  					unsigned int store_flags)
+>>  {
+>
+> And here we should probably explain why we don't have to respect the
+> payload.
+>
+
+Yeah, will add in a comment.
+
+>> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+>> index c7d2a6e50b..bd09b1280c 100644
+>> --- a/refs/refs-internal.h
+>> +++ b/refs/refs-internal.h
+>> @@ -666,4 +667,18 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
+>>  					  unsigned int initial_transaction,
+>>  					  struct strbuf *err);
+>>
+>> +/*
+>> + * Given a gitdir and the reference storage payload provided, retrieve the
+>> + * 'refdir' and 'ref_common_dir'. The former is where references should be
+>> + * stored for the current worktree, the latter is the common reference
+>> + * directory if working with a linked worktree. If working with the main
+>> + * worktree, both values will be the same.
+>> + *
+>> + * This is used by backends such as {files, reftable} which store references in
+>> + * dedicated filesystem paths.
+>> + */
+>
+> I guess we can say "This is used by backends that store store files in
+> the repository directly."
+>
+> Patrick
+
+Makes sense. Thanks.
+
+--000000000000c688de064a75724e
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 78ccae469ce08878_0.1
+X-Attachment-Id: eac2a88546d268b7_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tSy8wVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK2ZHREFDaUFjaCtYOFBpMFQ4Q25xTHhzNng2cmtWYwo1cHVIckpuVG1Q
-NTZyaVBDelRrSVNPZVZiczFIK1pyT0U0bFU5TDRlSWNHc2QrV3g4eXZ1RlhoaHZUb2l3NEFuCkJQ
-WVF2MXlnQmdhd0hKbUhicTdkM2pGOHpJdWpHRVROamNMY2JhcW5oMlV3WHJxSmtvQVNKc2w1bzQ5
-Z29ONU8KcUF5eHp4M2JLanVPWVN2NVdFbkFZaHEzVjR1U3VWSERUMXB5Vm5nTmNNRUwxTnZmUWlh
-cXFZZFN4S21EQnV4VwoyUDdHRGJGYkNLTGIxNWh5Ly8rNDFkWDFXUEl5T2QySTBIUE1oSVpaWXFa
-bG5Ud1dIVk4zYlNwd1NNRUc3STFUCktrUjF4M1ZzYUFYbW9LM3NqdzFzaUsyRFpSK0VxODBqaTZN
-dHBYYzlyRHNJV05KdmljMHQ2MWxLWVNWRmRtbGgKaVFXTW5LQVA3TG5Kb2lTWjA4WG5hUDhiSGVQ
-bDl4UXYzbDZFQVZhVmx3YnJKbHdoSWNNK3BCNy9uNzB1cTZuMgp0SGJrZUJHdms5SnVYd3dxYjUx
-U2FIeERPbEFaaXhUZGdVYzlhbk8xL3cwSk53UFVFeng5bWNWMHVFbGxRckFaCnJaQ1hDdnNlcjV0
-VUNmb00wMWhEVk55VmVkZlBtRE5mSHZZTUJKOD0KPXFTUWIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tTEE4b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNGh5Qy80NmN6RWJ2QkF1cVc5S3NleHpJVDJTT0xTSgpyWWoyT2pDTnhl
+YlowclVjYmpmKy93YWFXeG4rRUtXV3ZRV1ZQSXhIb0E5Y2s5dmxrcU5Gd0FQUjVZL0oyZFdpClE0
+eHJZeDB0YloyOWdITnhELzZ5UUNrNEtUUmM4OEZIdFBQb3ZOTkxjQWEwVmtSUkxtN0ord1FtSlJj
+VmRkRDgKd2w4ZXVrc1NCZ2lOMUpFbTErUDlWYjlSVU0wQzAycFd3TEY0dmxVUWR6SFdRU05Cb2lx
+a0FyY0dtL29SR3I1WgpVY1l6WUZHZ2NENnZkYk93TUczNUEzWTJaTVVCV1lGeVUydTQ5SHYyalQ0
+K1BtM0VWMnZIWkQ1WElXeDhHWm40CmQ5MWt3OW9YZ3JVdUhla1lYRGlBbm95OWJIUDFGSlR5NFU0
+Tys0d3FHNnJsakkwTGFvTGdaTUxGWXBXMDlpOEwKaDBCRXVYRFIreHp5d2VNN0NkaEtGejVrV2d2
+Y3Vvakh2b0FneDRKK2hJdlBMOW9RbnhTMDhQVWt5OW04dUxJSwpxa1hCMkU2MENXTXMvNGJmZVg4
+aDJHRmptZEwvVjBJMWFWbzdIcFBvZ3pLRTd2dXY4TzhQak1PNFhRNHFJV08yClBtTCttalNZVXJk
+NW1pUmgvUmpHTm1pbEZsNjkrRzJreFZ3akJFND0KPTMyLzMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000e14c81064a752d81--
+--000000000000c688de064a75724e--
