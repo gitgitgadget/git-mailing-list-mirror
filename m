@@ -1,276 +1,188 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C293491E1
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770718160; cv=pass; b=gPOneFi+t8YBCvmM7PY7KkCGpHg92y/DpL4xLbmsFQtqfYA+XAyWYslGVMybdCtx40st6SnUGNmaEzr2xQYcdH+uA6NgTq6bqdj7SLY7pdqBVHV7F08hS6AELuzlyDlhGZ52ucBgj452qasrwzdMaDeKf8WviuUyjs+lYZbNIzY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770718160; c=relaxed/simple;
-	bh=2DKnegsaCBCk5o+DnbUgQA0+MqBDCCi5QB1+jGJ69dU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IG6Orvgt62nK1gu2hglMVKyzKBK6pa8/y/T7Ljy6TYThXQXkUHuNiTEw8iBtAz5B77J8FJtL8hIP5PiJv9hxQOe0H3qJ1lluiQg7q4fyEuMBA/TJIdMGl/YBbENjmin/8R14yeU1rUKEeoP61lrZ8jUsnq5hpb8eF84S8Pdf2Pw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CJHV/0Ns; arc=pass smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FC0352FBB
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770718657; cv=none; b=KCse1kErTaMH+jk9yRbWuBHmEYojfGxZdcjAZwZOE6unpwa741Bb9CQ9g9YLmN8Ag2XcFN1xvDiHPSHxe3yfPxKUyjmM4xpgaL03kK4nlRKexQFbVcPOpWFcR27gukCwFY5TjIhm87l8zlT8YrVTyKPVvn1WRHzibgE5JWFL5Pk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770718657; c=relaxed/simple;
+	bh=ZYQiIyK2WlzLItNnYvr6/niNZKcUQFJtt+5pojauI/U=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=tQZxfoJdUl5O68+xV8clsy5jNQw6jSTgFyQKG7bWAqTEAGDRH23g2/j4Iry9xg16uQ/bb9cIrUhnwfctKebx9R3oYAo1cYKtemoobTy9kMmFeNQpLskjVC7ZcnpsSWy9CH1kCVcUC8ppPIw6JcUU1InMmtEEzL8Qhk7tmK0fySQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EI/Hh2aI; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CJHV/0Ns"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-948bff012f0so800608241.2
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 02:09:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770718157; cv=none;
-        d=google.com; s=arc-20240605;
-        b=FeYC3ntQPhgwxv5Qj0z9pGbrjQXRNyClGjuL4obiL5cPMlY77zg0yX6auRpTLET1sf
-         2xdr+7h1+tfKBy8T/VUPGX7j+21xPbot4of+U3Lc2VdTi9KUqSio5w/FLs8Oa+oH9D/V
-         0nn07e88iFR9J7aCRH12Y9koYgaz0jjWRAttglVFnL1B/ymso8IE3feixBMDGu7guGMc
-         JAvCJrKKW/+e/98u/atNnY88Ao6B24x3YmpUxtW0B++r0FdUpycwAlflv2HCkQ5MvBpH
-         cuh+LyuIJGWRJzFW+nZiPxH/hzZ9V9aq6wSPP4kEgTEf1EVAaXunz/drHEVlR9KAXdTz
-         rW0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=MQ9WuLkb9QHiMlJgTeiIaVd0MKgrNLwEHGCUDYUc/qI=;
-        fh=ty73qu/mjp6olkAb0/G4VGZeH6SWOLNBs8YQa03/qaY=;
-        b=fuzJaJL3gQEtvNRKZqt6v4JPFva2CPqd+74sut4wuPrJbScExaodUjH3jFRmSpBFGO
-         Lxq+29A5VRZGICLRPUnx15MHABQXh47/KkEXC4Dvlp3nPmxz1TQVj4fyApZ80xkp4dP9
-         WmqvCrplYGosjSqDxQPYHD4Axv9g8X+2MYH54S9UHS5MgJreBYVArzZ6TtVoKNzPbsw5
-         74Di5ns8vVeZi3IPqtSyoEOLosJh8o3vw2K66QoTdan6PZl40OJlDjqZXYBcbeJHyWbe
-         zke5vCIymIaxqekeXGyPNQCoYvAvWxcZSc4h9xzcrF9Tdihkhnqf0IRGXKmmRih3r1oU
-         AxXw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EI/Hh2aI"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-436263e31abso3830101f8f.1
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 02:17:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770718157; x=1771322957; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MQ9WuLkb9QHiMlJgTeiIaVd0MKgrNLwEHGCUDYUc/qI=;
-        b=CJHV/0NsEd00g6CY/GbGr0Rn/HB5AlwGNyvv0/Kil+uwA3SUMUekPk6ofToYXwbP7L
-         88gBEJUL6gJdMcxBtLYaPV2RTTZbNKXLjbzoPmYw5MdvsMH2/0I4z/HY2/nbQomW9GDz
-         4TdyHX/UvNWjida3m1Uwzg0/7D2HZI1RDCRmYXTxzLN3hOJQLo4U70n6WcwTrWUJerZN
-         WLxEpc5FQdp3O6qmWIziIINNs/kfBxleBETZ3vFVRjuLBdI3Cmr8yCNAZvKBBKN+a4aa
-         csF3/2wYB4QBH1A2T6h0sBLpaTWpwfKiswgef8HGmEL2g4LgvSwXs1MobDslxu6EZMmH
-         P26w==
+        d=gmail.com; s=20230601; t=1770718655; x=1771323455; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bb9W8kL4SEnFD0aZQK9wAX7+qOzyW9Df53rb7BRL0lc=;
+        b=EI/Hh2aIZdbN6vzxagCC79RheNXZUCf4kvFs+H7b7Bznkj0Fn6wVlT6ys+ENaAValz
+         yqQhJ6ybsAw2zK4VtIJxbhghMQHyfhXZCK3C5aBEEVBeGVbZHhTu4xGaJl2mL5pJnIXr
+         XvG0V/ncdlBC2C/YAn7QNMhvApxh0ZqKiKJJabWUjRgPErghoFm/yT8Mz1JuLAJiUBe/
+         QGfOLSnrkYLDXZufaeskmE7la47BlonjHeg3blbp/kIDthA9WtRyc5d8fNMtglvUrCo0
+         y3DWIB+x6si9fFAfX+Qgn504ALsPA8fzeW7W66fC1AcWR/jrLymHI8jXIStl1CPdvAx2
+         CYcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770718157; x=1771322957;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1770718655; x=1771323455;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MQ9WuLkb9QHiMlJgTeiIaVd0MKgrNLwEHGCUDYUc/qI=;
-        b=D5VqMdX+e1PpFK58l68CYyZDT7sRb30OdZopX9qYKKhz9QZSZeWGo5mzWHKaMuXvta
-         fRyO0ZgiiL6wXiE6GD9QLxilIF5znRX/v4BI2eOzKabyGKXe4w9GgmD8yXGQUpj2Ry1m
-         gwS+GDUa9trOCoAO9hTI9CtZw6u8cqBIXdKwYH8VPPDDRxat1cU47+iRIPPvi7ZnZ72w
-         sg2UZpt6sPjbcvjz15n0IvwjkRCEEDdugOZF0dtYWqsnN4O7A4p5GFfAo7eci6cswNu3
-         uaZx8QNKKvIL2tplcPTAkxKH0FbPrA555Ghc1Ry8UwfeBlmNcMtrETt19r/msqtoL5E9
-         tOoQ==
-X-Gm-Message-State: AOJu0Yxl+v6UZ1NAYKX8ojUfoziuq3aGvNTFsinfpf7MeURc6unKChtE
-	e98WY8NO66izbjCM+9uYGZRq0DlPd8NZMNMI//KjIkj8nqP5rERwBRj8U1vLPSEUdoaxxerbXmf
-	/aX8YNjsd+RsdyxyieUKkaiE9orszBMlnDLvE
-X-Gm-Gg: AZuq6aLbqlsXSGiWdZpKw8Vnh6ix+I3605To/6qQmCP0Kjp3H7hTH/aCYxkvS9BC/xL
-	9cvqRVsr+IZylF9f0dEslW+X6iXafpxsebyxr6fLtZAU0o+99dnUX9OuugAMAdpX870qV6A/vz1
-	jxvQkVMqSo2wFYCYX/T5uS0i/h/mmMMvIArchbBxXqlJcXI88b98E8yV7427Jt+XchTkvoricoN
-	gOBehGAU8ivLYtsK0JK3AR/rMiEQimVTuIO5VaXYm6y6ObIFr4qlfp2MY4ci4jbV296OEIzxxte
-	OhvDw3QdIGwyi5mcy6PlvBxdIZCWh4G1KEsWfl6Pqywohh3hOqxo
-X-Received: by 2002:a05:6102:d8a:b0:5dd:84f1:b51a with SMTP id
- ada2fe7eead31-5fae8c57374mr3479120137.43.1770718157496; Tue, 10 Feb 2026
- 02:09:17 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Feb 2026 02:09:16 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Feb 2026 02:09:16 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aYoMdqDDbt-BArQQ@pks.im>
-References: <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
- <20260209-kn-alternate-ref-dir-v5-2-740899834ceb@gmail.com> <aYoMdqDDbt-BArQQ@pks.im>
+        bh=bb9W8kL4SEnFD0aZQK9wAX7+qOzyW9Df53rb7BRL0lc=;
+        b=qE10pNBojKoQdXEBtY++6VDPg8sygC/WS3ZttEYfhM657gBSILvEbgqztt/WoT8BBg
+         C+OefDcsVY6+n+7eDJWI9tcOBxZjsEZINv+rc+C5/rXDHpGhZ2IFbYhysvQ/C/p3Cm+j
+         yvkMeVbnT/hUrDG0HJ34E3ZL8ftAzTHYvd3iHMm9RijbOqoCfdPXu+Jg5t+nzofipvpi
+         7jEPEYnMqfb9jcbwdTYOaKa+W1UsnnXYQ3HGIEaXADmjnPHiMQyOtFHOWEsxwD4kI/+i
+         zyGU0YFTsnkYOI8h520E8bmZeLuUkBGlkvI5BFzPfmszImU8xkAK89GNl24wieoxGHNC
+         jKtA==
+X-Forwarded-Encrypted: i=1; AJvYcCXhuLWWKNX2Gzss2J6dyPvU1wPc3zCvvJP3sr/xiE1kk7D6iPrY6V/YzAEOqY1Xufusixg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoLLSE3R03ghtQEaYqLiC7+R59IsdnfnkMMTsp157u7oXg2ca8
+	AZG2rHBRymEZaKZSQrOyfv0mpI5Y9445AW4gG1iKLtXMTmXfVfdM4RBD
+X-Gm-Gg: AZuq6aKrdZlCFBBSWne04gmFoSHIkCdARTkNm4/FI5gMIe69BakJHe4L2duxY/AGbae
+	dtwnhtXxkv3s+jcQMB+WaMyziSNar83DO0tXhNdRJR0bSHFThLnfIrK8KRje9cUPowwv02945cx
+	dzE6c/elF5Lgw2/KDE/4kca9WZ18/rWNlpUQjUQ4KcKTq4dZfcx5Oc4QRsjr10otm885m+96gFF
+	7Wa32Qb9VT3LXhT66Q43N0MuZTOixI/4h7uMCPTW+PLtd8oAdWh4bpacZegExKZ+Cr7eCRgP107
+	dJncdnbPwYBs9kKnSArtZ0UJ3a0WEohZi3mYxyGJOQZHtqwRtIH20Z1cboeivAfK+JoN9U11mS0
+	nLhqk+BKw5qTjKAnAbGAZoKOPpOPJbiDP4nIVKlLEI8aJaSgbGvVQevp+mBh+1iTCf3v9im+EsZ
+	lI5gIR6W82KZfYCKiX
+X-Received: by 2002:a05:6000:186b:b0:436:317b:f3bd with SMTP id ffacd0b85a97d-4377a57c769mr2377079f8f.33.1770718654554;
+        Tue, 10 Feb 2026 02:17:34 -0800 (PST)
+Received: from ubuntu ([102.91.81.188])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-436296bcdfcsm35351192f8f.10.2026.02.10.02.17.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Feb 2026 02:17:34 -0800 (PST)
+Date: Tue, 10 Feb 2026 11:17:21 +0100
+From: Bello Caleb Olamide <belkid98@gmail.com>
+To: Bello Olamide <belkid98@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, toon@iotcl.com,
+	christian.couder@gmail.com, usmanakinyemi202@gmail.com,
+	kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy PATCH v6 1/3] environment: stop storing
+ `core.attributesFile` globally
+Message-ID: <aYsEpvFwCSHb5DYO@ubuntu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 10 Feb 2026 02:09:16 -0800
-X-Gm-Features: AZwV_QhwdE9TWI9iGR0k18-ezTz8vjLuZjH8M41s0fU0Gt1eXvXpX5vZNmDbZx0
-Message-ID: <CAOLa=ZTQzckcqOcEgw+4pH+iXFTM3c7QX_tOnVSEujH1VWk4mw@mail.gmail.com>
-Subject: Re: [PATCH v5 2/4] refs: forward and use the reference storage payload
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
-	gitster@pobox.com
-Content-Type: multipart/mixed; boundary="000000000000c688de064a75724e"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
---000000000000c688de064a75724e
-Content-Type: text/plain; charset="UTF-8"
+This is how I implemented the suggestion
 
-Patrick Steinhardt <ps@pks.im> writes:
+diff --git a/oss-fuzz/fuzz-commit-graph.c b/oss-fuzz/fuzz-commit-graph.c
+index fb8b8787a4..59bbb849d1 100644
+--- a/oss-fuzz/fuzz-commit-graph.c
++++ b/oss-fuzz/fuzz-commit-graph.c
+@@ -10,6 +10,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+ {
+ 	struct commit_graph *g;
+ 
++	memset(the_repository, 0, sizeof(*the_repository));
+ 	initialize_repository(the_repository);
+ 
+ 	/*
+diff --git a/repository.c b/repository.c
+index c7e75215ac..0af40b016e 100644
+--- a/repository.c
++++ b/repository.c
+@@ -50,13 +50,27 @@ static void set_default_hash_algo(struct repository *repo)
+ 	repo_set_hash_algo(repo, algo);
+ }
+ 
++struct repo_config_values *repo_config_values(struct repository *repo)
++{
++	if (repo != the_repository)
++		BUG("trying to read config from wrong repository instance");
++	if(!repo->initialized)
++		BUG("config values from uninitialized repository");
++	return &repo->config_values_private_;
++}
++
+ void initialize_repository(struct repository *repo)
+ {
++	if (repo->initialized)
++		BUG("repository initialized already");
++	repo->initialized = true;
++
+ 	repo->remote_state = remote_state_new();
+ 	repo->parsed_objects = parsed_object_pool_new(repo);
+ 	ALLOC_ARRAY(repo->index, 1);
+ 	index_state_init(repo->index, repo);
+ 	repo->check_deprecated_config = true;
++	repo_config_values_init(repo_config_values(repo));
+ 
+ 	/*
+ 	 * When a command runs inside a repository, it learns what
 
-> On Mon, Feb 09, 2026 at 04:58:19PM +0100, Karthik Nayak wrote:
->> An upcoming commit will add support for providing an URI via the
->> 'extensions.refStorage' config. The URI will contain the reference
->> backend and a corresponding payload. The payload can be then used for
->> providing an alternate locations for the reference backend.
->>
->> To prepare for this, modify the existing backends to accept such an
->> argument when initializing via the 'init()' function. Both the files
->> and reftable backends will parse the information to be filesystem paths
->> to store references.
->
-> Maybe add: "to store references. Given that no callers pass any payload
-> yet this is essentially a no-op change for now."
->
+Some of the tests that fail are related to the submodule and a
+couple output is shown below
 
-Will add.
+./t7412-submodule-absorbgitdirs.sh  -i -v
+...
+Initialized empty Git repository in /home/ubuntu/Code/open_source/git/t/trash directory.t7412-submodule-absorbgitdirs/sub1/.git/
+[master (root-commit) 50e526b] first
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
+ create mode 100644 first.t
+BUG: repository.c:56: trying to read config from wrong repository instance
+Aborted (core dumped)
+not ok 1 - setup a real submodule
+#
+# cwd="$(pwd)" &&
+# git init sub1 &&
+# test_commit -C sub1 first &&
+# git submodule add ./sub1 &&
+# test_tick &&
+# git commit -m superproject
+#
+1..1
 
->> diff --git a/refs.c b/refs.c
->> index 36f3441632..d9df25d7c0 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -3425,3 +3426,33 @@ void refs_create_refdir_stubs(struct repository *repo, const char *refdir,
->>
->>  	strbuf_release(&path);
->>  }
->> +
->> +void refs_compute_filesystem_location(const char *gitdir, const char *payload,
->> +				      bool *is_worktree, struct strbuf *refdir,
->> +				      struct strbuf *ref_common_dir)
->> +{
->> +	struct strbuf sb = STRBUF_INIT;
->> +
->> +	strbuf_addstr(refdir, gitdir);
->> +	*is_worktree = get_common_dir_noenv(ref_common_dir, gitdir);
->> +
->> +	if (!payload)
->> +		return;
->
-> I think you should add a comment here that explains why it's not
-> necessary to modify the `refdir` in case `*is_worktree`. I'd arguably
-> even move that code into `if (!payload)`, as we otherwise only set it to
-> reset it later. So:
->
->         if (!payload) {
->                 /*
->                  * We can use `gitdir` as `refdir` without appending the
->                  * worktree path because...
->                  /
->                  strbuf_addstr(refdir, gitdir);
->         }
->
->> +	if (!is_absolute_path(payload)) {
->> +		strbuf_addf(&sb, "%s/%s", ref_common_dir->buf, payload);
->> +		strbuf_realpath(ref_common_dir, sb.buf, 1);
->> +	} else {
->> +		strbuf_realpath(ref_common_dir, payload, 1);
->> +	}
->> +
->> +	strbuf_reset(refdir);
->
-> And then you can drop this call to `strbuf_reset()`.
->
+./t4027-diff-submodule.sh  -i -v
+...
+Initialized empty Git repository in /home/ubuntu/Code/open_source/git/t/trash directory.t4027-diff-submodule/sub/.git/
+[master (root-commit) 4431e0b] submodule
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
+ create mode 100644 world
+BUG: repository.c:56: trying to read config from wrong repository instance
+Aborted (core dumped)
+not ok 1 - setup
+#
+# test_tick &&
+# test_create_repo sub &&
+# (
+# cd sub &&
+# echo hello >world &&
+# git add world &&
+# git commit -m submodule
+# ) &&
+#
+# test_tick &&
+# echo frotz >nitfol &&
+# git add nitfol sub &&
+# git commit -m superproject &&
+#
+# (
+# cd sub &&
+# echo goodbye >world &&
+# git add world &&
+# git commit -m "submodule #2"
+# ) &&
+#
+# git -C sub rev-list HEAD >revs &&
+# set x $(cat revs) &&
+# echo ":160000 160000 $3 $ZERO_OID M sub" >expect &&
+# subtip=$3 subprev=$2
+#
+1..1
 
-Fair enough, will do this.
-
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 240d3c3b26..b192ce606d 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -106,19 +106,24 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
->>   * set of caches.
->>   */
->>  static struct ref_store *files_ref_store_init(struct repository *repo,
->> +					      const char *payload,
->>  					      const char *gitdir,
->>  					      unsigned int flags)
->>  {
->>  	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
->>  	struct ref_store *ref_store = (struct ref_store *)refs;
->> -	struct strbuf sb = STRBUF_INIT;
->> +	struct strbuf ref_common_dir = STRBUF_INIT;
->> +	struct strbuf refdir = STRBUF_INIT;
->> +	bool is_worktree;
->> +
->> +	refs_compute_filesystem_location(gitdir, payload, &is_worktree, &refdir,
->> +					 &ref_common_dir);
->>
->> -	base_ref_store_init(ref_store, repo, gitdir, &refs_be_files);
->> +	base_ref_store_init(ref_store, repo, refdir.buf, &refs_be_files);
->>  	refs->store_flags = flags;
->> -	get_common_dir_noenv(&sb, gitdir);
->> -	refs->gitcommondir = strbuf_detach(&sb, NULL);
->> +	refs->gitcommondir = strbuf_detach(&ref_common_dir, NULL);
->>  	refs->packed_ref_store =
->> -		packed_ref_store_init(repo, refs->gitcommondir, flags);
->> +		packed_ref_store_init(repo, payload, refs->gitcommondir, flags);
->
-> It's a bit weird that we end up passing the payload even though we
-> unconditionally ignore it in `packed_ref_store_init()`. I'd argue that
-> we should either pass a `NULL` pointer as payload, or let the packed
-> backend call `refs_compute_filesystem_location()` itsefl.
->
-
-I'm considering passing in a NULL and relying on the 'gitdir'. Mostly
-because the packed-refs backend always comes linked to the files-backend
-and as such should simply rely on the 'gitdir' provided by it. Let me
-know if you think we should go the other way.
-
->> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
->> index 4ea0c12299..028fbc0585 100644
->> --- a/refs/packed-backend.c
->> +++ b/refs/packed-backend.c
->> @@ -212,6 +212,7 @@ static size_t snapshot_hexsz(const struct snapshot *snapshot)
->>  }
->>
->>  struct ref_store *packed_ref_store_init(struct repository *repo,
->> +					const char *payload UNUSED,
->>  					const char *gitdir,
->>  					unsigned int store_flags)
->>  {
->
-> And here we should probably explain why we don't have to respect the
-> payload.
->
-
-Yeah, will add in a comment.
-
->> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
->> index c7d2a6e50b..bd09b1280c 100644
->> --- a/refs/refs-internal.h
->> +++ b/refs/refs-internal.h
->> @@ -666,4 +667,18 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
->>  					  unsigned int initial_transaction,
->>  					  struct strbuf *err);
->>
->> +/*
->> + * Given a gitdir and the reference storage payload provided, retrieve the
->> + * 'refdir' and 'ref_common_dir'. The former is where references should be
->> + * stored for the current worktree, the latter is the common reference
->> + * directory if working with a linked worktree. If working with the main
->> + * worktree, both values will be the same.
->> + *
->> + * This is used by backends such as {files, reftable} which store references in
->> + * dedicated filesystem paths.
->> + */
->
-> I guess we can say "This is used by backends that store store files in
-> the repository directly."
->
-> Patrick
-
-Makes sense. Thanks.
-
---000000000000c688de064a75724e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: eac2a88546d268b7_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tTEE4b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNGh5Qy80NmN6RWJ2QkF1cVc5S3NleHpJVDJTT0xTSgpyWWoyT2pDTnhl
-YlowclVjYmpmKy93YWFXeG4rRUtXV3ZRV1ZQSXhIb0E5Y2s5dmxrcU5Gd0FQUjVZL0oyZFdpClE0
-eHJZeDB0YloyOWdITnhELzZ5UUNrNEtUUmM4OEZIdFBQb3ZOTkxjQWEwVmtSUkxtN0ord1FtSlJj
-VmRkRDgKd2w4ZXVrc1NCZ2lOMUpFbTErUDlWYjlSVU0wQzAycFd3TEY0dmxVUWR6SFdRU05Cb2lx
-a0FyY0dtL29SR3I1WgpVY1l6WUZHZ2NENnZkYk93TUczNUEzWTJaTVVCV1lGeVUydTQ5SHYyalQ0
-K1BtM0VWMnZIWkQ1WElXeDhHWm40CmQ5MWt3OW9YZ3JVdUhla1lYRGlBbm95OWJIUDFGSlR5NFU0
-Tys0d3FHNnJsakkwTGFvTGdaTUxGWXBXMDlpOEwKaDBCRXVYRFIreHp5d2VNN0NkaEtGejVrV2d2
-Y3Vvakh2b0FneDRKK2hJdlBMOW9RbnhTMDhQVWt5OW04dUxJSwpxa1hCMkU2MENXTXMvNGJmZVg4
-aDJHRmptZEwvVjBJMWFWbzdIcFBvZ3pLRTd2dXY4TzhQak1PNFhRNHFJV08yClBtTCttalNZVXJk
-NW1pUmgvUmpHTm1pbEZsNjkrRzJreFZ3akJFND0KPTMyLzMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c688de064a75724e--
+Thanks
