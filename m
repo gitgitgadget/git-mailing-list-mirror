@@ -1,104 +1,124 @@
-Received: from mail-dl1-f68.google.com (mail-dl1-f68.google.com [74.125.82.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A143D17BB21
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:50:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F4026E710
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:50:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770753040; cv=none; b=WUtGrOsWEFRfeguYC9+WTpEGLa0F1w4p8mlME5C/9aMC01zBJgilH4qP4ZaUlbQsBuiBwGe4HdmIJRImSriqPm7JZLHbs1Fr/BuUtWQCwiH0y2S1I9YpiLP3SBnVE2hhn43sZ6A/1gYT/fytyYUPBSSzRKhLeU05w86zjB4CXsE=
+	t=1770753056; cv=none; b=JDv5Ye4FzJyGpGda8HkkYypL9IpgQgAEfCEZ1BXX9S6j5L6W0bT6XtiGgoO62yN7FpOBDr+klLasQM4uK59OFhEVGZ72WkxuSVbOLpVFn5PurmkzqJ8FE3Kv5KhqaJZra0XaCP1rGKiHgT/ztBLoLw9GMZ9v5u3RGbVFpjC1BNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770753040; c=relaxed/simple;
-	bh=R+jfPC8NYTDMxq32V1Q+uHUVOpWMq2og0HyvkZOnejs=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=dQqSS9uK5cta9Chh2qU1WTo1eUzWpZ0xl3c5YNmgofpNIVQQENSfnyJ4u7BbEAbhP0T1WGg0XF//BpE1UVQE8CaFyVSlrQyTDIL1rMzMRh4nQ9QFqr2GXHDZBwNmSG7wZjNlHVRsfyWC0p1VxNZ6LFVXeYc86LamN6QfSjLAlmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PG5Yw/Or; arc=none smtp.client-ip=74.125.82.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770753056; c=relaxed/simple;
+	bh=ngaS8GXcsz1r+hy/UfdeLB6aIjnSfeOikgpMVnSmi1o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TONWKkVtIn5WNzn4nVbPQoCXPMHlYoPisGE+P7HBrN2k+ecnHrkwVbNVVFnoOdz6DggSCd1txB9bbi9aA/LrVAcY0FUQaDAO1TLOH3busIhY/CDkpeZXD7eyeBKR0jJXyVhYcAXJCWdYWDTtNzKQVj2Z5MC7q8fbcpcKS1xqXnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uh3Qh2Ck; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w+0g7XPG; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PG5Yw/Or"
-Received: by mail-dl1-f68.google.com with SMTP id a92af1059eb24-1270adc5121so1525790c88.0
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 11:50:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770753038; x=1771357838; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qwzDTx5tSdl+PwQ+XnoEE8FEvDmtRHJUIHHgUNTcLrE=;
-        b=PG5Yw/OrTDaQrAjLdViME44qWRiJrOn3ji3/i7IC/p2sTNW8KTpHPs3teU8AQApRRM
-         kZY3XVPLuRy6zgVsKDJg5JxmLxCr/BIG6wPfhut4g2OUEUyZzTOGqD45aETIRTuh8cdq
-         ayGPJUqJArHth6h2ufBzBvi+Xi/d4mr29QWVd7mJS/lwLJykRAX+zM7IA5unbWhpUJBP
-         PfcrwJJmih15W0pt9XsycIeGpV45POQP8QPfN/Qo/gwmUO87bZOOuvHDbTfIjuk4tZ3X
-         U6yJ+H7R4dl/NDkYd9jV6OQQNMcUlQ1ubbAgsRpRgyRXvK8bBHrIygGfStBR0grpbMXk
-         Zcag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770753038; x=1771357838;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qwzDTx5tSdl+PwQ+XnoEE8FEvDmtRHJUIHHgUNTcLrE=;
-        b=wfUJWkH2p1m9Xo37P5hN/TSiH5m/F8G8n2+OdU5M+ZkccDsWinF0HFsWuIqROHk76G
-         S6KRIBanhbyPQzLFX/qu78f83sUedlJSEc8qiUQR1urzfYVZI1tZm6FO5GwQ12L1C8bP
-         yQ886tVXp3j2qnEW/Hmn7+yJbZNs/EDHt0bOJeTk0LsFM59Ij5jiY4ChchGT60RPbJKl
-         66NRLTb8CN9YoyYYyLNqkoUUpDapIefQYkX9U4u+wxWVQ7F8xliBSETahq/RLPRn1CqV
-         D5HwQjsHlfmiANASUYnvLlnb9Y7P+2AlyJL5l6LTiTFHght238tqk+NF/BKeVuwiQgte
-         RfGQ==
-X-Gm-Message-State: AOJu0YxWJ6biTAAh47EN8PomM+OBy4Hr/m9e1uZwHdOmiHG3Jny9QL0t
-	WuZr20Ky05W6xKB3b1/BxtDjpDGwKoQE75fsWM5FKxtEI/8Rc5KYRuFKUSpxM9OV
-X-Gm-Gg: AZuq6aJEnLJkV72CbsmQDDmT8/s5xI3Z+E0B4EEKcsEh78CoRmeLJx8pW4Qoo/58l4Q
-	ppC2V6ixJHWRuegw5tJHub4fv4rBsrz/7U+otZdxvUYKzftrhk6OwTXlH056sPGQyvAPXmg06at
-	GmaUoYx25bd6SxQB0U7BX+jQH8HWgXC+uNL6R2ECkiI8CyD2fZ/sSQFgY8Akh5pjLMkvK2qi5N+
-	XDCpaQVgYOeoZkuD3gAW7xhWbCg69stzWiRIOS9VHbpuccdzX51G9Dr7OORahBquXTTti6IjMwL
-	bcPt/KUaV/keBq0GzC1Dbd/M2TmqHlQ/P9FbJkIkBzeO0UUG3YmXO/CKnuipJAJO+0JpfvuuaMo
-	YFS2utCPm2MUonjcORPTJTrltD/xZQHqj4p6EQ+WZB0xyxO3U5SAhXHfcYVpn/Jh9CBNBuz/O6+
-	wbzPuiTtokA5TaqRpVb28GrDdt+A==
-X-Received: by 2002:a05:7022:6293:b0:11f:2c69:2d with SMTP id a92af1059eb24-127040740e6mr7040203c88.45.1770753038145;
-        Tue, 10 Feb 2026 11:50:38 -0800 (PST)
-Received: from [127.0.0.1] ([172.182.195.38])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127041d94cesm11652312c88.3.2026.02.10.11.50.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Feb 2026 11:50:37 -0800 (PST)
-Message-Id: <pull.2039.git.1770753036679.gitgitgadget@gmail.com>
-From: "Ayush Sharma via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Feb 2026 19:50:36 +0000
-Subject: [PATCH] Documentation: fix duplicated word in 2.49.1 release notes
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uh3Qh2Ck";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w+0g7XPG"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4E08B1D00135;
+	Tue, 10 Feb 2026 14:50:54 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 10 Feb 2026 14:50:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770753054; x=1770839454; bh=7U34+9N0gt
+	jDr3KCun1Tj4rhXNsi7avQnoFBKceuNQI=; b=uh3Qh2CkBowHoBo0TVGCKDZuq0
+	50vnG5CQ3QF6PUc6VEEU1Xjgjqo7pDa79nHRPuFB15GCihpQ5KuaBxiWrvO5ltmV
+	anysN8WW9gHR5J6oWoL4i+zgiIo+UlE/YpB+H78uKhBshzqgsjboXOhvXUHgws3l
+	mPuX1I5xFFa/p74GwuNqpNtW8+D2/5mTv402xU2XLWN5J/45C2tfiSza6OcGxQeF
+	J6dKkpieayngC9XipoRXXCM9beavEW3XsipDU9AJQ9Eh16ioeiJ7ij7DO063bxLN
+	DY5+m7MjsxhBQC/WRMN99dhIJix4090cwtLiVIboUr18AIiE5flPotL9uJuQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770753054; x=1770839454; bh=7U34+9N0gtjDr3KCun1Tj4rhXNsi7avQnoF
+	BKceuNQI=; b=w+0g7XPGmgaWSeOnT5pn2mUS8PKeCDhtQze2sjqRJnG5oLDrgIc
+	/Uz26bBJNVbBjfPDgU/pMqI2E1DvVd0VXJ5lvym2dBqSl0qqIF/uE2I633wJqlVi
+	L31axhKIOC5O9oQwJFYfe7ljSbe06ezbXatjO0kjDgLtgXS6gQDJVyxuBM3b2ril
+	AmjYBftuWWC9YWlU0E/RMyVb4y5guPzU0d1d4yXMN/cIWcw+uj3AaZHHD5c9ypXV
+	UFOP3ojyq0cpRSVdDmo3VUDt2yWt/x/kqTXhEQheglNsKgFxvKh2wYJ9Z6vcsfd9
+	7fQBLW2K5qhMq2aF+AuKRQ3TkXJV8V39zZA==
+X-ME-Sender: <xms:HoyLae8KTkZ-bbnSl32pA-_e9QvHfrTuw5dB8433TUc6GJe6KlsKtA>
+    <xme:HoyLaVsikMb2mOBnZR8tMKI_Csqm5GIb-Qt3lyBCLZWGyKd2wnwnQD9WtwfduMAhQ
+    EExvmSsPdvqHyQwdK9cjscRiL7DMpyMejPAzpkugL1oxP6AYIZEFw>
+X-ME-Received: <xmr:HoyLaZBwCg4ir_lcTlBY_2N9ZtoEvpb-zbuwyCLhNiQaBL73AjgHQLHjluq3Uj79qRBe4ZsDbODeJjZqXvAJ2SaDL1o0_Ke5_g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtheeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehkohhjihdrnhgrkhgrmhgrrhhusehgrhgvvgdrnhgvthdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:HoyLaVVbc9l3iHY8TamiLN0oGOJJCt_hi-GqQKBFy81a1_Xxi4_x5g>
+    <xmx:HoyLafB2yc_tV-hYdC8fE0AUsIktGM0L-rR78YXTXlHRNdIQe1sVgQ>
+    <xmx:HoyLaQ-SeY0ssm0JG2Mbhmh9rjKFs8K4J3iMldayu1MlWGY0zP4FIQ>
+    <xmx:HoyLaeG9u6UxL6nFtyAqTDnlD0rhZLSTYABY1g8w0fDkuMqJ-emZuQ>
+    <xmx:HoyLaQaKwNhCqLhFhOBHBVXl8OSQxrSmsF20gzMVQvUtVPZK-aFzBnln>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Feb 2026 14:50:53 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Koji Nakamaru <koji.nakamaru@gree.net>
+Subject: Re: [PATCH] osxkeychain: define build targets in the top-level
+ Makefile.
+In-Reply-To: <pull.2046.git.1770746461307.gitgitgadget@gmail.com> (Koji
+	Nakamaru via GitGitGadget's message of "Tue, 10 Feb 2026 18:01:01
+	+0000")
+References: <pull.2046.git.1770746461307.gitgitgadget@gmail.com>
+Date: Tue, 10 Feb 2026 11:50:52 -0800
+Message-ID: <xmqqpl6cxtr7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ayush Sharma <connect@ayushhardeniya.site>,
-    Ayush Sharma <ayushhardeniya.grid@gmail.com>
+Content-Type: text/plain
 
-From: Ayush Sharma <ayushhardeniya.grid@gmail.com>
+"Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Remove a duplicated "to" in the 2.49.1 release notes that
-was introduced during CI-related wording updates.
+>  Makefile                                | 17 +++++++
+>  contrib/credential/osxkeychain/Makefile | 65 +++----------------------
+>  2 files changed, 23 insertions(+), 59 deletions(-)
 
-Signed-off-by: Ayush Sharma <ayushhardeniya.grid@gmail.com>
----
-    Documentation: fix duplicated word in 2.49.1 release notes
+Nice simplification overall.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2039%2FayushHardeniya%2Fdoc-fix-duplicate-to-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2039/ayushHardeniya/doc-fix-duplicate-to-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2039
+> diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
+> index c68445b82d..ddb29f0563 100644
+> --- a/contrib/credential/osxkeychain/Makefile
+> +++ b/contrib/credential/osxkeychain/Makefile
+> @@ -1,66 +1,13 @@
+>  # The default target of this Makefile is...
+>  all:: git-credential-osxkeychain
+>  
+> -include ../../../config.mak.uname
+> --include ../../../config.mak.autogen
+> --include ../../../config.mak
+> +git-credential-osxkeychain:
+> +	cd ../../..; make contrib/credential/osxkeychain/git-credential-osxkeychain
 
- Documentation/RelNotes/2.49.1.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Let's not write "make", but stick to $(MAKE), perhaps like
 
-diff --git a/Documentation/RelNotes/2.49.1.adoc b/Documentation/RelNotes/2.49.1.adoc
-index c619e8b495..697f0f2220 100644
---- a/Documentation/RelNotes/2.49.1.adoc
-+++ b/Documentation/RelNotes/2.49.1.adoc
-@@ -9,4 +9,4 @@ notes for v2.43.7 for details.
- 
- It also contains some updates to various CI bits to work around
- and/or to adjust to the deprecation of use of Ubuntu 20.04 GitHub
--Actions CI, updates to to Fedora base image.
-+Actions CI, updates to Fedora base image.
+	$(MAKE) -C ../../.. contrib/credential/osxkeychain/$@
 
-base-commit: ea717645d199f6f1b66058886475db3e8c9330e9
--- 
-gitgitgadget
+> +install:
+> +	cd ../../..; make install-git-credential-osxkeychain
+>  
+>  clean:
+> -	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
+> +	cd ../../..; make clean-git-credential-osxkeychain
+
+Likewise.
