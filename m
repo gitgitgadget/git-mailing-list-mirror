@@ -1,140 +1,215 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568D53816FA;
-	Tue, 10 Feb 2026 17:12:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A870D2D7DE4
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770743533; cv=none; b=jrbKk71KV1EPoPRrhv5RYSJuWOJSGZEnG+g3kCVWineA44jUyhgVQguQl67Bo1XG30nMniowSXzMNNLkAgB7A3oWdOQ2cPr0uD2+Uzs82ltTab48V69e5c2WuvD2rubRlT0T6QvqtxUrezUxthNDAvsMVpIXLYQZgaJj12yuhUk=
+	t=1770746465; cv=none; b=LHnRGmWgdWpq0VxUbmrDhKHr6PEh1FlVwMNzigRbuVPG4K+tprtSOTPzq6+WhpeohJOlg3orqcpV8JZqgTMGo+lLdgpYF82Kjn0Lej24Zz1c5cSchiPj6p3LKS4p2gHziTGqzwmPQErhS/g0x/6ix+qGLlQ8hgtciabK8zZVyk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770743533; c=relaxed/simple;
-	bh=iJr59b8sTIKisIMnmWAXIMyaR5zWDiBmFvI74XDgJgc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Yuz7SZfwzmVfWEk2gv5CxzeZDwleVw1FQoPj/akh6DFWHpLS3yfVomvLpaEcpolgYIzbGLBAVDqtfnF2im9igspXEOX678+NbSsHXtWOpnZl9ZMv1abobm9vSkZEq9o9B6KneWhyPWWRGWxkNuKTrdd+nVtBCRv5fFgFqBz/aGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Tjacu33Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pA+aDn85; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1770746465; c=relaxed/simple;
+	bh=XK3A/usLn2ncVt7Kbw6BMAQaFuqKXl69tX85N8INHno=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GUmm9WJamZIhX3Ee+sNzLw87c9xWnrMjT8554gMz6JrTLCACWfdomgvMFJSaZJYZ+TyIh0dNb5ZcO1kb4FWvcV10JWUuRcymg37iovGTD+d7EEOstKHq7pt4iRuG3wg2UDI8oK9XsXHR2kGOTZtrRF9q0SAJUWqy6H/gddcu//M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DdB4YKOA; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Tjacu33Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pA+aDn85"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 46EE31D000A7;
-	Tue, 10 Feb 2026 12:12:11 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 10 Feb 2026 12:12:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770743531;
-	 x=1770829931; bh=x6hN+TajK36EBH7K2CwyO4a4bC0cYUGum44S0EVLsdY=; b=
-	Tjacu33QUTNHhYoy5fB2l+6lvoibFpyacXvyRrslPOajL583ZLdK9DCOqwGZEKZ3
-	SnusPJAvwl9kq4oRY+iRX3vFbXVijI7+aCSyDn6ljd5TSRow2pAcai6YVVcMkiaz
-	vvz46bAMbRFueWqzOQFRCL+Xb7YiCvrW9kKGEW4gY4n/gZr/gJOXsOaPk9L3JUHH
-	Ld6kfmyrdttJl3lWdOCwgnO32etniVTzlRVbh/r7ezokp4OQv1Zw1AbmbN5/uMbZ
-	w7dujGiUMl45+dzrft093KEtmSmzYAq/6JuQellHr9NOPNgrWmNZdAfhFAIOpets
-	KctS5sr9tNK2yEXa7UnBtg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770743531; x=
-	1770829931; bh=x6hN+TajK36EBH7K2CwyO4a4bC0cYUGum44S0EVLsdY=; b=p
-	A+aDn85NIG2cvVzz9oNv0aewk0zpsiakGCkf6JzJBQTbqN4FZ/6Ua8mvvZBIJT2G
-	SZsu6K4jYSpyp8aJ1PMk4l2NHI450xy8KoptSo8nD+YgUZDwmOLLdDD2PJYuWpvh
-	OnC8j+EKSbhPCzCa09qUZZ5ATh2iRuRSg49fFej4405NKNR0Lx1Uya408h/ATaZ/
-	jf1WakTcZfVfHSgZYHVIUOwm/u3IMrUprJEm1EVyKksWdqZJkVYVnRQ+r8oHMg/g
-	pWX4d9TSg9DSQhDW9IBQq7CNtY/GSrEqX8sbfefky2k/ICc0SXiL8RPjrn3KnCJj
-	1Cj3HwzMjJ5WXf/toYopQ==
-X-ME-Sender: <xms:6maLaSPGNpr1sMVa_YZQEBzPEk0aH_3c9Rz607p7i7xoANuwf58Qsdc>
-    <xme:6maLabyiKL2JcRTQMRmsNX5Nm-5-JNWhwnTNR7s2mRNnhIJB8vYkVKOLvHYS4-YtN
-    aJ2inW11_PA_rgoihyS9GW0-LqIZ0ADe9680YqM3SWrNUJaDNdOiQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
-    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpeehudfgvefgfefgffdvhfffvdevveegheehudetvdfgueffjeev
-    jedugeevfedvfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopegrlhigsehkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehnrggsihhjrggtiihlvgifvghlihesnhgrsghijhgrtgiilhgvfigvlhhird
-    ighiiipdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqmh
-    grnhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:6maLaUasetilluZrUWlI1-UOzigNOTmwOORfeg0enRwCzk89c-3Qvg>
-    <xmx:6maLaYWXhusSFISWUJsmaLVcHnY6TDhYRp8V2DDFK_eGNbVa7IrAIA>
-    <xmx:6maLaahJRY_uBrFA0lKCgPfSfWQKmjlukg9w52btdkinCDg167DkiA>
-    <xmx:6maLaeuN_s7zK0tQ-VoCHupGs1tA5CkK0X8Hdt2onYbrkfkAXP1bLw>
-    <xmx:62aLadc5QADXDplbIZocmTgFwikhlQZGDr-FrlvtZVPkxW-EFQ__x_Qm>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id C6DC71EA006B; Tue, 10 Feb 2026 12:12:10 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DdB4YKOA"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8c70ab3b5fcso598609685a.2
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:01:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770746463; x=1771351263; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=K7aGhqrhFQ9pXv+/mPfQ+6CjaPhyLfNZdynUDEtRbbs=;
+        b=DdB4YKOAlltezZGmDR++IRvo68hw9R80aGFCjI0PP4kgoTM9D20OoOEQpS9Sb0rdjR
+         K1zQOvT6ANbP1ZOn1RLNS3yDZdblNiwICIQ6dHBbepjAR965XH/rIK7mqQ5492dYqmjT
+         ki9xb+J9FMaFoHmUA1T4TjXvR4V8ICPenVm0RKOh2wsOZILMM1KqxBLZjukWaGAuz+7G
+         Rcef+J4HOyyK4ulRY+L/ssZL64ZTOujy0JO6HDy8KeXRSbMVBWfMwJ+JKvbTWVvS+xF4
+         82yCN0PfKDk4W5wXOMaeffEG5KnwfWXPA0PZOWcb7Wq4X5Z6EVeOHaS0OMGDGCIgp1XI
+         5F/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770746463; x=1771351263;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=K7aGhqrhFQ9pXv+/mPfQ+6CjaPhyLfNZdynUDEtRbbs=;
+        b=mnDH4cIE8o3Bl7xNS5oa1ZMKPDzXC/IIB7gBbYsrdD6TCxZteHNnWuON4CafX+CN8w
+         LVhPmbuTKjKKUxtSZ2G/hf4sga47PGQYzb8QqioP/j9zkm5NXgEkJ/PEtwZvZV2t2O+R
+         B52gL0tm5pTI+4Bve2xfF7wj5gexxx8VU5atx4lhKsyyAhJIXAycpHz7H8NoGbs0pIqx
+         bUcXfKa5riRAaOtaPhavJjOej8fBciG/IsYdwjQYtLu1zW4Jabw2NeHYfXs38Y1Z472x
+         lyluJGmFmdfseKoKQEqqbEuY+POTb8S3/s3Ur8gp1wiY7nYXNzeouVrz2qyLmJA73SQ6
+         oZWw==
+X-Gm-Message-State: AOJu0YxLVLjRkDQDyKlP6yIejtYGXF6sFhnCKKtBgnxO4FrzoA2D8bHB
+	VJ1W/lbg4Il25r+6gzrufTN4+wyEnUlXreh3orWfxKYZkudOIlZQSTN2b49Gpg==
+X-Gm-Gg: AZuq6aIYA2VFzaGtFyYvyKPa/7C17VfovIWejfSei7vGsfaiWAvOpgm6jfy9LK188e5
+	7faB0ccV8rSFkqYrN4MySGDIIjnzq1pvhp12dseTFZ0qJzcAD+pwqA4pzmmb1Olfqsl3mG7W2pl
+	Tim8h7b2yc1BkPhxyDrwSBgVnimymR6Im239CjnEAD88aZjvgTrcKD1NtON/gWsv4UBowSSi3CJ
+	8kekpyguK6gU3iXlxgreKsUIGMpWqw5GcQbUN2cnVltpxiW8zqZM+32tJm3pUUBM/K2eFlP27zG
+	GgwOfF84kf/TR0cuvSNQJWhPMQxYBaGNbafgZC/IlMKEZirTm9vBzCBuKsQ7ihN7z5z9cfcqqyo
+	w4JfyfTesp+wE5/0+xuag4veYrLRUFAbY4daJQLo1XCOP1tcsopqKv2ckT+84R6q6F7s1dhTotk
+	W1qS7is/DpggUM6mS1Xr2fX8EsCxMVuf3aGiog
+X-Received: by 2002:a05:620a:2845:b0:8c6:a5b4:e01e with SMTP id af79cd13be357-8cb27f79048mr12130785a.16.1770746462828;
+        Tue, 10 Feb 2026 10:01:02 -0800 (PST)
+Received: from [127.0.0.1] ([172.174.167.25])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8caf9ee9efasm1094861685a.43.2026.02.10.10.01.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Feb 2026 10:01:01 -0800 (PST)
+Message-Id: <pull.2046.git.1770746461307.gitgitgadget@gmail.com>
+From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 10 Feb 2026 18:01:01 +0000
+Subject: [PATCH] osxkeychain: define build targets in the top-level Makefile.
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AsV1kM-kUU5c
-Date: Tue, 10 Feb 2026 18:11:50 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Alejandro Colomar" <alx@kernel.org>
-Cc: git@vger.kernel.org,
- =?UTF-8?Q?=D0=BD=D0=B0=D0=B1?= <nabijaczleweli@nabijaczleweli.xyz>,
- linux-man@vger.kernel.org
-Message-Id: <cf92ae10-7435-4130-a866-e1b30bf2b428@app.fastmail.com>
-In-Reply-To: <xmqqtsvozgi2.fsf@gitster.g>
-References: 
- <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
- <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
- <aYpg1XelZBzpw4ZL@devuan>
- <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
- <aYtAknObJpjszCaj@devuan> <xmqqtsvozgi2.fsf@gitster.g>
-Subject: Re: [PATCH v2] futex_waitv.2: new page
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Koji Nakamaru <koji.nakamaru@gree.net>,
+    Koji Nakamaru <koji.nakamaru@gree.net>
 
-On Tue, Feb 10, 2026, at 17:54, Junio C Hamano wrote:
-> Alejandro Colomar <alx@kernel.org> writes:
->
->> Junio, do you still have this queued?
->> <https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#m6f42ff4f0=
-cb2d6dd1d68f12a533d04c822b68a80>
->
-> Still queued??  Not very likely.
->
-> It is a topic from almost 3 years ago, so it is either in an ancient
-> released version, or it was discarded long time ago for some issues.
-> Given that it is from Peff, it is very likely the former.
->
-> https://git.kernel.org/pub/scm/git/git.git/commit/?h=3D15108de2fa0&id=3D=
-15108de2fa0cd8f002a0551d14c84505a853071c
->
->
-> That's v2.41.0-rc0~141 if my "git describe --contains" is counting
-> correctly.
->
-> My secretary will bill you for 30 minutes of my time and for making
-> me miss a meeting with external folks with this ;-).
+From: Koji Nakamaru <koji.nakamaru@gree.net>
 
-The email with the patch[1] seems to say Git 2.39.5 in the signature lin=
-e.
+The fix for git-credential-osxkeychain in 4580bcd235 (osxkeychain: avoid
+incorrectly skipping store operation) introduced linkage with libgit.a,
+and its Makefile was adjusted accordingly. However, the build fails as
+of 864f55e190 because several macOS-specific refinements were applied to
+the top-level Makefile and config.mak.uname, such as:
 
-    @@ -107,6 +111,7 @@ .SH NOTES
-     .SH SEE ALSO
-     .BR clone (2),
-     .BR futex (2),
-    +.BR futex_waitv (2),
-     .BR get_robust_list (2),
-     .BR set_robust_list (2),
-     .BR set_tid_address (2),
-    --
-    2.39.5
+  - 363837afe7 (macOS: make Homebrew use configurable, 2025-12-24)
+  - cee341e9dd (macOS: use iconv from Homebrew if needed and present,
+    2025-12-24)
+  - d281241518 (utf8.c: enable workaround for iconv under macOS 14/15,
+    2026-01-12)
 
-That topic is not in any 2.39.* release.
+Since libgit.a and its corresponding header files depend on many flags
+defined in the top-level Makefile, these flags must be consistently
+defined when building git-credential-osxkeychain. Continuing to manually
+adjust the git-credential-osxkeychain Makefile is cumbersome and
+fragile.
 
-=E2=80=A0 1: https://lore.kernel.org/all/se6hm5gnd7cyjsby5q6pctkrws5ecp5=
-gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz/
+Define the build targets for git-credential-osxkeychain in the top-level
+Makefile and modify its local Makefile to simply rely on those targets.
+
+Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+---
+    osxkeychain: define build targets in the top-level Makefile.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2046%2FKojiNakamaru%2Ffix%2Fosxkeychain-makefile-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2046/KojiNakamaru/fix/osxkeychain-makefile-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2046
+
+ Makefile                                | 17 +++++++
+ contrib/credential/osxkeychain/Makefile | 65 +++----------------------
+ 2 files changed, 23 insertions(+), 59 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 4ac44331ea..97196c6afa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4060,3 +4060,20 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+ 
+ contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+ 	$(AR) $(ARFLAGS) $@ $^
++
++contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
++		$(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security -framework CoreFoundation
++
++contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
++	$(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
++
++install-git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++	$(INSTALL) $(INSTALL_STRIP) $< '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++
++.PHONY: clean-git-credential-osxkeychain
++clean-git-credential-osxkeychain:
++	$(RM) \
++		contrib/credential/osxkeychain/git-credential-osxkeychain \
++		contrib/credential/osxkeychain/git-credential-osxkeychain.o
+diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
+index c68445b82d..ddb29f0563 100644
+--- a/contrib/credential/osxkeychain/Makefile
++++ b/contrib/credential/osxkeychain/Makefile
+@@ -1,66 +1,13 @@
+ # The default target of this Makefile is...
+ all:: git-credential-osxkeychain
+ 
+-include ../../../config.mak.uname
+--include ../../../config.mak.autogen
+--include ../../../config.mak
++git-credential-osxkeychain:
++	cd ../../..; make contrib/credential/osxkeychain/git-credential-osxkeychain
+ 
+-ifdef ZLIB_NG
+-	BASIC_CFLAGS += -DHAVE_ZLIB_NG
+-        ifdef ZLIB_NG_PATH
+-		BASIC_CFLAGS += -I$(ZLIB_NG_PATH)/include
+-		EXTLIBS += $(call libpath_template,$(ZLIB_NG_PATH)/$(lib))
+-        endif
+-	EXTLIBS += -lz-ng
+-else
+-        ifdef ZLIB_PATH
+-		BASIC_CFLAGS += -I$(ZLIB_PATH)/include
+-		EXTLIBS += $(call libpath_template,$(ZLIB_PATH)/$(lib))
+-        endif
+-	EXTLIBS += -lz
+-endif
+-ifndef NO_ICONV
+-        ifdef NEEDS_LIBICONV
+-                ifdef ICONVDIR
+-			BASIC_CFLAGS += -I$(ICONVDIR)/include
+-			ICONV_LINK = $(call libpath_template,$(ICONVDIR)/$(lib))
+-                else
+-			ICONV_LINK =
+-                endif
+-                ifdef NEEDS_LIBINTL_BEFORE_LIBICONV
+-			ICONV_LINK += -lintl
+-                endif
+-		EXTLIBS += $(ICONV_LINK) -liconv
+-        endif
+-endif
+-ifndef LIBC_CONTAINS_LIBINTL
+-	EXTLIBS += -lintl
+-endif
+-
+-prefix ?= /usr/local
+-gitexecdir ?= $(prefix)/libexec/git-core
+-
+-CC ?= gcc
+-CFLAGS ?= -g -O2 -Wall -I../../.. $(BASIC_CFLAGS)
+-LDFLAGS ?= $(BASIC_LDFLAGS) $(EXTLIBS)
+-INSTALL ?= install
+-RM ?= rm -f
+-
+-%.o: %.c
+-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+-
+-git-credential-osxkeychain: git-credential-osxkeychain.o ../../../libgit.a
+-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) \
+-		-framework Security -framework CoreFoundation
+-
+-install: git-credential-osxkeychain
+-	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
+-	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
+-
+-../../../libgit.a:
+-	cd ../../..; make libgit.a
++install:
++	cd ../../..; make install-git-credential-osxkeychain
+ 
+ clean:
+-	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
++	cd ../../..; make clean-git-credential-osxkeychain
+ 
+-.PHONY: all install clean
++.PHONY: all git-credential-osxkeychain install clean
+
+base-commit: 864f55e1906897b630333675a52874c0fec2a45c
+-- 
+gitgitgadget
