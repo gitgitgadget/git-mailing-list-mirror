@@ -1,66 +1,67 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99112328B6E
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 04:25:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44623329E49
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 04:35:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770697506; cv=none; b=Lk79lBKe+4P8HTA9SJV9s7xfOMttjlRV5TgifiaPbXDZK+Zo5wc6jMYK228vpuG10BbkUvtvK2OcBH1ScNeWKFr9KiBQL+1gxwk8UtzSubae21tVzXsxTvG9EbmhhbOiRaMP5dRIgZVeEpi4NDYh6lfO7GqKpzpyjGXP/a1K6tc=
+	t=1770698152; cv=none; b=VqmdAlNSjMBwFu9jg+wzlAGVFm+O5uR2j1b7/9lzsSyqCj33+nwuZLk35fFT5mYYkL68pxyb6gKPkc4NbArzkIAVMDztgcxoONAjUKnd+QOVkYnJgHsSHB/WDMfaH0YhzZEPmYYSKEFppCwZJYVhMJ0OEMrq1XJYDI7ATComm3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770697506; c=relaxed/simple;
-	bh=f0tlZSag1DZSyj8mWI7SasFPOTj5bZM6ZIyCXQOVWh8=;
+	s=arc-20240116; t=1770698152; c=relaxed/simple;
+	bh=ZNrUzj7leks9CdrQI2W7Mri9/R8QYmzTedl4H3p+izE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZByDZICJjOmxzYBfq+KAtt4vBx9hG5LvsXBZqZlhaRNLNv3CV7tO8ICWaOu58jcXMJKWYiWrUmXeCxj3dLhubBlVDtSpYoLDat25cvS2xfg2M0wA3vw3mo17jjvO0pCznVFzYfcIEWTkFRde2NGo1yqlyKlLd+uVcfSA8rkCODQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OYQROaM8; arc=none smtp.client-ip=209.85.219.50
+	 In-Reply-To:Content-Type; b=ai3eoTUzn/eyBcfeYWk5w+nenYfowcpIXCcWeyFpN+D2tqOTlzPIOEP+uTdJoqhq577RDcoNuUbUeNjRj79Z375aWHwTuXaSr2Ao2Yq8GQ4USsEjPBMmag7XrqOHa+tgPe5VjQgBEpAhXpxLXGQZweJJCPovI04uPO7kW5cKWhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gTEKEiUu; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OYQROaM8"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-896f8feee14so21749706d6.0
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 20:25:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gTEKEiUu"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8c6aaf3cd62so45216085a.3
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 20:35:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770697504; x=1771302304; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770698150; x=1771302950; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KTuP7OSGr2+DG3r2P7M7GMFbAJvOdqVB6tcAeokWtSU=;
-        b=OYQROaM8SD7cgi49qzVTcK0nuN2RRxenK8uXIkaU3T4QN37vpfaEwclfIeKHGI8jdg
-         +Jgdtc+UouJ2Hbqc3fvyL3o89OCA5S8xcvMWV9iIH99SAHkL6UnQjI4gOCfxAT0teE0b
-         AGGS+yalAn4Qnh29QHFXJB0Lw4M4mlvdlzqnmhoIn1uUAR9mMoBnk+K53C3sATlt4FQy
-         UMr28cHQg5uGaWCd57FLWhWjRJWo69sMq0BNo4FaRRo1vF7PpvMENlLVAZA1nYmFJvJI
-         yOskhAXJlR87lgfkKN+d0ql4qfqi3PSQub1nAFOj+0MgHiGUOcR5QFEOo31mmFh2iTSF
-         pfgw==
+        bh=q/hE5kYI/owbE+rz0qjtJWMEcgR86StZLKGvqrChrKA=;
+        b=gTEKEiUutHp3CRHgljePQA+WYQNHMZ/TJDceHz0u0I/6V+wZ0Vnha00t+hYWRdHAiH
+         L6kx15PxkAgdP4Ftl+zplucUjLQrvTX4/Wcc3oW/P2CO0PhtpKwV/dQ65/+JHAMMeIuF
+         CF6Lr5TD6RsR5PUpu0jM46/jKYkcPQoYLz1P7fjkYxoXS32zjiueh53zlymZZWgTO4ti
+         4rh97SncrKbNtvAzVOsnru3AJC/8mSQX1fASTfkjeAGUjlw0F+V4xLCb5z5gzNyXwwUx
+         4KAqUp5Msb7rgWLKoKTs2NKzZw5mrJ9yybXqYyxJ62KOAjXm4NGzlvfP/Z3rXuVhFnSk
+         nbiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770697504; x=1771302304;
+        d=1e100.net; s=20230601; t=1770698150; x=1771302950;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KTuP7OSGr2+DG3r2P7M7GMFbAJvOdqVB6tcAeokWtSU=;
-        b=mdJPsOwaD5R4fH6GIxq9dZvqU3CVMIxnpuOmpzsbYkFzKvehIJ754empjuYAPV96mu
-         p7W8MiQxgGQc0MaNUabrBrlWajm3zdcg9NM2UWIgKlBnRdhTGB7UaXy2ZtEB58LSDpfJ
-         sAL0AIdtKy1+ZtInN3ERBX80CJ9hMJXZhIiXGhwcTGmHZypFxTMzuD3inSBuFTXL2BFe
-         Kj8MHddAf6onAvRdAyfXH6VVqZn7vuY7omH+xQFCpk4rdyogBZQHuVSg6+sh5PUEn7Iz
-         0oiASSVldVQv6j766tUtPMZrtBwLZRUGVH8/sg1qcCXsnSpJgUKSK6rOxiRDl77UHS9I
-         HlMg==
-X-Forwarded-Encrypted: i=1; AJvYcCUf/atbM1BWD2z+fSGOZMAbo2779EQEvBd6BjFACrRLflOH8scyIdVvvw9VsLvZxldmtxw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwhJw2Rn8oXYmD4p9PVzLz2ngJU81Xr80twuRggxLmDXOYgEkEk
-	TtuWwQhHovGyUOHSRp2Ymm2oP3BOLGJUt8Wk/ff3B5Ub6wGPov1FXESA
-X-Gm-Gg: AZuq6aJPTQHjzMIA+7tH2o5saZq1fiEmXToifd/mTN3BLD47DRoGpmqe4Z5hn+/fj6e
-	z7wHUNXP3pnZLRQTNpBnsKxdtaK8MENjJVsLDmxHXpty6j850oNfgqm4wcNUbloH1xpN0w/qmjq
-	NpWOMaiBm06NpY14DAIq0BPt7cIZxZ5vyaYmJE3vLdDT5j9EHA6PchiB6oEPMyAiU0klpKxcT4K
-	0hP5IQlDv9LXlAjpwzf9eKcNLGWjDGTC5wZcLxRZTUNzRyEIoYaXR8LtJd/ezRWDNMZVQ7q1Iq6
-	sY6uAOOcyWxdHf75RhXGWQyCsx0TpmlqvB4WdZdfs8sRDBbcq3I5sDrKOE8Tq+O6neYr2b6vAW8
-	yo5mOsQrwhNaXnNBD6XeRcaDsMqPRgcYxwW/Fw25SDA8Jk7ewwanFYe9FNitmB3kwOlTZpLfmmR
-	xq0ZdumhfQ90y5QLVrtEzXMBZ8MtK9dxAeYCWxvzX6eTCV1X+L6QfXeihEWU5m2AbfOtpHKg==
-X-Received: by 2002:a05:6214:c23:b0:894:71b0:6b11 with SMTP id 6a1803df08f44-8970e2236fcmr11519926d6.14.1770697504486;
-        Mon, 09 Feb 2026 20:25:04 -0800 (PST)
+        bh=q/hE5kYI/owbE+rz0qjtJWMEcgR86StZLKGvqrChrKA=;
+        b=fg0D1Y3td5yzOCcNyWZhpeCP1ojDide0sJdXzLXMmCXqp5jDDeJCC8sCXgQ+9UnLdQ
+         6ypLSjZPxdyhbTQ0/iry70HsVfJpkd4+DzlAaoDixMnEZW1HvacsU9BchC5l9rhhSqD6
+         FwZtMl4+XT/Ep49zKFFOJbvAH3L6kvAOmuD37c4NDpTGH5LVhIqzjSUQJ/ZlqyUS0p7o
+         KPEjktwQndcsfS0I0nYAi/mY6jdqQgLGOc3zkAzqDeKxoEjXzpbZGQHwbufSVbCxdvXU
+         XiKBLRWr+U2Zw+RBliWkItQgHhkA6bbgYqIg3vFzEfdVokwOuTP9Khmn9y3d9zd8x5rW
+         z3fQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUsuVsETBSaAxl5x6O2hSuatK5o6b6mw5CBh//+oNBTAS3kIUXrpp6ZZpmpg7yeYDWV76g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwG0GChAJmb1wz4B4k+p8Zu2rJE8zPeaMr/8w6fhRbqVlmAN4wU
+	oZLMXoQ8MGzpsZM5Rvlhvf8bjimIdbLocqPSZzNHIuPtKTQE1LUiSfhIzr7QZg==
+X-Gm-Gg: AZuq6aI+jddZ8PWvCsujXpvV9/KvOJ6nUlCVbwzbdnMjpRNMtZPsi2o9RscRWOWIQQZ
+	3zxOW5x/7+8gs029ac1+FGmHUYpUDBSXpEC7pZDmUjRtokN4SO0UT13DLakTixvZtgPXwle8/mJ
+	nXGVdIAPiWUxxPMHgTKQL9x9yfqv7Y1LMEwB/9on8Qe27ksDLoDQxH3pe5xKwNW793GMYRZB8Qo
+	J45PoQ5mE6q3oM9bMjw5JUVgzfh9XltNXBluVI/0owBlQCkziFiAz/m4toprUGaY8b9F8zjgdgr
+	jeoxdtkdvAzV1VNv+4w4jff/Y9iw1YvolW4Uvh4DmVvJm/vKeTQX/n+/GE1RTu0/MDBPNouEgu8
+	W64Euoc48XWddCI0tWidkVwCRlXUHPaKyxswaykHT8256fq1MMSxOcVztG81yhTyb1istgtDVhn
+	gkibmqRe1vTWA5mV2Yn/gZIBZxoz9rCbBLqhCMwxZhq+eemmnKu+Kk9x3/RCW5JL7uO6LDZGQQC
+	Kv6DAji
+X-Received: by 2002:a05:620a:1a22:b0:8ca:305b:749b with SMTP id af79cd13be357-8caf1fa789bmr1776980385a.60.1770698150227;
+        Mon, 09 Feb 2026 20:35:50 -0800 (PST)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8953bf37b9asm93875416d6.9.2026.02.09.20.25.03
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8953c057751sm91891996d6.43.2026.02.09.20.35.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Feb 2026 20:25:03 -0800 (PST)
-Message-ID: <3455bd60-abe4-429b-b684-340a713d0b13@gmail.com>
-Date: Mon, 9 Feb 2026 23:25:03 -0500
+        Mon, 09 Feb 2026 20:35:49 -0800 (PST)
+Message-ID: <b365b5a8-b66c-40ac-bd85-a57aa9fa7d12@gmail.com>
+Date: Mon, 9 Feb 2026 23:35:48 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,50 +69,45 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/11] config-batch: add 'set' v1 command
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-References: <pull.2033.git.1770214803.gitgitgadget@gmail.com>
- <fdeef536f649bec811e8335d1c7151be8e352ff0.1770214803.git.gitgitgadget@gmail.com>
- <1cb68e4f-930d-456d-ba1b-b153e7a66524@app.fastmail.com>
+Subject: Re: [PATCH v2 0/2] merge-ours: sparse-index integration
+To: Sam Bostock via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Sam Bostock <sam@sambostock.ca>
+References: <pull.2189.git.git.1770345124.gitgitgadget@gmail.com>
+ <pull.2189.v2.git.git.1770405383.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <1cb68e4f-930d-456d-ba1b-b153e7a66524@app.fastmail.com>
+In-Reply-To: <pull.2189.v2.git.git.1770405383.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 2/5/2026 2:01 PM, Kristoffer Haugsbakk wrote:
-> On Wed, Feb 4, 2026, at 15:20, Derrick Stolee via GitGitGadget wrote:
->> [snip]
->> +`set` version 1::
->> +	The `set` command writes a single key-value pair to a config
->> +	file. It specifies which file by a `<scope>` parameter from
->> +	among `system`, `global`, `local`, and `worktree`. The `<key>`
->> +	is the next positional argument. The remaining data in the line
->> +	is provided as the `<value>` to assign the config.
->> ++
->> +------------
->> +set 1 <scope> <key> <value>
->> +------------
->> ++
->> +These uses will match the behavior of `git config --set --<scope> <key>
+On 2/6/2026 2:16 PM, Sam Bostock via GitGitGadget wrote:
+> This short series teaches merge-ours to work with a sparse index as a small
+> step toward broader sparse-index support.
 > 
-> `--set` doesn’t exist. I think you meant `set`.
+> Patch 1 is a preparatory cleanup that converts merge-ours away from
+> the_repository global, using the repo parameter instead.
+> 
+> Patch 2 adds the actual sparse-index integration and tests.
 
-You're right. Also `git config --<scope> <key>` is the older mode. I'm
-not always catching myself using the old format. Or inventing a mixed-up
-one that never existed!
+Thanks for working in this area. We have a long tail of instances where
+the sparse-index could be integrated at its most bare-minimum case.
 
-> Is there support for a user-provided file? (`git config --file=...`)
+> Developed with AI assistance (Claude).
 
-Not at the moment. It's worth thinking about what that interface would
-be within this query model.
+My experiments with such tools seem to do well when there are clear
+examples of how to make tests and how to make appropriate fixes. The
+tests added to t1092 follow the standard model for checking that
+the index isn't expanded. Perhaps the many cases we have for these
+integrations could be tackled more easily with such tools. I expect
+that they are _mostly_ boilerplate tests and minor fixes (but don't
+look too closely at 'git mv' which doesn't have clear patterns with
+sparse-checkout even with a full index).
 
-My initial feeling is that we wouldn't want to accept arbitrary filenames
-on a per-command basis, but instead would want to provide an alternate
-file in the command-line arguments as a replacement for the local config.
+The one thing I didn't see that we normally see is a case where the
+sparse index _is_ expanded, but that shouldn't happen with the 'ours'
+strategy! Excellent.
+
+These patches LGTM.
 
 Thanks,
 -Stolee
