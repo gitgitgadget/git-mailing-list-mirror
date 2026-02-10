@@ -1,99 +1,114 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D7F32B990
-	for <git@vger.kernel.org>; Mon,  9 Feb 2026 23:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770680600; cv=pass; b=o/6zfd26tCJuo1X2GO6CaToLgYnYc2QyswzJtdkn9qU6VffADKGPJ0PEJAyR/9bgf3lkAkLzl5asDZ0oB6D2Qyp9ooD2nmXBlngLbCKUej2VWVw+uHTRqdqhAt4hxEEs+kGhRwAFNYfa6X7HTKbCnTH0a8BHtbf/akxKQVJS2Mg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770680600; c=relaxed/simple;
-	bh=VzvuyWGvabhj1xEWPTBaegL00kuALLAwZ8gWoyUnSkM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Ot6efOhDR8xIj8m8Le/DM/apSDnUaIqQnOEZgmw8mk5up8MLtUf936yYkF1Ad9cBsHDGoyYxyeB9MmzOR0DaHe2lQ+ZhTp21rVHk8qTsS3PeyGVAcbQ7qqnfLOPh5227FHqP8kyKPzwxSzvTgbtG3AiLtSIXGUIQekCKzggJv1M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gLr8CjS7; arc=pass smtp.client-ip=74.125.224.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ED97262A
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 00:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770682969; cv=none; b=ED4CSKYpi1uGVRF1CJHWtJfuReEKyL5BvpYgTq5qsR4ut3GgzLGYdO2fghhg93B+jNUlUNWIt4yscIthUH2VwTUop6SSbCk4nZ84TTuvAD5B7Rvmmf3DR7LQTf++fOHVUhVWe59Z4T8h/DxoHIjyfNgqvQhBLNOryZxvOt2y18k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770682969; c=relaxed/simple;
+	bh=QL3gVEJNQsgxs2N/aqH/fgpBhG6RWs/F+GWZvQrpTK0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Pg3aN6TtzNAKyRcrpzOgiYYX6120iQzNgoWVTgC35T9wOBvrUs/xYishMYu2bLfYFW84T0hEuehqaleVt375cndmhXBtGiHEabTon1e88UN3rtTWUGZHJUTLtq6p9XTTez3szuv7+Oz5YcjdsueLu7FzoGrb3R0Hj982iyCb2e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aksODOsc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wFHprEmd; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gLr8CjS7"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-64ad019bbd4so3102784d50.0
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 15:43:19 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770680598; cv=none;
-        d=google.com; s=arc-20240605;
-        b=TXWJHuz4SO9iF9Z2llp5Mf/7rUXATtLx2H0yqKZCSh8uSSF5fVt1rxiEvIcO+bLuJS
-         gOkXiV8gf/+7L9ZMFe9c8srqeHkWiE2QxkmseFUlADbDYq4ZbJ2rsbWRKcE3zDlVuKVf
-         bM3o+RrmfrwBkzD7eVo3EslFYDwUzLG7eu9pGJE60+R6QpUmalzY/Lo6W9QA7iLQyJ8q
-         jczLBVwXp89C1olesgqmQ9bZKLe7GG9lVjntJoWzIdrwmvfcWjvN2tHxz4yxuFqoLW2L
-         RkVdj52xkCijU2ks3G59BYKlKK1uSkHTpEkr8kRqcwEzDpP8iNfWAJ8ZV5KtH7R+BHCv
-         Zywg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=VzvuyWGvabhj1xEWPTBaegL00kuALLAwZ8gWoyUnSkM=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=OVqHgLo48qkQCtSWgYkAzrN6hfM5J90cmMCrQExo4TzMfO7cO097+bU5lxzxwa5diM
-         GqW5zurSqJ5SYQ1Dj5QfVicr/cbeTBMbIA8eQJrYO/NtipNNtfknqPUjvmoz6f1FTSbe
-         ptDUq+ai8yBgbikBKpPvBXn3y9FbPPsRW67mNWeT/dgEzUrqosZ1nEohiI9VPf9E0X/O
-         a9xNOOr7EpJxE+ST/4Ao8tCXupFoocygB7+LEB47oMo1i1QXXTxhLYvvu4NZ80WgGx/l
-         azMM4tHMPGb1k0Ltf02DjBDVfVnLe/BPJSn4a8ZTCGUhqHONMVEzPawwX08Pclx7AxA9
-         4/Jg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770680598; x=1771285398; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VzvuyWGvabhj1xEWPTBaegL00kuALLAwZ8gWoyUnSkM=;
-        b=gLr8CjS7bFw+UTLLunaso4nAKcjyphyld94jGxZ0FlGFwlHDtXhMm1XtycMLXmadtd
-         Xm07Sa8ODH9ri4DVq7X25nYJ4c9C9lRsOQ2SHRE+dZlgsnQu+lq8s2FlOttJXTgjA30r
-         7Vpvexi/pPSg6LyJSkvW+ulz/VbNrWiW5vO1CwdWZpXhFFpxk1zWOVVeIhaQKYVH2uhf
-         4N1ezp6b1EiEJYc3RavAvMJ6zcCci0cv2V95enoIQf4UMHZQplfF809KoNgS9/zHBvZY
-         4w/3RhbKj+K13s9JqmFV1inufjkQxNsUeM4TrrCYfaS2juVzHL9T+stoqjFqPFO0neuj
-         9t8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770680598; x=1771285398;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VzvuyWGvabhj1xEWPTBaegL00kuALLAwZ8gWoyUnSkM=;
-        b=uHmBg2h5IwhbtfScAQXeRiFPphpScgyqu4pRVP1K/1CpSmzrRTAalgNXjwj37bb/e2
-         gNYtrtjTQcXRetP2+o/KXZk7b5ilW+yCy8JDMv+H6Qv/eRtIoiFcIfUN+uhhdl2834Hs
-         WGtUCjtgHPO5MZrtatIGEOHxxqYyYpVifVLWvnySD6/jwNdk+zW0BxkTmHwOkevqce00
-         CfRYG44HgSA/sFmKTexNposF9VXKSL2KHDUu052om6agvJpaT+tkuI967j4LhIX5CFVa
-         M1HiIve3ysaIAM2/uaJl33b0nVnaBnaI+D14PZvprxgXexDwHPZRWRRTtukiPRIUhw22
-         pXpA==
-X-Gm-Message-State: AOJu0YxKtBiM4V3VewdpsZJb0qx8vpeyxUbT4MaJt4m93GZoku2YM/Ej
-	YaPFBSmykLhnlNmTSUGdEz0R2jpM1JpXUfVr0WBXLEnxVJqwwrvn+3rV/3wU5J/b1+58czuf9Do
-	F2rUXUN6mqGQlhsee/TwOtC+B5QXuprWghthl
-X-Gm-Gg: AZuq6aJ3+jgpdVefAzs87vk/A55+Q2hzsEpcBojOLr/9MC2gjw7F7cchDJF2Gz8gKb/
-	rVmHLyQH5fKnmnTfM1r4FYTICrGbPHm30FtyT9K1gjxfvXcdHhur9i61/S9hq/pRo8uqc/FrMQD
-	kqKuSke6fRtaX+Y+jA98Y5I+KS1b/TWo6x4FMVpiN1R5RbYj0MhmcfRkJFZuNrxNz2+YTdcF321
-	Fv3LG9aJ2zUOnPvF8sjGMNR0GdU6Al58o95B0oA50vgYlg3ZsImiW+d2TllUNMof6r8Aezx96A0
-	lQCa
-X-Received: by 2002:a53:ccc3:0:b0:649:6a9b:9902 with SMTP id
- 956f58d0204a3-649f205d7c5mr7637217d50.65.1770680598499; Mon, 09 Feb 2026
- 15:43:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aksODOsc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wFHprEmd"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 910B0EC0550;
+	Mon,  9 Feb 2026 19:22:46 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 09 Feb 2026 19:22:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770682966; x=1770769366; bh=ChHptXdfvg
+	hEzw84MLS4Xx8LXn9TEC+/SCY5GbEYu1c=; b=aksODOscHY4G6+bzaLCpkSNafo
+	9MpQiM07Lu49EJVHNhZ/ADcx4PSuStFqG1I6plRPW63FQLfKa+/x4HpduvqAoKaQ
+	EiUfa6KHNhbCQ6Q/0KX9uhnL7lGmt1MrU3nsS/mQA6H8/NAYSpaLleTi1oFj2u6B
+	FiKUaHzOxT2haJq0eiuLKfspU52RbO61sBwoiSIcMRlAokCNNgY9SYNPK0fhk8Qb
+	sA/OTG0okEiOwI0Yr4IuY35NK+oMq/kK6quRyhNTfbKeb1GDvGud4tFX+oTkE2v7
+	oSZNhLe2uSC/YMhTFq+VGRlrX2aoTxP/Cyju2GA4b1sHd4xBJhkWhFiZAkLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770682966; x=1770769366; bh=ChHptXdfvghEzw84MLS4Xx8LXn9TEC+/SCY
+	5GbEYu1c=; b=wFHprEmd+ZdIENbNRRs7VWOaluKEoJHk7/HEG4XsPRaF6DmRa+1
+	Lq5PlBCEGhDqHVy27CU8gN9ygst81vLMxiDYL2RMw5+PR4xKVJFm6RYkYdCdNHgE
+	w01ZeLWKXiv4akFFJbXkObKf2dG1PHsJtXEEPNJolElyP6sQBvy3WkjKpz2atRD1
+	gy3+kOt3//0FgDEUvMUtbgoTkPOByWxjvsv7XkgHWMNuWeRERyWDi30CO12ayDZV
+	P4HutvQ4BcnASck0BQKJBRo/HLvJwFds3tmfiSKCkj8Oc8mvaoRo7QraVcHbFm3C
+	MAY2dYbfVo+itMk9GnERsFrXTmP5LXLK9jw==
+X-ME-Sender: <xms:VnqKaXeCSxQMK4iCVonMDdTmBr2lYCkhHBAh8tq2sVLvqN4XgnH9_A>
+    <xme:VnqKaUpu46ShEoCaig_iYSSsvE-lE2Ykz24U8EmxqF8C3dhNuZ4rRQebA6qr7QNE_
+    mPzB-M2nIm870AiUqQsfCsvwAjZ7wNWbAB5SYoD_iblJYZeIYTS-g>
+X-ME-Received: <xmr:VnqKad55opZbBibCeBppnFHPUaLq5ao1DuEvPmpnNsIHKJC8FfRiHF99h39L3nwSm3HHllgFm-tiMs4MDtGN8f4xntaVxxdj0g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleekvdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjihhmrdgt
+    rhhomhhivgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:VnqKaSrbHeLtK1kt5sCpPr_yQNfDALXDF43_akb9GZ8Ywno1DiJTbQ>
+    <xmx:VnqKaXiIt_otL7Z30Y-wocGwKT2J-8PuSAx0kKOSk1XhCjzh0CznDw>
+    <xmx:VnqKaUJs8o2bDATxCu5kim7lU5zklQ9RLk7az5oT5W3pnxk8ixBBmQ>
+    <xmx:VnqKafBtJrRjqPHcq3gNjGonZ9T9qyKwz0Ib_s0-NAUHyMQAUltRfw>
+    <xmx:VnqKaQoZxHvqeuATLeaiyKWR5eTcDgGR-lgXpM9qYIb9YoXyZUI3eCXH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Feb 2026 19:22:46 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: jim.cromie@gmail.com
+Cc: git@vger.kernel.org
+Subject: Re: --suppress-* options error out, apparently passing to
+ format-patch too.
+In-Reply-To: <CAJfuBxwJ_=4mh4gBd3Y98rVRWNZ=xyJAiDxMXb+2TEn6uJM_6g@mail.gmail.com>
+	(jim cromie's message of "Mon, 9 Feb 2026 16:42:52 -0700")
+References: <CAJfuBxwJ_=4mh4gBd3Y98rVRWNZ=xyJAiDxMXb+2TEn6uJM_6g@mail.gmail.com>
+Date: Mon, 09 Feb 2026 16:22:44 -0800
+Message-ID: <xmqq7bsl30rv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: jim.cromie@gmail.com
-Date: Mon, 9 Feb 2026 16:42:52 -0700
-X-Gm-Features: AZwV_QgYShoJVW3Gyy58xMVHJWlj9CcfP7Y8ZaY-3qmfYKFcYHw1n0CWRS6uWeU
-Message-ID: <CAJfuBxwJ_=4mh4gBd3Y98rVRWNZ=xyJAiDxMXb+2TEn6uJM_6g@mail.gmail.com>
-Subject: --suppress-* options error out, apparently passing to format-patch too.
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-[jimc@godzilla wk-test]$ git send-email --to=$trybot --no-to
---suppress-to --no-cc --dry-run
-0001-dyndbg-fix-NULL-ptr-on-i386-due-to-section-alignment.patch
-fatal: unrecognized argument: --suppress-to
-format-patch -o /tmp/tXB5tLINzc --suppress-to: command returned error: 128
-[jimc@godzilla wk-test]$ git send-email --to=$trybot --no-to
---suppress-to=all --no-cc --dry-run
-0001-dyndbg-fix-NULL-ptr-on-i386-due-to-section-alignment.patch
-fatal: unrecognized argument: --suppress-to=all
-format-patch -o /tmp/Y47eIqlSDG --suppress-to=all: command returned error: 128
+jim.cromie@gmail.com writes:
 
---no-to --no-cc also doesnt work (as Id expect), it still wants to cc
-to one given in patch-file.
+> [jimc@godzilla wk-test]$ git send-email --to=$trybot --no-to
+> --suppress-to --no-cc --dry-run
+> 0001-dyndbg-fix-NULL-ptr-on-i386-due-to-section-alignment.patch
+> fatal: unrecognized argument: --suppress-to
+> format-patch -o /tmp/tXB5tLINzc --suppress-to: command returned error: 128
+> [jimc@godzilla wk-test]$ git send-email --to=$trybot --no-to
+> --suppress-to=all --no-cc --dry-run
+> 0001-dyndbg-fix-NULL-ptr-on-i386-due-to-section-alignment.patch
+> fatal: unrecognized argument: --suppress-to=all
+> format-patch -o /tmp/Y47eIqlSDG --suppress-to=all: command returned error: 128
+>
+> --no-to --no-cc also doesnt work (as Id expect), it still wants to cc
+> to one given in patch-file.
+
+My findings from a quick read of the send-email script:
+
+ * There are --suppress-cc and --suppress-from but there is no
+   --suppress-to option at all.
+
+ * There are --no-cc and --no-to but they suppress cc and to
+   addresses from the command line (and probably from the
+   configuration); addresses a specific patch file lists to be sent
+   are not affected.
+
+Documentation updates might be needed.
