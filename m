@@ -1,144 +1,237 @@
-Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA4F301717
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BFF3203B0
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770750609; cv=none; b=Nq813MTnhaTpl1YkH71l+ZJO4Bx2X3gxUr18raOZAphCPMFzkmwJfMlJ+LPiuOKh3xODBrPjI2GkXe+1LwXZyLys4iFZzhOW1f7fp7h4Olx5TEyb3WGABmipe1dC3Tgzbd0BU7WOu1rQlsMhJNV+62lsBr9IaDSBIt/8+0txLS0=
+	t=1770751684; cv=none; b=NKlvDwfZcF3kiM0W33POHe0ACZMps+dcswKZ+xcDBoyN2jPJu4Z9BItnW6pzkYuTUdV0Ze7J5Va65bjtdcSOdU8zt/dm2erY/LcWYjFII6DAl8hjJ3lm6jCbbivWuP6kKkP8TkZBpEqXr6CdNwiYt2AJ3yqigqGmZ2wRraTXZSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770750609; c=relaxed/simple;
-	bh=RySzR4G5tRnIBHn2D/S19f+v9zvsLUVxbj2lQLf/y8o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fg+QcDbBVy+Ry0Aig3h84HunJMI3l0NbZh7OfWD7juwZlnfb/7gRfzDH8iuV1h4PEqDku1bw1gNw4TOqac1xP9vvhH0jv4UorHE1rl0Btc4/2yP6DlzuT2aRlcWGxHhpxDTr9nl/Vju88DyvRz/pYbeZUepCiRcdjGqKIfTL8Vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=m+1UMFkc; arc=none smtp.client-ip=212.159.14.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1770751684; c=relaxed/simple;
+	bh=vpbqIvy5My/2SOavwewws1qX+1n4BjOYYJkJ3SPgDsc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Gy6WBArZBNklFopGOE2FYhajbMUEbeT9tBTcMTSlxdnIWlSauqZ4qU57HPnUVz3nKVDume1IER6Qk3jSLCHfLCV5KiO9oJVu/LW0vAoCP3l5aRbaYtcS20Lexxx1gLSO7cOCcQZ8Vtb3CcUlRu+e3Zmz7tNJcsPY7Nr8PRGK8oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ofJk5TeU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TjBfpVeo; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="m+1UMFkc"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id pt4ZvUbUq9Rfhpt4avJD72; Tue, 10 Feb 2026 19:06:57 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1770750417; bh=XPBPt/oZNhAUtlDSh+5MRD4qVCMnZHUfmY3NN3/iNUc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=m+1UMFkcqpMTmg6jITfFk1zyDGP01KlaHzW7ZoHPoGpYx2oyOvanpoCeWCtAzmfD2
-	 DJfMDfJKByyn1oQOPAMUD9fwP4xO/sWcXaRUHWH1oSiGGXReA88ayN5HjufCg83jEQ
-	 vkXXylYb6RbwqaTE+dBrp1a7LNrhhsbNFjNO0gd+d+dNR/au5DNnqqhlBjIYKE4izm
-	 KzH71uUmDIEyxxNzLsqIE8ZaCYdAzHe3niVBxIG184PXFcm1uADfnF0fwDzlvT7KyQ
-	 yaGAbyBmCOoqQtCZSrUJl8bd4pBrlnNhNyuPiG9KKZTaxZ9mT0slOuu2ANJuW0WWcN
-	 /tYn+Zars70HQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=S5R6w5sP c=1 sm=1 tr=0 ts=698b81d1
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=746zZOYYsPCTJzl4cS0A:9 a=QEXdDO2ut3YA:10
- a=P9geR6_CPVCz1rZyWMZD:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <60d1c37d-518a-47af-a823-6e6c173d84df@ramsayjones.plus.com>
-Date: Tue, 10 Feb 2026 19:06:55 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ofJk5TeU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TjBfpVeo"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 911B21D000F0;
+	Tue, 10 Feb 2026 14:28:01 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 10 Feb 2026 14:28:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770751681; x=1770838081; bh=ub+QMUUAvg
+	Rrck/jUBo0x/ryQb0Z3nS4KP3BtFoeJ1Y=; b=ofJk5TeUC+s8SXVqj8tZ8zsRQI
+	SuLOw9lNITzRHTOGeisAQig4FINMYiSJTYWB+3teNUy9O9Tl/3OIbuhyx5LR4gHD
+	a7x6rBH1gF9mobTw986Abfah1sEwgIc5sTALALXSu3JjGL1MkegkuV5FbvnEH5/H
+	CLgysQfkeRtB3aI9nO/f2ymS1EFVZUpuE4sDlizlSazDUu0o0FAfxCwACSXNmoCR
+	brOJui/AjDBegzUT0AfovWNz37ZvQJ77k/HS1vvb5U0kGvG0NNvMKH7mw4Jq/85p
+	Mm1m/8YB6KbfNOvu3ozYz5NHg+DXjNZMVNJl3oSggVVao5g/2gk2JkwWsfhg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770751681; x=1770838081; bh=ub+QMUUAvgRrck/jUBo0x/ryQb0Z3nS4KP3
+	BtFoeJ1Y=; b=TjBfpVeo9BPYPRx7BGtsuiRwBIGWSWknFNnj5VjnA53sSRcf7r/
+	JkcS49FQ5tobaCl5PHo4YonFdy/N2den+BpU9vimk4qgf274OKNHQhGDmDL5AEfP
+	VQfOwlSZS+eWe9LyFT06QPt+ZDsvpe8EnzhHhpz4xSsgLkDlDWw1099c1CbkFYQj
+	JCkg5LfM74UL90N82eNL8xygdPCXg9H+f1Rw7fn183hSuTKx02YQN0zygpzvMRhZ
+	N1lOWTgLt6r7FMRYGg1rDfX0oRsALlETW32JCbXHbsKAGJo5542an5AAwsxBhJdK
+	iRbGCZGsOHlTkWwf4Z+9j1m/U9IrMS5BU6A==
+X-ME-Sender: <xms:wYaLabGhHaGCxx8rAnjXqYGVrm4QrpW4B8NEncPcD08byd6qn2Ju3g>
+    <xme:wYaLacAfgL2CbM6Y6f0naY2mBUtNJ75YT3Y_HeHoIZR-RgSUc00Fb1XDuXxb3yjdD
+    X7mO8cTPSjFVveNGoVLfYUfYcXtSMhr2bEqDrSeXTgR9wVKjLEqCw>
+X-ME-Received: <xmr:wYaLaW9f19nTMJLMS4KeR5monhC1qz3EOarjcrWN5MHTShIhCQWIqB5UgCxXegI-ZzB0kZXdXKwjiJO84F-vSP-lo2nD3nqdyw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddthedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhprghgvgdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgv
+    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnkhhnohgslhgvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
+    rdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:wYaLaQDMsmDdwn6ylsSjdXXJLStro7SZRlqk-J0dwkkB4T7bZOBxDg>
+    <xmx:wYaLaTSr3kWn9399LXT5bJrabMIIJlnsnOnQMqiYF0C3gdZ5TlCytA>
+    <xmx:wYaLafu7v0ic7nYBYfK_mRGjoykWFbudmH9Dn09Ym87OsV5eH6_R9w>
+    <xmx:wYaLaX0C8z_Tqx7Ra4RwqvY96k587EuUHp_nOmzUJxOrAfdVeewgMQ>
+    <xmx:wYaLaYDPAF3Y_YE6Jm4mR52Bwc5ZS-Q5mZSL2LvNKUbejyMxXhqnIuqc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Feb 2026 14:28:00 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jonatan Holmgren <jonatan@jontes.page>
+Cc: git@vger.kernel.org,  peff@peff.net,  "D . Ben Knoble"
+ <benknoble@gmail.com>,  "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 1/2] help: use list_aliases() for alias listing and
+ lookup
+In-Reply-To: <20260210183110.1151072-2-jonatan@jontes.page> (Jonatan
+	Holmgren's message of "Tue, 10 Feb 2026 19:31:09 +0100")
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+	<20260210183110.1151072-1-jonatan@jontes.page>
+	<20260210183110.1151072-2-jonatan@jontes.page>
+Date: Tue, 10 Feb 2026 11:27:59 -0800
+Message-ID: <xmqq3438z9ds.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: What's cooking in git.git (Feb 2026, #03)
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq7bsob0wo.fsf@gitster.g> <aYmleK3kGqzLXyJe@pks.im>
- <c29e0c1d-337c-4411-8d52-07c9155e8abe@ramsayjones.plus.com>
- <aYsyBPZfDHMnYy5s@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <aYsyBPZfDHMnYy5s@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfFA/JKVjzB7NN1y14tYxOONHyOtSDfAz5ENW5lLUfVmHWC2bnDptPrcsDlIwtQoqfEz1I4HghqbJIWL5MF0shC6LsCT0lhnW/M0wP27wfknN5B5mTQGU
- 8do+QlbGwK67KkTyy8mJpTUMBTIttYM0eDKKOLMiKR9MTeR/lkAOKGzzvszaQ8cDioAuL2wpcaJwg8cYHXg6KsvWtNI4grscKO8=
+Content-Type: text/plain
 
+Jonatan Holmgren <jonatan@jontes.page> writes:
 
+> help.c has its own get_alias() config callback that duplicates the
+> parsing logic in alias.c. Consolidate by teaching list_aliases() to
+> also store the alias values (via the string_list util field), then
+> use it in list_all_cmds_help_aliases() instead of the private
+> callback.
+>
+> While at it, switch git_unknown_cmd_config() from skip_prefix() to
+> parse_config_key() for alias parsing, which properly handles the
+> config key structure and prepares for multi-level alias config keys
+> in a subsequent commit.
+>
+> No functional change intended.
+>
+> Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
+> ---
+>  alias.c |  4 +++-
+>  help.c  | 26 ++++++++------------------
+>  2 files changed, 11 insertions(+), 19 deletions(-)
+>
+> diff --git a/alias.c b/alias.c
+> index 1a1a141a0a..c66a6095bb 100644
+> --- a/alias.c
+> +++ b/alias.c
+> @@ -29,7 +29,9 @@ static int config_alias_cb(const char *key, const char *value,
+>  						 key, value);
+>  		}
+>  	} else if (data->list) {
+> -		string_list_append(data->list, p);
+> +		if (value)
+> +			string_list_append(data->list, p)->util =
+> +				xstrdup(value);
+>  	}
 
-On 10/02/2026 1:26 pm, Patrick Steinhardt wrote:
-> On Mon, Feb 09, 2026 at 07:41:30PM +0000, Ramsay Jones wrote:
->> On 09/02/2026 9:14 am, Patrick Steinhardt wrote:
->>> On Sat, Feb 07, 2026 at 03:15:51PM -0800, Junio C Hamano wrote:
->> [snip]
+If !value, the original still added p to data->list, but the updated
+code discards p when value is not there.  Is that an intended change?
 
->>
->> Note that on cygwin I don't get the warning and the number of build targets
->> is 693, rather than 694 (I don't know if that's relevant). Also the version
->> of meson on linux is 1.3.2, but on cygwin is 1.5.2 (so, I would have thought
->> that the deprecation warning would also appear on cygwin! ;) ).
-> 
-> If I remember correctly this particular deprecation was rolled back
-> eventually. *goes double checking* Yup, it's been deprecated in Meson
-> 0.64.0, but that deprecation has been rolled back in 0c802d260 (remove
-> deprecation warning for `configure_file` kwarg 'copy', 2024-05-24),
-> released as part of Meson 1.5.0.
+If not,
 
-Ah, OK, that explains it. :)
+	} else if (data->list) {
+		struct string_list_item *item;
 
-> So I'm not sure whether this really needs addressing. We _could_ make
-> this conditional and use `fs.copyfile()` on Meson newer or equal to
-> 0.63.0 and older than 1.5.0. But whether that's worth it... dunno.
-> Probably not.
+                item = string_list_append(data->list, p);
+		if (value)
+			item->util = xstrdup(value);
+	}
 
-Yep, this is not worth spending any more time on.
+perhaps.
 
->> The make and meson builds appear very similar, although some paths and version
->> numbers differ:
->>
->>   $ diff build/subprojects/git-gui/git-gui git-gui/git-gui
->>   1c1
->>   < #!/usr/bin/sh
->>   ---
->>   > #!/bin/sh
->>   6c6
->>   < 	echo 'git-gui version 0.21.GITGUI'; \
->>   ---
->>   > 	echo 'git-gui version 0.21.0.257.g1a729'; \
->>   10c10
->>   <  exec '/usr/bin/wish' "$argv0" -- "$@"
->>   ---
->>   >  exec 'wish' "$argv0" -- "$@"
->>   12c12
->>   < set appvers {0.21.GITGUI}
->>   ---
->>   > set appvers {0.21.0.257.g1a729}
->>   378c378
->>   < set _shellpath {/usr/bin/sh}
->>   ---
->>   > set _shellpath {/bin/sh}
->>   $ 
-> 
-> I guess the /bin/sh thing is something I'll want to address so that we
-> prefer "/bin/sh" over "/usr/bin/sh". We did the same fix in Git itself
-> eventually. The wish shell feels sensible though, I don't think we need
-> to fix that part.
-> 
-> The version thing is actually a bug. The problem is that we have started
-> to set GIT_CEILING_DIRECTORIES, but we set it to the directory of
-> git-gui itself. That of course works as long as git-gui is compiled
-> standalone, but doesn't work anymore in case git-gui is embedded as a
-> subproject.
-> 
-> So why does it work for our Makefile? That's because we define the
-> SOURCE_DIR as ".", and as a result we define the ceiling directory as
-> "./..". And that seems to not restrict our discovery process. I don't
-> really know why that is, to be honest.
-> 
-> I have created [1] to address these issues. Thanks for testing!
+> -static int get_alias(const char *var, const char *value,
+> -		     const struct config_context *ctx UNUSED, void *data)
+> -{
+> -	struct string_list *list = data;
+> -
+> -	if (skip_prefix(var, "alias.", &var)) {
+> -		if (!value)
+> -			return config_error_nonbool(var);
+> -		string_list_append(list, var)->util = xstrdup(value);
+> -	}
+> -
+> -	return 0;
+> -}
+> -
 
-OK, thanks for taking the time to look into this (and good to know that
-it wasn't a waste of your time!).
+A value-less 
 
-Thanks.
+	[alias]
+		foo
 
-ATB,
-Ramsay Jones
+used to get an configuuration error with a friendly message from
+help.c:get_alias(), which was removed.  The config_alias_cb() called
+by alias.c:list_aliases() either silently ignores foo altogether
+(the posted patch) or creates an entry for 'foo' but leaves its
+expansion to NULL (the above "silent ignore fix").  Either way,
+there needs some new code to compensate for the loss of the error
+detection somehow.
 
-> [1]: https://github.com/j6t/git-gui/pull/31
+> @@ -501,7 +488,7 @@ static void list_all_cmds_help_aliases(int longest)
+>  	struct cmdname_help *aliases;
+>  	int i;
+>  
+> -	repo_config(the_repository, get_alias, &alias_list);
+> +	list_aliases(&alias_list);
+>  	string_list_sort(&alias_list);
+>  
+>  	for (i = 0; i < alias_list.nr; i++) {
+
+OK.
+
+> @@ -586,7 +573,8 @@ static int git_unknown_cmd_config(const char *var, const char *value,
+>  				  void *cb)
+>  {
+>  	struct help_unknown_cmd_config *cfg = cb;
+> -	const char *p;
+> +	const char *subsection, *key;
+> +	size_t subsection_len;
+>  
+>  	if (!strcmp(var, "help.autocorrect")) {
+>  		int v = parse_autocorrect(value);
+> @@ -601,8 +589,10 @@ static int git_unknown_cmd_config(const char *var, const char *value,
+>  	}
+>  
+>  	/* Also use aliases for command lookup */
+> -	if (skip_prefix(var, "alias.", &p))
+> -		add_cmdname(&cfg->aliases, p, strlen(p));
+> +	if (!parse_config_key(var, "alias", &subsection, &subsection_len, &key)) {
+> +		if (!subsection)
+> +			add_cmdname(&cfg->aliases, key, strlen(key));
+> +	}
+>  
+>  	return 0;
+>  }
+
+Arguably, the last two hunks are about preparing for three-level
+alias.*.command support.
+
+It is a bit unfortunate that with
+
+    [alias "foo"]
+	command = !date
+	bar = !echo bar
+
+in your configuration, 
+
+    $ git foo.command
+    $ git foo.bar
+
+used to invoke the alias 'foo.command' and 'foo.bar' just fine, but
+now with these two preparatory hunks, it no longer is the case and
+they are silently ignored.  With the next patch, 'git foo' starts
+working in place for 'git foo.command', but 'git foo.bar' has become
+forever inaccessible.  I wonder if we want to warn about foo.bar if
+not foo.command, or if it is too much?  It is conceivable that we
+may add variables like alias.*.help so it may not be a great idea to
+warn on anything alias.<subsection>.<key> where <key> is not "command"
+
+Perhaps we can claim that we are fixing a bug that allowed aliases
+with a dot in its name by mistake?  I dunno.  No matter what we
+claim here, some people will be hit by this behaviour change and
+complain about a regression X-<.
+
 
 
