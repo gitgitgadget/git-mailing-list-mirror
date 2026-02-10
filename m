@@ -1,124 +1,141 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F4026E710
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:50:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169D0202F70
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770753056; cv=none; b=JDv5Ye4FzJyGpGda8HkkYypL9IpgQgAEfCEZ1BXX9S6j5L6W0bT6XtiGgoO62yN7FpOBDr+klLasQM4uK59OFhEVGZ72WkxuSVbOLpVFn5PurmkzqJ8FE3Kv5KhqaJZra0XaCP1rGKiHgT/ztBLoLw9GMZ9v5u3RGbVFpjC1BNM=
+	t=1770753425; cv=none; b=a2KrPqhCC9QxKtmWP8Uc0inFFFInayMBkzCmomx/YrrMCeQi7kjJFxmfWX6Oe7BP/0c1XMQccJk6h8OWLdf2a4fMzYkdR+Ct/Dl9Xu7ioPsUxd9lbR69rpUlR4b1reHLX7vefowvFUFFWr+xdGj+mGsuFDiZ8/lvOgoY/XBphp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770753056; c=relaxed/simple;
-	bh=ngaS8GXcsz1r+hy/UfdeLB6aIjnSfeOikgpMVnSmi1o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TONWKkVtIn5WNzn4nVbPQoCXPMHlYoPisGE+P7HBrN2k+ecnHrkwVbNVVFnoOdz6DggSCd1txB9bbi9aA/LrVAcY0FUQaDAO1TLOH3busIhY/CDkpeZXD7eyeBKR0jJXyVhYcAXJCWdYWDTtNzKQVj2Z5MC7q8fbcpcKS1xqXnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uh3Qh2Ck; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w+0g7XPG; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770753425; c=relaxed/simple;
+	bh=pf87GmJ9thZAN1CnCTKeutWU+WsrCRZp6R9QeO21I3k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DiZoBGLdeEyfpyAQm4sXNPXfdVOBxzzyZ05Bm9SPF0TbROZa8ax7Gt+cN4c/h/6+CK2G3srVBxr6Fm2ceMBaAXIl69Hb8SbJFoUft06UOn5R5wl1RyBijdHyR3aE4nqfbICi8HqA53fMrK4kORQ6EPPqCIOLapNmPKAb78Nn1qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MLbfuAkd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nfu64azf; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uh3Qh2Ck";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w+0g7XPG"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4E08B1D00135;
-	Tue, 10 Feb 2026 14:50:54 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 10 Feb 2026 14:50:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770753054; x=1770839454; bh=7U34+9N0gt
-	jDr3KCun1Tj4rhXNsi7avQnoFBKceuNQI=; b=uh3Qh2CkBowHoBo0TVGCKDZuq0
-	50vnG5CQ3QF6PUc6VEEU1Xjgjqo7pDa79nHRPuFB15GCihpQ5KuaBxiWrvO5ltmV
-	anysN8WW9gHR5J6oWoL4i+zgiIo+UlE/YpB+H78uKhBshzqgsjboXOhvXUHgws3l
-	mPuX1I5xFFa/p74GwuNqpNtW8+D2/5mTv402xU2XLWN5J/45C2tfiSza6OcGxQeF
-	J6dKkpieayngC9XipoRXXCM9beavEW3XsipDU9AJQ9Eh16ioeiJ7ij7DO063bxLN
-	DY5+m7MjsxhBQC/WRMN99dhIJix4090cwtLiVIboUr18AIiE5flPotL9uJuQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MLbfuAkd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nfu64azf"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F2C3C7A012E;
+	Tue, 10 Feb 2026 14:57:02 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Tue, 10 Feb 2026 14:57:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770753422;
+	 x=1770839822; bh=w+9k2DTazzoDMR6c+n/qdKWMJxFr4Nbu4uQLL8riCdY=; b=
+	MLbfuAkdyMkS6yNOlpTYDW7Hn4oc/BEnkSqGtImh+LcKWoF9JmGRJ8aOZb0qOgHi
+	5jlX8z9EQYa8AKtbqu9kpDOWhZxoe2UAnsiEIuqe3pKqEV70M94vuwm/9arQY7ce
+	WTXZySpRqAW3XR45gwoOuTJiicyQGYQ+CZilOa0AuHhgGCUDLgwaOsS8f5nqxfuY
+	Oe9bI+0ZjGZP+g3ORYzGUufs1L7FUtrc9C41Tr87HVn/m5kov9f1/BX/s66NsmGJ
+	z7t+lVyfR4z4DwEOCbISUe0h2TH7IGKi7OoZtnow39IoqPyso2jXoXDq/FOIxVsR
+	iVOd6brB/iFMO5qCInMJFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770753054; x=1770839454; bh=7U34+9N0gtjDr3KCun1Tj4rhXNsi7avQnoF
-	BKceuNQI=; b=w+0g7XPGmgaWSeOnT5pn2mUS8PKeCDhtQze2sjqRJnG5oLDrgIc
-	/Uz26bBJNVbBjfPDgU/pMqI2E1DvVd0VXJ5lvym2dBqSl0qqIF/uE2I633wJqlVi
-	L31axhKIOC5O9oQwJFYfe7ljSbe06ezbXatjO0kjDgLtgXS6gQDJVyxuBM3b2ril
-	AmjYBftuWWC9YWlU0E/RMyVb4y5guPzU0d1d4yXMN/cIWcw+uj3AaZHHD5c9ypXV
-	UFOP3ojyq0cpRSVdDmo3VUDt2yWt/x/kqTXhEQheglNsKgFxvKh2wYJ9Z6vcsfd9
-	7fQBLW2K5qhMq2aF+AuKRQ3TkXJV8V39zZA==
-X-ME-Sender: <xms:HoyLae8KTkZ-bbnSl32pA-_e9QvHfrTuw5dB8433TUc6GJe6KlsKtA>
-    <xme:HoyLaVsikMb2mOBnZR8tMKI_Csqm5GIb-Qt3lyBCLZWGyKd2wnwnQD9WtwfduMAhQ
-    EExvmSsPdvqHyQwdK9cjscRiL7DMpyMejPAzpkugL1oxP6AYIZEFw>
-X-ME-Received: <xmr:HoyLaZBwCg4ir_lcTlBY_2N9ZtoEvpb-zbuwyCLhNiQaBL73AjgHQLHjluq3Uj79qRBe4ZsDbODeJjZqXvAJ2SaDL1o0_Ke5_g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtheeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770753422; x=
+	1770839822; bh=w+9k2DTazzoDMR6c+n/qdKWMJxFr4Nbu4uQLL8riCdY=; b=N
+	fu64azfokBx3AXRhZpGiNR3ODD+Ruwi9yc4UqQizQD5n4DQob81L36glrkTq7dwX
+	BiFLVQcxMzqV+iRRMlLKmt2vfHaopitz2SjH+5JA75nSuKuoJMv2RbqDP7nx+1Lt
+	JGZRgKnb5/yvbxVDHzw85ZM8nigXfdrkEGA2dgLRSPzna7w3gkQmal+5zySpNWoA
+	HnVht8JDXpmqJT4X4xGSPCUbXN2uQL7UQJ+hvtD/9vbVAGccuhug1XHl+vaqL4sX
+	urFyw58ogRnXxpqrbXfOVZxUeW8/WtT7E+szgqkgOZKkl0eRJ/07JygCGVh5d78Q
+	cN62WmOJqTENbhuqgoQTw==
+X-ME-Sender: <xms:jo2LaWp8HSr61mXDymvG_zEsnyeAwHoUGaSk49guty8S_c2Z_AYJ9_M>
+    <xme:jo2LacEs37vxQ76deBWmu0ohls7VJ-XGcKFeNN1ESsqjcARWV2PEyAKT_GtC_vH9a
+    6sZ4QeelSjH53GiHdXMvyB-0GBi5qWZAaoBbvDODsVpNYyOmBYYm-g>
+X-ME-Received: <xmr:jo2LaYl8pVR57mChLz0m88M-H7KpCLgrEIk29wAr7rlWkoOwL2H9GWxzPVoQlX3wejD2FfWRUbTY8zgadrr2_GfYskeP8bQ1MVeIeg7nbkLjYbcec9aAHRqZKg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtheekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkohhjihdrnhgrkhgrmhgrrhhusehgrhgvvgdrnhgvthdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:HoyLaVVbc9l3iHY8TamiLN0oGOJJCt_hi-GqQKBFy81a1_Xxi4_x5g>
-    <xmx:HoyLafB2yc_tV-hYdC8fE0AUsIktGM0L-rR78YXTXlHRNdIQe1sVgQ>
-    <xmx:HoyLaQ-SeY0ssm0JG2Mbhmh9rjKFs8K4J3iMldayu1MlWGY0zP4FIQ>
-    <xmx:HoyLaeG9u6UxL6nFtyAqTDnlD0rhZLSTYABY1g8w0fDkuMqJ-emZuQ>
-    <xmx:HoyLaQaKwNhCqLhFhOBHBVXl8OSQxrSmsF20gzMVQvUtVPZK-aFzBnln>
-Feedback-ID: if26b431b:Fastmail
+    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpefhvfevuf
+    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffgge
+    elhfejkefgteelteejhfetieehgeeftdduudffgeejhfektedugefghfeknecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvg
+    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhr
+    tghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:jo2Lafmfbz1U6fYi98DDFcwZe6tkCrwjzLYpwx2ayb8LMRnBupzdAQ>
+    <xmx:jo2LaZtOLkSb2_HYK08CpAGc0yOT_nm7jJG4mrviy99SkWcdIpuuSw>
+    <xmx:jo2LaSk7zI2u_5DdSRK1rLTcLwcqyHIGvI42FeSoQ8p9HrpPlPxVtw>
+    <xmx:jo2LaUsQu2L8Gr4mc60qbM5eSmIu0rNKg1wiAQshfQQwcTjM4Aatsw>
+    <xmx:jo2LaUHymmTymIREg8xRwqfyoEr1LdFustN6H9aluryQk5zzS6EiXc_d>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Feb 2026 14:50:53 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] osxkeychain: define build targets in the top-level
- Makefile.
-In-Reply-To: <pull.2046.git.1770746461307.gitgitgadget@gmail.com> (Koji
-	Nakamaru via GitGitGadget's message of "Tue, 10 Feb 2026 18:01:01
-	+0000")
-References: <pull.2046.git.1770746461307.gitgitgadget@gmail.com>
-Date: Tue, 10 Feb 2026 11:50:52 -0800
-Message-ID: <xmqqpl6cxtr7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 10 Feb 2026 14:57:01 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	ben.knoble@gmail.com
+Subject: [PATCH v2] doc: rerere-options.adoc: link to git-rerere(1)
+Date: Tue, 10 Feb 2026 20:56:49 +0100
+Message-ID: <V2_doc_link_rerere.34f@msgid.xyz>
+X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
+In-Reply-To: <doc_link_rerere.328@msgid.xyz>
+References: <doc_link_rerere.328@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-"Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
->  Makefile                                | 17 +++++++
->  contrib/credential/osxkeychain/Makefile | 65 +++----------------------
->  2 files changed, 23 insertions(+), 59 deletions(-)
+Five commands include these options. Let’s link to the command so that
+the curious user can learn more about what “rerere” is about.
 
-Nice simplification overall.
+It’s also better to consistently refer to things like
+e.g. “git-subcommand(1)” over `git subcommand` or `subcommand`.
 
-> diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
-> index c68445b82d..ddb29f0563 100644
-> --- a/contrib/credential/osxkeychain/Makefile
-> +++ b/contrib/credential/osxkeychain/Makefile
-> @@ -1,66 +1,13 @@
->  # The default target of this Makefile is...
->  all:: git-credential-osxkeychain
->  
-> -include ../../../config.mak.uname
-> --include ../../../config.mak.autogen
-> --include ../../../config.mak
-> +git-credential-osxkeychain:
-> +	cd ../../..; make contrib/credential/osxkeychain/git-credential-osxkeychain
+Also apply the same treatment to git-add(1).
 
-Let's not write "make", but stick to $(MAKE), perhaps like
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-	$(MAKE) -C ../../.. contrib/credential/osxkeychain/$@
+Notes (series):
+    Topic name (applied): kh/doc-rerere-options-xref
+    
+    v2: Same for git-add(1) and expand on the more general point of it all.
 
-> +install:
-> +	cd ../../..; make install-git-credential-osxkeychain
->  
->  clean:
-> -	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
-> +	cd ../../..; make clean-git-credential-osxkeychain
+ Documentation/rerere-options.adoc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Likewise.
+diff --git a/Documentation/rerere-options.adoc b/Documentation/rerere-options.adoc
+index b0b920144a6..4395fe05356 100644
+--- a/Documentation/rerere-options.adoc
++++ b/Documentation/rerere-options.adoc
+@@ -4,6 +4,6 @@
+ 	the current conflict to update the files in the working
+ 	tree, allow it to also update the index with the result of
+ 	resolution.  `--no-rerere-autoupdate` is a good way to
+-	double-check what `rerere` did and catch potential
++	double-check what linkgit:git-rerere[1] did and catch potential
+ 	mismerges, before committing the result to the index with a
+-	separate `git add`.
++	separate linkgit:git-add[1].
+
+Interdiff against v1:
+  diff --git a/Documentation/rerere-options.adoc b/Documentation/rerere-options.adoc
+  index 115882edab1..4395fe05356 100644
+  --- a/Documentation/rerere-options.adoc
+  +++ b/Documentation/rerere-options.adoc
+  @@ -6,4 +6,4 @@
+   	resolution.  `--no-rerere-autoupdate` is a good way to
+   	double-check what linkgit:git-rerere[1] did and catch potential
+   	mismerges, before committing the result to the index with a
+  -	separate `git add`.
+  +	separate linkgit:git-add[1].
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+-- 
+2.53.0.26.g2afa8602a26
+
