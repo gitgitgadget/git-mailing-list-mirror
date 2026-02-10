@@ -1,152 +1,132 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF97738B99C
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114D638B7C6
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:14:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770747124; cv=none; b=N3G9oz0HY4UQiKCLeADSxUad4AO1/rQSi7IsBPjAki/hZ732Q8Pu4Ru73C0suDuSQ1kOGtsmurrHOsTaf1UzdckOqTow2MuQwhOnqQoAvWQuo2zVETlZbTn6MyP3XTJl/nSgW8o/a3Fe+MX8vYjyHG/AZ/8FTCjoLm0yhaPN2pU=
+	t=1770747294; cv=none; b=ll6c0ux0chq4E3DENxl9ur7jPYgsjTFs5NvkGY3mbbYzsLXkVYmY91LeYCs1IXT1BQBSFyjWdQH2I42gnwZ0oZtrrx9nVlBLnE0F8Fj4VDyFv0gGyMqDgWXlt3nr1dvZYRLhR5JMGjMQpquF7LXg7oXVNnyJ/qhbN9DXu+fPvI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770747124; c=relaxed/simple;
-	bh=JsFDE/SZLJ11or9jK1/IVx0l/fFHlHpOVHpY0AjF2zY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DuQg4eerSIeyZp2wBlz4ZrTF4TADd4aCcJIUkI8pXM94/8SQzYHO+Ir5aRPTf/7ri5A0/BRJV0OkzrfNmoSwy+dV6MPrwPpsCYaFNdSsIRFBp64m2a0IB+4Sj/jIQkd1mhO9R7bY4u74xGFhtCSCSEebI4qJ6n+DBcIXDidrewM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hXQyig41; arc=none smtp.client-ip=209.85.219.52
+	s=arc-20240116; t=1770747294; c=relaxed/simple;
+	bh=wd2UAg69Ay1f6fYZ2/mAPs4x1kk8K4zpk6nm2z78u+A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=N6B73NrDZgY+D46b53nquAZM/hKKr10DVKral2Uab+YGR2Puxjp1tvjvoWKZSMAHMvdZyhNZv5a3GgSKDmbdr7RhMLeIC39pS9XPsaTvhqKdroyfnu10ePnH39Maye1vIkq9vMFY61Xk7OZ6gsh2q1kr6/ZSvsmjbCjEJGemU5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bJWgPAHh; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hXQyig41"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-89549b2f538so22791416d6.2
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:12:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bJWgPAHh"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-354a2a7d90fso662767a91.2
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:14:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770747122; x=1771351922; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DrKLBU2OpIRHnL+7iwbKlEs4TBYmpVV8zwbGtpVdB+8=;
-        b=hXQyig41hm91zAJOoDjMlL5nExCa4yuoLfw8WDHDhaIkyxm5rM03I6CMGMeZGxxLBH
-         DBIu2JPhcOY2b+p1WennceI5bW0R+r1eVY/dKV8SZZZs3cL2kg9pnipq0a9LAw7jyiBh
-         cotag2LQT2AuStZxsg6LxKR5OsJZyDVfw3u/opQFRttYiBCjbTdrR8B3kEGKwph2P1bH
-         CJFxgDqrqmu/kYrGI0rNoksgxGiRAvh/ToQS2CN/vS5Kc3k/2ZaSBA9vmJRqRafQcBfo
-         XSOlpa7l+A9v4i9kqHvTDpY/z+KK3cxa45duEc2b2cinGmikTvjB4Xeyk/W0zgYOdWiT
-         wAsA==
+        d=gmail.com; s=20230601; t=1770747292; x=1771352092; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BS2xyitEK/n3Mtka4JcFjG8WJcYTak4U0pb2mHPh6hg=;
+        b=bJWgPAHhMjOWz6uz4qHeSjD0U0fjzQVCMyUDK7vRGWwfjOW/nABjOekuYUa+tHCLhQ
+         Iw+DnjqPli/XjSpWnFqpmr1QAc9UI9maOW1sWyGvaNj3SiVFyelVtq+zO50Uktq9C1XY
+         XVy/qt6wk/8VG6ZE4fnMelmAN8DmGr3uh92Svc/EZ2giy2/ChLopmBusDWTj/urhH6IC
+         aiPkOjmh3CKf65NsFYw5mWmff/mgemf4k3Rvw90cZnfeYJXpta1jqp+67vJ5usXP7mIB
+         L4VJAZFbqXfWKMAfO/CRagcwDmHAGQbgnH3VMv/vdwOs5XrkSUjS2UBiQtrDfBMjLgcx
+         cZGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770747122; x=1771351922;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DrKLBU2OpIRHnL+7iwbKlEs4TBYmpVV8zwbGtpVdB+8=;
-        b=FjHYeDcKpng+EI0R2p0uWhn+NihYFWjBHL6wgtdTt5woiHwkHU0YRmzVUAhzyQS1ld
-         FIouBuY9nlujQImIjVWN0uWX1dDA6JDzCJs4FrZUn7yIPbF5N3lsBH8kjKwmzkbi4haT
-         4TcDYnfLBFyyb7EH/NgyMNdndFicHw+WwG0ezKLAtIxSoLHs2fSlIKdF8CJ3qHmGZQor
-         EeIbKJ547s3w28IoxYOT6VZlk/tdLWezupkdF/UFLAFncENMpCXgufi+erOXyhxklooB
-         kFvUvNAikFOjVLPPUF4SgKi3Jty8VLczHW5Igmvj/8JVsl4klEpRNz7do5U92FoHj3XS
-         mvNw==
-X-Gm-Message-State: AOJu0YyN0Jmd3jD75BvS3A+r1Mi6pntrC6JlHP+eV6yvGhBD6p0CT1RQ
-	8GUee5PDkkCmgETac7Th50ZAOSFzf1I52SBqEOHa1B5Jq3qzqI2kmV6w
-X-Gm-Gg: AZuq6aIesOjbgJfR4eIeWLI2Jk5rV4yexRoOcq1J2FBXVaurqYHP5F1OCC7QFkSQ/ty
-	UJsobBeEScZWImlrB87djEqnqZGuqeJmtFRy2ZyybSCcGGZKacmNiEqv3jpFPJsMxToXOQgrWmI
-	9hbgAMI5FsOSmMrvHDEmkxYNeg1iXsoElmeAMQrRr1PNEPbEakTiGopGCgyBTq8DqKs63ZR6f0a
-	6u/PMTXpvHUm1sf1El02d+Bew7FULKbwJxqSAezQLXSKgGIsfWYJhpYp/QiXYfn88f3xtKXQIhi
-	dYCsoCMe8SYZdDtAMdTBu1yckDdCiKOspwNgq6POPWJQC3+QqhnYg4tDYIp01IjsvORTRctY6mz
-	85oI3qSUoGT1mqcdnOMNlzgjAZMVi0wc+nH6xk4w6Lw8nAjl2m6BtiuhRDZXv44AOCkDhn1uOEL
-	acfiQx8kqwz+5F0C19RqKn2pclVAVXMdLBof3l6qWQux7z+F+a+2aJY5G1o9XbKx8ewChRMA==
-X-Received: by 2002:ad4:5aad:0:b0:894:6d0b:502 with SMTP id 6a1803df08f44-8953cd98884mr246526036d6.59.1770747121750;
-        Tue, 10 Feb 2026 10:12:01 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8953bf3c740sm105186846d6.11.2026.02.10.10.12.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Feb 2026 10:12:01 -0800 (PST)
-Message-ID: <91fb7d01-cc6a-47b5-a23a-45b0fb31134a@gmail.com>
-Date: Tue, 10 Feb 2026 13:12:00 -0500
+        d=1e100.net; s=20230601; t=1770747292; x=1771352092;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=BS2xyitEK/n3Mtka4JcFjG8WJcYTak4U0pb2mHPh6hg=;
+        b=J4GLNxlutuYsjKJEP81bVg5qQ1oBMhoMuGAMYt6/dgj3UwlFHmTthXir+y2bMFFqXI
+         uXdlmGXZ0proPrOAJGqFBCu+LlfWo+qqYZdepvPuroARvgJLaGFQrPX4C0G1RzzOxA+9
+         F6wrN+ilKaUdQEP5EXoIKZDqPx1lcifLe11V3eh14Lg+rNiR4OQW/y2PQOX3lmbDIMu6
+         XqZjgtTRzYNoQB5UXdeboY5Rcmn4mtwhsfc9F+4XocZVz7wPCZmdJX46FjXciY/EpBwn
+         WibJHAzi6gf7id9H9uJ6VMrg2r778fWQsftjBeKocf5dcHqu/bDAnK9nd4gDdf62M7ID
+         WYNw==
+X-Gm-Message-State: AOJu0YyCd75jF7OArrph1tc4r/uzCp0oFunHuMdJZjKQfgke1HzxSkyO
+	NU/JQZYUxByVTY39EdTMbk1pZJhsynNZC0v79PcbpFtfHh35OAVbW9zXjHUQtQ==
+X-Gm-Gg: AZuq6aIr3+ra8vyoWanouvg3X7hirijlcVlfK/DW42wsZyebJS8o/7YrrndBOLZPOPZ
+	qejP5cvwA+dG9epvD4pZ4xdC34aS7t3suOPS+WG7bI3k+hkpKTnxXXOCo6bSYx65w2QaFxzdVtP
+	meWyJhcAgdbB/YGHFz1z1gPmnF/mUBHOAlWtnnVYMYmKRAwZ65JW5cjbMbjSVkNq84lI7Act3m/
+	c/ao9MHaIifYb9Dret7BnCFIc5NpyNs8JL59tryGZP+uOLgQpVXZmncADQiHmWx0n3lI6KtX/YD
+	vxpXHBC25Ihj+FH1hswzhM3bJmF1EmGqfmx1bRF1ipehxz2ptdsvKB7Nkea9fTMWIEXujXv1zPv
+	UpkYc7+1VfrQoFNYy4h60GwBLy5TR3GMl0ANQ6ylVzInE/L6OLjUTs61hg9kwynWrFzGnoRYsvp
+	7TT4inX60sqZweqfNMOxgDFe0ZzoA/FKazqfprgFT693U551+ad1XZlKIjesJbGiUEKfhsqKjCB
+	iTh8vg39suOGO8lK/jzUG5488/mDdJ801dRqgh2M67fCwuygg6OPDaI3d6eHr6/PCoB1vhWDkbt
+	uNB4GVGk
+X-Received: by 2002:a17:90b:240e:b0:356:41c2:897d with SMTP id 98e67ed59e1d1-35641c28a26mr4460780a91.8.1770747292401;
+        Tue, 10 Feb 2026 10:14:52 -0800 (PST)
+Received: from localhost.localdomain ([2409:40e2:100c:822b:c98b:6ad:2fbf:bfff])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3567aeebdf2sm21112a91.8.2026.02.10.10.14.50
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 10 Feb 2026 10:14:51 -0800 (PST)
+From: SoutrikDas <valusoutrik@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	valusoutrik@gmail.com
+Subject: Re: [GSOC PATCH] t7003: modernize path existence checks using test helpers
+Date: Tue, 10 Feb 2026 23:44:45 +0530
+Message-ID: <20260210181445.49380-1-valusoutrik@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqqpl6d4wjh.fsf@gitster.g>
+References: <xmqqpl6d4wjh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] config: allow format_config() to filter
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
- <d9e04240100afb4188d32c5ce784f189f59348b4.1770698579.git.gitgitgadget@gmail.com>
- <xmqqfr791957.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqfr791957.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+> All the checks involving "is-missing" are now stricter than the
+> original, in that they used to allow "dir" to exist as long as it is
+> not a directory, etc., but if we audited the code that leads to
+> these tests can never create a "dir" that is a regular file or
+> something that is not a directory (which *I* did *NOT*, but
+> presumably you have already done so?
 
+At the time of sending the patch v1, I did not do so. Sorry about that.
+Now I ran the test from start to 11, since test 12 was the one with two 
+of those risky changes, ie `! test -d dir` and `! test -d diroh/dir`
 
-On 2/10/2026 12:04 AM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Derrick Stolee <stolee@gmail.com>
->>
->> The format_config() method in builtin/config.c currently only uses
->> git_config_*() methods for parsing. This allows parsing errors to result
->> in die() messages appropriate with keys in the error message.
->>
->> In a future change we will want to use format_config() within 'git
->> config list' to help format the output, including when --type=<X>
->> arguments are provided. When the parsing fails in that case, that
->> key-value pair should be omitted instead of causing a failure across the
->> entire command.
->>
->> This change is formatted in such a way that the if/else-if structure
->> allows the default die_on_error version to appear first and then be
->> followed by the gentle parsing mode immediately afterwards.
->>
->> The only callers right now have die_on_parse set to 1.
-> 
-> Certainly you meant die-on-parse-errors, not unconditionally die
-> when asked to parse ;-).
-> 
-> I wonder if a "bool gently" like everybody else takes would be
-> easier to understand by more developers and readers, though.
+and after doing that I can confirm that there is no non directory dir 
+present before test 12 starts. Neither is there a non directory dir 
+inside `diroh`
 
-'gently' makes a lot more sense.
+This was the output of ls -la 
 
->> +		if (opts->type == TYPE_INT && die_on_parse) {
->>  			strbuf_addf(buf, "%"PRId64,
->>  				    git_config_int64(key_, value_ ? value_ : "", kvi));
->> +		} else if (opts->type == TYPE_INT) {
->> +			int64_t v;
->> +			int ret = git_parse_int64(value_, &v);
->> +
->> +			if (ret)
->> +				return -1;
->> +
->> +			strbuf_addf(buf, "%"PRId64, v);
->> +		}
-> 
-> So, this follows the typical layout that was described in the
-> proposed log message.  I wonder if it is too much to break the set
-> of helper functions further down so that this part of the caller can
-> say something like:
-> 
-> 	switch (opts->type) {
-> 	case TYPE_INT:
-> 		format_config_int(buf, key_, value_, kvi, gently);
-> 		break;
-> 
-> and similar case arms for other types?
+drwxr-xr-x  14 soutrik  staff  448 10 Feb 23:16 .
+drwxr-xr-x   4 soutrik  staff  128 10 Feb 23:14 ..
+drwxr-xr-x@ 14 soutrik  staff  448 10 Feb 23:16 .git
+-rw-r--r--   1 soutrik  staff    2 10 Feb 23:15 A.t
+-rw-r--r--   1 soutrik  staff    2 10 Feb 23:15 B.t
+-rw-r--r--@  1 soutrik  staff  128 10 Feb 23:16 backup-refs
+-rw-r--r--@  1 soutrik  staff    2 10 Feb 23:15 C.t
+drwxr-xr-x@  3 soutrik  staff   96 10 Feb 23:16 diroh
+-rw-r--r--@  1 soutrik  staff    2 10 Feb 23:16 doh
+drwxr-xr-x   4 soutrik  staff  128 10 Feb 23:15 drepo
+drwxr-xr-x@  6 soutrik  staff  192 10 Feb 23:16 drepo-tree
+-rw-r--r--@  1 soutrik  staff    2 10 Feb 23:15 E.t
+-rw-r--r--   1 soutrik  staff    2 10 Feb 23:15 G.t
+-rw-r--r--   1 soutrik  staff    2 10 Feb 23:15 H.t
 
-I had a similar feeling that such a refactor would be necessary.
+And this was the ls -la in the `diroh` directory
 
-I didn't want to go through that careful work if it wasn't
-justified by positive reactions to the RFC. Thanks for calling it
-out, and I'll definitely put in that effort if we find this worth
-a v2.
+drwxr-xr-x@  3 soutrik  staff   96 10 Feb 23:16 .
+drwxr-xr-x  14 soutrik  staff  448 10 Feb 23:16 ..
+-rw-r--r--@  1 soutrik  staff    6 10 Feb 23:16 D.t
 
-Thanks,
--Stolee
+One thing is that I am not sure if what I did is ... the correct way
+to test this kind of thing... I just copy pasted all the test commands 
+into a big .sh file , did a git init -b main in a temp folder 
+and ran the .sh file from there. And then observed the changes.
+That big .sh file : https://pastebin.com/9QQD7qYA
 
+> ---if so that is worth noting in
+> the proposed log message), then "test ! -d dir" that is rewritten to
+> "test_path_is_missing dir" is actually a _better_ test.
 
+I am sending the v2 patch after this message. Should I have just put 
+this whole thing into the v2 patch cover mail ? 
+
+Best,
+Soutrik
