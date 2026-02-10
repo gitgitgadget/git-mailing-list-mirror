@@ -1,150 +1,194 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0BC1D516C
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 13:02:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770728572; cv=pass; b=ZGCfqP83NqcTkLaSVB+yZ6yw7dFY0eSGvyf1Fn/G3HX1hAFpvviVPt0ljy8PVy8HSJLQ5JUXBXE5pGbDatyekr8F74CGlZz5wzPhHsRy3+XMB+ipjjdPOQvGTaR1kqwb4sPCGaM2tMPk+TA39YJS/jF0513HWvOzSGFWb8emtyM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770728572; c=relaxed/simple;
-	bh=0mJQ+RJ0lq8b9mUGwMnV2x40Q5Hvg6n+eWfMR1gMK4I=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kJ87xw8TFVQRZKYVfPGBPjiqu4AZZX8Zp/w2P58KDTUKr1w5IT0vfWxY/I+zDjA3K5h8uNnzEKOjYonwzpl2DGjrDAtTH0vwDIfgX195uggYF3JqNBZPSH8DvFGiE5adPy5IvwcSSnvlFGi6tDYMzA8Mo7PSb9UwSHL7mGCTCBs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EeUCEkfp; arc=pass smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795C0207A32
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 13:26:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770730001; cv=none; b=ClT/nBuHg2EXybuTH4Ngwt0nTN9uLcw3luHsw3Avvl2YAKBIKZrE1zXsso1Jh/NCcwvtJDRNQUJZV2Jt6TOx9EZEMN5B0Xsvi2l8WbqXtLFk16IjPj+KFSfXhN2cElra5YBEXSbPdXvCNeLQfgfqCZMiUykMcvjnmRo8oNc9HFw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770730001; c=relaxed/simple;
+	bh=ZPlwIkODgglpLZRVosUJb4yXACLFH5/XqB5OQZIyhAQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qjL861OTzF9RSMdEpHYm3HEA/Gw8szHoMsrtgfZobQnGlxZL9qqqIDmtHeJebJXYbUx/ovjkCa98qyxEgMNWJJxdZ+HEj0h1TrG09dMN4i3VCT2W0tZMCWP1s/GEIpAuJoyP9CW+n34lqThC6TFBFH0v6Q+cNPnn6vuEu7vybjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RBmVK5zC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y/0XBKNy; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EeUCEkfp"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-56641200d6eso3240638e0c.0
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 05:02:51 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770728570; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Ub/mqWjXXWSRUb5VoqOPxCke5sgE1FKxS1bk1Tz2TAzFFf9IlLI8N0EUaOF22OQrkL
-         aQpzlmphi3VjeXyUpSuB5SeHqYNW3CQR+0jqIQvax3I0TffqNqJdfgzWS39lsBDb4Lcy
-         ZOv8w1wJ0dFCeGYBagxQl5Aw6E3M04toz81/PWm7hwMrt0rDKaKup0XgtVOYrGFIFQoU
-         C2l3bmdiQhP9obyzDA+A+tzLhDlhu36zMaKk3ciVt4fdUehWw20n80TURZHaP5EJXqdF
-         r7D6ls5UR/Zy6Z2PH8HtWWlV0Oi8fwWLtEx/lj7z6n4bi+W2paxABOh70UPa2flfw1TP
-         y14g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=3+sEpYVEdu40qNWBrhWomfvW/3zPA4CZCkB4pt9DED8=;
-        fh=E0rgsdqXW6tCaZb2Xj3mvK8a2j5Y/u/Mu4zAITXf9ts=;
-        b=PlKJKaOu2qr9XDbVkFQG2apEFUYK4OhEPejcQJpOjIMfM4Yy+0p/A2gmGDxj8EMorc
-         kCYTSsj/UH9JPMuVa13rMjSDITA+mMxVx/FBfeyahZOJ4+i8SQ0jRb9mpbxmsV6dvmaz
-         kJd3vsWilIU9jhjh9qe0x+PciNDWda33J4f9f9sP64wQDxDKJWwi6VelcrhesnimIls3
-         NeSHEeup6nSPluvtRDjdM3qCvaKuia+x4jfC45RbEwAog1k4eJI4mxJ2YXujSXkmZfO2
-         rltNQ8xb6PRL83dK3sf7t8f09mE7QSvXjQlrZagTSI0yeYiZeaDCts8iOGFV4WdHmGd1
-         iEHA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770728570; x=1771333370; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3+sEpYVEdu40qNWBrhWomfvW/3zPA4CZCkB4pt9DED8=;
-        b=EeUCEkfp3ZoqShAjpVnnZjGtv1KrrKbEkvwKEgR7KtCfA6cpa48eru6+eV2jlad9Zm
-         SVrKFzGQ/dPWA9NuIbuzHQzYwPWlzscste2cn3dZfz/rvil9XH4PPoANjUqAiORbr3eT
-         /zw2uhTB2o9ia+gkApTCi1sRy5ipik6UfO7zfhyaxHgbi8Rx0q3/u3ZwgMkyPy8kI69i
-         P04dJobvrOjNCMYdHGVlTrJ3A+nsfD/coyHlAtkItF8KSpUts7OJUgAQr4vaMZW84V62
-         PKyVC26H5vgHD+t62IKJ03kNa1iMJfY996/rdTQrgpg+q+XeU7PJmdYNAHbQ/PpLt80z
-         43bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770728570; x=1771333370;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3+sEpYVEdu40qNWBrhWomfvW/3zPA4CZCkB4pt9DED8=;
-        b=EhtZaQPvWmhS569Ppt6ZUi/lInGZhwbS3HCeH+8vu12mwgelGA0UPI977LeHG/33K2
-         KtdTpyzsddI5W7NDp/lMDuDRWqbqCw5g+tas0OM8pMsGwwVH/DNp/5eIbR77+DGhAQg+
-         KB13Uax/RlYuUauESNAGIlcbt+E9zPCycQCV9dqydlJm8/qU4z+188gDnDy6SsmRtdyU
-         TJTMsVQPZl3nhQQz5Y1OrHsv3m/YwgRmm7vnLn30G73DixhretR8vf9FHpo7jDjrkREF
-         hQ+5HUgWityRozLzWw9xth22nfTSA47ShqlWyrCRgwTOJweYI0bgg5GIYR7froinxtzi
-         SoVg==
-X-Gm-Message-State: AOJu0YxOjt5ueSoVCnCnzQAieZECnEZdxqBl38EDyhOWGV9nnoOFHcNR
-	S3QHA/bquUy8K8tqXQQosLD4S4XqtY4RwrHQ8bl9YWEG2gUiL49IGX3JAJyVGmbjJpA0+jFfm1p
-	CIi3jRKH7MOwsbJb+++Qx4K03jlFuluc=
-X-Gm-Gg: AZuq6aJMCEb+v9FvI8BJMLXiItYEtye+EzsdhmmC+Uf6J8e07SnIQUJsaQV0LHTjvc5
-	iaTf+Bawqvm1msV7ipVfkD95aKUyM+nuceB/LYGHo6QLNWrbWIFUz3F0WJoxtKFtm+BbZAwDczt
-	Ks7fqr+U87skVve/AQ3Y7IlgQWILRKgWpOYdi5KGdiGem+K7IpKU6Lm9vD5ISMMg4rW8ckbrpIE
-	8DBw1oxeRqBR/9skr+lX1LAooQvWeI35Uci2/a5NqM06uxJSwU1StnSEi+xf4D09iMHLaUw80SR
-	vvwKCmjQWWvov0lDK1EALK8StSwAGjYttaWEBjdyUA==
-X-Received: by 2002:a05:6122:3d03:b0:567:44ba:bd8a with SMTP id
- 71dfb90a1353d-56744baf19fmr166500e0c.9.1770728570026; Tue, 10 Feb 2026
- 05:02:50 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Feb 2026 05:02:49 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Feb 2026 05:02:49 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqtsvp4wxv.fsf@gitster.g>
-References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
- <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com> <xmqqtsvp4wxv.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RBmVK5zC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y/0XBKNy"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A170CEC05F3;
+	Tue, 10 Feb 2026 08:26:38 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 10 Feb 2026 08:26:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1770729998; x=1770816398; bh=aqsKk6TTMo
+	sGqUyXNk4NqjEWeDVDqDLWrjMvMXV8wOI=; b=RBmVK5zCK+8h07mcl0EyHPmWZD
+	JMe8ftlDBtS4b0QgMwstEvr4IIUR6kUX4voBVooBLBlGqZQE4zIJYQU3pftMMnjG
+	SPDPiZOFdGpQqnYuVzBpe8wAcG8YTqIdBUtsGLOkTi/6YGlJ5aJ2Y1Y11ddlP2xx
+	zwcWQdRiFUZHFsr1l/4aihGEYwglgbdohp7d3iv5R+PQ0FGpgOp6zbY8DlrCxCE3
+	f4steTuj2KPl664VONI0EL0R9cdiPB/7KX+FTZ7Z/nDakcQB84pSAarC2g8MgPgr
+	zuZGQT/ulWvIDwpVtH+EuWO+83vweLwFpBe50UxtUHcF/lkxIczw3cBkrVAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770729998; x=1770816398; bh=aqsKk6TTMosGqUyXNk4NqjEWeDVDqDLWrjM
+	vMXV8wOI=; b=Y/0XBKNyTqcTcyGg7Fsmt4hR2Rqv07hCHBhjocrvmKt2k0vRrXj
+	KsxBV+FKB6ICr/bpO88lyQ8xk4BVIzXq9Q4ZZDnbK1tN4Ymngq2fIddCGnCGQE2v
+	I0gzth5WqxFLNbYQPFkaC/kZ46Uk4UeqveVdhBREMVShUMHVHe1iBTux8eb4WFgQ
+	4ONaxcQ6tvGO/8LnGnrRqN7qANRHOyyMwasD2s9KYJn6S82K7FT5AkpoluPHrN+U
+	yyq6JdyKK91Hxl0ptnhZCCW9WymuZAZf9BU4lrajeqUStjV5Z3AWAtCSXgVajy4R
+	Z0/gNzp4xapIKrZ2bN5A42jCsfUgnfEpmPQ==
+X-ME-Sender: <xms:DjKLaRxDXlD8Om3Zs5qkZxkeaWD78NaBb7bVFYqAXvE00d11F7uk2g>
+    <xme:DjKLaZA-CPeknzkCWoEmoSulxDqsbJHdW12oagasoBN0x9v3PeDtfZ0gEj6QKubXa
+    bvp2bchAynKFAbsCof0gik9y91yaTQtTWRZUq7RokL4Z2Z1r0EpIg>
+X-ME-Received: <xmr:DjKLaeZ-2Y2EnSZ79olU1FVTFsTudRokQ2CTKBNjUwSRyeeGn6cHwP3VD22HQIcnnzvrSSRne5ss88YWs45wMjv-V6nsry8wJt4sf4_sGmY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleeljeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    ephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfehtefgveelhfeuueevuedvnecu
+    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:DjKLaRgtN0gazx1xMtcp9KyFtCo3uwxRYy0vTjbRWwygXhbkeNA69Q>
+    <xmx:DjKLaQ7N9CE-3UG6VoOl5TrVx54aqVNZvs7J7r8vILi9ZHM2vfWGHQ>
+    <xmx:DjKLaY6jjPVXrbFgF10e_nnUOvXluqjo9APwk5JDPg0gCoe3avIsrQ>
+    <xmx:DjKLaUdFpUDH8Q5aQYzfIUrd-lSEBLzb6dp1hE5g0ffyUrqi8VDHGw>
+    <xmx:DjKLaQwGyJYMy6ikUkegDduFzJgr_rW0rMaMrzDfzEcsZymNJ7ib9Ccp>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Feb 2026 08:26:37 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9b41dcbb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Feb 2026 13:26:35 +0000 (UTC)
+Date: Tue, 10 Feb 2026 14:26:28 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2026, #03)
+Message-ID: <aYsyBPZfDHMnYy5s@pks.im>
+References: <xmqq7bsob0wo.fsf@gitster.g>
+ <aYmleK3kGqzLXyJe@pks.im>
+ <c29e0c1d-337c-4411-8d52-07c9155e8abe@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 10 Feb 2026 05:02:49 -0800
-X-Gm-Features: AZwV_Qi5XRrx9NVcUiHkQQakNNyzzWirW_tHJFqAVJp9FF7S0x2IboArXVFuHNQ
-Message-ID: <CAOLa=ZRPLB-jLJ=4cdtO0DuDD=+tPp7t-Kei5pMsF0en6i2jJg@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] refs: allow setting the reference directory
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: multipart/mixed; boundary="000000000000692b12064a77dfe6"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c29e0c1d-337c-4411-8d52-07c9155e8abe@ramsayjones.plus.com>
 
---000000000000692b12064a77dfe6
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Feb 09, 2026 at 07:41:30PM +0000, Ramsay Jones wrote:
+> On 09/02/2026 9:14 am, Patrick Steinhardt wrote:
+> > On Sat, Feb 07, 2026 at 03:15:51PM -0800, Junio C Hamano wrote:
+> [snip]
+> > 
+> >> * ps/meson-gitk-git-gui (2026-02-04) 1 commit
+> >>  - meson: wire up gitk and git-gui
+> >>
+> >>  Plumb gitk/git-gui build and install procedure in meson based
+> >>  builds.
+> >>
+> >>  Expecting a reroll.
+> >>  source: <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
+> > 
+> > Probably makes more sense to say that this is waiting on a pull request
+> > of gitk, as the patch series itself doesn't need to change.
+> > 
+> 
+> So, I should probably wait until Junio pulls from Johannes Sixt, but as it stands
+> on the seen branch (@203d64cf67), I have warning against 'git-gui' on Linux (but
+> not cygwin). On Linux, I see:
+> 
+>   $ cat build/meson-logs/meson-log.txt
+>   ...
+>   Executing subproject git-gui
+> 
+>   Project name: git-gui
+>   Project version: undefined
+>   Program sh found: YES (/usr/bin/sh)
+>   Program tclsh found: YES (/usr/bin/tclsh)
+>   Program wish found: YES (/usr/bin/wish)
+>   Configuring GIT-GUI-BUILD-OPTIONS using configuration
+>   Program msgfmt found: YES (/usr/bin/msgfmt)
+>   Build targets in project: 694
+>   NOTICE: Future-deprecated features used:
+>    * 0.64.0: {'copy arg in configure_file'}
+>   Subproject git-gui finished.
+>   ...
+>   $ 
+> 
+> Note that on cygwin I don't get the warning and the number of build targets
+> is 693, rather than 694 (I don't know if that's relevant). Also the version
+> of meson on linux is 1.3.2, but on cygwin is 1.5.2 (so, I would have thought
+> that the deprecation warning would also appear on cygwin! ;) ).
 
-Junio C Hamano <gitster@pobox.com> writes:
+If I remember correctly this particular deprecation was rolled back
+eventually. *goes double checking* Yup, it's been deprecated in Meson
+0.64.0, but that deprecation has been rolled back in 0c802d260 (remove
+deprecation warning for `configure_file` kwarg 'copy', 2024-05-24),
+released as part of Meson 1.5.0.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Changes in v5:
->> - Moved around the commits, to ensure that the code to handle the config
->>   in the backend is first. Previously, we added the config first, which
->>   meant the commit allowed users to provide a URI but it was simply
->>   ignore.
->> - Fix typos and grammar and rename variables.
->> - Clean up the description and documentation to actually specify
->>   protocol over location.
->
-> This one looked good.
->
->> - Avoid an extra memory allocation by detaching the strbuf value.
->
-> So did this (thanks Stolee for spotting the opportunity).
->
->> - Link to v4: https://patch.msgid.link/20260202-kn-alternate-ref-dir-v4-0-3b30430411e3@gmail.com
->
-> Replaced.  Hopefully this is now ready for 'next'?
->
-> Thanks.
+So I'm not sure whether this really needs addressing. We _could_ make
+this conditional and use `fs.copyfile()` on Meson newer or equal to
+0.63.0 and older than 1.5.0. But whether that's worth it... dunno.
+Probably not.
 
-Hello Junio, I don't think so, I think we still need to address few
-things as per the latest review. So let's hold off on it.
+> The make and meson builds appear very similar, although some paths and version
+> numbers differ:
+> 
+>   $ diff build/subprojects/git-gui/git-gui git-gui/git-gui
+>   1c1
+>   < #!/usr/bin/sh
+>   ---
+>   > #!/bin/sh
+>   6c6
+>   < 	echo 'git-gui version 0.21.GITGUI'; \
+>   ---
+>   > 	echo 'git-gui version 0.21.0.257.g1a729'; \
+>   10c10
+>   <  exec '/usr/bin/wish' "$argv0" -- "$@"
+>   ---
+>   >  exec 'wish' "$argv0" -- "$@"
+>   12c12
+>   < set appvers {0.21.GITGUI}
+>   ---
+>   > set appvers {0.21.0.257.g1a729}
+>   378c378
+>   < set _shellpath {/usr/bin/sh}
+>   ---
+>   > set _shellpath {/bin/sh}
+>   $ 
 
-Karthik
+I guess the /bin/sh thing is something I'll want to address so that we
+prefer "/bin/sh" over "/usr/bin/sh". We did the same fix in Git itself
+eventually. The wish shell feels sensible though, I don't think we need
+to fix that part.
 
---000000000000692b12064a77dfe6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 7eaae8d631aed85d_0.1
+The version thing is actually a bug. The problem is that we have started
+to set GIT_CEILING_DIRECTORIES, but we set it to the directory of
+git-gui itself. That of course works as long as git-gui is compiled
+standalone, but doesn't work anymore in case git-gui is embedded as a
+subproject.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tTExIY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNmVPQy85dlpjUUEwQ3U4Z29rTWpSN0FkTW1yWFMxOQo3b2wwL0NUaVdB
-M1BEVWFTYS9tcDlPYVZHQkh3RDVFbHNZVkZKOFJrWGtpZXh4U2lXVVZhT1hVdkJxUDFjVDl1ClNq
-WVFDZDd3dHplcndRMHFxV3NGSEZmRWkvenREZngyRFN5VG1peUFQeGV1T1UzekxwZGFGenJIaXNz
-L3FtNlEKTnVEalNib2VXV3BpenlUT3llMDQyMCtrdHNXYmJ5dXJsL3IxWXdpSklUOWVXSzFYbEFu
-QjRDLzlOK2NDbXIrVwphVkp2b1lBMEZiZlhjajhrUFVhcUNpeGw3NW1Zc3ExK2tjZGdsc0Y3L0lN
-dmdCK2VIY0FzVUxTVno4QVNjejF6CjVMRGo5akRXZFpZT3BieUpmZmlXTkVUQ0lnMGFCSzczUTJm
-NGZpcHpRdnZQUHRXbC9wODZRa0kwbTJVbFVIemUKSFJnc3gyclFPRkM4U1hnZVZIdHVjcCtUblpw
-b3dQa3owT1FCblVuWjF3Qm45dFJmWnNKME9HcXA4YmxJUElMdApVWnhjOW8vMjVPcjUzaXR2WU82
-bFVUN0lHQzBIbjNmcjN0K09kYkMveGV3R3ZhdWxZbUpEZnB1WGVzdnQxZXEvCnVmQ2UwVHVrUlhq
-RmxyUCsxbXZkVXB3TkVzNmVPQ3Y5cVpVVkRpZz0KPW94K2wKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000692b12064a77dfe6--
+So why does it work for our Makefile? That's because we define the
+SOURCE_DIR as ".", and as a result we define the ceiling directory as
+"./..". And that seems to not restrict our discovery process. I don't
+really know why that is, to be honest.
+
+I have created [1] to address these issues. Thanks for testing!
+
+Patrick
+
+[1]: https://github.com/j6t/git-gui/pull/31
