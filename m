@@ -1,131 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8432FC004;
-	Tue, 10 Feb 2026 18:44:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BC72770A
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:00:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770749077; cv=none; b=JiorSuABnD+AfYWfj3Xo/1ZbBMDr/KmJrPlANNltDGcjP1DCIVt7cxNCXvdbqzeOH3Fg766jaQNursDnHx5/Exbh9VBy/ZZ8SwwSO20rBiXq4nKx83AZMJIiDUkn3VgWPBmh64Z4EB7nb+a+YDmEgUHX5mNu6Qez1IbqV77te64=
+	t=1770750056; cv=none; b=TTCV/XDDdwD8OxMd4LhOBxDfHR0qKA25mP7/ZW2Ijoupip4WhkACI22a4QEDz/nyaGVyBBAqN91ZO7J427bHis5UrRcKuMufn7VoSiojDhxBrjGtoUNujsk6BmgJT6Ux59G7jkPUqL2U85i6XHpAo3Wj9TT+gKnjs0YLoAJDbXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770749077; c=relaxed/simple;
-	bh=afLwYPyTKZCdm4dpPBlSE3FzRf8GrP7fnLrK+695bos=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qnhOh9FH7Hbe1LfOsM/uZqdAPT3+tBJd4XDQpMq+ALj563fIMh6oPAoVnuGP58OwfQD7mi15sAQl/dYsQTk6FLTPxa9aj4tRPuaGY2xr/o/3p0QeQecp8dZLg2Qu3pKgpDSfKtcspTGLKmI1zRYsdtg50L47Lzdpurz0Iyaq5wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QbxZSCD0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770750056; c=relaxed/simple;
+	bh=z29wub8aI/+6Kg5mRcFiihdA7Yc57JsOLFlxBuELYBQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cYQM9uRLXaHDx7e0XqIJH/+l5WgZe08teI0vPIiRo8L64LJU4K/kYYojK5++DhS5gFd5MC+TCRHLv7RItzMHdEmSV5xS2y3/0rLHn1ScpHwCm0JIrvxushDlAkKcJzxqWtLyox5/Tw1lEBFYHTyuyiDfXTRzHkQPQAau9qGEj+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L7WnxdrI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NJIsRke/; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QbxZSCD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B844C116C6;
-	Tue, 10 Feb 2026 18:44:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770749076;
-	bh=afLwYPyTKZCdm4dpPBlSE3FzRf8GrP7fnLrK+695bos=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QbxZSCD0zD2vBKuZwedNgg5UM/AIzHv7T1ovlCj4IGpIZXm/qJrLVGTxvJaRASi09
-	 GhzQ7bLVi23G4whOZmFDcIzEsI1VX6wFSp0FRMwOGdj48JlU2CUS15BTRh3QcvbCgp
-	 QVmfRF1ddyVRU4TZN3Xy8aLI3nDLW8TzRIc7kmjQUEWGp01M32KjFQ3v2OJo+sCOCg
-	 gpdi1fp4v/gBdHEhDGdq9MgL9HsVCGDqeYryXORxk3I02AyOub2sYkp12+cR9WTHKr
-	 62OVo8Rbx6OIo3BL8qGW08Csk3mhg+vjECxxpATJNXMu9E919A78el0By+sK6EVYvk
-	 08bx7QN20KJBQ==
-Date: Tue, 10 Feb 2026 19:44:32 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, 
-	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>, linux-man@vger.kernel.org
-Subject: Re: [PATCH v2] futex_waitv.2: new page
-Message-ID: <aYt79QGo9u9KHvNd@devuan>
-References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
- <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
- <aYpg1XelZBzpw4ZL@devuan>
- <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
- <aYtAknObJpjszCaj@devuan>
- <xmqqtsvozgi2.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L7WnxdrI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NJIsRke/"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 248C21D001C1;
+	Tue, 10 Feb 2026 14:00:54 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 10 Feb 2026 14:00:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770750052; x=1770836452; bh=HbJJ0Fhgn8
+	Z0/MbbjlB7fdlsyTmzNgMXLSjZ4gQlL7c=; b=L7WnxdrIF1z0dCA5JKn62WWaCY
+	FasjnKSZSGD7kBcrseaYkJbEc+PuZRGjqKtwIFxCiLmrxD6ePnBRQukZ86gYQNCe
+	8wUbMl0EZ+hsmywHuuuYwOJlmKrYpAHXjuF6lyZgraHVhsjGsi/ozla1PAx4yQpm
+	uWRksXEDeAXW85QWma1cOnV1/WsFO/eODfhhfkWmG9b5fwVCLCroBXFdXEu3uAgB
+	oRke0r8I9+Ym+wru7bpJH7Jgj/c5Vhttd6JrkVCI+eE2qNfAQrqotGXCWfz1DL8O
+	Ei3IiwVDMJkkLe2IqXsYqae+cjj1YsE82s+WCDodYGntOp8K6GGzUk7gaZKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770750052; x=1770836452; bh=HbJJ0Fhgn8Z0/MbbjlB7fdlsyTmzNgMXLSj
+	Z4gQlL7c=; b=NJIsRke/doiHndw6MA+dw2sOqguSoahLOCHsKhdtXZdr7C4+TX1
+	GxambsFN/Mdy8VDII2hhKH8pTfOLhonqmX3hV1QcAQYDPrh2jrb5qLOWILvM+Xsg
+	oNJLODbuGvU3+pRCQ1Jv3PuumpUbWULaxF9MQYJyWpDDKJITxazgvdjKhzK2bpXw
+	HNYrGM0DY7d8G9TxXMoNftLRqINntbJuHphaysUSr+oQ1Q16JMvfSzA2Pk938aIO
+	s4BZNVSGSpSVgKq06msNQo4/vMIF5YwF2LjY3pPjb1oB1KI3c2XoHaJYA9SrdyHV
+	DY0fR6Cg59CgsfuKjv0JSd+NZYRKg56REUQ==
+X-ME-Sender: <xms:ZICLadNSSBJ1fdtI7ykvsUSlLbNbBdkwiK_eCGUvlyG3JbbwvhdvUA>
+    <xme:ZICLaW-W53rLNY_NnTYytBpP8iQynJuRGmeL2XS71j5-AiSGMVfs7j0J5ZCaOegpp
+    ZAXZv8sOsNV7kGmqgJ8lmeYoCyb-hGKJtslQbrYxArZPLhDyy1l2g>
+X-ME-Received: <xmr:ZICLaRTVAMSaAKOiNSsPnXinZ5hoOjGYfIEBzxescJVb3Py9fCQzDmSdi0nQfzaTir0UedvOPW0vPTkvAOLXc09SZVcAoO-uBg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtgeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegthhgrnhgurhgrkhhrsehpmhdrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:ZICLaYm_WtN_0RDHEISLsopCjRkZuXjClwVNa0oluQmmmK8AhZSxIg>
+    <xmx:ZICLaRTZRZPeGS4u2xdSbOomKFh0t9_vEgAtZPTMBRlvxsAoO2rO_A>
+    <xmx:ZICLaWOzyzowe-wg4TvGV7xxcuU-CYkuhcwl1wCIHYYYR-2fla1Lhg>
+    <xmx:ZICLaaVmFc028Ex3GXdb5r6TD1mIrrKzwxRFnkbzD1vgLrApth2lpA>
+    <xmx:ZICLaZSAgI-V3-PkrpMC8hKX52gNwujq1_A4TXcItsDzRK1HV-2q-T39>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Feb 2026 14:00:52 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Chandra Kethi-Reddy <chandrakr@pm.me>
+Subject: Re: [PATCH] add: support pre-add hook
+In-Reply-To: <xmqqldh0zcpa.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	10 Feb 2026 10:16:17 -0800")
+References: <pull.2045.git.1770737573475.gitgitgadget@gmail.com>
+	<xmqqldh0zcpa.fsf@gitster.g>
+Date: Tue, 10 Feb 2026 11:00:50 -0800
+Message-ID: <xmqq8qd0zan1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jlaktbqwucvhu7ib"
-Content-Disposition: inline
-In-Reply-To: <xmqqtsvozgi2.fsf@gitster.g>
+Content-Type: text/plain
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---jlaktbqwucvhu7ib
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, 
-	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>, linux-man@vger.kernel.org
-Subject: Re: [PATCH v2] futex_waitv.2: new page
-Message-ID: <aYt79QGo9u9KHvNd@devuan>
-References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
- <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
- <aYpg1XelZBzpw4ZL@devuan>
- <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
- <aYtAknObJpjszCaj@devuan>
- <xmqqtsvozgi2.fsf@gitster.g>
-MIME-Version: 1.0
-In-Reply-To: <xmqqtsvozgi2.fsf@gitster.g>
+> The hook takes no clue from anything derived from the command line,
+> not even the pathspec (or list of individual paths computed using
+> the pathspec by the command) or the mode of operation like '-u' or
+> '--renormalize'.  I am not sure how effective a decision the invoked
+> hook can make to approve or deny in this lack of information.
 
-Hi Junio,
+And I do not necessarily suggest passing the pathspec arguments or
+command line options that the "git add" command received from its
+caller down to the hook, which will force hook authors to emulate
+what "git add" would do to these arguments and options, and they
+will certainly get it wrong.
 
-On 2026-02-10T08:54:13-0800, Junio C Hamano wrote:
-> Alejandro Colomar <alx@kernel.org> writes:
->=20
-> > Junio, do you still have this queued?
-> > <https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#m6f42ff4f0cb=
-2d6dd1d68f12a533d04c822b68a80>
->=20
-> Still queued??  Not very likely.
->=20
-> It is a topic from almost 3 years ago, so it is either in an ancient
-> released version, or it was discarded long time ago for some issues.
-> Given that it is from Peff, it is very likely the former.
->=20
-> https://git.kernel.org/pub/scm/git/git.git/commit/?h=3D15108de2fa0&id=3D1=
-5108de2fa0cd8f002a0551d14c84505a853071c   =20
->=20
-> That's v2.41.0-rc0~141 if my "git describe --contains" is counting
-> correctly.
->=20
-> My secretary will bill you for 30 minutes of my time and for making
-> me miss a meeting with external folks with this ;-).
+I wonder if we can split write_locked_index() into two so that
+writing out the in-core index to the temporary/lockfile can happen
+separately from the call to commit_locked_index().  If we can do so,
+then the following would become a viable and better implementation
+of this new feature to run the "pre-add" hook:
 
-Ohh, sorry!  :)
+ * Determine if we will need to run this "pre-add" hook, at the
+   location in the code you addded the run_hooks_opt() invocation,
+   but do *NOT* run any hook there yet.
 
-The problem seems to be still alive in some stable branch, probably in
-oldstable distros.  I guess I'll have to deal every now and then with
-those, depending on how many people discover diff.noprefix while still
-using old versions.
+ * Instead, create a temporary copy of the index file if the above
+   says "Yes, we are going to run the hook".
 
+ * Let the code path to update the in-core index, i.e., letting
+   everythning up to the "finish:" label to run normally.
 
-Cheers,
-Alex
+ * Perform the first-half of the write_locked_index(), writing the
+   new index contents into the lockfile, but stopping before
+   committing it to the final name.
 
---=20
-<https://www.alejandro-colomar.es>
+ * If we are running the hook, run it with two arguments, the name
+   of the temporary copy of the original index we created earlier,
+   and the name of this lockfile that has the proposed contents of
+   the index if the hook allowed "git add" to proceed.
 
---jlaktbqwucvhu7ib
-Content-Type: application/pgp-signature; name="signature.asc"
+ * If we ran the hook and hook succeeded, or if we did not have to
+   run the hook at all, then commit the lockfile.  Otherwise abort
+   the "git add" command and rollback_lock_file().
 
------BEGIN PGP SIGNATURE-----
+ * Remove the temporary file we created earlier (if any).
 
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmmLfJAACgkQ64mZXMKQ
-wqnS/hAAo9IriEn7gmGJnTzHbE8VmcKiZu8HdllXG3g5br25ZimAIKCfvxUFjKlP
-1lG3AD0J9WwR0ijt//ifdz/oMLY2DhP3XHyrUkBt5myJb3iod2snaFKXnsoEwqfq
-GxRUD6F9P0znpHQMWqGt/gOLLFALNxWyl5e8Sq+Q/XvggY7Ig/ulUKFuaq3hQ/JO
-GmDqp98pzVE7tqrwYg/cM93+BteLiATw8zD7NoqVL3JS42IAd9pw3rTvpu/JSnS4
-2eSDQnM7ZeG+L5rKQYIh8smWNFmuwt/6dj7cSvrYZOymNgDIPBqtpl1bNU1hBKXt
-gdVNemCQB3u40hPwk1RnN0+AL+KrgI4waxPFKvtN05EA88C8YbpkF51kxgWmVL+p
-G1h9c55gnDq+/nDfZEme0zY11cddUZ03kKYqnn/K/HqA88XWAXQ58oNpucH8vo1o
-6FwAU6lppb6gZZnPYVIJTBHzxdQlX3ghjmhhjfb1UWu3G+vHL4XZKPKap1VMKx4c
-mVxzi8GWkBXj3tkslQM/tCsnQp3LYBOco45/rNHoNkpnt2XEbdvip2+VkhHkbn+w
-LPjz10F2yqKkoIsc81A1QzaRb5B1YG5DwlQF6fLZa6FbWOYL8PlSNuVs73aQSoho
-Dti7hv8YBv3QRGVCctPkTGMlA1Tq+DHAPpHBYeDRRLrA+TfRs9U=
-=EeRs
------END PGP SIGNATURE-----
+Your hooks can "GIT_INDEX_FILE=$1 git diff --cached --name-only" to
+find out which paths already had changes added before this
+invocation of "git add", and similarly using $2 get the list of
+paths that will add further changes with this invocation.  The
+latter set of paths you can inspect to see if you like the
+additional changes brought in, perhaps like
 
---jlaktbqwucvhu7ib--
+    #!/bin/sh
+    paths=$(GIT_INDEX_FILE=$2 git diff --cached --name-only)
+    GIT_INDEX_FILE=$1 git diff $paths >patch.txt
+
+    if grep "^+.*secret" patch.txt
+    then
+        echo "do not divulge company secret!" >&2
+	exit 1
+    fi
+
+or something.
