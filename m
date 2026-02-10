@@ -1,359 +1,106 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86BE2DA768
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 15:32:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC032ED164
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 15:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770737578; cv=none; b=LV1Jt62xlKGKGPEo2c4QOFnEWoSiYGoFQtNsTPbQu/dw4RnOpKHAzFWInwsohz6nWYqTdLgbZtK55+NPivhhiJYiLPh23cC/sgmtzq1piw+tILj9T6zzDhyve4hkl6YNvJEV50gF3GOgAegBKbKInDsq9EvGx5DnpRB+JzK6vGs=
+	t=1770737735; cv=none; b=iozuAoHeveCn0JJ6+Kze5T2ZvxRmhgYXSLKPPJGKsKuDFqTY2nLRkynprrtn9vLcyDw2pZ0vPKXqG4/TX+ztQ3dPEXYuvXc4Jb7ITW0kgw/3Leg3/SrHF2C6A3PTM9nWW1MWQl/TdrGM43x0JtoCAVb3FY1uJ+0Mj3j4M/V3k74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770737578; c=relaxed/simple;
-	bh=XUL8rd2crTr+8BO6M1uTnQ/qk4POV0WSiVnl3mzxWCM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=hRWLMjHH683aVy9BHrWtGzj33AO4ZobCk7I1JAoIPwmlrbOUpAojgD0V7fIGrJs0CPTnH4/mm76YhWjsL3nZQ2eDyh01hHC2nRf41/ajY3DZwtUcyvRB5o4k7BMa1kOe9Bv0VO6HFineZhuMowwIqKHh3Olfda07K6WAqa03ew8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZNHEuCU/; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770737735; c=relaxed/simple;
+	bh=ykxvRLIrSR7OKwAvujGn0aj2nq0bS3cesRLYAC1ng3U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DRQOfZPAWKQnoQtkIhNTBJv5ea+ZrJQYTv5cwDSSW8J+iNGCaH3LzB4fcbLU32JWXq9rNeNHVeES9sSGxmQxAwrKpJciiKg+Nm1ai98bexuLkemlUiP3DvyoMjJNaX7ybdPoM/KlsvgYwqD06wPA3Rkuc5wPKF5v+8D7YJ+sVYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UsIImZY+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NfGpGEMP; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZNHEuCU/"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8c5389c3cd2so97906285a.0
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 07:32:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770737575; x=1771342375; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=S/kYCfGnTPS1ne7UNzSIoDvF/ewYpFxCy0eAg0oMZac=;
-        b=ZNHEuCU/Gg/4MHpVK5Eyprse9+dMTnsVRGgeaCkPojMhYPnqUbhAJsjCFVYv+L6JAQ
-         JfBcsGWw8zCaPR6zRo6fXfD4azJfw7lzSdyxBVUi+22w+Znl2hiYnCDshOwzhFq4u41i
-         NRBF5U07wK7PZHNtGrqhC/5grc/vbDy6QS9bJN2dv+Ztjj1eYg86AKiE+S2bVE3fWhO+
-         Ya6e35VOY5SOIkamL4WbK/w3SxJjQjRnf3vBdRtO3F2iClYMGrwxjLPVPt06sYch3IEd
-         /L32OhNxiTRyjfJ695AOOm4YiboSHlgOFb984KNFEH5AmoHDtNkDpRoq0T6FI4PqFKOc
-         8UVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770737575; x=1771342375;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S/kYCfGnTPS1ne7UNzSIoDvF/ewYpFxCy0eAg0oMZac=;
-        b=WFbOiXPDFkSzHQIe/aKK+jxaPUOHY6FrssKkrePwxGfehMLCRNm4wKGNgGjsPUIUvJ
-         ryADmnUEgUirxSILBVwoyafYCd3AnUOUCKShVOF1Mmi9C1mLHAAjjv9Nru3tNuITtorY
-         ogIzHz9n2tmkz1cnNFjuG3uYS76bX2Ep2jDXsRs7TNbOnG2QNkdctjbEDc0M7mpkBlMB
-         wNSnHTCqOLwjmw8S/7szDFNG2w0EqnxWnZJJCmde9+YP6bh6+AoSAlsPZYWUPM/pcZhR
-         wUa99DCvo45tXWxE62+WF83Yoi/qTCTCVFXgkUD/8JxgX3HN/59YPEvr6u+XbzvxLQgu
-         /DAA==
-X-Gm-Message-State: AOJu0YxMTc3iogb/jOlHjZdI3s/xi+G8QyWJOegxHbp9p0/brPi67+eO
-	iqPII2+x/f3nQOwTmRnD7fnX9rDCWBTyRzgIfjGq6fSJg9LgJxl1CYX855DXgg==
-X-Gm-Gg: AZuq6aIxfOKuLfpKqqTdKPuVxHFDg2i31AXfVYhT091weBQJZzZM0FSsuVGFoIc1OXt
-	gCrph4UgjhRUp36sg+xh2JULA2XcVofiBTW4YYizQds1UEuCZkQkWNdI1byZt/JddecmeqN00CU
-	3Oj8zeWrRlkz3/ZEIGHYLEllF53NJcSgPRR3eTTAmudcfPMIenNP8DYVsibWH0R6EosheTjeEq9
-	i6YwytNvpDwZE/QLWNS4Mv8XIRhyEwiOkxNys+ne7LgTeA6suitqOGDkLVYGOK7wt6ulClAtBPR
-	SPP0KDVOH/zjdP6nCvMfX3SVC2A4sq2I5PNEKO/23a/tKhz9LMzOkUuKCgfd4TMd4J/U96dt38s
-	vbsoQ3KhgkeiTph5sOJLdx5Q96YlMOAcNTEZiSadF2wz2NF4/+Y5WzUKHc9vbkQe9zHho+Y/MZI
-	gKoC+iYg45gJk+miZ670TIWmA=
-X-Received: by 2002:a05:620a:2913:b0:8b2:e5da:d317 with SMTP id af79cd13be357-8caf0d3d1ffmr1957874485a.54.1770737575000;
-        Tue, 10 Feb 2026 07:32:55 -0800 (PST)
-Received: from [127.0.0.1] ([20.98.23.171])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8caf9ee8662sm1152107785a.37.2026.02.10.07.32.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Feb 2026 07:32:54 -0800 (PST)
-Message-Id: <pull.2045.git.1770737573475.gitgitgadget@gmail.com>
-From: "Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Feb 2026 15:32:53 +0000
-Subject: [PATCH] add: support pre-add hook
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UsIImZY+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NfGpGEMP"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 39B9FEC04DC;
+	Tue, 10 Feb 2026 10:35:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 10 Feb 2026 10:35:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770737733; x=1770824133; bh=Z5F87lLdPn
+	Ejp7foc9zIfSVw1tVBsvYhsIeQhicsPHw=; b=UsIImZY+NjJef9Se8cp+ZDnuPC
+	Po5eQbnBvg9M8G2wEg7p5ZnwIZzAZ+fiZ8Ec5Rq3u4+ri2dzXgoGr7gRbqB9OGBU
+	aGEOFIAsxOvWZFfFeQ8X7LoppFDBs+9pX/BlDBoKDyyBDRrZBowFTfhOXSpDxB7W
+	m8THdQo+0RHGkW1IvQJEtzatZcAuOup0+hqg4dn21ZbSpidcrmZwZ1Mx0zst/Iy7
+	yU9MBIKHDw+CDIgW1MGNMDRANOf4dyyKU1yQRfcIwknPc7heWc3p2iHlVj0Dd6Kh
+	o0YC3UsG5+l0dxKtxjZ7zIbTUVExHzZMAk3y+kwrcOB4rtZHkkfBhceJaitg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770737733; x=1770824133; bh=Z5F87lLdPnEjp7foc9zIfSVw1tVBsvYhsIe
+	QhicsPHw=; b=NfGpGEMPb9kk0wXtt0/OFXpv6DD+RskAtN3OCcX/D3g8z2fMvmr
+	6xy7piiNFwaANukrKFFQ11RJE4oNMuuVN3V0jNkORxujK85AOPaslHdtQypy4+JJ
+	VX2PM6Wp2u5+V0n9KxUqO8JM3dWbnnzFlskVSMN/Brygy84u//BuHcGkNKSGErqk
+	Rjb3/JN3E0REoXOdUqrCGLdXTCTf0YRiTh7hE69NuUCuUjTE/bVtQ2641FIOdlVt
+	pPfBICuZrOyyX4K3gLYoTfe9AbVqiQyiDVGwfOTfw7vf/l/deZjH/TN5e5sErnbX
+	wObEaVdon+j4upd+etLM6AgabB4zLUJoDhQ==
+X-ME-Sender: <xms:RVCLaVaIqzIDxv6oGExfk2BTKARVpqaStoYjxYjW61dCNRNoHMuI5A>
+    <xme:RVCLaTQ3-w2GFKVsu3fjFrkAIUizDdgnP25loH6BwsZsCPG2UmcvGiwFciEBIWdyI
+    Cegz4KcDsNr8wJsDzyDTtOyqaSVE_a__ztzzDQnX8Oie9r2IBx7HCQ>
+X-ME-Received: <xmr:RVCLaQTMkUY4QOfwOZ_2Epy3Ysp8HiVZhx5mWOAnmCIUOMIx9mTGjGCF22W77tRYh49aWVnxwfJehMd2O3zUP0VcCI8lIC6hDw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddttdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phhssehpkhhsrdhimhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:RVCLafSfsBo-KYV3d0Vb4Bbk8hjyQ8OUSxCH5tIe9M1QNoiHrbojhA>
+    <xmx:RVCLad4P704TkHz_GknpPV-fOEcvQLPajQkrh9nJW_zcViDyqzXKsA>
+    <xmx:RVCLaT2Pr4zPFmjsPHdN8LXdSa60Z7_EuMz9Feeg2esWJBV55LRhnw>
+    <xmx:RVCLaQAT5un26JuITan7XktHXfSrUvucAbbM-NYolKQ9HxuqD93gKA>
+    <xmx:RVCLaatir37cVtaRsBjpUwu33PYP4l10USFnZavScjVrnVfNWHnnaQ3q>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Feb 2026 10:35:32 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Jean-?=
+ =?utf-8?Q?No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH v5 0/4] refs: allow setting the reference directory
+In-Reply-To: <CAOLa=ZRPLB-jLJ=4cdtO0DuDD=+tPp7t-Kei5pMsF0en6i2jJg@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 10 Feb 2026 05:02:49 -0800")
+References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
+	<20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
+	<xmqqtsvp4wxv.fsf@gitster.g>
+	<CAOLa=ZRPLB-jLJ=4cdtO0DuDD=+tPp7t-Kei5pMsF0en6i2jJg@mail.gmail.com>
+Date: Tue, 10 Feb 2026 07:35:31 -0800
+Message-ID: <xmqqbjhw1uik.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Chandra Kethi-Reddy <chandrakr@pm.me>,
-    Chandra Kethi-Reddy <chandrakr@pm.me>
+Content-Type: text/plain
 
-From: Chandra Kethi-Reddy <chandrakr@pm.me>
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-git has no hook that fires during 'git add'.  Users who want to
-validate files before staging must wrap 'git add' in a shell alias
-or wait for pre-commit, which fires after staging is already done.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+...
+>> Replaced.  Hopefully this is now ready for 'next'?
+>>
+>> Thanks.
+>
+> Hello Junio, I don't think so, I think we still need to address few
+> things as per the latest review. So let's hold off on it.
 
-Add a pre-add hook that runs after pathspec validation and before
-any files are staged.  If the hook exits non-zero, 'git add' aborts
-without modifying the index.  The hook receives GIT_INDEX_FILE in
-its environment, following the same convention as pre-commit.
-
-The hook is bypassed with '--no-verify' (long flag only, since '-n'
-is already '--dry-run' in 'git add').  It is not invoked for
---interactive, --patch, --edit, or --dry-run modes, nor by
-'git commit -a' which stages files through its own code path in
-builtin/commit.c.
-
-The implementation calls run_hooks_opt() directly rather than the
-run_commit_hook() wrapper, which sets GIT_EDITOR=: and is not
-relevant for 'git add'.  When no hook is installed, there is no
-performance impact.
-
-Disclosure: developed with guidance from Claude Code (Anthropic)
-and Codex CLI (OpenAI) for development, review and standards
-compliance. The contributor handtyped and reviewed all tests, code,
-and documentation.
-
-Signed-off-by: Chandra Kethi-Reddy <chandrakr@pm.me>
----
-    add: support pre-add hook
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2045%2Fshatachandra%2Fpre-add-hooks-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2045/shatachandra/pre-add-hooks-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2045
-
- Documentation/git-add.adoc  |  10 ++-
- Documentation/githooks.adoc |  17 ++++++
- builtin/add.c               |  14 +++++
- t/t3706-pre-add-hook.sh     | 117 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 157 insertions(+), 1 deletion(-)
- create mode 100644 t/t3706-pre-add-hook.sh
-
-diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-index 6192daeb03..c60e0c65a5 100644
---- a/Documentation/git-add.adoc
-+++ b/Documentation/git-add.adoc
-@@ -10,7 +10,7 @@ SYNOPSIS
- [synopsis]
- git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
- 	[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
--	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
-+	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize] [--no-verify]
- 	[--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	[--] [<pathspec>...]
- 
-@@ -42,6 +42,9 @@ use the `--force` option to add ignored files. If you specify the exact
- filename of an ignored file, `git add` will fail with a list of ignored
- files. Otherwise it will silently ignore the file.
- 
-+A pre-add hook can be run to inspect or reject the add operation before
-+it stages files. See linkgit:githooks[5] for details.
-+
- Please see linkgit:git-commit[1] for alternative ways to add content to a
- commit.
- 
-@@ -163,6 +166,10 @@ for `git add --no-all <pathspec>...`, i.e. ignored removed files.
- 	Don't add the file(s), but only refresh their stat()
- 	information in the index.
- 
-+`--no-verify`::
-+	Bypass the pre-add hook if it exists. See linkgit:githooks[5] for
-+	more information about hooks.
-+
- `--ignore-errors`::
- 	If some files could not be added because of errors indexing
- 	them, do not abort the operation, but continue adding the
-@@ -451,6 +458,7 @@ linkgit:git-reset[1]
- linkgit:git-mv[1]
- linkgit:git-commit[1]
- linkgit:git-update-index[1]
-+linkgit:githooks[5]
- 
- GIT
- ---
-diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
-index 056553788d..51156822bc 100644
---- a/Documentation/githooks.adoc
-+++ b/Documentation/githooks.adoc
-@@ -94,6 +94,23 @@ and is invoked after the patch is applied and a commit is made.
- This hook is meant primarily for notification, and cannot affect
- the outcome of `git am`.
- 
-+pre-add
-+~~~~~~~
-+
-+This hook is invoked by linkgit:git-add[1], and can be bypassed with the
-+`--no-verify` option. This hook is not invoked for `--interactive`, `--patch`,
-+`--edit`, or `--dry-run`. It takes no parameters, and is invoked after pathspec
-+validation and before any files are staged. Exiting with a non-zero status
-+from this script causes the `git add` command to abort without modifying the
-+index.
-+
-+This hook is invoked with the environment variable `GIT_INDEX_FILE`
-+which points to the index file. This allows the hook to inspect what
-+files would be staged before the operation proceeds.
-+
-+This hook is not invoked by `git commit -a` or `git commit --include` which
-+still can run the pre-commit hook, providing a control point at commit time.
-+
- pre-commit
- ~~~~~~~~~~
- 
-diff --git a/builtin/add.c b/builtin/add.c
-index 32709794b3..7747b41d10 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -25,6 +25,7 @@
- #include "strvec.h"
- #include "submodule.h"
- #include "add-interactive.h"
-+#include "hook.h"
- 
- static const char * const builtin_add_usage[] = {
- 	N_("git add [<options>] [--] <pathspec>..."),
-@@ -36,6 +37,7 @@ static int take_worktree_changes;
- static int add_renormalize;
- static int pathspec_file_nul;
- static int include_sparse;
-+static int no_verify;
- static const char *pathspec_from_file;
- 
- static int chmod_pathspec(struct repository *repo,
-@@ -271,6 +273,7 @@ static struct option builtin_add_options[] = {
- 	OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
- 	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
- 	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
-+	OPT_BOOL( 0 , "no-verify", &no_verify, N_("bypass pre-add hook")),
- 	OPT_BOOL(0, "sparse", &include_sparse, N_("allow updating entries outside of the sparse-checkout cone")),
- 	OPT_STRING(0, "chmod", &chmod_arg, "(+|-)x",
- 		   N_("override the executable bit of the listed files")),
-@@ -576,6 +579,17 @@ int cmd_add(int argc,
- 		string_list_clear(&only_match_skip_worktree, 0);
- 	}
- 
-+	if (!show_only && !no_verify) {
-+		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+
-+		strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s",
-+			     repo_get_index_file(repo));
-+		if (run_hooks_opt(repo, "pre-add", &opt)) {
-+			exit_status = 1;
-+			goto finish;
-+		}
-+	}
-+
- 	transaction = odb_transaction_begin(repo->objects);
- 
- 	ps_matched = xcalloc(pathspec.nr, 1);
-diff --git a/t/t3706-pre-add-hook.sh b/t/t3706-pre-add-hook.sh
-new file mode 100644
-index 0000000000..e64ee51b25
---- /dev/null
-+++ b/t/t3706-pre-add-hook.sh
-@@ -0,0 +1,117 @@
-+#!/bin/sh
-+
-+test_description='pre-add hook tests
-+
-+These tests run git add with and without pre-add hooks to ensure functionality. Largely derived from t7503 (pre-commit and pre-merge-commit hooks) and t5571 (pre-push hooks).'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'with no hook' '
-+	test_when_finished "rm -f actual" &&
-+	echo content >file &&
-+	git add file &&
-+	test_path_is_missing actual
-+'
-+
-+test_expect_success POSIXPERM 'with non-executable hook' '
-+	test_when_finished "rm -f actual" &&
-+	test_hook pre-add <<-\EOF &&
-+	echo should-not-run >>actual
-+	exit 1
-+	EOF
-+	chmod -x .git/hooks/pre-add &&
-+
-+	echo content >file &&
-+	git add file &&
-+	test_path_is_missing actual
-+'
-+
-+test_expect_success '--no-verify with no hook' '
-+	echo content >file &&
-+	git add --no-verify file &&
-+	test_path_is_missing actual
-+'
-+
-+test_expect_success 'with succeeding hook' '
-+	test_when_finished "rm -f actual expected" &&
-+	echo "pre-add" >expected &&
-+	test_hook pre-add <<-\EOF &&
-+	echo pre-add >>actual
-+	EOF
-+
-+	echo content >file &&
-+	git add file &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with failing hook' '
-+	test_when_finished "rm -f actual" &&
-+	test_hook pre-add <<-\EOF &&
-+	echo pre-add-rejected >>actual
-+	exit 1
-+	EOF
-+
-+	echo content >file &&
-+	test_must_fail git add file
-+'
-+
-+test_expect_success '--no-verify with failing hook' '
-+	test_when_finished "rm -f actual" &&
-+	test_hook pre-add <<-\EOF &&
-+	echo should-not-run >>actual
-+	exit 1
-+	EOF
-+
-+	echo content >file &&
-+	git add --no-verify file &&
-+	test_path_is_missing actual
-+'
-+
-+test_expect_success 'hook receives GIT_INDEX_FILE environment variable' '
-+	test_when_finished "rm -f actual expected" &&
-+	echo "hook-saw-env" >expected &&
-+	test_hook pre-add <<-\EOF &&
-+	if test -z "$GIT_INDEX_FILE"
-+	then
-+		echo hook-missing-env >>actual
-+	else
-+		echo hook-saw-env >>actual
-+	fi
-+	EOF
-+
-+	echo content >file &&
-+	git add file &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with --dry-run (show-only) the hook is not invoked' '
-+	test_when_finished "rm -f actual" &&
-+	test_hook pre-add <<-\EOF &&
-+	echo should-not-run >>actual
-+	exit 1
-+	EOF
-+
-+	echo content >file &&
-+	git add --dry-run file &&
-+	test_path_is_missing actual
-+'
-+
-+test_expect_success 'hook is invoked with git add -u' '
-+	test_when_finished "rm -f actual expected file" &&
-+	echo "initial" >file &&
-+	git add file &&
-+	git commit -m "initial" &&
-+	echo "pre-add" >expected &&
-+	test_hook pre-add <<-\EOF &&
-+	echo pre-add >>actual
-+	EOF
-+
-+	echo modified >file &&
-+	git add -u &&
-+	test_cmp expected actual
-+'
-+
-+test_done
-
-base-commit: b2826b52eb7caff9f4ed6e85ec45e338bf02ad09
--- 
-gitgitgadget
+Thnaks, will do.
