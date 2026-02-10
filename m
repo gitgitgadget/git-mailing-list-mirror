@@ -1,327 +1,129 @@
-Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C87232D450
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.80.101.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D337C38B990
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:42:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770748923; cv=none; b=frWvRCGprlyc7djA7A8XDRCVWVtEbCB5oNKCn/Ov9t5O4pKiUbSDXV6Hfy+7IA69aofp0pDmbZMVkgKRs9BSNV7syXXbbmLk7Ayq3mjIIqIDC7NpIjFV6kZF+r6XsGu+CWT1nvapbw2VdjEp81pu4ET8t4xrilOOdf0kyW5K6gI=
+	t=1770748925; cv=none; b=bf8CAc9nIXgv5b4NSKVKfkqT7+118/DrP1RkDOkfoUK6RMu1ZTSMVeP2p6Qbpjo6QljrKrWtGudfIuLHv8tdDjKCzHurEKx/wLmlyYOQvZxxCPJNgZEgRsDBpU8IHhusi47rXhFsXyJklXzhCLVearPRKxSNiEE3M3hbX61Zu5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770748923; c=relaxed/simple;
-	bh=cuW83Sj02hnxNUprnwbW+JkCLpdq0Z1hqV0MqSY+MVI=;
+	s=arc-20240116; t=1770748925; c=relaxed/simple;
+	bh=2I+bl2Tv1QpkavV5dOcIxtmI88E6Pb9jVjWzf8WkJhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SmOzR4hlAC4UPvf6unZWrXX95mqSUaUcPfaRqXEOYH44n5ek+FXgTsg1Gev+mKRbyFvdFyA1A411whSIKVyU8MN8fAryW7nOdA+Z97zLfJcmJkEDUayzV68R5FN2mzEDFUsYuQCspnfONTLqg/lDp+eqCx/DOeJlM3X0a/Vq+/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=pvDCwoOg; arc=none smtp.client-ip=213.80.101.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
+	 MIME-Version; b=AFTzD3AK4kCGRDrRWZZ8chNhuzWv2G5K4sp7jY0ARpnEiZVCSVq1udA6MgYmnrYOLgKbGfVXigTZLdDbeCxSk+C7pbKQf8kRwlwbdBYHP/DQOfmN5Pez1Dund2k/5z6IwZhxdnWu64i3VfD6epCYlTTj1S88BuuhsctzZmWWgqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mRPWc0tJ; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="pvDCwoOg"
-Received: from localhost (localhost [127.0.0.1])
-	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id CC543407EA;
-	Tue, 10 Feb 2026 19:33:23 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.1
-X-Spam-Level:
-Authentication-Results: ste-pvt-msa1.bahnhof.se (amavisd-new);
-	dkim=pass (2048-bit key) header.d=jontes.page
-Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
-	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jrRxsxg5iAZn; Tue, 10 Feb 2026 19:33:22 +0100 (CET)
-Received: 
-	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 780EF40282;
-	Tue, 10 Feb 2026 19:33:22 +0100 (CET)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A0DF4B1E34;
-	Tue, 10 Feb 2026 19:32:25 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
-	t=1770748345; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=/GDdIFvLIWwarWtPRLiOCEaEBzVm1vBn4UHhbXmkP/E=;
-	b=pvDCwoOgokIPaBej9mhZi3calEDOH4gd7QDVTaj0Q89z+Yn1GIEb51RRQnwdI4A0kPdLUU
-	JSqSSpnTM7W4EXNKCi05/NsPsgGGI8qgpwHRugaViB/gfU9rqJKrhehAUghL8KKKtgHx/Z
-	nYczVIx3eqJ6SNY7+Q2STsje3VgA5hyjbMCy+f4FQKdFcXLHOaP+b5EUl25Crak3q774vd
-	FdKPcoxgHWfPmvFe6sB5v9s+NYrKLVU/b68CHwGb8+VyiACPKykdiECLI3SjpovYHe6mvy
-	QYUDDcpGlSZ26trxwVl7wOYPZFlpGYXlMvSbJTAbY8nnmk8TZxN1Jt8qYajYUA==
-From: Jonatan Holmgren <jonatan@jontes.page>
-To: git@vger.kernel.org
-Cc: peff@peff.net,
-	gitster@pobox.com,
-	"D . Ben Knoble" <benknoble@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Jonatan Holmgren <jonatan@jontes.page>
-Subject: [PATCH v2 2/2] alias: support non-alphanumeric names via subsection syntax
-Date: Tue, 10 Feb 2026 19:31:10 +0100
-Message-ID: <20260210183110.1151072-3-jonatan@jontes.page>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260210183110.1151072-1-jonatan@jontes.page>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
- <20260210183110.1151072-1-jonatan@jontes.page>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mRPWc0tJ"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-354a7b089bbso3570379a91.2
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:42:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770748924; x=1771353724; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1nwY8HpQ0ZOPmqaSDlD6xPIIhrz1y8zX1viZUMblevw=;
+        b=mRPWc0tJ37RhV+XsiFSr8XtRyBGqvm2OEmz7A1f5kWzPmsBCBw8eS5vFpjvTPPkggJ
+         jasl3Rk+HI8EheIi935dJRRjNsborUS1S1A9DdFLGQcNxwMWG9AUldpTBVuB4j/RKa8T
+         7agz3WVi01zFcdslpOc6gHOPBKwwdPUmY6wy8sBcENzk+4y2ezmS22FvR9qlAO0rsMjM
+         jFfPQK2gUu8aWoHAnuiSNxwpPj6G7z45zzuUuoaL1WrledFPt+uyH88L0/C090GZKPvS
+         jBa1Bz1qzSO8DMH/cRUwwHiPfTtTc9iZP6NCyjFVpxEN4jKEH/GjV1trcO1i4IGOmgTj
+         ixgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770748924; x=1771353724;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1nwY8HpQ0ZOPmqaSDlD6xPIIhrz1y8zX1viZUMblevw=;
+        b=IqV9jNcSl+kxPfPxA01SaGxa8yvrBXKm4dclTnLi52iJC8PecAYFYJb/DVKeUdm7f8
+         MCdA7FX+lJG5B5kFRnVh6bLrYcfPRQGZmMEoZqBqHfTla1nFKnklp8QTnJ+iWYJbIa/i
+         v1q0WnoJC71t0nmiWHU46y7dza3mFNYaPdLBkPjWef/p8hgDa98CzuWhKZyDUdfPTvwz
+         fFRrwz8LZyupzNF5zeF+1OUdK1Nj3e6xkWwqHx1qi+VZdPNo9LiWCvv2kmog8xWuHrZo
+         bN+5st0JYfj8ymKZHHAU3pbPFs+JFTI+ETExzTYy9FLBnGYRxfLjPbw2OQQV3LkAKTSY
+         HelQ==
+X-Gm-Message-State: AOJu0Yw2oVTj9sGWuYeT3VZtU68wELNp5zeOv5OlTXdwnyoELxFl4pou
+	up14zD8IUpf1UTTMv2AqgAL0TMLVSrreJsAoB8g6T/508be9Nt1zb0j2
+X-Gm-Gg: AZuq6aJ5m8gSvY8ixXH92ZS0ggr7CbbdBkCuvngMQPAjipP61PCxS5+yEd19CKY20zY
+	ppQKyEBELtRpXTeU1Zubr1t/KrhwAg+Le8USUnsw30CfKkLBKmgO/iK6Z3XECqgiKmYHUP1UXzt
+	VxINHaItO+SLxNQSizXazySDwfNGrQVvRfCnADHrDCpEob7wr+lYoymG477CS0kY2CgWv7TSgti
+	PTEHeX++Avx/OCvDvwbhEc+zz2HWsEvowJLHixJCJnOXuJb/F6tgFw51r2wkFkexsfFqTo0i0Ma
+	6JYsO6McHY1tK0//Hq8HoCvLc99kUA+TvfjqhVmjZ+Ow4JFlQS01C5Geyy14zKkK+jeNSVd6RLA
+	rhcRJPXNi4F/Vzel7lhuJYe9wfjPMnvc4RkaA3B/MDTBGZ1oBBP8KLgIR7+SWCMQQYjfbcq0LgW
+	ZYL6/2JEKc1nThiHU1Ifxscsum5/CxBGI3TkkUPaECeVmKWeXRt66hDO5GlKjUyEnEKI1m8kKAk
+	Fs13uNIPsXmSYCGR9LA4OaLHdwsk38eBhlbgSbEghZqE/rtS99ikF6MMlnXO/t9KwBUDhU3obO7
+	TlifNGRAyNZchgUCPwI=
+X-Received: by 2002:a17:90b:3505:b0:341:c964:126c with SMTP id 98e67ed59e1d1-354b3d086f9mr11573707a91.34.1770748924200;
+        Tue, 10 Feb 2026 10:42:04 -0800 (PST)
+Received: from localhost.localdomain ([2409:40e2:100c:822b:c98b:6ad:2fbf:bfff])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662e6cc17sm3629219a91.5.2026.02.10.10.42.01
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 10 Feb 2026 10:42:03 -0800 (PST)
+From: SoutrikDas <valusoutrik@gmail.com>
+To: valusoutrik@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com
+Subject: [GSOC PATCH v2] t7003: modernize path existence checks using test helpers
+Date: Wed, 11 Feb 2026 00:11:56 +0530
+Message-ID: <20260210184156.50363-1-valusoutrik@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260210181445.49380-1-valusoutrik@gmail.com>
+References: <20260210181445.49380-1-valusoutrik@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
 
-Git alias names are limited to alphanumeric characters and dashes
-because config variable names are validated by iskeychar(). This
-prevents non-English speakers from creating aliases in their native
-languages.
+Replace 'test -f' and 'test -d' with Git's path
+helpers. Strengthen the '! test -d dir' and
+'! test -d diroh/dir' tests.
 
-Add support for arbitrary alias names by using config subsections:
+Checking the test setup before test 12 confirms
+that there are no expected non directories named
+'dir' or 'diroh/dir'
 
-    [alias "förgrena"]
-        command = branch
-
-The subsection name is matched as-is (case-sensitive byte comparison),
-while the existing definition without a subsection (e.g.,
-"[alias] co = checkout") remains case-insensitive for backward
-compatibility. This uses existing config infrastructure since
-subsections already support arbitrary bytes, and avoids introducing
-Unicode normalization.
-
-Also teach the help subsystem about the new syntax so that "git help
--a" properly lists subsection aliases and the autocorrect feature can
-suggest them. Use utf8_strwidth() instead of strlen() for column
-alignment so that non-alphanumeric alias names display correctly.
-
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
+Signed-off-by: SoutrikDas <valusoutrik@gmail.com>
 ---
- Documentation/config/alias.adoc | 44 +++++++++++++++++++++-----
- alias.c                         | 45 ++++++++++++++++++++++-----
- help.c                          | 12 +++++--
- t/t0014-alias.sh                | 55 +++++++++++++++++++++++++++++++++
- 4 files changed, 137 insertions(+), 19 deletions(-)
+v2:
+Address feedback from Junio C Hamano 
+Acknowledge that the rewritten tests are stricter
+---
+ t/t7003-filter-branch.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
-index 80ce17d2de..17a548cd64 100644
---- a/Documentation/config/alias.adoc
-+++ b/Documentation/config/alias.adoc
-@@ -1,12 +1,40 @@
- alias.*::
--	Command aliases for the linkgit:git[1] command wrapper - e.g.
--	after defining `alias.last = cat-file commit HEAD`, the invocation
--	`git last` is equivalent to `git cat-file commit HEAD`. To avoid
--	confusion and troubles with script usage, aliases that
--	hide existing Git commands are ignored except for deprecated
--	commands.  Arguments are split by
--	spaces, the usual shell quoting and escaping are supported.
--	A quote pair or a backslash can be used to quote them.
-+alias.*.command::
-+	Command aliases for the linkgit:git[1] command wrapper. Aliases
-+	can be defined using two syntaxes:
-++
-+--
-+1. Without a subsection, e.g., `[alias] co = checkout`. The alias
-+   name is limited to alphanumeric characters and `-` (the same
-+   limitation as configuration variable names), and is matched
-+   case-insensitively.
-+2. With a subsection, e.g., `[alias "name"] command = value`. The
-+   alias name can contain any characters including UTF-8, and is
-+   matched case-sensitively as raw bytes.
-+--
-++
-+Examples:
-++
-+----
-+# Without subsection
-+[alias]
-+    co = checkout
-+    st = status
-+
-+# With subsection (allows UTF-8 and special characters)
-+[alias "hämta"]
-+    command = fetch
-+[alias "gömma"]
-+    command = stash
-+----
-++
-+E.g. after defining `alias.last = cat-file commit HEAD`, the invocation
-+`git last` is equivalent to `git cat-file commit HEAD`. To avoid
-+confusion and troubles with script usage, aliases that
-+hide existing Git commands are ignored except for deprecated
-+commands.  Arguments are split by
-+spaces, the usual shell quoting and escaping are supported.
-+A quote pair or a backslash can be used to quote them.
- +
- Note that the first word of an alias does not necessarily have to be a
- command. It can be a command-line option that will be passed into the
-diff --git a/alias.c b/alias.c
-index c66a6095bb..cfd313ce5d 100644
---- a/alias.c
-+++ b/alias.c
-@@ -17,21 +17,50 @@ static int config_alias_cb(const char *key, const char *value,
- 			   const struct config_context *ctx UNUSED, void *d)
- {
- 	struct config_alias_data *data = d;
--	const char *p;
-+	const char *subsection, *subkey;
-+	size_t subsection_len;
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 5ab4d41ee7..c475769858 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -92,8 +92,8 @@ test_expect_success 'rewrite, renaming a specific file' '
  
--	if (!skip_prefix(key, "alias.", &p))
-+	if (parse_config_key(key, "alias", &subsection, &subsection_len,
-+			     &subkey) < 0)
- 		return 0;
- 
-+	/*
-+	 * Two config syntaxes:
-+	 * - alias.name = value        (without subsection, case-insensitive)
-+	 * - [alias "name"]
-+	 *       command = value       (with subsection, case-sensitive)
-+	 */
-+	if (subsection) {
-+		if (strcmp(subkey, "command"))
-+			return 0;
-+	}
-+
- 	if (data->alias) {
--		if (!strcasecmp(p, data->alias)) {
-+		int match;
-+
-+		if (subsection)
-+			match = (strlen(data->alias) == subsection_len &&
-+				 !strncmp(data->alias, subsection,
-+					  subsection_len));
-+		else
-+			match = !strcasecmp(data->alias, subkey);
-+
-+		if (match) {
- 			FREE_AND_NULL(data->v);
--			return git_config_string(&data->v,
--						 key, value);
-+			return git_config_string(&data->v, key, value);
- 		}
- 	} else if (data->list) {
--		if (value)
--			string_list_append(data->list, p)->util =
--				xstrdup(value);
-+		struct string_list_item *item;
-+
-+		if (!value)
-+			return 0;
-+
-+		if (subsection)
-+			item = string_list_append_nodup(data->list,
-+				xmemdupz(subsection, subsection_len));
-+		else
-+			item = string_list_append(data->list, subkey);
-+		item->util = xstrdup(value);
- 	}
- 
- 	return 0;
-diff --git a/help.c b/help.c
-index a450d57987..16abfe7bf3 100644
---- a/help.c
-+++ b/help.c
-@@ -21,6 +21,7 @@
- #include "fsmonitor-ipc.h"
- #include "repository.h"
- #include "alias.h"
-+#include "utf8.h"
- 
- #ifndef NO_CURL
- #include "git-curl-compat.h" /* For LIBCURL_VERSION only */
-@@ -108,7 +109,7 @@ static void print_command_list(const struct cmdname_help *cmds,
- 
- 	for (i = 0; cmds[i].name; i++) {
- 		if (cmds[i].category & mask) {
--			size_t len = strlen(cmds[i].name);
-+			size_t len = utf8_strwidth(cmds[i].name);
- 			printf("   %s   ", cmds[i].name);
- 			if (longest > len)
- 				mput_char(' ', longest - len);
-@@ -492,7 +493,7 @@ static void list_all_cmds_help_aliases(int longest)
- 	string_list_sort(&alias_list);
- 
- 	for (i = 0; i < alias_list.nr; i++) {
--		size_t len = strlen(alias_list.items[i].string);
-+		size_t len = utf8_strwidth(alias_list.items[i].string);
- 		if (longest < len)
- 			longest = len;
- 	}
-@@ -590,8 +591,13 @@ static int git_unknown_cmd_config(const char *var, const char *value,
- 
- 	/* Also use aliases for command lookup */
- 	if (!parse_config_key(var, "alias", &subsection, &subsection_len, &key)) {
--		if (!subsection)
-+		if (subsection) {
-+			if (!strcmp(key, "command"))
-+				add_cmdname(&cfg->aliases, subsection,
-+					    subsection_len);
-+		} else {
- 			add_cmdname(&cfg->aliases, key, strlen(key));
-+		}
- 	}
- 
- 	return 0;
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 07a53e7366..66631ad40f 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -112,4 +112,59 @@ test_expect_success 'cannot alias-shadow a sample of regular builtins' '
- 	done
+ test_expect_success 'test that the file was renamed' '
+ 	test D = "$(git show HEAD:doh --)" &&
+-	! test -f D.t &&
+-	test -f doh &&
++	test_path_is_missing D.t &&
++	test_path_is_file doh &&
+ 	test D = "$(cat doh)"
  '
  
-+test_expect_success 'subsection syntax works' '
-+	test_config alias.testnew.command "!echo ran-subsection" &&
-+	git testnew >output &&
-+	test_grep "ran-subsection" output
-+'
-+
-+test_expect_success 'subsection syntax only accepts command key' '
-+	test_config alias.invalid.notcommand value &&
-+	test_must_fail git invalid 2>error &&
-+	test_grep -i "not a git command" error
-+'
-+
-+test_expect_success 'simple syntax is case-insensitive' '
-+	test_config alias.LegacyCase "!echo ran-legacy" &&
-+	git legacycase >output &&
-+	test_grep "ran-legacy" output
-+'
-+
-+test_expect_success 'subsection syntax is case-sensitive' '
-+	test_config alias.SubCase.command "!echo ran-upper" &&
-+	test_config alias.subcase.command "!echo ran-lower" &&
-+	git SubCase >upper.out &&
-+	git subcase >lower.out &&
-+	test_grep "ran-upper" upper.out &&
-+	test_grep "ran-lower" lower.out
-+'
-+
-+test_expect_success 'UTF-8 alias with Swedish characters' '
-+	test_config alias."förgrena".command "!echo ran-swedish" &&
-+	git förgrena >output &&
-+	test_grep "ran-swedish" output
-+'
-+
-+test_expect_success 'UTF-8 alias with CJK characters' '
-+	test_config alias."分支".command "!echo ran-cjk" &&
-+	git 分支 >output &&
-+	test_grep "ran-cjk" output
-+'
-+
-+test_expect_success 'alias with spaces in name' '
-+	test_config alias."test name".command "!echo ran-spaces" &&
-+	git "test name" >output &&
-+	test_grep "ran-spaces" output
-+'
-+
-+test_expect_success 'subsection aliases listed in help -a' '
-+	test_config alias."förgrena".command "!echo test" &&
-+	test_config alias."分支".command "!echo test" &&
-+	test_config alias.regular "!echo test" &&
-+	git help -a >output &&
-+	test_grep "förgrena" output &&
-+	test_grep "分支" output &&
-+	test_grep "regular" output
-+'
-+
- test_done
+@@ -103,10 +103,10 @@ test_expect_success 'rewrite, renaming a specific directory' '
+ 
+ test_expect_success 'test that the directory was renamed' '
+ 	test dir/D = "$(git show HEAD:diroh/D.t --)" &&
+-	! test -d dir &&
+-	test -d diroh &&
+-	! test -d diroh/dir &&
+-	test -f diroh/D.t &&
++	test_path_is_missing dir &&
++	test_path_is_dir diroh &&
++	test_path_is_missing diroh/dir &&
++	test_path_is_file diroh/D.t &&
+ 	test dir/D = "$(cat diroh/D.t)"
+ '
+ 
 -- 
-2.53.0
+2.52.0
 
