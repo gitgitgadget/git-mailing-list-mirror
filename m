@@ -1,110 +1,196 @@
-Received: from pio-pvt-msa3.bahnhof.se (pio-pvt-msa3.bahnhof.se [79.136.2.42])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115A019F137
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:33:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B0B3246E3;
+	Tue, 10 Feb 2026 18:40:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770748393; cv=none; b=XtbVnHWBuNleZ+WjtKIlut1fWiIKWbTlMtgIaq57mr6BH+fPm8F2qGQZMtsHcpM3E+dwvmmwen8FdOvdVK30YmdTbFzyts0pSUG5TfrSgeEahI2WhxsVEXeBlfWE/GPY2xNw9peLwpWvSj3FcqIgaM1p/Rvc0SM5VuVQDeobtV4=
+	t=1770748802; cv=none; b=OJnadweCdVPwV0XztVsJqGvREol4hA8J7UzRTW/fsLN0N4sjJpFTokL+jB73/GW6l82yQvt15gWO62a3SX4kRKrtVn0x0wfHFH0yaIq7WLx7c+QkWa5llmXLC5T4OsU1SXEnnBQoW2EX0QrrMt1juvPcBet7RjZzuWv0AWKAXGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770748393; c=relaxed/simple;
-	bh=Yj128/TrE3HvNOW8zuU3EuOQRoyWtIG5spnpYODOckE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dGZD2dRgKZCrKhKQWECi1dssnD5353j31nm09Jl/y/crPxw336yCehyMM3kKa0U5MdFydCTEbdkfZfa8NFvmCjqdZlStmWP+8TMBeiduDdtoOToKUsGWd9tivuiIPiPzAvihxn4m49XcIRM/0OtZy1mMcVuSxaSH/MHuSKDKquA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=r1GMR2S9; arc=none smtp.client-ip=79.136.2.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
+	s=arc-20240116; t=1770748802; c=relaxed/simple;
+	bh=vTw4x8b7eJFQh4k8uSDRHgeHaYN55Co3pdIEjH0JFNw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CRp8LWGd/hxlqGA9r0HS+H7yRpy9XLqoMn4HIFpON0faLYd63Z4MJ5wl5b9BkJKVhdKjOcBn4nxixLP0iINjDWEvZFG8mknEZ4J4O0ywCyJ8uej1GVypBmLlO35wH70TgT6PFk1DdGD6f+HkhGtERiE+b4bIrHVx/IY7GQhha1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dzwvLUi2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="r1GMR2S9"
-Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTP id A9D913F8F0;
-	Tue, 10 Feb 2026 19:33:03 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.1
-X-Spam-Level:
-Authentication-Results: pio-pvt-msa3.bahnhof.se (amavisd-new);
-	dkim=pass (2048-bit key) header.d=jontes.page
-Received: from pio-pvt-msa3.bahnhof.se ([127.0.0.1])
-	by localhost (pio-pvt-msa3.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PXeJLZ4Qrdsf; Tue, 10 Feb 2026 19:33:02 +0100 (CET)
-Received: 
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTPA id 6C2ED3F841;
-	Tue, 10 Feb 2026 19:33:02 +0100 (CET)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4BD5DB1E34;
-	Tue, 10 Feb 2026 19:32:02 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
-	t=1770748325; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=eLBoDI67zGnn6+ML92SadUu+jI47QaWREuw1HfhwH4c=;
-	b=r1GMR2S9kZEAk0vkWknLbGjdDCxz0z/4goMcTVNZBYUwKy2ulwNxgV7N6e3T8mkyyt27vc
-	qnJ0FIPC11V8PJKAXcIa+gMUD67585Cq9U/XAk+Oqa27DnZ2iBBeSbcnKzor1cawCp+9Ni
-	OSIP0VuqP1J+Z8cdiFDAr/8gHUfH3OYwwx4IPG22OR5hDcdg7QS2C7rSYVOJAY4BjyL1yN
-	cITFCVfJG7F/XMbOIp6kFqOQ6+6HaF51hNsNtJS+ZSXjaZ6Dby4X+vHO6dmYdco2B2rsDB
-	BBATCrahYIwKP5YtzXMPmbMQVcjl0ZxV4lZZmBTtSeKy0LOUCrxnyEjXkOWObg==
-From: Jonatan Holmgren <jonatan@jontes.page>
-To: git@vger.kernel.org
-Cc: peff@peff.net,
-	gitster@pobox.com,
-	"D . Ben Knoble" <benknoble@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Jonatan Holmgren <jonatan@jontes.page>
-Subject: [PATCH v2 0/2] support UTF-8 in alias names
-Date: Tue, 10 Feb 2026 19:31:08 +0100
-Message-ID: <20260210183110.1151072-1-jonatan@jontes.page>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dzwvLUi2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EFEC116C6;
+	Tue, 10 Feb 2026 18:40:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770748802;
+	bh=vTw4x8b7eJFQh4k8uSDRHgeHaYN55Co3pdIEjH0JFNw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dzwvLUi29MBMhlPaMEEXmDXezagsbzp8QdGpPjxddZlDSWzaMCjY9Fc0mL1eYNDgT
+	 3inwGIqHCOXdaSqciCKGDOaxRkFw5qT339k+gIFMYrNSY/Nc2WubMunOZK+lPFCG/z
+	 OUmk9ipxIyNrMKiEuXdPjU0FsxtBOS+ZdLolEovhr/yeE+WWFDOXfRGJ3ZJ8mjlcwI
+	 QfWS3oLxD0M9dUCdvdW1retUFEKGajjpqRAh+FjZ9ybOIDwiyWPfguBr3IghLxrpko
+	 7rnl+mF2E2634EcEeJhgCLhI2yljlQ5VAHNt7cWkZUBntoEbuQfG97ZF9pM3tDW1yF
+	 qbMM4z415G+SA==
+Date: Tue, 10 Feb 2026 19:39:58 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, 
+	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>, linux-man@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] futex_waitv.2: new page
+Message-ID: <aYt5-PaPvKGPjI27@devuan>
+References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
+ <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
+ <aYpg1XelZBzpw4ZL@devuan>
+ <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
+ <aYtAknObJpjszCaj@devuan>
+ <55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
-
-Hi all,
-
-Thanks for the feedback on my first patch! This iteration (to my understanding) 
-addresses all the points raised by Jeff, Junio, and Brian.
-
-Relevant since RFC/v1:
-- Split into two commits: a preparatory refactoring and the main feature
-- Removed release notes from commits 
-  (suggested blurb below, first time doing this, bear with me :))
-- Fixed documentation to use "without subsection" terminology instead of
-  "flat syntax"
-- Consolidated help.c to use list_aliases() from alias.c, eliminating
-  duplicate parsing logic
-- Added utf8_strwidth() for proper column alignment in help output
-- Improved test coverage with case-sensitivity tests, subsection validation,
-  and help listing verification
-- Tests now use test_config helper and simpler output verification
-
-The implementation follows Peff's suggestion to use config subsections
-rather than modifying the config key syntax. This allows arbitrary bytes
-in alias names while maintaining backward compatibility.
-
-Suggested release note blurb:
-
- * Git aliases now support UTF-8 characters and special characters
-   in alias names through subsection syntax: `[alias "name"] command = value`.
-   This enables aliases in non-English languages. The traditional syntax
-   (without subsection, e.g., `[alias] co = checkout`) continues to work.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="2mwwcg22kklveia5"
+Content-Disposition: inline
+In-Reply-To: <55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
 
 
-Jonatan Holmgren (2):
-  help: use list_aliases() for alias listing and lookup
-  alias: support non-alphanumeric names via subsection syntax
+--2mwwcg22kklveia5
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, 
+	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>, linux-man@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] futex_waitv.2: new page
+Message-ID: <aYt5-PaPvKGPjI27@devuan>
+References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
+ <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
+ <aYpg1XelZBzpw4ZL@devuan>
+ <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
+ <aYtAknObJpjszCaj@devuan>
+ <55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
+MIME-Version: 1.0
+In-Reply-To: <55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
 
- Documentation/config/alias.adoc | 44 +++++++++++++++++++++-----
- alias.c                         | 43 ++++++++++++++++++++++----
- help.c                          | 36 ++++++++++-----------
- t/t0014-alias.sh                | 55 +++++++++++++++++++++++++++++++++
- 4 files changed, 144 insertions(+), 34 deletions(-)
+Hi Kristoffer, =D0=BD=D0=B0=D0=B1,
 
--- 
-2.53.0
+On 2026-02-10T16:54:02+0100, Kristoffer Haugsbakk wrote:
+> On Tue, Feb 10, 2026, at 15:30, Alejandro Colomar wrote:
+> > Hi!
+> >
+> > On 2026-02-10T15:17:55+0100, =D0=BD=D0=B0=D0=B1 wrote:
+> >> Hi!
+> >>
+> >> On Mon, Feb 09, 2026 at 11:35:53PM +0100, Alejandro Colomar wrote:
+> >> > On 2026-02-07T23:00:49+0100, =D0=BD=D0=B0=D0=B1 wrote:
+> >> > > Signed-off-by: Ahelenia Ziemia=C5=84ska <nabijaczleweli@nabijaczle=
+weli.xyz>
+> >> >
+> >> > For some reason, the patch doesn't want to apply.  I don't see anyth=
+ing
+> >> > obviously wrong, so it may be an issue in my side?
+> >> >
+> >> > 	Applying: futex_waitv.2: new page
+> >> > 	error: affected file 'man2/futex_waitv.2' is beyond a symbolic link
+> >> > 	error: man7/futex.7: does not exist in index
+> >> > 	Patch failed at 0001 futex_waitv.2: new page
+> >> > 	hint: Use 'git am --show-current-patch=3Ddiff' to see the failed pa=
+tch
+> >> > 	hint: When you have resolved this problem, run "git am --continue".
+> >> > 	hint: If you prefer to skip this patch, run "git am --skip" instead.
+> >> > 	hint: To restore the original branch and stop patching, run "git am=
+ --abort".
+> >> > 	hint: Disable this message with "git config set advice.mergeConflic=
+t false"
+> >> > 	Press any key to continue...
+> >>
+> >> Hm, I did recently set
+> >>   $ git config diff.noprefix
+> >>   true
+> >> I didn't expect this to affect format-patch diffs
+> >> (since it doesn't affect diffs shown by git add -p),
+> >> or, if it did, I expected the designated consumer of format-patch
+> >> diffs (am) to understand this. perhaps not;
+> >> maybe -p0 to git am?
+> >>
+> >> A quick search yields
+> >>   https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#eaa0323ec4=
+eed441b37caf96e1b136529b298dbac
+> >> where you're in the thread and the maintainer says "queued" for a patch
+> >> that would ignore noprefix for format-patch for this reason precisely.
+> >> But clearly not, since my patches were with noprefix=3Dtrue and came o=
+ut -p0.
+> >
+> > Oh, that bites again!
+> >
+> > Junio, do you still have this queued?
+> > <https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#m6f42ff4f0cb=
+2d6dd1d68f12a533d04c822b68a80>
+>=20
+> See 15108de2 (Merge branch 'jk/format-patch-ignore-noprefix',
+> 2023-03-21).
 
+Ahhh, it seems that the OP is using a too-old version of git.  I saw at
+the bottom of the patch 2.39.5.  But the fix was part of 2.41.0.
+
+	$ git describe --contains ab89575387c02ea024163256826ad1c6dd2e4247
+	v2.41.0-rc0~141^2
+
+This seems reasonable.  =D0=BD=D0=B0=D0=B1, would you mind not using that f=
+lag unless
+you use a recent-enough git(1) (I suspect you're on an old Debian)?  :)
+
+	alx@devuan:~/src/linux/git/main$ git show v2.41.0 | grep ^Date
+	Date:   2023-06-01 15:28:43 +0900
+	Date:   2023-06-01 15:28:26 +0900
+	alx@devuan:~/src/linux/git/main$ git show v2.39.5 | grep ^Date
+	Date:   2024-05-30 17:22:58 -0700
+	Date:   2024-05-30 16:52:52 -0700
+	alx@devuan:~/src/linux/git/main$ git show v2.39.0 | grep ^Date
+	Date:   2022-12-12 09:59:23 +0900
+	Date:   2022-12-12 09:59:08 +0900
+
+
+Have a lovely night!
+Alex
+
+> An aside but `format.noprefix` is not a boolean like `diff.noprefix`.
+> It will be enabled with any value.
+>=20
+> Is it standard to indicate this with the existing =E2=80=9CIf set,=E2=80=
+=9D, perhaps? Or
+> should it say =E2=80=9Cenabled with any value=E2=80=9D?
+>=20
+> (+Cc Peff)
+>=20
+>     format.noprefix::
+>             If set, do not show any source or destination prefix in patch=
+es.
+>             This is equivalent to the `diff.noprefix` option used by `git
+>             diff` (but which is not respected by `format-patch`). Note th=
+at
+>             by setting this, the receiver of any patches you generate will
+>             have to apply them using the `-p0` option.
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--2mwwcg22kklveia5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmmLe3gACgkQ64mZXMKQ
+wqlzMxAAuGYuSgSKrUL4qHH0C5vPOefQYDdDnvoSps2KLLLlRwgXNKf0eqkK6nD8
+qvO128TcYu7ink3h/OPfokvgU9/4rjmATvS17LWZaqgWzqDdYQJEqS0QdpHk8DJ1
+gwgkO0eHaxh3871AylRIRHXaUD5c0UGWfSFDZ4R/GVIeqVKhJpJHp3zE0l0RvGo2
+WRzbzkyEQkZ0hGOYTTG2GWcN5DHLy7HeXr1eMQpVIY+SRzvYPxfXRaQ6/2Yr1QAz
+UHeWnlIkJ/gHvNtApHvRiWo/zxG68BY5oQoNwGojWO5BW92gaZMburu+S8Ll0wCd
+cONM1sXw0BrcVQ+mNYLCvW3V1EkMWqrLGcwdOHQldLZliJ619QIR8cWVUiMGtRZ3
+z4eAQff3DrktHPGLrQzk59raiNirjhlIoF+aDN155SnlXtVhfuqn6F2xmkIlPGIJ
+/nbrxx0H9OC3lXl/YcwBtfMKzXfHBUkxLbwS0E+F0JyOSPlwKZgWM8i5oMXYR98p
+uPvyaFl23b2/bBxtZqJNERHlXFzaKZtp092HJ2SWpv0kd2riAW1F0Q1ua6BxRDqW
+8ynmeBO/y4zhNBeaEBd7Zl+4kSqjWY/0PaddgJr5JZKrgz3qIu1pk9VwlG0Cox+w
+3lQzd/9Tw+aYKgGNQUYtmqQNLiuVGqJmFGRL2Gi+Y4gYp5qkqLI=
+=EXTs
+-----END PGP SIGNATURE-----
+
+--2mwwcg22kklveia5--
