@@ -1,125 +1,96 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from siberian.tulip.relay.mailchannels.net (siberian.tulip.relay.mailchannels.net [23.83.218.246])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F5E13D539
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 00:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770684343; cv=none; b=C2VP41VI98Y3jX8r2nKo+QRQoiJf8UHgrxg3rhtPNS15ndjGNYuQZaQ1k/y5MM33SZG/gcs5sRWX9Zz4b8KHtHIJaSqkN8VHIoIgcD1bxsuCF5jHFIY7th1qvIaxg0vaYeGoESc+GDQ7t0FpCfgzAksDdHpNid30A8uvuCTL928=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770684343; c=relaxed/simple;
-	bh=x1if7HQrTvp5RcbUVvlnDYBXDE5ckJ2y4hXzEPP98aQ=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=Q/vah/rL54VTHuIDGD5Ae4AVBh6NemGrmlxufxOuZG9vw8QDpcN3Kb+59Y2jXTFdS2qDoDDx8sJrx3qJD0TVU3kMFfE+NFCy/9Py02e7I2f5Qp0j96AoiSMdXqiJVASc58833hywJJ7Yi8BDoyH2SU8Vr7gGc0VUhBZ8A2xZ9eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ibe0dC7Q; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ibe0dC7Q"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7964fb9ae3dso14221697b3.0
-        for <git@vger.kernel.org>; Mon, 09 Feb 2026 16:45:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770684341; x=1771289141; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=R4WXIVCUTMSCMyMdMc28zL+ErVZwYJNY3gZelKuops0=;
-        b=Ibe0dC7QIQW1zhK8w1G1MrCTwN5+JEclMb4xojV5amlJzEF62tGGlQ0xwkpb5I8+aJ
-         NN+4y6S3rx/oe+eSSsMvY3rTspGiJSb6j7NeT+mFfZRjRhaVHDwCPox4CLLCOHqlKdqP
-         hXlMAnDyH+QxgXUsVQDGEmXjdWbgMDJFm8o+IJAtjuxoG2K0cxf7LFtIewxPRaSlaMLr
-         W+Veq4tECTF6rBPB2pmH8cLuY/uzPdGlFCXXtGhbnHAOH+yQkPEdipneWZA3axOTWZ2v
-         xP+Rg12+Lw0urUqcuSzKZ8xbLruJdiDQV0DLlg74tk21Ompl2wW6+EMFNfjlxQRuG1zZ
-         cT/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770684341; x=1771289141;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=R4WXIVCUTMSCMyMdMc28zL+ErVZwYJNY3gZelKuops0=;
-        b=Sj4I0Zi2a+m6GM7aZ/uD7xOldu7qXpB+naGxfHv5IB0EoYqJ0LyYJAcEETAgNbX73r
-         XfNgnoXEGu7YWymVSBZFy3LodZSFVy3GswvdYMj1eRkGDdU2fQUWl9OavknNbuKHQJQ2
-         Mg84ANj09Y7AowKSLzheXVyERaoWuDdsl23Davge0OYFUrZN7GI2bW/lIabxf3AAvoBN
-         g9PJSg6hiZPAG0Q0jxZYoIlYLZ9AvPMTMQEGiA81UVECpRq1PE0WWg3ehWggodpr+LRx
-         2aYaVKICvvxUwFt3xGRoBjELnq9yBTlu0TvzNXoDK7ymJK/smvx23DRyShGK1Mymptbc
-         ubwA==
-X-Forwarded-Encrypted: i=1; AJvYcCVgVZyEY4+rgxy+KbYysWJUO6he1c0pF7HEYhJaf2gTqM7KPbZyi8Q3i4iknMS6vOY0z7U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJAhPwZRVLObnvFpNVGCZD2UV6Qjyvv/vvvoEH4+fy7wo5uFLf
-	+2DnGxBB5LKq0Z+Buln85xEfqp5HQM22xSAfjRi+Y7jTCQeHVoYE8lWj
-X-Gm-Gg: AZuq6aKtzL/3NmYSU74VfrOX99icPSrivz3CtiBPbXu2QaGq7eIkzG4+VqVAHpUQcFQ
-	93T3mdvXIiJzBZglgbU0ssI9pFv1DpC8XC553WHzfbUsfxt1MRFLh6Hdy2UlmoDYkK5epqXuYrX
-	hhprJeJHRiQuzZvMCuQUQodfmTUm4b6Bn2YowOOAPCuHztXcqYc4PGBrUnXYbCZtA4kPKoYZbLx
-	w5++e9yBnsyQ7LzTnoC7pVQw21lVChduSBY81lzfjodyVGIxcEvpyTDPc70w+wegdpZYV3uqEsU
-	RGQWLiU+TYfCWBAWDNjLhC0wLfyAFNWT+SL1ccaGbkyTLcKcdunfGtLbjaaiDm83KF5I7PsHjg2
-	5TB2UhMpFdrLt1bKMRJFf0A7CxFR9gRhlRVNMcvfdgPmrRk9DCyja04UFSqyFHUzSDaWspmmBle
-	eHbmBE6mzk5tr/NGodIJBN//seZgQdN2vvY0sQTSUJz9cVzirG3O8JgCFwmyIHPAiGe4nsYk0oW
-	s0HlKcIWTs52lLOJVxg8GOnkdlXvBt2A7K7y1U3x9r4hg==
-X-Received: by 2002:a05:690c:6c90:b0:794:77da:aa55 with SMTP id 00721157ae682-7952ab3fbabmr106801667b3.42.1770684341266;
-        Mon, 09 Feb 2026 16:45:41 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90eb:5600:1cfa:97ae:441a:82ab])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79644b06cfbsm43827577b3.52.2026.02.09.16.45.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Feb 2026 16:45:40 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9E71F1315
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 00:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.246
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770684837; cv=pass; b=kyR6fDEaqn2WU3fZPXC9G7VRei/VrPt9IhVK9FEbbaWn1xkWMTAUvvDwoB8exQSifOpZ0bJEy5JPoYZ3+fsc/K4+uyPnAy2oX7L/qTLwe+c+VW6TCrS+JRYDE6XkHtf06BX+JRczzpSuy/EfJDvb0KGfYxo7GtPo1MECm16imJ0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770684837; c=relaxed/simple;
+	bh=gLAYW2mn4tQHSrDIcaBVxSsmQB5Hg7Q7YNwsewv5Ri8=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=aZUMCYfTt+cN+2hHqDlgLS0msVShMtPXQ3XwVk9POrhDyRCRRlRDsOkz1jrnC0Wy34p4Y+Pvt3l+Ga6rQM7tFk9FVI+BNTvi4eU9ZiZIIJiXZvMkcVwFUgZ2UMIY0M/SmrW9dnMzOjlLt8VJ1U6bCYQ2+dl31Y3xOIlmaSPBzBQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org; spf=pass smtp.mailfrom=scientia.org; arc=pass smtp.client-ip=23.83.218.246
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 39F06461AF4
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 00:53:56 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com (trex-green-4.trex.outbound.svc.cluster.local [100.96.85.251])
+	(Authenticated sender: instrampxe0y3a)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 1C5E3461BB8
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 00:53:54 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1770684835;
+	b=JrujLd8S5TSyfhIG5LtA0LN4ra46wYeG6cqAKdxygWQ8xC5xHswmauGXRbPYYAfah7LyRN
+	q4G3i7DDKATqtoLex+oegFRatBdxHr402TtO+Cjm5GHBKllNpFxk7qPxbtXtORI73Mbw8s
+	a9ECdYvcltXCmquSSlZI48JbsPi5TV49aCqtuSjjIz+FZ/aQOp/kxA+UIdCbeCzh4wUvck
+	nNES0RPZzrobf6zY9PET0MBtDLEaij3Tydyk8o9HbSX//g3KW/YVx4RRgJPAMQt3nWnWR/
+	up/wWyeRkwAfATOCXyyLMyP6fS58IzUuQ9ZVffW7MkRLH2/GW42QYg7FFUOrEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1770684835;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=gLAYW2mn4tQHSrDIcaBVxSsmQB5Hg7Q7YNwsewv5Ri8=;
+	b=NG7RCu5ugD2FNZCW5dY61sJYwCBoTVgenVQx+mPra8+MTW5PVcpKkcQDlRvwYzK7ZykS2D
+	dJCKu9+eGl2YAV4htr93nYU4VtTV3gNO4C7gvTjaVwywt5sto9AgKrttwUo4SVw9b8xpul
+	roDFV4mn/+AMoejNvxCWvXXeULpGoE8wq8zZ8L9kF9LrLCsGwxqHD2qdwoad9V7wih+ecF
+	UdTXSWs4milal7rG8aJ0e1cuvEiciWpweO0BBA4XjR2pikRp0rnGIpQ3HXCNzhbUiLZkBX
+	sTcnr0kK296BlObzg8anY5IWo/qVIu5eOrZnt+h0C4hXJ27w2A1UfXY8mtX4PA==
+ARC-Authentication-Results: i=1;
+	rspamd-845545c4df-thxvx;
+	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Bitter-Thread: 5357460373ae867e_1770684836134_824038914
+X-MC-Loop-Signature: 1770684836134:1254736725
+X-MC-Ingress-Time: 1770684836134
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.96.85.251 (trex/7.1.3);
+	Tue, 10 Feb 2026 00:53:56 +0000
+Received: from p5b071a6f.dip0.t-ipconnect.de ([91.7.26.111]:62961 helo=heisenberg.fritz.box)
+	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.99.1)
+	(envelope-from <calestyo@scientia.org>)
+	id 1vpc0m-0000000FwiM-0sgH
+	for git@vger.kernel.org;
+	Tue, 10 Feb 2026 00:53:53 +0000
+Message-ID: <83b776c4c3b6092f9714adc157ac6a38af1022f7.camel@scientia.org>
+Subject: Re: [PATCH] doc: add caveat about roundtripping format-patch
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: git@vger.kernel.org
+Date: Tue, 10 Feb 2026 01:53:51 +0100
+In-Reply-To: <format-patch_caveats.281@msgid.xyz>
+References: 
+	<bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
+	 <format-patch_caveats.281@msgid.xyz>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+User-Agent: Evolution 3.56.2-8 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [RFC] Support UTF-8 characters in Git alias names
-Date: Mon, 9 Feb 2026 19:45:30 -0500
-Message-Id: <D96BCAD5-5482-4BD5-B22E-82D34EBC1F0A@gmail.com>
-References: <xmqqecmt33xk.fsf@gitster.g>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Jonatan Holmgren <jonatan@jontes.page>, git@vger.kernel.org
-In-Reply-To: <xmqqecmt33xk.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+X-AuthUser: calestyo@scientia.org
 
+Hey.
 
->=20
-> Le 9 f=C3=A9vr. 2026 =C3=A0 18:14, Junio C Hamano <gitster@pobox.com> a =C3=
-=A9crit :
->=20
-> =EF=BB=BF"brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
->>> On 2026-02-09 at 14:55:51, Junio C Hamano wrote:
->>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->>>=20
->>>> I don't think we have any Unicode normalization code at all in Git,
->>>> though, so if you want a quality implementation, that may be a thing we=
+While it's nice to see it getting documented (thanks for that)...
+wouldn't it be even better to actually fix the underlying issue? :-)
 
->>>> need.
->>>=20
->>> Isn't NKC/NKD a macOS-only issue in practice?  Anything on the
->>> command line "git" potty and "git-blah" built-in commands receive
->>> goes through precompose_argv_prefix() to be normalized on that
->>> platform.
->>=20
->> Normalization is not a macOS-only issue.  Many accented characters can
->> be written in multiple ways,...
->=20
-> Yup, but that wasn't what I brought up macOS for.  No sane person
-> would write the same string in multiple ways on purpose and
-> everybody would want to stick to one, so that byte-for-byte
-> comparison can decide paths they created in the filesystem can be
-> matched with a list of paths they added in .gitignore, for example.
-> And for that everybody uses normalization form C, no?
->=20
-> But the macOS makes it harder to stick to a single way when it
-> involves filesystem entities; the pathname you gave to a new file
-> with your creat/open(2) may be normalized in macOS specific way when
-> it comes back from readdir(2).  Ahd for that glitch, we massage the
-> strings we got from the command line and readdir(), which are in the
-> normalization form D, into normalization form C.
->=20
-> I think the suggestion here is to assume that the users are doing
-> the right thing and treat alias names (which eventually end up being
-> pathname components) as bytes, and everything should be happy, even
-> on macOS.
+I mean it's all but guaranteed that everyone reads this,... and IMO the
+problem might even be exploited security wise.
 
-In what way do alias names end up being pathname components? Or did you mean=
- to insert =C2=AB treated like =C2=BB (as in, normalized as command argument=
-s)?=
+Cheers,
+Chris.
