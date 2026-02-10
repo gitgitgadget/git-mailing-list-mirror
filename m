@@ -1,152 +1,144 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BC72770A
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA4F301717
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 19:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770750056; cv=none; b=TTCV/XDDdwD8OxMd4LhOBxDfHR0qKA25mP7/ZW2Ijoupip4WhkACI22a4QEDz/nyaGVyBBAqN91ZO7J427bHis5UrRcKuMufn7VoSiojDhxBrjGtoUNujsk6BmgJT6Ux59G7jkPUqL2U85i6XHpAo3Wj9TT+gKnjs0YLoAJDbXQ=
+	t=1770750609; cv=none; b=Nq813MTnhaTpl1YkH71l+ZJO4Bx2X3gxUr18raOZAphCPMFzkmwJfMlJ+LPiuOKh3xODBrPjI2GkXe+1LwXZyLys4iFZzhOW1f7fp7h4Olx5TEyb3WGABmipe1dC3Tgzbd0BU7WOu1rQlsMhJNV+62lsBr9IaDSBIt/8+0txLS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770750056; c=relaxed/simple;
-	bh=z29wub8aI/+6Kg5mRcFiihdA7Yc57JsOLFlxBuELYBQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cYQM9uRLXaHDx7e0XqIJH/+l5WgZe08teI0vPIiRo8L64LJU4K/kYYojK5++DhS5gFd5MC+TCRHLv7RItzMHdEmSV5xS2y3/0rLHn1ScpHwCm0JIrvxushDlAkKcJzxqWtLyox5/Tw1lEBFYHTyuyiDfXTRzHkQPQAau9qGEj+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L7WnxdrI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NJIsRke/; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770750609; c=relaxed/simple;
+	bh=RySzR4G5tRnIBHn2D/S19f+v9zvsLUVxbj2lQLf/y8o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fg+QcDbBVy+Ry0Aig3h84HunJMI3l0NbZh7OfWD7juwZlnfb/7gRfzDH8iuV1h4PEqDku1bw1gNw4TOqac1xP9vvhH0jv4UorHE1rl0Btc4/2yP6DlzuT2aRlcWGxHhpxDTr9nl/Vju88DyvRz/pYbeZUepCiRcdjGqKIfTL8Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=m+1UMFkc; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L7WnxdrI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NJIsRke/"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 248C21D001C1;
-	Tue, 10 Feb 2026 14:00:54 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 10 Feb 2026 14:00:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770750052; x=1770836452; bh=HbJJ0Fhgn8
-	Z0/MbbjlB7fdlsyTmzNgMXLSjZ4gQlL7c=; b=L7WnxdrIF1z0dCA5JKn62WWaCY
-	FasjnKSZSGD7kBcrseaYkJbEc+PuZRGjqKtwIFxCiLmrxD6ePnBRQukZ86gYQNCe
-	8wUbMl0EZ+hsmywHuuuYwOJlmKrYpAHXjuF6lyZgraHVhsjGsi/ozla1PAx4yQpm
-	uWRksXEDeAXW85QWma1cOnV1/WsFO/eODfhhfkWmG9b5fwVCLCroBXFdXEu3uAgB
-	oRke0r8I9+Ym+wru7bpJH7Jgj/c5Vhttd6JrkVCI+eE2qNfAQrqotGXCWfz1DL8O
-	Ei3IiwVDMJkkLe2IqXsYqae+cjj1YsE82s+WCDodYGntOp8K6GGzUk7gaZKA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770750052; x=1770836452; bh=HbJJ0Fhgn8Z0/MbbjlB7fdlsyTmzNgMXLSj
-	Z4gQlL7c=; b=NJIsRke/doiHndw6MA+dw2sOqguSoahLOCHsKhdtXZdr7C4+TX1
-	GxambsFN/Mdy8VDII2hhKH8pTfOLhonqmX3hV1QcAQYDPrh2jrb5qLOWILvM+Xsg
-	oNJLODbuGvU3+pRCQ1Jv3PuumpUbWULaxF9MQYJyWpDDKJITxazgvdjKhzK2bpXw
-	HNYrGM0DY7d8G9TxXMoNftLRqINntbJuHphaysUSr+oQ1Q16JMvfSzA2Pk938aIO
-	s4BZNVSGSpSVgKq06msNQo4/vMIF5YwF2LjY3pPjb1oB1KI3c2XoHaJYA9SrdyHV
-	DY0fR6Cg59CgsfuKjv0JSd+NZYRKg56REUQ==
-X-ME-Sender: <xms:ZICLadNSSBJ1fdtI7ykvsUSlLbNbBdkwiK_eCGUvlyG3JbbwvhdvUA>
-    <xme:ZICLaW-W53rLNY_NnTYytBpP8iQynJuRGmeL2XS71j5-AiSGMVfs7j0J5ZCaOegpp
-    ZAXZv8sOsNV7kGmqgJ8lmeYoCyb-hGKJtslQbrYxArZPLhDyy1l2g>
-X-ME-Received: <xmr:ZICLaRTVAMSaAKOiNSsPnXinZ5hoOjGYfIEBzxescJVb3Py9fCQzDmSdi0nQfzaTir0UedvOPW0vPTkvAOLXc09SZVcAoO-uBg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegthhgrnhgurhgrkhhrsehpmhdrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:ZICLaYm_WtN_0RDHEISLsopCjRkZuXjClwVNa0oluQmmmK8AhZSxIg>
-    <xmx:ZICLaRTZRZPeGS4u2xdSbOomKFh0t9_vEgAtZPTMBRlvxsAoO2rO_A>
-    <xmx:ZICLaWOzyzowe-wg4TvGV7xxcuU-CYkuhcwl1wCIHYYYR-2fla1Lhg>
-    <xmx:ZICLaaVmFc028Ex3GXdb5r6TD1mIrrKzwxRFnkbzD1vgLrApth2lpA>
-    <xmx:ZICLaZSAgI-V3-PkrpMC8hKX52gNwujq1_A4TXcItsDzRK1HV-2q-T39>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Feb 2026 14:00:52 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Chandra Kethi-Reddy <chandrakr@pm.me>
-Subject: Re: [PATCH] add: support pre-add hook
-In-Reply-To: <xmqqldh0zcpa.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	10 Feb 2026 10:16:17 -0800")
-References: <pull.2045.git.1770737573475.gitgitgadget@gmail.com>
-	<xmqqldh0zcpa.fsf@gitster.g>
-Date: Tue, 10 Feb 2026 11:00:50 -0800
-Message-ID: <xmqq8qd0zan1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="m+1UMFkc"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id pt4ZvUbUq9Rfhpt4avJD72; Tue, 10 Feb 2026 19:06:57 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1770750417; bh=XPBPt/oZNhAUtlDSh+5MRD4qVCMnZHUfmY3NN3/iNUc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=m+1UMFkcqpMTmg6jITfFk1zyDGP01KlaHzW7ZoHPoGpYx2oyOvanpoCeWCtAzmfD2
+	 DJfMDfJKByyn1oQOPAMUD9fwP4xO/sWcXaRUHWH1oSiGGXReA88ayN5HjufCg83jEQ
+	 vkXXylYb6RbwqaTE+dBrp1a7LNrhhsbNFjNO0gd+d+dNR/au5DNnqqhlBjIYKE4izm
+	 KzH71uUmDIEyxxNzLsqIE8ZaCYdAzHe3niVBxIG184PXFcm1uADfnF0fwDzlvT7KyQ
+	 yaGAbyBmCOoqQtCZSrUJl8bd4pBrlnNhNyuPiG9KKZTaxZ9mT0slOuu2ANJuW0WWcN
+	 /tYn+Zars70HQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=S5R6w5sP c=1 sm=1 tr=0 ts=698b81d1
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=746zZOYYsPCTJzl4cS0A:9 a=QEXdDO2ut3YA:10
+ a=P9geR6_CPVCz1rZyWMZD:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <60d1c37d-518a-47af-a823-6e6c173d84df@ramsayjones.plus.com>
+Date: Tue, 10 Feb 2026 19:06:55 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: What's cooking in git.git (Feb 2026, #03)
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq7bsob0wo.fsf@gitster.g> <aYmleK3kGqzLXyJe@pks.im>
+ <c29e0c1d-337c-4411-8d52-07c9155e8abe@ramsayjones.plus.com>
+ <aYsyBPZfDHMnYy5s@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <aYsyBPZfDHMnYy5s@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfFA/JKVjzB7NN1y14tYxOONHyOtSDfAz5ENW5lLUfVmHWC2bnDptPrcsDlIwtQoqfEz1I4HghqbJIWL5MF0shC6LsCT0lhnW/M0wP27wfknN5B5mTQGU
+ 8do+QlbGwK67KkTyy8mJpTUMBTIttYM0eDKKOLMiKR9MTeR/lkAOKGzzvszaQ8cDioAuL2wpcaJwg8cYHXg6KsvWtNI4grscKO8=
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> The hook takes no clue from anything derived from the command line,
-> not even the pathspec (or list of individual paths computed using
-> the pathspec by the command) or the mode of operation like '-u' or
-> '--renormalize'.  I am not sure how effective a decision the invoked
-> hook can make to approve or deny in this lack of information.
 
-And I do not necessarily suggest passing the pathspec arguments or
-command line options that the "git add" command received from its
-caller down to the hook, which will force hook authors to emulate
-what "git add" would do to these arguments and options, and they
-will certainly get it wrong.
+On 10/02/2026 1:26 pm, Patrick Steinhardt wrote:
+> On Mon, Feb 09, 2026 at 07:41:30PM +0000, Ramsay Jones wrote:
+>> On 09/02/2026 9:14 am, Patrick Steinhardt wrote:
+>>> On Sat, Feb 07, 2026 at 03:15:51PM -0800, Junio C Hamano wrote:
+>> [snip]
 
-I wonder if we can split write_locked_index() into two so that
-writing out the in-core index to the temporary/lockfile can happen
-separately from the call to commit_locked_index().  If we can do so,
-then the following would become a viable and better implementation
-of this new feature to run the "pre-add" hook:
+>>
+>> Note that on cygwin I don't get the warning and the number of build targets
+>> is 693, rather than 694 (I don't know if that's relevant). Also the version
+>> of meson on linux is 1.3.2, but on cygwin is 1.5.2 (so, I would have thought
+>> that the deprecation warning would also appear on cygwin! ;) ).
+> 
+> If I remember correctly this particular deprecation was rolled back
+> eventually. *goes double checking* Yup, it's been deprecated in Meson
+> 0.64.0, but that deprecation has been rolled back in 0c802d260 (remove
+> deprecation warning for `configure_file` kwarg 'copy', 2024-05-24),
+> released as part of Meson 1.5.0.
 
- * Determine if we will need to run this "pre-add" hook, at the
-   location in the code you addded the run_hooks_opt() invocation,
-   but do *NOT* run any hook there yet.
+Ah, OK, that explains it. :)
 
- * Instead, create a temporary copy of the index file if the above
-   says "Yes, we are going to run the hook".
+> So I'm not sure whether this really needs addressing. We _could_ make
+> this conditional and use `fs.copyfile()` on Meson newer or equal to
+> 0.63.0 and older than 1.5.0. But whether that's worth it... dunno.
+> Probably not.
 
- * Let the code path to update the in-core index, i.e., letting
-   everythning up to the "finish:" label to run normally.
+Yep, this is not worth spending any more time on.
 
- * Perform the first-half of the write_locked_index(), writing the
-   new index contents into the lockfile, but stopping before
-   committing it to the final name.
+>> The make and meson builds appear very similar, although some paths and version
+>> numbers differ:
+>>
+>>   $ diff build/subprojects/git-gui/git-gui git-gui/git-gui
+>>   1c1
+>>   < #!/usr/bin/sh
+>>   ---
+>>   > #!/bin/sh
+>>   6c6
+>>   < 	echo 'git-gui version 0.21.GITGUI'; \
+>>   ---
+>>   > 	echo 'git-gui version 0.21.0.257.g1a729'; \
+>>   10c10
+>>   <  exec '/usr/bin/wish' "$argv0" -- "$@"
+>>   ---
+>>   >  exec 'wish' "$argv0" -- "$@"
+>>   12c12
+>>   < set appvers {0.21.GITGUI}
+>>   ---
+>>   > set appvers {0.21.0.257.g1a729}
+>>   378c378
+>>   < set _shellpath {/usr/bin/sh}
+>>   ---
+>>   > set _shellpath {/bin/sh}
+>>   $ 
+> 
+> I guess the /bin/sh thing is something I'll want to address so that we
+> prefer "/bin/sh" over "/usr/bin/sh". We did the same fix in Git itself
+> eventually. The wish shell feels sensible though, I don't think we need
+> to fix that part.
+> 
+> The version thing is actually a bug. The problem is that we have started
+> to set GIT_CEILING_DIRECTORIES, but we set it to the directory of
+> git-gui itself. That of course works as long as git-gui is compiled
+> standalone, but doesn't work anymore in case git-gui is embedded as a
+> subproject.
+> 
+> So why does it work for our Makefile? That's because we define the
+> SOURCE_DIR as ".", and as a result we define the ceiling directory as
+> "./..". And that seems to not restrict our discovery process. I don't
+> really know why that is, to be honest.
+> 
+> I have created [1] to address these issues. Thanks for testing!
 
- * If we are running the hook, run it with two arguments, the name
-   of the temporary copy of the original index we created earlier,
-   and the name of this lockfile that has the proposed contents of
-   the index if the hook allowed "git add" to proceed.
+OK, thanks for taking the time to look into this (and good to know that
+it wasn't a waste of your time!).
 
- * If we ran the hook and hook succeeded, or if we did not have to
-   run the hook at all, then commit the lockfile.  Otherwise abort
-   the "git add" command and rollback_lock_file().
+Thanks.
 
- * Remove the temporary file we created earlier (if any).
+ATB,
+Ramsay Jones
 
-Your hooks can "GIT_INDEX_FILE=$1 git diff --cached --name-only" to
-find out which paths already had changes added before this
-invocation of "git add", and similarly using $2 get the list of
-paths that will add further changes with this invocation.  The
-latter set of paths you can inspect to see if you like the
-additional changes brought in, perhaps like
+> [1]: https://github.com/j6t/git-gui/pull/31
 
-    #!/bin/sh
-    paths=$(GIT_INDEX_FILE=$2 git diff --cached --name-only)
-    GIT_INDEX_FILE=$1 git diff $paths >patch.txt
 
-    if grep "^+.*secret" patch.txt
-    then
-        echo "do not divulge company secret!" >&2
-	exit 1
-    fi
-
-or something.
