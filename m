@@ -1,77 +1,76 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD3E25C809
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 04:59:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E86C21770B
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 05:04:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770699573; cv=none; b=PvQ1ybsgiaoT8yh3pcTMbXpbJepSV/Shc/CgppiPCK7/+zNjsqP74d6kKMFhKLZxJJhpc8Jnd0nFyb4PdD5qlNCSqEq5z/2ibF78g1TL9Ft5UzPtya6s+fQwsDmZ/eI1b5+iO9YLLOt+D62/w4iXgaMr1pHMfx/VLbf0f3g2Umk=
+	t=1770699896; cv=none; b=PLFHUGBEG2H7awhF7BsBj3AgflQT4FfvISoURgknvsD8VZfiqXz85h1ejXEwbTA5HSD1BOQkoa8ZITi+ReBQRRuTsD9cXGXtMEFZpO2Sbcb15jFl91nkg2+3oEJEqpnqMglGloHoBBPit0k8qTWcrU50OFx7Tics8s3CjnGUAk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770699573; c=relaxed/simple;
-	bh=vcAU5qdIeZTtzx2BV9i0L+2GdLIDnHWrbzNX0gKNTtE=;
+	s=arc-20240116; t=1770699896; c=relaxed/simple;
+	bh=j9ueVZo8Xyu6KG/vmtwspUolGgnYphx1sT4FOFOIMcw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f1Yy6OW4FYhTJ/CUDVTInIUWl4knC/ctbHcXLBYCdaryLNiWE/SZ+6mn9GVv3s3DndHJGKlot9rOpJIE/9MKyxhC//Y4JaQrMWfbt6qKfMPD/0JV7u4kzVmtb4Fzj03ICht0zrHe5b66GU+ErrXlM9C9OZXOkwneUwewEfxiON8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LaSf0yVO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=khHB8QHp; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=HMm1mHMRhV5M7ncQWpTD8+ti35UgUVC5xIxMnQGyAkuJVsK5Iz25uWJoGJPHE+JB9SJlHbTtXDeA+xT7QAqhFkxicza9O7DuQc3u1UZG80v8zg1EcWP769rdcGdyhuF0ACNXKnvTuLuur6rF5uXZzb5CfOzEuonBO3qIEsaf5Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=00plxHf0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IkQT1q5+; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LaSf0yVO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="khHB8QHp"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 087C91400149;
-	Mon,  9 Feb 2026 23:59:31 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="00plxHf0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IkQT1q5+"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 48608EC052B;
+	Tue, 10 Feb 2026 00:04:54 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 09 Feb 2026 23:59:31 -0500
+  by phl-compute-05.internal (MEProxy); Tue, 10 Feb 2026 00:04:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770699571; x=1770785971; bh=+Owk17VTpX
-	ef9/wNwBjoix6EOYXkbREL8KJC0P+2ny8=; b=LaSf0yVO6Gb2EaB6h/vAdvo+Bv
-	FXWojpN3Kn0GRWc4Z4Hj7ffUknVrPKnWcMIksV5XJ0IDnin1pQkLWST2GE2SeSsJ
-	sAZifgXNt7P1imEc1IqQPm/SgDtoMoRv+Gfl7zqcicaqNjHuK0LxI00NWqE9vL6+
-	7UOsZ6ZT87YM1073sN3/2TRRiavL8KD6ufewHCcEbIsQTdQRni2Ugk8WUbCJnvCu
-	3GxX1JmcSX0c5f+3TzskmxcqD6gLFbp+Uq3QCryxM7mWAOxpAKfTlTsD5pZMxBcG
-	HdCSG2HZOc9TaKvPqtZm8quneclvgVq2pvLIXFQN8egax7I1fULTuwy1lZqg==
+	:subject:to:to; s=fm2; t=1770699894; x=1770786294; bh=VxqVTHU+cT
+	XhsINHDrrt3JHkScpUlY35pUegEXcF3Xk=; b=00plxHf0u7P8NXyPH3ERAxpWVu
+	zL+65e1ewqetZmuMWhoeweNcY9Q+3YQavDT0NqnP2L9fAmuTEuaCL++ygAkb+kVh
+	4H50ZqmcnherAe6iM3HS3PYmSdrNJJn4ha0sjKSIAXJkV/uGmVSrHOqcN/A746z8
+	R7W1IjsCSW71B0TK2qgVspCuJp3mU0vyPloCsbeT5eckqVD2wX7MvRSo+Dthx7Gf
+	15AzHww4zBMH4t5hlVlXrybr4XjDsXL0KPAG82YkcQdhuYnfpcpXFgqhRV6hAwV2
+	OJ2VshHV1QSa6okpgFAwJ6mjpm6jBcQv2gxwRNGxB4/ELmkE4uK6xBmBIFAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770699571; x=1770785971; bh=+Owk17VTpXef9/wNwBjoix6EOYXkbREL8KJ
-	C0P+2ny8=; b=khHB8QHpK220TRPlP3kbq19rRwtZcfAwDIlKmCq15RW3pJyRa8k
-	DRlPOIyG3ZaLQVpoQ0ILZgBUcQMMoHEnFJX1wqawB+Fl3CZ/DK9Z7PummdNj5Exn
-	AvSl8WBra0YK8VN0yVg/Kj4NAzD2KAqcjT24cFdlpdFXSMp7BnvrRUAY5H9Ggoie
-	nzbXQxvfyJ6Udzw6hlzhNapF7DZTCpJoTuZMu3tmlsIDYdybHm+pWgv0Et1uO4Ex
-	CtoiQLn6JTRS+IyZUQfD4GPFmAEl4uwZ8iuAAWGulxRlZOKZ2p2n/LYBKkZmNhY2
-	oNsTaxIF1tX659KtjgPG2YcXE7JPiO2HHDQ==
-X-ME-Sender: <xms:MruKaXw7XbFkh8adY31CrIgO86sqPC3h8rEj99SZ5ellbwxtSDmKzA>
-    <xme:MruKacN5ADr4dR0uJzPc8CfsRlW6s7y-SDFCcdyOEQL0qcHgAn04SR3WQ0KNQKAsP
-    93QrmWFlJOBUiReFY4Vr-msu5tRxoLXeZonLfc9SRo4oqGQDfxl5A>
-X-ME-Received: <xmr:MruKac8nRu6Z3cPcHKgdKjXCZbWMYi2JuP53AWf_vntHSqy0iTVcEbbUCj4ZY-cGnYzOIuDmLBhRNXenXOdtXkNGFggmsXA5Pw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleekjeelucetufdoteggodetrf
+	1770699894; x=1770786294; bh=VxqVTHU+cTXhsINHDrrt3JHkScpUlY35pUe
+	gEXcF3Xk=; b=IkQT1q5+EzGqc0KoIg48vYKfd9bOAe2RD8bI8Br5DyxzH1dP8y4
+	MZbFDHMqhaN3CBhF4XTfxAHk/KMeERD5cXsF6nTgCWiG1pJFwY/3QhUw6GtYROMu
+	YcyZYe0s/Ko56vcv91RtAloiLdXsunK+ARM99neM/kzBgw5+xT9DR/eiJbWh/2i1
+	+fS1HJlY+6ni1yZ4VkxtTRTJHW5fZwHMiXWPLWi3htjKjqf3y/Um7yA/Kx533hJq
+	ROiq3Q4g5wjWM5giDFhGw1qsu5etNsj7Fg5eRKQCuXffTZhVae/C4Z1kbwgvLwxX
+	MqKKMM52FNR5LKIx4bpwAmf5SF1xut+Wimw==
+X-ME-Sender: <xms:dryKaUk1d7Qybk7h5nlx2d6hUery7XtxtPeWfspc2bmsJY12jJtO7Q>
+    <xme:dryKaS5BVuw3JdTXVobvrsJm7n3TdBg966zrU4q6GjtyNKOy4lbr20Xk7_gIYukFd
+    r1ayFJtnU6ao6doG_2NRpQPGct83Ro2NgzIxMXWw1Fta0rn8i8WWg>
+X-ME-Received: <xmr:dryKaY3SPa08uzXEUG1R0eNKLaaOVWffSAqyxI9Oc2AWfmddXLRZMGvrASDyTdq6ah2f7U-so9br_c40eRwN16Hea1g6Gx93sw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleekkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihth
-    hoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddv
-    feesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhr
-    vggvrdhfrhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:MruKaZ57tdjp8RdsL_YpOyCXdl-ra-_Vl6kZBrrvYkYLpQ9j8RTYfA>
-    <xmx:MruKaS6UtSxtGdg_ptUYooNfmEqNhxHYprYDllx4A0AO9wlekO54-g>
-    <xmx:MruKaSq8nC2u19MlXOA29PQ7nSMhR5dHmUlCjhTR621QTgWxmrJXQA>
-    <xmx:MruKaTO6NVIzD8WQDb_ruych9KAzwSIVyeI_0PFK05-CVOoBi2gHug>
-    <xmx:M7uKafm83qMlIHPHObcObe8kYJvdldFy0FbiUxdG7xpWj0abf9-pwTME>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
+    hopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepshhtohhlvggv
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:dryKadFxYiPHC1bPJHqwsyNh9PRTzAARH8PDlDFLe1U4w3bUEcVtSg>
+    <xmx:dryKaXjKFtZjlu5GrLl9VGCAljyqnT85ps7OhEd-9HXFHMXeF4cGKQ>
+    <xmx:dryKaQAD9DiO3Ay5AOrb3jTcbd4_WeuqJbuxKDvuP37lV3aCwy3mpA>
+    <xmx:dryKaZSXWsGXj_-d6DA7GGX1nusA6gHAcRna1B5ZRu-jclPRhUxffQ>
+    <xmx:dryKaX9NYgpVs0_YN_Ig7Nf-BHMPHcVe1mGx4qglnTr-Hjg_EIWE873Q>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 23:59:30 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Feb 2026 00:04:53 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -79,13 +78,14 @@ Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
  <kristofferhaugsbakk@fastmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
  <jn.avila@free.fr>,
   Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/5] [RFC] Make 'git config list --type=' parse and
- filter types
-In-Reply-To: <pull.2044.git.1770698579.gitgitgadget@gmail.com> (Derrick Stolee
-	via GitGitGadget's message of "Tue, 10 Feb 2026 04:42:54 +0000")
+Subject: Re: [PATCH 3/5] config: allow format_config() to filter
+In-Reply-To: <d9e04240100afb4188d32c5ce784f189f59348b4.1770698579.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Tue, 10 Feb 2026
+	04:42:57 +0000")
 References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
-Date: Mon, 09 Feb 2026 20:59:28 -0800
-Message-ID: <xmqqldh119e7.fsf@gitster.g>
+	<d9e04240100afb4188d32c5ce784f189f59348b4.1770698579.git.gitgitgadget@gmail.com>
+Date: Mon, 09 Feb 2026 21:04:52 -0800
+Message-ID: <xmqqfr791957.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,71 +97,54 @@ Content-Type: text/plain
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Problem: 'git config list' doesn't respect --type=<X>!
-
-;-).  
-
-As there is no "inherent" type associated with each configuration
-variable (in other words, type of a particular configuration
-variable is something determined by the caller that wants the value
-of that variable), "git config list/get --type=auto" would not work,
-but it would not be too bad to allow "git config list --type=path"
-to treat everything as if it is a path and having to filter nonsense
-out of the result (like "core.bare = true/false" or even "core.bare"
-without value that means true, which may make the "*force*
-interpreting it as path" approach to barf), which is an inevitable
-consequence.
-
-> This boils down to the fact that the iterator function show_all_config()
-> doesn't call format_config(), which includes the type-parsing code.
+> From: Derrick Stolee <stolee@gmail.com>
 >
-> This wasn't super trivial to update:
+> The format_config() method in builtin/config.c currently only uses
+> git_config_*() methods for parsing. This allows parsing errors to result
+> in die() messages appropriate with keys in the error message.
 >
->  1. format_config() uses git_config_parse_*() methods, which die() on a bad
->     parse.
->  2. The path parsing code didn't have a gentle version.
->  3. The two paths ('git config list' and 'git config --list') needed to
->     standardize their display options to work with format_config().
+> In a future change we will want to use format_config() within 'git
+> config list' to help format the output, including when --type=<X>
+> arguments are provided. When the parsing fails in that case, that
+> key-value pair should be omitted instead of causing a failure across the
+> entire command.
+>
+> This change is formatted in such a way that the if/else-if structure
+> allows the default die_on_error version to appear first and then be
+> followed by the gentle parsing mode immediately afterwards.
+>
+> The only callers right now have die_on_parse set to 1.
 
-Thanks for dealing with them.  These are what I would have expected
-as part of the "inevitable consequence".
+Certainly you meant die-on-parse-errors, not unconditionally die
+when asked to parse ;-).
 
->  4. Finally, we need to filter out key-value pairs that don't match the
->     given type.
+I wonder if a "bool gently" like everybody else takes would be
+easier to understand by more developers and readers, though.
 
-This one, however, I need to see the actual code before commenting,
-as I do not think key-value pairs have inherent types.  The _only_
-special case where you can tell what type the thing is is the
-valueless true, which we can safely say is inherently boolean.
-Everything else is text string, sometimes interpreted as boolean,
-sometimes number, sometimes human-scaled number, sometimes path
-(with possible tilde expansion), etc.
 
-> This is marked as an RFC because I need to add some more tests and because
-> this is a behavior change! If there are any tools currently passing the
-> --type=<X> argument to git config list then they will have a change of
-> behavior with this series. It's an easy workaround: drop the --type argument
-> or add --no-type to go back to the previous behavior.
->
-> Thanks for any and all feedback, -Stolee
->
-> Derrick Stolee (5):
->   config: move show_all_config()
->   parse: add git_parse_maybe_pathname()
->   config: allow format_config() to filter
->   config: create special init for list mode
->   config: make 'git config list --type=<X>' work
->
->  Documentation/git-config.adoc |   3 +
->  builtin/config.c              | 130 ++++++++++++++++++++++++----------
->  config.c                      |  14 +---
->  parse.c                       |  24 +++++++
->  parse.h                       |   2 +
->  t/t1300-config.sh             |  26 ++++++-
->  6 files changed, 147 insertions(+), 52 deletions(-)
->
->
-> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2044%2Fderrickstolee%2Fconfig-list-type-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2044/derrickstolee/config-list-type-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2044
+
+> +		if (opts->type == TYPE_INT && die_on_parse) {
+>  			strbuf_addf(buf, "%"PRId64,
+>  				    git_config_int64(key_, value_ ? value_ : "", kvi));
+> +		} else if (opts->type == TYPE_INT) {
+> +			int64_t v;
+> +			int ret = git_parse_int64(value_, &v);
+> +
+> +			if (ret)
+> +				return -1;
+> +
+> +			strbuf_addf(buf, "%"PRId64, v);
+> +		}
+
+So, this follows the typical layout that was described in the
+proposed log message.  I wonder if it is too much to break the set
+of helper functions further down so that this part of the caller can
+say something like:
+
+	switch (opts->type) {
+	case TYPE_INT:
+		format_config_int(buf, key_, value_, kvi, gently);
+		break;
+
+and similar case arms for other types?
+
