@@ -1,151 +1,132 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC6F31355C
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A9D25A354
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770747521; cv=none; b=pX9cgOhYjWJz/ZAbl0S9bafw5n86Yi2p+/sTTrJf46sSj5q06j4hJdjEuEZUeKAziDM6PLCqgzXBjFrN6gsHUQQoee/ekuFZRQJYnTgedAquiPuUw/bCLAq7ELEQ6bCLt7ZV3/GH5g/jwMJ5JS/9OwsUlBriJHRrh4om+HoKHGI=
+	t=1770747839; cv=none; b=gYzcN1VnoA+95NonxSL3VYjXvXNkvvPC6NWunsZuc6EprK/JWDKXL26ISRv6prJ4gWZhQ1lNqJxcwaQRubRwJU3ozfGnb2bKNa8FLqaYDdEebVemjgEMigrvZTa2inYeAul5VfohL3QKmd2mf9vh6tW5G7Rae9UdiYCy++yIW2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770747521; c=relaxed/simple;
-	bh=+2lER7RmwzKOeZ6dG+OGKTFB2zrZcKvQY2lzDBBYUPQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NKbf6ghu23WQyYK1fziOUhfrIkulViBuMdWBNfayuiXI58ff9FlCPIhnvJT93atK85DDAaeCGrNhl8YsJl2CLQainhn0fimIHDCDDYjPp0JnJDFaI93bQRdDSFgYEFbAFobz49xM+fMDOBxI7+NxuCtNh93lwiatGO0fmmmARKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SbSQL34v; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770747839; c=relaxed/simple;
+	bh=zJk4Dp2/Ajo3W3ldBP8HbQiJQ+lJpIwLrGnqxd1nq0s=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=XEqY/pRzTNbIdZbh/qCUecfT+u+RDafzqrUE1zGyBuFzF6g84qEVp7YOyUGmIk8NIov1Z/HrBRla+ctzGsig8pqiInhHKrAb1c/dwuTgLeYmH3Dh9wCXqpiym6HUrSov1WPpmbZzZwG3h+S7U8+BSOhaCPypd00eOo1GzeIdTx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=PbKFuoTL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gI4QXpWg; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SbSQL34v"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8c70ce93afaso123861985a.0
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:18:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770747519; x=1771352319; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=P9KeR6q3c6A7pP44TomWjGSOUxsIZatEaAvU7l8KErM=;
-        b=SbSQL34vog+oXmrCkIyxnCqrQQ+X85XJ2oeqktrFxR/xbc2ViddGlzN4vBpzituLbY
-         kY4pp6aZnt7/1ZBTVh26/iHOeupqt/yCWNfZagTab4AVa4glQfgjzHN2SNWYthgz6Cdp
-         MEuCUXO098WNQ1HJ3WYffjhkAq0gOZvu0FrtKd8qvcbx3rh/XxqCvCYWJdeLcOq93GfP
-         0lbSV9e65mMcSOrk2B8JvUSQ6oVCIkTTtjwBkP62Iset+OWoJsw/3FCrMrF1YyuCUfQp
-         uK2oiq0z7MmKTryhPRSHs7HMF4SwN4KrDQqAZJl4cPTT4tIOsa6xFUbRsJn7ybLa9/o8
-         XQsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770747519; x=1771352319;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P9KeR6q3c6A7pP44TomWjGSOUxsIZatEaAvU7l8KErM=;
-        b=FxlStqhOmFOS7AiO2vgyqfkzxDELr0g4JIX7e9RW/q3vo2NvOSfhmxS6V97RJlRu6r
-         /t5jJP15rTVCp/AqsXqh2aRjbdzLYqoe3jEQDen7H0F2ont8GzRfrQ8+VQBKxdCoDyya
-         Pfa1tZMFbprqlTW4mj8nfo4bcxHsCjgZtGUA+uh9aSg07cDaFKmjSEpxY/7joyMtv0xM
-         ULCRp39F5eMverB8bpItWpfnmoCgoF+8CVaKJVHAox/hjxwT0vddFID7yCcJgx/L1JKz
-         sTr4txaRy+dsI4SmrRc9h5+mjnIls4Fuwe0EGaIF2XSpEvFdgxrhgt/0SOE67xk+xbYx
-         FH1g==
-X-Gm-Message-State: AOJu0YzPafobhA6kkCsfhxDNLeW0nhFtnJDqzvUYXOZk+PYEe4RkRdl7
-	bGDPVyDLpAsPLl9F4BtJW/ccQ2B/CGV34vSXKiMqq7zGLVBeUS1JqECF
-X-Gm-Gg: AZuq6aJUYSc2ZkkY3Ig9nVOHDvMA+Y5RXUBaiH72Ma3gHvDXhLEDIaGX2UbQjQJspd8
-	ZKZ9NOKz3uY6OWSAzGxPjBLQD5mgHOq3daeya+qNGg3u5E3KuC0jVFiXhSoXgHSF7u9hFbNXoeS
-	ebaSrAlrawYtKcvfUuEmwaBBfxZUeMPOP5HOA/BhVTWJY+afH2VYILuK0zgFwZHU8DT1IvhFumV
-	H6RI/NHMv6XXQ6LK5KDA6syfJqYyR2/+7FUNGtbzMyyVj+0x2TBgKZnaVCO+wQ/u8EjKUigkQ+8
-	86FVwfrF/utWkrogyynwbWxB64/dWzr2NdYUN+2uzdB322iYKlF8TdjOVEKne8x7UWOU7fZCF25
-	1io9jbmrBRedmXVoZj8Tix/Po4q8ZBYp7N3GMrJrVeVxqjpLgG7W/sols9uPU+1FxqSyhkggtam
-	f1w8GnOvMWQW+N7FNX408vrApPxts2ycLsInLQKIMvocOYt1LYSdzKTkyzVCWUjhyANP5oqg==
-X-Received: by 2002:a05:620a:4144:b0:8c6:ff8f:58af with SMTP id af79cd13be357-8caf1acb367mr2128059285a.51.1770747518870;
-        Tue, 10 Feb 2026 10:18:38 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-896fb9ad27fsm56555286d6.4.2026.02.10.10.18.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Feb 2026 10:18:38 -0800 (PST)
-Message-ID: <ccde188e-267c-479c-a012-a33027b2df63@gmail.com>
-Date: Tue, 10 Feb 2026 13:18:37 -0500
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="PbKFuoTL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gI4QXpWg"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9F0911400105;
+	Tue, 10 Feb 2026 13:23:56 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 10 Feb 2026 13:23:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1770747836; x=1770834236; bh=HcHg+j2cFxbmbkBTAnkUJL+KCIF/wNg3
+	180O94jZnd0=; b=PbKFuoTL5VFR6iKT6bPwnVRjdIvyKqx0GGTGBRsIsz5xXein
+	X7CRa+cjnuccqjoH+q2YDFD2ypXBvHmHh/MgtcWzprtVqWSJE1GF4lA9au02V2ru
+	pEygYgJ72GDAinspn6l2On32IfLYt7nVkr7R6CAAC2/94wNq9ttjYlX2KZiBAx97
+	DV0TzEwgSzzeb0+Y8PGGDme3g2J0D/KJA/9dwrn9HzMNApyXgvWtCsmgp3kcsvhG
+	PKxbdNVqNPucgLyIFT85SpPky7Q633PkjyJxMFPBBvD4ix1FysCsa4UIFWdXaGvU
+	ZUqUWP27YdNFQnyd9SecCl1wXSzehmzKGmXkGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770747836; x=
+	1770834236; bh=HcHg+j2cFxbmbkBTAnkUJL+KCIF/wNg3180O94jZnd0=; b=g
+	I4QXpWgJWWaZrvPzF9Pb7SbiDPRG+xQaANc+YMaisfGcu0i+XzRuvA6Z2QF2gGMw
+	bcgNWPjHSScKJ2W79/EgNIQL2dWY8ONKMduVatP+2K1/HsGrA9dAuCWWJL08Gihv
+	6quPeDQAsZexZAQWG2Ov8kuFBbsS8I88AkpjjiWO4/IkeQwuZy52PIU7ev5MhCbT
+	vtqRqqdhkngLgHt+e+c0WslrCumhq0vDRFoIXl31vnBVv+TRW4XwRQ91SVyw/zyi
+	MhNr28Zz+1TJWdSZhxc1sOx8BaDem9Vbe8Rcf7NqCySS+MnXIPumKZG8yCTTvw2x
+	BZnRK7ymKeT24f7sWuMtg==
+X-ME-Sender: <xms:uneLaXVl3WNzorGUJEV8yX54S-g2x4061fXkOWCck7p4jImyLaaCvn0>
+    <xme:uneLaaYk1kdSFBgCx8CANtRcGUNvProICMUmmlrCEPzCGSFNQDsW6saep5EYunEOm
+    4UBKswXtX1R2_-U66UBSqPejt9drZGSG-kGJ-qXgTO8wslHg7v29A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrd
+    hnrghmvgeqnecuggftrfgrthhtvghrnhepfeetgefhgeefveelgeduvdekteehieevffdu
+    jeelgfduffffjeelffffledukeejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggp
+    rhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghilhessg
+    gvhigvrhhmrghtthhhihgrshdruggvpdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
+    seguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruh
+    hgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhuughgvgdrphgr
+    tghkhhgrmhesghhmrghilhdrtghomhdprhgtphhtthhopehmrghthhgvuhhsrdhtrghvsg
+    esghhmrghilhdrtghomhdprhgtphhtthhopegtrghlvghsthihohesshgtihgvnhhtihgr
+    rdhorhhgpdhrtghpthhtohepshhurhehrhesshhurhehrhdrnhgvthdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:uneLaV1Jn00d5cZnZhBM6QA9E6qFq9wKFkNTeD4ABAG9HFBRIWWQsg>
+    <xmx:uneLaYHIL1GMckHyAmpqwrQmEFBnSgYBy1arysYgucpkwdxpaezj9w>
+    <xmx:uneLaYGVK7dQmoqD0-wRuTg1JLHj91sqthGrYpWFO3bIoE7wfocM7Q>
+    <xmx:uneLaT5ugAm8n-GVWO1lprQGRU67eqJh8_kAePmgfjPWuQW5P1AkPQ>
+    <xmx:vHeLadFUIxkf1yHAdC3o3AFeDyP-fQkSTuVdyBbW_mn3BPcd2k8lVYZ3>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id ACB841EA006B; Tue, 10 Feb 2026 13:23:54 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] [RFC] Make 'git config list --type=' parse and filter
- types
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
- <xmqqldh119e7.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqldh119e7.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-ThreadId: A2LExlyUAPtc
+Date: Tue, 10 Feb 2026 19:20:38 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org
+Cc: "Matthias Beyer" <mail@beyermatthias.de>,
+ "Christoph Anton Mitterer" <calestyo@scientia.org>,
+ "Matheus Tavares" <matheus.tavb@gmail.com>,
+ "Chris Packham" <judge.packham@gmail.com>, "Jakob Haufe" <sur5r@sur5r.net>,
+ "Phillip Wood" <phillip.wood@dunelm.org.uk>
+Message-Id: <cd125186-dd81-43dd-a7f6-388b683d01ca@app.fastmail.com>
+In-Reply-To: <V2_format-patch_caveats.34b@msgid.xyz>
+References: <format-patch_caveats.281@msgid.xyz>
+ <V2_format-patch_caveats.34b@msgid.xyz>
+Subject: Re: [PATCH v2] doc: add caveat about roundtripping format-patch
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 2/9/2026 11:59 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:...
->> This boils down to the fact that the iterator function show_all_config()
->> doesn't call format_config(), which includes the type-parsing code.
->>
->> This wasn't super trivial to update:
->>
->>  1. format_config() uses git_config_parse_*() methods, which die() on a bad
->>     parse.
->>  2. The path parsing code didn't have a gentle version.
->>  3. The two paths ('git config list' and 'git config --list') needed to
->>     standardize their display options to work with format_config().
-> 
-> Thanks for dealing with them.  These are what I would have expected
-> as part of the "inevitable consequence".
-> 
->>  4. Finally, we need to filter out key-value pairs that don't match the
->>     given type.
-> 
-> This one, however, I need to see the actual code before commenting,
-> as I do not think key-value pairs have inherent types.  The _only_
-> special case where you can tell what type the thing is is the
-> valueless true, which we can safely say is inherently boolean.
-> Everything else is text string, sometimes interpreted as boolean,
-> sometimes number, sometimes human-scaled number, sometimes path
-> (with possible tilde expansion), etc.
-This is the crux of this series. If the caller asks for a type, then I
-see a couple different ways to react:
+Snipping all my verbiage here.
 
- 1. If the value fails to parse in that type, then don't list that
-    result, allowing the caller to have confidence that every result
-    is of the correct format.
+On Mon, Feb 9, 2026, at 23:37, kristofferhaugsbakk@fastmail.com wrote:
+>[snip]
+> @@ -796,10 +796,14 @@ CAVEATS
+>  Note that `format-patch` will omit merge commits from the output, even
+>  if they are part of the requested range. A simple "patch" does not
+>  include enough information for the receiving end to reproduce the same
+>  merge commit.
+>
+> +'''
+> +
+> +include::format-patch-caveats.adoc[]
+> +
+>  SEE ALSO
+>  --------
+>[snip]
+>     +
+>     +    It seems that the section break in git-format-patch(1) does n=
+ot get
+>     +    applied in the man output (according to `Documentation/doc-di=
+ff`
+>     +    apparently)? Maybe this is the wrong construct? I couldn=E2=80=
+=99t find any
+>     +    other thematic breaks here (though there are several variatio=
+ns).
+>     +
+>[snip]
 
- 2. If the value fails to parse in that type, then list it in its
-    base string. The caller would need to do extra parsing to check
-    that the results match the correct format.
+I want to use a heading instead.
 
-I chose option 1. It avoids showing results that would result in
-'git config get --type=<X> <key>' to die().
-
-I'd be interested to hear if there are reasons to go with option 2,
-or if there exists an alternative option that I don't see.
-
-Reordering your message somewhat:
-
-> As there is no "inherent" type associated with each configuration
-> variable (in other words, type of a particular configuration
-> variable is something determined by the caller that wants the value
-> of that variable), "git config list/get --type=auto" would not work,
-> but it would not be too bad to allow "git config list --type=path"
-> to treat everything as if it is a path and having to filter nonsense
-> out of the result (like "core.bare = true/false" or even "core.bare"
-> without value that means true, which may make the "*force*
-> interpreting it as path" approach to barf), which is an inevitable
-> consequence.
-
-I agree that there is not inherent type, so the user can only
-specify the type that they are expecting. To me, this is a request to
-filter the results.
-
-I don't think we'll have much success if we try to guess the type,
-such as trying to parse an int, then a bool, then a path.
-
-Thanks,
--Stolee
-
+    =3D=3D=3D Patch application
