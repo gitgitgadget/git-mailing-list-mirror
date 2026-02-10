@@ -1,188 +1,194 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FC0352FBB
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E203612C1
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:57:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770718657; cv=none; b=KCse1kErTaMH+jk9yRbWuBHmEYojfGxZdcjAZwZOE6unpwa741Bb9CQ9g9YLmN8Ag2XcFN1xvDiHPSHxe3yfPxKUyjmM4xpgaL03kK4nlRKexQFbVcPOpWFcR27gukCwFY5TjIhm87l8zlT8YrVTyKPVvn1WRHzibgE5JWFL5Pk=
+	t=1770721053; cv=none; b=pq2LT/hhZcHZ3DHki267pWaZtRbDEOK4L6xkinb1zmIIBk1lRfEpOiZ4wkXKklTrGrEfh6TtXGp+HzltjU+X1hlAWBDp1wPuDftbrny5RVUEVuhjBRHXNGGZEYLZ6Al5/B386E7azfT9vl5Y0gIQY1Ro99WrOyLuslrn4MQht2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770718657; c=relaxed/simple;
-	bh=ZYQiIyK2WlzLItNnYvr6/niNZKcUQFJtt+5pojauI/U=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=tQZxfoJdUl5O68+xV8clsy5jNQw6jSTgFyQKG7bWAqTEAGDRH23g2/j4Iry9xg16uQ/bb9cIrUhnwfctKebx9R3oYAo1cYKtemoobTy9kMmFeNQpLskjVC7ZcnpsSWy9CH1kCVcUC8ppPIw6JcUU1InMmtEEzL8Qhk7tmK0fySQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EI/Hh2aI; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1770721053; c=relaxed/simple;
+	bh=75taNo6QXbEdsk9lKvBXQuGiM5EmiDWwHmpyxsqYTnI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=epsfwNeK4GFSUGIvGRq+7zmCnGkSOgF94mIbJK9+5O8wqoKdxBQROPjPu6cjs0q8E5qUGqYWWp6N+iUQpQ7xAIOSGH2snKHPlwSYBbOKkigj9yuMj1djSLSs5ojKAnNuwSYH8MEddoxONlWVritb38b+3QkrKq2MagQz8N9srBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OBAY+lcN; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EI/Hh2aI"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-436263e31abso3830101f8f.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 02:17:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OBAY+lcN"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-4358fb60802so3659575f8f.1
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 02:57:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770718655; x=1771323455; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=gmail.com; s=20230601; t=1770721050; x=1771325850; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bb9W8kL4SEnFD0aZQK9wAX7+qOzyW9Df53rb7BRL0lc=;
-        b=EI/Hh2aIZdbN6vzxagCC79RheNXZUCf4kvFs+H7b7Bznkj0Fn6wVlT6ys+ENaAValz
-         yqQhJ6ybsAw2zK4VtIJxbhghMQHyfhXZCK3C5aBEEVBeGVbZHhTu4xGaJl2mL5pJnIXr
-         XvG0V/ncdlBC2C/YAn7QNMhvApxh0ZqKiKJJabWUjRgPErghoFm/yT8Mz1JuLAJiUBe/
-         QGfOLSnrkYLDXZufaeskmE7la47BlonjHeg3blbp/kIDthA9WtRyc5d8fNMtglvUrCo0
-         y3DWIB+x6si9fFAfX+Qgn504ALsPA8fzeW7W66fC1AcWR/jrLymHI8jXIStl1CPdvAx2
-         CYcg==
+        bh=CRBd+OWZNvcE5sSbB/HiCSXAnOZkp22n1XabDGemtf8=;
+        b=OBAY+lcNfGa7lWPvGBw/Ocb4mBt7GhNGcFHs/rA6y61KAQZmYDIjbAYHdMN5kH1/G+
+         aDx+UPR89Yth3vOwwxLzLEDMjB1XJ1dyX+7vIoUbC7Lj6Ns3hgKlW8X3sdYEfFAbVxHY
+         LQPW9+Gl1Z+cVpU+XvNm2mbE/UqOsgJDhDd4Dm8JA61XecdwbK/j7/I7WrvueDIcFpcA
+         TitZcsIM4xufT+fR5KtLgTByx+5VXVRW4H/tZcUCBqIGDZv07xDfgblVY2qHh67FlUmh
+         K28YPLXgoVrz+VIacM+ZDXKSecg9dhUOW0Ee0e4kZ72uqcfMYAakW3LBNa9NrzceMSZN
+         TPAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770718655; x=1771323455;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1770721050; x=1771325850;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bb9W8kL4SEnFD0aZQK9wAX7+qOzyW9Df53rb7BRL0lc=;
-        b=qE10pNBojKoQdXEBtY++6VDPg8sygC/WS3ZttEYfhM657gBSILvEbgqztt/WoT8BBg
-         C+OefDcsVY6+n+7eDJWI9tcOBxZjsEZINv+rc+C5/rXDHpGhZ2IFbYhysvQ/C/p3Cm+j
-         yvkMeVbnT/hUrDG0HJ34E3ZL8ftAzTHYvd3iHMm9RijbOqoCfdPXu+Jg5t+nzofipvpi
-         7jEPEYnMqfb9jcbwdTYOaKa+W1UsnnXYQ3HGIEaXADmjnPHiMQyOtFHOWEsxwD4kI/+i
-         zyGU0YFTsnkYOI8h520E8bmZeLuUkBGlkvI5BFzPfmszImU8xkAK89GNl24wieoxGHNC
-         jKtA==
-X-Forwarded-Encrypted: i=1; AJvYcCXhuLWWKNX2Gzss2J6dyPvU1wPc3zCvvJP3sr/xiE1kk7D6iPrY6V/YzAEOqY1Xufusixg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoLLSE3R03ghtQEaYqLiC7+R59IsdnfnkMMTsp157u7oXg2ca8
-	AZG2rHBRymEZaKZSQrOyfv0mpI5Y9445AW4gG1iKLtXMTmXfVfdM4RBD
-X-Gm-Gg: AZuq6aKrdZlCFBBSWne04gmFoSHIkCdARTkNm4/FI5gMIe69BakJHe4L2duxY/AGbae
-	dtwnhtXxkv3s+jcQMB+WaMyziSNar83DO0tXhNdRJR0bSHFThLnfIrK8KRje9cUPowwv02945cx
-	dzE6c/elF5Lgw2/KDE/4kca9WZ18/rWNlpUQjUQ4KcKTq4dZfcx5Oc4QRsjr10otm885m+96gFF
-	7Wa32Qb9VT3LXhT66Q43N0MuZTOixI/4h7uMCPTW+PLtd8oAdWh4bpacZegExKZ+Cr7eCRgP107
-	dJncdnbPwYBs9kKnSArtZ0UJ3a0WEohZi3mYxyGJOQZHtqwRtIH20Z1cboeivAfK+JoN9U11mS0
-	nLhqk+BKw5qTjKAnAbGAZoKOPpOPJbiDP4nIVKlLEI8aJaSgbGvVQevp+mBh+1iTCf3v9im+EsZ
-	lI5gIR6W82KZfYCKiX
-X-Received: by 2002:a05:6000:186b:b0:436:317b:f3bd with SMTP id ffacd0b85a97d-4377a57c769mr2377079f8f.33.1770718654554;
-        Tue, 10 Feb 2026 02:17:34 -0800 (PST)
-Received: from ubuntu ([102.91.81.188])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-436296bcdfcsm35351192f8f.10.2026.02.10.02.17.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Feb 2026 02:17:34 -0800 (PST)
-Date: Tue, 10 Feb 2026 11:17:21 +0100
-From: Bello Caleb Olamide <belkid98@gmail.com>
-To: Bello Olamide <belkid98@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, toon@iotcl.com,
-	christian.couder@gmail.com, usmanakinyemi202@gmail.com,
-	kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [Outreachy PATCH v6 1/3] environment: stop storing
- `core.attributesFile` globally
-Message-ID: <aYsEpvFwCSHb5DYO@ubuntu>
+        bh=CRBd+OWZNvcE5sSbB/HiCSXAnOZkp22n1XabDGemtf8=;
+        b=Plz1nqG726ToJoN7mD/HlKDiQ1xj1Vivc3j2lf8dRTmr2W/hfrumAcGXmT1AhA4Gg0
+         HPjHJ3mqnAswqYJwTFKsdE10TyQnv8f7sTcli75J3g8j7ZyUrfTH5jfGoxTLfmRszsii
+         xwUt/2DjZ2RVGKI6HFUiD0rMCWMY33aACDF06l/xkeirFb/Bw0nePnyd6bMjSa0MK0eL
+         NHWeY9+ZIJSO6i5H03oFxPh4S8CE3FNvdzL8JgZ/PKzqwyvxW73YFFXV/HZhM3Iow/Ab
+         GC8hcqFZlpQo8tF0tw6i6qd7yXs8tghQagGf4SGOiX1j+FS4X27gudasCv3MTVYMPftW
+         ZLdg==
+X-Forwarded-Encrypted: i=1; AJvYcCX5J1+bCQeWuHz8qaWvtdeX0yShYIQ2uzem9e0B25iihWRDwofZGxnTGvCaLiOuf3FAcRE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywz1c9B9lR5aiywECkTkgIs/5giKBiL8i+y7JZI393EO6sb/x60
+	x8ILPPpa40mysfQDq9Ps1x3oEQU9aTAPgyn7ngwAXrEF3ZHrbVudlx+iR1tq1A==
+X-Gm-Gg: AZuq6aJ2vxmNf/rMg5EINMCl2FNYc0SiBU0yQ3N0NotfZSlhzJTJbg6JiXV33lhtx7h
+	iPe4ZZkX1IOpnyqDmL+yqfyu9HGok4zrsQATeqIOTKpFqoSq5ugT3N9B3X//VTm8yofAqBJ1zeL
+	3b8RpMWKMB5Pgv8MGY/L1Nl2J9flLu5xgKjBqEoXmSg8yxTWW0yjq+l7uIoSAEFMvipl4cSHmxX
+	I1Q8OiK7+gHBuf38Y3UF78EbkFoywPMuqPEJGQLZ95r4Yd37PUMirHpf/mlwiwJnFw74R6iBlea
+	+4do1tsnVmglmU3RvHw3wojVGhj1XuENFTwLGjgJVVVPRrJcOc36VeVwm19VndEX9RxsID+ANBW
+	rgOu6+pmKyMWjmFkdi3Qe+AT+sKVJTb9ZUuQR6jVOklBcPQxPLHBYzdgoAtoiH979beq0/CEByY
+	VeZge5ju+SUYSsK/wfFsj1mASP6aPDgM+hWw/rTRMk0zfushbUzyvkSin18bActp/vcrn34VTp4
+	Ut/fpNuSSgEz/Aza2YGPA==
+X-Received: by 2002:a5d:64c6:0:b0:432:5a4e:c023 with SMTP id ffacd0b85a97d-43779fed381mr3120714f8f.13.1770721049886;
+        Tue, 10 Feb 2026 02:57:29 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:881b:6538:b006:6700? ([2a0a:ef40:627:1f01:881b:6538:b006:6700])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4362974b230sm37081246f8f.36.2026.02.10.02.57.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Feb 2026 02:57:29 -0800 (PST)
+Message-ID: <7e6a19c0-332c-40dd-8aee-f6dd9324bcfa@gmail.com>
+Date: Tue, 10 Feb 2026 10:57:28 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] doc: add caveat about roundtripping format-patch
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ Matthias Beyer <mail@beyermatthias.de>,
+ Christoph Anton Mitterer <calestyo@scientia.org>,
+ Matheus Tavares <matheus.tavb@gmail.com>,
+ Chris Packham <judge.packham@gmail.com>, Jakob Haufe <sur5r@sur5r.net>
+References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
+ <format-patch_caveats.281@msgid.xyz>
+ <bf5d1e84-2a59-4e1b-a524-c8b251dbae70@gmail.com>
+ <c70adde6-e3db-4a46-bb29-a19d7aba8c7e@app.fastmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <c70adde6-e3db-4a46-bb29-a19d7aba8c7e@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-This is how I implemented the suggestion
+Hi Kristoffer
 
-diff --git a/oss-fuzz/fuzz-commit-graph.c b/oss-fuzz/fuzz-commit-graph.c
-index fb8b8787a4..59bbb849d1 100644
---- a/oss-fuzz/fuzz-commit-graph.c
-+++ b/oss-fuzz/fuzz-commit-graph.c
-@@ -10,6 +10,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
- {
- 	struct commit_graph *g;
- 
-+	memset(the_repository, 0, sizeof(*the_repository));
- 	initialize_repository(the_repository);
- 
- 	/*
-diff --git a/repository.c b/repository.c
-index c7e75215ac..0af40b016e 100644
---- a/repository.c
-+++ b/repository.c
-@@ -50,13 +50,27 @@ static void set_default_hash_algo(struct repository *repo)
- 	repo_set_hash_algo(repo, algo);
- }
- 
-+struct repo_config_values *repo_config_values(struct repository *repo)
-+{
-+	if (repo != the_repository)
-+		BUG("trying to read config from wrong repository instance");
-+	if(!repo->initialized)
-+		BUG("config values from uninitialized repository");
-+	return &repo->config_values_private_;
-+}
-+
- void initialize_repository(struct repository *repo)
- {
-+	if (repo->initialized)
-+		BUG("repository initialized already");
-+	repo->initialized = true;
-+
- 	repo->remote_state = remote_state_new();
- 	repo->parsed_objects = parsed_object_pool_new(repo);
- 	ALLOC_ARRAY(repo->index, 1);
- 	index_state_init(repo->index, repo);
- 	repo->check_deprecated_config = true;
-+	repo_config_values_init(repo_config_values(repo));
- 
- 	/*
- 	 * When a command runs inside a repository, it learns what
+On 09/02/2026 17:59, Kristoffer Haugsbakk wrote:
+> Hi Phillip
+> On Mon, Feb 9, 2026, at 17:42, Phillip Wood wrote:
+>> On 08/02/2026 00:11, kristofferhaugsbakk@fastmail.com wrote:
+>>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>>
+>>> [snip]
+>>> +Patches produced by linkgit:git-format-patch[1] or
+>>> +linkgit:git-send-email[1] are inline. This means that the output of
+>>> +these two commands can lead to a different commit message when applied
+>>> +with linkgit:git-am[1]. It can also mean that the patch is not applied
+>>> +correctly.
+>>
+>> Is this last sentence referring to diffs in the commit message being
+>> applied? I don't think there are circumstances where the patch itself is
+>> not applied correctly.
+> 
+> I tested with a line like
+> 
+>      Index x
+> 
+> Yesterday and got an empty patch when running git-am(1). But I couldn’t
+> reproduce now. I must have made a mistake.
 
-Some of the tests that fail are related to the submodule and a
-couple output is shown below
+Oh, if you use "Index: x" (with a colon) does that mess up the patch 
+application?
 
-./t7412-submodule-absorbgitdirs.sh  -i -v
-...
-Initialized empty Git repository in /home/ubuntu/Code/open_source/git/t/trash directory.t7412-submodule-absorbgitdirs/sub1/.git/
-[master (root-commit) 50e526b] first
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 first.t
-BUG: repository.c:56: trying to read config from wrong repository instance
-Aborted (core dumped)
-not ok 1 - setup a real submodule
-#
-# cwd="$(pwd)" &&
-# git init sub1 &&
-# test_commit -C sub1 first &&
-# git submodule add ./sub1 &&
-# test_tick &&
-# git commit -m superproject
-#
-1..1
+> 
+> I think this should be changed to:
+> 
+>      It can also mean that the patch that is applied is not the same as
+>      the one that was generated.
 
-./t4027-diff-submodule.sh  -i -v
-...
-Initialized empty Git repository in /home/ubuntu/Code/open_source/git/t/trash directory.t4027-diff-submodule/sub/.git/
-[master (root-commit) 4431e0b] submodule
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 world
-BUG: repository.c:56: trying to read config from wrong repository instance
-Aborted (core dumped)
-not ok 1 - setup
-#
-# test_tick &&
-# test_create_repo sub &&
-# (
-# cd sub &&
-# echo hello >world &&
-# git add world &&
-# git commit -m submodule
-# ) &&
-#
-# test_tick &&
-# echo frotz >nitfol &&
-# git add nitfol sub &&
-# git commit -m superproject &&
-#
-# (
-# cd sub &&
-# echo goodbye >world &&
-# git add world &&
-# git commit -m "submodule #2"
-# ) &&
-#
-# git -C sub rev-list HEAD >revs &&
-# set x $(cat revs) &&
-# echo ":160000 160000 $3 $ZERO_OID M sub" >expect &&
-# subtip=$3 subprev=$2
-#
-1..1
+That's a nice concise way of putting it
+
+> 
+> (generated = shorthand for made by git-format-patch(1))
+> 
+> This sentence would then serve as an introduction for the “Furthermore,”
+> paragraph later.
+> 
+>>> [snip]
+>>> +----
+>>> +```
+>>> +diff ...
+>>> +```
+>>> +----
+>>
+>> I'm not sure the markdown really adds anything here
+> 
+> I don’t understand? It demonstrates a markup for code which does not use
+> indentation.
+
+But I think the markup is a distraction from the problem which is that 
+the diff is not indented. Also calling it "Github MarkDown" is 
+unfortunate as we try not to favor one forge over another and many sites 
+support that syntax.
+
 
 Thanks
+
+Phillip
+
+> Well, maybe it should be:
+> 
+>      ----
+>      ```
+>      diff ...
+>      ...
+>      ```
+>      ----
+> 
+> Or maybe...
+> 
+>      ----
+>      ```
+>      diff --git a/example.txt b/example.txt
+>      ...
+>      ```
+>      ----
+> 
+> I’m leaning towards the latter.
+> 
+>>> [snip]
+>>> +One might want to use a general-purpose utility like patch(1) instead,
+>>
+>> "Given these limitations, one might be tempted to ..."?
+> 
+> That’s good. That leads with the problem instead letting it trail off at
+> the end of the sentence. I’ll use that.
+> 
+>>> +given these limitations. However, patch(1) will not only look for
+>>> +unindented diffs (like linkgit:git-am[1]) but will try to apply indented
+>>> +diffs as well.
+>>
+>> This is useful context.
+>>
+>> Thanks
+>>
+>> Phillip
+> 
+> Thanks for taking a look. It’s always appreciated.
+
