@@ -1,132 +1,132 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114D638B7C6
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:14:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E7E295DAC
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 18:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770747294; cv=none; b=ll6c0ux0chq4E3DENxl9ur7jPYgsjTFs5NvkGY3mbbYzsLXkVYmY91LeYCs1IXT1BQBSFyjWdQH2I42gnwZ0oZtrrx9nVlBLnE0F8Fj4VDyFv0gGyMqDgWXlt3nr1dvZYRLhR5JMGjMQpquF7LXg7oXVNnyJ/qhbN9DXu+fPvI8=
+	t=1770747382; cv=none; b=ANa/YQzqtLvFqbkWpfqkg0g4hY4r8h2K8cP+V6yxv24n4ZGbRp0RJqWmLJeijMfcMzMgsLdld9iR9IrQThpC6Oxoy1hl21eS//IquMC2Ug7vnvyZ0e28uqsMqpO/2RQhpAEOG7O9rJ1y+bMZnkHjNUf5iPJ0MjcUhq0YI4WBd90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770747294; c=relaxed/simple;
-	bh=wd2UAg69Ay1f6fYZ2/mAPs4x1kk8K4zpk6nm2z78u+A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6B73NrDZgY+D46b53nquAZM/hKKr10DVKral2Uab+YGR2Puxjp1tvjvoWKZSMAHMvdZyhNZv5a3GgSKDmbdr7RhMLeIC39pS9XPsaTvhqKdroyfnu10ePnH39Maye1vIkq9vMFY61Xk7OZ6gsh2q1kr6/ZSvsmjbCjEJGemU5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bJWgPAHh; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770747382; c=relaxed/simple;
+	bh=Ksqc3e/egJloktTtxFZqFwqZLMhnQrpknsJnWCrMeh0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JJsGj43eSinEhgGzJ/emifhr7yadkjK/SA6Ie796gdkSqN119mdv9BoXQk4+Twb167xQc3P/jS+uGD391LZgakd1kMTZ1QPJACm4ymVFyGZVIUbzXP0cP+Dowd64B8XBAw2BAuuuL1is8sjd/pgR2Q+p0R2xf4Z4ZqitzP7NWSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WhAUPKPL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZFJBE6OV; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bJWgPAHh"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-354a2a7d90fso662767a91.2
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 10:14:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770747292; x=1771352092; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BS2xyitEK/n3Mtka4JcFjG8WJcYTak4U0pb2mHPh6hg=;
-        b=bJWgPAHhMjOWz6uz4qHeSjD0U0fjzQVCMyUDK7vRGWwfjOW/nABjOekuYUa+tHCLhQ
-         Iw+DnjqPli/XjSpWnFqpmr1QAc9UI9maOW1sWyGvaNj3SiVFyelVtq+zO50Uktq9C1XY
-         XVy/qt6wk/8VG6ZE4fnMelmAN8DmGr3uh92Svc/EZ2giy2/ChLopmBusDWTj/urhH6IC
-         aiPkOjmh3CKf65NsFYw5mWmff/mgemf4k3Rvw90cZnfeYJXpta1jqp+67vJ5usXP7mIB
-         L4VJAZFbqXfWKMAfO/CRagcwDmHAGQbgnH3VMv/vdwOs5XrkSUjS2UBiQtrDfBMjLgcx
-         cZGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770747292; x=1771352092;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=BS2xyitEK/n3Mtka4JcFjG8WJcYTak4U0pb2mHPh6hg=;
-        b=J4GLNxlutuYsjKJEP81bVg5qQ1oBMhoMuGAMYt6/dgj3UwlFHmTthXir+y2bMFFqXI
-         uXdlmGXZ0proPrOAJGqFBCu+LlfWo+qqYZdepvPuroARvgJLaGFQrPX4C0G1RzzOxA+9
-         F6wrN+ilKaUdQEP5EXoIKZDqPx1lcifLe11V3eh14Lg+rNiR4OQW/y2PQOX3lmbDIMu6
-         XqZjgtTRzYNoQB5UXdeboY5Rcmn4mtwhsfc9F+4XocZVz7wPCZmdJX46FjXciY/EpBwn
-         WibJHAzi6gf7id9H9uJ6VMrg2r778fWQsftjBeKocf5dcHqu/bDAnK9nd4gDdf62M7ID
-         WYNw==
-X-Gm-Message-State: AOJu0YyCd75jF7OArrph1tc4r/uzCp0oFunHuMdJZjKQfgke1HzxSkyO
-	NU/JQZYUxByVTY39EdTMbk1pZJhsynNZC0v79PcbpFtfHh35OAVbW9zXjHUQtQ==
-X-Gm-Gg: AZuq6aIr3+ra8vyoWanouvg3X7hirijlcVlfK/DW42wsZyebJS8o/7YrrndBOLZPOPZ
-	qejP5cvwA+dG9epvD4pZ4xdC34aS7t3suOPS+WG7bI3k+hkpKTnxXXOCo6bSYx65w2QaFxzdVtP
-	meWyJhcAgdbB/YGHFz1z1gPmnF/mUBHOAlWtnnVYMYmKRAwZ65JW5cjbMbjSVkNq84lI7Act3m/
-	c/ao9MHaIifYb9Dret7BnCFIc5NpyNs8JL59tryGZP+uOLgQpVXZmncADQiHmWx0n3lI6KtX/YD
-	vxpXHBC25Ihj+FH1hswzhM3bJmF1EmGqfmx1bRF1ipehxz2ptdsvKB7Nkea9fTMWIEXujXv1zPv
-	UpkYc7+1VfrQoFNYy4h60GwBLy5TR3GMl0ANQ6ylVzInE/L6OLjUTs61hg9kwynWrFzGnoRYsvp
-	7TT4inX60sqZweqfNMOxgDFe0ZzoA/FKazqfprgFT693U551+ad1XZlKIjesJbGiUEKfhsqKjCB
-	iTh8vg39suOGO8lK/jzUG5488/mDdJ801dRqgh2M67fCwuygg6OPDaI3d6eHr6/PCoB1vhWDkbt
-	uNB4GVGk
-X-Received: by 2002:a17:90b:240e:b0:356:41c2:897d with SMTP id 98e67ed59e1d1-35641c28a26mr4460780a91.8.1770747292401;
-        Tue, 10 Feb 2026 10:14:52 -0800 (PST)
-Received: from localhost.localdomain ([2409:40e2:100c:822b:c98b:6ad:2fbf:bfff])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3567aeebdf2sm21112a91.8.2026.02.10.10.14.50
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 10 Feb 2026 10:14:51 -0800 (PST)
-From: SoutrikDas <valusoutrik@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	valusoutrik@gmail.com
-Subject: Re: [GSOC PATCH] t7003: modernize path existence checks using test helpers
-Date: Tue, 10 Feb 2026 23:44:45 +0530
-Message-ID: <20260210181445.49380-1-valusoutrik@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqqpl6d4wjh.fsf@gitster.g>
-References: <xmqqpl6d4wjh.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WhAUPKPL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZFJBE6OV"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id B2F7E1D000AE;
+	Tue, 10 Feb 2026 13:16:19 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 10 Feb 2026 13:16:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770747379; x=1770833779; bh=pr6mVMKkR9
+	aUO5zMqJHO9XtKGQBemzSWETz7kowmkFU=; b=WhAUPKPLVK1E6MmASfgW9j+kQw
+	KVIWZM1Yy/Q+5u8lmpoAf3KP871U9M1M4jKKqQaiQ0eTnL6vm2HPh3/8hyvVn6sD
+	Rxzqy05n8Lp3uuz54vkvwtFlOXAnXCe9xf72HipMBqvqYc5Y5OX0RLODPf1VrI3D
+	Er+BcQCW/Wb7SCKepTb7UxR7M9/IGeCaWwVuF0JtBR1Bs/aFvp3JFIB4hNdDUqlD
+	2IhT0p/uq8p5r8oFiwk4zW2JlqQNSmX5gfaDGv3zdHMas/Rwkt8N8iFFFlnDZnuH
+	dXf/imKuxGLS1JIppkDEQQv2iq/UC59nZ7pt0gAwLlY8dMjyWlHJ51IBWx1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770747379; x=1770833779; bh=pr6mVMKkR9aUO5zMqJHO9XtKGQBemzSWETz
+	7kowmkFU=; b=ZFJBE6OVxlgKCVd8h5WxVrx6qGMN009xinm+HFHJ4HzGcbxuagD
+	F7xF8fJ9GZlVqQ5n5N3jwPjb6M4Rk3Tn48a7sxWeM+71u53rZVg6aKmfYgCNdKMY
+	vcyv6ud30Zvm1W3607lyO850V8ROIuQni1BcaV8wMaZ4kAFUzf3eDypyqWJmOA0Z
+	X/1YX01H8Nt0nafoHZI1Em9jdrOvp6owZz51oiL3EtRymt+7iSwI9l/QT59htGVw
+	jf3m+GFbQOowTmeApRX04B+yD7zBhTRnOmL2miBculIcvmEvvq58LiqsaqZVjF1B
+	WZpnG2LG42HlxDWeoA1fVvG7/9pCxm7ijOA==
+X-ME-Sender: <xms:83WLaTYcZIfO3_tOZaAXy0IepH3F5XMffobF2d6QXfDKUEt8oQ8shw>
+    <xme:83WLaZZH788w-nuP6tjSusad-8mlKy0DbtL7a5YrhxWwXQlPCLzpFe4GvheHqgNjr
+    Eh-Lobc7o21HVyuZMhHhqu-sYqM4ijZ-gyYWubjqhHiJXERSmOqWA>
+X-ME-Received: <xmr:83WLaa9MZANve-bPcwSCEmbEcoNH4fYjpkYKnFCTZ2THT_zwXsuKgBk9yonktiYF5rHL2DArp3TEy88SYv8Ddu7ivVwNe1F4fA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtfeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegthhgrnhgurhgrkhhrsehpmhdrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:83WLaYjuDdvS5LHs3THHz8WCvMswAwrs34ldQPVw9WFkP6P3u5RxCg>
+    <xmx:83WLaaf13Ut9AFYa6-VcP-HPo_alQtv5RfNccevylWkdVk0gGGAOyw>
+    <xmx:83WLafrvv061hjlTaLuKNDNOKgAgXTgeDvhap4JA3Vxtr55HNRAAeA>
+    <xmx:83WLafDctocxCJ4vsOHpyp7dsF9Vhc18aKqeXI-h5V2GDstSNM9O5A>
+    <xmx:83WLaf-4bRUj7rvbaoh2mZZOSiLGy9xik80d2AS2KAVQa6rICNfjHKtu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Feb 2026 13:16:19 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Chandra Kethi-Reddy <chandrakr@pm.me>
+Subject: Re: [PATCH] add: support pre-add hook
+In-Reply-To: <pull.2045.git.1770737573475.gitgitgadget@gmail.com> (Chandra
+	Kethi-Reddy via GitGitGadget's message of "Tue, 10 Feb 2026 15:32:53
+	+0000")
+References: <pull.2045.git.1770737573475.gitgitgadget@gmail.com>
+Date: Tue, 10 Feb 2026 10:16:17 -0800
+Message-ID: <xmqqldh0zcpa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> All the checks involving "is-missing" are now stricter than the
-> original, in that they used to allow "dir" to exist as long as it is
-> not a directory, etc., but if we audited the code that leads to
-> these tests can never create a "dir" that is a regular file or
-> something that is not a directory (which *I* did *NOT*, but
-> presumably you have already done so?
+"Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-At the time of sending the patch v1, I did not do so. Sorry about that.
-Now I ran the test from start to 11, since test 12 was the one with two 
-of those risky changes, ie `! test -d dir` and `! test -d diroh/dir`
+> @@ -576,6 +579,17 @@ int cmd_add(int argc,
+>  		string_list_clear(&only_match_skip_worktree, 0);
+>  	}
+>  
+> +	if (!show_only && !no_verify) {
+> +		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+> +
+> +		strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s",
+> +			     repo_get_index_file(repo));
+> +		if (run_hooks_opt(repo, "pre-add", &opt)) {
+> +			exit_status = 1;
+> +			goto finish;
+> +		}
+> +	}
+> +
+>  	transaction = odb_transaction_begin(repo->objects);
+>  
+>  	ps_matched = xcalloc(pathspec.nr, 1);
 
-and after doing that I can confirm that there is no non directory dir 
-present before test 12 starts. Neither is there a non directory dir 
-inside `diroh`
+Hmph, unless I am confused, I am a bit disappointed.  The code
+snippet whose beginning we can see in the post context is
+preparation for determining which paths are going to be updated, and
+this new code happens before anything is added to the in-core index.
 
-This was the output of ls -la 
+The hook takes no clue from anything derived from the command line,
+not even the pathspec (or list of individual paths computed using
+the pathspec by the command) or the mode of operation like '-u' or
+'--renormalize'.  I am not sure how effective a decision the invoked
+hook can make to approve or deny in this lack of information.
 
-drwxr-xr-x  14 soutrik  staff  448 10 Feb 23:16 .
-drwxr-xr-x   4 soutrik  staff  128 10 Feb 23:14 ..
-drwxr-xr-x@ 14 soutrik  staff  448 10 Feb 23:16 .git
--rw-r--r--   1 soutrik  staff    2 10 Feb 23:15 A.t
--rw-r--r--   1 soutrik  staff    2 10 Feb 23:15 B.t
--rw-r--r--@  1 soutrik  staff  128 10 Feb 23:16 backup-refs
--rw-r--r--@  1 soutrik  staff    2 10 Feb 23:15 C.t
-drwxr-xr-x@  3 soutrik  staff   96 10 Feb 23:16 diroh
--rw-r--r--@  1 soutrik  staff    2 10 Feb 23:16 doh
-drwxr-xr-x   4 soutrik  staff  128 10 Feb 23:15 drepo
-drwxr-xr-x@  6 soutrik  staff  192 10 Feb 23:16 drepo-tree
--rw-r--r--@  1 soutrik  staff    2 10 Feb 23:15 E.t
--rw-r--r--   1 soutrik  staff    2 10 Feb 23:15 G.t
--rw-r--r--   1 soutrik  staff    2 10 Feb 23:15 H.t
+Also I am not sure what good it is doing to pass GIT_INDEX_FILE as
+an environment variable.  If this were a hook that is invoked by
+"git commit", which may be doing a partial commit "git commit [-o]
+path", the command involves multiple on-disk index files to allow
+the changes to named paths jump over already added changes to other
+paths, but "git add path" is always inclusive of already added
+changes, and does not use anything but the main index file being
+used.
 
-And this was the ls -la in the `diroh` directory
-
-drwxr-xr-x@  3 soutrik  staff   96 10 Feb 23:16 .
-drwxr-xr-x  14 soutrik  staff  448 10 Feb 23:16 ..
--rw-r--r--@  1 soutrik  staff    6 10 Feb 23:16 D.t
-
-One thing is that I am not sure if what I did is ... the correct way
-to test this kind of thing... I just copy pasted all the test commands 
-into a big .sh file , did a git init -b main in a temp folder 
-and ran the .sh file from there. And then observed the changes.
-That big .sh file : https://pastebin.com/9QQD7qYA
-
-> ---if so that is worth noting in
-> the proposed log message), then "test ! -d dir" that is rewritten to
-> "test_path_is_missing dir" is actually a _better_ test.
-
-I am sending the v2 patch after this message. Should I have just put 
-this whole thing into the v2 patch cover mail ? 
-
-Best,
-Soutrik
+So,...
