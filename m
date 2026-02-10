@@ -1,114 +1,143 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ED97262A
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 00:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770682969; cv=none; b=ED4CSKYpi1uGVRF1CJHWtJfuReEKyL5BvpYgTq5qsR4ut3GgzLGYdO2fghhg93B+jNUlUNWIt4yscIthUH2VwTUop6SSbCk4nZ84TTuvAD5B7Rvmmf3DR7LQTf++fOHVUhVWe59Z4T8h/DxoHIjyfNgqvQhBLNOryZxvOt2y18k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770682969; c=relaxed/simple;
-	bh=QL3gVEJNQsgxs2N/aqH/fgpBhG6RWs/F+GWZvQrpTK0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Pg3aN6TtzNAKyRcrpzOgiYYX6120iQzNgoWVTgC35T9wOBvrUs/xYishMYu2bLfYFW84T0hEuehqaleVt375cndmhXBtGiHEabTon1e88UN3rtTWUGZHJUTLtq6p9XTTez3szuv7+Oz5YcjdsueLu7FzoGrb3R0Hj982iyCb2e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aksODOsc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wFHprEmd; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF2C18E02A
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 00:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770683610; cv=pass; b=q2EdA23fgIWQhOqR9CEGdHKx/ztyifdQngud5jO2vxf0/NOyfLOZOoqfDPXdNoEerKv2PAwVOY5GqrYc0PBIZX4VM2MO8BfvbQKlFf6JHQZDkHd0I3NNg4sE/oD1G6qwKi54PeUEU4GlOAY0qYnl3rjHHpdzSk+Zl8/3dW6fbWQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770683610; c=relaxed/simple;
+	bh=XlmOLv7Fr+1KN1kQmh0rZVeu+ZtGbU2Ssd7fmmZB0+s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rEjQZWBQf21WPVumIGfgHxaBz5aHa0C4LConTxgSrRb7NOh0dStvAqWM2QqQV2TZYnMqFZTtD/wTWGQ0oIFoqfXZLL/m0JWleyqCwJVJ7M7XUk4a4RjKlb+FNiO8P5AGfnlWD7UkM/Q60EtE6IUKP7shrF8NQTwKNV8QDS8KlzU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LM1pxY7m; arc=pass smtp.client-ip=74.125.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aksODOsc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wFHprEmd"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 910B0EC0550;
-	Mon,  9 Feb 2026 19:22:46 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Feb 2026 19:22:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770682966; x=1770769366; bh=ChHptXdfvg
-	hEzw84MLS4Xx8LXn9TEC+/SCY5GbEYu1c=; b=aksODOscHY4G6+bzaLCpkSNafo
-	9MpQiM07Lu49EJVHNhZ/ADcx4PSuStFqG1I6plRPW63FQLfKa+/x4HpduvqAoKaQ
-	EiUfa6KHNhbCQ6Q/0KX9uhnL7lGmt1MrU3nsS/mQA6H8/NAYSpaLleTi1oFj2u6B
-	FiKUaHzOxT2haJq0eiuLKfspU52RbO61sBwoiSIcMRlAokCNNgY9SYNPK0fhk8Qb
-	sA/OTG0okEiOwI0Yr4IuY35NK+oMq/kK6quRyhNTfbKeb1GDvGud4tFX+oTkE2v7
-	oSZNhLe2uSC/YMhTFq+VGRlrX2aoTxP/Cyju2GA4b1sHd4xBJhkWhFiZAkLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770682966; x=1770769366; bh=ChHptXdfvghEzw84MLS4Xx8LXn9TEC+/SCY
-	5GbEYu1c=; b=wFHprEmd+ZdIENbNRRs7VWOaluKEoJHk7/HEG4XsPRaF6DmRa+1
-	Lq5PlBCEGhDqHVy27CU8gN9ygst81vLMxiDYL2RMw5+PR4xKVJFm6RYkYdCdNHgE
-	w01ZeLWKXiv4akFFJbXkObKf2dG1PHsJtXEEPNJolElyP6sQBvy3WkjKpz2atRD1
-	gy3+kOt3//0FgDEUvMUtbgoTkPOByWxjvsv7XkgHWMNuWeRERyWDi30CO12ayDZV
-	P4HutvQ4BcnASck0BQKJBRo/HLvJwFds3tmfiSKCkj8Oc8mvaoRo7QraVcHbFm3C
-	MAY2dYbfVo+itMk9GnERsFrXTmP5LXLK9jw==
-X-ME-Sender: <xms:VnqKaXeCSxQMK4iCVonMDdTmBr2lYCkhHBAh8tq2sVLvqN4XgnH9_A>
-    <xme:VnqKaUpu46ShEoCaig_iYSSsvE-lE2Ykz24U8EmxqF8C3dhNuZ4rRQebA6qr7QNE_
-    mPzB-M2nIm870AiUqQsfCsvwAjZ7wNWbAB5SYoD_iblJYZeIYTS-g>
-X-ME-Received: <xmr:VnqKad55opZbBibCeBppnFHPUaLq5ao1DuEvPmpnNsIHKJC8FfRiHF99h39L3nwSm3HHllgFm-tiMs4MDtGN8f4xntaVxxdj0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleekvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjihhmrdgt
-    rhhomhhivgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VnqKaSrbHeLtK1kt5sCpPr_yQNfDALXDF43_akb9GZ8Ywno1DiJTbQ>
-    <xmx:VnqKaXiIt_otL7Z30Y-wocGwKT2J-8PuSAx0kKOSk1XhCjzh0CznDw>
-    <xmx:VnqKaUJs8o2bDATxCu5kim7lU5zklQ9RLk7az5oT5W3pnxk8ixBBmQ>
-    <xmx:VnqKafBtJrRjqPHcq3gNjGonZ9T9qyKwz0Ib_s0-NAUHyMQAUltRfw>
-    <xmx:VnqKaQoZxHvqeuATLeaiyKWR5eTcDgGR-lgXpM9qYIb9YoXyZUI3eCXH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Feb 2026 19:22:46 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: jim.cromie@gmail.com
-Cc: git@vger.kernel.org
-Subject: Re: --suppress-* options error out, apparently passing to
- format-patch too.
-In-Reply-To: <CAJfuBxwJ_=4mh4gBd3Y98rVRWNZ=xyJAiDxMXb+2TEn6uJM_6g@mail.gmail.com>
-	(jim cromie's message of "Mon, 9 Feb 2026 16:42:52 -0700")
-References: <CAJfuBxwJ_=4mh4gBd3Y98rVRWNZ=xyJAiDxMXb+2TEn6uJM_6g@mail.gmail.com>
-Date: Mon, 09 Feb 2026 16:22:44 -0800
-Message-ID: <xmqq7bsl30rv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LM1pxY7m"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-64ae1729637so1605072d50.2
+        for <git@vger.kernel.org>; Mon, 09 Feb 2026 16:33:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770683608; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SM1FXlZ9btc6ue5MXJ2dhDg2EzxqJ6V1gXRjRUbUeD6ju8mSltJHZvvfhGhr4KrHRE
+         e+TeOG0QKe56zBzXJEv3P343nwxY9kut50TGqbkZ/Z/MiqgcBnrajSht7yR6qArLQ1am
+         SF5hr0YSEBk/eLdruxi5MuzYKnhB3PhbziqXmWa59iVxv5VSJajqK9gqkkvSYMj1tFTZ
+         HJ//pSHT2uZvpljvtcniKRdflCsnG8S2cdmnxZ7fJ8+GoB5N/C/2tAV71UGyNCLN8jyb
+         gqWferl8pWGKyM8hKPwnx+GmAKdk2LGPeq4dNG5yJVXC2J9527pYvf9Vslnf3jP8ECwu
+         HhjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=UHSrJ+uZZNwmNc+OqKDjKTU0ZeMo1RHYauGycVv7llo=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=UhPZMRrjvTq0mQCUl7knRGInCsWAyqh+UCe0J6gyr5uuntbwFrKarEZ0isZUHTk9WB
+         tp4KIxtO9Ffs44TOv4zm2K1XvYmgUFabyqDtnAz5J1JBaSfdxEdZlUnHLgec03lKX4zj
+         8d/++SGJCEbB37Qpt+wtwaLeQE7XLTNAsc1dHNBOKCddXhxxel1N+VbKDV9HL8aa90EO
+         dIpQDGRMPR+v7Q8PbQPiUmRSJCAAi4zN7PxejEY2K4P79s72BdFF7XL7rFwzBY4gbnSl
+         JaBBWgb3E/EFv+7hpluAq+adJbOJeQKeCu9QtD1AXJuKBMpkIwgwFuDe09ljRr1U8C+y
+         oCgw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770683608; x=1771288408; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UHSrJ+uZZNwmNc+OqKDjKTU0ZeMo1RHYauGycVv7llo=;
+        b=LM1pxY7mC5Hw026pPXluEWXl059oUjah5d66S4IHsPhCzRV0pOHVB77vCWCvMy2vvV
+         2992CyiFf/3EnySgokgKiXj1bIa8mrtMaI4B76WpmjaR64tmoF5mTrwIB/vfZLK6y4F/
+         kqYLaMnPhBw6WKIq4xRCroBv1Udqqb/X9gGRz1N9MVXN25Y7E+M0VRL8lMRPzX5K2btQ
+         d+iiX0D8XY5rLWB0XeNPgVnGXbPUrKz26TOkdd+kL23qqAzXacj0QviSnCsBgZMSBdfP
+         JSnoWpdx72GxaEnv7B4DAvwYfGyNVVPAHU3a6drejZSYxVSSFAe0kSGX9YaC/5tSXi58
+         K+1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770683608; x=1771288408;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UHSrJ+uZZNwmNc+OqKDjKTU0ZeMo1RHYauGycVv7llo=;
+        b=Q2TdCQIbygWCvRAkWkiNx8Ee+DH34ih+4st7bLvxzbAXSIXF35RdtrjUpUqFG5nzZG
+         Pw4vxJLNrMzyPF14+JeD9hiD7OppZIvULWWqoytX1ibDt/WhmCBiyP6ASp2lpqxcvZ4Z
+         Yv2nRYmNGk95amGGIdSB3LXY/BFGgyx35b/j5FQM4nz7fn59Ks2i4s6UJ++t9dB7lFAu
+         Xtul0OuU9ZApb4fFgBqRq6qzz+MI/NcYYOti/yCQdi/VWEFBDNo/1Qsc9uq28hk1jMEP
+         2jqYMogAd8ae0N3Q5MSkQgOBsPXZK7bKMvnTeQ3T6G5QjRBXTce6xgK6b9uYw0xfLvqk
+         ICBA==
+X-Gm-Message-State: AOJu0YypSpEIh4ZXAyNFjJ2gQdDyTdArBxqei7H7xyO82McSJUNN43hx
+	HV2rXBzEXvt+tUEjQqCTVyDf7lA6Jy2HLr43Q0tIsQcrmxXTGrH4yOaF7R9Che9wSxhR4/k/YmB
+	msU9h2XelkZBDk0Oc9lZ0G1x6LinSVwQ=
+X-Gm-Gg: AZuq6aKW7thUK/c59zJBVzn6p61Ae6qQghHLIrAbwJrxagp28OdJkeTun+qo2HXmNUQ
+	JBwcIGxAIqmX0ONH3vRqqMsP96MLJ20GxiyOsRp4pCAO3ZlewpkC36a86box4GfArJVDHsUg63+
+	GcE6h7M7RVV0p7XxhVSzixJEnDohENEfU0OHkCAPHlyaoWhBRo4gR8y010aA/OhEZcMLjfyA4wW
+	jjB/FfbkePKXRlzdGvLwJ3ZXzAyZQmBD1hABgL9eb1izY+toC06tFdmJQKIPELJo4TwGrn+YxGg
+	i7fkZQds60gzKH0=
+X-Received: by 2002:a53:d013:0:b0:64a:edf2:e769 with SMTP id
+ 956f58d0204a3-64aedf2ebdamr2153639d50.10.1770683608535; Mon, 09 Feb 2026
+ 16:33:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAJfuBxwJ_=4mh4gBd3Y98rVRWNZ=xyJAiDxMXb+2TEn6uJM_6g@mail.gmail.com>
+ <xmqq7bsl30rv.fsf@gitster.g>
+In-Reply-To: <xmqq7bsl30rv.fsf@gitster.g>
+From: jim.cromie@gmail.com
+Date: Mon, 9 Feb 2026 17:33:02 -0700
+X-Gm-Features: AZwV_Qhdnt_Yqnifq6dZANWZkiipmbWOsfSE_8aiNsVY5y2sugK8yNd7vMo9hdI
+Message-ID: <CAJfuBxzvkMuV3cNB-GvZRLtZ--sz46eGzSSAE+tHePSL44O4sA@mail.gmail.com>
+Subject: Re: --suppress-* options error out, apparently passing to
+ format-patch too.
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-jim.cromie@gmail.com writes:
-
-> [jimc@godzilla wk-test]$ git send-email --to=$trybot --no-to
-> --suppress-to --no-cc --dry-run
-> 0001-dyndbg-fix-NULL-ptr-on-i386-due-to-section-alignment.patch
-> fatal: unrecognized argument: --suppress-to
-> format-patch -o /tmp/tXB5tLINzc --suppress-to: command returned error: 128
-> [jimc@godzilla wk-test]$ git send-email --to=$trybot --no-to
-> --suppress-to=all --no-cc --dry-run
-> 0001-dyndbg-fix-NULL-ptr-on-i386-due-to-section-alignment.patch
-> fatal: unrecognized argument: --suppress-to=all
-> format-patch -o /tmp/Y47eIqlSDG --suppress-to=all: command returned error: 128
+On Mon, Feb 9, 2026 at 5:22=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> --no-to --no-cc also doesnt work (as Id expect), it still wants to cc
-> to one given in patch-file.
+> jim.cromie@gmail.com writes:
+>
+> > [jimc@godzilla wk-test]$ git send-email --to=3D$trybot --no-to
+> > --suppress-to --no-cc --dry-run
+> > 0001-dyndbg-fix-NULL-ptr-on-i386-due-to-section-alignment.patch
+> > fatal: unrecognized argument: --suppress-to
+> > format-patch -o /tmp/tXB5tLINzc --suppress-to: command returned error: =
+128
+> > [jimc@godzilla wk-test]$ git send-email --to=3D$trybot --no-to
+> > --suppress-to=3Dall --no-cc --dry-run
+> > 0001-dyndbg-fix-NULL-ptr-on-i386-due-to-section-alignment.patch
+> > fatal: unrecognized argument: --suppress-to=3Dall
+> > format-patch -o /tmp/Y47eIqlSDG --suppress-to=3Dall: command returned e=
+rror: 128
+> >
+> > --no-to --no-cc also doesnt work (as Id expect), it still wants to cc
+> > to one given in patch-file.
+>
+> My findings from a quick read of the send-email script:
+>
+>  * There are --suppress-cc and --suppress-from but there is no
+>    --suppress-to option at all.
+>
 
-My findings from a quick read of the send-email script:
+Indeed.  my brain filled that in.
+once I dropped it, the cmd succeeded.
 
- * There are --suppress-cc and --suppress-from but there is no
-   --suppress-to option at all.
+>  * There are --no-cc and --no-to but they suppress cc and to
+>    addresses from the command line (and probably from the
+>    configuration); addresses a specific patch file lists to be sent
+>    are not affected.
+>
 
- * There are --no-cc and --no-to but they suppress cc and to
-   addresses from the command line (and probably from the
-   configuration); addresses a specific patch file lists to be sent
-   are not affected.
+yes, that explains things.
 
-Documentation updates might be needed.
+> Documentation updates might be needed.
+
+       --no-to, --no-cc, --no-bcc
+           Clear any list of To:, Cc:, Bcc: addresses previously set via co=
+nfig.
+
+I did find "config" somewhat ambiguous. "options" would be clearer.
+
+thank you.
