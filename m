@@ -1,173 +1,150 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A759F27FB25
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 14:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B80525B662;
+	Tue, 10 Feb 2026 14:31:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770733383; cv=none; b=mdQ6G3unWSOhtipT8nGCwvqLJrrD5UhWJOx+ZgT77bduct71nJ4C0uhKQrsRbRvXLbcrAGrhqIenxsLHZ7VPPU2j9xn/bn0QS3vb1LsqRehyB7y/pRADt9UfuDzkQdjiVWrmRYYvjEykCAjZhrc7wtmjR5PaO8znBFWx0KqZENA=
+	t=1770733863; cv=none; b=PC96DsIl97DG9VVyxRqhr+bJvlWEkxEJagdNgb+ZOLsHt5k0YQsFUwNW9qtbjuNUvHkRDZjwYuwOrKRZGZ3nolMp1T8eOFf9ABA9qHiPtQWWrdYiRLQiwzkBum/wVjCp1Q1ATNfjWgJfqaq66TPagxG5wkv3/RYfYgymJBo7aA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770733383; c=relaxed/simple;
-	bh=ZrnwOe+Bi8yZwxbkEIutR63VhDv0QuxGhiR0/TRemvM=;
+	s=arc-20240116; t=1770733863; c=relaxed/simple;
+	bh=/6D7mtlSsxu6MuFgsjjumKvjX6uQ8f2ofDlklCQlVfM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gz/Ec4pX2qyvLNYR5PZ9CBw7IVTd7mzkClWCzwCaAJr/aYSQNtKDLm94mHO3KytLX51j8B0850DjSB8sxltoC5ys8Y0ElWrASWrXcD5eo4NKoXjVHIArGY+D30TWog2CBAiz6jZ+K8yefQP+mPbfNuPchDwnuERXuG0c8diz4Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MtOCpBYT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QTMOwsmB; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=h8SaZ+uZrXulzIRiomysUP0hUQVuRurOLUTxPYN24oZNsLQlOdGgPKlYUreATMaBrMzN1Zub1b8jGtfUCIMTj/ANLFKlXPK+Lhy7js5lUMCO1vaAi3EZtdcVHlJWwsDYQlKWtTqe0a5Ha1Zq4CqUwamvWLnaLy27SHBmCw8jyWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=okTrY1E+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MtOCpBYT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QTMOwsmB"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C4BBE14000CE;
-	Tue, 10 Feb 2026 09:23:01 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 10 Feb 2026 09:23:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770733381;
-	 x=1770819781; bh=aIsq1LtzDH6D8hBKgc2AK/vmLXAUBAd5v+D1vBie8kc=; b=
-	MtOCpBYTBIwBIqQtNhkbMJaCBV5rVbDqlzAlil7J/fT1xJdDZtGNKbzP5iWSYW+n
-	WAhzWLm6MhaoAlElP0V5SUnN5u3/Cp6SnPIQDh0JWQ49tUusyUZEsVhU2jIh6udV
-	25LqvRhRAjIuNCV4PZPh34VkneXDexCvQDo3kt0qKa+wBZsLrV9w3asKB6H98knC
-	FOPOr+2MPvXzsQL5HW/9vGCn9D1+sutctSljkMRkuRxe5RXqG/iS5ZtKPQv4va5e
-	RtBwnhbmQrXZoWqMDbsPR8Bx5p3wD1ZRoTkKFe9m8nbmGGURbFygtFyCSdH9lt1h
-	uk7YgfHiyH/P95nSuAdWAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770733381; x=
-	1770819781; bh=aIsq1LtzDH6D8hBKgc2AK/vmLXAUBAd5v+D1vBie8kc=; b=Q
-	TMOwsmBHsuhOWRf8qXt+zai9xQND8ZtuJdWUfeTeXFP6fIV7VT5HJURgRjthLPxs
-	klUuU9YBMsdleHiDxaNTna5/aMjipUentu01PTAsVA13rznpDkJDFS74Rr34mJX/
-	gq5YmHxcQ7xzM7pzSSOMyF7Ag4rYS3wTAMONgdMOv9WoyhXx7EwK8BlWU5RbW+cY
-	uBll+bxf1/USwZAyS1Aw4y4jHKOBt5XPtDD14RgWfTg5GpoFfHkJ6wYu1atHY0f+
-	FAFbFZf07RODTwcVWXotE0WwA/23AwYRs6Onq8wPDkl993/cxHxYVRjaEd4ze5qF
-	DiBdmdiFjAIvmZSUBmmTQ==
-X-ME-Sender: <xms:RT-LaVNhJgzguY3vKZgUx5s3hW9OuRJNBEAYVkJakgpszNu-fJjfBg>
-    <xme:RT-Lae3oeHXxBSfjyiSIGvhmChrHwue_GwbImG9LAxd5DjFgthZA7LOV5xBK_yQGU
-    g9QPQlp7r_AwuCq4JdyPO46qbGCNKTXoJciO9MBbaZvsZmcNKp6qw>
-X-ME-Received: <xmr:RT-LacmtTolw1Glx5fG8sEklHrSRqxAIot5Xz8Iq8uCj_Z7FRm7sxNZsvXF82stdm2Ucr8OwLZg_hdqkYcRhAYw7ysNgIG1I42eUbdwUShA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleelleduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetheffvddtleettdetueeukedugeettedutdegueeukeetheefueevvdeitddtveen
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    hedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphihohhkrghgrghnsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehj
-    rggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrihhlsegsvgihvghrmhgrthht
-    hhhirghsrdguvg
-X-ME-Proxy: <xmx:RT-LadW-jy_CCXgvPKH4A82MI2QnfvEbrsrnnbWY3NAd1JD30LVNSg>
-    <xmx:RT-LaatbGT3N8uU4HY0voI1DkYTB2cCdUDg3WieFxtRlbpjkxTodLA>
-    <xmx:RT-LaYYDyJvBSAD7vgtb6-gCYG5cwnqEnsjFR-1xY7byUZ-T-6Q9kA>
-    <xmx:RT-LaRUsFdEQCb6IlamxPYtJY1OxwxFVsbAwtipu52tGxXa8p5ZnrQ>
-    <xmx:RT-LaW0J8MqxC1jt-nhbooMPbBLaK2w_nhEvtsaQcJvYpw9q0jabO-3_>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Feb 2026 09:23:00 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9d77ad16 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Feb 2026 14:22:58 +0000 (UTC)
-Date: Tue, 10 Feb 2026 15:22:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jacob Keller <jacob.keller@gmail.com>
-Cc: Jeff King <peff@peff.net>, Matthias Beyer <mail@beyermatthias.de>,
-	git@vger.kernel.org, pyokagan@gmail.com
-Subject: Re: git-am applies commit message diffs
-Message-ID: <aYs_P8QujA6mL81-@pks.im>
-References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
- <CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
- <hn6q2mdjdqezzvtxfxffmatctnlf4ttvwedfk7wnw7xw75gy4g@hetctv53f7bh>
- <20260206090358.GA2761602@coredump.intra.peff.net>
- <aYoEO0CcVt2Qjgnb@pks.im>
- <CA+P7+xrNycJHTyJwn9AQcJLG0dDAE7KrTvWTHBi+CiQUqK8p5A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="okTrY1E+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D03C116C6;
+	Tue, 10 Feb 2026 14:31:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770733863;
+	bh=/6D7mtlSsxu6MuFgsjjumKvjX6uQ8f2ofDlklCQlVfM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=okTrY1E+yUyV2iINPeTNPULJHjHE+XQUyeUn3deAvg3Sd/zwSV0X+89rQp9UAtxyi
+	 0dWILd7CCuzamAhE6RsrA1pb+Ex/SQZTmA2k7X+b0DIxZZ3PFZmiMTAQDopilZM5FD
+	 dx8CdobMLYJ8c/36LXYYqpxv5HoixIQjN2bUjjiCxH7GboQsNF+QSpa8Ifn89iL/Wn
+	 KCevEtuK4bvnBYrL/W+IGRwiNQPhsMk9d7pd5OqX0LjvmoCirnk9B83gGoJeZ+AacF
+	 GcbAaOBS5xqh2DRfrFw3ry0YS8nv1K1YgtoOlF4dPqME3H372UFHmlOi6BsJ8KjDV+
+	 TETVQ/dmlzN0A==
+Date: Tue, 10 Feb 2026 15:30:59 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: git@vger.kernel.org, 
+	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>
+Cc: linux-man@vger.kernel.org
+Subject: Re: [PATCH v2] futex_waitv.2: new page
+Message-ID: <aYtAknObJpjszCaj@devuan>
+References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
+ <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
+ <aYpg1XelZBzpw4ZL@devuan>
+ <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ozagggnj4k7r53xj"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+P7+xrNycJHTyJwn9AQcJLG0dDAE7KrTvWTHBi+CiQUqK8p5A@mail.gmail.com>
+In-Reply-To: <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
 
-On Mon, Feb 09, 2026 at 06:16:35PM -0800, Jacob Keller wrote:
-> On Mon, Feb 9, 2026 at 7:59 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Fri, Feb 06, 2026 at 04:03:58AM -0500, Jeff King wrote:
-> > > On Fri, Feb 06, 2026 at 09:18:50AM +0100, Matthias Beyer wrote:
-> > >
-> > > > That said, I am no expert in either C or the git codebase at all, but
-> > > > from what I saw from reading the git-am codebase, it looks like it tries
-> > > > to find the patch by looking for three dashes on a line with a linebreak
-> > > > behind ("---\n").
-> > >
-> > > Yes, that is how the split is made.
-> > >
-> > > > From what I read, it looks for that from the first line.
-> > > > What I would think of here is looking for that "patchbreak" from the
-> > > > _end_ of the email rather than from the top, that would have prevented
-> > > > this issue, right?
-> > >
-> > > The patch itself may legitimately contain "---" on a line by itself (it
-> > > would indicate that the line "--" was removed from a file). That would
-> > > confuse your parser, including in a way that we end up only applying
-> > > part of the diff (everything before that fake "---" becomes commit
-> > > message, and everything after becomes cover-letter material up to the
-> > > next "diff" line).
-> > >
-> > > I suspect it also creates corner cases with cover-letter material
-> > > (between the "---" and the diff itself) that itself contains any "---"
-> > > marker.
-> > >
-> > > I don't think there is a way to unambiguously parse the single-stream
-> > > output that format-patch produces. This is a reasonably well-known
-> > > gotcha (at least around here). E.g., some earlier discussions:
-> > >
-> > >   2024: https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org/
-> > >   2022: https://lore.kernel.org/git/d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br/
-> > >   2015: https://lore.kernel.org/git/CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com/
-> > >
-> > > There are probably more, but it's actually a tricky thing to search for
-> > > in the archive, so I stopped digging. ;)
-> >
-> > Maybe we can't parse it unambiguously. But what we _can_ detect is that
-> > a patch is ambiguous in the first place, right? So maybe we could extend
-> > git-am(1) to bail by default with a hint that tells the user that:
-> >
-> 
-> I think it might make sense in a breaking change to update format
-> patch and git am to have an "unambiguous" mode which would allow
-> somehow to unambiguously distinguish between commit message contents
-> and patch data. I'm not 100% sure how to do this, and it likely
-> requires some sort of breaking changes to both tools to allow
-> distinguishing properly between the two points.
 
-That is worth a thought indeed. I guess one of the biggest questions
-here is whether we can introduce such an unambiguous mode in such a way
-that old Git clients/patch(1) would continue to understand them. I
-wouldn't mind much if they would still misinterpret the ambiguous parts.
-But if so, we could make this unambiguous mode the default without a
-breaking change.
+--ozagggnj4k7r53xj
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: git@vger.kernel.org, 
+	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>
+Cc: linux-man@vger.kernel.org
+Subject: Re: [PATCH v2] futex_waitv.2: new page
+Message-ID: <aYtAknObJpjszCaj@devuan>
+References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
+ <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
+ <aYpg1XelZBzpw4ZL@devuan>
+ <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
+MIME-Version: 1.0
+In-Reply-To: <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
 
-This is all pure speculation though, I have no idea whether such a
-backwards-compatible and forwards-safe mode exists.
+Hi!
 
-> Obviously if you're sending the contents together, a malicious user
-> could edit the formatted patch to move or copy whatever the
-> "signifier" for patch vs commit separator is... but at least we'd
-> prevent the cases where someone accidentally includes diffs without
-> intending to.
+On 2026-02-10T15:17:55+0100, =D0=BD=D0=B0=D0=B1 wrote:
+> Hi!
+>=20
+> On Mon, Feb 09, 2026 at 11:35:53PM +0100, Alejandro Colomar wrote:
+> > On 2026-02-07T23:00:49+0100, =D0=BD=D0=B0=D0=B1 wrote:
+> > > Signed-off-by: Ahelenia Ziemia=C5=84ska <nabijaczleweli@nabijaczlewel=
+i.xyz>
+> >=20
+> > For some reason, the patch doesn't want to apply.  I don't see anything
+> > obviously wrong, so it may be an issue in my side?
+> >=20
+> > 	Applying: futex_waitv.2: new page
+> > 	error: affected file 'man2/futex_waitv.2' is beyond a symbolic link
+> > 	error: man7/futex.7: does not exist in index
+> > 	Patch failed at 0001 futex_waitv.2: new page
+> > 	hint: Use 'git am --show-current-patch=3Ddiff' to see the failed patch
+> > 	hint: When you have resolved this problem, run "git am --continue".
+> > 	hint: If you prefer to skip this patch, run "git am --skip" instead.
+> > 	hint: To restore the original branch and stop patching, run "git am --=
+abort".
+> > 	hint: Disable this message with "git config set advice.mergeConflict f=
+alse"
+> > 	Press any key to continue...
+>=20
+> Hm, I did recently set
+>   $ git config diff.noprefix
+>   true
+> I didn't expect this to affect format-patch diffs
+> (since it doesn't affect diffs shown by git add -p),
+> or, if it did, I expected the designated consumer of format-patch
+> diffs (am) to understand this. perhaps not;
+> maybe -p0 to git am?
+>=20
+> A quick search yields
+>   https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#eaa0323ec4eed=
+441b37caf96e1b136529b298dbac
+> where you're in the thread and the maintainer says "queued" for a patch
+> that would ignore noprefix for format-patch for this reason precisely.
+> But clearly not, since my patches were with noprefix=3Dtrue and came out =
+-p0.
 
-Well, if we had such an unambiguous mode I would say that eventually,
-Git should start to refuse patches that have been generated without this
-mode by default.
+Oh, that bites again!
 
-Patrick
+Junio, do you still have this queued?
+<https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#m6f42ff4f0cb2d6d=
+d1d68f12a533d04c822b68a80>
+
+
+Have a lovely day!
+Alex
+
+>=20
+> Best,
+
+
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--ozagggnj4k7r53xj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmmLQR0ACgkQ64mZXMKQ
+wqlDpw/9E2TyUu3WnmEPciM7JuGN5a1yAO34c5ttqJQv9xdXYRwkd3TgFZcjU4ca
+uvV2n7CJgY+RDWH6YJEyP4tiAJgJT/ogBFV0IDBvw8tmEyeNkQqOe9+euLtFBMZG
++GGuHtX6y3cYXuQtCfOR6vrbgUDxqLtm7aj+X70sCkn16IJa6Oc7jRNreHoeihoK
+m4CbYcRoITygTLqYj5C/4NzN26HGD+A4fm6zrfO9+PwdkIZPl8BBfbmyLP2A4lw0
+O/2LLtTVi99DgXhwo/Jugx7uxMYTJb0dCUJdsuvPh3Do9SJz+5rQOdANZAao4kyg
+ruY0iPZ+QrEUYfkMUobPkwpEbefMwCxZ0lrKzbf3pBzXYwFGQ7XvzCBKWpHWgJyt
+rtDutnGSG/T9joaQy0yp+OsKqZsn6EodyUr6DaQuoZiAYdmxg6qPiMxcd/1u79qi
+W1rRrusyQmMW2V4Sknxm9Whq5DxwmcoeOmJtchbcEDHidQ3dVA1JaivuV+n4J+pi
+PM+zidcoPExMp0/qPOpX4cBGbIIIkFvY8UNp9K/1+NvbpbR5K2yHS5LwbTeY57Fe
+c0Es3qtgf1TKbRHX29Vu71XeZMuh/8DbpQ45AkDcUlQcop7bZiVCdiVZz61LBcxw
+n5pKJV5cYnGh/tNo2XEo/FcC6Zch7FWJ3/u4mf/x6okgGhUh2vs=
+=5yH5
+-----END PGP SIGNATURE-----
+
+--ozagggnj4k7r53xj--
