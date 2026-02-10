@@ -1,76 +1,78 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FAA3859CF;
-	Tue, 10 Feb 2026 15:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381343081BE
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 16:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770738865; cv=none; b=gJEVeWAaOyvH6KZj0mThqYMDzcNYFQda+RjTgMf/xQG6KJWJIsoLS45azJXKunftnGrulkYDE1DF3KEuPn9QCYb9Ueb+1Wvp/we0vrk4vTgnHvYoE+uK4D6p/mL2UO2q1c4d/FnZhEoBy8JvxA53Jxnuj9/qQlZZHVUt4WPqq14=
+	t=1770739230; cv=none; b=QHV2bAHJzu4MvEEaySlEgcU0dqplnlwZJbjT+xMOUyomlroiO03Yo3OF7kx3zfBT0FqHqcWPlKVAED4urYzaQvd9YwkFKdKH3sg4X8X4PU/TA+xF/4GnI9ihv/WK/dK+mSVSgo9z8xaDeTJDXv2ydMMpQatm+UY9zCWNfDiia7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770738865; c=relaxed/simple;
-	bh=6kAmUcfLDGkZjA28/PZm9IIn4e0YDH0tVCnss/Bnbiw=;
+	s=arc-20240116; t=1770739230; c=relaxed/simple;
+	bh=1ARCH7rgLFt5l+xnY54oq0c2Ss45hZhUXU94n56lQFY=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=PhIY/edLb0w9OTsryueTd3rRUy7zNjFHcKpXbg0RkcCzij1q28f6nNdHf1G3Nv61axR/9g7jK/HT0dJtbGEjHjjrePY+MWJqDFY2F3pxZELyHAR8tx734SzZ52wCMeb14R39nWroWTcxCk765P8Dxg1R+albvyk0hGPcwCPjiOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=If8VY50X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uBl2AbQ9; arc=none smtp.client-ip=202.12.124.149
+	 Subject:Content-Type; b=KRgCMONR9vffPnxKl4iW8F9wm0sqN2ZnNwsSaemaFhfojzgWXWu4dmOvyHdkS0cix/09+ITnT2lsSYYS6Cidt+jAVXBL5dpUMUUvZK4FaLvM+hGk2wiFl2L9ciJ6F0cNfkibVh54mLLSFV3klx8yShMx3jQvXSTBsXGAWh/xONc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Ha9n1Pi9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C/4VGYye; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="If8VY50X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uBl2AbQ9"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Ha9n1Pi9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C/4VGYye"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 468C71D0012E;
-	Tue, 10 Feb 2026 10:54:23 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id 5D9AB1D001A9;
+	Tue, 10 Feb 2026 11:00:28 -0500 (EST)
 Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 10 Feb 2026 10:54:23 -0500
+  by phl-compute-06.internal (MEProxy); Tue, 10 Feb 2026 11:00:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1770738863;
-	 x=1770825263; bh=xb2p9GuhyCbyLt1bmZiSREEZz+c4GAoQEZDpN2kDumI=; b=
-	If8VY50XabWRl6lWvxHTgVsfQMEYewNn05aA6+LA0j2VlzGLlnb01MYobmISpOAV
-	0h7iDgAxpsBi1+YFz5Sw8Af/y+rIF6SniLFDniOkgipkYFWseTDBFN2oKGFwYDol
-	zCZdvSXcCfYPcWakkiXjpQhSZT7bq5pmRmLktd1FJzicLjePwfojk/uXVvRuZrTx
-	9k5hnotSGQHMfZ+3wT5pxKlLD+aCfsBI0r1b+4tzsfMYHoQqw6hIeFVhBVx2FelL
-	gwydeFIcEu5zWnDAo9qjcbcxW+b33TG/JGdLVjLnzQVuAbX2z2yR3QB0gibA6CKJ
-	XRtksAmwl76rboxaQ1lNiw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770739228;
+	 x=1770825628; bh=1ARCH7rgLFt5l+xnY54oq0c2Ss45hZhUXU94n56lQFY=; b=
+	Ha9n1Pi9s9wR7Wv2Z4G7YLdD6pCfEe2hvgW9Kd8zRGJFu7ElJApqek4FQ4yTqtEz
+	6XIh0lts/5ywp50qZJ/rr0YfiRE7fZ5TQuYtyolzNc2Qe7TUnDs1rIQE+j/lLPyn
+	EgYzMTnd+1cRZpRF5zM56XghNZGTiCee/sIkE+n0lCdk2kqp24CxctS7rShzXtf4
+	+FqejRj4bKjW3vSa06xXj6caCbtKX8O8oBllWncg/SfSmNYZrWiLOog1bJqH/Uct
+	2B85ZS5QtEg+Qn9ip5+qntJ91Gq7XOWXazkumFgMxFEoFRpw3sxlbYb+W66XRO08
+	IXX7++6zdDtWiakjibPT9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770738863; x=
-	1770825263; bh=xb2p9GuhyCbyLt1bmZiSREEZz+c4GAoQEZDpN2kDumI=; b=u
-	Bl2AbQ9BcwP7uwraMHchKL01a57DisY2vH0TSQxPmc8Kd5rORCpqs+p6UygG80XR
-	smWBayutTV+0WJtl9Rub8xuwWfnKT25NI6fr+wQZ8dJUwrvihlJpIFxFDR77NJPy
-	TEB0ES005y/cb67sdIRO5Fux/XmhQ9HyaqsflB9L/i/FZD6Ko63CvC1dPkmJAzC6
-	J1Zcse4ehdaOuUD//NklypiFw2LZGJkNCFqwETX9DJCfOLiXuF7RkfmWrJwnpei5
-	U5FpWnGZQOju2I01aTTWyWYmaZSk5cr6ufiTVfOfRLmokKx56KQDyCnzUNId1nwV
-	wdV0v4yM0OqoTDP1E7SGA==
-X-ME-Sender: <xms:rlSLab-SrnYrnIldiwT38z9XAfnPWnS_LI_sM2VeyfQvsTBgmWy8zN0>
-    <xme:rlSLaSjpziU4_xEqan1Sk7shzM4-txY7tJ4cqxfEEo3X3LuI56-VBbnvfPAyVYAqD
-    SetjFJTG20JyNepxHMgQ_aPYs5sHuJ4IxCsz_jVNykMUfp0v1X12Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddttdelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770739228; x=
+	1770825628; bh=1ARCH7rgLFt5l+xnY54oq0c2Ss45hZhUXU94n56lQFY=; b=C
+	/4VGYyenoZc72wsA+U3dcwtzqBEb25gf/KRxuYm/T+LlCoy+rZhRP3clJaNhqKqX
+	3nJPWJDXJjvFhkSfinXACkDhnTO6LbDZtQGPmEysp2C48yeTRfcfCesWEfFk9sJW
+	waCy15UcmqQa+PVkRh/G3IBf4MyNvk1FNtjxbB2jSSu05+D7/ztCdK+fhsAx3Ybw
+	7nCrAGD+/wEtewEV5HfwkY1AN10CUWQcBQ3WWri6K1rBdbd/rXzVjrUKLOia5HOh
+	pLPUPsE+rL12UVvuwSUOIL/HsKm3ud/GEp/aJG1hENequkfkJ+UuHPKTWsOdfoy9
+	QnpdqehxxqC26TZwdlnBg==
+X-ME-Sender: <xms:G1aLaf--x1JigJVMCYmyRKx90ctRDJNRrEFMTGVWxrH8C0ld5XIJh3g>
+    <xme:G1aLaWhASMV4jPAunU_wSDzjwCQfTXEZ6ygYJWzGg0-kR0HG-Diph5kdldwS93EQF
+    NvjOeJlSDhh2pFlvPYMPygKl4s5lbYhKIMUgR5P7k2Eyo50mMYKZg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtuddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
-    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpeeifeetgedvieeggefhheevtdfgkeeiffdtuefhudejvdejhfef
-    leevvddtheegveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhnohhprhgvfhhigi
-    drihhtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrlhigsehk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehnrggsihhjrggtiihlvgifvghlihesnhgrsg
-    hijhgrtgiilhgvfigvlhhirdighiiipdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
-    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    eplhhinhhugidqmhgrnhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:rlSLaaKEJUrxQls0m-ti4D4tCntvUrU42ikrh0N0ViPD9vwqVGP9Zw>
-    <xmx:rlSLabFedwxim-HkXwqMjgIxygQuDzFpbKB2Ys0XTnxX88HexO_v8w>
-    <xmx:rlSLaWSfS61TRd9SJnii6UEB2VeAft5O5q_wbmrtrPsG5U-fDad6ig>
-    <xmx:rlSLaff2B1q9qXMf0PnM1HCpwbPOOB9xnJrRziE3O_eEj0Zmofpojw>
-    <xmx:r1SLac7QtjGaYDkJp1WfkjVQfDF3e8qYXsTBKZkd0yA86DLOJL01B1Tv>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfef
+    gfffvdfhffdvveevgeehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpe
+    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepmhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprhgtphhtthhopehphhhilh
+    hlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehjuhgughgv
+    rdhprggtkhhhrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrthhhvghushdrth
+    grvhgssehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrlhgvshhthihosehstghivghn
+    thhirgdrohhrghdprhgtphhtthhopehsuhhrhehrsehsuhhrhehrrdhnvghtpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:G1aLaZmKlZ6TmUVZHbRmV8SYeeaYc-na0E83m1Ho0jEMHQcSN0sk4Q>
+    <xmx:G1aLae7YiqXh6DTvrgJtXpEV8zkhAgpPj8HkNEvlaZ9zxhqcC8R7xw>
+    <xmx:G1aLafiMRg4-fEi1h9-_Yc4BDwvIQbDUccDc9T0Set4L-0H_GkS8sg>
+    <xmx:G1aLabHQuQl8xWh1mGr51i3qYuL6zvMHIYFATb3rec_3xcEfhngofQ>
+    <xmx:HFaLaW38szwCPoFEVZB_3fFkyZMhT6D-hyqiY2-Rml2SdlcmYkrtABbY>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B375F1EA006B; Tue, 10 Feb 2026 10:54:22 -0500 (EST)
+	id 6AAE81EA006B; Tue, 10 Feb 2026 11:00:27 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,96 +80,37 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AsV1kM-kUU5c
-Date: Tue, 10 Feb 2026 16:54:02 +0100
+X-ThreadId: A2LExlyUAPtc
+Date: Tue, 10 Feb 2026 17:00:07 +0100
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Alejandro Colomar" <alx@kernel.org>, git@vger.kernel.org,
- =?UTF-8?Q?=D0=BD=D0=B0=D0=B1?= <nabijaczleweli@nabijaczleweli.xyz>
-Cc: linux-man@vger.kernel.org, "Jeff King" <peff@peff.net>
-Message-Id: <55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
-In-Reply-To: <aYtAknObJpjszCaj@devuan>
-References: 
- <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
- <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
- <aYpg1XelZBzpw4ZL@devuan>
- <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
- <aYtAknObJpjszCaj@devuan>
-Subject: Re: [PATCH v2] futex_waitv.2: new page
+To: "Christoph Anton Mitterer" <calestyo@scientia.org>, git@vger.kernel.org
+Cc: "Matthias Beyer" <mail@beyermatthias.de>,
+ "Christoph Anton Mitterer" <calestyo@scientia.org>,
+ "Matheus Tavares" <matheus.tavb@gmail.com>,
+ "Chris Packham" <judge.packham@gmail.com>, "Jakob Haufe" <sur5r@sur5r.net>,
+ "Phillip Wood" <phillip.wood@dunelm.org.uk>
+Message-Id: <7ef28209-9953-4593-b1ce-11af5e8375bd@app.fastmail.com>
+In-Reply-To: <83b776c4c3b6092f9714adc157ac6a38af1022f7.camel@scientia.org>
+References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
+ <format-patch_caveats.281@msgid.xyz>
+ <83b776c4c3b6092f9714adc157ac6a38af1022f7.camel@scientia.org>
+Subject: Re: [PATCH] doc: add caveat about roundtripping format-patch
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 10, 2026, at 15:30, Alejandro Colomar wrote:
-> Hi!
+Hi
+
+On Tue, Feb 10, 2026, at 01:53, Christoph Anton Mitterer wrote:
+> While it's nice to see it getting documented (thanks for that)...
+> wouldn't it be even better to actually fix the underlying issue? :-)
 >
-> On 2026-02-10T15:17:55+0100, =D0=BD=D0=B0=D0=B1 wrote:
->> Hi!
->>
->> On Mon, Feb 09, 2026 at 11:35:53PM +0100, Alejandro Colomar wrote:
->> > On 2026-02-07T23:00:49+0100, =D0=BD=D0=B0=D0=B1 wrote:
->> > > Signed-off-by: Ahelenia Ziemia=C5=84ska <nabijaczleweli@nabijaczl=
-eweli.xyz>
->> >
->> > For some reason, the patch doesn't want to apply.  I don't see anyt=
-hing
->> > obviously wrong, so it may be an issue in my side?
->> >
->> > 	Applying: futex_waitv.2: new page
->> > 	error: affected file 'man2/futex_waitv.2' is beyond a symbolic link
->> > 	error: man7/futex.7: does not exist in index
->> > 	Patch failed at 0001 futex_waitv.2: new page
->> > 	hint: Use 'git am --show-current-patch=3Ddiff' to see the failed p=
-atch
->> > 	hint: When you have resolved this problem, run "git am --continue".
->> > 	hint: If you prefer to skip this patch, run "git am --skip" instea=
-d.
->> > 	hint: To restore the original branch and stop patching, run "git a=
-m --abort".
->> > 	hint: Disable this message with "git config set advice.mergeConfli=
-ct false"
->> > 	Press any key to continue...
->>
->> Hm, I did recently set
->>   $ git config diff.noprefix
->>   true
->> I didn't expect this to affect format-patch diffs
->> (since it doesn't affect diffs shown by git add -p),
->> or, if it did, I expected the designated consumer of format-patch
->> diffs (am) to understand this. perhaps not;
->> maybe -p0 to git am?
->>
->> A quick search yields
->>   https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#eaa0323ec=
-4eed441b37caf96e1b136529b298dbac
->> where you're in the thread and the maintainer says "queued" for a pat=
-ch
->> that would ignore noprefix for format-patch for this reason precisely.
->> But clearly not, since my patches were with noprefix=3Dtrue and came =
-out -p0.
->
-> Oh, that bites again!
->
-> Junio, do you still have this queued?
-> <https://lore.kernel.org/git/xmqqy1o5op1i.fsf@gitster.g/t/#m6f42ff4f0c=
-b2d6dd1d68f12a533d04c822b68a80>
+> I mean it's all but guaranteed that everyone reads this,... and IMO the
+> problem might even be exploited security wise.
 
-See 15108de2 (Merge branch 'jk/format-patch-ignore-noprefix',
-2023-03-21).
+There=E2=80=99s a discussion about fixing it from the start of the threa=
+d:
 
-An aside but `format.noprefix` is not a boolean like `diff.noprefix`.
-It will be enabled with any value.
+https://lore.kernel.org/git/bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7q=
+k7dldf@fij5calmscvm/
 
-Is it standard to indicate this with the existing =E2=80=9CIf set,=E2=80=
-=9D, perhaps? Or
-should it say =E2=80=9Cenabled with any value=E2=80=9D?
-
-(+Cc Peff)
-
-    format.noprefix::
-            If set, do not show any source or destination prefix in patc=
-hes.
-            This is equivalent to the `diff.noprefix` option used by `git
-            diff` (but which is not respected by `format-patch`). Note t=
-hat
-            by setting this, the receiver of any patches you generate wi=
-ll
-            have to apply them using the `-p0` option.
+Please use Reply-All. ;)
