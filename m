@@ -1,165 +1,168 @@
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B0827E1DC
-	for <git@vger.kernel.org>; Tue, 10 Feb 2026 08:40:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAE333F39C
+	for <git@vger.kernel.org>; Tue, 10 Feb 2026 09:24:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770712817; cv=pass; b=pYxFqB3NBH9E67MOGQ6cQdvu/QKICtzMZ5e7s+ANhpP4EURECVKv2GgfrKNMuvRdq5n9ftkm2TWdrrBKACbJsxW2AikS2dybW8lFi4k7Vo1pV/kvgHj/+Zw8z3etXluRlDj432NFMgFMU62oBCHRe+b5QOURux2L5/SMC34jUZo=
+	t=1770715485; cv=pass; b=WFcJzIrEvMk04k54DLqqBqe7MAoBOIGYcC02GOeTezhhYBDvT+xZZ+dhLXk/lyRUWWEt89JE6U2DnVLwuOeoj3bHw3tTRQdZ/mrCCOtkehj6PKr6j9Ev8VtBJ8KH/M+XRp/gjaOTfSkltU/fe6hLkEX63McrYaO99yRW8SeFlkM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770712817; c=relaxed/simple;
-	bh=wnjeEobwYukPzNI+IjMGT1H8AFYx5XuHR/rF3jlKmB0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hGAab9+f1s/XBWWi944SxCiCuZnFsC540F+auKXbQPhLZDjnYucakPAkVEk0bMR08c06WZX591pk76JWWM9glgA6Qk+H/rp5UvU5FSffXQkth/SyFqYGzlawlj8dy68pMtGp95jH2D2xaG/FHZ9YLsKhuTwDAQhYk9TiLWF+tKw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gU0dG8TR; arc=pass smtp.client-ip=74.125.82.51
+	s=arc-20240116; t=1770715485; c=relaxed/simple;
+	bh=Ciz5JtrOdWH3tJwyurxpatWOHFC/NcgofHnMjL/ytjk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=H6caVDyWLfnh3ZP6oh0o4EDbBybDEZ+iFCJUeaq5nwyDpU4KAdMwsqlLwM5vXrUIG/riRIJdvVLmEzqySm0vCXUArVMLctf21ZGTP2O9CCjkgumDxF7HvXid1l7pU1z6nPPZSvSeRPoOHqOXFr74aw+/5alf9QzfuqdUcRt4hT4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Csi6os9W; arc=pass smtp.client-ip=209.85.222.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gU0dG8TR"
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1270be4d125so1874830c88.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 00:40:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770712816; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Csi6os9W"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-94ab69af6c8so1967953241.0
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 01:24:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770715483; cv=none;
         d=google.com; s=arc-20240605;
-        b=QlwzqhKhBd5XJV/NBb4szRoSqpDT/d1Z22AzXJ143RZelXyqPMt5msAFGyRInyLITN
-         Q7Y9VFN3yJG03ACgcU/HW49t5Mg1wiF2jBuAYLVfrgneHTgSzw9tJg0a7xZSXW3vGCU5
-         4JaHwf27zV6YVbh7/Uo3gKQteiXrNeefU94gz/j4qxGhUh4GyKkxtBYWD4Xc5q59Bu1O
-         kvXXTEe/snA3D1xaOoCNNpSw4xZbCQX0+H6uxlJnBZB07/VpTJXNT0/T9/hGJEmT3QmC
-         o5lTXs+mXw66AmSaUAjENvA2iiNqCykX0vL76V3WHjUPLHu/n+Y4YA2jV9L83umxrVMJ
-         bk7A==
+        b=XYD/GFV/lgqAueDP26PxQLDMfcuiNajH2c3oA0HTYtFu1AqPKhLtSIy2+BcIblkGvw
+         x2dj6O6b4V0/LxIOvtOIyPTf7q/CaXAFm9y+tJCrxh/CURfZGd345yxBMXFiO0UeiIZJ
+         EbdaStzU53i8uQpwNT3jtL9qaJXxyVUzALymBGlurTuqYlFhMOtvgYp+pNiQd+bjs5Jq
+         4w4yVleedlSu9vEmcEJn2sJ0o4ir5vOrl6TSLWHAwNWcxiSqsHqdU74wI47uvUrjmF+a
+         y061KHde23HMoAHVxwdsXs6tAQCpbklaTuykMh2a/aQdHG3s8Bk94D0WH1KBNhPEAKYP
+         A1Lg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=MwQ8A9wro1rQ+BxfFIFqQDLpRnOwzMEcLhBrRFjxko8=;
-        fh=nMyJPDOOkWXHi4NomUE+OLjZftP6uMygnWXJvAYxnBc=;
-        b=KoK2NN8YyJEG936oHwNz4AgXwiP+vGXTx6v6vj9edwZUxaaa7aGFN/0lritsR+hr/c
-         jMqN6PqGH9l4/SqC6RfbPwu893pEBDKX15mk5q6tDulI4pVHa0bgAlGRzSX598Y9rzTV
-         ZYx1N2K3rTexHcys1UiU6+Uy5PHau/A1MlOkN/q53p9t53P4MvrhcxQmfpm6MnoWMjWr
-         31o3xwNhAXOQBEGs2poVbowdoFKubzRj1B4aNfe1Wp8o1FxDXxMLp6W5qIMz+Y3z1mmp
-         u8pPM8y+mk9l+B3HgT0v5eORgbizYAyPQtd+z0VyGS1AD81un8WNSqZVHemCVQ1/Db6O
-         lfKw==;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=rIWpZFtutMWzDZc8dmKvQ3D8eV3Gm/nem539QlHXn8U=;
+        fh=F9yksAPJMt6RfhwxGUJV6S0MY1ZdNsDtCRfZNORhjWI=;
+        b=BDNm2Z55PZzsr5rs9dUsknInrMivnoQu+HZ92mivp/OFeeFLFqHrQRu0AnlRe0zOVB
+         m9mbsf+UwYg9EfaEOO3DfwdQ5yzkJvDYap24UhB1imT5HvmITUEzHvJoYaNFaLLct9fC
+         ahei/08ZXdB8/xOMGYP7F+aQ6gWnNeM/EVQsIQdgULbN9UC3WwNZe/19d6++p0v5xHyw
+         8gPaep4As+U1za2r28zMnaezBJNKFwSc8I0VvG3YvWOWcvrgqLlgIe3GttBrTrbFPRqa
+         3+maZ2tbNNwY4TP4myoSFkC/eIjgGebgrbKsQpO3omo+OMLQcxUNw6Zu/qe9cUM7zv5i
+         R+Og==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770712816; x=1771317616; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MwQ8A9wro1rQ+BxfFIFqQDLpRnOwzMEcLhBrRFjxko8=;
-        b=gU0dG8TRvsVzZ41F5vKkDlBSFTG1zL3jdWnmR/3Y9V86zZ/y/yRbWE1eoPkff6MvMC
-         sLL3fmEcBWDE4TOjXgXj+FK3Sl0UwgkdPZY5LXxjTnjGzn4rpKxpIPguJEXwHyrtb1LO
-         Tj5rcg+0D4/Ru40bY6H6UoSFShp/LarJEWdfT7NYzfcupe73kgptLynuCav1fQnwQWXj
-         U7NmJzf+QOBtd89EiIkbQfdYx/om4PUlqntS0l53bEgh5bmXGlvTw9A1YGQilxBad2tN
-         pd91r5Apahg+FtJjndaPjsAXYGYQT22JfnjGH4mcDoYBk655JWJ45QPo/3V50m9G89Qr
-         XNXg==
+        d=gmail.com; s=20230601; t=1770715483; x=1771320283; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rIWpZFtutMWzDZc8dmKvQ3D8eV3Gm/nem539QlHXn8U=;
+        b=Csi6os9WMbMkLhtMv+ylj7WiQaivucSUkH9XkN7Y3d4MG0OMZgrhrjo3gBHxrcbab/
+         Cc7XZJ8oOy7ee75lvhtWx7T5fjV1UCTI5Aaui8hSrMnNyaiMTbnP5QnuptfBkDqB/raU
+         ffyZPqt0Gebso35/V5FSpfMgOqX/DXSS7b9Nnz7qJYHsdKdhVBZjG9sffyjj7Ms79CiY
+         cLLFVjf06sibIWKg0LhQ5BLl0kTX1yO9udhJ0HG2SQAAhCdk+3XqY+VYDrJW46NCNaeq
+         Ld7ebwbfnKXArad3pHxAgo8nRZkd82cub5p9mVoBDGX2Trs8gshjfJ+Iy3bqfI2Ih1pu
+         enCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770712816; x=1771317616;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MwQ8A9wro1rQ+BxfFIFqQDLpRnOwzMEcLhBrRFjxko8=;
-        b=tJQ14gGhWXQN2bBUEtt6T5o6HD/Qjv5iEVK5G1kRjmkpCFfdHRgFwI56R6SwfQMPwC
-         nnaQOJ94v1h6fDNOxZQiPt94Wvtvnmju4n2DcHVCYPryh9XqkypOJCFGSErcwfouR0Lg
-         VKtZ1sN8FNwUguXOSfrW/5O90Eu30JHxmNzVjXSa9uvMw67H88ZXN0hnn0y9KFBsyh/v
-         cowieR0lozeQ4GiazLalQ0es6Uml2Kd1h/zrghTJUqhaDDUCM3Y2yPRb9ExX36CwKpDI
-         BXR9dhJC0io+9qCpnyaJK/SRWiaMXZkjlFAPfYGUU3vhcgekwY2Olqhu23/zLnThqa7L
-         XOAw==
-X-Forwarded-Encrypted: i=1; AJvYcCX4yYbvNb5DUM7T4IygZPqBNoj8wC5jVudn/AhtKpDWKfk7Da4EArFYubYRgNtWhHGAl4U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJ5CJyE5WgVkSCIwvEItWPE1lxTZWGL5Jy7UOXQajBrFKbVZP7
-	RFb1em7QJKCA//n80MF3mJ3bIsxKmpbyCVmTmrIlu3pYjly+mnDNLtUT5qhepxJouHvGQry+aqy
-	bFBlontVUCXK7Fkva+/uKtJxpCmJ96pI=
-X-Gm-Gg: AZuq6aJTdfILXhHSy8n2csMPf+Ze8Ny0xAVCUZ2nBcEMbd30NHTwBaT6L1eOqSA2MB5
-	5mAmZYljb+RVzGBJU0/SFcWXPuZEfSIvZFBORbWVQnSJObnE+mQMbpxiXUnxHLAcV3Wx+wJGKyv
-	isOH3HPD0ITlZdwAGnnB56B39oUQBMuDqBWSVds40h6peTF/cRQcYg4risqgZGs1Xn/8G7fIety
-	mUWyl6xzaLYp3bsuWFm7DcHy+zP03YHFN+91Z5Ff1eDNS16skdeL5nbGuZ77p5TRwztNMUHCQGt
-	gqHY/i0U9Dcly9AkbsgH
-X-Received: by 2002:a05:7022:f97:b0:11e:161:c008 with SMTP id
- a92af1059eb24-127040596b1mr6985544c88.26.1770712815633; Tue, 10 Feb 2026
- 00:40:15 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770715483; x=1771320283;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rIWpZFtutMWzDZc8dmKvQ3D8eV3Gm/nem539QlHXn8U=;
+        b=l/vS1zqkzIJf0sLdZFgpwTIRmj+y5zz5lasYQkJ+kVzV67S2FjdFEp/fcv40y6cXlX
+         56AsyNHyad/YliaTBxnHiv+53HZBq3cFd6pzmiO1NtliTSeSNymoRkBD1IlJKxaikHL+
+         IiPEkwnlXPz9n5DrbWji+WC1H6OVlUP4LoqD7gkHfYJmbmtN/zLhk8xxCVAVorVZljXv
+         zV0gdJkugGn0RdeDFx+6Qz1s5DCkLAU3JjDmqzkRZQjISP8zK91kYskYk3G3Bm5KuCuC
+         oQELyULcKuiGbniY1yvqW0ZEijCrFAwx+VrkVtZ6SATS5wiI5pWgKtWIXidnjtspgiwd
+         O7Vw==
+X-Forwarded-Encrypted: i=1; AJvYcCUN3+lwXpdhFD3KJQazMo0M8Ce7bZEchRMW3+sT1Bz5USLZPeI5ymkTNIt/xVuOPL257+E=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNEX3xStTOlySSFz8CLrM7E78RTsFE83wVsCSGnleRG5bYXHcd
+	wmNGLN4UEWX238AS0IHLzyEIsssFW1AD2OV0dgQFB3sv6NBqapqwCFYcFGpyAvi3LahJ6gvuoHY
+	aMR5ZEcRE8zzuD/3htT7tyCBscQxr+x74DR7r
+X-Gm-Gg: AZuq6aKHOx8NCyhYeR4fvTaF1u80ojCAvLPHRMS7bEWEm2E6gwcngVdLehUfydplIAT
+	4jh5iebHVWmCDdZNjUdcJ1HYpK+7QmlnpNPmzEF4srEST/NOWhFh6gvsa524GXIJ+mkWBKeABMV
+	HlAHClr5+2vrzbl9qEvVmwjJNsP63ODxm1rMHkOxi7h+V/if9soxv+FgJg/WF+Pmi4sT8iK/6la
+	epsbYTZyRI3XNGiDc+Cms5zzD1kWoxdmEyQqtQM9fR6dJzayZBNMvxJWN1fh7Cgxpw3q2Tpt0Fk
+	mZ46oNrJqASJe8MMpG/tKRBi8wNjYIp4/pb5QhRDkw==
+X-Received: by 2002:a05:6102:3907:b0:5ee:a6f8:f93b with SMTP id
+ ada2fe7eead31-5fc4672b990mr559384137.2.1770715483107; Tue, 10 Feb 2026
+ 01:24:43 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 Feb 2026 01:24:41 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 Feb 2026 01:24:41 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260126-b4-pks-read-object-info-flags-v1-1-e682a003b17c@pks.im>
+References: <20260126-b4-pks-read-object-info-flags-v1-0-e682a003b17c@pks.im> <20260126-b4-pks-read-object-info-flags-v1-1-e682a003b17c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1770127568.git.belkid98@gmail.com> <7e3082125df08d3e5fb2195d73698c4c28c6645e.1770127568.git.belkid98@gmail.com>
- <xmqq7bspcq3c.fsf@gitster.g> <88570b6c-2ff3-416f-b63f-2fb7c80c5af8@gmail.com>
-In-Reply-To: <88570b6c-2ff3-416f-b63f-2fb7c80c5af8@gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Tue, 10 Feb 2026 09:40:16 +0100
-X-Gm-Features: AZwV_QjIJSRukTu9JDd7vts-WtpKj3yaGwcjNaMV2m-kJuhUV_qAYK_izydJpfo
-Message-ID: <CAD=f0L8jeLE_Zy-5aW+DZrM6JNgbwRcgWCdW1f7SJ5uG_2R-yA@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v6 1/3] environment: stop storing
- `core.attributesFile` globally
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, toon@iotcl.com, 
-	christian.couder@gmail.com, usmanakinyemi202@gmail.com, 
-	kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com
+Date: Tue, 10 Feb 2026 01:24:41 -0800
+X-Gm-Features: AZwV_QjcoG9CiWLAoECcuSom742AW66cn1MYoa5LCvurXQpXj8_Zf65rL-o2nvg
+Message-ID: <CAOLa=ZQeDTFkVjJcmY8VOeR_F1E8c6dcc+fcMbUdcWcw2DPcGQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] builtin/backfill: fix flags passed to `odb_has_object()`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000005e8a77064a74d3ad"
+
+--0000000000005e8a77064a74d3ad
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 8 Feb 2026 at 12:14, Phillip Wood <phillip.wood123@gmail.com> wrote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> The function `fill_missing_blobs()` receives an array of object IDs and
+> verifies for each of them whether the corresponding object exists. If it
+> doesn't exist, we add it to a set of objects and then batch-fetch all of
+> the objects at once.
 >
+> The check for whether or not we already have the object is broken
+> though: we pass `OBJECT_INFO_FOR_PREFETCH`, but `odb_has_object()`
+> expects us to pass `HAS_OBJECT_*` flags. The flag expands to:
 >
+>   - `OBJECT_INFO_QUICK`, which asks the object database to not reprepare
+>     in case the object wasn't found. This makes sense, as we'd otherwise
+>     reprepare the object database as many times as we have missing
+>     objects.
 >
-> On 07/02/2026 01:14, Junio C Hamano wrote:
-> > Olamide Caleb Bello <belkid98@gmail.com> writes:
-> >
-> >> Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-> >> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> >> Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> >> Helped-by: Junio C Hamano <gitster@pobox.com>
-> >> Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
-> >> ---
-> >>   attr.c        |  7 ++++---
-> >>   environment.c | 12 +++++++++---
-> >>   environment.h | 11 ++++++++++-
-> >>   repository.c  | 12 ++++++++++++
-> >>   repository.h  |  7 +++++++
-> >>   5 files changed, 42 insertions(+), 7 deletions(-)
-> >
-> > I bisected our recent CI failures that break fuzz smoke test down to
-> > this change.
+>   - `OBJECT_INFO_SKIP_FETCH_OBJECT`, which asks the object database to
+>     not fetch the object in case it's missing. Again, this makes sense,
+>     as we want to batch-fetch the objects.
 >
-> The documentation for the LibFuzzer [1] notes
+> This shows that we indeed want the equivalent of this flag, but of
+> course represented as `HAS_OBJECT_*` flags.
 >
->      * The fuzzing engine will execute the fuzz target many times with
->        different inputs in the same process.
+> Luckily, the code is already working correctly. The `OBJECT_INFO` flag
+> expands to `(1 << 3) | (1 << 4)`, none of which are valid `HAS_OBJECT`
+> flags. And if no flags are passed, `odb_has_object()` ends up calling
+> `odb_read_object_info_extended()` with exactly the above two flags that
+> we wanted to set in the first place.
 >
-> and the first thing that the callback in oss-fuzz/fuzz-commit-graph.c
-> does is
->
->         initialize_repository(the_repository);
->
-> so I think the problem is that the assumption that a process will only
-> initialize "the_repository" once is incompatible with the way LibFuzzer
-> works. Maybe we should add
->
->         memset(the_repository, 0, sizeof(*the_repository));
->
-> before the call in initialize_repository()?
->
-> Thanks
->
-> Phillip
->
-> [1] https://llvm.org/docs/LibFuzzer.html
+> Of course, this is pure luck, and this can break any moment. So let's
+> fix this and correct the code to not pass any flags at all.
 >
 
-Hello Phillip,
-thank you for your reviews and assistance so far.
+We do pass the same equivalent, no? I mean `OBJECT_INFO_FOR_PREFETCH`
+does resolve to `OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK` and
+calling `odb_has_object(... , 0)` would also eventually set the same
+flags.
 
-So I moved the code
- memset(the_repository, 0, sizeof(*the_repository))
-into the fuzz-commit-graph.c Fuzzer test before the call to
-initialize_repository().
-This made the fuzzer smoke tests pass.
+I understand the issue, `odb_has_object()` should only take in
+`HAS_OBJECT_*` flags, even though internally it converts them to
+`OBJECT_INFO_*` flags.
 
-But the line below,
-`if (repo != the_repository)
-    BUG("trying to read config from wrong repository instance")`,
-in the repo_config_values() accessor function
-to make sure we are reading the config_values only for the_repository ,
-makes many tests fail.
+Wouldn't it also be nicer to convert the enum for `HAS_OBJECT_*` to no
+longer be anonymous and use that in `odb_has_object()`?
 
-I believe this is because repo_init() calls initialize_repository() and
-repo_init() is also called in repo_submodule_init() when creating a
-subrepo from a super project, and this subrepo passed to repo_init() is
-not the_repository.
+The patch itself looks good!
+
+- Karthik
+
+--0000000000005e8a77064a74d3ad
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 353fc946c0585936_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tSytWTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mdzd0Qy80MDV2UEV3eW1Mcjc1dEdFMWIxVHIzNWJqaAorZkVnOXhxa1d6
+NEpkcW9oRFQ1WVRDdjFxV3B0bWgyLzRXNnVtdTBhMEoyNnhVQXk4SlhVQnRWVEVrRHREWFZFCldN
+aWxlY2ZiR0NJclA4SStvczkyeXFndW1iQ0tMWGF6RnVDRWFKcmtKTUtyMTR5V3lueEoxdU5jcUFJ
+NS9zczgKZHFKU2dVa3pXVDdZcUphTmo5RGgweStERi82VlVoNUJZK2ozV3NUbng2KzA3bFQybVZZ
+M09tNktaR0tOUlBPTApaQzh2RDAxZE9JRTZoNjJjQ0h1SmRzY25OWTRwaHk0U3Z0N3lMZTh6MUlG
+QktBcDZ5RVRDMVlHYk5BbTJTNUwvCjhLTjRIcHlXbGg3WDFDUWVsblpCVFlkMDc1TndOY08vYzNv
+d0YzR1hsRjI2S1dyeWdIbmNQdzl0Z2hnYW1YNjYKMjR0eW55ZWpSSDFyNHhqdDl0SUU2UW5zc1p3
+TU1waGRFVXNFL0V3Zjg2T0RNcFZKZXB1dFdnV09jYnRaWnk0TApJek1HWmpEOW1aaWllSzVFVzVV
+enBqNjlwL09PK1ZBbjI5ZUNtM3pDYTNIRlJtdU5CZXBDb0xDdTBKTnZYdS9xClBGK3RTaDJqVmpY
+bFRwSjBzNVhJUWRMRk8xUEJLV2d5ZVdCT05lND0KPS92MncKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005e8a77064a74d3ad--
