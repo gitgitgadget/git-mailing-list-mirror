@@ -1,325 +1,105 @@
-Received: from pio-pvt-msa2.bahnhof.se (pio-pvt-msa2.bahnhof.se [79.136.2.41])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F56311977
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 21:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D810361DAB
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 21:24:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770844743; cv=none; b=pVnAFEQapj1SwyIIp0lJYw8eHphdPsKW9Um4BD7KqUcRclSk+FasA27YJ2wMIBFne2op/evJqPxkdZSxCNyD2MkQtyPPOiFUnEh9J0z2a4drCziUGg7FQMR5VYPYsGR46zVTt00GAUHlz7RH+BpDAiQ3inPdW6Aj8ydpQijTva8=
+	t=1770845074; cv=none; b=JU6XTa1kCA+6OdP7iXozpKOzvikfz4fKy6wW5BtTMrKbtXWNCJK+WhU4GP9zHAsjxmF+MhAcJ/opCAz7fATHmNlTSU3SnpJFll60/9vzzc0kAZPIt8ClOuOGapGlpju2zGAdrddz2XxtUBSycztVcXvLUOZFnmjQvyUqEt9dPRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770844743; c=relaxed/simple;
-	bh=9ykDifSQY54Lii7ghFyq4rieHHjmcEzXxi+nvcqfrjY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AQqHFMfdDsXCJbRD0xqDCAc3VwD4TFnCePIEpJSvipS9/W9gWT12/s/Fu4avCj+zcKwPf+KC2fWUlyNnPrxNLCRRBJNKAEYADGdPmDxEvezrO1ew2MBkLf466JNJ9x7dOm1THKYP8gy2OJ7Ahhpw9kxq0TFqPf6DdPZXGlEQV5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=ag+h59gt; arc=none smtp.client-ip=79.136.2.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
+	s=arc-20240116; t=1770845074; c=relaxed/simple;
+	bh=e73AXqr1+eXp/PAR8OG9UdpbzOAbYpYzCrsZaUN/6tk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LKH9ZoKzJ1Zn/i3IrNQuWpVvanqhpbUSWswcAyEVc0g3tjuTqUnKVkFgBmR3TaEguGaXv/7tnTfw9EYjxPuPuvcuZL4yFNK4usZCowhkPlyQlHdh9+0RDnXn23MhmVuAHY/psEiwzGuyq9R/2+NXErZF+ewodzcfpf30WhiZbcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=x1jPpY/A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v3xIswIe; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="ag+h59gt"
-Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa2.bahnhof.se (Postfix) with ESMTP id 273E3408FC;
-	Wed, 11 Feb 2026 22:18:54 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.099
-X-Spam-Level:
-Authentication-Results: pio-pvt-msa2.bahnhof.se (amavisd-new);
-	dkim=pass (2048-bit key) header.d=jontes.page
-Received: from pio-pvt-msa2.bahnhof.se ([127.0.0.1])
-	by localhost (pio-pvt-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vsJXhGKzaep3; Wed, 11 Feb 2026 22:18:52 +0100 (CET)
-Received: 
-	by pio-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id 434A43F6F3;
-	Wed, 11 Feb 2026 22:18:52 +0100 (CET)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id AA7D3B1E34;
-	Wed, 11 Feb 2026 22:17:53 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
-	t=1770844673; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=30pZ9p+BV4aShSka4/t6HHZhomNsJ383otHoKPI8kKc=;
-	b=ag+h59gtQQhu0Om4fohFpRM0lrOp5zHU9KCWrKH1Q3/6XYkcH7yIG5fawWZ/4Ae1Ac7Yi2
-	2VjrO2MdgEJ64H6WqD9GTdJxKy5uNLIWwdCGoFtaldierSwcH0pHkb7KKxOjScCFDBUvLJ
-	2phFi38kXRVqTvMjzC+WSx9upDMqJ7hKnOe9yqOvidAdDD7cXXLm5HE4+vCIStDC7idrBo
-	Q+Z2OD0Wwv7EoXgTIQAeds0i+6YoMStT2xm6cLqyuFG6zl6LX3HLQfzDQ+IajRI4wVkSuC
-	2nUKVHSEn4ZH5fjdmYt9pDeroShQLpbWlivK66Ho2aUm4VWrlzUkBpGGPeh4Uw==
-From: Jonatan Holmgren <jonatan@jontes.page>
-To: git@vger.kernel.org
-Cc: peff@peff.net,
-	gitster@pobox.com,
-	"D . Ben Knoble" <benknoble@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Jonatan Holmgren <jonatan@jontes.page>
-Subject: [PATCH v4 3/3] alias: support non-alphanumeric names via subsection syntax
-Date: Wed, 11 Feb 2026 22:18:10 +0100
-Message-ID: <20260211211810.278806-4-jonatan@jontes.page>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260211211810.278806-1-jonatan@jontes.page>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
- <20260211211810.278806-1-jonatan@jontes.page>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="x1jPpY/A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v3xIswIe"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 67ED21D000BC;
+	Wed, 11 Feb 2026 16:24:32 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 11 Feb 2026 16:24:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770845072; x=1770931472; bh=ZV59bIGFkX
+	w7hamT1dt6Ia6tO4T+GjIP5WXZ7T/GhDU=; b=x1jPpY/AlX6BVjoH1wXDxohUJi
+	6B5ui53Ab9popFdqf1qjV5YptWzpDAZQ1j94cFCd+IUkGYJo+ndbvH2VgkPhErzr
+	5FMmXvmZws2pXv46FlOWqZb9Pa3khgdNCjMZ3ApdgtybUWf6TMKelHzlztnqqDCL
+	9LK15dMFoKHVaxs0aK5gg/FXe2E2MIHNng8cxz9+i1s8BMQKt9wg70frZv3KiDZ+
+	kpdbHWg6bgIe9OlHlKJknHjYuDhIvPh7TV1kMSZyU8r+hzajQeAxtZNog7KnczJy
+	NAt+SO49Mu4w94jSKh4l+HP5jl4QS8vCcHbKFRC+UcKj6BWfbUhrIzEXjEew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770845072; x=1770931472; bh=ZV59bIGFkXw7hamT1dt6Ia6tO4T+GjIP5WX
+	Z7T/GhDU=; b=v3xIswIeocQOKC8QgtoCdHW/DRjdgAXICqo2c2QGik7LhmJow/u
+	qSItar84pGXTECh2DsMamkuEnzWdrAUN+FunXvCC6QVSKY2uVx23wkofGA91FORi
+	JdG4loBD/I9eylAY5S+/K5J2eYb7DYlyKOzEFb2KkVq94r34dR8HrYa8V1mBlgm8
+	cDdGa1DcQFosklhQnH6eBNZrxRcj/5reirYPAgoWYUfvXHcNLN6FTfB2iPEzXTJ9
+	sjL2QSjaVxeW5bssVQiKZGredJp5mJN1jYRUpHMIaRROWch8jiRX8EXcrrHcAcFA
+	POPwdLlBRqa1nkMoJwtvbPX7sPu8W2KGe7w==
+X-ME-Sender: <xms:kPOMaSNeobrb6uF2I2N9Ry0cbFuAJ7nfEKe2HuZ2EmOJy00yqi97tQ>
+    <xme:kPOMaX9Hu_Zc45U08rmCOftyBOo-zM5n5pIFoyRBOZNY4Dg1-ZtZpubbS8qd8OWhH
+    IN-ptNYykIqMmsLF6s2nJm7XV0kydlIyl1Fvmnxdh3Xc7VXYOaA>
+X-ME-Received: <xmr:kPOMaeSY98hXWaugFPNcomO9GUpn9SDiRAZCf0-mRaHuO3urxaDAYKeHdy_zwIzoGDwbI2LLP-tVVjyJEymNcH7fGvduuqMzkg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdefiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptghhrghnughrrghkrhesphhmrdhmvgdprhgtphhtth
+    hopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:kPOMaRn_GIj1eN9KS1rD6QCVdhmIXhfzS3BvRE-SZQqkTSKXNgEGcg>
+    <xmx:kPOMaWRJIu6hj770JrotGOxXQrptmXXoEMpH8JJs94nwRbRGmdW9-w>
+    <xmx:kPOMaXNlT-FW9XGprgxQ0lPj3i-JaRUuDLtrkQpAfQPHQEoqtZGBgg>
+    <xmx:kPOMaXWX4gsa20LuTJ80nyFEpEERdhyj6EB9LCtBS68MsOcMHkVHMw>
+    <xmx:kPOMaTtsSnuiTGw8l8dXXne2EsNv_qravVmnUrt7tZd3BUS1WGbDiHRY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Feb 2026 16:24:31 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chandra <Chandrakr@pm.me>
+Cc: Chandra Kethi-Reddy via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2] add: support pre-add hook
+In-Reply-To: <2kX5wTQeOz3VPzUT6QiH_KyB9RMMtf8L3I8N6WtVWHaVQ1ZguBTaqAqFcFgOGpCqv-RJyALKlsENx-g7E3DMx3TzCfZoaRtPEpoDyx6d9kg=@pm.me>
+	(Chandra's message of "Wed, 11 Feb 2026 21:11:15 +0000")
+References: <pull.2045.git.1770737573475.gitgitgadget@gmail.com>
+	<pull.2045.v2.git.1770822312474.gitgitgadget@gmail.com>
+	<xmqqseb7rre9.fsf@gitster.g>
+	<2kX5wTQeOz3VPzUT6QiH_KyB9RMMtf8L3I8N6WtVWHaVQ1ZguBTaqAqFcFgOGpCqv-RJyALKlsENx-g7E3DMx3TzCfZoaRtPEpoDyx6d9kg=@pm.me>
+Date: Wed, 11 Feb 2026 13:24:30 -0800
+Message-ID: <xmqqfr77rn1t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain
 
-Git alias names are limited to ASCII alphanumeric characters and
-dashes because aliases are implemented as config variable names.
-This prevents non-English speakers from creating aliases in their
-native languages.
+Chandra <Chandrakr@pm.me> writes:
 
-Add support for arbitrary alias names by using config subsections:
+>> the word pre-add ... would not look good
+>
+> Originally, I wanted to call these pre-staging hooks.
 
-    [alias "förgrena"]
-        command = branch
+I was not talking about the choice of words.  If pre-commit
+interferes before a commit is made in 'git commit', pre-add is a
+natural phrase to use to interfere 'git add'.
 
-The subsection name is matched as-is (case-sensitive byte comparison),
-while the existing definition without a subsection (e.g.,
-"[alias] co = checkout") remains case-insensitive for backward
-compatibility. This uses existing config infrastructure since
-subsections already support arbitrary bytes, and avoids introducing
-Unicode normalization.
-
-Also teach the help subsystem about the new syntax so that "git help
--a" properly lists subsection aliases and the autocorrect feature can
-suggest them. Use utf8_strwidth() instead of strlen() for column
-alignment so that non-ASCII alias names display correctly.
-
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
----
- Documentation/config/alias.adoc | 43 ++++++++++++++++++-----
- alias.c                         | 32 ++++++++++++++---
- help.c                          | 14 ++++++--
- t/t0014-alias.sh                | 61 +++++++++++++++++++++++++++++++++
- 4 files changed, 135 insertions(+), 15 deletions(-)
-
-diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
-index 80ce17d2de..9184f7cb37 100644
---- a/Documentation/config/alias.adoc
-+++ b/Documentation/config/alias.adoc
-@@ -1,12 +1,39 @@
- alias.*::
--	Command aliases for the linkgit:git[1] command wrapper - e.g.
--	after defining `alias.last = cat-file commit HEAD`, the invocation
--	`git last` is equivalent to `git cat-file commit HEAD`. To avoid
--	confusion and troubles with script usage, aliases that
--	hide existing Git commands are ignored except for deprecated
--	commands.  Arguments are split by
--	spaces, the usual shell quoting and escaping are supported.
--	A quote pair or a backslash can be used to quote them.
-+alias.*.command::
-+	Command aliases for the linkgit:git[1] command wrapper. Aliases
-+	can be defined using two syntaxes:
-++
-+--
-+1. Without a subsection, e.g., `[alias] co = checkout`. The alias
-+   name is limited to ASCII alphanumeric characters and `-`,
-+   and is matched case-insensitively.
-+2. With a subsection, e.g., `[alias "name"] command = value`. The
-+   alias name can contain any characters including UTF-8, and is
-+   matched case-sensitively as raw bytes.
-+--
-++
-+Examples:
-++
-+----
-+# Without subsection (ASCII alphanumeric and dash only)
-+[alias]
-+    co = checkout
-+    st = status
-+
-+# With subsection (allows any characters, including UTF-8)
-+[alias "hämta"]
-+    command = fetch
-+[alias "gömma"]
-+    command = stash
-+----
-++
-+E.g. after defining `alias.last = cat-file commit HEAD`, the invocation
-+`git last` is equivalent to `git cat-file commit HEAD`. To avoid
-+confusion and troubles with script usage, aliases that
-+hide existing Git commands are ignored except for deprecated
-+commands.  Arguments are split by
-+spaces, the usual shell quoting and escaping are supported.
-+A quote pair or a backslash can be used to quote them.
- +
- Note that the first word of an alias does not necessarily have to be a
- command. It can be a command-line option that will be passed into the
-diff --git a/alias.c b/alias.c
-index 271acb9bf1..896d0f80a4 100644
---- a/alias.c
-+++ b/alias.c
-@@ -17,13 +17,33 @@ static int config_alias_cb(const char *key, const char *value,
- 			   const struct config_context *ctx UNUSED, void *d)
- {
- 	struct config_alias_data *data = d;
--	const char *p;
-+	const char *subsection, *subkey;
-+	size_t subsection_len;
- 
--	if (!skip_prefix(key, "alias.", &p))
-+	if (parse_config_key(key, "alias", &subsection, &subsection_len,
-+			     &subkey) < 0)
-+		return 0;
-+
-+	/*
-+	 * Two config syntaxes:
-+	 * - alias.name = value   (without subsection, case-insensitive)
-+	 * - [alias "name"]
-+	 *       command = value  (with subsection, case-sensitive)
-+	 */
-+	if (subsection && strcmp(subkey, "command"))
- 		return 0;
- 
- 	if (data->alias) {
--		if (!strcasecmp(p, data->alias)) {
-+		int match;
-+
-+		if (subsection)
-+			match = (strlen(data->alias) == subsection_len &&
-+				 !strncmp(data->alias, subsection,
-+					  subsection_len));
-+		else
-+			match = !strcasecmp(data->alias, subkey);
-+
-+		if (match) {
- 			FREE_AND_NULL(data->v);
- 			return git_config_string(&data->v,
- 						 key, value);
-@@ -34,7 +54,11 @@ static int config_alias_cb(const char *key, const char *value,
- 		if (!value)
- 			return config_error_nonbool(key);
- 
--		item = string_list_append(data->list, p);
-+		if (subsection)
-+			item = string_list_append_nodup(data->list,
-+				xmemdupz(subsection, subsection_len));
-+		else
-+			item = string_list_append(data->list, subkey);
- 		item->util = xstrdup(value);
- 	}
- 
-diff --git a/help.c b/help.c
-index eccd0c22f8..d7c6011780 100644
---- a/help.c
-+++ b/help.c
-@@ -21,6 +21,7 @@
- #include "fsmonitor-ipc.h"
- #include "repository.h"
- #include "alias.h"
-+#include "utf8.h"
- 
- #ifndef NO_CURL
- #include "git-curl-compat.h" /* For LIBCURL_VERSION only */
-@@ -108,7 +109,7 @@ static void print_command_list(const struct cmdname_help *cmds,
- 
- 	for (i = 0; cmds[i].name; i++) {
- 		if (cmds[i].category & mask) {
--			size_t len = strlen(cmds[i].name);
-+			size_t len = utf8_strwidth(cmds[i].name);
- 			printf("   %s   ", cmds[i].name);
- 			if (longest > len)
- 				mput_char(' ', longest - len);
-@@ -492,7 +493,7 @@ static void list_all_cmds_help_aliases(int longest)
- 	string_list_sort(&alias_list);
- 
- 	for (i = 0; i < alias_list.nr; i++) {
--		size_t len = strlen(alias_list.items[i].string);
-+		size_t len = utf8_strwidth(alias_list.items[i].string);
- 		if (longest < len)
- 			longest = len;
- 	}
-@@ -591,8 +592,15 @@ static int git_unknown_cmd_config(const char *var, const char *value,
- 	/* Also use aliases for command lookup */
- 	if (!parse_config_key(var, "alias", &subsection, &subsection_len,
- 			      &key)) {
--		if (!subsection)
-+		if (subsection) {
-+			/* [alias "name"] command = value */
-+			if (!strcmp(key, "command"))
-+				add_cmdname(&cfg->aliases, subsection,
-+					    subsection_len);
-+		} else {
-+			/* alias.name = value */
- 			add_cmdname(&cfg->aliases, key, strlen(key));
-+		}
- 	}
- 
- 	return 0;
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index a13d2be8ca..34bbdb51c5 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -122,4 +122,65 @@ test_expect_success 'alias without value reports error' '
- 	test_grep "alias.noval" error
- '
- 
-+test_expect_success 'subsection syntax works' '
-+	test_config alias.testnew.command "!echo ran-subsection" &&
-+	git testnew >output &&
-+	test_grep "ran-subsection" output
-+'
-+
-+test_expect_success 'subsection syntax only accepts command key' '
-+	test_config alias.invalid.notcommand value &&
-+	test_must_fail git invalid 2>error &&
-+	test_grep -i "not a git command" error
-+'
-+
-+test_expect_success 'subsection syntax requires value for command' '
-+	test_when_finished "git config --remove-section alias.noval" &&
-+	cat >>.git/config <<-\EOF &&
-+	[alias "noval"]
-+		command
-+	EOF
-+	test_must_fail git noval 2>error &&
-+	test_grep "alias.noval.command" error
-+'
-+
-+test_expect_success 'simple syntax is case-insensitive' '
-+	test_config alias.LegacyCase "!echo ran-legacy" &&
-+	git legacycase >output &&
-+	test_grep "ran-legacy" output
-+'
-+
-+test_expect_success 'subsection syntax is case-sensitive' '
-+	test_config alias.SubCase.command "!echo ran-upper" &&
-+	test_config alias.subcase.command "!echo ran-lower" &&
-+	git SubCase >upper.out &&
-+	git subcase >lower.out &&
-+	test_grep "ran-upper" upper.out &&
-+	test_grep "ran-lower" lower.out
-+'
-+
-+test_expect_success 'UTF-8 alias with Swedish characters' '
-+	test_config alias."förgrena".command "!echo ran-swedish" &&
-+	git förgrena >output &&
-+	test_grep "ran-swedish" output
-+'
-+
-+test_expect_success 'UTF-8 alias with CJK characters' '
-+	test_config alias."分支".command "!echo ran-cjk" &&
-+	git 分支 >output &&
-+	test_grep "ran-cjk" output
-+'
-+
-+test_expect_success 'alias with spaces in name' '
-+	test_config alias."test name".command "!echo ran-spaces" &&
-+	git "test name" >output &&
-+	test_grep "ran-spaces" output
-+'
-+
-+test_expect_success 'subsection aliases listed in help -a' '
-+	test_config alias."förgrena".command "!echo test" &&
-+	git help -a >output &&
-+	test_grep "förgrena" output
-+'
-+
- test_done
--- 
-2.53.0
-
+It was a comment only on how it is typeset in the documentation,
+e.g., should it be `pre-add` (for verbatim), 'pre-add', _pre_add_,
+etc.
