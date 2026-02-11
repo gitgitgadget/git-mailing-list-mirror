@@ -1,189 +1,120 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBA734F488
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 20:15:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770840913; cv=pass; b=ClQ/j7aUsFaAzMFAtCVpXhzt6p0Ja3/M6MzROelyQUJ5fUWwu9oy8n3QKvFFuKUNfG0JgwQglmyNkQW6CrEseqqdbwjdZwAwqb4slQ8xymb9s466eCfX60M36FherecYQdKSWvz4NET53AjQdR2PTD7MbvHKfHh7LzgMlv7hvMI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770840913; c=relaxed/simple;
-	bh=uaxx4hJ8tR+UZBhFdFay8ZzxobATmkrfmmxouAWGp/M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BBihwj5Fx8f90FQhAlFDTt/T9FF0K/ZjKaAFvDO9tJTjUr1qO7wh1Gl21x2fpf74CJ6NF47HUpOgmLqYmnSo/KQPebSGE6yNgMmvbMZxNKSLJb/PmCoYVeH1u58OHuTGPEmnRb5xCaQ/35WzTZala2ZkNP67uIPyjTY/c9ztt98=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aeTFqpm+; arc=pass smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D02F2DFA2F
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 20:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770842806; cv=none; b=SRRfd2QRG7c014XXB3cE2gZg8al7sDr03oyJU46JsWomVk12PWiJ6sERZiqQtEdg7+e7GBivJRelIgNweVE//VXrnpKjmljo4fJZO2gvDYa9IjjmsE21WvML3Bt2Dh1xxKoJ2pq4y/7j9dk4vjVx+cx6smsC0aMR8Vy1z9Jco6I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770842806; c=relaxed/simple;
+	bh=GGvfPjzqocAol1LBxPNIrSlRepptCxY6fXS/ipb3gQw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YjL5jqrjQA4/4J84ULWWE1E9TdHDVyLILJAIYWaCc0/goyamOzbok+pVMgj6oopKml/IcsvaNR2NCb54w/LGPyNm7+53d6y+fb/myJIv7zGXd5KE2wXI1/ug9BIYSUgBLUl5MZy53m8+StQj0KwO78PWYznvUNO1PYs73UXIH1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RFOWzHBK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fygh7ygD; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aeTFqpm+"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c6e23cb81f4so279504a12.2
-        for <git@vger.kernel.org>; Wed, 11 Feb 2026 12:15:12 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770840912; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VI3Xt3umzmHami6ZbsN8wOUW5ZF2xllRPuCHXv96T9lWYoCHy/r2mHX0poTC/5MwMb
-         gdegY/3+qp3F6sAl/8Sje9jh/mcdf1XH1hiJ5C6DXoqrdKxLkxRq5jEStl5OmsWGQbhS
-         +8D9hCTQIcWworIEXgK06i8VB3CKSBMMTdyhiAo8U31v2+4EYznMJ/TpfQ9elztDj2wa
-         CBEowxD03t24u6Mmftej9q4PVSlYax6kfur3Se5jB/lAawR6gmcTUWXjHRRPC+q3nDvl
-         MSTe2FOIN8IlKeQHjEz/DjVmK0/dJl7oUrpgKhlWlqtPzdcSMWRnV0PvbsIstorXQrjh
-         0EFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=dPfLM3Mzx0Vxb6JMRx8WMOoDwZgT+1f8rEljWqjN5qk=;
-        fh=sY0qntvYIGRE+D5nQFUxTPRB0Kai1WvBDG1o4g6CRC4=;
-        b=UFrkbLTlFaaLRtExQgmtSxmk4wac0iL5Be3dgAflqrNrHibu6aqz2THdy1Obel2j2O
-         2nBYr+ePsMs1pcG+4e71t0/3mKYGXJj94+BpUd8dA8KeTExcaJ3x+MYJ3fT5riWELc/F
-         dGbSnvluf5sNPCrcFaQ3SQ4NCZNsLOc+8g0dd0UavuwpeWmyeGrhc3eQ32U56s5mmSAj
-         8SJ1vMoJtYIj3p60cfXY5XjqOJoO0/OA4HS6DDLMmm+3bd6Ex/SxnoS1cDq4heBBiHIC
-         EUwllpxTsHQsyZvM2ZpdEDzKjKptFbynqhGVimrQA0fAsmzuAAUekepmANjbRaOXDlck
-         8emA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770840912; x=1771445712; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dPfLM3Mzx0Vxb6JMRx8WMOoDwZgT+1f8rEljWqjN5qk=;
-        b=aeTFqpm+PC4+AZ/oJdipbKxlQGAHCkEe74MlgvvyOWEt5SnCj80ybFny63yu15LcHI
-         IWQCBFbKoNqUZ17RS/3avMVazLIeBVhyV++e65hjwuLTwqSA2ZxTApMjn0IYaH0w9IoW
-         40P6OCpSw6qJiy1CzipmmFn2qdE9xHj2rx/ZX76RUUG4p+4ob3pRB3c7FCHFhYu5Gs4A
-         IWviW2z8dITZ38Bt/4w2QwqWVLT+isUxRKNtXZrRyvdkfGIRSNXA2QM8VqDiXSqHX+tZ
-         Isz8j3M7T8Lj7vPDupA7+9xvVHVB3+G3QY24ysCI63EJB32Bs6oNBP+xJbZXzlNf8d/h
-         5g8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770840912; x=1771445712;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=dPfLM3Mzx0Vxb6JMRx8WMOoDwZgT+1f8rEljWqjN5qk=;
-        b=MDob3bf/20UEDLpINyehXgyicz8VV3Ol9I4ZS1WIrK6Mt8nJGLDx5rT7GoBczxsobR
-         WIBZEv5eCltDz12YrjbmD9PFugfczo2WBYHFPLapPC+EiMQAJjQqllahPSCtlCIB+mjf
-         V1S9xpXG3CATq/VXZIBSCVEbGGEVf4nFL4jxTnuY8uS4hsd2uATlFGWpisrx9ZxmAiQ8
-         YflkMPxk69uD+YIq6zU+O/t29X8ihDGztm8bGdIgJeh6t9PprkP0k1mc7eWaLyYLRPPK
-         k11Xlq6US0at3vdy11tFp6Tguxn5yg1ZH45RWGfnb2+QAFlO/2BMP8U302QzQ3VuZQhe
-         zLew==
-X-Forwarded-Encrypted: i=1; AJvYcCXUm005Cfh8nXLwA0dEaUJ1Br9b1SBmXKjY3qv7zQ5et8bRf4+mH3XdbEQwbZmu8PN5JpA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqbsZsIPYC5786+6ecBqBvQ9kkSg53IggDy8vwaPSpZgPwYz8U
-	XYr/oRewoYPjWYsZqaTn2lAzj67vFfKQmCGIAvUSACcvn1XBqaWymv33V+vypgJMhNVyCVTVQqd
-	dNTfZmK0TpWPWBoUUuoELhEPX1JM4YZA=
-X-Gm-Gg: AZuq6aLgrA1PWLsWwc8jtxcbR78CNdKAxsLwPiGHHbuSopMkfpx6AKt2CvvqRxHLKJt
-	EBM914wN1WAuWPNEgoKr3huk1CHrRboSJW41jJm8uSEDvWM8+leLSrEbgJCPhgmLAgh6/k/Jux+
-	BpMhL1ciiZIWLobRpgMCl/UAPk+9hnK2S02wXJd2Rpm4rdOqwReWJBuV9sd66Am5hTmxEgcr7x/
-	qGhau678TiNMCeYu4/TXQYZgfAsuDW9RVJMBgZst7KpWkdLwh+wkjiUQV8UTx9v3MJ0cq3NAKZo
-	ZHEwsoQb9jJSZCvbZD6j7qpcBd0nVTl69LNw14yeyM10yUhkqE+uJJj+LPFnKAQiTDmd9Es2ZNR
-	6RzCN
-X-Received: by 2002:a17:90b:58ee:b0:354:56fc:b721 with SMTP id
- 98e67ed59e1d1-3568f2be833mr548744a91.8.1770840911855; Wed, 11 Feb 2026
- 12:15:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RFOWzHBK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fygh7ygD"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 250101D00127;
+	Wed, 11 Feb 2026 15:46:44 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 11 Feb 2026 15:46:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770842803; x=1770929203; bh=pfmVND5AnO
+	cBvspKlOganfeRypi7Ll8Y4LxDZ9CeA9U=; b=RFOWzHBKidlI/5MRUAZJANtq7U
+	ngKXDO9+JxCk+Bk4IH18o7CnjgMEKF+zqj9pkyzIm/vXLNAJpuPjLi1eG37NoJ4M
+	HYY8Mmhb1w3lvwZqdv74o4ou0JFLxTLrF6YFDde4BEYkmvK7E8XrWEdz1m35Cia5
+	nv9Y7U8SOrFhch1g0/5CPmvMJB32g82gyApINouuHGl223J7z2eVIZfEiq0BC2zc
+	tTU0yub4FXY8gEze716STWdFOea1fIh09W05XALqD7L6hXvOymsRjsPOQzSGMCwy
+	u7yRK//a5Gb2kPM8bEVeQSc5c272f57KvggTwc7jb9Iew76LmMK/5s16m5gw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770842803; x=1770929203; bh=pfmVND5AnOcBvspKlOganfeRypi7Ll8Y4Lx
+	DZ9CeA9U=; b=Fygh7ygDDDJ3P8pPoPL7WSKl8QDK+tFZClNqrCf5IEqZW7nrYDn
+	438FMoRGSVjZjud6tfJnO7UZqEnfd5vnlKdp+8rKOJi4xo9yIaOTvqLq1jnH9QIB
+	2ghHl+KrTdcO4TBUGsiwn2w4eJ7yZoDTnRA/maIzqgsvQ7JjFEeDOc/R9J5iBGqX
+	Ih8Islzajr6v1Bh1IZPr8Hw/fYeggOYp7afuQfUi656RPvwFpnXI23RT6DOru5fx
+	WdEJf1IO8w5/fBwx1vhD1Je2ALUV9h/DneDTGqVabRYfdVGOx8CApdskHN0/0vfb
+	xgLjZ9blmAjaBGOB/QrblSjFSeFEdgtaWDg==
+X-ME-Sender: <xms:s-qMaTQGJSE65TZpNEtbl3IGZ1qfRlbvEsrV0LmeXsuE4svs0Q4yvQ>
+    <xme:s-qMabwcdZMXjLqCZdGpnB-MtfZkxv_MPJ4aEXC1VvGj2lquuktVBp8skyA1jnw3b
+    LpIVbMQZCr1JNPM56WZcdJu_5CXxozI7Dubskmr8_huTjPAdAUv>
+X-ME-Received: <xmr:s-qMad0x6PPJgYwNVf54eGgdJSnOev20KV-V1HmENYTZwSTqiDT0BV-MOz376DBaEJK3dNXMMxa2rWRk5qRKjSU5xiTrttRRAA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdefheegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepjeehhffffffgtdegffejkefgfefgveejgfeuleeujeeukedvheetgfelhfek
+    gefhnecuffhomhgrihhnpehrvghrohhllhdrphhsnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhr
+    tghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:s-qMaR7Xhe3nWEWayKnirrCopmCYT36skRic57DGaYoXBzG7QazIlg>
+    <xmx:s-qMaYXBKmJvGTnuwhdeExQejfRvDeuAyeNuMXJOSyPvaymE9JY4jg>
+    <xmx:s-qMaYAxREFYXz_RYaNRX2kRg1A_s8_HQIiBowrRcMPDZUUqhhpifQ>
+    <xmx:s-qMaf4mbTg4qewKCSK0ZVrCV8N1DMhl_VOhPhqu5U6eaBYEJCjlOw>
+    <xmx:s-qMaVVuDDqnZROvzgrQpd1dDj3wR2RDqEHXbSTB_Fx-yeQL0954xpax>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Feb 2026 15:46:43 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+Subject: Re: What's cooking in git.git (Feb 2026, #04)
+In-Reply-To: <xmqq5x84xms1.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	10 Feb 2026 14:21:34 -0800")
+References: <xmqq5x84xms1.fsf@gitster.g>
+Date: Wed, 11 Feb 2026 12:46:42 -0800
+Message-ID: <xmqqo6lvrost.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aYn8XKv2hH2HX2xO@pks.im> <20260209215015.25867-1-ben.knoble+github@gmail.com>
- <aYwzAt-dugh_acj9@pks.im> <4a566010-821b-4078-9563-9ca00ada55a0@gmail.com>
- <aYxguUQ6A1cuphCe@pks.im> <171c0724-7891-41d7-8a70-94fbbf8b43b2@gmail.com>
-In-Reply-To: <171c0724-7891-41d7-8a70-94fbbf8b43b2@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Wed, 11 Feb 2026 15:15:00 -0500
-X-Gm-Features: AZwV_QjJO2qRLzAdbHiII8YbOMZSa9M_59oUxx1AThOX0VGnh-rHpam3GIIhqrc
-Message-ID: <CALnO6CCoSKKxFZVPbWpTdxkW0xfxwZgJNv1wS2Qz7GGhAKkeAQ@mail.gmail.com>
-Subject: Re: [PATCH] meson: regenerate config-list.h when Documentation changes
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Evan Martin <evan.martin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Feb 11, 2026 at 9:05=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> On 11/02/2026 10:58, Patrick Steinhardt wrote:
-> > On Wed, Feb 11, 2026 at 09:44:48AM +0000, Phillip Wood wrote:
-> >> On 11/02/2026 07:42, Patrick Steinhardt wrote:
-> >>> On Mon, Feb 09, 2026 at 04:50:06PM -0500, D. Ben Knoble wrote:
-> >>>>> On Sat, Feb 07, 2026 at 04:59:17PM -0500, D. Ben Knoble wrote:
-> >>> [snip]
-> >>>> Only, things are behaving oddly. For example:
-> >>>>
-> >>>>       =CE=BB meson setup build2
-> >>>>       =CE=BB ninja -C build2
-> >>>>
-> >>>> works fine, but
-> >>>>
-> >>>>       =CE=BB ls -l build2/config*
-> >>>>       -rw-r--r-- 1 benknoble benknoble 17169  9 f=C3=A9vr. 16:39 bui=
-ld2/config-list.h
-> >>>>
-> >>>> I don't see the dependency file.
-> >>>
-> >>>> Further, re-building seems to get stuck (I get
-> >>>> similar symptoms if I add or remove a relevant config.adoc file, but=
- let's keep
-> >>>> it simple for now):
-> >>>>
-> >>>>       =CE=BB ninja -C build2
-> >>>>       ninja: Entering directory `build2'
-> >>>>       [1/28] Generating GIT-VERSION-FILE with a custom command (wrap=
-ped by meson to set env)
-> >>>
-> >>> With "stuck" you mean that it doesn't do anything, or that it doesn't
-> >>> actually rebuild?
-> >>>
-> >>> I guess it kind of makes sense that a new file wouldn't trigger a
-> >>> rebuild, even though I would have expected a removed one to trigger o=
-ne.
-> >>> After all, the dependency file only tracks the set of _existing_ file=
-s
-> >>> so that we know when to rebuild, and of course the dependency file on=
-ly
-> >>> gets regenerated in case any of those files changes.
-> >>
-> >> If anyone adds a new file under Documentation/config/ they will need t=
-o
-> >> update Documentation/config.adoc which should then trigger the rebuild=
-. That
-> >> rebuld will then add the new file to the list of dependencies. If they
-> >> remove a file we should pick that up with the dependencies that are al=
-ready
-> >> listed.
-> >
-> > Oh? Well, if that's the case then the additional changes should indeed
-> > not be required.
->
-> I think so. The only problem I can think of is that if you delete a
-> file, build, restore the file without changing anything else and build
-> again then config-list.h will not be rebuilt because the deleted file
-> would have been removed from the list of dependencies by the previous bui=
-ld.
->
-> >>
-> >> It would be really nice if we can avoid regenerating the depfile with =
-every
-> >> build.
-> >
-> > Agreed. So maybe the first patch I sent is sufficient after all?
->
-> We need to add the script to the list of dependencies and reading the
-> comments in
-> https://github.com/ninja-build/ninja/blob/master/src/depfile_parser.in.cc
-> we should be backslash escaping space, hash and backslash in the
-> filename when we write the dependencies. Apart from that I think it is ok=
-.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Re-reading, I now see something actionable:
-- use Patrick's original patch
-- add the script itself to dependencies
-- quote dependencies correctly
+Sorry, but I need to fix a few obvious "oops, that's embarrassing"
+mistakes.
 
-Thanks
+> * aa/add-p-no-auto-advance (2026-02-06) 3 commits
+>  - add-patch: Allow proper 'git apply' when using the --rework-with-file flag
+>  - add-patch: Allow interfile navigation when selecting hunks
+>  - interactive -p: add new `--rework-with-file` flag to interactive machinery
+>
+>  "git add -p" learned a new mode that allows the user to revisit a
+>  file that was already dealt with.
+>
+>  Expecting a gitk update.
+>  source: <cover.1770390576.git.abrahamadekunle50@gmail.com>
 
-> I guess the alternative is to bite the bullet and list these
-> dependencies explicitly as we do for other targets.
+No, this is not about "gitk" at all.  It is expecting a hopefully
+small and final reroll.
+
+> * ps/meson-gitk-git-gui (2026-02-04) 1 commit
+>  - meson: wire up gitk and git-gui
 >
-> Thanks
+>  Plumb gitk/git-gui build and install procedure in meson based
+>  builds.
 >
-> Phillip
->
+>  Expecting a reroll.
+>  source: <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
+
+This is the one that waits updated "gitk".
+
+Thanks.
