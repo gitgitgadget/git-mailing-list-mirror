@@ -1,88 +1,95 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203EF30F7EA
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 15:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820C330DD22;
+	Wed, 11 Feb 2026 15:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770824601; cv=none; b=fIEhjwl/gE7oS1W4kZPh1pPZfjkbd86pisyqzgzUPCiX24yJoNCaEGrmc2pJYcfDoWJaGPbXASgsZLJveDSjl7icDtLC1zRCQrF6YUjaCwVD/0GWBXQc5UgbXioVOi3dKInLZryFem563TOPcWvFiMrtyC7q+ZBE0blqWDPt86o=
+	t=1770824638; cv=none; b=pV/LEW1qpBkTWolT0DnzyvvDLXsGHITxzCnShBSDgB/omeLLnkvsBnzpQRGUEmtg0B+/JCVw06EwHThi2K6Ie4X6WSfTnjasZU3aPgasmvtldYrMyI+fV5kl8Qfb2+di5X/Zmhj15zKUfRZ9NTK8HGARfPwtLYngeFddKD1pMT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770824601; c=relaxed/simple;
-	bh=qmFhC0rkWlChhGgZvP5JgGKP7CV8B6Vkveeq0FccU+0=;
+	s=arc-20240116; t=1770824638; c=relaxed/simple;
+	bh=sOjpaBGaEI9wogZqbwVjQXovrEu2YNYdYffaIwQciJk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lj8cu5S184KJa6C7QKV1qd6a3vU6C2+acK0VtrXPmBB7S4VmHRZtj/wqIjLmcHz0AR+g2f0STJx7opTBplU39AAIWruJCB+WLaZBJHC1tIJ4o1jDdyw5JFipxXZWVM9kXKJj48zUMdsN5w9DCGOyzGOcvpH7n9Y6hBT8R59fz5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uA+dYQPJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=veJUJ9Md; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=U0xLCa5a/u7akOpGJy1EcCavrlG1x1i4qZMhAGsxJIVWUXf/kljcK9wFg8fMQaTBjOvFUcm9m2SBYrTlrkEbv1kmzrLEjro6ArsOdK6LC47WOIm/KvhOKVrDHjgTsqUN0UswVpGH65AiKAi8fm6+DMWSZivJIK4a0sw9nLFu2ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iyMhqxuK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qrFLGKMj; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uA+dYQPJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="veJUJ9Md"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 66A0FEC0261;
-	Wed, 11 Feb 2026 10:43:19 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iyMhqxuK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qrFLGKMj"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BAF2114000BE;
+	Wed, 11 Feb 2026 10:43:56 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 11 Feb 2026 10:43:19 -0500
+  by phl-compute-04.internal (MEProxy); Wed, 11 Feb 2026 10:43:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1770824599;
-	 x=1770910999; bh=MvPV6QRTXsLvVbpVChY/XXHI0WkuUEaATj2pTBSU9Dk=; b=
-	uA+dYQPJVqwXPWguAmmVglj8liAjFqS2s/BPvr8i1okcXb91UolM/2kHU5IWPY+Z
-	Jq2h5zLqaFOc4fzTYqP57pm8zmhUuMxtFo8W+S5gUul75A2BeZErSsndvtyUviq9
-	EoiaItfqENaGtRSu1n8lLBWqVFWMV153vSjobIcSGIxFuC5SsJ6vPvSIqkS9CMQD
-	tJ4S0vUHL0j5evQ9OByXSV4uoisRftaiq/iBB/7WslbmppGzJKiIn2QAmUVX++Sc
-	qRv6+P6ACPhcQs/lVNyOruzLBVqVbwYdGwqFQfgfuGncO8IppcVIbyu/KlDxw8Af
-	kDB3qVZaLL62Wog5otMNCw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1770824636;
+	 x=1770911036; bh=XeLTB6PnAWwhW4H3RkaeiODjEYyCHXzmYRybX5V/Fwo=; b=
+	iyMhqxuK8OLe6eyV5WOQf4a/CNZAJAXhoTuafg+5vHjxgmBgg8ok2Jmp4LgE+Nux
+	LI7RiQaw1MypJWvdGTOxO0MXCipQWgMCIUkOaISvXAQq1vJR58vfcaOD1N82RYgp
+	5F4tbvj2wsiwRPonJRzvS2hYl/vni00f+P+kAH1fXts3jiGbV8ksQS+xSM8/NqHG
+	vorWAJLtzZyM4NhNRDgNT5eWxcZBX5ZPHmSz+ViFW7ep3dOgk3CugV5amQS8v/r3
+	59uRZ0XZk8vrHX/Zo8pnrPyLzWf2X+cevniAfAbvZ0dHYu69pmm7x2F4xnfWmfw2
+	roqlfNMpZP/j8mJaRxvOzA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770824599; x=
-	1770910999; bh=MvPV6QRTXsLvVbpVChY/XXHI0WkuUEaATj2pTBSU9Dk=; b=v
-	eJUJ9MdwTKQlK0SrfF5clmE/3N/KaVt9WdkLNhDOsTTK3bfO4v9Ncb5xruuBRp5c
-	XwH4Onqv368p2zrEz5EOJQ/IuTkW0qwD0AOjQa0HBu1MBSmZbnYv7LwR56tCGdPE
-	ewiiW08awaJsorkEJk9qPVvX5arh0JZsIrWultURTN+OrozQ4bt4vCq/fFzRVN9f
-	SuDo2kr0a/ut7mZA3W1LYcldJJ5i+lTDPPreQe7XlzbUPpc2xGh0dAb4It5Xi6JK
-	xzLT8/Y2QRNXNNkVk8hLp779qFRLGFY+gwpR0JLhLZKZSdq4XtRZLySlPNIvzuA3
-	XNWdBAuYK7fq2055m+Rgg==
-X-ME-Sender: <xms:l6OMaQstTebYv7PexjFrJMcwEouCFzKmWlgHae8kfTT11odEoXvo8A>
-    <xme:l6OMaUX2pJARmSNH1VWZbllWuzq5A3JC6dFKI6eiMyAdKnnBrAKLSb8WJmppA8dIO
-    qA556xTiXxMYIr_MPnUrVo8PVjwxbUzwH95rw2RnGzC5z5gp17ghA>
-X-ME-Received: <xmr:l6OMaUFsLUznjGoUBynKMUK7VnJBOEIgpQB7kjHidNdDQAenDY2hem1SdvmxQpPx4e2yb4TE_E4e1BZ7oRj49VDVZTbYHT0PDw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770824636; x=
+	1770911036; bh=XeLTB6PnAWwhW4H3RkaeiODjEYyCHXzmYRybX5V/Fwo=; b=q
+	rFLGKMj7uKU+wpXim+Wz5k2KTyA+tC/YOCikiIa5gR8FBHwIK/hQAlVxDdyqcgvb
+	OKwWyLVs4uCEvZ9NvtKL3n3jbtL+XQNz/pZh0k9bteL3rPHCDozYP1MOSXapvc6q
+	3VdTzpumvMiMYnQ7DK8rr//7iJOcmzk3iqmOZ1y8MME/5c483D1qmEpuMKKQeGXj
+	KQxgaGNlgopY8X6XuiGA4Mh9rY7QWx7bn9gwvnB+nOD/HJ8bnxSyiL0g9mZhAy22
+	lwFTgs6vcj/wrpT80NQHK96r81rfT0YX+10lQ7TbCmGw3UBHJl52F2X7j6SEh2s+
+	9z8GpzGQecEQTmqE65Zzg==
+X-ME-Sender: <xms:vKOMaZUYMlviDKxiZBFkC36NIu-U8p7-UbEq2UuLHte9d_gNNi9wKg>
+    <xme:vKOMaaTDdUSHGAMNgEl67awCPUX3g9ebrekJ0PZXWf7AbAFlcWG2ReupUZIOqJu1z
+    vYWhX_cXcZkcaaBc5goWl5-n87Vtz5mdZioGIDx-QM16WObb_zA>
+X-ME-Received: <xmr:vKOMaTl5zs604948jtM5w0SqDDK2eXXUWBmPgsw_yThTF9bZGzoWUNJQWV_-WPFjDgPmjRAbtzcW67wu3JDUM8cIZwVRYM1BGQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    gurhephffvvefujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihho
     ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtph
-    htthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:l6OMae2nJu46iTuRnRt5GH_WzTwIDQBSKkJMPkz5BSWP8i8ypXne3g>
-    <xmx:l6OMaeMq5qrYc3h9WREwWmhLKzpDoO-QqkVvif-qv5U-4cTmU6JhjQ>
-    <xmx:l6OMaV6OyPVJxpvK94kjdHJ_Vh8jrIArHoqdb1vW7jtZh_3tkAj05Q>
-    <xmx:l6OMaQ1aLu9s9isstSmYOjWgqFnfD41KC6sfV-KP_GVi15yEB-GFDw>
-    <xmx:l6OMaWBlvqBCiMaFNSKwKL8LqUzpEQJL1V5GVz6moa6f8sftdHLd0Vj4>
+    htthgvrhhnpeehhedtvdethfduheffudehudeitdevvedvvdduffelgfffhfdtueeikeeg
+    vdeghfenucffohhmrghinhepnhhophhrvghfihigrdhithenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoheprghlgieskhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehnrggsihhjrggtiihlvgifvghlihesnhgrsghijhgrtgiilhgvfigvlhhird
+    ighiiipdhrtghpthhtoheplhhinhhugidqmhgrnhesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:vKOMaQ4zrA8b-XUAzO1mn8K0H-i295QjrSPfMYStyNEdUwE5W4VJjg>
+    <xmx:vKOMaZis8gpUjSNxlgF-P64ZkiJEx3sHR8JpRK9CWTQziNtEx49ZKw>
+    <xmx:vKOMadEH7SqRKTEGeWG0UzJmfXecF7hdmG5q5jRAcL3y6l8np82Akg>
+    <xmx:vKOMafTXKkKOGtdjsJcTHUpeQkRj_2jjD1q61h454Pm5odIn_O0Dfw>
+    <xmx:vKOMadxZ8tjXwdfTmvYmh9LGnan2YSZ52gZpgjNotTP3rjZObEGBI8Rb>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Feb 2026 10:43:18 -0500 (EST)
+ 11 Feb 2026 10:43:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc: kristofferhaugsbakk@fastmail.com,  git@vger.kernel.org,  Kristoffer
- Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH] doc: rerere-options.adoc: link to git-rerere(1)
-In-Reply-To: <1a4060f1-6607-4b50-859d-927642eb34df@free.fr> (=?utf-8?Q?=22?=
- =?utf-8?Q?Jean-No=C3=ABl?=
-	Avila"'s message of "Wed, 11 Feb 2026 08:14:13 +0100")
-References: <doc_link_rerere.328@msgid.xyz>
-	<1a4060f1-6607-4b50-859d-927642eb34df@free.fr>
-Date: Wed, 11 Feb 2026 07:43:17 -0800
-Message-ID: <xmqqikc3waju.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Alejandro
+ Colomar <alx@kernel.org>,  git@vger.kernel.org,  =?utf-8?B?0L3QsNCx?=
+ <nabijaczleweli@nabijaczleweli.xyz>,  linux-man@vger.kernel.org
+Subject: Re: [PATCH v2] futex_waitv.2: new page
+In-Reply-To: <20260211073553.GA1867915@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 11 Feb 2026 02:35:53 -0500")
+References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
+	<se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
+	<aYpg1XelZBzpw4ZL@devuan>
+	<rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
+	<aYtAknObJpjszCaj@devuan>
+	<55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
+	<20260211073553.GA1867915@coredump.intra.peff.net>
+Date: Wed, 11 Feb 2026 07:43:55 -0800
+Message-ID: <xmqqecmrwais.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,35 +100,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Jean-Noël Avila <jn.avila@free.fr> writes:
+Jeff King <peff@peff.net> writes:
 
->> diff --git a/Documentation/rerere-options.adoc b/Documentation/rerere-options.adoc
->> index b0b920144a6..115882edab1 100644
->> --- a/Documentation/rerere-options.adoc
->> +++ b/Documentation/rerere-options.adoc
->> @@ -4,6 +4,6 @@
->>  	the current conflict to update the files in the working
->>  	tree, allow it to also update the index with the result of
->>  	resolution.  `--no-rerere-autoupdate` is a good way to
->> -	double-check what `rerere` did and catch potential
->> +	double-check what linkgit:git-rerere[1] did and catch potential
->>  	mismerges, before committing the result to the index with a
->>  	separate `git add`.
->> 
->> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+> On Tue, Feb 10, 2026 at 04:54:02PM +0100, Kristoffer Haugsbakk wrote:
 >
-> I'm not fond of introducing linkgit macro that can create auto-reference
-> in manual pages. At the moment, we need to use conditional inclusion in
-> the manual pages source, but I wonder if we could simply filter out the
-> links in the macro itself.
+>> An aside but `format.noprefix` is not a boolean like `diff.noprefix`.
+>> It will be enabled with any value.
+>
+> Huh, that's weird. Indeed, the code is:
+>
+>           if (!strcmp(var, "format.noprefix")) {
+>                   format_no_prefix = 1;
+>                   return 0;
+>           }
+>
+> which seems just wrong. I cannot think of any other case where the
+> _existence_ of a config variable determines the outcome, rather than the
+> assigned value. So I would be inclined to call this a bug and switch it
+> to use git_config_bool().
 
-FWIW, before deciding to accept the patch, I did check if
-git-rerere.adoc included this file (it didn't), but if we can make
-the macro smarter to do so, it would be great, as that would avoid
-people including this file there later without realizing that they
-now need to make the mark-up conditional.
-
-This particular patch does not have to be blocked waiting for such
-an improvement, though, right?
+Very true.  It is surprising that nobody noticed it during the review.
 
 
+> Technically that is not backwards-compatible, but I really think the
+> existing behavior is just a bug. It was not something intended and is
+> contrary to how the rest of Git works. Presumably nobody noticed because
+> why in the world would you set it to false in the first place?
+>
+>> Is it standard to indicate this with the existing “If set,”, perhaps? Or
+>> should it say “enabled with any value”?
+>> 
+>> (+Cc Peff)
+>> 
+>>     format.noprefix::
+>>             If set, do not show any source or destination prefix in patches.
+>>             This is equivalent to the `diff.noprefix` option used by `git
+>>             diff` (but which is not respected by `format-patch`). Note that
+>>             by setting this, the receiver of any patches you generate will
+>>             have to apply them using the `-p0` option.
+>
+> We usually use "if set" in the config documentation to refer to options
+> being set to the true value. So I think the documentation text is OK and
+> would match the code, once fixed.
+>
+> Kristoffer, do you want to produce a patch to fix the code? I feel like
+> finding it was 99% of the work. ;)
+>
+> -Peff
