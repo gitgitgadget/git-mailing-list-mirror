@@ -1,53 +1,53 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F42C3358B8
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 12:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076163126B2
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 12:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770812001; cv=none; b=oGrZ1oUBYEeN7hf/gutF91UL3lKOaccikJsPqJY3ZjKV5JGQ3mBoXW+lJ+0jdEsBckeOx4NUbfpHttG3dZDTjgmL6/9OGzIIvHFT3TX+C57TQ+SNgmwXejIUo0TSvw5uy/kdpn6Zcq0yUHy+RFrdR1ZAmjSDdImNpGJJS3h6/Vo=
+	t=1770812006; cv=none; b=NJbuUoQqX30k/02NMR1CoulnwrL98oQhLTblOAZovBI20tNMhMrIrGm5y7e4ywDjk5JMJIVsQFQWKlMB6QZsmFdFeUWs5bRNcRmB4sfF1M014eAu6I+t4pyE6ME1KHP20vGSn6XI02OLycP+WvSP5gFE7zbBcXk6hZ2AjN2utX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770812001; c=relaxed/simple;
-	bh=tIEm6dHmzTZGNCJqOpV1XzRMKXf3uKEh0cOLpc0zH8g=;
+	s=arc-20240116; t=1770812006; c=relaxed/simple;
+	bh=5vrzWK/XSDYyPSoPlclE/QCNcDYherXIpjRVp8q7lrc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tsREAkNQ4HkB9y/CVBtlCNxOD17o82EWYkjjbaTgeELmpYFdEH0GdU1QT+i9DIKSGyDA/UJrBN8eJTrUqTuuzZrjWls/SmirDoM7Hr5XbfpKZYZRsq+T4m/llksjjf0hyfXAQaWXlzYft0+bVEOd2KdOmDyq5APHpyeJoWIBkjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y1xzk2I2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=us0PGLiP; arc=none smtp.client-ip=202.12.124.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=fiYDOfdJp2ge79nynOALxKhA+PLL86kkB4IH0QFxUFa40FSOSxAf4CkbZnYHWByE2y1iywuO3Xe9YWOQZX7PwaAowarhxJaq6pfjEjOzExLX9MFHYuEW5wtx90SLPsPi+MlNloYsL6rqjhjE3j7iAI37nu7zravmC0NOo/Jz/PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=prPOXcWy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k0YwqpT4; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y1xzk2I2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="us0PGLiP"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id D17C71D0009A;
-	Wed, 11 Feb 2026 07:13:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="prPOXcWy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k0YwqpT4"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 317651D0009A;
+	Wed, 11 Feb 2026 07:13:24 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Feb 2026 07:13:18 -0500
+  by phl-compute-03.internal (MEProxy); Wed, 11 Feb 2026 07:13:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770811997; x=1770898397; bh=tIEm6dHmzT
-	ZGNCJqOpV1XzRMKXf3uKEh0cOLpc0zH8g=; b=Y1xzk2I2bhq3He6GPHHc6gp5St
-	Gsg1W278BCF9+XmITKfFnEHM9H8yYaEcOVYkKxBa2vZpdG1x23TvJ3okLdCjP9nT
-	yAtgT63lWFDgBnPUvC2ZV6vV9q+h3YFZviIbdG7F0s0sfyL6TqilxtMseYqcqKjJ
-	QD8BViDMwUzQdjvNbwzOBkWdiYRsPoV3VnPwZrt5CoWFYHqsFFp4FbnaaMrsMpH6
-	xU11JCIrDvB2vGnR7bVdG27Nj0hcYUv9s6Oe7S4fM2zlyyZTNd2QlXE3mCNZcm6J
-	Are8jyIo1Oz0YeByB4VSRTcXFd4ov6mDtiri8/X/8YuoBkk0k1iyx72AqowQ==
+	:subject:to:to; s=fm3; t=1770812004; x=1770898404; bh=LquM4UyIuV
+	xU51Q3kKlyPMO8ZENKcoXxYh6p3AVsnB4=; b=prPOXcWyJfvmMR/9g58NWj0s8l
+	DEpKW9tpa805u+UglN/6MlnRsy/mR+tJIS68DqW+5KIAXHS9bBqLPSuF/FcYZsaK
+	vhSvMxvyeaSwiozTDOZMzOEgbF+JK7RsGTkJMe9bOOmGHiacCY5Y2fINoTtALH3h
+	K/Vp/UTjRtQDG1stN+YC1vBwZekk5xZhmvsGTg+zlI8E5jUsZ+4qW2VrAG/WWxNF
+	FOX1NXVuBQOoOm2eOpgvcDwno8udfxwoZmJfJeNXceorEUnCCEGtVKAVHqE7Zcfj
+	lOYe2qhtd67t+qw5JikY5ld8THMhXUpjlLHbJ/EAXL0WEACQo/dEGsi/vFxg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770811997; x=1770898397; bh=tIEm6dHmzTZGNCJqOpV1XzRMKXf3uKEh0cO
-	Lpc0zH8g=; b=us0PGLiPGfgFxEMgQGJs/8AT1mC1byUEYrQxRJjwpskC1sBpDyP
-	kYyVr/4c25BPfp6tiRKpT+EG+osUVmxKJnfLteuKqqEfK5qq+9swBwhVDJXYFAlC
-	ZSbA5V3iUNosaj50J+jQb60kNdGqDBSs3O4c0HlhdMc6MK/udHZmyUJXM6Y102OF
-	91hXPyjiB+n7w62jI3NVz3SjqxtTVKducHZL1vzOlF8bJ0mVVKou2YXATyTIicwf
-	AiRjYAmp8G20J80nuG8RdjkTHXLKvl5sHKi9UzAyItlNHx+dOBPkd1tXrKvTBx4E
-	m+6swP0BSxGU/5+rJgqz4NPS8lH1ENPGm0g==
-X-ME-Sender: <xms:XXKMaUrL7jsSmUw-lf4Oo-_6IuDYY938arsF_6ssRtMlXFQEBw3tfw>
-    <xme:XXKMaZsF8jG3of7lktvLYJR1B2lo9dKJJEWleY2FpiKEIJgTiCzGs0vGJSiqd2jZU
-    F8BiPN92iM50dKg6CrV4wSt19ah64kVCmsO1FQ5-6-nRlSE2dNz>
-X-ME-Received: <xmr:XXKMafZiht357mxYyZH-OUZhdCD3XOTZo6aUrS72PX2XD6GInUldQQICU3ij9AqKj-rFfyMnyLZ71FXdykJwMQVYu8E4_78D-g1ch0oYAfaH>
+	1770812004; x=1770898404; bh=LquM4UyIuVxU51Q3kKlyPMO8ZENKcoXxYh6
+	p3AVsnB4=; b=k0YwqpT4AegW2HWKscFyMfMJp8Q5QiPFmZJ4nwsrA4RAGxHmNB/
+	tJ2Wfp4pBjhDHJ10+xxqBSFBzAlrzrCc83epK3czGuynqcOipFBvdR0cSHQ7e3UM
+	6JRI1GRGxS83B43uq1kV3WTcNLB4plG0jDW31+oHOdI46UjHHbyWYMcDioo4a+ZT
+	PLRLYWRkqdG/+adH8AvNlEmbLWUeU5Apj1mS8nP8kMS2mVq5Pidm7kytpjkxAAyw
+	zq0Bwl+5+V1pKmIPeSl0U12iU0ohD9GYCSAGRuZl0TGk7DC35+sfgbARv7Ise9Zt
+	ENu+VvLb5j6T3ZSLTcATRSEMgVAD8uuXS3A==
+X-ME-Sender: <xms:Y3KMaQ6B7oLoNfLjOqXK710dVLzXX3fo_S52Im5bRtAb1w5pn_-8sg>
+    <xme:Y3KMaQ-C0LJi6eeCqy8aF94_hK-Ey6z6K_PglqEYEkmierISNaQ4zzGj6peXdqDEd
+    pTSfWjzTr8gIljphbwOkCuCc-gNXiy1zQTqGq961flIjFe__bd4MvY>
+X-ME-Received: <xmr:Y3KMaVqYAfPfBhnPJQiyhSvduFnT1ewzY7sPPO4UCs4cqDg8RYdOJyMu2b3Ho__oRxopOdo9S4WOVtT1jjNHFDT9SifsyDzAi13gTDBiBHa9>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvhedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvhedvucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgt
-    phhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:XXKMaYZE0hIDJKfAN1mJOiilwXjAnDI26wmH7nhNYJDDtYwZzg634Q>
-    <xmx:XXKMaYkf3nT1egYowmZv9-BNSHX6Lmo2KP4XkP5CsTa_z6JgxCOPuw>
-    <xmx:XXKMaT2B7BNAeN7Fp7bgFcq7bxO6bCuzN8Yq9v6nPWKdd23SSCgz5Q>
-    <xmx:XXKMaY0lz4SXm2ctvGu4SDvEXivRM2u4cKZOcFBJke21DcDMRdkZWg>
-    <xmx:XXKMaXiOd1pEAFnd8_FHFAiFEQRODhPF0l8TjDqszPMrlD1kEv_xd-rg>
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhih
+    hllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgv
+    vgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrh
+    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggr
+    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:Y3KMaRrYb9oYuXnV8FxLnTKTSUNrOHgbe5M0Joc6IuOpfQebEp4Kjw>
+    <xmx:Y3KMaY3t_Gk9ftwKYNQyE7Nau9tJfwaIbptY5AU3QaNVDQzlaV_GkA>
+    <xmx:Y3KMafHQ0YJo8_-8webmYz80-CUSLQibvW53_nmU2vB1fdcfSu66Ng>
+    <xmx:Y3KMaTHN_VO0KFiJqQcd3WIQ65GoH6xvqRMLNCUBQoKnazFyYHhlTA>
+    <xmx:ZHKMaWTwIL5AlkFo-VIu8R5SjIxN5BRAGDQp-sI5ehnu5TMErOrbcKWU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Feb 2026 07:13:16 -0500 (EST)
+ 11 Feb 2026 07:13:22 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bd0ddd49 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Feb 2026 12:13:14 +0000 (UTC)
-Date: Wed, 11 Feb 2026 13:13:11 +0100
+	by mail (OpenSMTPD) with ESMTPSA id e2ab858d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Feb 2026 12:13:22 +0000 (UTC)
+Date: Wed, 11 Feb 2026 13:13:18 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com,
@@ -83,10 +83,10 @@ Cc: git@vger.kernel.org, gitster@pobox.com,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/5] [RFC] Make 'git config list --type=' parse and
- filter types
-Message-ID: <aYxyV1P4QUPmBzeZ@pks.im>
+Subject: Re: [PATCH 2/5] parse: add git_parse_maybe_pathname()
+Message-ID: <aYxyXlH5Z0toWgPj@pks.im>
 References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
+ <8d3a6a8265714c5e4bae0f2e5a587ea46a6adddc.1770698579.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,17 +95,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
+In-Reply-To: <8d3a6a8265714c5e4bae0f2e5a587ea46a6adddc.1770698579.git.gitgitgadget@gmail.com>
 
-On Tue, Feb 10, 2026 at 04:42:54AM +0000, Derrick Stolee via GitGitGadget wrote:
-> This is marked as an RFC because I need to add some more tests and because
-> this is a behavior change! If there are any tools currently passing the
-> --type=<X> argument to git config list then they will have a change of
-> behavior with this series. It's an easy workaround: drop the --type argument
-> or add --no-type to go back to the previous behavior.
+On Tue, Feb 10, 2026 at 04:42:56AM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
+> 
+> This extraction of logic from config.c's git_config_pathname() allows
+> for parsing a fully-qualified path from a relative path along with
+> validation of the existence of the path without failing with a die().
 
-I think this is not a huge problem. It simply reads like a bug to me
-that the command accepts the option, but doesn't honor it. Sure, it can
-lead to different behaviour, but I think that's acceptable.
+That sentence is quite something. I had to read it thrice to understand
+what it wants to say :)
+
+> diff --git a/parse.c b/parse.c
+> index 48313571aa..3f37f0b93a 100644
+> --- a/parse.c
+> +++ b/parse.c
+> @@ -209,3 +210,26 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
+>  		die(_("failed to parse %s"), k);
+>  	return val;
+>  }
+> +
+> +int git_parse_maybe_pathname(const char *value, char **dest)
+> +{
+> +	bool is_optional;
+> +	char *path;
+> +
+> +	if (!value)
+> +		return -1;
+> +
+> +	is_optional = skip_prefix(value, ":(optional)", &value);
+> +	path = interpolate_path(value, 0);
+> +	if (!path)
+> +		return -1;
+> +
+> +	if (is_optional && is_missing_file(path)) {
+> +		free(path);
+> +		*dest = NULL;
+> +		return 0;
+> +	}
+> +
+> +	*dest = path;
+> +	return 0;
+> +}
+
+Okay. So the difference is that this function here doesn't cause us to
+die in case the path is not marked as optional and missing. Makes sense.
+
+> diff --git a/parse.h b/parse.h
+> index ea32de9a91..4f97c3727a 100644
+> --- a/parse.h
+> +++ b/parse.h
+> @@ -19,4 +19,6 @@ int git_parse_maybe_bool_text(const char *value);
+>  int git_env_bool(const char *, int);
+>  unsigned long git_env_ulong(const char *, unsigned long);
+>  
+> +int git_parse_maybe_pathname(const char *value, char **dest);
+
+I think this function could use some explanation what it actually does,
+as the behaviour is non-trivial:
+
+  - I think the ":(optional)" part needs to be documented properly to
+    say that we return successfully with a NULL string in case the
+    target path doesn't exist.
+
+  - We should document that it expands "~" and "%(prefix)" (even though
+    the latter feels somewhat coincidental to me).
+
+  - The path is not resolved to an absolute path.
+
+Thanks!
 
 Patrick
