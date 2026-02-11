@@ -1,95 +1,95 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820C330DD22;
-	Wed, 11 Feb 2026 15:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AFD17BB21
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 15:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770824638; cv=none; b=pV/LEW1qpBkTWolT0DnzyvvDLXsGHITxzCnShBSDgB/omeLLnkvsBnzpQRGUEmtg0B+/JCVw06EwHThi2K6Ie4X6WSfTnjasZU3aPgasmvtldYrMyI+fV5kl8Qfb2+di5X/Zmhj15zKUfRZ9NTK8HGARfPwtLYngeFddKD1pMT4=
+	t=1770824835; cv=none; b=M4KoFmiY+nrpgeUvZlw3OweR3uHJIHoN/LJom9LRh+kQPMPq4o1bcGKEHdg4K64HvYJQ1v7lBDfJwUdKAUOiYuRJ7XbNaJPjEF7WZj3s7Jr8K2MtZgPJX5IQvkdBMr+3GSqofA+lM20oGyeoqVRhbJorp/9JjvrsblskKWRydUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770824638; c=relaxed/simple;
-	bh=sOjpaBGaEI9wogZqbwVjQXovrEu2YNYdYffaIwQciJk=;
+	s=arc-20240116; t=1770824835; c=relaxed/simple;
+	bh=c+c7eHj39n9ZcO2V48J51eWJoxxDxJneNZ0/UHx32BU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U0xLCa5a/u7akOpGJy1EcCavrlG1x1i4qZMhAGsxJIVWUXf/kljcK9wFg8fMQaTBjOvFUcm9m2SBYrTlrkEbv1kmzrLEjro6ArsOdK6LC47WOIm/KvhOKVrDHjgTsqUN0UswVpGH65AiKAi8fm6+DMWSZivJIK4a0sw9nLFu2ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iyMhqxuK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qrFLGKMj; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=HeTKgM6Che+/uzLFqMFarbEOPLpjiPbPj9hmoz7Gvv/ME/SVu0koDmU3JnMxiAiImjLkc1nVUmi6mvW5Gh/DGZw//VpqjsZQMnGJbEtKKCHuCO73RfLzC9Nnc07okeJr15a49XLNB+o4rmjQAjjLAM55AWvnQGRI4BVfWaA8x/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lw8/a1RF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oOqiMQ3y; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iyMhqxuK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qrFLGKMj"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lw8/a1RF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oOqiMQ3y"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BAF2114000BE;
-	Wed, 11 Feb 2026 10:43:56 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Feb 2026 10:43:56 -0500
+	by mailfout.phl.internal (Postfix) with ESMTP id D2B5CEC022F;
+	Wed, 11 Feb 2026 10:47:13 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 11 Feb 2026 10:47:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1770824636;
-	 x=1770911036; bh=XeLTB6PnAWwhW4H3RkaeiODjEYyCHXzmYRybX5V/Fwo=; b=
-	iyMhqxuK8OLe6eyV5WOQf4a/CNZAJAXhoTuafg+5vHjxgmBgg8ok2Jmp4LgE+Nux
-	LI7RiQaw1MypJWvdGTOxO0MXCipQWgMCIUkOaISvXAQq1vJR58vfcaOD1N82RYgp
-	5F4tbvj2wsiwRPonJRzvS2hYl/vni00f+P+kAH1fXts3jiGbV8ksQS+xSM8/NqHG
-	vorWAJLtzZyM4NhNRDgNT5eWxcZBX5ZPHmSz+ViFW7ep3dOgk3CugV5amQS8v/r3
-	59uRZ0XZk8vrHX/Zo8pnrPyLzWf2X+cevniAfAbvZ0dHYu69pmm7x2F4xnfWmfw2
-	roqlfNMpZP/j8mJaRxvOzA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770824833; x=1770911233; bh=qeES5AImM4
+	Xj82tTezMSZmE6pNMZ8h2mp+A4JFz5Gww=; b=Lw8/a1RFLgZXhr0V2F9SVAOwwl
+	QYsGlquxPQ6VazC4AiZFj5PlMcErzRzzV8p9xGB+XHsBO9NDWk9geGXDOtz7C1d/
+	1Kfrwv+cZ+iDow95BekghxGwkoGWfqs40hxzRb09zejszVC1zb+60QxUMei81Vwc
+	N/27sjR6ko4+3preePMlSs3TQUl+3Lz5EB50C66EuOi2gmfVIRSZQ0oxvQfdGaHX
+	EJSKnQAKpNWb8mKKK1sR/G71XHqrReCAcfmdU2xVjDbK429zflNv/sYTR/Hca79B
+	WszxdL7P4bm4ApSdLbG24/dx4prYt85w4imHqozu//jcmWUn58sBag2EoQfg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770824636; x=
-	1770911036; bh=XeLTB6PnAWwhW4H3RkaeiODjEYyCHXzmYRybX5V/Fwo=; b=q
-	rFLGKMj7uKU+wpXim+Wz5k2KTyA+tC/YOCikiIa5gR8FBHwIK/hQAlVxDdyqcgvb
-	OKwWyLVs4uCEvZ9NvtKL3n3jbtL+XQNz/pZh0k9bteL3rPHCDozYP1MOSXapvc6q
-	3VdTzpumvMiMYnQ7DK8rr//7iJOcmzk3iqmOZ1y8MME/5c483D1qmEpuMKKQeGXj
-	KQxgaGNlgopY8X6XuiGA4Mh9rY7QWx7bn9gwvnB+nOD/HJ8bnxSyiL0g9mZhAy22
-	lwFTgs6vcj/wrpT80NQHK96r81rfT0YX+10lQ7TbCmGw3UBHJl52F2X7j6SEh2s+
-	9z8GpzGQecEQTmqE65Zzg==
-X-ME-Sender: <xms:vKOMaZUYMlviDKxiZBFkC36NIu-U8p7-UbEq2UuLHte9d_gNNi9wKg>
-    <xme:vKOMaaTDdUSHGAMNgEl67awCPUX3g9ebrekJ0PZXWf7AbAFlcWG2ReupUZIOqJu1z
-    vYWhX_cXcZkcaaBc5goWl5-n87Vtz5mdZioGIDx-QM16WObb_zA>
-X-ME-Received: <xmr:vKOMaTl5zs604948jtM5w0SqDDK2eXXUWBmPgsw_yThTF9bZGzoWUNJQWV_-WPFjDgPmjRAbtzcW67wu3JDUM8cIZwVRYM1BGQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvleegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770824833; x=1770911233; bh=qeES5AImM4Xj82tTezMSZmE6pNMZ8h2mp+A
+	4JFz5Gww=; b=oOqiMQ3yXiugnf2a8HqOCbaNgq9InfGM4UAtgeWd5b2X8heM7JI
+	oLcLZh6hSZOPB4wWY0AqT9PZM7A8JwuZH0uqLiHuRKd2XFhR5FkSPSNDnlp8hd5W
+	VW+CaPg5jGgRWpU/saEC6A/SQJxPYdFELKuitVHvd5ys5+qFMamADxeuYWBOu8G6
+	wafanoW+QBSErOIj41BY+vkJsRMvxrEIzgpsTeRyT0OU8ez5y+rfJme4UAG7h/V2
+	GmFkmw5vCkbX7Z9atC0Ryz7RZjZ5A4MAARdyjJNtCAR/u9zMLC0Hvd/6Eon94ZZ0
+	r8RLfX07E7Y1VtuxAUZd1ZGOfyvGw+TLJEg==
+X-ME-Sender: <xms:gaSMaYJPyPOuDpiaCYorX7Nt0ANOKh4GZ95LWQ3GtgmcJl3R1rxbjg>
+    <xme:gaSMaaaqXsrev49AB8mTM3qPP5hIQuz4wpQTcZ9Md0JHjsea6HfMN1VV_2sPb41oU
+    y_D5_qwRynGQiCXbM0xs3gwEC-4eqSTVmolJMXybYZMDoWMXHfa>
+X-ME-Received: <xmr:gaSMaa-o62f-36Ph62N5hU2f5dq_I0s0y9SVTNe09esh2BBNCrYwLgaisVXr_HzdOumaS2xZmNmKbhwMDZFnskP-QWhUkjBtNA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvleehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeehhedtvdethfduheffudehudeitdevvedvvdduffelgfffhfdtueeikeeg
-    vdeghfenucffohhmrghinhepnhhophhrvghfihigrdhithenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgt
-    ohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoheprghlgieskhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehnrggsihhjrggtiihlvgifvghlihesnhgrsghijhgrtgiilhgvfigvlhhird
-    ighiiipdhrtghpthhtoheplhhinhhugidqmhgrnhesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:vKOMaQ4zrA8b-XUAzO1mn8K0H-i295QjrSPfMYStyNEdUwE5W4VJjg>
-    <xmx:vKOMaZis8gpUjSNxlgF-P64ZkiJEx3sHR8JpRK9CWTQziNtEx49ZKw>
-    <xmx:vKOMadEH7SqRKTEGeWG0UzJmfXecF7hdmG5q5jRAcL3y6l8np82Akg>
-    <xmx:vKOMafTXKkKOGtdjsJcTHUpeQkRj_2jjD1q61h454Pm5odIn_O0Dfw>
-    <xmx:vKOMadxZ8tjXwdfTmvYmh9LGnan2YSZ52gZpgjNotTP3rjZObEGBI8Rb>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhk
+    shdrihhmpdhrtghpthhtohepmhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphih
+    ohhkrghgrghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:gaSMabZ658qY1HMlBDpEuxImCD6ni6tv4u34KxsKTgIM8T-gdNz8hA>
+    <xmx:gaSMaeOXS5jPK6QjxRwF39It8vYKjKNmbYhHnrUF_wtS8D1ZE6awFQ>
+    <xmx:gaSMaXD9NvQQc5dxSQN1nEY9_V59bYOW_VV_GJpV4xGJ4vDHdinaeg>
+    <xmx:gaSMaVLkNprnO7H6Y_Yv7fL_nxs02Og-ke30Vo_CsRX9m1MEjJzh-A>
+    <xmx:gaSMadZCQHWW1nQQMBthNTFoMWDA9qS0ZCakBvrKeUVNtSsXvWMxR7-G>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Feb 2026 10:43:55 -0500 (EST)
+ 11 Feb 2026 10:47:12 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Alejandro
- Colomar <alx@kernel.org>,  git@vger.kernel.org,  =?utf-8?B?0L3QsNCx?=
- <nabijaczleweli@nabijaczleweli.xyz>,  linux-man@vger.kernel.org
-Subject: Re: [PATCH v2] futex_waitv.2: new page
-In-Reply-To: <20260211073553.GA1867915@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 11 Feb 2026 02:35:53 -0500")
-References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
-	<se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
-	<aYpg1XelZBzpw4ZL@devuan>
-	<rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
-	<aYtAknObJpjszCaj@devuan>
-	<55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
-	<20260211073553.GA1867915@coredump.intra.peff.net>
-Date: Wed, 11 Feb 2026 07:43:55 -0800
-Message-ID: <xmqqecmrwais.fsf@gitster.g>
+Cc: Jacob Keller <jacob.keller@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Matthias Beyer <mail@beyermatthias.de>,  git@vger.kernel.org,
+  pyokagan@gmail.com
+Subject: Re: git-am applies commit message diffs
+In-Reply-To: <20260211074751.GB1867915@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 11 Feb 2026 02:47:51 -0500")
+References: <bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm>
+	<CA+P7+xqcBcV8uySGgDfvt2ruAnFmfgaUy6aRbUC2zCzmCgPubw@mail.gmail.com>
+	<hn6q2mdjdqezzvtxfxffmatctnlf4ttvwedfk7wnw7xw75gy4g@hetctv53f7bh>
+	<20260206090358.GA2761602@coredump.intra.peff.net>
+	<aYoEO0CcVt2Qjgnb@pks.im>
+	<CA+P7+xrNycJHTyJwn9AQcJLG0dDAE7KrTvWTHBi+CiQUqK8p5A@mail.gmail.com>
+	<aYs_P8QujA6mL81-@pks.im> <xmqq34381tze.fsf@gitster.g>
+	<CA+P7+xo0-9h_V8xGQaEdgBEaxjrbrNOdPfmFmhKup+Z-7w0zUw@mail.gmail.com>
+	<CA+P7+xpYSyhBoC23RLycVXFSBB2=dgsQrnvLkk0D7afOqWyafA@mail.gmail.com>
+	<20260211074751.GB1867915@coredump.intra.peff.net>
+Date: Wed, 11 Feb 2026 07:47:11 -0800
+Message-ID: <xmqqa4xfwadc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,53 +97,23 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> On Tue, Feb 10, 2026 at 04:54:02PM +0100, Kristoffer Haugsbakk wrote:
+> All that said, if the main goal is just avoiding accidental diffs in
+> commit messages (and not worrying about truncation due to "---" in
+> messages), there may be a simpler receiver-side solution. If the
+> receiver expects the message to be generated by Git, then it will expect
+> there to be a "---" line. And we will not expect any diff before then.
+> So could we just have a "git am --strict" mode (and perhaps matching
+> config option) that always looks for the "---" separator?
 >
->> An aside but `format.noprefix` is not a boolean like `diff.noprefix`.
->> It will be enabled with any value.
->
-> Huh, that's weird. Indeed, the code is:
->
->           if (!strcmp(var, "format.noprefix")) {
->                   format_no_prefix = 1;
->                   return 0;
->           }
->
-> which seems just wrong. I cannot think of any other case where the
-> _existence_ of a config variable determines the outcome, rather than the
-> assigned value. So I would be inclined to call this a bug and switch it
-> to use git_config_bool().
+> It's not foolproof, but I suspect it would help with the worst cases of
+> embedded diffs. And it's not that hard to implement.
 
-Very true.  It is surprising that nobody noticed it during the review.
+Yup, if the payload is known to be generated by "git", which is much
+more likely these days than back when "git am" (or "git applymbox")
+was written, can ignore "Index:" and "diff -" when deciding when the
+log message part of a piece of e-mail ends.  I like that approach.
 
-
-> Technically that is not backwards-compatible, but I really think the
-> existing behavior is just a bug. It was not something intended and is
-> contrary to how the rest of Git works. Presumably nobody noticed because
-> why in the world would you set it to false in the first place?
->
->> Is it standard to indicate this with the existing “If set,”, perhaps? Or
->> should it say “enabled with any value”?
->> 
->> (+Cc Peff)
->> 
->>     format.noprefix::
->>             If set, do not show any source or destination prefix in patches.
->>             This is equivalent to the `diff.noprefix` option used by `git
->>             diff` (but which is not respected by `format-patch`). Note that
->>             by setting this, the receiver of any patches you generate will
->>             have to apply them using the `-p0` option.
->
-> We usually use "if set" in the config documentation to refer to options
-> being set to the true value. So I think the documentation text is OK and
-> would match the code, once fixed.
->
-> Kristoffer, do you want to produce a patch to fix the code? I feel like
-> finding it was 99% of the work. ;)
->
-> -Peff
