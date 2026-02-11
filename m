@@ -1,85 +1,94 @@
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2C738F9C
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 07:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AAE4AEE2
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 07:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770794073; cv=none; b=T3BH8b44MKUTHK995h9UjLJ/1gZZJQ2LyaU1pCgf2S/h6BNb4KtjRiIKo5FrKc1jDF0ri38N8F01ICtBBMrEZ/7lMTkBIhxdG4lZ4ObOxYEIR306aZHLRc64K+hUE1ex3RyCBQZXgnfAYQh536ve67vJdU40W6QXabRtfqbDg+o=
+	t=1770795364; cv=none; b=WhFIFjUFxcoKQ9sgPrsxzvIF6V8ikg++DYti28HQpKYV9hxTOu5PT8+zH03Zl9hCGc6dx7o40sXIrvEgqnWh4zAvomRWkSa0TUOP/Ek5H+S5P3FdX4Evw/03LR8w6pae878jhP9sEQrrawDvNk3ZoFyRO9pqpDq7vzvHw0Yx4VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770794073; c=relaxed/simple;
-	bh=/5FSwzsjaCJVINurkEnUFP3O2Dpsr3p6mOux8SoDMyQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P5lTfqtb8W1NEQMVnYvatWJg4so9UUfZlIgrWHyEp3zUO2nHOQRLgwzSFdJKMUk062Cij3LHJKAtjcOt+bYSAe4W5yhOIU2cYkFG4ZZAiGSW2dw/cB2tJomM+v1tm9oLeLYwnONKxKdFG4nvrghuthxmKUlx3k0Hj3m4TqLjTyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=dKx6lyS0; arc=none smtp.client-ip=212.27.42.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1770795364; c=relaxed/simple;
+	bh=xYR1Xa3whcBlgqTEVkZGIRMnGtGiuNZtqY0OY76c7dY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zg8A+UfQVqLek8oxUz1yhGLIeGDQ9lgF8CUXUR/Phaa5jNuOA2aE3SaOfEglKzYUYpkewYSvp0GGHB1ud0EeVwrZ5OLRNmZsIO/edS8ShfM4G8XVu7O8mwjbrkwUKG0xNBqrNhxjv7k3LmRIT18qNqul6dK/paNolLS57PtI0V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OuzvBII1; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="dKx6lyS0"
-Received: from [172.168.17.249] (unknown [103.51.116.155])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id B297120039C;
-	Wed, 11 Feb 2026 08:14:19 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1770794062;
-	bh=/5FSwzsjaCJVINurkEnUFP3O2Dpsr3p6mOux8SoDMyQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dKx6lyS03WAM6UUjnzIDGltCLOQTV69DMtO/5LNhldR7Kkbrc8DIb/fZBdIYk72iO
-	 wnNfKTar1ffBTgsxWo848V3wHbCXBa49xfI2zwIYWe440herttJvvm0nKIWY9Mojg8
-	 EfWdujgcTtMkcWZWMEdyMIJHHXzXm5sNw3nUmukKR/OjiEdRSroxVEtTz3tEiVs72Q
-	 aocDsgbrqj7nJv/PUhl4OoqJOnZ/79feQofIsc0N2wSvtLx5pRn3DaxlTdTUk0jQtm
-	 1ylYo6ENUG3GVx9GAZOdu2yqdKtHwBm8bj6Om2CCuQN3e8d0+ctBdYjNpw2P9wHvGy
-	 VkuRfgbUHEnVw==
-Message-ID: <1a4060f1-6607-4b50-859d-927642eb34df@free.fr>
-Date: Wed, 11 Feb 2026 08:14:13 +0100
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OuzvBII1"
+Received: (qmail 11940 invoked by uid 109); 11 Feb 2026 07:35:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=xYR1Xa3whcBlgqTEVkZGIRMnGtGiuNZtqY0OY76c7dY=; b=OuzvBII11CSbHTPZ4QK+LyiNTgyfF4y4FVfkwKwCHgr6/Mmyhj30PlhB5q/5vU+SlUpoSohE/v4wXIFnixCMLf3gHdJu3f+qql561yl3peQZeT22+7dc4Earw2fh7swGbpUz+d5O+DzUy0LUhg0eHWJFiz9yDJJnhxoDZEeThijmdu/vWTi9nyR9GHfhz15YwoacnMa/uvw9X7DxBpzCG8bCaP77N8Uoa97JCdJ4FObmUx7MbrT8RZuOQW82C95Xaifkwt3fTiq6lT+FOMWooQdShCPOvnB9ITsfSWa9KGiyaPmVE8MhzXYViUbyrUeHKhXniQXZpesWN1Pju4s+7g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Feb 2026 07:35:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20285 invoked by uid 111); 11 Feb 2026 07:35:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Feb 2026 02:35:58 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 11 Feb 2026 02:35:53 -0500
+From: Jeff King <peff@peff.net>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Alejandro Colomar <alx@kernel.org>, git@vger.kernel.org,
+	=?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>,
+	linux-man@vger.kernel.org
+Subject: Re: [PATCH v2] futex_waitv.2: new page
+Message-ID: <20260211073553.GA1867915@coredump.intra.peff.net>
+References: <jpyv367v4jdxfxebxw6wh7rgqdfeswzp44dzsycfjt5k2pxe4j@tarta.nabijaczleweli.xyz>
+ <se6hm5gnd7cyjsby5q6pctkrws5ecp5gpnfjuy3zh2shd2abyj@tarta.nabijaczleweli.xyz>
+ <aYpg1XelZBzpw4ZL@devuan>
+ <rqshygydxwpfs2mi5cwxl3wvztgctj3nvu3y5bpo5s32owucna@tarta.nabijaczleweli.xyz>
+ <aYtAknObJpjszCaj@devuan>
+ <55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: rerere-options.adoc: link to git-rerere(1)
-To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <doc_link_rerere.328@msgid.xyz>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Language: fr
-In-Reply-To: <doc_link_rerere.328@msgid.xyz>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <55bd6ad3-cd19-4839-a808-eceae802d3c8@app.fastmail.com>
 
-Le 09/02/2026 à 19:13, kristofferhaugsbakk@fastmail.com a écrit :
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> 
-> Five commands include these options. Let’s link to the command so that
-> the curious user can learn more about what “rerere” is about.
-> 
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
-> 
-> Notes (series):
->     Topic name: kh/doc-link-rerere
-> 
->  Documentation/rerere-options.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/rerere-options.adoc b/Documentation/rerere-options.adoc
-> index b0b920144a6..115882edab1 100644
-> --- a/Documentation/rerere-options.adoc
-> +++ b/Documentation/rerere-options.adoc
-> @@ -4,6 +4,6 @@
->  	the current conflict to update the files in the working
->  	tree, allow it to also update the index with the result of
->  	resolution.  `--no-rerere-autoupdate` is a good way to
-> -	double-check what `rerere` did and catch potential
-> +	double-check what linkgit:git-rerere[1] did and catch potential
->  	mismerges, before committing the result to the index with a
->  	separate `git add`.
-> 
-> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+On Tue, Feb 10, 2026 at 04:54:02PM +0100, Kristoffer Haugsbakk wrote:
 
-I'm not fond of introducing linkgit macro that can create auto-reference
-in manual pages. At the moment, we need to use conditional inclusion in
-the manual pages source, but I wonder if we could simply filter out the
-links in the macro itself.
+> An aside but `format.noprefix` is not a boolean like `diff.noprefix`.
+> It will be enabled with any value.
+
+Huh, that's weird. Indeed, the code is:
+
+          if (!strcmp(var, "format.noprefix")) {
+                  format_no_prefix = 1;
+                  return 0;
+          }
+
+which seems just wrong. I cannot think of any other case where the
+_existence_ of a config variable determines the outcome, rather than the
+assigned value. So I would be inclined to call this a bug and switch it
+to use git_config_bool().
+
+Technically that is not backwards-compatible, but I really think the
+existing behavior is just a bug. It was not something intended and is
+contrary to how the rest of Git works. Presumably nobody noticed because
+why in the world would you set it to false in the first place?
+
+> Is it standard to indicate this with the existing “If set,”, perhaps? Or
+> should it say “enabled with any value”?
+> 
+> (+Cc Peff)
+> 
+>     format.noprefix::
+>             If set, do not show any source or destination prefix in patches.
+>             This is equivalent to the `diff.noprefix` option used by `git
+>             diff` (but which is not respected by `format-patch`). Note that
+>             by setting this, the receiver of any patches you generate will
+>             have to apply them using the `-p0` option.
+
+We usually use "if set" in the config documentation to refer to options
+being set to the true value. So I think the documentation text is OK and
+would match the code, once fixed.
+
+Kristoffer, do you want to produce a patch to fix the code? I feel like
+finding it was 99% of the work. ;)
+
+-Peff
