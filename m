@@ -1,124 +1,119 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7199D34575A
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 18:21:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899BE303A35
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 19:17:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770834098; cv=none; b=apoFmNNjVR0ENe29HgNwiQ8Vu/A8FxHACgWh1s0r0wxmIOvx8Nil6vDDUG02+CDTgZGp26FLDCd57ITIaQ0Il8VDAANou8ikh1woZMWcZALggcHjY09uYox50hnhlxcPGOEpcN3rvl+/MvXzkhgDx/ysBqgHVvl06WNQt7iwVVs=
+	t=1770837431; cv=none; b=hsiyTI3zXyX9iPRB6/iKE7P5V8ZuKzFNoLSnlz307Lytw4Y42gp2rSqLb5xx+MeTJ5lCUgYafPCTOfwyCGrNERuzqwbbT2/oPorqJnc7DuskmC4nu743SAMX8Re5ZPmE5JIKYg5r/LiMe4UiA9uPz6YvEZrrbsDvaePB+xqS744=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770834098; c=relaxed/simple;
-	bh=Qcs4vdc/c1hXHVxS8y83hxujj0eunuNbTwNyp6bCEaY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NhmiMwn3D4bxihXpJL+JgtzIA0+rmsw/KaurzINcY+zZEsBvrmT3Ds7UklsznNcS9I0CPGZeuFqcXHWoN8susuvnJIL16M6h+G/pK7wmqGaCqgbp7MT3ctTeIVP4ig+GKTBkHTireH6T9jq4PMmK3uutTeQtWLwR/NxQ7AbxVXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iP0d+lIj; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770837431; c=relaxed/simple;
+	bh=4UcijMFhxx+G59fG6JeSfOO8bQprS4B6MPHjBJL4150=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I2ybbFE1+7mCVaUH3OMMK+Z6tz2S15y0j4VjxAcoBZYggfZ/4BJ2oT82wUpQZ2UB3t7TJcAQzs20gs+fn0ayrrJtCXwvgI0sCDWSM6zZEF0IMXCiPY2/iGxVjT8ZgwIqlwf5ZHLzXqMjtgaS/ThBU40wb0Yi4ObVc4cWrNJjH24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U+QPAO4E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q85Cf9+L; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iP0d+lIj"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-35622f00cb0so229125a91.3
-        for <git@vger.kernel.org>; Wed, 11 Feb 2026 10:21:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770834096; x=1771438896; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ceHMugt9OY5tltjWdjoju2v0Wxj7nbpwblBafzV3oYk=;
-        b=iP0d+lIjmf6+YwZ73e+5aQkPjYWAaVE/tWigRExehr4VEc7iWI7gEVhkuq/LGaLPTh
-         joTNxknjc7fADpkPGE+7oiNb7l4MzJJVYA1Wq+mSBDuNhzIjwGKiTd+W2YHQeFE6OgvL
-         t20dDZI7rbjIWdBUzeeC2y7jFKlpPFK7K+PTnWv6MtkYWCwp7I9aTglOOQFwRAleFDmp
-         RuSivQ5oxrk66ZdONCmrFJmhURwm9prmmgHuxjvVKsN/ZQ6CcUtGMN4LyOTAbNtJW1xq
-         0LF2xNP0mksdKF6ZjL+a/A2Fx/poGXSXkANKvIViGw0XC1rFyT6l9fEPOd0NgLi3v3Nn
-         q2xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770834096; x=1771438896;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ceHMugt9OY5tltjWdjoju2v0Wxj7nbpwblBafzV3oYk=;
-        b=As+HqHe9xK7cwtdrzyPHTl3Ph2vv9a60WdeoMHppbfBQjGMsWHMLtuzt4NDW3OqK5C
-         eWzvcxX8Mefil2Uyru167tuI6/9hReXwFRp7caaNU2YJLCun1fgD+KTrKoN/QfXwmsyk
-         0W3Gkbcqyja3e/gMFtBsrm8/9BihTIYkj/G/y/RAzehtuLKL7CMbWLeslMqichHrnaHT
-         /ockRfQFjmBYZN7OFUsQv6Qvuo4B8SingptmybNp0uqTdn4MLz6i18VvTZ7xMubaZsQ6
-         zQT+aX8spI1H9ilAEFifn9emN65Z6vJxPjNbvwoJY5A7x5da9delv5ucISnGP09dVNvc
-         fR8g==
-X-Gm-Message-State: AOJu0Yz2vQbLq+vmB5A+IG8Eay6xBl72bQCKh4gUUaFDBE2LWuX2PVpr
-	1kpuYJxUNXrBk+nl1//QqayixVgVkRiZCWyuNMt4cjD20QY1XHdKl5qzfmuI88f/Pw0=
-X-Gm-Gg: AZuq6aJn/UqBKnKPfjS1RCtCBWzAveub1dT9/ZTndvK02CJC1cLTGXjKE+znHTu58c7
-	aae0JXLqff2caSYiVfIJkLFyUZBQiZF8aFpSkv5yeWsjUAUOhHvBi5imtAFVqtivkl7w9xks9zO
-	x0JT5xB/O2tLU5Yx5KPz/HCG+unPzyT5Pb32mwOtvGpSrQExvOyfIdxAVvoNIoU3wMNe0Jsimqf
-	loXilJD3naJa/Ra+cUxCShwvvP9uOqSCYCHRnT8wAeP1FmwXL+nKtQ9xhvOCrVhVeOPDQnMxQrC
-	6YmJIY/92WLW3zmzI4GnZ5GgYtqtEj3Wh3eS5wqrHtWGQWM2zoZVmeqqdqbDNbVBRKKXMl2zP1I
-	mswdjJr0vWQZkAvzeb3Uf5kyNyATgaJQlN3j53MB68DKQj56h/8cyHrgptosCCIMPAtkMnQZxCJ
-	/dFOB1sOW5m/Q8pTf4SVj3ZzWzW9AGrHKSCqF77e8=
-X-Received: by 2002:a17:90b:54c5:b0:356:22ef:57aa with SMTP id 98e67ed59e1d1-3568f2b7605mr229232a91.2.1770834096260;
-        Wed, 11 Feb 2026 10:21:36 -0800 (PST)
-Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c6e1967ca7esm2714331a12.3.2026.02.11.10.21.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Feb 2026 10:21:35 -0800 (PST)
-From: Tian Yuchen <a3205153416@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U+QPAO4E";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q85Cf9+L"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BA9307A01A1;
+	Wed, 11 Feb 2026 14:17:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 11 Feb 2026 14:17:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1770837428; x=1770923828; bh=i2jeGcYXEYgB2anhmMJ/9AJDdqBIm3PJ
+	4oCmmmfb8HQ=; b=U+QPAO4EgqcdmUxzmonGjIy9YtE3zMPzYM2RTjYywfQAD+9v
+	uXATCX2YRdvSS+WiEhtn+BXkr4Z++FRrgoHXpucx4FhDJ63NvgJLWsUqL2jd5r/P
+	a9UggxRJ0Fm0GLA3VBqfkKMNRBDGRQu+T2JhVNLWUecr6kJ9QizVEclnZWPrjfYw
+	chnz0/bmsyBAkvLKyeRyfCF660mMxl7Bl84BTV5NNjrebO5VaNWeVgspweVl/P1o
+	4apA5pV+cmlQIIP1RQ6wWMMyy7fk6ZMPCKTsF5kcD8yu9u1k7q8wTxrZIHNJG/9R
+	Dk8ZcyjQRllOICCR9OUbDdIqkDbjnGgaPTu/fA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770837428; x=
+	1770923828; bh=i2jeGcYXEYgB2anhmMJ/9AJDdqBIm3PJ4oCmmmfb8HQ=; b=Q
+	85Cf9+LqGGhHZIXldvnWFwqdCznM3392A9ykBTlmO+Ire29sjujcMmQCYSi4R6Ww
+	uZpA7a2XXV9LNrP5BVUxyQTQKEKXoeEDm5pGvhT5eBXmCbvL38mzXTXYpqfqaIju
+	HQsz5+t0PIAd6d6Vh1yDLhWXwEJX9AQrSGy1eZ+qDLZZY+fumr0/g9NynEIX+lFM
+	NBi4vWHgFNDYhv22CtopQoNJ5uhUbmP+FRBHbmCUeV5tmzqGqi6qL/TVj7rlpZZk
+	uTyQ5/GTjqJxyExm3P2GYqpoCUJW+DAkqPtCojMy2M2pNYGrLyig247jniIsjt1A
+	9PSFTHrlAUcK3AWLi7G7w==
+X-ME-Sender: <xms:tNWMaRcNA3T872kbKw_ERKeAiQZVNVmhk7EikdM9kAVs7eTn9VIvFw>
+    <xme:tNWMaVPc1v4WgjRIgqUwrtDSLB6BbV0NeflbUZ3yWryTLyJ_rBOLaQIP4P7hOeiOm
+    CGpZVpPHIaAxEgn8c3W6rsDVKteHdF5v5YkDkh5Asrm0gwV2t2D>
+X-ME-Received: <xmr:tNWMaYJXO9YprqJTPcCppuL3i84UXSvzn1NcL-TueCDF7T4QNvLrkulNOs2R1NohpKgG1NiOVKriqEpkOmj1m0At7ajpdpcOXQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeffeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepledvfedtfedtkeefueevlefgleetieeuff
+    ffkefhgfekveehkefhgfetjefhffegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
+    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:tNWMaWFXlRfe6xWbZ17veZs3A7CkB11OIGX37ixq5kvgE-vvaGrOgQ>
+    <xmx:tNWMaQTYScxiI4MXqTJ43FRzLvFgdMT8XzeUSBSfGGan2A_TyVnETQ>
+    <xmx:tNWMaSF9zIzswY6Ks1pYplOfd9dV0NkqdTSq9KrD1DkhB2wZBwSAXQ>
+    <xmx:tNWMac-ffX_MvQBEdJoTv6wxCR7S2q1sKq7f7k9_mgwsyjhdtpttuA>
+    <xmx:tNWMac1yL50lI6tFVCNoeCTd71IjFAX29-QKbyXMOfJU8YAAy7P13Q7v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Feb 2026 14:17:08 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [RFC] setup: fail if .git is not a file or directory
-Date: Thu, 12 Feb 2026 02:21:22 +0800
-Message-ID: <20260211182122.35352-1-a3205153416@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Subject: [PATCH] CodingGuidelines: document NEEDSWORK comments
+Date: Wed, 11 Feb 2026 11:17:06 -0800
+Message-ID: <xmqqms1ft7il.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Currently, `setup_git_directory_gently_1()` checks if `.git` is a
-regular file (handling submodules/worktrees) or a directory. If it is
-neither (e.g., a FIFO), the code hits a NEEDSWORK comment and simply
-ignores the entity, continuing the discovery process in the parent
-directory.
+We often say things like /* NEEDSWORK: further _do_ _this_ */ in
+comments, but it is a short-hand to say "We might later want to do
+this.  We might not.  We do not have to decide it right now at this
+moment in the commit this comment was added.  If somebody is
+inclined to work in this area further, the first thing they need to
+do is to figure out if it truly makes sense to do so, before blindly
+doing it.
 
-This behavior can be very dangerous. If a user is inside a subdirectory
-containing a melformed/broken `.git` entity, the Git will traverse up,
-attach to a parent repository and might execute destructive commands.
+This seems to have never been documented.  Do so now.
 
-I tried to resolve the NEEDSWORK by using `lstat()` to explicitly check
-the entity's mode. If it is neither a regular file nor a directory, we
-kill the discovery process.
-
-But I still have questions:
-1. Is failing hard the desired behavior here? Should skipping it and
-   continuing discovery be an option for the user, which might seem
-   more fault-tolerant?
-2. Should we die() immediately here, or return GIT_DIR_INVALID_GITFILE
-   and let the caller decide?
-
-Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- setup.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ Documentation/CodingGuidelines | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/setup.c b/setup.c
-index 3a6a048620..a1b56de67a 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1581,7 +1581,17 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
- 		if (!gitdirenv) {
- 			if (die_on_error ||
- 			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
--				/* NEEDSWORK: fail if .git is not file nor dir */
-+				struct stat st;
-+				if (!lstat(dir->buf, &st) &&
-+					!S_ISREG(st.st_mode) &&
-+					!S_ISDIR(st.st_mode)){
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index df72fe0177..b358d6bfb8 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -33,6 +33,15 @@ Git in general, a few rough rules are:
+    achieve and why the changes were necessary (more on this in the
+    accompanying SubmittingPatches document).
+ 
++ - A label "NEEDSWORK:" followed by description of the things to be
++   done is a way to leave in-code comments to document design
++   decisions yet to be made. 80% of the work to resolve a NEEDSWORK
++   comment is to decide if it makes sense to do so.  It can be a very
++   valid change to remove an existing NEEDSWORK comment without doing
++   anything else, with the commit log message describing a good
++   argument why it does not make sense to do the thing the NEEDSWORK
++   comment mentioned.
 +
-+					if (die_on_error)
-+						die(_("Invalid %s: not a regular file or directory"), dir->buf);
-+					else
-+						return GIT_DIR_INVALID_GITFILE;
-+				}
-+
- 				if (is_git_directory(dir->buf)) {
- 					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
- 					gitdir_path = xstrdup(dir->buf);
+ Make your code readable and sensible, and don't try to be clever.
+ 
+ As for more concrete guidelines, just imitate the existing code
 -- 
-2.43.0
+2.53.0-247-g50a2c88be3
 
