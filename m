@@ -1,113 +1,275 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from mail-244122.protonmail.ch (mail-244122.protonmail.ch [109.224.244.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC2E36164E
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 21:05:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1D735CBBE
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 21:11:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770843945; cv=none; b=hLGo6F0Njknouc/dFWWgLgTaZk50dYaSWYP3l8zydNYHi4ep+ttqvlZfdEfv7Gkkst67yTstTDXN/Y/a/blJKfNQSo9e6IKHTMhIgPZvwYXnlcrwg3gqFOAePpZKZfSl3s6TWGeSGCS3UqAPwK9QFni3ZP/kvm35m2BGOuAoDeg=
+	t=1770844288; cv=none; b=ncIsbERp68PmMush6wklrkLJEaLXEda3pZt4SKglN/Yd6kuZBdY5jgTeExTA1VN5iO+jBt2OFFzoA6BD6TE472tddFKwXZsWrS23OGxYYFTb9V9RINDNvxqca10dGIeaJxPWpV5wYWuH4pJDbVIPoibiWcT6yy3ITkNOuwXKLwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770843945; c=relaxed/simple;
-	bh=ANC8JVRgDrAyoS1lrr/OPQmvdWdRgGJjdR+5AL8hW90=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jiu4sUK2hM59g4NDfLAo2sxlZpD7XUDRjFO6CXel0HCd6x2CUnSrkf7GST1Gr5S1wk0+ou5FozGl15EMz2b7d9W9E0HkbakKie2tQZAg/d3jdP8djJMFxoVyll3b8kZhjVNSoQMBWMyKo9CJohdsCVUrrp+6/i/5mSkfTu50MW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SshlJgiZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hGBlVXg6; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770844288; c=relaxed/simple;
+	bh=zDDuoNI5q4fQQRulvnsHfUKvKvbID6xo7ELrmQ+l33o=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ii0GkXBiTT7yi8TY64XVInf5TwUrhDud18vY3Qo6lgwBaLTm/Yyb2yXIY31B1HAHTq/3R3Pg9Zvxv7okUzuheUqxgxhRBQ+2qUHAif5Xrtc4CihrG6RC46QTgXbf5gGyfqDK4Eby9POBWoVZuAz6Ua3oU2FvYUMBTPQWkk9XdK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=rQM4N7s9; arc=none smtp.client-ip=109.224.244.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SshlJgiZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hGBlVXg6"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 63AC17A0105;
-	Wed, 11 Feb 2026 16:05:43 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Feb 2026 16:05:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770843943; x=1770930343; bh=wKP0gQKjAz
-	i/0m/ppjoaQL1P9caEoU1Qh9FNyGLVf4A=; b=SshlJgiZECqoa1vNalu7PzlvbD
-	cMZY9oGHBzgRA/hcVKZk38lWfU0vscSlEtu9Yv80zjB6uboyjL0sSB/sSA6BSxKe
-	a1KlMHO/OCWAGgIvZaOHFTyYld+4By4GO5xWdGgVvqJoEIDdW024ToSVeMBkky/M
-	W3KZ0Dt56oxZbL324V/1FbaYk9vF6QYn9uBq2tN6FueShARdhnIFmPqY7uvpKWfn
-	NtcdH2C4kzscHkj6qNCN8X5M9jDKTEyNpMWyytsojijXi5NU7OObeBu27EtVClU9
-	GWMnOh+oDP5JxdkspI6WFQw/oi06pmE4bGow66UZkByg9CT0sahp5UGSquJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770843943; x=1770930343; bh=wKP0gQKjAzi/0m/ppjoaQL1P9caEoU1Qh9F
-	NyGLVf4A=; b=hGBlVXg6ShL4D3yrp8RpvwRPwhh5W+a4SP5wQwOEjFJUbqmPWZW
-	HbjBpe4e5Kr/bYHgyuaEzXKUmstFLJWdKB8CKu+0mADh6VQoFrFZCwM80wzoK/7H
-	nredfyDjIIxypVIt5C+a2UUsyMRw32Ss0CNSIkfFicafjbhih3bCv8m+7/85H8jg
-	InoCEIjkMGz0bPqSBcXXunr8kcWFm4m7nwe1LH0WiYipa8uD0SeGmyWWWA5aUu4A
-	p4a1Rfa631t77NDO9e6kTjVpeDgEzaJtTmCV33VT18vUg4UyefxeLSJxp4oDta/m
-	OaOh5pl9IZlqCyXUomZsvLdnqKrdxmpKXOA==
-X-ME-Sender: <xms:Ju-MaUrzMs-CAmIP0-bIryH7rufCTJufJRaso3tLrdLnRYJVp3IhyA>
-    <xme:Ju-MaRj5qo7ejKWh90eN6rdw7L5-0TWx83SqOS7aIF1QBL3P-H5zi-NGZ7XW7N-hV
-    4Jy-wxGm_AwucEiq0RUg1JDUr4o-BomLaW-OMQbfamBIoZoSezF>
-X-ME-Received: <xmr:Ju-MaRgyym_Hsf6LxSGzSROYeeqVxmSpCFNdoenQJbaU5JRwNVsEi3AAJILaYFrPOZMBzkeMVaoSkXwnvaf0lWDQ6EBDJENHyg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdefheekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjie
-    htsehkuggsghdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Ju-MaXgO2sUcptQItqyhlC3tKCZpzS12H2ZbiMU3BDaR7OD6NkaTHw>
-    <xmx:Ju-MaRK2jcJLRnXzXEcPoVDSWVOpa9BEK7fmA7bOfhjndBFVMmekFQ>
-    <xmx:Ju-MaWELf6CVSLYiSN-UhZq9bFg1veLahdq0hmBzE9LwkUhYdlPr7A>
-    <xmx:Ju-MaVRG9mtVLIevdN46wzdCgfdtKEuw_u5VaPryKUB6KSSub-rqlg>
-    <xmx:J--MaSRRnBcbQpc24Afqd_HKAa3puZnfGBdKxvkV6yQwJ50kCcwnrYyo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Feb 2026 16:05:42 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org, Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH v2] meson: wire up gitk and git-gui
-In-Reply-To: <aYYLLI2Gb7YlBtKt@pks.im> (Patrick Steinhardt's message of "Fri,
-	6 Feb 2026 16:39:24 +0100")
-References: <20250819-b4-pks-meson-tcl-tk-v1-0-6bcaff0bc0a0@pks.im>
-	<20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
-	<20260205093748.GA2177239@coredump.intra.peff.net>
-	<aYSFGG7lCg6Sw8vy@pks.im> <aYYLLI2Gb7YlBtKt@pks.im>
-Date: Wed, 11 Feb 2026 13:05:41 -0800
-Message-ID: <xmqqjywjrnx6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="rQM4N7s9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1770844278; x=1771103478;
+	bh=eqyYFcbXwXmDG0pjQ6aXgyrWcnKTil5DygIokfAbCJw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=rQM4N7s93/5uTvwEJdfz+9e20aRJ1lBDVjw3ejT5wIXisBfU/E35lXGlsunvk1cCE
+	 jZiY3eHPDks10vSo6ub83OM+5V84ISjyCgkjbhiM089ngV6WP6TLmgwjLqN0ZuQn6R
+	 4SN29LCxXoSofrDYUOLR69F9V6xl7Bhj/cAwiVCmyfOpTxYPhrwMgs5WBfG22rStmL
+	 sfgVEYCRYDHTCz1QgThkcdeK9+YZjdlS0XOUZAg11AA1kWRBvYrXwdNONriNpKfkzF
+	 CO+tHywqsSFEm+jYUwEHTCrHi0nuXkmUKp1YHb5tRzgAYrhje3eMfnFDl8iTlN1UC0
+	 ztfxuj8v++nsQ==
+Date: Wed, 11 Feb 2026 21:11:15 +0000
+To: Junio C Hamano <gitster@pobox.com>
+From: Chandra <Chandrakr@pm.me>
+Cc: Chandra Kethi-Reddy via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] add: support pre-add hook
+Message-ID: <2kX5wTQeOz3VPzUT6QiH_KyB9RMMtf8L3I8N6WtVWHaVQ1ZguBTaqAqFcFgOGpCqv-RJyALKlsENx-g7E3DMx3TzCfZoaRtPEpoDyx6d9kg=@pm.me>
+In-Reply-To: <xmqqseb7rre9.fsf@gitster.g>
+References: <pull.2045.git.1770737573475.gitgitgadget@gmail.com> <pull.2045.v2.git.1770822312474.gitgitgadget@gmail.com> <xmqqseb7rre9.fsf@gitster.g>
+Feedback-ID: 10057713:user:proton
+X-Pm-Message-ID: 05e7df63b024bdd1c246c8963d0ab02f6229d01d
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+> the word pre-add ... would not look good
 
-> On Thu, Feb 05, 2026 at 12:55:04PM +0100, Patrick Steinhardt wrote:
->
->> I've created https://github.com/j6t/gitk/pull/37 to fix the issue,
->> thanks!
->
-> The fix has been merged upstream. I've created [1] to verify that the CI
-> now succeeds.
+Originally, I wanted to call these pre-staging hooks. The ugly pre-add word=
+ing was an artifact of my attempt to narrow the scope. The goal here was to=
+ be as conservative as possible because I thought this concept would be mor=
+e controversial. This implementation didn't contain hooks for stash/merge/r=
+ebase/cherry-pick, which modify the index in their own ways. It wasn't a ho=
+ok for `commit -a` nor reset/checkout/restore either. I felt it excessively=
+ ambitious to name this the pre-staging hook, especially as my first contri=
+bution.
 
-Hannes, I see that in your tree
+Ideally however, I think there should be a category of hooks called pre-sta=
+ging hooks, with this as the flagship one, and it would make sense, for bot=
+h aesthetic and future-proofing reasons, for the githooks docs to use that =
+phrasing.=20
 
-  https://github.com/j6t/gitk/commit/ddae547e3775638c238c11f30120f1e7e763fba8 
+> Is it and will it always be only the pre-add hook that this option
+> will bypass, or if we ever add another hook that decides to interfere,
+> will that hook also be turned off with this option?  This reads like
+> the former, but the intent would be the latter, no?
 
-has Patrick's fix.  Is it a good time for me to pull from you, or do
-you want/need to finish any housekeeping tasks like tagging before I
-do?
+As it stands, the no-verify flag is only used in the guard for the "pre-add=
+" hook given the limited scope I aimed for. The implementation could be fut=
+ureproofed in a way where a string could be passed to the --no-verify flag,=
+ each with a unique boolean to guard different hooks. If the flag is set bu=
+t no strings are passed, then we can assume the user wants no hooks to run,=
+ and all of them can be disabled. I thought it overengineering to add somet=
+hing like that in the initial commit, but am open to doing so.
 
-This will hopefully help us unblock one of in-flight topics.
+> What is a special environment variable?
 
-Thanks.
+That's hilarious. I suppose there's nothing "special" about them, I only me=
+ant to say that no unexpected environment variables were being set or unset=
+ by the implementation. It was mostly to distinguish this from the original=
+ implementation that passed GIT_INDEX_FILE as an env-var which you correctl=
+y noted didn't even make sense. In hindsight, I don't see much value in spe=
+lling this out unless anyone thinks it would help users distinguish from pr=
+e-commit hooks in some useful way.
+
+> Do we really need to create a copy of this [index] file?=20
+
+Lockfile protocol should prevent index from being modified. It probably cou=
+ld be as easy as 1) write proposed index -> index.lock and run the hook wit=
+h $1=3Dindex $2=3Dindex.lock. Good point. I'll try this out and push it if =
+it works.
+
+> Shouldn't the die() message mirror the wording used there, i.e.,
+> "unable to create temporary index" or something, or is this fine, as
+> it will become the new index file once the hook approves?=20
+
+Answer depends on how the rewrite without index-copying goes. I'll be more =
+conscientious of die messaging in the next commit.
+
+In all, I'd like hooks for pre-staging to be the operative concept here, no=
+t pre-add, for more reasons than just the word's poor aesthetics. With inte=
+rest/approval, I can change the --no-verify implementation to be more gener=
+ic, although I'm not sure if it's worth actually adding any other pre-stagi=
+ng hooks yet because I haven't seen anyone ask for anything besides gates b=
+efore add.=20
+
+Thanks again
+
+Chandra Kethi-Reddy
+
+Sent with Proton Mail secure email.
+
+On Thursday, February 12th, 2026 at 1:20 AM, Junio C Hamano <gitster@pobox.=
+com> wrote:
+
+> "Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>=20
+> > diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+> > index 6192daeb03..c864ce272d 100644
+> > --- a/Documentation/git-add.adoc
+> > +++ b/Documentation/git-add.adoc
+> > @@ -10,7 +10,7 @@ SYNOPSIS
+> >  [synopsis]
+> >  git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactiv=
+e | -i] [--patch | -p]
+> >  =09[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update =
+| -u]] [--sparse]
+> > -=09[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-miss=
+ing] [--renormalize]
+> > +=09[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-miss=
+ing] [--renormalize] [--no-verify]
+> >  =09[--chmod=3D(+|-)x] [--pathspec-from-file=3D<file> [--pathspec-file-=
+nul]]
+> >  =09[--] [<pathspec>...]
+> >
+> > @@ -42,6 +42,10 @@ use the `--force` option to add ignored files. If yo=
+u specify the exact
+> >  filename of an ignored file, `git add` will fail with a list of ignore=
+d
+> >  files. Otherwise it will silently ignore the file.
+> >
+> > +A pre-add hook can be run to inspect or reject the proposed index upda=
+te
+> > +after `git add` computes staging and writes it to the index lockfile,
+> > +but before writing it to the final index. See linkgit:githooks[5].
+> >
+> > +`--no-verify`::
+> > +=09Bypass the pre-add hook if it exists. See linkgit:githooks[5] for
+> > +=09more information about hooks.
+>=20
+> I'll leave it up to others to comment on and make concrete
+> suggestions for the formatting and markups, but the word pre-add the
+> users must use verbatim that is not marked up in any way would not
+> look good in the documentation.
+>=20
+> Is it and will it always be only the pre-add hook that this option
+> will bypass, or if we ever add another hook that decides to interfere,
+> will that hook also be turned off with this option?  This reads like
+> the former, but the intent would be the latter, no?
+>=20
+> I'll also leve it up to others (including the original author of the
+> patch) to propose a better wording here, as I am not good at naming
+> things ;-)
+>=20
+>=20
+> > +pre-add
+> > +~~~~~~~
+> > +
+> > +This hook is invoked by linkgit:git-add[1], and can be bypassed with t=
+he
+> > +`--no-verify` option. It is not invoked for `--interactive`, `--patch`=
+,
+> > +`--edit`, or `--dry-run`.
+> > +
+> > +It takes two parameters: the path to a copy of the index before this
+> > +invocation of `git add`, and the path to the lockfile containing the
+> > +proposed index after staging. It does not read from standard input.
+> > +If no index exists yet, the first parameter names a path that does not
+> > +exist and should be treated as an empty index. No special environment
+> > +variables are set. The hook is invoked after the index has been update=
+d
+>=20
+> What are "special environment variables"?  What happens, for
+> example, if the end user has an "special environment variable" set
+> and exported when running "git add"---are you unexporting them?
+> E.g., Does GIT_INDEX_FILE environment variable visible to the hook
+> when you do this ...
+>=20
+>     $ GIT_INDEX_FILE=3D.git/alt-index git add .
+>=20
+> ... and if so, what value does it have?
+>=20
+> In other words, is it worth spelling this "special environment
+> variables" thing out?
+>=20
+> > +=09if (!show_only && !no_verify && find_hook(repo, "pre-add")) {
+> > +=09=09int fd_in, status;
+> > +=09=09const char *index_file =3D repo_get_index_file(repo);
+> > +=09=09char *template;
+> > +
+> > +=09=09run_pre_add =3D 1;
+> > +=09=09template =3D xstrfmt("%s.pre-add.XXXXXX", index_file);
+> > +=09=09orig_index =3D xmks_tempfile(template);
+> > +=09=09free(template);
+> > +
+> > +=09=09fd_in =3D open(index_file, O_RDONLY);
+> > +=09=09if (fd_in >=3D 0) {
+> > +=09=09=09status =3D copy_fd(fd_in, get_tempfile_fd(orig_index));
+> > +=09=09=09if (close(fd_in))
+> > +=09=09=09=09die_errno(_("unable to close index for pre-add hook"));
+> > +=09=09=09if (close_tempfile_gently(orig_index))
+> > +=09=09=09=09die_errno(_("unable to close temporary index copy"));
+> > +=09=09=09if (status < 0)
+> > +=09=09=09=09die(_("failed to copy index for pre-add hook"));
+> > +=09=09} else if (errno =3D=3D ENOENT) {
+> > +=09=09=09orig_index_path =3D xstrdup(get_tempfile_path(orig_index));
+> > +=09=09=09if (delete_tempfile(&orig_index))
+> > +=09=09=09=09die_errno(_("unable to remove temporary index copy"));
+> > +=09=09} else {
+> > +=09=09=09die_errno(_("unable to open index for pre-add hook"));
+> > +=09=09}
+> > +=09}
+>=20
+> Do we really need to create a copy of the file?  I am just asking
+> without knowing the answer myself, but given that the general
+> architecture of file writing used in our codebase, which is to (1)
+> prepare a new temporary file, (2) write new contents to that
+> temporary file, and then finally (3) rename the temporary file to
+> the final location, I would expect that between the time the control
+> passes this point and the latter half of write_locked_index() calls
+> commit_locked_index(), the original index file would not be touched
+> by anybody, and can be readable by the hook.
+>=20
+> > +=09if (run_pre_add && !exit_status && repo->index->cache_changed) {
+> > +=09=09struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT;
+> > +
+> > +=09=09if (write_locked_index(repo->index, &lock_file, 0))
+> > +=09=09=09die(_("unable to write new index file"));
+>=20
+> This mimics the pattern used in builtin/commit.c:prepare_index()
+> that populates the index file (the real one, when making a
+> non-partial commit, or the temporary one when making a partial
+> commit), closes it, and let us later commit or roll back depending
+> on what happens in between.  Looks sensible (but I have to admit
+> that I may have missed resource leakage etc., as I didn't seriously
+> look for such flaws).
+>=20
+> Shouldn't the die() message mirror the wording used there, i.e.,
+> "unable to create temporary index" or something, or is this fine, as
+> it will become the new index file once the hook approves?  I dunno.
+>=20
+> Thanks.
+>=20
+> > +=09=09strvec_push(&opt.args, orig_index ? get_tempfile_path(orig_index=
+) :
+> > +=09=09=09=09=09     orig_index_path);
+> > +=09=09strvec_push(&opt.args, get_lock_file_path(&lock_file));
+> > +=09=09if (run_hooks_opt(repo, "pre-add", &opt)) {
+> > +=09=09=09rollback_lock_file(&lock_file); /* hook rejected */
+> > +=09=09=09exit_status =3D 1;
+> > +=09=09} else {
+> > +=09=09=09if (commit_lock_file(&lock_file)) /* hook approved */
+> > +=09=09=09=09die(_("unable to write new index file"));
+> > +=09=09}
+> > +=09} else {
+> > +=09=09if (write_locked_index(repo->index, &lock_file,
+> > +=09=09=09=09       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+> > +=09=09=09die(_("unable to write new index file"));
+> > +=09}
+>=20
+> 
