@@ -1,233 +1,204 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E754532BF42
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 12:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B75F21257F
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 12:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813712; cv=none; b=Eom/jN0NYRTzYBKkuvY8mHvqO0uZ0vfYmvjMr+uYN6m8gyRAwHW8wMISxeKcjrgS/XY2aW1WyBd0XtLkkpawwuJcX3JPbg4sqompEXAS6nkwCZa8YkvYuX8SmVYe26xvtKxDrInBG5uxJGz1Iqyh7mLa4hTNmJrR552mlMWN9Oo=
+	t=1770813909; cv=none; b=QFM5DqEQSvNIOnGzxaFR1FJdgIp28ybEQ4n6kp1F1+9D0ntYzmkPiyWxwubTcLncy5K8qOejZnyrFU/mEXDNRdOC8IY7ntaOcGtn49bgv6ZgqUAO7HpGB0xBUCeujvOiV/giTS8OAkuR0kZshj8vIzBpIOx/bkBA2HU/KvvTsgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813712; c=relaxed/simple;
-	bh=XbVrLgcOfr1Zvb4Hzjh9kaN/wB5vG8uBAuzd3rXbjH4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tmpgth/7NVDZfTkuAyKqFBqRrKk1GwlWUbaAifTncND1uR1gKLejfw3LFEq5BiDyho0Xn7Dk9OdkSPMzUH4mifJwams/RtodmjbH15vyCcTH8i31YjgjqamDA2DOnovcda6VZVFXac0mhQXn9/yZ3vK8EUbpelORT1v4KN+E6qI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i4by3aDh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MhKxKQel; arc=none smtp.client-ip=202.12.124.154
+	s=arc-20240116; t=1770813909; c=relaxed/simple;
+	bh=YWX/ckdu/ZeVxMsOesjclCuXi0XPZ6Y1lpFpKsIpA3o=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jpfTtgZu29Sk4LoikGNrAI9rkwwmxG5ReMa6tNi3ayrCPi15w4e8t2C6giqI5/hR5Sn74flRZftjGd350Yi0zNcyML9KzwXh8ccT3zsbNYB4DAqUT6mGFG0//ZNg9qHAXVZ5VFWLwDrEL39G283L2xZ37O4wYMvtH0xigp2MVp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bF3Meh2U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n87HIUmA; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i4by3aDh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MhKxKQel"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CB9BC7A0063;
-	Wed, 11 Feb 2026 07:41:49 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bF3Meh2U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n87HIUmA"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CDD7F7A01AE;
+	Wed, 11 Feb 2026 07:45:06 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 11 Feb 2026 07:41:50 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 11 Feb 2026 07:45:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770813709; x=1770900109; bh=waQs4KpemS
-	KMuEuf0lxuylULWnGJuhI9rjBQ7m2qF9k=; b=i4by3aDhSHOV5EcIw5tVEajJ7E
-	yRNlQyssKMBlRtqDKzmLUDanMxQHXZMPqRBYOc3LQ6Ws4bHeJTc4s+ZREO01haZH
-	fUjTbJNrM+hVhNcJhI4xoQgE0yM0WxPjVSyBE1PK4kTOiRioqQ/535P1Ni8+qpbj
-	BY8e6TVEQcssfaUi4A7elAGFmWsb6pNWqSFJ9SxpGGM+PBqHHOKuUu7JK+AycXdq
-	1790RE9igDnJFpXMo3u/Xru6CN9cUUXFA0Vw1mR0fOWQwmg37D5N0sL/j1Jr8tw9
-	nmF5JWUs2WDzWc8KHbe4t4ekClgUTv0Xg3GkTOZ0xlq+TYy0XjzDy+pV/QFQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1770813906; x=1770900306; bh=hWn7a9p3wW
+	5BWEJDqbuKJqtRHT4v489BGelRyfNpuMg=; b=bF3Meh2UkHQweQc8jr343nD0Jx
+	cwMfBI2uvd7iMYcszFmpi56iPFWhfT0GsDmP50NAQwaONLRbc4WEGdcOr1yNlL/2
+	4FpIVJtDa0DnolwPkVOITUVpIFWuWAINSlS8vJggUN72dsqLBaEB44QK6I0Hk6SQ
+	Ko7jg+XoqZWOl4gUobUZZ3ALyehRLFdtvYeNEi+DsFk0HHUL5RQQNNZfMJR7hIOn
+	F0nCEuZ6W6Err5Uy//RolZauGNIFXzgNNIBySJMDjwMv/t4HLEmV0h3/5J6257V1
+	989wH7PIk9llzPV/UKA5mAT1l4qU72HlAzOJYOu5D0R2FXKqeyObp4MoGL4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770813709; x=1770900109; bh=waQs4KpemSKMuEuf0lxuylULWnGJuhI9rjB
-	Q7m2qF9k=; b=MhKxKQelF2kQhWiYPaI08cvXVDzqA+1qqgFOXNX9cyLS5IAcOpG
-	D+dqTNNsqbdkMk01pPFbSW7N8CEFZl/8Er2sh+SmK+vGejGFpJ0R6FqSiX2Gh/Rd
-	SuyXcPxHEHOuJs5lVuPRuho2WSQMzKtag79PAB/LLGbh33SciZgUzUZVl5WkHimP
-	tFmUDdJ3HoDxvsLv3/SJLrFSTOzXwpZjbm3DevenhDo0+RbjqbjEzv0GTqNoaIGk
-	vbBQUEZBLPoGSotGnnKXt0slrQ8wCm4kS0NeXxoL3uI5S96wDT1EhlQkcTTodqVo
-	mvWv7okDxUbOYKqY8gA/AGb8IBsVpUm8Nww==
-X-ME-Sender: <xms:DXmMae9cLIiCZsUpPA90xtovy5jjPTSnduoQIFn2uq9_6rJxhx7U-Q>
-    <xme:DXmMadxGH1Ows7syiLYXMGUz39mbE-23pQU8YeXo_dNH8AZi4nlIKqkeZMFgttdvZ
-    T46IDv-tbYJmZM6h39VaJfm2-PHZwebJYYoybfB7aa4PRq89Orhy4A>
-X-ME-Received: <xmr:DXmMaaORVywXHq3O-dwTiwkOBflHSebhR5nQYFFL85zubfr0xJSsvx_f7mpM6c5NjuFfWZe8pEjU8SI6QethbS1Ibdu4htn9mdS9F6JZDu-6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvheejucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1770813906; x=1770900306; bh=hWn7a9p3wW5BWEJDqbuKJqtRHT4v
+	489BGelRyfNpuMg=; b=n87HIUmAp/2t3ymLSadPMDFzXTV0z7IN+x2Et9B8IdF1
+	EAv8/WfQbLNi9tNz29mYY49DEUGsBwOiC2CtNQGfx1pLE2ZGfWvx/mzRKHWTP9C9
+	Hy9mU/iys0KVkBHJE50wOgoKdfy+J9NwzHMJ0qEJKVui8SPV+D0zGJdWQlCJTCEz
+	Id+DJLmMASqZKcrjWdnMTOqz+CLr/abH24krCRcnhFewXIvjnIG0p0bJIDO605ir
+	xdyS+Ils5KzLjFOAWKwJyqi6N3YvXEdHJFJfGRwqhnuFu9Jq7URA/YDMtlsAGI0W
+	L9Z8OgJqhxi8dz4jU8v9Wgg0FY897j2RgG85koOtZA==
+X-ME-Sender: <xms:0nmMacSOIZ5Uuq8oBjl5rzzC4oHapvqIeCj4fPBffRlVDeCa9SfhjQ>
+    <xme:0nmMafyA0ec3uVmsmMYJ-fSuhlBE_3607P3M_x7wyO6Y4u60eqkOO-9w0Vy3fGwH5
+    T45Oy2W_rpKNMbzcs4K9oBvQX41G_mVKFArUm_52v9sfrqt1BRe7Q>
+X-ME-Received: <xmr:0nmMaXdJr5IreUYWgueoFsAWGAmsDhooE43lZYpEeA5x0MVzjqPZ3IWw2bxvZxs2wWbaGd_eTohd14nZMyBwCihMp9ATTYL0niLQ733JT5MM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvheekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopegr
-    vhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopegvmhhilhihshhhrghffhgvrh
-    esghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheprggurhhirg
-    hnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:DXmMaS-STp_oTcfFtS_W8GGOBDZ405gMoXVaZQVoHC6URNozjaKW3A>
-    <xmx:DXmMaX4GXRkwdDc4mXAO2_S2CQ8ASrxcHrY9InBiPaa9ollru85yJQ>
-    <xmx:DXmMaY71UIFn3vi7CotQ0l_0cDijPvTVpl40MlNHuew6bACJ_jaTsw>
-    <xmx:DXmMaQpywdHFF675IUaJf7oZ0TA2LODtN2VpI8yhOHq4N6qTdaqrNg>
-    <xmx:DXmMaQqOx0ohuAwKKK-pJF4ip0VFU3YB9jxfhxwxZTdhcoaVlPfDVFGX>
+    gurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    eigfeitdffffdvvdeuheehjeehheeludduhfehkeekgeeggfeuffehveegteejfeenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhifrghnkhhose
+    hgihhtlhgrsgdrtghomh
+X-ME-Proxy: <xmx:0nmMabJ6MQSRsVpSnlJRP42STbiIPsro9KSjwzgs7_dRKIKO-tR6ag>
+    <xmx:0nmMaYGnK5-bHgddZrIZJSR46ikBKSlifZmfdU8dsQhyBsvmNcwpHQ>
+    <xmx:0nmMaVojmOQAqOT4zfzIJxdMoQfIok5guGVTkHpYZlj2_-0l9ueIzA>
+    <xmx:0nmMaRScFoN8MPEyxqf4E6NbCKZXryOkoZ3E7eOu3bV1jbUDBCI6OA>
+    <xmx:0nmMaQDWhOySvYG4ENKFPk54aQ5VuaSSSvsp4Lmbj20Fty67cuitflJ2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Feb 2026 07:41:48 -0500 (EST)
+ 11 Feb 2026 07:45:05 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2151a6e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Feb 2026 12:41:46 +0000 (UTC)
-Date: Wed, 11 Feb 2026 13:41:43 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 7a38b0a4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Feb 2026 12:45:04 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 2/4] hook: allow parallel hook execution
-Message-ID: <aYx5B-nf4dlFpw3v@pks.im>
-References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
- <20260204173328.1601807-3-adrian.ratiu@collabora.com>
+Date: Wed, 11 Feb 2026 13:44:59 +0100
+Subject: [PATCH] builtin/pack-objects: don't fetch objects when merging
+ packs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260204173328.1601807-3-adrian.ratiu@collabora.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260211-pks-pack-objects-stdin-skip-backfill-fetch-v1-1-870cad56d8ae@pks.im>
+X-B4-Tracking: v=1; b=H4sIAMp5jGkC/x2NQQqDMBAAvyJ7diEbULBfKR5M3NRtJIZsEEH8e
+ 0OPM4eZG5SLsMKru6HwKSpHakB9B35b0odR1sZgjR2NJYM5KubFRzzcl31V1LpKQo2S0TUfZN8
+ xcPUbhnHiYTATOSJowVw4yPWfvefn+QG69+BtfAAAAA==
+X-Change-ID: 20260210-pks-pack-objects-stdin-skip-backfill-fetch-f69e55091b11
+To: git@vger.kernel.org
+Cc: Lukas Wanko <lwanko@gitlab.com>
+X-Mailer: b4 0.14.3
 
-On Wed, Feb 04, 2026 at 07:33:26PM +0200, Adrian Ratiu wrote:
-> From: Emily Shaffer <emilyshaffer@google.com>
-> 
-> In many cases, there's no reason not to allow hooks to execute in
-> parallel, if more than one was provided.
-> 
-> hook.c already calls run_processes_parallel() so all we need to do is
-> allow its job count to be greater than 1.
-> 
-> Serial execution is achieved by setting .jobs == 1 at compile time via
-> RUN_HOOKS_OPT_INIT_SERIAL or by setting the 'hook.jobs' config to 1.
-> This matches the behavior prior to this commit.
-> 
-> The compile-time 'struct run_hooks_opt.jobs' parameter has the highest
-> priority if non-zero, followed by the 'hook.jobs' user config, then the
-> processor count from online_cpus() is the last fallback.
+The "--stdin-packs" option can be used to merge objects from multiple
+packfiles given via stdin into a new packfile. One big upside of this
+option is that we don't have to perform a complete rev walk to enumerate
+objects. Instead, we can simply enumerate all objects that are part of
+the specified packfiles, which can be significantly faster in very large
+repositories.
 
-Wait, the compile-time parameter overrides the user configuration? That
-doesn't seem right to me.
+There is one downside though: when we don't perform a rev walk we also
+don't have a good way to learn about the respective object's names. As a
+consequence, we cannot use the name hashes as a heuristic to get better
+delta selection.
 
-I'm also a bit sceptical whether we should really default to
-`online_cpus()`. If so, we start to assume semantics of the hooks
-themselves, and that they cannot conflict with one another. But this is
-nothing we can really guarantee. It might be that multiple hooks want to
-modify the same data structure, and if so running them in parallel would
-lead to races.
+We try to offset this downside though by performing a localized rev
+walk: we queue all objects that we're about to repack as interesting,
+and all objects from excluded packfiles as uninteresting. We then
+perform a best-effort rev walk that allows us to fill in object names.
 
-So I wonder whether we should rather make this behaviour opt-in than
-opt-out.
+There is one gotcha here though: when "--exclude-promisor-objects" has
+not been given we will perform backfill fetches for any promised objects
+that are missing. This used to not be an issue though as this option was
+mutually exclusive with "--stdin-packs". But that has changed recently,
+and starting with dcc9c7ef47 (builtin/repack: handle promisor packs with
+geometric repacking, 2026-01-05) we will now repack promisor packs
+during geometric compaction. The consequence is that a geometric repack
+may now perform a bunch of backfill fetches.
 
-> The above ordering ensures hooks unsafe to run in parallel are always
-> executed sequentially (RUN_HOOKS_OPT_INIT_SERIAL) while allowing users
-> to control parallelism with an efficient default.
+We of course cannot passe "--exclude-promisor-objects" to fix this
+issue -- after all, the whole intent is to repack objects part of a
+promisor pack. But arguably we don't have to: the rev walk is intended
+as best effort, and we already configure it to ignore missing links to
+other objects. So we can adapt the walk to unconditionally disable
+fetching any missing objects.
 
-Ah, okay, we only let the compile-time parameter override the config in
-case we know that hooks must run in serial. That makes a bit more sense.
+Do so and add a test that verifies we don't backfill any objects.
 
-> diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
-> index 49c7ffd82e..c394756328 100644
-> --- a/Documentation/config/hook.adoc
-> +++ b/Documentation/config/hook.adoc
-> @@ -15,3 +15,8 @@ hook.<name>.event::
->  	On the specified event, the associated `hook.<name>.command` will be
->  	executed. More than one event can be specified if you wish for
->  	`hook.<name>` to execute on multiple events. See linkgit:git-hook[1].
-> +
-> +hook.jobs::
-> +	Specifies how many hooks can be run simultaneously during parallelized
-> +	hook execution. If unspecified, defaults to the number of processors on
-> +	the current system.
+Reported-by: Lukas Wanko <lwanko@gitlab.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
 
-We should probably note that some hooks will run sequentially regardless
-of this setting. Maybe we should even document which ones? I expect it's
-not going to be that many.
-
-> diff --git a/Documentation/git-hook.adoc b/Documentation/git-hook.adoc
-> index 5f339dc48b..72c6c6d1ee 100644
-> --- a/Documentation/git-hook.adoc
-> +++ b/Documentation/git-hook.adoc
-> @@ -128,6 +129,16 @@ OPTIONS
->  	tools that want to do a blind one-shot run of a hook that may
->  	or may not be present.
->  
-> +-j::
-> +--jobs::
-> +	Only valid for `run`.
-> ++
-> +Specify how many hooks to run simultaneously. If this flag is not specified,
-> +the value of the `hook.jobs` config is used, see linkgit:git-config[1]. If the
-> +config is not specified, the number of CPUs on the current system is used. Some
-> +hooks may be ineligible for parallelization: for example, 'commit-msg' hooks
-> +typically modify the commit message body and cannot be parallelized.
-
-Yeah, this info is probably what I was searching for in the "hook.jobs"
-description.
-
-> diff --git a/builtin/hook.c b/builtin/hook.c
-> index 4cc6dac45a..cd1f4ebe6a 100644
-> --- a/builtin/hook.c
-> +++ b/builtin/hook.c
-> @@ -76,7 +77,7 @@ static int run(int argc, const char **argv, const char *prefix,
->  	       struct repository *repo UNUSED)
->  {
->  	int i;
-> -	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-> +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
->  	int ignore_missing = 0;
->  	const char *hook_name;
->  	struct option run_options[] = {
-
-Hm. Assuming that the user executes `git hooks run prepare-commit-msg`
-with "--jobs=2", should we really honor that request? We know that the
-hook cannot run in parallel, so we might want to refuse such requests.
-
-Taking a step back, I wonder whether it really is sensible to declare
-complete classes of hooks as parallelizable or non-parallelizable. We
-have to assume semantics of the hook scripts themselves to be able to
-answer whether or not they can be parallelizable. For some classes of
-hooks like "prepare-commit-msg" we can assume that it's almost never
-correct to serialize them. But for others we cannot assume anything.
-
-Which makes me wonder whether the design here is really the right one.
-Shouldn't we stop worrying about classes of hooks, but rather worry
-about the user's intent? The user will know whether two hooks can run in
-parallel or not, so let them tell us that this is the case.
-
-I think this could be achieved via the configuration:
-
-    [hook "my-parallelizable-hook-a"]
-    path = /some/script-a.sh
-    parallel = true
-
-    [hook "my-parallelizable-hook"]
-    path = /some/script-b.sh
-    parallel = true
-
-    [hook "serial-hook"]
-    path = /some/script-c.sh
-    parallel = false
-
-This would tell us that we can safely run two of the hooks in parallel,
-but not the third one. So we'd then first execute all serial hooks in
-serial, and then in a second phase we'd execute the other hooks in
-parallel.
-
-Sure, this puts more responsibility on the user. But I think this is a
-more flexible approach as it also empowers the user and caters to more
-use cases.
-
-Please let me know what you think.
-
-Thanks!
+we've recently encountered this issue in a partial clone of one of our
+own repositoires. Thanks!
 
 Patrick
+---
+ builtin/pack-objects.c        | 10 ++++++++++
+ t/t5331-pack-objects-stdin.sh | 18 ++++++++++++++++++
+ 2 files changed, 28 insertions(+)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 9807dd0eff..4053f9659f 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3925,8 +3925,16 @@ static void add_unreachable_loose_objects(struct rev_info *revs);
+ 
+ static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpacked)
+ {
++	int prev_fetch_if_missing = fetch_if_missing;
+ 	struct rev_info revs;
+ 
++	/*
++	 * The revision walk may hit objects that are promised, only. As the
++	 * walk is best-effort though we don't want to perform backfill fetches
++	 * for them.
++	 */
++	fetch_if_missing = 0;
++
+ 	repo_init_revisions(the_repository, &revs, NULL);
+ 	/*
+ 	 * Use a revision walk to fill in the namehash of objects in the include
+@@ -3962,6 +3970,8 @@ static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpacked)
+ 			   stdin_packs_found_nr);
+ 	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_hints",
+ 			   stdin_packs_hints_nr);
++
++	fetch_if_missing = prev_fetch_if_missing;
+ }
+ 
+ static void add_cruft_object_entry(const struct object_id *oid, enum object_type type,
+diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
+index cd949025b9..c3bbc76b0d 100755
+--- a/t/t5331-pack-objects-stdin.sh
++++ b/t/t5331-pack-objects-stdin.sh
+@@ -358,6 +358,24 @@ test_expect_success '--stdin-packs with promisors' '
+ 	)
+ '
+ 
++test_expect_success '--stdin-packs does not perform backfill fetch' '
++	test_when_finished "rm -rf remote client" &&
++
++	git init remote &&
++	test_commit_bulk -C remote 10 &&
++	git -C remote config set --local uploadpack.allowfilter 1 &&
++	git -C remote config set --local uploadpack.allowanysha1inwant 1 &&
++
++	git clone --filter=tree:0 "file://$(pwd)/remote" client &&
++	(
++		cd client &&
++		ls .git/objects/pack/*.promisor | sed "s|.*/||; s/\.promisor$/.pack/" >packs &&
++		test_line_count -gt 1 packs &&
++		GIT_TRACE2_EVENT="$(pwd)/event.log" git pack-objects --stdin-packs pack <packs &&
++		test_grep ! "\"event\":\"child_start\"" event.log
++	)
++'
++
+ stdin_packs__follow_with_only () {
+ 	rm -fr stdin_packs__follow_with_only &&
+ 	git init stdin_packs__follow_with_only &&
+
+---
+base-commit: 864f55e1906897b630333675a52874c0fec2a45c
+change-id: 20260210-pks-pack-objects-stdin-skip-backfill-fetch-f69e55091b11
+
