@@ -1,69 +1,73 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AFD352FAB
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 04:11:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850B12F3C3D
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 04:11:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770783098; cv=none; b=RtnYdCo+kwKb0xZ3xqv2O2+YY70kfuVKjAIQ/qJED4IuPPWeYqhPN9BfSCu6TjwRi8NMHb8mslWiAQ/84ZZSe1r8/v40sGm1NhwywdQfeYaztXQqNBDNEETR7lsi6SqmH7B68Wygl7FjOtmxluNXMR80H02yBDlYhFARBLutLYI=
+	t=1770783102; cv=none; b=dn6AzRxGFCzcMZmiaHUT8BqsdtJT9oBar+trIgi2FI7OQwDXTIxRk9RthE6SMpGyUn9EmpLoMEeenWu5gXapaTf15FVPXm0q/+7JumobKDlv17lqSzK+gesi0ylAnHQd037WnACIAENMEWgIBjsv7BwC9yMgLZTf2CIm7kkEGRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770783098; c=relaxed/simple;
-	bh=sAZBf68dZ2Vu02jgSpw7RewN4H0WktjV97bxfTpL2fg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tBsLZs+T/wiMBJCSwf0z8GHI3+DRNqsse1UqKn0r+LdWGvYLw3zZMjH22wkulvdQCIGyEwNb/UXlhYM4eq6HctvE/3LPRYEI/H9U7VJLLiJOYj0mKeHAFlHz5d5pVjlOBdsH95DD/XiZQWeOFw4/F110spuqeqR7IIo9NnMKDGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=YtDpG4M3; arc=none smtp.client-ip=209.85.216.46
+	s=arc-20240116; t=1770783102; c=relaxed/simple;
+	bh=JOHlrpMAZsff5YHQdPVNCQwanV2KWbNbh5d4DJI7bKs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bleiiteUC9XYwdnY3qrZ+edEGoxfbl32nBS3ax8R8jPh/0JMECzd7Exepv202R5ASGNoWY7/vb+/rC53VyvrFyoEt1A5/u7t6nlnm8JiybaSbddNfrTyJ0PVXqoBfb4r8z0e+aFkevh8MYZ2KHULXDEXok4exTs5mXA2MRY4jKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=ERc6vtdl; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="YtDpG4M3"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35640ad94d3so1303068a91.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2026 20:11:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="ERc6vtdl"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-352f60d6c2fso3248875a91.1
+        for <git@vger.kernel.org>; Tue, 10 Feb 2026 20:11:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1770783096; x=1771387896; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q1lfSlPLaMxTewDJtXX7e8NPKXhZALACq7LOrsggFTs=;
-        b=YtDpG4M3wkeQzTLz1MT5mNik/dKXkJ9VNkkXAp8zIsxQFpPWRfC2Hvt9g/8n17p/O6
-         zXIs7C2Hssod16JfJ8Hd+lqCuQ7efv0Zr3C3cou93m4cpPBQVEbSQUXxYagq66Iz8Xfn
-         GryeswFrGD0FgoVoJ/0RE8l/sqAatSqSqq/V1A6pWSEy9z3WsNq3+zGlpcRkB9Jn5c6u
-         Bw/XgejUUThNHF1uff6pnrExA4Pqkmjr4vDgtMCunoH4llIUQ9vfzidR4GkMw7IWVsk9
-         yeH93n+Hf3ZB0l98rW3twfesYDahYfYzjoYbVU2N44cmoa66eouF/lJ8kBvgMo4nEcib
-         H3NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770783096; x=1771387896;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=bytedance.com; s=google; t=1770783100; x=1771387900; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q1lfSlPLaMxTewDJtXX7e8NPKXhZALACq7LOrsggFTs=;
-        b=uyZ9FB0p3JPhNzQiPngHzmclwDn732zUZtwWjPW7SYdSkQVwAxznDKK/os/XdXiX2n
-         4CzQiBLTL/8jASWsDoZhJTgZjc4WVaW2Amr3cNfEs8eaC2t0VBoe3prkzcr4F9cdKODy
-         Bcw5xQQZeClXQiSyU4k0aNy2p5za6iMs7rKztZed9OcIu4SJj8F2BL9SlLFv8zYUQOVe
-         0ALeZXlmewLHRfou+9RPF5M38bGrt9Yr0l0TNZ77YM+xDPfjcoDzJZCSd5YnXFmBuVH3
-         pqF77kjCEJOqOUPoGo6CupzDf4IHqKUZWBHcbZeHnigcXgcgcgDWph4UF6tAjuCr9oZO
-         8dBA==
-X-Gm-Message-State: AOJu0Yyo+D4X8k8MvdqZR6oFgQcObDdM3oOchd1SOs741hg16XwyIk6T
-	mHrbcOwtQ3QvXx3P5E7Yxjw7v3eHd0RxfXz4YsFKmZYD31ZD9kGKW6/qptol1PfUqTzQCUt9oZr
-	StNER
-X-Gm-Gg: AZuq6aJTNFitUHKCKarYHCgA9d+Xg+2TDzHn32yrKTouU63tRUCCSnmrLFm/3RTF44D
-	u1+DgCZlnF7Q6agsv7ysyYcUAYCv24ixqivr7P7IXVetYVO2Bgz8abYndrbiPbdLG4NfVj9RXpV
-	wH+XN/UEMMSeId0uReFiZtXrOvNexwJW9xvDfE1zm30vLobtfe2ix0m5RiVfCS3jUmABFM9Par6
-	dkI3W0EsOud5OKqU2bxDdEhop4e7c4TJbutJQsXrph414++fYPtREr7iiK92Td8zpq2DbbOa7qs
-	iCVsKBL44LWY3cwHT9t/fXUaChRzIn54HSc9u51Ie8S8eQR2HIl9PDKl3Db79QCDsCZc/39mp6w
-	lzKPCmmfIYiQTiButrpXOlWg2S29BF9Xbu02aAxGiM/mlWfldB9zWhUvTxtJ1WTyyngtC/4ZvH3
-	TB5V7N92cPR1BGdyWWVCbpT1kosKzK6mQi9prPLvY7/4i2aWbVlcWgFmnwdJo3OpBWpA==
-X-Received: by 2002:a17:90b:35cc:b0:353:5595:3247 with SMTP id 98e67ed59e1d1-354b3c74a3fmr17848066a91.12.1770783095477;
-        Tue, 10 Feb 2026 20:11:35 -0800 (PST)
+        bh=fCNH4KCQhax9lVCJCVpGCZaNDF7SIFwwepn4cSXXNeA=;
+        b=ERc6vtdlfosKMgAyx83m70dghTkvsO11qMFW4RhxHR/8TJFiVCSYzxt6Cg2n4dZI2k
+         cCP/vb+REvHLvKaw852lNsmxIYOxGbrTn7g3xD7iXXiSYMfwZCKxAY+ahrevZZw66b7/
+         wivl8j+P0qkCGVREKgZ547Yo1gFH3dUi+wCLZmmA0zuUoltLp2NSJvW4Op7dRev9ED7D
+         Z7HTxaOI493cGiPeMpFLy/7RaoGpO83MpiQ/gRK4CEwsoHNcznli4kgZ5EuoDMZfWEoq
+         S3FvTgLivAtSgyF3njwjlkONphvOK9hPpe4JbYWqLIePwVvUBQeTixLiieS3EeCrS71w
+         zlXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770783100; x=1771387900;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=fCNH4KCQhax9lVCJCVpGCZaNDF7SIFwwepn4cSXXNeA=;
+        b=g00qMslduYPHZtJJhZ9fiEn6J6Pqkc/Y/wv4eANPfWo/OEsoaJUNP9n3kq8bIjOP8S
+         1kbuhwdxFLGG3pmVTfofkmoRLZ2kTlmngfeB6U2FbuqElLCHOZxKkE+HtnKxS4GxIf61
+         ujOJRCSlA0u4yYimaCc0oAFlGKmFYxIzEcl0dBt8oSwoEE7uWxUSN/1PfCJFFaqKScEF
+         ljYaq+Mw+919TWY3uSrmOmYnwOhJRC0O4zfAUhc8IM7K9WqfxQY659rovHupTA+sx4Td
+         Dq9B4SM9k3phBicB0Phe7E/kmmQQH63QvtRpyCtPTKYv9PjJedJkEiBmz1tsVzrTm+46
+         ly4Q==
+X-Gm-Message-State: AOJu0YwS8R4tgfwyaZ4DNN5oa82FtQa/vOi+GC/vfLwT7BGeq0b2s0WQ
+	YX3Vw14p/UEWQxxblpyKORKZgXaplfSELI6Mws/2qVGn7S3QUFWK4DDllisWf/MauBmvKGSmHyJ
+	vc+/j
+X-Gm-Gg: AZuq6aJwpuPfIGzJ9u7L/nrvKsGbFFAWtLLC6L/1Kjw+FCxfQfX4xeUSAN3Wcj5xQ3c
+	sEXUsp7Y4IJZzUeqpWoqG+4Jj2XU+HJUtgjaP7Hjs8UIthUveq6To2gPscFE5fgDEvmVHYlSbw2
+	jCAIzFyhsmi7tjwXM6cf/Jjyq12PEbwZi6Mb0aYm5wV2uTGBnczqxIQYqcgQY0TiMTK16IDIGsg
+	tCNN2A7vJRkJ2DPbZCA52kGFQxdH2O485mFlFOafhWHvplLUnc4w38oreRSHAQ45HjD1EhSnao0
+	/AYm9XylDH7o7ZfvYkcHlh3dPErzNIdjo8GagnvQcnKjQ4megN0GE+wlYRsVK6SU3FMZe2ZHT9R
+	mcPJqyIe3pq6g+NjDFYVly5Y1pyJxbQO6C4E4gNoufrkIBmf9r3xiHFFl3CxdKbVhxJaNb5Ogsv
+	L+VcMRMKkNuCuze9nytYnpnADC9I+j9cCnjbyOtRNX8qAWOcIzi3qOwone6L9si1Os+w==
+X-Received: by 2002:a17:90b:5146:b0:354:a5eb:a64b with SMTP id 98e67ed59e1d1-3567aff9565mr1620489a91.12.1770783100453;
+        Tue, 10 Feb 2026 20:11:40 -0800 (PST)
 Received: from LTY2K703JV.bytedance.net ([203.208.167.148])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662e538d6sm4371513a91.3.2026.02.10.20.11.33
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662e538d6sm4371513a91.3.2026.02.10.20.11.38
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 10 Feb 2026 20:11:34 -0800 (PST)
+        Tue, 10 Feb 2026 20:11:39 -0800 (PST)
 From: Han Young <hanyang.tony@bytedance.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH 0/1] diffcore-break: prevent dangling pointer
-Date: Wed, 11 Feb 2026 12:11:27 +0800
-Message-ID: <20260211041128.48412-1-hanyang.tony@bytedance.com>
+Subject: [PATCH 1/1] diffcore-break: prevent dangling pointer
+Date: Wed, 11 Feb 2026 12:11:28 +0800
+Message-ID: <20260211041128.48412-2-hanyang.tony@bytedance.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260211041128.48412-1-hanyang.tony@bytedance.com>
+References: <20260211041128.48412-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,131 +76,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The diffcore_break function in diffcore-break.c forgets to set the queue
-reference to NULL after freeing it. In a blobless cloned repository,
-the queue could be accessed by prefetch and result in a segmentation fault.
-
-This bug is only triggered if:
-* the repository is partially cloned
-* the diff operation triggers prefetch
-* a diff is split into delete and create before prefetching
-
-I've prepared a example repository that triggers this bug.
-
-  git clone git@github.com:hanyang-tony/dangle_sanitize.git --filter=blob:none
-  cd dangle_sanitize
-
-  # download the old version of the file
-  # to ensure the splited diff exists in local repository
-  git checkout HEAD~1 .iac
-
-  # reset the file so we have a diff 
-  git reset --hard HEAD
-
-  # segmentation fault
-  git reset HEAD~1
-
-Here is how to create the example repository:
-
-  mkdir example && cd example && git init
-  mkdir -p .iac/configs/devops
-  cat >.iac/configs/devops/config.yml <<EOL
-whiteListInfo:
-  - target: TARGET1
-    emails:
-      - user01
-      - user02
-      - user03
-      - user04
-      - user05
-      - user06
-      - user07
-      - user08
-      - user09
-      - user10
-      - user11
-      - user12
-      - user13
-  - target: TARGET2
-    department:
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_01
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_02
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_03
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_04
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_05
-  - target: TARGET3
-    emails:
-      - user14
-  - target: TARGET4
-    department:
-      - DEPARTMENT_06
-    emails:
-      - user15
-  - target: TARGET5
-    department:
-      - DEPARTMENT_07
-  - target: TARGET6
-    department:
-      - DEPARTMENT_08
-EOL
-
-  echo bar >> foo.c
-  git add -A && git commit -m init
-
-  echo baz >> foo.c
-cat >.iac/configs/devops/config.yml <<EOL
-whiteListInfo:
-  - target: TARGET1
-    emails:
-      - user01
-      - user02
-      - user03
-      - user04
-      - user05
-      - user06
-      - user07
-      - user08
-      - user09
-      - user10
-      - user11
-      - user12
-      - user13
-  - target: TARGET2
-    department:
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENTS_01
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENTS_02
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENTS_03
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENTS_04
-      - DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENT_DEPARTMENTS_05
-  - target: TARGET3
-    emails:
-      - user14
-  - target: TARGET4
-    department:
-      - DEPARTMENT_06
-    emails:
-      - user15
-  - target: TARGET5
-    department:
-      - DEPARTMENT_07
-  - target: TARGET6
-    department:
-      - DEPARTMENT_08
-EOL
-
-  git add -A && git commit -m 1
-
-
-After partially cloning the the example repository, fetch the old version of
-.iac/configs/devops/config.yml. Trying to reset to the initial commit should
-result in a segmentation fault.
-
-Han Young (1):
-  diffcore-break: prevent dangling pointer
-
+After we have freed the file pair, we should set the queue reference to null.
+This prevents us from encountering a dangling pointer later on.
+---
  diffcore-break.c | 1 +
  1 file changed, 1 insertion(+)
 
+diff --git a/diffcore-break.c b/diffcore-break.c
+index c4c2173f30..9b11fe2fa0 100644
+--- a/diffcore-break.c
++++ b/diffcore-break.c
+@@ -222,6 +222,7 @@ void diffcore_break(struct repository *r, int break_score)
+ 				free(p); /* not diff_free_filepair(), we are
+ 					  * reusing one and two here.
+ 					  */
++				q->queue[i] = NULL;
+ 				continue;
+ 			}
+ 		}
 -- 
 2.52.0
 
