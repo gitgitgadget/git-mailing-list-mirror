@@ -1,152 +1,155 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8AB227EB9
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 10:27:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770805624; cv=pass; b=SZfnmawBD31U6J5JA/OLNi5/Qe/aeJ7rl9QUf5kzKxshOg6uysM3LHEP52YnFvZCXYBBKoNVTwEMusqXxXPK21IBTfjBE6xHk3zfjZitwQ4ZV6FsoRABHCJigIiilMrMsAaRHQp1XIHTxWs7AZ4+Ad6QmMqS1vcOlZQtKdjr9Cc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770805624; c=relaxed/simple;
-	bh=lMQR1sVTKQ0IyTg1gXvhR4+9yOF5doyxnQOssMxYPQk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H6rA2EPJYMYZZR9TI7cRYvKimseocGoStBBaPN+JsW1T+sSMZQReYA9SzWpG04AYzNFh/FY4iKO7BYOS8GyoTZ5HM7Zv4UGw+GDS6es3g5Q8T/HrazNJDMZ9Hy/epugHE4eynt81wb/pz10PndIs91fX6H8x0khIMI7Mtmzfi4s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J6GrZ5Mr; arc=pass smtp.client-ip=209.85.222.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AC3306483
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 10:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770806084; cv=none; b=itPtIoeGb+76lOXTsrSIDtmMz4ATFMPh4nnX1TLw6i3A21LMRwcHQ8iicQHDrP1v8QWaD5ck9hSJmVvOnCDGnbLLi+iu50RIxuYyZBMfNfkTB5r2eJT3cl8Uvp753eaLSvJO8IzeOrko/pgRPft9uf0xfAjeK90THoIntTqyrT8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770806084; c=relaxed/simple;
+	bh=r83zJlbb7gm++GxoRgT98NXNLO/gGNaxfD+qf15rQZI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kXJymwaQwHeEfOAy8zhRVEfSBcZ+WXFTnpV3eYrM5Xcp7D1SnNAdCLJq0W+VY0QsRVvC+upbCqLdsfMlvYp4NtulH3VJQUHaba1SiwAjnNwbhxPRr6Ox7cgW4gUjkoxsE2Qcs34sLjlipE+44giPMao2BFclew7yV0G0wHo3/mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b5nuj6I2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D9fvZekU; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J6GrZ5Mr"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-948d0d5d4d0so1089312241.3
-        for <git@vger.kernel.org>; Wed, 11 Feb 2026 02:27:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770805622; cv=none;
-        d=google.com; s=arc-20240605;
-        b=fzpTqedhvfrgR3VcVk72aZiArNFvYROPtAskYY4tmTpy/vHa4qL1dw0p0ip1rXt2jC
-         mma1AQ/rxs2P2kQnuVXakhtqpXQ6Dh48KLuXVSOeA8zrt1FSuPzv6jV2rEIQ1W1ZwyFR
-         RTR3EesQE5asUG87xKHRfxMe334rJkRhHviW0xkf/ZEWTfI8UPzBCsdMicWRY8lNCoTg
-         Bnlqzh0RuCzSb2KGOI5lpTEPKlp6mWC2kabcxwYyVnNpKlQ4PT3AY9TUFpEAGN/2epmZ
-         uh0hJfvd3CH+sYn2zhj+4xvQQKixsLJc5QdKUXB45ATh2m/n6frtwK2JN86KbYB4El2u
-         R5OQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=/H8qeNoMjgp+duk7qmtEiZiepdEaom2snB7vZRt4lNU=;
-        fh=MPMvdI4OKdwoNdUqlzx/FPwWfkTJ3ZzCcYeiizfGmP8=;
-        b=hRPnCI+BjApMnG79/94fzuwG9SUMP5GPnOJLFpJe19LWD6ezFteIwp0ACe00zKchQv
-         iK/yCucS5oqMeagpP6wpm2pKlU1D1XPAyFOCYpthY1inkckuVADsRwYNSSLG8HkTRrNb
-         PI73xM1IrGlJF0jSQCXc+acGO5/op4atkfP3ToS78sKapeBDqnbUcP+AQspv1GWAfN6P
-         cuXff86Ni8rWkC1j9BiBG4YVomb4eUqnmKadwAnAQWhtpUGF7ug5RgRh1Fnb8JPdksjF
-         /NbjUMiaRs3M83iGzjkv431H4kXFus2IwsJdatqqoYbtm9MCASpY+HhXMTfencGeirNq
-         W81g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770805622; x=1771410422; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/H8qeNoMjgp+duk7qmtEiZiepdEaom2snB7vZRt4lNU=;
-        b=J6GrZ5MryLAqA/nJmUAC0BUwLKcBnJw1KcND9EAJJvDC27Vs6zkkM11+uBAa8D4kIt
-         LbhVt3gphic30MwhlhPX5uMqMy3HbNv06Z9Vj5yh19XIttgLMpPgnh5ws91vgJFvxw5U
-         fEQwoDPogDKUSu/Ya3OB26VuWtuRHt3EBpgw5t35+OpsqQ8Y6+0looi/g6GoQswloihm
-         rVmVSd7ug2sxtj/IQ0rXVsk3GJLXBcY2UgRtk3yWEcQrpn7U9y78EFWGkUk+AK8K7fnr
-         d6m1Khiz48XWdgvEHGfx2p4RquLNsCyZJjPamuUFqCtTCo66pA03MiRPVPcQ3fjMdUMk
-         3nQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770805622; x=1771410422;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/H8qeNoMjgp+duk7qmtEiZiepdEaom2snB7vZRt4lNU=;
-        b=qdYXcqJh8z9lZMtExOodoqqQLGU645elnynyB1AEfDffKecYRBp+cJGOs7r1QL8mPl
-         C4Ootp1ysIGaKC3VRUjYeAgjMtQTy/Tczf2iI4b/TppgZdW7DFvtxqN4F51H6z0fGEUh
-         NWdKv2lBGkPa6RUckteqWJDFBBWNvrSYvYZ7m78i9Vyzcx5D5cKKIF8I7MJJSVJiSyiy
-         mC6fOaUDzszMVFQwnVXxjHoGpDidP7UrPrP1Q5LPOzypLeXvX4AUPSkV37CJndzcfNaT
-         XABnD4j0izCNcD2sIvrVUXoh9P+WdGO7f5KQmydwfiviBVjCmkohGxi4xkA5PLUMvE9E
-         4vRw==
-X-Gm-Message-State: AOJu0Yyl7C4wW+kd+wu87TTTHfkwlxfSpwpVtLahHBUZaLc7KFuTrhU4
-	kA0GWBHpKh/7yquWGrMNezADV75mF0C87jBXkRFye81C9PIMiVzzapdSL3ty3hwXouxFep4KO2G
-	6llnw1MRKN64O86JImPloiCWQi5suJAI=
-X-Gm-Gg: AZuq6aIgZsfBRzSUDw8TVwzV4A36cY0f2O5kHj/o4pXOE5ULjLhJBu4zfPhxaIhoMRE
-	AK2GG8Mu9aGASn0Wlw6z4x64eWuRpLWRZN2AVbCdILBPZ4Es6a+4AV3a93JNHxxoFC0dI4U3y62
-	6A9leDyyZDktoYAAFcFp/2floDKDamQ+R4NK0nfqxHwQoWtLd1bBNjYMAUyqSkG+6vSh2Rq1svQ
-	qxK9CUOcugHhT1V+dFNNyObcHU1KLgNElsXkNYs4r95OphUqeZ8GWjxm7nxrm9udK3KyP1NJuvf
-	kU3zwKg=
-X-Received: by 2002:a05:6102:358f:b0:5db:cc69:7399 with SMTP id
- ada2fe7eead31-5fae8a26639mr5431615137.5.1770805621740; Wed, 11 Feb 2026
- 02:27:01 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Feb 2026 02:27:00 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Feb 2026 02:27:00 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260210224401.GA1836788@coredump.intra.peff.net>
-References: <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
- <20260209-kn-alternate-ref-dir-v5-3-740899834ceb@gmail.com> <20260210224401.GA1836788@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b5nuj6I2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D9fvZekU"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id A06311D00246;
+	Wed, 11 Feb 2026 05:34:42 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 11 Feb 2026 05:34:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1770806082; x=1770892482; bh=91URf1piVy
+	swgZY3nFDzHGD90T9shOOas27wMPC/m6k=; b=b5nuj6I2obASguRIGKotQywkch
+	BwAA4xJYN0YUJuaNbie/cDrE6oPjsL9xJLbO0Th1wVwKPJSyG/tRvzelAoPUJcrw
+	fZaya1RYY6TWvJZTBbgBmZdiFXZUwpSWsqxgQ/9oq4N1QhplNBXqCMtFv99jJs3L
+	0XnNZsNZtErqGcL2bPlW/QUYwKMpSqUMY62Rs+k7KwJS4+E1pmEKIsbTeFiLlmBC
+	CAf//p9AoCch6sTFrUj7N9QHBCiR5ZY3f7as2nMhF2FxjhknIoETF+egXboFrCVd
+	9moEs2X+CdgYMqZV19jkkPoM6wly4OyAn0GZ5FY21pnZGWIx2E1hINxGr2Zw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1770806082; x=1770892482; bh=91URf1piVyswgZY3nFDzHGD90T9s
+	hOOas27wMPC/m6k=; b=D9fvZekU9pzTht1yP7zRN5umpYgwVkpdNecwztImLt8m
+	E2i44eeEdnaynlqLkvx+jcMJNk1dO1vpdjg2+eCcHXmKW0ToTQvo9IE5/ezosDLe
+	XBS6+JSNgSboULOQJKb0mYaMPni5QMMih0vfXenK8uHEcQEp879kr2v4EUiXM2EF
+	SEuE9HrpWjoyNiJjF2dpxj/viEJbT7DYmNcwyB+QeUAR5t4dmxL+4NqL1USgjXtT
+	6NUkMipyDfCsc/9fcKbg63j3Z/u97gGjRG20PC+h/za6goZenv9bB2YW7oY/uKOc
+	iPquXGFbI/BhiCY5NGyKl8qc/nVbYgB3xdC2gjjRbA==
+X-ME-Sender: <xms:QVuMaS7D-D2OrtZK3JJvfEzaO-H-_hpbReEEVgoN-tdKPxdzWIElfQ>
+    <xme:QVuMaS4v3RfiDXRdvoB-tjWJUf-fJ2KsrKX-YwN0G0GKwURb2n_4Kpo248JEtjb-m
+    Dbdm1eyuvVnoQffNzHAOaQDg9CxDEMzutBsVCq7wsybmHFG2KDk_g>
+X-ME-Received: <xmr:QVuMaWd44rF_xTjb53CE-6s9BRNISfeMNfxCxCXi7105ULNByNEMhlYIF3TRcENAd8HhmJeUTb3DgR5agqfYV099atwCVLo0WFHQSJs7T84F>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    fftefhtdelffevhfetgfefvddvhfeluedttedtueeuueehtddtjeduhfdvkefftdenucff
+    ohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhtlhgrsgdrtghomhdpghhithhhuhgsrd
+    gtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    phhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
+    gvthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:QluMaeDbrV-buaRyhRLqakBj4yL9xH-PgO2jEAIAVxgRj_89m30m6Q>
+    <xmx:QluMaR8UU5A6GLEhb0W_-jhSsKQyEX931UvsCGjcD9wv-ILCuzOgKw>
+    <xmx:QluMaRK5ndQCnGTkRldm18p6NqUigRNlut8KV1QbRURif0ABZ5IVGw>
+    <xmx:QluMaSgM8fu1sPA2AgVlrgbL1G30tey1p2IdTLiu3tc2Y0pBLSnx1Q>
+    <xmx:QluMaUakovaOugrQUL3X5pu4vsbNwvQgQdySz-Ta6TDkT-afJuMWSabv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Feb 2026 05:34:41 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 07707ad6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Feb 2026 10:34:39 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/7] Some assorted fixes for GitLab CI
+Date: Wed, 11 Feb 2026 11:34:26 +0100
+Message-Id: <20260211-b4-pks-ci-meson-improvements-v1-0-cb167cc80b86@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 11 Feb 2026 02:27:00 -0800
-X-Gm-Features: AZwV_QgsMRb3Uwa1OQmcROaC2rrv7MyWMQ1JK3KYSNSV-bSvtp2Kh7JGvfuz9YE
-Message-ID: <CAOLa=ZS00qJuRvDA0Ud34MiUAPuSMTe7M76fSWXmHmbPtc2wsw@mail.gmail.com>
-Subject: Re: [PATCH v5 3/4] refs: allow reference location in refstorage config
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
-	gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000000cfc10064a89d08b"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADJbjGkC/x3MSwqFMAwAwKtI1gZqFT/vKuJCbarh0Q+NiCDe3
+ eJyNnODUGIS+BU3JDpZOPiMqixg3We/EbLJBq10q7QacGkw/gVXRkcSPLKLKZzkyB+CQ236ubL
+ WGN1BLmIiy9fXj9PzvMmu1LFuAAAA
+X-Change-ID: 20260209-b4-pks-ci-meson-improvements-93d8a1ffdd27
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+ Jeff King <peff@peff.net>
+X-Mailer: b4 0.14.3
 
---0000000000000cfc10064a89d08b
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Jeff King <peff@peff.net> writes:
+I recently had the pleasure of debugging a couple of failing
+MSVC+Windows jobs in GitLab CI, which hasn't been quite fun because we
+didn't know to print error logs, and neither did we upload the failed
+test artifacts. This patch series is the result of this frustration and
+fixes a couple of smaller issues in the context of our CI:
 
-> On Mon, Feb 09, 2026 at 04:58:20PM +0100, Karthik Nayak wrote:
->
->> +static void parse_reference_uri(const char *value, char **format,
->> +				char **payload)
->> +{
->> +	char *schema_end;
->> +
->> +	schema_end = strstr(value, "://");
->> +	if (!schema_end) {
->> +		*format = xstrdup(value);
->> +		*payload = NULL;
->> +	} else {
->> +		*format = xstrndup(value, schema_end - value);
->> +		*payload = xstrdup_or_null(schema_end + 3);
->> +	}
->> +}
->
-> The schema_end variable should be "const" here. Otherwise new versions
-> of gcc/glibc will complain that the strstr() implicitly removes the
-> const from value (and compilation with DEVELOPER=1 fails). More details
-> in this thread:
->
->   https://lore.kernel.org/git/e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com/
->
-> -Peff
+  - I noticed that test slicing is slightly wrong because of a
+    difference between zero- and one-based indices, which causes us to
+    skip the first test on GitLab.
 
-Thanks for the hint, my Linux distribution is still on glibc 2.42 and
-didn't see the error. Will fix it in my next version.
+  - I deduplicated how we run Meson tests so that both GitLab and GitHub
+    use the same "run-test-slice-meson.sh" script.
 
---0000000000000cfc10064a89d08b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b9a5962f7e6ad8c_0.1
+  - I add logic to handle failing tests via "print-test-failures.sh".
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tTVdYTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM0M4Qy85dThlWHozeDNLYktqSEFlcnpHemw1TFovYQppMlZCVy9hdkZn
-czcrMTdrYzE2NkhUQVk2VEd5UFlyVlFwUi9yd2hSU2E5TFZSRGZDaXlPKzUxYnBvZHJ2NFU4ClQ4
-cFdEeTFCQmg0ZDZ2MGg1cXZHMjNWem10VDZ2VDJVYUhaQjdQWW0xclBOOXQxUkxwRG5qQVVBaUE0
-d3BUZksKa3drY0o4aXdMekg0aHo3UUpHcHNsbldGTDNSYUdwZ3IxMUU0ZXgrM0tYcW1FbUw3aDBi
-VXozdEMxN3AxNDdkRwpXa2pTc1hUWjVwMmRxZXorQSt5aS9Ia3VpOWt4a0FwdUxLUzF0Nm44bXlu
-RjFaNmdtY3NJZitLbFpFL3FMREZkClJrNC9aZm1oeXNrNkZvRHVwZHVUYzB1MXd6RW5aKzJlMUNa
-NHl0NnJzUzhrSkoyelU0QWtnNmhMMEU1K2JJM0wKa3BLanFLTzlFaUZrTFFhc1RqRHE2NHR1bmNs
-QTBCMmhFRmpzbVB1YVVVNWllODNMd3R1L1YzeUNNL21iVnJnOApSSmo3TUF6ZnpqdTVZV2xaZG9u
-bW13WWZwUWdhV0VRZE1rbHZFbk93aW9QR1l0RVRrOStLMUxYT0hFV3Q5bGs2CmtES1F3M1puaFJw
-Vy9jY01XOVNoVGk2Y2JtMHNzMi9IM1FZM2w0OD0KPVp5NTEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000cfc10064a89d08b--
+The result can be found at [1]. Note that tests are failing, but those
+failures are fixed in a separate patch series via [2]. In any case, I
+guess those test failures also serve as a good demonstration how the
+failing tests show up now.
+
+Changes in v2:
+  - Fix syntax in GitHub workflow.
+  - Add another patch on top that fixes win+Meson tests in GitHub. Those
+    tests didn't execute at all, even before this patch series.
+  - This uncovers another bug in how we set up MERGE_TOOLS_DIR, so this
+    results in another commit.
+  - I've now tested also tested the changes on GitHub [3].
+  - Link to v1: https://lore.kernel.org/r/20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im
+
+Thanks!
+
+Patrick
+
+[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/497
+[2]: <20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im>
+[3]: https://github.com/git/git/pull/2195
+
+---
+Patrick Steinhardt (7):
+      ci: handle failures of test-slice helper
+      ci: don't skip smallest test slice in GitLab
+      meson: fix MERGE_TOOL_DIR with "--no-bin-wrappers"
+      github: fix Meson tests not executing at all
+      ci: make test slicing consistent across Meson/Make
+      gitlab-ci: use "run-test-slice-meson.sh"
+      gitlab-ci: handle failed tests on MSVC+Meson job
+
+ .github/workflows/main.yml |  6 +++---
+ .gitlab-ci.yml             | 17 +++++++++++++++--
+ ci/run-test-slice-meson.sh |  2 +-
+ ci/run-test-slice.sh       |  6 +++---
+ t/helper/test-path-utils.c | 18 ++++++++++++------
+ t/meson.build              |  1 +
+ 6 files changed, 35 insertions(+), 15 deletions(-)
+
+
+---
+base-commit: 3e0db84c88c57e70ac8be8c196dfa92c5d656fbc
+change-id: 20260209-b4-pks-ci-meson-improvements-93d8a1ffdd27
+
