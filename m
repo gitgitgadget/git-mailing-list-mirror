@@ -1,204 +1,132 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B75F21257F
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 12:45:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFA715B0EC
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 13:03:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813909; cv=none; b=QFM5DqEQSvNIOnGzxaFR1FJdgIp28ybEQ4n6kp1F1+9D0ntYzmkPiyWxwubTcLncy5K8qOejZnyrFU/mEXDNRdOC8IY7ntaOcGtn49bgv6ZgqUAO7HpGB0xBUCeujvOiV/giTS8OAkuR0kZshj8vIzBpIOx/bkBA2HU/KvvTsgs=
+	t=1770815022; cv=none; b=lCYmg2UWyjJjDj1EYwNjfEvsNa/rQllinn0FNGjC5erpJ0ZANOIf30ECWSv/Hjovsopr/LG9WkJfUyMFPVe1FhvY6PDjyM+XDwmNvsaPqR7CQV19WzOFNt3R67QOdGgfRlPZm3EXkGWkylbGyYYifriQm0jseeWtBcBLCwqsi8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813909; c=relaxed/simple;
-	bh=YWX/ckdu/ZeVxMsOesjclCuXi0XPZ6Y1lpFpKsIpA3o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jpfTtgZu29Sk4LoikGNrAI9rkwwmxG5ReMa6tNi3ayrCPi15w4e8t2C6giqI5/hR5Sn74flRZftjGd350Yi0zNcyML9KzwXh8ccT3zsbNYB4DAqUT6mGFG0//ZNg9qHAXVZ5VFWLwDrEL39G283L2xZ37O4wYMvtH0xigp2MVp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bF3Meh2U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n87HIUmA; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1770815022; c=relaxed/simple;
+	bh=yI3FFRLXF9ApmZ4ClJ30wQjZB7AoK07j+woEDaj2yBA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sulelav9Y2LVHieYv/HZ46FwY4cCSRFc5CbC3YPsMmVtnmJ7nMBw7/yGwALyF921E3Y2QPNe7Ctpq8WvzRXdv7oMzGRwVj3S8+/e4HU/tVr+kSPNOluBoWP1mvJP9HGLpkxOlNMK8yV4LVd/NgeiDX6gdwJQKVeDacryHMsoWfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=yDVf7xjW; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bF3Meh2U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n87HIUmA"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CDD7F7A01AE;
-	Wed, 11 Feb 2026 07:45:06 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Wed, 11 Feb 2026 07:45:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1770813906; x=1770900306; bh=hWn7a9p3wW
-	5BWEJDqbuKJqtRHT4v489BGelRyfNpuMg=; b=bF3Meh2UkHQweQc8jr343nD0Jx
-	cwMfBI2uvd7iMYcszFmpi56iPFWhfT0GsDmP50NAQwaONLRbc4WEGdcOr1yNlL/2
-	4FpIVJtDa0DnolwPkVOITUVpIFWuWAINSlS8vJggUN72dsqLBaEB44QK6I0Hk6SQ
-	Ko7jg+XoqZWOl4gUobUZZ3ALyehRLFdtvYeNEi+DsFk0HHUL5RQQNNZfMJR7hIOn
-	F0nCEuZ6W6Err5Uy//RolZauGNIFXzgNNIBySJMDjwMv/t4HLEmV0h3/5J6257V1
-	989wH7PIk9llzPV/UKA5mAT1l4qU72HlAzOJYOu5D0R2FXKqeyObp4MoGL4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1770813906; x=1770900306; bh=hWn7a9p3wW5BWEJDqbuKJqtRHT4v
-	489BGelRyfNpuMg=; b=n87HIUmAp/2t3ymLSadPMDFzXTV0z7IN+x2Et9B8IdF1
-	EAv8/WfQbLNi9tNz29mYY49DEUGsBwOiC2CtNQGfx1pLE2ZGfWvx/mzRKHWTP9C9
-	Hy9mU/iys0KVkBHJE50wOgoKdfy+J9NwzHMJ0qEJKVui8SPV+D0zGJdWQlCJTCEz
-	Id+DJLmMASqZKcrjWdnMTOqz+CLr/abH24krCRcnhFewXIvjnIG0p0bJIDO605ir
-	xdyS+Ils5KzLjFOAWKwJyqi6N3YvXEdHJFJfGRwqhnuFu9Jq7URA/YDMtlsAGI0W
-	L9Z8OgJqhxi8dz4jU8v9Wgg0FY897j2RgG85koOtZA==
-X-ME-Sender: <xms:0nmMacSOIZ5Uuq8oBjl5rzzC4oHapvqIeCj4fPBffRlVDeCa9SfhjQ>
-    <xme:0nmMafyA0ec3uVmsmMYJ-fSuhlBE_3607P3M_x7wyO6Y4u60eqkOO-9w0Vy3fGwH5
-    T45Oy2W_rpKNMbzcs4K9oBvQX41G_mVKFArUm_52v9sfrqt1BRe7Q>
-X-ME-Received: <xmr:0nmMaXdJr5IreUYWgueoFsAWGAmsDhooE43lZYpEeA5x0MVzjqPZ3IWw2bxvZxs2wWbaGd_eTohd14nZMyBwCihMp9ATTYL0niLQ733JT5MM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvheekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    eigfeitdffffdvvdeuheehjeehheeludduhfehkeekgeeggfeuffehveegteejfeenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhifrghnkhhose
-    hgihhtlhgrsgdrtghomh
-X-ME-Proxy: <xmx:0nmMabJ6MQSRsVpSnlJRP42STbiIPsro9KSjwzgs7_dRKIKO-tR6ag>
-    <xmx:0nmMaYGnK5-bHgddZrIZJSR46ikBKSlifZmfdU8dsQhyBsvmNcwpHQ>
-    <xmx:0nmMaVojmOQAqOT4zfzIJxdMoQfIok5guGVTkHpYZlj2_-0l9ueIzA>
-    <xmx:0nmMaRScFoN8MPEyxqf4E6NbCKZXryOkoZ3E7eOu3bV1jbUDBCI6OA>
-    <xmx:0nmMaQDWhOySvYG4ENKFPk54aQ5VuaSSSvsp4Lmbj20Fty67cuitflJ2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Feb 2026 07:45:05 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7a38b0a4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Feb 2026 12:45:04 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 11 Feb 2026 13:44:59 +0100
-Subject: [PATCH] builtin/pack-objects: don't fetch objects when merging
- packs
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="yDVf7xjW"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1770815017;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=S6/Mv+TRIhyZhsFsDvTTsk+LBjaKFxwFYiP39UsDNNw=;
+	b=yDVf7xjWslX1mBOYDAgmFnhnnIoAPV4YcppTyBqVNXtR/mzZEyql1SvZZUb2KF9mxZJU80
+	zaTWqNdMwgc6FGIQ1tKiW0dqE06TFzfiblzL/r/fhuEFC8Fj2GVxlobvvJBync2lw3I7LQ
+	FseEK/8RuROSVsE2/6TyKzSn4oBVZK8=
+From: Toon Claes <toon@iotcl.com>
+To: Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, newren@gmail.com,
+ gitster@pobox.com, phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk,
+ karthik.188@gmail.com, johannes.schindelin@gmx.de, Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v2 1/2] sequencer: extract revert message formatting
+ into shared function
+In-Reply-To: <aTZ5RrjnwJ2ZnT7A@pks.im>
+References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
+ <20251202201611.22137-1-siddharthasthana31@gmail.com>
+ <20251202201611.22137-2-siddharthasthana31@gmail.com>
+ <aTLDA11AKs0jlxFJ@pks.im> <ac12100d-4aba-4d15-8bcf-c50e6100c95e@gmail.com>
+ <aTZ5RrjnwJ2ZnT7A@pks.im>
+Date: Wed, 11 Feb 2026 14:03:22 +0100
+Message-ID: <87bjhvqvol.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260211-pks-pack-objects-stdin-skip-backfill-fetch-v1-1-870cad56d8ae@pks.im>
-X-B4-Tracking: v=1; b=H4sIAMp5jGkC/x2NQQqDMBAAvyJ7diEbULBfKR5M3NRtJIZsEEH8e
- 0OPM4eZG5SLsMKru6HwKSpHakB9B35b0odR1sZgjR2NJYM5KubFRzzcl31V1LpKQo2S0TUfZN8
- xcPUbhnHiYTATOSJowVw4yPWfvefn+QG69+BtfAAAAA==
-X-Change-ID: 20260210-pks-pack-objects-stdin-skip-backfill-fetch-f69e55091b11
-To: git@vger.kernel.org
-Cc: Lukas Wanko <lwanko@gitlab.com>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-The "--stdin-packs" option can be used to merge objects from multiple
-packfiles given via stdin into a new packfile. One big upside of this
-option is that we don't have to perform a complete rev walk to enumerate
-objects. Instead, we can simply enumerate all objects that are part of
-the specified packfiles, which can be significantly faster in very large
-repositories.
+Patrick Steinhardt <ps@pks.im> writes:
 
-There is one downside though: when we don't perform a rev walk we also
-don't have a good way to learn about the respective object's names. As a
-consequence, we cannot use the name hashes as a heuristic to get better
-delta selection.
+> On Mon, Dec 08, 2025 at 04:30:58AM +0530, Siddharth Asthana wrote:
+>> 
+>> On 05/12/25 17:03, Patrick Steinhardt wrote:
+>> > On Wed, Dec 03, 2025 at 01:46:10AM +0530, Siddharth Asthana wrote:
+>> > > diff --git a/sequencer.c b/sequencer.c
+>> > > index 5476d39ba9..9f621aef4b 100644
+>> > > --- a/sequencer.c
+>> > > +++ b/sequencer.c
+>> > > @@ -2365,22 +2365,10 @@ static int do_pick_commit(struct repository *r,
+>> > >   		if (opts->commit_use_reference) {
+>> > >   			strbuf_commented_addf(&ctx->message, comment_line_str,
+>> > >   				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
+>> > > -		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
+>> > > -			   /*
+>> > > -			    * We don't touch pre-existing repeated reverts, because
+>> > > -			    * theoretically these can be nested arbitrarily deeply,
+>> > > -			    * thus requiring excessive complexity to deal with.
+>> > > -			    */
+>> > > -			   !starts_with(orig_subject, "Revert \"")) {
+>> > > -			strbuf_addstr(&ctx->message, "Reapply \"");
+>> > > -			strbuf_addstr(&ctx->message, orig_subject);
+>> > > -			strbuf_addstr(&ctx->message, "\n");
+>> > > +			strbuf_addstr(&ctx->message, "\nThis reverts commit ");
+>> > >   		} else {
+>> > > -			strbuf_addstr(&ctx->message, "Revert \"");
+>> > > -			strbuf_addstr(&ctx->message, msg.subject);
+>> > > -			strbuf_addstr(&ctx->message, "\"\n");
+>> > > +			sequencer_format_revert_header(&ctx->message, msg.subject);
+>> > >   		}
+>> > > -		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
+>> > >   		refer_to_commit(opts, &ctx->message, commit);
+>> > >   		if (commit->parents && commit->parents->next) {
+>> > Is there any reason why we don't also handle `refer_to_commit()` in that
+>> > new function?
+>> 
+>> 
+>> The `refer_to_commit()` function depends on `struct replay_opts` and its
+>> `commit_use_reference` flag, which controls whether to use abbreviated
+>> commit info ("%h (%s, %ad)") or the full OID. This is specific to
+>> sequencer.c's interactive workflow where users can choose the reference
+>> style via --reference.
+>> 
+>> In replay.c, we always use the full OID via `oid_to_hex()` since it's
+>> designed for non-interactive server-side operations without the
+>> `replay_opts` framework.
 
-We try to offset this downside though by performing a localized rev
-walk: we queue all objects that we're about to repack as interesting,
-and all objects from excluded packfiles as uninteresting. We then
-perform a best-effort rev walk that allows us to fill in object names.
+Even if it's non-interactive, I wonder if we should make it obey the
+config 'revert.reference' as well? To me it makes sense git-replay(1)
+and git-revert(1) give the same outcome if that config is set.
 
-There is one gotcha here though: when "--exclude-promisor-objects" has
-not been given we will perform backfill fetches for any promised objects
-that are missing. This used to not be an issue though as this option was
-mutually exclusive with "--stdin-packs". But that has changed recently,
-and starting with dcc9c7ef47 (builtin/repack: handle promisor packs with
-geometric repacking, 2026-01-05) we will now repack promisor packs
-during geometric compaction. The consequence is that a geometric repack
-may now perform a bunch of backfill fetches.
+>> Including `refer_to_commit()` would require either
+>> passing `replay_opts` to the shared function (leaking sequencer internals)
+>> or adding a format parameter which feels like over-engineering for current
+>> needs.
+>> 
+>> Happy to reconsider if you think there's a cleaner way to share this.
+>
+> A simple alternative might be to convert the `struct replay_opts`
+> parameter into a `flags` field that tells the function whether it is
+> expected to use the object ID or whether it should try using the
+> abbreviated commit info instead.
 
-We of course cannot passe "--exclude-promisor-objects" to fix this
-issue -- after all, the whole intent is to repack objects part of a
-promisor pack. But arguably we don't have to: the rev walk is intended
-as best effort, and we already configure it to ignore missing links to
-other objects. So we can adapt the walk to unconditionally disable
-fetching any missing objects.
+I was considering to add a bool for this option alone, but I agree flags
+is probably more future-proof.
 
-Do so and add a test that verifies we don't backfill any objects.
+Patrick, I assume you don't mean to revamp the `struct replay_opts`
+completely, but only the parameter that would be passed into
+sequencer_format_revert_header() and refer_to_commit()?
 
-Reported-by: Lukas Wanko <lwanko@gitlab.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
+Siddharth, I see you have plenty of good reviews on this version of the
+series ([PATCH 2/2] in particular). I'd love to see you post v3. Or do
+you have any open questions you need answers to before you can send it
+out? Let me know if I can help with any decision-making.
 
-we've recently encountered this issue in a partial clone of one of our
-own repositoires. Thanks!
-
-Patrick
----
- builtin/pack-objects.c        | 10 ++++++++++
- t/t5331-pack-objects-stdin.sh | 18 ++++++++++++++++++
- 2 files changed, 28 insertions(+)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 9807dd0eff..4053f9659f 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3925,8 +3925,16 @@ static void add_unreachable_loose_objects(struct rev_info *revs);
- 
- static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpacked)
- {
-+	int prev_fetch_if_missing = fetch_if_missing;
- 	struct rev_info revs;
- 
-+	/*
-+	 * The revision walk may hit objects that are promised, only. As the
-+	 * walk is best-effort though we don't want to perform backfill fetches
-+	 * for them.
-+	 */
-+	fetch_if_missing = 0;
-+
- 	repo_init_revisions(the_repository, &revs, NULL);
- 	/*
- 	 * Use a revision walk to fill in the namehash of objects in the include
-@@ -3962,6 +3970,8 @@ static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpacked)
- 			   stdin_packs_found_nr);
- 	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_hints",
- 			   stdin_packs_hints_nr);
-+
-+	fetch_if_missing = prev_fetch_if_missing;
- }
- 
- static void add_cruft_object_entry(const struct object_id *oid, enum object_type type,
-diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
-index cd949025b9..c3bbc76b0d 100755
---- a/t/t5331-pack-objects-stdin.sh
-+++ b/t/t5331-pack-objects-stdin.sh
-@@ -358,6 +358,24 @@ test_expect_success '--stdin-packs with promisors' '
- 	)
- '
- 
-+test_expect_success '--stdin-packs does not perform backfill fetch' '
-+	test_when_finished "rm -rf remote client" &&
-+
-+	git init remote &&
-+	test_commit_bulk -C remote 10 &&
-+	git -C remote config set --local uploadpack.allowfilter 1 &&
-+	git -C remote config set --local uploadpack.allowanysha1inwant 1 &&
-+
-+	git clone --filter=tree:0 "file://$(pwd)/remote" client &&
-+	(
-+		cd client &&
-+		ls .git/objects/pack/*.promisor | sed "s|.*/||; s/\.promisor$/.pack/" >packs &&
-+		test_line_count -gt 1 packs &&
-+		GIT_TRACE2_EVENT="$(pwd)/event.log" git pack-objects --stdin-packs pack <packs &&
-+		test_grep ! "\"event\":\"child_start\"" event.log
-+	)
-+'
-+
- stdin_packs__follow_with_only () {
- 	rm -fr stdin_packs__follow_with_only &&
- 	git init stdin_packs__follow_with_only &&
-
----
-base-commit: 864f55e1906897b630333675a52874c0fec2a45c
-change-id: 20260210-pks-pack-objects-stdin-skip-backfill-fetch-f69e55091b11
-
+-- 
+Cheers,
+Toon
