@@ -1,246 +1,181 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com [209.85.221.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBC4469D
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 09:13:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C927921ADA4
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 09:31:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770801218; cv=none; b=FvNvmnyHm20zTK0HreBrMCn/G4YzS6JWmk6r/3ZClToZDNZvBfARWfSBqfh5L0aTGDn9UuD9Cl8cR2n85zfaWnkCe+vD7cEbthTkg4GgyhyOUH/Mh/tJA1QRpkY1U+ErKWMSYwK7kkd9u0GEnbV2dw1Za1uaBCgmC1dEfykX0Qk=
+	t=1770802320; cv=none; b=T3XNXYnfkUSzuqN12P2h8LjKlojDmdfOk0IETOuSBOnRnLbaxsXH2RzcU1N4MDABmbjjY7ALz/Qzgj/6VjuXAtKObFu2ie3O7BKkd70EiYzYAnUgNrx8uh0nr+VmIS/ipawKVxo7ZT5RiVSvZCka7tNucfoGcWlQkA5X4DQxhKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770801218; c=relaxed/simple;
-	bh=NVUKfcHE3HqP4hwmYWXH/fjntFy+r6tM6Jh7x+sdjL0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K53OD5P3S+gwScmNMXF+lxVOYYubyqOdBFRZIOIwebOGRCMELBKfRQvUtHE+lZlCo94mk3+ztC6ChacQJzwZKSVGK1q1MfKrpWaeJ6KFZBLR1UpvrLak4YqKmjA/Hn2FTNsuGGUDXiXg51wqudxh52Bz0zubFbrQuS8pcZh+A1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dyG1KLg7; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1770802320; c=relaxed/simple;
+	bh=cbLDSY5yYMewKk/CRNTjtFudFgf7vugra+s1+Ca/GuA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Cxo1v+iDO0KAocj4YtUPWQQGOs5GEF/3mVdOXF8oy39/DDFCeBwlH32vfLayidDQdbv9gozDlvJqQCct2SM5L51zREd9F4sVcS3LSj6n3ixEhd9BpJq74HXq2bDctL9UL3LxcPd/0LrjOCJrGsCN19pOVf+iZs+EpI0XlL6zpWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mxGHNrvV; arc=none smtp.client-ip=209.85.221.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dyG1KLg7"
-Received: (qmail 13195 invoked by uid 109); 11 Feb 2026 09:13:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=NVUKfcHE3HqP4hwmYWXH/fjntFy+r6tM6Jh7x+sdjL0=; b=dyG1KLg7luYKpL6DVag24zTGEIgNWtjFZ2Vb/OL3xVZeDXCkQmlTTFbvXRb7rJ4OSqkIorYTOhZUxm5iOGmxGOhRuk3BUvYgUddhBBFInVyGquTi1J7zD4/FXck54qWC3+vVo0g43PHOTd0LJaWF4EhYuOEIjVuSBaTsGwBytbX91NS8p5QGs2RIeiwMeAm/Gi7ag0CxK6Ela46QImvWBwS03KtbEGABwyRZ9Jkc0TwprMO8pElBZKUo6PTSuitNaGmbNYty5X2l/yrpz8Z/Af0jozzQL6oCxl9qk4Xzafjl8YuLXxNTlzCMyHOJMu3e4tKSBuqpA2ZvQriXQ+7ZOA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Feb 2026 09:13:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21540 invoked by uid 111); 11 Feb 2026 09:13:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Feb 2026 04:13:39 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 11 Feb 2026 04:13:33 -0500
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Vaidas Pilkauskas via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
-Subject: Re: [PATCH v2 1/2] http: add support for HTTP 429 rate limit retries
-Message-ID: <20260211091333.GA1868492@coredump.intra.peff.net>
-References: <pull.2008.git.1764160227.gitgitgadget@gmail.com>
- <pull.2008.v2.git.1766069088.gitgitgadget@gmail.com>
- <d80ce077038bab96aca26b0b0ad706c91ea1d8a8.1766069088.git.gitgitgadget@gmail.com>
- <aYvV2W5pcvqZig8S@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mxGHNrvV"
+Received: by mail-wr1-f66.google.com with SMTP id ffacd0b85a97d-43622089851so1652445f8f.3
+        for <git@vger.kernel.org>; Wed, 11 Feb 2026 01:31:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770802317; x=1771407117; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=m6sMBMntdIJtTMJH1Dgs+f9j0vFoMCy7gtAVxHTJClM=;
+        b=mxGHNrvVkWcMJVFJhqfboj5QElvr6h5dFsFbADExHP3794SWCNRmJFj6K6Jm1IZ+iK
+         iJDbfeO2kNETIluxGaW/11dOLamlMpCdoVjYUDIEM8FGqlSZZs3/7MUTe5gfHK/SoLxk
+         qFIMu/Gr4yVrMtAU4dDLY1yTmFhOZTVX2T+5Nee1kGRsFBOyoGQGnoFlZJEnDFFTfMoj
+         qZFDdHOgPlvbatQVzt7g7t4ccZgcdODDSxVmuIhVcOxIEKcK8cFzli0NVn2HLfa/kWR7
+         GdQJ00vt7KqidA9F6Mri+HF3+b4IUpQ0D+SohJ//d1NHStfAIbTt1qJg+zvIpneO41De
+         RafQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770802317; x=1771407117;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m6sMBMntdIJtTMJH1Dgs+f9j0vFoMCy7gtAVxHTJClM=;
+        b=rKma+StaXVcsRcJaCF7ySRq5iFs2ChxQetKSF+J+5tqaqnmNVLiZCOWHDg341FaxYC
+         YdDV+Tw9t+K1v2U9W3FDuo9sRP8GHOEAIM9YmTxLIddU9Fh2akzfCfFAUx4NW84VbIcK
+         PcSLOvIqU/HcBmqdnk/orZDdVzXMPQVYDWcbMLt/Nyu9MIKKf8GzTpMRz2D8nNig8uTh
+         Ww+trXRGB+CR2Af05fFLVOtA9fru5dFW31MJu4m/p3dq1ezEMDV/+ahsWWEbg15IOZ71
+         ckC3C/C93CVAo7II+NUb3FdbuD1hskiLKl3qDstZluYNSwIJOVpdc+Q0N1hqjg9v4s/C
+         oPnw==
+X-Forwarded-Encrypted: i=1; AJvYcCX1nrApTnQd9YclYTQgp3hcvqT4Z1tKZN/ZyUPXlLuPK86fkW5cBkrlPpWaLdrbhU5HpkE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNUyXVSbXlAMsz2lNVD8HgmXBXgFDNAtW6LPHvwuUj8CEsL7DG
+	XqGqjJgTKRNL/HsB7BII6BjtU1eelYDIwEq1G3D0YtCzpPJ5aCW/o/jb
+X-Gm-Gg: AZuq6aLGVzLZdKZQjo/INN3a8ztSWhCd6HWlHvXEuc5GLQqkwJCnZ5He6ahZeJcYWQK
+	hrFJ2MWukNzTXnLktDG0ATVFBZVJE8JMNK4qUt6J9Ot6j6wK4x3hxm7qQZBBmnWF7+mGh6YrpbF
+	RXpOHnSJA4y2fSyD/Mh4lbLpKqPMxKQIB9pfRMEOsjxYsrHL3/WluKcAC71urVnqpoOjTr2zdSd
+	yqPHgWZS+kZIEmRy3BeK31ya8GX9aPQcuPaNCR9Dd0j/T5TPxTqwpBVgZexKtsWfKjTEvQuEwGW
+	cfH0jFd7O7Dn3Py5E8RS7TRk5QqASwyJ0o9HG9/oacTo520QOkhFLbf261yDVnxKBZx/wOb4w+v
+	B5FcOcWeDmrJ7p+cdqsIfvcogEogQLdd/rQtWtTJ3iV5CuLO/nYcQZGq+bdB4kUt2WuHJj1bEyn
+	06gDfTCUip1QAoRrF2QN/UYvPBEwC/w+syRcCMVtC6oeLHdRtjBnq7/kO+HFQWmWcuLJ7LIdSpy
+	HqRPg==
+X-Received: by 2002:a05:6000:3104:b0:435:a2f8:1533 with SMTP id ffacd0b85a97d-4362938b45dmr29385828f8f.52.1770802316910;
+        Wed, 11 Feb 2026 01:31:56 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43783d58b4fsm3255953f8f.15.2026.02.11.01.31.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Feb 2026 01:31:56 -0800 (PST)
+Message-ID: <37abfe28-ff89-460a-962d-4503ec3f7975@gmail.com>
+Date: Wed, 11 Feb 2026 09:31:53 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aYvV2W5pcvqZig8S@nand.local>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy PATCH v6 1/3] environment: stop storing
+ `core.attributesFile` globally
+To: Bello Caleb Olamide <belkid98@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, toon@iotcl.com,
+ christian.couder@gmail.com, usmanakinyemi202@gmail.com,
+ kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com,
+ phillip.wood@dunelm.org.uk
+References: <aYsEpvFwCSHb5DYO@ubuntu>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <aYsEpvFwCSHb5DYO@ubuntu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 10, 2026 at 08:05:29PM -0500, Taylor Blau wrote:
+Thanks for the backtrace which helped me spot the problem though I 
+should have spotted this yesterday. The problem is in 
+initialize_repository()
 
-> > diff --git a/http-push.c b/http-push.c
-> > index 60a9b75620..ddb9948352 100644
-> > --- a/http-push.c
-> > +++ b/http-push.c
-> > @@ -716,6 +716,10 @@ static int fetch_indices(void)
-> >  	case HTTP_MISSING_TARGET:
-> >  		ret = 0;
-> >  		break;
-> > +	case HTTP_RATE_LIMITED:
-> > +		error(_("rate limited by '%s', please try again later"), repo->url);
-> > +		ret = -1;
-> > +		break;
-> >  	default:
-> >  		ret = -1;
-> >  	}
-> > @@ -1548,6 +1552,10 @@ static int remote_exists(const char *path)
-> >  	case HTTP_MISSING_TARGET:
-> >  		ret = 0;
-> >  		break;
-> > +	case HTTP_RATE_LIMITED:
-> > +		error(_("rate limited by '%s', please try again later"), url);
-> > +		ret = -1;
-> > +		break;
+>   void initialize_repository(struct repository *repo)
+>   {
+> +	if (repo->initialized)
+> +		BUG("repository initialized already");
+> +	repo->initialized = true;
+> +
+>   	repo->remote_state = remote_state_new();
+>   	repo->parsed_objects = parsed_object_pool_new(repo);
+>   	ALLOC_ARRAY(repo->index, 1);
+>   	index_state_init(repo->index, repo);
+>   	repo->check_deprecated_config = true;
+> +	repo_config_values_init(repo_config_values(repo));
+
+Here you need to use repo->config_values_private_ instead of using the 
+accessor as it is fine to initialize the config values to their defaults 
+in any instance, it is only when we read them that we want to assert 
+that we're reading from "the_repository".
+
+Thanks
+
+Phillip
+
+>   
+>   	/*
+>   	 * When a command runs inside a repository, it learns what
 > 
-> I wonder if there is an opportunity to DRY this up a bit? I think the
-> case in fetch_indices() is very similar to remote_Exists(), and ditto
-> for fetch_indices() in the http-walker.c code.
-
-IMHO it is not worth trying to clean up http-push here. It's the dumb
-push-over-webdav implementation that nobody uses. I'd actually be happy
-to see it ripped out, but am too lazy to go through the effort of a big
-deprecation period myself.
-
-So I would actually consider not touching this code at all, and letting
-it continue to behave as it did before (returning -1 and not producing
-any specialized message). Though I suppose in remote_exists() we'd fail
-to even print the curl error anymore, which would be a regression.
-
-Ditto for http-walker.c's fetch_indices() function. It is used only for
-dumb-http fetches (which are forbidden by most forges). And if not
-touched at all, it would continue to function in the same way (not
-producing any specialized message).
-
-> As a separate but related note, I don't know if this function properly
-> handles header continuations for Retry-After headers, but in practice I
-> suspect it doesn't matter, as servers should not be continuing
-> Retry-After headers across multiple lines.
-
-Yeah, I noticed that, too. And all of the parsing actually makes me
-nervous. Surely curl can do some of this for us?
-
-...studies some manpages...
-
-Ah, indeed. How about:
-
-  curl_off_t wait = 0;
-  curl_easy_getinfo(slot->curl, CURLINFO_RETRY_AFTER, &wait);
-
-You can see how we already dig out similar info in finish_active_slot().
-And more extended (but optional) info in http_request(). It looks like
-CURLINFO_RETRY_AFTER was added in 7.66.0, so this would have to be a
-conditional feature at build-time. But that seems like a reasonable
-trade-off.
-
-  Side note: the obvious question is why we need fwrite_wwwauth() in the
-  first place. And the answer is that curl does not provide structured
-  access to the information from those headers. It does make me wonder
-  if we could be using curl_easy_header() to get rid of all of this
-  manual parsing and continuation code. That was introduced in 7.83.0,
-  which would again make it conditional. But it seems like a nicer path
-  forward for us. Anyway, way out of scope for this patch.
-
-> > @@ -1660,44 +1729,98 @@ void run_active_slot(struct active_request_slot *slot)
-> [...]
-> > -	while (!finished) {
-> > +	while (waiting_for_delay || !finished) {
-> > +		if (waiting_for_delay) {
-> > +			gettimeofday(&current_time, NULL);
-> > +			elapsed_time.tv_sec = current_time.tv_sec - start_time.tv_sec;
-> > +			elapsed_time.tv_usec = current_time.tv_usec - start_time.tv_usec;
-> > +			if (elapsed_time.tv_usec < 0) {
-> > +				elapsed_time.tv_sec--;
-> > +				elapsed_time.tv_usec += 1000000;
-> > +			}
-> > +
-> > +			if (elapsed_time.tv_sec >= slot->retry_delay_seconds) {
-> > +				slot->retry_delay_seconds = -1;
-> > +				waiting_for_delay = 0;
-> > +
-> > +				if (slot_not_started)
-> > +					return;
+> Some of the tests that fail are related to the submodule and a
+> couple output is shown below
 > 
-> I wonder if run_active_slot() is the right place for these changes or if
-> it should be handled separately. I think it may be somewhat surprising
-> for run_active_slot() to return without actually running the slot, even
-> if the slot is marked as "active" but just waiting for a delay.
-
-Yeah, I agree. The point of run_active_slot() is to run the slot to
-completion (I think; it has been a while since I've had to dig into any
-of this). So I'd either expect it to handle the retry and delay itself
-internally, or to return the failed request to the caller, who will then
-delay and initiate the retry.
-
-That's all assuming we're making one request at a time (which I think is
-mostly all that run_active_slot() handles). There's a much more
-complicated question when we have multiple simultaneous requests, which
-we'd do only with the dumb protocol (trying to fetch multiple objects at
-once). In that case we need to be queuing requests. And I _think_ that
-might be what this code is trying to do. But I'm not sure if it would
-actually work, as we try to advance those via step_active_slots().
-
-> OTOH, like I mentioned earlier, I am far from an expert in this part of
-> the code, so perhaps this is totally OK. shortlog says that Peff (CC'd)
-> is among the most active contributors to this file in the past year, so
-> I'll be curious what he thinks as well.
-
-Most of the details of this active slot stuff have long been paged out
-of my memory. It's all _so_ messy because of the desire for the
-dumb-http code to handle multiple requests. But for smart-http (and I
-would be perfectly content for this feature to only apply there), we
-could probably just focus on run_one_slot(), I'd think.
-
-I.e., what I'd expect the simplest form of the patch to look like is
-roughly:
-
-  - teach handle_curl_result() to recognize 429 and pull out the
-    retry-after value, returning HTTP_RETRY
-
-  - in run_one_slot(), recognize HTTP_RETRY and if appropriate, sleep
-    and retry
-
-I do wonder if even that might be too low-level, though. For a real
-large request, we'll be streaming data into the request, and I'm not
-sure we _can_ retry. We send a probe_rpc() first in that case to try to
-resolve issues like credential-filling. But there's nothing to say that
-we can't get a 200 on the probe and a 429 on the real request.
-
-Which I guess implies to me that http_request_reauth() should be where
-the magic happens. And it somewhat does in this patch, but...why not do
-the sleeping there, and why push it all the way down into
-run_active_slot()?
-
-I know I'm kind of talking in circles here, which is indicative of my
-confusion (and the general complexity of the http code). But as the
-patch stands, I'm not really convinced which cases it is trying to cover
-(single requests vs multi, repeatable requests vs streaming POSTs), how
-well it covers them, and that it is doing it as simply as possible (or
-at least keeping the logic together).
-
-> > @@ -518,21 +529,25 @@ static struct discovery *discover_refs(const char *service, int for_push)
-> >  	case HTTP_OK:
-> >  		break;
-> >  	case HTTP_MISSING_TARGET:
-> > -		show_http_message(&type, &charset, &buffer);
-> > -		die(_("repository '%s' not found"),
-> > -		    transport_anonymize_url(url.buf));
-> > +		show_http_message_fatal(&type, &charset, &buffer,
-> > +					_("repository '%s' not found"),
-> > +					transport_anonymize_url(url.buf));
+> ./t7412-submodule-absorbgitdirs.sh  -i -v
+> ...
+> Initialized empty Git repository in /home/ubuntu/Code/open_source/git/t/trash directory.t7412-submodule-absorbgitdirs/sub1/.git/
+> [master (root-commit) 50e526b] first
+>   Author: A U Thor <author@example.com>
+>   1 file changed, 1 insertion(+)
+>   create mode 100644 first.t
+> BUG: repository.c:56: trying to read config from wrong repository instance
+> Aborted (core dumped)
+> not ok 1 - setup a real submodule
+> #
+> # cwd="$(pwd)" &&
+> # git init sub1 &&
+> # test_commit -C sub1 first &&
+> # git submodule add ./sub1 &&
+> # test_tick &&
+> # git commit -m superproject
+> #
+> 1..1
 > 
-> Thanks for taking my suggestion here as well. I think that the end
-> result reads much cleaner, though I do think that introducing the new
-> show_http_message_fatal() function and rewriting the existing code
-> should happen in a preparatory commit before this one to more clearly
-> separate the changes.
-
-Yeah, I had the same thought.
-
-> > diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-> > index 5091db949b..8a43261ffc 100644
-> > --- a/t/lib-httpd.sh
-> > +++ b/t/lib-httpd.sh
+> ./t4027-diff-submodule.sh  -i -v
+> ...
+> Initialized empty Git repository in /home/ubuntu/Code/open_source/git/t/trash directory.t4027-diff-submodule/sub/.git/
+> [master (root-commit) 4431e0b] submodule
+>   Author: A U Thor <author@example.com>
+>   1 file changed, 1 insertion(+)
+>   create mode 100644 world
+> BUG: repository.c:56: trying to read config from wrong repository instance
+> Aborted (core dumped)
+> not ok 1 - setup
+> #
+> # test_tick &&
+> # test_create_repo sub &&
+> # (
+> # cd sub &&
+> # echo hello >world &&
+> # git add world &&
+> # git commit -m submodule
+> # ) &&
+> #
+> # test_tick &&
+> # echo frotz >nitfol &&
+> # git add nitfol sub &&
+> # git commit -m superproject &&
+> #
+> # (
+> # cd sub &&
+> # echo goodbye >world &&
+> # git add world &&
+> # git commit -m "submodule #2"
+> # ) &&
+> #
+> # git -C sub rev-list HEAD >revs &&
+> # set x $(cat revs) &&
+> # echo ":160000 160000 $3 $ZERO_OID M sub" >expect &&
+> # subtip=$3 subprev=$2
+> #
+> 1..1
 > 
-> I may solicit Peff's input here on the remainder of the test changes,
-> since he is much more familiar with the lib-httpd parts of the suite
-> than I am.
+> Thanks
+> 
 
-The lib-httpd parts looked about as I'd expect (and I found the use of
-custom URL components to encode the retry parameters quite clever).
-
-There were lots of uses of "date" that I suspect may give us portability
-problems. "+%s" is not even in POSIX, but maybe it is universal enough.
-But stuff like '-d "+2 seconds"' seems likely to be a GNU-ism.
-
-Using "test-tool date" might get around some of that. We even understand
-relative dates like "2 seconds ago", but I think only in the past. :-/
-So you'd probably have to do:
-
-  now=$(test-tool date timestamp now | cut -d' ' -f3)
-  then=$((now + 2))
-  test-tool date show:rfc2822 $then
-
-or something.
-
--Peff
