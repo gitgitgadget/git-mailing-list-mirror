@@ -1,131 +1,127 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA24158535
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 17:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C779427FD56
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 17:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770830480; cv=none; b=PCut3f6fKp3Bf1wX/VcqbDfii9DPFN1xbU3DpcxW3Mzr+1SGucoVh+p6ef6smHjO7lKfTstHNa5SLbu0ftDKaY/EmQu3PC5IEEQj+Cxa6GMKlEEC3Qv7zSaPJmHIIlEx0F5j/GKxvmRZ5cOryzhsmaj1aGV9ya3W82ZQwTFDpww=
+	t=1770831169; cv=none; b=AmX99+0JR5LF1PrXGwFmqezPMFxQAC/X8a5Qmk7zCCwLAYW3vxkz2goFmQUis0eOA9VhIhyTE/dfTn5N09BqpIGlugvuZwsroGgBMWMdR/HfS7uMus2QS8fkkErjnum6cCf1ZJoOmR/pWClpUAAOJUI6sXJB/PFNE4o01AtuUKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770830480; c=relaxed/simple;
-	bh=M3HCUOY6C0HzWUiRY68TmRMW2gwtC289bIc5yDdbNCE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GgXGs2srO/1Cvm0U3nqYdcUL+2tnqv5+pAG/QWEJZlshOyRbqKMr9mKNvSL21vO+7v9hKu3IrW4esKO1L5dDoONXO8vilBJu92XAILqdcHtJ6/LSPtgad99T+VepibGnksEz7VqwGFKz29/R+lXvK+gwhkxR9E9j5uThcZ/zBSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HGHXkWT1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L44xLOVM; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770831169; c=relaxed/simple;
+	bh=8V32opJyqwzX5/sZZMB8pypIkmF+/XCKaVlg9Ke9RQc=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=JcJeGU+odIUUuzDVe0c9UMw07+fEhqydeL7k8nITxZrivC2fcGS7jl/Ao+EV0F/47japt7YKli76mtzAHJESbWnfpV0Hmc1LbJA2kvbB9TOntY8FYIBXJ12g38ZQKYMgTt8HrSC4Olmn5P4timPPHS9ij4ONoltN70M3vLmGzVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=dh6qzVi2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pw8oQ/F/; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HGHXkWT1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L44xLOVM"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E4B41400103;
-	Wed, 11 Feb 2026 12:21:19 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 11 Feb 2026 12:21:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770830479; x=1770916879; bh=H2nXhx1QUX
-	XU83COZhYN5seWAyfl5YGAXd9eKyN2wHE=; b=HGHXkWT11ownDnXfZc0xzy/qw2
-	a3/qVHRnML4DAu4fcUKzyPntlkOpd7F+kKHJr7fJTc7lCWZlMAlqkYzNslYJUlxb
-	4X43PdI3ez2bU7rHChKshSUWB1NJ+jBLD6YQws//SnMwi2nHgsGdjsT3aBQjgtED
-	8NFP1yhwNdWr4Yax/SR2PvNROvbnHeMdTr9BGsfEtTfyf5PSb4xFaxEU/6z+0vfi
-	/oUFjb45tMcpmCAtAIrNKelqlWkylHpzsqFrekmUGgbKn4V7zOYyoMsy1+Wg1pB1
-	OYg1absyb2adNFm7Sl2h1hEOZeAK36nseDuWrrYNTNnJS6KDvAyqfTsFoGVw==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="dh6qzVi2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pw8oQ/F/"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EDF3B14000AF;
+	Wed, 11 Feb 2026 12:32:46 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Wed, 11 Feb 2026 12:32:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1770831166;
+	 x=1770917566; bh=UQm5LfJ4JhO1cTwsBd1gBuac4Lv2CqFbclyJnXxfCWI=; b=
+	dh6qzVi2652JaG4NfhDAxb5eIeuj+BVfW9od0Q0OpNkWKhdrv4zV73XOylhRFXn8
+	SzMUx6r47vEyVGQoL4bWg5wuuK7b27Gf0JCwdpIIGNFKZlOin3R8WvH5ua9inHbn
+	3A35VxU94Cf2kKzvOq4aSKEjI3yi2d/9CzwzUr7UDglfdqiQvQ0GPbyHH6xn9ZaY
+	MB1qDxGIh66Jlj3xxHIvsDKjIUwkQW8+gAx3SOrf9ksdnrASpYbIaUmokLRjuKoS
+	rchi7EDIW5FbkNVj2NvFw5CPnisis4NzhgBU2yix5wkICl9K/IiRY8eavPZdrCRD
+	CjwcUHox6RXRC+M+TSqbkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770830479; x=1770916879; bh=H2nXhx1QUXXU83COZhYN5seWAyfl5YGAXd9
-	eKyN2wHE=; b=L44xLOVM/Vv9kY8Silgq5kZa3j+5y2hi9cjflY49vw5LEDVwPIU
-	ZH3x/flpHOk/QNkVaQDo8OUX/tgaxePKTawvdjM7QDRFCACLmvrM7qcvK6mG1uWo
-	Z9d8Oe1f2njEfbRiOHNuBOouoqzdTBYjO8PodW7s8eXP6lFxRvrptuSPFZ5yx0Fh
-	y0aINPSCM/i8f1CqyYd8FOvPWyw206n14H7TSxVFzFn/7KkZAvvyNtx59e8fJhjY
-	IGC/zAWj8epeTGhFsZxeci8tcJsIsoNOOOlDxQRzKQ/SC6CX57NNAGJ7PBSqUan0
-	Od/j1FEeeQCa6yDPS8jlyKBbbGf80Xtq5Eg==
-X-ME-Sender: <xms:jrqMae8hXevULS_quGb1RsIl2j4xVcGB5-NaxXH4GWsf98hp93hzCg>
-    <xme:jrqMaVvtptCKZDwxBF8CUA8s8er0vSiIfkDfwx4uWjZ8S8nnN_8e6j_KN0yTFbueN
-    _EwhhwB6fJA1wzU_sxvpnOphgn6SkoRCMQCYulWKtSybqIsfe-33Us>
-X-ME-Received: <xmr:jrqMaZDfIPgnN8qM3_YfYmzpHmIULwX3ItZsKiva1oX6lPdYjPO9cT3XHBP6ZkH49Hb0vvaCbZn_gg6ge3_Sqg2SQE9Lmb546A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdefudefucetufdoteggodetrf
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1770831166; x=1770917566; bh=U
+	Qm5LfJ4JhO1cTwsBd1gBuac4Lv2CqFbclyJnXxfCWI=; b=pw8oQ/F/vdaWbFpEU
+	fl6NQWsLPYs+qvMi5tKKVXegAqWN0PgObDHSxA8LHqVe28Uc/YI+l03FvXCI2gGD
+	0PA6rlPhEdDQf3avaG3/0wkroAhsuFlrdPPLquHQpcoOLiRsrsmi9zpMCIC+aIuJ
+	GUuPTvsZgVNdO2+RE7qLCAaHdcCEALvoQwWqU7Eyl/Q9OuLLUsHXgACYCT6ewgHC
+	RjDZrdGXQ/hAWyJLYYRWtqeeWuFLsvrekTDvCjsLes/+VkqqZl1WdgxZNElFWzqS
+	PQwaZJ2TboqfTOtmZSZAS14kRIxVBVbhkObhBKB81plqktZebi8/zpSzZ+VlLuw+
+	dgmiw==
+X-ME-Sender: <xms:Pr2MadfEwMUK1CjrjFry_z5KonSey0RWennN5BhDCOt5l-nwsiSxbkk>
+    <xme:Pr2MaWDNrycJ_sR6TIUNcM7ZQ98HvMbdrK5dbS5Qwdh5rzd7vBnkfcUMMN0tXd7HQ
+    bHYaZxW3AdEt5sh83uekrwOPM0EQyAGCNnNk3lqVlGcIBjQo3kXpg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdefudeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhifrghnkhhosehgihhtlhgr
-    sgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:jrqMaVWeugAzu23MhuowrOSP9G33bVOf_HopODtoPdz_UzNPViQL7w>
-    <xmx:jrqMafD9UlOCYszmslmf-EdPy4fCJ2STs5Lt2WmJzmOE3wtQKEJzvA>
-    <xmx:jrqMaQ8NUpKE4PK5fsUyfT_0uZG0hP8EOi_P4R-fU3EsBgt-tmnk2g>
-    <xmx:jrqMaeEcaphtzUdRMAH6xpzYUAgqrTs_8_9QMe1gGTpsrSi9CRvK3w>
-    <xmx:j7qMacgZMbd4Xm_O6jjht0_GKxCCdY_T1QQ6O7PWicac2tg2cCjbXhQT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Feb 2026 12:21:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Lukas Wanko <lwanko@gitlab.com>
-Subject: Re: [PATCH] builtin/pack-objects: don't fetch objects when merging
- packs
-In-Reply-To: <20260211-pks-pack-objects-stdin-skip-backfill-fetch-v1-1-870cad56d8ae@pks.im>
-	(Patrick Steinhardt's message of "Wed, 11 Feb 2026 13:44:59 +0100")
-References: <20260211-pks-pack-objects-stdin-skip-backfill-fetch-v1-1-870cad56d8ae@pks.im>
-Date: Wed, 11 Feb 2026 09:21:16 -0800
-Message-ID: <xmqqseb7urg3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
+    grmhgvqeenucggtffrrghtthgvrhhnpeetgfevveduheehjefhleefuefgheevuddtuedu
+    feeifeelfefhjefhvdetleejhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehk
+    hhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
+    thhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Pr2MaTbpwNWk3D-A88mebJxMgMUNDcH2j1FSpQy5O1zLej5r_E6g9g>
+    <xmx:Pr2MaaJTPA-PjWz2cgbdRv7mWKGL-QwtM5ls68wjq3nGwPPDWXXPgg>
+    <xmx:Pr2MaZCjjK9VWCJxc6ZSxbR81hae8VEyzBlxjCAuQyENyJNNbBbZRg>
+    <xmx:Pr2MaXqFJs3VA5qJad-jmCxL2r7MTb8_Xlnh0YipXC6MDUYItRbaMA>
+    <xmx:Pr2MaY8XtXHtN418rrviS84NF9CNcokinku1p4UhBHI9R0Bxq7GMiyLH>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B816A1EA006B; Wed, 11 Feb 2026 12:32:46 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AS5hoZxEI1Uc
+Date: Wed, 11 Feb 2026 18:32:15 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org, =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Message-Id: <1a05ca33-dda0-4315-970d-b61a3f48a8f4@app.fastmail.com>
+In-Reply-To: <git-am_gitlinks.322@msgid.xyz>
+References: <doc_am_gitlinks_and_am.messageId.321@msgid.xyz>
+ <git-am_gitlinks.322@msgid.xyz>
+Subject: Re: [PATCH 1/4] doc: am: normalize git(1) command links
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> The "--stdin-packs" option can be used to merge objects from multiple
-> packfiles given via stdin into a new packfile. One big upside of this
-> option is that we don't have to perform a complete rev walk to enumerate
-> objects. Instead, we can simply enumerate all objects that are part of
-> the specified packfiles, which can be significantly faster in very large
-> repositories.
+On Mon, Feb 9, 2026, at 18:34, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> There is one downside though: when we don't perform a rev walk we also
-> don't have a good way to learn about the respective object's names. As a
-> consequence, we cannot use the name hashes as a heuristic to get better
-> delta selection.
+> There are many mentions of commands using inline-verbatim or
+> emphasis ('). We just mention the command themselves, not specific
+> invocations like `git am <opts>`. Let=E2=80=99s link to them instead.
 >
-> We try to offset this downside though by performing a localized rev
-> walk: we queue all objects that we're about to repack as interesting,
-> and all objects from excluded packfiles as uninteresting. We then
-> perform a best-effort rev walk that allows us to fill in object names.
+> There are also many such mentions which then link to the command right
+> afterwards. Simplify to just using a link.
 >
-> There is one gotcha here though: when "--exclude-promisor-objects" has
-> not been given we will perform backfill fetches for any promised objects
-> that are missing. This used to not be an issue though as this option was
-> mutually exclusive with "--stdin-packs". But that has changed recently,
-> and starting with dcc9c7ef47 (builtin/repack: handle promisor packs with
-> geometric repacking, 2026-01-05) we will now repack promisor packs
-> during geometric compaction. The consequence is that a geometric repack
-> may now perform a bunch of backfill fetches.
+> Also remove =E2=80=9Csee <gitlink>=E2=80=9D phrases where they have no=
+w already
+> been mentioned.
 >
-> We of course cannot passe "--exclude-promisor-objects" to fix this
-> issue -- after all, the whole intent is to repack objects part of a
-> promisor pack. But arguably we don't have to: the rev walk is intended
-> as best effort, and we already configure it to ignore missing links to
-> other objects. So we can adapt the walk to unconditionally disable
-> fetching any missing objects.
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>[snip]
+> diff --git a/Documentation/git-am.adoc b/Documentation/git-am.adoc
+>[snip]
+>  Valid <action> for the `--whitespace` option are:
+>  `nowarn`, `warn`, `fix`, `error`, and `error-all`.
+> @@ -205,7 +203,8 @@ applying.
+>  	to the screen before exiting.  This overrides the
+>  	standard message informing you to use `--continue`
+>  	or `--skip` to handle the failure.  This is solely
+> -	for internal use between 'git rebase' and 'git am'.
+> +	for internal use between linkgit:git-rebase[1] and
+> +	linkgit:git-am[1].
 
-"passe" -> "pass".
+Jean-No=C3=ABl, regarding [this]. This change adds a lot of self-referen=
+ces:
+git-am(1) inside the git-am(1) doc. Is that problematic?
 
-Other than that, very nicely described, and the implementation is
-surprisingly simple (thanks to a single global variable, and
-asumption that makes it safe to use such a single global variable,
-i.e., there is just one packing operation running at a time).
+[this]: https://lore.kernel.org/git/1a4060f1-6607-4b50-859d-927642eb34df=
+@free.fr/
 
-Will queue.  Thanks.
+>[snip]
