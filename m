@@ -1,275 +1,152 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
+Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AC435FF4C
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 09:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770803097; cv=none; b=YA6TnlOgOyM1xQcBjQW8XJ8bS5JbLczSpFyQUKhz6ytwcxRlB8/rUp1jH7ug9x5lV/GeVTbwcOK+QTmRp2gIEyb9uRmeNqzqodq7MYq97jxBUGDnhaaR4ZZvcWmELeFgwYhNuBqB4TBFgYiMUUM4p+cOYQD6vpQcQvmMoD4bQoY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770803097; c=relaxed/simple;
-	bh=CoTCYUieW9f/9u1vPeh/vIz0CY+yHtjgNwKcDvflUSc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=di3jGsyg8+0ON2EjTCCav7YpiTpLvKT4/UM9xghA8hW76ghzLG664nrKI8vDU8ZaxTNwIU6MX+15Zzyer9u2yZIs1WrC3fvsAgyif0Y2ddkkSyHcox2kKnzb0kcCr0VpePuuP2g0X3jPcTEu1+/CVQ2ihsHTXaX0yVK4GJwUyqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qy1t7JSl; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8AB227EB9
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 10:27:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770805624; cv=pass; b=SZfnmawBD31U6J5JA/OLNi5/Qe/aeJ7rl9QUf5kzKxshOg6uysM3LHEP52YnFvZCXYBBKoNVTwEMusqXxXPK21IBTfjBE6xHk3zfjZitwQ4ZV6FsoRABHCJigIiilMrMsAaRHQp1XIHTxWs7AZ4+Ad6QmMqS1vcOlZQtKdjr9Cc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770805624; c=relaxed/simple;
+	bh=lMQR1sVTKQ0IyTg1gXvhR4+9yOF5doyxnQOssMxYPQk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H6rA2EPJYMYZZR9TI7cRYvKimseocGoStBBaPN+JsW1T+sSMZQReYA9SzWpG04AYzNFh/FY4iKO7BYOS8GyoTZ5HM7Zv4UGw+GDS6es3g5Q8T/HrazNJDMZ9Hy/epugHE4eynt81wb/pz10PndIs91fX6H8x0khIMI7Mtmzfi4s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J6GrZ5Mr; arc=pass smtp.client-ip=209.85.222.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qy1t7JSl"
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-48069a48629so59465585e9.0
-        for <git@vger.kernel.org>; Wed, 11 Feb 2026 01:44:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J6GrZ5Mr"
+Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-948d0d5d4d0so1089312241.3
+        for <git@vger.kernel.org>; Wed, 11 Feb 2026 02:27:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770805622; cv=none;
+        d=google.com; s=arc-20240605;
+        b=fzpTqedhvfrgR3VcVk72aZiArNFvYROPtAskYY4tmTpy/vHa4qL1dw0p0ip1rXt2jC
+         mma1AQ/rxs2P2kQnuVXakhtqpXQ6Dh48KLuXVSOeA8zrt1FSuPzv6jV2rEIQ1W1ZwyFR
+         RTR3EesQE5asUG87xKHRfxMe334rJkRhHviW0xkf/ZEWTfI8UPzBCsdMicWRY8lNCoTg
+         Bnlqzh0RuCzSb2KGOI5lpTEPKlp6mWC2kabcxwYyVnNpKlQ4PT3AY9TUFpEAGN/2epmZ
+         uh0hJfvd3CH+sYn2zhj+4xvQQKixsLJc5QdKUXB45ATh2m/n6frtwK2JN86KbYB4El2u
+         R5OQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=/H8qeNoMjgp+duk7qmtEiZiepdEaom2snB7vZRt4lNU=;
+        fh=MPMvdI4OKdwoNdUqlzx/FPwWfkTJ3ZzCcYeiizfGmP8=;
+        b=hRPnCI+BjApMnG79/94fzuwG9SUMP5GPnOJLFpJe19LWD6ezFteIwp0ACe00zKchQv
+         iK/yCucS5oqMeagpP6wpm2pKlU1D1XPAyFOCYpthY1inkckuVADsRwYNSSLG8HkTRrNb
+         PI73xM1IrGlJF0jSQCXc+acGO5/op4atkfP3ToS78sKapeBDqnbUcP+AQspv1GWAfN6P
+         cuXff86Ni8rWkC1j9BiBG4YVomb4eUqnmKadwAnAQWhtpUGF7ug5RgRh1Fnb8JPdksjF
+         /NbjUMiaRs3M83iGzjkv431H4kXFus2IwsJdatqqoYbtm9MCASpY+HhXMTfencGeirNq
+         W81g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770803093; x=1771407893; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2MDS6JahC3nmKYDjCtgmLBu9IwTJv55e55JlqbADc4A=;
-        b=Qy1t7JSl9zTUZ7Fec1Tv9YhI97kAQrVTGj4cCyaFp4eH1j9d04W+KeQQHrXmNH7wn4
-         TMechJJCKKIOCBskbDBGOlKBf3bQKX0TPxriQWOfIQgL0xoBsp+Q5FAIZPwojmrPZOnX
-         7+YbBQ8AA15y6VXXwcnWFqLDb6Eclm6oVxzZiX9hnjnJc7xxOYbtuzDSq7/2ET+f+kVq
-         bxWnYFQwg+PoQa7txXOhSi1KUh42lud1HxcaI5bS4A11CmC8JYzIh/UiYk/9M9L33+ev
-         vKa8lZdn0P7Uan5L1OwL6MEYbEi8sdPzqh7/jB3qOsTAKe33cq1n/iXmWhaHwpdgsgAc
-         Nxsw==
+        d=gmail.com; s=20230601; t=1770805622; x=1771410422; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/H8qeNoMjgp+duk7qmtEiZiepdEaom2snB7vZRt4lNU=;
+        b=J6GrZ5MryLAqA/nJmUAC0BUwLKcBnJw1KcND9EAJJvDC27Vs6zkkM11+uBAa8D4kIt
+         LbhVt3gphic30MwhlhPX5uMqMy3HbNv06Z9Vj5yh19XIttgLMpPgnh5ws91vgJFvxw5U
+         fEQwoDPogDKUSu/Ya3OB26VuWtuRHt3EBpgw5t35+OpsqQ8Y6+0looi/g6GoQswloihm
+         rVmVSd7ug2sxtj/IQ0rXVsk3GJLXBcY2UgRtk3yWEcQrpn7U9y78EFWGkUk+AK8K7fnr
+         d6m1Khiz48XWdgvEHGfx2p4RquLNsCyZJjPamuUFqCtTCo66pA03MiRPVPcQ3fjMdUMk
+         3nQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770803093; x=1771407893;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2MDS6JahC3nmKYDjCtgmLBu9IwTJv55e55JlqbADc4A=;
-        b=BwiVSeFY13QsdYyOD6WiFfhTUTfVuKPtvM34mT3jik93+XgsZFFZglybpVRHrN+6sU
-         /w/KSh21LeenqWTlyV/LP+4X4yf25j64sHYedq43Am4lQai/PW9IvuwCrPfRrWYlDhZn
-         A1k88KlNO3jETGMO/w5O8SFduIKRB2s5peYqpUr4bM6STFjtUhzjdVH9XKYVJnzIeW6P
-         uMbdd7D7HZ5MgXkDbUdcBCTk999d+Bkgzc78umkHtNww7hkx6GSkfdggtKsd+IOiYFFt
-         h1IIh/UDGzmm5aB3OoHWXcyMrPn9/Z90lLQeoQtNZxYchlldEcqvk7rgvAVl4qsX4aU5
-         DpvQ==
-X-Gm-Message-State: AOJu0Yy7iN0mYXg6cAO9Q0Guif8xaGf9Eq+SICxwXWx5Kg1Pjfs0LgOE
-	ukvPv81IFhDpuB1FR80zKwLpWM7RE35zQVozDqX0/bMh3SHlgGuvYOsY67K5bpbc
-X-Gm-Gg: AZuq6aIk82Jyzh9fAz9AsCFpEYsyx7dA7si+GnaoSMMH4SQtyb1zjmtbcNMi1Qzb1e7
-	089cnASiurQrN2EokVFagZaxmZZlK2A84z/anzvbGHPzB1IlgV6A2gzDSMc6grPRcfsOVahtHDD
-	p251CFOEL8gNgn6qBH5UuET+GJQ5wM+DF5vxvwmks6EIf+eeQiqOBek92VRYxkSlRCMypQ15LKa
-	LnWM81cKbpoIqTKb2CimVdWex+e71YDv8rOp2YvxWrygR3SPm6dQLEJBVq5x4WwsChwjG0yvatv
-	zL2c364/YeUZuHDQJbb3jn2qq0U8MlNBXGubPZCBCFSeZ6dr40/6e+7/VIH64jA2iN8w+VRZUdD
-	Bpvxp5Vstjh4C0seDldQTGNoMaCdS0MDna2bX3QJicUd4L+6iIbvCKJuvjYFWGfe8PMZG6T7aaS
-	sxICqx8oOIcWg7BbgIcyyQMjxZc7fszW1qMShX84SSWFYno34xQ2Oq4Vtykc8Zl8OBkg5CxRLLe
-	3LXEA==
-X-Received: by 2002:a05:600c:4ed3:b0:480:4b59:932e with SMTP id 5b1f17b1804b1-483507e184amr68187425e9.11.1770803092554;
-        Wed, 11 Feb 2026 01:44:52 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4835a610e72sm18137965e9.2.2026.02.11.01.44.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Feb 2026 01:44:51 -0800 (PST)
-Message-ID: <4a566010-821b-4078-9563-9ca00ada55a0@gmail.com>
-Date: Wed, 11 Feb 2026 09:44:48 +0000
+        d=1e100.net; s=20230601; t=1770805622; x=1771410422;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/H8qeNoMjgp+duk7qmtEiZiepdEaom2snB7vZRt4lNU=;
+        b=qdYXcqJh8z9lZMtExOodoqqQLGU645elnynyB1AEfDffKecYRBp+cJGOs7r1QL8mPl
+         C4Ootp1ysIGaKC3VRUjYeAgjMtQTy/Tczf2iI4b/TppgZdW7DFvtxqN4F51H6z0fGEUh
+         NWdKv2lBGkPa6RUckteqWJDFBBWNvrSYvYZ7m78i9Vyzcx5D5cKKIF8I7MJJSVJiSyiy
+         mC6fOaUDzszMVFQwnVXxjHoGpDidP7UrPrP1Q5LPOzypLeXvX4AUPSkV37CJndzcfNaT
+         XABnD4j0izCNcD2sIvrVUXoh9P+WdGO7f5KQmydwfiviBVjCmkohGxi4xkA5PLUMvE9E
+         4vRw==
+X-Gm-Message-State: AOJu0Yyl7C4wW+kd+wu87TTTHfkwlxfSpwpVtLahHBUZaLc7KFuTrhU4
+	kA0GWBHpKh/7yquWGrMNezADV75mF0C87jBXkRFye81C9PIMiVzzapdSL3ty3hwXouxFep4KO2G
+	6llnw1MRKN64O86JImPloiCWQi5suJAI=
+X-Gm-Gg: AZuq6aIgZsfBRzSUDw8TVwzV4A36cY0f2O5kHj/o4pXOE5ULjLhJBu4zfPhxaIhoMRE
+	AK2GG8Mu9aGASn0Wlw6z4x64eWuRpLWRZN2AVbCdILBPZ4Es6a+4AV3a93JNHxxoFC0dI4U3y62
+	6A9leDyyZDktoYAAFcFp/2floDKDamQ+R4NK0nfqxHwQoWtLd1bBNjYMAUyqSkG+6vSh2Rq1svQ
+	qxK9CUOcugHhT1V+dFNNyObcHU1KLgNElsXkNYs4r95OphUqeZ8GWjxm7nxrm9udK3KyP1NJuvf
+	kU3zwKg=
+X-Received: by 2002:a05:6102:358f:b0:5db:cc69:7399 with SMTP id
+ ada2fe7eead31-5fae8a26639mr5431615137.5.1770805621740; Wed, 11 Feb 2026
+ 02:27:01 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 Feb 2026 02:27:00 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 Feb 2026 02:27:00 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260210224401.GA1836788@coredump.intra.peff.net>
+References: <20260209-kn-alternate-ref-dir-v5-0-740899834ceb@gmail.com>
+ <20260209-kn-alternate-ref-dir-v5-3-740899834ceb@gmail.com> <20260210224401.GA1836788@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] meson: regenerate config-list.h when Documentation
- changes
-To: Patrick Steinhardt <ps@pks.im>,
- "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Evan Martin <evan.martin@gmail.com>
-References: <aYn8XKv2hH2HX2xO@pks.im>
- <20260209215015.25867-1-ben.knoble+github@gmail.com>
- <aYwzAt-dugh_acj9@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <aYwzAt-dugh_acj9@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date: Wed, 11 Feb 2026 02:27:00 -0800
+X-Gm-Features: AZwV_QgsMRb3Uwa1OQmcROaC2rrv7MyWMQ1JK3KYSNSV-bSvtp2Kh7JGvfuz9YE
+Message-ID: <CAOLa=ZS00qJuRvDA0Ud34MiUAPuSMTe7M76fSWXmHmbPtc2wsw@mail.gmail.com>
+Subject: Re: [PATCH v5 3/4] refs: allow reference location in refstorage config
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
+	gitster@pobox.com
+Content-Type: multipart/mixed; boundary="0000000000000cfc10064a89d08b"
 
-On 11/02/2026 07:42, Patrick Steinhardt wrote:
-> On Mon, Feb 09, 2026 at 04:50:06PM -0500, D. Ben Knoble wrote:
->>> On Sat, Feb 07, 2026 at 04:59:17PM -0500, D. Ben Knoble wrote:
-> [snip]
->> Only, things are behaving oddly. For example:
->>
->>      λ meson setup build2
->>      λ ninja -C build2
->>
->> works fine, but
->>
->>      λ ls -l build2/config*
->>      -rw-r--r-- 1 benknoble benknoble 17169  9 févr. 16:39 build2/config-list.h
->>
->> I don't see the dependency file.
-> 
->> Further, re-building seems to get stuck (I get
->> similar symptoms if I add or remove a relevant config.adoc file, but let's keep
->> it simple for now):
->>
->>      λ ninja -C build2
->>      ninja: Entering directory `build2'
->>      [1/28] Generating GIT-VERSION-FILE with a custom command (wrapped by meson to set env)
-> 
-> With "stuck" you mean that it doesn't do anything, or that it doesn't
-> actually rebuild?
-> 
-> I guess it kind of makes sense that a new file wouldn't trigger a
-> rebuild, even though I would have expected a removed one to trigger one.
-> After all, the dependency file only tracks the set of _existing_ files
-> so that we know when to rebuild, and of course the dependency file only
-> gets regenerated in case any of those files changes.
+--0000000000000cfc10064a89d08b
+Content-Type: text/plain; charset="UTF-8"
 
-If anyone adds a new file under Documentation/config/ they will need to 
-update Documentation/config.adoc which should then trigger the rebuild. 
-That rebuld will then add the new file to the list of dependencies. If 
-they remove a file we should pick that up with the dependencies that are 
-already listed.
+Jeff King <peff@peff.net> writes:
 
-Do we need to create the depfile when meson is setup? What does meson do 
-when the depfile is missing?
+> On Mon, Feb 09, 2026 at 04:58:20PM +0100, Karthik Nayak wrote:
+>
+>> +static void parse_reference_uri(const char *value, char **format,
+>> +				char **payload)
+>> +{
+>> +	char *schema_end;
+>> +
+>> +	schema_end = strstr(value, "://");
+>> +	if (!schema_end) {
+>> +		*format = xstrdup(value);
+>> +		*payload = NULL;
+>> +	} else {
+>> +		*format = xstrndup(value, schema_end - value);
+>> +		*payload = xstrdup_or_null(schema_end + 3);
+>> +	}
+>> +}
+>
+> The schema_end variable should be "const" here. Otherwise new versions
+> of gcc/glibc will complain that the strstr() implicitly removes the
+> const from value (and compilation with DEVELOPER=1 fails). More details
+> in this thread:
+>
+>   https://lore.kernel.org/git/e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com/
+>
+> -Peff
 
-> The thing is that build systems like Meson really want to know the list
-> of files ahead of time so that they can have an optimal build graph. So
-> we could of course list all the files that we actually depend on. But I
-> guess that's something we want to avoid?
-> 
-> There's another, alternative approach: you can have a separate build
-> step that's marked as `build_always_stale: true` that lists all the
-> config files. This step would then always run, and it would only update
-> its target file in case any of the files has changed.
+Thanks for the hint, my Linux distribution is still on glibc 2.42 and
+didn't see the error. Will fix it in my next version.
 
-It would be really nice if we can avoid regenerating the depfile with 
-every build.
+--0000000000000cfc10064a89d08b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: b9a5962f7e6ad8c_0.1
 
-Thanks
-
-Phillip
-
-> Combined with the depfile we'd then rebuild in all cases:
-> 
->    - When a file gets added or removed, as that would cause the
->      `build_always_stale` target to be rewritten.
-> 
->    - When any of the files changes, because that would cause the
->      dependencies in the depfile to change.
-> 
-> Something like the attached patch (note that I don't perform the
-> necessary changes for the Makefile). I confirmed that it works for all
-> of the above cases.
-> 
-> Thanks!
-> 
-> Patrick
-> 
-> --- >8 ---
-> 
-> diff --git a/generate-configlist.sh b/generate-configlist.sh
-> index 75c39ade20..17605e6f77 100755
-> --- a/generate-configlist.sh
-> +++ b/generate-configlist.sh
-> @@ -1,13 +1,6 @@
->   #!/bin/sh
->   
-> -SOURCE_DIR="$1"
-> -OUTPUT="$2"
-> -
-> -if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
-> -then
-> -	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-> -	exit 1
-> -fi
-> +set -e
->   
->   print_config_list () {
->   	cat <<EOF
-> @@ -30,9 +23,50 @@ EOF
->   EOF
->   }
->   
-> -{
-> -	echo "/* Automatically generated by generate-configlist.sh */"
-> -	echo
-> -	echo
-> -	print_config_list
-> -} >"$OUTPUT"
-> +case "$1" in
-> +generate)
-> +	SOURCE_DIR="$2"
-> +	OUTPUT="$3"
-> +	DEPFILE="$4"
-> +
-> +	if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
-> +	then
-> +		echo >&2 "USAGE: $0 generate <SOURCE_DIR> <OUTPUT>"
-> +		exit 1
-> +	fi
-> +
-> +	if test -n "$DEPFILE"
-> +	then
-> +		printf "$OUTPUT: %s\n" "$SOURCE_DIR"/Documentation/*config.adoc \
-> +			"$SOURCE_DIR"/Documentation/config/*.adoc >"$DEPFILE"
-> +	fi
-> +
-> +	{
-> +		echo "/* Automatically generated by generate-configlist.sh */"
-> +		echo
-> +		echo
-> +		print_config_list
-> +	} >"$OUTPUT"
-> +	;;
-> +deps)
-> +	SOURCE_DIR="$2"
-> +	OUTPUT="$3"
-> +
-> +	if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
-> +	then
-> +		echo >&2 "USAGE: $0 deps <SOURCE_DIR> <OUTPUT>"
-> +		exit 1
-> +	fi
-> +
-> +	TMPFILE=$(mktemp "$OUTPUT".XXXXXX)
-> +	printf "%s\n" "$SOURCE_DIR"/Documentation/*config.adoc \
-> +		"$SOURCE_DIR"/Documentation/config/*.adoc | sort >"$TMPFILE"
-> +
-> +	if ! test -f "$OUTPUT" || ! cmp "$TMPFILE" "$OUTPUT" >/dev/null
-> +	then
-> +		mv "$TMPFILE" "$OUTPUT"
-> +	else
-> +		rm "$TMPFILE"
-> +	fi
-> +	;;
-> +esac
-> diff --git a/meson.build b/meson.build
-> index dd52efd1c8..6b9147a39a 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -716,14 +716,29 @@ if not get_option('breaking_changes')
->     builtin_sources += 'builtin/pack-redundant.c'
->   endif
->   
-> +configlist_deps = custom_target(
-> +  output: 'config-list.h.deps',
-> +  command: [
-> +    meson.current_source_dir() + '/generate-configlist.sh',
-> +    'deps',
-> +    meson.current_source_dir(),
-> +    '@OUTPUT@',
-> +  ],
-> +  build_always_stale: true,
-> +)
-> +
->   builtin_sources += custom_target(
->     output: 'config-list.h',
->     command: [
->       shell,
->       meson.current_source_dir() + '/generate-configlist.sh',
-> +    'generate',
->       meson.current_source_dir(),
->       '@OUTPUT@',
-> +    '@OUTPUT@.d',
->     ],
-> +  depends: [ configlist_deps, ],
-> +  depfile: 'config-list.h.d',
->     env: script_environment,
->   )
->   
-> 
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tTVdYTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM0M4Qy85dThlWHozeDNLYktqSEFlcnpHemw1TFovYQppMlZCVy9hdkZn
+czcrMTdrYzE2NkhUQVk2VEd5UFlyVlFwUi9yd2hSU2E5TFZSRGZDaXlPKzUxYnBvZHJ2NFU4ClQ4
+cFdEeTFCQmg0ZDZ2MGg1cXZHMjNWem10VDZ2VDJVYUhaQjdQWW0xclBOOXQxUkxwRG5qQVVBaUE0
+d3BUZksKa3drY0o4aXdMekg0aHo3UUpHcHNsbldGTDNSYUdwZ3IxMUU0ZXgrM0tYcW1FbUw3aDBi
+VXozdEMxN3AxNDdkRwpXa2pTc1hUWjVwMmRxZXorQSt5aS9Ia3VpOWt4a0FwdUxLUzF0Nm44bXlu
+RjFaNmdtY3NJZitLbFpFL3FMREZkClJrNC9aZm1oeXNrNkZvRHVwZHVUYzB1MXd6RW5aKzJlMUNa
+NHl0NnJzUzhrSkoyelU0QWtnNmhMMEU1K2JJM0wKa3BLanFLTzlFaUZrTFFhc1RqRHE2NHR1bmNs
+QTBCMmhFRmpzbVB1YVVVNWllODNMd3R1L1YzeUNNL21iVnJnOApSSmo3TUF6ZnpqdTVZV2xaZG9u
+bW13WWZwUWdhV0VRZE1rbHZFbk93aW9QR1l0RVRrOStLMUxYT0hFV3Q5bGs2CmtES1F3M1puaFJw
+Vy9jY01XOVNoVGk2Y2JtMHNzMi9IM1FZM2w0OD0KPVp5NTEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000000cfc10064a89d08b--
