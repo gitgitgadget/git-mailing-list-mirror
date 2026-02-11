@@ -1,155 +1,114 @@
-Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C133129B8E5
-	for <git@vger.kernel.org>; Wed, 11 Feb 2026 14:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED415C8EB
+	for <git@vger.kernel.org>; Wed, 11 Feb 2026 14:23:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770818716; cv=none; b=Z0teFgt49f5O2eZ14s4n8WhE95/hdt4RtO6SiZeyRZZr0r7NVy1j8KnvTPpWPGb1RCMeMs/x+kgLyIBEONn55SS4G6XBNsq89vdJoQ2WWOOIRt48r1pjaiuma0gpxyI2OUM1mWitomBWzlMyJod1wX+9UPelN/lHT3Em0Dlf2lc=
+	t=1770819795; cv=none; b=gB/rl6esgYTsIpfGbmrWuMphGXup5bfTh6SPWS1iPI0P5polX0YG9oxIcYdtQ0KEdyzb5zuLfJpKX3UUNQLi9pBqcjtDpFm4jyewFNw5fIsfgwYd3aIvrCP/ssTqwplIqGXruF4GNTLuDRMTGgDxqYneY2IFysewWBwG/oDdYlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770818716; c=relaxed/simple;
-	bh=qGy4yYf75KMTucP9aXM/OKP58U2JMDd7mkdflw+0QMo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=RYBHFXwHPdfLaFyvKdaIWHcnC8dFYLuICVdvXLajLb+zt1WOu9zLwpgBs1zrrBu5QUWoCVtVVjF94XU9x+vFK0jNmjGugt5T4PZ3WTwgsN248rQkaIYkunXHJ+IGe8YbpWNHNFk8c7RdStF+VfQimMbCIYWQKgp9wegP7jbGZ68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xqo3bdym; arc=none smtp.client-ip=209.85.218.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770819795; c=relaxed/simple;
+	bh=wb/fqdk+i46zmx6tjh4fXB9F4uYhxURAFxDRTYCjLfg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DrPaBsgCjNygjQtvrjAjxA6fVAm9U4T39DdACuCgZQXP91uguGHq2HGMp85KV28CSv6c9leAUc5kQK5gmGba/Om45umwHhQEoYAFug1UCI4LYYvV4NNvM81Zl4tLWkZGrS2uw2DZpKS5QmFYgNEJwSUw5iaHyI9B0qd9Pj4Txlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=re7QniZY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GIVCFu3r; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xqo3bdym"
-Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-b8876d1a39bso748958666b.1
-        for <git@vger.kernel.org>; Wed, 11 Feb 2026 06:05:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770818713; x=1771423513; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=roLwHroitjcRIiH9BYFw4uLlNl0zU7O8coqfFOp/tvo=;
-        b=Xqo3bdymdxG9PChqGhJydf+fVPZwSjRiC9TANyS29fS8brpILM/M/ujDz9VbBSHCx8
-         T7Vw6fgZp9yf3gzxVz4/ufPRPZvaYQO8gtsD+ZsWYACTzsMGUzxZem1XeI4JHTy/oMes
-         mkLKPFqoVfVqS0yJwxKFEZ14rcmuifL3kiNPTkbp0M03VXBlA4tEbSBcMMgANhDNIpyM
-         063u+da3EOiALb11ZWZtXdig75c7Lag3r3Lo0gbv3RhWGrTHmyjC3n6x/Bo7sdnV2nrk
-         PH6NTpF6b5PBP92CLlzi32j2O7pmmXvIBmHvqxqrhKpXuLjWx/eXFM46JWT1TgbqcVM+
-         FlkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770818713; x=1771423513;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=roLwHroitjcRIiH9BYFw4uLlNl0zU7O8coqfFOp/tvo=;
-        b=KIPi9Nlkzvt/6pKju42HMjBHT2rmH2gkGnuDdz4wbtmPEgpWHY9k0NvCaKFqofcyB3
-         qrkOpUknOaFI3c9l4H5InegGnOoXrdqIlKGoTAeHTfbul24Qpig3Hj5p5Mza0gnyLH3t
-         Z8KZEZ6e+2l7VglcLT5IpEMVkHiF2sIYET6G5EKKGizdWkkO0suRPdmy9RCN6WOLZqp+
-         5sooGmFxWaYPuNq5p/O/x/GNNOfFi1nte+w8jHJcKIruh8KKMFz8ODGTMg4pmbaePz3X
-         pTP65zXbqT/9eqIITx9HC3ep0zrcFHWDlY2m7TA8bVgFTaZrgR/v8sL1H+H8wxazvADq
-         a6UQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVWdKnWAz1MVRGpcWpR66lSBt8qzsb1yI2TB+kTfb0YdtIxKDPiMBbDcf+6Gj9NN1J0ae8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQ3KzDrr6nMUvRXt+Qxcc30VE7oJ5pIKBGl3AhyfJC3q7RylLD
-	Nd/EKY0lJy8+0N/yeLMYDzCuwoyAm6y+B6jwy/CnGmfukSpYYVkHRmpl
-X-Gm-Gg: AZuq6aIkKOvY0bueWzUJgP2dg3saYfHgMNctxEOnAGdg0dejazxz6BLtW4RK3Hd1QwP
-	0dGEcD6dFiaTZeK/10wUxovXAd7pleVyByhBwydgYsci5dHIwkU12bbvw7WyFUkCvomuUpb3dFQ
-	l5A+N0sWCVVA2vCUobCp3CA0tlE+Lau51oNNILw53pRncQR5CSXteOJVkFWrlKsZd/T/IHDgc3z
-	QIt6Ns+Ev4wj/kh1hXaTA+xv7upou8b3wOwcywdjTr67H0LX0xbFm3MWrnCOyAvjnH+C4Zgfi++
-	tg9f0SLsrePjK+JWtJ/l9LLoCiOPyI2EGHT9Cgd57fMZBXCtmTUq01b3zhPj/g1f0HEF1IDpBwC
-	6BREJ9SQLKC7CYOzFVONRD00gyw3PX9HoPDeJXDehZHtSpGOhvc9LCEeJ3ZLZHwvFuEr4o52P+p
-	LZtW/fmpGMEHpsngT2X2EuRWHupwbFWCZftOrmkhnfCI3hG4dMeASpLqeIi7wKUmUuqVK2rJ1rW
-	frJDQ==
-X-Received: by 2002:a17:907:9343:b0:b87:117f:b6f9 with SMTP id a640c23a62f3a-b8f6a92e4cdmr163322066b.8.1770818712235;
-        Wed, 11 Feb 2026 06:05:12 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8f82e70799sm20907566b.8.2026.02.11.06.05.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Feb 2026 06:05:11 -0800 (PST)
-Message-ID: <171c0724-7891-41d7-8a70-94fbbf8b43b2@gmail.com>
-Date: Wed, 11 Feb 2026 14:05:10 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="re7QniZY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GIVCFu3r"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1530C1D00151;
+	Wed, 11 Feb 2026 09:23:13 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 11 Feb 2026 09:23:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1770819792; x=1770906192; bh=Z42p+P0zie
+	mklhmFyoSp3wbwxitYt04nX6JrxNJPrOE=; b=re7QniZYrutLczxZPx3Or0oYH7
+	eZZ7X9hAHb5O6wVpJM1Kj+rKaXuitj5RHUCJBLI8szgHXl+T7pCCMaWJqEra/Ba1
+	5Hak/Y4OMrzhUZbBS5OCGIYtQMjNRUV7Tc2NXekIhPqOyE8LlXmgNfUgYqPoVu7u
+	Mnd8rH5aUrAmW2EpPK8PlbvV1MyK3/muK3AMwHCTl0R+nCC2+W4OTnvAL2EhJbl+
+	vcmhWtWpq5m7pyRqNY/sEbF+vxYgeYo+EN/AAT1vrFnE8O23Ld0KozpxoiS3c58F
+	x6QCNrkOckp9VtG6Dd/ERuWCv2sVkSvs5kke9PONwQ28Zpe0lCZlq2IGpK3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770819792; x=1770906192; bh=Z42p+P0ziemklhmFyoSp3wbwxitYt04nX6J
+	rxNJPrOE=; b=GIVCFu3rSFb77X/Y7n5IRswJ02Erw6ODfNZTl6HO9eQcFVKR3R5
+	dgcLwZVzksOL/XtNNy9d+SPB3LsNiGQ2WzXl8YUJgoVnWIZ8ndQg1NM6fLBCcdaH
+	5hBxCFwB0KS8Cx3GsVmMPShLhS3Th/1yM1EUfglxiWiokF20aEKsvfg9odjAaA6b
+	LbSgifYWjOx8Hf0psf7/ViGRmRNkWvqvIad6DcrjEF1T+59UMsfcLch1/UgmlS0L
+	FjYoqsdJlcTCGp6CJlRX9mMgdE/HbZTW692/fWMWpcndsp4teS7qWLMCxq/BnB23
+	CtpgPHLZKlxgSOIygNdTgdcBkV6d5u3Ko4g==
+X-ME-Sender: <xms:0JCMab27rH9mgQkZeUbxGrn-Ku_Ul6qv4dY4irNuyxirqtrqe-PDMA>
+    <xme:0JCMaRF-oujapk__WpnJLGd5UGClI7a0Okn0L7cO_Okvh2C8WLAbnH_LuXF_l-dnH
+    g1F7qFrRlqrgxaTVhVZVoryaZUsTNWYL-WiV-7itMIR7pRqahvjjQ>
+X-ME-Received: <xmr:0JCMaQ4BCW7TIefo7BuaJ6A1w6-80tMmt6fSvINwXtfKNpgCkiEeU8FYiRKgE1x7phi6YqdrB73w3_aaAsx6H3pZyHlRJQCiZ2Sd92fuF8_C>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvjeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
+    thhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:0JCMafsU0Oa14vJH8hcPgIoRnXBZqrz3A36FbeUJlH9rLZ1pyM1YDw>
+    <xmx:0JCMaZ6mF-iZeawx7X3kyZQDyurOgO7vY2Om0zsnWq1_urjFu799Ag>
+    <xmx:0JCMaSUzAv5ZkE0dgVhTZ2uJgsmsz-m2u0iMwKMMlhl54FWxMoxYkw>
+    <xmx:0JCMaT8Y6uQe9Oda9bYzriQE-6sdeyxRnlwqIsXxAvFr_p7FtBKSyQ>
+    <xmx:0JCMae5fKkC1qTmRrsJRqcR1cot6XaSRrgDLRbbM1MLPTqLof7GoYrDm>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Feb 2026 09:23:11 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 17371af6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Feb 2026 14:23:10 +0000 (UTC)
+Date: Wed, 11 Feb 2026 15:23:03 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: ps/object-info-bits-cleanup (was: What's cooking in git.git (Feb
+ 2026, #04))
+Message-ID: <aYyQx8Yvx1n4W5L5@pks.im>
+References: <xmqq5x84xms1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] meson: regenerate config-list.h when Documentation
- changes
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
- Junio C Hamano <gitster@pobox.com>, Evan Martin <evan.martin@gmail.com>
-References: <aYn8XKv2hH2HX2xO@pks.im>
- <20260209215015.25867-1-ben.knoble+github@gmail.com>
- <aYwzAt-dugh_acj9@pks.im> <4a566010-821b-4078-9563-9ca00ada55a0@gmail.com>
- <aYxguUQ6A1cuphCe@pks.im>
-Content-Language: en-US
-In-Reply-To: <aYxguUQ6A1cuphCe@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5x84xms1.fsf@gitster.g>
 
-On 11/02/2026 10:58, Patrick Steinhardt wrote:
-> On Wed, Feb 11, 2026 at 09:44:48AM +0000, Phillip Wood wrote:
->> On 11/02/2026 07:42, Patrick Steinhardt wrote:
->>> On Mon, Feb 09, 2026 at 04:50:06PM -0500, D. Ben Knoble wrote:
->>>>> On Sat, Feb 07, 2026 at 04:59:17PM -0500, D. Ben Knoble wrote:
->>> [snip]
->>>> Only, things are behaving oddly. For example:
->>>>
->>>>       λ meson setup build2
->>>>       λ ninja -C build2
->>>>
->>>> works fine, but
->>>>
->>>>       λ ls -l build2/config*
->>>>       -rw-r--r-- 1 benknoble benknoble 17169  9 févr. 16:39 build2/config-list.h
->>>>
->>>> I don't see the dependency file.
->>>
->>>> Further, re-building seems to get stuck (I get
->>>> similar symptoms if I add or remove a relevant config.adoc file, but let's keep
->>>> it simple for now):
->>>>
->>>>       λ ninja -C build2
->>>>       ninja: Entering directory `build2'
->>>>       [1/28] Generating GIT-VERSION-FILE with a custom command (wrapped by meson to set env)
->>>
->>> With "stuck" you mean that it doesn't do anything, or that it doesn't
->>> actually rebuild?
->>>
->>> I guess it kind of makes sense that a new file wouldn't trigger a
->>> rebuild, even though I would have expected a removed one to trigger one.
->>> After all, the dependency file only tracks the set of _existing_ files
->>> so that we know when to rebuild, and of course the dependency file only
->>> gets regenerated in case any of those files changes.
->>
->> If anyone adds a new file under Documentation/config/ they will need to
->> update Documentation/config.adoc which should then trigger the rebuild. That
->> rebuld will then add the new file to the list of dependencies. If they
->> remove a file we should pick that up with the dependencies that are already
->> listed.
+On Tue, Feb 10, 2026 at 02:21:34PM -0800, Junio C Hamano wrote:
+> * ps/object-info-bits-cleanup (2026-01-26) 3 commits
+>  - odb: drop gaps in object info flag values
+>  - builtin/fsck: fix flags passed to `odb_has_object()`
+>  - builtin/backfill: fix flags passed to `odb_has_object()`
 > 
-> Oh? Well, if that's the case then the additional changes should indeed
-> not be required.
-
-I think so. The only problem I can think of is that if you delete a 
-file, build, restore the file without changing anything else and build 
-again then config-list.h will not be rebuilt because the deleted file 
-would have been removed from the list of dependencies by the previous build.
-
->>
->> It would be really nice if we can avoid regenerating the depfile with every
->> build.
+>  A couple of bugs in use of flag bits around odb API has been
+>  corrected, and the flag bits reordered.
 > 
-> Agreed. So maybe the first patch I sent is sufficient after all?
+>  Comments?
+>  source: <20260126-b4-pks-read-object-info-flags-v1-0-e682a003b17c@pks.im>
 
-We need to add the script to the list of dependencies and reading the 
-comments in 
-https://github.com/ninja-build/ninja/blob/master/src/depfile_parser.in.cc 
-we should be backslash escaping space, hash and backslash in the 
-filename when we write the dependencies. Apart from that I think it is ok.
+The discussion on this series has wound down by now, but I'm not sure
+whether anything actionable came out of it. The biggest question was
+around whether or not to use an enum as parameter or an unsigned
+integer, but there wasn't really a clear conclusion.
 
-I guess the alternative is to bite the bullet and list these 
-dependencies explicitly as we do for other targets.
+Should I reroll this series to convert it to an enum, or should I keep
+this as-is and then we can merge this series down?
 
-Thanks
+Thanks!
 
-Phillip
-
+Patrick
