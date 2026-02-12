@@ -1,63 +1,63 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3638F2E7167
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:09:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C682E8B9F
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770890957; cv=none; b=DshvBlEyWSDtR/787y53bRMrJg1rHLzL1B4nCdTLS8hRefhXhWNje3emoEgswKdXDrwJvvF/EcHb/C431IhHeK9MyUNGLdtaeF91s6Gy152zcrtMUfbZKqKi0VU2Xxg7pVAHvtst7K0I6Y6SiYE4VoTWUR+3LJ7bNvV8M3VfaC0=
+	t=1770890958; cv=none; b=W3AOFG2qLNMLOsyU827ojot7LyDe0DJDI88YxJDTJlZynTaj5Z4ujJz7UGJSk+J/tXu6I465K9pYJ9NdyPn8Pc2YsJkwH3p8W9liAk2TA0eKVxZF9wVzC8nn1Ml49H+Csv2XdqL71KlYmM8IfwnE8X3Zz2YfS+SnUDKxEu3ypE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770890957; c=relaxed/simple;
-	bh=y8J9g/aZJm9j99kaTFtsivYsne/SL+2etcwqvjaRCHE=;
+	s=arc-20240116; t=1770890958; c=relaxed/simple;
+	bh=4whjzx16Qg9LFSSaqV7pqzDrakCu81hPtX5kA6fEmqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ne0nIKc5cCIQFqjOROqtAXbwNubgofR6aQ3CocsQyZSnobwmD/nCXOg5geRnvgUpgKUTebxV/wulWs5atB5CvQamvh2SXQLVl1xlwi/EdKa4PQF1+x//63necEKGFCoqmynZRZXJl7lf8nyKpX2IpdP9JiJpI3DkGgrC0D/LIys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NIl9Ti/H; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version; b=RQunB2pi4cineqYBXd6o63x5lu0gheKh3vAXSHddvhxqKC9IVcuVSejNEOS4CLOOdug7FtdNrhlD9/7Ce/3UO3fNgL6IwKMKhuW/7xNHXXcqXL4kus1bWFnmdMYVnRDLSBpwL6PZwX+ny2CqZzH2GPNYlp7+lhj/SqMaxArZAYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hm1Ug2YI; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NIl9Ti/H"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-4359228b7c6so4161758f8f.2
-        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:09:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hm1Ug2YI"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-43767807cf3so3332662f8f.1
+        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:09:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770890953; x=1771495753; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770890952; x=1771495752; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PJKAnMpSpHx+vU1EYQWdEDD3LRNhWVzTGIKPE3Pgcgw=;
-        b=NIl9Ti/HOqvZm3NWXfmGS1RKyoPmCVHpCKb08iv4ySy6n2YKqJFJ9xu5qZecNW1rmA
-         3sgxAJ4Ru3MKoW0wZcpwgJxklomtIOlyTs0NWlWuzEAZNX6B1LMS86vD96wcan3O0Y6b
-         jihxz+eF5Gk9Rw67QCTiUPv9fExoxSuD+4BKnFtz9b7Jzy7qLfY3BIFu01ArWRyKB9F2
-         7Tnu2XtiSQJa3cMzI+3FAJtOjmG0KgeJs8USC56as0IQcxM5BbLTKjlMYQFTF2teyx5M
-         qJnepsbt5dnrSOjfPBCqbWbCVAZtVxrI2tueUoyxdrYYmuFqjjGFjZVk4me6Q5r+8ZSA
-         ReQA==
+        bh=vTQvpd14cXKcH74GupBQJ/4G1v6qNFHubz8uL2pyf/Q=;
+        b=hm1Ug2YI+VCCEfr5PlLTciCZgH6ajkynxWARu+eyu5qWjXApFa/U+3qlldcXKr5x6a
+         UtNxPdMWRCulAMqHZ9HV8JWf9ihtLubSllGRmiSV2/2Vs7/fk7+dAi3ySw3dVr229cUv
+         tmUMUgY37cTRv9QAzodhSlpvTQ3HIQcehFemHZc08Hb3daa1IuqQL1b5zP5B+yl1J2S4
+         RwZgGY2Xtamyh0TmoMmO006rr/OdNQZGtDMZuekJKVuqgCY0nh7qbJHwDdVexl9yYAXS
+         jGDyYj7/zxP1AZHdn+DgjEwkbGZOzJW8QAkUPhD30m+oqu33M7+2o2neVdo0NEEP6gdA
+         d6vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770890953; x=1771495753;
+        d=1e100.net; s=20230601; t=1770890952; x=1771495752;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PJKAnMpSpHx+vU1EYQWdEDD3LRNhWVzTGIKPE3Pgcgw=;
-        b=SMxsH8pxrI1QTY5vMV+eYO7qvRSVFKFkm/7yBkiW9TOLbdFA3Gr5qeuRO89Xc4es7/
-         +s7rJDmkerI7fwjRom9/EPoyiPoP6+z9CEBGcfDKEVzC8ExAMrozTjDV5/WA1G+7YQa2
-         CxDjeZoQuFUruQJMEtEoYiHUOA+44HFd1HZLQsh+F2AvMXHQx16863tACiFNQjtnHZ+a
-         sSiHgZ0/Fdk4aSXgU/OcuMDQ+zeuu53ui4lN+wa9dHRz4OYy1eccjfA/gVIzWDEB1K7v
-         rOi/X3bu39fUWLld73qb1aahbIfi/1MVbkUtc5KyBcOqyRbPqLj/1RYiipvjTkNDr64i
-         aUgw==
-X-Gm-Message-State: AOJu0Yz7svi6wxn1GOcbcLGjDwNzSoFr39GExFLVNjfxlcjq8ey4HMfg
-	30ZOziLD5VO0rH5jKIXIm+0vobDSrKC6p/Vc5q0IkmmQ4UVmcUbOTz1bp9fOYw==
-X-Gm-Gg: AZuq6aKdGXsVNE90Uwd4oRZsyki+qHYzaKuyGhbI3ALOPUWOs3FG5Sog1N0s3XTpt8c
-	PvKM52UFjkqcCH/wUC6IcfWjBkFKwRdw3SIpLIj6qzbFy5dOd3M1gi2ejTF959dk7mQyfml/vTm
-	T+dEqMMcltrZylL8jCIl7MRP/BEwR2Y47itvSQSnLk4vgWqU8a+r4I4ZbP+X4cTkAGKkzxpkMOR
-	+yzieKbRiTTrlUzYP/YavY9HBlILNfMwKf2qXqzBEyVV7amFxNs4pPwxUvHfwzthSk+MufHbBpJ
-	vaNhq+0D07wx+Vp5aPxPpTvE3nvu0v/wGzLfHiiMimc8mKsIyOsyHkdEGP8jtk5g7CB9A04vsYr
-	wFdo8Okb0cb/yz6e7uywTZIcoOEs73+2vEWYwVIe9sPsssYNQqrlyATJUNZKrupZrBKL8LzstW/
-	iBMJJhAfmb+6y8OpuqivQ7ABVH6gNC92KFNlIIhFVfeSlfqUUJn4qr4vXDG960VInhuEiA6NdY8
-	tn6iAAUTIB7AwLAW/XmZ8wBbZ6XC3y+zVjX1e5131rK2c3xKw==
-X-Received: by 2002:a05:6000:200f:b0:435:d859:5cf with SMTP id ffacd0b85a97d-4378ad82962mr4298745f8f.54.1770890953071;
-        Thu, 12 Feb 2026 02:09:13 -0800 (PST)
-Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43783d3464csm12701151f8f.5.2026.02.12.02.09.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=vTQvpd14cXKcH74GupBQJ/4G1v6qNFHubz8uL2pyf/Q=;
+        b=YIlL7p9A09e0g43Eb2wCJOQQinK1wlSjIslZV01A5bWCRmwo8hn2EUcHttcDERkgcY
+         ij8jiYmO4C75x5WhAeWz0sQsaSHJe0V2NyNK0OE6HXoG3PqWD20L3TTlxV4Rq+QT7ROO
+         EWy/Gqw/4CjDla7QbFn2kfzvmRLA/Sb3B3iqpr3+lEMQrLx9NfG6XAP447BRBoBd4nM+
+         jKJ6OtnbJmVw7tjIJYiCLZtWJWZca8H4ECK8xgv51Fk92xljf9eedTFecQ2k9pw67FBd
+         gGxiPeCOODo+NNfNO94kkOOLl+q6q2gLC1J4w30gEF8ltgmKY/6ex6C8vZmDVVwo7oLE
+         Wu2g==
+X-Gm-Message-State: AOJu0YyGQVGG6MKO3eMN5FeHtQUSln01HXaWef/g6RRimSGrCMb32E2r
+	tyeBx82LgdXCYUdv9V03FcifIZ1N6xa5Jhs9irIVLi6rfzL289GBH28E/4Z/vg==
+X-Gm-Gg: AZuq6aK4YXmBzSfiqS/M8RSKAuefpg//WBoRzMmVSCo9lVcQB5qRhX5KwEROv1svMbW
+	BZgwCGsbph1DIS3p6WsxqhjixVDPrGqlkhZOBnAqBmXJqVOBzMBlT6eunyu6y6WL7IVLMlKF0Dw
+	kaSfp8Nu4Y7ZAe9Q+q8IQcXmifG31aLPjWBRQ2ZXpa4v0KsPE4vh5invyQk7R3YEV5SUaF5Wtbb
+	YfTpEfItFWCn3vuAl8RmXHbVz1ceNGtNH5A0gpPfpLCr67SlTNcTO7hpe3mX0lbgnEfvNjV+ub4
+	lPg9w/d11MxpZH81vy/q/XvfIrkUltiUvtbmAFrAi1pMpDACsi/omYhXvCLK3ITdYu021wJs2j3
+	rdcGJxdv7tTGm6c0TQOPVT/dADhX3484kT3ppcucpDZRYFAQdh6sCqOIHP9091inXsVX5OkrR6W
+	Kx/josXyMKKokGDxzGAoqR1to5ePkFs9fF1RCpFLvDAXeQGGOIEGcqzjVTKWPIWrP405PiGM4KJ
+	290cp+ZxA5HkvgTFIqMwz26FXz66Uizqsiy7js=
+X-Received: by 2002:a05:6000:144e:b0:436:42fb:154c with SMTP id ffacd0b85a97d-4378acd7047mr4162343f8f.61.1770890952193;
         Thu, 12 Feb 2026 02:09:12 -0800 (PST)
+Received: from christian--20230123--2G7D3 ([62.35.114.108])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43783d3464csm12701151f8f.5.2026.02.12.02.09.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Feb 2026 02:09:11 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <avila.jn@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 8/9] promisor-remote: change promisor_remote_reply()'s signature
-Date: Thu, 12 Feb 2026 11:08:39 +0100
-Message-ID: <20260212100843.883623-9-christian.couder@gmail.com>
+Subject: [PATCH v3 7/9] promisor-remote: keep advertised filters in memory
+Date: Thu, 12 Feb 2026 11:08:38 +0100
+Message-ID: <20260212100843.883623-8-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.53.0.70.g3d1fd9d397.dirty
 In-Reply-To: <20260212100843.883623-1-christian.couder@gmail.com>
 References: <20260204110818.2919273-1-christian.couder@gmail.com>
@@ -83,109 +83,166 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `promisor_remote_reply()` function performs two tasks:
-1. It uses filter_promisor_remote() to parse the server's
-   "promisor-remote" advertisement and to mark accepted remotes in the
-   repository configuration.
-2. It assembles a reply string containing the accepted remote names to
-   send back to the server.
+Currently, advertised filters are only kept in memory temporarily
+during parsing, or persisted to disk if `promisor.storeFields`
+contains 'partialCloneFilter'.
 
-In a following commit, the fetch-pack logic will need to trigger the
-side effect (1) to ensure the repository state is correct, but it will
-not need to send a reply (2).
+In a following commit though, we will add a `--filter=auto` option.
+This option will enable the client to use the filters that the server
+is suggesting for the promisor remotes the client accepts.
 
-To avoid assembling a reply string when it is not needed, let's change
-the signature of promisor_remote_reply(). It will now return `void` and
-accept a second `char **accepted_out` argument. Only if that argument
-is not NULL will a reply string be assembled and returned back to the
-caller via that argument.
+To use them even if `promisor.storeFields` is not configured, these
+filters should be stored somewhere for the current session.
+
+Let's add an `advertised_filter` field to `struct promisor_remote`
+for that purpose.
+
+To ensure that the filters are available in all cases,
+filter_promisor_remote() captures them into a temporary list and
+applies them to the `promisor_remote` structs after the potential
+configuration reload.
+
+Then the accepted remotes are marked as `accepted` in the repository
+state. This ensures that subsequent calls to look up accepted remotes
+(like in the filter construction below) actually find them.
+
+In a following commit, we will add a `--filter=auto` option that will
+enable a client to use the filters suggested by the server for the
+promisor remotes the client accepted.
+
+To enable the client to construct a filter spec based on these filters,
+let's also add a `promisor_remote_construct_filter(repo)` function.
+
+This function:
+
+- iterates over all accepted promisor remotes in the repository,
+- collects the filters advertised for them (using `advertised_filter`
+  added in this commit, and
+- generates a single filter spec for them.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- connect.c         |  3 ++-
- promisor-remote.c | 24 +++++++++++++-----------
- promisor-remote.h | 10 +++++-----
- 3 files changed, 20 insertions(+), 17 deletions(-)
+ promisor-remote.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++
+ promisor-remote.h |  7 ++++++
+ 2 files changed, 65 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index c6f76e3082..a02583a102 100644
---- a/connect.c
-+++ b/connect.c
-@@ -505,7 +505,8 @@ static void send_capabilities(int fd_out, struct packet_reader *reader)
- 		reader->hash_algo = &hash_algos[GIT_HASH_SHA1_LEGACY];
- 	}
- 	if (server_feature_v2("promisor-remote", &promisor_remote_info)) {
--		char *reply = promisor_remote_reply(promisor_remote_info);
-+		char *reply;
-+		promisor_remote_reply(promisor_remote_info, &reply);
- 		if (reply) {
- 			packet_write_fmt(fd_out, "promisor-remote=%s", reply);
- 			free(reply);
 diff --git a/promisor-remote.c b/promisor-remote.c
-index f3bafb7731..96fa215b06 100644
+index 59997dd4c7..f3bafb7731 100644
 --- a/promisor-remote.c
 +++ b/promisor-remote.c
-@@ -920,25 +920,27 @@ static void filter_promisor_remote(struct repository *repo,
+@@ -193,6 +193,7 @@ void promisor_remote_clear(struct promisor_remote_config *config)
+ 	while (config->promisors) {
+ 		struct promisor_remote *r = config->promisors;
+ 		free(r->partial_clone_filter);
++		free(r->advertised_filter);
+ 		config->promisors = config->promisors->next;
+ 		free(r);
  	}
- }
+@@ -837,6 +838,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 	struct store_info *store_info = NULL;
+ 	struct string_list_item *item;
+ 	bool reload_config = false;
++	struct string_list accepted_filters = STRING_LIST_INIT_DUP;
  
--char *promisor_remote_reply(const char *info)
-+void promisor_remote_reply(const char *info, char **accepted_out)
- {
- 	struct strvec accepted = STRVEC_INIT;
--	struct strbuf reply = STRBUF_INIT;
+ 	if (!repo_config_get_string_tmp(the_repository, "promisor.acceptfromserver", &accept_str)) {
+ 		if (!*accept_str || !strcasecmp("None", accept_str))
+@@ -879,6 +881,13 @@ static void filter_promisor_remote(struct repository *repo,
+ 				reload_config = true;
  
- 	filter_promisor_remote(the_repository, &accepted, info);
- 
--	if (!accepted.nr)
--		return NULL;
--
--	for (size_t i = 0; i < accepted.nr; i++) {
--		if (i)
--			strbuf_addch(&reply, ';');
--		strbuf_addstr_urlencode(&reply, accepted.v[i], allow_unsanitized);
-+	if (accepted_out) {
-+		if (accepted.nr) {
-+			struct strbuf reply = STRBUF_INIT;
-+			for (size_t i = 0; i < accepted.nr; i++) {
-+				if (i)
-+					strbuf_addch(&reply, ';');
-+				strbuf_addstr_urlencode(&reply, accepted.v[i], allow_unsanitized);
+ 			strvec_push(accepted, advertised->name);
++
++			/* Capture advertised filters for accepted remotes */
++			if (advertised->filter) {
++				struct string_list_item *i;
++				i = string_list_append(&accepted_filters, advertised->name);
++				i->util = xstrdup(advertised->filter);
 +			}
-+			*accepted_out = strbuf_detach(&reply, NULL);
-+		} else {
-+			*accepted_out = NULL;
-+		}
- 	}
+ 		}
  
- 	strvec_clear(&accepted);
--
--	return strbuf_detach(&reply, NULL);
+ 		promisor_info_free(advertised);
+@@ -890,6 +899,25 @@ static void filter_promisor_remote(struct repository *repo,
+ 
+ 	if (reload_config)
+ 		repo_promisor_remote_reinit(repo);
++
++	/* Apply accepted remote filters to the stable repo state */
++	for_each_string_list_item(item, &accepted_filters) {
++		struct promisor_remote *r = repo_promisor_remote_find(repo, item->string);
++		if (r) {
++			free(r->advertised_filter);
++			r->advertised_filter = item->util;
++			item->util = NULL;
++		}
++	}
++
++	string_list_clear(&accepted_filters, 1);
++
++	/* Mark the remotes as accepted in the repository state */
++	for (size_t i = 0; i < accepted->nr; i++) {
++		struct promisor_remote *r = repo_promisor_remote_find(repo, accepted->v[i]);
++		if (r)
++			r->accepted = 1;
++	}
  }
  
- void mark_promisor_remotes_as_accepted(struct repository *r, const char *remotes)
+ char *promisor_remote_reply(const char *info)
+@@ -935,3 +963,33 @@ void mark_promisor_remotes_as_accepted(struct repository *r, const char *remotes
+ 
+ 	string_list_clear(&accepted_remotes, 0);
+ }
++
++char *promisor_remote_construct_filter(struct repository *repo)
++{
++	struct promisor_remote *r;
++	struct list_objects_filter_options filter_options = LIST_OBJECTS_FILTER_INIT;
++	struct strbuf err = STRBUF_INIT;
++	char *result = NULL;
++
++	promisor_remote_init(repo);
++
++	for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
++		if (r->accepted && r->advertised_filter)
++			if (gently_parse_list_objects_filter(&filter_options,
++							     r->advertised_filter,
++							     &err)) {
++				warning(_("promisor remote '%s' advertised invalid filter '%s': %s"),
++					r->name, r->advertised_filter, err.buf);
++				strbuf_reset(&err);
++				continue;
++			}
++	}
++
++	if (filter_options.choice)
++		result = xstrdup(expand_list_objects_filter_spec(&filter_options));
++
++	list_objects_filter_release(&filter_options);
++	strbuf_release(&err);
++
++	return result;
++}
 diff --git a/promisor-remote.h b/promisor-remote.h
-index d227299fd0..3d4d2de018 100644
+index 263d331a55..d227299fd0 100644
 --- a/promisor-remote.h
 +++ b/promisor-remote.h
-@@ -49,12 +49,12 @@ char *promisor_remote_info(struct repository *repo);
- /*
-  * Prepare a reply to a "promisor-remote" advertisement from a server.
-  * Check the value of "promisor.acceptfromserver" and maybe the
-- * configured promisor remotes, if any, to prepare the reply.
-- * Return value is NULL if no promisor remote from the server
-- * is accepted. Otherwise it contains the names of the accepted promisor
-- * remotes separated by ';'. See gitprotocol-v2(5).
-+ * configured promisor remotes, if any, to prepare the reply. If the
-+ * `accepted_out` argument is not NULL, it is set to either NULL or to
-+ * the names of the accepted promisor remotes separated by ';' if
-+ * any. See gitprotocol-v2(5).
+@@ -15,6 +15,7 @@ struct object_id;
+ struct promisor_remote {
+ 	struct promisor_remote *next;
+ 	char *partial_clone_filter;
++	char *advertised_filter;
+ 	unsigned int accepted : 1;
+ 	const char name[FLEX_ARRAY];
+ };
+@@ -67,4 +68,10 @@ void mark_promisor_remotes_as_accepted(struct repository *repo, const char *remo
   */
--char *promisor_remote_reply(const char *info);
-+void promisor_remote_reply(const char *info, char **accepted_out);
+ int repo_has_accepted_promisor_remote(struct repository *r);
  
- /*
-  * Set the 'accepted' flag for some promisor remotes. Useful on the
++/*
++ * Use the filters from the accepted remotes to create a combined
++ * filter (useful in `--filter=auto` mode).
++ */
++char *promisor_remote_construct_filter(struct repository *repo);
++
+ #endif /* PROMISOR_REMOTE_H */
 -- 
 2.53.0.70.g3d1fd9d397.dirty
 
