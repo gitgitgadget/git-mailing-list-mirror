@@ -1,137 +1,171 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851E7F4FA
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:27:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460412DE6F3
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770892055; cv=none; b=GfXbNMirn9rOYzUO2kp7JsTNAcTuxzkgOiuRWTG8QQ/a3iD6qgk8LaiVqlnEZm32V6t9u5cpcEDxWhr/YwDQBBbvzSeTSee/PkPfHlOLBDD7ijlEnb+GMg+Ua14ZQiGYTNoCQc02E4AvBkkyVokX3hW3qsTkwe7M/aKomxnH5gM=
+	t=1770892186; cv=none; b=dOLRHXfifztum7yD5VC9ofP5rP0Q4yN81jRrDljFm6FCcJODAan9WNTGFjDgjCkgkRjWCGiU2jr0DVMBGxgKUPFqPp2S4JfQaQPgvtsWwMNeDrMU4gPMnR7iQnlMi506+n43aYpEb4vrlHqfo3QfF3rum5WtK4OSmj4hFrzNJRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770892055; c=relaxed/simple;
-	bh=i9l4wPzSNNBd034y0BjoufKxWC81hHkuPF3rThl8df4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DOniYI0BGh5Zk3YeaJ9QHgd8O5eYIRPMupe1P+KP5pF26O4++gA6LdyIrrBFoWxs8swRkn+mMQkLb/i/hAyadKl6NBl1JcXnEfbbtrKYUJ/8C2183GD4CfWiMMqqj/lpy4HlgQ2pHTerFG5je9nSxL7dLaeVFaFoUa5/gD/nr6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=jXKXQiHq; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1770892186; c=relaxed/simple;
+	bh=CgrvpHQ/2PansNy+UCHxCrWi3bbm2HAsr0ZnPQKpiIk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Tr/ZNTfwjkYX4CqM8uI4n59z/1+fqLSvi7h4h+JyM2pznQuL9bIBSJYkAuxu2zFPHfJbCOrOhZVkIQqIl82jYEC/9DfRF3Ot5JVZS6d4+fEmOwmh8XNbUXLdYQ/6BKGJGDqw6TCsDCDglzPiYCo/7+XH/2To9Uor57R10RmbAdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lhGsHk73; arc=none smtp.client-ip=209.85.128.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="jXKXQiHq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1770892033; x=1771496833; i=tboegi@web.de;
-	bh=i9l4wPzSNNBd034y0BjoufKxWC81hHkuPF3rThl8df4=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=jXKXQiHqvePrbN0Y9SE0Qv0KNgBZHw6QI5rccWlc2CLhNXr+XVKxyebqjoAyUj/f
-	 Q2UEY/NbfPUJTOBWjqrxoHGUXkdSwWUxrFiXheiandANQRzoZqwp79OV4qb0OglTQ
-	 JQkYiSlXMxPJyfWvdNB7C1CYcP0h81sxZqxqUpOFTn2a3npBKRJG+GM4F6n/MBDTB
-	 O7svE+SzGoI7v0CozwE3SDaH1CVJieN8DFu/BkD4+j4zZ+WTxLvAqcymVPAUaMZWA
-	 R07BYI9UIcth26yyZl5BLrXpMI9DElURwrQsYOjk0v9bUWjsBSjKoYbs4NE8XXfYP
-	 W+Hh2XXTKPzZfYGyEg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.224.105.209]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MC0LJ-1vvfOG1JzZ-005AlR; Thu, 12
- Feb 2026 11:27:13 +0100
-Date: Thu, 12 Feb 2026 11:27:12 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Jonatan Holmgren <jonatan@jontes.page>
-Cc: git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
-	"D . Ben Knoble" <benknoble@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 0/3] support UTF-8 in alias names
-Message-ID: <20260212102711.GA17587@tb-raspi4>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
- <20260211211810.278806-1-jonatan@jontes.page>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lhGsHk73"
+Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-47edd6111b4so116468555e9.1
+        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:29:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770892184; x=1771496984; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GCXpP23eAcRec+1RyiZApYEsFEV7LSckZSY7pYNJ3Zg=;
+        b=lhGsHk73P+TqM38hZuy66XVyDABa9BFnFbMeYVlRIG+E/H+4FUGpMeYsIJ8ueDvaDB
+         PM86QRTdq/sGllPsYjwsd2rSzM4Z9JNfw9NCSH/+N3dhx76pjmrkAOZ8R0jTEs+HMKd5
+         FOBK/HSUecpMlj5y3BKDIPGoZPswVqEf1fhvQEB32RKn+ba1Lkd3wXLlytkv2b2UU0uD
+         1TxexGb4TVqr4QewK7vzWnDlYud8mrgLfbGEtU4QhSeIUiJ5RMeOYjDNFiWhvec6Ou88
+         IsBSST+pdp/cJYvo5MKGCHQcqTSLTiHHJGoJwPfxaQOxg6cjsqh58OYwcDeCYT8XFblI
+         Wmfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770892184; x=1771496984;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GCXpP23eAcRec+1RyiZApYEsFEV7LSckZSY7pYNJ3Zg=;
+        b=wfiCj7cNnEgyFVRLV+vgygrCOcaZoExC+d0NZpddyn9qWnuJccwzy/sq67r/fC2cDH
+         dyhFh6ywkinRH+ZxdDHaCFviYge935UdkSNM0moKtQrEI+5vWhAFa/GPVbwN3iSFuRuh
+         WCSFsaIwforbLGbmBiLcHHff/hcF+qPXBr+Lnt5z8DHBFomGHdu+YDJTVFL1cZrwNM3b
+         g5QDSyhSUKogPxGWkteScHnONRUJHA6gfP3n0kXcbubhTHHdSqHjrxZrQoOg3/ooR/pw
+         HX8jyDYQR8RBceiMckmQDFi+euQsGzfPLahxsJQoZ8qY5qoJLelO+o/jsVDikJRwbjj9
+         MkEg==
+X-Forwarded-Encrypted: i=1; AJvYcCU7rPSQYfrQ9G/x4u084QnhZVaUPe1P+IDlN35KkajgKn+ZaETWgcVb/+fJIr4NqVxDP6A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcHmyK6ckuvGXco/vVUt+0KZMak1uYY9Bj+tIvmPiF10aKQRlh
+	z7+SvEYLglOuusSmKUYmawcp131MZbpIlQEnFE5TPUrKMLXXlEGSLH3F
+X-Gm-Gg: AZuq6aJmnNGjfZbuJR1y3sySBLyZlxRdkvhMZcruGk13VMtULt/3tz/68imIVtm2HJZ
+	iXt2R6B79OynyeqleKV17RdA+9AiL3KIaA/G/6pP/AhaLEixkaSfnlGsy/38pLYRsCS2ovQ8910
+	G4gQWC0+yVwYpmnawE4aXPB3ZPWXwucew+I2mmyxiwu7zL9D0gBiVLsIuf2qBRRtPgW0H3XGgOp
+	w2N3YDP5Q9RN/ASJK7sx8TpRNFzPm1tCiAejWed0zFUFeIBixIGtdET6//6jucdl1WkBSeo8nCL
+	exRZalsbAPy4xvrpr5+LKIEXcG6aqPdx+jMPTJUHgkXDWljQ1PCgNSnUe4N7nXtRbq+sIzx2iB1
+	3vU2KP9aTURbOJthNnkN+pemhKIGNlRIfnU7PnuJx0ovx7nY7rt6EaMJVv6Lf2LoBSl5qj5B8/c
+	SQTdd7OCutZ3+DhI99i8x5kvIuXh44k5s7nrQwncIhJy+wj5PnsGcWDZE2SpC84SCj202/yX/7O
+	eWjcg==
+X-Received: by 2002:a05:600c:1e8c:b0:480:4b59:932e with SMTP id 5b1f17b1804b1-483656c0a5dmr30166345e9.11.1770892183380;
+        Thu, 12 Feb 2026 02:29:43 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4835a64cf1asm40197605e9.5.2026.02.12.02.29.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Feb 2026 02:29:42 -0800 (PST)
+Message-ID: <19d86fb2-cbbe-4753-831c-a6ed49722103@gmail.com>
+Date: Thu, 12 Feb 2026 10:29:39 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260211211810.278806-1-jonatan@jontes.page>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:xtYRgYrjs9amAz4EVqIo06Lodv7sZ5XWLjMQJoq0lJ0QjNxqrdi
- nKs+TLe6DquViRgXWoWhneOp+UOzzWDB3gPawKCGc/jCoFys/RkbXb5LfJ51q5b4x8yvhhf
- Vm6re8QY2QLTh99fsftbqg4rBDrL0cdtKr3iAEhJi3TzbfKUQqPln0CGVKCd1yxjarp5B8C
- AHbYMbVzu4vOLvP1WyC8A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:OEG1PU61GYg=;hz9rKC/R7COZ3KzcIJNvnpeFsTj
- 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
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3] meson: regenerate config-list.h when Documentation
+ changes
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
+ <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ Evan Martin <evan.martin@gmail.com>
+References: <c9ae171eed6bd5b0fa6671b10a5ad0da024f36d0.1770649805.git.ben.knoble+github@gmail.com>
+ <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Feb 11, 2026 at 10:18:07PM +0100, Jonatan Holmgren wrote:
-[]
-Is it only me who only sees the header message, the 0/3, and not
-the patches themselves, the 1/3..3/3 ?
+Hi Ben
+
+On 11/02/2026 23:51, D. Ben Knoble wrote:
+> The Meson-based build doesn't know when to rebuild config-list.h, so the
+> header is sometimes stale.
+> 
+> For example, an old build directory might have config-list.h from before
+> 4173df5187 (submodule: introduce extensions.submodulePathConfig,
+> 2026-01-12), which added submodule.<name>.gitdir to the list. Without
+> it, t9902-completion.sh fails. Regenerating the config-list.h artifact
+> from sources fixes the artifact and the test.
+> 
+> Teach the meson build to depend on the Documentation files that
+> generate-configlist.sh reads by having it an additional output as a list
+> of dependency files, since Meson does not have (or want) builtin support
+> for globbing like Make.
+
+It would be useful to mention that we assume that if a user adds a new 
+file under Documentation/config then they will also edit one of the 
+existing files to include that new file and that will trigger a rebuild.
+
+> Helped-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> ---
+> 
+> Notes (benknoble/commits):
+>      Changes from v2 (<c9ae171eed6bd5b0fa6671b10a5ad0da024f36d0.1770649805.git.ben.knoble+github@gmail.com>):
+>      
+>      • Pick up (and tweak) Patrick's depfile proposal
+>      • Include the script itself as a dependency
+>      • Escape output paths (spaces, octothorpes, and backslashes) for Ninja
+>      
+>      I'm not 100% sure I've actually done the escaping correctly, though,
+>      since Ninja's source says that a space preceded by 2N backslashes
+>      represents 2N backslashes at the end of a filename, and
+>      
+>          λ printf '%s\n' 'foo\' | sed 's/[# \\]/\\&/g' | xxd
+>          00000000: 666f 6f5c 5c0a                           foo\\.
+>      
+>      So would they interpret that as the filename 'foo\\' instead of 'foo\' ?
+>      (Or, no because the 2N slashes aren't followed by a SP, but a NL?)
+
+Having re-read the ninja source I agree with Patrick that we should not 
+be escaping backslashes
+
+> +if test -n "$DEPFILE"
+> +then
+> +	printf "$OUTPUT: %s\n" "$0" "$SOURCE_DIR"/Documentation/*config.adoc \
+> +	    "$SOURCE_DIR"/Documentation/config/*.adoc |
+> +	    sed 's/[# \\]/\\&/g' >"$DEPFILE"
+
+This will escape the space after "$OUTPUT:" which is not what we want.
+
+	printf '%s\n' ... | sed "s/[# ]/\\&/g; s|^|$OUTPUT|" >"$DEPFILE"
+
+should work so long as $OUTPUT does not contain any '|' characters.
+
+Thanks
+
+Phillip
+
+> +fi
+> diff --git a/meson.build b/meson.build
+> index 3a1d12caa4..fb5d7367f5 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -720,11 +720,13 @@ endif
+>   
+>   builtin_sources += custom_target(
+>     output: 'config-list.h',
+> +  depfile: 'config-list.h.d',
+>     command: [
+>       shell,
+> -    meson.current_source_dir() + '/generate-configlist.sh',
+> +    meson.current_source_dir() / 'generate-configlist.sh',
+>       meson.current_source_dir(),
+>       '@OUTPUT@',
+> +    '@DEPFILE@',
+>     ],
+>     env: script_environment,
+>   )
+> 
+> base-commit: 19a08e0c02faf1c5b4efd1add85598cf8390ff7e
+> prerequisite-patch-id: 364ba1899740b93be5957262d3583348d030e8fa
+
