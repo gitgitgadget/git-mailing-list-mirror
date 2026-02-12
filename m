@@ -1,83 +1,81 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EC8275861
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 20:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF102D4805
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 20:59:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770927602; cv=none; b=qnQJp3WxexVSZI9QmJW06zKLTjrZ/XlGl8yzQgm4WShLJ2HxcSL1kF6f+LW0IBggfsdglNXIhbB9G8rcEVe4XnfpFplbb+OdCpx7EXOchDaNadAHN69Ektk2zDJ+Q8VkNPBI1e/eQyJdEiQFqHat8G9YnM4TrBi2cm2WP4vxwLM=
+	t=1770929965; cv=none; b=QboWQMN9SEfsYpi674b8lYMcNtiVdQASZB2jyVZ/zoRdSls1IXTD18Tqc1l8maqIWGcE3pbzw17KkcUBZEhVvEivAJtvMgXJEzA3ni82BoyOnu6++ozyJGQWZOhHbaJyo2NRMUgjUDgNPnOmcRS9Gynqpy4TIJ3ywLy2M5yi7Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770927602; c=relaxed/simple;
-	bh=URUh3Mj21x0XzTlpxhMs2lzl8KoUQA+uZkWNU8f15fU=;
+	s=arc-20240116; t=1770929965; c=relaxed/simple;
+	bh=pSL0Y7W89ftfWe/SGVJJaj9N1dF58VgtMr3G8/13jwM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TyPenKDg2Dx5wnazXzlWde+36pOnpjOeMm5zQUTY1IcDUKP4SRk2L09XWhfVC4wLMrgTKpN1pvWBNSHOVuUuPRCCrUVk//LnGhfGZWNxEK/Xmg5Zq3EA0QE1N/4CTKv708LfnP4Z+cM3ecZRQ6myvo5KJiNrv/98zNP2rrDJ6KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sjl8DAwv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P+wKgdjH; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=pHf787SIrWctDvYamSMvSoeFgwILqqJSJ33+KhG72D3H6RQ/6HqHlq7pyU/3AaEURmZghZHlKhqa9oXJrXt3z1JEqGDPV6Pgj7qS6X5Y2/gAjo81vLcJZb44RID97Heqb58aMGc6rtbQQBQQFgiEvTAIeJFOQrYGOiJPIz9JBUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A1SzuQF0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ol+jsz+b; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sjl8DAwv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P+wKgdjH"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A1SzuQF0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ol+jsz+b"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BAE837A00A2;
-	Thu, 12 Feb 2026 15:20:00 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E549A7A012E;
+	Thu, 12 Feb 2026 15:59:22 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 12 Feb 2026 15:20:00 -0500
+  by phl-compute-05.internal (MEProxy); Thu, 12 Feb 2026 15:59:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770927600; x=1771014000; bh=URUh3Mj21x
-	0XzTlpxhMs2lzl8KoUQA+uZkWNU8f15fU=; b=sjl8DAwv2guxvjJK/q+4wdH8UJ
-	w/zMGtz6FXlyVgoKLS/QELhxr6oC0XA6AcvI2f9om9sgS6Xxy4Z41ltmpvH1TJEj
-	hAKT0yGHyaXb6iOQBNFT1+noMSMhlnB6AAWqMWSB3wWr/DqqZZcOm2/i6xeTR8NC
-	QNE3nIk0ly+LXUGhjQ7AX5FFHhEle81oyTxXyj74mI3lUJik9+Ik8PBY/vx7KgYk
-	ww3E2e7F6zwfGew52raeYacXKFY/kFjWJYfS9LzGTIuhaos/Vvle39Kq+rY54aXo
-	GlS0tGxfkZ7rWXA2GSm36hHkD0Q0ldHWwtLHjShiQdvucPz9eay0fJ2Q9kHg==
+	:subject:to:to; s=fm2; t=1770929962; x=1771016362; bh=YxpVcO6mWS
+	/NFqKVvt8+sQ6Y6CKhaJ+oEb48fB5YikQ=; b=A1SzuQF0GxF776Sfdu0E9cdh5x
+	ujwnAQHvWUrNFjHHdx3ruK0RgWJgilSjWNXrnLruBfDJm8iU2itFMixH2s1uujg8
+	GI5LJFvwigOnPBEG9S0NmCz9LZXIGEYFfyUj6gGOq3/AiW3EUnfhYoG8fm2Rz76e
+	t8LNjzLzH8TMEPGb5cMJFyOHXxZrt7f3Ae9cszaZWD2mxRiFtO+/4/o8BCJzoSSW
+	cupRhTmZ0qx9p45crqOSsV4+IIuk1Sdmt0FyNSlnPq/OKM8QZTh54L61iXFuWYc9
+	4q3hqrUxi9LmYZl5vSek9JxRv+8ezYLI3ooNOZsQSY3DUES+NpTJwOkEI8cg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770927600; x=1771014000; bh=URUh3Mj21x0XzTlpxhMs2lzl8KoUQA+uZkW
-	NU8f15fU=; b=P+wKgdjHrkQImF4R1z/oVPKpg92Tqs2Wcq3DDu/g9nHp5NJT/6g
-	LD1KgVcxIiP9VVQwhs2PS+YdU1xrEz4uMLN61e5RmJRvf6qjA6mBs47fhkARg+yC
-	jjwjCOTQ9gw6TllRqVoAsbAvdx/tdvXlNBDNfi3qhDUNNeOejKJwTT2+WtpQdI+b
-	DPAWLj1mBJg7J2rEeiy61dDQXR3RE8apJXeqz+GC/f7INKArYXjI/sqycGEPHLPB
-	VWCMeVNsW2Vej9KOk/VGv4jxXDnHUdk/u/OJpMDohHVLMt3j5j7rTMFQQpvixaPF
-	FcnRG+BeoTEiEY7+6PaDWSpYe6Nhs2DDoYA==
-X-ME-Sender: <xms:8DWOae7ePMd-ylXPsLuvIIlOKc6FbPnXXjumh80_fN6xdy7p8Ry8dw>
-    <xme:8DWOafW2bh6FLeQM3TqBEt6IXUCwd0CHhlZFXhawb-RoAHp1lVGAKNoLh7ZEhZ3wx
-    UX8NdJDvPaFFz57SljkNkE9HBDZz7rnNQyOkJKikJjYA1DNB8fdWQ>
-X-ME-Received: <xmr:8DWOaa0M3sHdYdXrbUAVxecEEmo8OYMBgLIs0aaFfI-_Or94U5mNvoU9IYAODsDW13k4aWXl_985zUOH7-NrXdxWDoztzHmg-w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeifedvucetufdoteggodetrf
+	1770929962; x=1771016362; bh=YxpVcO6mWS/NFqKVvt8+sQ6Y6CKhaJ+oEb4
+	8fB5YikQ=; b=ol+jsz+bJIj6wnGLvMFfgTIPR8IV7Y9xd6Ciwhvj6V3R8yzW3Zc
+	xptOvrS31gtY0Tm9tv6atgooL3rVuGmi8WeyM3+Agip1ppkNDr5TKXKE9mAKjCDV
+	3GowqP1BMzfP28DiyQtBL38wG0jRmJ3R8e4TnyogqsOtDOiMpXaXy3oF7s0WGmhi
+	loYasfJE/QXZvtwWJTYsqq7KOa0QmUejlsYJMKvQ+edwY1AXYqvercpTc7uV/N9h
+	IbMKJ0CTN8YY/lfuCbktJBbX4ud3Ke51zZrjYlwfnuVZLizjuJxBeoMUGFl1C/N9
+	0n5+QipeyMmu7vE6olrnQqJFwzUWX7otWjg==
+X-ME-Sender: <xms:Kj-OaTZQMMXdSTps_I6gkBG6tbIXCmhIZqaqHUFh0FgLa7ZJUWAHzw>
+    <xme:Kj-OaZ2iPNU5rETTw1AiR0ZQtL02UC1fjzgsYn-soGGNxw1pDPkArNAwN-KuRVbnD
+    ApIg8QF66Dgt1neD8QBP6gxCRudO-gEIgz94ZHngI3nqf0tFAZRZgQ>
+X-ME-Received: <xmr:Kj-OaTVTJIiN9gDFhf3-kEVnfcD-dGvoQiskxMFltLQWKrt11d-GAmNt-1KZv88AoX4rkfFC67GPPll8x24eqCjyCMhXyhQQ_A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeifeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:8DWOaU1XNamZYStqIJ8S-Ip5_zXJjkWwnQiMGVrdxdxu0aJzaB_cSg>
-    <xmx:8DWOaV_VgqNOpp1YApK0r64mOoi5QXmKpCsXCSY4I7sEfBx6hwKW3A>
-    <xmx:8DWOaZ20jUquCt_0qBD-NZ9__7lN15XWDlql2tGhZw2e6cn7tDshTg>
-    <xmx:8DWOaa_-KSOAOWW3FM45EMxzBrJpyVUStEsQy-GGRmql4KhwnydOzg>
-    <xmx:8DWOaXfDIVMGo2IRe0w2-EPKkWf0luHk_Y62txnQ_HlxdIvioX12ZrYr>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
+    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Kj-OaTWP3y06-yB-tLxPYI3SNJlBo3QI5wkciWhI_nd5k7wrEAPYNQ>
+    <xmx:Kj-OaScTF8gAjzK8AUKwLRs2kTW6usKK1Qc4vaZIWgjhMfdZeB1mqA>
+    <xmx:Kj-OacWyjXEi3HSSTIyaTaVBarQ92ahdXPQc3nPVKI_FZhpdgO5U8w>
+    <xmx:Kj-OabclYbk_wO54O0oxaABgUnRuqh6n7XEEt-brEt5aIkZVwho1uQ>
+    <xmx:Kj-OaR3T13XKf5z6l7gM3KKeqARkdxz28MnNQNYMqIim7MAXD6bAMuIZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Feb 2026 15:19:59 -0500 (EST)
+ 12 Feb 2026 15:59:22 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
+To: Tian Yuchen <a3205153416@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] builtin/history: replace "--ref-action=print" with
- "--dry-run"
-In-Reply-To: <20260212-b4-pks-history-dry-run-v1-3-1ce03d631c1b@pks.im>
-	(Patrick Steinhardt's message of "Thu, 12 Feb 2026 13:44:36 +0100")
-References: <20260212-b4-pks-history-dry-run-v1-0-1ce03d631c1b@pks.im>
-	<20260212-b4-pks-history-dry-run-v1-3-1ce03d631c1b@pks.im>
-Date: Thu, 12 Feb 2026 12:19:58 -0800
-Message-ID: <xmqq5x81ogsx.fsf@gitster.g>
+Subject: Re: [PATCH v2] setup: fail if .git is not a file or directory
+In-Reply-To: <20260212172405.48614-1-a3205153416@gmail.com> (Tian Yuchen's
+	message of "Fri, 13 Feb 2026 01:24:05 +0800")
+References: <20260211182122.35352-1-a3205153416@gmail.com>
+	<20260212172405.48614-1-a3205153416@gmail.com>
+Date: Thu, 12 Feb 2026 12:59:20 -0800
+Message-ID: <xmqqtsvln0ev.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,42 +85,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Tian Yuchen <a3205153416@gmail.com> writes:
 
-> The git-history(1) command has the ability to perform a dry-run
-> that will not end up modifying any references. Instead, we'll only print
-> any ref updates that would happen as a consequence of performing the
-> operation.
->
-> This mode is somewhat hidden though behind the "--ref-action=print"
-> option. This command line option has its origin in git-replay(1), where
-> it's probably an okayish interface as this command is sitting more on
-> the plumbing side of tools. But git-history(1) is a user-facing tool,
-> and this way of achieving a dry-run is way too technical and thus not
-> very discoverable.
->
-> Besides usability issues, it also has another issue: the dry-run mode
-> will always operate as if the user wanted to rewrite all branches. But
-> in fact, the user also has the option to only update the HEAD reference,
-> and they might want to perform a dry-run of such an operation, too. We
-> could of course introduce "--ref-actoin=print-head", but that would
-> become even less ergonomic.
->
-> Replace "--ref-action=print" with a new "--dry-run" toggle. This new
-> toggle works with both "--ref-action={head,branches}" and is way more
-> discoverable.
->
-> Add a test to verify that both "--ref-action=" values behave as
-> expected.
+>  		if (!gitdirenv) {
+>  			if (die_on_error ||
+> -			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
+> +				error_code == READ_GITFILE_ERR_NOT_A_FILE) {
 
-This "--dry-run" mode still creates necessary new objects, right?
+Why this indentation change?
 
-Describing this "--dry-run" as not updating any refs is a very good
-thing, which is what the documentation update says, but at the same
-time, we should clearly promise that the necessary new objects are
-still created, so should the user then choose to update refs to
-point at the reported objects, it will not result in a repository
-corruption.
+> -				/* NEEDSWORK: fail if .git is not file nor dir */
+> -				if (is_git_directory(dir->buf)) {
+> +				if (is_git_directory(dir->buf)){
 
-Other than that, looking good.
+Why this change (which is style violation that lack necessary SP
+between "){")?
 
+>  					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
+>  					gitdir_path = xstrdup(dir->buf);
+> +				} else {
+> +					/*
+> +					 * It is neither a gitfile nor a git directory.
+> +					 */
+> +					struct stat st;
+> +					if (!lstat(dir->buf, &st) &&
+> +						!S_ISREG(st.st_mode) &&
+> +						!S_ISDIR(st.st_mode)) {
+> +						if (die_on_error)
+> +							die(_("Invalid %s: not a regular file or directory"), dir->buf);
+> +						else
+> +							return GIT_DIR_INVALID_GITFILE;
+> +					}
+>  				}
+
+Stepping back a bit, even though the NEEDSWORK comment is placed
+here, I am not sure if this is the bast place to do much of the
+necessary work.
+
+When gitdirenv is NULL and die_on_error is set, we would have died
+on any error other than STAT_FAILED (most often, this is because
+there wasn't .git at the path in the first place) or NOT_A_FILE
+(again, a happy case is that .git existed and it was a directory).
+We would have already died in read_gitfile_error_die() in all other
+cases.  But these two error cases are not necessarily entirely happy
+and that is what the NEEDSWORK comment is about.
+
+So, if we wanted to tighten the error checking to help users
+diagnose problems in their filesystem, I wonder if it is a better
+approach to refine the set of READ_GITFILE_ERR_* error codes:
+
+ - STAT_ENOENT (new) is returned when stat failed and we got ENOENT,
+   and it is not a fatal error.
+
+ - STAT_FAILED becomes a fatal error in read_gitfile_error_die().
+
+ - IS_A_DIR (new) is returned when stat succeeded and it is a
+   directory.  It is not a fatal error.
+
+ - NOT_A_FILE becomes a fatal error in read_gitfile_error_die().
+
+Existing callers of the two functions, read_gitfile_gently() and
+read_gitfile_error_die(), must be audited and adjusted
+appropriately, but once it is done, it would become much simpler,
+wouldn't it?
+
+Thanks.
