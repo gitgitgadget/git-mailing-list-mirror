@@ -1,63 +1,63 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C682E8B9F
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:09:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5F22E8B8B
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:09:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770890958; cv=none; b=W3AOFG2qLNMLOsyU827ojot7LyDe0DJDI88YxJDTJlZynTaj5Z4ujJz7UGJSk+J/tXu6I465K9pYJ9NdyPn8Pc2YsJkwH3p8W9liAk2TA0eKVxZF9wVzC8nn1Ml49H+Csv2XdqL71KlYmM8IfwnE8X3Zz2YfS+SnUDKxEu3ypE0=
+	t=1770890960; cv=none; b=gM94xXVr6mQDa4sB9pg7YgimZEy60J5qYpRTsyLTf0KZCejLkGP6YiG9U3/JXWp5yszpNHEAYV0BhWYZvfgze+2HCcydtMM0YIaBw/+4FKGfnAp4wtE/zKrg65Z8QxYnIlNt2iCGgdD5/egBxTbtYpnKzfSsg458vkAAMdRgz0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770890958; c=relaxed/simple;
-	bh=4whjzx16Qg9LFSSaqV7pqzDrakCu81hPtX5kA6fEmqk=;
+	s=arc-20240116; t=1770890960; c=relaxed/simple;
+	bh=1r5krPU87mTF+9lVaCXGZJAIPZakM4DkTFsgcYhS1t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQunB2pi4cineqYBXd6o63x5lu0gheKh3vAXSHddvhxqKC9IVcuVSejNEOS4CLOOdug7FtdNrhlD9/7Ce/3UO3fNgL6IwKMKhuW/7xNHXXcqXL4kus1bWFnmdMYVnRDLSBpwL6PZwX+ny2CqZzH2GPNYlp7+lhj/SqMaxArZAYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hm1Ug2YI; arc=none smtp.client-ip=209.85.221.48
+	 MIME-Version; b=R+tFESlqgaWQzsOFcLDW6Nn+7LOjDxslSVh9nbOjxFFlUCNDGN13BsAXyph4NUhPtNkDdo3nfBJUv72faHIpz8ul0puCyvMLErjfVuV3vOEF9WXNOyi6qTdJ9XmpODjPQkjg93kgws09dFPQAs6fgnq5QxTnSBHYHvzQwNN9ToQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ph03kBRY; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hm1Ug2YI"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-43767807cf3so3332662f8f.1
-        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:09:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ph03kBRY"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-4362507f396so2558347f8f.0
+        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:09:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770890952; x=1771495752; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770890955; x=1771495755; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vTQvpd14cXKcH74GupBQJ/4G1v6qNFHubz8uL2pyf/Q=;
-        b=hm1Ug2YI+VCCEfr5PlLTciCZgH6ajkynxWARu+eyu5qWjXApFa/U+3qlldcXKr5x6a
-         UtNxPdMWRCulAMqHZ9HV8JWf9ihtLubSllGRmiSV2/2Vs7/fk7+dAi3ySw3dVr229cUv
-         tmUMUgY37cTRv9QAzodhSlpvTQ3HIQcehFemHZc08Hb3daa1IuqQL1b5zP5B+yl1J2S4
-         RwZgGY2Xtamyh0TmoMmO006rr/OdNQZGtDMZuekJKVuqgCY0nh7qbJHwDdVexl9yYAXS
-         jGDyYj7/zxP1AZHdn+DgjEwkbGZOzJW8QAkUPhD30m+oqu33M7+2o2neVdo0NEEP6gdA
-         d6vQ==
+        bh=ilcFDgc0URS3Yx11C9G9MbpcDEg+W8WiSgOnDQPnOpY=;
+        b=Ph03kBRYlxEo8v8HKsLmQ9pl+RalJoIdQQdDwjNcJYUNdzdhFR1LKciSE17S1uUnJn
+         46qTun3FuAlwk2jnbhCt1hrbAAeiBFooazvumd7e0oUfNW285QUjWSiR1/010wWNEPyc
+         UfAVKCMKuw7UbJxEUYR/E2n8rsjK3E7fJLH8YZN4VQVaJ9Bt5kOfeBsUkPpU4oqii164
+         p/mQaoeKfhM2bUylRfZ4D1FDDGQ1mZbWs56puNxQjSge9RRXTBjl2tRWMPN3eHQchEK8
+         pJk0OLjGDERCGsMmywu6du3th5Ftvx6Jdjk+2a9vVdb48kB+M9CEQG/XTCehFUg3J9Vf
+         cX7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770890952; x=1771495752;
+        d=1e100.net; s=20230601; t=1770890955; x=1771495755;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=vTQvpd14cXKcH74GupBQJ/4G1v6qNFHubz8uL2pyf/Q=;
-        b=YIlL7p9A09e0g43Eb2wCJOQQinK1wlSjIslZV01A5bWCRmwo8hn2EUcHttcDERkgcY
-         ij8jiYmO4C75x5WhAeWz0sQsaSHJe0V2NyNK0OE6HXoG3PqWD20L3TTlxV4Rq+QT7ROO
-         EWy/Gqw/4CjDla7QbFn2kfzvmRLA/Sb3B3iqpr3+lEMQrLx9NfG6XAP447BRBoBd4nM+
-         jKJ6OtnbJmVw7tjIJYiCLZtWJWZca8H4ECK8xgv51Fk92xljf9eedTFecQ2k9pw67FBd
-         gGxiPeCOODo+NNfNO94kkOOLl+q6q2gLC1J4w30gEF8ltgmKY/6ex6C8vZmDVVwo7oLE
-         Wu2g==
-X-Gm-Message-State: AOJu0YyGQVGG6MKO3eMN5FeHtQUSln01HXaWef/g6RRimSGrCMb32E2r
-	tyeBx82LgdXCYUdv9V03FcifIZ1N6xa5Jhs9irIVLi6rfzL289GBH28E/4Z/vg==
-X-Gm-Gg: AZuq6aK4YXmBzSfiqS/M8RSKAuefpg//WBoRzMmVSCo9lVcQB5qRhX5KwEROv1svMbW
-	BZgwCGsbph1DIS3p6WsxqhjixVDPrGqlkhZOBnAqBmXJqVOBzMBlT6eunyu6y6WL7IVLMlKF0Dw
-	kaSfp8Nu4Y7ZAe9Q+q8IQcXmifG31aLPjWBRQ2ZXpa4v0KsPE4vh5invyQk7R3YEV5SUaF5Wtbb
-	YfTpEfItFWCn3vuAl8RmXHbVz1ceNGtNH5A0gpPfpLCr67SlTNcTO7hpe3mX0lbgnEfvNjV+ub4
-	lPg9w/d11MxpZH81vy/q/XvfIrkUltiUvtbmAFrAi1pMpDACsi/omYhXvCLK3ITdYu021wJs2j3
-	rdcGJxdv7tTGm6c0TQOPVT/dADhX3484kT3ppcucpDZRYFAQdh6sCqOIHP9091inXsVX5OkrR6W
-	Kx/josXyMKKokGDxzGAoqR1to5ePkFs9fF1RCpFLvDAXeQGGOIEGcqzjVTKWPIWrP405PiGM4KJ
-	290cp+ZxA5HkvgTFIqMwz26FXz66Uizqsiy7js=
-X-Received: by 2002:a05:6000:144e:b0:436:42fb:154c with SMTP id ffacd0b85a97d-4378acd7047mr4162343f8f.61.1770890952193;
-        Thu, 12 Feb 2026 02:09:12 -0800 (PST)
+        bh=ilcFDgc0URS3Yx11C9G9MbpcDEg+W8WiSgOnDQPnOpY=;
+        b=S+Jnvh+d8YJmQWn7AjbVEQW3WVXSWCXQFJtwIJkT9hkbLZhWGlMVvsGHWBSxFK4bB8
+         nEBz7VBjv5rzRLg7hoZBAA4iQzBv2SeH29xl0n0g6NO1JvUxRWghO8cx/uhj6NnD4nRK
+         65ZhROsdGuZqPFUSNeoxxj6JDJ4fosl74X9V8VPSlosjtebRb+8aPiJmPj9E5vdVXZk2
+         toJU96VppEUdROVdmPx8d+y1kCS+7Hsks+0Ca/uROYV1pgUp996wRSji1gCj32DIXVXn
+         hBjOf9H8iXvGYE3D5wMOEAuCPOrkPszQiE+LYOoi6LKGpn7kRYSq6T28NWPPblABusm4
+         exGA==
+X-Gm-Message-State: AOJu0YxSdJL+pRm7vpucvA7bPw1bwfA5hcuxyndNfHjCqW2vkzbfoOE5
+	BewgLAnVUsDO1iH339yNThaIkzfY7n1b6ncgJFZTi/JD/szr0tHPS556Q8fNkw==
+X-Gm-Gg: AZuq6aLaH1dqfiiCl+hqV5KRdut5vLo0WMZBYSXyDI2gHRv6nFgM+Xz7p9T5PDZ1XVA
+	NJoiDojgHz4miQBJtJMlpfPW1rdUr6y4e46bIhD5hm5brqaffPEeznbkolyTBk9E81LQ1czGCnw
+	xUpTYCh+HrCT+jaGpHY4R73bU9Ji26dPz4PJh1MTRKWNvU02nP/EpA99y8Pt0IeH6Mp+GQOjLft
+	nudL50QSqVvzktp5mRRz4fWKW2xTu9DezH9Cvn7ixuA5DWAqpMY20QnrXBO62/9ndbnWncujHfO
+	cl75fUzD4RIIdg5eirxfd21aUYWwTJRl6LZDmvXiGnk4E+JUg+aDRk2pngKpNbLTFtc+TLxt7to
+	PuQQ2+WrVzYeL2XUrmFXpIe1bQqUD3W7rbU785l2/FTdu2+7dWI43z6Lg4y416VS+qsUko0/a5Z
+	d6YLB3K+K9ShJZU/o1RM8liH4NV3o8Kdzan4Y3C3V6qRK3jlU3vxBO59l9aGxSNx+C7BVO5Nv0l
+	iwKKvmr09AGW2NmHa2kbskIKX1GeOnYJKOxvvWq7z74kTuY7w==
+X-Received: by 2002:a05:6000:2912:b0:435:dbe3:c6b1 with SMTP id ffacd0b85a97d-4378f11f98amr2550271f8f.25.1770890954336;
+        Thu, 12 Feb 2026 02:09:14 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43783d3464csm12701151f8f.5.2026.02.12.02.09.11
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43783d3464csm12701151f8f.5.2026.02.12.02.09.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Feb 2026 02:09:11 -0800 (PST)
+        Thu, 12 Feb 2026 02:09:13 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <avila.jn@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 7/9] promisor-remote: keep advertised filters in memory
-Date: Thu, 12 Feb 2026 11:08:38 +0100
-Message-ID: <20260212100843.883623-8-christian.couder@gmail.com>
+Subject: [PATCH v3 9/9] fetch-pack: wire up and enable auto filter logic
+Date: Thu, 12 Feb 2026 11:08:40 +0100
+Message-ID: <20260212100843.883623-10-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.53.0.70.g3d1fd9d397.dirty
 In-Reply-To: <20260212100843.883623-1-christian.couder@gmail.com>
 References: <20260204110818.2919273-1-christian.couder@gmail.com>
@@ -83,166 +83,295 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Currently, advertised filters are only kept in memory temporarily
-during parsing, or persisted to disk if `promisor.storeFields`
-contains 'partialCloneFilter'.
+Previous commits have set up an infrastructure for `--filter=auto` to
+automatically prepare a partial clone filter based on what the server
+advertised and the client accepted.
 
-In a following commit though, we will add a `--filter=auto` option.
-This option will enable the client to use the filters that the server
-is suggesting for the promisor remotes the client accepts.
+Using that infrastructure, let's now enable the `--filter=auto` option
+in `git clone` and `git fetch` by setting `allow_auto_filter` to 1.
 
-To use them even if `promisor.storeFields` is not configured, these
-filters should be stored somewhere for the current session.
+Note that these small changes mean that when `git clone --filter=auto`
+or `git fetch --filter=auto` are used, "auto" is automatically saved
+as the partial clone filter for the server on the client. Therefore
+subsequent calls to `git fetch` on the client will automatically use
+this "auto" mode even without `--filter=auto`.
 
-Let's add an `advertised_filter` field to `struct promisor_remote`
-for that purpose.
+Let's also set `allow_auto_filter` to 1 in `transport.c`, as the
+transport layer must be able to accept the "auto" filter spec even if
+the invoking command hasn't fully parsed it yet.
 
-To ensure that the filters are available in all cases,
-filter_promisor_remote() captures them into a temporary list and
-applies them to the `promisor_remote` structs after the potential
-configuration reload.
+When an "auto" filter is requested, let's have the "fetch-pack.c" code
+in `do_fetch_pack_v2()` compute a filter and send it to the server.
 
-Then the accepted remotes are marked as `accepted` in the repository
-state. This ensures that subsequent calls to look up accepted remotes
-(like in the filter construction below) actually find them.
-
-In a following commit, we will add a `--filter=auto` option that will
-enable a client to use the filters suggested by the server for the
-promisor remotes the client accepted.
-
-To enable the client to construct a filter spec based on these filters,
-let's also add a `promisor_remote_construct_filter(repo)` function.
-
-This function:
-
-- iterates over all accepted promisor remotes in the repository,
-- collects the filters advertised for them (using `advertised_filter`
-  added in this commit, and
-- generates a single filter spec for them.
+In `do_fetch_pack_v2()` the logic also needs to check for the
+"promisor-remote" capability and call `promisor_remote_reply()` to
+parse advertised remotes and populate the list of those accepted (and
+their filters).
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- promisor-remote.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++
- promisor-remote.h |  7 ++++++
- 2 files changed, 65 insertions(+)
+ Documentation/fetch-options.adoc      | 19 ++++++---
+ Documentation/git-clone.adoc          | 25 ++++++++---
+ Documentation/gitprotocol-v2.adoc     | 16 ++++---
+ builtin/clone.c                       |  2 +
+ builtin/fetch.c                       |  2 +
+ fetch-pack.c                          | 24 +++++++++++
+ t/t5710-promisor-remote-capability.sh | 60 +++++++++++++++++++++++++++
+ transport.c                           |  1 +
+ 8 files changed, 134 insertions(+), 15 deletions(-)
 
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 59997dd4c7..f3bafb7731 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -193,6 +193,7 @@ void promisor_remote_clear(struct promisor_remote_config *config)
- 	while (config->promisors) {
- 		struct promisor_remote *r = config->promisors;
- 		free(r->partial_clone_filter);
-+		free(r->advertised_filter);
- 		config->promisors = config->promisors->next;
- 		free(r);
- 	}
-@@ -837,6 +838,7 @@ static void filter_promisor_remote(struct repository *repo,
- 	struct store_info *store_info = NULL;
- 	struct string_list_item *item;
- 	bool reload_config = false;
-+	struct string_list accepted_filters = STRING_LIST_INIT_DUP;
+diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
+index 1ef9807d00..a0cfb50d89 100644
+--- a/Documentation/fetch-options.adoc
++++ b/Documentation/fetch-options.adoc
+@@ -92,11 +92,20 @@ precedence over the `fetch.output` config option.
+ 	Use the partial clone feature and request that the server sends
+ 	a subset of reachable objects according to a given object filter.
+ 	When using `--filter`, the supplied _<filter-spec>_ is used for
+-	the partial fetch. For example, `--filter=blob:none` will filter
+-	out all blobs (file contents) until needed by Git. Also,
+-	`--filter=blob:limit=<size>` will filter out all blobs of size
+-	at least _<size>_. For more details on filter specifications, see
+-	the `--filter` option in linkgit:git-rev-list[1].
++	the partial fetch.
+++
++If `--filter=auto` is used, the filter specification is determined
++automatically by combining the filter specifications advertised by
++the server for the promisor remotes that the client accepts (see
++linkgit:gitprotocol-v2[5] and the `promisor.acceptFromServer`
++configuration option in linkgit:git-config[1]).
+++
++For details on all other available filter specifications, see the
++`--filter=<filter-spec>` option in linkgit:git-rev-list[1].
+++
++For example, `--filter=blob:none` will filter out all blobs (file
++contents) until needed by Git. Also, `--filter=blob:limit=<size>` will
++filter out all blobs of size at least _<size>_.
  
- 	if (!repo_config_get_string_tmp(the_repository, "promisor.acceptfromserver", &accept_str)) {
- 		if (!*accept_str || !strcasecmp("None", accept_str))
-@@ -879,6 +881,13 @@ static void filter_promisor_remote(struct repository *repo,
- 				reload_config = true;
+ ifndef::git-pull[]
+ `--write-fetch-head`::
+diff --git a/Documentation/git-clone.adoc b/Documentation/git-clone.adoc
+index 57cdfb7620..0db2d1e5f0 100644
+--- a/Documentation/git-clone.adoc
++++ b/Documentation/git-clone.adoc
+@@ -187,11 +187,26 @@ objects from the source repository into a pack in the cloned repository.
+ 	Use the partial clone feature and request that the server sends
+ 	a subset of reachable objects according to a given object filter.
+ 	When using `--filter`, the supplied _<filter-spec>_ is used for
+-	the partial clone filter. For example, `--filter=blob:none` will
+-	filter out all blobs (file contents) until needed by Git. Also,
+-	`--filter=blob:limit=<size>` will filter out all blobs of size
+-	at least _<size>_. For more details on filter specifications, see
+-	the `--filter` option in linkgit:git-rev-list[1].
++	the partial clone filter.
+++
++If `--filter=auto` is used the filter specification is determined
++automatically through the 'promisor-remote' protocol (see
++linkgit:gitprotocol-v2[5]) by combining the filter specifications
++advertised by the server for the promisor remotes that the client
++accepts (see the `promisor.acceptFromServer` configuration option in
++linkgit:git-config[1]). This allows the server to suggest the optimal
++filter for the available promisor remotes.
+++
++As with other filter specifications, the "auto" value is persisted in
++the configuration. This ensures that future fetches will continue to
++adapt to the server's current recommendation.
+++
++For details on all other available filter specifications, see the
++`--filter=<filter-spec>` option in linkgit:git-rev-list[1].
+++
++For example, `--filter=blob:none` will filter out all blobs (file
++contents) until needed by Git. Also, `--filter=blob:limit=<size>` will
++filter out all blobs of size at least _<size>_.
  
- 			strvec_push(accepted, advertised->name);
+ `--also-filter-submodules`::
+ 	Also apply the partial clone filter to any submodules in the repository.
+diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
+index d93dd279ea..f985cb4c47 100644
+--- a/Documentation/gitprotocol-v2.adoc
++++ b/Documentation/gitprotocol-v2.adoc
+@@ -812,10 +812,15 @@ MUST appear first in each pr-fields, in that order.
+ After these mandatory fields, the server MAY advertise the following
+ optional fields in any order:
+ 
+-`partialCloneFilter`:: The filter specification used by the remote.
++`partialCloneFilter`:: The filter specification for the remote. It
++corresponds to the "remote.<name>.partialCloneFilter" config setting.
+ Clients can use this to determine if the remote's filtering strategy
+-is compatible with their needs (e.g., checking if both use "blob:none").
+-It corresponds to the "remote.<name>.partialCloneFilter" config setting.
++is compatible with their needs (e.g., checking if both use
++"blob:none"). Additionally they can use this through the
++`--filter=auto` option in linkgit:git-clone[1]. With that option, the
++filter specification of the clone will be automatically computed by
++combining the filter specifications of the promisor remotes the client
++accepts.
+ 
+ `token`:: An authentication token that clients can use when
+ connecting to the remote. It corresponds to the "remote.<name>.token"
+@@ -828,8 +833,9 @@ future protocol extensions.
+ 
+ The client can use information transmitted through these fields to
+ decide if it accepts the advertised promisor remote. Also, the client
+-can be configured to store the values of these fields (see
+-"promisor.storeFields" in linkgit:git-config[1]).
++can be configured to store the values of these fields or use them
++to automatically configure the repository (see "promisor.storeFields"
++in linkgit:git-config[1] and `--filter=auto` in linkgit:git-clone[1]).
+ 
+ Field values MUST be urlencoded.
+ 
+diff --git a/builtin/clone.c b/builtin/clone.c
+index bb27472020..45d8fa0eed 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1001,6 +1001,8 @@ int cmd_clone(int argc,
+ 		NULL
+ 	};
+ 
++	filter_options.allow_auto_filter = 1;
 +
-+			/* Capture advertised filters for accepted remotes */
-+			if (advertised->filter) {
-+				struct string_list_item *i;
-+				i = string_list_append(&accepted_filters, advertised->name);
-+				i->util = xstrdup(advertised->filter);
-+			}
- 		}
+ 	packet_trace_identity("clone");
  
- 		promisor_info_free(advertised);
-@@ -890,6 +899,25 @@ static void filter_promisor_remote(struct repository *repo,
+ 	repo_config(the_repository, git_clone_config, NULL);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 8fbf3557ce..573c295241 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2580,6 +2580,8 @@ int cmd_fetch(int argc,
+ 		OPT_END()
+ 	};
  
- 	if (reload_config)
- 		repo_promisor_remote_reinit(repo);
++	filter_options.allow_auto_filter = 1;
 +
-+	/* Apply accepted remote filters to the stable repo state */
-+	for_each_string_list_item(item, &accepted_filters) {
-+		struct promisor_remote *r = repo_promisor_remote_find(repo, item->string);
-+		if (r) {
-+			free(r->advertised_filter);
-+			r->advertised_filter = item->util;
-+			item->util = NULL;
-+		}
+ 	packet_trace_identity("fetch");
+ 
+ 	/* Record the command line for the reflog */
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 40316c9a34..9f8f980516 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -35,6 +35,7 @@
+ #include "sigchain.h"
+ #include "mergesort.h"
+ #include "prio-queue.h"
++#include "promisor-remote.h"
+ 
+ static int transfer_unpack_limit = -1;
+ static int fetch_unpack_limit = -1;
+@@ -1661,6 +1662,29 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 	struct string_list packfile_uris = STRING_LIST_INIT_DUP;
+ 	int i;
+ 	struct strvec index_pack_args = STRVEC_INIT;
++	const char *promisor_remote_config;
++
++	if (server_feature_v2("promisor-remote", &promisor_remote_config))
++		promisor_remote_reply(promisor_remote_config, NULL);
++
++	if (args->filter_options.choice == LOFC_AUTO) {
++		struct strbuf errbuf = STRBUF_INIT;
++		char *constructed_filter = promisor_remote_construct_filter(r);
++
++		list_objects_filter_release(&args->filter_options);
++		/* Disallow 'auto' as a result of the resolution of this 'auto' filter below */
++		args->filter_options.allow_auto_filter = 0;
++
++		if (constructed_filter &&
++		    gently_parse_list_objects_filter(&args->filter_options,
++						     constructed_filter,
++						     &errbuf))
++			die(_("couldn't resolve 'auto' filter '%s': %s"),
++			    constructed_filter, errbuf.buf);
++
++		free(constructed_filter);
++		strbuf_release(&errbuf);
 +	}
-+
-+	string_list_clear(&accepted_filters, 1);
-+
-+	/* Mark the remotes as accepted in the repository state */
-+	for (size_t i = 0; i < accepted->nr; i++) {
-+		struct promisor_remote *r = repo_promisor_remote_find(repo, accepted->v[i]);
-+		if (r)
-+			r->accepted = 1;
-+	}
- }
  
- char *promisor_remote_reply(const char *info)
-@@ -935,3 +963,33 @@ void mark_promisor_remotes_as_accepted(struct repository *r, const char *remotes
+ 	negotiator = &negotiator_alloc;
+ 	if (args->refetch)
+diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
+index 6ef6431bd7..532e6f0fea 100755
+--- a/t/t5710-promisor-remote-capability.sh
++++ b/t/t5710-promisor-remote-capability.sh
+@@ -423,6 +423,66 @@ test_expect_success "clone with promisor.storeFields=partialCloneFilter" '
+ 	test_grep "'\''blob:limit=8k'\'' -> '\''blob:limit=7k'\''" err
+ '
  
- 	string_list_clear(&accepted_remotes, 0);
- }
++test_expect_success "clone and fetch with --filter=auto" '
++	git -C server config promisor.advertise true &&
++	test_when_finished "rm -rf client trace" &&
 +
-+char *promisor_remote_construct_filter(struct repository *repo)
-+{
-+	struct promisor_remote *r;
-+	struct list_objects_filter_options filter_options = LIST_OBJECTS_FILTER_INIT;
-+	struct strbuf err = STRBUF_INIT;
-+	char *result = NULL;
++	git -C server config remote.lop.partialCloneFilter "blob:limit=9500" &&
++	test_config -C server promisor.sendFields "partialCloneFilter" &&
 +
-+	promisor_remote_init(repo);
++	GIT_TRACE_PACKET="$(pwd)/trace" GIT_NO_LAZY_FETCH=0 git clone \
++		-c remote.lop.promisor=true \
++		-c remote.lop.url="file://$(pwd)/lop" \
++		-c promisor.acceptfromserver=All \
++		--no-local --filter=auto server client 2>err &&
 +
-+	for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
-+		if (r->accepted && r->advertised_filter)
-+			if (gently_parse_list_objects_filter(&filter_options,
-+							     r->advertised_filter,
-+							     &err)) {
-+				warning(_("promisor remote '%s' advertised invalid filter '%s': %s"),
-+					r->name, r->advertised_filter, err.buf);
-+				strbuf_reset(&err);
-+				continue;
-+			}
-+	}
++	test_grep "filter blob:limit=9500" trace &&
++	test_grep ! "filter auto" trace &&
 +
-+	if (filter_options.choice)
-+		result = xstrdup(expand_list_objects_filter_spec(&filter_options));
++	# Verify "auto" is persisted in config
++	echo auto >expected &&
++	git -C client config remote.origin.partialCloneFilter >actual &&
++	test_cmp expected actual &&
 +
-+	list_objects_filter_release(&filter_options);
-+	strbuf_release(&err);
++	# Check that the largest object is still missing on the server
++	check_missing_objects server 1 "$oid" &&
 +
-+	return result;
-+}
-diff --git a/promisor-remote.h b/promisor-remote.h
-index 263d331a55..d227299fd0 100644
---- a/promisor-remote.h
-+++ b/promisor-remote.h
-@@ -15,6 +15,7 @@ struct object_id;
- struct promisor_remote {
- 	struct promisor_remote *next;
- 	char *partial_clone_filter;
-+	char *advertised_filter;
- 	unsigned int accepted : 1;
- 	const char name[FLEX_ARRAY];
- };
-@@ -67,4 +68,10 @@ void mark_promisor_remotes_as_accepted(struct repository *repo, const char *remo
-  */
- int repo_has_accepted_promisor_remote(struct repository *r);
++	# Now change the filter on the server
++	git -C server config remote.lop.partialCloneFilter "blob:limit=5678" &&
++
++	# Get a new commit on the server to ensure "git fetch" actually runs fetch-pack
++	test_commit -C template new-commit &&
++	git -C template push --all "$(pwd)/server" &&
++
++	# Perform a fetch WITH --filter=auto
++	rm -rf trace &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch --filter=auto &&
++
++	# Verify that the new filter was used
++	test_grep "filter blob:limit=5678" trace &&
++
++	# Check that the largest object is still missing on the server
++	check_missing_objects server 1 "$oid" &&
++
++	# Change the filter on the server again
++	git -C server config remote.lop.partialCloneFilter "blob:limit=5432" &&
++
++	# Get yet a new commit on the server to ensure fetch-pack runs
++	test_commit -C template yet-a-new-commit &&
++	git -C template push --all "$(pwd)/server" &&
++
++	# Perform a fetch WITHOUT --filter=auto
++	# Relies on "auto" being persisted in the client config
++	rm -rf trace &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch &&
++
++	# Verify that the new filter was used
++	test_grep "filter blob:limit=5432" trace &&
++
++	# Check that the largest object is still missing on the server
++	check_missing_objects server 1 "$oid"
++'
++
+ test_expect_success "clone with promisor.advertise set to 'true' but don't delete the client" '
+ 	git -C server config promisor.advertise true &&
  
-+/*
-+ * Use the filters from the accepted remotes to create a combined
-+ * filter (useful in `--filter=auto` mode).
-+ */
-+char *promisor_remote_construct_filter(struct repository *repo);
-+
- #endif /* PROMISOR_REMOTE_H */
+diff --git a/transport.c b/transport.c
+index c7f06a7382..cde8d83a57 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1219,6 +1219,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		 */
+ 		struct git_transport_data *data = xcalloc(1, sizeof(*data));
+ 		list_objects_filter_init(&data->options.filter_options);
++		data->options.filter_options.allow_auto_filter = 1;
+ 		ret->data = data;
+ 		ret->vtable = &builtin_smart_vtable;
+ 		ret->smart_options = &(data->options);
 -- 
 2.53.0.70.g3d1fd9d397.dirty
 
