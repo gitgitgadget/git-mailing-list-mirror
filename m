@@ -1,152 +1,206 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF102D4805
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 20:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770929965; cv=none; b=QboWQMN9SEfsYpi674b8lYMcNtiVdQASZB2jyVZ/zoRdSls1IXTD18Tqc1l8maqIWGcE3pbzw17KkcUBZEhVvEivAJtvMgXJEzA3ni82BoyOnu6++ozyJGQWZOhHbaJyo2NRMUgjUDgNPnOmcRS9Gynqpy4TIJ3ywLy2M5yi7Hg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770929965; c=relaxed/simple;
-	bh=pSL0Y7W89ftfWe/SGVJJaj9N1dF58VgtMr3G8/13jwM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pHf787SIrWctDvYamSMvSoeFgwILqqJSJ33+KhG72D3H6RQ/6HqHlq7pyU/3AaEURmZghZHlKhqa9oXJrXt3z1JEqGDPV6Pgj7qS6X5Y2/gAjo81vLcJZb44RID97Heqb58aMGc6rtbQQBQQFgiEvTAIeJFOQrYGOiJPIz9JBUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A1SzuQF0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ol+jsz+b; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8AA1D130E
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 21:13:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770930820; cv=pass; b=cZI87EAN/YncuzuFQJ+515OCDFDnvGXDl9LPgavmj3xxKQRb5Jz8TRJi7tDNBOwlIDb96ZFrBmp1xgOer9AdPnwNOObIr6wVMPRam77idreibfCDso03nzJVfkurD1cuUIJW9QbNlxul9sv8983uBqgtRFDJ0T8qcVEBL/dY/yw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770930820; c=relaxed/simple;
+	bh=H5M/m2aJ0OA2GVDg4x6apXkRu4qFNa2iisIMPMphHW8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u2VKA+KgdgOV/3NA/kJ0dg5IqWXhR6cjAIV9Ch6fsuQEPoiZ/puYfF2z68xZOGaqfGJnsYm7ssyIwYmpTbipyyTU2r90rvbFSqsmkp+rzoEETaobsTsCHXPI89N11hUQWVTfjP7zVQe9YE+H2BxWJFkAEoSJLC9GAxgxJmguScw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AX/MvlCs; arc=pass smtp.client-ip=209.85.221.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A1SzuQF0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ol+jsz+b"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E549A7A012E;
-	Thu, 12 Feb 2026 15:59:22 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 12 Feb 2026 15:59:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770929962; x=1771016362; bh=YxpVcO6mWS
-	/NFqKVvt8+sQ6Y6CKhaJ+oEb48fB5YikQ=; b=A1SzuQF0GxF776Sfdu0E9cdh5x
-	ujwnAQHvWUrNFjHHdx3ruK0RgWJgilSjWNXrnLruBfDJm8iU2itFMixH2s1uujg8
-	GI5LJFvwigOnPBEG9S0NmCz9LZXIGEYFfyUj6gGOq3/AiW3EUnfhYoG8fm2Rz76e
-	t8LNjzLzH8TMEPGb5cMJFyOHXxZrt7f3Ae9cszaZWD2mxRiFtO+/4/o8BCJzoSSW
-	cupRhTmZ0qx9p45crqOSsV4+IIuk1Sdmt0FyNSlnPq/OKM8QZTh54L61iXFuWYc9
-	4q3hqrUxi9LmYZl5vSek9JxRv+8ezYLI3ooNOZsQSY3DUES+NpTJwOkEI8cg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770929962; x=1771016362; bh=YxpVcO6mWS/NFqKVvt8+sQ6Y6CKhaJ+oEb4
-	8fB5YikQ=; b=ol+jsz+bJIj6wnGLvMFfgTIPR8IV7Y9xd6Ciwhvj6V3R8yzW3Zc
-	xptOvrS31gtY0Tm9tv6atgooL3rVuGmi8WeyM3+Agip1ppkNDr5TKXKE9mAKjCDV
-	3GowqP1BMzfP28DiyQtBL38wG0jRmJ3R8e4TnyogqsOtDOiMpXaXy3oF7s0WGmhi
-	loYasfJE/QXZvtwWJTYsqq7KOa0QmUejlsYJMKvQ+edwY1AXYqvercpTc7uV/N9h
-	IbMKJ0CTN8YY/lfuCbktJBbX4ud3Ke51zZrjYlwfnuVZLizjuJxBeoMUGFl1C/N9
-	0n5+QipeyMmu7vE6olrnQqJFwzUWX7otWjg==
-X-ME-Sender: <xms:Kj-OaTZQMMXdSTps_I6gkBG6tbIXCmhIZqaqHUFh0FgLa7ZJUWAHzw>
-    <xme:Kj-OaZ2iPNU5rETTw1AiR0ZQtL02UC1fjzgsYn-soGGNxw1pDPkArNAwN-KuRVbnD
-    ApIg8QF66Dgt1neD8QBP6gxCRudO-gEIgz94ZHngI3nqf0tFAZRZgQ>
-X-ME-Received: <xmr:Kj-OaTVTJIiN9gDFhf3-kEVnfcD-dGvoQiskxMFltLQWKrt11d-GAmNt-1KZv88AoX4rkfFC67GPPll8x24eqCjyCMhXyhQQ_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeifeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
-    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Kj-OaTWP3y06-yB-tLxPYI3SNJlBo3QI5wkciWhI_nd5k7wrEAPYNQ>
-    <xmx:Kj-OaScTF8gAjzK8AUKwLRs2kTW6usKK1Qc4vaZIWgjhMfdZeB1mqA>
-    <xmx:Kj-OacWyjXEi3HSSTIyaTaVBarQ92ahdXPQc3nPVKI_FZhpdgO5U8w>
-    <xmx:Kj-OabclYbk_wO54O0oxaABgUnRuqh6n7XEEt-brEt5aIkZVwho1uQ>
-    <xmx:Kj-OaR3T13XKf5z6l7gM3KKeqARkdxz28MnNQNYMqIim7MAXD6bAMuIZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Feb 2026 15:59:22 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] setup: fail if .git is not a file or directory
-In-Reply-To: <20260212172405.48614-1-a3205153416@gmail.com> (Tian Yuchen's
-	message of "Fri, 13 Feb 2026 01:24:05 +0800")
-References: <20260211182122.35352-1-a3205153416@gmail.com>
-	<20260212172405.48614-1-a3205153416@gmail.com>
-Date: Thu, 12 Feb 2026 12:59:20 -0800
-Message-ID: <xmqqtsvln0ev.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AX/MvlCs"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-56750cb34c8so202629e0c.0
+        for <git@vger.kernel.org>; Thu, 12 Feb 2026 13:13:38 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770930818; cv=none;
+        d=google.com; s=arc-20240605;
+        b=RPU8hxVcTFfLRhvbjLvgufNl+AgX5AZFSqCAjaETYacBdG1eDnpLwb8RUqfksB0eAD
+         PqMR7h6axcgpbQOz1d5ruvvMqXCBpsdfGwFfgg2i8xu4Tcnry+AURveAmQhvRZQ5pomR
+         BsNrWqB0J+EA6i++JvuEgqgYQGIWLQN0QqC6Z87iHB08ergAp50u7E/LQUrUrL/nCrlS
+         W6Em+vOC4U7FGpiAG96JQwFf+6g7acqFjmeGCkZTelA2asp65eCyK48Bl4oFGBTTMRs1
+         H4E5c4A7Xt41CbQKBOmSCBiBSJKpxqevOpAoc3MzuHqFT8tCpWaU2IF1X4Wk2WL+DQlA
+         LH8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=8MXjFjiMaImrCBKs3UL5blf/M6Yu/sZVEFEyxRIXyQA=;
+        fh=392ryK1TiLXjQymH8YuTlaSLgmX4+VbMxfQfkGuHyGc=;
+        b=N+eikUNiDnYiqgxp38pjjEAYwIcPyd2cwGWBvflU4DKqaW9/OdBjTAFSdj/i85lGYH
+         BrLygdVjAgkIeC0xV8tkOxZawnFUPj7LAgLe2/rv1azLXNsyvvzpI3DQvO2FNV+Yrwfw
+         1TLFMDG0PDVIr5zmrcX31NfzNGFM2VbvLcCDqyXOdE48tmxNck12uwWmUNcE8+VsSYzq
+         2dDfM2/N427DtiTuCZaCXvrGOARLrbB6xvElK1xvEwn1Cabw/JZMJX/hsiTJKf3jFqp3
+         iX9o1gfPSfBVhzTxQHj+B0PL5V8zJkZG76df5hH1/aJrX3FO5jq9ITftfTuO55KbTrij
+         wZBQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770930818; x=1771535618; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8MXjFjiMaImrCBKs3UL5blf/M6Yu/sZVEFEyxRIXyQA=;
+        b=AX/MvlCsU8MODQv6o5SRw9qEmi0s2rxnIsDOIdD+zWVtMWIWtlppe+3xMxEEXGtD4N
+         F7sTa/MzUvaWGGPl9yGxserCECCUH6dBTcP5xS/dq+b84SOcMMfKZ0KNdQJjUSw26vGD
+         gWkAtdd1290B+7ABwnvziFwdwJFXR1oaLuscRs5jBM0ATPA/4Ox3qqY74vQ3Xz4k4TGW
+         56NcdAkDtGt67MLgj04kfnWrxJqyL/2xPerg3WISz9LRSshXkjyaH9KGyLJtRKBW3ASY
+         B1OchvlNEaELUaj8DFmrUkyxhamfuMAzEvpeIVVumlTCxU3UF9j17HIkg4KfEWkF3seR
+         iivA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770930818; x=1771535618;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=8MXjFjiMaImrCBKs3UL5blf/M6Yu/sZVEFEyxRIXyQA=;
+        b=PB5fqUy3vvDTx2fr1v0Fk5P0B7pM7WDiYG+Dow9J5ads57pMJwS2MByBYyrnu8ON98
+         m9V3Za7Fa8kOylCcjTdOXpBqoi+jNndNnVB1McA7JVlOf2EUcODD9Y69HC9c3rA6CgcH
+         Juioc5f68GPzulkG6fvbiXg0Mfp7HbV8nv0/M8EaHvxO/SpuEZ8XDC7zcbggjccwVVwR
+         tXzB2JneHe1wo493N9XqzEt9pj88aV8sQ06RpVU9Q9OHwjFIFtbD7o7Z13xhmnWVMGGN
+         kZG6jLlPIbpeOCBeUUh84mwRjstdwu42wq9fWaGqCA45hA060WgwYSWOC0/Axg7n9SEO
+         ngyw==
+X-Gm-Message-State: AOJu0Yye1r8bklR8iUiwzAg/NFEOHAfBylBPGQdl7Sd2ZTFH2CUvjRV4
+	W5KPxc6Obpeg1i9aBjMYN86B7WFGSsg/IR3AwhOYmOSodyEb2l3A3apf1WmfnCr38P+90A/Nb8A
+	VNg7zhSUYd2g1I7wDpWjlGRghIjMyJNhBe9v72Nd9iA==
+X-Gm-Gg: AZuq6aJzXLUk6RPUV4Us3FMZAz2Ke1+K645smV8lPM/x1PiLjVjmsWj7M5kJowlcR/I
+	tI+3IQwFdpn7jq8jQI9r7dCusU7kSPQMOMpN2QkFBKebeFPYdqr9DGRXUw6xoFlX4fnL8fcY2L9
+	n7njMuarLIkG2kwTCDv+GVjY/qmCtT8BFIFINz2U4Yc2LL+K0VxHVSya7idNBZjkVu8hI5YdSMO
+	IiJasTpSSrp/LZ7Zh85PnpmT2KsroU9JAkRGGv0WGfaUwviDipsdgofO9Uh9ktcO7mvIoP8UbY6
+	lkiovqHXKeTT
+X-Received: by 2002:a05:6122:1b03:b0:567:4260:5244 with SMTP id
+ 71dfb90a1353d-567682c7108mr115526e0c.21.1770930817649; Thu, 12 Feb 2026
+ 13:13:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1770390576.git.abrahamadekunle50@gmail.com>
+ <24692afa3f0a67d3f3eba776cc745287c5d71e94.1770390576.git.abrahamadekunle50@gmail.com>
+ <xmqqikc9ekzz.fsf@gitster.g> <CADYq+fa81Uki0ZVta80VO=-UG-f+Z8GAyzom-FLNXULartwwXA@mail.gmail.com>
+ <xmqqtsvlq3gr.fsf@gitster.g>
+In-Reply-To: <xmqqtsvlq3gr.fsf@gitster.g>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Thu, 12 Feb 2026 22:13:38 +0100
+X-Gm-Features: AZwV_QhfyjK8QW-DrikMYWElZAymp7yOCcasM4uXlE85YZSVwoDfwk1XhJBu9_8
+Message-ID: <CADYq+fab0FKncE8VFJcaHA5VmrTJbrSo79jxA6x+Y5dkZP+2RQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] add-patch: Allow interfile navigation when
+ selecting hunks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, 
+	Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+On Thu, Feb 12, 2026 at 6:25=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Samuel Abraham <abrahamadekunle50@gmail.com> writes:
+>
+> > On Fri, Feb 6, 2026 at 8:21=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
+m> wrote:
+> >>
+> >> Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+> >>
+> >> > @@ -1566,11 +1589,14 @@ static int patch_update_file(struct add_p_st=
+ate *s,
+> >> >                                               : 1));
+> >> >               printf(_(s->mode->prompt_mode[prompt_mode_type]),
+> >> >                      s->buf.buf);
+> >> > +             if (s->s.no_auto_advance && all_decided)
+> >> > +                     printf(_("\n%s All hunks decided. What now? ")=
+,
+> >> > +                             s->s.prompt_color);
+> >>
+> >> This gives an ordinary prompt for the hunk and then another one
+> >> after it if we notice everything has been decided.  I am wondering
+> >> if it wants to be more like
+> >>
+> >>         if (!s->auto_advance && all_decided)
+> >>                 say What now?
+> >>         else
+> >>                 ask the usual
+> >>
+> >> ?
+> >
+> > Hello Junio
+> > Please just a small curiosity.
+> >
+> > If I do it this way, the user will not be able to see the options avail=
+able
+> > once they have decided on all hunks and want to rework the file.
+> > The options for a hunk will not be visible if they navigate with say K =
+or J
+> > and want to change decisions on a hunk.
+> > They will always be greeted with What now? without the available option=
+s.
+>
+> Ah, OK.
+>
+> But then after deciding on all hunks and not telling the prompt to
+> move to another file, the user will keep seeing this extra line of
+> prompt?
+>
+> It somehow smells like a waste of a whole line just to remind the
+> user that all hunks in the file have now been decided.
+>
+> There was a separate topic that added "(was: [yn])" to the prompt
+> when the prompt asks about a hunk that already has been decided on.
+> As we only need a single bit "all hunks decided", can we do
+> something similar, I wonder?  At the beginning of the main prompt,
+> we show which of the N available hunks we are currently at, e.g.,
+>
+>  (1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?
+>
+> Perhaps we can add a third number to indicate how many of the
+> available hunks the user has already decided, or something, that can
+> be used to avoid this wasted line?  Or is it a good thing that we
+> are loud in this case using a whole line to remind the user that it
+> may be time to move on?  I dunno.
 
->  		if (!gitdirenv) {
->  			if (die_on_error ||
-> -			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
-> +				error_code == READ_GITFILE_ERR_NOT_A_FILE) {
+I thought of a suggestion where after deciding on all hunks in the
+file, the user
+will be able to see the "what now prompt", the options for the current hunk=
+ and
+also the previous decision on the hunk since at this point, all the
+hunks would have been decided on.
 
-Why this indentation change?
+I tried something like
 
-> -				/* NEEDSWORK: fail if .git is not file nor dir */
-> -				if (is_git_directory(dir->buf)) {
-> +				if (is_git_directory(dir->buf)){
+What now? (was: n) [y,n,q,a,d,s,e,>,<,p,P,?]?
 
-Why this change (which is style violation that lack necessary SP
-between "){")?
+This does not show the number of the hunk we are currently at and the
+"Stage this hunk" since the decision had been made initially but the "whatn=
+ow"
+prompt still provides a chance to change the decision, while showing
+the previous
+decision on the hunk by asking "What now?" instead.
+The options have the default [y,n,q,a,d] and the remaining options are popu=
+lated
+from the permit set for the hunk. SO the user can still carry out the
+normal actions on
+the hunk.
 
->  					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
->  					gitdir_path = xstrdup(dir->buf);
-> +				} else {
-> +					/*
-> +					 * It is neither a gitfile nor a git directory.
-> +					 */
-> +					struct stat st;
-> +					if (!lstat(dir->buf, &st) &&
-> +						!S_ISREG(st.st_mode) &&
-> +						!S_ISDIR(st.st_mode)) {
-> +						if (die_on_error)
-> +							die(_("Invalid %s: not a regular file or directory"), dir->buf);
-> +						else
-> +							return GIT_DIR_INVALID_GITFILE;
-> +					}
->  				}
+In response to your earlier question, if the user decides on all hunks in a
+file and does not go to the next file, he'll see the prompt above and
+that is what will keep
+showing if he remains in the file, no extra line.
+If he navigates away, the hunk re-renders with the "what now" prompt
+when he comes
+back.
+If he had made all decisions in a file and decides to split a
+splittable hunk, then the normal
+prompt shows for those hunks since they are now undecided.
 
-Stepping back a bit, even though the NEEDSWORK comment is placed
-here, I am not sure if this is the bast place to do much of the
-necessary work.
+What do you think about this?
+Thanks
 
-When gitdirenv is NULL and die_on_error is set, we would have died
-on any error other than STAT_FAILED (most often, this is because
-there wasn't .git at the path in the first place) or NOT_A_FILE
-(again, a happy case is that .git existed and it was a directory).
-We would have already died in read_gitfile_error_die() in all other
-cases.  But these two error cases are not necessarily entirely happy
-and that is what the NEEDSWORK comment is about.
-
-So, if we wanted to tighten the error checking to help users
-diagnose problems in their filesystem, I wonder if it is a better
-approach to refine the set of READ_GITFILE_ERR_* error codes:
-
- - STAT_ENOENT (new) is returned when stat failed and we got ENOENT,
-   and it is not a fatal error.
-
- - STAT_FAILED becomes a fatal error in read_gitfile_error_die().
-
- - IS_A_DIR (new) is returned when stat succeeded and it is a
-   directory.  It is not a fatal error.
-
- - NOT_A_FILE becomes a fatal error in read_gitfile_error_die().
-
-Existing callers of the two functions, read_gitfile_gently() and
-read_gitfile_error_die(), must be audited and adjusted
-appropriately, but once it is done, it would become much simpler,
-wouldn't it?
-
-Thanks.
+Abraham
