@@ -1,83 +1,83 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDA3219A81
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 18:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6301E8329
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 19:30:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770922699; cv=none; b=P4seNdlXdDlmtfMV0DE9XPs38FcpL/Izyk544Qh2AwysFU0weoh5yrdFipBd3t0GhtEcYHAFAybsvxaMaST5jafQ5nk3WJ0SkdjJf54Yo5yGQgNuTGu8m2qmXhI7NLPyCYt+M23an3JPWYedL1Dfc4u+AWOr0BX57VYqlbwr+uk=
+	t=1770924625; cv=none; b=Fh9namhqfEd7WQ7o6nmgKnF0r5c82v7nv3O84YvBDrFbphE4sKoSqk8gz0ZG4mU9fZgftc6HuW6ohYZiEiYbIr2lCn/YC6IIRxp/PrzPZy31SRvWpKX3Ut1ffjobWE+PK0H+Mp2L+M6617IST+YC495KTLdxBSQ86qQw9CInS1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770922699; c=relaxed/simple;
-	bh=XK2eJzUL0PsRiGAg2GWrcRA8gG3Vb4dmmqKquatiV2g=;
+	s=arc-20240116; t=1770924625; c=relaxed/simple;
+	bh=ekWIppz9bkmEdk6OmEkJkbAJZ1QzBrIn0R9ZWY7pZD8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PnzQyNKjhClb8ZJamN7wwvlAEtoq5Ukb6Gpn3/x34ZbrQGNHUGfwy2y1cRxIQjDmExaKpbxfuBMdpP0kZgyxZKN+Kj4qAtG9WIWXfAA1kUpm+HopFFQJNq3coxeGcw0N2+JG7sO2IgUd4gjag5rG51BQdKppK2e+O/vDaMSDWBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rYBLWv29; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vr1tuPOz; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=f5kX5q8cxemJC8+0GbzspriQio7ZzdYvjHL4niNyzjl8ld8GxRdvDpp0Ollj88lnJCR4eCGO8XjGxzr88FWfpscHGa5Wvmvf7L9T2Q1CCvcZSvcDDdsHSL1qNbeHWYqT3aqgJL/IiVI9zp5iSWiitz9oLJ2Asx7a97yTmmIUD3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dBvT/wfu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L9QMrRto; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rYBLWv29";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vr1tuPOz"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id A16E31D001B3;
-	Thu, 12 Feb 2026 13:58:16 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dBvT/wfu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L9QMrRto"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 614547A00B6;
+	Thu, 12 Feb 2026 14:30:23 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 12 Feb 2026 13:58:16 -0500
+  by phl-compute-01.internal (MEProxy); Thu, 12 Feb 2026 14:30:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770922696; x=1771009096; bh=b+6xRLR+xk
-	QTnQ/0aH41ozkJ4+IRFWLy6ISkHqe4/2w=; b=rYBLWv29/qzFKDmsPShaCKVrGA
-	CAYVRaaU9IwDrHtzT3U9gfiJRe+Nq8VmK2Kj/8jgvmpxa91ztu730V+r4DtYXXGl
-	uWb57ye2pQ6jlkHTIRV0D1fVW5Zsix6mgw+NOjroMXbaCgz5IoTVXrWZhSYhvrNv
-	QnpmSanVGEl4PdPp84VBJ4fd2qc+i95sfvdetQHSWo7RsU4WbXuWbWHx7Efbc77Z
-	oe8j31Trx0XM6Dq3bgGFLu+2xPJ6G0W1rEtxjjO86UIdJ/H9Gt6sOT6FpmATv1Lb
-	48x7yhfcOnkdO3xZuoYjelwhbPN+snRw4I6z4DNlnvzGAE5SzRME2785OJIw==
+	:subject:to:to; s=fm2; t=1770924623; x=1771011023; bh=50IWReOCiT
+	u2WFqQt18SYc0lweLDfwr8JrvsoSNoBco=; b=dBvT/wfuukG0CdPbRuMvPJnqOB
+	FGhNSOpECMRRRqznKowg+g+F2uRP+0M6xKIE4tRoTslzR4Ddf2YQ4ExGE0DZdS0m
+	IVvaRb5j31ZjmefcdQxyYe91dbC9bLNJsXsHdVDUJTpj7AGWurSPa3JslYSIGzW7
+	9sIDnTneOoDlLsVmmEUo3+huNP8aZrpIOA0X5VjiuwMsJbAfRw88mh5Rr7T/JgrP
+	fl8FAf021IDJMPaGpBp2AdprXmrRG7caevrmw7kZ7Uugg2iDnjiNJCqPDCfPk8+9
+	FwiPwddOXQUTe61pd/fLWnZnHwPSWlgXjT4nuBidTQmxfANnCOa1A3RmaPnw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770922696; x=1771009096; bh=b+6xRLR+xkQTnQ/0aH41ozkJ4+IRFWLy6IS
-	kHqe4/2w=; b=vr1tuPOze8LTOUbaPbcwwd132yBG1zVLtC6jIaB25t4MEKGai6X
-	qWKlf+zsa/H26d+Aaq26rt8xBq5JL6k5+1gvB9itnfz+WjSJbGEs1vHtXqOfYBm+
-	YrErT0S63NY7TTCd7WfPS/g84pB00wt0cTb+muEvqzNEucD7Y4VpJK5vB0Y4wnI6
-	7eE/GbsztYdzswuww/Sll8m271gLgqye84aBiuvxLbHaHA389s2lNuVhwEETgM1R
-	HPrmqEYwUHjii53pLdkPPtnp4bSKlAmv0npWQiMgu+qryWzvoUSO9itzVyKNpzN0
-	+spAShqtdPvfhBs0VgY6EtT5I675LHkkJ/A==
-X-ME-Sender: <xms:yCKOaQDwvh6IYBb5LUd45xuMZAylPtsgtYAaXkEjWnzaPavAmUWeWg>
-    <xme:yCKOaVw4ahdXmQsyjY25mJDNY3gza7J3UOvwK4Ph1L0GBTydoD0ls9HRy9Js93_Uq
-    EqZxKpl4hMJCzvvsSxe7Ru7X-OlrQj5OaNnFQdF1Ofq1wKqvbwQwg>
-X-ME-Received: <xmr:yCKOadAqdwxP8nqoewPm7d0GU_RbwWBCKEL3DLdk5hKZempLUSCu2Hcod0yrfiVI0uE0XM9on_xDL5qXT9pm88JGPv_UgVNcjQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeiudehucetufdoteggodetrf
+	1770924623; x=1771011023; bh=50IWReOCiTu2WFqQt18SYc0lweLDfwr8Jrv
+	soSNoBco=; b=L9QMrRtoSW/H0fqTV+gGjkSHI88zbLh6gDmR7VF51f22HbNbWK1
+	JRBNBH+TAZr3/V1/2oYu+fmYrAxZZT6uvTwz5PtaFYctd3MUvfWdyuVkpxuCYgFe
+	WtqOFfyIMW98XFeQil/5zlxSMNIA6RTdZBkAR7RZjLtMk6HzhMaChkMRq6L/DGEB
+	IMv9nvp4yC0FJvsRtqSsnaUQHQFkkL62x4vWRQvk2ztW4Ozp8jJ7kTCtwrKPZpca
+	uBtdV0FqzlgTMW86tQ/0nvVguEaJjoW6f2i7qTYrgKUHiRP3qkDxCCciOkW7tsfc
+	wspeUwUWB6r6yjbPBA8BMxQbnrrQau7GW+A==
+X-ME-Sender: <xms:TyqOaUiJbF7X6PZFUNVmJEDo1FvHbf0ui2KdbOU1XlJ6ozRDeamTfQ>
+    <xme:TyqOaT4KGtFz5OzDeV9RVGvmdkhV563oTRVXpX5KwMyW1AqR6Kr7PLXR6PLbEH_Rh
+    kOEZ9_GSHR4VE-Glqemj3Dl9tYfrC4Bj-yunhnLNn200I74VDY1vA>
+X-ME-Received: <xmr:TyqOaUajhEX9b9wWb3nglHZX5jXQXQgv9FRr5IWR52lVp8SASTRA-aMC4FRJgs-bf5lrHZyu-iRuVUTkmy7L8KZ_ecPxaRPJqA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeivdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
     dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeevvdeiieduteevuedtieeuheejve
-    dvfedvvefggfeiheehleeugeelfeefgfehtdenucffohhmrghinhepughifhhftghorhgv
-    qdgsrhgvrghkrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehhrghnhigrnhhgrdhtohhnhiessg
-    ihthgvuggrnhgtvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:yCKOaSaWVaF00-TRsHEhjG_9I9j7w7MiAgThBwGAX1ISxZigUo7fMg>
-    <xmx:yCKOaViT8P_1jcVuqT35zsZZfuuAprxNqoRQ9kB-OdWKcvjE3tIwMQ>
-    <xmx:yCKOaU7WwrC5pE_U9ZRFB9B-6b2_l4lGyXHVTI1l-_F9EE_dQEI24g>
-    <xmx:yCKOac4TluYkwrAQ2LArv7wCVBk1sY2UZtDghODX8z94CmqF5HxdxA>
-    <xmx:yCKOaaY7vZIKY3eH2plXaZlelPULp_3yShFIgHtb-F-mERUZfDmebmkN>
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrmhhishhh
+    hhhhrggrrggrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:TyqOaQ6TU4KBZoQyqUIwH98CupsUl-7iWZO09Q4IvtmIyyDsr0z8QQ>
+    <xmx:TyqOafDtsX1hjlOWJ9mdmpcmGWPfIUJRG81iWjmNi0NseeGP1EU2kA>
+    <xmx:TyqOaedIxN29s_VS6_ASfkBGho6YXP2SRziCsK7bqAY3CXOrQ5Ahcw>
+    <xmx:TyqOaWLcP6NMUZ4ilTtQ3FE-cOM2fzhMXqokpOAtXh6beXfwJGDnYA>
+    <xmx:TyqOaVYu4929aOTzYJ7mXT60EQ5cqGLjCUK7mesTqOHXuqVBKOcEgNhi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Feb 2026 13:58:15 -0500 (EST)
+ 12 Feb 2026 14:30:22 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Han Young <hanyang.tony@bytedance.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] diffcore-break: prevent dangling pointer
-In-Reply-To: <20260212072002.2347-2-hanyang.tony@bytedance.com> (Han Young's
-	message of "Thu, 12 Feb 2026 15:20:02 +0800")
-References: <20260211041128.48412-1-hanyang.tony@bytedance.com>
-	<20260212072002.2347-1-hanyang.tony@bytedance.com>
-	<20260212072002.2347-2-hanyang.tony@bytedance.com>
-Date: Thu, 12 Feb 2026 10:58:14 -0800
-Message-ID: <xmqqseb5okl5.fsf@gitster.g>
+To: Amisha Chhajed <amishhhaaaa@gmail.com>
+Cc: git@vger.kernel.org, stolee@gmail.com, peff@peff.net
+Subject: Re: [PATCH 1/2] sparse-checkout: use string_list_sort_u
+In-Reply-To: <20260212041017.91370-2-amishhhaaaa@gmail.com> (Amisha Chhajed's
+	message of "Thu, 12 Feb 2026 09:40:16 +0530")
+References: <20260212041017.91370-1-amishhhaaaa@gmail.com>
+	<20260212041017.91370-2-amishhhaaaa@gmail.com>
+Date: Thu, 12 Feb 2026 11:30:21 -0800
+Message-ID: <xmqqo6ltoj3m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,211 +87,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Han Young <hanyang.tony@bytedance.com> writes:
+Amisha Chhajed <amishhhaaaa@gmail.com> writes:
 
-> After we have freed the file pair, we should set the queue reference to null.
-> This prevents us from encountering a dangling pointer later on.
-
-I sense that "This prevents ... later on" needs further be
-clarified, since it is totally unclear what "later on" refers to.
-We are done with the old filepair, and have no reason to revisit the
-q->queue[] item ourselves, but somebody later attempts to use it.
-Who is it and why does it do so?  That is a natural question readers
-of the above description would ask, isn't it?
-
-    Side note: I am guessiong that this is similar to the problem
-    fixed with recent 56d388e6 (diff: avoid segfault with freed
-    entries, 2025-12-29), where pointers in diff_queue->queue[] that
-    point at file pairs that have been freed were mistakenly used by
-    diff_queued_diff_prefetch() to populate them.  Is a prefetch
-    happening in "git reset --mixed" that calls read_from_tree()
-    which calls update_index_from_diff() via do_diff_cache()?
-
-> The test uses git reset to trigger prefetching after break-rewrites have freed
-> the file pair.
+> From: Amisha Chhajed <136238836+amishhaa@users.noreply.github.com>
 >
-> Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+> sparse_checkout_list() uses string_list_sort and
+> string_list_remove_duplicates instead of string_list_sort_u.
+>
+> use string_list_sort_u at that place.
+>
+> Signed-off-by: Amisha Chhajed <136238836+amishhaa@users.noreply.github.com>
 > ---
->  diffcore-break.c              |  1 +
->  t/t4067-diff-partial-clone.sh | 30 ++++++++++++++++++++++++++++++
->  2 files changed, 31 insertions(+)
+>  builtin/sparse-checkout.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 >
-> diff --git a/diffcore-break.c b/diffcore-break.c
-> index c4c2173f30..9b11fe2fa0 100644
-> --- a/diffcore-break.c
-> +++ b/diffcore-break.c
-> @@ -222,6 +222,7 @@ void diffcore_break(struct repository *r, int break_score)
->  				free(p); /* not diff_free_filepair(), we are
->  					  * reusing one and two here.
->  					  */
-> +				q->queue[i] = NULL;
->  				continue;
->  			}
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index cccf630331..34e965bfa6 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -94,8 +94,7 @@ static int sparse_checkout_list(int argc, const char **argv, const char *prefix,
+>  			string_list_append(&sl, pe->pattern + 1);
 >  		}
-> diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
-> index 72f25de449..a980cd30a0 100755
-> --- a/t/t4067-diff-partial-clone.sh
-> +++ b/t/t4067-diff-partial-clone.sh
-> @@ -132,6 +132,36 @@ test_expect_success 'diff with rename detection batches blobs' '
->  	test_line_count = 1 done_lines
->  '
 >  
-> +test_expect_success 'diff succeeds even if prefetch triggered by break-rewrites' '
-> +	test_when_finished "rm -rf server client trace" &&
-> +
-> +	test_create_repo server &&
-> +	echo xyz >server/foo &&
-> +	mkdir server/bar &&
-> +	test_seq -f "line %d" 1 100 >server/bar/baz &&
-> +	git -C server add -A &&
-> +	git -C server commit -m x &&
-> +
-> +
-> +	echo xyzz >server/foo &&
+> -		string_list_sort(&sl);
+> -		string_list_remove_duplicates(&sl, 0);
+> +		string_list_sort_u(&sl, 0);
+>  
+>  		for (i = 0; i < sl.nr; i++) {
+>  			quote_c_style(sl.items[i].string, NULL, stdout, 0);
 
-The blank line above does not have to be doubled, I think.  So the
-first commit yas "xyz" in "foo", and 100 lines 1..100 in "bar/baz".
-
-> +	rm server/bar/baz &&
-
-We are overwriting it, so I am not sure why this "rm" is needed.  Is
-it necessary to avoid reusing the same i-num for the file to avoid
-racily clean condition, or something?  I find it unlikely because
-the length of the new contents ...
-
-> +	test_seq -f "line %d" 90 190 >server/bar/baz &&
-
-... is different from the original.
-
-> +	git -C server add -A &&
-> +	git -C server commit -m x &&
-
-In any case, the second commit has "xyzz" in "foo", and different
-100 lines 90..190 in "bar/baz".
-
-> +	test_config -C server uploadpack.allowfilter 1 &&
-> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
-
-And we grab both commits and their trees, but not any blob.
-
-> +	# Fetch bar/baz without fetching foo.
-> +	git -C client checkout HEAD~1 bar &&
-
-And we move "bar/baz" back to the 1..100 (the tip of the history
-immediately after cloning had 90..190).
-
-> +	# Ensure baz has diff
-> +	git -C client reset --hard HEAD &&
-
-I am not sure what the comment wants to say.  Before this hard
-reset, we did have modification relative to HEAD in bar/baz; with a
-hard reset, we are ensuring that everything including bar/baz
-exactly match HEAD, aren't we?
-
-> +	# reset's break-rewrites detection will trigger prefetch
-
-"reset's break-rewrites detection" -> "break-rewrites detction in reset"
-or something to avoid the "'"; otherwise you'd get
-
-    error: bug in the test script: not 2 or 3 parameters to test-expect-success
-
-You rewrote this line as a part of the last-minute change before you
-ran the test for the last time, or something?
-
-Anyway, starting from the "everything clean wrt HEAD" state, we try
-to move to the HEAD~1.  We already have both 1..100 and 90..190
-versions of bar/baz (and HEAD: and HEAD~1: trees), and we have the
-contents for foo in HEAD, which is "xyzz", but we have never seen
-HEAD~1:foo so far.  "reset --mixed HEAD~1" requires us to obtain
-it...
-
-> +	git -C client reset HEAD~1
-
-... and cause us to run the prefetch to obtain "foo", but it runs
-do_diff_cache() and makes it notice bar/baz has changed too much?
-
-Your "do not leave q->queue[] dangling, as other people may still
-look at them" fix certainly is a good hygiene, but I have to wonder
-why we are doing break detection in this case in the first place.
-For the internal "Let's figure out which path have changed, so that
-we re-read only those changed paths" invocation of diff machinery,
-we should not be doing so.  A break detection is to see if the
-change in the contents of a single path is a total rewrite, and
-regardless of the answer, the fact that the path was modified does
-not change, update_index_from_diff() would work on the path anyway.
-I also suspect that, if we are doing rename detection in this call
-to do_diff_cache(), it is a totally wasted effort.  We may want to
-take a deeper look at it, possibly outside the theme of this more
-focused fix.
-
-> +'
-> +
->  test_expect_success 'diff succeeds even if entries are removed from queue' '
->  	test_when_finished "rm -rf server client trace" &&
-
-By the way, I find it highly curious that with the following patch
-to revert the fix with a bit of extra output sprinkled to your
-tests, the problem does not reproduce reliably, which may indicate
-that your test may be flaky (i.e., timing dependent).  Am I doing
-something bogus in the patch?
-
- * revert of the fix in diffcore-break.c is a deliberate attempt to
-   reproduce the problem, and "echo/cd client/ls" are for inspection
-   so you should not take it in your final version.
-
- * removal of double blank lines is a style fix I'd want you to take.
-
- * "reset's" fix is a shell script syntax fix I'd want you to take.
-
-Thanks.
-
-
-diff --git c/diffcore-break.c w/diffcore-break.c
-index 9b11fe2fa0..c4c2173f30 100644
---- c/diffcore-break.c
-+++ w/diffcore-break.c
-@@ -222,7 +222,6 @@ void diffcore_break(struct repository *r, int break_score)
- 				free(p); /* not diff_free_filepair(), we are
- 					  * reusing one and two here.
- 					  */
--				q->queue[i] = NULL;
- 				continue;
- 			}
- 		}
-diff --git c/t/t4067-diff-partial-clone.sh w/t/t4067-diff-partial-clone.sh
-index a980cd30a0..b5a35ded99 100755
---- c/t/t4067-diff-partial-clone.sh
-+++ w/t/t4067-diff-partial-clone.sh
-@@ -142,7 +142,6 @@ test_expect_success 'diff succeeds even if prefetch triggered by break-rewrites'
- 	git -C server add -A &&
- 	git -C server commit -m x &&
- 
--
- 	echo xyzz >server/foo &&
- 	rm server/bar/baz &&
- 	test_seq -f "line %d" 90 190 >server/bar/baz &&
-@@ -153,12 +152,22 @@ test_expect_success 'diff succeeds even if prefetch triggered by break-rewrites'
- 	test_config -C server uploadpack.allowanysha1inwant 1 &&
- 	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
- 
-+echo after clone &&
-+(cd client && ls -l foo bar/baz) &&
-+
- 	# Fetch bar/baz without fetching foo.
- 	git -C client checkout HEAD~1 bar &&
-+
-+echo after checkout HEAD~1 bar &&
-+(cd client && ls -l foo bar/baz) &&
-+
- 	# Ensure baz has diff
- 	git -C client reset --hard HEAD &&
- 
--	# reset's break-rewrites detection will trigger prefetch
-+echo after reset --hard HEAD &&
-+(cd client && ls -l foo bar/baz) &&
-+
-+	# break-rewrites detection in reset will trigger prefetch
- 	git -C client reset HEAD~1
- '
- 
+Obviously correct.  Will queue.  Thanks.
