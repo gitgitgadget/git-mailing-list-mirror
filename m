@@ -1,171 +1,134 @@
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460412DE6F3
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:29:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770892186; cv=none; b=dOLRHXfifztum7yD5VC9ofP5rP0Q4yN81jRrDljFm6FCcJODAan9WNTGFjDgjCkgkRjWCGiU2jr0DVMBGxgKUPFqPp2S4JfQaQPgvtsWwMNeDrMU4gPMnR7iQnlMi506+n43aYpEb4vrlHqfo3QfF3rum5WtK4OSmj4hFrzNJRw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770892186; c=relaxed/simple;
-	bh=CgrvpHQ/2PansNy+UCHxCrWi3bbm2HAsr0ZnPQKpiIk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tr/ZNTfwjkYX4CqM8uI4n59z/1+fqLSvi7h4h+JyM2pznQuL9bIBSJYkAuxu2zFPHfJbCOrOhZVkIQqIl82jYEC/9DfRF3Ot5JVZS6d4+fEmOwmh8XNbUXLdYQ/6BKGJGDqw6TCsDCDglzPiYCo/7+XH/2To9Uor57R10RmbAdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lhGsHk73; arc=none smtp.client-ip=209.85.128.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18AA42048
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:32:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770892350; cv=pass; b=E+LE8Kc9CZ0gLj3BvW6G4+TAiv5O2yc0108ccAitW39XxXJ9Ah06oYLMq2BIcrk//De2nQfmcXKssImcR33H4S65+2+5vVg9pi0T49VD8S0NTpbRfSXqLYvP2j0G0rRYSVEfhG5GDspeyGFpOcI3eKMWcrTW7HPVxbtRgoSY+rA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770892350; c=relaxed/simple;
+	bh=X9RWK4hcpL81rSC/jSRr+nx0MerRBKcSS4Y0l7yBks8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UpOR+Jf76ptRtpeLj7dHwoBiIlmxrztvCA3/+EB/c/JAB1f8vEznbqVg5vEgyfzOG4VrupejZ8lnIlPNgj0EpgE63I4Hn2T9l6fhQTZra+ZPnW1jfLiiO1EpZc7+7XmUi6jIrHDDRiCun8xQjtVAIS+m3f5tkAk1pU0ij6r0cz8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ey+GSmP0; arc=pass smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lhGsHk73"
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-47edd6111b4so116468555e9.1
-        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:29:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ey+GSmP0"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5675d609621so194386e0c.2
+        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:32:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770892348; cv=none;
+        d=google.com; s=arc-20240605;
+        b=C+x2jB8DFY4Iy9atrwRW/ohh+7S5RJi+NF4iqYU4xIL9Hr+4RMhWOp1VrlFEkyXG+e
+         Pgp0fAxQWcDhjFCkEsiTkmskpoMypCBKE2wBh7Ae3DSX3Ot5mViok+E3wqWGi8T3Kbsx
+         54IuxdESetYKyHBqWE+da259uM9gE47nHyid6iBv0fjZaJ9HBBnE33UFf5XTkBJqH5Oz
+         lEBxiLG5/Bme+bzzXpPczu+6506U53yYYoLZj72/llYDujnHWShn1pWo2/jitHeU/lyd
+         9iOuscK0Rn11M5UkTl4f+CTLinRxZ4ruems9AdSlYWCZInC1FOaolInXbHbr9PfebL7m
+         mNTg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=l0izMFzNxkmM7YDx5h4a9+FoDM8ipIeWtfIFfJq/Zf4=;
+        fh=392ryK1TiLXjQymH8YuTlaSLgmX4+VbMxfQfkGuHyGc=;
+        b=WIAY46ebaNxPi4kkaUE32+GQUe5fR2kCRj+cnA55ngyICKUTRmTNZDIV7oY0xEMqZw
+         KIi1GBD9iVQ1WjnGHSr8J+aT3XPDbXuAKyIuZlEOdXwZeAiUVP468oMEgigzrO7OzDlZ
+         zGloRXSM+FkqtGhjMPvbPBdRuRLywZIrbnTy7e1tMCPoRMJ99KbitfdifaY+jb3iSsAo
+         XPN9n1pgLEFR92qFIO7/C0qlRvMXZMrmTOyA672XQEZXmBz4qLeYcb95ctaSGTNO7HMc
+         YueeARsGZ7pGBBbnjVIgMfoT0FUy7ljMhS1SNrJ24qZ2b+lDtnPehc3zwAZxK859RU3E
+         6j0g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770892184; x=1771496984; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GCXpP23eAcRec+1RyiZApYEsFEV7LSckZSY7pYNJ3Zg=;
-        b=lhGsHk73P+TqM38hZuy66XVyDABa9BFnFbMeYVlRIG+E/H+4FUGpMeYsIJ8ueDvaDB
-         PM86QRTdq/sGllPsYjwsd2rSzM4Z9JNfw9NCSH/+N3dhx76pjmrkAOZ8R0jTEs+HMKd5
-         FOBK/HSUecpMlj5y3BKDIPGoZPswVqEf1fhvQEB32RKn+ba1Lkd3wXLlytkv2b2UU0uD
-         1TxexGb4TVqr4QewK7vzWnDlYud8mrgLfbGEtU4QhSeIUiJ5RMeOYjDNFiWhvec6Ou88
-         IsBSST+pdp/cJYvo5MKGCHQcqTSLTiHHJGoJwPfxaQOxg6cjsqh58OYwcDeCYT8XFblI
-         Wmfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770892184; x=1771496984;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770892348; x=1771497148; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GCXpP23eAcRec+1RyiZApYEsFEV7LSckZSY7pYNJ3Zg=;
-        b=wfiCj7cNnEgyFVRLV+vgygrCOcaZoExC+d0NZpddyn9qWnuJccwzy/sq67r/fC2cDH
-         dyhFh6ywkinRH+ZxdDHaCFviYge935UdkSNM0moKtQrEI+5vWhAFa/GPVbwN3iSFuRuh
-         WCSFsaIwforbLGbmBiLcHHff/hcF+qPXBr+Lnt5z8DHBFomGHdu+YDJTVFL1cZrwNM3b
-         g5QDSyhSUKogPxGWkteScHnONRUJHA6gfP3n0kXcbubhTHHdSqHjrxZrQoOg3/ooR/pw
-         HX8jyDYQR8RBceiMckmQDFi+euQsGzfPLahxsJQoZ8qY5qoJLelO+o/jsVDikJRwbjj9
-         MkEg==
-X-Forwarded-Encrypted: i=1; AJvYcCU7rPSQYfrQ9G/x4u084QnhZVaUPe1P+IDlN35KkajgKn+ZaETWgcVb/+fJIr4NqVxDP6A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcHmyK6ckuvGXco/vVUt+0KZMak1uYY9Bj+tIvmPiF10aKQRlh
-	z7+SvEYLglOuusSmKUYmawcp131MZbpIlQEnFE5TPUrKMLXXlEGSLH3F
-X-Gm-Gg: AZuq6aJmnNGjfZbuJR1y3sySBLyZlxRdkvhMZcruGk13VMtULt/3tz/68imIVtm2HJZ
-	iXt2R6B79OynyeqleKV17RdA+9AiL3KIaA/G/6pP/AhaLEixkaSfnlGsy/38pLYRsCS2ovQ8910
-	G4gQWC0+yVwYpmnawE4aXPB3ZPWXwucew+I2mmyxiwu7zL9D0gBiVLsIuf2qBRRtPgW0H3XGgOp
-	w2N3YDP5Q9RN/ASJK7sx8TpRNFzPm1tCiAejWed0zFUFeIBixIGtdET6//6jucdl1WkBSeo8nCL
-	exRZalsbAPy4xvrpr5+LKIEXcG6aqPdx+jMPTJUHgkXDWljQ1PCgNSnUe4N7nXtRbq+sIzx2iB1
-	3vU2KP9aTURbOJthNnkN+pemhKIGNlRIfnU7PnuJx0ovx7nY7rt6EaMJVv6Lf2LoBSl5qj5B8/c
-	SQTdd7OCutZ3+DhI99i8x5kvIuXh44k5s7nrQwncIhJy+wj5PnsGcWDZE2SpC84SCj202/yX/7O
-	eWjcg==
-X-Received: by 2002:a05:600c:1e8c:b0:480:4b59:932e with SMTP id 5b1f17b1804b1-483656c0a5dmr30166345e9.11.1770892183380;
-        Thu, 12 Feb 2026 02:29:43 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4835a64cf1asm40197605e9.5.2026.02.12.02.29.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Feb 2026 02:29:42 -0800 (PST)
-Message-ID: <19d86fb2-cbbe-4753-831c-a6ed49722103@gmail.com>
-Date: Thu, 12 Feb 2026 10:29:39 +0000
+        bh=l0izMFzNxkmM7YDx5h4a9+FoDM8ipIeWtfIFfJq/Zf4=;
+        b=Ey+GSmP0+PQSWhTTKyOBs6xIRS4JXp/m6hE9hitaL0ty5IZCVXZqyE+iNkB75FC6LQ
+         58QYmenCgt62C62Si7yTzf5py+NTjMbNAum9O6CaJ+BvjH7nNowiE6zr+Nh7UbofCYpY
+         NF50hrdqG6WLA2nCBlRZxd4jQY5k73a6cWIF3s25/f0+Q2p7b8fEvFBz5tDohqYGu3lw
+         o7/6TZ6FU6oZxiMmRaq5aBD2xt2jrTv2nOcgd0OvveStBIdfycAa6hhVkXHDydsfKVEN
+         nVG+l0+jMCziGH9e9Xyo4Ao4Kf8y2hDVB6ndsSSDv1+dSg9Exmh9FluwvO3TMdSAxuOC
+         Y6yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770892348; x=1771497148;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=l0izMFzNxkmM7YDx5h4a9+FoDM8ipIeWtfIFfJq/Zf4=;
+        b=rbKkty5ByCb/VJERlZ5bWFV1wFrhzzaQne8iU4oo/5Gc1IXQQRi/WpjWOIgnW9cP4C
+         OnihO+d+u8k1djXdXPB7PIwS230xOWb0ZSlSe/P2EYuEOVPqJ6A148F8dbr3lJkI7H0A
+         ZHjSmyo7h3sNOFtIm73VHCcKzi8tf/PPw9DgpjdHpQXECglV+fGt84v0WyYt5EWxM6xs
+         qprl27YSTOlv+7nPOCXVsaAF0ykF40lPMMKKlPEmbZqTUAlYpAg8bm18QHEi/UlQ5XRz
+         uJBgCHFNfL2RRNHVs0/9bE+lMyUHvz41b4Thfevq1joqLUJd4nAsZxzPt9rqYr4VwPPY
+         6mEg==
+X-Gm-Message-State: AOJu0YxkiSOyYs1HNEgxZ4GeuhynwoEhg62jORthATt3WpPSINgFmBAH
+	aE03ENBgLQYvm5oE+4WOUPHJwm+/KwyUspsY+bBdPGDEDVuldPwNArNHK2S+2sBkvc4Qn+NLdEF
+	kph2GufLzgDFb6spzMJp0+JMCgJObULE=
+X-Gm-Gg: AZuq6aJK9guvOYID1wlFh7sCGuwnvg7YlIahkhmOmof8KO7e5FWOfJwIoyO5t+PJS4i
+	BHYSnJ/tRDLXxjbVBcXcImeix95JL0NgCLQNc0PZ4tCDPKhC1xskNzxrhCCMOHpBh9P+hh/vnB8
+	P7cVL6uIBo1Ugz75w8YFWnnTfq5937q89LjTJjRCf7gVdFi0MEO8h0bjX0toaDD2reZDj0bw44n
+	B8uWio3UU0puvP4jTp7422COGgXYqelrwSIUnuLIKGFs8Lo1ngpfcN8r92q3xbIQ22hE1c9X1tf
+	XQkfrWxzg8/5KBMAlOIlEw==
+X-Received: by 2002:a05:6122:a510:b0:55b:7494:177b with SMTP id
+ 71dfb90a1353d-56759e982a4mr488134e0c.10.1770892347762; Thu, 12 Feb 2026
+ 02:32:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] meson: regenerate config-list.h when Documentation
- changes
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
- <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- Evan Martin <evan.martin@gmail.com>
-References: <c9ae171eed6bd5b0fa6671b10a5ad0da024f36d0.1770649805.git.ben.knoble+github@gmail.com>
- <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <cover.1770390576.git.abrahamadekunle50@gmail.com>
+ <24692afa3f0a67d3f3eba776cc745287c5d71e94.1770390576.git.abrahamadekunle50@gmail.com>
+ <xmqqikc9ekzz.fsf@gitster.g>
+In-Reply-To: <xmqqikc9ekzz.fsf@gitster.g>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Thu, 12 Feb 2026 11:32:29 +0100
+X-Gm-Features: AZwV_Qi4Z9Og5xmvZRMzhLb-3tZit2SwPrVv4IjNqjeNzyVmWSlyhovj0t6OUtg
+Message-ID: <CADYq+fa81Uki0ZVta80VO=-UG-f+Z8GAyzom-FLNXULartwwXA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] add-patch: Allow interfile navigation when
+ selecting hunks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, 
+	Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Ben
+On Fri, Feb 6, 2026 at 8:21=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+>
+> > @@ -1566,11 +1589,14 @@ static int patch_update_file(struct add_p_state=
+ *s,
+> >                                               : 1));
+> >               printf(_(s->mode->prompt_mode[prompt_mode_type]),
+> >                      s->buf.buf);
+> > +             if (s->s.no_auto_advance && all_decided)
+> > +                     printf(_("\n%s All hunks decided. What now? "),
+> > +                             s->s.prompt_color);
+>
+> This gives an ordinary prompt for the hunk and then another one
+> after it if we notice everything has been decided.  I am wondering
+> if it wants to be more like
+>
+>         if (!s->auto_advance && all_decided)
+>                 say What now?
+>         else
+>                 ask the usual
+>
+> ?
 
-On 11/02/2026 23:51, D. Ben Knoble wrote:
-> The Meson-based build doesn't know when to rebuild config-list.h, so the
-> header is sometimes stale.
-> 
-> For example, an old build directory might have config-list.h from before
-> 4173df5187 (submodule: introduce extensions.submodulePathConfig,
-> 2026-01-12), which added submodule.<name>.gitdir to the list. Without
-> it, t9902-completion.sh fails. Regenerating the config-list.h artifact
-> from sources fixes the artifact and the test.
-> 
-> Teach the meson build to depend on the Documentation files that
-> generate-configlist.sh reads by having it an additional output as a list
-> of dependency files, since Meson does not have (or want) builtin support
-> for globbing like Make.
+Hello Junio
+Please just a small curiosity.
 
-It would be useful to mention that we assume that if a user adds a new 
-file under Documentation/config then they will also edit one of the 
-existing files to include that new file and that will trigger a rebuild.
-
-> Helped-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> ---
-> 
-> Notes (benknoble/commits):
->      Changes from v2 (<c9ae171eed6bd5b0fa6671b10a5ad0da024f36d0.1770649805.git.ben.knoble+github@gmail.com>):
->      
->      • Pick up (and tweak) Patrick's depfile proposal
->      • Include the script itself as a dependency
->      • Escape output paths (spaces, octothorpes, and backslashes) for Ninja
->      
->      I'm not 100% sure I've actually done the escaping correctly, though,
->      since Ninja's source says that a space preceded by 2N backslashes
->      represents 2N backslashes at the end of a filename, and
->      
->          λ printf '%s\n' 'foo\' | sed 's/[# \\]/\\&/g' | xxd
->          00000000: 666f 6f5c 5c0a                           foo\\.
->      
->      So would they interpret that as the filename 'foo\\' instead of 'foo\' ?
->      (Or, no because the 2N slashes aren't followed by a SP, but a NL?)
-
-Having re-read the ninja source I agree with Patrick that we should not 
-be escaping backslashes
-
-> +if test -n "$DEPFILE"
-> +then
-> +	printf "$OUTPUT: %s\n" "$0" "$SOURCE_DIR"/Documentation/*config.adoc \
-> +	    "$SOURCE_DIR"/Documentation/config/*.adoc |
-> +	    sed 's/[# \\]/\\&/g' >"$DEPFILE"
-
-This will escape the space after "$OUTPUT:" which is not what we want.
-
-	printf '%s\n' ... | sed "s/[# ]/\\&/g; s|^|$OUTPUT|" >"$DEPFILE"
-
-should work so long as $OUTPUT does not contain any '|' characters.
-
-Thanks
-
-Phillip
-
-> +fi
-> diff --git a/meson.build b/meson.build
-> index 3a1d12caa4..fb5d7367f5 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -720,11 +720,13 @@ endif
->   
->   builtin_sources += custom_target(
->     output: 'config-list.h',
-> +  depfile: 'config-list.h.d',
->     command: [
->       shell,
-> -    meson.current_source_dir() + '/generate-configlist.sh',
-> +    meson.current_source_dir() / 'generate-configlist.sh',
->       meson.current_source_dir(),
->       '@OUTPUT@',
-> +    '@DEPFILE@',
->     ],
->     env: script_environment,
->   )
-> 
-> base-commit: 19a08e0c02faf1c5b4efd1add85598cf8390ff7e
-> prerequisite-patch-id: 364ba1899740b93be5957262d3583348d030e8fa
-
+If I do it this way, the user will not be able to see the options available
+once they have decided on all hunks and want to rework the file.
+The options for a hunk will not be visible if they navigate with say K or J
+and want to change decisions on a hunk.
+They will always be greeted with What now? without the available options.
