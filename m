@@ -1,154 +1,139 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F0024DD1F
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 21:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770931380; cv=none; b=rn2TYTDrAg1LfDSL/5qTeutd5zmkpR1HC8HtawuwcvNuo6OaPCY0xatqSfGqMyaBhDXb5kP5s4/tk5QPMTANTtgTTFATqu4KpR+dDVJQ0PvuKdJdi+39/YLhDQavA4nmzxZiRzCSnBldEEhyf2ZpFmjTCSHFUHZpJgeGf1FKkgA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770931380; c=relaxed/simple;
-	bh=iY7neEMfJRa0UgqN+hrUBrOPUoQuXEU6uClUgaTNVXw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ruZcTy/6+I+9dyHM3Abqh4kS4o0tVtiWd5oMTJ78PYFpm+gXu2Idm2Ifkg9+F6TVBR4tiCEO7UOBjD7ds2Al/mucJImMQHIWlPLkHXuU5xkGgcZaqVERy4cKJ9w34fieqeZH4/IV2+JHw0umegBfBGEfduuMsGf5JUiIJpfZkfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dJaEnYk9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q4KL5GjS; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC4732C942
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 21:29:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770931796; cv=pass; b=ZEAUf/zW41UKkg+w6Tbgi0sA9tQczwPvvc8GzDmHlOIFqCzKUC5Sazw1vtMcOFFDpwV/mXnK8BBl+6evrIo1ThriqUm4jW1mJVT4tnJsNNyVO9czjdoGxqgadhGpz0MgWkjzp7kNIsczsMl16YxKwu7dP7BQLojcdwhRWtMzvHg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770931796; c=relaxed/simple;
+	bh=wBkn9mFmgxWZ3OP1ZJ3s1LDzbViDHOz6+AHedsl3k/4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QjGTavMT23lxm9yF39tejDDlHG8b6ksey0vIrssP/iEe0u1uXM/ynbsgNrRmDSXnVw5uBEjSy7kV2IRJYlh/JEKARTPW5PVHRJrg9DINXVLrqMjLo9PUaVFT+jzpkWWbe8tAJNhjn5xGOE5ySnZwQXtfJXHBfZ2avQC0b5uzmCg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J3WAiSQZ; arc=pass smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dJaEnYk9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q4KL5GjS"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6D1241D000B7;
-	Thu, 12 Feb 2026 16:22:58 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 12 Feb 2026 16:22:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1770931378; x=1771017778; bh=Ljq1fPMW2J
-	WolLX8yHr4iI5+IANLqvUhE+GwUZeS498=; b=dJaEnYk9DwzumrXG1NDEWnruDn
-	7r7fk2GTMbGon/zJR4Zr5ZyDYSq2CvRXzUV4Y3qTw35U7qDh4G/ninBarRJEFrvk
-	bD5idJWtgWOsA805m+o0ye2JKVVf1jxSHMXmPVUUmuLn8Fe/xU2AK5ZbBWWt5o3Q
-	kkXGf9lVGxtS+JJ3AREEDvo2j9ftI6cWe4O0Eo29j8OXZiWLsphd/4wNgde4oo2t
-	4WhZCqcAQg1W3rEIYZx/o72OdwFdrK7A19IW4YU1aAGR7CB9snUySPYkOq9sJ1xN
-	QN1wSh6YctzMBBficVNACgHuR3yswikjZg0S9YDcpW9zez/d3W53uepX0LkA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770931378; x=1771017778; bh=Ljq1fPMW2JWolLX8yHr4iI5+IANLqvUhE+G
-	wUZeS498=; b=q4KL5GjSPDELWplboMBkdKprEs+Np/FDn9vJql03PilrItqRv6J
-	peBYo1JF8Rvsr3LTd7jJCCkDnRNcNnZY9tTAIUMiPlHjF21eD1XiyCu02JEdoRnR
-	/X7I2Kqj8itbJVD8/voN5KlE47x2NYtgjTPcP3hRgLmxJ3Dr6wrEJSOUtDL6r3tF
-	dPRKfFnge5JL1B8knfT8utCl0/ugCDN74dw+wUYQjMtbCCZiUHTl+dpPWTXOrebF
-	RghRv0ICVFsjYRwkGdUnMtH+yNyLrJH1KSnP5PSg34RY/V3yGEoN+h5G7hUrlgBh
-	3d6j5B80yCx/dfLQhV5p2PqdJhJAqBTrtGw==
-X-ME-Sender: <xms:skSOad7y4nyQ6L8d739A2nihOVG3jTX4jnMEp67P8tfaE4U3fbYSLg>
-    <xme:skSOaSXUTi1GZvlNJmPw0AO33kNHkxIe3AY1RwXct-PY_FJxz9SNR9vIhdRQobl2Z
-    Z2fhbTLvt-Ec-opSmh_Y3RwuTvK4Nw_ei-PCOruVrKzB6BRtA2jIcY>
-X-ME-Received: <xmr:skSOaR2aw_mtAzH7_63lJhnRxB-GgTmCti_PDXcf6STPwWa8B2sobc3sT7p7n27eKCJHfJu78oqGfS824rhyAPT5X27fZo4BuA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeigeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:skSOaf0vRTZZi8cB2Gl33ZIJNeap0UajDKvN4eJQUwUfR9KRVniXjw>
-    <xmx:skSOaU84MFJEWDHRjsdGiu8aM13cIsfTf3wDeBt2pXtXVWJr_I_Kag>
-    <xmx:skSOac10hMasuMVSV7OzmzvpHXkMxKdn080dBZKwqegRQHWHGQ7esQ>
-    <xmx:skSOaR_zJGglaMo4x-FZC8eYPvRm543abrPlWbfkeNM7MX6-8FW2vw>
-    <xmx:skSOaac4yDnyNDvRw7W6iKz-rD1FpaZiWsokCsJ8uEZ9PZGaaibGgidq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Feb 2026 16:22:57 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org,
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2] CodingGuidelines: document NEEDSWORK comments
-In-Reply-To: <xmqqms1ft7il.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	11 Feb 2026 11:17:06 -0800")
-References: <xmqqms1ft7il.fsf@gitster.g>
-Date: Thu, 12 Feb 2026 13:22:56 -0800
-Message-ID: <xmqqldgxmzbj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J3WAiSQZ"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-64ad8435f46so288325d50.1
+        for <git@vger.kernel.org>; Thu, 12 Feb 2026 13:29:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770931795; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Fw4V1l6PPA4Ao6mwny+vI9xV0ep435tAy2WfmRaaaI0DN70h2DtH09YoAc0EbQjHQw
+         Q5kxM1zR0Cfgytj9u/XmzGVKf1981lQb8pruQUDhmynkVH17Da8MOhPyciygzu/XzlfC
+         FsBCOY/HO9ZfGi2js8K/sjMSVe80IQ38fp1xXeXM4XITRDNsOxqf/VY8hDiVHTXFiVfG
+         nQlZD/BVMtf2uuaxpzhOvJaqMUAG1q0Trz8R5JpezVJ46gODo/lYIK9XTxmBkYG19eND
+         zQ3YUhdomCQTr9spG3kr/xde5x3u4xUn3AiraV9PYDmLoYL4Lh1jNWCTiGmQpmBtXbwc
+         1fJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=mOhrzESJEsgtDGZql5VwJlI1OSvj17pBAXAxTTwJhnY=;
+        fh=RJRPxWyrU64VNsuotaC6zvtv6r3085k5B0lFV7F/MWM=;
+        b=IlPuXZLqdSaHtlMCYasJFGyt3YBFqxnBO+iMy4pIJlIkFMF8zQPh0y515UrGtTRjPI
+         icmBXel3YAERbjmz/cAJU+wHU+sRPcMTK9j6PxebN0SkL/r4kkvjSVv6W9wJ7c0X8PcS
+         zd9D+kuQY7gcfAIhj1AB7S34LvK0CQ/fPCMgBxQa19INWyWk7cLgIZavAsKKgFdLwbes
+         KxxIX7Hu7h8w0fsb/nhLtJ8NgycJJAGSuwPy+q1mqVGynYRq2g/rhfu0MiIt8DXRDKc/
+         tV8isJcJ3nPcqlwVVUNcSaa1TfDYnCUuDOqZk4KpjgDaoJyp7GAysjKMx7HQaVmcPwt+
+         sL/w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770931794; x=1771536594; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mOhrzESJEsgtDGZql5VwJlI1OSvj17pBAXAxTTwJhnY=;
+        b=J3WAiSQZzkFPI8rNJLlrzN4tZrtZXTCzBDwnfvlBIzlgZ18tm4bCjbMaRqNxTZ59wv
+         /DiNWiSmtN4Pwwqj6ZblEoXJe1sBDD29y6bh2b6X7TcF1fdRCTeJNy6ngbkIgPlZDFXZ
+         +gedaRdhAwCNG50DPjXmtTWve/qubqO1FGTSgJ6dRkE/oTD1RoerG+FV1KCeRA20opM5
+         5V9R1wTp6svlYtlFiqIKwowEnT2PnrjVKhUoD4FB2Cr1I/pQtrBvzJLQR0jB/SMrJk/d
+         INyBbK16dCC4ozaFh0o7p9bkjkiMT0BJc+ANvJzh36wiHyli6nQ3xkFZQeClB1PN0RcC
+         lN/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770931795; x=1771536595;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mOhrzESJEsgtDGZql5VwJlI1OSvj17pBAXAxTTwJhnY=;
+        b=ApP+znhDplJqHCgW3IE+KrdhjmYr1XIGe9dsano8dRXH48IzGpgOjdcsYbY7fO1i0Z
+         bzPUwIY0hsxjVC8tZ5mQAxOJNLCecsH0al2xpKx14az7piVYKchcfRCB6pUfX8G360kx
+         NFqyFBJgydGpUe1FvjZ1j5xinl3CoFCWbezsN2as4ISfFFD7RqFRaZCaD+Mqqrb34l0y
+         ZNdNpRnFhGEaMKzKIjgHkhfSstkpO3FPwlYPSbxbwhRYXtqsCfAzbSIC14MrfhOuv8sw
+         QLcAG8GkvoH0ehEmIw7p5NcvBu/3P25MU0Cu4jbcEKH7JZEIizx01Bsyib5hOyIcHV40
+         es1A==
+X-Gm-Message-State: AOJu0YzCN3i3t6UYKrIksobwI1o3oY3ggROCyu66v8JtuECkpZ8olQ6P
+	qc3kmAi2JCWo0VlVwrOUrImS26WkphHu+byoYdYYIhICvJfhYhcoQgQlKDQJBFk51YrtRYD9lnU
+	nB8jx45tIJH1AnI9PFrjIy9ovjx4lSok=
+X-Gm-Gg: AZuq6aKTusSH9VgIbBly5JwAJeqQGP/vAX2P0SnkMR4HBOBBV4k1b53FLMxcK1nzSG8
+	Ehw0qoVQPUe2k76Gps8gGqvyxk652xFQ7cI6s2RV86PbZP6KC9IN5x25+DhotiH7PcCpScGDB0q
+	x5/CuqlpXJdM7diNoNKbMNqvzJHjG8xhDNwtHcV0rxyh0J0Ui2M6n3wBFm4iXg/Re80oDp67BEB
+	QskNh5RuKja8l3z99NkiV2AfH9fPkRIdRlkVxDT81XjgWjrIx1goSrcQbDiaspF4Ya+a5ylIPlm
+	VKWsIhClQnsqX+lj56xIo/l8elr45yxuu8ZAW+RD
+X-Received: by 2002:a53:c703:0:b0:64a:db34:8509 with SMTP id
+ 956f58d0204a3-64c14d71e0bmr349249d50.66.1770931794584; Thu, 12 Feb 2026
+ 13:29:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260212041017.91370-1-amishhhaaaa@gmail.com> <20260212041017.91370-3-amishhhaaaa@gmail.com>
+ <xmqqh5rlohsm.fsf@gitster.g>
+In-Reply-To: <xmqqh5rlohsm.fsf@gitster.g>
+From: Amisha Chhajed <amishhhaaaa@gmail.com>
+Date: Fri, 13 Feb 2026 02:59:43 +0530
+X-Gm-Features: AZwV_QhOZlPGizDtHsDU2ohCXKm_lOX8EpMu2ZUUGz8CKaXK9WWGpoULoyADvY4
+Message-ID: <CAPvEtrenMBMFaMxcCR4VwoyMFU-_Z+bqq5nJaWv5eyn3HRutEA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] help: ensure &keys_uniq follows sort -u
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, stolee@gmail.com, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 
-We often say things like /* NEEDSWORK: further _do_ _this_ */ in
-comments, but it is a short-hand to say "We might later want to do
-this.  We might not.  We do not have to decide it right now at this
-moment in the commit this comment was added.  If somebody is
-inclined to work in this area further, the first thing they need to
-do is to figure out if it truly makes sense to do so, before blindly
-doing it.
+On Fri, 13 Feb 2026 at 01:28, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Amisha Chhajed <amishhhaaaa@gmail.com> writes:
+>
+> > From: Amisha Chhajed <136238836+amishhaa@users.noreply.github.com>
+> >
+> > uniqueness operation of &keys_uniq depends on the sort operation executed
+> > for &keys this might introduce regressions in future when the logic of
+> > forming &keys_uniq from &keys is changed.
+> >
+> > add string_list_sort_u operation for &keys_uniq after the processing of
+> > &keys so it follows the expected sort -u behaviour.
+>
+> I am not sure the above reasoning is sound.  With the original code,
+> we
+>
+>  - prepare empty keys_uniq
+>  - collect keys
+>  - sort keys
+>  - iterate over keys
+>    - add either the whole "section[.subsection].key" or "section" to keys_uniq
+>
+> before we call remove_duplicates.  keys_uniq would have duplicates,
+> but because keys is sorted upfront, wouldn't the contents of
+> keys_uniq be collected in sorted order anyway?
 
-This seems to have never been documented.  Do so now.
+No, there is a case where it would not be sorted(keys_uniq won't be sorted
+even though keys is), more details on the case[0] and steps to reproduce[1].
+[0] https://lore.kernel.org/git/CAPvEtrfEZXHxcDf=z60ODfUA8cS81rhF1y7KEZApEBby7aCa1A@mail.gmail.com/
+[1] https://lore.kernel.org/git/20260212041017.91370-1-amishhhaaaa@gmail.com/T/#m64880c5cd0d36e35bc78692757cf206b13496aea
+only reason it is not causing a problem now is because we do not have
+this edge case appearing git documentation(from where the keys are built)
+but if someday a case like this appears there then it would cause problems.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * reworded with a bit more stress on the possibility that the
-   rationale behind NEEDSWORK comment may have gotten stale.
+> This is not a performance critical part of the system, so it is OK
+> as a future-proof measure to sort keys_uniq immediately before we
+> start doing something that we _care_ about its sortedness (e.g.,
+> presenting the final output to the user), even if keys_uniq is known
+> to be already sorted with the current code.  Using sort_u here would
+> allow us not to worry about how keys_uniq is constructed in that
+> ugly loop.
 
- Documentation/CodingGuidelines | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index df72fe0177..318829d4e4 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -33,6 +33,16 @@ Git in general, a few rough rules are:
-    achieve and why the changes were necessary (more on this in the
-    accompanying SubmittingPatches document).
- 
-+ - A label "NEEDSWORK:" followed by description of the things to be
-+   done is a way to leave in-code comments to document design
-+   decisions yet to be made. 80% of the work to resolve a NEEDSWORK
-+   comment is to decide if it still makes sense to do so, since the
-+   situation around the codebase may have changed since the comment
-+   was written.  It can be a very valid change to remove an existing
-+   NEEDSWORK comment without doing anything else, with the commit log
-+   message describing a good argument why it does not make sense to do
-+   the thing the NEEDSWORK comment mentioned.
-+
- Make your code readable and sensible, and don't try to be clever.
- 
- As for more concrete guidelines, just imitate the existing code
-
-Interdiff against v1:
-  diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-  index b358d6bfb8..318829d4e4 100644
-  --- a/Documentation/CodingGuidelines
-  +++ b/Documentation/CodingGuidelines
-  @@ -36,11 +36,12 @@ Git in general, a few rough rules are:
-    - A label "NEEDSWORK:" followed by description of the things to be
-      done is a way to leave in-code comments to document design
-      decisions yet to be made. 80% of the work to resolve a NEEDSWORK
-  -   comment is to decide if it makes sense to do so.  It can be a very
-  -   valid change to remove an existing NEEDSWORK comment without doing
-  -   anything else, with the commit log message describing a good
-  -   argument why it does not make sense to do the thing the NEEDSWORK
-  -   comment mentioned.
-  +   comment is to decide if it still makes sense to do so, since the
-  +   situation around the codebase may have changed since the comment
-  +   was written.  It can be a very valid change to remove an existing
-  +   NEEDSWORK comment without doing anything else, with the commit log
-  +   message describing a good argument why it does not make sense to do
-  +   the thing the NEEDSWORK comment mentioned.
-   
-   Make your code readable and sensible, and don't try to be clever.
-   
--- 
-2.53.0-248-g282ed54c8f
-
-
+Agreed, we do not need to sort it twice if we decouple CONFIG_HUMAN
+from the rest of the switch case, that is a great way to go about it,
+thank you!.
+I will work on it.
