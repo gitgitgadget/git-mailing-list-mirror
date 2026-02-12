@@ -1,54 +1,54 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57D628F5
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 07:05:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4951941760
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 07:10:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770879927; cv=none; b=u0KfVnZS3tIzopfTXd8lEGFOtmisDqZo1AqwifTujWebVcoE6JPuexE9VSTPmCARtpHH+tEMU7v71xaBW2Pr7DSHbjpfndyYfLFIF8M+S7X7kJpMI9k5SDn+kBbKNkybRi4QHTg/nnfCLkBYRM7USA8m+L5audZ3vbTH1JdhzEY=
+	t=1770880254; cv=none; b=WAsgQi/pSvpq6bGp6c3lfkg/fAMVDyX0jrXhc/sqXgoT0cXBTBXJLdmRDNJ2MIg4fqq87EzhOl+OuZUH7R06Ca3PHlFpcUd3QP1j14T3I9SHSICv+te0miBsEd7xZX2x+FE5K9dajbOBW7CUp45cbGzDQ4Y34to5V5IRFSjTUtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770879927; c=relaxed/simple;
-	bh=dMrgdjqcdElELVQaDf1w75eCK6ObllKQS8O63PscO1w=;
+	s=arc-20240116; t=1770880254; c=relaxed/simple;
+	bh=ilGala0iQpkH/QN6avG88cBZAL/p79HQGs3HXYqgdh8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XfJug9kcy4DFbwb5KcaqpcgfAy3aInv2tpsGloCqM+PCFd6PrPQ/criD2/gWfNweob98CAZawRl/bzIJf0tUqQ161tN0k3ZIEIWAiqsy9Po05WHgu0b+StqqcdxIg2m1e8abQc79yw51JzpQpINP2FKBoukSBojMAS6FoWj3EmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gwrapq6d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JuVimEzm; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=GIBiA5jNBsgDbHqYJVoA5ekPhqun4X7XJsc8E1cuTGU6ZyiZYtFvZvfp+j4br49no0TR/R1Hv1su51kIux//dTHMQeF2mMdtKX4tVcHCVfuct6yGgbQGQCJbVyjUvguDzj/6G1VnNw4Y32rVmA5y30mZqxy2+DC3asgbq1+fZ7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RSxO5DML; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PNcvtP83; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gwrapq6d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JuVimEzm"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1EEC2EC05E9;
-	Thu, 12 Feb 2026 02:05:25 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RSxO5DML";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PNcvtP83"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 751CA140001A;
+	Thu, 12 Feb 2026 02:10:52 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 12 Feb 2026 02:05:25 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 12 Feb 2026 02:10:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770879925; x=1770966325; bh=4PZjT/bUAz
-	HSjcW5XqKzHFIgZ4prqMpNu8DNb/sf/Eo=; b=gwrapq6dn30uAaRmW8O9Kscy2J
-	vpBH2ZWaBOED13eQGvflKjw7boICf4UcyvZg/vvqkgJSbS0PNitBuY715jgu/cwC
-	oWf/QmBliIM8Z+lxYtVqhhmvWDQ3gO/DwDNnsa4kuMxZxiLKDgkEcBWJ0XShVZIN
-	15P1VO0yUsEwUqGD5DjgYQeJLABt3Ai+hT4bU9+T7eOo3RHCee0vOBxSg7QkBTjW
-	i4LIJ9LlpfUYW3u0lEg5+6KJT872HOILDGMBcBf0vdKtVrqwrBTrz5laod61LkW/
-	y/TXaw+awWxMz64VNHr0dE7LxFeYlTHVpcIYnVBYO2oj+P1xrVrrvYG3fNhQ==
+	:subject:to:to; s=fm3; t=1770880252; x=1770966652; bh=vD3piml0r+
+	uBnKf2sBHsrzA+uECJH3XNHU5Sthd2rE0=; b=RSxO5DMLuOoYmR7FQU7vwbbHBc
+	9pEzpC7kt+A/QSvFMzrPUiLAk9vClon+SgKBGMAKAlk7gg4aWKIpG/Dn3gTRWeb7
+	99sfQTsAArTdFZA5AGELdfojkizm+oxItz2/0t8TqT1Aq14Li7Q7Hz9HmtFJCAQu
+	BDDVsq79JZ4fRdM7hkBXWqtJ9GVnTVOc1dOLP32T9R2pXX0rHR0M9Bhgz4ddKDAH
+	MS4NYey5KytiKagLOFpzu9ZNUVGMXNPsiZ2hWK0vCrHaTNmR/oPaYskwCGYs+lgX
+	Cdtemgk0mRSsnKZwhMbtpyXfWtw6wTI0/W7XFe32zfiUDeOdnTVLhuaAZ49w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770879925; x=1770966325; bh=4PZjT/bUAzHSjcW5XqKzHFIgZ4prqMpNu8D
-	Nb/sf/Eo=; b=JuVimEzmuBLUUEMsTC/7aoKxbY9NdQIKQZB43waNC6jS70WX5+1
-	hLErcULXnhyFneRr+NYTZKoa3ObLPX8l8RDNqbOPOAMjXDV27Z6tem8jB5oYRZEE
-	JO5E9udJSY8Ial9kbBx0/RBVXqHzsvYW5/TI9oHCqY1VrmVvLqCcN13XVsvxUyIR
-	DoxPDfRVQHWLoP2N8vyjXS9OSLao+rQ6NNYzRBHomeE4ZNA7MpstStnsc566vuCC
-	MhOgDS30pru8f3X0fzWSH3+17dg7yzh9xu1pnx1B8Dz1shbePKqODkhUtG8269Jl
-	t3PZ9FdBZ2+xlPdKX0Wil/55qxpuFXrRPUw==
-X-ME-Sender: <xms:tXuNaTayg6Uh2wcurBZ2IW3qr1IJ-h0mWR5HTxWAughSaxD-O9hGZw>
-    <xme:tXuNaYYEi8HhNNtwJX_PBaVVWM4AGx6YDejf-jwg3mldf5cYHiTPe34iv7MeCOMX5
-    WJdsjrQzwuzAfFVEPZnCq60BltvpY9PiK965FzBDCiFQwLHtu_l>
-X-ME-Received: <xmr:tXuNaTlHEuJFQVzeRFi5D__v1s9PvXouqUovhl2yOKLSu5y_7sLS37COpFxskz0dVzGSkYV0gxtuuDv3O3FLOtJ3embFVPzBhTsU9sQIGtk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdegjeegucetufdoteggodetrf
+	1770880252; x=1770966652; bh=vD3piml0r+uBnKf2sBHsrzA+uECJH3XNHU5
+	Sthd2rE0=; b=PNcvtP83S67lWu+WPjcibCrSEMTZUr9OmH1YUPnMcvRzMdmRbKU
+	YuBMsNsu/Q+zKFP7UtGrCvT8yhATYCYl04XLgjsqIYZxZHi2tKJjB1W0lmEKbBKg
+	TfHsHiVpwTyTvr184FbklCwEYhGnltvlYrUtQq5zQPBiT+kRqZN+ohDg+QTVcaEe
+	b6lyMIGbPKt2LdmZneHWfVl0lrit4aGr/5CJpubNxWu4+iPpdXyzNoNOjX4etTjD
+	nvTNXQfIzhiDQzVKQXX+HMJxMgU8RWb3UXO+e6ga4KnN5wUdxU3cEy2w7zMpWnuk
+	Gldq234Jl/IX4mxAqTYyzmS3nKVnsEqnG+g==
+X-ME-Sender: <xms:_HyNaX-BB0rh8-VEXjqpnSlGDx1vmRBhKMxC8qPspxw9fZ2cVmBnpg>
+    <xme:_HyNaZvcMZ9qv162ytMhy8HxaRESXwShoGgYvXXKMkXbT4iPw5n3nZqGhDhrH5K1p
+    axC0aOgXrofAZm6IrKoPBad_k0RYaPwhJwLlfRPhZYrTzUKCtlpKw>
+X-ME-Received: <xmr:_HyNaSomm5FaZKaI2KJimulF8ZEoh6GXNT_URfYj7P0P-OL5pePQt3fiKF09gDuso9S7-xMTr7cVg1TNzdU3fy8tC4cCTBoa6DolURAg_DA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdegjeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
@@ -57,24 +57,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdegjeegucetufdote
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
     guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
     pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:tXuNaUzSK-wkYxwRFnAbezW7BnIK7S4UAQZXFHwkNRDoM0F69rKwwg>
-    <xmx:tXuNaRNQb52Uox9KuirF8cBjiBn6yyrFWYZ8UzzC1TgS9AgZtqu8dA>
-    <xmx:tXuNaYQVcvNV-X5YELTM7fJvUcoda11DH1jxlWFtYq76pZ5q5Jy3dg>
-    <xmx:tXuNafZzLFDvBeSmo0R5LPCqEEUOCNYqAjbkQJgBKg2_4JPfFfMrrQ>
-    <xmx:tXuNaWwTnO8ZKe7q_5lxBfCPzfZxhfEsBUvyTxeElSm2dG4GO6KohWFp>
+X-ME-Proxy: <xmx:_HyNaelE6yX8d4GAn5NHuA1k83HKSkxBcL4NtFeWNr2R8sUum08x7g>
+    <xmx:_HyNaewqqANbcJmnijZVBkQWxDKvuL1sd53gelyTTKV1qHdBqgHMPA>
+    <xmx:_HyNaek5Unyaz0ya6yf_c_PSP70NOolnwzQ4U9umqZEAlCiUkgEi6A>
+    <xmx:_HyNafewahvj5T-KmOBIuGbJddCJf1l_6Ttsa8ldIs8GrpxzTJrOEA>
+    <xmx:_HyNaTU7zqLBYLybnlO0VhaphJ6nsvsNDontvei16wF15N9hz9Kdatp2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Feb 2026 02:05:24 -0500 (EST)
+ 12 Feb 2026 02:10:51 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 080aeb64 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Feb 2026 07:05:23 +0000 (UTC)
-Date: Thu, 12 Feb 2026 08:05:20 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 72bdff7c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Feb 2026 07:10:50 +0000 (UTC)
+Date: Thu, 12 Feb 2026 08:10:47 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] CodingGuidelines: document // comments
-Message-ID: <aY17sNHtr9ZM9qOr@pks.im>
-References: <xmqqikc3t7hf.fsf@gitster.g>
+Subject: Re: [PATCH] CodingGuidelines: document NEEDSWORK comments
+Message-ID: <aY1892Rzp1bQsLoW@pks.im>
+References: <xmqqms1ft7il.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,31 +83,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqikc3t7hf.fsf@gitster.g>
+In-Reply-To: <xmqqms1ft7il.fsf@gitster.g>
 
-On Wed, Feb 11, 2026 at 11:17:48AM -0800, Junio C Hamano wrote:
-> We do not use // comments in our C code, which is implied by the
-> description of multi-line comment rule and its examples, but is not
-> explicitly spelled out.  Spell it out.
+On Wed, Feb 11, 2026 at 11:17:06AM -0800, Junio C Hamano wrote:
+> We often say things like /* NEEDSWORK: further _do_ _this_ */ in
+> comments, but it is a short-hand to say "We might later want to do
+> this.  We might not.  We do not have to decide it right now at this
+> moment in the commit this comment was added.  If somebody is
+> inclined to work in this area further, the first thing they need to
+> do is to figure out if it truly makes sense to do so, before blindly
+> doing it.
 > 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/CodingGuidelines | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+> This seems to have never been documented.  Do so now.
+
+I noticed recently that there have been multiple patch series that
+blindly turn such NEEDSWORK comments into code. But I agree with you,
+the first and most important thing that such an author would need to
+worry about is whether the comment still applies, and what the
+ramifications of it are.
+
+I almost feel as if NEEDSWORK is a bit of a misnomer, and that something
+like NEEDSTHOUGHTS would be a much better fit. But I don't have any
+intent to change that throughout our code base right now.
+
 > diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index b358d6bfb8..507d52b0d3 100644
+> index df72fe0177..b358d6bfb8 100644
 > --- a/Documentation/CodingGuidelines
 > +++ b/Documentation/CodingGuidelines
-> @@ -439,6 +439,8 @@ For C programs:
->  	 */
->  	_("Here is a translatable string explained by the above.");
+> @@ -33,6 +33,15 @@ Git in general, a few rough rules are:
+>     achieve and why the changes were necessary (more on this in the
+>     accompanying SubmittingPatches document).
 >  
-> +   We do not use // comments.
-> +
->   - Double negation is often harder to understand than no negation
->     at all.
+> + - A label "NEEDSWORK:" followed by description of the things to be
+> +   done is a way to leave in-code comments to document design
+> +   decisions yet to be made. 80% of the work to resolve a NEEDSWORK
+> +   comment is to decide if it makes sense to do so.  It can be a very
+> +   valid change to remove an existing NEEDSWORK comment without doing
+> +   anything else, with the commit log message describing a good
+> +   argument why it does not make sense to do the thing the NEEDSWORK
+> +   comment mentioned.
 
-Makes sense and looks good to me. Thanks!
+Documenting is a good first step, but I have to wonder whether such
+authors would even discover this. But even if not, it means that we have
+an easy place to point to going forward.
+
+Thanks!
 
 Patrick
