@@ -1,111 +1,93 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB541DF27D
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 04:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1455428850B
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 05:37:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770869444; cv=none; b=L3muPnW/QGLegt9sZ8ZYkilwTf4HWg4bR3dySU5+SQ8dI4uaQo/S3dX24qUs4kXlLiTFQ4eAVhqXlI/INLWb/pJpbMrjmOAAO9ygI8OXA9N8AKL9IdKroUwliOWy6CRs90ulAKEFF9pDr5bMmf6wUjN+a6lWXK0+Tex6/pG33M8=
+	t=1770874678; cv=none; b=HQ+jwYelBI+vHhOm3k6XPhZBkWBI9Z5IWby9xuURn7Gqvdnqc5WaJBpNDGgnx8j0tx5HGJo0wmjfB6x7x5jhDpD7wCnMm71wtv0siDWrk9ZhiwoO9AIE77maMl7mgXtZxDjTlMZEbBimNRjT55k3na026iTBBroXEodkiOBKiVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770869444; c=relaxed/simple;
-	bh=p84hT7Vj+RgOSTca3R0/r8XcwJAFl+Aydz/5e9WHz58=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mG1+fkpXB8v7wtvmCxCMxWvFDGOUiixqzvysPVbd0QPp4OaZGcT8It073BAUQOYJMySQVX4Pc5b3fXm5rSJPFzDCWmOFPD97kZcvZnz2QN5dA4VSrH/EWf/600jqas8+amG1PWo45N92Wu8cEIXKX5JtaOLfNkm3sMnnrTifAok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mngwdvYJ; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770874678; c=relaxed/simple;
+	bh=gVOYfld21GI1k7CvOVmQgVIq/qdNPKzEmej718/O1ow=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Pi9vPPesR9UW4Pw81Nj0V9lJVzQjDgn9aJVd1gR6pB7tBhLIQZV/sXOkZRUWyv8/eH8bnXXiN9EZX5DnVzyd3JsMkNU3Z5YYhxQ6ZAIIEVIf6YudB96wTPQr3TmRrNhR7xcsV9E0Cmpbwq7zpLppzcm/jTuQfonmwEO1gX3QcdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=Iv5aEZrL; arc=none smtp.client-ip=212.27.42.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mngwdvYJ"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2a8fba3f769so32466625ad.2
-        for <git@vger.kernel.org>; Wed, 11 Feb 2026 20:10:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770869443; x=1771474243; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X5RfDs7QoR/9s0Q6eGp7yIOUa21r0MNgQYDUL6cOIgw=;
-        b=mngwdvYJI1NT+LE1n0JnKDwrDcqelAWUmNHBfFcJLEpG7WhqHqPDzF8wDfgEPZYayH
-         8oDkjw1spBEzNmUNcKxRsCu9HqSfgNq0JhF7jO89oaIATtlh9m6HKDihJWE11mdGA2AC
-         ycn69vYdChGOoNL5pzetZDh60T3es1h7NbQZ2p0AYhpMcLJP2rPs+MYRsfo+r8lVLHjA
-         L9mOf0qxdCX/jvl1xZR81bJSGURBMR/5lKHcPh3d1+uYczn/fz5IPe0/g6KXGqtjvfQZ
-         87dp4Z/2sHFmHAq+vBKzajIgfR4Tg/9MhtghasOhlwazUCnBlo6lHVjcIVbpa22sODVb
-         9uOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770869443; x=1771474243;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=X5RfDs7QoR/9s0Q6eGp7yIOUa21r0MNgQYDUL6cOIgw=;
-        b=DfoKvFbN14B7V2g7ub2dmiVDhqSK3MhAkPUOGqfZBAlJ4X9jB6+yQ+MIOuTgQR8BBc
-         4h49eHow5ow2U2eklW6aNxrzpudp4pikIvTtiVpRpiM3XTytmt/NIg0IkLxcfG7kAnF5
-         ev/gCahp395OkLVEXyC10SzJHSjQvQxdM7n/vAF+v7HEx5acswdXWQ7PCZVuZAwYEysJ
-         w1hknPWJAcgb7IrYtwGapjs0p/SMm/EynCG9+DKZ0xKbhQlqcdpxpj1WeMNU3FEie7FG
-         37f0ttZ8UVSzVoKeAthBloTvpKa/i1YRqDwDLcjsKylRet32K1gRdEp77aazegvl9+uV
-         CFrw==
-X-Gm-Message-State: AOJu0Yx+EWJ1xu/5Nqa5dPAoyhwvDPGscPA3AVAzNDRWnGy6EY2gy8RU
-	U6HVHG5M2YWH1diV23TUa/AQOAEeSCYhPcrjKHI6VBvTT1Dcp8xpuInjb7WYtg==
-X-Gm-Gg: AZuq6aIgUuEASY6mVRYERL9Dvhp9O7My18hSEZrwqWSxfDAmLIBIww/3wQJYuGstUNV
-	PhfGq0AO+O+BQCcamZqvuz57wg1n6Io++Rydot+vv3BLD90yGzkAjb6LCot8lONU04lYXjAzS9M
-	luwWUwFpAOaM8DhdECK5k531DSvpmmKQ5aDPyeM4OvzO7FgsWndDBiDyX3qjqS2wQCkctamNmnL
-	sJ5ZdxSuVWZ7WhzzvF6JCfYG9QUaSX5QOeSRwCCsyfeK6p8H1j0T2SXWjgtF34oBiRprbDa+YVT
-	Avl2r6VGMQjHrH6ns3xfbV8X2X+InJ3WlhYsKCSIysBPv9gglrIxhrlx4pA1Yr0nXBVDtCsvJL7
-	e5LwLJxeaekK4se0pXJnhLEmQ3tFljScPtUhtKyKEAqDVH1SZPJv6Q8/tb94X7L+e8V1ZOpN5Xx
-	bQ7WMwujdRmP3squjTJavKnYrBQjSyYATMvEuJdqBbGNe/bmfuHsgJrEeuFASaUKwQ6vzFSyr/2
-	d8=
-X-Received: by 2002:a17:902:f291:b0:2aa:e817:1bd4 with SMTP id d9443c01a7336-2ab39b18249mr8010795ad.37.1770869442651;
-        Wed, 11 Feb 2026 20:10:42 -0800 (PST)
-Received: from localhost.localdomain ([60.254.0.0])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ab29966612sm52919805ad.59.2026.02.11.20.10.40
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 11 Feb 2026 20:10:42 -0800 (PST)
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	stolee@gmail.com,
-	peff@peff.net,
-	avarab@gmail.com,
-	Amisha Chhajed <136238836+amishhaa@users.noreply.github.com>
-Subject: [PATCH 2/2] help: ensure &keys_uniq follows sort -u
-Date: Thu, 12 Feb 2026 09:40:17 +0530
-Message-ID: <20260212041017.91370-3-amishhhaaaa@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260212041017.91370-1-amishhhaaaa@gmail.com>
-References: <20260212041017.91370-1-amishhhaaaa@gmail.com>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="Iv5aEZrL"
+Received: from [172.168.17.249] (unknown [103.51.116.155])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp2-g21.free.fr (Postfix) with ESMTPSA id C78B82003CC;
+	Thu, 12 Feb 2026 06:37:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1770874674;
+	bh=gVOYfld21GI1k7CvOVmQgVIq/qdNPKzEmej718/O1ow=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Iv5aEZrLF2H5JsRqAaTBVNDwQY2BQjPQzQUOc+Ia6E/5/o6CzIAwtQ1e+mOl8y4M0
+	 XD1W2ooRANe7iu2N+Uohq5WAv/lA+F5tHkwlUzrRUlWOYxAa6friEm0kyANFmSBDem
+	 vEs8lYMWUeOodSawvYIHuHz14FHt2SvG+7e1rjVswqvEfqIwFU7FCdFKz5Wzw0rsjM
+	 /vIa+1NuM4IrQnMUaNHWu4CBa1cRtQYbT1tFF3dhyupg1s0l9Yl2kkZ9/FVtzQKMGN
+	 ezior0sKvj4x01MYLZvIiGQAZRCa/pbT7lVg9EZk0AF0EjILVg3M8skB0NgITh0mjz
+	 yQThpuSC11iHw==
+Message-ID: <1ce11655-eaef-407f-86af-956a190f5358@free.fr>
+Date: Thu, 12 Feb 2026 06:37:45 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] doc: rerere-options.adoc: link to git-rerere(1)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>
+References: <doc_link_rerere.328@msgid.xyz>
+ <1a4060f1-6607-4b50-859d-927642eb34df@free.fr> <xmqqikc3waju.fsf@gitster.g>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr
+In-Reply-To: <xmqqikc3waju.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amisha Chhajed <136238836+amishhaa@users.noreply.github.com>
+Le 11/02/2026 à 16:43, Junio C Hamano a écrit :
+> Jean-Noël Avila <jn.avila@free.fr> writes:
+> 
+>>> diff --git a/Documentation/rerere-options.adoc b/Documentation/rerere-options.adoc
+>>> index b0b920144a6..115882edab1 100644
+>>> --- a/Documentation/rerere-options.adoc
+>>> +++ b/Documentation/rerere-options.adoc
+>>> @@ -4,6 +4,6 @@
+>>>  	the current conflict to update the files in the working
+>>>  	tree, allow it to also update the index with the result of
+>>>  	resolution.  `--no-rerere-autoupdate` is a good way to
+>>> -	double-check what `rerere` did and catch potential
+>>> +	double-check what linkgit:git-rerere[1] did and catch potential
+>>>  	mismerges, before committing the result to the index with a
+>>>  	separate `git add`.
+>>>
+>>> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+>>
+>> I'm not fond of introducing linkgit macro that can create auto-reference
+>> in manual pages. At the moment, we need to use conditional inclusion in
+>> the manual pages source, but I wonder if we could simply filter out the
+>> links in the macro itself.
+> 
+> FWIW, before deciding to accept the patch, I did check if
+> git-rerere.adoc included this file (it didn't), but if we can make
+> the macro smarter to do so, it would be great, as that would avoid
+> people including this file there later without realizing that they
+> now need to make the mark-up conditional.
 
-uniqueness operation of &keys_uniq depends on the sort operation executed
-for &keys this might introduce regressions in future when the logic of
-forming &keys_uniq from &keys is changed.
 
-add string_list_sort_u operation for &keys_uniq after the processing of
-&keys so it follows the expected sort -u behaviour.
+Ah, adding the options of rerere in git-rerere manual page is then
+something that will need to be done when reworking it.
 
-Signed-off-by: Amisha Chhajed <136238836+amishhaa@users.noreply.github.com>
----
- builtin/help.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index c09cbc8912..0c9c007214 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -196,7 +196,7 @@ static void list_config_help(enum show_config_type type)
- 
- 	}
- 	string_list_clear(&keys, 0);
--	string_list_remove_duplicates(&keys_uniq, 0);
-+	string_list_sort_u(&keys_uniq, 0);
- 	for_each_string_list_item(item, &keys_uniq)
- 		puts(item->string);
- 	string_list_clear(&keys_uniq, 0);
--- 
-2.52.0
+> 
+> This particular patch does not have to be blocked waiting for such
+> an improvement, though, right?
+> 
 
+No it doesn't. I don't intend to scratch this itch soon.
