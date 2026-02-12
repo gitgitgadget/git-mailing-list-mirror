@@ -1,112 +1,109 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EE72264B0
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 22:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2619832D0DA
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 22:39:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770935639; cv=none; b=M+RLx5wyDdw6edEdppPFHJqNF2238eM44wujnuPb3gZY/JEk15sJGcoPUjtFpXSBYiXcEyM1fk85TVEQG80779mBlNDV5pFAHdDOrhAjPoUSOrH/SfPOizjJe7xs+mnAFCLgPqdgenHEs0+COBbvpnPabuLFLMrNh1EENcCQY2Y=
+	t=1770935955; cv=none; b=K7ZFadvs03DhXPRt7AL9wP7T/5OkGsXR3d8bCoZxlxxNBYn/hGAWLq6Jq/4IlZnsrgf564KpWcpQFpZhCii17M5c0+6tL4PprekNLB8i6hcAGZvqyBmJikOCPdgHeSvvta0JSz4WwR9XaK7MkDHUPuXW30N2tTUqo/ERLkvh2vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770935639; c=relaxed/simple;
-	bh=a2AkdMNNoxIo+jBqZIRNEuEJgjAeYOu4t4qDdJsJdW8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DJJA/XdwVEPy+A5HdpPtdgHo0v/3S7Ok361qtSnSnNze1KL2bR/HAGs9Uu7nTTOjsWUeidCacnLkwdGeS6yH1JVZb1cn0KuWFkzdi/F9WGxdxObDYMGGK97pBg1Pft/s9Z4wUG9RAc6vQ176kvZU4zaX7oI7VEMou4+XWP38MRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Edj1mfMN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X2vjCCmM; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1770935955; c=relaxed/simple;
+	bh=Uqe/X06xqxbzcFthWj+yWXfMs21tThyy+aRlstaWWnE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JgB0DMoNr8f7wLsndVYCQbAGoMq0urVhPRdq3fMZOiBaMbaid8EWggwdO5Spw4sSGtR3OfrJRl1IC4GMaljHT3Pq21aFejQGOuxQGnLbMv/6irFey1mqY0RQchzEBVAS9DnT8GFfLYvZnurZW5LJuB+yteiO0K46y6kyUAD3aMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=og/H0UQi; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Edj1mfMN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X2vjCCmM"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 696047A0049;
-	Thu, 12 Feb 2026 17:33:57 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 12 Feb 2026 17:33:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1770935637;
-	 x=1771022037; bh=D0147QJs5M8fUWJDn4WkdCdeGAlEVydDwf/706f/m7o=; b=
-	Edj1mfMNEBf5tvtndu7dWKYcTGCsAfrPkrnjCWKMaAGhLtN156lgovkBPhyIl1Q/
-	ZqemiqpRUhqzlSXF3PcP9LYwO7dz/vhjwJGNkg967V0kzhjRMNLDP72Ak7tkTu3E
-	CUQghpSxfJrY1NcqmXTdWER7ZJCxRMk19jr2gVYkQRuZd9sonNApo3gvgislVgoS
-	6vlGDOn/aRnQTGAzzF0q6KSny0kRU3XmpvLn+oBcwWNgdpSl9pcoQVKQxxV7DaJd
-	nFBDTDP/ARoXmy1+0J3xAJYvHTljH5b6+BIdoJRRYOV5ApTxNlTymo+wXpz57nx7
-	6qyKo3U/9e73Js7R5TfCuQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770935637; x=
-	1771022037; bh=D0147QJs5M8fUWJDn4WkdCdeGAlEVydDwf/706f/m7o=; b=X
-	2vjCCmMXibNHACz1IRSX5V94CBY+Y5QGas+rlKw5SPBOVb3g2KRO6ACV7fiwgIgG
-	GQ/z3YE10riWhgHaL8C8k38AmaPvaGM9z0hV9kbd6mt9uJMBoMqRma0eZZTb66Wd
-	8tqnuf6nfvot4WfBFC0Fgag0XchXr/xl+Dpw0wQ9v280CCmyBwTd9UBH+fWFRYYB
-	KsT61ZRMGY1P04SRT0nfbXIBn4WdzOWSgRPLG1CPqN/gs/g/0S/39VcMDCYcwJ50
-	Um+BtTplT8vnFsjhwCWOQA7iYuKXAHya1b914SVVIQB4+K9E4FaZy5M9sp816Wj9
-	tVKf9o9A2QdNqH2GoT7qg==
-X-ME-Sender: <xms:VVWOaXqBjhvJe1p9lsHKHs8VE_faTygxcOvzGb_z4a15NXW59bqzzg>
-    <xme:VVWOaYp9p08iWvSCeej6GST-sAq7fbmJCmolhTP67E7CJAUnzVNTmBMYH-RqWDlMX
-    uQfJWUpyMpJAOTi394V24HJP0XJkkHI-BYgszmtNjH0p6xcKbV4aA>
-X-ME-Received: <xmr:VVWOaZN9PDpd31ElLJaFT3Q-L3I_IXQAzmCNTkLOx87hMIAZAT92fFbCbT3yloOE47_d02nk0-HF-_mHFgFsv5HPOSimNyqeMQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeiheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    phhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:VVWOaZyXNzsrsI_BhQvVsKrAnS4-C5oVJNOUJaBijHFoWlhg3_tDkg>
-    <xmx:VVWOaSvr8uGTiFo1iqAGrwHKyBZ8RSiVtrDXAoMRCVZtkGWSyyhteA>
-    <xmx:VVWOaS4R8dfBWfiOJBrEQEOE9YBwQTnfx0XtP46NiB6nrXiSVJvN7Q>
-    <xmx:VVWOaRS4ZskIYNTCg4jV-S7E8h0B5m9OS7Di4SvSVzwo28ksgwbzNg>
-    <xmx:VVWOaYs52s64WOeRCPBqnQslG_W3pvI1GOEPs6DGffJkcicvK7CqO9GL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Feb 2026 17:33:56 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] CodingGuidelines: document NEEDSWORK comments
-In-Reply-To: <CALnO6CAjd0vbi0S+giYBwsyQwFmSZoWUBQMKiUEokCEeaNTnrQ@mail.gmail.com>
-	(D. Ben Knoble's message of "Thu, 12 Feb 2026 17:22:05 -0500")
-References: <xmqqms1ft7il.fsf@gitster.g> <xmqqldgxmzbj.fsf@gitster.g>
-	<CALnO6CAjd0vbi0S+giYBwsyQwFmSZoWUBQMKiUEokCEeaNTnrQ@mail.gmail.com>
-Date: Thu, 12 Feb 2026 14:33:55 -0800
-Message-ID: <xmqq3435mw18.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="og/H0UQi"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1770935947;
+	bh=Uqe/X06xqxbzcFthWj+yWXfMs21tThyy+aRlstaWWnE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=og/H0UQiVJYmi3zi78kwgm66Vr5TZ35WfzAmBa5rR/pTRkuTZ1mPCyHM83T8UPjrT
+	 LS2zs1uel4axSlGUaYcjMc1K9Lpfz0r9IkTC0xAfZnbbitEWUCKy9mfcYlzRRuaCk/
+	 xDcGJHif+PYP9DPGiFO3kMt9pkQ5nkz4ZnfrvZNCbjwaZ0cCTuvF6ATWKoGXxw+Uqp
+	 dMKqBq/1rMX9bcNRcRamA+2j9iUn5oLNiakx/PfY39KLUtFaa5LnQ1rBtr0chINBhq
+	 Mj+NnMktV9pzAHYZA0lWHqEDLMuQe2DAUeCGIOF6h9kVhTbGyOoEARgfFXr9G0p28I
+	 qO0/YSS7F6M5YcfueGuTqx7MQ0vd73BNX59yqhcvRWCyCLmx7/ysZ9a0yAkEXt5K0/
+	 R1cvJf8u/PdBzKmD3kDqvcqb3iGRYwMcDZUiLzjmXmOC6J46v6VuNL6y8MZODCMAed
+	 bfy+UQ9IAg5zQv0drb9cN+5Qs4yO4rlF9ifFyfDVjL0KACldGCt
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e298:762a:be2c:ed79])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4F226200C7;
+	Thu, 12 Feb 2026 22:39:07 +0000 (UTC)
+Date: Thu, 12 Feb 2026 22:39:05 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [RFC] setup: fail if .git is not a file or directory
+Message-ID: <aY5Wid6eg1-LwZm8@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Tian Yuchen <a3205153416@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+References: <20260211182122.35352-1-a3205153416@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="t2fOLUmqz7YwVTuk"
+Content-Disposition: inline
+In-Reply-To: <20260211182122.35352-1-a3205153416@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--t2fOLUmqz7YwVTuk
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On 2026-02-11 at 18:21:22, Tian Yuchen wrote:
+> Currently, `setup_git_directory_gently_1()` checks if `.git` is a
+> regular file (handling submodules/worktrees) or a directory. If it is
+> neither (e.g., a FIFO), the code hits a NEEDSWORK comment and simply
+> ignores the entity, continuing the discovery process in the parent
+> directory.
+>=20
+> This behavior can be very dangerous. If a user is inside a subdirectory
+> containing a melformed/broken `.git` entity, the Git will traverse up,
+> attach to a parent repository and might execute destructive commands.
+>=20
+> I tried to resolve the NEEDSWORK by using `lstat()` to explicitly check
+> the entity's mode. If it is neither a regular file nor a directory, we
+> kill the discovery process.
 
-> Small nit:
->
-> On Thu, Feb 12, 2026 at 4:23 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> We often say things like /* NEEDSWORK: further _do_ _this_ */ in
->> comments, but it is a short-hand to say "We might later want to do
->> this.  We might not.  We do not have to decide it right now at this
->> moment in the commit this comment was added.  If somebody is
->> inclined to work in this area further, the first thing they need to
->> do is to figure out if it truly makes sense to do so, before blindly
->> doing it.
->>
->> This seems to have never been documented.  Do so now.
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> The opening quote '"We might later…' doesn't appear to ever get closed.
+We used to allow symlinks as well.  That was used instead of gitfiles
+for submodules at one point, I believe, and there may still be some
+people using that.  A brief test indicates that that functionality still
+works, so if we make a change here, we should be sure to accept symlinks
+as well.
 
-Yikes.  Thanks for spotting.
+In general, we should allow people to use symlinks wherever they can use
+a file or directory unless we can definitively prove that there's a
+clear security or functionality problem that cannot be avoided.  Git was
+originally written for Unix, after all.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--t2fOLUmqz7YwVTuk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaY5WiQAKCRB8DEliiIei
+gUGxAQDv0KX4BJWuhQ3Zd1HUyy8dFZ95dp3PdT2Br1LV6CZQcQEA7nymBnBBEp3V
+k1j7t9D8shk9g074A/qqFwppC167dQM=
+=jupC
+-----END PGP SIGNATURE-----
+
+--t2fOLUmqz7YwVTuk--
