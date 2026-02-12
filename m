@@ -1,63 +1,63 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A372E1F08
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:09:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3638F2E7167
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 10:09:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770890956; cv=none; b=conNzdQ1srOwx0yfXw/DSf4QFlW46LVAmQs+jax08TSN/3kRj4NeQTOzz9jVBU3efgnhtoSkDDTKQrx7GTBqnM/g6bfm0RUr0exa8V1x3MNiwLCawijZZNfUkfRI2osiuD14KhfYxbFNP3JcECyEXVzLdIk2OSo2C8QyLVhWR2U=
+	t=1770890957; cv=none; b=DshvBlEyWSDtR/787y53bRMrJg1rHLzL1B4nCdTLS8hRefhXhWNje3emoEgswKdXDrwJvvF/EcHb/C431IhHeK9MyUNGLdtaeF91s6Gy152zcrtMUfbZKqKi0VU2Xxg7pVAHvtst7K0I6Y6SiYE4VoTWUR+3LJ7bNvV8M3VfaC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770890956; c=relaxed/simple;
-	bh=qFqpKeO2+qLBkIosaAH9LkDKt8jVvfFlIjTqEtJuVJM=;
+	s=arc-20240116; t=1770890957; c=relaxed/simple;
+	bh=y8J9g/aZJm9j99kaTFtsivYsne/SL+2etcwqvjaRCHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jr1PlTkviBNCOEN1oB96ibcU8+lnZZ+10IWk/D/16P0uvnkHxsdUECU0FiTqA4KOQr2X16+mkN7PSrdKeK3PM9+UL4OHY8JRMVnS5NJNCuF5lc29Vibbiz+ny1wK+XIL0g2NHduA74dBGdrF+yM+6sH8Ghyrx62Cicb00QadRDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jhb7EwxD; arc=none smtp.client-ip=209.85.221.48
+	 MIME-Version; b=Ne0nIKc5cCIQFqjOROqtAXbwNubgofR6aQ3CocsQyZSnobwmD/nCXOg5geRnvgUpgKUTebxV/wulWs5atB5CvQamvh2SXQLVl1xlwi/EdKa4PQF1+x//63necEKGFCoqmynZRZXJl7lf8nyKpX2IpdP9JiJpI3DkGgrC0D/LIys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NIl9Ti/H; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jhb7EwxD"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-4376de3f128so2826109f8f.0
-        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:09:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NIl9Ti/H"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-4359228b7c6so4161758f8f.2
+        for <git@vger.kernel.org>; Thu, 12 Feb 2026 02:09:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770890951; x=1771495751; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770890953; x=1771495753; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bGQf0noYuHFY8Mf5BP9UfshMi4b6OLnmrDiGUaDTnsM=;
-        b=jhb7EwxDfR0TbAunASTr1pLSHaPJy0PPt61c3nrBGmxQmJaU8s/qyqhmXVpn0z7/Yk
-         hW0dnbcgG23fAQqb0foJkEUFS6rmKUaBzVNEHqJCvcj9e1b34cElnVtoV/Cb/q76plDN
-         3IcE6ZxE36Q06QdViwKVHPDNc78v5ygxNKf9uij6PRtzt+tHKsVJFE4MN1y1/KG8Vafk
-         ftDcBWmwDN8HNn5IJUOUKuXeXxCsBYEHSu/TqLGxkw7dcXodPl334vwuNz66YHl3WHd7
-         aPyXYgVXj08WkUqzJ3scfFY5o4QOxWwGjYxbSsMxGWf8sWySu/ayKbHC+T4rf/kb+Pyc
-         /rfA==
+        bh=PJKAnMpSpHx+vU1EYQWdEDD3LRNhWVzTGIKPE3Pgcgw=;
+        b=NIl9Ti/HOqvZm3NWXfmGS1RKyoPmCVHpCKb08iv4ySy6n2YKqJFJ9xu5qZecNW1rmA
+         3sgxAJ4Ru3MKoW0wZcpwgJxklomtIOlyTs0NWlWuzEAZNX6B1LMS86vD96wcan3O0Y6b
+         jihxz+eF5Gk9Rw67QCTiUPv9fExoxSuD+4BKnFtz9b7Jzy7qLfY3BIFu01ArWRyKB9F2
+         7Tnu2XtiSQJa3cMzI+3FAJtOjmG0KgeJs8USC56as0IQcxM5BbLTKjlMYQFTF2teyx5M
+         qJnepsbt5dnrSOjfPBCqbWbCVAZtVxrI2tueUoyxdrYYmuFqjjGFjZVk4me6Q5r+8ZSA
+         ReQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770890951; x=1771495751;
+        d=1e100.net; s=20230601; t=1770890953; x=1771495753;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=bGQf0noYuHFY8Mf5BP9UfshMi4b6OLnmrDiGUaDTnsM=;
-        b=IQrdogUfqonnP6lTR6gsPyj19MqJnvCwTDid88dhLUEg5o/19crwagdwMU0pLCj4rY
-         5DZ+Pnmt3uEwx3xfqqkpwIFkwWx4dN9vvoZJyBwQ6m1eYdLNFjr/rAFZ3aekwEnkk0K7
-         JWKynNE+ZcYk7y+FgBE4QuQX/VzJ13IhI8F3+k8Lq44AeZKkQThBvyDHFoMs+u4pDPm1
-         t6w0naQvO+coyErgkVgUGYRak/9AgIMPQ9IGP3rvWfW9wS0oOvTdr920KF9cibQruqH9
-         qbDD2vmKUDtnhc27C/4+0ThHMYcjLhr0hq1EZG2XAMFTeywHd8LLQupgftO8LzZ4Tst8
-         aaJQ==
-X-Gm-Message-State: AOJu0Yw2hoPORba0nVUynCiNMNqpFJzxJYXpiYSH03giUo7WHoWdF3AT
-	YF/+Ww6zgkcmAEbSDphUgyQLYno8Ed6ufs2SWwpYwrnusLw9FL7mGHvdtMzCJg==
-X-Gm-Gg: AZuq6aINJIM5CYMwJlif33BgBGE1Ly03UPSA2ut7qC9Ger0osSVx/sVLLJuIJQ46jIR
-	V+9rr88onIMMFiUfWsM1ItUV3AEkYqX/5eyapv1TlAfGORC0aO2mi4TP2KI8ogx4fO0N6xENL4V
-	qCr7mNnuNKPviRaR8SLW/VXuCMdDUE1jPBWVpfbk6HbATEfVRNpFD4Iv7mVwnLVWkTa2uUePVdU
-	AmLiugvKpPrJQpCbw4qVrKE7Q4W3ZrJ4zRToD8iZUQClcYwS9bTpRG9oXYLXzdRD6iqTv8dbwc/
-	TBoUz9tWLskIUU+m32lPAOmScg4a02xFnIdINfAUxFPGntKqkMHNFYkN4r2u/rYqiT1uY/bRaHO
-	tr5XzuYLHCbXw+0RK/hsNKGLeWedoCbSUvY9UyA71QVmucF0gHEvB3oIIJWKh3fVz7Fi2ZoSCI5
-	5Vi/D6P4a/0TKKR1UNQLxsftbXzLbiXHKz8cIkPZScBRIgW1hjuSvVw74fG8JZSy5VFAnLR9KDd
-	ZmZ855f8j1jfFVMLhfIca22mVKwGVXOmVyDk6a6TmcAmaBqOA==
-X-Received: by 2002:a05:6000:2501:b0:437:6ec2:b11d with SMTP id ffacd0b85a97d-4378ad46ecbmr3863212f8f.38.1770890950848;
-        Thu, 12 Feb 2026 02:09:10 -0800 (PST)
+        bh=PJKAnMpSpHx+vU1EYQWdEDD3LRNhWVzTGIKPE3Pgcgw=;
+        b=SMxsH8pxrI1QTY5vMV+eYO7qvRSVFKFkm/7yBkiW9TOLbdFA3Gr5qeuRO89Xc4es7/
+         +s7rJDmkerI7fwjRom9/EPoyiPoP6+z9CEBGcfDKEVzC8ExAMrozTjDV5/WA1G+7YQa2
+         CxDjeZoQuFUruQJMEtEoYiHUOA+44HFd1HZLQsh+F2AvMXHQx16863tACiFNQjtnHZ+a
+         sSiHgZ0/Fdk4aSXgU/OcuMDQ+zeuu53ui4lN+wa9dHRz4OYy1eccjfA/gVIzWDEB1K7v
+         rOi/X3bu39fUWLld73qb1aahbIfi/1MVbkUtc5KyBcOqyRbPqLj/1RYiipvjTkNDr64i
+         aUgw==
+X-Gm-Message-State: AOJu0Yz7svi6wxn1GOcbcLGjDwNzSoFr39GExFLVNjfxlcjq8ey4HMfg
+	30ZOziLD5VO0rH5jKIXIm+0vobDSrKC6p/Vc5q0IkmmQ4UVmcUbOTz1bp9fOYw==
+X-Gm-Gg: AZuq6aKdGXsVNE90Uwd4oRZsyki+qHYzaKuyGhbI3ALOPUWOs3FG5Sog1N0s3XTpt8c
+	PvKM52UFjkqcCH/wUC6IcfWjBkFKwRdw3SIpLIj6qzbFy5dOd3M1gi2ejTF959dk7mQyfml/vTm
+	T+dEqMMcltrZylL8jCIl7MRP/BEwR2Y47itvSQSnLk4vgWqU8a+r4I4ZbP+X4cTkAGKkzxpkMOR
+	+yzieKbRiTTrlUzYP/YavY9HBlILNfMwKf2qXqzBEyVV7amFxNs4pPwxUvHfwzthSk+MufHbBpJ
+	vaNhq+0D07wx+Vp5aPxPpTvE3nvu0v/wGzLfHiiMimc8mKsIyOsyHkdEGP8jtk5g7CB9A04vsYr
+	wFdo8Okb0cb/yz6e7uywTZIcoOEs73+2vEWYwVIe9sPsssYNQqrlyATJUNZKrupZrBKL8LzstW/
+	iBMJJhAfmb+6y8OpuqivQ7ABVH6gNC92KFNlIIhFVfeSlfqUUJn4qr4vXDG960VInhuEiA6NdY8
+	tn6iAAUTIB7AwLAW/XmZ8wBbZ6XC3y+zVjX1e5131rK2c3xKw==
+X-Received: by 2002:a05:6000:200f:b0:435:d859:5cf with SMTP id ffacd0b85a97d-4378ad82962mr4298745f8f.54.1770890953071;
+        Thu, 12 Feb 2026 02:09:13 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43783d3464csm12701151f8f.5.2026.02.12.02.09.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43783d3464csm12701151f8f.5.2026.02.12.02.09.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Feb 2026 02:09:10 -0800 (PST)
+        Thu, 12 Feb 2026 02:09:12 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <avila.jn@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 6/9] list-objects-filter-options: support 'auto' mode for --filter
-Date: Thu, 12 Feb 2026 11:08:37 +0100
-Message-ID: <20260212100843.883623-7-christian.couder@gmail.com>
+Subject: [PATCH v3 8/9] promisor-remote: change promisor_remote_reply()'s signature
+Date: Thu, 12 Feb 2026 11:08:39 +0100
+Message-ID: <20260212100843.883623-9-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.53.0.70.g3d1fd9d397.dirty
 In-Reply-To: <20260212100843.883623-1-christian.couder@gmail.com>
 References: <20260204110818.2919273-1-christian.couder@gmail.com>
@@ -83,281 +83,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In a following commit, we are going to allow passing "auto" as a
-<filterspec> to the `--filter=<filterspec>` option, but only for some
-commands. Other commands that support the `--filter=<filterspec>`
-option should still die() when 'auto' is passed.
+The `promisor_remote_reply()` function performs two tasks:
+1. It uses filter_promisor_remote() to parse the server's
+   "promisor-remote" advertisement and to mark accepted remotes in the
+   repository configuration.
+2. It assembles a reply string containing the accepted remote names to
+   send back to the server.
 
-Let's set up the "list-objects-filter-options.{c,h}" infrastructure to
-support that:
+In a following commit, the fetch-pack logic will need to trigger the
+side effect (1) to ensure the repository state is correct, but it will
+not need to send a reply (2).
 
-- Add a new `unsigned int allow_auto_filter : 1;` flag to
-  `struct list_objects_filter_options` which specifies if "auto" is
-  accepted or not by the current command.
-- Change gently_parse_list_objects_filter() to parse "auto" if it's
-  accepted.
-- Make sure we die() if "auto" is combined with another filter.
-- Update list_objects_filter_release() to preserve the
-  allow_auto_filter flag, as this function is often called (via
-  opt_parse_list_objects_filter) to reset the struct before parsing a
-  new value.
-
-Let's also update `list-objects-filter.c` to recognize the new
-`LOFC_AUTO` choice. Since "auto" must be resolved to a concrete filter
-before filtering actually begins, initializing a filter with
-`LOFC_AUTO` is invalid and will trigger a BUG().
-
-Note that ideally combining "auto" with "auto" could be allowed, but in
-practice, it's probably not worth the added code complexity. And if we
-really want it, nothing prevents us to allow it in future work.
-
-If we ever want to give a meaning to combining "auto" with a different
-filter too, nothing prevents us to do that in future work either.
-
-Also note that the new `allow_auto_filter` flag depends on the command,
-not user choices, so it should be reset to the command default when
-`struct list_objects_filter_options` instances are reset.
-
-While at it, let's add a new "u-list-objects-filter-options.c" file for
-`struct list_objects_filter_options` related unit tests. For now it
-only tests gently_parse_list_objects_filter() though.
+To avoid assembling a reply string when it is not needed, let's change
+the signature of promisor_remote_reply(). It will now return `void` and
+accept a second `char **accepted_out` argument. Only if that argument
+is not NULL will a reply string be assembled and returned back to the
+caller via that argument.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile                                     |  1 +
- list-objects-filter-options.c                | 37 ++++++++++++--
- list-objects-filter-options.h                |  6 +++
- list-objects-filter.c                        |  8 +++
- t/meson.build                                |  1 +
- t/unit-tests/u-list-objects-filter-options.c | 53 ++++++++++++++++++++
- 6 files changed, 103 insertions(+), 3 deletions(-)
- create mode 100644 t/unit-tests/u-list-objects-filter-options.c
+ connect.c         |  3 ++-
+ promisor-remote.c | 24 +++++++++++++-----------
+ promisor-remote.h | 10 +++++-----
+ 3 files changed, 20 insertions(+), 17 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 4ac44331ea..9e174dd06c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1518,6 +1518,7 @@ CLAR_TEST_SUITES += u-dir
- CLAR_TEST_SUITES += u-example-decorate
- CLAR_TEST_SUITES += u-hash
- CLAR_TEST_SUITES += u-hashmap
-+CLAR_TEST_SUITES += u-list-objects-filter-options
- CLAR_TEST_SUITES += u-mem-pool
- CLAR_TEST_SUITES += u-oid-array
- CLAR_TEST_SUITES += u-oidmap
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index 7420bf81fe..ad92cbaa37 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -20,6 +20,8 @@ const char *list_object_filter_config_name(enum list_objects_filter_choice c)
- 	case LOFC_DISABLED:
- 		/* we have no name for "no filter at all" */
- 		break;
-+	case LOFC_AUTO:
-+		return "auto";
- 	case LOFC_BLOB_NONE:
- 		return "blob:none";
- 	case LOFC_BLOB_LIMIT:
-@@ -52,7 +54,16 @@ int gently_parse_list_objects_filter(
- 	if (filter_options->choice)
- 		BUG("filter_options already populated");
- 
--	if (!strcmp(arg, "blob:none")) {
-+	if (!strcmp(arg, "auto")) {
-+		if (!filter_options->allow_auto_filter) {
-+			strbuf_addstr(errbuf,
-+				      _("'auto' filter not supported by this command"));
-+			return 1;
-+		}
-+		filter_options->choice = LOFC_AUTO;
-+		return 0;
-+
-+	} else if (!strcmp(arg, "blob:none")) {
- 		filter_options->choice = LOFC_BLOB_NONE;
- 		return 0;
- 
-@@ -146,10 +157,22 @@ static int parse_combine_subfilter(
- 
- 	decoded = url_percent_decode(subspec->buf);
- 
--	result = has_reserved_character(subspec, errbuf) ||
--		gently_parse_list_objects_filter(
-+	result = has_reserved_character(subspec, errbuf);
-+	if (result)
-+		goto cleanup;
-+
-+	result = gently_parse_list_objects_filter(
- 			&filter_options->sub[new_index], decoded, errbuf);
-+	if (result)
-+		goto cleanup;
-+
-+	result = (filter_options->sub[new_index].choice == LOFC_AUTO);
-+	if (result) {
-+		strbuf_addstr(errbuf, _("an 'auto' filter cannot be combined"));
-+		goto cleanup;
-+	}
- 
-+cleanup:
- 	free(decoded);
- 	return result;
- }
-@@ -263,6 +286,9 @@ void parse_list_objects_filter(
- 	} else {
- 		struct list_objects_filter_options *sub;
- 
-+		if (filter_options->choice == LOFC_AUTO)
-+			die(_("an 'auto' filter is incompatible with any other filter"));
-+
- 		/*
- 		 * Make filter_options an LOFC_COMBINE spec so we can trivially
- 		 * add subspecs to it.
-@@ -277,6 +303,9 @@ void parse_list_objects_filter(
- 		if (gently_parse_list_objects_filter(sub, arg, &errbuf))
- 			die("%s", errbuf.buf);
- 
-+		if (sub->choice == LOFC_AUTO)
-+			die(_("an 'auto' filter is incompatible with any other filter"));
-+
- 		strbuf_addch(&filter_options->filter_spec, '+');
- 		filter_spec_append_urlencode(filter_options, arg);
+diff --git a/connect.c b/connect.c
+index c6f76e3082..a02583a102 100644
+--- a/connect.c
++++ b/connect.c
+@@ -505,7 +505,8 @@ static void send_capabilities(int fd_out, struct packet_reader *reader)
+ 		reader->hash_algo = &hash_algos[GIT_HASH_SHA1_LEGACY];
  	}
-@@ -317,6 +346,7 @@ void list_objects_filter_release(
- 	struct list_objects_filter_options *filter_options)
+ 	if (server_feature_v2("promisor-remote", &promisor_remote_info)) {
+-		char *reply = promisor_remote_reply(promisor_remote_info);
++		char *reply;
++		promisor_remote_reply(promisor_remote_info, &reply);
+ 		if (reply) {
+ 			packet_write_fmt(fd_out, "promisor-remote=%s", reply);
+ 			free(reply);
+diff --git a/promisor-remote.c b/promisor-remote.c
+index f3bafb7731..96fa215b06 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -920,25 +920,27 @@ static void filter_promisor_remote(struct repository *repo,
+ 	}
+ }
+ 
+-char *promisor_remote_reply(const char *info)
++void promisor_remote_reply(const char *info, char **accepted_out)
  {
- 	size_t sub;
-+	unsigned int allow_auto_filter = filter_options->allow_auto_filter;
+ 	struct strvec accepted = STRVEC_INIT;
+-	struct strbuf reply = STRBUF_INIT;
  
- 	if (!filter_options)
- 		return;
-@@ -326,6 +356,7 @@ void list_objects_filter_release(
- 		list_objects_filter_release(&filter_options->sub[sub]);
- 	free(filter_options->sub);
- 	list_objects_filter_init(filter_options);
-+	filter_options->allow_auto_filter = allow_auto_filter;
+ 	filter_promisor_remote(the_repository, &accepted, info);
+ 
+-	if (!accepted.nr)
+-		return NULL;
+-
+-	for (size_t i = 0; i < accepted.nr; i++) {
+-		if (i)
+-			strbuf_addch(&reply, ';');
+-		strbuf_addstr_urlencode(&reply, accepted.v[i], allow_unsanitized);
++	if (accepted_out) {
++		if (accepted.nr) {
++			struct strbuf reply = STRBUF_INIT;
++			for (size_t i = 0; i < accepted.nr; i++) {
++				if (i)
++					strbuf_addch(&reply, ';');
++				strbuf_addstr_urlencode(&reply, accepted.v[i], allow_unsanitized);
++			}
++			*accepted_out = strbuf_detach(&reply, NULL);
++		} else {
++			*accepted_out = NULL;
++		}
+ 	}
+ 
+ 	strvec_clear(&accepted);
+-
+-	return strbuf_detach(&reply, NULL);
  }
  
- void partial_clone_register(
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index 7b2108b986..77d7bbc846 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -18,6 +18,7 @@ enum list_objects_filter_choice {
- 	LOFC_SPARSE_OID,
- 	LOFC_OBJECT_TYPE,
- 	LOFC_COMBINE,
-+	LOFC_AUTO,
- 	LOFC__COUNT /* must be last */
- };
+ void mark_promisor_remotes_as_accepted(struct repository *r, const char *remotes)
+diff --git a/promisor-remote.h b/promisor-remote.h
+index d227299fd0..3d4d2de018 100644
+--- a/promisor-remote.h
++++ b/promisor-remote.h
+@@ -49,12 +49,12 @@ char *promisor_remote_info(struct repository *repo);
+ /*
+  * Prepare a reply to a "promisor-remote" advertisement from a server.
+  * Check the value of "promisor.acceptfromserver" and maybe the
+- * configured promisor remotes, if any, to prepare the reply.
+- * Return value is NULL if no promisor remote from the server
+- * is accepted. Otherwise it contains the names of the accepted promisor
+- * remotes separated by ';'. See gitprotocol-v2(5).
++ * configured promisor remotes, if any, to prepare the reply. If the
++ * `accepted_out` argument is not NULL, it is set to either NULL or to
++ * the names of the accepted promisor remotes separated by ';' if
++ * any. See gitprotocol-v2(5).
+  */
+-char *promisor_remote_reply(const char *info);
++void promisor_remote_reply(const char *info, char **accepted_out);
  
-@@ -50,6 +51,11 @@ struct list_objects_filter_options {
- 	 */
- 	unsigned int no_filter : 1;
- 
-+	/*
-+	 * Is LOFC_AUTO a valid option?
-+	 */
-+	unsigned int allow_auto_filter : 1;
-+
- 	/*
- 	 * BEGIN choice-specific parsed values from within the filter-spec. Only
- 	 * some values will be defined for any given choice.
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index acd65ebb73..78316e7f90 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -745,6 +745,13 @@ static void filter_combine__init(
- 	filter->finalize_omits_fn = filter_combine__finalize_omits;
- }
- 
-+static void filter_auto__init(
-+	struct list_objects_filter_options *filter_options UNUSED,
-+	struct filter *filter UNUSED)
-+{
-+	BUG("LOFC_AUTO should have been resolved before initializing the filter");
-+}
-+
- typedef void (*filter_init_fn)(
- 	struct list_objects_filter_options *filter_options,
- 	struct filter *filter);
-@@ -760,6 +767,7 @@ static filter_init_fn s_filters[] = {
- 	filter_sparse_oid__init,
- 	filter_object_type__init,
- 	filter_combine__init,
-+	filter_auto__init,
- };
- 
- struct filter *list_objects_filter__init(
-diff --git a/t/meson.build b/t/meson.build
-index a04a7a86cf..bec4c72327 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -4,6 +4,7 @@ clar_test_suites = [
-   'unit-tests/u-example-decorate.c',
-   'unit-tests/u-hash.c',
-   'unit-tests/u-hashmap.c',
-+  'unit-tests/u-list-objects-filter-options.c',
-   'unit-tests/u-mem-pool.c',
-   'unit-tests/u-oid-array.c',
-   'unit-tests/u-oidmap.c',
-diff --git a/t/unit-tests/u-list-objects-filter-options.c b/t/unit-tests/u-list-objects-filter-options.c
-new file mode 100644
-index 0000000000..f7d73701b5
---- /dev/null
-+++ b/t/unit-tests/u-list-objects-filter-options.c
-@@ -0,0 +1,53 @@
-+#include "unit-test.h"
-+#include "list-objects-filter-options.h"
-+#include "strbuf.h"
-+
-+/* Helper to test gently_parse_list_objects_filter() */
-+static void check_gentle_parse(const char *filter_spec,
-+			       int expect_success,
-+			       int allow_auto,
-+			       enum list_objects_filter_choice expected_choice)
-+{
-+	struct list_objects_filter_options filter_options = LIST_OBJECTS_FILTER_INIT;
-+	struct strbuf errbuf = STRBUF_INIT;
-+	int ret;
-+
-+	filter_options.allow_auto_filter = allow_auto;
-+
-+	ret = gently_parse_list_objects_filter(&filter_options, filter_spec, &errbuf);
-+
-+	if (expect_success) {
-+		cl_assert_equal_i(ret, 0);
-+		cl_assert_equal_i(expected_choice, filter_options.choice);
-+		cl_assert_equal_i(errbuf.len, 0);
-+	} else {
-+		cl_assert(ret != 0);
-+		cl_assert(errbuf.len > 0);
-+	}
-+
-+	strbuf_release(&errbuf);
-+	list_objects_filter_release(&filter_options);
-+}
-+
-+void test_list_objects_filter_options__regular_filters(void)
-+{
-+	check_gentle_parse("blob:none", 1, 0, LOFC_BLOB_NONE);
-+	check_gentle_parse("blob:none", 1, 1, LOFC_BLOB_NONE);
-+	check_gentle_parse("blob:limit=5k", 1, 0, LOFC_BLOB_LIMIT);
-+	check_gentle_parse("blob:limit=5k", 1, 1, LOFC_BLOB_LIMIT);
-+	check_gentle_parse("combine:blob:none+tree:0", 1, 0, LOFC_COMBINE);
-+	check_gentle_parse("combine:blob:none+tree:0", 1, 1, LOFC_COMBINE);
-+}
-+
-+void test_list_objects_filter_options__auto_allowed(void)
-+{
-+	check_gentle_parse("auto", 1, 1, LOFC_AUTO);
-+	check_gentle_parse("auto", 0, 0, 0);
-+}
-+
-+void test_list_objects_filter_options__combine_auto_fails(void)
-+{
-+	check_gentle_parse("combine:auto+blob:none", 0, 1, 0);
-+	check_gentle_parse("combine:blob:none+auto", 0, 1, 0);
-+	check_gentle_parse("combine:auto+auto", 0, 1, 0);
-+}
+ /*
+  * Set the 'accepted' flag for some promisor remotes. Useful on the
 -- 
 2.53.0.70.g3d1fd9d397.dirty
 
