@@ -1,132 +1,95 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4951941760
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 07:10:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440312BD580
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 07:20:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770880254; cv=none; b=WAsgQi/pSvpq6bGp6c3lfkg/fAMVDyX0jrXhc/sqXgoT0cXBTBXJLdmRDNJ2MIg4fqq87EzhOl+OuZUH7R06Ca3PHlFpcUd3QP1j14T3I9SHSICv+te0miBsEd7xZX2x+FE5K9dajbOBW7CUp45cbGzDQ4Y34to5V5IRFSjTUtU=
+	t=1770880811; cv=none; b=FG6iK4xnQQXNk1CZv5Vd562AO30ot+TIh04dnZ6vRzpJzExq0X84EnJBxDt0f/Cv/fEXU3QXzCnTqgl+wY3TVwCGYq1iULasRtf3CVlIzRKpt1LQWY2QYYOHoxYscznxF7r2PpLEsc1+3VHC834uaTffTnyuGBBaVXa04NsFBcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770880254; c=relaxed/simple;
-	bh=ilGala0iQpkH/QN6avG88cBZAL/p79HQGs3HXYqgdh8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GIBiA5jNBsgDbHqYJVoA5ekPhqun4X7XJsc8E1cuTGU6ZyiZYtFvZvfp+j4br49no0TR/R1Hv1su51kIux//dTHMQeF2mMdtKX4tVcHCVfuct6yGgbQGQCJbVyjUvguDzj/6G1VnNw4Y32rVmA5y30mZqxy2+DC3asgbq1+fZ7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RSxO5DML; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PNcvtP83; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1770880811; c=relaxed/simple;
+	bh=tQUDTO9ScbVYKmBB03GRhKUTcqgSDagl1u+WyiCsumE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jMmi4pEWLURfhd7HahUP1CjzGXTUTgDRgIuSMSkCR4EjaWbM0dkZxEDZ+QzK6c8mowapFBR8q2is7Xslw3pwJOEJYfyu6rDmgr1ihcaKepRiZM/7UXKVst0lRsctEHOYP2Qhg6nOGp8cDWTAm6DWRl5KL1f1UK3++WZ/eExdaG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=jc6pLBal; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RSxO5DML";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PNcvtP83"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 751CA140001A;
-	Thu, 12 Feb 2026 02:10:52 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 12 Feb 2026 02:10:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1770880252; x=1770966652; bh=vD3piml0r+
-	uBnKf2sBHsrzA+uECJH3XNHU5Sthd2rE0=; b=RSxO5DMLuOoYmR7FQU7vwbbHBc
-	9pEzpC7kt+A/QSvFMzrPUiLAk9vClon+SgKBGMAKAlk7gg4aWKIpG/Dn3gTRWeb7
-	99sfQTsAArTdFZA5AGELdfojkizm+oxItz2/0t8TqT1Aq14Li7Q7Hz9HmtFJCAQu
-	BDDVsq79JZ4fRdM7hkBXWqtJ9GVnTVOc1dOLP32T9R2pXX0rHR0M9Bhgz4ddKDAH
-	MS4NYey5KytiKagLOFpzu9ZNUVGMXNPsiZ2hWK0vCrHaTNmR/oPaYskwCGYs+lgX
-	Cdtemgk0mRSsnKZwhMbtpyXfWtw6wTI0/W7XFe32zfiUDeOdnTVLhuaAZ49w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1770880252; x=1770966652; bh=vD3piml0r+uBnKf2sBHsrzA+uECJH3XNHU5
-	Sthd2rE0=; b=PNcvtP83S67lWu+WPjcibCrSEMTZUr9OmH1YUPnMcvRzMdmRbKU
-	YuBMsNsu/Q+zKFP7UtGrCvT8yhATYCYl04XLgjsqIYZxZHi2tKJjB1W0lmEKbBKg
-	TfHsHiVpwTyTvr184FbklCwEYhGnltvlYrUtQq5zQPBiT+kRqZN+ohDg+QTVcaEe
-	b6lyMIGbPKt2LdmZneHWfVl0lrit4aGr/5CJpubNxWu4+iPpdXyzNoNOjX4etTjD
-	nvTNXQfIzhiDQzVKQXX+HMJxMgU8RWb3UXO+e6ga4KnN5wUdxU3cEy2w7zMpWnuk
-	Gldq234Jl/IX4mxAqTYyzmS3nKVnsEqnG+g==
-X-ME-Sender: <xms:_HyNaX-BB0rh8-VEXjqpnSlGDx1vmRBhKMxC8qPspxw9fZ2cVmBnpg>
-    <xme:_HyNaZvcMZ9qv162ytMhy8HxaRESXwShoGgYvXXKMkXbT4iPw5n3nZqGhDhrH5K1p
-    axC0aOgXrofAZm6IrKoPBad_k0RYaPwhJwLlfRPhZYrTzUKCtlpKw>
-X-ME-Received: <xmr:_HyNaSomm5FaZKaI2KJimulF8ZEoh6GXNT_URfYj7P0P-OL5pePQt3fiKF09gDuso9S7-xMTr7cVg1TNzdU3fy8tC4cCTBoa6DolURAg_DA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdegjeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:_HyNaelE6yX8d4GAn5NHuA1k83HKSkxBcL4NtFeWNr2R8sUum08x7g>
-    <xmx:_HyNaewqqANbcJmnijZVBkQWxDKvuL1sd53gelyTTKV1qHdBqgHMPA>
-    <xmx:_HyNaek5Unyaz0ya6yf_c_PSP70NOolnwzQ4U9umqZEAlCiUkgEi6A>
-    <xmx:_HyNafewahvj5T-KmOBIuGbJddCJf1l_6Ttsa8ldIs8GrpxzTJrOEA>
-    <xmx:_HyNaTU7zqLBYLybnlO0VhaphJ6nsvsNDontvei16wF15N9hz9Kdatp2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Feb 2026 02:10:51 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 72bdff7c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Feb 2026 07:10:50 +0000 (UTC)
-Date: Thu, 12 Feb 2026 08:10:47 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] CodingGuidelines: document NEEDSWORK comments
-Message-ID: <aY1892Rzp1bQsLoW@pks.im>
-References: <xmqqms1ft7il.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="jc6pLBal"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-824a829f9bbso682215b3a.0
+        for <git@vger.kernel.org>; Wed, 11 Feb 2026 23:20:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1770880809; x=1771485609; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TEG3xV8K4bj5k6PmOjacmqxDdxHW9F3rQc/nrERdKB0=;
+        b=jc6pLBal3LZ/0WmHCtGIUMp33w2bDnLDvnwvbZVpzIZ51e3Yj1RoaPbidDPJjOtxcL
+         g8AVmfTCVtr1gbOHsrwSvesWLE5AVlsnnjBCY8hBf6Wu9lxJk/5Jy9GruVOO2P1oRp4u
+         PbWKq4TLREKp7c2uYR1mAdQzSDGvYdIIn8FTxfb2d6CVG40k+dB9URxf9CNi/0AsbJQ/
+         HIi0/Hv6qCcFqB7xCqbg9TRR0mTlQbPLxBHVELAtNOZYOMOakTO1vSDCD1YauSR4Guar
+         gqGoyfXx4A3nxVdKhRU+vkcSEQqtRVfRmGs9n+iZS10WWdMM2oFCNTZU9q0ymCmvn0FS
+         TpBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770880809; x=1771485609;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=TEG3xV8K4bj5k6PmOjacmqxDdxHW9F3rQc/nrERdKB0=;
+        b=chS8oi4DXEPve2XC8+lLyQM04SOJQ5Z1+gOdo2+0IStdIhcKZbZYpTPQnQXmintTsT
+         F1Px0n3DX3GQFOLWlGSx8yIaTi3yvx9oa53PtgkHvN3h71Os88LKC3JT3Y8eFCmffixh
+         aOl8sRpIWw6fEE0hcy/SuA4FrzTEdIU2tRvRRMqZPLIuv7qc+pksG/c00KgZE3E/WNF0
+         UQLCI6lxzYA+wOcxZMcx7jDiZAqNsh8KMSNQlJO6i6NLxpaKifuGvT2K/3nebylCWtG1
+         857yfRjNYWyEeygWITQV52iRXYI5+7UfSe/7u6nlZ4J2hh3Qo6ZDWyhiIffmb+/1eIEA
+         DL6w==
+X-Gm-Message-State: AOJu0YxVTHMbXzBMf1QyQ92LyPjxOtG/4Ma3vcl9HoKJ8V6rota9avXf
+	uMGtre4Fllnyy1K/XGTH+nRUtz5gHNIZ2fskZ14B/P3xAsdUN1uZD6j50zw9OMP1jSlYIjY4ywi
+	RgjqYtgo=
+X-Gm-Gg: AZuq6aILe8S1fsPAuwPLiiaPhi6PQ6SVUoeFgTtGQM+fKkALmgbcOf3uCjrE2RyXxcH
+	+LA46fp4tj4/QMZKygsPGD3wuNUNVhLqYWWmvpIJulVs9AgTnzDOTIKEcBf+98IMLfpS+ZpJyGg
+	xIaJ/AlxkbezxlvpcFrcmJvYsdQuAH6DVqnX+32M/RaFY9QyVEkH1DxczX3Vq4CAv+Cv200OqYd
+	sEERYUhp48Uk9JBuoS6Fu5UiQcxVDnKLd7WbEIxK1CH/4KgZHrKyI5jGEdaXzk7dmK7ZZoreVFc
+	nIN0XoAc46OCkKm4BvgrFd6WvlOkpiWfS5Wu/VX7sqw9wShFkzpFpVB6N9WwbNHZsJuBGSQWLgY
+	o49Mb56uWs75VcsnUg5eR7O0iIccUt/pviHtdtN6+NbWoeWbcf4u6jR9UuuUjOSknxbQ2yuObCa
+	p9qVj5o0c5v33pRmKosDHS8XVydrXOplAGh1U+tlPeqI6/gXkwTg44dpEPe5GYYh0U
+X-Received: by 2002:a05:6a00:bb0f:b0:7ff:885f:9c2a with SMTP id d2e1a72fcca58-824b03f9776mr1771014b3a.12.1770880809079;
+        Wed, 11 Feb 2026 23:20:09 -0800 (PST)
+Received: from LTY2K703JV.bytedance.net ([63.216.146.178])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8249e3bd8cbsm4311761b3a.24.2026.02.11.23.20.07
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 11 Feb 2026 23:20:08 -0800 (PST)
+From: Han Young <hanyang.tony@bytedance.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Han Young <hanyang.tony@bytedance.com>
+Subject: [PATCH v2 0/1] diffcore-break: prevent dangling pointer
+Date: Thu, 12 Feb 2026 15:20:01 +0800
+Message-ID: <20260212072002.2347-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260211041128.48412-1-hanyang.tony@bytedance.com>
+References: <20260211041128.48412-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqms1ft7il.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Feb 11, 2026 at 11:17:06AM -0800, Junio C Hamano wrote:
-> We often say things like /* NEEDSWORK: further _do_ _this_ */ in
-> comments, but it is a short-hand to say "We might later want to do
-> this.  We might not.  We do not have to decide it right now at this
-> moment in the commit this comment was added.  If somebody is
-> inclined to work in this area further, the first thing they need to
-> do is to figure out if it truly makes sense to do so, before blindly
-> doing it.
-> 
-> This seems to have never been documented.  Do so now.
+This bug is difficult to trigger, git-diff won't trigger the bug because
+in git-diff, the prefetching happens before the break-rewrites.
+The test uses git reset to trigger it.
 
-I noticed recently that there have been multiple patch series that
-blindly turn such NEEDSWORK comments into code. But I agree with you,
-the first and most important thing that such an author would need to
-worry about is whether the comment still applies, and what the
-ramifications of it are.
+Changes since v1:
+* Added the test
 
-I almost feel as if NEEDSWORK is a bit of a misnomer, and that something
-like NEEDSTHOUGHTS would be a much better fit. But I don't have any
-intent to change that throughout our code base right now.
+Han Young (1):
+  diffcore-break: prevent dangling pointer
 
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index df72fe0177..b358d6bfb8 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -33,6 +33,15 @@ Git in general, a few rough rules are:
->     achieve and why the changes were necessary (more on this in the
->     accompanying SubmittingPatches document).
->  
-> + - A label "NEEDSWORK:" followed by description of the things to be
-> +   done is a way to leave in-code comments to document design
-> +   decisions yet to be made. 80% of the work to resolve a NEEDSWORK
-> +   comment is to decide if it makes sense to do so.  It can be a very
-> +   valid change to remove an existing NEEDSWORK comment without doing
-> +   anything else, with the commit log message describing a good
-> +   argument why it does not make sense to do the thing the NEEDSWORK
-> +   comment mentioned.
+ diffcore-break.c              |  1 +
+ t/t4067-diff-partial-clone.sh | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
-Documenting is a good first step, but I have to wonder whether such
-authors would even discover this. But even if not, it means that we have
-an easy place to point to going forward.
+-- 
+2.52.0
 
-Thanks!
-
-Patrick
