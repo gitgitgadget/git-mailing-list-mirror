@@ -1,93 +1,108 @@
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1455428850B
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 05:37:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DB46FC3
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 05:45:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770874678; cv=none; b=HQ+jwYelBI+vHhOm3k6XPhZBkWBI9Z5IWby9xuURn7Gqvdnqc5WaJBpNDGgnx8j0tx5HGJo0wmjfB6x7x5jhDpD7wCnMm71wtv0siDWrk9ZhiwoO9AIE77maMl7mgXtZxDjTlMZEbBimNRjT55k3na026iTBBroXEodkiOBKiVQ=
+	t=1770875140; cv=none; b=mcLUuMvsi2pmwqyWfhtsSjo91vAX+F0KSXSpmyP84BWQwbmnsV8FwM9L/X4DQpUURu/+vXt/HIPH4pLZHErxGdAMHPNrFGTMjPSFtzkuoRN5ZFE6PErghy5bmjCvbhozaQBv9Qyvxi1AN4HU7Ex0wFh/czX7Vu4FQGXTHvfWymo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770874678; c=relaxed/simple;
-	bh=gVOYfld21GI1k7CvOVmQgVIq/qdNPKzEmej718/O1ow=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pi9vPPesR9UW4Pw81Nj0V9lJVzQjDgn9aJVd1gR6pB7tBhLIQZV/sXOkZRUWyv8/eH8bnXXiN9EZX5DnVzyd3JsMkNU3Z5YYhxQ6ZAIIEVIf6YudB96wTPQr3TmRrNhR7xcsV9E0Cmpbwq7zpLppzcm/jTuQfonmwEO1gX3QcdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=Iv5aEZrL; arc=none smtp.client-ip=212.27.42.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1770875140; c=relaxed/simple;
+	bh=sPnpyU+nCurqAZofQKcnwd230X0erYfmJXLcXIB3ASk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VI8KrGTKJmE6J0MgrLjOcE/4+qpyqmEFE3eXI+x4mMIq6bwxp8UZCH63m8BE1P7R1hgYpNPq8VZtr0WEMjfGoOR+K1bRLhQ5BOEHoCh4wEx5fp+osmu0Ai8vk7W49PIF3bIRwT43xSFh+JO+lybT4cYM/KdUYRprf5fiUTrwp1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hwXKftJd; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="Iv5aEZrL"
-Received: from [172.168.17.249] (unknown [103.51.116.155])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id C78B82003CC;
-	Thu, 12 Feb 2026 06:37:49 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1770874674;
-	bh=gVOYfld21GI1k7CvOVmQgVIq/qdNPKzEmej718/O1ow=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Iv5aEZrLF2H5JsRqAaTBVNDwQY2BQjPQzQUOc+Ia6E/5/o6CzIAwtQ1e+mOl8y4M0
-	 XD1W2ooRANe7iu2N+Uohq5WAv/lA+F5tHkwlUzrRUlWOYxAa6friEm0kyANFmSBDem
-	 vEs8lYMWUeOodSawvYIHuHz14FHt2SvG+7e1rjVswqvEfqIwFU7FCdFKz5Wzw0rsjM
-	 /vIa+1NuM4IrQnMUaNHWu4CBa1cRtQYbT1tFF3dhyupg1s0l9Yl2kkZ9/FVtzQKMGN
-	 ezior0sKvj4x01MYLZvIiGQAZRCa/pbT7lVg9EZk0AF0EjILVg3M8skB0NgITh0mjz
-	 yQThpuSC11iHw==
-Message-ID: <1ce11655-eaef-407f-86af-956a190f5358@free.fr>
-Date: Thu, 12 Feb 2026 06:37:45 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hwXKftJd"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c6de13d9ebbso1332111a12.3
+        for <git@vger.kernel.org>; Wed, 11 Feb 2026 21:45:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770875138; x=1771479938; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KD/1b2joPaUmsY6saeeZmMlanGh+toRpgIgoVrr/ON4=;
+        b=hwXKftJduklilnDMdmjggO1ITaU1k7GnJOtB6eoGbZRuSCiZo07FlZ2LxtP3okbp5j
+         MyMgBLkzdjZrl+NZlmD8J2YQPpN7V9fhOl5+rIuh4NzLZnRlGRqqlfogLrwuG9qEkgdM
+         f9po75l8hi4G4Q14ouCcjCublg3nCY/uyxqBDBkcKBvYpdkHc69Aq+ibjrBB+z3mDN4E
+         GwBM7vnyLT7nqalDk45sp3THsLLisUomopiK1w3ZM7udjvmUiGvdq4/r5Az3YYU/O4uS
+         UADshvw7STm3Uo/W+x/OlTjfU+JgoFC14Zg+u4ga6RVErTUVXN0MFqjmnBdiYfS02kx0
+         j35w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770875138; x=1771479938;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KD/1b2joPaUmsY6saeeZmMlanGh+toRpgIgoVrr/ON4=;
+        b=C9spNgf4uAFeQykNxGxKuAJAGiL1dzwiQYwE2pf4mQ0GR0C38faSdK1AyQqjR9MjlV
+         SPxWmuuDD9PuQkdy8byslixvzMnYcAB48WfJ9oUjI7cAlBz32G242la65sqLdT021veV
+         /QXbYX3Fi3P8wUoJ05JVgPoVA0JgMq2Bq3jvJaUQuDWWJaKyd3fgAYmmjhbyN6q9i6PT
+         rH6jsswEFq7teYf25DccaoKH88TK5AE0Uy92G+LDnghifkRTniEbtjRRj9ocn5m5YawS
+         CzAtSfwl5vDCr3HL440Z0DDSvXCwr/ZTF0scf7uL4S+SoB7hMSEnR/EAR2+cDTBOEwDN
+         6qEA==
+X-Gm-Message-State: AOJu0YymdFAen2yf56dGLJdqY2SlMivHa8Y6NaN9vNUsWy4rxHsMaqF/
+	2nD7L5JVGh3z7RaqkvNOLmVWiBgIBzTegfcnBWCFoZJQkwbqG3fvwpQkSUfm
+X-Gm-Gg: AZuq6aJdubZiZan3rdryYd16mtGNNn6Wedp5vJoxDIW0kC6PW3qfueA/kgU39rwnE2E
+	ZSMR6Nlb9CIdWkv1uIa4NnhaHmQ3fhjlEcEdTFArBuZkej8BIHsHd5P0IXESDgRxYlfguhoDxvX
+	L5dEyVxrlGT3LksQhYNPEnjh+pRDhAIbLLd8xG6yk+rNZwpxdP0ucVVvieBtF+quIi3pC8RamW4
+	0dajTRmu9xj3xIJxWzT7r8OjxwB4+6j3eICq4Y5m/HN9xj103SOvtmClsBowDG+MBqiFR+JA0NY
+	AmawzU6cXQHxeKw1Fu7Ry22JdH0N2JMAPLPTEDZBi1BGn/u0uABwDhTE4S1MBHXGujfdKgZReqm
+	DIQuElJK81zZ1NqFGBTcpz4AeeCgiC0ZmgAShTtSw/07znFhn+71+iMkTNPS0sdS8P9OKMHbdkx
+	Nm/LaxNRYVsvxr/1Cn7i1rMvlBHgvJUGqX+r3+7aIn8EWOz7/YHHjCI4xjy4gsbyFpagEIpLZjE
+	sCtPVUH29Y=
+X-Received: by 2002:a05:6a21:33a2:b0:38d:ecd6:60c with SMTP id adf61e73a8af0-394489b386bmr1902588637.77.1770875137906;
+        Wed, 11 Feb 2026 21:45:37 -0800 (PST)
+Received: from SLB-94V8GY3.dir.slb.com ([152.58.32.239])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c6e1967ca7esm3695905a12.3.2026.02.11.21.45.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Feb 2026 21:45:37 -0800 (PST)
+From: Ashwani Kumar Kamal <ashwanikamal.im421@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Ashwani Kumar Kamal <ashwanikamal.im421@gmail.com>
+Subject: [GSOC PATCH] t9812: modernize test path helpers
+Date: Thu, 12 Feb 2026 11:15:30 +0530
+Message-Id: <20260212054530.4763-1-ashwanikamal.im421@gmail.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: rerere-options.adoc: link to git-rerere(1)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org,
- Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <doc_link_rerere.328@msgid.xyz>
- <1a4060f1-6607-4b50-859d-927642eb34df@free.fr> <xmqqikc3waju.fsf@gitster.g>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Language: fr
-In-Reply-To: <xmqqikc3waju.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Le 11/02/2026 à 16:43, Junio C Hamano a écrit :
-> Jean-Noël Avila <jn.avila@free.fr> writes:
-> 
->>> diff --git a/Documentation/rerere-options.adoc b/Documentation/rerere-options.adoc
->>> index b0b920144a6..115882edab1 100644
->>> --- a/Documentation/rerere-options.adoc
->>> +++ b/Documentation/rerere-options.adoc
->>> @@ -4,6 +4,6 @@
->>>  	the current conflict to update the files in the working
->>>  	tree, allow it to also update the index with the result of
->>>  	resolution.  `--no-rerere-autoupdate` is a good way to
->>> -	double-check what `rerere` did and catch potential
->>> +	double-check what linkgit:git-rerere[1] did and catch potential
->>>  	mismerges, before committing the result to the index with a
->>>  	separate `git add`.
->>>
->>> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
->>
->> I'm not fond of introducing linkgit macro that can create auto-reference
->> in manual pages. At the moment, we need to use conditional inclusion in
->> the manual pages source, but I wonder if we could simply filter out the
->> links in the macro itself.
-> 
-> FWIW, before deciding to accept the patch, I did check if
-> git-rerere.adoc included this file (it didn't), but if we can make
-> the macro smarter to do so, it would be great, as that would avoid
-> people including this file there later without realizing that they
-> now need to make the mark-up conditional.
+Replace assertion-style 'test -f' checks with Git's
+test_path_is_file() helper for clearer failures and
+consistency.
 
+Signed-off-by: Ashwani Kumar Kamal <ashwanikamal.im421@gmail.com>
+---
+ t/t9812-git-p4-wildcards.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Ah, adding the options of rerere in git-rerere manual page is then
-something that will need to be done when reworking it.
+diff --git a/t/t9812-git-p4-wildcards.sh b/t/t9812-git-p4-wildcards.sh
+index 254a7c2446..e91004ee79 100755
+--- a/t/t9812-git-p4-wildcards.sh
++++ b/t/t9812-git-p4-wildcards.sh
+@@ -30,13 +30,13 @@ test_expect_success 'wildcard files git p4 clone' '
+ 	test_when_finished cleanup_git &&
+ 	(
+ 		cd "$git" &&
+-		test -f file-wild#hash &&
++		test_path_is_file file-wild#hash &&
+ 		if test_have_prereq !MINGW,!CYGWIN
+ 		then
+-			test -f file-wild\*star
++			test_path_is_file file-wild\*star
+ 		fi &&
+-		test -f file-wild@at &&
+-		test -f file-wild%percent
++		test_path_is_file file-wild@at &&
++		test_path_is_file file-wild%percent
+ 	)
+ '
+ 
+-- 
+2.39.5
 
-
-> 
-> This particular patch does not have to be blocked waiting for such
-> an improvement, though, right?
-> 
-
-No it doesn't. I don't intend to scratch this itch soon.
