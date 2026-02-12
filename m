@@ -1,65 +1,49 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pio-pvt-msa1.bahnhof.se (pio-pvt-msa1.bahnhof.se [79.136.2.40])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C575D211A28
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 17:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0024DBA21
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 18:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770917631; cv=none; b=e20mPMDUW+WVzqYtoka7x+6lWydRWNN9aVzyQUmC8EUD8RjivwRFhLQwcEpchXtx7+4gid2g+VCxRfMLB1zEw9ICnYcv7YgaXjCoqe0TpolL76DGUg0siMQVMdUX+LnQPxKpkr9Z7ZKuSssuZpm/niGUa4uDDXq1FmQGFhJ3MvI=
+	t=1770922380; cv=none; b=KbiVTxD6KxT6M+x6dEyx5MuSuV+CYWIyQr6nF1vc3tDQ35gzrzkx7RAGY/lY6S4zJNG3c7+/MtgSwT2DTrjFzV6QjGGD5HMjgoO746zeISvYFjs/hYMw2jCj+IFlN11UhOVrsJdv2CjsqIw2nNUvGLkGj3oQS4AKphOOGcK8fPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770917631; c=relaxed/simple;
-	bh=D90ErHCkF5gcz1DaWuwsKjUZc6rRLKJFawD+tjejQco=;
+	s=arc-20240116; t=1770922380; c=relaxed/simple;
+	bh=POnf0Jmq34kK0cK2I7iMkbddbVdtOV4PpyFxpIWR5pQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BbtixbDusNi0U1BPQiFK+RhSin4l4DxwFGaN/iS5UNtQ4rpduFghUbXyvKycv2kY3CE9QIL1q/JYDzU1tcayxxEtK1axYlPJiItP7uuwDclkQZfRNQxHi4pW8BIIdL+bceQiAf3AlbB6ftW4WJ+pHstQUI7+ikUGKNZCSv4yh98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hv0p18dc; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=EI63do+d9zuIjPihrAptqvHpd1Lm90WO1IgzfllRmng/2E/fWsapoNhsa2g4uKtqzp4857REjboi2Hutl1ZIXyfAZhMljTd7jfPBgNErCbS9vPgWf79ogbYwmsSn9sGUF6aBg7z4iOdzWb8oL93JQba/m9PsArX0KERd7Yso4CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=g5ppJsZy; arc=none smtp.client-ip=79.136.2.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hv0p18dc"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2aae985a839so70635ad.3
-        for <git@vger.kernel.org>; Thu, 12 Feb 2026 09:33:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770917630; x=1771522430; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=D90ErHCkF5gcz1DaWuwsKjUZc6rRLKJFawD+tjejQco=;
-        b=hv0p18dcCiuY/4BmVzc/ctUjeaOpYdVcln0YxxlkCiP1jG33EGj2TPKNiWtR6gDcoe
-         00Lny860VwqvnclELkENJJqyiWFF/s4ZdRs3t0w+oFl3AD1+2fa7TVWrq9hlRRr5VP+K
-         6BqbWzCRIyMhofo3zeGSN3rJm6rPXw2u6hluWxJXRBVpYQA+uFng4Zni0c9/Nt7LuDED
-         Fc1k7FcAd3DgodPcXupj9yvZy/1NqbkDY5THaWDaSOsNTtemcdmgBwuHX8fAQ+Y0Ho6g
-         XqGDk9OJJaa4zyi2Jvf0M4rXwQ4guMr5Sds2uHHtRoGr+FgqjcVhBtl7LG2JgW9LCdzK
-         wG2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770917630; x=1771522430;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=D90ErHCkF5gcz1DaWuwsKjUZc6rRLKJFawD+tjejQco=;
-        b=egmnambBMEMhPpnS6uRKFwymENm5TI8zqTXvIvLqeB+fKPdSLPBfXVGA8hYA+D9ZqR
-         m8/fSrHnsqzYno1rzRPhtaqhk4v/TkuC5Szx0B4oqTbkdNlJo7k7GJSxYZEe66eBmwQX
-         z8X+Zyqm1sfnRf7LO2sOdzUMV6naJ7Qu2st8M6bted2pxrZSr7qotvFYNjwdJHUyy+we
-         uWCY6QfxH8rwAlbRCa+NrXUxWSxmFblgni0gIh1kFWq0hXFeGZemyHrpX3xqWdo4NMF1
-         Hn1kAVYi9q1DzqsUdSBxjn8PRMisZ1qGl2bw04bGScAHV0jy6r/u2BL4AhojG5NIG77x
-         UrLg==
-X-Gm-Message-State: AOJu0YzeuObb2lL9C9L7QV8JYFO3tqfOLd1OQz9Czr3m3E+9L8fundFo
-	6j78vuLtc3gXFhjefSpvzKTBPUqAJEG0cXxMD5jbvwjb+YI0DDQ8aUYPkZ4cunp1
-X-Gm-Gg: AZuq6aJinSDmF5brLFXl+nnTgo/rLdbxErXrNspjy+gXRhPjR4IL+hy/QPPg80r2zZ7
-	LV84sOqqdLzvBv84evevZ98v6wcOIgvZk9kYdI/NJGuMIrq8fBPdG2UcEatfJ1Kcd2omPbuq+tv
-	htakdI42kUGs4zToMFRO6RDOtVZZg6GkthjuD0A2Z1QT0DHa8m3zVHnzd6F5GvoRTQpU/ix8vrn
-	FrUmWn1Bf4t3d/tEDVEYAKEdMa0CmmmAlF7EjkFDrs7tGZh4lDmDv+TPJJhTLRuz92GtsXON2Va
-	yEbbhXUwTDBjs8P0Kj8S1UXg8PArcbGdL/rQHfm/ZPdocKIhCv1KbDbm26s99S+KyPqnF1u0e64
-	PvILGcHMORiAWWnEIMhkFz+/bnzNM6ojAB3406IkYxiNX2WljFuy2SCuz8+VTumOPNiNCM18DlO
-	ZfO1nOxwwEQYAXRSvLKIVA0kE4n0I=
-X-Received: by 2002:a17:903:35d0:b0:297:f3a7:9305 with SMTP id d9443c01a7336-2ab39ca1d30mr26821745ad.6.1770917629780;
-        Thu, 12 Feb 2026 09:33:49 -0800 (PST)
-Received: from [192.168.0.105] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ab2984ad4asm58234485ad.6.2026.02.12.09.33.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Feb 2026 09:33:49 -0800 (PST)
-Message-ID: <950a54d3-2b00-4e1e-937d-d22bf5cbbf27@gmail.com>
-Date: Fri, 13 Feb 2026 01:33:46 +0800
+	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="g5ppJsZy"
+Received: from localhost (localhost [127.0.0.1])
+	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 37E493F429;
+	Thu, 12 Feb 2026 19:52:50 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -2.1
+X-Spam-Level:
+Authentication-Results: pio-pvt-msa1.bahnhof.se (amavisd-new);
+	dkim=pass (2048-bit key) header.d=jontes.page
+Received: from pio-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (pio-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id U_Bxo90VbJQU; Thu, 12 Feb 2026 19:52:49 +0100 (CET)
+Received: 
+	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id E1B2B3F6BA;
+	Thu, 12 Feb 2026 19:52:48 +0100 (CET)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5B03CB1C4A;
+	Thu, 12 Feb 2026 19:51:47 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
+	t=1770922308; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=qH8RInBV2DsJg6yz9kscOVEKs52bWLkBooP7CYR6KTw=;
+	b=g5ppJsZy4auqQ25yfQkYWVxoGICwkqCS7Ehz5RS3X/zfqBNqjAx9Z9eGUutB4OhrDmj4zX
+	UTmPZHsiCMY/pKhQyovM56uXL/e4JtDX5MlGsjgp6qIaXbGONjmx1Nq2Jh7ugyO5brBe+L
+	lVI6yLILHJhpAazg0ij0JyWhXF2UHqraCWBfY/6FYoip3yb2UP06ZrORfYQI8ZJ0BONkMI
+	ebnrkDT2r5hzzXemD8sXXHu6yIr2U9MXYPfk8E7D/rn0yDGuoPDxAvnLugHh6g7s20u65t
+	h5wRNIddrfllI5PgvxanQ3O63q0ccnTCc2121RwGldognZDkMSkO36uX+Z5f7Q==
+Message-ID: <ed066558-a846-4c72-894f-f29b4f911589@jontes.page>
+Date: Thu, 12 Feb 2026 19:52:45 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,24 +51,22 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] setup: fail if .git is not a file or directory
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20260211182122.35352-1-a3205153416@gmail.com>
- <xmqq3437t643.fsf@gitster.g>
+Subject: Re: [PATCH v4 3/3] alias: support non-alphanumeric names via
+ subsection syntax
+To: git@vger.kernel.org
+Cc: peff@peff.net, gitster@pobox.com, "D . Ben Knoble" <benknoble@gmail.com>,
+ "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+ <20260211211810.278806-1-jonatan@jontes.page>
+ <20260211211810.278806-4-jonatan@jontes.page>
 Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqq3437t643.fsf@gitster.g>
+From: Jonatan Holmgren <jonatan@jontes.page>
+In-Reply-To: <20260211211810.278806-4-jonatan@jontes.page>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-Hi Junio,
+I have discovered that shell completion suggests the "<alias>.command" 
+which is a bug. Can't believe I didn't test that. Fixing in revision 5.
 
-I've rewrote the code based on your suggestions. If there
-are further improvements to be made regarding coding style
-or readability(especially the style of comments), please
-let me know.
-
-Happy valentine's day(though it's tomorrow)!
-
-Yuchen
+Jonatan
