@@ -1,97 +1,142 @@
-Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92592C3256
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 14:14:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770905670; cv=none; b=ChLH1nUavriq+nGUqb4TgDtpEWhG2yr8b+4EqNxgiy0z80wZKDuC+QaHKh7A0VOiBA9UjS5e12png+ZC78SSXz2FXgpM8RaYBc3DmvjmL5ObU111A+8VIda4kko42UKUVskpaQiLuv4Nng02OQCGQ5wyH+11I5neFviwadD060o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770905670; c=relaxed/simple;
-	bh=KxFjnNms0M4oThQgXyqKhKK17U/PP5I0uJlfJMj9hFk=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=miXxUKgLvgFrHSeWDD3B8am4/b6IbCcoDUC2/GRDQYSW3q9HGRNPy6CMncFg7rigUehzFG66ANkWI391rLJo9+zMV40JBpgmpKBr+baZYhytrSYGWSoY2imuddFCefYyyBsjx2npZhAKwP+wNhbVDtxB5rDQXzOK9zLzAWzulKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RhFnN62Q; arc=none smtp.client-ip=209.85.128.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5F4F4F1
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 14:25:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770906302; cv=pass; b=IC3cpMasSV/ARAGI5YzEW8fP2Vq7HR11eRbLlqW1Fqbf0j6HHMXElfCcxJT968yHeaZHtdUvr/W74LbYwnW7F9w2ZcUWIUs3lXps+ccULrSZt8+EhV/9EJJC67Y/aPhPekQT0ddOJ/t8CGvowM5sl3lc0iqR68sHFdKqkSpVWfk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770906302; c=relaxed/simple;
+	bh=Mb9vCeHyLGaW0fJFR82K80OsWop1W6GpMqQaV2bzDj8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G5jSusZBN+2VFzQFxhQtKLXG2IcUchl/deDO7Cm0A06Hgd0dMEVOgn7dFXNdKqZTaXAxjcWo89Zpck6nHcnnovpa6u5u7QpI7Zfu6bDaxTBqxN8hNog1dmTxc0qluTjakNVwSmqmxevbhwaJ7zTh0Xp6OzMMCTPsRmK+BC877AE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=UYYotGQE; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RhFnN62Q"
-Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-4806bf39419so14469055e9.1
-        for <git@vger.kernel.org>; Thu, 12 Feb 2026 06:14:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770905667; x=1771510467; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zZkO/HejhWlZ+b9BUtrFjOvLtaEjrnWHvHT+0b/LWpo=;
-        b=RhFnN62QBlaQSGdGNmaTNvahAFvf4eJOYh5oNQdBwDT2FG7qd0cqiGB5qLMkxt0i3n
-         QgRcVc0qzwTRTL4uW72oFWlNsjlkDHkWEFJ0Z66P91bvO/4EDmRApOfwlE6X+20IvEHz
-         R0RB1TXnQneOfDsLkFWTbyiF8SXBJDYrc8JogyerU3OMmgopO9FQF7Z4F2vW1hC/XAxT
-         fO1piT/bwHMF39icf1wx43BGLeL+6Lg2UeXn9DtyOYX6B1kS3G4EsjCVEIs776R/utcB
-         GoJZXLxxug9lBeA6kaXVeopMNoN5rB23LNVDWYpz84wJkOOXsbDVLBgj1hiC1n0czCPG
-         bbGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770905667; x=1771510467;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zZkO/HejhWlZ+b9BUtrFjOvLtaEjrnWHvHT+0b/LWpo=;
-        b=h2polFwIWkF/hQx5s5s1mV0MvkYNfUOjSOJtFoKpuka4DQM+cdaucm4o7O0/rCeAt6
-         zfDqHmsOkLpmqEKfOw+qNDbWdnYQ97Slv1nal+1cN8fLA6FkA/jWeqW2ZPab4aOJRcWo
-         hN0dcnFs3NbwCAFm72bYnn/JkaUrvTKGRtngq++J+jZM+ffFgZHr8/EN6B52hO9AasuO
-         ICzlfr5AxUXTH5ysiuvZx+2Y/rWXzsYf50jlRcGOOS9CTOBnVqcpjs7YltAeq0QwCOj0
-         dnZXIXsYJhVy0Ybbp/Ue/eOBbSLBkvpDyj3+d9BtQJ1U7oaQoKuTo6GC7DoHboTbWfKS
-         i51Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVnZ8ppX1A+qUMCQcpoL9iTzoz0KovaAkO8rzRVUzOOBJdMpasgNScqSke87fJtSfecXB0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwewoyvVD47a4gMoeU03szOSSX2Ph6f5Tp3hdNqOGdk8RbJwoKJ
-	VwD4A5jT0Z87x7PoWBdF9vzb4C+Lq61gwwVXY81GUD0GB5vup4wQnA8L
-X-Gm-Gg: AZuq6aJBgkEwl3ioDVd/Ppc0gsywJLZ2pxZ3nwg353B8jR0jgN9+KJXUbxe79IEsPgh
-	zOFM0Vaghb2xKHafJZdTVBhISTWlyyNUdv+4Z8fyXw77b5peiRY6NICUKVxM97BC3n+n1TZrh/6
-	fdDYIVVz7SGaqR480Oaa54SFCS79XxFbM7Z4mol9nE6eg1J2xuInoX4Qou9wueChLTU3s04jzZd
-	ctNZlMDYr67QAgnqEdRkUcTptA8b+rvvXl/4iDeKkRisrqLZEVNtQPSV4ntCV6n5UjcO1LBMbo5
-	4CvszyVN8xlWNtkxVrNSXvsOuTR+oOUVhKyAue49JaTmd6etMnQUdNwvaERK39nTeFXUUsNkSLP
-	RDrHDTf9dnankl538vm7YwtLasudS4JeN3h2ZEJSxYc226CWwlcVCNXMO6WHHxdizciwLwE7uGc
-	vJoS91SxGZf0zqvNNqIssVqgwUmupA/YXebGL/hpby6lL0en/6W95OAYkNSSj9Zkioj+YbiD34P
-	CMc6w==
-X-Received: by 2002:a05:600c:1d99:b0:46f:a2ba:581f with SMTP id 5b1f17b1804b1-4836603adfdmr43387735e9.16.1770905666645;
-        Thu, 12 Feb 2026 06:14:26 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4835ba3df7asm61739105e9.4.2026.02.12.06.14.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Feb 2026 06:14:25 -0800 (PST)
-Message-ID: <0ff07837-643b-41ac-b1d6-f49f6668c202@gmail.com>
-Date: Thu, 12 Feb 2026 14:14:20 +0000
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="UYYotGQE"
+ARC-Seal: i=1; a=rsa-sha256; t=1770906281; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=k7MZ17U7WqZD3HG7F/Y2LL1KhPljFBFccVmNzqSgHBRtNQkSbyf3svGosIsjd+vjMadnZBktyFb0fDBmRrBuhsANSBDS+ODsumxX5Oqc5Y8gOsPlI86akitG4R8jhSQUVYk9WZIox6HlbaOC5RiUnUTAb9di3gkt6xb0K92Dnts=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1770906281; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=6MJjsQ7UvMcs0/S9yKRFtSUCPg13o0WYU8zcUxofLSA=; 
+	b=NIi9MOVkqQfskOYIRv2sMabT3zNRpyA1PuF5ggE19MRMGpCuI53XohjsP97BML3Kr2i2oBZpX/SbSk2ns5Y5PwznowJ1FQfeVYnQgp/ufS7v7YWDvfRDuc9wMLAW+FPE1nlNZBw7USw3Qh2uxW0L4NEJ8fvw063PgiDMixBspiE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1770906281;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=6MJjsQ7UvMcs0/S9yKRFtSUCPg13o0WYU8zcUxofLSA=;
+	b=UYYotGQEp+5awrf0TuatB7HB2toMdj/RDOS2CmDxkF+oFMgArM3shUz6y9+zxt2X
+	wxEzPqmHHLghmt0dgtLZ620k9MPHo4CSjA2WV1FvuK+QjggyEHenXP7bFAXU7iFoNZN
+	MejPrPNMeApWNW8gpnMQ0U9tz9XSc2KV/l4lpJiQ=
+Received: by mx.zohomail.com with SMTPS id 177090627307031.933490015510642;
+	Thu, 12 Feb 2026 06:24:33 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
+ Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Josh
+ Steadmon <steadmon@google.com>, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH 0/4] Run hooks in parallel
+In-Reply-To: <eedde9c3-2aff-433b-9dc3-f8593d53dec0@gmail.com>
+References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
+ <eedde9c3-2aff-433b-9dc3-f8593d53dec0@gmail.com>
+Date: Thu, 12 Feb 2026 16:24:28 +0200
+Message-ID: <87jywiox9f.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] meson: regenerate config-list.h when Documentation
- changes
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
- <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- Evan Martin <evan.martin@gmail.com>
-References: <c9ae171eed6bd5b0fa6671b10a5ad0da024f36d0.1770649805.git.ben.knoble+github@gmail.com>
- <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
- <19d86fb2-cbbe-4753-831c-a6ed49722103@gmail.com>
-Content-Language: en-US
-In-Reply-To: <19d86fb2-cbbe-4753-831c-a6ed49722103@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-On 12/02/2026 10:29, Phillip Wood wrote:
-> 
->      printf '%s\n' ... | sed "s/[# ]/\\&/g; s|^|$OUTPUT|" >"$DEPFILE"
+On Thu, 12 Feb 2026, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> Hi Adrian
+>
+> On 04/02/2026 17:33, Adrian Ratiu wrote:
+>> Hello everyone,
+>> 
+>> This enables running hook commands in parallel and is based on the patch
+>> series enabling config hooks [1], which added the ability to run a list
+>> of hooks for each hook event.
+>> 
+>> For context, hooks used to run sequentially due to hardcoded .jobs == 1
+>> in hook.c, leading to .processes == 1 in run-command.c. We're removing
+>> that restriction for hooks known to be safe to parallelize.
+>> 
+>> The parallelism enabled here is to run multiple hook commands/scripts
+>> in parallel for a single event, for example the pre-push event might
+>> trigger linters / spell checkers / unit tests to run at the same time.
+>> 
+>> Another kind of parallelism is to split the hook input to multiple
+>> child processes, running the same command in parallel on subsets of
+>> the hook input. This series does not do that. It might be a future
+>> addition on top of this, since it's kind of a lower-level parallelism.
+>
+> There's quite a lot of prior-art on parallelization from the various 
+> hook managers - is there anything we can learn from them? For example I 
+> know some of them serialize the pre-commit hook by default as it may 
+> update the index but allow the user to configure a subset of scripts 
+> that can be parallelized. They also allow for parallelization where 
+> different scripts update different files (e.g. code formatters for 
+> python and C can run in parallel). We don't need to implement all that 
+> now but we should design our config so that we can support it in the future.
 
-Sorry that's missing ": " after $OUTPUT
+Yes, all the prior-art is very useful and it is possible to do
+finer-grained (or lower-level? :-) ) parallelism further with the
+new run-command parallelization design, APIs and config.
 
-Thanks
+Obviously that will require more work and doing careful analysis on each
+hook-by-hook case. I'm just adding the basic buliding blocks and
+enabling the "highest-level" (most... independent?... level between
+tasks) of parallelism here.
 
-Phillip
+My approach to this big problem was to simplify and break it down into
+smaller / easier-to-manage chunks. I'm still splitting up commits and
+untangling logic to ensure each part is done properly (also easier to
+review) and can work independently (no regresions etc) before building
+on top of it.
 
+Thank you, and everyone else, so much for all the help and patience.
+
+>> The pre-push hook is special because it is the only known hook to break
+>> backward compatibility when running in parallel, due to run-command
+>> collating its outputs via a pipe, so I added an extension for it.
+>> Users can opt-in to this extension with a runtime config.
+>
+> In the past we had a regression report [1] when the pre-commit hook 
+> stopped having access to the terminal. I've not been following the hook 
+> changes, is this series (or any of your preparatory series) in danger of 
+> reintroducing that regression?
+
+Thank you for raising this, it is a very valuable data point!
+
+The preparatory series 100% will not reintroduce it.
+
+This series might reintroduce it, depending how we set the defaults.
+
+By that I mean:
+    -j1 will keep all hooks connected to the tty, just like before.
+    -jN with N>1 will disconnect the hooks from the tty and their
+        outputs will get buffered through run-command's pipes.
+
+The design I followed (which to be transparent is Peff's design, I just
+implemented his ideas :), is the keep the original, serialized behavior
+exactly how it was before, to not introduce any regressions and to also
+keep identical "real-time" performance.
+
+Taking this into account, together with Patrick's feedback on this
+series, I do intend keep the jobs == 1 default for all hooks in v2.
+
+>
+> Thanks for working on this - both config based hooks and parallel 
+> execution are really nice improvements.
+
+Thank you for the kind words. :)
