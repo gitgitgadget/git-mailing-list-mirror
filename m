@@ -1,206 +1,154 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8AA1D130E
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 21:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770930820; cv=pass; b=cZI87EAN/YncuzuFQJ+515OCDFDnvGXDl9LPgavmj3xxKQRb5Jz8TRJi7tDNBOwlIDb96ZFrBmp1xgOer9AdPnwNOObIr6wVMPRam77idreibfCDso03nzJVfkurD1cuUIJW9QbNlxul9sv8983uBqgtRFDJ0T8qcVEBL/dY/yw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770930820; c=relaxed/simple;
-	bh=H5M/m2aJ0OA2GVDg4x6apXkRu4qFNa2iisIMPMphHW8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u2VKA+KgdgOV/3NA/kJ0dg5IqWXhR6cjAIV9Ch6fsuQEPoiZ/puYfF2z68xZOGaqfGJnsYm7ssyIwYmpTbipyyTU2r90rvbFSqsmkp+rzoEETaobsTsCHXPI89N11hUQWVTfjP7zVQe9YE+H2BxWJFkAEoSJLC9GAxgxJmguScw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AX/MvlCs; arc=pass smtp.client-ip=209.85.221.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F0024DD1F
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 21:22:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770931380; cv=none; b=rn2TYTDrAg1LfDSL/5qTeutd5zmkpR1HC8HtawuwcvNuo6OaPCY0xatqSfGqMyaBhDXb5kP5s4/tk5QPMTANTtgTTFATqu4KpR+dDVJQ0PvuKdJdi+39/YLhDQavA4nmzxZiRzCSnBldEEhyf2ZpFmjTCSHFUHZpJgeGf1FKkgA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770931380; c=relaxed/simple;
+	bh=iY7neEMfJRa0UgqN+hrUBrOPUoQuXEU6uClUgaTNVXw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ruZcTy/6+I+9dyHM3Abqh4kS4o0tVtiWd5oMTJ78PYFpm+gXu2Idm2Ifkg9+F6TVBR4tiCEO7UOBjD7ds2Al/mucJImMQHIWlPLkHXuU5xkGgcZaqVERy4cKJ9w34fieqeZH4/IV2+JHw0umegBfBGEfduuMsGf5JUiIJpfZkfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dJaEnYk9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q4KL5GjS; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AX/MvlCs"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-56750cb34c8so202629e0c.0
-        for <git@vger.kernel.org>; Thu, 12 Feb 2026 13:13:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770930818; cv=none;
-        d=google.com; s=arc-20240605;
-        b=RPU8hxVcTFfLRhvbjLvgufNl+AgX5AZFSqCAjaETYacBdG1eDnpLwb8RUqfksB0eAD
-         PqMR7h6axcgpbQOz1d5ruvvMqXCBpsdfGwFfgg2i8xu4Tcnry+AURveAmQhvRZQ5pomR
-         BsNrWqB0J+EA6i++JvuEgqgYQGIWLQN0QqC6Z87iHB08ergAp50u7E/LQUrUrL/nCrlS
-         W6Em+vOC4U7FGpiAG96JQwFf+6g7acqFjmeGCkZTelA2asp65eCyK48Bl4oFGBTTMRs1
-         H4E5c4A7Xt41CbQKBOmSCBiBSJKpxqevOpAoc3MzuHqFT8tCpWaU2IF1X4Wk2WL+DQlA
-         LH8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8MXjFjiMaImrCBKs3UL5blf/M6Yu/sZVEFEyxRIXyQA=;
-        fh=392ryK1TiLXjQymH8YuTlaSLgmX4+VbMxfQfkGuHyGc=;
-        b=N+eikUNiDnYiqgxp38pjjEAYwIcPyd2cwGWBvflU4DKqaW9/OdBjTAFSdj/i85lGYH
-         BrLygdVjAgkIeC0xV8tkOxZawnFUPj7LAgLe2/rv1azLXNsyvvzpI3DQvO2FNV+Yrwfw
-         1TLFMDG0PDVIr5zmrcX31NfzNGFM2VbvLcCDqyXOdE48tmxNck12uwWmUNcE8+VsSYzq
-         2dDfM2/N427DtiTuCZaCXvrGOARLrbB6xvElK1xvEwn1Cabw/JZMJX/hsiTJKf3jFqp3
-         iX9o1gfPSfBVhzTxQHj+B0PL5V8zJkZG76df5hH1/aJrX3FO5jq9ITftfTuO55KbTrij
-         wZBQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770930818; x=1771535618; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8MXjFjiMaImrCBKs3UL5blf/M6Yu/sZVEFEyxRIXyQA=;
-        b=AX/MvlCsU8MODQv6o5SRw9qEmi0s2rxnIsDOIdD+zWVtMWIWtlppe+3xMxEEXGtD4N
-         F7sTa/MzUvaWGGPl9yGxserCECCUH6dBTcP5xS/dq+b84SOcMMfKZ0KNdQJjUSw26vGD
-         gWkAtdd1290B+7ABwnvziFwdwJFXR1oaLuscRs5jBM0ATPA/4Ox3qqY74vQ3Xz4k4TGW
-         56NcdAkDtGt67MLgj04kfnWrxJqyL/2xPerg3WISz9LRSshXkjyaH9KGyLJtRKBW3ASY
-         B1OchvlNEaELUaj8DFmrUkyxhamfuMAzEvpeIVVumlTCxU3UF9j17HIkg4KfEWkF3seR
-         iivA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770930818; x=1771535618;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8MXjFjiMaImrCBKs3UL5blf/M6Yu/sZVEFEyxRIXyQA=;
-        b=PB5fqUy3vvDTx2fr1v0Fk5P0B7pM7WDiYG+Dow9J5ads57pMJwS2MByBYyrnu8ON98
-         m9V3Za7Fa8kOylCcjTdOXpBqoi+jNndNnVB1McA7JVlOf2EUcODD9Y69HC9c3rA6CgcH
-         Juioc5f68GPzulkG6fvbiXg0Mfp7HbV8nv0/M8EaHvxO/SpuEZ8XDC7zcbggjccwVVwR
-         tXzB2JneHe1wo493N9XqzEt9pj88aV8sQ06RpVU9Q9OHwjFIFtbD7o7Z13xhmnWVMGGN
-         kZG6jLlPIbpeOCBeUUh84mwRjstdwu42wq9fWaGqCA45hA060WgwYSWOC0/Axg7n9SEO
-         ngyw==
-X-Gm-Message-State: AOJu0Yye1r8bklR8iUiwzAg/NFEOHAfBylBPGQdl7Sd2ZTFH2CUvjRV4
-	W5KPxc6Obpeg1i9aBjMYN86B7WFGSsg/IR3AwhOYmOSodyEb2l3A3apf1WmfnCr38P+90A/Nb8A
-	VNg7zhSUYd2g1I7wDpWjlGRghIjMyJNhBe9v72Nd9iA==
-X-Gm-Gg: AZuq6aJzXLUk6RPUV4Us3FMZAz2Ke1+K645smV8lPM/x1PiLjVjmsWj7M5kJowlcR/I
-	tI+3IQwFdpn7jq8jQI9r7dCusU7kSPQMOMpN2QkFBKebeFPYdqr9DGRXUw6xoFlX4fnL8fcY2L9
-	n7njMuarLIkG2kwTCDv+GVjY/qmCtT8BFIFINz2U4Yc2LL+K0VxHVSya7idNBZjkVu8hI5YdSMO
-	IiJasTpSSrp/LZ7Zh85PnpmT2KsroU9JAkRGGv0WGfaUwviDipsdgofO9Uh9ktcO7mvIoP8UbY6
-	lkiovqHXKeTT
-X-Received: by 2002:a05:6122:1b03:b0:567:4260:5244 with SMTP id
- 71dfb90a1353d-567682c7108mr115526e0c.21.1770930817649; Thu, 12 Feb 2026
- 13:13:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dJaEnYk9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q4KL5GjS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6D1241D000B7;
+	Thu, 12 Feb 2026 16:22:58 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 12 Feb 2026 16:22:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1770931378; x=1771017778; bh=Ljq1fPMW2J
+	WolLX8yHr4iI5+IANLqvUhE+GwUZeS498=; b=dJaEnYk9DwzumrXG1NDEWnruDn
+	7r7fk2GTMbGon/zJR4Zr5ZyDYSq2CvRXzUV4Y3qTw35U7qDh4G/ninBarRJEFrvk
+	bD5idJWtgWOsA805m+o0ye2JKVVf1jxSHMXmPVUUmuLn8Fe/xU2AK5ZbBWWt5o3Q
+	kkXGf9lVGxtS+JJ3AREEDvo2j9ftI6cWe4O0Eo29j8OXZiWLsphd/4wNgde4oo2t
+	4WhZCqcAQg1W3rEIYZx/o72OdwFdrK7A19IW4YU1aAGR7CB9snUySPYkOq9sJ1xN
+	QN1wSh6YctzMBBficVNACgHuR3yswikjZg0S9YDcpW9zez/d3W53uepX0LkA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1770931378; x=1771017778; bh=Ljq1fPMW2JWolLX8yHr4iI5+IANLqvUhE+G
+	wUZeS498=; b=q4KL5GjSPDELWplboMBkdKprEs+Np/FDn9vJql03PilrItqRv6J
+	peBYo1JF8Rvsr3LTd7jJCCkDnRNcNnZY9tTAIUMiPlHjF21eD1XiyCu02JEdoRnR
+	/X7I2Kqj8itbJVD8/voN5KlE47x2NYtgjTPcP3hRgLmxJ3Dr6wrEJSOUtDL6r3tF
+	dPRKfFnge5JL1B8knfT8utCl0/ugCDN74dw+wUYQjMtbCCZiUHTl+dpPWTXOrebF
+	RghRv0ICVFsjYRwkGdUnMtH+yNyLrJH1KSnP5PSg34RY/V3yGEoN+h5G7hUrlgBh
+	3d6j5B80yCx/dfLQhV5p2PqdJhJAqBTrtGw==
+X-ME-Sender: <xms:skSOad7y4nyQ6L8d739A2nihOVG3jTX4jnMEp67P8tfaE4U3fbYSLg>
+    <xme:skSOaSXUTi1GZvlNJmPw0AO33kNHkxIe3AY1RwXct-PY_FJxz9SNR9vIhdRQobl2Z
+    Z2fhbTLvt-Ec-opSmh_Y3RwuTvK4Nw_ei-PCOruVrKzB6BRtA2jIcY>
+X-ME-Received: <xmr:skSOaR2aw_mtAzH7_63lJhnRxB-GgTmCti_PDXcf6STPwWa8B2sobc3sT7p7n27eKCJHfJu78oqGfS824rhyAPT5X27fZo4BuA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeigeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:skSOaf0vRTZZi8cB2Gl33ZIJNeap0UajDKvN4eJQUwUfR9KRVniXjw>
+    <xmx:skSOaU84MFJEWDHRjsdGiu8aM13cIsfTf3wDeBt2pXtXVWJr_I_Kag>
+    <xmx:skSOac10hMasuMVSV7OzmzvpHXkMxKdn080dBZKwqegRQHWHGQ7esQ>
+    <xmx:skSOaR_zJGglaMo4x-FZC8eYPvRm543abrPlWbfkeNM7MX6-8FW2vw>
+    <xmx:skSOaac4yDnyNDvRw7W6iKz-rD1FpaZiWsokCsJ8uEZ9PZGaaibGgidq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Feb 2026 16:22:57 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org,
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2] CodingGuidelines: document NEEDSWORK comments
+In-Reply-To: <xmqqms1ft7il.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	11 Feb 2026 11:17:06 -0800")
+References: <xmqqms1ft7il.fsf@gitster.g>
+Date: Thu, 12 Feb 2026 13:22:56 -0800
+Message-ID: <xmqqldgxmzbj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1770390576.git.abrahamadekunle50@gmail.com>
- <24692afa3f0a67d3f3eba776cc745287c5d71e94.1770390576.git.abrahamadekunle50@gmail.com>
- <xmqqikc9ekzz.fsf@gitster.g> <CADYq+fa81Uki0ZVta80VO=-UG-f+Z8GAyzom-FLNXULartwwXA@mail.gmail.com>
- <xmqqtsvlq3gr.fsf@gitster.g>
-In-Reply-To: <xmqqtsvlq3gr.fsf@gitster.g>
-From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Thu, 12 Feb 2026 22:13:38 +0100
-X-Gm-Features: AZwV_QhfyjK8QW-DrikMYWElZAymp7yOCcasM4uXlE85YZSVwoDfwk1XhJBu9_8
-Message-ID: <CADYq+fab0FKncE8VFJcaHA5VmrTJbrSo79jxA6x+Y5dkZP+2RQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] add-patch: Allow interfile navigation when
- selecting hunks
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, 
-	Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Feb 12, 2026 at 6:25=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Samuel Abraham <abrahamadekunle50@gmail.com> writes:
->
-> > On Fri, Feb 6, 2026 at 8:21=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
-m> wrote:
-> >>
-> >> Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
-> >>
-> >> > @@ -1566,11 +1589,14 @@ static int patch_update_file(struct add_p_st=
-ate *s,
-> >> >                                               : 1));
-> >> >               printf(_(s->mode->prompt_mode[prompt_mode_type]),
-> >> >                      s->buf.buf);
-> >> > +             if (s->s.no_auto_advance && all_decided)
-> >> > +                     printf(_("\n%s All hunks decided. What now? ")=
-,
-> >> > +                             s->s.prompt_color);
-> >>
-> >> This gives an ordinary prompt for the hunk and then another one
-> >> after it if we notice everything has been decided.  I am wondering
-> >> if it wants to be more like
-> >>
-> >>         if (!s->auto_advance && all_decided)
-> >>                 say What now?
-> >>         else
-> >>                 ask the usual
-> >>
-> >> ?
-> >
-> > Hello Junio
-> > Please just a small curiosity.
-> >
-> > If I do it this way, the user will not be able to see the options avail=
-able
-> > once they have decided on all hunks and want to rework the file.
-> > The options for a hunk will not be visible if they navigate with say K =
-or J
-> > and want to change decisions on a hunk.
-> > They will always be greeted with What now? without the available option=
-s.
->
-> Ah, OK.
->
-> But then after deciding on all hunks and not telling the prompt to
-> move to another file, the user will keep seeing this extra line of
-> prompt?
->
-> It somehow smells like a waste of a whole line just to remind the
-> user that all hunks in the file have now been decided.
->
-> There was a separate topic that added "(was: [yn])" to the prompt
-> when the prompt asks about a hunk that already has been decided on.
-> As we only need a single bit "all hunks decided", can we do
-> something similar, I wonder?  At the beginning of the main prompt,
-> we show which of the N available hunks we are currently at, e.g.,
->
->  (1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?
->
-> Perhaps we can add a third number to indicate how many of the
-> available hunks the user has already decided, or something, that can
-> be used to avoid this wasted line?  Or is it a good thing that we
-> are loud in this case using a whole line to remind the user that it
-> may be time to move on?  I dunno.
+We often say things like /* NEEDSWORK: further _do_ _this_ */ in
+comments, but it is a short-hand to say "We might later want to do
+this.  We might not.  We do not have to decide it right now at this
+moment in the commit this comment was added.  If somebody is
+inclined to work in this area further, the first thing they need to
+do is to figure out if it truly makes sense to do so, before blindly
+doing it.
 
-I thought of a suggestion where after deciding on all hunks in the
-file, the user
-will be able to see the "what now prompt", the options for the current hunk=
- and
-also the previous decision on the hunk since at this point, all the
-hunks would have been decided on.
+This seems to have never been documented.  Do so now.
 
-I tried something like
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * reworded with a bit more stress on the possibility that the
+   rationale behind NEEDSWORK comment may have gotten stale.
 
-What now? (was: n) [y,n,q,a,d,s,e,>,<,p,P,?]?
+ Documentation/CodingGuidelines | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-This does not show the number of the hunk we are currently at and the
-"Stage this hunk" since the decision had been made initially but the "whatn=
-ow"
-prompt still provides a chance to change the decision, while showing
-the previous
-decision on the hunk by asking "What now?" instead.
-The options have the default [y,n,q,a,d] and the remaining options are popu=
-lated
-from the permit set for the hunk. SO the user can still carry out the
-normal actions on
-the hunk.
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index df72fe0177..318829d4e4 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -33,6 +33,16 @@ Git in general, a few rough rules are:
+    achieve and why the changes were necessary (more on this in the
+    accompanying SubmittingPatches document).
+ 
++ - A label "NEEDSWORK:" followed by description of the things to be
++   done is a way to leave in-code comments to document design
++   decisions yet to be made. 80% of the work to resolve a NEEDSWORK
++   comment is to decide if it still makes sense to do so, since the
++   situation around the codebase may have changed since the comment
++   was written.  It can be a very valid change to remove an existing
++   NEEDSWORK comment without doing anything else, with the commit log
++   message describing a good argument why it does not make sense to do
++   the thing the NEEDSWORK comment mentioned.
++
+ Make your code readable and sensible, and don't try to be clever.
+ 
+ As for more concrete guidelines, just imitate the existing code
 
-In response to your earlier question, if the user decides on all hunks in a
-file and does not go to the next file, he'll see the prompt above and
-that is what will keep
-showing if he remains in the file, no extra line.
-If he navigates away, the hunk re-renders with the "what now" prompt
-when he comes
-back.
-If he had made all decisions in a file and decides to split a
-splittable hunk, then the normal
-prompt shows for those hunks since they are now undecided.
+Interdiff against v1:
+  diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+  index b358d6bfb8..318829d4e4 100644
+  --- a/Documentation/CodingGuidelines
+  +++ b/Documentation/CodingGuidelines
+  @@ -36,11 +36,12 @@ Git in general, a few rough rules are:
+    - A label "NEEDSWORK:" followed by description of the things to be
+      done is a way to leave in-code comments to document design
+      decisions yet to be made. 80% of the work to resolve a NEEDSWORK
+  -   comment is to decide if it makes sense to do so.  It can be a very
+  -   valid change to remove an existing NEEDSWORK comment without doing
+  -   anything else, with the commit log message describing a good
+  -   argument why it does not make sense to do the thing the NEEDSWORK
+  -   comment mentioned.
+  +   comment is to decide if it still makes sense to do so, since the
+  +   situation around the codebase may have changed since the comment
+  +   was written.  It can be a very valid change to remove an existing
+  +   NEEDSWORK comment without doing anything else, with the commit log
+  +   message describing a good argument why it does not make sense to do
+  +   the thing the NEEDSWORK comment mentioned.
+   
+   Make your code readable and sensible, and don't try to be clever.
+   
+-- 
+2.53.0-248-g282ed54c8f
 
-What do you think about this?
-Thanks
 
-Abraham
