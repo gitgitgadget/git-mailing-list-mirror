@@ -1,147 +1,193 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D642882B2
-	for <git@vger.kernel.org>; Thu, 12 Feb 2026 07:20:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBDAF9D9
+	for <git@vger.kernel.org>; Thu, 12 Feb 2026 08:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770880815; cv=none; b=LA29wp8vesrGdx1QB9e8LiIiilR9yJMNUa8KjQatRZjZ1DwT8u7hjN6DLyrkkiXJ/xsPJv4K1Bl2vy7UW0G7zSJs9MsEt5da/WXG+x1PGG1i1B8aEZ5W5W/AOdQu9jB9WTXHnDy4GcQORwngS/EMWPnXBdschAWOGyBgQHQX39Y=
+	t=1770883574; cv=none; b=ndjnSyePML/Zh3L26Rx3bujxVGZIwIDfvLqDOg0XdyHCvMBSeSzRYTTtdmMmUakGKrjlnDatsc2ukmvM9chZDZNsjUqyyrXVA37ljZTPGZPvDFV9xwfpvalA+X3iLWqpOYZZ3lCfhCnBPP99J9jTu88ICoM8LF19Bj0LF+Sa6ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770880815; c=relaxed/simple;
-	bh=hiZCKWFDVAVfUnH23YOX3a0X+STkPZayZ2sRc1I7/0E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8Uw8pLm98gzsS1rNhH3iK9RfkmBuuUy7tycIatAfClLBNBEHOCBE96HaTUGKBjKom4b1Mck9Y8cyRPgTRGXaYTi6V5naSjj5HHoxQB+alxWcDBdV2bA/2DmixB90XkIHrrKOczN3wSLtj48I0LGKM09g4yNeZC3xMz+qhvKE9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=faL4m/gc; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1770883574; c=relaxed/simple;
+	bh=Kmjn5+bYWXxZIP2aWEi+brKaGk4VnbTaCbmkeFW3YwQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L87y48S+NKlDL2pkKp5RPaRuuox5245xmIYSM9XrCJDfvLv4u+AAjgP/Edrnfe3fr3VP/POt//kht+y/uXptDvwQxA0miL42zmw52EGs1O9tN3FoMyxxqjanfJ4MN22ibeKmEkPIwIlRqaMxQQ9xXwJe1q6nL6JpjU1egEmyNEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j6mxJ1vn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pil51CGk; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="faL4m/gc"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-82318b640beso1530546b3a.0
-        for <git@vger.kernel.org>; Wed, 11 Feb 2026 23:20:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1770880813; x=1771485613; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c2vP6KWIFTp0Tl+57wzTQrKD5O/8arbdgofgR+N5XTs=;
-        b=faL4m/gcIQmWbrd2DJqvPIY61n5v2aKG7Sz4tzO52YwR50Ddr6SIByD7ptZZxy0I6T
-         DVyQlYaG00eHSb+t1eeNzJ7wE+BhW4kj2jbTEeoRe/xryQpgGvRcu2exhtv2NjxQXLUw
-         t4O2u04dhUOLDYcZ2spVgg0vbu8r2miSu9jrnRy4YxJqF9XGEmlHe8jC6gi/KEFj+gT6
-         j/ZbpbHnQ6H9I0Th3KQQZyRS/8tbDHkNuu9Z3jqYvdgg30cVtPjDIjqdDjDjuQem2Wh2
-         4TAncY9oqoul1BjIyw44LaFVFBcwfB/bfOQJVVWZ5i8SQaV6Afek0pHdw5YK9o9Y+mg5
-         cZVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770880813; x=1771485613;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=c2vP6KWIFTp0Tl+57wzTQrKD5O/8arbdgofgR+N5XTs=;
-        b=o++4zjSbLOowwBFqASjD+c5cevK3v3QkzuiGKWMoICkZgNjuGfIH+I7VcNaThkb94E
-         U7j2LJcuyeTV8hOZu8S2iyGhifm1ROEWE4CGPwDJE0SPKggosFssSDczL+ZcgRzcg/St
-         vptDiFQXlTxNfszkp6PxUEpoalQstf6VV/uT7Q0vIJhCWE/3BAjtZnNfuR7EtKZqN9Vp
-         3m/wpKj7Crtu3hbkNNkc5fvXj5YQLZC1jquy9MN+rwoMIVZ8odWUKoeHJbffys9aGhMv
-         Y7RYw2MiSN+4kkPZjG3BvohgYIpGciuId/O/7ugOUCnmGxOvM86lD6a8DBOUhQCy+PEP
-         VHoQ==
-X-Gm-Message-State: AOJu0YwPmUclaLnaaZRW2SsdW0a9ZTF/rkNXJ60JFIk4J+drekpCtLya
-	KtFWyIum8RF08z5zKacPPNR1H73a4MxhQun7HLGjJMuztL3MDWKNKl3TleMf8/oABgSycn1gRtQ
-	S/erv/LU=
-X-Gm-Gg: AZuq6aLDddmMJkFD7saZswMP82TRvxhg3/4P+vej3nU5GW37rTmjIYDY9i/ElgcnNnd
-	nRUXFYojBN5QxVn9Pvl+rUIG2PxXpT604o1oT8/YK6FUBa13HnvJUjJ/yONXLelUnGYWEeNCev4
-	0uwWFe02kbQinSAxfXE7JKWOJeZVZW3T1q2/fQjCEa7NqWARtyNj3r55/wKjkV4NM4kUOttB8z5
-	MQHA+uvqtLLhhe/JvsXZMnnDRChkHkrO6tBUtf3j1t9mInpZq5M+Hs1DuCPzgH8ieo05IWNBZM7
-	aAY3SocrQztGoI3XXieztk4MFa1bigkIqEcCPRTVbywWxa6m82Nb8Etz2NJBB2eeKEsenJN2ldo
-	wv255IDG7PePl+QbL3+TYUppeU5ba63NSGst7Uw2ekRrTEJM2ZvvhaVv1oGbypAtFd6o7nUdWC5
-	Yd9jUHxRD4e3tUYSKeY1mpeq2UhukMz3ORtw+mJWtyqjQMrcLk9QDZvtNxTdcT6hPW
-X-Received: by 2002:a05:6a00:2d12:b0:7b9:4e34:621b with SMTP id d2e1a72fcca58-824b2da6e00mr1262316b3a.12.1770880812956;
-        Wed, 11 Feb 2026 23:20:12 -0800 (PST)
-Received: from LTY2K703JV.bytedance.net ([63.216.146.178])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8249e3bd8cbsm4311761b3a.24.2026.02.11.23.20.11
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 11 Feb 2026 23:20:12 -0800 (PST)
-From: Han Young <hanyang.tony@bytedance.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH v2 1/1] diffcore-break: prevent dangling pointer
-Date: Thu, 12 Feb 2026 15:20:02 +0800
-Message-ID: <20260212072002.2347-2-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260212072002.2347-1-hanyang.tony@bytedance.com>
-References: <20260211041128.48412-1-hanyang.tony@bytedance.com>
- <20260212072002.2347-1-hanyang.tony@bytedance.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j6mxJ1vn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pil51CGk"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5B437EC05FA;
+	Thu, 12 Feb 2026 03:06:12 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 12 Feb 2026 03:06:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770883572;
+	 x=1770969972; bh=YmNdutZkYSj7yyxAW1OhzkC9WA1OrGZ6zWp+I9Oob3A=; b=
+	j6mxJ1vn0Dv3CTnpBa3qKtHmFBPEtVstUMWIy/3TTaP2dmG26BrJpl1JGUdMtk5j
+	o0vR2hRztW2GNdw5MIMXTidAaNXH7kS3+AN6N1B5tIZk//9Epce++bv6HAQ8CTyr
+	jCN9QX4CvqTTT30yCcQeYgPV8ZNIsXdotrwyRN0ABEAx37FZA7IhTCFYUIqodNkL
+	+sCcFkJ6MMfyEVDXqs0GJ7kiWKf0SjIGIRQRNzKBuMONNiDQAK9hQNMdiNkHf2AR
+	2lO85at7a+RhIw7KH0/5b3Vzz6SY3fMnVdXyPyPsmnt3sahcHlfkyTaH9sztq5jn
+	37+4ifDc3JlAMvTv7AukOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770883572; x=
+	1770969972; bh=YmNdutZkYSj7yyxAW1OhzkC9WA1OrGZ6zWp+I9Oob3A=; b=P
+	il51CGk3XLYz4XJKg6utYu84d5Qm9Lgs/7+BMDxqCmWh363kh2vKzNA0uYAI6cyK
+	O/B+oMR4OgPQo5f4G8cPX0OfMOF/VYQjBPjMuYCpFWJ/lpRph+cQSLbIudbOFiME
+	GLOf0Ep408pzwMmZZevZ0FCadpBjIl7rZsHGRQr3QhMfVItPnGGhNxhPUvWJhj10
+	PyGyePY11UvvDALdYhaKz7m8FrLMcFFnfrqhDBK1Vx9QOPSr55ws6jPjbkxYe5wH
+	QWaJ+SIex/Pgr/q8bVH4SxWKDt+Jy1WVRjX7vgMVKEEZaqzP6RYWwmUa2Xk0lCKL
+	CsBYTLUbVKR1kxjprGfxQ==
+X-ME-Sender: <xms:84mNaQ2OSYI-hQFmGI9RBIychVDMlHfcn899PKdbjKsdst1K26Jw8Q>
+    <xme:84mNaclTjk5RvQtTs8DYJ2yiPbURwTJcZkjnZYeDTIqhbEQx6W9Ygw5iMM4r34Jzn
+    -JwhA7oJA-gixnM1PMvN1wca_ZSgbya-gSvn0kfWNOXVvMZARVXwg>
+X-ME-Received: <xmr:84mNaY__QRLcc0oTLXELurQCsgUOLizPTiaJ6xgn1b0gfwLX2psndy8vW5oTw6FJMrMHpv3OOZUBRSF0U0u66wEoHfn8mhMr4oUuhKJaGnQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdegkeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeegleekleehjeejffdufeduvdfggfehieetveffveeftdelteefjeeuffdukeekveen
+    ucffohhmrghinhepghhithhhuhgsrdgtohhmpdhinhdrtggtnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepvghvrghnrdhmrg
+    hrthhinhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhouges
+    ughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:84mNaZqjhK8d8xoltX6fMsIKHhXyaBRwae6_OVHsewYWZzqo2M7SSg>
+    <xmx:84mNaZlMp5qfGxh2ZVB1z1Yg4XU_YOQWZ9orPSsW3pIsu7j9Y4iT7g>
+    <xmx:84mNaYhUimpEdo5msxGt7d_fuaU-QAMLTvDACcwhYjNwSnwAnzkr_Q>
+    <xmx:84mNaZeI-8oCCOguW9F2RDpV8BZHW3ArTy8Q8IWEiret6S2SAD3L-w>
+    <xmx:9ImNaV6N8f9eQJ82pZ7sUWAECUa690cu5kv-SQB7QLERTNH5muRn9lJV>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Feb 2026 03:06:10 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id efb6a8d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Feb 2026 08:06:09 +0000 (UTC)
+Date: Thu, 12 Feb 2026 09:06:02 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Martin <evan.martin@gmail.com>
+Subject: Re: [PATCH v3] meson: regenerate config-list.h when Documentation
+ changes
+Message-ID: <aY2J6lcBC4Gcy-SK@pks.im>
+References: <c9ae171eed6bd5b0fa6671b10a5ad0da024f36d0.1770649805.git.ben.knoble+github@gmail.com>
+ <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
 
-After we have freed the file pair, we should set the queue reference to null.
-This prevents us from encountering a dangling pointer later on.
+On Wed, Feb 11, 2026 at 06:51:02PM -0500, D. Ben Knoble wrote:
+> Notes (benknoble/commits):
+>     Changes from v2 (<c9ae171eed6bd5b0fa6671b10a5ad0da024f36d0.1770649805.git.ben.knoble+github@gmail.com>):
+>     
+>     • Pick up (and tweak) Patrick's depfile proposal
+>     • Include the script itself as a dependency
+>     • Escape output paths (spaces, octothorpes, and backslashes) for Ninja
+>     
+>     I'm not 100% sure I've actually done the escaping correctly, though,
+>     since Ninja's source says that a space preceded by 2N backslashes
+>     represents 2N backslashes at the end of a filename, and
 
-The test uses git reset to trigger prefetching after break-rewrites have freed
-the file pair.
+I guess you refer to [1], more specifically this quote:
 
-Signed-off-by: Han Young <hanyang.tony@bytedance.com>
----
- diffcore-break.c              |  1 +
- t/t4067-diff-partial-clone.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+)
+  Rather than implement all of above, we follow what GCC/Clang produces:
 
-diff --git a/diffcore-break.c b/diffcore-break.c
-index c4c2173f30..9b11fe2fa0 100644
---- a/diffcore-break.c
-+++ b/diffcore-break.c
-@@ -222,6 +222,7 @@ void diffcore_break(struct repository *r, int break_score)
- 				free(p); /* not diff_free_filepair(), we are
- 					  * reusing one and two here.
- 					  */
-+				q->queue[i] = NULL;
- 				continue;
- 			}
- 		}
-diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
-index 72f25de449..a980cd30a0 100755
---- a/t/t4067-diff-partial-clone.sh
-+++ b/t/t4067-diff-partial-clone.sh
-@@ -132,6 +132,36 @@ test_expect_success 'diff with rename detection batches blobs' '
- 	test_line_count = 1 done_lines
- '
- 
-+test_expect_success 'diff succeeds even if prefetch triggered by break-rewrites' '
-+	test_when_finished "rm -rf server client trace" &&
-+
-+	test_create_repo server &&
-+	echo xyz >server/foo &&
-+	mkdir server/bar &&
-+	test_seq -f "line %d" 1 100 >server/bar/baz &&
-+	git -C server add -A &&
-+	git -C server commit -m x &&
-+
-+
-+	echo xyzz >server/foo &&
-+	rm server/bar/baz &&
-+	test_seq -f "line %d" 90 190 >server/bar/baz &&
-+	git -C server add -A &&
-+	git -C server commit -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
-+
-+	# Fetch bar/baz without fetching foo.
-+	git -C client checkout HEAD~1 bar &&
-+	# Ensure baz has diff
-+	git -C client reset --hard HEAD &&
-+
-+	# reset's break-rewrites detection will trigger prefetch
-+	git -C client reset HEAD~1
-+'
-+
- test_expect_success 'diff succeeds even if entries are removed from queue' '
- 	test_when_finished "rm -rf server client trace" &&
- 
--- 
-2.52.0
+      Backslashes escape a space or hash sign.
 
+      When a space is preceded by 2N+1 backslashes, it is represents N
+      backslashes followed by space.
+
+      When a space is preceded by 2N backslashes, it represents 2N
+      backslashes at the end of a filename.
+
+      A hash sign is escaped by a single backslash. All other
+      backslashes remain unchanged.
+
+>         λ printf '%s\n' 'foo\' | sed 's/[# \\]/\\&/g' | xxd
+>         00000000: 666f 6f5c 5c0a                           foo\\.
+>     
+>     So would they interpret that as the filename 'foo\\' instead of 'foo\' ?
+>     (Or, no because the 2N slashes aren't followed by a SP, but a NL?)
+
+I think it would be interpreted as "foo\\". I would say that we really
+don't need to go too much into detail here. I very much hope that no
+sane person would have literal "\ " in their paths. One might wonder
+about Windows, where backslashes are common. But filenames cannot start
+with a space there, so this is fine.
+
+So I'd say we should only care about quoting ' ' and '#', nothing else.
+We can still iterate going forward if we see that we're too naive.
+
+>  generate-configlist.sh | 10 +++++++++-
+>  meson.build            |  4 +++-
+>  2 files changed, 12 insertions(+), 2 deletions(-)
+> 
+> diff --git a/generate-configlist.sh b/generate-configlist.sh
+> index 75c39ade20..091efd4564 100755
+> --- a/generate-configlist.sh
+> +++ b/generate-configlist.sh
+> @@ -36,3 +37,10 @@ print_config_list () {
+>  	echo
+>  	print_config_list
+>  } >"$OUTPUT"
+> +
+> +if test -n "$DEPFILE"
+> +then
+> +	printf "$OUTPUT: %s\n" "$0" "$SOURCE_DIR"/Documentation/*config.adoc \
+
+I think it's a tiny bit hacky that we output the script itself as a
+dependency here, and that it would be cleaner to do this via
+`depend_files` in the target itself.
+
+> +	    "$SOURCE_DIR"/Documentation/config/*.adoc |
+> +	    sed 's/[# \\]/\\&/g' >"$DEPFILE"
+> +fi
+
+From the above rules I would think that we should simply ignore
+backslashes here. As the last rule says, "All other backslashes remain
+unchanged.".
+
+> diff --git a/meson.build b/meson.build
+> index 3a1d12caa4..fb5d7367f5 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -720,11 +720,13 @@ endif
+>  
+>  builtin_sources += custom_target(
+>    output: 'config-list.h',
+> +  depfile: 'config-list.h.d',
+>    command: [
+>      shell,
+> -    meson.current_source_dir() + '/generate-configlist.sh',
+> +    meson.current_source_dir() / 'generate-configlist.sh',
+>      meson.current_source_dir(),
+>      '@OUTPUT@',
+> +    '@DEPFILE@',
+
+I didn't know about `@DEPFILE@`, nice.
+
+Thanks!
+
+Patrick
+
+[1]: https://github.com/ninja-build/ninja/blob/cc60300ab94dae9bb28fece3c9b7c397235b17de/src/depfile_parser.in.cc#L27
