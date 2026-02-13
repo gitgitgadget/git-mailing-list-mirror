@@ -1,62 +1,62 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC3436165E
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 14:35:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC35221F26
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 14:35:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770993308; cv=none; b=om3FzuhAfGQt1BcgZDZRCbdItuNVnuTAH+HhOTsNul8hr3TsMGKUpS2J0cy+9JRwKAXrR3ZGEdwWt2knxWLItK1ChPiKAlfu9/UJ6ANBhJZThpSYGMYcdjTnTTyeBKvfdNgJBq8crT/+VJZ6i4PyBgPyEX+2hpRZQvVz7sE/lVU=
+	t=1770993309; cv=none; b=nPhmgO0AQ+ujAkSvfRZ83/7wvzJ3v7bxNwDdsjrHholgPa//HtOJ7p9V8EqgiBayyLHajg2NkJBme38kIRYkXIbZ7LeuoaJ+PDHK49N5VYjuWl9V0aT44Pdxfu1tga3Cf4MHe1yP3Mq3M8DOo3/f249DeQO8IAD9lwgO+s0MKVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770993308; c=relaxed/simple;
-	bh=WyMU6xhVXtADH2q3uL6AnUzqU+a+jiBkc6uaFu0SObI=;
+	s=arc-20240116; t=1770993309; c=relaxed/simple;
+	bh=eYYbf2Fx9bx/F7NBONguUlzrSFkhd/ioraDgDAqlxYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDjJLpAuk/Y6vQH3xcexTxxtETuBBuRRue1gRcrFJrvzY3vdfNSBnbn1jn98tAUihzFR5eZLulyn8A1W/sS1aheGBY3JE+d216MkivsAJ5sASkEscjAdA4evRay5FltcbcwGKXIMaVxxzrAxUgHdupPkE/I62YKdnmR2ayhvJZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AmtCdZFp; arc=none smtp.client-ip=209.85.128.67
+	 MIME-Version; b=j7j3EdgQ9yfplZows5wK8lDxjTCa64AaO1tuyAwdTlaCJUA1XaY+AmJV0Yr7bbAKJgI2FpV2SkFWTFhthXEPK6/c5PAwMeKd1VetNEaV1VGEeFJCGMmfEocxszm7R4N4b4aHxmycXY/4Ac/KhdnmjTb8KSIvnx9KX7+hv9Kf5ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILteLd+O; arc=none smtp.client-ip=209.85.128.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AmtCdZFp"
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-4837634de51so2477265e9.1
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 06:35:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILteLd+O"
+Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-48336a6e932so6177585e9.3
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 06:35:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770993305; x=1771598105; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1770993306; x=1771598106; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=xmS+176cq+lst1ItoNkMBQNRpNLOvlk6KePDp2KzfFk=;
-        b=AmtCdZFpQiYWW//kUpZ04mw1WPgqpDQVvd/srbptU/ZsnGgZfbAJwozcbwrTKvztUA
-         D4KOOf8zetjDecA27kU3sFKRMRC2EboNEK1jRJWHMhtm7rr/ARYbZPzvAPHMBZiogFBo
-         RFVf0yo5fCpluBvf6Xuo/mJDF9dfNEvyiJ/B4KCcg1R8wzPbCrWz4881x7Bf+1UN+RVa
-         v6emccpbXsnuHBmXYP5FbEH+UH13LdccIWarVMcaMrZFlp/1ULTanSL88J+MTw+ygTII
-         N41vuonqgSdBzRgL23LbT36V4uMBCZwMzxi0JhiBT5Oe6YindTJErqzxM+zidXmUGL+1
-         jRNg==
+        bh=62ihkrQu9LB7XprCQcm5ZTWs10qtBK8XPnDPP2voSL0=;
+        b=ILteLd+O8529nxT1fcUE46I2Yp/xsE2j4aVaUS3FK3FfDpyaNNFrjVz7O4XWT7FaXK
+         m+PkxJozeRcioVoMwVZfvzGYUP2bhLRjjQFOLoC8Dju+IFCdhQhlY2xwJYyZW0tpIi+z
+         u/2G8G12f1hZsBtupg2/A8+LKDRd8Ylpehfa35skdwvG1NeWKy+43JGPiIfzmYxXN8g9
+         F7GBxGdjiB/qIFn7wkiDlyCdc5+VA+BYBnXiruXOW5ruUnCTz9RdBGQPVlz7n60D8Ajs
+         +THYtIXCJayRIRpmu40dSgLVamjISWW/yD46/hbVnm3jZosA8IxE1Q1VSrzdewMcM0xW
+         dxJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770993305; x=1771598105;
+        d=1e100.net; s=20230601; t=1770993306; x=1771598106;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xmS+176cq+lst1ItoNkMBQNRpNLOvlk6KePDp2KzfFk=;
-        b=RJ9HXa89O5FaHUdFk4xVrElra8DoYuvB7x/1NZeav5VVZALosVO4eAqVH1fXIQgT4n
-         PDwfJg+Cg0xDsqI65aOaj+zmyMuRL19PHg/Yi7hqDRZr/ZM5Xq2FiQRUYIfNHVJV1IU0
-         1a6QkRTAFTxuVDzjSTPHBq8baxmpdMcTNmAfAPurIKOwRWgWODfz0u3Ua6/MEeMWYXq4
-         8l2gqVfQhVcDqIsqQ+m+WVMLll2x3wuQsLWYLQ838AMFHCJCO+jBTFMIiDRGisNoaxC4
-         UFDM25AkXSXmdswwTpis46zXK4TFyqE5CYwxq5WzQRziq5XfXE76KuYORjxohasGFp5z
-         0EFw==
-X-Gm-Message-State: AOJu0YwFYskLBGXQ/5gBEfl/qkeaYWaE25zNeIbb2KqLcDBxiz7/eE9O
-	fUdF9Xx5XNmEBdvuvlZSf2qpc5cu1E1wICCeFJitZKH9Iztdmf440r6LZH2Aj+/n
-X-Gm-Gg: AZuq6aJqbVLLx7PyJ2931CbYaszaAVBbyzKZqfHs9YAL06QVk0E9N7tLKs+GV6Q0oqM
-	w5hhW0rsQjzEfoJqDgdWUqVT6XQMlbEZMVtbsPA3SKFJuScz1Xwa2dqfzkfdYWomjV6t8sjPxWw
-	RdpLVzD+TsbuP6HIuQ7cqtIRAeiH7XvnbJwh6kLTi/QL6OvXYOVJVTaZXc2ANQYVtRW2JqrF4s2
-	yqNx+/ChmNTnfViAUp2X2o7zjXA/2G3FpxPkFiqkqT5Y6bI1+KQGwvSK9opJV6kMOF3UJF0kgkG
-	uuA64HINY32NLC+QaIsRhURCEDjNsXOa7w5QWUtYkdvsvubpUv9qLHCh1d0ELjj/Shq2Eq2wH7d
-	tI4MO7WP0ENuH8PI4MMEKyk1HBszzHaZqViMUfnqO+9zpeg/30o7IpcZuDT6AFrtpjY//m6FVir
-	nBvSaU8LLPJqaF8lZtW4r+L1Zjw7E=
-X-Received: by 2002:a05:600c:620d:b0:480:3bba:1cac with SMTP id 5b1f17b1804b1-48371043046mr40828375e9.6.1770993305267;
-        Fri, 13 Feb 2026 06:35:05 -0800 (PST)
+        bh=62ihkrQu9LB7XprCQcm5ZTWs10qtBK8XPnDPP2voSL0=;
+        b=Ss9deOtxi7+O7b0UNWMWVH9Y5CgGSdh4Ofj1rbGgoaWiu9O1vrrrNbO0MnQhhApF+A
+         v3Cn6yPxrfU3rO1gi9N6Pde7sQ7APNYC+iKZVykZL7Gp0DunK6g/d7OAB8jErQznYuIE
+         bFGinZhVokTHWvcmhhnWy4wcx6FKH1GkUteqBor9DaW6mXZgBvRvNmRneqsQm5/lpfBy
+         DSAtj4LFA0raxDZrm8JGgzsaqO8jYnweQEk4n2R3JXp6JWcBjwQagvZqMJ93fUECn/0E
+         A1p07/YaVHS9nCBOWWNFtxDfBtqMMF9GNjXDnVshaiISOVc5ZSKlRAZjyeRgpmUvlpSK
+         agvQ==
+X-Gm-Message-State: AOJu0YzzBacwd/IUow6HLqOZ4pKzqYu7A9LTKEnW/8A/YYky6cr4QDWr
+	gTPtILq7Luci3xrsslLzgK6jcgeJh75zLkj+owxMsw1kfDqZ4qSPx9P9HytE8cYH
+X-Gm-Gg: AZuq6aJq1CDtEg7CsunB6QkDYb7cWQyRghCo174LLgYtKA1sUnnxXkd911z+KbvdaWy
+	sVwYYGYntxaT36CHT/CEf10vksLIg4oSOvsdKiH9NCRHRluoR0QNfq6BjdiGgDz4vaDMBN1vUVD
+	YEuPyD35JP9IcXISJmpAWsiNLzEe+/dXrpDDBxLEFpUgCXjqFwYX9cAinekBkf1HWAmSzUxk2ji
+	knTatTZfG5LO0RStD8PzwmyumT4F6Qj4M2Oe7aeomrIuiLZhqVMuZR9Ib/wIwLamz2Z97dmluY/
+	mz90H3QkUauu7giHcpgxXWzWR+6/aNI6Ez3o5kCYIA7UEVCuUZLxGR7xaQ+OB0Cf3FaeUZq9+Yu
+	dJy0nR9WrMd+9FuAna5o4zUXcAxokPR5v7MRSOhQ0g0K4XygWx4MKZrdOZsPk0JXYT6se5TmXuH
+	KK4okumz2ADLZeX2O0/hyjinFYGho=
+X-Received: by 2002:a05:600c:1c22:b0:483:6de6:37ad with SMTP id 5b1f17b1804b1-48373a7b9fcmr32562085e9.34.1770993306297;
+        Fri, 13 Feb 2026 06:35:06 -0800 (PST)
 Received: from berwick ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5e11f5sm257083905e9.4.2026.02.13.06.35.04
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5e11f5sm257083905e9.4.2026.02.13.06.35.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 06:35:04 -0800 (PST)
+        Fri, 13 Feb 2026 06:35:05 -0800 (PST)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org,
 	Jeff King <peff@peff.net>
@@ -65,9 +65,9 @@ Cc: Matthias Beyer <mail@beyermatthias.de>,
 	pyokagan@gmail.com,
 	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 1/2] templates: add .gitattributes entry for sample hooks
-Date: Fri, 13 Feb 2026 14:34:48 +0000
-Message-ID: <5f5e30914355ba108d8f4ce9157369e979f585e4.1770993281.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 2/2] templates: detect commit messages containing diffs
+Date: Fri, 13 Feb 2026 14:34:49 +0000
+Message-ID: <494f4df6865f81eba42584ead81327c9a305d0d4.1770993281.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.52.0.362.g884e03848a9
 In-Reply-To: <cover.1770993281.git.phillip.wood@dunelm.org.uk>
 References: <20260206090358.GA2761602@coredump.intra.peff.net> <cover.1770993281.git.phillip.wood@dunelm.org.uk>
@@ -82,38 +82,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-The sample hooks are shell scripts but the filenames end with ".sample"
-so they need their own .gitattributes rule. Update our editorconfig
-settings to match the attributes as well.
+If the body of a commit message contains a diff that is not indented
+then "git am" will treat that diff as part of the patch rather than
+as part of the commit message. This allows it to apply email messages
+that were created by adding a commit message in front of a regular diff
+without adding the "---" separator used by "git format-patch". This
+often surprises users [1-4] so add a check to the sample "commit-msg"
+hook to reject messages that would confuse "git am". Even if a project
+does not use an email based workflow it is not uncommon for people
+to generate patches from it and apply them with "git am". Therefore
+it is still worth discouraging the creation of commit messages that
+would not be applied correctly.
+
+A further source of confusion when applying patches with "git am" is
+the "---" separator that is added by "git format patch". If a commit
+message body contains that line then it will be truncated by "git am".
+As this is often used by patch authors to add some commentary that
+they do not want to end up in the commit message when the patch is
+applied, the hook does not complain about the presence of "---" lines
+in the message.
+
+Detecting if the message contains a diff is complicated by the
+hook being passed the message before it is cleaned up so we need to
+ignore any diffs below the scissors line. There are also two possible
+config keys to check to find the comment character at the start of
+the scissors line. The first paragraph of the commit message becomes
+the email subject header which beings "Subject: " and so does not
+need to be checked. The trailing ".*" when matching commented lines
+ensures that if the comment string ends with a "$" it is not treated
+as an anchor.
+
+[1] https://lore.kernel.org/git/bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm
+[2] https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org/
+[3] https://lore.kernel.org/git/d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br/
+[4] https://lore.kernel.org/git/CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com/
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- .editorconfig  | 2 +-
- .gitattributes | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ templates/hooks/commit-msg.sample | 54 +++++++++++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/.editorconfig b/.editorconfig
-index 2d3929b5916..6e4eaa8e955 100644
---- a/.editorconfig
-+++ b/.editorconfig
-@@ -4,7 +4,7 @@ insert_final_newline = true
+diff --git a/templates/hooks/commit-msg.sample b/templates/hooks/commit-msg.sample
+index b58d1184a9d..f7458efe62f 100755
+--- a/templates/hooks/commit-msg.sample
++++ b/templates/hooks/commit-msg.sample
+@@ -15,10 +15,60 @@
+ # SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+ # grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
  
- # The settings for C (*.c and *.h) files are mirrored in .clang-format.  Keep
- # them in sync.
--[{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile}]
-+[{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile,templates/hooks/*.sample}]
- indent_style = tab
- tab_width = 8
+-# This example catches duplicate Signed-off-by lines.
++# This example catches duplicate Signed-off-by lines and messages that
++# would confuse 'git am'.
++
++ret=0
  
-diff --git a/.gitattributes b/.gitattributes
-index 38b1c52fe0e..556322be01b 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -18,3 +18,4 @@ CODE_OF_CONDUCT.md -whitespace
- /Documentation/user-manual.adoc conflict-marker-size=32
- /t/t????-*.sh conflict-marker-size=32
- /t/unit-tests/clar/test/expected/* whitespace=-blank-at-eof
-+/templates/hooks/*.sample whitespace=indent,trail,space,incomplete text eol=lf
+ test "" = "$(grep '^Signed-off-by: ' "$1" |
+ 	 sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
+ 	echo >&2 Duplicate Signed-off-by lines.
+-	exit 1
++	ret=1
+ }
++
++comment_re="$(
++	{
++		git config --get-regexp "^core\.comment(char|string)\$" ||
++			echo '#'
++	} | sed -n -e '
++		${
++			s/^[^ ]* //
++			s|[][*./\]|\\&|g
++			s/^auto$/[#;@!$%^&|:]/
++			p
++		}'
++)"
++scissors_line="^${comment_re} -\{8,\} >8 -\{8,\}\$"
++comment_line="^${comment_re}.*"
++blank_line='^[ 	]*$'
++# Disallow lines starting with "diff -" or "Index: " in the body of the
++# message. Stop looking if we see a scissors line.
++line="$(sed -n -e "
++	# Skip comments and blank lines at the start of the file.
++	/${scissors_line}/q
++	/${comment_line}/d
++	/${blank_line}/d
++	# The first paragraph will become the subject header so
++	# does not need to be checked.
++	: subject
++	n
++	/${scissors_line}/q
++	/${blank_line}/!b subject
++	# Check the body of the message for problematic
++	# prefixes.
++	: body
++	n
++	/${scissors_line}/q
++	/${comment_line}/b body
++	/^diff -/{p;q;}
++	/^Index: /{p;q;}
++	b body
++	" "$1")"
++if test -n "$line"
++then
++	echo >&2 "Message contains a diff that will confuse 'git am'."
++	echo >&2 "To fix this indent the diff."
++	ret=1
++fi
++
++exit $ret
 -- 
 2.52.0.362.g884e03848a9
 
