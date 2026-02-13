@@ -1,333 +1,157 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E9928B4FD
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 19:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D83E285C8E
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 20:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771012514; cv=none; b=pi/6kLILuqVPzPpC+KwwqJox+hJvL4kzD5Fy6YMp9JnOZ85+PgQELDTsFi3JMPSXiTuMWHg9o8z2xxsRG9KVRRN+pt+FjSNmTEMpYllHy8upTaGtBuG5hjLPwLw8xsYBYMmWgTtS7AOYeOmis/8fJYp9EztjGDxEtCLJGEOephU=
+	t=1771014876; cv=none; b=s5iMgXulNEuaFXw5CZ3FSIOdgkawe4FRUjGN8BNCyxar07rptYZN0DKym5ySQFRBKNBEXGhewejnGa3KDY1YGP7EiBqfalPFuSxm3xJN8GO0bb6tfWYy/l64uEFRetfiYKy0EMndc133I7Ys3LXuLmXAYATvDQyI+9BGHv5POvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771012514; c=relaxed/simple;
-	bh=ttXBu8PI2/zXpuFfzHWq6M/Lzra+Pu+XqevWCDTjFCY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=antoW1UiuJKvWXsTNp6VMc1Qa0bc4tpJI99tq4E2OVtoEnAzTW/DXkpNWSuBL+98V3ISBATgPhwup2LtdieNi8u+/WC8OMT1CKDy0RvMQnK0foSZp/BdQRCWDISZ6HzgTH/337frHlmzTcR12qGTQGOi4gvGBUoZy9QwQzRcF7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nImUKiQi; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771014876; c=relaxed/simple;
+	bh=lAmM7BjGEl9kUzLurmISPRCiR9bmuSgMKz5lcu2w3BA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UMKybAEAk99e0gFBnIME1/ssBZmAyy+NyogdJnp5Ht/zj3EocU3cSG8POp81dLlELDE4ErkMxhnVD5R1bVOHdwzjcNnHpEeUvvtIvJiYP9p+yLcG45IemqVDBfdnPW0UVX4TAlO2vVMzLJDITuYUxS7UYPO8t2JdFLgU8d5ULds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vgo+MWbO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jyUvbRnq; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nImUKiQi"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8c7199e7f79so173023485a.0
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 11:55:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771012512; x=1771617312; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fJhUeDXSF3BE4VfyvSfM9gPM2Lwx6wxy/Ir5illbZW0=;
-        b=nImUKiQihbUQ5k4xq+TvPqjg7vU10oaq3jOhmnFWGt3bilkX2jbFEzG7SI2lmWyoLw
-         MV7k2QjyMd0LMDHJcCJno4KoxuiBTVx7DkQupqOCUqsg4c2Y6JsVjN/kHTrRGOJQ7ZAz
-         MHrZRbVZYRk8yb9J5EQabOV83h/q09xlKZ7g0KHmzJfzsqTbbTOtC8N05BaxfPKggdN2
-         GKVxTdhOjgtVnnxghGuwzRZ9E2S8MNSOQzWwgmYU/buxMCL95iAEjs1EfoetXuYfqhvB
-         gpfTrRFHzbIq3JAB+J/BVBRukW9ys5KKQT8ukAg7tPYbhdpahG39Txa/WGlDwtGTVQyL
-         j+aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771012512; x=1771617312;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=fJhUeDXSF3BE4VfyvSfM9gPM2Lwx6wxy/Ir5illbZW0=;
-        b=gEQQgIZPL1tjxwA6KhlZ/Gt08spDNLB9djnsDWZwu5k75yTrd95db/y8NhDZQn9x7G
-         2XEaz1ORtpKJpDdl8RIEAb5iAmD2O/DMDDkk+ruTs/y7VEALcjqf4H4N9c0ciiX+5a1E
-         Y9sShX/00qf5nWlJ3AgWHMeMKbocVUNAgWwScvsRnsqUnwK2LtBVDJVhjbYbTVZFq8x3
-         ZrGn4IIRq+s7GCooRE7qeY551oYPtBT/6PN11W01FTXLiezRer0tuWNshfTZaloxj4dH
-         4ukUUXdiguthQPpkrLHXujq+HrFgs9+aINFT41DzWtr0ElBGmNvPeNeDMMs9u02IlTxd
-         aX4g==
-X-Gm-Message-State: AOJu0Ywu0pHdVccHTs7ThX6NjLSNJBtY4qkDjoSY2RfG2wif6uiJTfXR
-	eOSZM1fn4uKXozDb7OM8xYrQ39MJeJ5JXw1nSBCYWAM1hedCIB6FFbq0zYqxBA==
-X-Gm-Gg: AZuq6aIgwfQ38DLDzhqslKBABzuzmy91nXA1KWkATcGZ9v+o2sY85/dBi8A+hwVZshJ
-	lJYwg8aD5gsB9y+yiNWyNSvmlXPXwyFNSinnGN2FUcmW10o6DNmIsxrmVn1IgWiwgMuHqfLug44
-	j0tPeRK5Uf0Dh8JG/qzpv0Iz0D7PcKKqIYJEmXh0n+4xQg3SxErLjQGmWArYV3kRwvOe1SaksTW
-	gAC6IYn4GssklXYvnwRdSUk/akKkNjQljCALsH/vrzr9fBnHEmLnemzjdtMyHrWmgaJnMJt1SKK
-	UMdQ16T9o11nobLdG1SRxF6tYswMHmCWzIeUwRN7kAV0lZSA0b/xMMuQtcVy+71g2KDYV6nWec2
-	P8UcQyUWTLk08hW5jSJmOV1oGCpqpS0KeLnpadiDm0Uhyros3ToQffWCDocT8aoRXGnUaTKkI+y
-	h5PyAcsWwT42AxP6IgwyaYBtXw
-X-Received: by 2002:a05:620a:28cb:b0:89f:7109:185f with SMTP id af79cd13be357-8cb4bf97d9cmr95991785a.31.1771012511756;
-        Fri, 13 Feb 2026 11:55:11 -0800 (PST)
-Received: from [127.0.0.1] ([64.236.135.10])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb48c27330sm156104085a.19.2026.02.13.11.55.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 11:55:11 -0800 (PST)
-Message-Id: <6a5232540ed8f7138b03cf3df9b7009f54188d97.1771012500.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2040.v2.git.1771012500.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vgo+MWbO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jyUvbRnq"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 021527A0123;
+	Fri, 13 Feb 2026 15:34:31 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Fri, 13 Feb 2026 15:34:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771014871; x=1771101271; bh=/iVtD1LpyO
+	vW+1Inh+xOI9+tbWvY1g/j2ZhRWcpgCl4=; b=vgo+MWbOJmdl4jsukJI94QsNrx
+	ZtcDhG2x/FRSq54gLGn0iXn3wL/PRSuQQXFpBqfsVPx0nGixHfMj/8lFV0OCQK7e
+	9thXaYaFC+nUm68l2zZxSr5F8O9k4an1B4xA356xofM2jx2JdCY1D8U3lnFe4onS
+	x0xypZ30AmYB/QafT+qEW/AUQLDtZfakESVG8BI7HqsPALrLEOXRlCM5bq3yrZPg
+	jSfgRLJelgwuTTHJ9/1zrODlpOUrnAIxZSCxsbmlbB16p7jtuOjdfbl1/FkB9oNj
+	lE6qO+IRIKTzWpZ5SgB3DvjFe5VvBEoHNUIJ75K1ZE5xkE541yL5/G+kmlvw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771014871; x=1771101271; bh=/iVtD1LpyOvW+1Inh+xOI9+tbWvY1g/j2Zh
+	RWcpgCl4=; b=jyUvbRnqzwNl8a4imy7z6MNQYMpfYKLEssPv1nXmDK18vJei29r
+	zHnhpokflgZtBsgDpzEBWxFWmy0I3iZznfvB8glv1RpXAfnKmC4w5XaUmz9VHoLe
+	GZg/cClYmI2MyAkW2BGYbAPgOjRHecKTguUbY+svqTqd6x0yRNrpWfUiy46d8tkj
+	aNKpJnRS/mGCKwq5OjH0fH/LOC2rFsw3jj130N2a4Yq1foNAWB8D3pHYqVaAZ48b
+	yWl5Y+J/9x3hx8OVPuOptseHRPLjUOXViTRStcD1yqkoV+RVhIWvgkw02oLpPAyx
+	1vk++LAnDk+T/ciMghA+Sj/rMXWBGakld0w==
+X-ME-Sender: <xms:14qPaV-rFdrYw-pNR49Ta7BFbZZiZ2YjSx7TRsrQzZVqGa6GFJHgFw>
+    <xme:14qPab9Vk6_P9NMOOshEHAe3Mf_dP73XXvqWpx6wp-WpNt5IMy8EMP-I5B72YQirH
+    w9avhES9sWksmGJz8sYL0qzZ9LiWsGHhrGZvJ2h6sVBZeJTWTOD>
+X-ME-Received: <xmr:14qPaVT4HLr88gEfNKKuXN1Uj2grLuCP-NLjV8EKx-l2dPTlDtG63_fwjBINF9kiR6G6VJUu2aRm2fTSRoSAkfsqaiOYG8VtBA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdelvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrsh
+    gthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehkrhhishhtohhffhgvrhhh
+    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmjhgthhgvvg
+    hthhgrmhesohhuthhlohhokhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:14qPafehkJlbTPY1Q4XstTCR2nslNUvSpHzcVhiOl1k61qxlhU_tuw>
+    <xmx:14qPaZC0gR1RuSgoXJ0R0cI3S7_Jv2mrmdVUk0LIvdQOMwdT5PAlMA>
+    <xmx:14qPaRmhgL-MJq1Vo--MAlj4nWDZ82P4JyTSbd61H7dGplCeJn9Qbg>
+    <xmx:14qPaUdpZ79bnYaK3GXE6q6D8QfShlkOPoBrOoc8_nL4e8tpqyk5qQ>
+    <xmx:14qPaaixXUOZEBw9CeA6RZ7l7tUuFgzi7sbwvLBpe7r3cajBllvFGmYM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Feb 2026 15:34:31 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  stolee@gmail.com,  johannes.schindelin@gmx.de,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Matthew John
+ Cheetham <mjcheetham@outlook.com>
+Subject: Re: [PATCH v2 2/6] build: include procinfo.c impl for macOS
+In-Reply-To: <546fcc3446508eb56312fa195483816d94ea0d41.1771012500.git.gitgitgadget@gmail.com>
+	(Matthew John Cheetham via GitGitGadget's message of "Fri, 13 Feb 2026
+	19:54:56 +0000")
 References: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
 	<pull.2040.v2.git.1771012500.gitgitgadget@gmail.com>
-From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 13 Feb 2026 19:55:00 +0000
-Subject: [PATCH v2 6/6] t0213: add trace2 cmd_ancestry tests
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	<546fcc3446508eb56312fa195483816d94ea0d41.1771012500.git.gitgitgadget@gmail.com>
+Date: Fri, 13 Feb 2026 12:34:30 -0800
+Message-ID: <xmqqy0kwl6w9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    stolee@gmail.com,
-    johannes.schindelin@gmx.de,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Matthew John Cheetham <mjcheetham@outlook.com>,
-    Matthew John Cheetham <mjcheetham@outlook.com>,
-    Matthew John Cheetham <mjcheetham@outlook.com>
+Content-Type: text/plain
 
-From: Matthew John Cheetham <mjcheetham@outlook.com>
+"Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Add a new test script t0213-trace2-ancestry.sh that verifies
-cmd_ancestry events across all three trace2 output formats (normal,
-perf, and event).
+> From: Matthew John Cheetham <mjcheetham@outlook.com>
+>
+> Include an implementation of trace2_collect_process_info for macOS.
+>
+> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+> ---
+>  config.mak.uname                    | 2 ++
+>  contrib/buildsystems/CMakeLists.txt | 2 ++
+>  meson.build                         | 2 ++
+>  3 files changed, 6 insertions(+)
 
-The tests use the "400ancestry" test helper to spawn child processes
-with controlled trace2 environments. Git alias resolution (which
-spawns a child git process) creates a predictable multi-level process
-tree. Filter functions extract cmd_ancestry events from each format,
-truncating the ancestor list at the outermost "test-tool" so that only
-the controlled portion of the tree is verified, regardless of the test
-runner environment.
+Looking good.  I wondered if the first two steps should be a single
+patch (as the tree will be with a totally unused file until the
+second patch is applied), but this organization will give better
+chances for the second patch to be viewed by folks who are good at
+build infrastructure who are not necessarily interested in macOS
+specific programming, so it probably is better presented this way.
 
-A runtime prerequisite (TRACE2_ANCESTRY) is used to detect whether the
-platform has a real procinfo implementation; platforms with only the
-stub are skipped.
-
-We must pay attention to an extra ancestor on Windows (MINGW) when
-running without the bin-wrappers (such as we do in CI). In this
-situation we see an extra "sh.exe" ancestor after "test-tool.exe".
-
-Also update the comment in t0210-trace2-normal.sh to reflect that
-ancestry testing now has its own dedicated test script.
-
-Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
----
- t/meson.build              |   1 +
- t/t0210-trace2-normal.sh   |   5 +-
- t/t0213-trace2-ancestry.sh | 180 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 184 insertions(+), 2 deletions(-)
- create mode 100755 t/t0213-trace2-ancestry.sh
-
-diff --git a/t/meson.build b/t/meson.build
-index a5531df415..551c3036c0 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -131,6 +131,7 @@ integration_tests = [
-   't0210-trace2-normal.sh',
-   't0211-trace2-perf.sh',
-   't0212-trace2-event.sh',
-+  't0213-trace2-ancestry.sh',
-   't0300-credentials.sh',
-   't0301-credential-cache.sh',
-   't0302-credential-store.sh',
-diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-index 96c68f65df..7e1e7af862 100755
---- a/t/t0210-trace2-normal.sh
-+++ b/t/t0210-trace2-normal.sh
-@@ -74,8 +74,9 @@ scrub_normal () {
- 	#      This line is only emitted when RUNTIME_PREFIX is defined,
- 	#      so just omit it for testing purposes.
- 	#
--	#   4. 'cmd_ancestry' is not implemented everywhere, so for portability's
--	#      sake, skip it when parsing normal.
-+	#   4. 'cmd_ancestry' output depends on how the test is run and
-+	#      is not relevant to the features we are testing here.
-+	#      Ancestry tests are covered in t0213-trace2-ancestry.sh instead.
- 	sed \
- 		-e 's/elapsed:[0-9]*\.[0-9][0-9]*\([eE][-+]\{0,1\}[0-9][0-9]*\)\{0,1\}/elapsed:_TIME_/g' \
- 		-e "s/^start '[^']*' \(.*\)/start _EXE_ \1/" \
-diff --git a/t/t0213-trace2-ancestry.sh b/t/t0213-trace2-ancestry.sh
-new file mode 100755
-index 0000000000..a2b9536da8
---- /dev/null
-+++ b/t/t0213-trace2-ancestry.sh
-@@ -0,0 +1,180 @@
-+#!/bin/sh
-+
-+test_description='test trace2 cmd_ancestry event'
-+
-+. ./test-lib.sh
-+
-+# Turn off any inherited trace2 settings for this test.
-+sane_unset GIT_TRACE2 GIT_TRACE2_PERF GIT_TRACE2_EVENT
-+sane_unset GIT_TRACE2_BRIEF
-+sane_unset GIT_TRACE2_CONFIG_PARAMS
-+
-+# Add t/helper directory to PATH so that we can use a relative
-+# path to run nested instances of test-tool.exe (see 004child).
-+# This helps with HEREDOC comparisons later.
-+TTDIR="$GIT_BUILD_DIR/t/helper/" && export TTDIR
-+PATH="$TTDIR:$PATH" && export PATH
-+
-+# The 400ancestry helper spawns a child process so that the child
-+# sees "test-tool" in its process ancestry.  We capture only the
-+# child's trace2 output to a file.
-+#
-+# The tests use git commands that spawn child git processes (e.g.,
-+# alias resolution) to create a controlled multi-level process tree.
-+# Because cmd_ancestry walks the real process tree, processes will
-+# also report ancestors above "test-tool" that depend on the test
-+# runner environment (e.g., bash, make, tmux).  The filter functions
-+# below truncate the ancestry at "test-tool", discarding anything
-+# above it, so only the controlled portion is verified.
-+#
-+# On platforms without a real procinfo implementation (the stub),
-+# no cmd_ancestry event is emitted.  We detect this at runtime and
-+# skip the format-specific tests accordingly.
-+
-+# Determine if cmd_ancestry is supported on this platform.
-+test_expect_success 'detect cmd_ancestry support' '
-+	test_when_finished "rm -f trace.detect" &&
-+	GIT_TRACE2_BRIEF=1 GIT_TRACE2="$(pwd)/trace.detect" \
-+		test-tool trace2 001return 0 &&
-+	if grep -q "^cmd_ancestry" trace.detect
-+	then
-+		test_set_prereq TRACE2_ANCESTRY
-+	fi
-+'
-+
-+# Filter functions for each trace2 target format.
-+#
-+# Each extracts cmd_ancestry events, strips format-specific syntax,
-+# and truncates the ancestor list at the outermost "test-tool"
-+# (or "test-tool.exe" on Windows), discarding any higher-level
-+# (uncontrolled) ancestors.
-+#
-+# Output is a space-separated list of ancestor names, one line per
-+# cmd_ancestry event, with the immediate parent listed first:
-+#
-+#   test-tool                          (or: test-tool.exe)
-+#   git test-tool                      (or: git.exe test-tool.exe)
-+#   git test-tool test-tool            (or: git.exe test-tool.exe test-tool.exe)
-+
-+if test_have_prereq MINGW
-+then
-+	TT=test-tool$X
-+else
-+	TT=test-tool
-+fi
-+
-+filter_ancestry_normal () {
-+	sed -n '/^cmd_ancestry/{
-+		s/^cmd_ancestry //
-+		s/ <- / /g
-+		s/\(.*'"$TT"'\) .*/\1/
-+		p
-+	}'
-+}
-+
-+filter_ancestry_perf () {
-+	sed -n '/cmd_ancestry/{
-+		s/.*ancestry:\[//
-+		s/\]//
-+		s/\(.*'"$TT"'\) .*/\1/
-+		p
-+	}'
-+}
-+
-+filter_ancestry_event () {
-+	sed -n '/"cmd_ancestry"/{
-+		s/.*"ancestry":\[//
-+		s/\].*//
-+		s/"//g
-+		s/,/ /g
-+		s/\(.*'"$TT"'\) .*/\1/
-+		p
-+	}'
-+}
-+
-+# On Windows (MINGW) when running with the bin-wrappers, we also see "sh.exe" in
-+# the ancestry. We must therefore account for this expected ancestry element in
-+# the expected output of the tests.
-+if test_have_prereq MINGW && test -z "$no_bin_wrappers"; then
-+	SH_TT="sh$X $TT"
-+else
-+	SH_TT="$TT"
-+fi
-+
-+# Git alias resolution spawns the target command as a child process.
-+# Using "git -c alias.xyz=version xyz" creates a two-level chain:
-+#
-+#   test-tool (400ancestry)
-+#     -> git (resolves alias xyz -> version)
-+#          -> git (version)
-+#
-+# Both git processes are instrumented and emit cmd_ancestry.  After
-+# filtering out ancestors above test-tool, we get:
-+#
-+#   test-tool                 (from git alias resolver)
-+#   git test-tool             (from git version)
-+
-+test_expect_success TRACE2_ANCESTRY 'normal: git alias chain, 2 levels' '
-+	test_when_finished "rm -f trace.normal actual expect" &&
-+	test-tool trace2 400ancestry normal "$(pwd)/trace.normal" \
-+		git -c alias.xyz=version xyz &&
-+	filter_ancestry_normal <trace.normal >actual &&
-+	cat >expect <<-EOF &&
-+	$SH_TT
-+	git$X $SH_TT
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success TRACE2_ANCESTRY 'perf: git alias chain, 2 levels' '
-+	test_when_finished "rm -f trace.perf actual expect" &&
-+	test-tool trace2 400ancestry perf "$(pwd)/trace.perf" \
-+		git -c alias.xyz=version xyz &&
-+	filter_ancestry_perf <trace.perf >actual &&
-+	cat >expect <<-EOF &&
-+	$SH_TT
-+	git$X $SH_TT
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success TRACE2_ANCESTRY 'event: git alias chain, 2 levels' '
-+	test_when_finished "rm -f trace.event actual expect" &&
-+	test-tool trace2 400ancestry event "$(pwd)/trace.event" \
-+		git -c alias.xyz=version xyz &&
-+	filter_ancestry_event <trace.event >actual &&
-+	cat >expect <<-EOF &&
-+	$SH_TT
-+	git$X $SH_TT
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# Use 004child to add a test-tool layer, creating a three-level chain:
-+#
-+#   test-tool (400ancestry)
-+#     -> test-tool (004child)
-+#          -> git (resolves alias xyz -> version)
-+#               -> git (version)
-+#
-+# Three instrumented processes emit cmd_ancestry.  After filtering:
-+#
-+#   test-tool                  (from test-tool 004child)
-+#   test-tool test-tool        (from git alias resolver)
-+#   git test-tool test-tool    (from git version)
-+
-+test_expect_success TRACE2_ANCESTRY 'normal: deeper chain, 3 levels' '
-+	test_when_finished "rm -f trace.normal actual expect" &&
-+	test-tool trace2 400ancestry normal "$(pwd)/trace.normal" \
-+		test-tool trace2 004child \
-+			git -c alias.xyz=version xyz &&
-+	filter_ancestry_normal <trace.normal >actual &&
-+	cat >expect <<-EOF &&
-+	$TT
-+	$SH_TT $TT
-+	git$X $SH_TT $TT
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-gitgitgadget
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 1691c6ae6e..baa5018461 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -148,6 +148,8 @@ ifeq ($(uname_S),Darwin)
+>  	HAVE_NS_GET_EXECUTABLE_PATH = YesPlease
+>  	CSPRNG_METHOD = arc4random
+>  	USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS = YesPlease
+> +	HAVE_PLATFORM_PROCINFO = YesPlease
+> +	COMPAT_OBJS += compat/darwin/procinfo.o
+>  
+>  	# Workaround for `gettext` being keg-only and not even being linked via
+>  	# `brew link --force gettext`, should be obsolete as of
+> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+> index edb0fc04ad..d489f0cada 100644
+> --- a/contrib/buildsystems/CMakeLists.txt
+> +++ b/contrib/buildsystems/CMakeLists.txt
+> @@ -274,6 +274,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+>  elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+>  	add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
+>  	list(APPEND compat_SOURCES unix-socket.c unix-stream-server.c compat/linux/procinfo.c)
+> +elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+> +	list(APPEND compat_SOURCES compat/darwin/procinfo.c)
+>  endif()
+>  
+>  if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+> diff --git a/meson.build b/meson.build
+> index 1f95a06edb..32d470e4f7 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1292,6 +1292,8 @@ if host_machine.system() == 'linux'
+>    libgit_sources += 'compat/linux/procinfo.c'
+>  elif host_machine.system() == 'windows'
+>    libgit_sources += 'compat/win32/trace2_win32_process_info.c'
+> +elif host_machine.system() == 'darwin'
+> +  libgit_sources += 'compat/darwin/procinfo.c'
+>  else
+>    libgit_sources += 'compat/stub/procinfo.c'
+>  endif
