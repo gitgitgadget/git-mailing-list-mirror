@@ -1,69 +1,69 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F88528C869
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 19:55:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2660285CB9
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 19:55:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771012511; cv=none; b=QoAuJQ7MS3S1Zjaul+Zr1kWVBig/4lbgmNnI91hxYTQniFXqgHUW3mn0Rt6GoVcughfQidMREuMY8hQZl+KDe4NF1PzEmZFERt7XOY3HNG/tKZauB6rtDxcC+grCmMe+wkCUtqjvbdiucLgiOXIwNnLGZwn9HKyOeQhNcqFRTfU=
+	t=1771012513; cv=none; b=GNDIeNc/4O1F2X4c0F/9zWCviCWu5uh27Hj3nbw/oVvFj/7J0xNYdxIwq5aXKSijKuYSJc+JtMMPslFX0mu+e2XByZm7umsnDBp3VXaQFghTrAF4BFS+ZlbaNXA30Clcq7zkJRbgjyLUbk/6ZueaKWnIJTSEZZ/lEJU5BBpPBl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771012511; c=relaxed/simple;
-	bh=+yPHfMO82MOs7OQFl+y4IFlB+qHI2zBALOnOyiZR3EU=;
+	s=arc-20240116; t=1771012513; c=relaxed/simple;
+	bh=J2O0ShHuWYRr+6DVUCR03uhb4CbNzBMdnSsHr1aLVSo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=K/zxhl6WahADgaT8XarJILRri7CCinQ4B2/PkfHJ1yLrLlME3fKl4yf74maBMPve0uBvu34sMq+Oqj1gTRwTTMnwBaP4umXLZ935Kp9VSz50RtDaRkPuUoUs/Y7sJfpq3LtK8ByZbSfMaa+wx5PYATsMgA0YwY+Hyu1/ZPeamCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fyn0qOQg; arc=none smtp.client-ip=209.85.219.47
+	 MIME-Version:To:Cc; b=cnWQ4ltRtfkWpqX6iGLHHbmsZ4gmCFrfJr5TvFg3gvU61OnAhXeWamrd+x58lYTk9bZXN6CpZULVhRUU416QLjb6oHiZ5TKTCI9WRdz+Ofnt3sdhRDsixRhlc5DUvx6f0K7Sg0jhscvTE7y2EraD1HCwJScV7YtpBEC1fGWdcJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Re0l0Cdz; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fyn0qOQg"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8954a050c19so15637216d6.3
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 11:55:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Re0l0Cdz"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cb40149037so127377585a.2
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 11:55:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771012509; x=1771617309; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771012510; x=1771617310; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pdEcR0dD6hIrNxIDkgrBoIqa9CIiY3LB9DK8nCE6SDE=;
-        b=Fyn0qOQgKPC4uc8222lEWV1B0KpC91gej0cHPGfKMl3RKFPXizDYms7XQbqMumppnj
-         r3VbX5BQoW3594zx9jG2FR5V4PioRtg6zlraHMJrwId+nU3ZjuC5ebgbJPWeNhBJnhwg
-         UiXL1wQmvzIXb7G8T8Ovm/hJmYGLaiJ3gW9a0zEBc38OhzovH+pNOMajnVl1KK8n8mo/
-         asQd4NeMOQoIZT+Djfqda1ZhJleIRLeB1cpEMIBoCRYuBoykLuin8SUa04eyCTbdcVEH
-         gjiibOpdbD+T2+t9TgMDuHe0ZoNaXo6myzryu/bmZWR6pGMuXU8i2Mj3pak7y/9c+B1A
-         Gffg==
+        bh=XTHzUiVDSSKpImL8t99Ru8wkMDp7JooUDs11kYxy5OY=;
+        b=Re0l0CdzOG1L0u+hZ49awUFxxpkgcazw9qhFkPc/mtKsaWldvm32FYplCv6TfxwH5T
+         IW8PJ2sRJyWtClW+Eezb088Teb3lzjESrTq158TuhtjCTwrypLReSk5quIb1V8TT2Ked
+         JZJTmY48yXA2glFy9F6QRXNK9BfYm+/Yiwn2MhdYqim/mIWxydvQ5offfGPIEoSo8Fr8
+         JwqgsaBUmdRZXfaryE1f+Shg6JzflBKYtv/eBOS4rrVBEmDyr+NMMzJpjEYT/ExlWs+s
+         BIzzqiPtDlT6+M/TK0kksPZWoX4wrDXWAjwLLMCaZyNCeB0H5AXj/YTy7CIH+d3Vjai6
+         8Kpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771012509; x=1771617309;
+        d=1e100.net; s=20230601; t=1771012510; x=1771617310;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=pdEcR0dD6hIrNxIDkgrBoIqa9CIiY3LB9DK8nCE6SDE=;
-        b=jTBa6TcFLf7kA8xu4DZ/tZSz1ZKAV7DEwJsUuyZv79bm3xxlHXOXg1ulJNi9jC9gIa
-         ZJtL7KvpvpMaqYIM4HRsWGHlwE1zn6kJE3Vsu5fT0n4tS209CZqsVsI0QAyzUeklgT7Q
-         q5Gf9sQtn4a+YewazLWxrlnvZXWb9CdfxeoGionhnqtfR5GXiCeBu/HIJqxaVRU2EOcH
-         85aR/bstdy+587v65BYiPNg/INlMQF4btD8Flt+8rWx/pPGEWzrCgJVZB93N1cvwJipS
-         RQG1sygVBp3rcwqiNJxRzoD3ZO4nZNW2VoUW92FyTHXtdVZkcjYMFFVccwAebnADQIZJ
-         HKYA==
-X-Gm-Message-State: AOJu0Yx3AJu++z4s3253SLXCIiQ/g3xCkOlpfeIomO26ohvom7ESA9eO
-	mVAkoAmbdfDfi6D8mbd4VW/f+MOJXcPEixRMVCrIyQDK8+cwVfzhpcoRYlRiWw==
-X-Gm-Gg: AZuq6aLkbz5R0kK+HoFaQ0togqQ8n6DibJ020KJA+XAbtx1Kcy5ddC7jzwC66NFSd33
-	KIIbYciJ4snARdGhMrzitDsOigbcp5bbPMdN5/MvE5B7rEay9RU9rQAAVcC7Vjh+kumkgE/lrs4
-	7C1wDd24TAN/88Un687B0rUhimFAA8ledBgADc2IoBwIr58dlPjutnjdRx9GFFnq+W2Tb4uSh+1
-	UZ8LN5XGLdu5lZ9Nk47iW/WnyO2CPNAXxrVXcjQOxZWqGRjVnBirTu0+MezLJZagrGw9/1YrcBg
-	wbx8FAKzi05Gf1/PmnwtdQcShHBOb6ZslJbarCqdUrxFiAjvyvmujIQSydQfh7x3TCX8T0oLHxp
-	zkltnNwbeWHvbdjNPWQrek4jUbkKPLXLE2RR5UmmOMqfdPS4+BdLaAd8b3imXjn6UQft1QwKlbP
-	TfJbRF72b6NStAngoyaGUwVVBi
-X-Received: by 2002:a05:6214:411:b0:88a:4452:750b with SMTP id 6a1803df08f44-89734971460mr55109666d6.60.1771012508972;
-        Fri, 13 Feb 2026 11:55:08 -0800 (PST)
+        bh=XTHzUiVDSSKpImL8t99Ru8wkMDp7JooUDs11kYxy5OY=;
+        b=DMDSLzoniWQOql+Vx7C9eo/uMltGJzJOReJCf70goEbVrWuBoFO9PF5TRjQFT5vwZs
+         S0F+zb40T2fpscyOElK32X7pax9j/lNqSEK+z6ezb1tNs+r8s7b8s0dlY+ege/jUMH7z
+         78rWTPsDgHT5XIqdwIRzylVNOT5SqDY9pbzUQEf3ic475RONweVMHYFUEAGMNcLeGPrM
+         gm6fPnSztVCSAtn4kaWJqJgUWz5dTt70fcPGEQr4uDMvjJktG9ju5FKNQJG+f141k2M8
+         UiomXou3HN8+jTcj2AAwoSe7kYGt23BD0O/rl0G1UfPr54OGuOkHs2XbnDCsUPeUyd4V
+         Dd5g==
+X-Gm-Message-State: AOJu0YxpZQw0rDtUNO1x8h5qOBHWyHorOr6zHQjNXtA/FmjlNsnTTPXk
+	S8/FF+nDB40NPAnQBNohEV9E7Q5+1FlNINciow8RPPQ6Z1n6R5G0NczmCfqPRQ==
+X-Gm-Gg: AZuq6aLrjXvGvT1z6PdqDCTm6Ad8wvl1ofvlEGElU2ydpVipO2qtXlMMmLbRwsjbJlK
+	riPjiXCOSVTjr1QuD3Xj7YrMjAbGLFV8ARRlE9VnieijgZTl5JkVXOL7pJfi+84QyBlsD13gEt5
+	ucBNgdRg1bOSJpIBTeUorBvLPPUEN2zgV04WKL5cVhQO9I69ZiYI0e0Uj9Lo4TknRlBCOrWIAus
+	LSSanIKiJIdoqtvqElQP/xh8VdrFP0A+hrNS1mbleAvRZ1ZJRXuA91Mkws/DpKJxtJntB+94ADj
+	ZcPjnPhfGKsgLDYj6yg9+1rss3OmH3ytewsbtzzro/K/thPlfl9WpbSKEHrkHb2sGEZLuWrLn9b
+	5OLFxHmqi+tcpCPCVlxD4a8bqTvvrWdqCwTXUls8t29pCFV/sGWzekETsUgOi+myp7Dow4Duw9x
+	xeoS8TsS0JEQE1rKE0wNuEBmmx9sI2vURsAjc=
+X-Received: by 2002:a05:620a:319f:b0:8c2:faed:ded3 with SMTP id af79cd13be357-8cb424de722mr351114485a.89.1771012510350;
+        Fri, 13 Feb 2026 11:55:10 -0800 (PST)
 Received: from [127.0.0.1] ([64.236.135.10])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8971cdbf972sm70177506d6.44.2026.02.13.11.55.08
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8971cdb19b6sm77054246d6.40.2026.02.13.11.55.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 11:55:08 -0800 (PST)
-Message-Id: <6b9054115eddeb08d0e429f1ec45093691dd84d3.1771012500.git.gitgitgadget@gmail.com>
+        Fri, 13 Feb 2026 11:55:09 -0800 (PST)
+Message-Id: <b9a94291a6238bfe8d4fd05d479b4d6d8ab6efc1.1771012500.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2040.v2.git.1771012500.gitgitgadget@gmail.com>
 References: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
 	<pull.2040.v2.git.1771012500.gitgitgadget@gmail.com>
 From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 13 Feb 2026 19:54:58 +0000
-Subject: [PATCH v2 4/6] trace2: emit cmd_ancestry data for Windows
+Date: Fri, 13 Feb 2026 19:54:59 +0000
+Subject: [PATCH v2 5/6] test-tool: extend trace2 helper with 400ancestry
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,45 +84,100 @@ Cc: gitster@pobox.com,
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Since 2f732bf15e (tr2: log parent process name, 2021-07-21) it is now
-now possible to emit a specific process ancestry event in TRACE2. We
-should emit the Windows process ancestry data with the correct event
-type.
+Add a new test helper "400ancestry" to the trace2 test-tool that
+spawns a child process with a controlled trace2 environment, capturing
+only the child's trace2 output (including cmd_ancestry events) in
+isolation.
 
-To not break existing consumers of the data_json "windows/ancestry"
-event, we continue to emit the ancestry data as a JSON event.
+The helper clears all inherited GIT_TRACE2* variables in the child
+and enables only the requested target (normal, perf, or event),
+directing output to a specified file. This gives the test suite a
+reliable way to capture cmd_ancestry events: the child always sees
+"test-tool" as its immediate parent in the process ancestry, providing
+a predictable value to verify in tests.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- compat/win32/trace2_win32_process_info.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ t/helper/test-trace2.c | 59 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
-index aceea05430..6a6a396078 100644
---- a/compat/win32/trace2_win32_process_info.c
-+++ b/compat/win32/trace2_win32_process_info.c
-@@ -172,6 +172,11 @@ void trace2_collect_process_info(enum trace2_process_info_reason reason)
- 		get_is_being_debugged();
- 		get_ancestry(&names);
- 		if (names.nr) {
-+			/*
-+			  Emit the ancestry data as a data_json event to
-+			  maintain compatibility for consumers of the older
-+			  "windows/ancestry" event.
-+			 */
- 			struct json_writer jw = JSON_WRITER_INIT;
- 			jw_array_begin(&jw, 0);
- 			for (size_t i = 0; i < names.nr; i++)
-@@ -180,6 +185,9 @@ void trace2_collect_process_info(enum trace2_process_info_reason reason)
- 			trace2_data_json("process", the_repository,
- 					 "windows/ancestry", &jw);
- 			jw_release(&jw);
-+
-+			/* Emit the ancestry data with the new event. */
-+			trace2_cmd_ancestry(names.v);
- 		}
+diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+index 415df078c1..3b12f4173e 100644
+--- a/t/helper/test-trace2.c
++++ b/t/helper/test-trace2.c
+@@ -466,6 +466,63 @@ static int ut_303redact_def_param(int argc, const char **argv)
+ 	return 0;
+ }
  
- 		strvec_clear(&names);
++/*
++ * Run a child process with specific trace2 environment settings so that
++ * we can capture its trace2 output (including cmd_ancestry) in isolation.
++ *
++ * test-tool trace2 400ancestry <target> <output_file> [<child_command_line>]
++ *
++ * <target> is one of: normal, perf, event
++ *
++ * For example:
++ *     test-tool trace2 400ancestry normal out.normal test-tool trace2 001return 0
++ *
++ * The child process inherits a controlled trace2 environment where only
++ * the specified target is directed to <output_file>. The parent's trace2
++ * environment variables are cleared in the child so that only the child's
++ * events are captured.
++ *
++ * This is used by t0213-trace2-ancestry.sh to test cmd_ancestry events.
++ * The child process will see "test-tool" as its immediate parent in the
++ * process ancestry, giving us a predictable value to verify.
++ */
++static int ut_400ancestry(int argc, const char **argv)
++{
++	struct child_process cmd = CHILD_PROCESS_INIT;
++	const char *target;
++	const char *outfile;
++	int result;
++
++	if (argc < 3)
++		die("expect <target> <output_file> <child_command_line>");
++
++	target = argv[0];
++	outfile = argv[1];
++	argv += 2;
++	argc -= 2;
++
++	/* Clear all trace2 environment variables in the child. */
++	strvec_push(&cmd.env, "GIT_TRACE2=");
++	strvec_push(&cmd.env, "GIT_TRACE2_PERF=");
++	strvec_push(&cmd.env, "GIT_TRACE2_EVENT=");
++	strvec_push(&cmd.env, "GIT_TRACE2_BRIEF=1");
++
++	/* Set only the requested target. */
++	if (!strcmp(target, "normal"))
++		strvec_pushf(&cmd.env, "GIT_TRACE2=%s", outfile);
++	else if (!strcmp(target, "perf"))
++		strvec_pushf(&cmd.env, "GIT_TRACE2_PERF=%s", outfile);
++	else if (!strcmp(target, "event"))
++		strvec_pushf(&cmd.env, "GIT_TRACE2_EVENT=%s", outfile);
++	else
++		die("invalid target '%s', expected: normal, perf, event",
++		    target);
++
++	strvec_pushv(&cmd.args, argv);
++	result = run_command(&cmd);
++	exit(result);
++}
++
+ /*
+  * Usage:
+  *     test-tool trace2 <ut_name_1> <ut_usage_1>
+@@ -497,6 +554,8 @@ static struct unit_test ut_table[] = {
+ 	{ ut_301redact_child_start, "301redact_child_start", "<argv...>" },
+ 	{ ut_302redact_exec,        "302redact_exec",        "<exe> <argv...>" },
+ 	{ ut_303redact_def_param,   "303redact_def_param",   "<key> <value>" },
++
++	{ ut_400ancestry,           "400ancestry",           "<target> <output_file> [<child_command_line>]" },
+ };
+ /* clang-format on */
+ 
 -- 
 gitgitgadget
 
