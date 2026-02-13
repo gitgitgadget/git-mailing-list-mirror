@@ -1,95 +1,93 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7D266B72
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 23:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD8E318BAE
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 23:50:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771025644; cv=none; b=n5FP30H0G10BLiroimmlbpkC4ms1rJI7qe42SlEbDJyjAgj6wIiC78vMp+zVxEnv36H9ogrP3XT1y295TmoH212+AdQ8Tx44bQWjklkOlTdC1AnL+GgIXF7NESDDl9y7Y4zYr1BgzYWo2gbU6LzqdBCRZiLxMKx/OSnhj4ZGGwI=
+	t=1771026655; cv=none; b=Hz9iEUqeHl+TUoKJRZtsSQAyOIxIAflZQMzOjugv/zMKCkUYr5eIOIhmiYBdaYaJwZkmZNgwunLSgOnJnJu/P/M0PaEByQPeiTbcw+l1NmsxIpolddbZgK0uhrl4YoABT328UozbZgpi7Uc5zu8qSlpFVDQvIkmwS1LhRx1uKBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771025644; c=relaxed/simple;
-	bh=qQxoFj4GlQjtunEld+agbRdr+uGovlR2Bw88HfcmjLo=;
+	s=arc-20240116; t=1771026655; c=relaxed/simple;
+	bh=0kpCHet1w6xwDh42WMnS/9FiyWJtLgKurV2fWccEVJM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TfBJNcaEqY+ux8DPGAqXgk949YHdYudqsMjQCcnlPufhYtYNCEUAaDHDlCCzF2Ku3B9lh5WiGiy5A7Skvn95e7EATDp9LImgNV+7XnpXS2POdDrBPnk3QICdefT5c3hcrT7DGSvPrT+z/0EpPNNi+4OrZZ+e6Ku3VV/IJM3OIVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SLydztL3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S4/lGx9d; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=jcWTkzZeRxVJywPLeoWfjZEfk6Sg5xZ3G9Z2y09mqErqdpohxZ3IyPfOh8YeTKNy6cN6Rgx2fpnUpkBt74tlIIZH4cotNxFBO2BNNgs4/1MOkxRsoY7dnAE0DJNk/Dm4TIRlhJmrcqv9zLC3efDTDS1l1WtXnGSzbW+HIy+Q6Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M8wHHmcW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kg3vKXT+; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SLydztL3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S4/lGx9d"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9299E7A00C0;
-	Fri, 13 Feb 2026 18:34:01 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M8wHHmcW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kg3vKXT+"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3C38B1D00177;
+	Fri, 13 Feb 2026 18:50:53 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 13 Feb 2026 18:34:02 -0500
+  by phl-compute-06.internal (MEProxy); Fri, 13 Feb 2026 18:50:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771025641; x=1771112041; bh=Tf7xCmBu3O
-	jjeBtPucYWSu7ZZmA/9KEq2qolVnDV8VI=; b=SLydztL3qQSOHEoNU7m702ZfbE
-	OLcs4ZVp5eGlbuuYQ7Zr/XYS7W/ATFhVDEzS4wEc0xrI18IlSVXK28JM9hSLG3Fi
-	pX1my/RyHGRCFZW8IX0OLtyXZqtH65MHesSV9Tn0aMxo9P67JivW9xaCpeVGKHfD
-	sqvF2vrFrTqkxsrzogvC6X93VIffed0iYE0M6tb4x0lPC0//5V/dJ7Km+Da/Kez6
-	B1Y7Un84vdRVHXtJaTtrlEGFOl7QcWtyW11BTLtMOeh18JNKcfw2H/1dIEMFu2nY
-	RJk96DywU+3XYZkIvCZPmEjNOxtdbyaw2aGJkFA0XTSjJ11sMjB/KUYUoc+A==
+	:subject:to:to; s=fm2; t=1771026653; x=1771113053; bh=uJLHErmBya
+	6trqvqCDAgnw762VcU9cEiRXU3VV7XY5E=; b=M8wHHmcWTnKFURG2R/C+rMBwbE
+	4THyX9tqr57BpM/HeeuaGY0wYiC1N3He7s3yuDjJNMHD3hB2WsyeIf05QX/IcMJR
+	7DFHsX710WC2x2xv2AK4jgjVjQJrKX4TY57mbJ0ipQrvq2YPa5Jjjt8/eZ8mLoTE
+	LLsbIZ084e6WRv4KJoy0n57jEmkIDRu4Ji24eOzED04evpcyplNvHLfNAhfHzvZ7
+	63R21jIKH84g/cVaCgCog8ciQukntpvO5ZL/JebdqPlHbzW71Igk0B4JsWAnKrQ7
+	y1tfFWCA5kEojqhEiilQwTQ8d8XuFVq2Wb8QyMRYCOOMnkW08gfvpxo3tIuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771025641; x=1771112041; bh=Tf7xCmBu3OjjeBtPucYWSu7ZZmA/9KEq2qo
-	lVnDV8VI=; b=S4/lGx9d7BxIK7dX989RlczPVu/+k7TLRbQgUlLqJik6CmS5OTh
-	g+b9pL1aUBwJGB0kRrMHHsu/GVBNMJHByv2uE/3WQAUK3zrW3zIZl9ukMmEycy0C
-	e9evuduFIJ8uUwIxsTDb32liYvABuHQp2AuJnbriJIntvukXiBDuj99JlM5dv0yp
-	imEt74BJOcE632RSOSqdYGgua0V44Sjywzrc4W0dfUkon+jgTpZa/M+eyAOws17U
-	8KwrpqwZYuZVKmFkkHGJeYrMAA0rFz4qNuTzh/VnA76H1XYw+4fxa28kA3ve2BLt
-	7x7voPnYjFLS7v9UoIq3iBTAnui/pDLZVkQ==
-X-ME-Sender: <xms:6bSPaQB7XDLW9m7fE1IKQ6kflBnBg81wkS29ZswKrjOFe6MpYWLx4Q>
-    <xme:6bSPaeXJE6lFBMAcF7XsUFwYg4_3rTRY2cXo1zyqbaH6YK12Vj17e6B6zGJF8RCqx
-    7C_nIgxUX3EmjmPV8qFK_VQq9nDJVStNBhEgUhGZw0wzlOenGIvOos>
-X-ME-Received: <xmr:6bSPae_tPULp594w4pxlZxS_VJoj5tiQI_IAgdXHSKQLgxYN7zYyuEKqEex33-FP0J1IpPANZ8Z8sMCdFWTmV4KhpS4VHEzruw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdelheekucetufdoteggodetrf
+	1771026653; x=1771113053; bh=uJLHErmBya6trqvqCDAgnw762VcU9cEiRXU
+	3VV7XY5E=; b=Kg3vKXT+HU6q97RWnZ0Qurwf7srujlZ22ddvrvMwdDO8DJmYsiK
+	WX8UxtXS0BatKC1ccoLptOthZMZ89mHPSKT4QSZdcPHQj1AecVXgiFVsPwTL6Fuu
+	oyaM9HlSaK7WaI8j0YgdD8iOpScM9xb8NoneGAKOn3gW9JH3zboGzSgdmsPg8Tka
+	QN7hn0o1K+raV+FhXEJLxfDi47gstVAdzsMYJqq8a9RSCDAAIDCfCHWhTS0S5bRW
+	eoSIzkhKqelSURD1pKArhMnu5TwEHRfd24ozOdd2qovyEiAEdMK1Qn0YkY5SF9oa
+	eJvISNqcr5x22iNWBuIbvPo6S+/WpXD+MYw==
+X-ME-Sender: <xms:3LiPaV6TINErqIBFA8j_M5FmTw4p3fSiWGuz0qA99Sgdap_mb-ckOg>
+    <xme:3LiPabFDX3BXuxXzdz1acFC2bRehMq6KotmhgYmyXdqnT4iFvS276qhgUn79x7E3L
+    ykB_2_fNBD57LJ7vD-qOIpW2KyILHLiVMs42ZWm_qq_uSgua2szNJg>
+X-ME-Received: <xmr:3LiPaYCaB97rsV5Em3cqp_cGXBE4lqO9x_-F1PR7-NuqekR33n_d86FkjLh50T4TpZN3C_SO3LE2myMCKkfA1NgU9MClaJRNrg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdelieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegrsghrrghhrghmrgguvghkuhhnlhgvhedtsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
-    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhm
-    rghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
-    rghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilh
-    drtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:6bSPaQRGJaV14FvhSqxog2y2ttFxlafFgGzmlkcB0PRcVWFIQPChjg>
-    <xmx:6bSPaTT-ABgBf_QWSmUjOX9Nt3hcq2gYH3ci4e-Z5h50mQ_EIFfGjg>
-    <xmx:6bSPac7Fvbc_Mzv3O89C7EdBp87HeIjGy_wrj3lDTfeJbbQ8TdeSsw>
-    <xmx:6bSPaYVaBYPzHZ1FgHMy_HyndWxFgupTtZi3JL-_X7kzRxnyayYslw>
-    <xmx:6bSPacw8SHGQneX0OKItl0Mjm58B8E3REVoNBL6RvjCvd10nKqMwwh8U>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehstghhfigrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepohhpohhhoh
+    hrvghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvg
+    esghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:3LiPaYxOhC71mHrFdC2QFXkXFelTcWxJeEN4XRYNK-zH9vNud_Otfg>
+    <xmx:3LiPaU59RXULcZ63OnCGiWktLXojVC63BPRRTuSOFDniL5eNyJo5_w>
+    <xmx:3LiPaRxB93tE2HJuFMsuxd-vA6-WQ2UX9nQdyXrAUTYXyhdixvXhGA>
+    <xmx:3LiPaQf8YArue43CM2v7cIlpIdBTGKlC6vqefrCzMA3-bCIPhePAfw>
+    <xmx:3biPaWPb6nepObLZXdZqVTZXhKCd7BNToo08rhfV6r4xdJIWE5QTl-uH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Feb 2026 18:34:00 -0500 (EST)
+ 13 Feb 2026 18:50:52 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood123@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,
-  Christian Couder <christian.couder@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
-  Karthik Nayak <karthik.188@gmail.com>,  Lucas Seiki Oshiro
- <lucasseikioshiro@gmail.com>,  Chandra Pratap
- <chandrapratap3519@gmail.com>
-Subject: Re: [PATCH v4 2/4] add-patch: modify patch_update_file() signature
-In-Reply-To: <906f25e184d744f9d23681600a0d9e440b7f07df.1771015581.git.abrahamadekunle50@gmail.com>
-	(Abraham Samuel Adekunle's message of "Fri, 13 Feb 2026 23:10:48
-	+0100")
-References: <cover.1771015581.git.abrahamadekunle50@gmail.com>
-	<906f25e184d744f9d23681600a0d9e440b7f07df.1771015581.git.abrahamadekunle50@gmail.com>
-Date: Fri, 13 Feb 2026 15:33:59 -0800
-Message-ID: <xmqqms1ci5g8.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Andreas Schwab
+ <schwab@linux-m68k.org>,  Ondrej Pohorelsky <opohorel@redhat.com>,
+  Patrick Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v4 0/6] Sanitize sideband channel messages
+In-Reply-To: <xmqqqzqzmeks.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	05 Feb 2026 06:48:19 -0800")
+References: <pull.1853.v3.git.1768602373.gitgitgadget@gmail.com>
+	<pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
+	<xmqqv7gcnwd4.fsf@gitster.g> <xmqqqzqzmeks.fsf@gitster.g>
+Date: Fri, 13 Feb 2026 15:50:50 -0800
+Message-ID: <xmqqikc0i4o5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,45 +97,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> -static int patch_update_file(struct add_p_state *s,
-> -			     struct file_diff *file_diff)
-> +static ssize_t patch_update_file(struct add_p_state *s, size_t idx)
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>  * I would have preferred to see the early parts of the series all
+>>    being opt-in, and that subset of the series be able to graduate
+>>    earlier.  Way earlier than the default flip to prove that they do
+>>    not hurt when unconfigured (they are theoretically no-op while
+>>    being opt-in, but we want to make sure), and that they do help
+>>    when configured.  And then once we are satisfied, the default
+>>    flip can be discussed and applied.
+>
+> Thinking about this a bit more, I see a strong reason to prefer the
+> way the series in this iteration is constructed.  We could merge the
+> early parts down to 'next' well before the last piece, and hopefully
+> we will know how much what they are already using breaks (and we
+> know colors are use in the field, and we know by default we pass
+> colors, so this is to catch other uses of control sequences) by
+> filtering among those who are running 'next' for their every-day
+> work, before the main part of the series leaves 'master'.
+>
+> If we did it the other way around, even if we mergee everything to
+> 'next', the guinea-pig population will be limited to those who build
+> 'next' with WITH_BREAKING_CHANGES, which would be a lot smaller
+> minority (I suspect that nobody uses a build with
+> WITH_BREAKING_CHANGES for their every-day work, actually).
+>
+> So I no longer think the "no-op by default first and then tighten at
+> the end with WITH_BREAKING_CHANGES" is my preference.
 
-Why ssize_t?  Are we going to handle that many hunks that we do not
-expect to fit in a platform natural "int" type?  If we are not doing
-anything about "idx" being more than half the type, which apparently
-is the case ...
+The other two points I still care about.
 
->  {
->  	size_t hunk_index = 0;
->  	ssize_t i, undecided_previous, undecided_next, rendered_hunk_index = -1;
->  	struct hunk *hunk;
->  	char ch;
->  	struct child_process cp = CHILD_PROCESS_INIT;
-> -	int colored = !!s->colored.len, quit = 0, use_pager = 0;
-> +	int colored = !!s->colored.len, use_pager = 0;
->  	enum prompt_mode_type prompt_mode_type;
-> +	struct file_diff *file_diff = s->file_diff + idx;
-> +	ssize_t patch_update_resp = (ssize_t)idx;
-
-... with the cast that is not checked here, wouldn't it make sense
-to just use the platform natural "int" everywhere?  Your code is not
-"safe" either way.  I do not think we expect to handle 2 billion
-hunks, so even on 32-bit platforms, platform natural "int" should be
-plenty.  Instead of religiously using size_t and ssize_t to count
-things without extra care, I'd rather see us check the error
-condition for real, if that is what we really care about (and that
-can still be done while leaving the codebase cleaner by sticking to
-the platform natural "int").
-
-Enough ranting.  Anyway.
-
-If we really are bothered that we cannot handle 3 billion hunks, we
-could avoid losing half the number range by returning
-s->file_diff.file_diff_nr (which is one more than there are elements
-in s->file_diff[] array) or ((size_t)-1).  That would allow us to
-return size_t from here.  I care about this a bit more than "why use
-size_t when int is perfectly fine", because some platforms that are
-not quite POSIX can have ssize_t that is not as wide as size_t.
+Others have any opinion on the topic?
