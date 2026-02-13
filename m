@@ -1,68 +1,69 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E488523F422
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 19:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD982773EE
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 19:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771012506; cv=none; b=oCsW8OWRCxhy24gixvnepBbTtQGmANswcL/qk+nLhxTurcN5Tnn5OQykJPikAYg0y5afm/F53Hmmz1/3VNmYd4AgBzFHG837LQUbOwRkWTor6LX02/7ktLTOFd87I1vSgT5XWq44oOhho8iM7+SdWuHuIGi/BOt16aAAwp9EOl0=
+	t=1771012507; cv=none; b=HeDBnLDkEwrYWdiURnDq74dkccpMjCZhsuBg7G3Tlg55BXNuleRSx8mX6JHQ0/1RI6ih2mcuv3xwD//7w5T1XkxZxWlfmIk1UrIFojOcItIrYLHi1Yg0zkgC6XOwHuMFqoN7mX8w9PgiPZLJm5GAEq916HUN/da8ccB9/K6U3d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771012506; c=relaxed/simple;
-	bh=V4KgMto+6bIM6rI6crM2PKvNXuWUoQUe+V9sB6ZKmfg=;
+	s=arc-20240116; t=1771012507; c=relaxed/simple;
+	bh=SnFAEoGLTWx/w9i0kfJcZ1rh2GRd1THcnDXCqPVGi8E=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gwL1Q0To3A9FnXshgf0Zd00NneZfyYw2bzkl1O9QreVMBqSbcUp8xTurKrlmM4kiGmKhu5lKemBkXmtScX97L+sks4/jll8gdzqkCcgv8evQCsrg3dKSFFSF+TY7TI+wJ63PhmqwUDqjVV0HJLBIZPkmmDYPgdasLnwnyv/6E0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H58xxZzz; arc=none smtp.client-ip=209.85.219.46
+	 MIME-Version:To:Cc; b=Xii+CUUN2BYKjDwPE5zCW9B04F52Qtl6rvrl0BrFkZ5zfoAzQzMCURXwsmJlIc3i5ssUdyVE198qt/R0gljEsYZT1t49DP7k2mbN8aNV9UImWmuzDSpzbvyvUKtjcAdLSNLrOrLi828qmfs5XwDTEASIcFGUqv2mn9bLMGiSo8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Syu8NEmB; arc=none smtp.client-ip=209.85.219.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H58xxZzz"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-896fb37d1f0so25085856d6.2
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 11:55:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Syu8NEmB"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-896f9397ecdso14557366d6.3
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 11:55:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771012503; x=1771617303; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771012504; x=1771617304; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aD/b5iKpHguAeC0jnB0Z+WvM+XZ/OKT1EgCkpZ50+WE=;
-        b=H58xxZzzszCaxodPkI0QKpIpx1RPFKUs5yPXRl3rRJpSZQO20aYRcG3ZH366L/s1uC
-         M4DfiDzhiWZn7peEph5JyMW+LJFb14SQdxIQbgsfhMm2Nhu+QkHpr+69jPJUs4abgGp3
-         pqaeS1DtJB38teHLCDvtZp4wbg2+8tOmZAQacRXIDBeGiuvMO/bdYPIWMbr+HCWI0RK8
-         o7qTRVxJQZHsn1ESfmuShChO0hs5SE2CwVSRE1MFGed09j5njmfMYt9xsswgqSJio0ic
-         QV2gfGntdb3CwMsJUTD+VEVmEyjqpprzwHur85o0pX2SFoj21qTVxICZjlaYShbA3rNB
-         9Vxw==
+        bh=hmIV03m5mKxEGoecOF03Hso1FtheT3G/Py0ixArHlmw=;
+        b=Syu8NEmBUQH19ys1HLyMv+FPSf+81zZelXscAQhR51RKn0Ius61am5wJC9PQl/UhbF
+         mc8pyK0zxH80aF2EfEmrvOr9dKfyuogYgMAmuBVZy+y5F+p1vlqHxL2Y3gHoL6cSXchm
+         KoU24oD7AOrBITgFWlwBoEIc6aPGUiGlA5DF227cjn9NdHIB5sG7SoYdzyRy0T9/+hcn
+         o2klWlD6/Y8uYyrZLjwGeL2KzwMRS/90fINjDBGjYl1tOgBtWiDYW8ltqclHXtfvF1d1
+         3rcKpl6687czq14BqfckNp9wCpRdB2zCtyrCqBwRRrNVwqENp97U//W0nL8CJFiSSKVR
+         AxbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771012503; x=1771617303;
+        d=1e100.net; s=20230601; t=1771012504; x=1771617304;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=aD/b5iKpHguAeC0jnB0Z+WvM+XZ/OKT1EgCkpZ50+WE=;
-        b=U3OsruovEZoLSbQLd1lBv/OAWnGvdn6e1DpJv9Ck5E4vPWArT5TuKtz/JdkNSmnTcL
-         rfXV9tCa/qYIY2D9+QVDxabHiF3eTUSHgevBazdD/vHXTuPTGtuGk+eiacIwIWfVT5bs
-         RwUZMobKPNj/d/Qygbw/9Jur2lecu/e3x7CxO3G2plRmN/xKnlhfU8K4QXq6q2Ewmpvy
-         qycXTtE1CmkUtGyVWFBz8kWhlzMEDJH9tTDWpE+4z12lGbBwJoRf85tGpWz6uz2zdGw7
-         cMiq/b00VWX5OeBmutvnish94c/MB/4Yog73gT4DU8yg1kabC3n9jJfWAuL440wF1jGU
-         ToaA==
-X-Gm-Message-State: AOJu0Yw6AaHNmr3Q3UIXfBMrhlJGvfFqpHJ0gcxAEvF7wLPw8MGmUdNL
-	ZX0xDo0tTe29GIYeCr5yIjH81X7I5ZRbo+6NjnW8UiqlbMjfu9jRyS739PS0Kg==
-X-Gm-Gg: AZuq6aKBncmv+qpInklIZQOdpHIMQ1dC6gnifqVs7OEcRuyuKGG879uSbq7ORMnZjQu
-	si+bbXT/CBxcr9ryuy4DFWWZYWKHgBHLFQZ5NUvn63iLjc7IfwV+KKMDNXy2n3OuwvAL1yyYH55
-	TfFrHwKLQKdVe7bxZqfQEgO3k67di+49TU/tQkkcK55YzOOP8byd0Ns870bMVCS9CkJ0CZLVWuG
-	N4O8TpU0rIJUF+hqFtG7/FCcws1RivbJqrJIYbBref4H3rfvU8PprYE9T/aRYmIRqxA89PHJCXJ
-	dd394OnPy9WxWTVkACBiJur6yi++9BBBy7QCPf5ZWkiPR9nU+LtCN+ZNH/zuunp7LTicqkqMRFJ
-	3Fg0lyIOrk1CcOLoS8ZqIWm1VGsL9TVQyIKLJiiAbAjx3GwmbX7m/jOmbMjF+oNyvG85caGUu7G
-	Rf7MPxyru4bsTxv1pGIDTBS2+w
-X-Received: by 2002:a05:6214:242c:b0:894:6b9e:253e with SMTP id 6a1803df08f44-897404b8296mr11409626d6.52.1771012502624;
-        Fri, 13 Feb 2026 11:55:02 -0800 (PST)
+        bh=hmIV03m5mKxEGoecOF03Hso1FtheT3G/Py0ixArHlmw=;
+        b=WK862mkR2jOdnVY+ySHliWx5RxZMZFrDRtsK36cpavpEfAp+H4G7+BDj+bKxbNBV//
+         n+ZanMILfA5yjVyutwl1k6n1drJGYuLdmSF4pSGoA8MOoXq3h3tTn2W/Du1ODSOvl3LI
+         MpP4LDYfltHc5yqu6eSe6158GI1S8TiWtAT/tUgvanBCwmlrAJlFZYGlIGbg0qhPjJ44
+         n9K2Hbs2B4ja40/1YaUo7y/ST11FVtnKrvq9B/4fxKxW9ye+YjSg3yVcrlySUl9qJWxW
+         XEYlZqiN0DQBTkOj6obXC+aeHUvEO3zqMuplvcalReWiQV86kjBXswsuPA2ARLEicNft
+         z7CA==
+X-Gm-Message-State: AOJu0YzWKK+V44hJaOy6J0TM1zZHWVzm4yo4PxgfY0yguOsIzTWJSRWh
+	nwDIPWuTC09/wyqNXe2WEtWDRvY1DY/5GqyVZyJPRXlRnn8PWSocNb8hJIaAkA==
+X-Gm-Gg: AZuq6aLACVA/NPozbFNHVr2j+BvMQ2whsv+TC2Jaei3+hR4faxaE4q0lM1XaouJNdjQ
+	7AFiEMjxtU/y0D4hgHlfGjvZ+Fx2cCAgmIelQy20c83pl/8cn8VrThEG6LKdur+XS9Xw/YMsPy+
+	Ye8972LfNVFDecaubXl1tpe4X40ZdAFZxAv3DbuFqgi9FMnVqUq5In0ZOQi/c09QYRP+tG6b7X6
+	hHuKKwPIstF3FuCNxggToB7SG0cXqeSgdlEWgDRcLLQoQdHuMBpe9P5XJHqOHdqvCUBmh6lkDXc
+	dk9NZPKxPgQqOBJ62exVl5SKck3yGeziuHFM6yaN2DMM7dcud7+mldRxgolt5r2XmCE/PUJQaj2
+	SdH77R5GX5YFNvWipo7lLpS2um3T6OtNAfm7Q0EgnGDtgaoQKiPWQrSJk65B5ZWkmnMEwe/UQpP
+	AzQAhyQWq4zp0JhHBQmczCk3XI
+X-Received: by 2002:a05:622a:189c:b0:501:4fe6:5a5b with SMTP id d75a77b69052e-506a8387d14mr47354431cf.77.1771012504053;
+        Fri, 13 Feb 2026 11:55:04 -0800 (PST)
 Received: from [127.0.0.1] ([64.236.135.10])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8971cc7dc1csm70953586d6.10.2026.02.13.11.55.01
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8971cd8b330sm81902246d6.29.2026.02.13.11.55.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 11:55:02 -0800 (PST)
-Message-Id: <pull.2040.v2.git.1771012500.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
+        Fri, 13 Feb 2026 11:55:03 -0800 (PST)
+Message-Id: <233f6cdd33efdd91dd5b4a68f7b02d53c32a0739.1771012500.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2040.v2.git.1771012500.gitgitgadget@gmail.com>
 References: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
+	<pull.2040.v2.git.1771012500.gitgitgadget@gmail.com>
 From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 13 Feb 2026 19:54:54 +0000
-Subject: [PATCH v2 0/6] trace2: add macOS and Windows process ancestry tracing
+Date: Fri, 13 Feb 2026 19:54:55 +0000
+Subject: [PATCH v2 1/6] trace2: add macOS process ancestry tracing
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,157 +79,132 @@ Cc: gitster@pobox.com,
     johannes.schindelin@gmx.de,
     Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
     Matthew John Cheetham <mjcheetham@outlook.com>,
+    Matthew John Cheetham <mjcheetham@outlook.com>,
     Matthew John Cheetham <mjcheetham@outlook.com>
 
+From: Matthew John Cheetham <mjcheetham@outlook.com>
+
 In 353d3d77f4 (trace2: collect Windows-specific process information,
-2019-02-22) Windows-specific process ancestry information was added as a
-data_json event to TRACE2. Furthermore in 2f732bf15e (tr2: log parent
-process name, 2021-07-21) similar functionality was added for Linux-based
-systems, using procfs.
+2019-02-22) Windows-specific process ancestry information was added as
+a data_json event to TRACE2. Furthermore in 2f732bf15e (tr2: log
+parent process name, 2021-07-21) similar functionality was added for
+Linux-based systems, using procfs.
 
-Let's teach Git on macOS to also gather process ancestry information, and
-emit it as a cmd_ancestry TRACE2 event.
+Teach Git to also log process ancestry on macOS using the sysctl with
+KERN_PROC to get process information (PPID and process name).
+Like the Linux implementation, we use the cmd_ancestry TRACE2 event
+rather than using a data_json event and creating another custom data
+point.
 
-Furthermore, let's refactor the Windows implementation to align with the
-Linux and macOS versions - by emitting the ancestry information as a
-cmd_ancestry event. We keep the older, custom data_json event type on
-Windows for compatibility for consumers of the TRACE2 data that use the
-older event.
-
-Finally, we add tests of the cmd_ancestry events in the new t0213 test
-script. Extend the trace2 test helper to allow us to execute commands with a
-known process in the ancestry ("test-tool"); we use this to allow tests to
-filter out the uncontrolled environment (how the test script was run, and on
-what system).
-
-Thanks, Matthew
-
-
-Updates in v2
-=============
-
- * On macOS do not filter out PPID 1 or 0, to match what the Linux
-   implementation does.
-   
-   Stopping before PID 1 and 0 means we do not emit the launchd init process
-   on macOS. The Linux implementation does not do this, nor does the Windows
-   implementation.
-
- * Add t0213-trace2-ancestry tests and extend the trace2 test helper.
-   
-   The tests use the "400ancestry" test helper to spawn child processes with
-   controlled trace2 environments. Verify that the process ancestry is being
-   correctly captured on platforms that support cmd_ancestry.
-
- * Drop USE_THE_REPOSITORY_VARIABLE macro as it was not required.
-
- * Updated commit messages to use more standard format to refer to existing
-   commits.
-
-Matthew John Cheetham (6):
-  trace2: add macOS process ancestry tracing
-  build: include procinfo.c impl for macOS
-  trace2: refactor Windows process ancestry trace2 event
-  trace2: emit cmd_ancestry data for Windows
-  test-tool: extend trace2 helper with 400ancestry
-  t0213: add trace2 cmd_ancestry tests
-
- compat/darwin/procinfo.c                 |  97 ++++++++++++
- compat/win32/trace2_win32_process_info.c |  58 ++++----
- config.mak.uname                         |   2 +
- contrib/buildsystems/CMakeLists.txt      |   2 +
- meson.build                              |   2 +
- t/helper/test-trace2.c                   |  59 ++++++++
- t/meson.build                            |   1 +
- t/t0210-trace2-normal.sh                 |   5 +-
- t/t0213-trace2-ancestry.sh               | 180 +++++++++++++++++++++++
- 9 files changed, 379 insertions(+), 27 deletions(-)
+Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+---
+ compat/darwin/procinfo.c | 97 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
  create mode 100644 compat/darwin/procinfo.c
- create mode 100755 t/t0213-trace2-ancestry.sh
 
-
-base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2040%2Fmjcheetham%2Ftrace2-macos-ancestry-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2040/mjcheetham/trace2-macos-ancestry-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2040
-
-Range-diff vs v1:
-
- 1:  d99a30a1a7 ! 1:  233f6cdd33 trace2: add macOS process ancestry tracing
-     @@ Metadata
-       ## Commit message ##
-          trace2: add macOS process ancestry tracing
-      
-     -    In 353d3d77 (trace2: collect Windows-specific process information)
-     -    Windows-specific process ancestry information was added as a data_json
-     -    event to TRACE2. Furthermore in 2f732bf1 (tr2: log parent process name)
-     -    similar functionality was added for Linux-based systems, using procfs.
-     +    In 353d3d77f4 (trace2: collect Windows-specific process information,
-     +    2019-02-22) Windows-specific process ancestry information was added as
-     +    a data_json event to TRACE2. Furthermore in 2f732bf15e (tr2: log
-     +    parent process name, 2021-07-21) similar functionality was added for
-     +    Linux-based systems, using procfs.
-      
-          Teach Git to also log process ancestry on macOS using the sysctl with
-          KERN_PROC to get process information (PPID and process name).
-     @@ Commit message
-      
-       ## compat/darwin/procinfo.c (new) ##
-      @@
-     -+#define USE_THE_REPOSITORY_VARIABLE
-     -+
-      +#include "git-compat-util.h"
-      +#include "strbuf.h"
-      +#include "strvec.h"
-     @@ compat/darwin/procinfo.c (new)
-      +	strvec_push(names, name.buf);
-      +
-      +	/*
-     -+	 * Recurse to the parent process. Stop if ppid is 0 or 1
-     -+	 * (init/launchd) or if we've reached ourselves (cycle).
-     ++	 * Recurse to the parent process. Stop if ppid not valid
-     ++	 * or if we've reached ourselves (cycle).
-      +	 */
-     -+	if (ppid > 1 && ppid != pid)
-     ++	if (ppid && ppid != pid)
-      +		push_ancestry_name(names, ppid, depth + 1);
-      +
-      +cleanup:
- 2:  c786a038f3 = 2:  546fcc3446 build: include procinfo.c impl for macOS
- 3:  7ccd0a9a6d ! 3:  2b02f62f0d trace2: refactor Windows process ancestry trace2 event
-     @@ Metadata
-       ## Commit message ##
-          trace2: refactor Windows process ancestry trace2 event
-      
-     -    In 353d3d77 (trace2: collect Windows-specific process information) we
-     -    added process ancestry information for Windows to TRACE2 via a data_json
-     -    event. It was only later in 2f732bf1 (tr2: log parent process name) that
-     -    the specific cmd_ancestry event was added to TRACE2.
-     +    In 353d3d77f4 (trace2: collect Windows-specific process information,
-     +    2019-02-22) we added process ancestry information for Windows to TRACE2
-     +    via a data_json event. It was only later in 2f732bf15e (tr2: log parent
-     +    process name, 2021-07-21) that the specific cmd_ancestry event was
-     +    added to TRACE2.
-      
-          In a future commit we will emit the ancestry information with the newer
-          cmd_ancestry TRACE2 event. Right now, we rework this implementation of
- 4:  a06344dc75 ! 4:  6b9054115e trace2: emit cmd_ancestry data for Windows
-     @@ Metadata
-       ## Commit message ##
-          trace2: emit cmd_ancestry data for Windows
-      
-     -    Since 2f732bf1 (tr2: log parent process name) it is now possible to emit
-     -    a specific process ancestry event in TRACE2. We should emit the Windows
-     -    process ancestry data with the correct event type.
-     +    Since 2f732bf15e (tr2: log parent process name, 2021-07-21) it is now
-     +    now possible to emit a specific process ancestry event in TRACE2. We
-     +    should emit the Windows process ancestry data with the correct event
-     +    type.
-      
-          To not break existing consumers of the data_json "windows/ancestry"
-          event, we continue to emit the ancestry data as a JSON event.
- -:  ---------- > 5:  b9a94291a6 test-tool: extend trace2 helper with 400ancestry
- -:  ---------- > 6:  6a5232540e t0213: add trace2 cmd_ancestry tests
-
+diff --git a/compat/darwin/procinfo.c b/compat/darwin/procinfo.c
+new file mode 100644
+index 0000000000..c8954f02d7
+--- /dev/null
++++ b/compat/darwin/procinfo.c
+@@ -0,0 +1,97 @@
++#include "git-compat-util.h"
++#include "strbuf.h"
++#include "strvec.h"
++#include "trace2.h"
++#include <sys/sysctl.h>
++
++/*
++ * An arbitrarily chosen value to limit the depth of the ancestor chain.
++ */
++#define NR_PIDS_LIMIT 10
++
++/*
++ * Get the process name and parent PID for a given PID using sysctl().
++ * Returns 0 on success, -1 on failure.
++ */
++static int get_proc_info(pid_t pid, struct strbuf *name, pid_t *ppid)
++{
++	int mib[4];
++	struct kinfo_proc proc;
++	size_t size = sizeof(proc);
++
++	mib[0] = CTL_KERN;
++	mib[1] = KERN_PROC;
++	mib[2] = KERN_PROC_PID;
++	mib[3] = pid;
++
++	if (sysctl(mib, 4, &proc, &size, NULL, 0) < 0)
++		return -1;
++
++	if (size == 0)
++		return -1;
++
++	strbuf_addstr(name, proc.kp_proc.p_comm);
++	*ppid = proc.kp_eproc.e_ppid;
++
++	return 0;
++}
++
++/*
++ * Recursively push process names onto the ancestry array.
++ * We guard against cycles by limiting the depth to NR_PIDS_LIMIT.
++ */
++static void push_ancestry_name(struct strvec *names, pid_t pid, int depth)
++{
++	struct strbuf name = STRBUF_INIT;
++	pid_t ppid;
++
++	if (depth >= NR_PIDS_LIMIT)
++		return;
++
++	if (pid <= 0)
++		return;
++
++	if (get_proc_info(pid, &name, &ppid) < 0)
++		goto cleanup;
++
++	strvec_push(names, name.buf);
++
++	/*
++	 * Recurse to the parent process. Stop if ppid not valid
++	 * or if we've reached ourselves (cycle).
++	 */
++	if (ppid && ppid != pid)
++		push_ancestry_name(names, ppid, depth + 1);
++
++cleanup:
++	strbuf_release(&name);
++}
++
++void trace2_collect_process_info(enum trace2_process_info_reason reason)
++{
++	struct strvec names = STRVEC_INIT;
++
++	if (!trace2_is_enabled())
++		return;
++
++	switch (reason) {
++	case TRACE2_PROCESS_INFO_STARTUP:
++		push_ancestry_name(&names, getppid(), 0);
++		if (names.nr)
++			trace2_cmd_ancestry(names.v);
++
++		strvec_clear(&names);
++		break;
++
++	case TRACE2_PROCESS_INFO_EXIT:
++		/*
++		 * The Windows version of this calls its
++		 * get_peak_memory_info() here. We may want to insert
++		 * similar process-end statistics here in the future.
++		 */
++		break;
++
++	default:
++		BUG("trace2_collect_process_info: unknown reason '%d'", reason);
++	}
++}
 -- 
 gitgitgadget
+
