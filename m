@@ -1,197 +1,136 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0E2C029D
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 21:35:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964FC3033F9
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 22:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771018539; cv=none; b=sd9nTZGMuRypyDDI3tZT7P8+zi6eZGTdPt9uBJeYNGp+1wlYldc0R8GgzFHjKcRx2WgPKHyoHye2ofpxvHUph4y9APWQYg7AnPBiy99lepGJhifF+gTv7kbERP3FU63tiZP5ijqZRy7dKIFxLaJI+v5mOLWFuMNMZ/dd6vsnL0I=
+	t=1771020525; cv=none; b=RcQAivYdwOK+Mc8fUUKs4ZRw4I81Jatyw1VPj3QhU3BaGeGVVl7L5GjbMzW/ep7OeEHCG1io+v8SwVQBw5bWXPHzSZ9LQkNKTqk2RUhAId4hGa4PVzGl2PG1a5WzLkFvNyfzTtgAA9u5i4ovh/jw2RkOi6OSBSufmqK5X3nzZYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771018539; c=relaxed/simple;
-	bh=7n8r2NYMmi7pFWRRy4MTCDTNTYXlJ2vkG5GAPVL3ubs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PobUb4XqfH+kzeRa32m4v71asaYpM26PdapM6UTHoUCl2B9NIe9Z+rYS5su0aamGWKfcWlquaLGgcssZsfovbIaZvWvN0A8V4ivgzGFYWh022qimd07AuwEzowsuusQV+DYgnGrMmk7cUNA/UWdPeQZ5pRp88RIOh8s1mYGXOgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k8nwByzt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AVSw5tdQ; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771020525; c=relaxed/simple;
+	bh=0t4p8xq4EAvabJU3fTq3O0bDDAKqDu/MZYaiKP8r+TY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=ZCP0zqIeLTdCR4+jHfRfys3/zuSJhC/8M4BUpD/JU43Ibjb9yzz/ioLT5MVx5qNeYWaZd5f2m4oOXhSGCCTEgdcxPjSJrqgKAyJ/y+yNBWI4c4wB8jrcn6gp96vLDhFvCNHy1TmLDEQr2plu6DhrItKzlbJotSQmlvsusuamy9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hMHZDiSW; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k8nwByzt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AVSw5tdQ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F04DE7A00CD;
-	Fri, 13 Feb 2026 16:35:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 13 Feb 2026 16:35:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771018534; x=1771104934; bh=Katt88n6FH
-	lBpYzxW4hel0pE8qb76cihiRFmBb+Kvkk=; b=k8nwByztp8aJ6+jGoDCJ/j1bg7
-	r5kN9X/NTbq83DGWV4WG+kQXy1GZr/R2YwVx5GIIPOFKE/TU3lemcQu6eUObgjWr
-	s4uyh5AfHyTwi2vx80d5x3WL8r13shAlcPvl49PnRRRYTHC38UK9E7IGQw0MoiO1
-	SW6iAs/b+UQLK28LpnW1HqtfzSNEhbBNCYaoEsfwFcCn3su+MDa6RBDm4aeUC5MV
-	wEVoJGBgX7eKWblCw+2aWh4n9tAk5bJMkU2SFBDAt+wcVbXedWT16/tXZ5j8R5sv
-	38mTBUUSMAPIc+HRGzrQ4VeCPcXBLVIbxUxZ0NPoZS/u/85Y8eALPf9qHvYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771018534; x=1771104934; bh=Katt88n6FHlBpYzxW4hel0pE8qb76cihiRF
-	mBb+Kvkk=; b=AVSw5tdQ7NtpJGF9/1jYIJC2YTnBB6Fe/k2eSIJ5sRb8eHcrfbN
-	SB0xTyCHGQsmJff9kctnzo6h90HLFn9GHG5V7kNHyrd3vbG/pfBF4EvkKb9FwDko
-	819y4HRHDoQGnPxULOeeKEk8r9OkeEzFsY4fg9hLUECZ7f0QKX31hNE6lzNQcrG1
-	aeSgzcVf6++vgNaUDHm7nwJO3As5XFOXsAIy7tN2Wej9aV/0i8daPkEIGQ5OdBn3
-	aEEATF+p9XQmeL3nP/Q7Bv9PMY32Kbd47/QDqCBcMYvACo7sQmJeJvxfKd5HikFc
-	unsUl/q+dHnlSh45JMtfPMMBIj95qmB9u5Q==
-X-ME-Sender: <xms:JpmPaa90wtbhrku_u-RjKp-1sGflrvvleD9SIlSJPypXMO50sA1zHg>
-    <xme:JpmPaRupI9wuEXtO94HkxAqogii13Ef79OuyFksjiaOda2BVnZWwiwNgYNgSRluKz
-    XZI0Tza_-GyabrtbuuCHLVibwb7l_OVO9sIKy3_vI0MZi9B-GVChO0>
-X-ME-Received: <xmr:JpmPaVBQ64EAhQnioxSJV4pj6y7mq7yz3RvKToY8t9W2GGAA5W0lBcshd9fqSytgp-CRZ0Q7BlfrunVcY81jd-01ZY1Tf9TQfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdelfeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
-    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddu
-    keeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:JpmPaRUgOf6aerAnUp3MafwXUUgAgB998eMANDBsUqABxAdvWOE0Sw>
-    <xmx:JpmPabC8wgfTv0nmxgg0iE4tW2VygnVbwwyeYJrYkVr8QkWNxcm17Q>
-    <xmx:JpmPac_ERiSRi1esLD0VYKGAs9efYelIst0x-alL-ZxnbkJSBXKKaQ>
-    <xmx:JpmPaaHZsn8w3MD-mycSarunDx1PWhokSMXmzTuA6nINYrOzTacKZw>
-    <xmx:JpmPaYj6ZxMyykEL9cOvJPPCpXacefZVowwtg5_FMIUEWAvaDWfQDbx1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Feb 2026 16:35:34 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [RFC][PATCH 1/2] worktree: represent the primary worktree with
- '/' instead of NULL
-In-Reply-To: <20260213120529.15475-2-shreyanshpaliwalcmsmn@gmail.com>
-	(Shreyansh Paliwal's message of "Fri, 13 Feb 2026 17:29:53 +0530")
-References: <20260213120529.15475-1-shreyanshpaliwalcmsmn@gmail.com>
-	<20260213120529.15475-2-shreyanshpaliwalcmsmn@gmail.com>
-Date: Fri, 13 Feb 2026 13:35:32 -0800
-Message-ID: <xmqq7bsgl42j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hMHZDiSW"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48372efa020so8603275e9.2
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 14:08:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771020523; x=1771625323; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VKgC4x9/+SSjUvO40LfAujDrK814rQKTNHzy9qVi4QY=;
+        b=hMHZDiSWrcLEddPKl45ayodzH06iyt8F1ETM2Dt6HRIf9aOWewtN1Ojzvzj0sqY1Aq
+         sar5+o9CYJ6aIRUt0hWaJ/bpqhw/CUqhlVahO/tOj1yinprxYA4ml0dlbdPlTw0Pa0fO
+         IH8ZXv5B908+jkjTJaXQV2TGqDLmBY7ej3ubnGPC45x3OMV6jJ6GVATi7p/t2jZCnlPV
+         IXOMTlldPToaKqMLeYJKzqjIVSqE4E+bHV1Osd+VWASAiNc3IqFsLpwFhMbOWRX9YdbJ
+         2NxSFKG+Etp3VKQ8FaGdd4yVnyIdD3D8R+gyJy6tyr6YYuHtjRPpr5PnpTiJVDJLKE8H
+         Dg/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771020523; x=1771625323;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VKgC4x9/+SSjUvO40LfAujDrK814rQKTNHzy9qVi4QY=;
+        b=JA3SCTNYCtHoZnA0Epd+nqy/YT+untNlMJOtINPz997VhHGYPgAs5WK9J5Nc5N2Wdq
+         7fdMl1de0NHSItqBBSBngp36v/hdz1tDY7DvK/zP61F9NTraWxKCxIIOhUSTvhwpfN6Y
+         yrF7e8OU0y+Xa/F5DsFV1IINKPHRHXoiI6o2A7TBccSnMl+OjFbQ6BoAhiqFn2dMzm0j
+         Rc/Q9+hJRPA+f0WmhHdg2PaAVBRVlStoNJR2/FOE0BfTQjPOUywI3R48er2e3/ckEUUv
+         +gH38uuXuLBj5zU6PNrr4mVwv/HsKbdC4+QFPncNe7Xq/yopB2QKbzYHIa+eZwL7Y4w2
+         JGzg==
+X-Gm-Message-State: AOJu0Yx3grt7ZIOn0/kE1W/1Lc2FFkt4wbdHY9hySePW7WiZzX49g+x+
+	qs2FxTBKgb1rmXEJilzEUYbcDxP6twoUTKxzhOtnDyyc6BbuaiW6DHEFXXTBmUEJ
+X-Gm-Gg: AZuq6aK/opX9sF5M+1soOQ4KqcZxPLjCbc7t5GMm3eapi/yQNfabhn/3mQiIUAIBu6r
+	nqQ7OUfE7yhXWufnxx0DDkvogQASE+seRkrBbk8d2dYj+ZgSXzWdm47sEBrvvinJltt/ZZRKqOW
+	BBM6NnXsKN847Ro/WG20V5/K/Lg1aaIVmPtmkETr2+kKTfy38DwBrDs97SqAVM6CONYlUPddFrV
+	LsVvO5OZpdYGa/kxBL79cKBkRDaNvQrzqsK//9R9i0wFIxl3gTyzzDq1/vU4HsuAYi6GnPKS+8O
+	XF0Vf6+J6jgCeBbWjMCjhVrKd1pb7fJwrr6AAQe9SCGep09GZE3qjFETkN0LfByfX3SfM7VJI09
+	0H2EtbBZGvrwpwYR76WMXjqUAcjlocjCCe8IvPUBU0BS6URA1sPMReAbUgMdNtjgVwzZTz1K+qA
+	9fPpQVPnnmk9MK+8/F/dLIO6YnHTvYYZfar2HHcEsc
+X-Received: by 2002:a05:600c:a44:b0:477:2f7c:314f with SMTP id 5b1f17b1804b1-48379bbc51bmr13369855e9.10.1771020522342;
+        Fri, 13 Feb 2026 14:08:42 -0800 (PST)
+Received: from localhost ([102.88.77.2])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43796a6b563sm8417445f8f.12.2026.02.13.14.08.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Feb 2026 14:08:41 -0800 (PST)
+Date: Fri, 13 Feb 2026 23:08:51 +0100
+From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: [PATCH v4 0/4] introduce new option `--auto-advance`
+Message-ID: <cover.1771015581.git.abrahamadekunle50@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1770390576.git.abrahamadekunle50@gmail.com>
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+Hello,
 
-> diff --git a/worktree.c b/worktree.c
-> index 9308389cb6..b29934407f 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -101,6 +101,7 @@ static struct worktree *get_main_worktree(int skip_reading_head)
->  
->  	CALLOC_ARRAY(worktree, 1);
->  	worktree->repo = the_repository;
-> +	worktree->id = xstrdup("/");
->  	worktree->path = strbuf_detach(&worktree_path, NULL);
->  	worktree->is_current = is_current_worktree(worktree);
->  	worktree->is_bare = (is_bare_repository_cfg == 1) ||
+After after more reviews and deliberations, I have been able to
+rename the new option name to `--auto-advance`, where the
+--no-auto-advance implements the feature and does not auto advance
+while --auto-advance is the default and maintains the current
+behaviour.
 
-Presumably we left .id = NULL from CALLOC_ARRAY(), so this looks
-sensible.  When releasing resources from an instance of worktree,
-we'd blindly free(worktree->id) and in the old world, free(NULL)
-turned into no-op, and this xstrdup()'d copy will be freed in the
-new world, so there is nothing funny here, I hope?  This one, and
-the change to is_main_worktree() go together.
+With the option, users can navigate in between files while deciding
+on hunks as they wish with the '>' and '<' option for going to the
+next and previous file respectively if there are more than one file.
 
-> @@ -127,6 +128,8 @@ struct worktree *get_linked_worktree(const char *id,
->  
->  	if (!id)
->  		die("Missing linked worktree name");
-> +	if (!strcmp(id, "/"))
-> +		die("'/' is reserved for primary worktree");
+Patch 1 implements the new `--no-auto-advance` options, Patch 2
+modifies the function `patch_update_file()` to instead take the index
+of the file as parameter instead of the file_diff. Patch 3 moves the
+'git apply' logic into a function so that we can reuse this logic when
+implementing the all or none application of patches.
+Patch 4 implements the interfile navigation, and adds tests to the
+interactive test file.
 
-Makes me wonder if this is a BUG not die; where does id come from?
+Changes in v4:
+==============
+- Renamed option to `--no-auto-advance` with `auto-advance` being
+  the default option
+- Modified the function signature of 'patch_update_file()' to accept
+  the index of the file diff
+- Moved git apply logic into function for reuse
+- Removed the whatnow prompt. Now the hunks in the file keep
+  showing even after all hunks have been decided
+- Added hunk summary to patch help remainder to show the user the
+  hunk deails
+- Added tests ot t3701-add-interactive.sh
 
-	... goes and looks ...
+Abraham Samuel Adekunle (4):
+  interactive -p: add new `--auto-advance` flag
+  add-patch: modify patch_update_file() signature
+  add-patch: allow all-or-none application of patches
+  add-patch: allow interfile navigation when selecting hunks
 
-The only caller is worktree.c:get_worktrees_internal() and it is
-feeding d->d_name that came from readdir_skip_dot_and_dotdot(), so
-it cannot be "/".
+ add-interactive.c          |   4 +
+ add-interactive.h          |   5 +-
+ add-patch.c                | 157 +++++++++++++++++++++++++++----------
+ builtin/add.c              |   4 +
+ builtin/checkout.c         |   7 ++
+ builtin/reset.c            |   4 +
+ builtin/stash.c            |   8 ++
+ t/t3701-add-interactive.sh | 100 +++++++++++++++++++++++
+ t/t9902-completion.sh      |   1 +
+ 9 files changed, 246 insertions(+), 44 deletions(-)
 
-By the way, I suspect that get_linked_worktree() should become
-file-scope static, as there is no other caller.
+-- 
+2.39.5 (Apple Git-154)
 
-> @@ -206,9 +209,7 @@ struct worktree **get_worktrees_without_reading_head(void)
->  
->  char *get_worktree_git_dir(const struct worktree *wt)
->  {
-> -	if (!wt)
-> -		return xstrdup(repo_get_git_dir(the_repository));
-> -	else if (!wt->id)
-> +	if (is_main_worktree(wt))
->  		return xstrdup(repo_get_common_dir(the_repository));
->  	else
->  		return repo_common_path(the_repository, "worktrees/%s", wt->id);
-
-Good spotting.  This series needs to spot any and all places that
-use these other conventions (i.e. wt->id == NULL) to identify the
-primary worktree and rewrite them to call is_main_worktree(), which
-may be a chore, but once it is done, it would become a lot easier to
-follow the resulting code.
-
-> @@ -277,7 +278,7 @@ struct worktree *find_worktree_by_path(struct worktree **list, const char *p)
->  
->  int is_main_worktree(const struct worktree *wt)
->  {
-> -	return !wt->id;
-> +	return !strcmp(wt->id, "/");
->  }
-
-OK.
-
-> @@ -566,7 +567,7 @@ void strbuf_worktree_ref(const struct worktree *wt,
->  {
->  	if (parse_worktree_ref(refname, NULL, NULL, NULL) ==
->  		    REF_WORKTREE_CURRENT &&
-> -	    wt && !wt->is_current) {
-> +	    !wt->is_current) {
-
-OK.
-
-> @@ -629,6 +630,9 @@ static void repair_gitfile(struct worktree *wt,
->  	char *path = NULL;
->  	int err;
->  
-> +	if (is_main_worktree(wt))
-> +		goto done;
-
-This is a bit new.
-
-The original did not say 
-
-	if (!wt || !wt->id || !strcmp(wt->id, "/"))
-		goto done;
-
-The only caller is iterating over the resulting list of worktrees
-returned from get_worktrees_internal(1) *BUT* it already skips the
-primary worktree (the function MUST return the primary one as the
-first one, and the callers MUST be aware of the convention).
-
-So I am not sure if the new check is even needed.  Or rather, this ...
-
-	if (!wt || !wt->id || !strcmp(wt->id, "/"))
-		BUG("why are you feeding me the primary worktree???");
-	
-... might be more appropriate, perhaps?  I dunno.
-
-
->  	/* missing worktree can't be repaired */
->  	if (!file_exists(wt->path))
->  		goto done;
