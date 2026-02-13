@@ -1,69 +1,69 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4A333BBD9
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 23:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF7033D502
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 23:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771026946; cv=none; b=uD1lSbWQpoDeJgVjmyxvrrUK4Qn3bsVVLasjzWdnXYK48kQvT2tDkTDwbJOdLg9eGSm3m9rvh6ljO60XOwG6RI/bfv/KzXsQ6ltP8l5nTEtgyU/nmXSVsdNaM/pN5PbwSkeNaKMWxkfXPxIH5b1sZt02KtLs56M4bcDI0lWSTi8=
+	t=1771026948; cv=none; b=EFB6oqrRtyLu3S4iDmT4vkBn7FnW6tXk+QC9nKzU/RpcRNJxR/XHE/CHey71t5F+9OFKviIjpVy9TBU3OVtnFPL2XfOP7e0CaE8eadVv8g97i7n18WERW6dkJIk+Fd5wZQfKRxcBQFYzUiaw8yLdkBZDpKVTOO4BD7R2niUkWVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771026946; c=relaxed/simple;
-	bh=T1nqel8NkWF99/pTNJOpZ+fsaS9aU9DBgTdIYh1rNqs=;
+	s=arc-20240116; t=1771026948; c=relaxed/simple;
+	bh=jnZxZHybTScvJBpgPWXS/cNGn6JAGzJt+QbFkk7j+hc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FRf4yYDZ/DG2cwuiu9PMwnCLhxGDFw+nLv4arPgtvqpR0rCAqxDLf6AISyVcXK8rrUklARe5hVRaqg/Zmn4ddlVH/RTPPk6WHkZtdERdjkgv2zCmCwzZTnSVPdY2p041an3ePdSgBdm6e7ZDISekkCyxFohX2GRB2stn8HjsfPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FX1mPxIt; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=twymQXVZMyYRX5zx+s10jZFJ/c0AznzLdK1z8NlWB5XBtP8gCdlCHa2gXoTcNbJMNmmp6TpYQPoSfcbPgb4+fEoUAVzWn2Nc0/ZdIlPrURVP+4l1UOwQ4DOPGqTEsqXIxKw+C4Q0S+TrZ9d3Joua3BnuS1ICWZ8X3g9njoOuakg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AAZnEZCG; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FX1mPxIt"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cb49f63238so44376885a.0
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 15:55:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AAZnEZCG"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-89577f866d6so20455176d6.0
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 15:55:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771026944; x=1771631744; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771026946; x=1771631746; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y72pMqs9yEyscWB91fyClow6wxiBSt1McfKC3DosdIM=;
-        b=FX1mPxItrpbPj7qOY0buPOJywzItU+PlFrlFtoPOKjGs6NV1dai1VtxsZrSrwQoA18
-         OGjNh3K5pbC9u9DtN5DrNXff6XrF2Bfx63ka45SkZ7fh7eplQO46b7agfCsgPHQJIMvm
-         x8hrcgUQifJMjxppEkT3xg7g91+ZWm2UgP4EHVUzAi1qpCM0jbiB2WlXFFgLrNPoIb1K
-         MAhmz6QMPZWXnGk7N5d8hWIk9gouCZDuP15ScxplUh54xwHNA+dGr7oUSuVV3Dnz9bDu
-         nF1jOFma4B9VEX5VtpHgh9SL+gzo9G/zS/H/6L4hZPo39oYrfQmItER3ogIwRnjKtWx5
-         L3CQ==
+        bh=PAzhFuRZ2SJdSK9F1xCSqLK0xt8spRnyjC+Gfiotgs8=;
+        b=AAZnEZCGfeKGVmm7IAn49Vqk5yIUDPdx60fdG47pOS6ROA0IKIZL9oQI2W7K2HxIM5
+         MubmeQ7vf2z5PmPDOqYtA9EmNz+HLk+ezJsRwpQ2MwGirReffeFqJ1A0np1LFzabhmu1
+         WdaedJZS1oFSsqAPIwqdEE9+47XugbBKkDaRjZtoy+XX8lw8YB8hiAPByRYSke4ak6YE
+         HJ8yP8yN0J+BB/R4wUV15fUXNUBShZE7uzXzSIngcYowObO9ahvFvoKiHMb12/sb/gkq
+         jxYmAXsOKg0CCoJ7S2Si1gxg8qddS31bSevqXhdaJG1r7V35QBT/RfxeePmqYMgT9sAp
+         nsXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771026944; x=1771631744;
+        d=1e100.net; s=20230601; t=1771026946; x=1771631746;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=y72pMqs9yEyscWB91fyClow6wxiBSt1McfKC3DosdIM=;
-        b=gga3JzZKzNr+kOk8NOhUCZKa1VE6G/bZFo34+T2gJjeUPScGLcysgy6eXlYy3GQsbY
-         G3f+m+9wWlAXzix+Se3biJqKmyarx27MW9jmensDIHpejF/XrSfDT3KvAq0X5kmlPrl5
-         RksLEyF5KbOPs3nFKbysOcou5RS6KMvW1RJSoHPLg5Jl7lJ5JgBai9NmttjnjZpPUJNr
-         /8LOffpa8EsgqhjvxMqoG1COXjS7mojOblhUHOj0G5Q3YyTOY8l0Avtk7dSZzlGVDF5O
-         0QlsXRcKgqBuHYXkaj0JtMMcJgoN0A8ykM23O/S5IPu3RJD7NJNcRZgXkzB1smD/uf99
-         d10w==
-X-Gm-Message-State: AOJu0YyJQ/+rYIuqe/7e88/wg6aBbhEplTfvMO0ZMUPjnGI3hnJJNW42
-	0hn5FR1ZnOP2Va3fajSJZCDSl+Cev+gGh2TKmmqOLtLDD7sJpEfibrgkCdtK5g==
-X-Gm-Gg: AZuq6aKVyCMRaIQXgrZhCDdHl/kD5RYiFMAU3PdV6UrR/9eN6X4OeH0LSRVp1oh1262
-	5dDohI2cEtvsCLAhOu7oraoYmXe5s2+CgKztmlZalaofuUcsVigp2O00LHzzXvRyzA49Y66ewiX
-	S7PGfGtURd/74txuz3H1sQMSJbxACNZFL832butc8XtcrSKM1pvpTWVQF78R2pvVEHYZ0slCB5A
-	CGONsRWJlb7zNyqwSC+jiR0cqi13i7l9sAVRu+MMG90Pc3MXpIWOcftJK25XH+RAqyv6I5D005/
-	Sa5w9crY7BaU1A/ypuGRt5Hfke5IDTZSVjyuYdPbBCxxW3LuNDg3G0xZikazam99uj8znqWEfsC
-	wJuK3OJApkUW07IRSyc54rSe3YrxrI7pLOyrEjPjH3NWrse4fRchlOlx7vg6MgdUEbojgfXSL6I
-	wK6zI+N09rmcHNGh3BMur6ndSh
-X-Received: by 2002:a05:620a:460c:b0:8b9:cf85:40a0 with SMTP id af79cd13be357-8cb4245fea1mr421057685a.57.1771026943835;
-        Fri, 13 Feb 2026 15:55:43 -0800 (PST)
+        bh=PAzhFuRZ2SJdSK9F1xCSqLK0xt8spRnyjC+Gfiotgs8=;
+        b=dwEs49EVPWsKINqSbSSrNvKEFZovtgarh+UkSuLpDjJJhPRuOdO7eOfsxpvtKiCvpL
+         7NZb+L5mDUoyZknk6fJIs9uun8HMG8HOHr4P+w34PlYjxm3TW0cWejqwijSe4YaKQUyr
+         zohvSqLr7WnlMbAB+85OWX6tMXmANR9MZcKPvPZ6gMY0hrMT0/heHJmOnA9DL932MA1O
+         gOYSgIibyhcsmx2Ph8cKYgHwD0J38/hT4OYxBIWZyvnMUy4B3cgLmtpygD2Os6sgJY2C
+         4fFUpG4e1VpezFSxleYxBZh3BZlaXcaWWRCVjonwVeSYzktqStzLYfYIARdwCx4Iye97
+         e12A==
+X-Gm-Message-State: AOJu0Yx1mhpglWKVOHa1crYEGyRcRWQw6zmDukW/Y6ACDb2FhHYwtYWz
+	4t+lxiuNFkZIPgf9X2JXhxHeojjQa84QaAAzn/CV6BnRvQ0aC8GH6jDLXLgGcszQ
+X-Gm-Gg: AZuq6aLRIe5iARnnnY9J3ZVObvqAFvbWs9sLNJQEVdBx45APWWfT+DwmajV2dGLOVwZ
+	ddYkU8FB2blpX4qBIao8+JvWidAsX1cMrQ6dcBeW37AtsTbzXyD/56XmP5ROvdP79ixO8kXIfLb
+	RvIC3FXDGpIHfOBPkkWaYW7znEKzYQqulqiMxrvdv9Z9z9gHpHtRt2Gjm9sJZGzfYIIv7c4A+3u
+	VC+RzoI8gBhoOWZT8T5nznNs0+l1EmI+jjGzBYKk6cILJv5vJT9i0UmhbmfvnOaJdI8ceDvSljz
+	BLM7gR1KUxmTkt45+pIyCpPadHIb6ZvKdojdk8dUTp0HslkAYwcIiguCvXeKODoRq7Q51fx3RZ+
+	PC0GeJaK5/U9xwlt0z8fr1haaezDqO05kjp9bs0dBnoXz5ovpK7fq6eaP/adnAYuIdCqcj8Pnsg
+	hKiZGhkNeOzLZIaVoNr5D1VvZOUVcOUIwVdFk=
+X-Received: by 2002:a05:6214:2264:b0:88a:31e5:80fa with SMTP id 6a1803df08f44-8973f2bd416mr31479316d6.16.1771026946249;
+        Fri, 13 Feb 2026 15:55:46 -0800 (PST)
 Received: from [127.0.0.1] ([145.132.99.17])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-506847ed9c4sm73823291cf.8.2026.02.13.15.55.42
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb2b0db51fsm717452185a.14.2026.02.13.15.55.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 15:55:43 -0800 (PST)
-Message-Id: <d14937e6d1e4e33bb7892107061807f2b3bba3d7.1771026918.git.gitgitgadget@gmail.com>
+        Fri, 13 Feb 2026 15:55:45 -0800 (PST)
+Message-Id: <48fc882785013b129fba9b8aada6c1f2e239a4cd.1771026918.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
 References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
 	<pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 13 Feb 2026 23:55:17 +0000
-Subject: [PATCH v2 12/13] config: format colors gently
+Date: Fri, 13 Feb 2026 23:55:18 +0000
+Subject: [PATCH v2 13/13] config: restructure format_config()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,86 +85,95 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Move the logic for formatting color config value into a helper method
-and use gentle parsing when needed.
+The recent changes have replaced the bodies of most if/else-if cases
+with simple helper method calls. This makes it easy to adapt the
+structure into a clearer switch statement, leaving a simple if/else in
+the default case.
 
-This removes error messages when parsing a list of config values that do
-not match color formats.
+Make things a little simpler to read by reducing the nesting depth via a
+new goto statement when we want to skip values.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/config.c  | 27 +++++++++++++++++++++------
- t/t1300-config.sh |  9 +--------
- 2 files changed, 22 insertions(+), 14 deletions(-)
+ builtin/config.c | 59 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 40 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 71b685d943..e8c02e5f21 100644
+index e8c02e5f21..1de3ce0eaa 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -354,6 +354,24 @@ static int format_config_expiry_date(struct strbuf *buf,
- 	return 0;
- }
- 
-+static int format_config_color(struct strbuf *buf,
-+			       const char *key_,
-+			       const char *value_,
-+			       int gently)
-+{
-+	char v[COLOR_MAXLEN];
+@@ -393,25 +393,44 @@ static int format_config(const struct config_display_options *opts,
+ 		show_config_origin(opts, kvi, buf);
+ 	if (opts->show_keys)
+ 		strbuf_addstr(buf, key_);
+-	if (!opts->omit_values) {
+-		if (opts->show_keys)
+-			strbuf_addch(buf, opts->key_delim);
+-
+-		if (opts->type == TYPE_INT)
+-			res = format_config_int64(buf, key_, value_, kvi, gently);
+-		else if (opts->type == TYPE_BOOL)
+-			res = format_config_bool(buf, key_, value_, gently);
+-		else if (opts->type == TYPE_BOOL_OR_INT)
+-			res = format_config_bool_or_int(buf, key_, value_, kvi, gently);
+-		else if (opts->type == TYPE_BOOL_OR_STR)
+-			res = format_config_bool_or_str(buf, value_);
+-		else if (opts->type == TYPE_PATH)
+-			res = format_config_path(buf, key_, value_, gently);
+-		else if (opts->type == TYPE_EXPIRY_DATE)
+-			res = format_config_expiry_date(buf, key_, value_, gently);
+-		else if (opts->type == TYPE_COLOR)
+-			res = format_config_color(buf, key_, value_, gently);
+-		else if (value_) {
 +
-+	if (gently) {
-+		if (color_parse_gently(value_, v) < 0)
-+			return -1;
-+	} else if (git_config_color(v, key_, value_) < 0) {
-+		return -1;
-+	}
++	if (opts->omit_values)
++		goto terminator;
 +
-+	strbuf_addstr(buf, v);
-+	return 0;
-+}
++	if (opts->show_keys)
++		strbuf_addch(buf, opts->key_delim);
 +
- /*
-  * Format the configuration key-value pair (`key_`, `value_`) and
-  * append it into strbuf `buf`.  Returns a negative value on failure,
-@@ -391,12 +409,9 @@ static int format_config(const struct config_display_options *opts,
- 			res = format_config_path(buf, key_, value_, gently);
- 		else if (opts->type == TYPE_EXPIRY_DATE)
- 			res = format_config_expiry_date(buf, key_, value_, gently);
--		else if (opts->type == TYPE_COLOR) {
--			char v[COLOR_MAXLEN];
--			if (git_config_color(v, key_, value_) < 0)
--				return -1;
--			strbuf_addstr(buf, v);
--		} else if (value_) {
-+		else if (opts->type == TYPE_COLOR)
-+			res = format_config_color(buf, key_, value_, gently);
-+		else if (value_) {
++	switch (opts->type) {
++	case TYPE_INT:
++		res = format_config_int64(buf, key_, value_, kvi, gently);
++		break;
++
++	case TYPE_BOOL:
++		res = format_config_bool(buf, key_, value_, gently);
++		break;
++
++	case TYPE_BOOL_OR_INT:
++		res = format_config_bool_or_int(buf, key_, value_, kvi, gently);
++		break;
++
++	case TYPE_BOOL_OR_STR:
++		res = format_config_bool_or_str(buf, value_);
++		break;
++
++	case TYPE_PATH:
++		res = format_config_path(buf, key_, value_, gently);
++		break;
++
++	case TYPE_EXPIRY_DATE:
++		res = format_config_expiry_date(buf, key_, value_, gently);
++		break;
++
++	case TYPE_COLOR:
++		res = format_config_color(buf, key_, value_, gently);
++		break;
++
++	default:
++		if (value_) {
  			strbuf_addstr(buf, value_);
  		} else {
  			/* Just show the key name; back out delimiter */
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index c134d85d8a..79b2ee203c 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2553,17 +2553,10 @@ test_expect_success 'list --type=color shows only canonicalizable color values'
- 	section.blue=<BLUE>
- 	EOF
- 
--	cat >expecterr <<-EOF &&
--	error: invalid color value: True
--	error: invalid color value: 1M
--	error: invalid color value: ~/dir
--	error: invalid color value: Fri Jun 4 15:46:55 2010
--	EOF
--
- 	git config ${mode_prefix}list --type=color >actual.raw 2>err &&
- 	test_decode_color <actual.raw >actual &&
- 	test_cmp expect actual &&
--	test_cmp expecterr err
-+	test_must_be_empty err
- '
- 
- test_expect_success '--type rejects unknown specifiers' '
+@@ -419,6 +438,8 @@ static int format_config(const struct config_display_options *opts,
+ 				strbuf_setlen(buf, buf->len - 1);
+ 		}
+ 	}
++
++terminator:
+ 	strbuf_addch(buf, opts->term);
+ 	return res;
+ }
 -- 
 gitgitgadget
-
