@@ -1,114 +1,161 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8223ECA6B
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 17:21:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771003297; cv=pass; b=MwMUtQUamSg5wqgghek58E8wloOV/OtYDZmO4Hw3jKWIXNsoMLbSzRA/S2lK/L+hmp/NqyCsPb3alwXu7ygxGBlWOtN0Dvqpm9EYjVnXRvc1EFWYi8KAYJFgBpkrfVk3JoH2RQz/fzlvPn7HeaLQKb/iQrowKFbp0AudzHc6o8A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771003297; c=relaxed/simple;
-	bh=jJEMIFHrPv3QiF97LbQJYOcNMxBr+AZXb1S/vD8rdk0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TyVAs1ex3/seBa0Dpg9OO90INCStidnRJSh5umWY9gJ6+NtT7ftUaXm2ONXGTnjjRhBgvB46Hd5A+dKRiGNx8kWq+lxcCWM6BXJ+1xSUJOK7n8reOC3NtUi1nBqgI9XHO0Es/oNHFVEIFctZnHrSbz9VpgENEp4FJgvlSBgp4AE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=X5qZt8nn; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871AA1A38F9
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 17:30:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771003838; cv=none; b=A02wmkQziSov39H+bnymYxeQgShKDEkRCt4yTjGam2+DGBTZzAV1o3nDiHplggi1aJcjHT4XT02JgTKv1sJCF8hQIdIZgNOz8uwKaRCiPlDsSCSUPjHrRny3COFoFUnHj1A5JfqbhN+JxMhOiudZPDqKVGFh31OYMEaznR8KLag=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771003838; c=relaxed/simple;
+	bh=Q0IQ5/iD5St/oC9sNNf0KR52fovcQ/NJgnZk7cNWzfk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=vGRvg0b9qe5eQacLdZfMXvDb7D/koairWKOidttG+yPUuCJjqhBBQWjibRgtiiAxGLKGKYEV4v+qd1266QTSVqD+9NiIwqdfGpyyIiqD/9LfhOkGMJNf2Ojoseo3enwr1OeMJoxxTy18rdYEF/oFjnPzgtaoCViUQ8tGkyRtE0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=EtiNSNQf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mOoWkBpX; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="X5qZt8nn"
-ARC-Seal: i=1; a=rsa-sha256; t=1771003270; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Ad4rTQ7eJusgSl/iqoE4c0IdSE2LltWDioLSCj7eluYzTg3N2kSGqaU7k+BZPk24jLVkzKsD/xx6gW8IEAKqxouMmkFTSae/rB+mKFCP9HRD4FuQ5B6Vdh8JHZMlb56cjimnpgIZn4JOytjUQd6FLJ2kzwREYyHLm0ECEeqXBhc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771003270; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=wdwzIUppmkI6fvkMj/e5dQnV/DJv+/QaL9hpQF3ej0Q=; 
-	b=Mjkukbs16H2bJP0dQaiLeiAF6qjW3AUd5h0NRu6P23kXf9Bun/GWsAzfSXm2Azn8l5dyQFhrA66uE5KjFRVo6IsCJGWAdRCB93H3qhTx4Sx7R7ZNP5+p04PRZKq1GcfbT6geIBkwbQtgj3eEIhhleK+c3hs/YhpaULnmebqaoGA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771003270;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=wdwzIUppmkI6fvkMj/e5dQnV/DJv+/QaL9hpQF3ej0Q=;
-	b=X5qZt8nnzFHPIHwv153JmYWgAxqxxVqR1/XFx3cc9hd1n5JmkZrl2Yzq4WSckwko
-	0iE/HwoASGZpmDhqp55c2rvMuamS5vYysMN3GfPU9RMg9T9+FeuPiQQtbSsxmhbiqhv
-	RWSOD8mJJDcyGj81V9H04uyBBHPL+WAXjJd8qsSs=
-Received: by mx.zohomail.com with SMTPS id 1771003267817142.8258244992021;
-	Fri, 13 Feb 2026 09:21:07 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk,
- git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
- Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Josh
- Steadmon <steadmon@google.com>, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH 0/4] Run hooks in parallel
-In-Reply-To: <1dd09e04-dbdb-4a6c-933a-e4dc451878f9@gmail.com>
-References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
- <eedde9c3-2aff-433b-9dc3-f8593d53dec0@gmail.com>
- <87jywiox9f.fsf@collabora.com>
- <1dd09e04-dbdb-4a6c-933a-e4dc451878f9@gmail.com>
-Date: Fri, 13 Feb 2026 19:21:02 +0200
-Message-ID: <87h5rkpnk1.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="EtiNSNQf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mOoWkBpX"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C8E821400040;
+	Fri, 13 Feb 2026 12:30:35 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Fri, 13 Feb 2026 12:30:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771003835;
+	 x=1771090235; bh=Qjpxuw9XanaKB3ReRx/kkz6rGGbY8V7j78k/ffM0w3o=; b=
+	EtiNSNQfvam+JaIZz9jGeXaqNy0UrZf+/5OLay2yIb0aUx7xTwycnmxcHeWqASX0
+	fIMRaPaSWwxL/IduBobIeA9fV49QGpzeuAfmB8MNAZjg6LUUN9UbmVbGt0W1T0d7
+	1Mq+P2qCTpa357pn1HHjKwLB6PNLjoHTeAx/7DI5bPQDxUtiNkGRrc3lB4wGSPD/
+	rQDXGlvNERGtfF8Dae/qkuut+eEIb8A6RDMWU2zgrMvTucd9gY4j5ICyzjMANEdx
+	qZK8DiBb5z3WhjGBjl0qpVGMyOUZvpS3NQiDdQopooaTWp6/7uN3o/8bNLYGZVBz
+	DY+Y0rMmBCornWGMaNFE0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771003835; x=
+	1771090235; bh=Qjpxuw9XanaKB3ReRx/kkz6rGGbY8V7j78k/ffM0w3o=; b=m
+	OoWkBpXLLUd0LDMo8/0YcfCYVXGEZhYeo5ORitHo+mG51EUR8+k3d8h9HgEi8uxw
+	5kPESIavIyEZhoqxf5UswjFNNY23zxX2OewzfAfbLwT14+xy5PjQoiEXXYx/MHeY
+	4xmuGihSw7ZUbSxBQt/61kmJyB22Yg+Uo7MsKdFYBh/9ayAkiq0qabN0ybu53Cqe
+	snkHHOG0F3Td6kYeIVTMDD8MUsMhromano11FBDenpCfQJggsn7kR9H5+e8RjGbq
+	V2w6dgT2haBz2+qhE+vBPNml+u9y7hcHXNE618SCjbA0I/ZYQwJze6OLMfwyvDMO
+	annMUSPIZB6fh4NEc18Aw==
+X-ME-Sender: <xms:u1-PaRD7oFnifC1FLmb-1GEwobDIR5reDl3Rg2z2aI5vzLTgdK5cdGM>
+    <xme:u1-PaaUZavnToVpUWekRUrPkHTDs8-EbTjZKqQrxppPApv2dsNb4M6LQEdWnwYu8H
+    6aLEIyn2dO3EWzsee0uQV6xMgUFy7FXhrRxIAsb5h30BR27N0Fbyw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdekkeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdr
+    tghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:u1-PabqH8CA_dmuCAtgj5TDM6tDeMdXNOFqvrlfnyx3glQd4F4QtxA>
+    <xmx:u1-PaTf08mQcMOYiR-ce4kQ-P0rNLgwaTti8ew7JQPlRbZCCWSpvnQ>
+    <xmx:u1-PaSqb0MQEeU8hSEam1s4mZXDqXLGb69sVfo5WPdKvi5CwcJy8sQ>
+    <xmx:u1-PacEaiP2adSMj4dkieYV5OkAPcuG-h42RnbGPnWBjW_3PJg1KbQ>
+    <xmx:u1-PaZP8EPtG05mkEl8vbCxc4wzNDR8xBHplIk_POWneGwyQ23EXwB3r>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 9ADEF1EA006B; Fri, 13 Feb 2026 12:30:35 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+X-ThreadId: A1Ljo1cD_StZ
+Date: Fri, 13 Feb 2026 18:30:10 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <315801b6-bc9e-42b4-8356-12fd8b83223c@app.fastmail.com>
+In-Reply-To: <20260213-b4-pks-history-dry-run-v2-3-756ac376e9e5@pks.im>
+References: <20260213-b4-pks-history-dry-run-v2-0-756ac376e9e5@pks.im>
+ <20260213-b4-pks-history-dry-run-v2-3-756ac376e9e5@pks.im>
+Subject: Re: [PATCH v2 3/5] builtin/history: replace "--ref-action=print" with
+ "--dry-run"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 13 Feb 2026, Phillip Wood <phillip.wood123@gmail.com> wrote:
-<snip>
->>>> The pre-push hook is special because it is the only known hook to break
->>>> backward compatibility when running in parallel, due to run-command
->>>> collating its outputs via a pipe, so I added an extension for it.
->>>> Users can opt-in to this extension with a runtime config.
->>>
->>> In the past we had a regression report [1] when the pre-commit hook
->>> stopped having access to the terminal. I've not been following the hook
->>> changes, is this series (or any of your preparatory series) in danger of
->>> reintroducing that regression?
->> 
->> Thank you for raising this, it is a very valuable data point!
->> 
->> The preparatory series 100% will not reintroduce it.
->> 
->> This series might reintroduce it, depending how we set the defaults.
->> 
->> By that I mean:
->>      -j1 will keep all hooks connected to the tty, just like before.
->>      -jN with N>1 will disconnect the hooks from the tty and their
->>          outputs will get buffered through run-command's pipes.
->> 
->> The design I followed (which to be transparent is Peff's design, I just
->> implemented his ideas :), is the keep the original, serialized behavior
->> exactly how it was before, to not introduce any regressions and to also
->> keep identical "real-time" performance.
->> 
->> Taking this into account, together with Patrick's feedback on this
->> series, I do intend keep the jobs == 1 default for all hooks in v2.
+On Fri, Feb 13, 2026, at 10:12, Patrick Steinhardt wrote:
+> The git-history(1) command has the ability to perform a dry-run
+> that will not end up modifying any references. Instead, we'll only pri=
+nt
+> any ref updates that would happen as a consequence of performing the
+> operation.
 >
-> I think that would be safer. If we could opt-in to parallel execution on 
-> a per-hook basis would that be a solution for the "pre-push" hook? Users 
-> who want to keep the current behavior would avoid configuring parallel 
-> execution for that hook.
+> This mode is somewhat hidden though behind the "--ref-action=3Dprint"
+> option. This command line option has its origin in git-replay(1), where
+> it's probably an okayish interface as this command is sitting more on
+> the plumbing side of tools. But git-history(1) is a user-facing tool,
+> and this way of achieving a dry-run is way too technical and thus not
+> very discoverable.
 
-Yes, opting in on a per-hook basis is one of the mechanisms I'll be
-adding in v2 (that's what I've been discussing with Patrick via the
-other thread on this series).
+It makes sense to use this command as a dry run and then pass the output
+on to git-update-ref(1) for the wet run.
 
-However we also need a mechanism to enable more than just 1 hook at a
-time, for users who want to enable by default a known-good set of hooks
-to run in parallel.
+    git history --dry-run ... | git update-ref --stdin
 
-That's what we did with `RUN_HOOKS_OPT_INIT_PARALLEL` at compile-time in
-v1, however that's a dead end and I won't pursue it.
+Looks good.
 
-For v2 I'm thinking of a runtime/global config which can specify a list
-of hook to default for parallel execution. That should be enough to
-replace RUN_HOOKS_OPT_INIT_PARALLEL.
+>
+> Besides usability issues, it also has another issue: the dry-run mode
+> will always operate as if the user wanted to rewrite all branches. But
+> in fact, the user also has the option to only update the HEAD referenc=
+e,
+> and they might want to perform a dry-run of such an operation, too. We
+> could of course introduce "--ref-actoin=3Dprint-head", but that would
 
-Suggestions welcome, as always. :)
+s/--ref-actoin/--ref-action/
+
+> become even less ergonomic.
+>
+> Replace "--ref-action=3Dprint" with a new "--dry-run" toggle. This new
+> toggle works with both "--ref-action=3D{head,branches}" and is way more
+> discoverable.
+>
+> Add a test to verify that both "--ref-action=3D" values behave as
+> expected.
+>
+> This patch is best viewed with "--ignore-space-change".
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>[snip]
+> +`--ref-action=3D(branches|head)`::
+>  	Control which references will be updated by the command, if any. With
+>  	`branches`, all local branches that point to commits which are
+>  	descendants of the original commit will be rewritten. With `head`, o=
+nly
+> -	the current `HEAD` reference will be rewritten. With `print`, all
+> -	updates as they would be performed with `branches` are printed in a
+> -	format that can be consumed by linkgit:git-update-ref[1].
+> +	the current `HEAD` reference will be rewritten.
+
+`HEAD` is mentioned here because it could be detached `HEAD`. So you
+can=E2=80=99t just say the current branch.
+
+=E2=80=9Cthe current `HEAD` reference=E2=80=9D seems a bit much. Is this=
+ less precise?
+
+     only `HEAD` is rewritten.
+
+>
+>  GIT
+>  ---
+>[snip]
