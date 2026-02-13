@@ -1,102 +1,122 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6A2361DA3
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 15:21:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770996065; cv=none; b=hY8TAW2tBRu4rTQhYINKISg09epNtZ8miNpDEK0zYVRaBy4xnEABrUycUC0Eid/pun01fqxtMb1p7l/0L1Sr+Fx0VyM8vhVe/7RWXfeIcpfSJF7EVIufWbMO8fuLkXfbt07uPCv0TsLRAZFHrBMu1NTBpln6Q8tLYZ29DxiuCKU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770996065; c=relaxed/simple;
-	bh=oLaXPcP3jVnGb93CRiljrPiPGxK37RTS96aABnLtRnc=;
-	h=Message-ID:From:To:Subject:Date:MIME-Version:Content-Type; b=K0D0FxanmUvS2jRE996w5y4G3nuvIbsTgAyBDWFuyBNHq9KLj0Kuuq/uxBdKC6s+bXGC2bnXmWilXLsJjMgtj4+HjcGrRDF+TnH5vd2GoqOnxzOgJQUlIAWqdc5elUm/Vu6QtB64FBU40+F6SAwjRyKFWGbIInjUB3Dz4itjFmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=chartazephyrsolve.com; spf=pass smtp.mailfrom=chartazephyrsolve.com; dkim=pass (2048-bit key) header.d=chartazephyrsolve.com header.i=@chartazephyrsolve.com header.b=BGTAOz5u; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=chartazephyrsolve.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chartazephyrsolve.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B580364024
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 15:36:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770996997; cv=pass; b=BHqhBTXbaI5jaUbAmJ0DQ8BvfXnOMyrVidrsWCmGEPwSoUjraYDP/FJv746k4lAB0RP6K1oRdBb/F7pn/eFUhSlDWQr47wGaPuPWMPdb4M/9/jpltDChDM0JYZ8USwK8wACrUMXaubxXJuf+7Zs1GFIdGArFA6ypMutjK1eEz+4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770996997; c=relaxed/simple;
+	bh=XQ9sv/oj5ttXg9USeSIHvieIClh3kD9D3Dx1EG3vfXM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HVhqvUu+h668vbes2jnqJCKswwzY5/nZfdMhtnEgLIMh7wTdjm9++J+2SW3GFxSQHU7HJb3vHq3zS2c6iebXTAGN5+T/Q5ObdbDwhpmdrvNC35n+KNRdFAc6zbW/At7uoZsHpd3lkIUeRMtm561AVHJ223ctn23qUur0+1VN9iU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fgiA0oAl; arc=pass smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chartazephyrsolve.com header.i=@chartazephyrsolve.com header.b="BGTAOz5u"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-463a94f8475so224954b6e.0
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 07:21:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fgiA0oAl"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-59e5f52b13eso1044013e87.2
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 07:36:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770996993; cv=none;
+        d=google.com; s=arc-20240605;
+        b=G95vob7K9jK+hUK9RjZU1d4rzVhhlAUw3c5ROmsNyDSTaPwoUPkZyU8HSaU1crPVJV
+         q6aYI/1uCB2sA+y3fqWo4Kg+QtcbeSoaNKUu9aQB2Qb45NdNIHN9vbBIXhws26w3F1mH
+         G2B5S60TOSbw+adn/WH/OonvgoBYGDfzh9tVdgOcB/pevQe+IqONUtJ84Njoi8l2huWl
+         cwunxUkxwlsFhSgccS9dUYpxmIXwBJZJBThKjz4+grh1+JvjRAggY4XnizBaQtK/z+ti
+         1bYsYz2E/OkCkttYRGspBvhBxRILPM7xblDtS78WVeAKbxspfCPhmIaYc98OYDhaBwOV
+         GT7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YvKkAiMmosRw4wv+iahA+CRinvN0vRWm2oZFGXTCDME=;
+        fh=V2m9a5jGMgYlM90uz0b1m6stuFGrPJdB3Z0gC2OAg2A=;
+        b=ImLQ3dDTCZhH+sSClavlb374OV68RCRpDHG6/RxM+Uu6V4sgLKymDOWMeQdO5ux8FZ
+         v0QkUqtiiwtxYDi9WfD0/eD3b6fS1XKjmsMF6wLFdsPE5u1eSOTINL7AXn4hrV+5eNpj
+         tIWgQJ6C4vVjOETnc28EIWemsreVHZ5CXWqv1GyX545tqL8WfrLPpDT7Fgv1dYuyUpDB
+         jmEMuf+lMVLxtfclAiVJhIoUFoVGT4jMYjspoOCUKTEMFfcuOgBruLh/JW5C+30hGgMq
+         7kLeXzEPOjszt7ZopT9jEy71Fo/orApTZ6mM0rkRj17VzZMkbvBD7yyDQp4aSzQTo3VH
+         H8Dw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chartazephyrsolve.com; s=google; t=1770996063; x=1771600863; darn=vger.kernel.org;
-        h=mime-version:date:content-transfer-encoding:subject:to:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=oLaXPcP3jVnGb93CRiljrPiPGxK37RTS96aABnLtRnc=;
-        b=BGTAOz5u9pLkZDjac+NtE41irS5OrGh0USOP203/BYF2pe1E/jX1JTaWtea5D9jeFl
-         9WOW8etMeQPQO8pmNX51abPeKHsaSlQFx+4ApexonALL85ArdjtqNdNHEYlzu9z5A0Hx
-         oM2ZyhR7wB9Fe4ZcbW9RTet8YJQMGcmHRbZ6uNodIRZr6pMW9T9Z68gNuBhWM7C41+z6
-         yiB0LFO33j/diH3HIuX2VcJO5jEZEagcBCyjPhXZF6Q2R/apX92LTYDWWgHEKD88V8cE
-         bmxqDipTf4DONZ9PY78sPZYm82ssFNM7DM7wzyys1nLZeBImgDInwZFiCFmCNb8ylpCK
-         aekQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770996063; x=1771600863;
-        h=mime-version:date:content-transfer-encoding:subject:to:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770996993; x=1771601793; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oLaXPcP3jVnGb93CRiljrPiPGxK37RTS96aABnLtRnc=;
-        b=SmOxZR2dP0Fz51O5NzNbCyAm4/rZ4jLXZyA/VWULzsW7g62yX2Zh1vl5RTjZC/9LVa
-         ZwvOZ63RETUXYOBq38m9bg1RXLLjeM6OvPk50JpMoOw3Zi0gjJb2SnekXFLxZD3c8Krl
-         MSuSaTyKBygzEwC3+CDxXmMsa3rlls2vXt2Le8kMom2sJPzQiaSmLHyYzL1+zTp+y6WJ
-         CmZLt0N5dLw0XdBXiMQarC4F3zB2uGn7l0cz4xWFdu4/jJsMnCO50uDsFAu+mx83PHRl
-         YvrM3wCTQubg/j39haJhBV1H9zYyFIzToRI+9bflR3yt04gb8Iaud3OiuyiMk1HriAUG
-         wpng==
-X-Gm-Message-State: AOJu0YxZLWCwafXt8l+qyPh6KDIN3v9vb5+tqvR4tbeNbiMbVc1cTmG5
-	QIKQN//Lto4+4qZAjTsixkKhgSDGLxK+Mdauu3CBcfAq7eyFV4cO7ASNnp62r4IQtqwlmt0BgD1
-	DplWxrg==
-X-Gm-Gg: AZuq6aKTCjnEu1+2SIzmQZ8h50hGum2qDkAI2eyqsfTdMUh4CjX/co+XhZ4IDki0jcz
-	RJPHb072najWgrVAsrV0aI172+fG1iRHCtZ1pNH5rGZVu+70coe6rHNwIDYp/Jw1ZfN8ngyaUJA
-	J6PF8sJa0pWaxFECnycL1imR7kw9IsOWVGUwaRHWUhI+sm3L5eVpJlI03RPSuS1ByG7dk2zVTqR
-	TX8HD1gkvwpWgfWAoe3qjgfx/XqXenDpcYAnaUEDP8YWV2NvHVxH8YNS4QeNE6aK9K9BOf/s6D6
-	lma/L4TrBSUHjJ8q/NrOGsEMXy4NDSqZJMoWcNg2W8o1FNxHkFlIX5Zih9zM1LnSJVtbayhu/Hk
-	woDvZB39vEtvfyQzZlDigm1HZpL/jIvvgYRfpeDHfdM6h6WhgdcZkxesAlgmV4JtCy74RDkS7KW
-	rGP/3CyC9M49tsfgdKJOXf9QG25OpsjL/4Y+evk2yLw1+UXr07muepb18LqHhieL6vhhg0cXfqZ
-	L82lnPtVnPDdhsgepGplPFdAxY/4KBV39R8ahzY+dylq3aQuV9MzcRGtK2VKTk9v20iEawl
-X-Received: by 2002:ad4:5de9:0:b0:895:4855:83f4 with SMTP id 6a1803df08f44-8973f2af6c2mr1602126d6.16.1770989025826;
-        Fri, 13 Feb 2026 05:23:45 -0800 (PST)
-Received: from 019c572b-f4bd-7b79-9011-776c9b32589d.local (ec2-3-133-125-60.us-east-2.compute.amazonaws.com. [3.133.125.60])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8971cd8b330sm73075106d6.29.2026.02.13.05.23.45
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 05:23:45 -0800 (PST)
-Message-ID: <019c572b-f4bd-7b79-9011-776c9b32589d@chartazephyrsolve.com>
-From: Nicholas Rodriguez <nicholas@chartazephyrsolve.com>
-To: git@vger.kernel.org
-Subject: Interested in Publishing Sponsored Content on gitforwindows.org
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 13 Feb 2026 13:23:44 +0000
+        bh=YvKkAiMmosRw4wv+iahA+CRinvN0vRWm2oZFGXTCDME=;
+        b=fgiA0oAlZZ1xNLE75y4bqYGUsEXwq5FVlaWvcgk68dd13qw+qKKJmRaaN6xbRUTYje
+         qo91qXA4iPwNbupv7kHEbnusoFHDHIfxyUJjziURMuinHqEHttclfgDKd7pYBKgvmayl
+         TIV/HJWbpNd9hNO5YcYgic526wQcwKAchxY9NG/FR+lsVhj/VYqJ0QtIpXReLRzzWnPz
+         ZV0mgdjyoghO8ph4Uy4aGWu+7CdajCiC6l0u6WROXlTRQHY9NHyfkG2IbRNCNauI5HZh
+         8yQLGOdgVd/S9p0vtA7lTXFUxjRTMitSdcHnmtTSx3BqsX4tbMEpYYV+uw7CGEzZzXe4
+         85JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770996993; x=1771601793;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YvKkAiMmosRw4wv+iahA+CRinvN0vRWm2oZFGXTCDME=;
+        b=ZbxMlsYDXheEidF+v6Hl+LdkX101A4vKavjyV5P5eGyw8B1uueDZzzMGww8EDV6XI/
+         UW235MIBq6m7li7gtnRiqUdJ4uWC/YRwWEu2AXAXXaqfJ3/DUUhjOaNcIbJlMWjXIS+Q
+         RdVisR3IJO3BVBmvNUZHUAh7Mk2uOyae06UmXG6bP9/ki7LX6wCxicisXq/fSxJ8ANX1
+         cwU0gPp0zl1Fo6INVJ9F1fELQu4gH4e6T5x+NTPNam9ybC+go5p3Dxe2Ss2TtiH+9VFh
+         YPorJeIVWdmu3jlyfQUVhU6b2vIExgH2JRzmxrcGn+FbmgeTRaY7yOTWScHTwmcQntsy
+         xd8g==
+X-Gm-Message-State: AOJu0Ywbbj0JAfBYZKZLvbCJzJOwYO8DJZoCu1EZPauCBCIvb6TqwwGW
+	x5gRskzUlpHpMrt9yQFVgLbU4R2vKRR9HwoX0ratmwQLFptvUJIlP1UkhNnkseGJdzrNCmWTkot
+	PDrVtaM5eMsatLy+Q33CH8bMk2wl6uoo=
+X-Gm-Gg: AZuq6aL6G4rvBFh1fyFqW/Xo5FjmCCHYOR9xP5VKQaEOUC0NJAOUzlMdG2Lu8roq/c7
+	GSncNKLC00E3/SAAiRR2cvPMlMIZ4T0qUdEWfBi9tDETuSslnV7NznmVMfy20k8W2tLue3iBK57
+	kGy49O84RRXbwSJLOmGIlLH/0cG92LCnhVc5hmLtBg5Q3ihN1GK9W2oK9DzsfY2WlTux4sqPBDU
+	zlgjYdso2k37lYBDFSTivICGNcL1AFnJz/3xS5TsOW0689Vt9K4QRVaHWjcOr/yBBm1cWygUv9r
+	8sd2xRbabJd4Qkq8uRY=
+X-Received: by 2002:a05:6512:1188:b0:59e:5ba7:1a40 with SMTP id
+ 2adb3069b0e04-59f69c26371mr755988e87.15.1770996992956; Fri, 13 Feb 2026
+ 07:36:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260213124656.218396-1-integral@archlinux.org>
+In-Reply-To: <20260213124656.218396-1-integral@archlinux.org>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Fri, 13 Feb 2026 07:36:20 -0800
+X-Gm-Features: AZwV_QhBN9W3iVMwBFZCZRhYsh50VjVtmth6pasbYcxu_5dogGITBfyEddOQnu8
+Message-ID: <CAPx1GvfsnZiUkkXJSAtt4HECT6f+zb1+vtiT+UikcAq0WuFR8Q@mail.gmail.com>
+Subject: Re: [PATCH] copy.c: use `sendfile()` for in-kernel file copying on Linux
+To: George Hu <integral@archlinux.org>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello gitforwindows.org Team,
+On Fri, Feb 13, 2026 at 4:47=E2=80=AFAM George Hu <integral@archlinux.org> =
+wrote:
+> The `sendfile()` system call copies data between one file descriptor
+> and another within the kernel, which is more efficient than the
+> combination of `read()` and `write()`.
 
-I hope you're doing well.
+sendfile() is found on other systems (notably BSDs), so perhaps ...
 
-I am writing from PressWhizz=C2=AE - a Marketing & SEO agency from the US. =
-We have over 1k clients using our services each month.
+> Signed-off-by: George Hu <integral@archlinux.org>
+> ---
+>  copy.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>
+> diff --git a/copy.c b/copy.c
+> index b668209b6c..d4b7cde764 100644
+> --- a/copy.c
+> +++ b/copy.c
+> @@ -7,8 +7,23 @@
+>  #include "strbuf.h"
+>  #include "abspath.h"
+>
+> +#ifdef __linux__
 
-We have many clients interested in publishing sponsored content on your =
-website,
+... this and the subsequent ifdef should be based on the feature,
+rather than the OS.
 
-Would it be possible to publish the articles on your website, and=
- how much does it cost?
-
-Please let me know all the pricing details and =
-editorial guidelines so we can go further.
-
-Additionally, I'm curious to =
-know if your website is open to content from various niches, such as =
-casinos, CBD, etc. If yes, please provide prices for this type of content =
-also.
-
-I am looking forward to hearing from you.
-
-Best regards,
-Nicholas
-Outreach Expert @ PressWhizz
-=C2=A0
-=C2=A0
+Chris
