@@ -1,153 +1,81 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from naumann.dschung.com (naumann.dschung.com [5.9.77.230])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C121226FD93
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 20:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D017127EFE3
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 21:17:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.9.77.230
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771015947; cv=none; b=hFFepqxCm1CrsrZWAox2tF3IWW2fEwMn9DTVcoiRMNTRjXDMSsvwN4a+W5D3JzoP1gLdxBq1MNy2mmVn+d99bjvsiAgPchMy5Cu1O1hNusgrBxR7dfUeZPm6ryaMGaxwITqhGXELfhogbsjrmO7lkijwPjzdgl8Q0jj3AMtIK3A=
+	t=1771017440; cv=none; b=Wj6fiDOaDifNExEUJ8OJW4Ju0pfyvueZ6dnsVcOl+3aFHzKH44aRJ+VjqRYm+6nj0eqAY3f9j8rtqMtiOwn0MXqesh5w1oYqwMO9nDJpKaNnmAp3dVS3WTF4LCmc6NU8F9iGcMrdJDpJBU4GK2+Npb2CmPRHLFAPONYfDD/nzP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771015947; c=relaxed/simple;
-	bh=a+pCWV1QBYWLtUHLRR08Zk6R83UhT39gBAKlnDVES6U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ehJel3J54kuTqz+2VPGBezzsnyxaKBQQr+JwhOZPVUqFs9nU6pZKI1Q7bAFZ7K0q8sD1bRLg7cD1xpvCXmxlg4owhs5KJ6UZb0I9vECqhB4ZpCDXo95ugX04KsWbHHXVuRwbu3i5TxQDjGwfEdQyfxR81/EM2IkwczlqZPiasuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mujz9Kzt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TfEp2/ze; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mujz9Kzt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TfEp2/ze"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id AEAF01D000F0;
-	Fri, 13 Feb 2026 15:52:24 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 13 Feb 2026 15:52:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771015944; x=1771102344; bh=rbVG+r2xGy
-	w9uMDSxATFGiGCVP+RgQndEEJ+1Cn/sOs=; b=Mujz9KztJWt0JaARSpwOhSv6C+
-	PqL2NiF8UuX4G0OhzyO63MULikpnFvgcKz6c/tRR7ouRSUSSPIsUAIGA9hcrTWxF
-	oh7r5Q1DcFclRyh2CJIGtrDvp26KS67j3f4HEwOI+66csgcKfRf/uTd7XLm1XDW5
-	6cJFuVI4b/iWsdLPWrlR2j8ZA57zKWc4srZskMruVAZQeL+L6gCunOf1XF7yYGlP
-	Y9gN+oFiTv5aYjvtA+OgFTbPA+lEEvoEYbb9a98n5zeKLHvTfB9Cq4N4zTzbx4oP
-	Rdi7GBzZwZBudY315uWYdJkPL0mrnDtdhmElhqygeCvZpS1efo2hwDiOD5Yw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771015944; x=1771102344; bh=rbVG+r2xGyw9uMDSxATFGiGCVP+RgQndEEJ
-	+1Cn/sOs=; b=TfEp2/zeA6v5W61+MUjN1QyDQQMCf5u25gL6xYKK6qY//+CKk0a
-	kqwnQFQfDhTu3D6bCSnG6TQxYIlR6GA0A4y9qErrnEVu3lW0sc3oG/ToOOGeJnfD
-	6Vs3BSHbou88yjHsPL3oD0AGfCZ9YJzloD49hsifChR42hb56CDfgdmRaFyeGEqW
-	Ycb/WiZ6R5eHtSgSosXNKbx6/s3xVNNtpsDijpDYBYbCaULiZktSBHaRQ36jD7SG
-	w7NW8jHGhot8DQcr65wN7uU4KewQ9TW4Aca++ARL84MYEvlHMCbuQPDdFaQihIBy
-	esnC+MDA02n8IQ5yJDByDfDNDNRBsYLps/w==
-X-ME-Sender: <xms:CI-Paavt0edPGNVZMN_nVG1mIAvCHtUTCGFtAgGGoYJo2JjCzpXXgQ>
-    <xme:CI-PadCv0Z4JGW4w9M1AsuoJAbv1Kvk10pqDgeK5NNvrcQFvxFkBONjD_i2aMKov5
-    7iDRFbZ3mw54cQz1TK6eMsauvcfouCnxUo0pNBLvgrGonocZHwXtQ>
-X-ME-Received: <xmr:CI-PacMprAWHqhtBIGjiNclDDpLbYAKHyxrP2nxcUlDCWU-h6o6q2mQS5xoVg-tzf44SjYXkAHoOElmBWXoKSTm0uA3qco99ag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdelvdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrsh
-    gthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehkrhhishhtohhffhgvrhhh
-    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmjhgthhgvvg
-    hthhgrmhesohhuthhlohhokhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:CI-PaWzOS_kINsvJ3mJzSYciaxdpIOYhTNhL4jun6ET0CJcMZiV2eg>
-    <xmx:CI-PacVLmYYipTa5CFnmQtBSwaAEFWHPi26RjJ27x4kupQigkysJag>
-    <xmx:CI-PaYOczix_zENxUQnXOWrkxq4O1blKkxVT2Xdo6lglNDfVp31zfQ>
-    <xmx:CI-PaeBQwyVgprAdy8VEqUqgovL1sUePYtXnXp_dk6-B9x0aFZXbXQ>
-    <xmx:CI-PacSeH00bv_cSj3zH_WQfypdk6-FrIsK5XuWv47_J2CyKnW-jNxys>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Feb 2026 15:52:24 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  stolee@gmail.com,  johannes.schindelin@gmx.de,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Matthew John
- Cheetham <mjcheetham@outlook.com>
-Subject: Re: [PATCH v2 4/6] trace2: emit cmd_ancestry data for Windows
-In-Reply-To: <6b9054115eddeb08d0e429f1ec45093691dd84d3.1771012500.git.gitgitgadget@gmail.com>
-	(Matthew John Cheetham via GitGitGadget's message of "Fri, 13 Feb 2026
-	19:54:58 +0000")
-References: <pull.2040.git.1770307510.gitgitgadget@gmail.com>
-	<pull.2040.v2.git.1771012500.gitgitgadget@gmail.com>
-	<6b9054115eddeb08d0e429f1ec45093691dd84d3.1771012500.git.gitgitgadget@gmail.com>
-Date: Fri, 13 Feb 2026 12:52:22 -0800
-Message-ID: <xmqqpl68l62h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1771017440; c=relaxed/simple;
+	bh=BSLI3FvAy0dQDfElOr/3HAxxAlczUiPJ1u8JeYcGd9E=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=WtVNvXEatHWVGk2u9q0Ya0Wf0wSowYgfHHCGM5PgQTcWRyfRoscZk/KpJFSOaNu7GM9Kt4fI9ESq/SJ5hzrKBbhUz6uAuHKQjryz9WmjjIG8b2DBieXKCo+3rOtpEKmMt9lPtX7kQ5OTq6GuJhO4lgR+reuZ029gymEWTWcqGsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chkpnt.de; spf=pass smtp.mailfrom=chkpnt.de; arc=none smtp.client-ip=5.9.77.230
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chkpnt.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chkpnt.de
+Received: by naumann.dschung.com (Postfix) with ESMTPSA id 844EF5F7B30E
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 22:09:30 +0100 (CET)
+Message-ID: <e5904a7b-c146-4c36-8b87-c5c508e14cca@chkpnt.de>
+Date: Fri, 13 Feb 2026 22:09:29 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: de-DE
+To: git@vger.kernel.org
+From: gregor@chkpnt.de
+Subject: Question: --since date parsing uses current time instead of midnight
+ - by design?
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hello,
 
-> From: Matthew John Cheetham <mjcheetham@outlook.com>
->
-> Since 2f732bf15e (tr2: log parent process name, 2021-07-21) it is now
-> now possible to emit a specific process ancestry event in TRACE2. We
-> should emit the Windows process ancestry data with the correct event
-> type.
->
-> To not break existing consumers of the data_json "windows/ancestry"
-> event, we continue to emit the ancestry data as a JSON event.
->
-> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
-> ---
->  compat/win32/trace2_win32_process_info.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
+I've just noticed how git log --since=<date> interprets dates without 
+explicit times, and I found the behavior seems potentially unintended. 
+I'd like to understand if this is by design or a bug.
 
-Quite straight-forward.  Given the way json event readers are
-organized, I suppose that existing readers will not choke on seeing
-the same data twice?  Are we officially deprecating the "old way",
-or keeping both to serve two different audiences (i.e., those who
-have been in the ecosystem long before this change and want to keep
-reading in the format they are used to, and those who are writing
-cross platform data analyzers that want to stick to a single
-format)?  I do not think we need to decide it now, and if I were
-asked, I would probably vote for the latter, but just thinking
-aloud.
+When using --since="2026-02-09" (date without time), Git uses the 
+current local time at command execution, not midnight (00:00:00) as 
+users might expect.
 
-Thanks.
+For example:
 
-> diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
-> index aceea05430..6a6a396078 100644
-> --- a/compat/win32/trace2_win32_process_info.c
-> +++ b/compat/win32/trace2_win32_process_info.c
-> @@ -172,6 +172,11 @@ void trace2_collect_process_info(enum trace2_process_info_reason reason)
->  		get_is_being_debugged();
->  		get_ancestry(&names);
->  		if (names.nr) {
-> +			/*
-> +			  Emit the ancestry data as a data_json event to
-> +			  maintain compatibility for consumers of the older
-> +			  "windows/ancestry" event.
-> +			 */
->  			struct json_writer jw = JSON_WRITER_INIT;
->  			jw_array_begin(&jw, 0);
->  			for (size_t i = 0; i < names.nr; i++)
-> @@ -180,6 +185,9 @@ void trace2_collect_process_info(enum trace2_process_info_reason reason)
->  			trace2_data_json("process", the_repository,
->  					 "windows/ancestry", &jw);
->  			jw_release(&jw);
-> +
-> +			/* Emit the ancestry data with the new event. */
-> +			trace2_cmd_ancestry(names.v);
->  		}
->  
->  		strvec_clear(&names);
+     Running git log --since="2026-02-09" at 21:20:00 interprets it as 
+"2026-02-09 21:20:00"
+
+     Running the same command at 09:00:00 interprets it as "2026-02-09 
+09:00:00"
+
+This means the same command returns different results depending on when 
+it's executed.
+
+Root Cause (in date.c)
+
+The issue stems from the two-stage parsing in approxidate_careful():
+1) parse_date_basic() parses the date fields (year, month, day) but 
+fails because time fields remain at -1, causing tm_to_time_t() to return -1
+2) Falls back to approxidate_str(), which:
+   - Calls localtime_r() to initialize tm with current time
+   - Resets only date fields to -1 (year, mon, mday)
+   - Re-parses the string, overwriting date fields
+   - Time fields retain values from current local time
+   - update_tm() calls mktime() with this mixed result
+
+Is this behavior intentional? The approxidate mechanism is designed to 
+be "human-friendly," but this seems like an edge case where users likely 
+expect --since="2026-02-09" to mean midnight.
+
+Explicitly specifying the time works correctly as a workaround:
+
+--since="2026-02-09 00:00:00"
+--since="2026-02-09T00:00:00"
+
+Should this behavior be documented, or would a patch to default to 
+midnight be appropriate?
+
+Regards,
+Gregor
