@@ -1,194 +1,186 @@
 Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC35221F26
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 14:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217B0361672
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 14:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770993309; cv=none; b=nPhmgO0AQ+ujAkSvfRZ83/7wvzJ3v7bxNwDdsjrHholgPa//HtOJ7p9V8EqgiBayyLHajg2NkJBme38kIRYkXIbZ7LeuoaJ+PDHK49N5VYjuWl9V0aT44Pdxfu1tga3Cf4MHe1yP3Mq3M8DOo3/f249DeQO8IAD9lwgO+s0MKVs=
+	t=1770993595; cv=none; b=bIIp3tTQc6Q5Xntz2z5stx3ctDPhQa3rBJqd2VnlDlvco5lnXlaMsQiA5Ukehe/v7hTDpZp3sOazZGkOWlFQneHqfx3HixEvyXb3pAgyKJRftlzkuYHIzyHXVkVI8Fpo00HWO24xYLaTd0Y9JqlDNs8nc5fCnM+3bp8WpitOFjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770993309; c=relaxed/simple;
-	bh=eYYbf2Fx9bx/F7NBONguUlzrSFkhd/ioraDgDAqlxYk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7j3EdgQ9yfplZows5wK8lDxjTCa64AaO1tuyAwdTlaCJUA1XaY+AmJV0Yr7bbAKJgI2FpV2SkFWTFhthXEPK6/c5PAwMeKd1VetNEaV1VGEeFJCGMmfEocxszm7R4N4b4aHxmycXY/4Ac/KhdnmjTb8KSIvnx9KX7+hv9Kf5ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILteLd+O; arc=none smtp.client-ip=209.85.128.68
+	s=arc-20240116; t=1770993595; c=relaxed/simple;
+	bh=ZPkDB8g6qpgZMHmfQA8zKprAkzQY5lnCry88GjPB6h0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=SjCWg2m8LoRFSfDLzc31uYvTkqNOJd8p2Vh8cw5SEd/9an+lqSQF9Jj8AmPC185RBC+CqFBDB2kp0YbJX8v/sumfA2+mKO6XPnfh4lK/aljl3co4ciG3pqLAqzMNHK4VKDAweqXTjQQsMS2fvQm9KPdQ8q+uwoKDKbmkCp+z/ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JnRI153k; arc=none smtp.client-ip=209.85.128.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILteLd+O"
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-48336a6e932so6177585e9.3
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 06:35:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JnRI153k"
+Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-4836f363d0dso8271865e9.3
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 06:39:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770993306; x=1771598106; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=62ihkrQu9LB7XprCQcm5ZTWs10qtBK8XPnDPP2voSL0=;
-        b=ILteLd+O8529nxT1fcUE46I2Yp/xsE2j4aVaUS3FK3FfDpyaNNFrjVz7O4XWT7FaXK
-         m+PkxJozeRcioVoMwVZfvzGYUP2bhLRjjQFOLoC8Dju+IFCdhQhlY2xwJYyZW0tpIi+z
-         u/2G8G12f1hZsBtupg2/A8+LKDRd8Ylpehfa35skdwvG1NeWKy+43JGPiIfzmYxXN8g9
-         F7GBxGdjiB/qIFn7wkiDlyCdc5+VA+BYBnXiruXOW5ruUnCTz9RdBGQPVlz7n60D8Ajs
-         +THYtIXCJayRIRpmu40dSgLVamjISWW/yD46/hbVnm3jZosA8IxE1Q1VSrzdewMcM0xW
-         dxJA==
+        d=gmail.com; s=20230601; t=1770993590; x=1771598390; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=riy8ejXz8zTA6T2Emsh9AUWrH1pzaqXAgcNJRPlXxWw=;
+        b=JnRI153kiFapCsf7Sxg6s8uwapF4hS9TNUoeYejsDhKZps+cVTzXGRk5RZsuzoode2
+         fKQDulzsN0KOzlXltq4SOi4kU6EUQuzzLXR93Q8IVIl/kl167GEDgMUVgtEETCTS0a69
+         4kH4qCSooGbfNYCr82irn4CKQ6D5OPcadztbzj2rGrtwL2jUL1qS7mRPAxkObSpTkFoB
+         HEi06koFSGcM8LMBJJ+vXi50HL0lUECcBynMHnNiRefYrcFnJ7pN6Z+f/bdyzqgL4B4E
+         SNMAYPnvbHOLpOSEfAWEXI9/MmlOkKHzq3llRjog0aX3TGtOAQLV163JTIXaFQ01HUlb
+         IykQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770993306; x=1771598106;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=62ihkrQu9LB7XprCQcm5ZTWs10qtBK8XPnDPP2voSL0=;
-        b=Ss9deOtxi7+O7b0UNWMWVH9Y5CgGSdh4Ofj1rbGgoaWiu9O1vrrrNbO0MnQhhApF+A
-         v3Cn6yPxrfU3rO1gi9N6Pde7sQ7APNYC+iKZVykZL7Gp0DunK6g/d7OAB8jErQznYuIE
-         bFGinZhVokTHWvcmhhnWy4wcx6FKH1GkUteqBor9DaW6mXZgBvRvNmRneqsQm5/lpfBy
-         DSAtj4LFA0raxDZrm8JGgzsaqO8jYnweQEk4n2R3JXp6JWcBjwQagvZqMJ93fUECn/0E
-         A1p07/YaVHS9nCBOWWNFtxDfBtqMMF9GNjXDnVshaiISOVc5ZSKlRAZjyeRgpmUvlpSK
-         agvQ==
-X-Gm-Message-State: AOJu0YzzBacwd/IUow6HLqOZ4pKzqYu7A9LTKEnW/8A/YYky6cr4QDWr
-	gTPtILq7Luci3xrsslLzgK6jcgeJh75zLkj+owxMsw1kfDqZ4qSPx9P9HytE8cYH
-X-Gm-Gg: AZuq6aJq1CDtEg7CsunB6QkDYb7cWQyRghCo174LLgYtKA1sUnnxXkd911z+KbvdaWy
-	sVwYYGYntxaT36CHT/CEf10vksLIg4oSOvsdKiH9NCRHRluoR0QNfq6BjdiGgDz4vaDMBN1vUVD
-	YEuPyD35JP9IcXISJmpAWsiNLzEe+/dXrpDDBxLEFpUgCXjqFwYX9cAinekBkf1HWAmSzUxk2ji
-	knTatTZfG5LO0RStD8PzwmyumT4F6Qj4M2Oe7aeomrIuiLZhqVMuZR9Ib/wIwLamz2Z97dmluY/
-	mz90H3QkUauu7giHcpgxXWzWR+6/aNI6Ez3o5kCYIA7UEVCuUZLxGR7xaQ+OB0Cf3FaeUZq9+Yu
-	dJy0nR9WrMd+9FuAna5o4zUXcAxokPR5v7MRSOhQ0g0K4XygWx4MKZrdOZsPk0JXYT6se5TmXuH
-	KK4okumz2ADLZeX2O0/hyjinFYGho=
-X-Received: by 2002:a05:600c:1c22:b0:483:6de6:37ad with SMTP id 5b1f17b1804b1-48373a7b9fcmr32562085e9.34.1770993306297;
-        Fri, 13 Feb 2026 06:35:06 -0800 (PST)
-Received: from berwick ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5e11f5sm257083905e9.4.2026.02.13.06.35.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 06:35:05 -0800 (PST)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-Cc: Matthias Beyer <mail@beyermatthias.de>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	pyokagan@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 2/2] templates: detect commit messages containing diffs
-Date: Fri, 13 Feb 2026 14:34:49 +0000
-Message-ID: <494f4df6865f81eba42584ead81327c9a305d0d4.1770993281.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.52.0.362.g884e03848a9
-In-Reply-To: <cover.1770993281.git.phillip.wood@dunelm.org.uk>
-References: <20260206090358.GA2761602@coredump.intra.peff.net> <cover.1770993281.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        d=1e100.net; s=20230601; t=1770993590; x=1771598390;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=riy8ejXz8zTA6T2Emsh9AUWrH1pzaqXAgcNJRPlXxWw=;
+        b=DVjT5nAaSVfnal1Du4QfJBpW+VeY5/hqlf7AncND/w81qkT1C00lPgcIHWx+E20yY3
+         bWkAiT4Ktl4ObNkmBqeqdascj9BQ70RfL49M0OB9EbMD89dXSuv70xHo75z75gsSBL0z
+         s1Vw468r+RV3jT3e84WmL/Dm5Ysze2EN7XU9FjZLYtp8C5Qkwr+qXq6p4HSxR75E5+mt
+         YU0vqyxrAFESonBvfPvOP7oXKFaAT9aTpm+v2Jg6cOhOb1DhUxusYXyhp3i4oawwvTnY
+         DODlPnYO2sEPLNa7+yFQRKye2K4zV2iDsaolqiy3rqUrktG6xXYxqRNC0qUDpSTVp6S1
+         mklQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU2VIad7xpqCVz/3tc69Wc8W/2pBdIU7iRvp1XI8kGD+1GOTDqmw8TsxA9We+qWk6qRyvg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxR+Tjj4nNSD4JYDuMl4TaQPF2cn2qKzQTzFLPsDndIvhCNGmxw
+	ekZYQKaVA72Spcn3OwX8Sq4mysQOCWenMNr8KiKGRwqBw8HnXz13rOXzuRJ8QGsi
+X-Gm-Gg: AZuq6aKjP/Q2QbFYvSbL7+dTw1EBzeJI9RkIwCNUJbEBVAaf9EoY/rEGBxdeD+xhkKw
+	LPxmG+IU6QYXoQIVzcVvzJHWZbw5pDZwOK3af6sN6LDKv99WRNmwurcwlCdGiAexo6Nq1O6lArv
+	//gv1aTKFcJvxynwyu3KjNovGo/18WGPBV9eUkbl2rhI48rZUS64NrtwNBC8kzUNmzi8ZUM1Ur5
+	ZQgZMqhka3PpwnjbCGbllT5l7f8kkfV2MpzjXRHvM+/KYEqJhTPI1ejxdF/iY97kZX45oOUUF2h
+	Rh5aW5ikLMmf/JqW12iM+XIcMnSqNX9lY6WJy3vO+/AO9GblCCMYymLfi9yjOKLDqIoA78pJ0oz
+	/2jAXCAcY9DRZz072f0x0fB7ese+yFQzHWjhsfeQN1yz4cywUFZZtGHNgEJIkdeqbJ407h2ArwO
+	Wkyk5JCyx9P0ublBt20HWaYxyOFT6G3vRyWF+O5ago0Bw0ZKVNXWIPuAABoZXk4gyqIHHkBdqC+
+	NbS8Q==
+X-Received: by 2002:a05:600c:a085:b0:480:6941:d38b with SMTP id 5b1f17b1804b1-48373a7460fmr31183225e9.30.1770993590357;
+        Fri, 13 Feb 2026 06:39:50 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4835dcfafcdsm336987775e9.9.2026.02.13.06.39.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Feb 2026 06:39:49 -0800 (PST)
+Message-ID: <1dd09e04-dbdb-4a6c-933a-e4dc451878f9@gmail.com>
+Date: Fri, 13 Feb 2026 14:39:48 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/4] Run hooks in parallel
+To: Adrian Ratiu <adrian.ratiu@collabora.com>, phillip.wood@dunelm.org.uk,
+ git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
+ Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Josh Steadmon <steadmon@google.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
+ <eedde9c3-2aff-433b-9dc3-f8593d53dec0@gmail.com>
+ <87jywiox9f.fsf@collabora.com>
+Content-Language: en-US
+In-Reply-To: <87jywiox9f.fsf@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 12/02/2026 14:24, Adrian Ratiu wrote:
+> On Thu, 12 Feb 2026, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> Hi Adrian
+>>
+>> On 04/02/2026 17:33, Adrian Ratiu wrote:
+>>> Hello everyone,
+>>>
+>>> This enables running hook commands in parallel and is based on the patch
+>>> series enabling config hooks [1], which added the ability to run a list
+>>> of hooks for each hook event.
+>>>
+>>> For context, hooks used to run sequentially due to hardcoded .jobs == 1
+>>> in hook.c, leading to .processes == 1 in run-command.c. We're removing
+>>> that restriction for hooks known to be safe to parallelize.
+>>>
+>>> The parallelism enabled here is to run multiple hook commands/scripts
+>>> in parallel for a single event, for example the pre-push event might
+>>> trigger linters / spell checkers / unit tests to run at the same time.
+>>>
+>>> Another kind of parallelism is to split the hook input to multiple
+>>> child processes, running the same command in parallel on subsets of
+>>> the hook input. This series does not do that. It might be a future
+>>> addition on top of this, since it's kind of a lower-level parallelism.
+>>
+>> There's quite a lot of prior-art on parallelization from the various
+>> hook managers - is there anything we can learn from them? For example I
+>> know some of them serialize the pre-commit hook by default as it may
+>> update the index but allow the user to configure a subset of scripts
+>> that can be parallelized. They also allow for parallelization where
+>> different scripts update different files (e.g. code formatters for
+>> python and C can run in parallel). We don't need to implement all that
+>> now but we should design our config so that we can support it in the future.
+> 
+> Yes, all the prior-art is very useful and it is possible to do
+> finer-grained (or lower-level? :-) ) parallelism further with the
+> new run-command parallelization design, APIs and config.
+> 
+> Obviously that will require more work and doing careful analysis on each
+> hook-by-hook case. I'm just adding the basic buliding blocks and
+> enabling the "highest-level" (most... independent?... level between
+> tasks) of parallelism here.
+> 
+> My approach to this big problem was to simplify and break it down into
+> smaller / easier-to-manage chunks. I'm still splitting up commits and
+> untangling logic to ensure each part is done properly (also easier to
+> review) and can work independently (no regresions etc) before building
+> on top of it.
 
-If the body of a commit message contains a diff that is not indented
-then "git am" will treat that diff as part of the patch rather than
-as part of the commit message. This allows it to apply email messages
-that were created by adding a commit message in front of a regular diff
-without adding the "---" separator used by "git format-patch". This
-often surprises users [1-4] so add a check to the sample "commit-msg"
-hook to reject messages that would confuse "git am". Even if a project
-does not use an email based workflow it is not uncommon for people
-to generate patches from it and apply them with "git am". Therefore
-it is still worth discouraging the creation of commit messages that
-would not be applied correctly.
+That sounds sensible and should make it easier to review, so long as we 
+design the configuration in a way that it can be extended as we add more 
+features.
 
-A further source of confusion when applying patches with "git am" is
-the "---" separator that is added by "git format patch". If a commit
-message body contains that line then it will be truncated by "git am".
-As this is often used by patch authors to add some commentary that
-they do not want to end up in the commit message when the patch is
-applied, the hook does not complain about the presence of "---" lines
-in the message.
+> Thank you, and everyone else, so much for all the help and patience.
+> 
+>>> The pre-push hook is special because it is the only known hook to break
+>>> backward compatibility when running in parallel, due to run-command
+>>> collating its outputs via a pipe, so I added an extension for it.
+>>> Users can opt-in to this extension with a runtime config.
+>>
+>> In the past we had a regression report [1] when the pre-commit hook
+>> stopped having access to the terminal. I've not been following the hook
+>> changes, is this series (or any of your preparatory series) in danger of
+>> reintroducing that regression?
+> 
+> Thank you for raising this, it is a very valuable data point!
+> 
+> The preparatory series 100% will not reintroduce it.
+> 
+> This series might reintroduce it, depending how we set the defaults.
+> 
+> By that I mean:
+>      -j1 will keep all hooks connected to the tty, just like before.
+>      -jN with N>1 will disconnect the hooks from the tty and their
+>          outputs will get buffered through run-command's pipes.
+> 
+> The design I followed (which to be transparent is Peff's design, I just
+> implemented his ideas :), is the keep the original, serialized behavior
+> exactly how it was before, to not introduce any regressions and to also
+> keep identical "real-time" performance.
+> 
+> Taking this into account, together with Patrick's feedback on this
+> series, I do intend keep the jobs == 1 default for all hooks in v2.
 
-Detecting if the message contains a diff is complicated by the
-hook being passed the message before it is cleaned up so we need to
-ignore any diffs below the scissors line. There are also two possible
-config keys to check to find the comment character at the start of
-the scissors line. The first paragraph of the commit message becomes
-the email subject header which beings "Subject: " and so does not
-need to be checked. The trailing ".*" when matching commented lines
-ensures that if the comment string ends with a "$" it is not treated
-as an anchor.
+I think that would be safer. If we could opt-in to parallel execution on 
+a per-hook basis would that be a solution for the "pre-push" hook? Users 
+who want to keep the current behavior would avoid configuring parallel 
+execution for that hook.
 
-[1] https://lore.kernel.org/git/bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7dldf@fij5calmscvm
-[2] https://lore.kernel.org/git/ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org/
-[3] https://lore.kernel.org/git/d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br/
-[4] https://lore.kernel.org/git/CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com/
+Thanks
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- templates/hooks/commit-msg.sample | 54 +++++++++++++++++++++++++++++--
- 1 file changed, 52 insertions(+), 2 deletions(-)
+Phillip
 
-diff --git a/templates/hooks/commit-msg.sample b/templates/hooks/commit-msg.sample
-index b58d1184a9d..f7458efe62f 100755
---- a/templates/hooks/commit-msg.sample
-+++ b/templates/hooks/commit-msg.sample
-@@ -15,10 +15,60 @@
- # SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
- # grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
- 
--# This example catches duplicate Signed-off-by lines.
-+# This example catches duplicate Signed-off-by lines and messages that
-+# would confuse 'git am'.
-+
-+ret=0
- 
- test "" = "$(grep '^Signed-off-by: ' "$1" |
- 	 sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
- 	echo >&2 Duplicate Signed-off-by lines.
--	exit 1
-+	ret=1
- }
-+
-+comment_re="$(
-+	{
-+		git config --get-regexp "^core\.comment(char|string)\$" ||
-+			echo '#'
-+	} | sed -n -e '
-+		${
-+			s/^[^ ]* //
-+			s|[][*./\]|\\&|g
-+			s/^auto$/[#;@!$%^&|:]/
-+			p
-+		}'
-+)"
-+scissors_line="^${comment_re} -\{8,\} >8 -\{8,\}\$"
-+comment_line="^${comment_re}.*"
-+blank_line='^[ 	]*$'
-+# Disallow lines starting with "diff -" or "Index: " in the body of the
-+# message. Stop looking if we see a scissors line.
-+line="$(sed -n -e "
-+	# Skip comments and blank lines at the start of the file.
-+	/${scissors_line}/q
-+	/${comment_line}/d
-+	/${blank_line}/d
-+	# The first paragraph will become the subject header so
-+	# does not need to be checked.
-+	: subject
-+	n
-+	/${scissors_line}/q
-+	/${blank_line}/!b subject
-+	# Check the body of the message for problematic
-+	# prefixes.
-+	: body
-+	n
-+	/${scissors_line}/q
-+	/${comment_line}/b body
-+	/^diff -/{p;q;}
-+	/^Index: /{p;q;}
-+	b body
-+	" "$1")"
-+if test -n "$line"
-+then
-+	echo >&2 "Message contains a diff that will confuse 'git am'."
-+	echo >&2 "To fix this indent the diff."
-+	ret=1
-+fi
-+
-+exit $ret
--- 
-2.52.0.362.g884e03848a9
+>>
+>> Thanks for working on this - both config based hooks and parallel
+>> execution are really nice improvements.
+> 
+> Thank you for the kind words. :)
 
