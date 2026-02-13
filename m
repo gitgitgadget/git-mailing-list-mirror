@@ -1,62 +1,62 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7EB29BD91
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 22:10:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C70306487
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 22:11:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771020642; cv=none; b=VjrAn6qXq7nl6/MVuTYCWG8YvK5d/Efq54O5Sc79T462equcp9s+kyXG1bJ6iUK8hPHhHWv9RGVo17Tw4/Fj2P7Uu+zDq6STRQPEUafQ4JDn9aXAoGwbtbnvR47A6MFNzutJ5wbrXhTty6hcUcB9lQ4yX5+QJA17y+jB9huhCUo=
+	t=1771020698; cv=none; b=pbU+qbDXNFtXZ2HFJtGMiXHesWDkoe9TXjvRfzkNtSY3PEDzjIXg2iZYKgVmOngvF8T6Lg2af1iaM6LVOn+2Eff1oEetxRkkV3BBctrjEp0EME2f43zkmObjfH5qqmtwtzO+PqEbuRyH+htDDYZXFGO4HkVYBly80D65zT/PzkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771020642; c=relaxed/simple;
-	bh=ROkWgT/TmuBuR4dAWhQYLaYFsR9DD0JHboHTW1sSm08=;
+	s=arc-20240116; t=1771020698; c=relaxed/simple;
+	bh=FJaSnMfKF36k/dN0JFdDSgL3NrGq4RITVNd1xTDl/aI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iHcVS9ZOAc18u+m9vTqXTdv3czq046PYWBDcGM9Oxxb36yVoto6KM3VwLfCuZoLqQlRb+/H7Fxpa8ggYs8ao3QztDP8MjNamCuy3IhoS9BkIuwuq26WxnWW+AyOuYWYprLfgkelLkW6fIdo1Yr5/OgImeQAG7ty5/YMAGWT3lOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RhJTLn5k; arc=none smtp.client-ip=209.85.128.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=JaGGA4BrDAVYCaJmgQpExiQCf0tM0yzdgcbM5c+njzSUmi49EyvAq6K0UB64gCyFPPI2KNzK1zFnB35/LoPa2uUQra8nWub5fqxVPizanEAv3Hu6mEMf0T5DksZd8KcLv+6Dz+OsPNfpk8qJwVkmwbMgFOsS6m9Fe53rxBFE0EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gid/AY/W; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RhJTLn5k"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-48370174e18so9320625e9.2
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 14:10:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gid/AY/W"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-43767807da6so844307f8f.2
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 14:11:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771020639; x=1771625439; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771020694; x=1771625494; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KtOJ78jt22d4EeEUW5CHaKOR43BUybXlUu+fvmTvuug=;
-        b=RhJTLn5k0g3Hd1bI6syh44Kz5DxShOfvXG8DmAXQGEEel56no28kSz3cd+GcfYn8RK
-         zM8c8lwb0KfiXbkKfc1lPrc85RgN75K7IdCC9oW4TRgvtAsHv+v8aq8iu23phNOoA8c/
-         LJ18sMoP+MmV4MbRXCb7bPpjvKWbrz4eX8uLbsGjAoiAk8yWOJrCANmKCy3TwmlgiOEj
-         oMWoLpiPxBaUeN3YtWBNnmGcPAkaBd2ocEWqKcYwnq8FvICq7L+1zxF4nKAf45392nlo
-         Jp0nLEpjRUHhHUergLLkBdbmH0mFIIFG02DcaBn7Bopt7L+sXk6G1oblhyGXhwGWmmrn
-         26eg==
+        bh=txRDosfPod6AU8WUvWBGeTkKIQcFLODpqpYM9ZTlS+Y=;
+        b=Gid/AY/WnB/JrrxeTztqszv3XaMt3Vg41iW/xGzLKXON5WT5kOhGGjvWGnL5OphmSB
+         5dOjVKDoFJFzE/ZHmOFKBBiaFBscqTJ+fLdYdXtiKwgjcUpIafuEB2mypcYBvWvUq6Ek
+         hfebvE8/fC85N95f3cIxpHu6w39z+emtlQWkBeX5w0xnCtII4GiBpHxzmySsEsukbW8Z
+         nr2iw9cOfG3mY5Y1elvEJviQno1nw3/l47B3yrSlUxN6TAJLOqT1Fl7+tLRHdlZYyDAp
+         P9Niumwzte4Od6BGdlJlUPEHlhS31KwLGenjrQ7BgmLmRVrLEApc3kSzEoa2cxfUXUZJ
+         00aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771020639; x=1771625439;
+        d=1e100.net; s=20230601; t=1771020694; x=1771625494;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KtOJ78jt22d4EeEUW5CHaKOR43BUybXlUu+fvmTvuug=;
-        b=E3clJPkTtlaLF2r0hQE+VEKaXgQgEkcAawKAXN4CJDfViO7HYArM1PoUtVX+0vRfX9
-         UnVTBbziqgHmWsI1Fq4kDszlpALOxnIOEMcmTVhwFwtH6ZBkYuItMNAVgwp6EmGACUQG
-         Y0I4vR0cyOxrcLh0JypIPIg7ENoZ1tca9oNeQ05MvBE2ZI/rfynDI6laxYMoljig/cDC
-         JSU0MEQsl5H2rCFFYblyBEkkVOgN9XnL8W0/pZn36l6MfrJl6ZchxVaCHS6rM7W6eK0J
-         t4VUZwcK2R0+EyIV5xd1hv4HwOanANYcuMkGFSu/qJBLbMWBmemTINC3KAjHgMjxdFi9
-         50Kg==
-X-Gm-Message-State: AOJu0YxAqR8mYc7H9jbSO9gjLhsxcD9DduD1KNnBqKDE1NHdIlJYe+Zq
-	7Ex3Bvx/7AQPoSDY7joVtUXTCehjhc8fhh6Qzgx5LsdaLdj9AuQLLaIq/cOPBpU5
-X-Gm-Gg: AZuq6aIglwnFgqNwEWdt1pifu4P+yMXL822WH/aC1AmMiyqHQLhHGuAfL9XbChddcqU
-	p1ddFlgUDYFEXBxMYKb3iF9NP/JpjQ9erilRi9XGuhDOvtjeQNVUn2Y3VAPxrxP2unBZNdHpx2h
-	dzXAN7ieodWHHLpQpzLcNNh4cM/BTOTUP5X9sxhABChNQl3tTylo8Z/v5CEMPuz8ouSM+Gk7sCQ
-	ECQ5BUfaulPleTbAa7NdyRoz3d7VWNcmnnzopBFWnuCZeJekZY7pxuiKrWAysTiWXGlNUlE7FhL
-	LBqdWp8p7+SLLqsnxJgj7Fd4pbZC5ie+eryYoZ0Xtwrx2ePZNcV90qKKjhXlid5KSEYr9h3mXMy
-	Geo78PqX8UTQGO61NRzozf6U9qJFd5G+AgJvNxziA//lvhkumQExosB4QRlBSZYJabkJZgvs4N1
-	QdjIwpLdErt3FFnG/bzYmaNK03ooh5Cg==
-X-Received: by 2002:a05:600c:444f:b0:475:de14:db1e with SMTP id 5b1f17b1804b1-48379bd742amr11771435e9.24.1771020639418;
-        Fri, 13 Feb 2026 14:10:39 -0800 (PST)
-Received: from localhost ([102.88.77.5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5d77b3sm316262075e9.2.2026.02.13.14.10.38
+        bh=txRDosfPod6AU8WUvWBGeTkKIQcFLODpqpYM9ZTlS+Y=;
+        b=lg9mGuGyVkFDqg/IhzHyXXzwOgkeaczJHiZ6vUZGZed8M2glZgySuGAbXQgp3ppyV3
+         iMrE5PKAME/1GcWU0aonKeil27KnKJCfagWLCMhQgOG1dBe7nLVAp21X9oMmvwt9yTOi
+         gJMpV9u/bA13Z5wNsZPYDvrx/hZLVFOZDGKM/OTkKR9/xS2ZR8a+b8v4NUdhtN35l90/
+         RK3UX1+MWIloWv620y+ekhqiiH/o90hCMuSTSsXceyuLnA9j8RMEBaGdCDGm8PF9U2AZ
+         o/+XmSjXllfLHoOQBe5k1uq90VvIl9EMRWJbP+cOoPgEJUQsg+Hdr+yqQPYGSe+PSlbL
+         kP1w==
+X-Gm-Message-State: AOJu0Yz1JO9fLuJbPeK3B0GBvgdpLkN83EGb1zgvVpq4ZQYcGv4+RsVo
+	/BfSC+18aR7mWBLdaN67AGCGEg87ciNnN7W+L0kkFdRQQj5/iajkYrRKClZhwn2N
+X-Gm-Gg: AZuq6aJwD3jyghMDNQdGBnl3RDSi/W+QX+dwGwND9jyes4jj2p0a4xgFpz8dVqjkMcw
+	+K28KpUbCDBFH8R0dQbYi7fyydEQPsNEfLn9fgas2aJvMArmoH+Ne4lICTt0WtmXkjoQuGh+NIF
+	dCyibi+xWVr9AAfLUXrxjpQL5Y8Pw5jI6/t13dNOYjfGKyXZlI4o27bv+XyoTopS0v9Z8jPaFQG
+	oQBDwHLe3W2x0diiqiIi+0q24ftiH6aGIoRUMEFwQap7Vjpr9MwJKtQovF4sCDUoINzMZwnd4xb
+	MdJTe0kA5WpmhurY0nX2gwD4tajBnMAkXb+y346D3ji/6hyDW07cIicYgO4f1LBAV4fUmUqAbWk
+	XC8eVoez9WdyFMnVYENgE55aMd5YcruoygehXtQjvdyOtSDidenvsB2+HXc9KcV+GBXZgBPRfxN
+	OqknFTCFe1qLQo7HtlEwuNaLzCMutXWrw=
+X-Received: by 2002:a05:6000:24c4:b0:436:cea:6165 with SMTP id ffacd0b85a97d-437978c09d5mr5632825f8f.6.1771020694002;
+        Fri, 13 Feb 2026 14:11:34 -0800 (PST)
+Received: from localhost ([102.88.77.11])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43796a5ac92sm8535450f8f.1.2026.02.13.14.11.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 14:10:39 -0800 (PST)
-Date: Fri, 13 Feb 2026 23:10:48 +0100
+        Fri, 13 Feb 2026 14:11:33 -0800 (PST)
+Date: Fri, 13 Feb 2026 23:11:43 +0100
 From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
@@ -69,8 +69,8 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
 	Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: [PATCH v4 2/4] add-patch: modify patch_update_file() signature
-Message-ID: <906f25e184d744f9d23681600a0d9e440b7f07df.1771015581.git.abrahamadekunle50@gmail.com>
+Subject: [PATCH v4 3/4] add-patch: allow all-or-none application of patches
+Message-ID: <aed0a80d8e55e4331677844bd84635b758572959.1771015581.git.abrahamadekunle50@gmail.com>
 References: <cover.1771015581.git.abrahamadekunle50@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,124 +82,109 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1771015581.git.abrahamadekunle50@gmail.com>
 
-The function `patch_update_file()` takes the `add_p_state` struct
-pointer and the current `struct file_diff` pointer and returns an
-int.
+When the flag `--no-auto-advance` is used with `--patch`,
+if the user has decided `USE` on a hunk in a file, goes to another
+file, and then returns to this file and changes the previous
+decision on the hunk to `SKIP`, because the patch has already
+been applied, the last decision is not registered and the now
+SKIPPED hunk is still applied.
 
-When using the `--no-auto-advance` flag, we want to be able to request
-the next or previous file from the caller.
-
-Modify the function signature to instead take the index of the
-current `file_diff` and the `add_p_state` struct pointer so that we
-can compute the `file_diff` from the index while also having
-access to the file index. This will help us request the next or
-previous file from the caller.
+Move the logic for applying patches into a function so that we can
+reuse this logic to implement the all or non application of the patches
+after the user is done with the hunk selection.
 
 Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 ---
- add-patch.c | 35 ++++++++++++++++++++++-------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ add-patch.c | 62 ++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 35 insertions(+), 27 deletions(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index df8f2e6d74..673ea659ff 100644
+index 673ea659ff..7d4f17e432 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -1441,20 +1441,21 @@ static bool get_first_undecided(const struct file_diff *file_diff, size_t *idx)
- 	return false;
- }
+@@ -1420,6 +1420,40 @@ N_("j - go to the next undecided hunk, roll over at the bottom\n"
+    "P - print the current hunk using the pager\n"
+    "? - print help\n");
  
--static int patch_update_file(struct add_p_state *s,
--			     struct file_diff *file_diff)
-+static ssize_t patch_update_file(struct add_p_state *s, size_t idx)
++static void apply_patch(struct add_p_state *s, struct file_diff *file_diff)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++	size_t j;
++
++	/* Any hunk to be used? */
++	for (j = 0; j < file_diff->hunk_nr; j++)
++		if (file_diff->hunk[j].use == USE_HUNK)
++			break;
++
++	if (j < file_diff->hunk_nr ||
++		(!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
++		/* At least one hunk selected: apply */
++		strbuf_reset(&s->buf);
++		reassemble_patch(s, file_diff, 0, &s->buf);
++
++		discard_index(s->s.r->index);
++		if (s->mode->apply_for_checkout)
++			apply_for_checkout(s, &s->buf,
++					s->mode->is_reverse);
++		else {
++			setup_child_process(s, &cp, "apply", NULL);
++			strvec_pushv(&cp.args, s->mode->apply_args);
++			if (pipe_command(&cp, s->buf.buf, s->buf.len,
++					NULL, 0, NULL, 0))
++				error(_("'git apply' failed"));
++		}
++		if (repo_read_index(s->s.r) >= 0)
++			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
++							1, NULL, NULL, NULL);
++	}
++
++}
++
+ static size_t dec_mod(size_t a, size_t m)
  {
- 	size_t hunk_index = 0;
+ 	return a > 0 ? a - 1 : m - 1;
+@@ -1447,7 +1481,6 @@ static ssize_t patch_update_file(struct add_p_state *s, size_t idx)
  	ssize_t i, undecided_previous, undecided_next, rendered_hunk_index = -1;
  	struct hunk *hunk;
  	char ch;
- 	struct child_process cp = CHILD_PROCESS_INIT;
--	int colored = !!s->colored.len, quit = 0, use_pager = 0;
-+	int colored = !!s->colored.len, use_pager = 0;
+-	struct child_process cp = CHILD_PROCESS_INIT;
+ 	int colored = !!s->colored.len, use_pager = 0;
  	enum prompt_mode_type prompt_mode_type;
-+	struct file_diff *file_diff = s->file_diff + idx;
-+	ssize_t patch_update_resp = (ssize_t)idx;
+ 	struct file_diff *file_diff = s->file_diff + idx;
+@@ -1784,32 +1817,7 @@ static ssize_t patch_update_file(struct add_p_state *s, size_t idx)
+ 		}
+ 	}
  
- 	/* Empty added files have no hunks */
- 	if (!file_diff->hunk_nr && !file_diff->added)
--		return 0;
-+		return patch_update_resp + 1;
- 
- 	strbuf_reset(&s->buf);
- 	render_diff_header(s, file_diff, colored, &s->buf);
-@@ -1499,9 +1500,10 @@ static int patch_update_file(struct add_p_state *s,
- 
- 		/* Everything decided? */
- 		if (undecided_previous < 0 && undecided_next < 0 &&
--		    hunk->use != UNDECIDED_HUNK)
+-	/* Any hunk to be used? */
+-	for (i = 0; i < file_diff->hunk_nr; i++)
+-		if (file_diff->hunk[i].use == USE_HUNK)
 -			break;
 -
-+		    hunk->use != UNDECIDED_HUNK) {
-+				patch_update_resp++;
-+				break;
-+		}
- 		strbuf_reset(&s->buf);
- 		if (file_diff->hunk_nr) {
- 			if (rendered_hunk_index != hunk_index) {
-@@ -1577,7 +1579,7 @@ static int patch_update_file(struct add_p_state *s,
- 			fputs(s->s.reset_color_interactive, stdout);
- 		fflush(stdout);
- 		if (read_single_character(s) == EOF) {
--			quit = 1;
-+			patch_update_resp = -1;
- 			break;
- 		}
- 
-@@ -1623,7 +1625,7 @@ static int patch_update_file(struct add_p_state *s,
- 				hunk->use = SKIP_HUNK;
- 			}
- 		} else if (ch == 'q') {
--			quit = 1;
-+			patch_update_resp = -1;
- 			break;
- 		} else if (s->answer.buf[0] == 'K') {
- 			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
-@@ -1810,7 +1812,7 @@ static int patch_update_file(struct add_p_state *s,
- 	}
+-	if (i < file_diff->hunk_nr ||
+-	    (!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
+-		/* At least one hunk selected: apply */
+-		strbuf_reset(&s->buf);
+-		reassemble_patch(s, file_diff, 0, &s->buf);
+-
+-		discard_index(s->s.r->index);
+-		if (s->mode->apply_for_checkout)
+-			apply_for_checkout(s, &s->buf,
+-					   s->mode->is_reverse);
+-		else {
+-			setup_child_process(s, &cp, "apply", NULL);
+-			strvec_pushv(&cp.args, s->mode->apply_args);
+-			if (pipe_command(&cp, s->buf.buf, s->buf.len,
+-					 NULL, 0, NULL, 0))
+-				error(_("'git apply' failed"));
+-		}
+-		if (repo_read_index(s->s.r) >= 0)
+-			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
+-						     1, NULL, NULL, NULL);
+-	}
++	apply_patch(s, file_diff);
  
  	putchar('\n');
--	return quit;
-+	return patch_update_resp;
- }
- 
- int run_add_p(struct repository *r, enum add_p_mode mode,
-@@ -1821,6 +1823,7 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 		{ r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
- 	};
- 	size_t i, binary_count = 0;
-+	ssize_t patch_update_resp;
- 
- 	init_add_i_state(&s.s, r, o);
- 
-@@ -1859,11 +1862,17 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 		return -1;
- 	}
- 
--	for (i = 0; i < s.file_diff_nr; i++)
--		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr)
-+	for (i = 0; i < s.file_diff_nr;) {
-+		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr) {
- 			binary_count++;
--		else if (patch_update_file(&s, s.file_diff + i))
-+			i++;
-+			continue;
-+		}
-+		patch_update_resp = patch_update_file(&s, i);
-+		if (patch_update_resp < 0)
- 			break;
-+		i = (size_t)patch_update_resp;
-+    }
- 
- 	if (s.file_diff_nr == 0)
- 		err(&s, _("No changes."));
+ 	return patch_update_resp;
 -- 
 2.39.5 (Apple Git-154)
 
