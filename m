@@ -1,189 +1,214 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D91214204
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 07:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770966858; cv=pass; b=BHyDiALpOLsvd409+VMUyDEvgi8QaqQ16YZCRF6+YU/4i2yRlMmgBlcJEZeSkh7j3IOefgSJEPmUYqgGGVidUI+pZZv8t9RcvU3bjLdM6EEwStGk52+vAauaIITB0Gk7LXX7srs6ABdV3wmOGoPcT5wkAS6EXBxaXG+iQ+QutV0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770966858; c=relaxed/simple;
-	bh=EjAX7d7yHENillGfkoGEeXKAEcg+jIivb+IKm0cb8OI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kj6dyNGA/6t+RLN73onj1Vk5P/zHQd0MGATEcIoxNnWvAJZc3PdgIAezjXdURBgbN6lAtOxoZ4wQOs/7OrqOYHbiKoggZ4SW3OnltRgHx1eLKm7vwbMI1QszFb24n3ul6uFcYxwmdzjT7WjOiwKD1P0hxjuczdGwELRBpNc2WA4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=jKTRr/oy; arc=pass smtp.client-ip=74.125.82.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3281261B9B
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 09:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770973982; cv=none; b=c5HSBT/kb+GqHyqHIjs8GWEW7qpLVu+pJuSZ4HbW2EJri1hySqpxdK12+EPtz324Bi96fVNlGKOg26H2EP6cU6vydQWDRjVjVGCyMbpzOgoO+nL5NyHCnBLiInYlLMH82ngR6BGvxDs4GW2Ezlk5QVXRMNXUZrmogXEzno9Ncjs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770973982; c=relaxed/simple;
+	bh=0t4WGfhA0xWYwTyi3gGY+wHSRO0BOeGrRvmIBdZER5I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=oYGgmFVzoJPUXa06USgM5rmzihBzGmDnWQtBlwQBQIzJoI5Jysp3CSyE7nkwMphq6lCQJNlWoSkr5AkyN8b7ln7ebqcpnO3fQC43C6d+EtZa2AVeL6Cin99yRTQYCr/csbDNJWbUXiG4gd7zi8ZllutKkGEL9cOXwZUv6ipRQZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ukjkkb0F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NOcv8IT3; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="jKTRr/oy"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-124afd03fd1so1122734c88.0
-        for <git@vger.kernel.org>; Thu, 12 Feb 2026 23:14:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770966855; cv=none;
-        d=google.com; s=arc-20240605;
-        b=E9AtEcC7s2CJ07bcRRqs0e+eSxGIYGGEvXsOjvGDssSsmQB3jiNyIX6d/pbUdRYnra
-         Np3zbqvzXq9BKg9iHuxg/gJhqrQhvDafVFzQDjMlcHiQnhEFofBl2Ud0HA/tH1Z8gyl9
-         FtvizjZajiglj92dUpeh9N3S2B9ym6Cr6dF3I/SCvQy3SXa+Paa99EV5qAFpj5u89p0a
-         gyXDED246nSjP6bvQJbDB5C11cJZRkPRfigDCHrZkF8qUEEyq4d6c5Ib2YllOmuylRgn
-         M3uGYRA7vO89vX4UBumCS4i5Slah65WjQLwSXax+o179K1jZg4DFqvO9MGRjlsbXFA4u
-         UqKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=W0LUDLp/3moxxyLUD6fiYAJ1vQnRI3Ku6beji5Tg+SY=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=W/anzWwTtx/t4/lOMSduU5WVYwHJEmNlHmLuGJ2MkRVwwibwoXJWgU0eEASOCrzZG7
-         i3KFhOHvt2aGTPgSPifPsR2xihmY5aIAVZlJ/YQSdRqEVeWVHxLGFNL/6MKs3f1F8HT7
-         oEonaINrwIXUavQ4uzGRNofuPZOd06uOvlvcyVi3EiJcJkF43yF52b2zYGuVL8ULBJ7v
-         9abT0MIxXkw6HCB3pOcf0QCJevryYURA8MBHWqWdfFwCwLoKoRZtSm/WSbeyTUaeW4lZ
-         SUZYOXuTIbHxZZ4xiYFtGoY7C7DAnR/BgUTPh1yyFNrI7fEP7FYVtJi5be1Tp/a/ahth
-         HoWw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1770966855; x=1771571655; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W0LUDLp/3moxxyLUD6fiYAJ1vQnRI3Ku6beji5Tg+SY=;
-        b=jKTRr/oyULVVGiGmzwViMmtvuXsFxxN999rdk9ik9B7erVk2TrgnAYjOLxmyLKLMk6
-         xFGpm40Gf+bptgYo9pxxbcOt9JkRmFu6ILGZSICi+ccuj70yedWS3Bj3kVTcqgO/OK1R
-         LRz4fn5ryHQo9/d0FqVkQhg9GYNuE4hA3jN4U4fx+ijuDWFNtBcAObhi7dkIl0zUVLf5
-         ABaHCUw4+EouAZrAvbUNhZwkr5qIcNsaKe1RbJV91TjxfFJhDpT49zejLjRPgLTdHtDk
-         LxZJFBywcYqw5XgmLVLDjP657GIigPDQZQG2zcda0mZZIFLtqyOhCuyJD++QdT7n8r1J
-         YigA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770966855; x=1771571655;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=W0LUDLp/3moxxyLUD6fiYAJ1vQnRI3Ku6beji5Tg+SY=;
-        b=Fm9hKzUsxZLI3pj3hz2qjs6AmMqK/Icp4lenYZUGe5hAyXrF6A7EjW9BhZmKBHANqH
-         apLxry+VQk5UTp/BGtzC8S6fV2DZNzUJbDoa7ndqnlStZTSlnrMXT3nTSP1TaT3ESGa7
-         EFSgBOpO793+kUT0sDkgSYNtCcY5XtaX26l49srzWgE5hBo1+qsY7ECtssx+SD544DzK
-         rsU7SrqFuHhAB0PfzUiq2ZKzhpYbqShYX8fzTj7e2iCMLm6LBxQlvFAg1i5Fe/7I3w14
-         nn5QFXhHzY6hJMUguENJZ8ul0fQ3CaC+d3/YI8OWWj7Ja1K09AuQlcUBvbuvmYRTzYvw
-         5wKQ==
-X-Gm-Message-State: AOJu0Yz8sVQlQaz0c4PmBtcF5C3oGG+cZ2OfnScOwa/fyu+1+D4iEnk0
-	pnEA76yxY9zCbgGgLmE17l4vH7SfEzBzqQHyYqECn8kEmAG1O1Ft+LpENFBQeWSr1j6MqerkKZv
-	DcJlsaZ5D37CWluC70riwEucolajR9pLOZ/RRAQZ8c1LwwFPuHhbtRzQ=
-X-Gm-Gg: AZuq6aKkwZZpFeO7a7ftbt0aC121l67rKOPK62Cywoe6qzB/dFpeh72k2qHWy0oXcV2
-	CGXeAaoVqeOy+8ITXr2WLzSl0JIjxgSWuLyz4reucaqwV2Qt8ayW8T6KFF9dt8viXQ6SXJFRJMn
-	vOMlhWEl4Nkel86b/ZoEhK1GWqXKO3eEdUENLZ9L5Tn025ftGmFdbhdb5fw9QtO1GdyJIDUvGsC
-	W/B0VkH6hektWr7EohQyCQY96V5gcGZu4JOEn2Q4yA9YTpTxE8uf7qcZcPA1IyifMwPaLM0GQhv
-	qAwGVQQVVoDg+8Hi9/I=
-X-Received: by 2002:a05:7022:2386:b0:11b:99a2:9082 with SMTP id
- a92af1059eb24-1273adce0a6mr244580c88.15.1770966855143; Thu, 12 Feb 2026
- 23:14:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ukjkkb0F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NOcv8IT3"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 21A2414000CE;
+	Fri, 13 Feb 2026 04:12:59 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Fri, 13 Feb 2026 04:12:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1770973979;
+	 x=1771060379; bh=Y1lLPop3LilMNA0TMC3JJnk33WOnSZ+Sk+bWTSWSnlo=; b=
+	Ukjkkb0FoLKfhMKXf3x20Klk/LfwrJiEt+m84RJtIhxNAcEDN064KG8X7mlWZT6O
+	Y0cmWvFtjUfGx/mwrabvnq38Bz3hW6ImDYJVEcGD1txLumRZ/EqtJIvVsk8RG4mx
+	Uwns7MgCc/FLHs8Laf68g/J4J9JYO8w1wPYs+fB1TIRyYzUrAQnse2aJEwWeUenM
+	V0OQ3Lc7P27xNXfWL+Zf5k4yMnDQ4uD7IOF4uYbhM8YFvA5LFaKzAe4YaWmTwF0c
+	Vi708H3UWA9CjRMK3J6dg5zx7x3pGm5rHzBtTkxquuhP3ezJkOnfn+x/lV1/scZB
+	9cIgG5/8cBrXl69NBkIVbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770973979; x=
+	1771060379; bh=Y1lLPop3LilMNA0TMC3JJnk33WOnSZ+Sk+bWTSWSnlo=; b=N
+	Ocv8IT36fCj20WVFDIBwgey1rKGnFC+iJX0yXD60rlJyMYtDu6+ZSBU0rknDqYuL
+	+4FsRC58ZdIvmgl2wAF9K/0urIzhmKFaFWBayRdBP2ZDNOtCb1YUK52Z6NuI7cea
+	zPPT1lkKDGKefnF9TZi2yuaJ31FybuwF6rso240wkVDST4Of+sPtdce2aRnhsiN+
+	OJqTmXEYzFD1eKu4JAiY/b4exWCD6RqDURIAd77lLmy+5t34KuxJqcZPPCBcqW8J
+	mL00W2FiA5w8cXgirp8niC3zTaGdKzPyLYrQijn5IqsIQe/RVETjkbmrqbMdh5yJ
+	gjXpp6k/wm0z3QSg4rz0w==
+X-ME-Sender: <xms:GuuOaSGCtPsTJOQZskUTfE-zidkbJEAQiw4GUAKGqezcKFd2BhUSHA>
+    <xme:GuuOaawFA587Ec2Kd25Z3yzVImLiB59PPqFgOlqAvZ1NSSnJIYo596kEkixX03cAX
+    ZpFe73ieRiFHuPQXXvnOuVDs0ko-et6gisgbF_XQbvFGIpCSNejUQ>
+X-ME-Received: <xmr:GuuOaZj6bwJ_4N58110lxjhVmB_5G2Km064149hLKigG45TCgnSDvR-3Xc8ZDtl5KrpWp9vk_tUCc5tvogWDh92ma4fuSv5aAWJHr9J42NCf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdejkeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    fedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:GuuOaVzGvGGt1wOSK5iDPctHdUrB4kKFfdV8z3014gqbOIEPomLpOg>
+    <xmx:GuuOacKYyEYKj1saoTa1ZFIodFBINURBTOHKAk4-zcYCMEkdW-A7Sw>
+    <xmx:GuuOacTXEHZAPRf9ZChgPMC4pxl3d4Y7NC1zXv5DkzALa9iub0LXzA>
+    <xmx:GuuOaUoAibXFHxe143sVLgPas6jSQwo0ttBohdCrye_E-y0SahqN8Q>
+    <xmx:G-uOaez-48cN9KDx9xwh8ZnLGejNfEGFcZjvsLh-esVqTN73v33_PNGZ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Feb 2026 04:12:58 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 96a99076 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Feb 2026 09:12:56 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/5] builtin/history: some smaller UI improvements
+Date: Fri, 13 Feb 2026 10:12:46 +0100
+Message-Id: <20260213-b4-pks-history-dry-run-v2-0-756ac376e9e5@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260211041128.48412-1-hanyang.tony@bytedance.com>
- <20260212072002.2347-1-hanyang.tony@bytedance.com> <20260212072002.2347-2-hanyang.tony@bytedance.com>
- <xmqqseb5okl5.fsf@gitster.g>
-In-Reply-To: <xmqqseb5okl5.fsf@gitster.g>
-From: Han Young <hanyang.tony@bytedance.com>
-Date: Fri, 13 Feb 2026 15:14:03 +0800
-X-Gm-Features: AZwV_Qi9LLTb1I9fmRVCq3_UJL15Yx9fvj6-pfZG551TofQZZtw7ZFaB9gtvl4U
-Message-ID: <CAG1j3zH0C0DA+V35A1e73wi41gmk9Xry6gmtZM3w3LT09etntQ@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v2 1/1] diffcore-break: prevent dangling pointer
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA7rjmkC/4WNTQrCMBCFr1Jm7UgyqUFceY/SRZOMdhDbkmhQS
+ u5uLO5dvMX3eD8rJI7CCU7NCpGzJJmnCrRrwI/DdGWUUBlIkVWkCV2Lyy3hKOkxxzeGqvickNy
+ xVXwwamALtbxEvshrG+76yr/89pP11/07mTUq1J6VCdZor925pvZyh76U8gFJTXGxuQAAAA==
+X-Change-ID: 20260212-b4-pks-history-dry-run-2b840e530ae6
+In-Reply-To: <20260212-b4-pks-history-dry-run-v1-0-1ce03d631c1b@pks.im>
+References: <20260212-b4-pks-history-dry-run-v1-0-1ce03d631c1b@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+X-Mailer: b4 0.14.3
 
-On Fri, Feb 13, 2026 at 2:58=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> I sense that "This prevents ... later on" needs further be
-> clarified, since it is totally unclear what "later on" refers to.
-> We are done with the old filepair, and have no reason to revisit the
-> q->queue[] item ourselves, but somebody later attempts to use it.
-> Who is it and why does it do so?  That is a natural question readers
-> of the above description would ask, isn't it?
+Hi,
 
-Sorry, I'll try to describe the problem thoroughly in version 3 of the patc=
-h.
+this patch series contains a small set of UI improvements for
+git-history(1):
 
-> > +     echo xyzz >server/foo &&
->
-> The blank line above does not have to be doubled, I think.  So the
-> first commit yas "xyz" in "foo", and 100 lines 1..100 in "bar/baz"
+  - The first two commits adapt git-history(1) so that it performs
+    verifications before asking the user for input.
 
-Yes, I wasn't being careful, I will ensure there are no double blank lines.
+  - The last two commits rework the "--ref-action=" option to instead be
+    split up into "--dry-run" and "--update-refs=" so that the option is
+    less focussed on technical implementation details.
 
-> > +     rm server/bar/baz &&
->
-> We are overwriting it, so I am not sure why this "rm" is needed.  Is
-> it necessary to avoid reusing the same i-num for the file to avoid
-> racily clean condition, or something?  I find it unlikely because
-> the length of the new contents ...
+I decided to send this patch series as a small incremental step before
+sending `git history split`, also because that series conflicts with
+aa/add-p-no-auto-advance.
 
-This is an artifact from before I found the test_seq helper function.
-I will remove it.
+Changes in v2:
+  - Use `strvec_pushv()` instead of looping around `strvec_push()`.
+  - Document that "--dry-run" writes objects for later use.
+  - Document the default value of "--update-refs=".
+  - Mention the subtlety around false(1) in the commit messages.
+  - Link to v1: https://lore.kernel.org/r/20260212-b4-pks-history-dry-run-v1-0-1ce03d631c1b@pks.im
 
-> > +     # Ensure baz has diff
-> > +     git -C client reset --hard HEAD &&
->
-> I am not sure what the comment wants to say.  Before this hard
-> reset, we did have modification relative to HEAD in bar/baz; with a
-> hard reset, we are ensuring that everything including bar/baz
-> exactly match HEAD, aren't we?
+Thanks!
 
-This resets bar/baz to the HEAD's version. So that in the reset below,
-The `bar/baz` in the worktree is different from the `bar/baz` in HEAD~1.
-We rely on bar/baz to be broken into delete/create to trigger the
-use-after-free bug. I'll clarify the comment in v3.
+Patrick
 
-> > +     # reset's break-rewrites detection will trigger prefetch
->
-> "reset's break-rewrites detection" -> "break-rewrites detction in reset"
-> or something to avoid the "'"; otherwise you'd get
->
->     error: bug in the test script: not 2 or 3 parameters to test-expect-s=
-uccess
->
-> You rewrote this line as a part of the last-minute change before you
-> ran the test for the last time, or something?
+---
+Patrick Steinhardt (5):
+      builtin/history: perform revwalk checks before asking for user input
+      builtin/history: check for merges before asking for user input
+      builtin/history: replace "--ref-action=print" with "--dry-run"
+      builtin/history: rename "--ref-action=" to "--update-refs="
+      Documentation/git-history: document default for "--update-refs="
 
-Sorry, I only added the comments after finish writing the test, and
-forgot to run the test again.
+ Documentation/git-history.adoc |  14 ++-
+ builtin/history.c              | 254 ++++++++++++++++++++++++++---------------
+ t/t3451-history-reword.sh      |  20 +++-
+ 3 files changed, 182 insertions(+), 106 deletions(-)
 
-> ... and cause us to run the prefetch to obtain "foo", but it runs
-> do_diff_cache() and makes it notice bar/baz has changed too much?
->
-> Your "do not leave q->queue[] dangling, as other people may still
-> look at them" fix certainly is a good hygiene, but I have to wonder
-> why we are doing break detection in this case in the first place.
-> For the internal "Let's figure out which path have changed, so that
-> we re-read only those changed paths" invocation of diff machinery,
-> we should not be doing so.  A break detection is to see if the
-> change in the contents of a single path is a total rewrite, and
-> regardless of the answer, the fact that the path was modified does
-> not change, update_index_from_diff() would work on the path anyway.
-> I also suspect that, if we are doing rename detection in this call
-> to do_diff_cache(), it is a totally wasted effort.  We may want to
-> take a deeper look at it, possibly outside the theme of this more
-> focused fix.
+Range-diff versus v1:
 
-I'm not familiar with reset and diff machinery; I encountered this bug
-during a real world mixed reset. The segmentfault calling stack is
-cmd_reset -> read_from_tree -> diffcore_std -> diffcore_break
-It looks like rename detection is indeed pointless.
+1:  a4b0654c49 ! 1:  495a8e7a1a builtin/history: perform revwalk checks before asking for user input
+    @@ Commit message
+         Extract the function to set up the revision walk and call it before we
+         ask for user input to fix this.
+     
+    +    Adapt one of the tests that is expected to fail because of this check
+    +    to use false(1) as editor. If the editor had been executed by Git, it
+    +    would fail with the error message "Aborting commit as launching the
+    +    editor failed."
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## builtin/history.c ##
+2:  3ea8f7740a ! 2:  13c5edbe7b builtin/history: check for merges before asking for user input
+    @@ Commit message
+         Fix this by checking whether the revwalk contains merge commits before
+         we ask for user input.
+     
+    +    Adapt one of the tests that is expected to fail because of this check
+    +    to use false(1) as editor. If the editor had been executed by Git, it
+    +    would fail with the error message "Aborting commit as launching the
+    +    editor failed."
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## builtin/history.c ##
+    @@ builtin/history.c: static int parse_ref_action(const struct option *opt, const c
+     +	struct rev_info revs;
+     +	int ret;
+     +
+    -+	for (size_t i = 0; i < revwalk_args->nr; i++)
+    -+		strvec_push(&args, revwalk_args->v[i]);
+    ++	strvec_pushv(&args, revwalk_args->v);
+     +	strvec_push(&args, "--min-parents=2");
+     +
+     +	repo_init_revisions(repo, &revs, NULL);
+3:  4e605e65e0 ! 3:  7226c4d1af builtin/history: replace "--ref-action=print" with "--dry-run"
+    @@ Commit message
+         Add a test to verify that both "--ref-action=" values behave as
+         expected.
+     
+    +    This patch is best viewed with "--ignore-space-change".
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## Documentation/git-history.adoc ##
+    @@ Documentation/git-history.adoc: The following commands are available to rewrite
+     -`--ref-action=(branches|head|print)`::
+     +`--dry-run`::
+     +	Do not update any references, but instead print any ref updates in a
+    -+	format that can be consumed by linkgit:git-update-ref[1].
+    ++	format that can be consumed by linkgit:git-update-ref[1]. Necessary new
+    ++	objects will be written into the repository, so applying these printed
+    ++	ref updates is generally safe.
+     +
+     +`--ref-action=(branches|head)`::
+      	Control which references will be updated by the command, if any. With
+4:  1da7284902 ! 4:  7f41026981 builtin/history: rename "--ref-action=" to "--update-refs="
+    @@ Documentation/git-history.adoc: git-history - EXPERIMENTAL: Rewrite history
+      DESCRIPTION
+      -----------
+     @@ Documentation/git-history.adoc: OPTIONS
+    - 	Do not update any references, but instead print any ref updates in a
+    - 	format that can be consumed by linkgit:git-update-ref[1].
+    + 	objects will be written into the repository, so applying these printed
+    + 	ref updates is generally safe.
+      
+     -`--ref-action=(branches|head)`::
+     +`--update-refs=(branches|head)`::
+-:  ---------- > 5:  0bc831fcab Documentation/git-history: document default for "--update-refs="
 
-> By the way, I find it highly curious that with the following patch
-> to revert the fix with a bit of extra output sprinkled to your
-> tests, the problem does not reproduce reliably, which may indicate
-> that your test may be flaky (i.e., timing dependent).  Am I doing
-> something bogus in the patch?
+---
+base-commit: 6fcee4785280a08e7f271bd015a4dc33753e2886
+change-id: 20260212-b4-pks-history-dry-run-2b840e530ae6
 
-It seems the problem does not reproduce reliably with or without your
-patch. I suspect that could be due to the freed memory on some
-occasions isn't reused by system, thus the access later on doesn't
-trigger a segment fault. On my macOS system, the test passes around
-5% of the time. However, if I set q->queue[i] to a bogus memory
-location like 0x1 causes a Git segment fault every time.
-Is there a better way to write tests for this kind of situation?
-
-Thanks.
