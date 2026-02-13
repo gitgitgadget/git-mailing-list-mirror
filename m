@@ -1,69 +1,69 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEFE330330
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 23:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C8C33C50B
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 23:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771026937; cv=none; b=n+RWYHSSk8PTD911SkUZJYOSV+mathHTQMV7drH6ZeFPfDKdk/P8X4oW/cKyTTzNQ6dR8BgeVrytnp6OZjZowk0w5FEECrI5PzuDtj9HCwOsR20SK0U5a/O44LB4xOC5WKTJpBn3WnuRlhJ+CI/7cJcnXxlM4GW1+rYlVJsDHX8=
+	t=1771026939; cv=none; b=JLzMtIFI8OVBjjASomHlIlLMOTD8xyzgNk5/PInc4PaqY8kMogj14N/Z1iQPdlVDNWY2fHd33gwQK+A3UJwCAOU9m1j9qZ+eG1n7ir1sp0BEiQKpeBIWSL+YSR0TdieLhl1QDclwS6Ol+EjDZctS3tHSyBUi2V8ePstgp0HTMnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771026937; c=relaxed/simple;
-	bh=huTNhMYL9zmfhTir7P4A16k9VB3OBuliYyxVhOxbQ5k=;
+	s=arc-20240116; t=1771026939; c=relaxed/simple;
+	bh=r4Fm1mEAHNFzyj+90ap7fx6LvlskApXwTjlaOsr6M28=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=m9CGm9w3mPr/IxiKrtsyEMdQZidv7GYlBnXqEYCsb2AXs0R0Wf6pHf93JfVUiVII9SbJUW9BZlV8Xhg5/bFDA0BQ5uHYRSYLYOhRCLHCMyPo4O1dfwwd14K88+CDub7vfhaTgyMok3I0vfCmp8OtVFOlQcB+jb7CIzPOQeULV9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YDpkjHBQ; arc=none smtp.client-ip=209.85.222.175
+	 MIME-Version:To:Cc; b=cF7RvCK+vz1Qxbg78l/KQq+ALxxjWUI28D3DqP97WVBgQZIhWW9qSoKIL5LkrzF5+Knj0YyV3Rg5+4cIb8DYXlgemGZrx0220fFK+Jscq+WdOykkIsZFljmRz3kzRSAZ3+pw/8D5C+ZkAOX66GYfpxmsa3l/wKsSvNdAOtRusak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fEQ1gDcJ; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YDpkjHBQ"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8c7199e7f79so194668585a.0
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 15:55:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fEQ1gDcJ"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-50334dd44d2so17289291cf.1
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 15:55:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771026935; x=1771631735; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771026937; x=1771631737; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ao+nheOyDdI51UJpwkpo58cE+2/UdPr9zDVKsEq1TBw=;
-        b=YDpkjHBQq94ublWBDVJwcxtbbRfy0iyR4rYHN78pvrjg1r0tc10prwhdRBaSTgrRyR
-         JyqbEyFHCWZpISNvanPn8e2vttblNylK5AlnfiZ7Fp+kjvSikYLkpcLc2PSUTfFqBKuO
-         HX94jeAiWyyBx+CsIBEjXNzxTyOv61G8iumjCBn0n5MacGvxnw0/j6ou1AIv3IPh/B1h
-         JDp+I8gU5dFGKu1uFPYzp9vLbfSFsK7sghMfPLPuUSgg3BohkOeyCAkbRUi8BIRBDrAo
-         YNauDxEO0hC+2XkVWV5aBc+6Mfhht0qdU1zjz+D8shEz9SU58pCldTWf7J7jQcFPKEqh
-         8EbQ==
+        bh=a3BhxttOJ3GFRSLMQC2443CSpp3Swv/8P/KnuCZZmMY=;
+        b=fEQ1gDcJp3OikpIlZltH2F+ds9K3n0FIvHbpvTAnRwHw7pd1dnMosiHN06n2c8CfID
+         D4dsr0pDuy8LStmIJfMEHSxJnHyaPQjZmQlZRP2TL61uNX5IHqJfWRrd2SkHpSoAiaJb
+         9ZbcZ8WpIjq5o9dhRYtAR4oEaki4NMrodqnkjYneybkKCa6YrdKYj1hJB/gE8W/PtZfD
+         cMh3Hy1RsGoMVp0xm2xguR0YbsbEM/SLfwVgqE3JDfvVcGUPdIP89maQeI8EzXMbbYIL
+         LDnJG2yF2FR5IosRrvx2WPcRMf5YWVEPf5KB6d6XkVAuK2DGllMfQpRYuqBJDdc7KLYz
+         4CXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771026935; x=1771631735;
+        d=1e100.net; s=20230601; t=1771026937; x=1771631737;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Ao+nheOyDdI51UJpwkpo58cE+2/UdPr9zDVKsEq1TBw=;
-        b=n9Ar+safUVaoX/BZyZl+u+jpJwBDFigaZcA23wXMczw4JTNHIKfEZ5ZjeR7VZMAtCZ
-         3BS2s0eibltdgTqkJ21ecvmQuDfl2PmAhyy39kzQPYhp4Oi5YDOVE3i0w369u//gER0U
-         ls/bIzaWNkyI37H5mS3SX8uj8Pf2IxHolRXomXSp8748k5d/4L58fmKz2RsPvhqbzY11
-         rAoLRdHoIK6Qk6KAInhWEJStzuFy/W6cDr3vV37fUMcNcD808wgZ9J9B4iyLGVXnNOhk
-         7WFYmq9anQxt+8COOWY5Tdjg57N0LFc07iLA1K09wGCNL+TOpCWLLnsVs2F8031slhwB
-         bKGw==
-X-Gm-Message-State: AOJu0YyUpk398Lymulvb4BRUjOZXafLNJDnC1dc0v19Gd71AEei1b9vu
-	IIcm74BzAo5ZLTKRDYUxsp2Lpc8RvKYws1bsWgvgDdvRy+qUVqyz1h7igOXXNhvr
-X-Gm-Gg: AZuq6aLwIzu2OqVM+p1d7f/TgCpjrEmbqQ8K7ZpRHLKGcnW7/VqPiKHHAELZGJi/doH
-	2/QakmfhjAaQW8nI5/0VYKjYMmst5pYZwDeHuTVx3IaulF9sVz5LOF+Wv9/ZtcZkQ0KK19QOK6O
-	niKOag+iVI7iEil7QqCldbHI2kEl79+yKCw5S0qT04WUJD8FOtq9yXpz2kkxNGXif6jp3fKym9q
-	e0n5EuceZqWle9xuP1QIa/FHKgyJZ7HNwmHrs3iDWiJR/0IAdASc9BZnUJ826P8dh1CuPJTxQJy
-	YBtNTzI+99JZrVQQAjdcflnsHKnJxd6C+Wk8AKkJDyzUR5EWws8pyKRJfcPkaGciqJ7N1sLModM
-	6ASea8SdNThfu/S7zHZ0YQqyc8AFOOzsdEHuCIpMTgUEZ32x/c+Mg8ejsXoyGSdL6FSOlVzEb36
-	TVwtRjDqKjuiMk0xU6ETe1FJ4T
-X-Received: by 2002:a05:620a:2585:b0:8c6:afa6:2700 with SMTP id af79cd13be357-8cb4bff24cfmr172979085a.47.1771026934757;
-        Fri, 13 Feb 2026 15:55:34 -0800 (PST)
+        bh=a3BhxttOJ3GFRSLMQC2443CSpp3Swv/8P/KnuCZZmMY=;
+        b=Zn9HyDOIpNrf70q5cEN3bWm9C2NOM/OuJjnBzFgDMdfFy8Ne+3hiRzAgOesEKqeNf4
+         fu3o2shQ8tNoB3i3R1knyHikZ36v9toGdhek+PZ1zeYBohIrhq6Ev4aO7xuqkFamxIZ4
+         ENaeyxVnUy1C2OUD1JDxa6RCcJqgjkR5ggd7nplkO6n5/ER3DnVUD4lJKvXualoHUcCE
+         IepNzIbW6MxvKETQrR8BBRMqZrSOgSYp1wUJNqZ0eM+YtSb+qenmJDTEVYSlJCFPNFWQ
+         f9BNw39egJjspqy8P/ki2XXAjVlrj45ZyHtiplgJy+2KdVcHZlaocqUc6q40wnsEZwBi
+         KiVg==
+X-Gm-Message-State: AOJu0YyHTpJKGifwrJ6HFbLF24E+b0iMHMNTr1xxs37RqWQ2hXjjVGXA
+	InBDjc/bbM8z/A+rF+VuZrnAjJDP+ZzDWtsxiq4sVU3WVv8W7pmuFGLLqxfHL+rI
+X-Gm-Gg: AZuq6aJX3i/9CGNu/sLWJE8MjhG+HhgIrheTBiRSZsmv8oYSkcx7DB9rnWUytkrflP2
+	nRhYUmnLdecwn1N9CWcCRMhgMNMjTO98gsHA6cC21JH/Qpf5npuJr55eK/5Px4u2NreMvMNn3kp
+	+zZn9ZY2ecVPkx63ZcbR/68k6NXzCVOpCBbyNG8BHAvZ8LRlYS6tJr2suf8nj9tq+b3/Pxur/K2
+	SdmFcJRzsErD1OWFkvZSEf8v8xitpTmjRDzTP0LuAv+wuFYVEjK5QYrBa/FYDgdIHDwnKynVPs7
+	kwsq4ElxU6V+LY0OQ5sh3o1P34TERyey3svKqCitThOCARBctyEth7KMGLmwr7JOKI7kSm5w7Fh
+	CspVsiQdl8J1NKhRwO23nslcV5uO9AqMzUDOyNpz+6T1TX2AFzW5pU/3cMsOW/PCh2RNR3ye2BX
+	COuhBt3k5CroM6i+IAmdoxegp0
+X-Received: by 2002:ac8:7f45:0:b0:501:47d5:76b6 with SMTP id d75a77b69052e-506b3fadca0mr18929721cf.31.1771026937058;
+        Fri, 13 Feb 2026 15:55:37 -0800 (PST)
 Received: from [127.0.0.1] ([145.132.99.17])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb2b0e1bdbsm705464585a.17.2026.02.13.15.55.33
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8971cd899b1sm78654236d6.32.2026.02.13.15.55.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 15:55:34 -0800 (PST)
-Message-Id: <3fec3abbd62307bec885cab0198007c13f0f1d8e.1771026918.git.gitgitgadget@gmail.com>
+        Fri, 13 Feb 2026 15:55:35 -0800 (PST)
+Message-Id: <fafafc5465979dc62b7c8253a6d2053bc0aa171a.1771026918.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
 References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
 	<pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 13 Feb 2026 23:55:12 +0000
-Subject: [PATCH v2 07/13] config: format bools or strings in helper
+Date: Fri, 13 Feb 2026 23:55:13 +0000
+Subject: [PATCH v2 08/13] parse: add git_parse_maybe_pathname()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,56 +85,97 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Move the logic for formatting bool-or-string config values into a
-helper. This parsing has always been gentle, so this is not unlocking
-new behavior. This extraction is only to match the formatting of the
-other cases that do need a behavior change.
+The git_config_pathname() method parses a config value as a path, but
+always die()s on an error. Move this logic into a gentler parsing
+algorithm that will return an error value instead of ending the process.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/config.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ config.c | 14 +-------------
+ parse.c  | 24 ++++++++++++++++++++++++
+ parse.h  |  2 ++
+ 3 files changed, 27 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 2c93e1725b..0c539ff98e 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -302,6 +302,18 @@ static int format_config_bool_or_int(struct strbuf *buf,
+diff --git a/config.c b/config.c
+index 7f6d53b473..83257b7a97 100644
+--- a/config.c
++++ b/config.c
+@@ -1278,24 +1278,12 @@ int git_config_string(char **dest, const char *var, const char *value)
+ 
+ int git_config_pathname(char **dest, const char *var, const char *value)
+ {
+-	bool is_optional;
+-	char *path;
+-
+ 	if (!value)
+ 		return config_error_nonbool(var);
+ 
+-	is_optional = skip_prefix(value, ":(optional)", &value);
+-	path = interpolate_path(value, 0);
+-	if (!path)
++	if (git_parse_maybe_pathname(value, dest) < 0)
+ 		die(_("failed to expand user dir in: '%s'"), value);
+ 
+-	if (is_optional && is_missing_file(path)) {
+-		free(path);
+-		*dest = NULL;
+-		return 0;
+-	}
+-
+-	*dest = path;
  	return 0;
  }
  
-+/* This mode is always gentle. */
-+static int format_config_bool_or_str(struct strbuf *buf,
-+				     const char *value_)
+diff --git a/parse.c b/parse.c
+index 48313571aa..3f37f0b93a 100644
+--- a/parse.c
++++ b/parse.c
+@@ -1,6 +1,7 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "parse.h"
++#include "path.h"
+ 
+ static uintmax_t get_unit_factor(const char *end)
+ {
+@@ -209,3 +210,26 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
+ 		die(_("failed to parse %s"), k);
+ 	return val;
+ }
++
++int git_parse_maybe_pathname(const char *value, char **dest)
 +{
-+	int v = git_parse_maybe_bool(value_);
-+	if (v < 0)
-+		strbuf_addstr(buf, value_);
-+	else
-+		strbuf_addstr(buf, v ? "true" : "false");
++	bool is_optional;
++	char *path;
++
++	if (!value)
++		return -1;
++
++	is_optional = skip_prefix(value, ":(optional)", &value);
++	path = interpolate_path(value, 0);
++	if (!path)
++		return -1;
++
++	if (is_optional && is_missing_file(path)) {
++		free(path);
++		*dest = NULL;
++		return 0;
++	}
++
++	*dest = path;
 +	return 0;
 +}
+diff --git a/parse.h b/parse.h
+index ea32de9a91..4f97c3727a 100644
+--- a/parse.h
++++ b/parse.h
+@@ -19,4 +19,6 @@ int git_parse_maybe_bool_text(const char *value);
+ int git_env_bool(const char *, int);
+ unsigned long git_env_ulong(const char *, unsigned long);
+ 
++int git_parse_maybe_pathname(const char *value, char **dest);
 +
- /*
-  * Format the configuration key-value pair (`key_`, `value_`) and
-  * append it into strbuf `buf`.  Returns a negative value on failure,
-@@ -333,13 +345,9 @@ static int format_config(const struct config_display_options *opts,
- 			res = format_config_bool(buf, key_, value_, gently);
- 		else if (opts->type == TYPE_BOOL_OR_INT)
- 			res = format_config_bool_or_int(buf, key_, value_, kvi, gently);
--		else if (opts->type == TYPE_BOOL_OR_STR) {
--			int v = git_parse_maybe_bool(value_);
--			if (v < 0)
--				strbuf_addstr(buf, value_);
--			else
--				strbuf_addstr(buf, v ? "true" : "false");
--		} else if (opts->type == TYPE_PATH) {
-+		else if (opts->type == TYPE_BOOL_OR_STR)
-+			res = format_config_bool_or_str(buf, value_);
-+		else if (opts->type == TYPE_PATH) {
- 			char *v;
- 			if (git_config_pathname(&v, key_, value_) < 0)
- 				return -1;
+ #endif /* PARSE_H */
 -- 
 gitgitgadget
 
