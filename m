@@ -1,90 +1,84 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093EC3164DF
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 16:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7425C26AC3
+	for <git@vger.kernel.org>; Fri, 13 Feb 2026 17:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771001834; cv=none; b=bnXP8mO918WV1M25eP4HA9P3J2fEaO2oio30/2EoWBENY+HL2Fd6DALbyOz2RP/bakLOuKL1O/kcEBqTkJZOTGAfOSFVCFMmiqV9i0lArPyBTsmxR7LEh9X93IB6wQtcgbOb3I0ULkikkPZ3AEabJGXBgFXdmu2Z3MzOqFABlKU=
+	t=1771002131; cv=none; b=PQYTY88ILNq13Mje0/Tok8uuHMoYI9pe3wF/NV3R9XHSfSPQuTCg97LBBBLyz3QZ15eY9S+QMCPDbUNjUwpq81+/eAT0A0jktCS0gvd1p2md8L+SHhpWT3gyYvVt9W0Ty/CBv4mQolDf7h9h95s8TIOAyFhKbDdkkoaYJe7FHYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771001834; c=relaxed/simple;
-	bh=k947Y8XHiM588yD24I0nU+Ji7dl80dkSqJKM0OpgdXc=;
+	s=arc-20240116; t=1771002131; c=relaxed/simple;
+	bh=a65SIPxK/qF2EUQzuRzNIaxvZaTS2g1hBg4SLkjVGug=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FCLj7KD3SiKCHEitrEByyWk4f6V7u9OyOYFaegnuYpWbYjyckqmYOMw/f22EPpsVtA5Ifeq3WxKlNB0tkBW5fkq/3QxFWNdcx9aO8n6ZACQ7RHQ/asxm5XV31pnmzw6mmU/v6Z+g/iSibzyf6gu8yOkpQxl3d/GCkIzv7kRPgTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ubrRVu7y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oDtbAfcn; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=FD1ujCb1QTlmZeQjld4Tqs/C/U+azg89he6qyJR7D/yrlwngx3cnWqe9iZ5UALSxRBKkMtbsFHo+gKS6jK3sMCpBNuqZirq1y8ZZ8df6hxO9VPl7g9c31IxsLTW/bZFqYwuXE7jzzfIzV6SgPkKgqKgU0w+DDp+S2nMeI10lo4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L0zAgBAO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ql2D0aEh; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ubrRVu7y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oDtbAfcn"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 03FCD1D00151;
-	Fri, 13 Feb 2026 11:57:11 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L0zAgBAO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ql2D0aEh"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id BD53B1D00015;
+	Fri, 13 Feb 2026 12:02:09 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 13 Feb 2026 11:57:12 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 13 Feb 2026 12:02:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1771001831;
-	 x=1771088231; bh=5viqiqN3OIGMj0G3NKuoV2dL7M59H9mIS+mh+hoL1AQ=; b=
-	ubrRVu7yHiqujEGQIiPlN+1Tz0E3Boe0hlsQOOy2Wx6nwUDA4EjGKFfv/q7kUkt3
-	MhFSIYQ6DUDA3nq6j5+EfotlefxECp+Gn66FV6IDtGphkvGyZcqB5M5SXJ1o6P6e
-	hj+TOnyg4rbb4zmMGsewXFNIu4zN2AEHmpMFZsPXq8dcJvm63v1XE5GXHNhqu0XY
-	zH0BXGNXUNq+ohCE7kItTwABKsoJy4KzWSIJHpJisJpR30PSER+RNjQUkmP0sr8q
-	Jr2YDX3/RcyduYEdT3zQvjz0HeARdZtAS9aP31DiejY41Rmxj8ZnAm1gPg25NvPK
-	twaE2IIvDXYkmu0sJKbSPw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771002129; x=1771088529; bh=szGUf6JlTf
+	VZVtlQBGscAjhLBc2H+A/Zp1ZcRW2rE0o=; b=L0zAgBAOEqC3Zv578EcAUKl08j
+	VAg/O4oA4v4QpRo8dB6yvbwQX3EehvWsVjVmunPO2lQeUpB8qckTutnXwl0CFiBx
+	EBKQszo7hGBUhUsbxbHUDFLQnnYKYcCZqaOLHcn1ca61+OIRWm0sRnLLIW6hnYka
+	PMWpa81I2vGktP0C2mooLQhQDjBJGyQ3FugdwiTfIdlV1aKXZrQhnJDgpgYOpxkB
+	QrpDWcx0cAeyUKtI2k7t8XbEinH4tPJQ1N1kuRVZXVHkvHPnNqEm2JZHVJgw0A1+
+	yXsNkMaccRb3UTTZ72hdwrHtUnCKHAaZnNgctj+AF7P4vlShMAOSqbvXSN8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771001831; x=
-	1771088231; bh=5viqiqN3OIGMj0G3NKuoV2dL7M59H9mIS+mh+hoL1AQ=; b=o
-	DtbAfcnCv7hs5f7LUQrvhd9+X6cjPe4bPe2nvHP3thnYN/ubl1s5Pau0/2jcY0/d
-	XgX3y4P14dU7M1LPqMuGGLRfeWorI4Ny11m9tv5zpIMacxA1+IEiqPdRiH2PQ+bB
-	3EfbYq4CKPA4p8V4WqZXnwMW7C3vKgVyomaDrCBy8f/hGIYW2l6wHbcGCyaSPNq1
-	aE5/Q39nA8JFdI5Z0rClIGdDmBaGH2p96F0L31GsDdSZAqeNDV+ImUlmaordc5ai
-	1u2302XKojfFJgJmHtQ5BkEs9yqvs8wqfXZTSWBMTzJ6TOFOSxShch/gNcUiTr5O
-	YM7l6YHWBQZAYYkxGH8XQ==
-X-ME-Sender: <xms:51ePaciPa-lfIkacNOURkcNy7H5ub8dicNBkKgAkX2pQzp4yQO5Scw>
-    <xme:51ePaYspy_nk7bRQdec-5AZhHmCr9toZgtvTcxHDvmjZUS7y4GOLRyMlAU8msrGNq
-    OetaYvBjDYT99DV1xLrCHGv8Gvj03G2c66RELBmeoaTsxx1B1iAKQ>
-X-ME-Received: <xmr:51ePad7sugHVH5hjj9t6TCCfKfnOAy29mdPxEy59rMFG8-WNpL54zDp5ld8C-diKjSrl6jSFFce3sBSmK8doZZ-FVs4opEFvyg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdekjeelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771002129; x=1771088529; bh=szGUf6JlTfVZVtlQBGscAjhLBc2H+A/Zp1Z
+	cRW2rE0o=; b=Ql2D0aEhsQTS1N7F9jiFH22EUHZufYhl6zHb4M+kpiuugtH1V0R
+	av3J8pOjGq/QnvR1O5gz2ZJomV8yiPWjV0azANx102VIEMwJHIp1uPICUQ0bvBsB
+	OzMIJ5twkatyNvxHcoxp59JnBHLu/WxD2Qy3C0zRhDfmywZzoaDA1vHlfGdsA+ch
+	h99sp+Kefsgm6xJt1kG1328E10N4zk0Ox8O066LW6lmjyyrOm0HIfzd1Lhypa0Qs
+	iSf5/wmxO51BbfV7cBUPXkJX0k1unb0qFC/06d6h28hdJ3xl7IJXxUfaTTrNFCbo
+	vAoJpVUDqOE8nEtexelEU2lHClK9ICMexZg==
+X-ME-Sender: <xms:EVmPaT82DO6Z3zELZqnnPZ3YDEKYQBlH8GHfjSfB1p8pW4nA0ER9OQ>
+    <xme:EVmPaXKq1anBIX3djKRywpJyKlGGkrKLr4otvMw7ie7DejlU9TLRrkc2gqCOrOkJC
+    xVodPLhy2aez1166gQCHMSI0SYgPiaz70TGe1PY0_lNsXqXX1oX1A>
+X-ME-Received: <xmr:EVmPaeYGsng6I0NjE0Yh59patUbHrL1Glv7vyqwjsApr8u7L7q7CKyDxH_IrV5numM6mnbXdvqINGpq34wj036MelMnTDFz3fw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdekkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtoheprghmihhshhhhhhgrrggrrgesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtoh
-    hlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:51ePaUO--3GFYMT4SprjVtWI17YpfvJz9cSLhN58F8CnA-juAf8IIw>
-    <xmx:51ePabsDWpsmt3jkk7x25EN_k1iBDOWRaTX55BpXTLpOYzkMDc1bSA>
-    <xmx:51ePaXa3QS4kBWIu62x0qCoF76HVsqeDtYIVlMkCqlsXlfhfbsIAzw>
-    <xmx:51ePadyXnz_u-iEdVCgkQWcywdYDyzU0QTA2-LG3N6jy9JLmczS4Tg>
-    <xmx:51ePacz-Iy104tLDNuKTCii4w_fWV5QcuvrUhxaWX496G3OWCkDqDDgN>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:EVmPaZIX0g5StJKqv57Bf-a3HoUwb1EBdrJLWJUjQz_sO_wJFGGO2A>
+    <xmx:EVmPacCwmtHNm_WoqO_kzzipKNvkdLE4jAa4AaV365grusidva8H-g>
+    <xmx:EVmPaepCO7WRgss3TAbeBBYOSRVYOG85F9IaEEuyVGYxPyBSfVJhsA>
+    <xmx:EVmPaXjD5HH0HM5XCkD6BkRVHEjQZwDnyIXUWCUns74cZdVejbLb8Q>
+    <xmx:EVmPaXQ5wan8V3lSfI5p1tXUi3xD8cAwJrpsUUfRgzPOiPkc7Wrxc62S>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Feb 2026 11:57:11 -0500 (EST)
+ 13 Feb 2026 12:02:08 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Amisha Chhajed <amishhhaaaa@gmail.com>,  git@vger.kernel.org,
-  stolee@gmail.com,  peff@peff.net
-Subject: Re: [PATCH v2 2/2] help: cleanup the contruction of keys_uniq
-In-Reply-To: <CAPig+cRciH+qvjXTcW-32b2-QtK41rYXZosjNXy2mC0AijajKQ@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 13 Feb 2026 00:02:25 -0500")
-References: <20260212041017.91370-1-amishhhaaaa@gmail.com>
-	<20260213033729.50208-1-amishhhaaaa@gmail.com>
-	<20260213033729.50208-2-amishhhaaaa@gmail.com>
-	<xmqqecmpnu3g.fsf@gitster.g>
-	<CAPig+cRciH+qvjXTcW-32b2-QtK41rYXZosjNXy2mC0AijajKQ@mail.gmail.com>
-Date: Fri, 13 Feb 2026 08:57:09 -0800
-Message-ID: <xmqqa4xcoa3e.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/4] builtin/history: perform revwalk checks before
+ asking for user input
+In-Reply-To: <aY67ycgnisRjeguw@pks.im> (Patrick Steinhardt's message of "Fri,
+	13 Feb 2026 06:51:05 +0100")
+References: <20260212-b4-pks-history-dry-run-v1-0-1ce03d631c1b@pks.im>
+	<20260212-b4-pks-history-dry-run-v1-1-1ce03d631c1b@pks.im>
+	<xmqqcy29ohi5.fsf@gitster.g> <aY67ycgnisRjeguw@pks.im>
+Date: Fri, 13 Feb 2026 09:02:07 -0800
+Message-ID: <xmqq1pioo9v4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,35 +86,38 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Thu, Feb 12, 2026 at 11:30 PM Junio C Hamano <gitster@pobox.com> wrote:
->> Amisha Chhajed <amishhhaaaa@gmail.com> writes:
->> > +test_expect_success 'git help --config-for-completion' '
->> > +     file="$GIT_SOURCE_DIR/Documentation/config/add.adoc" &&
->> > +     test_when_finished "git -C \"$GIT_SOURCE_DIR\" checkout -- Documentation/config/add.adoc" &&
->> > +     cat <<-\EOF >>"$file" &&
->> > +     aa*.b::
->> > +     aa.b::
->> > +     EOF
->> > +     git help -c >human &&
->> > +     grep -E \
->> > +          -e "^[^.]+\.[^.]+$" \
->> > +          -e "^[^.]+\.[^.]+\.[^.]+$" human |
->> > +          sed -e "s/\*.*//" -e "s/<.*//" |
->> > +          sort -u >human.munged &&
->>
->> Dedent "sed" and "sort" to the same level as "grep -E".
+> On Thu, Feb 12, 2026 at 12:04:50PM -0800, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > diff --git a/t/t3451-history-reword.sh b/t/t3451-history-reword.sh
+>> > index 3594421b68..6775ed62f9 100755
+>> > --- a/t/t3451-history-reword.sh
+>> > +++ b/t/t3451-history-reword.sh
+>> > @@ -263,7 +263,7 @@ test_expect_success '--ref-action=head updates only HEAD' '
+>> >  
+>> >  		# When told to update HEAD, only, the command will refuse to
+>> >  		# rewrite commits that are not an ancestor of HEAD.
+>> > -		test_must_fail git history reword --ref-action=head theirs 2>err &&
+>> > +		test_must_fail git -c core.editor=false history reword --ref-action=head theirs 2>err &&
+>> >  		test_grep "rewritten commit must be an ancestor of HEAD" err &&
+>> 
+>> This ensures that the editor is never consulted?  How?  Running the
+>> "false" editor would give us a different error, like "your editor
+>> exited with non-zero status, telling us to abort" or something?
 >
-> Also, don't we usually avoid having both `grep` and `sed` in the same
-> pipeline like this, considering that `sed` alone should be able to
-> handle the job itself?
+> Yup, exactly that. We'd see "Aborting commit as launching the editor
+> failed." instead of the above error message.
 
-Yes, we often say "do not pipe output of grep or awk to sed".  I did
-not want to burden a bit too much on a contributor who is relatively
-new to the list.
+I see at least two people wondered during the review, so perhaps
 
-Thanks.
+ 		# When told to update HEAD, only, the command will refuse to
+ 		# rewrite commits that are not an ancestor of HEAD.
+-		test_must_fail git history reword --ref-action=head theirs 2>err &&
++		# Use the "false" editor that shows a different error when run
++		test_must_fail git -c core.editor=false history reword --ref-action=head theirs 2>err &&
+  		test_grep "rewritten commit must be an ancestor of HEAD" err &&
+
+would help future readers.  Or it might be too much.
