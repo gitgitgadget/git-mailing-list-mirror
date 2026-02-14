@@ -1,178 +1,110 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.archlinux.org (mail.archlinux.org [95.216.189.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951FE296BD6
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 09:16:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771060566; cv=pass; b=c+N+nvUdH2eq0lc4p18MATbbGLOo2H170gwGxsnsNV1catgvYCyonwJ8eNQy0kURzpGXTEvdlom1ycWR1UseeJTqSv7t3/j4dIPGu7V+iXuURLzbJ20PNxHIAUK6q/YMgXSPsWorF3SPi6RsweWddDTzAUUS6PqSiDFbXkIk9/Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771060566; c=relaxed/simple;
-	bh=qrbWx9g8zy/0qeWFqWSWAYz7JIpzrNzzc94+jdMzeYo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lc9p7KaxezHUKUKE0UT9qFwk0uEHbDE3/RGW4m9pIaX78z/rxA3azsDqn8cI4PhmWwaYOB7Xp//8pX8/bvE/q6wHt7cBtRZAT0PvwdSX6VXDo4EAA371H8rlBKq2dRd8NHaPhgAn8R/XMCBw1XiKHTNZ5GYl1THtzspjdJg/BfQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z6K2pHtM; arc=pass smtp.client-ip=209.85.221.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78F31E5B63
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 09:22:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.216.189.61
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771060971; cv=none; b=QMit0Xu3wtbg3IlHomX4kGRQMainJIbcE/23mzfhhjcJlJn9JS4dbag8+Zo40i+Ndd4egYGQZ1RJk3fL9frLcfKb3ImGyxK5WaglNd41oeg2ERPjOe+ajG/27F5DiWjAhIBkPlEuYK04pEfU6zrzD76fLaLkTe3vQDf7n9sqIR0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771060971; c=relaxed/simple;
+	bh=hQnTEAvqyZShFPRmEbQ0K4J+M3ej9ebIK4kgZZd7J98=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Qb9+qxtoAafFQACoC3BGi0GeUL9b1hfhRfbFaULo9k+wRuXk1G3S9++l1ckUvdTJQmblFzUKcVAX2TwKOz6P0YqghPtLNyvZ+aHzACO7h8AYIi/3bwsK6QM0qbrQzwsGx2ML+M5yMUcIGd2vm3UPfTXY2AJQm8tlN4J6UJRo+CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=archlinux.org; spf=pass smtp.mailfrom=archlinux.org; dkim=pass (4096-bit key) header.d=archlinux.org header.i=@archlinux.org header.b=jlclQS3O; dkim=permerror (0-bit key) header.d=archlinux.org header.i=@archlinux.org header.b=7EO4J/Wz; arc=none smtp.client-ip=95.216.189.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=archlinux.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archlinux.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z6K2pHtM"
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-5665171836cso1954587e0c.2
-        for <git@vger.kernel.org>; Sat, 14 Feb 2026 01:16:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771060564; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UfPyvyvlE7iHdkNRfc1ZRONK2QpcAGG9QrWcepRPPl2WI71nl89P9AG/vcohA8nMDh
-         W52t66Wl6i/Kro7ohCYF6GhhLBa/3hS4IfLMVulowhgCj+HFaNGblZO3VPW23XST/n/U
-         653BWSUrwtWYB1UgNBalWHjEwO+mk+2DfVWxPMTgmJzkYQPZtljdh2tVP/aJtpnvAmgF
-         6oJWeTvbxtMxVmSVJmpR7KLaWKi4NeIVeCwPjefRI7VUpgFlyYkZUJm32uB4arzH8LES
-         cyMZTp4WmdnSKkIxBTPRq9UCi1W+9o6qMTxOeVFucn1gxau10f4jj4qawPSfivsKiFEn
-         ckOQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=d58j4kOLnpzviUfyWfybmWbyyMvaFd3UkLOJuHFGWqM=;
-        fh=wMEuQs+GpV4sPE9aqLGoS837e9vPIyS4RJzxckXqt0E=;
-        b=efgBzcQCufEttL58C0DWtg8R/0WqNxHJ8oVj9bUsE3pzc+nWPo6g/z/BuAHalvPFte
-         hjr3HY239hNqZNZOxGe9mE4FnNZctaXPlIdOW/1iuQU5yj8u/UqUIgcomTTatEemSPcd
-         E64BNqV7HLpbseyKNin/ptY0UFVaYrHjiaac4XtZCR4p8IvWVMH7u/dOTDWBiT257OPW
-         xfTIhNI2EuhLyFeb8AXmTzADjHXL3hJUYtQlxXrtObHrSWm2FHVb8SUQ+8m55+temJgX
-         I6QBh2AbTkipiFenD80nHS/tnB+Ntmk8ujv9zhERYeGis3/o5sue4X0Fr1/6gYGWXABm
-         gQJw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771060564; x=1771665364; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d58j4kOLnpzviUfyWfybmWbyyMvaFd3UkLOJuHFGWqM=;
-        b=Z6K2pHtMn850Hwbe5PnaOwRI2/P5vL4uRvMfe4C6Gl/+W6hfP9Eq3GGiE14lSXPH82
-         kuBFLJpxGW1xPnchxOjhbh8KqRy67tVu+r2w8wSyZXE4wW36cvugU2BnrJxgG9Hg1lhB
-         MU+oAH56tUxqs21rgeIYSvv3EZWEOPIa+9s2hLtwodjt+4gMW1x70A+y38m0MwCDpk+9
-         Fs/flb+oXtQqAmoJoHfKYLj9TehEIdE/NgdpZtowTSTAwnjad2UjRk1j26HiwdSPw1Pu
-         D5UWVk9eX4VqQc36+AjuSV44ZKwDN8IW4Zijd7atigJe88+JcBRjCfDJYKmKsi8xufsR
-         GJaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771060564; x=1771665364;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=d58j4kOLnpzviUfyWfybmWbyyMvaFd3UkLOJuHFGWqM=;
-        b=iiR4d+wwD8KcAyT6t/827sjpFtkI4WP8TAn79jK48r74KOsa4YQZrbzUurmgAhX3Tk
-         LTdJQUyidHrmq3sP6PCaf/G/3y21TVcFLbb2UpS4uYh1tpbdV2UHBpmRtsn0TeIQIlen
-         0PfU8CRxvVHIh/orOGyhnV8fYacBWclr2DhiyXpTRfOSyhtejMfTcd8QcmXWn963nIaz
-         8Y5mWP5yZpPWmbtdGWeqL1Mu1ZZNT7jNFypChFKXuZ0KDSaGbXuES7UzbEpMwovLVoLK
-         CXZQytT2usX177GC5O8dBEwHS1mDiFdotINnmeJFLy/2EwiXLHl6bDkirK+O5wB3rRvA
-         xxbw==
-X-Gm-Message-State: AOJu0YzHinB37x0c8erwooyLLZs4Uu4/X+xrFlzL1dxrXEVw6fZz1n2Y
-	RjBmbBP8JER1H1bNb42WWTM1CqrtFfoHtGBRPJKnZM6oTDPpOIwLqdbpJcfuOv63MiEb/IrHe4q
-	tx1fFKgFFnOWe7/954447IqV/nOUMvhI=
-X-Gm-Gg: AZuq6aKMVkI0Wea5oME6BxavGaqvdKm4aOe5YpIdGXcVtAVjrPnGnN0mMXsbfsDxvtF
-	Gjp0YSjdjjEu/9WXgbij9Jp/THttWU8tiKuBseIoaliIivsU8IUtpUHgal7ASuuEr7zEx170LU5
-	QwPZtE2Ixos+wz0a1OQi+8jAI5YHn+dpGNNpaTual/UYwsNh9kvSfUP8oaPnZrXhD/V7OjGOTKJ
-	sB6yN72ZaVzflC/qXjI4R1VZrdEhsr9YWzu5jZsnRUvuqH5y6Q8Gyjh0lWUb5DjKG/xh6R1KCZR
-	DU/HxeOWSMe8
-X-Received: by 2002:a05:6122:8c12:b0:563:7390:b17d with SMTP id
- 71dfb90a1353d-5676a7493b0mr1806243e0c.0.1771060564451; Sat, 14 Feb 2026
- 01:16:04 -0800 (PST)
+	dkim=pass (4096-bit key) header.d=archlinux.org header.i=@archlinux.org header.b="jlclQS3O";
+	dkim=permerror (0-bit key) header.d=archlinux.org header.i=@archlinux.org header.b="7EO4J/Wz"
+Message-ID: <e2a5c920-7f15-4ea8-9390-cf42ac33082d@archlinux.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+	s=dkim-rsa; t=1771060966;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=7ekFlZr3TA9mCBxVCA0v+8n7jWNiQWAYY6scSaIjH28=;
+	b=jlclQS3OdWjomXLjIr2ZH3wR54Pfa6mynUCkWzIPTzsma+AKIGqUK1FMiJGDTNJsRPYSyO
+	167mc/XQJoIWAeN88PVvd3n3QqQ25atRVW3kLFlP5cTLJptjhLHwUvHMDwKcUeCP+Fmnl1
+	znK70wJC/xV9Gkn2rq9jAZErnhSlCwvVR6oGL7+VfysLZL/uwBqpANO4aGqbax7MwbOIP5
+	i0QxX0ptMt01vXAFVfzrOUKYIfvPAuk/qkLmjg7NBGS73rRDAP0j31AdnmN6OYsIT0K3+O
+	ecpemNXvnip3PmU9Q+6W0T/vhr1lGQ4f7rRQLLjlbd4/XwuZEfkxUxeX/GRJLYHN8WAJ4o
+	2GHJjoH779UHR5VzTNKjjjXM7FNq39i92Qt3w4CnkTzaHAEt5QZsSfvtPv+jq5lE+PTeZL
+	Qf3lue3pNkkRTavYahBofzXIHenvOsarvta1dlcQ86oQ3V9mXTUwUGVGNnYzYUhx7Ef9PH
+	DMR+/kZAOSqovJi6eUWnzzJt7H1Zkt4lZmyTqnBJbcVjwyM1uU75eS1Nei94tGyBZgOirG
+	FdilAZaN6vb5Y6VDaRUZsT5DogZiNCxxrIWZDEY/hAN3Bg2pDwVhmVAW1elhw4mvTc2Bkh
+	3S8L6C3MGjx1XoON3O7oekAbJA+AKw//P7XT5toh13bLQYyHMYWnc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+	s=dkim-ed25519; t=1771060966;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=7ekFlZr3TA9mCBxVCA0v+8n7jWNiQWAYY6scSaIjH28=;
+	b=7EO4J/WzyHvYje+BFgIq46OO3iLObPZpU6uW2r0Bp3lFMaaSbelY9yEh+yCzbieSNCDue1
+	z2tKGN4m++89rPCQ==
+Authentication-Results: mail.archlinux.org;
+	auth=pass smtp.auth=integral smtp.mailfrom=integral@archlinux.org
+Date: Sat, 14 Feb 2026 17:21:59 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1771015581.git.abrahamadekunle50@gmail.com>
- <497ca5b43c84dc4d146a18899461cd02564c0268.1771015581.git.abrahamadekunle50@gmail.com>
- <xmqq4inkjld4.fsf@gitster.g>
-In-Reply-To: <xmqq4inkjld4.fsf@gitster.g>
-From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Sat, 14 Feb 2026 10:16:04 +0100
-X-Gm-Features: AZwV_QgEblPvTubcyM0qDgDDWj_YCNbdCvNIvrb3KWs9hu68qM-uuAIpdr7XKXc
-Message-ID: <CADYq+faXoK7FQqG6gs1yiXR3i1FBScNTG5npGp4G=Yc+FEVexQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] interactive -p: add new `--auto-advance` flag
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
-	Chandra Pratap <chandrapratap3519@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] copy.c: use `sendfile()` for in-kernel file copying on
+ Linux
+To: Chris Torek <chris.torek@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20260213124656.218396-1-integral@archlinux.org>
+ <CAPx1GvfsnZiUkkXJSAtt4HECT6f+zb1+vtiT+UikcAq0WuFR8Q@mail.gmail.com>
+Content-Language: en-US
+From: George Hu <integral@archlinux.org>
+In-Reply-To: <CAPx1GvfsnZiUkkXJSAtt4HECT6f+zb1+vtiT+UikcAq0WuFR8Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Sat, Feb 14, 2026 at 12:04=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
->
-> > When using the interactive add, reset, stash or checkout machinery,
-> > we do not have the option of reworking with a file when selecting
-> > hunks, because the session automatically advances to the next file
-> > or ends if we have just one file.
-> >
-> > Introduce the flag `--auto-advance` which auto advances by default,
-> > when interactively selecting patches with the '--patch' option.
-> > However, the `--no-auto-advance` option does not auto advance, thereby
-> > allowing users the option to rework with files.
-> >
-> > Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-> > ---
-> >  add-interactive.c     | 4 ++++
-> >  add-interactive.h     | 5 +++--
-> >  builtin/add.c         | 4 ++++
-> >  builtin/checkout.c    | 7 +++++++
-> >  builtin/reset.c       | 4 ++++
-> >  builtin/stash.c       | 8 ++++++++
-> >  t/t9902-completion.sh | 1 +
-> >  7 files changed, 31 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/add-interactive.c b/add-interactive.c
-> > index 95ec5a89f8..c3a36cd11f 100644
-> > --- a/add-interactive.c
-> > +++ b/add-interactive.c
-> > @@ -64,6 +64,7 @@ void init_add_i_state(struct add_i_state *s, struct r=
-epository *r,
-> >       s->r =3D r;
-> >       s->context =3D -1;
-> >       s->interhunkcontext =3D -1;
-> > +     s->auto_advance =3D 1;
-> >
-> >       s->use_color_interactive =3D check_color_config(r, "color.interac=
-tive");
-> >
-> > @@ -124,6 +125,8 @@ void init_add_i_state(struct add_i_state *s, struct=
- repository *r,
-> >                       die(_("%s cannot be negative"), "--inter-hunk-con=
-text");
-> >               s->interhunkcontext =3D add_p_opt->interhunkcontext;
-> >       }
-> > +     if (!add_p_opt->auto_advance)
-> > +             s->auto_advance =3D 0;
-> >  }
->
-> I am confused.  Why do we need above two hunks in this function?
-> Wouldn't it suffice to do
->
->         s->auto_advance =3D add_p_opt->auto_advance;
->
-> in the first hunk, instead of assigning 1 to it?
+On 2/13/26 11:36 PM, Chris Torek wrote:
 
-Yes thank you
+> On Fri, Feb 13, 2026 at 4:47 AM George Hu <integral@archlinux.org> wrote:
+>> The `sendfile()` system call copies data between one file descriptor
+>> and another within the kernel, which is more efficient than the
+>> combination of `read()` and `write()`.
+> sendfile() is found on other systems (notably BSDs), so perhaps ...
+>
+>> Signed-off-by: George Hu <integral@archlinux.org>
+>> ---
+>>   copy.c | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>>
+>> diff --git a/copy.c b/copy.c
+>> index b668209b6c..d4b7cde764 100644
+>> --- a/copy.c
+>> +++ b/copy.c
+>> @@ -7,8 +7,23 @@
+>>   #include "strbuf.h"
+>>   #include "abspath.h"
+>>
+>> +#ifdef __linux__
+> ... this and the subsequent ifdef should be based on the feature,
+> rather than the OS.
+>
+> Chris
 
->
-> >  struct add_i_state {
-> >       struct repository *r;
-> > @@ -28,7 +29,7 @@ struct add_i_state {
-> >
-> >       int use_single_key;
-> >       char *interactive_diff_filter, *interactive_diff_algorithm;
-> > -     int context, interhunkcontext;
-> > +     int context, interhunkcontext, auto_advance;
->
-> Please don't do this.
->
-> The original is already bad to have two members on the same line,
-> but is tolerated as they represent somewhat related concepts.  The
-> auto_advance member has nothing to do with these two.
->
+Hello,
 
-Okay
+Although the `sendfile()` system call exists in both Linux and BSDs, 
+their semantics and APIs differ.
+The Linux prototype of `sendfile()` is:
+
+ssize_t sendfile(int out_fd, int in_fd, off_t *_Nullable offset, size_t 
+count);
+
+While FreeBSD exposes:
+
+int sendfile(int fd, int s, off_t offset, size_t nbytes, struct sf_hdtr 
+*hdtr, off_t *sbytes, int flags);
+
+George
