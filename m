@@ -1,160 +1,137 @@
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039D93EBF3D
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 10:14:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771064051; cv=pass; b=DwG2HqQM4Z+p1tPQjkLvvrQAyygE5sX9yjqqG7pCgeoCa3zJUxqbhQs1re3EM31sr8f0+GlB8/nV6+fWjWEuFVJR0aNtmau9QG4GYca16hlaW6RpqAt4ufF7iqV1ooctUI9sdayAoYXfrvyYhr1FZladdfzEk3PaAq7UlTco69I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771064051; c=relaxed/simple;
-	bh=FbRBsqi1o2lh9B0mdipPFG3nb5mvJf/h+akLSmF8cd4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Pgezzr6/IQIQ+NHPHU1Z2MZGQNu9zmPRxY+xWtS6qWyQpNvo5nEoZFwOandXrZvRkEY4Cub5N1uSfbYjlgXR9t0gsW+zYtPl/0or6fRpsv0WaokEhm9/I9jaLVDoBBurCHb7ttFOB7eBMABnsK2TXDXd9U3aE0PybhT3Z9qFoD8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F2hcxnYh; arc=pass smtp.client-ip=209.85.221.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B542D339A8
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 10:19:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771064388; cv=none; b=jHlxg4yWkX45elTCsaLaSU9SbBf0gDcseoPqcISuexSJEyhF0Jt5chuyYGnxgEs69xLxkcaBPsE5lSMpvfH/T9U7pKIxV5h3p82xAgMmFhmZ5PvNSvshr3JqiuyMDwCnveLHxbIhDPv9xy1XXErFWT+BP4iD0JPIZlM9uPoyRuc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771064388; c=relaxed/simple;
+	bh=aU0ZlwODBlYDDp4Ec+rqkbYG5SzIP5WV3CioaIx/xVc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nC0Mqh+9uCWatad0KT7IlTS8SXJ5VOHwrfLmSaB+dHs+FCnJE5UL6jFDhKYXirZd4BylkCQLtvEGRbCRWuBNjV/aR/uf3X960l65XzIIYd+XAfJVB/F4tuOHO4XLYP/VBeSZW7eRnUcU7RTvYPf6mKjsEYHVuMWGbdmEga7rzH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=I346zJd1; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F2hcxnYh"
-Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-566390e7db3so1265561e0c.1
-        for <git@vger.kernel.org>; Sat, 14 Feb 2026 02:14:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771064049; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ak9kHbdDFrVmV9vpqfJgRbdXJMlPRodZ14GW0Z1zs6Q1s2D5z+efIBJHKOZXLjHD0A
-         Qq/4U+LnDzpF4LdPBa/DtHugMZ0OQke8gWWF13KiB73pr/RiHA6YwMjcCf43MLA/jzbp
-         jBABqgQzdQunEIwRm2lyhuBKi5fyqy83qGltOSVdmT9thh+ZddzfgRw06AA2kf1MGL88
-         7+ap0ASjmuV6DtQbUG3hyi1xwvGpxS/Ju/DMGmBlbUycLMrjAx/ySay1eMpQZ8ERu5nL
-         Ltz2X1Kevr0InBILEneeyejtaB7HLM2Aallttqm9Ni8RFEDVmLaPwjEUna/irEpoOTd2
-         CEwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=YpEKytcxZX28su8hfG2iiEL/gGPpZ1LC0XIlOXiTgqM=;
-        fh=wMEuQs+GpV4sPE9aqLGoS837e9vPIyS4RJzxckXqt0E=;
-        b=T0gpaCwdJDG5pQkOfRBm9Xj54cTHQPYf3vmGnowLF8Jjs7XjCyUXeICPycbHJ6XGjQ
-         jxq4kyXOTXqPNP9OwOPrudhvOvmpTPyKnrtlvYNU6uyRQG4BupixLKysqmBQwxC3loxr
-         GpsKpO3rw1bjSwVw1SkczJnBKAsCQgP3CivaIB8pYee9wUHBE/QdTjWB85sF8nzYoh5L
-         zZqds4WL2vz5qSbmfwLxn5y6YftGldQlDTNs97J3nUIIp/4gJW7bA0TeGF02MYVy2b/5
-         fBYlNRk4/ymtXAt2JS/CP2ArhDYHcnYFqLSFlT+yUl+GmOxQEItLsCLiUEQqBfdOsf3Y
-         3izg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771064049; x=1771668849; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YpEKytcxZX28su8hfG2iiEL/gGPpZ1LC0XIlOXiTgqM=;
-        b=F2hcxnYh+p+KkzJpH6iC5wZNpqZJ/az8QMxHiZPCOHyxa7G4n2xgqY4Bq4rLQ+rn1P
-         KdqVGOzd/FU8zR7Fg31Ko0utA3YI+ZQ7kp2BfUvpNNva2RpduRngkk4V7vmROY26sPRf
-         X7cXcul2bHHSluIc+xT3h2RX8M4O4Qd/QBlJjByDZoEGid91mNhYBeuZC+ky3qim/5O4
-         KdZYQAE6aZqsDGJUwFcXbY3BnltFibs3ExtBelLxq4SsF0DTf58/JfRyef8nCAe8lheX
-         6PCc7DRmM2W0R2lFQdKb3lkLw0Q3iM0Wh5pTuZZCmAggm9VCBZK0csT8RqCRKywr0kYz
-         sRTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771064049; x=1771668849;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YpEKytcxZX28su8hfG2iiEL/gGPpZ1LC0XIlOXiTgqM=;
-        b=ErdW8sQgEhbhee49f9BQh+jxlniqxo9q70DOyRNRtZCZs5dRObe2EJsYPS3pqZvtFO
-         22Nhjbr6uYu2nSTx0MjVzOAIA2Qo9bnPLExOmQPH2QJgRn4r1wnYLvl79GnL+3XGsfU+
-         uvN3lvbXotkO0/UJOWVdvd/8js1rMB6gSG+OQJ1UolCt6u7SI8reDJCB7dBqFyOxZvmh
-         iatGCXR7LKLP9wLp3h+OmgcpKyLDEyYdD8vUUHKIoZvigLJKKP5/oaqSHT0W9umQWAgh
-         jOwUY1HpHB7MQHteluOc+GLsM5ZDoKt9ZgKb/r7BL2Y2yUkcAX36saVFagpFernQyJ3T
-         Vh0w==
-X-Gm-Message-State: AOJu0Yw+21xSkYGQjqyxv0MSxKDSyOnPZ8rZazd8G49+sz+yGD2vtcCg
-	X+7442ORzPGKMYBGr4uRtd/toVBcg7f97ghq5gAWpsqhhBSyJJBwJ11YGY1t9rCmjGijAFvUfnh
-	oea9vVuTRQk05BJItfZCNWkTVJyhDMSY=
-X-Gm-Gg: AZuq6aJ41QwwEDUQrvXNU/JQ1TCbuQhJDbZXeQHt7oaAJEoc9cZnHQaFm9b1lXO1kPf
-	OMVeCD3jTKpeT5Op578dI8EFw8hF26NnwJBONWqzkD0zaSfjEnwloDeH3nLC/7BstDt/QD0zHQ2
-	MXFaaJ1+/8wTjmGnc5AIlX59mOO3uJRe6p9qSkKDKypIdFnB2X1P4N1xMgKLrIjGBcM4LZeC5pq
-	O2Ue2AA6bmITs1wBGN/JULQ4JJLoiQEzXcanLviATJFniLKiADgE96BDJxkSfs0et2KnFsZgoME
-	b49vSJKP0HRwm1QV8UGmXxM=
-X-Received: by 2002:a05:6122:8b0e:b0:55b:305b:4e41 with SMTP id
- 71dfb90a1353d-5676aa6c837mr1515374e0c.18.1771064048798; Sat, 14 Feb 2026
- 02:14:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="I346zJd1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1771064385; x=1771669185;
+	i=oswald.buddenhagen@gmx.de;
+	bh=aU0ZlwODBlYDDp4Ec+rqkbYG5SzIP5WV3CioaIx/xVc=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=I346zJd1aBX2bXydV3EiDHvu95uPsfXLpVETdx4NtdHdP3EghkeHTxewj6+P1HO9
+	 oAAzBNg3IN8MckWC/ltLr4gBnnNDadwoq+9isjntaL1FbLtsrNzI/STXwiAi0b2hR
+	 eqce/YLKnQ5PySS2vq1YsvdtOvXTP35cjbbGnjnTtmpdA2263DaR1UFOzZNAt35iu
+	 H4zrdWx7Mlyfn96hC1zzZI4t60i+pHHsshLY3LPy3xqm65lINgBfiboAEcL97aWix
+	 paqRFc3reJ8M752IbNLcCRSqMxPFYvXhosw5ScrygAX6ahr5tbn3thjOBY2xC4MVr
+	 70rZFRNGYoCzUJIj0w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.117]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MHGCu-1vvek43WNs-000aKh; Sat, 14
+ Feb 2026 11:19:44 +0100
+Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
+	id 1vrCka-JbD-00; Sat, 14 Feb 2026 11:19:44 +0100
+Date: Sat, 14 Feb 2026 11:19:44 +0100
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] CodingGuidelines: document NEEDSWORK comments
+Message-ID: <aZBMQGQPiE3cJBUq@ugly.lan>
+References: <xmqqms1ft7il.fsf@gitster.g>
+ <xmqqldgxmzbj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1771015581.git.abrahamadekunle50@gmail.com>
- <906f25e184d744f9d23681600a0d9e440b7f07df.1771015581.git.abrahamadekunle50@gmail.com>
- <xmqqms1ci5g8.fsf@gitster.g>
-In-Reply-To: <xmqqms1ci5g8.fsf@gitster.g>
-From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Sat, 14 Feb 2026 11:14:08 +0100
-X-Gm-Features: AZwV_Qi2tcnbqRchtRL1IUiZ2XzuB5mLBdeElz3flGuCaAaTPTMI_obiboBmdHs
-Message-ID: <CADYq+fa=-V9_gTpPRUvCDwFDShrUuxBqojOM+JSo_AvfvAJR7Q@mail.gmail.com>
-Subject: Re: [PATCH v4 2/4] add-patch: modify patch_update_file() signature
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
-	Chandra Pratap <chandrapratap3519@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <xmqqldgxmzbj.fsf@gitster.g>
+X-Provags-ID: V03:K1:O218FfBw4z87ONw6/PkE8mSxukwAQPXITWkaXh7yZ0kILfORFie
+ YtTOLUYt+MfXfr0ByeSwv1gjhQ2uxQV1AGZwx5Rur2qrCbiseNmLnT8/eVi6ypCxdkY/8te
+ bA1kQFME5pzIZyaV3d0W+YPm4j0YcNpkkgbf6yqPK31HOPQDoxlVeqoBD+B72q2U2lgN7w/
+ +GVa8hiz7sxZcXEp3PONA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:BjRK6GOW2fc=;MCAXsjyl0scSzuQUlW5T5VQyE3j
+ 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
 
-On Sat, Feb 14, 2026 at 12:34=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
+On Thu, Feb 12, 2026 at 01:22:56PM -0800, Junio C Hamano wrote:
+>+ - A label "NEEDSWORK:" followed by description of the things to be
 >
-> Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
->
-> > -static int patch_update_file(struct add_p_state *s,
-> > -                          struct file_diff *file_diff)
-> > +static ssize_t patch_update_file(struct add_p_state *s, size_t idx)
->
-> Why ssize_t?  Are we going to handle that many hunks that we do not
-> expect to fit in a platform natural "int" type?  If we are not doing
-> anything about "idx" being more than half the type, which apparently
-> is the case ...
->
-> >  {
-> >       size_t hunk_index =3D 0;
-> >       ssize_t i, undecided_previous, undecided_next, rendered_hunk_inde=
-x =3D -1;
-> >       struct hunk *hunk;
-> >       char ch;
-> >       struct child_process cp =3D CHILD_PROCESS_INIT;
-> > -     int colored =3D !!s->colored.len, quit =3D 0, use_pager =3D 0;
-> > +     int colored =3D !!s->colored.len, use_pager =3D 0;
-> >       enum prompt_mode_type prompt_mode_type;
-> > +     struct file_diff *file_diff =3D s->file_diff + idx;
-> > +     ssize_t patch_update_resp =3D (ssize_t)idx;
->
-> ... with the cast that is not checked here, wouldn't it make sense
-> to just use the platform natural "int" everywhere?  Your code is not
-> "safe" either way.  I do not think we expect to handle 2 billion
-> hunks, so even on 32-bit platforms, platform natural "int" should be
-> plenty.  Instead of religiously using size_t and ssize_t to count
-> things without extra care, I'd rather see us check the error
-> condition for real, if that is what we really care about (and that
-> can still be done while leaving the codebase cleaner by sticking to
-> the platform natural "int").
->
-> Enough ranting.  Anyway.
->
-> If we really are bothered that we cannot handle 3 billion hunks, we
-> could avoid losing half the number range by returning
-> s->file_diff.file_diff_nr (which is one more than there are elements
-> in s->file_diff[] array) or ((size_t)-1).  That would allow us to
-> return size_t from here.  I care about this a bit more than "why use
-> size_t when int is perfectly fine", because some platforms that are
-> not quite POSIX can have ssize_t that is not as wide as size_t.
-
-Hello Junio.
-Thank you for the review.
-
-I wanted to be able to return a negative value while also making sure to
-return a type of the same size as "i" since that is what we use to
-update the caller
-for the next or previous "i".
-But I know better now to think about platforms that are not quite POSIX.
-I will return the s->file_diff_nr and check for that instead.
-
-Thanks
-Abraham
+by [a] description
