@@ -1,179 +1,119 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF7033D502
-	for <git@vger.kernel.org>; Fri, 13 Feb 2026 23:55:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93824191
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 00:04:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771026948; cv=none; b=EFB6oqrRtyLu3S4iDmT4vkBn7FnW6tXk+QC9nKzU/RpcRNJxR/XHE/CHey71t5F+9OFKviIjpVy9TBU3OVtnFPL2XfOP7e0CaE8eadVv8g97i7n18WERW6dkJIk+Fd5wZQfKRxcBQFYzUiaw8yLdkBZDpKVTOO4BD7R2niUkWVc=
+	t=1771027492; cv=none; b=PV4mn3Ip2L4IrdaTNjyAZRD5vY8+wtbA+kcfuG9IYhxCxrDpAe5Dil7H+5tBXAi/VVrJtdGNsO0yh0Q5qdAK3CiY8gp4gDoODOkmk47QMtySFkWhB3EJsb3SyPs3clLXFoZO6ki11L0ajJD2FZSAHG+CsINU7GAa0mx75Sgj4s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771026948; c=relaxed/simple;
-	bh=jnZxZHybTScvJBpgPWXS/cNGn6JAGzJt+QbFkk7j+hc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=twymQXVZMyYRX5zx+s10jZFJ/c0AznzLdK1z8NlWB5XBtP8gCdlCHa2gXoTcNbJMNmmp6TpYQPoSfcbPgb4+fEoUAVzWn2Nc0/ZdIlPrURVP+4l1UOwQ4DOPGqTEsqXIxKw+C4Q0S+TrZ9d3Joua3BnuS1ICWZ8X3g9njoOuakg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AAZnEZCG; arc=none smtp.client-ip=209.85.219.49
+	s=arc-20240116; t=1771027492; c=relaxed/simple;
+	bh=lcHZsWqz+9g7r295g1NMsT+dGyjoIX8h9KA5VDS08o4=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=uD++lcUarK9CTwXXMyHRv+rK+sjycjvIlklPIdchf3V+fTBKlWB6KsRvN+cuFvbq64lvIZs4UHaGxzRflZZiVAKcmAeUVXPNj66fZwBa4d2lSQPUWUYz0gLtF8q4JHD8Rri49mMJ0gpkf1GkCFcDkuYN2tBt0Ujmn2MHRDpSXzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g4f0o8Yr; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AAZnEZCG"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-89577f866d6so20455176d6.0
-        for <git@vger.kernel.org>; Fri, 13 Feb 2026 15:55:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g4f0o8Yr"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-797a75e47afso7892307b3.0
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 16:04:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771026946; x=1771631746; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771027490; x=1771632290; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PAzhFuRZ2SJdSK9F1xCSqLK0xt8spRnyjC+Gfiotgs8=;
-        b=AAZnEZCGfeKGVmm7IAn49Vqk5yIUDPdx60fdG47pOS6ROA0IKIZL9oQI2W7K2HxIM5
-         MubmeQ7vf2z5PmPDOqYtA9EmNz+HLk+ezJsRwpQ2MwGirReffeFqJ1A0np1LFzabhmu1
-         WdaedJZS1oFSsqAPIwqdEE9+47XugbBKkDaRjZtoy+XX8lw8YB8hiAPByRYSke4ak6YE
-         HJ8yP8yN0J+BB/R4wUV15fUXNUBShZE7uzXzSIngcYowObO9ahvFvoKiHMb12/sb/gkq
-         jxYmAXsOKg0CCoJ7S2Si1gxg8qddS31bSevqXhdaJG1r7V35QBT/RfxeePmqYMgT9sAp
-         nsXg==
+        bh=+SphdNtPUiWnyb9UlVqOUsAjlMhQR1rvM7nZDCQpz7U=;
+        b=g4f0o8Yrw8nDJhjqBu/PV8i/eympeGp7eUy95Xqx9qQzY2QZsrSWBh1FFmFNiD80fu
+         2mvq/6o6WiyFG5kquoygpqoDtnhwlGmgYg9R6vDEmHqlPHcwACtMijl+NrdxWTalQYAh
+         6atmkBRxeIsu2KUmCjIwfJFZJpkBqsSwfOEhByjJLZ7MaBCjd1UbJWBKmv3IPYMr+iU6
+         BZ7w31sfHRWVUiR4vyH/AXFxTysXkrqEAtgbQJKpZeim0h70y/KTiPd2Em2byQRsaY+o
+         k9zDCbeDVyYuQNXPEYbm02muYdbpuNvrtTJa0IDKG6CutFQrzb4WJ9mSE+mg84cBkr15
+         3B3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771026946; x=1771631746;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PAzhFuRZ2SJdSK9F1xCSqLK0xt8spRnyjC+Gfiotgs8=;
-        b=dwEs49EVPWsKINqSbSSrNvKEFZovtgarh+UkSuLpDjJJhPRuOdO7eOfsxpvtKiCvpL
-         7NZb+L5mDUoyZknk6fJIs9uun8HMG8HOHr4P+w34PlYjxm3TW0cWejqwijSe4YaKQUyr
-         zohvSqLr7WnlMbAB+85OWX6tMXmANR9MZcKPvPZ6gMY0hrMT0/heHJmOnA9DL932MA1O
-         gOYSgIibyhcsmx2Ph8cKYgHwD0J38/hT4OYxBIWZyvnMUy4B3cgLmtpygD2Os6sgJY2C
-         4fFUpG4e1VpezFSxleYxBZh3BZlaXcaWWRCVjonwVeSYzktqStzLYfYIARdwCx4Iye97
-         e12A==
-X-Gm-Message-State: AOJu0Yx1mhpglWKVOHa1crYEGyRcRWQw6zmDukW/Y6ACDb2FhHYwtYWz
-	4t+lxiuNFkZIPgf9X2JXhxHeojjQa84QaAAzn/CV6BnRvQ0aC8GH6jDLXLgGcszQ
-X-Gm-Gg: AZuq6aLRIe5iARnnnY9J3ZVObvqAFvbWs9sLNJQEVdBx45APWWfT+DwmajV2dGLOVwZ
-	ddYkU8FB2blpX4qBIao8+JvWidAsX1cMrQ6dcBeW37AtsTbzXyD/56XmP5ROvdP79ixO8kXIfLb
-	RvIC3FXDGpIHfOBPkkWaYW7znEKzYQqulqiMxrvdv9Z9z9gHpHtRt2Gjm9sJZGzfYIIv7c4A+3u
-	VC+RzoI8gBhoOWZT8T5nznNs0+l1EmI+jjGzBYKk6cILJv5vJT9i0UmhbmfvnOaJdI8ceDvSljz
-	BLM7gR1KUxmTkt45+pIyCpPadHIb6ZvKdojdk8dUTp0HslkAYwcIiguCvXeKODoRq7Q51fx3RZ+
-	PC0GeJaK5/U9xwlt0z8fr1haaezDqO05kjp9bs0dBnoXz5ovpK7fq6eaP/adnAYuIdCqcj8Pnsg
-	hKiZGhkNeOzLZIaVoNr5D1VvZOUVcOUIwVdFk=
-X-Received: by 2002:a05:6214:2264:b0:88a:31e5:80fa with SMTP id 6a1803df08f44-8973f2bd416mr31479316d6.16.1771026946249;
-        Fri, 13 Feb 2026 15:55:46 -0800 (PST)
-Received: from [127.0.0.1] ([145.132.99.17])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb2b0db51fsm717452185a.14.2026.02.13.15.55.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 15:55:45 -0800 (PST)
-Message-Id: <48fc882785013b129fba9b8aada6c1f2e239a4cd.1771026918.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
-References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
-	<pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 13 Feb 2026 23:55:18 +0000
-Subject: [PATCH v2 13/13] config: restructure format_config()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1771027490; x=1771632290;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+SphdNtPUiWnyb9UlVqOUsAjlMhQR1rvM7nZDCQpz7U=;
+        b=Mkbckm7AM/H1C8hyDZI2ziobv0kXE2ZiQUyzYxoYwuf8Kbb6ZddPLR3hFrurDWkh/6
+         sHHG0V3FWCJ3C4Ur7AKrjaO1fHRgUn4Ue3bje3Rv0HRH+IEVtskJIT8uLZtqCpbKeTKz
+         94IRuNYhgH0uF4yyc2WcOoarHeVyyGb0TBnySFsrS7tN8E9OY6f9ys/HuGTriJr3wWym
+         x4Ah5dzYH/B9JVS1fTck2Fq9Vo8H6XeaIaSDhYsrNRjWAXlyB+rENDYQRrnlE2NvpKHR
+         mqmPhiweFfhMne1uYEITzxDAU7MjI2wt9ECs1gi/OJ2XQnJrFdEInssTpKpy9cBmLJ4X
+         y6Dg==
+X-Gm-Message-State: AOJu0Yzp2X+AA+3iVlU0APCxWLb2MOZaM/cYBGXPU7nVr0IW6iw2Cij9
+	CmwnR8INGDQedKewy0/VFyaN//AsdhX2WScqndaDmGoEPIP/6AVEVpEuHWJkkQ==
+X-Gm-Gg: AZuq6aLJVeO8W6x0eC1cJtT07W6pFBrAIMQjIYLVLK7CnYN/Zv1aLGHxZd53RX0zJYA
+	HqrCmk/PY97mwzt269bt6uH6JIu9tv0pxMAU3wpS4MglDCZGKEoEXS41O4osNqRCQUvrPDBlrCA
+	al/0Wbjy8PX1H0jVuMm0YxhdcYdD04k/0ZTxsgQs+MR6SrkFGx6bDZLxxMFWwLlikEkOruQWB7K
+	nqN8fALxXjudqdQ75T7c8S7dI2qOZxmq8BrLCHmvV2KONACb7cEnZ2YxL9AvKF+cXWuwo2ZKo9L
+	IWHCHFBuq9PClpj36QrbNlapi6pIn+YZ2caY9F5s8HWFGL8jMzxbm196ZNSIgmpcPW7QXmVynQ8
+	upWDtbxmHg5pCOA5aAIkkeqRjjBmCzA3hnEaaYvLNwIIifnjktpXyavBorc4CAA2I62UiNgmdkA
+	0h7jMSs6JV7aj3T0CMC8jsmb95X+Ue24kCHy1ikRf5D4m5GFNksvwsGpk=
+X-Received: by 2002:a05:690c:f14:b0:794:cea5:2ce with SMTP id 00721157ae682-797a0c0a55amr29709627b3.5.1771027490559;
+        Fri, 13 Feb 2026 16:04:50 -0800 (PST)
+Received: from smtpclient.apple ([177.118.182.126])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7966c267fcbsm77063777b3.53.2026.02.13.16.04.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Feb 2026 16:04:50 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    Patrick Steinhardt <ps@pks.im>,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH] [RFC][GSoC][PATCH] attr: use local repository state in
+ read_attr
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <CAFNBzOckR2yfGvLMHm0VZW+iKJTgFxzfxQAskdBV2HQ_3yXggA@mail.gmail.com>
+Date: Fri, 13 Feb 2026 21:04:35 -0300
+Cc: git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>,
+ Justin Tobler <jltobler@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>,
+ Chandra Pratap <chandrapratap3519@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <03F6CE03-751E-43D5-80E2-E799D97B09B2@gmail.com>
+References: <20260207114007.40-1-kumarayushjha123@gmail.com>
+ <96329bc6-0490-454b-a21b-babb85c98bc9@gmail.com>
+ <CAFNBzOckR2yfGvLMHm0VZW+iKJTgFxzfxQAskdBV2HQ_3yXggA@mail.gmail.com>
+To: Ayush Jha <kumarayushjha123@gmail.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
 
-From: Derrick Stolee <stolee@gmail.com>
 
-The recent changes have replaced the bodies of most if/else-if cases
-with simple helper method calls. This makes it easy to adapt the
-structure into a clearer switch statement, leaving a simple if/else in
-the default case.
+> Hello everyone,
 
-Make things a little simpler to read by reducing the nesting depth via a
-new goto statement when we want to skip values.
+Hello again, Ayush!
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- builtin/config.c | 59 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 40 insertions(+), 19 deletions(-)
+> I=E2=80=99ve incorporated the feedback provided on this patch and sent =
+an
+> updated version as a follow-up patch series:
+>=20
+> [RFC GSoC PATCH v3 0/2] Make read_attr() repository-aware by
+> introducing a lazy bare state
+> [RFC GSoC PATCH v3 1/2] repo-settings: add repo_settings_get_is_bare
+> [RFC GSoC PATCH v3 2/2] attr: use local repository state in read_attr
 
-diff --git a/builtin/config.c b/builtin/config.c
-index e8c02e5f21..1de3ce0eaa 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -393,25 +393,44 @@ static int format_config(const struct config_display_options *opts,
- 		show_config_origin(opts, kvi, buf);
- 	if (opts->show_keys)
- 		strbuf_addstr(buf, key_);
--	if (!opts->omit_values) {
--		if (opts->show_keys)
--			strbuf_addch(buf, opts->key_delim);
--
--		if (opts->type == TYPE_INT)
--			res = format_config_int64(buf, key_, value_, kvi, gently);
--		else if (opts->type == TYPE_BOOL)
--			res = format_config_bool(buf, key_, value_, gently);
--		else if (opts->type == TYPE_BOOL_OR_INT)
--			res = format_config_bool_or_int(buf, key_, value_, kvi, gently);
--		else if (opts->type == TYPE_BOOL_OR_STR)
--			res = format_config_bool_or_str(buf, value_);
--		else if (opts->type == TYPE_PATH)
--			res = format_config_path(buf, key_, value_, gently);
--		else if (opts->type == TYPE_EXPIRY_DATE)
--			res = format_config_expiry_date(buf, key_, value_, gently);
--		else if (opts->type == TYPE_COLOR)
--			res = format_config_color(buf, key_, value_, gently);
--		else if (value_) {
-+
-+	if (opts->omit_values)
-+		goto terminator;
-+
-+	if (opts->show_keys)
-+		strbuf_addch(buf, opts->key_delim);
-+
-+	switch (opts->type) {
-+	case TYPE_INT:
-+		res = format_config_int64(buf, key_, value_, kvi, gently);
-+		break;
-+
-+	case TYPE_BOOL:
-+		res = format_config_bool(buf, key_, value_, gently);
-+		break;
-+
-+	case TYPE_BOOL_OR_INT:
-+		res = format_config_bool_or_int(buf, key_, value_, kvi, gently);
-+		break;
-+
-+	case TYPE_BOOL_OR_STR:
-+		res = format_config_bool_or_str(buf, value_);
-+		break;
-+
-+	case TYPE_PATH:
-+		res = format_config_path(buf, key_, value_, gently);
-+		break;
-+
-+	case TYPE_EXPIRY_DATE:
-+		res = format_config_expiry_date(buf, key_, value_, gently);
-+		break;
-+
-+	case TYPE_COLOR:
-+		res = format_config_color(buf, key_, value_, gently);
-+		break;
-+
-+	default:
-+		if (value_) {
- 			strbuf_addstr(buf, value_);
- 		} else {
- 			/* Just show the key name; back out delimiter */
-@@ -419,6 +438,8 @@ static int format_config(const struct config_display_options *opts,
- 				strbuf_setlen(buf, buf->len - 1);
- 		}
- 	}
-+
-+terminator:
- 	strbuf_addch(buf, opts->term);
- 	return res;
- }
--- 
-gitgitgadget
+Two tips about working with our mailing lists:
+
+1. Normally here we sent next versions replying to the cover letter
+   of the first version. You can use the flag --in-reply-to in
+   git-send-email(1) to do that. (This is a Git thing, some other
+   patch-based FLOSS projects don't do that).
+
+2. When we reference other messages, we use the message id instead of
+   the subject. For example, I'm referencing your message [1] in this
+   sentence.
+
+> Best regards,
+> Ayush Jha
+
+Thanks and welcome!
+
+[1] CAFNBzOckR2yfGvLMHm0VZW+iKJTgFxzfxQAskdBV2HQ_3yXggA@mail.gmail.com/=
