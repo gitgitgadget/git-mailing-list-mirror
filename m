@@ -1,143 +1,251 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED2F7262E
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 00:42:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0F4DF59
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 00:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771029771; cv=none; b=JvnfCAeIC6u/tM7T6FEr4BhI7iiFzv3mhJOhTBhnH4qUHu+yFkg8sH/lfji2ec4gGbngAUQkdRMkWxrYq8c8/CvtifnhHtcbF/H2X99pSl4uo6mTrAGb4r0lAbt14LfuSYJzgx7NMosEXYK42SUGxyQ481nPopj1R3QNpoFuLL4=
+	t=1771030712; cv=none; b=AgvbSY8rmoMicATVGRf0+fSV6j1t0KTVH73QKC5ToAPbT1Bu6MrxHJeF1t2mLLQABuQGTDpSIFuTTck1jgKZ2N37qLOWjByqVM97sPlnPPItb+FnXdFJHPPaqeduqxTtAkLkcObyJNY3CF1iHqwUGsSvIwDW9KVtEx/xZS1KbFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771029771; c=relaxed/simple;
-	bh=1ze+zwTJcXsLNBS1ApJ/A25V88uaKIcMd7PU3HdT+1M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CgcBNhbBd7SYLaGme9TGx1ci0xi9+7DdWPJgKeTXQgLmpxDaeLDh58X6p7m5dktnExkrwQcCXgOkjTe2zijmHUZu4vWb8vHYsiWkSd7ShTHo9Y8iyUe8DBTD7wKNXrH5QcG0I0SWOQoCv9mHnTTK65oedOB2Jpx9ZkrK7UjAaLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qois08ox; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rlHcKYdU; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771030712; c=relaxed/simple;
+	bh=g5LXe1f3PuuUic80WBXE9ACFaSFlkzxH63FQI+PlCoI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Tx8zArHmb6+k9cvHcIt1iYvoDgEnIWWICykdaf5hLwZQMRwhi4VBAjE7vmndfaKNe+FIvPodJSzPYriStfvoR4mvGZ+1k/JCOvyu/WrsJkrSfroDQI7B9qbIH0RYtwwcMiLXWYhLSoPnv6MlCqc3Q+fDjN/Q1PxuvXxwI6UvAGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OE+XBLUs; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qois08ox";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rlHcKYdU"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7EAB01D0008A;
-	Fri, 13 Feb 2026 19:42:48 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 13 Feb 2026 19:42:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771029768; x=1771116168; bh=66fl5eBU45
-	OwMASKsuyL9MuVHz4uVV0yroLVNA3blRY=; b=Qois08oxpud66SqyRadYdwbgxF
-	R9T5PR5kvC5lH84tcxnGe7zt44juNedvpaei0gPh6zq0zJI7U31Rg3YmeRv4cUcN
-	YgfztwXMtGvuuf6eAND/BBqWAnae5fVSOoM8SzZjqNg6JJDmAgmsVtC/U+IvB94B
-	vjZ3BKbwBl91dV36i+dP3AMAw+JyIovCCGQcH1s8+gKBlW65h0uKAhWIHqrsMLZi
-	cgTPY+vkQWX5vCLwYhVk48P13p3AidlCZ/8c4Zkvq+qOEav5ZcQR3z3W67MYmh/C
-	F6glC1oqU6WDbt9EeCkQk6S9KOLrcyVhMSyR2+X4W9KxSQhAautRREkVtTFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771029768; x=1771116168; bh=66fl5eBU45OwMASKsuyL9MuVHz4uVV0yroL
-	VNA3blRY=; b=rlHcKYdUbkZ79gj2a/ow9nYquLiSJgAvHDqoBgzYmC3H1EPupsJ
-	e2LWIf8tYAn073fQNNghrHL96rRUTXkqIrZVzB/ccwCC3MFdNVW+pksoZZ5UUCB2
-	zQRUpRvHiwABL1tXkd6FRf6Upa+epvBUK5bL9fgOp3kAHL09itb3BC/PDXOCdxaM
-	7f+vs7c7QajV1KB0s6itOa9n4ZsRLyeLL3YW8fegLGTwjamArzJBvGVu5wyckIFF
-	/5CDHWL9JmxDXreF0z3c8D6PoVh653zU90mjc/dj+ol1l6vLSMJe/puTozQH2my2
-	zTViTQgi8R4957lGR++P/GAgvlBZj/zdIqA==
-X-ME-Sender: <xms:B8WPaflhwf6pXlv5zEkNLcAWv6u7jEcP7xyA4YQJ6Nm_hTv6oEzV8w>
-    <xme:B8WPaVZNnKgpURVIcrgiY1QC3xlpa9Hn4p64HF1M0Rk_0UCqeGw0Dxu8_HX2vPV8-
-    VnnjfIOFuAtgfEnmE62qDUOwpY_gqOCdI_W4Tm9CHzRu6jiHz23vXs>
-X-ME-Received: <xmr:B8WPaZQGbp4sA1_z-nOxvm6HiEzUtjPzj1OZPOvFWZ8sx1gnTDmAP5ZjOgBp27bFpzQmKgqCzVnxzjm-AvqNU9IjMO1KDikR_w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdeljedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
-    hopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepphhssehpkhhs
-    rdhimhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:CMWPaXt6vsQa62cBzXgIDqoPz1xcGTL5mqa0i094Ggla5JZON3v1AA>
-    <xmx:CMWPaTHYCPwNvAMzh8gjJwt5VzomR56zxJi4egMwpoJWdK4WTjyEKA>
-    <xmx:CMWPaQzJzR68FmlZYztaikGD7Y-q4qCajW8ejeqvdQf-DR3jamsfxw>
-    <xmx:CMWPaV1eVojbhGiLIpy86ftrjvYvnvl75PoJEYoQ6cSm63MSIE_hZw>
-    <xmx:CMWPaWgH9B6LtKWmVihixMJ4TjS7eqHZLy47ap6VW-poC38bUDBzmZew>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Feb 2026 19:42:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>,
-  Patrick Steinhardt <ps@pks.im>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 04/13] config: format int64s gently
-In-Reply-To: <2bca4d231686e33ea9d4d85b10fcffd60a63ad46.1771026918.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Fri, 13 Feb 2026
-	23:55:09 +0000")
-References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
-	<pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
-	<2bca4d231686e33ea9d4d85b10fcffd60a63ad46.1771026918.git.gitgitgadget@gmail.com>
-Date: Fri, 13 Feb 2026 16:42:46 -0800
-Message-ID: <xmqq8qcwi29l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OE+XBLUs"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-79495b1aaa7so15738207b3.1
+        for <git@vger.kernel.org>; Fri, 13 Feb 2026 16:58:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771030710; x=1771635510; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3Ve6RGELOMc+yAgkn7dPa0mdVV+JVbjGfmTSPxtK2vw=;
+        b=OE+XBLUsC/k6ZFNIZo8aiSzg4dGOKBsoFX2C5mKQtmeF4YDc6FD6uPd2b+5tHwMy85
+         nuWYR9PqIE0yfqK5yhYCGBf73NnFEaImP13EH6Jyu7KibpDavH8gVwaqNAboYTlFjHy7
+         ineMBohaDRQMhhnr+Ni2yk46+pwvGmF2qSwHczXjBcJ5S5BsFLgTL078Z5hhJR0MJxtd
+         cxtFTFDCnQdY5kyR2Hn7dyVm01MvZbpcpAneH/7n/rPXp44LRLaY7ppyBdXe26ZJncYE
+         ydLE4Lq/obZrkPRcv3KVxs7myn5IDzMl9b/gHQxZyHbM/wEk2qNt9OZfhb2W7t7LfWF+
+         hGmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771030710; x=1771635510;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3Ve6RGELOMc+yAgkn7dPa0mdVV+JVbjGfmTSPxtK2vw=;
+        b=A5Y1JC80c36ni1W3X72Wgp2JGF0JbhY8afvzEgTLHcB0YM0WI+WkwDmwj76pDedj5N
+         BTvvLWy0BFEv8wXXBiC7Pis0cgClpgnMc5zw5w152ceQMTGDTVZDTayN057GbKX1eI6e
+         FIWSG2320vSjK64+MFW8OFkmwgk4ShCCfZ9+8IHjgeac+aoqgIAvUg9zNWiQhNIQ70+5
+         7Ptxaz9VtcqUaVEI7A77BjyDhyHk55TRzMB8rbYuTckJ6AthdZf+uNOjifvUhMHYlMjv
+         tmxkR94Dtz+fSdZVeB13AzicBoWqY1JqULJaTakyCzxjhUDz2WmptzntlEQ+pxN1hGn7
+         mFUA==
+X-Gm-Message-State: AOJu0YwTGeTszu6k5xPv7/ev4paj5SQW6NN8Tuo9Bdt2CuId+mhwKfrx
+	y05OJYikP12qkeeEF5qwDJdVivRGMJLHJ27fYLi2eAHxD95dWXdOrdWaVBX1pw==
+X-Gm-Gg: AZuq6aLuu5d0mAomPPcEEtfuOpCRFvDYZr586YFeb3IgCwgyjwiW3p09ltn02cfi19Y
+	SSyhdYULp/jnvzvwu/C21fyUEexy2QnA2PlcdLFygW65g2a6Fd9zG8IDLmxVd1CQ0BQlU9SF52V
+	tI9uMPUI2wGikXljTQt7Kk9+9wE5kf7IMm4HzOjL7uxGMzaGNUhfhwffSnWWAXKK7H7NGw0V9XS
+	vyVcfVQaOeyFV7P+d8ZjzFfE3VibEq0h2uLzf5rk0BRzgmN9TwJ2+U0lCEyfiSxcEx430Os7wFi
+	pxP85jYfhpvGCbWZqu6FaNz1TQ5+SH3+Ue7WRb5MHNhXAr66dGd5YBl0RwjtsWUngrrzuCDtol2
+	Yuoo6b+n9nocfT12maIs8CmcMKcBspI8/vRJtVuX8Pix7V/gYzW2/LFw6/nAf15dnu8qecGoquw
+	GXNiDhDl0Ag1IRgCB/fYhG4LbWwYmNivdkGvb10phErVi/PQyJ5LUVkKF33Up8Dg==
+X-Received: by 2002:a05:690c:660f:b0:794:f92a:1063 with SMTP id 00721157ae682-7979e7f0b64mr40737567b3.16.1771030709607;
+        Fri, 13 Feb 2026 16:58:29 -0800 (PST)
+Received: from localhost.localdomain ([177.118.182.126])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7966c2533ccsm77824947b3.36.2026.02.13.16.58.27
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 13 Feb 2026 16:58:29 -0800 (PST)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	avila.jn@gmail.com,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [PATCH v6 0/2] repo: add --keys and rename "keyvalue" to "lines"
+Date: Fri, 13 Feb 2026 21:35:14 -0300
+Message-ID: <20260214005818.37349-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi!
 
-> +static int format_config_int64(struct strbuf *buf,
-> +			       const char *key_,
-> +			       const char *value_,
-> +			       const struct key_value_info *kvi,
-> +			       int gently)
-> +{
-> +	int64_t v = 0;
-> +	if (gently) {
-> +		if (git_parse_int64(value_, &v))
-> +			return -1;
-> +	} else {
-> +		/* may die() */
-> +		v = git_config_int64(key_, value_ ? value_ : "", kvi);
-> +	}
-> +
-> +	strbuf_addf(buf, "%"PRId64, v);
-> +	return 0;
-> +}
+This v6 addresses these issues raised by Patrick:
 
-This establishes the pattern the next handful of patches follow.  We
-already have in parse.c helpers that we can use for the gentler
-parsing, and otherwise we'd use git_config_*() that the caller of
-these new helpers were using originally.
+- It renames `FORMAT_LINES` to `FORMAT_NEWLINE_TERMINATED`
+- Change the commit messsage of the first patch (I'm using Patrick's
+  suggestion)
+- It capitalizes the new paragraphs
 
-I'd have preferred to have the blank line moved to the gap between
-the decl and the first statement, i.e.,
+There was a discussion about the name of the new format ("lines" vs
+"newline") [1]. Personally I prefer "lines" instead of "newline" because
+I understand the --format flag expects a format name (e.g. `table`,
+`lines`) instead of the delimiter, being `nul` only a short form of
+"nul-terminated". But, of course, I'm open to other opinions about it
+:-).
 
-> +{
-> +	int64_t v = 0;
-> +
-> +	if (gently) {
-> +		if (git_parse_int64(value_, &v))
-> +			return -1;
-> +	} else {
-> +		/* may die() */
-> +		v = git_config_int64(key_, value_ ? value_ : "", kvi);
-> +	}
-> +	strbuf_addf(buf, "%"PRId64, v);
-> +	return 0;
-> +}
+Thanks
 
-These "format X gently" steps look very good.
+[1] aXhiHAFNFxgsXa0S@pks.im
+
+Lucas Seiki Oshiro (2):
+  repo: rename the output format "keyvalue" to "lines"
+  repo: add new flag --keys to git-repo-info
+
+ Documentation/git-repo.adoc | 32 +++++++++++++++--------
+ builtin/repo.c              | 51 ++++++++++++++++++++++++++++++-------
+ t/t1900-repo.sh             | 44 ++++++++++++++++++++++----------
+ t/t1901-repo-structure.sh   |  4 +--
+ 4 files changed, 97 insertions(+), 34 deletions(-)
+
+Range-diff against v5:
+1:  f5448ce915 ! 1:  6f5b4a577e repo: rename "keyvalue" to "lines"
+    @@ Metadata
+     Author: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+     
+      ## Commit message ##
+    -    repo: rename "keyvalue" to "lines"
+    +    repo: rename the output format "keyvalue" to "lines"
+     
+    -    The output format name "keyvalue" isn't so descriptive. Rename it to
+    -    "lines", since it describes better the syntax of the output format and
+    -    it isn't tied to key-value pairs.
+    +    Both subcommands in git-repo(1) accept the "keyvalue" format. This
+    +    format is newline-delimited, where the key is separated from the
+    +    value with an equals sign.
+     
+    +    The name of this option is suboptimal though, as it is both too
+    +    limiting while at the same time not really indicating what it
+    +    actually does:
+    +
+    +      - There is no mention of the format being newline-delimited, which
+    +        is the key differentiator to the "nul" format.
+    +
+    +      - Both "nul" and "keyvalue" have a key and a value, so the latter
+    +        is not exactly giving any hint what makes it so special.
+    +
+    +      - "keyvalue" requires there to be, well, a key and a value, but we
+    +        want to add additional output that is only going to be newline
+    +        delimited.
+    +
+    +    Taken together, "keyvalue" is kind of a bad name for this output
+    +    format.
+    +
+    +    Luckily, the git-repo(1) command is still rather new and marked as
+    +    experimental, so things aren't cast into stone yet. Rename the
+    +    format to "lines" instead to better indicate that the major
+    +    difference is that we'll get newline-delimited output. This new name
+    +    will also be a better fit for a subsequent extension in git-repo(1).
+    +
+    +    Helped-by: Patrick Steinhardt <ps@pks.im>
+         Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+     
+      ## Documentation/git-repo.adoc ##
+    @@ builtin/repo.c: typedef int get_value_fn(struct repository *repo, struct strbuf
+      enum output_format {
+      	FORMAT_TABLE,
+     -	FORMAT_KEYVALUE,
+    -+	FORMAT_LINES,
+    ++	FORMAT_NEWLINE_TERMINATED,
+      	FORMAT_NUL_TERMINATED,
+      };
+      
+    @@ builtin/repo.c: static void print_field(enum output_format format, const char *k
+      {
+      	switch (format) {
+     -	case FORMAT_KEYVALUE:
+    -+	case FORMAT_LINES:
+    ++	case FORMAT_NEWLINE_TERMINATED:
+      		printf("%s=", key);
+      		quote_c_style(value, NULL, stdout, 0);
+      		putchar('\n');
+    @@ builtin/repo.c: static int parse_format_cb(const struct option *opt,
+     -	else if (!strcmp(arg, "keyvalue"))
+     -		*format = FORMAT_KEYVALUE;
+     +	else if (!strcmp(arg, "lines"))
+    -+		*format = FORMAT_LINES;
+    ++		*format = FORMAT_NEWLINE_TERMINATED;
+      	else if (!strcmp(arg, "table"))
+      		*format = FORMAT_TABLE;
+      	else
+    @@ builtin/repo.c: static int parse_format_cb(const struct option *opt,
+      			 struct repository *repo)
+      {
+     -	enum output_format format = FORMAT_KEYVALUE;
+    -+	enum output_format format = FORMAT_LINES;
+    ++	enum output_format format = FORMAT_NEWLINE_TERMINATED;
+      	int all_keys = 0;
+      	struct option options[] = {
+      		OPT_CALLBACK_F(0, "format", &format, N_("format"),
+    @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char
+      	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+     -	if (format != FORMAT_KEYVALUE && format != FORMAT_NUL_TERMINATED)
+     +
+    -+	if (format != FORMAT_LINES && format != FORMAT_NUL_TERMINATED)
+    ++	if (format != FORMAT_NEWLINE_TERMINATED && format != FORMAT_NUL_TERMINATED)
+      		die(_("unsupported output format"));
+      
+      	if (all_keys && argc)
+    @@ builtin/repo.c: static int cmd_repo_structure(int argc, const char **argv, const
+      		stats_table_print_structure(&table);
+      		break;
+     -	case FORMAT_KEYVALUE:
+    -+	case FORMAT_LINES:
+    ++	case FORMAT_NEWLINE_TERMINATED:
+      		structure_keyvalue_print(&stats, '=', '\n');
+      		break;
+      	case FORMAT_NUL_TERMINATED:
+2:  16bc72afe1 ! 2:  53503e1433 repo: add new flag --keys to git-repo-info
+    @@ Documentation/git-repo.adoc: supported:
+     +	through the flag `--format`. The following formats are supported:
+     ++
+     +`lines`:::
+    -+	output the keys one per line. This is the default.
+    ++	Output the keys one per line. This is the default.
+     +
+     +`nul`:::
+    -+	similar to `lines`, but using a _NUL_ character after each value.
+    ++	Similar to `lines`, but using a _NUL_ character after each value.
+     +
+      `structure [--format=(table|lines|nul) | -z]`::
+      	Retrieve statistics about the current repository structure. The
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+     +	char sep;
+     +
+     +	switch (format) {
+    -+	case FORMAT_LINES:
+    ++	case FORMAT_NEWLINE_TERMINATED:
+     +		sep = '\n';
+     +		break;
+     +	case FORMAT_NUL_TERMINATED:
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+      {
+     @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+      {
+    - 	enum output_format format = FORMAT_LINES;
+    + 	enum output_format format = FORMAT_NEWLINE_TERMINATED;
+      	int all_keys = 0;
+     +	int show_keys = 0;
+      	struct option options[] = {
+    @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char
+     +	if (show_keys)
+     +		return print_keys(format);
+     +
+    - 	if (format != FORMAT_LINES && format != FORMAT_NUL_TERMINATED)
+    + 	if (format != FORMAT_NEWLINE_TERMINATED && format != FORMAT_NUL_TERMINATED)
+      		die(_("unsupported output format"));
+      
+     
+-- 
+2.50.1 (Apple Git-155)
+
