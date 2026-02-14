@@ -1,114 +1,197 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAC02FE056
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 18:14:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00CC2DEA62
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 20:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771092870; cv=none; b=WA1fJZ2vrXKDw84xvTu7FdDdGywnf6OM6K8cqGkSVYQG1JasyTuF0JDrI99fBtiVCp8ZkWkAHly+OdcAI3AoPoS+ttAs0aZeCudGbzbHiZhAwIR8BPjeN9ohCvJEVFshle3cBAp6juVq+Zn27xrHP3T6bj5RDGkl9T40bpdKNxA=
+	t=1771099229; cv=none; b=ZT5mZhHM2MOTMKnVL7vu+hNKjMzzgOviLCsXbI4v12/9eWLrlPaYdBPn2+wmpk23RnAjqRCJecny9eEafzfk+HPBRLYhaSb9EyPc0r0muP3aaFpVosnoPD8BeRicZ0CPfOUQ40szyU5L2lsNF5HEKvt3fYdZvXYIkMk5XFWl4o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771092870; c=relaxed/simple;
-	bh=+wX3mPpnSNX1Y3o7PO2bKXyiLEWCm4afpuCNcUPuFSw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tMqdIsYDeaGywS67tb2HvaIyz/0lulExJWwhoARZWTqesppZQ3pvhtBC+eVZsMcCRllmw8kB65s21GWQvov2J3E8COtdORTd8RBlmh1guv0nfraZJ2klEvVMaHNbD34WhKxnxVNXC6rnxchZmnHvez7ZqIfAWAFnefmQ05tPrro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dKEruCRp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ad3xYJhX; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771099229; c=relaxed/simple;
+	bh=Gbqu3rKmf6r2bMGkyRujMZVmj1p58UbLi2XMjZmAro0=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=cAhdjWlyj1Pd/jr+pF3tszGhb/2FergxAupXzBnucPnkw/wyZtpHiVy69Zc4V6YH7NLMt64VNKjZMhohg6Ldmrj5um/rWRdJtK3KbdxISxknFQ4njrwF3gBkgoguiK+7HbHIBbSHslMfYkzB4Rhbwed77APg6xwKRJ+RIeUraMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OD5smZMf; arc=none smtp.client-ip=74.125.224.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dKEruCRp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ad3xYJhX"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id C5D661D0031B;
-	Sat, 14 Feb 2026 13:14:26 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sat, 14 Feb 2026 13:14:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771092866; x=1771179266; bh=y/SP2pILqt
-	nOFAkrjhtGuBYHFndjy0p/ISPcbhWtveg=; b=dKEruCRpQlzD4BC+MIbyjhrWJ6
-	JEGlUwoP+6u4bVQIzC3uvwB0vIeB4nmzLKVZTNnABuctNWVl40lX3J9oLEfCQbfd
-	EXpJXCOMiIvWEM2l47eZM82rv1D0cUCLukaNP6ZXLSJFLC5ua5XuZlIcVtkyW3lp
-	U48HelGQ6k1sMcvHd4mOsRqNSEHA3i18RiUozAl9e8VXlMBxm6XvrAKQhA0oyP0Q
-	Gf/OjO2IsyQ3Hdttlk4SRiA5DvGehtBM3S0bvxZ5cvObXbqMIVbNu5rM9Ts50iqp
-	HOIete6He/jiVEneMoSKpl+Dq/QIJANyGwp7i4Vx6gmGny/weTJ/o1pZwSEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771092866; x=1771179266; bh=y/SP2pILqtnOFAkrjhtGuBYHFndjy0p/ISP
-	cbhWtveg=; b=Ad3xYJhXxynDHME63pDOTM9PndwoQLfN1dimihwmL4bHM7mUUw3
-	rhoB6ouBmKRt/uo92Foyred9ojwAoyVKuerBwV04Xs3s1peSTcR3KhYG6yGf4bIW
-	nhuxSH1nzDVNfSb0oFj9lWq42Sm/CEVYBdcDOJtsTSQFfpArObwBwlF5VbeJo0Jj
-	0I4YzjN2IGY4i0fzoiWwoQjoPsbYMfYMo9sRZ3/R/6jmNesgYUf9c9g6RLBEbPGV
-	NOQH+o3xc+kXa43Jdu/tQ/W8VToLNxJM+dz1n8bVHQSyau1IH2VEvPUzT+Z+LW8n
-	scSwQIhtZuytFxzmzdPcTAHQVPEbHE/X58A==
-X-ME-Sender: <xms:gruQaSXopOgk3m-kcVb13pdwcIxozV0d13tbC0znj6XRglaFVlugGw>
-    <xme:gruQaSRXVUaS1Xen39E8N-bkNSWu-7GzKdJwVLbcnUI640xHnsLERVHoDFro-TIzi
-    SqhxWPRp9m5-ibgOB8AAd4iVkA5UkJK807_WMRpYpo_p0VNnLv7nw>
-X-ME-Received: <xmr:gruQaQPNk3Qt3U_Q2wa73eZz_iINRmXH6KoPXDtXZ6xfuABs_xcA770ZSmypwR7huI_wIi0OnJHwsmJGg9BFIuCy3d3bNrlXXQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvuddukedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtoheprghvihhlrgdrjhhnsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:gruQaQRs0OlEPz8AamHhSx8SwoZxO6aDk_RD4HfeT17dU6LUDWhRzQ>
-    <xmx:gruQaehk70CXnnfGknDz1K8CsSbv9vQ8hisbE1Rp_5ZR_9jYhQMbYw>
-    <xmx:gruQaZ-Fpn-MX-E6vq_Y0gZ4zEc8H8jCKbv8nhp39uChiCzrFQt2WA>
-    <xmx:gruQaVE1kBS5NZsw9tyfZGyXb6yYBfebYq98UmoTujNQbqlhbuLbLg>
-    <xmx:gruQaQ47KW_1r3jgFw_dDWkq5e1_5Mgu-giT6WC_G1BjoJh2HnGiY58P>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Feb 2026 13:14:26 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com,  avila.jn@gmail.com
-Subject: Re: [PATCH v6 0/2] repo: add --keys and rename "keyvalue" to "lines"
-In-Reply-To: <20260214005818.37349-1-lucasseikioshiro@gmail.com> (Lucas Seiki
-	Oshiro's message of "Fri, 13 Feb 2026 21:35:14 -0300")
-References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
-	<20260214005818.37349-1-lucasseikioshiro@gmail.com>
-Date: Sat, 14 Feb 2026 10:14:24 -0800
-Message-ID: <xmqq7bsfgpkv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OD5smZMf"
+Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-64ae5f0777dso1956045d50.3
+        for <git@vger.kernel.org>; Sat, 14 Feb 2026 12:00:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771099226; x=1771704026; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kIC1WC8eq7doQ7DzWZlyki0YnndMnzX8rMoW7gdcm0s=;
+        b=OD5smZMfL6n1QN+2LJ4R//7cz1lKde7UhXaMt2ryPgysJSNXYqvJaAxET0mkmMI6qi
+         VbVQ4dV/Hn1oz7Vw1qiuYYq/uxOdNBvowyTnk6Q3LGwpPFhSN+wIPVdhR2VjwncaTyMh
+         pOjF+OdQZpmS4NCA5KUfPpQju1eg6pOOApZoNp+3MrT50seMXodOU+OqJVdAgmYq1Vpv
+         GeI+HVc8FTNVAXURmNJq0fC1RyY0KCZXaOGwASsvGAfxQJnVqs/FhW+3Gefmd4GnLr7c
+         xwf/F9gzzIJQ4SkYaPtyRfS57a9jk3YFKyuWhSS3tKWeA/rKa5NRP90qEwQ4Phj3Jpx0
+         Gzgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771099226; x=1771704026;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kIC1WC8eq7doQ7DzWZlyki0YnndMnzX8rMoW7gdcm0s=;
+        b=fmew1bJOvNbYgCHOaJ75ZRPeGQFuQiikQE3pJuCupT0Y+4bG2sXGF/r7mdP/5CGkKU
+         xOG+prJC5Ro/gJPWl7Z3/C04VxWoPxkdyaEZgIt7dW1NheoCJ3d3NrMs7ojKwcJYcaya
+         4xPHS6lgBSLy+K6+uBcaxTHmPnvEY4Zf+LqvHohG3OL2V+KRLS69EslSnn3qBF10gPi+
+         0wji3vbMv8Ya3Xi2XMZjZuP2os92DURaHGtNt/qM3qN2fyOJJRrdS0/qlwpBSd5eQhpH
+         sFH0ldj9egUThNfcv6/Ml9kCwMCemep7CH8PNmn1RCPQ3ivbAadIlHFOFBjnwgQ2jVX/
+         /XiA==
+X-Gm-Message-State: AOJu0Yw5ipcaJJE1W3JA6FfBU5MYUnPm/U8bSYq6WfS+IYoOIUsG5CXy
+	66K4CMw8XSeYdGTUuaEp1KAQLuT5WMZMHLs0E413YkW6mFpdO8xyz0ExLEx8dA==
+X-Gm-Gg: AZuq6aJ6cEfNQ936uIOuLdcqqcNanyqJFLRuHRHAeS/xbydRRun8saY75TaHHH6Ka+5
+	YHu35DBvHoPOq/rM1dhvcGNvYYfKFMpW6eV+7e+rnhIS4EO4TqNfb6wYrcsBhy3r1DI4kJZebNs
+	y1fC46BzC0p6Zybt4lQ3DLkSExMV/FU4nASTpxdZYfpfevSYMAbj1XKa7BMtXjvNgDFVwJsObGz
+	r3YOrD7CxfVLr61x+CC6eb6oRZVWE3JAt16DiLG91RSXTKrc1tDTxOYyyTViWm/sqtRiGzi4xHd
+	u7r/jSN7VoFC417FjtmXLuiqy3qEBRuNkneGQHLkZ5ro2TeHzptonYJcpIaCDX62WGvPMS72VOH
+	sj/0PRyLWmUADiSmk9kqSmE2VyFBGBVqIEy1Bt3VdbzXrdtIz7HPWsX0RHYJTyG7sNTIkBcZamY
+	rQbqC6Z/9OBnqK2qPbmLzO+fKFfNEHlRBlzQuR94BCieChgz8RFoeP6vTimNq4PMVxjhJYB/1YD
+	N/SVd+rU+DuIm51Ynx9VplKismWaRTFOEUAzFCYY02nmORdfFw+o5ZZUKW4k8QSHJfxXMhEJqjh
+	4jgG
+X-Received: by 2002:a05:690c:b:b0:794:ecaf:c4b1 with SMTP id 00721157ae682-797a0bfb972mr106383377b3.25.1771099226386;
+        Sat, 14 Feb 2026 12:00:26 -0800 (PST)
+Received: from smtpclient.apple (99-144-70-174.lightspeed.chrlnc.sbcglobal.net. [99.144.70.174])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7966c16e5desm82808187b3.11.2026.02.14.12.00.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 14 Feb 2026 12:00:25 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 0/3] doc: patch-id: explain how to map efficiently
+Date: Sat, 14 Feb 2026 15:00:14 -0500
+Message-Id: <69F74ACB-93A4-4FB9-AE0D-57C433448981@gmail.com>
+References: <V2_CV_doc_patch-id_4.371@msgid.xyz>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ Linus Torvalds <torvalds@linux-foundation.org>
+In-Reply-To: <V2_CV_doc_patch-id_4.371@msgid.xyz>
+To: kristofferhaugsbakk@fastmail.com
+X-Mailer: iPhone Mail (21F90)
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> This v6 addresses these issues raised by Patrick:
->
-> - It renames `FORMAT_LINES` to `FORMAT_NEWLINE_TERMINATED`
-> - Change the commit messsage of the first patch (I'm using Patrick's
->   suggestion)
-> - It capitalizes the new paragraphs
->
-> There was a discussion about the name of the new format ("lines" vs
-> "newline") [1]. Personally I prefer "lines" instead of "newline" because
-> I understand the --format flag expects a format name (e.g. `table`,
-> `lines`) instead of the delimiter, being `nul` only a short form of
-> "nul-terminated". But, of course, I'm open to other opinions about it
-> :-).
+> Le 14 f=C3=A9vr. 2026 =C3=A0 06:56, kristofferhaugsbakk@fastmail.com a =C3=
+=A9crit :
+>=20
+> =EF=BB=BFFrom: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>=20
+> Topic name (applied): kh/doc-patch-id-4
+>=20
+> Topic summary: Explain and emphasize how to map commits efficiently and
+> add an example script.
+>=20
+> This is the fourth patch series for git-patch-id(1). This one focuses on
+> emphasizing how the command is an efficient patch ID=E2=80=93commit mapper=
+ and
+> how to use the patch IDs to join commits in a script.
+>=20
+> =C2=A7 Changes in v2
+>=20
+> =E2=80=A2 Delete temporary files at the end of the script.
+> =E2=80=A2 Consistent footnote style: https://lore.kernel.org/git/c70adde6-=
+e3db-4a46-bb29-a19d7aba8c7e@app.fastmail.com/
+>=20
+> =C2=A7 Previous patch series
+>=20
+> =E2=80=A2 Patch series 1:
+>  =E2=80=A2 Topic: kh/doc-patch-id-markup-fix
+>  =E2=80=A2 https://lore.kernel.org/git/v2-e5ad12cc3b3.1759178715.git.code@=
+khaugsbakk.name/
+> =E2=80=A2 Patch series 2:
+>  =E2=80=A2 Topic: kh/doc-patch-id-1
+>  =E2=80=A2 https://lore.kernel.org/git/v2-38645ea253c.1760369708.git.code@=
+khaugsbakk.name/
+> =E2=80=A2 Patch series 3:
+>  =E2=80=A2 Topic: kh/doc-patch-id
+>  =E2=80=A2 https://lore.kernel.org/git/CV_doc_patch-id_3.1ab@msgid.xyz/
+>=20
+> Link to v1: https://lore.kernel.org/git/CV_doc_patch-id_4.275@msgid.xyz/#t=
 
-I'll refrain from commenting on this part, as I am not good at
-naming ;-)
+>=20
+> Kristoffer Haugsbakk (3):
+>  doc: patch-id: emphasize multi-patch processing
+>  doc: patch-id: add script example
+>  doc: patch-id: see also git-cherry(1)
+>=20
+> Documentation/git-patch-id.adoc | 51 +++++++++++++++++++++++++++++++--
+> 1 file changed, 48 insertions(+), 3 deletions(-)
+>=20
+> Interdiff against v1:
+> diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.=
+adoc
+> index fb9ec211bb6..05859990c8e 100644
+> --- a/Documentation/git-patch-id.adoc
+> +++ b/Documentation/git-patch-id.adoc
+> @@ -101,6 +101,8 @@ git rev-list --no-merges $tail_opts |
+>     git diff-tree --patch --stdin |
+>     git patch-id  --stable | sort >"$for_upstream"
+> join -a1 "$for_branch" "$for_upstream" | cut -d' ' -f2,3
+> +rm "$for_branch"
+> +rm "$for_upstream"
+> ----
+>=20
+> Now the first column shows the commit from your branch and the second
+> Range-diff against v1:
+> 1:  704dc0ada8f ! 1:  e9319039d5e doc: patch-id: emphasize multi-patch pro=
+cessing
+>    @@ Commit message
+>=20
+>         Also drop =E2=80=9Cthe=E2=80=9D from =E2=80=9Cstandard input=E2=80=
+=9D.
+>=20
+>    -    [1]: https://stackoverflow.com/a/19758159
+>    +    =E2=80=A0 1: https://stackoverflow.com/a/19758159
+>         =E2=80=A0 2: This is `master` of this repository on 2025-10-02
+>=20
+>         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> 2:  e37c25aa5fc ! 2:  8ba3e71752c doc: patch-id: add script example
+>    @@ Commit message
+>         demonstrate generating two lists, sorting them, joining them, and
+>         finally discarding the patch ID lookup column with cut(1).
+>=20
+>    -    [1]: https://lore.kernel.org/workflows/CAHk-=3DwiN+8EUoik4UeAJ-HPS=
+U7hczQP+8+_uP3vtAy_=3DYfJ9PQ@mail.gmail.com/
+>    +    =E2=80=A0 1: https://lore.kernel.org/workflows/CAHk-=3DwiN+8EUoik4=
+UeAJ-HPSU7hczQP+8+_uP3vtAy_=3DYfJ9PQ@mail.gmail.com/
+>=20
+>         Inspired-by: Linus Torvalds <torvalds@linux-foundation.org>
+>         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>    @@ Documentation/git-patch-id.adoc: This is the default if `patchid.sta=
+ble` is set
+>     +    git diff-tree --patch --stdin |
+>     +    git patch-id  --stable | sort >"$for_upstream"
+>     +join -a1 "$for_branch" "$for_upstream" | cut -d' ' -f2,3
+>    ++rm "$for_branch"
+>    ++rm "$for_upstream"
+>     +----
+>     +
+>     +Now the first column shows the commit from your branch and the second=
 
-Changes relative to the previous round look all good.  Will replace.
+> 3:  2a319a43b2e ! 3:  27cad849312 doc: patch-id: see also git-cherry(1)
+>    @@ Commit message
+>         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>=20
+>      ## Documentation/git-patch-id.adoc ##
+>    -@@ Documentation/git-patch-id.adoc: join -a1 "$for_branch" "$for_upstr=
+eam" | cut -d' ' -f2,3
+>    +@@ Documentation/git-patch-id.adoc: rm "$for_upstream"
+>      Now the first column shows the commit from your branch and the second=
 
-Let's mark it for 'next'.
+>      column shows the patch ID equivalent commit, if it exists.
+>=20
+>=20
+> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+> --
+> 2.53.0.26.g2afa8602a26
+>=20
 
-Thanks.
+Looks like my comments were well-addressed, thanks! Looks good.=20=
