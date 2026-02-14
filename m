@@ -1,359 +1,191 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB159339A8
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 11:06:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679971A0BD6
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 11:56:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771067209; cv=none; b=PfWeCJaNv2p12iH8as4YonOE2fv+Z+pX86BCRIIviuVWYnnvitlbPk5GG7Co3+eXItUpY1DDsGncpIIbKisTdOAQ1tvK6btqBlUQvdbAXVYQUybrh6nKhfU6bXhytKOnUBIa5gbushFxdp4/XbwOP8KqKuDRGCKglOwAdgBTDfU=
+	t=1771070189; cv=none; b=tN/DpmKpb439BfgbAG+LW/q2lSgY196isKY7Kv9dvrm/gONGmb/5/lT6J8HeOeRE2tyh0gVdUW1e/oMJXNZE6xr23XwRmNCZn8Yz8oYYKfwFL8rKoMK3t+PIVJQADl+gb5Q9Ub5CJitlSDvYmmwEbIJppZJTOxT7R7uceGsc6cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771067209; c=relaxed/simple;
-	bh=Z4uN+IosPiXYiEO3q2OezZ4w/yYoMZaBWAwEqiKF2ww=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=idh8sN9T1SbiJl3dkLtqNTGrcIIfJeZm/GElii5RxT6GtQLsDjAz+pPbz+gs/v1NcC7cc2nPyC0gS/vI3WXojVnhdCl6wsBYZqRAhi1wNamYn5EEh/H7TzLXUA9d4xH+e/CnkJZIZpJlNrGaKxStODBjd46dmAqXAC3a3WTpYds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K7qn0ovP; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771070189; c=relaxed/simple;
+	bh=EMTNM09pqll/iE0aBgxVoCdP0VtfJHD1OjCVUh5umb8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=eLoifEGSBOrvUU91yAPc4jaW517Fhm4rrIcZI5iN5wDjINh33xVcJCcplJDrS+LsvdHq/isCreHII6uGpgt5Bg/8YzsKQF6/wfRCYw1D6DGZgUKh/9BXNZaf33wU5PpOI3ch/bhJkAQHDdqKslUPXusvIxPcCMzNSgfAauq+sEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=GGnp8q8C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jpR5ty4I; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7qn0ovP"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-483487335c2so15094455e9.2
-        for <git@vger.kernel.org>; Sat, 14 Feb 2026 03:06:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771067206; x=1771672006; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XuYiMj4lRR/8FRX0OIewXONm+ly82xKLuzxPp29KRXY=;
-        b=K7qn0ovPtUxINX2S175NJoJKi/DEcYNZhcTMxChHAXlYezrTmE1l6vlp7F1ZX9d2xJ
-         f/z4OLoGiHYoMmgXy/3mA3eDjrn3/ejswdrFdY0WA8Ikakvt0cba5cyZpefp/mJBc2Cf
-         YstFWDpzQNCMM4Ea91Ix8Pn97CcZPYhdncsnVkoP0nVUgHr/1LWKTFB6uhIV78q6KiHA
-         5LyDt4t1rFRcN8t854gDPH53G7TA/vVVg9kYMLuIwIfXOQ4FT3gN3iWvvJHXm++RSxJ7
-         h0Gprz35JiDm8z/1W77UdqFWF/SGLHquUe/gq6TFbdm1XUcej+xcz+Q571BccQ6t6dZL
-         Wv8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771067206; x=1771672006;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XuYiMj4lRR/8FRX0OIewXONm+ly82xKLuzxPp29KRXY=;
-        b=XKbusMhjVSaDEC3g6RuMD7a2Jyibn5B/HyIK05ZTSczSUuvoY8neWb0r5v0rnNI7RQ
-         lwh0jCxuow67DOaom9cTkoWGa1uz5OGJ0qyUEooSjVan+BhsbYUryY0IAec/Jxgkl7V/
-         WTxY+yZQ2ulKQbzItOJI+XYN2VG8gqLdShFh3sMN8urW1uAQcXiezukG0DE8ljTL2VYn
-         Q4+8QgojqFYyFLc71PTGChbWC3qOeALAIiE7URhShyHv5xw9ThWxOyfuW1Gy4+c18tGw
-         mkMkOlxI7g4ag24nVl2df7qcQaoE0cSLevXuW3UlUya31Q7wc0sWNH5llyjXLfeJkDki
-         Jt1w==
-X-Gm-Message-State: AOJu0YyWczllHBCKu1cZ/n9FELp1Ba5rSP+snacEV8pTweHSafIAyRNX
-	oQAHOJOWPLHJXulCwksDE69BDSdiDoyTr2qXuGgWgHiu3sAjSDGEPWl4HcnesHAg
-X-Gm-Gg: AZuq6aLeJlFyzOCiZaXxQmdS+rSKRTD1Sj5Tx4TBhw7pF4nfPTTiIn61K+yqv7B5mDx
-	qRASmVFMV6YhmnohaxCWRVP+8y8inMla4mTCc5s2mDqir09bnq65Ly18kFuWnJpv5Opc+Hmj/Lj
-	nm413su4G7581NEcjQHisLC8LiTJh3CiF5+B7vo1Vbowp+RT4H94DWRJAbYtxYsXFxgS4CTemEa
-	iTSO6lTgnotLbDh3h5G+Os/BqKH63uAOHgw0Rfjg7eHKJ4J2gplOc4H6PeuN9d0NzNXvp4bGr8/
-	3GC0BoOpqs+Jy6W67y4v5o56jO6Q01lh/3WgsAICSHnmD4A+BnpK+J58Y+VhZsRCKKmbzhUP+Io
-	As2ypRIGXC6detZ9pV2Zt42a9mqT9tEd9nH/agPqprGI4CGViwm1L6jORPOpkzZFw255pxB4wtv
-	2IgbsLMkv2Ewqd5NundaOpqNMrO9t1LQ==
-X-Received: by 2002:a05:600c:4e4d:b0:482:df17:bbbc with SMTP id 5b1f17b1804b1-48373a37b73mr76657455e9.20.1771067205756;
-        Sat, 14 Feb 2026 03:06:45 -0800 (PST)
-Received: from localhost ([102.88.77.2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4836aa0847asm235229105e9.3.2026.02.14.03.06.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Feb 2026 03:06:45 -0800 (PST)
-Date: Sat, 14 Feb 2026 12:06:55 +0100
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="GGnp8q8C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jpR5ty4I"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 66B037A0141;
+	Sat, 14 Feb 2026 06:56:26 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Sat, 14 Feb 2026 06:56:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771070186;
+	 x=1771156586; bh=MxogQZKPLtYjMJY7WWdvEplGqDk4/fud+TbraUz6jpk=; b=
+	GGnp8q8CD1KvVe/e5MGbuxwEza8W5tCgNSZoZ/fcHOPbLALerbmMPvleu5NjIfQT
+	021LFWZCFS1KyfUJRVZ0CpSN2mQja1/uGrTf/vdmn3ggN67wiRKYB5REp075Ofa5
+	qhVeMR428Ca4KoFl7OS0owlh8w7b+9McLH+ldlNhiDmky7GWMnXV4wjZCgjDcZC2
+	/vg0W0FFZl0s0pmVo6lrzP9kJVRxRnACy/cPPOqPt34BEqCkaupzp2NojDjaz/zu
+	tupLyHAOZ8B2RQHRU0OVrzagFAa27NRMK32yIpvDIYumPtaBxReJ626wVSbvaqxT
+	VwFt8JNFtkZERXZaZu08Eg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771070186; x=
+	1771156586; bh=MxogQZKPLtYjMJY7WWdvEplGqDk4/fud+TbraUz6jpk=; b=j
+	pR5ty4I2brU3GhVUjG2uTmQ9FD4Yi8Zri/b5GGq5AVhanluQ0KNOveGKen7OJcqA
+	zqHK0hL7dL8N/avM6ybiIL1XMTHUxJP5HkjHLpJdrNHpEA7Lyk5MXrCroVNCbDMM
+	UaNVlPw+bo1q2TOgDUfP2hh3lgFIv97wxhibbKv9uJN46bk+W/xRO7MZ5iQYPKwj
+	6GbkamX+JA4tyfejKFBmzJVMTHY7hymJLbgxPvZV8tSRXWqXkTwsBA24J81zPd5v
+	4kDfBBufXNclwEPUUSHWABkD8AxMrcEJ7GXc8nMCX+xe/54oqb8wp/JR7qYvoEZ4
+	4i/BK5t6N4hVpoTd7flwQ==
+X-ME-Sender: <xms:6mKQaSC1IFP4FqJUt1GLGUoYvSCLNhsUc9bxNZyf9o7vgi5yNGpz-pc>
+    <xme:6mKQaTifVuRFcVcaHd69VhlNAOdAMEJoUs08mGvU71Fh75z8tFE-XLpGKjyCxipwl
+    muW_UHwN0mMWXCoe3zMunhSthCP5T2zSNTi-oV9vVmg4cLkwckuwg>
+X-ME-Received: <xmr:6mKQaakoeNF-5luh6FITOFR0L6wIzerVfxQtJEN4XBWJ91zGVDRpsdPxWKGlaLSK9724MLY-esisENupuA5z4VcADpTZnzkFxB59b2o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvuddutdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+    hlucfvnfffucdlvdefmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
+    jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
+    hlrdgtohhmnecuggftrfgrthhtvghrnhepvddvhfdtueetveevvdegvedtffdvfeehjeej
+    ieekfeekgeetgeegjeeuueffvdetnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpsh
+    htrggtkhhovhgvrhhflhhofidrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    gtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehtohhrvhgrlhgu
+    sheslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:6mKQafoznQfs5ECXvBxdMizm6B6mEvQX-6n3GCv3YtUFwhQtIw4n-w>
+    <xmx:6mKQaTHzWt6D29ds_AkkXD31J6Svvl8QH856pDbcs3Ip7pzCbFwzFA>
+    <xmx:6mKQabzf-WBYhoNXe5irMf1sCXaWJn3dTJQ2Y_bL968xYF9_00y6Bg>
+    <xmx:6mKQaYo-opo7c4VBlqo8_pviC9WcoUG6o4jNwETIw23D3EfFLyTjBg>
+    <xmx:6mKQaVHNgbNavMHQmJiJzVAXGSPlkickLjWQQhBSIybjpjMclyCuEWJV>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 14 Feb 2026 06:56:24 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-	Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: [PATCH v5 4/4] add-patch: allow interfile navigation when selecting
- hunks
-Message-ID: <193fba4e336897a57a26e77c6eac74a05abc79c0.1771066252.git.abrahamadekunle50@gmail.com>
-References: <cover.1771066252.git.abrahamadekunle50@gmail.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	ben.knoble@gmail.com
+Subject: [PATCH v2 0/3] doc: patch-id: explain how to map efficiently
+Date: Sat, 14 Feb 2026 12:55:40 +0100
+Message-ID: <V2_CV_doc_patch-id_4.371@msgid.xyz>
+X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
+In-Reply-To: <CV_doc_patch-id_4.275@msgid.xyz>
+References: <CV_doc_patch-id_4.275@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1771066252.git.abrahamadekunle50@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-After deciding on all hunks in a file, the interactive session
-advances automatically to the next file if there is another,
-or the process ends.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Now using the `--no-auto-advance` flag with `--patch`, the process
-does not advance automatically. A user can choose to go to the next
-file by pressing '>' or the previous file by pressing '<', before or
-after deciding on all hunks in the current file.
+Topic name (applied): kh/doc-patch-id-4
 
-After all hunks have been decided in a file, the user can still
-rework with the file by applying the options available in the permit
-set for that hunk, and after all the decisions, the user presses 'q'
-to submit.
-After all hunks have been decided, the user can press '?' which will
-show the hunk selection summary in the help patch remainder text
-including the total hunks, number of hunks marked for use and number
-of hunks marked for skip.
+Topic summary: Explain and emphasize how to map commits efficiently and
+add an example script.
 
-This feature is enabled by passing the `--no-auto-advance` flag
-to `--patch` option of the subcommands add, stash, reset,
-and checkout.
+This is the fourth patch series for git-patch-id(1). This one focuses on
+emphasizing how the command is an efficient patch ID–commit mapper and
+how to use the patch IDs to join commits in a script.
 
-Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
----
- add-patch.c                |  66 ++++++++++++++++++++++--
- t/t3701-add-interactive.sh | 100 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 161 insertions(+), 5 deletions(-)
+§ Changes in v2
 
-diff --git a/add-patch.c b/add-patch.c
-index 07526e7fb6..b3fb08f416 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1418,7 +1418,10 @@ N_("j - go to the next undecided hunk, roll over at the bottom\n"
-    "e - manually edit the current hunk\n"
-    "p - print the current hunk\n"
-    "P - print the current hunk using the pager\n"
--   "? - print help\n");
-+   "> - go to the next file, roll over at the bottom\n"
-+   "< - go to the previous file, roll over at the top\n"
-+   "? - print help\n"
-+   "HUNKS SUMMARY - Hunks: %d, USE: %d, SKIP: %d\n");
+• Delete temporary files at the end of the script.
+• Consistent footnote style: https://lore.kernel.org/git/c70adde6-e3db-4a46-bb29-a19d7aba8c7e@app.fastmail.com/
+
+§ Previous patch series
+
+• Patch series 1:
+  • Topic: kh/doc-patch-id-markup-fix
+  • https://lore.kernel.org/git/v2-e5ad12cc3b3.1759178715.git.code@khaugsbakk.name/
+• Patch series 2:
+  • Topic: kh/doc-patch-id-1
+  • https://lore.kernel.org/git/v2-38645ea253c.1760369708.git.code@khaugsbakk.name/
+• Patch series 3:
+  • Topic: kh/doc-patch-id
+  • https://lore.kernel.org/git/CV_doc_patch-id_3.1ab@msgid.xyz/
+
+Link to v1: https://lore.kernel.org/git/CV_doc_patch-id_4.275@msgid.xyz/#t
+
+Kristoffer Haugsbakk (3):
+  doc: patch-id: emphasize multi-patch processing
+  doc: patch-id: add script example
+  doc: patch-id: see also git-cherry(1)
+
+ Documentation/git-patch-id.adoc | 51 +++++++++++++++++++++++++++++++--
+ 1 file changed, 48 insertions(+), 3 deletions(-)
+
+Interdiff against v1:
+diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.adoc
+index fb9ec211bb6..05859990c8e 100644
+--- a/Documentation/git-patch-id.adoc
++++ b/Documentation/git-patch-id.adoc
+@@ -101,6 +101,8 @@ git rev-list --no-merges $tail_opts |
+     git diff-tree --patch --stdin |
+     git patch-id  --stable | sort >"$for_upstream"
+ join -a1 "$for_branch" "$for_upstream" | cut -d' ' -f2,3
++rm "$for_branch"
++rm "$for_upstream"
+ ----
  
- static void apply_patch(struct add_p_state *s, struct file_diff *file_diff)
- {
-@@ -1483,6 +1486,7 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
- 	char ch;
- 	int colored = !!s->colored.len, use_pager = 0;
- 	enum prompt_mode_type prompt_mode_type;
-+	int all_decided = 0;
- 	struct file_diff *file_diff = s->file_diff + idx;
- 	size_t patch_update_resp = idx;
- 
-@@ -1502,7 +1506,9 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
- 			ALLOW_GOTO_NEXT_UNDECIDED_HUNK = 1 << 3,
- 			ALLOW_SEARCH_AND_GOTO = 1 << 4,
- 			ALLOW_SPLIT = 1 << 5,
--			ALLOW_EDIT = 1 << 6
-+			ALLOW_EDIT = 1 << 6,
-+			ALLOW_GOTO_PREVIOUS_FILE = 1 << 7,
-+			ALLOW_GOTO_NEXT_FILE = 1 << 8
- 		} permitted = 0;
- 
- 		if (hunk_index >= file_diff->hunk_nr)
-@@ -1534,8 +1540,12 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
- 		/* Everything decided? */
- 		if (undecided_previous < 0 && undecided_next < 0 &&
- 		    hunk->use != UNDECIDED_HUNK) {
--				patch_update_resp++;
--				break;
-+				if (!s->s.auto_advance)
-+					all_decided = 1;
-+				else {
-+					patch_update_resp++;
-+					break;
-+				}
- 		}
- 		strbuf_reset(&s->buf);
- 		if (file_diff->hunk_nr) {
-@@ -1584,6 +1594,14 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
- 				permitted |= ALLOW_EDIT;
- 				strbuf_addstr(&s->buf, ",e");
- 			}
-+			if (!s->s.auto_advance && s->file_diff_nr > 1) {
-+				permitted |= ALLOW_GOTO_NEXT_FILE;
-+				strbuf_addstr(&s->buf, ",>");
-+			}
-+			if (!s->s.auto_advance && s->file_diff_nr > 1) {
-+				permitted |= ALLOW_GOTO_PREVIOUS_FILE;
-+				strbuf_addstr(&s->buf, ",<");
-+			}
- 			strbuf_addstr(&s->buf, ",p,P");
- 		}
- 		if (file_diff->deleted)
-@@ -1660,6 +1678,28 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
- 		} else if (ch == 'q') {
- 			patch_update_resp = s->file_diff_nr;
- 			break;
-+		} else if (!s->s.auto_advance && s->answer.buf[0] == '>') {
-+			if (permitted & ALLOW_GOTO_NEXT_FILE) {
-+				if (patch_update_resp == s->file_diff_nr - 1)
-+					patch_update_resp = 0;
-+				else
-+					patch_update_resp++;
-+				break;
-+			} else {
-+				err(s, _("No next file"));
-+				continue;
-+			}
-+		} else if (!s->s.auto_advance && s->answer.buf[0] == '<') {
-+			if (permitted & ALLOW_GOTO_PREVIOUS_FILE) {
-+				if (patch_update_resp == 0)
-+					patch_update_resp = s->file_diff_nr - 1;
-+				else
-+					patch_update_resp--;
-+				break;
-+			} else {
-+				err(s, _("No previous file"));
-+				continue;
-+			}
- 		} else if (s->answer.buf[0] == 'K') {
- 			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
- 				hunk_index = dec_mod(hunk_index,
-@@ -1805,6 +1845,18 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
- 				 * commands shown in the prompt that are not
- 				 * always available.
- 				 */
-+				if (all_decided && !strncmp(p, "HUNKS SUMMARY", 13)) {
-+					int total = file_diff->hunk_nr, used = 0, skipped = 0;
-+
-+					for (i = 0; i < file_diff->hunk_nr; i++) {
-+						if (file_diff->hunk[i].use == USE_HUNK)
-+							used += 1;
-+						if (file_diff->hunk[i].use == SKIP_HUNK)
-+							skipped += 1;
-+					}
-+					color_fprintf_ln(stdout, s->s.help_color, _(p),
-+							 total, used, skipped);
-+				}
- 				if (*p != '?' && !strchr(s->buf.buf, *p))
- 					continue;
- 
-@@ -1817,7 +1869,8 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
- 		}
- 	}
- 
--	apply_patch(s, file_diff);
-+	if (s->s.auto_advance)
-+		apply_patch(s, file_diff);
- 
- 	putchar('\n');
- 	return patch_update_resp;
-@@ -1878,6 +1931,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 		 if ((i = patch_update_file(&s, i)) == s.file_diff_nr)
- 			break;
-     }
-+	if (!s.s.auto_advance)
-+		for (i = 0; i < s.file_diff_nr; i++)
-+			apply_patch(&s, s.file_diff + i);
- 
- 	if (s.file_diff_nr == 0)
- 		err(&s, _("No changes."));
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 5ce9c6dd60..6e120a4001 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -1441,5 +1441,105 @@ test_expect_success 'EOF quits' '
- 	test_grep file out &&
- 	test_grep ! file2 out
- '
-+for cmd in add checkout reset "stash save" "stash push"
-+do
-+	test_expect_success "$cmd rejects invalid --no-auto-advance options" '
-+		test_must_fail git $cmd --no-auto-advance 2>actual &&
-+		test_grep -E  "requires .*--(interactive|patch)" actual
-+	'
-+done
-+
-+test_expect_success 'manual advance (">") moves to next file with --no-auto-advance' '
-+	git reset --hard &&
-+	echo line1 >first-file &&
-+	echo line2 >second-file &&
-+	git add -A &&
-+	git commit -m initial >/dev/null 2>&1 &&
-+	echo change_first >>first-file &&
-+	echo change_second >>second-file &&
-+
-+	printf ">\nq\n" | git add -p --no-auto-advance >output.test 2>&1 &&
-+	test_grep  -E "(a|b)/second-file" output.test
-+'
-+
-+test_expect_success 'select n on a hunk, go to another file, come back and change to y stages' '
-+	git reset --hard &&
-+	echo one >f1 &&
-+	echo one >f2 &&
-+	git add -A &&
-+	git commit -m initial >/dev/null 2>&1 &&
-+	echo change1 >>f1 &&
-+	echo change2 >>f2 &&
-+
-+	printf "n\n>\n<\ny\nq\n" | git add -p --no-auto-advance >output.staged 2>&1 &&
-+	git diff --cached --name-only >staged &&
-+	test_grep -E "(a/f1)" output.staged
-+'
-+
-+test_expect_success 'select y on a hunk, go to another file, come back and change to n does not stage' '
-+	git reset --hard &&
-+	echo one >f1 &&
-+	echo one >f2 &&
-+	git add -A &&
-+	git commit -m initial >/dev/null 2>&1 &&
-+	echo change1 >>f1 &&
-+	echo change2 >>f2 &&
-+
-+	printf "y\n>\n<\nn\nq\n" | git add -p --no-auto-advance >output.unstaged 2>&1 &&
-+	git diff --cached --name-only >staged &&
-+	test_must_be_empty staged
-+'
-+
-+test_expect_success 'deciding all hunks in a file does not auto advance' '
-+	git reset --hard &&
-+	echo line >stay &&
-+	echo line >other &&
-+	git add -A &&
-+	git commit -m initial >/dev/null 2>&1 &&
-+	echo change >>stay &&
-+	echo change >>other &&
-+	test_write_lines y | git add -p --no-auto-advance >raw-output 2>&1 &&
-+	test_grep "(1/1) Stage this hunk (was: y)" raw-output &&
-+	test_grep ! "diff --git a/stay b/stay" raw-output
-+'
-+test_expect_success 'HUNKS SUMMARY does not show in help text when there are undecided hunks' '
-+	git reset --hard &&
-+	test_write_lines 1 2 3 4 5 6 7 8 9 >f &&
-+	git add f &&
-+	git commit -m initial >/dev/null 2>&1 &&
-+	test_write_lines 1 X 3 4 Y 6 7 Z 9 >f &&
-+	test_write_lines s y n | git add -p --no-auto-advance >raw-nostat 2>&1 &&
-+	test_grep ! "HUNKS SUMMARY - Hunks: " raw-nostat
-+'
-+
-+test_expect_success 'help text shows HUNK SUMMARY when all hunks have been decided' '
-+	git reset --hard &&
-+	test_write_lines 1 2 3 4 5 6 7 8 9 >f2 &&
-+	git add f2 &&
-+	git commit -m initial >/dev/null 2>&1 &&
-+	test_write_lines 1 X 3 4 Y 6 7 Z 9 >f2 &&
-+	printf "s\ny\nn\ny\n?\n" | git add -p --no-auto-advance >raw-stat 2>&1 &&
-+	test_grep "HUNKS SUMMARY - Hunks: 3, USE: 2, SKIP: 1" raw-stat
-+'
-+
-+test_expect_success 'selective staging across multiple files with --no-advance' '
-+	git reset --hard &&
-+	test_write_lines 1 2 3 4 5 6 7 8 9 >a.file &&
-+	test_write_lines 1 2 3 4 5 6 7 8 9 >b.file &&
-+	test_write_lines 1 2 3 4 5 6 7 8 9 >c.file &&
-+	git add -A &&
-+	git commit -m initial >/dev/null 2>&1 &&
-+	test_write_lines 1 A2 3 4 A5 6 7 8 9 >a.file &&
-+	test_write_lines 1 2 B3 4 5 6 7 B8 9 >b.file &&
-+	test_write_lines C1 2 3 4 5 C6 7 8 9 >c.file &&
-+	printf "s\ny\nn\n>\ns\nn\ny\n>\ns\ny\ny\nq\n" | git add -p --no-auto-advance >output.index 2>&1 &&
-+	git diff --cached >staged.diff &&
-+	test_grep "+A2" staged.diff &&
-+	test_grep ! "+A5" staged.diff &&
-+	test_grep "+B8" staged.diff &&
-+	test_grep ! "+B3" staged.diff &&
-+	test_grep "+C1" staged.diff &&
-+	test_grep "+C6" staged.diff
-+'
- 
- test_done
+ Now the first column shows the commit from your branch and the second
+Range-diff against v1:
+1:  704dc0ada8f ! 1:  e9319039d5e doc: patch-id: emphasize multi-patch processing
+    @@ Commit message
+     
+         Also drop “the” from “standard input”.
+     
+    -    [1]: https://stackoverflow.com/a/19758159
+    +    † 1: https://stackoverflow.com/a/19758159
+         † 2: This is `master` of this repository on 2025-10-02
+     
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+2:  e37c25aa5fc ! 2:  8ba3e71752c doc: patch-id: add script example
+    @@ Commit message
+         demonstrate generating two lists, sorting them, joining them, and
+         finally discarding the patch ID lookup column with cut(1).
+     
+    -    [1]: https://lore.kernel.org/workflows/CAHk-=wiN+8EUoik4UeAJ-HPSU7hczQP+8+_uP3vtAy_=YfJ9PQ@mail.gmail.com/
+    +    † 1: https://lore.kernel.org/workflows/CAHk-=wiN+8EUoik4UeAJ-HPSU7hczQP+8+_uP3vtAy_=YfJ9PQ@mail.gmail.com/
+     
+         Inspired-by: Linus Torvalds <torvalds@linux-foundation.org>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+    @@ Documentation/git-patch-id.adoc: This is the default if `patchid.stable` is set
+     +    git diff-tree --patch --stdin |
+     +    git patch-id  --stable | sort >"$for_upstream"
+     +join -a1 "$for_branch" "$for_upstream" | cut -d' ' -f2,3
+    ++rm "$for_branch"
+    ++rm "$for_upstream"
+     +----
+     +
+     +Now the first column shows the commit from your branch and the second
+3:  2a319a43b2e ! 3:  27cad849312 doc: patch-id: see also git-cherry(1)
+    @@ Commit message
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Documentation/git-patch-id.adoc ##
+    -@@ Documentation/git-patch-id.adoc: join -a1 "$for_branch" "$for_upstream" | cut -d' ' -f2,3
+    +@@ Documentation/git-patch-id.adoc: rm "$for_upstream"
+      Now the first column shows the commit from your branch and the second
+      column shows the patch ID equivalent commit, if it exists.
+      
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
 -- 
-2.39.5 (Apple Git-154)
+2.53.0.26.g2afa8602a26
 
