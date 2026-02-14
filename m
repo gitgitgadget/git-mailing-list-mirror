@@ -1,65 +1,65 @@
-Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF561548C
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 22:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A28C3191BA
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 22:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771108473; cv=none; b=O3rZZfX3AKm4iudQViwkD/1QnX75ikTtkbxa4eZy+NcNNsyxJtzUW8Wz4bLv3JXN4d4zQ5Jv83NLIaXXmwxGLY/I6wnnZClMcHV+k0cdZnpYAyv2SzIiKk6x5ZMsit4/HWroD4ebtxkNNpZDb+UJiH4jJPH10NoZgcoh40EezDE=
+	t=1771108475; cv=none; b=Wn0V12xiJoGdaG5jgoUhwdqQIvfDOqxr5fKIrU2x4hmqnP4HGHfVpnJW4v4xj7fUrHz+KleoC32KLlb2z0KCuL6H1xh7X+zSahEfMaxdUb5XqFq26/Gcl5lvLCflGxvtGZlhm4X3gRAGJOCIdH3Jcw2B+IFs/gyjbc3O0Hpuyjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771108473; c=relaxed/simple;
-	bh=kEi+uDuvxwPMOraGR6F5bS3uRaepQxJZHvw+6kzLqOA=;
+	s=arc-20240116; t=1771108475; c=relaxed/simple;
+	bh=ceEBUIEljfRvGDNBSdNRhwzLw4H+biioAxRWRUqs/D8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gUcEV0ZVwCurnpHAcV5R8L4bS6UdKny9ZXmFzn2UEgkn14PscqfiemjtAw5jpRKxRdl1u/qWwvt99ck7K9HwUz1Se+PXSLOXRhnWLrMjk377tVZu7h/7Q3pa3Ug4j8m37p8cgP97Lmfh4nDIWvrT1/HvQYDJpCY5Go9KU6cZVUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f5RXkgNO; arc=none smtp.client-ip=209.85.128.65
+	 In-Reply-To:To:Cc; b=QAQwgcDcPfzGGIQB1jxQIMa/W5aYIM46P3Zzq8ZlF5mHafXcLorAy5t4W47tgVByrITEM1neQstDai2YclWQ+YeE8GLFK/HNWsAQDkmBJYp9h01paZv1QxDwwVuwP7w9Ox6SLwsPKvetE2ap/7ZaQkyrguJPKbqzFBsTyZmslu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YDd0G/Sv; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f5RXkgNO"
-Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-48373a4bca3so9175465e9.0
-        for <git@vger.kernel.org>; Sat, 14 Feb 2026 14:34:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YDd0G/Sv"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4837f27cf2dso3949305e9.2
+        for <git@vger.kernel.org>; Sat, 14 Feb 2026 14:34:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771108471; x=1771713271; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771108472; x=1771713272; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OJoI8AnprpH+LCLNLxXe0uihiRPd43tfA5E7LNoyZkw=;
-        b=f5RXkgNOO+F7bISPg1RH98MsG+ckgF/rVEKKMKsxEuwMrZMzbPjbrDdpz7CwDUHKuU
-         gc7bOfEvbBsIjhKTCjwjXMjWLwW/3s6bFKJ+sB2h8oaRhk5oy1jf1OyNnBVMbr/bqYel
-         Fum/btNyvumLys9JU2SHpT72tV6kupaDu49NndgtCa8LJGiLcspgBXvnE4x+cpIMcnWd
-         shqfghFcBkOivKkYT2p8lt2L1IXlINFllkmh+qdBrUpjlZepf8Bn6Si209klTvNEmpZR
-         KBFp9Vp6FSfiS3zg0WduELgdDGdP1WyOeh8urGVUB4FPICge7i7Fqqi2i24Dx8MwiAb+
-         6jAA==
+        bh=nhystp4vmNg9p4rhgXarpnIFXw01FwyhAolPCJnEEtg=;
+        b=YDd0G/SvvdCze42zyr0LSrnzKbwI2zP7lGpnva2NEyYZLOxZaAi+dB/MzeXXHwWMp7
+         kwD+nb3VPjvbqs+FN61ARg8/PLlEV6fIxI1bWYuhEjeU/eNRIZHNA43LNWTav/NPio3P
+         0bXE9OXXH6QCXgXrvL767IJ5ftTBZCnqK6QGvofgr2hkt/syuwxettEXf3Hh14i79058
+         P+GaLcdO9JjQg19cFAk8Ls4w9rW2PsWOlNQYQeZDOzGUx+RjoaiHD9EUN4tqv65KGQNh
+         vQIbSixiwFofr9r4fm0s/I+fy5eG1lhb9Wh4oNQvCGdILjDo8fVfdr6x13RCSiJEH+cu
+         tffg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771108471; x=1771713271;
+        d=1e100.net; s=20230601; t=1771108472; x=1771713272;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=OJoI8AnprpH+LCLNLxXe0uihiRPd43tfA5E7LNoyZkw=;
-        b=If+B5X18MOTSEQkiLLx4vYt8TjLLnsqsHF1C+GUr8PNqfwtfvt6s58caR8QjeatiPI
-         EgB7oG/oRRDwWvmrwAgYsNYfqxMJtWoC/KJMICRr2Y5sc8Tkskyp7e5f+E2juD7C52iY
-         1riR1ZGZKkdnDbLgrsH5zAgo0GNCf095EFKWhTQQIXSvE6CgRTZU2bp1LsU43YqFFqKD
-         0/kfpoCw1AKtroihoGGP3PsIVl1OeQ5IrEt7gB0WqTAlzCbGOlnX1TnvemmLAhLVYZsq
-         xvs7cHVoO4tf4FDgUT6QfInUTBESiPs5OGfPKpNeaY0B+xsr5+YCVOZbZpL89b97CXbe
-         oR8A==
-X-Gm-Message-State: AOJu0YypVa5rrO7XWwWkV4E36tSsBLD3PmCNXLw5g1f2/kgznswFnKYJ
-	sCU2jXxOW6EwVJKmxRjksaO+qZHDcxXCgdPFnGhrhKHmgjHYkZbBLxtW
-X-Gm-Gg: AZuq6aJWYBFEeLaAIEx7KlAMAjqkAc/aUDoSrjMumW4qyvo2WpEuZSjdPwuplEUlGsl
-	6f76MJv60WiuaRqAVHPURsHOzXc2XdH5WW5GHNLh+V5pvwRecGe4SnlyaptJz4F6c85dcVMqpQg
-	JydpDPBvU3CUbbnetUd6RV609bqgi9v8fgp6eJkriS/O9na4gWTAgVoLOcowJfVHfLOkDVCkjZR
-	rF3BUzMIKUtEH4L7nwWjqQGU2r4nLGFlQ0fcjJiejETzYyA5ODS/176uFBBhQgyJPGBAuNjs+is
-	bhz+bK1PWEvM/AUhSOuo1QhtCqlkyFChR8C98MR2pHH1qYQ6IC0U5MtcHR8veBUSXXN9WlnAWk6
-	dLGVupDUyjct/kFiqoDD8Y9qUtNWqNiS5B4oKWNfeFt6ysm7C8jk/CNfkVnZ2UuHGuWG3KbqlzC
-	b433tRpGY4JyGb9MM7rlAVbewU3AZQwCCxUJP9pbAw0A==
-X-Received: by 2002:a05:600c:c095:b0:483:7f4e:fef6 with SMTP id 5b1f17b1804b1-4837f4f00f8mr26889055e9.26.1771108470624;
-        Sat, 14 Feb 2026 14:34:30 -0800 (PST)
+        bh=nhystp4vmNg9p4rhgXarpnIFXw01FwyhAolPCJnEEtg=;
+        b=oTWHml9DbYnusDDnJyEeLZT/aQHRCh1SOdhNhTWUW8k/ozEMDhzrz5NcQ7FnPsi8yn
+         XdM47MN8l8iNr9q/WDuCc8UqYBuEzmLeDuO441imj1SsT8pCFPElkwTIyLE8FIrXHwBr
+         TicjpfBeXYeQN6DT28CRv12GWPpm/Cw/WYZeLbh7hh+ZNfm1ZdlsPDrotbXzJeAkEElT
+         nPK0RRg6mSiDvg7WUSQ/D8Zb3S6M9T/WHnar9bg2b2+MnJEqBEuSv19sbYpG/tpdlEjG
+         Guf8TkYSTdTqYQ8IdkYsVkCj/Rm5aub3qQW36TMlxXYOq04pdOPsaFIac+4zZH6ti4tS
+         TvEw==
+X-Gm-Message-State: AOJu0YzlxV3ACTTary3jm6HNWD5m6WpivcvnjKrPnl63GlPd7w3WffMh
+	QCgsGJnw71NCaWNkAtLbY4GpN3gJ4Xo/6Kvb2uZBXKi2PfmSMcqW7+XEnj6Nui5J
+X-Gm-Gg: AZuq6aKtJ9P8d/cEMNe7trF7jFXU0660nET8W7ikdHP/IXcQUg3OXR8njcSwMQVTCxr
+	Z+O7uIhoqKGS5BH5G/A6R3qBAknkZEB2qhAcORIdRH7+ke8BfV68TBR35EKIwVjLdsbOitThm6t
+	MWhWTFE6dww5Qmma0U8zi7VIxoVXqVW3zke8EDuBvEx2wCHJQ/392BtRcc6LJh8jAV0BVzCcsRJ
+	hYQq8D7i3nTmTyvH7Qjb/JM2MnDPeO2AjPY6xn5IeYfqtTeq8LkKx+PiD1SdYEWVJagwomdc2hM
+	dKbHj6p0v1+Jp8CWQ0AXnn99KpaPZTBvgfw9tuMj9smn7GmDIC0ylVnWGgI+y9mBdy07tnpHHo0
+	icxlyoK+q7sRQF9iP3tWLswX2IzEP0/dSTvAQrjRK11oM0dvyob06YnYI4Fw0BsfMTlwLHlW1pD
+	eAs8iKwRGl1xfWEH7iEU5sAnA5N6lawTEyKgBGAHQEDQ==
+X-Received: by 2002:a05:600c:8b4c:b0:480:39ad:3b7c with SMTP id 5b1f17b1804b1-4837106152cmr113868625e9.16.1771108471572;
+        Sat, 14 Feb 2026 14:34:31 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:ffee:e476:e6e4:b574])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4837e565f5esm83591645e9.10.2026.02.14.14.34.29
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4837e565f5esm83591645e9.10.2026.02.14.14.34.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Feb 2026 14:34:30 -0800 (PST)
+        Sat, 14 Feb 2026 14:34:31 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Sat, 14 Feb 2026 23:34:15 +0100
-Subject: [PATCH v6 2/6] refs: extract out `refs_create_refdir_stubs()`
+Date: Sat, 14 Feb 2026 23:34:16 +0100
+Subject: [PATCH v6 3/6] refs: receive and use the reference storage payload
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260214-kn-alternate-ref-dir-v6-2-86a82c77cf59@gmail.com>
+Message-Id: <20260214-kn-alternate-ref-dir-v6-3-86a82c77cf59@gmail.com>
 References: <20260214-kn-alternate-ref-dir-v6-0-86a82c77cf59@gmail.com>
 In-Reply-To: <20260214-kn-alternate-ref-dir-v6-0-86a82c77cf59@gmail.com>
 To: git@vger.kernel.org
@@ -76,150 +76,285 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  =?utf-8?q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, gitster@pobox.com, 
  ps@pks.im
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4488; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=kEi+uDuvxwPMOraGR6F5bS3uRaepQxJZHvw+6kzLqOA=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGmQ+HLmW//8gsZwFQ0a+VZ7t1+gUWIQr8pIs
- 0xYQnLeueD6LYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpkPhyAAoJED7VnySO
- Rox/N5cL+gOzmga3yyhe2deURVv7wu0FjUQaq/33p5BHncfkFXl0KYUK6SIxgiLBFtrwwOnky0b
- o2ZImJ7mum/CMzsP8LfGPYGVhQ2lr596POd6MKMMHD/AAFadW8BcwEizSYe5bs0lmVrC2Qo2WmZ
- LY9g6rE5gBG5QjCRsG2f2ukubdgUbZfdDxJpi9Am6wpgdrjyeFwJrE/YTEX4Dv5L2YFwOrEIZ0t
- fMOdTM/LtDw+vC+0y/hulGfr/y/4uH8Oj2iF7KtR9jqiam0aZKUlfp6JupZDatZoKDCM2OLADP4
- Zv+oKQ4p3T6RdKGkh5hAlXfHojXrs0j80U+gjba2dTLSSvp/dIUmRigE0AZNRIYBbEo9T7NfP3/
- aLt7YThadzWMyASWiEJX6S6xqvQYhyl++iWe0OstcSpO0puK+C2YnMYzW6LTlfY8jhkEYkrHCk0
- KmvM84qx3wlCHqSrerqin0CNnlsYt3bSVtLzsuzqSb9beY6j0HZFt8sCaQRn3YABpDd6Clp8XM8
- Og=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9635; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=ceEBUIEljfRvGDNBSdNRhwzLw4H+biioAxRWRUqs/D8=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGmQ+HLVY5+m95W1W9uDkYbWo0lXs3h1VyQFG
+ Hh9KrzdBadWV4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpkPhyAAoJED7VnySO
+ Rox/3HYL/2TLu4bU9XHD+jEqWvvr+5loKPRRLyV+XQhy3Zh7RJdGgqo+GAiCmxREnTIOchFwy0y
+ 85RJacuptjP+V+mbl8aNKqHYFRuEn3P5phibwrYAtZD5Vs75trriaEf/pyFSQeTG2I5xbgc8NT6
+ veorJQZvpdXs/gDTTNUGjJWSQlsSHtncb1K/yO2QMupWzOcWFme0Yir5osb8iFavEMyYLU9ZAIG
+ H0sxXJNHVmFvrbA6nf1sQPXYZDh8RVIPz1ZWZ31Wzqd4e6dehXLuY5lYk2NvRTfUXXH4LShU+4W
+ v0eiH0x/lMdE511pIFeh9WIDWlyvC7QYlb8dGIW45bi62ZxhrhqgNSnErX2lCGg7iPJEJukUOkP
+ WZivccSwvcYNJF0taPQPgmErLPG82Qjx7zjkbMf672JSg1ai7eWIARXTk5tCoXvZJnksmVgRY64
+ kM6M7wuEYB45Y/RedT57Hx7hLRJzwTnqrY8jANrHnSRjY3DN/A8umZWHjlMKQSWz34viojsI067
+ Ak=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-For Git to recognize a directory as a Git directory, it requires the
-directory to contain:
+An upcoming commit will add support for providing an URI via the
+'extensions.refStorage' config. The URI will contain the reference
+backend and a corresponding payload. The payload can be then used for
+providing an alternate locations for the reference backend.
 
-  1. 'HEAD' file
-  2. 'objects/' directory
-  3. 'refs/' directory
+To prepare for this, modify the existing backends to accept such an
+argument when initializing via the 'init()' function. Both the files
+and reftable backends will parse the information to be filesystem paths
+to store references. Given that no callers pass any payload yet this is
+essentially a no-op change for now.
 
-Here, #1 and #3 are part of the reference storage mechanism,
-specifically the files backend. Since then, newer backends such as the
-reftable backend have moved to using their own path ('reftable/') for
-storing references. But to ensure Git still recognizes the directory as
-a Git directory, we create stubs.
+To enable this, provide a 'refs_compute_filesystem_location()' function
+which will parse the current 'gitdir' and the 'payload' to provide the
+final reference directory and common reference directory (if working in
+a linked worktree).
 
-There are two locations where we create stubs:
+The documentation and tests will be added alongside the extension of the
+config variable.
 
-- In 'refs/reftable-backend.c' when creating the reftable backend.
-- In 'clone.c' before spawning transport helpers.
-
-In a following commit, we'll add another instance. So instead of
-repeating the code, let's extract out this code to
-`refs_create_refdir_stubs()` and use it.
-
+Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/clone.c         |  7 +------
- refs.c                  | 23 +++++++++++++++++++++++
- refs.h                  | 13 +++++++++++++
- refs/reftable-backend.c | 14 ++------------
- 4 files changed, 39 insertions(+), 18 deletions(-)
+ refs.c                  | 40 +++++++++++++++++++++++++++++++++++++++-
+ refs/files-backend.c    | 17 ++++++++++++-----
+ refs/packed-backend.c   |  5 +++++
+ refs/packed-backend.h   |  1 +
+ refs/refs-internal.h    | 14 ++++++++++++++
+ refs/reftable-backend.c | 24 ++++++++++++++----------
+ 6 files changed, 85 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index cd43bb5aa2..697c5bb5cb 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1225,12 +1225,7 @@ int cmd_clone(int argc,
- 	initialize_repository_version(GIT_HASH_UNKNOWN,
- 				      the_repository->ref_storage_format, 1);
- 
--	strbuf_addf(&buf, "%s/HEAD", git_dir);
--	write_file(buf.buf, "ref: refs/heads/.invalid");
--
--	strbuf_reset(&buf);
--	strbuf_addf(&buf, "%s/refs", git_dir);
--	safe_create_dir(the_repository, buf.buf, 1);
-+	refs_create_refdir_stubs(the_repository, git_dir, NULL);
- 
- 	/*
- 	 * additional config can be injected with -c, make sure it's included
 diff --git a/refs.c b/refs.c
-index 627b7f8698..77b93d655b 100644
+index 77b93d655b..11d028232b 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2163,6 +2163,29 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 	return NULL;
+@@ -5,6 +5,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ 
+ #include "git-compat-util.h"
++#include "abspath.h"
+ #include "advice.h"
+ #include "config.h"
+ #include "environment.h"
+@@ -2247,7 +2248,7 @@ static struct ref_store *ref_store_init(struct repository *repo,
+ 	if (!be)
+ 		BUG("reference backend is unknown");
+ 
+-	refs = be->init(repo, gitdir, flags);
++	refs = be->init(repo, NULL, gitdir, flags);
+ 	return refs;
  }
  
-+void refs_create_refdir_stubs(struct repository *repo, const char *refdir,
-+			      const char *refs_heads_content)
+@@ -3425,3 +3426,40 @@ const char *ref_transaction_error_msg(enum ref_transaction_error err)
+ 		return "unknown failure";
+ 	}
+ }
++
++void refs_compute_filesystem_location(const char *gitdir, const char *payload,
++				      bool *is_worktree, struct strbuf *refdir,
++				      struct strbuf *ref_common_dir)
 +{
-+	struct strbuf path = STRBUF_INIT;
++	struct strbuf sb = STRBUF_INIT;
 +
-+	strbuf_addf(&path, "%s/HEAD", refdir);
-+	write_file(path.buf, "ref: refs/heads/.invalid");
-+	adjust_shared_perm(repo, path.buf);
++	*is_worktree = get_common_dir_noenv(ref_common_dir, gitdir);
 +
-+	strbuf_reset(&path);
-+	strbuf_addf(&path, "%s/refs", refdir);
-+	safe_create_dir(repo, path.buf, 1);
-+
-+	if (refs_heads_content) {
-+		strbuf_reset(&path);
-+		strbuf_addf(&path, "%s/refs/heads", refdir);
-+		write_file(path.buf, "%s", refs_heads_content);
-+		adjust_shared_perm(repo, path.buf);
++	if (!payload) {
++		/*
++		 * We can use the 'gitdir' as the 'refdir' without appending the
++		 * worktree path, as the 'gitdir' here is already the worktree
++		 * path and is different from 'commondir' denoted by 'ref_common_dir'.
++		 */
++		strbuf_addstr(refdir, gitdir);
++		return;
 +	}
 +
-+	strbuf_release(&path);
-+}
++	if (!is_absolute_path(payload)) {
++		strbuf_addf(&sb, "%s/%s", ref_common_dir->buf, payload);
++		strbuf_realpath(ref_common_dir, sb.buf, 1);
++	} else {
++		strbuf_realpath(ref_common_dir, payload, 1);
++	}
 +
- /* backend functions */
- int ref_store_create_on_disk(struct ref_store *refs, int flags, struct strbuf *err)
++	strbuf_addbuf(refdir, ref_common_dir);
++
++	if (*is_worktree) {
++		const char *wt_id = strrchr(gitdir, '/');
++		if (!wt_id)
++			BUG("worktree path does not contain slash ");
++		strbuf_addf(refdir, "/worktrees/%s", wt_id + 1);
++	}
++
++	strbuf_release(&sb);
++}
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 240d3c3b26..b40d6feb1f 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -106,19 +106,24 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
+  * set of caches.
+  */
+ static struct ref_store *files_ref_store_init(struct repository *repo,
++					      const char *payload,
+ 					      const char *gitdir,
+ 					      unsigned int flags)
  {
-diff --git a/refs.h b/refs.h
-index f0abfa1d93..9d8890fdff 100644
---- a/refs.h
-+++ b/refs.h
-@@ -1427,4 +1427,17 @@ void ref_iterator_free(struct ref_iterator *ref_iterator);
- int do_for_each_ref_iterator(struct ref_iterator *iter,
- 			     each_ref_fn fn, void *cb_data);
+ 	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
+ 	struct ref_store *ref_store = (struct ref_store *)refs;
+-	struct strbuf sb = STRBUF_INIT;
++	struct strbuf ref_common_dir = STRBUF_INIT;
++	struct strbuf refdir = STRBUF_INIT;
++	bool is_worktree;
++
++	refs_compute_filesystem_location(gitdir, payload, &is_worktree, &refdir,
++					 &ref_common_dir);
+ 
+-	base_ref_store_init(ref_store, repo, gitdir, &refs_be_files);
++	base_ref_store_init(ref_store, repo, refdir.buf, &refs_be_files);
+ 	refs->store_flags = flags;
+-	get_common_dir_noenv(&sb, gitdir);
+-	refs->gitcommondir = strbuf_detach(&sb, NULL);
++	refs->gitcommondir = strbuf_detach(&ref_common_dir, NULL);
+ 	refs->packed_ref_store =
+-		packed_ref_store_init(repo, refs->gitcommondir, flags);
++		packed_ref_store_init(repo, NULL, refs->gitcommondir, flags);
+ 	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
+ 	repo_config_get_bool(repo, "core.prefersymlinkrefs", &refs->prefer_symlink_refs);
+ 
+@@ -126,6 +131,8 @@ static struct ref_store *files_ref_store_init(struct repository *repo,
+ 	chdir_notify_reparent("files-backend $GIT_COMMONDIR",
+ 			      &refs->gitcommondir);
+ 
++	strbuf_release(&refdir);
++
+ 	return ref_store;
+ }
+ 
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 4ea0c12299..e7bb9f10f9 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -211,7 +211,12 @@ static size_t snapshot_hexsz(const struct snapshot *snapshot)
+ 	return snapshot->refs->base.repo->hash_algo->hexsz;
+ }
  
 +/*
-+ * Git only recognizes a directory as a repository if it contains:
-+ * - HEAD file
-+ * - refs/ folder
-+ * While it is necessary within the files backend, newer backends may not
-+ * follow the same structure. To go around this, we create stubs as necessary.
-+ *
-+ * If provided with a 'refs_heads_msg', we create the 'refs/heads/head' file
-+ * with the provided message.
++ * Since packed-refs is only stored in the common dir, don't parse the
++ * payload and rely on the files-backend to set 'gitdir' correctly.
 + */
-+void refs_create_refdir_stubs(struct repository *repo, const char *refdir,
-+			      const char *refs_heads_msg);
+ struct ref_store *packed_ref_store_init(struct repository *repo,
++					const char *payload UNUSED,
+ 					const char *gitdir,
+ 					unsigned int store_flags)
+ {
+diff --git a/refs/packed-backend.h b/refs/packed-backend.h
+index 9481d5e7c2..2c2377a356 100644
+--- a/refs/packed-backend.h
++++ b/refs/packed-backend.h
+@@ -14,6 +14,7 @@ struct ref_transaction;
+  */
+ 
+ struct ref_store *packed_ref_store_init(struct repository *repo,
++					const char *payload,
+ 					const char *gitdir,
+ 					unsigned int store_flags);
+ 
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index c7d2a6e50b..9a635f4e6c 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -389,6 +389,7 @@ struct ref_store;
+  * the ref_store and to record the ref_store for later lookup.
+  */
+ typedef struct ref_store *ref_store_init_fn(struct repository *repo,
++					    const char *payload,
+ 					    const char *gitdir,
+ 					    unsigned int flags);
+ /*
+@@ -666,4 +667,17 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
+ 					  unsigned int initial_transaction,
+ 					  struct strbuf *err);
+ 
++/*
++ * Given a gitdir and the reference storage payload provided, retrieve the
++ * 'refdir' and 'ref_common_dir'. The former is where references should be
++ * stored for the current worktree, the latter is the common reference
++ * directory if working with a linked worktree. If working with the main
++ * worktree, both values will be the same.
++ *
++ * This is used by backends that store store files in the repository directly.
++ */
++void refs_compute_filesystem_location(const char *gitdir, const char *payload,
++				      bool *is_worktree, struct strbuf *refdir,
++				      struct strbuf *ref_common_dir);
 +
- #endif /* REFS_H */
+ #endif /* REFS_REFS_INTERNAL_H */
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index fe74af73af..d8651fe779 100644
+index d8651fe779..964b0b50fc 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -491,18 +491,8 @@ static int reftable_be_create_on_disk(struct ref_store *ref_store,
- 	safe_create_dir(the_repository, sb.buf, 1);
- 	strbuf_reset(&sb);
+@@ -372,18 +372,24 @@ static int reftable_be_fsync(int fd)
+ }
  
--	strbuf_addf(&sb, "%s/HEAD", refs->base.gitdir);
--	write_file(sb.buf, "ref: refs/heads/.invalid");
--	adjust_shared_perm(the_repository, sb.buf);
--	strbuf_reset(&sb);
--
--	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
--	safe_create_dir(the_repository, sb.buf, 1);
--	strbuf_reset(&sb);
--
--	strbuf_addf(&sb, "%s/refs/heads", refs->base.gitdir);
--	write_file(sb.buf, "this repository uses the reftable format");
--	adjust_shared_perm(the_repository, sb.buf);
-+	refs_create_refdir_stubs(the_repository, refs->base.gitdir,
-+				 "this repository uses the reftable format");
+ static struct ref_store *reftable_be_init(struct repository *repo,
++					  const char *payload,
+ 					  const char *gitdir,
+ 					  unsigned int store_flags)
+ {
+ 	struct reftable_ref_store *refs = xcalloc(1, sizeof(*refs));
++	struct strbuf ref_common_dir = STRBUF_INIT;
++	struct strbuf refdir = STRBUF_INIT;
+ 	struct strbuf path = STRBUF_INIT;
+-	int is_worktree;
++	bool is_worktree;
+ 	mode_t mask;
  
- 	strbuf_release(&sb);
- 	return 0;
+ 	mask = umask(0);
+ 	umask(mask);
+ 
+-	base_ref_store_init(&refs->base, repo, gitdir, &refs_be_reftable);
++	refs_compute_filesystem_location(gitdir, payload, &is_worktree, &refdir,
++					 &ref_common_dir);
++
++	base_ref_store_init(&refs->base, repo, refdir.buf, &refs_be_reftable);
+ 	strmap_init(&refs->worktree_backends);
+ 	refs->store_flags = store_flags;
+ 	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
+@@ -419,14 +425,11 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 	/*
+ 	 * Set up the main reftable stack that is hosted in GIT_COMMON_DIR.
+ 	 * This stack contains both the shared and the main worktree refs.
+-	 *
+-	 * Note that we don't try to resolve the path in case we have a
+-	 * worktree because `get_common_dir_noenv()` already does it for us.
+ 	 */
+-	is_worktree = get_common_dir_noenv(&path, gitdir);
++	strbuf_addbuf(&path, &ref_common_dir);
+ 	if (!is_worktree) {
+ 		strbuf_reset(&path);
+-		strbuf_realpath(&path, gitdir, 0);
++		strbuf_realpath(&path, ref_common_dir.buf, 0);
+ 	}
+ 	strbuf_addstr(&path, "/reftable");
+ 	refs->err = reftable_backend_init(&refs->main_backend, path.buf,
+@@ -443,10 +446,9 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 	 * do it efficiently.
+ 	 */
+ 	if (is_worktree) {
+-		strbuf_reset(&path);
+-		strbuf_addf(&path, "%s/reftable", gitdir);
++		strbuf_addstr(&refdir, "/reftable");
+ 
+-		refs->err = reftable_backend_init(&refs->worktree_backend, path.buf,
++		refs->err = reftable_backend_init(&refs->worktree_backend, refdir.buf,
+ 						  &refs->write_options);
+ 		if (refs->err)
+ 			goto done;
+@@ -456,6 +458,8 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 
+ done:
+ 	assert(refs->err != REFTABLE_API_ERROR);
++	strbuf_release(&ref_common_dir);
++	strbuf_release(&refdir);
+ 	strbuf_release(&path);
+ 	return &refs->base;
+ }
 
 -- 
 2.52.0
