@@ -1,121 +1,150 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB44284896
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 11:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AA7186E2E
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 14:30:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771070245; cv=none; b=qJA5tAR6l1aOSF5VNG9Hz2/JJFhhK/56YSJ0E6NjG2ChJS3XbgBFOTLXY9RExDQZz3NvLavDn7/XdyDnSehKxtczcKpxIxLeY/ltVkSdcFDz86u6d4hElG421IoCc2ylCKY2jP8b8hfwMuIG6eJQbPNcxJdWbjeRcF9hgtTLsVo=
+	t=1771079427; cv=none; b=TgFYy6Dipn03XERgGcjOEZtjSSjLpaAu3F99YG1yxQeuHmlzs7fG8j7LegjCie+Z5Bj8QiKzBEJI6GlPUY27HomNuC4rjZ6lAUw5Fec+SDeakmyCVv1x26f34tPW82vtDx3qRFKKmW9P+biqFF7e56HrO4xiAJBfAHkft4Vi/aA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771070245; c=relaxed/simple;
-	bh=QC1XCl0xBw4Mzfs6vGAKKuu2xvtJ/9zIYQAcuc9KaJc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QE3VtfND5P2WeMPRneeWK2ObYAzqdaCupK6/sEsDR4L1UiqkDSyhsnXYVBTvRMo3AyMLGRGQPFFWpspB1KkcUoHj8d05sW+jFaaCJhyaOfwJ45aqafLNThCEvaKtDqHnPaCF6UGwpeARbZRHnqUmVxUTkXEmK94NyG4rS9ctyXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LS2Drd/h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=exE8071+; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1771079427; c=relaxed/simple;
+	bh=5HdqEznKY0EL1NIVVW1zjFpJvODDvTeDz+HS6tLm0b8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gMdA+hF+bmsaqARlJY5brFpetBKuGve8RhLf3ZADF/ksFEnpdUUrbIlaDOAG+bnA03XpR5iNQqcdvwZMrKcqJxx27l7K2UIxlkgxpD72KzXteE2QWVRcpqn10DqP23aaVOgNLcWkNo75JRStXDRGdKWqJ+4dml86vfmKLbeHHzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cbMA0fpD; arc=none smtp.client-ip=209.85.221.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LS2Drd/h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="exE8071+"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BF5C87A0089;
-	Sat, 14 Feb 2026 06:57:23 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Sat, 14 Feb 2026 06:57:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771070243;
-	 x=1771156643; bh=TiQN5U2QyNv42iWcmhN2oRfN1KTbKq+iiDq41uOL09w=; b=
-	LS2Drd/h0m+ndSpoEfqavTWr0SihJPMqqR1vsKm2e9kEQnxYEtp1kVRgHOKKy9Pr
-	dW+q5GWPBZVHdqwsv+uqP/O46O2kNITXmTlP6zY1ttzi7O8CTsfPelvXb+kXcms5
-	x+tc4Mp87QRTmbH+iyvoTRDAA4VhlNPf76N8a5Yy5F6oJpcy3exB4TtquTKlD24y
-	lsSSZjv/grYlX2W+sQmLZuF6Xi7EWHJdW/Vhgkagj0NnUeqRkuzGWZiHCobRPggU
-	+a0k9L9UyqhgDnThR93P1elfB2026q/gMHtoFgtfpckmybGvIgwZNhd7SBNO6CT5
-	lHVWCu2tUWsA0GYWLDTwKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771070243; x=
-	1771156643; bh=TiQN5U2QyNv42iWcmhN2oRfN1KTbKq+iiDq41uOL09w=; b=e
-	xE8071+tExP2vcJE1bX8zgi4lNB2wCX9jusLqkhi+KyjDGrlDGp7hlKi1En3OMEC
-	CDjs/Efslf5LYzhq/sNYWfhPmQfBqAXI2v07Cs4DsUkL2swNdWW7I0GrbVskdpvz
-	4wCVJZUBC2Ei2466HGxjWVswI/3m86H4Gi+1GSLv9+mJxj0wQZPCqZ/0EBwgjyRc
-	4GccsOuv0RCYqAboAgE/B5pwF7JZwwFOoZeH32CeIoBCcTKW9Efwbml33Ep73fYS
-	sUReYsyHeP269azMib53HvrDNNXYUJg8VA/CdY/iq5iZ/n1h1/33kdQ1sKM6CsHs
-	O8dAlqIn+EoCj5X56MoaA==
-X-ME-Sender: <xms:I2OQabsvQ0cVDYC0s8m5hxZzeM5nZjB93PxGG0fD1xUsOmjgiSrN2Eg>
-    <xme:I2OQaTcVEEKdtP0LvOOAh3aFEAh8jf1OW4oAehlBKjjWmTJBCnOzF82QvWrZksH6w
-    hRpOJMScOT7MM0YM24sXg9JdFyPAP2v-_gC1nYuT7qPe-isZ9itVw>
-X-ME-Received: <xmr:I2OQaTyAhkLaJoCKI8vNXpv5LeEDfBK1scY86TQwNGZiAwRUfZjL_4YOb8XaCuGI0ZLDKvpRjv5VgzSUXtF7GeCsigKZsAvz7V0Wb24>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvuddutdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
-    jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
-    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
-    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepthhorhhvrghlughsse
-    hlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopegsvghnrdhknhho
-    sghlvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:I2OQaZGP6kLLcMx6z0vHgBMNvxLhje6GREErP8Pi6d_0yVT6OfX8Lg>
-    <xmx:I2OQaXycyP-qS11dPbD0wl7wA2A31vBPw9PYYBRqz_bByncIBOlELw>
-    <xmx:I2OQaatW6D1U8jMEY3PoDw1oQiYs2otLQiFRwzzWgUu8LoZmRbzKKA>
-    <xmx:I2OQaU2cWdHDu7V17QW1V5HiJfXxHmc6Q09X9jdSv9D31a4j0t85Iw>
-    <xmx:I2OQaeS63TrJXR3CBgcXVTuZiunEsscdQcKTOgtsRpfbTsQQUSA34PmR>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Feb 2026 06:57:22 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	ben.knoble@gmail.com
-Subject: [PATCH v2 3/3] doc: patch-id: see also git-cherry(1)
-Date: Sat, 14 Feb 2026 12:55:43 +0100
-Message-ID: <V2_link_git-cherry.374@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
-In-Reply-To: <V2_CV_doc_patch-id_4.371@msgid.xyz>
-References: <CV_doc_patch-id_4.275@msgid.xyz> <V2_CV_doc_patch-id_4.371@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cbMA0fpD"
+Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-4375d4fb4d4so1436164f8f.0
+        for <git@vger.kernel.org>; Sat, 14 Feb 2026 06:30:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771079425; x=1771684225; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=86uz/h1ncx+7aW+5KDx74lwFzpu0o8ir8iMul250xn4=;
+        b=cbMA0fpD3YIeVHDg9h7LXjxWc937i13lIrxOHV/mfHap/9AmDqqojj2E5xQRqp+CPc
+         NshUfp2kA0zNL/jtIXGuofQZYNVMziTFSKH2A9+3psb6DGSL25O+EgW1A6dJT4iZdqc0
+         HdYfP0aQBCiCKY5i9fEF/Qh/0mpQezKerTBpq+85QROIPcqaC5Y5EIYODNRGUPl7hJ6N
+         rR6/1abvI7s5nZIzVIzgIzIWb+N0lzl+vu2xpv+RMI3x8ijxQB/dsFqACKM6JVgoLNJK
+         lHVWyKJKJK0HfjgVPpcigbpb0xXEpaGOZRSx4Lf90J+QyH/voFdgqFHQhRZY+9MfHIo6
+         s05w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771079425; x=1771684225;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=86uz/h1ncx+7aW+5KDx74lwFzpu0o8ir8iMul250xn4=;
+        b=volHfLbRaGcasGC02uOeVOio2QP60eJ3uUO7I/hVmn4Ml2vZF1/7Lxku90+GVF+FCg
+         cnmnVzcNWCtJ2YZ+oPa0EJpJNshIvqc8pfzkIBHvofpdgeqlTrHAMqM+YPKxMqDgXl8H
+         4CTEWCfzx0cU+seQrUZNNynRjYxT/afC/LJJy00SvrRi7i1zl5P9WtpNUpfl7VisdgT0
+         qznKYI4Q5oEerXFJZNFNgg+BuH83+9HKQXgrLXIuOy6S6wXvfJsy1pN8jWoC6cFMtWT3
+         skai//yp/WsWvLq0gbBIz2LIjBFnfHzbsBhB43JyEIiydTDD/9UJhQ7/mvzJyPeInW5N
+         U/rw==
+X-Gm-Message-State: AOJu0YxdQiPAAoKZ8+wki7hd+hztv2AbLnOUM2vbAmmXJS+O3dhd12zL
+	glRqQCmJzc1cdDft2oK8Y6Z4gmLCGh28/d3HzPBzPvSvMh9Et6ugXoty
+X-Gm-Gg: AZuq6aI6yHL48zV+7EASnHSjph7fdX1oxSIUH8o+Wcaq5SjadgDn7PF+SBIDEp2IHhB
+	iAGA0rzjt8v0kPmG4ObgiqLcVLmsNQ114utGap8LCwtwwdG/O7ctRgPM5lk08G5IkvnuVrJUD4f
+	ao8puS2HUWR3IpyHZmHw4LyJG6XWr2KjokmacfEBHT6kUh60wEZPE3pchr/WQvb1fFwDaDjvnwO
+	07yXxOPNoQxpPjRXI2q298sKo2vBJW8VfYqV47r8tKvdqXSHzvGVdHyZOnzT/IOBAR8MTomyWe6
+	auhE+4JWjeH+zhJPTS8yfT+69sPmBkpzeou2ARwpYravUaP9+/yjAfZkwrWTpyxHRgLxmRz7BK+
+	Pnx3CYQP0W0enxJCHX9NCtFhxOq/fJCVlUMJn7LMapAJ2qUthqdQI8gMP3RMElQZO5s+QlAxz5N
+	cwsokcNVcCIftFMJS6eZaiORZWt5Tydu1tavL2++cg+Lh63A+uxxM1M5u+xIqa78YdyQffOc8UI
+	LUkEQ==
+X-Received: by 2002:a05:6000:220d:b0:436:1d80:b663 with SMTP id ffacd0b85a97d-437979279dfmr9740855f8f.58.1771079424553;
+        Sat, 14 Feb 2026 06:30:24 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43796abe3b3sm15668401f8f.18.2026.02.14.06.30.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 14 Feb 2026 06:30:23 -0800 (PST)
+Message-ID: <ebc16a74-0555-4951-8ec6-ff7fce6b6fcc@gmail.com>
+Date: Sat, 14 Feb 2026 14:30:22 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC][PATCH 2/2] worktree: stop passing NULL as primary worktree
+To: Junio C Hamano <gitster@pobox.com>,
+ Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com,
+ Eric Sunshine <sunshine@sunshineco.com>
+References: <20260213120529.15475-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260213120529.15475-3-shreyanshpaliwalcmsmn@gmail.com>
+ <xmqqcy28jmzs.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqcy28jmzs.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+I've cc'd Eric for a second opinion
 
-git-cherry(1) links to this command. These two commands are similar and
-we also mention it in the “Examples” section now. Let’s link to it.
+On 13/02/2026 22:29, Junio C Hamano wrote:
+> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+> 
+>> diff --git a/path.c b/path.c
+>> index d726537622..4ac86e1e58 100644
+>> --- a/path.c
+>> +++ b/path.c
+>> @@ -408,9 +408,7 @@ static void strbuf_worktree_gitdir(struct strbuf *buf,
+>>   				   const struct repository *repo,
+>>   				   const struct worktree *wt)
+>>   {
+>> -	if (!wt)
+>> -		strbuf_addstr(buf, repo->gitdir);
+>> -	else if (!wt->id)
+>> +	if (is_main_worktree(wt))
+>>   		strbuf_addstr(buf, repo->commondir);
+>>   	else
+>>   		repo_common_path_append(repo, buf, "worktrees/%s", wt->id);
+> 
+> This is curious.
+> 
+> We used to treat "wt==NULL" and "wt->id==NULL" differently.  Now we
+> use repo->commondir for both.  For the primary worktree, it ought to
+> be the same as repo->gitdir, so it should not matter, but makes me
+> wonder what the reason behind this difference in the original.
+> 
+> We have been assuming that wt==NULL and wt->id==NULL both meant the
+> same thing: "we are talking about the primary worktree".  But the
+> code around here before this patch seems to behave differently.  Is
+> our assumption incorrect and are we making a mistake by conflating
+> these two conditions into one?
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-patch-id.adoc | 4 ++++
- 1 file changed, 4 insertions(+)
+My understanding is that wt==NULL means "use the current worktree" and 
+wt->id==NULL means "this is the main worktree". That would explain why 
+we use repo->gitdir above when wt==NULL and repo->commondir when 
+wt->id==NULL, as repo->gitdir is the gitdir of the current worktree and 
+repo->commondir will be the gitdir of the main worktree. If we look at 
+the code in wt-status.c that's passing a NULL worktree it wants to know 
+about the status of the current worktree, not the main worktree.
 
-diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.adoc
-index 1618994e76c..05859990c8e 100644
---- a/Documentation/git-patch-id.adoc
-+++ b/Documentation/git-patch-id.adoc
-@@ -108,6 +108,10 @@ rm "$for_upstream"
- Now the first column shows the commit from your branch and the second
- column shows the patch ID equivalent commit, if it exists.
- 
-+SEE ALSO
-+--------
-+linkgit:git-cherry[1]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
--- 
-2.53.0.26.g2afa8602a26
+I think that we should add a new function
+
+struct worktree *get_current_worktree(struct repository*);
+
+to worktree.c that constructs a struct worktree using repo->gitdir etc. 
+The worktree id is the last path component of repo->gitdir when the 
+repo->gitdir and repo->commondir differ, otherwise it is NULL. Then we 
+can use that function to get the current worktree rather than passing 
+NULL when we call wt_status_check_{rebase,bisect} from 
+wt_status_get_state(). We should also think about whether we should 
+change wt_status_get_state() to take a "struct worktree*" rather than a 
+"struct repository*" instead (I've not looked at the callers to see if 
+that's sensible).
+
+With that, we can gradually clean up uses of wt==NULL in the rest of the 
+codebase overtime and eventually remove support for it from worktree.c 
+rather than having a big flag-day patch. I don't think we need to change 
+uses of wt-id==NULL.
+
+Thanks
+
+Phillip
 
