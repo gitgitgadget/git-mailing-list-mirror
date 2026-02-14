@@ -1,62 +1,62 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40579339A8
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 11:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB159339A8
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 11:06:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771067164; cv=none; b=PeYRY/62dbF3hf8ej0dV1E1ziKD7cWZIIPzX3/RoS9NI/l40xYY5E2j7k1PDQgNKuA3hf1ja8iD3zHig14ZWpYCHIyHyyv4AKVVkl/T+GByMLl4+RvhycjvQVvk9vwcCX1Mgjt3TeUlm9Z1tdDbmx+9BAw+xMHCeDkQ+TixC36o=
+	t=1771067209; cv=none; b=PfWeCJaNv2p12iH8as4YonOE2fv+Z+pX86BCRIIviuVWYnnvitlbPk5GG7Co3+eXItUpY1DDsGncpIIbKisTdOAQ1tvK6btqBlUQvdbAXVYQUybrh6nKhfU6bXhytKOnUBIa5gbushFxdp4/XbwOP8KqKuDRGCKglOwAdgBTDfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771067164; c=relaxed/simple;
-	bh=ogIQIIhuoOkKycsj0IVexebeumXh/fLOxromyD2Y9DU=;
+	s=arc-20240116; t=1771067209; c=relaxed/simple;
+	bh=Z4uN+IosPiXYiEO3q2OezZ4w/yYoMZaBWAwEqiKF2ww=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qfKy36R8TzBbGEsNf24xpcWq0M48gRtS1uTb2pW8iLBaOkMl9pw46JatmHiMDt9yDoFJWxdyB8DQcHpAZdByIJ5RU+h8cuF8k3vhpOp6J1CWU1P150ciwWdflPkg6GJTPuSGyw5bVF1IvBu4YwGDrbZ3SLAyKdyPR97i+5NAI7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZNGcLSnR; arc=none smtp.client-ip=209.85.128.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=idh8sN9T1SbiJl3dkLtqNTGrcIIfJeZm/GElii5RxT6GtQLsDjAz+pPbz+gs/v1NcC7cc2nPyC0gS/vI3WXojVnhdCl6wsBYZqRAhi1wNamYn5EEh/H7TzLXUA9d4xH+e/CnkJZIZpJlNrGaKxStODBjd46dmAqXAC3a3WTpYds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K7qn0ovP; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZNGcLSnR"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-48371bb515eso16488355e9.1
-        for <git@vger.kernel.org>; Sat, 14 Feb 2026 03:06:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7qn0ovP"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-483487335c2so15094455e9.2
+        for <git@vger.kernel.org>; Sat, 14 Feb 2026 03:06:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771067161; x=1771671961; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771067206; x=1771672006; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=c+/qQIUW3lNlwkHfERRF+1NQ6jYn6g82Zw3J71sCpeM=;
-        b=ZNGcLSnRS+5BI89bUw1hiQ7D+TWutW0dIMJ6xfQhlTeM0ZmEw3hljKIRkUQ+6JpYnd
-         0YDDW3am7A8LhdCDrCxIf9B+jrpmGjnt1xEKd7lYx4Q6qiHcqs/DVviQzMpl7Np7QkUA
-         YV+3XeX8Q6HXT0wmBbAbYCGT+Ig9+TKY362eXkCEydvVxn0uWS765EpE8razFFpfIcH3
-         LHl6TNCWVPJue+ihAWR1Hw93i1OpvwJk8u7aL6oYj0oqu9QkwTqi09+EA6MfjauJZc+T
-         eAe2lSqvAUeAK17/gui5G9him80QqToKrZc6wkLW5LLgfRB47Yhx3NEjt/VVEK6/4d7G
-         QrMw==
+        bh=XuYiMj4lRR/8FRX0OIewXONm+ly82xKLuzxPp29KRXY=;
+        b=K7qn0ovPtUxINX2S175NJoJKi/DEcYNZhcTMxChHAXlYezrTmE1l6vlp7F1ZX9d2xJ
+         f/z4OLoGiHYoMmgXy/3mA3eDjrn3/ejswdrFdY0WA8Ikakvt0cba5cyZpefp/mJBc2Cf
+         YstFWDpzQNCMM4Ea91Ix8Pn97CcZPYhdncsnVkoP0nVUgHr/1LWKTFB6uhIV78q6KiHA
+         5LyDt4t1rFRcN8t854gDPH53G7TA/vVVg9kYMLuIwIfXOQ4FT3gN3iWvvJHXm++RSxJ7
+         h0Gprz35JiDm8z/1W77UdqFWF/SGLHquUe/gq6TFbdm1XUcej+xcz+Q571BccQ6t6dZL
+         Wv8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771067161; x=1771671961;
+        d=1e100.net; s=20230601; t=1771067206; x=1771672006;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c+/qQIUW3lNlwkHfERRF+1NQ6jYn6g82Zw3J71sCpeM=;
-        b=mwW7FOT5W193aOkEjTjJDiJ94ZkV7/wzHxzfl892awPlTH/Ij/M7fxJCNTzZkVPAeT
-         dDgOVx4H0Dh5lt0fPm+kXsXM253Msrcpu9Go2IVN6hpKJuJ1lVO9xEKPJsxXOLHJ94cb
-         aMJX9UISwJ5jq3u4oUIbaU9vR9aUmIdWK/pATjVkW2/yXn03r9LRsSvLlhTjBzjlO0ga
-         yVJEa67PKsIBOO4XlzoMcrY83Ocw5DmSI9zn6xsdms7RpltHMmKRxdkUnmYltRCo599p
-         Aj0wCeUHUx2KUkEH4lq2SCNBxUFbS0eIQ1dIVBSj8Uj+980CPp3NT1IEr7Dxqs296LMI
-         UaLQ==
-X-Gm-Message-State: AOJu0YzJqlsXKBpCdlPnvUvo1zlflidfi9SJT5e+tQdvyt+U4pgq0hln
-	I23TO/EKJZU3T3jAJwK78YE8W9XVLRa6bADNKb/dbTcSQEnSlNM0tGxUcXpQ3GJD
-X-Gm-Gg: AZuq6aLRuvs2ggwIYQUYTT9OFJdr7J3qCzLEHlDrUg0y3Hy6ILOUwYNBW/azua6VTod
-	SP0XCqTnhswEjWS1Z1Gc5nZKMU4STOc6KHGsj2IFLmuLQ/zdqs2lEsrecPaVXj5LuPqc2jj6fT8
-	dJn808Ms9W9mys8qH2qbvSI+p1wC5N62mz3jyxMUCmSkisevpv6ARqQUqIsfIFAV4BzzRo6w8gs
-	tqbS9gZfDEzXI96ZXmJ9JxdXGR8H8XAa/RlmNq1/OdoObjdb+aJEiWpxNFITU+kjDs/jLQWnYrU
-	MCxIXscXjfhcqedSPr/Aau3s+7Dxpj1GVN4O5vmNsCGqx6d6YdHrAYHJbKN81/xB5fyOPblXzIC
-	rX1H8VfCzDSONb2dEw0560GaEnzsVagrY5F3bHhQ16qSQT6aNBrwrsNa8A/qoV4q4liLy+Ucfbt
-	lGE8wOA3wSuUtwSkRytQ5PwJl0sAwnXas=
-X-Received: by 2002:a05:600c:a08c:b0:480:6910:abd1 with SMTP id 5b1f17b1804b1-48373a5ba84mr84580905e9.18.1771067161087;
-        Sat, 14 Feb 2026 03:06:01 -0800 (PST)
-Received: from localhost ([102.88.77.11])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48371a44ae0sm33968335e9.29.2026.02.14.03.06.00
+        bh=XuYiMj4lRR/8FRX0OIewXONm+ly82xKLuzxPp29KRXY=;
+        b=XKbusMhjVSaDEC3g6RuMD7a2Jyibn5B/HyIK05ZTSczSUuvoY8neWb0r5v0rnNI7RQ
+         lwh0jCxuow67DOaom9cTkoWGa1uz5OGJ0qyUEooSjVan+BhsbYUryY0IAec/Jxgkl7V/
+         WTxY+yZQ2ulKQbzItOJI+XYN2VG8gqLdShFh3sMN8urW1uAQcXiezukG0DE8ljTL2VYn
+         Q4+8QgojqFYyFLc71PTGChbWC3qOeALAIiE7URhShyHv5xw9ThWxOyfuW1Gy4+c18tGw
+         mkMkOlxI7g4ag24nVl2df7qcQaoE0cSLevXuW3UlUya31Q7wc0sWNH5llyjXLfeJkDki
+         Jt1w==
+X-Gm-Message-State: AOJu0YyWczllHBCKu1cZ/n9FELp1Ba5rSP+snacEV8pTweHSafIAyRNX
+	oQAHOJOWPLHJXulCwksDE69BDSdiDoyTr2qXuGgWgHiu3sAjSDGEPWl4HcnesHAg
+X-Gm-Gg: AZuq6aLeJlFyzOCiZaXxQmdS+rSKRTD1Sj5Tx4TBhw7pF4nfPTTiIn61K+yqv7B5mDx
+	qRASmVFMV6YhmnohaxCWRVP+8y8inMla4mTCc5s2mDqir09bnq65Ly18kFuWnJpv5Opc+Hmj/Lj
+	nm413su4G7581NEcjQHisLC8LiTJh3CiF5+B7vo1Vbowp+RT4H94DWRJAbYtxYsXFxgS4CTemEa
+	iTSO6lTgnotLbDh3h5G+Os/BqKH63uAOHgw0Rfjg7eHKJ4J2gplOc4H6PeuN9d0NzNXvp4bGr8/
+	3GC0BoOpqs+Jy6W67y4v5o56jO6Q01lh/3WgsAICSHnmD4A+BnpK+J58Y+VhZsRCKKmbzhUP+Io
+	As2ypRIGXC6detZ9pV2Zt42a9mqT9tEd9nH/agPqprGI4CGViwm1L6jORPOpkzZFw255pxB4wtv
+	2IgbsLMkv2Ewqd5NundaOpqNMrO9t1LQ==
+X-Received: by 2002:a05:600c:4e4d:b0:482:df17:bbbc with SMTP id 5b1f17b1804b1-48373a37b73mr76657455e9.20.1771067205756;
+        Sat, 14 Feb 2026 03:06:45 -0800 (PST)
+Received: from localhost ([102.88.77.2])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4836aa0847asm235229105e9.3.2026.02.14.03.06.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Feb 2026 03:06:00 -0800 (PST)
-Date: Sat, 14 Feb 2026 12:06:06 +0100
+        Sat, 14 Feb 2026 03:06:45 -0800 (PST)
+Date: Sat, 14 Feb 2026 12:06:55 +0100
 From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
@@ -69,8 +69,9 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
 	Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: [PATCH v5 3/4] add-patch: allow all-or-none application of patches
-Message-ID: <1ad4524023e246744b3d268db8a476b605d44223.1771066252.git.abrahamadekunle50@gmail.com>
+Subject: [PATCH v5 4/4] add-patch: allow interfile navigation when selecting
+ hunks
+Message-ID: <193fba4e336897a57a26e77c6eac74a05abc79c0.1771066252.git.abrahamadekunle50@gmail.com>
 References: <cover.1771066252.git.abrahamadekunle50@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,109 +83,277 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1771066252.git.abrahamadekunle50@gmail.com>
 
-When the flag `--no-auto-advance` is used with `--patch`,
-if the user has decided `USE` on a hunk in a file, goes to another
-file, and then returns to this file and changes the previous
-decision on the hunk to `SKIP`, because the patch has already
-been applied, the last decision is not registered and the now
-SKIPPED hunk is still applied.
+After deciding on all hunks in a file, the interactive session
+advances automatically to the next file if there is another,
+or the process ends.
 
-Move the logic for applying patches into a function so that we can
-reuse this logic to implement the all or non application of the patches
-after the user is done with the hunk selection.
+Now using the `--no-auto-advance` flag with `--patch`, the process
+does not advance automatically. A user can choose to go to the next
+file by pressing '>' or the previous file by pressing '<', before or
+after deciding on all hunks in the current file.
+
+After all hunks have been decided in a file, the user can still
+rework with the file by applying the options available in the permit
+set for that hunk, and after all the decisions, the user presses 'q'
+to submit.
+After all hunks have been decided, the user can press '?' which will
+show the hunk selection summary in the help patch remainder text
+including the total hunks, number of hunks marked for use and number
+of hunks marked for skip.
+
+This feature is enabled by passing the `--no-auto-advance` flag
+to `--patch` option of the subcommands add, stash, reset,
+and checkout.
 
 Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 ---
- add-patch.c | 62 ++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 35 insertions(+), 27 deletions(-)
+ add-patch.c                |  66 ++++++++++++++++++++++--
+ t/t3701-add-interactive.sh | 100 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 161 insertions(+), 5 deletions(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index 8e21ea1246..07526e7fb6 100644
+index 07526e7fb6..b3fb08f416 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -1420,6 +1420,40 @@ N_("j - go to the next undecided hunk, roll over at the bottom\n"
+@@ -1418,7 +1418,10 @@ N_("j - go to the next undecided hunk, roll over at the bottom\n"
+    "e - manually edit the current hunk\n"
+    "p - print the current hunk\n"
     "P - print the current hunk using the pager\n"
-    "? - print help\n");
+-   "? - print help\n");
++   "> - go to the next file, roll over at the bottom\n"
++   "< - go to the previous file, roll over at the top\n"
++   "? - print help\n"
++   "HUNKS SUMMARY - Hunks: %d, USE: %d, SKIP: %d\n");
  
-+static void apply_patch(struct add_p_state *s, struct file_diff *file_diff)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	size_t j;
-+
-+	/* Any hunk to be used? */
-+	for (j = 0; j < file_diff->hunk_nr; j++)
-+		if (file_diff->hunk[j].use == USE_HUNK)
-+			break;
-+
-+	if (j < file_diff->hunk_nr ||
-+		(!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
-+		/* At least one hunk selected: apply */
-+		strbuf_reset(&s->buf);
-+		reassemble_patch(s, file_diff, 0, &s->buf);
-+
-+		discard_index(s->s.r->index);
-+		if (s->mode->apply_for_checkout)
-+			apply_for_checkout(s, &s->buf,
-+					s->mode->is_reverse);
-+		else {
-+			setup_child_process(s, &cp, "apply", NULL);
-+			strvec_pushv(&cp.args, s->mode->apply_args);
-+			if (pipe_command(&cp, s->buf.buf, s->buf.len,
-+					NULL, 0, NULL, 0))
-+				error(_("'git apply' failed"));
-+		}
-+		if (repo_read_index(s->s.r) >= 0)
-+			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
-+							1, NULL, NULL, NULL);
-+	}
-+
-+}
-+
- static size_t dec_mod(size_t a, size_t m)
+ static void apply_patch(struct add_p_state *s, struct file_diff *file_diff)
  {
- 	return a > 0 ? a - 1 : m - 1;
-@@ -1447,7 +1481,6 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
- 	ssize_t i, undecided_previous, undecided_next, rendered_hunk_index = -1;
- 	struct hunk *hunk;
+@@ -1483,6 +1486,7 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
  	char ch;
--	struct child_process cp = CHILD_PROCESS_INIT;
  	int colored = !!s->colored.len, use_pager = 0;
  	enum prompt_mode_type prompt_mode_type;
++	int all_decided = 0;
  	struct file_diff *file_diff = s->file_diff + idx;
-@@ -1784,32 +1817,7 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
+ 	size_t patch_update_resp = idx;
+ 
+@@ -1502,7 +1506,9 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
+ 			ALLOW_GOTO_NEXT_UNDECIDED_HUNK = 1 << 3,
+ 			ALLOW_SEARCH_AND_GOTO = 1 << 4,
+ 			ALLOW_SPLIT = 1 << 5,
+-			ALLOW_EDIT = 1 << 6
++			ALLOW_EDIT = 1 << 6,
++			ALLOW_GOTO_PREVIOUS_FILE = 1 << 7,
++			ALLOW_GOTO_NEXT_FILE = 1 << 8
+ 		} permitted = 0;
+ 
+ 		if (hunk_index >= file_diff->hunk_nr)
+@@ -1534,8 +1540,12 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
+ 		/* Everything decided? */
+ 		if (undecided_previous < 0 && undecided_next < 0 &&
+ 		    hunk->use != UNDECIDED_HUNK) {
+-				patch_update_resp++;
+-				break;
++				if (!s->s.auto_advance)
++					all_decided = 1;
++				else {
++					patch_update_resp++;
++					break;
++				}
+ 		}
+ 		strbuf_reset(&s->buf);
+ 		if (file_diff->hunk_nr) {
+@@ -1584,6 +1594,14 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
+ 				permitted |= ALLOW_EDIT;
+ 				strbuf_addstr(&s->buf, ",e");
+ 			}
++			if (!s->s.auto_advance && s->file_diff_nr > 1) {
++				permitted |= ALLOW_GOTO_NEXT_FILE;
++				strbuf_addstr(&s->buf, ",>");
++			}
++			if (!s->s.auto_advance && s->file_diff_nr > 1) {
++				permitted |= ALLOW_GOTO_PREVIOUS_FILE;
++				strbuf_addstr(&s->buf, ",<");
++			}
+ 			strbuf_addstr(&s->buf, ",p,P");
+ 		}
+ 		if (file_diff->deleted)
+@@ -1660,6 +1678,28 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
+ 		} else if (ch == 'q') {
+ 			patch_update_resp = s->file_diff_nr;
+ 			break;
++		} else if (!s->s.auto_advance && s->answer.buf[0] == '>') {
++			if (permitted & ALLOW_GOTO_NEXT_FILE) {
++				if (patch_update_resp == s->file_diff_nr - 1)
++					patch_update_resp = 0;
++				else
++					patch_update_resp++;
++				break;
++			} else {
++				err(s, _("No next file"));
++				continue;
++			}
++		} else if (!s->s.auto_advance && s->answer.buf[0] == '<') {
++			if (permitted & ALLOW_GOTO_PREVIOUS_FILE) {
++				if (patch_update_resp == 0)
++					patch_update_resp = s->file_diff_nr - 1;
++				else
++					patch_update_resp--;
++				break;
++			} else {
++				err(s, _("No previous file"));
++				continue;
++			}
+ 		} else if (s->answer.buf[0] == 'K') {
+ 			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
+ 				hunk_index = dec_mod(hunk_index,
+@@ -1805,6 +1845,18 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
+ 				 * commands shown in the prompt that are not
+ 				 * always available.
+ 				 */
++				if (all_decided && !strncmp(p, "HUNKS SUMMARY", 13)) {
++					int total = file_diff->hunk_nr, used = 0, skipped = 0;
++
++					for (i = 0; i < file_diff->hunk_nr; i++) {
++						if (file_diff->hunk[i].use == USE_HUNK)
++							used += 1;
++						if (file_diff->hunk[i].use == SKIP_HUNK)
++							skipped += 1;
++					}
++					color_fprintf_ln(stdout, s->s.help_color, _(p),
++							 total, used, skipped);
++				}
+ 				if (*p != '?' && !strchr(s->buf.buf, *p))
+ 					continue;
+ 
+@@ -1817,7 +1869,8 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
  		}
  	}
  
--	/* Any hunk to be used? */
--	for (i = 0; i < file_diff->hunk_nr; i++)
--		if (file_diff->hunk[i].use == USE_HUNK)
--			break;
--
--	if (i < file_diff->hunk_nr ||
--	    (!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
--		/* At least one hunk selected: apply */
--		strbuf_reset(&s->buf);
--		reassemble_patch(s, file_diff, 0, &s->buf);
--
--		discard_index(s->s.r->index);
--		if (s->mode->apply_for_checkout)
--			apply_for_checkout(s, &s->buf,
--					   s->mode->is_reverse);
--		else {
--			setup_child_process(s, &cp, "apply", NULL);
--			strvec_pushv(&cp.args, s->mode->apply_args);
--			if (pipe_command(&cp, s->buf.buf, s->buf.len,
--					 NULL, 0, NULL, 0))
--				error(_("'git apply' failed"));
--		}
--		if (repo_read_index(s->s.r) >= 0)
--			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
--						     1, NULL, NULL, NULL);
--	}
-+	apply_patch(s, file_diff);
+-	apply_patch(s, file_diff);
++	if (s->s.auto_advance)
++		apply_patch(s, file_diff);
  
  	putchar('\n');
  	return patch_update_resp;
+@@ -1878,6 +1931,9 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 		 if ((i = patch_update_file(&s, i)) == s.file_diff_nr)
+ 			break;
+     }
++	if (!s.s.auto_advance)
++		for (i = 0; i < s.file_diff_nr; i++)
++			apply_patch(&s, s.file_diff + i);
+ 
+ 	if (s.file_diff_nr == 0)
+ 		err(&s, _("No changes."));
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 5ce9c6dd60..6e120a4001 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -1441,5 +1441,105 @@ test_expect_success 'EOF quits' '
+ 	test_grep file out &&
+ 	test_grep ! file2 out
+ '
++for cmd in add checkout reset "stash save" "stash push"
++do
++	test_expect_success "$cmd rejects invalid --no-auto-advance options" '
++		test_must_fail git $cmd --no-auto-advance 2>actual &&
++		test_grep -E  "requires .*--(interactive|patch)" actual
++	'
++done
++
++test_expect_success 'manual advance (">") moves to next file with --no-auto-advance' '
++	git reset --hard &&
++	echo line1 >first-file &&
++	echo line2 >second-file &&
++	git add -A &&
++	git commit -m initial >/dev/null 2>&1 &&
++	echo change_first >>first-file &&
++	echo change_second >>second-file &&
++
++	printf ">\nq\n" | git add -p --no-auto-advance >output.test 2>&1 &&
++	test_grep  -E "(a|b)/second-file" output.test
++'
++
++test_expect_success 'select n on a hunk, go to another file, come back and change to y stages' '
++	git reset --hard &&
++	echo one >f1 &&
++	echo one >f2 &&
++	git add -A &&
++	git commit -m initial >/dev/null 2>&1 &&
++	echo change1 >>f1 &&
++	echo change2 >>f2 &&
++
++	printf "n\n>\n<\ny\nq\n" | git add -p --no-auto-advance >output.staged 2>&1 &&
++	git diff --cached --name-only >staged &&
++	test_grep -E "(a/f1)" output.staged
++'
++
++test_expect_success 'select y on a hunk, go to another file, come back and change to n does not stage' '
++	git reset --hard &&
++	echo one >f1 &&
++	echo one >f2 &&
++	git add -A &&
++	git commit -m initial >/dev/null 2>&1 &&
++	echo change1 >>f1 &&
++	echo change2 >>f2 &&
++
++	printf "y\n>\n<\nn\nq\n" | git add -p --no-auto-advance >output.unstaged 2>&1 &&
++	git diff --cached --name-only >staged &&
++	test_must_be_empty staged
++'
++
++test_expect_success 'deciding all hunks in a file does not auto advance' '
++	git reset --hard &&
++	echo line >stay &&
++	echo line >other &&
++	git add -A &&
++	git commit -m initial >/dev/null 2>&1 &&
++	echo change >>stay &&
++	echo change >>other &&
++	test_write_lines y | git add -p --no-auto-advance >raw-output 2>&1 &&
++	test_grep "(1/1) Stage this hunk (was: y)" raw-output &&
++	test_grep ! "diff --git a/stay b/stay" raw-output
++'
++test_expect_success 'HUNKS SUMMARY does not show in help text when there are undecided hunks' '
++	git reset --hard &&
++	test_write_lines 1 2 3 4 5 6 7 8 9 >f &&
++	git add f &&
++	git commit -m initial >/dev/null 2>&1 &&
++	test_write_lines 1 X 3 4 Y 6 7 Z 9 >f &&
++	test_write_lines s y n | git add -p --no-auto-advance >raw-nostat 2>&1 &&
++	test_grep ! "HUNKS SUMMARY - Hunks: " raw-nostat
++'
++
++test_expect_success 'help text shows HUNK SUMMARY when all hunks have been decided' '
++	git reset --hard &&
++	test_write_lines 1 2 3 4 5 6 7 8 9 >f2 &&
++	git add f2 &&
++	git commit -m initial >/dev/null 2>&1 &&
++	test_write_lines 1 X 3 4 Y 6 7 Z 9 >f2 &&
++	printf "s\ny\nn\ny\n?\n" | git add -p --no-auto-advance >raw-stat 2>&1 &&
++	test_grep "HUNKS SUMMARY - Hunks: 3, USE: 2, SKIP: 1" raw-stat
++'
++
++test_expect_success 'selective staging across multiple files with --no-advance' '
++	git reset --hard &&
++	test_write_lines 1 2 3 4 5 6 7 8 9 >a.file &&
++	test_write_lines 1 2 3 4 5 6 7 8 9 >b.file &&
++	test_write_lines 1 2 3 4 5 6 7 8 9 >c.file &&
++	git add -A &&
++	git commit -m initial >/dev/null 2>&1 &&
++	test_write_lines 1 A2 3 4 A5 6 7 8 9 >a.file &&
++	test_write_lines 1 2 B3 4 5 6 7 B8 9 >b.file &&
++	test_write_lines C1 2 3 4 5 C6 7 8 9 >c.file &&
++	printf "s\ny\nn\n>\ns\nn\ny\n>\ns\ny\ny\nq\n" | git add -p --no-auto-advance >output.index 2>&1 &&
++	git diff --cached >staged.diff &&
++	test_grep "+A2" staged.diff &&
++	test_grep ! "+A5" staged.diff &&
++	test_grep "+B8" staged.diff &&
++	test_grep ! "+B3" staged.diff &&
++	test_grep "+C1" staged.diff &&
++	test_grep "+C6" staged.diff
++'
+ 
+ test_done
 -- 
 2.39.5 (Apple Git-154)
 
