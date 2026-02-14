@@ -1,138 +1,148 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C0F1A9F96
-	for <git@vger.kernel.org>; Sat, 14 Feb 2026 16:43:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771087413; cv=none; b=QmWJtzUjfjUVptxYL7vhI536UKC7s23L3qGf1JMS3Y+JpxAWj6eBR8xjeQnVBfuZkhhPxo9RdxQCI4a6dWHjT5rGP3Ry5FakhV7ySpZAflMnnj+HdmpSdJQzg4BbftnvJo/B9X24NCKyTEA9pCQYHUQcJ3KQT9Nejg3WXeatd8g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771087413; c=relaxed/simple;
-	bh=dXZ5qTLOXIr7uDzS95GsdErenVUJW7fsT1JJ1zE+8GQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kT5gX8TIl8XKHzX3FUZRnxFWdrXZkxvcGe8DIM/qMP+6IxgrtDjbbuUmwxvX8rWB5ILxitwHakiA6HH/CZm6tF2tFSj+IhbMAfYKQ7+6LoRZQwn0InvqKmEQBpD4MSFJ0wQqKQ4FR127axIo6SuWcw4PAB9JuElnZvul7Et9BRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B4QjyXfd; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A141C1AA7A6
+	for <git@vger.kernel.org>; Sat, 14 Feb 2026 16:50:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771087816; cv=pass; b=gLklFKH6oIDet/PZ1RoMM2tNaDUZI2NuTxYAtwkRwe7ZkiTJMIX+KWgRYchyqfbljyB/5I7pKG5xUgWyuOR9OJYbiUSARSZ0FgDodb8758XWTQsf3IWm1cYcB9b378sI86gGN9bG6xpAUBetD1M7OuE4yZ5wyqKC9HtnfMb+c98=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771087816; c=relaxed/simple;
+	bh=9E7iyoU5rU0473dk2MssuGPC2xuETBXqn5QkNuhM+dU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N19XfF0Aj/VnS73L11pigai2DfqKWAqXtdEM1pBuDhiU/231LZUjMrlzeMii/bnfuwTE9MGQ/HMLaTRiHV3Ir8zXlCrseIORjoiQqocok83I/BJo3zbF/o9PJ4h24K0KpOmES5Oee+576In2FQn3LASHtsX4InsbK12npBhoKsg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S5jnTf20; arc=pass smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4QjyXfd"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-48378136adcso7671315e9.1
-        for <git@vger.kernel.org>; Sat, 14 Feb 2026 08:43:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S5jnTf20"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3870df2331aso31640411fa.1
+        for <git@vger.kernel.org>; Sat, 14 Feb 2026 08:50:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771087813; cv=none;
+        d=google.com; s=arc-20240605;
+        b=NfhHu9LTNxPG6yQ2CF6OUdXdcjxk998aXEpoTNqSgmRIKF1+jaAzavvy9/2R33Y6b2
+         1jPAnGjvNZBjxmTSLiHB0JEs/vhZb5lhEPh6evFDQS87nmwpqs6jA2G0eK8bTGjdr0Sw
+         GD+sOWNdRB6yY7KL7VOLs782vlzPp/rXFbDR/ItmPwPRrG1iH058eyTVWbRNlpWMWi8X
+         V9oN7oA0QqlpE5vvoY20sn20uRC8b9E4L7efTspEYmPjjAjPqozlzssUoflIXxa67sU+
+         5h/v35M6x4S1oeFRtnjM0K0tfUXn0qS/TcyP0FXwsOSbHQltKgiBEdHZYHOaqZU3Gzut
+         NsMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=EN0W0m3rxtpOkuXunF6rr0jaHgXiqdcRZSHo9Q7BqtM=;
+        fh=V2m9a5jGMgYlM90uz0b1m6stuFGrPJdB3Z0gC2OAg2A=;
+        b=PoRrWswSN4+VUzGF6ZIIU8c+sByix39PYH/haiZgLuQnnvbf+Z5dbf+raFV7q7lif9
+         8eBtnJJp1+LhtIGV66zGjnj2ImhyXw8M0UViWJhMGo4hcEGLU2+odhL+qoifYGlS5VcU
+         IOe/Nb9NlZWwEoumRb/V7XE+Q/U5d0mFri86T/Cg8XrcfouyI2D5H7XqjNFSBcKSG1hR
+         SBLwGS0W9SDuJ6n5iEv4YytKG5l1bkrAI5RflQpz6e2jEw4OzWuW3kR2+4uTZl/qlNLL
+         44eaaZIT2RQ9Y0S3eXF2LpLExCEKe+NPMbLjP45ggYFdv1TfocuWcPyT3PszX1AsR8Xr
+         1HCg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771087410; x=1771692210; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dJk5L52tZzELO8bJppXXD+zm5XeRFg27JRXbEwfHi3k=;
-        b=B4QjyXfdYVMaJENlYkPZw/1iWC4e/gEwmfvMA0v3frZoY0g/x+Dp31cf5xElfNzHqY
-         Isp1fJfdHecA23FaYet9jwIsgmlqFaBYvluZvv6dg8Crvle+KlR3ZwG8p+1nqiojtZ9y
-         JQSg5GxWEcNmupQRZ5gX2GjnLKPjosOC2063q9RDOSoMkDfJzG0ZXtU1inaz5I0dzgs8
-         R7ipXyr7JfjLUT7nhf/Gw+wnGP/ksoqN53j48Kqw2aW7hXi9VMmsl/YhVm7HiXDe2CMg
-         7+atubjYGrtppWrf2+vDhYe8dpjSK38SfW19Iw+IrS/ujblPUW5JXpE9AZm9Wz+Ay+8c
-         uxOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771087410; x=1771692210;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771087813; x=1771692613; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dJk5L52tZzELO8bJppXXD+zm5XeRFg27JRXbEwfHi3k=;
-        b=GVChf6uFBKHxrsbrNQZyWmPaLoVM5+eDL1H+csn+D7K9fTiv5NinyDo6RRdIEzS2D8
-         lwdKrERkW6a/iMhn9Tk7Z8ivlDOzQTygsjuyWB+IOFFGGcEhJc47q5xWx7O17ldn8C4q
-         1PPpHK7AAzVOE0E63i7vGlrrvHNnxdZ7Q9lYthBn0kPQMIATrwgu4DZgt+wJfizf3ti1
-         D08bCLtiYm8de9Jka8eO4VYu8/lAZ/q+bwqAxwt5Po7lyQHGsCIdI6ZDdjsQRp4r+rsz
-         xbQeAGwAw8ZtQY/w/L1sprtaQiD2pqV1aRcEk1b4nCj5AbpwnvftikRcOyj2MRbe9OHl
-         QFlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXC/geZ3UvrGiVdMaoO/mWuFuPHT+qTRdN0VS06vx8LQXtpAQwUzxbXSuSKdhnoYXZxo8g=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyewRirpoNMLA3ONqH6HVZToOeffi2sN1xFG/DjD7CeceHX3a9k
-	K/ro124T7o1XrooTTxPiYg2o8bCl14zgDDx6RcW2l+GqLyRAfCby3Boo
-X-Gm-Gg: AZuq6aJlXQ+EZIFjh69Kt9VpHoZp5Qq71AIO8zBO4cFN1GgCdhCpNo5kpupVbFihxDJ
-	QdFOz/KD4eD1EC5tQWf5DwvLIt7pso1xmjBvZ3PC4cT8qdlCdgJCjT4yFONgFLR75KMdF7AUZKZ
-	5ZJfete7ifV08Ccr4/f+Kl7sdHg4Gms9/r/hqReO/8Xqp1CFqf2M8CiCuOlDa/GjCZHcXWpj3Jz
-	fdQlY0jpHC54/EVWbZaPJzUPyDk3UDIM7/XOs7pc4KnU+/z/H4fVFjES6f+vGsL1oGgHrKD1nGs
-	5wJICrlBjbA/1AtyRZQyk5QeVWySGEfn66N/Ir6e7t7VWapK0Ehhho5Vnkj+efuGOL6z1kUaTbv
-	YCCmcy7EOJFUiLbJ3dcNtafz93VDUH63u1Y9sF5wKtuHq9ZXCMDGF1Ir4Gsi1cxnpVMyFZvuY2Q
-	4yqrp9h+L79T9Hvg+Jg+mbGr9ihzZR9+SNW27mRcP8spsCnIS20d3JY0j7P5929yGRtkThLiE6e
-	pX+xg==
-X-Received: by 2002:a05:600c:1c07:b0:477:561f:6fc8 with SMTP id 5b1f17b1804b1-48379bac86bmr56845965e9.5.1771087410359;
-        Sat, 14 Feb 2026 08:43:30 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4836aa0847asm263583315e9.3.2026.02.14.08.43.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 14 Feb 2026 08:43:29 -0800 (PST)
-Message-ID: <bf0b3c41-9784-4494-a932-68abfa60cea6@gmail.com>
-Date: Sat, 14 Feb 2026 16:43:27 +0000
+        bh=EN0W0m3rxtpOkuXunF6rr0jaHgXiqdcRZSHo9Q7BqtM=;
+        b=S5jnTf20LvT59t3JrpYL6w396ghIFvMW8NRiXqQfXzxSjPRoGOgBC5zag3Mb8h5Qwy
+         HxhM48/XR3Fw9EVRALsRkEIbzmw7lpLX9+eW9AwUpcHzhQsa3eCa7cJ6AzqGW+2ENN7c
+         aMU+RV/bp1Jb95a3lHSOYHM8qOQ3SIemI3skoCWyaxZ536ruuIvRw49ID8ar1VUR8MJr
+         KyMO3VZDxLSdNt6sHvIQiJl2w718GEOT9FRgPHcIHzehDl23Tm+WYqDdmOW1S7flC7cl
+         IIvRXXSLm2ygRX5QJErdAXuF2OmTXWD4XU223KGTRg+uFQ6Er9Tit2ThvvX/+2AqUYvs
+         O3Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771087813; x=1771692613;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=EN0W0m3rxtpOkuXunF6rr0jaHgXiqdcRZSHo9Q7BqtM=;
+        b=nD/OnK1747ZxL6t+5TnoEhLhokuBoW/ZAO3b/LnrWTWAyWUd7Tgo0Ew/b1e3VAzAdY
+         X5PE8ceyUTZRrzOVZo1IZcaQrnj+DSp1r8jsLR7WVUamfRIbAoOLynKJItI3eSCSYyEp
+         OpOSGh/cfRuAjBCh9OLPDXGTn0FceKhlKgUGTWUUFNZM5nYVmxbZsGlqwRBCmOb6jyUb
+         yW0Nty06n6Oly66ZUwFMal3AZcJBSpjBP7W6HV0NvagQZvturTm165YnBc1NZtDLw4Sd
+         bydjleUdavnlu4IEPcaBzZsX6FNWjZw4WYY4S9hUGvhY8QPv46+7IJkT3Yaj49rEzYP5
+         YCfA==
+X-Gm-Message-State: AOJu0YxW5uEpFxhO2hvc9J2cdbYrjFt2+sK8pbSpFEEVJOi3wjaX2U5J
+	Z/o0ki+wbrEgFwPWJ+4SDElH8IBAHEpZdRfcVToy6hG1QLi15jqVsvrKOVIHHo3wPn4a0peERz8
+	N5bbp2gHC/rx+OvOFfRpvuqOPiQ00G1PFpg==
+X-Gm-Gg: AZuq6aIW6JlR0WwWDqzdRTO/HP5QKZBkDSZS4y+3aupngrXTBr+vCU2CHa/rY1jgBzi
+	CRF9B94ZcnuNDqNprBxGqkr/vEo8IT4eCa8Rm6XVW/c0/ibut5VnwV9hcu0ZBz4MzllwwPdzYuL
+	yevPxTUXsB+7AZ3Ksf8IPw0WBjcLiTNIzbS/rg43gbk9lIEjXT89Fb2bYw/v+IGEOapbM30fd/C
+	Z3SZuERlaUZJSHnjiRtuxeJbGNKLkfWLZVO7NWJUjYYz2C3oX5ozxRtBNn89dNoOpJngX5jueO8
+	JcVnCd4Pk8uAseJw3dY=
+X-Received: by 2002:a05:6512:6514:b0:59f:6f4f:547 with SMTP id
+ 2adb3069b0e04-59f6f4f07d3mr692717e87.3.1771087812392; Sat, 14 Feb 2026
+ 08:50:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] copy.c: use `sendfile()` for in-kernel file copying on
- Linux
-To: George Hu <integral@archlinux.org>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
 References: <20260213124656.218396-1-integral@archlinux.org>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260213124656.218396-1-integral@archlinux.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <CAPx1GvfsnZiUkkXJSAtt4HECT6f+zb1+vtiT+UikcAq0WuFR8Q@mail.gmail.com> <e2a5c920-7f15-4ea8-9390-cf42ac33082d@archlinux.org>
+In-Reply-To: <e2a5c920-7f15-4ea8-9390-cf42ac33082d@archlinux.org>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Sat, 14 Feb 2026 08:50:00 -0800
+X-Gm-Features: AZwV_QiynSKcjXUr8BZtemJGavNlnUQYv8VTkCUOba8TCXVLGptdz89GpbBwHS8
+Message-ID: <CAPx1GvcdFN5gn97xxuNLRBy2sV2gK3Wm56Pw3tQGENN8_+BKnw@mail.gmail.com>
+Subject: Re: [PATCH] copy.c: use `sendfile()` for in-kernel file copying on Linux
+To: George Hu <integral@archlinux.org>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 13/02/2026 12:46, George Hu wrote:
-> The `sendfile()` system call copies data between one file descriptor
-> and another within the kernel, which is more efficient than the
-> combination of `read()` and `write()`.
+Ah, more importantly, FreeBSD's sendfile only operates on sockets.
 
-Does git copy any files big enough that this makes a noticeable difference?
+Both systems also need fallback code for un-handled cases.
 
->   int copy_fd(int ifd, int ofd)
->   {
-> +#ifdef __linux__
+Chris
 
-Our normal practice when a function has platform specific 
-implementations is to host those implementations under compat/<platform>
-(see the implementations of trace2_collect_process_information() for an 
-example)
-
-> +	struct stat ifd_st;
-> +	size_t ifd_len;
-> +	ssize_t ret = 0;
-> +
-> +	fstat(ifd, &ifd_st);
-
-What happens if fstat() fails?
-
-> +	ifd_len = ifd_st.st_size;
-> +
-> +	while (ifd_len && (ret = sendfile(ofd, ifd, NULL, ifd_len)) > 0)
-> +		ifd_len -= (size_t)ret;
-
-This does not propagate errors to the caller, if sendfile() fails the 
-function returns 0. write_in_full() handles non-blocking writes, we 
-should do the same here if we see EAGAIN. The man page lists various 
-restrictions on the file descriptors passed to sendfile() - I'm not sure 
-that they affect the uses of copy_file() in git but to be safe we should 
-fall back to the read()/write() loop if we see EINVAL.
-
-Thanks
-
-Phillip
-
-> +#else
->   	while (1) {
->   		char buffer[8192];
->   		ssize_t len = xread(ifd, buffer, sizeof(buffer));
-> @@ -19,6 +34,8 @@ int copy_fd(int ifd, int ofd)
->   		if (write_in_full(ofd, buffer, len) < 0)
->   			return COPY_WRITE_ERROR;
->   	}
-> +#endif
-> +
->   	return 0;
->   }
->   
-
+On Sat, Feb 14, 2026 at 1:22=E2=80=AFAM George Hu <integral@archlinux.org> =
+wrote:
+>
+> On 2/13/26 11:36 PM, Chris Torek wrote:
+>
+> > On Fri, Feb 13, 2026 at 4:47=E2=80=AFAM George Hu <integral@archlinux.o=
+rg> wrote:
+> >> The `sendfile()` system call copies data between one file descriptor
+> >> and another within the kernel, which is more efficient than the
+> >> combination of `read()` and `write()`.
+> > sendfile() is found on other systems (notably BSDs), so perhaps ...
+> >
+> >> Signed-off-by: George Hu <integral@archlinux.org>
+> >> ---
+> >>   copy.c | 17 +++++++++++++++++
+> >>   1 file changed, 17 insertions(+)
+> >>
+> >> diff --git a/copy.c b/copy.c
+> >> index b668209b6c..d4b7cde764 100644
+> >> --- a/copy.c
+> >> +++ b/copy.c
+> >> @@ -7,8 +7,23 @@
+> >>   #include "strbuf.h"
+> >>   #include "abspath.h"
+> >>
+> >> +#ifdef __linux__
+> > ... this and the subsequent ifdef should be based on the feature,
+> > rather than the OS.
+> >
+> > Chris
+>
+> Hello,
+>
+> Although the `sendfile()` system call exists in both Linux and BSDs,
+> their semantics and APIs differ.
+> The Linux prototype of `sendfile()` is:
+>
+> ssize_t sendfile(int out_fd, int in_fd, off_t *_Nullable offset, size_t
+> count);
+>
+> While FreeBSD exposes:
+>
+> int sendfile(int fd, int s, off_t offset, size_t nbytes, struct sf_hdtr
+> *hdtr, off_t *sbytes, int flags);
+>
+> George
