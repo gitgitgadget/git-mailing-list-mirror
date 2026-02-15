@@ -1,75 +1,66 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB85D22CBD9
-	for <git@vger.kernel.org>; Sun, 15 Feb 2026 09:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4531E1C11
+	for <git@vger.kernel.org>; Sun, 15 Feb 2026 10:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771146829; cv=none; b=e1o5Mbil73nCU4OaP6xMm2CiUVt26jajOvDbT2JTZDBmRCfrpB6m0j3wePjoI40YVYWNyEigkJVbNO4ZsVIXFXKszVjERagkClQJAscgpCGZFzKXvLkxU1Pm8J438fFA14sYIfAi6CSQhw47y9IIl2ZVqczVIDgXyX8/xPTSfBA=
+	t=1771150933; cv=none; b=mVABl9qE2rBR0IrKhFK/ersatt3TpDxl1yyWG2JPBB7aOVMJ3w97u8eGmhHFY/SU6Rh7I4R8aoJVikwf7daJT/SV0+BWlOQk+OwU/I84KhZH3Bv2fzhlDKRZidfQTKCGZitWNgerJepXLPiGJ9HetNxRdpulBMGwvh1uAHgLSjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771146829; c=relaxed/simple;
-	bh=TXGlamvw2GhLLKYlqUQp6KX6qJfJrr8+aJFbvTKTdxY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XC3dqiRxtNIjduZAibgFw853DUtRadkOC74F/giQC9JSahuPP9JE2dh7D9Ff2I0ZlxoKsjHy4Qix7DHDaLvJIgObtA7Rn3fp4lOXSq8rYS4dcsIPi8H1KOGeBxKiIMfo1WR8Y1j/NUAQf+bc4RlW7VzBoZh+rZr/zqmmmuhMp8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=B/gx2Zkm; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="B/gx2Zkm"
-Received: (qmail 44827 invoked by uid 109); 15 Feb 2026 09:13:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=TXGlamvw2GhLLKYlqUQp6KX6qJfJrr8+aJFbvTKTdxY=; b=B/gx2ZkmQsMd4s3sMsc0KSgAmdGvOeydXKTPQwRZarCUEkSvJ/o0kGQ7kXDIJLjLyn3rkQcvY5lUrJ8d034UxMJPcuIKyZhpGA41EADTLTBmhYE75Fyi/LSGkgfiqlNQgybQfhzEUbW3JhR7Bb6u3P4Fx2WBp0yHQj8+OqqBsOv32AUKKKnEwBRgRo3P+7oB9XjV8I/WC+mWSiAiuaRoopp4JdUwGHljSsSSKesrC804Er/AFyREcR8WLI760A33GQpLCiSc2VcHWFhIlGnNqfvtQbW9dn+/1UkA6apTGhNzpkwUK0cVJtbYHmxs5JlE85iGtBEFhn0onrBfZWuGJA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 15 Feb 2026 09:13:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 113428 invoked by uid 111); 15 Feb 2026 09:13:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 15 Feb 2026 04:13:51 -0500
-Authentication-Results: peff.net; auth=none
-Date: Sun, 15 Feb 2026 04:13:46 -0500
-From: Jeff King <peff@peff.net>
-To: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
-Cc: Taylor Blau <me@ttaylorr.com>,
-	Vaidas Pilkauskas via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] http: add support for HTTP 429 rate limit retries
-Message-ID: <20260215091346.GB696020@coredump.intra.peff.net>
-References: <pull.2008.git.1764160227.gitgitgadget@gmail.com>
- <pull.2008.v2.git.1766069088.gitgitgadget@gmail.com>
- <d80ce077038bab96aca26b0b0ad706c91ea1d8a8.1766069088.git.gitgitgadget@gmail.com>
- <aYvV2W5pcvqZig8S@nand.local>
- <20260211091333.GA1868492@coredump.intra.peff.net>
- <CAGjQmDMhWFx32M+2DrZ3cF-mt+T==LNEzXRO4z=R73RjZnTQPg@mail.gmail.com>
+	s=arc-20240116; t=1771150933; c=relaxed/simple;
+	bh=jr9N4NUju5hiaLdIh1s7RXEQLnaU8tlRoTOGyMtTtOs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RMgpWN8b2fygHzMMgiVxhXoRVdlwuXz/Bgu4ugKE3Ho3/tsL7viTth8M16n+1eLNCvY2EBp2j4BCfpT6WLD6S8rQa8bZjeoHsEsic6zF5LnNw6SSLJHznT6zFYyl5OOUEnb4DV8Z+zdxZHbSL2tHKaMfIuF3K4qFs8gGuOaMZlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from gauss.fritz.box (unknown [IPv6:2001:a62:4f9:3601:ec47:70f:d4c0:5b33])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: zzam)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3DA483427B9;
+	Sun, 15 Feb 2026 10:22:10 +0000 (UTC)
+From: Matthias Schwarzott <zzam@gentoo.org>
+To: git@vger.kernel.org
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	Matthias Schwarzott <zzam@gentoo.org>
+Subject: [PATCH resent] l10n: de.po: Fix spelling of suggested color-moved-ws mode allow-indentation-change
+Date: Sun, 15 Feb 2026 11:21:54 +0100
+Message-ID: <20260215102154.21582-1-zzam@gentoo.org>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGjQmDMhWFx32M+2DrZ3cF-mt+T==LNEzXRO4z=R73RjZnTQPg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 13, 2026 at 03:41:55PM +0200, Vaidas Pilkauskas wrote:
+Copy and paste of the suggested mode makes git fail again and display the same
+suggestion again:
 
-> > There were lots of uses of "date" that I suspect may give us portability
-> > problems. "+%s" is not even in POSIX, but maybe it is universal enough.
-> > But stuff like '-d "+2 seconds"' seems likely to be a GNU-ism.
-> >
-> > Using "test-tool date" might get around some of that. We even understand
-> > relative dates like "2 seconds ago", but I think only in the past. :-/
-> > So you'd probably have to do:
-> >
-> >   now=$(test-tool date timestamp now | cut -d' ' -f3)
-> >   then=$((now + 2))
-> >   test-tool date show:rfc2822 $then
-> >
-> > or something.
-> 
-> I was not aware about test-tool, thanks!
+Fehler: Unbekannter color-moved-ws Modus 'allow-identation-change', mögliche Werte sind 'ignore-space-change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-identation-change'
+Fehler: ungültiger Modus 'allow-identation-change' in --color-moved-ws
 
-It might be a little awkward to bend it to your will, especially since
-it likes to print "input -> output" instead of just the output you want.
-If it gets too hairy, I wouldn't be opposed to teaching it a new option
-or even a new command-mode for doing this kind of computed date stuff.
+Signed-off-by: Matthias Schwarzott <zzam@gentoo.org>
+---
+ po/de.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--Peff
+diff --git a/po/de.po b/po/de.po
+index 6b65bb618076..16871c9a839f 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -16564,7 +16564,7 @@ msgid ""
+ "'ignore-space-at-eol', 'ignore-all-space', 'allow-indentation-change'"
+ msgstr ""
+ "Unbekannter color-moved-ws Modus '%s', mögliche Werte sind 'ignore-space-"
+-"change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-identation-change'"
++"change', 'ignore-space-at-eol', 'ignore-all-space', 'allow-indentation-change'"
+ 
+ msgid ""
+ "color-moved-ws: allow-indentation-change cannot be combined with other "
+-- 
+2.52.0
+
