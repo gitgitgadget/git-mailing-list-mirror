@@ -1,64 +1,68 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB05284B26
-	for <git@vger.kernel.org>; Sun, 15 Feb 2026 20:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6E9285041
+	for <git@vger.kernel.org>; Sun, 15 Feb 2026 20:23:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771187020; cv=none; b=KRD+vqjjc778vc0SakxQjs/3HxCT/fV13CmIWAax1M/6lgZzXMF3mSz66NQDQALhGdkFOs4XmVndlUk1yYTbvk4F0e08H2GL9oXgTzHKLMHfxOZmgi1rFsvZnyu7lrB/2JeNxhFgpIk7h7DUL4eRP01RW2WWrhOhHlI2bampHsk=
+	t=1771187021; cv=none; b=guLA/TUtti6YDk5JHW46rTywJi4BZXtRNJ7S0F1Gc0SkK3bDe/YTbz3WIe2kpKJrvzog1gzWY1ywxpS6aPObNFLnTetd7mMhdodyhAQsKhyC6BlEGfnjZoKH9rEeYk8ygZ0s0KQ+MdkfAo0Y4k8sQZ3Pi0lN0EktWr8+qFf1JsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771187020; c=relaxed/simple;
-	bh=6Kdf2BpURaqzJ5tPqh5y/Rwi3SsJvPkRPwGxkuShcQA=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=DKfr/DwN3tN2edjyLjUP5FHRsmflkawkXFXlD8yV/1VacKYXIcV//hZCgOHwW0T2VIc14GWmaI/4tjWz2pxhA3FFJiblNsnO4iI5xsqHGHK0iQLZYGBoyXo+Vp+gCCbYu24hUZF4p0wftS/25OnpMJk+o+s65+eabRKJOVMSzmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FdMj9jSL; arc=none smtp.client-ip=74.125.82.54
+	s=arc-20240116; t=1771187021; c=relaxed/simple;
+	bh=Dws17k26KGAr85CLdnsRSuagwr3FIgrtMwX4Rg8DbOs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=f8A/A8oN9dLDU3+sJsIdKmhDZbEoIoyMimvpKVyL/DcWupwT8iLZGuXsthOk9QOHsD4+8khtcumqAlNAP9H8meWduM7QI04mzN7Z4vO6LEa3Pmzpv4/4g0VUFoPUJ25f2g4N4ZoNS0hmQt6H5DK+i/2FUfXp+YoRX4g4K1xyI18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f/sQHXoJ; arc=none smtp.client-ip=74.125.82.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FdMj9jSL"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-12732165d1eso2804477c88.1
-        for <git@vger.kernel.org>; Sun, 15 Feb 2026 12:23:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f/sQHXoJ"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-126ea4e9694so6896367c88.1
+        for <git@vger.kernel.org>; Sun, 15 Feb 2026 12:23:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771187018; x=1771791818; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771187019; x=1771791819; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GdXbvYjBDFK8uMsUnrSc0ML5bPJ2cPyb5G+pgkpYy58=;
-        b=FdMj9jSLB3Nmyps18IH8XMvDNTSEk6fBhI9xrkYVEy1i25jhQHiMV7vLI9WsZH6zOQ
-         plLIKKGpbXxRKsLss33W4KBf06aF/0U0xblSZVV/e++CgYWUMfMky1riM4XkZVxepDLP
-         gkK4smHZGfDWyiZtJ44rYNNlgHmgOmU8pWLY2lITN+bEqWku8m/rkpj3t88J8HOqAKEn
-         WqSaQk0rV5feU5GCH9J3LuhFqsAABF15wz6Wb21EtZAN/iEZlzALauIrOZahZPFOqBjU
-         NFv9DdRj+jwP0uqVFRk5aMlOPY4KY599V83gHwFIMuJCGUqBRG6uQphif1qkiAEGaeJY
-         UAtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771187018; x=1771791818;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GdXbvYjBDFK8uMsUnrSc0ML5bPJ2cPyb5G+pgkpYy58=;
-        b=fmBRl2Z8SPZGJq1GsMKiWNE4UgDpY6m8ygorDiggrVtnVRKOS8qqShESSZxVl5q1uu
-         NijU32cN8iDYMLzCmMi3Pdi0Qa8Pqmj9Mn0SbVI0Iw4Pi7bXi89ABLmZ5NKO13buEQqS
-         v2Z8SCTQrarDjBzszr8ScR7ieh1yLaU5MaONfep1UVqKKR4lh9QuM+F2yfaRLWnVF7Q2
-         9AWVzh+ENGAYPofZtj0PSCwZKqlpJGbujb0XLydWjHvY75KaHKeuy1L19yGoqHFILY3I
-         acqpxBo8nPvTfUDo2f+zeMOWprLGUk+KJ5HChAP6LbfHZGAeYu4juvwq7etBnSKknFLH
-         v7Sg==
-X-Gm-Message-State: AOJu0YyYgiqkqM5C9i0ng53B3vqXWrYJqK9vli5RJp3R9nm3Gl5n8X28
-	Q4ZRaLN9Iof3sDSgQoU3/Z4aOpzJbZ1EsBx4YjUIpej1X7G81vSMawI86rmrEw==
-X-Gm-Gg: AZuq6aKKjWfBG5nBA4UFg0BvGRoSvL684ThZi3UHeKy4SPkNsjYWgYG6Ld3zO+3WP6U
-	LWTiGeUELhksQ0Gk1bznIh20zDHbO2XzM/6sYkXEq2+i9O1T2x6PYpZgsZfWmz64ChOgDL16yF6
-	t6Sl4HyzrL3N69dfl5kVVE/UIgpWnJf29e2MgSFIf6mVYwaCm7aIGIuisJlg/mMvw9XTB2g+ibZ
-	VKnm+qfRzg4i8vX2/yPzRvP3athI1vh9d9pZ3GhL/bnzNoBDZKcnSPt/nNU4elO73FFDoaeSeZ5
-	awHHNOW3IGKy1cEopsyZBmNhFeKuXE75+LqUxN9RDSFiE2H6SSYZ+3rJTfXoGidGxGPqpgoLiTu
-	kW0UDkqS7zvJXSiYeQnCTsmqKilG6WLanwgYHC4OF/c/qBnZ5HqtOXoXQ4AteU4Ce5j3w22DNyq
-	cNkwp6rVaFHISsQ2chXXMoREtLRBI=
-X-Received: by 2002:a05:7022:660d:b0:122:a2:ffcd with SMTP id a92af1059eb24-1273ae695c9mr3360344c88.23.1771187017664;
-        Sun, 15 Feb 2026 12:23:37 -0800 (PST)
+        bh=Vzua+15CwnwT15xjjXTtuTeuIDwUNy2mtjO+sHF4H/0=;
+        b=f/sQHXoJxUIvcN9L8ABLnrdrofyhsvJDne6Ow6c0WlI36rXUTE3H/+Z99EsqFFKILl
+         PziN0ixOes2xPAbq64QK6mfk3Wk3IM/nKVfOL1Pg2kMSfyiRNbayg186vNZhlL9ebF6d
+         9yIPI3gTZ5C2bzX3tIxU8m9V6/DzWWv+68JyaiA2zxlc6sKzC4WEdFoPclKGlbBp+8Rl
+         +F+68iNlQBj6rQQstuX7rbbKwotWMlHd18aY+SR/mmLrPtr9R1IDlIxAED2wp8w3NCx4
+         QYAXxgjE5IHvnDh4Y81Fw/vSzbJUzeTL/3ofZf8UUBmEA9+BLAE+mBmAMm43YMKMCr5g
+         WawQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771187019; x=1771791819;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Vzua+15CwnwT15xjjXTtuTeuIDwUNy2mtjO+sHF4H/0=;
+        b=nY2NTRZcJXs28lIrxlQii2Ggzqbo9rSnXLFDlJXGIJ6UidNPMdZ4pVJOq3h1pHSbku
+         /OGzmNZ3JemNM+COurpanyQLsoTU3A7nsc1dCz66lTmJwfpPuzdNk8+CdD2WLxC1dTDP
+         TsJNA0Tm8SqD3ZG1i9tBIWiZE1qQpC2ETM2qAyrXUrF4chD7ih95g/VwfST3z6asRIsh
+         8ly5u9dY6cRNmX7ffNx3peoLBKJQ6ym9AKs8hhmO+Y5naifrJtIQ3uHsQ33CiV57VLR8
+         8/PZRMke3eeTv/luPvK2rnbbT1P520TaWlTD5g/v2PUrMwqIOg1dQJpUUwY6c3HuTRyc
+         altw==
+X-Gm-Message-State: AOJu0Yyp2wWGctwgtAdvckRNdOFga6yMfEQFHU2NhzCjLNBAfm3Q40Qp
+	BscggdtkpcOdFuAUm+mnfOMXoFUglSQRGCuU2xP5zeAseOAZmCacHYaNAwJWPA==
+X-Gm-Gg: AZuq6aLPOM1g8bQuX4Mju7c/FdM6JjhpNLWbJmxDs5WOxZw8dQq8biRv8oUB6wDAWFo
+	p99JJ1IZaPjxAnQR3vHlpQbicbvlqtsYVKqozAXSsJMMazxnPtHJ51S0z6bVc1n++MkN25kHtbA
+	cUXZ6ifovnIC67vYqw8rtG5w6ygLWqeoCKEc6lluJdxFuDDo3NsCxFW0yMq265DUJjHOfOHlJ3Q
+	emfumTlx0x2kE1OVii7KjiDw/30th2Oar97eaa6ftaRUCCN92bm7OnZEaLIwIMYL/ygX5N9jIrE
+	J41QkJGOBRwoihoXv9/cfoiGN9J+ysRsqX9uOFCx4qlNFCiowUlEgwXUdckpOaWHQM0T9Z+KmaU
+	aSndhDVpVStaUGomHEb+FWuqmW16crzkcHfV5FSltFMgkS//n5CcGaOzwTwwDhfkq6GvcpcrST9
+	TkzxADSrSOI3N2etRaEO0hXRn5Yds=
+X-Received: by 2002:a05:7022:f91:b0:123:2dd0:10bc with SMTP id a92af1059eb24-1273adb383dmr3399565c88.10.1771187018825;
+        Sun, 15 Feb 2026 12:23:38 -0800 (PST)
 Received: from [127.0.0.1] ([172.182.226.211])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12742aff32asm7865289c88.0.2026.02.15.12.23.36
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12742b62455sm7971635c88.1.2026.02.15.12.23.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Feb 2026 12:23:37 -0800 (PST)
-Message-Id: <pull.2200.git.git.1771187016.gitgitgadget@gmail.com>
+        Sun, 15 Feb 2026 12:23:38 -0800 (PST)
+Message-Id: <3ef70fe673170925ccf2901a625fb458837e9fcf.1771187016.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2200.git.git.1771187016.gitgitgadget@gmail.com>
+References: <pull.2200.git.git.1771187016.gitgitgadget@gmail.com>
 From: "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 15 Feb 2026 20:23:34 +0000
-Subject: [PATCH 0/2] fetch: clobber existing tags with --prune-tags
+Date: Sun, 15 Feb 2026 20:23:35 +0000
+Subject: [PATCH 1/2] fetch: add a test for --force flag
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,28 +73,39 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Orgad Shaneh <orgads@gmail.com>
+Cc: Orgad Shaneh <orgads@gmail.com>,
+    Orgad Shaneh <orgad.shaneh@audiocodes.com>
 
-This was documented but not implemented.
+From: Orgad Shaneh <orgad.shaneh@audiocodes.com>
 
-In the flag description: prune local tags no longer on remote and clobber
-changed tags
+There are two ways to force-fetch tags that have changed: either by
+specifying an explicit forced ref (+refs/tags/*:refs/tags/*), or by
+using --force.
 
-In the documentation: ... to prune local tags that don't exist on the
-remote, and force-update those tags that differ.
+The first approach was already tested, but the second was not. This
+has now been addressed.
 
-Orgad Shaneh (2):
-  fetch: add a test for --force flag
-  fetch: clobber existing tags with --prune-tags
+Signed-off-by: Orgad Shaneh <orgad.shaneh@audiocodes.com>
+---
+ t/t5516-fetch-push.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
- builtin/fetch.c       |  2 +-
- t/t5516-fetch-push.sh | 13 +++++++++++--
- 2 files changed, 12 insertions(+), 3 deletions(-)
-
-
-base-commit: 852829b3dd2fe4e7c7fc4d8badde644cf1b66c74
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2200%2Forgads%2Ffetch-prune-clobber-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2200/orgads/fetch-prune-clobber-v1
-Pull-Request: https://github.com/git/git/pull/2200
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 29e2f17608..31df7faf56 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1105,7 +1105,10 @@ test_force_fetch_tag () {
+ 			git commit -m 'file1' &&
+ 			git tag $tag_args testTag &&
+ 			test_must_fail git -C ../child1 fetch origin tag testTag &&
+-			git -C ../child1 fetch origin '+refs/tags/*:refs/tags/*'
++			git -C ../child1 fetch origin '+refs/tags/*:refs/tags/*' &&
++			git tag $tag_args testTag HEAD^ &&
++			test_must_fail git -C ../child1 fetch origin tag testTag &&
++			git -C ../child1 fetch --force origin tag testTag
+ 		)
+ 	"
+ }
 -- 
 gitgitgadget
+
