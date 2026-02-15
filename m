@@ -1,138 +1,96 @@
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D204C25A2DD
-	for <git@vger.kernel.org>; Sun, 15 Feb 2026 20:19:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB05284B26
+	for <git@vger.kernel.org>; Sun, 15 Feb 2026 20:23:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771186796; cv=none; b=DMs2kqhi8dx94MdHfun7fhf2un3f/CNG6dWeS2BlEHOGbU7WZDO2CL06f0mIHAposCqJTzbcqI2/674F9dewofhldp8Vr6ca7cqwbx697V8+IWcNEnT2YHjy5C8auVXMHHDVLYwo29UgJR8iwVNnkS1IOkVDbeOo8lpDC4ArBfo=
+	t=1771187020; cv=none; b=KRD+vqjjc778vc0SakxQjs/3HxCT/fV13CmIWAax1M/6lgZzXMF3mSz66NQDQALhGdkFOs4XmVndlUk1yYTbvk4F0e08H2GL9oXgTzHKLMHfxOZmgi1rFsvZnyu7lrB/2JeNxhFgpIk7h7DUL4eRP01RW2WWrhOhHlI2bampHsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771186796; c=relaxed/simple;
-	bh=9x6TQfjcybZjJAD9tzINK5oCbvIBwCvnKpTMdZnItu8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSAdKBzHgtTPIgS7Xu4CRi4QuthRqDJfHa3TotV9LzmJ1I2781YV9V+DuNK8Z0FYqRqDMvoaRuPBlnUAbff2OYP21k1D0onzwDpU+b+B9zpcPl5fsw9og7mL5wM1/nm7YUr7khNWgVuXGWNfWglSzYsZxOgL7fAs2t/kG5IMqX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=KQkyorbw; arc=none smtp.client-ip=185.226.149.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1771187020; c=relaxed/simple;
+	bh=6Kdf2BpURaqzJ5tPqh5y/Rwi3SsJvPkRPwGxkuShcQA=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=DKfr/DwN3tN2edjyLjUP5FHRsmflkawkXFXlD8yV/1VacKYXIcV//hZCgOHwW0T2VIc14GWmaI/4tjWz2pxhA3FFJiblNsnO4iI5xsqHGHK0iQLZYGBoyXo+Vp+gCCbYu24hUZF4p0wftS/25OnpMJk+o+s65+eabRKJOVMSzmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FdMj9jSL; arc=none smtp.client-ip=74.125.82.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="KQkyorbw"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1vriau-008BOC-QI; Sun, 15 Feb 2026 21:19:52 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector2; h=Content-Transfer-Encoding:MIME-Version:References:
-	In-Reply-To:Message-ID:Date:Subject:Cc:To:From;
-	bh=wjByl8HBZQXJ9CC+6hCOF8Z+8K/hiUUWaDif3XIYJhY=; b=KQkyorbwK44ga9TKiHjlSGRjvu
-	oFntI/m4QG8mya7x9WK1oVYe6pfLqeqJKclEfCnISNpGDzIPHZ/1fOg/BgWqq9ru/FDAgnbVCMjkm
-	4uXRO3BK2Qrkvo1a0iT2BzD4CRT0SIpSQ1X0650KRsvw25cjXq8KkIl7Ozr0sDt2K+LA9L+pCJoWy
-	6snxDrZc5DkLZi3eVfn67nY6VAnM+WPqBJhary8WO52rXocclQhAePZnLkmnQNT/mCS9rVmKg0bn8
-	udLpPk3mGvEkqiTkMXXDpjDT0C411K0NGHweR943hgDfYTrubK6iG9yUIiIaQY7VnYkVj8HTdyB90
-	HcfKPmIA==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1vriau-0005ps-HW; Sun, 15 Feb 2026 21:19:52 +0100
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1vriab-00E3Nx-4f; Sun, 15 Feb 2026 21:19:33 +0100
-From: Colin Stagner <ask+git@howdoi.land>
-To: git@vger.kernel.org,
-	Zach FettersMoore <zach.fetters@apollographql.com>,
-	Christian Heusel <christian@heusel.eu>,
-	george@mail.dietrich.pub
-Cc: Colin Stagner <ask+git@howdoi.land>,
-	Christian Hesse <list@eworm.de>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] contrib/subtree: test history depth
-Date: Sun, 15 Feb 2026 14:18:46 -0600
-Message-ID: <20260215201906.889951-3-ask+git@howdoi.land>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260215201906.889951-1-ask+git@howdoi.land>
-References: <20260215201906.889951-1-ask+git@howdoi.land>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FdMj9jSL"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-12732165d1eso2804477c88.1
+        for <git@vger.kernel.org>; Sun, 15 Feb 2026 12:23:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771187018; x=1771791818; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GdXbvYjBDFK8uMsUnrSc0ML5bPJ2cPyb5G+pgkpYy58=;
+        b=FdMj9jSLB3Nmyps18IH8XMvDNTSEk6fBhI9xrkYVEy1i25jhQHiMV7vLI9WsZH6zOQ
+         plLIKKGpbXxRKsLss33W4KBf06aF/0U0xblSZVV/e++CgYWUMfMky1riM4XkZVxepDLP
+         gkK4smHZGfDWyiZtJ44rYNNlgHmgOmU8pWLY2lITN+bEqWku8m/rkpj3t88J8HOqAKEn
+         WqSaQk0rV5feU5GCH9J3LuhFqsAABF15wz6Wb21EtZAN/iEZlzALauIrOZahZPFOqBjU
+         NFv9DdRj+jwP0uqVFRk5aMlOPY4KY599V83gHwFIMuJCGUqBRG6uQphif1qkiAEGaeJY
+         UAtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771187018; x=1771791818;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GdXbvYjBDFK8uMsUnrSc0ML5bPJ2cPyb5G+pgkpYy58=;
+        b=fmBRl2Z8SPZGJq1GsMKiWNE4UgDpY6m8ygorDiggrVtnVRKOS8qqShESSZxVl5q1uu
+         NijU32cN8iDYMLzCmMi3Pdi0Qa8Pqmj9Mn0SbVI0Iw4Pi7bXi89ABLmZ5NKO13buEQqS
+         v2Z8SCTQrarDjBzszr8ScR7ieh1yLaU5MaONfep1UVqKKR4lh9QuM+F2yfaRLWnVF7Q2
+         9AWVzh+ENGAYPofZtj0PSCwZKqlpJGbujb0XLydWjHvY75KaHKeuy1L19yGoqHFILY3I
+         acqpxBo8nPvTfUDo2f+zeMOWprLGUk+KJ5HChAP6LbfHZGAeYu4juvwq7etBnSKknFLH
+         v7Sg==
+X-Gm-Message-State: AOJu0YyYgiqkqM5C9i0ng53B3vqXWrYJqK9vli5RJp3R9nm3Gl5n8X28
+	Q4ZRaLN9Iof3sDSgQoU3/Z4aOpzJbZ1EsBx4YjUIpej1X7G81vSMawI86rmrEw==
+X-Gm-Gg: AZuq6aKKjWfBG5nBA4UFg0BvGRoSvL684ThZi3UHeKy4SPkNsjYWgYG6Ld3zO+3WP6U
+	LWTiGeUELhksQ0Gk1bznIh20zDHbO2XzM/6sYkXEq2+i9O1T2x6PYpZgsZfWmz64ChOgDL16yF6
+	t6Sl4HyzrL3N69dfl5kVVE/UIgpWnJf29e2MgSFIf6mVYwaCm7aIGIuisJlg/mMvw9XTB2g+ibZ
+	VKnm+qfRzg4i8vX2/yPzRvP3athI1vh9d9pZ3GhL/bnzNoBDZKcnSPt/nNU4elO73FFDoaeSeZ5
+	awHHNOW3IGKy1cEopsyZBmNhFeKuXE75+LqUxN9RDSFiE2H6SSYZ+3rJTfXoGidGxGPqpgoLiTu
+	kW0UDkqS7zvJXSiYeQnCTsmqKilG6WLanwgYHC4OF/c/qBnZ5HqtOXoXQ4AteU4Ce5j3w22DNyq
+	cNkwp6rVaFHISsQ2chXXMoREtLRBI=
+X-Received: by 2002:a05:7022:660d:b0:122:a2:ffcd with SMTP id a92af1059eb24-1273ae695c9mr3360344c88.23.1771187017664;
+        Sun, 15 Feb 2026 12:23:37 -0800 (PST)
+Received: from [127.0.0.1] ([172.182.226.211])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12742aff32asm7865289c88.0.2026.02.15.12.23.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Feb 2026 12:23:37 -0800 (PST)
+Message-Id: <pull.2200.git.git.1771187016.gitgitgadget@gmail.com>
+From: "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 15 Feb 2026 20:23:34 +0000
+Subject: [PATCH 0/2] fetch: clobber existing tags with --prune-tags
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Orgad Shaneh <orgads@gmail.com>
 
-Add history depth checks to some of the subtree unit tests.
+This was documented but not implemented.
 
-These checks were previously introduced as part of 28a7e27cff
-(contrib/subtree: detect rewritten subtree commits, 2026-01-09),
-which has since been reverted.
+In the flag description: prune local tags no longer on remote and clobber
+changed tags
 
-Signed-off-by: Colin Stagner <ask+git@howdoi.land>
----
- contrib/subtree/t/t7900-subtree.sh | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+In the documentation: ... to prune local tags that don't exist on the
+remote, and force-update those tags that differ.
 
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 3ee2f95d86..dad8dea63a 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -411,8 +411,9 @@ test_expect_success 'split sub dir/ with --rejoin' '
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
--		git subtree split --prefix="sub dir" --annotate="*" --rejoin &&
--		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
-+		git subtree split --prefix="sub dir" --annotate="*" -b spl --rejoin &&
-+		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''" &&
-+		test "$(git rev-list --count spl)" -eq 5
- 	)
- '
- 
-@@ -442,18 +443,25 @@ test_expect_success 'split with multiple subtrees' '
- 	git -C "$test_count" subtree add --prefix=subADir FETCH_HEAD &&
- 	git -C "$test_count" fetch ./subB HEAD &&
- 	git -C "$test_count" subtree add --prefix=subBDir FETCH_HEAD &&
-+	test "$(git -C "$test_count" rev-list --count main)" -eq 7 &&
- 	test_create_commit "$test_count" subADir/main-subA1 &&
- 	test_create_commit "$test_count" subBDir/main-subB1 &&
- 	git -C "$test_count" subtree split --prefix=subADir \
--		--squash --rejoin -m "Sub A Split 1" &&
-+		--squash --rejoin -m "Sub A Split 1" -b a1 &&
-+	test "$(git -C "$test_count" rev-list --count main..a1)" -eq 1 &&
- 	git -C "$test_count" subtree split --prefix=subBDir \
--		--squash --rejoin -m "Sub B Split 1" &&
-+		--squash --rejoin -m "Sub B Split 1" -b b1 &&
-+	test "$(git -C "$test_count" rev-list --count main..b1)" -eq 1 &&
- 	test_create_commit "$test_count" subADir/main-subA2 &&
- 	test_create_commit "$test_count" subBDir/main-subB2 &&
- 	git -C "$test_count" subtree split --prefix=subADir \
--		--squash --rejoin -m "Sub A Split 2" &&
-+		--squash --rejoin -m "Sub A Split 2" -b a2 &&
-+	test "$(git -C "$test_count" rev-list --count main..a2)" -eq 2 &&
-+	test "$(git -C "$test_count" rev-list --count a1..a2)" -eq 1 &&
- 	test "$(git -C "$test_count" subtree split --prefix=subBDir \
--		--squash --rejoin -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" = ""
-+		--squash --rejoin -d -m "Sub B Split 1" -b b2 2>&1 | grep -w "\[1\]")" = "" &&
-+	test "$(git -C "$test_count" rev-list --count main..b2)" -eq 2 &&
-+	test "$(git -C "$test_count" rev-list --count b1..b2)" -eq 1
- '
- 
- # When subtree split-ing a directory that has other subtree
-@@ -477,6 +485,7 @@ do
- 			test_path_is_file subA/file1.t &&
- 			test_path_is_file subA/subB/file2.t &&
- 			git subtree split --prefix=subA --branch=bsplit &&
-+			test "$(git rev-list --count bsplit)" -eq 2 &&
- 			git checkout bsplit &&
- 			test_path_is_file file1.t &&
- 			test_path_is_file subB/file2.t &&
-@@ -489,6 +498,7 @@ do
- 				--prefix=subA/subB mksubtree &&
- 			test_path_is_file subA/subB/file3.t &&
- 			git subtree split --prefix=subA --branch=bsplit &&
-+			test "$(git rev-list --count bsplit)" -eq 3 &&
- 			git checkout bsplit &&
- 			test_path_is_file file1.t &&
- 			test_path_is_file subB/file2.t &&
+Orgad Shaneh (2):
+  fetch: add a test for --force flag
+  fetch: clobber existing tags with --prune-tags
+
+ builtin/fetch.c       |  2 +-
+ t/t5516-fetch-push.sh | 13 +++++++++++--
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+
+base-commit: 852829b3dd2fe4e7c7fc4d8badde644cf1b66c74
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2200%2Forgads%2Ffetch-prune-clobber-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2200/orgads/fetch-prune-clobber-v1
+Pull-Request: https://github.com/git/git/pull/2200
 -- 
-2.43.0
-
+gitgitgadget
