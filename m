@@ -1,119 +1,119 @@
-Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F0414A4F9
-	for <git@vger.kernel.org>; Sun, 15 Feb 2026 21:58:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC68C223DD6
+	for <git@vger.kernel.org>; Sun, 15 Feb 2026 22:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771192727; cv=none; b=VUIjv9S0aPRTXdRP+u/pK0tVd8mwbdc0irgD9Mf8qT6eDoEIMCSTpPIHsOUhC623wBm+piYjJf7LmGK4Fig9817Md9zu0/PKLDlmUr80BUEf8H+G2FlHQy1FCSTK/iJwvt4wb8+tRLrZHp21liO8aXw1bLwbG+0qRUe0w029S0E=
+	t=1771194223; cv=none; b=M2FlHoCMOMPLOgXheh63TG3R2+fJVIqFLwUOPZgvZ2hi2vEnhKdPu5NnRyOo5j8ZrmczOhAcyKuWTcyNb4cG3YftNiIriBClohEOT23P+LNKu8UY4k4z//IgpFJBDqearUNUY3367m0DMihlCsSEn0EZlpjRoX6iG7343A6qq0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771192727; c=relaxed/simple;
-	bh=2tzuGPSwiNUUPVC9OUmMK1FxstWoEMXw08/hzc2A2Z8=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=j1d24bVqB/HFuB6zWMo2sK8IKY7BnA1G3PrY+tCsF6t4iu64YcNSpU+iqzPgkVgYy7AVNlJnkEomQtwhJblhWzUA6XtGZcAR56+AVxDBZfoorqbqcg5YRjoqxt5N9muiqWdaQ4R96Vb7ZFOsxYeSKYgSIXe28ybpMyTPUGreI2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.eu; spf=pass smtp.mailfrom=posteo.eu; dkim=pass (2048-bit key) header.d=posteo.eu header.i=@posteo.eu header.b=ajwJHUh8; arc=none smtp.client-ip=185.67.36.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.eu
+	s=arc-20240116; t=1771194223; c=relaxed/simple;
+	bh=BoZMYK+mdwbPiSZ+JoZbbpxc4Ha1pbYRC9Vcfuel518=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Is23N9zI/O6JeAIwX2pvDnN9K5XSb3WRk4n0SqYe0yNqJF79rzQuNiuWKnnpcD1peGia5IY6ZcuafbSUuE1X2Fsme/IAn+KOMKQ5DtJND0PSeJxM3ZJRz2VoCN0mBRi76Sa8iaB+nwZRox0e7g608yjyMUmlyuJq5RIGybi9aHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dCHGxaHJ; arc=none smtp.client-ip=74.125.82.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.eu header.i=@posteo.eu header.b="ajwJHUh8"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout02.posteo.de (Postfix) with ESMTPS id 32E8A240101
-	for <git@vger.kernel.org>; Sun, 15 Feb 2026 22:58:43 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu; s=2017;
-	t=1771192723; bh=ZSLYihv24lkQtMotsRF4/F5xwmv2V/TYV2Gy5Svy6L8=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type:
-	 Content-Transfer-Encoding:From;
-	b=ajwJHUh8St0UWbIpeo2m6U/MwT/4F10cNVHUFfFEVMGy4a2tfypADYimXL7niLU+g
-	 fVmFbAHIWAYpS30M8Ni/3ngH5VCmijctTJ7im6pnCObFzFX07KQitTYF71ac/LqODv
-	 1kAM9aEMcKruuGKNjLgMmdC7I8MJKqhjd4cDyiML+AJ/TpCe3yKlopbDnUqwmuXaI1
-	 TQ4WbUNx9I2nIVj4UObkzRhREZNUpjqeookR9HgCxQfVnwz0UDQqCl9LfyfJ9iZG09
-	 WeHzkSnnBCYmcICESFQSGCbe9tlJ1oJHWkyI1s+iGi47OiBZdEhEgBsAIt1PMT4PF6
-	 ZwH5DaXWrNFRg==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4fDftV6DN8z9rxD
-	for <git@vger.kernel.org>; Sun, 15 Feb 2026 22:58:42 +0100 (CET)
-Message-ID: <d180884c-8108-4c8a-9cc7-5314a4f5a45a@posteo.eu>
-Date: Sun, 15 Feb 2026 21:58:42 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dCHGxaHJ"
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2ba6aa57d5fso2556086eec.1
+        for <git@vger.kernel.org>; Sun, 15 Feb 2026 14:23:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771194222; x=1771799022; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=j7Nt5lJRXvVPG/U+818yjSkoq5OM0tmsuamcOYyNGTQ=;
+        b=dCHGxaHJuRsg9X5lujd5Tzz7a7ZjaV1wEKtzaR3Ggps1cmprofh/plvY4P6+u223cZ
+         3HGBnA1wD8A23H6KfH1g94EQpLobLwh/7eikHw2Q1wmGm+wA1KR1xEenAQqaWkAHJ7hX
+         Zen9gcQhx9TwllwJ84zMnVjwPoiboJElMVVaoRNVGvhlP06ybF/52qiBzAKN4kCRqUSX
+         +uqRhK7uqKbdJFVYDAFrATRfLn8nV/Rxxx4A0yP/1zNiEgVX9SrDWhRgZMIqM6ZSxKHn
+         GEaacD8DhtPqFqqlDN7sheajfjoCGZgVeTH+2I8gtDzKlv6JrUZ8k220CwlymrMhFdCs
+         Mmqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771194222; x=1771799022;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=j7Nt5lJRXvVPG/U+818yjSkoq5OM0tmsuamcOYyNGTQ=;
+        b=pcd6OHQIT/zyKN7nOSunBIgePjIWdc+STi8Imp8SHMwWODO4hKG11CAUpW49L3/PWm
+         25giRmflsHKDZGrEE7xjHJLvjf+S0ulenPzKJo/92OlZPtqh7sbbuMhuQni4tCrCct8o
+         voBCduAn6ew1lNCoM61Piu/g/GB7nf92ewfE0PMGxGNFODBANDcucTNRzQwZvnc35Q5F
+         2fVJgZv4p82j38G2FtSpNU+YBbJqtPt8p+p41c/uRx3oLknBdlrAM8Mm/OpaQvj5/ovh
+         tJbyRrGI/8rZx7cfG3bANIrXtvTj8kw2DxlKXt4G0EhAHwGIiVxfqJzd0bMguRpNiLHF
+         P0zQ==
+X-Gm-Message-State: AOJu0YwgbDMl8lr+hAS4YcBfrBQxt1URDYlX3RxGcnmi0oNL1RAX1zsY
+	ZYUcGW+N/8sUyMa1ukFBq81QYdo0pmnoB1tCMNq5+Sjs9I6nV/lN+nsw
+X-Gm-Gg: AZuq6aLRIFJe5bJS0Hg3PSYFz79v4+EGO+B4Gu85e4RAdXhyPszocNTy6SLEWLjXtmq
+	quTKu4cUxep7842Fg5EV+ZtuZGGzbpglgFHZVTnybuuEmLz/+rDj6NHy+pSXCAMPavJJzhuymtD
+	TKrd5LusdSUVymUfyfNJIApCi+lVP3MHX/ltW/eSN4soPKe1z/jOog8WuoGYVmuAja7UHsc6ZzR
+	CO+wd0/vejuAlqadRMQw2/Xq6UpE+kmyv5qr/5ApBx9HNFNo5dFA5fisMmNUT3tmEVzEF/yYL28
+	5SE55trYyDPVMoOwCJGP63qnsDtRafert8BC3BCoOB/4tDybOkZChQf6bfaspDLvu459i4iE83s
+	w7XrNtMc08v3barAy8YAZWbZUJo51E8znGsY3EtbytE9Z8m4HhFPVGmbfQ34bUsVfyNGM5I7TwY
+	YULjypAlId8mgSFuA=
+X-Received: by 2002:a05:7300:1348:b0:2ba:aeb2:3f46 with SMTP id 5a478bee46e88-2bac93560ebmr1869451eec.15.1771194221701;
+        Sun, 15 Feb 2026 14:23:41 -0800 (PST)
+Received: from fedora ([2601:646:8081:3770::996e])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb543d40sm8507669eec.2.2026.02.15.14.23.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Feb 2026 14:23:41 -0800 (PST)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] cleaning up ref-filter lstrip/rstrip code
+In-Reply-To: <20260215085755.GA86262@coredump.intra.peff.net>
+References: <c752a4a6c750bc485804b43d7b525754e39e5fe0.1771046151.git.collin.funk1@gmail.com>
+	<20260215085755.GA86262@coredump.intra.peff.net>
+Date: Sun, 15 Feb 2026 14:23:40 -0800
+Message-ID: <87cy25ve6r.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Lorenz Leutgeb <lorenz.leutgeb@posteo.eu>
-Content-Language: en-US
-To: git@vger.kernel.org
-Subject: Push Certificates: Privacy Concerns Regarding the "pushee" Header
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Dear recipients,
+Jeff King <peff@peff.net> writes:
 
-I am working on an application built on top of Git, which wants to 
-ingest push certificates in order to keep (something similar to) a 
-transparency log (see 
-<https://people.kernel.org/monsieuricon/signed-git-pushes>).
+> On Fri, Feb 13, 2026 at 09:15:57PM -0800, Collin Funk wrote:
+>
+>> I generally don't like the casts like in rstrip_ref_components and
+>> rstrip_ref_components because they force you to write this:
+>> 
+>>     free((char *)free_ptr);
+>> 
+>> And the const doesn't really benefit readability, in my opinion.
+>
+> Agreed. It is especially egregious in this case because the const
+> variable is called to_free, and so its only purpose is to be non-const. ;)
+>
+>> That is a bit of a seperate topic than fixing the warning, though, so
+>> I left them as-is.
+>
+> It is a separate topic, but I feel like this is a good opportunity to
+> make this code less horrible. That is, there are some obvious
+> low-hanging cleanups that make the code more readable, and as a side
+> effect we clean up the const confusion. In such cases I think it is
+> worth veering off the path a little.
+>
+> I was going to catalog the numerous flaws I found, but by the time I
+> explained them, I had basically written patches and commit messages. So
+> here is what I would propose instead. I hope I'm not stealing your
+> thunder nor knocking us too far off our goal.
 
-For reasons that I will only go into detail upon request, in the context 
-of the application, logical "pushes to the network" are split into two 
-parts: The *first part* is always local (from one repository in one 
-directory on the filesystem, to another).  Bundled with the application 
-is a daemon.  The daemon process then takes over the *second part* of 
-the push, for further propagation of over the network in a peer-to-peer 
-manner.  However, one desires the *first* part already to be certified.
+No need to worry about stealing my thunder.
 
-This would result in push certificates of the following form (hashes 
-abbreviated, signature omitted):
+> The first three I hope are no-brainers, and the final one fixes the
+> glibc const issue. The fourth is perhaps more risky.
+>
+>   [1/4]: ref-filter: factor out refname component counting
+>   [2/4]: ref-filter: simplify lstrip_ref_components() memory handling
+>   [3/4]: ref-filter: simplify rstrip_ref_components() memory handling
+>   [4/4]: ref-filter: open-code slash search in rstrip_ref_components()
 
-	certificate version 0.1
-	pusher SHA256:xX6bp…T0  1771188983 +0100
-	pushee /home/lorenz/.example/storage/foo
-	nonce 1771188983-345389c
-	
-	0000000 ccae4e0 refs/heads/main
+The cleanups look good and certainly make the code more understandable.
 
-As you can see, this push certificate leaks a path on the application 
-users' filesystem.  Here it is quite obviously my home directory, but 
-actually the "storage path", is user-configurable at the application 
-level, and considered private.
+Also, I confirm that the last one fixes the glibc-2.43 warning.
 
-I do realize that the leak is in part due to the weird application 
-architecture.  Who would have guessed that I want to certify a push *on 
-my own filesystem*?  I am convinced the main motivation for this feature 
-were pushes (directly) over the network.  However, I also believe that 
-it could be of more general interest to allow the Git user to control 
-which/whether the pushee header is emitted.
-
-Handling of the pushee header was introduced to `send-pack.c` in 
-9be89160e7382a88e56a02bcf38f4694dd6542d6, over 11 years ago, and was not 
-touched since. Remarking on the current implementation, I do realize 
-that `transport_anonymize_url` is used to sanitize, in order not to leak 
-usernames, passwords, etc., which is appreciated.  However, file paths 
-are not removed.  This makes a great deal of sense as the same function 
-is used in other places where indeed the path on the filesystem is 
-expected.  I think the current implementation is sensible.  However, 
-allowing the Git user to ultimately control which URL is used allows for 
-the greatest flexibility.
-
-Note that the receiving end might inspect the push certificate in their 
-`pre-receive` handler, and reject to receive if the pushee is malformed.
-
-I would like to provide a patch that adds an option `git send-pack`, 
-which allows the Git user to specify the pushee or indicate that the 
-header should not be emitted.  My proposal is as follows.  Because of 
-the connection to signed pushes, and therefore to the the already 
-existing `--[no-]-signed=…` option, I would add 
-`--signed-pushee=<string>` as well as `--no-signed-pushee`.
-
-One edge case that I would like to get clarification on is how the empty 
-string should be handled.  I would consider `--signed-pushee=""` 
-invalid, making it impossible to specify the empty string as pushee, 
-erroring out and potentially hinting at `--no-signed-pushee`.
-
-Before I do so, I would like to ask for your feedback.  Would you accept 
-such patch if implemented cleanly?  What do you think, how should the 
-option be named and interpreted?  Further, if this option is added to 
-`git send-pack`, one natural question is whether `git push` should also 
-"inherit" it, as is the case with `--signed`?
-
-Kind regards,
-Lorenz Leutgeb
+Collin
