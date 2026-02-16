@@ -1,122 +1,221 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FC12C08AB
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 06:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55D9242D89
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 06:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771224368; cv=none; b=eTnuqZM/MKOFIbFJkcZixnuQuYugQlKtj/D7kMk8RIw1QTnBHeZK79bZcxWwIGjbBLe/ekj7Xc5IuSZwjEKROz7Zd5KOdQF/LLG/jN1EBYVCliE4Pk6CHlQoyph5j2PEow5ZiLYYMTAaVqT+JMixAZi+anqCnpQRBF1Fyf7YZ+w=
+	t=1771225008; cv=none; b=Ydx2+i91CcRgnRYoMbEWEDMzLQiRFO/uz7yMYZhi+UHVGi7Ywfmvm4F2/Z7zJw5C3de3ljirDIsrkrQyPoAbhL/qLc6jz9nP3zAqiPyrXumw0PE5uiBZHoJCFsoMoc0qKLcXJwyCY0UQbhsZbRu8WSOZqqA8t6xXix3c2Lvd90I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771224368; c=relaxed/simple;
-	bh=5XwLmW40GX9zGxDbLv098P6YcBGvbyeqtGn6z/ylDvs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JTcEwU7mKR7qAOR2n8KwodHE95048Z5z7+a2XMrHUebfzWpDPLjZ9K9K8QMl4xo+5YGvc3QMj/G1aS3rJJhFEJLh14qfnO45/Z1OZyM2koJrOHN3s9I/KL5Au+8ZyP3vYycJ0aE6XtIIX3h+S8wG0ZDtgjJhj6/D2W0NsfKSxWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l3ur2/hU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lI7Cnoqi; arc=none smtp.client-ip=202.12.124.146
+	s=arc-20240116; t=1771225008; c=relaxed/simple;
+	bh=vAGTvp+WM/1PtYDgT10UyBuHveZEIDYnxnsAXbgY3Ng=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B1sts9Ym2GgyqeP5Gm6UWnea+JUXyOgn7DQz8IaaBheos7G1351ocgbE4u2mph9jzFklFYpfcEGVaD9Hm3Oh81Kcrw3bnP0Iw94cTU2+RtGH54XjXV+TzxVQvehtJA1/0UB9Wt7XAUQVVhydmiQPUq6Vl5Wtz9DHg9f+JbhLE4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IUqIXrCK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ca8uFAnd; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l3ur2/hU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lI7Cnoqi"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 44A501D0021B;
-	Mon, 16 Feb 2026 01:46:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IUqIXrCK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ca8uFAnd"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2CF3B7A00B1;
+	Mon, 16 Feb 2026 01:56:46 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 16 Feb 2026 01:46:07 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 16 Feb 2026 01:56:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771224367;
-	 x=1771310767; bh=g7vI9gZRnPFRcm+y8RHkt+lGlGSYJGZWhioPG1Cj8x4=; b=
-	l3ur2/hUlu4yosw5ii3cE/k8RtlA7U5dYeq+cEqi/qwHQhQGiaIeaMzMuUfH2kcW
-	vbhY+GmjhNesYExFWv4jEyHoITJ6JqTb6RYN7R2FuDvTwamc4inCjNaBw5CQlnOH
-	4+qU8YjwkADGUX7Y4Tf2RdWZxNOWRPFS9/ZB4o8vSLiIMg+ULL6jPYq+JWyhgSwt
-	FEiBrncPervFdd8iE5U0vNMe94LLdk6EcJh5yp9w94TWE3VEDeyZYzdn7K1Vl/xr
-	F+G59V7YnuO9xXIyutT2lG4Qcm5RbmkzjYSw4TsgRQbx+WqBktOKqWkHK6Jz+5MA
-	LQ6h1ocYJZwu/rAImMESug==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771225005; x=1771311405; bh=blqMbcRfzs
+	0V7iFTybZEmM3WckAcdY9ONzs9ehhrQb4=; b=IUqIXrCKH8LU/O09HjT6dQJfq5
+	L3S1GkSGYQGBXYqwm6HCK1mArYREyY1yECBL6gUK4D1Pbsq51HjdrcS4L6k2GroE
+	BF04wDmlZ1Ctq4jAg/LLzAz6Mav08QVEryiEyelB8IAq/Ass/9/FeIEC83aHspax
+	1UxVLaw4SgNwobBBnC3pDyU1F78LqXpiuVNN5Hd0Jsf8IIOnRNqKNTW4xLGrhgJe
+	9+Tu/s0U+ranuhdFgbfvx3FLb5zVtO/N4Qot1ET/v7RPqq2mkG7Lq9tD8G4X4skF
+	1J4RzGG/xa8MakQcMGUkxOL7WNGKzLAUsiZhqZdjNUjcLOJGIvoYuhLcKE9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771224367; x=
-	1771310767; bh=g7vI9gZRnPFRcm+y8RHkt+lGlGSYJGZWhioPG1Cj8x4=; b=l
-	I7CnoqibmX8x+UhIRdrQnhh0Ux3F3pkUTkcr+KRviWxMJEqQNpXV6Mo6IT+5f+c6
-	XpDvbk2gl7P1brhA7FJFXwpSKhJY8qeqDHaocb/YiSUedZoBpsuXeJKzegQhjjCy
-	G85xQ/a5+vYhAFjCpiy7fcAkohcjjHKRxNxfeo7p4ZHCYjlCqllhZFiws/Wh6wLR
-	qwnCgEOa0ie6DBWyGmVv+06wNpb/OybgGvYl1HqRwQjwNIvTA3HSyI+LIiRhf5Hi
-	wu0lPb1qyjzKWtPp0tpL81cyNdOBQpVxppNmXdmQ65fBq683MscbYfIyfpIURPqP
-	beD+0W7dltWmapTtX9GwA==
-X-ME-Sender: <xms:L72SaUh589SYWlIykorRJkVG1nG43-XF8PzVD1sltXhe3IS_8aLXgQ>
-    <xme:L72SaUAUMAy9YYZ6uX7zM6Leg7eYiW1LH-9DIlDFwSr-4c98GR5H9pCVLuFVpIdnh
-    6BCC3imeUEIK4fR699HPVboNg9Np3mL7fTgY90sB_VBUX9_1LZt4L4>
-X-ME-Received: <xmr:L72SaREtlPvuPWjsWEMuqV6oUpdNdXsRJSMvo6INtkel9u-fY-5yBEQiU-8oAQKsuNl_gvgUkR0GGMRK8_txTcQPK5y-pC9D10LcxtNGrA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudeiudekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771225005; x=1771311405; bh=blqMbcRfzs0V7iFTybZEmM3WckAcdY9ONzs
+	9ehhrQb4=; b=ca8uFAnd3g1pDRl/ZY7mPhR9VQVaVQR99pYOCEDntsdw8k3odfL
+	HYjGNPRTVf0GVii4L2XFnf2AgG5xx9e7Yf6+ptocLGAOaNPK52ILu2Q3P7wNgYJN
+	Xt7fFthoQNtJ+H8PLljtVofdKCLSOPDTNoMY7FuxtVFGhwsdkSOq1vv9ZHosQYZj
+	IvXlwxK+ENKycJHMrJX896cHz4kBaWCSvsZwNqrOC5wGldv5V7eCuCXVUYCr4V4F
+	VBY2+/40mWOQf3QubPciec96UvY4uy6ZIH1hESTLBjQdFBmPOKAcpdnnyUytrCIC
+	dTqJwNlAvNDUoJ0rOPhdc34nwg5RSneDcJA==
+X-ME-Sender: <xms:rb-SaSy7goZzHNdms7vQVI0pfarNldRnaNV0DpQER7eaZW0ND3u66A>
+    <xme:rb-SaUTZ9kbsQIbk5vJk5i04t4TDuyFM6kA2FGXhBhzazPSQDSBSPXO-7b1bmJVu2
+    sPjgj25AfpNUqTl9hyhZOUVA7SrOiHLtkmfuH_o24i3zWhzCLez_4I>
+X-ME-Received: <xmr:rb-SaR-QRnWsQaFQilalQXoU_rLxsbmNK5odfUxZUBTn2W7a6mf3oFF7Kb6g-jMfoC9LaqeOIwjuNbbG1dGo_845BpMrIatUxAoRzj0VGQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudeivdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:L72SaUKEYGFR-DA8TjHOq2p_4-q7l7SZ2fp_k4_7ch-UaDUqfCGaHQ>
-    <xmx:L72SadnRBAOF8SbQPw62oBWo6l4RbhNtDpls7RIc7qow505MZncVGg>
-    <xmx:L72SaUSdOI4KXgGoZiemr4MFJk_41ZZq5yXrOwS5mL3GNRsBc0afZg>
-    <xmx:L72SaXIhAeaqKu9Y-_-MxBDUooegCLiy6qThLNCuGJb0X-aLwqj-kw>
-    <xmx:L72SaYnymi4UGyyJ2-DWPxiJHo3cEKW64SZwtsLIbbbVZRKI6ko9afUb>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeegtdekieekteekteejtdeljeeuudehjeekue
+    fhveelgffhiefhtdegveelteeikeenucffohhmrghinhepmhgvrhhgvggurdhpshdpghho
+    rdhpshdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:rb-SaTqA9Toh8yLvY036nADqAUTZQE_2gjYK3Ui0Up5mZBbx4eeTUw>
+    <xmx:rb-SaWky-hYFJqMOXwlfd69CPZdcNOkWk1QMgGW0mv4x9i_SziBObA>
+    <xmx:rb-SaSK4NbbT2zDQyY2i-k-pe3DVUCr7LDob9itevsBmvCIP7tcgjw>
+    <xmx:rb-SaTylOu-dl6h6P8ZWYFB0W06RGpFMeENxoSMl64sBsgFCfSjQdg>
+    <xmx:rb-SaWLPkKRqSTKTPyGWdayQ2eZJaU5y01tB7lE3n-YYNXg1JIBtFKS6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Feb 2026 01:46:05 -0500 (EST)
+ 16 Feb 2026 01:56:44 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a5617f12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Feb 2026 06:46:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5343b63a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Feb 2026 06:56:43 +0000 (UTC)
+Date: Mon, 16 Feb 2026 07:56:40 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Feb 2026 07:45:48 +0100
-Subject: [PATCH v3 5/5] Documentation/git-history: document default for
- "--update-refs="
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2026, #05)
+Message-ID: <aZK_qHzKslgb_P_O@pks.im>
+References: <xmqq4inkhymy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260216-b4-pks-history-dry-run-v3-5-c4db58a651fc@pks.im>
-References: <20260216-b4-pks-history-dry-run-v3-0-c4db58a651fc@pks.im>
-In-Reply-To: <20260216-b4-pks-history-dry-run-v3-0-c4db58a651fc@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- "D. Ben Knoble" <ben.knoble@gmail.com>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4inkhymy.fsf@gitster.g>
 
-While we document the values that can be passed to the "--update-refs="
-option, we don't give the user any hint what the default behaviour is.
-Document it.
+On Fri, Feb 13, 2026 at 06:01:09PM -0800, Junio C Hamano wrote:
+> * ps/pack-concat-wo-backfill (2026-02-11) 1 commit
+>  - builtin/pack-objects: don't fetch objects when merging packs
+> 
+>  "git pack-objects --stdin-packs" with "--exclude-promisor-objects"
+>  fetched objects that are promised, which was not wanted.  This has
+>  been fixed.
+> 
+>  Will merge to 'next'?
+>  source: <20260211-pks-pack-objects-stdin-skip-backfill-fetch-v1-1-870cad56d8ae@pks.im>
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-history.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Yeah, all the reviews have been favorable here, so I think this is ready
+for next.
 
-diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index 4dbe665ec4..cc019de697 100644
---- a/Documentation/git-history.adoc
-+++ b/Documentation/git-history.adoc
-@@ -70,7 +70,7 @@ OPTIONS
- 	Control which references will be updated by the command, if any. With
- 	`branches`, all local branches that point to commits which are
- 	descendants of the original commit will be rewritten. With `head`, only
--	the current `HEAD` reference will be rewritten.
-+	the current `HEAD` reference will be rewritten. Defaults to `branches`.
- 
- GIT
- ---
+> * jc/doc-cg-needswork (2026-02-12) 1 commit
+>  - CodingGuidelines: document NEEDSWORK comments
+> 
+>  A CodingGuidelines update.
+> 
+>  Will merge to 'next'?
+>  source: <xmqqldgxmzbj.fsf@gitster.g>
 
--- 
-2.53.0.352.gd1286b26eb.dirty
+There's still the one grammar issue pointed out in [1], but once that's
+fixed I think it can be merged.
 
+> * ps/history-ergonomics-updates (2026-02-13) 5 commits
+>  - Documentation/git-history: document default for "--update-refs="
+>  - builtin/history: rename "--ref-action=" to "--update-refs="
+>  - builtin/history: replace "--ref-action=print" with "--dry-run"
+>  - builtin/history: check for merges before asking for user input
+>  - builtin/history: perform revwalk checks before asking for user input
+> 
+>  UI improvements for "git history reword".
+> 
+>  Will merge to 'next'?
+>  source: <20260213-b4-pks-history-dry-run-v2-0-756ac376e9e5@pks.im>
+
+I've sent out v3 to fix up a small typo here.
+
+> * ps/meson-gitk-git-gui (2026-02-04) 1 commit
+>  - meson: wire up gitk and git-gui
+> 
+>  Plumb gitk/git-gui build and install procedure in meson based
+>  builds.
+> 
+>  Expecting a pull request for gitk.
+>  source: <20260204-b4-pks-meson-tcl-tk-v2-1-5bc3ccf3a8ce@pks.im>
+
+That PR for gitk has been merged now. The build for git-gui still has
+some issues (e.g. no askyesno helper), and fixes for this are in review
+upstream [2]. I think it's fine to merge this regardless as it won't
+cause builds to fail, but I'm also happy to wait for the git-gui bits to
+settle first.
+
+> * jc/checkout-switch-restore (2026-01-29) 2 commits
+>  - checkout: tell "parse_remote_branch" which command is calling it
+>  - checkout: pass program-readable token to unified "main"
+> 
+>  "git switch <name>", in an attempt to create a local branch <name>
+>  after a remote tracking branch of the same name gave an advise
+>  message to disambiguate using "git checkout", which has been
+>  updated to use "git switch".
+> 
+>  Will merge to 'next'?
+>  source: <20260129190616.645471-1-gitster@pobox.com>
+
+I think this is good to go.
+
+> * ps/for-each-ref-in-fixes (2026-02-05) 4 commits
+>  - bisect: simplify string_list memory handling
+>  - bisect: fix misuse of `refs_for_each_ref_in()`
+>  - pack-bitmap: fix bug with exact ref match in "pack.preferBitmapTips"
+>  - pack-bitmap: deduplicate logic to iterate over preferred bitmap tips
+> 
+>  A handful of places used refs_for_each_ref_in() API incorrectly,
+>  which has been corrected.
+> 
+>  Will merge to 'next'?
+>  cf. <aYmleK3kGqzLXyJe@pks.im>
+>  source: <20260206-b4-pks-fix-for-each-ref-in-misuse-v3-0-1e050c3d6a50@pks.im>
+
+This has been cooking for a while, and the latest version did address
+all feedback. So maybe it's time to merge this down now.
+
+> * ps/object-info-bits-cleanup (2026-02-11) 5 commits
+>  - odb: convert `odb_has_object()` flags into an enum
+>  - odb: convert object info flags into an enum
+>  - odb: drop gaps in object info flag values
+>  - builtin/fsck: fix flags passed to `odb_has_object()`
+>  - builtin/backfill: fix flags passed to `odb_has_object()`
+> 
+>  A couple of bugs in use of flag bits around odb API has been
+>  corrected, and the flag bits reordered.
+> 
+>  Will merge to 'next'?
+>  source: <20260212-b4-pks-read-object-info-flags-v2-0-3bfa9bb149ef@pks.im>
+
+Fine with me.
+
+> * ps/odb-for-each-object (2026-01-26) 16 commits
+>  - odb: drop unused `for_each_{loose,packed}_object()` functions
+>  - reachable: convert to use `odb_for_each_object()`
+>  - builtin/pack-objects: use `packfile_store_for_each_object()`
+>  - odb: introduce mtime fields for object info requests
+>  - treewide: drop uses of `for_each_{loose,packed}_object()`
+>  - treewide: enumerate promisor objects via `odb_for_each_object()`
+>  - builtin/fsck: refactor to use `odb_for_each_object()`
+>  - odb: introduce `odb_for_each_object()`
+>  - packfile: introduce function to iterate through objects
+>  - packfile: extract function to iterate through objects of a store
+>  - object-file: introduce function to iterate through objects
+>  - object-file: extract function to read object info from path
+>  - odb: fix flags parameter to be unsigned
+>  - odb: rename `FOR_EACH_OBJECT_*` flags
+>  - Merge branch 'ps/packfile-store-in-odb-source' into ps/odb-for-each-object
+>  - Merge branch 'ps/read-object-info-improvements' into ps/odb-for-each-object
+> 
+>  Revamp object enumeration API around odb.
+> 
+>  Will merge to 'next'?
+>  cf. <aXk2FjTUMMThs5Kp@nand.local>
+>  source: <20260126-pks-odb-for-each-object-v4-0-5a64a038c791@pks.im>
+
+Same here, this has been cooking for a long time by now, and the
+discussion around mtime has stalled after I clarified intentions and
+future plans to evolve it further. So I'd love to see this merged.
+
+Thanks!
+
+Patrick
+
+[1]: <aZBMQGQPiE3cJBUq@ugly.lan> 
+[2]: https://github.com/j6t/git-gui/pull/31
