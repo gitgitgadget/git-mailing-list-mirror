@@ -1,63 +1,63 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FE630B508
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 13:23:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BDB303A02
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 13:23:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771248226; cv=none; b=dRbhW1AZtHPTbOqEPYMgXeQqOWD6ZH1GvfTM1FmLChlN2RNqSwUCk3NO9IseWyK8B5D0ROw1QTVUUqJFtRDKk3dNf2o+DjqsyNtBeLoGRMXWNFhxVn3+nqq4wDzYpzefCWPSS7xmCMOkdWtsgimpWgWArvnOXP63QB71pEH/Twk=
+	t=1771248227; cv=none; b=W1AkEIcML5wbjpNd2WrlyBJwliWDjeQKhB6WhbOfdmgDyCYCtFQe+6NeQG10r0ynPJdo9U1oar5/Yd6ZW52brd9csamUqBvMoIlNYzjZGPWFm4NNGNJn6xMvmQQRNOGaoNIMftEBZuGB7dokbkcP4RXAFmUU0oSsG9fMwXghptY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771248226; c=relaxed/simple;
-	bh=U5rxdEzoK5k+W3fnMl0Efoa0ELRJhMo3o4beXj9hzCE=;
+	s=arc-20240116; t=1771248227; c=relaxed/simple;
+	bh=5b+jSRh3DWiuKR3qEZ6cxducKUICqBuqXsSiEwaXOgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ht6owqLQXvs5E7nrMU67dQ6Gf8EZwMKHr/g387jfm6W4Y4D7G9IA2xmaqfgZVKVg7w3A7/JHF3d4nu4MRyWXhU66XMBy+1ZKRNnU7/NIru+CI5YO9A5uSlFl1BIcivHsvMJOi8f/l5IuKBAyH4Ypb3cEBnXdlMZitSc9UkVIDIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y6EvtiXY; arc=none smtp.client-ip=209.85.128.67
+	 MIME-Version; b=Tgp/O6RNdyte/V4Gda4G+OPINfFW518JO/RJU8X4AKt8ylABfQeL0LuFBZH3mYo9KbsGJHHYlKWFfSzmvlUkSQyR+wunx4L9Ovb1BuLNuuBMLE94ppngokOqvRmFwliS0cqvJMkR/qODXSdQ7KDsrbEfOip4YRjla9RdOQYkdGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dKKjBUL4; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y6EvtiXY"
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-4836d4c26d3so23406135e9.2
-        for <git@vger.kernel.org>; Mon, 16 Feb 2026 05:23:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dKKjBUL4"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-436263e31abso3069648f8f.1
+        for <git@vger.kernel.org>; Mon, 16 Feb 2026 05:23:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771248223; x=1771853023; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771248224; x=1771853024; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q7VaWIaYKcqkp5o2SRvCxZUXuEGnr+aYsoYFSRhDk3Y=;
-        b=Y6EvtiXYJOyHf8hz/vFsGcmCpyvLqjprIxdfyY9Xsa5fhXh9ljKoIjHXdZGGI3FN0p
-         flrjZXtuVGl5ddw86+KFCSxTVf74jSOOTaKKzjL1Vh+b1LuzB8dNEKFAQzYXoXmkqnSV
-         rt2N0sj/BFevv0bJfoKXpIPHk/A7YevslR+wGa8DuchhMP4cvjPD4fFkvel50Sr+oxxP
-         8UvOhfOJLplwolN1srTS8P7swhyUj8mbrgIoSbCfN675qCtoGUleccJ7g5ovwrZqcf1r
-         pVKXnw88fQdiPTx+HIXLameVjVTSGryMh66pxso3tPUNbM2MvjGWpIfQCRFWKEHvihbg
-         OCfQ==
+        bh=kEX9cvQFDXx2riBXn3VU4GwVuFAlm6CmMFDDOqvpmBk=;
+        b=dKKjBUL4dUVy5xYBx3ggHWFUsGX5ixVrp/anpPSPX6FWN9/Z/5L7XrANY7oIh6CvuJ
+         lZ9eVNhFwpzzA2AFOKie55ME/3cy9cT8TEsixzeGWqaMldnBlkg8je9v63Tv03E4Xi6B
+         hzsFIjPukzI2QlLqaa62eCX9C4WfkcRstZeUV+IF0mNxQ0qw70h+YsMdi09xrBNIC7o1
+         PYS5Qc9pghqKVYrkRhaZ4TJDSCFMjN+3xDm4kPN8f1vXY5Q4BbE+2lwYE+TxQf2ArskE
+         Bv2XGc0hC7QZdiDjD8K8MOATZemj1n/ja31FjU4NYQefgSKc6Y1Wv6UuZjMVM9KGMFCK
+         /lDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771248223; x=1771853023;
+        d=1e100.net; s=20230601; t=1771248224; x=1771853024;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Q7VaWIaYKcqkp5o2SRvCxZUXuEGnr+aYsoYFSRhDk3Y=;
-        b=veJzUIXByIQxobK/iSuSctA+16ESp8wOiNziuuqBAxn4BgA5oJKY6HEfC81egeVCpm
-         6ok3nIuG1D2RVOE+p3Nc6h6urEzCN+FV9nxWNZOnZOOYTojfhl0K1LGeC4sHkNQyUp7o
-         1AXdw6nt8sUxfjxk69T2SvFkPiPCEPn0Q8F+wew6truglU1yg55fNDnc/kn0kJJgP6xw
-         u+F00e07SYdqDEpsUpzF6uvYrhT2tgpCQUs8x+0A5TZrAI80ADaRC9O7Ixe/lMzGST/p
-         FLAnQtXlSeRUKhesP416BEAnM4H+7Wixrp1vE8OyJfYH+3UIbk39obBUrvHffZg6GKN5
-         p0vw==
-X-Gm-Message-State: AOJu0Yw9fEIj0pR8XBXb4eJLhDlxCjIoqj31xSI6+D2sQTNMwxbRi413
-	sWqBPvbXlSk8zgVCDm3tag+/R3lPQKiiqHFd/q82oZpUtBTwuYNd2G1PoVOdmEQf
-X-Gm-Gg: AZuq6aIOniHaNobVwzRu0jlM+gSlyqNreP2qJdIUR6Ky/PbUkYB6bavTet13hoXy4he
-	nrI8fJim8ux5iacp2N5SBKl2JLrQRMajELut6Pi0gAfXCg8QmH4LjMgBW7KYVxp2nLYF9rlxxG6
-	DQXcDcwZUeL1aZnoHe34daV3P+iqLem8zPAOEQuGQXcralpCD97GfHh5phevJs6h3RqYaLILIFC
-	oYjrEfB3H3y508FkVfxOYCjp9r9H50KV1vvJrT53XGCVeoC0M+ixApoIX+mfdeE/ILlOWekw7LH
-	ff+dIUccowrrOacdu1dwQ4LkGDL7Ckd93G/Y5cxlFCEJ924Nlyr+ym3UeMfuQ9rx8FtGQI6cPV1
-	fHwIqS+y9Z/AVNBO5kERx/e7qXzuM/nPm4KBJ7krivAqOqVEE5sscyBULnjh41R1/Rh9Hle9lpv
-	cl40pKFRDMyc/Lsaou+A6fXFgL9qD7VU1+NXWL/HRKfzeG+RJebwFdC9BDejVPHxL9NLZkbjQon
-	G2laGd109dPiqG/etlWyHHtEhnGFVz6DYNnDUckqNEbvYMQXA==
-X-Received: by 2002:a05:600c:1c21:b0:483:47ae:7c00 with SMTP id 5b1f17b1804b1-48373a3eac4mr196067395e9.20.1771248222460;
-        Mon, 16 Feb 2026 05:23:42 -0800 (PST)
+        bh=kEX9cvQFDXx2riBXn3VU4GwVuFAlm6CmMFDDOqvpmBk=;
+        b=QJElrABXuIWTLL+A7f/szj75orcnZNrFHoJ/pWnaKj7kfK3uNAzXlctYPQGRlHD9AM
+         UDT3BKrAX5tzxPgUetHUwqcaRu4+Dbef8STktCFa+LSFdw5qtewst3aFy9qwZLIWIC4p
+         vbDKNJqzfSwzxX/g3Q04zk8WtZWfDA4SeW9fRo27D5xV4Fb8vTceLzPw+E3ospYCK+RD
+         HGOFBOwMzZNhtGh9tQtyHHLuT1aJz1LFoFQjEK23/M9lnhNdxz2V0M8noN6RITnA0L3E
+         QVqKu1sw6nR74remA8qrtr2PX9xq+krUIVOLj0o9VodghAz1A48oJZJhcx5jgFxQ5x2t
+         6kkA==
+X-Gm-Message-State: AOJu0Yzh+i8TI5epwiWGVTd/SGh3SWEC8E61pdDEJ968E0fNNJkG2E5q
+	jOEWFnsj8IeV068cLL3fBolpNzTWFctff2+mNlRjU6fgVhChOYJM59Zvm+PYrA==
+X-Gm-Gg: AZuq6aJw3dbom4oQdDuu4tXs2fsrkBmL14YpV6HogxqKJb4mg9DC/2NZ1F6optR1EOW
+	Vn9L92YudWPwnrXMlTDaaRKOCE6in9OsjXx22M3l/YaY/tHaJ8k670dPSDuVPkSgazKTMhewMV7
+	uPn7Fb0f/jealuu49XHCFpzDp59pR/VJXp2Tj8xU1+R1ykqL8QwxUu8ZMEnj7xK2CkYX5Xh3tOA
+	mECVs0vZzCcni/8tyRVkhv3MPBkwSC1syNfux1TKBq57qjJ3TI89hRn+N9KTJwUiWYpJ76NvpwD
+	AhWJec4Z4QarC3/CBuDjeFxyIJLGKPGX/ZOuS8RUF5/NKib82k0IKA7CWjWCguyUkp7Olvtz+5W
+	ksJ0tETfjNIHQe7E3CQB8SzXOpQa3errk8V5DFMxiTsdVU0goylODscz9iX+R0ebsOvC7Op94gZ
+	7ZYX5rPEnX8R0yieP9qMyd2M4/PjTqi6A8XnJRyWjTGR8bNNL5kNPdKpbgPqfJVnRMFRHcBxdkl
+	CuJftNX988KGQWHGsrOWO3kKTo3Y8TPuk1C+do=
+X-Received: by 2002:a05:600c:1986:b0:483:71f9:37f3 with SMTP id 5b1f17b1804b1-483739ff8cdmr186519145e9.1.1771248223903;
+        Mon, 16 Feb 2026 05:23:43 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48370ac3564sm235688025e9.5.2026.02.16.05.23.41
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48370ac3564sm235688025e9.5.2026.02.16.05.23.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Feb 2026 05:23:41 -0800 (PST)
+        Mon, 16 Feb 2026 05:23:43 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -69,9 +69,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 5/9] doc: fetch: document `--filter=<filter-spec>` option
-Date: Mon, 16 Feb 2026 14:23:11 +0100
-Message-ID: <20260216132317.15894-6-christian.couder@gmail.com>
+Subject: [PATCH v4 6/9] list-objects-filter-options: support 'auto' mode for --filter
+Date: Mon, 16 Feb 2026 14:23:12 +0100
+Message-ID: <20260216132317.15894-7-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.53.0.77.g4627d513d6
 In-Reply-To: <20260216132317.15894-1-christian.couder@gmail.com>
 References: <20260212100843.883623-1-christian.couder@gmail.com>
@@ -84,39 +84,285 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `--filter=<filter-spec>` option is documented in most commands that
-support it except `git fetch`.
+In a following commit, we are going to allow passing "auto" as a
+<filterspec> to the `--filter=<filterspec>` option, but only for some
+commands. Other commands that support the `--filter=<filterspec>`
+option should still die() when 'auto' is passed.
 
-Let's fix that and document this option. To ensure consistency across
-commands, let's reuse the exact description currently found in
-`git clone`.
+Let's set up the "list-objects-filter-options.{c,h}" infrastructure to
+support that:
+
+- Add a new `unsigned int allow_auto_filter : 1;` flag to
+  `struct list_objects_filter_options` which specifies if "auto" is
+  accepted or not by the current command.
+- Change gently_parse_list_objects_filter() to parse "auto" if it's
+  accepted.
+- Make sure we die() if "auto" is combined with another filter.
+- Update list_objects_filter_release() to preserve the
+  allow_auto_filter flag, as this function is often called (via
+  opt_parse_list_objects_filter) to reset the struct before parsing a
+  new value.
+
+Let's also update `list-objects-filter.c` to recognize the new
+`LOFC_AUTO` choice. Since "auto" must be resolved to a concrete filter
+before filtering actually begins, initializing a filter with
+`LOFC_AUTO` is invalid and will trigger a BUG().
+
+Note that ideally combining "auto" with "auto" could be allowed, but in
+practice, it's probably not worth the added code complexity. And if we
+really want it, nothing prevents us to allow it in future work.
+
+If we ever want to give a meaning to combining "auto" with a different
+filter too, nothing prevents us to do that in future work either.
+
+Also note that the new `allow_auto_filter` flag depends on the command,
+not user choices, so it should be reset to the command default when
+`struct list_objects_filter_options` instances are reset.
+
+While at it, let's add a new "u-list-objects-filter-options.c" file for
+`struct list_objects_filter_options` related unit tests. For now it
+only tests gently_parse_list_objects_filter() though.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/fetch-options.adoc | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ Makefile                                     |  1 +
+ list-objects-filter-options.c                | 39 ++++++++++++--
+ list-objects-filter-options.h                |  6 +++
+ list-objects-filter.c                        |  8 +++
+ t/meson.build                                |  1 +
+ t/unit-tests/u-list-objects-filter-options.c | 53 ++++++++++++++++++++
+ 6 files changed, 105 insertions(+), 3 deletions(-)
+ create mode 100644 t/unit-tests/u-list-objects-filter-options.c
 
-diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
-index fcba46ee9e..1ef9807d00 100644
---- a/Documentation/fetch-options.adoc
-+++ b/Documentation/fetch-options.adoc
-@@ -88,6 +88,16 @@ linkgit:git-config[1].
- This is incompatible with `--recurse-submodules=(yes|on-demand)` and takes
- precedence over the `fetch.output` config option.
+diff --git a/Makefile b/Makefile
+index 4ac44331ea..9e174dd06c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1518,6 +1518,7 @@ CLAR_TEST_SUITES += u-dir
+ CLAR_TEST_SUITES += u-example-decorate
+ CLAR_TEST_SUITES += u-hash
+ CLAR_TEST_SUITES += u-hashmap
++CLAR_TEST_SUITES += u-list-objects-filter-options
+ CLAR_TEST_SUITES += u-mem-pool
+ CLAR_TEST_SUITES += u-oid-array
+ CLAR_TEST_SUITES += u-oidmap
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 7420bf81fe..7f3e7b8f50 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -20,6 +20,8 @@ const char *list_object_filter_config_name(enum list_objects_filter_choice c)
+ 	case LOFC_DISABLED:
+ 		/* we have no name for "no filter at all" */
+ 		break;
++	case LOFC_AUTO:
++		return "auto";
+ 	case LOFC_BLOB_NONE:
+ 		return "blob:none";
+ 	case LOFC_BLOB_LIMIT:
+@@ -52,7 +54,16 @@ int gently_parse_list_objects_filter(
+ 	if (filter_options->choice)
+ 		BUG("filter_options already populated");
  
-+`--filter=<filter-spec>`::
-+	Use the partial clone feature and request that the server sends
-+	a subset of reachable objects according to a given object filter.
-+	When using `--filter`, the supplied _<filter-spec>_ is used for
-+	the partial fetch. For example, `--filter=blob:none` will filter
-+	out all blobs (file contents) until needed by Git. Also,
-+	`--filter=blob:limit=<size>` will filter out all blobs of size
-+	at least _<size>_. For more details on filter specifications, see
-+	the `--filter` option in linkgit:git-rev-list[1].
+-	if (!strcmp(arg, "blob:none")) {
++	if (!strcmp(arg, "auto")) {
++		if (!filter_options->allow_auto_filter) {
++			strbuf_addstr(errbuf,
++				      _("'auto' filter not supported by this command"));
++			return 1;
++		}
++		filter_options->choice = LOFC_AUTO;
++		return 0;
 +
- ifndef::git-pull[]
- `--write-fetch-head`::
- `--no-write-fetch-head`::
++	} else if (!strcmp(arg, "blob:none")) {
+ 		filter_options->choice = LOFC_BLOB_NONE;
+ 		return 0;
+ 
+@@ -146,10 +157,22 @@ static int parse_combine_subfilter(
+ 
+ 	decoded = url_percent_decode(subspec->buf);
+ 
+-	result = has_reserved_character(subspec, errbuf) ||
+-		gently_parse_list_objects_filter(
++	result = has_reserved_character(subspec, errbuf);
++	if (result)
++		goto cleanup;
++
++	result = gently_parse_list_objects_filter(
+ 			&filter_options->sub[new_index], decoded, errbuf);
++	if (result)
++		goto cleanup;
++
++	result = (filter_options->sub[new_index].choice == LOFC_AUTO);
++	if (result) {
++		strbuf_addstr(errbuf, _("an 'auto' filter cannot be combined"));
++		goto cleanup;
++	}
+ 
++cleanup:
+ 	free(decoded);
+ 	return result;
+ }
+@@ -263,6 +286,9 @@ void parse_list_objects_filter(
+ 	} else {
+ 		struct list_objects_filter_options *sub;
+ 
++		if (filter_options->choice == LOFC_AUTO)
++			die(_("an 'auto' filter is incompatible with any other filter"));
++
+ 		/*
+ 		 * Make filter_options an LOFC_COMBINE spec so we can trivially
+ 		 * add subspecs to it.
+@@ -277,6 +303,9 @@ void parse_list_objects_filter(
+ 		if (gently_parse_list_objects_filter(sub, arg, &errbuf))
+ 			die("%s", errbuf.buf);
+ 
++		if (sub->choice == LOFC_AUTO)
++			die(_("an 'auto' filter is incompatible with any other filter"));
++
+ 		strbuf_addch(&filter_options->filter_spec, '+');
+ 		filter_spec_append_urlencode(filter_options, arg);
+ 	}
+@@ -317,15 +346,19 @@ void list_objects_filter_release(
+ 	struct list_objects_filter_options *filter_options)
+ {
+ 	size_t sub;
++	unsigned int allow_auto_filter;
+ 
+ 	if (!filter_options)
+ 		return;
++
++	allow_auto_filter = filter_options->allow_auto_filter;
+ 	strbuf_release(&filter_options->filter_spec);
+ 	free(filter_options->sparse_oid_name);
+ 	for (sub = 0; sub < filter_options->sub_nr; sub++)
+ 		list_objects_filter_release(&filter_options->sub[sub]);
+ 	free(filter_options->sub);
+ 	list_objects_filter_init(filter_options);
++	filter_options->allow_auto_filter = allow_auto_filter;
+ }
+ 
+ void partial_clone_register(
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index 7b2108b986..77d7bbc846 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -18,6 +18,7 @@ enum list_objects_filter_choice {
+ 	LOFC_SPARSE_OID,
+ 	LOFC_OBJECT_TYPE,
+ 	LOFC_COMBINE,
++	LOFC_AUTO,
+ 	LOFC__COUNT /* must be last */
+ };
+ 
+@@ -50,6 +51,11 @@ struct list_objects_filter_options {
+ 	 */
+ 	unsigned int no_filter : 1;
+ 
++	/*
++	 * Is LOFC_AUTO a valid option?
++	 */
++	unsigned int allow_auto_filter : 1;
++
+ 	/*
+ 	 * BEGIN choice-specific parsed values from within the filter-spec. Only
+ 	 * some values will be defined for any given choice.
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index acd65ebb73..78316e7f90 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -745,6 +745,13 @@ static void filter_combine__init(
+ 	filter->finalize_omits_fn = filter_combine__finalize_omits;
+ }
+ 
++static void filter_auto__init(
++	struct list_objects_filter_options *filter_options UNUSED,
++	struct filter *filter UNUSED)
++{
++	BUG("LOFC_AUTO should have been resolved before initializing the filter");
++}
++
+ typedef void (*filter_init_fn)(
+ 	struct list_objects_filter_options *filter_options,
+ 	struct filter *filter);
+@@ -760,6 +767,7 @@ static filter_init_fn s_filters[] = {
+ 	filter_sparse_oid__init,
+ 	filter_object_type__init,
+ 	filter_combine__init,
++	filter_auto__init,
+ };
+ 
+ struct filter *list_objects_filter__init(
+diff --git a/t/meson.build b/t/meson.build
+index a04a7a86cf..bec4c72327 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -4,6 +4,7 @@ clar_test_suites = [
+   'unit-tests/u-example-decorate.c',
+   'unit-tests/u-hash.c',
+   'unit-tests/u-hashmap.c',
++  'unit-tests/u-list-objects-filter-options.c',
+   'unit-tests/u-mem-pool.c',
+   'unit-tests/u-oid-array.c',
+   'unit-tests/u-oidmap.c',
+diff --git a/t/unit-tests/u-list-objects-filter-options.c b/t/unit-tests/u-list-objects-filter-options.c
+new file mode 100644
+index 0000000000..f7d73701b5
+--- /dev/null
++++ b/t/unit-tests/u-list-objects-filter-options.c
+@@ -0,0 +1,53 @@
++#include "unit-test.h"
++#include "list-objects-filter-options.h"
++#include "strbuf.h"
++
++/* Helper to test gently_parse_list_objects_filter() */
++static void check_gentle_parse(const char *filter_spec,
++			       int expect_success,
++			       int allow_auto,
++			       enum list_objects_filter_choice expected_choice)
++{
++	struct list_objects_filter_options filter_options = LIST_OBJECTS_FILTER_INIT;
++	struct strbuf errbuf = STRBUF_INIT;
++	int ret;
++
++	filter_options.allow_auto_filter = allow_auto;
++
++	ret = gently_parse_list_objects_filter(&filter_options, filter_spec, &errbuf);
++
++	if (expect_success) {
++		cl_assert_equal_i(ret, 0);
++		cl_assert_equal_i(expected_choice, filter_options.choice);
++		cl_assert_equal_i(errbuf.len, 0);
++	} else {
++		cl_assert(ret != 0);
++		cl_assert(errbuf.len > 0);
++	}
++
++	strbuf_release(&errbuf);
++	list_objects_filter_release(&filter_options);
++}
++
++void test_list_objects_filter_options__regular_filters(void)
++{
++	check_gentle_parse("blob:none", 1, 0, LOFC_BLOB_NONE);
++	check_gentle_parse("blob:none", 1, 1, LOFC_BLOB_NONE);
++	check_gentle_parse("blob:limit=5k", 1, 0, LOFC_BLOB_LIMIT);
++	check_gentle_parse("blob:limit=5k", 1, 1, LOFC_BLOB_LIMIT);
++	check_gentle_parse("combine:blob:none+tree:0", 1, 0, LOFC_COMBINE);
++	check_gentle_parse("combine:blob:none+tree:0", 1, 1, LOFC_COMBINE);
++}
++
++void test_list_objects_filter_options__auto_allowed(void)
++{
++	check_gentle_parse("auto", 1, 1, LOFC_AUTO);
++	check_gentle_parse("auto", 0, 0, 0);
++}
++
++void test_list_objects_filter_options__combine_auto_fails(void)
++{
++	check_gentle_parse("combine:auto+blob:none", 0, 1, 0);
++	check_gentle_parse("combine:blob:none+auto", 0, 1, 0);
++	check_gentle_parse("combine:auto+auto", 0, 1, 0);
++}
 -- 
 2.53.0.77.g4627d513d6
 
