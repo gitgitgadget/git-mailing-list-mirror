@@ -1,56 +1,56 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995532EBBA9
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 06:46:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FC12C08AB
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 06:46:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771224366; cv=none; b=oEwmZDJ4Cl09EFSaP6q06KaP0oJ3YUL+Px1dKr+2wyC14ooteQEnyGQcGptEDSBtlvITwnfiefa1vUj0OE3a8v+J58P9fDvoQtBYdgY7O0qRL2gEXw+PZ2uVVxH1/WDkPuXpJMIaEYlNTPhkwNacIdY39/q0nvir1MjUl/asgC4=
+	t=1771224368; cv=none; b=eTnuqZM/MKOFIbFJkcZixnuQuYugQlKtj/D7kMk8RIw1QTnBHeZK79bZcxWwIGjbBLe/ekj7Xc5IuSZwjEKROz7Zd5KOdQF/LLG/jN1EBYVCliE4Pk6CHlQoyph5j2PEow5ZiLYYMTAaVqT+JMixAZi+anqCnpQRBF1Fyf7YZ+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771224366; c=relaxed/simple;
-	bh=ULSLg1fRVb4gEfgModArehstwZZ0yQ1Ek45SOYgoNYA=;
+	s=arc-20240116; t=1771224368; c=relaxed/simple;
+	bh=5XwLmW40GX9zGxDbLv098P6YcBGvbyeqtGn6z/ylDvs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=erzuUmWS49U+1yfynSt4LZ0/DOqGApZTUtWwWHBy6eqbo/e0YYdA8zdTWIyh0Avye89QvA1QINIzuggGBmuds7wcCa+OWdbstewt16zERIhW6nheL58N3fMP38BawOLbdFpoqiNkcMcoJiFxzT4HYfdPKLv/DJ4B9vtQUw4YrvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XooHTVy4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S9ByVYjO; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=JTcEwU7mKR7qAOR2n8KwodHE95048Z5z7+a2XMrHUebfzWpDPLjZ9K9K8QMl4xo+5YGvc3QMj/G1aS3rJJhFEJLh14qfnO45/Z1OZyM2koJrOHN3s9I/KL5Au+8ZyP3vYycJ0aE6XtIIX3h+S8wG0ZDtgjJhj6/D2W0NsfKSxWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l3ur2/hU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lI7Cnoqi; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XooHTVy4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S9ByVYjO"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 845987A010D;
-	Mon, 16 Feb 2026 01:46:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l3ur2/hU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lI7Cnoqi"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 44A501D0021B;
+	Mon, 16 Feb 2026 01:46:07 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 16 Feb 2026 01:46:04 -0500
+  by phl-compute-02.internal (MEProxy); Mon, 16 Feb 2026 01:46:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771224364;
-	 x=1771310764; bh=JD8psSd9Q/bXqgPieDtUJvTFbp/X5kK8kvIb/MHeo6E=; b=
-	XooHTVy42T77Sim8eh9UQHn2D7JvSxnRuWtnzhd23eKbu5RUQ5d1RRnlNCwieF3u
-	MTD+PoanOBCwiXdRwBXY6PAWXfimo/gs9EpmVTAcR48RAYDsoxEfSiDsIesS3nH9
-	64E0NdwCln8fE/jZgYf6aUO3V5XznFJR20u5rvQyOlaB1O3T+xt/RX+ON+LHqSf2
-	e8MlxToZ3QtYB6IcFDijY/dWBocB9fCowPjldpX1UylnX3I6AF5pEmnUeV8Nhwzp
-	kMyqpwQXZeRrUW3ZHKm/ZBlzsPC5CkJJ1kXj1HQ2pSBhxzF6zVRlaEgbuQMuQPF+
-	+PiU0SJvUNEUtReM8zECkg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771224367;
+	 x=1771310767; bh=g7vI9gZRnPFRcm+y8RHkt+lGlGSYJGZWhioPG1Cj8x4=; b=
+	l3ur2/hUlu4yosw5ii3cE/k8RtlA7U5dYeq+cEqi/qwHQhQGiaIeaMzMuUfH2kcW
+	vbhY+GmjhNesYExFWv4jEyHoITJ6JqTb6RYN7R2FuDvTwamc4inCjNaBw5CQlnOH
+	4+qU8YjwkADGUX7Y4Tf2RdWZxNOWRPFS9/ZB4o8vSLiIMg+ULL6jPYq+JWyhgSwt
+	FEiBrncPervFdd8iE5U0vNMe94LLdk6EcJh5yp9w94TWE3VEDeyZYzdn7K1Vl/xr
+	F+G59V7YnuO9xXIyutT2lG4Qcm5RbmkzjYSw4TsgRQbx+WqBktOKqWkHK6Jz+5MA
+	LQ6h1ocYJZwu/rAImMESug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771224364; x=
-	1771310764; bh=JD8psSd9Q/bXqgPieDtUJvTFbp/X5kK8kvIb/MHeo6E=; b=S
-	9ByVYjOASRUXvqgu8JxDW3A7Ygs5u4Iqwux6FGq5QwACOASUqsdhIy6Dn1/jAW6L
-	bFc2gx5vA3TGqsOVXdVyYzI5Reo3nX5EhNFwqNsUvfE8WxLVF9NaOtMgSmh1BX1y
-	FiN2M8A7zbeWp+y2QwecvDvgfUfsbcWc2Jf9kaArbOLZ5Dw5j8Ypp21GiRqeO+T6
-	BhWhKukuOJm+9aOjXSBKuzU+dNmrKDcwklpsDG998tZPUGZ/wx0G4iGDl8HHan5F
-	9iTXh+EcfiyoN0a67Hy0tSj56Ac5+uG8A2RKuc3iCZ3HndjD8cHz7bEwn7DFmgt1
-	LsxB941Tt1NbAvmRqcO7w==
-X-ME-Sender: <xms:LL2SaaWBuyMdSPE3t8L6T0aA-YKuqx5uGCo77kPx6xTa_XYJyF92Sg>
-    <xme:LL2Sadkxm6r3fvuJg4z8i-IOgXAb4nnNHUrp6vlRFbtfclpmA4DfeqhRmOlcphgUa
-    3lsZKw47WCNQgM5QIO-S-n0v_647uRLwzkc8xTWB42LqBRI0avoeA>
-X-ME-Received: <xmr:LL2SaTY906Lpl1yDK8HgRVum3BQlR57j7THpBRAfnpxXbfc9zBpURrXaUxBbDkQr4OFgUWGj_DpESdA4gOeZq9Rr-ym0H6-kNIvgA1mmmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudeiudelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771224367; x=
+	1771310767; bh=g7vI9gZRnPFRcm+y8RHkt+lGlGSYJGZWhioPG1Cj8x4=; b=l
+	I7CnoqibmX8x+UhIRdrQnhh0Ux3F3pkUTkcr+KRviWxMJEqQNpXV6Mo6IT+5f+c6
+	XpDvbk2gl7P1brhA7FJFXwpSKhJY8qeqDHaocb/YiSUedZoBpsuXeJKzegQhjjCy
+	G85xQ/a5+vYhAFjCpiy7fcAkohcjjHKRxNxfeo7p4ZHCYjlCqllhZFiws/Wh6wLR
+	qwnCgEOa0ie6DBWyGmVv+06wNpb/OybgGvYl1HqRwQjwNIvTA3HSyI+LIiRhf5Hi
+	wu0lPb1qyjzKWtPp0tpL81cyNdOBQpVxppNmXdmQ65fBq683MscbYfIyfpIURPqP
+	beD+0W7dltWmapTtX9GwA==
+X-ME-Sender: <xms:L72SaUh589SYWlIykorRJkVG1nG43-XF8PzVD1sltXhe3IS_8aLXgQ>
+    <xme:L72SaUAUMAy9YYZ6uX7zM6Leg7eYiW1LH-9DIlDFwSr-4c98GR5H9pCVLuFVpIdnh
+    6BCC3imeUEIK4fR699HPVboNg9Np3mL7fTgY90sB_VBUX9_1LZt4L4>
+X-ME-Received: <xmr:L72SaREtlPvuPWjsWEMuqV6oUpdNdXsRJSMvo6INtkel9u-fY-5yBEQiU-8oAQKsuNl_gvgUkR0GGMRK8_txTcQPK5y-pC9D10LcxtNGrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudeiudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudeiudelucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhs
-    sggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvg
-    esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:LL2SaQOi1zcN_veBxA7iRnyLbINgCT31dPwQBblbkjVALWRhtHVslQ>
-    <xmx:LL2SaQbjYyRL07ZEJgZfkFdm686_gELq2NI5YLrD4KoAbO4vsISkxg>
-    <xmx:LL2SaW1bnQgD5Qmlob_oQLqmlVA4_1bV18i385D0hDJA0hzngEKe6A>
-    <xmx:LL2SaefuimEkyCfw9OaVHPFk1S9d7kVwapw6G657Oj0gCoPpgXB6mA>
-    <xmx:LL2Sae7C_GNgugYWYRtg-ZKByFoYhgGkuCb3bUBsrvzuIcJaD6SPLIQZ>
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomh
+X-ME-Proxy: <xmx:L72SaUKEYGFR-DA8TjHOq2p_4-q7l7SZ2fp_k4_7ch-UaDUqfCGaHQ>
+    <xmx:L72SadnRBAOF8SbQPw62oBWo6l4RbhNtDpls7RIc7qow505MZncVGg>
+    <xmx:L72SaUSdOI4KXgGoZiemr4MFJk_41ZZq5yXrOwS5mL3GNRsBc0afZg>
+    <xmx:L72SaXIhAeaqKu9Y-_-MxBDUooegCLiy6qThLNCuGJb0X-aLwqj-kw>
+    <xmx:L72SaYnymi4UGyyJ2-DWPxiJHo3cEKW64SZwtsLIbbbVZRKI6ko9afUb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Feb 2026 01:46:03 -0500 (EST)
+ 16 Feb 2026 01:46:05 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f1d83b4f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Feb 2026 06:46:02 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a5617f12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Feb 2026 06:46:05 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Feb 2026 07:45:47 +0100
-Subject: [PATCH v3 4/5] builtin/history: rename "--ref-action=" to
+Date: Mon, 16 Feb 2026 07:45:48 +0100
+Subject: [PATCH v3 5/5] Documentation/git-history: document default for
  "--update-refs="
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260216-b4-pks-history-dry-run-v3-4-c4db58a651fc@pks.im>
+Message-Id: <20260216-b4-pks-history-dry-run-v3-5-c4db58a651fc@pks.im>
 References: <20260216-b4-pks-history-dry-run-v3-0-c4db58a651fc@pks.im>
 In-Reply-To: <20260216-b4-pks-history-dry-run-v3-0-c4db58a651fc@pks.im>
 To: git@vger.kernel.org
@@ -94,110 +94,28 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.3
 
-With the preceding commit we have changed "--ref-action=" to only
-control which refs are supposed to be updated, not what happens with
-them. As a consequence, the option is now somewhat misnamed, as we don't
-control the action itself anymore.
-
-Rename it to "--update-refs=" to better align it with its new use.
+While we document the values that can be passed to the "--update-refs="
+option, we don't give the user any hint what the default behaviour is.
+Document it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-history.adoc | 4 ++--
- builtin/history.c              | 8 ++++----
- t/t3451-history-reword.sh      | 8 ++++----
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ Documentation/git-history.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index df2900ac2f..4dbe665ec4 100644
+index 4dbe665ec4..cc019de697 100644
 --- a/Documentation/git-history.adoc
 +++ b/Documentation/git-history.adoc
-@@ -8,7 +8,7 @@ git-history - EXPERIMENTAL: Rewrite history
- SYNOPSIS
- --------
- [synopsis]
--git history reword <commit> [--dry-run] [--ref-action=(branches|head)]
-+git history reword <commit> [--dry-run] [--update-refs=(branches|head)]
- 
- DESCRIPTION
- -----------
-@@ -66,7 +66,7 @@ OPTIONS
- 	objects will be written into the repository, so applying these printed
- 	ref updates is generally safe.
- 
--`--ref-action=(branches|head)`::
-+`--update-refs=(branches|head)`::
+@@ -70,7 +70,7 @@ OPTIONS
  	Control which references will be updated by the command, if any. With
  	`branches`, all local branches that point to commits which are
  	descendants of the original commit will be rewritten. With `head`, only
-diff --git a/builtin/history.c b/builtin/history.c
-index c135361c67..1cf6c668cf 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -18,7 +18,7 @@
- #include "wt-status.h"
+-	the current `HEAD` reference will be rewritten.
++	the current `HEAD` reference will be rewritten. Defaults to `branches`.
  
- #define GIT_HISTORY_REWORD_USAGE \
--	N_("git history reword <commit> [--dry-run] [--ref-action=(branches|head)]")
-+	N_("git history reword <commit> [--dry-run] [--update-refs=(branches|head)]")
- 
- static void change_data_free(void *util, const char *str UNUSED)
- {
-@@ -258,7 +258,7 @@ static int setup_revwalk(struct repository *repo,
- 			goto out;
- 		} else if (!ret) {
- 			ret = error(_("rewritten commit must be an ancestor "
--				      "of HEAD when using --ref-action=head"));
-+				      "of HEAD when using --update-refs=head"));
- 			goto out;
- 		}
- 
-@@ -416,8 +416,8 @@ static int cmd_history_reword(int argc,
- 	enum ref_action action = REF_ACTION_DEFAULT;
- 	int dry_run = 0;
- 	struct option options[] = {
--		OPT_CALLBACK_F(0, "ref-action", &action, N_("<action>"),
--			       N_("control ref update behavior (branches|head)"),
-+		OPT_CALLBACK_F(0, "update-refs", &action, N_("<action>"),
-+			       N_("control which refs should be updated (branches|head)"),
- 			       PARSE_OPT_NONEG, parse_ref_action),
- 		OPT_BOOL('n', "dry-run", &dry_run,
- 			 N_("perform a dry-run without updating any refs")),
-diff --git a/t/t3451-history-reword.sh b/t/t3451-history-reword.sh
-index 702d40dc06..de7b357685 100755
---- a/t/t3451-history-reword.sh
-+++ b/t/t3451-history-reword.sh
-@@ -233,7 +233,7 @@ test_expect_success '--dry-run prints ref updates without modifying repo' '
- 		test_commit theirs &&
- 
- 		git refs list >refs-expect &&
--		reword_with_message --dry-run --ref-action=head base >updates <<-\EOF &&
-+		reword_with_message --dry-run --update-refs=head base >updates <<-\EOF &&
- 		reworded commit
- 		EOF
- 		git refs list >refs-actual &&
-@@ -258,7 +258,7 @@ test_expect_success '--dry-run prints ref updates without modifying repo' '
- 	)
- '
- 
--test_expect_success '--ref-action=head updates only HEAD' '
-+test_expect_success '--update-refs=head updates only HEAD' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo --initial-branch=main &&
- 	(
-@@ -271,10 +271,10 @@ test_expect_success '--ref-action=head updates only HEAD' '
- 
- 		# When told to update HEAD, only, the command will refuse to
- 		# rewrite commits that are not an ancestor of HEAD.
--		test_must_fail git -c core.editor=false history reword --ref-action=head theirs 2>err &&
-+		test_must_fail git -c core.editor=false history reword --update-refs=head theirs 2>err &&
- 		test_grep "rewritten commit must be an ancestor of HEAD" err &&
- 
--		reword_with_message --ref-action=head base >updates <<-\EOF &&
-+		reword_with_message --update-refs=head base >updates <<-\EOF &&
- 		reworded base
- 		EOF
- 		expect_log HEAD <<-\EOF &&
+ GIT
+ ---
 
 -- 
 2.53.0.352.gd1286b26eb.dirty
