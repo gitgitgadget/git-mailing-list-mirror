@@ -1,62 +1,62 @@
 Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5DF332911
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 16:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7377419CC28
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 16:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771258723; cv=none; b=mHb8Kx6IytOi9awXmbf/i/KzJ0Nn45B2TGKEg9vDnVJeA3dw05XzrgowWrYLGDaNoiw6+gUUFYTxTebS4vOQMXOgw+ImwRTu9QMIhC6AIH93tnPCDXKW2RfrUvLqNPFV49/46UfU0oubf0Szxf+BGwfRHFPOGRVIuHUI4+tZ/4c=
+	t=1771258724; cv=none; b=c1mHIKAvewBotopeOo9r/h8qvjv+39xCqmUbz/1yFCbZPA8vRtVXplCB8stpluNmVF8TgVNua0FqzrLlUByeRNcxy6Bmg9K3FO8lB0vU8UGJi2Yev1jfVQ0kvfw2VrD1pKxeCrDXVWJhwtvrbZCdlJg1t0rEatLVNE60s+AmmGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771258723; c=relaxed/simple;
-	bh=mF4N1uJCBscep2tLlnbE0W2T8WZOIC6P2pSOW3k+TxE=;
+	s=arc-20240116; t=1771258724; c=relaxed/simple;
+	bh=OvqfsEm9Gnwt4ofYzfxHME13tXzZJmVcHgqIZbhSFSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6k8e/F+bCP1C6lqJX1mfJ7d5gSQ8iEhCU+PsgpkGMasp082V6rmOkV+dxaDBWxWGmUU9M8nLWI4R5M78wCJBbIBfcaeLawVYuUe31DlWGic7/L3DB0NIBMeB/hn8zhFo+hX9tMOB36erLN//ekp+21/jcrl6XiCHSTUcynzbw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MDUf6kFd; arc=none smtp.client-ip=209.85.221.67
+	 MIME-Version; b=MZ4hS0gLDeb3o1B6dDxid+2rJBMrUvbb6Jxjv7zpZHxQLJQ/c84DS2ySo0Sr6/BwVpucimRwcGFveBMz3dfd6ZRBgCc0b0eHDkNGjMchF5xvroovCA3k1hmiroNYrl0WCOQ+L3kZiofts8qLLy7uVH1xuPivGK49fAEekFMQ1nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K+qAhvFA; arc=none smtp.client-ip=209.85.221.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MDUf6kFd"
-Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-43591b55727so3810451f8f.3
-        for <git@vger.kernel.org>; Mon, 16 Feb 2026 08:18:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+qAhvFA"
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-4359228b7c6so2528249f8f.2
+        for <git@vger.kernel.org>; Mon, 16 Feb 2026 08:18:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771258720; x=1771863520; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771258721; x=1771863521; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=azV08lKoDCRkIAOnoP7nqogMEvyhyhNnvV7fWKrCCxo=;
-        b=MDUf6kFd53CFOWL3DQVg4GZXcXLz7AF2bJ+YAB3RLHGKcSOvDoUdSBvalsQBYkyYno
-         x0UNITtBOJFjKXYnJPbrQv6sJkes1VxQOGvAfrIoYvhlAjlDuh9/ZBf7IRuHaJ1lVkqL
-         r/s0ce9vYuv2PUwxhJxYc8kEjKD42mKXhabHE+iGTF3J9sh8z4Faa83tCVvER6VlGU+P
-         VMF4KSMY8rR4Uw00+58D23DWcanzXytUPDkrDGFu3vaoAazNot0rSiL4rwKqJpbPbTL7
-         CXxQIR2FeUfo/nhZBexxKlTRWw52Ns+DLfViqq6x3wOZ/hh6tBhbZ/lwUzSy1Scd0bJN
-         Zg7w==
+        bh=0ENGMK8E66Mm92JJ26peFl7vWDIwWrn5taqa8DUxuEs=;
+        b=K+qAhvFAAio2fHfcJASyK5dtw6zc0VDK8+jFxDlV0+kcS/Q+P4GDzyP7/t2TvRidSA
+         2z+qUWa91FyI2TOjsOnGUJ559ig3A8ShsBlUqnPrIsW756kx5PB1z5GrhJsXS7SFpRQC
+         ZidBRm7qS/vnSdIZZq5z7LcAF0yb+q1l5CrYdfzRQc6j0BADyXZZkd+curme88zKHKwQ
+         F4mobaeDLcYQlxt9pKzO+tUPiab4bsa54LUtkNcg7cqyvVOY3Y2jYsCJyWJjVB7ScWHK
+         upczhxzOAZIEJkPEKJ2LTro3mH45WxiVKcPRZfJBIjRPMCLJfTsgI7xvCjGHkCsNeviF
+         Tn9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771258720; x=1771863520;
+        d=1e100.net; s=20230601; t=1771258721; x=1771863521;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=azV08lKoDCRkIAOnoP7nqogMEvyhyhNnvV7fWKrCCxo=;
-        b=l2j/427p3o7Qus+SuK7O2IArmJXrp+xWslCxsPcokEQR6zCzkRyelBt76ijrNXnz2n
-         cbVU/OrCkinJPu2f1o/qvpEMvZ+IO+lgc6mIJ5vEJ6nsSEurm5tlU4sJhsfVdFTVjHsL
-         tczzMCWKj2z6d+rayZFHqib4kZn9uxJyUrwRhZwqtyF82BGYJiV0AHLiygQkpW3JpCC0
-         oERYRxAzG3y/mglvl4SXezjM/uMwqZT/Nb34BJcyfFH6WoooW6j+F2XszmZceD4kh7UW
-         l0O4loqi60JiUkKEOlqN1Asbp+XFtVV7bJM3aaoR4XwhQpfSuRuLoCrs+D1vImkGOH5U
-         ODxw==
-X-Gm-Message-State: AOJu0Yw4+EhYDgoU7N7kFUpKxcpNuKlr27jvghcgWbwScaPa/IjoS49z
-	wdBCJLt9VBWelwjJGGoDL0gjiPAl9xH9w0ymUIw7nAtSK3HFDaeZIJHnCTn6PB8t
-X-Gm-Gg: AZuq6aJfri4K68/cP7KRUxQZGdhpFRw8xNfwTgi1gnIeQhWukDHUUr1KXM+uBDOI0Fy
-	vYLoA2yjfsum3R8MRThpXP3E5VP2/v3UyzCQuZt9TijLYw12yacvtcnyPBVIhXftpaS8k84qPBX
-	ZMSckUeKAucQAU9gRnu601v6RrI31ld2Bjmp4TnSghIMC3UkoELAenNaLHXz4U9+6IqSa4En8GQ
-	NPcrwUClxmYPILBpG3zPgGwIc1CaMfI0KvzKq/sjPVkGaI0o4zB1sb+ttSI7W4uXCvRbPjxcBmk
-	k+8mQRCuMx+A/B2ygpxrGoCPc7LOGO8IiBLfb3w2LdE+P6Jt3kXMJZBHAd85gLOTbcMiwsfezD6
-	bdpMKEu/WZ89YHvd5ZG1wU0MbnVVjc/HfjmLwyg/CC5G0iiDeYw8nXu7Cb8bgtP8V6zeBneLgrG
-	Uq945dys1+mUPO4jomOUuO6lLzR/E=
-X-Received: by 2002:a05:6000:402b:b0:437:6e6e:6f95 with SMTP id ffacd0b85a97d-4379db70171mr15867456f8f.27.1771258719696;
-        Mon, 16 Feb 2026 08:18:39 -0800 (PST)
+        bh=0ENGMK8E66Mm92JJ26peFl7vWDIwWrn5taqa8DUxuEs=;
+        b=SwGTyMT3i6NacYhdybYCITGVah0/RsbLT/LmzUmpBoon1ggaUuSXq0k0hSfY499afg
+         arA5OOY4jJxKLeo3YwBLpvY+5hfvDTutcohZHJSMkYGak2YnfmeP4TST8ErHSqej7IAv
+         FOqLA7yEsUmX4PE/Dl/cwnOScla372so0u6/FJBILnwFIaZtC+dNfEm71b9t1SPBsr6c
+         B5uoe2czvu4I2ivKQtt0F7MzmHavB1e0C6yiHTptAvrQR40aBhDaesi6rf9alyZpfiH1
+         ZIMDh55ke/VMYPy43Qy29iO4qiE+dp9GACQcnenn7o8PEpRirL+qHFczNc1/QRjiEDw3
+         9bHQ==
+X-Gm-Message-State: AOJu0YzFJLHuebEPyDMbs9Og1ASh16Wnp13W8V+77T2Tyxwqs8vxQqW3
+	IsPwUIdWKXSHTfHdw9dIJnxCX1YZMtIPh9dbp0PCAuOlQw3zD5IXiOxBjqqE8JPY
+X-Gm-Gg: AZuq6aI8vgoIWhyMh11to/dkAUrlXsI+k2nfzfPYkXuUpplWyrs4pvvX0+AeDMm3irj
+	vKa3OscSHcZj/ToULxbToZlMMjSwIWZMB5F12b0gNtbK2X/rKmhSVsxaxiBzIU3SQ/xsLjQld/3
+	7tfPh+vs/Wuh1FgV9rZA3vbG8uCp5sErUxhp+Ja7fv7OPj8HuNeACD++jmRRYhPkBUxB/Giwxg8
+	8NKpexS9Tvyfdom7jDto/p3hYfm/1q3pgaoA82lgHK3CtycENr4n674EMTn13O8fdf710GbWPBS
+	40QvrHvaGdYiBIq6gRTRs6ecmModkN/N1a/vtbBU4jfzQjsI/KZ9HS7fEii5dVp9bDFXKmcku1h
+	RnVSgzIo1Zc2vYULnGCzTu816sTaQz/JxN0qHi9wEQeori7/wjvKMt2ptMnzFtbA128WPMxegtY
+	7SnlelE1RWa8qzTd5Sn1pL/iZZgOQ=
+X-Received: by 2002:a05:6000:2f83:b0:435:975a:131c with SMTP id ffacd0b85a97d-4379db987aamr14359175f8f.36.1771258720547;
+        Mon, 16 Feb 2026 08:18:40 -0800 (PST)
 Received: from berwick ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43796abc8b1sm29396714f8f.23.2026.02.16.08.18.38
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43796abc8b1sm29396714f8f.23.2026.02.16.08.18.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Feb 2026 08:18:39 -0800 (PST)
+        Mon, 16 Feb 2026 08:18:40 -0800 (PST)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
@@ -64,9 +64,9 @@ Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 1/2] wt-status: avoid passing NULL worktree
-Date: Mon, 16 Feb 2026 16:18:09 +0000
-Message-ID: <409871a7d521b76c9eb811d3c49747e04de8defc.1771258688.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 2/2] path: remove repository argument from worktree_git_path()
+Date: Mon, 16 Feb 2026 16:18:10 +0000
+Message-ID: <23b8a355b414da2b6216a50006bf2276dd3ea6ae.1771258688.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.52.0.362.g884e03848a9
 In-Reply-To: <cover.1771258688.git.phillip.wood@dunelm.org.uk>
 References: <ebc16a74-0555-4951-8ec6-ff7fce6b6fcc@gmail.com> <cover.1771258688.git.phillip.wood@dunelm.org.uk>
@@ -81,138 +81,202 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-In preparation for removing the repository argument from
-worktree_git_path() add a function to construct a "struct worktree"
-from a "struct repository" and use that to avoid passing a NULL
-worktree to wt_status_check_bisect() and wt_status_check_rebase().
+worktree_git_path() takes a struct repository and a struct worktree
+which also contains a struct repository. The repository argument
+was added by a973f60dc7c (path: stop relying on `the_repository` in
+`worktree_git_path()`, 2024-08-13) and exists because the worktree
+argument is optional. Having two ways of passing a repository is
+a potential foot-gun as if the the worktree argument is present the
+repository argument must match the worktree's repository member. Since
+the last commit there are no callers that pass a NULL worktree so lets
+remove the repository argument. This removes the potential confusion
+and lets us delete a number of uses of "the_repository".
 
-wt_status_check_bisect() and wt_status_check_rebase() have the following
-callers:
+worktree_git_path() has the following callers:
 
- - branch.c:prepare_checked_out_branches() which loops over all
+ - builtin/worktree.c:validate_no_submodules() which is called from
+   check_clean_worktree() and move_worktree(), both of which supply
+   a non-NULL worktree.
+
+ - builtin/fsck.c:cmd_fsck() which loops over all worktrees.
+
+ - revision.c:add_index_objects_to_pending() which loops over all
    worktrees.
 
- - worktree.c:is_worktree_being_rebased() which is called from
-   builtin/branch.c:reject_rebase_or_bisect_branch() that loops over all
-   worktrees and worktree.c:is_shared_symref() which dereferences wt
-   earlier in the function.
+ - worktree.c:worktree_lock_reason() which dereferences wt before
+   calling worktree_git_path().
 
- - wt-status:wt_status_get_state() which is updated to avoid passing a
-   NULL worktree by this patch.
+ - wt-status.c:wt_status_check_bisect() and wt_status_check_rebase()
+   which are always called with a non-NULL worktree after the last
+   commit.
 
-This updates the only callers that pass a NULL worktree to
-worktree_git_path().
+ - wt-status.c:git_branch() which is only called by
+   wt_status_check_bisect() and wt_status_check_rebase().
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- worktree.c  | 20 ++++++++++++++++++++
- worktree.h  |  5 ++++-
- wt-status.c | 15 ++++++++++++---
- 3 files changed, 36 insertions(+), 4 deletions(-)
+ builtin/fsck.c     |  2 +-
+ builtin/worktree.c |  4 ++--
+ path.c             |  9 ++++-----
+ path.h             |  8 +++-----
+ revision.c         |  2 +-
+ worktree.c         |  2 +-
+ wt-status.c        | 14 +++++++-------
+ 7 files changed, 19 insertions(+), 22 deletions(-)
 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 0512f78a87f..42ba0afb91a 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -1137,7 +1137,7 @@ int cmd_fsck(int argc,
+ 			 * and may get overwritten by other calls
+ 			 * while we're examining the index.
+ 			 */
+-			path = xstrdup(worktree_git_path(the_repository, wt, "index"));
++			path = xstrdup(worktree_git_path(wt, "index"));
+ 			wt_gitdir = get_worktree_git_dir(wt);
+ 
+ 			read_index_from(&istate, path, wt_gitdir);
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 3d6547c23b4..62fd4642e5d 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -1191,14 +1191,14 @@ static void validate_no_submodules(const struct worktree *wt)
+ 
+ 	wt_gitdir = get_worktree_git_dir(wt);
+ 
+-	if (is_directory(worktree_git_path(the_repository, wt, "modules"))) {
++	if (is_directory(worktree_git_path(wt, "modules"))) {
+ 		/*
+ 		 * There could be false positives, e.g. the "modules"
+ 		 * directory exists but is empty. But it's a rare case and
+ 		 * this simpler check is probably good enough for now.
+ 		 */
+ 		found_submodules = 1;
+-	} else if (read_index_from(&istate, worktree_git_path(the_repository, wt, "index"),
++	} else if (read_index_from(&istate, worktree_git_path(wt, "index"),
+ 				   wt_gitdir) > 0) {
+ 		for (i = 0; i < istate.cache_nr; i++) {
+ 			struct cache_entry *ce = istate.cache[i];
+diff --git a/path.c b/path.c
+index d726537622c..073f631b914 100644
+--- a/path.c
++++ b/path.c
+@@ -486,17 +486,16 @@ const char *mkpath(const char *fmt, ...)
+ 	return cleanup_path(pathname->buf);
+ }
+ 
+-const char *worktree_git_path(struct repository *r,
+-			      const struct worktree *wt, const char *fmt, ...)
++const char *worktree_git_path(const struct worktree *wt, const char *fmt, ...)
+ {
+ 	struct strbuf *pathname = get_pathname();
+ 	va_list args;
+ 
+-	if (wt && wt->repo != r)
+-		BUG("worktree not connected to expected repository");
++	if (!wt)
++		BUG("%s() called with NULL worktree", __func__);
+ 
+ 	va_start(args, fmt);
+-	repo_git_pathv(r, wt, pathname, fmt, args);
++	repo_git_pathv(wt->repo, wt, pathname, fmt, args);
+ 	va_end(args);
+ 	return pathname->buf;
+ }
+diff --git a/path.h b/path.h
+index 0ec95a0b079..cbcad254a0a 100644
+--- a/path.h
++++ b/path.h
+@@ -66,13 +66,11 @@ const char *repo_git_path_replace(struct repository *repo,
+ 
+ /*
+  * Similar to repo_git_path() but can produce paths for a specified
+- * worktree instead of current one. When no worktree is given, then the path is
+- * computed relative to main worktree of the given repository.
++ * worktree instead of current one.
+  */
+-const char *worktree_git_path(struct repository *r,
+-			      const struct worktree *wt,
++const char *worktree_git_path(const struct worktree *wt,
+ 			      const char *fmt, ...)
+-	__attribute__((format (printf, 3, 4)));
++	__attribute__((format (printf, 2, 3)));
+ 
+ /*
+  * The `repo_worktree_path` family of functions will construct a path into a
+diff --git a/revision.c b/revision.c
+index 29972c3a198..ca3481c1902 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1847,7 +1847,7 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
+ 		wt_gitdir = get_worktree_git_dir(wt);
+ 
+ 		if (read_index_from(&istate,
+-				    worktree_git_path(the_repository, wt, "index"),
++				    worktree_git_path(wt, "index"),
+ 				    wt_gitdir) > 0)
+ 			do_add_index_objects_to_pending(revs, &istate, flags);
+ 
 diff --git a/worktree.c b/worktree.c
-index 9308389cb6f..fd182c319b7 100644
+index fd182c319b7..efd2b75608d 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -66,6 +66,26 @@ static int is_current_worktree(struct worktree *wt)
- 	return is_current;
- }
+@@ -308,7 +308,7 @@ const char *worktree_lock_reason(struct worktree *wt)
+ 	if (!wt->lock_reason_valid) {
+ 		struct strbuf path = STRBUF_INIT;
  
-+struct worktree *get_worktree_from_repository(struct repository *repo)
-+{
-+	struct worktree *wt = xcalloc(1, sizeof(*wt));
-+	char *gitdir = absolute_pathdup(repo->gitdir);
-+	char *commondir = absolute_pathdup(repo->commondir);
-+
-+	wt->repo = repo;
-+	if (repo->worktree)
-+		wt->path = absolute_pathdup(repo->worktree);
-+	wt->is_bare = !!repo->worktree;
-+	if (fspathcmp(gitdir, commondir))
-+		wt->id = xstrdup(find_last_dir_sep(commondir) + 1);
-+	wt->is_current = is_current_worktree(wt);
-+	add_head_info(wt);
-+
-+	free(gitdir);
-+	free(commondir);
-+	return wt;
-+}
-+
- /*
- * When in a secondary worktree, and when extensions.worktreeConfig
- * is true, only $commondir/config and $commondir/worktrees/<id>/
-diff --git a/worktree.h b/worktree.h
-index e4bcccdc0ae..b162bbabd50 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -38,7 +38,10 @@ struct worktree **get_worktrees(void);
-  */
- struct worktree **get_worktrees_without_reading_head(void);
- 
--/*
-+/* Construct a struct worktree from a struct repository */
-+struct worktree *get_worktree_from_repository(struct repository *repo);
-+
-+ /*
-  * Returns 1 if linked worktrees exist, 0 otherwise.
-  */
- int submodule_uses_worktrees(const char *path);
+-		strbuf_addstr(&path, worktree_git_path(the_repository, wt, "locked"));
++		strbuf_addstr(&path, worktree_git_path(wt, "locked"));
+ 		if (file_exists(path.buf)) {
+ 			struct strbuf lock_reason = STRBUF_INIT;
+ 			if (strbuf_read_file(&lock_reason, path.buf, 0) < 0)
 diff --git a/wt-status.c b/wt-status.c
-index 95942399f8c..2debda534c1 100644
+index 2debda534c1..68257d6dfd2 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1747,6 +1747,9 @@ int wt_status_check_rebase(const struct worktree *wt,
- {
- 	struct stat st;
+@@ -1648,7 +1648,7 @@ static char *get_branch(const struct worktree *wt, const char *path)
+ 	struct object_id oid;
+ 	const char *branch_name;
  
-+	if (!wt)
-+		BUG("wt_status_check_rebase() called with NULL worktree");
-+
- 	if (!stat(worktree_git_path(the_repository, wt, "rebase-apply"), &st)) {
- 		if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/applying"), &st)) {
+-	if (strbuf_read_file(&sb, worktree_git_path(the_repository, wt, "%s", path), 0) <= 0)
++	if (strbuf_read_file(&sb, worktree_git_path(wt, "%s", path), 0) <= 0)
+ 		goto got_nothing;
+ 
+ 	while (sb.len && sb.buf[sb.len - 1] == '\n')
+@@ -1750,18 +1750,18 @@ int wt_status_check_rebase(const struct worktree *wt,
+ 	if (!wt)
+ 		BUG("wt_status_check_rebase() called with NULL worktree");
+ 
+-	if (!stat(worktree_git_path(the_repository, wt, "rebase-apply"), &st)) {
+-		if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/applying"), &st)) {
++	if (!stat(worktree_git_path(wt, "rebase-apply"), &st)) {
++		if (!stat(worktree_git_path(wt, "rebase-apply/applying"), &st)) {
  			state->am_in_progress = 1;
-@@ -1774,6 +1777,9 @@ int wt_status_check_bisect(const struct worktree *wt,
- {
- 	struct stat st;
+-			if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/patch"), &st) && !st.st_size)
++			if (!stat(worktree_git_path(wt, "rebase-apply/patch"), &st) && !st.st_size)
+ 				state->am_empty_patch = 1;
+ 		} else {
+ 			state->rebase_in_progress = 1;
+ 			state->branch = get_branch(wt, "rebase-apply/head-name");
+ 			state->onto = get_branch(wt, "rebase-apply/onto");
+ 		}
+-	} else if (!stat(worktree_git_path(the_repository, wt, "rebase-merge"), &st)) {
+-		if (!stat(worktree_git_path(the_repository, wt, "rebase-merge/interactive"), &st))
++	} else if (!stat(worktree_git_path(wt, "rebase-merge"), &st)) {
++		if (!stat(worktree_git_path(wt, "rebase-merge/interactive"), &st))
+ 			state->rebase_interactive_in_progress = 1;
+ 		else
+ 			state->rebase_in_progress = 1;
+@@ -1780,7 +1780,7 @@ int wt_status_check_bisect(const struct worktree *wt,
+ 	if (!wt)
+ 		BUG("wt_status_check_bisect() called with NULL worktree");
  
-+	if (!wt)
-+		BUG("wt_status_check_bisect() called with NULL worktree");
-+
- 	if (!stat(worktree_git_path(the_repository, wt, "BISECT_LOG"), &st)) {
+-	if (!stat(worktree_git_path(the_repository, wt, "BISECT_LOG"), &st)) {
++	if (!stat(worktree_git_path(wt, "BISECT_LOG"), &st)) {
  		state->bisect_in_progress = 1;
  		state->bisecting_from = get_branch(wt, "BISECT_START");
-@@ -1819,18 +1825,19 @@ void wt_status_get_state(struct repository *r,
- 	struct stat st;
- 	struct object_id oid;
- 	enum replay_action action;
-+	struct worktree *wt = get_worktree_from_repository(r);
- 
- 	if (!stat(git_path_merge_head(r), &st)) {
--		wt_status_check_rebase(NULL, state);
-+		wt_status_check_rebase(wt, state);
- 		state->merge_in_progress = 1;
--	} else if (wt_status_check_rebase(NULL, state)) {
-+	} else if (wt_status_check_rebase(wt, state)) {
- 		;		/* all set */
- 	} else if (refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
- 		   !repo_get_oid(r, "CHERRY_PICK_HEAD", &oid)) {
- 		state->cherry_pick_in_progress = 1;
- 		oidcpy(&state->cherry_pick_head_oid, &oid);
- 	}
--	wt_status_check_bisect(NULL, state);
-+	wt_status_check_bisect(wt, state);
- 	if (refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD") &&
- 	    !repo_get_oid(r, "REVERT_HEAD", &oid)) {
- 		state->revert_in_progress = 1;
-@@ -1848,6 +1855,8 @@ void wt_status_get_state(struct repository *r,
- 	if (get_detached_from)
- 		wt_status_get_detached_from(r, state);
- 	wt_status_check_sparse_checkout(r, state);
-+
-+	free_worktree(wt);
- }
- 
- static void wt_longstatus_print_state(struct wt_status *s)
+ 		return 1;
 -- 
 2.52.0.362.g884e03848a9
 
