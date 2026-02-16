@@ -1,206 +1,120 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB2C1C69D
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 18:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7307723BF9F
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 21:25:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771266776; cv=pass; b=PlgwMKYj3Iissxu1GL8sXT9c7MAkHiyXFLfmxduH7SVFrUDbf7dJwsDuEffIEpdAUjBN5yChoGSRTAZmcuPHW5WjeGj/uwWo/vAR0hdZj3O6p7OqK8w15RJl+ZMzwuP5WILtQVIyEa4djHcsHpkCpAvZknoxs1nzSuYwvODW27c=
+	t=1771277155; cv=pass; b=PCcZVsrwdodv5jLD+FQ/O+hXsoLE+22CJuNrAZJuWu4xoZY+SdRlV8X6l/PgmxJkf09W/EsMW/56jBlD+OQGtEnX/x2STm/jTjtxAVhMqhRKzl7WxDR+REigbXR26YjAEgqxfK1U2YQm41zRatVtq6TUE0j4tTX/GWUWHburOzA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771266776; c=relaxed/simple;
-	bh=wcJ1Bc1CHjQnT0WMMPjzjA7T4PNZjjQLnXDb20xllec=;
+	s=arc-20240116; t=1771277155; c=relaxed/simple;
+	bh=Py0YHGSpy3phMm+k1yBWyKNZRETOB3X0sh/u22XsH54=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tsO0uLtH1nLeC37XIPDv6RDYcM2QR8mZsgcABAMfY+9BIzSnVSSbVLD/C8hb1GM5NSb2DvXm76aX/GAgqCNPU6oclHfbCTG0Qb0SocEWCn4gkGG0Dp49mWvY5IAkimj7zcLhE6v+xqCLNitYs9qE9KYjK3f6F9sHNMojHDX3PGY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jLjICYx1; arc=pass smtp.client-ip=209.85.215.169
+	 To:Cc:Content-Type; b=fbn46zL7Sc2rV5MTIG8+c/2BiNEOmWqknjiI4bcNXgnAvfp5IQDNnqrZm6+4m98qCYb8Lt131q/pgYtr4LkewBMTfeNlS8dqJBUMyMI1TiJll4BOMxmQjCddTxMz/CwhJsa7ivb70VGZ2Q1tJFPT9n9hWedVyNi1qBdtQeA35yk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jDwhGouu; arc=pass smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jLjICYx1"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c6e1a67d4b8so2036524a12.0
-        for <git@vger.kernel.org>; Mon, 16 Feb 2026 10:32:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771266774; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jDwhGouu"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-352dda4a34eso1433329a91.1
+        for <git@vger.kernel.org>; Mon, 16 Feb 2026 13:25:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771277154; cv=none;
         d=google.com; s=arc-20240605;
-        b=b7G0UZ1M55/Yeya1yPy5qyxQD95byoED3kp0hCdVkpRQUwtBa3KIYtIwPoIgiwunHi
-         8pOAookTXk+B5TGrzbsWwwTwGYWn/ehgXTeKWVUje8IbyYvboIImT6xkMvZMJqqWJlPS
-         DRm2peIRq7cMHcwGU429k7S6zqPcGAAnntoiL92DcNgsclMUBb+pFw+tQxy4r2Hanp/j
-         bkIWpjZVFiEa/Dp05tya7NzX5jEa5kFPfl0g0k6A4ice/yNHjSGmYf30qFL5TAq2b+xV
-         aIsvhNmIokFXc5IXOwaCUgulgx041EMPkPq1tKQsom2jdufUMAgvY019ZFR8Z3oO3yAY
-         BMZw==
+        b=b7gyy95JMwn24N6VpN8+zaehoMtC4xFnL2OQRXfOrpRtmcmtQ4097pLHJ2YqxsBYp2
+         NT7eprasgHE0BCK0exVZW96ULz7PvIUJZO45hnXfoZ1D1sNKu/7pzC4wtXAEXdHLB/Y5
+         UxHA53Xg+2vO5E4uGJUSYnOfK9JethtrNT44xtL5HRkwSHFllx0b5mUnSV3Ls2dzOQdT
+         Z7xhC+klVp5A6CTFd2u8sng7p85yqSmob1vJStc4lBUgQqMTiCgjDfe7ASrGLBV817Qz
+         racXQ62Tq+ZybvK2I3VeJZNWCMS40GQIh+qYgGrEPzG/TYl2GNX6aMx8xUS9Pmk0nsoX
+         JufA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=thKpvhAN3Ww/dkkJHk+ozJuHOnbudeU45Yd8jQMSd8A=;
-        fh=VMi6suD7q0ooNDTHboYltQBU7GDs0CZDgNnvuDGHhno=;
-        b=P5VYWRY0xAPhBr3ARmIDoqR17119F6YdQxjzHN0uoYtiTid9Q5z+A98Uviz69m+mBw
-         zm42wijVlGjROF6jrjx5X1rhbZEGxr5E0vNX0tJsVTz+yBT/YLe0rUWRI/ujuZAcSBxb
-         jfYiBpVXRy2B+IglHcvonb2iW83TjA0CTannk/yvZChDPiTDdRcTQZAy7AD6uONVad9h
-         rTPjse3GO6qk4rshgPra/TVcW91Dl1vJX3HuIVot1WPNqoE9R6zrSEuZ85/NJAovK+kx
-         7VFYLR7bAiagxEcVjHvnBk4pNA0wJBr2Lw7PHXb7psTM3EGw3xAe/SA6JmEf433cffpN
-         B/JQ==;
+        bh=Py0YHGSpy3phMm+k1yBWyKNZRETOB3X0sh/u22XsH54=;
+        fh=h0zmq8ijHzs6/yGwVrcMuThoZHWAS7Weu7RTSv00c94=;
+        b=FKOgL+yhYsAIpmwfPsX5mRFhU86M0DuXKty12p89y4wdjl5u4yf6IrnRbChBBU9I3j
+         FDyZIT5Gd0zK3yc91MY21EipyYRDhNzl/RDB66G6RO5RN2kKiJnQXtuedzkeOa66NQfA
+         0hjxfqwTpLB9sCeC42KxH2wcrnJFpvZ0TeV6Y4hOR7wZeKofs+QoaNBVBF863TXLHRuC
+         vD2gOSFI2rEjoQD7LOwMDFgnPpECBQYEmrE3eoN+XPD56z0IsQ8OBT2Sp935VWGTXhQ1
+         FtSYeJpTXiTBIBtDXIMhccfJWgQQ5jbtNgO1ipsRSWhrHhBRStDyykMjk6VjfTPX8tnN
+         HqfA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771266774; x=1771871574; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771277154; x=1771881954; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=thKpvhAN3Ww/dkkJHk+ozJuHOnbudeU45Yd8jQMSd8A=;
-        b=jLjICYx17xZR5A/ZIAiTPQgBfWsy8fqkfDcQRaQHbfTqBY4Uq+CmkzlnT/FNY1PbQ1
-         sL2xLDzUc7/bjKw/s9Xsqd23jlh5BsqJsUPV5zsLHledTvr/0YhuCeHW2x0Z9BIAtY8W
-         5AbGkPTlXOYlk1VKr8lzhPQdFyQuex+ybLgVuXyuLPnXtr1NjGkLtxbzfrJ2/b1lt4yf
-         VrnSMHjS41pZcHeyfEvSjVacW8PSPJXQotLZuWsvMc6To8nvV7naDB+8AAAKWrTKvHT8
-         s7Td/Xe7FfiMwmwCZNVmzH5IR/09QmwzqUe/EepoXkBFFS6xFbXrao8nVHd2rbCo2xDe
-         MkpA==
+        bh=Py0YHGSpy3phMm+k1yBWyKNZRETOB3X0sh/u22XsH54=;
+        b=jDwhGouubwdzsxNUc/G+TLb9pqK/W842kU4g46KrsHBD7K98N0JssRH042VT2DlMPQ
+         EjBdRyzeC1cWbHxPFG51YdqJsGisw0/iLAfzvkElXGEL4+sxRZUhSJ4irhSJ7LTxzQgH
+         AQ+fsWBTrn/kVIiAo6LbLLR7qu2CuPl21yRYT7TatFWqIMIaYoCN4LNmcTbB+OfwETrH
+         r3WdD0SLSroUHYhK4fjPLax0MkcQQwnmG37a9Jnb2/Lps80TWew/rQFbqY3CSr5AiEck
+         kEz1YriJ1EYw7uaiWLAndFerhFjzAKENg2kjzV1KzKYqVNh88c29IH+IsoK2uPFNynjW
+         xysA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771266774; x=1771871574;
+        d=1e100.net; s=20230601; t=1771277154; x=1771881954;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=thKpvhAN3Ww/dkkJHk+ozJuHOnbudeU45Yd8jQMSd8A=;
-        b=ZzfVGGnuR6FgsaEmIehSRD2bs/pQti3m+vFV+vcOiYWjMtmVBR5DpGqqzq6LdKuylA
-         HTG/0ut2RlMZw31C1afK2hCV0//GZknI7c5qdsOYWpJnnyaRCSqr3RuCHLhTexsZEFV1
-         0GMPfXD97fq+5PfMvQA0hoc7K4MiAahw9a7AXaWcFZZydV5/4dxy9wtwmPh6RGF/FOOG
-         DbMfD+oZM8BMOTUQd43Ho3jbk3rxPAyt/AlqJzQ/qJz8y5zXFXQIQ0oF1vwLvxGsPIu0
-         HZZSkXbOs5e2Uycck+eguCl6lxu3v0f3nw4tzsitTrx+nbJhqlhkcUApeDKbNdvsad25
-         Z9Yw==
-X-Gm-Message-State: AOJu0YxyvDTr0EbgwAZeytHnYue4QeQZ5hLhZOvi+Xvzaf7FWXQZMaaN
-	NWL7vzYG3zeko7d9VhG+xw2vlwfjDnM2DBMQka06IJj0y9rwPUwbWvjNVXPI5ArX8Z1iOJMFSOy
-	fQTzLtMZLEAMEFfwdkebaklp2p2rK7T4=
-X-Gm-Gg: AZuq6aJNmsWulKzwai8gG6Zm5+aJ0ATxB+UOgLdBFspwl1cfxodM6HxWmFA9g64TiKo
-	ICK0TH3tab6spQNdw8BTBqI32Ym3PUIn99S7fFBg3YBcDfigE8nb3467IjxsDJ7uWc2eOddFIHg
-	UQxoTemKtb/pS5uCvQ8qVKs0vi3EYWopCasoqbmioGNw5KlsSwfeG7LGYnIpk5Gyixm15wktI3x
-	+/UUPI4AZHV9qQclei+VUKUmm8F/J24pTGSk730ivC8Nc4nVdYwSTkZzo5HcgdauEooTbjnrBb2
-	x1KHBIzIz4hDqMDWVz+EBsVbvG99APlZE4aZgyM43+4uIs3FOxKwoU7UMGLofyjSYvZgVZ+267j
-	L78y/2SWLW97sEPB1uIf8RMe1XA==
-X-Received: by 2002:a17:90b:1fcf:b0:356:41c2:897d with SMTP id
- 98e67ed59e1d1-356aaa7623amr11044284a91.8.1771266774300; Mon, 16 Feb 2026
- 10:32:54 -0800 (PST)
+        bh=Py0YHGSpy3phMm+k1yBWyKNZRETOB3X0sh/u22XsH54=;
+        b=hJhZNvBcnY9dFeQasWzShnmUboFFqdIg/vuxLDIYEgH8khwgye2vsObbBTH+YV9kh+
+         hjrtEfSOX+aEMEE0fDjQ739l9AsvK5j+HIw7p8PJEoV7+ORjyA684QQJc/uWUUUx/X7c
+         gxceG0TdWlSiqec1lo4UM+N+wsDuAb2kQQvpQcdBgZ+w1oieUGFOomeVtM87PeyHXDmh
+         Iq4BYjK9BYevVqsnRi9k9QWS6NKkLBeegfyeCjJZq85txLzP+WB6HZzf+6Xx5k8bx2oe
+         XEqvaT1YXG69gMpjQ+SLCAvXMJVX3K4HrcGhIWyak7hVvvVxhcg9IRriTuQWgr/ltyLj
+         e7IA==
+X-Forwarded-Encrypted: i=1; AJvYcCX14SSu4wkLBHC0CwxO2sau63rI9s67p31hxQZI0Iyv6eozcUFS6uzeYGvDi1nv65Hmf+k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwiQMTKFxjGLocFmqCksI/zVIagZwTDiCzGrqFS7ju7ietilP0
+	K1SRm3E0xjm1VZKp0aqMc2TRlirV+1jlclnI/wSBxFSSE0s8M2I2Hez32kAfGHZHCLP1Ux7btJR
+	1845kxnLWCqBxInlo1TrCqvrxHWG8TxZTDA==
+X-Gm-Gg: AZuq6aK2Ca5xkf5jkmSvEi0JN2VWUWXEPTsspr9JfxbXDhGj9bJY//Vu3tWRgDNxZ/L
+	5Qd2eKpX9VJ4SMLJk9MDrw4RjcJWtZfgIRxGpHpWduPrdZQyFeK2zegOst4jDAemrLB7H2YQLJD
+	4S4BG14nX08iVPUQNtvP0rtiz/k8x42BQogYIyAPKP6rH2tSSf6fij/LQcovOWFaU0+be+fRuip
+	CRKMYdYDlZAgWitsYeSAyGGv+MaiaQEM52HWsVpUE/xvKNoDpDhFz+JfrOrdXCVcxmcUC2PZLVZ
+	4PuxIac6idNZhqC6OSu+Q2INGMD0g9jgDzkvJ+zCJk0L8BOg9X1+nWyBSLMh/w7xhaiKg9uNOgG
+	Q8tBAGDGBJjkXjvjfpCkkhiWKjg==
+X-Received: by 2002:a17:90a:e184:b0:354:bfb7:db13 with SMTP id
+ 98e67ed59e1d1-356aadcf6f3mr9705265a91.35.1771277153632; Mon, 16 Feb 2026
+ 13:25:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
- <20260216161513.2533141-1-jonatan@jontes.page> <20260216161513.2533141-5-jonatan@jontes.page>
-In-Reply-To: <20260216161513.2533141-5-jonatan@jontes.page>
+References: <5794d99e-a7e6-4258-9a1c-1512c3f577af@howdoi.land>
+ <20260110172219.125762-1-george@mail.dietrich.pub> <8d5212b5-3088-4b73-a849-f1c297e06157@howdoi.land>
+In-Reply-To: <8d5212b5-3088-4b73-a849-f1c297e06157@howdoi.land>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 16 Feb 2026 13:32:43 -0500
-X-Gm-Features: AaiRm52NQV8S9YlBudAtQTZTWA55NE1zfw_tGGJFsN6mslDHeUWXaOPFSCALr9s
-Message-ID: <CALnO6CD3QpEZ=689w3mQpc5Hx0bj3+E8gU-JhstYJ9XOvunxiQ@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] completion: fix zsh alias listing for subsection aliases
-To: Jonatan Holmgren <jonatan@jontes.page>
-Cc: git@vger.kernel.org, peff@peff.net, gitster@pobox.com, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>
+Date: Mon, 16 Feb 2026 16:25:42 -0500
+X-Gm-Features: AaiRm52BPtUti5DzoJrJIkNxW4PS32e4SzhjPgm98geDLILPhuBduqK7s6vJgCE
+Message-ID: <CALnO6CDkeBCi3jhHVDG5T2Em_SJrDokezjrao6xCXtSK89MpEw@mail.gmail.com>
+Subject: Re: [Bug] Git subtree regression
+To: Colin Stagner <ask+git@howdoi.land>
+Cc: george@mail.dietrich.pub, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 16, 2026 at 11:15=E2=80=AFAM Jonatan Holmgren <jonatan@jontes.p=
-age> wrote:
+On Mon, Feb 16, 2026 at 3:26=E2=80=AFPM Colin Stagner <ask+git@howdoi.land>=
+ wrote:
 >
-> The zsh completion function __git_zsh_cmd_alias() uses 'git config
-> --get-regexp' to enumerate aliases and then strips the "alias." prefix
-> from each key. For subsection-style aliases (alias.name.command), this
-> leaves "name.command" as the completion candidate instead of just
-> "name".
+> George,
 >
-> The bash completion does not have this problem because it goes through
-> 'git --list-cmds=3Dalias', which calls list_aliases() in C and already
-> handles both alias syntaxes correctly. However, zsh needs both the
-> alias name and its value for descriptive completion, which
-> --list-cmds=3Dalias does not provide.
+> My original patch for this issue introduced other regressions and needed
+> to be reverted. I don't recommend using it.
 >
-> Add a hidden --aliases-for-completion option to 'git help', following
-> the existing --config-for-completion pattern. It outputs NUL-separated
-> "name\nvalue" pairs using list_aliases(), which correctly resolves both
-> the traditional (alias.name) and subsection (alias.name.command)
-> formats. Update __git_zsh_cmd_alias() to use it.
-
-An alternative would to be to post-process and turn
-"alias.name.command" into "name", but this solution is easier to parse
-(won't mix 2 formats).
-
-> ---
->  builtin/help.c                        | 15 +++++++++++++++
->  contrib/completion/git-completion.zsh |  2 +-
->  2 files changed, 16 insertions(+), 1 deletion(-)
+> Instead, can you take a look at:
 >
-> diff --git a/builtin/help.c b/builtin/help.c
-> index c09cbc8912..f02308a391 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -54,6 +54,7 @@ static enum help_action {
->         HELP_ACTION_DEVELOPER_INTERFACES,
->         HELP_ACTION_CONFIG_FOR_COMPLETION,
->         HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION,
-> +       HELP_ACTION_ALIASES_FOR_COMPLETION,
->  } cmd_mode;
 >
->  static char *html_path;
-> @@ -90,6 +91,8 @@ static struct option builtin_help_options[] =3D {
->                     HELP_ACTION_CONFIG_FOR_COMPLETION, PARSE_OPT_HIDDEN),
->         OPT_CMDMODE_F(0, "config-sections-for-completion", &cmd_mode, "",
->                     HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION, PARSE_OPT=
-_HIDDEN),
-> +       OPT_CMDMODE_F(0, "aliases-for-completion", &cmd_mode, "",
-> +                   HELP_ACTION_ALIASES_FOR_COMPLETION, PARSE_OPT_HIDDEN)=
-,
+> https://lore.kernel.org/git/20260215201748.889866-1-ask+git@howdoi.land/
+[snip]
+> https://lore.kernel.org/git/20260215201748.889866-1-ask+git@howdoi.land/
 >
->         OPT_END(),
->  };
-> @@ -691,6 +694,18 @@ int cmd_help(int argc,
->                                help_format);
->                 list_config_help(SHOW_CONFIG_SECTIONS);
->                 return 0;
-> +       case HELP_ACTION_ALIASES_FOR_COMPLETION: {
-> +               struct string_list alias_list =3D STRING_LIST_INIT_DUP;
-> +               opt_mode_usage(argc, "--aliases-for-completion",
-> +                              help_format);
+> which fixes a "recursion depth exceeded" bug on Debian/Ubuntu.
+>
+> I've CC'd you on both of these patch series.
 
-style nit: I _think_ this line could be unwrapped?
-
-> +               list_aliases(&alias_list);
-> +               string_list_sort(&alias_list);
-
-It may not matter much since lists of aliases are probably not
-humongous, but do we need to sort? I don't _think_ "git
---list-cmds=3Dalias" does, for example, though I'm not sure about "git
-config --get-regexp" that's being replaced. Leaving it in the config
-order could even be a feature, so I can put easier-to-complete aliases
-earlier in my config?
-
-> +               for (size_t i =3D 0; i < alias_list.nr; i++)
-> +                       printf("%s%c%s%c", alias_list.items[i].string, '\=
-n',
-> +                              (char *)alias_list.items[i].util, '\0');
-> +               string_list_clear(&alias_list, 1);
-> +               return 0;
-> +       }
->         case HELP_ACTION_CONFIG:
->                 opt_mode_usage(argc, "--config", help_format);
->                 setup_pager(the_repository);
-
-
-> diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/g=
-it-completion.zsh
-> index f5877bd7a1..c32186a977 100644
-> --- a/contrib/completion/git-completion.zsh
-> +++ b/contrib/completion/git-completion.zsh
-> @@ -202,7 +202,7 @@ __git_zsh_cmd_common ()
->  __git_zsh_cmd_alias ()
->  {
->         local -a list
-> -       list=3D(${${(0)"$(git config -z --get-regexp '^alias\.*')"}#alias=
-.})
-> +       list=3D(${(0)"$(git help --aliases-for-completion)"})
->         list=3D(${(f)"$(printf "%s:alias for '%s'\n" ${(f@)list})"})
->         _describe -t alias-commands 'aliases' list && _ret=3D0
->  }
-> --
-> 2.53.0.83.g660bbd62ee.dirty
-
-The Zsh hunk looks straightforwardly correct, especially since the
-output format of the new help-mode is unchanged, thanks.
+JFYI: looks like you pasted the same link twice ;)
 
 --=20
 D. Ben Knoble
