@@ -1,80 +1,80 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EA93314D1
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 15:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B47331A57
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 15:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771256302; cv=none; b=L8Nqj+VdmulcNuE6d7Ewp5+UYc029OaRwsxMdsIK/XlbfuAYPmvEVvhFl4K8UEP6+nalheqEGZYxHUMB8tfXim6JawiA0Yz6XW7s+o8mMAvq2uzgdkHrfz+L3h8lsBj4D0+WITZgCXyPikGrBAbr/v9SGDjHqx05i5SU4ArmXLM=
+	t=1771256304; cv=none; b=kAmnro3Sdn7IdG96h6XLmxCQyravZodwZNwL4iWHwe38DtqzGt3ihCzZY6PPmkEHlEC3DqGaVm3YpT1HHyYQV1wUpGdcPoRHJsxaP6QhQ8DBQnfEZyh0AB1VQ17BCaQT5HYsou5jSqv2wbI5mjCf2Gd2vCU0AV8NP0InOnjBTio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771256302; c=relaxed/simple;
-	bh=ft5GAuo+effEeqQd1dIKDOArZakjnzDfZCJu8DbPsso=;
+	s=arc-20240116; t=1771256304; c=relaxed/simple;
+	bh=EILVSv8O953eVYv3ty++7S4qdqkjBNUWYyW1bCA/A78=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RHzC+ZZNb8gQpXxXNfDhM+4yy0LeTvqzQ/VnRLJFI00ViPwB2k29p3hyCq3nMojVJOIGPTvjTll4MgVluYzwGOj76SbFaXd+Vo5BlMN0Zz0B4F4hb5lTHrywgmG5AaSx1lmqbOddJt8uetUvhEPMhfU/fTqVlPyStRZ5Jp3pU5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FyrhNg7v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JAtXacQG; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=QMfBvTRD+aO6kRfPswd8f8VJWpGCqrj4TTREsVbrHgqxSNHt5orOGurxjlr92MhSYkmnf5TYd8OXRgg0Dled0e0IudzSjrqSpPPLb0bSUAhdWZwpfuLg1NOCyZwD8riMzsONpPgYgeSsEOpeXcJ6WTcd238+KJZVAPOr5JuH0Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UXxg/Fz+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QV18hFnA; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FyrhNg7v";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JAtXacQG"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 47567140018E;
-	Mon, 16 Feb 2026 10:38:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UXxg/Fz+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QV18hFnA"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6B6C214000F5;
+	Mon, 16 Feb 2026 10:38:22 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 16 Feb 2026 10:38:20 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 16 Feb 2026 10:38:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771256300;
-	 x=1771342700; bh=stqa5PQbIe0l4cUUx1rBQcNldRUcJBbWAEXdsEsqTbs=; b=
-	FyrhNg7vX8VtNstyur9o66BUqp9se8HQF3kf9Z5aS8dVuf7g3lM4HXUR/qJfy0xq
-	3welauQq7T0fz5jA8IUzGil7+LIgJ4xr5f7GxlRE0v8PSgdBvbzmKBbM9hifIkEv
-	WoMijg/CvEnBr1WPLEqO0EY9bWQgP2lkIzsm0APQDCd0PwVP1p5qGUVZ3vNS7H9W
-	2zk9hbdfzIFf4k6H4dIWdYOmPHNbu+shF7r3hmS5zAfrSatIjGtB4HCG/pCSNUgC
-	1xpiOge0wFulbESgx9zFGMj9bZ6UM6dzJxXcO+s4cagKoLDYS/lCGmTyyC2rSnjC
-	Y9RizfNiJOXPc2yPGnb1jQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771256302;
+	 x=1771342702; bh=XcAmyPYnpKBz/hVH9zexnAVhMviD8jeHLFihDejlYS8=; b=
+	UXxg/Fz+7l2LyYcLZeHlSheTbOAsFKQq+WXVXqLwtd1F+L2cJjmhIcahz8/EzeLH
+	/PEkfa5C9iiaTkJyOtjWARblVlqFKTL2tBHwmuemesTLsOXkzsIPorx0g1Xsvrt6
+	2chxREnsL3+bu1n3N6eL67DCymkXc9lrTOhPjpkmUiMeVZEnM71Ac/IbQAYVjc1U
+	c2gO8v6Mx+Lx27QQyyQsvBFPzmHht76kMREIVmDMwM+3kApYk7uqcp/K9Wg3f2B9
+	yKhBCbbrwnyF7Xnyk9gUlbbE+J6QAdU7zVOS6FyFZlpQU4K+iKZV7lCSzzRvzNqQ
+	p1iM1LzhBNX1c1ZXH9B82Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771256300; x=
-	1771342700; bh=stqa5PQbIe0l4cUUx1rBQcNldRUcJBbWAEXdsEsqTbs=; b=J
-	AtXacQG3uds94wxwIoWO3DLNJgLRgu9CoishVSz/pT7sEHFT6pl5q0whfV0VAYrd
-	8lmOta6XiV2/kZWVHeeNE5meXECkkxn9HTb3ubSRGRmBHlIRSNBuOlKySMLvGjS7
-	pDCVCrI5l5fsPq23T+XGMifrbi1r1B/EoVP6nwNTV+/UuKY1hJ3MigqKIJjnj/UW
-	+Ni8T9QKP4KZ2cS6J4h0edxo0MLO4tWtld8ooalhsxqvz9xFjs9LNBKyFkZsD6DY
-	2TokAWUk+buuKbaw/Ybidf5zKAuMhjKED7npzzT8Ph1AJI7r6EcruLhHLLFU5wGZ
-	m86LCo4/kjd3dRdaNbEkA==
-X-ME-Sender: <xms:7DmTacY_OOLkF3b_10_kZIbfhbF2ZDGw7LZ-UqRYrJ4Te_kHh7m_Lw>
-    <xme:7DmTadaqWjJ-a-ylWjFBQhI3TTZ6DIWPif2PsW49-jRtMjoGiR9TulGH-VOdZ_vI_
-    mNhq_wiDtQd56Epc8Njv9SA-JxfCyRFas2H2VTiiir8zm-dc6K5KQ>
-X-ME-Received: <xmr:7DmTaUn3pyvW_lWSHI_mDO7ImbkpVzPLGO6F9SwzHgyFlUtqRKHfogRs3RFiIK1FPrHMoJNpdDTY7aLTEhPFB7fR2nAjXxSYK0TFdMsgGA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771256302; x=
+	1771342702; bh=XcAmyPYnpKBz/hVH9zexnAVhMviD8jeHLFihDejlYS8=; b=Q
+	V18hFnAkWWklMRSmHphj6t8PvZjqR9tybZsOBV9Vd4eGTe6vtXxyQ0wXmWwi+xSl
+	Kjm3u+uiVlJFxF4wVqCb0sSMvhRJxQhxzfdr5LtZFiPbapo0vABkg4i7D6PLRusq
+	5ml0YilkH70QtgAiCihDZW0dWDshQE8XHTNDs9NbniG18wQoq7S/OVgC/7NV816q
+	2Z6AF2l4NCxgSsEbfaxrzpRsZ2pDSXBhgvPZyEnVcUPeF5rMCtToSPnv4etktjRT
+	Cq5cFgIwON4tE6GWfCUcMcDkdu9qsrgq5Vq6bTKYT5mS2gl+dMVCydi3M589eSUK
+	9imHRCRJ3miwNqsdmDc8Q==
+X-ME-Sender: <xms:7jmTaVoqW8-3kK8kxwFiOaxPOzTYE4i-JHCkiWnJUYqz3iPT3bgkyA>
+    <xme:7jmTadqDaSGw5Ppp0crebQRm9sbM7s4T7Qkc5jt-SkOu6FSl6qlGZqPlxoMDExPxL
+    DdXCqDK1liomGoohPgtraK2apXLrkJ8LJWbaRrK8nklTuhf3z2PAQ>
+X-ME-Received: <xmr:7jmTaf31o9NKbhsyY3tudUMJhV42MnDVhxXjTOqICXNWWuPN03JKUjdqQXaZYuqJ1eyBI5SCXl-FZvSC-Q86hcpIbMSTLPSUhTjrzdk9fg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudejvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    hnpeefhfeugeelheefjeektdffhedvhfdvteefgfdtudffudevveetgeeuuedtkefhgeen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhsmhhilh
-    gvhiesghhithhlrggsrdgtohhm
-X-ME-Proxy: <xmx:7DmTaRwp1utS6wrKrQTE7kXrtSXM-8fn7ktQhI8n4QuVhF35puj1rw>
-    <xmx:7DmTaaMmtepgM-xsvvD2ikAxhCDZrQ0JJl3kk2RKVyZ0_5gnZ6B3MA>
-    <xmx:7DmTadTQs0UKAw1qN4-6PgpK0Tc2Q6ILTEWst4orWX4bJMV748dQEg>
-    <xmx:7DmTaQYVM3JjRxladH2vmjJSXWBuVkY-HXt73fuMeN4SZpC7jc2MdA>
-    <xmx:7DmTaSJH78eSpnbh1-1aNqiypzQMpIy7kAven4fJBOTKnwu9JR-U3Jg2>
+    thhopehmshhmihhlvgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:7jmTacBT576DVxdRXiwSrGv1I5SLy9RFNtFgUwAQ383imE4AmHFEnw>
+    <xmx:7jmTaXemg7wRqhsyHvMd0TrRB88X2_4HgGgG8h2sj6Mw7ZEiXG0fLQ>
+    <xmx:7jmTaRi26NCT6p91HvsILZ69Fa_vLyE7YBw7PqYPBZLkcuX2WkdbLw>
+    <xmx:7jmTafrKY5Cho1Um6dnwt6f5t9U7dSrxeapwAUsx2zqpj10e_xrMVw>
+    <xmx:7jmTafa6gyaa25uC-cecYQ8lbaifBu3tvR1fhsRY44m2PS-g25KVI6Sc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Feb 2026 10:38:19 -0500 (EST)
+ 16 Feb 2026 10:38:21 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8d3f3ee9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Feb 2026 15:38:18 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 15eef0c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Feb 2026 15:38:21 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Feb 2026 16:38:02 +0100
-Subject: [PATCH 2/3] commit: make `repo_parse_commit_no_graph()` more
- robust
+Date: Mon, 16 Feb 2026 16:38:03 +0100
+Subject: [PATCH 3/3] commit: use commit graph in
+ `lookup_commit_reference_gently()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,115 +82,91 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260216-b4-pks-receive-pack-optimize-shallow-v1-2-e98886daff2b@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260216-b4-pks-receive-pack-optimize-shallow-v1-3-e98886daff2b@pks.im>
 References: <20260216-b4-pks-receive-pack-optimize-shallow-v1-0-e98886daff2b@pks.im>
 In-Reply-To: <20260216-b4-pks-receive-pack-optimize-shallow-v1-0-e98886daff2b@pks.im>
 To: git@vger.kernel.org
 Cc: Matt Smiley <msmiley@gitlab.com>
 X-Mailer: b4 0.14.3
 
-In the next commit we will start to parse more commits via the
-commit-graph. This change will lead to a segfault though because we try
-to access the tree of a commit via `repo_get_commit_tree()`, but:
+In the preceding commit we refactored `lookup_commit_reference_gently()`
+so that it doesn't parse non-commit objects anymore. This has led to a
+speedup when git-receive-pack(1) accepts a shallow push into a repo
+with lots of refs that point to blobs or trees.
 
-  - The commit has been parsed via the commit-graph, and thus its
-    `maybe_tree` field is not yet populated.
+But while this case is now faster, we still have the issue that
+accepting pushes with lots of "normal" refs that point to commits are
+still slow. This is mostly because we look up the commits via the object
+database, and that is rather costly.
 
-  - We cannot use the commit-graph to populate the commit's tree because
-    we're in the process of writing the commit-graph.
+Adapt the code to use `repo_parse_commit_gently()` instead of
+`parse_object()` to parse the resulting commit object. This function
+knows to use the commit-graph to fill in the object, which is way more
+cost efficient.
 
-The consequence is that we'll get a `NULL` pointer for the tree in
-`write_graph_chunk_data()`.
+This leads to another significant speedup when accepting shallow pushes.
+The following benchmark pushes a single objects from a shallow clone
+into a repository with 600,000 references that all point to commits:
 
-In theory we are already mindful of this situation, as we explicitly use
-`repo_parse_commit_no_graph()` to parse the commit without the help of
-the commit-graph. But that doesn't do the trick as the commit is already
-marked as parsed, so the function will not re-populate it. And as the
-commit-graph has been closed, neither will `get_commit_tree_oid()` be
-able to load the tree for us.
+  Benchmark 1: git-receive-pack (rev = HEAD~)
+    Time (mean ± σ):      9.179 s ±  0.031 s    [User: 8.858 s, System: 0.528 s]
+    Range (min … max):    9.154 s …  9.213 s    3 runs
 
-It seems like this issue can only be hit under artificial circumstances:
-the error was hit via `git_test_write_commit_graph_or_die()`, which is
-run by git-commit(1) and git-merge(1) in case `GIT_TEST_COMMIT_GRAPH=1`:
+  Benchmark 2: git-receive-pack (rev = HEAD)
+    Time (mean ± σ):      2.337 s ±  0.032 s    [User: 2.331 s, System: 0.234 s]
+    Range (min … max):    2.308 s …  2.371 s    3 runs
 
-  $ GIT_TEST_COMMIT_GRAPH=1 meson test t7507-commit-verbose \
-      --test-args=-ix -i
-  ...
-  ++ git -c commit.verbose=true commit --amend
-  hint: Waiting for your editor to close the file...
-  ./test-lib.sh: line 1012: 55895 Segmentation fault         (core dumped) git -c commit.verbose=true commit --amend
+  Summary
+    git-receive-pack . </tmp/input (rev = HEAD) ran
+      3.93 ± 0.05 times faster than git-receive-pack (rev = HEAD~)
 
-To the best of my knowledge, this is the only case where we end up
-writing a commit-graph in the same process that might have already
-consulted the commit-graph to look up arbitrary objects. But regardless
-of that, this feels like a bigger accident that is just waiting to
-happen.
+Also, this again leads to a significant reduction in memory allocations.
+Before this change:
 
-Make the code more robust by extending `repo_parse_commit_no_graph()` to
-unparse a commit first in case we detect it's coming from a graph. This
-ensures that we will re-read the object without it, and thus we will
-populate `maybe_tree` properly.
+  HEAP SUMMARY:
+      in use at exit: 17,524,978 bytes in 22,393 blocks
+    total heap usage: 33,313 allocs, 10,920 frees, 407,774,251 bytes allocated
 
-This fix shouldn't have any performance consequences: the function is
-only ever called in the "commit-graph.c" code, and we'll only re-parse
-the commit at most once.
+And after this change:
 
-Add an exclusion to our Coccinelle rules so that it doesn't complain
-about us accessing `maybe_tree` directly.
+  HEAP SUMMARY:
+      in use at exit: 11,534,036 bytes in 12,406 blocks
+    total heap usage: 13,284 allocs, 878 frees, 15,521,451 bytes allocated
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit.h                        | 14 ++++++++++++--
- contrib/coccinelle/commit.cocci |  2 +-
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ commit.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/commit.h b/commit.h
-index 1635de418b..f2f39e1a89 100644
---- a/commit.h
-+++ b/commit.h
-@@ -103,16 +103,26 @@ static inline int repo_parse_commit(struct repository *r, struct commit *item)
- 	return repo_parse_commit_gently(r, item, 0);
- }
- 
-+void unparse_commit(struct repository *r, const struct object_id *oid);
-+
- static inline int repo_parse_commit_no_graph(struct repository *r,
- 					     struct commit *commit)
+diff --git a/commit.c b/commit.c
+index b7c4ec2eb5..014f74822c 100644
+--- a/commit.c
++++ b/commit.c
+@@ -45,7 +45,7 @@ struct commit *lookup_commit_reference_gently(struct repository *r,
  {
-+	/*
-+	 * When the commit has been parsed but its tree wasn't populated then
-+	 * this is an indicator that it has been parsed via the commit-graph.
-+	 * We cannot read the tree via the commit-graph, as we're explicitly
-+	 * told not to use it. We thus have to first un-parse the object so
-+	 * that we can re-parse it without the graph.
-+	 */
-+	if (commit->object.parsed && !commit->maybe_tree)
-+		unparse_commit(r, &commit->object.oid);
-+
- 	return repo_parse_commit_internal(r, commit, 0, 0);
+ 	const struct object_id *maybe_peeled;
+ 	struct object_id peeled_oid;
+-	struct object *object;
++	struct commit *commit;
+ 	enum object_type type;
+ 
+ 	switch (peel_object_ext(r, oid, &peeled_oid, 0, &type)) {
+@@ -67,11 +67,11 @@ struct commit *lookup_commit_reference_gently(struct repository *r,
+ 		return NULL;
+ 	}
+ 
+-	object = parse_object(r, maybe_peeled);
+-	if (!object)
++	commit = lookup_commit(r, maybe_peeled);
++	if (!commit || repo_parse_commit_gently(r, commit, quiet) < 0)
+ 		return NULL;
+ 
+-	return object_as_type(object, OBJ_COMMIT, quiet);
++	return commit;
  }
  
- void parse_commit_or_die(struct commit *item);
- 
--void unparse_commit(struct repository *r, const struct object_id *oid);
--
- struct buffer_slab;
- struct buffer_slab *allocate_commit_buffer_slab(void);
- void free_commit_buffer_slab(struct buffer_slab *bs);
-diff --git a/contrib/coccinelle/commit.cocci b/contrib/coccinelle/commit.cocci
-index c5284604c5..42725161e9 100644
---- a/contrib/coccinelle/commit.cocci
-+++ b/contrib/coccinelle/commit.cocci
-@@ -26,7 +26,7 @@ expression s;
- // repo_get_commit_tree() on the LHS.
- @@
- identifier f != { repo_get_commit_tree, get_commit_tree_in_graph_one,
--		  load_tree_for_commit, set_commit_tree };
-+		  load_tree_for_commit, set_commit_tree, repo_parse_commit_no_graph };
- expression c;
- @@
-   f(...) {<...
+ struct commit *lookup_commit_reference(struct repository *r, const struct object_id *oid)
 
 -- 
 2.53.0.352.gd1286b26eb.dirty
