@@ -1,133 +1,99 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84B423F417
-	for <git@vger.kernel.org>; Sun, 15 Feb 2026 23:21:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40781D63D1
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 00:57:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.178
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771197670; cv=pass; b=DTk7jR2ZduXHjsfo+TCoWBuNICN6PMoq4LbmlIRMfFVTjgYuM5DKrfZynemWuHjhiOmj0ZLJCW0y0kYFaNn9+TZ8NYCLWn7qIFGQch2f4seS+ci6J9OoN/mImEaELuoMZR8NDUcREzWJh0gsUPQUKoD6GymV1TBtz/mSxceQtlQ=
+	t=1771203425; cv=pass; b=SVt/o6tAr0Mg6MdNuncO7H848uxK7mww7SraGrKCKKy5x9uKDpIHY8fWfFgPeCHdcbZccivkcl1nH4RgvFJqjU0RPPMIZSzv58ZgoPxq+PuHw9vaZg+X0SvnQxkMApK+l23m+16KaJOivo2BwiOCA2g6Rf2a813dp+hJ3oBKMGU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771197670; c=relaxed/simple;
-	bh=NVhZJQHQUwBaOenCZqHYq/o+0jHHaeZoybkOFgjkxuo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B1ximP/ZEzYdp2xnj8BCSYSFnEydb3MhFKOceMwR1HgWTBvVDAqQuuxx6CfmW0vAchLsRyO70xGofB0T5QvaJkpu1poj1TS/ZCqQkaoPGefd50jBnUz/YSPh5r/pygOK58uMcwwfrMhdkKjVqcqK4KDPyISG0p3yUln6YtwK/N8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1771203425; c=relaxed/simple;
+	bh=1QuaJdNTbt7s5i7SUvqz9lRQJH797I88UTOb6sux7ys=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=tRFs6xHLt11kzT4FKDj89Mf4q/5/OTmKrTYKA3x0oiGZ9rB6ks6wW/HmSrjAfJzxT4zIr+s1069TLFxEpvDORQ8KpkEf2LNgBsuLQMdPprvvYcQRdxFux/twlMBegpqJbO2YdxFLoZwtvCDJXsc+iIMOl2m9qGlDyx4g1G/OzNU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N3v8e0YN; arc=pass smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2b86a9613d8so221756eec.2
-        for <git@vger.kernel.org>; Sun, 15 Feb 2026 15:21:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771197668; cv=none;
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N3v8e0YN"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-823081bb15fso1431865b3a.3
+        for <git@vger.kernel.org>; Sun, 15 Feb 2026 16:57:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771203424; cv=none;
         d=google.com; s=arc-20240605;
-        b=KWmKt0VxXFlkX2pW/O0qUhniiWSshHpbAQDFB5OIngkDfXcgUwjdy5T/c488tU9RwV
-         /qsRtD5pkAZUlvf55PpiP6cdJF8SCrAmHnaoyIIvcMPIVJwJwpQF/KDUfDFiORsG07nX
-         3k/oEVdocdZoO6SzjlRDt1YdlZb1exJnaoWDU9BstWJ4bhbj0sbNapNHQ1ELkwc2tCmU
-         w1HKTTsDUzxKr5161K/oHsuEjLRuoOF6rMjx+eYJ6nuLtxhvP5wZd/+OZ9n//fHjwfAs
-         V/IGc1D67M87EBVpWQjmAulFcSIWBYwazYvsHpO5bQ6T2Rlod2lxf/Cbs3qhi8df+HML
-         5x+w==
+        b=L7fshQRhzXwRu5I6hbpcSo4gk1RJaUTjcnMFSyDG0gFH50h5iofAjvA1LOLC5Nr8U9
+         iPmbRbpQ734q2Onm2Y+M0v9S4etqSGH5lFTnJekazYNAOl7j7dL3fstZZ46I4F715Dje
+         g5ezrPJiW3qufkUHru1qtYtfNWW6YqSooaFKyqeS1PNgGmU4MMHNSNRkboTIYoukj/3j
+         N3tfOVeCkrqf46o5D/zbsWY6D7vFDpObsyRqlAjCSfj2m2DkhdKGJsa+QExYhXdrpXni
+         gv+WiHHKktzC/PcOBdNdowK6wmM9LGBk5yhuBsSdYdLg0QUfczEGdb2t6o/EWNo8O36V
+         Nhcg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=JI1EjMnOy6rnxRrq1H3Xu+aaJR9LfCu7Rbq11sb2M3g=;
-        fh=VhJ3gV/8rdgwlkGnxk+MslABgokmfzWj/oFUn+q6hH4=;
-        b=OSMRg+ap2V2cZHyXDiuLwR0P32Dn03VwW+Gfb3WcHduM0Gg0hm+CLx7ExPNjaoXiJ0
-         o+CrmOZ7z4Ey4MsZJ/NQltL3DFJTMTy44zOrOpJLyvY+sOBuzNo+Pa7crFGwxP3vFPIr
-         hGOIWicMnuyIYYdtw5vRY8QyoYL1guYAdjfGIgNb7qCblxcdfegpcBRCHILJp0jb2peH
-         ozm1/0k6ssLFliCnzGW9Ez46+MsktFXpgT3dm8vSlOfbervB8tByxqoiRc9ergtfwJbf
-         6tMe7T5iON5aK22S6tWzD+RhZgmxvyH/cVBzsWST9APoQlED+w2LeVb/X3OeHxv8fzan
-         Kr1A==;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=1QuaJdNTbt7s5i7SUvqz9lRQJH797I88UTOb6sux7ys=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=K0sevAii46WduBS7BDa+oo0z/Vl0UP6/q1iTy4XmdMLbqEpwRY8CnfRJkKLcvTnU6D
+         68a+FL9d73MZRl0pDxHDu/tFZRJBHnLdJvNHso/MpwSZV3PTtMCVmJihJPSOQ7Ixv9n4
+         yNUG+s7WWRdVWv6PvXFcr+R2LaKaCKDR9ghDEA5K06lYi983BqsQaJ74UNz5IKIYXxGI
+         hf2EDASUnbm9irb8PfomiraTn4Jhr7tasumdPy10qyn+2M/zmnrpSdKZCOyAmfoWDwNN
+         U/6g0jYWuxLZIzOdOll4iwWSRCn0marDazqeT1HbVht5Bbubm0kF3VCF6GpTVWsmVVt9
+         awNA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771203424; x=1771808224; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1QuaJdNTbt7s5i7SUvqz9lRQJH797I88UTOb6sux7ys=;
+        b=N3v8e0YNwUhqVdD/yQQGadOUJqDesV4jDWh7x2dcbM3rD4aIUo76WylukQ2L99hTE6
+         1el21hahfEyGz7d8rK3nhY8BXcIv4jia7+9mlnEpngZcSZN81woqII7h2zLUun5FFvvr
+         yZ/pe4JEOmJRsB00EmlvdX6DfbkayYpQ/W1oCM5tep1MajixM0MzLdvTu/eMlKPt/cBJ
+         9VHMVXB58duejz1DZFS0OcQVLCI2I04W/yeQ/cfDhlbp5JOqC8xVjKraT7d1qEHyHOUV
+         pLWNnw/xoZOTI1LzFBz1V2jiDp2jQrLIe/1OvVYZahg/dwnaJ9fPShGi79awZRdM2tAK
+         P9KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771197668; x=1771802468;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=JI1EjMnOy6rnxRrq1H3Xu+aaJR9LfCu7Rbq11sb2M3g=;
-        b=erWXEVV/h+WUEwMatVEvy7eMRuJB2Mmj//ENdNDn+2S/lTfTL1Ek9sSgmIz8Dk25WH
-         XvOUOzJPtPEtpwSg/1+FBxih28l9LYvyY4gPnFxaJvQe6TIiVBtm6ervoawxEYF2eRRp
-         EUEYFIq34hmBQlCi1HtcR+X7/36SNdDF9Eq8d0ealK5/RD7cmU4ifkPCbXv2d1KIFsgM
-         XfMNKK8NOWNLZ/ZECibkeis/IRJADOYnOgN5mmzEaP/cLhx/XXA+ZpssQml1NREWSqEP
-         mOLMNZIVmLIZhdL3HwPb7/SYgfU0NcnaGXKrMFYZgEQTjjA7Ln87lrXkbt59Ond3w3Nt
-         v9CQ==
-X-Gm-Message-State: AOJu0Yx992ODPkp5uJL+jsSj11nEa5gC9ToTVxALj1G5vN4Q6ngyTPjL
-	6x1CUg6C8Or2sWorEdrrNXk7u9eTncLVqnWLIoBfeY4dt/hK+2g4MoAzC+IDdImuEcV9+6C9IDp
-	nz1U7rVhX6iINMr+dRtNKpIUITjh4Gsw=
-X-Gm-Gg: AZuq6aKmiG5Oi0EuXU13ZUeOrN+ghII7OUM2iu99NN1od32B0JnEtZVb/KwBH1VwmGE
-	wV3BEy4RPfNUgh2K4pvkStMGR5gr0I1GwtLAZEeg94JRbhpD7YPJVrN8uJprmUueUNTf6O6jErl
-	K2gNwOAB3ChcTDsHYFnmFjTkJyYmGeAqCDgsxvUf4SeetsYYiMEzvZxXduadUmHI2tMA4ZyE0/t
-	byRg9iP/hrKq2iIa5qm21sGbk3qTIg5263yk125L7Vr00s6G98NUIHyP05YDgKsVkTvwnEojpy5
-	Bxtyffn1Vw==
-X-Received: by 2002:a05:7300:fd15:b0:2b0:4f9a:724b with SMTP id
- 5a478bee46e88-2baba0f2857mr1854665eec.6.1771197667671; Sun, 15 Feb 2026
- 15:21:07 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771203424; x=1771808224;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1QuaJdNTbt7s5i7SUvqz9lRQJH797I88UTOb6sux7ys=;
+        b=bJ9dfBTZTzARhybNzf/f1z91vfC0PJxmVSDZhdFNa2nfNDkPzOI0H5jOiQKPRZggdR
+         jnLxuEBWy2cJL9jM+hIKIXdNzvFayMM1rRjEd+vKrjyKA81I5vBXH/9fl/t8+p7yRJfV
+         r4rFDc9n2bF8k3BtGwP6yXWFhbFinRYpciHrWDRPclcy1tIELX4m8DOsTiHJUiOXu8SR
+         xOT3NJ0OTUekQ9ITEM8+0hgLCGcpf8Vq53roTWqOI0+lbUXDvwvSM6Qji7ho/EG0fDTp
+         T073KymLZds+wtxdyLHz1QjfBHSxbUrM4sblYsh0XHTn7t0xkq2AcmWyWND4YJ5Dxc9h
+         g9wQ==
+X-Gm-Message-State: AOJu0YzigqnDpEoXE6dxFomvquAFGdqUMBdQDHDtRnZe+4KERVy/Pjmx
+	Uch24w6XWmsuvu6gY4PRNp7oUxgZKuCRVebOTiCoUWawJSttpgluqgyANXV+59Qe5JBfaegGSp6
+	+P6f1GwJjGm31O+rCcy5cZH6+FrCuQFkKtIx7ELQN
+X-Gm-Gg: AZuq6aLXEsfScMbJ2W0K5Y9Vq2kGqsIjJnSa5hQL7CcoQrgou18CBcYCfc+GP+5+uBU
+	nhcuYJczeP+7uB6mKOCqTOSFMNGTvmU8OPwQ2k6KBXRDFfH9WnenNZl7FiiWuAQ9nNeVWL+h81l
+	j8ngT2CyfZ8pg/+J9yLMX1rbP45u3NjKpN1/jePgrEW817IT/S8j2qtlQmdjxcOSlXxQXfeDgdJ
+	jwRQkZs0M1SwVrmGCB3MO8LRGTSpaItd4iyJ2VLaXo22rR8uo/BjWtlo9Q+68bWb/NV0FA+/ZbN
+	EXhMLmw/wgF40zpM
+X-Received: by 2002:a05:6a21:748e:b0:38e:5655:2897 with SMTP id
+ adf61e73a8af0-3948389a31bmr5444584637.22.1771203423609; Sun, 15 Feb 2026
+ 16:57:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2043.git.1770679038.gitgitgadget@gmail.com> <7b785b6064966aefe6883ce3c45e80bb74fe79f4.1770679038.git.gitgitgadget@gmail.com>
-In-Reply-To: <7b785b6064966aefe6883ce3c45e80bb74fe79f4.1770679038.git.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 15 Feb 2026 18:20:56 -0500
-X-Gm-Features: AaiRm52lL151ssoQqstlgDuZ6Nah4RqYB7Kb-7iYivfAAgBq1HclJzPldtl9Es4
-Message-ID: <CAPig+cSb=zzDJCoo91detBgfAi9p4a3R8sVc6iTXfzpbNxsNrg@mail.gmail.com>
-Subject: Re: [PATCH 3/5] gitweb: fix mobile page overflow across
- log/commit/blob/diff views
-To: Rito Rhymes via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Rito Rhymes <rito@ritovision.com>
+From: Pierre Houston <jpmhouston@gmail.com>
+Date: Sun, 15 Feb 2026 16:56:52 -0800
+X-Gm-Features: AaiRm50EXdT7N8XIkX0GQnEuuhqGfT2y80M-qPFgfcBXXTVMqAL5W1skYzC03Sk
+Message-ID: <CAMh=C_0ravwVS6UsKKux8PTewd7Z=db4bgvisMXnPwKU-Kyytg@mail.gmail.com>
+Subject: [feature request] stash diff usability
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 9, 2026 at 6:17=E2=80=AFPM Rito Rhymes via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> On mobile-sized viewports, gitweb pages in log/commit/blob/diff views can
-> overflow horizontally due to desktop-oriented paddings and fixed-width
-> preformatted content.
->
-> Add a shared mobile media query to rebalance those layouts: reduce or cle=
-ar
-> paddings in log/commit sections, keep header/search content within the
-> viewport, and allow horizontal scrolling for preformatted blob/diff conte=
-nt
-> instead of forcing page-wide overflow.
->
-> Signed-off-by: Rito Rhymes <rito@ritovision.com>
-> ---
-> diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-> @@ -537,13 +538,6 @@ div.search {
->  div.projsearch {
->         text-align: center;
->         margin: 20px 0px;
-> -       padding: 0 8px;
-> -       box-sizing: border-box;
-> -}
-> -
-> -div.projsearch input[type=3D"text"] {
-> -       max-width: 100%;
-> -       box-sizing: border-box;
->  }
+I can't recall wanting to get, from the command line, the contents of
+a stash as a diff in the past. I thought there was maybe an option to
+`git stash show` , boy was I wrong: `git diff 'stash@{0}^'
+'stash@{0}'`. This seems rather user hostile.
 
-These lines were all added by patch [2/5], applying to all viewport
-sizes, but here in patch [3/5]...
+I see the request to get the "!" syntax working, this would be an
+improvement, However, I'd like to see the command `git stash diff
+[stashname]` to be a shorthand for the above, and of course defaulting
+to the most recent stash.
 
-> @@ -691,3 +685,66 @@ div.remote {
-> +@media (max-width: 768px) {
-> +       div.projsearch {
-> +               padding: 0 8px;
-> +               box-sizing: border-box;
-> +       }
-> +
-> +       div.projsearch input[type=3D"text"] {
-> +               max-width: 100%;
-> +               box-sizing: border-box;
-> +       }
-
-...they are relocated to this @media query. It seems a bit odd to add
-the lines in one patch and then immediately relocate them in the next
-patch, and it's not clear why the series is constructed this way. I
-could, perhaps, understand having separate patches like this if the
-idea is to specially call out the existing "broken" behavior, but
-considering that the commit message of both patches talk about
-restricting the width of the input field to fit the viewport, I'm
-having trouble understanding why the patches are separate.
+My apologies if this matches an old, previously rejected suggestion.
+Searching the mailing list exhaustively takes some skill I haven't
+acquired.
