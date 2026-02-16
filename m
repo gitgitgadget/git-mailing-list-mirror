@@ -1,188 +1,249 @@
-Received: from mail-ej1-f67.google.com (mail-ej1-f67.google.com [209.85.218.67])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A61330B2C
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 16:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A745318EFB
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 16:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771258742; cv=none; b=M2AYxa1YFL9Um5+bENx+nZFMzIqwjWDZ9JkzDY1qg6cV+NQbbUUBa40nJmLUaX9w1XoBuIZkmWpVPsPMDL2+843wYb/hfhL+iUXKTJ/qcEEl0KhipaMqioyC3eBaWAa1iGrN6WI9NlldtnLJHoMYP5DEtTexETnqjPazLJ+9zqg=
+	t=1771259934; cv=none; b=FbKSm7tunUW1dOruZqyz+nTtg5BngDm/mfueyevwnZA72t85mcGWWo2ordWaGgNXKxqKOAIR2veeejWBvQkcf+mL7T0UQxs2XugYLck/olkcrrFhuz6ziVDKFcTUnNTmuI87ampzmI4OkWzE952QvASD/7ioXbXLXR3wxvQWXwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771258742; c=relaxed/simple;
-	bh=ZpTb5h6NjemebaqVyzxUsprDaQd1++uSFBwcBy3HWgk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eidiHhV7DioWDkqYK57mZjw/4FnmA68kSTQVKW/e5SSUsLNLeUOWAlwTwwpqV38vsuqY4bJsx3aAeFUDix+T9dC83JUxbAralr0ZuO4MHXSm18RBAbG+vIaee5h+wDXsyApq/yhkuLvfX9r7ke97WsHDWJoKamM3lQtLdCRX6rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jNmgJ8FV; arc=none smtp.client-ip=209.85.218.67
+	s=arc-20240116; t=1771259934; c=relaxed/simple;
+	bh=St63FK02LQRnU6lM+L4iCAuSOyDE/KGe7yJqcDbMhGY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=EZRlKH8/Hbxb0Lp47hrhMLrwgWBiyhUpFe4NU+c45xQ1KIllT10p+RTUBGmoUWH93JNcV1brlMPdy0kahoD1RuAfUSlBGeNTRQSFcQ34QgZ+7lbOOS4df0T9q/rbTw8STl9IkZp71Kx1z+fOGwMyAWhROIfIRtnVJdH44iyzce4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cC7IRTE1; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jNmgJ8FV"
-Received: by mail-ej1-f67.google.com with SMTP id a640c23a62f3a-b883787268fso403310966b.3
-        for <git@vger.kernel.org>; Mon, 16 Feb 2026 08:19:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cC7IRTE1"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-65be78011c8so2147891a12.3
+        for <git@vger.kernel.org>; Mon, 16 Feb 2026 08:38:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771258740; x=1771863540; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IZm8GXnuf7cuWCGO949Pmi8nVevRFMMhUJykFpqqweg=;
-        b=jNmgJ8FV80dC7/zzUjtXWg04azFZE89bvU3KVvsvYbOzDWdl8NTqFoO/sKBq/UhyvH
-         silGBNwQaxduUTsklz7hcJnDChQC3srnd1noQGE7ir9gJyFmQeeIcoo9LRKNSguWz3b+
-         56MzAgQz7+dKVXJXka5AoqteOAPCc3w9VWCoYQs2PKVJljErHA3ghBvLIzi/T0PgsyQP
-         E/RtUF66qFHCu9LIj/mabkkzXhiVKf2BSOw/OABC0ravQz8m22GDyOo7UoKdaPEvVgUo
-         yDouW6FpMIdoJ3S5/lSkrJTyeraALHiJScQNYTwRhYvxOeT0w5THYt2pomHFxN6aiQhW
-         EsQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771258740; x=1771863540;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771259931; x=1771864731; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IZm8GXnuf7cuWCGO949Pmi8nVevRFMMhUJykFpqqweg=;
-        b=EpC1CWUL2k3Co4Fwg0/YIcaXwUnLIsh78lnigFL8gF5F3BbR8UCl3rNeBDeNavIrMF
-         ZJnHkzHsbH5ZYIlNus8KpCprDNxV5DnfBbV/rUqisGcw9cdKkw9TTi6HjNRqmoqU6fnT
-         v/bxL/C1VkJxWu+VX2bTfw/R0A35FFPTzFTuReM/rH1wyMtAkTvgvYDbP3e5ajEsBoKN
-         7OU2wzogZQ6il83hLzEjnMhqYXedIZ3W9r4UnPycafXOdcgcCX9dx4ITjR6+jlenYfic
-         m3MOtcD2eECDdvxpSTggKDcPwKp3qmMVjJIfUBg1oYqmmRMTcOMANIO4y98T4cpxFfzr
-         d7fg==
-X-Forwarded-Encrypted: i=1; AJvYcCXHLDVwhh4LwwtGK7Vq8Hoc/3N7zciYo6ZlMKxQ0qqzXoxGm4aTjix2C2udVLnqOEBLlIs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxwMOnaUK6dgk+T2C1FkdLEAKqzMsgdV7UhVoDpor2N5XR1K4L
-	LeQmJ248PGzsJKqVwlnENPh1Tv+dVmU5dPIFibrPiGNG1RicSXFOnHItkqwL0EeV
-X-Gm-Gg: AZuq6aLkz9Ocwt8/nIc3w4KvGqN7jlAya/f2IuA+mlmx0Hl7TZ77ESjosJnCls2y27O
-	ilrp53lP61wkYxMFBMLWkH0G9gBU+d6F8Uu3NK8BpItMosHt1wVRDWjt2Bsyoirl0YhAuY/M7YZ
-	xaSfEUekK5hBM4UDu4RKOGH+k82mKAuBQ9EH7YGx+0Q2yyQe3nw2GUkH82Skc2yaAzHsSo4Ms3i
-	5Y1Cn8zDqIpPNBP5soOwt9GIPKKTL0e4WVBiTveUTMgNwETyRYIwQKyarRGN2QgTRgV4kP7AllE
-	8GosEzlyCKX0M4xNMbGU9xVLY2vUN1EqYZ/wN+J4WKIhrtPDAJDvFUjzf3kgzaRdQvOTXma9lFV
-	Lx08aCqF3+dTyrycjVUda+Bv8aiuXfReY/LiiB0Mf3gyBwRPR/1Bz4UziwxiX3CW9yeKdkLntK3
-	+G19Cn02umN6lLBOB+WDlrIHyCVeCk8tvNvNuaquRgfto/tCaor3mtPA8Fg/SfocBse4K0lLb3m
-	2DZOA==
-X-Received: by 2002:a17:907:2dac:b0:b8f:ad62:edc1 with SMTP id a640c23a62f3a-b8fc38f90f5mr437001766b.7.1771258739513;
-        Mon, 16 Feb 2026 08:18:59 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8fc735d66esm263375266b.4.2026.02.16.08.18.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Feb 2026 08:18:59 -0800 (PST)
-Message-ID: <66b0f03a-36ab-4305-814e-6d964f5d33c4@gmail.com>
-Date: Mon, 16 Feb 2026 16:18:58 +0000
+        bh=k9LCiC9JqR8tQT35s1HSVUpeHVv8Mburr2NKAxU2WZE=;
+        b=cC7IRTE1JAhu1EDnu8DkXw6edgLkIZS5cJdwMKnHbn1uaXvz7mD+kap7VgufnBxtQa
+         2Z5XzYqvHe176dvFNK0LxuU3THamYYrojj0joaYjB3Hov3qptl+88vB78tvxW624Fclk
+         MJljiLzn3Rg2Ubn63YANX803gf9Qn++rXn8gUbBk9giV5nhMQ0b28LZwAwciKkU3PxiL
+         TLQbAt0I1Awxl7luKTP0pfWpPFBmbT3ScOlkpsoflJQFBDnzIt4Ss2ooeYkuZBtt8MAt
+         uRnD2FBTKkGiwXokJEQnVjpiNUaA5rlxOUyg8wOhKTFi+CEPxGfCIs6LBB5QkQatIy6S
+         csYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771259931; x=1771864731;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=k9LCiC9JqR8tQT35s1HSVUpeHVv8Mburr2NKAxU2WZE=;
+        b=kuiZVl0UgdnMg6T2Stu03SZBTVdik/+jb2BLzrRU5I8cW3jiPfnR/u2oBvtw+ZdE62
+         O262Maace7ftejbJHYujtQnOoFuKsxUgaKeAOP2UUOkbIqCvBC5Jq3lmPbltg0ZRMJxz
+         aqFuFTqUpnGmd+u1sp/rM1NJXP4A6oD0j7rpE+wFxtMQD1A/llQiHs75AS87Hi9qp7vW
+         zSSKrROSTGDjmtVRRFnZysMdD0pq9LYLLoOr3TsZJD/dyaamo5oJ/CAa9aVh/mrBZpaF
+         Q4itz2Nr47mLSzNhnAWNg4vUDT0xFSJ4ClEUrx4okglrsO5RrgucNIRXlwef71SwpBkp
+         rzaA==
+X-Gm-Message-State: AOJu0YwlqymXw5mB3jjhxatghuhbV5K1kHT5xOn6Fv4VJ9dzDPh4U/cA
+	6Bidq/gYMpFhcNgFKIjbrCbtwNZE2S6uotNrI+E2s8JhTAnNFOG7QFUU
+X-Gm-Gg: AZuq6aLfG14OqgYundSRSDo7T+rDsk+684ep3rsZaAwbKEOPLuMe9YU0h4IRhdHdtLD
+	MpN4hxoadaDP9kYYVWt7sUbSqRwL/S1uI37QEWKVgeVUw2wjYYRwpBkE4KQZD7mOiMVqTQ0CqZL
+	Rm2ubNShTO0KsfvAa7/0xAvkhF4f9AYPOVtaFT0rGhI261bP0v5C20T/lj3AATmKGouIcRwXG30
+	GoVnkGPJ9r0ONMge5cUzUlv/Teir4StuQhWfNPpD0SXgGPt9HubdAi1cJPHxI5dCg6UUeTEoW6y
+	lB4atJ6fhV2VHCPW+9VvfKidVWXcSawSUzFgJzTaIlkSDuXB41rNp70w1XQs+fLRrJ3oEQXVpuW
+	QNyypuCczDE4DPlMkZpKTb+7rfkg0MCIwdF204k3Z7k9ZcfL36INI3XEZTYQje6W8Ucdg8Ny7GU
+	Q3JswVgyKPXJwFDg==
+X-Received: by 2002:a17:907:7fa5:b0:b8e:fe3c:2264 with SMTP id a640c23a62f3a-b8face2498amr568017766b.41.1771259931257;
+        Mon, 16 Feb 2026 08:38:51 -0800 (PST)
+Received: from ubuntu ([102.88.77.5])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8fc7385d99sm260394966b.17.2026.02.16.08.38.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Feb 2026 08:38:50 -0800 (PST)
+From: Olamide Caleb Bello <belkid98@gmail.com>
+To: git@vger.kernel.org
+Cc: toon@iotcl.com,
+	phillip.wood123@gmail.com,
+	gitster@pobox.com,
+	christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	me@ttaylorr.com,
+	karthik.188@gmail.com,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [Outreachy PATCH v7 0/3] store repo specific config values in new `struct repo_config_values`
+Date: Mon, 16 Feb 2026 17:38:24 +0100
+Message-Id: <cover.1771258573.git.belkid98@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <cover.1769256839.git.belkid98@gmail.com>
+References: <cover.1769256839.git.belkid98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC][PATCH 2/2] worktree: stop passing NULL as primary worktree
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
-Cc: sunshine@sunshineco.com, gitster@pobox.com, karthik.188@gmail.com
-References: <ebc16a74-0555-4951-8ec6-ff7fce6b6fcc@gmail.com>
- <20260215090815.46544-1-shreyanshpaliwalcmsmn@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260215090815.46544-1-shreyanshpaliwalcmsmn@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 15/02/2026 08:56, Shreyansh Paliwal wrote:
->> I've cc'd Eric for a second opinion
->>
->> On 13/02/2026 22:29, Junio C Hamano wrote:
->>> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
->>>
->>>> diff --git a/path.c b/path.c
->>>> index d726537622..4ac86e1e58 100644
->>>> --- a/path.c
->>>> +++ b/path.c
->>>> @@ -408,9 +408,7 @@ static void strbuf_worktree_gitdir(struct strbuf *buf,
->>>>    				   const struct repository *repo,
->>>>    				   const struct worktree *wt)
->>>>    {
->>>> -	if (!wt)
->>>> -		strbuf_addstr(buf, repo->gitdir);
->>>> -	else if (!wt->id)
->>>> +	if (is_main_worktree(wt))
->>>>    		strbuf_addstr(buf, repo->commondir);
->>>>    	else
->>>>    		repo_common_path_append(repo, buf, "worktrees/%s", wt->id);
->>>
->>> This is curious.
->>>
->>> We used to treat "wt==NULL" and "wt->id==NULL" differently.  Now we
->>> use repo->commondir for both.  For the primary worktree, it ought to
->>> be the same as repo->gitdir, so it should not matter, but makes me
->>> wonder what the reason behind this difference in the original.
->>>
->>> We have been assuming that wt==NULL and wt->id==NULL both meant the
->>> same thing: "we are talking about the primary worktree".  But the
->>> code around here before this patch seems to behave differently.  Is
->>> our assumption incorrect and are we making a mistake by conflating
->>> these two conditions into one?
->>
->> My understanding is that wt==NULL means "use the current worktree" and
->> wt->id==NULL means "this is the main worktree". That would explain why
->> we use repo->gitdir above when wt==NULL and repo->commondir when
->> wt->id==NULL, as repo->gitdir is the gitdir of the current worktree and
->> repo->commondir will be the gitdir of the main worktree. If we look at
->> the code in wt-status.c that's passing a NULL worktree it wants to know
->> about the status of the current worktree, not the main worktree.
->>
->> I think that we should add a new function
->>
->> struct worktree *get_current_worktree(struct repository*);
->>
->> to worktree.c that constructs a struct worktree using repo->gitdir etc.
->> The worktree id is the last path component of repo->gitdir when the
->> repo->gitdir and repo->commondir differ, otherwise it is NULL. Then we
->> can use that function to get the current worktree rather than passing
->> NULL when we call wt_status_check_{rebase,bisect} from
->> wt_status_get_state(). We should also think about whether we should
->> change wt_status_get_state() to take a "struct worktree*" rather than a
->> "struct repository*" instead (I've not looked at the callers to see if
->> that's sensible).
->>
->> With that, we can gradually clean up uses of wt==NULL in the rest of the
->> codebase overtime and eventually remove support for it from worktree.c
->> rather than having a big flag-day patch. I don't think we need to change
->> uses of wt-id==NULL.
-> 
-> Thanks a lot for clarifying. This helps solve the doubt regarding the
-> different usage of !wt and !wt->id in strbuf_worktree_gitdir(). I realize
-> we have been under the wrong assumption about what wt == NULL represents.
-> 
-> But I still have a few points where I’m a bit confused,
-> 
-> If wt == NULL is meant to represent the current worktree, then what role
-> wt->is_current plays in the present implementation, and if they both
-> represent the same thing then wt->is_current wouldn't make sense if wt is
-> already NULL in the case of a current worktree.
+Hi Git Community,
+Over the course of my ongoing internship, which focused on moving repo specific
+global variables in environment.h into local scope, I have attempted to move some
+variables into the struct repo-settings.
+However there has been some design concerns as regards the use of
+`prepare_repo_settings()` with respect to when and where to call the
+function, and also the change in behaviours when the variable is lazily
+loaded as discussed in [1] and [2].
 
-wt == NULL is a shorthand that callers can use if they don't have a 
-struct worktree to pass, it does not replace wt->is_current when listing 
-all worktrees with get_worktrees() which returns a NULL terminated list.
+After different deliberations, Phillip Wood proposed creating a new config
+struct [3], adding it to the repository struct and passing the repo struct to
+`git_default_config()` to store parsed repo specific config values per repo.
+This ensures the current behaviours will be retained.
 
-> Beyond representation, I’m not quite understanding on how call sites are
-> logically differentiating on whether the intent is to 'operate on the
-> worktree we are in' or 'operate on the primary one'.
+In version v6, the fuzz-commit-graph failed due to the test being run
+multiples times in the same process. This makes us get a BUG due to
+the repository being reinitialized in the same process.
+But now resetting the initialization using memset before rerunning
+the test, the failure is not longer experienced.
 
-We're nearly always interested in the current one. The primary worktree 
-is special in that it cannot be moved or deleted with "git worktree" but 
-git commands generally operate on the current worktree and occasionally 
-check the state of other worktrees (for example to avoid checking out 
-the same branch in two different worktrees).
+1. https://lore.kernel.org/git/43aaec10-2696-44c9-8728-2045b83dc5d3@gmail.com/
+2. https://lore.kernel.org/git/a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com/
+3. https://lore.kernel.org/git/8899016f-eeef-404b-8da6-ff3a90e81cea@gmail.com
+4. https://github.com/git/git/actions/runs/21633462506/job/62352191148?pr=2166
+5. https://gitlab.com/gitlab-community/gitlab-org/git/-/pipelines/2303203992
 
-> And I think if we included both in struct repository (r->main_wt, r->current_wt)
-> so accessing either of them would be a whole lot easier and also would
-> prevent confusion in the future.
+Changes in v7:
+==============
+- Added the code to reset the initialization of the_repository
+  in the fuzz-commit-graph test in Patch 1.
+- Changed the call to rep_config_values_init() in
+  initialze_repository() by passing it the repo config_values_private_
+  struct instead of the accessor function in Patch 1.
+- Modified the commit message in Patch 1
+- Added extra lines between variable declarations and code
 
-It might be worth adding the current worktree (or probably the worktree 
-that the struct repository refers to) to struct repository in the future 
-but I think that is outside the scope of cleaning up wt-status.c
+Olamide Caleb Bello (3):
+  environment: stop storing `core.attributesFile` globally
+  environment: stop using core.sparseCheckout globally
+  environment: move "branch.autoSetupMerge" into `struct
+    repo_config_values`
 
-Thanks
+ attr.c                       |  7 ++++---
+ branch.h                     |  2 --
+ builtin/backfill.c           |  3 ++-
+ builtin/branch.c             |  3 ++-
+ builtin/checkout.c           |  3 ++-
+ builtin/clone.c              |  4 +++-
+ builtin/grep.c               |  2 +-
+ builtin/mv.c                 |  3 ++-
+ builtin/push.c               |  3 ++-
+ builtin/sparse-checkout.c    | 31 ++++++++++++++++++++-----------
+ builtin/submodule--helper.c  |  3 ++-
+ builtin/worktree.c           |  3 ++-
+ dir.c                        |  4 +++-
+ environment.c                | 28 ++++++++++++++++++----------
+ environment.h                | 17 +++++++++++++++--
+ oss-fuzz/fuzz-commit-graph.c |  1 +
+ repository.c                 | 14 ++++++++++++++
+ repository.h                 |  7 +++++++
+ sparse-index.c               |  7 +++++--
+ unpack-trees.c               |  3 ++-
+ wt-status.c                  |  4 +++-
+ 21 files changed, 110 insertions(+), 42 deletions(-)
 
-Phillip
+Range diff versus v6:
+=====================
+1:  7e3082125d ! 1:  48821a3848 environment: stop storing `core.attributesFile` globally
+    @@ Commit message
 
-> Let me know what you think.
-> 
-> Best,
-> Shreyansh
-> 
+         The `core.attributeFile` config value is parsed in
+         git_default_core_config(), loaded eagerly and stored in the global
+    -    variable `git_attributes_file`. Storing this value in a global variable
+    -    can lead to it being overwritten by another repository when more than one
+    -    Git repository run in the same Git process.
+    +    variable `git_attributes_file`. Storing this value in a global
+    +    variable can lead to it being overwritten by another repository when
+    +    more than one Git repository run in the same Git process.
+
+         Create a new struct `repo_config_values` to hold this value and
+         other repository dependent values parsed by `git_default_config()`.
+         This will ensure the current behaviour remains the same while also
+         enabling the libification of Git.
+
+    -    An accessor function 'repo_config_values()' is created and used to access
+    -    the new struct member of the repository struct.
+    -    This is to ensure that we detect if the struct repository has been
+    -    initialized and also prevent double initialization of the repository.
+    -
+    -    It is important to note that `git_default_config()` is a wrapper to other
+    -    `git_default_*_config()` functions such as `git_default_core_config()`.
+    -    Therefore to access and modify this global variable,
+    -    the change has to be made `git_default_core_config()`.
+    +    An accessor function 'repo_config_values()' to ensure that we do not
+    +    access an uninitialized repository, or an instance of a different
+    +    repository than the current one.
+
+         Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+         Mentored-by: Christian Couder <christian.couder@gmail.com>
+    @@ environment.h: extern int assume_unchanged;
+      extern int pack_compression_level;
+      extern unsigned long pack_size_limit_cfg;
+
+    + ## oss-fuzz/fuzz-commit-graph.c ##
+    +@@ oss-fuzz/fuzz-commit-graph.c: int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+    + {
+    + 	struct commit_graph *g;
+    +
+    ++	memset(the_repository, 0, sizeof(*the_repository));
+    + 	initialize_repository(the_repository);
+    +
+    + 	/*
+    +
+      ## repository.c ##
+     @@ repository.c: static void set_default_hash_algo(struct repository *repo)
+      	repo_set_hash_algo(repo, algo);
+    @@ repository.c: static void set_default_hash_algo(struct repository *repo)
+
+     +struct repo_config_values *repo_config_values(struct repository *repo)
+     +{
+    ++	if (repo != the_repository)
+    ++		BUG("trying to read config from wrong repository instance");
+     +	if(!repo->initialized)
+     +		BUG("config values from uninitialized repository");
+     +	return &repo->config_values_private_;
+    @@ repository.c: static void set_default_hash_algo(struct repository *repo)
+      	ALLOC_ARRAY(repo->index, 1);
+      	index_state_init(repo->index, repo);
+      	repo->check_deprecated_config = true;
+    -+	repo_config_values_init(repo_config_values(repo));
+    ++	repo_config_values_init(&repo->config_values_private_);
+
+      	/*
+      	 * When a command runs inside a repository, it learns what
+2:  8645b4f595 ! 2:  7d33f1ef0f environment: stop using core.sparseCheckout globally
+    @@ builtin/clone.c: static int git_sparse_checkout_init(const char *repo)
+      	struct child_process cmd = CHILD_PROCESS_INIT;
+      	int result = 0;
+     +	struct repo_config_values *cfg = repo_config_values(the_repository);
+    ++
+      	strvec_pushl(&cmd.args, "-C", repo, "sparse-checkout", "set", NULL);
+
+      	/*
+    @@ dir.c: enum pattern_match_result path_matches_pattern_list(
+      {
+     -	if (!core_apply_sparse_checkout)
+     +	struct repo_config_values *cfg = repo_config_values(the_repository);
+    ++
+     +	if (!cfg->apply_sparse_checkout)
+      		return 1;
+      	if (istate->sparse_checkout_patterns)
+    @@ sparse-index.c: static int index_has_unmerged_entries(struct index_state *istate
+      {
+     -	if (!core_apply_sparse_checkout || !core_sparse_checkout_cone)
+     +	struct repo_config_values *cfg = repo_config_values(the_repository);
+    ++
+     +	if (!cfg->apply_sparse_checkout || !core_sparse_checkout_cone)
+      		return 0;
+
+3:  60451b93a5 = 3:  c3ecfa63b9 environment: move "branch.autoSetupMerge" into `struct repo_config_values`
+
+
+-- 
+2.34.1
 
