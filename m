@@ -1,151 +1,181 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CD1E571
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 07:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB2627A92D
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 08:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771228512; cv=pass; b=kT2Rz45zSvkvYGm0kjDAgYEUHh7UoO6EaMPJvlzmgJnZtet3YDHrbmQfyPuY/AJHjqTvz5Uyyl15bS3dECYjVEcKD6KPW4RCJNhtW/NDt2cSf5nzmJuG/VzjfNigkXHIsSSrLIMY6YBO5W9FwHrBi/iJp/9Phn9y86hv3UiQ/xk=
+	t=1771232267; cv=pass; b=syoMCHkTlYdnTam3c6nW70MvYx8l1GNx3hOjuTqQNAe/m3MVTJA7Fn/0Ug7kpOiMoWxshEZvM80UZCJ8NoUt4sBscOTIc19gklcyG1vhh2Lxa1GHqhQ4UvvYRCfxFUlE6Rtel+DvHYDkag68MiZ53QoA4UVD6n2iuZOWm4Y4lDk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771228512; c=relaxed/simple;
-	bh=gMVOA32OeGyBrXYjl/UFFloU2jXssjX8sPvaftm3erg=;
+	s=arc-20240116; t=1771232267; c=relaxed/simple;
+	bh=osbdAXCL+/nxICmKLlX+YJnyy+VxagnFckbAxQ9yNjw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dOgpyzh6sXNf4vBHPy/imp1X+VpSBc3UsVJT1wmQajPDoMgdkdVOSHHcqbsvUcJf0FgcbJxLWwzWWunPmIK6AzjkxGZes16NCn3mB7LwhZgXHwPeSmKFHt/1Z/otPZ4QNNe5C0Ra/P2iYTq9o5Z1T1qfuqLmNVWmtayx+NVCIiA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KukE/+xx; arc=pass smtp.client-ip=209.85.208.174
+	 To:Cc:Content-Type; b=h8SNWE6j2CPQzfQVMXr+1XELq6xp/beMJkOzM9rwe86IhJOZBnh3dohJPDlTUiSQX1psbDTIOpMcmgpBSZKIUA426b+diMnfsOoGQjwP8MZ0WxSJ2wSOCJBvsxPKlqFQfT6LdZOMxZ91E5ZpvEylSv8F+VF/2lMZ+BvlTVgy0Dg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K49ja2mR; arc=pass smtp.client-ip=74.125.82.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KukE/+xx"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-3871017fea2so35410331fa.0
-        for <git@vger.kernel.org>; Sun, 15 Feb 2026 23:55:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771228509; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K49ja2mR"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-126ea4b77adso3475220c88.1
+        for <git@vger.kernel.org>; Mon, 16 Feb 2026 00:57:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771232265; cv=none;
         d=google.com; s=arc-20240605;
-        b=HJYNd8jwgQpWmRWo2pTxHUKYx01tej7dCUnnM4vdSM9mIQHF2zNfR/rFGt0wmMNMBr
-         QGKxwG73rLT+7eXrWtLQabmn4GwCn0oEeoqOo4FqRingtLHDSDHW7IYSeC9XDQifixk1
-         rzYF6dPLiN+reoMT3KBTdOiIHe4eUbgqDSd4xS8JR3tpMRqzx9mbFa1u9QEhj1r1AavW
-         Uw8HQCVPUCu2cPiNL6PnJqNRReZ1ldgfAAdfF52kZB0itv72omoyT5cHyqNN1iNxJ1qr
-         sLK3F3Ji7JIh+SrkK0nbsNsGA5zJ4f4NKJH8FW8CcpRMw74KBtQnga7Uu6rmCfHhf6CJ
-         J8lw==
+        b=BwCLXYNSJ4qPpI3Mm01RI23ydW9kQIS0ea7jW0r1r5pr5xMk+ytz7CUMjP+bLrYcyB
+         duvRuOwNVPHYl/FpFmpzDeOOlzkV6mYomiDiJB0SQLxDQfFritGcuFCLm0FLgvkqYJEf
+         8O/0dzN4S8yrRC6X5Q9soW6z0k/n08M5bcy9AK71BFeUMmdtq4F3UsZY0Q9mxKcjCDOO
+         MSzFBjprU7xe2j5ipoel6dQoP7lcxT6E8R/wYq03XjBkPV6IntuEGmRktH1ijVXyojv1
+         OMaAWrn8/OPl7uZhO0BAvhQ58Xh6BDE8sod9muiq1WjlzyOzHDT/eEn4+WrsdMtI7j9r
+         vG+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=t4LDs++S/NtEUGEKdOEzGC1b6ucLjhX1HuLXrLBJSc0=;
-        fh=lHgJOfPjyunQtBD465hhOC+yrhKR5YfusrAnOoqGLxY=;
-        b=BnJFbHTiais6+OtRKcs4e2yzj/EtFeuEKeWVgkTO+RI/K13HEDTympx9yRazoBuem3
-         hruFxrKky5eoHEGwWqgcU8up5qAzBjNULJmks/QK6Vj90pjA88upY9xpwMcuIluV8lRL
-         +H+63tr+3ZVaWUJQVkehnKNehjBRb+BxeI9MuTZTvMPogzB7tbtY2F5MXZYam+2bzEnB
-         s50lyaOur1j0kIST5WUhupOXXUtv6Gf+1Hqft+igdmAclT7HYntUbHp/Z0rXLf7Ra9l1
-         IXxHh9Vb2/mqoh34pnqH1LocggcxQkwdDBYHrzoySoeZ/xPu5CFiqSnU8dLfgUq+9pZ6
-         5CLA==;
+        bh=+6r0JeihJRojQuzZUGYy3W1DsNd9CX1i7BA4FnTqVOw=;
+        fh=ixUb2l2hrASaZJ+AYipvdfT+QE47GqYCY6tByYLgH5k=;
+        b=YYGvjIboKnHha/uHzYVBw7XaaS6eN3pJ40uCvtN3rq3lmThJ4+LGGjpZIpnC4xv3Dt
+         YkobCa9oNKIk5Labw+/baJDUbZ7XHLiNhqPXN6eeKcOicCOXApApw0JKuWS2Sc+p43IH
+         IPaC4YdVrupMRKeEBQX9TD8OZjfGJZGsdfNLr7CiQv83z6Vt3TanOk60zuZOwZ41HrPx
+         3mQsJdt/GAHfHT+6TnUGoNlbtQbaItXEzVZNAeJ+J0Yh64fAkE+aJwAq+/8PAuZaA9to
+         XPtO5iXCkyq3CDlOibyHmNHWVE0sF67s+FDUPdUe/tDDp+XDdP1xaEGvHienmkkj+wk3
+         n3Dw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771228509; x=1771833309; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771232265; x=1771837065; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t4LDs++S/NtEUGEKdOEzGC1b6ucLjhX1HuLXrLBJSc0=;
-        b=KukE/+xxP+vvnGn0Xv4nYtZi1vr56MM87gqCTv/AM/uKM5h1Go8iMQKi8Mcj8Eybtk
-         ciuHcNIBLK+6FN2LgoYQ016riQ1DP+JUXm2KHtr/7viLBg0CUp2nfe3Gv1FPS7VXwh4y
-         r8W4hmnwPFR0gTXTguyPQWbMbhnnBFzMC0UHP8coExM/KudFydQeAGRiExF+mPSDhWHq
-         Zs5udb2yy2BYtoCpKLFUc0rKhdYjDpUxquMLgdNwuwBjZkIEwncGKLj6ySrMpzpAV+fZ
-         MtOlKJLxxSZyVAQSICcdv672zJeRsUzPLwjxuYJFXdKQkl3qjLh0CX0a0xk4cLGtbIVb
-         GLFA==
+        bh=+6r0JeihJRojQuzZUGYy3W1DsNd9CX1i7BA4FnTqVOw=;
+        b=K49ja2mRJsdYDCGZPC9DIgcEkH/1d5glIluQOlPcS9Hwk0xhUAbItLx5LvsC0/T2hI
+         O6EOUGS6YLwADKmeEMjFjYP1LPlsWzcovJ0EnRWaI9TFHOJJ0lac80EdACSWEuDCLSFH
+         WvnaE/dcgQK0M/Q5dI4RsdkTHoFhJstTKBc8fQbMXOKy1JNPKIWbff5l19fhWGtBZnKh
+         pgqr2Fh+obPsa90464Yt/F/zpF6u1JD4xZ9TCHhSZEF6hYbQB0aml7e62bqlpeik3a/c
+         IA2EstZKwyf7p3G8bGtoklE3/UMeR2zemFokxlo4jjEVeVNbmE83dc9Pg141vMeooSGX
+         bB8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771228509; x=1771833309;
+        d=1e100.net; s=20230601; t=1771232265; x=1771837065;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=t4LDs++S/NtEUGEKdOEzGC1b6ucLjhX1HuLXrLBJSc0=;
-        b=O4v4MUYkQy0jEaFrVoiO1HaiTQwdkcFnIOzO2Z6fQv982v7sl7A/7rrjtqws8jAzGW
-         IXKhIKb5b2S2LSLgLKb0Qi+4hoMa0wLCi97iTKc5LPDvTUMOtxsxvpK3xXC9Rv91N81W
-         6tc4XPwJYQBOmwsotLZ8p8kyV7RSxLdmGU9RGPmy29MQcczQkZ+LGXcdyNnhC9vo76gC
-         +CkVOzt598SnNCfjJaUco03a5ISpDTx27pMTkM1sgg0X3aNOAX9TTYCvP/2Qrctro7Uq
-         0TdpUKGethd9jJ1sfGQ66TxoP+u3OoFVpaH61AnukghSNB6OBl9mpGEBaFb6vij5yWng
-         oTpA==
-X-Gm-Message-State: AOJu0YxebxAOTvSYk5h8dV1NccoisZl/Igo/HsAXlOi00gFTs7VslbeP
-	Ah/oFc95yIiu+YC5qz7SaN92NdH/I/xDAOg0Ijk79u/efMnz9mwNr0kjRZJLWAJzGSKaJ/ZwNHE
-	D4/E/DQQM3fvThHW11WCy3BcbWHGjt3/TQH4wr3y4ww==
-X-Gm-Gg: AZuq6aIhjsz474CrwrQxYe/eg2dFADn4v4EYqg1HVS6v/kKYjCNdZmsq4r1k7dlZw+5
-	QPuwTqOeJD5ruX7Lv80coBnRFM7uKDL1t4Yl58gYicRXrrQOiKkUXoomER+19bimdOrT6u70FhV
-	YVscLmSjDJdLGWfHgJkXPAA4Y/eTKA06fZPWkThOwCfvtufuFS1h2ouaQFml92ZK8LnkV67w5B/
-	CNyNR9ETC4v16s3XzHzpuOc5yCQjfLcqo82rs1gYKmIa+6MuxC0keY0c0TYZ0kbHuQa/wWaN34S
-	AmIMkVw1p8UkJ5covHyPlf2R6vuinuKR3kJRVYI=
-X-Received: by 2002:a05:6512:304c:b0:59e:1930:d932 with SMTP id
- 2adb3069b0e04-59f6cfe8fc3mr2304726e87.13.1771228509013; Sun, 15 Feb 2026
- 23:55:09 -0800 (PST)
+        bh=+6r0JeihJRojQuzZUGYy3W1DsNd9CX1i7BA4FnTqVOw=;
+        b=Mp3XRcQz95GbhE1YHo9jE230YfdJg/7Z/GvreIVI4MnGPcWU4F0pWBJrDSYK9GnGpX
+         xuFX8GZIPhb8ggIfm6mJoXUB9JgLzWirmrMAdeMG2UC/Mc4hz7wEitj9ev9gkzt7CKQY
+         IZ3BzbD/XZDYUDMpCcZNfofT5Jua300HCfw8Q7vE/Ug34Wh+6Ib0G6C/hbiUbIMWUQI4
+         cpbBhuCKTF/z3wELH0XS1Xx5wHjfCnUZqlMTLMMCSLBvYPIUJVMPJw7ZCy09dP72yHVX
+         kV051OKPtvPh1QTOUGDcsCSYgnqfNoaGR2iKdbqjIIVXG4XfRnTTuSJ1FbXH3BbfqX4t
+         eN7A==
+X-Gm-Message-State: AOJu0Yw8LyYTZelffs4SPTQjHjjRuH2/gMuw0Fgg21l1LhNcv14mOkN4
+	qBNbQ06v4NgNrjsR+buYlXdRYprC8hB/kv0dEX2zBfP++DNGLD8N+VoNpcKLpVZQSCHFqih6fJ2
+	qL8GRqTEKFSaLI+00NYFroz0tlJr2Gjf5DWZJ
+X-Gm-Gg: AZuq6aIqlw32lDHfQVlV6GJ7Spm9Htx7nX0BScCghOu4VUFXzycgB6mFF76X34Wh8rA
+	/ErPE9DNEGoAA5IKiNo6d4b0R/b0+YViIMD1EAxCQC7p0Jok0cr6PgmN5lCUljKLasIo/8WNOOI
+	fyWQhIQjcoV+2oW6xgAS9L8vSHv6gfS2fk6rarq3GIvolYK/BztjzW5ZGsoelz/CGRiLOLVxNuZ
+	eKzvne3a0A7xQn3rEyssmK7IWCvxxYv/M+dfjqvorgWwMEP4BYLeqL1gAU+ePJnybkCDvcBAgpS
+	avRXnnJ78juDxotvY2SVyosvZCWqCkQs0BLx73NuhiGu0AysoFUHqbGVm+KJPyQ+w0/N/m+vLAt
+	w36c=
+X-Received: by 2002:a05:7022:f87:b0:119:e56c:18ae with SMTP id
+ a92af1059eb24-127397c9950mr3945568c88.22.1771232265318; Mon, 16 Feb 2026
+ 00:57:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260205080853.2034-1-kumarayushjha123@gmail.com> <CA+J6zkRtjxa2BUoa9SMXVET7w4O6=b8iYMLPPpb4REROPGGQNA@mail.gmail.com>
-In-Reply-To: <CA+J6zkRtjxa2BUoa9SMXVET7w4O6=b8iYMLPPpb4REROPGGQNA@mail.gmail.com>
-From: Ayush Jha <kumarayushjha123@gmail.com>
-Date: Mon, 16 Feb 2026 13:24:57 +0530
-X-Gm-Features: AaiRm50Snunb8gdlk6TEcTrQD1SemFuPwJdl8ZGgTv2deWSt4UFYz9TaxbOGnjI
-Message-ID: <CAFNBzOfy6Gcx=jcDDBGzwELskTAAjKbNiDNGwh=QNLz8T+-O2g@mail.gmail.com>
-Subject: Re: [GSoC PATCH] doc: fix typo in tree-walk.h comment
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org
+References: <20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im>
+In-Reply-To: <20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 16 Feb 2026 09:57:33 +0100
+X-Gm-Features: AaiRm51gFGYBhc27lzuqjnQ86AHf-5sL5BTMQ1774bfrKU2MxzP9XbV8Aam-0ME
+Message-ID: <CAP8UFD0zja_P7fOuCtLt46ubit+QTOME2K4+M9N=CQNceevMBQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Fix tests with missing iconv(1) executable
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Chandra,
+Hi,
 
-Thank you for pointing that out. You=E2=80=99re absolutely right =E2=80=94 =
-the subject
-line should use =E2=80=9Ctree-walk.h:=E2=80=9D instead of =E2=80=9Cdoc:=E2=
-=80=9D since the change is
-in the header file and not in Documentation.
-
-Would you prefer that I resend the patch with the corrected subject prefix?
-
-Thanks again for the review and guidance.
-
-Best regards,
-Ayush
-
-On Fri, Feb 6, 2026 at 10:27=E2=80=AFPM Chandra Pratap
-<chandrapratap3519@gmail.com> wrote:
->
-> On Thu, 5 Feb 2026 at 13:39, Ayush Jha <kumarayushjha123@gmail.com> wrote=
+On Mon, Feb 9, 2026 at 1:42=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
 :
-> >
-> > Fix a duplicated word in a comment describing the return value.
-> >
-> > No code or behavior change.
-> >
-> > Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
-> > ---
-> >  tree-walk.h | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/tree-walk.h b/tree-walk.h
-> > index 29a55328bd..9646c47ac5 100644
-> > --- a/tree-walk.h
-> > +++ b/tree-walk.h
-> > @@ -177,7 +177,7 @@ struct traverse_info {
-> >
-> >  /**
-> >   * Walk trees starting with "tree_oid" to find the entry for "name", a=
-nd
-> > - * return the the object name and the mode of the found entry via the
-> > + * return the object name and the mode of the found entry via the
-> >   * "oid" and "mode" parameters.  Return 0 if the entry is found, and -=
-1
-> >   * otherwise.
-> >   */
-> > --
-> > 2.53.0.windows.1
 >
-> Nit: The subject line should preferably use 'tree-walk.h: ' instead of 'd=
-oc: '
-> since it is a change to the `tree-walk.h` file and not 'Documentation'.
+> Hi,
 >
-> Other than that, the change looks good to me. Thanks for your interest
-> in contributing to Git!
+> I recently noticed that th MSVC-based tests in GitLab CI started to
+> fail. The root cause is that the iconv(1) executable cannot be found on
+> this platform anymore. This isn't entirely surprising: we depend on the
+> Git for Windows environment to provide necessary shell tools, and that
+> environment of course is not a fully fledged MSYS2 installation.
 >
-> Thanks,
-> Chandra.
+> In any case, this patch series fixes those issues by building on top of
+> the ICONV prerequisite. If the prereq isn't found, then we also don't
+> assume that the iconv(1) executable exists.
+
+I think it's reasonable to assume that iconv isn't available if the
+ICONV prereq isn't satisfied.
+
+> An alternative strategy would be to introduce a new ICONV_EXECUTABLE
+> prereq. But given that Git doesn't perform any kind of reencoding itself
+> in case the ICONV support isn't built into it I found it to not be worth
+> the additional hassle.
+
+I agree that it's better to not add a new ICONV_EXECUTABLE prereq if
+possible, as it keeps things simple.
+
+> In any case, this patch series causes the MSVC jobs to pass again on
+> GitLab CI.
+
+I think it would be nice if this could talk a bit about the NO_ICONV
+build knob and how it still relates to the ICONV prereq though.
+
+Before this series, for example, the Makefile says:
+
+  # Define NO_ICONV if your libc does not properly support iconv.
+
+while t/test-lib.sh has:
+
+  test -z "$NO_ICONV" && test_set_prereq ICONV
+
+Unfortunately the diffstat below:
+
+>  t/t4041-diff-submodule-option.sh             |  8 +++--
+>  t/t4059-diff-submodule-not-initialized.sh    |  8 +++--
+>  t/t4060-diff-submodule-option-diff-format.sh |  8 +++--
+>  t/t4205-log-pretty-formats.sh                | 50 ++++++++++++++++------=
+------
+>  t/t5550-http-fetch-dumb.sh                   | 20 +++++------
+>  t/t6006-rev-list-format.sh                   | 29 +++++++++++-----
+>  6 files changed, 77 insertions(+), 46 deletions(-)
+
+shows no change in the Makefile, or any build infrastructure file,
+despite the fact that the series changes the one-to-one relationship
+between the NO_ICONV build knob and the ICONV prereq.
+
+In the Makefile, for example, I think something like the following
+would be nice:
+
+diff --git a/Makefile b/Makefile
+index 47ed9fa7fd..ed54071fd7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -182,7 +182,9 @@ include shared.mak
+# Define NO_SOCKADDR_STORAGE if your platform does not have struct
+# sockaddr_storage.
+#
+-# Define NO_ICONV if your libc does not properly support iconv.
++# Define NO_ICONV if your libc does not properly support iconv. Note that =
+for
++# simplicity the test suite assumes that iconv(1) is available if and only=
+ if
++# NO_ICONV is not defined.
+#
+# Define OLD_ICONV if your library has an old iconv(), where the second
+# (input buffer pointer) parameter is declared with type (const char **).
+
+Not sure how a similar update should be done in configure.ac or
+meson.build but maybe it might be worth clarifying things there too.
+
+On the other hand maybe we can say that the situation regarding the
+documentation of iconv(1) and the build knobs was quite bad before
+this series already and that a full separate patch series would be
+required to improve on that. But I think at least this cover letter
+should say that.
