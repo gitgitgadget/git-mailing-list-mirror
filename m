@@ -1,183 +1,151 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A7D381C4
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 07:23:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771226632; cv=none; b=uRFa+59nrVM6I8Lk2AoxZNAsyR41f4Vb09fSKhr2q6qDeWkqQzTLQNgdBvmEk3IzIg4IgADrPp6bsLlQyxtLo4Lerph8BSBmrnug9+J/NwWja2tQPsqRQ8EhnF4QQ1MpW1REqihcHYaX9QMXWhsQv891HrUn1sAI8PdRie9BWaY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771226632; c=relaxed/simple;
-	bh=ag5SGIMmKdd7he5N+WLKOzwt7kg+xtJhVF91rm9K9UE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TM3tncr/rmXmwiJZfusGkTfr10MDolca5HPEWAnswGHO6L5EqHctCF2cbSo7/ieiL22ewHa9xtQmkbQdwpSCEVq7233+o89gZQa+L9gpoEFyGrr+7FkqrvNhHya54lE/B+YZ/17BYASYLQP0MnZ2Y1qNZyFpNailGlrNG3ruuAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JarA0p+Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FrGKYbU3; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CD1E571
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 07:55:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771228512; cv=pass; b=kT2Rz45zSvkvYGm0kjDAgYEUHh7UoO6EaMPJvlzmgJnZtet3YDHrbmQfyPuY/AJHjqTvz5Uyyl15bS3dECYjVEcKD6KPW4RCJNhtW/NDt2cSf5nzmJuG/VzjfNigkXHIsSSrLIMY6YBO5W9FwHrBi/iJp/9Phn9y86hv3UiQ/xk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771228512; c=relaxed/simple;
+	bh=gMVOA32OeGyBrXYjl/UFFloU2jXssjX8sPvaftm3erg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dOgpyzh6sXNf4vBHPy/imp1X+VpSBc3UsVJT1wmQajPDoMgdkdVOSHHcqbsvUcJf0FgcbJxLWwzWWunPmIK6AzjkxGZes16NCn3mB7LwhZgXHwPeSmKFHt/1Z/otPZ4QNNe5C0Ra/P2iYTq9o5Z1T1qfuqLmNVWmtayx+NVCIiA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KukE/+xx; arc=pass smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JarA0p+Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FrGKYbU3"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E92237A0103;
-	Mon, 16 Feb 2026 02:23:50 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Mon, 16 Feb 2026 02:23:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771226630; x=1771313030; bh=+4HtwsB+Nf
-	rp9lyM9/+UqahEV7dVg+pgke8F+5ap36U=; b=JarA0p+QlDMpEFGr7HPC7xAZ4R
-	cP4Fq9v0nGcxWMkFSs30bjMQvv5QYccD7vJxGgeNf+oSJbfxDwglGP4i9TW1J02g
-	A5bNsxPbfQYGQbQL2Kl7OVx7ExO7+sQ7du5Z5cjvbvnv8QeTV96/NcXdm8ymXzt8
-	pjcMVCS/GY1Gihq/y1ct2f2YUnKtzya5WkHu2pL1oHl0kS3jzxki1Hl6/dP2fQoy
-	KjyjlDUcBp1PqqgAz/vyY85fsg8xJmhgNpyhgvKNAfTxqNbrmd46LoANeYiQaFbY
-	ufzWDCvzcoAP7liv0ebHeKog+HCJaQjG/yM43dkUnYlV45eygEalrxRppyXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771226630; x=1771313030; bh=+4HtwsB+Nfrp9lyM9/+UqahEV7dVg+pgke8
-	F+5ap36U=; b=FrGKYbU3pdtAt+YWSmazgSsZHSGzD/KPw0+bwyMDElW6cftCdWM
-	e+BTM+5kIHd9JRN4PhZZ1kEMVwA8+j8WxjthVwxhVw3vGpRa3G6LO6ZnsoUCWgFH
-	o/Jp/CYH6PGgvRbMIUQ2/qIXnLjuPGolrcrFJz1MoU9rgRNHp/jrtxJzhPjXIEAE
-	Im4bNtBQkD/QhTe4hynK9v/vlnApvUX0wsNrVZiQKuNydejU0L2Lq0Y5Vr2x4ZpN
-	0EOG+F+G5jrUnn/mQEvx3CxYUegaSrLKs94hCLIhNtZDWtlj8DhHCPbonZisVKAU
-	5nX6LfDgrh+OG75p8AMlzZw66cMrV+fx74Q==
-X-ME-Sender: <xms:BsaSaRvsVnorBhLpooi5Qw66gSv8fLJFU1tyK1Cin7gegRvSlQzK3g>
-    <xme:BsaSaReKNaUqUWPYCc862Vf7Yjz2B1Qy_nTSmlQRz6dd7gctkB6fadJxVLKI4cF4N
-    UtLZyNXvFdLo_p8iaK1igl1zwlw8BI2-m4ALCIN5tSw3kZ8sx1b>
-X-ME-Received: <xmr:BsaSaZyD-h67RuguF7XgKmR95gkP3igu4fDc5gDgQ3lAltUJoeOJGg5AbWObp6oxzSZDLIThBz2hu0Jqls0qHXC4o35ZOqW_gPGoPKDG0Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudeivdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:BsaSaXE_2Ld24ozbavEqu_IgF-TQsDAnX6_1CcbG_uM3LwuyWShOCQ>
-    <xmx:BsaSady-f7evTPzecyHAWD52YoWng6pw864er8r0OYevQ16R0ZAxhA>
-    <xmx:BsaSaYs5RPB29nJNTpQ3-NAMXXQKWY8j8jsAh69nc5-QfuKVDGJ4XQ>
-    <xmx:BsaSaa11zrZMk4pn-rrozTrt7fhLi17IoHJogKcX9wOYtxlcQnLfNQ>
-    <xmx:BsaSaVt9qooAOAtdQz1cRyUebLXvll1gFlRSBTFRs3E0UDoAaz4C1esl>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Feb 2026 02:23:49 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6166cc85 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Feb 2026 07:23:47 +0000 (UTC)
-Date: Mon, 16 Feb 2026 08:23:44 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] ref-filter: avoid strrchr() in
- rstrip_ref_components()
-Message-ID: <aZLGAMiDdZ_vplND@pks.im>
-References: <20260215085755.GA86262@coredump.intra.peff.net>
- <20260215090744.GD695631@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KukE/+xx"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-3871017fea2so35410331fa.0
+        for <git@vger.kernel.org>; Sun, 15 Feb 2026 23:55:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771228509; cv=none;
+        d=google.com; s=arc-20240605;
+        b=HJYNd8jwgQpWmRWo2pTxHUKYx01tej7dCUnnM4vdSM9mIQHF2zNfR/rFGt0wmMNMBr
+         QGKxwG73rLT+7eXrWtLQabmn4GwCn0oEeoqOo4FqRingtLHDSDHW7IYSeC9XDQifixk1
+         rzYF6dPLiN+reoMT3KBTdOiIHe4eUbgqDSd4xS8JR3tpMRqzx9mbFa1u9QEhj1r1AavW
+         Uw8HQCVPUCu2cPiNL6PnJqNRReZ1ldgfAAdfF52kZB0itv72omoyT5cHyqNN1iNxJ1qr
+         sLK3F3Ji7JIh+SrkK0nbsNsGA5zJ4f4NKJH8FW8CcpRMw74KBtQnga7Uu6rmCfHhf6CJ
+         J8lw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=t4LDs++S/NtEUGEKdOEzGC1b6ucLjhX1HuLXrLBJSc0=;
+        fh=lHgJOfPjyunQtBD465hhOC+yrhKR5YfusrAnOoqGLxY=;
+        b=BnJFbHTiais6+OtRKcs4e2yzj/EtFeuEKeWVgkTO+RI/K13HEDTympx9yRazoBuem3
+         hruFxrKky5eoHEGwWqgcU8up5qAzBjNULJmks/QK6Vj90pjA88upY9xpwMcuIluV8lRL
+         +H+63tr+3ZVaWUJQVkehnKNehjBRb+BxeI9MuTZTvMPogzB7tbtY2F5MXZYam+2bzEnB
+         s50lyaOur1j0kIST5WUhupOXXUtv6Gf+1Hqft+igdmAclT7HYntUbHp/Z0rXLf7Ra9l1
+         IXxHh9Vb2/mqoh34pnqH1LocggcxQkwdDBYHrzoySoeZ/xPu5CFiqSnU8dLfgUq+9pZ6
+         5CLA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771228509; x=1771833309; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t4LDs++S/NtEUGEKdOEzGC1b6ucLjhX1HuLXrLBJSc0=;
+        b=KukE/+xxP+vvnGn0Xv4nYtZi1vr56MM87gqCTv/AM/uKM5h1Go8iMQKi8Mcj8Eybtk
+         ciuHcNIBLK+6FN2LgoYQ016riQ1DP+JUXm2KHtr/7viLBg0CUp2nfe3Gv1FPS7VXwh4y
+         r8W4hmnwPFR0gTXTguyPQWbMbhnnBFzMC0UHP8coExM/KudFydQeAGRiExF+mPSDhWHq
+         Zs5udb2yy2BYtoCpKLFUc0rKhdYjDpUxquMLgdNwuwBjZkIEwncGKLj6ySrMpzpAV+fZ
+         MtOlKJLxxSZyVAQSICcdv672zJeRsUzPLwjxuYJFXdKQkl3qjLh0CX0a0xk4cLGtbIVb
+         GLFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771228509; x=1771833309;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=t4LDs++S/NtEUGEKdOEzGC1b6ucLjhX1HuLXrLBJSc0=;
+        b=O4v4MUYkQy0jEaFrVoiO1HaiTQwdkcFnIOzO2Z6fQv982v7sl7A/7rrjtqws8jAzGW
+         IXKhIKb5b2S2LSLgLKb0Qi+4hoMa0wLCi97iTKc5LPDvTUMOtxsxvpK3xXC9Rv91N81W
+         6tc4XPwJYQBOmwsotLZ8p8kyV7RSxLdmGU9RGPmy29MQcczQkZ+LGXcdyNnhC9vo76gC
+         +CkVOzt598SnNCfjJaUco03a5ISpDTx27pMTkM1sgg0X3aNOAX9TTYCvP/2Qrctro7Uq
+         0TdpUKGethd9jJ1sfGQ66TxoP+u3OoFVpaH61AnukghSNB6OBl9mpGEBaFb6vij5yWng
+         oTpA==
+X-Gm-Message-State: AOJu0YxebxAOTvSYk5h8dV1NccoisZl/Igo/HsAXlOi00gFTs7VslbeP
+	Ah/oFc95yIiu+YC5qz7SaN92NdH/I/xDAOg0Ijk79u/efMnz9mwNr0kjRZJLWAJzGSKaJ/ZwNHE
+	D4/E/DQQM3fvThHW11WCy3BcbWHGjt3/TQH4wr3y4ww==
+X-Gm-Gg: AZuq6aIhjsz474CrwrQxYe/eg2dFADn4v4EYqg1HVS6v/kKYjCNdZmsq4r1k7dlZw+5
+	QPuwTqOeJD5ruX7Lv80coBnRFM7uKDL1t4Yl58gYicRXrrQOiKkUXoomER+19bimdOrT6u70FhV
+	YVscLmSjDJdLGWfHgJkXPAA4Y/eTKA06fZPWkThOwCfvtufuFS1h2ouaQFml92ZK8LnkV67w5B/
+	CNyNR9ETC4v16s3XzHzpuOc5yCQjfLcqo82rs1gYKmIa+6MuxC0keY0c0TYZ0kbHuQa/wWaN34S
+	AmIMkVw1p8UkJ5covHyPlf2R6vuinuKR3kJRVYI=
+X-Received: by 2002:a05:6512:304c:b0:59e:1930:d932 with SMTP id
+ 2adb3069b0e04-59f6cfe8fc3mr2304726e87.13.1771228509013; Sun, 15 Feb 2026
+ 23:55:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260215090744.GD695631@coredump.intra.peff.net>
+References: <20260205080853.2034-1-kumarayushjha123@gmail.com> <CA+J6zkRtjxa2BUoa9SMXVET7w4O6=b8iYMLPPpb4REROPGGQNA@mail.gmail.com>
+In-Reply-To: <CA+J6zkRtjxa2BUoa9SMXVET7w4O6=b8iYMLPPpb4REROPGGQNA@mail.gmail.com>
+From: Ayush Jha <kumarayushjha123@gmail.com>
+Date: Mon, 16 Feb 2026 13:24:57 +0530
+X-Gm-Features: AaiRm50Snunb8gdlk6TEcTrQD1SemFuPwJdl8ZGgTv2deWSt4UFYz9TaxbOGnjI
+Message-ID: <CAFNBzOfy6Gcx=jcDDBGzwELskTAAjKbNiDNGwh=QNLz8T+-O2g@mail.gmail.com>
+Subject: Re: [GSoC PATCH] doc: fix typo in tree-walk.h comment
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 15, 2026 at 04:07:44AM -0500, Jeff King wrote:
-> To strip path components from our refname string, we repeatedly call
-> strrchr() to find the trailing slash, shortening the string each time by
-> assigning NUL over it. This has two downsides:
-> 
->   1. Calling strrchr() in a loop is quadratic, since each call has to
->      call strlen() under the hood to find the end of the string (even
->      though we know exactly where it is from the last loop iteration).
+Hi Chandra,
 
-Ah, indeed, that's something I missed.
+Thank you for pointing that out. You=E2=80=99re absolutely right =E2=80=94 =
+the subject
+line should use =E2=80=9Ctree-walk.h:=E2=80=9D instead of =E2=80=9Cdoc:=E2=
+=80=9D since the change is
+in the header file and not in Documentation.
 
->   2. We need a temporary buffer, since we're munging the string with NUL
->      as we shorten it (which we must do, because strrchr() has no other
->      way of knowing what we consider the end of the string).
+Would you prefer that I resend the patch with the corrected subject prefix?
 
-Right, upon reading the preceding patch I figured that we can improve
-this function even further and avoid the call to `xstrdup()` in the case
-where we have less components than we're being asked to strip.
+Thanks again for the review and guidance.
 
-> Using memrchr() would let us fix both of these, but it isn't portable.
-> So instead, let's just open-code the string traversal from back to
-> front as we loop.
-> 
-> I doubt that the quadratic nature is a serious concern. You can see it
-> in practice with something like:
-> 
->   git init
->   git commit --allow-empty -m foo
->   echo "$(git rev-parse HEAD) refs/heads$(perl -e 'print "/a" x 500_000')" >.git/packed-refs
->   time git for-each-ref --format='%(refname:rstrip=-1)'
-> 
-> That takes ~5.5s to run on my machine before this patch, and ~11ms
-> after. But I don't think there's a reasonable way for somebody to infect
-> you with such a garbage ref, as the wire protocol is limited to 64k
-> pkt-lines. The difference is measurable for me for a 32k-component ref
-> (about 19ms vs 7ms), so perhaps you could create some chaos by pushing a
-> lot of them. But we also run into filesystem limits (if the loose
-> backend is in use), and in practice it seems like there are probably
-> simpler and more effective ways to waste CPU.
+Best regards,
+Ayush
 
-Agreed, not much of a concern, but good regardless to see it being
-addressed.
-
-> Likewise the extra allocation probably isn't really measurable. In fact,
-> since our goal is to return an allocated string, we end up having to
-> make the same allocation anyway (though it is sized to the result,
-> rather than the input). My main goal was simplicity in avoiding the need
-> to handle cleaning it up in the early return path.
-
-Likewise.
-
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 1008b2fd5a..ac32b0e6bb 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -2213,17 +2213,15 @@ static const char *lstrip_ref_components(const char *refname, int len)
->  static const char *rstrip_ref_components(const char *refname, int len)
->  {
->  	int remaining = normalize_component_count(refname, len);
-> -	char *start = xstrdup(refname);
-> +	const char *end = refname + strlen(refname);
->  
-> -	while (remaining-- > 0) {
-> -		char *p = strrchr(start, '/');
-> -		if (!p) {
-> -			free(start);
-> +	while (remaining > 0) {
-> +		if (end == refname)
->  			return xstrdup("");
-> -		} else
-> -			p[0] = '\0';
-> +		if (*--end == '/')
-> +			remaining--;
-
-We start scannign from the trailing NUL byte, so this would also cause
-us to detect if the refname had "/" as a suffix. But I assume that's a
-case we don't even need to care about, as refs cannot end with a slash
-anyway.
-
-Another edge case is if we were passed the empty string, but as we
-already abort in case we see that `end == refname` we're good there,
-too.
-
->  	}
-> -	return start;
-> +	return xmemdupz(refname, end - refname);
->  }
-
-So overall this and all the preceding patches look good to me. Thanks!
-
-Patrick
+On Fri, Feb 6, 2026 at 10:27=E2=80=AFPM Chandra Pratap
+<chandrapratap3519@gmail.com> wrote:
+>
+> On Thu, 5 Feb 2026 at 13:39, Ayush Jha <kumarayushjha123@gmail.com> wrote=
+:
+> >
+> > Fix a duplicated word in a comment describing the return value.
+> >
+> > No code or behavior change.
+> >
+> > Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
+> > ---
+> >  tree-walk.h | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/tree-walk.h b/tree-walk.h
+> > index 29a55328bd..9646c47ac5 100644
+> > --- a/tree-walk.h
+> > +++ b/tree-walk.h
+> > @@ -177,7 +177,7 @@ struct traverse_info {
+> >
+> >  /**
+> >   * Walk trees starting with "tree_oid" to find the entry for "name", a=
+nd
+> > - * return the the object name and the mode of the found entry via the
+> > + * return the object name and the mode of the found entry via the
+> >   * "oid" and "mode" parameters.  Return 0 if the entry is found, and -=
+1
+> >   * otherwise.
+> >   */
+> > --
+> > 2.53.0.windows.1
+>
+> Nit: The subject line should preferably use 'tree-walk.h: ' instead of 'd=
+oc: '
+> since it is a change to the `tree-walk.h` file and not 'Documentation'.
+>
+> Other than that, the change looks good to me. Thanks for your interest
+> in contributing to Git!
+>
+> Thanks,
+> Chandra.
