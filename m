@@ -1,265 +1,136 @@
-Received: from mail-yx1-f66.google.com (mail-yx1-f66.google.com [74.125.224.66])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31ED5236A73
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 22:29:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.66
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771280953; cv=none; b=gZyggPK/P31i41jH5z9lXaLQaBjc/9vXhUoaCxxTNfIQMJVTVN31ox7K4CeGPYKPY7RxnqlSua8m5FwDbrXCQhqlquFWmtMsiIZSo296gODYmUeJBIzG1L2o8NqYXWD03CXR5SR5TG/Vjsa8iyF2bca6UzK1rq8TjFa1VW8DlAU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771280953; c=relaxed/simple;
-	bh=uXqSgei+An2/LDp1xAxnxWTzrGAB5p3Gf44F32I4WGc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ofo2+CSIfXah8e8x05fc1kNn1ttKZtSU4+5KZsCjN8yGm7/FynCv1u+wqdH6BfjzGNFDiug+xwh6hrc6UE6WdcMDiArt6f3OAUcTNaHpdPOYZYUtwPy3dgDadl/FXsJUSAU440veIGTnK0S1S8fyskXBH531ffmE4f3CNFwch50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eDBXKFl0; arc=none smtp.client-ip=74.125.224.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17B464
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 23:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771285541; cv=pass; b=aDW+hHVqCTNsPedGEfRI7pDCiy7I9ZzMvabKusEuL5iyN76K2M4V+BLYFgdMNznI7FQUeZwVi+8Ye7WvQ6/jIgKoRsXoC0KFXzIF2UUETg9ezZH+UKnJKuS28WrK/IzmgOs2WWywbxPyuA7u8ONRfA7OKW+y4Nj5m8JpDXs7dlo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771285541; c=relaxed/simple;
+	bh=Gnwk9jwBJDeV+/OMgqroLF5JQ514SG60GjolgUal4hk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SPhD9zxbugWw0PjixkvtNOv/SzQFTweGCT1AvfXLnrYdV+gUMIbHH/c69pz8Et1cut7RzJSueDZx8GdRILkEQyhv8Rzo918MVYQOpewlL+n60otN1QTi8QB+JO3xh1gR5mVNJSqvx1dmixJ5emUmt7eSshB1YO5t2xmK6/ah3L8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IGASkrrj; arc=pass smtp.client-ip=209.85.216.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eDBXKFl0"
-Received: by mail-yx1-f66.google.com with SMTP id 956f58d0204a3-64a28af2f4cso4814534d50.1
-        for <git@vger.kernel.org>; Mon, 16 Feb 2026 14:29:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IGASkrrj"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-352ccc61658so1523020a91.0
+        for <git@vger.kernel.org>; Mon, 16 Feb 2026 15:45:40 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771285540; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dTsT7SgVvyud8jmw/V/T9/5lY8jCu9w0U4L0SDhxjAoI/sB4tRbVsJCYZhrKCdk6l+
+         Ali67C5svCri1Fn+QjdZUtueNyr4ycAwWHkYo+vJAvfUs1yxDw8AQ5SrDvfIOMoxWryJ
+         NTBISMuR/LgXRXLmSW1+FlSPAgWj9T14joK1KtBbOz5ohzPG7miQEo/JePuLhHjj0okQ
+         nDSIvGya3ZjXHolkzSZPikrG/eW7NmbhM82OZ0LGgbnQvs+rgomZ6xU3g8TIdGUlZYAi
+         JpFq7EE6hn3ujiNNoJr8+GLvSgNuYSpvfR56PRCb4VZlswSRfz3HVHzXvvutSA2XSw69
+         Eorg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=94NUQiOvX0bBX+UMmoTnXjAf7mRRMWfHBYRNMOfVBsI=;
+        fh=SgACNcb8W7mWyQIloKL41NkSItAGD276VhIgKKbSzB0=;
+        b=iAsCtIdKKOU/5cgR1IKTiPtYYHGrXdLF28n43cC0lv3VSDQASt3nGitPTJf/yIZNJx
+         aG8nnaBOres615cnAvQj1Vkh91nUtfe/z35Kw+OTd0p5bmWCFQmolpCWMuI/1OoI+sec
+         qAxLLUutEjeGtIjuhF1NhbLL1llMQ8YO1ki//3C6ZT+SoFDLXPOth4Cus1yMlaA29Xz5
+         PcfgHu5HTqKgty0J2+SlUQnTSifhDAW3y0DrRBpguxrrA+v+cMuTq9QAF0DQM7cNOmjz
+         V8ZrB4+k1Fqal+4yY1NN/CV8dwCwwNOrhTX9DANG2mhb3xTNAqT4fhXlJ/kJyZ+V5inp
+         B4rQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771280951; x=1771885751; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771285540; x=1771890340; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rG5NxY4M+Vh6FFdYcw/zy9KbGzMt+kcWJffGzwunCZA=;
-        b=eDBXKFl0HPa8AJIv0dOQDvt2rh1MdCvz06dyCBKeMUwTecmCi5eNFgWT0hT+9louYy
-         QaTUEs6VMBcUo5kRwoXCEWpV8VpB3Fxgy+ZQP7X/JeAJXMocD1JP7tA7V6bYCT7mWETw
-         48byMGMVyhsFV/VgwO3RhLEM+wawWRHtkil9UNoUfTRcoC8emDicDfCUipEf6+QrETnS
-         dNM3FekjF3vbM4ot9p9Y9yNOBJZ0tPjEHWVuFYneO7bYjsG5ZX8/ElsU6b5hMM/rYfsA
-         /ah6z7Qwf8ZnENVrsu5tF9c8rzzq9ZHdUtwWdIbBtOXmATPPNjVg0mlXNMs/ugo0/I9K
-         O5Eg==
+        bh=94NUQiOvX0bBX+UMmoTnXjAf7mRRMWfHBYRNMOfVBsI=;
+        b=IGASkrrjDR6rFb+mA+TIN9eQwxo26wKy1DxLayK7uJunLQE7XI8T4qgSIJga81kOg9
+         eGI2LM4QxOxGTtK0zz8GRItGgKb6iyS9oSqdkPfWQ3kEFF7oQxHBrNiz/txm/Yt7jpmV
+         XIaNB4izYbY7n8bSLvk7jaKETFhK0WQMyIbIBk6FilijQec1VGadE4EHF0k7GxxLXboO
+         CYBYxdQFXhgURhsa4bhxmXGxCGgmCaP8azDoDst/IJ4gyH3krNBJP31xkZUd2kNdNQOX
+         ZbJnD1E+12mEkwk71mnsDyYsQQL1ib6RBN2YUGjC7xweEQt0PDEAjYi+Sb1SS5Nu6dZL
+         yR5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771280951; x=1771885751;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rG5NxY4M+Vh6FFdYcw/zy9KbGzMt+kcWJffGzwunCZA=;
-        b=SxnOzKXB3uBsq1UC02VbnHwnFGUq1y+z+qPwpiGtqdfJwdxaUjF7+JdljDGrz5t2W9
-         D3LbQdg55eZyzjTjwLC6hDVk7Lqo2o8/BGwEKRv0Bjs/ZbeZndrXYMDM+9JjMFEqyW6h
-         s+dk6SWhOInHC/AFHxSJ+G+gqE9a+kEMJkfjeG6F3N8HP/SIKTVkw9hRI7TdlJFA/qNl
-         eUhQaFllwq4JHlGW4TwYvHLnDfMbtQ2S5NlPDJr9/d58jhR+FdNxVTR4KUmiEvMMGISP
-         r4RHOQ/EPpmh9nPlwPsiGvP/5ObOrxY17ItmKuMWbNdyb9XNAhFkAIN2ZW/AO5bgk9L2
-         DOcQ==
-X-Gm-Message-State: AOJu0YyKGNweh2WJojM7ilF6PZFFMxL4LRfdrsgItZNCfGGocqaDxhDR
-	YmiRfZ+0bKMnkw7FKw8OoJWjxj5+iVqERY6V4Zti8cPxvMJaknvjV+HoPfOBxopU
-X-Gm-Gg: AZuq6aIBcUEohFGlMeVe5XupfO3jdqHgqDeiuJr8Gn9gn/tAlKuapcWTDAKA1dO1DBj
-	xjpnxwBy6t+TBRmhnP1CxQpA4N6HVqUuDQTg841Q56I+BlFzSzhqWXqxsaCK15G+ykQI5XxSnme
-	xo/pxzOFV7aaNb9IsvyISbAEwzcadIxQ6YSyX/d/hhDuSrnW1NsoEfaXuGtbZRW56L/hcRiLCHX
-	0nPqclUcLEc50s5aAAxK+ctrxPkKW/QWsezQxTu4AiCbF+dfXxGInHhfQhzsea0H4bktzGbdmz0
-	u81B/tmWa3k/OQ2cTpQ/jsjrCWUSCKm4sOaWn5eB8MBIThaGz5CCXGX6BPA4uiSV9lJOiQIC4lq
-	lGmJaFje1Jd1x73oRFldOeoC7rnQRBr1JvioTX9xvrNGUvM3j9sA6NWCnVckJ+hmvOU2wHMWog0
-	5pr0RKleiycxll+455FU9PFSBr0O9MFPFXAR5WrFAlf/aiWPrl6EsrRphVQVohnjXeHdcdr9/TC
-	384Gm2Sz1ZqPN3cs90RbW7Oa4Jco671l9xY+nmfJW8=
-X-Received: by 2002:a05:690e:c4d:b0:64a:db63:99e9 with SMTP id 956f58d0204a3-64c20270399mr7786028d50.23.1771280950577;
-        Mon, 16 Feb 2026 14:29:10 -0800 (PST)
-Received: from macaroon.lan ([2605:a601:90eb:5600:bd86:3f2a:ab6:399a])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64c22f875b7sm4063073d50.13.2026.02.16.14.29.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Feb 2026 14:29:10 -0800 (PST)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Patrick Steinhardt <ps@pks.im>,
-	Evan Martin <evan.martin@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4] meson: regenerate config-list.h when Documentation changes
-Date: Mon, 16 Feb 2026 17:28:57 -0500
-Message-ID: <9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
-References: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
+        d=1e100.net; s=20230601; t=1771285540; x=1771890340;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=94NUQiOvX0bBX+UMmoTnXjAf7mRRMWfHBYRNMOfVBsI=;
+        b=ZcMLCsb2MOB3uGk7Nf1Uxpj3gbZ17qc7IvZrO4tSgdDYi0EXX7AU18c5b5TqChOOF5
+         cz5IcvZIgbY/BfWgjGCKgqmb/hF7L17lGHC94b2maQ8RLmE1979U8zayBQjNMqZ5mq+G
+         ZYCd29L0YRnGta+kQqbnLy53VXBovh9xssrBGcXMOAG8XChajh+li8WFEUexrfwugqaB
+         IxpipZWf/7qxxlZeIrkk9gMlHoWpzmbn6d8i74D5WOdaoANDZkS17dIa83CHiQfkxkyP
+         6OxcTKTZfjPKzfKe3J74modz/nYttEPae3G+RR2YIcqVs9SgrGhLWAgniyn7PAlo3Q7s
+         EQoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX0oeFszfamP0tR36SD7biJ5godIDkESJ70i7QrCsJwGaUOrN3jSxQ0F260yxOJXs5Olas=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzboQB+/4QuEuE75Qp2Skwve+hZSrnbc8mSFpo5RLyyQjhf6y8E
+	v/stZ/9k24IWto5+RU0X2wigTaNeejLiOj0/if2fQRv4ve6/qM03/gleX2JOWkg0YjbIH48SijM
+	/wOjxojyC1p9uAoCEWI4HkN8gGf/7BUE=
+X-Gm-Gg: AZuq6aIi8Hxf7exIAo6wfJkrPNsKE085+NmZ5GGMMzpjQNieXnLDlIJERRfe+uFWt1o
+	FuXC5fWA49GBhYdyvqebKkelf57k0aTPfqhxDEsM0dPg3vL7/UOti57L6kIicQebYah2k69U1SR
+	0Iud6NrOplVyMnQS85GIEiEu9inbI3bExXJ/UGmeV3ck/oEm+/0Qa0sPgZkmR2X0VGPpov/1coP
+	jeuHKMY/PV+FMLZvGylETsY4BtnwexlBDbmdUYZtKrYIcuwPVNJVp36/WxdyHjm4sRqlRz/vEyk
+	3ueSW8mZpx0p3LmbGqfnL+PWxDByFRtTiltrRZlY7VBHxdRGpV2h9au23uwYtoF3Mp8hFzgb5se
+	0k3bg029wDOz712KZdRwmUZ8dnQ==
+X-Received: by 2002:a17:90b:5603:b0:356:2c88:1e7a with SMTP id
+ 98e67ed59e1d1-356aad6415bmr10598879a91.29.1771285540229; Mon, 16 Feb 2026
+ 15:45:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.2046.git.1770746461307.gitgitgadget@gmail.com>
+ <pull.2046.v2.git.1770775169908.gitgitgadget@gmail.com> <xmqqms1fwasx.fsf@gitster.g>
+ <CAOTNsDz0ZtdsM8Z2NW0WBMGs8xyWz5ROS6pf8DKQAx26LU4xRA@mail.gmail.com>
+In-Reply-To: <CAOTNsDz0ZtdsM8Z2NW0WBMGs8xyWz5ROS6pf8DKQAx26LU4xRA@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 16 Feb 2026 18:45:28 -0500
+X-Gm-Features: AaiRm5113giA9I-SjrcfRDNko4TUIvB8Gxl-8CbBa92Eovhu6z_A4z38pCzk-ps
+Message-ID: <CALnO6CARu8HSYh9=z6FAF=84q1qA4Oan7_DLMbcK+1rth8B7cA@mail.gmail.com>
+Subject: Re: [PATCH v2] osxkeychain: define build targets in the top-level Makefile.
+To: Koji Nakamaru <koji.nakamaru@gree.net>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The Meson-based build doesn't know when to rebuild config-list.h, so the
-header is sometimes stale.
+On Wed, Feb 11, 2026 at 6:06=E2=80=AFPM Koji Nakamaru <koji.nakamaru@gree.n=
+et> wrote:
+>
+> On Thu, Feb 12, 2026 at 12:37=E2=80=AFAM Junio C Hamano <gitster@pobox.co=
+m> wrote:
+> >
+> > "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > >      -+       cd ../../..; make install-git-credential-osxkeychain
+> > >      ++       $(MAKE) -C  ../../.. install-git-credential-osxkeychain
+> >
+> > Will replace and mark for 'next'.  Will squash the double spaces
+> > after "-C" into one while doing so.
+>
+> Thank you again for the squash and for marking it for 'next'.
+>
+> --
+> Koji Nakamaru
+>
 
-For example, an old build directory might have config-list.h from before
-4173df5187 (submodule: introduce extensions.submodulePathConfig,
-2026-01-12), which added submodule.<name>.gitdir to the list. Without
-it, t9902-completion.sh fails. Regenerating the config-list.h artifact
-from sources fixes the artifact and the test.
+Homebrew picked this patch on top of 2.53.0, and on a recent build on
+older macOS I needed to
 
-Teach the meson build to depend on the Documentation files that
-generate-configlist.sh reads by having it an additional output as a list
-of dependency files, since Meson does not have (or want) builtin support
-for globbing like Make. We assume that if a user adds a new file under
-Documentation/config then they will also edit one of the existing files
-to include that new file, and that will trigger a rebuild.
+    mkdir contrib/credential/osxkeychain/.depend
 
-Also mark the generator script as a dependency.
+in order to make their build work, since otherwise:
 
-Combining the following commands helps debug dependencies:
+    error: error opening
+'contrib/credential/osxkeychain/.depend/git-credential-osxkeychain.o.d':
+No such file or directory
+    1 error generated.
+    make[1]: ***
+[contrib/credential/osxkeychain/git-credential-osxkeychain.o] Error 1
 
-    ninja -C <builddir> -t deps config-list.h
-    ninja -C <builddir> -t browse config-list.h
 
-The former lists all the dependencies discovered from our output ".d"
-file (the config documentation) and the latter shows the dependency on
-the script itself, among other useful edges in the dependency graph.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
-
-Notes (benknoble/commits):
-    Changes from v3 (<0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>):
-    
-    • Include the script itself as a dependency via depfile
-    • Fix output path escaping (spaces, octothorpes; drop backslashes) for
-      Ninja (I've used a loop because I couldn't find a portable construct
-      that could escape only the remainder of the lines in the way I
-      wanted).
-    • Mention our assumptions about Documentation updates triggering
-      rebuilds
-    • Also include some debugging information in the commit message
-
- generate-configlist.sh | 12 +++++++++++-
- meson.build            |  5 ++++-
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/generate-configlist.sh b/generate-configlist.sh
-index 75c39ade209..63a2e8b6938 100755
---- a/generate-configlist.sh
-+++ b/generate-configlist.sh
-@@ -2,10 +2,11 @@
- 
- SOURCE_DIR="$1"
- OUTPUT="$2"
-+DEPFILE="$3"
- 
- if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
- then
--	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT> [<DEPFILE>]"
- 	exit 1
- fi
- 
-@@ -36,3 +37,12 @@ print_config_list ()
- 	echo
- 	print_config_list
- } >"$OUTPUT"
-+
-+if test -n "$DEPFILE"
-+then
-+	for doc in "$SOURCE_DIR"/Documentation/*config.adoc \
-+		"$SOURCE_DIR"/Documentation/config/*.adoc
-+	do
-+		printf "$OUTPUT: %s\n" "$(printf '%s\n' "$doc" | sed 's/[# ]/\\&/g')"
-+	done >"$DEPFILE"
-+fi
-diff --git a/meson.build b/meson.build
-index 3a1d12caa4b..e4b8f1e33d2 100644
---- a/meson.build
-+++ b/meson.build
-@@ -720,11 +720,14 @@ endif
- 
- builtin_sources += custom_target(
-   output: 'config-list.h',
-+  depfile: 'config-list.h.d',
-+  depend_files: [ 'generate-configlist.sh' ],
-   command: [
-     shell,
--    meson.current_source_dir() + '/generate-configlist.sh',
-+    meson.current_source_dir() / 'generate-configlist.sh',
-     meson.current_source_dir(),
-     '@OUTPUT@',
-+    '@DEPFILE@',
-   ],
-   env: script_environment,
- )
-
-Diff-intervalle contre v3 :
-1:  0a344f1f3ee ! 1:  9cdcc9de04f meson: regenerate config-list.h when Documentation changes
-    @@ Commit message
-         Teach the meson build to depend on the Documentation files that
-         generate-configlist.sh reads by having it an additional output as a list
-         of dependency files, since Meson does not have (or want) builtin support
-    -    for globbing like Make.
-    +    for globbing like Make. We assume that if a user adds a new file under
-    +    Documentation/config then they will also edit one of the existing files
-    +    to include that new file, and that will trigger a rebuild.
-    +
-    +    Also mark the generator script as a dependency.
-    +
-    +    Combining the following commands helps debug dependencies:
-    +
-    +        ninja -C <builddir> -t deps config-list.h
-    +        ninja -C <builddir> -t browse config-list.h
-    +
-    +    The former lists all the dependencies discovered from our output ".d"
-    +    file (the config documentation) and the latter shows the dependency on
-    +    the script itself, among other useful edges in the dependency graph.
-     
-         Helped-by: Patrick Steinhardt <ps@pks.im>
-    +    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-     
-     
-      ## Notes (benknoble/commits) ##
-    -    Changes from v2 (<c9ae171eed6bd5b0fa6671b10a5ad0da024f36d0.1770649805.git.ben.knoble+github@gmail.com>):
-    +    Changes from v3 (<0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>):
-     
-    -    • Pick up (and tweak) Patrick's depfile proposal
-    -    • Include the script itself as a dependency
-    -    • Escape output paths (spaces, octothorpes, and backslashes) for Ninja
-    -
-    -    I'm not 100% sure I've actually done the escaping correctly, though,
-    -    since Ninja's source says that a space preceded by 2N backslashes
-    -    represents 2N backslashes at the end of a filename, and
-    -
-    -        λ printf '%s\n' 'foo\' | sed 's/[# \\]/\\&/g' | xxd
-    -        00000000: 666f 6f5c 5c0a                           foo\\.
-    -
-    -    So would they interpret that as the filename 'foo\\' instead of 'foo\' ?
-    -    (Or, no because the 2N slashes aren't followed by a SP, but a NL?)
-    +    • Include the script itself as a dependency via depfile
-    +    • Fix output path escaping (spaces, octothorpes; drop backslashes) for
-    +      Ninja (I've used a loop because I couldn't find a portable construct
-    +      that could escape only the remainder of the lines in the way I
-    +      wanted).
-    +    • Mention our assumptions about Documentation updates triggering
-    +      rebuilds
-    +    • Also include some debugging information in the commit message
-     
-      ## generate-configlist.sh ##
-     @@
-    @@ generate-configlist.sh: print_config_list ()
-     +
-     +if test -n "$DEPFILE"
-     +then
-    -+	printf "$OUTPUT: %s\n" "$0" "$SOURCE_DIR"/Documentation/*config.adoc \
-    -+	    "$SOURCE_DIR"/Documentation/config/*.adoc |
-    -+	    sed 's/[# \\]/\\&/g' >"$DEPFILE"
-    ++	for doc in "$SOURCE_DIR"/Documentation/*config.adoc \
-    ++		"$SOURCE_DIR"/Documentation/config/*.adoc
-    ++	do
-    ++		printf "$OUTPUT: %s\n" "$(printf '%s\n' "$doc" | sed 's/[# ]/\\&/g')"
-    ++	done >"$DEPFILE"
-     +fi
-     
-      ## meson.build ##
-    @@ meson.build: endif
-      builtin_sources += custom_target(
-        output: 'config-list.h',
-     +  depfile: 'config-list.h.d',
-    ++  depend_files: [ 'generate-configlist.sh' ],
-        command: [
-          shell,
-     -    meson.current_source_dir() + '/generate-configlist.sh',
-
-base-commit: 19a08e0c02faf1c5b4efd1add85598cf8390ff7e
-prerequisite-patch-id: 364ba1899740b93be5957262d3583348d030e8fa
--- 
-2.48.1
-
+--=20
+D. Ben Knoble
