@@ -1,80 +1,80 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F309E2745C
-	for <git@vger.kernel.org>; Mon, 16 Feb 2026 15:38:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EA93314D1
+	for <git@vger.kernel.org>; Mon, 16 Feb 2026 15:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771256299; cv=none; b=cYzV/4MVPBqkvQdoUyH5j07LiTc/68bkNrxFYkTQwClQT5L0u9sAzha2aI9/e2zDpnAt/BeU3Gqzkbl5V6YexHVk9KgoT+XQqVvRGfYzZV/iijgOEHCbxEmGuEz9WQpTvE3PtTu0lnZ9uoeQJo7/ESPt5Xx4nyVuKnmOYNtDhsc=
+	t=1771256302; cv=none; b=L8Nqj+VdmulcNuE6d7Ewp5+UYc029OaRwsxMdsIK/XlbfuAYPmvEVvhFl4K8UEP6+nalheqEGZYxHUMB8tfXim6JawiA0Yz6XW7s+o8mMAvq2uzgdkHrfz+L3h8lsBj4D0+WITZgCXyPikGrBAbr/v9SGDjHqx05i5SU4ArmXLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771256299; c=relaxed/simple;
-	bh=ZQYkUKRuhPlWnBq7jq/DdFv1f0nVn6ML0JdcmKCxPbI=;
+	s=arc-20240116; t=1771256302; c=relaxed/simple;
+	bh=ft5GAuo+effEeqQd1dIKDOArZakjnzDfZCJu8DbPsso=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EGsOxnK9KzF+V5jdjuFqEmRUqCXIPfMGZ0tt+g5LAemLqIiVb98m05Hd1YuDVomtZiYeS//8uWaJCsr1DmuOOZv9w51zg12J8QH7YD2i6k+0aHmZGTPFSQsiO/zDfs5P5etV7JlHxR1wPXKniFsrr32nxieChZlu66rpi7BMD7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jbpDBRdO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ejvkr7ML; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=RHzC+ZZNb8gQpXxXNfDhM+4yy0LeTvqzQ/VnRLJFI00ViPwB2k29p3hyCq3nMojVJOIGPTvjTll4MgVluYzwGOj76SbFaXd+Vo5BlMN0Zz0B4F4hb5lTHrywgmG5AaSx1lmqbOddJt8uetUvhEPMhfU/fTqVlPyStRZ5Jp3pU5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FyrhNg7v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JAtXacQG; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jbpDBRdO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ejvkr7ML"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0B2BDEC05AD;
-	Mon, 16 Feb 2026 10:38:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FyrhNg7v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JAtXacQG"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 47567140018E;
+	Mon, 16 Feb 2026 10:38:20 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 16 Feb 2026 10:38:17 -0500
+  by phl-compute-08.internal (MEProxy); Mon, 16 Feb 2026 10:38:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771256297;
-	 x=1771342697; bh=7HcBuB7CHBmQ/Rno05C7kpmDK5y2nVDDbWWGvuwt6xw=; b=
-	jbpDBRdObpsNgJoccclUqWVE2CfM3p/TmA8YfXva6BkT6IVif9pkIA4C2VKAvjOI
-	u9vqBuJamhEhOdTikjxvSz0me9NBNxq9D+TBhUICGTf14bVS+NzH5JiFM+8uMOB6
-	/kCVyNjrwAJ1jBZXLCsrJ2lCCXqrrYuH6BcxAEUnFEX3dG4LnjEEn7KpEshw+NCE
-	Nerby0RAdR7m1oGTsLFptaKtvA1YHjcaihAJpXdVca4Hg2J6BYffBfDx7CHlgXI2
-	2U/CjFbA3iFVS6aeSH0PXIrE71rgEhRn8XcfFpJIeWur/GNjJ+SIQi6pabSXAKy0
-	mgDyJ8/E/HwRIjDXKyGfaw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771256300;
+	 x=1771342700; bh=stqa5PQbIe0l4cUUx1rBQcNldRUcJBbWAEXdsEsqTbs=; b=
+	FyrhNg7vX8VtNstyur9o66BUqp9se8HQF3kf9Z5aS8dVuf7g3lM4HXUR/qJfy0xq
+	3welauQq7T0fz5jA8IUzGil7+LIgJ4xr5f7GxlRE0v8PSgdBvbzmKBbM9hifIkEv
+	WoMijg/CvEnBr1WPLEqO0EY9bWQgP2lkIzsm0APQDCd0PwVP1p5qGUVZ3vNS7H9W
+	2zk9hbdfzIFf4k6H4dIWdYOmPHNbu+shF7r3hmS5zAfrSatIjGtB4HCG/pCSNUgC
+	1xpiOge0wFulbESgx9zFGMj9bZ6UM6dzJxXcO+s4cagKoLDYS/lCGmTyyC2rSnjC
+	Y9RizfNiJOXPc2yPGnb1jQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771256297; x=
-	1771342697; bh=7HcBuB7CHBmQ/Rno05C7kpmDK5y2nVDDbWWGvuwt6xw=; b=E
-	jvkr7MLSIlEnyEwvl9QT2RlAG2ilMywpDVJhvDdUnNJVs/NWtjZODqiDYuCpKzvY
-	eTwBOE0gU7HeWSZBAjCr/YHV9gZd1zaPhpB8QdNsi13DKQVAYveeyj9+rYUQGG0x
-	J+/nIY71xTQo2CkTebsJe5eezeNwuzzPMTbOcq5b+eywwljpHbfrQUxHfZV0VjNL
-	ODEMItxidpVgME+6AOi7AH/025zRXze2EYu5pHuHPmbqGiUUGS5do5Qym8mr6Mih
-	1UGKewm+5bG/9dmIswBm6LxQQmKVMG5DZWgStnPR/1nMqjqof1QvFOFiZQFHMGYp
-	flrPs92s9JvvwY0HjMIAg==
-X-ME-Sender: <xms:6DmTaU1-VZA6n-OI5fF_v6nC_6npkAySmR8UF5Y5hjHSJ_bXKmVCIQ>
-    <xme:6DmTaVGUb1EncyUhV7T3uL7G0FI-tZ2z-4uK-E80I2gbhORaGIOelggkwk-NaO_OF
-    _69IOil5CawapPnu-r9ZnBwRGZHgjy9Fq1apaSVPJoiJMW9srGOew>
-X-ME-Received: <xmr:6DmTaajitxgrbn_u89LVHJwlil6IESbjyTRifWKsmIo1ThklnfeqAiKzveHGjMDR3TLfrvqD0tx34mEpn-frC3CBJKP3dl1aaXAq0haSWA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771256300; x=
+	1771342700; bh=stqa5PQbIe0l4cUUx1rBQcNldRUcJBbWAEXdsEsqTbs=; b=J
+	AtXacQG3uds94wxwIoWO3DLNJgLRgu9CoishVSz/pT7sEHFT6pl5q0whfV0VAYrd
+	8lmOta6XiV2/kZWVHeeNE5meXECkkxn9HTb3ubSRGRmBHlIRSNBuOlKySMLvGjS7
+	pDCVCrI5l5fsPq23T+XGMifrbi1r1B/EoVP6nwNTV+/UuKY1hJ3MigqKIJjnj/UW
+	+Ni8T9QKP4KZ2cS6J4h0edxo0MLO4tWtld8ooalhsxqvz9xFjs9LNBKyFkZsD6DY
+	2TokAWUk+buuKbaw/Ybidf5zKAuMhjKED7npzzT8Ph1AJI7r6EcruLhHLLFU5wGZ
+	m86LCo4/kjd3dRdaNbEkA==
+X-ME-Sender: <xms:7DmTacY_OOLkF3b_10_kZIbfhbF2ZDGw7LZ-UqRYrJ4Te_kHh7m_Lw>
+    <xme:7DmTadaqWjJ-a-ylWjFBQhI3TTZ6DIWPif2PsW49-jRtMjoGiR9TulGH-VOdZ_vI_
+    mNhq_wiDtQd56Epc8Njv9SA-JxfCyRFas2H2VTiiir8zm-dc6K5KQ>
+X-ME-Received: <xmr:7DmTaUn3pyvW_lWSHI_mDO7ImbkpVzPLGO6F9SwzHgyFlUtqRKHfogRs3RFiIK1FPrHMoJNpdDTY7aLTEhPFB7fR2nAjXxSYK0TFdMsgGA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudejvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeefhfeugeelheefjeektdffhedvhfdvteefgfdtudffudevveetgeeuuedtkefhgeen
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmshhmihhlvgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:6DmTaY-6qIZfDCKDR0LbO5ttDgFQQkzbGS7sl2pfWGQo8uDt9XyR9Q>
-    <xmx:6DmTaZpmDtU5O9TnAFdSxgph4ZNq1YBYyj3xLlPJZFWnwq0kmCFodA>
-    <xmx:6DmTaf_232ao3VfaBFnhX9RHcd-FrR0YZPjJGA02kRaPg7RXbeLDYw>
-    <xmx:6DmTaVX37bWwnpbg-ty9JG_ZR9e-ycc3XSYqRDQOvS_WJLcP8GkODA>
-    <xmx:6TmTaRnWFt3rn0bx4ryUkkNdJ4rDEjQsmpNyuzf0h5A-CDDyDIvZF5Yz>
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhsmhhilh
+    gvhiesghhithhlrggsrdgtohhm
+X-ME-Proxy: <xmx:7DmTaRwp1utS6wrKrQTE7kXrtSXM-8fn7ktQhI8n4QuVhF35puj1rw>
+    <xmx:7DmTaaMmtepgM-xsvvD2ikAxhCDZrQ0JJl3kk2RKVyZ0_5gnZ6B3MA>
+    <xmx:7DmTadTQs0UKAw1qN4-6PgpK0Tc2Q6ILTEWst4orWX4bJMV748dQEg>
+    <xmx:7DmTaQYVM3JjRxladH2vmjJSXWBuVkY-HXt73fuMeN4SZpC7jc2MdA>
+    <xmx:7DmTaSJH78eSpnbh1-1aNqiypzQMpIy7kAven4fJBOTKnwu9JR-U3Jg2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Feb 2026 10:38:15 -0500 (EST)
+ 16 Feb 2026 10:38:19 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6f8a359a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Feb 2026 15:38:15 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 8d3f3ee9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Feb 2026 15:38:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Feb 2026 16:38:01 +0100
-Subject: [PATCH 1/3] commit: avoid parsing non-commits in
- `lookup_commit_reference_gently()`
+Date: Mon, 16 Feb 2026 16:38:02 +0100
+Subject: [PATCH 2/3] commit: make `repo_parse_commit_no_graph()` more
+ robust
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,224 +82,115 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-b4-pks-receive-pack-optimize-shallow-v1-1-e98886daff2b@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260216-b4-pks-receive-pack-optimize-shallow-v1-2-e98886daff2b@pks.im>
 References: <20260216-b4-pks-receive-pack-optimize-shallow-v1-0-e98886daff2b@pks.im>
 In-Reply-To: <20260216-b4-pks-receive-pack-optimize-shallow-v1-0-e98886daff2b@pks.im>
 To: git@vger.kernel.org
 Cc: Matt Smiley <msmiley@gitlab.com>
 X-Mailer: b4 0.14.3
 
-The function `lookup_commit_reference_gently()` can be used to look up a
-committish by object ID. As such, the function knows to peel for example
-tag objects so that we eventually end up with the commit.
+In the next commit we will start to parse more commits via the
+commit-graph. This change will lead to a segfault though because we try
+to access the tree of a commit via `repo_get_commit_tree()`, but:
 
-The function is used quite a lot throughout our tree. One such user is
-"shallow.c" via `assign_shallow_commits_to_refs()`. The intent of this
-function is to figure out whether a shallow push is missing any objects
-that are required to satisfy the ref updates, and if so, which of the
-ref updates is missing objects.
+  - The commit has been parsed via the commit-graph, and thus its
+    `maybe_tree` field is not yet populated.
 
-This is done by painting the tree with `UNINTERESTING`. We start
-painting by calling `refs_for_each_ref()` so that we can mark all
-existing referenced objects as the boundary of objects that we already
-have, and which are supposed to be fully connected. The reference tips
-are then parsed via `lookup_commit_reference_gently()`, and the commit
-commit is then marked as uninteresting.
+  - We cannot use the commit-graph to populate the commit's tree because
+    we're in the process of writing the commit-graph.
 
-But references may not necessarily point to a committish, and if a lot
-of them aren't then this step takes a lot of time. This is mostly due to
-the way that `lookup_commit_reference_gently()` is implemented: before
-we learn about the type of the object we already call `parse_object()`
-on the object ID. This has two consequences:
+The consequence is that we'll get a `NULL` pointer for the tree in
+`write_graph_chunk_data()`.
 
-  - We parse all objects, including trees and blobs, even though we
-    don't even need the contents of them.
+In theory we are already mindful of this situation, as we explicitly use
+`repo_parse_commit_no_graph()` to parse the commit without the help of
+the commit-graph. But that doesn't do the trick as the commit is already
+marked as parsed, so the function will not re-populate it. And as the
+commit-graph has been closed, neither will `get_commit_tree_oid()` be
+able to load the tree for us.
 
-  - More importantly though, `parse_object()` will cause us to check
-    whether the object ID matches its contents.
+It seems like this issue can only be hit under artificial circumstances:
+the error was hit via `git_test_write_commit_graph_or_die()`, which is
+run by git-commit(1) and git-merge(1) in case `GIT_TEST_COMMIT_GRAPH=1`:
 
-Combined this means that we deflate and hash every non-committish
-object, and that of course ends up being both CPU- and memory-intensive.
+  $ GIT_TEST_COMMIT_GRAPH=1 meson test t7507-commit-verbose \
+      --test-args=-ix -i
+  ...
+  ++ git -c commit.verbose=true commit --amend
+  hint: Waiting for your editor to close the file...
+  ./test-lib.sh: line 1012: 55895 Segmentation fault         (core dumped) git -c commit.verbose=true commit --amend
 
-Improve the logic so that we first use `peel_object()`. This function
-won't parse the object for us, and thus it allows us to learn about the
-object's type before we parse and return it.
+To the best of my knowledge, this is the only case where we end up
+writing a commit-graph in the same process that might have already
+consulted the commit-graph to look up arbitrary objects. But regardless
+of that, this feels like a bigger accident that is just waiting to
+happen.
 
-The following benchmark pushes a single object from a shallow clone into
-a repository that has 100,000 refs. These refs were created by listing
-all objects via `git rev-list(1) --objects --all` and creating refs for
-a subset of them, so lots of those refs will cover non-commit objects.
+Make the code more robust by extending `repo_parse_commit_no_graph()` to
+unparse a commit first in case we detect it's coming from a graph. This
+ensures that we will re-read the object without it, and thus we will
+populate `maybe_tree` properly.
 
-  Benchmark 1: git-receive-pack (rev = HEAD~)
-    Time (mean ± σ):     62.571 s ±  0.413 s    [User: 58.331 s, System: 4.053 s]
-    Range (min … max):   62.191 s … 63.010 s    3 runs
+This fix shouldn't have any performance consequences: the function is
+only ever called in the "commit-graph.c" code, and we'll only re-parse
+the commit at most once.
 
-  Benchmark 2: git-receive-pack (rev = HEAD)
-    Time (mean ± σ):     38.339 s ±  0.192 s    [User: 36.220 s, System: 1.992 s]
-    Range (min … max):   38.176 s … 38.551 s    3 runs
-
-  Summary
-    git-receive-pack . </tmp/input (rev = HEAD) ran
-      1.63 ± 0.01 times faster than git-receive-pack . </tmp/input (rev = HEAD~)
-
-This leads to a sizeable speedup as we now skip reading and parsing
-non-commit objects. Before this change we spent around 40% of the time
-in `assign_shallow_commits_to_refs()`, after the change we only spend
-around 1.2% of the time in there. Almost the entire remainder of the
-time is spent in git-rev-list(1) to perform the connectivity checks.
-
-Despite the speedup though, this also leads to a massive reduction in
-allocations. Before:
-
-  HEAP SUMMARY:
-      in use at exit: 352,480,441 bytes in 97,185 blocks
-    total heap usage: 2,793,820 allocs, 2,696,635 frees, 67,271,456,983 bytes allocated
-
-And after:
-
-  HEAP SUMMARY:
-      in use at exit: 17,524,978 bytes in 22,393 blocks
-    total heap usage: 33,313 allocs, 10,920 frees, 407,774,251 bytes allocated
-
-Note that when all references refer to commits performance stays roughly
-the same, as expected. The following benchmark was executed with 600k
-commits:
-
-  Benchmark 1: git-receive-pack (rev = HEAD~)
-    Time (mean ± σ):      9.101 s ±  0.006 s    [User: 8.800 s, System: 0.520 s]
-    Range (min … max):    9.095 s …  9.106 s    3 runs
-
-  Benchmark 2: git-receive-pack (rev = HEAD)
-    Time (mean ± σ):      9.128 s ±  0.094 s    [User: 8.820 s, System: 0.522 s]
-    Range (min … max):    9.019 s …  9.188 s    3 runs
-
-  Summary
-    git-receive-pack (rev = HEAD~) ran
-      1.00 ± 0.01 times faster than git-receive-pack (rev = HEAD)
-
-This will be improved in the next commit.
+Add an exclusion to our Coccinelle rules so that it doesn't complain
+about us accessing `maybe_tree` directly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit.c | 32 +++++++++++++++++++++++++++-----
- object.c | 23 ++++++++++++++++++-----
- object.h |  5 +++++
- 3 files changed, 50 insertions(+), 10 deletions(-)
+ commit.h                        | 14 ++++++++++++--
+ contrib/coccinelle/commit.cocci |  2 +-
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 9bb471d217..b7c4ec2eb5 100644
---- a/commit.c
-+++ b/commit.c
-@@ -43,13 +43,35 @@ const char *commit_type = "commit";
- struct commit *lookup_commit_reference_gently(struct repository *r,
- 		const struct object_id *oid, int quiet)
- {
--	struct object *obj = deref_tag(r,
--				       parse_object(r, oid),
--				       NULL, 0);
-+	const struct object_id *maybe_peeled;
-+	struct object_id peeled_oid;
-+	struct object *object;
-+	enum object_type type;
- 
--	if (!obj)
-+	switch (peel_object_ext(r, oid, &peeled_oid, 0, &type)) {
-+	case PEEL_NON_TAG:
-+		maybe_peeled = oid;
-+		break;
-+	case PEEL_PEELED:
-+		maybe_peeled = &peeled_oid;
-+		break;
-+	default:
- 		return NULL;
--	return object_as_type(obj, OBJ_COMMIT, quiet);
-+	}
-+
-+	if (type != OBJ_COMMIT) {
-+		if (!quiet)
-+			error(_("object %s is a %s, not a %s"),
-+			      oid_to_hex(oid), type_name(type),
-+			      type_name(OBJ_COMMIT));
-+		return NULL;
-+	}
-+
-+	object = parse_object(r, maybe_peeled);
-+	if (!object)
-+		return NULL;
-+
-+	return object_as_type(object, OBJ_COMMIT, quiet);
+diff --git a/commit.h b/commit.h
+index 1635de418b..f2f39e1a89 100644
+--- a/commit.h
++++ b/commit.h
+@@ -103,16 +103,26 @@ static inline int repo_parse_commit(struct repository *r, struct commit *item)
+ 	return repo_parse_commit_gently(r, item, 0);
  }
  
- struct commit *lookup_commit_reference(struct repository *r, const struct object_id *oid)
-diff --git a/object.c b/object.c
-index 4669b8d65e..99b6df3780 100644
---- a/object.c
-+++ b/object.c
-@@ -207,10 +207,11 @@ struct object *lookup_object_by_type(struct repository *r,
- 	}
- }
- 
--enum peel_status peel_object(struct repository *r,
--			     const struct object_id *name,
--			     struct object_id *oid,
--			     unsigned flags)
-+enum peel_status peel_object_ext(struct repository *r,
-+				 const struct object_id *name,
-+				 struct object_id *oid,
-+				 unsigned flags,
-+				 enum object_type *typep)
- {
- 	struct object *o = lookup_unknown_object(r, name);
- 
-@@ -220,8 +221,10 @@ enum peel_status peel_object(struct repository *r,
- 			return PEEL_INVALID;
- 	}
- 
--	if (o->type != OBJ_TAG)
-+	if (o->type != OBJ_TAG) {
-+		*typep = o->type;
- 		return PEEL_NON_TAG;
-+	}
- 
- 	while (o && o->type == OBJ_TAG) {
- 		o = parse_object(r, &o->oid);
-@@ -241,9 +244,19 @@ enum peel_status peel_object(struct repository *r,
- 		return PEEL_INVALID;
- 
- 	oidcpy(oid, &o->oid);
-+	*typep = o->type;
- 	return PEEL_PEELED;
- }
- 
-+enum peel_status peel_object(struct repository *r,
-+			     const struct object_id *name,
-+			     struct object_id *oid,
-+			     unsigned flags)
-+{
-+	enum object_type dummy;
-+	return peel_object_ext(r, name, oid, flags, &dummy);
-+}
++void unparse_commit(struct repository *r, const struct object_id *oid);
 +
- struct object *parse_object_buffer(struct repository *r, const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p)
+ static inline int repo_parse_commit_no_graph(struct repository *r,
+ 					     struct commit *commit)
  {
- 	struct object *obj;
-diff --git a/object.h b/object.h
-index 4bca957b8d..8f98382243 100644
---- a/object.h
-+++ b/object.h
-@@ -309,6 +309,11 @@ enum peel_status peel_object(struct repository *r,
- 			     const struct object_id *name,
- 			     struct object_id *oid,
- 			     unsigned flags);
-+enum peel_status peel_object_ext(struct repository *r,
-+				 const struct object_id *name,
-+				 struct object_id *oid,
-+				 unsigned flags,
-+				 enum object_type *typep);
++	/*
++	 * When the commit has been parsed but its tree wasn't populated then
++	 * this is an indicator that it has been parsed via the commit-graph.
++	 * We cannot read the tree via the commit-graph, as we're explicitly
++	 * told not to use it. We thus have to first un-parse the object so
++	 * that we can re-parse it without the graph.
++	 */
++	if (commit->object.parsed && !commit->maybe_tree)
++		unparse_commit(r, &commit->object.oid);
++
+ 	return repo_parse_commit_internal(r, commit, 0, 0);
+ }
  
- struct object_list *object_list_insert(struct object *item,
- 				       struct object_list **list_p);
+ void parse_commit_or_die(struct commit *item);
+ 
+-void unparse_commit(struct repository *r, const struct object_id *oid);
+-
+ struct buffer_slab;
+ struct buffer_slab *allocate_commit_buffer_slab(void);
+ void free_commit_buffer_slab(struct buffer_slab *bs);
+diff --git a/contrib/coccinelle/commit.cocci b/contrib/coccinelle/commit.cocci
+index c5284604c5..42725161e9 100644
+--- a/contrib/coccinelle/commit.cocci
++++ b/contrib/coccinelle/commit.cocci
+@@ -26,7 +26,7 @@ expression s;
+ // repo_get_commit_tree() on the LHS.
+ @@
+ identifier f != { repo_get_commit_tree, get_commit_tree_in_graph_one,
+-		  load_tree_for_commit, set_commit_tree };
++		  load_tree_for_commit, set_commit_tree, repo_parse_commit_no_graph };
+ expression c;
+ @@
+   f(...) {<...
 
 -- 
 2.53.0.352.gd1286b26eb.dirty
