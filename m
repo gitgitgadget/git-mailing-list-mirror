@@ -1,115 +1,146 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA51C275B1A
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 07:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD0B2E040E
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 08:06:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771315056; cv=none; b=aG055LzCGRSTbqZLBqeqj898eFmvVmf2NpkCreCBN1Y3mE5KOod8mR8m4+P1GuO/k189iLJFCx5+3zpSzXhaerUuxWLC7xe0GzV5Gs2VtxVPTJ96Kdbc/JSHS5QWDqh8vdSVMR9fXKe+gCWiU7T07BRNnA0EF39RSQEmyYI3RVE=
+	t=1771315621; cv=none; b=CBdRzl7hyz9nOIXZdAKbRpIj+bPLDf9UbjS0hSYIkYL7kL+KlUTJlAEEaaonD+gw4skRmVnuIzE9MVpdY30gZTrdz0xACkm1/boJgH1edpDpJE8g5iODb43CcAYjJDxvv8HgNqckxxmm2ax1xpqu1cBiwf596xlNFxkUWoNjQIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771315056; c=relaxed/simple;
-	bh=m3DgPnokffm4c9ayP/FeKSwF+4BFzXS97SG9aM69/cs=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=Aq7Yc8g3TBHgkXx/cUa2mDfAWnOjQljTLvRo6x0B38VMqWnXBXIB4BcEsnkXLHhpggjPgbko1qzAm8LzJ0WIPjVKOAHNBgCm3d8h692WPzD1S/0/M8DfOa1AIW+/MsD4yc5S0NXHrfAAx2cuZ6TtMAF4LsXYrEJarw3hqPEWe6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OZ48EjTA; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771315621; c=relaxed/simple;
+	bh=2s7Is6cr1IuG8WTTdB4bjwJzP2JwaNL7V+hXwPYsYVY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mV3vLbWgD/jtfNr0Lb29LmC9sUXWYamY6Tf5MxrCMtRQlIIc3b8D7x/OuHlAvo1BlM6gPM+kWXWNd16FilVsKnNMybKM/+CHFx8pQYjdxgshm8+opyh06bx32rmUOaOsIYlG3KvFHvmDs/KKLVr8o8Xw2wMhnjv3O3lfoB5HhBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=grFLoOoN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h4sNDRDL; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OZ48EjTA"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-824b03d9787so148619b3a.2
-        for <git@vger.kernel.org>; Mon, 16 Feb 2026 23:57:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771315055; x=1771919855; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4zTeHr/J4FLBLYSqKlWDUUU3gchI/BmJKCrmGqturDg=;
-        b=OZ48EjTA2gj5TlAzI8dgsxqmHhuuNQkhWsBo8aLhBiaOS2/PCdXWKWV3MY1wxefSku
-         NZApTD87c3/fgDeQpDK4G+/aCP/c5y/9az7QVesKZ2E0oLIsTMUj90aC/618+ctdfuIC
-         gX5XIqigDOQfVduo0dBoAmzVLKhwiXLFVbxz4Dh3+ub42OxEbOuKHx2EELi8EXlctYa/
-         UvVpN1yukhgiqNzddie/3WsjjSiWG9FofDMs2nvSi3zumQNqWHUPo1gw5z+PwcyQ5IeG
-         8oSBbyq+2miYgF38vTx4oJ2WWF0Ld9r0CS8Rk+1JuKc8GbMTN88P3vERL1mBQd7YNn9R
-         iQqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771315055; x=1771919855;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4zTeHr/J4FLBLYSqKlWDUUU3gchI/BmJKCrmGqturDg=;
-        b=Hg9uC+h8ZsQx8QXRK/qoChmRHeWrdmqTvP5pTGrMRAg3Yt16have+XSw0N/KAzVkRr
-         Fbs+r2kB2cEHFLmWbccbEaBuJEtlsjPZBbAi7nXGAiaE50GpExceb3C/VuderxotDTpz
-         0xZTn33YXRfFiZp52K0S9tq+7FMsnLhIJ2H2oA22R6EfKBKq2/FfJQ4BIttrKsL+nShu
-         0f+b2iNEE5Y2jONEo8E+wq9quNl0QY4KCF2MJ5N+S1bPKYYWU9Vpd/JygYZjwk50Ba2U
-         Wdi2m0iuaIerbBoG1Fzl5xFqZy7XDg9XJl8Ym0uV8TnnPJUDUl/saa0VVjv3HVc+ZCGk
-         0lnA==
-X-Gm-Message-State: AOJu0YxXtMqfjR6M+yZDPeJ1tlie7O8n7EL85RBqYGUXwgwlVxxCIbDj
-	Xy6KOasxbaX+rh7u97FPWXQh9DUGcRKqzyrVK/gegL12HMxOFL8HW8C6/bvlrCOs
-X-Gm-Gg: AZuq6aJrSN6MtcfZnmSL1RADewU6yCcBTU91tnmROinrw9DMrzAgEn+6OrwZrYnXhAg
-	oyHI8I/eP0zild0p6y9h1zzMnW711PmexVI8vYHh+O7jYE0pLAkNT1y3hrr9Wi7ZiMvNBoWnAAe
-	zz5wlwPEb41G5EVGKsjS/EUt9XkSXNl7O2P8CP1hwbtQx2Aa25nASZY9XcSp0PV2kZ9dX6wqcQV
-	cRjG4EC260N8f9I4PedaVnoF08dDrjZcD8D61pN91/nLhIiRVmMzDCdx7QDgOci3/6zg95JkDly
-	p983cM20e4Qd01r/qVlazgUYtzocJNKHBt7RlBCxfgGaCCHtAoAmWCtHehnCVv4IfSUW5u+OIOC
-	9Cc2teDDIzvwlVXCtbc1RQccNfJ6u3VtMbfUMii5jZeRuiVEAYt7QNY0jqbxQARK92g+D9Yyp0C
-	mqKr1pxGL1zOJ3nuQvyQqYtx0GWnfuLnDSQlFcqg==
-X-Received: by 2002:a17:90b:5643:b0:341:a9c7:8fa0 with SMTP id 98e67ed59e1d1-356a7aa21fcmr8037251a91.4.1771315055019;
-        Mon, 16 Feb 2026 23:57:35 -0800 (PST)
-Received: from [192.168.0.104] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662e538d6sm21737837a91.3.2026.02.16.23.57.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Feb 2026 23:57:34 -0800 (PST)
-Message-ID: <7a95b0f4-8242-4418-bc54-22e81cf40019@gmail.com>
-Date: Tue, 17 Feb 2026 15:57:31 +0800
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="grFLoOoN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h4sNDRDL"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 355931D000AF;
+	Tue, 17 Feb 2026 03:06:59 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 17 Feb 2026 03:06:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771315618; x=1771402018; bh=Z9iTNJmCkD
+	fF3jWZd95gwrDIeOK4L9ufddo8ezamtyY=; b=grFLoOoNDI+zrKUDVkrvhiPB+h
+	6RJ8stMOFD16G9fuIwqmPOEhzp5z0mBzN11Yer/yYNiMQRE8pibb7fZUVNGpJ/ci
+	X4t7UK22rwOEAJhtfwKdY0VDOMgS5142aESFjHJZ/dhcEpu+tA53rUGQ7EBtbFwY
+	vPJzxXgLcG0l8uyfTz0/AWXDSkt1nIlWIwMGIyU92HmIaFpI4z6LDHEFHIfK34oV
+	aT1w+n04SWRjqBXqCKRzchpZ/k0Q0e5ylUvZp7ex2KjTKXhn2Axh6K8bpOtlhwad
+	TcXdofGNOFVk3upW+pyHhmLvczWujxZUhKn2kifEPxZkt/5nGHq4pki1YQaQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771315618; x=1771402018; bh=Z9iTNJmCkDfF3jWZd95gwrDIeOK4L9ufddo
+	8ezamtyY=; b=h4sNDRDLsjjXGMMMbjYvCLYiD/lVtyfPBXq+2yDAxZWiL64Hwt4
+	tKszukOd/V7xvHXsGpOG2/6a6QG82ZigGRFU6WlLggxcYFIGLzAFaTmaxsQe74tp
+	J9lQv6iu1yApVS9VV9O91lLXbnN7Gj/9+fM9Gitm3sR2udhIBG1vhzqxOw1FHIgg
+	RNKUwu2ju44qC+iVL1E9wU++cjL40JJs8BwUL47+0L3Qlw+qcHCOk2azz33ZbmWD
+	tc/4eTBwmuX1u3FQnFUPRyJMuMIPziTNumHGCbb/E4AewnRLc6D8/J4P2F31X8tD
+	FPaVPFCF/ldUWBJw76B2f1PKOb7Gj3dzzsg==
+X-ME-Sender: <xms:oiGUaRjQ4oNIsv3LtFR3nGUFoIMlQStQKUM9Jxx6lgd05cyTciisHg>
+    <xme:oiGUadDq1vemsid1-rlPxYORikt16MH5h98-emyJzG1dxfOLyH7yneqIiJ5V5J2AM
+    -mZYbOnE_ZXwmKjGc_GMTYbrLGFtXObtyvBKtwJ3XW9zozPiccq1g>
+X-ME-Received: <xmr:oiGUaWHoIuNisBVexpLQqjoIz7bdcF6UaVdR-S1JWIj30k-YknuR4M-zBRliKCI6uAcHv-pRqmirW4wgy1oZw6-IcS4Y0pnDtJZ3Mf2t8A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudelvdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepmhgvsehjohgrqhhuihhmrhhotghhrgdrtghomhdprhgtphhtthhopehjohgrqhhuih
+    hmsegrmhhuthgrsghlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hm
+X-ME-Proxy: <xmx:oiGUaVIlMEOn-3RVxHEoXj510OhfnrVWmB2sQ_Je4ynL5ztKIjk9XQ>
+    <xmx:oiGUaanF4A0MUjn4hk-zrY1FcRUU73k1ldd89dP8e_N7NE8ki08L9Q>
+    <xmx:oiGUadRMrO4JP1womBcoBHHXNuyGdqX93TvK58q_jvHdwDWprACYkA>
+    <xmx:oiGUacJBvp8g4ZVJOmK8KmkpqgDHzdu6rbx7lcmB0j7Gtr61nKCmpw>
+    <xmx:oiGUaTNPI9dnsYwlA1Xr8OcIRi3Cu6LlYIvulxGqORYLmjp34It8I_Zk>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Feb 2026 03:06:57 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bb8ae967 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 17 Feb 2026 08:06:55 +0000 (UTC)
+Date: Tue, 17 Feb 2026 09:06:52 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Joaquim Rocha via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Joaquim Rocha <me@joaquimrocha.com>,
+	Joaquim Rocha <joaquim@amutable.com>
+Subject: Re: [PATCH] apply: strip ./ prefix from --directory argument
+Message-ID: <aZQhnIcPa9sCPpBb@pks.im>
+References: <pull.2198.git.git.1771002510709.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Karthik Nayak <karthik.188@gmail.com>,
- Christian Couder <christian.couder@gmail.com>,
- Justin Tobler <jltobler@gmail.com>, Ayush Chandekar
- <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>,
- Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org
-From: Tian Yuchen <a3205153416@gmail.com>
-Subject: [GSoC 2026 Inquiry] Refactoring global state
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.2198.git.git.1771002510709.gitgitgadget@gmail.com>
 
-Hi Christian, Karthik, Justin.. and Git community,
+On Fri, Feb 13, 2026 at 05:08:30PM +0000, Joaquim Rocha via GitGitGadget wrote:
+> From: Joaquim Rocha <joaquim@amutable.com>
+> 
+> When passing a relative path like --directory=./some/sub, the leading
+> "./" caused apply to prepend it literally to patch filenames, resulting
+> in an error (invalid path).
+> 
+> Since using "./" is almost memory muscle for many, strip the "./"
+> prefix so it behaves the same as --directory=some/sub.
 
-My name is Tian Yuchen. I am an undergraduate year 1 student who's new 
-to the Git community. I've been hanging around the community for over a 
-month now, contributing almost every day. I really love the vibe here!
+Isn't the problem wider than that though? For example, if you had
+"././some/sub" it would break again. Or if you had "some/./sub", or
+"some/sub/../sub", or "some//sub".
 
-I'm quite interested in applying for the GSoC project "Refactoring in 
-order to reduce Git's global state":
+> diff --git a/apply.c b/apply.c
+> index 3de4aa4d2e..a44c54077c 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -5001,6 +5001,10 @@ static int apply_option_parse_directory(const struct option *opt,
+>  	BUG_ON_OPT_NEG(unset);
+>  
+>  	strbuf_reset(&state->root);
+> +
+> +	if (starts_with(arg, "./"))
+> +		arg += 2;
+> +
+>  	strbuf_addstr(&state->root, arg);
+>  	strbuf_complete(&state->root, '/');
+>  	return 0;
 
-Coincidentally, just as the new idea list for this year was released 
-these past few days, I've been working on a patch that has some 
-connections to this project. (setup.c: handling named pipes/FIFOs during 
-git directory discovery, currently in v4). Indeed, based on my 
-experience, this requires tremendous patience, but I'm more than willing 
-to give it a try.
+While this change here fixes your observed issues, the next person might
+run into a totally different one. So more generally, I think what we'd
+rather want to do is to fully normalize the path. How about this
+instead:
 
-I understand that removing global state is a massive, multi-year effort. 
-I assume the goal of the GSoC project is not to finish everything, but 
-to pick a specific area or a set of related modules and migrate them to 
-use 'struct repository' explicitly.
+diff --git a/apply.c b/apply.c
+index 9de2eb953e..8946b133a3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -5002,6 +5002,7 @@ static int apply_option_parse_directory(const struct option *opt,
+ 
+ 	strbuf_reset(&state->root);
+ 	strbuf_addstr(&state->root, arg);
++	strbuf_normalize_path(&state->root);
+ 	strbuf_complete(&state->root, '/');
+ 	return 0;
+ }
 
-My Question:
+`strbuf_normalize_path()` drops "." components, removes ".." and it
+squashes multiple directory separators. So it handles your specific use
+case, but also others.
 
-Do you have a specific module or subsystem in mind that you would like 
-to prioritize for this summer?
+Thanks!
 
-For example, would focusing on 'environment.c' (as mentioned in the idea 
-list) be the primary target, or are there other areas (like 'config.c' 
-or 'setup.c') that are currently blocking other major features?
-
-I would love to align my proposal with the community's current 
-priorities. Thanks for your time!
-
-Regards,
-
-Yuchen
+Patrick
