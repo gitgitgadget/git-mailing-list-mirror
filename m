@@ -1,53 +1,53 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529A1280325
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 07:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C482D0625
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 07:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771313060; cv=none; b=rzyJ6CF/UXZE2tK6xp22YE4dpOxXpRLjA+SPUsXQs0zOEo1e9GkrSyDvuFIX5MWePhmq7Ig6cVccfl2/JLf9I+UAZQsuLsDM4uSXt3S9CaUTPa0bu0QyJgQosbv1a36b20jd1PZHYhSwtAm85LmZz22KUkderAs4WVHqNNBes70=
+	t=1771313062; cv=none; b=YShRl/P7Rj1YJ3Lx/kKEGFs3SZYykWsoRl8rz7mOP3OXl6sjz3eiJJUTKFJUfAmfcgnUOEstGJs0qBuGnvWitqmJt8bpZ3ARZU2CjbJLrLHYMdI1kdcQnZjFlTNflP8eO+OyfNOJkd4SN+rZlLP+9b6cyNpeWcPLbAJ+4Tiou0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771313060; c=relaxed/simple;
-	bh=0LUj8YVdMh5nfLzaNDcqcAe8VFku7piXHU6V67AtE3Y=;
+	s=arc-20240116; t=1771313062; c=relaxed/simple;
+	bh=hGeUVbZ9FOz7DLNx6i5bl2Acf/S2yAwyNOn7wtKbSE0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YWgFthcgVn08gQxtUI8jXe09ZRTVOg0GxOup7XxE8E/PJkIcre4Kzw8t2bZoNDCbdKQuyW1iJqMduWGaga82wvQXje6wgDSa5GEKlQDOkhskgGES8rRmLVgUtLwF5aWwl5R6OHDbUrNPq30zglvvwIq60IVmzskvBHI9zaqYRRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mjTdc0xx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q48aOuyN; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=DuJewrmACk1+ytkbIEKqumwuodnbM/jwAgUMBmkBsI9J9CQbsfBul6LCUmWuPu7nLRXT2gkkPRnPir5f8Fko9YW+7JcATBzck5uY6mW5pfbYwjVk+eu5tLTOSFnfYcebk/NNhJxPwIwLX2GdCK316V5TCcBimV/JCEAG+cfh03U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZfR9mh6c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bpcDh/4e; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mjTdc0xx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q48aOuyN"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 61F061D00351;
-	Tue, 17 Feb 2026 02:24:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZfR9mh6c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bpcDh/4e"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6E7F21D00350;
+	Tue, 17 Feb 2026 02:24:20 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 17 Feb 2026 02:24:17 -0500
+  by phl-compute-07.internal (MEProxy); Tue, 17 Feb 2026 02:24:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771313057; x=1771399457; bh=tu3lNz0smC
-	fqPt+xRyWy13qkrQOliy6iTh911SaQ5vk=; b=mjTdc0xxBWLWjFJvlz29Sl3Z4/
-	X7MkBQdI46T/V3o69u3Al6SAmK4QazHQWQTzTt7vHzkDXgXeI8ai/b6oWREYXttE
-	lwdXsJffBsjH4B8YwF0KHAfIvkArsKLroQ/6l02arcLKO3jyGVqpHNe2r4TDbgQA
-	RbVLXOjte6x9e55fRoyaPyyZ9DdsVuXQukc9kf70sgNNnv8SrUP5xuca6KAe6ERG
-	X3+Deq8TEC8AZt+hsbyvDCKVPnM83vlatOBJkLio35CPN4UV0uSvdPTurehIEaxR
-	6OBWXZxkKR3pA84gZwYNR1j2fz3D+WmwuV+eyQM0nE5VCPbsGsoFVqHHRIew==
+	:subject:to:to; s=fm3; t=1771313060; x=1771399460; bh=Qtjs7kvmYJ
+	FEmbBCpE5g+UPO9uGjFUkk66STyvVKjk8=; b=ZfR9mh6cPhDa1s9lmrtpfA7eqF
+	QjJFPU+N5mrPlORhgsGQZ8DvKj4BUKRlR43/zYt9lk9+k7e0S2meqbNslz4tV7v1
+	rJZ65Pj9T6HpeCaYaHn9phO2Bg04ooqTYCyzyw/jAc2uMGXIuoNII3qqvFPmEWE3
+	Nl4Z8OMIl0B1LXUIJqNk6zE3+Fy4b7ijT8VYOjIoCVEHLzqErI7wvGqQgGQWLan2
+	E/ykQ9kOUwT+iORKaM/HT0LLwxznq1cj/uTdtrPEeSsDyw798YdsplAYDUmN5McG
+	uKMbfjYvVFHOc+ozQ74xsx9VM0sQ/D53/Q9dSwCxMGGN9JmhgDRr63mqOgPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771313057; x=1771399457; bh=tu3lNz0smCfqPt+xRyWy13qkrQOliy6iTh9
-	11SaQ5vk=; b=q48aOuyNFiUyLAMd6XXC0vVGZuQmtj4i/J1dTrnpHYMHsZVDG2h
-	h6Y1byoJwF6BlrwrjPNHPjliGZVyr00olW2iMbM4XgWRlqPSJWdVhjjj3cweao6p
-	9PxUC6iQ3N2iV0BjymCiQtPhUV18e/3AOXfMb5ZrmzgzfLe0Sy0TKtqZKr12JMt5
-	z+5bjah9GWuLO40SwepUksJRpkwv10QW5cfxmJt3obvBqCtaHiKekz+aPlntDEGa
-	iksmCT9PM5I/ANSvPldttI0TbQ7qYCFU2zMifE6bN2/6GX0TKQFnzXmzaBK5ifAW
-	SwT0mnk7rB0Btp2kbV0qPxzy/nARgaYnQ+A==
-X-ME-Sender: <xms:oReUaXIYIzDV_CK6OsoplgQMuKH0UDtxrJrnWF3Uv35qRGs4k6tXyg>
-    <xme:oReUaSKVLs_xdSHW5BCRMdIQWcJb1xFnOn4XKrAQXslbKAX0QStQj2MxzR4KwwJ59
-    UC7OML3EKC-Ounml20AfN7ep4Hh3K1GbGENrzses22hudgQnPcNXg>
-X-ME-Received: <xmr:oReUaUsZFHZHSwQisdjGPYgS1Zr5MBw0L17dmafZfPqBsAP7lAUve7HkoznCto8GPWTOq248dudmXF46Najlu1-XTBcuMDuHEKOtrmVVpw>
+	1771313060; x=1771399460; bh=Qtjs7kvmYJFEmbBCpE5g+UPO9uGjFUkk66S
+	TyvVKjk8=; b=bpcDh/4eneI/BnAiwKdvZcoxZ6fJIhlSI5tMwi3yV8z6/A/cvJg
+	DN2Jr/MM75p/sdTPmsr+dg1YZ/IIbghfNaNB5ciKqSgRqSr8JDFSRxgQhgzk+oXl
+	A6RRMPazNJhyh/ke+tlwiTOS7+mW1j7wRxuDoiu9oauWeWpQCTAHjcn/XW+YawCr
+	P2WvcjJajCHGTZShbYkXP2UxDuxo3kGrxT92e/SA/lxmUJd/sGeSobjMoMJt+mrO
+	f/omXdLk0m35E6IwSefE1xbNTGVLCrlEWecXiJn9BjpUCG7W/EdSezIBm7ZLLYCk
+	cdPDn72tbv3JKO07fR+yhza+UrzY8sRnffg==
+X-ME-Sender: <xms:pBeUafiilSoUCPHUYOXIrFylfmJshw90o65hwJo9XM3gEZ8S8NxRqg>
+    <xme:pBeUaTD070Gu8tAsCZsLn1HLoiylKhwConzOAVtHk3s0CyGufL57hFQ7q-LAi7RHL
+    Hr_QbD2agbSZ2vcloeQS1Bbg6pFrZYATppVBijDkbV31TEACc9XSSI>
+X-ME-Received: <xmr:pBeUaUEmuNKwldTa-ssNdL56ULWcZC2dLhodg_5atinfkakpzWY1jnov5qrhgtXERtLY5r-gyEIi6s719S-MDS_458bW5mWvXnzW77UdOw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudeludehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,31 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudeludehucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdr
-    fhhrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:oReUafQ0jIkycCtM1Gf8tkUac_D20eTAP-A7MdIUlYzeXhZKC-qcnQ>
-    <xmx:oReUaaP5dp5IdHXDJIIu1ZpzjFgCZdg1O5AZCdNn_EC3sraY6hCSbw>
-    <xmx:oReUaUYKyycdTbY6UJmv_NltDwn5Glr7ty4B2Ab88sUQGLvd5LS70A>
-    <xmx:oReUaUxXIREOrUbcv-5HM1v_hDOyE8n9-8jkL1E9zwzvCePfLgIzuA>
-    <xmx:oReUadsNq9Uo0XiltNAocKo5mhdPLTSYNj2S2YRdMrmMsT9uKF-qGKPb>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhr
+    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:pBeUabK90qVBsBx-kMKlQ9I3fALauy2cEkiNMw5bUKSri3iVJpb4BQ>
+    <xmx:pBeUaYnmgdpcgg3yYZi_uh9xVMJ51b8bLUOxqtsKLog6tXlNvULodg>
+    <xmx:pBeUaTSMUGHgsNS1g_M8wReW0YdonGudNc0ssd7nMB5SjToRLJl4_A>
+    <xmx:pBeUaaJ9Ha1hJKfBnJs6M3JSyvQ_txc09aSKZCvz2Q32e-M7iSqHug>
+    <xmx:pBeUaXHg64dvn8vI_1I_hxxGLvTPOpXILTtJS45BxB2Z_7Wv7rUV2Gfo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Feb 2026 02:24:15 -0500 (EST)
+ 17 Feb 2026 02:24:18 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0436adae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 17 Feb 2026 07:24:13 +0000 (UTC)
-Date: Tue, 17 Feb 2026 08:24:10 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 7b2e0d44 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 17 Feb 2026 07:24:18 +0000 (UTC)
+Date: Tue, 17 Feb 2026 08:24:15 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org,
 	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 	gitster@pobox.com
-Subject: Re: [PATCH v6 1/6] setup: don't modify repo in
- `create_reference_database()`
-Message-ID: <aZQXmvZbVT1eRtSH@pks.im>
+Subject: Re: [PATCH v6 3/6] refs: receive and use the reference storage
+ payload
+Message-ID: <aZQXnwc_90cwPaZ6@pks.im>
 References: <20260214-kn-alternate-ref-dir-v6-0-86a82c77cf59@gmail.com>
- <20260214-kn-alternate-ref-dir-v6-1-86a82c77cf59@gmail.com>
+ <20260214-kn-alternate-ref-dir-v6-3-86a82c77cf59@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,68 +89,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260214-kn-alternate-ref-dir-v6-1-86a82c77cf59@gmail.com>
+In-Reply-To: <20260214-kn-alternate-ref-dir-v6-3-86a82c77cf59@gmail.com>
 
-On Sat, Feb 14, 2026 at 11:34:14PM +0100, Karthik Nayak wrote:
-> The `create_reference_database()` function is used to create the
-> reference database during initialization of a repository. The function
-> calls `repo_set_ref_storage_format()` to set the repositories reference
-> format. This is an unexpected side-effect of the function. More so
-> because the function is only called in two locations:
-> 
->   1. During git-init(1) where the value is propagated from the `struct
->      repository_format repo_fmt` value.
-> 
->   2. During git-clone(1) where the value is propagated from the
->      `the_repository` value.
-> 
-> The former is valid, however the flow already calls
-> `repo_set_ref_storage_format()`, so this effort is simply duplicated.
-> The latter sets the existing value in `the_repository` back to itself.
-> While this is okay for now, introduction of more fields in
-> `repo_set_ref_storage_format()` would cause issues, especially
-> dynamically allocated strings, where we would free/allocate the same
-> string back into `the_repostiory`.
-> 
-> To avoid all this confusion, clean up the function to longer take in and
+On Sat, Feb 14, 2026 at 11:34:16PM +0100, Karthik Nayak wrote:
+> diff --git a/refs.c b/refs.c
+> index 77b93d655b..11d028232b 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3425,3 +3426,40 @@ const char *ref_transaction_error_msg(enum ref_transaction_error err)
+>  		return "unknown failure";
+>  	}
+>  }
+> +
+> +void refs_compute_filesystem_location(const char *gitdir, const char *payload,
+> +				      bool *is_worktree, struct strbuf *refdir,
+> +				      struct strbuf *ref_common_dir)
+> +{
+> +	struct strbuf sb = STRBUF_INIT;
+> +
+> +	*is_worktree = get_common_dir_noenv(ref_common_dir, gitdir);
+> +
+> +	if (!payload) {
+> +		/*
+> +		 * We can use the 'gitdir' as the 'refdir' without appending the
+> +		 * worktree path, as the 'gitdir' here is already the worktree
+> +		 * path and is different from 'commondir' denoted by 'ref_common_dir'.
+> +		 */
+> +		strbuf_addstr(refdir, gitdir);
+> +		return;
+> +	}
+> +
+> +	if (!is_absolute_path(payload)) {
+> +		strbuf_addf(&sb, "%s/%s", ref_common_dir->buf, payload);
+> +		strbuf_realpath(ref_common_dir, sb.buf, 1);
+> +	} else {
+> +		strbuf_realpath(ref_common_dir, payload, 1);
+> +	}
+> +
+> +	strbuf_addbuf(refdir, ref_common_dir);
+> +
+> +	if (*is_worktree) {
+> +		const char *wt_id = strrchr(gitdir, '/');
+> +		if (!wt_id)
+> +			BUG("worktree path does not contain slash ");
 
-s/longer/no &/, I assume?
-
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index b40cee5968..cd43bb5aa2 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -1442,7 +1442,7 @@ int cmd_clone(int argc,
->  	hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
->  	initialize_repository_version(hash_algo, the_repository->ref_storage_format, 1);
->  	repo_set_hash_algo(the_repository, hash_algo);
-> -	create_reference_database(the_repository->ref_storage_format, NULL, 1);
-> +	create_reference_database(NULL, 1);
->  
->  	/*
->  	 * Before fetching from the remote, download and install bundle
-
-This is case (2), where we set the ref storage format to itself.
-
-> diff --git a/setup.c b/setup.c
-> index b723f8b339..1fc9ae3872 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -2701,8 +2699,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
->  				      &repo_fmt, init_shared_repository);
->  
->  	if (!(flags & INIT_DB_SKIP_REFDB))
-> -		create_reference_database(repo_fmt.ref_storage_format,
-> -					  initial_branch, flags & INIT_DB_QUIET);
-> +		create_reference_database(initial_branch, flags & INIT_DB_QUIET);
->  	create_object_directory();
->  
->  	if (repo_settings_get_shared_repository(the_repository)) {
-
-And this is the second case. We call `repository_format_configure()` a
-few lines above, and that function calls `repo_set_ref_storage_format()`
-itself.
-
-Looks good to me, and a nice simplification. Thanks!
+There's a trailing space in the error message here.
 
 Patrick
