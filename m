@@ -1,90 +1,89 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D0536BCEB
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 20:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801E217993
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 20:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771358894; cv=none; b=JCy/mc/iJ0ha88wmH/1q2thG3WkjqXjQbltcbe2ytZJwGyplKMQygDzUpHDIqZoBKxHOOcO2uQID5e5BD4eTIvFHrlQAMrk0qmlwiZ0p2fDymqJNwRfQrjwj+4AOCLyYEUT7AQ1hL/JxvKw1wYeqU4/PH4kF6eP8MjvYZZJlK38=
+	t=1771359864; cv=none; b=Kv0pSkbi1fEGLo2+Z87r/vlWkMrAF3PQxs0q3+2wLBljmvA3gW0ItW4Z0ykYUJgbVP1RGB2d1a4f2v6/KsSmDtWqTx5o/KKeXcZLSyTkEqaGjUjQTX7t+Xf9pyhemOXLTZqp0aacEUyv87oKMBeSDMQaJlZDx6si6a/0lZP9aro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771358894; c=relaxed/simple;
-	bh=6NsSWjc/FqkWbQUH8eM/e2+pwuMNNt7BcI9y3YDb3o8=;
+	s=arc-20240116; t=1771359864; c=relaxed/simple;
+	bh=I7izJLzXtSiET4cgK7OvSgzGGMaENrHy5/o33zPIqeo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L1zjC0YsCM7/g2ohOGkbA9Z+eqzOaMf0tD3D6ffJBP8BZw6huchzIt9AiKqsPbe8YeQ40NUGP8O0Rro8p1PRygYU0fBZVas+KqIPhFO02xUxgornM/GsqUzFJkzoO6b2sOAuUZaidw54u8DK82RjOlv4pY0ShgXebUz5EPi2BAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GqAXeD89; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qPXxGaPq; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=rUGp/qTtx6jP8M9WxWXPUgWESQ0BoVIRWv8muKbKD85WX9KPoZdZ7rGWSKgcZR/XH1DtRcdnKLB5m8LZ08EeLryRGsd8/404dFMTs42iW5D/O4OYm1hab9F0YD7ZmxtNa/ehcWtJYJ57pQgr5i985BCQGDHRaGtlr6EpUvBymC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ySEIjCae; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PSTEUPVv; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GqAXeD89";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qPXxGaPq"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D25A7A010D;
-	Tue, 17 Feb 2026 15:08:12 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 17 Feb 2026 15:08:12 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ySEIjCae";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PSTEUPVv"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 50E7A7A0054;
+	Tue, 17 Feb 2026 15:24:22 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 17 Feb 2026 15:24:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771358892; x=1771445292; bh=nQfy0t6j8X
-	iuLsJPYBYMyxY5lqIhlRfzlbcfxG4X8Mg=; b=GqAXeD89k5frHLhq1sL5V+arEL
-	WkLDJ4C6ZHJRSKTjFIMoG2/DLPOz0ZlOuUi9PVeJLxSWfHt6ezgCRSgz3SkOeKCx
-	+dk9OPJOa+tyFP888mD2/Lf5zPDLi8D8ZFLRxJFuhd3eePp/LITr/tM+HUznJQEw
-	JYcIESDPFa72XHLVr5BtHhUHY4COYbxokRarrnfJBPJkFwA1zPUJHNAc3H4WzQ6A
-	DL0csFyA1lRbMVbppNFUaTLdArZ4xiRIDT/3cfB5ZbofDtIMbGmI4TBFYDTgSNJW
-	/jhIbr3YCvy9GhAyV1osRMWa6sn0Cyf7DSIpEpQfjEeFacAU9RLJquMlcr9Q==
+	:subject:to:to; s=fm2; t=1771359862; x=1771446262; bh=yFGcr2J/W3
+	hdgnhVRSmJLmYEko/uhjENYhdYrNW2nGM=; b=ySEIjCaeYb15LsH2HV4svaHpf2
+	MKCospgCSKh3MWisIXyuUMwTJ1oq9M/wDRqcqRcFmkjV04EECKIsKBEwSb7yyfX8
+	uZ7V//Lgemk2NIHcZLMVR11BGYRYxabUo8akV+njTgVSPYP8Tu8BYIemD7yz4BeP
+	npzwmcPfUQvweZQfvRJAN/JVZMhx2bP5qdkbDl+rHdYGKv3iXPRxlvMIlBPYIqMk
+	ZGOXizu40B1eNemCKpN921IcAbZCw7qo+MjcrY16xvrHAQBtMM6C6P3rywmDHOnm
+	DE7ys+WxtSGhjKYrB6KcotNfdBxneO18j/CIvjbz3a09uNO0XL1QQkeRWehQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771358892; x=1771445292; bh=nQfy0t6j8XiuLsJPYBYMyxY5lqIhlRfzlbc
-	fxG4X8Mg=; b=qPXxGaPqpfl/t5j1CwaRR5OyAaQuHrRJ5yJ+cXPdfdmFFyMqf42
-	T0hZ0AkPPBLMbjYaGzj4kPaL5DNjHT92HuzvoCyxpdllr3O/wxSDbTrxELHc29HX
-	FempeOlA7SatpjVHLt2QcUZo9VJMMryHpXHzyU8mv8dcgYmO4fytcjCGJXrMk04H
-	vu3yc2UQ9nBV0vJFowAW2TEo+2tOTEATkPFaFsWsF+4n5sSiMaNNAQgvn2KLkkiA
-	bnyQXLG2Uv22wp/YigRSIryqXXPLmryrW75pUTyx/ajS8okksg/QeQJaN1+P/T9j
-	rkJHGPQnxxb5A3clnCphKZzNzyCB8Ne+VZA==
-X-ME-Sender: <xms:q8qUaeWhpdHfpv87LWRYa7lqMrQ1xLJ4cJI4gQXS9fxt2ztqF5PfJw>
-    <xme:q8qUaXKT4V_9PEmvlpzYu0BVbOYzHUmAqUcSojY1R2SyAacNsRaeaZGg_Eeq3DbDm
-    -NyYMPt986s25hzS-7psGoFwaZNcCUlNSzYXXddxguIJgEXzsVZWw>
-X-ME-Received: <xmr:q8qUaW1sQrrGj0wBXyOoc7h5VyaonzlaW2GbNN8X7WvHZJmQXiJ3WEShZuu-60IEWwA-dW4YNDHzouiVIOJCs07DJL47KMIwdA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtieekucetufdoteggodetrf
+	1771359862; x=1771446262; bh=yFGcr2J/W3hdgnhVRSmJLmYEko/uhjENYhd
+	YrNW2nGM=; b=PSTEUPVv+xOQbQIpHRnTzxYJijjs9m09S5vD5A/cwUbLliUGGMd
+	ANGObjAYz8+EWPy6Y8tH0auDz0UBPnRBIrRkWLgaLCSAG++01YrUdrcPH5XCj3Yp
+	Zta/Gg/uM8SIOlYVSfTFfDZPOXb+O2ZPnLZGMrBJKm6jJvbJV3joIaTCtnvp6aOE
+	/XM8ZmTbB+/LUsoZnQ5kQJee0cn2x2BjZlEqQMTa+E1APr4MMIj8kxfvPErENTtz
+	1u0DjGIR5MBhJR419ZPyhSF8DVIuNtFnvMEFaOb+Q0NGb8oXU81ceLxYDuEF4JJY
+	EKaw3tY6AUx5Wlf8p3RW6A7ORZO/3PnEUZg==
+X-ME-Sender: <xms:dc6UadI5LM_2dl8ksq6gX97A1yeZTVswtHMUNIQBtfVGO2mtpeA2Kg>
+    <xme:dc6UaZ4Z1cHAazPs1Av4W4nGa2fVsFfxrqIWjmZ4xuEYuuDmJnzOwtIqnG33Mpyex
+    JrQZulPnYjt-zycQF3o0L-DcT5OdYaz9mWoGQvy79i3033F4KWL6FQ>
+X-ME-Received: <xmr:dc6UaR37ly2EJVuMbl2QSt4gW4Julu_LGbzBb8216HHfqYBEi4Go37LdbGkLWAwu8fwlNnVJBdyfvvL-UQeXwlCdDKkCCnB-vQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtjeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvlhhk
-    ihguleeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptg
-    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhs
-    mhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrg
-    hrthhitgdrshhivhgrrhgrrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
-    hlrdgtohhm
-X-ME-Proxy: <xmx:q8qUacIZo6bDbJ6VUSrGwwkz6WcV4eJLyRAlqtqVqInOZiI-WrZCYw>
-    <xmx:q8qUaZgbjNOQK05lRsUSqVo9KT91XYRq81Xv0SiSxosyQDLGvp2P6Q>
-    <xmx:q8qUaUDHlAweDZj5AspERItubxp58Ljq20_7kPwRvKoWzbs1gj4rrw>
-    <xmx:q8qUaT6_HMntt17aUsy53DjIUjiJ_6V-Ba7ezqmo0OpPSuu0NnRrAg>
-    <xmx:rMqUac7Hbzfqk8m_qOpB9qpdm3PXscu4JW7frzVWrPA_raeIJz6nsMyr>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvg
+    hnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhs
+    sehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhr
+    tghpthhtohepvghvrghnrdhmrghrthhinhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dc6UafdvFqh6SGznjEWll1o-hUEUQqr2ElKt0Wi16YZlp-glwA74Ww>
+    <xmx:dc6UaXeapyLvvTvDXE4duOHbyNCEtvfFsk6Pl6AksF1Lul4VlbhWew>
+    <xmx:dc6UaayKG9nuEJF5-9KfCghyhq9LAeXyK8v4r0QRIerlgyqzHnQWuQ>
+    <xmx:dc6UaW8BkLytL8UiD44WlMzPValDTFgMM64Iqnog-60FHO7qCO41KA>
+    <xmx:ds6UacGJWjf9t5UXxszaI2ZMBBFxIA1Ad9-Z6sz5RlcRUTCI3eC5YQVJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Feb 2026 15:08:10 -0500 (EST)
+ 17 Feb 2026 15:24:21 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Olamide Caleb Bello <belkid98@gmail.com>
-Cc: git@vger.kernel.org,  toon@iotcl.com,  phillip.wood123@gmail.com,
-  christian.couder@gmail.com,  usmanakinyemi202@gmail.com,
-  kaartic.sivaraam@gmail.com,  me@ttaylorr.com,  karthik.188@gmail.com
-Subject: Re: [Outreachy PATCH v7 0/3] store repo specific config values in
- new `struct repo_config_values`
-In-Reply-To: <cover.1771258573.git.belkid98@gmail.com> (Olamide Caleb Bello's
-	message of "Mon, 16 Feb 2026 17:38:24 +0100")
-References: <cover.1769256839.git.belkid98@gmail.com>
-	<cover.1771258573.git.belkid98@gmail.com>
-Date: Tue, 17 Feb 2026 12:08:09 -0800
-Message-ID: <xmqqa4x7b0ba.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  Evan Martin <evan.martin@gmail.com>
+Subject: Re: [PATCH v4] meson: regenerate config-list.h when Documentation
+ changes
+In-Reply-To: <CALnO6CAGfd2orSzjvxfAYx=xBnB=QdOwT-f5g0pQrcxO_19BGQ@mail.gmail.com>
+	(D. Ben Knoble's message of "Tue, 17 Feb 2026 08:28:10 -0500")
+References: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
+	<9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
+	<aZQSf9yaNa693IFF@pks.im>
+	<CALnO6CAGfd2orSzjvxfAYx=xBnB=QdOwT-f5g0pQrcxO_19BGQ@mail.gmail.com>
+Date: Tue, 17 Feb 2026 12:24:19 -0800
+Message-ID: <xmqq4infazkc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,30 +93,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Olamide Caleb Bello <belkid98@gmail.com> writes:
+"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
-> Changes in v7:
-> ==============
-> - Added the code to reset the initialization of the_repository
->   in the fuzz-commit-graph test in Patch 1.
-> - Changed the call to rep_config_values_init() in
->   initialze_repository() by passing it the repo config_values_private_
->   struct instead of the accessor function in Patch 1.
-> - Modified the commit message in Patch 1
-> - Added extra lines between variable declarations and code
+>> > +     for doc in "$SOURCE_DIR"/Documentation/*config.adoc \
+>> > +             "$SOURCE_DIR"/Documentation/config/*.adoc
+>> > +     do
+>> > +             printf "$OUTPUT: %s\n" "$(printf '%s\n' "$doc" | sed 's/[# ]/\\&/g')"
+>>
+>> Tiny nit: can't we simplify this to "$(echo "$doc" | sed ...)"?
+>
+> Given how unportable echo is [1], I'd prefer to keep printf.
+>
+> [1]: https://github.com/benknoble/echocho, for one. If the doc started
+> with "-e" for example the results might be unreliable.
 
->      +struct repo_config_values *repo_config_values(struct repository *repo)
->      +{
->     ++	if (repo != the_repository)
->     ++		BUG("trying to read config from wrong repository instance");
->      +	if(!repo->initialized)
+To cause trouble, wouldn't it be necessary for "$doc" to be exactly
+"-e", not "started with"?
 
-$ git clang-format --diff $(git merge-base master HEAD)
+And when does $SOURCE_DIR begin with "-e" anyway?  It sounds more or
+less academic irrelevancy.
 
-would have pointed out the style issue here.
-
-Will amend while queuing but it would be a bit before I can get to
-this patch set for real reviews.
-
-Thanks.
+Whatn I am more curious about is the "#"s and spaces being the only
+bytes that needs quoting.  As SOURCE_DIR pretty much under end-user's
+control (otherwise you wouldn't be worried about it starting with -e),
+wouldn't we have other problematic bytes we need to worry about?
 
