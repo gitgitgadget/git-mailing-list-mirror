@@ -1,144 +1,132 @@
-Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AFF36D4E0
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 15:11:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F1222424C
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 15:19:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771341090; cv=none; b=m91IcNcPffJpyKzC3Y2bfFw5fH+NjQm8X70zxc+x5Zi2EjLd3VU/8Askr3XTwIZahZPIo4HX4kcGq3LdAlGh+NZFpMI3jaZnHcrhWwaXGW2y4MIzq4NHHxOq8iSwuCuvaNiKL2ecXMEGGHoelCfwTz1k2zv90idCUYelSQcGi44=
+	t=1771341546; cv=none; b=t45KLMgV1xqve4Rjhp/VnFKOw43z+QHSMqP/7knQeirM4luL/M16Hg2niuUsTqnYbpY7cGmn7i9SSnmbEpjZ9irSBw/gyfj/nkziewyiXEKaE5V8NO1lEfAu8r1m4CtdmCRUOlJi/90is5Cerfn8qXwEBJTFT8bGAtIYP+G7Xc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771341090; c=relaxed/simple;
-	bh=abYS2ocfvphNvsCVN/tu1dWW66Ve3wUcazLqf5Qfhiw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KVPRaOXtywo2mwaDSyIc1YSDJY6AT4Ed7xkUbs2PKWU+BGC6J/9RVhB9UMn3DaHqvKipVkwFL8NLinUPR2f564SJ6pYc30feS75WFNCCeSiTCVGxb5/mxUk2czYcrmvrZVoBRL3hTwrJmUt+Y8RrqtcNdC+OUnHtfeM+3rmguEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dtL7Ca4E; arc=none smtp.client-ip=209.85.218.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771341546; c=relaxed/simple;
+	bh=oCOkIZe4yEP/BpxRkElE6STMkoyJz3s3K387MnEBdo4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V4J/uQ9kSdVyYnobint/JKIQtI2IRur1dJb9EMZ2UZOSDTQSvrqiIn0Zd5ryA314mzybPHbvZyKOwRSVrwA5otmG4y821XB5LSD5W/kdvfwa99KB6uX/qSZzE6SEBjIC1AZN2TKkRayrcpPHlW/Ee0gKKYqsnlFDWioSad0Dvjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K3TEKXos; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TbOezDFZ; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dtL7Ca4E"
-Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-b883c8dfb00so851986966b.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2026 07:11:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771341087; x=1771945887; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=St70udpKaAjUQCFgBKAn/7Ky28X95T4/7V9MsvAi1Ik=;
-        b=dtL7Ca4EPbL4TpiUh+Nq8ctvXhgI3vx4j9EaqqrIkAbwxdUWLDKCbS7x9b6zQZyeP5
-         p03o8kL8Wd0Z++0RqI8JJpTfgdDdGm2t+3HelGOlj18b3xCujkNtB+5WSu3rJkVGnQaj
-         FczJlY4/gf//+qu+7gEnDlOUM2U/eOEUcIptihyAR9AxhQ8z2OzSP3N7fZKmnJ33Mp91
-         s55tYE/UGnwuWVKGFtL1FD0REcAcWfAdgbb0CEpbPt74+eP7wzHlXtuUlambf//bHAto
-         DnL1/B3OmHlYn31OXgQALTKCLEZmF6HHiHs0FjHunQwI11QqX44IRLPGmIra5ImwAEKN
-         JJjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771341087; x=1771945887;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=St70udpKaAjUQCFgBKAn/7Ky28X95T4/7V9MsvAi1Ik=;
-        b=iChlApg0JGDt+JB3uedR5HYQh81CumyjmHVYC542+yEXXBVHUSV/bACfuoszHkBl6/
-         yYlXatEBV69bZ942gEZdbkl0ThiE1uDw8k7KuCbkblb566ZK+ttmyvz8ACp4qT3pXUrE
-         7NmUbhcjY1QE3TR2k0M3BRxtYJ2t5FFBEzhWfnngr50FlhP0LhST40mrA+utI6xldyYn
-         zgas2kc6TK3nXZ5AAtpv/UFyIB/Xd1ZccAyW3PB1uFUEhfCC2XZmOZImEPnOnfAcFC9y
-         9Yq7nHbec1nRtq/FVjN+PzCpiNud5vh9ruWgzdj4gaarIn+W89ViPD9rlD3TT+b9w8WO
-         +5Hg==
-X-Gm-Message-State: AOJu0YxSCJtLCEJCLkITWMjJcatZrwrBoaM2JcXwuHahMxHbxoiMFKTN
-	Fm3CuTJc5TlykyR844XLdYtPdfYXDKAzExm5TVKfu4saEVlluBuZF6ar
-X-Gm-Gg: AZuq6aK4nVxO6vZy3kYLRY6JEW+qQH/qLFdJIKK7+EiU8hQqn9AwwD4rEjpTNu3WIJw
-	4aThosTF/zGWRIoVs2kf8DQHXr0HK2QME+ef4bNEPwzWl5LGgXW2GCAhc68FSrHPbDLeJ81xdrw
-	siXUXvNGUrYXSWnQG1PKNbUbTnnCD8DN0UNOinvHcdNQw8Zltg6OXFIrNYi9OfcskemAWYPiCCU
-	dUQEc0lBeS1H28O95TrP+yWtOSEkKT1GkzAv/l9+pCPmbToYcBPH3gvn3yaxMf0izwbJLw4n9Z+
-	jJhXh95iIgkaID5M97TGi+GEbg319JyOrU/wt3S9fgk+4ipB27aY/eldzCS3mbA3wtU+3GGmty5
-	n6K4v0mJvnPM359MscKV3PCvnuB5qI3Nv2JLxt9BeKIfpLvi6Et6dMg/5ZBvKfcly+M2AM2JIkH
-	nwYljn20nZnXMb+S4Hu+9vSUoPfVkDEbtdmZoZCGkrXpHvDODgL2CsfAc8TUkyr8Ia0xQCRMo6b
-	pYRmg==
-X-Received: by 2002:a17:906:c144:b0:b8e:12fa:ff2b with SMTP id a640c23a62f3a-b8fb4462fa0mr838540166b.37.1771341086918;
-        Tue, 17 Feb 2026 07:11:26 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8fc7385f5dsm364254666b.20.2026.02.17.07.11.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Feb 2026 07:11:26 -0800 (PST)
-Message-ID: <cfea5749-af95-4a46-8a3d-9022d28edb2c@gmail.com>
-Date: Tue, 17 Feb 2026 15:11:24 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K3TEKXos";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TbOezDFZ"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id B87B6EC059C;
+	Tue, 17 Feb 2026 10:19:03 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 17 Feb 2026 10:19:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771341543;
+	 x=1771427943; bh=ovYFcx9DyYPC5kyzeH2NUL8Bv5Ax6UCmIMjaSq2VTB4=; b=
+	K3TEKXosabpPuDoPPkgYJ7nIY+hnENIgvDwHtVMJ9Fk90wD8MJViZkvsZ9lZupZC
+	68L0pRETAnSjtpS0RktSmGw71rtSwl5lUmCDuwIhFlPddhHMM3QL4Vzw5NV7w3GZ
+	mcpt0VfkynzW6rHE7T+y79qZN/woODZRVTDWJ6ynak+tCWpDrXdHcLHO6bSKbszJ
+	N4u+0aILCFTauvG+Xt/XxPLLabLkEizHRtB1fbmboa4KhPBEV/ob1Tx7VWI+IXMQ
+	v4JzgIy86kzqZ3hbgJ0lNudJSTLMouOMILYsCdsG30ZEIKf5nSK4XcnP7SW8oDIm
+	oY8GpjiAmu27ccxasqTC9Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771341543; x=
+	1771427943; bh=ovYFcx9DyYPC5kyzeH2NUL8Bv5Ax6UCmIMjaSq2VTB4=; b=T
+	bOezDFZtXvCk4FIwQZ6R/kK1+QxnvsPgOKhP8GTW6fTWSKcCt/rF12pq+1r8SL5b
+	GfrOFPnoQ9zt1eQx8j5HRA8h3iWTu/y1pXlcpc6M5dKpNRyPI77EKOvthREpJslD
+	53P44jsBaYcYmOvbGqnZguJCH1bGPEnc/kgXDx8NggZ38Tp0ONeIpn8ItXY9QFzt
+	bT14jNoxwCHoiybzxrL7DZRchKUyPQaFflcug+lziW8xvbpNawy4GpD+q8BS+pTH
+	QHBUjhqI4LSYBnN45GluA9/W4H8CHsECXkDkv+9F+ERMRdo96B3PmnSq2JSjgmVK
+	PWicVzOHoAMMl6PJG2CUQ==
+X-ME-Sender: <xms:54aUaQ4IjqWt7ZEB_RVLqsO7fwzudBugIOQYjMoEfROr7E4rYYCYiQ>
+    <xme:54aUaZX5b1spSKxKlxPzwZujeQRfr_UuuotuI0WqeFpZQbYJEq4liMPcGHfH8zEcL
+    _nsuaubuXKidkqx-idRLRnXQk-UXJQAIVRppDtsp1YTBHCEcC-bgA>
+X-ME-Received: <xmr:54aUac0qwwhTW3vsHRJW3j-HZ_YRb76Qn7dLM3CH-d4wU2lXC-f459htYBl9Wfy9lo8p_QeIkEk_bRYhoOjDQVZBodUWbOR7sQLfA_g9mA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtuddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtth
+    hopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:54aUae3qUzeH-d41x_pE8Z5r7XIbzH6-mt0R_Y0NmCIHpet8OLQe8A>
+    <xmx:54aUaX9wqXZYtnPvN4L3kb_rKeoiEHmKhJ4PnOzBdVj7QDZ5r4VGwQ>
+    <xmx:54aUaT2B3KJbilTaNJ0teF4_nHKUi3UNH0hfv5AOpEQDWr_XqH_7Jg>
+    <xmx:54aUac_eDuxhovgS_TpowffGnDH7Y6GbjpdmIlIz-5QucNqHt8wweA>
+    <xmx:54aUaRWQCNvH4vVMj2cl_UikH9Sj9E9Y9g6Xoq93B2QrJ7p6pJqjKePs>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Feb 2026 10:19:02 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 11ec5df6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 17 Feb 2026 15:19:00 +0000 (UTC)
+Date: Tue, 17 Feb 2026 16:18:55 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 1/4] t4xxx: don't use iconv(1) without ICONV prereq
+Message-ID: <aZSG31TB_Pprcq2a@pks.im>
+References: <20260217-b4-pks-ci-msvc-iconv-fixes-v2-0-25491bc8dbf8@pks.im>
+ <20260217-b4-pks-ci-msvc-iconv-fixes-v2-1-25491bc8dbf8@pks.im>
+ <CAP8UFD23MdTF3qVFhDFBDcnqh4dqiehvFz_3c-keMhSOa92Dpw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4] meson: regenerate config-list.h when Documentation
- changes
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Evan Martin <evan.martin@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
- <9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
- <833b54f7-bb6b-4bb7-a5ec-fc0fa679abf8@gmail.com>
- <CALnO6CBqbJ3s6XO0s_bTagJxT0N8nseyJb1T-H7+B6qqWNKoUg@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CALnO6CBqbJ3s6XO0s_bTagJxT0N8nseyJb1T-H7+B6qqWNKoUg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD23MdTF3qVFhDFBDcnqh4dqiehvFz_3c-keMhSOa92Dpw@mail.gmail.com>
 
-On 17/02/2026 13:38, D. Ben Knoble wrote:
-> On Tue, Feb 17, 2026 at 4:20 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 16/02/2026 22:28, D. Ben Knoble wrote:
->>> +if test -n "$DEPFILE"
->>> +then
->>> +     for doc in "$SOURCE_DIR"/Documentation/*config.adoc \
->>> +             "$SOURCE_DIR"/Documentation/config/*.adoc
->>> +     do
->>> +             printf "$OUTPUT: %s\n" "$(printf '%s\n' "$doc" | sed 's/[# ]/\\&/g')"\\
->>
->> This forks two processes for every file which is a bit inefficient and
->> will be especially slow on windows.
+On Tue, Feb 17, 2026 at 03:48:19PM +0100, Christian Couder wrote:
+> On Tue, Feb 17, 2026 at 2:58 PM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > We've got a couple of tests that all use the iconv(1) executable to
+> > convert the encoding of a commit message. All of these tests are
+> > prepared to handle a missing ICONV prereq, in which case they will
+> > simply use UTF-8 encoding.
+> >
+> > But even if the ICONV prerequisite has failed we try to use the iconv(1)
+> > executable. But it's not a safe to assume that the executable exists in
 > 
-> Yeah. I couldn't find a way I trusted to behave in the presence of
-> strange characters, though…
+> s/not a safe/not safe/
 > 
->> If we quote $OUTPUT first we should
->> be able to use a single sed process for all the files
->>
->>          QUOTED_OUTPUT="$(printf '%s\n' "$OUTPUT"| sed 's|[/\]|\\&|g')"
->>          printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
->>                  "$SOURCE_DIR"/Documentation/config/*.adoc |
->>          sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /" >"$DEPFILE"
+> > that case. And besides that, it's also unnecessary to use iconv(1) in
+> > the first place, as we would only use it to convert from UTF-8 to UTF-8,
+> > which should be equivalent to a no-op.
+> >
+> > In fact, Git for Windows has recently (unintentionally) shipped a change
+> > where the iconv(1) binary is not getting installed anymore [1]. And as
+> > we use Git for Windows directly in MSVC+Meson jobs in GitLab CI this has
+> > exposed the issue. The missing iconv(1) binary is considered a bug that
+> > will be fixed in Git for Windows, but regardless of that it makes sense
+> > to not assume the binary to always exist.
+> >
+> > Fix the issue and skip the call to iconv(1) in case the prerequisite is
+> > not set. This makes tests work on systems that don't have iconv at all.
 > 
-> …and this version matches a concept I considered. Let me think aloud.
-> 
-> To quote output, we backslash-escape any "/" and "\"; we are going to
-> use it in the replacement side of sed's substitute command with "/"
-> delimiters.
-> 
-> My manual says "&" and "\[0-9]" are also special in the replacement
-> string.
+> Nit: when reading this, it's not clear if this commit is enough to fix
+> all the MSVC+Meson jobs in GitLab CI or only those related to the
+> t4xxx tests.
 
-Oh, I should have remembered '&' needed escaping as well
+Yeah, fair. I think this is an artifact of me lumping these two changes
+together into a single commit. I'll split it up in v3 of this patch
+series.
 
-  We have no backreferences for the latter, but my sed on macOS
-> complains about bad backreferences in cases like
-> 
->      echo abc | sed 's/^/foo\1/'
-> 
-> OTOH, escaping backslashes already covers such backreferences. So I
-> think we'd need something closer to
-> 
->      sed 's,[&/\],\\&,g'
-> 
-> ? If you agree with that reasoning, I'll include this in the next
-> version. (I'll also try this out a bit first.)
+Thanks!
 
-That looks good to me
-
-> PS in patterns with so many "vertical" characters, I find the commas a
-> bit easier to read than pipes :)
-
-Yes, that does make it clearer
-
-Thanks
-
-Phillip
+Patrick
