@@ -1,241 +1,148 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4BD374191
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 18:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771354567; cv=pass; b=N5UvoQ8nM1vGSICjJ3fIlbILDovYAgDgCdFL1EvaNivGNpetCPNpMD24CUGt/2EbUQBjbUku5aOsnuieuIGdKazeC5XfznRwlRULNKkrsP4WItqHQw3BVUhKiJTo5s8EXIMfmyNZeVP8MwRuNYkSvAwiXni0x98LRN/uZ7DwOHM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771354567; c=relaxed/simple;
-	bh=mgpzCqOgtJ30sRx+7tYODh5qzo/Owu6sgPdUdecdaKE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R0vYtGpuO3OFmJLyNDYo1CUpw0kRlUHLX4Ju/r/HDz08tvHlQJjmvkOKee/hReRZtmtVrVE8MjqGbiPDrxO68kIte1KNaxBGui7D/H8w46TYCr46o+7bJ2Q2k/Jq9Ds/OCw7oJuUzKX5E7f5ORqZP/Fz0kXuY83o49zGHcvTm6k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G6Su855x; arc=pass smtp.client-ip=209.85.222.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA40413DDAA
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 19:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771355641; cv=none; b=L83+3pjUrtUWVVGuG8vhswfKbqyk0wNGxwVWjmASIr9+Z/tEJgCgsBRbUAKW3ohS/wbVqsG2sThiG/IOeTN569nAhtd9Rwqig61hxodK6sFlOudfw/sH3Yk99IIzRVhcspmYgLDmz7WOSS9BFVRtKWXFh7XVadLi0SdGt6fQra4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771355641; c=relaxed/simple;
+	bh=/pcwpeJvRfYbFIe9cygGfZNZdBjVjhVPHTLaJnxdby0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Rdy6h9/d3GQDDYKrhhlFl9bViiQeXPtF15/0/FBTDM7j2bfYHz87HeqHqQqPdGwVKGQZc10B390QcQF/sCxE/HWcehe+Epgz5yj+ro4Ty/Ye97Cai9Pxi5pq6pzyQgudW2h9slXEA68PR0nMwSYIYOhgDY0wVQ0HhmKA6SXQa4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wq15TAxn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TSqWXqL1; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G6Su855x"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-94ac7f22d23so1059890241.3
-        for <git@vger.kernel.org>; Tue, 17 Feb 2026 10:56:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771354565; cv=none;
-        d=google.com; s=arc-20240605;
-        b=He9dowwk1ej3LXm4xiCN/WYoN3R2TAfbbm2qRPd8xIccCGGiJZlr0EF3kYpyHUx6t7
-         sybj94CHApi6FEAj7R8iJD0L3RbLAJVhS1jXO7dxjAr2rdqs9i4C+ZL7S0SC0KJ3kp7v
-         s+wxRyBtmt9LWaCsftGmKIOJbLkW01ooVUW7s1o028oKyRNZgkXT+0c4tgHkjKEc1NA+
-         6edT3aHp58dw/YOQ4TMmq1SnnDss4QB2nJV9jDi2VCGs+JThlL80uTxF5iOpt2vfMj0/
-         2OXsQMVKdemFzpwPojN44rqSIQpqr/0992cljV0MIHf7Yy5wUnHTjsVGOnIYx790v7Tu
-         IayQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=Tw2u+uh50a7CaGmSE+CwnhLJyobXLQVPiwgUzHjaJNE=;
-        fh=6h8LoOdpYUKTRz26lM0JJYIbzF5GCSkzlbFR4AlYs0A=;
-        b=UyP7UA1j6vyp8h3KII6VQN6L+aKZC5qM9W6xziw+/fnde7pKSRgsDxCEo/yQ43+eGW
-         5l5qNkBwDjFsGvPQVgqjdVEFLGYo5O3FmqpzeRjS0U3FNzT9PYAselAaYukGXWUCK5jL
-         SZG4qeAuAt8kv0uBCU7LERaqekiLqHdF8eyIxTA4o07+2O91ectCYFfN1I9tvE7c8599
-         quDUJCUydu/zBFn1zcc/ia43go4GYRVuLADb/1IE/sHcCMzeLmdWlza089mbv/m2mTrp
-         hYXMGqN8OZjLyVpNKhNycMAMj0Do8mO7IOj6WIVKiBgJwXyJh5I/wBgMExxPpu3H4f6G
-         lgnQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771354565; x=1771959365; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tw2u+uh50a7CaGmSE+CwnhLJyobXLQVPiwgUzHjaJNE=;
-        b=G6Su855xoQWyY8LJp5U9bl9nm/f+J9hZ4xQUdssHj4WozFDNKOaqGWvOFUSLAoraDv
-         Ib38Cy19TzuyaaIB4shQct476/YuNiwvFVHmIRlyu9625rdNmcSqFvUIxVI2IqHZzQCK
-         uWHCleqWl5ASRBujDlA4ARtB0gfAQEHfnHKZIfxHadUHeUMIYDc0L+yIAZOsZ9JLwgUw
-         w/NH6CXKmZRxlDNlCE89vGKhJWEX+73TBqRAjbDO+m0BXbRNejTpb5hVzfSWGSMywlIz
-         SqIqw524SuMjJYQycLqTz/rtDDgbx9rGbWHklGVt/YTLW2w08NAMSKWMzAzcHtUP43Kk
-         /zlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771354565; x=1771959365;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Tw2u+uh50a7CaGmSE+CwnhLJyobXLQVPiwgUzHjaJNE=;
-        b=tACWkU1O+rIdBW9czJwDzA9MNFJiY8FvHeLvCwWuszMtwCfTplSFMcqHkU/7CTCA1o
-         jYbb8q/Y79YsESjUqJg+m1d7gFC7XRL4Aqmt5+FdooinSV1GB23oUjCrCZT69SQH2Owq
-         4S0T3JIRbXh9IG0cXlHWdCAB6fVQblDe3iFK4qCoc5ylwV0ZdXmJ3N9eFByqH39h25Uh
-         Fi31ROK212lvTO5lvkHGjxKK0QvgOQK8NtNXpH/Hi82xo/wuGYZ5MtXC9o/7PCbk6jyT
-         ArT4zQShDA7XUEOcqKDrNV6z5W39HbTVFqtwvYG0suRAmpJ201tQ00XOUMLd/aDvFpvk
-         M5+A==
-X-Forwarded-Encrypted: i=1; AJvYcCWTOp4QsDYiIfjZrlf4CxZRUH0lep2bXePqmWs0LR6Ek7XHlDM/ncdhqkjQfaOkfQuxpSw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+3snadRAtQj8JmkaO++O6Nz1FZ+dwY5hWoYOFSKgIMhGVr6jB
-	63zmlEJP7tnlbfvWKAPgbp5sIxs/1vcwz7Dzhn9zPbiPrAGuTk4FbPR1+0YqDiSMCg5odfACiMT
-	5m6myvemf1GADHHE6p7yg6f4jnl4WfsA=
-X-Gm-Gg: AZuq6aIpL3Q6FJlNIgs4KhE5Aqu34d822mvKP8tsoCWxl49e1KhfOEzPflygY/5a3gD
-	R6oqA0oDWGsHGsbQAQWJgNV8CF+c7UBjq7BkS2mmUac4trVqM1RyE1mwe56puKLWzpdtHHNdEKx
-	SDJ2WfDcmbRxYumUB1UW/2ruEEo8fCKpXhj7cDb9xovSF9OI3wBGA+tmIqX0mfMPLmHt/avjxah
-	9GcO+5uXAsghpjZA3Tldh2JpR/jno5vz/zhMo8oz+J998PKTQe7v5jjNuhv7D15g7IXEajsQs71
-	o9hD1Zgsq0tjNRVBAoBd4G+JmgpDV4gcxieIYaloQg==
-X-Received: by 2002:a05:6102:3f4c:b0:5ee:a3d3:39ec with SMTP id
- ada2fe7eead31-5fe2aed06f9mr4010415137.22.1771354564864; Tue, 17 Feb 2026
- 10:56:04 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 17 Feb 2026 10:56:03 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 17 Feb 2026 10:56:03 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <e5cee6ca-b908-466a-b496-0b170c6a2838@gmail.com>
-References: <5b29218a-8d18-41f0-8a03-eac707151945@gmail.com>
- <20260217084124.150366-1-a3205153416@gmail.com> <CAOLa=ZTeTWhb0Yc8rPEv8vONTHtSg3bSvW6FBC-AWrZzi12oCA@mail.gmail.com>
- <e5cee6ca-b908-466a-b496-0b170c6a2838@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wq15TAxn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TSqWXqL1"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6295B1D000F9;
+	Tue, 17 Feb 2026 14:13:59 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 17 Feb 2026 14:13:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771355639; x=1771442039; bh=ogFL7ePE1U
+	hY8gYilJ1wJKZ6ephipvol14HExz+gOKI=; b=Wq15TAxn4iX7j+kvmiDOtSqhp+
+	YuV9u9rQkLt7iyQrqSB3z9/7LzgOx4jfeHEsMPoSK1m6G6kNLCSphshPqpHaxFSD
+	n4nRal5NBe+EsmKzD4DXl0HCzz4R2O4X2RXQ+QtLIHz62HL0jm41qkj4K9LQem3/
+	olT2A0q+PNJHMwQRtFpW+JTuTlqe87kczS5/N6iLF8OAe6kwltWZfrFE83ZWhyE3
+	Yb6DBAbPzc0+2fddPPuQR89/L7Ah3Kuc6y9Y4Vvdks28+eC/MPw6dFqn7yCoNF+Y
+	QL3AwlHGfGaPqdxfitSVskVH4WN1MSNNJpsXDMSsbfsQuwbBX1wYRdic3wFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771355639; x=1771442039; bh=ogFL7ePE1UhY8gYilJ1wJKZ6ephipvol14H
+	Exz+gOKI=; b=TSqWXqL1iMt7tY9XoYlQM6wHw36ARBAlzDzEkSsmNkOO3dKNVCr
+	uY1iwXI2Qh2klkXc1+juhySwu7lZ7r/DWE3ubPHhgiZx2BLbm5zEhXFaW2c1Jyk9
+	T2mnCxPepC5cgK93LzZdiPpmhFCHWTeJYynyS1SXOqRSUXJR9W1a6p6044fEBigu
+	yJyG4+uvkh5fpkklhmfeoKwGsVZF1k1fOrjfUhhANyb7eYw2mpEBu5yaZkgMLYNu
+	PwGoMjbu8H6JV/7V4wG933vbpuyuQ9MUV08o8DPXJFeq2tM/80KWyGbiLGhyAwOI
+	dvLsuECbpkmG19f9hyFhxFxDwklZKkMsZxg==
+X-ME-Sender: <xms:972UaeCsPRfcB2cIFDuc-aGkYbdS3ELN0soss0KUcCIlCJEvQhydTg>
+    <xme:972UaUVGRaqkH12Lqif68it-6Yfx_D7VhZMO5JqfHWW6-o96nyVsFUpFXnnlL6yxV
+    eYGSwb-LKIFUbvnaBOb43hAB1GDm0WVe8FMyFcXyqAPnvcYBz789w>
+X-ME-Received: <xmr:972Uac8ijiK17-VL1kzBoThAHaglZXYVejbf1IOgeELm-eyyJ5HeYlZYXVCkZ16JYzpNGUbgA0hHhecQF565rKay5YGrhcZo7g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtheejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkh
+    humhgrrhgrhihushhhjhhhrgduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifoh
+    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvlhhkihguleeksehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegrhi
+    hurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgr
+    rhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:972UaWQJTTVb_5Cw5PJf-7Betden0cN-aJj_p3hZPNOFn8eGufndaQ>
+    <xmx:972UaRRu945nY3j8cEOn8MKlBrT5LTRZnC4iRUcRZ4ZtMZl-ByBqlA>
+    <xmx:972UaS6orikYX3Jep_yD2CHYN7E7vCQ0YSYy5kV98Q-h_9hYwAf_OQ>
+    <xmx:972UaWX9d2Llvk7it2iRGDwCjofG_zTIOv1TZcnUGx2G06Ni5ha6NA>
+    <xmx:972UaawFeHbr2F2WUUgcydG1eZ9TGjtBlLdTpo5o_ZIYunWg4P5QGdld>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Feb 2026 14:13:58 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ayush Jha <kumarayushjha123@gmail.com>
+Cc: git@vger.kernel.org,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Olamide Caleb Bello <belkid98@gmail.com>,
+    Christian Couder <christian.couder@gmail.com>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    Justin Tobler <jltobler@gmail.com>,
+    Ayush Chandekar <ayu.chandekar@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+    Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [RFC GSoC PATCH] environment: move core.trustctime to
+ repo_settings
+In-Reply-To: <20260215112331.22-1-kumarayushjha123@gmail.com> (Ayush Jha's
+	message of "Sun, 15 Feb 2026 16:53:30 +0530")
+References: <20260215112331.22-1-kumarayushjha123@gmail.com>
+Date: Tue, 17 Feb 2026 11:13:57 -0800
+Message-ID: <xmqqpl63b2tm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 17 Feb 2026 10:56:03 -0800
-X-Gm-Features: AaiRm5336_LlEorL6EUKexDhFnwT3S0jBhFeq0eCQhUw1Mgd_S6p9tlYabIuTvE
-Message-ID: <CAOLa=ZR-0DGm4eHB6oqi6FpdOV1YDT6mf0=ONZnpi==3o3ab+w@mail.gmail.com>
-Subject: Re: [PATCH v4] setup: allow cwd/.git to be a symlink to a directory
-To: Tian Yuchen <a3205153416@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000009c4be2064b099f3f"
+Content-Type: text/plain
 
---0000000000009c4be2064b099f3f
-Content-Type: text/plain; charset="UTF-8"
+Ayush Jha <kumarayushjha123@gmail.com> writes:
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+> The core.trustctime configuration variable is currently stored as a global in environment.c. This prevents it from being repository-specific, which is problematic when multiple repository instances are used within the same process.
+>
+> This change continues the effort to move global configuration into struct repo_settings, as discussed in
+> <20260208062949.596-1-kumarayushjha123@gmail.com>.
+>
+> Move trust_ctime into struct repo_settings so that it is associated with a repository instance.
+>
+> Add repo_settings_get_trust_ctime() to lazily read the
+> core.trustctime configuration value, defaulting to true.
+>
+> Update statinfo.c to use the new accessor instead of the global variable.
+>
+> Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
+> ---
+>  environment.c   | 5 -----
+>  environment.h   | 1 -
+>  repo-settings.c | 7 +++++++
+>  repo-settings.h | 8 ++++++++
+>  statinfo.c      | 4 ++--
+>  5 files changed, 17 insertions(+), 8 deletions(-)
 
-> Hi Karthik,
->
-> Thanks for the review!
->
->> Small nit, it would have been a bit nicer to separate these out into
->> individual commits with tests added per commit.
->
-> Since this is a security fix involving logic changes, I kept the tests
-> and code together to ensure the commit is self-contained. I hope keeping
-> them together is acceptable here!
->
+Doesn't this regress end-user experience when the configuration
+variable is misspelled, e.g. "[core] trustctime = bad"?  We used to
+run git_config_bool() from git_config(git_default_condfig) fairly
+early in the program, and would have died before doing anythihng to
+give the user a chance to fix the configuration files before going
+forward.
 
-My indication wasn't separate the tests out into an individual commit.
-But rather to highlight that this one commit is doing multiple things
-and it would be nice to split it out and each commit could tackle an
-individual problem with tests included.
+Now we will run deep into codepath and would not notice the
+misconfigured core.trustctime until the code happens to ask to
+compare the filesystem stat data and in-core index stat data.
 
->> Wouldn't something like 't0009-git-dir-validation.sh' be a better name?
->
-> Indeed a much better name. Will rename it in the next reroll.
->
->> I understand the exclusion here (they are non-fatal flows), but wouldn't
->> it more make sense to add these two exclusions within
->> `read_gitfile_error_die()` which already has two such exclusions? By
->> separating this out, it gets really confusing.
->
-> I actually implemented exactly that in previous patches (handling these
-> exclusions inside 'read_gitfile_error_die'), but Junio pointed out that:
->
->  >> diff --git a/setup.c b/setup.c
->  >> index 3a6a048620..8681a8a9d1 100644
->  >> --- a/setup.c
->  >> +++ b/setup.c
->  >> @@ -911,6 +911,10 @@ void read_gitfile_error_die(int error_code,
-> const char *path, const char *dir)
->  >>  		die(_("no path in gitfile: %s"), path);
->  >>  	case READ_GITFILE_ERR_NOT_A_REPO:
->  >>  		die(_("not a git repository: %s"), dir);
->  >> +	case READ_GITFILE_ERR_STAT_ENOENT:
->  >> +		die(_("Not a git repository: %s"), path);
->  >> +	case READ_GITFILE_ERR_IS_A_DIR:
->  >> +		die(_("Not a git file (is a directory): %s"), path);
->  >
->  > Hmph, isn't this backwards?
->  >
->  > We used to treat STAT_FAILED as OK without dying in this function,
->  > because we conflated "there is nothing there, so you should go one
->  > level up and try again" happy case with all other stat(2) failure,
->  > and that is why we introduced STAT_ENOENT here.  ENOENT is the
->  > *only* case among what used to be STAT_FAILED that we do *not* want
->  > to die in this function.  The same thing with NOT_A_FILE vs
->  > IS_A_DIR.  We used to treat the former as OK but the only case we
->  > wanted to treat as OK was IS_A_DIR and all other cases, like FIFO,
->  > we wanted to complain, no?
->
-> In other word, ENOENT and IS_A_DIR cases are *VALID* states during the
-> discovery process, not *ERRORS* that need to be suppressed in a "die"
-> function. Therefore, we moved the decision-making logic up to the
-> caller. This allows 'setup_git_directory_gently_1' to decide:
->
-> ENOENT -> Continue search
-> IS_A_DIR -> Check dir
-> NOT_A_FILE -> Die
-> Other -> Call 'read_gitfile_error_die()' *REAL ERROR*
->
+I think this is a recurring theme, e.g.
 
-My understanding was Junio was suggesting that what you're doing is the
-inverse of what is expected. In short (on top of your patch), something
-like:
+https://lore.kernel.org/git/32fceddc-c867-4a47-bde8-c873279edbc1@gmail.com/
+https://lore.kernel.org/git/a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.com/
 
-diff --git a/setup.c b/setup.c
-index c3dd6a4197..7edf921564 100644
---- a/setup.c
-+++ b/setup.c
-@@ -898,10 +898,14 @@ int verify_repository_format(const struct
-repository_format *format,
- void read_gitfile_error_die(int error_code, const char *path, const char *dir)
- {
- 	switch (error_code) {
--	case READ_GITFILE_ERR_STAT_FAILED:
--	case READ_GITFILE_ERR_NOT_A_FILE:
-+	case READ_GITFILE_ERR_STAT_ENOENT:
-+	case READ_GITFILE_ERR_IS_A_DIR:
- 		/* non-fatal; follow return path */
- 		break;
-+	case READ_GITFILE_ERR_STAT_FAILED:
-+		die(_("stat failed to run correctly"))
-+	case READ_GITFILE_ERR_NOT_A_FILE:
-+		die(_("unsupported file type"))
- 	case READ_GITFILE_ERR_OPEN_FAILED:
- 		die_errno(_("error opening '%s'"), path);
- 	case READ_GITFILE_ERR_TOO_LARGE:
+That other topic Olamide has been working on seems to have settled
+*not* to lazily load into repo_settings to avoid the problem.
+Instead it reads and parses at the same places in the code path as
+before, but into a repo_config_values structure that is associated
+with the repository in question (which typically is the_repository).
 
->> Okay so we unconditionally read the error into errorcode, quick question
->> that comes to mind: Wouldn't this break the previous flow for when
->> `die_on_error = 1`? Where `read_gitfile_error_die()` would've been
->> called?
->
-> It does change the flow, but intentionally, by passing &error_code
-> (making it non-NULL), we prevent 'read_gitfile_gently' from
-> automatically dying.
->
-> We must do it because if it encounters a "garbage file", we now want to
-> capture that error code and verify it in the caller. But more
-> importantly, if it encounters ENOENT (which is now a distinct error
-> code), we definitely do not want it to die, nor do we want to treat it
-> as a fatal error.
->
-> It does look a bit verbose, but it makes the state transitions explicit
-> in 'setup_git_directory_gently_1'. I believe we are on the right track!
->
-> Thanks again for the feedback.
->
-> Regards,
->
-> Yuchen
-
---0000000000009c4be2064b099f3f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 423f06038d97c0c7_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tVXVjSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mODA0Qy80NlAxSm9LSmdLWk95VGxRUzl4UWlVdHR0SgpZTUNKbmR2MHFQ
-RmxISFcxblB4UmtGM0trYURyMWdZZHF1WTd4S0JWanVnSEpXemJBcHRNUTlUbjlkd09Qby8vCmNS
-bkhnWDcrUEN0cFQzdGlhMUpJbzFVTEx6Nld3TVhrNUFIajdlNDNqMGxPUTMwdGExb21BaDRtSXFJ
-V3JuTGkKTnJscXdOU0x1V0w4T1Q2QUpidTRWdmI2Mm9tcVl1RTlXUHlnY0x3SDRvT0hWK293RzlM
-cURraHFWOXArNzc5MQpHM09hdXh4K2hPN3J4WGREV2RmTlNuVGszNm9SRC9Tak1LTGpTZSs1Y3lt
-S3QvWkRIUzgvTEZ4ZC9zOUxxRFJwCkVlVHZHaDFIa3V6VERVeWJ3MitZbkNYb3d3cHllQThsUS8z
-QTBDWTNQWjB6VzVWdFczbkV1NTVGTWt1b1ZzbjEKdEdKZHR6VVdNZDd1NVJNTlJZbEF5NDVSbThB
-bkQxS21BeVo3MVU5cEFmY0xjNmRTL3V5VVRJaVRHNEVTT2NxeApLZEx6MTVmdmlYUWkya3ZoeVFw
-bGJwREVpVHh3VVdmcGJIZHlDV2FCMGVFblhKeTErZzk2TmR0N2srcGUyS3hyCmNYd1ZXYXd3WWh4
-WWw3RHVRTDhDdGVtV2dESFMvSUY3TkNiZ29KVT0KPWVuTEYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000009c4be2064b099f3f--
