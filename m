@@ -1,116 +1,155 @@
-Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com [136.143.188.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BC933A010
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 12:29:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D137191F98
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 13:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771331364; cv=pass; b=QgqY43KzGyz09axS8h0mDLOfFITkaDKqSOY+8zmqJFse4y2W37HMqarzK2thfZ+6eXVnV0fu6CCSXwGgteh9R2eCi3f+B/tse3hM1oZgYSDzZ4hWbZk8d3mxyjLPBrYv/M5c3tTt+Flp8azHARhrpea8QQsrpHHuvUdss3ymtvQ=
+	t=1771333829; cv=pass; b=tAKL5zsZm6WGgkRNI8Ym1woI18qORQHSV+UvSojnkLp1e9zmCnxZKw9Z5LpI2I4zp/Q1tFlddK5evR5xDz7LtIkY1mxsc9eFleAE22xzA23ZfGafZ1KIDvClXOaA5YPaH0Y5aW72i4vO63Z6Ta15nqJ2GFEp5PdrOY40ZgqVxjE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771331364; c=relaxed/simple;
-	bh=niOFhbz5gBGs5PWEMD0AyavgDCS2JZ/SlXgckEpHptU=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=gAct1j5Lin0kj0YMJdx0Tu17RJrLbe/5ol1LHkVxXLvq/69oHGHUN5xM0ahizkI+xW/4z7yVGM5k6zvNMUJiBvZMx5st2gRM2GXbxgozfiw+uhrQ+EuMTONL663nHzYoy9rSvrtFG7a88RH3DjDdjs1LfCL9PUEOXpC+ZTRivpg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com; spf=pass smtp.mailfrom=ritovision.com; arc=pass smtp.client-ip=136.143.188.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ritovision.com
-ARC-Seal: i=1; a=rsa-sha256; t=1771331358; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=AYIJYzXh63K2dT+62foYIe1Gp58j6UAmMHxckX7n13ERhwO0FQOj2/6GMfL4TPzgG6CPX/S+WrqnczJecNk7X8hqfMhYk83dszeqi46Ne5jVP4FIjzkRsPGk3cs+X6gyMELEZq69amGjjHOEilBG0Gtd/D+zw99hFBFbZeKNNUw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771331358; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=NydeNsOJa0bmxIqQLZ5ujspC+AxiRtRu4wzhxZLEAeA=; 
-	b=DVNjWQuZ0i0yaUmLXF+xjtPbZBO2FWMoePdx6wEcMYb/15z8p/6qJN4MxyAzM0RhjMSDloNKK2smMuhMLPiVO/c7veSDmZ4Uwe4efd/yWKj8pmGX77MoghI/ReTW4ZwFHzSaQQtXsaFvI2YSEyCSwcYjlIlpXQhMz3evSfXELfU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	spf=pass  smtp.mailfrom=rito@ritovision.com;
-	dmarc=pass header.from=<rito@ritovision.com>
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1771331357392248.266012243555; Tue, 17 Feb 2026 04:29:17 -0800 (PST)
-Date: Tue, 17 Feb 2026 07:29:17 -0500
-From: Matthew Pellerito <rito@ritovision.com>
-To: "Eric Sunshine" <sunshine@sunshineco.com>
-Cc: "Rito Rhymes via GitGitGadget" <gitgitgadget@gmail.com>,
-	"git" <git@vger.kernel.org>
-Message-ID: <19c6b938a9a.dac9ed8487680.8990157022586832057@ritovision.com>
-In-Reply-To: <CAPig+cSb=zzDJCoo91detBgfAi9p4a3R8sVc6iTXfzpbNxsNrg@mail.gmail.com>
-References: <pull.2043.git.1770679038.gitgitgadget@gmail.com> <7b785b6064966aefe6883ce3c45e80bb74fe79f4.1770679038.git.gitgitgadget@gmail.com> <CAPig+cSb=zzDJCoo91detBgfAi9p4a3R8sVc6iTXfzpbNxsNrg@mail.gmail.com>
-Subject: Re: [PATCH 3/5] gitweb: fix mobile page overflow across
- log/commit/blob/diff views
+	s=arc-20240116; t=1771333829; c=relaxed/simple;
+	bh=M9x1rHO7UsFQ8gwSqJKpftXtRjOFA++kSN6NzADsKh4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TfvS2W6DHDXWeERYlmqh1R7YY0K+svbUaXF7gQ1Bz+k+ZUuoQ3gtEfpwgCGDisxr2kXHDnpvIEGVBPnOS4BCuBY8nxRSL9nU55fDWBdPLTLvqoUJs6PU4g0GUPaeylD+WnS2n6Ax86YrFRRk4C50djT6d4LD3io05yGkzbutNCI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cU8qVpVn; arc=pass smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cU8qVpVn"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-35640ad94d3so2813569a91.1
+        for <git@vger.kernel.org>; Tue, 17 Feb 2026 05:10:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771333825; cv=none;
+        d=google.com; s=arc-20240605;
+        b=MPnSZkCjiJ6tlk5FEDIBAsBh7mAePmTpYWRRilIWY/pq/kKn1iiV11GOtqVKNrsbgu
+         x4UlxqvMgJ5XI/35CaQkr+cqTSzjja086YMT1r7pIkBj1gaIclG+V80bs7eiXCcAbYjX
+         017R/An5kfVHd4SfEgz8b5d3j/DMtTq/RCeD9VcAO5RHXYmYt+sfpVKi8R4AWKQK2Av7
+         Q/CeGElEviIn1epkkXBcuZboY7nXQJAxpfkL//krz9hN0I3R7dEAJG/9EKlbhRFMxMKG
+         mHAAED+a3j4ZWIytG0Nvzeyl7vhctkPfXhKJSrAYnwGViESspe9IZ4cOIKwg5Bfb8JcU
+         7mJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=gOjq5lBkz3aClCZ5FXZoFkpq0D+ewwNW3wf3k0qY9Uk=;
+        fh=pWyRf2q6Cj4atnzp9ItHQ8NvbjJ9ZTCr/V/a4vCmUKw=;
+        b=NpPEUkHVvcKcNRmeP119ewdnKnPNVmZmWowVNpZUIFsFDQ8kv4EdLhX6SyDtXEi9LZ
+         QRJ9ozu0uCrawyd85/VKLVjro8NNd98tkz35IEZedJczBWiFnwW8wO0RCcr/cRGJhr03
+         9PS+Ke/PqwxT/APcJ8VEoX9nQbDN7hErkM2fYp/FkidsXSodnpe32DDCW5JmWBu5iknl
+         46xMa8rmarXLfaaa1ocDLn/NoCDNOgTJ4cL0tyizsTmmov/HYvov6zPwZCQsZ2j8s+C9
+         3KbNE4o7chCQQ3N22qcfyRgjsRyq/EELE1lg4LaWGZRmFlQXOJEJqRxiA8k+j66rdfY6
+         MySQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771333825; x=1771938625; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gOjq5lBkz3aClCZ5FXZoFkpq0D+ewwNW3wf3k0qY9Uk=;
+        b=cU8qVpVn2N+YzFY+5n90MCBZut3UksBMxre8wm9be9f54uV37Fu7L2svzUIslC/U3f
+         MedAhkqAAuWYvEXx/ulvgB8l72rmt6/n+nnHoCVhDvjVD1/wZcWqYyg2nvaX7MNsPL6Q
+         iQNqVrOkFVaJP6Yru7McBUgWubgZ1bBPjoPIKhlTB8lRFLfNPtaiuyraQkNvN2WPpIuj
+         +/VXMHyYJhuPJqDr9wN9tR3nZRQ4ytXSIOZPZGyz4dmtgYGHK2TN1DMz1j1+hcVevKCp
+         sMdeOLUlGnuYFvvB5a4yUgTzrHl0RtkVYk/2yPSN6fSR7jw8coXMcGNuIjMsutumZuTU
+         dZtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771333825; x=1771938625;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=gOjq5lBkz3aClCZ5FXZoFkpq0D+ewwNW3wf3k0qY9Uk=;
+        b=omp6I2FDLZAN2Pp7kwoaOX2vJ3XNNAS0bZ4uVxlRcFemso7WySc8zoPX43w6e6h8wQ
+         wsousRp6yt+6vyXmdmSeFIwCK0FCBqrnD8ezp+hJULqyvvBvJVTFo2FcJk0cJReZKUs9
+         kzv9RvpVLiiOGGHnI9nQcy1DmqLSrC1VvVK//6UDqzDt88TwizeM15M/hZ3mjTc9d0uo
+         cFGhwno1RfB8pVCBMCIg8rJHC0Sg7xy9X1d2OG2trm2a06qNp89hBa65EkxcLWOpqvn4
+         xEeTAFRH3/9r9vq5Zx4ihwmcrNO6Cr8e15m52CLy/3tluNFuHP62pptuiqUVcxXaA25B
+         d9Qg==
+X-Forwarded-Encrypted: i=1; AJvYcCXR4ncmki+oO1BekTRP0ltjz27u8l/dSLNkdYqytCj4CabliMVGBuakVCz6XNHTmigJRZ4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5raODn9EucR6ic9wI/VRW/FoF/+A0dvVoNn3qRICiSrur7qbh
+	kOX4xf+gow9IxEocF0rKdHZ4PT98YVjW2wCEobse9bL6InBZVMBb07WWZFjV+nXoN+uepSnm6kD
+	SkqpdOfDmYowiWhT+Af6/+GYDTAT/Ofo=
+X-Gm-Gg: AZuq6aIoeKXPK8it/goVnBItZju5icT7QeDDCW5sNsH829cNHfRGhzqT8zSroUaHblI
+	fd4USRRUYEMKB/0snQcuw55K0EH7QGmZW9/X4DuwD9R6cFCQFk1o+C6m2B0Aywt0s5bGkQitSS9
+	9j2Vy6sfLg/2R05pS0Jh+cMYMMi0VwBgAI2FoDI5GWQL1MFQNVJKQSxC1Q4wUUy74Umov7rgLA8
+	JPklji+q0GzaI2m3PWzo/dlzEwN/3cD0hA/IVGpKMgiMWrpFekcVBBXR3KgJqr+aH1dRfjlFIz8
+	eUw8qxmudqtI0kkHIyQXf6MPgbKYBfFdiWO1tXrSLsD2A/x98ZUZCGdkmutleTK/wz27JE/4TUZ
+	ZpVd8pM2gPeHssKH6BMxbMfl6RQ==
+X-Received: by 2002:a17:90b:1fcf:b0:356:41c2:897d with SMTP id
+ 98e67ed59e1d1-356aaa7623amr13293073a91.8.1771333825475; Tue, 17 Feb 2026
+ 05:10:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <pull.2046.git.1770746461307.gitgitgadget@gmail.com>
+ <pull.2046.v2.git.1770775169908.gitgitgadget@gmail.com> <xmqqms1fwasx.fsf@gitster.g>
+ <CAOTNsDz0ZtdsM8Z2NW0WBMGs8xyWz5ROS6pf8DKQAx26LU4xRA@mail.gmail.com>
+ <CALnO6CARu8HSYh9=z6FAF=84q1qA4Oan7_DLMbcK+1rth8B7cA@mail.gmail.com> <CAOTNsDwMeszCC6wunkkx_vhKYx9OvRWXB4VxedypOTQJ6Qs2sA@mail.gmail.com>
+In-Reply-To: <CAOTNsDwMeszCC6wunkkx_vhKYx9OvRWXB4VxedypOTQJ6Qs2sA@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 17 Feb 2026 08:10:14 -0500
+X-Gm-Features: AaiRm52THBLhkhiCQ3PMfSVVY4FOodneI4uSvYUdtJ81fLD3sfQ2aCBLU3ypHcc
+Message-ID: <CALnO6CCYorpEzmZwLrb7O-ucKLTOCLp6zXxZr0Qv73tOBqKKig@mail.gmail.com>
+Subject: Re: [PATCH v2] osxkeychain: define build targets in the top-level Makefile.
+To: Koji Nakamaru <koji.nakamaru@gree.net>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
 
-Good catch. I just rerolled a cleaner sequencing.
+On Mon, Feb 16, 2026 at 8:09=E2=80=AFPM Koji Nakamaru <koji.nakamaru@gree.n=
+et> wrote:
+>
+> On Tue, Feb 17, 2026 at 8:45=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.c=
+om> wrote:
+> > ...
+> >
+> > Homebrew picked this patch on top of 2.53.0, and on a recent build on
+> > older macOS I needed to
+> >
+> >     mkdir contrib/credential/osxkeychain/.depend
+> >
+> > in order to make their build work, since otherwise:
+> >
+> >     error: error opening
+> > 'contrib/credential/osxkeychain/.depend/git-credential-osxkeychain.o.d'=
+:
+> > No such file or directory
+> >     1 error generated.
+> >     make[1]: ***
+> > [contrib/credential/osxkeychain/git-credential-osxkeychain.o] Error 1
+>
+> I tried to reproduce this using the current Homebrew formula for git [1]
+> on macOS 15.7.4 and 14.8.4 (both relatively newer) with the following
+> steps:
+>
+>   brew tap --force homebrew/core
+>   cd "$(brew --repository homebrew/core)"
+>   git checkout -B main origin/main
+>   git pull
+>   HOMEBREW_NO_INSTALL_FROM_API=3D1 brew reinstall --build-from-source git
+>
+> In my environment, the build finished successfully. The patch doesn't
+> seem to trigger any issues during a local "make" either. How exactly are
+> you performing your build?
+>
+> [1] https://github.com/Homebrew/homebrew-core/blob/9ec3da0dcd3ccd1cd4d892=
+a71377b251770212d7/Formula/g/git.rb
 
+macOS 12.7.6 ;) hence tier 3 Homebrew support + all packages build
+from source. So just
 
-From: Eric Sunshine <sunshine@sunshineco.com>
-To: "Rito Rhymes via GitGitGadget"<gitgitgadget@gmail.com>
-Cc: <git@vger.kernel.org>, "Rito Rhymes"<rito@ritovision.com>
-Date: Sun, 15 Feb 2026 18:20:56 -0500
-Subject: Re: [PATCH 3/5] gitweb: fix mobile page overflow across log/commit=
-/blob/diff views
+    brew upgrade git
 
- > On Mon, Feb 9, 2026 at 6:17=E2=80=AFPM Rito Rhymes via GitGitGadget
- > <gitgitgadget@gmail.com> wrote:
- > > On mobile-sized viewports, gitweb pages in log/commit/blob/diff views =
-can
- > > overflow horizontally due to desktop-oriented paddings and fixed-width
- > > preformatted content.
- > >
- > > Add a shared mobile media query to rebalance those layouts: reduce or =
-clear
- > > paddings in log/commit sections, keep header/search content within the
- > > viewport, and allow horizontal scrolling for preformatted blob/diff co=
-ntent
- > > instead of forcing page-wide overflow.
- > >
- > > Signed-off-by: Rito Rhymes <rito@ritovision.com>
- > > ---
- > > diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
- > > @@ -537,13 +538,6 @@ div.search {
- > >  div.projsearch {
- > >         text-align: center;
- > >         margin: 20px 0px;
- > > -       padding: 0 8px;
- > > -       box-sizing: border-box;
- > > -}
- > > -
- > > -div.projsearch input[type=3D"text"] {
- > > -       max-width: 100%;
- > > -       box-sizing: border-box;
- > >  }
- >=20
- > These lines were all added by patch [2/5], applying to all viewport
- > sizes, but here in patch [3/5]...
- >=20
- > > @@ -691,3 +685,66 @@ div.remote {
- > > +@media (max-width: 768px) {
- > > +       div.projsearch {
- > > +               padding: 0 8px;
- > > +               box-sizing: border-box;
- > > +       }
- > > +
- > > +       div.projsearch input[type=3D"text"] {
- > > +               max-width: 100%;
- > > +               box-sizing: border-box;
- > > +       }
- >=20
- > ...they are relocated to this @media query. It seems a bit odd to add
- > the lines in one patch and then immediately relocate them in the next
- > patch, and it's not clear why the series is constructed this way. I
- > could, perhaps, understand having separate patches like this if the
- > idea is to specially call out the existing "broken" behavior, but
- > considering that the commit message of both patches talk about
- > restricting the width of the input field to fit the viewport, I'm
- > having trouble understanding why the patches are separate.
- >=20
- >=20
+built 2.53.0 + patches from source. "brew --version" says I have
+"Homebrew 5.0.14-59-g45db1ce"; it doesn't print a homebrew-core line,
+so I'm not sure off-hand if that includes the core tap version or not
+anymore.
 
+I ended up having to use `brew upgrade --debug git`, fix the build
+error ("mkdir =E2=80=A6") and manually perform a few steps when it arose, e=
+tc.
+
+--=20
+D. Ben Knoble
