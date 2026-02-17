@@ -1,111 +1,97 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E40371050
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 16:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56188334C31
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 16:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771345997; cv=none; b=DTXkogozj5UP7Tb7ZUubFdUJFhrHb6nq1NR6A4cKWLjI+3iJso0a271miMXPQ71EGaVohp6tyiuXvOXOidZ9W7D8fHvL2e2rQiTf1nVaBK1fowoGH+UFkGseIiytyqq//WV9Baa9HEn5rWxfVWJia3yFEMtMhTPb9YXfgqYPkqE=
+	t=1771346360; cv=none; b=iVWmPxXxK60grFf3O5gdlHqiSC1n1hob5C3JzmdUb0b0ouQKFNscacVrqaxqeQlF3VctQ4Bm3imK5soasUoHWXlzWUzSsdob94AlFVUpG50o5esK390wrYYEmJBs+SaFnPfBeldXjgP6YwIaFPke3aHvpjBBowDoSkLHkIvrdxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771345997; c=relaxed/simple;
-	bh=GoZpxvm/S7DZ6WT3jzBwV8GXywUtMLrWSLttdicUw2Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uWlgWla62c0CLPpm8Ljzfvt71XZWuB4Q2W4KAh09xlefI8S1XT0QudnNMjvUDD38Neoi9rw7EpqzMel5ys8EdK3ntkuqP+3qAXXj2/gnjN8kWRRMUyxmFQUP9nFmafDLoq4OoLStRXRqM3Y4XUmdTFVhPmgz67QtLGELsqf1O20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VN3RU57w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PNNDhdu2; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771346360; c=relaxed/simple;
+	bh=p6OiSBd1nc46Sjk9fvnsXes+gFr5bMKQoVPegQvto/E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pv76OJwmV3X2uO0xsxvlqeHTU6ZYS14tYs5tqFXTY703Rk/7ftwNNSZn2p3waGAubTPsEgnwbvk2XExElbGBUyjCD83ZBJfuYVRdVwP3ZUE/mrKWVrafo+awOc6bUaXVJsgEgCap7OUUCzXa13M8bWGHfhnwWiMRm8NvBfrDaDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TsWZyp28; arc=none smtp.client-ip=209.85.210.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VN3RU57w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PNNDhdu2"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 920CE1400040;
-	Tue, 17 Feb 2026 11:33:15 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 17 Feb 2026 11:33:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771345995; x=1771432395; bh=LLaZMxQTGg
-	3yxgEQaVWh6XtiIGCcmRjo2n3nmA+ju0s=; b=VN3RU57wJBj7ML/lOBxbEKsXHK
-	OkZQfO6z36dy8hT3KHoSjtoqYjY3ADzGxEbz01BkIEZrdBxNP/TpxSkYj/obrBPd
-	70LdYE9qm9SLJlJBs6IuxiDkIewYGcb47J/gWef/gwkUCKYFLQEkdIIO5YxMLYjE
-	r0v3NDiovy8DhjZiiiAh/s6zfBl0aZenrjCPXJ4GU+B5EAjceZCNY/YZ8+b+xRQd
-	7A4QG56IfF36xhkm5HO2L3o4BXjycYEf6+1n2k9CdNa2/AnobxkH28FGLhqx6Kd6
-	JPD9I8NNXQBlmFciFZ7G2kmswLqRILJGkllykVNgPQm6ew3povUoe/oMRTRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771345995; x=1771432395; bh=LLaZMxQTGg3yxgEQaVWh6XtiIGCcmRjo2n3
-	nmA+ju0s=; b=PNNDhdu2SI8qD9wb5wq+C5TxmlE5Qcd07EOwyzE9r9DGA3HNrji
-	dxe/8tBjAixMFbVv703gXtBzKVrVdRkY3ToCQ1tTBbDMUfJXXkbw3lfi5/Yw0plx
-	jITgxIhrFx7xR+7e8hycM0QWgQq8gkL8hYJHJeIDDPq3NZPThyynnOP70jKCXWLx
-	L+RffsfbIFC7oMCAsHI7XcLdzhYtkN11ApbnHEiiJ37dtaC0MRWj7kA2Uy/knRCE
-	/e4usza5PCFRtEDhzYHY0bURcD2ZU7SODtULel9hfF5w7XBnq9sqplV0qeIMgHGy
-	cVS3YRDD7qIQ/B0ia2r55ccKZGmrcOiC/XA==
-X-ME-Sender: <xms:S5iUaQV2aCJ2TcmcfW_tQ0sWaS5tnl-_U96ndLdPJO9IyOoOH2rxRg>
-    <xme:S5iUacC18FTaXYZHQkfrFYrol_knW7lc970RD-O6EsXuQUIfuqw29CQYiJyawRQpa
-    7104ic1TMNfny6N82PtbccvVWUrPrkBaICZGfT5sAEeWfLcrQ30yA>
-X-ME-Received: <xmr:S5iUaRzrRa9ZNOnUxHvgj02QqulQPae5yILK0dnANDj6YvaE8XAIP2WEA9yNBB-CBcxqB52KAl0U-Ue-MDSUkhmEWVWC7wIuvQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtvdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:S5iUaZDGmmD78X9aNyggJDmnpjadbzfoMWvkxO75Yi6q-_M7PFp82A>
-    <xmx:S5iUaeZmbYe1NFwaockbYtZ6h-enxjR-Gi0hGtgmixETDJkj_xE2EQ>
-    <xmx:S5iUaRj1oE5J3RsvUCjm10QMXnifJDZe64kZmLCc4DzSvQXZIuCh5g>
-    <xmx:S5iUaQ71rkbDSvDoDkoR-yY_lpeHlif7GXU6fZFF28u8p_dZ_5Gphg>
-    <xmx:S5iUaQAQM6kcfXwNKmhN2oCVjuD5b0Zv0EMXweQraorG7JJpL9dlnEGQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Feb 2026 11:33:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: ds/revision-maximal-only (was Re: What's cooking in git.git
- (Feb 2026, #05))
-In-Reply-To: <966fe2a3-1565-4bc6-ab4e-433fd4ff517f@gmail.com> (Derrick
-	Stolee's message of "Sat, 14 Feb 2026 16:17:36 -0500")
-References: <xmqq4inkhymy.fsf@gitster.g>
-	<966fe2a3-1565-4bc6-ab4e-433fd4ff517f@gmail.com>
-Date: Tue, 17 Feb 2026 08:33:14 -0800
-Message-ID: <xmqqzf57cotx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TsWZyp28"
+Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-82491fbf02cso2573655b3a.1
+        for <git@vger.kernel.org>; Tue, 17 Feb 2026 08:39:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771346358; x=1771951158; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p6OiSBd1nc46Sjk9fvnsXes+gFr5bMKQoVPegQvto/E=;
+        b=TsWZyp28wu+NYniblQU2iXVOyeCl2ph/7YOOAs6ANrmXUBeHquQVEk73uwPgbqhMGY
+         rZi4NwOlx1x3n0LTmP7q69Z4cBwlhtjindmP3xB7pTuXcj98bFE69koazgPAgUMX2Smc
+         uhPxxfC30kx53iYBdHgCHE1Bys6FAqDhY7LYwoRFkwAuVF5ktYjFbzQpld0FXyKDUw4Z
+         8cOyBumqiAfPt6juhV/6vTE5q+FurazMmeV4fNwrrkerU4RIqQFRP/cRcACY/xXew02C
+         NTCbnTj0U8I1UIil47tnhwp5uaTKmtM7EgPh8tMgMxXHDDyUo+ObsRG68sRoxukMZbFF
+         9VYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771346358; x=1771951158;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=p6OiSBd1nc46Sjk9fvnsXes+gFr5bMKQoVPegQvto/E=;
+        b=VT/+iiPx5MGu/bRPujJdxYnyV5TMlTWwEDYfBeTO74eKcsIGADiig4phHGbZRG/Q5v
+         c4kX+fyOi/x1AZOggauV4h4oE3VB9gBfdQGZ94V0jhTC5u+mTJ4Ks71Q4QmQ+0ntmEcd
+         Zq4DkrI/CNcQx5lE+Bvluv4s8jl1t1xv+VM2ozJq4jILZ80k7c5Nmz3PUXpOodBCU8Be
+         I10pJa3zzn1BF2Dc8/ZBEy9fsK0rgvoQQxyzucuQDTys+cNVAIBt9Pel1cxOea2THruy
+         OUNlWG+Qp3WHSS8Fh2Y1RG0RtcWUTjQHvohdD1o3/LUfhfijklzjv2a1IpuK0o7pnE9b
+         dGdg==
+X-Gm-Message-State: AOJu0YxFeNadYlVpt9k2/MomuJEbMHZWE4O+d7oVi7tJgF1BPizBhxHi
+	fPVgZ3Bzs1EJHqrm3cYznoZnMcWBoRbP1RbM5d8qqrttg/BnvzEz4aWXXvveCTdpeA1gwA==
+X-Gm-Gg: AZuq6aJ8D7AVyrSXGc/Lq2fBt8yRexHFFpyR4D0+lgZFSCXaHRe5xZdx+sz3kMA0TU+
+	du5ciuJrEd4+UuuhDsDg45t3yTZQ5lxxVGm1AZcxlty25cFSGaGW3kEwfXFGZQ0m6SZNL7oAYgg
+	8qPnEP4egjSQVizaa5VvdNTCsEdeArPBAB5x/TTscjtSBwDSuEj19CEY45DnGkY5rqneAwG2hrk
+	xAej2wYPNTXX2tnIQftPY5GpoyqbUTp25JWxsP37flV57KA4g3jw6U01/p0uyzDCHU6TWNQC06l
+	VFvXpS3il0ordx/jPlzitG//HPYGnVJHSJGa0egIUg5eW+kBXbMYqYGGfLCnFvJBGlhwNO2+Ajj
+	0aGT520xwUdvtUg78XPQIny/VItoXymtP4+0urGrK/p7kCu5b0r47GZDnNS8FBgSwGE+bNY1SIv
+	Pr3dVwoXm+jCzH/b/P4jfLWkpMERmv4LIi5H02zZpLyqbOxM4rAeeVm8oZx34IP0gqDbCq
+X-Received: by 2002:a05:6a20:734c:b0:392:e5eb:f0f with SMTP id adf61e73a8af0-39483aa450dmr10163325637.68.1771346358425;
+        Tue, 17 Feb 2026 08:39:18 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:a392:d36:fa44:db83])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-824c6a2a6c3sm13537354b3a.5.2026.02.17.08.39.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Feb 2026 08:39:18 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: phillip.wood123@gmail.com,
+	gitster@pobox.com,
+	karthik.188@gmail.com
+Subject: Re: [PATCH 1/2] wt-status: avoid passing NULL worktree
+Date: Tue, 17 Feb 2026 22:08:59 +0530
+Message-ID: <20260217163909.55094-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <0619603c-278c-42e3-a186-a674a124a451@gmail.com>
+References: <0619603c-278c-42e3-a186-a674a124a451@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Derrick Stolee <stolee@gmail.com> writes:
-
-> On 2/13/26 9:01 PM, Junio C Hamano wrote:
+> On 17/02/2026 10:18, Shreyansh Paliwal wrote:
+> >
+> > I wanted to just check for my understanding: the NULL usage of worktree in
+> > get_worktree_git_dir() caller, repo_git_pathv() callers and inside function
+> > add_reflogs_to_pending() is intentionally left unchanged for now,
+> > and is meant for a follow-up once this gets gets finalized.
+> > or it is out of scope wrt this cleanup?
 >
->> * ds/revision-maximal-only (2026-01-22) 1 commit
->>   - revision: add --maximal-only option
->> 
->>   "git rev-list" and friends learn "--maximal-only" to show only the
->>   commits that are not reachable by other commits.
->> 
->>   Will merge to 'next'?
->>   source: <pull.2032.v2.git.1769097958549.gitgitgadget@gmail.com>
->
-> This has been stable for a few weeks, so I think it's ready for
-> 'next'.
+> I left those out as they're not needed for cleaning up wt-status.c. They
+> can be cleaned up separately if you're still interesting in working on
+> that. It would certainly be worth removing "the_repository" from
+> get_worktree_git_dir(). The others are not quite so bad as they don't
+> use "the_repository".
 
-I am not 100% sure if "stable" is the most appropriate word to
-describe the topic, or if it is "dormant".  Let's merge it down.
+Thanks, that makes sense.
+I will send a patch for get_worktree_git_dir() sometime later.
 
-Thanks.
-
-
+Best,
+Shreyansh
