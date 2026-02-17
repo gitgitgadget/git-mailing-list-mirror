@@ -1,116 +1,136 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAF82DF136
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 16:46:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D29CC2FF
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 17:01:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771346788; cv=none; b=Iwm8yF+f1wlOhg3pd7A6jhlRNZX882xa2qI9IzGudEKT1Zh49NUffEHEFfMzf/2fTiqC09LHn4gn7bwhCwhn4C9hht3P6IUdwXvMIT82uAmpQ4u7nRNMajAruvG42KqjURYoY3vculCG97ajdHRttF/RBSQqMnrtmLDOKv3QLx8=
+	t=1771347682; cv=none; b=gGVPTg/HCpMvx59XwJglJ3V10UgAGe8Wm7WQbdGP2CFJ39dOr1XQQ0aOVadmqcmWeydwzvFPJCk9GNfeEGr2d2rmUX9WsbMV+tsvCRGzU75iWstN9JbENbjrDB2iuCIPL2+UbZuVnNAKcB0k70eXW6bVB+ZSESBX/gtjE6Wz9/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771346788; c=relaxed/simple;
-	bh=mzoObMQg/4XM8oydRfpea/Y4kf5AMmS+wrVnf0pLmQA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RLnwWY4GYM8CE+fzv7W2oNOC590x+XmacqfSs7QQ/rTlxWrMcnkmIVX7aiVw/R4CV3yx4V2prQtFu2yrNizuq6eVwvrglhXkt2NZWbHA0sQ9vx9zaOmfjF4s99lwIxv3gbk8s8tq//DvRLfyZIHYIB9/RqOd5JSMPMM/r/6vMsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=egE/S2U1; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771347682; c=relaxed/simple;
+	bh=l4JGt0s17ZIlnrn+Bi+No4YmVCpLpe4YysPm+0UmuCo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QJdMrcP841T8qwQho5HHH+ngC02RdLi4M81BTfCJd2a9S3y33P0ACDWQXanq/hd0YIJLRHJgUIG6L073m7wVzAG8pLxyOTjdWaRww+w/6cy0ERW61E7RiADEZ+Z/cnY+jB0935jlMs7LzacJ0+OTHLvHAxxrGzA6DanF2guDnzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WPfz326e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cM13nMvE; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egE/S2U1"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-824a6f2d816so2101231b3a.3
-        for <git@vger.kernel.org>; Tue, 17 Feb 2026 08:46:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771346787; x=1771951587; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mzoObMQg/4XM8oydRfpea/Y4kf5AMmS+wrVnf0pLmQA=;
-        b=egE/S2U1/06s2NATXbFMETIbmd+pQHuX0CZs41MCKo+7wtNQAvVJEoAwH9jSSqvrYm
-         613QCLn06XkrD2h9Kbn+5jpGG+kIeRKnXJ0PsBZ6//cJ3mPqDbVADo+qpm7pyuAgzr29
-         M82rkBb3lLmMgi4ow+z1DuxCN3WiPlqOd5lcuLq7RLJJ4hZdhSJpbo1EPQNrFPyNprRl
-         I9/Cl9eju0A7ErihSmuGLXFpiXSK+ZijX8sJuUnHPK+3AK9QG/MobZjHP4+H3b8P+kER
-         nzdyPZRXc9yzGRZMzzMY4LAYssBXlwF1XKC0Yuh+wdo0PIMCKtN73ivmLB5nwJGyLTpM
-         QMmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771346787; x=1771951587;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=mzoObMQg/4XM8oydRfpea/Y4kf5AMmS+wrVnf0pLmQA=;
-        b=a+by98Y02Ob/oXpVcwSDLnLgmH/8mKwHBlbPdDmkxdJBB9bdRkQY6fLSSbwegYqpb7
-         pSCGa2j21NdGN4TtQiqYACkHJ6bESdKYhZcqr0Wo4ENxiIjcjhuzUH2bcFShXMhh2xzF
-         RerWhwBEXlwjVpYoRN+186xJbUPAy4MVnr5uzQmhep5SLruV82tgpZskrRbfnzagfXAg
-         6vQ1fny0ZV6Urqe/BrrNZG8Au+Cx42R+tgomfIs0xBr1X37NobR0gFR/HRXBXu09MfKq
-         6hhl0Hhn4cB5qe8xrfJXmO16CCLjUjLwTpiZv1zE/WTIAthKkLscH/Z9FkXc5q7/Rbil
-         UBxQ==
-X-Gm-Message-State: AOJu0YyO9l5gDcFWPiPwADVKVYssUa5hExLMMzMaNkWlMJuhu7cDbToB
-	dpS1vg69OpWeRbYl5fdXQx6HeJ0y1dj8zKWirpo48+pdwWFFp+7lVB+qNrQV3iP8Ekc=
-X-Gm-Gg: AZuq6aLzICuHKNiW4/xK4OBYXwy8lMvwWtdCHbW01PeU8mAywCHFSIuq1J3IZq5wubL
-	0eqJcXOiIfiMAP8tYfsuk4FEeHeDekd/ZCmQsLfp4a+vYmQqV0MHntZvWMqKM8t0YaN5R+UdYvP
-	uusj2TreMgIFQ0ciQa9pYoM/mhp3/eQ9jH9RQwp/nAa8wJEecxn+rrPDnTQPGqLaPpTTtIEgLOa
-	rcJGBukyAnQ5Jy14NLfphV0J93xyfz0Lir0vZUjxa1YiELvo6Z7j7q99X57cJH+zG5Q/2m436Ws
-	SlNMdCzzUbt+/KiJko/+f2JFIaj6AXnctIGHUZbWuywiPLM1Rel5WX5Vy3i2NvQ2a3JNdxrV3Hs
-	Xy4hLIoNegzR2zoShYxnbGyDsueU5kABAL6eG644JpprPsB/m+mBw5v0OD01fWN5KhtZZWwG/KW
-	fZ50Ymy3ZQ8OBzKQ/4IplxMkLH+YqsKUszf5Z3d8mwRDksldq1NuArGVgU62fWUoTCtycN
-X-Received: by 2002:a05:6a21:6494:b0:38d:ea8a:3dbd with SMTP id adf61e73a8af0-3946c9402e7mr13027246637.73.1771346786809;
-        Tue, 17 Feb 2026 08:46:26 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:a392:d36:fa44:db83])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662e53936sm23253251a91.1.2026.02.17.08.46.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Feb 2026 08:46:26 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: phillip.wood123@gmail.com,
-	gitster@pobox.com,
-	karthik.188@gmail.com
-Subject: Re: [PATCH 0/2] worktree_git_path(): remove repository argument
-Date: Tue, 17 Feb 2026 22:15:49 +0530
-Message-ID: <20260217164615.55916-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <d7fe45b3-4a75-4a28-aa0e-74619fbe6a2f@gmail.com>
-References: <d7fe45b3-4a75-4a28-aa0e-74619fbe6a2f@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WPfz326e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cM13nMvE"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4FEEAEC05D9;
+	Tue, 17 Feb 2026 12:01:20 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 17 Feb 2026 12:01:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771347680; x=1771434080; bh=lGx8UkWu9R
+	MXhnZmjIjYFvF2NLORqobPf/tDHiF+JEY=; b=WPfz326eCRZy3VwMkkjfNXzqvx
+	V2fKETGYjdEkFE2uMrLcBuRGjGJiXcMKPmjiohLx6FB+hAqEdFvhKYC0aGwW27km
+	50fWpo7sAK50UQZxLQg+OnzgaXUKffoDzSRDsh4RSYLMn/5bQJjJs+efgCrsj6fw
+	6YDsvpCD4mexfoakWbzP5QB8IPrB7TlQVjPJZ19e5YVXapTW4DFvSvFhuI7Eg/4o
+	jPY7DamKP+l0sOPuoBkCmmT1j37CGeyeqQysFcWlJJ9mfNruT6Mqz85pbi0JZk58
+	rJG12fdS6zJTXLBB96w1hQikzPNYilYhIgClRiE0EMzuaRs1QdccCVD3psjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771347680; x=1771434080; bh=lGx8UkWu9RMXhnZmjIjYFvF2NLORqobPf/t
+	DHiF+JEY=; b=cM13nMvEgm+1mpqg3TPmwGFU6TlEa8a9zeT3+bKnIkhJAUd4Hfo
+	mtXiI2SFEO5owFOQwkVct0pxXLj3MTA/eoitSNZx6YPE9ZJupkZFB5ZIa5MbgD9I
+	3yFrf+zOnkiBbpv26vTzMiyaow6vf7QYWK15gQs7aIPmPItbnrLuz2VoBE1HqOky
+	tdIM5gI6ufGwhGnRJoTsrbELMgZopvIk2SqV/HgNU15njsdauXLRahQkmiyJ85iw
+	bVaqDe+V/LipkVYig3wBBhLziM4Yi7ZzYHD7kM3TPi+ouWeKqpVymPikikyEhyoK
+	HkFLc9eufNsiLmUn0k7CYAa1jAi1Kb20tRw==
+X-ME-Sender: <xms:4J6UaR_Sr-GHdTBbv4wi4EE8xwvz8mro9qdf9yZTk2eugE8zR2_mrQ>
+    <xme:4J6UacsRZwg8JjoYZYigSYvZSwCkStq5U1Oay85vlk8ustmZwvBtVlsmrLqvDaWvd
+    HkgpjgDgPAWXRaGeT8r26xb2k6kDiQsQhMxO-EK2zCqzojDNrUgIw>
+X-ME-Received: <xmr:4J6UaUAD7QzazIyYNCspk7JyvP5Mf8JUyHdj5TzeGAY1IcWlLa4aXI2fQwOAFToKDDwo4TSq2fdkqtm4KsPWN52XhAveKKp94w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtfedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopegrfedvtdehudehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:4J6UaUXw9clOHP57EES3KyXUWtWZwTA9PbenLtg7Hg9Owlmup05umw>
+    <xmx:4J6UaSCBcvbLFTDG2IcOZr1P0-5JalVYgiy6OmssnaBxIdzptOwBeQ>
+    <xmx:4J6UaX8I2uYGXPzd4y1jxZlC3Cz7XsMP59bVuL3Fevl39T_4fVk8Kw>
+    <xmx:4J6UaZHLdq3O4aJ_9YiEo2aOhDhjQPmLVWTiZ0tfo-i79ZKhfK0shg>
+    <xmx:4J6UaXi5fGWcRKPs5YO7V2S6xjrw_IO6zVbHoI412qJZKK-Uv3Cfgha2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Feb 2026 12:01:19 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Tian Yuchen <a3205153416@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v4] setup: allow cwd/.git to be a symlink to a directory
+In-Reply-To: <CAOLa=ZTeTWhb0Yc8rPEv8vONTHtSg3bSvW6FBC-AWrZzi12oCA@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 17 Feb 2026 06:26:10 -0500")
+References: <5b29218a-8d18-41f0-8a03-eac707151945@gmail.com>
+	<20260217084124.150366-1-a3205153416@gmail.com>
+	<CAOLa=ZTeTWhb0Yc8rPEv8vONTHtSg3bSvW6FBC-AWrZzi12oCA@mail.gmail.com>
+Date: Tue, 17 Feb 2026 09:01:18 -0800
+Message-ID: <xmqqv7fvcnj5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> On 17/02/2026 10:12, Shreyansh Paliwal wrote:
-> >> On 14/02/2026 14:30, Phillip Wood wrote:
-> >>>
-> >>> I think that we should add a new function
-> >>>
-> >>> struct worktree *get_current_worktree(struct repository*);
-> >>>
-> >>> to worktree.c that constructs a struct worktree using repo->gitdir etc.
-> >>> The worktree id is the last path component of repo->gitdir when the
-> >>> repo->gitdir and repo->commondir differ, otherwise it is NULL. Then we
-> >>> can use that function to get the current worktree rather than passing
-> >>> NULL when we call wt_status_check_{rebase,bisect} from
-> >>> wt_status_get_state().
-> >>
-> >> Here's what that looks like, the first patch adds
-> >> get_worktree_from_repository() and uses it to avoid passing a NULL
-> >> worktree to worktree_git_path(). The second patch then removes the
-> >> repository argument from that function and always uses wt->repo instead.
-> >>
-> >> Shreyansh - I think your patches to clean up wt-status.c can probably proceed
-> >> separately to these if you remove the changes to
-> >> wt_status_check_{bisect,rebase}().
-> >
-> > Cool. I'll send a revised version on the original thread.
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+>> @@ -994,7 +1000,9 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+>>  cleanup_return:
+>>  	if (return_error_code)
+>>  		*return_error_code = error_code;
+>> -	else if (error_code)
+>> +	else if (error_code &&
+>> +		error_code != READ_GITFILE_ERR_STAT_ENOENT &&
+>> +		error_code != READ_GITFILE_ERR_IS_A_DIR)
+>>  		read_gitfile_error_die(error_code, path, dir);
+>>
 >
-> Great, I hope I'm not stepping on your toes posting these patches. By
-> the time I'd worked out what was needed and checked all the callers were
-> passing a non-NULL worktree argument I had the code changes and commit
-> messages so I thought I'd post them.
+> I understand the exclusion here (they are non-fatal flows), but wouldn't
+> it more make sense to add these two exclusions within
+> `read_gitfile_error_die()` which already has two such exclusions? By
+> separating this out, it gets really confusing.
 
-Not at all, I’m glad you posted them. They clarified the right direction
-and are logically more fit.
-I got to learn a lot about the worktree API while working on this,
-so that was very helpful. Thanks :)
+Absolutely.  The point of this change, IIUC, is that these two
+existing exclusions were too broad.  stat() can fail for many
+reasons, but because we did not differenciate ENOENT (which we *are*
+happy to see and do not want to consider an error) from all other
+error cases (which we may have been better off if we diagnosed them
+as error), we pretended both ENOENT and all other stat() failures
+were happy case and "case ERR_STAT_FAILED:" covered both.  To fix
+this, the patch splits stat() failures into two, ERR_STAT_ENOENT is
+the happy case we should have been returning without dying from
+read_gitfile_error_die(), and ERR_STAT_FAILED is the rest that we
+should have been dying there but in order to return from there
+without dying when we got ENOENT, we were not dying there.  Now we
+have a separate ERR_STAT_ENOENT, read_gitfile_error_die() can (and
+should) die when we see ERR_STAT_FAILED, and it can (and should)
+return to us when we see ERR_STAT_ENOENT as a happy case.  The story
+is exactly the same between ERR_NOT_A_FILE (which had been non-error
+only because we wanted to treat a directory as OK, but we can make
+it an error) and ERR_IS_A DIR (which is new, and is an OK case).
 
-Best,
-Shreyansh
+The above exception on the caller's side you quoted is a complete
+opposite from that line of reasoning, and that is why it is
+confusing.
+
+If there are other callers of read_gitfile_error_die() and different
+semantics, such a "now we die on every possible errors" may also be
+a valid position to take, *but* then it does not make sense unless
+this patch makes read_gitfile_error_die() to die on ERR_STAT_FAILED
+and ERR_NOT_A_FILE.
