@@ -1,165 +1,109 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com [209.85.216.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157491A9F88
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 10:15:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A07281532
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 10:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771323355; cv=none; b=YjAhk3xyAX74WkJtmPczYj+jG6i/JhQaXwohbwus8yDGlWASHaVZ595BNCZLoTek76PUAaHw4Xd3lyrVtE82SAL/EdKVAS8cvB4IY7uMpWhZdlQGzPWzdX2AKwdTBvxUUntA/Y0nDmmYSA3eA9VYmxbcuz3JVVe95fklifeCRE4=
+	t=1771323601; cv=none; b=h/yAhlJpKh6DaUptC3pcCD2xXQqvRsAmjxl3RfOGCQYOa7xaL/4IkSs28CDPNZin7iN1qt08E871ynqUTvfnpWrE137AmEiIQEUv3WJew6MkeDygdBLcCEkA771+FxKldFbHfXnc7j9kSwejx3pIOz2phKaVAly2Sho8bP7euxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771323355; c=relaxed/simple;
-	bh=WWvmVAtKS6bqaPsV+8v8p/cwa89qCLXwDCatG1lQNyc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YUVhG0JdsIrYni7SUIx7h7BuNqdKsRYUp44kP2AakQ1x2pSfX+czireetcwy33wOxPeaCSE714OShGfj3OVBaUKseGQiqcCK8btPzX+16bx2lx+sy11UPNuHm8TqhQTQtvuzR6q+L9BAqDGN8iKmcrXL/doOJoXP+KEM1eNJJds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p8WRl0HK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HKGYoEAq; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1771323601; c=relaxed/simple;
+	bh=S/M87E94hR+2j8o0YlXhrc9JiEwU4xxXXyp0Knp1HTk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=C1mWKqrLrAmrAhwqaTgLsnnJFDZ8sjxVepf8syiX7yXyterrHaPb+bBfWkm0yLevLAT91KvcXZy1qHTuaG9wfXFrFJFj2NPyxawWib/srmldayhoUWKmdkPgNTPZhwdOrunSojsCgWocxBEYsGoYpjs8QpPtuewumpIose3EhcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C+DNu2Tb; arc=none smtp.client-ip=209.85.216.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p8WRl0HK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HKGYoEAq"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id CF23D1D0009F;
-	Tue, 17 Feb 2026 05:15:51 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 17 Feb 2026 05:15:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771323351; x=1771409751; bh=MQCYC3to5R
-	P/1VJW0iw1hLL3amNccNmzT3fBgv+ZKPA=; b=p8WRl0HKMjtOHy/8bhu9nmfSMp
-	m3b24skC6DAhE5xdKt67JCNZI+eooxTW2Yn/LCI3jQXHCM9bhT8OgitV6ziFcB/a
-	kt/hSHMcklSnurXLBFtR+CpUz/kGQ3Yaer+8Wcun5VZNP+tHKn0gf3II19T0A5B1
-	ttfTe3VPoBwWamaby7opBcoBSH5ize7xN5HF+Ut7JgpX2rW6I3wb7mEOmt9SkniY
-	Ldf68K5OHG8Vw4mQmazh5zgTvtp8XNOLIrIL5bDIvFwKU43x1HhZE+evOY6/ZGyW
-	DpcqbEmKcQNuhFG7fTtvpNRhwQsuFfy1DwvltN0q3MLQXsX38+kse4v2L5Gw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771323351; x=1771409751; bh=MQCYC3to5RP/1VJW0iw1hLL3amNccNmzT3f
-	Bgv+ZKPA=; b=HKGYoEAqgoTlUiGw4mPWoKaL6OUNFMAFCeqCi5anBT4dHLFGmXc
-	nu7ZKnxKvTd+YRCeSgC5J4iFuKeMZVWOKvXBPFiFzRHZJ4wiQNDXHajuov8nEWZi
-	XpdmRMDd3XosIGR+bCs6097FXDnxRIe6vdUNqe8NjtFTpP1egPiz0jkxE84rShX1
-	VD2ph+HGs3OiVo+8Ee3qKL170LWub1/OCi1o/wOtYu1Y/GXmqdA/uRlr9JPJO5BK
-	zomWU98OYMokyu2qNKilNM82PWch7CVIbSBHgNobbm09e/8M49/wMVz1n7984KHc
-	bXf07jcOcxj4KqyiK/mKha7qZcFh7kGqMCA==
-X-ME-Sender: <xms:1z-UaXRHLFXi9gkOy09YE_UU2T0zIHNFS99FhHK6SPc7x9a9vwaxaQ>
-    <xme:1z-UafxkK-ZQDF5OOZUArLdLKu2ari6zFdX-gxWY9tqQLeREXNNUsBtYZAVg1BSbq
-    2P10p2M0Y28dfTpEp2iahUgtCTmPWi73XzaZMwqpe3kYbqPl4lPDw>
-X-ME-Received: <xmr:1z-UaR11bgs8ky2yGEeAL7Q3wKhq3KwlsvPDk-JDl_BU5_rQV6J4EMEaCIBRJvlLBc2COhSC8MPWaPm0kIUcB9o9-pyHjmALlGiOKKPqrw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudelgeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdr
-    fhhrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:1z-UaV75GxE5TteVMSMQ_JyxoVvLEXr7VX90NaWZU5_e1ZFNSFS5pA>
-    <xmx:1z-UacXW3H7VmNlrHvVBHegHbFu4ypsInbI6gGMeDF9bB2Khq9gNOA>
-    <xmx:1z-UacC9Lo8Hqz7nT2vSZGqA3uwUa6hSeQOodQo8bqZCClCBbg3m8w>
-    <xmx:1z-UaT5eTOo_k80xwgIHugv48zM-7L6BOQC9Q4lwWe9KVQumw_O2kw>
-    <xmx:1z-UaY1znByof4IJepXuJPvLCDlQhhd9bKxgA8bSaO26JIbSwDnKuJ-m>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Feb 2026 05:15:50 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 292d0970 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 17 Feb 2026 10:15:47 +0000 (UTC)
-Date: Tue, 17 Feb 2026 11:15:44 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-	gitster@pobox.com
-Subject: Re: [PATCH v6 6/6] refs: add GIT_REFERENCE_BACKEND to specify
- reference backend
-Message-ID: <aZQ_0CaQG4Hhceby@pks.im>
-References: <20260214-kn-alternate-ref-dir-v6-0-86a82c77cf59@gmail.com>
- <20260214-kn-alternate-ref-dir-v6-6-86a82c77cf59@gmail.com>
- <aZQXrRuX3nsnuyEw@pks.im>
- <CAOLa=ZQFOLh6ixB4=ukPS44uE9k3-1Zw1U2bCYf+TsKyHEqLiA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C+DNu2Tb"
+Received: by mail-pj1-f67.google.com with SMTP id 98e67ed59e1d1-35305538592so2878228a91.0
+        for <git@vger.kernel.org>; Tue, 17 Feb 2026 02:20:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771323599; x=1771928399; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YtC2S5ddCuijpdDWHhzx6KkEdfenaYaJRL8xgSWuUaM=;
+        b=C+DNu2TbsEDG9U+KLTEKz2s1M4321B8DLrq/gwi336Icr7qSQk8NPDjWjsbLrQ1l6A
+         WumvlyoL8DMzANxhbOAbuLLAer5+mJx2dGcnfSeBDLs5o945oX5v6wrl68oqwSkNsKcm
+         LgYDtDj7pzP+xGOGWymvgGfQeQsgFVRMoR8xTZ1f4AoBYgcvEY0BhQQ/QFpugvNQ4Aaw
+         Sky1CPIkaApAqqEkszMl8GMMus2w83aRou5boouFS5MhxZBKZF/Y9xwCl9pLLbexzI0u
+         dtEPYdnbVd2c9DDUNYFeGrE0RBqXD4yggoWXSWhBil+eVZ8SUblcE6WqHJMNf6q+EfwU
+         8GVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771323599; x=1771928399;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YtC2S5ddCuijpdDWHhzx6KkEdfenaYaJRL8xgSWuUaM=;
+        b=BdJTzOpDuAe/uaj8LMwEe8S2MVPF8Pn/bAmfETNuZTIiBBGD2UP+/fZa/cfy1ddOrK
+         2Yrx+VjesP4SXsOsmFuiXxgPUGXXJzt60sEZReZyUfIqbS7djPPLpGGjOqtuVZZhl/zX
+         v3E4OxqLCx8nPueyDCcdVCZ26/p2LZvB9U0SZOzlJiOYZk3pFR3fxdyH2ULNkj4iBmi9
+         ZVkyaeWdyAMtSDbmEVECTAbkJZ4pkJBNhlERhJp6A9Ccf3WnMUXChQyDNOD7jyoPEbfH
+         nOPxKctIAwEQcZVPyAx2A9tsLVneJHauv6O7jI5TbdeCTO4fCW+mhoJ2Gd2QJAOOPWZL
+         bTKQ==
+X-Gm-Message-State: AOJu0YxrduodNPvkdWwYIpVmT5eh1NVX3WHfUopUg1rjC7F6uF2jxNAl
+	FnOQZVj87moAIAEjKzW8NE2kwtxbV+n/WSEJtpnZxdlTj4t/r0JMiEgCckJFWyBrFRPswA==
+X-Gm-Gg: AZuq6aJrlBc0pQeLQdEJT+NZTJCj8juVMi3Utg7hMK0YPD2AwKBR8PYgvatbMitDkWl
+	hFJLDKjkELpXmjZoqoieSKyxEwr0J0JMWbjQ9rqrlq6WdtK0RjAGVIynyLNo53NaoUCyVS7+bJP
+	YAj0vkVCgzXp+88ERZqrzuVw3UD05SgFknG1QwBJJ1DQ0PEH1FZ1tb17AvRT045lYZhGTJJLnDi
+	I6Z/4sY4N5MqONK11yE233TNS9e31SoGwDfHsfWAOz2ylcqX5wjOyncgLR9PgZoqU2HueGjnRkN
+	arfRhQdacw8Zx3Y6NCek3BbNZtVZzpn/0lcnP7eGh0B5eVSXHhpOetIucz8w9U0WaUlYgB+OjZr
+	YpHQu9jaXijXLE6MJprPKkU/M61SglL15zGxdVNOyopTfIszeS8/EiOvLTGBkDE5mgSfDQrLe7E
+	3pDG9Ez6rhxlYSJneGitzm5Yih7OKmqBT1yWpDUIjPonQavNXDtm1JyFeDSBg=
+X-Received: by 2002:a17:90b:2250:b0:352:ccae:fe65 with SMTP id 98e67ed59e1d1-35844819dd5mr9928040a91.4.1771323599453;
+        Tue, 17 Feb 2026 02:19:59 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:8c2a:3e1b:2a7b:dd15])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3567e7d95d8sm20595571a91.2.2026.02.17.02.19.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Feb 2026 02:19:59 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: phillip.wood123@gmail.com,
+	gitster@pobox.com,
+	karthik.188@gmail.com
+Subject: Re: [PATCH 1/2] wt-status: avoid passing NULL worktree
+Date: Tue, 17 Feb 2026 15:48:38 +0530
+Message-ID: <20260217101950.15731-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <89c78ce2-1783-416d-9ae5-ef51f6bde58d@gmail.com>
+References: <89c78ce2-1783-416d-9ae5-ef51f6bde58d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQFOLh6ixB4=ukPS44uE9k3-1Zw1U2bCYf+TsKyHEqLiA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 17, 2026 at 03:32:56AM -0600, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> >> diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
-> >> index 9912433b8c..b743c03a59 100755
-> >> --- a/t/t1423-ref-backend.sh
-> >> +++ b/t/t1423-ref-backend.sh
-> > [snip]
-> >> +test_expect_success 'initializing repository with alt ref directory' '
-> >> +	test_when_finished "rm -rf repo refdir" &&
-> >> +	mkdir refdir &&
-> >> +	BACKEND="$(test_detect_ref_format)://$(pwd)/refdir" &&
-> >> +	GIT_REFERENCE_BACKEND=$BACKEND git init repo &&
-> >> +	(
-> >> +		cd repo &&
-> >> +
-> >> +		git config get extensions.refstorage >expect &&
-> >> +		echo $BACKEND >actual &&
-> >> +		test_cmp expect actual &&
-> >> +
-> >> +		test_commit 1 &&
-> >> +		test_commit 2 &&
-> >> +		test_commit 3 &&
-> >> +		git refs list >out &&
-> >> +		test_grep "refs/tags/1"	out &&
-> >> +		test_grep "refs/tags/2"	out &&
-> >> +		test_grep "refs/tags/3"	out
-> >> +	)
-> >> +'
+> On 16/02/2026 16:18, Phillip Wood wrote:
 > >
-> > Should we also verify that the refdir contains the data and that the
-> > repository only contains stubs?
-> >
-> >> +test_expect_success 'cloning repository with alt ref directory' '
-> >> +	test_when_finished "rm -rf source repo refdir" &&
-> >> +	mkdir refdir &&
-> >> +
-> >> +	git init source &&
-> >> +	test_commit -C source 1 &&
-> >> +	test_commit -C source 2 &&
-> >> +	test_commit -C source 3 &&
-> >> +
-> >> +	BACKEND="$(test_detect_ref_format)://$(pwd)/refdir" &&
-> >> +	GIT_REFERENCE_BACKEND=$BACKEND git clone source repo &&
-> >> +
-> >> +	git -C repo config get extensions.refstorage >expect &&
-> >> +	echo $BACKEND >actual &&
-> >> +	test_cmp expect actual &&
-> >> +
-> >> +	git -C source for-each-ref refs/tags/ >expect &&
-> >> +	git -C repo for-each-ref refs/tags/ >actual &&
-> >> +	test_cmp expect actual
-> >> +'
-> >> +
-> >
-> > Same question here.
-> >
-> > Thanks!
-> >
-> > Patrick
-> 
-> We can verify that the repository only contains stubs, but to verify
-> that the refdir contains the data, we'd have to add backend specific
-> logic, I'm not sure that is the way to go.
+> > +struct worktree *get_worktree_from_repository(struct repository *repo)
+> > +{
+> > +	struct worktree *wt = xcalloc(1, sizeof(*wt));
+> > +	char *gitdir = absolute_pathdup(repo->gitdir);
+> > +	char *commondir = absolute_pathdup(repo->commondir);
+> > +
+> > +	wt->repo = repo;
+> > +	if (repo->worktree)
+> > +		wt->path = absolute_pathdup(repo->worktree);
+> > +	wt->is_bare = !!repo->worktree;
+> > +	if (fspathcmp(gitdir, commondir))
+> > +		wt->id = xstrdup(find_last_dir_sep(commondir) + 1);
+>
+> Oops s/commondir/gitdir/ - I'll wait to see if there are any other
+> comments before re-rolling (perhaps with a test that runs git status on
+> a rebase in a linked worktree)
+>
+> Thanks
+>
+> Phillip
 
-I mean all of this very much is backend-specific, but I think that it's
-sensible to at least verify some of the basics here. Otherwise it might
-silently do the wrong thing, and we'd never notice because we haven't
-been testing for it.
+I wanted to just check for my understanding: the NULL usage of worktree in
+get_worktree_git_dir() caller, repo_git_pathv() callers and inside function
+add_reflogs_to_pending() is intentionally left unchanged for now,
+and is meant for a follow-up once this gets gets finalized.
+or it is out of scope wrt this cleanup?
 
-Patrick
+Best,
+Shreyansh
