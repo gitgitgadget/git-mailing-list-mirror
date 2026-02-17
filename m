@@ -1,87 +1,90 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1089E29AB02
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 20:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D0536BCEB
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 20:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771358475; cv=none; b=ssCLd82/zxzkH6BYYMJI7eRvWeXNe2Rj2HQoUgofqCtHXvi3bqEON1ZZOq3wX3M880vgULNi2NkFBqs/+GY3jF7GAJEQ7nLfyvEqdonAjXaXQsvm+L8L4ZIW+TA3OqJqHjyDWrf7LxHS7QuXXRqtRn4m/9nQV8oe1aikjfH7nT0=
+	t=1771358894; cv=none; b=JCy/mc/iJ0ha88wmH/1q2thG3WkjqXjQbltcbe2ytZJwGyplKMQygDzUpHDIqZoBKxHOOcO2uQID5e5BD4eTIvFHrlQAMrk0qmlwiZ0p2fDymqJNwRfQrjwj+4AOCLyYEUT7AQ1hL/JxvKw1wYeqU4/PH4kF6eP8MjvYZZJlK38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771358475; c=relaxed/simple;
-	bh=DJA8XA4ceetsXXprmxVOXicn/q5tfHQRi0WUsQ9BZTQ=;
+	s=arc-20240116; t=1771358894; c=relaxed/simple;
+	bh=6NsSWjc/FqkWbQUH8eM/e2+pwuMNNt7BcI9y3YDb3o8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fLRin5R0Y9q3qhK/WCKVbp7htJRTcFb+E+F/DARXtkdE52793l4MxYnw0iXpZ92gnPhOKMhVGBfUFRpPT7cYzJ0bvJaIvSu54JL+A6rtYkVPxEMK5ot3Ht9GMGSGDl8pnuYeMzXiDa/ir3hylj28VFgN5bzGOo8rMMmWYH8m4fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gjtTjKLY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w8a1mys2; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=L1zjC0YsCM7/g2ohOGkbA9Z+eqzOaMf0tD3D6ffJBP8BZw6huchzIt9AiKqsPbe8YeQ40NUGP8O0Rro8p1PRygYU0fBZVas+KqIPhFO02xUxgornM/GsqUzFJkzoO6b2sOAuUZaidw54u8DK82RjOlv4pY0ShgXebUz5EPi2BAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GqAXeD89; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qPXxGaPq; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gjtTjKLY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w8a1mys2"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GqAXeD89";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qPXxGaPq"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 160421D00185;
-	Tue, 17 Feb 2026 15:01:13 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D25A7A010D;
+	Tue, 17 Feb 2026 15:08:12 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 17 Feb 2026 15:01:13 -0500
+  by phl-compute-03.internal (MEProxy); Tue, 17 Feb 2026 15:08:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771358472; x=1771444872; bh=P+a117H8ij
-	j8uzuvXsm2TN39P44LWzpa0FHYLuYJGoY=; b=gjtTjKLYUHND+7NjS09T8yxc5F
-	c1Rr2N3yBOtUDX9fVoBo2XcJXecACEiyMR27QM8ZGufYhAeQXR/0Gf5v20vy8SGA
-	2JvDLFvLPSWpSj2w+tEkA2Lh8IzP6uK4lj8dspsk+jTuJjRAeXUEbAkIEUZ94hKE
-	gLX8o+evfgu+WQcGnGSmCQQQ8s8q/2b0vxU6URy3RJLwXY5dtUGG2q+apmO4HZ4Q
-	rM6Dq31bG3mzbCNW1ck8/CXxwNdsmqMiTO3BRJR9HCQgJQ/JUoNweWVFviOWp3LT
-	bqPPkRHTz3KGsgj061fn0DbtvSwjxLNB6FcHWztu8oW9Nmy+0hy20vvP/y2A==
+	:subject:to:to; s=fm2; t=1771358892; x=1771445292; bh=nQfy0t6j8X
+	iuLsJPYBYMyxY5lqIhlRfzlbcfxG4X8Mg=; b=GqAXeD89k5frHLhq1sL5V+arEL
+	WkLDJ4C6ZHJRSKTjFIMoG2/DLPOz0ZlOuUi9PVeJLxSWfHt6ezgCRSgz3SkOeKCx
+	+dk9OPJOa+tyFP888mD2/Lf5zPDLi8D8ZFLRxJFuhd3eePp/LITr/tM+HUznJQEw
+	JYcIESDPFa72XHLVr5BtHhUHY4COYbxokRarrnfJBPJkFwA1zPUJHNAc3H4WzQ6A
+	DL0csFyA1lRbMVbppNFUaTLdArZ4xiRIDT/3cfB5ZbofDtIMbGmI4TBFYDTgSNJW
+	/jhIbr3YCvy9GhAyV1osRMWa6sn0Cyf7DSIpEpQfjEeFacAU9RLJquMlcr9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771358472; x=1771444872; bh=P+a117H8ijj8uzuvXsm2TN39P44LWzpa0FH
-	YLuYJGoY=; b=w8a1mys27QX3wjGx/syggPphkYevW7n2Cvt5l/S8u4JQCXYlg9O
-	VIwwRNymosG/+sMlywsnIX/Y6oLjyQCmlSB9x5/QiXe5PxSCFHTPhnoSeHmM4swp
-	VaFCPAlJVDc86XSdmCw+81G1RssvyqcYkPJoPHkETSzZWXRo/M5JOioi3KzbxzCJ
-	GLmFfV1u5Aq0aanwkDmFlN2rbTxVWCY+vwKTTa3XcbS/KLwVFaYC59yuWqizaX1O
-	ZzAUBu1q5gzHqBNbDTD5dYNcBQkPl2+ILhfhXVBATYe4xFIRf/tFjLAI21v+0I5b
-	ybyAGAnWfvyy4lVLEEYUJx1h3CQvazLvAmQ==
-X-ME-Sender: <xms:CMmUaXaIoo6jLOGeJwimWQdTm7f5HN9gB6bEjNCIGSe-xnylN44UjA>
-    <xme:CMmUaaFfB9rbhwZn4cMp_mS3lG0ByoxF7YGBCQ6UzjUBFYBtUj7Q9DP0Q9m2eP2qh
-    1jxKgjdaQzXqIZqa3N5yn3fHJgSmrWAu4IF1G-0JbUWZXgowBO_lQ>
-X-ME-Received: <xmr:CMmUaTy4PYSMe81G57A5RP4IlPW4WVCogkxT8F6NQ0G1o37kKGV9o1qF4AAldUZnzgSuz5MYKtBlrJ6VMsXRkF2E_38J4tBK6Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtieeiucetufdoteggodetrf
+	1771358892; x=1771445292; bh=nQfy0t6j8XiuLsJPYBYMyxY5lqIhlRfzlbc
+	fxG4X8Mg=; b=qPXxGaPqpfl/t5j1CwaRR5OyAaQuHrRJ5yJ+cXPdfdmFFyMqf42
+	T0hZ0AkPPBLMbjYaGzj4kPaL5DNjHT92HuzvoCyxpdllr3O/wxSDbTrxELHc29HX
+	FempeOlA7SatpjVHLt2QcUZo9VJMMryHpXHzyU8mv8dcgYmO4fytcjCGJXrMk04H
+	vu3yc2UQ9nBV0vJFowAW2TEo+2tOTEATkPFaFsWsF+4n5sSiMaNNAQgvn2KLkkiA
+	bnyQXLG2Uv22wp/YigRSIryqXXPLmryrW75pUTyx/ajS8okksg/QeQJaN1+P/T9j
+	rkJHGPQnxxb5A3clnCphKZzNzyCB8Ne+VZA==
+X-ME-Sender: <xms:q8qUaeWhpdHfpv87LWRYa7lqMrQ1xLJ4cJI4gQXS9fxt2ztqF5PfJw>
+    <xme:q8qUaXKT4V_9PEmvlpzYu0BVbOYzHUmAqUcSojY1R2SyAacNsRaeaZGg_Eeq3DbDm
+    -NyYMPt986s25hzS-7psGoFwaZNcCUlNSzYXXddxguIJgEXzsVZWw>
+X-ME-Received: <xmr:q8qUaW1sQrrGj0wBXyOoc7h5VyaonzlaW2GbNN8X7WvHZJmQXiJ3WEShZuu-60IEWwA-dW4YNDHzouiVIOJCs07DJL47KMIwdA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhprghgvgdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnkhhnohgslhgvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
-    rdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:CMmUaUnJCoV9hEVoANMZuzdElcLYBFNlrHSGUAOaR5A-5I7a59u7bw>
-    <xmx:CMmUaUkZMZqmVx9Plca1_HJaXpHkTuMRW0wNaJF9OHSJzMnUfcefwA>
-    <xmx:CMmUaex4G_BP8bwYxIt2n5ebV1bVTgOXxzNmnsV8QiYs0K-RuuntsA>
-    <xmx:CMmUaRr77hkKIedIi8MTcHHNyNfsf5L513IM4JDupxUyeHn6sy3z3w>
-    <xmx:CMmUaWXt0Ti6Im5RLVHNo1aWAF1l4_ATPv-vrwZxU8ruTatLNEVmogNh>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvlhhk
+    ihguleeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptg
+    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhs
+    mhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrg
+    hrthhitgdrshhivhgrrhgrrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:q8qUacIZo6bDbJ6VUSrGwwkz6WcV4eJLyRAlqtqVqInOZiI-WrZCYw>
+    <xmx:q8qUaZgbjNOQK05lRsUSqVo9KT91XYRq81Xv0SiSxosyQDLGvp2P6Q>
+    <xmx:q8qUaUDHlAweDZj5AspERItubxp58Ljq20_7kPwRvKoWzbs1gj4rrw>
+    <xmx:q8qUaT6_HMntt17aUsy53DjIUjiJ_6V-Ba7ezqmo0OpPSuu0NnRrAg>
+    <xmx:rMqUac7Hbzfqk8m_qOpB9qpdm3PXscu4JW7frzVWrPA_raeIJz6nsMyr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Feb 2026 15:01:11 -0500 (EST)
+ 17 Feb 2026 15:08:10 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jonatan Holmgren <jonatan@jontes.page>
-Cc: git@vger.kernel.org,  peff@peff.net,  "D . Ben Knoble"
- <benknoble@gmail.com>,  "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v5 4/4] completion: fix zsh alias listing for subsection
- aliases
-In-Reply-To: <20260216161513.2533141-5-jonatan@jontes.page> (Jonatan
-	Holmgren's message of "Mon, 16 Feb 2026 17:15:13 +0100")
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
-	<20260216161513.2533141-1-jonatan@jontes.page>
-	<20260216161513.2533141-5-jonatan@jontes.page>
-Date: Tue, 17 Feb 2026 12:01:10 -0800
-Message-ID: <xmqqecmjb0mx.fsf@gitster.g>
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org,  toon@iotcl.com,  phillip.wood123@gmail.com,
+  christian.couder@gmail.com,  usmanakinyemi202@gmail.com,
+  kaartic.sivaraam@gmail.com,  me@ttaylorr.com,  karthik.188@gmail.com
+Subject: Re: [Outreachy PATCH v7 0/3] store repo specific config values in
+ new `struct repo_config_values`
+In-Reply-To: <cover.1771258573.git.belkid98@gmail.com> (Olamide Caleb Bello's
+	message of "Mon, 16 Feb 2026 17:38:24 +0100")
+References: <cover.1769256839.git.belkid98@gmail.com>
+	<cover.1771258573.git.belkid98@gmail.com>
+Date: Tue, 17 Feb 2026 12:08:09 -0800
+Message-ID: <xmqqa4x7b0ba.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,93 +94,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jonatan Holmgren <jonatan@jontes.page> writes:
+Olamide Caleb Bello <belkid98@gmail.com> writes:
 
-> The zsh completion function __git_zsh_cmd_alias() uses 'git config
-> --get-regexp' to enumerate aliases and then strips the "alias." prefix
-> from each key. For subsection-style aliases (alias.name.command), this
-> leaves "name.command" as the completion candidate instead of just
-> "name".
->
-> The bash completion does not have this problem because it goes through
-> 'git --list-cmds=alias', which calls list_aliases() in C and already
-> handles both alias syntaxes correctly. However, zsh needs both the
-> alias name and its value for descriptive completion, which
-> --list-cmds=alias does not provide.
+> Changes in v7:
+> ==============
+> - Added the code to reset the initialization of the_repository
+>   in the fuzz-commit-graph test in Patch 1.
+> - Changed the call to rep_config_values_init() in
+>   initialze_repository() by passing it the repo config_values_private_
+>   struct instead of the accessor function in Patch 1.
+> - Modified the commit message in Patch 1
+> - Added extra lines between variable declarations and code
 
-OK.  It is a natural question to ask why it is insufficient to use
-what bash side happily uses, and the above gives a good explanation.
+>      +struct repo_config_values *repo_config_values(struct repository *repo)
+>      +{
+>     ++	if (repo != the_repository)
+>     ++		BUG("trying to read config from wrong repository instance");
+>      +	if(!repo->initialized)
 
-> Add a hidden --aliases-for-completion option to 'git help', following
-> the existing --config-for-completion pattern. It outputs NUL-separated
-> "name\nvalue" pairs using list_aliases(), which correctly resolves both
-> the traditional (alias.name) and subsection (alias.name.command)
-> formats. Update __git_zsh_cmd_alias() to use it.
+$ git clang-format --diff $(git merge-base master HEAD)
 
-Seeing that "--config-for-completion" is used for bash, I wonder if
-it would be a good follow-up topic to rewrite the bash completion to
-also use "--aliases-for-completion" (and possibly drop the need to
-support "git --list-cmds=alias" command).  But that is clearly
-outside the scope of this topic.
+would have pointed out the style issue here.
 
-> ---
+Will amend while queuing but it would be a bit before I can get to
+this patch set for real reviews.
 
-Missing sign-off.
+Thanks.
 
->  builtin/help.c                        | 15 +++++++++++++++
->  contrib/completion/git-completion.zsh |  2 +-
->  2 files changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/help.c b/builtin/help.c
-> index c09cbc8912..f02308a391 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -54,6 +54,7 @@ static enum help_action {
->  	HELP_ACTION_DEVELOPER_INTERFACES,
->  	HELP_ACTION_CONFIG_FOR_COMPLETION,
->  	HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION,
-> +	HELP_ACTION_ALIASES_FOR_COMPLETION,
->  } cmd_mode;
->  
->  static char *html_path;
-> @@ -90,6 +91,8 @@ static struct option builtin_help_options[] = {
->  		    HELP_ACTION_CONFIG_FOR_COMPLETION, PARSE_OPT_HIDDEN),
->  	OPT_CMDMODE_F(0, "config-sections-for-completion", &cmd_mode, "",
->  		    HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION, PARSE_OPT_HIDDEN),
-> +	OPT_CMDMODE_F(0, "aliases-for-completion", &cmd_mode, "",
-> +		    HELP_ACTION_ALIASES_FOR_COMPLETION, PARSE_OPT_HIDDEN),
->  
->  	OPT_END(),
->  };
-> @@ -691,6 +694,18 @@ int cmd_help(int argc,
->  			       help_format);
->  		list_config_help(SHOW_CONFIG_SECTIONS);
->  		return 0;
-> +	case HELP_ACTION_ALIASES_FOR_COMPLETION: {
-> +		struct string_list alias_list = STRING_LIST_INIT_DUP;
-> +		opt_mode_usage(argc, "--aliases-for-completion",
-> +			       help_format);
-> +		list_aliases(&alias_list);
-> +		string_list_sort(&alias_list);
-> +		for (size_t i = 0; i < alias_list.nr; i++)
-> +			printf("%s%c%s%c", alias_list.items[i].string, '\n',
-> +			       (char *)alias_list.items[i].util, '\0');
-> +		string_list_clear(&alias_list, 1);
-> +		return 0;
-> +	}
->  	case HELP_ACTION_CONFIG:
->  		opt_mode_usage(argc, "--config", help_format);
->  		setup_pager(the_repository);
-> diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-> index f5877bd7a1..c32186a977 100644
-> --- a/contrib/completion/git-completion.zsh
-> +++ b/contrib/completion/git-completion.zsh
-> @@ -202,7 +202,7 @@ __git_zsh_cmd_common ()
->  __git_zsh_cmd_alias ()
->  {
->  	local -a list
-> -	list=(${${(0)"$(git config -z --get-regexp '^alias\.*')"}#alias.})
-> +	list=(${(0)"$(git help --aliases-for-completion)"})
->  	list=(${(f)"$(printf "%s:alias for '%s'\n" ${(f@)list})"})
->  	_describe -t alias-commands 'aliases' list && _ret=0
->  }
