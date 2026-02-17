@@ -1,67 +1,66 @@
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5FE27E06C
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 15:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCF94C6C
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 15:30:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771341784; cv=none; b=jcr5zHRWwUTugnjjjbmoTcePH2NHo6tkyucpiRjKebJehrTg/3R5fHHnLGEOoJTMDWMCupsCejLwlaD3CS0tAylbjTTYCTRlR48CzZ9BXDNYdodi+ct1KXOqppGwCK9B7TNfQlZavG9PxBUBFUBrPzv5qqwd7F8+bWG6q+yr4wI=
+	t=1771342234; cv=none; b=DlB/biLYVYbXKGhzhOy0pZkHTuZASzWJZZdeKqlIeo67sSHTZUkPLuriMnKc1wZkZ5rfI7eABC5/pj2ihhY+7U02gv18LWGYHy5Y2YXdSGc/BPnBkx8nTBBGHRmk7f684hzeB9nCVb5Vg5pzlD6D+YeePzbY19oVBeoGe+553f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771341784; c=relaxed/simple;
-	bh=34TTggst1SKvIkJbSweNY8+Ogu6AOH4yI5OHrxoEBgU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Mv3cWHTwIfi6UAmCtRZdaPXDXwt5IlMyPKmwiI9/6gdsGxV0XPr/Y2imDYbgcsClePNIYrYxV99wqpca22gY6UoX/nvMNIxGQti/WduH13LC4skGraIPNalInYjDSXZSYptmP0xfm9pT8yk0z90rup/sLGXXNXqF0GAbLMASFlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JHJxFjjv; arc=none smtp.client-ip=209.85.221.65
+	s=arc-20240116; t=1771342234; c=relaxed/simple;
+	bh=CDvBHmcojPCY3YqQO3B0uSLY/VwSahNjYXX5seGqdrc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PDtDJTz6eA72q89G87LkJrLOPWYRnDrw1llxChlKSbiUcPIX/HjxgzzrZ3ignmgOJa6lJ1WGlSSWOwsWSoyVTpu62p5JeW51fba+QX2guyaoQ+COkT2RA74LYbGyzwQUfehi58GxtbJXy9PCBJCmwVoNwQK7E22Q14gzawoOahs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LQNl4LR0; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JHJxFjjv"
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-43638a33157so4202233f8f.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2026 07:23:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQNl4LR0"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c6139292ed7so276353a12.0
+        for <git@vger.kernel.org>; Tue, 17 Feb 2026 07:30:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771341781; x=1771946581; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1771342232; x=1771947032; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mZYBmo8uKPwg5fW9MmTR2zHusgfpQ7aQa8rbnva3jso=;
-        b=JHJxFjjv/6pWIH1tIMvjKohqQrxvCGsS3Am5glWf6QltADdeElHwdpiR1wQKL+cRQv
-         YPHlJNDt8jO3Tde9kPamTW9PCKESE8Bt6FO1a5EDyWAhiWc+wzqHIT6ySNCwVUMxs1EX
-         H9GZccUUDOw8qXBx86vXLHd6CdIeKC1J/PUb0VvRjRmFOw79yAxCQTNkwsa2n4FMfhND
-         5AC10iPYh8/eWvHrYIhZRLz8/3azKvo4l6Z7LtcBzEiRP0I4G07QDqpc2wsSurnztrnN
-         4ck96aFVp3hk8UeqCNKWKv5giFTCCEuTi+Gl6g24PaecrwYoAK1jB+5nxku4W8oHTgWy
-         pg0w==
+        bh=nLeiwVP2f+ZMsC+ADAQKeXmJCPKiau6OoGoWoeXAcKs=;
+        b=LQNl4LR014FXNSVAfGWZCFWAuqachbXIv4lo8+pzEnDqZuL5zcnaNcFxvimhFs6BRP
+         W0SHTeW58d+48jcIPYQ2kyn+RKkoioEHZl2u3MpaACWD5PGKcrn/oStzNT/EKr2aBWuG
+         5sU71FLdhjJK04v+2Cimt/MNeSNp+vRf4y98HFoW0b1fHJVu9fY3zx6JNmFvPewKIyxC
+         fGKfxo2eQmmBh+/QMEWFH2ajBzAFP2hFcpLbg1FwDN1QbcDWjRmOaOEoiXEMgKzrga1Y
+         tEu8Le6lrFq4czoru0cTzR6jzxyUkPrxwVh9gHmEsh6E+Lc+WNA2HFpHDufJ4b9jvTsS
+         7zOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771341781; x=1771946581;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1771342233; x=1771947033;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mZYBmo8uKPwg5fW9MmTR2zHusgfpQ7aQa8rbnva3jso=;
-        b=GchyD5GuAqQsUkyBZAhlCCCZVoRmWzPQN4WNsiFwQrF4Ftx31s/ccjRiTvSaovk4Mf
-         zaS5KDjhbaQjvv4LJmqzItIPg9Ch1wqoYDyJT7wk57SHq5Tdd9n/fmuBnGnPQQhZwYJa
-         aCtNUZ9CWcitXKT1ceL1E5knqoGkXeHLjAle7RkFG8dCcOLJNYFzqCLqpkyEjHNH3fas
-         7kixfFEGQ92zSTD0bwJPiHYBmybaSTl9gDZwF8ThTfSczNBJ8tm/gOB2//jQ/eWZ4Upg
-         fjRNcmNTnqP5m5Z6aEEsAYvB2MJOw0LejYXVAqTgnsOKOCex6KyubAjqHVq8B2H3S/cM
-         2Kgg==
-X-Forwarded-Encrypted: i=1; AJvYcCWRWJmTCV4WrDEGqTX84J0UDQTbQmnk4y8KwMagxCkC7bUDSvuXA6/zWp8RbBJNVXRkD8o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YygMDTPIEE1ETn6K6rGygyisg0gdmPn9yzq4PC250mxr3M/ppl3
-	KRx1xigqxFs4PmLMDkFtP1Bg+7/pahc5TiJuVi+UuD75MS0tdhvKpsUR1C3hFt7h
-X-Gm-Gg: AZuq6aIz57GPYi86begOyBwI9x3RyunScwKfEpmBzJ+IhQizIMshx3ij12Mf9rsVfa4
-	JYk5EMuK/rSSXRejvOQUGG3c8/BWhtNyoLYv5+N21/tw4thSKnLWtX56Xw9pU/eFhK8U614iXDR
-	hHnpe7FH/lUf/8PnEPLt8vRUYSOwZ5nz16R9WzFFr9lHRwxfME37EuP4BK16Nj4nIGZJGWKW5pt
-	/Hct8do017m/IwANuOTSusX+eCWCNpWosM8b39DjT1/rXED//ruwsj4HdF7oox83+/5Pxlwz2GW
-	qgMvSOUYpSPmEXC7+qfAK8kssiZ6rlFKAJNfKxI/G0z8SV2v6UKXEOMc8RhlQuRqZYYD/LuT59L
-	fnPKvfueOpHxTKzt8utFMabZP6UKGqNAblhlvQggmzlzN6BD1wEedwiWiyrAlBYs883Zqn99GAW
-	mttsv4oBILDQ2U1CucrNUHnlMaT2O1g7xjgu6h/ltut/NcRDU/ydNURqCHXuFnKhdrfMgC9QxC8
-	s99EA==
-X-Received: by 2002:a05:6000:603:b0:433:2f55:7cab with SMTP id ffacd0b85a97d-4379791ca61mr25916989f8f.37.1771341780760;
-        Tue, 17 Feb 2026 07:23:00 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-437969fd36dsm37093121f8f.0.2026.02.17.07.22.59
+        bh=nLeiwVP2f+ZMsC+ADAQKeXmJCPKiau6OoGoWoeXAcKs=;
+        b=YEWlKUGzvSuRT8uWz+7qpIoAoA5tslLe/6TB0xSoGB0xkKX//Ft/bKweO1+wPK9JHh
+         l2IoGesE6gG/Fsr6TGNomqihDK65z+KaS7bZf2b448oTvDnwpiXEF7CQYlgzb3PWgSwB
+         bSs9t6JeI+4iORF6JtiT6Int8yCiR+9OHtg1UZXLmA/a16Lx89gU0S8Bq7s9StCKik/E
+         RPmFKnfDz3HOlFQG7uOXFOV+TNnlo9uFGim/EqgK+3IivgRB/qE29H6V+cc4mpHO96Xd
+         g6BurwK16KJusTvp4X3MbA8p8BQvz8zK1kxd/JCVSK4rulBGBPnLuk2uyDOVeVlTN8rt
+         jY/g==
+X-Forwarded-Encrypted: i=1; AJvYcCWFoLnxOi+tV8RlT/Dm6/fzDRG8+J0kmsnt3JAJOxlgBrsSY+yb0vu79KRlLVJLX2e9wrU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVw/thkMqL4wdH8XNUd0CU3vuS/cx/IiYOErFIlyAN3AQqNvCL
+	m6uM7FqaCiv1nQ2ylf6efvFfljr2Q+62k2M+kw9vCZhDmdrSr7kp9M8B
+X-Gm-Gg: AZuq6aIznU4iItjCfG4zpIVxjnI5H9thwe58tAijqu8eHME+yY0XKX7vS/5DE/rjno+
+	YkqTV79eHCx0Do4Ux1noPzetsSukfWpCsBSH7ILS4eGebNzc8aBnCIfw9OkSl0Vr4t09gg91pUV
+	NTqmzqLWqT+unpokkTvJFFQ2TowGIM38zJ5CHjJqoESIHNi1Bq2rfdh/3YkUdyuiNoXJcL94taj
+	ZeiXcZfu7rcba8vbHUcvhmwF49gx71/iHLNaJk4sXKx6U9B0KS2jgBlqggRpviiZENM2T1gRIXs
+	7GGvkyLdxb1XmV7CafP+uLnMPGMTOp3fvbdkJBekGHzr3AEGjLMvwIg0ztRAgYOVfnEhDs26GKH
+	IkFAfM4jXi0h92EpoGjIXRrTRGXcAU/HnpObf9+PoGCZdtoMIPDmNLPC9OHQJPHfwUN+xiaHSXD
+	xJxg1tAh5mXJZ0CwCxyX2t+4GE0wk=
+X-Received: by 2002:a17:903:2c5:b0:2aa:df82:ed85 with SMTP id d9443c01a7336-2ab4cef7591mr115211535ad.1.1771342232437;
+        Tue, 17 Feb 2026 07:30:32 -0800 (PST)
+Received: from [192.168.0.105] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad1a713675sm147256525ad.27.2026.02.17.07.30.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Feb 2026 07:23:00 -0800 (PST)
-Message-ID: <d7fe45b3-4a75-4a28-aa0e-74619fbe6a2f@gmail.com>
-Date: Tue, 17 Feb 2026 15:22:59 +0000
+        Tue, 17 Feb 2026 07:30:30 -0800 (PST)
+Message-ID: <e5cee6ca-b908-466a-b496-0b170c6a2838@gmail.com>
+Date: Tue, 17 Feb 2026 23:30:25 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,48 +68,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/2] worktree_git_path(): remove repository argument
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, karthik.188@gmail.com
-References: <cover.1771258688.git.phillip.wood@dunelm.org.uk>
- <20260217101242.14688-1-shreyanshpaliwalcmsmn@gmail.com>
+Subject: Re: [PATCH v4] setup: allow cwd/.git to be a symlink to a directory
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com
+References: <5b29218a-8d18-41f0-8a03-eac707151945@gmail.com>
+ <20260217084124.150366-1-a3205153416@gmail.com>
+ <CAOLa=ZTeTWhb0Yc8rPEv8vONTHtSg3bSvW6FBC-AWrZzi12oCA@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <20260217101242.14688-1-shreyanshpaliwalcmsmn@gmail.com>
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <CAOLa=ZTeTWhb0Yc8rPEv8vONTHtSg3bSvW6FBC-AWrZzi12oCA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 17/02/2026 10:12, Shreyansh Paliwal wrote:
->> On 14/02/2026 14:30, Phillip Wood wrote:
->>>
->>> I think that we should add a new function
->>>
->>> struct worktree *get_current_worktree(struct repository*);
->>>
->>> to worktree.c that constructs a struct worktree using repo->gitdir etc.
->>> The worktree id is the last path component of repo->gitdir when the
->>> repo->gitdir and repo->commondir differ, otherwise it is NULL. Then we
->>> can use that function to get the current worktree rather than passing
->>> NULL when we call wt_status_check_{rebase,bisect} from
->>> wt_status_get_state().
->>
->> Here's what that looks like, the first patch adds
->> get_worktree_from_repository() and uses it to avoid passing a NULL
->> worktree to worktree_git_path(). The second patch then removes the
->> repository argument from that function and always uses wt->repo instead.
->>
->> Shreyansh - I think your patches to clean up wt-status.c can probably proceed
->> separately to these if you remove the changes to
->> wt_status_check_{bisect,rebase}().
-> 
-> Cool. I'll send a revised version on the original thread.
+Hi Karthik,
 
-Great, I hope I'm not stepping on your toes posting these patches. By 
-the time I'd worked out what was needed and checked all the callers were 
-passing a non-NULL worktree argument I had the code changes and commit 
-messages so I thought I'd post them.
+Thanks for the review!
 
-Thanks
+> Small nit, it would have been a bit nicer to separate these out into
+> individual commits with tests added per commit.
 
-Phillip
+Since this is a security fix involving logic changes, I kept the tests 
+and code together to ensure the commit is self-contained. I hope keeping 
+them together is acceptable here!
+
+> Wouldn't something like 't0009-git-dir-validation.sh' be a better name?
+
+Indeed a much better name. Will rename it in the next reroll.
+
+> I understand the exclusion here (they are non-fatal flows), but wouldn't
+> it more make sense to add these two exclusions within
+> `read_gitfile_error_die()` which already has two such exclusions? By
+> separating this out, it gets really confusing.
+
+I actually implemented exactly that in previous patches (handling these 
+exclusions inside 'read_gitfile_error_die'), but Junio pointed out that:
+
+ >> diff --git a/setup.c b/setup.c
+ >> index 3a6a048620..8681a8a9d1 100644
+ >> --- a/setup.c
+ >> +++ b/setup.c
+ >> @@ -911,6 +911,10 @@ void read_gitfile_error_die(int error_code, 
+const char *path, const char *dir)
+ >>  		die(_("no path in gitfile: %s"), path);
+ >>  	case READ_GITFILE_ERR_NOT_A_REPO:
+ >>  		die(_("not a git repository: %s"), dir);
+ >> +	case READ_GITFILE_ERR_STAT_ENOENT:
+ >> +		die(_("Not a git repository: %s"), path);
+ >> +	case READ_GITFILE_ERR_IS_A_DIR:
+ >> +		die(_("Not a git file (is a directory): %s"), path);
+ >
+ > Hmph, isn't this backwards?
+ >
+ > We used to treat STAT_FAILED as OK without dying in this function,
+ > because we conflated "there is nothing there, so you should go one
+ > level up and try again" happy case with all other stat(2) failure,
+ > and that is why we introduced STAT_ENOENT here.  ENOENT is the
+ > *only* case among what used to be STAT_FAILED that we do *not* want
+ > to die in this function.  The same thing with NOT_A_FILE vs
+ > IS_A_DIR.  We used to treat the former as OK but the only case we
+ > wanted to treat as OK was IS_A_DIR and all other cases, like FIFO,
+ > we wanted to complain, no?
+
+In other word, ENOENT and IS_A_DIR cases are *VALID* states during the 
+discovery process, not *ERRORS* that need to be suppressed in a "die" 
+function. Therefore, we moved the decision-making logic up to the 
+caller. This allows 'setup_git_directory_gently_1' to decide:
+
+ENOENT -> Continue search
+IS_A_DIR -> Check dir
+NOT_A_FILE -> Die
+Other -> Call 'read_gitfile_error_die()' *REAL ERROR*
+
+> Okay so we unconditionally read the error into errorcode, quick question
+> that comes to mind: Wouldn't this break the previous flow for when
+> `die_on_error = 1`? Where `read_gitfile_error_die()` would've been
+> called?
+
+It does change the flow, but intentionally, by passing &error_code 
+(making it non-NULL), we prevent 'read_gitfile_gently' from 
+automatically dying.
+
+We must do it because if it encounters a "garbage file", we now want to 
+capture that error code and verify it in the caller. But more 
+importantly, if it encounters ENOENT (which is now a distinct error 
+code), we definitely do not want it to die, nor do we want to treat it 
+as a fatal error.
+
+It does look a bit verbose, but it makes the state transitions explicit 
+in 'setup_git_directory_gently_1'. I believe we are on the right track!
+
+Thanks again for the feedback.
+
+Regards,
+
+Yuchen
+
+
+
