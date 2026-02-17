@@ -1,132 +1,101 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F1222424C
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 15:19:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D07D23373D
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 15:20:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771341546; cv=none; b=t45KLMgV1xqve4Rjhp/VnFKOw43z+QHSMqP/7knQeirM4luL/M16Hg2niuUsTqnYbpY7cGmn7i9SSnmbEpjZ9irSBw/gyfj/nkziewyiXEKaE5V8NO1lEfAu8r1m4CtdmCRUOlJi/90is5Cerfn8qXwEBJTFT8bGAtIYP+G7Xc0=
+	t=1771341632; cv=none; b=TtFZRd4Y+rOVy4oWMEpVyGYVVLmyeTnkxNHBRRZEEfotyOxx2IFH9H7xAJ+j3z2wSvz0UtesKOBTcdYsQlwNkzcSHCM1DbyRluQCcpTIyi5q6D/+bkuyFST1rCRvtOcexHmdwtt61Y5xkXHHo6UmaeEJ50Xtvp1RxHSJ3eyRFQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771341546; c=relaxed/simple;
-	bh=oCOkIZe4yEP/BpxRkElE6STMkoyJz3s3K387MnEBdo4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V4J/uQ9kSdVyYnobint/JKIQtI2IRur1dJb9EMZ2UZOSDTQSvrqiIn0Zd5ryA314mzybPHbvZyKOwRSVrwA5otmG4y821XB5LSD5W/kdvfwa99KB6uX/qSZzE6SEBjIC1AZN2TKkRayrcpPHlW/Ee0gKKYqsnlFDWioSad0Dvjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K3TEKXos; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TbOezDFZ; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1771341632; c=relaxed/simple;
+	bh=KUD2IEKJ0KE+HjO0eo+IY/Le1AB1EdGV7defBiX7dDY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=GVCEFdt2xcULYRevFqmnbNYBhfApmhW97Bo59HEbwxg36/sC0/nUNR5BUnxR9WiYJPxrySqkK9KoOWs5ccGZY2+UcBjUovYbiEudktCPkE5icBSeyOmJphpkdAKF/qDFtHS2x+N1EW26y0sRP8FGkVmTv1ugJI4r1Q82iGGght0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OKwykksD; arc=none smtp.client-ip=209.85.128.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K3TEKXos";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TbOezDFZ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B87B6EC059C;
-	Tue, 17 Feb 2026 10:19:03 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 17 Feb 2026 10:19:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771341543;
-	 x=1771427943; bh=ovYFcx9DyYPC5kyzeH2NUL8Bv5Ax6UCmIMjaSq2VTB4=; b=
-	K3TEKXosabpPuDoPPkgYJ7nIY+hnENIgvDwHtVMJ9Fk90wD8MJViZkvsZ9lZupZC
-	68L0pRETAnSjtpS0RktSmGw71rtSwl5lUmCDuwIhFlPddhHMM3QL4Vzw5NV7w3GZ
-	mcpt0VfkynzW6rHE7T+y79qZN/woODZRVTDWJ6ynak+tCWpDrXdHcLHO6bSKbszJ
-	N4u+0aILCFTauvG+Xt/XxPLLabLkEizHRtB1fbmboa4KhPBEV/ob1Tx7VWI+IXMQ
-	v4JzgIy86kzqZ3hbgJ0lNudJSTLMouOMILYsCdsG30ZEIKf5nSK4XcnP7SW8oDIm
-	oY8GpjiAmu27ccxasqTC9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771341543; x=
-	1771427943; bh=ovYFcx9DyYPC5kyzeH2NUL8Bv5Ax6UCmIMjaSq2VTB4=; b=T
-	bOezDFZtXvCk4FIwQZ6R/kK1+QxnvsPgOKhP8GTW6fTWSKcCt/rF12pq+1r8SL5b
-	GfrOFPnoQ9zt1eQx8j5HRA8h3iWTu/y1pXlcpc6M5dKpNRyPI77EKOvthREpJslD
-	53P44jsBaYcYmOvbGqnZguJCH1bGPEnc/kgXDx8NggZ38Tp0ONeIpn8ItXY9QFzt
-	bT14jNoxwCHoiybzxrL7DZRchKUyPQaFflcug+lziW8xvbpNawy4GpD+q8BS+pTH
-	QHBUjhqI4LSYBnN45GluA9/W4H8CHsECXkDkv+9F+ERMRdo96B3PmnSq2JSjgmVK
-	PWicVzOHoAMMl6PJG2CUQ==
-X-ME-Sender: <xms:54aUaQ4IjqWt7ZEB_RVLqsO7fwzudBugIOQYjMoEfROr7E4rYYCYiQ>
-    <xme:54aUaZX5b1spSKxKlxPzwZujeQRfr_UuuotuI0WqeFpZQbYJEq4liMPcGHfH8zEcL
-    _nsuaubuXKidkqx-idRLRnXQk-UXJQAIVRppDtsp1YTBHCEcC-bgA>
-X-ME-Received: <xmr:54aUac0qwwhTW3vsHRJW3j-HZ_YRb76Qn7dLM3CH-d4wU2lXC-f459htYBl9Wfy9lo8p_QeIkEk_bRYhoOjDQVZBodUWbOR7sQLfA_g9mA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtuddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtth
-    hopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:54aUae3qUzeH-d41x_pE8Z5r7XIbzH6-mt0R_Y0NmCIHpet8OLQe8A>
-    <xmx:54aUaX9wqXZYtnPvN4L3kb_rKeoiEHmKhJ4PnOzBdVj7QDZ5r4VGwQ>
-    <xmx:54aUaT2B3KJbilTaNJ0teF4_nHKUi3UNH0hfv5AOpEQDWr_XqH_7Jg>
-    <xmx:54aUac_eDuxhovgS_TpowffGnDH7Y6GbjpdmIlIz-5QucNqHt8wweA>
-    <xmx:54aUaRWQCNvH4vVMj2cl_UikH9Sj9E9Y9g6Xoq93B2QrJ7p6pJqjKePs>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Feb 2026 10:19:02 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 11ec5df6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 17 Feb 2026 15:19:00 +0000 (UTC)
-Date: Tue, 17 Feb 2026 16:18:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 1/4] t4xxx: don't use iconv(1) without ICONV prereq
-Message-ID: <aZSG31TB_Pprcq2a@pks.im>
-References: <20260217-b4-pks-ci-msvc-iconv-fixes-v2-0-25491bc8dbf8@pks.im>
- <20260217-b4-pks-ci-msvc-iconv-fixes-v2-1-25491bc8dbf8@pks.im>
- <CAP8UFD23MdTF3qVFhDFBDcnqh4dqiehvFz_3c-keMhSOa92Dpw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OKwykksD"
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-48378136adcso23078055e9.1
+        for <git@vger.kernel.org>; Tue, 17 Feb 2026 07:20:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771341629; x=1771946429; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=N4JY2RDkc6YZOmNNaXvgq8wFdy0P7cBVofI8de5AWCQ=;
+        b=OKwykksD1haF9OQ+Kb3KDMKPVhm87UeNm7DnCLKuN1ZcqdjTP1nWU2yNF3eiVmJIrt
+         xNVJWpjr/7+OtK0hW3l2LRazfE/O6zVhudPSpjfQxGbowVG5MtWx7wdo95AgI6IB+Ge2
+         tRMd5KoBSVe4egCdSxRsgrXET+EgdAFBnOb+ysFJUFPn9vusD1GoyCUp5Qc9C+FSk3lR
+         kkeK1PoNWJ8Wbs6PWxe6uox8qcZm+qPPgxqlSNutcb/JsPLiUR59HqrPujmLSTEYSZ8Z
+         1zYX4FoXimcB+z3nm+bs/fG4ptg0x6coCFJVbjgW5MkbBL/8ArwiCzs3KDcyGufL9Zn1
+         Y9/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771341629; x=1771946429;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N4JY2RDkc6YZOmNNaXvgq8wFdy0P7cBVofI8de5AWCQ=;
+        b=Oim86gR73kn29kSt3SuPo/nfCbh1iHCOnpoNNrEy1e5UDvcDeaOUvk/7KojojbKmCp
+         AxyuP9aGLcs5/2CrPlt/yutv2aVUH3gGyByVdrcC1IT8IwaP38ZHY+YwqxRFFFdVsxJq
+         E3J3RScB8kEyZ0rSUApPqilr8T4P7mdZGI4/j4Rk7AeeMt3OPjq7M+cWbQNDQF/1AqH3
+         Hb/tp+vY+FHQmxLUTHJIaAhloqL7PPEA1/pTGUv6ZNJS914Uru49Alv+HzW5XWoLM+oR
+         HGWbfZ7NnxPPnbCRSFKePdyBZPFyYe6VVW16wS3/xlq6Yv+dJFX0YqpLEC7suYaOjIcx
+         EKqg==
+X-Forwarded-Encrypted: i=1; AJvYcCVH9mktH1ugHriK7HjPgBYDmQAce3ltBRkP11/kt25zJPyEzoLxtw1gcuAiwdU2IhCwWWg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQDI4uxhk+Q33zFF1rz4CtAbBt6iSVhL/wGcYwS0rqZTDdTgMp
+	dINRUhutBAhguOSS4dlHKkZXF0z+iEed3oMFqQ8wDCfyn1+/nf8ligXI
+X-Gm-Gg: AZuq6aLTyUCPA1w9xmu5PpFxaPHSSEbwkvr0KPt3DR28qX8yVt16gOMh9wyyTmXLQog
+	qPZg0LloOa2b0m6qhEC2mAhS3tF///lvAmSpgNTCoadWlj6bzpR8sj3kxAyNpTPwXXQ4pEDyGcC
+	rE+mW+xxpFWF2eAB8jdoIl0eI0kMM3B+cJndfSu83eTkWGxraSrhz5/mMG5hyhx6u3UA8938I9H
+	zep1tj89pfMzDxBZiXxTlAFN+R7NbyTXvWgNJsPmVnn3uXlucgg0uU0MMeY2equFGpqDd1Gcde2
+	6I5E9STA5G1OXlI7CAtMj8JPzRp9FPxTRV0DWAQTughJdgQU3R2R1CJ5jyWDHHvTR59u2nr8D+h
+	27kXyA7mC1D4xIu8EErSiLJa9McYaHUAr/6t0uG0VSlcmTd7U9GbL5489FHV3n6s1sw0B0KasZ7
+	NHzWThJwduvdKTi/EqYGa17Y844ScEAfPkGge20Lwiy+nzi1aSvkIP4ZSRYOX54bTQMu5EBUJzf
+	9uTBw==
+X-Received: by 2002:a05:600c:6389:b0:477:7af8:c8ad with SMTP id 5b1f17b1804b1-48379c1f4d3mr211484235e9.31.1771341629255;
+        Tue, 17 Feb 2026 07:20:29 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48370a63afesm111699505e9.9.2026.02.17.07.20.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Feb 2026 07:20:28 -0800 (PST)
+Message-ID: <0619603c-278c-42e3-a186-a674a124a451@gmail.com>
+Date: Tue, 17 Feb 2026 15:20:27 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD23MdTF3qVFhDFBDcnqh4dqiehvFz_3c-keMhSOa92Dpw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] wt-status: avoid passing NULL worktree
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, karthik.188@gmail.com
+References: <89c78ce2-1783-416d-9ae5-ef51f6bde58d@gmail.com>
+ <20260217101950.15731-1-shreyanshpaliwalcmsmn@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260217101950.15731-1-shreyanshpaliwalcmsmn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 17, 2026 at 03:48:19PM +0100, Christian Couder wrote:
-> On Tue, Feb 17, 2026 at 2:58 PM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > We've got a couple of tests that all use the iconv(1) executable to
-> > convert the encoding of a commit message. All of these tests are
-> > prepared to handle a missing ICONV prereq, in which case they will
-> > simply use UTF-8 encoding.
-> >
-> > But even if the ICONV prerequisite has failed we try to use the iconv(1)
-> > executable. But it's not a safe to assume that the executable exists in
+On 17/02/2026 10:18, Shreyansh Paliwal wrote:
 > 
-> s/not a safe/not safe/
-> 
-> > that case. And besides that, it's also unnecessary to use iconv(1) in
-> > the first place, as we would only use it to convert from UTF-8 to UTF-8,
-> > which should be equivalent to a no-op.
-> >
-> > In fact, Git for Windows has recently (unintentionally) shipped a change
-> > where the iconv(1) binary is not getting installed anymore [1]. And as
-> > we use Git for Windows directly in MSVC+Meson jobs in GitLab CI this has
-> > exposed the issue. The missing iconv(1) binary is considered a bug that
-> > will be fixed in Git for Windows, but regardless of that it makes sense
-> > to not assume the binary to always exist.
-> >
-> > Fix the issue and skip the call to iconv(1) in case the prerequisite is
-> > not set. This makes tests work on systems that don't have iconv at all.
-> 
-> Nit: when reading this, it's not clear if this commit is enough to fix
-> all the MSVC+Meson jobs in GitLab CI or only those related to the
-> t4xxx tests.
+> I wanted to just check for my understanding: the NULL usage of worktree in
+> get_worktree_git_dir() caller, repo_git_pathv() callers and inside function
+> add_reflogs_to_pending() is intentionally left unchanged for now,
+> and is meant for a follow-up once this gets gets finalized.
+> or it is out of scope wrt this cleanup?
 
-Yeah, fair. I think this is an artifact of me lumping these two changes
-together into a single commit. I'll split it up in v3 of this patch
-series.
+I left those out as they're not needed for cleaning up wt-status.c. They 
+can be cleaned up separately if you're still interesting in working on 
+that. It would certainly be worth removing "the_repository" from 
+get_worktree_git_dir(). The others are not quite so bad as they don't 
+use "the_repository".
 
-Thanks!
+Thanks
 
-Patrick
+Phillip
+
