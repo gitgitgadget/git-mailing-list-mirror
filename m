@@ -1,53 +1,54 @@
 Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92331E1C11
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 21:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E8D28CF6F
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 21:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771363855; cv=none; b=LAj67eBulBiogCiq8441MagPFGZ24S2YzxBv5bMhS8GOCNqubipdiMz/n+l5PoiOqRHL9yFUK/dYY26FUZURZR17zWFVEmZDIvtCJadZxvINKNztsLK+vOecC4rzIACLGRE8VSDpaSr2o3JQjRs/RAlanbANUo3iW8vxq0rs4Yg=
+	t=1771364487; cv=none; b=M9q6BtELWgTGVap4VACr53J2dlLmkmn1QI3GnGqtWsr4b5SEblQfaVFEA4PhjgjIAEtiRjuTBvqcNu6ZXH7/lbY8ezq1Z3NEl60qde3MX/ryIAPAX2tZ1SC1P86mHKHGNNrEiIsY+7BhXQ1APkCpTG4evLvGIRvaY8YI9Am35f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771363855; c=relaxed/simple;
-	bh=jKqU6s85uZftnRowsQ63H1Y656X64yXmWMTI4KMRcXM=;
+	s=arc-20240116; t=1771364487; c=relaxed/simple;
+	bh=NBHdQjXtVfe/cyGxP1ju9jWTxLojYxOxLPpPfDqJxPo=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=qHV1jnOkonOJoPMMStIk12by9l2BmSif5eeAy6XQkffMsG9mStxnpzDWwrul4LLeSwyxzHC2448EdKFSK492IkGIFMmFQm2UufROGaVg3gxMdJK8erSJecrlyOhha8jyIO54irmVosLhGlTKgeWL1/WLVbpVPAMzSr4q0fhNkkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=Y88HfhQG; arc=none smtp.client-ip=195.231.85.169
+	 Content-Disposition; b=P0286RbAm/hQDQoT/tCc4lMn2a/gU1BSf1dD5lQEDnAUPW+kXe/6NqFaepM84jDLhmtw120iGDNSIBX9S0DXsxJ3VrF8sWWWS9XxnQNd4o2DgxjjArCA+60sQd/XDO6k4srhlkj2X6bpdamfEomtXlM34CV44bOpR/xzlMbeI2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=Cw8UM2Qy; arc=none smtp.client-ip=195.231.85.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="Y88HfhQG"
-Date: Tue, 17 Feb 2026 22:30:43 +0100
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="Cw8UM2Qy"
+Date: Tue, 17 Feb 2026 22:41:23 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1771363845;
+	s=dkim; t=1771364484;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=UIk+2KTremvmjF733c0VvCIHzcUqMyv0gCwKaYxF1MI=;
-	b=Y88HfhQGMuodP03kAJR7IE75kuj5Q7uTJ414hWPLTESvKwiUOIgFadRcvCtXKDr0GPsBFh
-	gXoyB6Y0NBsibMwXOxrr9kftPKgzsks5QF7tVOjHNtw1Qg29NhTL1dtEa6QmsvBPmmYzoR
-	MhIZ8+8t8ogEui/M8o/DBO3BwNa6GlTe65E5kmyvBzoPNkJIYP9Cf7DMa3rZo+jyGL5niJ
-	cC6HGIEM9ZxFnVkmC3MIeSqcbEyRGQnUQg/KuaLFM1KQefOyHhSyHx6//1CQXpzvya7MNq
-	+fHdAa5rhdrsscWmMN3nnf4Ev4JapTNzgdwkBdx39s5B4rAgBRMTHacsaSQ1FQ==
+	bh=A6w45k929ySuUKGA/eZgx1MnDLYiZx5HV6CM5nbJ+6o=;
+	b=Cw8UM2QyrVC/WwY79llNguvyZNPeYA9KJVJuqqrNAWoXI3E2ZNRIcG7pB6jFFZWWidUpi4
+	CtpiVOgV5aj9Hq+qxTnmRMJYReMpgWkDlzLu6OFiEq7XbS0wTbsmheyPQvhhQsVSG+wn3Q
+	YSoItSvRgZ9Y+SWO+3nORFi2y0qMHvmuzF0NT9vUQr7RXdZXDTzszt+Hq2aqmJeVbCG+n0
+	r9togtviFbLnzUwQInUwicZqYx2QUZWpNEZm5UWiDGwHpckNpWvZ4aQQjByrgXE6zp6+1q
+	yeQjtbI5dz0aErJ9G5huWiIChurq6jctlSQdIVbv0FV/847XCFYvX7lT0uswIQ==
 Authentication-Results: mail.delayed.space;
 	auth=pass smtp.mailfrom=mroik@delayed.space
 From: Mirko Faina <mroik@delayed.space>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
+	git@vger.kernel.org
 Subject: Re: [PATCH v2] format-patch: fix From header in cover letter
-Message-ID: <aZTcsow2QtBpRiJd@exploit>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1578; i=mroik@delayed.space;
- h=from:subject:message-id; bh=jKqU6s85uZftnRowsQ63H1Y656X64yXmWMTI4KMRcXM=;
- b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBplN3TlL3a735PUCgP8FoFewMr1/QshgbPYbGWF
- ytQZrxZeDqJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaZTd0wAKCRBIeX6hnBm+
- 0eR3D/4oKhgwhpI33Anh2jFPxKL11OMwCMhv6NilnhSmB1EJeZ4warMb2DOyHZ+gq6MzZCwTbeM
- Wj/rnnOtf7ut5LKM/BlWGbusSh5H5hwdY68BMHo1Xw2vbLY4AN5WqfPgnj76HddVNBIFnA+OUbY
- rIE4apfUWcTBl/m/Btzb9oAfpADqnK1Rmt9hvbpKyK+6GWX/rfgaGlUDDdBTvNS5k3mYgYpAoJz
- Pvxiexa1YozEXhVtOJsKq3oXYHR95A0YD0ezKupD7qdnbbzZ3K6ibPHI57/uvWUbWA2f1XtWEiK
- 0UiA7YikKwygl9cRT9JBAxi/jT8ldSCQIb+sPwpQNO0HW7sL/cgBA7Z0U2ydll/fuHtK03DQQd5
- UC0+WBsv/YhXVw/n2g+mumrC/7zt7cgZyFxY2HiengjVZ2yyqE1bcGod/0it1prbJhaNOp8lC0e
- wV2OuBN7DKP7VxgoWdEujp9tnFiBOm+At7uVgP99uFEpUNTcKynZ+mrDnW5iiBj1PatZbijwVU7
- C10Qc7YYRKPrB4GNYDrD2+UUtTT8J0kTglORXTw4aBNYET+mFWiFjd6OMCkItEqljwHZPlelDOX
- MCUK06FpBsx+FGyRZzXiq8l4R9pY7Jh3c+/yrcTEfKu9gjSF+LRdGLaUZ2kQew+kedB+E7optWD
- xX9oHuK2QXePFwQ==
+Message-ID: <aZTeLDzxSRRS4JAo@exploit>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=544; i=mroik@delayed.space;
+ h=from:subject:message-id; bh=NBHdQjXtVfe/cyGxP1ju9jWTxLojYxOxLPpPfDqJxPo=;
+ b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBplOBise7z0xBs4eLEvOjhvOAUOhy2+RNU3/P0s
+ tZui6T+60mJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaZTgYgAKCRBIeX6hnBm+
+ 0SRJEACJkdifAnA39XnYi7pST6s6z+WRElqfD0t6frN6ISbCa9sjylXsY4uONOm7GyHP54YvcEe
+ AMYtgipBpAuLq8cgeFODgk5pShi+ytZw4vK2ySGo6u8d2EvWshu/kEZsiWbMcjCWj9X+GCRxah9
+ uT++hfq5JB0j3aWuzC6y1lR1I02Ga0eEYC/lOg0hCq6O7/s58iV/0m/wB5TjLNflJla5rm0Dxsq
+ YSJ6rpx/yBFyE1vE5CloxvF7imTe+Lst7y8Vycipxp+wl5oADpPHcjuqpSxrOYxn6ctf2tj/ovu
+ Lz7H1XB/U5XDkVMSvGnk/izpG7UsWT3paxKt9N9sxWABTkfg1k20HGU/xXBeyCGIM9X/8vQyR46
+ qE4kd5nFV5ToT0C12QR/gWE1INL88WTRWjtOMRAFN3edjVXhCY9BpfCu/F009NS2K9JYA1G80vP
+ H4dJcFixkApTPdx6Rs1sC6WPNfqSVvxGRCWGF6WMkPE78WxgenIczCxEcy5/rot5l9kr+z75Ov1
+ O6wvpRaD3H1Gm994paMDVadnikpEfyBpeslbSEnsT43lNjXIRykG13twOIdoCvdXdKC76IEq8gm
+ nEyKDoUnoQ7rKDRo12/JreK+sBeAhdvZYtpMy6As+8eazJHtn6tlLfrtLrNCWUvuBLPXeBdUOlx
+ PShKce+v7JBGVVQ==
 X-Developer-Key: i=mroik@delayed.space; a=openpgp;
  fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
 Precedence: bulk
@@ -60,41 +61,16 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 X-Spamd-Bar: -
 
-On Tue, Feb 17, 2026 at 07:22:08AM +0100, Patrick Steinhardt wrote:
-> One thing that made me stop though is the folowing sentence in
-> git-format-patch(1):
-> 
->   Use ident in the From: header of each commit email.
-> 
-> The option explicitly mentions that we use "--from" for the commit
-> emails, only, and that may be read as implying that it's not used for
-> the cover letter.
-> 
-> I don't really know whether that wording is intentional, and I cannot
-> come up with a good reason why it should be. But I'd say that the
-> wording is something we should adjust.
+On Tue, Feb 17, 2026 at 07:22:33AM -0800, Junio C Hamano wrote:
+> Yes.  It does make sense to document the change in thinking in the
+> proposed log message and in documentation.
 
-I don't think any user would reasonably think that it wouldn't apply to
-the cover letter as you're sending the whole patch series in bulk, as the
-same person.
+As I said to Patrick, I don't think anyone would reasonably expect
+"--from" to not apply to the cover letter as well. Given this, I'm not
+sure we should refer to this as a change in thinking in the commit
+message, it should be treated as a bug as if it should've always been
+this way.
 
-I will change the documentation to remove any ambiguity.
-
-> We're not only testing the cover letter here though, but also the other
-> generated patch. This makes it somewhat hard to verify that the test
-> actually works as expected. Would it make sense to maybe use something
-> like the following instead?
-> 
->   test_expect_success '--from applies to cover letter' '
->   	test_when_finished "rm -rf patches" &&
->   	git format-patch -1 --cover-letter --from="Foo Bar <author@example.com>" -o patches &&
->   	echo "From: Foo Bar <author@example.com>" >expect &&
->   	grep "^From:" patches/0000-cover-letter.patch >patch.head &&
->   	test_cmp expect patch.head
->   '
-
-Yes, makes sense, wouldn't want to generate a false negative on the
-compliance of the "--from" option.
-I will apply the suggested change.
+I will edit the documentation to remove any ambiguity.
 
 Thank you
