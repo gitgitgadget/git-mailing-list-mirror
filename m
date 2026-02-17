@@ -1,97 +1,116 @@
-Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56188334C31
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 16:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAF82DF136
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 16:46:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771346360; cv=none; b=iVWmPxXxK60grFf3O5gdlHqiSC1n1hob5C3JzmdUb0b0ouQKFNscacVrqaxqeQlF3VctQ4Bm3imK5soasUoHWXlzWUzSsdob94AlFVUpG50o5esK390wrYYEmJBs+SaFnPfBeldXjgP6YwIaFPke3aHvpjBBowDoSkLHkIvrdxQ=
+	t=1771346788; cv=none; b=Iwm8yF+f1wlOhg3pd7A6jhlRNZX882xa2qI9IzGudEKT1Zh49NUffEHEFfMzf/2fTiqC09LHn4gn7bwhCwhn4C9hht3P6IUdwXvMIT82uAmpQ4u7nRNMajAruvG42KqjURYoY3vculCG97ajdHRttF/RBSQqMnrtmLDOKv3QLx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771346360; c=relaxed/simple;
-	bh=p6OiSBd1nc46Sjk9fvnsXes+gFr5bMKQoVPegQvto/E=;
+	s=arc-20240116; t=1771346788; c=relaxed/simple;
+	bh=mzoObMQg/4XM8oydRfpea/Y4kf5AMmS+wrVnf0pLmQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pv76OJwmV3X2uO0xsxvlqeHTU6ZYS14tYs5tqFXTY703Rk/7ftwNNSZn2p3waGAubTPsEgnwbvk2XExElbGBUyjCD83ZBJfuYVRdVwP3ZUE/mrKWVrafo+awOc6bUaXVJsgEgCap7OUUCzXa13M8bWGHfhnwWiMRm8NvBfrDaDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TsWZyp28; arc=none smtp.client-ip=209.85.210.193
+	 MIME-Version:Content-Type; b=RLnwWY4GYM8CE+fzv7W2oNOC590x+XmacqfSs7QQ/rTlxWrMcnkmIVX7aiVw/R4CV3yx4V2prQtFu2yrNizuq6eVwvrglhXkt2NZWbHA0sQ9vx9zaOmfjF4s99lwIxv3gbk8s8tq//DvRLfyZIHYIB9/RqOd5JSMPMM/r/6vMsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=egE/S2U1; arc=none smtp.client-ip=209.85.210.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TsWZyp28"
-Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-82491fbf02cso2573655b3a.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2026 08:39:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egE/S2U1"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-824a6f2d816so2101231b3a.3
+        for <git@vger.kernel.org>; Tue, 17 Feb 2026 08:46:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771346358; x=1771951158; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771346787; x=1771951587; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p6OiSBd1nc46Sjk9fvnsXes+gFr5bMKQoVPegQvto/E=;
-        b=TsWZyp28wu+NYniblQU2iXVOyeCl2ph/7YOOAs6ANrmXUBeHquQVEk73uwPgbqhMGY
-         rZi4NwOlx1x3n0LTmP7q69Z4cBwlhtjindmP3xB7pTuXcj98bFE69koazgPAgUMX2Smc
-         uhPxxfC30kx53iYBdHgCHE1Bys6FAqDhY7LYwoRFkwAuVF5ktYjFbzQpld0FXyKDUw4Z
-         8cOyBumqiAfPt6juhV/6vTE5q+FurazMmeV4fNwrrkerU4RIqQFRP/cRcACY/xXew02C
-         NTCbnTj0U8I1UIil47tnhwp5uaTKmtM7EgPh8tMgMxXHDDyUo+ObsRG68sRoxukMZbFF
-         9VYA==
+        bh=mzoObMQg/4XM8oydRfpea/Y4kf5AMmS+wrVnf0pLmQA=;
+        b=egE/S2U1/06s2NATXbFMETIbmd+pQHuX0CZs41MCKo+7wtNQAvVJEoAwH9jSSqvrYm
+         613QCLn06XkrD2h9Kbn+5jpGG+kIeRKnXJ0PsBZ6//cJ3mPqDbVADo+qpm7pyuAgzr29
+         M82rkBb3lLmMgi4ow+z1DuxCN3WiPlqOd5lcuLq7RLJJ4hZdhSJpbo1EPQNrFPyNprRl
+         I9/Cl9eju0A7ErihSmuGLXFpiXSK+ZijX8sJuUnHPK+3AK9QG/MobZjHP4+H3b8P+kER
+         nzdyPZRXc9yzGRZMzzMY4LAYssBXlwF1XKC0Yuh+wdo0PIMCKtN73ivmLB5nwJGyLTpM
+         QMmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771346358; x=1771951158;
+        d=1e100.net; s=20230601; t=1771346787; x=1771951587;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=p6OiSBd1nc46Sjk9fvnsXes+gFr5bMKQoVPegQvto/E=;
-        b=VT/+iiPx5MGu/bRPujJdxYnyV5TMlTWwEDYfBeTO74eKcsIGADiig4phHGbZRG/Q5v
-         c4kX+fyOi/x1AZOggauV4h4oE3VB9gBfdQGZ94V0jhTC5u+mTJ4Ks71Q4QmQ+0ntmEcd
-         Zq4DkrI/CNcQx5lE+Bvluv4s8jl1t1xv+VM2ozJq4jILZ80k7c5Nmz3PUXpOodBCU8Be
-         I10pJa3zzn1BF2Dc8/ZBEy9fsK0rgvoQQxyzucuQDTys+cNVAIBt9Pel1cxOea2THruy
-         OUNlWG+Qp3WHSS8Fh2Y1RG0RtcWUTjQHvohdD1o3/LUfhfijklzjv2a1IpuK0o7pnE9b
-         dGdg==
-X-Gm-Message-State: AOJu0YxFeNadYlVpt9k2/MomuJEbMHZWE4O+d7oVi7tJgF1BPizBhxHi
-	fPVgZ3Bzs1EJHqrm3cYznoZnMcWBoRbP1RbM5d8qqrttg/BnvzEz4aWXXvveCTdpeA1gwA==
-X-Gm-Gg: AZuq6aJ8D7AVyrSXGc/Lq2fBt8yRexHFFpyR4D0+lgZFSCXaHRe5xZdx+sz3kMA0TU+
-	du5ciuJrEd4+UuuhDsDg45t3yTZQ5lxxVGm1AZcxlty25cFSGaGW3kEwfXFGZQ0m6SZNL7oAYgg
-	8qPnEP4egjSQVizaa5VvdNTCsEdeArPBAB5x/TTscjtSBwDSuEj19CEY45DnGkY5rqneAwG2hrk
-	xAej2wYPNTXX2tnIQftPY5GpoyqbUTp25JWxsP37flV57KA4g3jw6U01/p0uyzDCHU6TWNQC06l
-	VFvXpS3il0ordx/jPlzitG//HPYGnVJHSJGa0egIUg5eW+kBXbMYqYGGfLCnFvJBGlhwNO2+Ajj
-	0aGT520xwUdvtUg78XPQIny/VItoXymtP4+0urGrK/p7kCu5b0r47GZDnNS8FBgSwGE+bNY1SIv
-	Pr3dVwoXm+jCzH/b/P4jfLWkpMERmv4LIi5H02zZpLyqbOxM4rAeeVm8oZx34IP0gqDbCq
-X-Received: by 2002:a05:6a20:734c:b0:392:e5eb:f0f with SMTP id adf61e73a8af0-39483aa450dmr10163325637.68.1771346358425;
-        Tue, 17 Feb 2026 08:39:18 -0800 (PST)
+        bh=mzoObMQg/4XM8oydRfpea/Y4kf5AMmS+wrVnf0pLmQA=;
+        b=a+by98Y02Ob/oXpVcwSDLnLgmH/8mKwHBlbPdDmkxdJBB9bdRkQY6fLSSbwegYqpb7
+         pSCGa2j21NdGN4TtQiqYACkHJ6bESdKYhZcqr0Wo4ENxiIjcjhuzUH2bcFShXMhh2xzF
+         RerWhwBEXlwjVpYoRN+186xJbUPAy4MVnr5uzQmhep5SLruV82tgpZskrRbfnzagfXAg
+         6vQ1fny0ZV6Urqe/BrrNZG8Au+Cx42R+tgomfIs0xBr1X37NobR0gFR/HRXBXu09MfKq
+         6hhl0Hhn4cB5qe8xrfJXmO16CCLjUjLwTpiZv1zE/WTIAthKkLscH/Z9FkXc5q7/Rbil
+         UBxQ==
+X-Gm-Message-State: AOJu0YyO9l5gDcFWPiPwADVKVYssUa5hExLMMzMaNkWlMJuhu7cDbToB
+	dpS1vg69OpWeRbYl5fdXQx6HeJ0y1dj8zKWirpo48+pdwWFFp+7lVB+qNrQV3iP8Ekc=
+X-Gm-Gg: AZuq6aLzICuHKNiW4/xK4OBYXwy8lMvwWtdCHbW01PeU8mAywCHFSIuq1J3IZq5wubL
+	0eqJcXOiIfiMAP8tYfsuk4FEeHeDekd/ZCmQsLfp4a+vYmQqV0MHntZvWMqKM8t0YaN5R+UdYvP
+	uusj2TreMgIFQ0ciQa9pYoM/mhp3/eQ9jH9RQwp/nAa8wJEecxn+rrPDnTQPGqLaPpTTtIEgLOa
+	rcJGBukyAnQ5Jy14NLfphV0J93xyfz0Lir0vZUjxa1YiELvo6Z7j7q99X57cJH+zG5Q/2m436Ws
+	SlNMdCzzUbt+/KiJko/+f2JFIaj6AXnctIGHUZbWuywiPLM1Rel5WX5Vy3i2NvQ2a3JNdxrV3Hs
+	Xy4hLIoNegzR2zoShYxnbGyDsueU5kABAL6eG644JpprPsB/m+mBw5v0OD01fWN5KhtZZWwG/KW
+	fZ50Ymy3ZQ8OBzKQ/4IplxMkLH+YqsKUszf5Z3d8mwRDksldq1NuArGVgU62fWUoTCtycN
+X-Received: by 2002:a05:6a21:6494:b0:38d:ea8a:3dbd with SMTP id adf61e73a8af0-3946c9402e7mr13027246637.73.1771346786809;
+        Tue, 17 Feb 2026 08:46:26 -0800 (PST)
 Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:a392:d36:fa44:db83])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-824c6a2a6c3sm13537354b3a.5.2026.02.17.08.39.16
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662e53936sm23253251a91.1.2026.02.17.08.46.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Feb 2026 08:39:18 -0800 (PST)
+        Tue, 17 Feb 2026 08:46:26 -0800 (PST)
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
 Cc: phillip.wood123@gmail.com,
 	gitster@pobox.com,
 	karthik.188@gmail.com
-Subject: Re: [PATCH 1/2] wt-status: avoid passing NULL worktree
-Date: Tue, 17 Feb 2026 22:08:59 +0530
-Message-ID: <20260217163909.55094-1-shreyanshpaliwalcmsmn@gmail.com>
+Subject: Re: [PATCH 0/2] worktree_git_path(): remove repository argument
+Date: Tue, 17 Feb 2026 22:15:49 +0530
+Message-ID: <20260217164615.55916-1-shreyanshpaliwalcmsmn@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <0619603c-278c-42e3-a186-a674a124a451@gmail.com>
-References: <0619603c-278c-42e3-a186-a674a124a451@gmail.com>
+In-Reply-To: <d7fe45b3-4a75-4a28-aa0e-74619fbe6a2f@gmail.com>
+References: <d7fe45b3-4a75-4a28-aa0e-74619fbe6a2f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=y
 Content-Transfer-Encoding: 8bit
 
-> On 17/02/2026 10:18, Shreyansh Paliwal wrote:
+> On 17/02/2026 10:12, Shreyansh Paliwal wrote:
+> >> On 14/02/2026 14:30, Phillip Wood wrote:
+> >>>
+> >>> I think that we should add a new function
+> >>>
+> >>> struct worktree *get_current_worktree(struct repository*);
+> >>>
+> >>> to worktree.c that constructs a struct worktree using repo->gitdir etc.
+> >>> The worktree id is the last path component of repo->gitdir when the
+> >>> repo->gitdir and repo->commondir differ, otherwise it is NULL. Then we
+> >>> can use that function to get the current worktree rather than passing
+> >>> NULL when we call wt_status_check_{rebase,bisect} from
+> >>> wt_status_get_state().
+> >>
+> >> Here's what that looks like, the first patch adds
+> >> get_worktree_from_repository() and uses it to avoid passing a NULL
+> >> worktree to worktree_git_path(). The second patch then removes the
+> >> repository argument from that function and always uses wt->repo instead.
+> >>
+> >> Shreyansh - I think your patches to clean up wt-status.c can probably proceed
+> >> separately to these if you remove the changes to
+> >> wt_status_check_{bisect,rebase}().
 > >
-> > I wanted to just check for my understanding: the NULL usage of worktree in
-> > get_worktree_git_dir() caller, repo_git_pathv() callers and inside function
-> > add_reflogs_to_pending() is intentionally left unchanged for now,
-> > and is meant for a follow-up once this gets gets finalized.
-> > or it is out of scope wrt this cleanup?
+> > Cool. I'll send a revised version on the original thread.
 >
-> I left those out as they're not needed for cleaning up wt-status.c. They
-> can be cleaned up separately if you're still interesting in working on
-> that. It would certainly be worth removing "the_repository" from
-> get_worktree_git_dir(). The others are not quite so bad as they don't
-> use "the_repository".
+> Great, I hope I'm not stepping on your toes posting these patches. By
+> the time I'd worked out what was needed and checked all the callers were
+> passing a non-NULL worktree argument I had the code changes and commit
+> messages so I thought I'd post them.
 
-Thanks, that makes sense.
-I will send a patch for get_worktree_git_dir() sometime later.
+Not at all, I’m glad you posted them. They clarified the right direction
+and are logically more fit.
+I got to learn a lot about the worktree API while working on this,
+so that was very helpful. Thanks :)
 
 Best,
 Shreyansh
