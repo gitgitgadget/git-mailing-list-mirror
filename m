@@ -1,83 +1,86 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7B7296BD7
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 18:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EB0372B44
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 18:27:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771351654; cv=none; b=aftJCZs+6sXu0k1FKqE4zjKqgwkKdoelxz8BNYjAsCKhqQjwRKkX8vaG1JRKFzyMDuthaxnAWBKcN4fYJTryIEjikzb7RaeivjUXCQGTQfL1OF8k1tAyx4dOCuSMoHyHWNAWFgSnRVCCSM4hinvh0HuMRN2qzyVtbrkqIObwFb8=
+	t=1771352852; cv=none; b=uNMANoKzA0TrGMors/Z5P72yg7rriZ+rzYe0jIOhUQBhNXfZkAhosWwEIIpAYYGHz/gHci6W910Cv61IaHX7+jNR1uxZkIjUIJVKYHdhGYXzqxK48Vd4XQ58hlRKDHj/vFBKZDMF5bGKM6ME2m1pEZ2bL39NiVxrorV/a0q3F1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771351654; c=relaxed/simple;
-	bh=qZXsNJqE0s3zx6eU0x+fDwZJbaQYS53diFdOclGPM+U=;
+	s=arc-20240116; t=1771352852; c=relaxed/simple;
+	bh=ozDh8MILvCGVhXq0K8IFxA3s1sv/qzX9YDat5gI2Sic=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DKYii4lojob0C5Dq/U7VqcCV8QEjY69izEFCBfbpX8FmTBR70HNnFwrJrW9gopJvSaCVhtMSoGpanPuLh/gA76DvF02cZZEJpsU6QImSZ9sleWv308S41j8u39eoMOT9t+zcUC2I7yJuffCe0fKEybuA6fHVY52Y6LWQySEYI7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KMuIGqqT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LLfysUCT; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=LemZAQ6ndLfhRNnrWYssTcRVHBD9ovax6OH6R5/ctZbE9JT/GA064SrF/7mPppureOIRCXh49pfCovH5R63QUvi6JJyecpACCobVumOUeMzxWTUXAa5B0Mv8/xS7zx2ef/H0FDwwU5BQdiyVDWeOUDVQlpYDIVpF4FylXJmZi7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BRHqYHUk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QUxkKiEq; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KMuIGqqT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LLfysUCT"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id C284A1D00157;
-	Tue, 17 Feb 2026 13:07:31 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BRHqYHUk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QUxkKiEq"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 60EBE1D0012B;
+	Tue, 17 Feb 2026 13:27:30 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 17 Feb 2026 13:07:32 -0500
+  by phl-compute-09.internal (MEProxy); Tue, 17 Feb 2026 13:27:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771351651; x=1771438051; bh=XpS4ICVFH/
-	2+Y0L6bJwxkSVWe1izeZaGeqWCB1KLpk4=; b=KMuIGqqTtg1Ym8HblukznAVKY1
-	ZwS8MzBljhzwu107dzfkdqsux46UHSLF0fRK1kGWxpJccyWDW3mkuFIVG5P1Ficr
-	Z3dHI0OM2HDYwP1q15jwmpLLYh8vZuYicC2YK2WW5S8h9JFzl7bXYSgjDUSlg2md
-	jmP/LdOA3W2lQTFd+oHW9GiAjCdwMZ1/YzI6XKYrm+9/S8SzBOAD15CXRxgWkTVz
-	1JpM6CA1vPuFLpPJMbkGLMB8qIqjbop8WROeFnK1yx5IQSi3q+92ZnInKFgLTMqO
-	S4qDKywmB3A0IsuxtDv7PpxodzFf1ml4KjuqW/T97sf6l0lgmuuHWq3Md3DQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1771352850;
+	 x=1771439250; bh=ozDh8MILvCGVhXq0K8IFxA3s1sv/qzX9YDat5gI2Sic=; b=
+	BRHqYHUknWSfHKpkoFsqxTK63t2eB2CV3m/yUmVdyQA/ahYT3kMpU1h9r0h5eCBu
+	LCQMswufjz/25rCsC3UuA1Q+w8YTvx+4nuLFn2pMfXLcYM2DPLetjPXU5YLy7jxD
+	fG1rlMhKxqtN/vhapniVRN2HiyzGCq/2Iv6PUGzV+TdO7ovC01nR+rvYiQXKGpNn
+	rUo5W59ll8d30R1EIToGabotor4L4KFWF82jAQK0rjkj+rjxjUgfFSvOpIhBfk1O
+	6/AXVgBnGc5V4PhMyl0RlnYh/FSKZkeHMPp7tXUc5OGk/fTBEytf+d5XKYeoMrVr
+	7nvjIDT3q1SLrD6CrQKxWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771351651; x=1771438051; bh=XpS4ICVFH/2+Y0L6bJwxkSVWe1izeZaGeqW
-	CB1KLpk4=; b=LLfysUCTXaXnG4LcODV0g8L1+69gjWKFYg58puqf4KhQvlxY3Oq
-	Gu5yiZn3uIqrVN+2Ctlqkm0Q71B6Go+NFYjwrLwLeZci5IgSoQYbbPbUuKH3vupW
-	feZP8G099sbySLBJdDyD3hWclRMz1C7lhc0gRmPjsHX7yeaMYMixrO5tVlwyb/bd
-	+HBjSxHOJ+fUcCcGg2vbN1Hyx+D21wTTj0Cfb7yUDDJZSBTqwXmmi8tQuTwnwJBO
-	z2iNfedTIZ+jr6ZH30qhs4FRKFmqwpSdQDLa+I8n62RqlN0ef5BdrwVilOOFiNwb
-	V0FJ/4OKYCzkani9nzc+ajh3+qdzYcLBc9Q==
-X-ME-Sender: <xms:Y66UafeB8GOJ9ARgq_NHhS0_Dcz9kMLfZX0Bh-tCyQtMckTeW7hi_w>
-    <xme:Y66UacMADgfse8RwjfaNe7RwhJvdSfL1rm_MX98yKwVJe4s3aelvXv7-VOS9Y-jBe
-    dpVDgSoaLaF9yxDDAg-wucXyz3giVRLhFSWBrtOhX31nWL5maMHsw>
-X-ME-Received: <xmr:Y66UadiSU9GtM5Ma9ixSpr5MG9-fvfIt3NaxXY4zmtxFD6eFPPRMq9HfJ-240vrC7mThoE5OTlg-LKgQz6ShBg07JLLd2Lx5Zg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtgeegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771352850; x=
+	1771439250; bh=ozDh8MILvCGVhXq0K8IFxA3s1sv/qzX9YDat5gI2Sic=; b=Q
+	UxkKiEq8WUIHMBo0V8XJQmXA38R7vpfngadh/Q2JbsYt3pzPydfa9bcNjE4cCzy7
+	tLKO0TnDiNdhHCQ9Rvtd8gNjqBELwCTxgMbHXFUHeYJf7BKySriwoqwG72c99Td9
+	He7g/cuwgQ2BySqw1KE5/VnSlUj88speE824Py/88WYJ+oLHKZ1RT0NDS7d+Q3YF
+	kyhI47l0mKlgqcjsHJls/3htAW11SFELYkHDzjZSPT/HiicK3jonuAVFsz+RLXqo
+	Eym7IIx51yJIlqAGL0Sgt4FwDUypeKR+rQplqFR8i9oYEBJP3tapiRyUC4SvIXBx
+	0/gzrEq7saiB6SpqxOPBg==
+X-ME-Sender: <xms:ErOUaX1X4Kb0dLp2VQx51tzj-zVmqC3YnAAvQLt2_Xrta_B2wGE0yA>
+    <xme:ErOUadFOigxuFT3vUQ4Xgd1j2tW6VTxIjQv7cakanFCUHXbPHJr64RcUMww7s2Dii
+    0eJBiYzQjKvvj_ASlA6ZrmDD18fOPmFxYDigC7AQQReiAR_EsMneQ>
+X-ME-Received: <xmr:ErOUac5iSe5OcRzEwRVPAllg_BxC9B01uqDoEoZynQi8hpmdeq12JUSGWuXA3Y4pkHIsLIDJFdX6gg8koK4DBBjQdNnML5GrQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    gtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:Y66Uaf2jw75_jbQNW7unOitnEPfCY1dQZKlmNe0n7Vw12asXr1Tpkw>
-    <xmx:Y66UaXhWHz9ZGvb8xGbHokvA8zS6Au1SimrQoMsckCVF9FOVlHlYJQ>
-    <xmx:Y66UaffuPR3an9NCWgvtmED-8xzgV6H9P4O0hIWmHHXJmnOkh2Cvmg>
-    <xmx:Y66Uaam8rx0uz9pDi4GP2WoeaqHmK70lpbE3Fi5h0g2y3zOiwyDX1Q>
-    <xmx:Y66UaRf72ZpSy0M3Id6Fo3EuOdyI-q92BIOvJ4YZzSktz95VW3dN7_3q>
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpuhhshhhkrghrkhhumhgrrhhsihhnghhhudelje
+    dtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ErOUabszDPfsCxshu_kPlULkHKZ3c0lr97yFMcDhWhSDiLnxTuVXaA>
+    <xmx:ErOUaV4-Ua6ZBNnIg4ZMFCc6Pwy_NW9PK5KZs_9PY9QpPes2b3eaDg>
+    <xmx:ErOUaeVP3ocSYh9m5RkOsyNB3SgtrrfPqG2wAISx9IiEnJon522LZg>
+    <xmx:ErOUaf_VdloO9vOYfDpVwPmCCOexSJTH-jL46JYVyveFAIlAcfajow>
+    <xmx:ErOUaX1B2CpIWniaYI8XdksCVogFOWjzhWraIdHk6p_Pg13rzcuE1wj0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Feb 2026 13:07:31 -0500 (EST)
+ 17 Feb 2026 13:27:29 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Collin Funk <collin.funk1@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/4] ref-filter: factor out refname component counting
-In-Reply-To: <20260215090052.GA695631@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 15 Feb 2026 04:00:52 -0500")
-References: <20260215085755.GA86262@coredump.intra.peff.net>
-	<20260215090052.GA695631@coredump.intra.peff.net>
-Date: Tue, 17 Feb 2026 10:07:29 -0800
-Message-ID: <xmqqqzqjckgu.fsf@gitster.g>
+To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net
+Subject: Re: [PATCH v2] path: factor out skip_slashes() in
+ normalize_path_copy_len()
+In-Reply-To: <20260214091406.15118-1-pushkarkumarsingh1970@gmail.com> (Pushkar
+	Singh's message of "Sat, 14 Feb 2026 09:13:58 +0000")
+References: <20260130140143.5579-2-pushkarkumarsingh1970@gmail.com>
+	<20260214091406.15118-1-pushkarkumarsingh1970@gmail.com>
+Date: Tue, 17 Feb 2026 10:27:28 -0800
+Message-ID: <xmqqms17cjjj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,32 +88,23 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
 
-> +	if (len < 0) {
-> +		int i;
-> +		const char *p = refname;
-> +
-> +		/* Find total no of '/' separated path-components */
-> +		for (i = 0; p[i]; p[i] == '/' ? i++ : *p++)
-> +			;
+> Hi Junio,
+>
+> Just checking back on the v2 in case it got missed.
+> Let me know if you’d like me to tweak anything.
+>
+> Thanks,
+> Pushkar
 
-Sorry, but I have no idea what this loop (copied verbatim from the
-original) is trying to do.
+Sorry, I saw it, I didn't think it was meant for application (it
+didn't have a proper log message like v1 used to describve its
+changes, which I expected to be updated to match the smaller scope
+of what v2 made---all it had was something akin to a cover letter)
+and did not comment on it when I saw it, and then completely forgot
+about it.
 
-We start at the beginning of the refname string, and while we are in
-the leading run of '/' we increment i to find the end of that
-run. E.g., we start with refname="///foo", p points at the leftmost
-'/', i runs from 0 to 3 at which point p[i] points at the first
-non-'/' character, at which point we do *p++, to make p point at the
-second slash?  Is the dereferencing of the pointer in *p++ a no-op
-that is there only to confuse readers?
-
-And then p moves to the right until p[i] points at the end of the
-string.  It does count the number of slashes in 'i', but there is no
-satisfying simple answer to this question: "what does p mean while
-this loop runs?".
-
-Anyway, the conversion looks very faithful to the original.
