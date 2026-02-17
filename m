@@ -1,89 +1,86 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801E217993
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 20:24:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AE61A9F91
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 20:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771359864; cv=none; b=Kv0pSkbi1fEGLo2+Z87r/vlWkMrAF3PQxs0q3+2wLBljmvA3gW0ItW4Z0ykYUJgbVP1RGB2d1a4f2v6/KsSmDtWqTx5o/KKeXcZLSyTkEqaGjUjQTX7t+Xf9pyhemOXLTZqp0aacEUyv87oKMBeSDMQaJlZDx6si6a/0lZP9aro=
+	t=1771360063; cv=none; b=JaAcUsaY6hAnNmas38UqixFrImsZUqwoR8Kvr+x8fespKGx8V31c7RS43OjvDF0MnyMhAzsc9OwNiZAVl4ddyk3gf/3lcwL9Uyor2sveMti4b45ovoA3awAJb7c4MNWIFW4t13IfTYka+jhS1W6Ya2QmFT6sVR4NaXI2SxLc3WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771359864; c=relaxed/simple;
-	bh=I7izJLzXtSiET4cgK7OvSgzGGMaENrHy5/o33zPIqeo=;
+	s=arc-20240116; t=1771360063; c=relaxed/simple;
+	bh=thEeF1E5j74t/1lhP/kw4UR9iPqIzYiHiubdpj3EzW0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rUGp/qTtx6jP8M9WxWXPUgWESQ0BoVIRWv8muKbKD85WX9KPoZdZ7rGWSKgcZR/XH1DtRcdnKLB5m8LZ08EeLryRGsd8/404dFMTs42iW5D/O4OYm1hab9F0YD7ZmxtNa/ehcWtJYJ57pQgr5i985BCQGDHRaGtlr6EpUvBymC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ySEIjCae; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PSTEUPVv; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=jfarrIiNJcErHIb9F68bnrA4VVwdPIP+sTAtMO26MYZM9u5NJ4l21Qls40hb23DB7y+OtZai04BJta7iw6uDOYhIUN2TQORZDDe5BfPh+F0Cyj0FAZSQ1gMdG2pj3UxR2tflINkzndO4JNPtDOROTRFyMCzQSpANJmNfxzVEpng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C6IdbWEh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uxZ4w81T; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ySEIjCae";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PSTEUPVv"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 50E7A7A0054;
-	Tue, 17 Feb 2026 15:24:22 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 17 Feb 2026 15:24:22 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C6IdbWEh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uxZ4w81T"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id A8C2C1D0013D;
+	Tue, 17 Feb 2026 15:27:41 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 17 Feb 2026 15:27:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771359862; x=1771446262; bh=yFGcr2J/W3
-	hdgnhVRSmJLmYEko/uhjENYhdYrNW2nGM=; b=ySEIjCaeYb15LsH2HV4svaHpf2
-	MKCospgCSKh3MWisIXyuUMwTJ1oq9M/wDRqcqRcFmkjV04EECKIsKBEwSb7yyfX8
-	uZ7V//Lgemk2NIHcZLMVR11BGYRYxabUo8akV+njTgVSPYP8Tu8BYIemD7yz4BeP
-	npzwmcPfUQvweZQfvRJAN/JVZMhx2bP5qdkbDl+rHdYGKv3iXPRxlvMIlBPYIqMk
-	ZGOXizu40B1eNemCKpN921IcAbZCw7qo+MjcrY16xvrHAQBtMM6C6P3rywmDHOnm
-	DE7ys+WxtSGhjKYrB6KcotNfdBxneO18j/CIvjbz3a09uNO0XL1QQkeRWehQ==
+	:subject:to:to; s=fm2; t=1771360061; x=1771446461; bh=WddOTFv+Cd
+	Z8DtDuYyAJEl92jSyZbWSwagj60syzbpA=; b=C6IdbWEhrk/g3yXLw6idQNiQXx
+	lGL5qA8IVW96t3lxtknfXLHLATekgKFNhZiqdvlLTdfTJymgDVXXSr7MjacNx2a3
+	Yc9tfVtPUfvMpx0PyesdUdHmhFMivXSNsK5BDM/TFwzYTD+SzRMbw9BqKeyf8jPV
+	5IaZ2H4ciIzbTAiayG5LEAM482Lx1E/x8pelSY/iFtDwJLczhMrDVSFc95uDKEc5
+	iI9A/UecJEP9gFqb8Bul1COmuRQzAL++vIGFcbgOMDt1sNUN1Ra+tWkB0IAe+KAe
+	IUMc/PPOySwww4JnghlHTds3F8CWpysvz7cndBceNRz2sUbFzOzyu6oWdRtA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771359862; x=1771446262; bh=yFGcr2J/W3hdgnhVRSmJLmYEko/uhjENYhd
-	YrNW2nGM=; b=PSTEUPVv+xOQbQIpHRnTzxYJijjs9m09S5vD5A/cwUbLliUGGMd
-	ANGObjAYz8+EWPy6Y8tH0auDz0UBPnRBIrRkWLgaLCSAG++01YrUdrcPH5XCj3Yp
-	Zta/Gg/uM8SIOlYVSfTFfDZPOXb+O2ZPnLZGMrBJKm6jJvbJV3joIaTCtnvp6aOE
-	/XM8ZmTbB+/LUsoZnQ5kQJee0cn2x2BjZlEqQMTa+E1APr4MMIj8kxfvPErENTtz
-	1u0DjGIR5MBhJR419ZPyhSF8DVIuNtFnvMEFaOb+Q0NGb8oXU81ceLxYDuEF4JJY
-	EKaw3tY6AUx5Wlf8p3RW6A7ORZO/3PnEUZg==
-X-ME-Sender: <xms:dc6UadI5LM_2dl8ksq6gX97A1yeZTVswtHMUNIQBtfVGO2mtpeA2Kg>
-    <xme:dc6UaZ4Z1cHAazPs1Av4W4nGa2fVsFfxrqIWjmZ4xuEYuuDmJnzOwtIqnG33Mpyex
-    JrQZulPnYjt-zycQF3o0L-DcT5OdYaz9mWoGQvy79i3033F4KWL6FQ>
-X-ME-Received: <xmr:dc6UaR37ly2EJVuMbl2QSt4gW4Julu_LGbzBb8216HHfqYBEi4Go37LdbGkLWAwu8fwlNnVJBdyfvvL-UQeXwlCdDKkCCnB-vQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtjeduucetufdoteggodetrf
+	1771360061; x=1771446461; bh=WddOTFv+CdZ8DtDuYyAJEl92jSyZbWSwagj
+	60syzbpA=; b=uxZ4w81TmZWJBejtkNX5dAjY1zfReFhLHB06kQ1QMsHAqPDqktQ
+	q0Ag35vVisC1QGRxsb/d+vk6jNI47vqn3ezRruFbyVrNLXqgv2K6zjCGDjWwlz9w
+	y/AYGD/0kpWHMTj8dSLPVMK9CfsCO4Tui8N7b2Q+Hy27M2+BD0YthAB/7twlgTMl
+	QEwcR0KS1+S42D/ZyHSa07avykTdjYiP87FjAXopEpEIwfG6l4FucGky0x8Ir78e
+	CVDNs0rtKTmhoeXK/nUALGqER2cJuvpl1v915KYVfCLIyrmePIm7qXIUBfN0GSQ4
+	6eTpLbULs4u587KWgcE92OSQr9ENKfyl+pw==
+X-ME-Sender: <xms:Pc-Uad8xdRmMiv2RYGim27P2kt2M8a9c39Jw0fZZOojtvv8jx_NPyA>
+    <xme:Pc-UaVbXuXS04QuADwwnbjW4RDTv_uwye--cAzV7yvp8g5ruKZafFu0UKKIpPlL_d
+    xj37YPyWyzgbALSjg2tmgtz4g7afW527r_tu6gxWyX5tK2Xk8JWtw>
+X-ME-Received: <xmr:Pc-UaU1OowqOLgk7pVieGpeMfoI0XWb65svHk1wi_JGXKG2YTBYZPGgFxaI0yo8W3ZpjXL-F4qYznCHlp9ligsdaYOkIb1dSWA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvddtjedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvg
-    hnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhs
-    sehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhr
-    tghpthhtohepvghvrghnrdhmrghrthhinhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:dc6UafdvFqh6SGznjEWll1o-hUEUQqr2ElKt0Wi16YZlp-glwA74Ww>
-    <xmx:dc6UaXeapyLvvTvDXE4duOHbyNCEtvfFsk6Pl6AksF1Lul4VlbhWew>
-    <xmx:dc6UaayKG9nuEJF5-9KfCghyhq9LAeXyK8v4r0QRIerlgyqzHnQWuQ>
-    <xmx:dc6UaW8BkLytL8UiD44WlMzPValDTFgMM64Iqnog-60FHO7qCO41KA>
-    <xmx:ds6UacGJWjf9t5UXxszaI2ZMBBFxIA1Ad9-Z6sz5RlcRUTCI3eC5YQVJ>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehjohgrqhhuihhmrhhotghhrgdrtg
+    homhdprhgtphhtthhopehjohgrqhhuihhmsegrmhhuthgrsghlvgdrtghomhdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Pc-UaYb0yhjWMP4r6iAmpBazgHWiz6XPZwt5AwijkOSDZUPKWnrLsg>
+    <xmx:Pc-UaUJQGOyyKuNmA3FlIRUuM-uTTbyDcHqrcGsRsLCbVgDbKoKbUg>
+    <xmx:Pc-UafGWfSZqpZlhVF9DKq4v9a7ASeOjIJ3UU7zz61g5-ozL2d6kTw>
+    <xmx:Pc-UaTtBSmv5obZJgipA0gH2kNc9r2CbBq1GaGoLMH8zS4SyjxOkbQ>
+    <xmx:Pc-UaQSmCZzbRwAbGQ9tQ_WKihOLWP4GL_gmFsZom3n5qKBlYc07i0EW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Feb 2026 15:24:21 -0500 (EST)
+ 17 Feb 2026 15:27:40 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  Evan Martin <evan.martin@gmail.com>
-Subject: Re: [PATCH v4] meson: regenerate config-list.h when Documentation
- changes
-In-Reply-To: <CALnO6CAGfd2orSzjvxfAYx=xBnB=QdOwT-f5g0pQrcxO_19BGQ@mail.gmail.com>
-	(D. Ben Knoble's message of "Tue, 17 Feb 2026 08:28:10 -0500")
-References: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
-	<9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
-	<aZQSf9yaNa693IFF@pks.im>
-	<CALnO6CAGfd2orSzjvxfAYx=xBnB=QdOwT-f5g0pQrcxO_19BGQ@mail.gmail.com>
-Date: Tue, 17 Feb 2026 12:24:19 -0800
-Message-ID: <xmqq4infazkc.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Joaquim Rocha via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Joaquim Rocha <me@joaquimrocha.com>,  Joaquim Rocha
+ <joaquim@amutable.com>
+Subject: Re: [PATCH] apply: strip ./ prefix from --directory argument
+In-Reply-To: <aZQhnIcPa9sCPpBb@pks.im> (Patrick Steinhardt's message of "Tue,
+	17 Feb 2026 09:06:52 +0100")
+References: <pull.2198.git.git.1771002510709.gitgitgadget@gmail.com>
+	<aZQhnIcPa9sCPpBb@pks.im>
+Date: Tue, 17 Feb 2026 12:27:39 -0800
+Message-ID: <xmqqzf579kuc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,28 +90,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> > +     for doc in "$SOURCE_DIR"/Documentation/*config.adoc \
->> > +             "$SOURCE_DIR"/Documentation/config/*.adoc
->> > +     do
->> > +             printf "$OUTPUT: %s\n" "$(printf '%s\n' "$doc" | sed 's/[# ]/\\&/g')"
->>
->> Tiny nit: can't we simplify this to "$(echo "$doc" | sed ...)"?
+> While this change here fixes your observed issues, the next person might
+> run into a totally different one. So more generally, I think what we'd
+> rather want to do is to fully normalize the path. How about this
+> instead:
+
+Sorry, but I am confused.  Why isn't "don't do it then" a good
+answer for a case like this?
+
 >
-> Given how unportable echo is [1], I'd prefer to keep printf.
+> diff --git a/apply.c b/apply.c
+> index 9de2eb953e..8946b133a3 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -5002,6 +5002,7 @@ static int apply_option_parse_directory(const struct option *opt,
+>  
+>  	strbuf_reset(&state->root);
+>  	strbuf_addstr(&state->root, arg);
+> +	strbuf_normalize_path(&state->root);
+>  	strbuf_complete(&state->root, '/');
+>  	return 0;
+>  }
 >
-> [1]: https://github.com/benknoble/echocho, for one. If the doc started
-> with "-e" for example the results might be unreliable.
-
-To cause trouble, wouldn't it be necessary for "$doc" to be exactly
-"-e", not "started with"?
-
-And when does $SOURCE_DIR begin with "-e" anyway?  It sounds more or
-less academic irrelevancy.
-
-Whatn I am more curious about is the "#"s and spaces being the only
-bytes that needs quoting.  As SOURCE_DIR pretty much under end-user's
-control (otherwise you wouldn't be worried about it starting with -e),
-wouldn't we have other problematic bytes we need to worry about?
-
+> `strbuf_normalize_path()` drops "." components, removes ".." and it
+> squashes multiple directory separators. So it handles your specific use
+> case, but also others.
+>
+> Thanks!
+>
+> Patrick
