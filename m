@@ -1,67 +1,67 @@
-Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A68527FD76
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 09:20:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463F927B33B
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 09:23:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771320029; cv=none; b=q74f9hlyxtOSXN5/xyG/utCT6wEgSdu0Dyw5nd4emU5aQZij8/Gtt8+dIocjSDfrFEuCt36ofIpGUvKLiGtPsuUcrn+ZxJg4DikTtCUDhvddg37DOuv/bHI2yewRS39poxQhzQWDQLvy6MIfOD3PtReGzo5+37DWzmFNJuYbfjc=
+	t=1771320191; cv=none; b=lY/sUUZzorYEHq6f1LPLR7w9+VFAMdaEy8nfNChna3XlmUIscLWPsMhl+/aTlFGXAMIYbExRD1+SZZ+j6e7WBFxtH6ThahxvTBpqEX+Lg1J9kBSx9E1dsyytIx07b44kUSHpUD7zgh3uxxmjfVKRmY1VD2QOjDnpks0jbYWl1G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771320029; c=relaxed/simple;
-	bh=bhMjUKpMiCRJnCaFO0CReYtI89tfwt6BvBQleqwWbDo=;
+	s=arc-20240116; t=1771320191; c=relaxed/simple;
+	bh=LTHE/iFvgKrKgIB1jLzbBnylve/xa8LsWxhJE2sjnf8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TDDy0NBnfFvdeT/Irw5qyBotjUpy7wH8hc6FjDnVwMHpVVSL9S049s06jAOdsj/dWgg6No3m/RM6ZwGjD8tlWliH3iDs8y+wtZsc5aHkuoEqIK2qbXOJS6LYMmz4iiTQeeuGBRs6as03NUxMYUFTHFM4z6p1Bc95f8pD75chTcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F1k55HmG; arc=none smtp.client-ip=209.85.221.67
+	 In-Reply-To:Content-Type; b=S1eQBRO7Xo8BxkYvt2uf9NB5ml8uEWBxQ+3G8+MpbsJj/r/X0t+yzQC5DY+cFWPu3TvWsGOeqCyCfHLVSRTUDpeHDH5QfCw9gIftgiHuoPMZxdT2T0GL2DNPT56sDWlujIJehoHj3hAGJesUw8+fG+6yTkPJKCxBEW9IJaGc1Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nbWRGG1f; arc=none smtp.client-ip=209.85.128.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F1k55HmG"
-Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-4376de3f128so2670722f8f.0
-        for <git@vger.kernel.org>; Tue, 17 Feb 2026 01:20:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nbWRGG1f"
+Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-4834826e5a0so39089555e9.2
+        for <git@vger.kernel.org>; Tue, 17 Feb 2026 01:23:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771320026; x=1771924826; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771320188; x=1771924988; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SheIlw3agZ5IIOevCFmBBXjNhiI8cn0Nzj++tD/dGs0=;
-        b=F1k55HmGElmKTMVi1g2hiZJ+IGDuO0smkFNIgtW7FuexY6fmHmlkqr2qKcwV4e+Luq
-         2g+rtTJG1XA88zRLa3qZJ3kIDxscWVzqh4NbEHa5LL1tlddXIrr+3krhF/OK79AW6khX
-         qCTOUYAtZ4UboMm6WXKc3IuPXWYGQezxtFPdxCjIXLNsHrFb8Xkt8A7OTPOsckXm+Onv
-         ZPiD2OfsTbbXTMIFLVL9YCOx6QVwg3UOCFh7jAitQ2c/I9EyAD7ucJ696M8HxqUOYpdP
-         KBl9QLEOK3rZNLgIFtSYcqAzn9tA2RH+c5d2lJZHDZOfbpOmvH4DKOMdOgW5+Cb5/Edp
-         dBww==
+        bh=Qlqgswl4BlHe/UVgkETCSYGFBzXDMxDQy5IcSu5WIUM=;
+        b=nbWRGG1fap+09RboyEkOhT+cqIE/lbWGQh68RK6yWJtS0TGaDZ3QHzaGwg5qxCE320
+         oQ9pQumMT/2/Zw4dtEcuHp/vjMfEU/HKvjmyzkkZl1ojqLRAc/DspgsxIJSxgQSIUafZ
+         FLFKED+2om26mS/V7gChbRbbvUc1Gfg614AaL2OzL8EPbrPf64bO9kCXl+ynrOlMvEqx
+         QTU5Svit46OCX7ia/uNHO+T3aIPmYmNfpuBXZ1eiTqb9sqhof4XrJzDrxVNfEUzLPZNW
+         FZREX3mNaZS2GPMkDbIOJ4yU7SxP4CLU3iXeUAjcCnCDKWmbS59E12+uCcxy+gBAmSS4
+         wCTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771320026; x=1771924826;
+        d=1e100.net; s=20230601; t=1771320188; x=1771924988;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SheIlw3agZ5IIOevCFmBBXjNhiI8cn0Nzj++tD/dGs0=;
-        b=cOT2xz1wGgpNBOKS/l5RCjhNv8imvnxqprjduwNolTHuaJz9BzZ60XxAikpfNyHt65
-         7dM1D+U1MprhX3CwwOXIC2VN5RI9YtBKWd3cMWMk5F5FLObh2yvD/AoHFap4TV/VDND6
-         6ivNPmHDozGBQNEWlqVb0QJT0+PrX76CzkCgADKpaHdHSUjNx7i5yXMDc/7UXTu7OjzN
-         3LrGipCv6oWS/4ZxpS1cCalq86nR8z5eOPBz3bytakZaBM40mbfpYaQ0rgfvAqtluqVE
-         xkqEFw7DPOIyRps1SR7yValg87EvNLbmIHzgCjZP4hHlr31EMlFnpA1sWNwMok77IKQY
-         +Z2w==
-X-Forwarded-Encrypted: i=1; AJvYcCUmGGDAkHyjnTJJ3Y6jlRVwbIixVGjHEgf7h8cZD09e8ja5+8v3naQs6Py7biVYZeUQQXo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGEPVNX/7z8JlgwEMVKNmM8EMpUp10wdWblps0kU5oLtFF2KJs
-	smtndSkOgWx3Od0goXvA5Nm8WBdGoPv4GJIW1cgrU4RZRePhkxNtDYjO
-X-Gm-Gg: AZuq6aIZGhjGXG7FDtHZoDB0q1R0qDTU5poVlw4oEcJh5nP04fP84CsB6OxMZRgrRb9
-	ElT46HVA+iyNG/iogc1DSYJdocyRRYEN6dHEmmzH3f8jnt6aL0ej40EnVd8M7ezsMq4VU7tl3ic
-	H4YQU9WWCKK6o0hI7zABfi4TYAp7ey/XNkTKkpd4VGzNna5HIqBT4EkbeQo/m7IFg06kPGmMxt4
-	3MqxYDjXaERiCAG4vTyOjjlKRZrSeK7VkPHnhV87IdGfkY/OKa1t/LGHheWfO4uZ0k6ZInrQA+F
-	snyoJsXgH4re9oTTHj6t0LXGoSvAosgqAO9yaLTnHQw5ftM29dJATIzWXL92mc4U4yIJzvlZN/F
-	D+tE6zBTJIsT0+bzukeL41bEWVD1dztkWVdq4GsYpdCLwca+0ik09vu4jubuEfRCds9PtUOlrWW
-	NAiV2IMYTf4g2qd13q4DPDmhlCYaE6XqtEXtnwezfyF+qbysrt+p+PQJFRm/+QRoVqpVFSLr+N2
-	tNanA==
-X-Received: by 2002:a05:6000:2303:b0:437:7010:1d09 with SMTP id ffacd0b85a97d-4379db732c7mr18785330f8f.27.1771320026224;
-        Tue, 17 Feb 2026 01:20:26 -0800 (PST)
+        bh=Qlqgswl4BlHe/UVgkETCSYGFBzXDMxDQy5IcSu5WIUM=;
+        b=o5SBssXtMDq1ryJ3sJtX8sttNPLEOnRvHAdNoKueUxYVgknIOHmzP7SDuU7wu63jgH
+         VbweUlpv3ZtxDy6QmMd08ozuT0ymb/jPymfXuk6wlvmz7lfq1hiU3wlAETG91UBvPF89
+         ItVXEu1iPP1ki3TEIEMOXLzQa3c1c0N/Vu+5LbPguIicd61prK8cOC/N8ng4+bxmoLuE
+         myW0UwCILoV+mVqwq5p4sXKqJPUyTjQAbXP8gPScxxlh7LOs+ouewPDE/mRfac8eS+Sd
+         QtCRiEkyEodAjiECi2AjtFvkMcLgy+JsADYEnV3mshaPh1JFLscXL0BIaByPjqgPt9Kq
+         u9vw==
+X-Forwarded-Encrypted: i=1; AJvYcCURK2Wl5fAu2c98hoC+ccLTm/SGYekiHm0wlugXWqiCk7XmZ1/GYDLvQ5c5ICPiWKKXiv0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYiP7cDVC4IvMYbz/ASrAsCv3EW4/vzudP6/ylrvC+psHbr9C1
+	oAp2YpezTZUAYdeSBENKXHBlH8aWyPe24N2sk1oda86hNknmBGy6NCJ/
+X-Gm-Gg: AZuq6aLJ5fhKZO0lIfGbdEWMgQVXOHZUIBNzaq5DBnGRYyccg7qVyy2WQrzxNnI2RG3
+	adC5xmYP+xj9iedBCqWrqNKcFqs2gVV8u67jb5pLXvBu628AzRqCzSdsKLM/JKKF7I9yz9iiVW3
+	JdqQAjs+IYKhsWYXzZvCp2Cl8pT8N5RjZJ2R//CuoYbvTI+tHJJNs7IEjVAvdZ17yIK2qKFTZxD
+	XXZ6ZTe9bTBL3loT8uKJkb0zwHNTqWw0z/en4GsWSWCzaTgrjn8f+U4SL6rTl/Q0WUV22v9u2yd
+	GMplpND182sOs4jSV9Y2fx2yaIMOJ9JHdJFixZsAuuUPXz1C24KOgI8NZX7hznry73pQuFyh3gF
+	8WRCdJHOBV7Lu7yNEuYXpXmKsNsSfiBhlhEsmmlGG2Cn9GN5sweNybWyZQTtoYZYQmrmMtYBkVX
+	UEcSAqrAAvkDyszjoKwVYEBa9g1ZwH6+3BQrv+K3lJblktohJCitWfhJo8KsFw5LEfiSB+7jTI6
+	0AF5A==
+X-Received: by 2002:a05:600c:3145:b0:471:13dd:bae7 with SMTP id 5b1f17b1804b1-48373a74362mr208249105e9.30.1771320188151;
+        Tue, 17 Feb 2026 01:23:08 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43796ac8d46sm34003285f8f.32.2026.02.17.01.20.25
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43796a6c1b4sm31274044f8f.14.2026.02.17.01.23.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Feb 2026 01:20:25 -0800 (PST)
-Message-ID: <833b54f7-bb6b-4bb7-a5ec-fc0fa679abf8@gmail.com>
-Date: Tue, 17 Feb 2026 09:20:24 +0000
+        Tue, 17 Feb 2026 01:23:07 -0800 (PST)
+Message-ID: <89c78ce2-1783-416d-9ae5-ef51f6bde58d@gmail.com>
+Date: Tue, 17 Feb 2026 09:23:04 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,73 +70,124 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4] meson: regenerate config-list.h when Documentation
- changes
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
- <ps@pks.im>, Evan Martin <evan.martin@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <0a344f1f3ee4a5d95c6f46df030b9936db4354a1.1770853297.git.ben.knoble+github@gmail.com>
- <9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
+Subject: Re: [PATCH 1/2] wt-status: avoid passing NULL worktree
+To: Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>,
+ Karthik Nayak <karthik.188@gmail.com>
+References: <ebc16a74-0555-4951-8ec6-ff7fce6b6fcc@gmail.com>
+ <cover.1771258688.git.phillip.wood@dunelm.org.uk>
+ <409871a7d521b76c9eb811d3c49747e04de8defc.1771258688.git.phillip.wood@dunelm.org.uk>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
+In-Reply-To: <409871a7d521b76c9eb811d3c49747e04de8defc.1771258688.git.phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+On 16/02/2026 16:18, Phillip Wood wrote:
+> 
+> +struct worktree *get_worktree_from_repository(struct repository *repo)
+> +{
+> +	struct worktree *wt = xcalloc(1, sizeof(*wt));
+> +	char *gitdir = absolute_pathdup(repo->gitdir);
+> +	char *commondir = absolute_pathdup(repo->commondir);
+> +
+> +	wt->repo = repo;
+> +	if (repo->worktree)
+> +		wt->path = absolute_pathdup(repo->worktree);
+> +	wt->is_bare = !!repo->worktree;
+> +	if (fspathcmp(gitdir, commondir))
+> +		wt->id = xstrdup(find_last_dir_sep(commondir) + 1);
 
-
-On 16/02/2026 22:28, D. Ben Knoble wrote:
-> The Meson-based build doesn't know when to rebuild config-list.h, so the
-> header is sometimes stale.
-> 
-> For example, an old build directory might have config-list.h from before
-> 4173df5187 (submodule: introduce extensions.submodulePathConfig,
-> 2026-01-12), which added submodule.<name>.gitdir to the list. Without
-> it, t9902-completion.sh fails. Regenerating the config-list.h artifact
-> from sources fixes the artifact and the test.
-> 
-> Teach the meson build to depend on the Documentation files that
-> generate-configlist.sh reads by having it an additional output as a list
-> of dependency files, since Meson does not have (or want) builtin support
-> for globbing like Make. We assume that if a user adds a new file under
-> Documentation/config then they will also edit one of the existing files
-> to include that new file, and that will trigger a rebuild.
-> 
-> Also mark the generator script as a dependency.
-> 
-> Combining the following commands helps debug dependencies:
-> 
->      ninja -C <builddir> -t deps config-list.h
->      ninja -C <builddir> -t browse config-list.h
-> 
-> The former lists all the dependencies discovered from our output ".d"
-> file (the config documentation) and the latter shows the dependency on
-> the script itself, among other useful edges in the dependency graph.
-> 
-> Helped-by: Patrick Steinhardt <ps@pks.im>
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-
-Thanks for the nicely written commit message.
-
-> +if test -n "$DEPFILE"
-> +then
-> +	for doc in "$SOURCE_DIR"/Documentation/*config.adoc \
-> +		"$SOURCE_DIR"/Documentation/config/*.adoc
-> +	do
-> +		printf "$OUTPUT: %s\n" "$(printf '%s\n' "$doc" | sed 's/[# ]/\\&/g')"\\
-
-This forks two processes for every file which is a bit inefficient and 
-will be especially slow on windows. If we quote $OUTPUT first we should 
-be able to use a single sed process for all the files
-
-	QUOTED_OUTPUT="$(printf '%s\n' "$OUTPUT"| sed 's|[/\]|\\&|g')"
-	printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
-		"$SOURCE_DIR"/Documentation/config/*.adoc |
-	sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /" >"$DEPFILE"
+Oops s/commondir/gitdir/ - I'll wait to see if there are any other 
+comments before re-rolling (perhaps with a test that runs git status on 
+a rebase in a linked worktree)
 
 Thanks
 
 Phillip
+
+> +	wt->is_current = is_current_worktree(wt);
+> +	add_head_info(wt);
+> +
+> +	free(gitdir);
+> +	free(commondir);
+> +	return wt;
+> +}
+> +
+>   /*
+>   * When in a secondary worktree, and when extensions.worktreeConfig
+>   * is true, only $commondir/config and $commondir/worktrees/<id>/
+> diff --git a/worktree.h b/worktree.h
+> index e4bcccdc0ae..b162bbabd50 100644
+> --- a/worktree.h
+> +++ b/worktree.h
+> @@ -38,7 +38,10 @@ struct worktree **get_worktrees(void);
+>    */
+>   struct worktree **get_worktrees_without_reading_head(void);
+>   
+> -/*
+> +/* Construct a struct worktree from a struct repository */
+> +struct worktree *get_worktree_from_repository(struct repository *repo);
+> +
+> + /*
+>    * Returns 1 if linked worktrees exist, 0 otherwise.
+>    */
+>   int submodule_uses_worktrees(const char *path);
+> diff --git a/wt-status.c b/wt-status.c
+> index 95942399f8c..2debda534c1 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1747,6 +1747,9 @@ int wt_status_check_rebase(const struct worktree *wt,
+>   {
+>   	struct stat st;
+>   
+> +	if (!wt)
+> +		BUG("wt_status_check_rebase() called with NULL worktree");
+> +
+>   	if (!stat(worktree_git_path(the_repository, wt, "rebase-apply"), &st)) {
+>   		if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/applying"), &st)) {
+>   			state->am_in_progress = 1;
+> @@ -1774,6 +1777,9 @@ int wt_status_check_bisect(const struct worktree *wt,
+>   {
+>   	struct stat st;
+>   
+> +	if (!wt)
+> +		BUG("wt_status_check_bisect() called with NULL worktree");
+> +
+>   	if (!stat(worktree_git_path(the_repository, wt, "BISECT_LOG"), &st)) {
+>   		state->bisect_in_progress = 1;
+>   		state->bisecting_from = get_branch(wt, "BISECT_START");
+> @@ -1819,18 +1825,19 @@ void wt_status_get_state(struct repository *r,
+>   	struct stat st;
+>   	struct object_id oid;
+>   	enum replay_action action;
+> +	struct worktree *wt = get_worktree_from_repository(r);
+>   
+>   	if (!stat(git_path_merge_head(r), &st)) {
+> -		wt_status_check_rebase(NULL, state);
+> +		wt_status_check_rebase(wt, state);
+>   		state->merge_in_progress = 1;
+> -	} else if (wt_status_check_rebase(NULL, state)) {
+> +	} else if (wt_status_check_rebase(wt, state)) {
+>   		;		/* all set */
+>   	} else if (refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
+>   		   !repo_get_oid(r, "CHERRY_PICK_HEAD", &oid)) {
+>   		state->cherry_pick_in_progress = 1;
+>   		oidcpy(&state->cherry_pick_head_oid, &oid);
+>   	}
+> -	wt_status_check_bisect(NULL, state);
+> +	wt_status_check_bisect(wt, state);
+>   	if (refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD") &&
+>   	    !repo_get_oid(r, "REVERT_HEAD", &oid)) {
+>   		state->revert_in_progress = 1;
+> @@ -1848,6 +1855,8 @@ void wt_status_get_state(struct repository *r,
+>   	if (get_detached_from)
+>   		wt_status_get_detached_from(r, state);
+>   	wt_status_check_sparse_checkout(r, state);
+> +
+> +	free_worktree(wt);
+>   }
+>   
+>   static void wt_longstatus_print_state(struct wt_status *s)
 
