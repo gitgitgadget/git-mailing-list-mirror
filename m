@@ -1,269 +1,151 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F74E2D8387
-	for <git@vger.kernel.org>; Tue, 17 Feb 2026 08:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB00F2F0685
+	for <git@vger.kernel.org>; Tue, 17 Feb 2026 09:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771317695; cv=none; b=UZsXsPgRiBGMYG+qQOsxJ/R7q4NoIqBAxQXFZa/sKWce59Dzv6q2h5zZSP+xQjZpnjTfF1kI2wB4cKa7b16UStVPjyPCGtgS7MxOM0Sx+APAh71Q2S1jEuoQ6rnUHJ/C0MC5G0fYckgEZWFLBo9aeUB/PXrgi+7YgtV55V6UNHU=
+	t=1771319102; cv=none; b=Bv5dO/yinMMHaezlovE7RX0PjiaSTzF4Dc1glN4mksocIesMfQOy00RTcVNxIzl6lQtAJzZVLgxCsds1KhprpoH6nxBHqeMsOnEjrpb09TaAdd9352O+724D/YwY9XboebNfAaHgRj/QuhcF7uDn5xV7yZog9XvvJBeCdF0cxJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771317695; c=relaxed/simple;
-	bh=ya3eUDo1QGvalY9DXAPJ2qBU99BjF1fDZKMZBhEnZk8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNfqAYxkmgRLQWbWC5EFAfNmO2obZ0TgAEJjjtlayHwxlpB+5a+h7D02QclptOh7toynbFyO94m4m6Ytd6c3YFjca3s/yK/bI7ctdphSx2x/RV1nMnLHzXAOfGhgaLYPv+EsXgw7GZyWTRY0cPUfdGuMHzn2V4c87+/dbeVy2lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dcOHsAyI; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771319102; c=relaxed/simple;
+	bh=uYZ2wTZGns0XRnQku4C6U8VrKy+BVOpCfcRLYkfqUso=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nqlHtFdBwRXkCL2Ul8+Qpm18orZGtw82qTK4wzlgAojF5sbqAR5gO5nS8EU6MfcZf80omZpWnMyP46RkuylXkOnOmBmSvcsDW+4rbTkB/MN1CpwOzF18cxh3qZhaxE97t00yOCgDpeMPFJHTjhlNW9YdYm8PUL3sTSpnqZbTN8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CKz4M1m2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eOPbkxlz; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dcOHsAyI"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c6e49b67239so159194a12.2
-        for <git@vger.kernel.org>; Tue, 17 Feb 2026 00:41:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771317693; x=1771922493; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IbAOpyZFe1XCWEAzEh0y6BJUGTdeiW1CRkTXW5W8RmU=;
-        b=dcOHsAyI/sNGLXpHDB7JimHbfMp9Gjt9yqQbS5EJmiEbuyBUGhwgCrzhw+51Ex7CRZ
-         wiFrlPBGD9hV/FfWeRzApFI9LrgOHOGCP5op5uQ0a9zamPybA4KOfApO+9VB6ZyIXHga
-         FUxiJHX4nkH1RrCS2ZBLkHN5kIfKVHn+EVvAX/vruoZSC4Hln4FpZQSZRJQ4yFnUUOsw
-         4BsTShG+a8qctp6E1vxo1/IdBh/ICChyEe9LnvNpRkCAwGqJMeFr2rQLuKTh3Lk09Wcn
-         7WZRWWEAhVKaS4iuhgXYaklcYReULkTtdt93n4Q1QZNkWredSpp+t+s/KvuaBWC43GVn
-         RmkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771317693; x=1771922493;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IbAOpyZFe1XCWEAzEh0y6BJUGTdeiW1CRkTXW5W8RmU=;
-        b=Ai0ZXYvv0CE+Nkh1m0V/gah8fJJ7gC7TNWyJ1WjAFpMwFddE5vACri2phx9dliC18N
-         kylAgjq58c8+PfqT7OY4hyldWTaHyRXUOWe7MgcdosWfVYdcdUnoouXgVzYSWwlaH/o5
-         1nBrZxLg44VcOoynCLONG5HYzZq32DAKp/5C7GLnrYOi0FgAAOxa/eVQOEdWlu8o+qqy
-         /lkopfaV3j0UKx2VnEPFlIgCH3vjQ3j+d65/uKUD2zLVysiAqjE04RvTQI/MvfxzMuML
-         2AzyHv8xwiOTddCJcBUVTdvUhFJ8dxp1hgJXeUE8pXgPfdL9C95UwYq0WUFJ4gmpeRjg
-         NE8g==
-X-Gm-Message-State: AOJu0Yw4y5sG5X30lgHKZ2HtKDXh7ROqFne6+gX48VFjqJ3A1/mZDJwB
-	nJ8xwQiRJqfxZ64EbDvffRPpQyRag8a4+5OLfx5ENDs2env5yhLAhqPD8kPsShQc
-X-Gm-Gg: AZuq6aLZwoYvLZmxBiYXheZVX9MMm7tzK3vEyV6R030wZBZBYFgoFpGWMqm5m9GLnVw
-	y3xHwIzFp0z64tfKI9tNt9lwqMn/yKO8WSWtX90jwy0mORfKtIux9s++tl7r9c4nxfXeSPg31iv
-	fUIdyGN6+wO1JzdlwhNqPpZ5QtR9MSO/4EmY94QNqQSj/a9CoHRiSlpIHKnuWE98l2yy5691i+g
-	C/NJds19L4Tybab1MxMbGAZQhJz1w0A6c/QZtTlhQ60qi0jSc9B+WyggBrZwOtOcMHG+0yhiIP4
-	np3j2OwN3Ppx8BkoIfo60fVwRUX8DowPnThi5TKUpZNv36KL1tIWs49D3mXvn9MwBZc71M20YAL
-	djpIuWLeg83vEELkCVlxU749z8bGHcB6sZklyyHXlnuAe/QDS2V0kRa4Si2nmGxQbiYp3vPPYN6
-	C4CbLuoKiES0Em3uUYx2viPxpylga1JQSGlZGFCNo=
-X-Received: by 2002:a05:6a20:2452:b0:394:5d36:1a0a with SMTP id adf61e73a8af0-3946733e30fmr9209380637.8.1771317693021;
-        Tue, 17 Feb 2026 00:41:33 -0800 (PST)
-Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c6e5300d135sm9852194a12.11.2026.02.17.00.41.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Feb 2026 00:41:32 -0800 (PST)
-From: Tian Yuchen <a3205153416@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [PATCH v4] setup: allow cwd/.git to be a symlink to a directory
-Date: Tue, 17 Feb 2026 16:41:24 +0800
-Message-ID: <20260217084124.150366-1-a3205153416@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <5b29218a-8d18-41f0-8a03-eac707151945@gmail.com>
-References: <5b29218a-8d18-41f0-8a03-eac707151945@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CKz4M1m2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eOPbkxlz"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9F0341D00124;
+	Tue, 17 Feb 2026 04:04:59 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 17 Feb 2026 04:05:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771319099; x=1771405499; bh=xr0b1PrcKc
+	BRBDsL/whg+hlHL8CFecMKlakQgNJA6VU=; b=CKz4M1m2Y7rGmdMlLoOIL8j/Vn
+	+3Aesbpz328/Dt0Z4114/Y1iidRclnPKolBgmfFtNGn9POCrbUCFl1cPbkC3wOY8
+	4EFZMxsJeJ0AaJlmp/cUwErYbdlXp82v93ucjuAjRKAcfO+TQ1r/MdcPBkCKHDPV
+	OKRPpxc4dGeG+/wf0IfQuIfTCFMwG4cDQpfNCaWUp3OY06KUxX1YgtK1pbucRzea
+	uhOTTGuAkMdNlkMRmfL1ajabjMn//AA3jQQJeMVTje5sI39wRKdZu0kR8pT7ioA6
+	vLcltSk74brsDC57tz/AzwKnSkMkzNVacnDwHPOeeII+xV8sAnQ601HurajA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771319099; x=1771405499; bh=xr0b1PrcKcBRBDsL/whg+hlHL8CFecMKlak
+	QgNJA6VU=; b=eOPbkxlz2qHIg+idV2WDc3A6LiAkyY5PxXyr4/Zpy3uRARKdNY4
+	q3203fiu10b+zFkNs1YxFDA8wXvasYqoNGwTNAYJLLgy0VXdbYVSBLoWvkRNb+/X
+	ETWA/RX6vP2DcJq8qWhtKkwK7CnvcIugRSHZ7ucjZYAEXP1QiKSq31hmT79Ie9A4
+	5A8jGrf+NpXCsPRcjslnaAikrexQQV+t5TjsVJniQEsU1xbFvrpb8V2qFi8QRCPx
+	lkhci0KW40SaFOfGzFBzDU9L3AHbyYFDaRB3OgQ0neB08ypOKsl2dcbpoSn5yZX0
+	IAKY8yT0MYNIL302TA8PXmyPCZCcDsjdBsw==
+X-ME-Sender: <xms:Oy-UaWjSOCZT_e2fcddlc8OOkU-qxY_KPf0c-FBMCC1s6tzaDNZ0eQ>
+    <xme:Oy-UaWEBhAn-CEuN4YrkBLIn46zY6YAR7T7gLfs80SUQnabRy-BWaxka00sYe3N7_
+    wM1Gr1lq4Fxsqk83PUl9hec0kkaECmgO23-u3vIKgkHMWWdlZNVHQ>
+X-ME-Received: <xmr:Oy-UaUR6ap1LVqP-JNOHbipRyq_ejrXrsmrjUW2t1enqKGJwrcP3hOb4Rvq2bW_IigoIB7Ct-yHx0aWPq57B7p-ECw1JMJTiPSpPDYR9Iw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudelfeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
+    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:Oy-UabxEyNNc4yRUvZqk7OIGlfB_a0U1fofXwZuiORLwHJl9NWJcrA>
+    <xmx:Oy-UaYe6lKenm1eRF2-tgj6GcTx6O2iEgIIaazGE0XjglM68pylI-A>
+    <xmx:Oy-UaWOzFOF1vR_qSuq9uLLqmg1rqRrgFJAx0qgr9AyxzkXFCj1P6g>
+    <xmx:Oy-UabujAivmHc5fd80S5V0SrQOuz3IAqHI5FaDhrvwrEUMI8BaWUA>
+    <xmx:Oy-Uaf7RT1diTIQmVtsT0ZT3En09O1E9q-EkHqxx0Qu_dgDtN08qA2BJ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Feb 2026 04:04:57 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d980dc95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 17 Feb 2026 09:04:54 +0000 (UTC)
+Date: Tue, 17 Feb 2026 10:04:47 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 03/13] config: make 'git config list --type=<X>' work
+Message-ID: <aZQvLzL-AhPG3rbx@pks.im>
+References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
+ <pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
+ <6d2a48a3b7f61c068392e66933caaf1d78055857.1771026918.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6d2a48a3b7f61c068392e66933caaf1d78055857.1771026918.git.gitgitgadget@gmail.com>
 
-Strictly enforcing 'lstat()' and 'S_ISREG()' on '.git' prevents valid
-workflows where '.git' is a symbolic link pointing to a real git
-directory (e.g. created via 'ln -s').
+On Fri, Feb 13, 2026 at 11:55:08PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
+> 
+> Previously, the --type=<X> argument to 'git config list' was ignored and
+> did nothing. Now, we add the use of format_config() to the
+> show_all_config() function so each key-value pair is attempted to be
+> parsed. This is our first use of the 'gently' parameter with a nonzero
+> value.
+> 
+> When listing multiple values, our initial settings for the output format
+> is different. Add a new init helper to specify the fact that keys should
+> be shown and also add the default delimiters as they were unset in some
+> cases.
+> 
+> If there is an error in parsing, then the row is not output.
 
-Refactor 'setup_git_directory_gently_1()' to use 'stat()' instead of
-'lstat()'. This allows the filesystem to automatically resolve symbolic
-links.
+It might make sense to document the rationale behind this decision in
+the commit message.
 
-To ensure safety and correctness, the logic flow is updated to:
+> diff --git a/builtin/config.c b/builtin/config.c
+> index b4c4228311..4c4c791883 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -318,21 +318,12 @@ static int show_all_config(const char *key_, const char *value_,
+>  {
+>  	const struct config_display_options *opts = cb;
+>  	const struct key_value_info *kvi = ctx->kvi;
+> +	struct strbuf formatted = STRBUF_INIT;
+>  
+> -	if (opts->show_origin || opts->show_scope) {
+> -		struct strbuf buf = STRBUF_INIT;
+> -		if (opts->show_scope)
+> -			show_config_scope(opts, kvi, &buf);
+> -		if (opts->show_origin)
+> -			show_config_origin(opts, kvi, &buf);
+> -		/* Use fwrite as "buf" can contain \0's if "end_null" is set. */
+> -		fwrite(buf.buf, 1, buf.len, stdout);
+> -		strbuf_release(&buf);
+> -	}
+> -	if (!opts->omit_values && value_)
+> -		printf("%s%c%s%c", key_, opts->delim, value_, opts->term);
+> -	else
+> -		printf("%s%c", key_, opts->term);
+> +	if (format_config(opts, &formatted, key_, value_, kvi, 1) >= 0)
+> +		fwrite(formatted.buf, 1, formatted.len, stdout);
 
-1. Ignore 'ENOENT' (file missing).
-2. Check 'IS_A_DIR' cases via 'is_git_directory()'.
-3. Explicitly reject 'NOT_A_FILE' cases (FIFOs or sockets).
+We could probably use puts(3p) instead, but as we know the length of the
+data ahead of time it might be more efficient to use fwrite(3p) indeed.
+Ultimately I guess it doesn't matter much.
 
-Add a new test script t/t0009-setup-security.sh which verifies:
-
-- Valid .git symlinks to real directories are accepted.
-- .git as a named pipe (FIFO) is rejected.
-- .git as a symlink to a named pipe is rejected.
-- .git with garbage content is rejected.
-- Empty .git directories are ignored.
-
-Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
----
- setup.c                   | 39 ++++++++++++++-------
- setup.h                   |  2 ++
- t/t0009-setup-security.sh | 72 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 101 insertions(+), 12 deletions(-)
- create mode 100755 t/t0009-setup-security.sh
-
-diff --git a/setup.c b/setup.c
-index 3a6a048620..269aa9faaa 100644
---- a/setup.c
-+++ b/setup.c
-@@ -939,8 +939,14 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
- 	static struct strbuf realpath = STRBUF_INIT;
- 
- 	if (stat(path, &st)) {
--		/* NEEDSWORK: discern between ENOENT vs other errors */
--		error_code = READ_GITFILE_ERR_STAT_FAILED;
-+		if (errno == ENOENT)
-+			error_code = READ_GITFILE_ERR_STAT_ENOENT;
-+		else
-+			error_code = READ_GITFILE_ERR_STAT_FAILED;
-+		goto cleanup_return;
-+	}
-+	if (S_ISDIR(st.st_mode)) {
-+		error_code = READ_GITFILE_ERR_IS_A_DIR;
- 		goto cleanup_return;
- 	}
- 	if (!S_ISREG(st.st_mode)) {
-@@ -994,7 +1000,9 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
- cleanup_return:
- 	if (return_error_code)
- 		*return_error_code = error_code;
--	else if (error_code)
-+	else if (error_code &&
-+		error_code != READ_GITFILE_ERR_STAT_ENOENT &&
-+		error_code != READ_GITFILE_ERR_IS_A_DIR)
- 		read_gitfile_error_die(error_code, path, dir);
- 
- 	free(buf);
-@@ -1576,20 +1584,27 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
- 		if (offset > min_offset)
- 			strbuf_addch(dir, '/');
- 		strbuf_addstr(dir, DEFAULT_GIT_DIR_ENVIRONMENT);
--		gitdirenv = read_gitfile_gently(dir->buf, die_on_error ?
--						NULL : &error_code);
-+		gitdirenv = read_gitfile_gently(dir->buf, &error_code);
- 		if (!gitdirenv) {
--			if (die_on_error ||
--			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
--				/* NEEDSWORK: fail if .git is not file nor dir */
-+			if (error_code == READ_GITFILE_ERR_STAT_ENOENT) {
-+				;
-+			} else if (error_code == READ_GITFILE_ERR_IS_A_DIR) {
- 				if (is_git_directory(dir->buf)) {
- 					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
- 					gitdir_path = xstrdup(dir->buf);
- 				}
--			} else if (error_code != READ_GITFILE_ERR_STAT_FAILED)
--				return GIT_DIR_INVALID_GITFILE;
--		} else
--			gitfile = xstrdup(dir->buf);
-+			} else if (error_code == READ_GITFILE_ERR_NOT_A_FILE) {
-+				if (die_on_error)
-+					die(_("Invalid %s: not a regular file or directory"), dir->buf);
-+				else
-+					return GIT_DIR_INVALID_GITFILE;
-+			} else if (error_code != READ_GITFILE_ERR_STAT_FAILED) {
-+				if (die_on_error)
-+					read_gitfile_error_die(error_code, dir->buf, NULL);
-+				else
-+					return GIT_DIR_INVALID_GITFILE;
-+			}
-+		}
- 		/*
- 		 * Earlier, we tentatively added DEFAULT_GIT_DIR_ENVIRONMENT
- 		 * to check that directory for a repository.
-diff --git a/setup.h b/setup.h
-index d55dcc6608..c23629cb4f 100644
---- a/setup.h
-+++ b/setup.h
-@@ -36,6 +36,8 @@ int is_nonbare_repository_dir(struct strbuf *path);
- #define READ_GITFILE_ERR_NO_PATH 6
- #define READ_GITFILE_ERR_NOT_A_REPO 7
- #define READ_GITFILE_ERR_TOO_LARGE 8
-+#define READ_GITFILE_ERR_STAT_ENOENT 9
-+#define READ_GITFILE_ERR_IS_A_DIR 10
- void read_gitfile_error_die(int error_code, const char *path, const char *dir);
- const char *read_gitfile_gently(const char *path, int *return_error_code);
- #define read_gitfile(path) read_gitfile_gently((path), NULL)
-diff --git a/t/t0009-setup-security.sh b/t/t0009-setup-security.sh
-new file mode 100755
-index 0000000000..72c5232147
---- /dev/null
-+++ b/t/t0009-setup-security.sh
-@@ -0,0 +1,72 @@
-+#!/bin/sh
-+
-+test_description='setup: validation of .git file/directory types
-+
-+Verify that setup_git_directory() correctly handles:
-+1. Valid .git directories (including symlinks to them).
-+2. Invalid .git files (FIFOs, sockets) by erroring out.
-+3. Invalid .git files (garbage) by erroring out.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup: create parent git repository' '
-+	git init parent &&
-+	test_commit -C parent "root-commit"
-+'
-+
-+test_expect_success SYMLINKS 'setup: .git as a symlink to a directory is valid' '
-+	mkdir -p parent/link-to-dir &&
-+	(
-+		cd parent/link-to-dir &&
-+		git init real-repo &&
-+		ln -s real-repo/.git .git &&
-+		git rev-parse --git-dir >actual &&
-+		echo .git >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success PIPE 'setup: .git as a FIFO (named pipe) is rejected' '
-+	mkdir -p parent/fifo &&
-+	(
-+		cd parent/fifo &&
-+		mkfifo .git &&
-+		test_must_fail git rev-parse --git-dir 2>stderr &&
-+		grep "not a regular file" stderr
-+	)
-+'
-+
-+test_expect_success SYMLINKS,PIPE 'setup: .git as a symlink to a FIFO is rejected' '
-+	mkdir -p parent/symlink-fifo &&
-+	(
-+		cd parent/symlink-fifo &&
-+		mkfifo target-fifo &&
-+		ln -s target-fifo .git &&
-+		test_must_fail git rev-parse --git-dir 2>stderr &&
-+		grep "not a regular file" stderr
-+	)
-+'
-+
-+test_expect_success 'setup: .git with garbage content is rejected' '
-+	mkdir -p parent/garbage &&
-+	(
-+		cd parent/garbage &&
-+		echo "garbage" >.git &&
-+		test_must_fail git rev-parse --git-dir 2>stderr &&
-+		grep "invalid gitfile format" stderr
-+	)
-+'
-+
-+test_expect_success 'setup: .git as an empty directory is ignored' '
-+	mkdir -p parent/empty-dir &&
-+	(
-+		cd parent/empty-dir &&
-+		mkdir .git &&
-+		git rev-parse --git-dir >actual &&
-+		echo "$TRASH_DIRECTORY/parent/.git" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_done
--- 
-2.43.0
-
+Patrick
