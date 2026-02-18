@@ -1,70 +1,70 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A35132A3E1
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 14:09:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE8E32D0C2
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 14:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771423759; cv=none; b=q1DhnKLOfNInB1dZL4JbfMufnPyy0LQDAmKocLvIf9PHlVRDA29+UVkb3OMazS6ETFMUl5b6YgiDDgajl+ZViccpDdf9a2YyUyaIIvd6//7ncW4gMmW7M/BN7nsspFZl4ekMlmxRU1ZdIsAuMHEHP2DpvZKZo3QRugYHocBhXl4=
+	t=1771423761; cv=none; b=RGeTl9iwUngqMX7MgD4AeKXPpD46PCVflHGYBuHtQyb/hM36L/VBQ5Cb7YB5NwSTOCgGQWGqHhqnj33iQJ0Sy0YV2aS11mhKGvRIQJe6pEkq4XA21XLd130Lu77KOdgLz71QbH+BEJBnJIWF2PNhWM8EpvlnsLVFZC4fj8hmaPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771423759; c=relaxed/simple;
-	bh=pRl01NYurgqIHzAv4kMIcSp3H0FlBnNMcNsX0Xo29jU=;
+	s=arc-20240116; t=1771423761; c=relaxed/simple;
+	bh=A3nJ2ocdJ/y9nzrqzCuC82mSvVN4GagRTDiOH09QSko=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rBxPhv6E/8PaoyFHgZnCSKsMJtUC5SNANALTfEjDxuKAdlHpe1rqepzBmvsCEH6VFJwVirQsLPNL2egaalyGRTyS2Pil599a6/jnT5MVynh4lw5Jf/6OK4e/rROS4frjWESggxMDI7/PxwMWInGU0Ga7sii8ToqnSyi5OTqZG9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ndjAUhXG; arc=none smtp.client-ip=74.125.82.43
+	 MIME-Version:To:Cc; b=L1047tc+ZWtwGloOJZ8wmhjU7fY9Ys1RRM+lnY1+upRq095oAp4L72kdHg8/h6BA/nwNE5AeK4vqt+KKCQtpqCvRmtFpu+5gM/7X3ByTpg4r4z4eS44uTuTRpxyvqQYEoXkkzMRspJ9hh/riW6NaIhKJ0Vrj1AssaMFeUhbQt/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lGES1XF4; arc=none smtp.client-ip=74.125.82.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ndjAUhXG"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-12732e6a123so2067342c88.1
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 06:09:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lGES1XF4"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2b785801c93so630272eec.0
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 06:09:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771423757; x=1772028557; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771423759; x=1772028559; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tLZNDWkTTA0heUrJ4eo8L2rJ+QzFCNvuQAcUnAZ964Q=;
-        b=ndjAUhXGWR3tmi2ZimUsDIxlZiLud8YurD7AyMqBntWcOvZRHcogMxZFsskcdwqKC5
-         TNMXNCZum4rJYk8olKBbVYtPzBddJYHyi3iWpmCNJtNSOsVYiSzr/1dBfrUrk48s+5ub
-         agYNXH8m0auDXda+r6kKhXmcCoBFuDsnAYLtlXk+UV8Zpui33M4yu1zf2r/aVKlDAzP9
-         T8zzYucQmtHinIeWdb9tPbr08eTf+Az93VX9rRtR8/Xgbo36g1A34K09oGFqRozhQNsF
-         fSq+pfAdRl8YmqwznF23RIpjmpxPiUcF4gguBZTZNnyZXr18HOvr2qhlS3EYOPmoUo3c
-         hgYg==
+        bh=4DSJ0O9xN6/l4I5wxamK9qz5cRzaOCcno/GPB7FbK14=;
+        b=lGES1XF4D8qUL36CA1L1cdE94mtL6jxj46uiIx68rR2VaHFYgCMDKzlOQA4ZmsPziz
+         eEnOuOa27Ap0YcO7VpR5F+FIP4ekxustmt+u3gOvRT8YjclFsYDRwbmTIBL38MPZ11tI
+         gKt1dJLCZsE1wlNaxZQZ6AC91i5LkyVphCRIb1oG1rquRIq/ajmz9wlDxYpf/Y+AgCw3
+         XGbqvxVRjCwnANmMD+SlLOlEhQVPg63wgo0/6ePnOJ1pfXQ/oOFmPdCi6ItBZuqI4zkK
+         lxeh3QpKgCDV+sZ58txlR1p8i8QWn5eC3rzpyEfLAddGdXc0iV5iRuZEknowvPAae4Z0
+         YC6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771423757; x=1772028557;
+        d=1e100.net; s=20230601; t=1771423759; x=1772028559;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=tLZNDWkTTA0heUrJ4eo8L2rJ+QzFCNvuQAcUnAZ964Q=;
-        b=iSYJMshHRirXSwEVRj8u3gIjmaAepoOitgdJMYoZJPXM9EL6h8BFfvOirvyUqly5yT
-         hTCTC8TaVsgFUTQ9E74DcrmNa7TcWexqPYBcmCcWEj0gY0zUFeRiDO6AdEcoyF3ufMgX
-         IRbTEPAmdKUOWjiomy++xtoqYBFuEUTP24nNJGl31w4A2apvi30UoBCYWdt7eLILArUb
-         SprVVkH/+mO4usfmFkZp3upWg6R5MbxXmGiKR6PtxpuZ4AaYoi8AOPI3RsOINq1M5obO
-         WqQt7NaCY1luXyzpDMVrWKRGWh7BbdaAuo6obE9I9e2yx1SFzuBZjudArlbVYEm42dQD
-         CRnQ==
-X-Gm-Message-State: AOJu0Ywiv9tVj29iAZ+Lks2msqMeAM7iTtVst18YEP+b6jjDg2E6uQVA
-	7zbbNK2PGyA6SESTpHzwpdEILuzdoqCSxUcPK3NWh+Lg4l473AkmdCwC/fOzNaqI
-X-Gm-Gg: AZuq6aLQpYIDTgvJ/i4QxLboeW/c8uSXGdsbkmHkEGdX+17F0D4tAnaCg1aYbweaBBV
-	dde5p8HMQbL132wouOBLYy43c6OEWW7e3TY5fCV5W6x+Y3fjP2g4AQAr96jCB+u5fix+2rftLGa
-	BC4ddKd42K1sJ2ePxmhE1LFHJMT2AvTU8CBazF6Ak1nPHJSLEr4Lcn+tvZRYYkZKGkpKM+AiJ2O
-	RR9kAcW8xy5HbEgWt8Ik7Bhvngwimqr8ogWcM8PvbFz8HNstFXnQ1emU17WTSz8PBfGic4yXyHf
-	f0auzDWCS7R9yTeVmSIdA0kwPP3It3TplM56U7p/MuU6UXNzpzwYL9th53La4AwRupydIAxxNyu
-	C84Sfntr70M0UIOOf3JqNNPFUdn4XxZKI3e6L/BDqsGHUnWCJHIUbWDk0XWjzKDNz6jrKRVivQj
-	bxGsPpnm/UVk6cEd+EkxaTDkNQKA==
-X-Received: by 2002:a05:7022:e05:b0:122:2f4:b247 with SMTP id a92af1059eb24-12759a61101mr882698c88.28.1771423756745;
-        Wed, 18 Feb 2026 06:09:16 -0800 (PST)
+        bh=4DSJ0O9xN6/l4I5wxamK9qz5cRzaOCcno/GPB7FbK14=;
+        b=d3IfFc8RsYVgylzR6FDLI2CRJuJ1cxEz+hitGW8l6p6TJCNMyAxFIEWxtSNNCcIQat
+         EJEmttA5BFB6dRhEo3dnbWSb02FxYqn6A3nC4TAhNvHkL48vtSXcll6I3IhbTWlVFuEp
+         OzEWVRn1cpiWUge0DLYCwxRvM3AM3le3VIhOhJ5+zCR60WtCi2XNkvYwVXqPGYWp85KF
+         sJuvf3fzrX7Wwinh9trpF5NvMv6gYV6Zsf41CxbM2IK8nxqmuNJRWQvHxjaqwacf5B3V
+         MbMNbfWDKugBZlduBRMJ6WnHgFW2d9g98Q/TELjz7++YDrPedh5kEW1EawiWo1axTXBB
+         EoVA==
+X-Gm-Message-State: AOJu0YwguyH0LoJIIXmMnojJweJlFOWQH7Bf/2svSAdY+1P+cr3MXQya
+	iAByX71dE43/2Ya3xF9O8SDI6V4tJ1cDYO72Yr9O1FWhx7tDUNVD6SS6kThTLZAN
+X-Gm-Gg: AZuq6aIim5Q8TOh99xHM02M3cR4lC89ZRAlUscIgMFSIjfde7SuORyLxtR4gt4pTSWP
+	pH9P/HCl7qCr4cb6SVj7K2EH+/1OTPhaWABQJIC+Nghu7SQDcng+2dKByCnYbZCzCQhk3sIYEeF
+	VfheSkphP2ULpZkqMxMjLUm8gmObEYwNqSVtwVF75gAHTC0fRVknNb5+1WPTODYTso3YbpEDSTe
+	HyySnfD7ubWs6NuADLp348on7BYRe+vV5WhQTccrmH11ji1QldBcvop4GHRqVKPJSznNB/UPFGI
+	Q+l5YriANRVu+UT9A+d+VUawAK0kQS6ItMmFUxhy7LMCs/2MKA9ocCEX9VSTY8W2X6SWnrWv/NG
+	Enw3OlX/Q/hEw+X4o5zPi2ggabt2r7XjhfFI4sGm3roT9lB/VPCaqOJ0j8S0chNNf67TsfBDjO7
+	31o2jVAB8akdDl+pFe0jPq9mQZkw==
+X-Received: by 2002:a05:7301:d1a:b0:2ab:ecd0:5221 with SMTP id 5a478bee46e88-2bac9805318mr6732822eec.42.1771423758267;
+        Wed, 18 Feb 2026 06:09:18 -0800 (PST)
 Received: from [127.0.0.1] ([52.159.225.192])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12742cada1csm18446756c88.9.2026.02.18.06.09.15
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb555b6esm18903990eec.8.2026.02.18.06.09.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Feb 2026 06:09:16 -0800 (PST)
-Message-Id: <557fd77444dcf68277fea7c1a57dae07b2ec993d.1771423748.git.gitgitgadget@gmail.com>
+        Wed, 18 Feb 2026 06:09:17 -0800 (PST)
+Message-Id: <3a39dc9e39d68b9543d97980b6c68d73d1a168df.1771423748.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2008.v4.git.1771423748.gitgitgadget@gmail.com>
 References: <pull.2008.v3.git.1771326521.gitgitgadget@gmail.com>
 	<pull.2008.v4.git.1771423748.gitgitgadget@gmail.com>
 From: "Vaidas Pilkauskas via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Feb 2026 14:09:06 +0000
-Subject: [PATCH v4 3/5] strbuf: replace strbuf_grow() in strbuf_attach() with
- BUG() check
+Date: Wed, 18 Feb 2026 14:09:07 +0000
+Subject: [PATCH v4 4/5] remote-curl: introduce show_http_message_fatal()
+ helper
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,34 +83,114 @@ Cc: Taylor Blau <me@ttaylorr.com>,
 
 From: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
 
-strbuf_attach() documents that alloc must be larger than len, as the
-buffer must have room for the NUL terminator. Replace the strbuf_grow(sb, 0)
-call, which was silently reallocating when alloc <= len, with an explicit
-BUG() to enforce this contract and write the NUL terminator directly.
+Several code paths in remote-curl.c follow the same pattern of calling
+show_http_message() to display server error messages followed by die()
+to terminate with an error. This duplication makes the code more verbose
+and harder to maintain.
 
+Introduce a new show_http_message_fatal() helper function that combines
+these two operations. This function:
+
+1. Displays any HTTP error message from the server via show_http_message()
+2. Calls die() with the provided error message
+3. Returns NORETURN to help the compiler with control flow analysis
+
+Refactor existing call sites in remote-curl.c to use this new helper,
+reducing code duplication and improving readability. This pattern will
+also be used by upcoming HTTP 429 rate limiting support.
+
+Suggested-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
 ---
- strbuf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ remote-curl.c | 45 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 17 deletions(-)
 
-diff --git a/strbuf.c b/strbuf.c
-index 3e04addc22..0abed40c91 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -95,11 +95,12 @@ char *strbuf_detach(struct strbuf *sb, size_t *sz)
- 
- void strbuf_attach(struct strbuf *sb, void *buf, size_t len, size_t alloc)
- {
-+	if (alloc <= len)
-+		BUG("alloc must be larger than len");
- 	strbuf_release(sb);
- 	sb->buf   = buf;
- 	sb->len   = len;
- 	sb->alloc = alloc;
--	strbuf_grow(sb, 0);
- 	sb->buf[sb->len] = '\0';
+diff --git a/remote-curl.c b/remote-curl.c
+index 92e40bb682..21c96f2ca9 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -367,23 +367,25 @@ static void free_discovery(struct discovery *d)
+ 	}
  }
  
+-static int show_http_message(struct strbuf *type, struct strbuf *charset,
+-			     struct strbuf *msg)
++static NORETURN void show_http_message_fatal(struct strbuf *type, struct strbuf *charset,
++				    struct strbuf *msg, const char *fmt, ...)
+ {
+ 	const char *p, *eol;
++	va_list ap;
++	report_fn die_message_routine = get_die_message_routine();
+ 
+ 	/*
+ 	 * We only show text/plain parts, as other types are likely
+ 	 * to be ugly to look at on the user's terminal.
+ 	 */
+ 	if (strcmp(type->buf, "text/plain"))
+-		return -1;
++		goto out;
+ 	if (charset->len)
+ 		strbuf_reencode(msg, charset->buf, get_log_output_encoding());
+ 
+ 	strbuf_trim(msg);
+ 	if (!msg->len)
+-		return -1;
++		goto out;
+ 
+ 	p = msg->buf;
+ 	do {
+@@ -391,7 +393,16 @@ static int show_http_message(struct strbuf *type, struct strbuf *charset,
+ 		fprintf(stderr, "remote: %.*s\n", (int)(eol - p), p);
+ 		p = eol + 1;
+ 	} while(*eol);
+-	return 0;
++
++out:
++	strbuf_release(type);
++	strbuf_release(charset);
++	strbuf_release(msg);
++
++	va_start(ap, fmt);
++	die_message_routine(fmt, ap);
++	va_end(ap);
++	exit(128);
+ }
+ 
+ static int get_protocol_http_header(enum protocol_version version,
+@@ -518,21 +529,21 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 	case HTTP_OK:
+ 		break;
+ 	case HTTP_MISSING_TARGET:
+-		show_http_message(&type, &charset, &buffer);
+-		die(_("repository '%s' not found"),
+-		    transport_anonymize_url(url.buf));
++		show_http_message_fatal(&type, &charset, &buffer,
++					_("repository '%s' not found"),
++					transport_anonymize_url(url.buf));
+ 	case HTTP_NOAUTH:
+-		show_http_message(&type, &charset, &buffer);
+-		die(_("Authentication failed for '%s'"),
+-		    transport_anonymize_url(url.buf));
++		show_http_message_fatal(&type, &charset, &buffer,
++					_("Authentication failed for '%s'"),
++					transport_anonymize_url(url.buf));
+ 	case HTTP_NOMATCHPUBLICKEY:
+-		show_http_message(&type, &charset, &buffer);
+-		die(_("unable to access '%s' with http.pinnedPubkey configuration: %s"),
+-		    transport_anonymize_url(url.buf), curl_errorstr);
++		show_http_message_fatal(&type, &charset, &buffer,
++					_("unable to access '%s' with http.pinnedPubkey configuration: %s"),
++					transport_anonymize_url(url.buf), curl_errorstr);
+ 	default:
+-		show_http_message(&type, &charset, &buffer);
+-		die(_("unable to access '%s': %s"),
+-		    transport_anonymize_url(url.buf), curl_errorstr);
++		show_http_message_fatal(&type, &charset, &buffer,
++					_("unable to access '%s': %s"),
++					transport_anonymize_url(url.buf), curl_errorstr);
+ 	}
+ 
+ 	if (options.verbosity && !starts_with(refs_url.buf, url.buf)) {
 -- 
 gitgitgadget
 
