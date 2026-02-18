@@ -1,124 +1,163 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAFE2FD1B1
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 16:49:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86183009D6
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 17:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771433398; cv=none; b=bYl3q3UYYPmcxy5xVEsHZvxBEtmInsBsMBbKrEvV9o5S11z/i1xh7HIp3lI166I8Ih7RixRugxC3Naen3Kg61hM6zav8O29U+iDuF/M8zWQ2ToH2wq0gUXGUouxKUZ/gvXoDwYU0PmMbuHeqzU22EPfeIEHwIHBf2217xcHKgJI=
+	t=1771436770; cv=none; b=QXN605yc39BHRWKpRU0GoA//D3yz/DN+p9YCetlRV70vOV5zsc5uGUqN4XVBXyu4c0ztMEhMoIqf4QmAsiJTmh3bmTpOCtBeidDsvcKoaXBwLvg37QUPlQf+w71KwrnA+tkGd+A9D3Tur7Hsuikze4SMkcHrvZNR6dkySx9X4Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771433398; c=relaxed/simple;
-	bh=FuVzWllg8gZ/iQTL9zgtZxzCYNwU7inKwBu0DY5nLyI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UAgo0XJeDZ3LrlA7tIV6H9qiSZJtqZbjqD0Y1Os9o6LxR3J9NWpdm8CCLXvf/sLNmZeUQkXhDj1IO76hv6IMNKqY3DIlwBZxdhYZsvcTjJEpjjS60NYNiAxukWe9eyC0TY2Q6TH50pC0iCNt32G8Ul76PyWI+yMrGW67xErfa5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Slw+8Zvi; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771436770; c=relaxed/simple;
+	bh=/yt+J3/YoG11hnMfjlPZQm8lzaFwyPUrLM7eAguGyq0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lbKC7s76uIeEwIaMCJocs7XeIrUVx9Pu20VaCBkgjQUsDIF70UCk2SQHybUqkpi0raSLqlDQsOEYHJ5nyfeleGO8sX1jMN7G46Q4F6n8D1lXk5ef/k+yHnAYwWXfGwuQadvmjciBGGW2i0wUlCswnKlo4mWfGhD2NdH5ZQ2GYNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vBH3Fwo+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iitVpPTd; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Slw+8Zvi"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8249fc726e9so3024495b3a.2
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 08:49:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771433397; x=1772038197; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=atC1ZllKaS3MjszAyYCQw0ARRS6r2NPup7bu1T5xgbY=;
-        b=Slw+8Zvit4gjZsqOkjwwNgzr+niJrcKudSEViRr2tNIcwBvjMW0JzMrCAknr18EE0w
-         1PPt15aYNPMgpCcxU13o90w4pIkScOI/5wqNeZFaEJCsFlL7GEHbg+RALxbYh4mrQs3/
-         GbBCW6h8HNIkGl4AYX2SlvEFtI+3macZ/KiGSAFtRDT4kGa7tG0u1Ixqj3MLKa8JjCmw
-         O79Ab4uU86AfIo5naNz/jagX6fzbVhOsRwsLrQutvWli0aUuktu2gxDlpXTInKiPf78W
-         yLq2ydoBqiNTjRuNrxS5yLnfQIh/AoQ/hVVX6KiO7nonWXO9wh1Lc6QHXYFjgN8FZdjG
-         ya5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771433397; x=1772038197;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=atC1ZllKaS3MjszAyYCQw0ARRS6r2NPup7bu1T5xgbY=;
-        b=SK4yyEGw+l4K7moirmidSErOLSox5fckKi4dAq586qwRc8w7wmnHU1aXunH94/io81
-         BTvqjBpELn+ZmT5Ata6/NuvJgeihveA6fDZ5tmzZaZxygWqlg9NE0uTDUFJQTUskEzuU
-         K4W6L2xxPdCXQZS27HWwn0p6HzvO2zomGOu6nR8Uux7bl4wwi9aXAoV0aSX0xgfc6RHO
-         DhHwzUn7eCFA57KI7UOMAU46dMa4iQQkeMo5UmwXNj2XVjzBDjZzML6bsAHcYmQLN7qe
-         ZneJDBeC9IrhlAKAO0mQoEmZ6tBo3P7jubBNN9jw0cE0u9e9WZGocHZznTo4pg7fNlnw
-         b9zw==
-X-Gm-Message-State: AOJu0Yx/HasME22AE3H0o988vZ92B2TPeJIaGZ1dcY00fr4CnAOUBEb5
-	inb3hVzLU2bKgnoDKHiBkWO1LpGs0jN/Yhfu6caDToKQzIcIB8STBfppL0Pykg==
-X-Gm-Gg: AZuq6aLLzgV+8fkTChW/J30VMpkH70avG4OCYylQJhoH8LRx5u89F3rorjhzXCVthfA
-	l8iR0zsv1alK8RFFo/1086tKPAb4Xc2sAqLofC+ZzeQ9fC/eIcXpL8tVpny9WnT5eOmz2DO27/A
-	ZR3CGtn3er10CeECJvs6X3Q6d6gotukEz0ZdMtg3y/HVyedZPmyaBocjRCEs8Fr5y7TPt0IRUES
-	tv/OfVdx2Mti2fu1HCpt7XKCTxL5TaYnrUZrpFoXnuZ0Wz97lHMJOfQgzmmeCFW/7LdyeEkB3wM
-	7UF+25TkJUSG26tkuc4aCUxbHuiEFOtzIiVoKiCjS1eWfnWKC7IQAoTDbXMJiKrNYr+n1BMGcO2
-	Kg/22IxenduOrYTM5e37fx6HHSYgugRHWGi4mh/dC54T5uMjbfAurJLDM/goinf7fgySxuBLc1L
-	tOnoPMyDblCCsrIPgTiIE/JFtAA3Jk/TEyTvs5qKwwcfozL7AP3ndf/KngEWqcoiCy9O0K
-X-Received: by 2002:a05:6a00:248c:b0:824:3670:66b1 with SMTP id d2e1a72fcca58-824d952ab85mr10320621b3a.28.1771433396733;
-        Wed, 18 Feb 2026 08:49:56 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:181:cb2d:52e8:2ca0])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-824c6a2afeesm19726242b3a.2.2026.02.18.08.49.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Feb 2026 08:49:56 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: phillip.wood123@gmail.com,
-	gitster@pobox.com,
-	karthik.188@gmail.com
-Subject: Re: [PATCH v4 0/3] wt-status: reduce reliance on global state
-Date: Wed, 18 Feb 2026 22:18:14 +0530
-Message-ID: <20260218164930.47613-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <df357921-dd2c-4bc8-aaaf-1ea5259b22b1@gmail.com>
-References: <df357921-dd2c-4bc8-aaaf-1ea5259b22b1@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vBH3Fwo+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iitVpPTd"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id B65BC1D0009D;
+	Wed, 18 Feb 2026 12:46:07 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 18 Feb 2026 12:46:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1771436767;
+	 x=1771523167; bh=/EzTCRWGMR61gM/d02yOtJs314NuAMsnRAMVbDK6tPk=; b=
+	vBH3Fwo+GZ2yT6DKRy9R9ERVt2sa4Z1EMfWiTkHLtEDD/UfP4RDDZqNIcvBEyJ+L
+	fQ7Cw5yDYL8pxaEqGycXjlltdrAGhRDOmQprxJ6GpAS6a20AEk51xtP/8xVhz6WT
+	S5Y2R3NKaBvj0AKnvu/0G9+vlZnl0BGonwlw94sLyDkMtAmILzu5oaiRD2HZFkpB
+	oUsBVkdU/iPIw0AEr80kNikh8OywA5gwHn8gxNu/+YyUf8+qj+5ET8QOXsSoEgKb
+	G49ISKjyd1/TyXzQzjDMVI24zNMmRj+KCYJt00n/xbT+0331oBO8TOJVK6uNnuWB
+	3uzIdHHO2hJzHtEYjcFumw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771436767; x=
+	1771523167; bh=/EzTCRWGMR61gM/d02yOtJs314NuAMsnRAMVbDK6tPk=; b=i
+	itVpPTdkOtX3JBJbKWoxuo3OjFV7RRghFn9Qor/7W7FaLtdLLTzUHRMEpfZRyre6
+	5/lhXufqbddW0GW87vOWgGTz2YQCY05WhVCVF3afDSHGLvzQ/nF/Ns7lnQSybu2x
+	dNy36XinkYSzLiAGkSgeBlcF1Q77FnzGfkSG4Czy1rmvmm2SqwJzCB/NWiT4f/Fs
+	VarSy1vG7NBnDoiupaoiJxKE8qxHk29yekgu1pjz1t4Zed9m+0mhDSXceXWerTCq
+	B83Z/nn5Co8uWrIc79IQrPlPpC9bS4wHbmj5MPWQs0yKCcDDoJ8RGcqhStOoUxyt
+	XbQGPrOox1gCGfovWld/A==
+X-ME-Sender: <xms:3vqVaQ1EV3un_GpvAOHAcOAlAm66tAZM8sC_mTi-s_Kfxnaf-4bpRw>
+    <xme:3vqVaSFodlDnA3z0AAiJ28kxW_yw2p1lSuEXN4lgILdtZRwWk3N-zr1wOeSQbuNDr
+    AKxhTb7maCRUW1d0LApF5YSHgLlZ_7W_g0ZaSW54eJBO_ly063pdQ>
+X-ME-Received: <xmr:3vqVad4JTq4rNM26YtoWjsU7OHJUQxPhBBz0Cw1lt2iSRZ6ZJmH86TG7XgvxMU8zyxXBvAs8khL5wQU3v5mSZ4AL1P6flTLKlA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdefvdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhstghoohhlseht
+    uhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:3vqVaYu138lMvzAUafPXWnYZIwnSNc6d44AsCX4g80m3T_Qsyz58NA>
+    <xmx:3vqVae5jwIRORbJVMfhho3JIpWUlkSWvy-K6LoiDlvBkKP5aXVGiPw>
+    <xmx:3vqVaTWusDFlHCVHIdbCx9MwFYqdP__-n-6y42hGoQlgtGbHj65gUg>
+    <xmx:3vqVaQ_ehPtaQB7MA0idItDBkfyHMU4O7hRBfjRMTO5WnNhkJuy1dg>
+    <xmx:3_qVac0E7ghOT6IwqmcjZFKnYFZOkfVTTg513qWX4EXqJnbypf2JBuEw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Feb 2026 12:46:06 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 5/5] t6006: don't use iconv(1) without ICONV prereq
+In-Reply-To: <20260218-b4-pks-ci-msvc-iconv-fixes-v3-5-08c1ff3ffc9a@pks.im>
+	(Patrick Steinhardt's message of "Wed, 18 Feb 2026 05:38:42 +0100")
+References: <20260218-b4-pks-ci-msvc-iconv-fixes-v3-0-08c1ff3ffc9a@pks.im>
+	<20260218-b4-pks-ci-msvc-iconv-fixes-v3-5-08c1ff3ffc9a@pks.im>
+Date: Wed, 18 Feb 2026 09:46:04 -0800
+Message-ID: <xmqqfr6y7xnn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-> On 17/02/2026 17:29, Shreyansh Paliwal wrote:
-> > In wt-status.c code still relies on some global variables, including
-> > the_repository and the_hash_algo, even in cases where a repository
-> > instance is already available via struct wt_status or struct repository.
-> >
-> > In patch 1/3, update function parameters and callers to pass struct
-> > repository where no local repository access was available.
->
-> This breaks the build when running "make DEVELOPER=1"
->
-> wt-status.c: In function ‘count_stash_entries’:
-> wt-status.c:1011:51: error: unused parameter ‘r’ [-Werror=unused-parameter]
->   1011 | static int count_stash_entries(struct repository *r)
->        |                                ~~~~~~~~~~~~~~~~~~~^
-> wt-status.c: In function ‘read_line_from_git_path’:
-> wt-status.c:1314:57: error: unused parameter ‘r’ [-Werror=unused-parameter]
->   1314 | static char *read_line_from_git_path(struct repository *r,
-> const char *filename)
->        |                                      ~~~~~~~~~~~~~~~~~~~^
-> wt-status.c: In function ‘abbrev_oid_in_line’:
-> wt-status.c:1377:51: error: unused parameter ‘r’ [-Werror=unused-parameter]
->   1377 | static void abbrev_oid_in_line(struct repository *r, struct
-> strbuf *line)
->        |                                ~~~~~~~~~~~~~~~~~~~^
->
-> It would be better to use the new argument to replace "the_repository"
-> in this patch. There aren't that many so the patch is still a manageable
-> size.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks for catching that. I ran the build and test suite after all the commits
-at once so it got overlooked.
-
-> > In patch 2/3, replace direct uses of the_repository with repository
-> > instances already available in local structs.
-> >
-> > In patch 3/3, replace remaining uses of the global the_hash_algo with the
-> > hash algorithm stored in the respective repository instance.
+> Two tests in t6006 depend on the iconv(1) prerequisite to reencode a
+> commit message. This executable may not even exist though in case the
+> prereq is not set, which will cause the tests to fail.
 >
-> These both look good, though I think the commit message for the second
-> patch could be reflowed to give a more consistent line length.
+> Fix this by using UTF-8 instead when the prereq is not set.
 
-I will send a revised version. Thanks.
+The above makes perfect sense, but would the rest of the test
+involving this data need to be adjusted to expect utf-8 instead of
+$test_encoding when iconv is not available?
 
-Best,
-Shreyansh
+> -iconv -f utf-8 -t $test_encoding > commit-msg <<EOF
+> -Test printing of complex bodies
+> +test_expect_success 'setup complex body' '
+> +	message=$(cat <<-EOF
+> +	Test printing of complex bodies
+>  
+> -This commit message is much longer than the others,
+> -and it will be encoded in $test_encoding. We should therefore
+> -include an ISO8859 character: ¡bueno!
+> -EOF
+> +	This commit message is much longer than the others,
+> +	and it will be encoded in $test_encoding. We should therefore
+> +	include an ISO8859 character: ¡bueno!
+> +	EOF
+> +	) &&
+
+Creative use of "cat" only to strip leading.   Otherwise,
+
+	message="Test printing of ...
+	...
+	include an ISO8859 character: ¡bueno!"
+
+would have sufficed ;-).
+
+> +	if test_have_prereq ICONV
+> +	then
+> +		echo "$message" | iconv -f utf-8 -t $test_encoding >commit-msg
+> +	else
+> +		echo "$message" >commit-msg
+> +	fi &&
+
+So we have the message in the file encoded in either utf-8 or
+the target encoding.
+
+> -test_expect_success 'setup complex body' '
+>  	git config i18n.commitencoding $test_encoding &&
+
+But we claim unconditionally $test_encoding is used in the commit
+object.  This is OK because test_encoding is also set to UTF-8 in the
+IONV challenged environment.  Cute.
+
+> @@ -448,7 +456,12 @@ test_expect_success 'setup expected messages (for test %b)' '
+>  	commit $head2
+>  	commit $head1
+>  	EOF
+> -	iconv -f utf-8 -t $test_encoding expected.utf-8 >expected.ISO8859-1
+> +	if test_have_prereq ICONV
+> +	then
+> +		iconv -f utf-8 -t $test_encoding expected.utf-8 >expected.ISO8859-1
+> +	else
+> +		cp expected.utf-8 expected.ISO8859-1
+> +	fi
+>  '
+>  
+>  test_format complex-body %b <expected.ISO8859-1
+
+And this is the same idea.  It is confiusing that the data has
+nothing to do with Latin-1 when iconv is not in use, but things will
+even out.  Nice.
