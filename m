@@ -1,157 +1,179 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000601C3C1F
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 19:14:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771442080; cv=pass; b=Ok1WjgX/olzJA8Jb77jkEAPYhyDg/Pl2BBLOW2jPuNv3RAEZPjFn3MundLSnJ573p95WHYqLcfzPdT8aksXZxbV+oKC2UWrNZM7P7R9058h1tL+ygSSPZjJXq4XiLGJe14tldt9F3q+ERSJLadYN2OKPLqHAhY/9LERYvAXE/Mo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771442080; c=relaxed/simple;
-	bh=Tsd0Xm2SI+8NzhkL4bIAKlVKsWY/hGLkagvEO9o3Yp4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hZXZtaPNbSgsoIAAm2mYURhnIiehfiK5kT/qrdMqewsUTbtlY5j41z9XSo03Ax30PllSJBiSQ6XfWxgTZQsYlDjchiUnLLF/dn25MLMOP0lpMYFf0DKxkJtNlHqyUtGL+7JMrfwisaMyLHUvnzvjxmdRuj1HrDKTt1IK2jH3Ggk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=M3Tmldhl; arc=pass smtp.client-ip=74.125.82.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FAE199230
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 19:23:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771442633; cv=none; b=T9NifvUxXuZzSJCPvmvzYKbPaEuAi6TqEPM3uQ7jI5nxaBuIL1O7fQdLnSaUvlxlumqhsOzVTINuzfy9Suw+6pBHquNFm96H9iwrDb5JlDjtGxPHYxTSw09D8lqw3ooSd9FvgloeFXT8w4xbVwVuU9dR6OaZcGru7pN2Sb30vBw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771442633; c=relaxed/simple;
+	bh=/+P6QKtiJ0ErhRHy5aCeNYZbvVJm/b6zdozqsJ3kJ2c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eqkVzmLPwJQKrVoi5oKCXQc3saK0KHAdOA7eMG/gDMtv1Q3MqCMoRel5JtWj6xzshcjRG1EauFIwPLtQleDTT9QGCS9dm3rxGgXqM4vjh+wZttO5mCSt8ckJwsWlAzdc3V5DlwOKUhU2080tcGMtUdc0j47wQZEx42zTQzkDHk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TxxJftkf; arc=none smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="M3Tmldhl"
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2b740872a01so331784eec.1
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:14:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771442078; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bsDqVo9xLoZd7H1xK9JdkBsM0AlF8Y6+M7jJ28tsSHk9YS8AvVeKQpgTP0QLG4Dpg9
-         FuQK2KwdKzoxzk43yKT3tE2F23F4yBcMG2OIPs8w97P0Ckd0xzfjyz/CRBPTBR+IrC03
-         yOrEYyhFeUJJdNYtMApzdt49XI2CluQlr2YlIc0KOJc3l8+uJ5GdyqWgx5AcI2BEstTb
-         LQz+mVYsPFSxkSeTc9ZS8PZIWhIyxPAIeHbJf54hPQvnNw3uS8hXVfhwAKdwucblDbU2
-         5qvmMmuauC7eKNWci5x3x0CHhD0eALH9wmohbINXMRhzuNZ+nL8FtRhiLPNiAC8bYjLW
-         ukEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=JiO5jPv0qMoKyPVeu56Xym021W96xwYn40loSAc6FhA=;
-        fh=Uks93GOZlVbSY9FCUOriV0scWSEUgOsxLwbQ0kmvji4=;
-        b=NXHZkwV7KDUn+O10SON5Kptr/0d1WZ2UWkapgjcIpbDVqGWWfVWzvOq5NTUgnpyhjp
-         ncpUs/nScYh5P7Q4dFG52IlmfYqeGOUEiz5KcRso8jhhlRV714zYMiDHhLUsElseW23M
-         QTIRvGNtXV5XWgNdEo29PNBcWcpuWiuLHjn/t1xCrV9/oFuEqWBASae4zOiosCOvlqp4
-         MMQ/hqBLz07F3rl368JqXkhQ3ZMNETQZNS9FWhGrbHTYADfAZ6nAkMWoVV8yboVPfmUu
-         CHe7mmNvkg3Y0CP/Jf20I8TcvG1cUZ+WjeCINdj/WzYXfTt2aFViP7AG9o4LjNkxrJzr
-         0x5Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TxxJftkf"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-45f04f1348cso109489b6e.1
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:23:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree.net; s=google; t=1771442078; x=1772046878; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JiO5jPv0qMoKyPVeu56Xym021W96xwYn40loSAc6FhA=;
-        b=M3Tmldhl/MbfSRgUP9heyDu4mbUW6LOW+rLvmEf9ZlmsYs6biiyj+6KE6AWWGZSTe8
-         sAnHkF3CSkB14QqfLEp6uOg988zvIrj8cGzeFLXpXNqMDbsCi6350jlAuDDSz0fnM0gN
-         RKJieFJu64Ja3Z2vsRz0miG70cANIVdI93B50S+CFp9IiSsbAZd6Mq0DgjR/s8/41Q8K
-         opy33gx8EW/7puCDODynWV5o2kfEfYQ4aatEQKx3VqvCy8lXGM/3Y/9pSbcb0TnE9Zhu
-         Q/N6qJiaTuVEaCPTg8Y9L0KibwiQLVXU+ss/laNWSeLQfkxQ/gmqCw/mcWgIVrK3/Tbr
-         xw8g==
+        d=gmail.com; s=20230601; t=1771442631; x=1772047431; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yYSVb3ErQ/h0eDc5P7GpHJnNQvHGuc91bmRHYRpdpa4=;
+        b=TxxJftkfl0t8ij+W/8T5UZtTIU5QU6DTc53H6guYzqON744p3PtW4KWXmhe+S6p2nK
+         0lcw2mV9QDSwO7YwCAchSfSrgQYkZs3WnJ06Ee+x5m/+yHHOS/rTA0CG8R1OM3MJjX0w
+         E4j92qoC0t/srD/f0OuiUCKC0FBN1V2WSJpIWmNjbWCN7IaE7QjMeeHG1xRRvkaWw1k9
+         1/IsmDe/T3KAIQrL2ElrnMNplPnk5UQT1B7rFvWcKXVI6urXoLX4ebxfvLmbqOQlWqU2
+         JpdtMKWddCpVE0/wKCCAXPHGuGB/NR9b2LS7A9TCRdoZvq0yV1Vyj8QChznWbmooxxEr
+         3Qtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771442078; x=1772046878;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=JiO5jPv0qMoKyPVeu56Xym021W96xwYn40loSAc6FhA=;
-        b=DYt/qLYVwtm0SVzmX9BujY0iNqLows7qbEdNXolQFuyyF8R3bDlgB3pRrItU1B/o5A
-         HL3gdlKhjtYZ4WpurIGszA6yLp46dMOTAjAvpjbXBF297ezDlcPowGSlaph30cnZq7Zu
-         U/E5m3MwFGaAC5h+zGSM3fWLn59+ZhaGAgKKJBQ6LQX7tJAp3EnVmAc5GP3h7Y4FnaVj
-         8SphK59ZK5JkF9qaFSk3hJ9J8p8yT12mbjwYKkgVn1hTtvpKtthHriFO6ziEzV8oYV9Z
-         Ufb+DDgtA2rMTmPZUBt2dQrdGr7oDumNvv4xGCpWvu7fYQRbzltds0uoN9LEGAiMUtw4
-         QWew==
-X-Forwarded-Encrypted: i=1; AJvYcCVGOZya2/iYsVvpTvr5V1t3mQwDA/Yr23W0LHav1I3/VeRJNkrHEWMhRF8sn/PjAAE1tU4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTKq8YZ2b9XiUiopOCn3/gQ5m7YC3HMhCgxdarDGTfqmEICmb3
-	9JsYwJAfd5vGhBtYZvug/Q8xJhthDDKP5hG0+96+YJVsuFRPbS13TnheOjSY/E6O1aukCmcZHuG
-	DJNzi2czLW8oC7IWjIjh+aUQ088V1y5c5fr7qhu7AkTeZFdjftZpKFvUZ2I7cBrxYqxh8qA0fQo
-	opL//0n0n0lqlD5oHjz2ODJ+Kr+DXHkQMqwUhE03+LWJ3qhOPFMZu/muhm3rsfDXIV9P83tu9PY
-	od+kxW88qx+dVr129VefORWfT0HykB4zwDMo3JlYRXlLS8Bb0ddsj9eQTzIj8FF6P/KEyMzOFEC
-	x1Rm9FdJYs72wPU=
-X-Gm-Gg: AZuq6aI7PQbTUNpqWUjBPARLhtGLTpkFb2t1dtm1kyXs14tG2nxly5NB3z4a+8gsGT8
-	dilABsPtd1bUe07SSXL9VGyr0bVqCGEm6wqoe8PqpsOFrNk/ZG2qb8EKs5ut2nUgqNp1sDMJtpw
-	6JW/v7Y62RI+fHheOUxalBLnwxnyXN2D2mQCGkn+2eo3ijKy7OoF1MYS9a7gFOyM9kqEwG4MBJe
-	moQ9pO2ZwkjUnMyn75wX0zgbfakVKrQOzHcEvDTXg7kSDCC5Hs2WcckayY6rC4volDBkz6fcCYJ
-	tE3u+4Jt
-X-Received: by 2002:a05:7300:3254:b0:2ba:a15b:5f40 with SMTP id
- 5a478bee46e88-2bd5015ed65mr1383909eec.26.1771442077865; Wed, 18 Feb 2026
- 11:14:37 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771442631; x=1772047431;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yYSVb3ErQ/h0eDc5P7GpHJnNQvHGuc91bmRHYRpdpa4=;
+        b=afqM2q9tphhS21YQGsj73OcouRQ+ldB7OKnwP1rOsbDH1ummtqTtnQ0atlD0K9/kG4
+         oS7qdUzfeTdWnSIzKHjXfoUz3BpYSoWI46+Jo+d9+RtMGc7T8ljAQeN4rwF5hychv1gg
+         057ZZ0fk7TfhzehF4F8y82VuZQEvNFVRyQRC5S9M4QIft0KMlfuPT3Fw0gyatHna1FGm
+         BU4w8nBrfJhvzG1HqYpR/s+/3S3k2gkE93dBMTo7TrK3ue+ZUjHb9N1VED3H0BEkfP6v
+         3QmxOqg53Niyrqkrd8xWTWOI2I06irHdIIkAPdDX3PDJUOUyIw1CYtUuIx2oA6XbvL7a
+         SjMw==
+X-Gm-Message-State: AOJu0Yx4uiu/62RHFAzQIzwiMtuDdL0uEfhHirovkxzzPN7e29h7ywk2
+	osKhpox1JLjn4gaDKPOajcHvej/Ye/Ka8X/GIrdkwPpKuWDjqpIDWpKjPPAOZw==
+X-Gm-Gg: AZuq6aKzBENbro9JjrrMfS7BHMQfIDapt6y1EhfK5TVVwAPZ1Njh4+y8UFyGfymFBHn
+	p0TSoJoTjR7mz4L+dV6j9E72jXrR9UAT6wTPNYXt0uZ/DAXJgWZdxKSqClF0JeGom/tRnysLfOn
+	lV3SbTNfh6PIFgfSE8eEkhdOwjz1oXjxkrtRt4yQJidQw5+ppjK7ZAdD2YiJ0a3XWZqycCGAfYF
+	UIHLsX17s8JHkzICpaquWvgs6aTeY3Xk3jVNKwxrxXszsLQyZr2PCnj+ByvpzJ+MDG8gLO5GzKV
+	LCvyEySMCy7JMK9OPWmhFUKyRtliOyYutszVwJQb8I8jKuxdtKZyl27A/L2stRI3uEaqhavOMst
+	vi1n3n/AIdjDnWs3nHADXOksfWx2Z4u/j/reakIUIbsOWsHZvsGYzLjVBzCiPPJ4IJNRJMAHrl5
+	+gByXdO/OAQEL26Ll1pJb8CodjK34=
+X-Received: by 2002:a05:6808:6507:b0:455:8400:f078 with SMTP id 5614622812f47-463b3f86dbfmr8661449b6e.25.1771442630633;
+        Wed, 18 Feb 2026 11:23:50 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4636ae8f86fsm14830508b6e.3.2026.02.18.11.23.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Feb 2026 11:23:50 -0800 (PST)
+Date: Wed, 18 Feb 2026 13:23:47 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>
+Subject: Re: [PATCH 2/3] commit: make `repo_parse_commit_no_graph()` more
+ robust
+Message-ID: <aZYJyT3QZ2lJrkL-@denethor>
+References: <20260216-b4-pks-receive-pack-optimize-shallow-v1-0-e98886daff2b@pks.im>
+ <20260216-b4-pks-receive-pack-optimize-shallow-v1-2-e98886daff2b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2046.v2.git.1770775169908.gitgitgadget@gmail.com>
- <pull.2046.v3.git.1771391650713.gitgitgadget@gmail.com> <xmqq7bsa7x78.fsf@gitster.g>
-In-Reply-To: <xmqq7bsa7x78.fsf@gitster.g>
-From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Thu, 19 Feb 2026 04:14:26 +0900
-X-Gm-Features: AaiRm53w0CtunUr3A3xeMfIwBSExJb-95Z0Xx2p6JQaNfpGdh6v-z6ODd5w-0w0
-Message-ID: <CAOTNsDzwb_k+FDBbfzf7z=X=zGhnhXb902Dx9JFGv_eLjza2tQ@mail.gmail.com>
-Subject: Re: [PATCH v3] osxkeychain: define build targets in the top-level Makefile.
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260216-b4-pks-receive-pack-optimize-shallow-v1-2-e98886daff2b@pks.im>
 
-On Thu, Feb 19, 2026 at 2:55=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/c=
-redential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
-> > +     @mkdir -p contrib/credential/osxkeychain/.depend
-> > +     $(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLA=
-GS) $(EXTRA_CPPFLAGS) $<
->
-> I notice that many other places in the Makefile we seem to use
-> $(call mkdir_p_parent_template).  Do we want to do so here, too?
->
-> Other than that, looking good.  Thanks for updating.
+On 26/02/16 04:38PM, Patrick Steinhardt wrote:
+> In the next commit we will start to parse more commits via the
+> commit-graph. This change will lead to a segfault though because we try
+> to access the tree of a commit via `repo_get_commit_tree()`, but:
+> 
+>   - The commit has been parsed via the commit-graph, and thus its
+>     `maybe_tree` field is not yet populated.
+> 
+>   - We cannot use the commit-graph to populate the commit's tree because
+>     we're in the process of writing the commit-graph.
+> 
+> The consequence is that we'll get a `NULL` pointer for the tree in
+> `write_graph_chunk_data()`.
 
-$(call mkdir_p_parent_tempate) seems to be used for creating the
-target's parent directory (e.g., creating
-po/build/locale/bg/LC_MESSAGES/ for
-po/build/locale/bg/LC_MESSAGES/git.mo).
+IIUC, when a commit has been parsed via the commit graph, if the commit
+graph is closed, there is no longer a way for commit object tree to be
+read. This results `repo_get_commit_tree()` always returning NULL in
+such scenarios.
 
-Since .depend directories are handled via dep_dirs in this Makefile,
-how about the following change for consistency?
+> In theory we are already mindful of this situation, as we explicitly use
+> `repo_parse_commit_no_graph()` to parse the commit without the help of
+> the commit-graph. But that doesn't do the trick as the commit is already
+> marked as parsed, so the function will not re-populate it. And as the
+> commit-graph has been closed, neither will `get_commit_tree_oid()` be
+> able to load the tree for us.
 
-  diff --git a/Makefile b/Makefile
-  index 1c2019a4cb..47485004d8 100644
-  --- a/Makefile
-  +++ b/Makefile
-  @@ -2876,6 +2876,10 @@ objects: $(OBJECTS)
-   dep_files :=3D $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
-   dep_dirs :=3D $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
+And `repo_parse_commit_no_graph()` doesn't work because the commit has
+already been marked as parsed.
 
-  +ifeq ($(uname_S),Darwin)
-  + dep_dirs +=3D $(addsuffix .depend,$(sort $(dir
-contrib/credential/osxkeychain/git-credential-osxkeychain.o)))
-  +endif
-  +
-   ifeq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
-   $(dep_dirs):
-    @mkdir -p $@
-  @@ -4066,7 +4070,6 @@
-contrib/credential/osxkeychain/git-credential-osxkeychain:
-contrib/credential/os
-    $(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security
--framework CoreFoundation
+> It seems like this issue can only be hit under artificial circumstances:
+> the error was hit via `git_test_write_commit_graph_or_die()`, which is
+> run by git-commit(1) and git-merge(1) in case `GIT_TEST_COMMIT_GRAPH=1`:
+> 
+>   $ GIT_TEST_COMMIT_GRAPH=1 meson test t7507-commit-verbose \
+>       --test-args=-ix -i
+>   ...
+>   ++ git -c commit.verbose=true commit --amend
+>   hint: Waiting for your editor to close the file...
+>   ./test-lib.sh: line 1012: 55895 Segmentation fault         (core dumped) git -c commit.verbose=true commit --amend
+> 
+> To the best of my knowledge, this is the only case where we end up
+> writing a commit-graph in the same process that might have already
+> consulted the commit-graph to look up arbitrary objects. But regardless
+> of that, this feels like a bigger accident that is just waiting to
+> happen.
 
-   contrib/credential/osxkeychain/git-credential-osxkeychain.o:
-contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
-  - @mkdir -p contrib/credential/osxkeychain/.depend
-    $(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args)
-$(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+So I assume we end up closing the commit-graph when writing a new one.
+If we need to read the trees of commits parsed via commit-graph, this
+will trigger a segfault since the commit tree will always be NULL.
 
-   install-git-credential-osxkeychain:
-contrib/credential/osxkeychain/git-credential-osxkeychain
+> Make the code more robust by extending `repo_parse_commit_no_graph()` to
+> unparse a commit first in case we detect it's coming from a graph. This
+> ensures that we will re-read the object without it, and thus we will
+> populate `maybe_tree` properly.
 
---
-Koji Nakamaru
+Hmm, I wonder if this is conceptually the correct place to address this
+problem. Naively, I would expect `repo_get_commit_tree()` to always be
+capable of providing the commit tree. I guess the problem though is that
+this would require `repo_get_commit_tree()` to detect this scenario and
+reparse the object itself. Maybe we could at least have
+`repo_get_commit_tree()` BUG() in this scenario though?
+
+> This fix shouldn't have any performance consequences: the function is
+> only ever called in the "commit-graph.c" code, and we'll only re-parse
+> the commit at most once.
+> 
+> Add an exclusion to our Coccinelle rules so that it doesn't complain
+> about us accessing `maybe_tree` directly.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  commit.h                        | 14 ++++++++++++--
+>  contrib/coccinelle/commit.cocci |  2 +-
+>  2 files changed, 13 insertions(+), 3 deletions(-)
+> 
+> diff --git a/commit.h b/commit.h
+> index 1635de418b..f2f39e1a89 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -103,16 +103,26 @@ static inline int repo_parse_commit(struct repository *r, struct commit *item)
+>  	return repo_parse_commit_gently(r, item, 0);
+>  }
+>  
+> +void unparse_commit(struct repository *r, const struct object_id *oid);
+> +
+>  static inline int repo_parse_commit_no_graph(struct repository *r,
+>  					     struct commit *commit)
+>  {
+> +	/*
+> +	 * When the commit has been parsed but its tree wasn't populated then
+> +	 * this is an indicator that it has been parsed via the commit-graph.
+> +	 * We cannot read the tree via the commit-graph, as we're explicitly
+> +	 * told not to use it. We thus have to first un-parse the object so
+> +	 * that we can re-parse it without the graph.
+> +	 */
+> +	if (commit->object.parsed && !commit->maybe_tree)
+> +		unparse_commit(r, &commit->object.oid);
+
+This unparses commits that were read via commit-graph so they can be
+reparsed normally. Looks good.
+
+-Justin
