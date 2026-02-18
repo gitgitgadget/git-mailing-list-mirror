@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE76833556E
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 22:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AF6335540
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 22:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771453470; cv=pass; b=G7uN8GVoMSnoefpX2c7kFqbJYxHqvUvxWDoObpoAQ4Q6LDqzgheYiII9nkxPNB6uhPHqFrSbPqF4XGSrNyPx12hf0gugEUAn2m+VPvR2MpwNfnojUOX+6VoSIYoMA8b3flya9pdC7fDTLbwvBa4U9VAEMnKpV7Ztvmj46im6Bsk=
+	t=1771453472; cv=pass; b=i/eexpWMq/X42vxIQhe9LCMupY+0gvAYKxDwVyaNIT6slqPjALMpcIvOz3kvYqPW2TXvmg4tHQb2ezy8CKRjjYKYwFoFYQrh+GH8QwNVY5uWtETcbk7APzdE8hgIkHfniIHeC8e/xePHNKjHD3v5GDnQJJooldUwJo/a3Y0dE/0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771453470; c=relaxed/simple;
-	bh=tpCqExBuIGMh3UZGrCMrYbBiS9o4UxdZ4Arck2K6VPY=;
+	s=arc-20240116; t=1771453472; c=relaxed/simple;
+	bh=khK4Gwl4jBGZP6m4dXDHrQ/DmuEJr36N9LgaE45/VGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4Pu8BlYqt0CkQ733+ohRRuRpbGSW4MxjJMMlN29k44tynqbp/F964zpGrvRDrM/ilbSLwYlXquJAdZDhotmqzG+kgDGdNXq6wknv0M+jbLhmoN+4aCDin5AgUqyXDgiiIzZY1HrpYEth7HZmsJrga6CWJDZAameEbpOnD+qdLA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=J8pWCRGL; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=jgDMyvBrmQ3ssrz+KfeA+Q/AcJ7mhQ/xvsg7QBReYwzLQncH7l7LuqeyI0QRvibL48q5zb+ClYFPohEdneZUoaq3c610NvOXwLxEvm2wsVH5ytBeXFEeCB6D0i1q9vgrf3dD90bqgLFrFEHwvBCgUTfEamjrekdglIvC8s3aUcA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=bgCWqHI7; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="J8pWCRGL"
-ARC-Seal: i=1; a=rsa-sha256; t=1771453454; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="bgCWqHI7"
+ARC-Seal: i=1; a=rsa-sha256; t=1771453458; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=Xw7Fs5FLSUhqIPz57vA1w8cCAOEFrpuuIqk+06OneGgbRawWNREbNYhdajIVna2sc7y0TFMhBpEl92G9Za6SX1y9H1JgTQmTWPytViWxIVv2rwgV0R1jLfUWeWcNk84XEjlJN8V7GWuyGW+F0e9mafp+phWFwwK74ceNEAYiGPo=
+	b=iD71Go6D1Dw/USsms+rrAIbkY3CiaG3WOPmX0X7mYXmnlxJoTLWafoHauVZ9fDu8l2SnFDFaKNwQSbaQsFQEzPLiqiSZkGnoeBtwiP9IvIHojI0SWmCVHsR3Q7k64R/j6X/jMHPYczCguEsCW5JAI08OSRHWcW3u8KtGxxJ7XX8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771453454; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=FSISW3Vu8sbQkkDs+zGNGBW3WwUNmM3UWA7kMqyk2s8=; 
-	b=JLUV95SX5rM6ZQ5nnTOoG2WsC8uua19jhh1PgLtqw1igY0u6q+KkbOrTq5z9WPAypvoKRxinCghsbU35ji/3Yt3Z8AT/EWubb/u5K/o/blryywVexUZr2pVKhQjZM7do0Zvqb8GtGm84DxbxhbrnDCIljmdKwo7Tu+TXj/z4gvo=
+	t=1771453458; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=nm2RPhGOeTNZwPrzBp3tTAxmZnOTSqmHu0mHEjRwVck=; 
+	b=RNmUIc6fLu3MWaNZmQqECkpfFAuk8uXEt/5KFVSRQLS/07XRgoAttJ/R2GwCSRq0uygfT74ckGHkBRJq+impsMaDXArJgwMNKUmyHqn/TOjWw3ZlNm//6hxBKklgRtTxeIvqDCPN0Kosq7qgJt6y1isY2O+mB2qXDLrX4l4dFbY=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771453454;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771453458;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=FSISW3Vu8sbQkkDs+zGNGBW3WwUNmM3UWA7kMqyk2s8=;
-	b=J8pWCRGL+MW2cpk3JgYlV9ILJr9MBx44AKO0TcIRJY6AMk208IvqRZSx8Ad26UYv
-	G/KH8QdXEOABwisAkpfdlc+B2Q7DRfTIddPA8GkVkpUZrW8tDJfOsU2zl9amFOym8hG
-	dxOwfxWKG5FhVd4AolfFW24uv4XV1/HKP2KNRnUE=
-Received: by mx.zohomail.com with SMTPS id 17714534535231.9521341375700558;
-	Wed, 18 Feb 2026 14:24:13 -0800 (PST)
+	bh=nm2RPhGOeTNZwPrzBp3tTAxmZnOTSqmHu0mHEjRwVck=;
+	b=bgCWqHI7QyA+RX9KP2LFkzhsYrIEwl32Wb1yeeeTEj2kK9fEFo8jZT6XS3I/mfWU
+	Kt157v4TWd69tvTRmh6Q/3jyrmaOes3xMU4HPsEEaeoKTqm930Q1GueFvR6geZj9ug8
+	1VaXlar4HvpoE56jhluJiifIQjEXmQ8GuI4kkbRU=
+Received: by mx.zohomail.com with SMTPS id 1771453457780363.6274029243531;
+	Wed, 18 Feb 2026 14:24:17 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -45,9 +45,9 @@ Cc: Jeff King <peff@peff.net>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2 3/8] hook: add "git hook list" command
-Date: Thu, 19 Feb 2026 00:23:47 +0200
-Message-ID: <20260218222352.55393-4-adrian.ratiu@collabora.com>
+Subject: [PATCH v2 5/8] hook: allow disabling config hooks
+Date: Thu, 19 Feb 2026 00:23:49 +0200
+Message-ID: <20260218222352.55393-6-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260218222352.55393-1-adrian.ratiu@collabora.com>
 References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
@@ -61,247 +61,117 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-From: Emily Shaffer <emilyshaffer@google.com>
+Hooks specified via configs are always enabled, however users
+might want to disable them without removing from the config,
+like locally disabling a global hook.
 
-The previous commit introduced an ability to run multiple commands for
-hook events and next commit will introduce the ability to define hooks
-from configs, in addition to the "traditional" hooks from the hookdir.
+Add a hook.<name>.enabled config which defaults to true and
+can be optionally set for each configured hook.
 
-Introduce a new command "git hook list" to make inspecting hooks easier
-both for users and for the tests we will add.
-
-Further commits will expand on this, e.g. by adding a -z output mode.
-
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Documentation/git-hook.adoc |  5 ++++
- builtin/hook.c              | 60 +++++++++++++++++++++++++++++++++++++
- hook.c                      | 17 ++---------
- hook.h                      | 24 ++++++++++++++-
- t/t1800-hook.sh             | 22 ++++++++++++++
- 5 files changed, 112 insertions(+), 16 deletions(-)
+ Documentation/config/hook.adoc |  7 +++++++
+ hook.c                         | 20 ++++++++++++++++++++
+ t/t1800-hook.sh                | 32 ++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+)
 
-diff --git a/Documentation/git-hook.adoc b/Documentation/git-hook.adoc
-index f6cc72d2ca..eb0ffcb8a9 100644
---- a/Documentation/git-hook.adoc
-+++ b/Documentation/git-hook.adoc
-@@ -9,6 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git hook' run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]
-+'git hook' list <hook-name>
- 
- DESCRIPTION
- -----------
-@@ -28,6 +29,10 @@ Any positional arguments to the hook should be passed after a
- mandatory `--` (or `--end-of-options`, see linkgit:gitcli[7]). See
- linkgit:githooks[5] for arguments hooks might expect (if any).
- 
-+list::
-+	Print a list of hooks which will be run on `<hook-name>` event. If no
-+	hooks are configured for that event, print a warning and return 1.
+diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
+index 9faafe3016..0cda4745a6 100644
+--- a/Documentation/config/hook.adoc
++++ b/Documentation/config/hook.adoc
+@@ -13,3 +13,10 @@ hook.<name>.event::
+ 	specified event, the associated `hook.<name>.command` is executed.
+ 	This is a multi-valued key. To run `hook.<name>` on multiple
+ 	events, specify the key more than once. See linkgit:git-hook[1].
 +
- OPTIONS
- -------
- 
-diff --git a/builtin/hook.c b/builtin/hook.c
-index 7afec380d2..51660c4941 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -6,12 +6,16 @@
- #include "hook.h"
- #include "parse-options.h"
- #include "strvec.h"
-+#include "abspath.h"
- 
- #define BUILTIN_HOOK_RUN_USAGE \
- 	N_("git hook run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]")
-+#define BUILTIN_HOOK_LIST_USAGE \
-+	N_("git hook list <hook-name>")
- 
- static const char * const builtin_hook_usage[] = {
- 	BUILTIN_HOOK_RUN_USAGE,
-+	BUILTIN_HOOK_LIST_USAGE,
- 	NULL
- };
- 
-@@ -20,6 +24,61 @@ static const char * const builtin_hook_run_usage[] = {
- 	NULL
- };
- 
-+static int list(int argc, const char **argv, const char *prefix,
-+		 struct repository *repo)
-+{
-+	static const char *const builtin_hook_list_usage[] = {
-+		BUILTIN_HOOK_LIST_USAGE,
-+		NULL
-+	};
-+	struct string_list *head;
-+	struct string_list_item *item;
-+	const char *hookname = NULL;
-+	int ret = 0;
-+
-+	struct option list_options[] = {
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, list_options,
-+			     builtin_hook_list_usage, 0);
-+
-+	/*
-+	 * The only unnamed argument provided should be the hook-name; if we add
-+	 * arguments later they probably should be caught by parse_options.
-+	 */
-+	if (argc != 1)
-+		usage_msg_opt(_("You must specify a hook event name to list."),
-+			      builtin_hook_list_usage, list_options);
-+
-+	hookname = argv[0];
-+
-+	head = list_hooks(repo, hookname, NULL);
-+
-+	if (!head->nr) {
-+		warning(_("No hooks found for event '%s'"), hookname);
-+		ret = 1; /* no hooks found */
-+		goto cleanup;
-+	}
-+
-+	for_each_string_list_item(item, head) {
-+		struct hook *h = item->util;
-+
-+		switch (h->kind) {
-+		case HOOK_TRADITIONAL:
-+			printf("%s\n", _("hook from hookdir"));
-+			break;
-+		default:
-+			BUG("unknown hook kind");
-+		}
-+	}
-+
-+cleanup:
-+	hook_list_clear(head, NULL);
-+	free(head);
-+	return ret;
-+}
-+
- static int run(int argc, const char **argv, const char *prefix,
- 	       struct repository *repo UNUSED)
- {
-@@ -77,6 +136,7 @@ int cmd_hook(int argc,
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option builtin_hook_options[] = {
- 		OPT_SUBCOMMAND("run", &fn, run),
-+		OPT_SUBCOMMAND("list", &fn, list),
- 		OPT_END(),
- 	};
- 
++hook.<name>.enabled::
++	Whether the hook `hook.<name>` is enabled. Defaults to `true`.
++	Set to `false` to disable the hook without removing its
++	configuration. This is particularly useful when a hook is defined
++	in a system or global config file and needs to be disabled for a
++	specific repository. See linkgit:git-hook[1].
 diff --git a/hook.c b/hook.c
-index c008a7232d..979a97a538 100644
+index 8a9b405f76..35c24bf33d 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -61,7 +61,7 @@ static void hook_clear(struct hook *h, cb_data_free_fn cb_data_free)
- 	free(h);
- }
+@@ -164,6 +164,21 @@ static int hook_config_lookup_all(const char *key, const char *value,
+ 		char *old = strmap_put(&data->commands, hook_name,
+ 				       xstrdup(value));
+ 		free(old);
++	} else if (!strcmp(subkey, "enabled")) {
++		switch (git_parse_maybe_bool(value)) {
++		case 0: /* disabled */
++			if (!unsorted_string_list_lookup(&data->disabled_hooks,
++							 hook_name))
++				string_list_append(&data->disabled_hooks,
++						   hook_name);
++			break;
++		case 1: /* enabled: undo a prior disabled entry */
++			unsorted_string_list_remove(&data->disabled_hooks,
++						    hook_name);
++			break;
++		default:
++			break; /* ignore unrecognised values */
++		}
+ 	}
  
--static void hook_list_clear(struct string_list *hooks, cb_data_free_fn cb_data_free)
-+void hook_list_clear(struct string_list *hooks, cb_data_free_fn cb_data_free)
- {
- 	struct string_list_item *item;
+ 	free(hook_name);
+@@ -216,6 +231,11 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
+ 			const char *hname = hook_names->items[i].string;
+ 			char *command;
  
-@@ -101,20 +101,7 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
- 	string_list_append(hook_list, hook_path)->util = h;
- }
- 
--/*
-- * Provides a list of hook commands to run for the 'hookname' event.
-- *
-- * This function consolidates hooks from two sources:
-- * 1. The config-based hooks (not yet implemented).
-- * 2. The "traditional" hook found in the repository hooks directory
-- *    (e.g., .git/hooks/pre-commit).
-- *
-- * The list is ordered by execution priority.
-- *
-- * The caller is responsible for freeing the memory of the returned list
-- * using string_list_clear() and free().
-- */
--static struct string_list *list_hooks(struct repository *r, const char *hookname,
-+struct string_list *list_hooks(struct repository *r, const char *hookname,
- 			       struct run_hooks_opt *options)
- {
- 	struct string_list *hook_head;
-diff --git a/hook.h b/hook.h
-index 3256d2dddb..fea221f87d 100644
---- a/hook.h
-+++ b/hook.h
-@@ -163,7 +163,29 @@ struct hook_cb_data {
- 	struct run_hooks_opt *options;
- };
- 
--/*
-+/**
-+ * Provides a list of hook commands to run for the 'hookname' event.
-+ *
-+ * This function consolidates hooks from two sources:
-+ * 1. The config-based hooks (not yet implemented).
-+ * 2. The "traditional" hook found in the repository hooks directory
-+ *    (e.g., .git/hooks/pre-commit).
-+ *
-+ * The list is ordered by execution priority.
-+ *
-+ * The caller is responsible for freeing the memory of the returned list
-+ * using string_list_clear() and free().
-+ */
-+struct string_list *list_hooks(struct repository *r, const char *hookname,
-+			       struct run_hooks_opt *options);
++			/* filter out disabled hooks */
++			if (unsorted_string_list_lookup(&cb_data.disabled_hooks,
++							hname))
++				continue;
 +
-+/**
-+ * Frees the memory allocated for the hook list, including the `struct hook`
-+ * items and their internal state.
-+ */
-+void hook_list_clear(struct string_list *hooks, cb_data_free_fn cb_data_free);
-+
-+/**
-  * Returns the path to the hook file, or NULL if the hook is missing
-  * or disabled. Note that this points to static storage that will be
-  * overwritten by further calls to find_hook and run_hook_*.
+ 			command = strmap_get(&cb_data.commands, hname);
+ 			if (!command)
+ 				die(_("'hook.%s.command' must be configured or "
 diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index ed28a2fadb..3ec11f1249 100755
+index f1048a5119..9797802735 100755
 --- a/t/t1800-hook.sh
 +++ b/t/t1800-hook.sh
-@@ -10,9 +10,31 @@ test_expect_success 'git hook usage' '
- 	test_expect_code 129 git hook run &&
- 	test_expect_code 129 git hook run -h &&
- 	test_expect_code 129 git hook run --unknown 2>err &&
-+	test_expect_code 129 git hook list &&
-+	test_expect_code 129 git hook list -h &&
- 	grep "unknown option" err
+@@ -318,6 +318,38 @@ test_expect_success 'rejects hooks with no commands configured' '
+ 	test_grep "hook.broken.command" actual
  '
  
-+test_expect_success 'git hook list: nonexistent hook' '
-+	cat >stderr.expect <<-\EOF &&
-+	warning: No hooks found for event '\''test-hook'\''
-+	EOF
-+	test_expect_code 1 git hook list test-hook 2>stderr.actual &&
-+	test_cmp stderr.expect stderr.actual
++test_expect_success 'disabled hook is not run' '
++	test_config hook.skipped.event "test-hook" &&
++	test_config hook.skipped.command "echo \"Should not run\"" &&
++	test_config hook.skipped.enabled false &&
++
++	git hook run --ignore-missing test-hook 2>actual &&
++	test_must_be_empty actual
 +'
 +
-+test_expect_success 'git hook list: traditional hook from hookdir' '
-+	test_hook test-hook <<-EOF &&
-+	echo Test hook
-+	EOF
++test_expect_success 'disabled hook does not appear in git hook list' '
++	test_config hook.active.event "pre-commit" &&
++	test_config hook.active.command "echo active" &&
++	test_config hook.inactive.event "pre-commit" &&
++	test_config hook.inactive.command "echo inactive" &&
++	test_config hook.inactive.enabled false &&
 +
-+	cat >expect <<-\EOF &&
-+	hook from hookdir
-+	EOF
-+	git hook list test-hook >actual &&
-+	test_cmp expect actual
++	git hook list pre-commit >actual &&
++	test_grep "active" actual &&
++	test_grep ! "inactive" actual
 +'
 +
- test_expect_success 'git hook run: nonexistent hook' '
- 	cat >stderr.expect <<-\EOF &&
- 	error: cannot find a hook named test-hook
++test_expect_success 'globally disabled hook can be re-enabled locally' '
++	test_config_global hook.global-hook.event "test-hook" &&
++	test_config_global hook.global-hook.command "echo \"global-hook ran\"" &&
++	test_config_global hook.global-hook.enabled false &&
++	test_config hook.global-hook.enabled true &&
++
++	echo "global-hook ran" >expected &&
++	git hook run test-hook 2>actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'git hook run a hook with a bad shebang' '
+ 	test_when_finished "rm -rf bad-hooks" &&
+ 	mkdir bad-hooks &&
 -- 
 2.52.0.732.gb351b5166d.dirty
 
