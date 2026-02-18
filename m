@@ -1,66 +1,67 @@
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BE1332916
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 14:18:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E26333342A
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 14:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771424335; cv=none; b=NQ7DcqAxqVzw7x1iSvJhbc8jM0DgpEF+dsfPo4evGjzsjcN6t7H+yB9I3YBzeGMnc7oZbPDQ3/Jqm44I6bAEhFa7e+t5ieaN6q3NmCIIhmpQJJ27lVVsf906kcmHToQttyAINH5btu4YUFg3yHHh33d6MHartnEpNYKU9D8IETY=
+	t=1771424400; cv=none; b=kG116tEbfedTpYGbZryV88yCFAYeoMz2Sfpogc61k3UBlc5V3JiNKT+Yio1OTGgvvOZbmc2zPY9y2kNJ4x2IobGr/w1XFot4hbl/njL91LTlgpucqZEa8eu+mI3NMZ/kqnFg7GRb0/5peyq82S+uiFKqUU7mo6Vsj8n28ACx8Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771424335; c=relaxed/simple;
-	bh=rrCh4Ka5CmxdEGvf42ObL1/2rf76gbva0P0cL7PBGbA=;
+	s=arc-20240116; t=1771424400; c=relaxed/simple;
+	bh=2bpxqihq2sPj6ha+N29EH/wRbY6Y06/BN4VZ+YuuyPE=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fRt/AyqaPTxNjANsqAY38MUvHEaA8th4YVAlHJPblZ3MGsiB2sOSNXQmUIcIz+/ajAZQOkv7XPiq599kKuEylliPWQvdCWEkjnS7MCgMdDby2zhbE45H+n6U0/co4DampL7JNGnfUJWR2Unv6NFCaiBOgR6o/JBd8TfmQtLn9BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EExp/spn; arc=none smtp.client-ip=209.85.128.68
+	 In-Reply-To:Content-Type; b=OGQm4ISe+7d3lt0fB5w2dCin/WEP3D+ADFIP1U17VKyQ2WZefEja8Y3lFxg2VE6eb2vpIamZDeRwga5QXvzmmGi7GYyXcOiQbXVty0KGufKaIevJO0Hic1QxxC2sJWg+x94lsBJAqiCS3Dq0fmSDKeHkhj2WBCgE36b7eSXDYjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bmo7Vr0C; arc=none smtp.client-ip=209.85.128.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EExp/spn"
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-4806f3fc50bso62768065e9.0
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 06:18:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bmo7Vr0C"
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-48373a4bca3so29741595e9.0
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 06:19:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771424332; x=1772029132; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771424398; x=1772029198; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=m/aaSslU8FylyxLS/LeM4Oc79564f767f0enGH3ku+k=;
-        b=EExp/spncHraAw/0eePMqJJrZ8/xRfj0DRv2tv6Ocix7aoj0MBcWKgUjay8y8xQ3Vs
-         /nESGVUf2WI+zr9rb7BagaLG4Oajlco+bX2Qlgb+jqkvCZpgU0vcP8b951mzCZ7A+5WM
-         TZbeickSE/lDMFT4/zu0ydMwfy3l8JL1OMIBnR0k/olciB/NqOiaJXKpbqi1YhOW6c5n
-         k7WS9kzaBW2sREHNj8ZoGMAaUo6GQekbitCzn5TBwnZltIEOp9DehHLPhZsaFBXJx+Q7
-         kzEIikRxwvESv2Zxm0jbbTdKBZYokh00TcQ2zwGToLtwk/O720ZdaiNhCUAq9v00HlSW
-         DYsg==
+        bh=fhvW51sfFXq7t/eI3n2OZ+hZ4W6WI6Iu47q4c6weC+Q=;
+        b=bmo7Vr0CZUZ9OqpI4zE7vMcaaZuCqLfQEkcTu4VGRE8Hnb1C8Cd+HNGXvO+fUdCK/C
+         VX4beGxSub5Bhoc5MO0Uz4eShA+L8P0imer/uuTRLJ5SMag48pzEdZKwcl6puanEq43n
+         HaLbfCxiOF3CgFTRN7K5NKS6vFPUuoMM5WbpantXDWw5TzWuO30poP/hPAakcQrUwaSJ
+         93OannPhMR4Se0sOWYexGkLoeTVrwOfpVhywMK/WDJXazRzAYWIVpe8vkttbmQiG+gze
+         Liu5UdlsaAqYHSPhHX3ORnHWnTz0+6iloCAiStZW0DMcoIh0/jwp4So/7TIU6n0KzrMU
+         Rgqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771424332; x=1772029132;
+        d=1e100.net; s=20230601; t=1771424398; x=1772029198;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=m/aaSslU8FylyxLS/LeM4Oc79564f767f0enGH3ku+k=;
-        b=GC5yEQE+RUSusmPI2MXDK0+UVYJsfOost3ekXJ5q5tKPOeZ3AjHdTIPLloFpa3Sm+e
-         MMS59wlcexK7EH4KpLfHXYnewWSO+/GpUF5pNUmLSXVWRm0wNZSvBYd1srJn3n/kCR6i
-         +SPafnQ9+LV+p6pkp2qBvJ0SH5rr44iaRZpoaSy0tdN8/oFOmSUI0SXm6+0kJ8HUErTc
-         +Sox0OylzmMVY9J6Y705y1D1NCfZY8GAs+RU227vu3aT59J7KLR4Z+Ob4PljqS6Rb9jc
-         zYxNC3NqoceIveqBc2tRJuR4tlJCBQrsCz0+IGZHChwZN3+sw4hJ35NW0T0r50M9y9V/
-         oMAw==
-X-Gm-Message-State: AOJu0Yx3Ho7Vi3FfLk51QVbz+J5l1rDaLMsy1mm4Qgxp2TrN4zHli9E/
-	ZR0nBtbax/jOg2rW6gIOgrnCVO0IIFm5c6wx+F22OJuPfOvvQs7bJf/N
-X-Gm-Gg: AZuq6aJdu22hDVRWZDanhfPmFE3sRsow5wCZXUpGSRlurk/YSXpgG61W9bSb/Ty9Swq
-	sfQpnbImvlTpVKzKGdd8V0VUXIZp23li3AVDsx9zHUEkXpkP1pxAkNbEIxQmlfQSQhYA6OPgzIZ
-	f08xSqQfatlpE8h5KsFFKO9Kjft95ylYczAbh3ncqPfx2RdevzbqWOhTxLervgncNXpcJdVh0rh
-	Q44NNdopn9K+ETgH/UX/Ghfm0Qb//GYnsGau0vPV3IdId+qZoAhq7h1FMeI9Q07SxqV6yfNShB8
-	e5N6xJpp2A6qjyUg8ZEI82CU89L/H5YV+1D3Smqc3F30RjePmCHL333sgkFvHcMEo1ivT2vPTEV
-	oO+cci9eZwRIrxxg1vxZUOu0CKAUJhBGmaluPiFtxz4GKeCPNHdOA26/xAwov+stemZJzzmo+W3
-	F4Ifs7/H5VUn+/ETckqeXQUe7uFg3Sq4VsOii01ctPTTVsNr2xErvvRvPUeule4tJkHnblbpN6D
-	+GnrA==
-X-Received: by 2002:a05:600c:820d:b0:47d:403e:4eaf with SMTP id 5b1f17b1804b1-48379b9f278mr270215865e9.10.1771424331441;
-        Wed, 18 Feb 2026 06:18:51 -0800 (PST)
+        bh=fhvW51sfFXq7t/eI3n2OZ+hZ4W6WI6Iu47q4c6weC+Q=;
+        b=jLqeGQIUl3G0xVPOShJ6c4o40k36VqCADICFRDHsXb5PJVHHr+2kRMWDRMLbEZ9vM1
+         1OkqW8ILAdpC8RcDQn5ch1GiqToTFqy3CfIfqVpYKL44jYcNvIqebupr25DztWmZuIGk
+         +RtceE2rPUUYsRLb0yg3ilwJ5pDNA+Y/dTUcVQBgzZ5ZB8nQLMbb16DU85DZETgSVkNU
+         786eQVCmqc2n0mE/ghuGv/Y5/VgGY+Mg619ujltoBFY3vopka8dzQ1xrSET7/ODnu7Uz
+         +zOT2ITieiz6J/slDnaPRU3nFAkK9oW8iTSxEKzWpBYYl8P9RuwaqzNucG7Koy6iOLlk
+         6S6w==
+X-Forwarded-Encrypted: i=1; AJvYcCVqZW8qV2nX9sv4OYhGpqVznqSuVf2y/rG2vTPtx3CSi9jhQy98FBQvQvC/zZ3q/nBX2y8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIKZXuGC3kB0LAqPZfIFpWRraxSy/EiX/XGZVWLwxo9sKVu4WR
+	WIKUeFPAABZPxinD3KziBAvU+KNfKnSWFx+NezkmaQY7maaAxPg6n4ibvkSur031
+X-Gm-Gg: AZuq6aLzbNd1s2xpLDAk6/O58bBG2tZ2tf6HGpDo7i8H+UZeLKl08jJhDK7FD2apwQm
+	jw8qp+u1l//cLwHQLmUK84dAfypKbfmKOz0vUG+P7TY68EhuLa9roAk4X9ByptiMQuk9cgVTbHi
+	ACQxqsiEg/7ONqCXGTu7sdBaT6PcRl/MhqzFvLI9DGg1RI+S734JD/+xl4r/NhklNYqmjCuBa1K
+	qLwaMGw+XCOvGlSKhypWWhJ2sZhX3lJHHUkfgkg06sdBV+ElHIPNrZ0huVR7FD9pUot9fFYM1UM
+	J0A2cDSNHyoeoPAJERuaMt84R0+qW8CH/KmRUDG81wnOASzGRvMJRW8ZdBky0kqRqXBiMp2xUck
+	dnKs+9hwoFqJv52pn2XONN1kLHT/vjpvMMGx9zDRlvX7crxXooQYvWlViClrMOBpvxjMsACZ1vf
+	1oZx0LR2q2hro1g/8h10tsaCtYygLdF0EILiKEipkAo8/DEnzbodQhYdvZn1Q7igCeYHq3xd0Fs
+	uI3ZQ==
+X-Received: by 2002:a05:600c:1912:b0:480:69ae:f0e9 with SMTP id 5b1f17b1804b1-48379ba54aemr264491015e9.16.1771424397427;
+        Wed, 18 Feb 2026 06:19:57 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5d78cfsm853757885e9.1.2026.02.18.06.18.50
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4836cd7af87sm464188015e9.1.2026.02.18.06.19.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Feb 2026 06:18:51 -0800 (PST)
-Message-ID: <f03fa5a8-b408-4b4e-a254-b0a39b87e636@gmail.com>
-Date: Wed, 18 Feb 2026 14:18:50 +0000
+        Wed, 18 Feb 2026 06:19:56 -0800 (PST)
+Message-ID: <d881edeb-d73b-43ba-bdb3-1b664e1cb882@gmail.com>
+Date: Wed, 18 Feb 2026 14:19:56 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,60 +72,31 @@ User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH 1/2] wt-status: avoid passing NULL worktree
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
- Eric Sunshine <sunshine@sunshineco.com>,
- Karthik Nayak <karthik.188@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
 References: <ebc16a74-0555-4951-8ec6-ff7fce6b6fcc@gmail.com>
  <cover.1771258688.git.phillip.wood@dunelm.org.uk>
  <409871a7d521b76c9eb811d3c49747e04de8defc.1771258688.git.phillip.wood@dunelm.org.uk>
- <xmqqa4x7cile.fsf@gitster.g>
+ <CAOLa=ZQKLqFn4w3s7PD87FZ_120gohoqKX5c3uLKo2vASsbxfA@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqqa4x7cile.fsf@gitster.g>
+In-Reply-To: <CAOLa=ZQKLqFn4w3s7PD87FZ_120gohoqKX5c3uLKo2vASsbxfA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 17/02/2026 18:47, Junio C Hamano wrote:
+On 17/02/2026 17:46, Karthik Nayak wrote:
 > Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
 >> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->> In preparation for removing the repository argument from
->> worktree_git_path() add a function to construct a "struct worktree"
->> from a "struct repository" and use that to avoid passing a NULL
->> worktree to wt_status_check_bisect() and wt_status_check_rebase().
+>> This updates the only callers that pass a NULL worktree to
+>> worktree_git_path().
+>>
 > 
-> Hmph, I am afraid that
-> 
->      "Construct a struct worktree from a struct repository"
-> 
-> is not quite sufficient.  A repository can have more than one
-> worktrees, so if you give a repository as a parameter, there needs a
-> way for the implementation of this helper function to identify which
-> one of them to construct a struct worktree for, and more importantly
-> for you as the caller to be able to expect which one the implementation
-> would pick, and what that particular worktree among many _means_ to you.
-> 
-> I know that the implementation uses repo->worktree but what does
-> that path mean in the world-view of the worktree API set?
+> I was thinking surely there must be other places where we also pass NULL
+> for worktree, but doesn't seem like there are any such instances.
 
-While a repository can have multiple worktrees, a "struct repository" 
-points to a particular worktree within that repository via the gitdir 
-and worktree members. I'll try and make it clearer that the function 
-returns a struct worktree corresponding to those members.
-
-> I am guessing that it is what the worktree API calls "current", but
-> if so, perhaps the function should be explained with that word in
-> it, and the function name should also contain that word, no?
-
-That's what I thought initially. However is_current_worktree() is 
-defined in terms of "the_repository" rather than "wt->repo". That means 
-all the struct worktrees within a single process agree on the "current" 
-worktree but it is suprising that if "wt->path" matches 
-"wt->repo->worktree" it is not necessarily the "current" worktree. I'm 
-not sure if we want to change the definition of is_current_worktree() to 
-use "wt->repo" rather than "the_repository", but if we do I think we can 
-do that separately.
+Yes, I was pleasantly surprised there weren't more sites to convert.
 
 >> +struct worktree *get_worktree_from_repository(struct repository *repo)
 >> +{
@@ -136,43 +108,41 @@ do that separately.
 >> +	if (repo->worktree)
 >> +		wt->path = absolute_pathdup(repo->worktree);
 > 
-> So, if the repository instance knows where the worktree is, we use
-> that to wt->path.  Otherwise wt->path is left NULL.
+> Shouldn't this always be set? I guess my question is, will
+> `repo->worktree` ever be NULL?
 
-That's actually a bug, we should be using repo->gitdir when the 
-repository is bare.
+Oh, wt->path should never be NULL. repo->worktree is NULL in bare 
+repositories but then we should use repo->gitdir as the worktree path.
 
 >> +	wt->is_bare = !!repo->worktree;
-> 
-> I may be confused but don't we have one ! too many?  If we have a
-> worktree directory, "git checkout" would check the files there, and
-> that is not quite a "bare" repository, no?
-
-Yes, it should be "wt->is_bare = !repo->worktree;"
-
 >> +	if (fspathcmp(gitdir, commondir))
 >> +		wt->id = xstrdup(find_last_dir_sep(commondir) + 1);
 > 
-> OK.  So gitdir and commondir would be the same for the primary and
-> for everybody else we'd have "id" as the last directory component of
-> the commondir.
+> So here we continue to treat NULL as the main worktree. Okay.
 > 
 >> +	wt->is_current = is_current_worktree(wt);
 > 
-> Oh, so I guessed wrong and this is not about "current" worktree?
-> What does the directory pointed at by repo->worktree mean to the
-> callers of this function?  I somehow thought that is_current would
-> be always 1 here,.
+> Since we're getting the worktree from the repo, shouldn't this be
+> 'true'?
 
-As explained above "repo->worktree" means nothing to 
-is_current_worktree() because it uses "the_repository" instead of 
-"wt->repo".
+That's what I thought initially. However is_current_worktree() compares 
+"repo->gitdir" to "the_repository->gitdir" so the "current" worktree is 
+the one that the process was started in, which is not necessarily the 
+same as the one matching "wt->repo->gitdir". It's possible that we will 
+want to change that definition in the future but I opted to make this 
+function consistent with the status quo.
 
-I'll re-roll with the fixes above and a bit more detail in the commit 
-message about is_current_worktree() and the that the "struct worktree" 
-instance corresponds to worktree that uses repo->gitdir
+>> -/*
+>> +/* Construct a struct worktree from a struct repository */
+>> +struct worktree *get_worktree_from_repository(struct repository *repo);
+>> +
+>> + /*
+> 
+> Nit: extra space?
 
-Thanks
+Good spot I'll fix it
+
+Thanks for the review
 
 Phillip
 
