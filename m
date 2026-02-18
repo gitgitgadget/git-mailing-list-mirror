@@ -1,61 +1,57 @@
-Received: from pio-pvt-msa3.bahnhof.se (pio-pvt-msa3.bahnhof.se [79.136.2.42])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA82330B26
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 21:58:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771451934; cv=none; b=F/l0KRk6o3fDwVDEhOBGj3bh31YvKSvh//9sgTv16XaVmELyaJCQQnHG2xFunVCVpe6/CUFq8rVc8wcvfq7k+7pDJAff+Bt/8aPUIETNNsGTq+AEfM9cCpxDGZjk+0zro0RAlSM8e9d9HBVSttolmeCzV7JoE3xVOu/N2BbCY3g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771451934; c=relaxed/simple;
-	bh=N1hRqM4GO2OcBwdvZVQ0auOwo1cM+yH6s+avFNGJHaA=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7CB223DD6
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 22:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771453468; cv=pass; b=KuE3q5AayyrYWPWliXL/o1OcOxrujMZtOhR7vB+XrgMQPTPi8ywsLAQpzwDauSY+KDmuUArwlVhGuru4szSZPMCCF1BaAAplVBoFTp7+xuQj1qsh61uar8Nky0r8sChy3vqKSu/KHo7cwnhBljT6uKbMU0cciX7rj1Ttj4iTSK0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771453468; c=relaxed/simple;
+	bh=7m0LtbIHOgRO+GzrAoTTDNRRYlr56FTeAUa3Lj30PzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VO5nNkVngm5dN7MkZInKic0RrglNNWX43Ivlp6Pd2HQhqgbHbKme++He5GF3iU51Yy+mKAJIL4UDZllao0zah3ZO4fnJf3p8yeiQuxGrTyanaXBjwX+TSuTe2WVMYg/g82ftr2UaPhgk7ZIHbxIZXb7oKf14Htx0WvDJnCiuJB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=oHQYYPXq; arc=none smtp.client-ip=79.136.2.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
+	 MIME-Version; b=Ppy+C1i9nguAi85W3Y7mL0vc0WmP6FfiHkrrsQZLNuoVrjZG9Au1P9Wo0AkiBSm1VL6Tx9iy53J5cVyfwa5c5vFbUajZaN9m/t10EoUvvLVECrvv8KGtDYgikRT/a8HGmOaLAmXGacpZSMj8XYRKxjStudUHuaa0VbZIp6UG+Es=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Xd9D1Z9j; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="oHQYYPXq"
-Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTP id 3827B4374E;
-	Wed, 18 Feb 2026 22:58:44 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.1
-X-Spam-Level:
-Authentication-Results: pio-pvt-msa3.bahnhof.se (amavisd-new);
-	dkim=pass (2048-bit key) header.d=jontes.page
-Received: from pio-pvt-msa3.bahnhof.se ([127.0.0.1])
-	by localhost (pio-pvt-msa3.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 55iOWJ8ykEhM; Wed, 18 Feb 2026 22:58:43 +0100 (CET)
-Received: 
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTPA id 44C1F4374C;
-	Wed, 18 Feb 2026 22:58:43 +0100 (CET)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4C422B20A7;
-	Wed, 18 Feb 2026 22:57:34 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
-	t=1771451854; h=from:subject:date:message-id:to:cc:mime-version:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=1gAcRkwNiCusx7l1N8gYj3gzPJkWyNDxekz+F8cRgvg=;
-	b=oHQYYPXqmLj2pfu4omLs/gdbhp4iXFmWTHdDTvjcHHSlrSt1fVpuhn9X0TVA2YgolbaBC0
-	BsxSMETuTHgJlNAt5uXLVbpvZVjZElRRmQTRZ63ykMrw8zTIQU/cSMLK+fpKelOyTQhvjk
-	qM9xWRbb9peeAYkEHcBYK+fWCaMQgKe2DHJZmNJfDZCmfgcSuaE21y5iGteVrQ0cVb0eJN
-	o9QKSZgtvsIcCCZ6hQNuCnbVH3jTTCcB76B7o+2W/1Kc3+yppqP1sa/hxL4pLZZ5w8nCAH
-	M8HULoy7ACvTkbCM/wkILPO3aQJKJQld8ADzQYbnH+cS6k8a+UKhnk9vyX8Nrg==
-From: Jonatan Holmgren <jonatan@jontes.page>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Xd9D1Z9j"
+ARC-Seal: i=1; a=rsa-sha256; t=1771453452; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=cqa/6KpDFWQ/8QoRg0DCPH3VUaSFLfGFdU2EezqVszDsNOrGUt/YWiWL+DTMO31IvGbJtUcpnv8ADTJcJk7K4l9ppVu0aFRi4M2oUAYmOspfKDKXywAKgFnSt60JL7vUp7BpsgksVrALdxSPq90P6i4ATUwoJ6whyrxknVAVGOY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1771453452; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=3eEDGRL7ii6AsxHyNVQfwKwPBS8dKm75iSvXx+VhrZw=; 
+	b=Hh5Axltjpc7NOHLJoHwNwqCGbmdenCOnVZu4w6VvB0OPr9w5tprGMfCFmCm+PuIt6drcUb/W5Bw9QSSrhSq5/l4rzzvwN94efrhiWso/xu3qazHzUjEI91NRqY0tMwx3by0SdcJOaL9KSGE8cQALau/g1O3UKUpspNrqbIddbI0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771453452;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=3eEDGRL7ii6AsxHyNVQfwKwPBS8dKm75iSvXx+VhrZw=;
+	b=Xd9D1Z9je6woxL2RQ8DvK9l2Ru0/OcdPL1eiIC9PaNJNd+0rH0rU4ili629+e+jx
+	SNAnzlQhaeBaQ2jwJXrssjba0Q1TNVISQh97vdiu58N6ZYVkb1sMtdm0FnUnEiUB4GI
+	SH+mOQriNkiPR+zODwd2KXOmUbo4xHjdIwKKLPqM=
+Received: by mx.zohomail.com with SMTPS id 1771453451245526.8705542752672;
+	Wed, 18 Feb 2026 14:24:11 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
-Cc: peff@peff.net,
-	gitster@pobox.com,
-	"D . Ben Knoble" <benknoble@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Jonatan Holmgren <jonatan@jontes.page>
-Subject: [PATCH v7 4/4] completion: fix zsh alias listing for subsection aliases
-Date: Wed, 18 Feb 2026 22:57:37 +0100
-Message-ID: <20260218215737.1181147-5-jonatan@jontes.page>
-X-Mailer: git-send-email 2.53.0.122.g3abf75d576
-In-Reply-To: <20260218215737.1181147-1-jonatan@jontes.page>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
- <20260218215737.1181147-1-jonatan@jontes.page>
+Cc: Jeff King <peff@peff.net>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v2 2/8] hook: run a list of hooks to prepare for multihook support
+Date: Thu, 19 Feb 2026 00:23:46 +0200
+Message-ID: <20260218222352.55393-3-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
+In-Reply-To: <20260218222352.55393-1-adrian.ratiu@collabora.com>
+References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+ <20260218222352.55393-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,83 +59,325 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+X-ZohoMailClient: External
 
-The zsh completion function __git_zsh_cmd_alias() uses 'git config
---get-regexp' to enumerate aliases and then strips the "alias." prefix
-from each key. For subsection-style aliases (alias.name.command), this
-leaves "name.command" as the completion candidate instead of just
-"name".
+From: Emily Shaffer <emilyshaffer@google.com>
 
-The bash completion does not have this problem because it goes through
-'git --list-cmds=alias', which calls list_aliases() in C and already
-handles both alias syntaxes correctly. However, zsh needs both the
-alias name and its value for descriptive completion, which
---list-cmds=alias does not provide.
+Hooks are limited to run one command (the default from the hookdir) for
+each event. This limitation makes it impossible to run multiple commands
+via config files, which the next commits will add.
 
-Add a hidden --aliases-for-completion option to 'git help', following
-the existing --config-for-completion pattern. It outputs NUL-separated
-"name\nvalue" pairs using list_aliases(), which correctly resolves both
-the traditional (alias.name) and subsection (alias.name.command)
-formats. Update __git_zsh_cmd_alias() to use it.
+Implement the ability to run a list of hooks in hook.[ch]. For now, the
+list contains only one entry representing the "default" hook from the
+hookdir, so there is no user-visible change in this commit.
 
-Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
+All hook commands still run sequentially like before. A separate patch
+series will enable running them in parallel.
+
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- builtin/help.c                        | 13 +++++++++++++
- contrib/completion/git-completion.zsh |  2 +-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ hook.c | 139 ++++++++++++++++++++++++++++++++++++++++++++-------------
+ hook.h |  59 ++++++++++++++++++------
+ 2 files changed, 153 insertions(+), 45 deletions(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index c09cbc8912..86a3d03a9b 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -54,6 +54,7 @@ static enum help_action {
- 	HELP_ACTION_DEVELOPER_INTERFACES,
- 	HELP_ACTION_CONFIG_FOR_COMPLETION,
- 	HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION,
-+	HELP_ACTION_ALIASES_FOR_COMPLETION,
- } cmd_mode;
- 
- static char *html_path;
-@@ -90,6 +91,8 @@ static struct option builtin_help_options[] = {
- 		    HELP_ACTION_CONFIG_FOR_COMPLETION, PARSE_OPT_HIDDEN),
- 	OPT_CMDMODE_F(0, "config-sections-for-completion", &cmd_mode, "",
- 		    HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION, PARSE_OPT_HIDDEN),
-+	OPT_CMDMODE_F(0, "aliases-for-completion", &cmd_mode, "",
-+		    HELP_ACTION_ALIASES_FOR_COMPLETION, PARSE_OPT_HIDDEN),
- 
- 	OPT_END(),
- };
-@@ -691,6 +694,16 @@ int cmd_help(int argc,
- 			       help_format);
- 		list_config_help(SHOW_CONFIG_SECTIONS);
- 		return 0;
-+	case HELP_ACTION_ALIASES_FOR_COMPLETION: {
-+		struct string_list alias_list = STRING_LIST_INIT_DUP;
-+		opt_mode_usage(argc, "--aliases-for-completion", help_format);
-+		list_aliases(&alias_list);
-+		for (size_t i = 0; i < alias_list.nr; i++)
-+			printf("%s%c%s%c", alias_list.items[i].string, '\n',
-+			       (char *)alias_list.items[i].util, '\0');
-+		string_list_clear(&alias_list, 1);
-+		return 0;
-+	}
- 	case HELP_ACTION_CONFIG:
- 		opt_mode_usage(argc, "--config", help_format);
- 		setup_pager(the_repository);
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index f5877bd7a1..c32186a977 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -202,7 +202,7 @@ __git_zsh_cmd_common ()
- __git_zsh_cmd_alias ()
- {
- 	local -a list
--	list=(${${(0)"$(git config -z --get-regexp '^alias\.*')"}#alias.})
-+	list=(${(0)"$(git help --aliases-for-completion)"})
- 	list=(${(f)"$(printf "%s:alias for '%s'\n" ${(f@)list})"})
- 	_describe -t alias-commands 'aliases' list && _ret=0
+diff --git a/hook.c b/hook.c
+index 83ff658866..c008a7232d 100644
+--- a/hook.c
++++ b/hook.c
+@@ -47,9 +47,97 @@ const char *find_hook(struct repository *r, const char *name)
+ 	return path.buf;
  }
+ 
++static void hook_clear(struct hook *h, cb_data_free_fn cb_data_free)
++{
++	if (!h)
++		return;
++
++	if (h->kind == HOOK_TRADITIONAL)
++		free((void *)h->u.traditional.path);
++
++	if (cb_data_free)
++		cb_data_free(h->feed_pipe_cb_data);
++
++	free(h);
++}
++
++static void hook_list_clear(struct string_list *hooks, cb_data_free_fn cb_data_free)
++{
++	struct string_list_item *item;
++
++	for_each_string_list_item(item, hooks)
++		hook_clear(item->util, cb_data_free);
++
++	string_list_clear(hooks, 0);
++}
++
++/* Helper to detect and add default "traditional" hooks from the hookdir. */
++static void list_hooks_add_default(struct repository *r, const char *hookname,
++				   struct string_list *hook_list,
++				   struct run_hooks_opt *options)
++{
++	const char *hook_path = find_hook(r, hookname);
++	struct hook *h;
++
++	if (!hook_path)
++		return;
++
++	h = xcalloc(1, sizeof(struct hook));
++
++	/*
++	 * If the hook is to run in a specific dir, a relative path can
++	 * become invalid in that dir, so convert to an absolute path.
++	 */
++	if (options && options->dir)
++		hook_path = absolute_path(hook_path);
++
++	/* Setup per-hook internal state cb data */
++	if (options && options->feed_pipe_cb_data_alloc)
++		h->feed_pipe_cb_data = options->feed_pipe_cb_data_alloc(options->feed_pipe_ctx);
++
++	h->kind = HOOK_TRADITIONAL;
++	h->u.traditional.path = xstrdup(hook_path);
++
++	string_list_append(hook_list, hook_path)->util = h;
++}
++
++/*
++ * Provides a list of hook commands to run for the 'hookname' event.
++ *
++ * This function consolidates hooks from two sources:
++ * 1. The config-based hooks (not yet implemented).
++ * 2. The "traditional" hook found in the repository hooks directory
++ *    (e.g., .git/hooks/pre-commit).
++ *
++ * The list is ordered by execution priority.
++ *
++ * The caller is responsible for freeing the memory of the returned list
++ * using string_list_clear() and free().
++ */
++static struct string_list *list_hooks(struct repository *r, const char *hookname,
++			       struct run_hooks_opt *options)
++{
++	struct string_list *hook_head;
++
++	if (!hookname)
++		BUG("null hookname was provided to hook_list()!");
++
++	hook_head = xmalloc(sizeof(struct string_list));
++	string_list_init_dup(hook_head);
++
++	/* Add the default "traditional" hooks from hookdir. */
++	list_hooks_add_default(r, hookname, hook_head, options);
++
++	return hook_head;
++}
++
+ int hook_exists(struct repository *r, const char *name)
+ {
+-	return !!find_hook(r, name);
++	struct string_list *hooks = list_hooks(r, name, NULL);
++	int exists = hooks->nr > 0;
++	hook_list_clear(hooks, NULL);
++	free(hooks);
++	return exists;
+ }
+ 
+ static int pick_next_hook(struct child_process *cp,
+@@ -58,11 +146,14 @@ static int pick_next_hook(struct child_process *cp,
+ 			  void **pp_task_cb)
+ {
+ 	struct hook_cb_data *hook_cb = pp_cb;
+-	const char *hook_path = hook_cb->hook_path;
++	struct string_list *hook_list = hook_cb->hook_command_list;
++	struct hook *h;
+ 
+-	if (!hook_path)
++	if (hook_cb->hook_to_run_index >= hook_list->nr)
+ 		return 0;
+ 
++	h = hook_list->items[hook_cb->hook_to_run_index++].util;
++
+ 	cp->no_stdin = 1;
+ 	strvec_pushv(&cp->env, hook_cb->options->env.v);
+ 
+@@ -85,21 +176,20 @@ static int pick_next_hook(struct child_process *cp,
+ 	cp->trace2_hook_name = hook_cb->hook_name;
+ 	cp->dir = hook_cb->options->dir;
+ 
+-	strvec_push(&cp->args, hook_path);
++	/* Add hook exec paths or commands */
++	if (h->kind == HOOK_TRADITIONAL)
++		strvec_push(&cp->args, h->u.traditional.path);
++
++	if (!cp->args.nr)
++		BUG("hook must have at least one command or exec path");
++
+ 	strvec_pushv(&cp->args, hook_cb->options->args.v);
+ 
+ 	/*
+ 	 * Provide per-hook internal state via task_cb for easy access, so
+ 	 * hook callbacks don't have to go through hook_cb->options.
+ 	 */
+-	*pp_task_cb = hook_cb->options->feed_pipe_cb_data;
+-
+-	/*
+-	 * This pick_next_hook() will be called again, we're only
+-	 * running one hook, so indicate that no more work will be
+-	 * done.
+-	 */
+-	hook_cb->hook_path = NULL;
++	*pp_task_cb = h->feed_pipe_cb_data;
+ 
+ 	return 1;
+ }
+@@ -133,8 +223,6 @@ static int notify_hook_finished(int result,
+ 
+ static void run_hooks_opt_clear(struct run_hooks_opt *options)
+ {
+-	if (options->feed_pipe_cb_data_free)
+-		options->feed_pipe_cb_data_free(options->feed_pipe_cb_data);
+ 	strvec_clear(&options->env);
+ 	strvec_clear(&options->args);
+ }
+@@ -142,13 +230,11 @@ static void run_hooks_opt_clear(struct run_hooks_opt *options)
+ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 		  struct run_hooks_opt *options)
+ {
+-	struct strbuf abs_path = STRBUF_INIT;
+ 	struct hook_cb_data cb_data = {
+ 		.rc = 0,
+ 		.hook_name = hook_name,
+ 		.options = options,
+ 	};
+-	const char *const hook_path = find_hook(r, hook_name);
+ 	int ret = 0;
+ 	const struct run_process_parallel_opts opts = {
+ 		.tr2_category = "hook",
+@@ -182,30 +268,21 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 	    (!options->feed_pipe_cb_data_alloc && options->feed_pipe_cb_data_free))
+ 		BUG("feed_pipe_cb_data_alloc and feed_pipe_cb_data_free must be set together");
+ 
+-	if (options->feed_pipe_cb_data_alloc)
+-		options->feed_pipe_cb_data = options->feed_pipe_cb_data_alloc(options->feed_pipe_ctx);
+-
+ 	if (options->invoked_hook)
+ 		*options->invoked_hook = 0;
+ 
+-	if (!hook_path && !options->error_if_missing)
+-		goto cleanup;
+-
+-	if (!hook_path) {
+-		ret = error("cannot find a hook named %s", hook_name);
++	cb_data.hook_command_list = list_hooks(r, hook_name, options);
++	if (!cb_data.hook_command_list->nr) {
++		if (options->error_if_missing)
++			ret = error("cannot find a hook named %s", hook_name);
+ 		goto cleanup;
+ 	}
+ 
+-	cb_data.hook_path = hook_path;
+-	if (options->dir) {
+-		strbuf_add_absolute_path(&abs_path, hook_path);
+-		cb_data.hook_path = abs_path.buf;
+-	}
+-
+ 	run_processes_parallel(&opts);
+ 	ret = cb_data.rc;
+ cleanup:
+-	strbuf_release(&abs_path);
++	hook_list_clear(cb_data.hook_command_list, options->feed_pipe_cb_data_free);
++	free(cb_data.hook_command_list);
+ 	run_hooks_opt_clear(options);
+ 	return ret;
+ }
+diff --git a/hook.h b/hook.h
+index a6bdc6f90f..3256d2dddb 100644
+--- a/hook.h
++++ b/hook.h
+@@ -2,9 +2,41 @@
+ #define HOOK_H
+ #include "strvec.h"
+ #include "run-command.h"
++#include "string-list.h"
+ 
+ struct repository;
+ 
++/**
++ * Represents a hook command to be run.
++ * Hooks can be:
++ * 1. "traditional" (found in the hooks directory)
++ * 2. "configured" (defined in Git's configuration, not yet implemented).
++ * The 'kind' field determines which part of the union 'u' is valid.
++ */
++struct hook {
++	enum {
++		HOOK_TRADITIONAL,
++	} kind;
++	union {
++		struct {
++			const char *path;
++		} traditional;
++	} u;
++
++	/**
++	 * Opaque data pointer used to keep internal state across callback calls.
++	 *
++	 * It can be accessed directly via the third hook callback arg:
++	 * struct ... *state = pp_task_cb;
++	 *
++	 * The caller is responsible for managing the memory for this data by
++	 * providing alloc/free callbacks to `run_hooks_opt`.
++	 *
++	 * Only useful when using `run_hooks_opt.feed_pipe`, otherwise ignore it.
++	 */
++	void *feed_pipe_cb_data;
++};
++
+ typedef void (*cb_data_free_fn)(void *data);
+ typedef void *(*cb_data_alloc_fn)(void *init_ctx);
+ 
+@@ -85,19 +117,6 @@ struct run_hooks_opt
+ 	 */
+ 	void *feed_pipe_ctx;
+ 
+-	/**
+-	 * Opaque data pointer used to keep internal state across callback calls.
+-	 *
+-	 * It can be accessed directly via the third callback arg 'pp_task_cb':
+-	 * struct ... *state = pp_task_cb;
+-	 *
+-	 * The caller is responsible for managing the memory for this data by
+-	 * providing alloc/free callbacks to `run_hooks_opt`.
+-	 *
+-	 * Only useful when using `run_hooks_opt.feed_pipe`, otherwise ignore it.
+-	 */
+-	void *feed_pipe_cb_data;
+-
+ 	/**
+ 	 * Some hooks need to create a fresh `feed_pipe_cb_data` internal state,
+ 	 * so they can keep track of progress without affecting one another.
+@@ -128,7 +147,19 @@ struct hook_cb_data {
+ 	/* rc reflects the cumulative failure state */
+ 	int rc;
+ 	const char *hook_name;
+-	const char *hook_path;
++
++	/**
++	 * A list of hook commands/paths to run for the 'hook_name' event.
++	 *
++	 * The 'string' member of each item holds the path (for traditional hooks)
++	 * or the unique friendly-name for hooks specified in configs.
++	 * The 'util' member of each item points to the corresponding struct hook.
++	 */
++	struct string_list *hook_command_list;
++
++	/* Iterator/cursor for the above list, pointing to the next hook to run. */
++	size_t hook_to_run_index;
++
+ 	struct run_hooks_opt *options;
+ };
+ 
 -- 
-2.53.0.122.g3abf75d576
+2.52.0.732.gb351b5166d.dirty
 
