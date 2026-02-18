@@ -1,209 +1,154 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE5D2FC890
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48A42F5A36
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 12:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771415150; cv=pass; b=kQMJWLkvmjlKywaSAcTxd5xzmNZ+ITVUs3P8kSc1/5TVqBAkYos5TIjI9wxkKfn/A3pghtBesyPC4V4VSNnETAfpjrcWL4bKEzx+0d9BSJC4eiSLsZqDflrcvdVr0zIkhlfpSP3F4/vtgmUp9uPccFkVgsmLRlqwm1VB2CALAic=
+	t=1771416328; cv=pass; b=Yoo1oj+3q2HndjVu0NQ8WV3mit5nZpvHZm3BL+1YdHZ+pMu2U5SskYTgpMYuPpEj69/AZP9JzrvLJca2E0lJFevYrKypHN9orrR9P4O8hUuv/+8F7u15QQtixdO9IZdyN7wCUAzyRIfAh54CQUGwyi54d7TtdGd6UwjTSDibgcA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771415150; c=relaxed/simple;
-	bh=GLWRidvbFUv0c9vQi7YJeJiialGdJ+TsrvtAQPijIwg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kzIZURla3HuShLCQQsoN27kJXUJsUyAONPF9dmsMDEz8uRbBGCnzgtnmnpAp/8oORTUypXatgNISs0J31X89QenXSAUejPPiM1sOvb2xCEFCAOht5M99wKUvp2YbsCPETLSicax1O654jJ1RU0R8lH+3eavko1hi5M9uHcf5nOs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LsVbJB83; arc=pass smtp.client-ip=209.85.167.53
+	s=arc-20240116; t=1771416328; c=relaxed/simple;
+	bh=pwNrXbDyvBm3ZhyJCz+4W7IYtcPdduvdWvTFxoi4qT4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=jh/BAhlMCpWNWIeFTeK/WhQxppkk4dCm4fRofF8Ep2XAHwwKRcIvzEvrGaFsYEpWS+w/LvR/Be20ARFNNEGtWGEVo87IZBpPnRj3OXT5MH+dt73Eh6/q1LsG1Dnt8m6tQTPzXx4UD57NkomL59UPNz94MsF2sO3MIs4d04WEzLA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ktw7xbQf; arc=pass smtp.client-ip=209.85.217.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LsVbJB83"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-59e646a4b9eso5640354e87.3
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 03:45:48 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771415146; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ktw7xbQf"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-5fc456c3742so1149713137.1
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 04:05:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771416325; cv=none;
         d=google.com; s=arc-20240605;
-        b=hxVu0ETpraJQnHwxz8Clt5c+9R3c1Cxvtg7544cRRsQn4/S9XkTB0YtJVAi56xDB2P
-         mslCOAiHrNtl2lPtQb/Lv2IsB6/bEWWEitKR4iXO0LodGTL1+WVzjlz4IYiqLz2gcgP/
-         Me2A3YMdpWvyMvtYk9RXk/Bz1Z9Q/wMuc3QmETRmb0zoHzJV0UWojQ7s7ZGZ4V29K/Ul
-         xjU0E+eKBzTtTidXiARjFnURPpmm544RUQXy4eEIbumpYzP4wePlrro80gLNzf9YJLlX
-         Ss495fiLV0OlWQqKriEB2Pmn4PVvB2NG3/fnIW0OEFQt67P7k3Y/POYoUvyta/MeZq9S
-         172g==
+        b=J4Tz/n902gYcX8w3tdkgpXHbYFp3N32ZFduDEnesX9H7g5opsy1oA9A/2vzGXC3iAh
+         eZ9Mf1D+e7DCDqPz9g/eLEPvtAnRYTrSW4mlUn2H7G4ZEVZ34IH1Ij+NGtsGHWv0Izbb
+         kim3e9c5NEC2iS/b1fnAG9G3bt0BUIpJt73Pm0aPxJoDA3W1HXADFZdqYiTLAyiXibWJ
+         pDJvhQBWQrBpmC4e7sGBn2Zqg8bhYg22zeF+hHJX7cOdVt9zD0oGlFvMtK93rjuNtN/C
+         osD3dqbV2cgCQ/q1j6prrksKg+3txOh8pKGjuWKSkwnYONRWesHXMDNXDD1Vcx6PFaTJ
+         joXg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nHdJO+hBYCYEG5bP4rNZF+nKpTiftw545WaUQDNrCoU=;
-        fh=jPktEwmwXA4p6QOnmqCcKFzATMKcWR56dYVENRWIhWk=;
-        b=PSZ4ulmQgbf9l0MxTB/ge7gPkeQYGkg7TbdHiwGMWze75weLkJvkbDXxFstJxpuRBP
-         RGBHnDOgROE3xpMC4/yBzGUza1uZeJ5FoR3HVtS0nhoN81jCcnWRJjAiz0picfQdLz7l
-         uLKXnp59koOEt8RQhlrXwVLLH1zkNYGMZAr4GSWsTUK0aOkTRHikJ19dQlLQJCQk/7Eg
-         qzo5CMj4tV5gw3e4Ggc18+iyZqw62be37THAHn6p5FqZ1whC+0wtjxujVqvjSG0bLeys
-         o+qFwB5nDWIEExm9qYc8V4NxE79J9y1K4++8Wg+/ha7jB569IiE0nc8LGuYqPknmsK/R
-         ydVw==;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=Sp2MLe8iOVggzjUzAaUuMdd5/76aM+kwxv/zZB/10ls=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=b86/un+9gm0bT+4UJjVqb5g50GKxZJ9YUkpOk8hJYVJxQ0hSlEEHPd2Nru9rkqQEgf
+         8Ka+N70K+9MoEzZVGaTfLw5uTiekQ3SAlKQm0W1t4uum/Z+iTRSgDW3XhGJPmGdHOomz
+         N1lQIFE4vN5zUIXMHxDVOfjUX2I9N8I3up5mQtCsdaGE6e/tHrNAEa/xG4LYW8rGmCg7
+         1f6g/p9q5T3+yiywBkgYeS8H9r1tBODvyPj8JR4aV1EuGm10AeORfCIJKmp0FI+gOrZt
+         oDFMHF84R8NUw0FELQRNbpTRReqRdsWcSfEgvCQO9c2bKsEMnoWOI4e+R1tA/Mw1il1w
+         uOrQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771415146; x=1772019946; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nHdJO+hBYCYEG5bP4rNZF+nKpTiftw545WaUQDNrCoU=;
-        b=LsVbJB83Qn5t0f1vZiP405kHmgJLQ1JCa34rLyBV1IwvLcYvO3Louy0KdY0lNb+NvM
-         Dp0UHzt0DmcP9Evv/huBJqNpw18JqQLGPINfJczHJ8dqhl0BbZsCNmrCkwIGgLov+OJ2
-         Tt8LBFwmlLYRsiOr04BJWg+4TcUQeq/7U7wPVtlT6KaZw+D6svqiCo/4qysE7CqcKU1J
-         pD9crBK8CIpsNEVc5A0wFPUDt+hzlbVlPcd4qk3H+yKrgZxFkzYZZGDFJ0Da+fnTTgL+
-         IoXRHzTWxxV3jWBpY+X/B879Qdf+/Q1sjoYQ3kTYjbnMNKHbLjz4UV30+BdT4WaTsGNH
-         2bxQ==
+        d=gmail.com; s=20230601; t=1771416325; x=1772021125; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Sp2MLe8iOVggzjUzAaUuMdd5/76aM+kwxv/zZB/10ls=;
+        b=ktw7xbQf4Qi4snFbONAqhhvallXvYaK97B1KTMsesOhI1e/a8EI9L5os0F9gWB3j5F
+         gTTbwtRSbhfJRgvZbriAN/Q52cq7gRdcgz4dJgmejKfjdgSiGT7EZ0BBWld0jpxoexjw
+         EPClZbPwaWTRaaXNT8FAPjSpflM36qqpM6Y+TfIaEtc3iEQaUNojaN1VOUZ3mTPD0Fxn
+         hw/jTXfN4DnPkMYxCQfYXFU+AdPzPj+pFlWicveM3Leja5dgZ0RziEHql920QmLrN3EV
+         ThdK+5gHo3+H5Al36UadN5ECuam3bmiP3gvrznpxiSRfM3iSI+FUkXOqpG9wZHMVAIGx
+         ClQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771415146; x=1772019946;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nHdJO+hBYCYEG5bP4rNZF+nKpTiftw545WaUQDNrCoU=;
-        b=IQWrRzFDeIaxbC2GSn6tJHSetB2wO6auzjgONsZaNcQ0S5+2S7ozZ4Az3xzmIZrFZ4
-         FhspMgJXC23kQbb/nVjFxe8s0TWPSHLdRn+vIOEbTRAXAaiUgn8Z3oqQVG6FrPvf3ZYK
-         ZyLQ00Jb8RE7cHVVIFgNiRyhEJc5lcI1x8zfb+ElpD5WONr3fdmUV2libz0cPaCwUsNi
-         xoGHyfFgzauxiqdHt9mnOHR5oDiOreIlIjpSjO5CRKbUfdV9GqEg4C2PLdMFhSWqmp8R
-         icdjTgf44Cbz7MltE3TVaz/uhWxMAmKvhh9yOlIV9CtIDlyuIVNQKqtGgEveHtKjAYOE
-         auwg==
-X-Forwarded-Encrypted: i=1; AJvYcCVpBK1uNHBmj0/dMRJdvBHSTbAQ5Ghvp+uaCokLsqFMALk5PJpIx3qLZKU/WD5Y0OlOVa0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5vu9LjCiSpjLerRjPqSHGs9pawqTTb6jU9Dnd9QRNmO0ODA2u
-	F8UC+aX49ovSWOgH3Zsw0+W1Q5zekfJHhBDthY6ahy/JRIBYSG/jOYVUgwWqAEIgaZLglEWPz61
-	tP0fn80ByXUVTDDGBepvnTw77ixy8S9E=
-X-Gm-Gg: AZuq6aKFZqtESrbn7Mm0/QYdPNpaXu2wTshxModb+EhNUilsQ/9sFfUu7ArGnjGwhh/
-	yOyFME5RXZQfI0yAnsX31sswTGwR7v22zFkbJABXruvD1qqjH/U7PZ+iroiXYaPXW7jA1cM7RAN
-	Deog7pRG9oG93buoinE+JiRa0h6JdDN3ROngi1A60qFyVxBKvGkw9xdYxGJNYvVwUKJBNSBxZ0s
-	pYTNcbVNK72EEwosw1mOYXvAYlQ2fEw5G9hVlmFS6OWSgY4TbqyRVMCLNOsreE193jIKyhuLF1D
-	k1C7XroFTxq27FeNZmVUCdzcaHrR84XGM9KRYw==
-X-Received: by 2002:a05:6512:b86:b0:59e:5b5a:c9b3 with SMTP id
- 2adb3069b0e04-59f6d353df0mr4432939e87.12.1771415146273; Wed, 18 Feb 2026
- 03:45:46 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771416325; x=1772021125;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sp2MLe8iOVggzjUzAaUuMdd5/76aM+kwxv/zZB/10ls=;
+        b=ims1nq8mzlvpD9MxQnlUEV3xUimQnUWCSQQm1cNdsQOlJ3WW7HE51ozj0EbQTg+io9
+         7WnSQPGX4Zj/zK4IqKLgtGFfbDvGQ/lJv5p4dDEF9HpqN51ex63QvuEtm0YwQThItPkM
+         ylqQV9LvZWND7+3kNq6qHunNi8ImVTziBrvHj1whQFby8S7X4nupxxYAfPaD9EFOs+Ao
+         vqNz9UCP40r/FClvD6iNw6Vc7SuoE8beWxXxSy5OrIvuiYVYlMsRLBvcCkYUVBhlOB0x
+         HHJGuwYEozMiU3L6wG8bySCS6iMpW9DpGQGdxC2fOueKjoT2jAwkaY9y4Uy2xmJczwr2
+         51Cg==
+X-Gm-Message-State: AOJu0Yxp6WN8NuOnyM6D0dn4SCt2LyzzsydTraUjkdeOLZkMOcbCIVCa
+	310SCnnO9k28cv0I8DYBQf1x5C3SqqQBMMP0NdY/7S1bd4BIFIOl9FftsWizn39PzQ5ZyLrSC1M
+	6Hr/1223auZrn9EBSAeNV0RqO0HfpDLVNvQG9
+X-Gm-Gg: AZuq6aKN5oVaKidFrFKBJCadDsUbDBZrXikdC49oqPDa2KkCl1l+GCkDqcITfRRubir
+	imxe37M2t90EaYy0aVJt5ouUktfLJXrfTp+Iy/Mb7bNrFqMpbGJZHqSYocje9jIm5NBXdOCbDzo
+	0IlM6HY3Y26aWvBb9FAxAbfqEBThwkG8uMVshUZtRvH6EbNorVHcA5/DYK9vIcDkwAYZRm/5HJR
+	cuoif5grKSrze2oeWXnuoNDNQrqATscaHoRy1AybLOtgHdwyiX2Niiju3sgJATLSDG8Jxm+tHvy
+	F5LaDrNrthZbW78CweEEWs3L85UcCff/3GoxCWMFCvliNzD3X9bCNwrVWSNXW4Mrpvm6bFT+Og=
+	=
+X-Received: by 2002:a05:6102:38c8:b0:5dd:f9c2:551c with SMTP id
+ ada2fe7eead31-5fe7fcab2f6mr432328137.27.1771416325259; Wed, 18 Feb 2026
+ 04:05:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260215112331.22-1-kumarayushjha123@gmail.com>
- <xmqqpl63b2tm.fsf@gitster.g> <CAFNBzOdqOLKFbDFCp99GvXYWs_Af3PdeXQMjE92y+s92j78GYA@mail.gmail.com>
- <CAD=f0L-nUS1N-P2cWM9AwOFv+G7dOBgGjWwEZYP3qSDMxyhGgA@mail.gmail.com>
-In-Reply-To: <CAD=f0L-nUS1N-P2cWM9AwOFv+G7dOBgGjWwEZYP3qSDMxyhGgA@mail.gmail.com>
-From: Ayush Jha <kumarayushjha123@gmail.com>
-Date: Wed, 18 Feb 2026 17:15:33 +0530
-X-Gm-Features: AaiRm51AXc6GlZcpDgL-J039dn5Mn37c32SjXC_WaQ_iOAqYcuVU3mFU6Ajviy4
-Message-ID: <CAFNBzOebt6iz2_X1kCpSa+6JXG-OTh=FAqcQ84rAZ-4x4YQVCw@mail.gmail.com>
-Subject: Re: [RFC GSoC PATCH] environment: move core.trustctime to repo_settings
-To: Bello Olamide <belkid98@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>
+From: Cary Reams <cary.reams@gmail.com>
+Date: Wed, 18 Feb 2026 07:05:13 -0500
+X-Gm-Features: AaiRm52Orxt4uIt2gCGzgTeQo3y-OnsvS_XI8yH9hAEvw__pNwIkPmJqBHVlHLg
+Message-ID: <CALT4vkh_t35eJ8oWkSokVzt4mj+cZYxPQCr=gtU5hEuA0v1baA@mail.gmail.com>
+Subject: rebase --abort had issues
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hello Olamide,
+wont be a lot to go on, but here goes. Apologies, I don't have a
+precise timeline for you,
+as its all running together mixed with a nontrivial amount of adrenaline.
 
-Thank you for the update. Since you are already working on a more
-robust pattern (repo_config_values) for this, I will drop my patch to
-avoid conflicts and duplicated effort.
+while attempting a rebase, made it to commit 7 of 18, when received message
+about segmentation fault and inability to parse the file experiencing
+the merge conflict
 
-Best regards,
-Ayush
+fixed the file as per normal
+added the file
+rebase --continue failed
+rebase --abort failed
+repo seemed to be stuck in the middle of the commit
+would permit checkout of other branches, but still displayed the
+interim rebase status report
 
-On Wed, Feb 18, 2026 at 4:52=E2=80=AFPM Bello Olamide <belkid98@gmail.com> =
-wrote:
->
-> On Wed, 18 Feb 2026 at 12:04, Ayush Jha <kumarayushjha123@gmail.com> wrot=
-e:
-> >
-> > Hi Junio,
-> >
-> > Thank you for the feedback. You are absolutely right that the
-> > lazy-loading approach regresses the user experience by delaying
-> > detection of configuration errors.
-> >
-> > To address this, I propose parsing core.trustctime in
-> > prepare_repo_settings() in repo-settings.c. This would ensure the
-> > configuration is read eagerly during repository initialization,
-> > preserving the historical =E2=80=9Cfail fast=E2=80=9D behavior where in=
-valid boolean
-> > values cause an immediate fatal error.
-> >
-> > The repo_settings_get_trust_ctime() accessor would then simply return
-> > the pre-parsed value from r->settings.trust_ctime.
-> >
-> > Does this approach sound reasonable?
-> >
-> > Thanks,
-> > Ayush
-> >
-> > On Wed, Feb 18, 2026 at 12:44=E2=80=AFAM Junio C Hamano <gitster@pobox.=
-com> wrote:
-> > >
-> > > Ayush Jha <kumarayushjha123@gmail.com> writes:
-> > >
-> > > > The core.trustctime configuration variable is currently stored as a=
- global in environment.c. This prevents it from being repository-specific, =
-which is problematic when multiple repository instances are used within the=
- same process.
-> > > >
-> > > > This change continues the effort to move global configuration into =
-struct repo_settings, as discussed in
-> > > > <20260208062949.596-1-kumarayushjha123@gmail.com>.
-> > > >
-> > > > Move trust_ctime into struct repo_settings so that it is associated=
- with a repository instance.
-> > > >
-> > > > Add repo_settings_get_trust_ctime() to lazily read the
-> > > > core.trustctime configuration value, defaulting to true.
-> > > >
-> > > > Update statinfo.c to use the new accessor instead of the global var=
-iable.
-> > > >
-> > > > Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
-> > > > ---
-> > > >  environment.c   | 5 -----
-> > > >  environment.h   | 1 -
-> > > >  repo-settings.c | 7 +++++++
-> > > >  repo-settings.h | 8 ++++++++
-> > > >  statinfo.c      | 4 ++--
-> > > >  5 files changed, 17 insertions(+), 8 deletions(-)
-> > >
-> > > Doesn't this regress end-user experience when the configuration
-> > > variable is misspelled, e.g. "[core] trustctime =3D bad"?  We used to
-> > > run git_config_bool() from git_config(git_default_condfig) fairly
-> > > early in the program, and would have died before doing anythihng to
-> > > give the user a chance to fix the configuration files before going
-> > > forward.
-> > >
-> > > Now we will run deep into codepath and would not notice the
-> > > misconfigured core.trustctime until the code happens to ask to
-> > > compare the filesystem stat data and in-core index stat data.
-> > >
-> > > I think this is a recurring theme, e.g.
-> > >
-> > > https://lore.kernel.org/git/32fceddc-c867-4a47-bde8-c873279edbc1@gmai=
-l.com/
-> > > https://lore.kernel.org/git/a881499d-e236-4f8e-a217-b6bce69e3e3c@gmai=
-l.com/
-> > >
-> > > That other topic Olamide has been working on seems to have settled
-> > > *not* to lazily load into repo_settings to avoid the problem.
-> > > Instead it reads and parses at the same places in the code path as
-> > > before, but into a repo_config_values structure that is associated
-> > > with the repository in question (which typically is the_repository).
-> > >
->
-> Hello Ayush
-> Thank you for your interest in this topic.
->
-> As Junio pointed out in his response to you, I have submitted patches tha=
-t
-> settle not to lazily load into repo_settings. but instead to read and par=
-se into
-> the struct repo_config_values structure associated with the repository.
->
-> I will continue working to move other repo specific configuration variabl=
-es
-> in environment.c into this struct once these patches have been accepted.
-> Thanks
->
-> Olamide
+At more than one juncture I received this message:
+
+fatal: Unable to create '...MERGE_RR.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+
+However, after removing MERGE_RR.lock and attempting rebase --continue
+or --abort (I don't recall which), I received the simple segmentation fault
+response with no other messaging.
+
+
+w/r/t to state of the compromised repo, I have been able to checkout
+multiple branches
+I have under development and move them to a fresh repo clone (init
+from backup). However, every
+status command responds as if the rebase is still in play, regardless of branch:
+
+On branch <any>
+Last commands done (7 commands done):
+   pick 6c706e0f5 refactors endpoints to include element-delimiting comma
+   pick 0373d1796 #1680 interim save to do research
+  (see more in file .git/rebase-merge/done)
+Next commands to do (11 remaining commands):
+   drop 5e3a99f46 fixes 0-day enabling facilitator to edit their org data
+   drop 428947142 #1680 creates facGroupInvoiceCreate template
+  (use "git rebase --edit-todo" to view and edit)
+You are currently editing a commit while rebasing branch
+'wip_i1680_pass1' on '85bcb9270'.
+  (use "git commit --amend" to amend the current commit)
+  (use "git rebase --continue" once you are satisfied with your changes)
+
+nothing to commit, working tree clean
+
+Began rebuilding a new copy of my repo. Once I finished getting my
+files transferred,
+I attempted to get precise error messages and detail for this report.
+
+the status message is as above
+checked out the branch I was attempting to rebase
+rebase --continue failed,
+rebase --abort did not fail
+and status no longer displays the interim rebase update messages
+
+not sure what to think, now.
+
+self-healing ??
+
+Thanks for reading, apologies its not more precise.
