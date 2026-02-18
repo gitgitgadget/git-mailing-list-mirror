@@ -1,120 +1,133 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5500346774
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 18:43:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771440212; cv=none; b=HDLutF3AlzPUSE4RS59yMLh2l3qYwsZQl/wVcAhm9KfNuj2YxPKhCM0LT95EIUM3tiv/J8ygzsDubOhr8rwIxV/aOuqikptxaQS+ia2tIGbK8D45nmQZhHZDLYXjiK8MO9YFh4ni/5mzxgqFqbwJolRqA8LRrrMUfcTY/HuoTYc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771440212; c=relaxed/simple;
-	bh=ekmLES9mQLhqa3lUhu/BcIcCOqAiSkfrxHbsHfl4Pdo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M0ACaMIwoQmpPlhfshtMbzyC8lp3xItxPfvSib9uECBHR7VNwiM/yF8jnE7sb1ixdfSgRlvAtupegOMoqSs3MO4CmXgdr+iXI0XzAYtHD+NntJrI/yepdQjZfpGE1NF1qpxKfO1TYiH8a8ehzf2GMCnq97Z0x6Py/1uixwpNeFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pDO3W+aO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jAFAuqtJ; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A4B346774
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 19:11:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771441914; cv=pass; b=CyNYc7tjGB5VsXoCB1ZXAoJxeqVWzqDEHpvaEcxV/Sj1z0WHJ4SYaJvVxSxrqvRRqYx5VTFGMDSmMbnHgutUgwwZ7oFzNJfrV/BA9vGeVNel8PHOwJFb/+tqvhBWoOxP/KvbuHmJMF9BUUl8K7kVYRcZopzQu/xqgp8+n1QMNAo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771441914; c=relaxed/simple;
+	bh=rku4vAAKy1zJzgdMmMJDE+tQs9lwybrGVbQVYRpcI1Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sYIX+NZCbN6IK/ML4bHNpxvUDB1zKjje6ZHiN8AuJ6zwEc1EPIF6seANQm9RSQ+jGvcZ+eNP2DcGUankE/Y/n8goay1uZV7bymd2e/QA5Ox6xsaaqhq1R4LYmNzpENO2duJ8j9ohKSmX7vPXYE09j1c2fncawYyV84OOcDvaVUg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=ufOwj6J+; arc=pass smtp.client-ip=74.125.82.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pDO3W+aO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jAFAuqtJ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0737B7A00F6;
-	Wed, 18 Feb 2026 13:43:30 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 18 Feb 2026 13:43:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771440209; x=1771526609; bh=Hn3PZmuG9k
-	btEiKbTFX1alhU8ZJwsXsvmI8jkPbJJyw=; b=pDO3W+aOJr3J6hAnp/TLJABcjm
-	Bw4+ItYYHNNDcon4tVQpj3GG5okmY7RQ+XmrViFL3VpzYB/0MnAhw2vvEgqlwgsE
-	AAI4aARjgp7O7eKytegjXHGEApQQBnCaej6d/dtKXCWfNUu5o6NVv8rZyvqBTBhB
-	yImf4fWd6AruWzvevhHDQg9sKcBWpR4F/3YF+5I3wHPih59BbjGTAxv3hX3GOUze
-	6+nuzqcjmfMErP1m/ibVU44mBOk7ohdq/T3WJ6Ue38usYE196LwrEnC1VE7/7DZe
-	ObbHMBOlZNFI7AbtvETqhZjUp77f/X96THTIE9ZeFY/Jd/C96dbwcD/Ym/xg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771440209; x=1771526609; bh=Hn3PZmuG9kbtEiKbTFX1alhU8ZJwsXsvmI8
-	jkPbJJyw=; b=jAFAuqtJ6P72r1LWsjbZJka3BlGZce2lYQi4/T8nTwqqxpIu/4H
-	Ibk47T6Gbx2im4wgMqCnW2jcxCLZncQiugzLKyKrDVlxjmYZrBjIwekgp2pBFSYm
-	WFRpqIEladdbMo4hyNZJRsXp7lv52CO6AcllFtEijxc80HIkPb5tqp4IvVs3Bjrg
-	vX94ionsfJai8KvsRa4ZR95KJEjyJgQ9KakxTkMj/6st7cKynUqhGSPfgwWjfdqM
-	AenObEsEPnx+MM+IxrZXId3HyVUgjC43nq1ijWtscNcU8QR19wLbonUO/ogOb+Je
-	roLJbU4vBqWkuv6nDNO6qjiVUdoing5gSLA==
-X-ME-Sender: <xms:UQiWaX-P2tzmRMWXQF69YJOdtgUqKHNfihlJ9NXik5lrCJM1wPm4lg>
-    <xme:UQiWaavzPTRVXBnlM1inwHUlYefM2mQChInZXiXTfq07K_VgxKFlrVCfjhwOfPdhN
-    zpF6aYe93zRMl4Y8TI1eVuTmFrCqk-prJmSkLxtVopF0vTj4z-uVl4>
-X-ME-Received: <xmr:UQiWaaBv2kCgb7GC7cQqKqjzllp3VxEAwqke3vzPSYWfnmG5XkV_1fZ4HTMYPb00Cuo-l-7M8StmWXI5iMij70K4gPvxSkh1AQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeffeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
-    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:UQiWaSVV611TWMOprxYwl7OhCowQS9Q6NnhG4C2ABwDgsCVC-Km7Cg>
-    <xmx:UQiWaYC0D61ozXQ5oatTaOPJawVZNkLHVriiprQezgijucG_lDZ2jw>
-    <xmx:UQiWaV8ocYDxDn1HsW8WBJACkr4lz5nap3U3PHQ9aQgfWo6A0hNj1g>
-    <xmx:UQiWafGd8nvJSh1I2ZKUEShXlFBB1I52jzu2lYAgrWB_fwMdXEH41g>
-    <xmx:UQiWadhdadc9Xn4JoTa0qz59ytvu-SlSGiUBWeMnv8E4OiKkGpOPoE66>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Feb 2026 13:43:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [PATCH v5 1/2] setup: distingush ENOENT from other stat errors
-In-Reply-To: <xmqqy0kp7wai.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	18 Feb 2026 10:15:33 -0800")
-References: <20260217084124.150366-1-a3205153416@gmail.com>
-	<20260218051850.164972-1-a3205153416@gmail.com>
-	<20260218051850.164972-2-a3205153416@gmail.com>
-	<xmqqy0kp7wai.fsf@gitster.g>
-Date: Wed, 18 Feb 2026 10:43:28 -0800
-Message-ID: <xmqqpl617uzz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="ufOwj6J+"
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-126ea4e9694so228874c88.1
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:11:52 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771441912; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bFxEE5VpgVihdAJRH2OVkw00TNJ3Cg/swLpNgYJITIZ/muGO5Xf5j399kRhW4GtXQw
+         hy2fbWlPk03HJCSVS1zAFHdDeiOCj0RbIfUXkzO/CDpYXPDmCqHxPL/RO6qFTUPsx7IC
+         YoQ8xjy675eO6YInvdTC9MaL6kc9Wu6cR/EzIIbsHVKoBYvj9C+vsdgnM4HzfgahS5j5
+         hkcAOagOnRRQydVW/PoZwD15JYLVEig/uhMyayvMPGSiosumh0luO/E1TK5h/0VPp8Jl
+         6lDbKzo7lfEeHDfZPS5m0vH0EXGFnSXxZpIl0ukmHKKrwKNKijX/OF45gJ7ligGjk6yk
+         j4YA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=DhummzunepqBKxkSOMuPvhvFEZgK6RYOC5P5i1aXNds=;
+        fh=Fijgd4WVKvFM4OjrSehwjrj60XszmU8tP9G4VU5nYH8=;
+        b=MxQHN9FK7jLsJBzACNJPk5RC2az7cNa/SL4z/K/Qn13+OBOZjCx8YkG5nOyS5oMCz0
+         I6Y2k98nrwxKM+Wk60t5bfvgrlmj2WXTVv9kz0Vx18L9spa1Qq7YCk+CSl0jxnOBuDs4
+         iL+G4ORjfGFV5o95OoKbnh4rujiYhhSpB35uThGqeGC6W9WSOVnp2A+IkZ6DT6loMPXg
+         fLE1caXE7oCKUrSBSYheloh9iXhNr1rYhbeW7u4kd2XDAwfovV/zqNxyBeJl3Y3k4SD2
+         C6TE7PofehbIAHDyb4XyTb56q00yBnY7Zoi8qrmH7MDPB5amHM8VZolAwYYgxa08FBPX
+         sVYA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree.net; s=google; t=1771441912; x=1772046712; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DhummzunepqBKxkSOMuPvhvFEZgK6RYOC5P5i1aXNds=;
+        b=ufOwj6J+VGSpXXTNo/4OkkinSiAp3XK+TOqKp0Ega7WThe7Ox8nUJi1XHGKC8Jsz6D
+         yatpXP4hvH3GVkFAfZacQHTKH4W1sVHaaF4mIiQ0l3PoAWg714E9GEg2T+SAyivjQ7HL
+         9V6WHYWzDY6HP3VbR1VwntVxCFvYiNktWmaYRTg6lDVYShznavv/QAiTN+njluFWRd8C
+         ca1lFOSB5LZ15hSZ4ylWJMWUbeRrXvV1xyT/jcssE2WeyZk7N4UWw7TVeAWnu+xOTXpR
+         nzqQ/7QXLA9wqraiR6hCc4zkbEyxS88QsYfzELZp2UrSGOg6LVi8f3jtasP4X+sUgQSx
+         KikA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771441912; x=1772046712;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=DhummzunepqBKxkSOMuPvhvFEZgK6RYOC5P5i1aXNds=;
+        b=fbOGrFvUaFOq0FNjb9Vt92LfkCglDUqgFvSqtOqfst2E86hFax6oKW9uE5dbUSh2jq
+         uYIT9HTfOdtAGFiOzdHCRFPZATzBgzxAZs+0XxWJUnA2rIMXkjPC+O4BLkSzwJ+Qv97e
+         DOhbjpnN3Suffh4VFOXa4SHY5vHMJBzAHdy1w2TduMPi5iMlUtLfw59T3nOa2OMZCqbj
+         66s9MvyuSkRDvB6OP7T84XIJERM0rQGEZFKKgogddUbQg5/qN//jtqrtKf1/KU0fBump
+         5osK6Kwb60Cct9mA7vbQO11IxLJlOkdJHGI5ngjE8BT/CcSFoVjPxdigHFoVFTNJ+W9T
+         J9fg==
+X-Forwarded-Encrypted: i=1; AJvYcCVjtLeyKxM4dh1amsFZe4889LqpvGTnbYDWdyGJcxsIPkKgYG2IuoxqB1kfsIqJbP9CUf0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQNQjnVBtPuWFVarEvkiczYLbYLvrs06gtCtiPoXoKe0zPVGVr
+	fvpcHkPi4f7A/sC8FPCax8IdkDbra2OX3aLJLpgr36LbvVMHjHqyC+boJJ+hD0mOvt3/f3x5PR2
+	ka5jv9v2i/RrLGnnbpUcjC7Brf7xBmb0f3MgeijQZQ3BxXvs5/YVbBkjAQ9vCrBhEsOQ6vJ/tw1
+	3N4sxZXXnkylflR/auUZIEc+wD9L39rrvnV+u1S9nsDiE9EaMz3XX9ef1h1FEoXgVMg5OzppE0Q
+	Xyou+2OPuhQ5Hy2vrmlEcUFHiIHZbBWsDfM4WHJRD2bhAvadnX4HybhDVHuh6Zy+Op9zkX95lWt
+	M8BvvCiBkcL6GDE=
+X-Gm-Gg: AZuq6aJl6IGxWrRtd8cX0PqI+vHmik2wcHMSssY9OOOR/FUGaBVV20x8jOzdQjsq4Dw
+	ODOkghHSBWUx260FAwP/ThokpSOH6X95crk9QODFgrMiXur5EWgfFJLHsikjrXNMEnIQ3wH6ogK
+	h3FI1PBA1i7rPCPnOrYI0/KUBhD/+BaK5pfvOubmmL1Qcu8nXBhchPvquPKjqfujOQhVsuVWX6k
+	Dk+iQoxCxJDuZwKfSnxfGa9/bpA7IWvUqazwgYb1xMB/CeJnN8Uhb5aaOUKC7a4ZmX/m8WsbrF1
+	JRR1b+TTHsewk5aGUgY=
+X-Received: by 2002:a05:7022:458f:b0:11b:9b9f:426b with SMTP id
+ a92af1059eb24-1273addfcaamr8365343c88.20.1771441911681; Wed, 18 Feb 2026
+ 11:11:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2046.v2.git.1770775169908.gitgitgadget@gmail.com>
+ <pull.2046.v3.git.1771391650713.gitgitgadget@gmail.com> <11a91368-7dc8-4081-bd13-d208126beb7b@app.fastmail.com>
+In-Reply-To: <11a91368-7dc8-4081-bd13-d208126beb7b@app.fastmail.com>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Thu, 19 Feb 2026 04:11:40 +0900
+X-Gm-Features: AaiRm52R7tyw9sd8g6d-aiSfNrLAhg9L4QrUqw_Kr_Ws-7uJ3bpEhYZ9I1xGAj4
+Message-ID: <CAOTNsDyVqooYkSXv3U-SwAqiSqTnwDCOXpRr9AZjgbv5P=dbqw@mail.gmail.com>
+Subject: Re: [PATCH v3] osxkeychain: define build targets in the top-level Makefile.
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Tian Yuchen <a3205153416@gmail.com> writes:
+On Thu, Feb 19, 2026 at 1:10=E2=80=AFAM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
 >
->> Currently, 'read_gitfile_gently()' treats all 'stat()' failures as
->> generic errors. This prevents distinguishing between a missing file and
->> real errors like permission denied (fatal).
+> On Wed, Feb 18, 2026, at 06:14, Koji Nakamaru via GitGitGadget wrote:
+> > From: Koji Nakamaru <koji.nakamaru@gree.net>
+> >
+> > The fix for git-credential-osxkeychain in 4580bcd235 (osxkeychain: avoi=
+d
+> > incorrectly skipping store operation) introduced linkage with libgit.a,
 >
-> The above plan makes sense---you would split stat() error into two
-> different classes, start returning ERR_STAT_NOENT in addition to
-> ERR_STAT_FAILED, have the caller act on the new ERR_STAT_NOENT and
-> adjust the way it acts on ERR_STAT_FAILED, and if possible add tests
-> to make sure we react to failures from stat in an appropriate way
-> (but how? --- it is where my "if possible" comes from).  So I would
-> expect that the other patch would be to split ERR_NOT_A_FILE and add
-> ERR_IS_A_DIR, have the caller act on the new ERR_IS_A_DIR and adjust
-> the way it acts on ERR_NOT_A_FILE.
+> Nitpick: Commit references should have the date:
+>
+>     4580bcd235 (osxkeychain: avoid incorrectly skipping store operation, =
+2025-11-14)
+>
+> Like the rest of the commits you reference here.
+>
+> > and its Makefile was adjusted accordingly. However, the build fails as
+> > of 864f55e190 because several macOS-specific refinements were applied t=
+o
+> > the top-level Makefile and config.mak.uname, such as:
+> >
+> >   - 363837afe7 (macOS: make Homebrew use configurable, 2025-12-24)
+> >   - cee341e9dd (macOS: use iconv from Homebrew if needed and present,
+> >     2025-12-24)
+> >   - d281241518 (utf8.c: enable workaround for iconv under macOS 14/15,
+> >     2026-01-12)
+> >[snip]
 
-I forgot to say one thing.
+I see. I'll fix the commit message in the next reroll.
 
-When changing the external interface for these service functions
-like read_gitfile_gently() and read_gitfile_error_die(), we need to
-make sure the change will not break _other_ callers of them, outside
-our main focus area.  The latter, for example, has a caller in
-submodule.c and we need to make sure that the existing code is
-reacting to the updated definition of what ERR_STAT_FAILED and
-ERR_NOT_A_FILE mean (and if not, adjust it).  read_gitfile_gently()
-is used more widely outside setup.c and we need to audit these
-callers, too.
-
+--
+Koji Nakamaru
