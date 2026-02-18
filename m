@@ -1,70 +1,70 @@
-Received: from mail-dl1-f67.google.com (mail-dl1-f67.google.com [74.125.82.67])
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C76332ED58
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 14:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A35132A3E1
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 14:09:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771423757; cv=none; b=CKZ/xEhLO1BQlpbh3UIFRi12D4AsjEg/HU0NZOog2gHbsQihsMFMW//mn9pU7Y9PIW5hugs2Bp7vaWPoQvNxvCUpe2CVgTfGQgSL8zZw/VO0ARLsSP2jW8hFzJSU58kFd7Ax+feOqfUMo6Tw08x7MCS2nRHWiZ4JeJeSMMfvNMw=
+	t=1771423759; cv=none; b=q1DhnKLOfNInB1dZL4JbfMufnPyy0LQDAmKocLvIf9PHlVRDA29+UVkb3OMazS6ETFMUl5b6YgiDDgajl+ZViccpDdf9a2YyUyaIIvd6//7ncW4gMmW7M/BN7nsspFZl4ekMlmxRU1ZdIsAuMHEHP2DpvZKZo3QRugYHocBhXl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771423757; c=relaxed/simple;
-	bh=Sxy2nVIlZZp91jUZHWrGuGmqqgzPvYqv7v1kcTT9N9M=;
+	s=arc-20240116; t=1771423759; c=relaxed/simple;
+	bh=pRl01NYurgqIHzAv4kMIcSp3H0FlBnNMcNsX0Xo29jU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=CUwOxXfdqMEXLKB/COuA/OivlOs7b+zVs/qAnFDjN0ZBPkTC8UoskYuUtwtUCk6DwYZaS/QIcxW3MWF/E/QgfBC7/7w0hR5cjyWjuk3AbnWXwkyKeT/Jcq55XO7/4jierGhXkYX4lSUgr1UasDBq9twEOaHbUBTug1sCvEyYcro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lVbXcnIf; arc=none smtp.client-ip=74.125.82.67
+	 MIME-Version:To:Cc; b=rBxPhv6E/8PaoyFHgZnCSKsMJtUC5SNANALTfEjDxuKAdlHpe1rqepzBmvsCEH6VFJwVirQsLPNL2egaalyGRTyS2Pil599a6/jnT5MVynh4lw5Jf/6OK4e/rROS4frjWESggxMDI7/PxwMWInGU0Ga7sii8ToqnSyi5OTqZG9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ndjAUhXG; arc=none smtp.client-ip=74.125.82.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lVbXcnIf"
-Received: by mail-dl1-f67.google.com with SMTP id a92af1059eb24-1270be4d125so607432c88.1
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 06:09:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ndjAUhXG"
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-12732e6a123so2067342c88.1
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 06:09:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771423755; x=1772028555; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771423757; x=1772028557; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EpVSl0rwwidbQyKEm5Ba56mUHn6+FPBpNAwQCRGAsxk=;
-        b=lVbXcnIfACEX3QnkplNJTb8dIFYTGiJEWm0amOXflxwiPkPkGVbNKd+Pzovrts/kcf
-         3RVe6CFe9dzMIvRfs0b+yG4u+MrVxQgJ6ik8uX6AOgRqBfyDkn+hVhKMSjRClwDSR3FW
-         OnUHQI4VNzjoEWQ56Hf5YMBYm1yRuNEptd1CUWEJB4SW/+20m5JmX8qivvmaah0wowI+
-         kk2nuAYcFegIMGrTduiD1w+5Lu2Hawyn/FedMIX+xgycZlkHdQcvzJvQgRJEEnvHICH3
-         r0TWda0wrzxnDJZONCKCRGkTBgyQg6oEg8W50B7jWdnWJeYEup+s0tMshLFfEWvo3nkN
-         Dfzg==
+        bh=tLZNDWkTTA0heUrJ4eo8L2rJ+QzFCNvuQAcUnAZ964Q=;
+        b=ndjAUhXGWR3tmi2ZimUsDIxlZiLud8YurD7AyMqBntWcOvZRHcogMxZFsskcdwqKC5
+         TNMXNCZum4rJYk8olKBbVYtPzBddJYHyi3iWpmCNJtNSOsVYiSzr/1dBfrUrk48s+5ub
+         agYNXH8m0auDXda+r6kKhXmcCoBFuDsnAYLtlXk+UV8Zpui33M4yu1zf2r/aVKlDAzP9
+         T8zzYucQmtHinIeWdb9tPbr08eTf+Az93VX9rRtR8/Xgbo36g1A34K09oGFqRozhQNsF
+         fSq+pfAdRl8YmqwznF23RIpjmpxPiUcF4gguBZTZNnyZXr18HOvr2qhlS3EYOPmoUo3c
+         hgYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771423755; x=1772028555;
+        d=1e100.net; s=20230601; t=1771423757; x=1772028557;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=EpVSl0rwwidbQyKEm5Ba56mUHn6+FPBpNAwQCRGAsxk=;
-        b=TYjNy/6xTZXF9NDwCvkigR3ZeBBFNgicp15LktfKXoraGdg2bN0O6GfEoK1MRPtjAW
-         2XVU23PbcNiNcfAUAFj/AGCEy9kIiFZRmDELWH0zt8zyCt0c6eshtJndOVVobedxfyG4
-         X1VfWy7xhexia51L9VCYnRqArO12OzUsSN+XRJvvyXoblM8WbgR4paISpqvdKwkfP8o4
-         GCx3uGohbS4HxaR6kaUSpZq1BhxK2vD63HdwlKqagnCB5WxjaHvgYOb0lrSH8ThDY/4T
-         U3Xb03t/ooXAJelskRMcNLb9UQmmEkEQmVN2HBIikhJVixebNth03fxNTv1BIQLEeH9o
-         8Bug==
-X-Gm-Message-State: AOJu0YxRPNPd32JRQu8dEOsPXfoGfGW5ib7mluCnc5dqzhztpkbsfrOT
-	+Mf384YsK/g1shr//tvEf4rzoZoXB2AlpnQ3IcRZ26AIvzH8m6EXEUrBFDiR/Z6zo8g=
-X-Gm-Gg: AZuq6aLvQ/9Odu3sMDA57kpNdL59/InA5Zk8gA8+RgPvStCslQ5bnUCB/ZN3l5962GL
-	mxPhT6WxA87c+u8/4C+IkOZOM/mt9fq/gMtzjaSIUI87vmWyYrBw7eK7IfgvpBG8MXoqDsmphpw
-	dZDBgLXCY1tcmw/ZwIprd6O9OiEyxegkcK7ayghjG7O+m1fPypRUGFdqqKX6BVv4A20eGKH5F/P
-	DEsddTjXxHoPta/zeLkLsRotUMTSxN4y592pe0+cLq3lWNVKOwAZtOeyByA/Zz3YMhRSBq00aoT
-	3fbACH7i0I3rvthfbbJ6KUiPWrEj0XM1iDAJNRuOgsN8Rwg93bTM3R4ir8y4OP4dmc4WiTshpSI
-	dx+/CwVMO4Y6aqwZIPL0fWCjLhC9O9oDsjZF3ymOuYD5rbvmj2wVCIheO/PHWzRl4W0x/U6iPmr
-	7s3TXiTbAM4dPeDzX6AXP66dDZ3Q==
-X-Received: by 2002:a05:7022:2387:b0:11b:f056:a19b with SMTP id a92af1059eb24-12741b8155bmr8344263c88.18.1771423754954;
-        Wed, 18 Feb 2026 06:09:14 -0800 (PST)
+        bh=tLZNDWkTTA0heUrJ4eo8L2rJ+QzFCNvuQAcUnAZ964Q=;
+        b=iSYJMshHRirXSwEVRj8u3gIjmaAepoOitgdJMYoZJPXM9EL6h8BFfvOirvyUqly5yT
+         hTCTC8TaVsgFUTQ9E74DcrmNa7TcWexqPYBcmCcWEj0gY0zUFeRiDO6AdEcoyF3ufMgX
+         IRbTEPAmdKUOWjiomy++xtoqYBFuEUTP24nNJGl31w4A2apvi30UoBCYWdt7eLILArUb
+         SprVVkH/+mO4usfmFkZp3upWg6R5MbxXmGiKR6PtxpuZ4AaYoi8AOPI3RsOINq1M5obO
+         WqQt7NaCY1luXyzpDMVrWKRGWh7BbdaAuo6obE9I9e2yx1SFzuBZjudArlbVYEm42dQD
+         CRnQ==
+X-Gm-Message-State: AOJu0Ywiv9tVj29iAZ+Lks2msqMeAM7iTtVst18YEP+b6jjDg2E6uQVA
+	7zbbNK2PGyA6SESTpHzwpdEILuzdoqCSxUcPK3NWh+Lg4l473AkmdCwC/fOzNaqI
+X-Gm-Gg: AZuq6aLQpYIDTgvJ/i4QxLboeW/c8uSXGdsbkmHkEGdX+17F0D4tAnaCg1aYbweaBBV
+	dde5p8HMQbL132wouOBLYy43c6OEWW7e3TY5fCV5W6x+Y3fjP2g4AQAr96jCB+u5fix+2rftLGa
+	BC4ddKd42K1sJ2ePxmhE1LFHJMT2AvTU8CBazF6Ak1nPHJSLEr4Lcn+tvZRYYkZKGkpKM+AiJ2O
+	RR9kAcW8xy5HbEgWt8Ik7Bhvngwimqr8ogWcM8PvbFz8HNstFXnQ1emU17WTSz8PBfGic4yXyHf
+	f0auzDWCS7R9yTeVmSIdA0kwPP3It3TplM56U7p/MuU6UXNzpzwYL9th53La4AwRupydIAxxNyu
+	C84Sfntr70M0UIOOf3JqNNPFUdn4XxZKI3e6L/BDqsGHUnWCJHIUbWDk0XWjzKDNz6jrKRVivQj
+	bxGsPpnm/UVk6cEd+EkxaTDkNQKA==
+X-Received: by 2002:a05:7022:e05:b0:122:2f4:b247 with SMTP id a92af1059eb24-12759a61101mr882698c88.28.1771423756745;
+        Wed, 18 Feb 2026 06:09:16 -0800 (PST)
 Received: from [127.0.0.1] ([52.159.225.192])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12742cad9desm18468372c88.11.2026.02.18.06.09.13
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12742cada1csm18446756c88.9.2026.02.18.06.09.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Feb 2026 06:09:14 -0800 (PST)
-Message-Id: <f48b1f07c45f6237f91fa6f746c58b791edef5bd.1771423748.git.gitgitgadget@gmail.com>
+        Wed, 18 Feb 2026 06:09:16 -0800 (PST)
+Message-Id: <557fd77444dcf68277fea7c1a57dae07b2ec993d.1771423748.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2008.v4.git.1771423748.gitgitgadget@gmail.com>
 References: <pull.2008.v3.git.1771326521.gitgitgadget@gmail.com>
 	<pull.2008.v4.git.1771423748.gitgitgadget@gmail.com>
 From: "Vaidas Pilkauskas via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Feb 2026 14:09:05 +0000
-Subject: [PATCH v4 2/5] strbuf_attach: fix all call sites to pass correct
- alloc
+Date: Wed, 18 Feb 2026 14:09:06 +0000
+Subject: [PATCH v4 3/5] strbuf: replace strbuf_grow() in strbuf_attach() with
+ BUG() check
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,122 +83,34 @@ Cc: Taylor Blau <me@ttaylorr.com>,
 
 From: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
 
-strbuf_attach(sb, buf, len, alloc) requires alloc > len (the buffer
-must have at least len+1 bytes to hold the NUL). Several call sites
-passed alloc == len, relying on strbuf_grow(sb, 0) inside strbuf_attach
-to reallocate. Prepare for changing that by fixing call sites to pass
-the correct alloc.
-
-- mailinfo, am, refs/files-backend, fast-import, trailer: pass len+1
-  when the buffer is a NUL-terminated string (or from strbuf_detach).
-- rerere, apply: ll_merge returns a buffer with exactly result.size
-  bytes (no extra NUL). Use strbuf_add() to copy and NUL-terminate
-  into the strbuf, then free the merge result, so alloc is correct.
+strbuf_attach() documents that alloc must be larger than len, as the
+buffer must have room for the NUL terminator. Replace the strbuf_grow(sb, 0)
+call, which was silently reallocating when alloc <= len, with an explicit
+BUG() to enforce this contract and write the NUL terminator directly.
 
 Signed-off-by: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
 ---
- apply.c               | 3 ++-
- builtin/am.c          | 2 +-
- builtin/fast-import.c | 2 +-
- mailinfo.c            | 2 +-
- refs/files-backend.c  | 2 +-
- rerere.c              | 3 ++-
- trailer.c             | 2 +-
- 7 files changed, 9 insertions(+), 7 deletions(-)
+ strbuf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/apply.c b/apply.c
-index e4c4bf7af9..d67d86bce4 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3589,7 +3589,8 @@ static int three_way_merge(struct apply_state *state,
- 		return -1;
- 	}
- 	image_clear(image);
--	strbuf_attach(&image->buf, result.ptr, result.size, result.size);
-+	strbuf_add(&image->buf, result.ptr, result.size);
-+	free(result.ptr);
+diff --git a/strbuf.c b/strbuf.c
+index 3e04addc22..0abed40c91 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -95,11 +95,12 @@ char *strbuf_detach(struct strbuf *sb, size_t *sz)
  
- 	return status;
- }
-diff --git a/builtin/am.c b/builtin/am.c
-index e0c767e223..c439f868dc 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1188,7 +1188,7 @@ static void am_append_signoff(struct am_state *state)
+ void strbuf_attach(struct strbuf *sb, void *buf, size_t len, size_t alloc)
  {
- 	struct strbuf sb = STRBUF_INIT;
- 
--	strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len);
-+	strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len + 1);
- 	append_signoff(&sb, 0, 0);
- 	state->msg = strbuf_detach(&sb, &state->msg_len);
- }
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index b8a7757cfd..164d8a6198 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -3246,7 +3246,7 @@ static void cat_blob(struct object_entry *oe, struct object_id *oid)
- 	cat_blob_write("\n", 1);
- 	if (oe && oe->pack_id == pack_id) {
- 		last_blob.offset = oe->idx.offset;
--		strbuf_attach(&last_blob.data, buf, size, size);
-+		strbuf_attach(&last_blob.data, buf, size, size + 1);
- 		last_blob.depth = oe->depth;
- 	} else
- 		free(buf);
-diff --git a/mailinfo.c b/mailinfo.c
-index a2f06dbd96..13949ff31e 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -470,7 +470,7 @@ static int convert_to_utf8(struct mailinfo *mi,
- 		return error("cannot convert from %s to %s",
- 			     charset, mi->metainfo_charset);
- 	}
--	strbuf_attach(line, out, out_len, out_len);
-+	strbuf_attach(line, out, out_len, out_len + 1);
- 	return 0;
++	if (alloc <= len)
++		BUG("alloc must be larger than len");
+ 	strbuf_release(sb);
+ 	sb->buf   = buf;
+ 	sb->len   = len;
+ 	sb->alloc = alloc;
+-	strbuf_grow(sb, 0);
+ 	sb->buf[sb->len] = '\0';
  }
  
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b1b13b41f6..6baba11f96 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1806,7 +1806,7 @@ static int commit_ref(struct ref_lock *lock)
- 		size_t len = strlen(path);
- 		struct strbuf sb_path = STRBUF_INIT;
- 
--		strbuf_attach(&sb_path, path, len, len);
-+		strbuf_attach(&sb_path, path, len, len + 1);
- 
- 		/*
- 		 * If this fails, commit_lock_file() will also fail
-diff --git a/rerere.c b/rerere.c
-index 6ec55964e2..2f4809a310 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -1031,7 +1031,8 @@ static int handle_cache(struct index_state *istate,
- 	else
- 		io.io.output = NULL;
- 	strbuf_init(&io.input, 0);
--	strbuf_attach(&io.input, result.ptr, result.size, result.size);
-+	strbuf_add(&io.input, result.ptr, result.size);
-+	free(result.ptr);
- 
- 	/*
- 	 * Grab the conflict ID and optionally write the original
-diff --git a/trailer.c b/trailer.c
-index 911a81ed99..3afe368db0 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1009,7 +1009,7 @@ static struct trailer_block *trailer_block_get(const struct process_trailer_opti
- 	for (ptr = trailer_lines; *ptr; ptr++) {
- 		if (last && isspace((*ptr)->buf[0])) {
- 			struct strbuf sb = STRBUF_INIT;
--			strbuf_attach(&sb, *last, strlen(*last), strlen(*last));
-+			strbuf_attach(&sb, *last, strlen(*last), strlen(*last) + 1);
- 			strbuf_addbuf(&sb, *ptr);
- 			*last = strbuf_detach(&sb, NULL);
- 			continue;
 -- 
 gitgitgadget
 
