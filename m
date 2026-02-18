@@ -1,54 +1,54 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057162FFDDE
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 18:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4DB1E0B86
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 18:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771438537; cv=none; b=joN1x6AeZaUaoRcNYkPg9I3rlZEJomphO+vnhKTGlQX2JSgY2vPc4LC28U4240hQOX3AG8GucktZUrFZSoPxW0gWpVJkiC/G709Pbe8rhwNEOTuBQ9TSIKeFwAuFcwC4TvN9RiUfLbUInFIOYSh8RY0G/ADM0TCT2BiGRVOlmJk=
+	t=1771439125; cv=none; b=huwaO58U198EfJkUJcOe+RNbhYIclN+s6p9YC3it4bRhCjHmOEIz2Zym/r61HnvECtDDB1/j8Yc1p2+XACjJGVoO1pguRlkQrsYy74DuJRSpHoMaB4B3xJ5Hd9QU6d+8FOoV/ctg+AMP3eqRdtmYLHjaxGQE+YznUl69B0RMFMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771438537; c=relaxed/simple;
-	bh=krD1wboeKEu6f5G0UdVjRw1vj5sZHzDwuFmuXQcf7Qs=;
+	s=arc-20240116; t=1771439125; c=relaxed/simple;
+	bh=2BdPSVYEyU5vJENSeOKTGGtHkfbLJbz5FPjL/60g2dE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Imui2PY7jTfNJ8flJEkqIUebA0PtqQXNsVXNqPzhTj2+pLvaYoYDcXToYzcqX82JkrcibUSo3k2ozX6YCikMwFXPFT2wXL7MKecq05zU9fhvH5BlZBIBoZtkr2p3bAwyKF6RjI+lcBHZ784vAHo9XZAkEoRRr/ahTsf2Weyp2IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FAsyd9/b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=USYYtzzh; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=qYgS/Dk77hNevGV9Izwd7SYulL0/C0BCSSJBEXXOhdOuadBme0lyNO16xzs4EunOv6eIvQfv2CJSa+2sZoWbFMpKcX+8cNZLuf4V441AcJ/8MLUVqjArtiozPYSRQ3cqspWDN2URt/ESUPUuAJYDF71QOoaaRdXdkaSdDk//F7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R1/JU6fx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hFDUPi2B; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FAsyd9/b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="USYYtzzh"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3A5DE1D00119;
-	Wed, 18 Feb 2026 13:15:35 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 18 Feb 2026 13:15:35 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R1/JU6fx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hFDUPi2B"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 919FF1D00031;
+	Wed, 18 Feb 2026 13:25:23 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 18 Feb 2026 13:25:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771438535; x=1771524935; bh=phwdCxP0Qv
-	9DI0WX0/hfqJRp67NpCE0FiX8coy8GWbg=; b=FAsyd9/b7HCBovdBnkWIGkHSFs
-	xgVvPnmu2vDfGOQDns4PSzDxxqX1DcAP5uHrOfnAMCHChaN6xDEbdKqt532FsT8J
-	UOn4v6GHPskj3HCQAqGgCfcxGHF8mkX+Z3m3XPW/JK9tQ1f3en1mdP+lwCFRwMkj
-	n3V+56wzNEXg7nY5Bl1KvggWUuvKTtarOwYXGuJWRqpi9kjbGSDZ35eV4XvSNX2S
-	ZbmunFrLvFeGjKjAGLhZ7B5eqDpGmcqp4qYDli/yBNK+h7VyhxYWhEbR94luRCiM
-	jNtg6VpTdc+/PZl2/viRG4lHghqC5T0jwZUJqrEeTH52ttVqpooNdaE5qJZw==
+	:subject:to:to; s=fm2; t=1771439123; x=1771525523; bh=PjjDALFGLk
+	58psn7UrCj/8lEuSknP6UfNoZCs0C1csM=; b=R1/JU6fxw+gv0JznOQ2zlwwLOY
+	Zvi/1Vb8CdsVjg8BAUE3P9A1FFcSUwhWp7OfjO22XgdcAvgyu3T8Uj75HVT3SQ2h
+	/V2wiLx0gIRHAjOJUCANH/ouXxVCXLEOD/cYqT6T2PtTz1FYUb70JpxUJyzesVn6
+	qSyh3yaRT76+vuYCaqanDBEMppfFB/WG8gwSP1iRMHkeUzLYZY+sK4nRoRe+TUlk
+	0A/jt27N9C/YqvjdtGDHcaLjp7pWuA/bHdEtkSYpjuDl6WVFFJb6VDG7O6ALeTK+
+	v/2EDcZuZ1PMZN2tOaNUQF7oYXQnocIWtCnrJeR47YUsnW1z2R79qNQJIqRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771438535; x=1771524935; bh=phwdCxP0Qv9DI0WX0/hfqJRp67NpCE0FiX8
-	coy8GWbg=; b=USYYtzzheAt07pvx4y6zi7/Emxfm9tQBUAQLeySVXLQ5kvf7fh/
-	lPfmLvcmwsbZtnTm2VRgGh06PSP6mtTQdrY/L7PSgHKzSVQiPEPdVoU+sd3QwxOl
-	mZlpPo67ovzAwRu9TZvfTzUFOl2jBq6GJvrcaA4BFYCMGQQ4fo6SEG0tK7zFt9eE
-	BIy8rKKnaorN1zuZsFyD0YhyipqMmKRhrAe9a64bTtnAaK+KQSUfRSoD7Vkpe1Px
-	JSwmD4gN6VNMRaxkNR7hCULPL6x38G4uDSaXfLryHldOeEGf2R/vlYqR5M8cZz2i
-	ICIJrDH1KyTR9zYA/fDPME+LtPs6p3L5Wjg==
-X-ME-Sender: <xms:xgGWabQtG9TlTTlNw0IEw2uiPKA6Pg1Rs9oHE4apX-ovpaoLyz-C1Q>
-    <xme:xgGWaTzuwFeK80ucDiayzS2hUF-B_-z9_lTRMRBWCsQsQaIy5p4O2FhcuQ_nu4GS_
-    a9W3VWqjcjxNZelb_scCovMN2lmUCnbnHszmByV1iKBbP_hyI8jpQ>
-X-ME-Received: <xmr:xgGWaV1lacgUrwOdku35QKpeZsbCez37HBJ4lUnYXFVm87kqQajvbjelT2Z_5_meI0Nx7ty3LPUg7HNLw3yABvEpSjDB0yrHJw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeffeefucetufdoteggodetrf
+	1771439123; x=1771525523; bh=PjjDALFGLk58psn7UrCj/8lEuSknP6UfNoZ
+	Cs0C1csM=; b=hFDUPi2BZ8b35FSk7LS0QpNspkYP0wcysspIWONdVAjW2u41av4
+	DIwbD9uu6iWrhjRjEMuBspbjyNNP+90m5LOcM6o/9JtGtigOGAvXr8JI7SKcmHwN
+	N2PGu9L6BNexPQkjf3G3aymg3BbHujMVmXFAzkBkf5YuTey1x9JhhpiG4UyZKq8d
+	Q2VsFz4KFlIkPM76nJJU16I1UT7N2Ro/mv8dbo8uFUQqWe8pROOhF+jOlNZcpjMR
+	UclPC0HHD8MMF9+Gv8o+9EMIjazlHDKNrkBjRIhb2RqV1ZHIhz+NCKnqtpS+xRnb
+	Jq5cFgTiF0g5gzXZKhJzH32bPydw1SYxZCw==
+X-ME-Sender: <xms:EwSWaf_2_5B-wcN5e7ZnFn8Pz5gLepRrr2suB9P24j4X9tBbwJ3q6A>
+    <xme:EwSWaSsFKO34xpb_VNcW5DQgoPBJN8bVJD1_QlyoQklXMbwFfm7ZHbpFfp9e_e9-c
+    xunm1AbueqSGRsqGgOull5x7KNisy-9lbm4ce_rs3p_2q_F4DtU>
+X-ME-Received: <xmr:EwSWaSDjPGp4GQupSHzlMvNr6yOEHZV8-F72yTju69heI0vITtHKPEk2CjVpOySnBww5nDoJ-4mW2Santg2UM3_q5ow83lmL_Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeffeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
     dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
@@ -59,25 +59,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeffeefucetufdote
     udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
     hrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
     ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:xgGWaZ7EzfZ2sJuOm1xzki9x3ndEkTyzwO8weadJTGw_TGdNiX7fMA>
-    <xmx:xgGWaQXhK-e24dyCtsG7ml98NkYiWI2zcuJCe92Age9GAI9J7kX6ZA>
-    <xmx:xgGWaQCbC-9NuYZkCkn2YMF5OQTADNItWS4sRR2L3xl1FuCEGrhyow>
-    <xmx:xgGWaX4SHqEozGd-b3U3z-5blGcdl3qksA7ZDYMqvKGe51m1vQ5RBg>
-    <xmx:xwGWadUBQeVa91X4IXynTMYUCSqUwcCwuvuhfqGlxYYTiJHQImbXxt1i>
+X-ME-Proxy: <xmx:EwSWaaWCm-qpHo5UOxprpg_F3HryLNPyAELqKVbYrVo3FYsX0uR1xg>
+    <xmx:EwSWaQAU9M6YDeAn1OdJ9s-LBzenM3erxTNHkdAwNBslpjDzKNghnw>
+    <xmx:EwSWad_ReiagolKZ7O_LjEwD0O4d4YP6_4rQg1NLAyvQMsgAy2dUvg>
+    <xmx:EwSWaXHJWB4nezLVp3uaDs0ZbJVRdSctpmjLcwrkIV4-sAgij8Jltg>
+    <xmx:EwSWaVgxjwWz_vE9MBLu3_c1kOrofYxBV0muU7wC2ga2zgZKqF9ctEZe>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Feb 2026 13:15:34 -0500 (EST)
+ 18 Feb 2026 13:25:22 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Tian Yuchen <a3205153416@gmail.com>
 Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [PATCH v5 1/2] setup: distingush ENOENT from other stat errors
-In-Reply-To: <20260218051850.164972-2-a3205153416@gmail.com> (Tian Yuchen's
-	message of "Wed, 18 Feb 2026 13:18:49 +0800")
+Subject: Re: [PATCH v5 2/2] setup: allow cwd/.git to be a symlink to a
+ directory
+In-Reply-To: <20260218051850.164972-3-a3205153416@gmail.com> (Tian Yuchen's
+	message of "Wed, 18 Feb 2026 13:18:50 +0800")
 References: <20260217084124.150366-1-a3205153416@gmail.com>
 	<20260218051850.164972-1-a3205153416@gmail.com>
-	<20260218051850.164972-2-a3205153416@gmail.com>
-Date: Wed, 18 Feb 2026 10:15:33 -0800
-Message-ID: <xmqqy0kp7wai.fsf@gitster.g>
+	<20260218051850.164972-3-a3205153416@gmail.com>
+Date: Wed, 18 Feb 2026 10:25:21 -0800
+Message-ID: <xmqqtsvd7vu6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,37 +90,59 @@ Content-Type: text/plain
 
 Tian Yuchen <a3205153416@gmail.com> writes:
 
-> Currently, 'read_gitfile_gently()' treats all 'stat()' failures as
-> generic errors. This prevents distinguishing between a missing file and
-> real errors like permission denied (fatal).
+> Strictly enforcing 'lstat()' prevents valid '.git' symlinks.
 
-The above plan makes sense---you would split stat() error into two
-different classes, start returning ERR_STAT_NOENT in addition to
-ERR_STAT_FAILED, have the caller act on the new ERR_STAT_NOENT and
-adjust the way it acts on ERR_STAT_FAILED, and if possible add tests
-to make sure we react to failures from stat in an appropriate way
-(but how? --- it is where my "if possible" comes from).  So I would
-expect that the other patch would be to split ERR_NOT_A_FILE and add
-ERR_IS_A_DIR, have the caller act on the new ERR_IS_A_DIR and adjust
-the way it acts on ERR_NOT_A_FILE.
+But nobody sane would propose running one more lstat() anyway, so
+how is that relevant?
 
-But then the proposed log message below says that in addition to
-NOENT, it also deals with IS_A_DIR.  I do not mind doing these two
-in the same patch, but I do prefer to see each patch to be complete.
-If a callee is changed and starts returning different return values,
-the callers must be also adjusted to react to these new return values.
+>  		if (!gitdirenv) {
+> -			if (die_on_error ||
+> -			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
+> -				/* NEEDSWORK: fail if .git is not file nor dir */
+> -				if (is_git_directory(dir->buf)) {
+> -					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
+> -					gitdir_path = xstrdup(dir->buf);
+> -				}
+> -			} else if (error_code != READ_GITFILE_ERR_STAT_FAILED)
+> -				return GIT_DIR_INVALID_GITFILE;
 
-Looking at the preimage of [v5 2/2], we stil check if dir->buf is a
-plain vanilla ".git" directory only when read_gitfile_gently() returns
-ERR_NOT_A_FILE with [v5 1/2] applied, but in the new world order
-with this patch applied, shouldn't the caller deal with ".git" when
-it gets ERR_IS_A_DIR and not ERR_NOT_A_FILE?
+The _intent_ of the original code was to
 
-After applying this patch but before applying [v5 2/2], we lose the
-ability to use plain vanilla ".git"?  That is the kind of thing I
-meant by each patch to be complete.
+    * do is_git_directory() thing to deal with a plain vanilla
+      ".git" directory when read_gitfile_gently thing said "we found
+      a directory" (NOT_A_FILE is overly coarse, which is what we
+      are correcting in this topic, but the _intent_ was to do the
+      is_git_directory() thing when we know it is a directory).
 
-So, I do not understand what the splitting the topic into two along
-this axis is trying to achieve.
+    * return INVALID_GITFILE on any error, but do not return when
+      the reason why read_gitfile_gently thing failed was because
+      there is no ".git" there (again, STAT_FAILED is overly coarse,
+      which is what we are correcting in this topic, but the
+      _intent_ was to return INVALID thing when we not the failure
+      is not due to ENOENT).  Note that returning INVALID_GITFILE is
+      done when die_on_error is not set.
 
-Thanks.
+> -		} else
+> +			if (error_code)
+> +				read_gitfile_error_die(error_code, dir->buf, NULL);
+
+Should this be unconditional?  If our caller did not ask us to die
+upon an error with die_on_error, what happens?  The original I think
+returned INVALID_GITFILE for the caller to deal with.
+
+> +			if (is_git_directory(dir->buf)) {
+
+Should this be unconditional?  If the thing is a directory, the
+original would have given us NOT_A_FILE but now it would give us
+IS_A_DIR.  And that is the only case original wanted to call
+is_git_directory() no?
+
+> +				gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
+> +				gitdir_path = xstrdup(dir->buf);
+> +			}
+> +		} else {
+>  			gitfile = xstrdup(dir->buf);
+> +		}
+>  		/*
+>  		 * Earlier, we tentatively added DEFAULT_GIT_DIR_ENVIRONMENT
+>  		 * to check that directory for a repository.
