@@ -1,240 +1,160 @@
-Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF711EBFF7
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 04:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771387630; cv=pass; b=MY+5biDF4r4IhujUZxpkhkGGb0i3H7HtmdSeONzz2ZGyh6M9tULDcRcBOcsb9RV57XOe0X8Cm8SUsdaAd0KA30qQ6D0GTxTedkLanhEbAJ5FxKonbiTAr6vhE5R0Y+C+s5s3UzPo6rsZtHRf4hWjvd21M1eExs7kwlDk1DLy56o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771387630; c=relaxed/simple;
-	bh=jl+g8w2EUvVTBvDPROoRyoWA9nVwv3IBteA4mbE2ywo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Kbsu9pMpURTQEilUWtMEOU2LqJ2Xeey1FmIhZeoSTX5fHhPQMZhWvR5hodaMiS2rfvg+MXu1HbQ/51tbaVj1ockV6PcvKD0RcE7NAQE9hTNUFo7umWPnKmeKbkJ9C3Nfj0RwURacP6XcPmj3F3q1JexT1wzwkxSAN2tOHs7nZmM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=PjbPcKlO; arc=pass smtp.client-ip=74.125.82.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96091EBFF7
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 04:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771387723; cv=none; b=kwfU2kMPRkEaICRNk/HXpyjdEK/Q3KdjORBuGcSvGYD6/fXTvddu570xlF/bpMviZ4xGOXJ1WGF+Fa5I/T26oCRI9WyAbd/q4w0bfjJuH7tBh5ph3VSIKMV3KhjWY4fmgJNoyDRN5xXPkImjgvdxS5ydYYVRsB8SZU7gnfbKImw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771387723; c=relaxed/simple;
+	bh=uoCpqjdk4iRCEnrmVquOOGDhbVaEjlKDRECiiKj2AUM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PUAX7GMRoVN5IPSN2nDydBCfTAU/g3z2ytKLGRD+JHaWw3qijPu0PnGhIH9zqK89pZ39nnxjPsZsZaILtn4tcI03wvxdzP0+/aygG5sgxT8vmYgU492vX3BEBsm4jbmhnAHnifcEZS/+TFnlK7CZDRFgsd1oD+kFd3bXa93ahws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lq1NUJfF; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="PjbPcKlO"
-Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2ba9c484e5eso4907546eec.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2026 20:07:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771387628; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GrweIhMSr0079Skm1luWOBrJrLSa66X0sU1+9PePkSL1t/Wd6URTN63At1KO4HyGYd
-         4T4fSYQsgUfbT0NvHIn4mxLJ81LeKHiEEPPfMEz98pT6ECb5M/yYTsk/D1YAFdDAOf3M
-         Ju2GbmlK9bTITOSuUA0sDcQG5mdmwgK48ufpTDmM8S2Tx2mRovoPxWA0vuGlxUby+Gqn
-         0ApAWrD4bwERllLuK4YYKvhYPDRYEF2SLamE1J8hqZgH5eLrf0XX3A+whUkpD9gpwShR
-         j9jqkK6GftnBxAfgSaJLAvBctK9sbZjKpO1q9XN/6/ZfUs0YQuXHr0dcX2OrDbdRIAlv
-         1a6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=9xfCq6mMPg22hAQIIurFI8ghooPxETLa83TkZjsbz3g=;
-        fh=iDClqoaIPRHbR8/ozFFAGxD11OAKPShwGeUKfCFZ5NY=;
-        b=K8XlBBv/pcDse+aKGyzSEAYIwT1BgLp1Ja2kwkitkjgyfv66IwlHyGtyFk8IPgkL/3
-         7Ojgg/+xKh2Fb94glHPSAVEudqUnMnbxEM2ww5ffn69viBbnHu/ToPnyFBCrHxszqMkV
-         7G3QvC8vF3X+vYR/9cWIWofeRrpv7fzbyzKB/19oiiBrg/ypCIq1vsEWzx/MjV9S5eOs
-         Fv49kRNglN5AukCjU/XALp2sZZE6MF0RwF14ZltqoAza2wf4Vb3kU7mqeBz+N8+iAcxt
-         reBv0c98AYHO4QdEhZVwA8LyfWLfRgPOZUSP8kSm1Ekjzn04FYpFoYPHjvvOjXsbtlu0
-         SStw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lq1NUJfF"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c6e49b67239so307273a12.2
+        for <git@vger.kernel.org>; Tue, 17 Feb 2026 20:08:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree.net; s=google; t=1771387628; x=1771992428; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9xfCq6mMPg22hAQIIurFI8ghooPxETLa83TkZjsbz3g=;
-        b=PjbPcKlOO7YO3zflBINRNGitmkT963hmkc/liqrb3TC4btbPmdY+8PsH0mZ1ks8bmz
-         H7/tspOETDjw5Kqz1jhCXXEjPwOFQ1Mm/C0kxSy+/314mp9L3xBwlEsydSO/cy/ZGkwx
-         LJKP0om0EdobJx7r7sYmYycoO2Kuoewg00szF/6CQ4LP25JN6B0bdKqMeWeAuQW2+l9H
-         kI/ZCLziULXk4RF3QIR0162CYvinxGg6gAaSM6d3Va3gTDIGo7uj9X4x1GH1IPZWGxqJ
-         dE8NkO94YoaEkkU2+2z5Foi3VDyaXtsYeMzvdvofvUUitnIpCmpW6etvNnoVHg+HCPsD
-         oU/w==
+        d=gmail.com; s=20230601; t=1771387722; x=1771992522; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Bw6x7YzRBXuC8utCT8GB9x1supNyPBjfGR/LBmTrUsA=;
+        b=Lq1NUJfFpU802BXm0dSR+Dh6urmc3zTU1MnEwLwKwcz1EHvouyUlMLLn3LTFrEqDf9
+         +fMj3jiAfpAmSY+edZE+HByrWIBRZIYd5p+yICuoDRkU6k5U6QaeecZmimC9bJTFYrt8
+         WBI5LjK6RmDxaHloCiHNg0WoeVAfrvdCGRZvvEL05E5S6tDa3XDyItzgPpKa1f0ohAH9
+         em3TRqz+yR+DRb+wPRyKrSCmP4UZt6Qt1yTClWg17UrW85HvhRtcwzUOApjWoKDQnyqp
+         qBEysCu8MH4om84HxbuITRMVpIDs6wuWnF/TLJm2Ig+J1z8UpvIlb6vleQzMiNpmNI0a
+         8fIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771387628; x=1771992428;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=9xfCq6mMPg22hAQIIurFI8ghooPxETLa83TkZjsbz3g=;
-        b=ZM+wjglIze5HTkOoEi6VGIOrgOuWc+b+HuUmjhp5tEosfOeesqyWxvyhB+ko7MnqBh
-         QcGC1L+mu7ecp5Gn4+DMP2GQCPgeFuMeFI5h8a5sBz/nDkWA3F0RQuQ/uEvKjnImocXs
-         I9YAZFjmYA+fgAUdpG/mtcXak3jGiYQDaNfVLCOI1jPjLKJoqRcTxubpGD6BrYasm+st
-         GRMpzMpvpuv8MxuB2xYDb3GkJ4YFaCBiABmLMfW0KNHJxffQ4HctDHI4eQeNbiZYfpk9
-         Myj1ytDe6a45kGz1kEhVGXC4ZUJS9kCPr1PHp8ZTyf+3sDJRaw0gaLroUZ7eiAzm0dMs
-         A47A==
-X-Forwarded-Encrypted: i=1; AJvYcCVfru2nNClDglVyppVwtW63Je0SluYSxCfJpEiA+pXhqJ62o0Uce4F5P6eIkWmM2XUn8NU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEagjct/jwdQw5a/eUiaMVN4xNAj7Vu+RnqqNNoKPITTjTGDSc
-	gwxc9QE4OzGOqxQAAO0SULyUqhiqdgE4G5HpP/lK8RXlSplpmBnHEeVPrNPEsLAvyvCXXXntt9e
-	tR3rt6oEeKHWj9YZ7AhDFyYLVvmBGtZHHSWc1GnIC4U1S0WqfJfgLpBYv23hiQwlO3Aae29OFVC
-	bY8r5HwN0O98/5NlJ57VJz/Q0IK65IKr8t2I0p+CQyuqA7kPiLbXr/7yudoGH0NmkhKliC2Kg9K
-	4pWVjrCBfE7A8xNk1x7qbDnoGdOJ/bssutiriuLO8tcp+7hCEIltTa/HCnh+Lhx1TcfNczBIH7a
-	WTNz8Jx8H39ngwg=
-X-Gm-Gg: AZuq6aLmvKIaDm97bxq8TnGonDcaKnNXk5j+5PCzOjjpibo3cRvSbYZHegN9f9y9X5K
-	Sl0Z/fs7NBRK7IXqtw4ra7y8Zd3/FCeJR+wGf15HMFL4riO4cDSKKBKp02EoCAehOYqqvckORC+
-	Ox3s29XRJojnyIe3E3G6XvIxIK05QsZb/OndSVlQ4g8LTyN0X8I+KXRavD8ZjIw1deZ9/AtP7WS
-	Gv0yjU463xtjgY7fkuX8vi3r5XG6Rj1V2WDJr62wohj4+lc17PvPmN2NdhXNK2/JSSnhUvfxlX9
-	lfquRI58
-X-Received: by 2002:a05:7300:a18b:b0:2ba:7b0b:e207 with SMTP id
- 5a478bee46e88-2bac97ad35bmr5275384eec.23.1771387628121; Tue, 17 Feb 2026
- 20:07:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771387722; x=1771992522;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Bw6x7YzRBXuC8utCT8GB9x1supNyPBjfGR/LBmTrUsA=;
+        b=atesjdftqKtRHHwuDPZDdui5v0Ur5qpQLopkVv68YcSqf3wLyR4OJrrI1is7cm1tAb
+         ZaIM5Ybo5EVDwzGqJY3eli/PV1UdZxQUZnb7/xVnyFWRro6BBLvjeUc6wSS7MnDzxXn6
+         QqDwYjbrEm9PWeDcltB5doUAu/EWILCgGPSbwhgbbAAFc/ffTkjuLZ+A5zzRpEAF95Ud
+         x3w9n8S4JmA/d5vlf5jQtBFjprpy9nMEXnz4SsYLGE3gJsXUF+ftDAzyXfhUkj3MByo2
+         7mKTjNmCmY8KVe0cNuvQj/mNhzHpbkSYyR2Y6Azopgr+O2d2LlP5OHHdUTR8LLQR9pMw
+         ldpw==
+X-Gm-Message-State: AOJu0Yx6uocU6Ma+Fg9VKxcLQgeNrDiasNM4KlteV772JBGwQAuWo6lC
+	mciV6OklYK7UyOLutVhv4K+noztFcSxYH2EV8JPnpuvd7C55b+6ElrvV
+X-Gm-Gg: AZuq6aJBZFOk1clBCEQpQR7gsM1ViUvLL1nPe2YR0qiL8B+0KfXDBvPMporLFj+BjYn
+	ticIvUc15Idv32lB+hkpPs9+TMZWmqitp/1PaGXKK3ZNQsHFTQUEdBOz436gsNgGz6gOr3YtGQK
+	NoYYtNXYKAHdvpiJVyu5o9jtN1mOxD0QgdEN3kZzwB1+itJXAvpymHr+SkoKFFfVTb5pOxxpCAo
+	xjp0UsYzjXcze4+o6bn4dnloiuNP3p9q7G2es9hdATxxfWGSQwqzpeaj0ZLpkLhKm2hyvz+N+kk
+	my29G/O23SZ1cVneG78CNIVIEqen996rSAOlOH86RRsKQ2cJ7RtVsWFD9jXwLz/M2gJuDzmaXYk
+	VF4zfxzpXMFnodF+WqWfs5aJLowc5VpJoOY1INBAbeKQsva3ftq2me8rL+BqrqXXJF0H2uIjOIF
+	DoqaHoFNNWmXphfTyuy4hxEewNG8U=
+X-Received: by 2002:a17:90b:56c4:b0:356:2872:9c5a with SMTP id 98e67ed59e1d1-356a7a9c53fmr11573105a91.7.1771387721848;
+        Tue, 17 Feb 2026 20:08:41 -0800 (PST)
+Received: from [192.168.0.105] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3588795d31fsm316128a91.7.2026.02.17.20.08.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Feb 2026 20:08:41 -0800 (PST)
+Message-ID: <8e9399db-e35b-4c0c-902d-b64c99cdc099@gmail.com>
+Date: Wed, 18 Feb 2026 12:08:38 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2046.git.1770746461307.gitgitgadget@gmail.com>
- <pull.2046.v2.git.1770775169908.gitgitgadget@gmail.com> <xmqqms1fwasx.fsf@gitster.g>
- <CAOTNsDz0ZtdsM8Z2NW0WBMGs8xyWz5ROS6pf8DKQAx26LU4xRA@mail.gmail.com>
- <CALnO6CARu8HSYh9=z6FAF=84q1qA4Oan7_DLMbcK+1rth8B7cA@mail.gmail.com>
- <CAOTNsDwMeszCC6wunkkx_vhKYx9OvRWXB4VxedypOTQJ6Qs2sA@mail.gmail.com>
- <CALnO6CCYorpEzmZwLrb7O-ucKLTOCLp6zXxZr0Qv73tOBqKKig@mail.gmail.com>
- <CALnO6CCys8hDtSe4=gFjaz7x410TH-7LFGRs0UU5e7XCSWuOQQ@mail.gmail.com>
- <CAOTNsDySo-t-qS5+_bm1Z+c_zRKcrS62vVtxURf9bBax0h8DAQ@mail.gmail.com> <CALnO6CAC3Vpdt34fZ0PLjmZOPazU3hDJiPnZy9reoyJJg-zU3A@mail.gmail.com>
-In-Reply-To: <CALnO6CAC3Vpdt34fZ0PLjmZOPazU3hDJiPnZy9reoyJJg-zU3A@mail.gmail.com>
-From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Wed, 18 Feb 2026 13:06:56 +0900
-X-Gm-Features: AaiRm53j1v8_8leo-yzV4cO6EwXMfWBNDKCqKG4A8pa0I3mWxg97O_Jps-OPirM
-Message-ID: <CAOTNsDwVHNF72A7uobRhArqPzEseuhz_fnt49Si6=gR9Xb_KMQ@mail.gmail.com>
-Subject: Re: [PATCH v2] osxkeychain: define build targets in the top-level Makefile.
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] setup: allow cwd/.git to be a symlink to a directory
+To: Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <5b29218a-8d18-41f0-8a03-eac707151945@gmail.com>
+ <20260217084124.150366-1-a3205153416@gmail.com>
+ <CAOLa=ZTeTWhb0Yc8rPEv8vONTHtSg3bSvW6FBC-AWrZzi12oCA@mail.gmail.com>
+ <xmqqv7fvcnj5.fsf@gitster.g>
+ <CAOLa=ZQ8i0pUAbF8NGidR=6jVLJuiYdUWu=ZLDrJMek005D9bA@mail.gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <CAOLa=ZQ8i0pUAbF8NGidR=6jVLJuiYdUWu=ZLDrJMek005D9bA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Feb 18, 2026 at 6:54=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
->
-> On Tue, Feb 17, 2026 at 1:05=E2=80=AFPM Koji Nakamaru <koji.nakamaru@gree=
-.net> wrote:
-> >
-> > On Tue, Feb 17, 2026 at 10:12=E2=80=AFPM D. Ben Knoble <ben.knoble@gmai=
-l.com> wrote:
-> > >
-> > > On Tue, Feb 17, 2026 at 8:10=E2=80=AFAM D. Ben Knoble <ben.knoble@gma=
-il.com> wrote:
-> > > >
-> > > > On Mon, Feb 16, 2026 at 8:09=E2=80=AFPM Koji Nakamaru <koji.nakamar=
-u@gree.net> wrote:
-> > > > >
-> > > > > On Tue, Feb 17, 2026 at 8:45=E2=80=AFAM D. Ben Knoble <ben.knoble=
-@gmail.com> wrote:
-> > > > > > ...
-> > > > > >
-> > > > > > Homebrew picked this patch on top of 2.53.0, and on a recent bu=
-ild on
-> > > > > > older macOS I needed to
-> > > > > >
-> > > > > >     mkdir contrib/credential/osxkeychain/.depend
-> > > > > >
-> > > > > > in order to make their build work, since otherwise:
-> > > > > >
-> > > > > >     error: error opening
-> > > > > > 'contrib/credential/osxkeychain/.depend/git-credential-osxkeych=
-ain.o.d':
-> > > > > > No such file or directory
-> > > > > >     1 error generated.
-> > > > > >     make[1]: ***
-> > > > > > [contrib/credential/osxkeychain/git-credential-osxkeychain.o] E=
-rror 1
-> > > > >
-> > > > > I tried to reproduce this using the current Homebrew formula for =
-git [1]
-> > > > > on macOS 15.7.4 and 14.8.4 (both relatively newer) with the follo=
-wing
-> > > > > steps:
-> > > > >
-> > > > >   brew tap --force homebrew/core
-> > > > >   cd "$(brew --repository homebrew/core)"
-> > > > >   git checkout -B main origin/main
-> > > > >   git pull
-> > > > >   HOMEBREW_NO_INSTALL_FROM_API=3D1 brew reinstall --build-from-so=
-urce git
-> > > > >
-> > > > > In my environment, the build finished successfully. The patch doe=
-sn't
-> > > > > seem to trigger any issues during a local "make" either. How exac=
-tly are
-> > > > > you performing your build?
-> > > > >
-> > > > > [1] https://github.com/Homebrew/homebrew-core/blob/9ec3da0dcd3ccd=
-1cd4d892a71377b251770212d7/Formula/g/git.rb
-> > > >
-> > > > macOS 12.7.6 ;) hence tier 3 Homebrew support + all packages build
-> > > > from source. So just
-> > > >
-> > > >     brew upgrade git
-> > > >
-> > > > built 2.53.0 + patches from source. "brew --version" says I have
-> > > > "Homebrew 5.0.14-59-g45db1ce"; it doesn't print a homebrew-core lin=
-e,
-> > > > so I'm not sure off-hand if that includes the core tap version or n=
-ot
-> > > > anymore.
-> > >
-> > > To rule out differing versions, I also diff'd the Homebrew formula
-> > > from GitHub against "brew edit git", and the only difference is the
-> > > bottle stanza on GitHub.
-> > >
-> > > > I ended up having to use `brew upgrade --debug git`, fix the build
-> > > > error ("mkdir =E2=80=A6") and manually perform a few steps when it =
-arose, etc.
-> >
-> > Thank you for the details. The current Makefile rule performs the
-> > following to generate dependency files
-> >
-> >   contrib/credential/osxkeychain/git-credential-osxkeychain.o:
-> > contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
-> >           $(QUIET_CC)$(CC) -o $@ -c $(dep_args) $(compdb_args)
-> > $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-> >
-> > where the compiler implicitly creates
-> > contrib/credential/osxkeychain/.depend/ if it doesn't exist. This
-> > behavior seems to be supported at least since Apple clang 15.0.0.
->
-> Aha! I have clang 13. That probably explains it.
->
-> > The
-> > following should work for older versions of clang that might not suppor=
-t
-> > this behavior.
-> >
-> >   contrib/credential/osxkeychain/git-credential-osxkeychain.o:
-> > contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
-> >           @mkdir -p contrib/credential/osxkeychain/.depend
-> >           $(QUIET_CC)$(CC) -o $@ -c $(dep_args) $(compdb_args)
-> > $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-> >
-> > Can you try this modification in your environment? You can confirm
-> > whether this works as below.
-> >
-> >   git clone https://github.com/git/git.git
-> >   cd git
-> >   git checkout v2.53.0
-> >   curl https://raw.githubusercontent.com/Homebrew/homebrew-core/46d746f=
-92167fd0559af22f4ccb79c9ff35fbe33/Patches/git/2.53.0-osxkeychain-top-level-=
-makefile.patch
-> > | patch
->
-> Using git-am worked (patch doesn't apply it)
->
-> >   # The next should fail in your environment.
-> >   make contrib/credential/osxkeychain/git-credential-osxkeychain
->
-> Fails as stated.
->
-> >   # Please edit Makefile as described and try again. This should
-> >   # succeed.
-> >   make contrib/credential/osxkeychain/git-credential-osxkeychain
->
-> With the (now obvious!) proposal, indeed succeeds.
->
-> Thanks!
+On 2/18/26 02:50, Karthik Nayak wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>>>> @@ -994,7 +1000,9 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+>>>>   cleanup_return:
+>>>>   	if (return_error_code)
+>>>>   		*return_error_code = error_code;
+>>>> -	else if (error_code)
+>>>> +	else if (error_code &&
+>>>> +		error_code != READ_GITFILE_ERR_STAT_ENOENT &&
+>>>> +		error_code != READ_GITFILE_ERR_IS_A_DIR)
+>>>>   		read_gitfile_error_die(error_code, path, dir);
+>>>>
+>>>
+>>> I understand the exclusion here (they are non-fatal flows), but wouldn't
+>>> it more make sense to add these two exclusions within
+>>> `read_gitfile_error_die()` which already has two such exclusions? By
+>>> separating this out, it gets really confusing.
+>>
+>> Absolutely.  The point of this change, IIUC, is that these two
+>> existing exclusions were too broad.  stat() can fail for many
+>> reasons, but because we did not differenciate ENOENT (which we *are*
+>> happy to see and do not want to consider an error) from all other
+>> error cases (which we may have been better off if we diagnosed them
+>> as error), we pretended both ENOENT and all other stat() failures
+>> were happy case and "case ERR_STAT_FAILED:" covered both.
+> 
+> Yeah, so this is the situation before the patch, and I'm in agreement.
+> 
+>> To fix
+>> this, the patch splits stat() failures into two, ERR_STAT_ENOENT is
+>> the happy case we should have been returning without dying from
+>> read_gitfile_error_die(), and ERR_STAT_FAILED is the rest that we
+>> should have been dying there but in order to return from there
+>> without dying when we got ENOENT, we were not dying there.  Now we
+>> have a separate ERR_STAT_ENOENT, read_gitfile_error_die() can (and
+>> should) die when we see ERR_STAT_FAILED, and it can (and should)
+>> return to us when we see ERR_STAT_ENOENT as a happy case.
+> 
+> Okay, this is what I was expecting too, historically
+> `read_gitfile_error_die()` treated ERR_STAT_FAILED as the non-fatal path
+> which made sense. But now that we have ERR_STAT_ENOENT. It should treat
+> the latter as the non-fatal path and the former as an actual issue.
+> 
+>> The story
+>> is exactly the same between ERR_NOT_A_FILE (which had been non-error
+>> only because we wanted to treat a directory as OK, but we can make
+>> it an error) and ERR_IS_A DIR (which is new, and is an OK case).
+>>
+> 
+> Yup makes sense.
+> 
+>> The above exception on the caller's side you quoted is a complete
+>> opposite from that line of reasoning, and that is why it is
+>> confusing.
+>>
+>> If there are other callers of read_gitfile_error_die() and different
+>> semantics, such a "now we die on every possible errors" may also be
+>> a valid position to take, *but* then it does not make sense unless
+>> this patch makes read_gitfile_error_die() to die on ERR_STAT_FAILED
+>> and ERR_NOT_A_FILE.
+> 
+> Exactly! Thanks for clearing it out.
+> 
+> Karthik
 
-Thank you for testing the modification. I'll submit an updated patch
-later and also submit it to homebrew (for the current 2.53.0).
+I don't think leaving it up yo the caller to determine "which are error 
+cases" is as confusing as you suggest. But honestly, your approach is 
+indeed much clearer and more readable.
 
---
-Koji Nakamaru
+I'll split this into two commits and send them shortly.
+
+Regards,
+
+Yuchen
